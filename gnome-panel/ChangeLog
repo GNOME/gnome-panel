@@ -1,5 +1,11 @@
 2002-12-16  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu.c: (do_icons_to_add), (load_icons_handler),
+	add a ref/unref pair for the GtkImage to make
+	the crash in #99378 impossible.
+
+2002-12-16  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-background.c: (panel_background_prepare):
 	fix warning.
 
