@@ -199,8 +199,8 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 		gs = gst;
 	}
 	gtk_label_set_text(GTK_LABEL(cc->time), gs->str);
+	applet_widget_queue_resize(APPLET_WIDGET(cd->applet));
 	g_string_free(gs,TRUE);
-	
 }
 
 static void

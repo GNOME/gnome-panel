@@ -38,13 +38,6 @@ make_new_applet(const gchar *goad_id)
 	return NULL;
 }
 
-/*when we get a command to start a new widget*/
-static GtkWidget *
-applet_start_new_applet(const gchar *goad_id, const char **params, int nparams)
-{
-  return make_new_applet(goad_id);
-}
-
 #if 1
 
 static CORBA_Object
@@ -92,6 +85,12 @@ GnomePlugin GNOME_Plugin_info = {
 };
 
 #else
+/*when we get a command to start a new widget*/
+static GtkWidget *
+applet_start_new_applet(const gchar *goad_id, const char **params, int nparams)
+{
+  return make_new_applet(goad_id);
+}
 
 int
 main(int argc, char **argv)
