@@ -35,6 +35,13 @@ APPLET_LIB = orbit-applet-lib.c
 
 PANEL_ORB_SRCLIST= orbit-glue.c
 
+# We need explicit dependencies here for people building out
+# of the tarballs.
+
+orbit-applet-lib.c: gnome-panel.h
+
+orbit-glue.c: gnome-panel.h
+
 else
 
 CORBA_SRCLIST = gnome-panel.cc gnome-panel.h
