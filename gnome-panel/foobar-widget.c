@@ -577,6 +577,10 @@ foobar_widget_realize (GtkWidget *w)
 	xstuff_set_no_group_and_no_input (w->window);
 
 	setup_task_menu (FOOBAR_WIDGET (w));
+
+	/* make sure we reset our position, so that if the wm misplaces us
+	 * we jump back */
+	gtk_widget_queue_resize (w);
 }
 
 static void

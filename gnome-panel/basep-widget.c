@@ -100,29 +100,33 @@ basep_widget_get_pos_class (BasePWidget *basep) {
 }
 
 static void
-basep_widget_realize(GtkWidget *w)
+basep_widget_realize (GtkWidget *w)
 {
-	BasePWidget *basep = BASEP_WIDGET(w);
+	BasePWidget *basep = BASEP_WIDGET (w);
 	BasePPosClass *klass;
 
-	g_return_if_fail(IS_BASEP_WIDGET(basep));
-	GTK_WIDGET_CLASS(basep_widget_parent_class)->realize(w);
+	g_return_if_fail (IS_BASEP_WIDGET (basep));
+	GTK_WIDGET_CLASS (basep_widget_parent_class)->realize (w);
 
 	basep_widget_update_winhints (basep);
 	xstuff_set_no_group_and_no_input (w->window);
 
-	set_frame_colors(PANEL_WIDGET(basep->panel),
-			 basep->frame,
-			 basep->hidebutton_n,
-			 basep->hidebutton_e,
-			 basep->hidebutton_w,
-			 basep->hidebutton_s);
+	set_frame_colors (PANEL_WIDGET (basep->panel),
+			  basep->frame,
+			  basep->hidebutton_n,
+			  basep->hidebutton_e,
+			  basep->hidebutton_w,
+			  basep->hidebutton_s);
 
 	
 	klass = basep_widget_get_pos_class (basep);
 	g_return_if_fail (klass);
-	if (klass->realize)	
-		klass->realize(w);
+	if (klass->realize != NULL)
+		klass->realize (w);
+
+	/* make sure we reset our position, so that if the wm misplaces us
+	 * we jump back */
+	gtk_widget_queue_resize (w);
 }
 
 static void

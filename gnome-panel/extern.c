@@ -7,11 +7,12 @@
  *           Miguel de Icaza
  */
 
+#include "config.h"
+#include <gnome.h>
+
 #include <gdk/gdkx.h>
-#include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <gnome.h>
 
 #include "panel-include.h"
 #include "gnome-panel.h"
@@ -915,6 +916,10 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 		 * had a stale one around */
 		if (ev->_major == CORBA_NO_EXCEPTION)
 			return acc;
+
+		/* recycle the exception */
+		CORBA_exception_free (ev);
+		CORBA_exception_init (ev);
 	}
 	
 	for (li = applets; li != NULL; li = li->next) {
@@ -972,13 +977,13 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 	panelspot_servant->_private = NULL;
 	panelspot_servant->vepv = &panelspot_vepv;
 
-	POA_GNOME_PanelSpot__init(panelspot_servant, ev);
+	POA_GNOME_PanelSpot__init (panelspot_servant, ev);
 	
-	CORBA_free(PortableServer_POA_activate_object(thepoa, panelspot_servant, ev));
+	CORBA_free(PortableServer_POA_activate_object (thepoa, panelspot_servant, ev));
 	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
 			      CORBA_OBJECT_NIL);
 
-	acc = PortableServer_POA_servant_to_reference(thepoa, panelspot_servant, ev);
+	acc = PortableServer_POA_servant_to_reference (thepoa, panelspot_servant, ev);
 	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
 			      CORBA_OBJECT_NIL);
 
@@ -997,7 +1002,7 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 
 	*wid = reserve_applet_spot (ext, li->data, pos,
 				    APPLET_EXTERN_RESERVED);
-	if(*wid == 0) {
+	if (*wid == 0) {
 		extern_clean(ext);
 		*globcfgpath = NULL;
 		*cfgpath = NULL;
@@ -1010,21 +1015,21 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 }
 
 static void
-s_panel_quit(PortableServer_Servant servant, CORBA_Environment *ev)
+s_panel_quit (PortableServer_Servant servant, CORBA_Environment *ev)
 {
-	panel_quit();
+	panel_quit ();
 }
 
 static CORBA_boolean
-s_panel_get_in_drag(PortableServer_Servant servant, CORBA_Environment *ev)
+s_panel_get_in_drag (PortableServer_Servant servant, CORBA_Environment *ev)
 {
 	return panel_applet_in_drag;
 }
 
 static GNOME_StatusSpot
-s_panel_add_status(PortableServer_Servant servant,
-		   CORBA_unsigned_long *wid,
-		   CORBA_Environment *ev)
+s_panel_add_status (PortableServer_Servant servant,
+		    CORBA_unsigned_long *wid,
+		    CORBA_Environment *ev)
 {
 	POA_GNOME_StatusSpot *statusspot_servant;
 	GNOME_StatusSpot acc;
@@ -1033,7 +1038,7 @@ s_panel_add_status(PortableServer_Servant servant,
 	*wid = 0;
 	
 	ss = new_status_spot();
-	if(!ss)
+	if (ss == NULL)
 		return CORBA_OBJECT_NIL;
 	
 	statusspot_servant = (POA_GNOME_StatusSpot *)ss;
@@ -1042,15 +1047,15 @@ s_panel_add_status(PortableServer_Servant servant,
 
 	POA_GNOME_StatusSpot__init(statusspot_servant, ev);
 	
-	CORBA_free(PortableServer_POA_activate_object(thepoa, statusspot_servant, ev));
-	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
-			      CORBA_OBJECT_NIL);
+	CORBA_free (PortableServer_POA_activate_object (thepoa, statusspot_servant, ev));
+	pg_return_val_if_fail (ev, ev->_major == CORBA_NO_EXCEPTION,
+			       CORBA_OBJECT_NIL);
 
 	acc = PortableServer_POA_servant_to_reference(thepoa, statusspot_servant, ev);
-	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
-			      CORBA_OBJECT_NIL);
+	pg_return_val_if_fail (ev, ev->_major == CORBA_NO_EXCEPTION,
+			       CORBA_OBJECT_NIL);
 
-	ss->sspot = CORBA_Object_duplicate(acc, ev);
+	ss->sspot = CORBA_Object_duplicate (acc, ev);
 
 	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
 			      CORBA_OBJECT_NIL);

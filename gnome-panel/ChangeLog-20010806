@@ -1,3 +1,11 @@
+Sat Jan 06 18:18:57 2001  George Lebl <jirka@5z.com>
+
+	* extern.c: some cleanups, recycle the exception when fail to
+	  add_applet on a booter
+
+	* foobar-widget.c, basep-widget.c:  queue_resize after a realize
+	  so that if the WM misplaces us we will replace ourselves back.
+
 Tue Jan 02 20:44:47 2001  George Lebl <jirka@5z.com>
 
 	* extern.c:  Implement launch_an_applet.  It's very simple really,
