@@ -1,3 +1,21 @@
+2005-03-28  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-menu-bar.c: (panel_menu_bar_class_init): remove unused
+	variable
+	* panel-toplevel.h: panel_toplevel_new does not exist any more
+
+2005-03-28  Vincent Untz  <vincent@vuntz.net>
+
+	Patch by Fernando Villacis Postigo <fvillacis@csnat.unt.edu.ar>
+	Add a setting to disable the autocompletion in the Run dialog.
+	Fix bug #152025
+
+	* panel-general.schemas.in: add new key:
+	/apps/panel/general/enable_autocompletion
+	* panel-profile.[ch]: (panel_profile_get_enable_autocomplete): new
+	* panel-run-dialog.c: (entry_event): don't autocomplete if
+	autocomplete is disabled
+
 2005-03-27  Vincent Untz  <vincent@vuntz.net>
 
 	Remove "Run application" from the menus.

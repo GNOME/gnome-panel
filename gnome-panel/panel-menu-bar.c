@@ -135,7 +135,6 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
-	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);

@@ -73,7 +73,6 @@ struct _PanelToplevelClass {
 };
 
 GType                panel_toplevel_get_type               (void) G_GNUC_CONST;
-GtkWidget           *panel_toplevel_new                    (void);
 
 PanelWidget         *panel_toplevel_get_panel_widget       (PanelToplevel       *toplevel);
 
