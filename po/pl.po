@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-03 16:25+0200\n"
-"PO-Revision-Date: 2002-07-02 13:43+0200\n"
+"POT-Creation-Date: 2002-07-08 12:04+0200\n"
+"PO-Revision-Date: 2002-07-08 12:11+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -430,6 +430,10 @@ msgstr ""
 msgid "Please enter your mailserver's _password:"
 msgstr "Podaj swoje _hasło na serwerze pocztowym:"
 
+#: applets/gen_util/mailcheck.c:1 applets/gen_util/mailcheck.c:1
+msgid "Password Entry box"
+msgstr "Wejście tekstowe na hasło"
+
 #: applets/gen_util/mailcheck.c:1
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
@@ -497,8 +501,16 @@ msgid "Mail s_erver:"
 msgstr "_Serwer pocztowy:"
 
 #: applets/gen_util/mailcheck.c:1
+msgid "Mail Server Entry box"
+msgstr "Wejście tekstowe na nazwę serwera pocztowego"
+
+#: applets/gen_util/mailcheck.c:1
 msgid "_Username:"
 msgstr "_Nazwa użytkownika:"
+
+#: applets/gen_util/mailcheck.c:1
+msgid "Username Entry box"
+msgstr "Wejście tekstowe na nazwę użytkownika"
 
 #: applets/gen_util/mailcheck.c:1
 msgid "_Password:"
@@ -509,8 +521,16 @@ msgid "_Folder:"
 msgstr "_Folder:"
 
 #: applets/gen_util/mailcheck.c:1
+msgid "Folder Entry box"
+msgstr "Wejście tekstowe na folder"
+
+#: applets/gen_util/mailcheck.c:1
 msgid "C_ommand to run before checking for mail:"
 msgstr "P_olecenie uruchamiane przed sprawdzeniem poczty:"
+
+#: applets/gen_util/mailcheck.c:1
+msgid "Command Entry box"
+msgstr "Wejście tekstowe na polecenie"
 
 #: applets/gen_util/mailcheck.c:1
 msgid "Execute"
@@ -520,18 +540,25 @@ msgstr "Wykonywanie"
 msgid "Before each _update:"
 msgstr "Przed każdym _odświeżeniem:"
 
-#: applets/gen_util/mailcheck.c:1 applets/gen_util/mailcheck.c:1
 #: applets/gen_util/mailcheck.c:1
-msgid "Command to execute"
-msgstr "Wykonywane polecenie"
+msgid "Command to execute before each update"
+msgstr "Polecenie wykonywane przed każdym odświeżeniem"
 
 #: applets/gen_util/mailcheck.c:1
 msgid "When new mail _arrives:"
 msgstr "Po _nadejściu poczty:"
 
+#: applets/gen_util/mailcheck.c:1 applets/gen_util/mailcheck.schemas.in.h:1
+msgid "Command to execute when new mail arrives"
+msgstr "Polecenie wykonywane po nadejściu listu"
+
 #: applets/gen_util/mailcheck.c:1
 msgid "When clicke_d:"
 msgstr "Po _kliknięciu:"
+
+#: applets/gen_util/mailcheck.c:1
+msgid "Command to execute when clicked"
+msgstr "Polecenie wykonywane po kliknięciu"
 
 #: applets/gen_util/mailcheck.c:1
 msgid "Set the number of unread mails to _zero"
@@ -545,9 +572,17 @@ msgstr "Sprawdzanie poczty _co"
 msgid "minutes"
 msgstr "minut"
 
+#: applets/gen_util/mailcheck.c:1
+msgid "Choose time interval in minutes to check mail"
+msgstr "Okres pomiędzy sprawdzeniami poczty (w minutach)"
+
 #: applets/gen_util/mailcheck.c:1 applets/gen_util/mailcheck.c:1
 msgid "seconds"
 msgstr "sekund"
+
+#: applets/gen_util/mailcheck.c:1
+msgid "Choose time interval in seconds to check mail"
+msgstr "Okres pomiędzy sprawdzeniami poczty (w sekundach)"
 
 #: applets/gen_util/mailcheck.c:1
 msgid "Play a _sound when new mail arrives"
@@ -592,10 +627,6 @@ msgstr "Monitor poczty powiadamia o pojawieniu się nowej poczty w skrzynce"
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
 msgstr "Polecenie wykonywane przy sprawdzaniu poczty"
-
-#: applets/gen_util/mailcheck.schemas.in.h:1
-msgid "Command to execute when new mail arrives"
-msgstr "Polecenie wykonywane po nadejściu listu"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when the applet is clicked"
@@ -862,7 +893,7 @@ msgstr ""
 
 #: applets/gen_util/printer.c:1
 msgid "Can't create applet!\n"
-msgstr "Nie można stworzyć apletu!\n"
+msgstr "Nie można utworzyć apletu!\n"
 
 #: applets/gen_util/printer.c:1
 msgid "Properties..."
@@ -895,7 +926,7 @@ msgstr "Grupowanie okien przy braku _miejsca"
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "M_inimum size:"
-msgstr "M_iminalny rozmiar:"
+msgstr "M_inimalny rozmiar:"
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Ma_ximum size:"
@@ -1336,7 +1367,7 @@ msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
-"Nie można stworzyć informacji png.\n"
+"Nie można utworzyć informacji png.\n"
 "Prawdopodobnie w systemie zainstalowana jest niewłaściwa wersja libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:1
@@ -1368,7 +1399,7 @@ msgid ""
 "\"%s\"\n"
 "Please check your permissions of the parent directory"
 msgstr ""
-"Nie można stworzyć pliku:\n"
+"Nie można utworzyć pliku:\n"
 "\"%s\"\n"
 "Upewnij się, że uprawnienia do katalogu nadrzędnego są właściwe"
 
@@ -2039,7 +2070,7 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
-"Nie można stworzyć w tym miejscu nowego aktywatora, ponieważ nie jest ono "
+"Nie można utworzyć w tym miejscu nowego aktywatora, ponieważ nie jest ono "
 "zapisywalne."
 
 #: gnome-panel/panel-applet-frame.c:1
@@ -2095,7 +2126,7 @@ msgid ""
 "you"
 msgstr ""
 "Nie odnaleziono w konfiguracji żadnych paneli. Zostanie automatycznie "
-"stworzony panel menu."
+"utworzony panel menu."
 
 #: gnome-panel/panel-config.c:1
 msgid "Hiding"
