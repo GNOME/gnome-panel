@@ -215,11 +215,12 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	EggRecentViewGtk *view;
 
 	menu_item = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menu_item,
-			       panel_menu_icon_get_size (),
-			       GTK_STOCK_OPEN,
-			       _("Recent Documents"),
-			       TRUE);
+	setup_menu_item_with_icon (menu_item,
+				   panel_menu_icon_get_size (),
+				   NULL,
+				   GTK_STOCK_OPEN,
+				   _("Recent Documents"),
+				   TRUE);
 	menu = panel_create_menu ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
 
@@ -244,11 +245,12 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
 	menu_item = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menu_item,
-			       panel_menu_icon_get_size (),
-			       GTK_STOCK_CLEAR,
-			       _("Clear Recent Documents"),
-			       TRUE);
+	setup_menu_item_with_icon (menu_item,
+				   panel_menu_icon_get_size (),
+				   NULL,
+				   GTK_STOCK_CLEAR,
+				   _("Clear Recent Documents"),
+				   TRUE);
 	gtk_tooltips_set_tip (panel_tooltips,
 			      menu_item,
 			      _("Clear all items from the recent documents list"),

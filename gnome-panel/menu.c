@@ -1474,14 +1474,16 @@ create_new_panel (GtkWidget *menuitem)
 }
 
 void
-setup_stock_menu_item (GtkWidget   *item,
-		       GtkIconSize  icon_size,
-		       const char  *stock_id,
-		       const char  *title,
-		       gboolean     invisible_mnemonic)
+setup_menu_item_with_icon (GtkWidget   *item,
+			   GtkIconSize  icon_size,
+			   const char  *icon_name,
+			   const char  *stock_id,
+			   const char  *title,
+			   gboolean     invisible_mnemonic)
 {
-	if (stock_id)
-		panel_load_menu_image_deferred (item, icon_size, stock_id, NULL, NULL);
+	if (icon_name || stock_id)
+		panel_load_menu_image_deferred (item, icon_size,
+						stock_id, icon_name, NULL);
 
 	setup_menuitem (item, icon_size, NULL, title, invisible_mnemonic);
 }
@@ -1692,10 +1694,11 @@ append_lock_screen (GtkWidget *menu)
 		return;
 
 	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, panel_menu_icon_get_size (),
-			       panel_action_get_stock_icon (PANEL_ACTION_LOCK),
-			       panel_action_get_text (PANEL_ACTION_LOCK),
-			       TRUE);
+	setup_menu_item_with_icon (menuitem, panel_menu_icon_get_size (),
+				   panel_action_get_icon_name (PANEL_ACTION_LOCK),
+				   panel_action_get_stock_icon (PANEL_ACTION_LOCK),
+				   panel_action_get_text (PANEL_ACTION_LOCK),
+				   TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_lock_screen), NULL);
@@ -1716,10 +1719,11 @@ append_log_out (GtkWidget *menu)
 
 	menuitem = gtk_image_menu_item_new ();
 
-	setup_stock_menu_item (menuitem, panel_menu_icon_get_size (),
-			       panel_action_get_stock_icon (PANEL_ACTION_LOGOUT),
-			       panel_action_get_text (PANEL_ACTION_LOGOUT),
-			       TRUE);
+	setup_menu_item_with_icon (menuitem, panel_menu_icon_get_size (),
+				   panel_action_get_icon_name (PANEL_ACTION_LOGOUT),
+				   panel_action_get_stock_icon (PANEL_ACTION_LOGOUT),
+				   panel_action_get_text (PANEL_ACTION_LOGOUT),
+				   TRUE);
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
@@ -1743,11 +1747,12 @@ create_main_menu (PanelWidget *panel)
 	g_object_set_data (G_OBJECT (main_menu), "menu_panel", panel);
 
 	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem,
-			       panel_menu_icon_get_size (),
-			       PANEL_STOCK_APPLICATIONS,
-			       _("Applications"),
-			       TRUE);
+	setup_menu_item_with_icon (menuitem,
+				   panel_menu_icon_get_size (),
+				   "gnome-applications",
+				   NULL,
+				   _("Applications"),
+				   TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 
 	applications_menu = create_applications_menu ("applications.menu", NULL);
@@ -1757,11 +1762,12 @@ create_main_menu (PanelWidget *panel)
 
 	if (!panel_lockdown_get_disable_command_line ()) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (menuitem,
-				       panel_menu_icon_get_size (),
-				       panel_action_get_stock_icon (PANEL_ACTION_RUN),
-				       panel_action_get_text (PANEL_ACTION_RUN),
-				       TRUE);
+		setup_menu_item_with_icon (menuitem,
+					   panel_menu_icon_get_size (),
+					   panel_action_get_icon_name (PANEL_ACTION_RUN),
+					   panel_action_get_stock_icon (PANEL_ACTION_RUN),
+					   panel_action_get_text (PANEL_ACTION_RUN),
+					   TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_run_program), NULL);
 		gtk_tooltips_set_tip (panel_tooltips,
@@ -1775,11 +1781,12 @@ create_main_menu (PanelWidget *panel)
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (menuitem,
-				       panel_menu_icon_get_size (),
-				       panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
-				       panel_action_get_text (PANEL_ACTION_SEARCH),
-				       TRUE);
+		setup_menu_item_with_icon (menuitem,
+					   panel_menu_icon_get_size (),
+					   panel_action_get_icon_name (PANEL_ACTION_SEARCH),
+					   panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
+					   panel_action_get_text (PANEL_ACTION_SEARCH),
+					   TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_search), NULL);
 		gtk_tooltips_set_tip (panel_tooltips,
@@ -1797,11 +1804,12 @@ create_main_menu (PanelWidget *panel)
 
 	if (panel_is_program_in_path ("gnome-screenshot")) {
 		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (menuitem,
-				       panel_menu_icon_get_size (),
-				       panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
-				       panel_action_get_text (PANEL_ACTION_SCREENSHOT),
-				       TRUE);
+		setup_menu_item_with_icon (menuitem,
+					   panel_menu_icon_get_size (),
+					   panel_action_get_icon_name (PANEL_ACTION_SCREENSHOT),
+					   panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
+					   panel_action_get_text (PANEL_ACTION_SCREENSHOT),
+					   TRUE);
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_screenshot), NULL);
 		gtk_tooltips_set_tip (panel_tooltips,

@@ -36,17 +36,10 @@ G_BEGIN_DECLS
 
 /* stock icons */
 #define PANEL_STOCK_RUN                 "panel-run"
-#define PANEL_STOCK_SEARCHTOOL          "panel-searchtool"
-#define PANEL_STOCK_SCREENSHOT          "panel-screenshot"
-#define PANEL_STOCK_LOCKSCREEN          "panel-lockscreen"
-#define PANEL_STOCK_LOGOUT              "panel-logout"
 #define PANEL_STOCK_FORCE_QUIT          "panel-force-quit"
 #define PANEL_STOCK_GNOME_LOGO          "panel-gnome-logo"
-#define PANEL_STOCK_APPLICATIONS        "panel-applications"
 #define PANEL_STOCK_MAIN_MENU           "panel-main-menu"
-#define PANEL_STOCK_LAUNCHER            "panel-launcher"
 #define PANEL_STOCK_DRAWER              "panel-drawer"
-#define PANEL_STOCK_DESKTOP             "panel-desktop"
 
 /* stock items  - no point in theme the icons one these,
  * they use stock gtk icons and just modify the text

@@ -95,6 +95,7 @@ void       panel_action_screenshot  (GtkWidget *widget);
 
 gboolean             panel_action_get_is_disabled (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_stock_icon  (PanelActionButtonType type);
+G_CONST_RETURN char *panel_action_get_icon_name   (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_text        (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_tooltip     (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_drag_id     (PanelActionButtonType type);

@@ -101,8 +101,8 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	{ PANEL_ADDTO_LAUNCHER_NEW,
 	  N_("Custom Application Launcher"),
 	  N_("Create a new launcher"),
+	  "launcher-program",
 	  NULL,
-	  PANEL_STOCK_LAUNCHER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -112,8 +112,8 @@ static PanelAddtoItemInfo special_addto_items [] = {
 	{ PANEL_ADDTO_LAUNCHER_MENU,
 	  N_("Application Launcher..."),
 	  N_("Launch a program that is already in the GNOME menu"),
+	  "launcher-program",
 	  NULL,
-	  PANEL_STOCK_LAUNCHER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -149,8 +149,8 @@ static PanelAddtoItemInfo internal_addto_items [] = {
 	{ PANEL_ADDTO_DRAWER,
 	  N_("Drawer"),
 	  N_("A pop out drawer to store other items in"),
+	  "drawer",
 	  NULL,
-	  PANEL_STOCK_DRAWER,
 	  PANEL_ACTION_NONE,
 	  NULL,
 	  NULL,
@@ -219,6 +219,7 @@ panel_addto_append_internal_applets (GSList *list)
 		info->action_type = i;
 		info->name        = (char *) panel_action_get_text (i);
 		info->description = (char *) panel_action_get_tooltip (i);
+		info->icon        = (char *) panel_action_get_icon_name (i);
 		info->stock_icon  = (char *) panel_action_get_stock_icon (i);
 		info->iid         = (char *) panel_action_get_drag_id (i);
 		info->static_data = FALSE;

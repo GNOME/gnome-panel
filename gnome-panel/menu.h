@@ -29,16 +29,17 @@
 
 G_BEGIN_DECLS
 
-void		setup_menuitem		(GtkWidget        *menuitem,
-					 GtkIconSize       icon_size,
-					 GtkWidget        *pixmap,
-					 const char       *title,
-					 gboolean          invisible_mnemonic);
-void            setup_stock_menu_item   (GtkWidget        *item,
-					 GtkIconSize       icon_size,
-					 const char       *stock_id,
-					 const char       *title,
-					 gboolean          invisible_mnemonic);
+void		setup_menuitem		  (GtkWidget        *menuitem,
+					   GtkIconSize       icon_size,
+					   GtkWidget        *pixmap,
+					   const char       *title,
+					   gboolean          invisible_mnemonic);
+void            setup_menu_item_with_icon (GtkWidget        *item,
+					   GtkIconSize       icon_size,
+					   const char       *icon_name,
+					   const char       *stock_id,
+					   const char       *title,
+					   gboolean          invisible_mnemonic);
 
 
 GtkWidget      *create_empty_menu         (void);

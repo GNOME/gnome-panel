@@ -92,11 +92,12 @@ panel_menu_bar_append_action_item (PanelMenuBar          *menubar,
 	GtkWidget *item;
 
 	item = gtk_image_menu_item_new ();
-	setup_stock_menu_item (item,
-			       panel_menu_icon_get_size (),
-			       panel_action_get_stock_icon (action_type),
-			       panel_action_get_text (action_type),
-			       TRUE);
+	setup_menu_item_with_icon (item,
+				   panel_menu_icon_get_size (),
+				   panel_action_get_icon_name (action_type),
+				   panel_action_get_stock_icon (action_type),
+				   panel_action_get_text (action_type),
+				   TRUE);
 
 	gtk_tooltips_set_tip (panel_tooltips,
 			      item,

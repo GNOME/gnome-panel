@@ -241,6 +241,7 @@ panel_action_force_quit (GtkWidget *widget)
 typedef struct {
 	PanelActionButtonType   type;
 	char                   *stock_icon;
+	char                   *icon_name;
 	char                   *text;
 	char                   *tooltip;
 	char                   *help_index;
@@ -262,7 +263,8 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_LOCK,
-		PANEL_STOCK_LOCKSCREEN,
+		NULL,
+		"gnome-lockscreen",
 		N_("Lock screen"),
 		N_("Protect your computer from unauthorized use"),
 		"gospanel-21",
@@ -274,7 +276,8 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_LOGOUT,
-		PANEL_STOCK_LOGOUT,
+		NULL,
+		"gnome-logout",
 		N_("Log Out"),
 		N_("Log out of this session to log in as a different user or to shut down the computer"),
 		"gospanel-20",
@@ -285,6 +288,7 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_RUN,
 		PANEL_STOCK_RUN,
+		NULL,
 		N_("Run Application..."),
 		N_("Run an Application by entering a command"),
 		"gospanel-555",
@@ -294,7 +298,8 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SEARCH,
-		PANEL_STOCK_SEARCHTOOL,
+		NULL,
+		"gnome-searchtool",
 		N_("Search for Files..."),
 		N_("Find files, folders, and documents on your computer"),
 		"gospanel-554",
@@ -303,7 +308,8 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_SCREENSHOT,
-		PANEL_STOCK_SCREENSHOT,
+		NULL,
+		"applets-screenshooter",
 		N_("Take Screenshot..."),
 		N_("Take a screenshot of your desktop"),
 		"gospanel-553",
@@ -313,6 +319,7 @@ static PanelAction actions [] = {
 	{
 		PANEL_ACTION_FORCE_QUIT,
 		PANEL_STOCK_FORCE_QUIT,
+		NULL,
 		N_("Force Quit"),
 		N_("Force a misbehaving application to quit"),
 		"gospanel-563",
@@ -339,6 +346,14 @@ panel_action_get_stock_icon (PanelActionButtonType type)
 	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
 
 	return actions[type].stock_icon;
+}
+
+G_CONST_RETURN char*
+panel_action_get_icon_name (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	return actions[type].icon_name;
 }
 
 G_CONST_RETURN char*
@@ -582,7 +597,10 @@ panel_action_button_set_type (PanelActionButton     *button,
 
 	button->priv->type = type;
 
-	button_widget_set_stock_id (BUTTON_WIDGET (button), actions [type].stock_icon);
+	if (actions [type].icon_name != NULL)
+		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [type].icon_name);
+	else
+		button_widget_set_stock_id (BUTTON_WIDGET (button), actions [type].stock_icon);
 
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
 			      _(actions [type].tooltip), NULL);
@@ -633,7 +651,10 @@ panel_action_button_connect_to_gconf (PanelActionButton *button)
 static void
 panel_action_button_style_set (PanelActionButton *button)
 {
-	button_widget_set_stock_id (BUTTON_WIDGET (button), actions [button->priv->type].stock_icon);
+	if (actions [button->priv->type].icon_name != NULL)
+		button_widget_set_icon_name (BUTTON_WIDGET (button), actions [button->priv->type].icon_name);
+	else
+		button_widget_set_stock_id (BUTTON_WIDGET (button), actions [button->priv->type].stock_icon);
 }
 
 static void
@@ -849,8 +870,14 @@ panel_action_button_set_dnd_enabled (PanelActionButton *button,
 		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
 				     dnd_targets, 1,
 				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-		gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
-						actions [button->priv->type].stock_icon);
+		if (actions [button->priv->type].stock_icon != NULL)
+			gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
+							actions [button->priv->type].stock_icon);
+		/* FIXME: waiting for bug #116577
+		else
+		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
+						actions [button->priv->type].icon_name);
+						*/
 		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));

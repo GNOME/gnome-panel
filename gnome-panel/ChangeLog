@@ -1,5 +1,28 @@
 2004-12-04  Vincent Untz  <vincent@vuntz.net>
 
+	Remove some stock icons and directly use the icon names instead.
+	I only left stock icons that are references more than once, so we
+	can change all the references at once. But it might be better to
+	provide a #define...
+
+	* menu.[ch]: (setup_stock_menu_item): renamed to...
+	(setup_menu_item_with_icon): new function, so we can use a stock icon
+	or an icon name
+	(append_lock_screen): updated
+	(append_log_out): updated
+	(create_main_menu): updated
+	* panel-action-button.[ch]: add icon names for most of the actions
+	(panel_action_get_icon_name): new function
+	(panel_action_button_set_type): updated to use the right icon
+	(panel_action_button_style_set): ditto
+	(panel_action_button_set_dnd_enabled): ditto
+	* panel-addto.c: (panel_addto_append_internal_applets): updated
+	* panel-menu-bar.c: (panel_menu_bar_append_action_item): updated
+	* panel-recent.c: (panel_recent_append_documents_menu): updated
+	* panel-stock-icons.[ch]: removed 6 stock icons. 5 to go!
+
+2004-12-04  Vincent Untz  <vincent@vuntz.net>
+
 	The menu bar now uses the panel background too.
 	Fix bug #152901
 
