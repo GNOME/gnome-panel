@@ -1635,7 +1635,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 		return TRUE;
 	}
 
-	if (!g_file_exists (pixmap))
+	if (!panel_file_exists (pixmap))
 		return FALSE;
 	
 	panel->backpix = gdk_pixbuf_new_from_file (pixmap);

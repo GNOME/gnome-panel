@@ -34,6 +34,7 @@ struct _FileRec {
 	char *fullname;
 	char *icon;
 	char *goad_id;
+	char *tryexec_path;
 	DirRec *parent;
 	time_t mtime;
 	time_t last_stat;
@@ -45,6 +46,7 @@ struct _DirRec {
 	time_t dentrylast_stat;
 	time_t merge_mtime;
 	gboolean force_reread;
+	GSList *tryexecs;
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/
 };

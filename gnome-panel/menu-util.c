@@ -107,7 +107,7 @@ get_default_menu_flags (void)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
 	/*guess KDE menus*/
-	if(g_file_exists(kde_menudir))
+	if(panel_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	return flags;

@@ -79,6 +79,10 @@ gboolean	is_ext			(const char *file,
 int		strcasecmp_no_locale	(const char *s1,
 					 const char *s2);
 
+/* stolen from gnome-libs head as they are faster and don't use "stat" */
+gboolean	panel_file_exists	(const char *filename);
+char *		panel_is_program_in_path (const char *program);
+
 END_GNOME_DECLS
 
 #endif /* PANEL_UTIL_H */

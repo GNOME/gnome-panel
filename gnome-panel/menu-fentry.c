@@ -177,28 +177,55 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 }
 
 static void
-fr_free(FileRec *fr, int free_fr)
+fr_free (FileRec *fr, gboolean free_fr)
 {
-	if(!fr) return;
-	g_free(fr->name);
-	g_free(fr->fullname);
-	g_free(fr->comment);
-	g_free(fr->icon);
-	g_free(fr->goad_id);
-	if(fr->parent && free_fr)
-		fr->parent->recs = g_slist_remove(fr->parent->recs,fr);
-	if(fr->type == FILE_REC_DIR) {
+	if (fr == NULL)
+		return;
+
+	g_free (fr->name);
+	fr->name = NULL;
+	g_free (fr->fullname);
+	fr->fullname = NULL;
+	g_free (fr->comment);
+	fr->comment = NULL;
+	g_free (fr->icon);
+	fr->icon = NULL;
+	g_free (fr->goad_id);
+	fr->goad_id = NULL;
+	g_free (fr->tryexec_path);
+	fr->tryexec_path = NULL;
+
+	if (fr->parent != NULL &&
+	    free_fr)
+		fr->parent->recs = g_slist_remove (fr->parent->recs, fr);
+	fr->parent = NULL;
+
+	if (fr->type == FILE_REC_DIR) {
 		DirRec *dr = (DirRec *)fr;
 		GSList *li;
-		for(li = dr->mfl; li!=NULL; li=g_slist_next(li))
-			((MenuFinfo *)li->data)->fr = NULL;
-		g_slist_free(dr->mfl);
-		for(li = dr->recs; li!=NULL; li=g_slist_next(li)) {
+
+		for (li = dr->mfl; li != NULL; li = li->next) {
+			MenuFinfo *mf = li->data;
+			li->data = NULL;
+			mf->fr = NULL;
+		}
+		g_slist_free (dr->mfl);
+		dr->mfl = NULL;
+
+		for (li = dr->recs; li != NULL; li = li->next) {
 			FileRec *ffr = li->data;
+			li->data = NULL;
 			ffr->parent = NULL;
-			fr_free(ffr,TRUE);
+			fr_free (ffr, TRUE);
 		}
 		g_slist_free(dr->recs);
+		dr->recs = NULL;
+
+		if (dr->tryexecs != NULL) {
+			g_slist_foreach (dr->tryexecs, (GFunc) g_free, NULL);
+			g_slist_free (dr->tryexecs);
+			dr->tryexecs = NULL;
+		}
 	}
 	if(free_fr) {
 		dir_list = g_slist_remove(dir_list,fr);
@@ -278,15 +305,29 @@ fr_fill_dir(FileRec *fr, int sublevels)
 			}
 		} else {
 			GnomeDesktopEntry *dentry;
+			char *tryexec_path;
 			char *p = strrchr(name,'.');
-			if (!p || (strcmp(p, ".desktop") != 0 &&
-				   strcmp(p, ".kdelnk") != 0)) {
-				g_free(name);
+			if (p == NULL ||
+			    (strcmp (p, ".desktop") != 0 &&
+			     strcmp (p, ".kdelnk") != 0)) {
+				g_free (name);
 				continue;
 			}
 
-			dentry = gnome_desktop_entry_load(name);
-			if(dentry) {
+			tryexec_path = NULL;
+
+			dentry = gnome_desktop_entry_load_unconditional (name);
+			if (dentry != NULL &&
+			    dentry->tryexec != NULL) {
+				tryexec_path = panel_is_program_in_path (dentry->tryexec);
+				if (tryexec_path == NULL) {
+					dr->tryexecs = g_slist_prepend (dr->tryexecs, dentry->tryexec);
+					dentry->tryexec = NULL;
+					gnome_desktop_entry_free (dentry);
+					dentry = NULL;
+				}
+			}
+			if (dentry != NULL) {
 				ffr = g_chunk_new0 (FileRec, file_chunk);
 				ffr->type = FILE_REC_FILE;
 				ffr->merged = merged;
@@ -297,18 +338,20 @@ fr_fill_dir(FileRec *fr, int sublevels)
 				ffr->icon = dentry->icon;
 				dentry->icon = NULL;
 				ffr->fullname = dentry->name;
-				ffr->comment  = g_strdup (dentry->comment);
+				ffr->comment = g_strdup (dentry->comment);
 				dentry->name = NULL;
+				ffr->tryexec_path = tryexec_path;
 				ffr->goad_id =
-					get_applet_goad_id_from_dentry(dentry);
-				gnome_desktop_entry_free(dentry);
+					get_applet_goad_id_from_dentry (dentry);
+				gnome_desktop_entry_free (dentry);
 
-				dr->recs = g_slist_prepend(dr->recs, ffr);
-			} else
-				g_free(name);
+				dr->recs = g_slist_prepend (dr->recs, ffr);
+			} else {
+				g_free (name);
+			}
 		}
 	}
-	dr->recs = g_slist_reverse(dr->recs);
+	dr->recs = g_slist_reverse (dr->recs);
 
 	g_free(mergedir);
 }
@@ -448,6 +491,17 @@ fr_check_and_reread(FileRec *fr)
 			reread = TRUE;
 		dr->force_reread = FALSE;
 
+		/* recheck tryexecs */
+		for (li = dr->tryexecs; ! reread && li != NULL; li = li->next) {
+			char *tryexec = li->data;
+			char *p = panel_is_program_in_path (tryexec);
+
+			if (p != NULL) {
+				reread = TRUE;
+				g_free (p);
+			}
+		}
+
 		if ( ! reread &&
 		    fr->last_stat < curtime-1) {
 			if(stat(fr->name, &ds)==-1) {
@@ -552,6 +606,10 @@ fr_check_and_reread(FileRec *fr)
 					ffr->mtime = s.st_mtime;
 					ffr->last_stat = curtime;
 					any_change = TRUE;
+				}
+				if (ffr->tryexec_path != NULL &&
+				    ! panel_file_exists (ffr->tryexec_path)) {
+					reread = TRUE;
 				}
 				break;
 			case FILE_REC_EXTRA:

@@ -839,7 +839,7 @@ launcher_get_unique_file (void)
 		full = launcher_file_name (fname);
 		g_free (fname);
 
-		if ( ! g_file_exists (full))
+		if ( ! panel_file_exists (full))
 			return full;
 	}
 

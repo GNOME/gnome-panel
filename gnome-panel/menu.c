@@ -289,7 +289,7 @@ copy_fr_dir (DirRec *dr, const char *to)
 			copy_file_to_dir (fr->name, to, 0600);
 		} else if (fr->type == FILE_REC_DIR) {
 			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
-			if (g_file_exists (newdir) ||
+			if (panel_file_exists (newdir) ||
 			    mkdir (newdir, 0700) == 0)
 				copy_fr_dir ((DirRec *)fr, newdir);
 			g_free (newdir);
@@ -320,7 +320,7 @@ add_app_to_personal (GtkWidget *widget, const char *item_loc)
 		FileRec *fr = fr_get_dir (item_loc);
 		if (fr != NULL) {
 			char *newdir = g_concat_dir_and_file (to, g_basename (fr->name));
-			if (g_file_exists (newdir) ||
+			if (panel_file_exists (newdir) ||
 			    mkdir (newdir, 0700) == 0)
 				copy_fr_dir ((DirRec *)fr, newdir);
 			g_free(newdir);
@@ -667,7 +667,7 @@ fake_pixmap_at_size (const char *file, int size)
 {
 	FakeIcon *fake;
 
-	if ( ! g_file_exists(file))
+	if ( ! panel_file_exists(file))
 		return NULL;
 
 	fake = g_new0 (FakeIcon, 1);
@@ -729,7 +729,7 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 						    dir, dentry->name);
 		validate_filename (dentry->location);
 
-		while (g_file_exists (dentry->location)) {
+		while (panel_file_exists (dentry->location)) {
 			g_free (dentry->location);
 			dentry->location = g_strdup_printf ("%s/%s%d.desktop",
 							    dir, dentry->name,
@@ -920,7 +920,8 @@ remove_menuitem (GtkWidget *widget, const char *item_loc)
 static void
 add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 {
-	GnomeDesktopEntry *item = gnome_desktop_entry_load (item_loc);
+	GnomeDesktopEntry *item =
+		gnome_desktop_entry_load_unconditional (item_loc);
 	if (item != NULL) {
 		if (item->exec != NULL) {
 			char *s = g_strjoinv (" ", item->exec);
@@ -962,7 +963,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	char *filename = NULL;
 	GSList *list, *li;
 
-	if(!g_file_exists(dirname))
+	if(!panel_file_exists(dirname))
 		return;
 
 	dentry_name = g_concat_dir_and_file (dirname,
@@ -1073,7 +1074,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
 	/*guess KDE menus*/
-	if(g_file_exists(kde_menudir))
+	if(panel_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	panel = get_panel_from_menu_data (widget);
@@ -1261,7 +1262,7 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 	g_return_if_fail (sim != NULL);
 	g_return_if_fail (sim->item_loc != NULL);
 
-	dentry = gnome_desktop_entry_load (sim->item_loc);
+	dentry = gnome_desktop_entry_load_unconditional (sim->item_loc);
 	/* We'll screw up a KDE menu entry if we edit it */
 	if (dentry != NULL &&
 	    dentry->is_kde) {
@@ -2684,7 +2685,7 @@ create_menuitem(GtkWidget *menu,
 
 	pixmap = NULL;
 	if (gnome_preferences_get_menus_have_icons ()) {
-		if (fr->icon && g_file_exists (fr->icon)) {
+		if (fr->icon && panel_file_exists (fr->icon)) {
 			pixmap = fake_pixmap_at_size (fr->icon, size);
 			if (pixmap)
 				gtk_widget_show (pixmap);
@@ -2857,7 +2858,7 @@ create_menu_at_fr (GtkWidget *menu,
 			if (pixmap_name) {
 				pixmap = fake_pixmap_at_size (pixmap_name, size);
 			}
-			if (!pixmap && gnome_folder && g_file_exists (gnome_folder)) {
+			if (!pixmap && gnome_folder && panel_file_exists (gnome_folder)) {
 				pixmap = fake_pixmap_at_size (gnome_folder, size);
 			}
 		}
@@ -3311,7 +3312,7 @@ create_user_menu(const char *title, const char *dir, GtkWidget *menu,
 		 gboolean force, gboolean fake, gboolean gottitle)
 {
 	char *menudir = gnome_util_home_file (dir);
-	if (!g_file_exists (menudir))
+	if (!panel_file_exists (menudir))
 		mkdir (menudir, 0755);
 	if (!g_file_test (menudir, G_FILE_TEST_ISDIR)) {
 		g_warning(_("Can't create the user menu directory"));
@@ -4576,9 +4577,9 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 			    GTK_SIGNAL_FUNC(about_cb),
 			    NULL);
 	
-	char_tmp = gnome_is_program_in_path("gnome-about");
+	char_tmp = panel_is_program_in_path("gnome-about");
 	if(!char_tmp)
-		char_tmp = gnome_is_program_in_path ("guname");
+		char_tmp = panel_is_program_in_path ("guname");
 
 	if (char_tmp) {
 		menuitem = gtk_menu_item_new ();
@@ -4623,7 +4624,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 				    NULL);
 	}
 
-	char_tmp = gnome_is_program_in_path ("xscreensaver");
+	char_tmp = panel_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
@@ -4791,7 +4792,7 @@ create_root_menu (GtkWidget *root_menu,
 		menu = create_kde_menu(NULL, fake_submenus, TRUE, TRUE, TRUE);
 		pixmap_path = g_concat_dir_and_file (kde_icondir, "exec.xpm");
 
-		if (g_file_exists(pixmap_path)) {
+		if (panel_file_exists(pixmap_path)) {
 			pixmap = fake_pixmap_at_size (pixmap_path, size);
 			if (pixmap)
 				gtk_widget_show (pixmap);
@@ -4989,7 +4990,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	if (menu->custom_icon &&
 	    menu->custom_icon_file != NULL &&
-	    g_file_exists (menu->custom_icon_file))
+	    panel_file_exists (menu->custom_icon_file))
 		pixmap_name = g_strdup (menu->custom_icon_file);
 	else
 		pixmap_name = get_pixmap (menudir, main_menu);
@@ -5087,7 +5088,7 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
 		if(params && strcmp(params, ".")==0 &&
-		   (tmp = gnome_is_program_in_path("gmenu")))  {
+		   (tmp = panel_is_program_in_path("gmenu")))  {
 			g_free(tmp);
 			applet_add_callback(menu->info, "edit_menus",
 					    NULL, _("Edit menus..."));

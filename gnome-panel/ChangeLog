@@ -1,3 +1,15 @@
+Tue Nov 28 00:45:55 2000  George Lebl <jirka@5z.com>
+
+	* applet.c, distribution.c, foobar-widget.c, gnome-run.c,
+	  launcher.c, main.c, menu-fentry.[ch], panel-util.[ch],
+	  menu-properties.c, menu-rh.c, menu-util.c, menu.c,
+	  panel-widget.c, panel.c, session.c, swallow.c:  Check for
+	  try execs on menu reread so that we notice newly installed
+	  software.  Might have to make this whole checking thing an
+	  option for people on slower machines.  Also put in routines
+	  stolen from gnome-libs head for checking for programs and file
+	  existance as they are faster.
+
 Fri Nov 24 22:24:04 2000  George Lebl <jirka@5z.com>
 
 	* basep-widget.c, foobar-widget.c: fixup basep to use default

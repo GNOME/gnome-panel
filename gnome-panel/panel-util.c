@@ -764,3 +764,32 @@ strcasecmp_no_locale (const char *s1, const char *s2)
 	else
 		return 0; /* equal */
 }
+
+/* stolen from gnome-libs head as they are faster and don't use "stat" */
+gboolean
+panel_file_exists (const char *filename)
+{
+	g_return_val_if_fail (filename != NULL, FALSE);
+	
+	return (access (filename, F_OK) == 0);
+}
+
+char *
+panel_is_program_in_path (const char *program)
+{
+	static char **paths = NULL;
+	char **p;
+	
+	if (paths == NULL)
+		paths = g_strsplit(g_getenv("PATH"), ":", -1);
+
+	for (p = paths; *p != NULL; p++){
+		char *f = g_strconcat (*p, "/", program, NULL);
+		if (panel_file_exists (f))
+			return f;
+		g_free (f);
+	}
+	return 0;
+}
+
+

@@ -64,7 +64,7 @@ swallow_launch (Swallow *swallow)
 		if(p != NULL &&
 		   (strcmp (p, ".desktop") == 0 ||
 		    strcmp (p, ".kdelnk") == 0) &&
-		   g_file_exists (swallow->path) &&
+		   panel_file_exists (swallow->path) &&
 		   (item = gnome_desktop_entry_load (swallow->path)) != NULL) {
 			gnome_desktop_entry_launch (item);
 			gnome_desktop_entry_free (item);

@@ -244,7 +244,7 @@ main(int argc, char **argv)
 
 #ifndef PER_SESSION_CONFIGURATION
 	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
-	if (!g_file_exists (real_global_path)) {
+	if ( ! panel_file_exists (real_global_path)) {
 		g_free (old_panel_cfg_path);
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
 	}

@@ -46,7 +46,7 @@ internal_get_distribution_type (void)
 	DistributionInfo *ptr;
 
 	for (ptr = distribution_info; ptr->type != DISTRIBUTION_UNKNOWN; ptr++)
-		if (g_file_exists (ptr->version_file))
+		if (panel_file_exists (ptr->version_file))
 			return ptr->type;
 
 	return DISTRIBUTION_UNKNOWN;

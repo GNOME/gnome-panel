@@ -913,7 +913,7 @@ battery_exists (void)
 	char buf[200] = "";
 	int foo;
 
-	if ( ! g_file_exists("/proc/apm"))
+	if ( ! panel_file_exists("/proc/apm"))
 		return FALSE;
 
 	fp = fopen ("/proc/apm", "r");
@@ -968,7 +968,7 @@ try_evil_config_hacks(const char *goad_id, PanelWidget *panel, int pos)
 
 		if(first_time) {
 			char *tmp;
-			tmp = gnome_is_program_in_path("gnomepager_applet");
+			tmp = panel_is_program_in_path("gnomepager_applet");
 			in_path = tmp != NULL;
 			first_time = FALSE;
 			g_free(tmp);
@@ -1139,7 +1139,7 @@ init_user_applets(void)
 				if(distribution != DISTRIBUTION_UNKNOWN)
 					flags |= MAIN_MENU_DISTRIBUTION_SUB;
 				/*guess KDE menus */
-				if(g_file_exists(kde_menudir))
+				if(panel_file_exists(kde_menudir))
 					flags |= MAIN_MENU_KDE_SUB;
 			}
 			if(old_style) {
