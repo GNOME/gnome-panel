@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-12 16:13+0100\n"
+"POT-Creation-Date: 2004-12-05 17:53+0100\n"
 "PO-Revision-Date: 2004-08-07 02:47+0200\n"
 "Last-Translator: Danilo Šegan <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -61,7 +61,7 @@ msgid "_Preferences"
 msgstr "Po_stavke"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2567
+#: applets/clock/clock.c:2553
 msgid "Clock"
 msgstr "Časovnik"
 
@@ -77,20 +77,20 @@ msgstr "Proizvodnja programčeta za časovnik."
 msgid "Get the current time and date"
 msgstr "Saznaj trenutno vreme i datum"
 
-#: applets/clock/clock.c:277
+#: applets/clock/clock.c:265
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:277 applets/clock/clock.c:608
+#: applets/clock/clock.c:265 applets/clock/clock.c:581
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:279 applets/clock/clock.c:1678
+#: applets/clock/clock.c:267 applets/clock/clock.c:1664
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:279 applets/clock/clock.c:610
-#: applets/clock/clock.c:1680
+#: applets/clock/clock.c:267 applets/clock/clock.c:583
+#: applets/clock/clock.c:1666
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -99,7 +99,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:290
+#: applets/clock/clock.c:278
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -107,7 +107,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:297
+#: applets/clock/clock.c:285
 #, c-format
 msgid ""
 "%1$s\n"
@@ -120,60 +120,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:304
+#: applets/clock/clock.c:292
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:388
+#: applets/clock/clock.c:376
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:615
+#: applets/clock/clock.c:588
 msgid "%b %d"
 msgstr "%d. %b"
 
-#: applets/clock/clock.c:911
+#: applets/clock/clock.c:888
 msgid "Tasks"
 msgstr "Zaduženja"
 
-#: applets/clock/clock.c:1055
+#: applets/clock/clock.c:1032
 msgid "All Day"
 msgstr "Ceo dan"
 
-#: applets/clock/clock.c:1096
+#: applets/clock/clock.c:1073
 msgid "Appointments"
 msgstr "Zakazani sastanci"
 
-#: applets/clock/clock.c:1328
+#: applets/clock/clock.c:1305
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: applets/clock/clock.c:1589
+#: applets/clock/clock.c:1566
 msgid "Computer Clock"
 msgstr "Računarski časovnik"
 
-#: applets/clock/clock.c:1673
+#: applets/clock/clock.c:1659
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1675
+#: applets/clock/clock.c:1661
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1717
+#: applets/clock/clock.c:1703
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y."
 
-#: applets/clock/clock.c:1761
+#: applets/clock/clock.c:1747
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Ne mogu da pokrenem alat za podešavanje: %s"
 
-#: applets/clock/clock.c:1800
+#: applets/clock/clock.c:1786
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -181,11 +181,11 @@ msgstr ""
 "Ne mogu da pronađem program za podešavanje datuma i vremena. Možda nijedan "
 "nije instaliran?"
 
-#: applets/clock/clock.c:2202
+#: applets/clock/clock.c:2188
 msgid "Custom format"
 msgstr "Oblik po izboru"
 
-#: applets/clock/clock.c:2323 applets/clock/clock.c:2513
+#: applets/clock/clock.c:2309 applets/clock/clock.c:2499
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
@@ -195,48 +195,48 @@ msgstr "Oblik po izboru"
 msgid "There was an error displaying help: %s"
 msgstr "Došlo je do greške pri prikazivanju pomoći: %s"
 
-#: applets/clock/clock.c:2359
+#: applets/clock/clock.c:2345
 msgid "Clock Preferences"
 msgstr "Postavke časovnika"
 
-#: applets/clock/clock.c:2395
+#: applets/clock/clock.c:2381
 msgid "Clock _type:"
 msgstr "_Vrsta časovnika:"
 
-#: applets/clock/clock.c:2405
+#: applets/clock/clock.c:2391
 msgid "12 hour"
 msgstr "12-točasovni"
 
-#: applets/clock/clock.c:2406
+#: applets/clock/clock.c:2392
 msgid "24 hour"
 msgstr "24-očasovni"
 
-#: applets/clock/clock.c:2407
+#: applets/clock/clock.c:2393
 msgid "UNIX time"
 msgstr "UNIX vreme"
 
-#: applets/clock/clock.c:2408
+#: applets/clock/clock.c:2394
 msgid "Internet time"
 msgstr "Internet vreme"
 
-#: applets/clock/clock.c:2416
+#: applets/clock/clock.c:2402
 msgid "Custom _format:"
 msgstr "Oblik po _izboru:"
 
-#: applets/clock/clock.c:2435
+#: applets/clock/clock.c:2421
 msgid "Show _seconds"
 msgstr "Prikaži _sekunde"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2430
 msgid "Show _date"
 msgstr "Prikaži _datum"
 
-#: applets/clock/clock.c:2453
+#: applets/clock/clock.c:2439
 msgid "Use _UTC"
 msgstr "Koristi _UT"
 
 #. Translator credits
-#: applets/clock/clock.c:2548 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2534 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:201
@@ -246,7 +246,7 @@ msgstr ""
 "\n"
 "Prevod.org — prevod na srpski jezik"
 
-#: applets/clock/clock.c:2569
+#: applets/clock/clock.c:2555
 msgid "The Clock displays the current time and date"
 msgstr "Časovnik prikazuje trenutno vreme i datum"
 
@@ -1028,7 +1028,7 @@ msgstr "Oso_bine"
 msgid "Create new file in the given directory"
 msgstr "Napravi novu datoteku u datom direktorijumu"
 
-#: gnome-panel/gnome-panel-screenshot.c:121
+#: gnome-panel/gnome-panel-screenshot.c:122
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1036,7 +1036,7 @@ msgstr ""
 "Ne mogu da inicijalizujem PNG strukturu.\n"
 "Verovatno imate neodgovarajuće izdanje libpng-a na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:129
+#: gnome-panel/gnome-panel-screenshot.c:130
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1044,7 +1044,7 @@ msgstr ""
 "Ne mogu da napravim podatke o PNG-u.\n"
 "Verovatno imate neodgovarajuće izdanje libpng-a na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:137
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1052,7 +1052,7 @@ msgstr ""
 "Ne mogu da postavim PNG podatke.\n"
 "Verovatno imate neodgovarajuće izdanje libpng-a na vašem sistemu"
 
-#: gnome-panel/gnome-panel-screenshot.c:154
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1060,13 +1060,13 @@ msgstr ""
 "Nedovoljno memorije za snimanje ekrana.\n"
 "Oslobodite nešto memorije i probajte ponovo."
 
-#: gnome-panel/gnome-panel-screenshot.c:212
+#: gnome-panel/gnome-panel-screenshot.c:213
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Datoteka „%s“ već postoji. Presnimiti preko nje?"
 
-#: gnome-panel/gnome-panel-screenshot.c:233
-#: gnome-panel/gnome-panel-screenshot.c:584
+#: gnome-panel/gnome-panel-screenshot.c:234
+#: gnome-panel/gnome-panel-screenshot.c:587
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1079,21 +1079,21 @@ msgstr ""
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:420
+#: gnome-panel/gnome-panel-screenshot.c:421
 #, c-format
 msgid "Screenshot-%s.png"
 msgstr "snimak-ekrana-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:424
+#: gnome-panel/gnome-panel-screenshot.c:425
 msgid "Screenshot.png"
 msgstr "snimak-ekrana.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
-#: gnome-panel/gnome-panel-screenshot.c:445
+#: gnome-panel/gnome-panel-screenshot.c:447
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "snimak-ekrana-%s-%d.png"
@@ -1101,17 +1101,17 @@ msgstr "snimak-ekrana-%s-%d.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: gnome-panel/gnome-panel-screenshot.c:452
+#: gnome-panel/gnome-panel-screenshot.c:454
 #, c-format
 msgid "Screenshot-%d.png"
 msgstr "snimak-ekrana-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:607
+#: gnome-panel/gnome-panel-screenshot.c:610
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nedovoljno mesta za upis datoteke „%s“"
 
-#: gnome-panel/gnome-panel-screenshot.c:708
+#: gnome-panel/gnome-panel-screenshot.c:711
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1120,7 +1120,7 @@ msgstr ""
 "Došlo je do greške pri prikazivanju pomoći: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1189
+#: gnome-panel/gnome-panel-screenshot.c:1306
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1128,20 +1128,20 @@ msgstr ""
 "Glade datoteka za snimanje ekrana nedostaje.\n"
 "Proverite instalaciju (paket „gnome-panel“)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1205
+#: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Ne mogu da snimim ekran tekuće radne površine."
 
-#: gnome-panel/gnome-panel-screenshot.c:1265
+#: gnome-panel/gnome-panel-screenshot.c:1382
 #, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "Sačuvaj snimak ekrana na veb stranicu (snimi u %s)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1321
+#: gnome-panel/gnome-panel-screenshot.c:1438
 msgid "Grab a window instead of the entire screen"
 msgstr "Snimi prozor umesto celog ekrana"
 
-#: gnome-panel/gnome-panel-screenshot.c:1322
+#: gnome-panel/gnome-panel-screenshot.c:1439
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Snimi ekran nakon određenog vremena (u sekundama)"
 
@@ -2724,12 +2724,12 @@ msgstr "Uspravna koordinata panela"
 msgid "Cannot display help document"
 msgstr "Ne može da prikaže pomoć"
 
-#: gnome-panel/panel.c:446
+#: gnome-panel/panel.c:458
 #, c-format
 msgid "Open URL: %s"
 msgstr "Otvori adresu: %s"
 
-#: gnome-panel/panel.c:1244
+#: gnome-panel/panel.c:1272
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2737,7 +2737,7 @@ msgstr ""
 "Kada se panel ukloni, panel i njegove postavke se \n"
 "nepovratno gube. Sigurno želite da uklonite panel?"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1281
 msgid "Delete Panel"
 msgstr "Ukloni panel"
 

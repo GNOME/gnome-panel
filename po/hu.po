@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-12 16:13+0100\n"
+"POT-Creation-Date: 2004-12-05 17:53+0100\n"
 "PO-Revision-Date: 2004-09-16 20:28+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -64,7 +64,7 @@ msgid "_Preferences"
 msgstr "_Beállítások"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-#: applets/clock/clock.c:2567
+#: applets/clock/clock.c:2553
 msgid "Clock"
 msgstr "Óra"
 
@@ -80,20 +80,20 @@ msgstr "Factory az Óra kisalkalmazás létrehozására."
 msgid "Get the current time and date"
 msgstr "A pontos időt és dátumot jeleníti meg"
 
-#: applets/clock/clock.c:277
+#: applets/clock/clock.c:265
 msgid "%l:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: applets/clock/clock.c:277 applets/clock/clock.c:608
+#: applets/clock/clock.c:265 applets/clock/clock.c:581
 msgid "%l:%M %p"
 msgstr "%l.%M %p"
 
-#: applets/clock/clock.c:279 applets/clock/clock.c:1678
+#: applets/clock/clock.c:267 applets/clock/clock.c:1664
 msgid "%H:%M:%S"
 msgstr "%H.%M.%S"
 
-#: applets/clock/clock.c:279 applets/clock/clock.c:610
-#: applets/clock/clock.c:1680
+#: applets/clock/clock.c:267 applets/clock/clock.c:583
+#: applets/clock/clock.c:1666
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -102,7 +102,7 @@ msgstr "%H.%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:290
+#: applets/clock/clock.c:278
 msgid "%a %b %e"
 msgstr "%b. %e., %a"
 
@@ -110,7 +110,7 @@ msgstr "%b. %e., %a"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:297
+#: applets/clock/clock.c:285
 #, c-format
 msgid ""
 "%1$s\n"
@@ -123,60 +123,60 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:304
+#: applets/clock/clock.c:292
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:388
+#: applets/clock/clock.c:376
 msgid "%A %B %d"
 msgstr "%B %e., %A"
 
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
-#: applets/clock/clock.c:615
+#: applets/clock/clock.c:588
 msgid "%b %d"
 msgstr "%b. %e."
 
-#: applets/clock/clock.c:911
+#: applets/clock/clock.c:888
 msgid "Tasks"
 msgstr "Feladatok"
 
-#: applets/clock/clock.c:1055
+#: applets/clock/clock.c:1032
 msgid "All Day"
 msgstr "Egész nap"
 
-#: applets/clock/clock.c:1096
+#: applets/clock/clock.c:1073
 msgid "Appointments"
 msgstr "Találkozók"
 
-#: applets/clock/clock.c:1328
+#: applets/clock/clock.c:1305
 msgid "Calendar"
 msgstr "Naptár"
 
-#: applets/clock/clock.c:1589
+#: applets/clock/clock.c:1566
 msgid "Computer Clock"
 msgstr "Számítógép óra"
 
-#: applets/clock/clock.c:1673
+#: applets/clock/clock.c:1659
 msgid "%I:%M:%S %p"
 msgstr "%l.%M.%S %p"
 
-#: applets/clock/clock.c:1675
+#: applets/clock/clock.c:1661
 msgid "%I:%M %p"
 msgstr "%l.%M %p"
 
-#: applets/clock/clock.c:1717
+#: applets/clock/clock.c:1703
 msgid "%A, %B %d %Y"
 msgstr "%Y. %B %e., %A"
 
-#: applets/clock/clock.c:1761
+#: applets/clock/clock.c:1747
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nem sikerült elindítani az időbeállító eszközt: %s"
 
-#: applets/clock/clock.c:1800
+#: applets/clock/clock.c:1786
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -184,12 +184,12 @@ msgstr ""
 "A rendszerben nem található meg az idő és dátumbeállításokat elvégző "
 "program. Lehet hogy nincs telepítve?"
 
-#: applets/clock/clock.c:2202
+#: applets/clock/clock.c:2188
 msgid "Custom format"
 msgstr "Egyéni formátum"
 
 # gnome-terminal/gnome-terminal.c:2027
-#: applets/clock/clock.c:2323 applets/clock/clock.c:2513
+#: applets/clock/clock.c:2309 applets/clock/clock.c:2499
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
@@ -199,48 +199,48 @@ msgstr "Egyéni formátum"
 msgid "There was an error displaying help: %s"
 msgstr "Hiba történt a súgó megjelenítése közben: %s"
 
-#: applets/clock/clock.c:2359
+#: applets/clock/clock.c:2345
 msgid "Clock Preferences"
 msgstr "Óra beállításai"
 
-#: applets/clock/clock.c:2395
+#: applets/clock/clock.c:2381
 msgid "Clock _type:"
 msgstr "Óra _típusa:"
 
-#: applets/clock/clock.c:2405
+#: applets/clock/clock.c:2391
 msgid "12 hour"
 msgstr "12 órás"
 
-#: applets/clock/clock.c:2406
+#: applets/clock/clock.c:2392
 msgid "24 hour"
 msgstr "24 órás"
 
-#: applets/clock/clock.c:2407
+#: applets/clock/clock.c:2393
 msgid "UNIX time"
 msgstr "UNIX idő"
 
-#: applets/clock/clock.c:2408
+#: applets/clock/clock.c:2394
 msgid "Internet time"
 msgstr "Internet idő"
 
-#: applets/clock/clock.c:2416
+#: applets/clock/clock.c:2402
 msgid "Custom _format:"
 msgstr "Egyéni _formátum:"
 
-#: applets/clock/clock.c:2435
+#: applets/clock/clock.c:2421
 msgid "Show _seconds"
 msgstr "_Másodpercek megjelenítése"
 
-#: applets/clock/clock.c:2444
+#: applets/clock/clock.c:2430
 msgid "Show _date"
 msgstr "_Dátum megjelenítése"
 
-#: applets/clock/clock.c:2453
+#: applets/clock/clock.c:2439
 msgid "Use _UTC"
 msgstr "_UTC használata"
 
 #. Translator credits
-#: applets/clock/clock.c:2548 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2534 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:201
@@ -254,7 +254,7 @@ msgstr ""
 "Tímár András <timar@gnome.hu>\n"
 "Vámosi Tamás <tvamosi@suselinux.hu>"
 
-#: applets/clock/clock.c:2569
+#: applets/clock/clock.c:2555
 msgid "The Clock displays the current time and date"
 msgstr "Az óra a jelenlegi időt és dátumot mutatja"
 
@@ -1033,7 +1033,7 @@ msgstr "_Tulajdonságok"
 msgid "Create new file in the given directory"
 msgstr "Új fájl létrehozása az adott könyvtárban"
 
-#: gnome-panel/gnome-panel-screenshot.c:121
+#: gnome-panel/gnome-panel-screenshot.c:122
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1041,7 +1041,7 @@ msgstr ""
 "Nem lehet png struktúrát inicializálni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépén"
 
-#: gnome-panel/gnome-panel-screenshot.c:129
+#: gnome-panel/gnome-panel-screenshot.c:130
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1049,7 +1049,7 @@ msgstr ""
 "Nem lehet png info-t létrehozni.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépén"
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:137
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1057,7 +1057,7 @@ msgstr ""
 "Nem lehet png info-t beállítani.\n"
 "Lehet, hogy nem a megfelelő verziójú libpng van a gépén"
 
-#: gnome-panel/gnome-panel-screenshot.c:154
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1065,13 +1065,13 @@ msgstr ""
 "Nincs elég memória a képernyőkép elkészítéséhez.\n"
 "Szabadítson fel egy kis memóriát és próbálja újra."
 
-#: gnome-panel/gnome-panel-screenshot.c:212
+#: gnome-panel/gnome-panel-screenshot.c:213
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "A(z) %s fájl már létezik. Felülírja?"
 
-#: gnome-panel/gnome-panel-screenshot.c:233
-#: gnome-panel/gnome-panel-screenshot.c:584
+#: gnome-panel/gnome-panel-screenshot.c:234
+#: gnome-panel/gnome-panel-screenshot.c:587
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1084,21 +1084,21 @@ msgstr ""
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:420
+#: gnome-panel/gnome-panel-screenshot.c:421
 #, c-format
 msgid "Screenshot-%s.png"
 msgstr "Képernyőkép-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:424
+#: gnome-panel/gnome-panel-screenshot.c:425
 msgid "Screenshot.png"
 msgstr "Képernyőkép.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
-#: gnome-panel/gnome-panel-screenshot.c:445
+#: gnome-panel/gnome-panel-screenshot.c:447
 #, c-format
 msgid "Screenshot-%s-%d.png"
 msgstr "Képernyőkép-%s-%d.png"
@@ -1106,18 +1106,18 @@ msgstr "Képernyőkép-%s-%d.png"
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
-#: gnome-panel/gnome-panel-screenshot.c:452
+#: gnome-panel/gnome-panel-screenshot.c:454
 #, c-format
 msgid "Screenshot-%d.png"
 msgstr "Képernyőkép-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:607
+#: gnome-panel/gnome-panel-screenshot.c:610
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Nincs elég hely, a következő fájl kiírásához: %s"
 
 # gnome-terminal/gnome-terminal.c:2027
-#: gnome-panel/gnome-panel-screenshot.c:708
+#: gnome-panel/gnome-panel-screenshot.c:711
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1126,7 +1126,7 @@ msgstr ""
 "Hiba történt a súgó megjelenítése közben: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1189
+#: gnome-panel/gnome-panel-screenshot.c:1306
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1134,20 +1134,20 @@ msgstr ""
 "A képernyőkép készítő program glade fájlja hiányzik.\n"
 "Kérem ellenőrizze a gnome-panel telepítését"
 
-#: gnome-panel/gnome-panel-screenshot.c:1205
+#: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nem lehet képernyőképet készíteni a jelenlegi munkaasztalról."
 
-#: gnome-panel/gnome-panel-screenshot.c:1265
+#: gnome-panel/gnome-panel-screenshot.c:1382
 #, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "Képernyőkép mentése _weblapra (%s könyvtárba)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1321
+#: gnome-panel/gnome-panel-screenshot.c:1438
 msgid "Grab a window instead of the entire screen"
 msgstr "Ablak fotózása a teljes képernyő helyett"
 
-#: gnome-panel/gnome-panel-screenshot.c:1322
+#: gnome-panel/gnome-panel-screenshot.c:1439
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "A megadott késleltetéssel készít képet [másodpercben]"
 
@@ -2734,12 +2734,12 @@ msgstr "A panel Y koordinátája"
 msgid "Cannot display help document"
 msgstr "Nem lehet megjeleníteni a súgót"
 
-#: gnome-panel/panel.c:446
+#: gnome-panel/panel.c:458
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
-#: gnome-panel/panel.c:1244
+#: gnome-panel/panel.c:1272
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2747,7 +2747,7 @@ msgstr ""
 "A panel törlésekor, a panel és a kisalkalmazások\n"
 "beállításai elvesznek. Törli a panelt?"
 
-#: gnome-panel/panel.c:1253
+#: gnome-panel/panel.c:1281
 msgid "Delete Panel"
 msgstr "Panel törlése"
 
