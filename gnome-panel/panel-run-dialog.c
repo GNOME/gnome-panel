@@ -846,7 +846,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 
 	if (uri) {
 		ditem = gnome_desktop_item_new_from_uri (uri,
-							 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+							 GNOME_DESKTOP_ITEM_LOAD_ONLY_IF_EXISTS,
 							 NULL /* error */);
 		if (ditem) {
 			dialog->use_program_list = TRUE;
@@ -868,7 +868,7 @@ program_list_selection_changed (GtkTreeSelection *selection,
 			temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_ICON);
 			panel_run_dialog_set_icon (dialog, temp);
 			
-			temp = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_COMMENT);
+			temp = gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_COMMENT);
 			gtk_label_set_text (GTK_LABEL (dialog->program_label), sure_string (temp));
 			
 			terminal = gnome_desktop_item_get_boolean (ditem, GNOME_DESKTOP_ITEM_TERMINAL);
