@@ -20,6 +20,7 @@
 #include "gwmh.h"
 
 #include "xstuff.h"
+#include "multiscreen-stuff.h"
 
 extern int config_sync_timeout;
 extern int applets_to_sync;
@@ -457,6 +458,7 @@ main(int argc, char **argv)
 	panel_tooltips = gtk_tooltips_new ();
 
 	xstuff_init ();
+	multiscreen_init ();
 
 	gnome_win_hints_init ();
 

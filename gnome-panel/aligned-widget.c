@@ -5,9 +5,11 @@
  *            George Lebl
  */
 
+#include "config.h"
 #include "aligned-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -176,34 +178,34 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x = *y = 0;
 	switch (edge) {
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height() - h - foobar_widget_get_height ();
+		*y = multiscreen_height(basep->screen) - h - foobar_widget_get_height (basep->screen);
 		/* fall thru */
 	case BORDER_TOP:
-		(*y) += foobar_widget_get_height ();
+		*y += foobar_widget_get_height (basep->screen);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
 			break;
 		case ALIGNED_CENTER:
-			*x = (gdk_screen_width() - w) / 2;
+			*x = (multiscreen_width(basep->screen) - w) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*x = gdk_screen_width() - w;
+			*x = multiscreen_width(basep->screen) - w;
 			break;
 		}
 		break;
 	case BORDER_RIGHT:
-		*x = gdk_screen_width() - w;
+		*x = multiscreen_width(basep->screen) - w;
 		basep_border_get (BORDER_TOP, NULL, NULL, &a);
 		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height () + a;
+			*y = foobar_widget_get_height (basep->screen) + a;
 			break;
 		case ALIGNED_CENTER:
-			*y = (gdk_screen_height() - h) / 2;
+			*y = (multiscreen_height(basep->screen) - h) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*y = gdk_screen_height() - h - b;
+			*y = multiscreen_height(basep->screen) - h - b;
 			break;
 		}
 		break;
@@ -212,17 +214,20 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height () + a;
+			*y = foobar_widget_get_height (basep->screen) + a;
 			break;
 		case ALIGNED_CENTER:
-			*y = (gdk_screen_height() - h) / 2;
+			*y = (multiscreen_height(basep->screen) - h) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*y = gdk_screen_height() - h - b;
+			*y = multiscreen_height(basep->screen) - h - b;
 			break;
 		}
 		break;
 	}
+
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 
 	basep_border_queue_recalc ();
 }

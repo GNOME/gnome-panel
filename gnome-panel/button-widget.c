@@ -191,15 +191,15 @@ get_frame(BasePWidget *basep)
 }
 
 static void
-calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
-			   GtkWidget *applet, int *x, int *y, int *w, int *h)
+calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
+			    GtkWidget *applet, int *x, int *y, int *w, int *h)
 {
 	*x = applet->allocation.x;
 	*y = applet->allocation.y;
 	*w = applet->allocation.width;
 	*h = applet->allocation.height;
 
-	translate_to(GTK_WIDGET(panel), parent, x, y);
+	translate_to (GTK_WIDGET(panel), parent, x, y);
 
 	/* when not shown, things are somewhat weird, and we try to put the
 	 * window completely off as it can't be clickable anyway */
@@ -215,13 +215,23 @@ calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
 	}
 
 	if(panel->orient == PANEL_HORIZONTAL) {
+		if (applet->allocation.x > panel->size) {
+			*x = parent->requisition.width + 1;
+			*y = parent->requisition.height + 1;
+			return;
+		}
+
 		*y = 0;
 		/* we use the requisition, since allocation might have not
 		   yet happened if we are inside the allocation, anyway
 		   they are the same for basep */
 		*h = parent->requisition.height;
 
-		if (!IS_BASEP_WIDGET(parent)) {
+		if ((*w + applet->allocation.x) > panel->size) {
+			*w = panel->size - applet->allocation.x;
+		}
+
+		if ( ! IS_BASEP_WIDGET(parent)) {
 			/*don't do the edge flushing on foobar*/
 			return;
 		}
@@ -235,13 +245,23 @@ calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
 			*x = frame->allocation.x;
 		} else if(applet->allocation.x + *w == panel->size) {
 			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*w = frame->allocation.width - *x;
+			*w = frame->allocation.width + frame->allocation.x - *x;
 		}
 	} else {
+		if (applet->allocation.y > panel->size) {
+			*x = parent->requisition.width + 1;
+			*y = parent->requisition.height + 1;
+			return;
+		}
+
 		*x = 0;
 		*w = parent->requisition.width;
 
-		if (!IS_BASEP_WIDGET(parent)) {
+		if ((*h + applet->allocation.y) > panel->size) {
+			*h = panel->size - applet->allocation.y;
+		}
+
+		if ( ! IS_BASEP_WIDGET(parent)) {
 			/*don't do the edge flushing on foobar*/
 			return;
 		}
@@ -255,7 +275,7 @@ calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
 			*y = frame->allocation.y;
 		} else if(applet->allocation.y + *h == panel->size) {
 			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*h = frame->allocation.height - *y;
+			*h = frame->allocation.height + frame->allocation.y - *y;
 		}
 	}
 }
@@ -785,8 +805,8 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 		panel = PANEL_WIDGET(widget->parent);
 
-		calculate_overlay_geometry(panel, panel->panel_parent,
-					   widget, &x, &y, &w, &h);
+		calculate_overlay_geometry (panel, panel->panel_parent,
+					    widget, &x, &y, &w, &h);
 		gdk_window_move_resize (button_widget->event_window,
 					x, y, w, h);
 	}

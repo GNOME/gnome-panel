@@ -27,6 +27,8 @@ struct _FoobarWidget
 
 	/*< private >*/
 
+	int screen;
+
 	GtkWidget *ebox;
 	GtkWidget *hbox;
 	GtkWidget *panel;
@@ -65,8 +67,8 @@ void		foobar_widget_set_clock_format	(FoobarWidget *foo,
 						 const char *format);
 
 
-gboolean	foobar_widget_exists		(void);
-gint		foobar_widget_get_height	(void);
+gboolean	foobar_widget_exists		(int screen);
+gint		foobar_widget_get_height	(int screen);
 
 void		foobar_widget_force_menu_remake	(void);
 

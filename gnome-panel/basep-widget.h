@@ -54,6 +54,8 @@ struct _BasePWidget
 	GtkWindow		window;
 	GtkAllocation		shown_alloc;
 
+	int			screen;
+
 	GtkWidget		*ebox;
 	
 	GtkWidget		*panel;

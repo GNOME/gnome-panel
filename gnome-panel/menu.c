@@ -3274,7 +3274,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
 		char *s;
-		if (!foobar_widget_exists ()) {
+		if (!foobar_widget_exists (0 /* FIXME */)) {
 			panel = foobar_widget_new ();
 
 			/* Don't translate the first part of this string */

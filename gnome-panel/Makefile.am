@@ -172,7 +172,9 @@ panel_SOURCES=\
 	scroll-menu.h		\
 	scroll-menu.c		\
 	icon-entry-hack.c	\
-	icon-entry-hack.h
+	icon-entry-hack.h	\
+	multiscreen-stuff.c	\
+	multiscreen-stuff.h
 
 panel_LDADD = \
 	libpanel_applet.la	\

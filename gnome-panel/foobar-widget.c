@@ -27,7 +27,7 @@
 #include "scroll-menu.h"
 #include "gwmh.h"
 #include "tasklist_icon.h"
-#include "scroll-menu.h"
+#include "multiscreen-stuff.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -614,7 +614,9 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 	if ( ! foo->compliant_wm)
 		return;
 
-	gdk_window_set_hints (w->window, 0, 0, 
+	gdk_window_set_hints (w->window, 
+			      multiscreen_x (foo->screen),
+			      multiscreen_y (foo->screen),
 			      0, 0, 0, 0, GDK_HINT_POS);
 
 	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
@@ -920,6 +922,8 @@ foobar_widget_init (FoobarWidget *foo)
 	/*GtkWidget *align;*/
 	gint flags;
 
+	foo->screen = 0;
+
 	foo->clock_format = g_strdup (_("%H:%M"));
 	foo->clock_timeout = 0;
 	foo->clock_label = NULL;
@@ -937,9 +941,11 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_signal_connect (GTK_OBJECT (foo), "delete_event",
 			    GTK_SIGNAL_FUNC (gtk_true), NULL);
 
-	gtk_widget_set_uposition (GTK_WIDGET (foo), 0, 0);
+	gtk_widget_set_uposition (GTK_WIDGET (foo),
+				  multiscreen_x (foo->screen),
+				  multiscreen_y (foo->screen));
 	gtk_widget_set_usize (GTK_WIDGET (foo),
-			      gdk_screen_width (), -2);
+			      multiscreen_width (foo->screen), -2);
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
@@ -959,7 +965,8 @@ foobar_widget_init (FoobarWidget *foo)
 				      GTK_SHADOW_NONE);
 	
 	
-	menuitem = pixmap_menu_item_new (_("Programs"), GNOME_STOCK_MENU_ABOUT);
+	menuitem = pixmap_menu_item_new (_("Programs"),
+					 "gnome-logo-icon-transparent.png");
 	flags = (get_default_menu_flags() & 
 		 ~(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER | MAIN_MENU_USER_SUB |
 		   MAIN_MENU_PANEL | MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP |
@@ -1089,7 +1096,7 @@ foobar_widget_new (void)
 }
 
 gboolean
-foobar_widget_exists (void)
+foobar_widget_exists (int screen)
 {
 	return (das_global_foobar != NULL);
 }
@@ -1115,10 +1122,14 @@ foobar_widget_force_menu_remake (void)
 }
 
 gint
-foobar_widget_get_height (void)
+foobar_widget_get_height (int screen)
 {
-	return (das_global_foobar && GTK_WIDGET_REALIZED (das_global_foobar)) 
-		? das_global_foobar->allocation.height : 0; 
+	if (das_global_foobar != NULL &&
+	    GTK_WIDGET_REALIZED (das_global_foobar) &&
+	    FOOBAR_WIDGET (das_global_foobar)->screen == screen) 
+		return das_global_foobar->allocation.height;
+	else
+		return 0; 
 }
 
 static void

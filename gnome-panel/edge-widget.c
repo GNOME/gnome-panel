@@ -5,9 +5,11 @@
  *           George Lebl
  */
 
+#include "config.h"
 #include "edge-widget.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -93,21 +95,22 @@ edge_pos_set_pos (BasePWidget *basep,
 	    y <= maxy)
 		return;
 
-	if ( x>(gdk_screen_width()/3) &&
-	     x<(2*gdk_screen_width()/3) &&
-	     y>(gdk_screen_height()/3) &&
-	     y<(2*gdk_screen_height()/3))
+	/* FIXME: use the multiscreen x/y offsets */
+	if ( x > (multiscreen_width(basep->screen)/3) &&
+	     x < (2*multiscreen_width(basep->screen)/3) &&
+	     y > (multiscreen_height(basep->screen)/3) &&
+	     y < (2*multiscreen_height(basep->screen)/3))
 		return;
 
-	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-		   y * gdk_screen_width() )
+	if ((x) * multiscreen_height(basep->screen) > y * multiscreen_width(basep->screen) ) {
+		if(multiscreen_height(basep->screen) * (multiscreen_width(basep->screen)-(x)) >
+		   y * multiscreen_width(basep->screen) )
 			newloc = BORDER_TOP;
 		else
 			newloc = BORDER_RIGHT;
 	} else {
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-		   y * gdk_screen_width() )
+		if(multiscreen_height(basep->screen) * (multiscreen_width(basep->screen)-(x)) >
+		   y * multiscreen_width(basep->screen) )
 			newloc = BORDER_LEFT;
 		else
 			newloc = BORDER_BOTTOM;
@@ -130,20 +133,24 @@ edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	switch (edge) {
 	case BORDER_RIGHT:
 		basep_border_get (BORDER_TOP, NULL, NULL, y);
-		*y += foobar_widget_get_height ();
-		*x = gdk_screen_width() - w;
+		*y += foobar_widget_get_height (basep->screen);
+		*x = multiscreen_width(basep->screen) - w;
+
 		break;
 	case BORDER_LEFT:
 		basep_border_get (BORDER_TOP, y, NULL, NULL);
-		*y += foobar_widget_get_height ();
+		*y += foobar_widget_get_height (basep->screen);
 		break;
 	case BORDER_TOP:
-		*y = foobar_widget_get_height ();
+		*y = foobar_widget_get_height (basep->screen);
 		break;
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height() - h;
+		*y = multiscreen_height(basep->screen) - h;
 		break;
 	}
+
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 
 	basep_border_queue_recalc ();
 }
@@ -159,16 +166,16 @@ edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 	case BORDER_RIGHT:
 		basep_border_get (BORDER_TOP, NULL, NULL, &a);
 		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
-		*h = gdk_screen_height() - foobar_widget_get_height () - a - b;
+		*h = multiscreen_height(basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_LEFT:
 		basep_border_get (BORDER_TOP, &a, NULL, NULL);
 		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
-		*h = gdk_screen_height() - foobar_widget_get_height () - a - b;
+		*h = multiscreen_height(basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_TOP:
 	case BORDER_BOTTOM:
-		*w = gdk_screen_width();
+		*w = multiscreen_width(basep->screen);
 		break;
 	}
 }

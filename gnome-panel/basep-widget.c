@@ -20,6 +20,7 @@
 #include "edge-widget.h"
 #include "aligned-widget.h"
 #include "xstuff.h"
+#include "multiscreen-stuff.h"
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
@@ -253,12 +254,26 @@ basep_widget_size_allocate (GtkWidget *widget,
 	}
 
 	if (basep->keep_in_screen) {
-		gint16 max = gdk_screen_width () - allocation->width;
-		allocation->x = CLAMP (allocation->x, 0, max);
+		gint16 max;
 
-		max = gdk_screen_height () - allocation->height;
-		allocation->y = CLAMP (allocation->y, 
-				       foobar_widget_get_height (), max);
+		max = multiscreen_width (basep->screen) -
+			allocation->width +
+			multiscreen_x (basep->screen);
+
+		if (allocation->x < multiscreen_x (basep->screen))
+			allocation->x = multiscreen_x (basep->screen);
+		else if (allocation->x > max)
+			allocation->x = max;
+
+
+		max = multiscreen_height (basep->screen) -
+			allocation->height +
+			multiscreen_y (basep->screen);
+
+		if (allocation->y < multiscreen_y (basep->screen))
+			allocation->y = multiscreen_y (basep->screen);
+		else if (allocation->y > max)
+			allocation->y = max;
 				       
 	}
 	widget->allocation = *allocation;
@@ -965,6 +980,8 @@ basep_widget_redo_window(BasePWidget *basep)
 static void
 basep_widget_init (BasePWidget *basep)
 {
+	basep->screen = 0;
+
 	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
 	basep->compliant_wm = xstuff_is_compliant_wm();
 	if(basep->compliant_wm)
@@ -1842,13 +1859,15 @@ basep_widget_get_menu_pos (BasePWidget *basep,
 			     x, y, wx, wy, 
 			     ww, wh);
 
-	if(*x + mreq.width > gdk_screen_width())
-		*x=gdk_screen_width() - mreq.width;
-	if(*x < 0) *x =0;
+	if (*x + mreq.width > multiscreen_width (basep->screen))
+		*x = multiscreen_width (basep->screen) - mreq.width;
+	if (*x < multiscreen_x (basep->screen))
+		*x = multiscreen_x (basep->screen);
 
-	if(*y + mreq.height > gdk_screen_height())
-		*y=gdk_screen_height() - mreq.height;
-	if(*y < 0) *y = 0;
+	if (*y + mreq.height > multiscreen_height (basep->screen))
+		*y = multiscreen_height (basep->screen) - mreq.height;
+	if (*y < multiscreen_y (basep->screen))
+		*y = multiscreen_y (basep->screen);
 }
 
 PanelOrientType
@@ -2140,7 +2159,7 @@ basep_border_recalc (void)
 	xstuff_setup_desktop_area (border_max (BORDER_LEFT),
 				   border_max (BORDER_RIGHT),
 				   border_max (BORDER_TOP) +
-				     foobar_widget_get_height (),
+				     foobar_widget_get_height (0 /* FIXME */),
 				   border_max (BORDER_BOTTOM));
 }
 

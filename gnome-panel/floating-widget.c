@@ -280,7 +280,7 @@ floating_pos_get_pos(BasePWidget *basep,
 {
 	*x = CLAMP (FLOATING_POS (basep->pos)->x, 0, gdk_screen_width () - w);
 	*y = CLAMP (FLOATING_POS (basep->pos)->y,
-		    foobar_widget_get_height (),
+		    foobar_widget_get_height (basep->screen),
 		    gdk_screen_height () - h);
 }
 

@@ -28,6 +28,9 @@ struct _ScrollMenu
 	int			offset;
 	int			max_offset;
 
+	int			screen_top;
+	int			screen_bottom;
+
 	gboolean		scroll;
 
 	GtkWidget		*up_scroll /* GtkButton */;
@@ -46,6 +49,9 @@ struct _ScrollMenuClass
 
 GtkType		scroll_menu_get_type		(void) G_GNUC_CONST;
 GtkWidget *	scroll_menu_new			(void);
+void		scroll_menu_set_screen_size	(ScrollMenu *self,
+						 int screen_top,
+						 int screen_bottom);
 
 #ifdef __cplusplus
 }

@@ -1,3 +1,22 @@
+Thu Apr 19 15:58:19 2001  George Lebl <jirka@5z.com>
+
+	* multiscreen-stuff.[ch], foobar-widget.[ch], main.c,
+	  basep-widget.[ch], edge-widget.c, aligned-widget.c,
+	  Makefile.am, floating-widget.c, menu.c, scroll-menu.[ch],
+	  sliding-widget.c:  Begin on multiscreen stuff.  Currently
+	  just trying to get the screen size and position abstraction
+	  happening, just the very beginnings.  However it still works
+	  just like before as right now it always inits to one large
+	  screen.
+
+	* button-widget.c:  Fix the overlay window geometry calculation
+	  near panel edge
+
+	* foobar-widget.c:  Apparently users got utterly confused as to what
+	  the flower meant and most thought it was a fried egg.  So I changed
+	  it to the gnome foot as it servers a similar purpose as the main
+	  menu on a normal panel so it's more consistent.
+
 Thu Apr 19 12:26:44 2001  George Lebl <jirka@5z.com>
 
 	* basep-widget.c, menu.c:  Add tooltips to menu and to hide buttons

@@ -298,6 +298,9 @@ make_scroller (ScrollMenu *self, int direction)
 static void
 scroll_menu_init (ScrollMenu *self)
 {
+	self->screen_top = 0;
+	self->screen_bottom = gdk_screen_height ();
+
 	self->up_scroll = make_scroller (self, SCROLL_UP);
 	gtk_widget_ref (self->up_scroll);
 	gtk_object_sink (GTK_OBJECT (self->up_scroll));
@@ -356,7 +359,7 @@ scroll_menu_size_request (GtkWidget *widget,
 		GTK_WIDGET_CLASS (parent_class)->size_request (widget,
 							       requisition);
 
-	screen_height = gdk_screen_height ();
+	screen_height = self->screen_bottom - self->screen_top;
 
 	if (requisition->height > screen_height) {
 		int button_height;
@@ -639,4 +642,16 @@ GtkWidget *
 scroll_menu_new (void)
 {
 	return (GtkWidget *)gtk_type_new (scroll_menu_get_type ());
+}
+
+void
+scroll_menu_set_screen_size (ScrollMenu *self,
+			     int screen_top,
+			     int screen_bottom)
+{
+	g_return_if_fail (self != NULL);
+	g_return_if_fail (IS_SCROLL_MENU (self));
+
+	self->screen_top = screen_top;
+	self->screen_bottom = screen_bottom;
 }

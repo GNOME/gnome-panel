@@ -243,10 +243,10 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (BORDER_POS (basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height () - h - foobar_widget_get_height ();
+		*y = gdk_screen_height () - h - foobar_widget_get_height (basep->screen);
 		/* fall through */
 	case BORDER_TOP:
-		(*y) += foobar_widget_get_height ();
+		(*y) += foobar_widget_get_height (basep->screen);
 		*x = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
 			: gdk_screen_width () - pos->offset - w;
@@ -258,7 +258,7 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		*y = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
 			: gdk_screen_height () - pos->offset - h;
-		*y = MAX (*y, foobar_widget_get_height ());
+		*y = MAX (*y, foobar_widget_get_height (basep->screen));
 		break;
 	}
 }
