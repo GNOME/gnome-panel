@@ -59,7 +59,7 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 	client  = panel_gconf_get_client ();
 	profile = session_get_current_profile ();
 
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "bonobo-iid");
+	temp_key = panel_gconf_applets_profile_get_full_key (profile, gconf_key, "bonobo-iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 	g_free (temp_key);
 	g_free (profile);
