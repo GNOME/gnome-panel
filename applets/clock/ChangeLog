@@ -1,3 +1,9 @@
+2004-07-17  William Jon McCann  <mccann@jhu.edu>
+
+	* clock.c (update_popup): Present the calendar window after
+	it is created.  This causes gtk_window_present to be called
+	twice, which ensures the window gets focus.  Fixes #120855.
+
 ==================== 2.7.3 ====================
 
 2004-06-21  Mark McLoughlin  <mark@skynet.ie>
