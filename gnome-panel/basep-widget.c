@@ -1103,6 +1103,13 @@ basep_widget_update_winhints (BasePWidget *basep)
 	GnomeWinLayer layer;
 	guint coverhint;
 
+        /* Do this before compliance check, the compliance
+         * check is for the legacy GNOME spec, this is for the
+         * new WM spec. Also, there's no harm to setting the hint
+         * for incompliant WM's, they'll just ignore it.
+         */
+        xstuff_set_wmspec_dock_hints (w->window);
+        
 	if ( ! basep->compliant_wm)
 		return;
 

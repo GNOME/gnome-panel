@@ -573,3 +573,22 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 
 	gdk_error_trap_pop ();
 }
+
+
+void
+xstuff_set_wmspec_dock_hints (GdkWindow *window)
+{
+        Atom atom;
+        
+        atom = XInternAtom (gdk_display,
+                            "_NET_WM_WINDOW_TYPE_DOCK",
+                            False);
+
+        XChangeProperty (GDK_WINDOW_XDISPLAY (window),
+                         GDK_WINDOW_XWINDOW (window),
+                         XInternAtom (gdk_display,
+                                      "_NET_WM_WINDOW_TYPE",
+                                      False),
+                         XA_ATOM, 32, PropModeReplace,
+                         (guchar *)&atom, 1);
+}

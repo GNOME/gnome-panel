@@ -40,5 +40,6 @@ void xstuff_unsetup_desktop_area	(void);
 void xstuff_set_pos_size		(GdkWindow *window,
 					 int x, int y,
 					 int w, int h);
+void xstuff_set_wmspec_dock_hints       (GdkWindow *window);
 
 #endif

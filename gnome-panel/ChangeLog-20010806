@@ -1,3 +1,11 @@
+2001-08-02  Havoc Pennington  <hp@pobox.com>
+
+	* xstuff.c (xstuff_set_wmspec_dock_hints): Set the 
+	_NET_WM_WINDOW_TYPE
+
+	* basep-widget.c (basep_widget_update_winhints): call
+	xstuff_set_wmspec_dock_hints()
+	
 2001-08-03  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* *.[desktop,soundlist]: Added Nynorsk translation.
