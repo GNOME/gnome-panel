@@ -10,37 +10,24 @@
 #include <string.h>
 
 #include <libbonoboui.h>
+#include <gtk/gtktooltips.h>
 
 #include "panel-applet.h"
 
-static void
-test_applet_on_do1 (BonoboUIComponent *uic,
-		    gpointer           user_data,
-		    const gchar       *verbname)
-{
-        g_message ("do1 called\n");
-}
+static GtkTooltips *test_applet_tooltips = NULL;
 
 static void
-test_applet_on_do2 (BonoboUIComponent *uic,
-		    gpointer           user_data,
-		    const gchar       *verbname)
+test_applet_on_do (BonoboUIComponent *uic,
+		   gpointer           user_data,
+		   const gchar       *verbname)
 {
-        g_message ("do2 called\n");
-}
-
-static void
-test_applet_on_do3 (BonoboUIComponent *uic,
-		    gpointer           user_data,
-		    const gchar       *verbname)
-{
-        g_message ("do3 called\n");
+        g_message ("%s called\n", verbname);
 }
 
 static const BonoboUIVerb test_applet_menu_verbs [] = {
-        BONOBO_UI_VERB ("TestAppletDo1", test_applet_on_do1),
-        BONOBO_UI_VERB ("TestAppletDo2", test_applet_on_do2),
-        BONOBO_UI_VERB ("TestAppletDo3", test_applet_on_do3),
+        BONOBO_UI_VERB ("TestAppletDo1", test_applet_on_do),
+        BONOBO_UI_VERB ("TestAppletDo2", test_applet_on_do),
+        BONOBO_UI_VERB ("TestAppletDo3", test_applet_on_do),
 
         BONOBO_UI_VERB_END
 };
@@ -51,6 +38,35 @@ static const char test_applet_menu_xml [] =
 	"   <menuitem name=\"Test Item 2\" verb=\"TestAppletDo2\" _label=\"Test This Two\"/>\n"
 	"   <menuitem name=\"Test Item 3\" verb=\"TestAppletDo3\" _label=\"Test This Three\"/>\n"
 	"</popup>\n";
+
+static void
+test_applet_setup_tooltips (GtkWidget *widget)
+{
+	g_return_if_fail (!GTK_WIDGET_NO_WINDOW (widget));
+
+	if (!test_applet_tooltips)
+		test_applet_tooltips = gtk_tooltips_new ();
+
+	gtk_tooltips_set_tip (test_applet_tooltips, widget, "Hello Tip", "");
+}
+
+static void
+test_applet_handle_orient_change (PanelApplet       *applet,
+				  PanelAppletOrient  orient,
+				  GtkLabel          *label)
+{
+        gchar *text;
+
+	g_return_if_fail (label && GTK_IS_LABEL (label));
+
+        text = g_strdup (gtk_label_get_text (label));
+
+        g_strreverse (text);
+
+        gtk_label_set_text (label, text);
+
+        g_free (text);
+}
 
 static BonoboObject *
 test_applet_new (const gchar *iid)
@@ -66,6 +82,13 @@ test_applet_new (const gchar *iid)
 
 	panel_applet_setup_menu (applet, test_applet_menu_xml, test_applet_menu_verbs, NULL);
 
+	test_applet_setup_tooltips (GTK_WIDGET (applet));
+
+	g_signal_connect (G_OBJECT (applet),
+			  "change_orient",
+			  (GCallback) test_applet_handle_orient_change,
+			  label);
+			  
 	return BONOBO_OBJECT (panel_applet_get_control (applet));
 }
 

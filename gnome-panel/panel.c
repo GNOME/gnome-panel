@@ -39,6 +39,7 @@
 #include "session.h"
 #include "status.h"
 #include "swallow.h"
+#include "panel-applet-frame.h"
 
 /* nautilus uses this UTTER HACK to reset backgrounds, ugly ugly ugly,
  * broken, ugly ugly, but whatever */
@@ -149,19 +150,19 @@ panel_thaw_changes(PanelWidget *panel)
 			      thaw_changes_foreach, NULL);
 }
 
-PanelOrientType
+PanelOrient
 get_applet_orient (PanelWidget *panel)
 {
 	GtkWidget *panelw;
-	g_return_val_if_fail(panel,ORIENT_UP);
-	g_return_val_if_fail(IS_PANEL_WIDGET(panel),ORIENT_UP);
-	g_return_val_if_fail(panel->panel_parent,ORIENT_UP);
+	g_return_val_if_fail(panel,PANEL_ORIENT_UP);
+	g_return_val_if_fail(IS_PANEL_WIDGET(panel),PANEL_ORIENT_UP);
+	g_return_val_if_fail(panel->panel_parent,PANEL_ORIENT_UP);
 	panelw = panel->panel_parent;
 
 	if (BASEP_IS_WIDGET(panelw))
 		return basep_widget_get_applet_orient (BASEP_WIDGET(panelw));
 	else
-		return ORIENT_DOWN;
+		return PANEL_ORIENT_DOWN;
 }
 
 /*we call this recursively*/
@@ -176,6 +177,10 @@ orientation_change (AppletInfo  *info,
 	case APPLET_EXTERN:
 		extern_handle_change_orient ((Extern)info->data,
 					     get_applet_orient (panel));
+		break;
+	case APPLET_BONOBO:
+		panel_applet_frame_change_orient ((PanelAppletFrame *) info->data,
+						  get_applet_orient (panel));
 		break;
 	case APPLET_MENU:
 		set_menu_applet_orient ((Menu *)info->data,

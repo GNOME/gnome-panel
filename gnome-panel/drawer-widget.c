@@ -23,15 +23,15 @@ static void drawer_pos_class_init (DrawerPosClass *klass);
 static void drawer_pos_init (DrawerPos *pos);
 
 static void drawer_pos_set_hidebuttons (BasePWidget *basep);
-static PanelOrientType drawer_pos_get_applet_orient (BasePWidget *basep);
+static PanelOrient drawer_pos_get_applet_orient (BasePWidget *basep);
 
-static PanelOrientType drawer_pos_get_hide_orient (BasePWidget *basep);
+static PanelOrient drawer_pos_get_hide_orient (BasePWidget *basep);
 static void drawer_pos_get_hide_pos (BasePWidget *basep,
-				     PanelOrientType hide_orient,
+				     PanelOrient hide_orient,
 				     int *x, int *y,
 				     int w, int h);
 static void drawer_pos_get_hide_size (BasePWidget *basep, 
-				      PanelOrientType hide_orient,
+				      PanelOrient hide_orient,
 				      int *w, int *h);
 
 static void drawer_pos_get_pos(BasePWidget *basep,
@@ -108,25 +108,25 @@ static void
 drawer_pos_set_hidebuttons (BasePWidget *basep)
 {
 	switch(DRAWER_POS(basep->pos)->orient) {
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		gtk_widget_show(basep->hidebutton_n);
 		gtk_widget_hide(basep->hidebutton_e);
 		gtk_widget_hide(basep->hidebutton_w);
 		gtk_widget_hide(basep->hidebutton_s);
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		gtk_widget_hide(basep->hidebutton_n);
 		gtk_widget_hide(basep->hidebutton_e);
 		gtk_widget_hide(basep->hidebutton_w);
 		gtk_widget_show(basep->hidebutton_s);
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		gtk_widget_hide(basep->hidebutton_n);
 		gtk_widget_hide(basep->hidebutton_e);
 		gtk_widget_show(basep->hidebutton_w);
 		gtk_widget_hide(basep->hidebutton_s);
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		gtk_widget_hide(basep->hidebutton_n);
 		gtk_widget_show(basep->hidebutton_e);
 		gtk_widget_hide(basep->hidebutton_w);
@@ -135,7 +135,7 @@ drawer_pos_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
-static PanelOrientType
+static PanelOrient
 drawer_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
@@ -148,19 +148,19 @@ drawer_pos_get_applet_orient (BasePWidget *basep)
 	if(porient == PANEL_VERTICAL) {
 		if (x > (multiscreen_width (basep->screen)/2 +
 			 multiscreen_x (basep->screen)))
-			return ORIENT_LEFT;
+			return PANEL_ORIENT_LEFT;
 		else
-			return ORIENT_RIGHT;
+			return PANEL_ORIENT_RIGHT;
 	} else {
 		if (y > (multiscreen_height (basep->screen)/2 +
 			 multiscreen_y (basep->screen)))
-			return ORIENT_UP;
+			return PANEL_ORIENT_UP;
 		else
-			return ORIENT_DOWN;
+			return PANEL_ORIENT_DOWN;
 	}
 }
 
-static PanelOrientType
+static PanelOrient
 drawer_pos_get_hide_orient (BasePWidget *basep)
 {
 	DrawerPos *pos = DRAWER_POS (basep->pos);
@@ -169,19 +169,19 @@ drawer_pos_get_hide_orient (BasePWidget *basep)
 	switch (basep->state) {
 	case BASEP_AUTO_HIDDEN:
 		switch (pos->orient) {
-		case ORIENT_UP: return ORIENT_DOWN;
-		case ORIENT_RIGHT: return ORIENT_LEFT;
-		case ORIENT_DOWN: return ORIENT_UP;
-		case ORIENT_LEFT: return ORIENT_RIGHT;
+		case PANEL_ORIENT_UP: return PANEL_ORIENT_DOWN;
+		case PANEL_ORIENT_RIGHT: return PANEL_ORIENT_LEFT;
+		case PANEL_ORIENT_DOWN: return PANEL_ORIENT_UP;
+		case PANEL_ORIENT_LEFT: return PANEL_ORIENT_RIGHT;
 		}
 		g_assert_not_reached ();
 		break;
 	case BASEP_HIDDEN_LEFT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_LEFT : ORIENT_UP;
+			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_RIGHT : ORIENT_DOWN;
+			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	default:
 		g_assert_not_reached ();
 		break;
@@ -207,12 +207,12 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 		gdk_window_raise(GTK_WIDGET(parentp)->window);
 
 	switch (DRAWER_POS (basep->pos)->orient) {
-	case ORIENT_UP:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_LEFT:
 		basep_widget_explicit_hide (basep, BASEP_HIDDEN_RIGHT);
 		break;
-	case ORIENT_RIGHT:
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENT_DOWN:
 		basep_widget_explicit_hide (basep, BASEP_HIDDEN_LEFT);
 		break;
 	}
@@ -301,19 +301,19 @@ drawer_pos_get_pos(BasePWidget *basep,
 		ph = ppanel->allocation.height;
 
 		switch(pos->orient) {
-		case ORIENT_UP:
+		case PANEL_ORIENT_UP:
 			*x = bx+(bw-width)/2;
 			*y = py - height;
 			break;
-		case ORIENT_DOWN:
+		case PANEL_ORIENT_DOWN:
 			*x = bx+(bw-width)/2;
 			*y = py + ph;
 			break;
-		case ORIENT_LEFT:
+		case PANEL_ORIENT_LEFT:
 			*x = px - width;
 			*y = by+(bh-height)/2;
 			break;
-		case ORIENT_RIGHT:
+		case PANEL_ORIENT_RIGHT:
 			*x = px + pw;
 			*y = by+(bh-height)/2;
 			break;
@@ -323,7 +323,7 @@ drawer_pos_get_pos(BasePWidget *basep,
 
 static void
 drawer_pos_get_hide_pos (BasePWidget *basep,
-			 PanelOrientType hide_orient,
+			 PanelOrient hide_orient,
 			 int *x, int *y,
 			 int w, int h)
 {
@@ -336,16 +336,16 @@ drawer_pos_get_hide_pos (BasePWidget *basep,
 
 static void
 drawer_pos_get_hide_size (BasePWidget *basep, 
-			  PanelOrientType hide_orient,
+			  PanelOrient hide_orient,
 			  int *w, int *h)
 {
 	switch (hide_orient) {
-	case ORIENT_UP:
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
 		*h = 1;
 		break;
-	case ORIENT_RIGHT:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENT_LEFT:
 		*w = 1;
 		break;
 	}
@@ -361,7 +361,7 @@ drawer_pos_pre_convert_hook (BasePWidget *basep)
 
 void
 drawer_widget_change_params (DrawerWidget *drawer,
-			     PanelOrientType orient,
+			     PanelOrient orient,
 			     BasePMode mode,
 			     BasePState state,
 			     BasePLevel level,
@@ -380,12 +380,12 @@ drawer_widget_change_params (DrawerWidget *drawer,
 	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
 
 	switch (orient) {
-	case ORIENT_UP:
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
 		porient = PANEL_VERTICAL;
 		break;
-	case ORIENT_LEFT:
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
 	default:
 		porient = PANEL_HORIZONTAL;
 		break;
@@ -397,12 +397,12 @@ drawer_widget_change_params (DrawerWidget *drawer,
 	if (state != BASEP_WIDGET (drawer)->state ||
 	    pos->orient != orient) {
 		if (state == BASEP_HIDDEN_LEFT &&
-		    (orient == ORIENT_LEFT ||
-		     orient == ORIENT_UP))
+		    (orient == PANEL_ORIENT_LEFT ||
+		     orient == PANEL_ORIENT_UP))
 			state = BASEP_HIDDEN_RIGHT;
 		else if (state == BASEP_HIDDEN_RIGHT &&
-			 (orient == ORIENT_RIGHT ||
-			  orient == ORIENT_DOWN))
+			 (orient == PANEL_ORIENT_RIGHT ||
+			  orient == PANEL_ORIENT_DOWN))
 			 state = BASEP_HIDDEN_LEFT;
 	}
 
@@ -436,7 +436,7 @@ drawer_widget_change_params (DrawerWidget *drawer,
 
 void
 drawer_widget_change_orient (DrawerWidget *drawer,
-			     PanelOrientType orient)
+			     PanelOrient orient)
 {
 	DrawerPos *pos = DRAWER_POS (drawer->pos);
 	if (pos->orient != orient) {
@@ -461,7 +461,7 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 }
 
 GtkWidget *
-drawer_widget_new (PanelOrientType orient,
+drawer_widget_new (PanelOrient orient,
 		   BasePMode mode,
 		   BasePState state,
 		   BasePLevel level,
@@ -486,8 +486,8 @@ drawer_widget_new (PanelOrientType orient,
 	pos->orient = orient;
 
 	switch (orient) {
-	case ORIENT_UP:
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
 		porient = PANEL_VERTICAL;
 		break;
 	default:

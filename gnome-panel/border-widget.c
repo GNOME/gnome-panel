@@ -20,9 +20,9 @@ static void border_pos_class_init (BorderPosClass *klass);
 static void border_pos_instance_init (BorderPos *pos);
 
 static void border_pos_set_hidebuttons (BasePWidget *basep);
-static PanelOrientType border_pos_get_applet_orient (BasePWidget *basep);
+static PanelOrient border_pos_get_applet_orient (BasePWidget *basep);
 
-static PanelOrientType border_pos_get_hide_orient (BasePWidget *basep);
+static PanelOrient border_pos_get_hide_orient (BasePWidget *basep);
 
 static void border_pos_get_menu_pos (BasePWidget *basep,
 				     GtkWidget *widget,
@@ -124,21 +124,21 @@ border_pos_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
-static PanelOrientType
+static PanelOrient
 border_pos_get_applet_orient (BasePWidget *basep)
 {
 	BorderPos *pos = BORDER_POS(basep->pos);
 	
 	switch (pos->edge) {
-	case BORDER_TOP: return ORIENT_DOWN;
-	case BORDER_RIGHT: return ORIENT_LEFT;
-	case BORDER_BOTTOM: return ORIENT_UP;
-	case BORDER_LEFT: return ORIENT_RIGHT;
-	default: return ORIENT_UP;		
+	case BORDER_TOP: return PANEL_ORIENT_DOWN;
+	case BORDER_RIGHT: return PANEL_ORIENT_LEFT;
+	case BORDER_BOTTOM: return PANEL_ORIENT_UP;
+	case BORDER_LEFT: return PANEL_ORIENT_RIGHT;
+	default: return PANEL_ORIENT_UP;		
 	}
 }
 
-static PanelOrientType 
+static PanelOrient 
 border_pos_get_hide_orient (BasePWidget *basep)
 {
 	BorderPos *pos = BORDER_POS (basep->pos);
@@ -147,25 +147,25 @@ border_pos_get_hide_orient (BasePWidget *basep)
 	switch (basep->state) {
 	case BASEP_AUTO_HIDDEN:
 		switch (pos->edge) {
-		case BORDER_TOP: return ORIENT_UP;
-		case BORDER_RIGHT: return ORIENT_RIGHT;
-		case BORDER_LEFT: return ORIENT_LEFT;
-		case BORDER_BOTTOM: return ORIENT_DOWN;
+		case BORDER_TOP: return PANEL_ORIENT_UP;
+		case BORDER_RIGHT: return PANEL_ORIENT_RIGHT;
+		case BORDER_LEFT: return PANEL_ORIENT_LEFT;
+		case BORDER_BOTTOM: return PANEL_ORIENT_DOWN;
 		}
 		g_assert_not_reached ();
 		break;
 	case BASEP_HIDDEN_LEFT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_LEFT : ORIENT_UP;
+			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_RIGHT : ORIENT_DOWN;
+			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
 	g_assert_not_reached ();
-	return ORIENT_LEFT;
+	return PANEL_ORIENT_LEFT;
 }
 
 #ifdef BORDER_WIDGET_DEBUG

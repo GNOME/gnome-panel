@@ -10,13 +10,14 @@
 #include <libbonoboui.h>
 
 #include "panel-applet-frame.h"
-
 #include "applet.h"
 
 #undef PANEL_APPLET_FRAME_DEBUG
 
 struct _PanelAppletFramePrivate {
-	AppletInfo *applet_info;
+	GNOME_PanelAppletShell  applet_shell;
+
+	AppletInfo            *applet_info;
 };
 
 static GObjectClass *parent_class;
@@ -68,9 +69,9 @@ static gchar popup_xml [] =
         "</popups>\n";
 
 void
-panel_bonobo_applet_load (const gchar *iid,
-			  PanelWidget *panel,
-			  gint         pos)
+panel_applet_frame_load (const gchar *iid,
+			 PanelWidget *panel,
+			 gint         pos)
 {
 	GtkWidget  *frame;
 	AppletInfo *info;
@@ -80,8 +81,8 @@ panel_bonobo_applet_load (const gchar *iid,
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, 
-				      NULL,     /* FIXME: data */
-				      NULL,     /* FIXME: data_destroy */
+				      frame,     /* FIXME: ref? */
+				      NULL,      /* FIXME: data_destroy */
 				      panel,
 				      pos,
 				      FALSE,
@@ -94,11 +95,26 @@ panel_bonobo_applet_load (const gchar *iid,
 }
 
 void
+panel_applet_frame_change_orient (PanelAppletFrame *frame,
+				  PanelOrient       orient)
+{
+	CORBA_Environment env;
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelAppletShell_changeOrientation (frame->priv->applet_shell, orient, &env);
+	if (BONOBO_EX (&env))
+		g_warning ("Error trying to change applet's orientation\n");
+
+
+	CORBA_exception_free (&env);
+}
+
+void
 panel_applet_frame_set_info (PanelAppletFrame *frame,
 			     AppletInfo       *info)
 {
 	frame->priv->applet_info = info;
-
 }
 
 static void
@@ -159,6 +175,28 @@ panel_applet_frame_get_type (void)
 	return type;
 }
 
+static GNOME_PanelAppletShell
+panel_applet_frame_get_applet_shell (Bonobo_Control control)
+{
+	CORBA_Environment      env;
+	GNOME_PanelAppletShell retval;
+
+	CORBA_exception_init (&env);
+
+	retval = Bonobo_Unknown_queryInterface (control, 
+						"IDL:GNOME/PanelAppletShell:1.0",
+						&env);
+	if (BONOBO_EX (&env)) {
+		g_warning ("Unable to obtain AppletShell interface from control\n");
+
+		retval = CORBA_OBJECT_NIL;
+	}
+
+	CORBA_exception_free (&env);
+
+	return retval;
+}
+
 void
 panel_applet_frame_construct (PanelAppletFrame  *frame,
 			      const gchar       *iid)
@@ -173,6 +211,8 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
         control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 
         control = bonobo_control_frame_get_control (control_frame);
+
+	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 
         ui_component = bonobo_ui_component_new_default ();
 

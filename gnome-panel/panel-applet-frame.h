@@ -48,9 +48,12 @@ void       panel_applet_frame_construct (PanelAppletFrame *frame,
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
 					
-void panel_bonobo_applet_load (const gchar *iid,
-			       PanelWidget *panel,
-			       gint         pos);
+void       panel_applet_frame_load      (const gchar *iid,
+					 PanelWidget *panel,
+					 gint         pos);
+
+void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
+					     PanelOrient       orient);
 
 G_END_DECLS
 

@@ -66,7 +66,7 @@ void		add_menu_widget		(Menu *menu,
 					 gboolean fake_subs);
 
 void		set_menu_applet_orient	(Menu *menu,
-					 PanelOrientType orient);
+					 PanelOrient orient);
 
 void		setup_menuitem		(GtkWidget *menuitem,
 					 GtkWidget *pixmap,

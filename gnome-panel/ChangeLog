@@ -1,3 +1,38 @@
+2001-11-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Note: this won't build without the patch to 
+	      glib-mkenums attached to #64714
+
+	* panel-applet-frame.[ch]: 
+	(panel_applet_frame_load): renamed from 
+	panel_bonobo_applet_load.
+	(panel_applet_frame_change_orient): impl.
+	(panel_applet_frame_get_applet_shell): impl.
+	(panel_applet_frame_construct): get applet shell.
+
+	* panel-applet.[ch]: 
+	(panel_applet_change_orient): impl.
+	(panel_applet_class_init): add "change_orient" signal.
+	(panel_applet_instance_init): set default orient.
+	(panel_applet_construct): instantiate an applet shell.
+
+	* panel-applet-shell.[ch], panel-applet-private.h:
+	implementation of PanelAppletShell.
+
+	* panel-marshal.list: add VOID:ENUM.
+
+	* panel-shell.c: s/runBox/displayRunDialog/.
+
+	* panel.c: (orientation_change): do bonobo applet 
+	orient change.
+
+	* test-bonobo-applet.c: handle orient change and give an
+	example of how applet tooltips should be done with the new
+	api.
+
+	* Makefile.am: add marshalers and enums to applet sources.
+	Generate enums from GNOME_Panel.h.
+
 2001-11-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.c: (popup_handle_verb): kill.

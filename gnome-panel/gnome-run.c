@@ -1273,7 +1273,7 @@ create_run_widget(void)
 	button = button_widget_new(pixmap_name,-1,
 				   MISC_POBJECT,
 				   FALSE,
-				   ORIENT_UP,
+				   PANEL_ORIENT_UP,
 				   _("Run..."));
 
 	/*A hack since this function only pretends to work on window

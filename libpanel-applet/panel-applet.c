@@ -13,12 +13,39 @@
 #include <libgnomeui/gnome-ui-init.h>
 
 #include "panel-applet.h"
+#include "panel-applet-private.h"
+#include "panel-applet-shell.h"
+#include "panel-marshal.h"
+#include "panel-typebuiltins.h"
 
 struct _PanelAppletPrivate {
-	BonoboControl *control;
+	PanelAppletShell  *shell;
+
+	BonoboControl     *control;
+	PanelAppletOrient  orient;
 };
 
 static GObjectClass *parent_class;
+
+enum {
+        CHANGE_ORIENT,
+        LAST_SIGNAL
+};
+
+static guint panel_applet_signals [LAST_SIGNAL];
+
+void
+panel_applet_change_orient (PanelApplet       *applet,
+			    PanelAppletOrient  orient)
+{
+	if (applet->priv->orient != orient) {
+		applet->priv->orient = orient;
+
+		g_signal_emit (G_OBJECT (applet),
+			       panel_applet_signals [CHANGE_ORIENT],
+			       0, orient);
+	}
+}
 
 void
 panel_applet_setup_menu (PanelApplet        *applet,
@@ -121,6 +148,18 @@ panel_applet_class_init (PanelAppletClass *klass,
 	widget_class->button_press_event = panel_applet_button_press;
 
 	gobject_class->finalize = panel_applet_finalize;
+
+	panel_applet_signals [CHANGE_ORIENT] =
+                g_signal_new ("change_orient",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelAppletClass, change_orient),
+                              NULL,
+			      NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+			      1,
+			      PANEL_TYPE_G_NOME__PANEL_ORIENT);
 }
 
 static void
@@ -128,6 +167,8 @@ panel_applet_instance_init (PanelApplet      *applet,
 			    PanelAppletClass *klass)
 {
 	applet->priv = g_new0 (PanelAppletPrivate, 1);
+
+	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
@@ -172,6 +213,11 @@ panel_applet_construct (PanelApplet *applet,
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	priv->control = bonobo_control_new (GTK_WIDGET (applet));
+
+	priv->shell = panel_applet_shell_new (applet);
+
+	bonobo_object_add_interface (BONOBO_OBJECT (priv->control),
+				     BONOBO_OBJECT (priv->shell));
 }
 
 PanelApplet *

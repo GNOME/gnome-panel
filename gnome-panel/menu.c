@@ -2271,7 +2271,7 @@ add_test_bonobo_applet (GtkWidget *widget,
 
 	panel = get_panel_from_menu_data (widget, TRUE);
 
-	panel_bonobo_applet_load ("OAFIID:GNOME_Panel_TestBonoboApplet", panel, -1);
+	panel_applet_frame_load ("OAFIID:GNOME_Panel_TestBonoboApplet", panel, -1);
 }
 
 static void
@@ -5924,7 +5924,7 @@ drag_data_get_cb (GtkWidget          *widget,
 
 static Menu *
 create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
-		   PanelOrientType orient, int main_menu_flags,
+		   PanelOrient orient, int main_menu_flags,
 		   gboolean global_main,
 		   gboolean custom_icon, const char *custom_icon_file)
 {
@@ -6002,7 +6002,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 static Menu *
 create_menu_applet(PanelWidget *panel, const char *arguments,
-		   PanelOrientType orient, int main_menu_flags,
+		   PanelOrient orient, int main_menu_flags,
 		   gboolean global_main,
 		   gboolean custom_icon, const char *custom_icon_file)
 {
@@ -6038,7 +6038,7 @@ create_menu_applet(PanelWidget *panel, const char *arguments,
 }
 
 void
-set_menu_applet_orient(Menu *menu, PanelOrientType orient)
+set_menu_applet_orient(Menu *menu, PanelOrient orient)
 {
 	g_return_if_fail(menu!=NULL);
 
@@ -6053,7 +6053,7 @@ load_menu_applet(const char *params, int main_menu_flags, gboolean global_main,
 {
 	Menu *menu;
 
-	menu = create_menu_applet(panel, params, ORIENT_UP,
+	menu = create_menu_applet(panel, params, PANEL_ORIENT_UP,
 				  main_menu_flags, global_main,
 				  custom_icon, custom_icon_file);
 

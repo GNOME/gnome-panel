@@ -23,7 +23,7 @@ Drawer *load_drawer_applet (int          mypanel,
 			    int          pos,
 			    gboolean     exactpos);
 
-void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
+void set_drawer_applet_orient(Drawer *drawer, PanelOrient orient);
 
 void add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer);
 

@@ -336,7 +336,7 @@ basep_widget_size_request (GtkWidget *widget,
 
 	if (basep->state != BASEP_SHOWN) {
 		int w,h;
-		PanelOrientType hide_orient =
+		PanelOrient hide_orient =
 			klass->get_hide_orient (basep);
 		w = chreq.width;
 		h = chreq.height;
@@ -394,7 +394,7 @@ basep_widget_size_allocate (GtkWidget *widget,
 
 	if (basep->state != BASEP_SHOWN) {
 		int w,h,x,y;
-		PanelOrientType hide_orient = 
+		PanelOrient hide_orient = 
 			klass->get_hide_orient (basep);
 
 		w = allocation->width;
@@ -525,7 +525,7 @@ basep_pos_get_type (void)
 
 static void
 basep_pos_get_hide_size (BasePWidget *basep, 
-			 PanelOrientType hide_orient,
+			 PanelOrient hide_orient,
 			 int *w, int *h)
 {
 
@@ -533,14 +533,14 @@ basep_pos_get_hide_size (BasePWidget *basep,
 	printf ("basep_pos_get_hide_size %d\n", panel_gconf_global_config_get_int ("panel-minimized-size"));
 #endif
 	switch (hide_orient) {
-	case ORIENT_UP:
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
 			? panel_gconf_global_config_get_int ("panel-minimized-size")
 			: get_requisition_height (basep->hidebutton_n);
 		break;
-	case ORIENT_RIGHT:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
 			? panel_gconf_global_config_get_int ("panel-minimized-size")
 			: get_requisition_width (basep->hidebutton_e);
@@ -552,20 +552,20 @@ basep_pos_get_hide_size (BasePWidget *basep,
 
 static void
 basep_pos_get_hide_pos (BasePWidget *basep,
-			PanelOrientType hide_orient,
+			PanelOrient hide_orient,
 			int *x, int *y,
 			int w, int h)
 {
 	switch (hide_orient) {
-	case ORIENT_UP:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_LEFT:
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN)
 			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
 			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
 			   : get_requisition_height (basep->hidebutton_s));
@@ -646,16 +646,16 @@ basep_enter_notify (GtkWidget *widget,
 }
 
 void
-basep_widget_get_position (BasePWidget *basep, PanelOrientType hide_orient,
+basep_widget_get_position (BasePWidget *basep, PanelOrient hide_orient,
 			   int *x, int *y, int w, int h)
 {
 	*x = *y = 0;
 	switch(hide_orient) {
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		if(h < basep->shown_alloc.height)
 			*y = h - basep->shown_alloc.height;
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		if(w < basep->shown_alloc.width)
 			*x = w - basep->shown_alloc.width;
 		break;
@@ -666,17 +666,17 @@ basep_widget_get_position (BasePWidget *basep, PanelOrientType hide_orient,
 
 static void
 basep_widget_set_ebox_orient(BasePWidget *basep,
-			     PanelOrientType hide_orient)
+			     PanelOrient hide_orient)
 {
 	XSetWindowAttributes xattributes;
 
 	switch(hide_orient) {
-	case ORIENT_UP:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_LEFT:
 		xattributes.win_gravity = SouthEastGravity;
 		break;
-	case ORIENT_DOWN:
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_DOWN:
+	case PANEL_ORIENT_RIGHT:
 	default:
 		xattributes.win_gravity = NorthWestGravity;
 		break;
@@ -716,7 +716,7 @@ move_step(int src, int dest, long start_time, long end_time, long cur_time)
 }
 
 void
-basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
+basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 		       int leftover, int step)
 {
 	GtkWidget *wid;
@@ -746,28 +746,28 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	oh = h = basep->shown_alloc.height;
 	
 	switch(hide_orient) {
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		diff = h-leftover;
 		dx = x;
 		dy = y;
 		dw = w;
 		dh = leftover;
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		diff = h-leftover;
 		dx = x;
 		dy = y+h-leftover;
 		dw = w;
 		dh = leftover;
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		diff = w-leftover;
 		dx = x;
 		dy = y;
 		dw = leftover;
 		dh = h;
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		diff = w-leftover;
 		dx = x+w-leftover;
 		dy = y;
@@ -826,7 +826,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 }
 
 void
-basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
+basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 			int leftover, int step)
 {
 	GtkWidget *wid;
@@ -856,23 +856,23 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	dh = basep->shown_alloc.height;
 			      
 	switch(hide_orient) {
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		ow = w = dw;
 		oh = h = leftover;
 		diff = dh-leftover;
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		oy = y + dh - leftover;
 		ow = w = dw;
 		oh = h = leftover;
 		diff = dh-leftover;
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		ow = w = leftover;
 		oh = h = dh;
 		diff = dw-leftover;
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		ox = x + dw - leftover;
 		ow = w = leftover;
 		oh = h = dh;
@@ -1703,7 +1703,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 	
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
-		PanelOrientType hide_orient;
+		PanelOrient hide_orient;
 		int w, h, size;
 
 		basep->state = state;
@@ -1714,8 +1714,8 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 				      hide_orient,
 				      &w, &h);
 
-		size = (hide_orient == ORIENT_UP ||
-			hide_orient == ORIENT_DOWN) ?
+		size = (hide_orient == PANEL_ORIENT_UP ||
+			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 		
 		basep->state = BASEP_MOVING;
@@ -1745,7 +1745,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
-		PanelOrientType hide_orient;
+		PanelOrient hide_orient;
 		int w, h, size;
 
 		hide_orient = klass->get_hide_orient (basep);
@@ -1754,8 +1754,8 @@ basep_widget_explicit_show (BasePWidget *basep)
 				      hide_orient,
 				      &w, &h);
 
-		size = (hide_orient == ORIENT_UP ||
-			hide_orient == ORIENT_DOWN) ?
+		size = (hide_orient == PANEL_ORIENT_UP ||
+			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 
 		basep->state = BASEP_MOVING;
@@ -1794,7 +1794,7 @@ basep_widget_autoshow (gpointer data)
 
 	if (GTK_WIDGET_REALIZED(basep)) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
-		PanelOrientType hide_orient;
+		PanelOrient hide_orient;
 		int w, h, size;
 
 		hide_orient = klass->get_hide_orient (basep);
@@ -1803,8 +1803,8 @@ basep_widget_autoshow (gpointer data)
 				      hide_orient,
 				      &w, &h);
 
-		size = (hide_orient == ORIENT_UP ||
-			hide_orient == ORIENT_DOWN) ?
+		size = (hide_orient == PANEL_ORIENT_UP ||
+			hide_orient == PANEL_ORIENT_DOWN) ?
 			h : w;
 
 		basep->state = BASEP_MOVING;
@@ -1917,7 +1917,7 @@ basep_widget_autohide (gpointer data)
 
 	if (GTK_WIDGET_REALIZED(basep)) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
-		PanelOrientType hide_orient;
+		PanelOrient hide_orient;
 		int w, h, size;
 
 		basep->state = BASEP_AUTO_HIDDEN;
@@ -1927,8 +1927,8 @@ basep_widget_autohide (gpointer data)
 		klass->get_hide_size (basep, 
 				      hide_orient,
 				      &w, &h);
-		size =  (hide_orient == ORIENT_UP ||
-			 hide_orient == ORIENT_DOWN) 
+		size =  (hide_orient == PANEL_ORIENT_UP ||
+			 hide_orient == PANEL_ORIENT_DOWN) 
 			? h : w;
 
 		basep->state = BASEP_MOVING;
@@ -2027,7 +2027,7 @@ basep_widget_get_menu_pos (BasePWidget *basep,
 		*y = multiscreen_y (basep->screen);
 }
 
-PanelOrientType
+PanelOrient
 basep_widget_get_applet_orient (BasePWidget *basep)
 {
 	BasePPosClass *klass = 
@@ -2042,7 +2042,7 @@ basep_widget_get_applet_orient (BasePWidget *basep)
 #if 0
 void
 basep_widget_get_hide_size (BasePWidget *basep,
-			    PanelOrientType hide_orient,
+			    PanelOrient hide_orient,
 			    int *w, int *h)
 {
 	BasePPosClass *klass = basep_widget_get_pos_class(basep);
@@ -2060,7 +2060,7 @@ basep_widget_get_hide_size (BasePWidget *basep,
 
 void
 basep_widget_get_hide_orient (BasePWidget *basep,
-			      PanelOrientType *hide_orient)
+			      PanelOrient *hide_orient)
 {
 	BasePPosClass *klass = basep_widget_get_pos_class(basep);
 
@@ -2076,7 +2076,7 @@ basep_widget_get_hide_orient (BasePWidget *basep,
 
 void
 basep_widget_get_hide_pos (BasePWidget *basep,
-			   PanelOrientType hide_orient,
+			   PanelOrient hide_orient,
 			   int *x, int *y)
 {
 	BasePPosClass *klass = basep_widget_get_pos_class(basep);

@@ -135,7 +135,7 @@ struct _BasePPosClass {
 
 	void (*update_winhints) (BasePWidget *basep);
 
-	PanelOrientType
+	PanelOrient
 	(*get_applet_orient) (BasePWidget *basep);
 
 	void (*set_pos)                   (BasePWidget *basep,
@@ -150,14 +150,14 @@ struct _BasePPosClass {
 	void (*get_size)                  (BasePWidget *basep,
 					   int *w, int *h);
 
-	PanelOrientType (*get_hide_orient) (BasePWidget *basep);
+	PanelOrient (*get_hide_orient) (BasePWidget *basep);
 
 	void (*get_hide_size)              (BasePWidget *basep,
-					    PanelOrientType hide_orient,
+					    PanelOrient hide_orient,
 					    int *w, int *h);
 
 	void (*get_hide_pos)               (BasePWidget *basep,
-					    PanelOrientType hide_orient,
+					    PanelOrient hide_orient,
 					    int *x, int *y,
 					    int w, int h);
 
@@ -247,17 +247,17 @@ void            basep_widget_explicit_hide      (BasePWidget *basep,
 void            basep_widget_explicit_show      (BasePWidget *basep);
 
 void		basep_widget_do_hiding		(BasePWidget *basep,
-						 PanelOrientType hide_orient,
+						 PanelOrient hide_orient,
 						 int leftover,
 						 int step);
 
 void		basep_widget_do_showing		(BasePWidget *basep,
-						 PanelOrientType hide_orient,
+						 PanelOrient hide_orient,
 						 int leftover,
 						 int step);
 
 void		basep_widget_get_position	(BasePWidget *basep,
-						 PanelOrientType hide_orient,
+						 PanelOrient hide_orient,
 						 int *x, int *y,
 						 int w, int h);
 
@@ -267,7 +267,7 @@ void            basep_widget_get_menu_pos  (BasePWidget *basep,
 					    int wx, int wy,
 					    int ww, int wh);
 
-PanelOrientType basep_widget_get_applet_orient (BasePWidget *basep);
+PanelOrient basep_widget_get_applet_orient (BasePWidget *basep);
 
 /* initialize drag offsets according to cursor */
 void            basep_widget_init_offsets      (BasePWidget *basep);
@@ -281,15 +281,15 @@ void            basep_widget_get_pos           (BasePWidget *basep,
 void            basep_widget_get_size          (BasePWidget *basep,
 						int *w, int *h);
 
-PanelOrientType basep_widget_get_hide_orient   (BasePWidget *basep);
+PanelOrient basep_widget_get_hide_orient   (BasePWidget *basep);
 
 /*
 void            basep_widget_get_hide_size      (BasePWidget *basep,
-						 PanelOrientType hide_orient,
+						 PanelOrient hide_orient,
 						 int *w, int *h);
 
 void            basep_widget_get_hide_pos      (BasePWidget *basep,
-						PanelOrientType hide_orient,
+						PanelOrient hide_orient,
 						int *w, int *h);
 						*/
 

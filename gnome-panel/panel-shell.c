@@ -9,15 +9,15 @@ struct _PanelShellPrivate {
 static GObjectClass *panel_shell_parent_class = NULL;
 
 static void
-impl_runBox (PortableServer_Servant  servant,
-	     const CORBA_char       *initial_string,
-	     CORBA_Environment      *ev)
+impl_displayRunDialog (PortableServer_Servant  servant,
+		       const CORBA_char       *initial_string,
+		       CORBA_Environment      *ev)
 {
 	PanelShell *shell;
 
 	shell = PANEL_SHELL (bonobo_object (servant));
 
-	g_message ("run: %s\n", initial_string);
+	g_message ("displayRunDialog: %s\n", initial_string);
 }
 
 static void
@@ -38,7 +38,7 @@ panel_shell_class_init (PanelShellClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	klass->epv.runBox = impl_runBox;
+	klass->epv.displayRunDialog = impl_displayRunDialog;
 
 	object_class->finalize = panel_shell_finalize;
 

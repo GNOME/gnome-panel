@@ -36,7 +36,7 @@ struct _DrawerPos {
 	BasePPos pos;
 
 	BasePState temp_hidden;
-	PanelOrientType orient;
+	PanelOrient orient;
 };
 
 struct _DrawerPosClass {
@@ -45,12 +45,12 @@ struct _DrawerPosClass {
 #if 0
 	/* signal */
 	void (*orient_change) (DrawerPos *pos,
-			       PanelOrientType orient);
+			       PanelOrient orient);
 #endif
 };
 
 GType drawer_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *drawer_widget_new (PanelOrientType orient,
+GtkWidget *drawer_widget_new (PanelOrient orient,
 			      BasePMode mode,
 			      BasePState state,
 			      BasePLevel level,
@@ -66,7 +66,7 @@ GtkWidget *drawer_widget_new (PanelOrientType orient,
 			      GdkColor *back_color);
 
 void drawer_widget_change_params (DrawerWidget *drawer,
-				  PanelOrientType orient,
+				  PanelOrient orient,
 				  BasePMode mode,
 				  BasePState state,
 				  BasePLevel level,
@@ -82,7 +82,7 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 				  GdkColor *back_color);
 
 void drawer_widget_change_orient (DrawerWidget *drawer,
-				  PanelOrientType orient);
+				  PanelOrient orient);
 
 void drawer_widget_restore_state (DrawerWidget *drawer);
 

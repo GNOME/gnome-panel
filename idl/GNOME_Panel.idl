@@ -3,6 +3,47 @@
 
 #include <Bonobo_Unknown.idl>
 
+/*
+ * GNOME 2.0 Interfaces
+ */
+module GNOME {
+
+	enum PanelOrient {
+		ORIENT_UP,
+		ORIENT_DOWN,
+		ORIENT_LEFT,
+		ORIENT_RIGHT
+	};
+
+	interface PanelShell : Bonobo::Unknown {
+
+		/*
+		 * GNOME::PanelShell::displayRunDialog
+		 * @initialString: string to display in dialog.
+		 *
+		 * Instructs the Panel to display the GNOME 'run'
+		 * dialog box.
+		 */
+		void displayRunDialog (in string initialString);
+	};
+
+	interface PanelAppletShell : Bonobo::Unknown {
+
+		/*
+		 * GNOME::PanelAppletShell::changeOrientation
+		 * @orient: new Applet orientation.
+		 *
+		 * Instruct the Applet that the orientation of the
+		 * Panel it is contained in has changed.
+		 */
+		void changeOrientation (in PanelOrient orient);
+	};
+
+};
+
+/*
+ * GNOME 1.4 Interfaces
+ */
 module GNOME {
 
 	interface PanelSpot;
@@ -13,10 +54,6 @@ module GNOME {
 					things can implement with
 					launch_an_applet to be able to host
 					applets */
-
-	interface PanelShell : Bonobo::Unknown {
-		void runBox (in string initialString);
-	};
 
 	interface Panel {
 		struct Color {

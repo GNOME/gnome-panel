@@ -50,7 +50,7 @@ struct _ButtonWidget
 					      of, so we don't have to dump the
 					      cache all the time*/
 	
-	PanelOrientType		orient;
+	PanelOrient		orient;
 
 	guint			pressed_timeout;
 };
@@ -70,7 +70,7 @@ GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,
 						 int pobject,
 						 gboolean arrow,
-						 PanelOrientType orient,
+						 PanelOrient orient,
 						 const char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
@@ -90,7 +90,7 @@ void		button_widget_set_text		(ButtonWidget *button,
 void		button_widget_set_params	(ButtonWidget *button,
 						 int pobject,
 						 gboolean arrow,
-						 PanelOrientType orient);
+						 PanelOrient orient);
 
 void		button_widget_set_dnd_highlight	(ButtonWidget *button,
 						 gboolean highlight);

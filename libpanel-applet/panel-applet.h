@@ -16,7 +16,17 @@
 #include <bonobo/bonobo-ui-component.h>
 #include <bonobo/bonobo-generic-factory.h>
 
+#include "GNOME_Panel.h"
+
 G_BEGIN_DECLS
+
+typedef GNOME_PanelOrient PanelAppletOrient;
+
+#define PANEL_APPLET_ORIENT_UP    GNOME_ORIENT_UP
+#define PANEL_APPLET_ORIENT_DOWN  GNOME_ORIENT_UP
+#define PANEL_APPLET_ORIENT_LEFT  GNOME_ORIENT_UP
+#define PANEL_APPLET_ORIENT_RIGHT GNOME_ORIENT_UP
+
  
 #define PANEL_TYPE_APPLET         (panel_applet_get_type ())
 #define PANEL_APPLET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET, PanelApplet))
@@ -29,6 +39,7 @@ typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
 typedef struct _PanelAppletPrivate PanelAppletPrivate;
 
+
 struct _PanelApplet {
 	GtkEventBox          event_box;
 
@@ -37,6 +48,9 @@ struct _PanelApplet {
 
 struct _PanelAppletClass {
 	GtkEventBoxClass     event_box_class;
+
+	void (*change_orient) (PanelApplet       *applet,
+			       PanelAppletOrient  orient);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;

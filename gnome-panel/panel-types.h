@@ -5,11 +5,12 @@
 #include <gtk/gtktypeutils.h>
 #include "GNOME_Panel.h"
 
-typedef GNOME_Panel_OrientType PanelOrientType;
-#define ORIENT_UP GNOME_Panel_ORIENT_UP
-#define ORIENT_DOWN GNOME_Panel_ORIENT_DOWN
-#define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
-#define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
+typedef GNOME_PanelOrient PanelOrient;
+
+#define PANEL_ORIENT_UP    GNOME_ORIENT_UP
+#define PANEL_ORIENT_DOWN  GNOME_ORIENT_DOWN
+#define PANEL_ORIENT_LEFT  GNOME_ORIENT_LEFT
+#define PANEL_ORIENT_RIGHT GNOME_ORIENT_RIGHT
 
 enum {
 	SIZE_ULTRA_TINY = 12,

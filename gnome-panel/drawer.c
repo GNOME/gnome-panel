@@ -310,7 +310,7 @@ drag_data_get_cb (GtkWidget          *widget,
 static Drawer *
 create_drawer_applet(GtkWidget * drawer_panel,
 		     const char *tooltip, const char *pixmap,
-		     PanelOrientType orient)
+		     PanelOrient orient)
 {
         static GtkTargetEntry dnd_targets[] = {
 		{ "application/x-panel-applet-internal", 0, 0 }
@@ -376,7 +376,7 @@ create_drawer_applet(GtkWidget * drawer_panel,
 
 static Drawer *
 create_empty_drawer_applet(const char *tooltip, const char *pixmap,
-			   PanelOrientType orient)
+			   PanelOrient orient)
 {
 	GtkWidget *dw = drawer_widget_new (orient,
 					   BASEP_EXPLICIT_HIDE,
@@ -391,7 +391,7 @@ create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 }
 
 void
-set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
+set_drawer_applet_orient(Drawer *drawer, PanelOrient orient)
 {
 	g_return_if_fail(drawer!=NULL);
 
@@ -435,7 +435,7 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 		    PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Drawer          *drawer;
-	PanelOrientType  orient = get_applet_orient (panel);
+	PanelOrient  orient = get_applet_orient (panel);
 	AppletInfo      *info;
 
 	if (mypanel_id < 0) {

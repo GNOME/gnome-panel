@@ -388,7 +388,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 					      -1,
 					      LAUNCHER_POBJECT,
 					      FALSE,
-					      ORIENT_UP,
+					      PANEL_ORIENT_UP,
 					      NULL /* text */);
 
 	gtk_widget_show (launcher->button);

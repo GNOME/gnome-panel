@@ -489,10 +489,10 @@ do_colorshift (GdkPixbuf *dest, GdkPixbuf *src, int shift)
 #define SCALE(x) (((x)*size)/48.0)
 
 static void
-draw_arrow(GdkPoint *points, PanelOrientType orient, int size)
+draw_arrow(GdkPoint *points, PanelOrient orient, int size)
 {
 	switch(orient) {
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		points[0].x = SCALE(48-12);
 		points[0].y = SCALE(10);
 		points[1].x = SCALE(48-4);
@@ -500,7 +500,7 @@ draw_arrow(GdkPoint *points, PanelOrientType orient, int size)
 		points[2].x = SCALE(48-8);
 		points[2].y = SCALE(3);
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		points[0].x = SCALE(4);
 		points[0].y = SCALE(48 - 10);
 		points[1].x = SCALE(12);
@@ -508,7 +508,7 @@ draw_arrow(GdkPoint *points, PanelOrientType orient, int size)
 		points[2].x = SCALE(8);
 		points[2].y = SCALE(48 - 3);
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		points[0].x = SCALE(10);
 		points[0].y = SCALE(4);
 		points[1].x = SCALE(10);
@@ -516,7 +516,7 @@ draw_arrow(GdkPoint *points, PanelOrientType orient, int size)
 		points[2].x = SCALE(3);
 		points[2].y = SCALE(8);
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		points[0].x = SCALE(48 - 10);
 		points[0].y = SCALE(48 - 12);
 		points[1].x = SCALE(48 - 10);
@@ -695,7 +695,7 @@ button_widget_init (ButtonWidget *button)
 	
 	button->pobject = 0;
 	button->arrow = 0;
-	button->orient = ORIENT_UP;
+	button->orient = PANEL_ORIENT_UP;
 	
 	button->pressed = FALSE;
 	button->in_button = FALSE;
@@ -904,7 +904,7 @@ button_widget_new(const char *filename,
 		  int size,
 		  int pobject,
 		  gboolean arrow,
-		  PanelOrientType orient,
+		  PanelOrient orient,
 		  const char *text)
 {
 	ButtonWidget *button;
@@ -982,7 +982,7 @@ void
 button_widget_set_params(ButtonWidget *button,
 			 int pobject,
 			 gboolean arrow,
-			 PanelOrientType orient)
+			 PanelOrient orient)
 {
 	g_return_if_fail(button != NULL);
 	g_return_if_fail(IS_BUTTON_WIDGET(button));

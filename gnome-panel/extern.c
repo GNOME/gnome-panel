@@ -1777,7 +1777,7 @@ s_panelspot_get_parent_orient(PortableServer_Servant servant,
 	if(!panel) {
 		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
-		return ORIENT_UP;
+		return PANEL_ORIENT_UP;
 	}
 
 	return get_applet_orient(panel);

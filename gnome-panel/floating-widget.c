@@ -20,11 +20,11 @@ static void floating_pos_class_init (FloatingPosClass *klass);
 static void floating_pos_init (FloatingPos *pos);
 
 static void floating_pos_set_hidebuttons (BasePWidget *basep);
-static PanelOrientType floating_pos_get_applet_orient (BasePWidget *basep);
+static PanelOrient floating_pos_get_applet_orient (BasePWidget *basep);
 
-static PanelOrientType floating_pos_get_hide_orient (BasePWidget *basep);
+static PanelOrient floating_pos_get_hide_orient (BasePWidget *basep);
 static void floating_pos_get_hide_pos (BasePWidget *basep,
-				     PanelOrientType hide_orient,
+				     PanelOrient hide_orient,
 				     int *x, int *y,
 				     int w, int h);
 
@@ -38,7 +38,7 @@ static void floating_pos_set_pos (BasePWidget *basep,
 				  gboolean force);
 
 static void floating_pos_get_hide_size (BasePWidget *basep,
-					PanelOrientType hide_orient,
+					PanelOrient hide_orient,
 					int *x, int *y);
 
 static void floating_pos_get_menu_pos (BasePWidget *basep,
@@ -138,7 +138,7 @@ floating_pos_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
-static PanelOrientType
+static PanelOrient
 floating_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
@@ -146,15 +146,15 @@ floating_pos_get_applet_orient (BasePWidget *basep)
 		return (FLOATING_POS (basep->pos)->y -
 			multiscreen_y (basep->screen) < 
 			multiscreen_height (basep->screen) / 2)
-			? ORIENT_DOWN : ORIENT_UP;
+			? PANEL_ORIENT_DOWN : PANEL_ORIENT_UP;
 	else
 		return (FLOATING_POS (basep->pos)->x -
 		       	multiscreen_x (basep->screen) < 
 			multiscreen_width (basep->screen) /2)
-			? ORIENT_RIGHT : ORIENT_LEFT;
+			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_LEFT;
 }
 
-static PanelOrientType
+static PanelOrient
 floating_pos_get_hide_orient (BasePWidget *basep)
 {
 	FloatingPos *pos = FLOATING_POS (basep->pos);
@@ -163,23 +163,23 @@ floating_pos_get_hide_orient (BasePWidget *basep)
 	switch (basep->state) {
 	case BASEP_HIDDEN_LEFT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_LEFT : ORIENT_UP;
+			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
 		return (panel->orient == PANEL_HORIZONTAL)
-			? ORIENT_RIGHT : ORIENT_DOWN;
+			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	case BASEP_AUTO_HIDDEN:
 		if (panel->orient == PANEL_HORIZONTAL) {
 			return ((pos->x >
 				 (multiscreen_width (basep->screen) +
 				  multiscreen_x (basep->screen) - pos->x -
 				  basep->shown_alloc.width))
-				? ORIENT_RIGHT : ORIENT_LEFT);
+				? PANEL_ORIENT_RIGHT : PANEL_ORIENT_LEFT);
 		} else {
 			return ((pos->y >
 				 (multiscreen_height (basep->screen) +
 				  multiscreen_y (basep->screen) - pos->y -
 				  basep->shown_alloc.height))
-				? ORIENT_DOWN : ORIENT_UP);
+				? PANEL_ORIENT_DOWN : PANEL_ORIENT_UP);
 		}
 	default:
 		g_warning ("not hidden");
@@ -195,23 +195,23 @@ floating_pos_get_menu_pos (BasePWidget *basep,
 			   int wx, int wy,
 			   int ww, int wh)
 {	
-	PanelOrientType menu_orient = floating_pos_get_applet_orient (basep);
+	PanelOrient menu_orient = floating_pos_get_applet_orient (basep);
 	
 	switch (menu_orient) {
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		*x += wx;
 		*y = wy + wh;
 		break;
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_LEFT:
 		*x = wx - mreq->width;
 		*y += wy;
 		break;
 	default:
-	case ORIENT_UP:
+	case PANEL_ORIENT_UP:
 		*x += wx;
 		*y = wy - mreq->height;
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		*x = wx + ww;
 		*y += wy;
 		break;
@@ -304,33 +304,33 @@ floating_pos_get_pos(BasePWidget *basep,
 
 static void
 floating_pos_get_hide_size (BasePWidget *basep, 
-			    PanelOrientType hide_orient,
+			    PanelOrient hide_orient,
 			    int *w, int *h)
 {
 	if (basep->state == BASEP_AUTO_HIDDEN &&
 	    ! basep->hidebuttons_enabled) {
 		switch (hide_orient) {
-		case ORIENT_UP:
-		case ORIENT_DOWN:
+		case PANEL_ORIENT_UP:
+		case PANEL_ORIENT_DOWN:
 			*h = panel_gconf_global_config_get_int ("panel-minimized-size");
 			break;
-		case ORIENT_LEFT:
-		case ORIENT_RIGHT:
+		case PANEL_ORIENT_LEFT:
+		case PANEL_ORIENT_RIGHT:
 			*w = panel_gconf_global_config_get_int ("panel-minimized-size");
 			break;
 		}
 	} else {
 		switch (hide_orient) {
-		case ORIENT_UP:
+		case PANEL_ORIENT_UP:
 			*h = get_requisition_height (basep->hidebutton_n);
 			break;
-		case ORIENT_RIGHT:
+		case PANEL_ORIENT_RIGHT:
 			*w = get_requisition_width (basep->hidebutton_w);
 			break;
-		case ORIENT_DOWN:
+		case PANEL_ORIENT_DOWN:
 			*h = get_requisition_height (basep->hidebutton_s);
 			break;
-		case ORIENT_LEFT:
+		case PANEL_ORIENT_LEFT:
 			*w = get_requisition_width (basep->hidebutton_e);
 			break;
 		}
@@ -343,21 +343,21 @@ floating_pos_get_hide_size (BasePWidget *basep,
 
 static void
 floating_pos_get_hide_pos (BasePWidget *basep,
-			   PanelOrientType hide_orient,
+			   PanelOrient hide_orient,
 			   int *x, int *y,
 			   int w, int h)
 {
 	switch (hide_orient) {
-	case ORIENT_UP:
-	case ORIENT_LEFT:
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_LEFT:
 		break;
-	case ORIENT_RIGHT:
+	case PANEL_ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
 			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
-	case ORIENT_DOWN:
+	case PANEL_ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
 			   ? panel_gconf_global_config_get_int ("panel-minimized-size")

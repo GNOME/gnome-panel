@@ -54,6 +54,12 @@ test_bonobo_applet_SOURCES =	\
 	test-bonobo-applet.c	\
 	panel-applet.c		\
 	panel-applet.h		\
+	panel-applet-shell.c	\
+	panel-applet-shell.h	\
+	panel-marshal-main.c	\
+	panel-typebuiltins.c	\
+	panel-typebuiltins.h	\
+	$(CORBA_SRCLIST)	\
 	$(NULL)
 
 test_bonobo_applet_LDADD =	\
@@ -249,7 +255,8 @@ panel_enum_headers =      \
 	panel-widget.h    \
 	basep-widget.h    \
 	aligned-widget.h  \
-	sliding-widget.h
+	sliding-widget.h  \
+	GNOME_Panel.h
 
 $(srcdir)/panel-marshal.h: panel-marshal.list
 	cd $(srcdir) \

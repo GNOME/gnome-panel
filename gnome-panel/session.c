@@ -1492,10 +1492,10 @@ init_user_panels(void)
 			break;
 		}
 		case DRAWER_PANEL: {
-			PanelOrientType orient;
+			PanelOrient orient;
 			/*BasePState temp_state;*/
 
-			orient = conditional_get_int ("orient", ORIENT_UP,
+			orient = conditional_get_int ("orient", PANEL_ORIENT_UP,
 						      NULL);
 
 			/* FIXME: there are some issues with auto hiding drawers */

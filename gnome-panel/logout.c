@@ -78,7 +78,7 @@ create_logout_widget (void)
 	button = button_widget_new (pixmap_name, -1,
 				    MISC_POBJECT,
 				    FALSE,
-				    ORIENT_UP,
+				    PANEL_ORIENT_UP,
 				    _("Log out"));
 
 	/*A hack since this function only pretends to work on window
@@ -142,7 +142,7 @@ create_lock_widget(void)
 	button = button_widget_new (pixmap_name, -1,
 				    MISC_POBJECT,
 				    FALSE,
-				    ORIENT_UP,
+				    PANEL_ORIENT_UP,
 				    _("Lock screen"));
 
 	/*A hack since this function only pretends to work on window
