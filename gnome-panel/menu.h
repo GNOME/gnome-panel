@@ -46,9 +46,6 @@ GtkWidget      *create_empty_menu         (void);
 GtkWidget      *create_applications_menu  (const char  *menu_file,
 					   const char  *menu_path);
 GtkWidget      *create_main_menu          (PanelWidget *panel);
-GtkWidget      *create_panel_context_menu (PanelWidget *panel);
-
-void		panel_menuitem_lock_screen (GtkWidget *widget);
 
 void		setup_internal_applet_drag (GtkWidget             *menuitem,
 					    PanelActionButtonType  type);
@@ -59,6 +56,10 @@ GdkPixbuf *	panel_make_menu_icon (const char *icon,
 				      const char *fallback,
 				      int size,
 				      gboolean *long_operation);
+
+GdkScreen      *menuitem_to_screen   (GtkWidget *menuitem);
+PanelWidget    *menu_get_panel       (GtkWidget *menu);
+GtkWidget      *add_menu_separator   (GtkWidget *menu);
 
 gboolean menu_dummy_button_press_event (GtkWidget      *menuitem,
 					GdkEventButton *event);

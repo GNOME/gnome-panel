@@ -89,6 +89,7 @@ panel_sources =			\
 	panel-properties-dialog.c \
 	panel-run-dialog.c	\
 	menu.c  		\
+	panel-context-menu.c 	\
 	launcher.c		\
 	panel-applet-frame.c	\
 	panel-shell.c		\
@@ -132,6 +133,7 @@ panel_headers =			\
 	panel-gconf.h		\
 	panel-run-dialog.h	\
 	menu.h  		\
+	panel-context-menu.h 	\
 	launcher.h		\
 	panel-applet-frame.h	\
 	panel-shell.h		\

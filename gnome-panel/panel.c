@@ -30,7 +30,7 @@
 #include "drawer.h"
 #include "button-widget.h"
 #include "launcher.h"
-#include "menu.h"
+#include "panel-context-menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
@@ -287,7 +287,7 @@ static GtkWidget *
 panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
 	if (!pd->menu) {
-		pd->menu = g_object_ref (create_panel_context_menu (panel));
+		pd->menu = g_object_ref (panel_context_menu_create (panel));
 		gtk_object_sink (GTK_OBJECT (pd->menu));
 		g_signal_connect (pd->menu, "deactivate",
 				  G_CALLBACK (menu_deactivate), pd);
