@@ -1781,9 +1781,9 @@ create_applets_menu(GtkWidget *menu, int fake_submenus)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at (menu, menudir,TRUE,
-				      _("Applets"),NULL,
-				      fake_submenus,FALSE);
+	applet_menu = create_menu_at(menu,menudir,TRUE,
+				     _("Applets"),NULL,
+				     fake_submenus,FALSE);
 	g_free (menudir);
 	return applet_menu;
 }
