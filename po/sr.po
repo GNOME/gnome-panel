@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-10-04 03:53+0200\n"
-"PO-Revision-Date: 2003-10-04 04:03+0200\n"
+"POT-Creation-Date: 2003-10-08 23:23+0200\n"
+"PO-Revision-Date: 2003-10-08 23:24+0200\n"
 "Last-Translator: Данило Шеган <danilo@prevod.org>\n"
 "Language-Team: Serbian (sr) <serbiagnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,7 @@ msgstr ""
 
 #: applets/clock/clock.c:1353 applets/clock/clock.c:1625
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:404 applets/wncklet/window-list.c:116
+#: applets/wncklet/showdesktop.c:406 applets/wncklet/window-list.c:116
 #: applets/wncklet/window-list.c:766 applets/wncklet/window-menu.c:82
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
@@ -145,7 +145,7 @@ msgstr "Користи _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:1660 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:797
+#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:797
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
@@ -284,7 +284,7 @@ msgstr "_О програму..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3108
+#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3129
 #: gnome-panel/panel-action-button.c:545 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:584
 msgid "_Help"
@@ -323,10 +323,10 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"Програмче „%s“ заправо нема намену. Само заузима простор на диску и продужава "
-"превођење, и уколико је учитан такође заузима значајан простор на панелу и "
-"меморију. Уколико се пронађе неко ко га користи, одмах мора отићи на "
-"психијатријски преглед."
+"Програмче „%s“ заправо нема намену. Само заузима простор на диску и "
+"продужава превођење, и уколико је учитан такође заузима значајан простор на "
+"панелу и меморију. Уколико се пронађе неко ко га користи, одмах мора отићи "
+"на психијатријски преглед."
 
 #: applets/fish/fish.c:478
 msgid "(with minor help from George)"
@@ -589,7 +589,7 @@ msgid "Window List"
 msgstr "Списак прозора"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:128
+#: applets/wncklet/window-menu.c:128 applets/wncklet/window-menu.c:624
 msgid "Window Menu"
 msgstr "Мени прозора"
 
@@ -611,24 +611,24 @@ msgstr "Кликните овде да прикажете прикривене �
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Кликните овде да прикријете све прозоре и видите радну површину."
 
-#: applets/wncklet/showdesktop.c:294
+#: applets/wncklet/showdesktop.c:295
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Неуспело учитавање „%s“: %s\n"
 
-#: applets/wncklet/showdesktop.c:295
+#: applets/wncklet/showdesktop.c:296
 msgid "File not found"
 msgstr "Датотека није нађена"
 
-#: applets/wncklet/showdesktop.c:444
+#: applets/wncklet/showdesktop.c:326 applets/wncklet/showdesktop.c:446
 msgid "Show Desktop Button"
 msgstr "Дугме за приказивање радне површине"
 
-#: applets/wncklet/showdesktop.c:446
+#: applets/wncklet/showdesktop.c:448
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Ово дугме омогућава да прикријете све прозоре и видите радну површину."
 
-#: applets/wncklet/showdesktop.c:486
+#: applets/wncklet/showdesktop.c:488
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -638,7 +638,8 @@ msgstr ""
 
 #: applets/wncklet/window-list.c:813
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr "Списак прозора приказује списак свих прозора и омогућава да их прегледате."
+msgstr ""
+"Списак прозора приказује списак свих прозора и омогућава да их прегледате."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -770,7 +771,8 @@ msgstr "Када груписати прозоре"
 
 #: applets/wncklet/window-menu.c:132
 msgid "The Window Menu shows a list of all windows and lets you browse them."
-msgstr "Списак прозора приказује списак свих прозора и омогућава да их прегледате."
+msgstr ""
+"Списак прозора приказује списак свих прозора и омогућава да их прегледате."
 
 #: applets/wncklet/window-menu.c:342
 msgid "Unknown Window"
@@ -779,6 +781,10 @@ msgstr "Непознати прозор"
 #: applets/wncklet/window-menu.c:538
 msgid "No Windows Open"
 msgstr "Нема отворених прозора"
+
+#: applets/wncklet/window-menu.c:625
+msgid "Tool to switch between windows"
+msgstr "Алат за пребацивање између прозора"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:804
@@ -1004,8 +1010,8 @@ msgstr "Соларис"
 msgid "CDE Menu"
 msgstr "CDE мени"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:758 gnome-panel/menu.c:1536
-#: gnome-panel/menu.c:3057 gnome-panel/panel-action-button.c:96
+#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:762 gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:3078 gnome-panel/panel-action-button.c:96
 msgid "_Properties"
 msgstr "_Поставке"
 
@@ -1261,7 +1267,7 @@ msgstr "Помоћ за програм „%s“"
 msgid "Launcher Properties"
 msgstr "Поставке покретача"
 
-#: gnome-panel/launcher.c:832
+#: gnome-panel/launcher.c:836
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Кључ „%s“ није постављен, не може покренути лансер\n"
@@ -1270,7 +1276,7 @@ msgstr "Кључ „%s“ није постављен, не може покре�
 msgid "Create Launcher"
 msgstr "Направи покретач"
 
-#: gnome-panel/launcher.c:1129 gnome-panel/menu.c:1185
+#: gnome-panel/launcher.c:1127 gnome-panel/menu.c:1192
 #: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "Не може да прикаже помоћ"
@@ -1279,7 +1285,7 @@ msgstr "Не може да прикаже помоћ"
 msgid "Specify a profile name to load"
 msgstr "Наведите име профила који учитавате"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3255
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3276
 #: gnome-panel/panel-menu-bar.c:173
 msgid "Log Out"
 msgstr "Одјава"
@@ -1308,7 +1314,7 @@ msgstr "Обавезно затварање"
 msgid "Screenshot"
 msgstr "Снимак екрана"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3423
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3444
 #: gnome-panel/panel-menu-bar.c:152
 msgid "Take a screenshot of your desktop"
 msgstr "Сачувај снимак екрана вашег десктопа"
@@ -1317,7 +1323,7 @@ msgstr "Сачувај снимак екрана вашег десктопа"
 msgid "Search"
 msgstr "Тражи"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3404
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3425
 #: gnome-panel/panel-menu-bar.c:137
 msgid "Find files, folders, and documents on your computer"
 msgstr "Пронађите датотеке, директоријуме и документе на вашем рачунару"
@@ -1365,142 +1371,142 @@ msgstr "О Гному"
 msgid "Cannot launch entry"
 msgstr "Не може да покрене ставку"
 
-#: gnome-panel/menu.c:362 gnome-panel/menu.c:1158 gnome-panel/menu.c:1198
+#: gnome-panel/menu.c:362 gnome-panel/menu.c:1165 gnome-panel/menu.c:1205
 msgid "Cannot load entry"
 msgstr "Не може да учита ставку"
 
-#: gnome-panel/menu.c:1062
+#: gnome-panel/menu.c:1069
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "Не може да уклони ставку менија %s"
 
-#: gnome-panel/menu.c:1073
+#: gnome-panel/menu.c:1080
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Не може одредити име датотеке из путање „%s“"
 
-#: gnome-panel/menu.c:1080
+#: gnome-panel/menu.c:1087
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Не може одредити име директоријума из путање „%s“"
 
-#: gnome-panel/menu.c:1149
+#: gnome-panel/menu.c:1156
 msgid "Cannot add to run box"
 msgstr "Не може да дода у прозорче за покретање"
 
-#: gnome-panel/menu.c:1150
+#: gnome-panel/menu.c:1157
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Нема „Exec“ нити „URL“ поља у уносу"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1482
 msgid "Add this launcher to panel"
 msgstr "Додај овај покретач на панел"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1492
 msgid "Remove this item"
 msgstr "Уклони ову ставку"
 
-#: gnome-panel/menu.c:1488
+#: gnome-panel/menu.c:1509
 msgid "Put into run dialog"
 msgstr "Постави као наредбу"
 
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1528
 #, c-format
 msgid "Help on %s"
 msgstr "Помоћ за „%s“"
 
-#: gnome-panel/menu.c:1508
+#: gnome-panel/menu.c:1529
 msgid "Application"
 msgstr "Програм"
 
-#: gnome-panel/menu.c:1558
+#: gnome-panel/menu.c:1579
 msgid "Entire menu"
 msgstr "Цео мени"
 
-#: gnome-panel/menu.c:1567
+#: gnome-panel/menu.c:1588
 msgid "Add this as drawer to panel"
 msgstr "Додај ово као фиоку на панел"
 
-#: gnome-panel/menu.c:1578
+#: gnome-panel/menu.c:1599
 msgid "Add this as menu to panel"
 msgstr "Додај ово на панел као мени"
 
-#: gnome-panel/menu.c:1591
+#: gnome-panel/menu.c:1612
 msgid "Add new item to this menu"
 msgstr "Додај нову ставу у овај мени"
 
-#: gnome-panel/menu.c:1618
+#: gnome-panel/menu.c:1639
 msgid "Properties"
 msgstr "Поставке"
 
-#: gnome-panel/menu.c:2592 gnome-panel/menu.c:2647
+#: gnome-panel/menu.c:2613 gnome-panel/menu.c:2668
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "испитај враћену грешку „%s“\n"
 
-#: gnome-panel/menu.c:2861 gnome-panel/menu.c:2866 gnome-panel/menu.c:3364
+#: gnome-panel/menu.c:2882 gnome-panel/menu.c:2887 gnome-panel/menu.c:3385
 #: gnome-panel/panel-menu-bar.c:195
 msgid "Applications"
 msgstr "Програми"
 
-#: gnome-panel/menu.c:2936
+#: gnome-panel/menu.c:2957
 msgid "You cannot remove your last panel."
 msgstr "Не можете уклонити једини преостали панел"
 
-#: gnome-panel/menu.c:2999
+#: gnome-panel/menu.c:3020
 msgid "_Delete This Panel..."
 msgstr "_Уклони овај панел..."
 
-#: gnome-panel/menu.c:3002 gnome-panel/menu.c:3042
+#: gnome-panel/menu.c:3023 gnome-panel/menu.c:3063
 msgid "_Delete This Panel"
 msgstr "_Уклони овај панел"
 
-#: gnome-panel/menu.c:3017
+#: gnome-panel/menu.c:3038
 msgid "_Add to Panel"
 msgstr "_Додај на панел"
 
-#: gnome-panel/menu.c:3072
+#: gnome-panel/menu.c:3093
 msgid "_New Panel"
 msgstr "_Нови панел"
 
-#: gnome-panel/menu.c:3119
+#: gnome-panel/menu.c:3140
 msgid "_About Panels"
 msgstr "_О панелима"
 
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3154
 msgid "About _GNOME"
 msgstr "О Гному"
 
-#: gnome-panel/menu.c:3181
+#: gnome-panel/menu.c:3202
 msgid "Launcher..."
 msgstr "Покретач..."
 
-#: gnome-panel/menu.c:3191
+#: gnome-panel/menu.c:3212
 msgid "Launcher from menu"
 msgstr "Покретач из менија"
 
-#: gnome-panel/menu.c:3201 gnome-panel/panel-menu-button.c:86
+#: gnome-panel/menu.c:3222 gnome-panel/panel-menu-button.c:86
 msgid "Main Menu"
 msgstr "Главни мени"
 
-#: gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3232
 msgid "Menu Bar"
 msgstr "Линија менија"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3241
 msgid "Drawer"
 msgstr "Фиока"
 
-#: gnome-panel/menu.c:3243 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3264 gnome-panel/panel-menu-bar.c:164
 msgid "Lock Screen"
 msgstr "Закључајте екран"
 
-#: gnome-panel/menu.c:3249
+#: gnome-panel/menu.c:3270
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Закључај екран како би могли да се привремено удаљите од рачунара"
 
-#: gnome-panel/menu.c:3261
+#: gnome-panel/menu.c:3282
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1508,23 +1514,23 @@ msgstr ""
 "Окончајте ову сесију како бисте се улоговали као неки други корисник, или да "
 "искључите ваш рачунар."
 
-#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3406 gnome-panel/panel-menu-bar.c:121
 msgid "Run Application..."
 msgstr "Покрени програм..."
 
-#: gnome-panel/menu.c:3392 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:123
 msgid "Run an Application by entering a command"
 msgstr "Покрените програм уносом наредбе"
 
-#: gnome-panel/menu.c:3401 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3422 gnome-panel/panel-menu-bar.c:135
 msgid "Search for Files..."
 msgstr "Тражите датотеке..."
 
-#: gnome-panel/menu.c:3420 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3441 gnome-panel/panel-menu-bar.c:150
 msgid "Take Screenshot..."
 msgstr "Снимак екрана..."
 
-#: gnome-panel/menu.c:3438
+#: gnome-panel/menu.c:3459
 msgid "Desktop"
 msgstr "Радна површина"
 
@@ -1617,7 +1623,7 @@ msgstr "Да ли је омогућено превлачење и пуштање
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Грешка у popup_menu: „%s“\n"
 
-#: gnome-panel/panel-applet-frame.c:829
+#: gnome-panel/panel-applet-frame.c:825
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -1628,19 +1634,23 @@ msgstr ""
 "\n"
 "Поново учитати ово програмче?%s"
 
-#: gnome-panel/panel-applet-frame.c:834
+#: gnome-panel/panel-applet-frame.c:830
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
-msgstr "\n\n(Ако се одлучите да га не учитате поново, можете га свакако додати десним кликом на панел, и избором подменија „Додај на панел“)"
+msgstr ""
+"\n"
+"\n"
+"(Ако се одлучите да га не учитате поново, можете га свакако додати десним "
+"кликом на панел, и избором подменија „Додај на панел“)"
 
-#: gnome-panel/panel-applet-frame.c:871
+#: gnome-panel/panel-applet-frame.c:865
 msgid "D_on't Delete"
 msgstr "_Не уклањај"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:907
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -1649,19 +1659,22 @@ msgstr ""
 "Овај панел је наишао на неприлику при учитавању „%s“\n"
 "Детаљи: %s%s"
 
-#: gnome-panel/panel-applet-frame.c:917 gnome-panel/panel-applet-frame.c:928
+#: gnome-panel/panel-applet-frame.c:911 gnome-panel/panel-applet-frame.c:922
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
-msgstr "\n\nДа ли желите да уклоните ово програмче из ваших поставки?"
+msgstr ""
+"\n"
+"\n"
+"Да ли желите да уклоните ово програмче из ваших поставки?"
 
-#: gnome-panel/panel-applet-frame.c:925
+#: gnome-panel/panel-applet-frame.c:919
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"%s"
 msgstr "Овај панел је наишао на неприлику при учитавању „%s“%s"
 
-#: gnome-panel/panel-applet-frame.c:1037
+#: gnome-panel/panel-applet-frame.c:1031
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Не може добити AppletShell интерфејс од контроле\n"
 
@@ -1680,12 +1693,12 @@ msgstr "Грешка при учитавању gconf директоријума 
 msgid "Error getting value for '%s': %s"
 msgstr "Грешка при учитавању вредности за „%s“: %s"
 
-#: gnome-panel/panel.c:477
+#: gnome-panel/panel.c:437
 #, c-format
 msgid "Open URL: %s"
 msgstr "Отвори URL: %s"
 
-#: gnome-panel/panel.c:1272
+#: gnome-panel/panel.c:1232
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1693,7 +1706,7 @@ msgstr ""
 "Када се панел уклони, панел и његове поставке се \n"
 "неповратно губе. Сигурно желите да уклоните панел?"
 
-#: gnome-panel/panel.c:1281
+#: gnome-panel/panel.c:1241
 msgid "Delete Panel"
 msgstr "Уклони панел"
 
@@ -1796,7 +1809,12 @@ msgid ""
 "certain applets from loading or showing up in the menu. For example to "
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
-msgstr "Списак IID-а програмчића које ће панел занемаривати. На овај начин можете да спречите учитавање или приказивање у менију неких програмчића. На пример, да искључите програмче мали-наредник, додајте „OAFIID:GNOME_MiniCommanderApplet“ у овај списак. Панел је неопходно поново покренути да би ово узело маха."
+msgstr ""
+"Списак IID-а програмчића које ће панел занемаривати. На овај начин можете да "
+"спречите учитавање или приказивање у менију неких програмчића. На пример, да "
+"искључите програмче мали-наредник, додајте „OAFIID:"
+"GNOME_MiniCommanderApplet“ у овај списак. Панел је неопходно поново "
+"покренути да би ово узело маха."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1881,7 +1899,10 @@ msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
-msgstr "Уколико је постављено, панел неће дозволити измене у мојим подешавањима панела. Појединачни програмчићи се могу засебно закључати. Панел је неопходно изнова покенути да би ово узело маха."
+msgstr ""
+"Уколико је постављено, панел неће дозволити измене у мојим подешавањима "
+"панела. Појединачни програмчићи се могу засебно закључати. Панел је "
+"неопходно изнова покенути да би ово узело маха."
 
 #: gnome-panel/panel-global.schemas.in.h:19
 msgid "If true, tooltips are shown for objects in panels."
@@ -2721,7 +2742,12 @@ msgid ""
 "of all objects on this panel will be locked down as well. Properties of "
 "external applets may however have to be locked down separately. The panel "
 "must be restarted for this to take effect."
-msgstr "Уколико је постављено, панел ће бити закључан на текућој позицији, особине неће бити могуће изменити. Корисник неће моћи ни да додаје, уклања, па чак ни да помера програмчиће. Такође, на овом панелу ће бити закључане и све особине објеката. Особине спољњих програмчета можда могу да се засебно закључају. Панел је неопходно изнова покенути да би ово узело маха."
+msgstr ""
+"Уколико је постављено, панел ће бити закључан на текућој позицији, особине "
+"неће бити могуће изменити. Корисник неће моћи ни да додаје, уклања, па чак "
+"ни да помера програмчиће. Такође, на овом панелу ће бити закључане и све "
+"особине објеката. Особине спољњих програмчета можда могу да се засебно "
+"закључају. Панел је неопходно изнова покенути да би ово узело маха."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2992,46 +3018,46 @@ msgstr "Испробај Бонобо програмче"
 msgid "Test Bonobo Applet Factory"
 msgstr "Испробај фабрику Бонобо програмчића"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:843
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Непотпуна врста позадине: „%s“"
 
-#: libpanel-applet/panel-applet.c:856
+#: libpanel-applet/panel-applet.c:857
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Примљена непотпуна врста позадине „%s“: %s"
 
-#: libpanel-applet/panel-applet.c:865
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Неуспешно учитавање слике %s"
 
-#: libpanel-applet/panel-applet.c:872
+#: libpanel-applet/panel-applet.c:873
 msgid "Unknown background type received"
 msgstr "Примљена непозната врста позадине"
 
-#: libpanel-applet/panel-applet.c:1057
+#: libpanel-applet/panel-applet.c:1058
 msgid "The Applet's containing Panel's orientation"
 msgstr "Програмче садржи и оријентацију панела"
 
-#: libpanel-applet/panel-applet.c:1065
+#: libpanel-applet/panel-applet.c:1066
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Програмче садржи и величину панела у тачкама"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1074
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Програмче садржи и боју или слику позадине панела"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1082
 msgid "The Applet's flags"
 msgstr "Особине програмчета"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1090
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Опсег који означава које су величине прихватљиве за аплет"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1098
 msgid "The Applet's containing Panel is locked down"
 msgstr "Панел који садржи програмче је привезан"
 
