@@ -1,3 +1,8 @@
+2003-03-11  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-background.c: (background_changed): don't unref
+	the desktop pixbuf if its NULL. Might fix bug #108062.
+
 2003-03-10  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-global.schemas.in: remove.

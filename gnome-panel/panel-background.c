@@ -156,7 +156,8 @@ background_changed (PanelBackgroundMonitor *monitor,
 					background->region.width,
 					background->region.height);
 
-	g_object_unref (tmp);
+	if (tmp)
+		g_object_unref (tmp);
 
 	panel_background_composite (background);
 }
