@@ -1,3 +1,16 @@
+2002-07-13  Havoc Pennington  <hp@pobox.com>
+
+        Try fixing panel to allow Mod2-Mod5 accels. This fix is a drop in
+	the bucket though, this code needs a lot of help.
+	
+	* eggaccelerators.h: copy in from libegg to use in fixing
+	global-keys.c. evil cut-and-paste code.
+
+	* global-keys.c (grab_key): dynamically get ignored mods
+
+	* global-keys.h: remove IGNORED_MODS and USED_MODS, any uses of
+	those were broken.
+
 2002-08-14  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.c: (panel_applet_save_position): don't
