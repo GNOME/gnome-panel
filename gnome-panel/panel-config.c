@@ -211,7 +211,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	if(page != -1)
 		return;
 
-	panel_freeze_changes(BASEP_WIDGET(ppc->panel)->panel);
+	panel_freeze_changes(PANEL_WIDGET(BASEP_WIDGET(ppc->panel)->panel));
 	if(IS_EDGE_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
 					    ppc->edge,
@@ -266,7 +266,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->hidebuttons);
 	}
 #endif
-	panel_thaw_changes(BASEP_WIDGET(ppc->panel)->panel);
+	panel_thaw_changes(PANEL_WIDGET(BASEP_WIDGET(ppc->panel)->panel));
 	gtk_widget_queue_draw (ppc->panel);
 }
 

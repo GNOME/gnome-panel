@@ -165,24 +165,10 @@ apply_global_config(void)
 	autohide_size_old = global_config.minimized_size;
 }
 
-static void
-ss_cancel_wait(GtkWidget *dlg, gpointer data)
-{
-	int cookie = GPOINTER_TO_INT(data);
-	ss_timeout_dlg = NULL;
-	if(cookie == ss_cookie) {
-		/*increment cookie so that the done_session_save will fail*/
-		ss_cookie++;
-		g_warning(_("Timed out on sending session save to an applet"));
-		save_next_applet();
-	}
-}
-
 static int
 session_save_timeout(gpointer data)
 {
 	int cookie = GPOINTER_TO_INT(data);
-	int res;
 	if(cookie != ss_cookie)
 		return FALSE;
 
@@ -200,6 +186,9 @@ session_save_timeout(gpointer data)
 					"or continue waiting?"),
 				      GNOME_MESSAGE_BOX_WARNING,
 				      NULL);
+	gtk_signal_connect(GTK_OBJECT(ss_timeout_dlg),"destroy",
+			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
+			   &ss_timeout_dlg);
 	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
 						_("Remove applet"),
 						GNOME_STOCK_PIXMAP_TRASH);

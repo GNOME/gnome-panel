@@ -258,6 +258,9 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 	if(button->pixbuf)
 		gdk_pixbuf_unref(button->pixbuf);
 	button->pixbuf = NULL;
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 
 	g_free(button->text);
 
@@ -399,7 +402,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 
 /* draw the xlib part (arrow/text) */
 void
-button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap, int offx, int offy)
+button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 {
 	GtkWidget *widget = GTK_WIDGET(button);
 	GtkWidget *pwidget;
@@ -421,8 +424,8 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap, int offx, int o
 		GdkFont *font;
 		GdkRectangle rect;
 	         
-	        rect.x = widget->allocation.x-offx;
-	        rect.y = widget->allocation.y-offy;
+	        rect.x = 0;
+	        rect.y = 0;
 	        rect.width = widget->allocation.width;
 	        rect.height = widget->allocation.height;
 
@@ -444,14 +447,14 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap, int offx, int o
 		
 		gdk_gc_set_foreground(gc,&widget->style->black);
 		gdk_draw_rectangle(pixmap,gc,TRUE,
-				   widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-1-offx,
-				   widget->allocation.y+(widget->allocation.height/2)-(theight/2)-1+off-offy,
+				   (widget->allocation.width/2)-(twidth/2)+off-1,
+				   (widget->allocation.height/2)-(theight/2)-1+off,
 				   twidth+2,
 				   theight+2);
 		gdk_gc_set_foreground(gc,&widget->style->white);
 		gdk_draw_string(pixmap,font,gc,
-				widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-offx,
-				widget->allocation.y+(widget->allocation.height/2)+(theight/2)+off-offy,
+				(widget->allocation.width/2)-(twidth/2)+off,
+				(widget->allocation.height/2)+(theight/2)+off,
 				text);
 		gdk_gc_set_foreground(gc,&widget->style->black);
 		gdk_gc_set_clip_rectangle (gc, NULL);
@@ -466,8 +469,8 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap, int offx, int o
 		GdkPoint points[3];
 		draw_arrow(points,button->orient,size);
 		for(i=0;i<3;i++) {
-			points[i].x+=widget->allocation.x+off-offx;
-			points[i].y+=widget->allocation.y+off-offy;
+			points[i].x+=off;
+			points[i].y+=off;
 		}
 		gdk_gc_set_foreground(gc,&pwidget->style->white);
 		gdk_draw_polygon(pixmap,gc,TRUE,points,3);
@@ -597,8 +600,13 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 	    (event->detail != GDK_NOTIFY_INFERIOR)) {
 		ButtonWidget *button = BUTTON_WIDGET (widget);
 		button->in_button = TRUE;
-		panel_widget_draw_icon(PANEL_WIDGET(widget->parent),
-				       button);
+		if(global_config.tile_when_over) {
+			if(button->cache)
+				gdk_pixmap_unref(button->cache);
+			button->cache = NULL;
+			panel_widget_draw_icon(PANEL_WIDGET(widget->parent),
+					       button);
+		}
 	}
 
 	return FALSE;
@@ -622,8 +630,13 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	    (event->detail != GDK_NOTIFY_INFERIOR) &&
 	    (!button->ignore_leave)) {
 		button->in_button = FALSE;
-		panel_widget_draw_icon(PANEL_WIDGET(widget->parent),
-				       button);
+		if(global_config.tile_when_over) {
+			if(button->cache)
+				gdk_pixmap_unref(button->cache);
+			button->cache = NULL;
+			panel_widget_draw_icon(PANEL_WIDGET(widget->parent),
+					       button);
+		}
 	}
 
 	return FALSE;
@@ -641,6 +654,9 @@ static void
 button_widget_pressed(ButtonWidget *button)
 {
 	button->pressed = TRUE;
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
 }
@@ -648,6 +664,9 @@ static void
 button_widget_unpressed(ButtonWidget *button)
 {
 	button->pressed = FALSE;
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
 	if(button->in_button)
@@ -703,6 +722,9 @@ button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 	g_free(button->filename);
 	button->filename = g_strdup(pixmap);
 	button->size = size;
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
@@ -718,6 +740,10 @@ button_widget_set_text(ButtonWidget *button, char *text)
 {
 	g_free(button->text);
 	button->text = text?g_strdup(text):NULL;
+
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 	
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
@@ -732,6 +758,10 @@ button_widget_set_params(ButtonWidget *button,
 	button->tile = tile;
 	button->arrow = arrow;
 	button->orient = orient;
+
+	if(button->cache)
+		gdk_pixmap_unref(button->cache);
+	button->cache = NULL;
 	
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
@@ -756,9 +786,13 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 	
 	for(list = buttons;list!=NULL;list=g_list_next(list)) {
 		ButtonWidget *button = list->data;
-		if(button->tile == tile)
+		if(button->tile == tile) {
+			if(button->cache)
+				gdk_pixmap_unref(button->cache);
+			button->cache = NULL;
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 					       button);
+		}
 	}
 }
 
@@ -774,8 +808,13 @@ button_widget_set_flags(int type, int _tiles_enabled, int _pixmaps_enabled, int 
 		pixmaps_enabled[type] = _pixmaps_enabled;
 		always_text[type] = _always_text;
 
-		for(list = buttons;list!=NULL;list=g_list_next(list))
+		for(list = buttons;list!=NULL;list=g_list_next(list)) {
+			ButtonWidget *button = list->data;
+			if(button->cache)
+				gdk_pixmap_unref(button->cache);
+			button->cache = NULL;
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(list->data)->parent),
-					       list->data);
+					       button);
+		}
 	}
 }

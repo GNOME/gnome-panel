@@ -3,6 +3,7 @@
 
 #include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_pixbuf.h>
 
 /* combine rgba onto the dest (given the dest has something in it already) */
 void combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
@@ -10,6 +11,9 @@ void combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
 /* tile an rgb onto dest */
 void tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	      guchar *tile, int w, int h, int rowstride, int has_alpha);
+/* tile an art_pixbuf onto an rgb buffer*/
+void tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
+		     ArtPixBuf *pbuf, int scale_w, int scale_h);
 
 /* just copied from pixbuf source */
 GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);

@@ -14,7 +14,9 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_alphagamma.h>
 #include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_pixbuf.h>
 #include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_affine.h>
 #include "rgb-stuff.h"
 
 GdkPixbuf *
@@ -178,6 +180,32 @@ tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		y++;
 		if(y>h)
 			y = 0;
+	}
+}
+
+void
+tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
+		ArtPixBuf *pbuf, int scale_w, int scale_h)
+{
+	int i,j;
+
+	gdouble scaleaff[6];
+	gdouble affine[6];
+	
+	scaleaff[1] = scaleaff[2] = scaleaff[4] = scaleaff[5] = 0;
+
+	scaleaff[0] = scale_w / (double)(pbuf->width);
+	scaleaff[3] = scale_h / (double)(pbuf->height);
+	
+	for(i=-(offx%scale_w);i<dw;i+=scale_w) {
+		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
+			art_affine_translate(affine,i,j);
+			art_affine_multiply(affine,scaleaff,affine);
+			art_rgb_pixbuf_affine(dest,
+					      0,0,dw,dh,drs,
+					      pbuf,affine,
+					      ART_FILTER_NEAREST,NULL);
+		}
 	}
 }
 

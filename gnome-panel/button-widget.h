@@ -21,6 +21,7 @@ struct _ButtonWidget
 	GtkWidget		pixmap;
 	
 	GdkPixbuf		*pixbuf;
+	GdkPixmap		*cache;
 	
 	char			*filename;
 	int			size;
@@ -68,8 +69,7 @@ void		button_widget_draw		(ButtonWidget *button,
 						 int rowstride);
 /* draw the xlib part (arrow/text) */
 void		button_widget_draw_xlib		(ButtonWidget *button,
-						 GdkPixmap *pixmap,
-						 int offx, int offy);
+						 GdkPixmap *pixmap);
 
 int		button_widget_set_pixmap	(ButtonWidget *button,
 						 char *pixmap,
