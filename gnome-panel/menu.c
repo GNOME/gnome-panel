@@ -669,7 +669,7 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 
 	/*guess debian menus*/
 	if (g_file_exists("/etc/menu-methods/gnome"))
-		flags |= MAIN_MENU_DEBIAN;
+		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 
 	if(mf)
 		load_menu_applet(mf->menudir,flags, current_panel, 0);

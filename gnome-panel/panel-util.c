@@ -16,7 +16,6 @@ string_is_in_list(GSList *list,char *text)
 }
 
 
-/*FIXME: use gnome_entry*/
 GtkWidget *
 create_text_entry(GtkWidget *table,
 		  char *history_id,
@@ -27,6 +26,7 @@ create_text_entry(GtkWidget *table,
 {
 	GtkWidget *wlabel;
 	GtkWidget *entry;
+	GtkWidget *t;
 
 	wlabel = gtk_label_new(label);
 	gtk_misc_set_alignment(GTK_MISC(wlabel), 0.0, 0.5);
@@ -37,16 +37,17 @@ create_text_entry(GtkWidget *table,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 	gtk_widget_show(wlabel);
 
-	entry = gtk_entry_new();
+	entry = gnome_entry_new(history_id);
+	t = gnome_entry_gtk_entry (GNOME_ENTRY (entry));
 	if (text)
-		gtk_entry_set_text(GTK_ENTRY(entry), text);
+		gtk_entry_set_text(GTK_ENTRY(t), text);
 	gtk_table_attach(GTK_TABLE(table), entry,
 			 1, 2, row, row + 1,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
-	gtk_signal_connect_object_while_alive (GTK_OBJECT (entry), "changed",
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
 					       GTK_OBJECT(w));
 	return entry;

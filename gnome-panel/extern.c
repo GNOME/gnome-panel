@@ -484,8 +484,12 @@ static CORBA_char *
 s_panelspot_get_tooltip(POA_GNOME_PanelSpot *servant,
 			CORBA_Environment *ev)
 {
-	/*FIXME: get the tooltip text*/
-	return CORBA_string_dup("");
+	Extern *ext = (Extern *)servant;
+	GtkTooltipsData *d = gtk_tooltips_data_get(ext->ebox);
+	if(!d || !d->tip_text)
+		return CORBA_string_dup("");
+	else
+		return CORBA_string_dup(d->tip_text);
 }
 
 static void

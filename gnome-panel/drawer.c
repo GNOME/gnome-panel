@@ -60,7 +60,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		}
 	}
 	g_free(s);
-	s = gtk_entry_get_text(GTK_ENTRY(tipentry));
+	s = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
 	if(!s || !*s)
 		drawer->tooltip = NULL;
 	else
