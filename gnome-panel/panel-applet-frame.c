@@ -259,6 +259,10 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
 	GtkWidget          *widget;
 
         widget = bonobo_widget_new_control (iid, NULL);
+	if (!widget) {
+		g_warning (G_STRLOC ": failed to load %s", iid);
+		return;
+	}
 
         control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 

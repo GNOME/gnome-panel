@@ -28,6 +28,7 @@
 #include <gnome-desktop-item.h>
 #include <gnome-ditem-edit.h>
 #include <gconf/gconf-client.h>
+#include <libbonobo.h>
 
 #include "aligned-widget.h"
 #include "button-widget.h"
@@ -2040,20 +2041,23 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 		{ "text/uri-list", 0, 0 }
 	};
 
-	GtkWidget *label, *hbox=NULL, *align;
+	GtkWidget *label;
+	GtkWidget *hbox = NULL;
+	GtkWidget *align;
+	gboolean   icons_in_menus = menus_have_icons ();
 
 	label = gtk_label_new (title);
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 	
-	if (menus_have_icons ())  {
+	if (icons_in_menus)  {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if (menus_have_icons ()) {
+	if (icons_in_menus) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -2071,7 +2075,7 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 	} else if(pixmap)
 		gtk_widget_unref(pixmap);
 
-	if (menus_have_icons ())
+	if (icons_in_menus)
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 
 	if (item_loc != NULL) {
@@ -2259,20 +2263,6 @@ add_test_applet (GtkWidget *widget,
 
 	extern_load_applet ("OAFIID:GNOME_Panel_TestApplet",
 			    NULL, panel, -1, FALSE, FALSE);
-}
-
-/*
- * FIXME: only a temporary testing menuitem
- */
-static void
-add_test_bonobo_applet (GtkWidget *widget,
-			gchar     *iid)
-{
-	PanelWidget *panel;
-
-	panel = get_panel_from_menu_data (widget, TRUE);
-
-	panel_applet_frame_load (iid, panel, -1);
 }
 
 static void
@@ -3049,22 +3039,19 @@ create_menuitem (GtkWidget *menu,
 		}
 	}
 
-	if (sub == NULL &&
-		   strstr(fr->name,"/applets/") &&
-		   fr->goad_id != NULL) {
+	if (sub)
+		setup_full_menuitem_with_size (menuitem, pixmap, itemname,
+					       NULL, FALSE, size, mf);
+
+	else if (strstr (fr->name,"/applets/") && fr->goad_id) {
 		setup_applet_drag (menuitem, fr->goad_id);
 		setup_full_menuitem_with_size (menuitem, pixmap, itemname,
 					       fr->name, TRUE, size, mf);
-	} else {
-		/*setup the menuitem, pass item_loc if this is not
-		  a submenu, so that the item can be added,
-		  we can be sure that the FileRec will live that long,
-		  (when it dies, the menu will not be used again, it will
-		  be recreated at the next available opportunity)*/
+
+	} else
 		setup_full_menuitem_with_size (menuitem, pixmap, itemname,
-					       sub != NULL ? NULL : fr->name,
-					       FALSE, size, mf);
-	}
+					       fr->name, FALSE, size, mf);
+
 
 	if(*add_separator) {
 		add_menu_separator(menu);
@@ -3340,31 +3327,159 @@ menu_deactivate (GtkWidget *w, gpointer data)
 	menu->age = 0;
 }
 
-static GtkWidget *
-create_applets_menu (GtkWidget *menu, gboolean fake_submenus, gboolean title)
+/*
+ * FIXME: figure out how to handle internationalised strings.
+ * FIXME: lazily create a hashtable
+ */
+static const gchar *
+applet_menu_get_category_icon (const gchar *category)
 {
-	GtkWidget *applet_menu;
-	char      *menudir;
+	if (!strcmp (category, "Amusements")) {
+		return "gnome-amusements.png";
+	} else if (!strcmp (category, "Clocks")) {
+		return "gnome-clock.png";
+	} else if (!strcmp (category, "Monitors")) {
+		return "gnome-monitor.png";
+	} else if (!strcmp (category, "Multimedia")) {
+		return "gnome-multimedia.png";
+	} else if (!strcmp (category, "Network")) {
+		return "gnome-networktool.png";
+	} else if (!strcmp (category, "Utility")) {
+		return "gnome-util.png";
+	}
 
-	menudir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-					     "applets", TRUE, NULL);
+	return NULL;
+}
 
-	if (menudir == NULL ||
-	    ! g_file_test (menudir, G_FILE_TEST_IS_DIR)) {
-		g_free (menudir);
-		g_warning (_("Cannot find applets menu directory"));
+static GtkWidget *
+applet_menu_append (GtkWidget   *menu,
+		    const gchar *name,
+		    const gchar *icon)
+{
+	GtkWidget *menuitem;
+	GtkWidget *pixmap;
+	IconSize   icon_size;
+
+	menuitem = gtk_menu_item_new ();
+
+	icon_size = global_config.use_large_icons ? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
+
+	if (icon && menus_have_icons ())
+		pixmap = fake_pixmap_at_size (icon, NULL, icon_size);
+	else
+		pixmap = NULL;
+
+	setup_full_menuitem_with_size (menuitem, pixmap, name, NULL, FALSE, icon_size, NULL);
+
+	gtk_widget_show_all (menuitem);
+
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+
+	return menuitem;
+}
+
+static void
+add_bonobo_applet (GtkWidget *widget,
+		   gchar     *iid)
+{
+	PanelWidget *panel;
+
+	panel = get_panel_from_menu_data (widget, TRUE);
+
+	panel_applet_frame_load (iid, panel, -1);
+
+	/*g_free (iid);*/
+}
+
+static const gchar applet_requirements [] = 
+	"has_all (repo_ids, ['IDL:Bonobo/Control:1.0', 'IDL:GNOME/PanelAppletShell:1.0']) && "
+	"defined (panel:icon) && defined (panel:category)";
+
+static gchar *applet_sort_criteria [] = {
+	"panel:category",
+	"name",
+	NULL
+	};
+
+static GtkWidget *
+create_applets_menu ()
+{
+	CORBA_Environment      env;
+	Bonobo_ServerInfoList *list;
+	GtkWidget             *menu;
+	GtkWidget             *prev_menu = NULL;
+	const gchar           *prev_category = NULL;
+	gint                   i;
+
+	CORBA_exception_init (&env);
+
+	list = bonobo_activation_query (applet_requirements,
+					applet_sort_criteria,
+					&env);
+	if (BONOBO_EX (&env)) {
+		g_warning (_("query returned exception %s\n"), BONOBO_EX_REPOID (&env));
+
+		CORBA_exception_free (&env);
+
 		return NULL;
 	}
-	
-	applet_menu = create_menu_at (menu, menudir,
-				      TRUE /* applets */,
-				      FALSE /* launcher_add */,
-				      FALSE /* favourites_add */,
-				      _("Applets"),
-				      "gnome-applets.png",
-				      fake_submenus, FALSE, title);
-	g_free (menudir);
-	return applet_menu;
+
+	menu = menu_new ();
+
+	menu_add_tearoff (GTK_MENU (menu), GTK_SIGNAL_FUNC (tearoff_new_menu), menu);
+
+	g_signal_connect (G_OBJECT (menu), "destroy", G_CALLBACK (menu_destroy), NULL);
+
+	for (i = 0; i < list->_length; i++) {
+		Bonobo_ServerInfo *info;
+		GtkWidget         *menuitem;
+		const gchar       *name;
+		const gchar       *icon;
+		const gchar       *category;
+		gchar             *iid;
+
+		info = &list->_buffer [i];
+
+		iid = info->iid;
+
+		name     = bonobo_server_info_prop_lookup (info, "name", NULL);
+		icon     = bonobo_server_info_prop_lookup (info, "panel:icon", NULL);
+		category = bonobo_server_info_prop_lookup (info, "panel:category", NULL);
+
+		if (!name)
+			continue;
+
+		if (!category || !category [0]) {
+			applet_menu_append (menu, name, icon);
+			continue;
+		}
+
+		if (!prev_category || strcmp (prev_category, category)) {
+			const gchar *cat_icon;
+
+			prev_category = category;
+			prev_menu = menu_new ();
+
+			cat_icon = applet_menu_get_category_icon (category);
+
+			menuitem = applet_menu_append (menu, category, cat_icon);
+
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), prev_menu);
+		}
+
+		menuitem = applet_menu_append (prev_menu, name, icon);
+
+		g_signal_connect (G_OBJECT (menuitem),
+				  "activate",
+				  G_CALLBACK (add_bonobo_applet),
+				  g_strdup (iid));
+	}
+
+	CORBA_free (list);
+
+	CORBA_exception_free (&env);
+
+	return menu;
 }
 
 static void
@@ -4983,36 +5098,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (add_test_applet), NULL);
-
-	/*
-	 * FIXME: only a temporary testing menuitem
-	 */
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Test Bonobo Applet"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (add_test_bonobo_applet),
-			    "OAFIID:GNOME_Panel_TestBonoboApplet");
-
-	/*
-	 * FIXME: only a temporary testing menuitem
-	 */
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Fish Applet"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (add_test_bonobo_applet),
-			    "OAFIID:GNOME_FishApplet");
-
-	/*
-	 * FIXME: only a temporary testing menuitem
-	 */
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Clock Applet"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC (add_test_bonobo_applet),
-			    "OAFIID:GNOME_ClockApplet");
 }
 
 static void

@@ -765,13 +765,9 @@ fish_expose (GtkWidget      *darea,
 static void
 create_fish_widget(Fish *fish)
 {
-	GtkStyle *style;
-
 	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
-	style = gtk_widget_get_style (GTK_WIDGET (fish->applet));
-	
 	fish->darea = gtk_drawing_area_new();
 	if(IS_ROT(fish)) {
 		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
