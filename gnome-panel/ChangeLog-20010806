@@ -1,3 +1,14 @@
+Sun Apr 22 21:59:04 2001  George Lebl <jirka@5z.com>
+
+	* extern.[ch]:  When an applet doesn't want session saving, don't
+	  bother trying to restart it.
+
+	* extern.[ch], session.c, panel.c, menu.c, launcher.c, applet.c:
+	  Save last location for a goad_id, and if an applet was started
+	  without specifying a position, then use this one.  This makes say
+	  the xchat applet always show up at the same place.  It also
+	  makes re-adding applets smarter.
+
 Sun Apr 22 20:13:03 2001  George Lebl <jirka@5z.com>
 
 	* applet-widget.c:  be clearer in applet_widget_init function docs

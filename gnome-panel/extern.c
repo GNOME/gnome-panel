@@ -441,7 +441,8 @@ extern_before_remove (Extern *ext)
 	GtkWidget *dlg;
 	ReloadCallbackData *d;
 
-	if (ext->clean_remove)
+	if (ext->clean_remove ||
+	    ext->didnt_want_save)
 		return;
 
 	id = ext->goad_id != NULL ? ext->goad_id : "";
@@ -790,6 +791,59 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
 
+/* Note exactpos may NOT be changed */
+static PanelWidget *
+get_us_position (const int panel, const int pos, const char *goad_id, int *newpos,
+		 gboolean *exactpos)
+{
+	PanelWidget *pw = NULL;
+
+	*newpos = pos;
+
+	if (panel < 0 || pos < 0) {
+		char *key = g_strdup_printf ("%sApplet_Position_Memory/%s/",
+					     PANEL_CONFIG_PATH,
+					     goad_id);
+		gnome_config_push_prefix (key);
+		g_free (key);
+
+		if (pos < 0)
+			*newpos = gnome_config_get_int ("position=-1");
+		if (panel < 0) {
+			guint32 unique_id = gnome_config_get_int ("panel_unique_id=0");
+			if (unique_id != 0) {
+				pw = panel_widget_get_by_id (unique_id);
+			}
+			if (pw == NULL) {
+				*newpos = -1;
+			}
+		}
+
+		gnome_config_pop_prefix ();
+	}
+
+	if (pw == NULL && panel < 0)
+		pw = panels->data;
+
+	if (*newpos < 0)
+		*newpos = 0;
+	else if (exactpos != NULL)
+		 *exactpos = TRUE;
+
+	if (pw == NULL) {
+		/*select the nth panel*/
+		GSList *node = g_slist_nth (panels, panel);
+		if (node == NULL)
+			node = panels;
+		/* There's always at least one */
+		g_assert (node != NULL);
+		pw = node->data;
+	}
+
+	return pw;
+}
+
+
 void
 load_extern_applet (const char *goad_id, const char *cfgpath,
 		    PanelWidget *panel, int pos, gboolean exactpos,
@@ -814,6 +868,10 @@ load_extern_applet (const char *goad_id, const char *cfgpath,
 	ext->send_draw = FALSE;
 	ext->orient = -1;
 
+	/* don't know until first save, but FALSE since
+	 * we assume it will want to. */
+	ext->didnt_want_save = FALSE;
+
 	/* not until we are properly added */
 	ext->clean_remove = TRUE;
 
@@ -835,6 +893,24 @@ load_extern_applet (const char *goad_id, const char *cfgpath,
 	ext->applet = CORBA_OBJECT_NIL;
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = cfg;
+
+	if (panel == NULL || pos < 0) {
+		if (panel != NULL) {
+			gboolean exactpos;
+			/* We have a panel */
+			PanelWidget *pw = get_us_position (-1, pos, goad_id,
+							   &pos, &exactpos);
+			/* only use this position if
+			 * pw and panel are the same */
+			if (pw != panel)
+				pos = 0;
+			else
+				ext->exactpos = exactpos;
+		} else /* panel == NULL && pos < 0 */ {
+			panel = get_us_position (-1, -1, goad_id, &pos,
+						 &ext->exactpos);
+		}
+	}
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
 		g_warning(_("Whoops! for some reason we can't add "
@@ -878,7 +954,7 @@ s_panel_add_applet (PortableServer_Servant servant,
 		    CORBA_unsigned_long* wid,
 		    CORBA_Environment *ev)
 {
-	return s_panel_add_applet_full (servant, panel_applet, goad_id, 0, 0,
+	return s_panel_add_applet_full (servant, panel_applet, goad_id, -1, -1,
 					cfgpath, globcfgpath, wid, ev);
 }
 
@@ -893,6 +969,8 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 			 CORBA_unsigned_long* wid,
 			 CORBA_Environment *ev)
 {
+	PanelWidget *pw;
+	int newpos;
 	GSList *li;
 	Extern *ext;
 	POA_GNOME_PanelSpot *panelspot_servant;
@@ -995,15 +1073,9 @@ s_panel_add_applet_full (PortableServer_Servant servant,
 	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
 			      CORBA_OBJECT_NIL);
 
-	/*select the nth panel*/
-	li = g_slist_nth (panels, panel);
-	if (li == NULL)
-		li = panels;
+	pw = get_us_position (panel, pos, goad_id, &newpos, &ext->exactpos);
 
-	/* There's always at least one */
-	g_assert (li != NULL);
-
-	*wid = reserve_applet_spot (ext, li->data, pos,
+	*wid = reserve_applet_spot (ext, pw, newpos,
 				    APPLET_EXTERN_RESERVED);
 	if (*wid == 0) {
 		extern_clean(ext);
@@ -1515,11 +1587,15 @@ s_panelspot_register_us(PortableServer_Servant servant,
 	extern_unref (ext);
 }
 
+
 static void
 s_panelspot_unregister_us(PortableServer_Servant servant,
 			  CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
+
+	extern_save_last_position (ext, TRUE /* sync */);
+
 	ext->clean_remove = TRUE;
 	panel_clean_applet(ext->info);
 }
@@ -1702,6 +1778,7 @@ save_applet (AppletInfo *info, gboolean ret)
 
 	panel_num = g_slist_index (panels, panel);
 	if (panel_num == -1) {
+		/* Eeeeeeeeeeeeeek! */
 		gnome_config_set_string ("id", EMPTY_ID);
 		gnome_config_pop_prefix ();
 		gnome_config_sync ();
@@ -1713,27 +1790,27 @@ save_applet (AppletInfo *info, gboolean ret)
 		
 	/*have the applet do it's own session saving*/
 	if (ret) {
+		/* wanted to save */
+		ext->didnt_want_save = FALSE;
+
 		gnome_config_set_string ("id", EXTERN_ID);
 		gnome_config_set_string ("goad_id",
 					 ext->goad_id);
+		gnome_config_set_int ("position", ad->pos);
+		gnome_config_set_int ("panel", panel_num);
+		gnome_config_set_int ("unique_panel_id", panel->unique_id);
+		gnome_config_set_bool ("right_stick",
+				       panel_widget_is_applet_stuck (panel,
+								     info->widget));
 	} else {
+		/* ahh didn't want to save */
+		ext->didnt_want_save = TRUE;
+
 		gnome_config_set_string ("id", EMPTY_ID);
-		gnome_config_pop_prefix ();
-		gnome_config_sync ();
-		/*save next applet, but from an idle handler, so that
-		  this call returns*/
-		gtk_idle_add (save_next_idle,NULL);
-		return;
 	}
-	
-	gnome_config_set_int ("position", ad->pos);
-	gnome_config_set_int ("panel", panel_num);
-	gnome_config_set_int ("unique_panel_id", panel->unique_id);
-	gnome_config_set_bool ("right_stick",
-			       panel_widget_is_applet_stuck (panel,
-							     info->widget));
+
 	gnome_config_pop_prefix ();
-	
+
 	gnome_config_sync ();
 	/*save next applet, but from an idle handler, so that
 	  this call returns*/
@@ -1906,3 +1983,37 @@ extern_send_draw(Extern *ext)
 		ext->send_draw_idle =
 			gtk_idle_add(send_draw_idle, ext);
 }
+
+void
+extern_save_last_position (Extern *ext, gboolean sync)
+{
+	char *key;
+	int panel_num;
+	AppletData *ad;
+
+	/* Here comes a hack.  We probably want the next applet to load at
+	 * a similar location.  If none is given.  Think xchat, or any
+	 * app that just adds applets on it's own by just running them. */
+	key = g_strdup_printf ("%sApplet_Position_Memory/%s/",
+			       PANEL_CONFIG_PATH,
+			       ext->goad_id);
+	gnome_config_push_prefix (key);
+	g_free (key);
+
+	ad = gtk_object_get_data (GTK_OBJECT (ext->info->widget),
+				  PANEL_APPLET_DATA);
+
+	panel_num = g_slist_index (panels, ext->info->widget->parent);
+
+	if (ad != NULL)
+		gnome_config_set_int ("position", ad->pos);
+	if (panel_num >= 0)
+		gnome_config_set_int
+			("panel_unique_id",
+			 PANEL_WIDGET (ext->info->widget->parent)->unique_id);
+	
+	gnome_config_pop_prefix ();
+	if (sync)
+		gnome_config_sync ();
+}
+

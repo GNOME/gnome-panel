@@ -2170,7 +2170,7 @@ add_applet (GtkWidget *w, const char *item_loc)
 	}
 	load_extern_applet(goad_id, NULL,
 			   get_panel_from_menu_data(w),
-			   0, FALSE, FALSE);
+			   -1, FALSE, FALSE);
 
 	g_free(goad_id);
 }

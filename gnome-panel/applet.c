@@ -78,6 +78,7 @@ kill_applet_in_idle(gpointer data)
 	AppletInfo *info = data;
 	if (info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
+		extern_save_last_position (ext, TRUE /* sync */);
 		ext->clean_remove = TRUE;
 	} else if (info->type == APPLET_SWALLOW) {
 		Swallow *swallow = info->data;

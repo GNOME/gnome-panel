@@ -837,6 +837,9 @@ panel_session_die (GnomeClient *client,
 		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
+			/* save but don't sync, we do that after
+			 * for everything */
+			extern_save_last_position (ext, FALSE /* sync */);
 			ext->clean_remove = TRUE;
 			gtk_widget_destroy (info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
@@ -847,6 +850,8 @@ panel_session_die (GnomeClient *client,
 					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
 		}
 	}
+
+	gnome_config_sync ();
 
 	xstuff_unsetup_desktop_area ();
 			

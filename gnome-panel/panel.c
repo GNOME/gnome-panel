@@ -596,12 +596,14 @@ clean_kill_applets (PanelWidget *panel)
 					     "applet_info");
 		if (info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
+			extern_save_last_position (ext, FALSE /* sync */);
 			ext->clean_remove = TRUE;
 		} else if (info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			swallow->clean_remove = TRUE;
 		}
 	}
+	gnome_config_sync ();
 }
 
 static void

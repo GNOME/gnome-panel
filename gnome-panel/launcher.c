@@ -79,8 +79,8 @@ launch (Launcher *launcher, int argc, char *argv[])
 
 		if (goad_id != NULL) {
 			load_extern_applet (goad_id, NULL,
-					    panels->data,
-					    0, FALSE, FALSE);
+					    NULL, -1,
+					    FALSE, FALSE);
 		} else {
 			g_warning (_("Can't get goad_id from desktop entry!"));
 		}

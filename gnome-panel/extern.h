@@ -18,6 +18,12 @@ struct _Extern {
 
 	int refcount; /* primitive refcounting */
 
+	gboolean didnt_want_save; /* normally FALSE, if an app returned TRUE
+				     from save session it's set to TRUE,
+				     in which case we won't warn about it
+				     croaking and wanting a reload, because
+				     it wouldn't work anyway. */
+
 	gboolean clean_remove; /* normally FALSE, if TRUE, the user or the
 				  applet requested to be killed, thus the
 				  panel should not ask about putting the
@@ -66,6 +72,8 @@ void	extern_send_draw 	(Extern *ext);
 
 void	save_applet		(AppletInfo *info,
 				 gboolean ret);
+
+void	extern_save_last_position (Extern *ext, gboolean sync);
 
 END_GNOME_DECLS
 
