@@ -451,7 +451,7 @@ xstuff_zoom_animate (GtkWidget *widget, GdkRectangle *opt_rect)
 	draw_zoom_animation (gscreen,
 			     rect.x, rect.y, rect.width, rect.height,
 			     dest.x, dest.y, dest.width, dest.height,
-			     MINIATURIZE_ANIMATION_DELAY_Z);
+			     MINIATURIZE_ANIMATION_STEPS_Z);
 }
 
 int
