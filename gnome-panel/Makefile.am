@@ -15,6 +15,7 @@ INCLUDES = -I. -I$(srcdir) \
 	@PIXBUF_CFLAGS@
 
 bin_PROGRAMS = panel gnome-panel-properties-capplet
+noinst_PROGRAMS = bad-applet
 
 libpanel_appletincludedir = $(includedir)
 libpanel_statusincludedir = $(includedir)
@@ -24,10 +25,13 @@ lib_LTLIBRARIES = libpanel_applet.la libpanel_status.la
 CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
 
 # try to make these get cleaned properly
-CLEANFILES += $(CORBA_SRCLIST)
+CLEANFILES += $(CORBA_SRCLIST) my_gnome_panel_idl
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
+$(CORBA_SRCLIST): my_gnome_panel_idl
+
+my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
+	touch my_gnome_panel_idl
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
@@ -59,7 +63,13 @@ libpanel_status_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
 
-base_panel_SOURCES=\
+bad_applet_SOURCES = bad-applet.c
+
+bad_applet_LDADD = libpanel_applet.la \
+	$(GNOME_LIBDIR) 	\
+	$(GNORBA_LIBS) $(INTLLIBS)
+
+panel_SOURCES=\
 	panel-include.h		\
 	panel-types.h		\
 	main.c			\
@@ -120,17 +130,9 @@ base_panel_SOURCES=\
 	rgb-stuff.h		\
 	rgb-stuff.c
 
-panel_SOURCES = 		\
-	$(base_panel_SOURCES)
+panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
+	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@
 
-# it should work without this as we link libpanel_applet anyway for shlib
-# applets and it already links to CORBA_SRCLIST, so this should give us a
-# dubious gain in linking speed and memory usage
-#	$(CORBA_SRCLIST)
-
-#$(base_panel_SOURCES): $(CORBA_SRCLIST)
-
-panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@
 panel_LDFLAGS=-export-dynamic
 
 gnome_panel_properties_capplet_SOURCES = \
