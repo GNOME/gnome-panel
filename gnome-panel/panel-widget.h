@@ -70,6 +70,8 @@ struct _PanelWidget
 	
 	GList          *applet_list;
 
+	GSList         *create_launcher_dialog_list;	
+
 	int             size;
 	GtkOrientation  orient;
 	int             sz;
@@ -88,6 +90,8 @@ struct _PanelWidget
 	                                  */
 	
 	GtkWidget      *panel_parent;
+
+	GtkWidget      *delete_dialog;
 	
 	GdkEventKey    *key_event;
 

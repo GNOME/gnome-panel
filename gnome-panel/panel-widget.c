@@ -1623,6 +1623,8 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->master_widget = NULL;
 	panel->drop_widget   = widget;
 	panel->inhibit_draw  = FALSE;
+	panel->delete_dialog = NULL;
+	panel->create_launcher_dialog_list = NULL;
 
 	panel_background_init (&panel->background);
 
