@@ -1,3 +1,10 @@
+Fri Jun 01 16:20:15 2001  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: when stoppong movement 1) ignore the press when
+	  we are still in movement mode and wipe the "event" signal, and 2)
+	  on release wipe the "event" signal yet again.  This way moving 
+	  menu buttons from right click menu actually works.
+
 Thu May 31 00:12:53 2001  George Lebl <jirka@5z.com>
 
 	* gnome-panel-properties.c, session.c, config/panel.global:  Add the

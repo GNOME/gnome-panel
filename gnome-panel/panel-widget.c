@@ -2406,8 +2406,11 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 #endif
 
 			/* don't propagate this event */
-			if (panel->currently_dragged_applet)
+			if (panel->currently_dragged_applet) {
+				gtk_signal_emit_stop_by_name
+					(GTK_OBJECT (widget), "event");
 				return TRUE;
+			}
 
 			if ( ! commie_mode &&
 			    bevent->button == 2) {
@@ -2421,6 +2424,8 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 		case GDK_BUTTON_RELEASE:
 			if (panel->currently_dragged_applet) {
+				gtk_signal_emit_stop_by_name
+					(GTK_OBJECT (widget), "event");
 				panel_widget_applet_drag_end(panel);
 				return TRUE;
 			}
