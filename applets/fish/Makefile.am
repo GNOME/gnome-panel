@@ -12,8 +12,6 @@ fish_applet_LDADD = ../../panel/libpanel_applet.la \
 		     $(GNOME_LIBDIR) $(ORB_LIBS) \
 		     $(GNOMEUI_LIBS) $(INTLLIBS) 
 
-fish_applet_LINK = $(CXXLINK)
-
 FISH_BITMAPS = fishanim.png
 
 EXTRA_DIST = \

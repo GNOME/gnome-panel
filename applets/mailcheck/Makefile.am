@@ -20,9 +20,6 @@ gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
 		     $(GNOME_LIBDIR) $(ORB_LIBS)      \
 		     $(GNOMEUI_LIBS) $(INTLLIBS) 
 
-# will go away once ORBit becomes default
-gen_util_applet_LINK = $(CXXLINK)
-
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.xpm email-e.xpm tux-anim.xpm
 
