@@ -1986,10 +1986,6 @@ calendar_client_launch_editor (CalendarClient     *client,
 			       GdkScreen          *screen,
 			       GError            **error)
 {
-#define EVOLUTION_COMMAND             "evolution-1.5"
-#define EVOLUTION_APPOINTMENTS_OAFIID "OAFIID:GNOME_Evolution_Calendar_Component:1.5"
-#define EVOLUTION_TASKS_OAFIID        "OAFIID:GNOME_Evolution_Tasks_Component:1.5"
-
   char     *command_line;
   gboolean  retval;
 
@@ -1997,19 +1993,12 @@ calendar_client_launch_editor (CalendarClient     *client,
   g_return_val_if_fail (event_type == CALENDAR_EVENT_APPOINTMENT ||
 			event_type == CALENDAR_EVENT_TASK, FALSE);
 
-  command_line = g_strdup_printf ("%s -c %s",
-				  EVOLUTION_COMMAND,
-				  event_type == CALENDAR_EVENT_APPOINTMENT ?
-				      EVOLUTION_APPOINTMENTS_OAFIID :
-				      EVOLUTION_TASKS_OAFIID);
+  command_line = g_strdup_printf ("evolution -c %s",
+				  event_type == CALENDAR_EVENT_APPOINTMENT ? "calendar" : "tasks");
 
   retval = gdk_spawn_command_line_on_screen (screen, command_line, error);
 
   g_free (command_line);
 
   return retval;
-
-#undef EVOLUTION_COMMAND
-#undef EVOLUTION_APPOINTMENTS_OAFIID
-#undef EVOLUTION_TASKS_OAFIID
 }
