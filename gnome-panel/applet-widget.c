@@ -13,33 +13,33 @@ typedef void (*AppletWidgetOrientSignal) (GtkObject * object,
 					  PanelOrientType orient,
 					  gpointer data);
 
-typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
+typedef int (*AppletWidgetSaveSignal) (GtkObject * object,
 				        char *cfgpath,
 				        char *globcfgpath,
 				        gpointer data);
 
 typedef void (*AppletWidgetBackSignal) (GtkObject * object,
 					PanelBackType type,
-					gchar *pixmap,
+					char *pixmap,
 					GdkColor *color,
 					gpointer data);
 
 typedef void (*AppletWidgetTooltipSignal) (GtkObject * object,
-					   gint enabled,
+					   int enabled,
 					   gpointer data);
 
 static GList *applet_widgets = NULL;
-static gint applet_count = 0;
+static int applet_count = 0;
 
-static gint do_multi = FALSE;
-static gint die_on_last = TRUE;
+static int do_multi = FALSE;
+static int die_on_last = TRUE;
 
 static GtkPlugClass *parent_class;
 
 static AppletStartNewFunc start_new_func=NULL;
 static gpointer start_new_func_data=NULL;
 
-static gchar *myinvoc= NULL;
+static char *myinvoc= NULL;
 
 static GtkTooltips *applet_tooltips=NULL;
 
@@ -73,7 +73,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static gint applet_widget_signals[LAST_SIGNAL] = {0,0};
+static int applet_widget_signals[LAST_SIGNAL] = {0,0};
 
 static void
 applet_widget_marshal_signal_orient (GtkObject * object,
@@ -96,7 +96,7 @@ applet_widget_marshal_signal_save (GtkObject * object,
 				   GtkArg * args)
 {
 	AppletWidgetSaveSignal rfunc;
-	gint *retval;
+	int *retval;
 
 	rfunc = (AppletWidgetSaveSignal) func;
 
@@ -207,7 +207,7 @@ wapplet_widget_init (AppletWidget *applet_widget)
 	applet_widget->applet_id = -1;
 }
 
-static gint
+static int
 applet_widget_destroy(GtkWidget *w, gpointer data)
 {
 	AppletWidget *applet = APPLET_WIDGET(w);
@@ -243,8 +243,8 @@ applet_widget_sync_config(void)
 
 void
 applet_widget_register_callback(AppletWidget *applet,
-				gchar *name,
-				gchar *menutext,
+				char *name,
+				char *menutext,
 				AppletCallbackFunc func,
 				gpointer data)
 {
@@ -253,9 +253,9 @@ applet_widget_register_callback(AppletWidget *applet,
 }
 void
 applet_widget_register_stock_callback(AppletWidget *applet,
-				      gchar *name,
-				      gchar *stock_type,
-				      gchar *menutext,
+				      char *name,
+				      char *stock_type,
+				      char *menutext,
 				      AppletCallbackFunc func,
 				      gpointer data)
 {
@@ -265,45 +265,45 @@ applet_widget_register_stock_callback(AppletWidget *applet,
 
 void
 applet_widget_unregister_callback(AppletWidget *applet,
-				  gchar *name)
+				  char *name)
 {
 	gnome_panel_applet_unregister_callback (applet->applet_id,name);
 }
 
 void
 applet_widget_register_callback_dir(AppletWidget *applet,
-				    gchar *name,
-				    gchar *menutext)
+				    char *name,
+				    char *menutext)
 {
 	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
 						  "",menutext);
 }
 void
 applet_widget_register_stock_callback_dir(AppletWidget *applet,
-					  gchar *name,
-					  gchar *stock_type,
-					  gchar *menutext)
+					  char *name,
+					  char *stock_type,
+					  char *menutext)
 {
 	gnome_panel_applet_register_callback_dir (applet->applet_id,name,
 						  stock_type,menutext);
 }
 
 void
-applet_widget_unregister_callback_dir(AppletWidget *applet, gchar *name)
+applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 {
 	gnome_panel_applet_unregister_callback_dir (applet->applet_id,name);
 }
 
 
 GtkWidget *
-applet_widget_new_with_param(const gchar *param)
+applet_widget_new_with_param(const char *param)
 {
 	AppletWidget *applet;
 	char *result;
 	char *cfgpath;
 	char *globcfgpath;
 	guint32 winid;
-	gint applet_id;
+	int applet_id;
 
 	if(!param)
 		param="";
@@ -336,7 +336,7 @@ applet_widget_new_with_param(const gchar *param)
 	return GTK_WIDGET(applet);
 }
 
-gint
+int
 applet_widget_get_applet_count()
 {
 	return applet_count;
@@ -358,13 +358,13 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 void
 applet_widget_set_widget_tooltip(AppletWidget *applet,
 				 GtkWidget *widget,
-				 gchar *text)
+				 char *text)
 {
 	gtk_tooltips_set_tip (applet_tooltips,widget,text,NULL);
 }
 
 void
-applet_widget_set_tooltip(AppletWidget *applet, gchar *text)
+applet_widget_set_tooltip(AppletWidget *applet, char *text)
 {
 	if(text)
 		gnome_panel_applet_add_tooltip (applet->applet_id, text);
@@ -380,7 +380,7 @@ applet_widget_get_panel_orient(AppletWidget *applet)
 }
 
 AppletWidget*
-applet_widget_get_by_id(gint applet_id)
+applet_widget_get_by_id(int applet_id)
 {
 	GList *list;
 	for(list = applet_widgets;list!=NULL;list=g_list_next(list)) {
@@ -398,9 +398,9 @@ applet_widget_init(char *app_id,
 		   char **argv,
 		   unsigned int flags,
 		   int *arg_index,
-		   gchar *argv0,
-		   gint last_die,
-		   gint multi_applet,
+		   char *argv0,
+		   int last_die,
+		   int multi_applet,
 		   AppletStartNewFunc new_func,
 		   gpointer new_func_data)
 {
@@ -462,7 +462,7 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 
 	char *cfg = g_strdup(cfgpath);
 	char *globcfg = g_strdup(globcfgpath);
-	gint return_val = FALSE;
+	int return_val = FALSE;
 
 	applet = applet_widget_get_by_id(applet_id);
 	if(applet) {
@@ -523,12 +523,12 @@ _gnome_applet_tooltips_state(int enabled)
 
 
 /* convenience function for multi applets */
-gchar *
-make_param_string(gint argc, char *argv[])
+char *
+make_param_string(int argc, char *argv[])
 {
-	gchar *s;
-	gint i;
-	gint len=0;
+	char *s;
+	int i;
+	int len=0;
 
 	for(i=1;i<argc;i++)
 		len = strlen(argv[i])+1;

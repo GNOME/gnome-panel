@@ -35,17 +35,17 @@ typedef struct _AppletWidget		AppletWidget;
 typedef struct _AppletWidgetClass	AppletWidgetClass;
 
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
-typedef void (*AppletStartNewFunc)(const gchar *param, gpointer data);
+typedef void (*AppletStartNewFunc)(const char *param, gpointer data);
 
 struct _AppletWidget
 {
 	GtkPlug			window;
 
-	gint			applet_id;
+	int			applet_id;
 
 	/* use these as prefixes when loading saving data */
-	gchar			*cfgpath;
-	gchar			*globcfgpath;
+	char			*cfgpath;
+	char			*globcfgpath;
 };
 
 struct _AppletWidgetClass
@@ -62,28 +62,28 @@ struct _AppletWidgetClass
 	   to change */
 	void (* back_change) (AppletWidget *applet,
 			      PanelBackType type,
-			      gchar *pixmap,
+			      char *pixmap,
 			      GdkColor *color);
 	/*will send the current state of the tooltips, if they are enabled
 	  or disabled, you should only need this if you are doing something
 	  weird*/
 	void (* tooltip_state) (AppletWidget *applet,
-				gint enabled);
+				int enabled);
 	/*when the panel wants to save a session it will call this signal 
 	  if you trap it make sure you do gnome_config_sync() and
 	  gnome_config_drop_all() after your done otherwise the changes
 	  might not be written to file, also make sure you return
 	  FALSE from this signal or your position wil not get saved!*/
-	gint (* session_save) (AppletWidget *applet,
-			       gchar *cfgpath,
-			       gchar *globcfgpath);
+	int (* session_save) (AppletWidget *applet,
+			       char *cfgpath,
+			       char *globcfgpath);
 };
 
 guint		applet_widget_get_type		(void);
 
 /*start one but add a parameter that the panel should use next time
   to start us*/
-GtkWidget*	applet_widget_new_with_param	(const gchar *param);
+GtkWidget*	applet_widget_new_with_param	(const char *param);
 
 
 /*start a normal applet*/
@@ -92,12 +92,12 @@ GtkWidget*	applet_widget_new_with_param	(const gchar *param);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
-						 gchar *text);
+						 char *text);
 
 /*set tooltip on a specific widget inside the applet*/
 void		applet_widget_set_widget_tooltip(AppletWidget *applet,
 						 GtkWidget *widget,
-						 gchar *text);
+						 char *text);
 
 /* add a widget to the plug and register the applet, this has to
    be done after all the children had been added so that the applet-lib
@@ -118,37 +118,37 @@ void		applet_widget_remove_from_panel (AppletWidget *applet);
 */
 /*add a callback onto the applet's right click menu*/
 void		applet_widget_register_callback	(AppletWidget *applet,
-						 gchar *name,
-						 gchar *menutext,
+						 char *name,
+						 char *menutext,
 						 AppletCallbackFunc func,
 						 gpointer data);
 void		applet_widget_register_stock_callback	(AppletWidget *applet,
-							 gchar *name,
-							 gchar *stock_type,
-							 gchar *menutext,
+							 char *name,
+							 char *stock_type,
+							 char *menutext,
 							 AppletCallbackFunc func,
 							 gpointer data);
 /*remove a menuitem*/
 void		applet_widget_unregister_callback (AppletWidget *applet,
-						   gchar *name);
+						   char *name);
 /*add a submenu*/
 void		applet_widget_register_callback_dir (AppletWidget *applet,
-						     gchar *name,
-						     gchar *menutext);
+						     char *name,
+						     char *menutext);
 void		applet_widget_register_stock_callback_dir (AppletWidget *applet,
-							   gchar *name,
-							   gchar *stock_type,
-							   gchar *menutext);
+							   char *name,
+							   char *stock_type,
+							   char *menutext);
 /*remove a submenu*/
 void		applet_widget_unregister_callback_dir (AppletWidget *applet,
-						       gchar *name);
+						       char *name);
 
 
 /* get the applet widget with the id of applet_id */
-AppletWidget*	applet_widget_get_by_id		(gint applet_id);
+AppletWidget*	applet_widget_get_by_id		(int applet_id);
 
 /*get thenumber of applets*/
-gint		applet_widget_get_applet_count	(void);
+int		applet_widget_get_applet_count	(void);
 
 /*tell the panel to save the session here (just saves no shutdown),
   this should be done when you change some of your config and want
@@ -169,9 +169,9 @@ error_t		applet_widget_init		(char *app_id,
 						 char **argv,
 						 unsigned int flags,
 						 int *arg_index,
-						 gchar *argv0,
-						 gint last_die,
-						 gint multi_applet,
+						 char *argv0,
+						 int last_die,
+						 int multi_applet,
 						 AppletStartNewFunc new_func,
 						 gpointer new_func_data);
 
@@ -186,7 +186,7 @@ applet_widget_init(app_id,app_parser,argc,argv,flags,arg_index, \
 void		applet_widget_gtk_main		(void);
 
 /* convenience function for multi applets */
-gchar *		make_param_string		(gint argc, char *argv[]);
+char *		make_param_string		(int argc, char *argv[]);
 
 #ifdef __cplusplus
 }
