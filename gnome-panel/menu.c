@@ -1137,12 +1137,14 @@ create_menuitem(GtkWidget *menu,
 	char *filename;
 	struct stat s;
 
-	g_strconcat3_a(filename,menudir,"/",thisfile);
+	filename = g_strconcat(menudir,"/",thisfile, NULL);
 
 	if (stat (filename, &s) == -1) {
 		g_warning("Something is wrong, "
 			  "file %s can't be stated",
 			  filename);
+		/* make sure that we free up the filename before returning. */
+		g_free(filename);
 		return finfo;
 	}
 
@@ -1150,7 +1152,7 @@ create_menuitem(GtkWidget *menu,
 	item_info = NULL;
 	if (S_ISDIR (s.st_mode)) {
 		char *p;
-		g_strconcat3_a(p,filename,"/.directory",NULL);
+		p = g_strconcat(filename,"/.directory",NULL);
 		item_info = gnome_desktop_entry_load (p);
 
 		/*add the .directory file to the checked files list*/
@@ -1176,8 +1178,12 @@ create_menuitem(GtkWidget *menu,
 		if (!sub) {
 			if(item_info)
 				gnome_desktop_entry_free(item_info);
+			/* free up the string allocated at the top of this block */
+			g_free(p);
 			return finfo;
 		}
+		/* free up the pointer at the top of this block. */
+		g_free(p);
 	} else {
 		char *p = strrchr(filename,'.');
 		if (!p || strcmp(p, ".desktop") != 0)
@@ -1264,7 +1270,7 @@ create_menu_at (GtkWidget *menu,
 	if(!force && !g_file_exists(menudir))
 		return menu;
 	
-	g_strconcat3_a(filename,menudir,"/.directory",NULL);
+	filename = g_strconcat(menudir,"/.directory",NULL);
 	dir_info = gnome_desktop_entry_load (filename);
 
 	/*add the .directory file to the checked files list,
@@ -1291,7 +1297,9 @@ create_menu_at (GtkWidget *menu,
 	/*add the order file to the checked files list,
 	  but only if we can stat it (if we can't it probably doesn't
 	  exist)*/
-	g_strconcat3_a(filename,menudir,"/.order",NULL);
+	/* free up the old filename first */
+	g_free(filename);
+	filename = g_strconcat(menudir,"/.order",NULL);
 	fi = make_finfo(filename,FALSE);
 	if(fi)
 		finfo = g_slist_prepend(finfo,fi);
@@ -1367,6 +1375,8 @@ create_menu_at (GtkWidget *menu,
 
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
 	
+	/* free up the filename from above. */
+	g_free(filename);
 	return menu;
 }
 
@@ -2198,29 +2208,32 @@ make_rh_submenu(char *dir, GSList *rhlist)
 	GSList *li;
 	FILE *fp;
 	char *order_file;
-	g_strconcat3_a(order_file,dir,"/",".order");
+	order_file = g_strconcat(dir,"/",".order", NULL);
 	fp = fopen(order_file,"w");
 	for(li = rhlist;li!=NULL;li = g_slist_next(li)) {
 		RHMenuItem *ri = li->data;
-		GnomeDesktopEntry *dentry = g_new0_a(GnomeDesktopEntry,1);
+		GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
 		dentry->name = ri->name;
 		if(ri->type == RH_MENU_GROUP) {
 			char *p;
 			char *s;
-			g_strdup_a(s,ri->name);
+			s = g_strdup(ri->name);
 			dentry->type = "Directory";
 			while((p=strchr(s,' '))) *p='_';
 
-			g_strconcat3_a(p,dir,"/",s);
+			p = g_strconcat(dir,"/",s, NULL);
 			if(fp) fprintf(fp,"%s\n",g_basename(p));
 			mkdir(p,0755);
-			g_strconcat3_a(dentry->location,p,"/",".directory");
+			dentry->location = g_strconcat(p,"/",".directory", NULL);
 			
 			make_rh_submenu(p,ri->u.items);
+			/* free up the strings */
+			g_free(s);
+			g_free(p);
 		} else {
 			char *p;
 			char *s;
-			g_strconcat3_a(s,ri->name,".desktop",NULL);
+			s = g_strconcat(ri->name,".desktop",NULL);
 			while((p=strchr(s,' '))) *p='_';
 
 			dentry->type = "Application";
@@ -2231,13 +2244,20 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			gnome_config_make_vector(ri->u.item.exec,
 						 &dentry->exec_length,
 						 &dentry->exec);
-			g_strconcat3_a(dentry->location,dir,"/",s);
+			dentry->location = g_strconcat(dir,"/",s, NULL);
 			if(fp) fprintf(fp,"%s\n",s);
+			/* free up the location */
+			g_free(dentry->location);
+			g_free(s);
 		}
 		gnome_desktop_entry_save(dentry);
 		if(dentry->exec) g_strfreev(dentry->exec);
+		/* free up the dentry at the top of this block */
+		g_free(dentry);
 	}
 	if(fp) fclose(fp);
+	/* clean up the order_file from the top of the function */
+	g_free(order_file);
 }
 
 
@@ -2279,8 +2299,10 @@ create_rh_menu(void)
 			if(strcmp(dent->d_name,".")==0 ||
 			   strcmp(dent->d_name,"..")==0)
 				continue;
-			g_strconcat3_a(p,dirs[i],dent->d_name,NULL);
+			p = g_strconcat(dirs[i],dent->d_name,NULL);
 			rhlist = add_redhat_entry(rhlist,p);
+			/* free the list. */
+			g_free(p);
 		}
 		closedir(dir);
 	}
@@ -2288,13 +2310,16 @@ create_rh_menu(void)
 	mkdir(rhdir,0755);
 	if(rhlist) {
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
-			GnomeDesktopEntry *dentry = g_new0_a(GnomeDesktopEntry,1);
+			GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
 			dentry->name = _("Red Hat menus");
 			dentry->type = "Directory";
 			dentry->icon = "/usr/share/icons/mini/mini-redhat.xpm";
-			g_strconcat3_a(dentry->location,rhdir,
-				       ".directory",NULL);
+			dentry->location = g_strconcat(dentry->location,rhdir,
+						       ".directory",NULL);
 			gnome_desktop_entry_save(dentry);
+			/* free up the dentry + the location */
+			g_free(dentry->location);
+			g_free(dentry);
 		}
 		make_rh_submenu(rhdir,rhlist);
 
@@ -2715,7 +2740,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	
 	rb = w = gtk_radio_button_new_with_label (NULL, _("Off"));
 	gtk_table_attach_defaults(table,w,3,4,row,row+1);
-	g_strconcat3_a(p,ident,"_off",NULL);
+	p = g_strconcat(ident,"_off",NULL);
 	gtk_object_set_data(dialog,p,w);
 	if(!on)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
@@ -2726,7 +2751,9 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("In a submenu"));
 	gtk_table_attach_defaults(table,w,2,3,row,row+1);
-	g_strconcat3_a(p,ident,"_sub",NULL);
+	/* free it from above... */
+	g_free(p);
+	p = g_strconcat(ident,"_sub",NULL);
 	gtk_object_set_data(dialog,p,w);
 	if(sub)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
@@ -2742,6 +2769,8 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
+	/* free up "p" from above */
+	g_free(p);
 }
 	
 
