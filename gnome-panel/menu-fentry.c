@@ -18,7 +18,7 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 

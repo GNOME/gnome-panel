@@ -23,8 +23,8 @@
  */
 
 #include <config.h>
-#include <gnome.h>
-#include <libgnorba/gnorba.h>
+#include <libgnomeui.h>
+#include <bonobo-activation/bonobo-activation.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include <gdk/gdkx.h>
 #include "capplet-widget.h"

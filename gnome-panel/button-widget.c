@@ -1,7 +1,7 @@
 #include <config.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>

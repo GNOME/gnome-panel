@@ -8,7 +8,7 @@
  */
 
 #include "config.h"
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include <gdk/gdkx.h>
 #include <string.h>

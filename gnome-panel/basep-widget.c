@@ -9,7 +9,7 @@
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include "panel-widget.h"
 #include "basep-widget.h"
 #include "panel-util.h"

@@ -9,7 +9,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 

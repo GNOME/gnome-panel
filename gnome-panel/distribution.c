@@ -6,7 +6,7 @@
  */
 
 #include <config.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 

@@ -5,7 +5,7 @@
  * Authors: George Lebl
  */
 #include <config.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 
 #include <X11/Xmd.h>

@@ -8,8 +8,8 @@
 #define __APPLET_WIDGET_H__
 
 #include <gtk/gtk.h>
-#include <gnome.h>
-#include <libgnorba/gnorba.h>
+#include <libgnomeui.h>
+#include <bonobo-activation/bonobo-activation.h>
 
 #include <gnome-panel.h>
 

@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <string.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 

@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 

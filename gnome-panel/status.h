@@ -1,13 +1,13 @@
 #ifndef STATUS_H
 #define STATUS_H
 
-#include <gnome.h>
+#include <libgnomeui.h>
 #include "panel.h"
 #include "panel-types.h"
 #include "panel-widget.h"
 #include "gnome-panel.h"
 
-#include <libgnorba/gnorba.h>
+#include <bonobo-activation/bonobo-activation.h>
 
 G_BEGIN_DECLS
 

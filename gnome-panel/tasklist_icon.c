@@ -9,7 +9,7 @@
 #include <X11/Xutil.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gdk/gdkx.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include "gwmh.h"
 #include "xstuff.h"
 

@@ -4,10 +4,10 @@
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include <status-docklet.h>
-#include <libgnorba/gnorba.h>
+#include <bonobo-activation/bonobo-activation.h>
 #include <libgnorba/gnome-factory.h>
 
 #include "gnome-panel.h"

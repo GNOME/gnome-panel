@@ -9,7 +9,7 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 
 #include "panel-include.h"

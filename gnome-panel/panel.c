@@ -14,7 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 #include "gnome-run.h"

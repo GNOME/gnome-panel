@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <gnome.h>
+#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"

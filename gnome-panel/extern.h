@@ -6,7 +6,7 @@
 #include "panel-widget.h"
 #include "gnome-panel.h"
 
-#include <libgnorba/gnorba.h>
+#include <bonobo-activation/bonobo-activation.h>
 
 G_BEGIN_DECLS
 

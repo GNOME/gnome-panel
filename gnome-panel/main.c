@@ -11,8 +11,8 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <gnome.h>
-#include <libgnorba/gnorba.h>
+#include <libgnomeui.h>
+#include <bonobo-activation/bonobo-activation.h>
 #include <libgnomeui/gnome-window-icon.h>
 
 #include "panel-include.h"
