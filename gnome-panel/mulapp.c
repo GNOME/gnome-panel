@@ -56,7 +56,7 @@ mulapp_remove_empty_from_list(void)
 			multiple_applet_load_list =
 				g_list_remove_link(multiple_applet_load_list,
 						   list);
-			g_list_free(list);
+			g_list_free_1(list);
 			if(mq->params) g_warning("Whoops! there were applets "
 						 "to be started while the "
 						 "main one disappeared, this "

@@ -579,8 +579,8 @@ gnome_panel_applet_cleanup(int applet_id)
 		nlist = g_list_next(list);
 		if(info->applet_id == applet_id) {
 			g_free(info->name);
-			g_list_remove_link(applet_callbacks,list);
-			g_list_free(list);
+			applet_callbacks = g_list_remove_link(applet_callbacks,list);
+			g_list_free_1(list);
 			g_free(info);
 		}
 		list = nlist;

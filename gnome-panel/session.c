@@ -392,9 +392,9 @@ do_session_save(GnomeClient *client,
 			save_applet_configuration(i);
 	} else {
 		while(sync_applets) {
+			printf("\nsaving: %d\n",GPOINTER_TO_INT(sync_applets->data));
 			save_applet_configuration(GPOINTER_TO_INT(sync_applets->data));
-			sync_applets = g_list_remove_link(sync_applets,
-							  sync_applets);
+			sync_applets = my_g_list_pop_first(sync_applets);
 		}
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);

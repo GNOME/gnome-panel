@@ -297,7 +297,15 @@ resize_window(GtkWidget *widget, int w, int h)
 GList *
 my_g_list_pop_first(GList *list)
 {
-	GList *r = g_list_remove_link(list,list);
-	g_list_free(list);
+	GList *r;
+	
+	if(!list)
+		return;
+       
+	r = list->next;
+	list->next = NULL;
+	if(r)
+		r->prev = NULL;
+	g_list_free_1(list);
 	return r;
 }

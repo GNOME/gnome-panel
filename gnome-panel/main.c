@@ -140,7 +140,7 @@ sigchld_handler(int type)
 
 		g_free(child);
 		children=g_list_remove_link(children,list);
-		g_list_free(list);
+		g_list_free_1(list);
 		return;
 	}
 }

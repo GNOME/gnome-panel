@@ -1733,20 +1733,21 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 static int
 panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 {
-	PanelWidget *panel;
 	AppletData *ad;
-
-	panel = PANEL_WIDGET(applet->parent);
-	g_return_val_if_fail(panel!=NULL,FALSE);
 
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 
-	if(panel->currently_dragged_applet == ad)
-		panel->currently_dragged_applet = NULL;
-	
-	panel->applet_list = g_list_remove(panel->applet_list,ad);
-	panel->no_window_applet_list =
-		g_list_remove (panel->no_window_applet_list, ad);
+	/*if it wasn't yet removed*/
+	if(applet->parent) {
+		PanelWidget *panel = PANEL_WIDGET(applet->parent);
+
+		if(panel->currently_dragged_applet == ad)
+			panel->currently_dragged_applet = NULL;
+
+		panel->applet_list = g_list_remove(panel->applet_list,ad);
+		panel->no_window_applet_list =
+			g_list_remove (panel->no_window_applet_list, ad);
+	}
 
 	g_free(ad);
 	return FALSE;
