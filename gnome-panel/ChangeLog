@@ -1,5 +1,18 @@
 2003-06-11  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-toplevel.c:
+	(panel_toplevel_attach_widget_destroyed): detach if the
+	parent toplevel is destroyed.
+	(panel_toplevel_disconnect_attached): guard against being
+	invoked twice.
+	(panel_toplevel_connect_attached)
+	(panel_toplevel_attach_to_widget),
+	(panel_toplevel_detach): move arrows reversal to here.
+	(panel_toplevel_destroy): disconnect signals. Hopefully
+	should fix crash in #113215.
+
+2003-06-11  Mark McLoughlin  <mark@skynet.ie>
+
 	Makes the minimum panel size relative to the font size.
 	See bug #94026 and probably a few others.
 

@@ -2077,12 +2077,7 @@ panel_toplevel_update_geometry (PanelToplevel  *toplevel,
 static void
 panel_toplevel_attach_widget_destroyed (PanelToplevel *toplevel)
 {
-	toplevel->priv->attached = FALSE;
-
-	toplevel->priv->attach_toplevel = NULL;
-	toplevel->priv->attach_widget   = NULL;
-
-	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	panel_toplevel_detach (toplevel);
 }
 
 static gboolean
@@ -2208,6 +2203,9 @@ panel_toplevel_disconnect_attached (PanelToplevel *toplevel)
 	int i;
 
 	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++) {
+		if (!toplevel->priv->attach_toplevel_signals [i])
+			continue;
+
 		g_signal_handler_disconnect (
 			toplevel->priv->attach_toplevel,
 			toplevel->priv->attach_toplevel_signals [i]);
@@ -2215,13 +2213,14 @@ panel_toplevel_disconnect_attached (PanelToplevel *toplevel)
 	}
 
 	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++) {
+		if (!toplevel->priv->attach_widget_signals [i])
+			continue;
+		
 		g_signal_handler_disconnect (
 			toplevel->priv->attach_widget,
 			toplevel->priv->attach_widget_signals [i]);
 		toplevel->priv->attach_widget_signals [i] = 0;
 	}
-
-	panel_toplevel_reverse_arrows (toplevel);
 }
 
 static void
@@ -2270,8 +2269,6 @@ panel_toplevel_connect_attached (PanelToplevel *toplevel)
 		G_CALLBACK (gtk_widget_hide), toplevel);
 
 	g_assert (i == N_ATTACH_WIDGET_SIGNALS);
-
-	panel_toplevel_reverse_arrows (toplevel);
 } 
 
 void
@@ -2292,7 +2289,8 @@ panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
 	toplevel->priv->attach_widget   = attach_widget;
 
 	panel_toplevel_connect_attached (toplevel);
-
+	
+	panel_toplevel_reverse_arrows (toplevel);
 	panel_toplevel_set_expand (toplevel, FALSE);
 	panel_toplevel_update_attach_orientation (toplevel);
 	panel_toplevel_update_hide_buttons (toplevel);
@@ -2309,6 +2307,8 @@ panel_toplevel_detach (PanelToplevel *toplevel)
 		return;
 
 	panel_toplevel_disconnect_attached (toplevel);
+	
+	panel_toplevel_reverse_arrows (toplevel);
 
 	toplevel->priv->attached = FALSE;
 
@@ -2468,7 +2468,14 @@ panel_toplevel_unrealize (GtkWidget *widget)
 static void
 panel_toplevel_destroy (GtkObject *widget)
 {
-	panel_toplevel_disconnect_timeouts (PANEL_TOPLEVEL (widget));
+	PanelToplevel *toplevel = (PanelToplevel *) widget;
+	
+	if (toplevel->priv->attached) {
+		panel_toplevel_disconnect_attached (toplevel);
+		toplevel->priv->attached = FALSE;
+	}
+
+	panel_toplevel_disconnect_timeouts (toplevel);
 
 	if (GTK_OBJECT_CLASS (parent_class)->destroy)
 		GTK_OBJECT_CLASS (parent_class)->destroy (widget);
