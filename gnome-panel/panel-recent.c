@@ -127,10 +127,13 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 
 static void
 recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
-			      GdkScreen *screen)
+			      GtkWidget *widget)
 {
 	char   *uri, *uri_utf8, *mime_type;
 	GError *error = NULL;
+	GdkScreen *screen;
+
+	screen = gtk_widget_get_screen (widget);
 	
 	uri = egg_recent_item_get_uri (item);
 	uri_utf8 = egg_recent_item_get_uri_utf8 (item);
@@ -164,7 +167,6 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	GtkWidget        *menu_item;
 	EggRecentModel   *model;
 	EggRecentViewGtk *view;
-	GdkScreen        *screen;
 
 	menu_item = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menu_item,
@@ -186,10 +188,9 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 
 	view = egg_recent_view_gtk_new (menu, NULL);
 
-	screen = gtk_widget_get_screen (menu);
 	g_signal_connect (view, "activate",
 			  G_CALLBACK (recent_documents_activate_cb),
-			  screen);
+			  menu);
 	egg_recent_view_gtk_show_numbers (view, FALSE);
 	egg_recent_view_set_model (EGG_RECENT_VIEW (view), model);
 	egg_recent_view_gtk_set_icon_size (view, panel_menu_icon_get_size ());

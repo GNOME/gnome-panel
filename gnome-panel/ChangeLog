@@ -1,3 +1,12 @@
+2003-08-01  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-recent.c: (recent_documents_activate_cb):
+	Determine the screen after the widget has been realized
+	else you land up with a wrong screen number.
+	Fixes bug #118697
+
+	Patch from Leena Gunda (leena.gunda@wipro.com)
+
 2003-07-31  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-menu-button.c: (panel_menu_button_instance_init):
