@@ -675,6 +675,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	const char  *profile;
 	const char  *temp_key;
 	char        *launcher_location;
+	Launcher    *launcher;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (gconf_key != NULL);
@@ -690,7 +691,10 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 		return;
 	}
         
-	load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
+	launcher = load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
+	if (launcher != NULL &&
+	    strstr (launcher_location, PANEL_LAUNCHERS_PATH) == NULL)
+		launcher_hoard (launcher);
 
 	g_free (launcher_location);
 }
