@@ -1414,12 +1414,58 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	}
 }
 
-static int
-reposition_menu(gpointer data)
+/* XXX: hmmm stolen GTK code, the gtk_menu_reposition only calls
+   gtk_menu_position if the widget is drawable, but that's not the
+   case when we want to do it*/
+static void
+gtk_menu_position (GtkMenu *menu)
 {
-	gtk_menu_reposition(GTK_MENU(data));
-	return FALSE;
+  GtkWidget *widget;
+  GtkRequisition requisition;
+  gint x, y;
+ 
+  g_return_if_fail (menu != NULL);
+  g_return_if_fail (GTK_IS_MENU (menu));
+
+  widget = GTK_WIDGET (menu);
+
+  gdk_window_get_pointer (NULL, &x, &y, NULL);
+
+  /* We need the requisition to figure out the right place to
+   * popup the menu. In fact, we always need to ask here, since
+   * if one a size_request was queued while we weren't popped up,
+   * the requisition won't have been recomputed yet.
+   */
+  gtk_widget_size_request (widget, &requisition);
+      
+  if (menu->position_func)
+    (* menu->position_func) (menu, &x, &y, menu->position_func_data);
+  else
+    {
+      gint screen_width;
+      gint screen_height;
+      
+      screen_width = gdk_screen_width ();
+      screen_height = gdk_screen_height ();
+	  
+      x -= 2;
+      y -= 2;
+      
+      if ((x + requisition.width) > screen_width)
+	x -= ((x + requisition.width) - screen_width);
+      if (x < 0)
+	x = 0;
+      if ((y + requisition.height) > screen_height)
+	y -= ((y + requisition.height) - screen_height);
+      if (y < 0)
+	y = 0;
+    }
+  
+  gtk_widget_set_uposition (GTK_MENU_SHELL (menu)->active ?
+			        menu->toplevel : menu->tearoff_window, 
+			    x, y);
 }
+
 
 static void
 submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
@@ -1472,9 +1518,7 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 		}
 		g_slist_free(mfl);
 
-		/*we run this as an idle so that it runs after the
-		  show signal finished*/
-		gtk_idle_add(reposition_menu,menuw);
+		gtk_menu_position(GTK_MENU(menuw));
 	}
 }
 

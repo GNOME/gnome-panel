@@ -1,3 +1,10 @@
+Mon Mar 08 18:11:54 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: stole menu positioning function from gtk as
+	  gtk_menu_reposition doesn't work on non-drawable menus, and that
+	  is just what we need to do, this fixes the jumping menus on first
+	  display
+
 Mon Mar 08 16:12:47 1999  George Lebl  <jirka@5z.com>
 
 	* menu.[ch]: export show_x_on_panels and use it directly, avoid
