@@ -1,3 +1,9 @@
+Thu May 18 01:52:07 2000  George Lebl <jirka@5z.com>
+
+	* applet.c: remove ref/sing from register_toy.  It should really not
+	  be needed anymore.  Seems to work, BUT it does need testing.  This
+	  should kill the leak with adding/removing applets/buttons.
+
 2000-05-18  Jacob Berkman  <jacob@helixcode.com>
 
 	* button-widget.c (button_widget_destroy): free the filename

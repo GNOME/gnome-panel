@@ -622,8 +622,10 @@ register_toy(GtkWidget *applet,
 	 * sink the object.
 	 */
 
+	/*
 	gtk_widget_ref (info->widget);
 	gtk_object_sink (GTK_OBJECT (info->widget));
+	*/
 
 	gtk_object_set_data(GTK_OBJECT(applet),"applet_info",info);
 
