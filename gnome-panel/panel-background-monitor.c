@@ -51,6 +51,8 @@ struct _PanelBackgroundMonitorClass {
 struct _PanelBackgroundMonitor {
 	GObject    parent_instance;
 
+	GdkScreen *screen;
+
 	Window     xwindow;
 	GdkWindow *gdkwindow;
 
@@ -62,6 +64,8 @@ struct _PanelBackgroundMonitor {
 
 	int        width;
 	int        height;
+
+	gboolean   display_grabbed;
 };
 
 static PanelBackgroundMonitor **global_background_monitors = NULL;
@@ -107,6 +111,8 @@ panel_background_monitor_class_init (PanelBackgroundMonitorClass *klass)
 static void
 panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 {
+	monitor->screen = NULL;
+
 	monitor->gdkwindow = NULL;
 	monitor->xwindow   = None;
 
@@ -115,6 +121,8 @@ panel_background_monitor_init (PanelBackgroundMonitor *monitor)
 
 	monitor->gdkpixmap = NULL;
 	monitor->gdkpixbuf = NULL;
+
+	monitor->display_grabbed = FALSE;
 }
 
 GType
@@ -146,6 +154,14 @@ static void
 panel_background_monitor_connect_to_screen (PanelBackgroundMonitor *monitor,
 					    GdkScreen              *screen)
 {
+	if (monitor->screen != NULL && monitor->gdkwindow != NULL) {
+		gdk_window_remove_filter (monitor->gdkwindow,
+					  panel_background_monitor_xevent_filter,
+					  monitor);
+	}
+
+	monitor->screen = screen;
+
 	monitor->gdkwindow = gdk_screen_get_root_window (screen);
 	monitor->xwindow   = gdk_x11_drawable_get_xid (monitor->gdkwindow);
 
@@ -232,6 +248,8 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 	Pixmap	*prop_data = NULL;
 	GdkAtom	 prop_type;
 
+	g_assert (monitor->display_grabbed);
+
 	if (!gdk_property_get (
 		monitor->gdkwindow, monitor->gdkatom,
 		gdk_x11_xatom_to_atom (XA_PIXMAP), 0, 10, 
@@ -239,8 +257,14 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 		return;
 
 	if ((prop_type == GDK_TARGET_PIXMAP) && prop_data && prop_data [0]) {
+		GdkDisplay *display;
+
 		g_assert (monitor->gdkpixmap == NULL);
-		monitor->gdkpixmap = gdk_pixmap_foreign_new (prop_data [0]);
+
+		display = gdk_screen_get_display (monitor->screen);
+
+		monitor->gdkpixmap = gdk_pixmap_foreign_new_for_display (display,
+									 prop_data [0]);
 
 		if (!monitor->gdkpixmap)
 			g_warning ("couldn't get background pixmap\n");
@@ -299,14 +323,23 @@ static void
 panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 {
 	GdkColormap *colormap = NULL;
+	GdkDisplay  *display;
 	int          rwidth, rheight;
 	int          pwidth, pheight;
+
+	display = gdk_screen_get_display (monitor->screen);
+
+	gdk_x11_display_grab (display);
+	monitor->display_grabbed = TRUE;
 
 	if (!monitor->gdkpixmap)
 		panel_background_monitor_setup_pixmap (monitor);
 
-	if (!monitor->gdkpixmap)
+	if (!monitor->gdkpixmap) {
+		gdk_x11_display_ungrab (display);
+		monitor->display_grabbed = FALSE;
 		return;
+	}
 
 	gdk_drawable_get_size (
 		GDK_DRAWABLE (monitor->gdkpixmap), &pwidth, &pheight);
@@ -319,16 +352,19 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 
 	colormap = gdk_drawable_get_colormap (monitor->gdkwindow);
 
-	gdk_error_trap_push ();
-
 	g_assert (monitor->gdkpixbuf == NULL);
 	monitor->gdkpixbuf = gdk_pixbuf_get_from_drawable (
 					NULL, monitor->gdkpixmap, colormap,
 					0, 0, 0, 0, 
 					monitor->width, monitor->height);
 
-	if (!gdk_error_trap_pop () &&
-	    (monitor->width < rwidth || monitor->height < rheight)) {
+	gdk_x11_display_ungrab (display);
+	monitor->display_grabbed = FALSE;
+
+	if (monitor->gdkpixbuf == NULL)
+		return;
+
+	if ((monitor->width < rwidth || monitor->height < rheight)) {
 		GdkPixbuf *tiled;
 
 		tiled = panel_background_monitor_tile_background (
