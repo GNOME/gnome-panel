@@ -424,10 +424,11 @@ do_session_save(GnomeClient *client,
 
 	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
 	gnome_client_set_discard_command (client, 3, new_args);
-	
+#ifdef DEBUG	
 	/*DEBUG*/printf("Saving to [%s]\n",panel_cfg_path);
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
+#endif
 	if(complete_sync) {
 		GSList *li;
 		for(li=applets;li!=NULL;li=g_slist_next(li))
@@ -437,22 +438,26 @@ do_session_save(GnomeClient *client,
 		for(li = sync_applets; li!=NULL; li=g_slist_next(li))
 			save_applet_configuration(li->data);
 	}
+#ifdef DEBUG
 	/*DEBUG*/printf(" 2"); fflush(stdout);
-
+#endif
 	s = g_concat_dir_and_file(panel_cfg_path,"panel/Config/");
 	gnome_config_push_prefix (s);
 	g_free(s);
 
 	if(complete_sync || sync_applets)
 		gnome_config_set_int ("applet_count", applet_count);
+#ifdef DEBUG
 	/*DEBUG*/printf(" 3"); fflush(stdout);
+#endif
 	if(complete_sync || sync_panels) {
 		num = 1;
 		g_slist_foreach(panel_list, save_panel_configuration,&num);
 		gnome_config_set_int("panel_count",num-1);
 	}
+#ifdef DEBUG
 	/*DEBUG*/printf(" 4"); fflush(stdout);
-
+#endif
 	if(complete_sync || sync_globals) {
 		GString *buf;
 		/*global options*/
@@ -515,8 +520,9 @@ do_session_save(GnomeClient *client,
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
-	
+#ifdef	
 	/*DEBUG*/puts("");
+#endif
 }
 
 void
