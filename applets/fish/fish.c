@@ -6,8 +6,14 @@
 #include <config.h>
 #include <string.h>
 #include <gnome.h>
-#include <gdk_imlib.h>
 #include <applet-widget.h>
+
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_alphagamma.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_pixbuf.h>
+#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_affine.h>
 
 typedef struct _FishProp FishProp;
 struct _FishProp {
@@ -41,7 +47,7 @@ struct _Fish {
 	GtkWidget * fortune_less; 
 	GtkWidget * aboutbox;
 	GtkWidget * pb;
-	PanelSizeType size;
+	int size;
 	PanelOrientType orient;
 };
 
@@ -52,46 +58,98 @@ GtkWidget *bah_window = NULL;
 static void
 load_image_file(Fish *fish)
 {
-	GdkImlibImage *pix;
+	GdkPixbuf *pix;
 	int w, h;
 
 	if(fish->pix)
 		gdk_pixmap_unref(fish->pix);
+
+	g_assert(bah_window);
+	g_assert(bah_window->window);
 	
-	pix = gdk_imlib_load_image(fish->prop.image);
+	pix = gdk_pixbuf_new_from_file(fish->prop.image);
 	if(pix) {
-		if(fish->size==SIZE_TINY && pix->rgb_height>24) {
-			h = 24;
-			w = pix->rgb_width*(24.0/pix->rgb_height);
-		} else {
-			h = pix->rgb_height;
-			w = pix->rgb_width;
+		double affine[6];
+		guchar *rgb;
+		GdkGC *gc;
+		int size;
+		
+		size = fish->size - 4;
+		if(ABS(pix->art_pixbuf->height - size)<6) {
+			size = pix->art_pixbuf->height;
 		}
+
+		h = size;
+		w = pix->art_pixbuf->width *
+			((double)h/pix->art_pixbuf->height);
+		
+		affine[1] = affine[2] = affine[4] = affine[5] = 0;
+
+		affine[0] = w / (double)(pix->art_pixbuf->width);
+		affine[3] = h / (double)(pix->art_pixbuf->height);
 
 		if(IS_ROT(fish)) {
 			int t;
+			double tmpaffine[6];
 			t = w; w = h; h = t;
-			gdk_imlib_rotate_image(pix,90);
-		}
 
-		gdk_imlib_render (pix, w, h);
+			art_affine_rotate(tmpaffine,270);
+			art_affine_multiply(affine,affine,tmpaffine);
+			art_affine_translate(tmpaffine,0,h);
+			art_affine_multiply(affine,affine,tmpaffine);
+		}
+		
+		rgb = g_new0(guchar,w*h*3);
+		
+		art_rgb_pixbuf_affine(rgb,
+				      0,0,w,h,w*3,
+				      pix->art_pixbuf,affine,
+				      ART_FILTER_NEAREST,NULL);
+		
+		gdk_pixbuf_unref(pix);
+
 		fish->w = w;
 		fish->h = h;
-		fish->pix = gdk_imlib_move_image(pix);
-		gdk_imlib_destroy_image(pix);
+ 		fish->pix = gdk_pixmap_new(bah_window->window,
+ 					   fish->w,fish->h,-1);
+		gc = gdk_gc_new(fish->pix);
+
+		gdk_draw_rgb_image(fish->pix,gc,
+				   0,0, w, h,
+				   GDK_RGB_DITHER_NORMAL,
+				   rgb, w*3);
+		
+		g_free(rgb);
 	} else {
- 		g_assert(bah_window);
- 		g_assert(bah_window->window);
 		if(IS_ROT(fish)) {
-			fish->w = 24;
-			fish->h = fish->prop.frames*24;
+			fish->w = fish->size;
+			fish->h = fish->prop.frames*fish->size;
 		} else {
-			fish->w = fish->prop.frames*24;
-			fish->h = 24;
+			fish->w = fish->prop.frames*fish->size;
+			fish->h = fish->size;
 		}
  		fish->pix = gdk_pixmap_new(bah_window->window,
  					   fish->w,fish->h,-1);
 	}
+}
+
+static void
+setup_size(Fish *fish)
+{
+	if(IS_ROT(fish)) {
+		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
+				      fish->h/fish->prop.frames);
+		gtk_widget_set_usize(fish->darea, fish->w,
+				     fish->h/fish->prop.frames);
+	} else {
+		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), 
+				      fish->w/fish->prop.frames, fish->h);
+		gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames,
+				     fish->h);
+	}
+	gtk_widget_queue_resize(fish->darea);
+	gtk_widget_queue_resize(fish->darea->parent);
+	gtk_widget_queue_resize(fish->darea->parent->parent);
 }
 
 static void
@@ -190,24 +248,13 @@ apply_properties(Fish *fish)
 	
 	load_image_file(fish);
 
-	if(IS_ROT(fish)) {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
-				      fish->h/fish->prop.frames);
-		gtk_widget_set_usize(fish->darea, fish->w,
-				     fish->h/fish->prop.frames);
-	} else {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-				      fish->w/fish->prop.frames, fish->h);
-		gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames,
-				     fish->h);
-	}
+	setup_size(fish);
 
 	if(fish->timeout_id)
 		gtk_timeout_remove(fish->timeout_id);
         fish->timeout_id = gtk_timeout_add(fish->prop.speed*1000,
 					   fish_timeout,fish);
 	fish->curpix = 0;
-
 	fish_timeout(fish);
 }
 
@@ -452,8 +499,8 @@ create_fish_widget(Fish *fish)
 {
 	GtkStyle *style;
 
-	gtk_widget_push_visual (gdk_imlib_get_visual ());
-	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
+	gtk_widget_push_visual (gdk_rgb_get_visual ());
+	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 	style = gtk_widget_get_style(fish->applet);
 	
 	fish->darea = gtk_drawing_area_new();
@@ -572,40 +619,22 @@ applet_change_orient(GtkWidget *w, PanelOrientType o, gpointer data)
 	
 	load_image_file(fish);
 	
-	if(IS_ROT(fish)) {
-		gtk_widget_set_usize(fish->darea, fish->w,
-				     fish->h/fish->prop.frames);
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
-				      fish->h/fish->prop.frames);
-	} else {
-		gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames,
-				     fish->h);
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-				      fish->w/fish->prop.frames, fish->h);
-	}
+	setup_size(fish);
+
 	fish_timeout(fish);
 }
 
 static void
-applet_change_size(GtkWidget *w, PanelSizeType o, gpointer data)
+applet_change_pixel_size(GtkWidget *w, int size, gpointer data)
 {
 	Fish *fish = data;
 
-	fish->size = o;
-
+	fish->size = size;
+	
 	load_image_file(fish);
 
-	if(IS_ROT(fish)) {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea), fish->w,
-				      fish->h/fish->prop.frames);
-		gtk_widget_set_usize(fish->darea, fish->w,
-				     fish->h/fish->prop.frames);
-	} else {
-		gtk_drawing_area_size(GTK_DRAWING_AREA(fish->darea),
-				      fish->w/fish->prop.frames, fish->h);
-		gtk_widget_set_usize(fish->darea, fish->w/fish->prop.frames,
-				     fish->h);
-	}
+	setup_size(fish);
+
 	fish_timeout(fish);
 }
 
@@ -616,57 +645,64 @@ wanda_activator(PortableServer_POA poa,
 		gpointer *impl_ptr,
 		CORBA_Environment *ev)
 {
-  Fish *fish;
+	Fish *fish;
 
-  fish = g_new0(Fish,1);
-  
-  fish->size = SIZE_STANDARD;
-  fish->orient = ORIENT_UP;
+	fish = g_new0(Fish,1);
 
-  fish->applet = applet_widget_new(goad_id);
+	fish->size = PIXEL_SIZE_STANDARD;
+	fish->orient = ORIENT_UP;
 
-  bah_window = gtk_window_new(GTK_WINDOW_POPUP);
-  gtk_widget_set_uposition(bah_window,gdk_screen_width()+1,
-			   gdk_screen_height()+1);
-  gtk_widget_show_now(bah_window);
-  
-  load_properties(fish);
-  
-  gtk_signal_connect(GTK_OBJECT(fish->applet),"change_orient",
-		     GTK_SIGNAL_FUNC(applet_change_orient),
-		     fish);
-  gtk_signal_connect(GTK_OBJECT(fish->applet),"change_size",
-		     GTK_SIGNAL_FUNC(applet_change_size),
-		     fish);
+	fish->applet = applet_widget_new(goad_id);
 
-  /*gtk_widget_realize(applet);*/
-  create_fish_widget(fish);
-  gtk_widget_show(fish->frame);
-  applet_widget_add(APPLET_WIDGET(fish->applet), fish->frame);
-  gtk_widget_show(fish->applet);
+	gtk_widget_push_visual(gdk_rgb_get_visual ());
+	gtk_widget_push_colormap(gdk_rgb_get_cmap ());
 
-  gtk_signal_connect(GTK_OBJECT(fish->applet),"save_session",
-		     GTK_SIGNAL_FUNC(applet_save_session),fish);
-  gtk_signal_connect(GTK_OBJECT(fish->applet),"destroy",
-		     GTK_SIGNAL_FUNC(applet_destroy),fish);
+	bah_window = gtk_window_new(GTK_WINDOW_POPUP);
 
-  applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
-					"about",
-					GNOME_STOCK_MENU_ABOUT,
-					_("About..."),
-					about_cb,
-					fish);
+	gtk_widget_pop_visual();
+	gtk_widget_pop_colormap();
+
+	gtk_widget_set_uposition(bah_window,gdk_screen_width()+1,
+				 gdk_screen_height()+1);
+	gtk_widget_show_now(bah_window);
+
+	load_properties(fish);
+
+	gtk_signal_connect(GTK_OBJECT(fish->applet),"change_orient",
+			   GTK_SIGNAL_FUNC(applet_change_orient),
+			   fish);
+	gtk_signal_connect(GTK_OBJECT(fish->applet),"change_pixel_size",
+			   GTK_SIGNAL_FUNC(applet_change_pixel_size),
+			   fish);
+
+	/*gtk_widget_realize(applet);*/
+	create_fish_widget(fish);
+	gtk_widget_show(fish->frame);
+	applet_widget_add(APPLET_WIDGET(fish->applet), fish->frame);
+	gtk_widget_show(fish->applet);
+
+	gtk_signal_connect(GTK_OBJECT(fish->applet),"save_session",
+			   GTK_SIGNAL_FUNC(applet_save_session),fish);
+	gtk_signal_connect(GTK_OBJECT(fish->applet),"destroy",
+			   GTK_SIGNAL_FUNC(applet_destroy),fish);
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      about_cb,
+					      fish);
 
 
-  applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
-					"properties",
-					GNOME_STOCK_MENU_PROP,
-					_("Properties..."),
-					properties_dialog,
-					fish);
+	applet_widget_register_stock_callback(APPLET_WIDGET(fish->applet),
+					      "properties",
+					      GNOME_STOCK_MENU_PROP,
+					      _("Properties..."),
+					      properties_dialog,
+					      fish);
 
-  return applet_widget_corba_activate(fish->applet, poa, goad_id, params,
-				      impl_ptr, ev);
+	return applet_widget_corba_activate(fish->applet, poa, goad_id, params,
+					    impl_ptr, ev);
 }
 
 static void
@@ -678,7 +714,7 @@ wanda_deactivator(PortableServer_POA poa,
   applet_widget_corba_deactivate(poa, goad_id, impl_ptr, ev);
 }
 
-#if 1 || defined(SHLIB_APPLETS)
+#if 0 && defined(SHLIB_APPLETS)
 static const char *repo_id[]={"IDL:GNOME/Applet:1.0", NULL};
 static GnomePluginObject applets_list[] = {
   {repo_id, "fish_applet", NULL, "Wanda the Magnificient",
