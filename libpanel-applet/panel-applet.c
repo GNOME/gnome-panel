@@ -36,6 +36,7 @@ enum {
         CHANGE_ORIENT,
         CHANGE_SIZE,
         CHANGE_BACKGROUND,
+        SAVE_YOURSELF,
         LAST_SIGNAL
 };
 
@@ -50,6 +51,18 @@ enum {
 	PROPERTY_SIZE_IDX,
 	PROPERTY_BACKGROUND_IDX
 };
+
+void
+panel_applet_save_yourself (PanelApplet *applet,
+			    const gchar *global_key, 
+			    const gchar *private_key)
+{
+	g_signal_emit (G_OBJECT (applet),
+		       panel_applet_signals [SAVE_YOURSELF],
+		       0,
+		       global_key,
+		       private_key);
+}
 
 /**
  * panel_applet_get_size:
@@ -446,6 +459,19 @@ panel_applet_class_init (PanelAppletClass *klass,
 			      3,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
 			      G_TYPE_POINTER,
+			      G_TYPE_STRING);
+
+	panel_applet_signals [SAVE_YOURSELF] =
+                g_signal_new ("save_yourself",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelAppletClass, save_yourself),
+                              NULL,
+			      NULL,
+                              panel_applet_marshal_VOID__STRING_STRING,
+                              G_TYPE_NONE,
+			      2,
+			      G_TYPE_STRING,
 			      G_TYPE_STRING);
 }
 

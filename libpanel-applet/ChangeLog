@@ -1,5 +1,21 @@
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-marshal.list: add VOID:STRING,STRING.
+
+	* panel-applet-private.h: add panel_applet_save_yourself.
+
+	* panel-applet-shell.c:
+	(impl_PanelAppletShell_saveYourself), impl.
+	(panel_applet_shell_class_init): upd.
+
+	* panel-applet.c:
+	(panel_applet_save_yourself): impl.
+	(panel_applet_class_init): set up "save_yourself" signal.
+
+	* panel-applet.h: upd.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet.h: make panel_applet_new return
 	a GtkWidget.
 

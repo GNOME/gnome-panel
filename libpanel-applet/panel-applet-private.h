@@ -14,6 +14,10 @@
 
 G_BEGIN_DECLS
 
+void panel_applet_save_yourself (PanelApplet *applet,
+				 const gchar *global_key,
+				 const gchar *private_key);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_PRIVATE_H__ */

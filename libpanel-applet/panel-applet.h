@@ -64,6 +64,10 @@ struct _PanelAppletClass {
 				   PanelAppletBackgroundType  type,
 				   GdkColor                  *color,
 				   const gchar               *pixmap);
+
+	void (*save_yourself) (PanelApplet               *applet,
+			       const gchar               *global_key,
+			       const gchar               *private_key);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;

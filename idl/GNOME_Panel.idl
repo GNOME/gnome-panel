@@ -57,9 +57,12 @@ module GNOME {
 	interface PanelAppletShell : Bonobo::Unknown {
 
 		/*
-		 * Okay, so nothing in this interface as yet.
+		 * GNOME::PanelAppletShell::saveYourself
+		 * @global_key: path to save global applet preferences
+		 * @private_key: path to save per-applet data settings
 		 */
-		void dummy ();
+		void saveYourself (in string global_key,
+				   in string private_key);
 	};
 
 };

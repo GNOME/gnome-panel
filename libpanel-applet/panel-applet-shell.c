@@ -20,6 +20,19 @@ struct _PanelAppletShellPrivate {
 static GObjectClass *parent_class = NULL;
 
 static void
+impl_PanelAppletShell_saveYourself (PortableServer_Servant  servant,
+				    const CORBA_char       *global_key,
+				    const CORBA_char       *private_key,
+				    CORBA_Environment      *ev)
+{
+	PanelAppletShell *shell;
+
+	shell = PANEL_APPLET_SHELL (bonobo_object (servant));
+
+	panel_applet_save_yourself (shell->priv->applet, global_key, private_key);
+}
+
+static void
 panel_applet_shell_finalize (GObject *object)
 {
 	PanelAppletShell *shell = PANEL_APPLET_SHELL (object);
@@ -37,7 +50,7 @@ panel_applet_shell_class_init (PanelAppletShellClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-	klass->epv.dummy = NULL;
+	klass->epv.saveYourself = impl_PanelAppletShell_saveYourself;
 
 	object_class->finalize = panel_applet_shell_finalize;
 
