@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
-"POT-Creation-Date: 2002-05-29 03:08+1200\n"
-"PO-Revision-Date: 2002-05-12 17:58-0400\n"
+"POT-Creation-Date: 2002-05-30 10:35+0200\n"
+"PO-Revision-Date: 2002-05-25 01:06+0700\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
 "Language-Team: GnomeVI <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgid "_Animation filename:"
 msgstr "Tên tập tin hoạt cảnh:"
 
 #: applets/fish/fish.c:738 applets/gen_util/mailcheck.c:1245
-#: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
+#: gnome-panel/menu-properties.c:498 gnome-panel/menu-properties.c:536
 #: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Duyệt"
@@ -125,39 +125,6 @@ msgid ""
 msgstr ""
 "Applet này không làm gì cả. Nó chỉ chiếm một ít đĩa và thời gian biên dịch, "
 "và nếu được nạp, nó chiếm một tí không gian panel và bộ nhớ. Nếu FIX"
-
-#: applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:2
-#, fuzzy
-msgid "Command to execute when the fish is clicked"
-msgstr "Lệnh thực hiện khi con cá được nhấn:"
-
-#: applets/fish/fish.schemas.in.h:3
-#, fuzzy
-msgid "Pause per frame"
-msgstr "Khoảng chờ giữa mỗi khung hình (giây):"
-
-#: applets/fish/fish.schemas.in.h:4
-#, fuzzy
-msgid "Rotate on vertical panels"
-msgstr "Quay thành panel dọc"
-
-#: applets/fish/fish.schemas.in.h:5
-msgid "The fish's animation pixmap"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:6
-msgid "The fish's name"
-msgstr ""
-
-#: applets/fish/fish.schemas.in.h:7
-msgid "The number of frames in the fish's animation"
-msgstr ""
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
 msgid "Amusements"
@@ -235,128 +202,74 @@ msgstr "Đồng hồ máy tính"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/gen_util/clock.c:874
+#: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
+#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr ""
+
+#: applets/gen_util/clock.c:898
 #, fuzzy
 msgid "Clock Preferences"
 msgstr "Thông số toàn cục..."
 
-#: applets/gen_util/clock.c:901
+#: applets/gen_util/clock.c:925
 #, fuzzy
 msgid "Clock type"
 msgstr "Applet đồng hồ"
 
-#: applets/gen_util/clock.c:911
+#: applets/gen_util/clock.c:935
 msgid "_12 hour"
 msgstr "_12 giờ"
 
-#: applets/gen_util/clock.c:917
+#: applets/gen_util/clock.c:941
 msgid "_24 hour"
 msgstr "_24 giờ"
 
-#: applets/gen_util/clock.c:922
+#: applets/gen_util/clock.c:946
 msgid "_UNIX time"
 msgstr "Giờ _UNIX"
 
-#: applets/gen_util/clock.c:926
+#: applets/gen_util/clock.c:950
 msgid "_Internet time"
 msgstr "Giờ _Internet"
 
-#: applets/gen_util/clock.c:963
+#: applets/gen_util/clock.c:987
 #, fuzzy
 msgid "Show _seconds"
 msgstr "giây"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:997
 msgid "Show _date"
 msgstr "Xem _ngày"
 
-#: applets/gen_util/clock.c:983
+#: applets/gen_util/clock.c:1007
 #, fuzzy
 msgid "Use _UTC"
 msgstr "Dùng _GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1073 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:641
+#: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
 msgstr "Nguyễn Thái Ngọc Duy"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1091
+#: applets/gen_util/clock.c:1138
 msgid "Clock"
 msgstr "Đồng hồ"
 
-#: applets/gen_util/clock.c:1092
+#: applets/gen_util/clock.c:1139
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1093
+#: applets/gen_util/clock.c:1140
 #, fuzzy
 msgid "The Clock displays the current time and date"
 msgstr "Applet đồng hồ hiển thị thời gian hiện thời"
-
-#: applets/gen_util/clock.schemas.in.h:1
-msgid "Display Internet time, which is same all over the world"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "Display date in applet, in addition to time"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:3
-msgid "Display seconds in time"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:6
-msgid "Hour format"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:8
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
-msgid "Show date in applet"
-msgstr "Xem _ngày"
-
-#: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
-msgid "Show date in tooltip"
-msgstr "Xem _ngày"
-
-#: applets/gen_util/clock.schemas.in.h:11
-#, fuzzy
-msgid "Show time with seconds"
-msgstr "giây"
-
-#: applets/gen_util/clock.schemas.in.h:12
-#, fuzzy
-msgid "Use GMT"
-msgstr "Dùng _GMT"
-
-#: applets/gen_util/clock.schemas.in.h:13
-#, fuzzy
-msgid "Use Internet time"
-msgstr "Giờ _Internet"
-
-#: applets/gen_util/clock.schemas.in.h:14
-#, fuzzy
-msgid "Use UNIX time"
-msgstr "Giờ _UNIX"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #, fuzzy
@@ -385,7 +298,7 @@ msgid "Get the current time and date"
 msgstr "Lấy thời gian hiện thời"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
 msgid "Inbox Monitor"
 msgstr "Inbox Monitor"
 
@@ -406,12 +319,12 @@ msgid "Utility"
 msgstr "Tiện ích"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:653
+#: applets/gen_util/tasklist.c:713
 msgid "Window List"
 msgstr "Danh sách cửa sổ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:499
 msgid "Workspace Switcher"
 msgstr "Bộ chuyển workspace"
 
@@ -469,7 +382,7 @@ msgid "No mail."
 msgstr "Không có thư."
 
 #: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
+#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
 msgid "Status not updated"
 msgstr "Trạng thái chưa được cập nhật"
 
@@ -577,159 +490,40 @@ msgstr "Chơi nhạc khi có thư mới"
 msgid "Select a_nimation"
 msgstr "Chọn hoạt cảnh"
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1580
 #, fuzzy
 msgid "Inbox Monitor Preferences"
 msgstr "Thuộc tính Inbox Monitor"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1599
 msgid "_Mail check"
 msgstr "_Trình kiểm tra thư"
 
-#: applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1603
 msgid "Mail_box"
 msgstr "_Hộp thư"
 
-#: applets/gen_util/mailcheck.c:1654
+#: applets/gen_util/mailcheck.c:1681
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1655
+#: applets/gen_util/mailcheck.c:1682
 #, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Trình kiểm tra thư thông báo cho bạn mỗi khi có thư mới."
 
-#: applets/gen_util/mailcheck.c:1792
+#: applets/gen_util/mailcheck.c:1841
 msgid "Text only"
 msgstr "Chỉ có text."
 
-#: applets/gen_util/mailcheck.c:1819
+#: applets/gen_util/mailcheck.c:1868
 #, fuzzy
 msgid "Mail check"
 msgstr "_Trình kiểm tra thư"
 
-#: applets/gen_util/mailcheck.c:1820
+#: applets/gen_util/mailcheck.c:1869
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Trình kiểm tra thư thông báo cho bạn mỗi khi có thư mới."
-
-#: applets/gen_util/mailcheck.schemas.in.h:1
-#, fuzzy
-msgid "Command to execute when checking mail"
-msgstr "Lệnh thực hiện khi con cá được nhấn:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-#, fuzzy
-msgid "Command to execute when new mail arrives"
-msgstr "Lệnh thực hiện khi con cá được nhấn:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
-msgid "Command to execute when the applet is clicked"
-msgstr "Lệnh thực hiện khi con cá được nhấn:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:4
-#, fuzzy
-msgid "Command to run before checking mail"
-msgstr "Lệnh cần thực hiện trước khi check mail:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:5
-msgid "Do we run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:6
-msgid "Do we run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:7
-msgid "How often (in milliseconds) we check the mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:8
-msgid "If mail should be checked automatically"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:9
-msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:10
-msgid "If this is set, we should run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:11
-msgid "If this is set, we should run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:12
-#, fuzzy
-msgid "Interval for checking mail"
-msgstr "Lệnh cần thực hiện trước khi check mail:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:13
-msgid "Path to the animation file"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:14
-#, fuzzy
-msgid "Play a sound when mail is recieved"
-msgstr "Chơi nhạc khi có thư mới"
-
-#: applets/gen_util/mailcheck.schemas.in.h:15
-msgid "Remote folder for mail retrieval"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:17
-#, fuzzy
-msgid "Run this command before we check the mail"
-msgstr "Lệnh cần thực hiện trước khi check mail:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:18
-#, fuzzy
-msgid "The mail server"
-msgstr "Mail server:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:19
-msgid "The user's password"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:20
-msgid "The user's password for the remote server"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:21
-msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:22
-msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:23
-msgid ""
-"This is the animation that will be displayed during normal use of the "
-"mailcheck applet"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:24
-msgid "Username on the remote server"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on the applet"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when the applet is clicked"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:27
-#, fuzzy
-msgid "You've got mail!"
-msgstr "Bạn có thư."
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -739,28 +533,27 @@ msgstr "Mailcheck"
 msgid "New Mail"
 msgstr "Thư mới"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
-#: applets/gen_util/pager.glade.h:2
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
 msgid "Rows"
 msgstr "Hàng"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
 msgid "Columns"
 msgstr ""
 
-#: applets/gen_util/pager.c:301
+#: applets/gen_util/pager.c:342
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "Lỗi khi nạp giá trị num_rows cho bộ chuyển workspace: %s\n"
 
-#: applets/gen_util/pager.c:312
+#: applets/gen_util/pager.c:353
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
 msgstr "Lỗi khi nạp giá trị cho bộ chuyển workspace: %s\n"
 
-#: applets/gen_util/pager.c:327
+#: applets/gen_util/pager.c:368
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -768,11 +561,11 @@ msgid ""
 msgstr ""
 "Lỗi khi nạp giá trị display_all_workspace cho bộ chuyển workspace: %s\n"
 
-#: applets/gen_util/pager.c:435
+#: applets/gen_util/pager.c:500
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:436
+#: applets/gen_util/pager.c:501
 #, fuzzy
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -780,62 +573,6 @@ msgid ""
 msgstr ""
 "Bộ chuyển workspace hiển thị một phiên bản thu nhỏ của workspace, cho phép "
 "bạn quản lý các cửa sổ."
-
-#: applets/gen_util/pager.glade.h:1
-msgid "Number of _workspaces:"
-msgstr "Số _workspace:"
-
-#: applets/gen_util/pager.glade.h:3
-msgid "Show _all workspaces"
-msgstr "Hiện _mọi workspace:"
-
-#: applets/gen_util/pager.glade.h:4
-msgid "Show only the _current workspace"
-msgstr "Chỉ hiện workspace _hiện thời"
-
-#: applets/gen_util/pager.glade.h:5
-msgid "Show workspace _names in the switcher"
-msgstr "Hiện _tên workspace trong bộ chuyển workspace"
-
-#: applets/gen_util/pager.glade.h:7
-#, fuzzy
-msgid "Workspace Switcher Preferences"
-msgstr "Thuộc tính bộ chuyển workspace"
-
-#: applets/gen_util/pager.glade.h:8
-msgid "Workspaces"
-msgstr "Workspace"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the pager will show all workspaces, otherwise it will only "
-"show the current workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the pager will display the names of the "
-"workspaces, otherwise they will display the contents of the workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
-msgid "Number of rows in the pager"
-msgstr "Số _workspace:"
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows(for horizontal "
-"layout) or columns (for vertical layout) the pager shows the workspaces in."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the pager."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid "Whether to display the names of the workspaces in the pager."
-msgstr ""
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -892,129 +629,17 @@ msgstr "Trợ giúp"
 msgid "About..."
 msgstr "Giới thiệu..."
 
-#: applets/gen_util/tasklist.c:654
+#: applets/gen_util/tasklist.c:714
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:655
+#: applets/gen_util/tasklist.c:715
 #, fuzzy
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
 "Danh sách cửa sổ hiển thị danh sách tất cả các cửa sổ và cho phép bạn duyệt "
 "chúng."
-
-#: applets/gen_util/tasklist.glade.h:1
-msgid "Group windows when _space is limited"
-msgstr "Nhóm các cửa sổ lại khi _không gian bị giới hạn"
-
-#: applets/gen_util/tasklist.glade.h:2
-msgid "M_inimum size:"
-msgstr ""
-
-#: applets/gen_util/tasklist.glade.h:3
-msgid "Ma_ximum size:"
-msgstr ""
-
-#: applets/gen_util/tasklist.glade.h:4
-msgid "Restore to current _workspace"
-msgstr "Phục hồi _workspace hiện thời"
-
-#: applets/gen_util/tasklist.glade.h:5
-msgid "Restore to na_tive workspace"
-msgstr "Phục hồi workspace _nguyên thủy"
-
-#: applets/gen_util/tasklist.glade.h:6
-msgid "Show windows from _current workspace"
-msgstr "Hiện các cửa sổ trên workspace hiện thời"
-
-#: applets/gen_util/tasklist.glade.h:7
-msgid "Show windows from a_ll workspaces"
-msgstr "Hiện các cửa sổ trên mọi workspace "
-
-#: applets/gen_util/tasklist.glade.h:8
-msgid "Tasklist size"
-msgstr ""
-
-#: applets/gen_util/tasklist.glade.h:9
-msgid "When restoring minimized windows"
-msgstr "Khi phục hồi cửa sổ bị thu nhỏ"
-
-#: applets/gen_util/tasklist.glade.h:10
-#, fuzzy
-msgid "Window List Preferences"
-msgstr "Thuộc tính danh sách cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:11
-msgid "Window List content"
-msgstr "Nội dung danh sách cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:12
-msgid "Window grouping"
-msgstr "Nhóm cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:13
-msgid "_Always group windows"
-msgstr "_Luôn nhóm các cửa sổ"
-
-#: applets/gen_util/tasklist.glade.h:14
-msgid "_Never group windows"
-msgstr "Không bao giờ nhóm các cửa sổ"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the tasklist. "
-"valid values are never, auto, and always."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the tasklist will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size the tasklist applet will request"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size the tasklist applet will request"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-#, fuzzy
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Hiện các cửa sổ trên workspace hiện thời"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-#, fuzzy
-msgid "Show windows from all workspaces"
-msgstr "Hiện các cửa sổ trên mọi workspace "
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"The tasklist applet needs a minimum width to be useful at all. This value is "
-"the minimum width the applet will request. This is useful for sliding and "
-"edge panels, which would otherwise ask for a very small default width."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"This value is the maximum width the applet will request. This is useful to "
-"limit the size used in big panels where this applet could otherwise fill the "
-"entire available space, like in edge panels."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-#, fuzzy
-msgid "When to group windows"
-msgstr "Không bao giờ nhóm các cửa sổ"
 
 #: gnome-panel/applet.c:204 gnome-panel/menu.c:1043
 #: gnome-panel/panel-util.c:49
@@ -1031,21 +656,21 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:474 gnome-panel/foobar-widget.c:364
+#: gnome-panel/applet.c:471 gnome-panel/foobar-widget.c:364
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:538
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
 msgid "Remove From Panel"
 msgstr "Loại bỏ khỏi panel"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:549
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
 msgid "Move"
 msgstr "Di chuyển"
 
-#: gnome-panel/applet.c:1150
+#: gnome-panel/applet.c:1147
 msgid "Can't find an empty spot"
 msgstr "Không thể tìm thấy chỗ trống"
 
@@ -1067,7 +692,7 @@ msgstr "trạng thái"
 #: gnome-panel/basep-widget.c:163
 #, fuzzy
 msgid "Current state of this panel"
-msgstr "Loại bỏ Panel này"
+msgstr "Tạo Panel"
 
 #: gnome-panel/basep-widget.c:171
 #, fuzzy
@@ -1138,8 +763,8 @@ msgstr "Vị trí và kích thước"
 msgid "Tooltip/Name"
 msgstr "Mẹo/Tên"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:522
-#: gnome-panel/menu-properties.c:556
+#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:519
+#: gnome-panel/menu-properties.c:553
 msgid "Icon"
 msgstr "Icon"
 
@@ -1286,7 +911,6 @@ msgid ""
 msgstr "System administrator không được phép thay đổi cấu hình panel"
 
 #: gnome-panel/gnome-panel-preferences.c:311
-#: gnome-panel/gnome-panel-preferences.glade.h:5
 #, fuzzy
 msgid "Panel Preferences"
 msgstr "Thông số toàn cục..."
@@ -1299,45 +923,6 @@ msgstr "Thuộc tính của panel chung"
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3633
 msgid "Panel"
 msgstr "Panel"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation"
-msgstr "Hoạt cảnh"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Fast"
-msgstr "Nhanh"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "General"
-msgstr "Chung"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-#: libpanel-applet/panel-test-applets.glade2.h:5
-msgid "Medium"
-msgstr "Trung bình"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6 gnome-panel/logout.c:217
-msgid "Properties"
-msgstr "Thuộc tính"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Chậm"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:8
-#, fuzzy
-msgid "_Animation Speed:"
-msgstr "Tốc độ hoạt cảnh:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:9
-msgid "_Close drawer if a launcher inside it is pressed"
-msgstr "Đóng ngăn kéo nếu launcher trong đó được nhấn"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:10
-#, fuzzy
-msgid "_Enable panel animation"
-msgstr "Bật hoạt cảnh"
 
 #: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
@@ -1445,34 +1030,6 @@ msgstr ""
 #: gnome-panel/gnome-panel-screenshot.c:1102
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Không thể tạo screenshot cho desktop hiện thời."
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:1
-msgid "Options"
-msgstr "Tùy chọn"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:2
-msgid "Preview"
-msgstr "Xem trước"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:3
-msgid "Save screenshot to _desktop"
-msgstr "Lưu screenshot vào desktop"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:4
-msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr "Lưu screenshot vào trang _web (thư mục ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:5
-msgid "Screenshot"
-msgstr "Screenshot"
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:6
-msgid "_Print screenshot..."
-msgstr "_In screenshot..."
-
-#: gnome-panel/gnome-panel-screenshot.glade2.h:7
-msgid "_Save screenshot to file:"
-msgstr "Lưu screenshot vào tập tin:"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1614,7 +1171,7 @@ msgstr "Trợ giúp cho ứng dụng %s"
 msgid "Launcher Properties"
 msgstr "Thuộc tính Launcher"
 
-#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:508
+#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:521
 #, fuzzy
 msgid "Create Launcher"
 msgstr "Không thể tạo applet launcher"
@@ -1670,6 +1227,10 @@ msgstr "Kết thúc Daemon Screensaver"
 msgid "Restart Screensaver Daemon"
 msgstr "Khởi động lại Daemon Screensaver"
 
+#: gnome-panel/logout.c:217
+msgid "Properties"
+msgstr "Thuộc tính"
+
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Xác định tên profile cần nạp"
@@ -1684,7 +1245,6 @@ msgid "and finally, The Knights Who Say ... NI!"
 msgstr "và cuối cùng, Hiệp Sĩ Nói ... NI!"
 
 #: gnome-panel/menu.c:263
-#, fuzzy
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1725,7 +1285,7 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
 "\n"
@@ -1974,7 +1534,7 @@ msgstr "Thực hiện lệnh"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
 #: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
 msgid "Menu"
 msgstr "Menu"
@@ -2002,16 +1562,16 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:439
+#: gnome-panel/menu-ditem.c:448
 msgid "You have to specify a name for the launcher."
 msgstr ""
 
-#: gnome-panel/menu-ditem.c:456
+#: gnome-panel/menu-ditem.c:464
 msgid "You have to specify a valid URL or command."
 msgstr ""
 
 #. class
-#: gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:493
 #, fuzzy, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
@@ -2022,7 +1582,7 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/menu-ditem.c:503
+#: gnome-panel/menu-ditem.c:516
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -2048,55 +1608,55 @@ msgstr "Trong menu con"
 msgid "On the main menu"
 msgstr "Trong menu chính"
 
-#: gnome-panel/menu-properties.c:367
+#: gnome-panel/menu-properties.c:364
 msgid "Menu properties"
 msgstr "Thuộc tính menu"
 
-#: gnome-panel/menu-properties.c:390
+#: gnome-panel/menu-properties.c:387
 msgid "Menu type"
 msgstr "Kiểu menu"
 
-#: gnome-panel/menu-properties.c:397
+#: gnome-panel/menu-properties.c:394
 msgid "Global main menu"
 msgstr "Menu chính, toàn cục"
 
-#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
+#: gnome-panel/menu-properties.c:408 gnome-panel/menu-properties.c:431
 msgid "Main menu"
 msgstr "Menu chính"
 
-#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
+#: gnome-panel/menu-properties.c:422 gnome-panel/menu-properties.c:485
 msgid "Normal menu"
 msgstr "Menu bình thường"
 
-#: gnome-panel/menu-properties.c:447
+#: gnome-panel/menu-properties.c:444
 msgid "Programs: "
 msgstr "Chương trình:"
 
-#: gnome-panel/menu-properties.c:454
+#: gnome-panel/menu-properties.c:451
 msgid "Applets: "
 msgstr "Applet:"
 
-#: gnome-panel/menu-properties.c:461
+#: gnome-panel/menu-properties.c:458
 msgid "Distribution menu (if found): "
 msgstr "Menu phân tán (nếu có): "
 
-#: gnome-panel/menu-properties.c:468
+#: gnome-panel/menu-properties.c:465
 msgid "KDE menu (if found): "
 msgstr "Menu KDE (nếu có): "
 
-#: gnome-panel/menu-properties.c:475
+#: gnome-panel/menu-properties.c:472
 msgid "Panel menu: "
 msgstr "Menu Panel: "
 
-#: gnome-panel/menu-properties.c:482
+#: gnome-panel/menu-properties.c:479
 msgid "Desktop menu: "
 msgstr "Menu Desktop: "
 
-#: gnome-panel/menu-properties.c:498
+#: gnome-panel/menu-properties.c:495
 msgid "Menu path"
 msgstr "Đường dẫn menu"
 
-#: gnome-panel/menu-properties.c:529
+#: gnome-panel/menu-properties.c:526
 msgid "Use custom icon for panel button"
 msgstr "Dùng icon riêng cho nút panel"
 
@@ -2135,12 +1695,12 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: gnome-panel/panel.c:937
+#: gnome-panel/panel.c:930
 #, c-format
 msgid "Open URL: %s"
 msgstr "Mở URL: %s"
 
-#: gnome-panel/panel.c:2261
+#: gnome-panel/panel.c:2254
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2309,45 +1869,6 @@ msgstr "Thuộc tính Panel"
 msgid "Background"
 msgstr "Nền"
 
-#: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-msgid "FIXME - need to define limits"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:4
-#, fuzzy
-msgid "Popup the panel menu"
-msgstr "Trong menu chính"
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-#, fuzzy
-msgid "Take a screen shot"
-msgstr "Lưu screenshot vào desktop"
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-#, fuzzy
-msgid "Take a screen shot of a window"
-msgstr "Lưu screenshot vào desktop"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "Enable the program listing in the run box"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:2
-msgid "Show the program listing by default when opening the Run box"
-msgstr ""
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-msgid "Show the program listing in the Run box"
-msgstr ""
-
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
@@ -2395,338 +1916,375 @@ msgstr "Kiểm tra Applet Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:750
+#: libpanel-applet/panel-applet.c:749
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s'"
 
-#: libpanel-applet/panel-applet.c:764
+#: libpanel-applet/panel-applet.c:763
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s': %s"
 
-#: libpanel-applet/panel-applet.c:773
+#: libpanel-applet/panel-applet.c:772
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Lỗi khi lấy pixmap %s"
 
-#: libpanel-applet/panel-applet.c:780
+#: libpanel-applet/panel-applet.c:779
 msgid "Unknown background type received"
 msgstr "Nhận được một kiểu nền lạ"
 
-#: libpanel-applet/panel-applet.c:949
+#: libpanel-applet/panel-applet.c:948
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet chứa hướng Panel"
 
-#: libpanel-applet/panel-applet.c:957
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet chứa kích thước Panel (pixel)"
 
-#: libpanel-applet/panel-applet.c:965
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet chứa màu nền hoặc pixmap nền của Panel"
 
-#: libpanel-applet/panel-applet.c:973
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's flags"
 msgstr "Cờ hiệu của Applet"
 
-#: libpanel-applet/panel-applet.c:981
+#: libpanel-applet/panel-applet.c:980
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:1
-#, fuzzy
-msgid "Applet:"
-msgstr "Applet:"
+msgid "Wanda"
+msgstr "Wanda"
 
-#: libpanel-applet/panel-test-applets.glade2.h:2
-msgid "Bottom"
+msgid "Your GNOME Fish's Name:"
+msgstr "Tên con cá GNOME của bạn:"
+
+msgid "The GNOME Fish Applet"
+msgstr "Applet cá GNOME"
+
+msgid ""
+"%I:%M\n"
+"%p"
 msgstr ""
+"%I:%M\n"
+"%p"
 
-#: libpanel-applet/panel-test-applets.glade2.h:3
-#, fuzzy
-msgid "Large"
-msgstr "Ảnh"
-
-#: libpanel-applet/panel-test-applets.glade2.h:4
-msgid "Left"
+msgid ""
+"%a\n"
+"%b %d"
 msgstr ""
+"%a\n"
+"%b %d"
 
-#: libpanel-applet/panel-test-applets.glade2.h:6
-msgid "Orientation:"
+msgid "Clock Properties"
+msgstr "Thuộc tính đồng hồ"
+
+msgid "Time Format"
+msgstr "Dạng thức thời gian"
+
+msgid "Mail check Applet"
+msgstr "Applet kiểm tra thư"
+
+msgid "Number of _workspaces:"
+msgstr "Số _workspace:"
+
+msgid "Show _all workspaces"
+msgstr "Hiện _mọi workspace:"
+
+msgid "Show only the _current workspace"
+msgstr "Chỉ hiện workspace _hiện thời"
+
+msgid "Show workspace _names in the switcher"
+msgstr "Hiện _tên workspace trong bộ chuyển workspace"
+
+msgid "Workspace Switcher Properties"
+msgstr "Thuộc tính bộ chuyển workspace"
+
+msgid "Workspaces"
+msgstr "Workspace"
+
+msgid "Group windows when _space is limited"
+msgstr "Nhóm các cửa sổ lại khi _không gian bị giới hạn"
+
+msgid "Restore to current _workspace"
+msgstr "Phục hồi _workspace hiện thời"
+
+msgid "Restore to na_tive workspace"
+msgstr "Phục hồi workspace _nguyên thủy"
+
+msgid "Show windows from _current workspace"
+msgstr "Hiện các cửa sổ trên workspace hiện thời"
+
+msgid "Show windows from a_ll workspaces"
+msgstr "Hiện các cửa sổ trên mọi workspace "
+
+msgid "When restoring minimized windows"
+msgstr "Khi phục hồi cửa sổ bị thu nhỏ"
+
+msgid "Window List Properties"
+msgstr "Thuộc tính danh sách cửa sổ"
+
+msgid "Window List content"
+msgstr "Nội dung danh sách cửa sổ"
+
+msgid "Window grouping"
+msgstr "Nhóm cửa sổ"
+
+msgid "_Always group windows"
+msgstr "_Luôn nhóm các cửa sổ"
+
+msgid "_Never group windows"
+msgstr "Không bao giờ nhóm các cửa sổ"
+
+msgid "Remove from panel"
+msgstr "Loại bỏ khỏi panel"
+
+msgid "mode"
+msgstr "chế độ"
+
+msgid ""
+"Cannot execute the gnome calendar,\n"
+"perhaps it's not installed.\n"
+"It is in the gnome-pim package."
 msgstr ""
+"Không thể thực hiện Lịch GNOME,\n"
+"có lẽ nó chưa được cài đặt.\n"
+"Nó nằm trong gói gnome-pim."
 
-#: libpanel-applet/panel-test-applets.glade2.h:7
-msgid "Prefs Dir:"
+msgid "menu wasn't created"
+msgstr "menu không được tạo"
+
+msgid "Today"
+msgstr "Hôm nay"
+
+msgid "View the calendar for today."
+msgstr "Xem lịch ngày hôm nay."
+
+msgid "This Week"
+msgstr "Tuần này"
+
+msgid "View the calendar for this week."
+msgstr "Xem lịch tuần này"
+
+msgid "This Month"
+msgstr "Tháng này"
+
+msgid "View the calendar for this month."
+msgstr "Xem lịch tháng này"
+
+msgid "%l:%M %p"
+msgstr "%l:%M %p"
+
+msgid "%l:%M:%S %p"
+msgstr "%l:%M:%S %p"
+
+msgid ""
+"Could not call time-admin\n"
+"Perhaps time-admin is not installed"
 msgstr ""
+"Không thể thực hiện chương trình time-admin\n"
+"Có lẽ time-admin chưa được cài đặt"
 
-#: libpanel-applet/panel-test-applets.glade2.h:8
-#, fuzzy
-msgid "Right"
+msgid "Add Appointment..."
+msgstr "Đặt cuộc hẹn..."
+
+msgid "Set Time..."
+msgstr "Chỉnh giờ..."
+
+msgid "Adjust the date and time."
+msgstr "Chỉnh ngày giờ"
+
+msgid "Format"
+msgstr "Dạng thức"
+
+msgid "Global Panel Properties"
+msgstr "Thuộc tính của panel chung"
+
+msgid "&lt;Alt&gt;F1"
+msgstr "&lt;Alt&gt;F1"
+
+msgid "&lt;Alt&gt;F1F1"
+msgstr "&lt;Alt&gt;F1F1"
+
+msgid "&lt;Alt&gt;F2"
+msgstr "&lt;Alt&gt;F2"
+
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr "&lt;Control&gt;&lt;Alt&gt;m"
+
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr "&lt;Control&gt;&lt;Alt&gt;r"
+
+msgid "Animation"
+msgstr "Hoạt cảnh"
+
+msgid "Animation speed:"
+msgstr "Tốc độ hoạt cảnh:"
+
+msgid "Automatically re-check menus for newly installed software"
+msgstr "Tự động kiểm tra menu để tìm các phần mềm mới cài đặt"
+
+msgid "Fast"
+msgstr "Nhanh"
+
+msgid "GNOME Menu:"
+msgstr "Menu GNOME:"
+
+msgid "General"
+msgstr "Chung"
+
+msgid "Grab key..."
+msgstr "Bắt lấy phím..."
+
+msgid "Keep panels above other windows"
+msgstr "Giữ panel ở trên các cửa sổ khác"
+
+msgid "Keep panels below other windows"
+msgstr "Giữ panel ở dưới các cửa sổ khác"
+
+msgid "Keep panels on same level as other windows"
+msgstr "Giữ panel ở cùng mức với các cửa sổ khác"
+
+msgid "Medium"
+msgstr "Trung bình"
+
+msgid "Panel Settings"
+msgstr "Thông số panel"
+
+msgid "Run Program dialog:"
+msgstr "Chạy hộp thoại Chương trình:"
+
+msgid "Shortcut keys"
+msgstr "Phím tắt"
+
+msgid "Slow"
+msgstr "Chậm"
+
+msgid "_Close drawer if a launcher inside it is pressed"
+msgstr "Đóng ngăn kéo nếu launcher trong đó được nhấn"
+
+msgid "_Enable animation"
+msgstr "Bật hoạt cảnh"
+
+msgid "_Enable shortcut keys"
+msgstr "Bật phím tắt"
+
+msgid "_Raise panels when the mouse moves over them"
+msgstr "Hiện panel khi chuột di chuyển ngang qua"
+
+msgid "Options"
+msgstr "Tùy chọn"
+
+msgid "Preview"
+msgstr "Xem trước"
+
+msgid "Save screenshot to _web page (save in ~/public__html)"
+msgstr "Lưu screenshot vào trang _web (thư mục ~/public__html)"
+
+msgid "Screenshot"
+msgstr "Screenshot"
+
+msgid "_Print screenshot..."
+msgstr "_In screenshot..."
+
+msgid "_Save screenshot to file:"
+msgstr "Lưu screenshot vào tập tin:"
+
+msgid ""
+"Failed to execute command:\n"
+"%s"
+msgstr ""
+"Lỗi khi thực hiện lệnh:\n"
+"%s"
+
+msgid "Choose a program to run"
+msgstr "Chọn chương trình cần thực hiện"
+
+msgid "_Browse..."
+msgstr "_Duyệt..."
+
+msgid "A_pplications:"
+msgstr "Ứng _dụng:"
+
+msgid "_Advanced <<"
+msgstr "_Nâng cao <<"
+
+msgid "Hide the advanced controls below this button."
+msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
+
+msgid "_Advanced >>"
+msgstr "_Nâng cao >>"
+
+msgid ""
+"Allow typing in a command line instead of choosing an application from "
+"the list"
+msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
+
+msgid "Desktop entry properties"
+msgstr "Thuộc tính Desktop"
+
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+"Không thể tạo Launcher.\n"
+"\n"
+"Không thấy lệnh nào hoặc URL nào."
+
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
+"\n"
+"%s"
+
+msgid "Create menu item"
+msgstr "Tạo menu item"
+
+msgid "Can't execute 'About GNOME'"
+msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
+
+msgid "You already have a status dock on the panel. You can only have one"
+msgstr "Bạn đã Status Dock trên Panel. Bạn chỉ có thể có một cái mà thôi"
+
+msgid "%I: %M: %S: %p"
+msgstr "%I: %M: %S: %p"
+
+msgid "Swallowed app..."
+msgstr "Ứng dụng bao..."
+
+msgid "Status dock"
+msgstr "Status dock"
+
+msgid "Cannot launch nautilus!"
+msgstr "Không thể thực hiện Nautilus!"
+
+msgid "Reread all menus"
+msgstr "Đọc lại toàn bộ menu"
+
+msgid "XX Small Tiny (12 pixels)"
+msgstr "XX Small Tiny (12 pixels)"
+
+msgid ""
+"A swallowed application appears to have died unexpectedly.\n"
+"Attempt to reload it?"
+msgstr ""
+"Có lẽ một ứng dụng bao đã chết.\n"
+"Thử nạp nó lại?"
+
+msgid "Reload"
+msgstr "Nạp lại"
+
+msgid "Create swallow applet"
+msgstr "Tạo applet bao"
+
+msgid "Width"
+msgstr "Độ rộng"
+
+msgid "Height"
 msgstr "Độ cao"
-
-#: libpanel-applet/panel-test-applets.glade2.h:9
-msgid "Size:"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:10
-msgid "Small"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:11
-msgid "Top"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:12
-msgid "X Large"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:13
-msgid "X Small"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:14
-msgid "XX Large"
-msgstr ""
-
-#: libpanel-applet/panel-test-applets.glade2.h:15
-msgid "XX Small"
-msgstr ""
-
-#~ msgid "mode"
-#~ msgstr "chế độ"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr "Bạn đã Status Dock trên Panel. Bạn chỉ có thể có một cái mà thôi"
-
-#~ msgid "Status dock"
-#~ msgstr "Status dock"
-
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Tên con cá GNOME của bạn:"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "Applet cá GNOME"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
-
-#~ msgid "Clock Properties"
-#~ msgstr "Thuộc tính đồng hồ"
-
-#~ msgid "Time Format"
-#~ msgstr "Dạng thức thời gian"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Applet kiểm tra thư"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Loại bỏ khỏi panel"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Không thể thực hiện Lịch GNOME,\n"
-#~ "có lẽ nó chưa được cài đặt.\n"
-#~ "Nó nằm trong gói gnome-pim."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "menu không được tạo"
-
-#~ msgid "Today"
-#~ msgstr "Hôm nay"
-
-#~ msgid "View the calendar for today."
-#~ msgstr "Xem lịch ngày hôm nay."
-
-#~ msgid "This Week"
-#~ msgstr "Tuần này"
-
-#~ msgid "View the calendar for this week."
-#~ msgstr "Xem lịch tuần này"
-
-#~ msgid "This Month"
-#~ msgstr "Tháng này"
-
-#~ msgid "View the calendar for this month."
-#~ msgstr "Xem lịch tháng này"
-
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Không thể thực hiện chương trình time-admin\n"
-#~ "Có lẽ time-admin chưa được cài đặt"
-
-#~ msgid "Add Appointment..."
-#~ msgstr "Đặt cuộc hẹn..."
-
-#~ msgid "Set Time..."
-#~ msgstr "Chỉnh giờ..."
-
-#~ msgid "Adjust the date and time."
-#~ msgstr "Chỉnh ngày giờ"
-
-#~ msgid "Format"
-#~ msgstr "Dạng thức"
-
-#~ msgid "Global Panel Properties"
-#~ msgstr "Thuộc tính của panel chung"
-
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
-
-#~ msgid "&lt;Alt&gt;F1F1"
-#~ msgstr "&lt;Alt&gt;F1F1"
-
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;m"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;r"
-#~ msgstr "&lt;Control&gt;&lt;Alt&gt;r"
-
-#~ msgid "Automatically re-check menus for newly installed software"
-#~ msgstr "Tự động kiểm tra menu để tìm các phần mềm mới cài đặt"
-
-#~ msgid "GNOME Menu:"
-#~ msgstr "Menu GNOME:"
-
-#~ msgid "Grab key..."
-#~ msgstr "Bắt lấy phím..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Giữ panel ở trên các cửa sổ khác"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Giữ panel ở dưới các cửa sổ khác"
-
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Giữ panel ở cùng mức với các cửa sổ khác"
-
-#~ msgid "Panel Settings"
-#~ msgstr "Thông số panel"
-
-#~ msgid "Run Program dialog:"
-#~ msgstr "Chạy hộp thoại Chương trình:"
-
-#~ msgid "Shortcut keys"
-#~ msgstr "Phím tắt"
-
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "Bật phím tắt"
-
-#~ msgid "_Raise panels when the mouse moves over them"
-#~ msgstr "Hiện panel khi chuột di chuyển ngang qua"
-
-#~ msgid ""
-#~ "Failed to execute command:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Lỗi khi thực hiện lệnh:\n"
-#~ "%s"
-
-#~ msgid "Choose a program to run"
-#~ msgstr "Chọn chương trình cần thực hiện"
-
-#~ msgid "_Browse..."
-#~ msgstr "_Duyệt..."
-
-#~ msgid "A_pplications:"
-#~ msgstr "Ứng _dụng:"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "_Nâng cao <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Ẩ các điều khiển nâng cao ở dưới nút này."
-
-#~ msgid "_Advanced >>"
-#~ msgstr "_Nâng cao >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr "Cho phép gõ một dòng lệnh thay vì chọn một ứng dụng từ danh sách"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Thuộc tính Desktop"
-
-#~ msgid ""
-#~ "Cannot create the launcher.\n"
-#~ "\n"
-#~ "No command or url specified."
-#~ msgstr ""
-#~ "Không thể tạo Launcher.\n"
-#~ "\n"
-#~ "Không thấy lệnh nào hoặc URL nào."
-
-#~ msgid ""
-#~ "Cannot save menu item to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Không thể lưu menu item vào đĩa, xảy ra lỗi:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Create menu item"
-#~ msgstr "Tạo menu item"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Không thể thực hiện chương trình 'Giới thiệu GNOME'"
-
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I: %M: %S: %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Ứng dụng bao..."
-
-#~ msgid "Cannot launch nautilus!"
-#~ msgstr "Không thể thực hiện Nautilus!"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Đọc lại toàn bộ menu"
-
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "XX Small Tiny (12 pixels)"
-
-#~ msgid ""
-#~ "A swallowed application appears to have died unexpectedly.\n"
-#~ "Attempt to reload it?"
-#~ msgstr ""
-#~ "Có lẽ một ứng dụng bao đã chết.\n"
-#~ "Thử nạp nó lại?"
-
-#~ msgid "Reload"
-#~ msgstr "Nạp lại"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Tạo applet bao"
-
-#~ msgid "Width"
-#~ msgstr "Độ rộng"
