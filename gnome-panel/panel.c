@@ -29,7 +29,7 @@
 
 #define DEFAULT_STEP_SIZE 6
 #define DEFAULT_DELAY     0
-#define DEFAULT_HEIGHT    48
+#define DEFAULT_HEIGHT    DEFAULT_APPLET_HEIGHT
 
 /* amount of time in ms. to wait before lowering panel */
 #define DEFAULT_MINIMIZE_DELAY 300
@@ -45,10 +45,13 @@
 
 
 static GtkWidget *applet_menu;
+static GtkWidget *applet_menu_remove_item;
 static GtkWidget *applet_menu_prop_separator;
 static GtkWidget *applet_menu_prop_item;
 
 static GdkCursor *fleur_cursor;
+
+static menu_count=0; /*how many "menu" applets we have ....*/
 
 Panel *the_panel;
 
@@ -634,12 +637,11 @@ applet_drag_start(GtkWidget *applet, int warp)
 
 
 static void
-applet_drag_end(GtkWidget *applet)
+applet_drag_end(void)
 {
-	the_panel->applet_being_dragged = NULL;
-
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
-	gtk_grab_remove(applet);
+	gtk_grab_remove(the_panel->applet_being_dragged);
+	the_panel->applet_being_dragged = NULL;
 }
 
 
@@ -664,8 +666,21 @@ static void
 remove_applet_callback(GtkWidget *widget, gpointer data)
 {
 	GtkWidget *applet;
+	AppletCommand  cmd;
+	gchar *id;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
+
+	cmd.cmd = APPLET_CMD_QUERY;
+	id      = call_applet(applet, &cmd);
+
+	if(strcmp(id,"Menu")==0)
+		if(menu_count<=1)
+			return;
+		/*FIXME: do something to make the user aware that this was
+		  wrong ... a message box maybe ... or a beep*/
+	menu_count--;
+
 	gtk_widget_destroy(applet);
 }
 
@@ -688,7 +703,7 @@ static void
 create_applet_menu(void)
 {
 	GtkWidget *menuitem;
-	
+
 	applet_menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
@@ -698,12 +713,13 @@ create_applet_menu(void)
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+	applet_menu_remove_item =
+		gtk_menu_item_new_with_label(_("Remove from panel"));
+	gtk_signal_connect(GTK_OBJECT(applet_menu_remove_item), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   NULL);
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
-	gtk_widget_show(menuitem);
+	gtk_menu_append(GTK_MENU(applet_menu), applet_menu_remove_item);
+	gtk_widget_show(applet_menu_remove_item);
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
@@ -724,6 +740,8 @@ static void
 show_applet_menu(GtkWidget *applet)
 {
 	long flags;
+	AppletCommand  cmd;
+	gchar *id;
 
 	flags = applet_flags(applet);
 
@@ -735,6 +753,13 @@ show_applet_menu(GtkWidget *applet)
 		gtk_widget_hide(applet_menu_prop_item);
 	}
 
+	cmd.cmd = APPLET_CMD_QUERY;
+	id      = call_applet(applet, &cmd);
+
+	if(strcmp(id,"Menu")!=0 || menu_count>1)
+		gtk_widget_show(applet_menu_remove_item);
+	else
+		gtk_widget_hide(applet_menu_remove_item);
 	gtk_object_set_user_data(GTK_OBJECT(applet_menu), applet);
 
 	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 3, time(NULL));
@@ -981,8 +1006,10 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
 
-			if (the_panel->applet_being_dragged)
+			if (the_panel->applet_being_dragged) {
+				applet_drag_end();
 				return TRUE;
+			}
 
 			switch (bevent->button) {
 				case 2: /* Start drag */
@@ -1002,15 +1029,15 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case GDK_BUTTON_RELEASE:
 			bevent = (GdkEventButton *) event;
 			
-			if (the_panel->applet_being_dragged == widget) {
-				applet_drag_end(widget);
+			if (the_panel->applet_being_dragged) {
+				applet_drag_end();
 				return TRUE;
 			}
 
 			break;
 
 		case GDK_MOTION_NOTIFY:
-			if (the_panel->applet_being_dragged == widget) {
+			if (the_panel->applet_being_dragged) {
 				gtk_widget_get_pointer(the_panel->window,
 						       &x, &y);
 
@@ -1020,11 +1047,15 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				x1 = the_panel->applet_drag_orig_x + dx;
 				y1 = the_panel->applet_drag_orig_y + dy;
 
-				fixup_applet_position(widget,&x1,&y1,
-					width,height);
+				fixup_applet_position(the_panel->
+						      applet_being_dragged,
+						      &x1,&y1,width,height);
 
 				if ((x1 != xpos) || (y1 != ypos))
-					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1, y1);
+					gtk_fixed_move(GTK_FIXED(the_panel->
+						       fixed), the_panel->
+						       applet_being_dragged,
+						       x1, y1);
 
 				return TRUE;
 			}
@@ -1059,6 +1090,7 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 			bevent = (GdkEventButton *) event;
 
 			switch (bevent->button) {
+				case 1:
 				case 2:
 				case 3:
 					return gtk_widget_event(listening_parent(widget->parent), event);
@@ -1621,6 +1653,9 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 
 	/*notify the applet of the orientation of the panel!*/
 	applet_orientation_notify(eventbox,NULL);
+
+	if(strcmp(id,"Menu")==0)
+		menu_count++;
 }
 
 static void

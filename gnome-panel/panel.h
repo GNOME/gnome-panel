@@ -6,6 +6,9 @@
 
 BEGIN_GNOME_DECLS
 
+#define DEFAULT_APPLET_WIDTH 50
+#define DEFAULT_APPLET_HEIGHT 50
+
 
 typedef enum {
 	PANEL_POS_TOP,
