@@ -193,7 +193,7 @@ mailcheck_execute_shell (MailCheck  *mailcheck,
 						 GTK_DIALOG_DESTROY_WITH_PARENT,
 						 GTK_MESSAGE_ERROR,
 						 GTK_BUTTONS_CLOSE,
-						 _("There was an error executing %s : %s"),
+						 _("There was an error executing %s: %s"),
 						 command,
 						 error->message);
 

@@ -237,9 +237,9 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	  "Anders Carlsson (andersca@gnu.org)",
 	  "Padraig O'Briain (padraig.obriain@sun.com)",
 	  "Ian McKellar <yakk@yakk.net>",
-	N_("Many many others ..."),
+	N_("Many, many others..."),
 	/* ... from the Monty Pythons show...  */
-	N_("and finally, The Knights Who Say ... NI!"),
+	N_("and finally, The Knights Who Say... NI!"),
 	  NULL
 	  };
 	char *documenters[] = {

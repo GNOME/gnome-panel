@@ -1045,7 +1045,7 @@ update_fortune_dialog (Fish *fish)
 	if (error) {
 		char *message;
 
-		message = g_strdup_printf (_("Unable to execute '%s'\n\nDetails : %s"),
+		message = g_strdup_printf (_("Unable to execute '%s'\n\nDetails: %s"),
 					   fortune_command, error->message);
 		something_fishy_going_on (fish, message);
 		g_free (message);
