@@ -37,6 +37,7 @@ struct _GlobalConfig {
 	guint run_keycode;
 	guint run_state;
 	int menu_flags;
+	gboolean use_large_icons;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

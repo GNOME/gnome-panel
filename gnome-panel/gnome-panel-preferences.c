@@ -1,7 +1,9 @@
 /*   gnome-panel-properties: crapplet for global panel properties
  *
  *   Copyright (C) 1999 Free Software Foundation
- *   Author: George Lebl <jirka@5z.com>
+ *   Copyright 2000 Helix Code, Inc.
+ *   Authors: George Lebl <jirka@5z.com>
+ *            Jacob Berkman <jacob@helixcode.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -84,6 +86,7 @@ static GtkWidget *show_small_icons_cb;
 static GtkWidget *show_dot_buttons_cb;
 static GtkWidget *off_panel_popups_cb;
 static GtkWidget *hungry_menus_cb;
+static GtkWidget *use_large_icons_cb;
 
 typedef struct {
 	int inline_flag;
@@ -619,6 +622,9 @@ sync_menu_page_with_config(GlobalConfig *conf)
 				    conf->off_panel_popups);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(hungry_menus_cb),
 				    conf->hungry_menus);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(use_large_icons_cb),
+				    conf->use_large_icons);
+	gtk_widget_set_sensitive(use_large_icons_cb, conf->show_small_icons);
 
 	for (opt = menu_options; opt->inline_flag; ++opt) {
 		if (conf->menu_flags & opt->inline_flag)
@@ -643,7 +649,8 @@ sync_config_with_menu_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(off_panel_popups_cb)->active;
 	conf->hungry_menus =
 		GTK_TOGGLE_BUTTON(hungry_menus_cb)->active;
-
+	conf->use_large_icons =
+		GTK_TOGGLE_BUTTON(use_large_icons_cb)->active;
 	conf->menu_flags = 0;
 	for (opt = menu_options; opt->inline_flag; ++opt) {
 		if (GTK_TOGGLE_BUTTON (opt->inline_rb)->active)
@@ -681,6 +688,12 @@ add_menu_options (GtkTable *table, MenuOptions *opt, int row)
 			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
 }
 
+static void
+toggle_sensitive (GtkWidget *t1, GtkWidget *t2)
+{
+	gtk_widget_set_sensitive (t2, GTK_TOGGLE_BUTTON (t1)->active);
+}
+
 static GtkWidget *
 menu_notebook_page(void)
 {
@@ -699,12 +712,12 @@ menu_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
 	/* table for frame */
-	table = gtk_table_new(2,2,FALSE);
+	table = gtk_table_new(2,3,FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* Small Icons */
-	show_small_icons_cb = gtk_check_button_new_with_label (_("Show small icons"));
+	show_small_icons_cb = gtk_check_button_new_with_label (_("Show icons"));
 	gtk_signal_connect (GTK_OBJECT (show_small_icons_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table),show_small_icons_cb, 0,1,0,1);
@@ -719,7 +732,7 @@ menu_notebook_page(void)
 	off_panel_popups_cb = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
 	gtk_signal_connect (GTK_OBJECT (off_panel_popups_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),off_panel_popups_cb, 0,1,1,2);
+	gtk_table_attach_defaults(GTK_TABLE(table),off_panel_popups_cb, 0,1,2,3);
 
 	/* Hungry Menus */
 	hungry_menus_cb = gtk_check_button_new_with_label (_("Keep menus in memory"));
@@ -727,7 +740,14 @@ menu_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table),hungry_menus_cb, 1,2,1,2);
 
-	
+	/* large icons */
+	use_large_icons_cb = gtk_check_button_new_with_label (_("Use large icons"));
+	gtk_signal_connect (GTK_OBJECT (use_large_icons_cb), "toggled",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_signal_connect (GTK_OBJECT (show_small_icons_cb), "toggled",
+			    GTK_SIGNAL_FUNC (toggle_sensitive),
+			    use_large_icons_cb);
+	gtk_table_attach_defaults(GTK_TABLE(table),use_large_icons_cb, 0,1,1,2);
 
 	/* Menu frame */
 	frame = gtk_frame_new (_("Panel menu"));
@@ -1002,6 +1022,9 @@ loadup_vals(void)
 	global_config.hungry_menus =
 		gnome_config_get_bool("hungry_menus=TRUE");
 
+	global_config.use_large_icons =
+		gnome_config_get_bool("use_large_icons=TRUE");
+
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");
 		
@@ -1131,6 +1154,8 @@ write_config(GlobalConfig *conf)
 			      conf->show_dot_buttons);
 	gnome_config_set_bool("hungry_menus",
 			      conf->hungry_menus);
+	gnome_config_set_bool("use_large_icons",
+			      conf->use_large_icons);
 	gnome_config_set_bool("off_panel_popups",
 			      conf->off_panel_popups);
 	gnome_config_set_bool("disable_animations",

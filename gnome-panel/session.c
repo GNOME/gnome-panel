@@ -88,6 +88,7 @@ apply_global_config(void)
 	static int keep_bottom_old = -1;
 	static int autohide_size_old = -1;
 	static int menu_flags_old = -1;
+	static int old_use_large_icons = -1;
 	GSList *li;
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
@@ -106,7 +107,8 @@ apply_global_config(void)
 	  for rereading, hopefullly the user doesn't do this too often
 	  so that he doesn't have to reread his menus all the time:)*/
 	if(dot_buttons_old != global_config.show_dot_buttons ||
-	   small_icons_old != global_config.show_small_icons) {
+	   small_icons_old != global_config.show_small_icons ||
+	   old_use_large_icons != global_config.use_large_icons) {
 		GSList *li;
 		for(li=applets;li!=NULL;li=g_slist_next(li)) {
 			AppletInfo *info = li->data;
@@ -135,6 +137,7 @@ apply_global_config(void)
 	}
 	dot_buttons_old = global_config.show_dot_buttons;
 	small_icons_old = global_config.show_small_icons;
+	old_use_large_icons = global_config.use_large_icons;
 	send_tooltips_state(global_config.tooltips_enabled);
 
 	if(keep_bottom_old == -1 ||
@@ -1253,6 +1256,11 @@ load_up_globals(void)
 
 	global_config.hungry_menus =
 		gnome_config_get_bool("hungry_menus=TRUE");
+
+	global_config.use_large_icons =
+		gnome_config_get_bool(gdk_screen_height () > 768 
+				      ? "use_large_icons=TRUE"
+				      : "use_large_icons=FALSE");
 
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");

@@ -1,3 +1,18 @@
+2000-01-24  Jacob Berkman  <jacob@helixcode.com>
+
+	* session.c (apply_global_config): save large menu setting
+	(load_up_globals): load large menu setting (default is based
+	on screen size)
+
+	* panel_config_global.h: add large menu toggle
+
+	* panel_config.c (sliding_notebook_page): fix the layout of
+	the sliding panel
+
+	* menu.c: (optionally) use large icons for the .desktop folders
+
+	* gnome-panel-properties.c: add a checkbox for large icon support
+
 Sun Jan 23 15:37:01 2000  George Lebl <jirka@5z.com>
 
 	* main.c,menu.c,menu-util.c,session.c,panel.c: use KDEDIR to try

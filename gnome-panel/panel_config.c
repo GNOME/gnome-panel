@@ -733,31 +733,28 @@ sliding_set_offset (GtkWidget *widget, gpointer data)
 static GtkWidget *
 sliding_notebook_page (PerPanelConfig *ppc)
 {
-	GtkWidget *vbox, *box;
+	GtkWidget *vbox, *box, *hbox;
 	GtkWidget *w, *f;
 	GtkWidget *l;
 	GtkWidget *button;
 	int range;
-
+	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
 	f = gtk_frame_new (_("Size and Position"));
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, TRUE, 0);
 	
-	box = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
+	box = gtk_vbox_new (TRUE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	
+
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
-	w = make_position_widget (ppc, 2);
-
-	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (w), box, TRUE, TRUE, 0);
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (box), hbox, TRUE, TRUE, 0);
 
 	l = gtk_label_new (_("Offset from screen edge:"));
-	gtk_box_pack_start (GTK_BOX (box), l, FALSE, FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, GNOME_PAD_SMALL);
 
 #warning FIXME: do the range correctly
 	range = MAX (gdk_screen_width (), gdk_screen_height ());
@@ -767,9 +764,16 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
 	gtk_signal_connect (GTK_OBJECT (button), "changed",
 			    GTK_SIGNAL_FUNC (sliding_set_offset), ppc);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-	gtk_box_pack_start (GTK_BOX (vbox), w,  FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (TRUE, GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (f), hbox);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+
+	gtk_box_pack_start (GTK_BOX (hbox), box, FALSE, FALSE, 0);
+
+	w = make_position_widget (ppc, 2);
+	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
