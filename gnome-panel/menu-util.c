@@ -76,7 +76,11 @@ panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y, gpointer data)
 }
 
 void
-panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+panel_menu_position (GtkMenu  *menu,
+		     gint     *x,
+		     gint     *y,
+		     gboolean *push_in,
+		     gpointer  data)
 {
 	GtkWidget *w = data;
 	gint wx, wy;
@@ -106,10 +110,16 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 			  multiscreen_x (foo->screen) -  req.width);
 		*y = w->allocation.height + multiscreen_y (foo->screen);
 	}
+
+	*push_in = TRUE;
 }
 
 void
-applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
+applet_menu_position (GtkMenu  *menu,
+		      gint     *x,
+		      gint     *y,
+		      gboolean *push_in,
+		      gpointer  data)
 {
 	AppletInfo *info = data;
 	int wx, wy;
@@ -145,11 +155,10 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 			  multiscreen_x (foo->screen) -  req.width);
 		*y = w->allocation.height + multiscreen_y (foo->screen);
 	}
+
+	*push_in = TRUE;
 }
 
-/* This function is marked as const as get_distribution_type is const and
- * it would never change while the program is running.  If you change this
- * do remember to take out the G_GNUC_CONST in menu-util.h */
 int
 get_default_menu_flags (void)
 {

@@ -3165,18 +3165,19 @@ create_menu_at_fr (GtkWidget *menu,
 		}
 	}
 
-	mf->menudir = g_strdup (fr->name);
-	mf->applets = applets;
-	mf->launcher_add = launcher_add;
+	mf->applets        = applets;
+	mf->launcher_add   = launcher_add;
 	mf->favourites_add = favourites_add;
-	mf->dir_name = g_strdup (dir_name);
-	mf->pixmap_name = g_strdup (pixmap_name);
-	mf->fake_menu = FALSE;
-	mf->title = title;
-	mf->fr = fr;
-	if (fr != NULL) {
-		DirRec *dr = (DirRec *)fr;
+	mf->dir_name       = g_strdup (dir_name);
+	mf->pixmap_name    = g_strdup (pixmap_name);
+	mf->fake_menu      = FALSE;
+	mf->title          = title;
+	mf->fr             = fr;
+
+	if (fr) {
 		dr->mfl = g_slist_prepend (dr->mfl, mf);
+
+		mf->menudir = g_strdup (fr->name);
 	}
 
 	if (title && global_config.show_menu_titles) {
@@ -4804,15 +4805,20 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	/* Add Menu */
 
-	menuitem = gtk_menu_item_new ();
-	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
-				   _("Applet"), SMALL_ICON_SIZE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	m = create_applets_menu(NULL, fake_submenus, TRUE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
-	gtk_signal_connect(GTK_OBJECT(m),"show",
-			   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
+	if (m) {
+		menuitem = gtk_menu_item_new ();
+		gtk_widget_lock_accelerators (menuitem);
+		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
+					   _("Applet"), SMALL_ICON_SIZE);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
+
+		gtk_signal_connect (GTK_OBJECT (m), "show",
+				    GTK_SIGNAL_FUNC (submenu_to_display),
+				    NULL);
+	}
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
@@ -5736,11 +5742,15 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gtk_grab_remove(menu->button);
 
 	menu->age = 0;
-#ifdef FIXME
-	gtk_menu_shell_popup(GTK_MENU_SHELL(menu->menu), 0, 0, 
-			     applet_menu_position,
-			     menu->info, bevent->button, bevent->time);
-#endif
+
+	gtk_menu_popup (GTK_MENU (menu->menu),
+			NULL,
+			NULL, 
+			applet_menu_position,
+			menu->info,
+			bevent->button,
+			bevent->time);
+
 	gdk_event_free((GdkEvent *)bevent);
 }
 

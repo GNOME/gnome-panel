@@ -1,5 +1,20 @@
 2001-10-08  Mark McLoughlin <mark@skynet.ie>
 
+	* applet.c (show_applet_menu): get popup menu working.
+	  panel.c (panel_event): ditto.
+	  menu.c (menu_button_pressed): ditto.
+
+	* menu.c (create_menu_at_fr): fix core dump.
+	(make_add_submenu): ditto.
+
+	* menu-util.h, menu-util.c (applet_menu_position): add
+	new push_in param for gtk_menu_popup callbacks.
+	(panel_menu_position): ditto.
+	(get_default_menu_flags): make not const - it calls a
+	non-const function.
+	
+2001-10-08  Mark McLoughlin <mark@skynet.ie>
+
 	* menu.c (create_applets_menu): warn if we can't find applets
 	menu directory.
 	(create_root_menu): only setup an applets menuitem if we have

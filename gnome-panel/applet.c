@@ -562,17 +562,14 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 	set_data (info->menu, info->widget->parent);
 
-#ifdef FIXME
-	gtk_menu_shell_popup (GTK_MENU_SHELL (info->menu),
-			      NULL,
-			      NULL,
-			      global_config.off_panel_popups ?
-			      applet_menu_position :
-			      NULL,
-			      info,
-			      event->button,
-			      event->time);
-#endif
+	gtk_menu_popup (GTK_MENU (info->menu),
+			NULL,
+			NULL,
+			global_config.off_panel_popups ?
+				applet_menu_position : NULL,
+			info,
+			event->button,
+			event->time);
 }
 
 
