@@ -137,6 +137,9 @@ struct _PanelToplevelPrivate {
 	gulong                  attach_widget_signals [N_ATTACH_WIDGET_SIGNALS];
 	gint			n_autohide_disablers;
 
+	/* Auto-hide blocking */
+	guint                   block_auto_hide;
+
 	guint                   auto_hide : 1;
 	guint                   animate : 1;
 	guint                   buttons_enabled : 1;
@@ -157,9 +160,6 @@ struct _PanelToplevelPrivate {
 
 	/* The x-y co-ordinates temporarily specify the panel center */
 	guint                   position_centered : 1;
-
-	/* Auto-hide blocking */
-	guint                   block_auto_hide : 1;
 
 	/* The toplevel is "attached" to another widget */
 	guint                   attached : 1;
@@ -3187,15 +3187,16 @@ panel_toplevel_block_auto_hide (PanelToplevel *toplevel)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
 
-	toplevel->priv->block_auto_hide = TRUE;
+	toplevel->priv->block_auto_hide++;
 }
 
 void
 panel_toplevel_unblock_auto_hide (PanelToplevel *toplevel)
 {
 	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+	g_return_if_fail (toplevel->priv->block_auto_hide > 0);
 
-	toplevel->priv->block_auto_hide = FALSE;
+	toplevel->priv->block_auto_hide--;
 
 	panel_toplevel_queue_auto_hide (toplevel);
 }
@@ -4003,6 +4004,7 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	for (i = 0; i < N_ATTACH_WIDGET_SIGNALS; i++)
 		toplevel->priv->attach_widget_signals [i] = 0;
 
+	toplevel->priv->block_auto_hide   = 0;
 	toplevel->priv->auto_hide         = FALSE;
 	toplevel->priv->buttons_enabled   = TRUE;
 	toplevel->priv->arrows_enabled    = TRUE;
@@ -4011,7 +4013,6 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->animating         = FALSE;
 	toplevel->priv->grab_is_keyboard  = FALSE;
 	toplevel->priv->position_centered = FALSE;
-	toplevel->priv->block_auto_hide   = FALSE;
 	toplevel->priv->attached          = FALSE;
 	toplevel->priv->attach_hidden     = FALSE;
 	toplevel->priv->updated_geometry_initial = FALSE;

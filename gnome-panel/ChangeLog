@@ -1,5 +1,14 @@
 2003-12-01  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-toplevel.c: (panel_toplevel_block_auto_hide),
+	(panel_toplevel_unblock_auto_hide), (panel_toplevel_instance_init):
+	use a counter instead of a boolean to know if the auto-hiding stuff is
+	blocked. This fixes a misbehaviour when there are multiple concurrent
+	reasons to block the auto-hide.
+	Fix bug #128126.
+
+2003-12-01  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-recent.c: (panel_recent_append_documents_menu):
 	s/Open Recent/Recent Documents/
 	Fix bug #98905.
