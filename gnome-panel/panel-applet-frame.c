@@ -816,9 +816,9 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				NULL, 0,
 				GTK_MESSAGE_QUESTION,
 				GTK_BUTTONS_NONE,
-				_("There was a problem loading applet '%s'\n"
+				_("The panel encountered a problem while loading \"%s\"\n"
 				  "Details: %s\n\n"
-				  "Delete this applet from your configuration?"),
+				  "Do you want to delete it from your configuration?"),
 				iid, error);
 
 	g_free (error);

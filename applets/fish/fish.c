@@ -597,11 +597,9 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 						    GTK_BUTTONS_OK,
 						    _("Warning:  The command appears to be "
 						      "something actually useful.\n"
-						      "Since this is a useless applet, you "
-						      "may not want to do this.\n"
 						      "We strongly advise you against "
 						      "usage of wanda for anything\n"
-						      "which would make the applet "
+						      "which would make it "
 						      "\"practical\" or useful."));
 			gtk_window_set_wmclass (GTK_WINDOW (w), "fish_useful_warning", "Fish");
 			gtk_window_set_screen (GTK_WINDOW (w),
@@ -1274,11 +1272,11 @@ display_about_dialog (BonoboUIComponent *uic,
 		gnome_about_new (_("Fish"),
 				 "3.4.7.4ac19",
 				 "(C) 1998 the Free Software Foundation",
-				 _("This applet has no use what-so-ever. "
+				 _("Wanda has no use what-so-ever. "
 				   "It only takes up disk space and "
 				   "compilation time, and if loaded it also "
 				   "takes up precious panel space and memory. "
-				   "If anyone is found using this applet, he "
+				   "If anyone is found using it, he "
 				   "should be promptly sent for a psychiatric "
 				   "evaluation."),
 				 (const char **)authors,
