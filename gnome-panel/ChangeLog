@@ -1,5 +1,26 @@
 2002-12-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix ui-review issues raised in #98914.
+
+	* panel-config.c:
+	(make_misc_widget):
+	use "new HIG borderless/bold label style" frame.
+	(floating_notebook_page): ditto and change strings
+	to be a little less confusing. Still a horrible
+	dialog though.
+	(sliding_notebook_page):
+	s/Screen edge offset/Distance from edge/
+	(make_size_widget): remove pixel sizes from the
+	labels.
+	(background_page):
+	use "new HIG borderless/bold label style" frame.
+	"Verbalise" the image transformation options.
+	Remove redundant "Background" strings.
+	s/Rotate image for vertical panels/
+	  Rotate image when panel is vertical/
+
+2002-12-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-preferences.glade:
 	s/_Animation/Drawer and Panel _Animation/.
 	Fixes ui-review bug #98911.
