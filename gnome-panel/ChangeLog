@@ -1,3 +1,19 @@
+2003-03-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c:
+	(button_widget_theme_changed): reload the icon when the
+	icon theme changes.
+	(load_pixbuf), split out from button_load_pixbuf().
+	(button_load_pixbuf): try loading with the icon basename
+	first and if that fails use the full path. This will ensure
+	that launchers with absolute paths for icons will theme
+	correctly, #106649.
+	(button_widget_instance_init): connect to the icon theme's
+	'changed' signal.
+
+	* launcher.[ch]: (free_launcher), (setup_button): remove handling
+	the icon theme's "changed" signal here.
+
 2003-03-07  Arvind Samptur <arvind.samptur@wipro.com>
 	* panel-toplevel.c : (panel_toplevel_realize) : Remove the
 	panel window from the window group. Else the WM will stack

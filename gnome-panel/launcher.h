@@ -29,7 +29,6 @@ typedef struct {
 
 	GtkWidget         *prop_dialog;
 
-	gulong             icon_changed_signal;
 	gulong             destroy_handler;
 } Launcher;
 

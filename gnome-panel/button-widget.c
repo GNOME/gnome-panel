@@ -328,6 +328,12 @@ button_widget_reload_pixbuf (ButtonWidget *button)
 }
 
 static void
+button_widget_theme_changed (ButtonWidget *button)
+{
+	button_widget_reload_pixbuf (button);
+}
+
+static void
 button_widget_finalize (GObject *object)
 {
 	ButtonWidget *button = (ButtonWidget *) object;
@@ -468,13 +474,39 @@ get_missing (int preffered_size)
 }
 
 static GdkPixbuf *
+load_pixbuf (const char  *file,
+	     int          preffered_size,
+	     char       **str_error)
+{
+	GError    *error = NULL;
+	GdkPixbuf *retval = NULL;
+	char      *full;
+
+	full = gnome_desktop_item_find_icon (panel_icon_theme, file, preffered_size, 0);
+
+	if (full) {
+		retval = gdk_pixbuf_new_from_file (full, &error);
+		if (!retval) {
+			if (str_error)
+				*str_error = g_strdup (error ? error->message : _("none"));
+			g_error_free (error);
+		}
+		g_free (full);
+	} else if (str_error)
+		*str_error = g_strdup (_("file not found"));
+
+	return retval;
+
+
+}
+
+static GdkPixbuf *
 button_load_pixbuf (const char  *file,
 		    int          preffered_size,
 		    char       **error)
 {
 	GdkPixbuf *retval = NULL;
-	GError *gerror = NULL;
-	char *full;
+	char *tmp;
 
 	if (preffered_size <= 0)
 		preffered_size = 48;
@@ -482,20 +514,20 @@ button_load_pixbuf (const char  *file,
 	if (string_empty (file))
 		return get_missing (preffered_size);
 
-	full = gnome_desktop_item_find_icon (panel_icon_theme, file,
-					     preffered_size, 0);
-	if (full != NULL) {
-		retval = gdk_pixbuf_new_from_file (full, &gerror);
-		if (retval == NULL) {
-			*error = g_strdup (gerror ? gerror->message : _("none"));
-			g_clear_error (&gerror);
+	tmp = g_path_get_basename (file);
+	retval = load_pixbuf (tmp, preffered_size, error);
+	g_free (tmp);
+
+	if (!retval && g_path_is_absolute (file)) {
+		if (error && *error) {
+			g_free (*error);
+			*error = NULL;
 		}
-		g_free (full);
-	} else {
-		*error = g_strdup (_("file not found"));
+
+		retval = load_pixbuf (file, preffered_size, error);
 	}
 
-	if (retval == NULL)
+	if (!retval)
 		retval = get_missing (preffered_size);
 
 	return retval;
@@ -790,6 +822,10 @@ button_widget_instance_init (ButtonWidget *button)
 	button->dnd_highlight = FALSE;
 
 	button->pressed_timeout = 0;
+
+	panel_signal_connect_object_while_alive (
+			panel_icon_theme, "changed",
+			G_CALLBACK (button_widget_theme_changed), button);
 }
 
 static void
