@@ -132,7 +132,6 @@ your friend here ...
         &lt;/oaf_attribute&gt;
         &lt;oaf_attribute name="name" type="string" value="Hello World Applet"/&gt;
         &lt;oaf_attribute name="description" type="string" value="My first applet for the GNOME2 panel"/&gt;
-        &lt;oaf_attribute name="panel:category" type="string" value="Amusements"/&gt;
         &lt;oaf_attribute name="panel:icon" type="string" value="gnome-applets.png"/&gt;
 &lt;/oaf_server&gt;
 &lt;/oaf_info&gt;
@@ -140,8 +139,8 @@ your friend here ...
 
       <para>Probably the most important thing to note here is that, unlike
 .server files for other bonobo components, applet .server files contain
-two special attributes - 'panel:category' and 'panel:icon'. Both are used
-by the panel to display an entry for the applet in the 'Add to Panel' menu.
+a special attribute called 'panel:icon'. This is used by the panel to display
+an entry for the applet in the 'Add to Panel' dialog.
       </para>
     </sect1>
 
@@ -293,7 +292,6 @@ this :</para>
         &lt;/oaf_attribute&gt;
         &lt;oaf_attribute name="name" type="string" value="Blah Applet"/&gt;
         &lt;oaf_attribute name="description" type="string" value="Blah De Blah"/&gt;
-        &lt;oaf_attribute name="panel:category" type="string" value="Amusements"/&gt;
         &lt;oaf_attribute name="panel:icon" type="string" value="blah-de-blah.png"/&gt;
 
 &lt;/oaf_server&gt;
@@ -302,10 +300,8 @@ this :</para>
 	</programlisting>
 
 	<para>A lot of this should be copied and pasted. The most
-important bits are setting "panel:category" and "panel:icon". The
-"panel:category" attribute sets what directory the applet should go in
-the "Add Applet" menu. The "panel:icon" attribute specfies the icon
-that should be displayed in the "Add Applet" menu.</para>
+important bit is "panel:icon" which specfies the icon
+that should be displayed in the "Add to Panel" dialog.</para>
 
       </simplesect>
 
