@@ -455,7 +455,11 @@ save_applet_configuration(AppletInfo *info)
 					     menu->main_menu_flags);
 			gnome_config_set_bool("global_main",
 					      menu->global_main);
-			gnome_config_set_bool("old_style_main",FALSE);
+			gnome_config_set_bool("old_style_main", FALSE);
+			gnome_config_set_bool("custom_icon",
+					      menu->custom_icon);
+			gnome_config_set_string("custom_icon_file",
+						menu->custom_icon_file);
 			break;
 		}
 	case APPLET_LAUNCHER:
@@ -826,7 +830,7 @@ load_default_applets1(PanelWidget *panel)
 
 	/* load up the foot menu */
 	load_menu_applet(NULL, get_default_menu_flags (),
-			 TRUE, panel, 0, TRUE);
+			 TRUE, FALSE, NULL, panel, 0, TRUE);
 
 	/*load up some buttons, but only if screen larger then 639*/
 	if(gdk_screen_width() >= 640) {
@@ -995,6 +999,10 @@ init_user_applets(void)
 			int flags;
 			gboolean old_style = 
 				gnome_config_get_bool("old_style_main=true");
+			gboolean custom_icon = 
+				gnome_config_get_bool ("custom_icon=false");
+			char *custom_icon_file =
+				gnome_config_get_string ("custom_icon_file=");
 
 			s = g_strdup_printf("main_menu_flags=%d",
 					    (int)(MAIN_MENU_SYSTEM_SUB |
@@ -1057,11 +1065,15 @@ init_user_applets(void)
 
 			if (old_style)
 				load_menu_applet(params, flags, FALSE,
+						 custom_icon, custom_icon_file,
 						 panel, pos, TRUE);
 			else
 				load_menu_applet(params, flags, global_main,
+						 custom_icon, custom_icon_file,
 						 panel, pos, TRUE);
-			g_free(params);
+
+			g_free (custom_icon_file);
+			g_free (params);
 		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
 			int mypanel = gnome_config_get_int("parameters=-1");
 			char *pixmap = gnome_config_get_string("pixmap=");

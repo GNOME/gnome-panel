@@ -37,6 +37,8 @@ typedef struct _Menu Menu;
 struct _Menu {
 	GtkWidget *button;
 	GtkWidget *menu;
+	gboolean custom_icon;
+	char *custom_icon_file;
 	char *path;
 	int main_menu_flags;
 	gboolean global_main;
@@ -45,6 +47,7 @@ struct _Menu {
 };
 
 void load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
+		      gboolean custom_icon, char *custom_icon_file,
 		      PanelWidget *panel, int pos, gboolean exactpos);
 void add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		      gboolean main_menu, gboolean fake_subs);

@@ -57,7 +57,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		else {
 			drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 			button_widget_set_pixmap(BUTTON_WIDGET(drawer->button),
-						 drawer->pixmap,-1);
+						 drawer->pixmap, -1);
 		}
 	}
 	g_free(s);

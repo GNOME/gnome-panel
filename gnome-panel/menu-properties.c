@@ -39,7 +39,7 @@ get_real_menu_path(char *arguments)
 	if (!arguments || !*arguments)
 		arguments = ".";
 
-	if(strcmp(arguments,".")==0)
+	if(strcmp(arguments, ".") == 0)
 		this_menu = gnome_unconditional_datadir_file ("gnome/apps");
 	else if (*arguments == '/')
 		this_menu = g_strdup (arguments);
@@ -60,9 +60,9 @@ get_real_menu_path(char *arguments)
 }
 
 char *
-get_pixmap(char *menudir, int main_menu)
+get_pixmap(char *menudir, gboolean main_menu)
 {
-	char *pixmap_name;
+	char *pixmap_name = NULL;
 	if (main_menu) {
 		pixmap_name = gnome_unconditional_pixmap_file("gnome-logo-icon-transparent.png");
 	} else {
@@ -120,10 +120,17 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 						     "desktop_sub");
 
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
+
+	GtkWidget *custom_icon = gtk_object_get_data(GTK_OBJECT(widget), "custom_icon");
+	GtkWidget *custom_icon_entry = gtk_object_get_data(GTK_OBJECT(widget), "custom_icon_entry");
 	char *s;
 
 	if (page != -1)
 		return;
+
+	menu->custom_icon = GTK_TOGGLE_BUTTON (custom_icon)->active ? TRUE : FALSE;
+	g_free (menu->custom_icon_file);
+	menu->custom_icon_file = gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(custom_icon_entry));
 	
 	applet_remove_callback(menu->info, "edit_menus");
 	if(GTK_TOGGLE_BUTTON(main_menu)->active ||
@@ -191,6 +198,9 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else if (GTK_TOGGLE_BUTTON(desktop)->active)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
+	/* FIXME: notice changes and only apply if neccessary */
+
+	/* Apply menu changes */
 	{
 		char *this_menu = get_real_menu_path(menu->path);
 		GSList *list = g_slist_append(NULL, this_menu);
@@ -207,6 +217,23 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		g_free(this_menu);
 
 		g_slist_free(list);
+	}
+
+	/* FIXME: notice changes and only apply if neccessary */
+
+	/* Apply icon changes */
+	{
+		char *this_menu = get_real_menu_path(menu->path);
+		char *pixmap_name;
+
+		if (menu->custom_icon &&
+		    menu->custom_icon_file != NULL &&
+		    g_file_exists (menu->custom_icon_file))
+			pixmap_name = g_strdup (menu->custom_icon_file);
+		else
+			pixmap_name = get_pixmap(this_menu, (strcmp (menu->path, ".") == 0));
+		button_widget_set_pixmap(BUTTON_WIDGET(menu->button),
+					 pixmap_name, -1);
 	}
 }
 
@@ -250,11 +277,33 @@ toggle_main_menu(GtkWidget *widget, gpointer data)
 						    "main_frame");
 	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
 						      "normal_frame");
+
+	g_assert (main_frame != NULL);
+	g_assert (normal_frame != NULL);
+
 	if(GTK_TOGGLE_BUTTON(widget)->active) {
 		gtk_widget_set_sensitive(main_frame, TRUE);
 		gtk_widget_set_sensitive(normal_frame, FALSE);
 		gnome_property_box_changed (box);
 	}
+}
+
+static void
+toggle_custom_icon(GtkWidget *widget, gpointer data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+	GtkWidget *custom_icon_entry = gtk_object_get_data(GTK_OBJECT(box),
+							   "custom_icon_entry");
+
+	g_assert (custom_icon_entry != NULL);
+
+	if(GTK_TOGGLE_BUTTON(widget)->active) {
+		gtk_widget_set_sensitive(custom_icon_entry, TRUE);
+	} else {
+		gtk_widget_set_sensitive(custom_icon_entry, FALSE);
+	}
+
+	gnome_property_box_changed (box);
 }
 
 static void
@@ -274,7 +323,7 @@ toggle_normal_menu(GtkWidget *widget, gpointer data)
 
 static void
 add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
-		      char *title,char *ident, int on, int sub)
+		      char *title, char *ident, int on, int sub)
 {
 	char *p;
 	GtkWidget *w;
@@ -340,7 +389,7 @@ create_properties_dialog(Menu *menu)
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
-			       "menu_properties","Panel");
+			       "menu_properties", "Panel");
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
@@ -463,6 +512,45 @@ create_properties_dialog(Menu *menu)
 	
 	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
 				  vbox, gtk_label_new (_("Menu")));
+
+	vbox = gtk_vbox_new(FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(vbox), GNOME_PAD_SMALL);
+
+	f = gtk_frame_new(_("Icon"));
+	gtk_box_pack_start(GTK_BOX(vbox), f, FALSE, FALSE, 0);
+	
+	box = gtk_vbox_new(FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(box), GNOME_PAD_SMALL);
+	gtk_container_add(GTK_CONTAINER(f), box);
+
+	w = gtk_check_button_new_with_label (_("Use custom icon for panel button"));
+	gtk_object_set_data(GTK_OBJECT(dialog), "custom_icon", w);
+	if(menu->custom_icon &&
+	   menu->custom_icon_file != NULL)
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_custom_icon), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
+
+	w = gnome_icon_entry_new("icon", _("Browse"));
+	gtk_object_set_data(GTK_OBJECT(dialog), "custom_icon_entry", w);
+	if (menu->custom_icon_file != NULL) {
+		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(w),
+					  menu->custom_icon_file);
+	}
+	if ( ! menu->custom_icon) {
+		gtk_widget_set_sensitive (w, FALSE);
+	}
+	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
+	t = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (w));
+	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
+					       GTK_SIGNAL_FUNC(gnome_property_box_changed), 
+					       GTK_OBJECT(dialog));
+
+
+	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
+				  vbox, gtk_label_new (_("Icon")));
 	
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) properties_close_callback,
@@ -492,6 +580,6 @@ menu_properties(Menu *menu)
 
 	dialog = create_properties_dialog(menu);
 	gtk_object_set_data(GTK_OBJECT(menu->button),
-			    MENU_PROPERTIES,dialog);
+			    MENU_PROPERTIES, dialog);
 	gtk_widget_show_all (dialog);
 }

@@ -863,7 +863,7 @@ drop_menu(PanelWidget *panel, int pos, char *dir)
 	/* Guess KDE menus */
 	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
-	load_menu_applet(dir, flags, TRUE, panel, pos, TRUE);
+	load_menu_applet(dir, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
 }
 
 static void

@@ -991,7 +991,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	panel = get_panel_from_menu_data (widget);
 
-	load_menu_applet (menudir, flags, TRUE, panel, 0, FALSE);
+	load_menu_applet (menudir, flags, TRUE, FALSE, NULL, panel, 0, FALSE);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -2511,11 +2511,20 @@ destroy_menu (GtkWidget *widget, gpointer data)
 						     MENU_PROPERTIES);
 	if(prop_dialog)
 		gtk_widget_unref(prop_dialog);
+	gtk_object_set_data(GTK_OBJECT(menu->button), MENU_PROPERTIES, NULL);
+
+	menu->button = NULL;
+
 	if(menu->menu)
 		gtk_widget_unref(menu->menu);
 	menu->menu = NULL;
+
 	g_free(menu->path);
 	menu->path = NULL;
+
+	g_free(menu->custom_icon_file);
+	menu->custom_icon_file = NULL;
+
 	g_free(menu);
 }
 
@@ -4499,7 +4508,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 
-	gtk_object_set_data(GTK_OBJECT(menu->menu),"menu_panel", panel);
+	gtk_object_set_data(GTK_OBJECT(menu->menu), "menu_panel", panel);
 	gtk_signal_connect_object_while_alive(
 	      GTK_OBJECT(panel),
 	      "destroy", GTK_SIGNAL_FUNC(gtk_widget_unref),
@@ -4561,7 +4570,8 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 static Menu *
 create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 		   PanelOrientType orient, int main_menu_flags,
-		   gboolean global_main)
+		   gboolean global_main,
+		   gboolean custom_icon, char *custom_icon_file)
 {
 	Menu *menu;
 	
@@ -4569,14 +4579,26 @@ create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 
 	menu = g_new0(Menu, 1);
 
-	pixmap_name = get_pixmap(menudir, main_menu);
+	menu->custom_icon = custom_icon;
+	if (custom_icon_file != NULL &&
+	    custom_icon_file[0] != '\0')
+		menu->custom_icon_file = g_strdup (custom_icon_file);
+	else
+		menu->custom_icon_file = NULL;
+
+	if (menu->custom_icon &&
+	    menu->custom_icon_file != NULL &&
+	    g_file_exists (menu->custom_icon_file))
+		pixmap_name = g_strdup (menu->custom_icon_file);
+	else
+		pixmap_name = get_pixmap(menudir, main_menu);
 
 	menu->main_menu_flags = main_menu_flags;
 	menu->global_main = global_main;
 
 	/*make the pixmap*/
-	menu->button = button_widget_new (pixmap_name,-1, MENU_TILE,
-					  TRUE,orient, _("Menu"));
+	menu->button = button_widget_new (pixmap_name, -1, MENU_TILE,
+					  TRUE, orient, _("Menu"));
 	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
 				  GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
@@ -4599,7 +4621,8 @@ create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 static Menu *
 create_menu_applet(PanelWidget *panel, char *arguments,
 		   PanelOrientType orient, int main_menu_flags,
-		   gboolean global_main)
+		   gboolean global_main,
+		   gboolean custom_icon, char *custom_icon_file)
 {
 	Menu *menu;
 	gboolean main_menu;
@@ -4617,7 +4640,8 @@ create_menu_applet(PanelWidget *panel, char *arguments,
 		     (strcmp (arguments, ".") == 0));
 
 	menu = create_panel_menu (panel, this_menu, main_menu,
-				  orient, main_menu_flags, global_main);
+				  orient, main_menu_flags, global_main,
+				  custom_icon, custom_icon_file);
 	if (arguments && *arguments)
 		menu->path = g_strdup(arguments);
 	else
@@ -4640,12 +4664,14 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 
 void
 load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
+		 gboolean custom_icon, char *custom_icon_file,
 		 PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Menu *menu;
 
 	menu = create_menu_applet(panel, params, ORIENT_UP,
-				  main_menu_flags, global_main);
+				  main_menu_flags, global_main,
+				  custom_icon, custom_icon_file);
 
 	if(menu) {
 		char *tmp;
