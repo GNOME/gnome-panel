@@ -74,6 +74,8 @@ struct _PanelAppletPrivate {
         int                         size_hints_len;
 
 	gboolean		    moving_focus_out;
+	gint		   	    focusable_child;
+	guint			    hierarchy_changed_id;
 };
 
 static GObjectClass *parent_class;
@@ -445,11 +447,71 @@ panel_applet_menu_position (GtkMenu  *menu,
 	*push_in = TRUE;
 }
 
+static GtkWidget*
+panel_applet_container_has_focusable_child (GtkWidget *widget)
+{
+	GtkContainer *container;
+	GtkWidget *child;
+	GList *list;
+	GList *t;
+	GtkWidget *retval = NULL;
+
+	container = GTK_CONTAINER (widget);
+	list = gtk_container_get_children (container);
+
+	for (t = list; t; t = t->next) {
+		child = GTK_WIDGET (t->data);
+		if (GTK_WIDGET_CAN_FOCUS (child)) {
+			retval = child;
+			break;
+		} else if (GTK_IS_CONTAINER (child)) {
+			retval = panel_applet_container_has_focusable_child (child);
+			if (retval)
+				break;
+		}
+	}
+	g_list_free (list);
+	return retval;	
+}
+
+static void
+panel_applet_hierarchy_changed_cb (GtkWidget *widget)
+{
+	PanelApplet *applet = PANEL_APPLET (widget);
+
+	applet->priv->focusable_child = -1;
+}
+
+static gboolean
+panel_applet_has_focusable_child (PanelApplet *applet)
+{
+	if (applet->priv->focusable_child == -1) {
+		GtkWidget *focusable_child;
+
+		if (!applet->priv->hierarchy_changed_id)
+			applet->priv->hierarchy_changed_id = 
+				g_signal_connect (applet, "hierarchy-changed", 
+				  		  G_CALLBACK (panel_applet_hierarchy_changed_cb),
+				  		  NULL);
+
+		focusable_child = panel_applet_container_has_focusable_child (GTK_WIDGET (applet));
+		applet->priv->focusable_child = (focusable_child != NULL);
+	}
+	return  (applet->priv->focusable_child != 0);
+}
+
 static gboolean
 panel_applet_button_press (GtkWidget      *widget,
 			   GdkEventButton *event)
 {
 	PanelApplet *applet = PANEL_APPLET (widget);
+
+	if (!panel_applet_has_focusable_child (applet)) {
+		if (!GTK_WIDGET_HAS_FOCUS (widget)) {
+			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_grab_focus (widget);
+		}
+	}
 
 	if (event->button == 1)
 		return TRUE;
@@ -1295,6 +1357,9 @@ panel_applet_setup (PanelApplet *applet)
 
 	g_signal_connect (applet, "popup_menu",
 			  G_CALLBACK (panel_applet_popup_menu), NULL);
+
+	priv->focusable_child = -1;
+	priv->hierarchy_changed_id  = 0;
 }
 
 /**

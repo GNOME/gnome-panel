@@ -1,3 +1,15 @@
+2002-07-16  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel-applet.c: 
+	(panel_applet_button_press): Give focus to applet when it is clicked 
+	on if the applet does not have a focusable child and the applet does
+	not have focus.
+
+	Fields focusable_child and hierarchy_changed_id are added to the data 
+	structure _PanelAppletPrivate to support caching whether an applet has
+	a focusable child and invalidating the cache if the hiererchy below
+	the applet changes. #86330.
+
 2002-07-03  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c: (panel_applet_expose): change how
