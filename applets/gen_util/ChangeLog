@@ -1,3 +1,17 @@
+1998-06-01  Mark Galassi  <rosalia@cygnus.com>
+
+	* modemlights/properties.c (property_load): introduced a
+	"confirmation" property to be saved and loaded.  It doesn't save
+	yet :-)
+	(confirm_checkbox_cb):
+	(property_show): added a confirmation checkbox to the properties
+	dialog.
+
+	* modemlights/modemlights.c (dial_cb): introduced the
+	ask_for_confirmation configuration variable.  Now we only enter
+	the yes/no dialog if that variable is true; otherwise we just fire
+	off the connect (or disconnect) script.
+
 Fri May 29 19:42:23 PDT 1998  Garrett Smith  <gsmith@serv.net>
 
         * webcontrol/webcontrol.c: added more configurability.
