@@ -239,14 +239,19 @@ panel_menu_items_append_place_item (const char *icon_name,
 static void
 panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 {
+	typedef struct {
+		GnomeVFSURI *uri;
+		char        *label;
+	} PanelBookmark;
+
 	GtkWidget   *add_menu;
 	char        *filename;
 	char        *contents;
 	gchar      **lines;
 	GHashTable  *table;
 	int          i;
-	GSList      *add_files, *l;
-	GnomeVFSURI *uri;
+	GSList      *add_bookmarks, *l;
+	PanelBookmark *bookmark;
 
 	filename = g_build_filename (g_get_home_dir (),
 				     BOOKMARKS_FILENAME, NULL);
@@ -262,13 +267,24 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	g_free (contents);
 
 	table = g_hash_table_new (g_str_hash, g_str_equal);
-	add_files = NULL;
+	add_bookmarks = NULL;
 
 	//FIXME gnome_vfs_uri_exists: could there be an authentication
 	//dialog if there's a bookmarks to sftp://something?
 	for (i = 0; lines[i]; i++) {
 		if (lines[i][0] && !g_hash_table_lookup (table, lines[i])) {
-			char *unescaped_uri;
+			GnomeVFSURI *uri;
+			char        *space;
+			char        *label;
+			char        *unescaped_uri;
+
+			space = strchr (lines[i], ' ');
+			if (space) {
+				*space = '\0';
+				label = g_strdup (space + 1);
+			} else {
+				label = NULL;
+			}
 
 			unescaped_uri = gnome_vfs_unescape_string (lines[i],
 								   "");
@@ -276,11 +292,16 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 			g_free (unescaped_uri);
 
 			if (!gnome_vfs_uri_exists (uri)) {
+				if (label)
+					g_free (label);
 				gnome_vfs_uri_unref (uri);
 				continue;
 			}
 
-			add_files = g_slist_prepend (add_files, uri);
+			bookmark = g_malloc (sizeof (PanelBookmark));
+			bookmark->uri = uri;
+			bookmark->label = label;
+			add_bookmarks = g_slist_prepend (add_bookmarks, bookmark);
 			g_hash_table_insert (table, lines[i], lines[i]);
 		}
 	}
@@ -288,9 +309,9 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 	g_hash_table_destroy (table);
 	g_strfreev (lines);
 
-	add_files = g_slist_reverse (add_files);
+	add_bookmarks = g_slist_reverse (add_bookmarks);
 
-	if (g_slist_length (add_files) <= MAX_ITEMS_OR_SUBMENU) {
+	if (g_slist_length (add_bookmarks) <= MAX_ITEMS_OR_SUBMENU) {
 		add_menu = menu;
 	} else {
 		GtkWidget *item;
@@ -307,14 +328,14 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
 	}
 
-	for (l = add_files; l; l = l->next) {
+	for (l = add_bookmarks; l; l = l->next) {
 		char *full_uri;
 		char *display_uri;
 		char *tooltip;
-		char *basename;
+		char *label;
 
-		uri = l->data;
-		full_uri = gnome_vfs_uri_to_string (uri,
+		bookmark = l->data;
+		full_uri = gnome_vfs_uri_to_string (bookmark->uri,
 						    GNOME_VFS_URI_HIDE_NONE);
 
 		display_uri = gnome_vfs_format_uri_for_display (full_uri);
@@ -322,21 +343,35 @@ panel_place_menu_item_append_gtk_bookmarks (GtkWidget *menu)
 		tooltip = g_strdup_printf (_("Open '%s'"), display_uri);
 		g_free (display_uri);
 
-		basename = gnome_vfs_uri_extract_short_name (uri);
+		label = NULL;
+		if (bookmark->label) {
+			label = g_strdup (g_strstrip (bookmark->label));
+			if (!label [0]) {
+				g_free (label);
+				label = NULL;
+			}
+		}
+
+		if (!label)
+			label = gnome_vfs_uri_extract_short_name (bookmark->uri);
+
 		panel_menu_items_append_place_item ("gnome-fs-directory",
-						    basename,
+						    label,
 						    tooltip,
 						    add_menu,
 						    G_CALLBACK (activate_uri),
 						    full_uri);
 
-		g_free (basename);
 		g_free (tooltip);
 		g_free (full_uri);
-		gnome_vfs_uri_unref (uri);
+		g_free (label);
+		if (bookmark->label)
+			g_free (bookmark->label);
+		gnome_vfs_uri_unref (bookmark->uri);
+		g_free (bookmark);
 	}
 
-	g_slist_free (add_files);
+	g_slist_free (add_bookmarks);
 }
 
 static void
