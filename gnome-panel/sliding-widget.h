@@ -5,20 +5,20 @@
  *           George Lebl
  */
 
-#ifndef __SLIDING_WIDGET_H__
-#define __SLIDING_WIDGET_H__
+#ifndef SLIDING_WIDGET_H
+#define SLIDING_WIDGET_H
 
 #include "border-widget.h"
 
 BEGIN_GNOME_DECLS
 
-#define SLIDING_POS_TYPE           (sliding_pos_get_type ())
-#define SLIDING_POS(o)             (GTK_CHECK_CAST ((o), SLIDING_POS_TYPE, SlidingPos))
-#define SLIDING_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), SLIDING_POS_TYPE, SlidingPosClass))
-#define IS_SLIDING_POS(o)          (GTK_CHECK_TYPE ((o), SLIDING_POS_TYPE))
-#define IS_SLIDING_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), SLIDING_POS_TYPE))
+#define TYPE_SLIDING_POS           (sliding_pos_get_type ())
+#define SLIDING_POS(o)             (GTK_CHECK_CAST ((o), TYPE_SLIDING_POS, SlidingPos))
+#define SLIDING_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), TYPE_SLIDING_POS, SlidingPosClass))
+#define IS_SLIDING_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_SLIDING_POS))
+#define IS_SLIDING_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_SLIDING_POS))
 
-#define SLIDING_WIDGET_TYPE        (BORDER_WIDGET_TYPE)
+#define TYPE_SLIDING_WIDGET        (TYPE_BORDER_WIDGET)
 #define SLIDING_WIDGET(o)          (BORDER_WIDGET(o))
 #define SLIDING_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
 #define IS_SLIDING_WIDGET(o)       (IS_BORDER_WIDGET(o) && IS_SLIDING_POS(BASEP_WIDGET(o)->pos))
@@ -54,7 +54,7 @@ struct _SlidingPosClass {
 			       gint16 offset);
 };
 
-GtkType sliding_pos_get_type (void);
+GtkType sliding_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 			       gint16 offset,
 			       BorderEdge edge,

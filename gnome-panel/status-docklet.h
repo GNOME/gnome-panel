@@ -16,6 +16,7 @@
 
 BEGIN_GNOME_DECLS
 
+#define TYPE_STATUS_DOCKLET          (status_docklet_get_type ())
 #define STATUS_DOCKLET(obj)          GTK_CHECK_CAST (obj, status_docklet_get_type (), StatusDocklet)
 #define STATUS_DOCKLET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, status_docklet_get_type (), StatusDockletClass)
 #define IS_STATUS_DOCKLET(obj)       GTK_CHECK_TYPE (obj, status_docklet_get_type ())
@@ -60,7 +61,7 @@ struct _StatusDockletClass
 			     GtkWidget     *plug);
 };
 
-guint		status_docklet_get_type		(void);
+guint		status_docklet_get_type		(void) G_GNUC_CONST;
 
 /*just creates a new object, but doesn't yet try to connect to a panel, you
   need to bind the build_plug signal which will make your widget, and then

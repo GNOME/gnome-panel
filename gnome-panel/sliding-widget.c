@@ -25,21 +25,23 @@ static void sliding_pos_get_pos (BasePWidget *basep,
 static BorderPosClass *parent_class;
 
 GtkType
-sliding_pos_get_type ()
+sliding_pos_get_type (void)
 {
 	static GtkType sliding_pos_type = 0;
 
-	if (!sliding_pos_type) {
+	if (sliding_pos_type == 0) {
 		GtkTypeInfo sliding_pos_info = {
 			"SlidingPos",
 			sizeof (SlidingPos),
 			sizeof (SlidingPosClass),
 			(GtkClassInitFunc) sliding_pos_class_init,
 			(GtkObjectInitFunc) sliding_pos_init,
-			NULL, NULL
+			NULL,
+			NULL,
+			NULL
 		};
 
-		sliding_pos_type = gtk_type_unique (BORDER_POS_TYPE,
+		sliding_pos_type = gtk_type_unique (TYPE_BORDER_POS,
 						    &sliding_pos_info);
 	}
 			       
@@ -59,7 +61,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-	parent_class = gtk_type_class(BORDER_POS_TYPE);
+	parent_class = gtk_type_class(TYPE_BORDER_POS);
 
 	sliding_pos_signals[ANCHOR_CHANGE_SIGNAL] =
 		gtk_signal_new("anchor_change",
@@ -262,8 +264,8 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color)
 {
-	SlidingWidget *sliding = gtk_type_new (SLIDING_WIDGET_TYPE);
-	SlidingPos *pos = gtk_type_new (SLIDING_POS_TYPE);
+	SlidingWidget *sliding = gtk_type_new (TYPE_SLIDING_WIDGET);
+	SlidingPos *pos = gtk_type_new (TYPE_SLIDING_POS);
 
 	pos->anchor = anchor;
 	pos->offset = offset;

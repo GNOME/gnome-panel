@@ -83,8 +83,7 @@ static GSList *tearoffs = NULL;
 void
 init_menus(void)
 {
-	DistributionType distribution = get_distribution ();
-	const DistributionInfo *distribution_info = get_distribution_info (distribution);
+	const DistributionInfo *distribution_info = get_distribution_info ();
 
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
@@ -897,7 +896,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 {
 	char *menudir = data;
 	PanelWidget *panel;
-	DistributionType distribution = get_distribution ();
+	DistributionType distribution = get_distribution_type ();
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 		MAIN_MENU_DESKTOP_SUB;
@@ -2841,8 +2840,7 @@ static GtkWidget *
 create_distribution_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake,
 			 gboolean title)
 {
-	DistributionType distribution = get_distribution ();
-	const DistributionInfo *info = get_distribution_info (distribution);
+	const DistributionInfo *info = get_distribution_info ();
 	gchar *pixmap_file = NULL, *menu_path;
 
 	if (!info)
@@ -3090,7 +3088,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	case EDGE_PANEL: 
 	{
 		BorderEdge edge = BORDER_BOTTOM;
-		convert_setup (basep, EDGE_POS_TYPE);
+		convert_setup (basep, TYPE_EDGE_POS);
 
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -3110,7 +3108,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		BorderEdge edge = BORDER_BOTTOM;
 		AlignedAlignment align;
 
-		convert_setup (basep, ALIGNED_POS_TYPE);
+		convert_setup (basep, TYPE_ALIGNED_POS);
 
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -3146,7 +3144,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		SlidingAnchor anchor;
 		gint16 offset;
 		
-		convert_setup (basep, SLIDING_POS_TYPE);
+		convert_setup (basep, TYPE_SLIDING_POS);
 		
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -3180,7 +3178,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	}
 	case FLOATING_PANEL:
 	{
-		convert_setup (basep, FLOATING_POS_TYPE);
+		convert_setup (basep, TYPE_FLOATING_POS);
 		floating_widget_change_coords (FLOATING_WIDGET (basep),
 					       x, y);
 		break;
@@ -4162,8 +4160,7 @@ create_root_menu(GtkWidget *root_menu,
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 
-	DistributionType distribution = get_distribution ();
-	const DistributionInfo *distribution_info = get_distribution_info (distribution);
+	const DistributionInfo *distribution_info = get_distribution_info ();
 
 	gboolean has_inline = (flags & (MAIN_MENU_SYSTEM |
 					MAIN_MENU_USER |
@@ -4183,7 +4180,7 @@ create_root_menu(GtkWidget *root_menu,
 	IconSize size = global_config.use_large_icons 
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
-	if (distribution_info) {
+	if (distribution_info != NULL) {
 		has_inline |= (flags & (MAIN_MENU_DISTRIBUTION));
 		has_subs |= (flags & (MAIN_MENU_DISTRIBUTION_SUB));
 	}
@@ -4209,7 +4206,8 @@ create_root_menu(GtkWidget *root_menu,
 	if (flags & MAIN_MENU_APPLETS)
 		create_applets_menu(root_menu, fake_submenus, title);
 
-	if (flags & MAIN_MENU_DISTRIBUTION) {
+	if (flags & MAIN_MENU_DISTRIBUTION &&
+	    distribution_info != NULL) {
 		if (distribution_info->menu_show_func)
 			distribution_info->menu_show_func(NULL,NULL);
 
@@ -4267,9 +4265,8 @@ create_root_menu(GtkWidget *root_menu,
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
-		g_assert (distribution_info != NULL);
-
+	if (flags & MAIN_MENU_DISTRIBUTION_SUB &&
+	    distribution_info != NULL) {
 		menu = create_distribution_menu(NULL, fake_submenus, TRUE, TRUE);
                 menuitem = gtk_menu_item_new ();
                 gtk_widget_lock_accelerators (menuitem);
@@ -4426,6 +4423,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	GtkWidget *wpanel = get_panel_parent(menu->button);
 	int main_menu = (strcmp (menu->path, ".") == 0);
 	int flags;
+	const DistributionInfo *distribution_info = get_distribution_info ();
 
 	if (menu->global_main)
 		flags = global_config.menu_flags;
@@ -4445,7 +4443,8 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	} else {
 		if(flags & MAIN_MENU_DISTRIBUTION &&
 		   ! (flags & MAIN_MENU_DISTRIBUTION_SUB) &&
-		   distribution_info && distribution_info->menu_show_func)
+		   distribution_info != NULL &&
+		   distribution_info->menu_show_func)
 			distribution_info->menu_show_func(NULL, NULL);
 
 		check_and_reread_applet(menu, main_menu);

@@ -845,7 +845,7 @@ extract_filename (const gchar* uri)
 static void
 drop_url(PanelWidget *panel, int pos, char *url)
 {
-	char *p = g_strdup_printf("Open URL: %s",url);
+	char *p = g_strdup_printf(_("Open URL: %s"),url);
 	load_launcher_applet_from_info_url(url, p, url, "netscape.png",
 					   panel, pos, TRUE);
 	g_free(p);
@@ -855,7 +855,7 @@ static void
 drop_menu(PanelWidget *panel, int pos, char *dir)
 {
 	int flags = MAIN_MENU_SYSTEM | MAIN_MENU_USER;
-	DistributionType distribution = get_distribution ();
+	DistributionType distribution = get_distribution_type ();
 
 	/*guess distribution menus*/
 	if(distribution != DISTRIBUTION_UNKNOWN)

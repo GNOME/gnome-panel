@@ -90,10 +90,14 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	}
 }
 
+/* This function is marked as const as get_distribution_type is const and
+ * it would never change while the program is running.  If you change this
+ * do remember to take out the G_GNUC_CONST in menu-util.h */
 int
-get_default_menu_flags ()
+get_default_menu_flags (void)
 {
-  DistributionType distribution = get_distribution();
+	DistributionType distribution = get_distribution_type();
+
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 		MAIN_MENU_DESKTOP;

@@ -25,14 +25,13 @@ typedef struct {
 	void (*menu_show_func) (GtkWidget *, GtkMenuItem *);
 } DistributionInfo;
 
-/* Distribution description array. */
-extern DistributionInfo distribution_info [];
-
 /* Get distribution type. */
-DistributionType get_distribution (void);
+DistributionType get_distribution_type (void) G_GNUC_CONST;
 
-/* Get info about a distribution or NULL. */
-const DistributionInfo *get_distribution_info (DistributionType type);
+/* Get the distribution info, it only checks the first time, it thus won't handle
+ * distributions getting changed from under us.  Hmmm ... I think doing that
+ * would be really going overboard */
+const DistributionInfo *get_distribution_info (void) G_GNUC_CONST;
 
 END_GNOME_DECLS
 

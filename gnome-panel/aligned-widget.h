@@ -12,13 +12,13 @@
 
 BEGIN_GNOME_DECLS
 
-#define ALIGNED_POS_TYPE           (aligned_pos_get_type ())
-#define ALIGNED_POS(o)             (GTK_CHECK_CAST ((o), ALIGNED_POS_TYPE, AlignedPos))
-#define ALIGNED_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), ALIGNED_POS_TYPE, AlignedPosClass))
-#define IS_ALIGNED_POS(o)          (GTK_CHECK_TYPE ((o), ALIGNED_POS_TYPE))
-#define IS_ALIGNED_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), ALIGNED_POS_TYPE))
+#define TYPE_ALIGNED_POS           (aligned_pos_get_type ())
+#define ALIGNED_POS(o)             (GTK_CHECK_CAST ((o), TYPE_ALIGNED_POS, AlignedPos))
+#define ALIGNED_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), TYPE_ALIGNED_POS, AlignedPosClass))
+#define IS_ALIGNED_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_ALIGNED_POS))
+#define IS_ALIGNED_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_ALIGNED_POS))
 
-#define ALIGNED_WIDGET_TYPE        (BORDER_WIDGET_TYPE)
+#define TYPE_ALIGNED_WIDGET        (TYPE_BORDER_WIDGET)
 #define ALIGNED_WIDGET(o)          (BORDER_WIDGET(o))
 #define ALIGNED_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
 #define IS_ALIGNED_WIDGET(o)       (IS_BORDER_WIDGET(o) && IS_ALIGNED_POS(BASEP_WIDGET(o)->pos))
@@ -51,7 +51,7 @@ struct _AlignedPosClass {
 			      AlignedAlignment align);
 };
 
-GtkType aligned_pos_get_type (void);
+GtkType aligned_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *aligned_widget_new (AlignedAlignment aligned,
 			       BorderEdge edge,
 			       BasePMode mode,

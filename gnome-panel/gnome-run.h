@@ -3,6 +3,7 @@
  *    bloatware edition by Havoc Pennington. Both versions written in 10
  *    minutes or less. :-)
  *   Copyright (C) 1998 Havoc Pennington <hp@pobox.com>
+ *   Copyright (C) 2000 Eazel, Inc.
  *
  * This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as 
@@ -20,12 +21,12 @@
  * USA
  */
 
-#ifndef __GNOME_RUN_H__
-#define __GNOME_RUN_H__
+#ifndef GNOME_RUN_H
+#define GNOME_RUN_H
 
 void show_run_dialog (void);
 void show_run_dialog_with_text (const char *text);
 
 void load_run_applet(PanelWidget *panel, int pos, gboolean exactpos);
 
-#endif /*__GNOME_RUN_H__*/
+#endif /* GNOME_RUN_H */

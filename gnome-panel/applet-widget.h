@@ -41,6 +41,7 @@ typedef GNOME_Panel_BackType PanelBackType;
 #define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
 
 
+#define TYPE_APPLET_WIDGET          (applet_widget_get_type ())
 #define APPLET_WIDGET(obj)          GTK_CHECK_CAST (obj, applet_widget_get_type (), AppletWidget)
 #define APPLET_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, applet_widget_get_type (), AppletWidgetClass)
 #define IS_APPLET_WIDGET(obj)       GTK_CHECK_TYPE (obj, applet_widget_get_type ())
@@ -121,7 +122,7 @@ typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **p
 /* Returns TRUE if the factory can activate this applet */
 typedef gboolean (*AppletFactoryQuerier)(const char *goad_id);
 
-guint		applet_widget_get_type		(void);
+guint		applet_widget_get_type		(void) G_GNUC_CONST;
 
 void            applet_factory_new(const char *goad_id,
 				   AppletFactoryQuerier qfunc,

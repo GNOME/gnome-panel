@@ -25,8 +25,8 @@ static GtkWidget *fixed = NULL; /*the fixed container in which the docklets resi
 static GSList *spots = NULL;
 static int nspots = 0;
 
-int status_inhibit = FALSE; /*inhibit adding and updating for the purpose
-			      of quitting*/
+gboolean status_inhibit = FALSE; /*inhibit adding and updating for the purpose
+				   of quitting*/
 
 extern GSList *applets;
 extern GSList *applets_last;
@@ -89,7 +89,8 @@ status_applet_update(StatusApplet *s)
 	int rows;
 	int i,j;
 	
-	if(status_inhibit) return;
+	if(status_inhibit)
+		return;
 	
 	DPUTS("STATUS_APPLET_UPDATE");
 	DPRINTD(nspots);

@@ -5,8 +5,8 @@
  *           George Lebl
  */
 
-#ifndef __EDGE_WIDGET_H__
-#define __EDGE_WIDGET_H__
+#ifndef EDGE_WIDGET_H
+#define EDGE_WIDGET_H
 
 #include "border-widget.h"
 
@@ -17,13 +17,13 @@ BEGIN_GNOME_DECLS
    since we do need a seperate GtkType
 */
 
-#define EDGE_POS_TYPE          (edge_pos_get_type ())
-#define EDGE_POS(o)            (GTK_CHECK_CAST ((o), EDGE_POS_TYPE, EdgePos))
-#define EDGE_POS_CLASS(k)      (GTK_CHECK_CLASS_CAST ((k), EDGE_POS_TYPE, EdgePosClass))
-#define IS_EDGE_POS(o)         (GTK_CHECK_TYPE ((o), EDGE_POS_TYPE))
-#define IS_EDGE_POS_CLASS(k)   (GTK_CHECK_CLASS_TYPE ((k), EDGE_POS_TYPE))
+#define TYPE_EDGE_POS          (edge_pos_get_type ())
+#define EDGE_POS(o)            (GTK_CHECK_CAST ((o), TYPE_EDGE_POS, EdgePos))
+#define EDGE_POS_CLASS(k)      (GTK_CHECK_CLASS_CAST ((k), TYPE_EDGE_POS, EdgePosClass))
+#define IS_EDGE_POS(o)         (GTK_CHECK_TYPE ((o), TYPE_EDGE_POS))
+#define IS_EDGE_POS_CLASS(k)   (GTK_CHECK_CLASS_TYPE ((k), TYPE_EDGE_POS))
 
-#define EDGE_WIDGET_TYPE       (BORDER_WIDGET_TYPE)
+#define TYPE_EDGE_WIDGET       (TYPE_BORDER_WIDGET)
 #define EDGE_WIDGET(o)         (BORDER_WIDGET(o))
 #define EDGE_WIDGET_CLASS(k)   (BORDER_WIDGET_CLASS(k))
 #define IS_EDGE_WIDGET(o)      (IS_BORDER_WIDGET(o) && IS_EDGE_POS(BASEP_WIDGET(o)->pos))
@@ -44,7 +44,7 @@ struct _EdgePosClass {
 	BorderPosClass parent_class;
 };
 
-GtkType edge_pos_get_type (void);
+GtkType edge_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *edge_widget_new (BorderEdge edge,
 			    BasePMode mode,
 			    BasePState state,

@@ -13,10 +13,10 @@
 
 BEGIN_GNOME_DECLS
 
-#define FOOBAR_WIDGET_TYPE     (foobar_widget_get_type ())
-#define FOOBAR_WIDGET(o)       (GTK_CHECK_CAST (o, FOOBAR_WIDGET_TYPE, FoobarWidget))
-#define FOOBAR_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST (k, FOOBAR_WIDGET_TYPE, FoobarWidgetType))
-#define IS_FOOBAR_WIDGET(o)    (GTK_CHECK_TYPE (o, FOOBAR_WIDGET_TYPE))
+#define TYPE_FOOBAR_WIDGET     (foobar_widget_get_type ())
+#define FOOBAR_WIDGET(o)       (GTK_CHECK_CAST ((o), TYPE_FOOBAR_WIDGET, FoobarWidget))
+#define FOOBAR_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), TYPE_FOOBAR_WIDGET, FoobarWidgetType))
+#define IS_FOOBAR_WIDGET(o)    (GTK_CHECK_TYPE ((o), TYPE_FOOBAR_WIDGET))
 
 typedef struct _FoobarWidget           FoobarWidget;
 typedef struct _FoobarWidgetClass      FoobarWidgetClass;
@@ -43,7 +43,7 @@ struct _FoobarWidgetClass
 	GtkWindowClass panel_class;
 };
 
-GtkType		foobar_widget_get_type		(void);
+GtkType		foobar_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget *	foobar_widget_new		(void);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);

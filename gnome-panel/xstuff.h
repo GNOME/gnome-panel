@@ -1,4 +1,4 @@
-#ifndef _XSTUFF_H_
+#ifndef XSTUFF_H
 
 #include <gdk/gdkx.h>
 

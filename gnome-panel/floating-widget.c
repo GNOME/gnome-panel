@@ -53,22 +53,24 @@ static void floating_pos_show_hide_right (BasePWidget *basep);
 static BasePPosClass *parent_class;
 
 GtkType
-floating_pos_get_type ()
+floating_pos_get_type (void)
 {
 	static GtkType floating_pos_type = 0;
 
-	if (!floating_pos_type) {
+	if (floating_pos_type == 0) {
 		GtkTypeInfo floating_pos_info = {
 			"FloatingPos",
 			sizeof (FloatingPos),
 			sizeof (FloatingPosClass),
 			(GtkClassInitFunc) floating_pos_class_init,
 			(GtkObjectInitFunc) floating_pos_init,
-			NULL, NULL
+			NULL,
+			NULL,
+			NULL
 		};
 
-		floating_pos_type = gtk_type_unique (BASEP_POS_TYPE,
-						   &floating_pos_info);
+		floating_pos_type = gtk_type_unique (TYPE_BASEP_POS,
+						     &floating_pos_info);
 	}
 
 	return floating_pos_type;
@@ -86,7 +88,7 @@ floating_pos_class_init (FloatingPosClass *klass)
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(BASEP_POS_TYPE);
+	parent_class = gtk_type_class(TYPE_BASEP_POS);
 
 	floating_pos_signals[COORDS_CHANGE_SIGNAL] =
 		gtk_signal_new ("floating_coords_change",
@@ -223,8 +225,8 @@ floating_pos_set_pos (BasePWidget *basep,
 	newy = pos->y;
 
 	if (x < minx || x > maxx) {
-		int w2=w;
-		int x2=x;
+		int w2 = w;
+		int x2 = x;
 		if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
 			switch (basep->state) {
 			case BASEP_SHOWN:
@@ -244,8 +246,8 @@ floating_pos_set_pos (BasePWidget *basep,
 	}
 
 	if (y < miny || y > maxy) {
-		int h2=h;
-		int y2=y;
+		int h2 = h;
+		int y2 = y;
 		if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
 			switch (basep->state) {
 			case BASEP_SHOWN:
@@ -477,8 +479,8 @@ floating_widget_new (gint16 x, gint16 y,
 	FloatingWidget *floating;
 	FloatingPos *pos;
 
-	floating = gtk_type_new (FLOATING_WIDGET_TYPE);
-	floating->pos = gtk_type_new (FLOATING_POS_TYPE);
+	floating = gtk_type_new (TYPE_FLOATING_WIDGET);
+	floating->pos = gtk_type_new (TYPE_FLOATING_POS);
 	pos = FLOATING_POS (floating->pos);
 
 	pos->x = x;

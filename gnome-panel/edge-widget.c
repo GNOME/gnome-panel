@@ -34,17 +34,19 @@ edge_pos_get_type ()
 {
 	static GtkType edge_pos_type = 0;
 
-	if (!edge_pos_type) {
+	if (edge_pos_type == 0) {
 		GtkTypeInfo edge_pos_info = {
 			"EdgePos",
 			sizeof (EdgePos),
 			sizeof (EdgePosClass),
 			(GtkClassInitFunc) edge_pos_class_init,
 			(GtkObjectInitFunc) edge_pos_init,
-			NULL, NULL
+			NULL,
+			NULL,
+			NULL
 		};
 
-		edge_pos_type = gtk_type_unique (BORDER_POS_TYPE,
+		edge_pos_type = gtk_type_unique (TYPE_BORDER_POS,
 						 &edge_pos_info);
 	}
 			       
@@ -56,7 +58,7 @@ edge_pos_class_init (EdgePosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(BORDER_POS_TYPE);
+	parent_class = gtk_type_class(TYPE_BORDER_POS);
 
 	pos_class->set_pos = edge_pos_set_pos;
 	pos_class->get_pos = edge_pos_get_pos;
@@ -165,10 +167,10 @@ edge_widget_new (BorderEdge edge,
 		 gboolean rotate_pixmap_bg,
 		 GdkColor *back_color)
 {
-	EdgeWidget *edgew = gtk_type_new (EDGE_WIDGET_TYPE);
+	EdgeWidget *edgew = gtk_type_new (TYPE_EDGE_WIDGET);
 	BasePWidget *basep = BASEP_WIDGET (edgew);
 
-	basep->pos = gtk_type_new (EDGE_POS_TYPE);
+	basep->pos = gtk_type_new (TYPE_EDGE_POS);
 
 	border_widget_construct (BORDER_WIDGET (basep), 
 				 edge, 

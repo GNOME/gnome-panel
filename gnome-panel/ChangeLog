@@ -1,3 +1,16 @@
+Sat Sep 02 19:19:08 2000  George Lebl <jirka@5z.com>
+
+	* distribution.[ch], menu*.c:  Make distribution menus api cache the
+	  results to avoid continual statting of version files (how often
+	  does a user change from one distro to another while keeping the
+	  panel running?).  Fix some remaking function to use the correct
+	  distribution_info and fix a crash when distribution menus got
+	  turned on on an unknown distribution system
+
+	* *.[ch]:  make type macros be more consistent in naming, all the
+	  _get_type functions are G_GNUC_CONST functions now also the 
+	  function to get default menu flags is G_GNUC_CONST
+
 2000-08-29  Ismael Olea <olea@hispafuentes.com>
 
 	* panel.hints: translation into Spanish

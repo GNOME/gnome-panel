@@ -19,6 +19,7 @@
 
 BEGIN_GNOME_DECLS
 
+#define TYPE_PANEL_WIDGET          (panel_widget_get_type ())
 #define PANEL_WIDGET(obj)          GTK_CHECK_CAST (obj, panel_widget_get_type (), PanelWidget)
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
@@ -123,7 +124,7 @@ struct _PanelWidgetClass
 			      GtkWidget *applet);
 };
 
-guint		panel_widget_get_type		(void);
+guint		panel_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget *	panel_widget_new		(gboolean packed,
 						 PanelOrientation orient,
 						 int sz,

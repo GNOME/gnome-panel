@@ -4,24 +4,24 @@
  * Authors:  George Lebl
  *           Jacob Berkman
  */
-#ifndef __BASEP_WIDGET_H__
-#define __BASEP_WIDGET_H__
+#ifndef BASEP_WIDGET_H
+#define BASEP_WIDGET_H
 
 #include "panel-widget.h"
 
 BEGIN_GNOME_DECLS
 
-#define BASEP_WIDGET_TYPE        (basep_widget_get_type ())
-#define BASEP_WIDGET(o)          (GTK_CHECK_CAST((o), BASEP_WIDGET_TYPE, BasePWidget))
-#define BASEP_WIDGET_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), BASEP_WIDGET_TYPE, BasePWidgetClass))
-#define IS_BASEP_WIDGET(o)       (GTK_CHECK_TYPE((o), BASEP_WIDGET_TYPE))
-#define IS_BASEP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), BASEP_WIDGET_TYPE))
+#define TYPE_BASEP_WIDGET        (basep_widget_get_type ())
+#define BASEP_WIDGET(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_WIDGET, BasePWidget))
+#define BASEP_WIDGET_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_WIDGET, BasePWidgetClass))
+#define IS_BASEP_WIDGET(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_WIDGET))
+#define IS_BASEP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_WIDGET))
 
-#define BASEP_POS_TYPE        (basep_pos_get_type ())
-#define BASEP_POS(o)          (GTK_CHECK_CAST((o), BASEP_POS_TYPE, BasePPos))
-#define BASEP_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), BASEP_POS_TYPE, BasePPosClass))
-#define IS_BASEP_POS(o)       (GTK_CHECK_TYPE((o), BASEP_POS_TYPE))
-#define IS_BASEP_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), BASEP_POS_TYPE))
+#define TYPE_BASEP_POS        (basep_pos_get_type ())
+#define BASEP_POS(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_POS, BasePPos))
+#define BASEP_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_POS, BasePPosClass))
+#define IS_BASEP_POS(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_POS))
+#define IS_BASEP_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_POS))
 
 typedef struct _BasePWidget		BasePWidget;
 typedef struct _BasePWidgetClass	BasePWidgetClass;
@@ -156,8 +156,8 @@ struct _BasePPosClass {
 	void (*pre_convert_hook)          (BasePWidget *basep);
 };
 
-GtkType         basep_pos_get_type              (void);
-GtkType		basep_widget_get_type		(void);
+GtkType         basep_pos_get_type              (void) G_GNUC_CONST;
+GtkType		basep_widget_get_type		(void) G_GNUC_CONST;
 GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,
@@ -192,14 +192,14 @@ void		basep_widget_change_params	(BasePWidget *basep,
 /*gboolean       basep_widget_convert_to         (BasePWidget *basep,
 						 PanelType type);*/
 
-void            _basep_widget_enable_buttons (BasePWidget *basep,
+void            basep_widget_enable_buttons_ (BasePWidget *basep,
 					      gboolean enabled);
 
 #define         basep_widget_enable_buttons(basep) \
-                (_basep_widget_enable_buttons ((basep),TRUE))
+                (basep_widget_enable_buttons_ ((basep),TRUE))
 
 #define         basep_widget_disable_buttons(basep) \
-                (_basep_widget_enable_buttons ((basep),FALSE))
+                (basep_widget_enable_buttons_ ((basep),FALSE))
 
 void		basep_widget_set_hidebuttons	(BasePWidget *basep);
 void            basep_widget_update_winhints    (BasePWidget *basep);

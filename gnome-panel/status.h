@@ -46,7 +46,7 @@ void status_applet_put_offscreen(StatusApplet *s);
 StatusSpot * status_applet_get_ss(guint32 winid);
 
 /*inhibit adding and updating for the purpose of quitting*/
-extern int status_inhibit;
+extern gboolean status_inhibit;
 
 END_GNOME_DECLS
 

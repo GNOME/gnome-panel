@@ -900,7 +900,7 @@ init_user_applets(void)
 {
 	GString *buf;
 	int count, num;	
-	DistributionType distribution = get_distribution();
+	DistributionType distribution = get_distribution_type();
 
 	count = gnome_config_get_int(PANEL_CONFIG_PATH
 				     "panel/Config/applet_count=0");

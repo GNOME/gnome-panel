@@ -1,5 +1,5 @@
-#ifndef __BUTTON_WIDGET_H__
-#define __BUTTON_WIDGET_H__
+#ifndef BUTTON_WIDGET_H
+#define BUTTON_WIDGET_H
 
 #include <gtk/gtk.h>
 #include <gnome.h>
@@ -9,6 +9,7 @@
 extern "C" {
 #endif /* __cplusplus */
 	
+#define TYPE_BUTTON_WIDGET	    (button_widget_get_type ())
 #define BUTTON_WIDGET(obj)          GTK_CHECK_CAST (obj, button_widget_get_type (), ButtonWidget)
 #define BUTTON_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, button_widget_get_type (), ButtonWidgetClass)
 #define IS_BUTTON_WIDGET(obj)       GTK_CHECK_TYPE (obj, button_widget_get_type ())
@@ -64,7 +65,7 @@ struct _ButtonWidgetClass
 	void (* unpressed) (ButtonWidget *button);
 };
 
-guint		button_widget_get_type		(void);
+guint		button_widget_get_type		(void) G_GNUC_CONST;
 
 GtkWidget*	button_widget_new		(char *pixmap,
 						 int size,

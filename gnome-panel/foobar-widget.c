@@ -647,13 +647,16 @@ GtkWidget *
 foobar_widget_new (void)
 {
 	g_return_val_if_fail (das_global_foobar == NULL, NULL);
-	das_global_foobar =  gtk_type_new (FOOBAR_WIDGET_TYPE);
+
+	das_global_foobar = gtk_type_new (TYPE_FOOBAR_WIDGET);
+
 	gtk_signal_connect_after (GTK_OBJECT (das_global_foobar),
 				  "size-allocate",
 				  GTK_SIGNAL_FUNC (queue_panel_resizes), NULL);
 	gtk_signal_connect (GTK_OBJECT (das_global_foobar), "destroy",
 			    GTK_SIGNAL_FUNC (foobar_destroyed),
 			    NULL);
+
 	return das_global_foobar;
 }
 

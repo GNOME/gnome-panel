@@ -1364,12 +1364,12 @@ basep_widget_convert_to (BasePWidget *basep,
 #endif
 
 void
-_basep_widget_enable_buttons(BasePWidget *basep, gboolean enabled)
+basep_widget_enable_buttons_ (BasePWidget *basep, gboolean enabled)
 {
-	gtk_widget_set_sensitive(basep->hidebutton_n,enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_e,enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_w,enabled);
-	gtk_widget_set_sensitive(basep->hidebutton_s,enabled);
+	gtk_widget_set_sensitive(basep->hidebutton_n, enabled);
+	gtk_widget_set_sensitive(basep->hidebutton_e, enabled);
+	gtk_widget_set_sensitive(basep->hidebutton_w, enabled);
+	gtk_widget_set_sensitive(basep->hidebutton_s, enabled);
 }
 
 void

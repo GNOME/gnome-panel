@@ -1,5 +1,5 @@
-#ifndef _RGB_STUFF_H_
-#define _RGB_STUFF_H_
+#ifndef RGB_STUFF_H
+#define RGB_STUFF_H
 
 #include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -29,4 +29,4 @@ void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 		      GdkPixbuf *pixbuf, double affine[6],
 		      int level, ArtAlphaGamma *ag);
 
-#endif /* _RGB_STUFF_H_ */
+#endif /* RGB_STUFF_H */

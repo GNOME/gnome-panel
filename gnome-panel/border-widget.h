@@ -5,20 +5,20 @@
  *          George Lebl
  */
 
-#ifndef __BORDER_WIDGET_H__
-#define __BORDER_WIDGET_H__
+#ifndef BORDER_WIDGET_H
+#define BORDER_WIDGET_H
 
 #include "basep-widget.h"
 
 BEGIN_GNOME_DECLS
 
-#define BORDER_POS_TYPE        (border_pos_get_type ())
-#define BORDER_POS(o)          (GTK_CHECK_CAST ((o), BORDER_POS_TYPE, BorderPos))
-#define BORDER_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST ((k), BORDER_POS_TYPE, BorderPosClass))
-#define IS_BORDER_POS(o)       (GTK_CHECK_TYPE ((o), BORDER_POS_TYPE))
-#define IS_BORDER_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), BORDER_POS_TYPE))
+#define TYPE_BORDER_POS        (border_pos_get_type ())
+#define BORDER_POS(o)          (GTK_CHECK_CAST ((o), TYPE_BORDER_POS, BorderPos))
+#define BORDER_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST ((k), TYPE_BORDER_POS, BorderPosClass))
+#define IS_BORDER_POS(o)       (GTK_CHECK_TYPE ((o), TYPE_BORDER_POS))
+#define IS_BORDER_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), TYPE_BORDER_POS))
 
-#define BORDER_WIDGET_TYPE        (BASEP_WIDGET_TYPE) 
+#define TYPE_BORDER_WIDGET        (TYPE_BASEP_WIDGET) 
 #define BORDER_WIDGET(o)          (BASEP_WIDGET(o))
 #define BORDER_WIDGET_CLASS(k)    (BASEP_WIDGET_CLASS(o))
 #define IS_BORDER_WIDGET(o)       (IS_BASEP_WIDGET(o) && IS_BORDER_POS( BASEP_WIDGET(o)->pos ))
@@ -58,7 +58,7 @@ struct _BorderPosClass {
 #endif
 };
 	
-GtkType border_pos_get_type (void);
+GtkType border_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *border_widget_construct (BorderWidget *border,
 				    BorderEdge edge,
 				    int packed,

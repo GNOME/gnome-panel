@@ -21,7 +21,7 @@
 static void rh_menu_init_func (void);
 static void rh_menu_show_func (GtkWidget *, GtkMenuItem *);
 
-DistributionInfo distribution_info [] = {
+static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
 	  N_("Debian GNU/Linux"), N_("Debian menus"),
 	  "gnome-debian.png", "/var/lib/gnome/Debian/.",
@@ -40,8 +40,8 @@ DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_UNKNOWN, NULL, NULL, NULL, NULL }
 };
 
-DistributionType
-get_distribution (void)
+static DistributionType
+internal_get_distribution_type (void)
 {
 	DistributionInfo *ptr;
 
@@ -52,8 +52,8 @@ get_distribution (void)
 	return DISTRIBUTION_UNKNOWN;
 }
 
-const DistributionInfo *
-get_distribution_info (DistributionType type)
+static const DistributionInfo *
+internal_get_distribution_info (DistributionType type)
 {
 	DistributionInfo *ptr;
 
@@ -62,6 +62,43 @@ get_distribution_info (DistributionType type)
 			return ptr;
 
 	return NULL;
+}
+
+/* note that this function is marked G_GNUC_CONST in distribution.h */
+DistributionType
+get_distribution_type (void)
+{
+	static gboolean cached = FALSE;
+	static DistributionType cache = DISTRIBUTION_UNKNOWN;
+
+	if (cached) {
+		return cache;
+	}
+
+	cache = internal_get_distribution_type ();
+	cached = TRUE;
+
+	return cache;
+}
+
+/* note that this function is marked G_GNUC_CONST in distribution.h */
+const DistributionInfo *
+get_distribution_info (void)
+{
+	static gboolean cached = FALSE;
+	static const DistributionInfo *cache = NULL;
+	DistributionType type;
+
+	if (cached) {
+		return cache;
+	}
+
+	type = get_distribution_type ();
+
+	cache = internal_get_distribution_info (type);
+	cached = TRUE;
+
+	return cache;
 }
 
 /*

@@ -33,7 +33,7 @@ status_docklet_get_type (void)
 {
 	static guint status_docklet_type = 0;
 
-	if (!status_docklet_type) {
+	if (status_docklet_type == 0) {
 		static const GtkTypeInfo status_docklet_info = {
 			"StatusDocklet",
 			sizeof (StatusDocklet),
@@ -42,6 +42,7 @@ status_docklet_get_type (void)
 			(GtkObjectInitFunc) status_docklet_init,
 			(GtkArgSetFunc) NULL,
 			(GtkArgGetFunc) NULL,
+			NULL
 		};
 
 		status_docklet_type = gtk_type_unique (gtk_object_get_type (),
@@ -207,8 +208,8 @@ try_getting_plug(StatusDocklet *docklet)
 	/*XXX: can these two next cases actually happen???*/
 
 	/*huh? what's going on here, just smash this and let's do it over*/
-	if(docklet->plug) {
-		gtk_object_set_data(GTK_OBJECT(docklet->plug),"status_docklet",NULL);
+	if(docklet->plug != NULL) {
+		gtk_object_set_data(GTK_OBJECT(docklet->plug), "status_docklet", NULL);
 		gtk_widget_destroy(docklet->plug);
 		docklet->plug = NULL;
 	}
@@ -227,7 +228,8 @@ try_getting_plug(StatusDocklet *docklet)
 						  GOAD_ACTIVATE_EXISTING_ONLY,
 						  NULL);
 	
-	if(!panel_client) return FALSE;
+	if(panel_client == NULL)
+		return FALSE;
 
 	CORBA_exception_init(&ev);
 	spot = GNOME_Panel_add_status(panel_client, &wid, &ev);
@@ -258,8 +260,8 @@ try_getting_plug(StatusDocklet *docklet)
 
 	CORBA_exception_free(&ev);
 
-	gtk_object_set_data(GTK_OBJECT(docklet->plug),"status_docklet",docklet);
-	gtk_signal_connect(GTK_OBJECT(docklet->plug),"destroy",
+	gtk_object_set_data(GTK_OBJECT(docklet->plug), "status_docklet", docklet);
+	gtk_signal_connect(GTK_OBJECT(docklet->plug), "destroy",
 			   GTK_SIGNAL_FUNC(plug_destroyed),
 			   NULL);
 	gtk_widget_show(docklet->plug);

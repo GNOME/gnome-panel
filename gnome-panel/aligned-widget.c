@@ -27,21 +27,23 @@ static void aligned_pos_show_hide_right (BasePWidget *basep);
 static BorderPosClass *parent_class;
 
 GtkType
-aligned_pos_get_type ()
+aligned_pos_get_type (void)
 {
 	static GtkType aligned_pos_type = 0;
 
-	if (!aligned_pos_type) {
+	if (aligned_pos_type == 0) {
 		GtkTypeInfo aligned_pos_info = {
 			"AlignedPos",
 			sizeof (AlignedPos),
 			sizeof (AlignedPosClass),
 			(GtkClassInitFunc) aligned_pos_class_init,
 			(GtkObjectInitFunc) aligned_pos_init,
-			NULL, NULL
+			NULL,
+			NULL,
+			NULL
 		};
 
-		aligned_pos_type = gtk_type_unique (BORDER_POS_TYPE,
+		aligned_pos_type = gtk_type_unique (TYPE_BORDER_POS,
 						    &aligned_pos_info);
 	}
 			       
@@ -60,7 +62,7 @@ aligned_pos_class_init (AlignedPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-	parent_class = gtk_type_class(BORDER_POS_TYPE);
+	parent_class = gtk_type_class(TYPE_BORDER_POS);
 	
 	aligned_pos_signals[ALIGN_CHANGE_SIGNAL] =
 		gtk_signal_new ("align_change",
@@ -344,8 +346,8 @@ aligned_widget_new (AlignedAlignment align,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
-	AlignedWidget *aligned = gtk_type_new (ALIGNED_WIDGET_TYPE);
-	AlignedPos *pos = gtk_type_new (ALIGNED_POS_TYPE);
+	AlignedWidget *aligned = gtk_type_new (TYPE_ALIGNED_WIDGET);
+	AlignedPos *pos = gtk_type_new (TYPE_ALIGNED_POS);
 	pos->align = align;
 
 	BASEP_WIDGET (aligned)->pos = BASEP_POS (pos);

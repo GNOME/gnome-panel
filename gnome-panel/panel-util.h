@@ -1,5 +1,5 @@
-#ifndef _PANEL_UTIL_H_
-#define _PANEL_UTIL_H_
+#ifndef PANEL_UTIL_H
+#define PANEL_UTIL_H
 
 #include <gnome.h>
 
@@ -70,4 +70,4 @@ GtkWidget *panel_error_dialog(char *format, ...) G_GNUC_PRINTF (1, 2);
 
 END_GNOME_DECLS
 
-#endif
+#endif /* PANEL_UTIL_H */

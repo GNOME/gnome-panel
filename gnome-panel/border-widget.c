@@ -48,7 +48,7 @@ border_pos_get_type ()
 			NULL, NULL
 		};
 
-		border_pos_type = gtk_type_unique (BASEP_POS_TYPE,
+		border_pos_type = gtk_type_unique (TYPE_BASEP_POS,
 						   &border_pos_info);
 	}
 
@@ -68,7 +68,7 @@ border_pos_class_init (BorderPosClass *klass)
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(BASEP_POS_TYPE);
+	parent_class = gtk_type_class(TYPE_BASEP_POS);
 
 	/* set up signals */
 	border_pos_signals[EDGE_CHANGE_SIGNAL] =
@@ -78,8 +78,8 @@ border_pos_class_init (BorderPosClass *klass)
 			       GTK_SIGNAL_OFFSET(BorderPosClass,
 						 edge_change),
 			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);
+			       GTK_TYPE_NONE, 1,
+			       GTK_TYPE_ENUM);
 
 	gtk_object_class_add_signals (object_class, 
 				      border_pos_signals,
