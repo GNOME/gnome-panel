@@ -37,7 +37,6 @@
 #include "foobar-widget.h"
 #include "gnome-run.h"
 #include "launcher.h"
-#include "logout.h"
 #include "menu-fentry.h"
 #include "menu-util.h"
 #include "menu.h"
@@ -49,6 +48,7 @@
 #include "session.h"
 #include "panel-applet-frame.h"
 #include "global-keys.h"
+#include "panel-action-button.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -1177,27 +1177,16 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		else
 			drop_menu (panel, pos, menu);
 
-	} else if (strcmp(applet_type,"DRAWER:NEW")==0) {
-		load_drawer_applet(NULL, NULL, NULL, panel, pos, TRUE, NULL);
+	} else if (!strcmp (applet_type, "DRAWER:NEW"))
+		load_drawer_applet (NULL, NULL, NULL, panel, pos, TRUE, NULL);
 
-	} else if (strcmp (applet_type, "LOGOUT:NEW") == 0) {
-		load_logout_applet (panel, pos, TRUE, NULL);
+	else if (!strncmp (applet_type, "ACTION:", strlen ("ACTION:")))
+		remove_applet = panel_action_button_load_from_drag (
+					applet_type, panel, pos,
+					TRUE, NULL, &applet_num);
 
-	} else if (sscanf (applet_type, "LOGOUT:%d", &applet_num) == 1) {
-		load_logout_applet (panel, pos, TRUE, NULL);
-		remove_applet = TRUE;
-
-	} else if (strcmp (applet_type, "LOCK:NEW") == 0) {
-		load_lock_applet (panel, pos, TRUE, NULL);
-
-	} else if (sscanf (applet_type, "LOCK:%d", &applet_num) == 1) {
-		load_lock_applet (panel, pos, TRUE, NULL);
-		remove_applet = TRUE;
-
-	} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
-		ask_about_launcher(NULL, panel, pos, TRUE);
-
-	}
+	else if (!strcmp(applet_type,"LAUNCHER:ASK"))
+		ask_about_launcher (NULL, panel, pos, TRUE);
 
 	if (remove_applet &&
 	    action == GDK_ACTION_MOVE) {

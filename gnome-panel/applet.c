@@ -17,7 +17,6 @@
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
-#include "logout.h"
 #include "menu-util.h"
 #include "menu.h"
 #include "panel-config.h"
@@ -26,6 +25,7 @@
 #include "session.h"
 #include "panel-applet-frame.h"
 #include "egg-screen-exec.h"
+#include "panel-action-button.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -44,11 +44,12 @@ extern GlobalConfig global_config;
 static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_DRAWER,   "drawer-object" },
 	{ APPLET_MENU,     "menu-object" },
-	{ APPLET_LOGOUT,   "logout-object" },
 	{ APPLET_LAUNCHER, "launcher-object" }, 
 	{ APPLET_EMPTY,    "empty-object" },
-	{ APPLET_LOCK,     "lock-object" },
 	{ APPLET_BONOBO,   "bonobo-applet" },
+	{ APPLET_ACTION,   "action-applet" },
+	{ APPLET_LOCK,     "lock-object" },   /* FIXME:                           */
+	{ APPLET_LOGOUT,   "logout-object" }, /*   Both only for backwards compat */
 };
 
 static GSList *queued_position_saves = NULL;
@@ -213,41 +214,9 @@ applet_callback_callback (GtkWidget      *widget,
 		if (!strcmp (menu->name, "help"))
 			panel_show_help (screen, "wgospanel.xml", "gospanel-37");
 		break;
-	case APPLET_LOCK: {
-                /*
-		  <jwz> Activate Screensaver
-		  <jwz> Lock Screen
-		  <jwz> Kill Screensaver Daemon
-		  <jwz> Restart Screensaver Daemon
-		  <jwz> Properties
-		  <jwz> (or "configuration" instead?  whatever word you use)
-		  <jwz> those should do xscreensaver-command -activate, -lock, -exit...
-		  <jwz> and "xscreensaver-command -exit ; xscreensaver &"
-		  <jwz> and "xscreensaver-demo"
-		*/
-		char *command = NULL;
-		gboolean freeit = FALSE;
-		if (strcmp (menu->name, "help") == 0)
-			panel_show_help (screen, "wgospanel.xml", "gospanel-21");
-		else if (strcmp (menu->name, "restart") == 0) {
-			command = "xscreensaver-command -exit ; xscreensaver &";
-		} else if (strcmp (menu->name, "prefs") == 0) {
-			command = "xscreensaver-demo";
-		} else {
-			command = g_strdup_printf ("xscreensaver-command -%s",
-						   menu->name);
-			freeit = TRUE;
-		}
-		if (command)
-			egg_screen_execute_shell (
-				screen, g_get_home_dir (), command);
-		if (freeit)
-			g_free (command);
-		break;
-	}
-	case APPLET_LOGOUT:
-		if (strcmp (menu->name, "help") == 0)
-			panel_show_help (screen, "wgospanel.xml", "gospanel-20");
+	case APPLET_ACTION:
+		panel_action_button_invoke_menu (
+			PANEL_ACTION_BUTTON (menu->info->widget), menu->name);
 		break;
 	case APPLET_BONOBO:
 		/*
@@ -775,18 +744,21 @@ panel_applet_load_idle_handler (gpointer dummy)
 					  applet->position,
 					  applet->unique_id);
 		break;
-	case APPLET_LOGOUT:
-		load_logout_applet (applet->panel_widget,
-				    applet->position,
-				    TRUE,
-				    applet->unique_id);
+	case APPLET_LOGOUT:  /* FIXME: This is backward compatibility only. */
+	case APPLET_LOCK:    /*        Remove at some time in the future    */
+		panel_action_button_load (
+				APPLET_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK,
+				applet->panel_widget,
+				applet->position,
+				TRUE,
+				applet->unique_id);
 		break;
-	case APPLET_LOCK:
-		load_lock_applet (applet->panel_widget,
-				  applet->position,
-				  TRUE,
-				  applet->unique_id);
-		break;
+	case APPLET_ACTION:
+		panel_action_button_load_from_gconf (
+				applet->panel_widget,
+				applet->position,
+				TRUE,
+				applet->unique_id);
 	default:
 		break;
 	}
@@ -1061,8 +1033,15 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		launcher_save_to_gconf ((Launcher *) applet_info->data,
 					applet_info->gconf_key);
 		break;
-	case APPLET_LOGOUT: /* no object specific stuff to save */
+	case APPLET_ACTION:
+		panel_action_button_save_to_gconf (
+			PANEL_ACTION_BUTTON (applet_info->widget),
+			applet_info->gconf_key);
+		break;
+	case APPLET_LOGOUT:
 	case APPLET_LOCK:
+		g_assert_not_reached ();
+		break;
 	default:
 		break;
 	}

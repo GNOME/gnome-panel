@@ -335,37 +335,6 @@ xstuff_init (void)
 	}
 }
 
-void
-xstuff_show_desktop (void)
-{
-	Display *display;
-	Window   root_window;
-	XEvent   event;
-
-	display     = GDK_DISPLAY_XDISPLAY (gdk_display_get_default ());
-	root_window = GDK_WINDOW_XWINDOW (gdk_get_default_root_window ());
-
-#define _NET_HIDE_DESKTOP 0
-#define _NET_SHOW_DESKTOP 1
-
-	event.xclient.type         = ClientMessage;
-	event.xclient.serial       = 0;
-	event.xclient.send_event   = True;
-	event.xclient.display      = display;
-	event.xclient.window       = root_window;
-	event.xclient.message_type = panel_atom_get ("_NET_SHOW_DESKTOP");
-	event.xclient.format       = 32;
-	event.xclient.data.l [0]   = _NET_SHOW_DESKTOP;
-	event.xclient.data.l [1]   = 0;
-	event.xclient.data.l [2]   = 0;
-
-	XSendEvent (display,
-		    root_window,
-		    False,
-		    SubstructureRedirectMask | SubstructureNotifyMask,
-		    &event);
-}
-
 /* Zoom animation */
 #define MINIATURIZE_ANIMATION_FRAMES_Z   1
 #define MINIATURIZE_ANIMATION_STEPS_Z    6

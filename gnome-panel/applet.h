@@ -19,12 +19,14 @@ G_BEGIN_DECLS
 typedef enum {
 	APPLET_DRAWER,
 	APPLET_MENU,
-	APPLET_LOGOUT,
 	APPLET_LAUNCHER,
 	APPLET_EMPTY,
-	APPLET_LOCK,
 	APPLET_STATUS,
-	APPLET_BONOBO
+	APPLET_BONOBO,
+	APPLET_ACTION,
+	APPLET_LOGOUT, /* FIXME:                          */
+	APPLET_LOCK,   /*  Both only for backwards compat */
+
 } AppletType;
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\

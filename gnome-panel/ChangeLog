@@ -1,5 +1,37 @@
 2002-09-24  Mark McLoughlin  <mark@skynet.ie>
 
+	Add a new PanelActionButton widget so we can
+	generically do action buttons. Fixes #84740.
+
+	* Makefile.am: remove logout.[ch] from the build
+	and add panel-action-button.[ch]. Also generate
+	enums from panel-action-button.h.
+
+	* applet.[ch]: add support for a generic "action button"
+	applet and convert old lock/logout buttons into one of
+	these for backwards compat.
+
+	* foobar-widget.c: (append_actions_menu): use action
+	callback from panel-action-button.h and setup dnd
+	for screenshot, run and search menu items. Remove
+	"Show Desktop" menu item.
+
+	* logout.[ch]: remove.
+
+	* menu.c:
+	(add_action_button_to_panel): impl.
+	(make_add_submenu): add screenshot, run and search
+	buttons.
+	(create_desktop_menu), (create_root_menu): setup
+	dnd for screenshot, run and search menu items.
+
+	* panel.c: (drop_internal_applet): impl new dnd
+	for action buttons.
+
+	* xstuff.[ch]: (xstuff_show_desktop): remove.
+
+2002-09-24  Mark McLoughlin  <mark@skynet.ie>
+
 	Implement support for stock ids in ButtonWidget and
 	use them for the lock button and logout button.
 

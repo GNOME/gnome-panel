@@ -102,7 +102,6 @@ panel_sources =			\
 	rgb-stuff.c		\
 	panel.c			\
 	applet.c		\
-	logout.c		\
 	drawer.c  		\
 	panel-config-global.c  	\
 	panel-util.c		\
@@ -121,6 +120,7 @@ panel_sources =			\
 	quick-desktop-reader.c	\
 	panel-access.c		\
 	panel-stock-icons.c	\
+	panel-action-button.c	\
 	$(NULL)
 
 panel_headers =			\
@@ -143,7 +143,6 @@ panel_headers =			\
 	rgb-stuff.h		\
 	panel.h         	\
 	applet.h         	\
-	logout.h		\
 	drawer.h  		\
 	panel-util.h		\
 	global-keys.h		\
@@ -161,6 +160,7 @@ panel_headers =			\
 	quick-desktop-reader.h	\
 	panel-shell.h		\
 	panel-stock-icons.h	\
+	panel-action-button.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
@@ -248,6 +248,7 @@ panel_enum_headers =					\
 	$(top_srcdir)/gnome-panel/basep-widget.h	\
 	$(top_srcdir)/gnome-panel/aligned-widget.h	\
 	$(top_srcdir)/gnome-panel/sliding-widget.h	\
+	$(top_srcdir)/gnome-panel/panel-action-button.h	\
 	$(top_builddir)/gnome-panel/GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)

@@ -37,6 +37,7 @@
 #include "panel-marshal.h"
 #include "egg-screen-exec.h"
 #include "panel-stock-icons.h"
+#include "panel-action-button.h"
 
 #define ICON_SIZE 20
 #define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
@@ -161,43 +162,6 @@ foobar_enter_notify (GtkWidget *widget,
 }
 
 static void
-foobar_screenshot (GtkWidget    *widget,
-		   FoobarWidget *foo) 
-{
-	GdkScreen *screen;
-	char      *argv [2] = {"gnome-panel-screenshot", NULL};
-
-	screen = panel_screen_from_number (foo->screen);
-
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-panel-screenshot",
-				    _("Cannot execute gnome-panel-screenshot"));
-}
-
-static void
-foobar_search (GtkWidget    *widget,
-	       FoobarWidget *foo)
-{
-	GdkScreen *screen;
-	char      *argv[2] = {"gnome-search-tool", NULL};
-
-	screen = panel_screen_from_number (foo->screen);
-
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool",
-				    _("Cannot execute gnome-search-tool"));
-}
-
-static void
-activate_run_dialog (GtkWidget    *menitem,
-		     FoobarWidget *foo)
-{
-	show_run_dialog (panel_screen_from_number (foo->screen));
-}
-
-static void
 append_actions_menu (FoobarWidget *foo,
 		     GtkWidget    *menu_bar)
 {
@@ -214,8 +178,8 @@ append_actions_menu (FoobarWidget *foo,
 			      NULL);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (item, "activate",
-			  G_CALLBACK (activate_run_dialog),
-			  foo);
+			  G_CALLBACK (panel_action_run_program), NULL);
+	setup_internal_applet_drag (item, "ACTION:run:NEW");
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
 		item = stock_menu_item_new (
@@ -230,7 +194,8 @@ append_actions_menu (FoobarWidget *foo,
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		g_signal_connect (item, "activate",
-				  G_CALLBACK (foobar_search), foo);
+				  G_CALLBACK (panel_action_search), NULL);
+		setup_internal_applet_drag (item, "ACTION:search:NEW");
 	}
 
 	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
@@ -242,23 +207,12 @@ append_actions_menu (FoobarWidget *foo,
 			              NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
         	g_signal_connect (item, "activate",
-			  	  G_CALLBACK (foobar_screenshot), foo);	 
+			  	  G_CALLBACK (panel_action_screenshot), NULL);	 
+		setup_internal_applet_drag (item, "ACTION:screenshot:NEW");
 	}
 
 	item = gtk_separator_menu_item_new ();
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	if (xstuff_net_wm_supports ("_NET_SHOW_DESKTOP")) {
-		item = stock_menu_item_new (_("Show Desktop"),
-					    PANEL_STOCK_DESKTOP,
-					    FALSE);
-		gtk_tooltips_set_tip (panel_tooltips, item,
-			      	      _("Hide all windows and focus the desktop"),
-			              NULL);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-        	g_signal_connect (item, "activate",
-			  	  G_CALLBACK (xstuff_show_desktop), NULL);	 
-	}
 
 	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = stock_menu_item_new (_("Lock Screen"), 
@@ -270,8 +224,8 @@ append_actions_menu (FoobarWidget *foo,
 				      NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 		g_signal_connect (item, "activate",
-				  G_CALLBACK (panel_menuitem_lock_screen), NULL);
-		setup_internal_applet_drag(item, "LOCK:NEW");
+				  G_CALLBACK (panel_action_lock_screen), NULL);
+		setup_internal_applet_drag (item, "ACTION:lock:NEW");
 	}
 
 	item = stock_menu_item_new (_("Log Out"),
@@ -282,8 +236,8 @@ append_actions_menu (FoobarWidget *foo,
 			      NULL);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (panel_quit), 0);
-	setup_internal_applet_drag (item, "LOGOUT:NEW");
+			  G_CALLBACK (panel_action_logout), 0);
+	setup_internal_applet_drag  (item, "ACTION:logout:NEW");
 
 	/* FIXME: shutdown or reboot */
 

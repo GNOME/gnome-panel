@@ -46,7 +46,6 @@
 #include "foobar-widget.h"
 #include "gnome-run.h"
 #include "launcher.h"
-#include "logout.h"
 #include "nothing.h"
 #include "menu-fentry.h"
 #include "menu-util.h"
@@ -64,6 +63,7 @@
 #include "xstuff.h"
 #include "egg-screen-exec.h"
 #include "panel-stock-icons.h"
+#include "panel-action-button.h"
 
 #undef MENU_DEBUG
 
@@ -1851,7 +1851,8 @@ add_drawer_to_panel (GtkWidget *widget, gpointer data)
 }
 
 static void
-add_logout_to_panel (GtkWidget *widget, gpointer data)
+add_action_button_to_panel (GtkWidget *widget,
+			    gpointer   data)
 {
 	PanelWidget *panel = menu_get_panel (widget);
 	PanelData *pd;
@@ -1861,21 +1862,8 @@ add_logout_to_panel (GtkWidget *widget, gpointer data)
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
 	
-	load_logout_applet (panel, insertion_pos, FALSE, NULL);
-}
-
-static void
-add_lock_to_panel (GtkWidget *widget, gpointer data)
-{
-	PanelWidget *panel = menu_get_panel (widget);
-	PanelData *pd;
-	int insertion_pos = -1;
-
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-	
-	load_lock_applet (panel, insertion_pos, FALSE, NULL);
+	panel_action_button_load (
+		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL);
 }
 
 static void
@@ -3378,18 +3366,42 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menuitem, PANEL_STOCK_LOGOUT, _("Log Out Button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(add_logout_to_panel),
-			   NULL);
-	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_LOGOUT));
+	setup_internal_applet_drag (menuitem, "ACTION:logout:NEW");
 	
 	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_LOCKSCREEN, _("Lock button"));
+	setup_stock_menu_item (menuitem, PANEL_STOCK_LOCKSCREEN, _("Lock Button"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(add_lock_to_panel),
-			   NULL);
-	setup_internal_applet_drag(menuitem, "LOCK:NEW");
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_LOCK));
+	setup_internal_applet_drag (menuitem, "ACTION:lock:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_SCREENSHOT, _("Screenshot Button"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_SCREENSHOT));
+	setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_SEARCHTOOL, _("Search Button"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_SEARCH));
+	setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
+
+	menuitem = gtk_image_menu_item_new ();
+	setup_stock_menu_item (menuitem, PANEL_STOCK_RUN, _("Run Button"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (add_action_button_to_panel),
+			  GINT_TO_POINTER (PANEL_ACTION_RUN));
+	setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
 }
 
 static void
@@ -3508,16 +3520,6 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 			    G_CALLBACK (show_panel_help), NULL);
 }
 
-void
-panel_menuitem_lock_screen (GtkWidget *menuitem)
-{
-	GdkScreen *screen;
-
-	screen = menuitem_to_screen (menuitem);
-
-	panel_lock_screen (screen);
-}
-
 static GtkWidget *
 create_panel_submenu (GtkWidget *menu,
 		      gboolean   fake_submenus,
@@ -3573,8 +3575,8 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus)
 		setup_stock_menu_item (menuitem, PANEL_STOCK_LOCKSCREEN, _("Lock Screen"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_menuitem_lock_screen), NULL);
-		setup_internal_applet_drag(menuitem, "LOCK:NEW");
+				  G_CALLBACK (panel_action_lock_screen), NULL);
+		setup_internal_applet_drag(menuitem, "ACTION:lock:NEW");
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Lock the screen so that you can "
 					"temporarily leave your computer"), NULL);
@@ -3583,9 +3585,9 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus)
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (menuitem, PANEL_STOCK_LOGOUT, _("Log Out"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK(panel_quit), 0);
-	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (panel_action_logout), 0);
+	setup_internal_applet_drag(menuitem, "ACTION:logout:NEW");
 	gtk_tooltips_set_tip (panel_tooltips, menuitem,
 			      _("Log out of this session to log in as "
 				"a different user or to shut down your "
@@ -3647,40 +3649,6 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	g_signal_connect (G_OBJECT(menu),"show",
 			  G_CALLBACK(submenu_to_display), NULL);
-}
-
-static void
-menu_screenshot (GtkWidget *menuitem)
-{
-	GdkScreen *screen;
-	char      *argv [2] = {"gnome-panel-screenshot", NULL};
-
-	screen = menuitem_to_screen (menuitem);
-
-	if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-		panel_error_dialog (screen,
-				    "cannot_exec_gnome-panel-screenshot",
-				    N_("Cannot execute gnome-panel-screenshot"));
-}
-
-static void
-menu_search (GtkWidget *menuitem)
-{
-	GdkScreen *screen;
-        char      *argv[2] = {"gnome-search-tool", NULL};
-
-	screen = menuitem_to_screen (menuitem);
-
-        if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
-                panel_error_dialog (screen,
-				    "cannot_exec_gnome-search-tool",
-				    N_("Cannot execute gnome-search-tool"));
-}
-
-static void
-activate_run_dialog (GtkWidget *menuitem)
-{
-	show_run_dialog (menuitem_to_screen (menuitem));
 }
 
 GtkWidget *
@@ -3795,8 +3763,9 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (menuitem, PANEL_STOCK_RUN, _("Run Program..."));
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (activate_run_dialog),
+				  G_CALLBACK (panel_action_run_program),
 				  NULL);
+		setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
 				      _("Run a command"), NULL);
@@ -3812,7 +3781,8 @@ create_root_menu (GtkWidget   *root_menu,
 					"on your computer"),
 				      NULL);
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (menu_search), NULL);
+				  G_CALLBACK (panel_action_search), NULL);
+		setup_internal_applet_drag (menuitem, "ACTION:search:NEW");
 	}
 
 	if (extra_items &&
@@ -3824,7 +3794,8 @@ create_root_menu (GtkWidget   *root_menu,
 				      _("Take a screenshot of your desktop"),
 				      NULL);
 		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (menu_screenshot), NULL);
+				  G_CALLBACK (panel_action_screenshot), NULL);
+		setup_internal_applet_drag (menuitem, "ACTION:screenshot:NEW");
 	}
 
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
