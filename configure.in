@@ -98,7 +98,6 @@ AC_SUBST(WNCKLET_LIBS)
 AC_MSG_CHECKING(for evolution-data-server)
 if $PKG_CONFIG --exists libecal-1.0; then
    AC_MSG_RESULT(yes)
-   AC_DEFINE(HAVE_LIBECAL)
    LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.4"
 else
    AC_MSG_RESULT(no)
