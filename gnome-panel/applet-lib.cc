@@ -6,6 +6,7 @@
 #include <gdk/gdkx.h>
 #include "panel.h"
 #include "gnome-panel.h"
+#include "panel-include.h"
 #include "applet-lib.h"
 #include "applet-widget.h"
 #include "panel-widget.h"

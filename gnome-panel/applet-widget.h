@@ -10,8 +10,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#ifndef PANEL_INCLUDE_H
-/*from applet.h*/
+#ifndef PANEL_TYPES_H
+/*from panel-types.h*/
 typedef enum {
 	ORIENT_UP,
 	ORIENT_DOWN,
