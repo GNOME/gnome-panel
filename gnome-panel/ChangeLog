@@ -1,5 +1,16 @@
 2001-10-11  Alex Larsson  <alexl@redhat.com>
 
+	* applet.c (applet_button_press):
+	Don't return TRUE here, it makes the buttons not
+	work. I'm not sure about the comment here in the old
+	code. Returning TRUE never blocked anything in
+	gtk 1.2....
+
+	* panel-widget.c:
+	Fix some code inside #ifdef PANEL_DEBUG
+	
+2001-10-11  Alex Larsson  <alexl@redhat.com>
+
 	* menu-fentry.c (fr_fill_dir, fr_read_dir,
 	fr_check_and_reread):
 	Move to new GnomeDesktopItem api

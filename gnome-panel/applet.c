@@ -593,9 +593,14 @@ applet_button_press (GtkWidget *widget, GdkEventButton *event, AppletInfo *info)
 			}
 		}
 	}
+
+#if FIXME /* ALEX: I had to remove this, because by returning TRUE we stopped button presses from reaching buttonwidgets */
 	/* don't let any button click events to the panel or moving the applets
 	 * would move the panel */
 	return TRUE;
+#else
+	return FALSE;
+#endif
 }
 
 static GList *launchers_to_kill = NULL;

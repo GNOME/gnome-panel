@@ -1876,7 +1876,7 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
 
 #ifdef PANEL_DEBUG
 	g_message("Starting drag on a %s at %p\n",
-		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+		  g_type_name(G_TYPE_FROM_INSTANCE (applet)), applet);
 #endif
 	panel->currently_dragged_applet = ad;
 	if (drag_off == PW_DRAG_OFF_CURSOR)
@@ -1921,7 +1921,7 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 
 #ifdef PANEL_DEBUG
 	g_message("Starting drag [grabbed] on a %s at %p\n",
-		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
+		  g_type_name(G_TYPE_FROM_INSTANCE(applet)), applet);
 #endif
 	panel_widget_applet_drag_start_no_grab (panel, applet, drag_off);
 
