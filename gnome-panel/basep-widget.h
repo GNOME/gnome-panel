@@ -33,6 +33,8 @@ struct _BasePWidget
 	
 	GtkWidget		*frame;
 
+	GtkAllocation		shown_alloc;
+
 	int			hidebuttons_enabled;
 	int			hidebutton_pixmaps_enabled;
 };

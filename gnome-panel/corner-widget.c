@@ -273,9 +273,10 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 	
-	/*we actually want to ignore the size_reqeusts since they are sometimes
-	  a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	/*we actually want to ignore the size_reqeusts since they
+	  are sometimes a cube for the flicker prevention*/
+	gtk_widget_size_request (basep->ebox,
+				 &basep->ebox->requisition);
 	
 	allocation->width = basep->ebox->requisition.width;
 	allocation->height = basep->ebox->requisition.height;
@@ -290,37 +291,36 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
-	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget)) {
+
+	basep->shown_alloc = *allocation;
+
+	if(corner->state != CORNER_SHOWN) {
+		PanelOrientType hide_orient;
+		int x,y;
 		int w = allocation->width;
 		int h = allocation->height;
-		gdk_window_set_hints (widget->window,
-				      allocation->x, allocation->y,
-				      0,0,0,0, GDK_HINT_POS);
-		if(corner->state != CORNER_SHOWN) {
-			PanelOrientType hide_orient;
-			int x,y;
-			corner_widget_get_hidepos(corner, &hide_orient,
-						   &w, &h);
-			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
-			challoc.x = x;
-			challoc.y = y;
-		}/* else if(basep->ebox->window) {
-			gdk_window_move_resize (basep->ebox->window,
-						0,0,
-						allocation->width, 
-						allocation->height);
-		}*/
+		corner_widget_get_hidepos(corner, &hide_orient,
+					  &w, &h);
+		basep_widget_get_position(basep, hide_orient,
+					  &x, &y, w, h);
+		challoc.x = x;
+		challoc.y = y;
 
 		allocation->width = w;
 		allocation->height = h;
+	}
 
+	widget->allocation = *allocation;
+	if (GTK_WIDGET_REALIZED (widget)) {
+		gdk_window_set_hints (widget->window,
+				      allocation->x, allocation->y,
+				      0,0,0,0, GDK_HINT_POS);
 		gdk_window_move_resize (widget->window,
 					allocation->x, 
 					allocation->y,
-					w,h);
-	} else
-		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
+					allocation->width,
+					allocation->height);
+	}
 
 	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
@@ -350,12 +350,12 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 		if(fromright)
 			basep_widget_do_showing(BASEP_WIDGET(corner),
 						ORIENT_LEFT,
-						BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
+						BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
 						pw_explicit_step);
 		else
 			basep_widget_do_showing(BASEP_WIDGET(corner),
 						ORIENT_RIGHT,
-						BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
+						BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
 						pw_explicit_step);
 	} else {
 		if(fromright)
@@ -404,12 +404,12 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 		if(fromright)
 			basep_widget_do_hiding(BASEP_WIDGET(corner),
 					       ORIENT_LEFT,
-					       BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
+					       BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
 					       pw_explicit_step);
 		else
 			basep_widget_do_hiding(BASEP_WIDGET(corner),
 					       ORIENT_RIGHT,
-					       BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
+					       BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
 					       pw_explicit_step);
 	} else {
 		if(fromright)
@@ -604,7 +604,7 @@ corner_widget_new (CornerPos pos,
 
 	/*EAST*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e),"clicked",
-			   GTK_SIGNAL_FUNC(corner_show_hide_right),
+			   GTK_SIGNAL_FUNC(corner_show_hide_left),
 			   corner);
 	/*NORTH*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n),"clicked",
@@ -612,7 +612,7 @@ corner_widget_new (CornerPos pos,
 			   corner);
 	/*WEST*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w),"clicked",
-			   GTK_SIGNAL_FUNC(corner_show_hide_left),
+			   GTK_SIGNAL_FUNC(corner_show_hide_right),
 			   corner);
 	/*SOUTH*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s),"clicked",

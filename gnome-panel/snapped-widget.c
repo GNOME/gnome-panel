@@ -282,9 +282,10 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 
-	/*get us a size request (we ignored the one on allocation because
-	  we don't want to change our size, ever*/
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	/*get us a size request (we ignored the one on allocation
+	  because we don't want to change our size, ever*/
+	gtk_widget_size_request (basep->ebox,
+				 &basep->ebox->requisition);
 	
 	/*ignore the allocation we get, we want to be this large*/
 	switch(snapped->pos) {
@@ -310,37 +311,35 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
 
-	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget)) {
+	basep->shown_alloc = *allocation;
+
+	if(snapped->state != SNAPPED_SHOWN) {
+		PanelOrientType hide_orient;
+		int x,y;
 		int w = allocation->width;
 		int h = allocation->height;
+		snapped_widget_get_hidepos(snapped, &hide_orient,
+					   &w, &h);
+		basep_widget_get_position(basep, hide_orient, &x, &y,
+					  w, h);
+		challoc.x = x;
+		challoc.y = y;
+
+		allocation->width = w;
+		allocation->height = h;
+	}
+
+	widget->allocation = *allocation;
+	if (GTK_WIDGET_REALIZED (widget)) {
 		gdk_window_set_hints (widget->window,
 				      allocation->x, allocation->y,
 				      0,0,0,0, GDK_HINT_POS);
-		if(snapped->state != SNAPPED_SHOWN) {
-			PanelOrientType hide_orient;
-			int x,y;
-			snapped_widget_get_hidepos(snapped, &hide_orient,
-						   &w, &h);
-			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
-			challoc.x = x;
-			challoc.y = y;
-		} /*else if(basep->ebox->window) {
-			gdk_window_move_resize (basep->ebox->window,
-						0,0,
-						allocation->width, 
-						allocation->height);
-		}*/
-		
-		allocation->width = w;
-		allocation->height = h;
-
 		gdk_window_move_resize (widget->window,
 					allocation->x, 
 					allocation->y,
-					w,h);
-	} else
-		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
+					allocation->width,
+					allocation->height);
+	}
 
 	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
@@ -506,12 +505,12 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 		if(fromright)
 			basep_widget_do_showing(BASEP_WIDGET(snapped),
 						ORIENT_LEFT,
-						BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
+						BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
 						pw_explicit_step);
 		else
 			basep_widget_do_showing(BASEP_WIDGET(snapped),
 						ORIENT_RIGHT,
-						BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
+						BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
 						pw_explicit_step);
 	} else {
 		if(fromright)
@@ -571,12 +570,12 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 		if(fromright)
 			basep_widget_do_hiding(BASEP_WIDGET(snapped),
 					       ORIENT_LEFT,
-					       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
+					       BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
 					       pw_explicit_step);
 		else
 			basep_widget_do_hiding(BASEP_WIDGET(snapped),
 					       ORIENT_RIGHT,
-					       BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
+					       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
 					       pw_explicit_step);
 	} else {
 		if(fromright)
@@ -771,7 +770,7 @@ snapped_widget_new (SnappedPos pos,
 			       back_color);
 	/*EAST*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e),"clicked",
-			   GTK_SIGNAL_FUNC(snapped_show_hide_right),
+			   GTK_SIGNAL_FUNC(snapped_show_hide_left),
 			   snapped);
 	/*NORTH*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n),"clicked",
@@ -779,7 +778,7 @@ snapped_widget_new (SnappedPos pos,
 			   snapped);
 	/*WEST*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w),"clicked",
-			   GTK_SIGNAL_FUNC(snapped_show_hide_left),
+			   GTK_SIGNAL_FUNC(snapped_show_hide_right),
 			   snapped);
 	/*SOUTH*/
 	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s),"clicked",

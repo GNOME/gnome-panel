@@ -248,9 +248,10 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GtkAllocation challoc;
 	int w,h;
 
-	/*we actually want to ignore the size_reqeusts since they are sometimes
-	  a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
+	/*we actually want to ignore the size_reqeusts since they
+	  are sometimes a cube for the flicker prevention*/
+	gtk_widget_size_request (basep->ebox,
+				 &basep->ebox->requisition);
 
 	w = basep->ebox->requisition.width;
 	h = basep->ebox->requisition.height;
@@ -269,18 +270,21 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			      &allocation->y,
 			      allocation->width,
 			      allocation->height);
+
+	basep->shown_alloc = *allocation;
+	
+	if(drawer->state != DRAWER_SHOWN ||
+	   drawer->temp_hidden) {
+		allocation->x = -allocation->width -1;
+		allocation->y = -allocation->height -1;
+	}
 	
 	/*ugly optimisation: XXX fix this to work with temp_hidden*/
 	/*if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
 		return;*/
-	
+
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
-		if(drawer->state != DRAWER_SHOWN ||
-		   drawer->temp_hidden) {
-			allocation->x = -allocation->width -1;
-			allocation->y = -allocation->height -1;
-		}
 		gdk_window_move_resize (widget->window,
 					allocation->x,
 					allocation->y,
@@ -290,13 +294,8 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				      allocation->x,
 				      allocation->y,
 				      0,0,0,0, GDK_HINT_POS);
-		/*if(basep->ebox->window) {
-			gdk_window_move_resize (basep->ebox->window,
-						0,0,
-						allocation->width, 
-						allocation->height);
-		}*/
 	}
+	
 
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
@@ -333,14 +332,14 @@ drawer_widget_set_hidebuttons(BasePWidget *basep)
 		break;
 	case ORIENT_LEFT:
 		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_show(basep->hidebutton_e);
-		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_show(basep->hidebutton_w);
 		gtk_widget_hide(basep->hidebutton_s);
 		break;
 	case ORIENT_RIGHT:
 		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_hide(basep->hidebutton_e);
-		gtk_widget_show(basep->hidebutton_w);
+		gtk_widget_show(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
 		gtk_widget_hide(basep->hidebutton_s);
 		break;
 	}
@@ -375,8 +374,8 @@ drawer_widget_open_drawer(DrawerWidget *drawer)
 
 	switch(drawer->orient) {
 	case ORIENT_UP:
-		GTK_WIDGET(drawer)->allocation.y += 
-			GTK_WIDGET(drawer)->allocation.height;
+		BASEP_WIDGET(drawer)->shown_alloc.y += 
+			BASEP_WIDGET(drawer)->shown_alloc.height;
 		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_DOWN,
 					0,pw_drawer_step);
 		break;
@@ -385,8 +384,8 @@ drawer_widget_open_drawer(DrawerWidget *drawer)
 					0,pw_drawer_step);
 		break;
 	case ORIENT_LEFT:
-		GTK_WIDGET(drawer)->allocation.x += 
-			GTK_WIDGET(drawer)->allocation.width;
+		BASEP_WIDGET(drawer)->shown_alloc.x += 
+			BASEP_WIDGET(drawer)->shown_alloc.width;
 		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_RIGHT,
 					0,pw_drawer_step);
 		break;

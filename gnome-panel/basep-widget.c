@@ -108,14 +108,14 @@ basep_widget_get_position(BasePWidget *basep, PanelOrientType hide_orient,
 	*x = *y = 0;
 	switch(hide_orient) {
 	case ORIENT_UP:
-		if(h < widget->allocation.height)
-			*y -= widget->allocation.height - h;
+		if(h < basep->shown_alloc.height)
+			*y -= basep->shown_alloc.height - h;
 		break;
 	case ORIENT_DOWN:
 		break;
 	case ORIENT_LEFT:
-		if(w < widget->allocation.width)
-			*x -= widget->allocation.width - w;
+		if(w < basep->shown_alloc.width)
+			*x -= basep->shown_alloc.width - w;
 		break;
 	case ORIENT_RIGHT:
 		break;
@@ -148,62 +148,6 @@ basep_widget_set_ebox_orient(BasePWidget *basep,
 				 GDK_WINDOW_XWINDOW(basep->ebox->window),
 				 CWWinGravity,  &xattributes);
 	
-}
-
-static GdkWindow *
-basep_widget_add_fake(BasePWidget *basep,
-		      PanelOrientType hide_orient,
-		      int x, int y, int w, int h,
-		      int show)
-{
-	GdkWindowAttr attributes;
-	gint attributes_mask;
-	GdkWindow *window;
-	GtkWidget *widget = GTK_WIDGET(basep);
-	int rx,ry;
-
-	attributes.window_type = GDK_WINDOW_TEMP;
-
-	if(x<0)
-		attributes.x = widget->allocation.x;
-	else
-		attributes.x = x;
-	if(y<0)
-		attributes.y = widget->allocation.y;
-	else
-		attributes.y = y;
-	if(w<0)
-		attributes.width = widget->allocation.width;
-	else
-		attributes.width = w;
-	if(h<0)
-		attributes.height = widget->allocation.height;
-	else
-		attributes.height = h;
-	
-	attributes.wclass = GDK_INPUT_OUTPUT;
-
-	attributes.visual = gtk_widget_get_visual(widget);
-	attributes.colormap = gtk_widget_get_colormap(widget);
-
-	attributes.event_mask = gtk_widget_get_events (widget);
-	/*attributes.event_mask |= GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK;*/
-
-	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
-
-	window = gdk_window_new (NULL, &attributes, attributes_mask);
-
-	basep_widget_set_ebox_orient(basep,hide_orient);
-	
-	if(show)
-		gdk_window_show(window);
-	
-	basep_widget_get_position(basep, hide_orient, &rx, &ry,
-				  attributes.width,attributes.height);
-
-	gdk_window_reparent(basep->ebox->window,window,rx,ry);
-	
-	return window;
 }
 
 static int
@@ -266,10 +210,10 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 
 	wid = GTK_WIDGET(basep);
 	
-	ox = x = wid->allocation.x;
-	oy = y = wid->allocation.y;
-	ow = w = wid->allocation.width;
-	oh = h = wid->allocation.height;
+	ox = x = basep->shown_alloc.x;
+	oy = y = basep->shown_alloc.y;
+	ow = w = basep->shown_alloc.width;
+	oh = h = basep->shown_alloc.height;
 	
 	switch(hide_orient) {
 	case ORIENT_UP:
@@ -308,7 +252,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	}
 
 	if(!pw_disable_animations && step != 0) {
-		GdkWindow * win = NULL;
 		int i;
 		GTimeVal tval;
 		long start_secs;
@@ -324,26 +267,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		end_time = start_time +
 			(diff/1000.0)*200*(10001-(step*step));
 
-		if (0 && gnome_win_hints_wm_exists()) {
-			if(dw == 0 || dh == 0) {
-				gdk_window_move(wid->window,
-						-wid->allocation.width-1,
-						-wid->allocation.height-1);
-				gdk_window_set_hints (wid->window,
-						      -wid->allocation.width-1,
-						      -wid->allocation.height-1,
-						      0,0,0,0,
-						      GDK_HINT_POS);
-			} else
-				gdk_window_move_resize(wid->window,
-						       dx,dy,dw,dh);
-			win = basep_widget_add_fake(basep, hide_orient,
-						    -1,-1,-1,-1,TRUE);
-			gdk_window_hide(wid->window);
-		} else  {
-			basep_widget_set_ebox_orient(basep, hide_orient);
-			win = wid->window;
-		}
+		basep_widget_set_ebox_orient(basep, hide_orient);
 		
 		i = 0;
 		while(x != dx ||
@@ -359,57 +283,20 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			y = move_step(oy,dy,start_time,end_time,cur_time);
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
-			gdk_window_move_resize(win, x,y,w,h);
-			/*drawing the entire table flickers, so don't do it
-			  often*/
+			gdk_window_move_resize(wid->window, x,y,w,h);
+			/*drawing the entire table flickers, so don't
+			  do it often*/
 			if(i++%10)
 				gtk_widget_draw(basep->panel, NULL);
 			else
 				gtk_widget_draw(basep->table, NULL);
 			gdk_flush();
 		}
-		
-		/*a hack to remove all the expose events that we generated
-		  above*/
-		/*{
-			GdkEvent *event;
-			GSList *list = NULL;
-			while((event=gdk_event_get())) {
-				if(event->type == GDK_EXPOSE &&
-				   gdk_window_get_toplevel(event->expose.window) == win) {
-					gdk_event_free(event);
-				} else 
-					list = g_slist_prepend(list,event);
-			}
-			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
-			g_slist_free(list);
-		}*/
-		
 
-		if (0 && gnome_win_hints_wm_exists()) {
-			if(dw == 0 || dh == 0) {
-				gdk_window_reparent(basep->ebox->window,
-						    wid->window,0,0);
-			} else {
-				int inx,iny;
-				basep_widget_get_position(basep,hide_orient,
-							  &inx,&iny,dw,dh);
-				gdk_window_reparent(basep->ebox->window,
-						    wid->window,inx,iny);
-				gdk_window_resize(wid->window,dw,dh);
-				gdk_window_set_hints (wid->window,
-						      dx,dy,0,0,0,0,
-						      GDK_HINT_POS);
-				gdk_window_show(wid->window);
-				gdk_window_move(wid->window,dx,dy);
-			}
-			gdk_window_destroy(win);
-		} else {
-			gdk_window_resize(wid->window,dw,dh);
-			gdk_window_set_hints (wid->window,
-					      dx,dy,0,0,0,0,
-					      GDK_HINT_POS);
-		}
+		gdk_window_resize(wid->window,dw,dh);
+		gdk_window_set_hints (wid->window,
+				      dx,dy,0,0,0,0,
+				      GDK_HINT_POS);
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
@@ -431,10 +318,10 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 
 	wid = GTK_WIDGET(basep);
 	
-	ox = x = wid->allocation.x;
-	oy = y = wid->allocation.y;
-	dw = wid->allocation.width;
-	dh = wid->allocation.height;
+	ox = x = basep->shown_alloc.x;
+	oy = y = basep->shown_alloc.y;
+	dw = basep->shown_alloc.width;
+	dh = basep->shown_alloc.height;
 	
 	switch(hide_orient) {
 	case ORIENT_UP:
@@ -473,7 +360,6 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	}
 	
 	if(!pw_disable_animations && step != 0) {
-		GdkWindow *win = NULL;
 		int i;
 		GTimeVal tval;
 		long start_secs;
@@ -489,31 +375,17 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		end_time = start_time +
 			(diff/1000.0)*200*(10001-(step*step));
 		
-		if (0 && gnome_win_hints_wm_exists()) {
-			win = basep_widget_add_fake(basep, hide_orient,
-						    ox,oy,ow,oh,FALSE);
-			gdk_window_set_hints (wid->window,
-					      -wid->allocation.x-1,
-					      -wid->allocation.y-1,
-					      0,0,0,0, GDK_HINT_POS);
-			gdk_window_move(wid->window,
-					-wid->allocation.x-1,
-					-wid->allocation.y-1);
-			gdk_window_hide(wid->window);
-		} else  {
-			basep_widget_set_ebox_orient(basep, hide_orient);
-			win = wid->window;
-			gdk_window_resize(wid->window,ow,oh);
-			gdk_window_set_hints (wid->window,
-					      ox,oy,0,0,0,0,
-					      GDK_HINT_POS);
-			gdk_window_show(wid->window);
-			gdk_window_move(wid->window,ox,oy);
-		}
+		basep_widget_set_ebox_orient(basep, hide_orient);
+		gdk_window_resize(wid->window,ow,oh);
+		gdk_window_set_hints (wid->window,
+				      ox,oy,0,0,0,0,
+				      GDK_HINT_POS);
+		gdk_window_show(wid->window);
+		gdk_window_move(wid->window,ox,oy);
 
 		gtk_widget_show_now(wid);
 
-		gdk_window_show(win);
+		gdk_window_show(wid->window);
 		i = 0;
 		while(x != dx ||
 		      y != dy ||
@@ -528,46 +400,21 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			y = move_step(oy,dy,start_time,end_time,cur_time);
 			w = move_step(ow,dw,start_time,end_time,cur_time);
 			h = move_step(oh,dh,start_time,end_time,cur_time);
-			gdk_window_move_resize(win, x,y,w,h);
-			/*drawing the entire table flickers, so don't do it
-			  often*/
+			gdk_window_move_resize(wid->window, x,y,w,h);
+			/*drawing the entire table flickers, so don't
+			  do it often*/
 			if(i++%10)
 				gtk_widget_draw(basep->panel, NULL);
 			else
 				gtk_widget_draw(basep->table, NULL);
 			gdk_flush();
 		}
-		/*a hack to remove all the expose events that we generated
-		  above*/
-		/*{
-			GdkEvent *event;
-			GSList *list = NULL;
-			while((event=gdk_event_get())) {
-				if(event->type == GDK_EXPOSE &&
-				   gdk_window_get_toplevel(event->expose.window) == win) {
-					gdk_event_free(event);
-				} else 
-					list = g_slist_prepend(list,event);
-			}
-			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
-			g_slist_free(list);
-		}
-		*/
-		if (0 && gnome_win_hints_wm_exists()) {
-			gdk_window_resize(wid->window,dw,dh);
-			gdk_window_set_hints (wid->window,
-					      dx,dy,0,0,0,0,
-					      GDK_HINT_POS);
-			gdk_window_show(wid->window);
-			gdk_window_move(wid->window,dx,dy);
-			gdk_window_reparent(basep->ebox->window,wid->window,0,0);
-			gdk_window_destroy(win);
-		} else {
-			gdk_window_resize(wid->window,dw,dh);
-			gdk_window_set_hints (wid->window,
-					      dx,dy,0,0,0,0,
-					      GDK_HINT_POS);
-		}
+
+		gdk_window_resize(wid->window,dw,dh);
+		gdk_window_set_hints (wid->window,
+				      dx,dy,0,0,0,0,
+				      GDK_HINT_POS);
+
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
@@ -626,6 +473,9 @@ basep_widget_init (BasePWidget *basep)
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
 	GTK_WINDOW(basep)->auto_shrink = TRUE;
+	
+	basep->shown_alloc.x = basep->shown_alloc.y =
+		basep->shown_alloc.width = basep->shown_alloc.height = 0;
 	
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(basep),
@@ -766,12 +616,12 @@ basep_widget_construct (BasePWidget *basep,
 
 	/*we add all the hide buttons to the table here*/
 	/*EAST*/
-	basep->hidebutton_e = make_hidebutton(basep,
+	basep->hidebutton_w = make_hidebutton(basep,
 					      reverse_arrows?
 					      "panel-arrow-right.png":
 					      "panel-arrow-left.png",
 					      TRUE);
-	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_e,
+	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_w,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*NORTH*/
 	basep->hidebutton_n = make_hidebutton(basep,
@@ -782,12 +632,12 @@ basep_widget_construct (BasePWidget *basep,
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	/*WEST*/
-	basep->hidebutton_w = make_hidebutton(basep,
+	basep->hidebutton_e = make_hidebutton(basep,
 					      reverse_arrows?
 					      "panel-arrow-left.png":
 					      "panel-arrow-right.png",
 					      TRUE);
-	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_w,
+	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_e,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*SOUTH*/
 	basep->hidebutton_s = make_hidebutton(basep,
