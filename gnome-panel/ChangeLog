@@ -1,3 +1,10 @@
+2002-12-23  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* menu.c
+	(load_icon_handler): Get icon height when about to load icon
+	(image_menu_shown): Remove getting icon height; we do it in
+	load_icon_handler() as it may change by the time the icon is loaded.
+
 2002-12-22  Frank Worsley <fworsley@shaw.ca>
 
 	* gnome-run.c: (show_run_dialog): fix #77089, focus program

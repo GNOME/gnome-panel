@@ -984,6 +984,14 @@ load_icons_handler_again:
 	} else {
 		IconToAdd *icon_to_add;
 		GdkPixbuf *pb;
+		gint icon_height;
+
+		/*
+		 * Make sure the icon height has not changed since
+		 * the request was queued.
+		 */
+		if (gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
+			icon->size = icon_height;
 
 		pb = panel_make_menu_icon (icon->image,
 					   icon->fallback_image,
@@ -4276,12 +4284,6 @@ image_menu_shown (GtkWidget *image, gpointer data)
 		return;
 
 	if (find_in_load_list (image) == NULL) {
-		/* Update required icon height */
-		gint icon_height;
-
-		if (gtk_icon_size_lookup (panel_menu_icon_get_size (), NULL, &icon_height))
-			icon->size = icon_height;
-
 		icons_to_load = g_list_append (icons_to_load,
 					       icon_to_load_copy (icon));
 	}
