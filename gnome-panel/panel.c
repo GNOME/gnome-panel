@@ -629,7 +629,6 @@ panel_menu_get(PanelWidget *panel, PanelData *pd)
 		return pd->menu;
 	
 	pd->menu = create_panel_root_menu(panel, TRUE);
-	gtk_object_set_data (GTK_OBJECT (pd->menu), "menu_panel", panel);
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
 	return pd->menu;
