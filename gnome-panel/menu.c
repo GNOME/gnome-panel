@@ -2806,37 +2806,6 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
-
-	add_menu_separator (menu);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(menu,
-						  GNOME_STOCK_PIXMAP_ABOUT),
-			_("About..."));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(about_cb),
-			    NULL);
-#if 0
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Convert to corner panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) convert_to_panel,
-			   GINT_TO_POINTER(CORNER_PANEL));
-	gtk_object_set_data(GTK_OBJECT(menu),"convcorn",menuitem);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Convert to edge panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) convert_to_panel,
-			   GINT_TO_POINTER(SNAPPED_PANEL));
-	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
-
-	add_menu_separator(menu);
-#endif
 }
 
 void
@@ -2864,6 +2833,18 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 
 	panel_menu = gtk_menu_new();
 	make_panel_submenu(panel_menu,fake_submenus);
+
+	add_menu_separator (panel_menu);
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_ABOUT),
+			_("About..."));
+	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(about_cb),
+			    NULL);
+
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
 					"gnome-panel.png",
@@ -2871,11 +2852,6 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 	
-#if 0
-	gtk_signal_connect_object(GTK_OBJECT(menu),"show",
-				  GTK_SIGNAL_FUNC(show_x_on_panels),
-				  GTK_OBJECT(panel_menu));
-#endif
 	add_menu_separator (menu);
 
 	char_tmp = gnome_is_program_in_path("guname");
