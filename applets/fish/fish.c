@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <gnome.h>
+#include <gdk_imlib.h>
 #include "applet-lib.h"
 #include "applet-widget.h"
 
@@ -25,8 +26,7 @@ static const fish_properties defaults = {
 static fish_properties properties = { NULL };
 
 static GtkWidget *applet;
-static GdkPixmap *pix[3];
-static GdkPixmap *mask[3];
+static GdkImlibImage *pix[3];
 static gint curpix = 0;
 
 static GtkWidget * fortune_dialog = NULL;
@@ -189,7 +189,8 @@ fish_timeout(gpointer data)
 
 	curpix++;
 	if(curpix>=3) curpix=0;
-	gtk_pixmap_set(GTK_PIXMAP(pixmap),pix[curpix],mask[curpix]);
+	gtk_pixmap_set(GTK_PIXMAP(pixmap),pix[curpix]->pixmap,
+					  pix[curpix]->shape_mask);
 	gtk_widget_queue_draw(pixmap);
 	return TRUE;
 }
@@ -204,17 +205,14 @@ create_fish_widget(GtkWidget *window)
 
 	style = gtk_widget_get_style(window);
 
-	pix[0] = gdk_pixmap_create_from_xpm_d(window->window,  &mask[0],
-                                              &style->bg[GTK_STATE_NORMAL],
-                                              (gchar **)fish1_xpm);
-	pix[1] = gdk_pixmap_create_from_xpm_d(window->window,  &mask[1],
-                                              &style->bg[GTK_STATE_NORMAL],
-                                              (gchar **)fish2_xpm);
-	pix[2] = gdk_pixmap_create_from_xpm_d(window->window,  &mask[2],
-                                              &style->bg[GTK_STATE_NORMAL],
-                                              (gchar **)fish3_xpm);
+	pix[0] = gdk_imlib_create_image_from_xpm_data((gchar **)fish1_xpm);
+	gdk_imlib_render (pix[0], pix[0]->rgb_width, pix[0]->rgb_height);
+	pix[1] = gdk_imlib_create_image_from_xpm_data((gchar **)fish2_xpm);
+	gdk_imlib_render (pix[1], pix[1]->rgb_width, pix[1]->rgb_height);
+	pix[2] = gdk_imlib_create_image_from_xpm_data((gchar **)fish3_xpm);
+	gdk_imlib_render (pix[2], pix[2]->rgb_width, pix[2]->rgb_height);
 
-        pixmap = gtk_pixmap_new(pix[0],mask[0]);
+        pixmap = gtk_pixmap_new(pix[0]->pixmap,pix[0]->shape_mask);
         gtk_widget_show(pixmap);
 
 	event_box = gtk_event_box_new();
