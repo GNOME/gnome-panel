@@ -1,3 +1,13 @@
+Tue Jan 18 03:29:27 2000  George Lebl <jirka@5z.com>
+
+	* panel_config.[ch]: remove the radio buttons for the background
+	  type and stick in an option menu instead.  Also fix the allocation
+	  and updating of the size option menu.  I think perhaps we
+	  should use the radiomenuitems here.  Also for screens with height
+	  of less then 600, reduce the height of the pixmap preview to
+	  50 pixels.  This all makes the properties dialog usable on
+	  640x480
+
 Mon Jan 17 00:40:25 2000  George Lebl <jirka@5z.com>
 
 	* xstuff.[ch]: implement our own routines for finding out if we
