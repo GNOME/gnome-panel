@@ -13,10 +13,10 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.9.91\n"
+"Project-Id-Version: gnome-panel 2.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-01 16:51+0800\n"
-"PO-Revision-Date: 2005-03-01 16:51+0800\n"
+"POT-Creation-Date: 2005-03-30 08:50+0800\n"
+"PO-Revision-Date: 2005-03-29 17:03+0800\n"
 "Last-Translator: Woodman Tuen <wmtuen@gmail.com>\n"
 "Language-Team: Chinese/Traditional <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -693,7 +693,7 @@ msgstr "工作區切換程式"
 msgid "Failed to load %s: %s\n"
 msgstr "無法載入 %s：%s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:569
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
 msgid "Icon not found"
 msgstr "圖示不存在"
 
@@ -987,7 +987,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "沒有空位"
 
-#: ../gnome-panel/button-widget.c:196
+#: ../gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "無法載入圖片 %s"
@@ -1123,7 +1123,7 @@ msgstr "重新啟動螢幕保護伺服程式(_S)"
 
 #: ../gnome-panel/panel-action-button.c:209
 #: ../gnome-panel/panel-action-button.c:222
-#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:633
+#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:665
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "無法執行 '%s'"
@@ -1808,25 +1808,25 @@ msgid "Use custom path for menu contents"
 msgstr "使用自選的路徑作為選單內容"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1611
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1628
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "讀取 GConf 字串值‘%s’時發生錯誤：%s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1509
-#: ../gnome-panel/panel-profile.c:1580 ../gnome-panel/panel-profile.c:1643
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1524
+#: ../gnome-panel/panel-profile.c:1597 ../gnome-panel/panel-profile.c:1660
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "讀取 GConf 整數值‘%s’時發生錯誤：%s"
 
-#: ../gnome-panel/panel-profile.c:1519
+#: ../gnome-panel/panel-profile.c:1534
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr "面板‘%s’被指定在第 %d 個螢幕中顯示，但該螢幕不存在，因此不會載入面板。"
 
-#: ../gnome-panel/panel-profile.c:1595
+#: ../gnome-panel/panel-profile.c:1612
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "讀取 GConf 布林值‘%s’時發生錯誤：%s"
@@ -1983,8 +1983,8 @@ msgid ""
 msgstr ""
 "如果您清除了最近存取文件的清單，您會同時清除了：\n"
 "\n"
-"• 在‘位置’ → 中的最近存取文件裡面的所有項目。\n"
-"• 所有程式的選單中最近存取文件的所有項目。"
+"• 在「位置」中「最近存取文件」內的所有項目。\n"
+"• 所有程式選單中最近存取文件的所有項目。"
 
 #: ../gnome-panel/panel-recent.c:219
 msgid "Recent Documents"
@@ -1992,7 +1992,7 @@ msgstr "最近存取的文件"
 
 #: ../gnome-panel/panel-recent.c:249
 msgid "Clear Recent Documents"
-msgstr "清除最近存取的文件"
+msgstr "清除最近存取文件"
 
 #: ../gnome-panel/panel-recent.c:253
 msgid "Clear all items from the recent documents list"
@@ -2012,17 +2012,17 @@ msgstr "無法由 UTF-8 轉換‘%s’"
 msgid "Choose a file to append to the command..."
 msgstr "在指令後附加檔案名稱..."
 
-#: ../gnome-panel/panel-run-dialog.c:1414
+#: ../gnome-panel/panel-run-dialog.c:1420
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "將會執行指令：‘%s’"
 
-#: ../gnome-panel/panel-run-dialog.c:1421
+#: ../gnome-panel/panel-run-dialog.c:1427
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "選取應用程式後可以顯示有關該程式的說明。"
 
-#: ../gnome-panel/panel-run-dialog.c:1456
+#: ../gnome-panel/panel-run-dialog.c:1462
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr "拖曳到執行視窗的 URI 清單 的格式 (%d) 或 長度(%d) 錯誤\n"
@@ -2503,7 +2503,7 @@ msgstr "面板的垂直座標"
 msgid "Cannot display help document"
 msgstr "無法顯示說明文件"
 
-#: ../gnome-panel/panel-util.c:255
+#: ../gnome-panel/panel-util.c:287
 #, c-format
 msgid "Details: %s"
 msgstr "詳情：%s"
@@ -2676,6 +2676,10 @@ msgstr "偏好設定目錄(_P)："
 #~ msgid "Desktop"
 #~ msgstr "桌面"
 
+#, fuzzy
+#~ msgid "Workspace Selector"
+#~ msgstr "工作區切換程式"
+
 #~ msgid "_Lock"
 #~ msgstr "鎖定位置(_L)"
 
@@ -2702,6 +2706,10 @@ msgstr "偏好設定目錄(_P)："
 
 #~ msgid "Actions"
 #~ msgstr "行動"
+
+#, fuzzy
+#~ msgid "Workspace List"
+#~ msgstr "工作區名稱"
 
 #~ msgid "Specify a profile name to load"
 #~ msgstr "指定準備載入的設定組合名稱"
@@ -2962,6 +2970,10 @@ msgstr "偏好設定目錄(_P)："
 
 #~ msgid "Utility"
 #~ msgstr "公用程式"
+
+#, fuzzy
+#~ msgid "Clear recent document history?"
+#~ msgstr "最近存取的文件"
 
 #~ msgid "Launcher from menu"
 #~ msgstr "選單中的啟動圖示"
