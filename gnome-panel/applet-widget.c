@@ -486,6 +486,9 @@ applet_widget_register_callback(AppletWidget *applet,
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(name != NULL);
+	g_return_if_fail(menutext != NULL);
+	g_return_if_fail(func != NULL);
 
 	gnome_panel_applet_register_callback (GTK_WIDGET(applet),name,
 					      "",menutext,func,data);
@@ -501,6 +504,10 @@ applet_widget_register_stock_callback(AppletWidget *applet,
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(name != NULL);
+	g_return_if_fail(stock_type != NULL);
+	g_return_if_fail(menutext != NULL);
+	g_return_if_fail(func != NULL);
 
 	gnome_panel_applet_register_callback (GTK_WIDGET(applet),name,
 					      stock_type,menutext,func,data);
