@@ -1,3 +1,10 @@
+2004-08-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.c: (panel_toplevel_contains_pointer): Fix
+	multiscreen issue where we were incorrectly returning TRUE
+	under some circumstances when the pointer was actually on
+	a different screen from the panel. bug #148703
+
 2004-08-23  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* panel-profile.c: (panel_profile_load_object): Plug a leak.

@@ -1262,21 +1262,29 @@ panel_toplevel_update_hide_buttons (PanelToplevel *toplevel)
 static gboolean
 panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 {
-	GtkWidget *widget;
-	int        x = -1, y = -1;
+	GdkDisplay *display;
+	GdkScreen  *screen;
+	GtkWidget  *widget;
+	int         x, y;
 
-	widget = GTK_WIDGET (toplevel);
+	display = gdk_display_get_default ();
+	widget  = GTK_WIDGET (toplevel);
 
 	if (!GTK_WIDGET_REALIZED (widget))
 		return FALSE;
 
-	gtk_widget_get_pointer (widget, &x, &y);
+	screen = NULL;
+	x = y = -1;
+	gdk_display_get_pointer (display, &screen, &x, &y, NULL);
+
+	if (screen != gtk_window_get_screen (GTK_WINDOW (toplevel)))
+		return FALSE;
 
 	if (x == -1 || y == -1)
 		return FALSE;
 
-	if (x < 0 || x >= widget->allocation.width ||
-	    y < 0 || y >= widget->allocation.height)
+	if (x < toplevel->priv->geometry.x || x >= (toplevel->priv->geometry.x + toplevel->priv->geometry.width) ||
+	    y < toplevel->priv->geometry.y || y >= (toplevel->priv->geometry.y + toplevel->priv->geometry.height))
 		return FALSE;
 
 	return TRUE;
