@@ -94,6 +94,9 @@ struct _PanelToplevelPrivate {
 	GdkRectangle            geometry;
 	PanelFrameEdge          edges;
 
+	int                     original_width;
+	int                     original_height;
+
 	PanelGrabOpType         grab_op;
 
 	/* The offset within the panel from which the panel
@@ -1229,7 +1232,7 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 }
 
 static gboolean
-panel_toplevel_update_struts (PanelToplevel *toplevel)
+panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation)
 {
 	PanelOrientation  orientation;
 	GdkScreen        *screen;
@@ -1262,10 +1265,25 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 						 &topmost,
 						 &bottommost);
 
-	x      = toplevel->priv->geometry.x;
-	y      = toplevel->priv->geometry.y;
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
+	if (end_of_animation) {
+		x = toplevel->priv->animation_end_x;
+		y = toplevel->priv->animation_end_y;
+		x += panel_multiscreen_x (screen, toplevel->priv->monitor);
+		x += panel_multiscreen_y (screen, toplevel->priv->monitor);
+		if (toplevel->priv->animation_end_width != -1)
+			width = toplevel->priv->animation_end_width;
+		else
+			width = toplevel->priv->geometry.width;
+		if (toplevel->priv->animation_end_height != -1)
+			height = toplevel->priv->animation_end_height;
+		else
+			height = toplevel->priv->geometry.height;
+	} else {
+		x      = toplevel->priv->geometry.x;
+		y      = toplevel->priv->geometry.y;
+		width  = toplevel->priv->geometry.width;
+		height = toplevel->priv->geometry.height;
+	}
 
 	orientation = toplevel->priv->orientation;
 
@@ -1281,8 +1299,8 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 		}
 
 		if (strut > 0) {
-			strut_start = MAX (x, 0);
-			strut_end = x + width;
+			strut_start = MAX (x, monitor_x);
+			strut_end = MIN (x + width, monitor_x + monitor_width);
 		}
 	} else {
 		if (leftmost && x <= monitor_x) {
@@ -1294,8 +1312,9 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 		}
 
 		if (strut > 0) {
-			strut_start = MAX (y, 0);
-			strut_end = y + height;
+			strut_start = MAX (y, monitor_y);
+			strut_end = MIN (y + height, monitor_y + monitor_height);
+
 		}
 	}
 
@@ -1591,8 +1610,8 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
+	width  = toplevel->priv->original_width;
+	height = toplevel->priv->original_height;
 
 	*x = CLAMP (*x, 0, monitor_width  - width);
 	*y = CLAMP (*y, 0, monitor_height - height);
@@ -1629,8 +1648,8 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
+	width  = toplevel->priv->original_width;
+	height = toplevel->priv->original_height;
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
@@ -1693,8 +1712,8 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
-	width  = toplevel->priv->geometry.width;
-	height = toplevel->priv->geometry.height;
+	width  = toplevel->priv->original_width;
+	height = toplevel->priv->original_height;
 
 	auto_hide_size = toplevel->priv->auto_hide_size;
 	if (auto_hide_size <= 0)
@@ -1725,13 +1744,12 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 	}
 }
 
-/* Copied directly from the original panel code.
- * Its supposed to give a sine-like movement.
- * _v_ likes math way too much for his own good :-)
+/*
+ * This is "almost" like the double sine movement
+ * from the original panel except that it uses
+ * a cubic (twice again).  I suppose it looks less
+ * mathematical now :) -- _v_
  */
-
-#include <math.h>
-
 static int
 get_delta (int  src,
 	   int  dest,
@@ -1739,7 +1757,7 @@ get_delta (int  src,
 	   long end_time,
 	   long cur_time)
 {
-	double n, d, percentage;
+	double x, n, d, percentage;
 
 	n = cur_time - start_time;
 	d = end_time - start_time;
@@ -1747,8 +1765,14 @@ get_delta (int  src,
 	if (abs (dest - src) <= 1 || n >= d)
 		return dest - src;
 
-	percentage = sin (M_PI * (n / d) - M_PI / 2) / 2 + 0.5;
-	percentage = sin (M_PI * percentage - M_PI / 2) / 2 + 0.5;
+	/* The cubic is: p(x) = (-2) x^2 (x-1.5) */
+	/* running p(p(x)) to make it more "pronounced",
+	 * effectively making it a ninth-degree polynomial */
+
+	x = n/d;
+	x = -2 * (x*x) * (x-1.5);
+	/* run it again */
+	percentage = -2 * (x*x) * (x-1.5);
 
 	percentage = CLAMP (percentage, 0.0, 1.0);
 
@@ -1756,27 +1780,23 @@ get_delta (int  src,
 }
 
 static void
-panel_toplevel_update_animating_position (PanelToplevel *toplevel,
-					  int           *x,
-					  int           *y,
-					  int           *w,
-					  int           *h)
+panel_toplevel_update_animating_position (PanelToplevel *toplevel)
 {
 	GdkScreen *screen;
 	GTimeVal   time_val;
 	long       current_time;
-	int        deltax, deltay, deltaw = -1, deltah = -1;
-
-	g_assert (x != NULL && y != NULL);
+	int        deltax, deltay, deltaw = 0, deltah = 0;
+	int        monitor_offset_x, monitor_offset_y;
 
 	g_get_current_time (&time_val);
 
 	current_time =  (time_val.tv_sec - toplevel->priv->animation_start_time.tv_sec)
 					* 1000000 + time_val.tv_usec;
 
-	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, x, y);
-
 	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
+
+	monitor_offset_x = panel_multiscreen_x (screen, toplevel->priv->monitor);
+	monitor_offset_y = panel_multiscreen_y (screen, toplevel->priv->monitor);
 
 	if (toplevel->priv->animation_end_width != -1)
 		deltaw = get_delta (toplevel->priv->geometry.width,
@@ -1792,44 +1812,40 @@ panel_toplevel_update_animating_position (PanelToplevel *toplevel,
 				    toplevel->priv->animation_end_time,
 				    current_time);
 
-	*x -= panel_multiscreen_x (screen, toplevel->priv->monitor);
-	*y -= panel_multiscreen_y (screen, toplevel->priv->monitor);
-
-	deltax = get_delta (*x,
+	deltax = get_delta (toplevel->priv->geometry.x - monitor_offset_x,
 			    toplevel->priv->animation_end_x,
 			    toplevel->priv->animation_start_time.tv_usec,
 			    toplevel->priv->animation_end_time,
 			    current_time);
 
-	deltay = get_delta (*y,
+	deltay = get_delta (toplevel->priv->geometry.y - monitor_offset_y,
 			    toplevel->priv->animation_end_y,
 			    toplevel->priv->animation_start_time.tv_usec,
 			    toplevel->priv->animation_end_time,
 			    current_time);
 
-	if (deltaw != -1 && abs (deltaw) > abs (deltax))
+	if (deltaw != 0 && abs (deltaw) > abs (deltax))
 		deltax = deltaw;
-	if (deltah != -1 && abs (deltah) > abs (deltay))
+	if (deltah != 0 && abs (deltah) > abs (deltay))
 		deltay = deltah;
 
-	*x += deltax;
-	*y += deltay;
+	toplevel->priv->geometry.x += deltax;
+	toplevel->priv->geometry.y += deltay;
 
-	if (deltaw != -1)
-		*w = toplevel->priv->geometry.width  + deltaw;
-	if (deltah != -1)
-		*h = toplevel->priv->geometry.height + deltah;
+	toplevel->priv->geometry.width += deltaw;
+	toplevel->priv->geometry.height += deltah;
 
-	if (*x == toplevel->priv->animation_end_x &&
-	    *y == toplevel->priv->animation_end_y) {
+	if (toplevel->priv->geometry.x - monitor_offset_x == toplevel->priv->animation_end_x &&
+	    toplevel->priv->geometry.y - monitor_offset_y == toplevel->priv->animation_end_y) {
 		toplevel->priv->animating = FALSE;
 
 		if (toplevel->priv->attached && panel_toplevel_get_is_hidden (toplevel))
 			gtk_widget_unmap (GTK_WIDGET (toplevel));
+		else
+			gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 		if (toplevel->priv->state == PANEL_STATE_NORMAL)
 			g_signal_emit (toplevel, toplevel_signals [UNHIDE_SIGNAL], 0);
-
 	}
 }
 
@@ -1923,6 +1939,12 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	panel_toplevel_get_monitor_geometry (
 			toplevel, NULL, NULL, &monitor_width, &monitor_height);
 
+	if (toplevel->priv->animating) {
+		panel_toplevel_update_animating_position (toplevel);
+		return;
+	}
+
+
 	if (toplevel->priv->position_centered) {
 		toplevel->priv->position_centered = FALSE;
 
@@ -1956,10 +1978,7 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 
 	w = h = -1;
 
-	if (toplevel->priv->animating)
-		panel_toplevel_update_animating_position (toplevel, &x, &y, &w, &h);
-
-	else if (toplevel->priv->state == PANEL_STATE_NORMAL)
+	if (toplevel->priv->state == PANEL_STATE_NORMAL)
 		panel_toplevel_update_normal_position (toplevel, &x, &y, &w, &h);
 
 	else if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
@@ -1979,12 +1998,20 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 	if (h != -1)
 		toplevel->priv->geometry.height = h;
 
-	panel_toplevel_update_struts (toplevel);
-	panel_struts_update_toplevel_geometry (toplevel,
-					       &toplevel->priv->geometry.x,
-					       &toplevel->priv->geometry.y,
-					       &toplevel->priv->geometry.width,
-					       &toplevel->priv->geometry.height);
+	panel_toplevel_update_struts (toplevel, FALSE);
+	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
+		panel_struts_update_toplevel_geometry (toplevel,
+						       &toplevel->priv->geometry.x,
+						       &toplevel->priv->geometry.y,
+						       &toplevel->priv->geometry.width,
+						       &toplevel->priv->geometry.height);
+	} else {
+		panel_struts_update_toplevel_geometry (toplevel,
+						       &toplevel->priv->geometry.x,
+						       &toplevel->priv->geometry.y,
+						       NULL, NULL);
+	}
 
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
@@ -2078,6 +2105,8 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 	toplevel->priv->geometry.width  = CLAMP (width,  0, monitor_width);
 	toplevel->priv->geometry.height = CLAMP (height, 0, monitor_height);
+	toplevel->priv->original_width  = toplevel->priv->geometry.width;
+	toplevel->priv->original_height = toplevel->priv->geometry.height;
 }
 
 static void
@@ -2921,11 +2950,13 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
 
+	panel_toplevel_update_struts (toplevel, TRUE);
 	panel_struts_update_toplevel_geometry (toplevel,
 					       &toplevel->priv->animation_end_x,
 					       &toplevel->priv->animation_end_y,
 					       &toplevel->priv->animation_end_width,
 					       &toplevel->priv->animation_end_height);
+	panel_toplevel_update_struts (toplevel, FALSE);
 
 	gdk_window_get_origin (GTK_WIDGET (toplevel)->window, &cur_x, &cur_y);
 
@@ -2943,7 +2974,7 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 		deltah = toplevel->priv->animation_end_height -
 			GTK_WIDGET (toplevel)->requisition.height;
 
-	if (!deltax && !deltay) {
+	if (deltax == 0 && deltay == 0 && deltaw == 0 && deltah == 0) {
 		toplevel->priv->animation_end_x      = -1;
 		toplevel->priv->animation_end_y      = -1;
 		toplevel->priv->animation_end_width  = -1;
@@ -3882,6 +3913,9 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->geometry.width  = -1;
 	toplevel->priv->geometry.height = -1;
 
+	toplevel->priv->original_width  = -1;
+	toplevel->priv->original_height = -1;
+
 	toplevel->priv->grab_op = PANEL_GRAB_OP_NONE;
 
 	toplevel->priv->drag_offset_x = 0;
@@ -4169,7 +4203,7 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 	toplevel->priv->auto_hide_size = auto_hide_size;
 
 	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
-		if (panel_toplevel_update_struts (toplevel))
+		if (panel_toplevel_update_struts (toplevel, FALSE))
 			gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 	}
 
@@ -4318,7 +4352,7 @@ panel_toplevel_set_auto_hide (PanelToplevel *toplevel,
 	else
 		panel_toplevel_queue_auto_unhide (toplevel);
 
-	if (panel_toplevel_update_struts (toplevel))
+	if (panel_toplevel_update_struts (toplevel, FALSE))
 		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_notify (G_OBJECT (toplevel), "auto-hide");

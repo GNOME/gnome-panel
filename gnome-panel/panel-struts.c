@@ -466,8 +466,6 @@ panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 
 	g_return_val_if_fail (x != NULL, FALSE);
 	g_return_val_if_fail (y != NULL, FALSE);
-	g_return_val_if_fail (width != NULL, FALSE);
-	g_return_val_if_fail (height != NULL, FALSE);
 	
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return FALSE;
@@ -475,9 +473,9 @@ panel_struts_update_toplevel_geometry (PanelToplevel *toplevel,
 	*x += strut->allocated_geometry.x - strut->geometry.x;
 	*y += strut->allocated_geometry.y - strut->geometry.y;
 
-	if (*width != -1)
+	if (width != NULL && *width != -1)
 		*width  += strut->allocated_geometry.width  - strut->geometry.width;
-	if (*height != -1)
+	if (height != NULL && *height != -1)
 		*height += strut->allocated_geometry.height - strut->geometry.height;
 
 	return TRUE;

@@ -1,3 +1,39 @@
+Tue Aug 12 12:52:33 2003  George Lebl <jirka@5z.com>
+
+	* panel-struts.c: Allow passing NULL width/height
+	  int pointers and just don't update them then
+
+	* panel-toplevel.c:  The update functions want to
+	  work with width/height of what it was after
+	  the update_size call, so store those values,
+	  the strut update function can now update struts
+	  based on the final position of animation to get the
+	  final position correctly, struts can't really extend
+	  beyond screen edges which would make hidden panels
+	  whacked out.  The "math" function to compute the
+	  "sin" wave is now a much simpler (but almost the
+	  same) ninth degree polynomial p(p(x)) where p(x)
+	  is a simple cubic.  The animating position is now
+	  updated separately short circuiting the position
+	  update instead of doing all the position dance as
+	  normally.  Fix things in case we ever do animation
+	  where we change the width/height which is not currently
+	  done.  Don't update the size for hidden panels to avoid
+	  completely squishing them and setting them to negative
+	  sizes and all such fun.
+
+	  Note: This fixes the struts for panels that hide at
+	  least in all the cases which I could find.  Animations
+	  are kind of off in some cases, but it would require
+	  lots of whacky code to get that right and it's not
+	  worth it.  Things it fixes include squishing panels
+	  (thus whacking your applet layout), panels not hiding
+	  at all, panels animating wrongly, panels jumping around
+	  while other panels are hiding and gtk warnings about
+	  negative sizes when panels are hidden.  Most of these
+	  problems especially for vertical panels being hidden
+	  down or up.
+
 Mon Aug 11 11:40:00 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: when queing unhide, first check if the panel
