@@ -5,6 +5,7 @@
  *          Miguel de Icaza
  */
 
+#include <config.h>
 #include <string.h>
 #include "gnome.h"
 #include "applet_files.h"
@@ -135,6 +136,7 @@ int
 main(int argc, char **argv)
 {
 	gnome_init(&argc, &argv);
+	textdomain(PACKAGE);
 
 	init_session_management (argc, argv);
 
