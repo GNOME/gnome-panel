@@ -91,7 +91,7 @@ struct _MailCheck {
 
 	/* The property window */
 	GtkWidget *property_window;
-	GtkWidget *spin, *pre_check_cmd_entry;
+	GtkWidget *min_spin, *sec_spin, *pre_check_cmd_entry;
 	GtkWidget *newmail_cmd_entry, *clicked_cmd_entry;
 
 	gboolean anim_changed;
@@ -103,10 +103,10 @@ struct _MailCheck {
 	GtkWidget *mailfile_entry, *mailfile_label;
         GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
         GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
-        GtkWidget *remote_option_menu;
+	GtkWidget *remote_option_menu;
         
-        char *remote_server, *remote_username, *remote_password;
-        int mailbox_type; // local = 0; pop3 = 1; imap = 2
+	char *remote_server, *remote_username, *remote_password;
+	int mailbox_type; /* local = 0; pop3 = 1; imap = 2 */
         int mailbox_type_temp;
 };
 
@@ -540,13 +540,17 @@ load_new_pixmap (MailCheck *mc)
 	gtk_widget_show (mc->containee);
 }
 
+/* FIXME?: for some reason, this function seems to be getting called twice
+   when "Apply" is pressed */
 static void
 apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
 {
 	char *text;
 	MailCheck *mc = (MailCheck *)data;
 	
-	mc->update_freq = (guint)(gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (mc->spin))*1000);
+	mc->update_freq = 1000 * (guint)(gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->sec_spin)) + 
+					 60 * gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->min_spin)));
+
 	gtk_timeout_remove (mc->mail_timeout);
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
 	
@@ -854,15 +858,28 @@ mailcheck_properties_page (MailCheck *mc)
         l = gtk_label_new (_("Check for mail every"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-	
-	freq_a = gtk_adjustment_new((float)mc->update_freq/1000, 0.1, 3600, 0.1, 5, 5);
-	mc->spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 0.1, 1);
+
+	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)/60), 0, 1440, 1, 5, 5);
+	mc->min_spin = gtk_spin_button_new( GTK_ADJUSTMENT (freq_a), 1, 0);
 	gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
-	gtk_signal_connect(GTK_OBJECT(mc->spin), "changed",
+	gtk_signal_connect(GTK_OBJECT(mc->min_spin), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
-	gtk_box_pack_start (GTK_BOX (hbox), mc->spin,  FALSE, FALSE, 0);
-	gtk_widget_show(mc->spin);
+	gtk_box_pack_start (GTK_BOX (hbox), mc->min_spin,  FALSE, FALSE, 0);
+	gtk_widget_show(mc->min_spin);
+	
+	l = gtk_label_new (_("m"));
+	gtk_widget_show(l);
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	
+	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 1, 60, 1, 5, 5);
+	mc->sec_spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
+	gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
+			   GTK_SIGNAL_FUNC(property_box_changed), mc);
+	gtk_signal_connect(GTK_OBJECT(mc->sec_spin), "changed",
+			   GTK_SIGNAL_FUNC(property_box_changed), mc);
+	gtk_box_pack_start (GTK_BOX (hbox), mc->sec_spin,  FALSE, FALSE, 0);
+	gtk_widget_show(mc->sec_spin);
 	
 	l = gtk_label_new (_("s"));
 	gtk_widget_show(l);
