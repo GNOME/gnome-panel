@@ -27,11 +27,6 @@
 #ifndef __PANEL_BACKGROUND_MONITOR_H__
 #define __PANEL_BACKGROUND_MONITOR_H__
 
-/* FIXME: this needs to be made multiscreen aware
- *        panel_background_monitor_get should take
- *        a GdkScreen argument.
- */
-
 #include <glib.h>
 #include <glib-object.h>
 #include <gtk/gtk.h>
@@ -55,7 +50,6 @@ typedef struct _PanelBackgroundMonitorClass PanelBackgroundMonitorClass;
 typedef struct _PanelBackgroundMonitor      PanelBackgroundMonitor;
 
 GType                   panel_background_monitor_get_type       (void);
-PanelBackgroundMonitor *panel_background_monitor_get            (void);
 PanelBackgroundMonitor *panel_background_monitor_get_for_screen (GdkScreen *screen);
 GdkPixbuf              *panel_background_monitor_get_region     (PanelBackgroundMonitor *monitor,
 								 int                     x,

@@ -918,7 +918,6 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 		gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),
 					  TRUE);
 	} else {
-		//FIXME
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
 				      GTK_STOCK_ADD);
 		gtk_button_set_use_stock (GTK_BUTTON (dialog->add_button),

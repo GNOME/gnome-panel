@@ -1,3 +1,21 @@
+2004-11-29  Vincent Untz  <vincent@vuntz.net>
+
+	I don't like FIXMEs. Let's try to fix most of them.
+
+	* panel-addto.c: (panel_addto_selection_changed): remove FIXME I added
+	for a reason I forgot a long time ago...
+
+	* panel-background-monitor.[ch]: (panel_background_monitor_get): kill,
+	it's not used any more since we have the better
+	panel_background_monitor_get_for_screen()
+
+	* panel-run-dialog.c: (panel_run_dialog_new): use
+	gdk_x11_window_set_user_time instead of
+	panel_gdk_x11_window_set_user_time
+	(panel_run_dialog_present): ditto
+	* panel-xutils.[ch]: (panel_gdk_x11_window_set_user_time): kill, we
+	now depend on GTK+ >= 2.5
+
 ==================== 2.9.2 ====================
 
 2004-11-29  Vincent Untz  <vincent@vuntz.net>

@@ -198,12 +198,6 @@ panel_background_monitor_get_for_screen (GdkScreen *screen)
 	return g_object_ref (global_background_monitors [screen_number]);
 }
 
-PanelBackgroundMonitor *
-panel_background_monitor_get (void)
-{
-	return panel_background_monitor_get_for_screen (gdk_screen_get_default ());
-}
-
 static GdkFilterReturn
 panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 					GdkEvent  *event,
