@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
+"POT-Creation-Date: 2004-01-15 12:56+0000\n"
 "PO-Revision-Date: 2002-05-31 18:15-0300\n"
 "Last-Translator: Isam Bayazidi <bayazidi@arabeyes.org>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -99,8 +99,8 @@ msgstr ""
 
 #: applets/clock/clock.c:1339 applets/clock/clock.c:1611
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:407 applets/wncklet/window-list.c:116
-#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:83
+#: applets/wncklet/showdesktop.c:413 applets/wncklet/window-list.c:116
+#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:84
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:461
 #, c-format
@@ -150,8 +150,8 @@ msgstr "استعمل UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:1646 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:786
-#: applets/wncklet/window-menu.c:110 applets/wncklet/workspace-switcher.c:493
+#: applets/wncklet/showdesktop.c:442 applets/wncklet/window-list.c:786
+#: applets/wncklet/window-menu.c:111 applets/wncklet/workspace-switcher.c:493
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
 msgstr "سيد جعفر الموسوي ( mosawi@arabeyes.org)"
@@ -293,9 +293,9 @@ msgstr "حول..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3098
+#: gnome-panel/drawer.c:601 gnome-panel/menu.c:3098
 #: gnome-panel/panel-action-button.c:536 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/panel-menu-button.c:557
 msgid "_Help"
 msgstr "مساعدة"
 
@@ -368,7 +368,7 @@ msgstr ""
 msgid "%s the GNOME Fish Says:"
 msgstr "سمكة جينوم %s"
 
-#: applets/fish/fish.c:730
+#: applets/fish/fish.c:731
 #, fuzzy, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -379,7 +379,7 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: applets/fish/fish.c:751
+#: applets/fish/fish.c:752
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -390,7 +390,7 @@ msgstr ""
 "\n"
 "الرجاء الرجوع لشاشة الخصائص."
 
-#: applets/fish/fish.c:1353
+#: applets/fish/fish.c:1355
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -398,7 +398,7 @@ msgstr ""
 "يحتاج الماء للتغيير!\n"
 "(لاحظ تاريخ اليوم)"
 
-#: applets/fish/fish.c:1421
+#: applets/fish/fish.c:1423
 msgid "GNOME Fish, the fortune teller"
 msgstr "سمكة جينوم، امين الثروة"
 
@@ -605,7 +605,7 @@ msgid "Window List"
 msgstr "قائمة النوافذ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:635
+#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:640
 #, fuzzy
 msgid "Window Menu"
 msgstr "القائمة الرئيسية"
@@ -621,20 +621,15 @@ msgstr "مصنع بريمج جينيوتيل"
 msgid "Workspace Switcher"
 msgstr "مغيّر بيئات العمل"
 
-#: applets/wncklet/showdesktop.c:219
+#: applets/wncklet/showdesktop.c:220
 msgid "Click here to restore hidden windows."
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-#, fuzzy
-msgid "Show Desktop Button"
-msgstr "أظهر أزرار الإخفاء"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:301
 #, fuzzy, c-format
 msgid "Failed to load %s: %s\n"
 msgstr ""
@@ -642,16 +637,21 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:302
 #, fuzzy
 msgid "File not found"
 msgstr "لم اجد وثيقة المساعدة"
 
-#: applets/wncklet/showdesktop.c:449
+#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:451
+#, fuzzy
+msgid "Show Desktop Button"
+msgstr "أظهر أزرار الإخفاء"
+
+#: applets/wncklet/showdesktop.c:453
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:489
+#: applets/wncklet/showdesktop.c:493
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -715,7 +715,7 @@ msgstr "أظهر النوافذ من بيئة العمل الحالية"
 msgid "Show windows from a_ll workspaces"
 msgstr "أظهر النوافذ من كل بيئات العمل"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3616
 #, fuzzy
 msgid "Size"
 msgstr "الحجم:"
@@ -803,11 +803,11 @@ msgstr "الحجم اﻷدنى الذي سيطلبه بريمج قائمة ال�
 msgid "When to group windows"
 msgstr "متى تجمّع النوافذ"
 
-#: applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:352
 msgid "Unknown Window"
 msgstr ""
 
-#: applets/wncklet/window-menu.c:548
+#: applets/wncklet/window-menu.c:553
 #, fuzzy
 msgid "No Windows Open"
 msgstr "لا توجد نوافذ مفتوحة"
@@ -1000,7 +1000,7 @@ msgstr ""
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr ""
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3605
 #, fuzzy
 msgid "Orientation"
 msgstr "الاتجاه :"
@@ -1063,7 +1063,7 @@ msgstr "سولاريس"
 msgid "CDE Menu"
 msgstr "قوائم سيدي"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
+#: gnome-panel/drawer.c:598 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
 #: gnome-panel/menu.c:3046 gnome-panel/panel-action-button.c:92
 #, fuzzy
 msgid "_Properties"
@@ -1221,15 +1221,15 @@ msgstr "%s%cScreenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "ليست هناك مساحة كافية لكتابة الملف %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1272
 msgid "Grab a window instead of the entire screen"
 msgstr "خذ صورة نافذة بدل الشاشة كلها"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1273
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "خذ صورة للشاشة بعد المهلة المحددة [بالثواني]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1325
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1237,7 +1237,7 @@ msgstr ""
 "ملف غليد لبرنامج صور الشاشة مفقود.\n"
 "فضلا تأكد من تنصيبك إلى gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1349
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "تعذر الحصول على صورة شاشة لسطح المكتب الحالي."
 
@@ -1729,11 +1729,11 @@ msgstr "أعمال"
 msgid "The type of action this button implements"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:440
 msgid "Drag N' Drop enabled"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:441
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr ""
 
@@ -1810,7 +1810,7 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "افتح عنوان URL: %s"
 
-#: gnome-panel/panel.c:1221
+#: gnome-panel/panel.c:1222
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -1819,7 +1819,7 @@ msgstr ""
 "حينما يتم حذف لوحة مهام، فإنه سيتم فقدان اللوحة وإعدادات بريمجاتها.\n"
 "هل تريد حذف لوحة المهام هذه؟"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1231
 #, fuzzy
 msgid "Delete Panel"
 msgstr "احذف لوحة المهام هذه"
@@ -1999,38 +1999,38 @@ msgstr "احمي كمبيوترك من المستخدمين غير المرخّ�
 msgid "Quit from the GNOME desktop"
 msgstr "إقلاع من سطح مكتب جينوم"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:404
 #, fuzzy
 msgid "Menu Path"
 msgstr "مسار القائمة"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:405
 msgid "The path from which to construct the menu"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:413
 msgid "Custom Icon"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:414
 #, fuzzy
 msgid "The custom icon for the menu"
 msgstr "استعمل أيقونة مخصصة لزر لوحة المهام"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:422
 #, fuzzy
 msgid "Use Menu Path"
 msgstr "مسار القائمة"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:423
 msgid "Use the path specified by the menu-path property"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:431
 msgid "Use Custom Icon"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:432
 msgid "Use the icon specified by the custom-icon property"
 msgstr ""
 
@@ -2509,225 +2509,225 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 #, fuzzy
 msgid "Top Expanded Edge Panel"
 msgstr "حجم الموسع"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 #, fuzzy
 msgid "Top Centered Panel"
 msgstr "لوحة مهام ركن"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 #, fuzzy
 msgid "Top Floating Panel"
 msgstr "لوحة مهام طافية"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 #, fuzzy
 msgid "Top Edge Panel"
 msgstr "لوحة مهام حافة"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 #, fuzzy
 msgid "Bottom Expanded Edge Panel"
 msgstr "حجم الموسع"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 #, fuzzy
 msgid "Bottom Centered Panel"
 msgstr "لوحة مهام ركن"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 #, fuzzy
 msgid "Bottom Floating Panel"
 msgstr "لوحة مهام طافية لجينوم"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 #, fuzzy
 msgid "Bottom Edge Panel"
 msgstr "لوحة مهام حافة"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 #, fuzzy
 msgid "Left Expanded Edge Panel"
 msgstr "حجم الموسع"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 #, fuzzy
 msgid "Left Centered Panel"
 msgstr "لوحة مهام ركن"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 #, fuzzy
 msgid "Left Floating Panel"
 msgstr "لوحة مهام طافية"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 #, fuzzy
 msgid "Left Edge Panel"
 msgstr "لوحة مهام حافة"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 #, fuzzy
 msgid "Right Expanded Edge Panel"
 msgstr "حجم الموسع"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 #, fuzzy
 msgid "Right Centered Panel"
 msgstr "لوحة مهام مضبطة"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 #, fuzzy
 msgid "Right Floating Panel"
 msgstr "لوحة مهام طافية"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 #, fuzzy
 msgid "Right Edge Panel"
 msgstr "لوحة مهام حافة"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3585
 #, fuzzy
 msgid "Name"
 msgstr "أيقونة"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3586
 #, fuzzy
 msgid "The name of this panel"
 msgstr "نمط لوحة التحكم هذه"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3595
 #, fuzzy
 msgid "Expand"
 msgstr "حجم الموسع"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3606
 #, fuzzy
 msgid "The orientation of the panel"
 msgstr "الحالة الحالية للوحة المهام هذه"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3617
 #, fuzzy
 msgid "The height (or width when vertical) of the panel"
 msgstr "الحالة الحالية للوحة المهام هذه"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3629
 #, fuzzy
 msgid "X position"
 msgstr "موقع لوحة المهام"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3630
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3641
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3642
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3651
 #, fuzzy
 msgid "Y position"
 msgstr "موقع لوحة المهام"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3652
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3663
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3664
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3673
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3674
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3685
 #, fuzzy
 msgid "Auto hide"
 msgstr "فعّل اﻹخفاء التلقائي"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3686
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3695
 msgid "Hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3696
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3707
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3708
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3719
 #, fuzzy
 msgid "Auto-hide size"
 msgstr "فعّل اﻹخفاء التلقائي"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3720
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3731
 #, fuzzy
 msgid "Animate"
 msgstr "رسوم متحركة"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3732
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3741
 #, fuzzy
 msgid "Animation Speed"
 msgstr "سرعة الحركة:"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3742
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3752
 #, fuzzy
 msgid "Buttons Enabled"
 msgstr "إخفاء اﻷزرار مفعل"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3753
 #, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "تفعيل زر اﻹخفاء"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3762
 msgid "Arrows Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3763
 #, fuzzy
 msgid "Enable arrows on hide/show buttons"
 msgstr "أظهر أسهما على زر اﻹخفاء"
@@ -3044,42 +3044,42 @@ msgstr "اختبر بريمج بونوبو"
 msgid "Test Bonobo Applet Factory"
 msgstr "اختبر معاين بريمج بونوبو"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:864
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "لقد تم استقبال '%s' نوع خلفية غير تام"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:878
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "لقد تم استقبال نوع خلفية '%s' غير تام: %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:887
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "فشل الحصول على الرسمة البيسكلية %s"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:894
 msgid "Unknown background type received"
 msgstr "لقد تم استقبال نوع خلفية مجهول"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "البريمج الذي يحوي اتجاه لوحة المهام"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "البريمج الذي يحوي حجم لوحة المهام بالبيكسل"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "البريمج الذي يحوي لون خلفية لوحة المهام أو رسمتها البيكسلية"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "أعلام البريمجات"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "المدى الذي يلمح بحجم البريمج المقبول"
 

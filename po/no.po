@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
+"POT-Creation-Date: 2004-01-15 12:56+0000\n"
 "PO-Revision-Date: 2003-09-07 10:00+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -95,8 +95,8 @@ msgstr ""
 
 #: applets/clock/clock.c:1339 applets/clock/clock.c:1611
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:407 applets/wncklet/window-list.c:116
-#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:83
+#: applets/wncklet/showdesktop.c:413 applets/wncklet/window-list.c:116
+#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:84
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:461
 #, c-format
@@ -141,8 +141,8 @@ msgstr "Bruk _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:1646 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:786
-#: applets/wncklet/window-menu.c:110 applets/wncklet/workspace-switcher.c:493
+#: applets/wncklet/showdesktop.c:442 applets/wncklet/window-list.c:786
+#: applets/wncklet/window-menu.c:111 applets/wncklet/workspace-switcher.c:493
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
@@ -278,9 +278,9 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3098
+#: gnome-panel/drawer.c:601 gnome-panel/menu.c:3098
 #: gnome-panel/panel-action-button.c:536 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/panel-menu-button.c:557
 msgid "_Help"
 msgstr "_Hjelp"
 
@@ -354,7 +354,7 @@ msgstr "Kan ikke finne kommandoen som skal kjøres"
 msgid "%s the GNOME Fish Says:"
 msgstr "GNOME-fisken %s sier:"
 
-#: applets/fish/fish.c:730
+#: applets/fish/fish.c:731
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -365,7 +365,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: applets/fish/fish.c:751
+#: applets/fish/fish.c:752
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -377,7 +377,7 @@ msgstr ""
 "\n"
 "Vennligst se dialogen \"Egenskaper\" for fisken."
 
-#: applets/fish/fish.c:1353
+#: applets/fish/fish.c:1355
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -385,7 +385,7 @@ msgstr ""
 "Vannet må skiftes!\n"
 "(Se på dagens dato)"
 
-#: applets/fish/fish.c:1421
+#: applets/fish/fish.c:1423
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME-fisk, en historieforteller"
 
@@ -583,7 +583,7 @@ msgid "Window List"
 msgstr "Vinduliste"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:635
+#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:640
 msgid "Window Menu"
 msgstr "Vindumeny"
 
@@ -597,32 +597,32 @@ msgstr "Factory for applet for vindunavigering"
 msgid "Workspace Switcher"
 msgstr "Bytt arbeidsområde"
 
-#: applets/wncklet/showdesktop.c:219
+#: applets/wncklet/showdesktop.c:220
 msgid "Click here to restore hidden windows."
 msgstr "Klikk her for å gjenopprette skjulte vinduer."
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klikk her for å skjule alle vinduer og vise skrivebordet."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "Vis skrivebordsknapp"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:301
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Kunne ikke laste %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:302
 msgid "File not found"
 msgstr "Fil ikke funnet"
 
-#: applets/wncklet/showdesktop.c:449
+#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:451
+msgid "Show Desktop Button"
+msgstr "Vis skrivebordsknapp"
+
+#: applets/wncklet/showdesktop.c:453
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Denne knappen lar deg skjule alle vinduer og vise skrivebordet"
 
-#: applets/wncklet/showdesktop.c:489
+#: applets/wncklet/showdesktop.c:493
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -685,7 +685,7 @@ msgstr "_Vis vinuder fra aktivt arbeidsområde"
 msgid "Show windows from a_ll workspaces"
 msgstr "Vis vinduer fra a_lle arbeidsområder"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3616
 msgid "Size"
 msgstr "Størrelse"
 
@@ -764,11 +764,11 @@ msgstr "Denne nøkkelen oppgir minste bredde som oppgavelisten forespør"
 msgid "When to group windows"
 msgstr "Når skal vinduer grupperes"
 
-#: applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:352
 msgid "Unknown Window"
 msgstr "Ukjent vindu"
 
-#: applets/wncklet/window-menu.c:548
+#: applets/wncklet/window-menu.c:553
 msgid "No Windows Open"
 msgstr "Ingen åpne vinduer"
 
@@ -941,7 +941,7 @@ msgstr "Uthev dra-og-slipp"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Om ikonet skal utheves under en dra-og-slipp operasjon"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3605
 msgid "Orientation"
 msgstr "Orientering"
 
@@ -997,7 +997,7 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE-meny"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
+#: gnome-panel/drawer.c:598 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
 #: gnome-panel/menu.c:3046 gnome-panel/panel-action-button.c:92
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1152,15 +1152,15 @@ msgstr "%s%cSkjermdump-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Ikke nok plass til å skrive filen %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1272
 msgid "Grab a window instead of the entire screen"
 msgstr "Hent et vindu i stedet for hele skjermen"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1273
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Ta skjermdump etter spesifisert pause [i sekunder]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1325
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1168,7 +1168,7 @@ msgstr ""
 "Glade-fil for skjermdump-programmet mangler.\n"
 "Vennligst sjekk installasjonen av gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1349
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan ikke ta skjermdump av skrivebordet nå."
 
@@ -1594,11 +1594,11 @@ msgstr "Handlingstype"
 msgid "The type of action this button implements"
 msgstr "Type handling denne knappen implementerer"
 
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:440
 msgid "Drag N' Drop enabled"
 msgstr "Dra-og-slipp aktivert"
 
-#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:441
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Om dra-og-slipp er aktivert for programkomponenten eller ikke"
 
@@ -1676,7 +1676,7 @@ msgstr "Feil under henting av verdi for «%s»: %s"
 msgid "Open URL: %s"
 msgstr "Åpne URL: %s"
 
-#: gnome-panel/panel.c:1221
+#: gnome-panel/panel.c:1222
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1684,7 +1684,7 @@ msgstr ""
 "Når et panel fjernes, blir panelet og dets\n"
 "instillinger tapt. Slett dette panelet?"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1231
 msgid "Delete Panel"
 msgstr "Slett panel"
 
@@ -1853,35 +1853,35 @@ msgstr "Beskytt din datamaskin mot uautorisert bruk"
 msgid "Quit from the GNOME desktop"
 msgstr "Avslutt GNOME skrivebordet"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:404
 msgid "Menu Path"
 msgstr "Menysti"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:405
 msgid "The path from which to construct the menu"
 msgstr "Stien til stedet menyen opprettes fra"
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:413
 msgid "Custom Icon"
 msgstr "Tilpasset ikon"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:414
 msgid "The custom icon for the menu"
 msgstr "Tilpasset ikon for menyen"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:422
 msgid "Use Menu Path"
 msgstr "Bruk menysti"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:423
 msgid "Use the path specified by the menu-path property"
 msgstr "Bruk stien som spesifiseres av egenskapen menu-path"
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:431
 msgid "Use Custom Icon"
 msgstr "Bruk tilpasset ikon"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:432
 msgid "Use the icon specified by the custom-icon property"
 msgstr "Bruk ikon som spesifiseres av egenskapen custom-icon"
 
@@ -2333,196 +2333,196 @@ msgstr "_Tvungen nedstenging"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr "Utvidet kantpanel øverst"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 msgid "Top Centered Panel"
 msgstr "Sentrert panel øverst"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 msgid "Top Floating Panel"
 msgstr "Flytende panel øverst"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 msgid "Top Edge Panel"
 msgstr "Kantpanel øverst"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr "Utvidet kantpanel nederst"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr "Sentrert panel nederst"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr "Flytende panel nederst"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr "Kantpanel nederst"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Left Expanded Edge Panel"
 msgstr "Utvidet kantpanel til venstre"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Left Centered Panel"
 msgstr "Sentrert panel til venstre"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Left Floating Panel"
 msgstr "Flytende panel til venstre"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Left Edge Panel"
 msgstr "Kantpanel til venstre"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr "Utvidet kantpanel til høyre"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr "Sentrert panel til høyre"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr "Flytende panel til høyre"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr "Kantpanel til høyre"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3585
 msgid "Name"
 msgstr "Navn"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3586
 msgid "The name of this panel"
 msgstr "Navn på dette panelet"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Expand"
 msgstr "Utvid"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Expand to take up the full monitor width/height"
 msgstr "Utvid og bruk hele skjermens bredde/høyde"
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3606
 msgid "The orientation of the panel"
 msgstr "Orientering for panelet"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3617
 msgid "The height (or width when vertical) of the panel"
 msgstr "Høyde (eller bredde hvis vertikal) for panelet"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3629
 msgid "X position"
 msgstr "X-posisjon"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3630
 msgid "The X position of the panel"
 msgstr "Panelets posisjon på X-aksen"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3641
 msgid "X centered"
 msgstr "X sentrert"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3642
 msgid "The x co-ordinate is relative to center screen"
 msgstr "X-koordinaten er relativ til midten av skjermen"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3651
 msgid "Y position"
 msgstr "Y-posisjon"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3652
 msgid "The Y position of the panel"
 msgstr "Panelets posisjon på Y-aksen"
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3663
 msgid "Y centered"
 msgstr "Y sentrert"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3664
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Y-koordinaten er relativ til midten av skjermen"
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3673
 msgid "Xinerama monitor"
 msgstr "Xinerama-skjerm"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3674
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Skjermen (mhp Xinerama) hvor panelet befinner seg"
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3685
 msgid "Auto hide"
 msgstr "Autoskjul"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3686
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Skjul panelet automatisk når musen forlater det"
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3695
 msgid "Hide delay"
 msgstr "Pause for skjuling"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3696
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Antall millisekunder pause før automatisk skjuling"
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3707
 msgid "Un-hide delay"
 msgstr "Pause for gjenopprettelse"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3708
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Antall millisekunder pause før automatisk gjenoppretting av panelet"
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3719
 msgid "Auto-hide size"
 msgstr "Størrelse ved automatisk skjuling"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3720
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Antall piksler som forblir synlig når panelet er automatisk skjult"
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3731
 msgid "Animate"
 msgstr "Animer"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3732
 msgid "Enable hiding/showing animations"
 msgstr "Aktiver animasjoner ved skjuling/gjenoppretting"
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3741
 msgid "Animation Speed"
 msgstr "Animasjonshastighet"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3742
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Hastighet for skjuling/gjenoppretting av panelet"
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3752
 msgid "Buttons Enabled"
 msgstr "Slå på knapper"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3753
 msgid "Enable hide/show buttons"
 msgstr "Slå på knapper for å skjule/vise panelet"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3762
 msgid "Arrows Enabled"
 msgstr "Slå på piler"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3763
 msgid "Enable arrows on hide/show buttons"
 msgstr "Slå på piler på knapp for skjuling/gjenoppretting"
 
@@ -2824,42 +2824,42 @@ msgstr "Test Bonobo-applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Factory for test Bonobo-applet"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:864
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ukomplett bakgrunnstype «%s» mottatt"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:878
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ukomplett bakgrunnstype «%s» mottatt: %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:887
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Feil under henting av pixmap %s"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:894
 msgid "Unknown background type received"
 msgstr "Ukjent bakgrunnstype mottatt"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Orientering for panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Størrelse i piksler på panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Bakgrunnsfarge eller bilde for panelet som inneholder appleten"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Appletens flagg"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Områder som gir hint om hvilke størrelser som er akseptable for appleten"

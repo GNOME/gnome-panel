@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel for gnome v.2.1.x\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
+"POT-Creation-Date: 2004-01-15 12:56+0000\n"
 "PO-Revision-Date: 2003-10-02 09:51+0700\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
 "Language-Team: Gnome-Vi <gnomevi-list@lists.sourceforge.net>\n"
@@ -96,8 +96,8 @@ msgstr ""
 
 #: applets/clock/clock.c:1339 applets/clock/clock.c:1611
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:407 applets/wncklet/window-list.c:116
-#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:83
+#: applets/wncklet/showdesktop.c:413 applets/wncklet/window-list.c:116
+#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:84
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:461
 #, c-format
@@ -142,8 +142,8 @@ msgstr "Dùng _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:1646 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:786
-#: applets/wncklet/window-menu.c:110 applets/wncklet/workspace-switcher.c:493
+#: applets/wncklet/showdesktop.c:442 applets/wncklet/window-list.c:786
+#: applets/wncklet/window-menu.c:111 applets/wncklet/workspace-switcher.c:493
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
 msgstr ""
@@ -276,9 +276,9 @@ msgstr "_Giới thiệu..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3098
+#: gnome-panel/drawer.c:601 gnome-panel/menu.c:3098
 #: gnome-panel/panel-action-button.c:536 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/panel-menu-button.c:557
 msgid "_Help"
 msgstr "Trợ _giúp"
 
@@ -351,7 +351,7 @@ msgstr "Không thể định vị trí lệnh cần thực hiện"
 msgid "%s the GNOME Fish Says:"
 msgstr "Cá GNOME %s nói:"
 
-#: applets/fish/fish.c:730
+#: applets/fish/fish.c:731
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -362,7 +362,7 @@ msgstr ""
 "\n"
 "Chi tiết: %s"
 
-#: applets/fish/fish.c:751
+#: applets/fish/fish.c:752
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -373,7 +373,7 @@ msgstr ""
 "\n"
 "Vui lòng xem lại hộp thoại thuộc tính con cá."
 
-#: applets/fish/fish.c:1353
+#: applets/fish/fish.c:1355
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -381,7 +381,7 @@ msgstr ""
 "Cần đổi nước!\n"
 "(Xem ngày tháng của hôm nay)"
 
-#: applets/fish/fish.c:1421
+#: applets/fish/fish.c:1423
 msgid "GNOME Fish, the fortune teller"
 msgstr "Cá GNOME, nhà tiên tri"
 
@@ -581,7 +581,7 @@ msgid "Window List"
 msgstr "Danh sách cửa sổ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:635
+#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:640
 msgid "Window Menu"
 msgstr "Menu Cửa sổ"
 
@@ -595,32 +595,32 @@ msgstr "Window Navigation Applet Factory"
 msgid "Workspace Switcher"
 msgstr "Bộ chuyển vùng làm việc"
 
-#: applets/wncklet/showdesktop.c:219
+#: applets/wncklet/showdesktop.c:220
 msgid "Click here to restore hidden windows."
 msgstr "Nhấn vào đây để khôi phục các cửa sổ ẩn."
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Nhấn vào đây để ẩn dấu mọi cửa sổ và hiện desktop."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "Hiện nút desktop"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:301
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Không nạp được %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:302
 msgid "File not found"
 msgstr "không thấy tập tin"
 
-#: applets/wncklet/showdesktop.c:449
+#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:451
+msgid "Show Desktop Button"
+msgstr "Hiện nút desktop"
+
+#: applets/wncklet/showdesktop.c:453
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Nút này để bạn ẩn dấu mọi cửa sổ và hiện desktop"
 
-#: applets/wncklet/showdesktop.c:489
+#: applets/wncklet/showdesktop.c:493
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -683,7 +683,7 @@ msgstr "_Hiện các cửa sổ trên vùng làm việc hiện thời"
 msgid "Show windows from a_ll workspaces"
 msgstr "Hiện các cửa sổ trên _mọi vùng làm việc"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3616
 msgid "Size"
 msgstr "Kích thước"
 
@@ -763,11 +763,11 @@ msgstr "Khóa nà xác định kích thước tối thiểu mà danh sách cửa
 msgid "When to group windows"
 msgstr "Khi nhóm cửa sổ"
 
-#: applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:352
 msgid "Unknown Window"
 msgstr "Cửa sổ lạ"
 
-#: applets/wncklet/window-menu.c:548
+#: applets/wncklet/window-menu.c:553
 msgid "No Windows Open"
 msgstr "Không có cửa sổ nào mở"
 
@@ -937,7 +937,7 @@ msgstr "Tô sáng Kéo Thả"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Có tô sáng biểu tượng trong quá trình kéo và thả hay không"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3605
 msgid "Orientation"
 msgstr "Định Hướng"
 
@@ -993,7 +993,7 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
+#: gnome-panel/drawer.c:598 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
 #: gnome-panel/menu.c:3046 gnome-panel/panel-action-button.c:92
 msgid "_Properties"
 msgstr "T_huộc tính"
@@ -1146,15 +1146,15 @@ msgstr "%s%cScreenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Không đủ chỗ để ghi tập tin %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1272
 msgid "Grab a window instead of the entire screen"
 msgstr "Lưu một cửa sổ thay vì cả màn hình"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1273
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Chụp hình sau một khoảng chờ [giây]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1325
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1162,7 +1162,7 @@ msgstr ""
 "Tập tin glade cho chương trình screenshot bị thiếu.\n"
 "Hãy kiểm tra lại bản cài đặt của gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1349
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Không thể tạo screenshot cho desktop hiện thời."
 
@@ -1588,11 +1588,11 @@ msgstr "Kiểu Hành Động"
 msgid "The type of action this button implements"
 msgstr "Kiểu hành động gán cho nút này"
 
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:440
 msgid "Drag N' Drop enabled"
 msgstr "Đã bật Kéo Thả"
 
-#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:441
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Có cho phép kéo thả trên Widget hay không"
 
@@ -1671,7 +1671,7 @@ msgstr "Lỗi lấy giá trị cho '%s': %s"
 msgid "Open URL: %s"
 msgstr "Mở URL: %s"
 
-#: gnome-panel/panel.c:1221
+#: gnome-panel/panel.c:1222
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1680,7 +1680,7 @@ msgstr ""
 "của Bảng điều khiển đó sẽ bị mất. Bạn có muốn loại bỏ Bảng điều khiển này "
 "không?"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1231
 msgid "Delete Panel"
 msgstr "Xóa Bảng điều khiển"
 
@@ -1868,35 +1868,35 @@ msgstr "Tránh sự quấy nhiễu máy tính của những người dùng khôn
 msgid "Quit from the GNOME desktop"
 msgstr "Thoát khỏi GNOME Desktop"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:404
 msgid "Menu Path"
 msgstr "Đường dẫn menu"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:405
 msgid "The path from which to construct the menu"
 msgstr "Đường dẫn từ đó xây dựng menu"
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:413
 msgid "Custom Icon"
 msgstr "Biểu tượng tự chọn"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:414
 msgid "The custom icon for the menu"
 msgstr "Dùng biểu tượng tự chọn cho menu"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:422
 msgid "Use Menu Path"
 msgstr "Dùng Đường dẫn menu"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:423
 msgid "Use the path specified by the menu-path property"
 msgstr "Dùng đường dẫn xác định bởi thuộc tính menu-path"
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:431
 msgid "Use Custom Icon"
 msgstr "Dùng Biểu tượng tự chọn"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:432
 msgid "Use the icon specified by the custom-icon property"
 msgstr "Dùng biểu tượng xác định bởi thuộc tính custom-icon"
 
@@ -2376,196 +2376,196 @@ msgstr "_Buộc thoát"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr "Bảng điều khiển cạnh bung đỉnh"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 msgid "Top Centered Panel"
 msgstr "Bảng điều khiển giữa đỉnh"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 msgid "Top Floating Panel"
 msgstr "Bảng điều khiển lơ lửng đỉnh"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 msgid "Top Edge Panel"
 msgstr "Bảng điều khiển cạnh đỉnh"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr "Bảng điều khiển cạnh bung đáy"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr "Bảng điều khiển giữa đáy"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr "Bảng điều khiển lơ lửng đáy"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr "Bảng điều khiển cạnh đáy"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Left Expanded Edge Panel"
 msgstr "Bảng điều khiển cạnh bung trái"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Left Centered Panel"
 msgstr "Bảng điều khiển giữa trái"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Left Floating Panel"
 msgstr "Bảng điều khiển lơ lửng trái"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Left Edge Panel"
 msgstr "Bảng điều khiển cạnh trái"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr "Bảng điều khiển canh bung phải"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr "Bảng điều khiển giữa phải"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr "Bảng điều khiển lơ lửng phải"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr "Bảng điều khiển cạnh phải"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3585
 msgid "Name"
 msgstr "Tên"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3586
 msgid "The name of this panel"
 msgstr "Tên Bảng điều khiển này"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Expand"
 msgstr "Bung"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Expand to take up the full monitor width/height"
 msgstr "Bung chiếm hết chiều rộng/cao màn hình"
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3606
 msgid "The orientation of the panel"
 msgstr "Hướng Bảng điều khiển"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3617
 msgid "The height (or width when vertical) of the panel"
 msgstr "Chiều cao (hoặc rông nếu nằm dọc) của Bảng điều khiển"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3629
 msgid "X position"
 msgstr "Vị trí X"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3630
 msgid "The X position of the panel"
 msgstr "Vị trí X của Bảng điều khiển"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3641
 msgid "X centered"
 msgstr "X giữa"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3642
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Tọa độ X so với tâm màn hình"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3651
 msgid "Y position"
 msgstr "Vị trí Y"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3652
 msgid "The Y position of the panel"
 msgstr "Vị trí Y của Bảng điều khiển"
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3663
 msgid "Y centered"
 msgstr "Y giữa"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3664
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Tọa độ Y so với tâm màn hình"
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3673
 msgid "Xinerama monitor"
 msgstr "Màn hình Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3674
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Màh hình (theo thuật ngữ Xinerama) đặt Bảng điều khiển"
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3685
 msgid "Auto hide"
 msgstr "Tự động ẩ_n"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3686
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Tự động ẩn bảng điều khiển khi đẩy chuột ra ngoài"
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3695
 msgid "Hide delay"
 msgstr "Khoảng chờ ẩn"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3696
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Số mili giây chờ trước khi tự động ẩn"
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3707
 msgid "Un-hide delay"
 msgstr "Khoảng chờ ngừng-ẩn"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3708
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Số mili giây chờ trước khi tự động ngừng ẩn"
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3719
 msgid "Auto-hide size"
 msgstr "Kích thước Tự động ẩn"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3720
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Số pixel nhìn thấy của Bảng điều khiển sau khi tự động ẩn"
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3731
 msgid "Animate"
 msgstr "Hoạt cảnh"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3732
 msgid "Enable hiding/showing animations"
 msgstr "Bật hoạt cảnh ẩn/hiện"
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3741
 msgid "Animation Speed"
 msgstr "Tốc độ hoạt cảnh"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3742
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Tốc độ chơi hoạt cảnh ẩn/hiện"
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3752
 msgid "Buttons Enabled"
 msgstr "Nút đã bật"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3753
 msgid "Enable hide/show buttons"
 msgstr "Bật nút hiện/ẩn"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3762
 msgid "Arrows Enabled"
 msgstr "Mũi tên đã bật"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3763
 msgid "Enable arrows on hide/show buttons"
 msgstr "Bật mũi tên trên nút hiện/ẩn"
 
@@ -2931,42 +2931,42 @@ msgstr "Kiểm tra Applet Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:864
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s'"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:878
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nhận được kiểu nền không hoàn chỉnh '%s': %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:887
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Lỗi khi lấy pixmap %s"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:894
 msgid "Unknown background type received"
 msgstr "Nhận được một kiểu nền lạ"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet chứa hướng Panel"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet chứa kích thước Panel (pixel)"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet chứa màu nền hoặc pixmap nền của Panel"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Cờ hiệu của Applet"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Phạm vi mà gợi ý kích thước nào chấp nhận được đối với applet"
 

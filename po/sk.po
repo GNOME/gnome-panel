@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME gnome-panel.HEAD\n"
-"POT-Creation-Date: 2003-10-14 12:25+0100\n"
+"POT-Creation-Date: 2004-01-15 12:56+0000\n"
 "PO-Revision-Date: 2003-09-09 11:19+0200\n"
 "Last-Translator: Stanislav Visnovsky <visnov@suse.cz>\n"
 "Language-Team: Slovak <sk-i18n@linux.sk>\n"
@@ -101,8 +101,8 @@ msgstr ""
 
 #: applets/clock/clock.c:1339 applets/clock/clock.c:1611
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:407 applets/wncklet/window-list.c:116
-#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:83
+#: applets/wncklet/showdesktop.c:413 applets/wncklet/window-list.c:116
+#: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:84
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:461
 #, c-format
@@ -147,8 +147,8 @@ msgstr "Používať _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:1646 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:786
-#: applets/wncklet/window-menu.c:110 applets/wncklet/workspace-switcher.c:493
+#: applets/wncklet/showdesktop.c:442 applets/wncklet/window-list.c:786
+#: applets/wncklet/window-menu.c:111 applets/wncklet/workspace-switcher.c:493
 #: gnome-panel/menu.c:282
 msgid "translator_credits"
 msgstr ""
@@ -280,9 +280,9 @@ msgstr "_O programe..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3098
+#: gnome-panel/drawer.c:601 gnome-panel/menu.c:3098
 #: gnome-panel/panel-action-button.c:536 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/panel-menu-button.c:557
 msgid "_Help"
 msgstr "_Pomocník"
 
@@ -356,7 +356,7 @@ msgstr "Nepodarilo sa nájsť príkaz pre spustenie"
 msgid "%s the GNOME Fish Says:"
 msgstr "GNOME ryba menom %s hovorí:"
 
-#: applets/fish/fish.c:730
+#: applets/fish/fish.c:731
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -367,7 +367,7 @@ msgstr ""
 "\n"
 "Detaily: %s"
 
-#: applets/fish/fish.c:751
+#: applets/fish/fish.c:752
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -378,7 +378,7 @@ msgstr ""
 "\n"
 "Prosím, nastavte si vlastnosti ryby."
 
-#: applets/fish/fish.c:1353
+#: applets/fish/fish.c:1355
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -386,7 +386,7 @@ msgstr ""
 "Voda potrebuje vymeniť!\n"
 "(Pozrite na dnešný dátum)"
 
-#: applets/fish/fish.c:1421
+#: applets/fish/fish.c:1423
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME Fish, zobrazenie citátov"
 
@@ -581,7 +581,7 @@ msgid "Window List"
 msgstr "Zoznam okien"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:635
+#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:640
 msgid "Window Menu"
 msgstr "Menu okien"
 
@@ -595,32 +595,32 @@ msgstr "Vytváracie rozhranie pre applet navigácie v oknách"
 msgid "Workspace Switcher"
 msgstr "Prepínanie plôch"
 
-#: applets/wncklet/showdesktop.c:219
+#: applets/wncklet/showdesktop.c:220
 msgid "Click here to restore hidden windows."
 msgstr "Kliknutím sem obnovíte skryté okná."
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím sem skryjete všetky okná a zobrazíte plochu."
 
-#: applets/wncklet/showdesktop.c:286 applets/wncklet/showdesktop.c:447
-msgid "Show Desktop Button"
-msgstr "Tlačidlo pre zobrazenie plochy"
-
-#: applets/wncklet/showdesktop.c:297
+#: applets/wncklet/showdesktop.c:301
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nepodarilo sa načítať %s:%s\n"
 
-#: applets/wncklet/showdesktop.c:298
+#: applets/wncklet/showdesktop.c:302
 msgid "File not found"
 msgstr "Súbor nenájdený"
 
-#: applets/wncklet/showdesktop.c:449
+#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:451
+msgid "Show Desktop Button"
+msgstr "Tlačidlo pre zobrazenie plochy"
+
+#: applets/wncklet/showdesktop.c:453
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Toto tlačidlo umožňuje skryť všetky okná a zobraziť plochu"
 
-#: applets/wncklet/showdesktop.c:489
+#: applets/wncklet/showdesktop.c:493
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -683,7 +683,7 @@ msgstr "Zobraziť okná z _aktuálnej plochy"
 msgid "Show windows from a_ll workspaces"
 msgstr "Zobraziť okná zo _všetkých plôch"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3606
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3616
 msgid "Size"
 msgstr "Veľkosť"
 
@@ -762,11 +762,11 @@ msgstr "Minimálna šírka, ktorú bude Zoznam okien požadovať."
 msgid "When to group windows"
 msgstr "Kedy zoskupovať okná"
 
-#: applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:352
 msgid "Unknown Window"
 msgstr "Neznáme okno"
 
-#: applets/wncklet/window-menu.c:548
+#: applets/wncklet/window-menu.c:553
 msgid "No Windows Open"
 msgstr "Neotvorené žiadne okná"
 
@@ -939,7 +939,7 @@ msgstr "Zvýrazňovanie pri ťahaní myšou"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Či sa má zvýrazňovať ikona počas ťahania myšou"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3595
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3605
 msgid "Orientation"
 msgstr "Orientácia"
 
@@ -995,7 +995,7 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE menu"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
+#: gnome-panel/drawer.c:598 gnome-panel/launcher.c:755 gnome-panel/menu.c:1552
 #: gnome-panel/menu.c:3046 gnome-panel/panel-action-button.c:92
 msgid "_Properties"
 msgstr "_Vlastnosti"
@@ -1148,15 +1148,15 @@ msgstr "%s%cobrazovka-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Nedostatok miesta pre zápis súboru %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1272
 msgid "Grab a window instead of the entire screen"
 msgstr "Zachytiť okno namiesto celej obrazovky"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1273
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Zachytiť obrazovku po danej dobe [v sekundách]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1325
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1164,7 +1164,7 @@ msgstr ""
 "Súbor Glade pre program na zachytenie obrazovky chýba.\n"
 "Prosím, skontrolujte inštaláciu gnome-panel."
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1349
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nepodarilo sa zachytiť obsah aktuálnej plochy."
 
@@ -1589,11 +1589,11 @@ msgstr "Typ akcie"
 msgid "The type of action this button implements"
 msgstr "Typ akcie, ktorú toto tlačidlo implementuje"
 
-#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:440
 msgid "Drag N' Drop enabled"
 msgstr "Povoliť ťahanie myšou"
 
-#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:395 gnome-panel/panel-menu-button.c:441
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Či sa má povoliť ťahanie myšou"
 
@@ -1671,7 +1671,7 @@ msgstr "Chyba pri načítavaní hodnoty pre '%s': %s"
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
-#: gnome-panel/panel.c:1221
+#: gnome-panel/panel.c:1222
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1679,7 +1679,7 @@ msgstr ""
 "Keď je panel odstránený, jeho a nastavenia jeho\n"
 "appletov sú stratené. Odstrániť tento panel?"
 
-#: gnome-panel/panel.c:1230
+#: gnome-panel/panel.c:1231
 msgid "Delete Panel"
 msgstr "Odstrániť panel"
 
@@ -1865,35 +1865,35 @@ msgstr "Ochráni váš počítač pred neoprávneným použitím"
 msgid "Quit from the GNOME desktop"
 msgstr "Ukončí prostredie GNOME"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:404
 msgid "Menu Path"
 msgstr "Cesta k menu"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:405
 msgid "The path from which to construct the menu"
 msgstr "Cesta, odkiaľ vytvoriť menu"
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:413
 msgid "Custom Icon"
 msgstr "Vlastná ikona"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:414
 msgid "The custom icon for the menu"
 msgstr "Vlastná ikona pre menu"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:422
 msgid "Use Menu Path"
 msgstr "Použiť cestu k menu"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:423
 msgid "Use the path specified by the menu-path property"
 msgstr "Použiť cestu zadanú v menu-path"
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:431
 msgid "Use Custom Icon"
 msgstr "Použiť vlastnú ikonu"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:432
 msgid "Use the icon specified by the custom-icon property"
 msgstr "Použiť ikonu zadanú v custom-icon"
 
@@ -2370,196 +2370,196 @@ msgstr "_Vynútiť koniec"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1446
+#: gnome-panel/panel-toplevel.c:1448
 msgid "Top Expanded Edge Panel"
 msgstr "Horný roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1447
+#: gnome-panel/panel-toplevel.c:1449
 msgid "Top Centered Panel"
 msgstr "Horný panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1448
+#: gnome-panel/panel-toplevel.c:1450
 msgid "Top Floating Panel"
 msgstr "Horný plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1449
+#: gnome-panel/panel-toplevel.c:1451
 msgid "Top Edge Panel"
 msgstr "Horný okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Bottom Expanded Edge Panel"
 msgstr "Dolný roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Bottom Centered Panel"
 msgstr "Dolný panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Bottom Floating Panel"
 msgstr "Dolný plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1456
+#: gnome-panel/panel-toplevel.c:1458
 msgid "Bottom Edge Panel"
 msgstr "Dolný okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Left Expanded Edge Panel"
 msgstr "Ľavý roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Left Centered Panel"
 msgstr "Ľavý panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Left Floating Panel"
 msgstr "Ľavý plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1463
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Left Edge Panel"
 msgstr "Ľavý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Right Expanded Edge Panel"
 msgstr "Pravý roztiahnutý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Right Centered Panel"
 msgstr "Pravý panel v strede"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Right Floating Panel"
 msgstr "Pravý plávajúci panel"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Right Edge Panel"
 msgstr "Pravý okrajový panel"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3585
 msgid "Name"
 msgstr "Meno"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3586
 msgid "The name of this panel"
 msgstr "Meno tohto panelu"
 
-#: gnome-panel/panel-toplevel.c:3585
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Expand"
 msgstr "Roztiahnuť"
 
-#: gnome-panel/panel-toplevel.c:3586
+#: gnome-panel/panel-toplevel.c:3596
 msgid "Expand to take up the full monitor width/height"
 msgstr "Roztiahnuť na celú šírku/výšku obrazovky"
 
-#: gnome-panel/panel-toplevel.c:3596
+#: gnome-panel/panel-toplevel.c:3606
 msgid "The orientation of the panel"
 msgstr "Orientácia panelu"
 
-#: gnome-panel/panel-toplevel.c:3607
+#: gnome-panel/panel-toplevel.c:3617
 msgid "The height (or width when vertical) of the panel"
 msgstr "Výška (alebo šírka pre vertikálny) panelu"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3629
 msgid "X position"
 msgstr "Pozícia X"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3630
 msgid "The X position of the panel"
 msgstr "Pozícia X panelu"
 
-#: gnome-panel/panel-toplevel.c:3631
+#: gnome-panel/panel-toplevel.c:3641
 msgid "X centered"
 msgstr "V strede X"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3642
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Súradnica X je relatívna k stredu obrazovky"
 
-#: gnome-panel/panel-toplevel.c:3641
+#: gnome-panel/panel-toplevel.c:3651
 msgid "Y position"
 msgstr "Pozícia Y"
 
-#: gnome-panel/panel-toplevel.c:3642
+#: gnome-panel/panel-toplevel.c:3652
 msgid "The Y position of the panel"
 msgstr "Pozícia Y panelu"
 
-#: gnome-panel/panel-toplevel.c:3653
+#: gnome-panel/panel-toplevel.c:3663
 msgid "Y centered"
 msgstr "V strede Y"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3664
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Súradnica Y je relatívna k stredu obrazovky"
 
-#: gnome-panel/panel-toplevel.c:3663
+#: gnome-panel/panel-toplevel.c:3673
 msgid "Xinerama monitor"
 msgstr "Monitor Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3664
+#: gnome-panel/panel-toplevel.c:3674
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Monitor (v zmysle Xinerama), na ktorom je panel"
 
-#: gnome-panel/panel-toplevel.c:3675
+#: gnome-panel/panel-toplevel.c:3685
 msgid "Auto hide"
 msgstr "Automatické skrývanie"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3686
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Automaticky skryť panel ak kurzor myši opustí oblasť panelu"
 
-#: gnome-panel/panel-toplevel.c:3685
+#: gnome-panel/panel-toplevel.c:3695
 msgid "Hide delay"
 msgstr "Čakanie pred skrytím"
 
-#: gnome-panel/panel-toplevel.c:3686
+#: gnome-panel/panel-toplevel.c:3696
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Počet milisekúnd pred automatickým skrytím"
 
-#: gnome-panel/panel-toplevel.c:3697
+#: gnome-panel/panel-toplevel.c:3707
 msgid "Un-hide delay"
 msgstr "Čakanie pred obnovením"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3708
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Počet milisekúnd pred automatickým obnovením"
 
-#: gnome-panel/panel-toplevel.c:3709
+#: gnome-panel/panel-toplevel.c:3719
 msgid "Auto-hide size"
 msgstr "Veľkosť pre automatické skrývanie"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3720
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Počet bodov viditeľných pri automaticky skrytom paneli"
 
-#: gnome-panel/panel-toplevel.c:3721
+#: gnome-panel/panel-toplevel.c:3731
 msgid "Animate"
 msgstr "Animácia"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3732
 msgid "Enable hiding/showing animations"
 msgstr "Povoliť animáciu skrývania"
 
-#: gnome-panel/panel-toplevel.c:3731
+#: gnome-panel/panel-toplevel.c:3741
 msgid "Animation Speed"
 msgstr "Rýchlosť animácie"
 
-#: gnome-panel/panel-toplevel.c:3732
+#: gnome-panel/panel-toplevel.c:3742
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Rýchlosť animácie pri skrývaní/objavovaní panelu"
 
-#: gnome-panel/panel-toplevel.c:3742
+#: gnome-panel/panel-toplevel.c:3752
 msgid "Buttons Enabled"
 msgstr "Povolené skrývacie tlačidlá"
 
-#: gnome-panel/panel-toplevel.c:3743
+#: gnome-panel/panel-toplevel.c:3753
 msgid "Enable hide/show buttons"
 msgstr "Povoliť skrývacie tlačidlá"
 
-#: gnome-panel/panel-toplevel.c:3752
+#: gnome-panel/panel-toplevel.c:3762
 msgid "Arrows Enabled"
 msgstr "Šipky povolené"
 
-#: gnome-panel/panel-toplevel.c:3753
+#: gnome-panel/panel-toplevel.c:3763
 msgid "Enable arrows on hide/show buttons"
 msgstr "Povoliť šipky na tlačidlách pre skrývanie"
 
@@ -2921,42 +2921,42 @@ msgstr "Applet pre test Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Vytváracie rozhranie pre applet Test Bonobo"
 
-#: libpanel-applet/panel-applet.c:830
+#: libpanel-applet/panel-applet.c:864
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Prijatý neúplný typ pozadia '%s'"
 
-#: libpanel-applet/panel-applet.c:844
+#: libpanel-applet/panel-applet.c:878
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Prijatý neúplný typ pozadia '%s': %s"
 
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:887
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nepodarilo sa získať obrázok %s"
 
-#: libpanel-applet/panel-applet.c:860
+#: libpanel-applet/panel-applet.c:894
 msgid "Unknown background type received"
 msgstr "Prijatý neznámy typ pozadia"
 
-#: libpanel-applet/panel-applet.c:1039
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet obsahujúci orientáciu panelu"
 
-#: libpanel-applet/panel-applet.c:1047
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet obsahujúci veľkosť panelu v oodoch"
 
-#: libpanel-applet/panel-applet.c:1055
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet obsahujúci farbu pozadia panelu alebo obrázok pozadia"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Príznaky appletu"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rozsahy ako rada pre akceptovateľnú veľkosť appletu"
 
