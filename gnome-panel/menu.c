@@ -857,6 +857,15 @@ struct _ShowItemMenu {
 	GtkWidget *prop_item;
 };
 
+static int
+is_ext(char *f, char *ext)
+{
+	char *p = strrchr(f,'.');
+	if(!p) return FALSE;
+	else if(strcmp(p,ext) == 0) return TRUE;
+	else return FALSE;
+}
+
 static void
 show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 {
@@ -942,6 +951,8 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 	   /*A HACK: but it works, don't have it edittable if it's redhat
 	     menus as they are auto generated!*/
 	   !strstr(sim->item_loc,"/.gnome/apps-redhat/") &&
+	   /*if it's a kdelnk file, don't let it be editted*/
+	   !is_ext(sim->item_loc,".kdelnk") &&
 	   access(sim->item_loc,W_OK)==0) {
 #ifdef PANEL_DEBUG
 		puts(sim->item_loc);
@@ -952,7 +963,11 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 		/*the dentry isn't there, check if we can write the
 		  directory*/
 		if(access(sim->mf->menudir,W_OK)==0 &&
-		   !strstr(sim->mf->menudir,".gnome/apps-redhat/"))
+		   /*A HACK: but it works, don't have it edittable if it's redhat
+		     menus as they are auto generated!*/
+		   !strstr(sim->mf->menudir,".gnome/apps-redhat/") &&
+		   /*if it's a kdelnk file, don't let it be editted*/
+		   !is_ext(sim->item_loc,".kdelnk"))
 			gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	}
 	

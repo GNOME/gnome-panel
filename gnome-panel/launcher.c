@@ -123,7 +123,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 		if (!parameters)
 			return NULL;
 		else if (*parameters == '/')
-			dentry = gnome_desktop_entry_load (parameters);
+			dentry = gnome_desktop_entry_load_unconditional(parameters);
 		else {
 			char *apps_par, *entry, *extension;
 
@@ -139,7 +139,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 
 			if (!entry)
 				return NULL;
-			dentry = gnome_desktop_entry_load (entry);
+			dentry = gnome_desktop_entry_load_unconditional (entry);
 			g_free (entry);
 		}
 	}
@@ -222,6 +222,10 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	gnome_desktop_entry_free(launcher->dentry);
 	launcher->dentry =
 		gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(launcher->dedit));
+	if(!launcher->dentry->name || !(*(launcher->dentry->name))) {
+		g_free(launcher->dentry->name);
+		launcher->dentry->name=g_strdup("???");
+	}
 
 	/* and install the new one with the right dentry pointer */
 	gtk_signal_connect (GTK_OBJECT(launcher->button),
@@ -341,9 +345,16 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
 	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
-	if(button==0)
-		_load_launcher_applet(NULL, gnome_dentry_get_dentry(dedit),
-				      panel, pos);
+	GnomeDesktopEntry *dentry;
+	
+	if(button == 0) {
+		dentry = gnome_dentry_get_dentry(dedit);
+		if(!dentry->name || !(*(dentry->name))) {
+			g_free(dentry->name);
+			dentry->name=g_strdup("???");
+		}
+		_load_launcher_applet(NULL, dentry, panel, pos);
+	}
 	gtk_widget_destroy(d);
 }
 

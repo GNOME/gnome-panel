@@ -1,3 +1,13 @@
+Fri Apr 09 19:01:06 1999  George Lebl  <jirka@5z.com>
+
+	* launcher.c: load desktops as unconditional to skip tryexec
+	  and empty exec tests, and set name to "???" if the user didn't
+	  set it to some string. This takes care of disappearing launchers
+	  upon realoading of the panel
+
+	* menu.c: the properties should never be set sensitive for
+	  kde menus
+
 Thu Apr  8 14:30:02 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* menu.c panel.c session.c: Add a KDE menus directory
