@@ -1,3 +1,13 @@
+2003-01-21  Arvind Samptur <arvind.samptur@wipro.com>
+        * pager.c: (pager_connect_while_alive) :Get rid
+        of signal emissions occuring on libwnck data after the
+        pager has been destroyed.
+        (destroy_pager): Destroy the properties dialog when
+        destroying the pager.
+
+        * tasklist.c (destroy_tasklist): Destroy the properties dialog
+        when destroying the tasklist.
+
 2003-01-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* mailcheck.schemas.in: s/Remove/Remote/
