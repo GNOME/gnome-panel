@@ -182,7 +182,7 @@ panel_bindings_initialise (void)
 	gconf_client_add_dir (client, BINDINGS_PREFIX,
 			      GCONF_CLIENT_PRELOAD_ONELEVEL, &error);
 	if (error) {
-		g_warning (_("Error loading gconf dir '%s': %s"),
+		g_warning (_("Error loading gconf directory '%s': %s"),
 			   BINDINGS_PREFIX, error->message),
 		g_error_free (error);
 	}
@@ -196,7 +196,7 @@ panel_bindings_initialise (void)
 		error = NULL;
 		str = gconf_client_get_string (client, key, &error);
 		if (error) {
-			g_warning (_("error getting value for '%s': %s"),
+			g_warning (_("Error getting value for '%s': %s"),
 				   error->message, key);
 			continue;
 		}
