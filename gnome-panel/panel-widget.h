@@ -102,8 +102,7 @@ GtkWidget*	panel_widget_new		(gint length,
 						 PanelState state,
 						 gint step_size,
 						 gint minimized_size,
-						 gint minimize_delay,
-						 gint tooltips_enabled);
+						 gint minimize_delay);
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
