@@ -898,16 +898,13 @@ load_default_applets1(PanelWidget *panel)
 
 	/*load up some buttons, but only if screen larger then 639*/
 	if(gdk_screen_width() >= 640) {
-		load_logout_applet(panel, sz, TRUE);
-		load_lock_applet(panel, sz*2, TRUE);
-
 		for(i=0;def_launchers[i]!=NULL;i++) {
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
 				Launcher *launcher;
 				launcher = load_launcher_applet(p, panel,
-								sz*4+i*sz, TRUE);
+								sz*2+i*sz, TRUE);
 				g_free(p);
 
 				/* suck these into our own directories now */
@@ -921,8 +918,15 @@ load_default_applets1(PanelWidget *panel)
 			   panel, G_MAXINT/2 /*flush right*/,
 			   TRUE, TRUE);
 
+	/*load up the fish, but only if screen larger then 639*/
+	if(gdk_screen_width() >= 640) {
+		load_extern_applet ("fish_applet", NULL,
+				    panel, G_MAXINT/2 + 4000/*flush right*/,
+				    TRUE, TRUE);
+	}
+
 	load_status_applet(panel,
-			   G_MAXINT/2 + 4000/*flush right*/, TRUE);
+			   G_MAXINT/2 + 8000/*flush right*/, TRUE);
 }
 
 static gboolean
