@@ -43,12 +43,30 @@ static Atom atom_gnome_panel_action_run_dialog = None;
 
 extern GSList *panels;
 
-static void
-panel_action_protocol_main_menu (GdkScreen *screen)
+struct PopupInIdleData {
+	GtkMenu *popup_menu;
+	guint32  activate_time;
+};
+
+static gboolean
+popup_menu_in_idle (struct PopupInIdleData *popup_data)
 {
-	PanelWidget *panel_widget;
-	GtkWidget   *panel;
-	GtkWidget   *menu;
+	gtk_menu_popup (popup_data->popup_menu,
+			NULL, NULL, NULL, NULL, 0,
+			popup_data->activate_time);
+	g_free (popup_data);
+
+	return FALSE;
+}
+
+static void
+panel_action_protocol_main_menu (GdkScreen *screen,
+				 guint32    activate_time)
+{
+	PanelWidget            *panel_widget;
+	GtkWidget              *panel;
+	GtkWidget              *menu;
+	struct PopupInIdleData *popup_data;
 
 	panel_widget = panels->data;
 	menu = create_panel_root_menu (panel_widget);
@@ -58,7 +76,17 @@ panel_action_protocol_main_menu (GdkScreen *screen)
 	basep_widget_autohide (BASEP_WIDGET (panel));
 
 	gtk_menu_set_screen (GTK_MENU (menu), screen);
-	gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 0, GDK_CURRENT_TIME);
+
+	popup_data = g_new0 (struct PopupInIdleData, 1);
+	popup_data->popup_menu = GTK_MENU (menu);
+	popup_data->activate_time = activate_time;
+
+	/* FIXME: using a timeout to workaround the keyboard
+	 *        grab failing with AlreadyGrabbed if we do
+	 *        it straight away. Can't track down the other
+	 *        grab.
+	 */
+	g_timeout_add (200, (GSourceFunc) popup_menu_in_idle, popup_data);
 }
 
 static void
@@ -89,7 +117,7 @@ panel_action_protocol_filter (GdkXEvent *gdk_xevent,
 	screen = gdk_drawable_get_screen (window);
 
 	if (xevent->xclient.data.l [0] == atom_gnome_panel_action_main_menu)
-		panel_action_protocol_main_menu (screen);
+		panel_action_protocol_main_menu (screen, xevent->xclient.data.l [1]);
 	else if (xevent->xclient.data.l [0] == atom_gnome_panel_action_run_dialog)
 		panel_action_protocol_run_dialog (screen);
 	else

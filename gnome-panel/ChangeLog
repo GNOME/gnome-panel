@@ -1,5 +1,12 @@
 2003-02-24  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-action-protocol.c: (popup_menu_in_idle),
+	(panel_action_protocol_main_menu), (panel_action_protocol_filter):
+	popup the menu in a timeout. For some reason (which I can't track
+	down) the keyboard grab on the popup is failing with AlreadyGrabbed.
+
+2003-02-24  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-stock-icons.c: (panel_init_stock_icons): don't give
 	a warning when we stock_icons[i].icon is NULL - i.e. with
 	PANEL_STOCK_ACTION stock icon.
