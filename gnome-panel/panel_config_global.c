@@ -50,6 +50,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 		temp_config.explicit_hide_step_size;
 	global_config.tooltips_enabled = temp_config.tooltips_enabled;
 	global_config.show_small_icons = temp_config.show_small_icons;
+	global_config.movement_type = temp_config.movement_type;
 
 	apply_global_config();
 }
@@ -140,6 +141,17 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
+static void 
+set_movement (GtkWidget *widget, gpointer data)
+{
+	PanelMovementType move_type = (PanelMovementType) data;
+
+	temp_config.movement_type = move_type;
+	
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+}
+
+
 GtkWidget *
 misc_notebook_page(void)
 {
@@ -168,9 +180,8 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.tooltips_enabled));
-	if (temp_config.tooltips_enabled) {
+	if (temp_config.tooltips_enabled)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
-	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -190,11 +201,43 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.show_small_icons));
-	if (temp_config.show_small_icons) {
+	if (temp_config.show_small_icons)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
-	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
+
+	/* Movement frame */
+	frame = gtk_frame_new (_("Movement"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+	
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	/* Switched */
+	button = gtk_radio_button_new_with_label (NULL, _("Switched movement"));
+	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+			    GTK_SIGNAL_FUNC (set_movement), 
+			    (gpointer)PANEL_SWITCH_MOVE);
+	if (temp_config.movement_type == PANEL_SWITCH_MOVE)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);	
+
+	/* Free */
+	button = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
+		_("Free movement (doesn't disturb other applets)"));
+	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+			    GTK_SIGNAL_FUNC (set_movement), 
+			    (gpointer)PANEL_FREE_MOVE);
+	if (temp_config.movement_type == PANEL_FREE_MOVE)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);	
 	
 	return (vbox);
 }

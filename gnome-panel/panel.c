@@ -52,7 +52,8 @@ apply_global_config(void)
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.minimized_size,
-				   global_config.minimize_delay);
+				   global_config.minimize_delay,
+				   global_config.movement_type);
 	if(global_config.tooltips_enabled)
 		gtk_tooltips_enable(panel_tooltips);
 	else

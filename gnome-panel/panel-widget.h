@@ -55,6 +55,10 @@ typedef enum {
 	DROP_ZONE_LEFT,
 	DROP_ZONE_RIGHT
 } DrawerDropZonePos;
+typedef enum {
+	PANEL_SWITCH_MOVE,
+	PANEL_FREE_MOVE
+} PanelMovementType;
 
 struct _AppletRecord
 {
@@ -222,7 +226,8 @@ void		panel_widget_change_drop_zone_pos(PanelWidget *panel,
 void		panel_widget_change_global	(gint explicit_step,
 						 gint auto_step,
 						 gint minimized_size,
-						 gint minimize_delay);
+						 gint minimize_delay,
+						 PanelMovementType move_type);
 
 /*popup the widget if it's popped down (autohide)*/
 void		panel_widget_pop_up		(PanelWidget *panel);

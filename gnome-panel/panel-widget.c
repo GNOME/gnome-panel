@@ -25,6 +25,8 @@ static gint pw_auto_step = 10;
 static gint pw_minimized_size = 6;
 static gint pw_minimize_delay = 300;
 
+static PanelMovementType movement_type = PANEL_SWITCH_MOVE;
+
 /* FIXME: real DND is disabled, needs fixing(??), or might be left for dead
    really ... if an applet wants to do dnd it will do it on it's own and
    the panel will do interpanel drags differently
@@ -2137,6 +2139,95 @@ panel_widget_get_moveby(PanelWidget *panel, gint pos)
 		return (y/PANEL_CELL_SIZE)- pos;
 }
 
+static gint
+panel_widget_get_free_spot(PanelWidget *panel, AppletData *ad)
+{
+	int i,e;
+	gint x,y;
+	gint place;
+	gint start;
+	gint right=-1,left=-1;
+
+	gtk_widget_get_pointer(panel->fixed, &x, &y);
+
+	if(panel->orient == PANEL_HORIZONTAL)
+		place = x/PANEL_CELL_SIZE;
+	else
+		place = y/PANEL_CELL_SIZE;
+
+	if(ad->pos>=panel->size)
+		return -1;
+
+	start = place-(ad->cells/2);
+	if(start<0)
+		start = 0;
+	for(e=0,i=start;i<panel->size;i++) {
+		if(!panel->applets[i].applet ||
+		   panel->applets[i].applet == ad->applet) {
+			e++;
+			if(e>=ad->cells) {
+				right = i-e+1;
+				break;
+			}
+		} else
+			e=0;
+	}
+
+	start = place+(ad->cells/2);
+	if(start>=panel->size)
+		start = panel->size-1;
+	for(e=0,i=start;i>=0;i--) {
+		if(!panel->applets[i].applet ||
+		   panel->applets[i].applet == ad->applet) {
+			e++;
+			if(e>=ad->cells) {
+				left = i;
+				break;
+			}
+		} else
+			e=0;
+	}
+
+	start = place-(ad->cells/2);
+
+	if(left==-1) {
+		if(right==-1)
+			return -1;
+		else
+			return right;
+	} else {
+		if(right==-1)
+			return left;
+		else
+			return abs(left-start)>abs(right-start)?right:left;
+	}
+}
+
+/*to call this function we MUST know that there is at least
+ad->cells free at pos otherwise we will mess up the panel*/
+static void
+panel_widget_nice_move(PanelWidget *panel, AppletData *ad, gint pos)
+{
+	gint i;
+
+	if(pos==ad->pos)
+		return;
+
+	for(i=ad->pos;i<ad->pos+ad->cells;i++) {
+		panel->applets[i].applet=NULL;
+		panel->applets[i].cells=1;
+	}
+
+	ad->pos = pos;
+
+	for(i=ad->pos;i<ad->pos+ad->cells;i++) {
+		panel->applets[i].applet=ad->applet;
+		panel->applets[i].cells=ad->cells;
+	}
+
+	panel_widget_applet_put(panel,pos);
+}
+
 
 /*find the cursor position and move the applet to that position*/
 gint
@@ -2193,9 +2284,20 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			/*return TRUE;*/
 		}
 
-		moveby = panel_widget_get_moveby(panel, pos);
-		if(moveby != 0)
-			panel_widget_switch_move(panel, pos, moveby);
+		if(movement_type == PANEL_SWITCH_MOVE ||
+		   panel->snapped == PANEL_DRAWER) {
+			moveby = panel_widget_get_moveby(panel, pos);
+			if(moveby != 0)
+				panel_widget_switch_move(panel, pos, moveby);
+		} else {
+			pos = panel_widget_get_free_spot(panel,
+					panel->currently_dragged_applet);
+
+			if(pos>=0)
+				panel_widget_nice_move(panel,
+					panel->currently_dragged_applet,
+					pos);
+		}
 		return TRUE;
 	}
 	return FALSE;
@@ -2490,11 +2592,10 @@ panel_widget_find_empty_pos(PanelWidget *panel, gint pos)
 				return i;
 
 		/*panel is full to the right*/
-		if(i==panel->size) {
-			for(i=pos-1;i>=0;i--)
-				if(!panel->applets[i].applet)
-					return i;
-		}
+		for(i=pos-1;i>=0;i--)
+			if(!panel->applets[i].applet)
+				return i;
+
 		/*panel is full!*/
 		return -1;
 	}
@@ -2509,7 +2610,12 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
 
-	pos = panel_widget_make_empty_pos(panel,pos);
+	if(movement_type == PANEL_SWITCH_MOVE ||
+	   panel->snapped == PANEL_DRAWER)
+		pos = panel_widget_make_empty_pos(panel,pos);
+	else
+		pos = panel_widget_find_empty_pos(panel,pos);
+
 	if(pos==-1) return -1;
 
 	/*this will get done right on size allocate!*/
@@ -2558,7 +2664,12 @@ panel_widget_reparent (PanelWidget *old_panel,
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
 
-	pos = panel_widget_make_empty_pos(new_panel,pos);
+	if(movement_type == PANEL_SWITCH_MOVE ||
+	   new_panel->snapped == PANEL_DRAWER)
+		pos = panel_widget_make_empty_pos(new_panel,pos);
+	else
+		pos = panel_widget_find_empty_pos(new_panel,pos);
+
 	if(pos==-1) return -1;
 
 	/*remove from the old_panel*/
@@ -2960,7 +3071,8 @@ void
 panel_widget_change_global(gint explicit_step,
 			   gint auto_step,
 			   gint minimized_size,
-			   gint minimize_delay)
+			   gint minimize_delay,
+			   PanelMovementType move_type)
 {
 	if(explicit_step>0)
 		pw_explicit_step=explicit_step;
@@ -2970,6 +3082,7 @@ panel_widget_change_global(gint explicit_step,
 		pw_minimized_size=minimized_size;
 	if(minimize_delay>=0)
 		pw_minimize_delay=minimize_delay;
+	movement_type = move_type;
 }
 
 void

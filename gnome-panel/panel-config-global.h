@@ -1,3 +1,5 @@
+#include "panel-widget.h"
+
 #ifndef PANEL_CONFIG_GLOBAL_H
 #define PANEL_CONFIG_GLOBAL_H
 
@@ -9,6 +11,7 @@ struct _GlobalConfig {
 	gint minimize_delay;
 	gint tooltips_enabled;
 	gint show_small_icons;
+	PanelMovementType movement_type;
 };
 
 

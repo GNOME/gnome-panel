@@ -720,7 +720,8 @@ init_user_panels(void)
 	panel_widget_change_global(DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
 				   DEFAULT_AUTO_HIDE_STEP_SIZE,
 				   DEFAULT_MINIMIZED_SIZE,
-				   DEFAULT_MINIMIZE_DELAY);
+				   DEFAULT_MINIMIZE_DELAY,
+				   PANEL_SWITCH_MOVE);
 
 	for(num=1;num<=count;num++) {
 		g_snprintf(buf,256,"%sPanel_%d/", old_panel_cfg_path, num);
@@ -937,6 +938,9 @@ main(int argc, char **argv)
 	g_snprintf(buf,256,"%sConfig/minimized_size=%d",old_panel_cfg_path,
 		   DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf);
+	g_snprintf(buf,256,"%sConfig/movement_type=%d",old_panel_cfg_path,
+		   PANEL_SWITCH_MOVE);
+	global_config.movement_type=gnome_config_get_int(buf);
 
 	init_main_menu();
 	init_user_panels();

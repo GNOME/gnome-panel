@@ -242,6 +242,7 @@ pixmap_page (PanelWidget *panel)
 			    CONFIG_PADDING_SIZE);
 
 	box = gtk_vbox_new (0, 0);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (f), box);
 	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
