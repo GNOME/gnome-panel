@@ -1,9 +1,10 @@
-<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.5.17">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "Agosto 2002">
+  <!ENTITY appletversion "3.4.7.4ac19">
+  <!ENTITY manrevision "2.3">
+  <!ENTITY date "Settembre 2003">
   <!ENTITY applet "Pesce">
 ]>
 
@@ -20,8 +21,9 @@
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
   <articleinfo>
-	 <title>Manuale dell'applet &applet; V&manrevision;</title>
+	 <title>Manuale dell&apos;applet &applet; V&manrevision;</title>
 	 <copyright> 
+		<year>2002</year>  
 		<year>2003</year>  
 		<holder>Sun Microsystems</holder> 
 	 </copyright> 
@@ -29,14 +31,11 @@
 		<year>2000</year> 
 		<holder>Telsa Gwynne</holder> 
 	 </copyright>
-<!-- translators: uncomment this:
 
   <copyright>
-   <year>2002</year>
-   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+   <year>2004</year>
+   <holder>Luca Ferretti (traduzione italiana)</holder>
   </copyright>
-
-   -->
 
 	 <publisher> 
 		<publishername>GNOME Documentation Project</publishername> 
@@ -62,41 +61,53 @@
 			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address>
 		  </affiliation>
 		</author>
-      <!-- This is appropriate place for other contributors: translators,
-           maintainers,  etc. Commented out by default.
            <othercredit role="translator">
-	     <firstname>Latin</firstname> 
-	     <surname>Translator 1</surname> 
+	     <firstname>Luca</firstname> 
+	     <surname>Ferretti</surname> 
 	     <affiliation> 
-	       <orgname>Latin Translation Team</orgname> 
-	       <address> <email>translator@gnome.org</email> </address> 
+	       <orgname>Italian GNOME Team</orgname> 
+	       <address> <email>elle.uca@infinito.it</email> </address> 
 	     </affiliation>
-	     <contrib>Latin translation</contrib>
+	     <contrib>Traduzione italiana</contrib>
            </othercredit>
--->
+
 	 </authorgroup>
 
 	 <revhistory>
 		<revision> 
-		  <revnumber>Manuale dell'applet &applet; V&manrevision;</revnumber> 
+		  <revnumber>Manuale dell&apos;applet &applet; V&manrevision;</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Sun GNOME Documentation Team</para>
 			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision> 
-		  <revnumber>Manuale dell'applet Pesce V2.0</revnumber> 
+		  <revnumber>Manuale dell&apos;applet Pesce V2.2</revnumber> 
+		  <date>Gennaio 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell&apos;applet Pesce V2.1</revnumber> 
+		  <date>Agosto 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell&apos;applet Pesce V2.0</revnumber> 
 		  <date>Maggio 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Sun GNOME Documentation Team</para>
 			 <para role="publisher">GNOME Documentation Project</para>
 		  </revdescription>
 		</revision>
 		<revision> 
-		  <revnumber>Manuale dell'applet Pesce </revnumber> 
+		  <revnumber>Manuale dell&apos;applet Pesce </revnumber> 
 		  <date>2000</date> 
 		  <revdescription> 
 			 <para role="author">Telsa Gwynne
@@ -109,7 +120,7 @@
 		</releaseinfo>
 	 <legalnotice> 
 		<title>Commenti</title>
-		<para> Per segnalare un problema o inviare suggerimenti sull'applet &applet; o su questo manuale, seguire le istruzioni presenti alla <ulink url="ghelp:gnome-feedback" type="help">Pagina di commenti su GNOME</ulink>. </para>
+		<para> Per segnalare un problema o inviare suggerimenti sull&apos;applet &applet; o su questo manuale, seguire le istruzioni presenti alla <ulink url="ghelp:gnome-feedback" type="help">Pagina di commenti su GNOME</ulink>. </para>
 		
 	 </legalnotice>
   </articleinfo>
@@ -129,71 +140,74 @@
 			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
 			 </imageobject>
 			 <textobject>
-				<phrase>Mostra l'applet Pesce.</phrase>
+				<phrase>Mostra l&apos;applet Pesce.</phrase>
 			 </textobject>
 		  </mediaobject>
 		</screenshot>
 	 </figure>
     <!-- ==== End of Figure ======================================= -->
-<para>L'applet <application>&applet;</application> visualizza un'immagine animata in un pannello. </para>
-<para>Per aggiungere <application>&applet;</application> a un pannello, fare clic con il pulsante destro del mouse sul pannello, quindi scegliere 
+<para>L&apos;applet <application>&applet;</application> visualizza un&apos;immagine animata in un pannello. </para>
+<para>Per aggiungere <application>&applet;</application> a un pannello, fare clic con il tasto destro del mouse sul pannello, quindi scegliere 
 <menuchoice>
 <guimenu>Aggiungi al pannello</guimenu>
-<guisubmenu>Divertimento</guisubmenu>
+<guisubmenu>Passatempi</guisubmenu>
 <guimenuitem>Pesce</guimenuitem>
 </menuchoice>.</para>
 </sect1>
 
 <sect1 id="fish-usage">
 <title>Utilizzo</title>
-<para>Fare clic sull'applet per visualizzare la finestra di dialogo <guilabel>Wanda il Pesce</guilabel>. In genere, la finestra di dialogo mostra un biscotto della fortuna. &Egrave; possibile configurare l'applet specificando il comando da eseguire al clic. Per maggiori informazioni, vedere <xref linkend="fish-settings"/>.</para>
+<para>Fare clic sull&apos;applet per visualizzare la finestra di dialogo <guilabel>Wanda il Pesce</guilabel>. In genere questa finestra di dialogo mostra un &quot;biscotto della fortuna&quot;. È possibile configurare l&apos;applet specificando il comando da eseguire al clic. Per maggiori informazioni, vedere <xref linkend="fish-settings"/>.</para>
 </sect1>
 
 <!-- ============= Preferences  ================================ -->
 <sect1 id="fish-settings">
 <title>Preferenze</title>
-<para>Per configurare l'applet <application>&applet;</application>, fare clic con il pulsante destro del mouse sull'applet, quindi scegliere <guimenu>Preferenze</guimenu>. </para>
+<para>Per configurare l&apos;applet <application>&applet;</application>, fare clic con il pulsante destro del mouse sull&apos;applet, quindi scegliere <guimenu>Preferenze</guimenu>. </para>
 <variablelist>
 <varlistentry>
-<term><guilabel>Nome del pesce di GNOME</guilabel> </term>
+<term><guilabel>Nome del pesce</guilabel> </term>
 <listitem>
 <para>Usare questa casella di testo per specificare il nome del pesce.</para>
-<para>Impostazione predefinita:  Wanda.</para>
+<!-- <para>Impostazione predefinita:  Wanda.</para> -->
+</listitem>
+</varlistentry>
+
+
+<varlistentry>
+<term><guilabel>Comando da eseguire quando si fa clic</guilabel> </term>
+<listitem>
+<para>Nella configurazione predefinita, facendo clic sull&apos;applet il <application>&applet;</application> esegue il comando <literal>fortune</literal>. Usare questa casella di testo per specificare un comando alternativo da eseguire. </para>
+<!-- <para>Impostazione predefinita:  fortune.</para> -->
+</listitem>
+</varlistentry>
+
+<varlistentry>
+<term><guilabel>File</guilabel> </term>
+<listitem>
+<para>Usare questo campo per selezionare l&apos;immagine da visualizzare nell&apos;applet. È possibile selezionare una delle immagini disponibili nell&apos;applet oppure un&apos;immagine personalizzata.</para>
+<!-- <para>Impostazione predefinita:  <filename>fish/fishanim.png</filename>.</para> -->
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>File dell'animazione</guilabel> </term>
+<term><guilabel>Fotogrammi totali nell&apos;animazione</guilabel> </term>
 <listitem>
-<para>Usare questo campo per selezionare l'immagine da visualizzare nell'applet. &Egrave; possibile selezionare una delle immagini disponibili nell'applet oppure un'immagine personalizzata.</para>
-<para>Impostazione predefinita:  <filename>fish/fishanim.png</filename>.</para>
+<para>Usare questa casella di selezione per specificare il numero di fotogrammi dell&apos;animazione. </para>
+<!-- <para>Impostazione predefinita:  3.</para> -->
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>Comando da eseguire quando il pesce viene premuto</guilabel> </term>
+<term><guilabel>Durata fotogramma</guilabel> </term>
 <listitem>
-<para>Nella configurazione predefinita, facendo clic sull'applet il <application>&applet;</application> esegue il comando fortune. Usare questa casella di testo per specificare un comando alternativo da eseguire. </para>
-<para>Impostazione predefinita:  fortune.</para>
+<para>Usare questa casella di selezione per specificare i secondi di pausa che devono trascorrere tra i fotogrammi dell&apos;animazione.</para>
+<!-- <para>Impostazione predefinita:  1.00.</para> -->
 </listitem>
 </varlistentry>
 <varlistentry>
-<term><guilabel>Numero di frame nell'animazione</guilabel> </term>
+<term><guilabel>Ruotare nei pannelli verticali</guilabel> </term>
 <listitem>
-<para>Usare questa casella di selezione per specificare il numero di frame dell'animazione. </para>
-<para>Impostazione predefinita:  3.</para>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>Pausa per frame</guilabel> </term>
-<listitem>
-<para>Usare questa casella di selezione per specificare i secondi di pausa che devono trascorrere tra i frame dell'animazione.</para>
-<para>Impostazione predefinita:  1.00.</para>
-</listitem>
-</varlistentry>
-<varlistentry>
-<term><guilabel>Ruota nei pannelli verticali</guilabel> </term>
-<listitem>
-<para>Selezionare questa opzione per ruotare l'immagine dell'applet quando la si aggiunge a un pannello verticale.</para>
-<para>Impostazione predefinita:  selezionato.</para>
+<para>Selezionare questa opzione per ruotare l&apos;immagine dell&apos;applet quando la si aggiunge a un pannello verticale.</para>
+<!-- <para>Impostazione predefinita:  selezionato.</para> -->
 </listitem>
 </varlistentry>
 </variablelist>
