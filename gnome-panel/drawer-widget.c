@@ -17,8 +17,6 @@
 we only have one mouse :) */
 extern int panel_applet_in_drag;
 
-extern void drawer_click(GtkWidget *w, Drawer *drawer);
-
 static void drawer_widget_class_init	(DrawerWidgetClass *klass);
 static void drawer_widget_init		(DrawerWidget      *drawer);
 static void drawer_widget_size_request	(GtkWidget          *widget,

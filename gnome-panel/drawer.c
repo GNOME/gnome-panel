@@ -19,6 +19,9 @@
 
 #define DRAWER_PROPERTIES "drawer_properties"
 
+/* Used for all the packing and padding options */
+#define CONFIG_PADDING_SIZE 3
+
 extern GArray *applets;
 extern int applet_count;
 extern GlobalConfig global_config;
@@ -123,7 +126,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (drawer_set_hidebutton), NULL);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE,
-			    1);
+			    CONFIG_PADDING_SIZE);
 
 	button = gtk_check_button_new_with_label (_("Disable hidebutton arrow"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
@@ -132,7 +135,7 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (drawer_set_hidebutton_pixmap), NULL);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE,
-			    1);
+			    CONFIG_PADDING_SIZE);
 	gtk_container_add(GTK_CONTAINER(f),box_in);
 	gtk_box_pack_start (GTK_BOX (box),f,FALSE,FALSE,0);
 
