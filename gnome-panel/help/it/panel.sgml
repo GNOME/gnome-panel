@@ -1,8 +1,7 @@
 <!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.0//EN"[
 ]>
 
-
-<article id="index">
+<article id="index" lang="it">
  
  <artheader> 
   <title>Il pannello di GNOME</title>
@@ -89,61 +88,65 @@
    <title>Introduzione agli oggetti del pannello</title>
    <para>
     Un <interface>pannello</interface> può contenere svariati tipi di
-    oggetti. Il <interface>pannello</interface> di esempio mostrato ne <xref
+    oggetti. Il <interface>pannello</interface> di esempio mostrato nella <xref
     linkend="examplepanelfig"> mostra ciascun tipo di oggetto possibile.
    </para>
    <figure id="examplepanelfig">
     <title>Un esempio di pannello</title>
     <screenshot>
-      <screeninfo>Un esempio di pannello.</screeninfo>
-       <graphic fileref="./figures/example_panel" format="png"
-       srccredit="cgabriel">
-       </graphic>
-     </screenshot>
-    </figure>
-
-    <para>
+     <screeninfo>Un esempio di pannello.</screeninfo>
+     <graphic fileref="./figures/example_panel" format="png"
+	      srccredit="cgabriel">
+     </graphic>
+    </screenshot>
+   </figure>
+   
+   <para>
     Il <interface>pannello</interface> di esempio contiene i seguenti oggetti: 
     <itemizedlist>
      <listitem>
       <formalpara>
        <title>Menu</title>
        <para>
-	Menus are lists of items, each of which either starts an
-         application, executes a command, or is a submenu.  In the
-         example <interface>Panel</interface> in <xref
-         linkend="examplepanelfig"> , the left-most  icon  after the
-         arrow is a stylized footprint icon (the GNOME logo). This is
-         the <guimenu>Main Menu</guimenu>, one of the most important
-         objects in the <interface>Panel</interface>.  This menu
-         provides access to almost all the applications, commands, and
-         configuration options available in GNOME. The <guimenu>Main
-         Menu</guimenu> is described in detail in <xref
-         linkend="mainmenu">. The second icon shown is a folder, the
-         default icon used for user menus.  GNOME allows users to
-         create their own menus with personalized contents to use in
-         addition to the <guimenu>Main Menu</guimenu>.  To open a
-         menu, just click on the icon with the left mouse button.  For
-         more information on menus, see <xref linkend="menus">.
-        </para>
-       </formalpara>
-      </listitem>
-      <listitem>
-       <formalpara>
-        <title>Launchers</title>
-        <para>
-         Launchers are buttons which either start an application or
-         execute a command when you press them (click with the left
-         mouse button). The third icon in the example
-         <interface>Panel</interface> is a launcher which starts the
-         <application>Gnumeric</application> spreadsheet.  For more
-         information on launchers, see <xref linkend="launchers">.
-        </para>
-       </formalpara>
-      </listitem>
-      <listitem>
-       <formalpara>
-        <title>Applets</title> <para>  Applets are applications which
+	I menu sono un elenco di voci, ciascuna delle quali
+	avvia una applicazione, esegue un comando, oppure è un sotto-menu. Nel
+	<interface>pannello</interface> di esempio mostrato nella <xref
+	linkend="examplepanelfig">, l'icona sulla estrema sinistra, a fianco
+	della freccia, è un piede stilizzato (il logo di GNOME). Questa
+	rappresenta un un <guimenu>Menu Principale</guimenu>, uno dei più
+	importanti oggetti del <interface>pannello</interface>. Questo menu
+	fornisce accesso alla maggior parte della applicazioni, comandi e
+	opzioni di configurazione disponibili in GNOME. Il <guimenu>Menu
+	Principale</guimenu> è descritto in dettaglio nel<xref
+	linkend="mainmenu">. La seconda icona mostrata è una cartella, l'icona
+	predefinita per rappresentare i menu degli utenti. GNOME permette agli
+	utenti di creare i proprio menu dai contenuti personalizzati, in
+	aggiunta al <guimenu>Menu Principale</guimenu>. Per aprire un menu,
+	cliccate semplicemente sull'icona che lo rappresenta con il pulsante
+	  sinistro del mouse. Per maggiori informazioni sui menu, fate riferimento
+	  al<xref linkend="menus">.
+       </para>
+      </formalpara>
+     </listitem>
+     <listitem>
+      <formalpara>
+       <title>Pulsanti di avvio</title>
+       <para>
+	I pulsanti di avvio sono pulsanti i quali possono sia avviare una
+         applicazione sia eseguire un comando quando vengono premuti (sempre con
+         il pulsante sinistro del mouse). La terza icona nel
+         <interface>pannello</interface> di esempio è un pulsante di avvio che
+         esegue l'applicazione <application>Gnumeric</application>. Per maggiori
+         informazioni su questi oggetti, consultate <xref
+         linkend="launchers">.
+       </para>
+      </formalpara>
+     </listitem>
+     <listitem>
+      <formalpara>
+       <title>Applet</title> 
+       <para>  
+	Applets are applications which
         run inside a small part of the
         <interface>Panel</interface>. The fourth through eighth icons
         in the example <interface>Panel</interface> are applets. The
@@ -2281,8 +2284,14 @@
    all'indirizzo <email>docs@gnome.org</email> oppure inviate i vostri commenti
    utilizzando <ulink type="http"
 		     url="http://www.gnome.org/gdp/doctable">l'apposita pagina</ulink>.
+
   </para>
- </sect1>
+  <para>
+   La traduzione italiana di questo documento è stata eseguita da Christopher
+   R. Gabriel (<email>cgabriel@pluto.linux.it</email>), all'interno del progetto
+   ILDP del Pluto Linux User Group, <ulink type="http"
+					   url="http://www.pluto.linux.it/ildp/">http://www.pluto.linux.it/ildp/</ulink>.
+</sect1>
  
  </article>
 
