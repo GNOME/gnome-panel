@@ -49,6 +49,7 @@ typedef struct {
 	GtkWidget    *image;
 	GtkWidget    *menu;
 	GtkWidget    *no_windows_item;
+	GtkWidget    *about_dialog;
 
 	GdkPixbuf    *icon_pixbuf;
 	WnckWindow   *icon_window;
@@ -109,14 +110,13 @@ window_menu_about (BonoboUIComponent *uic,
 	const char *documenters [] = { NULL };
 	const char *translator_credits = _("translator_credits");
 
-	static GtkWidget *about = NULL;
 	GdkPixbuf        *pixbuf = NULL;
 	char             *file;
 
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
+	if (window_menu->about_dialog) {
+		gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
 				       gtk_widget_get_screen (window_menu->applet));
-		gtk_window_present (GTK_WINDOW (about));
+		gtk_window_present (GTK_WINDOW (window_menu->about_dialog));
 		return;
 	}
 
@@ -126,7 +126,7 @@ window_menu_about (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free (file);
 
-	about = gnome_about_new (_("Window Menu"), VERSION,
+	window_menu->about_dialog = gnome_about_new (_("Window Menu"), VERSION,
 				 "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 				 "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
 				 "Copyright \xc2\xa9 2000 Helix Code, Inc.",
@@ -136,18 +136,18 @@ window_menu_about (BonoboUIComponent *uic,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 pixbuf);
 
-	gtk_window_set_wmclass (GTK_WINDOW (about), "window-menu", "WindowMenu");
-	gtk_window_set_screen (GTK_WINDOW (about),
+	gtk_window_set_wmclass (GTK_WINDOW (window_menu->about_dialog), "window-menu", "WindowMenu");
+	gtk_window_set_screen (GTK_WINDOW (window_menu->about_dialog),
 			       gtk_widget_get_screen (window_menu->applet));
 
 	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);
+		gtk_window_set_icon (GTK_WINDOW (window_menu->about_dialog), pixbuf);
 		g_object_unref (pixbuf);
 	}
 
-	g_signal_connect (about, "destroy",
-			  (GCallback) gtk_widget_destroyed, &about);
-	gtk_widget_show (about);
+	g_signal_connect (window_menu->about_dialog, "destroy",
+			  (GCallback) gtk_widget_destroyed, &window_menu->about_dialog);
+	gtk_widget_show (window_menu->about_dialog);
 }
 
 static const BonoboUIVerb window_menu_verbs [] =
@@ -172,6 +172,11 @@ window_menu_destroy (GtkWidget  *widget,
 	if (window_menu->no_windows_item)
 		g_object_unref (window_menu->no_windows_item);
 	window_menu->no_windows_item = NULL;
+
+	if (window_menu->about_dialog) {
+		gtk_widget_destroy (window_menu->about_dialog);
+		window_menu->about_dialog = NULL;
+	}
 
 	g_free (window_menu);
 }
