@@ -67,6 +67,7 @@ static void
 server_applet_session_save(CustomAppletServant *servant,
 			   CORBA_char * cfgpath,
 			   CORBA_char * globcfgpath,
+			   CORBA_unsigned_long cookie,
 			   CORBA_Environment *ev);
 
 static void
@@ -945,6 +946,7 @@ static void
 server_applet_session_save(CustomAppletServant *servant,
 			   CORBA_char * cfgpath,
 			   CORBA_char * globcfgpath,
+			   CORBA_unsigned_long cookie,
 			   CORBA_Environment *ev)
 {
 	AppletWidget *applet;
@@ -963,7 +965,8 @@ server_applet_session_save(CustomAppletServant *servant,
 	/*return_val of true would mean that the applet handeled the
 	  session saving itself, therefore we pass the reverse to the
 	  corba function */
-	GNOME_PanelSpot_done_session_save(CD(applet)->pspot, !return_val, ev);
+	GNOME_PanelSpot_done_session_save(CD(applet)->pspot,
+					  !return_val, cookie, ev);
 }
 
 static void

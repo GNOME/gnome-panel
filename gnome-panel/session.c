@@ -41,10 +41,10 @@ extern GSList *panel_list;
 /*add applets to this queue on startup to avoid races*/
 static GSList *applets_to_start = NULL;
 
-int session_save_return;
-int do_session_save_return = FALSE;
-Extern *session_save_ext = NULL;
-
+int ss_cur_applet = 0;
+int ss_done_save = FALSE;
+gushort ss_cookie = 0;
+static int ss_timeout = 500;
 
 /*send the tooltips state to all external applets*/
 static void
@@ -170,17 +170,22 @@ apply_global_config(void)
 	}
 }
 
-static int ss_timed_out;
-
 static int
 session_save_timeout(gpointer data)
 {
-	g_warning(_("Timed out on sending session save to an applet"));
-	ss_timed_out = TRUE;
+	int cookie = GPOINTER_TO_INT(data);
+	if(cookie == ss_cookie) {
+		printf("TIMEOUT (%d)\n",cookie);
+		/*increment cookie so that the done_session_save will fail*/
+		ss_cookie++;
+		g_warning(_("Timed out on sending session save to an applet"));
+		save_next_applet();
+	} else
+		printf("EXPIRED (%d)\n",cookie);
 	return FALSE;
 }
 
-static int
+static void
 send_applet_session_save (AppletInfo *info,
 			  CORBA_Object obj,
 			  const char *cfgpath,
@@ -188,42 +193,34 @@ send_applet_session_save (AppletInfo *info,
 {
 	CORBA_short retval;
 	CORBA_Environment ev;
-	int to;
-
-	session_save_return = TRUE;
 	
-	session_save_ext = info->data;
+	/*new unique cookie*/
+	ss_cookie++;
+	
+	printf("SENDING_SESSION_SAVE (%u)\n",ss_cookie);
+
+	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER(ss_cookie));
 
 	CORBA_exception_init(&ev);
-	puts("SENT_SESSION_SAVE");
 	GNOME_Applet_session_save(obj,
 				  (CORBA_char *)cfgpath,
-				  (CORBA_char *)globcfgpath, &ev);
+				  (CORBA_char *)globcfgpath,
+				  ss_cookie, &ev);
 	if(ev._major) {
 		panel_clean_applet(info);
 		CORBA_exception_free(&ev);
-		return TRUE;
+		save_next_applet();
+		return;
 	}
-	to = gtk_timeout_add(3000,session_save_timeout,NULL);
-	ss_timed_out = FALSE;
-	do_session_save_return = TRUE;
-	do {
-		gtk_main_iteration_do(TRUE);
-		puts("SPUNT");
-	} while(do_session_save_return && !ss_timed_out);
-	if(!ss_timed_out)
-		gtk_timeout_remove(to);
 
 	CORBA_exception_free(&ev);
-	
-	puts("DONE_WITH SENDING");
-
-	return session_save_return;
 }
 
 
 
-static void
+/*returns TRUE if the save was completed, FALSE if we need to wait
+  for the applet to respond*/
+static int
 save_applet_configuration(AppletInfo *info)
 {
 	GString       *buf;
@@ -231,7 +228,7 @@ save_applet_configuration(AppletInfo *info)
 	PanelWidget   *panel;
 	AppletData    *ad;
 	
-	g_return_if_fail(info!=NULL);
+	g_return_val_if_fail(info!=NULL,TRUE);
 
 	buf = g_string_new(NULL);
 	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
@@ -244,7 +241,7 @@ save_applet_configuration(AppletInfo *info)
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		g_string_free(buf,TRUE);
-		return;
+		return TRUE;
 	}
 
 	panel = PANEL_WIDGET(info->widget->parent);
@@ -254,7 +251,7 @@ save_applet_configuration(AppletInfo *info)
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		g_string_free(buf,TRUE);
-		return;
+		return TRUE;
 	}
 
 	switch(info->type) {
@@ -271,21 +268,11 @@ save_applet_configuration(AppletInfo *info)
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 panel_cfg_path, info->applet_id+1);
 			/*have the applet do it's own session saving*/
-			if(send_applet_session_save(info,ext->applet,
-						    buf->str, globalcfg)) {
-
-				gnome_config_set_string("id", EXTERN_ID);
-				gnome_config_set_string("goad_id",
-							ext->goad_id);
-			} else {
-				g_free(globalcfg);
-				gnome_config_set_string("id", EMPTY_ID);
-				gnome_config_pop_prefix();
-				g_string_free(buf,TRUE);
-				return;
-			}
+			send_applet_session_save(info,ext->applet,
+						 buf->str, globalcfg);
 			g_free(globalcfg);
-			break;
+			gnome_config_pop_prefix();
+			return FALSE; /*here we'll wait for done_session_save*/
 		}
 	case APPLET_DRAWER: 
 		{
@@ -360,6 +347,8 @@ save_applet_configuration(AppletInfo *info)
 							   info->widget));
 	g_string_free(buf,TRUE);
 	gnome_config_pop_prefix();
+	
+	return TRUE;
 }
 
 static void
@@ -434,6 +423,29 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_pop_prefix ();
 }
 
+void
+save_next_applet(void)
+{
+	GSList *cur;
+
+	ss_cur_applet++;
+	
+	if(g_slist_length(applets)<=ss_cur_applet) {
+		ss_done_save = TRUE;
+		return;
+	}
+	
+	cur = g_slist_nth(applets,ss_cur_applet);
+	
+	if(!cur) {
+		ss_done_save = TRUE;
+		return;
+	}
+	
+	if(save_applet_configuration(cur->data))
+		save_next_applet();
+}
+
 static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
@@ -463,11 +475,6 @@ do_session_save(GnomeClient *client,
 
 	printf("Saving session: 1"); fflush(stdout);
 #endif
-	if(complete_sync || sync_applets) {
-		GSList *li;
-		for(li=applets;li!=NULL;li=g_slist_next(li))
-			save_applet_configuration(li->data);
-	}
 #ifdef PANEL_DEBUG
 	printf(" 2"); fflush(stdout);
 #endif
@@ -548,6 +555,13 @@ do_session_save(GnomeClient *client,
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
+	
+	if(complete_sync || sync_applets) {
+		ss_cur_applet = -1;
+		ss_done_save = FALSE;
+		save_next_applet();
+	}
+
 #ifdef PANEL_DEBUG
 	puts("");
 #endif
@@ -600,7 +614,19 @@ panel_session_save (GnomeClient *client,
 		    int is_fast,
 		    gpointer client_data)
 {
+	if(is_shutdown)
+		ss_timeout = 3000;
 	do_session_save(client,TRUE,FALSE,FALSE,FALSE);
+	if(is_shutdown) {
+		GSList *li;
+		for(li=panel_list;li;li=g_slist_next(li)) {
+			PanelData *pd = li->data;
+			gtk_widget_hide(pd->panel);
+			gtk_widget_hide(pd->menu);
+		}
+		while(!ss_done_save)
+			gtk_main_iteration_do(TRUE);
+	}
 	/* Always successful.  */
 	return TRUE;
 }

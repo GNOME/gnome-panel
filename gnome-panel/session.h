@@ -27,6 +27,9 @@ int panel_session_save (GnomeClient *client,
 			int fast,
 			gpointer client_data);
 
+void save_next_applet(void);
+
+
 int panel_session_die (GnomeClient *client,
 			gpointer client_data);
 

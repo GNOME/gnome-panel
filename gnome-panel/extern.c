@@ -39,9 +39,9 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-extern int session_save_return;
-extern int do_session_save_return;
-extern Extern *session_save_ext;
+extern int ss_cur_applet;
+extern int ss_done_save;
+extern gushort ss_cookie;
 
 /********************* CORBA Stuff *******************/
 
@@ -148,6 +148,7 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 static void
 s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 			      CORBA_boolean ret,
+			      CORBA_unsigned_long cookie,
 			      CORBA_Environment *ev);
 
 static PortableServer_ServantBase__epv panel_base_epv = {
@@ -762,16 +763,106 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 	panel_config_sync();
 }
 
+static int
+save_next_idle(gpointer data)
+{
+	save_next_applet();
+	return FALSE;
+}
+
 static void
 s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 			      CORBA_boolean ret,
+			      CORBA_unsigned_long cookie,
 			      CORBA_Environment *ev)
 {
-	if(session_save_ext == (Extern *)servant) {
-		puts("DONE_SESSION_SAVE");
-		session_save_return = ret;
-		do_session_save_return = FALSE;
+	GSList *cur;
+	AppletInfo *info;
+	char *buf;
+	PanelWidget *panel;
+	AppletData *ad;
+	Extern *ext;
+	int panel_num;
+	
+	/*ignore bad cookies*/
+	if(cookie != ss_cookie)
+		return;
+
+	printf("DONE (%lu)\n",ss_cookie);
+	
+	/*increment cookie to kill the timeout warning*/
+	ss_cookie++;
+
+	if(g_slist_length(applets)<=ss_cur_applet) {
+		ss_done_save = TRUE;
+		return;
 	}
+	
+	cur = g_slist_nth(applets,ss_cur_applet);
+	
+	if(!cur) {
+		ss_done_save = TRUE;
+		return;
+	}
+	
+	info = cur->data;
+
+	/*hmm, this came from a different applet?, we are
+	  getting seriously confused*/
+	if(info->type!=APPLET_EXTERN ||
+	   (gpointer)servant!=(gpointer)info->data) {
+		applets_to_sync = TRUE; /*we need to redo this yet again*/
+		/*save next applet, but from an idle handler, so that
+		  this call returns*/
+		gtk_idle_add(save_next_idle,NULL);
+		return;
+	}
+	
+	ext = info->data;
+	
+	buf = g_strdup_printf("%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
+	gnome_config_push_prefix(buf);
+	g_free(buf);
+
+	panel = PANEL_WIDGET(info->widget->parent);
+	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
+
+	if((panel_num = g_slist_index(panels,panel)) == -1) {
+		gnome_config_set_string("id", EMPTY_ID);
+		gnome_config_pop_prefix();
+		gnome_config_sync();
+		/*save next applet, but from an idle handler, so that
+		  this call returns*/
+		gtk_idle_add(save_next_idle,NULL);
+		return;
+	}
+		
+	/*have the applet do it's own session saving*/
+	if(ret) {
+		gnome_config_set_string("id", EXTERN_ID);
+		gnome_config_set_string("goad_id",
+					ext->goad_id);
+	} else {
+		gnome_config_set_string("id", EMPTY_ID);
+		gnome_config_pop_prefix();
+		gnome_config_sync();
+		/*save next applet, but from an idle handler, so that
+		  this call returns*/
+		gtk_idle_add(save_next_idle,NULL);
+		return;
+	}
+	
+	gnome_config_set_int("position", ad->pos);
+	gnome_config_set_int("panel", panel_num);
+	gnome_config_set_bool("right_stick",
+			      panel_widget_is_applet_stuck(panel,
+							   info->widget));
+	gnome_config_pop_prefix();
+	
+	gnome_config_sync();
+	/*save next applet, but from an idle handler, so that
+	  this call returns*/
+	gtk_idle_add(save_next_idle,NULL);
 }
 
 void

@@ -535,6 +535,8 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Tom Tromey (tromey@cygnus.com)",
 	  "Ian Main (slow@intergate.bc.ca)",
 	  "Elliot Lee (sopwith@redhat.com)",
+	  "Owen Taylor (otaylor@redhat.com)",
+	  "Many others ...",
 	  "and finally, The Knights Who Say ... NI!",
 	  NULL
 	  };
