@@ -16,6 +16,7 @@
 #include "panel-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
+#include "corner-widget.h"
 #include "panel-util.h"
 #include "panel.h"
 #include "main.h"
@@ -686,6 +687,17 @@ create_new_panel(GtkWidget *w,gpointer data)
 		panel_setup(panel);
 		gtk_widget_show(panel);
 		break;
+	case CORNER_PANEL: 
+		panel = corner_widget_new(CORNER_NE,
+					  PANEL_HORIZONTAL,
+					  CORNER_SHOWN,
+					  PANEL_BACK_NONE,
+					  NULL,
+					  TRUE,
+					  &bcolor);
+		panel_setup(panel);
+		gtk_widget_show(panel);
+		break;
 	}
 }
 
@@ -710,6 +722,13 @@ create_add_panel_submenu (void)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) create_new_panel,
 			   (gpointer)SNAPPED_PANEL);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Corner Panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) create_new_panel,
+			   (gpointer)CORNER_PANEL);
 
 	return menu;
 }

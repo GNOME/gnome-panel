@@ -9,7 +9,7 @@ BEGIN_GNOME_DECLS
 typedef enum {
 	SNAPPED_PANEL,
 	DRAWER_PANEL,
-	CORNER_PANEL, /*not yet implemented*/
+	CORNER_PANEL,
 	FREE_PANEL, /*not yet implemented*/
 	TABBED_PANEL /*not yet implemented*/
 } PanelType;

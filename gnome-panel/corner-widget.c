@@ -528,12 +528,12 @@ corner_widget_new (CornerPos pos,
 
 	corner = gtk_type_new(corner_widget_get_type());
 
-	corner->panel = panel_widget_new(FALSE,
-					  orient,
-					  back_type,
-					  back_pixmap,
-					  fit_pixmap_bg,
-					  back_color);
+	corner->panel = panel_widget_new(TRUE,
+					 orient,
+					 back_type,
+					 back_pixmap,
+					 fit_pixmap_bg,
+					 back_color);
 	gtk_object_set_data(GTK_OBJECT(corner->panel),PANEL_PARENT,
 			    corner);
 	PANEL_WIDGET(corner->panel)->drop_widget = GTK_WIDGET(corner);

@@ -14,6 +14,7 @@
 #include "panel-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
+#include "corner-widget.h"
 #include "panel.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
@@ -253,6 +254,8 @@ get_def_panel_widget(GtkWidget *panel)
 	g_return_val_if_fail(panel!=NULL,NULL);
 	if(IS_SNAPPED_WIDGET(panel)) {
 		return PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
+	} else if(IS_CORNER_WIDGET(panel)) {
+		return PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		return PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
 	}
@@ -346,9 +349,6 @@ get_applet_orient(PanelWidget *panel)
 					ORIENT_RIGHT:ORIENT_DOWN;
 				break;
 			case SNAPPED_BOTTOM:
-				orient=(porient==PANEL_VERTICAL)?
-					ORIENT_RIGHT:ORIENT_UP;
-				break;
 			case SNAPPED_LEFT:
 				orient=(porient==PANEL_VERTICAL)?
 					ORIENT_RIGHT:ORIENT_UP;
@@ -359,6 +359,25 @@ get_applet_orient(PanelWidget *panel)
 				break;
 			}
 			break;
+		case CORNER_PANEL:
+			switch(CORNER_WIDGET(tpd->panel)->pos) {
+			case CORNER_NE:
+				orient=(porient==PANEL_VERTICAL)?
+					ORIENT_LEFT:ORIENT_DOWN;
+				break;
+			case CORNER_SE:
+				orient=(porient==PANEL_VERTICAL)?
+					ORIENT_LEFT:ORIENT_UP;
+				break;
+			case CORNER_SW:
+				orient=(porient==PANEL_VERTICAL)?
+					ORIENT_RIGHT:ORIENT_UP;
+				break;
+			case CORNER_NW:
+				orient=(porient==PANEL_VERTICAL)?
+					ORIENT_RIGHT:ORIENT_DOWN;
+				break;
+			}
 		default: break;
 		}
 		break;
@@ -370,6 +389,31 @@ get_applet_orient(PanelWidget *panel)
 		case SNAPPED_RIGHT: orient = ORIENT_LEFT; break;
 		}
 		break;
+	case CORNER_PANEL:
+		if(PANEL_WIDGET(CORNER_WIDGET(panelw)->panel)->orient ==
+		   PANEL_HORIZONTAL) {
+			switch(CORNER_WIDGET(panelw)->pos) {
+			case CORNER_SE: 
+			case CORNER_SW:
+				orient = ORIENT_UP;
+				break;
+			case CORNER_NE:
+			case CORNER_NW:
+				orient = ORIENT_DOWN;
+				break;
+			}
+		} else { /*vertical*/
+			switch(CORNER_WIDGET(panelw)->pos) {
+			case CORNER_SE: 
+			case CORNER_NE:
+				orient = ORIENT_LEFT;
+				break;
+			case CORNER_SW:
+			case CORNER_NW:
+				orient = ORIENT_RIGHT;
+				break;
+			}
+		}
 	default: break;
 	}
 	return orient;
@@ -684,6 +728,8 @@ panel_realize(GtkWidget *widget, gpointer data)
 	
 	if(IS_SNAPPED_WIDGET(widget))
 		snapped_widget_enable_buttons(SNAPPED_WIDGET(widget));
+	else if(IS_CORNER_WIDGET(widget))
+		corner_widget_enable_buttons(CORNER_WIDGET(widget));
 }
 
 /*we call this recursively*/
@@ -746,6 +792,19 @@ snapped_pos_change(GtkWidget *widget,
 		   gpointer data)
 {
 	panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
+			     orient_change_foreach,
+			     SNAPPED_WIDGET(widget)->panel);
+	config_changed = TRUE;
+	/*update the configuration box if it is displayed*/
+	update_config_orient(widget);
+}
+
+static void
+corner_pos_change(GtkWidget *widget,
+		  CornerPos pos,
+		  gpointer data)
+{
+	panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
 			     orient_change_foreach,
 			     SNAPPED_WIDGET(widget)->panel);
 	config_changed = TRUE;
@@ -833,6 +892,24 @@ snapped_state_change(GtkWidget *widget,
 				     (gpointer)widget);
 	else
 		panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
+				     state_hide_foreach,
+				     (gpointer)widget);
+
+	config_changed = TRUE;
+
+	return TRUE;
+}
+static int
+corner_state_change(GtkWidget *widget,
+		    CornerState state,
+		    gpointer data)
+{
+	if(state==CORNER_SHOWN)
+		panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
+				     state_restore_foreach,
+				     (gpointer)widget);
+	else
+		panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
 				     state_hide_foreach,
 				     (gpointer)widget);
 
@@ -961,6 +1038,39 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			*y += wy;
 			break;
 		}
+	} else if(IS_CORNER_WIDGET(w)) {
+		PanelWidget *panel = PANEL_WIDGET(CORNER_WIDGET(w)->panel);
+		if(panel->orient==PANEL_HORIZONTAL) {
+			switch(CORNER_WIDGET(w)->pos) {
+			case CORNER_NE:
+			case CORNER_NW:
+				gtk_widget_get_pointer(w, x, NULL);
+				*x += wx;
+				*y = wy + w->allocation.height;
+				break;
+			case CORNER_SE:
+			case CORNER_SW:
+				gtk_widget_get_pointer(w, x, NULL);
+				*x += wx;
+				*y = wy - GTK_WIDGET (menu)->allocation.height;
+				break;
+			}
+		} else { /*vertical*/
+			switch(CORNER_WIDGET(w)->pos) {
+			case CORNER_NE:
+			case CORNER_SE:
+				gtk_widget_get_pointer(w, NULL, y);
+				*x = wx - GTK_WIDGET (menu)->allocation.width;
+				*y += wy;
+				break;
+			case CORNER_SW:
+			case CORNER_NW:
+				gtk_widget_get_pointer(w, NULL, y);
+				*x = wx + w->allocation.width;
+				*y += wy;
+				break;
+			}
+		}
 	}
 
 	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
@@ -1048,7 +1158,8 @@ panel_destroy(GtkWidget *widget, gpointer data)
 			info->assoc = NULL;
 			panel_clean_applet(applet_id);
 		}
-	} else if(IS_SNAPPED_WIDGET(widget)) {
+	} else if(IS_SNAPPED_WIDGET(widget) ||
+		  IS_CORNER_WIDGET(widget)) {
 		/*this is a base panel and we just lost it*/
 		base_panels--;
 	}
@@ -1122,6 +1233,18 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 						gtk_widget_set_sensitive(rem,TRUE);
 					snapped->autohide_inhibit = TRUE;
 					snapped_widget_queue_pop_down(snapped);
+				} else if(IS_CORNER_WIDGET(widget)) {
+					CornerWidget *corner =
+						CORNER_WIDGET(widget);
+					PanelWidget *panel = PANEL_WIDGET(corner->panel);
+					GtkWidget *rem = 
+						gtk_object_get_data(GTK_OBJECT(widget),
+								    "remove_item");
+					if(panel_widget_get_applet_count(panel)>0 ||
+					   base_panels <= 1)
+						gtk_widget_set_sensitive(rem,FALSE);
+					else
+						gtk_widget_set_sensitive(rem,TRUE);
 				}
 				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
 					       panel_menu_position,
@@ -1284,8 +1407,8 @@ panel_setup(GtkWidget *panelw)
 	} else if(IS_SNAPPED_WIDGET(panelw)) {
 		PanelWidget *panel =
 			PANEL_WIDGET(SNAPPED_WIDGET(panelw)->panel);
-		panel_widget_setup(panel);
 		snapped_widget_disable_buttons(SNAPPED_WIDGET(panelw));
+		panel_widget_setup(panel);
 		gtk_signal_connect(GTK_OBJECT(panelw),
 				   "pos_change",
 				   GTK_SIGNAL_FUNC(snapped_pos_change),
@@ -1293,6 +1416,22 @@ panel_setup(GtkWidget *panelw)
 		gtk_signal_connect(GTK_OBJECT(panelw),
 				   "state_change",
 				   GTK_SIGNAL_FUNC(snapped_state_change),
+				   NULL);
+		
+		/*this is a base panel*/
+		base_panels++;
+	} else if(IS_CORNER_WIDGET(panelw)) {
+		PanelWidget *panel =
+			PANEL_WIDGET(CORNER_WIDGET(panelw)->panel);
+		corner_widget_disable_buttons(CORNER_WIDGET(panelw));
+		panel_widget_setup(panel);
+		gtk_signal_connect(GTK_OBJECT(panelw),
+				   "pos_change",
+				   GTK_SIGNAL_FUNC(corner_pos_change),
+				   NULL);
+		gtk_signal_connect(GTK_OBJECT(panelw),
+				   "state_change",
+				   GTK_SIGNAL_FUNC(corner_state_change),
 				   NULL);
 		
 		/*this is a base panel*/
@@ -1440,6 +1579,31 @@ init_user_panels(void)
 				panel = drawer_widget_new(orient,
 							  state,
 							  drop_pos,
+							  back_type,
+							  back_pixmap,
+							  fit_pixmap_bg,
+							  &back_color);
+				break;
+			}
+		case CORNER_PANEL:
+			{
+				CornerPos pos;
+				PanelOrientation orient;
+				CornerState state;
+
+				g_snprintf(buf,256,"pos=%d", CORNER_NE);
+				pos=gnome_config_get_int(buf);
+
+				g_snprintf(buf,256,"orient=%d",
+					   PANEL_HORIZONTAL);
+				orient=gnome_config_get_int(buf);
+
+				g_snprintf(buf,256,"state=%d", CORNER_SHOWN);
+				state=gnome_config_get_int(buf);
+				
+				panel = corner_widget_new(pos,
+							  orient,
+							  state,
 							  back_type,
 							  back_pixmap,
 							  fit_pixmap_bg,

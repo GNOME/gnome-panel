@@ -14,6 +14,7 @@
 #include "panel-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
+#include "corner-widget.h"
 #include "gdkextra.h"
 #include "panel.h"
 #include "main.h"
@@ -215,6 +216,11 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int("pos", snapped->pos);
 		gnome_config_set_int("mode", snapped->mode);
 		gnome_config_set_int("state", snapped->state);
+	} else if(pd->type == CORNER_PANEL) {
+		CornerWidget *corner = CORNER_WIDGET(pd->panel);
+		gnome_config_set_int("pos", corner->pos);
+		gnome_config_set_int("orient",panel->orient);
+		gnome_config_set_int("state", corner->state);
 	} else if(pd->type == DRAWER_PANEL) {
 		DrawerWidget *drawer = DRAWER_WIDGET(pd->panel);
 		gnome_config_set_int("orient",panel->orient);
@@ -828,6 +834,34 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 			*x = wx - GTK_WIDGET (menu)->allocation.width;
 			*y = wy;
 			break;
+		}
+	} else if(IS_CORNER_WIDGET(w)) {
+		if(panel->orient==PANEL_HORIZONTAL) {
+			switch(CORNER_WIDGET(w)->pos) {
+			case CORNER_SE:
+			case CORNER_SW:
+				*x = wx;
+				*y = wy - GTK_WIDGET (menu)->allocation.height;
+				break;
+			case CORNER_NE:
+			case CORNER_NW:
+				*x = wx;
+				*y = wy + info->widget->allocation.height;
+				break;
+			}
+		} else {
+			switch(CORNER_WIDGET(w)->pos) {
+			case CORNER_NW:
+			case CORNER_SW:
+				*x = wx + info->widget->allocation.width;
+				*y = wy;
+				break;
+			case CORNER_NE:
+			case CORNER_SE:
+				*x = wx - GTK_WIDGET (menu)->allocation.width;
+				*y = wy;
+				break;
+			}
 		}
 	}
 
