@@ -1,3 +1,14 @@
+2003-10-14  Vincent Untz  <vincent@vuntz.net>
+
+	* window-list.glade: give an useful name to a label which can be
+	insensitive.
+
+	* window-list.c: (setup_dialog) get the above label in a variable
+	(tasklist_properties_update_content_radio): disabled the "When
+	restoring minimized windows" options when the applet only shows the
+	windows of the current workspace.
+	Fix bug #102949.
+
 2003-10-13  Vincent Untz  <vincent@vuntz.net>
 
 	* workspace-switcher.glade: add shadow around the list in the prefs.

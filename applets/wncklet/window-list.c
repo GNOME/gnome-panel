@@ -55,6 +55,7 @@ typedef struct {
 	GtkWidget *never_group_radio;
 	GtkWidget *auto_group_radio;
 	GtkWidget *always_group_radio;
+	GtkWidget *minimized_windows_label;
 	GtkWidget *move_minimized_radio;
 	GtkWidget *change_workspace_radio;
 
@@ -289,6 +290,13 @@ tasklist_properties_update_content_radio (TasklistData *tasklist)
 	
         if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+	gtk_widget_set_sensitive (tasklist->minimized_windows_label,
+				  tasklist->include_all_workspaces);
+	gtk_widget_set_sensitive (tasklist->move_minimized_radio,
+				  tasklist->include_all_workspaces);
+	gtk_widget_set_sensitive (tasklist->change_workspace_radio,
+				  tasklist->include_all_workspaces);
 }
 
 static void
@@ -972,6 +980,7 @@ setup_dialog (GladeXML     *xml,
 			   "always_group_radio",
 			   "group_windows" /* key */);
 
+	tasklist->minimized_windows_label = WID ("minimized_windows_label");
 	tasklist->move_minimized_radio = WID ("move_minimized_radio");
 	tasklist->change_workspace_radio = WID ("change_workspace_radio");
 
