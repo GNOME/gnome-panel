@@ -79,8 +79,7 @@ panel_SOURCES = 		\
 	panel-util.c		\
 	$(CORBA_SOURCES)
 
-panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS) \
-	      -lcrypt
+panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 launcher_applet_SOURCES = \
 	launcher-lib.cc   \
@@ -96,8 +95,8 @@ logout_applet_SOURCES = \
 ## automake doesn't discover that automatically.
 logout_applet_LINK = $(CXXLINK)
 
-logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS)
-		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS) -lcrypt
+logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
+		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
