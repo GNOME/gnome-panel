@@ -782,11 +782,13 @@ task_notify (gpointer data, GwmhTask *task,
 			add_task (task, foo);
 		break;
 	case GWMH_NOTIFY_DESTROY:
+#warning Whoa; leak?
 		if (foo->tasks) {
 			item = GTK_WIDGET (g_hash_table_lookup (foo->tasks, task));
-			if (item) 
+			if (item) {
+				g_hash_table_remove (foo->tasks, task);
 				gtk_widget_hide (item);
-			else
+			} else
 				g_warning ("Could not find item for task '%s'",
 					   task->name);
 		}
