@@ -1835,21 +1835,21 @@ panel_toplevel_update_hidden_position (PanelToplevel *toplevel,
 
 	switch (toplevel->priv->state) {
 	case PANEL_STATE_HIDDEN_UP:
-		*y = - (height - MAX (toplevel->priv->hide_button_top->requisition.height,
+		*y = - (height - MAX (toplevel->priv->hide_button_bottom->allocation.height,
 				      min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_DOWN:
 		*y = monitor_height -
-			MAX (toplevel->priv->hide_button_bottom->requisition.height,
+			MAX (toplevel->priv->hide_button_top->allocation.height,
 			     min_hide_size);
 		break;
 	case PANEL_STATE_HIDDEN_LEFT:
-		*x = - (width - MAX (toplevel->priv->hide_button_left->requisition.width,
+		*x = - (width - MAX (toplevel->priv->hide_button_right->allocation.width,
 				    min_hide_size));
 		break;
 	case PANEL_STATE_HIDDEN_RIGHT:
 		*x = monitor_width -
-			MAX (toplevel->priv->hide_button_right->requisition.width,
+			MAX (toplevel->priv->hide_button_left->allocation.width,
 			     min_hide_size);
 		break;
 	default:
