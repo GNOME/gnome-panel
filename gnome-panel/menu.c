@@ -1525,18 +1525,10 @@ create_main_menu (PanelWidget *panel)
 					       menuitem);
 	}
 
-	menuitem = menu_create_action_item (PANEL_ACTION_SHUTDOWN);
-	if (menuitem != NULL)
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-
-	menuitem = menu_create_action_item (PANEL_ACTION_REBOOT);
-	if (menuitem != NULL)
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-
 	menuitem = menu_create_action_item (PANEL_ACTION_LOGOUT);
 	if (menuitem != NULL)
 		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-	
+
 	return main_menu;
 }
 

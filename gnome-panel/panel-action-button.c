@@ -45,7 +45,6 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 #include "panel-lockdown.h"
-#include "gdm-logout-action.h"
 
 #define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
 
@@ -74,8 +73,6 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_SEARCH,       "search"       },
 	{ PANEL_ACTION_SCREENSHOT,   "screenshot"   },
 	{ PANEL_ACTION_FORCE_QUIT,   "force-quit"   },
-	{ PANEL_ACTION_SHUTDOWN,     "shutdown"     },
-	{ PANEL_ACTION_REBOOT,       "reboot"       },
 };
 
 /* Lock Screen
@@ -175,24 +172,6 @@ panel_action_logout (GtkWidget *widget)
 	panel_session_request_logout ();
 
 	recursion_guard--;
-}
-
-/* Shutdown
- */
-static void
-panel_action_shutdown (GtkWidget *widget)
-{
-	gdm_set_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN);
-	panel_action_logout (widget);
-}
-
-/* Reboot
- */
-static void
-panel_action_reboot (GtkWidget *widget)
-{
-	gdm_set_logout_action (GDM_LOGOUT_ACTION_REBOOT);
-	panel_action_logout (widget);
 }
 
 /* Run Application
@@ -326,28 +305,6 @@ static PanelAction actions [] = {
 		"ACTION:logout:NEW",
 		panel_action_logout, NULL, NULL,
 		panel_lockdown_get_disable_log_out
-	},
-	{
-		PANEL_ACTION_SHUTDOWN,
-		NULL,
-		"gnome-shutdown",
-		N_("Shut Down"),
-		N_("Log out of GNOME and shut down the computer"),
-		"gospanel-20",
-		"ACTION:shutdown:NEW",
-		panel_action_shutdown, NULL, NULL,
-		panel_lockdown_get_disable_shutdown
-	},
-	{
-		PANEL_ACTION_REBOOT,
-		NULL,
-		"gnome-reboot",
-		N_("Restart"),
-		N_("Log out of GNOME and reboot the computer"),
-		"gospanel-20",
-		"ACTION:reboot:NEW",
-		panel_action_reboot, NULL, NULL,
-		panel_lockdown_get_disable_reboot
 	},
 	{
 		PANEL_ACTION_RUN,

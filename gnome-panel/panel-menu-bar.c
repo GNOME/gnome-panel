@@ -653,24 +653,6 @@ panel_menu_bar_append_desktop_menu (GtkWidget    *menu,
 		}
 	}
 
-	item = menu_create_action_item (PANEL_ACTION_SHUTDOWN);
-	if (item != NULL) {
-		if (!separator_inserted) {
-			add_menu_separator (desktop_menu);
-			separator_inserted = TRUE;
-		}
-		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
-	}
-
-	item = menu_create_action_item (PANEL_ACTION_REBOOT);
-	if (item != NULL) {
-		if (!separator_inserted) {
-			add_menu_separator (desktop_menu);
-			separator_inserted = TRUE;
-		}
-		gtk_menu_shell_append (GTK_MENU_SHELL (desktop_menu), item);
-	}
-
 	item = menu_create_action_item (PANEL_ACTION_LOGOUT);
 	if (item != NULL) {
 		if (!separator_inserted) {

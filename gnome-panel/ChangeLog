@@ -1,3 +1,15 @@
+2005-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Remove Shutdown/Reboot menu items again - we couldn't
+	figure out how to make it work in time in bug #92277
+
+	* Makefile.am:
+	* menu.c, panel-action-button.c, panel-enums.h,
+	  panel-lockdown.[ch], panel-menu-bar.c: remove
+	shutdown/reboot menu items.
+
+	* gdm-logout-action.[ch]: remove.
+
 2005-01-10  Vincent Untz  <vincent@vuntz.net>
 
 	* main.c: (main): call gnome_authentication_manager_init() because the

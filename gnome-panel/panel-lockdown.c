@@ -28,7 +28,6 @@
 
 #include <string.h>
 #include "panel-gconf.h"
-#include "gdm-logout-action.h"
 
 #define N_LISTENERS 6
 
@@ -48,8 +47,6 @@ typedef struct {
         guint   disable_command_line : 1;
         guint   disable_lock_screen : 1;
         guint   disable_log_out : 1;
-        guint   disable_shutdown : 1;
-        guint   disable_reboot : 1;
         guint   disable_force_quit : 1;
 
         GSList *disabled_applets;
@@ -350,20 +347,6 @@ panel_lockdown_get_disable_log_out (void)
         g_assert (panel_lockdown.initialized != FALSE);
 
         return panel_lockdown.disable_log_out;
-}
-
-gboolean
-panel_lockdown_get_disable_shutdown (void)
-{
-        return (panel_lockdown_get_disable_log_out () ||
-        	!gdm_supports_logout_action (GDM_LOGOUT_ACTION_SHUTDOWN));
-}
-
-gboolean
-panel_lockdown_get_disable_reboot (void)
-{
-        return (panel_lockdown_get_disable_log_out () ||
-        	!gdm_supports_logout_action (GDM_LOGOUT_ACTION_REBOOT));
 }
 
 gboolean
