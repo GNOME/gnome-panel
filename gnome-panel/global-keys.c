@@ -13,6 +13,84 @@ extern GlobalConfig global_config;
 extern GSList *panel_list;
 extern GSList *panels;
 
+#define N_BITS 32 /*all modifier masks fit into it */
+typedef void (*bits_callback_t)(guint value, gpointer user_data);
+static void
+all_combinations(guint mask_to_traverse, bits_callback_t callback,
+		gpointer user_data)
+{
+	int indexes[N_BITS];/*indexes of bits we need to flip*/
+	int i,bit,bits_set_cnt;
+
+	bit = 0;
+	for(i=0;i<N_BITS;++i)
+		if (mask_to_traverse & (1<<i))
+			indexes[bit++]=i;
+	bits_set_cnt = bit;
+	{
+		int uppervalue = 1<<bits_set_cnt;
+		for(i=0; i<uppervalue; ++i) {
+			int j, result=0;
+
+			for(j=0; j<bits_set_cnt; ++j) {
+				if (i & (1<<j))
+					result |= (1<<indexes[j]);
+			}
+			callback(result,user_data);
+		};
+	}
+};
+
+typedef struct mod_and_key_
+{
+	guint mods;
+	guint key;
+} mod_and_key;
+
+static void
+do_grab_key(guint mod,mod_and_key* data)
+{
+	XGrabKey (GDK_DISPLAY(), data->key, mod | data->mods,
+			GDK_ROOT_WINDOW(), True,
+			GrabModeAsync, GrabModeAsync);
+};
+
+/*we exclude shift, GDK_CONTROL_MASK and GDK_MOD1_MASK since we know what 
+ these modifiers mean */
+#define ALL_MODS (0x2000 /*Xkb modifier*/ | GDK_LOCK_MASK  | \
+	GDK_MOD2_MASK | GDK_MOD3_MASK | GDK_MOD4_MASK | GDK_MOD5_MASK) 
+    
+static void
+grab_key(guint mod, guint key)
+{
+	mod_and_key data;
+        int other_mods = ALL_MODS & ~mod;
+    
+	data.mods = mod;
+        data.key = key;
+    
+	all_combinations(other_mods, (bits_callback_t) do_grab_key,&data);
+};
+
+static void
+do_ungrab_key(guint mod, mod_and_key* data)
+{
+	XUngrabKey(GDK_DISPLAY(), data->key, mod | data->mods,
+				GDK_ROOT_WINDOW());
+};
+
+static void 
+ungrab_key(guint mod,guint key)
+{
+	mod_and_key data;
+	int other_mods = ALL_MODS & ~mod;    
+    
+	data.mods = mod;
+	data.key = key;
+    
+	all_combinations(other_mods, (bits_callback_t) do_ungrab_key,&data);
+};
+
 void
 panel_global_keys_setup(void)
 {
@@ -27,11 +105,9 @@ panel_global_keys_setup(void)
 
 	gdk_error_trap_push();
 	if (lastkey_menu)
-		XUngrabKey (GDK_DISPLAY(), lastkey_menu, laststate_menu,
-			    GDK_ROOT_WINDOW());
+		ungrab_key(laststate_menu, lastkey_menu);
 	if (lastkey_run && !same)
-		XUngrabKey (GDK_DISPLAY(), lastkey_run, laststate_run,
-			    GDK_ROOT_WINDOW());
+		ungrab_key(laststate_run, lastkey_run);
 	
 	if (global_config.keys_enabled && 
 	    global_config.menu_keysym) {
@@ -39,9 +115,7 @@ panel_global_keys_setup(void)
 						global_config.menu_keysym);
 		laststate_menu = global_config.menu_state;
 		if(lastkey_menu)
-			XGrabKey (GDK_DISPLAY(), lastkey_menu, laststate_menu, 
-				  GDK_ROOT_WINDOW(), True,
-				  GrabModeAsync, GrabModeAsync);
+		grab_key(laststate_menu, lastkey_menu);
 	} else
 		lastkey_menu = 0;
 
@@ -53,9 +127,7 @@ panel_global_keys_setup(void)
 		if(lastkey_run &&
 		   (lastkey_menu != lastkey_run ||
 		    laststate_menu != laststate_run))
-			XGrabKey (GDK_DISPLAY(), lastkey_run, laststate_run, 
-				  GDK_ROOT_WINDOW(), True,
-				  GrabModeAsync, GrabModeAsync);
+			grab_key(laststate_run, lastkey_run);
 	} else
 		lastkey_run = 0;
 	gdk_flush ();
@@ -87,7 +159,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	run_state = global_config.run_state;
 
 	if (keycode == menu_keycode &&
-	    state == menu_state) {
+	    (state & menu_state) == menu_state) {
 		PanelWidget *panel;
 		GtkWidget *menu, *basep;
 		/* check if anybody else has a grab */
@@ -110,7 +182,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 				NULL, NULL, 0, GDK_CURRENT_TIME);
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == run_keycode &&
-		   state == run_state) {
+		   (state & run_state) == run_state) {
 		/* check if anybody else has a grab */
 		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
 				      0, NULL, NULL, GDK_CURRENT_TIME)
