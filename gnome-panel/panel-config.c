@@ -582,7 +582,7 @@ aligned_notebook_page (PerPanelConfig *ppc)
 	ppc->r_align = button = 
 		gtk_radio_button_new_with_label (
 			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->l_align)),
-			_("Rightt / Bottom"));
+			_("Right / Bottom"));
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	if (ppc->align == ALIGNED_RIGHT)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);

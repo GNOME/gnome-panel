@@ -9,7 +9,8 @@ N_("To add an applet, right click on a panel\n"
 N_("To manipulate a panel applet, right click\n"
    "anywhere over the applet"),
 N_("To move a panel applet, click the middle\n"
-   "button of your mouse over it"),
+   "button of your mouse over it. You can also\n"
+   "right click on it and choose 'Move applet'"),
 N_("You can drag applets from the applet\n"
    "adding menu onto the panel"),
 N_("You can drag icons from the Programs menu\n"

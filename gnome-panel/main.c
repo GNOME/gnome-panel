@@ -209,7 +209,7 @@ main(int argc, char **argv)
 	}
 	default: {
 		GtkWidget *box = gnome_error_dialog
-			(_("There was a problem registering the panel"
+			(_("There was a problem registering the panel "
 			   "with the GOAD server.\n"
 			   "The panel will now exit."));
 		gnome_dialog_run_and_close (GNOME_DIALOG (box));
