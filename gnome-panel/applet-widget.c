@@ -1027,10 +1027,41 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 
 	*w = image->width;
 	*h = image->width;
-	*rowstride = image->rowstride;
-	
-	*rgb = g_new(guchar, (*h)*(*rowstride));
-	memcpy(*rgb,image->data._buffer,sizeof(guchar)*(*h)*(*rowstride));
+	if(!image->color_only)
+		*rowstride = image->rowstride;
+	else
+		*rowstride = (*w)*3;
+
+	if(image->data._buffer) {
+		*rgb = g_new(guchar, (*h)*(*rowstride));
+		if(!image->color_only) {
+			int size = (*h)*(*rowstride);
+			if(image->data._length<size)
+				size = image->data._length;
+			memcpy(*rgb,image->data._buffer,
+			       sizeof(guchar)*size);
+		} else {
+			int i;
+			int r;
+			int g;
+			int b;
+			guchar *p;
+
+			r = *(image->data._buffer);
+			g = *(image->data._buffer+1);
+			b = *(image->data._buffer+2);
+
+			p = *rgb;
+			for(i=0;i<(*w)*(*h);i++) {
+				*(p++) = r;
+				*(p++) = g;
+				*(p++) = b;
+			}
+		}
+	} else {
+		/* this will make a black background */
+		*rgb = g_new0(guchar, (*h)*(*rowstride));
+	}
 	
 	CORBA_free(image);
 }

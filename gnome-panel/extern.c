@@ -830,6 +830,7 @@ s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
 	GNOME_Panel_RgbImage *image;
 	int w, h, rowstride;
 	guchar *rgb;
+	int r,g,b;
 
 	g_assert(ext);
 	g_assert(ext->info);
@@ -837,14 +838,31 @@ s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 
 	panel_widget_get_applet_rgb_bg(panel, ext->ebox,
-				       &rgb,&w,&h,&rowstride);
-		
+				       &rgb,&w,&h,&rowstride,
+				       TRUE,&r,&g,&b);
+
 	image = GNOME_Panel_RgbImage__alloc();
-	image->data._buffer = CORBA_sequence_CORBA_octet_allocbuf(h*rowstride);
-	memcpy(image->data._buffer,rgb,sizeof(guchar)*h*rowstride);
 	image->width = w;
 	image->height = h;
-	image->rowstride = rowstride;
+		
+	/* if we got an rgb */
+	if(rgb) {
+		image->data._buffer = CORBA_sequence_CORBA_octet_allocbuf(h*rowstride);
+		image->data._length = image->data._maximum = h*rowstride;
+		memcpy(image->data._buffer,rgb,sizeof(guchar)*h*rowstride);
+		image->rowstride = rowstride;
+		image->color_only = FALSE;
+	} else { /* we must have gotten a color */
+		image->data._buffer = CORBA_sequence_CORBA_octet_allocbuf(3);
+		image->data._length = image->data._maximum = 3;
+		*(image->data._buffer) = r;
+		*(image->data._buffer+1) = g;
+		*(image->data._buffer+2) = b;
+		image->rowstride = 0;
+		image->color_only = TRUE;
+	}
+	CORBA_sequence_set_release(&image->data, TRUE);
+
 	return image;
 }
 

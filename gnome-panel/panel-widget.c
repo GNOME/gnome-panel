@@ -2743,12 +2743,17 @@ panel_widget_change_global(int explicit_step,
 	}
 }
 
+/* when we get color_only, we also optionally set r, g, b to the
+   color and w, and h to the area if the background is one color
+   only, otherwise normally return an rgb and set r, g, b to -1 */
 void
 panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 			       GtkWidget *applet,
 			       guchar **rgb,
 			       int *w, int *h,
-			       int *rowstride)
+			       int *rowstride,
+			       gboolean color_only,
+			       int *r, int *g, int *b)
 {
 	GtkWidget *widget;
 
@@ -2759,6 +2764,7 @@ panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 	
 	*rgb = NULL;
 	*w = *h = *rowstride = 0;
+	*r = *g = *b = -1;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
@@ -2776,6 +2782,22 @@ panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 	
 	*w = applet->allocation.width;
 	*h = applet->allocation.height;
+	
+	if(color_only && !pb) {
+		if(panel->back_type != PANEL_BACK_COLOR) {
+			GtkWidget *widget = GTK_WIDGET(panel);
+			/* convert to 8 bit per channel */
+			*r = widget->style->bg[GTK_WIDGET_STATE(widget)].red>>8;
+			*g = widget->style->bg[GTK_WIDGET_STATE(widget)].green>>8;
+			*b = widget->style->bg[GTK_WIDGET_STATE(widget)].blue>>8;
+		} else {
+			/* convert to 8 bit per channel */
+			*r = panel->back_color.red>>8;
+			*g = panel->back_color.green>>8;
+			*b = panel->back_color.blue>>8;
+		}
+		return;
+	}
 	*rowstride = applet->allocation.width*3;
 
 	*rgb = g_new0(guchar, (*h)*(*rowstride));
@@ -2785,4 +2807,3 @@ panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 			applet->allocation.y,
 			*w,*h, pb, scale_w, scale_h, rotate);
 }
-

@@ -224,11 +224,16 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
 
-void		panel_widget_get_applet_rgb_bg	(PanelWidget *panel,
-						 GtkWidget *applet,
-						 guchar **rgb,
-						 int *w, int *h,
-						 int *rowstride);
+/* when we get color_only, we also optionally set r, g, b to the
+   color and w, and h to the area if the background is one color
+   only, otherwise normally return an rgb and set r, g, b to -1 */
+void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
+				    GtkWidget *applet,
+				    guchar **rgb,
+				    int *w, int *h,
+				    int *rowstride,
+				    gboolean color_only,
+				    int *r, int *g, int *b);
 
 /*extern GSList *panels;*/
 
