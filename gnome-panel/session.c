@@ -119,8 +119,6 @@ panel_session_do_save (GnomeClient *client,
 
 		panel_session_save_applets (applets);
 	}
-	/* FIXME : add hack to see if we can flush changes */
-	gconf_client_suggest_sync (panel_gconf_get_client (), NULL);
 }
 
 static guint sync_handler = 0;

@@ -2417,8 +2417,6 @@ panel_remove_from_gconf (PanelWidget *panel)
         gconf_client_set_list (panel_gconf_get_client (), key,
 			       GCONF_VALUE_STRING, new_panels, NULL);
 
-	gconf_client_suggest_sync (panel_gconf_get_client (), NULL);
-
 	if (new_panels)
 		panel_g_slist_deep_free (new_panels);
 }

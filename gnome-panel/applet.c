@@ -969,9 +969,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 	temp_key = panel_applet_get_full_gconf_key (
 			applet_info->type, profile, gconf_key, "panel_id");
 	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (applet_info), NULL);
-
-
-	gconf_client_suggest_sync (client, NULL);
 }
 
 void
@@ -1045,8 +1042,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	default:
 		break;
 	}
-
-	gconf_client_suggest_sync (client, NULL);
 }
 
 AppletInfo *
