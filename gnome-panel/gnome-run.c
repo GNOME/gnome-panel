@@ -707,24 +707,20 @@ add_columns (GtkTreeView *treeview)
 	GtkTreeViewColumn *column;
 
 	renderer = gtk_cell_renderer_pixbuf_new ();
-	column = gtk_tree_view_column_new_with_attributes (NULL,
-							   renderer,
-							   "pixbuf", COLUMN_ICON,
-							   NULL);
-	gtk_tree_view_column_set_clickable (column, FALSE);
-	gtk_tree_view_column_set_sizing (GTK_TREE_VIEW_COLUMN (column),
-					 GTK_TREE_VIEW_COLUMN_FIXED);
-	gtk_tree_view_column_set_fixed_width (GTK_TREE_VIEW_COLUMN (column),
-					      ICON_SIZE);
-	gtk_tree_view_append_column (treeview, column);
-
+	column = gtk_tree_view_column_new ();
+        gtk_tree_view_column_set_title (column, _("Applications"));
+                
+        gtk_tree_view_column_pack_start (column, renderer, FALSE);
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "pixbuf", COLUMN_ICON,
+                                             NULL);
+        
 	renderer = gtk_cell_renderer_text_new ();
-	column = gtk_tree_view_column_new_with_attributes (_("Applications"),
-							   renderer,
-							   "text",
-							   COLUMN_FULLNAME,
-							   NULL);
-	gtk_tree_view_column_set_clickable (column, FALSE);
+        gtk_tree_view_column_pack_start (column, renderer, TRUE);
+
+        gtk_tree_view_column_set_attributes (column, renderer,
+                                             "text", COLUMN_FULLNAME,
+                                             NULL);
 	gtk_tree_view_append_column (treeview, column);
 }
 
@@ -830,7 +826,7 @@ fill_list (GtkWidget *list)
 	add_columns (GTK_TREE_VIEW (list));
 }
 
-#define DEFAULT_ICON "nautilus/i-executable.png"
+#define DEFAULT_ICON "document-icons/i-executable.png"
 #define FALLBACK_DEFAULT_ICON "gnome-logo-icon-transparent.png"
 
 static void
@@ -1003,6 +999,8 @@ create_simple_contents (void)
 			  run_dialog);
         
         w = gtk_scrolled_window_new (NULL, NULL);
+        gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (w),
+                                             GTK_SHADOW_IN);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w),
                                         GTK_POLICY_AUTOMATIC,
                                         GTK_POLICY_AUTOMATIC);
