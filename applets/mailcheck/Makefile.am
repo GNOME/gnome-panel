@@ -35,7 +35,7 @@ EXTRA_DIST = clock_applet.desktop	\
 mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 
-clocksysdir = $(datadir)/applets/Utility
+clocksysdir = $(datadir)/applets/Clocks
 clocksys_DATA = clock_applet.desktop
 
 malchecksysdir = $(datadir)/applets/Network
