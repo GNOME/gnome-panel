@@ -138,7 +138,6 @@ struct _ClockData {
         time_t             current_time;
 	char              *timeformat;
 	guint              timeout;
-	int                timeouttime;
 	PanelAppletOrient  orient;
 	int                size;
 
@@ -156,7 +155,8 @@ struct _ClockData {
 	guint listeners [N_GCONF_PREFS];
 };
 
-static void update_clock (ClockData * cd);
+static void  update_clock (ClockData * cd);
+static float get_itime    (time_t current_time);
 
 static void set_atk_name_description (GtkWidget *widget,
                                       const char *name,
@@ -206,39 +206,27 @@ static int
 clock_timeout_callback (gpointer data)
 {
 	ClockData *cd = data;
+	time_t new_time;
 
-	update_clock (cd);
+        time (&new_time);
 
-	if (!cd->showseconds && cd->format != CLOCK_FORMAT_UNIX) {
-		if (cd->format != CLOCK_FORMAT_INTERNET) {
-			int sec = cd->current_time % 60;
-			if (sec != 0 || cd->timeouttime != 60000) {
-				/* ensure next update is exactly on 0 seconds */
-				cd->timeouttime = (60 - sec)*1000;
-				cd->timeout = g_timeout_add (cd->timeouttime,
-							     clock_timeout_callback,
-							     cd);
-				return FALSE;
-			}
-		} else {
-			struct tm *tm;
-			time_t bmt;
-			long isec;
-
-			/* BMT (Biel Mean Time) is GMT+1 */
-			bmt = cd->current_time + 3600;
-			tm = gmtime (&bmt);
-			isec = ((tm->tm_hour*3600 + tm->tm_min*60 + tm->tm_sec)*10) % 864;
-			
-			if (isec != 0 || cd->timeouttime != INTERNETBEAT) {
-				/* ensure next update is exactly on beat limit */
-				cd->timeouttime = (864 - isec)*100;
-				cd->timeout = g_timeout_add (cd->timeouttime,
-							     clock_timeout_callback,
-							     cd);
-				return FALSE;
-			}
+	if (!cd->showseconds &&
+	    cd->format != CLOCK_FORMAT_UNIX &&
+	    cd->format != CLOCK_FORMAT_CUSTOM) {
+		if (cd->format != CLOCK_FORMAT_INTERNET && 
+		    new_time % 60 != cd->current_time % 60)
+		{
+				update_clock (cd);
 		}
+		else if ((long)get_itime (new_time) !=
+			 (long)get_itime (cd->current_time))
+		{
+				update_clock (cd);
+		}
+	}
+	else
+	{
+		update_clock (cd);
 	}
 
 	return TRUE;
@@ -342,7 +330,7 @@ update_clock (ClockData * cd)
 	char date[256], hour[256];
 	char *utf8, *loc;
 
-        time (&cd->current_time);
+	time (&cd->current_time);
 	
 	if (cd->gmt_time)
 		tm = gmtime (&cd->current_time);
@@ -407,6 +395,8 @@ refresh_clock (ClockData *cd)
 static void
 refresh_clock_timeout(ClockData *cd)
 {
+	int timeouttime;
+
 	unfix_size (cd);
 	
 	update_timeformat (cd);
@@ -416,29 +406,12 @@ refresh_clock_timeout(ClockData *cd)
 
 	update_clock (cd);
 	
-	if (cd->format == CLOCK_FORMAT_INTERNET) {
-		if (cd->showseconds)
-			cd->timeouttime = INTERNETSECOND;
-		else {
-			struct tm *tm;
-			time_t bmt;
-			long isec;
-
-			/* BMT (Biel Mean Time) is GMT+1 */
-			bmt = cd->current_time + 3600;
-			tm = gmtime (&bmt);
-			isec = ((tm->tm_hour*3600 + tm->tm_min*60 + tm->tm_sec)*10) % 864;
-			cd->timeouttime = (864 - isec)*100;
-		}
-	}
-	else if(cd->format == CLOCK_FORMAT_UNIX ||
-		cd->format == CLOCK_FORMAT_CUSTOM ||
-		cd->showseconds)
-		cd->timeouttime = 1000;
+	if (cd->format == CLOCK_FORMAT_INTERNET)
+		timeouttime = INTERNETSECOND;
 	else
-		cd->timeouttime = (60 - cd->current_time % 60)*1000;
+		timeouttime = 1000;
 	
-	cd->timeout = g_timeout_add (cd->timeouttime,
+	cd->timeout = g_timeout_add (timeouttime,
 	                             clock_timeout_callback,
 	                             cd);
 }

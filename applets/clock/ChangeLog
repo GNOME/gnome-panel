@@ -1,3 +1,13 @@
+2004-10-29  Marco Pesenti Gritti  <marco@gnome.org>
+
+	reviewed by: Vincent Untz  <vincent@vuntz.net>
+
+	* clock.c: (clock_timeout_callback), (update_clock),
+	(refresh_clock_timeout):
+
+	Emit the timeout every second (or internet second) but only
+	update the clock when necessary. Fix 156796.
+
 ==================== 2.8.1 ====================
 
 ==================== 2.8.0.1 ====================
