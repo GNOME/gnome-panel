@@ -1121,8 +1121,10 @@ register_toy(GtkWidget *applet,
 	/* We wrap the applet in a GtkEventBox so that we can capture
 	   events over it */
 	eventbox = gtk_event_box_new();
-	gtk_widget_set_events(eventbox, gtk_widget_get_events(eventbox) |
-			      APPLET_EVENT_MASK);
+	gtk_widget_set_events(eventbox, (gtk_widget_get_events(eventbox) |
+			      APPLET_EVENT_MASK) &
+		~( GDK_POINTER_MOTION_MASK |
+		   GDK_POINTER_MOTION_HINT_MASK));
 	gtk_container_add(GTK_CONTAINER(eventbox), applet);
 
 	info.applet_id = applet_count;
