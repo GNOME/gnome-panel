@@ -48,7 +48,7 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 	g_return_if_fail (info != NULL);
 	g_return_if_fail (info->widget != NULL);
 	g_return_if_fail (info->widget->parent != NULL);
-	g_return_if_fail (IS_PANEL_WIDGET (info->widget->parent));
+	g_return_if_fail (PANEL_IS_WIDGET (info->widget->parent));
 
 	panel = PANEL_WIDGET (info->widget->parent);
 
@@ -651,7 +651,7 @@ applet_button_press (GtkWidget      *widget,
 		return TRUE;
 	}
 
-	if (IS_BUTTON_WIDGET (widget))
+	if (BUTTON_IS_WIDGET (widget))
 		return FALSE;
 	else
 		return TRUE;
@@ -801,7 +801,7 @@ panel_applet_register (GtkWidget      *applet,
 		panel = PANEL_WIDGET(list->data);
 	}
 
-	if(IS_BUTTON_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet))
+	if(BUTTON_IS_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet))
 		gtk_signal_connect(GTK_OBJECT(applet),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(applet_button_press),

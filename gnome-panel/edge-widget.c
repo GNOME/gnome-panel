@@ -15,7 +15,7 @@ extern GlobalConfig global_config;
 extern int pw_minimized_size;
 
 static void edge_pos_class_init (EdgePosClass *klass);
-static void edge_pos_init (EdgePos *pos);
+static void edge_pos_instance_init (EdgePos *pos);
 
 static void edge_pos_set_pos (BasePWidget *basep,
 			      int x, int y,
@@ -30,30 +30,31 @@ static void edge_pos_get_size (BasePWidget *basep,
 
 static void edge_pos_pre_convert_hook (BasePWidget *basep);
 
-static BorderPosClass *parent_class;
+static BorderPosClass *edge_pos_parent_class;
 
 GType
 edge_pos_get_type (void)
 {
-	static GType edge_pos_type = 0;
+	static GType object_type = 0;
 
-	if (edge_pos_type == 0) {
-		GtkTypeInfo edge_pos_info = {
-			"EdgePos",
-			sizeof (EdgePos),
-			sizeof (EdgePosClass),
-			(GtkClassInitFunc) edge_pos_class_init,
-			(GtkObjectInitFunc) edge_pos_init,
-			NULL,
-			NULL,
-			NULL
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+                    sizeof (EdgePosClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        edge_pos_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (EdgePos),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     edge_pos_instance_init
 		};
 
-		edge_pos_type = gtk_type_unique (BORDER_TYPE_POS,
-						 &edge_pos_info);
+		object_type = g_type_register_static (BORDER_TYPE_POS, "EdgePos", &object_info, 0);
+		edge_pos_parent_class = g_type_class_ref (BORDER_TYPE_POS);
 	}
 			       
-	return edge_pos_type;
+	return object_type;
 }
 
 static void
@@ -61,7 +62,6 @@ edge_pos_class_init (EdgePosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	parent_class = gtk_type_class(BORDER_TYPE_POS);
 
 	pos_class->set_pos = edge_pos_set_pos;
 	pos_class->get_pos = edge_pos_get_pos;
@@ -70,7 +70,7 @@ edge_pos_class_init (EdgePosClass *klass)
 }
 
 static void
-edge_pos_init (EdgePos *pos) { }
+edge_pos_instance_init (EdgePos *pos) { }
 
 static void
 edge_pos_set_pos (BasePWidget *basep,
@@ -214,10 +214,10 @@ edge_widget_new (int screen,
 		 gboolean rotate_pixmap_bg,
 		 GdkColor *back_color)
 {
-	EdgeWidget *edgew = gtk_type_new (TYPE_EDGE_WIDGET);
+	EdgeWidget *edgew = gtk_type_new (EDGE_TYPE_WIDGET);
 	BasePWidget *basep = BASEP_WIDGET (edgew);
 
-	basep->pos = gtk_type_new (TYPE_EDGE_POS);
+	basep->pos = gtk_type_new (EDGE_TYPE_POS);
 
 	border_widget_construct (BORDER_WIDGET (basep), 
 				 screen,

@@ -15,7 +15,7 @@
 #include "panel-typebuiltins.h"
 
 static void sliding_pos_class_init (SlidingPosClass *klass);
-static void sliding_pos_init (SlidingPos *pos);
+static void sliding_pos_instance_init (SlidingPos *pos);
 
 static void sliding_pos_set_pos (BasePWidget *basep,
 				 int x, int y,
@@ -25,30 +25,31 @@ static void sliding_pos_get_pos (BasePWidget *basep,
 				 int *x, int *y,
 				 int w, int h);
 
-static BorderPosClass *parent_class;
+static BorderPosClass *sliding_pos_parent_class;
 
 GType
 sliding_pos_get_type (void)
 {
-	static GType sliding_pos_type = 0;
+	static GType object_type = 0;
 
-	if (sliding_pos_type == 0) {
-		GtkTypeInfo sliding_pos_info = {
-			"SlidingPos",
-			sizeof (SlidingPos),
-			sizeof (SlidingPosClass),
-			(GtkClassInitFunc) sliding_pos_class_init,
-			(GtkObjectInitFunc) sliding_pos_init,
-			NULL,
-			NULL,
-			NULL
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+                    sizeof (SlidingPosClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        sliding_pos_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (SlidingPos),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     sliding_pos_instance_init 
 		};
 
-		sliding_pos_type = gtk_type_unique (BORDER_TYPE_POS,
-						    &sliding_pos_info);
+		object_type = g_type_register_static (BORDER_TYPE_POS, "SlidingPos", &object_info, 0);
+		sliding_pos_parent_class = g_type_class_ref (BORDER_TYPE_POS);
 	}
 			       
-	return sliding_pos_type;
+	return object_type;
 }
 
 enum {
@@ -64,7 +65,6 @@ sliding_pos_class_init (SlidingPosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-	parent_class = gtk_type_class(BORDER_TYPE_POS);
 
 	sliding_pos_signals[ANCHOR_CHANGE_SIGNAL] =
 		gtk_signal_new("anchor_change",
@@ -92,7 +92,7 @@ sliding_pos_class_init (SlidingPosClass *klass)
 }
 
 static void
-sliding_pos_init (SlidingPos *pos) { }
+sliding_pos_instance_init (SlidingPos *pos) { }
 
 static void
 sliding_pos_set_pos (BasePWidget *basep,
@@ -292,8 +292,8 @@ sliding_widget_new (int screen,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
-	SlidingWidget *sliding = gtk_type_new (TYPE_SLIDING_WIDGET);
-	SlidingPos *pos = gtk_type_new (TYPE_SLIDING_POS);
+	SlidingWidget *sliding = gtk_type_new (SLIDING_TYPE_WIDGET);
+	SlidingPos *pos = gtk_type_new (SLIDING_TYPE_POS);
 
 	pos->anchor = anchor;
 	pos->offset = offset;

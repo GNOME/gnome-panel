@@ -20,7 +20,7 @@ extern int pw_minimized_size;
 #undef DRAWER_WIDGET_DEBUG
 
 static void drawer_pos_class_init (DrawerPosClass *klass);
-static void drawer_pos_init (DrawerPos *pos);
+static void drawer_pos_instance_init (DrawerPos *pos);
 
 static void drawer_pos_set_hidebuttons (BasePWidget *basep);
 static PanelOrient drawer_pos_get_applet_orient (BasePWidget *basep);
@@ -49,30 +49,29 @@ static void drawer_pos_hidebutton_click (BasePWidget *basep);
 
 static void drawer_pos_pre_convert_hook (BasePWidget *basep);
 
-static BasePPosClass *parent_class;
+static BasePPosClass *drawer_pos_parent_class;
 
 GType
 drawer_pos_get_type (void)
 {
-	static GType drawer_pos_type = 0;
-
-	if (drawer_pos_type == 0) {
-		GtkTypeInfo drawer_pos_info = {
-			"DrawerPos",
-			sizeof (DrawerPos),
+	static GType object_type = 0;
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
 			sizeof (DrawerPosClass),
-			(GtkClassInitFunc) drawer_pos_class_init,
-			(GtkObjectInitFunc) drawer_pos_init,
-			NULL,
-			NULL,
-			NULL
+ 	                (GBaseInitFunc)         NULL,
+       		        (GBaseFinalizeFunc)     NULL,
+       		        (GClassInitFunc)        drawer_pos_class_init,
+                    	NULL,                   /* class_finalize */
+                    	NULL,                   /* class_data */
+                    	sizeof (DrawerPos),
+                    	0,                      /* n_preallocs */
+                    	(GInstanceInitFunc)    drawer_pos_instance_init 
 		};
-
-		drawer_pos_type = gtk_type_unique (BASEP_TYPE_POS,
-						   &drawer_pos_info);
+		object_type = g_type_register_static (BASEP_TYPE_POS, "DrawerPos", &object_info, 0);
+		drawer_pos_parent_class = g_type_class_ref (BASEP_TYPE_POS);
 	}
 
-	return drawer_pos_type;
+	return object_type;
 }
 
 static void
@@ -80,8 +79,6 @@ drawer_pos_class_init (DrawerPosClass *klass)
 {
 	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
-
-	parent_class = gtk_type_class(BASEP_TYPE_POS);
 
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = drawer_pos_set_hidebuttons;
@@ -102,7 +99,7 @@ drawer_pos_class_init (DrawerPosClass *klass)
 }
 
 static void
-drawer_pos_init (DrawerPos *pos) { }
+drawer_pos_instance_init (DrawerPos *pos) { }
 
 static void
 drawer_pos_set_hidebuttons (BasePWidget *basep)
@@ -480,8 +477,8 @@ drawer_widget_new (PanelOrient orient,
 	DrawerPos *pos;
 	PanelOrientation porient;
 
-	drawer = gtk_type_new (TYPE_DRAWER_WIDGET);
-	drawer->pos = gtk_type_new (TYPE_DRAWER_POS);
+	drawer = gtk_type_new (DRAWER_TYPE_WIDGET);
+	drawer->pos = gtk_type_new (DRAWER_TYPE_POS);
 	pos = DRAWER_POS (drawer->pos);
 	pos->orient = orient;
 

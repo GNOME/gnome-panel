@@ -12,18 +12,18 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_SLIDING_POS           (sliding_pos_get_type ())
-#define SLIDING_POS(o)             (GTK_CHECK_CAST ((o), TYPE_SLIDING_POS, SlidingPos))
-#define SLIDING_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), TYPE_SLIDING_POS, SlidingPosClass))
-#define IS_SLIDING_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_SLIDING_POS))
-#define IS_SLIDING_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_SLIDING_POS))
+#define SLIDING_TYPE_POS           	(sliding_pos_get_type ())
+#define SLIDING_POS(object)             (G_TYPE_CHECK_INSTANCE_CAST ((object), SLIDING_TYPE_POS, SlidingPos))
+#define SLIDING_POS_CLASS(klass)        (G_TYPE_CHECK_CLASS_CAST ((klass), SLIDING_TYPE_POS, SlidingPosClass))
+#define SLIDING_IS_POS(object)          (G_TYPE_CHECK_INSTANCE_TYPE ((object), SLIDING_TYPE_POS))
+#define SLIDING_IS_POS_CLASS(klass)     (G_TYPE_CHECK_CLASS_TYPE ((klass), SLIDING_TYPE_POS))
 
-#define TYPE_SLIDING_WIDGET        (BORDER_TYPE_WIDGET)
-#define SLIDING_WIDGET(o)          (BORDER_WIDGET(o))
-#define SLIDING_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
-#define IS_SLIDING_WIDGET(o)       (BORDER_IS_WIDGET(o) && IS_SLIDING_POS(BASEP_WIDGET(o)->pos))
+#define SLIDING_TYPE_WIDGET        	(BORDER_TYPE_WIDGET)
+#define SLIDING_WIDGET(object)          (BORDER_WIDGET(object))
+#define SLIDING_WIDGET_CLASS(klass)     (BORDER_WIDGET_CLASS(klass))
+#define SLIDING_IS_WIDGET(object)       (BORDER_IS_WIDGET(object) && SLIDING_IS_POS(BASEP_WIDGET(object)->pos))
 /* this is not reliable */
-#define IS_SLIDING_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
+#define SLIDING_IS_WIDGET_CLASS(klass) (BORDER_IS_WIDGET_CLASS(klass))
 
 typedef BorderWidget            SlidingWidget;
 typedef BorderWidgetClass       SlidingWidgetClass;
@@ -55,6 +55,7 @@ struct _SlidingPosClass {
 };
 
 GType sliding_pos_get_type (void) G_GNUC_CONST;
+
 GtkWidget *sliding_widget_new (int screen,
 			       SlidingAnchor anchor,
 			       gint16 offset,

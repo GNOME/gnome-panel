@@ -44,7 +44,7 @@ extern GSList *panel_list;
 extern GtkTooltips *panel_tooltips;
 
 static void foobar_widget_class_init	(FoobarWidgetClass	*klass);
-static void foobar_widget_init		(FoobarWidget		*foo);
+static void foobar_widget_instance_init (FoobarWidget		*foo);
 static void foobar_widget_realize	(GtkWidget		*w);
 static void foobar_widget_destroy	(GtkObject		*o);
 static void foobar_widget_size_allocate	(GtkWidget		*w,
@@ -58,32 +58,34 @@ static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
 
-static GtkWindowClass *parent_class = NULL;
+static GtkWindowClass *foobar_widget_parent_class = NULL;
 
 
 
 GType
 foobar_widget_get_type (void)
 {
-	static GType foobar_widget_type = 0;
+	static GType object_type = 0;
 
-	if (!foobar_widget_type) {
-		GtkTypeInfo foobar_widget_info = {
-			"FoobarWidget",
-			sizeof (FoobarWidget),
-			sizeof (FoobarWidgetClass),
-			(GtkClassInitFunc) foobar_widget_class_init,
-			(GtkObjectInitFunc) foobar_widget_init,
-			NULL,
-			NULL
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+                    sizeof (FoobarWidgetClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        foobar_widget_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (FoobarWidget),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     foobar_widget_instance_init
 		};
 
-		foobar_widget_type = gtk_type_unique (gtk_window_get_type (),
-						      &foobar_widget_info);
+		object_type = g_type_register_static (GTK_TYPE_WINDOW, "FoobarWidget", &object_info, 0);
+        	foobar_widget_parent_class = g_type_class_ref (GTK_TYPE_WINDOW);
 
 	}
 
-	return foobar_widget_type;
+	return object_type;
 }
 
 static void
@@ -91,8 +93,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-
-        parent_class = gtk_type_class (gtk_window_get_type ());
 
 	object_class->destroy = foobar_widget_destroy;
 
@@ -170,8 +170,8 @@ static gboolean
 foobar_leave_notify (GtkWidget *widget,
 		     GdkEventCrossing *event)
 {
-	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
-		GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget,
+	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->leave_notify_event)
+		GTK_WIDGET_CLASS (foobar_widget_parent_class)->leave_notify_event (widget,
 								     event);
 
 	return FALSE;
@@ -181,8 +181,8 @@ static gboolean
 foobar_enter_notify (GtkWidget *widget,
 		     GdkEventCrossing *event)
 {
-	if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event)
-		GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget,
+	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->enter_notify_event)
+		GTK_WIDGET_CLASS (foobar_widget_parent_class)->enter_notify_event (widget,
 								     event);
 
 	if (global_config.autoraise)
@@ -766,8 +766,8 @@ foobar_widget_realize (GtkWidget *w)
 	gtk_window_set_wmclass (GTK_WINDOW (w),
 				"panel_window", "Panel");
 
-	if (GTK_WIDGET_CLASS (parent_class)->realize)
-		GTK_WIDGET_CLASS (parent_class)->realize (w);
+	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->realize)
+		GTK_WIDGET_CLASS (foobar_widget_parent_class)->realize (w);
 
 	foobar_widget_update_winhints (FOOBAR_WIDGET (w));
 	xstuff_set_no_group_and_no_input (w->window);
@@ -1091,7 +1091,7 @@ setup_task_menu (FoobarWidget *foo)
 }
 
 static void
-foobar_widget_init (FoobarWidget *foo)
+foobar_widget_instance_init (FoobarWidget *foo)
 {
 	/*gchar *path;*/
 	GtkWindow *window = GTK_WINDOW (foo);
@@ -1226,7 +1226,7 @@ queue_panel_resize (gpointer data, gpointer user_data)
 
 	g_return_if_fail (GTK_IS_WIDGET (panel));
 
-	if (!IS_DRAWER_WIDGET (panel) && !IS_FOOBAR_WIDGET (panel))
+	if (!DRAWER_IS_WIDGET (panel) && !FOOBAR_IS_WIDGET (panel))
 		gtk_widget_queue_resize (panel);
 }
 
@@ -1257,15 +1257,15 @@ foobar_widget_destroy (GtkObject *o)
 	foo->notify = 0;
 #endif
 
-	if (GTK_OBJECT_CLASS (parent_class)->destroy)
-		GTK_OBJECT_CLASS (parent_class)->destroy (o);
+	if (GTK_OBJECT_CLASS (foobar_widget_parent_class)->destroy)
+		GTK_OBJECT_CLASS (foobar_widget_parent_class)->destroy (o);
 }
 
 static void
 foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 {
-	if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
-		GTK_WIDGET_CLASS (parent_class)->size_allocate (w, alloc);
+	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_allocate)
+		GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_allocate (w, alloc);
 
 	if (GTK_WIDGET_REALIZED (w)) {
 		FoobarWidget *foo = FOOBAR_WIDGET (w);
@@ -1290,7 +1290,7 @@ foobar_widget_new (int screen)
 	if (foobar_widget_exists (screen))
 		return NULL;
 
-	foo = gtk_type_new (TYPE_FOOBAR_WIDGET);
+	foo = gtk_type_new (FOOBAR_TYPE_WIDGET);
 
 	foo->screen = screen;
 	gtk_widget_set_uposition (GTK_WIDGET (foo),
@@ -1359,7 +1359,7 @@ static void
 reparent_button_widgets(GtkWidget *w, gpointer data)
 {
 	GdkWindow *newwin = data;
-	if (IS_BUTTON_WIDGET (w)) {
+	if (BUTTON_IS_WIDGET (w)) {
 		ButtonWidget *button = BUTTON_WIDGET(w);
 		/* we can just reparent them all to 0,0 as the next thing
 		 * that will happen is a queue_resize and on size allocate

@@ -28,7 +28,7 @@ logout (GtkWidget *widget)
 	if (global_config.drawer_auto_close) {
 		GtkWidget *parent = PANEL_WIDGET(widget->parent)->panel_parent;
 		g_return_if_fail(parent!=NULL);
-		if(IS_DRAWER_WIDGET(parent)) {
+		if(DRAWER_IS_WIDGET(parent)) {
 			BasePWidget *basep = BASEP_WIDGET(parent);
 			GtkWidget *grandparent = PANEL_WIDGET(basep->panel)->master_widget->parent;
 			GtkWidget *grandparentw =

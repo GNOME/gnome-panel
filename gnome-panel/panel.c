@@ -100,7 +100,7 @@ panel_realize (GtkWidget *widget, gpointer data)
 	
 	if (BASEP_IS_WIDGET (widget))
 		basep_widget_enable_buttons(BASEP_WIDGET(widget));
-	else if (IS_FOOBAR_WIDGET (widget))
+	else if (FOOBAR_IS_WIDGET (widget))
 		foobar_widget_update_winhints (FOOBAR_WIDGET(widget));
 
 	/*FIXME: this seems to fix the panel size problems on startup
@@ -155,7 +155,7 @@ get_applet_orient (PanelWidget *panel)
 {
 	GtkWidget *panelw;
 	g_return_val_if_fail(panel,PANEL_ORIENT_UP);
-	g_return_val_if_fail(IS_PANEL_WIDGET(panel),PANEL_ORIENT_UP);
+	g_return_val_if_fail(PANEL_IS_WIDGET(panel),PANEL_ORIENT_UP);
 	g_return_val_if_fail(panel->panel_parent,PANEL_ORIENT_UP);
 	panelw = panel->panel_parent;
 
@@ -242,7 +242,7 @@ panel_orient_change(GtkWidget *widget,
 			      orient_change_foreach,
 			      widget);
 
-	if (IS_FLOATING_WIDGET (PANEL_WIDGET (widget)->panel_parent))
+	if (FLOATING_IS_WIDGET (PANEL_WIDGET (widget)->panel_parent))
 		update_config_floating_orient (FLOATING_WIDGET (PANEL_WIDGET (widget)->panel_parent));
 
 	panels_to_sync = TRUE;
@@ -432,7 +432,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	 * generated on a reparent.
 	 */
 	if((BASEP_IS_WIDGET(panelw) &&
-	    !IS_DRAWER_WIDGET(panelw)) &&
+	    !DRAWER_IS_WIDGET(panelw)) &&
 	   info && info->type == APPLET_DRAWER) {
 	        Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
@@ -546,14 +546,14 @@ panel_destroy (GtkWidget *widget, gpointer data)
 
 	if (BASEP_IS_WIDGET (widget))
 		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
-	else if (IS_FOOBAR_WIDGET (widget))
+	else if (FOOBAR_IS_WIDGET (widget))
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 
 	clean_kill_applets (panel);
 		
 	kill_config_dialog(widget);
 
-	if (IS_DRAWER_WIDGET(widget)) {
+	if (DRAWER_IS_WIDGET(widget)) {
 		GtkWidget *master_widget = panel->master_widget;
 
 		if (master_widget != NULL) {
@@ -567,8 +567,8 @@ panel_destroy (GtkWidget *widget, gpointer data)
 						"applet_info");
 		}
 	} else if ((BASEP_IS_WIDGET(widget)
-		    && !IS_DRAWER_WIDGET(widget))
-		   || IS_FOOBAR_WIDGET (widget)) {
+		    && !DRAWER_IS_WIDGET(widget))
+		   || FOOBAR_IS_WIDGET (widget)) {
 		/*this is a base panel and we just lost it*/
 		base_panels--;
 	}
@@ -639,7 +639,7 @@ make_popup_panel_menu (PanelWidget *panel)
 		panelw = ((PanelData *)panel_list->data)->panel;
 		if (BASEP_IS_WIDGET (panelw))
 			panel = PANEL_WIDGET (BASEP_WIDGET (panelw)->panel);
-		else if (IS_FOOBAR_WIDGET (panelw))
+		else if (FOOBAR_IS_WIDGET (panelw))
 			panel = PANEL_WIDGET (FOOBAR_WIDGET (panelw)->panel);
 	} else
 		panelw = panel->panel_parent;
@@ -661,14 +661,14 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 	if (BASEP_IS_WIDGET (widget)) {
 		basep = BASEP_WIDGET (widget);
 		panel = PANEL_WIDGET (basep->panel);
-	} else if (IS_FOOBAR_WIDGET (widget)) {
+	} else if (FOOBAR_IS_WIDGET (widget)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 	}
 
 	/*this should probably be in snapped widget*/
 	if(!panel_dragged &&
-	   !IS_DRAWER_WIDGET (widget) &&
-	   !IS_FOOBAR_WIDGET (widget)) {
+	   !DRAWER_IS_WIDGET (widget) &&
+	   !FOOBAR_IS_WIDGET (widget)) {
 		GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
 		gtk_grab_add(widget);
 		gdk_pointer_grab (widget->window,
@@ -686,7 +686,7 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 
 		panel_dragged = TRUE;
 		return TRUE;
-	} if(IS_DRAWER_WIDGET(widget) &&
+	} if(DRAWER_IS_WIDGET(widget) &&
 	     !panel_applet_in_drag) {
 		panel_widget_applet_drag_start (
 						PANEL_WIDGET(panel->master_widget->parent),
@@ -708,7 +708,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 	if (BASEP_IS_WIDGET (widget)) {
 		basep = BASEP_WIDGET (widget);
 		panel = PANEL_WIDGET (basep->panel);
-	} else if (IS_FOOBAR_WIDGET (widget)) {
+	} else if (FOOBAR_IS_WIDGET (widget)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 	}
 
@@ -1098,7 +1098,7 @@ move_applet (PanelWidget *panel, int pos, int applet_num)
 	if (info != NULL &&
 	    info->widget != NULL &&
 	    info->widget->parent != NULL &&
-	    IS_PANEL_WIDGET (info->widget->parent)) {
+	    PANEL_IS_WIDGET (info->widget->parent)) {
 		GSList *forb;
 		forb = gtk_object_get_data (GTK_OBJECT (info->widget),
 					    PANEL_APPLET_FORBIDDEN_PANELS);
@@ -1229,7 +1229,7 @@ is_this_drop_ok (GtkWidget      *widget,
 
 	g_return_val_if_fail (widget, FALSE);
 
-	if (!BASEP_IS_WIDGET (widget) && !IS_FOOBAR_WIDGET (widget))
+	if (!BASEP_IS_WIDGET (widget) && !FOOBAR_IS_WIDGET (widget))
 		return FALSE;
 
 	if (!(context->actions & (GDK_ACTION_COPY|GDK_ACTION_MOVE)))
@@ -1248,7 +1248,7 @@ is_this_drop_ok (GtkWidget      *widget,
 
 		if (gtk_target_list_find (get_target_list (), atom, &info)) {
 
-			if (IS_FOOBAR_WIDGET (widget) &&
+			if (FOOBAR_IS_WIDGET (widget) &&
 			    (info == TARGET_COLOR || info == TARGET_BGIMAGE))
 				return FALSE;
 
@@ -1304,7 +1304,7 @@ drag_motion_cb (GtkWidget	   *widget,
 
 		source_widget = gtk_drag_get_source_widget (context);
 		if (source_widget != NULL &&
-		    IS_BUTTON_WIDGET (source_widget)) {
+		    BUTTON_IS_WIDGET (source_widget)) {
 			GSList *forb;
 			PanelWidget *panel = NULL;
 
@@ -1312,7 +1312,7 @@ drag_motion_cb (GtkWidget	   *widget,
 				BasePWidget *basep =
 					BASEP_WIDGET (widget);
 				panel = PANEL_WIDGET (basep->panel);
-			} else if (IS_FOOBAR_WIDGET (widget)) {
+			} else if (FOOBAR_IS_WIDGET (widget)) {
 				panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 			}
 			forb = gtk_object_get_data (GTK_OBJECT (source_widget),
@@ -1390,7 +1390,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 
 	g_return_if_fail(widget!=NULL);
 	g_return_if_fail (BASEP_IS_WIDGET (widget) ||
-			  IS_FOOBAR_WIDGET (widget));
+			  FOOBAR_IS_WIDGET (widget));
 
 	/* we use this only to really find out the info, we already
 	   know this is an ok drop site and the info that got passed
@@ -1420,7 +1420,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 	switch (info) {
 	case TARGET_URL:
 		drop_urilist (panel, pos, (char *)selection_data->data,
-			      IS_FOOBAR_WIDGET(widget) ? FALSE : TRUE);
+			      FOOBAR_IS_WIDGET(widget) ? FALSE : TRUE);
 		break;
 	case TARGET_NETSCAPE_URL:
 		drop_url (panel, pos, (char *)selection_data->data);
@@ -1429,7 +1429,7 @@ drag_data_recieved_cb (GtkWidget	*widget,
 		drop_color (panel, pos, (guint16 *)selection_data->data);
 		break;
 	case TARGET_BGIMAGE:
-		if ( ! IS_FOOBAR_WIDGET(widget))
+		if ( ! FOOBAR_IS_WIDGET(widget))
 			drop_bgimage (panel, (char *)selection_data->data);
 		break;
 	case TARGET_DIRECTORY:
@@ -1513,12 +1513,12 @@ basep_pos_connect_signals (BasePWidget *basep)
 					   "align_change",
 					   GTK_SIGNAL_FUNC (update_config_align),
 					   GTK_OBJECT (basep));
-	else if (IS_FLOATING_WIDGET (basep))
+	else if (FLOATING_IS_WIDGET (basep))
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "floating_coords_change",
 					   GTK_SIGNAL_FUNC (update_config_floating_pos),
 					   GTK_OBJECT(basep));
-	else if (IS_SLIDING_WIDGET (basep)) {
+	else if (SLIDING_IS_WIDGET (basep)) {
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "anchor_change",
 					   GTK_SIGNAL_FUNC (update_config_anchor),
@@ -1546,11 +1546,11 @@ panelw_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 	if(!GTK_WIDGET_REALIZED(basep))
 		return;
 
-	if(IS_DRAWER_WIDGET(basep)) {
+	if(DRAWER_IS_WIDGET(basep)) {
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      orient_change_foreach,
 				      basep->panel);
-	} else if(IS_FLOATING_WIDGET(basep)) {
+	} else if(FLOATING_IS_WIDGET(basep)) {
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      orient_change_foreach,
 				      basep->panel);
@@ -1559,7 +1559,7 @@ panelw_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      drawer_orient_change_foreach,
 				      basep->panel);
-	} else if(IS_SLIDING_WIDGET(basep)) {
+	} else if(SLIDING_IS_WIDGET(basep)) {
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      drawer_orient_change_foreach,
 				      basep->panel);
@@ -1579,7 +1579,7 @@ panel_setup(GtkWidget *panelw)
 	if (BASEP_IS_WIDGET (panelw)) {
 		basep = BASEP_WIDGET(panelw);
 		panel = PANEL_WIDGET(basep->panel);
-	} else if (IS_FOOBAR_WIDGET (panelw)) {
+	} else if (FOOBAR_IS_WIDGET (panelw)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (panelw)->panel);
 	}
 
@@ -1588,22 +1588,22 @@ panel_setup(GtkWidget *panelw)
 	pd->menu_age = 0;
 	pd->panel = panelw;
 
-	if (IS_FOOBAR_WIDGET (panelw) || 
+	if (FOOBAR_IS_WIDGET (panelw) || 
 	    (BASEP_IS_WIDGET (panelw) &&
-	     !IS_DRAWER_WIDGET (panelw)))
+	     !DRAWER_IS_WIDGET (panelw)))
 		base_panels++;
 	
-	if(IS_EDGE_WIDGET(panelw))
+	if(EDGE_IS_WIDGET(panelw))
 		pd->type = EDGE_PANEL;
-	else if(IS_DRAWER_WIDGET(panelw))
+	else if(DRAWER_IS_WIDGET(panelw))
 		pd->type = DRAWER_PANEL;
 	else if(IS_ALIGNED_WIDGET(panelw))
 		pd->type = ALIGNED_PANEL;
-	else if(IS_SLIDING_WIDGET(panelw))
+	else if(SLIDING_IS_WIDGET(panelw))
 		pd->type = SLIDING_PANEL;
-	else if(IS_FLOATING_WIDGET(panelw))
+	else if(FLOATING_IS_WIDGET(panelw))
 		pd->type = FLOATING_PANEL;
-	else if(IS_FOOBAR_WIDGET(panelw))
+	else if(FOOBAR_IS_WIDGET(panelw))
 		pd->type = FOOBAR_PANEL;
 	else
 		g_warning("unknown panel type");
@@ -1687,7 +1687,7 @@ send_state_change(void)
 	GSList *list;
 	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
 		PanelData *pd = list->data;
-		if(BASEP_IS_WIDGET (pd->panel) && !IS_DRAWER_WIDGET(pd->panel))
+		if(BASEP_IS_WIDGET (pd->panel) && !DRAWER_IS_WIDGET(pd->panel))
 			basep_state_change(BASEP_WIDGET(pd->panel),
 					   BASEP_WIDGET(pd->panel)->state,
 					   NULL);
@@ -1704,7 +1704,7 @@ panel_data_by_id (int id)
 
 		if (BASEP_IS_WIDGET (pd->panel))
 		       pd_id = PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id;
-		else if (IS_FOOBAR_WIDGET (pd->panel))
+		else if (FOOBAR_IS_WIDGET (pd->panel))
 		       pd_id = PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id;
 
 		if (id == pd_id)
@@ -1718,7 +1718,7 @@ panel_set_id (GtkWidget *widget, int id)
 {
 	if (BASEP_IS_WIDGET (widget))
 		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = id;
-	else if (IS_FOOBAR_WIDGET (widget))
+	else if (FOOBAR_IS_WIDGET (widget))
 		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = id;
 }
 
@@ -1729,7 +1729,7 @@ status_unparent (GtkWidget *widget)
 	PanelWidget *panel = NULL;
 	if (BASEP_IS_WIDGET (widget))
 		panel = PANEL_WIDGET(BASEP_WIDGET(widget)->panel);
-	else if (IS_FOOBAR_WIDGET (widget))
+	else if (FOOBAR_IS_WIDGET (widget))
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 	for(li=panel->applet_list;li;li=li->next) {
 		AppletData *ad = li->data;

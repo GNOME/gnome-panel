@@ -13,10 +13,10 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_FOOBAR_WIDGET     (foobar_widget_get_type ())
-#define FOOBAR_WIDGET(o)       (GTK_CHECK_CAST ((o), TYPE_FOOBAR_WIDGET, FoobarWidget))
-#define FOOBAR_WIDGET_CLASS(k) (GTK_CHECK_CLASS_CAST ((k), TYPE_FOOBAR_WIDGET, FoobarWidgetType))
-#define IS_FOOBAR_WIDGET(o)    (GTK_CHECK_TYPE ((o), TYPE_FOOBAR_WIDGET))
+#define FOOBAR_TYPE_WIDGET     		(foobar_widget_get_type ())
+#define FOOBAR_WIDGET(object)       	(G_TYPE_CHECK_INSTANCE_CAST ((object), FOOBAR_TYPE_WIDGET, FoobarWidget))
+#define FOOBAR_WIDGET_CLASS(klass) 	(G_TYPE_CHECK_CLASS_CAST ((klass), FOOBAR_TYPE_WIDGET, FoobarWidgetType))
+#define FOOBAR_IS_WIDGET(object)    	(G_TYPE_CHECK_INSTANCE_TYPE ((object), FOOBAR_TYPE_WIDGET))
 
 typedef struct _FoobarWidget           FoobarWidget;
 typedef struct _FoobarWidgetClass      FoobarWidgetClass;
@@ -62,6 +62,7 @@ struct _FoobarWidgetClass
 };
 
 GType		foobar_widget_get_type		(void) G_GNUC_CONST;
+
 GtkWidget *	foobar_widget_new		(int screen);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);

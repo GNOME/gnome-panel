@@ -453,7 +453,7 @@ load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
 			panels_to_sync = TRUE;
-		} else if ( ! IS_DRAWER_WIDGET (dr_pd->panel)) {
+		} else if ( ! DRAWER_IS_WIDGET (dr_pd->panel)) {
 			g_warning ("I found a bogus panel for a drawer, making a new one");
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);

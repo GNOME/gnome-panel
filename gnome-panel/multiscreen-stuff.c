@@ -191,11 +191,11 @@ multiscreen_screen_from_panel (GtkWidget *widget)
 {
 	g_return_val_if_fail (widget != NULL, 0);
 	g_return_val_if_fail (BASEP_IS_WIDGET (widget) ||
-			      IS_FOOBAR_WIDGET (widget), 0);
+			      FOOBAR_IS_WIDGET (widget), 0);
 	
 	if (BASEP_IS_WIDGET (widget))
 		return BASEP_WIDGET (widget)->screen;
-	else if (IS_FOOBAR_WIDGET (widget))
+	else if (FOOBAR_IS_WIDGET (widget))
 		return FOOBAR_WIDGET (widget)->screen;
 	else
 		return 0;

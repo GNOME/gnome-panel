@@ -13,18 +13,18 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_DRAWER_POS            (drawer_pos_get_type ())
-#define DRAWER_POS(o)              (GTK_CHECK_CAST ((o), TYPE_DRAWER_POS, DrawerPos))
-#define DRAWER_POS_CLASS(k)        (GTK_CHECK_CLASS_CAST ((k), DRAWER_POS_TYPE, DrawerPosClass))
-#define IS_DRAWER_POS(o)           (GTK_CHECK_TYPE ((o), TYPE_DRAWER_POS))
-#define IS_DRAWER_POS_CLASS(k)     (GTK_CHECK_CLASS_TYPE ((k), TYPE_DRAWER_POS))
+#define DRAWER_TYPE_POS			(drawer_pos_get_type ())
+#define DRAWER_POS(object)              (G_TYPE_CHECK_INSTANCE_CAST ((object), DRAWER_TYPE_POS, DrawerPos))
+#define DRAWER_POS_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST ((klass), DRAWER_TYPE_POS, DrawerPosClass))
+#define DRAWER_IS_POS(object)           (G_TYPE_CHECK_INSTANCE_TYPE ((object), DRAWER_TYPE_POS))
+#define DRAWER_IS_POS_CLASS(k)     	(G_TYPE_CHECK_CLASS_TYPE ((klass), DRAWER_TYPE_POS))
 
-#define TYPE_DRAWER_WIDGET         (BASEP_TYPE_WIDGET)
-#define DRAWER_WIDGET(o)           (BASEP_WIDGET(o))
-#define DRAWER_WIDGET_CLASS(k)     (BASEP_WIDGET_CLASS(k))
-#define IS_DRAWER_WIDGET(o)        (BASEP_IS_WIDGET(o) && IS_DRAWER_POS(BASEP_WIDGET(o)->pos))
+#define DRAWER_TYPE_WIDGET         	(BASEP_TYPE_WIDGET)
+#define DRAWER_WIDGET(object)          	(BASEP_WIDGET(object))
+#define DRAWER_WIDGET_CLASS(klass)      (BASEP_WIDGET_CLASS(klass))
+#define DRAWER_IS_WIDGET(object)        (BASEP_IS_WIDGET(object) && DRAWER_IS_POS(BASEP_WIDGET(object)->pos))
 /* this is not reliable */
-#define IS_DRAWER_WIDGET_CLASS(k)  (BASEP_IS_WIDGET_CLASS(k))
+#define DRAWER_IS_WIDGET_CLASS(klass)	(BASEP_IS_WIDGET_CLASS(klass))
 
 typedef BasePWidget            DrawerWidget;
 typedef BasePWidgetClass       DrawerWidgetClass;
@@ -50,6 +50,7 @@ struct _DrawerPosClass {
 };
 
 GType drawer_pos_get_type (void) G_GNUC_CONST;
+
 GtkWidget *drawer_widget_new (PanelOrient orient,
 			      BasePMode mode,
 			      BasePState state,

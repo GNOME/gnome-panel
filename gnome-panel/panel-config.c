@@ -230,9 +230,9 @@ update_config_screen (BasePWidget *w)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->screen_spin),
 				   w->screen);
 
-	if (IS_FLOATING_WIDGET (w))
+	if (FLOATING_IS_WIDGET (w))
 		update_config_floating_pos_limits (w);
-	else if (IS_SLIDING_WIDGET (w))
+	else if (SLIDING_IS_WIDGET (w))
 		update_config_offset_limit (w);
 }
 
@@ -374,7 +374,7 @@ update_config_back (PanelWidget *pw)
 	PerPanelConfig *ppc;
 	
 	g_return_if_fail (pw);
-	g_return_if_fail (IS_PANEL_WIDGET(pw));
+	g_return_if_fail (PANEL_IS_WIDGET(pw));
 	g_return_if_fail (pw->panel_parent);
 
 	ppc = get_config_struct (pw->panel_parent);
@@ -424,7 +424,7 @@ void
 update_config_anchor (BasePWidget *w)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
-	g_return_if_fail (IS_SLIDING_WIDGET (w));
+	g_return_if_fail (SLIDING_IS_WIDGET (w));
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
@@ -439,7 +439,7 @@ update_config_offset (BasePWidget *w)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
 
-	g_return_if_fail (IS_SLIDING_WIDGET (w));
+	g_return_if_fail (SLIDING_IS_WIDGET (w));
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
@@ -518,7 +518,7 @@ config_apply (PerPanelConfig *ppc)
 
 	panel_freeze_changes (PANEL_WIDGET (BASEP_WIDGET (ppc->panel)->panel));
 
-	if(IS_EDGE_WIDGET(ppc->panel))
+	if(EDGE_IS_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
 					    ppc->screen,
 					    ppc->edge,
@@ -535,7 +535,7 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->strech_pixmap_bg,
 					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
-	else if(IS_SLIDING_WIDGET(ppc->panel))
+	else if(SLIDING_IS_WIDGET(ppc->panel))
 		sliding_widget_change_params(SLIDING_WIDGET(ppc->panel),
 					     ppc->screen,
 					     ppc->align,
@@ -572,7 +572,7 @@ config_apply (PerPanelConfig *ppc)
 					      ppc->strech_pixmap_bg,
 					      ppc->rotate_pixmap_bg,
 					      &ppc->back_color);
-	else if (IS_FLOATING_WIDGET (ppc->panel))
+	else if (FLOATING_IS_WIDGET (ppc->panel))
 		floating_widget_change_params (FLOATING_WIDGET (ppc->panel), 
 					       ppc->screen,
 					       ppc->x,
@@ -591,7 +591,7 @@ config_apply (PerPanelConfig *ppc)
 					       ppc->strech_pixmap_bg,
 					       ppc->rotate_pixmap_bg,
 					       &ppc->back_color);
-	else if(IS_DRAWER_WIDGET(ppc->panel)) {
+	else if(DRAWER_IS_WIDGET(ppc->panel)) {
 	        DrawerPos *dp = DRAWER_POS (BASEP_WIDGET (ppc->panel)->pos);
 		drawer_widget_change_params(DRAWER_WIDGET (ppc->panel),
 					    dp->orient,
@@ -1730,12 +1730,12 @@ setup_pertype_defs (BasePWidget *basep, PerPanelConfig *ppc)
 	
 	if (IS_ALIGNED_WIDGET(basep)) {
 		ppc->align = ALIGNED_POS (basep->pos)->align;
-	} else if (IS_FLOATING_WIDGET (basep)) {
+	} else if (FLOATING_IS_WIDGET (basep)) {
 		FloatingPos *pos = FLOATING_POS (basep->pos);
 		ppc->x = pos->x;
 		ppc->y = pos->y;
 		ppc->orient = PANEL_WIDGET(basep->panel)->orient;
-	} else if (IS_SLIDING_WIDGET(basep)) {
+	} else if (SLIDING_IS_WIDGET(basep)) {
 		SlidingPos *pos = SLIDING_POS (basep->pos);
 		ppc->offset = pos->offset;
 		ppc->align = pos->anchor;
@@ -1766,7 +1766,7 @@ update_config_type (BasePWidget *w)
 
 	setup_pertype_defs (BASEP_WIDGET(w), ppc);
 
-	if(IS_EDGE_WIDGET(w)) {
+	if(EDGE_IS_WIDGET(w)) {
 		/* edge notebook page */
 		page = edge_notebook_page(ppc);
 		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
@@ -1778,13 +1778,13 @@ update_config_type (BasePWidget *w)
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
 		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
 			      _("Aligned panel"));
-	} else if(IS_SLIDING_WIDGET(w)) {
+	} else if(SLIDING_IS_WIDGET(w)) {
 		/* sliding notebook page */
 		page = sliding_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
 		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
 			      _("Sliding panel"));
-	} else if(IS_FLOATING_WIDGET(w)) {
+	} else if(FLOATING_IS_WIDGET(w)) {
 		/* floating notebook page */
 		page = floating_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1887,7 +1887,7 @@ panel_config (GtkWidget *panel)
 	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (ppc->config_window)->vbox),
 			    prop_nbook, TRUE, TRUE, 0);
 
-	if(IS_EDGE_WIDGET(panel)) {
+	if(EDGE_IS_WIDGET(panel)) {
 		/* edge notebook page */
 		help_path = "panelproperties";
 		help_linkid = "EDGETAB";
@@ -1909,7 +1909,7 @@ panel_config (GtkWidget *panel)
 		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
-	} else if(IS_SLIDING_WIDGET(panel)) {
+	} else if(SLIDING_IS_WIDGET(panel)) {
 		/* sliding notebook page */
 		help_path = "panelproperties";
 		help_linkid = "EDGETAB";
@@ -1920,7 +1920,7 @@ panel_config (GtkWidget *panel)
 		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
-	} else if(IS_FLOATING_WIDGET(panel)) {
+	} else if(FLOATING_IS_WIDGET(panel)) {
 		/* floating notebook page */
 		help_path = "panelproperties";
 		help_linkid = "EDGETAB";
@@ -1931,7 +1931,7 @@ panel_config (GtkWidget *panel)
 		gtk_notebook_append_page(GTK_NOTEBOOK (prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
-	} else if(IS_DRAWER_WIDGET(panel)) {
+	} else if(DRAWER_IS_WIDGET(panel)) {
 		BasePWidget *basep = BASEP_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =

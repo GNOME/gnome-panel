@@ -44,7 +44,7 @@ popup_handle_move (BonoboUIComponent *uic,
 
 	widget = GTK_WIDGET (frame);
 
-	g_return_if_fail (IS_PANEL_WIDGET (widget->parent));
+	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
 	panel = PANEL_WIDGET (widget->parent);
 

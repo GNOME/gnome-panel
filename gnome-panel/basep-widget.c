@@ -89,7 +89,7 @@ enum {
  widget core
  ************************/
 
-GType									\
+GType
 basep_widget_get_type (void)					
 {
 	static GType object_type = 0;
@@ -1009,7 +1009,7 @@ static void
 reparent_button_widgets(GtkWidget *w, gpointer data)
 {
 	GdkWindow *newwin = data;
-	if(IS_BUTTON_WIDGET(w)) {
+	if(BUTTON_IS_WIDGET(w)) {
 		ButtonWidget *button = BUTTON_WIDGET(w);
 		/* we can just reparent them all to 0,0 as the next thing
 		 * that will happen is a queue_resize and on size allocate
@@ -1245,7 +1245,7 @@ basep_widget_update_winhints (BasePWidget *basep)
 		}
 
 		/* drawers are always in DOCK, or NORMAL */
-		if ( IS_DRAWER_WIDGET(w) &&
+		if ( DRAWER_IS_WIDGET(w) &&
 		     ! global_config.normal_layer)
 			layer = WIN_LAYER_DOCK;
 
@@ -1326,7 +1326,7 @@ basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
 	basep = BASEP_WIDGET (widget);
 
 	g_return_if_fail (basep->panel != NULL);
-	g_return_if_fail (IS_PANEL_WIDGET (basep->panel));
+	g_return_if_fail (PANEL_IS_WIDGET (basep->panel));
 
 	panel = PANEL_WIDGET (basep->panel);
 
@@ -1669,7 +1669,7 @@ basep_widget_set_hidebuttons (BasePWidget *basep)
 		 * except for the drawers case that is */
 		if ((basep->state == BASEP_HIDDEN_LEFT ||
 		     basep->state == BASEP_HIDDEN_RIGHT) &&
-		    ! IS_DRAWER_WIDGET (basep))
+		    ! DRAWER_IS_WIDGET (basep))
 			basep_widget_explicit_show (basep);
 	} else {
 		g_return_if_fail (klass && klass->set_hidebuttons);
@@ -2261,7 +2261,7 @@ basep_calculate_borders (int screen)
 
 		g_assert (pd != NULL);
 
-		if ( ! IS_EDGE_WIDGET (pd->panel) &&
+		if ( ! EDGE_IS_WIDGET (pd->panel) &&
 		     ! IS_ALIGNED_WIDGET (pd->panel))
 			continue;
 
@@ -2275,7 +2275,7 @@ basep_calculate_borders (int screen)
 
 		edge = BORDER_POS (basep->pos)->edge;
 
-		if (IS_EDGE_WIDGET (basep)) {
+		if (EDGE_IS_WIDGET (basep)) {
 			BasePState state = basep->state;
 			if (PANEL_WIDGET (basep->panel)->orient ==
 			    PANEL_VERTICAL) {

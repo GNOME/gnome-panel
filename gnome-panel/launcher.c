@@ -116,7 +116,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 		GtkWidget *parent =
 			PANEL_WIDGET(launcher->button->parent)->panel_parent;
 		g_return_if_fail(parent!=NULL);
-		if(IS_DRAWER_WIDGET(parent)) {
+		if(DRAWER_IS_WIDGET(parent)) {
 			BasePWidget *basep = BASEP_WIDGET(parent);
 			GtkWidget *grandparent = PANEL_WIDGET(basep->panel)->master_widget->parent;
 			GtkWidget *grandparentw =

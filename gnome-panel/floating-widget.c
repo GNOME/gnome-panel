@@ -17,7 +17,7 @@
 #include "multiscreen-stuff.h"
 
 static void floating_pos_class_init (FloatingPosClass *klass);
-static void floating_pos_init (FloatingPos *pos);
+static void floating_pos_instance_init (FloatingPos *pos);
 
 static void floating_pos_set_hidebuttons (BasePWidget *basep);
 static PanelOrient floating_pos_get_applet_orient (BasePWidget *basep);
@@ -53,30 +53,31 @@ static void floating_pos_pre_convert_hook (BasePWidget *basep);
 static void floating_pos_show_hide_left (BasePWidget *basep);
 static void floating_pos_show_hide_right (BasePWidget *basep);
 
-static BasePPosClass *parent_class;
+static BasePPosClass *floating_pos_parent_class;
 
 GType
 floating_pos_get_type (void)
 {
-	static GType floating_pos_type = 0;
+	static GType object_type= 0;
 
-	if (floating_pos_type == 0) {
-		GtkTypeInfo floating_pos_info = {
-			"FloatingPos",
-			sizeof (FloatingPos),
-			sizeof (FloatingPosClass),
-			(GtkClassInitFunc) floating_pos_class_init,
-			(GtkObjectInitFunc) floating_pos_init,
-			NULL,
-			NULL,
-			NULL
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+                    sizeof (FloatingPosClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        floating_pos_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (FloatingPos),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     floating_pos_instance_init
 		};
 
-		floating_pos_type = gtk_type_unique (BASEP_TYPE_POS,
-						     &floating_pos_info);
+		object_type = g_type_register_static (BASEP_TYPE_POS, "FloatingPos", &object_info, 0);
+		floating_pos_parent_class = g_type_class_ref (BASEP_TYPE_POS);
 	}
 
-	return floating_pos_type;
+	return object_type;
 }
 
 enum {
@@ -90,8 +91,6 @@ floating_pos_class_init (FloatingPosClass *klass)
 {
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
-
-	parent_class = gtk_type_class(BASEP_TYPE_POS);
 
 	floating_pos_signals[COORDS_CHANGE_SIGNAL] =
 		gtk_signal_new ("floating_coords_change",
@@ -120,7 +119,7 @@ floating_pos_class_init (FloatingPosClass *klass)
 }
 
 static void
-floating_pos_init (FloatingPos *pos) { }
+floating_pos_instance_init (FloatingPos *pos) { }
 
 static void
 floating_pos_set_hidebuttons (BasePWidget *basep)
@@ -539,8 +538,8 @@ floating_widget_new (int screen,
 	FloatingWidget *floating;
 	FloatingPos *pos;
 
-	floating = gtk_type_new (TYPE_FLOATING_WIDGET);
-	floating->pos = gtk_type_new (TYPE_FLOATING_POS);
+	floating = gtk_type_new (FLOATING_TYPE_WIDGET);
+	floating->pos = gtk_type_new (FLOATING_TYPE_POS);
 	pos = FLOATING_POS (floating->pos);
 
 	pos->x = x;

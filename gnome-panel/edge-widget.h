@@ -17,18 +17,18 @@ G_BEGIN_DECLS
    since we do need a seperate GtkType
 */
 
-#define TYPE_EDGE_POS          (edge_pos_get_type ())
-#define EDGE_POS(o)            (GTK_CHECK_CAST ((o), TYPE_EDGE_POS, EdgePos))
-#define EDGE_POS_CLASS(k)      (GTK_CHECK_CLASS_CAST ((k), TYPE_EDGE_POS, EdgePosClass))
-#define IS_EDGE_POS(o)         (GTK_CHECK_TYPE ((o), TYPE_EDGE_POS))
-#define IS_EDGE_POS_CLASS(k)   (GTK_CHECK_CLASS_TYPE ((k), TYPE_EDGE_POS))
+#define EDGE_TYPE_POS          		(edge_pos_get_type ())
+#define EDGE_POS(object)            	(G_TYPE_CHECK_INSTANCE_CAST ((object), EDGE_TYPE_POS, EdgePos))
+#define EDGE_POS_CLASS(klass)      	(G_TYPE_CHECK_CLASS_CAST ((klass), EDGE_TYPE_POS, EdgePosClass))
+#define EDGE_IS_POS(object)         	(G_TYPE_CHECK_INSTANCE_TYPE ((object), EDGE_TYPE_POS))
+#define EDGE_IS_POS_CLASS(klass)   	(G_TYPE_CHECK_CLASS_TYPE ((klass), EDGE_TYPE_POS))
 
-#define TYPE_EDGE_WIDGET       (BORDER_TYPE_WIDGET)
-#define EDGE_WIDGET(o)         (BORDER_WIDGET(o))
-#define EDGE_WIDGET_CLASS(k)   (BORDER_WIDGET_CLASS(k))
-#define IS_EDGE_WIDGET(o)      (BORDER_IS_WIDGET(o) && IS_EDGE_POS(BASEP_WIDGET(o)->pos))
+#define EDGE_TYPE_WIDGET       		(BORDER_TYPE_WIDGET)
+#define EDGE_WIDGET(object)         	(BORDER_WIDGET(object))
+#define EDGE_WIDGET_CLASS(klass)   	(BORDER_WIDGET_CLASS(klass))
+#define EDGE_IS_WIDGET(object)      	(BORDER_IS_WIDGET(object) && EDGE_IS_POS(BASEP_WIDGET(object)->pos))
 /* this is not reliable */
-#define IS_EDGE_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
+#define EDGE_IS_WIDGET_CLASS(klass) 	(BORDER_IS_WIDGET_CLASS(klass))
 
 typedef BorderWidget            EdgeWidget;
 typedef BorderWidgetClass       EdgeWidgetClass;
@@ -45,6 +45,7 @@ struct _EdgePosClass {
 };
 
 GType edge_pos_get_type (void) G_GNUC_CONST;
+
 GtkWidget *edge_widget_new (int screen,
 			    BorderEdge edge,
 			    BasePMode mode,

@@ -472,7 +472,7 @@ get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
 							 "menu_panel");
 		if(panel) {
-			if(IS_PANEL_WIDGET(panel))
+			if(PANEL_IS_WIDGET(panel))
 				return panel;
 			else
 				g_warning("Menu is on crack");
@@ -3437,8 +3437,8 @@ find_empty_pos_array (int screen, int posscore[3][3])
 	for (li = panel_list; li != NULL; li = li->next) {
 		pd = li->data;
 
-		if (IS_DRAWER_WIDGET(pd->panel) ||
-		    IS_FOOBAR_WIDGET (pd->panel))
+		if (DRAWER_IS_WIDGET(pd->panel) ||
+		    FOOBAR_IS_WIDGET (pd->panel))
 			continue;
 
 		basep = BASEP_WIDGET (pd->panel);
@@ -4014,7 +4014,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	panel = get_panel_from_menu_data(w, TRUE);
 	panelw = panel->panel_parent;
 
-	if (!IS_DRAWER_WIDGET (panelw) && base_panels == 1) {
+	if (!DRAWER_IS_WIDGET (panelw) && base_panels == 1) {
 		panel_error_dialog ("cannot_remove_last_panel",
 				    _("You cannot remove your last panel."));
 		return;
@@ -4136,7 +4136,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4162,7 +4162,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	case EDGE_PANEL: 
 	{
 		BorderEdge edge = BORDER_BOTTOM;
-		convert_setup (basep, TYPE_EDGE_POS);
+		convert_setup (basep, EDGE_TYPE_POS);
 
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -4222,7 +4222,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		SlidingAnchor anchor;
 		gint16 offset;
 		
-		convert_setup (basep, TYPE_SLIDING_POS);
+		convert_setup (basep, SLIDING_TYPE_POS);
 		
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -4258,7 +4258,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 	}
 	case FLOATING_PANEL:
 	{
-		convert_setup (basep, TYPE_FLOATING_POS);
+		convert_setup (basep, FLOATING_TYPE_POS);
 		floating_widget_change_coords (FLOATING_WIDGET (basep),
 					       x, y);
 		break;
@@ -4279,7 +4279,7 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4316,7 +4316,7 @@ change_level (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4353,7 +4353,7 @@ change_avoid_on_maximize (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4410,7 +4410,7 @@ change_orient (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 	
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4466,7 +4466,7 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget, TRUE);
 
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 
 	if (!GTK_CHECK_MENU_ITEM (widget)->active)
 		return;
@@ -4522,14 +4522,14 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 	GtkWidget *orient = gtk_object_get_data (GTK_OBJECT (menu), MENU_ORIENTS);
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu, TRUE);
 	g_return_if_fail(cur_panel != NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(cur_panel));
+	g_return_if_fail(PANEL_IS_WIDGET(cur_panel));
 	g_return_if_fail(types != NULL);
 	g_return_if_fail(modes != NULL);
 	
 	pw = cur_panel->panel_parent;
 	g_return_if_fail(pw != NULL);
 	
-	if(IS_DRAWER_WIDGET(pw)) {
+	if(DRAWER_IS_WIDGET(pw)) {
 		gtk_widget_hide(modes);
 		gtk_widget_hide(types);
 	} else {
@@ -4537,7 +4537,7 @@ show_x_on_panels(GtkWidget *menu, gpointer data)
 		gtk_widget_show(types);
 	}
 
-	if (IS_FLOATING_WIDGET (pw))
+	if (FLOATING_IS_WIDGET (pw))
 		gtk_widget_show (orient);
 	else
 		gtk_widget_hide (orient);
@@ -4550,13 +4550,13 @@ update_type_menu (GtkWidget *menu, gpointer data)
 	GtkWidget *menuitem = NULL;
 	PanelWidget *cur_panel = get_panel_from_menu_data(menu, TRUE);
 	GtkWidget *basep = cur_panel->panel_parent;
-	if (IS_EDGE_WIDGET (basep))
+	if (EDGE_IS_WIDGET (basep))
 		s = MENU_TYPE_EDGE;
 	else if (IS_ALIGNED_WIDGET (basep))
 		s = MENU_TYPE_ALIGNED;
-	else if (IS_SLIDING_WIDGET (basep))
+	else if (SLIDING_IS_WIDGET (basep))
 		s = MENU_TYPE_SLIDING;
-	else if (IS_FLOATING_WIDGET (basep))
+	else if (FLOATING_IS_WIDGET (basep))
 		s = MENU_TYPE_FLOATING;
 	else
 		return;
@@ -5155,7 +5155,7 @@ setup_remove_this_panel(GtkWidget *menu, GtkWidget *menuitem)
 	g_assert(panel->panel_parent);
 
 	if(!GTK_MENU(menu)->torn_off &&
-	   !IS_DRAWER_WIDGET(panel->panel_parent) &&
+	   !DRAWER_IS_WIDGET(panel->panel_parent) &&
 	   base_panels == 1)
 		gtk_widget_set_sensitive(menuitem, FALSE);
 	else
@@ -6286,7 +6286,7 @@ load_tearoff_menu(void)
 	}
 	if (menu_panel_widget == NULL)
 		menu_panel_widget = panels->data;
-	if ( ! IS_PANEL_WIDGET(menu_panel_widget))
+	if ( ! PANEL_IS_WIDGET(menu_panel_widget))
 		g_warning("panels list is on crack");
 
 	mfl_count = conditional_get_int("mfl_count", 0, NULL);
@@ -6464,7 +6464,7 @@ menu_allocated (GtkWidget *menu, GtkAllocation *alloc)
 			screen = 0;
 	} else if (BASEP_IS_WIDGET (cur_panel->panel_parent)) {
 		screen = BASEP_WIDGET (cur_panel->panel_parent)->screen;
-	} else if (IS_FOOBAR_WIDGET (cur_panel->panel_parent)) {
+	} else if (FOOBAR_IS_WIDGET (cur_panel->panel_parent)) {
 		screen = FOOBAR_WIDGET (cur_panel->panel_parent)->screen;
 	}
 

@@ -11,18 +11,18 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_FLOATING_POS            (floating_pos_get_type ())
-#define FLOATING_POS(o)              (GTK_CHECK_CAST ((o), TYPE_FLOATING_POS, FloatingPos))
-#define FLOATING_POS_CLASS(k)        (GTK_CHECK_CLASS_CAST ((k), TYPE_FLOATING_POS, FloatingPosClass))
-#define IS_FLOATING_POS(o)           (GTK_CHECK_TYPE ((o), TYPE_FLOATING_POS))
-#define IS_FLOATING_POS_CLASS(k)     (GTK_CHECK_CLASS_TYPE ((k), TYPE_FLOATING_POS))
+#define FLOATING_TYPE_POS            	(floating_pos_get_type ())
+#define FLOATING_POS(object)            (G_TYPE_CHECK_INSTANCE_CAST ((object), FLOATING_TYPE_POS, FloatingPos))
+#define FLOATING_POS_CLASS(klass)       (G_TYPE_CHECK_CLASS_CAST ((klass), FLOATING_TYPE_POS, FloatingPosClass))
+#define FLOATING_IS_POS(object)         (G_TYPE_CHECK_INSTANCE_TYPE ((object), FLOATING_TYPE_POS))
+#define FLOATING_IS_POS_CLASS(klass)    (G_TYPE_CHECK_CLASS_TYPE ((klass), FLOATING_TYPE_POS))
 
-#define TYPE_FLOATING_WIDGET         (BASEP_TYPE_WIDGET)
-#define FLOATING_WIDGET(o)           (BASEP_WIDGET(o))
-#define FLOATING_WIDGET_CLASS(k)     (BASEP_WIDGET_CLASS(k))
-#define IS_FLOATING_WIDGET(o)        (BASEP_IS_WIDGET(o) && IS_FLOATING_POS(BASEP_WIDGET(o)->pos))
+#define FLOATING_TYPE_WIDGET         	(BASEP_TYPE_WIDGET)
+#define FLOATING_WIDGET(object)        	(BASEP_WIDGET(object))
+#define FLOATING_WIDGET_CLASS(klass)   	(BASEP_WIDGET_CLASS(klass))
+#define FLOATING_IS_WIDGET(object)     	(BASEP_IS_WIDGET(object) && FLOATING_IS_POS(BASEP_WIDGET(object)->pos))
 /* this is not reliable */
-#define IS_FLOATING_WIDGET_CLASS(k)  (BASEP_IS_WIDGET_CLASS(k))
+#define FLOATING_IS_WIDGET_CLASS(klass)	(BASEP_IS_WIDGET_CLASS(klass))
 
 typedef BasePWidget            FloatingWidget;
 typedef BasePWidgetClass       FloatingWidgetClass;
@@ -45,6 +45,7 @@ struct _FloatingPosClass {
 };
 
 GType floating_pos_get_type (void) G_GNUC_CONST;
+
 GtkWidget *floating_widget_new (int screen,
 				gint16 x,
 				gint16 y,

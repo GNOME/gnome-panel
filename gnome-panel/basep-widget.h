@@ -16,7 +16,7 @@ G_BEGIN_DECLS
 #define BASEP_WIDGET_CLASS(klass)    	(G_TYPE_CHECK_CLASS_CAST ((klass), BASEP_TYPE_WIDGET, BasePWidgetClass))
 #define BASEP_IS_WIDGET(object)       	(G_TYPE_CHECK_INSTANCE_TYPE ((object), BASEP_TYPE_WIDGET))
 #define BASEP_IS_WIDGET_CLASS(klass) 	(G_TYPE_CHECK_CLASS_TYPE ((klass), BASEP_TYPE_WIDGET))
-#define BASEP_WIDGET_GET_CLASS(obj)	(G_TYPE_INSTANCE_GET_CLASS ((obj), BASEP_TYPE_WIDGET, BasePWidgetClass))
+#define BASEP_WIDGET_GET_CLASS(object)	(G_TYPE_INSTANCE_GET_CLASS ((object), BASEP_TYPE_WIDGET, BasePWidgetClass))
 
 #define BASEP_TYPE_POS		        (basep_pos_get_type ())
 #define BASEP_POS(object)      		(G_TYPE_CHECK_INSTANCE_CAST((object), BASEP_TYPE_POS, BasePPos))

@@ -433,7 +433,7 @@ kill_free_drawers (void)
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
-		if (IS_DRAWER_WIDGET (pd->panel) &&
+		if (DRAWER_IS_WIDGET (pd->panel) &&
 		    PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->master_widget == NULL) {
 			status_unparent (pd->panel);
 			to_destroy = g_slist_prepend (to_destroy, pd->panel);

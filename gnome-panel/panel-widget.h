@@ -18,10 +18,10 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_PANEL_WIDGET          (panel_widget_get_type ())
-#define PANEL_WIDGET(obj)          GTK_CHECK_CAST (obj, panel_widget_get_type (), PanelWidget)
-#define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
-#define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
+#define PANEL_TYPE_WIDGET          	(panel_widget_get_type ())
+#define PANEL_WIDGET(object)          	(G_TYPE_CHECK_INSTANCE_CAST ((object), PANEL_TYPE_WIDGET, PanelWidget))
+#define PANEL_WIDGET_CLASS(klass)  	(G_TYPE_CHECK_CLASS_CAST ((klass), PANEL_TYPE_WIDGET, PanelWidgetClass))
+#define PANEL_IS_WIDGET(object)       	(G_TYPE_CHECK_INSTANCE_TYPE ((object), PANEL_TYPE_WIDGET)) 
 
 #define PANEL_MINIMUM_WIDTH 12
 
@@ -134,6 +134,7 @@ struct _PanelWidgetClass
 };
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
+
 GtkWidget *	panel_widget_new		(gboolean packed,
 						 PanelOrientation orient,
 						 int sz,

@@ -192,7 +192,7 @@ apply_global_config (void)
 				continue;
 			if (BASEP_IS_WIDGET (pd->panel))
 				basep_widget_update_winhints (BASEP_WIDGET (pd->panel));
-			else if (IS_FOOBAR_WIDGET (pd->panel))
+			else if (FOOBAR_IS_WIDGET (pd->panel))
 				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
 		}
 		panel_reset_dialog_layers ();
@@ -536,7 +536,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	if (BASEP_IS_WIDGET (pd->panel)) {
 		basep = BASEP_WIDGET (pd->panel);
 		panel = PANEL_WIDGET (basep->panel);
-	} else if (IS_FOOBAR_WIDGET (pd->panel)) {
+	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
 
