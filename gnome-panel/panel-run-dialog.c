@@ -179,7 +179,7 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 						     0 /* flags */);
 						     
 	if (icon)
-		pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
+		pixbuf = gdk_pixbuf_new_from_file_at_size (icon, ICON_SIZE, ICON_SIZE, NULL);
 
                         
 	if (pixbuf) {
