@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-12-01 23:39+0100\n"
-"PO-Revision-Date: 2002-12-01 23:41+0100\n"
+"POT-Creation-Date: 2002-12-03 18:02+0100\n"
+"PO-Revision-Date: 2002-12-03 18:07+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -217,7 +217,7 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:800 gnome-panel/menu.c:3542
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:803 gnome-panel/menu.c:3542
 #: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Hjälp"
@@ -976,7 +976,7 @@ msgstr "Misslyckades med att läsa in %s: %s\n"
 msgid "File not found"
 msgstr "Filen hittades inte"
 
-#: applets/gen_util/showdesktop.c:453
+#: applets/gen_util/showdesktop.c:453 applets/notification_area/main.c:126
 msgid "(C) 2002 Red Hat, Inc."
 msgstr "© 2002 Red Hat, Inc."
 
@@ -1128,10 +1128,6 @@ msgstr "Fabrik för notifieringsyta"
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
 msgstr "Panelnotifieringsyta"
-
-#: applets/notification_area/main.c:126
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "Copyright 2002 Red Hat Inc."
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1328,7 +1324,7 @@ msgstr "Visa pil på döljknappen"
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:798 gnome-panel/menu.c:1487
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:801 gnome-panel/menu.c:1487
 #: gnome-panel/menu.c:3517 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1787,26 +1783,26 @@ msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
-#: gnome-panel/launcher.c:521
+#: gnome-panel/launcher.c:524
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Hjälp med _programmet %s"
 
-#: gnome-panel/launcher.c:643 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:646 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:754
+#: gnome-panel/launcher.c:757
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:850 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:853 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: gnome-panel/launcher.c:1072
+#: gnome-panel/launcher.c:1075
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1817,7 +1813,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1159 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1162 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1867,8 +1863,8 @@ msgid "The GNOME Panel"
 msgstr "GNOME-panelen"
 
 #: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 Free Software Foundation"
+msgid "(C) 1997 Free Software Foundation, Inc."
+msgstr "© 1997 Free Software Foundation, Inc."
 
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
@@ -2095,6 +2091,10 @@ msgid ""
 msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
 " inställningar. Vill du ta bort denna panel?"
+
+#: gnome-panel/menu.c:3152
+msgid "Delete Panel"
+msgstr "Ta bort panel"
 
 #: gnome-panel/menu.c:3391
 msgid "Launcher..."
@@ -2331,7 +2331,7 @@ msgstr "Kan inte få AppletShell-gränssnitt från kontroll\n"
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
-#: gnome-panel/panel.c:2232
+#: gnome-panel/panel.c:2238
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2709,6 +2709,30 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid ""
+#~ "Unable to execute '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "Kan inte köra \"%s\"\n"
+#~ "\n"
+#~ "Detaljer: %s"
+
+#~ msgid "There was an error executing %s: %s"
+#~ msgstr "Ett fel uppstod vid körande av %s: %s"
+
+#~ msgid "Many many others..."
+#~ msgstr "Många många andra..."
+
+#~ msgid "and finally, The Knights Who Say... NI!"
+#~ msgstr "och slutligen, riddarna som säger... NI!"
+
+#~ msgid "Copyright 2002 Red Hat Inc."
+#~ msgstr "Copyright 2002 Red Hat Inc."
+
+#~ msgid "(C) 1997-2002 the Free Software Foundation"
+#~ msgstr "© 1997-2002 Free Software Foundation"
 
 #~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 #~ msgstr "<big><big>GNOME-fisken %s säger:</big></big>"
