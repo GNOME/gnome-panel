@@ -77,7 +77,8 @@ show_hint(int is_first)
 
 	box = gnome_dialog_new(_("Panel hint"),
 			       _("Show another hint"),
-			       GNOME_STOCK_BUTTON_CLOSE);
+			       GNOME_STOCK_BUTTON_CLOSE,
+			       NULL);
 	gtk_signal_connect(GTK_OBJECT(box),"destroy",
 			   GTK_SIGNAL_FUNC(on_destroy), NULL);
 	gtk_signal_connect(GTK_OBJECT(box),"clicked",
