@@ -247,6 +247,20 @@ get_remote_password (void)
 }
 
 static void
+remove_dialog (GtkWidget *w, int response, gpointer *data)
+{
+	MailCheck *mc = (MailCheck *) data;
+	
+	gtk_widget_destroy (w);
+	
+	if(mc->mail_timeout != 0) {
+		gtk_timeout_remove(mc->mail_timeout);
+		mc->mail_timeout = 0;
+	}
+	mc->auto_update = FALSE;
+}
+
+static void
 got_remote_answer (int mails, gpointer data)
 {
 	MailCheck *mc = data;
@@ -257,18 +271,17 @@ got_remote_answer (int mails, gpointer data)
 	if (mails == -1) {
 		/* Notify about an error and keep the current mail status */
 		GtkWidget *dialog = gtk_message_dialog_new (NULL,
-							    GTK_DIALOG_MODAL,
+							    0,/* Flags */
 							    GTK_MESSAGE_ERROR,
 							    GTK_BUTTONS_CLOSE,
 							    _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
-		gtk_dialog_run (GTK_DIALOG (dialog));
-		gtk_widget_destroy (dialog);
+		
+		g_signal_connect (G_OBJECT (dialog), "response",
+					G_CALLBACK (remove_dialog),
+					mc);
+		
+		gtk_widget_show_all (dialog);				
 
-		if(mc->mail_timeout != 0) {
-			gtk_timeout_remove(mc->mail_timeout);
-			mc->mail_timeout = 0;
-		}
-		mc->auto_update = FALSE;
 	} else {
 		old_unreadmail = mc->unreadmail;
 		mc->unreadmail = (signed int) (((unsigned int) mails) >> 16);

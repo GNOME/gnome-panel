@@ -1,3 +1,9 @@
+2002-04-17  Arvind S N  <arvind.samptur@wipro.com>
+
+	* button-widget.c: workaround to get the drawer panel
+	working. In translate_to(),from->allocation.x and from->allocation.y
+	getting -ve values and thus causing problems in selecting launchers.
+
 2002-04-17  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.c: (applet_do_popup_menu): return FALSE if its

@@ -97,8 +97,8 @@ translate_to(GtkWidget *from, GtkWidget *to, int *x, int *y)
 {
 	while (from != to) {
 		if (!GTK_WIDGET_NO_WINDOW (from)) {
-			*x += from->allocation.x;
-			*y += from->allocation.y;
+			*x += MAX (from->allocation.x, 0);
+			*y += MAX (from->allocation.y, 0);
 		}
 		from = from->parent;
 	}
@@ -141,7 +141,8 @@ calculate_overlay_geometry (PanelWidget *panel,
 		/* we use the requisition, since allocation might have not
 		   yet happened if we are inside the allocation, anyway
 		   they are the same for basep */
-		*h = parent->requisition.height;
+		if(*h < parent->requisition.height)
+			*h = parent->requisition.height;
 
 		if ((*w + applet->allocation.x) > panel->size) {
 			*w = panel->size - applet->allocation.x;
@@ -171,7 +172,8 @@ calculate_overlay_geometry (PanelWidget *panel,
 		}
 
 		*x = 0;
-		*w = parent->requisition.width;
+		if(*w < parent->requisition.width)
+			*w = parent->requisition.width;
 
 		if ((*h + applet->allocation.y) > panel->size) {
 			*h = panel->size - applet->allocation.y;
