@@ -1153,7 +1153,7 @@
 	Das GNOME-<interface>Panel</interface> ermöglicht Ihnen, Applikationen
 	die keine Applets sind innerhalb des <interface>Panels</interface>
 	ablaufen zu lassen &mdash; so als wären es Applets. Solche
-	"verschluckte Applikationen" müssen noch nicht einmal GNOME-kompliant
+	"verschluckte Applikationen" müssen noch nicht einmal GNOME-kompatibel
 	sein, um verschluckt werden zu können. Genauer ist die einzige
 	Anforderung an eine Applikation, um verschluckt werden zu können, daß
 	sie klein genug ist, um ins Panel hineinzupassen und Sie müssen den
@@ -1615,293 +1615,299 @@
 
   <!-- ############### Global Panel Preferences  ################## -->
   <sect1 id="globalpanelprefs">
-    <title>Global Panel Preferences</title>
+    <title>Globale Panel-Eigenschaften</title>
     <para>
-      <indexterm id="idx-a61">  <primary>Panel</primary>
-	<secondary>Global Panel Preferences</secondary>
+      <indexterm id="idx-a61">
+	<primary>Panel</primary>
+	<secondary>Globale Panel-Eigenschaften</secondary>
       </indexterm>
-     To start configuring the GNOME panel, select <guimenuitem>Global
-     Preferences</guimenuitem> from the <guisubmenu>Panel</guisubmenu>
-     submenu of the <guimenu>Hauptmenü</guimenu> (you can access the
-     main menu by either pressing the foot icon or by right-clicking
-     on the panel).
+      Um das GNOME-Panel zu konfigurieren, wählen Sie
+      <guimenuitem>Globale Eigenschaften</guimenuitem> aus dem
+      <guisubmenu>Panel</guisubmenu>-Untermenü des
+      <guimenu>Hauptmenü</guimenu> (zum Hauptmenü gelangen Sie entweder
+      über des Fußabdrucks-Icon oder durch Rechtsklick auf das Panel).
     </para>
     <para>
-     This will bring the <interface>Global Panel
-     Preferences</interface> dialog up (this dialog is one of the
-     components of the <application>GNOME Control
-     Center</application>).  With this dialog you can set properties
-     that will affect all Panels you use now and any panels you add in
-     the future.
-     <figure>
-	<title>The Global Panel Configuration Dialog</title>
+      Dies bringt den <interface>Globale Panel-Eigenschaften</interface>-Dialog
+      zum Vorschein (dieser Dialog ist Bestandteil des
+      <application>GNOME-Kontrollzentrums</application>). Mit Hilfe dieses
+      Dialogs können Sie Eigenschaften festlegen, die alle Panels betreffen,
+      die Sie im Moment verwenden und alle Panels, die Sie in Zukunft erzeugen.
+      <figure>
+	<title>Der "Globale Panel-Eigenschaften" Konfigurationsdialog</title>
 	<screenshot>
-	  <screeninfo>The Global Panel Configuration Dialog</screeninfo>
+	  <screeninfo>Der "Globale Panel-Eigenschaften" Konfigurationsdialog</screeninfo>
 	  <graphic fileref="./figures/glob_pref_anim"
-       format="png" srccredit="muet">
-       </graphic>
+	    format="png" srccredit="muet">
+	  </graphic>
 	</screenshot>
       </figure>
     </para>
     <para>
-     The Global Panel Configuration Dialog contains five tabs which
-     help you configure the global properties of the GNOME Panel:
-     <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
-     <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
-     <guilabel>Miscellaneous</guilabel>. Each of these tabs is
-     explained below.
+      Der "Globale Panel-Eigenschaften"-Dialog enthält fünf Reitern, die
+      Ihnen die Konfiguration der globalen Eigenschaften des GNOME-Panels
+      ermöglichen:
+      <guilabel>Animation</guilabel>, <guilabel>Knöpfe</guilabel>,
+      <guilabel>Panelobjekte</guilabel>, <guilabel>Menü</guilabel> und
+      <guilabel>Allgemeines</guilabel>. Jeder dieser Reiter wird nachfolgend
+      beschrieben.
     </para>
     <sect2 id="animtab">
-      <title>Animation  Tab</title>
+      <title>Animations-Reiter</title>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-       <guilabel>Enable animations</guilabel> &mdash; This allows the
-       animations configurable on this tab to be visible.  The
-       animations must be enabled to use the other features of this
-       tab. The default position is on.
-      </para>
+	    <guilabel>Animation an/aus</guilabel> &mdash; Dies ermöglicht
+	    die Konfiguration der Animationen in diesem Reiter. Animationen
+	    müssen eingeschaltet sein, um alle anderen Dinge in diesem Reiter
+	    zu benutzen. Standardmäßig sind Animationen eingeschaltet.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Constant speed animations</guilabel> &mdash; By
-       default, the animations start slowly, but then accelerate. If
-       you enable this option, the animations will not use any
-       acceleration.
-      </para>
+	    <guilabel>Gleichmäßige Animationen</guilabel> &mdash; Normalerweise
+	    starten Animationen langsam und werden dann schneller. Wenn Sie
+	    diese Option aktivieren, verwenden die Animationen keine solche
+	    Beschleunigung.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Auto hide animation speed</guilabel> &mdash; If you
-       have the panel hiding automatically this will control how fast
-       it occurs. The slowest setting is 1, the fastest, 100.
-      </para>
+	    <guilabel>Automatisch verstecken</guilabel> &mdash; Wenn Sie ein
+	    sich automatisch versteckendes Panel haben, bestimmt diese Option
+	    wie schnell dies geschieht. Die langsamste Einstellung ist 1, die
+	    schnellste 100.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Explicit hide animation speed</guilabel> &mdash; This
-       controls the hide speed when you press the Panel's
-       <guibutton>Hide Button</guibutton>. The slowest setting is 1,
-       the fastest, 100.
-      </para>
+	    <guilabel>Verstecken auf Wunsch</guilabel> &mdash; Dies bestimmt,
+	    wie schnell das Panel sich versteckt, wenn Sie den
+	    <guibutton>Versteckknopf</guibutton> des Panels benutzen. Die
+	    langsamste Einstellung ist 1, die schnellste 100.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Drawer sliding animation speed</guilabel> &mdash;
-       this will control how fast the drawer menu will raise when you
-       press a Drawer button on the Panel. The slowest setting is 1,
-       the fastest, 100.
-      </para>
+	    <guilabel>Schubladenschieben</guilabel> &mdash;
+	    Dies bestimmt, wie schnell Schubladen auf- und zugemacht werden,
+	    wenn Sie den Schubladenknopf auf dem Panel drücken. Die langsamste
+	    Einstellung ist 1, die schnellste 100.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Auto hide delay (ms)</guilabel> &mdash; If you have
-       the Panel set to minimize automatically this will allow you to
-       control how much time passes before it minimizes.  The Panel
-       will start the time count once the mouse is no longer over
-       it. It will appear again when the mouse is passed over the
-       portion of the Panel that remains visible. This time is
-       measured in milliseconds.
-      </para>
+	    <guilabel>Verzögerung (ms)</guilabel> &mdash; Wenn Sie ein Panel
+	    haben, das sich automatisch minimiert, bestimmt diese Option
+	    wieviel Zeit verstreichen muß, befor dies geschieht. Die Zeit
+	    beginnt zu laufen, sobald die Maus sich nicht mehr über dem Panel
+	    befindet. Das Panel kommt dann wieder zurück, wenn Sie die Maus
+	    über den Teil des Panels bewegen, der sichtbar bleibt. Diese Ziet
+	    wird in Millisekunden angegeben.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash;
-       If you have the Panel hiding automatically this determines the
-       number of pixels that will show while the Panel is
-       minimized. To maximize the panel the pointer must enter the
-       Panel area.
-      </para>
+	    <guilabel>Größe (Pixel)</guilabel> &mdash; Wenn Sie ein sich
+	    automatisch versteckendes Panel haben, bestimmt diese Option,
+	    wieviel vom Panel (in Pixel) sichtbar bleibt während es minimiert
+	    ist. Um das Panel wieder zurückzuholen, muß sich der Mauszeiger
+	    über diesem Panelbereich befinden.
+	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
     <sect2 id="launchtab">
-      <title>Buttons Tab</title> <para> In this section, you can set
-      appearance of buttons of various types (launcher buttons, menu
-      buttons, drawer buttons, and special (Logout and Lock Screen)
-      buttons).
+      <title>Knöpfe-Reiter</title>
+
+      <para>
+	In diesem Reiter können Sie das Aussehen der verschiedenen Arten
+	von Knöpfen (Starterknöpfe, Menüknöpfe, Schubladenknöpfe und
+	Sonderknöpfe (Abmelde- und Sperrknopf)) bestimmen.
       </para>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-       <guilabel>Tiles enabled</guilabel> &mdash; This checkbox will
-       enable background tiles for buttons of given type on the Panel.
-      </para>
+	    <guilabel>Kacheln an/aus</guilabel> &mdash; Diese Checkbox
+	    schaltet für den gewählten Knopftyp die Hintergrundkacheln
+	    ein und aus.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Normal Tile</guilabel> &mdash; This shows the image
-       used for the tile in the up position (inactive, not
-       pressed). To choose another image file, just click on the
-       image, and it will launch the icon browser. Tiles must be
-       enabled to access this option.
-      </para>
+	    <guilabel>Normale Kachel</guilabel> &mdash; Dies bestimmt das
+	    Bild der Kachel in ungedrückten Zustand (inaktiv). Um ein anderes
+	    Bild zu wählen, klicken Sie auf das Bild um den Icon-Browser zu
+	    starten. Für diese Option müssen die Kacheln eingeschaltet sein.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Clicked Tile</guilabel> &mdash; This shows the image
-       used for the tile in the down position (active, pressed). To
-       choose another image file, just press on the image, and it will
-       launch the icon browser. Tiles must be enabled to access this
-       option.
-      </para>
+	    <guilabel>Geklickte Kachel</guilabel> &mdash; Dies bestimmt das
+	    Bild der Kachel im eingedrückten Zustand (aktiv).  Um ein anderes
+	    Bild zu wählen, klicken Sie auf das Bild um den Icon-Browser zu
+	    starten. Für diese Option müssen die Kacheln eingeschaltet sein.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Border width (tile only)</guilabel> &mdash; This
-       determines the width of the border around an icon. For example,
-       if you set border width equal to 5, this will ensure that at
-       least 5 pixels of the tile will be shown on every side of the
-       icon; if necessary, the icon will be cropped. This is very
-       useful if you have an icon that would normally cover up a tile.
-       Tiles must be enabled to access this option.
-      </para>
+	    <guilabel>Randbreite (nur Kachel)</guilabel> &mdash; Dies bestimmt
+	    die Breite des Randes um ein Icon. Wenn Sie zum Beispiel den Rand
+	    auf 5 setzen, stellt dies sicher das mindestens 5 Pixel der Kachel
+	    auf jeder Seite des Icons freibleiben. Andernfalls wird das Icon
+	    zurechtgestutzt. Dies ist sehr nützlich, wenn Sie ein Icon haben,
+	    das normalerweise die ganze Kachel ausfüllen würde. Für diese
+	    Option müssen die Kacheln eingeschaltet sein.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> &mdash;
-       This determines the depth an icon will displace when
-       pressed. Tiles must be enabled to access this option.
-      </para>
+	    <guilabel>Tiefe (Hub des Knopfes beim Drücken)</guilabel> &mdash;
+	    Dies bestimmt die Tiefe, um die ein Icon eingedrückt wird, wenn
+	    der Knopf gedrückt ist. Für diese Option müssen die Kacheln
+	    eingeschaltet sein.
+	  </para>
 	</listitem>
       </itemizedlist>
-      <para> This tab also contains 3 options which affect all types
-      of buttons simultaneously:
-     </para>
+      <para>
+	Dieser Reiter enthält außerdem 3 Optionen, die alle Knopftypen zur
+	gleichen Zeit betreffen:
+      </para>
       <itemizedlist>
-	<listitem>  <para> <guilabel>Make buttons flush with panel
-	  edge</guilabel> &mdash; allows you to align the button with
-	  the edge of the panel.  If this option is not set then the
-	  border width setting is obeyed.  By default this option is
-	  off.
-	  </para>
-	</listitem>
 	<listitem>
-	  <para><guilabel>Show button tiles only when cursor is over
-	  the button</guilabel> &mdash; if this option is enabled, the
-	  tiles will only appear when mouse cursor is over the button.
+	  <para>
+	    <guilabel>Knöpfe bündig mit der Panelkante ausrichten</guilabel>
+	    &mdash; erlaubt Ihnen die Knöpfe an der Kante des Panels
+	    auszurichten. Wenn diese Option ausgeschaltet ist, wird die
+	    Einstellung der Randbreite beachtet. Diese Option ist standardmäßig
+	    ausgeschaltet.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel> Keep saturation low when cursor is not over the
-	    button</guilabel> &mdash; Choosing this option will dim
-	    the panel buttons; the button will brighten up when the
-	    mouse cursor is over it.
+	    <guilabel>Knopfkacheln nur anzeigen, wenn der Mauszeiger über dem Knopf steht</guilabel> &mdash; Wenn diese Option eingeschaltet ist, erscheinen die
+	    Kacheln nur, wenn sich der Mauszeiger über dem Knopf befindet.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel>Icon dunkler anzeigen, wenn Mauszeiger nicht darüber</guilabel> &mdash; Diese Option verdunkelt die Panelknöpfe; sie hellen sich auf
+	    wenn sich der Mauszeiger darüberbefindet.
 	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
     <sect2 id="appletstab">
-      <title>Panel objects Tab</title>
+      <title>Panelobjekte-Reiter</title>
       <para>
-	This tab shows some options related to placement and moving
-	objects on the panel.  
+	Dieser Reiter enthält einige Optionen zur Plazierung und zum Verschieben
+	von Objekten auf dem Panel.
       </para>
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <guilabel> Default movement mode </guilabel> &mdash; here
-	    you can choose the default mode for moving the objects on
-	    the panel. Possible variants are
-	    </para>
+	    <guilabel>Standard-Bewegungsmodus</guilabel> &mdash; hier können
+	    Sie die Standardmethode zum Verschieben von Objekten auf dem
+	    Panel festlegen. Mögliche Varianten sind
+	  </para>
 	  <itemizedlist>
-	    <listitem><para> <emphasis>Switched</emphasis> &mdash;
-		when the object you are moving hits another object,
-		they switch places
-		  </para>
-	    </listitem>
-
-	    <listitem><para>  <emphasis>Free</emphasis> &mdash; when
-		  the object you are moving hits another object, it
-		  "jumps" over it, so no other object is disturbed
-		  &mdash; this is a convenient option if you like the
-		  current arrangement of objects on your panel and
-		  want to lock it
-		</para>
+	    <listitem>
+	      <para>
+		<emphasis>Bockspringende Bewegung (oder Ctrl benutzen)</emphasis> &mdash; wenn das bewegte Objekt andere Objekte trifft, tauschen sie die Plätze.
+	      </para>
 	    </listitem>
 
 	    <listitem>
 	      <para>
-		  <emphasis>Push</emphasis> &mdash; the object you are
-		  moving pushes all other objects in front of it, like
-		  a snow plow.
-		</para>
+		<emphasis>Freie Bewegung (stört andere Applets nicht) (oder Alt benutzten)</emphasis> &mdash; when das bewegte Objekt andere Objekte trifft,
+		"springt" es über sie drüber, so daß keine der anderen Objekte
+		gestört werden. Diese Option ist sehr bequem, wenn Ihnen die
+		gegenwärtige Anordnung der Objekte auf Ihrem Panel gefällt und
+		Sie sie festhalten wollen.
+	      </para>
+	    </listitem>
+
+	    <listitem>
+	      <para>
+		<emphasis>Schiebende Bewegung (oder Shift benutzen)</emphasis> &mdash; das bewegte Objekt schiebt wie ein Schneepflug alle anderen Objekte, die
+		ihm im Weg sind, einfach zur Seite.
+	      </para>
 	    </listitem>
 	  </itemizedlist>
-	  <para>You can override the default movement mode by dragging
-	    an  object while holding <keycap>Ctrl</keycap> (for
-	    switched movement), <keycap>Alt</keycap> (for free
-	    movement), or <keycap>Shift</keycap> (for push movement)
-	    button pressed.
-	    </para>
+	  <para>
+	    Sie können die Art der Bewegung auch mit der
+	    <keycap>Ctrl</keycap> (für Bockspringen), der <keycap>Alt</keycap>
+	    (für freie Bewegung) bzw. der <keycap>Shift</keycap>-Taste
+	    (für zur Seite schieben) während des Verschiebens ändern.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel>Padding</guilabel> &mdash;  This changes
-	    the amount of space (padding) between objects on the
-	    panel. It is measured in pixels.
+	    <guilabel>Polsterung</guilabel> &mdash;  Dies bestimmt, wieviel
+	    Platz (Polster) zwischen den Objekten auf dem Panel verbleiben
+	    soll. Sie wird in Pixel angegeben.
 	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
 
     <sect2 id="menutab">
-      <title>Menu Tab</title> 
+      <title>Menü-Reiter</title> 
 
-      <para> In this tab, you can set the options determining the
-	appearance of <interface>Panel</interface> menus.
+      <para>
+	Mit diesem Reiter bestimmen Sie das Erscheinungsbild der
+	<interface>Panel</interface>-Menüs.
       </para>
       
       <itemizedlist>
 	<listitem>
 	  <para>
-       <guilabel>Use large icons</guilabel> &mdash; This will use
-       large icons (rather than the default size) in menus. Only
-       practical for those with high resolution screens (1280x1024 and
-       higher)
-      </para>
+	    <guilabel>Große Icons benutzen</guilabel> &mdash; Dieses bestimmt,
+	    ob in den Menüs große Icons (statt der Standardgröße) verwendet
+	    werden sollen. Nur bei hoher Bildschirmauflösung (1280x1024 oder
+	    höher) zu empfehlen.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Show ... buttons</guilabel> &mdash; This will add
-       small buttons labelled by three dots (...) to all the items of
-       the <guimenu>Hauptmenü</guimenu>. Clicking on such a button
-       with the left mouse button will bring the
-       <guimenu>pop-up</guimenu> menu for this item, i.e. the same
-       menu which you get by clicking on the menu item wiht the right
-       mouse button.   
-      </para>
+	    <guilabel>Knöpfe mit ... anzeigen</guilabel> &mdash; Dies fügt
+	    kleine mit drei Punkten (...) beschriftete Knöpfe zu allen
+	    Einträgen des <guimenu>Hauptmenüs</guimenu> hinzu. Wenn Sie mit
+	    der linken Maustaste auf einen solchen Knopf klicken, bekommen
+	    Sie das <guimenu>Kontext-Menü</guimenu> dieses Eintrags, das
+	    heißt dasselbe Menü, das Sie auch mit der rechten Maustaste
+	    erhalten.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Show popup menus outside of panels</guilabel> &mdash;
-       When this button is on, it allows pop-up menus to appear away
-       from the Panel. When toggled off, the pop-ups will appear over
-       the Panel. This can be useful on smaller screens or cluttered
-       desktops.
-      </para>
+	    <guilabel>Popup-Menüs außerhalb des Panels anzeigen</guilabel> &mdash;
+	    Wenn dieser Knopf gedrückt ist, können Popup-Menüs auch außerhalb
+	    des Panels erscheinen. Ist er ausgeschaltet, erscheinen Popup-Menüs
+	    über dem Panel. Dies kann für kleinere Bildschirme oder vollgestopfte
+	    Desktop hilfreich sein.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Keep menus in memory</guilabel> &mdash; This will
-       keep your menus in memory so that they do not rescan for added
-       items. This can increase the speed of GNOME, but may also
-       result in you missing new items added to your menu.
-	</para>
+	    <guilabel>Menüs im Speicher halten</guilabel> &mdash; Dies hält
+	    alle Menüs im Speicher, so daß sie nicht automatisch nach neuen
+	    Einträgen suchen. Dies kann die Geschwindigkeit von GNOME steigern,
+	    unter Umständen aber auch bedeuten daß neu hinzugefügte Einträge
+	    fehlen.
+	  </para>
 	</listitem>
 	<listitem> <para> 
-          <guilabel>Global menu</guilabel> &mdash; This
-	  allows you to configure the  <link linkend="globalmenu">
-          <guimenu>Global Menu</guimenu></link>
-	  which you get by right-clicking on the panel, or by using
-	  the keyboard shortcut. For each of the possible submenus
-	  (<guisubmenu>Programme</guisubmenu>,
-	  <guisubmenu>Favoriten</guisubmenu>, etc.), you can choose
-	  whether it should be included as a part of the <guimenu>Global
-	  Menu</guimenu>, as a submenu, or not included at all. A
-	  description of these submenus is given in <xref
-	      linkend="submenus">.
+	    <guilabel>Globales Menüs</guilabel> &mdash; Dies erlaubt Ihnen
+	    die Konfiguration des
+	    <link linkend="globalmenu"><guimenu>Globalen Menüs</guimenu></link>,
+	    welches Sie durch Rechtsklick aufs Panel oder durch die
+	    entsprechende Tastenkombination erhalten. Für jedes der möglichen
+	    Untermenüs (<guisubmenu>Programme</guisubmenu>,
+	    <guisubmenu>Favoriten</guisubmenu>, etc.), können Sie bestimmen,
+	    ob es als Teil des <guimenu>Globalen Menüs</guimenu> erscheint,
+	    als Untermenü, oder überhaupt nicht. Eine Beschreibung dieser
+	    Untermenüs finden Sie in <xref linkend="submenus">.
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -1909,112 +1915,118 @@
 
 
     <sect2 id="misctab">
-      <title>Miscellaneous Tab</title>    
-      <para>The Miscellaneous group
-      contains options for various customizable behavior that didn't
-      fit anywhere else.
+      <title>Allgemeines-Reiter</title>    
+      <para>
+	Die Gruppe "Allgemeines" enthält verschiedene Optionen, die
+	sonst nirgendwo Platz fanden.
       </para>
 
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-       <guilabel>Tooltips enabled</guilabel> &mdash; This option
-            defines whether GNOME should show a tooltip when the
-            pointer pauses on a panel item.
-      </para>
+	    <guilabel>Minihilfen verwenden</guilabel> &mdash; Diese Option
+	    bestimmt, ob GNOME eine Minihilfe anzeigen soll, wenn der
+	    Mauszeiger über einem Panelelement verweilt.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Close drawer if a launcher inside it is
-       pressed</guilabel> &mdash; By default drawers will remain open
-       when you select an item within one. This can be annoying as the
-       drawer will remain open until you close it with a mouse
-       click. With this option selected drawers will close
-       automatically when you select any item within one.
-      </para>
-	</listitem>
-
-	<listitem>
-	  <para>
-       <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
-       are using a window manager that is not GNOME compliant it will
-       not understand its relationship with the Panel. This can cause
-       your <interface>Panel</interface> to be covered by
-       applications. If you enable this feature you can have the
-       <interface>Panel</interface> automatically raise when your
-       mouse is over it.
-      </para>
-	</listitem>
-	<listitem>
-	  <para>
-       <guilabel>Keep panel below windows</guilabel> &mdash; If you
-       are using a GNOME compliant window manager the window manager
-       will understand its relationship with the Panel. If you choose
-       this feature the window manager and GNOME will allow
-       applications to appear over the Panel. This can be useful on
-       smaller screens.
-      </para>
+	    <guilabel>Schublade schließen, wenn ein Starter darin gedrückt wird</guilabel> &mdash; Standardmäßig bleiben Schubladen offen, wenn sich in der
+	    Schublade befindliche Starter gedrückt wird. Dies kann sehr
+	    ermüdend sein, da die Schublade offen bleibt bis man sie mit einem
+	    Mausklick wieder schließt. Wenn diese Option aktiviert ist,
+	    schließen sich Schubladen von selbst, wenn Sie irdenein Element
+	    in ihnen auswählen.
+	  </para>
 	</listitem>
 
 	<listitem>
 	  <para>
-	      <guilabel>Confirm removal of panels with a
-	      dialog</guilabel> &mdash; If this option is enabled,
-	      GNOME will ask for confirmation before removing a panel.
-	      </para>
+	    <guilabel>Panel unter Mauszeiger anheben</guilabel> &mdash; Wenn
+	    Sie einen nicht GNOME-kompatiblen Fenstermanager verwenden,
+	    versteht dieser nicht die Bedeutung des Panels. Dies kann dazu
+	    führen das Ihr <interface>Panel</interface> von Applikationen
+	    verdeckt wird. Diese Option sort dafür, daß das Panel automatisch
+	    angehoben wird, wenn Sie mit der Maus darüberfahren.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel>Panel unter Fenstern halten (nur für GNOME-kompatible Fenstermanager</guilabel> &mdash; Wenn Sie einen GNOME-kompatiblen Fenstermanager
+	    verwenden, versteht dieser die Bedeutung des Panels. Wenn Sie diese
+	    Option aktivieren, erlauben der Fenstermanager und GNOME es Ihnen,
+	    Applikationen über dem Panel zu plazieren. Dies kann bei kleinen
+	    Bildschirmen hilfreich sein.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <guilabel>Bei Entfernen von Panels durch Dialogfeld nachfragen</guilabel> &mdash; Wenn diese Option eingeschaltet ist, fragt GNOME vor dem Entfernen
+	    eines Panels in einem Dialogfeld um Bestätigung.
+	  </para>
 	</listitem>
 
       </itemizedlist>
       <para>
-      This tab also allows you to configure some global key
-      bindings. At the moment, you can define key bindings for <link
-      linkend="globalmenu"><guimenu>Global Menu</guimenu></link> and
-      for Run Command dialog.  For example, if you are using a
-      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
-      (this key is usually located to the left of the space bar and
-      labelled with a picture of a menu) to the <guimenu>Global
-      Menu</guimenu>, so that pressing this key will bring up the
-      <guimenu>Global Menu</guimenu>; similarly, the common key
-      binding for the Run command dialog is the so-called
-      <keycap>Windows</keycap> key (called so because on most PC
-      keyboards this key is indeed labelled with a flying window).  To
-      change the key bound to <guimenu>Global Menu</guimenu> or to the
-      Run Dialog, you can either select a key from the drop-down list,
-      or click on the <guibutton>Grab</guibutton> button and then
-      press the desired key. </para>
+	Dieser Reiter erlaubt es Ihnen zusätzlich, einige globale
+	Tastenkombinationen festzulegen. Zur Zeit können Sie hier
+	eigene Tastenkombinationen für das
+	<link linkend="globalmenu"><guimenu>Globale Menü</guimenu></link>
+	und den <interface>Ausführen ...</interface>-Dialog festlegen.
+	Wenn Sie zum Beispiel eine Standard PC-Tastatur haben, können Sie
+	mit der <keycap>Menü</keycap>-Taste (sie befindet sich gewöhnlich links
+	neben der Leertaste und ist mit dem Bild eines Menüs beschriftet)
+	das <guimenu>Globale Menü</guimenu> aufrufen; in der gleichen Weise
+	ist die normale Tastenkombination für den
+	<interface>Ausführen ...</interface>-Dialog die
+	<keycap>Windows</keycap>-Taste (auf dem meisten PC-Tastaturen trägt
+	sie das Bild eines fliegenden Fensters).
+	Um die Tastenkombination für das <guimenu>Globale Menü</guimenu> oder
+	den <interface>Ausführen ...</interface>-Dialog zu ändern, können Sie
+	entweder eine Taste aus der Auswahlliste auswählen, oder den
+	<guibutton>Taste erfassen ...</guibutton>-Knopf klicken und dann die
+	gewünschte Taste drücken.
+      </para>
       <note>
-	<title>NOTE</title>
+	<title>HINWEIS</title>
 	<para>
-	  If you have problems with using <keycap>Menu</keycap> or
-	  <keycap>Windows</keycap> keys, the most probable explanation
-	  is that your X server was incorrectly configured: the
-	  keyboard type chosen during installation  does not match
-	  your actual keyboard. If you are using
-	  <application>XFree86</application> server, you can fix it by
-	  manually editing the configuration file. This file, named
-	  <filename>XF86Config</filename>, is usually located in
-	  <filename>/etc</filename> or <filename>/etc/X11</filename>
-	  directory. Open this file with any text editor (not a
-	  word-processor!), find there the line containing words
-	  <literal>XkbModel</literal> and change it to read
+	  Wenn Sie Probleme mit der <keycap>Menü</keycap>- oder
+	  <keycap>Windows</keycap>-Taste haben, bedeutet dies meistens,
+	  daß Ihr X-Server nicht richtig konfiguriert wurde: die während
+	  der Installation gewählte Tastatur stimmt nicht mit Ihrer
+	  physikalischen Tastatur überein. Wenn Sie den
+	  <application>XFree86</application>-Server verwenden, können Sie
+	  dies von Hand korrigieren, indem Sie die Konfigurationsdatei
+	  editieren. Diese Datei, <filename>XF86Config</filename> genannt,
+	  befindet sich normalerweise im Verzeichnis <filename>/etc</filename>
+	  oder <filename>/etc/X11</filename>. Öffnen Sie diese Datei mit
+	  einem Texteditor (keiner Textverarbeitung!), suchen Sie die Zeile,
+	  die die Wörter <literal>XkbModel</literal> enthält und ändern Sie
+	  sie in
 	  <programlisting>
               XkbModel "pc104"
 	  </programlisting>
-	  You need to be root (system administrator) to do this. Now,
-	  logout of GNOME and restart the X server by simultaneously
-	  pressing <keycombo> <keycap>Ctrl</keycap>
-	    <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>.
+	  Sie müssen als root (Systemverwalter) angemeldet sein, um dies
+	  zu tun. Nun melden Sie sich von GNOME ab und starten dann den
+	  X-Server neu, indem Sie gleichzeitig
+	  <keycombo> <keycap>Ctrl</keycap>
+	    <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>
+	  drücken.
 	</para>
       </note>
       <warning>
-	<title>WARNING</title>
+	<title>WARNUNG</title>
 	<para>
-	Making a mistake while editing <filename>XF86Config</filename>
-	file can make you keyboard or screen unusable in X
-	Windows. Therefore, please be careful, make a backup copy of
-	this file and make sure you know how to restore it from backup
-	without using X Windows, i.e., from a terminal. If you don't,
-	then do not edit it at all.  </para>
+	  Falls Ihnen beim Editieren der <filename>XF86Config</filename>-Datei
+	  ein Fehler unterläuft, kann dies Ihre Tastatur oder Ihr ganzes System
+	  im X-Window-System unbenutzbar machen. Seihen Sie daher also bitte
+	  vorsichtig, machen Sie eine Sicherheitskopie dieser Datei und stellen
+	  sicher, daß Sie wissen, wie man Sie von dieser Sicherheitskopie
+	  wiederherstellt, ohne das X-Window-System zu benutzen, also z.B.
+	  in einem Terminal. Wenn Sie sich darüber nicht sicher sind, ändern
+	  Sie diese Datei überhaupt nicht ab.
+	</para>
       </warning>
     </sect2>
   </sect1>
