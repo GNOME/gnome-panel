@@ -274,8 +274,7 @@ main(int argc, char **argv)
 
 	applet_files_init();
 
-	/*FIXME: make this work*/
-	/*create_applet_menu();*/
+	create_applet_menu();
 
 	/*set up the tooltips*/
 	tooltips_enabled =

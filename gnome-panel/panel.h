@@ -32,6 +32,8 @@ int panel_session_save (gpointer client_data,
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
 
+void create_applet_menu(void);
+
 END_GNOME_DECLS
 
 #endif

@@ -913,16 +913,11 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				return TRUE;
 			}
 
-			switch (bevent->button) {
-				case 2: /* Start drag */
-					panel_widget_applet_drag_start(
-						panel, widget, FALSE);
-					return TRUE;
-
-				case 3: /* Applet menu */
-					/*FIXME: APPLET MENU*/
-					/*show_applet_menu(widget);*/
-					return TRUE;
+			if(bevent->button == 2) {
+				/* Start drag */
+				panel_widget_applet_drag_start(
+					panel, widget, FALSE);
+				return TRUE;
 			}
 
 			break;

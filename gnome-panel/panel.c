@@ -389,16 +389,16 @@ create_applet(char *id, char *params, int pos, int panel)
 		g_free(params);
 }
 
-/*FIXME:applet menu!*/
-
-#if 0
+/*FIXME: move can't work from here!*/
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
+	/*
 	GtkWidget      *applet;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 	applet_drag_start(applet, TRUE);
+	*/
 }
 
 
@@ -409,6 +409,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	AppletCommand  cmd;
 	gchar *id;
 	gint pos;
+	GList *list;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 
@@ -422,17 +423,15 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 		  wrong ... a message box maybe ... or a beep*/
 		menu_count--;
 	}
+	applets=g_list_remove(applets,applet);
 
-	pos = find_applet(the_panel->panel,applet);
+	for(list=panels;list!=NULL;list=g_list_next(list))
+		if(panel_widget_get_pos(PANEL_WIDGET(list->data),applet)!=-1)
+			break;
+	if(!list)
+		return;
+	panel_widget_remove(PANEL_WIDGET(list->data),applet);
 	gtk_widget_destroy(applet);
-
-	/*FIMXE: no placeholders in drawers!*/
-	the_panel->panel->applets[pos]->applet = gtk_event_box_new();
-	gtk_widget_show(the_panel->panel->applets[pos]->applet);
-	the_panel->panel->applets[pos]->type = APPLET_PLACEHOLDER;
-
-	put_applet_in_slot(the_panel->panel,
-			   the_panel->panel->applets[pos],pos);
 }
 
 
@@ -449,12 +448,10 @@ applet_properties_callback(GtkWidget *widget, gpointer data)
 	call_applet(applet, &cmd);
 }
 
-#endif
-
-static void
+void
 create_applet_menu(void)
 {
-	/*GtkWidget *menuitem;
+	GtkWidget *menuitem;
 
 	applet_menu = gtk_menu_new();
 
@@ -466,12 +463,14 @@ create_applet_menu(void)
 	gtk_widget_show(menuitem);
 	applet_menu_remove_item = menuitem;
 
+	/*
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
 			   NULL);
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
+	*/
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
@@ -484,7 +483,7 @@ create_applet_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
-	applet_menu_prop_item = menuitem;*/
+	applet_menu_prop_item = menuitem;
 }
 
 
@@ -519,6 +518,16 @@ show_applet_menu(GtkWidget *applet)
 	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 3, time(NULL));
 	/*FIXME: make it pop-up on some title bar of the applet menu or
 	  somehow avoid pressing remove applet being under the cursor!*/
+}
+
+static gint
+applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
+{
+	if(event->button==3) {
+		show_applet_menu(widget);
+		return TRUE;
+	}
+	return FALSE;
 }
 
 static void
@@ -659,6 +668,11 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 	gtk_widget_show(eventbox);
 
 	applets = g_list_append(applets,eventbox);
+
+	gtk_signal_connect(GTK_OBJECT(eventbox),
+			   "button_press_event",
+			   GTK_SIGNAL_FUNC(applet_button_press),
+			   NULL);
 
 	/*notify the applet of the orientation of the panel!*/
 	applet_orientation_notify(eventbox,NULL);
