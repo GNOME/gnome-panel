@@ -54,8 +54,9 @@
 #define DEFAULT_AUTO_HIDE_SIZE    6
 #define DEFAULT_HIDE_DELAY        500
 #define DEFAULT_UNHIDE_DELAY      500
+#define DEFAULT_DND_THRESHOLD     8
 #define MINIMUM_WIDTH             100
-#define SNAP_TOLERANCE            20
+#define SNAP_TOLERANCE_FACTOR     6
 #define DEFAULT_ARROW_SIZE        20
 #define HANDLE_SIZE               10
 #define N_ATTACH_TOPLEVEL_SIGNALS 5
@@ -86,6 +87,9 @@ struct _PanelToplevelPrivate {
 	int                     unhide_delay;
 	int                     auto_hide_size;
 	PanelAnimationSpeed     animation_speed;
+
+	int                     snap_tolerance;
+	GtkSettings            *gtk_settings;
 
 	PanelState              state;
 
@@ -654,6 +658,7 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 	int               width, height;
 	int               new_monitor;
 	int               x, y;
+	int               snap_tolerance;
 
 	screen = panel_toplevel_get_screen_geometry (
 			toplevel, &screen_width, &screen_height);
@@ -661,24 +666,26 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 
+	snap_tolerance = toplevel->priv->snap_tolerance;
+
 	new_x = CLAMP (new_x, 0, screen_width  - width);
 	new_y = CLAMP (new_y, 0, screen_height - height);
 
 	new_orientation = toplevel->priv->orientation;
 
-	if (new_x <= SNAP_TOLERANCE &&
+	if (new_x <= snap_tolerance &&
 	    toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 		new_orientation = PANEL_ORIENTATION_LEFT;
 
-	else if ((new_x + width) >= (screen_width - SNAP_TOLERANCE) &&
+	else if ((new_x + width) >= (screen_width - snap_tolerance) &&
 		 toplevel->priv->orientation & PANEL_VERTICAL_MASK)
 		new_orientation = PANEL_ORIENTATION_RIGHT;
 
-	if (new_y <= SNAP_TOLERANCE &&
+	if (new_y <= snap_tolerance &&
 	    toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_TOP;
 
-	else if ((new_y + height) >= (screen_height - SNAP_TOLERANCE) &&
+	else if ((new_y + height) >= (screen_height - snap_tolerance) &&
 		 toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		new_orientation = PANEL_ORIENTATION_BOTTOM;
 
@@ -695,18 +702,18 @@ panel_toplevel_move_to (PanelToplevel *toplevel,
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
 		y_centered = FALSE;
-		if (new_y <= SNAP_TOLERANCE ||
-		    new_y + height >= screen_height - SNAP_TOLERANCE)
+		if (new_y <= snap_tolerance ||
+		    new_y + height >= screen_height - snap_tolerance)
 			x_centered = abs (x - ((monitor_width - width) / 2))
-								<= SNAP_TOLERANCE;
+								<= snap_tolerance;
 		else
 			x_centered = FALSE;
 	} else {
 		x_centered = FALSE;
-		if (new_x <= SNAP_TOLERANCE ||
-		    new_x + width >= screen_width - SNAP_TOLERANCE)
+		if (new_x <= snap_tolerance ||
+		    new_x + width >= screen_width - snap_tolerance)
 			y_centered = abs (y - ((monitor_height - height) / 2))
-								<= SNAP_TOLERANCE;
+								<= snap_tolerance;
 		else
 			y_centered = FALSE;
 	}
@@ -744,6 +751,7 @@ panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
 	GdkScreen *screen;
 	int        x_diff, y_diff;
 	int        x, y;
+	int        snap_tolerance;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -751,24 +759,25 @@ panel_toplevel_rotate_to_pointer (PanelToplevel *toplevel,
 
 	x = toplevel->priv->geometry.x;
 	y = toplevel->priv->geometry.y;
+	snap_tolerance = toplevel->priv->snap_tolerance;
 
 	x_diff = pointer_x - (x + toplevel->priv->geometry.width / 2);
 	y_diff = pointer_y - (y + toplevel->priv->geometry.height / 2);
 
-	if (((-y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
-	    (( y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
+	if (((-y_diff > x_diff + snap_tolerance) && x_diff > 0 && y_diff < 0) ||
+	    (( y_diff < x_diff + snap_tolerance) && x_diff < 0 && y_diff < 0))
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_RIGHT);
 
-	else if (((-x_diff < y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff < 0) ||
-	         (( x_diff > y_diff - SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0))
+	else if (((-x_diff < y_diff - snap_tolerance) && x_diff > 0 && y_diff < 0) ||
+	         (( x_diff > y_diff - snap_tolerance) && x_diff > 0 && y_diff > 0))
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_BOTTOM);
 
-	else if ((( y_diff > x_diff + SNAP_TOLERANCE) && x_diff > 0 && y_diff > 0) ||
-	         ((-y_diff < x_diff + SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0))
+	else if ((( y_diff > x_diff + snap_tolerance) && x_diff > 0 && y_diff > 0) ||
+	         ((-y_diff < x_diff + snap_tolerance) && x_diff < 0 && y_diff > 0))
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_LEFT);
 
-	else if (((-x_diff > y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff > 0) ||
-	         (( x_diff < y_diff - SNAP_TOLERANCE) && x_diff < 0 && y_diff < 0))
+	else if (((-x_diff > y_diff - snap_tolerance) && x_diff < 0 && y_diff > 0) ||
+	         (( x_diff < y_diff - snap_tolerance) && x_diff < 0 && y_diff < 0))
 		panel_toplevel_set_orientation (toplevel, PANEL_ORIENTATION_TOP);
 }
 
@@ -998,6 +1007,7 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 	GdkScreen *screen;
 	int        screen_width, screen_height;
 	int        x, y;
+	int        snap_tolerance;
 
 	if (toplevel->priv->expand) {
 		toplevel->priv->floating = FALSE;
@@ -1009,13 +1019,14 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 
 	x = panel_multiscreen_x (screen, toplevel->priv->monitor) + toplevel->priv->x;
 	y = panel_multiscreen_y (screen, toplevel->priv->monitor) + toplevel->priv->y;
+	snap_tolerance = toplevel->priv->snap_tolerance;
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		toplevel->priv->floating =
-			(y > SNAP_TOLERANCE) && (y < (screen_height - toplevel->priv->geometry.height - SNAP_TOLERANCE));
+			(y > snap_tolerance) && (y < (screen_height - toplevel->priv->geometry.height - snap_tolerance));
 	else
 		toplevel->priv->floating =
-			(x > SNAP_TOLERANCE) && (x < (screen_width - toplevel->priv->geometry.width - SNAP_TOLERANCE));
+			(x > snap_tolerance) && (x < (screen_width - toplevel->priv->geometry.width - snap_tolerance));
 }
 
 void 
@@ -1663,6 +1674,7 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 	GtkWidget *widget;
 	int        monitor_width, monitor_height;
 	int        width, height;
+	int        snap_tolerance;
 
 	g_assert (x != NULL && y != NULL);
 
@@ -1678,25 +1690,26 @@ panel_toplevel_update_normal_position (PanelToplevel *toplevel,
 
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
+	snap_tolerance = toplevel->priv->snap_tolerance;
 
 	*x = CLAMP (*x, 0, monitor_width  - width);
 	*y = CLAMP (*y, 0, monitor_height - height);
 
-	if (*x <= SNAP_TOLERANCE) {
+	if (*x <= snap_tolerance) {
 		*x = 0;
 		panel_toplevel_set_x (toplevel, 0, toplevel->priv->x_centered);
 	}
-	else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE)) {
+	else if ((*x + width) >= (monitor_width - snap_tolerance)) {
 		*x = monitor_width - width;
 		panel_toplevel_set_x (toplevel, monitor_width - width,
 				      toplevel->priv->x_centered);
 	}
 
-	if (*y <= SNAP_TOLERANCE) {
+	if (*y <= snap_tolerance) {
 		*y = 0;
 		panel_toplevel_set_y (toplevel, 0, toplevel->priv->y_centered);
 	}
-	else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE)) {
+	else if ((*y + height) >= (monitor_height - snap_tolerance)) {
 		*y = monitor_height - height;
 		panel_toplevel_set_y (toplevel, monitor_height - height,
 				      toplevel->priv->y_centered);
@@ -1713,6 +1726,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	int width, height;
 	int monitor_width, monitor_height;
 	int auto_hide_size;
+	int snap_tolerance;
 
 	g_assert (x != NULL && y != NULL);
 
@@ -1726,6 +1740,7 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 
 	width  = toplevel->priv->original_width;
 	height = toplevel->priv->original_height;
+	snap_tolerance = toplevel->priv->snap_tolerance;
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK)
 		auto_hide_size = CLAMP (toplevel->priv->auto_hide_size,
@@ -1757,23 +1772,23 @@ panel_toplevel_update_auto_hide_position (PanelToplevel *toplevel,
 	}
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
-		if (*x <= SNAP_TOLERANCE) {
+		if (*x <= snap_tolerance) {
 			*x = 0;
 			panel_toplevel_set_x (toplevel, 0,
 					      toplevel->priv->x_centered);
 		}
-		else if ((*x + width) >= (monitor_width - SNAP_TOLERANCE)) {
+		else if ((*x + width) >= (monitor_width - snap_tolerance)) {
 			*x = monitor_width - width;
 			panel_toplevel_set_x (toplevel, monitor_width - width,
 					      toplevel->priv->x_centered);
 		}
 	} else /* if (toplevel->priv->orientation & PANEL_VERTICAL_MASK) */ {
-		if (*y <= SNAP_TOLERANCE) {
+		if (*y <= snap_tolerance) {
 			*y = 0;
 			panel_toplevel_set_y (toplevel, 0,
 					      toplevel->priv->y_centered);
 		}
-		else if ((*y + height) >= (monitor_height - SNAP_TOLERANCE)) {
+		else if ((*y + height) >= (monitor_height - snap_tolerance)) {
 			*y = monitor_height - height;
 			panel_toplevel_set_y (toplevel, monitor_height - height,
 					      toplevel->priv->y_centered);
@@ -3437,9 +3452,43 @@ panel_toplevel_style_set (GtkWidget *widget,
 }
 
 static void
+panel_toplevel_drag_threshold_changed (PanelToplevel *toplevel)
+{
+	int threshold;
+
+	threshold = 0;
+	g_object_get (G_OBJECT (toplevel->priv->gtk_settings),
+		      "gtk-dnd-drag-threshold", &threshold,
+		      NULL);
+
+	if (threshold)
+		toplevel->priv->snap_tolerance = threshold * SNAP_TOLERANCE_FACTOR;
+}
+
+static void
+panel_toplevel_update_gtk_settings (PanelToplevel *toplevel)
+{
+	if (toplevel->priv->gtk_settings)
+		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
+						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
+						      toplevel);
+
+	toplevel->priv->gtk_settings = gtk_widget_get_settings (GTK_WIDGET (toplevel->priv->panel_widget));
+
+	g_signal_connect_swapped (G_OBJECT (toplevel->priv->gtk_settings),
+				  "notify::gtk-dnd-drag-threshold",
+				  G_CALLBACK (panel_toplevel_drag_threshold_changed),
+				  toplevel);
+
+	panel_toplevel_drag_threshold_changed (toplevel);
+}
+
+static void
 panel_toplevel_screen_changed (GtkWidget *widget,
 			       GdkScreen *previous_screen)
 {
+	panel_toplevel_update_gtk_settings (PANEL_TOPLEVEL (widget));
+
 	if (GTK_WIDGET_CLASS (parent_class)->screen_changed)
 		GTK_WIDGET_CLASS (parent_class)->screen_changed (widget, previous_screen);
 
@@ -3602,6 +3651,13 @@ panel_toplevel_finalize (GObject *object)
 	panel_struts_unregister_strut (toplevel);
 
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
+
+	if (toplevel->priv->gtk_settings) {
+		g_signal_handlers_disconnect_by_func (toplevel->priv->gtk_settings,
+						      G_CALLBACK (panel_toplevel_drag_threshold_changed),
+						      toplevel);
+		toplevel->priv->gtk_settings = NULL;
+	}
 
 	if (toplevel->priv->attached) {
 		panel_toplevel_disconnect_attached (toplevel);
@@ -4049,6 +4105,9 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	toplevel->priv->auto_hide_size  = DEFAULT_AUTO_HIDE_SIZE;
 	toplevel->priv->animation_speed = PANEL_ANIMATION_MEDIUM;
 
+	toplevel->priv->snap_tolerance  = DEFAULT_DND_THRESHOLD * SNAP_TOLERANCE_FACTOR;
+	toplevel->priv->gtk_settings    = NULL;
+
 	toplevel->priv->state = PANEL_STATE_NORMAL;
 
 	toplevel->priv->name        = NULL;
@@ -4117,6 +4176,7 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
+	panel_toplevel_update_gtk_settings (toplevel);
 	
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
 

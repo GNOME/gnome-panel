@@ -1,5 +1,27 @@
 2005-01-12  Vincent Untz  <vincent@vuntz.net>
 
+	 Use gtk dnd threshold value for snap tolerance
+	 Fix bug #107776.
+
+	* panel-toplevel.c: (panel_toplevel_move_to): updated to use the
+	snap_tolerance in the private structure
+	(panel_toplevel_rotate_to_pointer): ditto
+	(panel_toplevel_calc_floating): ditto
+	(panel_toplevel_update_normal_position): ditto
+	(panel_toplevel_update_auto_hide_position): ditto
+	(panel_toplevel_drag_threshold_changed): new, update the
+	snap_tolerance when gtk-dnd-drag-threshold has been changed
+	(panel_toplevel_update_gtk_settings): new, update the GtkSettings we
+	watch and disconnect from the previous one
+	(panel_toplevel_screen_changed): call
+	panel_toplevel_update_gtk_settings()
+	(panel_toplevel_finalize): disconnect the handler for
+	gtk-dnd-drag-threshold changes
+	(panel_toplevel_instance_init): initialize the new fields and the
+	GtkSettings we watch
+
+2005-01-12  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-gconf.c: (panel_gconf_copy_dir): don't set a key if there's no
 	value. Fix crasher #146768.
 
