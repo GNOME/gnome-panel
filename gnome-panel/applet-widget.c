@@ -1517,6 +1517,10 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
  * @return_ctx: return popt context
  *
  * Description: Initialize the applet library, gnome and corba.
+ * Don't call this if your app has an applet, but your process is not
+ * simply an applet process.  This will 1) disconnect the session
+ * manager and 2) setup stuff to call gtk_main_quit when the last applet
+ * you create exists.  And that's all really.
  *
  * Returns: A boolean, %TRUE if we succeed, %FALSE if an error occured
  **/

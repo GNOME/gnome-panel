@@ -1705,6 +1705,11 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 		return; 
 	}
 
+        if (basep->leave_notify_timer_tag != 0) {
+                gtk_timeout_remove (basep->leave_notify_timer_tag);
+                basep->leave_notify_timer_tag = 0;
+	}
+
         if (basep->enter_notify_timer_tag != 0) {
                 gtk_timeout_remove (basep->enter_notify_timer_tag);
 #ifdef PANEL_DEBUG
@@ -1818,6 +1823,11 @@ basep_widget_queue_autohide(BasePWidget *basep)
 		g_print ("return 2");
 #endif
 		return; 
+	}
+
+        if (basep->enter_notify_timer_tag != 0) {
+                gtk_timeout_remove (basep->enter_notify_timer_tag);
+                basep->enter_notify_timer_tag = 0;
 	}
 
         if (basep->leave_notify_timer_tag != 0) {
