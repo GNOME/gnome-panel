@@ -1,3 +1,11 @@
+2002-12-17  Mark McLoughlin  <mark@skynet.ie>
+
+	* gnome-panel-preferences.c: (bool_value_changed_notify),
+	(load_checkboxes), (enum_value_changed_notify),
+	(load_animation_menu), (load_config_into_gui): receive
+	gconf notifications and update the GUI accordingly.
+	Fixes #101064.
+
 2002-12-13  Rajkumar Sivasamy  <rajkumar.siva@wipro.com>
 
 	* panel-stock-icons.[ch],

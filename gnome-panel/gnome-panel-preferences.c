@@ -64,6 +64,32 @@ update_sensitive_for_checkbox (GladeXML *gui,
 }
 
 static void
+bool_value_changed_notify (GConfClient     *client,
+			   guint            cnxn_id,
+			   GConfEntry      *entry,
+			   GtkToggleButton *toggle)
+{
+	gboolean value;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+
+	if (gtk_toggle_button_get_active (toggle) != value) {
+		char *basename;
+
+		gtk_toggle_button_set_active (toggle, value);
+
+		basename = g_path_get_basename (gconf_entry_get_key (entry));
+		update_sensitive_for_checkbox (
+			g_object_get_data (G_OBJECT (toggle), "glade-xml"),
+			basename, value);
+		g_free (basename);
+	}
+}
+
+static void
 checkbox_clicked (GtkWidget *widget,
 		  char      *key)
 {
@@ -106,6 +132,11 @@ load_checkboxes (GladeXML    *gui,
 
 		key = panel_gconf_global_key (checkboxes [i]);
 
+		gconf_client_notify_add (
+			client, key,
+			(GConfClientNotifyFunc) bool_value_changed_notify,
+			checkbox, NULL, NULL);
+
 		checked = gconf_client_get_bool (client, key, NULL);
 
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(checkbox), checked);
@@ -133,19 +164,47 @@ animation_menu_changed (GtkWidget *widget)
 }
 
 static void
+enum_value_changed_notify (GConfClient   *client,
+			   guint          cnxn_id,
+			   GConfEntry    *entry,
+			   GtkOptionMenu *option)
+{
+	const char *value;
+	int         speed = PANEL_SPEED_SLOW;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+		return;
+
+	value = gconf_value_get_string (entry->value);
+	 
+	gconf_string_to_enum (
+		global_properties_speed_type_enum_map, value, &speed);
+
+	if (gtk_option_menu_get_history (GTK_OPTION_MENU (option)) != speed)
+		gtk_option_menu_set_history (GTK_OPTION_MENU (option), speed);
+}
+
+static void
 load_animation_menu (GladeXML    *gui,
 		     GConfClient *client)
 {
 	GtkWidget  *option;
 	char       *tmpstr;
 	int         speed = PANEL_SPEED_SLOW;
+	const char *key;
 
 	option = glade_xml_get_widget (gui, "panel_animation_speed");
+
+	key = panel_gconf_global_key ("panel_animation_speed");
+
+	gconf_client_notify_add (
+		client, key,
+		(GConfClientNotifyFunc) enum_value_changed_notify,
+		option, NULL, NULL);
 		
-	tmpstr = gconf_client_get_string (
-			client, panel_gconf_global_key ("panel_animation_speed"), NULL);
+	tmpstr = gconf_client_get_string (client, key, NULL);
 	gconf_string_to_enum (
-		global_properties_speed_type_enum_map, tmpstr, (int *) &speed);
+		global_properties_speed_type_enum_map, tmpstr, &speed);
 	g_free (tmpstr);
 
 	gtk_option_menu_set_history (GTK_OPTION_MENU (option), speed);
@@ -158,8 +217,16 @@ static void
 load_config_into_gui (GladeXML *gui)
 {
 	GConfClient *client;
+	GError      *error = NULL;
 
 	client = gconf_client_get_default ();
+
+	gconf_client_add_dir (client, "/apps/panel/global",
+			      GCONF_CLIENT_PRELOAD_NONE, &error);
+	if (error) {
+		g_warning ("Failed to monitor '/apps/panel/global': %s", error->message);
+		g_error_free (error);
+	}
 
 	load_checkboxes (gui, client);
 	load_animation_menu (gui, client);
