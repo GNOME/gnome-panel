@@ -93,6 +93,18 @@ applet_orientation_notify(GtkWidget *widget, gpointer data)
 {
 }
 
+static gint
+find_panel(PanelWidget *panel)
+{
+	gint i;
+	GList *list;
+
+	for(i=0,list=panels;list!=NULL;list=g_list_next(list),i++)
+		if(list->data == panel)
+			return i; 
+	return -1;
+}
+
 static void
 save_applet_configuration(gpointer data, gpointer user_data)
 {
@@ -131,7 +143,18 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"parameters",NULL);
-	gnome_config_set_string(fullpath, info->params);
+	if(strcmp(info->id,DRAWER_ID) == 0) {
+		int i;
+
+		i = find_panel(PANEL_WIDGET(info->assoc));
+		if(i>=0)
+			gnome_config_set_int(fullpath,i);
+		else
+			g_warning("Drawer not associated with applet!");
+	} else {
+		if(info->params)
+			gnome_config_set_string(fullpath, info->params);
+	}
 	g_free(fullpath);
 
 	g_free(path);
@@ -464,7 +487,7 @@ add_main_menu(GtkWidget *widget, gpointer data)
 {
 	PanelWidget *panel = data;
 	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
-	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION,1);
+	create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/

@@ -1054,11 +1054,12 @@ panel_widget_new (gint size,
 			panel->state = PANEL_HIDDEN;
 	} else {
 		panel->size = PANEL_MAX;
+		/*sanity check*/
+		if(panel->mode == PANEL_EXPLICIT_HIDE &&
+		   panel->state == PANEL_HIDDEN)
+			panel->state = PANEL_SHOWN;
 	}
 
-	/*sanity check*/
-	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
-		panel->state = PANEL_SHOWN;
 
 	panel_widget_set_size(panel,panel->size);
 

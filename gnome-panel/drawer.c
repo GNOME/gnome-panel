@@ -77,7 +77,7 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 
 Drawer *
 create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
-		     DrawerOrient orient)
+	DrawerOrient orient)
 {
 	GtkWidget *pixmap;
 	Drawer *drawer;
@@ -105,7 +105,7 @@ create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
 	drawer->orient = orient;
 
 	/* main button */
-	drawer->button = gtk_event_box_new ();
+	drawer->button = gtk_button_new ();
 	
 	/*make the pixmap*/
 	pixmap = gnome_create_pixmap_widget (window, drawer->button, pixmap_name);
@@ -121,17 +121,23 @@ create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
 
 	drawer->drawer = drawer_panel;
 
-	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN)
-		gtk_widget_show(drawer->drawer);
-	else
-		gtk_widget_hide(drawer->drawer);
-
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "clicked",
 			    GTK_SIGNAL_FUNC (drawer_click), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
 
 	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
+
+	/*FIXME: this don't work, make sure the drawer is shown if
+	  it is supposed to be
+	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
+		PANEL_WIDGET(drawer->drawer)->state = PANEL_HIDDEN;
+		gtk_signal_connect_after(GTK_OBJECT(drawer->button),
+					 "size_allocate",
+					 GTK_SIGNAL_FUNC(drawer_click),
+					 drawer);
+	}
+	*/
 
 	g_free (pixmap_name);
 	return drawer;
@@ -145,7 +151,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						PANEL_HIDDEN,
+						PANEL_SHOWN,
 						global_config.explicit_hide_step_size,
 						0, 0, 0, 0, 
 						DROP_ZONE_LEFT),
@@ -155,7 +161,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						PANEL_HIDDEN,
+						PANEL_SHOWN,
 						global_config.explicit_hide_step_size,
 						0, 0, 0, 0, 
 						DROP_ZONE_RIGHT),
@@ -165,7 +171,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						PANEL_HIDDEN,
+						PANEL_SHOWN,
 						global_config.explicit_hide_step_size,
 						0, 0, 0, 0, 
 						DROP_ZONE_LEFT),
@@ -175,7 +181,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						PANEL_HIDDEN,
+						PANEL_SHOWN,
 						global_config.explicit_hide_step_size,
 						0, 0, 0, 0, 
 						DROP_ZONE_RIGHT),

@@ -16,8 +16,10 @@ typedef struct {
 	DrawerOrient orient;
 } Drawer;
 
-Drawer * create_drawer_applet(GtkWidget *window ,GtkWidget * drawer_panel,
+Drawer * create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
 			      DrawerOrient orient);
+
+Drawer * create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient);
 
 END_GNOME_DECLS
 

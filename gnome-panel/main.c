@@ -51,9 +51,45 @@ load_applet(char *id, char *params, int pos, int panel)
 			     panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
 	} else if(strcmp(id,DRAWER_ID) == 0) {
 		Drawer *drawer;
+		PanelWidget *parent;
+		DrawerOrient orient;
 
-		/*FIXME: create an applet, if params is NULL create a whole
-		  new panel*/
+		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
+
+		switch(parent->snapped) {
+			case PANEL_FREE:
+			case PANEL_DRAWER:
+				orient = (parent->orient==PANEL_VERTICAL)?
+					 DRAWER_RIGHT:DRAWER_UP;
+				break;
+			case PANEL_TOP:
+				orient = DRAWER_DOWN;
+				break;
+			case PANEL_BOTTOM:
+				orient = DRAWER_UP;
+				break;
+			case PANEL_LEFT:
+				orient = DRAWER_RIGHT;
+				break;
+			case PANEL_RIGHT:
+				orient = DRAWER_LEFT;
+				break;
+		}
+
+		if(!params) {
+			drawer = create_empty_drawer_applet(GTK_WIDGET(parent),
+							    orient);
+			panels = g_list_append(panels,drawer->drawer);
+		} else {
+			int i;
+
+			sscanf(params,"%d",&i);
+			drawer = create_drawer_applet(GTK_WIDGET(parent),
+						     g_list_nth(panels,i)->data,
+						     orient);
+		}
+
+		g_return_if_fail(drawer != NULL);
 
 		register_toy(drawer->button,drawer->drawer,DRAWER_ID,params,
 			     pos, panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
