@@ -1271,7 +1271,7 @@ panel_ensure_dir (const char *dirname)
 	while (p != NULL) {
 		*p = '\0';
 		if (mkdir (parsed, 0700) != 0 &&
-		    errno != EEXIST) {
+		    errno != EEXIST && errno != ENOSYS) {
 			g_free (parsed);
 			return FALSE;
 		}
@@ -1280,7 +1280,7 @@ panel_ensure_dir (const char *dirname)
 	}
 
 	if (mkdir (parsed, 0700) != 0 &&
-	    errno != EEXIST) {
+	    errno != EEXIST && errno != ENOSYS) {
 		g_free (parsed);
 		return FALSE;
 	}
