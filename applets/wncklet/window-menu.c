@@ -778,6 +778,39 @@ window_menu_key_press_event (GtkWidget   *widget,
 }
 
 static void
+window_menu_change_background (PanelApplet               *applet,
+			       PanelAppletBackgroundType  type,
+			       GdkColor                  *color,
+			       GdkPixmap                 *pixmap,
+			       WindowMenu                *window_menu)
+{
+	GtkRcStyle *rc_style;
+	GtkStyle   *style;
+
+	/* reset style */
+	gtk_widget_set_style (GTK_WIDGET (window_menu->applet), NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (GTK_WIDGET (window_menu->applet), rc_style);
+	g_object_unref (rc_style);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gtk_widget_modify_bg (GTK_WIDGET (window_menu->applet),
+				      GTK_STATE_NORMAL, color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		style = gtk_style_copy (GTK_WIDGET (window_menu->applet)->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (GTK_WIDGET (window_menu->applet), style);
+		break;
+	}
+}
+
+static void
 window_menu_setup_menu (WindowMenu *window_menu)
 {
 	WnckScreen *screen;
@@ -883,6 +916,8 @@ window_menu_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (window_menu_button_press_event), window_menu);
 	g_signal_connect (window_menu->applet, "key_press_event",
 			  G_CALLBACK (window_menu_key_press_event), window_menu);
+	g_signal_connect (G_OBJECT (window_menu->applet), "change_background",
+			  G_CALLBACK (window_menu_change_background), window_menu);
 
     	gtk_widget_show (GTK_WIDGET (window_menu->applet));
 

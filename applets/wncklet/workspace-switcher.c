@@ -146,6 +146,39 @@ applet_change_orient (PanelApplet       *applet,
 		gtk_label_set_text (GTK_LABEL (pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("rows") : _("columns"));	
 }
 
+static void
+applet_change_background (PanelApplet               *applet,
+			  PanelAppletBackgroundType  type,
+			  GdkColor                  *color,
+			  GdkPixmap                 *pixmap,
+			  PagerData                 *pager)
+{
+	GtkRcStyle *rc_style;
+	GtkStyle   *style;
+
+	/* reset style */
+	gtk_widget_set_style (GTK_WIDGET (pager->applet), NULL);
+	rc_style = gtk_rc_style_new ();
+	gtk_widget_modify_style (GTK_WIDGET (pager->applet), rc_style);
+	g_object_unref (rc_style);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		gtk_widget_modify_bg (GTK_WIDGET (pager->applet),
+				      GTK_STATE_NORMAL, color);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		style = gtk_style_copy (GTK_WIDGET (pager->applet)->style);
+		if (style->bg_pixmap[GTK_STATE_NORMAL])
+			g_object_unref (style->bg_pixmap[GTK_STATE_NORMAL]);
+		style->bg_pixmap[GTK_STATE_NORMAL] = g_object_ref (pixmap);
+		gtk_widget_set_style (GTK_WIDGET (pager->applet), style);
+		break;
+	}
+}
+
 static void 
 response_cb (GtkWidget *widget,
 	     int        id,
@@ -426,6 +459,10 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
+			  pager);
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "change_background",
+			  G_CALLBACK (applet_change_background),
 			  pager);
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
