@@ -522,6 +522,35 @@ create_launcher (const char *location)
 	return launcher;
 }
 
+static char *
+guess_icon_from_exec (GnomeDesktopItem *ditem)
+{
+	const char *exec;
+	char       *icon_name;
+	char       *icon;
+
+	exec = gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC);
+	if (!exec || !exec [0])
+		return NULL;
+
+	icon_name = g_path_get_basename (exec);
+
+	if (!(icon = gnome_desktop_item_find_icon (panel_icon_theme, icon_name, 48, 0))) {
+		g_free (icon_name);
+		return NULL;
+	}
+
+	if (g_file_test (icon, G_FILE_TEST_IS_DIR)) {
+		g_free (icon_name);
+		g_free (icon);
+		return NULL;
+	}
+
+	g_free (icon);
+
+	return icon_name;
+}
+
 static void
 setup_button (Launcher *launcher)
 {
@@ -530,6 +559,7 @@ setup_button (Launcher *launcher)
 	char *str;
 	const char *icon;
 	char *unescaped_str;
+	char *freeme = NULL;
 	
 	g_return_if_fail (launcher != NULL);
 
@@ -557,7 +587,12 @@ setup_button (Launcher *launcher)
 	/* Setup icon */
 	icon = gnome_desktop_item_get_string (launcher->ditem,
 					      GNOME_DESKTOP_ITEM_ICON);
+	if (!icon)
+		icon = freeme = guess_icon_from_exec (launcher->ditem);
+
 	button_widget_set_icon_name (BUTTON_WIDGET (launcher->button), sure_string (icon));
+
+	g_free (freeme);
 }
 
 

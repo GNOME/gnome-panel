@@ -1,5 +1,13 @@
 2004-05-13  Mark McLoughlin  <mark@skynet.ie>
 
+	Based on a patch from Satvik Upadhyaya <satvik@students.iiit.net>
+	in bug #107968.
+
+	* launcher.c: (guess_icon_from_exec), (setup_button): if no icon
+	is set, try and guess a sensible icon from the command name.
+
+2004-05-13  Mark McLoughlin  <mark@skynet.ie>
+
 	* button-widget.c: (calc_arrow), (button_widget_expose): use
 	gtk_paint_arrow() to draw the little triangle on menu buttons
 	rather than drawing a rectangle manually. Fixes bug #103342.
