@@ -4095,6 +4095,14 @@ menu_applet_reparented (GtkWidget *applet,
 		GTK_MENU (menu->menu), "menu_panel", applet->parent);
 }
 
+static void
+button_style_event_cb (GtkWidget *widget,
+		       GtkStyle  *prev_style, 
+		       Menu      *menu)
+{
+	button_widget_set_stock_id (menu->button, PANEL_STOCK_GNOME_LOGO);
+}
+
 static Menu *
 create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 		   PanelOrient orient, int main_menu_flags,
@@ -4106,7 +4114,9 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	};
 	Menu *menu;
 	
-	char *pixmap_name;
+	char *pixmap_name = NULL;
+	char *stock_id = NULL;
+	
 
 	menu = g_new0 (Menu, 1);
 
@@ -4124,16 +4134,28 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	    menu->custom_icon_file != NULL &&
 	    g_file_test (menu->custom_icon_file, G_FILE_TEST_EXISTS))
 		pixmap_name = g_strdup (menu->custom_icon_file);
-	else
-		pixmap_name = get_pixmap (menudir, main_menu);
+	else {
+		if (main_menu)
+			stock_id = PANEL_STOCK_GNOME_LOGO;
+		else
+			pixmap_name = get_pixmap (menudir, main_menu);
+	}
 
 	menu->main_menu_flags = main_menu_flags;
 	menu->global_main = global_main;
 
 	/*make the pixmap*/
-	menu->button = button_widget_new (pixmap_name, -1,
-					  TRUE, orient);
-	g_free (pixmap_name);
+	if (stock_id) {
+		menu->button = button_widget_new_from_stock (stock_id, -1,
+							     TRUE, orient);
+		g_signal_connect (menu->button, "style-set", 
+				  G_CALLBACK (button_style_event_cb), menu);
+	}
+	else {
+		menu->button = button_widget_new (pixmap_name, -1, TRUE, orient);
+		g_free (pixmap_name); 
+	}
+
 	if (!menu->button) {
 		free_menu (menu);
 		return NULL;

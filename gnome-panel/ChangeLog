@@ -1,3 +1,15 @@
+2003-02-12  Rajkumar Sivasamy  <rajkumar.siva@wipro.com>
+
+	* panel-action-button.c: Listen to "style-set" signal for 
+	theme changes and update LockScreen and LogOut buttons 
+	with new stock images supplied.
+	Fixes bug 105948
+
+2003-02-11  Rajkumar Sivasamy  <rajkumar.siva@wipro.com>
+
+	* menu.c: Use stock icon for GNOME Foot menu.
+	Fixes bug 95317
+
 2003-01-30  Arvind Samptur <arvind.samptur@wipro.com>
 	* panel-widget.[ch]: Add a GSList to the PanelWidget struct
 	to keep track of all the open 'Create Launcher' dialogs.
