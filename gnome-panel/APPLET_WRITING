@@ -12,6 +12,11 @@ etc ... etc ... etc ...
 Changes:
 ========
 
+7/23/98) The applets should call applet_widget_sync_config, so that their
+	 changes can be noticed by the panel and synced to disk immediately
+	 it's not completely neccessary as everything will be saved when
+	 logging out, but it makes it nice for crashes, etc ...
+
 7/3/98) the session_save signal is now being phased out, you need to use
 	save_session signal which has basically the same interface, but
 	uses privcfgpath instead of cfgpath. cfgpath variable is also
@@ -311,6 +316,14 @@ hello = gnome_config_get_bool("all_hello_applets/hello=true");
 gnome_config_pop_prefix();
 
 Similiarly for the save_session.
+
+NOTE:
+When you update your configuration in some properties dialog, or however
+else, you should call applet_widget_config_sync(AppletWidget *applet),
+it will tell the panel to send a session save signal to the applet with
+the correct paths etc. This is not 100% neccessary, but makes it nice so
+that configuration is not lost during crashes (when panel couldn't do it's
+complete save during shutdown)
 
 Panel Orientation:
 ==================
