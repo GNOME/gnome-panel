@@ -104,6 +104,19 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 }
 
 static void
+add_tearoff (GtkMenu *menu)
+{
+	GtkWidget *item;
+
+	if (!gnome_preferences_get_menus_have_tearoff ())
+		return;
+	
+	item = gtk_tearoff_menu_item_new ();
+	gtk_widget_show (item);
+	gtk_menu_prepend (menu, item);
+}
+
+static void
 url_show (GtkWidget *w, const char *url)
 {
 	gnome_url_show (url);
@@ -193,6 +206,8 @@ append_gnome_menu (GtkWidget *menu_bar)
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (about_cb), NULL);
 
+	add_tearoff (GTK_MENU (menu));
+
 	item = pixmap_menu_item_new ("", "gnome-spider.png");
 
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -233,6 +248,8 @@ append_desktop_menu (GtkWidget *menu_bar)
 	item = gtk_menu_item_new_with_label (_("Arrange Icons"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
+	add_tearoff (GTK_MENU (menu));
+
 	menu = gtk_menu_new ();
 
 	gtk_menu_append (GTK_MENU (menu), item);
@@ -260,6 +277,8 @@ append_desktop_menu (GtkWidget *menu_bar)
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
+
+	add_tearoff (GTK_MENU (menu));
 
 	item = gtk_menu_item_new_with_label (_(" Desktop "));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -420,10 +439,14 @@ append_clock_menu (GtkWidget *menu_bar)
 	for (i=0; formats[i]; i++)
 		append_format_item (menu2, formats[i]);
 
+	add_tearoff (GTK_MENU (menu2));
+
 	item = gtk_menu_item_new_with_label (_("Format"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
 	gtk_menu_append (GTK_MENU (menu), item);
-	
+
+	add_tearoff (GTK_MENU (menu));
+
 	item = gtk_menu_item_new ();
 	label = gtk_label_new ("");
 	timeout = gtk_timeout_add (1000, timeout_cb, label);
