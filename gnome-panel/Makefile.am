@@ -119,7 +119,6 @@ panel_sources =			\
 	panel-config-global.c  	\
 	panel-util.c		\
 	panel-gconf.c		\
-	global-keys.c		\
 	panel-config.c  	\
 	distribution.c		\
 	gnome-run.c  		\
@@ -139,6 +138,7 @@ panel_sources =			\
 	panel-menu-bar.c        \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
+	panel-action-protocol.c	\
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -163,7 +163,6 @@ panel_headers =			\
 	applet.h         	\
 	drawer.h  		\
 	panel-util.h		\
-	global-keys.h		\
 	panel-config.h		\
 	panel-config-global.h  	\
 	panel-gconf.h		\
@@ -184,6 +183,7 @@ panel_headers =			\
 	panel-menu-bar.h        \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
+	panel-action-protocol.h	\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 

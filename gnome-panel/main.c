@@ -30,7 +30,7 @@
 #include "session.h"
 #include "xstuff.h"
 #include "panel-stock-icons.h"
-#include "global-keys.h"
+#include "panel-action-protocol.h"
 
 extern int config_sync_timeout;
 
@@ -191,7 +191,7 @@ main(int argc, char **argv)
 
 	panel_tooltips = gtk_tooltips_new ();
 
-	xstuff_init ((GdkFilterFunc) panel_global_keys_filter);
+	panel_action_protocol_init ();
 	multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 

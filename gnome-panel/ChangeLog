@@ -1,3 +1,23 @@
+2003-02-24  Mark McLoughlin  <mark@skynet.ie>
+
+	Move responsibility for the various global keybindings
+	from the panel to the winow manager. Window managers can
+	invoke the keybindings using the _GNOME_PANEL_ACTION
+	ClientMessage protocol.
+
+	* Makefile.am: add panel-action-protocol.[ch] and remove
+	global-keys.[ch].
+
+	* panel-action-protocol.[ch]: implement the protocol.
+
+	* global-keys.[ch]: kill.
+
+	* main.c: (main): upd.
+
+	* panel.c: (panel_apply_global_config): upd.
+
+	* xstuff.[ch]: (xstuff_init): kill.
+
 2003-02-22  Arvind Samptur <arvind.samptur@wipro.com>
 
 	Do not popup a 'Delete Panel" query if there are

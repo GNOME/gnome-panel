@@ -46,7 +46,6 @@
 #include "panel-gconf.h"
 #include "session.h"
 #include "panel-applet-frame.h"
-#include "global-keys.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
 #include "panel-compatibility.h"
@@ -2002,10 +2001,7 @@ panel_apply_global_config (void)
 
 		basep_update_frame (BASEP_WIDGET (pd->panel));
 	}
-
-	panel_global_keys_setup ();
 }
-
 
 static GtkWidget *
 panel_load_edge_panel_from_gconf (const char          *profile,

@@ -312,26 +312,6 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 			 panel_atom_get (name));
 }
 
-void
-xstuff_init (GdkFilterFunc keys_filter)
-{
-	GdkDisplay *display;
-	int         screens, i;
-
-	display = gdk_display_get_default ();
-	screens = gdk_display_get_n_screens (display);
-
-	for (i = 0; i < screens; i++) {
-		GdkScreen *screen;
-		GdkWindow *root_window;
-
-		screen = gdk_display_get_screen (display, i);
-		root_window = gdk_screen_get_root_window (screen);
-
-		gdk_window_add_filter (root_window, keys_filter, screen);
-	}
-}
-
 /* Zoom animation */
 #define MINIATURIZE_ANIMATION_FRAMES_Z   1
 #define MINIATURIZE_ANIMATION_STEPS_Z    6
