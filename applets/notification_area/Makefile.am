@@ -8,7 +8,11 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(PANEL_CFLAGS)						\
 	$(APPLET_CFLAGS)					\
-	-DG_LOG_DOMAIN=\""notification-area-applet"\"
+	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\
+	-DPREFIX=\"$(prefix)\"					\
+	-DSYSCONFDIR=\"$(sysconfdir)\"				\
+	-DDATADIR=\"$(datadir)\"				\
+	-DLIBDIR=\"$(libdir)\"
 
 libexec_PROGRAMS = notification-area-applet
 
