@@ -101,6 +101,8 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
+void panel_clean_applet(AppletInfo *info);
+
 /*stuff for corba*/
 int applet_request_id (const char *path, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);

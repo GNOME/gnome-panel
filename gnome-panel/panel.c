@@ -331,7 +331,7 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 	panel_widget_applet_move_use_idle(panel);
 }
 
-static void
+void
 panel_clean_applet(AppletInfo *info)
 {
 	PanelWidget *panel;
@@ -739,8 +739,10 @@ reserve_applet_spot (const char *id_str, const char *path, int panel,
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
 	if(!register_toy(socket,NULL,NULL,g_strdup(id_str),g_strdup(path),
-		         pos,panel,cfgpath, type))
+		         pos,panel,cfgpath, type)) {
+		g_warning("Couldn't add applet");
 		return 0;
+	}
 
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
@@ -890,7 +892,6 @@ register_toy(GtkWidget *applet,
 		gtk_object_set_data(GTK_OBJECT(eventbox),
 				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc);
 		
-
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
 	while(panel_widget_add(panelw, eventbox, pos)==-1) {
@@ -903,6 +904,7 @@ register_toy(GtkWidget *applet,
 				g_free(info->params);
 			g_free(info->id_str);
 			g_free(info);
+			g_warning("Can't find an empty spot");
 			return FALSE;
 		}
 		panelw = PANEL_WIDGET(list->data);

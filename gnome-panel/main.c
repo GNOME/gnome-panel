@@ -8,6 +8,8 @@
 
 #include <config.h>
 #include <string.h>
+#include <signal.h>
+#include <waitflags.h>
 #include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
@@ -52,6 +54,16 @@ struct _LoadApplet {
 	int panel;
 	char *cfgpath;
 };
+
+static GList * children = NULL;
+
+typedef struct _AppletChild AppletChild;
+struct _AppletChild {
+	AppletInfo *info;
+	pid_t pid;
+};
+
+
 
 GList *load_queue=NULL;
 	
@@ -108,7 +120,7 @@ void
 load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
-		gchar *command;
+		/*gchar *command;*/
 		gchar *fullparams;
 
 		/*make it an absolute path, same as the applets will
@@ -125,18 +137,41 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		   params[0] == '\0')
 		   	return;
 
-		reserve_applet_spot (id_str, fullparams, panel, pos, cfgpath,
-				     APPLET_EXTERN_PENDING);
+		if(reserve_applet_spot (id_str, fullparams, panel, pos, cfgpath,
+				        APPLET_EXTERN_PENDING)==0)
+			return;
 		
 		/*'#' marks an applet that will take care of starting
 		  itself but wants us to reserve a spot for it*/
 		if(params[0]!='#') {
-			/*this applet is dumb and wants us to start it :)*/
-			command = g_copy_strings ("(true;", fullparams, ") &",
-						  NULL);
+			AppletChild *child;
+			GList *list;
 
-			system (command);
-			g_free (command);
+			child = g_new(AppletChild,1);
+			
+			child->pid=fork();
+
+			if(child->pid==-1)
+				g_error("Can't fork!");
+			if(child->pid==0) {
+				execlp(fullparams,fullparams,NULL);
+				g_error("Can't execlp!");
+				_exit(1);
+			}
+			/*this applet is dumb and wants us to start it :)*/
+			/*command = g_copy_strings ("(true;", fullparams, ") &",
+						  NULL);*/
+
+			for(list=applets;g_list_next(list)!=NULL;
+			    list=g_list_next(list))
+				;
+
+			child->info = list->data;
+				
+			children = g_list_prepend(children,child);
+
+			/*system (command);
+			g_free (command);*/
 		}
 
 		g_free(fullparams);
@@ -767,6 +802,23 @@ panel_connect_client (GnomeClient *client,
 }
 	
 
+void
+sigchld_handler(int type)
+{
+	GList *list;
+	pid_t pid = waitpid(0,NULL,WNOHANG);
+
+	if(pid <= 0)
+		return;
+
+	for(list=children;list!=NULL;list=g_list_next(list)) {
+		AppletChild *child=list->data;
+		if(child->pid == pid) {
+			panel_clean_applet(child->info);
+			break;
+		}
+	}
+}
 
 
 int
@@ -779,6 +831,8 @@ main(int argc, char **argv)
 
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
+
+	signal(SIGCHLD,  sigchld_handler);
 
 	client = gnome_client_new_default ();
 
