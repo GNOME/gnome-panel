@@ -603,8 +603,9 @@ create_advanced_contents (void)
         gentry = gnome_entry_new ("gnome-run");
         gtk_box_pack_start (GTK_BOX (hbox), gentry, TRUE, TRUE, 0);
         /* 1/4 the width of the first screen should be a good value */
-        gtk_widget_set_size_request (GTK_WIDGET (gentry),
-				     multiscreen_width (0) / 4, -2);
+	g_object_set (G_OBJECT (gentry),
+		      "width_request", (int)(multiscreen_width (0) / 4),
+		      NULL);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 

@@ -567,7 +567,7 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 			layout = gtk_widget_create_pango_layout (foo->clock_label, str_utf8);
 			pango_layout_get_pixel_size (layout, &width, NULL);
 			width += 8; /* Padding */
-			gtk_widget_set_size_request (foo->clock_label, width, 0);
+			gtk_widget_set_size_request (foo->clock_label, width, -1);
 			g_object_unref (G_OBJECT(layout));
 		}
 	}
@@ -1033,8 +1033,9 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	gtk_window_move (GTK_WINDOW (foo),
 			 multiscreen_x (foo->screen),
 			 multiscreen_y (foo->screen));
-	gtk_widget_set_size_request (GTK_WIDGET (foo),
-				     multiscreen_width (foo->screen), -2);
+	g_object_set (G_OBJECT (foo),
+		      "width_request", (int)multiscreen_width (foo->screen),
+		      NULL);
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
@@ -1204,8 +1205,9 @@ foobar_widget_new (const char *panel_id, int screen)
 	gtk_window_move (GTK_WINDOW (foo),
 			 multiscreen_x (foo->screen),
 			 multiscreen_y (foo->screen));
-	gtk_widget_set_size_request (GTK_WIDGET (foo),
-				     multiscreen_width (foo->screen), -2);
+	g_object_set (G_OBJECT (foo),
+		      "width_request", (int)multiscreen_width (foo->screen),
+		      NULL);
 
 	foobars = g_list_prepend (foobars, foo);
 

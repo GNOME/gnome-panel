@@ -679,7 +679,7 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 					    1, 1, 1);
 		ppc->screen_spin = button =
 			gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-		gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
+		gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 		g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
 		g_signal_connect (G_OBJECT (button), "changed",
@@ -1004,7 +1004,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	range = gtk_adjustment_new (ppc->x, 0, xlimit, 1, 10, 10);
 	ppc->x_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-	gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
+	gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->x);
 	g_signal_connect (G_OBJECT (button), "changed",
@@ -1018,7 +1018,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	range = gtk_adjustment_new (ppc->y, 0, ylimit, 1, 10, 10);
 	ppc->y_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-	gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
+	gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
 	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
 	g_signal_connect (G_OBJECT (button), "changed",
@@ -1098,7 +1098,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
 		gtk_spin_button_new (adj, 1, 0);
-	gtk_widget_set_size_request (button, 100, 0);
+	gtk_widget_set_size_request (button, 100, -1);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
 	g_signal_connect (G_OBJECT (button), "changed",
 			  G_CALLBACK (sliding_set_offset), ppc);

@@ -122,7 +122,7 @@ before_remove (Swallow *swallow)
 		/* make the socket again */
 		swallow->socket = gtk_socket_new ();
 
-		if (swallow->width != 0 || swallow->height != 0)
+		if (swallow->width > 0 || swallow->height > 0)
 			gtk_widget_set_size_request (swallow->socket,
 						     swallow->width, swallow->height);
 
@@ -350,6 +350,11 @@ static Swallow *
 create_swallow_applet(const char *title, const char *path, int width, int height, SwallowOrient orient)
 {
 	Swallow *swallow;
+
+	if (width == 0)
+		width = -1;
+	if (height == 0)
+		height = -1;
 	
 	swallow = g_new (Swallow, 1);
 	swallow->ref_count = 1;
@@ -360,8 +365,7 @@ create_swallow_applet(const char *title, const char *path, int width, int height
 	gtk_widget_show (swallow->ebox);
 
 	swallow->socket = gtk_socket_new ();
-	if (width != 0 || height != 0)
-		gtk_widget_set_size_request (swallow->socket, width, height);
+	gtk_widget_set_size_request (swallow->socket, width, height);
 	g_signal_connect_after (G_OBJECT (swallow->socket), "realize",
 				G_CALLBACK (socket_realized), swallow);
 	g_signal_connect (G_OBJECT (swallow->socket), "destroy",
