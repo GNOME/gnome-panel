@@ -31,6 +31,10 @@ static GtkWidget *applet_menu_prop_item;
 static menu_count=0; /*how many "menu" applets we have ....*/
 			/*FIXME: this should only count "main" menus!*/
 
+#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
+			   GDK_BUTTON_RELEASE_MASK |		\
+			   GDK_POINTER_MOTION_MASK |		\
+			   GDK_POINTER_MOTION_HINT_MASK)
 
 extern GList *panels;
 extern GList *drawers;
@@ -90,7 +94,7 @@ call_applet(GtkWidget *applet, AppletCommand *cmd)
 	return (*cmd_func) (cmd);
 }
 
-/*FIXME this should be somehow done througj signals and panel-widget*/
+/*FIXME this should be somehow done through signals and panel-widget*/
 static void
 applet_orientation_notify(GtkWidget *widget, gpointer data)
 {
@@ -376,7 +380,8 @@ create_applet(char *id, char *params, int pos, int panel)
 	cmd.panel  = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 	cmd.applet = NULL;
 	cmd.params.create_instance.params = params;
-	cmd.params.create_instance.pos   = pos;
+	cmd.params.create_instance.pos    = pos;
+	cmd.params.create_instance.panel  = panel;
 
 	(*cmd_func) (&cmd);
 
@@ -634,20 +639,24 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 	/* We wrap the applet in a GtkEventBox so that we can capture events over it */
 
 	eventbox = gtk_event_box_new();
+	gtk_widget_set_events(eventbox, gtk_widget_get_events(eventbox) |
+			      APPLET_EVENT_MASK);
 	gtk_container_add(GTK_CONTAINER(eventbox), applet);
 
+	/* FIXME:get rid of this*/
 	/* Attach our private data to the applet */
-
-	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC, get_applet_cmd_func(id));
-	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
+	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC,
+			    get_applet_cmd_func(id));
+	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS,
+			    (gpointer) flags);
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
 	panel_widget_add(PANEL_WIDGET(g_list_nth(panels,panel)->data),
 			 eventbox, pos);
 
-	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
+	gtk_widget_show(eventbox);
 
 	applets = g_list_append(applets,eventbox);
 

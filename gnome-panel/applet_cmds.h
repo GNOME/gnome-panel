@@ -34,7 +34,8 @@ typedef struct {
 		/* Create instance parameters */
 		struct {
 			char *params;
-		int   pos;
+			int   pos;
+			int   panel;
 		} create_instance;
 
 		/* Orientation change notify parameters */

@@ -654,7 +654,7 @@ set_show_small_icons(gpointer data, gpointer user_data)
 }
 
 static void
-create_instance (PanelWidget *panel, char *params, int pos)
+create_instance (PanelWidget *panel, char *params, int pos, int panelnum)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *this_menu;
@@ -711,6 +711,7 @@ create_instance (PanelWidget *panel, char *params, int pos)
 	cmd.params.register_toy.applet = menu->button;
 	cmd.params.register_toy.id     = APPLET_ID;
 	cmd.params.register_toy.pos    = pos;
+	cmd.params.register_toy.panel  = panelnum;
 	cmd.params.register_toy.flags  = APPLET_HAS_PROPERTIES;
 
 	(*panel_cmd_func) (&cmd);
@@ -897,7 +898,8 @@ applet_cmd_func(AppletCommand *cmd)
 		case APPLET_CMD_CREATE_INSTANCE:
 			create_instance(cmd->panel,
 					cmd->params.create_instance.params,
-					cmd->params.create_instance.pos);
+					cmd->params.create_instance.pos,
+					cmd->params.create_instance.panel);
 			break;
 
 		case APPLET_CMD_GET_INSTANCE_PARAMS:

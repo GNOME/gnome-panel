@@ -1012,9 +1012,9 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	 */
 	
 	if (!GTK_WIDGET_NO_WINDOW(widget)) {
-		/*FIXME: casn't be realized!*/
-		gtk_widget_set_events(widget, gtk_widget_get_events(widget) |
-				      APPLET_EVENT_MASK);
+		/*FIXME: can't be realized!*/
+		/*gtk_widget_set_events(widget, gtk_widget_get_events(widget) |
+				      APPLET_EVENT_MASK);*/
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
 				   NULL);
