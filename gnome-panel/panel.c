@@ -174,7 +174,7 @@ pop_down(gpointer data)
 
 	if ((the_panel->state == PANEL_MOVING) ||
 	    (the_panel->state == PANEL_HIDDEN))
-		return;
+		return FALSE;
 
 	the_panel->state = PANEL_MOVING;
 
