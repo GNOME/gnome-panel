@@ -446,6 +446,8 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 		panel->applets[pos-i].cells =
 			panel->applets[pos-i+1].cells;
 	}
+	panel->applets[pos].applet=NULL;
+	panel->applets[pos].cells=1;
 
 	for(i=pos-freepos;i<pos;i+=panel->applets[i].cells)
 		panel_widget_applet_put(panel,i);
@@ -496,8 +498,10 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 		panel->applets[pos+i].cells =
 			panel->applets[pos+i-1].cells;
 	}
+	panel->applets[pos].applet=NULL;
+	panel->applets[pos].cells=1;
 
-	for(i=0;i<freepos;i+=panel->applets[pos+i].cells)
+	for(i=1;i<freepos;i+=panel->applets[pos+i].cells)
 		panel_widget_applet_put(panel,pos+i);
 	return TRUE;
 }
@@ -1308,39 +1312,28 @@ panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
 	gint x,y;
 	PanelWidget *old_panel;
 	
-	puts("d1");
 	gtk_widget_get_pointer(panel->fixed, &x, &y);
 
-	puts("d2");
 	if(panel->orient == PANEL_HORIZONTAL)
 		pos = (x/PANEL_CELL_SIZE);
 	else
 		pos = (y/PANEL_CELL_SIZE);
 
-	puts("d3");
 	if(!(event->dropdataavailable.data))
 		return FALSE;
 
-	puts("d4");
 	applet = GTK_WIDGET(*((GtkWidget **)event->dropdataavailable.data));
 
-	puts("d5");
 	if(!applet)
 		return FALSE;
 
 	old_panel = gtk_object_get_data(GTK_OBJECT(applet),
 					PANEL_APPLET_PARENT_KEY);
 
-	puts("d6");
 	gtk_widget_ref(applet);
-	puts("d7");
 	panel_widget_remove(old_panel,applet);
-	puts("d8");
 	panel_widget_add(panel,applet,pos);
-	puts("d9");
 	gtk_widget_unref(applet);
-
-	puts("\n\nDROP\n\n");
 
 	return TRUE;
 }*/
@@ -1672,19 +1665,14 @@ artificial_drag_start (GtkWidget *widget, int x, int y)
 	GdkWindow *window = widget->window;
 	GdkWindowPrivate *wp = (GdkWindowPrivate *) window;
 
-	puts("1");
 	if (!wp->dnd_drag_enabled)
 		return;
-	puts("2");
 	/*if (!gdk_dnd.drag_perhaps)
 		return;*/
-	puts("3");
 	if (gdk_dnd.dnd_grabbed)
 		return;
-	puts("4");
 	if (gdk_dnd.drag_really)
 		return;
-	puts("5");
 
 	printf ("Pushing artificial drag\n");
 	/*gdk_dnd_drag_addwindow (window);*/
@@ -1994,6 +1982,58 @@ bind_top_applet_events(GtkWidget *widget)
 				       bind_applet_events, 0);
 }
 
+static gint
+panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
+{
+	int i;
+
+	g_return_val_if_fail(panel!=NULL,-1);
+	g_return_val_if_fail(pos>=0,-1);
+
+	if(panel->snapped == PANEL_DRAWER) {
+		/*is it completely full*/
+		if(panel->size+1>=PANEL_MAX)
+			return -1;
+
+		if(pos >= panel->size) {
+			i = panel->size++;
+			panel_widget_set_size(panel,panel->size);
+		} else {
+			for(i=pos;i>=0 && panel->applets[pos].applet ==
+			    panel->applets[i].applet;i--)
+				;
+			i++;
+			panel_widget_push_right(panel,i);
+		}
+		return i;
+	} else {
+		if(pos>=panel->size)
+			pos = panel->size - 1;
+
+		if(panel->applets[pos].applet==NULL)
+			return pos;
+
+		for(i=pos;i<panel->size && panel->applets[pos].applet ==
+		    panel->applets[i].applet;i++)
+			;
+		if(i>=panel->size) {
+			if(panel_widget_push_left(panel,panel->size-1))
+				return panel->size-1;
+			return -1;
+		}
+
+		if(panel_widget_push_right(panel,i))
+			return i;
+
+		if(panel_widget_push_left(panel,i))
+			return i;
+
+		/*panel is full!*/
+		return -1;
+	}
+}
+
+
 
 static gint
 panel_widget_find_empty_pos(PanelWidget *panel, gint pos)
@@ -2043,7 +2083,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
 
-	pos = panel_widget_find_empty_pos(panel,pos);
+	pos = panel_widget_make_empty_pos(panel,pos);
 	if(pos==-1) return -1;
 
 	/*this will get done right on size allocate!*/
@@ -2087,7 +2127,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	g_return_val_if_fail(applet!=NULL,-1);
 	g_return_val_if_fail(pos>=0,-1);
 
-	pos = panel_widget_find_empty_pos(new_panel,pos);
+	pos = panel_widget_make_empty_pos(new_panel,pos);
 	if(pos==-1) return -1;
 
 	/*remove from the old_panel*/
@@ -2174,7 +2214,7 @@ panel_widget_move (PanelWidget *panel, gint oldpos, gint pos)
 		panel->applets[i].cells = 1;
 	}
 	
-	pos = panel_widget_find_empty_pos(panel,pos);
+	pos = panel_widget_make_empty_pos(panel,pos);
 	if(pos==-1) return -1;
 
 	/*reset size to 1 and adjust the applet*/
