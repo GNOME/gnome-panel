@@ -737,6 +737,9 @@ load_default_applets(void)
 	/*guess redhat menus*/
 	if(g_file_exists("/etc/X11/wmconfig"))
 		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+	/*guess debian menus*/
+	if (g_file_exists("/etc/menu-methods/gnome"))
+		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 	load_menu_applet(NULL,flags, panels->data, 0);
 
 	for(i=0;def_launchers[i]!=NULL;i++) {
@@ -847,6 +850,9 @@ init_user_applets(void)
 				/*guess redhat menus*/
 				if(g_file_exists("/etc/X11/wmconfig"))
 					flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+				/*guess debian menus*/
+				if (g_file_exists("/etc/menu-methods/gnome"))
+					flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 			}
 			load_menu_applet(params,flags,panel,pos);
 			g_free(params);

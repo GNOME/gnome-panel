@@ -18,9 +18,11 @@ enum {
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
 	MAIN_MENU_REDHAT = 1<<4,
-	MAIN_MENU_REDHAT_SUB = 1<<5, /*RH menus are always in submenu for now*/
+	MAIN_MENU_REDHAT_SUB = 1<<5,
 	/*MAIN_MENU_KDE = 1<<6,
 	MAIN_MENU_KDE_SUB = 1<<7, KDE menus not done yet*/
+	MAIN_MENU_DEBIAN = 1<<8,
+	MAIN_MENU_DEBIAN_SUB = 1<<9
 };
 
 typedef struct _Menu Menu;

@@ -23,10 +23,6 @@ struct _PanelData {
 	int menu_age;
 };
 
-/*get the default panel widget if the panel has more then one or
-  just get the that one*/
-PanelWidget * get_def_panel_widget(GtkWidget *panel);
-
 void orientation_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);
 
@@ -36,9 +32,6 @@ void panel_setup(GtkWidget *panel);
 
 /*send state change to all the panels*/
 void send_state_change(void);
-
-/* Destroy all panels - called upon exit */
-void destroy_all_panels(void);
 
 #define get_panel_parent(appletw) \
 	(gtk_object_get_data(GTK_OBJECT(appletw->parent), PANEL_PARENT))

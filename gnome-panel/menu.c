@@ -667,6 +667,10 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 	if(g_file_exists("/etc/X11/wmconfig"))
 		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
 
+	/*guess debian menus*/
+	if (g_file_exists("/etc/menu-methods/gnome"))
+		flags |= MAIN_MENU_DEBIAN;
+
 	if(mf)
 		load_menu_applet(mf->menudir,flags, current_panel, 0);
 	else
@@ -2065,6 +2069,29 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
 	return menu;
 }
 
+static GtkWidget *
+create_debian_menu(GtkWidget *menu, int fake_submenus, int fake)
+{
+	char *menudir = "/var/lib/gnome/Debian/.";
+
+	if (g_file_exists (menudir)) {
+		if (!fake || menu) {
+			menu = create_menu_at (menu, menudir, FALSE,
+					       _("Debian menus"), NULL,
+					       fake_submenus, FALSE);
+		} else {
+			menu = create_fake_menu_at (menudir, FALSE,
+						    _("Debian menus"), NULL);
+		}
+		/*this would be bad*/
+		g_return_val_if_fail (menu, NULL);
+	} else {
+		g_warning (_("No Debian menus found!"));
+	}
+
+	return menu;
+}
+
 GtkWidget *
 create_panel_root_menu(GtkWidget *panel)
 {
@@ -2074,46 +2101,59 @@ create_panel_root_menu(GtkWidget *panel)
 
 	panel_menu = gtk_menu_new();
 
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("System menus"));
-	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = create_system_menu(NULL,TRUE,TRUE);
 	if(menu) {
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, 0, _("System menus"));
+		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   menuitem);
 	}
 
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("User menus"));
-	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE,TRUE);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-	gtk_signal_connect(GTK_OBJECT(menu),"show",
-			   GTK_SIGNAL_FUNC(submenu_to_display),
-			   menuitem);
+	if(menu) {
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, 0, _("User menus"));
+		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   menuitem);
+	}
 
 	if(g_file_exists("/etc/X11/wmconfig")) {
-		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("Red Hat menus"));
-		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		menu = create_user_menu(_("Red Hat menus"),"apps-redhat",
 					NULL,TRUE,TRUE,TRUE);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
-				   menuitem);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   menuitem);
-		/*gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
-				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
-				   NULL);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);*/
+		if(menu) {
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0, _("Red Hat menus"));
+			gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+						   menu);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(rh_submenu_to_display),
+					   menuitem);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   menuitem);
+		}
 	}
+
+	if(g_file_exists("/etc/menu-methods/gnome")) {
+		menu = create_debian_menu(NULL,TRUE,TRUE);
+		if(menu) {
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0, _("Debian menus"));
+			gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   menuitem);
+		}
+	}
+
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
@@ -2820,6 +2860,10 @@ create_root_menu(int fake_submenus, int flags)
 					     FALSE);
 		need_separ = TRUE;
 	}
+	if(flags&MAIN_MENU_DEBIAN && !(flags&MAIN_MENU_DEBIAN_SUB)) {
+		root_menu = create_debian_menu(root_menu, fake_submenus, FALSE);
+		need_separ = TRUE;
+	}
 	/*others here*/
 	
 	if(!root_menu)
@@ -2879,6 +2923,22 @@ create_root_menu(int fake_submenus, int flags)
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   menuitem);
+	}
+	if(flags&MAIN_MENU_DEBIAN && flags&MAIN_MENU_DEBIAN_SUB) {
+		if(need_separ)
+			add_menu_separator(root_menu);
+		need_separ = FALSE;
+		menu = create_debian_menu(NULL,fake_submenus, TRUE);
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, 0, _("Debian menus"));
+		gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		if(menu) {
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+						   menu);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   menuitem);
+		}
 	}
 	add_special_entries (root_menu, fake_submenus);
 	
@@ -3074,6 +3134,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
 	GtkWidget *redhat_off = gtk_object_get_data(GTK_OBJECT(widget), "redhat_off");
 	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
+	GtkWidget *debian_off = gtk_object_get_data(GTK_OBJECT(widget), "debian_off");
+	GtkWidget *debian_sub = gtk_object_get_data(GTK_OBJECT(widget), "debian_sub");
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
 	char *s;
 
@@ -3119,8 +3181,17 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->main_menu_flags |= MAIN_MENU_REDHAT;
 		menu->main_menu_flags &=~ MAIN_MENU_REDHAT_SUB;
 	}
+	if(GTK_TOGGLE_BUTTON(debian_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB);
+	else if(GTK_TOGGLE_BUTTON(debian_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
+	else {
+		menu->main_menu_flags |= MAIN_MENU_DEBIAN;
+		menu->main_menu_flags &=~ MAIN_MENU_DEBIAN_SUB;
+	}
 
-	gtk_widget_destroy(menu->menu);	
+	if(menu->menu)
+		gtk_widget_destroy(menu->menu);	
 	menu->menu = NULL;
 
 	{
@@ -3309,6 +3380,10 @@ create_properties_dialog(Menu *menu)
 			      _("Red Hat menu (if found): "),"redhat",
 			      menu->main_menu_flags&MAIN_MENU_REDHAT,
 			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
+			      _("Debian menu (if found): "),"debian",
+			      menu->main_menu_flags&MAIN_MENU_DEBIAN,
+			      menu->main_menu_flags&MAIN_MENU_DEBIAN_SUB);
 	
 	f = gtk_frame_new(_("Normal menu"));
 	if(!menu->path || strcmp(menu->path,".")==0)

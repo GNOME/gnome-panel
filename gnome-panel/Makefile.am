@@ -125,7 +125,8 @@ EXTRA_DIST = \
 	panel.in		\
 	appletsConf.sh.in	\
 	panel.gnorba		\
-	panel.soundlist
+	panel.soundlist		\
+	APPLET_WRITING
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
