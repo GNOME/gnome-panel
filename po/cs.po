@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-07 12:26+0100\n"
-"PO-Revision-Date: 2004-12-07 18:08+0100\n"
+"POT-Creation-Date: 2004-12-19 04:24+0100\n"
+"PO-Revision-Date: 2004-12-19 12:57+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -48,8 +48,8 @@ msgstr "O _aplikaci"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:605 gnome-panel/menu.c:1675
-#: gnome-panel/panel-action-button.c:696 gnome-panel/panel-menu-bar.c:344
+#: gnome-panel/drawer.c:605 gnome-panel/panel-action-button.c:727
+#: gnome-panel/panel-context-menu.c:326 gnome-panel/panel-menu-bar.c:302
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "Nápo_věda"
@@ -188,7 +188,7 @@ msgstr "Vlastní formát"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
 #: applets/fish/fish.c:137 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:436 applets/wncklet/window-list.c:114
+#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:202
 #: applets/wncklet/workspace-switcher.c:508
@@ -238,9 +238,10 @@ msgstr "Používat _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:466
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
-#: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
+#: applets/wncklet/workspace-switcher.c:539
+#: gnome-panel/panel-context-menu.c:127
 msgid "translator-credits"
 msgstr ""
 "David Šauer <davids@penguin.cz>\n"
@@ -678,25 +679,25 @@ msgstr "Skrytá okna obnovíte kliknutím zde."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:325
+#: applets/wncklet/showdesktop.c:326
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nemohu načíst %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:326
+#: applets/wncklet/showdesktop.c:328
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: applets/wncklet/showdesktop.c:356 applets/wncklet/showdesktop.c:477
+#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:479
 msgid "Show Desktop Button"
 msgstr "Tlačítko Zobrazit pracovní plochu"
 
-#: applets/wncklet/showdesktop.c:480
+#: applets/wncklet/showdesktop.c:482
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Toto tlačítko vám umožňuje skrýt všechna okna a zobrazit pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:521
+#: applets/wncklet/showdesktop.c:523
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -1004,16 +1005,16 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Nemohu najít volné místo"
 
-#: gnome-panel/button-widget.c:197
+#: gnome-panel/button-widget.c:226
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Nemohu načíst obrázek %s"
 
-#: gnome-panel/button-widget.c:406
+#: gnome-panel/button-widget.c:394
 msgid "none"
 msgstr "žádný"
 
-#: gnome-panel/button-widget.c:411
+#: gnome-panel/button-widget.c:399
 msgid "file not found"
 msgstr "soubor nenalezen"
 
@@ -1022,8 +1023,8 @@ msgstr "soubor nenalezen"
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822 gnome-panel/menu.c:1625
-#: gnome-panel/panel-action-button.c:132
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822
+#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:282
 msgid "_Properties"
 msgstr "_Vlastnosti"
 
@@ -1107,90 +1108,31 @@ msgstr ""
 "Nemůžete vytvořit nový spouštěč v tomto umístění, protože na toto místo "
 "nelze zapisovat."
 
-#: gnome-panel/menu.c:154
-msgid "And many, many others..."
-msgstr "A mnoho, mnoho dalších..."
-
-#: gnome-panel/menu.c:179
-msgid "The GNOME Panel"
-msgstr "Panel GNOME"
-
-#: gnome-panel/menu.c:182
-msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
-msgstr ""
-"Tento program je odpovědný za spouštění jiných aplikací, použití malých "
-"appletů."
-
-#: gnome-panel/menu.c:212 gnome-panel/panel-action-button.c:201
-#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:542
-#, c-format
-msgid "Cannot execute '%s'"
-msgstr "Nemohu spustit '%s'"
-
-#: gnome-panel/menu.c:213
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
-#: gnome-panel/menu.c:214
-msgid "About GNOME"
-msgstr "O GNOME"
-
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:124
 msgid "Cannot launch entry"
 msgstr "Nemohu spustit položku"
 
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:136
 msgid "Cannot load entry"
 msgstr "Nemohu načíst položku"
 
-#: gnome-panel/menu.c:916
+#: gnome-panel/menu.c:800
 msgid "Add this launcher to panel"
 msgstr "Přidat tento spouštěč na panel"
 
-#: gnome-panel/menu.c:933
+#: gnome-panel/menu.c:817
 msgid "Entire menu"
 msgstr "Celé menu"
 
-#: gnome-panel/menu.c:943
+#: gnome-panel/menu.c:827
 msgid "Add this as drawer to panel"
 msgstr "Přidat jako zásuvku na panel"
 
-#: gnome-panel/menu.c:955
+#: gnome-panel/menu.c:839
 msgid "Add this as menu to panel"
 msgstr "Přidat jako menu na panel"
 
-#: gnome-panel/menu.c:1530
-msgid "You cannot remove your last panel."
-msgstr "Nemůžete odstranit svůj poslední panel."
-
-#: gnome-panel/menu.c:1579
-msgid "_Delete This Panel..."
-msgstr "_Odstranit tento panel..."
-
-#: gnome-panel/menu.c:1582 gnome-panel/menu.c:1610
-msgid "_Delete This Panel"
-msgstr "_Odstranit tento panel"
-
-#: gnome-panel/menu.c:1595
-msgid "_Add to Panel..."
-msgstr "_Přidat na panel..."
-
-#: gnome-panel/menu.c:1639
-msgid "_New Panel"
-msgstr "_Nový panel"
-
-#: gnome-panel/menu.c:1686
-msgid "A_bout Panels"
-msgstr "_O panelech"
-
-#: gnome-panel/menu.c:1700
-msgid "About _GNOME"
-msgstr "O _GNOME"
-
-#: gnome-panel/menu.c:1778 gnome-panel/panel-menu-bar.c:224
+#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:182
 msgid "Applications"
 msgstr "Aplikace"
 
@@ -1210,19 +1152,26 @@ msgstr "Zabít _démona šetřiče obrazovky"
 msgid "Restart _Screensaver Daemon"
 msgstr "_Restartovat démona šetřiče obrazovky"
 
-#: gnome-panel/panel-action-button.c:268
+#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:57
+#: gnome-panel/panel-util.c:542
+#, c-format
+msgid "Cannot execute '%s'"
+msgstr "Nemohu spustit '%s'"
+
+#: gnome-panel/panel-action-button.c:289
 msgid "Lock screen"
 msgstr "Zamknout obrazovku"
 
-#: gnome-panel/panel-action-button.c:269
+#: gnome-panel/panel-action-button.c:290
 msgid "Protect your computer from unauthorized use"
 msgstr "Chránit váš počítač před neautorizovaným použitím"
 
-#: gnome-panel/panel-action-button.c:281
+#: gnome-panel/panel-action-button.c:302
 msgid "Log Out"
 msgstr "Odhlásit se"
 
-#: gnome-panel/panel-action-button.c:282
+#: gnome-panel/panel-action-button.c:303
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1230,35 +1179,35 @@ msgstr ""
 "Odhlásit se z tohoto sezení, aby bylo možné přihlásit se jako jiný uživatel "
 "nebo vypnout počítač"
 
-#: gnome-panel/panel-action-button.c:292
+#: gnome-panel/panel-action-button.c:313
 msgid "Run Application..."
 msgstr "Spustit aplikaci..."
 
-#: gnome-panel/panel-action-button.c:293
+#: gnome-panel/panel-action-button.c:314
 msgid "Run an Application by entering a command"
 msgstr "Spustit aplikaci zadáním příkazu"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:324
 msgid "Search for Files..."
 msgstr "Hledat soubory..."
 
-#: gnome-panel/panel-action-button.c:304
+#: gnome-panel/panel-action-button.c:325
 msgid "Find files, folders, and documents on your computer"
 msgstr "Hledat soubory, adresáře a dokumenty na vašem počítači"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:334
 msgid "Take Screenshot..."
 msgstr "Zachytit obrazovku..."
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:335
 msgid "Take a screenshot of your desktop"
 msgstr "Zachytit obrázek vaší pracovní plochy"
 
-#: gnome-panel/panel-action-button.c:323
+#: gnome-panel/panel-action-button.c:344
 msgid "Force Quit"
 msgstr "Vynutit ukončení"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:345
 msgid "Force a misbehaving application to quit"
 msgstr "Vynutit ukončení špatně se chovající aplikace"
 
@@ -1307,21 +1256,21 @@ msgstr "(prázdné)"
 msgid "query returned exception %s\n"
 msgstr "dotaz vrátil výjimku %s\n"
 
-#: gnome-panel/panel-addto.c:848
+#: gnome-panel/panel-addto.c:885
 #, c-format
 msgid "Add to %s"
 msgstr "Přidat do %s"
 
-#: gnome-panel/panel-addto.c:850
+#: gnome-panel/panel-addto.c:887
 msgid "Add to the panel"
 msgstr "Přidat na panel"
 
-#: gnome-panel/panel-addto.c:856
+#: gnome-panel/panel-addto.c:893
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Zvolte _položku, kterou přidat do %s:"
 
-#: gnome-panel/panel-addto.c:859
+#: gnome-panel/panel-addto.c:896
 msgid "Select an _item to add to the panel:"
 msgstr "Zvolte _položku, kterou přidat na panel:"
 
@@ -1384,6 +1333,59 @@ msgstr "Chyba při načítání adresáře gconf '%s': %s"
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Chyba při získávání hodnoty pro '%s': %s"
+
+#: gnome-panel/panel-context-menu.c:58
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: gnome-panel/panel-context-menu.c:59
+msgid "About GNOME"
+msgstr "O GNOME"
+
+#: gnome-panel/panel-context-menu.c:117
+msgid "And many, many others..."
+msgstr "A mnoho, mnoho dalších..."
+
+#: gnome-panel/panel-context-menu.c:142
+msgid "The GNOME Panel"
+msgstr "Panel GNOME"
+
+#: gnome-panel/panel-context-menu.c:145
+msgid ""
+"This program is responsible for launching other applications and embedding "
+"small applets within itself."
+msgstr ""
+"Tento program je odpovědný za spouštění jiných aplikací, použití malých "
+"appletů."
+
+#: gnome-panel/panel-context-menu.c:185
+msgid "You cannot remove your last panel."
+msgstr "Nemůžete odstranit svůj poslední panel."
+
+#: gnome-panel/panel-context-menu.c:234
+msgid "_Delete This Panel..."
+msgstr "_Odstranit tento panel..."
+
+#: gnome-panel/panel-context-menu.c:237 gnome-panel/panel-context-menu.c:267
+msgid "_Delete This Panel"
+msgstr "_Odstranit tento panel"
+
+#: gnome-panel/panel-context-menu.c:251
+msgid "_Add to Panel..."
+msgstr "_Přidat na panel..."
+
+#: gnome-panel/panel-context-menu.c:297
+msgid "_New Panel"
+msgstr "_Nový panel"
+
+#: gnome-panel/panel-context-menu.c:337
+msgid "A_bout Panels"
+msgstr "_O panelech"
+
+#: gnome-panel/panel-context-menu.c:353
+msgid "About _GNOME"
+msgstr "O _GNOME"
 
 #: gnome-panel/panel-force-quit.c:74
 msgid ""
@@ -1630,7 +1632,7 @@ msgstr "Zachytit obrazovku"
 msgid "Take window screenshot"
 msgstr "Zachytit snímek okna"
 
-#: gnome-panel/panel-menu-bar.c:233
+#: gnome-panel/panel-menu-bar.c:191
 msgid "Actions"
 msgstr "Akce"
 
@@ -1972,11 +1974,11 @@ msgstr "Otevřít '%s'"
 msgid "Recent Documents"
 msgstr "Nedávné dokumenty"
 
-#: gnome-panel/panel-recent.c:252
+#: gnome-panel/panel-recent.c:251
 msgid "Clear Recent Documents"
 msgstr "Vymazat nedávné dokumenty"
 
-#: gnome-panel/panel-recent.c:256
+#: gnome-panel/panel-recent.c:255
 msgid "Clear all items from the recent documents list"
 msgstr "Vymazat všechny položky ze seznamu nedávných dokumentů"
 
@@ -2011,7 +2013,9 @@ msgstr "Vyberte aplikaci pro zobrazení jejího popisu."
 #: gnome-panel/panel-run-dialog.c:1406
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
-msgstr "Seznam URI upuštěný na dialog spuštění měl špatný formát (%d) nebo délku (%d)\n"
+msgstr ""
+"Seznam URI upuštěný na dialog spuštění měl špatný formát (%d) nebo délku (%"
+"d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2512,27 +2516,35 @@ msgstr "Detaily: %s"
 msgid "Open URL: %s"
 msgstr "Otevřít URL: %s"
 
-#: gnome-panel/panel.c:1219
+#: gnome-panel/panel.c:1224
+msgid "Delete this drawer?"
+msgstr "Odstranit tuto zásuvku?"
+
+#: gnome-panel/panel.c:1225
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
-"settings are lost. Delete this drawer?"
+"settings are lost."
 msgstr ""
 "Když je odstraněna zásuvka, je zásuvka a její\n"
-"nastavení ztraceno. Odstranit tuto zásuvku?"
+"nastavení ztraceno."
 
-#: gnome-panel/panel.c:1221
+#: gnome-panel/panel.c:1227
 msgid "Delete Drawer"
 msgstr "Odstranit zásuvku"
 
-#: gnome-panel/panel.c:1223
+#: gnome-panel/panel.c:1229
+msgid "Delete this panel?"
+msgstr "Odstranit tento panel?"
+
+#: gnome-panel/panel.c:1230
 msgid ""
 "When a panel is deleted, the panel and its\n"
-"settings are lost. Delete this panel?"
+"settings are lost."
 msgstr ""
 "Když je panel odstraněn, je panel a jeho\n"
-"nastavení ztraceno. Odstranit tento panel?"
+"nastavení ztraceno."
 
-#: gnome-panel/panel.c:1225
+#: gnome-panel/panel.c:1232
 msgid "Delete Panel"
 msgstr "Odstranit panel"
 
