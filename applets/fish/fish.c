@@ -874,7 +874,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	const gchar *author_format = _("%s the Fish");
 	gchar       *authors [3];
 	GdkPixbuf   *pixbuf;
-	GError      *error;
+	GError      *error = NULL;
 	gchar       *file;
 	gchar       *name;
 

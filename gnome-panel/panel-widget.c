@@ -2856,7 +2856,7 @@ panel_widget_move_to_panel (PanelWidget *panel,
 	g_return_if_fail (ad);
 	
 	for (li = panels; li; li = li->next) {
-		PanelWidget *previous_panel;
+		PanelWidget *previous_panel = NULL;
 		PanelWidget *panel_in_list = li->data;
 
 		if (panel_in_list == panel) {

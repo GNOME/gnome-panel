@@ -74,8 +74,6 @@ button_widget_class_init (ButtonWidgetClass *class)
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
 	GtkButtonClass *button_class = GTK_BUTTON_CLASS (class);
 
-	GtkBindingSet *binding_set;
-
 	gtk_object_class->destroy = button_widget_destroy;
 	  
 	widget_class->realize = button_widget_realize;
