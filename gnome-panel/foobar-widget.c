@@ -237,7 +237,7 @@ append_actions_menu (GtkWidget *menu_bar)
 	}
 
 	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
-		item = pixmap_menu_item_new (_("Take a Screen Shot..."), "gnome-mdi.png", FALSE);
+		item = pixmap_menu_item_new (_("Take a Screen Shot..."), "gnome-screenshot.png", FALSE);
 		gtk_tooltips_set_tip (panel_tooltips, item,
 			      	      _("Take a screen shot of your desktop"),
 			              NULL);

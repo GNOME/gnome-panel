@@ -3902,7 +3902,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 		if (panel_is_program_in_path ("gnome-panel-screenshot")) {
 			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem_try_pixmap (menuitem, "gnome-mdi.png",
+			setup_menuitem_try_pixmap (menuitem, "gnome-screenshot.png",
 						  _("Take a Screen Shot..."));
 			gtk_menu_shell_insert (GTK_MENU_SHELL (menu->menu), menuitem, 3);
 			gtk_tooltips_set_tip (panel_tooltips, menuitem,
