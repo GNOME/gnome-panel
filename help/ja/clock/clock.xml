@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.1.2">
+  <!ENTITY manrevision "2.3">
+  <!ENTITY date "2003年1月">
+  <!ENTITY applet "時計">
+]>
+<!--
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 11, 2002
+
+-->
+
+<!-- =============Document Header ============================= -->
+
+<article id="index" lang="ja">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+    <title>&applet;アプレットマニュアル V&manrevision;</title>
+    <copyright>
+      <year>2003</year>
+      <holder>サン マイクロシステムズ</holder>
+    </copyright>
+    <copyright>
+      <year>2000</year>
+      <holder>Dan Mueth</holder>
+    </copyright>
+    <copyright>
+      <year>2003</year>
+      <holder>鎌ヶ迫正俊 (日本語訳)</holder>
+    </copyright>
+
+    <!-- An address can be added to the publisher information.  If a role is
+    not specified, the publisher/author is the same for all versions of the
+    document.  -->
+    <publisher>
+      <publishername>
+	GNOMEドキュメンテーションプロジェクト
+      </publishername>
+    </publisher>
+
+    &legal;
+    <!-- This file  contains link to license for the documentation (GNU FDL), 
+    and other legal stuff such as "NO WARRANTY" statement. Please do not change
+    any of this. -->
+
+    <authorgroup>
+      <author>
+	<firstname>Sun</firstname>
+	<surname>Microsystems</surname>
+	<affiliation>
+	  <orgname>GNOMEドキュメンテーションプロジェクト</orgname>
+	  <address><email>gdocteam@sun.com</email></address>
+	</affiliation>
+      </author>
+      <author>
+	<firstname>Dan </firstname>
+	<surname>Mueth</surname>
+	<affiliation>
+	  <orgname>GNOMEドキュメンテーションプロジェクト</orgname>
+	  <address><email>d-mueth@uchicago.edu</email></address>
+	</affiliation>
+      </author>
+      <othercredit role="translator">
+	<firstname>Masatoshi</firstname>
+	<surname>KAMAGASAKO</surname>
+	<affiliation>
+	  <orgname>日本GNOMEユーザ会 翻訳チーム</orgname>
+	  <address><email>emerald@gnome.gr.jp</email></address>
+	</affiliation>
+	<contrib>日本語訳</contrib>
+      </othercredit>
+    </authorgroup>
+
+    <revhistory>
+      <revision>
+	<revnumber>&applet;アプレットマニュアル V&manrevision;</revnumber>
+	<date>&date;</date>
+	<revdescription>
+	  <para role="author">
+	    サン マイクロシステムズ
+	    <email>gdocteam@sun.com</email>
+	  </para>
+	  <para role="publisher">
+	    GNOMEドキュメンテーションプロジェクト
+	  </para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>時計アプレットマニュアル V2.2</revnumber>
+	<date>2002年8月</date>
+	<revdescription>
+	  <para role="author">
+	    サン マイクロシステムズ
+	    <email>gdocteam@sun.com</email>
+	  </para>
+	  <para role="publisher">
+	    GNOMEドキュメンテーションプロジェクト
+	  </para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>時計アプレットマニュアル V2.1</revnumber>
+	<date>2002年6月</date>
+	<revdescription>
+	  <para role="author">
+	    サン マイクロシステムズ
+	    <email>gdocteam@sun.com</email>
+	  </para>
+	  <para role="publisher">
+	    GNOMEドキュメンテーションプロジェクト
+	  </para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>時計アプレットマニュアル V2.0</revnumber>
+	<date>2002年3月</date>
+	<revdescription>
+	  <para role="author">
+	    サン マイクロシステムズ
+	    <email>gdocteam@sun.com</email>
+	  </para>
+	  <para role="publisher">
+	    GNOMEドキュメンテーションプロジェクト
+	  </para>
+	</revdescription>
+      </revision>
+      <revision>
+	<revnumber>&applet; アプットマニュアル</revnumber>
+	<date>2002年4月</date>
+	<revdescription>
+	  <para role="author">
+	    Dan Mueth
+	    <email>d-mueth@uchicago.edu</email>
+	  </para>
+	  <para role="publisher">
+	    GNOMEドキュメンテーションプロジェクト
+	  </para>
+	</revdescription>
+      </revision>
+    </revhistory>
+    <releaseinfo>
+      このマニュアルは、&applet;アプレット 第&appletversion;版について
+      説明しています。
+    </releaseinfo>
+    <legalnotice>
+      <title>フィードバック</title>
+      <para>
+	この&applet;アプレットやマニュアルについてのバグレポートや提
+	案は、<ulink url="ghelp:gnome-feedback" type="help">GNOMEフィー
+	ドバックページ</ulink>を参照してください。
+      </para>
+      <para>
+        このマニュアルの日本語訳についての指摘や提案は
+        <email>emerald@gnome.gr.jp</email>
+        までお願いします。
+      </para>
+    </legalnotice>
+  </articleinfo>
+
+  <indexterm>
+    <primary>時計</primary>
+  </indexterm>
+  <!-- ============= Document Body ============================= -->
+
+  <!-- ============= Introduction ============================== -->
+
+  <sect1 id="clock-introduction">
+    <title>はじめに</title>
+
+    <!-- ==== Figure ============================================= -->
+    <figure id="clock-fig">
+      <title>&applet; アプレット</title>
+      <screenshot>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="figures/clock_applet.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>&applet;アプレットを表示</phrase>
+	  </textobject>
+	</mediaobject>
+      </screenshot>
+    </figure>
+    <!-- ==== End of Figure ======================================= -->
+
+    <para>
+      <application>&applet;</application>アプレットは、時刻と日付をパ
+      ネル上に表示します。
+    </para>
+
+    <para>
+      パネルに<application>&applet;</application>を追加するには、パネルを
+      右クリックし、
+      <menuchoice>
+	<guimenu>パネルに追加</guimenu>
+	<guisubmenu>アクセサリ</guisubmenu>
+	<guimenuitem>時計</guimenuitem>
+      </menuchoice>
+      と選択します。
+    </para>
+    <para>
+      <application>&applet;</application>アプレットのポップアップメ
+      ニューには、標準的なアプレットのメニュー項目に加え、以下のメニュー
+      項目が追加されています:
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    時刻のコピー
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    日付のコピー
+	  </para>
+	</listitem>
+      </itemizedlist>
+      この項目は、テキストエディタのようなアプリケーションに時刻や日付
+      を挿入するのに利用できます。
+    </para>
+  </sect1>
+
+  <!-- ================ Usage ================================ -->
+
+  <sect1 id="clock-usage">
+    <title>使い方</title>
+    <para>
+      <application>&applet;</application>アプレットはシステムクロック
+      から時刻を取得します。
+    </para>
+    <para>
+      時刻や日付を<application>&applet;</application>アプレットからア
+      プリケーションに挿入するには、以下の手順を踏みます:
+    </para>
+    <orderedlist>
+      <listitem>
+	<para>
+	  <application>&applet;</application>を右クリックする。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  以下の項目のいずれかをポップアップメニューから選択する:
+	</para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      <guilabel>時刻のコピー</guilabel>
+	    </para>
+	  </listitem>
+	  <listitem>
+	    <para>
+	      <guilabel>日付のコピー</guilabel>
+	    </para>
+	  </listitem>
+	</itemizedlist>
+      </listitem>
+      <listitem>
+	<para>
+	  時刻・日付を挿入したいアプリケーション上の位置を選択します。
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <menuchoice>
+	    <guimenu>編集</guimenu>
+	    <guimenuitem>貼り付け</guimenuitem>
+	  </menuchoice>
+	  と選択するか、マウスの中ボタンをクリックすることで、時刻・日
+	  付を挿入することができます。
+	</para>
+      </listitem>
+    </orderedlist>
+  </sect1>
+
+  <!-- ============= Preferences ============================= -->
+
+  <sect1 id="clock-settings">
+    <title>設定</title>
+    <para>
+      <application>&applet;</application>アプレットを設定するには、ア
+      プレットを右クリックし、<guimenuitem>設定</guimenuitem>を選択し
+      ます。
+    </para>
+
+    <variablelist>
+      <varlistentry>
+	<term><guilabel>時計の種類</guilabel></term>
+	<listitem>
+	  <para>以下のいずれかを選択します:</para>
+	  <itemizedlist>
+	    <listitem>
+	      <para><guilabel>12時間制</guilabel></para>
+	      <para>
+		a.m./p.m.フォーマットで時刻を表示します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>24時間制</guilabel></para>
+	      <para>
+		00.00〜24.00のフォーマットで時刻を表示します。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>UNIX時間</guilabel></para>
+	      <para>
+		1970年1月1日からの秒数を表示します。開発者はUNIX時間の
+		主要な利用者です。
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para><guilabel>インターネット時間</guilabel></para>
+	      <para>
+		アプレットにインターネット時間を表示します。インターネッ
+		ト時間は世界標準時としてBiel Mean Time (BMT)に基く、世
+		界中で同じ時刻を示す時刻です。インターネット時間を利用
+		することで、インターネットのユーザは共通の時刻で同期す
+		ることができます。
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>秒を表示する</guilabel></term>
+	<listitem>
+	  <para>
+	    アプレット上に秒数を表示します。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>日付を表示する</guilabel></term>
+	<listitem>
+	  <para>
+	    アプレット上に日付を表示します。
+	  </para>
+	</listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><guilabel>UTCを使用する</guilabel></term>
+	<listitem>
+	  <para>
+	    グリニッジ標準時としても知られる、UTCをアプレット上に表示
+	    します。
+	  </para>
+	</listitem>
+      </varlistentry>
+    </variablelist>
+
+  </sect1>
+</article>
