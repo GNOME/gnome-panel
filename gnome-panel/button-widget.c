@@ -10,6 +10,7 @@
 #include "panel-widget.h"
 #include "basep-widget.h"
 #include "panel-types.h"
+#include "panel-util.h"
 #include "panel_config_global.h"
 #include "rgb-stuff.h"
 

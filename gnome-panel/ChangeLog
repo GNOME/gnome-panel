@@ -1,3 +1,12 @@
+Tue Jan 02 20:44:47 2001  George Lebl <jirka@5z.com>
+
+	* extern.c:  Implement launch_an_applet.  It's very simple really,
+	  activate the applet, and then if we get an applet with such a
+	  goad_id, use the PanelAppletBooter interface to bootstrap it, and
+	  leave the rest to whatever wanted the applet in the first place.
+
+	* button-widget.c: fix warning 
+
 Sun Dec 31 19:14:47 2000  George Lebl <jirka@5z.com>
 
 	* panel-widget.[ch], applet.c, extern.c, panel.c:  Allow

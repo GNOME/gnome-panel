@@ -48,6 +48,54 @@ extern int ss_done_save;
 extern GtkWidget* ss_timeout_dlg;
 extern gushort ss_cookie;
 
+/* Launching applets into other things then the panel */
+
+typedef struct {
+	char *goad_id;
+	GNOME_PanelAppletBooter booter;
+} OutsideExtern;
+
+static GSList *outside_externs = NULL;
+
+static void
+push_outside_extern (const char *goad_id,
+		     const GNOME_PanelAppletBooter booter,
+		     CORBA_Environment *ev)
+{
+	OutsideExtern *oe;
+
+	g_return_if_fail (goad_id != NULL);
+	g_return_if_fail (booter != CORBA_OBJECT_NIL);
+
+	oe = g_new0 (OutsideExtern, 1);
+
+	oe->goad_id = g_strdup (goad_id);
+	oe->booter = CORBA_Object_duplicate (booter, ev);
+
+	outside_externs = g_slist_prepend (outside_externs, oe);
+}
+
+static GNOME_PanelAppletBooter
+pop_outside_extern (const char *goad_id)
+{
+	GSList *li;
+
+	g_return_val_if_fail (goad_id != NULL, CORBA_OBJECT_NIL);
+
+	for (li = outside_externs; li != NULL; li = li->next) {
+		OutsideExtern *oe = li->data;
+
+		if (strcmp (oe->goad_id, goad_id) == 0) {
+			GNOME_PanelAppletBooter booter = oe->booter;
+			g_free (oe->goad_id);
+			oe->goad_id = NULL;
+			g_free (oe);
+			return booter;
+		}
+	}
+	return CORBA_OBJECT_NIL;
+}
+
 /********************* CORBA Stuff *******************/
 
 CORBA_ORB orb = NULL;
@@ -56,24 +104,24 @@ PortableServer_POA thepoa;
 
 /***Panel stuff***/
 static GNOME_PanelSpot
-s_panel_add_applet(PortableServer_Servant servant,
-		   const GNOME_Applet panel_applet,
-		   const CORBA_char *goad_id,
-		   CORBA_char ** cfgpath,
-		   CORBA_char ** globcfgpath,
-		   CORBA_unsigned_long* wid,
-		   CORBA_Environment *ev);
+s_panel_add_applet (PortableServer_Servant servant,
+		    const GNOME_Applet panel_applet,
+		    const CORBA_char *goad_id,
+		    CORBA_char ** cfgpath,
+		    CORBA_char ** globcfgpath,
+		    CORBA_unsigned_long* wid,
+		    CORBA_Environment *ev);
 
 static GNOME_PanelSpot
-s_panel_add_applet_full(PortableServer_Servant servant,
-			const GNOME_Applet panel_applet,
-			const CORBA_char *goad_id,
-			const CORBA_short panel,
-			const CORBA_short pos,
-			CORBA_char ** cfgpath,
-			CORBA_char ** globcfgpath,
-			CORBA_unsigned_long* wid,
-			CORBA_Environment *ev);
+s_panel_add_applet_full (PortableServer_Servant servant,
+			 const GNOME_Applet panel_applet,
+			 const CORBA_char *goad_id,
+			 const CORBA_short panel,
+			 const CORBA_short pos,
+			 CORBA_char ** cfgpath,
+			 CORBA_char ** globcfgpath,
+			 CORBA_unsigned_long* wid,
+			 CORBA_Environment *ev);
 
 static void
 s_panel_quit(PortableServer_Servant servant, CORBA_Environment *ev);
@@ -125,6 +173,10 @@ void s_panel_run_box (PortableServer_Servant _servant,
 		      CORBA_Environment * ev);
 void s_panel_main_menu (PortableServer_Servant _servant,
 			CORBA_Environment * ev);
+void s_panel_launch_an_applet (PortableServer_Servant _servant,
+			       const CORBA_char * goad_id,
+			       const GNOME_PanelSpot spot,
+			       CORBA_Environment * ev);
 
 /*** PanelSpot stuff ***/
 
@@ -259,7 +311,8 @@ static POA_GNOME_Panel2__epv panel2_epv = {
 	s_panel_add_launcher_from_info,
 	s_panel_add_launcher_from_info_url,
 	s_panel_run_box,
-	s_panel_main_menu
+	s_panel_main_menu,
+	s_panel_launch_an_applet
 };
 
 static POA_GNOME_Panel2__vepv panel_vepv = { &panel_base_epv, &panel_epv, &panel2_epv };
@@ -813,33 +866,56 @@ load_queued_externs(void)
 
 
 static GNOME_PanelSpot
-s_panel_add_applet(PortableServer_Servant servant,
-		   const GNOME_Applet panel_applet,
-		   const CORBA_char *goad_id,
-		   CORBA_char ** cfgpath,
-		   CORBA_char ** globcfgpath,
-		   CORBA_unsigned_long* wid,
-		   CORBA_Environment *ev)
+s_panel_add_applet (PortableServer_Servant servant,
+		    const GNOME_Applet panel_applet,
+		    const CORBA_char *goad_id,
+		    CORBA_char ** cfgpath,
+		    CORBA_char ** globcfgpath,
+		    CORBA_unsigned_long* wid,
+		    CORBA_Environment *ev)
 {
-	return s_panel_add_applet_full(servant, panel_applet, goad_id, 0, 0,
-				       cfgpath, globcfgpath, wid, ev);
+	return s_panel_add_applet_full (servant, panel_applet, goad_id, 0, 0,
+					cfgpath, globcfgpath, wid, ev);
 }
 
 static GNOME_PanelSpot
-s_panel_add_applet_full(PortableServer_Servant servant,
-			const GNOME_Applet panel_applet,
-			const CORBA_char *goad_id,
-			const CORBA_short panel,
-			const CORBA_short pos,
-			CORBA_char ** cfgpath,
-			CORBA_char ** globcfgpath,
-			CORBA_unsigned_long* wid,
-			CORBA_Environment *ev)
+s_panel_add_applet_full (PortableServer_Servant servant,
+			 const GNOME_Applet panel_applet,
+			 const CORBA_char *goad_id,
+			 const CORBA_short panel,
+			 const CORBA_short pos,
+			 CORBA_char ** cfgpath,
+			 CORBA_char ** globcfgpath,
+			 CORBA_unsigned_long* wid,
+			 CORBA_Environment *ev)
 {
 	GSList *li;
 	Extern *ext;
 	POA_GNOME_PanelSpot *panelspot_servant;
 	GNOME_PanelSpot acc;
+	GNOME_PanelAppletBooter booter;
+
+	booter = pop_outside_extern (goad_id);
+	if (booter != CORBA_OBJECT_NIL) {
+		/* yeah, we do dump the panel and pos, since they
+		 * really don't make any sesnse, and aren't really
+		 * used anywhere in the first place */
+		acc = GNOME_PanelAppletBooter_add_applet (booter,
+							  panel_applet,
+							  goad_id,
+							  cfgpath,
+							  globcfgpath,
+							  wid,
+							  ev);
+
+		/* if we succeeded, then all fine and dandy, otherwise
+		 * this thing was some stale thingie, so just ignore it
+		 * and launch us into the panel.  This way we're always
+		 * getting the applet, even if the booter crashed or we
+		 * had a stale one around */
+		if (ev->_major == CORBA_NO_EXCEPTION)
+			return acc;
+	}
 	
 	for (li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
@@ -1123,6 +1199,33 @@ s_panel_main_menu (PortableServer_Servant _servant,
 	}
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
 			NULL, NULL, 0, GDK_CURRENT_TIME);
+}
+
+void
+s_panel_launch_an_applet (PortableServer_Servant _servant,
+			  const CORBA_char *goad_id,
+			  const GNOME_PanelSpot spot,
+			  CORBA_Environment *ev)
+{
+	if (goad_id != NULL &&
+	    spot != CORBA_OBJECT_NIL) {
+		CORBA_Object applet;
+
+		/* push us */
+		push_outside_extern (goad_id, spot, ev);
+
+		/* launch the applet, EVIL! this way shlib applets
+		 * get dumped into the panel.  Reason?  Simple:  the
+		 * shlib applet logic is complex, broken, evil and
+		 * whatever, we do not want to impose it upon an
+		 * unsuspecting PanelSpot. */
+		applet = goad_server_activate_with_id (NULL, goad_id,
+						       GOAD_ACTIVATE_NEW_ONLY |
+						       GOAD_ACTIVATE_ASYNC,
+						       NULL);
+
+		CORBA_Object_release (applet, ev);
+	}
 }
 
 /*** PanelSpot stuff ***/
