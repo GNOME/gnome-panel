@@ -1,4 +1,11 @@
-2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+2002-07-06  Miguel Rodríguez Pérez  <migrax@terra.es>
+
+	* fish.c (update_fortune_dialog): Convert the fortune string from
+	the user locale to UTF-8. This fixes bug #82254
+
+2002-06-21  Mark McLoughlin  <mark@skynet.ie>
+  
+  	* fish.c: (load_image_file), (create_fish_widget),
 
 	* fish.c: sanity check speed and frames values.
 	Fixes #70872.

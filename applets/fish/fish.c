@@ -902,6 +902,7 @@ update_fortune_dialog (Fish *fish)
 {
 	char *fortune_command;
 	gchar *output = NULL;
+	gchar *output_utf8;
 
 	if ( fish->fortune_dialog == NULL ) {
 		GtkWidget *view;
@@ -974,8 +975,15 @@ update_fortune_dialog (Fish *fish)
 	
 	g_free (fortune_command);
 
-	if (output) {
-		insert_text (fish, output);
+	/* The output is not guarantied to be in UTF-8 format, most
+	   likely it's just in ASCII-7 or in the user locale */
+	if (!g_utf8_validate (output, -1, NULL))
+	  output_utf8 = g_locale_to_utf8 (output, -1, NULL, NULL, NULL);
+	else
+	  output_utf8 = g_strdup (output);
+
+	if (output_utf8) {
+		insert_text (fish, output_utf8);
 	} else {
 		insert_text (fish, 
 			     _("You do not have fortune installed "
@@ -983,7 +991,8 @@ update_fortune_dialog (Fish *fish)
 			       "to run.\n\nPlease refer to fish "
 			       "properties dialog."));
 	}
-
+	g_free (output);
+	g_free (output_utf8);
 }
 
 static void
