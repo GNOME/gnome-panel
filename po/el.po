@@ -1,6 +1,6 @@
 # translation of el.po to Greek
 # gnome-panel Greek PO file.
-# Copyright (C) 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 #
 # Comment: Most of the work done by Spiros (around 600 messages).
 # Comment: Simos/Sarantis did 12%.
@@ -25,23 +25,24 @@
 # Nikos:29Aug2003, review tranlation
 # kostas: 30Oct2003, update translation for Gnome 2.6
 # kostas: 12Nov2003, fixes
+# kostas:27Jan2004, update
 # Spiros Papadimitriou <sapadim+@cs.cmu.edu>, 1999.
 # Simos Xenitellis <simos@hellug.gr>, 1999, 2000, 2001, 2002.
 # Sarantis Paskalis <paskalis@di.uoa.gr>, 2000.
-# Kostas Papadimas <pkst@gnome.org>, 2002,2003.
+# Kostas Papadimas <pkst@gnome.org>, 2002,2003, 2004.
 # Nikos Charonitakis <frolix68@yahoo.gr>, 2003.
 msgid ""
 msgstr ""
 "Project-Id-Version: el\n"
-"POT-Creation-Date: 2004-01-15 12:14+0000\n"
-"PO-Revision-Date: 2003-11-12 19:18+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-27 17:51+0200\n"
+"PO-Revision-Date: 2004-01-27 17:52+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gnome.org>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
-"X-Generator: KBabel 1.0\n"
+"X-Generator: KBabel 1.0.2\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -72,9 +73,9 @@ msgstr "_Περί..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:608
+#: gnome-panel/drawer.c:603 gnome-panel/menu.c:3077
+#: gnome-panel/panel-action-button.c:598 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Βοήθεια"
 
@@ -108,28 +109,27 @@ msgstr "Λήψη της τρέχουσας ημερομηνίας και ώρα�
 
 #: applets/clock/calendar-client.c:177
 msgid "Day"
-msgstr ""
+msgstr "Ημέρα"
 
 #: applets/clock/calendar-client.c:178
 msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
+msgstr "Η τρέχουσα ημέρα μεταξύ 1 και 31 (0 σημαίνει απενεργοποίηση)"
 
 #: applets/clock/calendar-client.c:185
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #: applets/clock/calendar-client.c:186
 msgid "The currently monitored month between 0 and 11"
-msgstr ""
+msgstr "Ο τρέχων μήνας  μεταξύ 1 και 11"
 
 #: applets/clock/calendar-client.c:193
-#, fuzzy
 msgid "Year"
-msgstr "Αναζήτηση"
+msgstr "Έτος"
 
 #: applets/clock/calendar-client.c:194
 msgid "The currently monitored year"
-msgstr ""
+msgstr "Το τρέχον έτος"
 
 #: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
@@ -154,31 +154,30 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:276
-#, fuzzy
 msgid "%a %b %e"
-msgstr "%a %b %d"
+msgstr "%a %b %e"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:283
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:407
@@ -187,15 +186,15 @@ msgstr "%A %B %d"
 
 #: applets/clock/clock.c:825
 msgid "Tasks"
-msgstr ""
+msgstr "Εργασίες"
 
 #: applets/clock/clock.c:961
 msgid "All Day"
-msgstr ""
+msgstr "Ολοήμερο"
 
 #: applets/clock/clock.c:991
 msgid "Appointments"
-msgstr ""
+msgstr "Ραντεβού"
 
 #: applets/clock/clock.c:1217
 msgid "Calendar"
@@ -265,14 +264,12 @@ msgid "Internet time"
 msgstr "Ώρα Διαδικτύου"
 
 #: applets/clock/clock.c:2223
-#, fuzzy
 msgid "Custom format"
-msgstr "Προσαρμοσμένο Εικονίδιο"
+msgstr "Προσαρμοσμένη μορφή"
 
 #: applets/clock/clock.c:2239
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Τύπος ώρας"
+msgstr "Προσαρμοσμένη μορ_φή:"
 
 #: applets/clock/clock.c:2256
 msgid "Show _seconds"
@@ -290,7 +287,7 @@ msgstr "Χρήση _UTC"
 #: applets/clock/clock.c:2487 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
-#: gnome-panel/menu.c:283
+#: gnome-panel/menu.c:284
 msgid "translator_credits"
 msgstr ""
 "Κώστας Παπαδήμας <pkst@gmx.net>, 2002,2003\n"
@@ -307,13 +304,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
 msgstr "24ωρο"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Προσαρμοσμένη μορφή του ρολογιού"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -354,6 +350,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -361,6 +359,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Αυτό το κλειδί καθορίζει την μορφή που θα χρησιμοποιείται από το εφαρμογίδιο "
+"ρολογιού όταν το κλειδί μορφής έχει ορισθεί στο \"προσαρμοσμένο\".. Μπορείτε "
+"να χρησιμοποιήσετε conversion specifiers που είναι κατανοητοί από το strftime"
+"() για να λάβετε μια συγκεκριμένη μορφή."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -373,6 +375,14 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Αυτό το κλειδί καθορίζει την μορφή ώρας που θα χρησιμοποιείται από το "
+"εφαρμογίδιο ρολογιού . Πιθανές τιμές είναι \"12-ωρο\", \"24-ωρο\", "
+"\"διαδικτύου\", \"unix\" και \"προσαρμοσμένο\". Η ώρα διαδικτύου χωρίζει την "
+"ημέρα σε 1000 \".beats\". δεν υπάρχουν ζώνες ώρας σε αυτό το σύστημα και "
+"έτσι η ώρα σε όλο τον κόσμο είναι η ίδια. Αν ορισθεί σε  \"unix\", το ρολόϊ "
+"θα εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01. Αν "
+"ορισθεί σε \"προσαρμοσμένο\" η μορφή θα είναι αυτή που καθορίζεται στο "
+"κλειδί custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -394,278 +404,6 @@ msgstr "Χρήση UTC"
 msgid "Use internet time"
 msgstr "Χρήση ώρας Διαδικτύου"
 
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:186
-msgid "Text"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:187
-msgid "Text to render"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:194
-msgid "Markup"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:195
-msgid "Marked up text to render"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:202
-msgid "Attributes"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:203
-msgid "A list of style attributes to apply to the text of the renderer"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:210
-msgid "Ellipsize"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:211
-msgid "Whether to crop the text and display \"...\" when space is limited"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:218
-#, fuzzy
-msgid "Background color name"
-msgstr "Χρώμα παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:219
-#, fuzzy
-msgid "Background color as a string"
-msgstr "Διαφάνεια χρώματος παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:226
-#: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Χρώμα παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:227
-#, fuzzy
-msgid "Background color as a GdkColor"
-msgstr "Χρώμα παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:234
-#, fuzzy
-msgid "Foreground color name"
-msgstr "Χρώμα παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:235
-msgid "Foreground color as a string"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:242
-#, fuzzy
-msgid "Foreground color"
-msgstr "Χρώμα παρασκηνίου"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:243
-msgid "Foreground color as a GdkColor"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:251
-msgid "Editable"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:252
-msgid "Whether the text can be modified by the user"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:259
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:267
-msgid "Font"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:260
-msgid "Font description as a string"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:268
-msgid "Font description as a PangoFontDescription struct"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:276
-msgid "Font family"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:277
-msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:284
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:285
-msgid "Font style"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:293
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:294
-msgid "Font variant"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:302
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:303
-msgid "Font weight"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:312
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:313
-#, fuzzy
-msgid "Font stretch"
-msgstr "Τέ_ντωμα"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:321
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:322
-#, fuzzy
-msgid "Font size"
-msgstr "Μέγεθος ταμπλώ"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:331
-msgid "Font points"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:332
-msgid "Font size in points"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:341
-msgid "Font scale"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:342
-msgid "Font scaling factor"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:351
-msgid "Rise"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:352
-msgid ""
-"Offset of text above the baseline (below the baseline if rise is negative)"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:362
-msgid "Strikethrough"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:363
-msgid "Whether to strike through the text"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:370
-msgid "Underline"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:371
-msgid "Style of underline for this text"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:381
-#, fuzzy
-msgid "Background set"
-msgstr "Παρασκήνιο"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:382
-msgid "Whether this tag affects the background color"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:385
-msgid "Foreground set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:386
-msgid "Whether this tag affects the foreground color"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:389
-msgid "Editability set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:390
-msgid "Whether this tag affects text editability"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:393
-msgid "Font family set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:394
-msgid "Whether this tag affects the font family"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:397
-msgid "Font style set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:398
-msgid "Whether this tag affects the font style"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:401
-msgid "Font variant set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:402
-msgid "Whether this tag affects the font variant"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:405
-msgid "Font weight set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:406
-msgid "Whether this tag affects the font weight"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:409
-msgid "Font stretch set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:410
-msgid "Whether this tag affects the font stretch"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:413
-msgid "Font size set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:414
-msgid "Whether this tag affects the font size"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:417
-msgid "Font scale set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:418
-msgid "Whether this tag scales the font size by a factor"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:421
-msgid "Rise set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:422
-msgid "Whether this tag affects the rise"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:425
-msgid "Strikethrough set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:426
-msgid "Whether this tag affects strikethrough"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:429
-msgid "Underline set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:430
-msgid "Whether this tag affects underlining"
-msgstr ""
-
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
 msgstr "Διασκέδαση"
@@ -675,7 +413,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Εμφανίζει ένα ψάρι που κολυμπάει ή κάποιο άλλο κινούμενο πλάσμα"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:493
+#: applets/fish/fish.c:496
 msgid "Fish"
 msgstr "Ψάρι"
 
@@ -687,7 +425,7 @@ msgstr "Από που Κρατά η Σκούφια Αυτού του Ηλιθί�
 msgid "Wanda Factory"
 msgstr "Εργοστάσιο Wanda"
 
-#: applets/fish/fish.c:194
+#: applets/fish/fish.c:197
 #, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -700,12 +438,12 @@ msgstr ""
 "θέλετε να το κάνετε. Είμαστε σθεναρά αντίθετοι στη χρήση του\n"
 "%s  για οτιδήποτε θα μπορούσε να κάνει το εφαρμογίδιο \"πρακτικό\" ή χρήσιμο."
 
-#: applets/fish/fish.c:455 applets/fish/fish.c:525 applets/fish/fish.c:613
+#: applets/fish/fish.c:458 applets/fish/fish.c:528 applets/fish/fish.c:616
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s το Ψάρι"
 
-#: applets/fish/fish.c:456
+#: applets/fish/fish.c:459
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -718,29 +456,29 @@ msgstr ""
 "χώρο στο ταμπλώ και στη μνήμη.  Όποιος βρεθεί να χρησιμοποιεί αυτό το "
 "εφαρμογίδιο, πρέπει να υποβληθεί εγκαίρως σε ψυχολογική εξέταση."
 
-#: applets/fish/fish.c:477
+#: applets/fish/fish.c:480
 msgid "(with minor help from George)"
 msgstr "(με λίγη βοήθεια από το George)"
 
-#: applets/fish/fish.c:526
+#: applets/fish/fish.c:529
 #, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s το Ψάρι, ένα σύγχρονο μαντείο"
 
-#: applets/fish/fish.c:573
+#: applets/fish/fish.c:576
 msgid "Unable to get the name of the command to execute"
 msgstr "Αδυναμία λήψης ονόματος εντολής για εκτέλεση"
 
-#: applets/fish/fish.c:590
+#: applets/fish/fish.c:593
 msgid "Unable to locate the command to execute"
 msgstr "Αδυναμία εντοπισμού εντολής για εκτέλεση"
 
-#: applets/fish/fish.c:618
+#: applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish Says:"
 msgstr "%s το Ψάρι λέει:"
 
-#: applets/fish/fish.c:744
+#: applets/fish/fish.c:747
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -751,7 +489,7 @@ msgstr ""
 "\n"
 "Λεπτομέρειες:%s"
 
-#: applets/fish/fish.c:765
+#: applets/fish/fish.c:768
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -763,7 +501,7 @@ msgstr ""
 "\n"
 "Παρακαλώ αναφερθείτε στο διάλογο ιδιοτήτων του ψαριού."
 
-#: applets/fish/fish.c:1369
+#: applets/fish/fish.c:1372
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -771,7 +509,7 @@ msgstr ""
 "Το νερό θέλει αλλαγή!\n"
 "(Δείτε τη σημερινή ημερομηνία)"
 
-#: applets/fish/fish.c:1429
+#: applets/fish/fish.c:1432
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "%s το ψάρι, το μέντιουμ της τύχης"
@@ -854,8 +592,7 @@ msgid "Frames in fish's animation"
 msgstr "Ο αριθμός των καρέ στην κίνηση του ψαριού"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
 "Αν true η εικόνα παρασκηνίου θα περιστρέφεται αν το ταμπλώ προσανατολίζεται "
 "κάθετα."
@@ -880,8 +617,7 @@ msgstr "Το όνομα του ψαριού"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr ""
-"Αυτό το κλειδί καθορίζει την εντολή προς εκτέλεση όταν το ψάρι πατηθεί."
+msgstr "Αυτό το κλειδί καθορίζει την εντολή προς εκτέλεση όταν το ψάρι πατηθεί."
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -925,16 +661,15 @@ msgid "Panel Notification Area"
 msgstr "Περιοχή ειδοποίησης ταμπλώ"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:121 gnome-panel/menu.c:131
-#: gnome-panel/menu.c:141 gnome-panel/menu.c:151 gnome-panel/menu.c:161
-#: gnome-panel/panel-menu-bar.c:192
+#: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
+#: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
+#: gnome-panel/panel-menu-bar.c:223
 msgid "Actions"
 msgstr "Ενέργειες"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Factory for the window navigation related applets"
-msgstr ""
-"Εργοστάσιο για τη δημιουργία εφαρμογιδίων σχετικά με την περιήγηση παραθύρων."
+msgstr "Εργοστάσιο για τη δημιουργία εφαρμογιδίων σχετικά με την περιήγηση παραθύρων."
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Hide application windows and show the desktop"
@@ -963,9 +698,8 @@ msgstr "Εργοστάσιο εφαρμογιδίου περιήγησης πα�
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
-#, fuzzy
 msgid "Window Selector"
-msgstr "Λίστα παραθύρων"
+msgstr "Επιλογέας παραθύρων"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -979,8 +713,7 @@ msgstr "Πατήστε εδώ για επαναφορά των κρυμμένω�
 
 #: applets/wncklet/showdesktop.c:224
 msgid "Click here to hide all windows and show the desktop."
-msgstr ""
-"Πατήστε εδώ για απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
+msgstr "Πατήστε εδώ για απόκρυψη των παραθύρων και εμφάνιση της επιφάνειας εργασίας."
 
 #: applets/wncklet/showdesktop.c:306
 #, c-format
@@ -1063,7 +796,7 @@ msgstr "Προ_βολή παραθύρων από τον τρέχοντα χώρ
 msgid "Show windows from a_ll workspaces"
 msgstr "Προβολή παραθύρων από ό_λους τους χώρους εργασίας"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3611
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3615
 msgid "Size"
 msgstr "Μέγεθος"
 
@@ -1119,8 +852,7 @@ msgstr "Ελάχιστο μέγεθος παραθύρου λίστας"
 
 #: applets/wncklet/window-list.schemas.in.h:6
 msgid "Move windows to current workspace when unminimized"
-msgstr ""
-"Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά την επαναφορά τους"
+msgstr "Μετακίνηση παραθύρων στην τρέχουσα περιοχή εργασίας κατά την επαναφορά τους"
 
 #: applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
@@ -1145,12 +877,10 @@ msgid "When to group windows"
 msgstr "Πότε θα ομαδοποιούνται τα παράθυρα"
 
 #: applets/wncklet/window-menu.c:135
-#, fuzzy
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
-"Το μενού παραθύρου εμφανίζει μια λίστα από όλα τα παράθυρα και σας επιτρέπει "
-"να τα ξεφυλλίσετε."
+"Ο επιλογέας παραθύρου εμφανίζει μια λίστα από όλα τα παράθυρα και σας "
+"επιτρέπει να τα ξεφυλλίσετε."
 
 #: applets/wncklet/window-menu.c:415
 msgid "Unknown Window"
@@ -1184,8 +914,7 @@ msgstr ""
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Σφάλμα φόρτωσης τιμής display_workspace_names για το εφαρμογίδιο εναλλαγής "
 "χώρων εργασίας : %s\n"
@@ -1285,81 +1014,89 @@ msgid "GNOME Panel Shell"
 msgstr "Κέλυφος Ταμπλώ GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:497 gnome-panel/panel-applet-frame.c:111
+#: gnome-panel/applet.c:470 gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "Κλεί_δωμα"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:478
 msgid "_Move"
 msgstr "_Μετακίνηση"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:483
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:456
 msgid "_Remove From Panel"
 msgstr "_Αφαίρεση από το ταμπλώ"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:497
-#: gnome-panel/panel-applet-frame.c:111
+#: gnome-panel/applet.c:103 gnome-panel/applet.c:470
+#: gnome-panel/panel-applet-frame.c:109
 msgid "Un_lock"
 msgstr "Ξε_κλείδωμα"
 
-#: gnome-panel/applet.c:406
+#: gnome-panel/applet.c:377
 msgid "???"
 msgstr ";;;"
 
-#: gnome-panel/applet.c:1115
+#: gnome-panel/applet.c:1094
 msgid "Can't find an empty spot"
 msgstr "Δε βρέθηκε ελεύθερη τοποθεσία"
 
-#: gnome-panel/button-widget.c:198
+#: gnome-panel/button-widget.c:199
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Αποτυχία φόρτωσης εικόνας %s"
 
-#: gnome-panel/button-widget.c:400
+#: gnome-panel/button-widget.c:403
 msgid "none"
 msgstr "κανένα"
 
-#: gnome-panel/button-widget.c:405
+#: gnome-panel/button-widget.c:408
 msgid "file not found"
 msgstr "το αρχείο δε βρέθηκε"
 
-#: gnome-panel/button-widget.c:769
+#: gnome-panel/button-widget.c:753
+msgid "Activatable"
+msgstr "Ενεργοποιήσιμο"
+
+#: gnome-panel/button-widget.c:754
+msgid "Whether the button is activatable"
+msgstr "Αν αυτό το κουμπί θα είναι ενεργοποιήσιμο"
+
+#: gnome-panel/button-widget.c:762
 msgid "Has Arrow"
 msgstr "Έχει Βέλος"
 
-#: gnome-panel/button-widget.c:770
+#: gnome-panel/button-widget.c:763
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Αν θα σχεδιάζεται ή όχι βέλος"
 
-#: gnome-panel/button-widget.c:778
+#: gnome-panel/button-widget.c:771
 msgid "Drag and drop Highlight"
 msgstr "Επισήμανση Drag and drop"
 
-#: gnome-panel/button-widget.c:779
+#: gnome-panel/button-widget.c:772
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Αν θα γίνεται επισήμανση του εικονιδίου κατά το 'σύρε και άφησε'"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3600
+#: gnome-panel/button-widget.c:780 gnome-panel/panel-toplevel.c:3604
 msgid "Orientation"
 msgstr "Προσανατολισμός"
 
-#: gnome-panel/button-widget.c:788
+#: gnome-panel/button-widget.c:781
 msgid "The ButtonWidget orientation"
 msgstr "Ο προσανατολισμός του Γραφικού Συστατικού Κουμπιού"
 
-#: gnome-panel/button-widget.c:797
+#: gnome-panel/button-widget.c:790
 msgid "Icon Name"
 msgstr "Όνομα Eικονιδίου"
 
-#: gnome-panel/button-widget.c:798
+#: gnome-panel/button-widget.c:791
 msgid "The desired icon for the ButtonWidget"
 msgstr "Η επιθυμητή εικόνα για το γραφικό συστατικό κουμπιού"
 
-#: gnome-panel/button-widget.c:806
+#: gnome-panel/button-widget.c:799
 msgid "Stock Icon ID"
 msgstr "Stock Icon ID"
 
-#: gnome-panel/button-widget.c:807
+#: gnome-panel/button-widget.c:800
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Το επιθυμητό stock icon για το γραφικό συστατικό κουμπιού"
 
@@ -1387,12 +1124,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Μενού KDE"
 
-#: gnome-panel/drawer.c:339 gnome-panel/menu.c:3199
+#: gnome-panel/drawer.c:340 gnome-panel/menu.c:3186
 msgid "Drawer"
 msgstr "Συρτάρι"
 
-#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:739 gnome-panel/menu.c:1514
-#: gnome-panel/menu.c:3036 gnome-panel/panel-action-button.c:98
+#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:742 gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:3027 gnome-panel/panel-action-button.c:125
 msgid "_Properties"
 msgstr "_Ιδιότητες"
 
@@ -1512,32 +1249,31 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cScreenshot-%s.png"
+msgstr "Screenshot-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cScreenshot.png"
+msgstr "Screenshot.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cScreenshot-%s-%d.png"
+msgstr "Screenshot-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cScreenshot-%d.png"
+msgstr "Screenshot-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1550,10 +1286,9 @@ msgstr "Αρπαγή παραθύρου αντί ολόκληρης της οθ�
 
 #: gnome-panel/gnome-panel-screenshot.c:1099
 msgid "Take screenshot after specified delay [in seconds]"
-msgstr ""
-"Λήψη αρπαγής οθόνης μετά από προκαθορισμένη καθυστέρηση [σε δευτερόλεπτα]"
+msgstr "Λήψη αρπαγής οθόνης μετά από προκαθορισμένη καθυστέρηση [σε δευτερόλεπτα]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1151
+#: gnome-panel/gnome-panel-screenshot.c:1154
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1561,7 +1296,7 @@ msgstr ""
 "Λείπει το αρχείο glade για το πρόγραμμα αρπαγής οθόνης.\n"
 "Παρακαλώ ελέγξτε την εγκατάσταση του gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1167
+#: gnome-panel/gnome-panel-screenshot.c:1170
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Αδύνατη η αρπαγή οθόνης της τρέχουσας επιφάνειας γραφείου."
 
@@ -1587,8 +1322,7 @@ msgstr "Αποθήκευση αρπαγής οθόνης σε αρ_χείο:"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
-"Αποθήκευση αρπαγής οθόνης σε _σελίδα web (αποθήκευση στο ~/public__html)"
+msgstr "Αποθήκευση αρπαγής οθόνης σε _σελίδα web (αποθήκευση στο ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1602,65 +1336,64 @@ msgstr ""
 msgid "Web directory"
 msgstr "Κατάλογος παγκόσμιου ιστού"
 
-#: gnome-panel/launcher.c:101
+#: gnome-panel/launcher.c:102
 msgid "Cannot save launcher to disk"
 msgstr "Αδυναμία αποθήκευσης εκκινητή στο δίσκο"
 
-#: gnome-panel/launcher.c:129 gnome-panel/launcher.c:172
-#: gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
+#: gnome-panel/launcher.c:217
 msgid "Cannot launch icon"
 msgstr "Αδύνατη η εκκίνηση του εικονιδίου"
 
-#: gnome-panel/launcher.c:130
+#: gnome-panel/launcher.c:131
 msgid "This launch icon does not specify a url to show."
 msgstr "Το εικονίδιο εκκινητή δεν προσδιορίζει URL προς εμφάνιση"
 
-#: gnome-panel/launcher.c:138
+#: gnome-panel/launcher.c:139
 #, c-format
 msgid "Cannot show %s"
 msgstr "Αδύνατη η εμφάνιση του %s"
 
-#: gnome-panel/launcher.c:408
+#: gnome-panel/launcher.c:409
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr ""
-"Δεν έχει ορισθεί  URI για το αρχείο επιφάνειας εργασίας του εκκινητή ταμπλώ\n"
+msgstr "Δεν έχει ορισθεί  URI για το αρχείο επιφάνειας εργασίας του εκκινητή ταμπλώ\n"
 
-#: gnome-panel/launcher.c:422
+#: gnome-panel/launcher.c:423
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Αδυναμία ανοίγματος αρχείου επιφάνειας εργασίας %s για τον εκκινητή μενού %s%"
 "s\n"
 
-#: gnome-panel/launcher.c:629 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Ιδιότητες Eκκινητή"
 
-#: gnome-panel/launcher.c:813
+#: gnome-panel/launcher.c:817
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Το πλήκτρο  %s δεν έχει ορισθεί, αδυναμία φόρτωσης εκκινητήr\n"
 
-#: gnome-panel/launcher.c:867 gnome-panel/launcher.c:884
+#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Αδυναμία δημιουργίας εκκινητή"
 
-#: gnome-panel/launcher.c:868 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Θα πρέπει να καθορίσετε ένα όνομα."
 
-#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Θα πρέπει να καθορίσετε ένα έγκυρο URL ή εντολή"
 
-#: gnome-panel/launcher.c:928 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Δημιουργία Eκκινητή"
 
-#: gnome-panel/main.c:48
+#: gnome-panel/main.c:49
 msgid "Specify a profile name to load"
 msgstr "Καθορίστε ένα όνομα συνεδρίας προς φόρτωση"
 
@@ -1668,7 +1401,7 @@ msgstr "Καθορίστε ένα όνομα συνεδρίας προς φόρ�
 msgid "Cannot save changes to launcher"
 msgstr "Αδυναμία αποθήκευσης αλλαγών στο εκκινητή"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1324
 msgid "Menu"
 msgstr "Μενού"
 
@@ -1685,11 +1418,11 @@ msgstr ""
 "Δε μπορείτε να δημιουργήσετε ένα νέο εκκινητή σε αυτή την τοποθεσία επειδή η "
 "τοποθεσία δεν είναι εγγράψιμη."
 
-#: gnome-panel/menu.c:110
+#: gnome-panel/menu.c:111
 msgid "Log Out"
 msgstr "Αποσύνδεση"
 
-#: gnome-panel/menu.c:113
+#: gnome-panel/menu.c:114
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1697,59 +1430,59 @@ msgstr ""
 "Αποσυνδεθείτε από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικός χρήστης "
 "ή για να κλείσετε τον υπολογιστή σας"
 
-#: gnome-panel/menu.c:120
+#: gnome-panel/menu.c:121
 msgid "Lock"
 msgstr "Κλείδωμα"
 
-#: gnome-panel/menu.c:123
+#: gnome-panel/menu.c:124
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr ""
 "Κλείδωμα της οθόνης έτσι ώστε να μπορέσετε να φύγετε προσωρινά από τον "
 "υπολογιστή σας"
 
-#: gnome-panel/menu.c:130 gnome-panel/panel-action-button.c:260
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:282
 msgid "Force Quit"
 msgstr "Εξαναγκασμός Eξόδου"
 
-#: gnome-panel/menu.c:133
+#: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Εξαναγκασμός σε έξοδο μιας εφαρμογής με κακή συμπεριφορά"
 
-#: gnome-panel/menu.c:140 gnome-panel/panel-action-button.c:255
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
 msgid "Screenshot"
 msgstr "Αρπαγή οθόνης"
 
-#: gnome-panel/menu.c:143 gnome-panel/menu.c:3416
-#: gnome-panel/panel-menu-bar.c:157
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3403
+#: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Αρπαγή οθόνης της επιφάνειας εργασίας σας"
 
-#: gnome-panel/menu.c:150
+#: gnome-panel/menu.c:151
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: gnome-panel/menu.c:153 gnome-panel/menu.c:3397
-#: gnome-panel/panel-menu-bar.c:142
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3384
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Εύρεση αρχείων, φακέλων και εγγράφων στον υπολογιστή σας"
 
-#: gnome-panel/menu.c:160
+#: gnome-panel/menu.c:161
 msgid "Run"
 msgstr "Εκτέλεση"
 
-#: gnome-panel/menu.c:163
+#: gnome-panel/menu.c:164
 msgid "Run a command"
 msgstr "Εκτέλεση εντολής"
 
-#: gnome-panel/menu.c:273
+#: gnome-panel/menu.c:274
 msgid "And many, many others..."
 msgstr "Και πολλοί, πολλοί άλλοι ..."
 
-#: gnome-panel/menu.c:296
+#: gnome-panel/menu.c:297
 msgid "The GNOME Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/menu.c:299
+#: gnome-panel/menu.c:300
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1757,249 +1490,249 @@ msgstr ""
 "Το παρόν πρόγραμμα είναι υπεύθυνο για την εκκίνηση άλλων εφαρμογών και την "
 "ενσωμάτωση εφαρμογιδίων σε αυτό."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:169
-#: gnome-panel/panel-action-button.c:193 gnome-panel/panel-util.c:717
+#: gnome-panel/menu.c:329 gnome-panel/panel-action-button.c:194
+#: gnome-panel/panel-action-button.c:218 gnome-panel/panel-util.c:717
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Αδύνατη η εκτέλεση του  '%s'"
 
-#: gnome-panel/menu.c:329
-#, fuzzy, c-format
-msgid "%s: %s"
-msgstr "%s, %s"
-
 #: gnome-panel/menu.c:330
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: gnome-panel/menu.c:331
 msgid "About GNOME"
 msgstr "Περί GNOME"
 
-#: gnome-panel/menu.c:354
+#: gnome-panel/menu.c:355
 msgid "Cannot launch entry"
 msgstr "Αδυναμία εκκίνησης καταχώρησης"
 
-#: gnome-panel/menu.c:366 gnome-panel/menu.c:1169
+#: gnome-panel/menu.c:367 gnome-panel/menu.c:1170
 msgid "Cannot load entry"
 msgstr "Αδυναμία φόρτωσης καταχώρησης"
 
-#: gnome-panel/menu.c:1073
+#: gnome-panel/menu.c:1074
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "Αδυναμία απομάκρυνσης αντικείμενου μενού %s"
 
-#: gnome-panel/menu.c:1084
+#: gnome-panel/menu.c:1085
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Αδύνατη η εύρεση ονόματος αρχείου από τη διαδρομή: %s"
 
-#: gnome-panel/menu.c:1091
+#: gnome-panel/menu.c:1092
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Αδύνατη η εύρεση ονόματος καταλόγου από τη διαδρομή: %s"
 
-#: gnome-panel/menu.c:1160
+#: gnome-panel/menu.c:1161
 msgid "Cannot add to run box"
 msgstr "Αδύνατη η προσθήκη στο κουτί εκτέλεσης"
 
-#: gnome-panel/menu.c:1161
+#: gnome-panel/menu.c:1162
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Δεν υπάρχει πεδίο 'Exec' η 'URL' στην καταχώρηση"
 
-#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3180
+#: gnome-panel/menu.c:1319 gnome-panel/menu.c:3167
 msgid "Main Menu"
 msgstr "Κύριο Μενού"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1466
 msgid "Add this launcher to panel"
 msgstr "Προσθήκη του εκκινητή στο ταμπλώ"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1475
 msgid "Remove this item"
 msgstr "Αφαίρεση του στοιχείου"
 
-#: gnome-panel/menu.c:1488
+#: gnome-panel/menu.c:1492
 msgid "Put into run dialog"
 msgstr "Τοποθέτηση στο διάλογο εκτέλεσης"
 
-#: gnome-panel/menu.c:1536
+#: gnome-panel/menu.c:1540
 msgid "Entire menu"
 msgstr "Ολόκληρο το μενού"
 
-#: gnome-panel/menu.c:1545
+#: gnome-panel/menu.c:1548
 msgid "Add this as drawer to panel"
 msgstr "Προσθήκη του παρόντος ως συρτάρι στο ταμπλώ"
 
-#: gnome-panel/menu.c:1556
+#: gnome-panel/menu.c:1559
 msgid "Add this as menu to panel"
 msgstr "Προσθήκη του παρόντος ως μενού στο ταμπλώ"
 
-#: gnome-panel/menu.c:1569
+#: gnome-panel/menu.c:1571
 msgid "Add new item to this menu"
 msgstr "Προσθήκη νέου στοιχείου στο μενού"
 
-#: gnome-panel/menu.c:1596
+#: gnome-panel/menu.c:1598
 msgid "Properties"
 msgstr "Ιδιότητες"
 
-#: gnome-panel/menu.c:2571 gnome-panel/menu.c:2626
+#: gnome-panel/menu.c:2567 gnome-panel/menu.c:2622
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "η επερώτηση επέστρεψε την εξαίρεση %s\n"
 
-#: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3357
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/menu.c:2839 gnome-panel/menu.c:2844 gnome-panel/menu.c:3345
+#: gnome-panel/panel-menu-bar.c:241
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: gnome-panel/menu.c:2915
+#: gnome-panel/menu.c:2914
 msgid "You cannot remove your last panel."
 msgstr "Δε μπορείτε να αφαιρέσετε το τελευταίο σας ταμπλώ."
 
-#: gnome-panel/menu.c:2978
+#: gnome-panel/menu.c:2974
 msgid "_Delete This Panel..."
 msgstr "_Αφαίρεση Παρόντος Ταμπλώ..."
 
-#: gnome-panel/menu.c:2981 gnome-panel/menu.c:3021
+#: gnome-panel/menu.c:2977 gnome-panel/menu.c:3012
 msgid "_Delete This Panel"
 msgstr "_Αφαίρεση Παρόντος Ταμπλώ"
 
-#: gnome-panel/menu.c:2996
+#: gnome-panel/menu.c:2991
 msgid "_Add to Panel"
 msgstr "_Προσθήκη στο ταμπλώ"
 
-#: gnome-panel/menu.c:3051
+#: gnome-panel/menu.c:3041
 msgid "_New Panel"
 msgstr "_Νέο Ταμπλώ"
 
-#: gnome-panel/menu.c:3098
+#: gnome-panel/menu.c:3088
 msgid "_About Panels"
 msgstr "_Περί ταμπλώ..."
 
-#: gnome-panel/menu.c:3112
+#: gnome-panel/menu.c:3102
 msgid "About _GNOME"
 msgstr "Περί _GNOME"
 
-#: gnome-panel/menu.c:3160
+#: gnome-panel/menu.c:3147
 msgid "Launcher..."
 msgstr "Εκκινητής..."
 
-#: gnome-panel/menu.c:3170
+#: gnome-panel/menu.c:3157
 msgid "Launcher from menu"
 msgstr "Εκκινητής από μενού"
 
-#: gnome-panel/menu.c:3190
+#: gnome-panel/menu.c:3177
 msgid "Menu Bar"
 msgstr "Εργαλειοθήκη Μενού"
 
-#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:169
+#: gnome-panel/menu.c:3211 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Κλείδωμα Οθόνης"
 
-#: gnome-panel/menu.c:3231
+#: gnome-panel/menu.c:3217
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Κλείδωμα της οθόνης ούτως ώστε να μπορέσετε να φύγετε προσωρινά από τον "
 "υπολογιστή σας"
 
-#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
-#, fuzzy, c-format
+#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:206
+#, c-format
 msgid "Log Out %s"
-msgstr "Αποσύνδεση"
+msgstr "Αποσύνδεση %s"
 
-#: gnome-panel/menu.c:3252
-#, fuzzy, c-format
+#: gnome-panel/menu.c:3239
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"Αποσυνδεθείτε από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικος χρήστης "
+"Αποσύνδεση %s από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικος χρήστης "
 "ή για να κλείσετε τον υπολογιστή σας"
 
-#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
+#: gnome-panel/menu.c:3366 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Εκτέλεση Εφαρμογής..."
 
-#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:128
+#: gnome-panel/menu.c:3373 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Εκτελεί ένα προγράμμα με την εισαγωγή εντολής"
 
-#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:140
+#: gnome-panel/menu.c:3381 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Αναζήτηση Αρχείων..."
 
-#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:155
+#: gnome-panel/menu.c:3400 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Αρπαγή Οθόνης..."
 
-#: gnome-panel/menu.c:3431
+#: gnome-panel/menu.c:3418
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: gnome-panel/panel-action-button.c:87
+#: gnome-panel/panel-action-button.c:101
 msgid "_Activate Screensaver"
 msgstr "_Ενεργοποίηση Προφύλαξης Οθόνης"
 
-#: gnome-panel/panel-action-button.c:88
+#: gnome-panel/panel-action-button.c:107
 msgid "_Lock Screen"
 msgstr "_Κλείδωμα Οθόνης"
 
-#: gnome-panel/panel-action-button.c:92
+#: gnome-panel/panel-action-button.c:113
 msgid "_Kill Screensaver Daemon"
 msgstr "_Τερματισμός Υπηρεσίας Προφύλαξης Οθόνης"
 
-#: gnome-panel/panel-action-button.c:94
+#: gnome-panel/panel-action-button.c:119
 msgid "Restart _Screensaver Daemon"
 msgstr "Επανεκκίνηση Υ_πηρεσίας Προφύλαξης Οθόνης"
 
-#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-action-button.c:252
 msgid "Lock screen"
 msgstr "Κλείδωμα οθόνης"
 
-#: gnome-panel/panel-action-button.c:240
+#: gnome-panel/panel-action-button.c:260
 msgid "Log out of GNOME"
 msgstr "Τερματισμός GNOME"
 
-#: gnome-panel/panel-action-button.c:245
+#: gnome-panel/panel-action-button.c:266
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Εκτέλεση Εφαρμογής"
 
-#: gnome-panel/panel-action-button.c:250
+#: gnome-panel/panel-action-button.c:272
 msgid "Search for Files"
 msgstr "Αναζήτηση Αρχείων"
 
-#: gnome-panel/panel-action-button.c:405
+#: gnome-panel/panel-action-button.c:439
 msgid "Action Type"
 msgstr "Τύπος Ενέργειας"
 
-#: gnome-panel/panel-action-button.c:406
+#: gnome-panel/panel-action-button.c:440
 msgid "The type of action this button implements"
 msgstr "Ο τύπος της ενέργειας που θα εφαρμόζει το κουμπί"
 
-#: gnome-panel/panel-action-button.c:415 gnome-panel/panel-menu-button.c:461
+#: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
 msgid "Drag and drop enabled"
 msgstr "Ενεργοποιημένο Σύρε και άφησε"
 
-#: gnome-panel/panel-action-button.c:416 gnome-panel/panel-menu-button.c:462
+#: gnome-panel/panel-action-button.c:450 gnome-panel/panel-menu-button.c:475
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Αν θα είναι ενεργοποιημένο  το Σύρε και άφησε στο γραφικό συστατικό"
 
-#: gnome-panel/panel-applet-frame.c:739
+#: gnome-panel/panel-applet-frame.c:745
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Εξαίρεση από το αναδυόμενο_μενού '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:861
-#, fuzzy, c-format
+#: gnome-panel/panel-applet-frame.c:866
+#, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
-"Το εφαρμογίδιο %s φαίνεται να έχει πεθάνει απρόσμενα\n"
+"Το εφαρμογίδιο \"%s\" φαίνεται να έχει πεθάνει απρόσμενα\n"
 "\n"
-"Επαναφόρτωση αυτού του εφαρμογιδίου?%s"
+"Επαναφόρτωση αυτού του εφαρμογιδίου?"
 
-#: gnome-panel/panel-applet-frame.c:867
+#: gnome-panel/panel-applet-frame.c:872
 msgid ""
 "\n"
 "\n"
@@ -2011,21 +1744,21 @@ msgstr ""
 "(Αν επιλέξετε να μην επαναφορτωθεί τώρα,  μπορείτε πάντα να το προσθέσετε με "
 "δεξί κλικ στο ταμπλώ και επιλογή από το υπομενού \"Προσθήκη στο ταμπλώ\")"
 
-#: gnome-panel/panel-applet-frame.c:907
+#: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
 msgstr "Να _μη γίνει Διαγραφή"
 
-#: gnome-panel/panel-applet-frame.c:944
-#, fuzzy, c-format
+#: gnome-panel/panel-applet-frame.c:948
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr "Το ταμπλώ αντιμετώπισε ένα πρόβλημα κατά τη φόρτωση του \"%s\"%s"
+msgstr "Το ταμπλώ αντιμετώπισε ένα πρόβλημα κατά τη φόρτωση του \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
 msgid "Details: %s"
 msgstr "Λεπτομέρειες: %s "
 
-#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
+#: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
 msgid ""
 "\n"
 "\n"
@@ -2055,8 +1788,7 @@ msgid "Error getting value for '%s': %s"
 msgstr "Σφάλμα λήψης τιμής για  '%s': %s"
 
 #: gnome-panel/panel-force-quit.c:73
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 "Κλικ σε ένα παράθυρο για να εξαναγκάσετε την εφαρμογή σε έξοδο. Για ακύρωση "
 "πατήστε <ESC>."
@@ -2110,8 +1842,7 @@ msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr ""
-"Ενεργοποίηση της λίστας προγραμμάτων στο διάλογο \"Εκτέλεση εφαρμογής\". "
+msgstr "Ενεργοποίηση της λίστας προγραμμάτων στο διάλογο \"Εκτέλεση εφαρμογής\". "
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
@@ -2184,35 +1915,47 @@ msgid "Confirm panel removal"
 msgstr "Επιβεβαίωση αφαίρεσης ταμπλώ"
 
 #: gnome-panel/panel-global.schemas.in.h:7
+msgid "Disable Force Quit"
+msgstr "Απενεργοποίηση εξαναγκασμού εξόδου"
+
+#: gnome-panel/panel-global.schemas.in.h:8
+msgid "Disable Lock Screen"
+msgstr "Απενεργοποίηση κλειδώματος οθόνης"
+
+#: gnome-panel/panel-global.schemas.in.h:9
+msgid "Disable Logging Out"
+msgstr "Απενεργοποίηση αποσύνδεσης"
+
+#: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
 msgstr "Εμφάνιση συνδυασμού πλήκτρων διαλόγου \"Εκτέλεσης εφαρμογής\""
 
-#: gnome-panel/panel-global.schemas.in.h:8
+#: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
 msgid "Enable animations"
 msgstr "Ενεργοποίηση κινούμενων σχεδίων"
 
-#: gnome-panel/panel-global.schemas.in.h:9
+#: gnome-panel/panel-global.schemas.in.h:12
 msgid "Enable keybindings"
 msgstr "Ενεργοποίηση συνδυασμών πλήκτρων"
 
-#: gnome-panel/panel-global.schemas.in.h:10
+#: gnome-panel/panel-global.schemas.in.h:13
 msgid "Enable tooltips"
 msgstr "Ενεργοποίηση συμβουλών οθόνης"
 
-#: gnome-panel/panel-global.schemas.in.h:11
+#: gnome-panel/panel-global.schemas.in.h:14
 msgid "FIXME - is this resolved with the new menu stuff"
 msgstr "FIXME -  έχει αυτό επιλυθεί με το νέο μενού?"
 
-#: gnome-panel/panel-global.schemas.in.h:12
+#: gnome-panel/panel-global.schemas.in.h:15
 msgid "FIXME - need to define limits"
 msgstr "FIXME - ανάγκη να καθοριστούν όρια"
 
-#: gnome-panel/panel-global.schemas.in.h:13
+#: gnome-panel/panel-global.schemas.in.h:16
 msgid "Highlight launchers on mouseover"
 msgstr "Επισήμανση εκκινητών με το πέρασμα του ποντικιού"
 
-#: gnome-panel/panel-global.schemas.in.h:14
+#: gnome-panel/panel-global.schemas.in.h:17
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
@@ -2220,7 +1963,7 @@ msgstr ""
 "Αν true, εμφανίζεται ένας διάλογος που ζητά την επιβεβαίωση αν ο χρήστης "
 "θέλει να αφαιρέσει το ταμπλώ."
 
-#: gnome-panel/panel-global.schemas.in.h:15
+#: gnome-panel/panel-global.schemas.in.h:18
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
@@ -2228,19 +1971,42 @@ msgstr ""
 "Αν true, το συρτάρι θα κλείνει αυτόματα όταν ο χρήστης κάνει κλικ σε έναν "
 "εκκινητή που βρίσκεται στο συρτάρι."
 
-#: gnome-panel/panel-global.schemas.in.h:16
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+#: gnome-panel/panel-global.schemas.in.h:19
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Αν true, θα επισημαίνεται ο εκκινητής όταν ο χρήστης μετακινεί το ποντίκι "
 "από πάνω του."
 
-#: gnome-panel/panel-global.schemas.in.h:17
+#: gnome-panel/panel-global.schemas.in.h:20
 msgid "If true, panel-specific keybindings are enabled."
-msgstr ""
-"Αν true, ενεργοποιούνται συνδυασμοί πλήκτρων για το συγκεκριμένο ταμπλώ."
+msgstr "Αν true, ενεργοποιούνται συνδυασμοί πλήκτρων για το συγκεκριμένο ταμπλώ."
 
-#: gnome-panel/panel-global.schemas.in.h:18
+#: gnome-panel/panel-global.schemas.in.h:21
+msgid ""
+"If true, the panel will not allow a user to force an application to quit by "
+"removing access to the force quit button."
+msgstr ""
+"Αν true, το ταμπλώ δεν θα επιτρέπει σε ένα χρήστη να εξαναγκάσει μια "
+"εφαρμογή σε έξοδο, με το να αρνείται την πρόσβαση στο κουμπί εξαναγκασμού "
+"εξόδου."
+
+#: gnome-panel/panel-global.schemas.in.h:22
+msgid ""
+"If true, the panel will not allow a user to lock their screen, by removing "
+"access to the lock screen menu entries."
+msgstr ""
+"Αν true, το ταμπλώ δεν θα επιτρέπει σε ένα χρήστη να κλειδώνει, με το να "
+"αρνείται την πρόσβαση στο μενού κλειδώματος οθόνης."
+
+#: gnome-panel/panel-global.schemas.in.h:23
+msgid ""
+"If true, the panel will not allow a user to log out, by removing access to "
+"the log out menu entries."
+msgstr ""
+"Αν true, το ταμπλώ δεν θα επιτρέπει σε ένα χρήστη να αποσυνδέεται, με το να "
+"αρνείται την πρόσβαση στο μενού αποσύνδεσης."
+
+#: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
 "If true, the panel will not allow any changes to the configuration of the "
 "panel. Individual applets may need to be locked down separately however. The "
@@ -2250,72 +2016,68 @@ msgstr ""
 "εφαρμογίδια θα πρέπει να κλειδωθούν ξεχωριστά. Το ταμπλώ θα πρέπει να "
 "επανεκκινήσει για να εφαρμοστούν οι αλλαγές."
 
-#: gnome-panel/panel-global.schemas.in.h:19
+#: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
-msgstr ""
-"Αν true, οι συμβουλές οθόνης εμφανίζονται για τα αντικείμενα στα ταμπλώ."
+msgstr "Αν true, οι συμβουλές οθόνης εμφανίζονται για τα αντικείμενα στα ταμπλώ."
 
-#: gnome-panel/panel-global.schemas.in.h:20
+#: gnome-panel/panel-global.schemas.in.h:26
 msgid "Popup panel menu keybinding"
 msgstr "Συνδυασμός πλήκτρων ανάδυσης του μενού ταμπλώ"
 
-#: gnome-panel/panel-global.schemas.in.h:21
+#: gnome-panel/panel-global.schemas.in.h:27
 msgid "Take screenshot"
 msgstr "Λήψη αρπαγής οθόνης"
 
-#: gnome-panel/panel-global.schemas.in.h:22
+#: gnome-panel/panel-global.schemas.in.h:28
 msgid "Take window screenshot"
 msgstr "Λήψη αρπαγής οθόνης παραθύρου"
 
-#: gnome-panel/panel-menu-bar.c:171
+#: gnome-panel/panel-menu-bar.c:193
 msgid "Protect your computer from unauthorized use"
 msgstr "Προστασία του υπολογιστή από μη εξουσιοδοτημένη χρήση"
 
-#: gnome-panel/panel-menu-bar.c:179
-#, fuzzy, c-format
+#: gnome-panel/panel-menu-bar.c:207
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Έξοδος από το περιβάλλον εργασίας GNOME"
+msgstr "Έξοδος από την επιφάνεια εργασίας %s's"
 
-#: gnome-panel/panel-menu-button.c:416
+#: gnome-panel/panel-menu-button.c:429
 msgid "Menu Path"
 msgstr "Διαδρομή Μενού"
 
-#: gnome-panel/panel-menu-button.c:417
+#: gnome-panel/panel-menu-button.c:430
 msgid "The path from which to construct the menu"
 msgstr "Η διαδρομή από την οποία θα κατασκευαστεί το μενού"
 
-#: gnome-panel/panel-menu-button.c:425
+#: gnome-panel/panel-menu-button.c:438
 msgid "Custom Icon"
 msgstr "Προσαρμοσμένο Εικονίδιο"
 
-#: gnome-panel/panel-menu-button.c:426
+#: gnome-panel/panel-menu-button.c:439
 msgid "The custom icon for the menu"
 msgstr "Το προσαρμοσμένο εικονίδιο για το μενού"
 
-#: gnome-panel/panel-menu-button.c:434
-#, fuzzy
+#: gnome-panel/panel-menu-button.c:447
 msgid "Tooltip"
-msgstr "Πάνω"
+msgstr "Συμβουλή οθόνης"
 
-#: gnome-panel/panel-menu-button.c:435
-#, fuzzy
+#: gnome-panel/panel-menu-button.c:448
 msgid "Tooltip displayed for the menu"
-msgstr "Η συμβουλή οθόνης που εμφανίζεται για αυτό το συρτάρι"
+msgstr "Η συμβουλή οθόνης που εμφανίζεται για αυτό το μενού"
 
-#: gnome-panel/panel-menu-button.c:443
+#: gnome-panel/panel-menu-button.c:456
 msgid "Use Menu Path"
 msgstr "Χρήση διαδρομής μενού"
 
-#: gnome-panel/panel-menu-button.c:444
+#: gnome-panel/panel-menu-button.c:457
 msgid "Use the path specified by the menu-path property"
-msgstr ""
-"Χρήση της διαδρομής που καθορίζεται από την ιδιότητα της διαδρομής μενού"
+msgstr "Χρήση της διαδρομής που καθορίζεται από την ιδιότητα της διαδρομής μενού"
 
-#: gnome-panel/panel-menu-button.c:452
+#: gnome-panel/panel-menu-button.c:465
 msgid "Use Custom Icon"
 msgstr "Χρήση Προσαρμοσμένου Εικονίδιου"
 
-#: gnome-panel/panel-menu-button.c:453
+#: gnome-panel/panel-menu-button.c:466
 msgid "Use the icon specified by the custom-icon property"
 msgstr ""
 "Χρήση του εικονιδίου που καθορίζεται από την ιδιότητα προσαρμοσμένου "
@@ -2470,14 +2232,13 @@ msgstr ""
 "εικονοστοιχείων από την αριστερή γωνία ταμπλώ (η την επάνω αν είναι κάθετο)."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Το κείμενο που θα εμφανίζεται σε μια συμβουλή οθόνης για αυτό το συρτάρι. "
-"Αυτό το κλειδί έχει σημασία μόνο αν το object_type key είναι \"drawer-object"
-"\"."
+"Το κείμενο που θα εμφανίζεται σε μια συμβουλή οθόνης για αυτό το μενού. Αυτό "
+"το κλειδί έχει σημασία μόνο αν το object_type key είναι \"drawer-object\" ή "
+"\"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2490,9 +2251,8 @@ msgstr ""
 "applet\" και \"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Η συμβουλή οθόνης που εμφανίζεται για αυτό το συρτάρι"
+msgstr "Η συμβουλή οθόνης που εμφανίζεται για το συρτάρι ή το μενού"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2506,19 +2266,19 @@ msgstr "Χρήση προσαρμοσμένου εικονιδίου για το
 msgid "Use custom path for menu contents"
 msgstr "Χρήση προσαρμοσμένης διαδρομής για τα περιεχόμενα του μενού"
 
-#: gnome-panel/panel-profile.c:776 gnome-panel/panel-profile.c:807
-#: gnome-panel/panel-profile.c:843 gnome-panel/panel-profile.c:1615
+#: gnome-panel/panel-profile.c:765 gnome-panel/panel-profile.c:796
+#: gnome-panel/panel-profile.c:832 gnome-panel/panel-profile.c:1603
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής αλφαριθμητικού GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:822 gnome-panel/panel-profile.c:1510
-#: gnome-panel/panel-profile.c:1584 gnome-panel/panel-profile.c:1648
+#: gnome-panel/panel-profile.c:811 gnome-panel/panel-profile.c:1498
+#: gnome-panel/panel-profile.c:1572 gnome-panel/panel-profile.c:1635
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής ακεραίου GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:1520
+#: gnome-panel/panel-profile.c:1508
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -2527,12 +2287,12 @@ msgstr ""
 "Το ταμπλώ '%s' έχει ορισθεί να εμφανίζεται στην οθόνη  %d που αυτή τη στιγμή "
 "δεν είναι διαθέσιμη. Δε φορτώνεται αυτό το ταμπλώ."
 
-#: gnome-panel/panel-profile.c:1599
+#: gnome-panel/panel-profile.c:1587
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής boolean GConf '%s': %s"
 
-#: gnome-panel/panel-profile.c:2144
+#: gnome-panel/panel-profile.c:2131
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "Σφάλμα ανάγνωσης τιμής λίστας GConf '%s': %s"
@@ -2662,8 +2422,7 @@ msgid "Couldn't find a suitable application"
 msgstr "Δεν είναι δυνατή η εύρεση κατάλληλης εφαρμογής"
 
 #: gnome-panel/panel-recent.c:82
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr ""
 "Η προεπιλεγμένη εφαρμογή για αυτό τον τύπο αρχείων δε μπορεί να χειριστεί "
 "απομακρυσμένα αρχεία"
@@ -2679,33 +2438,33 @@ msgstr "Δημιουργήθηκε ένα σφάλμα κατά την προσ�
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Πρόσφατα έγγραφα"
 
-#: gnome-panel/panel-run-dialog.c:284
+#: gnome-panel/panel-run-dialog.c:285
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Αδύνατη η εκκίνηση εντολής '%s'"
 
-#: gnome-panel/panel-run-dialog.c:310
+#: gnome-panel/panel-run-dialog.c:311
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Σφάλμα εμφάνισης τοποθεσίας: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:362
+#: gnome-panel/panel-run-dialog.c:363
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "Αδυναμία μετατροπής '%s από UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1039
+#: gnome-panel/panel-run-dialog.c:1041
 msgid "Choose a file to append to the command..."
 msgstr "Επιλέξτε ένα αρχείο για συσχέτιση με την εντολή..."
 
-#: gnome-panel/panel-run-dialog.c:1227
+#: gnome-panel/panel-run-dialog.c:1229
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Θα εκτελεστεί η εντολή:'%s'"
 
-#: gnome-panel/panel-run-dialog.c:1233 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Επιλογή μιας εφαρμογής για την προβολή της περιγραφής."
 
@@ -2859,139 +2618,141 @@ msgstr "Δεξιό Πλωτό Ταμπλώ"
 msgid "Right Edge Panel"
 msgstr "Δεξιό Ακραίο Ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3580
+#: gnome-panel/panel-toplevel.c:3584
 msgid "Name"
 msgstr "Όνομα"
 
-#: gnome-panel/panel-toplevel.c:3581
+#: gnome-panel/panel-toplevel.c:3585
 msgid "The name of this panel"
 msgstr "Το όνομα του παρόντος ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3590
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Expand"
 msgstr "Ανάπτυξη"
 
-#: gnome-panel/panel-toplevel.c:3591
+#: gnome-panel/panel-toplevel.c:3595
 msgid "Expand to take up the full monitor width/height"
 msgstr "Ανάπτυξη ώστε να καταληφθεί το πλήρες πλάτος/ύψος της οθόνης"
 
-#: gnome-panel/panel-toplevel.c:3601
+#: gnome-panel/panel-toplevel.c:3605
 msgid "The orientation of the panel"
 msgstr "Ο προσανατολισμός του παρόντος ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3612
+#: gnome-panel/panel-toplevel.c:3616
 msgid "The height (or width when vertical) of the panel"
 msgstr "Το ύψος (ή το πλάτος όταν είναι κάθετο) του ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3624
+#: gnome-panel/panel-toplevel.c:3628
 msgid "X position"
 msgstr "Θέση Χ:"
 
-#: gnome-panel/panel-toplevel.c:3625
+#: gnome-panel/panel-toplevel.c:3629
 msgid "The X position of the panel"
 msgstr "Η θέση X στο ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3636
+#: gnome-panel/panel-toplevel.c:3640
 msgid "X centered"
 msgstr "Κεντραρισμένη στο Χ"
 
-#: gnome-panel/panel-toplevel.c:3637
+#: gnome-panel/panel-toplevel.c:3641
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Γωνιακό ταμπλώ αναπτυσσόμενο προς τα πάνω"
 
-#: gnome-panel/panel-toplevel.c:3646
+#: gnome-panel/panel-toplevel.c:3650
 msgid "Y position"
 msgstr "Θέση Υ"
 
-#: gnome-panel/panel-toplevel.c:3647
+#: gnome-panel/panel-toplevel.c:3651
 msgid "The Y position of the panel"
 msgstr "Η θέση Υ στο ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3658
+#: gnome-panel/panel-toplevel.c:3662
 msgid "Y centered"
 msgstr "Κεντραρισμένη Υ"
 
-#: gnome-panel/panel-toplevel.c:3659
+#: gnome-panel/panel-toplevel.c:3663
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Η συντεταγμένη y είναι σχετική στο κέντρο της οθόνης"
 
-#: gnome-panel/panel-toplevel.c:3668
+#: gnome-panel/panel-toplevel.c:3672
 msgid "Xinerama monitor"
 msgstr "Οθόνη Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3669
+#: gnome-panel/panel-toplevel.c:3673
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Η οθόνη (σε όρους Xinerama) στην οποία ανήκει το ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3680
+#: gnome-panel/panel-toplevel.c:3684
 msgid "Auto hide"
 msgstr "Αυτόματη απόκρυψη"
 
-#: gnome-panel/panel-toplevel.c:3681
+#: gnome-panel/panel-toplevel.c:3685
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Αυτόματη απόκρυψη του ταμπλώ όταν το ποντίκι φεύγει από το ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3690
+#: gnome-panel/panel-toplevel.c:3694
 msgid "Hide delay"
 msgstr "Καθυστέρηση απόκρυψης"
 
-#: gnome-panel/panel-toplevel.c:3691
+#: gnome-panel/panel-toplevel.c:3695
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Η καθυστέρηση σε χιλιοστά δευτερολέπτου πριν την αυτόματη απόκρυψη"
 
-#: gnome-panel/panel-toplevel.c:3702
+#: gnome-panel/panel-toplevel.c:3706
 msgid "Un-hide delay"
 msgstr "Καθυστέρηση επανεμφάνισης"
 
-#: gnome-panel/panel-toplevel.c:3703
+#: gnome-panel/panel-toplevel.c:3707
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Η καθυστέρηση σε χιλιοστά δευτερολέπτου πριν την αυτόματη επανεμφάνιση"
 
-#: gnome-panel/panel-toplevel.c:3714
+#: gnome-panel/panel-toplevel.c:3718
 msgid "Auto-hide size"
 msgstr "Μέγεθος αυτόματης απόκρυψης"
 
-#: gnome-panel/panel-toplevel.c:3715
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
-"Ο αριθμός των ορατών εικονοστοιχείων όταν το ταμπλώ έχει αυτόματα αποκρυφθεί"
+#: gnome-panel/panel-toplevel.c:3719
+msgid "The number of pixels visible when the panel has been automatically hidden"
+msgstr "Ο αριθμός των ορατών εικονοστοιχείων όταν το ταμπλώ έχει αυτόματα αποκρυφθεί"
 
-#: gnome-panel/panel-toplevel.c:3726
+#: gnome-panel/panel-toplevel.c:3730
 msgid "Animate"
 msgstr "Κίνηση"
 
-#: gnome-panel/panel-toplevel.c:3727
+#: gnome-panel/panel-toplevel.c:3731
 msgid "Enable hiding/showing animations"
 msgstr "Ενεργοποίηση απόκρυψης/εμφάνισης κινούμενων σχεδίων"
 
-#: gnome-panel/panel-toplevel.c:3736
+#: gnome-panel/panel-toplevel.c:3740
 msgid "Animation Speed"
 msgstr "Ταχύτητα κινούμενων εικόνων"
 
-#: gnome-panel/panel-toplevel.c:3737
+#: gnome-panel/panel-toplevel.c:3741
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Η ταχύτητα με την οποία θα κινείται η απόκρυψη/εμφάνιση του ταμπλώ"
 
-#: gnome-panel/panel-toplevel.c:3747
+#: gnome-panel/panel-toplevel.c:3751
 msgid "Buttons Enabled"
 msgstr "Ενεργοποίηση Κουμπιών"
 
-#: gnome-panel/panel-toplevel.c:3748
+#: gnome-panel/panel-toplevel.c:3752
 msgid "Enable hide/show buttons"
 msgstr "Ενεργοποίηση κουμπιών απόκρυψης"
 
-#: gnome-panel/panel-toplevel.c:3757
+#: gnome-panel/panel-toplevel.c:3761
 msgid "Arrows Enabled"
 msgstr "Ενεργοποίηση Βελών"
 
-#: gnome-panel/panel-toplevel.c:3758
+#: gnome-panel/panel-toplevel.c:3762
 msgid "Enable arrows on hide/show buttons"
 msgstr "Ενεγοποίηση βελών στα κουμπιά απόκρυψης"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
 msgstr "Αυτόματη απόκρυψη του ταμπλώ στη γωνία"
+
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Χρώμα παρασκηνίου"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
@@ -3090,21 +2851,6 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
-"If true, the panel will be locked in place, properties won't be changable. "
-"The user won't be able to add, remove or even move applets. Also properties "
-"of all objects on this panel will be locked down as well. Properties of "
-"external applets may however have to be locked down separately. The panel "
-"must be restarted for this to take effect."
-msgstr ""
-"Αν true το ταμπλώ θα κλειδωθεί  και οι ιδιότητες του δεν θα μπορούν να "
-"αλλαχθούν. Ο χρήστης δεν θα μπορεί να προσθέσει αφαιρέσει ή να μετακινήσει "
-"εφαρμογίδια . Ακόμα θα κλειδωθού και οι ιδιότητες όλων των αντικειμένων στο "
-"ταμπλώ. Οι ιδιότητες από εξωτερικές εφαρμογές όμως, θα πρέπει να κλειδωθούν "
-"ξεχωριστά. Το ταμπλώ θα πρέπει να επανεκκινήσει για να εφαρμοστούν οι "
-"αλλαγές."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
@@ -3116,7 +2862,7 @@ msgstr ""
 "μεγάλο όσο χρειάζεται για να φιλοξενήσει τα εφαρμογίδια εκκινητές και "
 "κουμπιά του ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:23
+#: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
 "If true, the x key is ignored and the panel is placed at the center of the x-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -3128,7 +2874,7 @@ msgstr ""
 "θέση - π.χ το ταμπλώ θα μεγαλώσει και από τις δυο πλευρές. Αν false η "
 "ρύθμιση x θα καθορίσει την τοποθεσία του ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:24
+#: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
 "If true, the y key is ignored and the panel is placed at the center of the y-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -3140,7 +2886,7 @@ msgstr ""
 "θέση - π.χ το ταμπλώ θα μεγαλώσει και από τις δυο πλευρές. Αν false η "
 "ρύθμιση x θα καθορίσει την τοποθεσία του ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:25
+#: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
@@ -3148,39 +2894,35 @@ msgstr ""
 "Σε μια ρύθμιση Xinerama, μπορείτε να έχετε ταμπλώ σε κάθε ξεχωριστή οθόνη. "
 "Αυτό το κλειδί καθορίζει την τρέχουσα οθόνη στην οποία εμφανίζεται το ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:26
-msgid "Lock down the panel"
-msgstr "Κλείδωμα του ταμπλώ"
-
-#: gnome-panel/panel-toplevel.schemas.in.h:27
+#: gnome-panel/panel-toplevel.schemas.in.h:25
 msgid "Name to identify panel"
 msgstr "Ένα όνομα με το οποίο θα πιστοποιείται αυτό το ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:28
+#: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
 msgstr "Καθυστέρηση αυτόματης απόκρυψης ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:29
+#: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
 msgstr "Καθυστέρηση επανεμφάνισης ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:30
+#: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid "Panel orientation"
 msgstr "Προσανατολισμός ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:31
+#: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid "Panel size"
 msgstr "Μέγεθος ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:32
+#: gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Rotate image on vertical panels"
 msgstr "Περιστροφή της εικόνας στα κατακόρυφα ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:33
+#: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr "Καθορίζει το χρώμα παρασκηνίου του ταμπλώ σε μορφή #RGB."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:34
+#: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
@@ -3189,7 +2931,7 @@ msgstr ""
 "Καθορίζει το αρχείο που θα χρησιμοποιηθεί για την εικόνα παρασκηνίου. Αν η "
 "εικόνα περιέχει ένα κανάλι άλφα, θα γίνει σύνθεση στην εικόνα παρασκηνίου."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:35
+#: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -3199,7 +2941,7 @@ msgstr ""
 "μετά την είσοδο του δρομέα στην περιοχή του ταμπλώ. Το κλειδί έχει "
 "χρησιμότητα μόνο αν είναι true το κλειδί auto_hide ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:36
+#: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -3209,7 +2951,7 @@ msgstr ""
 "μετά την απόχώρηση του δρομέα από την περιοχή του ταμπλώ. Το κλειδί έχει "
 "χρησιμότητα μόνο αν είναι true το κλειδί auto_hide ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:37
+#: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -3218,7 +2960,7 @@ msgstr ""
 "έχει αποκρυφθεί αυτόματα στη γωνία.Το κλειδί έχει χρησιμότητα μόνο αν είναι "
 "true το κλειδί auto_hide ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:38
+#: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
 "completely opaque (a value of less than 65535), the color will be composited "
@@ -3228,11 +2970,11 @@ msgstr ""
 "είναι εντελώς αδιαφανές (μια τιμή μικρότερη από 65535), τότε το χρώμα θα "
 "είναι σύνθετο στην εικόνα παρακηνίου."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:39
+#: gnome-panel/panel-toplevel.schemas.in.h:37
 msgid "Stretch image to panel"
 msgstr "Τέντωμα εικόνας στο ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:40
+#: gnome-panel/panel-toplevel.schemas.in.h:38
 msgid ""
 "The height (width for a vertical panel) of the panel. The panel will "
 "determine at runtime a minimum size based on the font size and other "
@@ -3244,7 +2986,7 @@ msgstr ""
 "χαρακτηριστικά. Το μέγιστο μέγεθος είναι καθορισμένο στο ένα τέταρτο του "
 "ύψους της οθόνης ( ή του πλάτους)."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:41
+#: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -3255,7 +2997,7 @@ msgstr ""
 "το ταμπλώ τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί "
 "προσανατολισμού."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:42
+#: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
@@ -3266,7 +3008,7 @@ msgstr ""
 "το ταμπλώ τοποθετείται στη γωνία της οθόνης που καθορίζεται από το κλειδί "
 "προσανατολισμού."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:43
+#: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -3286,7 +3028,7 @@ msgstr ""
 "ένα\"πάνω\" ταμπλώ ένα κουμπί μενού θα αναδύει το μενού του προς τα κάτω, "
 "ενώ σε ένα \"κάτω\" ταμπλώ το μενού θα αναδύεται προς τα πάνω."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:44
+#: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -3296,7 +3038,7 @@ msgstr ""
 "πιθανές τιμές είναι \"αργή\", \"μέτρια\" και \"γρήγορη\". Αυτό το κλειδί "
 "έχει σημασία μόνο αν είναι true το κλειδί enable_animations."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:45
+#: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -3306,11 +3048,11 @@ msgstr ""
 "την αναγνώριση του ταμπλώ. Ο κύριος σκοπός του είναι να δείχνει τον τίτλο "
 "του παραθύρου ο οποίος είναι χρήσιμος για την περιήγηση μεταξύ ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:46
+#: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
 msgstr "Αριθμός ορατών εικονοστοιχείων σε ένα κρυφό ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:47
+#: gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -3323,7 +3065,7 @@ msgstr ""
 "χρώμα παρασκηνίου ή \"εικόνα\" - η εικόνα που καθορίζεται από το κλειδί "
 "εικόνας θα χρησιμοποιείται ως παρασκήνιο."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:48
+#: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
@@ -3332,21 +3074,19 @@ msgstr ""
 "οθόνη. Αυτό το κλειδί αναπαριστά την τρέχουσα οθόνη στην οποία προβάλλεται "
 "το ταμπλώ."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:49
+#: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid "X co-ordinate of panel"
 msgstr "Συντεταγμένη X του ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:50
-#, fuzzy
+#: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "X screen where the panel is displayed"
-msgstr "Οθόνη X στην οποία βρίσκεται το ταμπλώ"
+msgstr "Οθόνη X στην οποία εμφανίζεται το ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:51
-#, fuzzy
+#: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "Η οθόνη Xinerama στην οποία βρίσκεται το ταμπλώ"
+msgstr "Η οθόνη Xinerama στην οποία εμφανίζεται το ταμπλώ"
 
-#: gnome-panel/panel-toplevel.schemas.in.h:52
+#: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
 msgstr "Συντεταγμένη Y του ταμπλώ"
 
@@ -3354,12 +3094,12 @@ msgstr "Συντεταγμένη Y του ταμπλώ"
 msgid "Cannot display help document"
 msgstr "Δεν είναι δυνατή η προβολή του αρχείου βοήθειας"
 
-#: gnome-panel/panel.c:433
+#: gnome-panel/panel.c:445
 #, c-format
 msgid "Open URL: %s"
 msgstr "Άνοιγμα Τοποθεσίας: %s"
 
-#: gnome-panel/panel.c:1228
+#: gnome-panel/panel.c:1241
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -3367,7 +3107,7 @@ msgstr ""
 "Όταν ένα ταμπλώ αφαιρείται, οι ρυθμίσεις του\n"
 "και το ταμπλώ χάνονται. Αφαίρεση του ταμπλώ αυτού;"
 
-#: gnome-panel/panel.c:1237
+#: gnome-panel/panel.c:1250
 msgid "Delete Panel"
 msgstr "Αφαίρεση Ταμπλώ"
 
@@ -3412,8 +3152,7 @@ msgstr "Το Εφαρμογίδιο που περιέχει το μέγεθος 
 
 #: libpanel-applet/panel-applet.c:1108
 msgid "The Applet's containing Panel's background color or pixmap"
-msgstr ""
-"Το Εφαρμογίδιο που περιέχει το χρώμα παρασκηνίου του Ταμπλώ ή το pixmap"
+msgstr "Το Εφαρμογίδιο που περιέχει το χρώμα παρασκηνίου του Ταμπλώ ή το pixmap"
 
 #: libpanel-applet/panel-applet.c:1116
 msgid "The Applet's flags"
@@ -3432,20 +3171,17 @@ msgid "Specify an applet IID to load"
 msgstr "Καθορίστε ένα applet IID προς φόρτωση"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 "Καθορίστε μια τοποθεσία gconf στην οποία θα αποθηκεύονται οι προτιμήσεις του "
 "εφαρμογιδίου"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
-"Καθορίστε το αρχικό μέγεθος του εφαρμογιδίου (xx-μικρό, μεσαίο, μεγάλο κτλ.)"
+msgstr "Καθορίστε το αρχικό μέγεθος του εφαρμογιδίου (xx-μικρό, μεσαίο, μεγάλο κτλ.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Καθορίστε τον αρχικό προσανατολισμό του εφαρμογιδίου (πάνω, κάτω, αριστερά ή "
 "δεξιά)"
@@ -3490,106 +3226,3 @@ msgstr "ΧΧ Μεγάλο"
 msgid "XX Small"
 msgstr "ΧΧ Μικρό"
 
-#~ msgid "%s - command not found"
-#~ msgstr "%s - η εντολή δε βρέθηκε"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "Αδύνατη η εκτέλεση του %s"
-
-#~ msgid ""
-#~ "If true, display internet time. The internet time system divides the day "
-#~ "into 1000 \".beats\". There is no time zones in this system, so time is "
-#~ "the same all over the world."
-#~ msgstr ""
-#~ "Αν true προβάλλετε η ώρα διαδικτύου. Το σύστημα ώρας διαδικτύου χωρίζει "
-#~ "την ημέρα σε 1000 \".beats\". Δεν υπάρχουν ζώνες ώρας σε αυτό το σύστημα "
-#~ "με αποτέλεσμα η ώρα να είναι ίδια σε όλο τον κόσμο."
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr ""
-#~ "Αν true, εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01"
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Αυτό το κλειδί καθορίζει τη μορφή ώρας του εφαρμογιδίου ρολογιού. Οι "
-#~ "πιθανές τιμές είναι 12 και 24."
-
-#~ msgid "Window Menu"
-#~ msgstr "Μενού Παραθύρου"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Εκτύπωση αρπαγής οθόνης"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Προεπισκόπηση εκτύπωσης αρπαγής οθόνης"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Εκτύπωση αρπαγής οθόνης..."
-
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "Το ταμπλώ αντιμετώπισε ένα πρόβλημα κατά τη φόρτωση του\"%s\"\n"
-#~ "Λεπτομέρειες: %s%s"
-
-#~ msgid "Open Recent"
-#~ msgstr "Άνοιγμα Πρόσφατων"
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s το Ψάρι του GNOMΕ"
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "Βοήθεια στην Εφ_αρμογή %s"
-
-#~ msgid "Help on %s"
-#~ msgstr "Βοήθεια για %s"
-
-#~ msgid "Application"
-#~ msgstr "Εφαρμογή"
-
-#~ msgid "Help document not found"
-#~ msgstr "Το αρχείο βοήθειας δε βρέθηκε"
-
-#~ msgid "No document to show"
-#~ msgstr "Δεν υπάρχει έγγραφο για προβολή"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr ""
-#~ "Αν true,προβολή ώρας διαδικτύου, η οποία είναι ίδια σε όλο τον κόσμο."
-
-#~ msgid "Expander Size"
-#~ msgstr "Μέγεθος Expander "
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Μέγεθος του βέλους expander"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>Ό_νομα:</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>Πρ_οσανατολισμός:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Μέγεθος:</b>"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Μια περιγραφή της επιλεγμένης εφαρμογής ή των πληροφοριών για την εντολή "
-#~ "που θα εκτελεσθεί."
-
-#~ msgid "Application description"
-#~ msgstr "Περιγραφή εφαρμογής"
-
-#~ msgid "List of known applications"
-#~ msgstr "Λίστα γνωστών εφαρμογών"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Επιλογή μιας εφαρμογής από τη λίστα για εκτέλεση"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "Όταν αυτό επιλεχθεί θα εμφανίζεται ή λίστα με τις γνωστές εφαρμογές"
