@@ -1,3 +1,14 @@
+Sun Dec 20 01:37:54 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c,applet.c: add a call to back_change when changing panels
+	  so that we actually change the back on applets that can (printer
+	  can)
+
+	* panel-widget.c: take out the old timeout based move as it's now
+	  (and actually been for a while) possible to again use motion_notify
+	  ... though I use a timeout to avoid too many motions at once and
+	  move at most every 100ms
+
 Sat Dec 19 21:10:02 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: when adding new panel try to find a spot that is empty,

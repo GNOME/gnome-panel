@@ -44,7 +44,6 @@ move_applet_callback(GtkWidget *widget, AppletInfo *info)
 	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_start(panel,info->widget);
-	panel_widget_applet_move_use_idle(panel);
 }
 
 /*destroy widgets and call the above cleanup function*/
@@ -512,6 +511,7 @@ register_toy(GtkWidget *applet,
 				 applet_drag_types, 1);*/
 
 	orientation_change(info,panel);
+	back_change(info,panel);
 
 	return TRUE;
 }

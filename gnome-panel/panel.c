@@ -483,6 +483,7 @@ panel_applet_added_idle(gpointer data)
 	PanelWidget *panel = PANEL_WIDGET(info->widget->parent);
 
 	orientation_change(info,panel);
+	back_change(info,panel);
 
 	return FALSE;
 }

@@ -662,7 +662,6 @@ s_panelspot_drag_start(POA_GNOME_PanelSpot *servant,
 	/*panel_widget_applet_drag_start(panel,info->widget);
 	panel_widget_applet_drag_end(panel);*/
 	panel_widget_applet_drag_start(panel,ext->info->widget);
-	panel_widget_applet_move_use_idle(panel);
 }
 
 static void
