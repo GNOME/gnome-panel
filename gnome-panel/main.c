@@ -881,7 +881,7 @@ static gint panel_move( GtkWidget *widget, double x, double y, int time )
 					    panel->fit_pixmap_bg,
 					    panel->state,
 					    panel->drawer_drop_zone_pos,
-					    panel->pixmap_enabled ? panel->back_pixmap : NULL);
+					    panel->back_pixmap );
 		while( gtk_events_pending() )
 		{
 			gtk_main_iteration();
