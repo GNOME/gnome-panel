@@ -38,6 +38,7 @@
 #include "egg-screen-exec.h"
 #include "panel-stock-icons.h"
 #include "panel-action-button.h"
+#include "panel-recent.h"
 
 #define ICON_SIZE 20
 #define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
@@ -181,6 +182,9 @@ append_actions_menu (FoobarWidget *foo,
 			  G_CALLBACK (panel_action_run_program), NULL);
 	setup_internal_applet_drag (item, "ACTION:run:NEW");
 
+	item = gtk_separator_menu_item_new ();
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
 		item = stock_menu_item_new (
 				_("Search for Files..."),
@@ -197,6 +201,10 @@ append_actions_menu (FoobarWidget *foo,
 				  G_CALLBACK (panel_action_search), NULL);
 		setup_internal_applet_drag (item, "ACTION:search:NEW");
 	}
+
+	panel_recent_append_documents_menu (menu);
+	item = gtk_separator_menu_item_new ();
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
 		item = stock_menu_item_new (_("Screenshot..."),
