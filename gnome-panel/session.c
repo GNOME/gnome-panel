@@ -1488,7 +1488,6 @@ session_read_global_config (void)
 	/* FIXME STUFF THAT IS BORKED */
 	global_config.menu_check = TRUE;
 	global_config.menu_flags = get_default_menu_flags();
-	g_print ("Got flags: %d\n", global_config.menu_flags);
 
 	apply_global_config ();
 }
