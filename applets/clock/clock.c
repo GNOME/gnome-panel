@@ -1457,6 +1457,7 @@ applet_change_orient (PanelApplet       *applet,
 {
 	cd->orient = orient;
 
+        unfix_size (cd);
 	update_clock (cd);
         update_popup (cd);
 }
@@ -1494,6 +1495,7 @@ applet_change_pixel_size (PanelApplet *applet,
 {
 	cd->size = size;
 
+        unfix_size (cd);
 	update_timeformat (cd);
 	update_clock (cd);
 }
