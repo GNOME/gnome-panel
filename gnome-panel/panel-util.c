@@ -613,6 +613,8 @@ convert_string_to_keysym_state(char *string,
 
 	s = g_strdup(string);
 
+	gdk_error_trap_push();
+
 	p = strtok(s, "-");
 	while(p) {
 		if(strcmp(p, "Control")==0) {
@@ -632,16 +634,19 @@ convert_string_to_keysym_state(char *string,
 		} else if(strcmp(p, "Mod5")==0) {
 			*state |= GDK_MOD5_MASK;
 		} else {
-			gdk_error_trap_push();
 			*keysym = gdk_keyval_from_name(p);
-			gdk_error_trap_pop();
 			if(*keysym == 0) {
+				gdk_flush();
+				gdk_error_trap_pop();
 				g_free(s);
 				return FALSE;
 			}
 		} 
 		p = strtok(NULL, "-");
 	}
+
+	gdk_flush();
+	gdk_error_trap_pop();
 
 	g_free(s);
 
@@ -664,6 +669,7 @@ convert_keysym_state_to_string(guint keysym,
 
 	gdk_error_trap_push();
 	key = gdk_keyval_name(keysym);
+	gdk_flush();
 	gdk_error_trap_pop();
 	if(!key) return NULL;
 

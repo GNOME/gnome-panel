@@ -66,6 +66,7 @@ get_window_id(Window win, char *title, guint32 *wid)
 			XFree(tit);
 		}
 	}
+	gdk_flush();
 	gdk_error_trap_pop ();
 	for(i=0;!ret && i<nchildren;i++)
 		ret=get_window_id(children[i],title,wid);
@@ -81,6 +82,8 @@ socket_realized(GtkWidget *w, gpointer data)
 	Swallow *swallow = gtk_object_get_user_data(GTK_OBJECT(w));
 
 	g_return_val_if_fail(swallow->title!=NULL,FALSE);
+	
+	gdk_error_trap_push ();
 
 	if(!get_window_id(GDK_ROOT_WINDOW(), swallow->title,
 			  &swallow->wid, TRUE)) {
@@ -88,6 +91,9 @@ socket_realized(GtkWidget *w, gpointer data)
 		xstuff_reset_need_substructure();
 	} else
 		gtk_socket_steal(GTK_SOCKET(swallow->socket), swallow->wid);
+
+	gdk_flush();
+	gdk_error_trap_pop ();
 
 	return FALSE;
 }

@@ -52,8 +52,6 @@ get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 	char *tit;
 	gboolean ret = FALSE;
 
-	gdk_error_trap_push ();
-	
 	if(XFetchName(GDK_DISPLAY(), win, &tit) && tit) {
 		if(strstr(tit, title)!=NULL) {
 			if(wid) *wid = win;
@@ -62,10 +60,8 @@ get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 		XFree(tit);
 	}
 
-	if(!depth || ret) {
-		gdk_error_trap_pop ();
+	if(!depth || ret)
 		return ret;
-	}
 
 	XQueryTree(GDK_DISPLAY(),
 		   win,
@@ -80,7 +76,6 @@ get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 			ret=get_window_id(children[i], title, wid, depth);
 		XFree(children);
 	}
-	gdk_error_trap_pop ();
 	return ret;
 }
 
@@ -115,7 +110,6 @@ static void
 try_checking_swallows(guint32 winid)
 {
 	char *tit;
-	gdk_error_trap_push ();
 	if(XFetchName(GDK_DISPLAY(), winid, &tit) &&
 	   tit) {
 		GList *li;
@@ -134,19 +128,21 @@ try_checking_swallows(guint32 winid)
 		}
 		XFree(tit);
 	}
-	gdk_error_trap_pop ();
 }
 
 static void
 go_through_client_list(void)
 {
 	int i;
+	gdk_error_trap_push ();
 	/* just for status dock stuff for now */
 	for(i=0;i<client_list_size;i++) {
 		if(check_swallows)
 			try_checking_swallows(client_list[i]);
 		try_adding_status(client_list[i]);
 	}
+	gdk_flush();
+	gdk_error_trap_pop ();
 }
 
 static int redo_interface_timeout_handle = 0;
@@ -250,6 +246,7 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 			if(!check_swallows)
 				xstuff_reset_need_substructure();
 
+			gdk_flush();
 			gdk_error_trap_pop ();
 		}
 	}
@@ -336,6 +333,7 @@ xstuff_set_simple_hint(GdkWindow *w, GdkAtom atom, int val)
 	gdk_error_trap_push();
 	XChangeProperty(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(w), atom, atom,
 			32, PropModeReplace, (unsigned char*)&val, 1);
+	gdk_flush();
 	gdk_error_trap_pop();
 }
 
