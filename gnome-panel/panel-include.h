@@ -29,15 +29,4 @@
 #include "panel-util.h"
 #include "gdkextra.h"
 
-/* Gross backward compatibility hack.  */
-#ifndef GPOINTER_TO_INT
-# if SIZEOF_INT == SIZEOF_VOID_P
-#  define GPOINTER_TO_INT(p)	((gint)(p))
-#  define GINT_TO_POINTER(i)    ((gpointer)(i))
-# elif SIZEOF_LONG == SIZEOF_VOID_P
-#  define GPOINTER_TO_INT(p)	((gint)(glong)(p))
-#  define GINT_TO_POINTER(i)	((gpointer)(glong)(i))
-# endif /* SIZEOF_INT */
-#endif /* GPOINTER_TO_INT */
-
 #endif
