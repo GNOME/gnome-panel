@@ -373,6 +373,9 @@ panel_widget_cremove(GtkContainer *container, GtkWidget *widget)
 	p = gtk_object_get_data(GTK_OBJECT(widget),
 				PANEL_APPLET_ASSOC_PANEL_KEY);
 
+	if(p)
+		run_up_forbidden(p,remove_panel_from_forbidden);
+
 	gtk_widget_ref(widget);
 	if (GTK_CONTAINER_CLASS (parent_class)->remove)
 		(* GTK_CONTAINER_CLASS (parent_class)->remove) (container,
@@ -384,9 +387,6 @@ panel_widget_cremove(GtkContainer *container, GtkWidget *widget)
 		panel->no_window_applet_list =
 			g_list_remove (panel->no_window_applet_list, ad);
 	}
-
-	if(p)
-		run_up_forbidden(p,remove_panel_from_forbidden);
 
 	gtk_signal_emit(GTK_OBJECT(container),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL],
@@ -2068,6 +2068,13 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 		bind_top_applet_events(applet,bind_lower_events);
 	}
 
+	panel->applet_list =
+		g_list_insert_sorted(panel->applet_list,ad,
+				     (GCompareFunc)applet_data_compare);
+	if(GTK_WIDGET_NO_WINDOW(applet))
+		panel->no_window_applet_list =
+			g_list_prepend(panel->no_window_applet_list,ad);
+
 	/*this will get done right on size allocate!*/
 	if(panel->orient == PANEL_HORIZONTAL)
 		gtk_fixed_put(GTK_FIXED(panel),applet,
@@ -2078,13 +2085,6 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 
 
 	gtk_widget_queue_resize(GTK_WIDGET(panel));
-
-	panel->applet_list =
-		g_list_insert_sorted(panel->applet_list,ad,
-				     (GCompareFunc)applet_data_compare);
-	if(GTK_WIDGET_NO_WINDOW(applet))
-		panel->no_window_applet_list =
-			g_list_prepend(panel->no_window_applet_list,ad);
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
@@ -2208,8 +2208,6 @@ panel_widget_change_params(PanelWidget *panel,
 	panel->orient = orient;
 
 	if(oldorient != panel->orient) {
-		/*postpone all adjustments until fixed is size_allocated*/
-		/*panel->postpone_adjust = TRUE;*/
 	   	gtk_signal_emit(GTK_OBJECT(panel),
 	   			panel_widget_signals[ORIENT_CHANGE_SIGNAL],
 	   			panel->orient);
@@ -2255,6 +2253,7 @@ panel_widget_change_params(PanelWidget *panel,
 				panel->back_pixmap,
 				&panel->back_color);
 	}
+	gtk_widget_queue_resize(GTK_WIDGET(panel));
 }
 
 void

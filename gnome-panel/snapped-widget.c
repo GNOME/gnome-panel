@@ -132,6 +132,7 @@ snapped_widget_size_request(GtkWidget *widget,
 			    GtkRequisition *requisition)
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+
 	if(snapped_widget_request_cube) {
 		requisition->width = 48;
 		requisition->height = 48;

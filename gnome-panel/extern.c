@@ -276,12 +276,12 @@ applet_register (const char * ior, int applet_id)
 	g_free(ext->ior);
 	ext->ior = g_strdup(ior);
 
+	mulapp_add_ior_and_free_queue(ext->path, ext->ior);
+
 	orientation_change(applet_id,panel);
 	back_change(applet_id,panel);
 	send_applet_tooltips_state(ext->ior,applet_id,
 				   global_config.tooltips_enabled);
-
-	mulapp_add_ior_and_free_queue(ext->path, ext->ior);
 }
 
 static int
