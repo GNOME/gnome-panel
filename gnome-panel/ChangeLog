@@ -1,3 +1,16 @@
+Wed May 29 10:06:54 2002  George Lebl <jirka@5z.com>
+
+	* basep-widget.c, panel-widget.[ch], panel.c, panel-marshal.list:
+	  remove all args from the back_change, size_change and orient_change
+	  signals.  This removes some complexity that was not needed and
+	  fixes a marshalling bug found by Jorgen Viksell
+	  <jorgen.viksell@telia.com>
+
+	* gnome-desktop-item-edit.c: allow editting of directories, fix
+	  error output.  Allow editting non-existing .desktops and
+	  .directories, though it doesn't work too great with vfolders
+	  and .desktops.
+
 2002-05-29  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* button-widget.c (button_widget_expose): Caculate focus indication

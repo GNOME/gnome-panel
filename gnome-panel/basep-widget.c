@@ -1457,12 +1457,9 @@ basep_update_frame (BasePWidget *basep)
 }
 
 static void
-basep_back_change (PanelWidget *panel,
-		   PanelBackType type,
-		   char *pixmap,
-		   GdkColor *color,
-		   BasePWidget *basep)
+basep_back_change (PanelWidget *panel, gpointer data)
 {
+	BasePWidget *basep = BASEP_WIDGET (data);
 	basep_update_frame (basep);
 
 	panel_set_frame_colors (panel,
@@ -1474,10 +1471,9 @@ basep_back_change (PanelWidget *panel,
 }
 
 static void
-basep_orient_change (PanelWidget *panel,
-		     GtkOrientation orient,
-		     BasePWidget *basep)
+basep_orient_change (PanelWidget *panel, gpointer data)
 {
+	BasePWidget *basep = BASEP_WIDGET (data);
 	setup_hidebuttons (basep);
 }
 

@@ -349,10 +349,9 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, orient_change),
                               NULL,
                               NULL, 
-                              g_cclosure_marshal_VOID__ENUM,
+                              panel_marshal_VOID__VOID,
                               G_TYPE_NONE,
-                              1,
-                              GTK_TYPE_ORIENTATION); 
+                              0);
 
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
                 g_signal_new ("size_change",
@@ -361,10 +360,9 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, size_change),
                               NULL,
                               NULL, 
-                              panel_marshal_VOID__INT,
+                              panel_marshal_VOID__VOID,
                               G_TYPE_NONE,
-                              1,
-                              G_TYPE_INT); 
+                              0);
 
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
                 g_signal_new ("applet_move",
@@ -409,12 +407,9 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_STRUCT_OFFSET (PanelWidgetClass, back_change),
                               NULL,
                               NULL, 
-                              g_cclosure_marshal_VOID__ENUM,
+                              panel_marshal_VOID__VOID,
                               G_TYPE_NONE,
-                              3,
-			      PANEL_TYPE_PANEL_BACK_TYPE,
-			      G_TYPE_POINTER,
-			      G_TYPE_POINTER);
+                              0);
 
 	panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL] =
                 g_signal_new ("applet_about_to_die",
@@ -2827,12 +2822,12 @@ panel_widget_change_params(PanelWidget *panel,
 	if(oldorient != panel->orient) {
 	   	g_signal_emit (G_OBJECT(panel),
 	   		       panel_widget_signals[ORIENT_CHANGE_SIGNAL],
-	   		       0, panel->orient);
+	   		       0);
 	}
 	if(oldsz != panel->sz) {
 	   	g_signal_emit (G_OBJECT(panel),
 	   		       panel_widget_signals[SIZE_CHANGE_SIGNAL],
-	   		       0, panel->sz);
+	   		       0);
 	}
 	if(back_color) {
 		/*this will allways trigger, but so what*/

@@ -110,6 +110,18 @@ main (int argc, char * argv[])
 			if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY && create_new) {
 				dlg = panel_new_launcher (uri);
 
+			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+				/* rerun this iteration with the .directory file */
+				/* Note: No need to free, for one we can't free an
+				 * individual member of desktops and secondly we
+				 * will soon exit */
+			        desktops[i] =
+					g_build_path ("/", uri,
+						      ".directory", NULL);
+				g_free (uri);
+				i--;
+				continue;
+
 			} else if (info->type == GNOME_VFS_FILE_TYPE_REGULAR
 				   && is_ext (desktops[i], ".directory")
 				   && !create_new) {
@@ -125,11 +137,32 @@ main (int argc, char * argv[])
 				g_free (dirname);
 				
 			} else {
-				fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
-				return 0;
+				fprintf (stderr, "gnome-desktop-item-edit: %s "
+					 "doesn't seem like a desktop item\n",
+					 uri);
 			}
+
+		} else if (is_ext (desktops[i], ".directory")
+			   && !create_new) {
+			/* a non-existant file.  Well we can still edit that sort
+			 * of.  We will just create it new */
+			char *dirname = g_path_get_dirname (uri);
+			dlg = panel_edit_direntry (dirname, NULL);
+			g_free (dirname);
+		
+		} else if (is_ext (desktops[i], ".desktop")
+			   && !create_new) {
+			/* a non-existant file.  Well we can still edit that sort
+			 * of.  We will just create it new */
+			/* FIXME: deal with issues of item existing in
+			 * another vfolder! */
+			char *dirname = g_path_get_dirname (uri);
+			dlg = panel_edit_dentry (uri, dirname);
+			g_free (dirname);
+
 		} else {
-			fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
+			fprintf (stderr, "gnome-desktop-item-edit: %s does "
+				 "not exist\n", uri);
 		}
 
 		if (dlg != NULL) {

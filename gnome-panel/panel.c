@@ -228,9 +228,7 @@ orient_change_foreach(GtkWidget *w, gpointer data)
 
 
 static void
-panel_orient_change(GtkWidget *widget,
-		    GtkOrientation orient,
-		    gpointer data)
+panel_orient_change (GtkWidget *widget, gpointer data)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget),
 			      orient_change_foreach,
@@ -279,9 +277,7 @@ size_change_foreach(GtkWidget *w, gpointer data)
 
 
 static void
-panel_size_change(GtkWidget *widget,
-		  int sz,
-		  gpointer data)
+panel_size_change (GtkWidget *widget, gpointer data)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget), size_change_foreach,
 			      widget);
@@ -311,10 +307,7 @@ back_change_foreach (GtkWidget   *widget,
 }
 
 static void
-panel_back_change(GtkWidget *widget,
-		  PanelBackType type,
-		  char *pixmap,
-		  GdkColor *color)
+panel_back_change (GtkWidget *widget, gpointer data)
 {
 	gtk_container_foreach (GTK_CONTAINER (widget),
 			       (GtkCallback) back_change_foreach,
@@ -1584,13 +1577,13 @@ panel_widget_setup(PanelWidget *panel)
 			  "applet_about_to_die",
 			  G_CALLBACK(panel_applet_about_to_die),
 			  NULL);
-	g_signal_connect (G_OBJECT(panel),
+	g_signal_connect (G_OBJECT (panel),
 			  "back_change",
-			  G_CALLBACK(panel_back_change),
+			  G_CALLBACK (panel_back_change),
 			  NULL);
-	g_signal_connect (G_OBJECT(panel),
+	g_signal_connect (G_OBJECT (panel),
 			  "size_change",
-			  G_CALLBACK(panel_size_change),
+			  G_CALLBACK (panel_size_change),
 			  NULL);
 	g_signal_connect (G_OBJECT (panel),
 			  "orient_change",

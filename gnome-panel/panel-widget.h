@@ -113,20 +113,15 @@ struct _PanelWidgetClass
 {
 	GtkFixedClass parent_class;
 
-	void (* orient_change) (PanelWidget *panel,
-				GtkOrientation orient);
-	void (* size_change) (PanelWidget *panel,
-			      int sz);
+	void (* orient_change) (PanelWidget *panel);
+	void (* size_change) (PanelWidget *panel);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
 			       GtkWidget *applet);
 	void (* applet_removed) (PanelWidget *panel,
 				 GtkWidget *applet);
-	void (* back_change) (PanelWidget *panel,
-			      PanelBackType type,
-			      char *pixmap,
-			      GdkColor *color);
+	void (* back_change) (PanelWidget *panel);
 	void (* applet_about_to_die) (PanelWidget *panel,
 				      GtkWidget *applet);
 	void (* push_move) (PanelWidget		*panel,
