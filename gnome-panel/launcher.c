@@ -575,15 +575,21 @@ setup_button (Launcher *launcher)
 	else
 		str = g_strdup (name);
 
+	/* If we can unescape the string, then we probably have an escaped
+	 * string (a location e.g.). If we can't, then it most probably means
+	 * we have a % that is not here to encode a character, and we don't
+	 * want to unescape in this case. See bug #170516 for details. */
 	unescaped_str = gnome_vfs_unescape_string (str, NULL);
-	gtk_tooltips_set_tip (panel_tooltips, launcher->button,
-			      unescaped_str, NULL);
+	if (unescaped_str) {
+		g_free (str);
+		str = unescaped_str;
+	}
 
+	gtk_tooltips_set_tip (panel_tooltips, launcher->button, str, NULL);
 	/* Setup accessible name */
-	panel_a11y_set_atk_name_desc (launcher->button, unescaped_str, NULL);
+	panel_a11y_set_atk_name_desc (launcher->button, str, NULL);
 
 	g_free (str);
-	g_free (unescaped_str);
 
 	/* Setup icon */
 	icon = gnome_desktop_item_get_string (launcher->ditem,

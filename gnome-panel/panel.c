@@ -513,16 +513,23 @@ drop_uri (PanelWidget *panel,
 	  const char  *icon)
 {
 	char  *base;
+	char  *name;
+	char  *comment;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
 	base = g_path_get_basename (uri);
-
-	panel_launcher_create_from_info (
-		panel->toplevel, position, FALSE, uri, base, uri, icon);
-
+	name = gnome_vfs_unescape_string_for_display (base);
 	g_free (base);
+
+	comment = gnome_vfs_unescape_string_for_display (uri);
+
+	panel_launcher_create_from_info (panel->toplevel, position, FALSE,
+					 uri, name, comment, icon);
+
+	g_free (name);
+	g_free (comment);
 
 	return TRUE;
 }
