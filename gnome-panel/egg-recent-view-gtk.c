@@ -56,6 +56,10 @@ struct _EggRecentViewGtk {
 	GnomeIconTheme *theme;
 #endif
 
+	GtkTooltips *tooltips;
+	EggRecentViewGtkTooltipFunc tooltip_func;
+	gpointer tooltip_func_data;
+
 	EggRecentModel *model;
 	GConfClient *client;
 };
@@ -155,7 +159,7 @@ egg_recent_view_gtk_menu_cb (GtkWidget *menu, gpointer data)
 	g_return_if_fail (md);
 	g_return_if_fail (md->item);
 	g_return_if_fail (md->view);
-	g_return_if_fail (GNOME_IS_RECENT_VIEW_GTK (md->view));
+	g_return_if_fail (EGG_IS_RECENT_VIEW_GTK (md->view));
 
 	item = md->item;
 	
@@ -226,6 +230,8 @@ egg_recent_view_gtk_new_menu_item (EggRecentViewGtk *view,
 		pixbuf = NULL;
 #endif
 		image = gtk_image_new_from_pixbuf (pixbuf);
+		if (pixbuf)
+			g_object_unref (pixbuf);
 
 		if (view->show_icons)
 			gtk_widget_show (image);
@@ -283,6 +289,11 @@ egg_recent_view_gtk_add_to_menu (EggRecentViewGtk *view,
 	menu_offset = egg_recent_view_gtk_find_menu_offset (view);
 
 	menu_item = egg_recent_view_gtk_new_menu_item (view, item, display);
+
+	if (view->tooltip_func != NULL && menu_item != NULL) {
+		view->tooltip_func (view->tooltips, menu_item,
+				    item, view->tooltip_func_data);
+	}
 	
 	if (menu_item)
 		gtk_menu_shell_insert (GTK_MENU_SHELL (view->menu), menu_item,
@@ -466,6 +477,7 @@ egg_recent_view_gtk_finalize (GObject *object)
 #endif
 	g_object_unref (view->client);
 
+	g_object_unref (view->tooltips);
 }
 
 static void
@@ -546,6 +558,15 @@ show_menus_changed_cb (GConfClient *client,
 
 }
 
+#ifndef USE_STABLE_LIBGNOMEUI
+static void
+theme_changed_cb (GnomeIconTheme *theme, EggRecentViewGtk *view)
+{
+	if (view->model != NULL)
+		egg_recent_model_changed (view->model);
+}
+#endif
+
 static void
 egg_recent_view_gtk_init (EggRecentViewGtk * view)
 {
@@ -571,7 +592,14 @@ egg_recent_view_gtk_init (EggRecentViewGtk * view)
 	view->uid = egg_recent_util_get_unique_id ();
 #ifndef USE_STABLE_LIBGNOMEUI
 	view->theme = gnome_icon_theme_new ();
+	g_signal_connect (view->theme, "changed",
+			  G_CALLBACK (theme_changed_cb), view);
 #endif
+	view->tooltips = gtk_tooltips_new ();
+	g_object_ref (view->tooltips);
+	gtk_object_sink (GTK_OBJECT (view->tooltips));
+	view->tooltip_func = NULL;
+	view->tooltip_func_data = NULL;
 }
 
 void
@@ -592,6 +620,18 @@ egg_recent_view_gtk_show_numbers (EggRecentViewGtk *view, gboolean show)
 		egg_recent_model_changed (view->model);
 }
 
+void
+egg_recent_view_gtk_set_tooltip_func (EggRecentViewGtk *view,
+				      EggRecentViewGtkTooltipFunc func,
+				      gpointer user_data)
+{
+	view->tooltip_func = func;
+	view->tooltip_func_data = user_data;
+	
+	if (view->model)
+		egg_recent_model_changed (view->model);
+}
+
 /**
  * egg_recent_view_gtk_set_menu:
  * @view: A EggRecentViewGtk object.
@@ -606,7 +646,7 @@ egg_recent_view_gtk_set_menu (EggRecentViewGtk *view,
 				GtkWidget *menu)
 {
 	g_return_if_fail (view);
-	g_return_if_fail (GNOME_IS_RECENT_VIEW_GTK (view));
+	g_return_if_fail (EGG_IS_RECENT_VIEW_GTK (view));
 	g_return_if_fail (menu);
 
 	if (view->menu != NULL)
@@ -628,7 +668,7 @@ egg_recent_view_gtk_set_start_menu_item (EggRecentViewGtk *view,
 					 GtkWidget *menu_item)
 {
 	g_return_if_fail (view);
-	g_return_if_fail (GNOME_IS_RECENT_VIEW_GTK (view));
+	g_return_if_fail (EGG_IS_RECENT_VIEW_GTK (view));
 	
 	view->start_menu_item = menu_item;
 }
@@ -720,7 +760,7 @@ egg_recent_view_gtk_get_type (void)
 							"EggRecentViewGtk",
 							&egg_recent_view_gtk_info, 0);
 		g_type_add_interface_static (egg_recent_view_gtk_type,
-					     GNOME_TYPE_RECENT_VIEW,
+					     EGG_TYPE_RECENT_VIEW,
 					     &view_info);
 	}
 
