@@ -60,6 +60,7 @@ panel_SOURCES = 		\
 	gdkextra.h		\
 	main.c			\
 	menu.c  		\
+	cookies.c		\
 	menu.h  		\
 	swallow.c  		\
 	swallow.h  		\
