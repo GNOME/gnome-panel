@@ -282,6 +282,24 @@ create_properties_dialog(Launcher *launcher)
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
 				     launcher->dentry);
+
+	/* This sucks, but there is no other way to do this with the current
+	   GnomeDEntry API.  */
+
+#define SETUP_EDITABLE(entry_name)					\
+	gnome_dialog_editable_enters					\
+		(GNOME_DIALOG (dialog),					\
+		 GTK_EDITABLE (gnome_dentry_get_##entry_name##_entry  	\
+			       (GNOME_DENTRY_EDIT (launcher->dedit))));
+
+	SETUP_EDITABLE (name);
+	SETUP_EDITABLE (comment);
+	SETUP_EDITABLE (exec);
+	SETUP_EDITABLE (tryexec);
+	SETUP_EDITABLE (doc);
+	SETUP_EDITABLE (icon);
+
+#undef SETUP_EDITABLE
 	
 	gtk_signal_connect_object(GTK_OBJECT(launcher->dedit), "changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
