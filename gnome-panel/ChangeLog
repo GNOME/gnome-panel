@@ -1,3 +1,11 @@
+1998-02-24  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* batmon/batmon.c (init_module): ref and sink the tooltips.
+	(destroy_module): Unref the tooltips properly.
+
+	* mailcheck/mailcheck.c (mailcheck_load_animation): Whoops, it's
+	not GdkImlib, it's GdkImlibImage.
+
 Tue Feb 24 00:05:55 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl, applet-lib.cc (others): changed the way
