@@ -267,8 +267,6 @@ update_config_size (GtkWidget *panel)
 void
 update_config_back (PanelWidget *pw)
 {
-	GtkWidget *item = NULL;
-	int history = 0;
 	PerPanelConfig *ppc;
 	
 	g_return_if_fail (pw);
@@ -281,11 +279,9 @@ update_config_back (PanelWidget *pw)
 	    ppc->ppc_origin_change)
 		return;
 
-	switch(pw->back_type) {
+	switch (pw->back_type) {
 	default:
 	case PANEL_BACK_NONE:
-		item = ppc->non;
-		history = 0;
 		break;
 	case PANEL_BACK_COLOR:
 		gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
@@ -293,8 +289,6 @@ update_config_back (PanelWidget *pw)
 					   pw->back_color.green,
 					   pw->back_color.blue,
 					   65535);
-		item = ppc->col;
-		history = 1;
 		break;
 	case PANEL_BACK_PIXMAP: {
 		GtkWidget   *t;
@@ -308,14 +302,11 @@ update_config_back (PanelWidget *pw)
 			gtk_entry_set_text (GTK_ENTRY (t),
 					    sure_string (pw->back_pixmap));
 
-		item = ppc->pix;
-		history = 2;
 		}
 		break;
 	}
 
-	gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), history);
-	gtk_menu_item_activate(GTK_MENU_ITEM(item));
+	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->back_om), pw->back_type);
 }
 
 void
@@ -1319,44 +1310,50 @@ color_set_cb (GtkWidget *w, int r, int g, int b, int a, gpointer data)
 	
 	panel_config_register_changes (ppc);
 }
-			   
+
 static void
-set_back (GtkWidget *widget, gpointer data)
+background_type_changed (GtkOptionMenu  *option_menu,
+			 PerPanelConfig *ppc)
 {
-	GtkWidget *pix_frame, *col_label, *col_menu;
-	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
-	PanelBackType back_type = GPOINTER_TO_INT (data);
+	PanelBackType back_type;
+
+	g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
+
+	back_type = gtk_option_menu_get_history (option_menu);
 
 	if (ppc->back_type == back_type)
 		return;
 
-	pix_frame = g_object_get_data (G_OBJECT (widget), "pix_frame");
-	col_menu = g_object_get_data (G_OBJECT (widget), "col_menu");
-	col_label = g_object_get_data (G_OBJECT (widget), "col_label");
-	
-	if (back_type == PANEL_BACK_NONE) {
-		gtk_widget_set_sensitive (pix_frame, FALSE);
-		gtk_widget_set_sensitive (col_menu, FALSE);
-		gtk_widget_set_sensitive (col_label, FALSE);
-	} else if (back_type == PANEL_BACK_COLOR) {
-		gtk_widget_set_sensitive (pix_frame, FALSE);
-		gtk_widget_set_sensitive (col_menu, TRUE);
-		gtk_widget_set_sensitive (col_label, TRUE);
-	} else  {
-		gtk_widget_set_sensitive (pix_frame, TRUE);
-		gtk_widget_set_sensitive (col_menu, FALSE);
-		gtk_widget_set_sensitive (col_label, FALSE);
-	}
-	
 	ppc->back_type = back_type;
+
+	switch (ppc->back_type) {
+	case PANEL_BACK_NONE:
+		gtk_widget_set_sensitive (ppc->pix_frame, FALSE);
+		gtk_widget_set_sensitive (ppc->backsel, FALSE);
+		gtk_widget_set_sensitive (ppc->col_label, FALSE);
+		break;
+	case PANEL_BACK_COLOR:
+		gtk_widget_set_sensitive (ppc->pix_frame, FALSE);
+		gtk_widget_set_sensitive (ppc->backsel, TRUE);
+		gtk_widget_set_sensitive (ppc->col_label, TRUE);
+		break;
+	case PANEL_BACK_PIXMAP:
+		gtk_widget_set_sensitive (ppc->pix_frame, TRUE);
+		gtk_widget_set_sensitive (ppc->backsel, FALSE);
+		gtk_widget_set_sensitive (ppc->col_label, FALSE);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
 
 	panel_config_register_changes (ppc);
 }
-
+			   
 static GtkWidget *
 background_page (PerPanelConfig *ppc)
 {
-	GtkWidget *box, *f, *t, *table;
+	GtkWidget *box, *t, *table;
 	GtkWidget *vbox, *noscale, *fit, *stretch;
 	GtkWidget *w, *m;
 	GtkWidget *label;
@@ -1376,18 +1373,12 @@ background_page (PerPanelConfig *ppc)
 				
 	/*background type option menu*/
 	m = gtk_menu_new ();
-	ppc->non = gtk_menu_item_new_with_label (_("Default"));
-	g_object_set_data (G_OBJECT (ppc->non), "PerPanelConfig", ppc);
-	gtk_widget_show (ppc->non);
-	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->non);
-	ppc->col = gtk_menu_item_new_with_label (_("Color"));
-	g_object_set_data (G_OBJECT (ppc->col), "PerPanelConfig", ppc);
-	gtk_widget_show (ppc->col);
-	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->col);
-	ppc->pix = gtk_menu_item_new_with_label (_("Image"));
-	g_object_set_data (G_OBJECT (ppc->pix), "PerPanelConfig", ppc);
-	gtk_widget_show (ppc->pix);
-	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->pix);
+	gtk_menu_shell_append (GTK_MENU_SHELL (m),
+			       gtk_menu_item_new_with_label (_("Default")));
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), 
+			       gtk_menu_item_new_with_label (_("Color")));
+	gtk_menu_shell_append (GTK_MENU_SHELL (m), 
+			       gtk_menu_item_new_with_label (_("Image")));
 
 	ppc->back_om = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
@@ -1399,21 +1390,20 @@ background_page (PerPanelConfig *ppc)
 
 	panel_set_atk_relation (ppc->back_om, GTK_LABEL (label));
 
-	label = gtk_label_new_with_mnemonic (_("Background co_lor:"));
-	gtk_widget_set_sensitive (label, ppc->back_type == PANEL_BACK_COLOR);
-	gtk_table_attach (GTK_TABLE (table), GTK_WIDGET (label), 
+	g_signal_connect (ppc->back_om, "changed",
+			  G_CALLBACK (background_type_changed), ppc);
+
+	ppc->col_label = gtk_label_new_with_mnemonic (_("Background co_lor:"));
+	gtk_widget_set_sensitive (ppc->col_label, ppc->back_type == PANEL_BACK_COLOR);
+	gtk_table_attach (GTK_TABLE (table), GTK_WIDGET (ppc->col_label), 
 			  0, 1, 1, 2,
 			  GTK_SHRINK, GTK_EXPAND | GTK_FILL,
 			  2, 2);
 
-	g_object_set_data (G_OBJECT (ppc->pix), "col_label", label);
-	g_object_set_data (G_OBJECT (ppc->col), "col_label", label);
-	g_object_set_data (G_OBJECT (ppc->non), "col_label", label);
-
 	ppc->backsel = gnome_color_picker_new();
 
 	gtk_widget_set_sensitive (ppc->backsel, ppc->back_type == PANEL_BACK_COLOR);
-	gtk_label_set_mnemonic_widget (GTK_LABEL (label), ppc->backsel);
+	gtk_label_set_mnemonic_widget (GTK_LABEL (ppc->col_label), ppc->backsel);
 	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
 			  G_CALLBACK(color_set_cb), ppc);
         gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
@@ -1421,28 +1411,22 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.green,
 				   ppc->back_color.blue,
 				   65535);
-	panel_set_atk_relation (ppc->backsel, GTK_LABEL (label));
+	panel_set_atk_relation (ppc->backsel, GTK_LABEL (ppc->col_label));
 
 	gtk_table_attach (GTK_TABLE (table), ppc->backsel,
 			  1, 2, 1, 2,
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL,
 			  2, 2);
-	g_object_set_data (G_OBJECT (ppc->pix), "col_menu", ppc->backsel);
-	g_object_set_data (G_OBJECT (ppc->col), "col_menu", ppc->backsel);
-	g_object_set_data (G_OBJECT (ppc->non), "col_menu", ppc->backsel);
 
 	/*image frame*/
-	f = gtk_frame_new (_("Image"));
-	gtk_widget_set_sensitive (f, ppc->back_type == PANEL_BACK_PIXMAP);
-	g_object_set_data (G_OBJECT (ppc->pix), "pix_frame", f);
-	g_object_set_data (G_OBJECT (ppc->col), "pix_frame", f);
-	g_object_set_data (G_OBJECT (ppc->non), "pix_frame", f);
-	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
+	ppc->pix_frame = gtk_frame_new (_("Image"));
+	gtk_widget_set_sensitive (ppc->pix_frame, ppc->back_type == PANEL_BACK_PIXMAP);
+	gtk_container_set_border_width (GTK_CONTAINER (ppc->pix_frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), ppc->pix_frame, FALSE, FALSE, 0);
 
 	box = gtk_vbox_new (0, 0);
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
+	gtk_container_add (GTK_CONTAINER (ppc->pix_frame), box);
 
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
@@ -1488,26 +1472,8 @@ background_page (PerPanelConfig *ppc)
 			  G_CALLBACK (set_rotate_pixmap_bg), ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
 
-	g_signal_connect (G_OBJECT (ppc->non), "activate", 
-			  G_CALLBACK (set_back), 
-			  GINT_TO_POINTER(PANEL_BACK_NONE));
-	g_signal_connect (G_OBJECT (ppc->pix), "activate", 
-			  G_CALLBACK (set_back), 
-			  GINT_TO_POINTER(PANEL_BACK_PIXMAP));
-	g_signal_connect (G_OBJECT (ppc->col), "activate", 
-			  G_CALLBACK (set_back), 
-			  GINT_TO_POINTER(PANEL_BACK_COLOR));
-	
-	if(ppc->back_type == PANEL_BACK_NONE) {
-		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 0);
-		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->non));
-	} else if(ppc->back_type == PANEL_BACK_COLOR) {
-		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 1);
-		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->col));
-	} else {
-		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 2);
-		gtk_menu_item_activate(GTK_MENU_ITEM(ppc->pix));
-	}
+	gtk_option_menu_set_history (
+		GTK_OPTION_MENU (ppc->back_om), ppc->back_type);
 
 	return vbox;
 }

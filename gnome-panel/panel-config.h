@@ -73,9 +73,8 @@ struct _PerPanelConfig {
 	GtkWidget               *size_menu;
 
 	/*color buttons*/
-	GtkWidget		*non;
-	GtkWidget		*pix;
-	GtkWidget		*col;
+	GtkWidget               *col_label;
+	GtkWidget               *pix_frame;
 	GtkWidget		*backsel;
 	GtkWidget		*back_om; /* the back type option menu */
 
