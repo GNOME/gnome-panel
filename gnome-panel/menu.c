@@ -446,7 +446,7 @@ static GtkWidget *
 menu_new(void)
 {
 	GtkWidget *ret;
-	ret = hack_scroll_menu_new ();
+	ret = gtk_menu_new ();
 	gtk_signal_connect(GTK_OBJECT(ret), "show",
 			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
 

@@ -1089,7 +1089,9 @@ foobar_widget_init (FoobarWidget *foo)
 	foo->settings =
 		append_folder_menu(menu_bar, _("Settings"),  NULL, TRUE,
 			           "gnome/apps/Settings");
+#ifdef FIXME
 	append_desktop_menu (menu_bar);
+#endif
 
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
 	
@@ -1115,8 +1117,8 @@ foobar_widget_init (FoobarWidget *foo)
 #endif
 
 	bar = menu_bar = gtk_menu_bar_new ();
-	append_clock_menu (foo, menu_bar);
 #if 0
+	append_clock_menu (foo, menu_bar);
 	/* TODO: use the gnome menu if no gnome compliant WM or tasklist disabled */
 	append_gnome_menu (foo, menu_bar);
 #endif

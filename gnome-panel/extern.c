@@ -1965,9 +1965,11 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
     return -4;
   }
 
+#if 0
   result = bonobo_activation_active_server_register("OAFIID:GNOME_Panel", acc);
   if (result != Bonobo_ACTIVATION_REG_SUCCESS)
     return -1;
+#endif
 
   return 0;
 }
