@@ -230,7 +230,7 @@ floating_pos_set_pos (BasePWidget *basep,
 				break;
 			}
 		}
-		newx = CLAMP (x < minx ? x2 : x2 - w, 0, gdk_screen_width () - w);
+		newx = CLAMP (x < minx ? x2 : x2 - w2, 0, gdk_screen_width () - w);
 	}
 
 	if (y < miny || y > maxy) {
