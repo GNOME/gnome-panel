@@ -199,16 +199,103 @@ guess_encoding (const char *uri,
 	}
 }
 
+static void
+insert_locales (GHashTable *encodings, char *enc, ...)
+{
+	va_list args;
+	char *s;
+
+	va_start (args, enc);
+	for (;;) {
+		s = va_arg (args, char *);
+		if (s == NULL)
+			break;
+		g_hash_table_insert (encodings, s, enc);
+	}
+	va_end (args);
+}
+
+/* make a standard conversion table from the desktop standard spec */
+static GHashTable *
+init_encodings (void)
+{
+	GHashTable *encodings = g_hash_table_new (g_str_hash, g_str_equal);
+
+	insert_locales (encodings, "ARMSCII-8", "by", NULL);
+	insert_locales (encodings, "BIG5", "zh_TW", NULL);
+	insert_locales (encodings, "CP1251", "be", "bg", NULL);
+	insert_locales (encodings, "EUC-CN", "zh_CN", NULL);
+	insert_locales (encodings, "EUC-JP", "ja", NULL);
+	insert_locales (encodings, "EUC-KR", "ko", NULL);
+	/* insert_locales (encodings, "GEORGIAN-ACADEMY", NULL); */
+	insert_locales (encodings, "GEORGIAN-PS", "ka", NULL);
+	insert_locales (encodings, "ISO-8859-1", "br", "ca", "da", "de", "en", "es", "eu", "fi", "fr", "gl", "it", "nl", "wa", "no", "pt", "pt", "sv", NULL);
+	insert_locales (encodings, "ISO-8859-2", "cs", "hr", "hu", "pl", "ro", "sk", "sl", "sq", "sr", NULL);
+	insert_locales (encodings, "ISO-8859-3", "eo", NULL);
+	insert_locales (encodings, "ISO-8859-5", "mk", "sp", NULL);
+	insert_locales (encodings, "ISO-8859-7", "el", NULL);
+	insert_locales (encodings, "ISO-8859-9", "tr", NULL);
+	insert_locales (encodings, "ISO-8859-13", "lt", "lv", "mi", NULL);
+	insert_locales (encodings, "ISO-8859-14", "ga", "cy", NULL);
+	insert_locales (encodings, "ISO-8859-15", "et", NULL);
+	insert_locales (encodings, "KOI8-R", "ru", NULL);
+	insert_locales (encodings, "KOI8-U", "uk", NULL);
+	insert_locales (encodings, "TCVN-5712", "vi", NULL);
+	insert_locales (encodings, "TIS-620", "th", NULL);
+	/* insert_locales (encodings, "VISCII", NULL); */
+
+	return encodings;
+}
+
+static const char *
+get_encoding_from_locale (const char *locale)
+{
+	char lang[3];
+	const char *encoding;
+	static GHashTable *encodings = NULL;
+
+	if (locale == NULL)
+		return NULL;
+
+	/* if locale includes encoding, use it */
+	encoding = strchr (locale, '.');
+	if (encoding != NULL) {
+		return encoding+1;
+	}
+
+	if (encodings == NULL)
+		encodings = init_encodings ();
+
+	/* first try the entire locale (at this point ll_CC) */
+	encoding = g_hash_table_lookup (encodings, locale);
+	if (encoding != NULL)
+		return encoding;
+
+	/* Try just the language */
+	strncpy (lang, locale, 2);
+	lang[2] = '\0';
+	return g_hash_table_lookup (encodings, lang);
+}
+
 static const char *
 get_encoding (int encoding, const char *lang)
 {
-	const gchar *enc;
-
-	g_get_charset (&enc);
-	if (strcmp (enc, "UTF-8") == 0) {
-		return NULL;
-	} else {
+	const char *enc = NULL;
+	if (lang != NULL)
+		strchr (lang, '.');
+	if (enc != NULL) {
+		enc++;
+		if (strcmp (enc, "UTF-8") == 0)
+			return NULL;
 		return enc;
+	} else if (encoding == ENCODING_LEGACY_MIXED) {
+		enc = get_encoding_from_locale (lang);
+		if (enc == NULL)
+			g_get_charset (&enc);
+		return enc;
+	} else {
+		/* no decoding */
+		return NULL;
 	}
 }
 
@@ -364,12 +451,6 @@ quick_desktop_item_load_uri (const char *uri,
 		quick_desktop_item_destroy (retval);
 		retval = NULL;
 	}
-
-	/* Failsafe */
-	if (!name_lang)
-		name_lang = g_strdup (setlocale (LC_CTYPE, NULL));
-	if (!comment_lang)
-		comment_lang = g_strdup (setlocale (LC_CTYPE, NULL));
 
 	/* Convert encodings */
 
