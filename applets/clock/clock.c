@@ -1192,6 +1192,21 @@ fill_clock_applet (PanelApplet *applet)
 					   NULL,
 					   clock_menu_verbs,
 					   cd);
+
+	if (panel_applet_get_locked_down (PANEL_APPLET (cd->applet))) {
+		BonoboUIComponent *popup_component;
+
+		popup_component = panel_applet_get_popup_component (PANEL_APPLET (cd->applet));
+
+		bonobo_ui_component_set_prop (popup_component,
+					      "/commands/ClockPreferences",
+					      "hidden", "1",
+					      NULL);
+		bonobo_ui_component_set_prop (popup_component,
+					      "/commands/ClockConfig",
+					      "hidden", "1",
+					      NULL);
+	}
 	
 	return TRUE;
 }
