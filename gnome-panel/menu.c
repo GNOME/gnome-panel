@@ -2096,7 +2096,7 @@ static GtkWidget *
 create_kde_menu(GtkWidget *menu, int fake_submenus,
 		int force, int fake)
 {
-	char *pixmap_name = g_concat_dir_and_file (KDE_ICONDIR, "exec.xpm");
+	char *pixmap_name = g_concat_dir_and_file (KDE_MINI_ICONDIR, "exec.xpm");
 	if(!fake || menu) {
 		menu = create_menu_at (menu, 
 				       KDE_MENUDIR, FALSE,
@@ -2194,6 +2194,30 @@ create_panel_root_menu(GtkWidget *panel)
 		}
 	}
 
+	if (g_file_exists (KDE_MENUDIR)) {
+		menu = create_kde_menu(NULL,TRUE,FALSE,TRUE);
+		if (menu) {
+			GtkWidget *pixmap = NULL;
+			char *pixmap_path = g_concat_dir_and_file (KDE_MINI_ICONDIR, 
+							      "exec.xpm");
+			if (g_file_exists(pixmap_path)) {
+				pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_path,
+									    SMALL_ICON_SIZE,
+									    SMALL_ICON_SIZE);
+				if (pixmap)
+					gtk_widget_show (pixmap);
+			}
+			g_free (pixmap_path);
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, pixmap, _("KDE menus"));
+			gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
+			gtk_signal_connect(GTK_OBJECT(menu),"show",
+					   GTK_SIGNAL_FUNC(submenu_to_display),
+					   menuitem);
+		}
+	}
+
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
@@ -2220,10 +2244,9 @@ create_panel_root_menu(GtkWidget *panel)
 #endif
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(panel_menu,
-						  GNOME_STOCK_PIXMAP_QUIT),
-			_("Log out"));
+	setup_menuitem_try_pixmap (menuitem,
+				   "gnome-term-night.png",
+				   _("Log out"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit),
@@ -2945,10 +2968,9 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	g_free (char_tmp);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(menu,
-						  GNOME_STOCK_MENU_QUIT),
-			_("Log out"));
+	setup_menuitem_try_pixmap (menuitem,
+				   "gnome-term-night.png",
+				   _("Log out"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC(panel_quit), 0);

@@ -1,5 +1,11 @@
 1999-10-01  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* menu.c (create_panel_root_menu): use the logout button
+	(add_special_entries): ditto
+	(create_panel_root_menu): show the KDE menu if it is here
+
+	fixes bug #2503
+
 	* extern.c (extern_clean): deactivate the object before
 	calling __fini on it
 
