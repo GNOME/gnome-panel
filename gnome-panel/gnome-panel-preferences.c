@@ -1030,7 +1030,7 @@ loadup_vals(void)
 		gnome_config_get_bool("show_dot_buttons=FALSE");
 
 	global_config.hungry_menus =
-		gnome_config_get_bool("really_hungry_menus=FALSE");
+		gnome_config_get_bool("memory_hungry_menus=FALSE");
 
 	global_config.use_large_icons =
 		gnome_config_get_bool("use_large_icons=TRUE");
@@ -1160,7 +1160,7 @@ write_config(GlobalConfig *conf)
 			      conf->tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
 			      conf->show_dot_buttons);
-	gnome_config_set_bool("hungry_menus",
+	gnome_config_set_bool("memory_hungry_menus",
 			      conf->hungry_menus);
 	gnome_config_set_bool("use_large_icons",
 			      conf->use_large_icons);
