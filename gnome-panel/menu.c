@@ -1231,6 +1231,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 	GtkMenu *menu = GTK_MENU(menu_item->parent); 
 	GtkWidget *xgrab_shell;
 	GtkWidget *parent;
+
 	/* Find the last viewable ancestor, and make an X grab on it
 	 */
 	parent = GTK_WIDGET (menu);
@@ -1254,18 +1255,14 @@ restore_grabs(GtkWidget *w, gpointer data)
 	}
 
 	/*only grab if this HAD a grab before*/
-	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab)) {
-		GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
-
+	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab))
 		GTK_MENU_SHELL (xgrab_shell)->have_xgrab = 
 			(gdk_pointer_grab (xgrab_shell->window, TRUE,
 					   GDK_BUTTON_PRESS_MASK |
 					   GDK_BUTTON_RELEASE_MASK |
 					   GDK_ENTER_NOTIFY_MASK |
 					   GDK_LEAVE_NOTIFY_MASK,
-					   NULL, cursor, 0) == 0);
-		gdk_cursor_unref (cursor);
-	}
+					   NULL, NULL, 0) == 0);
 	
 	gtk_grab_add (GTK_WIDGET (menu));
 }
