@@ -63,8 +63,6 @@ typedef void (*PositionSignal) (GtkObject *object,
 				int        y,
 				gpointer   data);
 
-static int applet_count = 0;
-
 static GtkPlugClass *parent_class;
 
 GType
@@ -382,11 +380,6 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 	bonobo_object_unref (BONOBO_OBJECT (applet->object));
 	applet->object = NULL;
 
-	applet_count--;
-
-	if (!applet_count)
-		gtk_main_quit();
-
 	g_free (applet->priv);
 	applet->priv = NULL;
 }
@@ -470,23 +463,6 @@ applet_widget_construct (AppletWidget *applet,
 	gtk_signal_connect (GTK_OBJECT (applet), "destroy",
 			    GTK_SIGNAL_FUNC (applet_widget_destroy),
 			    NULL);
-
-	applet_count++;
-}
-
-/**
- * applet_widget_get_applet_count:
- *
- * Description:  Gets the number of applets loaded in this this process.  If
- * this is a shared lib applet it will return the total number of shared lib
- * applets loaded.
- *
- * Returns:  The number of applets loaded.
- **/
-int
-applet_widget_get_applet_count(void)
-{
-	return applet_count;
 }
 
 static gboolean

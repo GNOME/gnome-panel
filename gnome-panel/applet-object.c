@@ -426,14 +426,15 @@ void
 applet_object_panel_quit (AppletObject *applet)
 {
 	CORBA_Environment env;
+	GNOME_Panel       panel;
 
 	CORBA_exception_init (&env);
 
-        GNOME_Panel_quit (applet_object_panel (), &env);
-        if (BONOBO_EX (&env)) {
-                CORBA_exception_free (&env);
-                return;
-        }
+	panel = applet_object_panel ();
+
+        GNOME_Panel_quit (panel, &env);
+
+	CORBA_Object_release (panel, &env);
 
         CORBA_exception_free (&env);
 }
@@ -686,6 +687,8 @@ applet_object_new (GtkWidget   *widget,
 							   &global_config_path,
 							   winid,
 							   &env);
+
+	CORBA_Object_release (panel, &env);
 
 	if (config_path && *config_path)
 		applet->priv->widget->privcfgpath = g_strdup (config_path);
