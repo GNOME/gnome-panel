@@ -1,4 +1,81 @@
 =============
+Version 2.0.2
+=============
+
+Panel
+
+	* Duplicate function removal (Frederic Crozat)
+	* Remove GNOME_PANEL_DESKTOP_AREA root window hint (Mark)
+	* Cleanups and bugfixes mulitscreen support implementation (Mark)
+	* Fix crash in run dialog disclosure animation (Mark)
+	* Sanity check bonobo-activation return values (Mark)
+	* String changes and UI consistency changes (Glynn, Mark)
+	* Load icons for run dialog in idle instead of timeout (Jonathon)
+	* Pop up the global menu on panel keybinding (Glynn)
+	* .desktop file encoding fixes (George, Toshi)
+	* Use X-GNOME-DocPath instead of DocPath (Glynn, Mark)
+	* Check gconf string returns (Havoc, Mark)
+	* Use fallback values when convert strings to enums (Mark)
+	* Save launchers to disk in idle handler (Mark)
+	* Better error handling in button creation (Mark, George)
+	* Better error handling loading .desktop files (Havoc)
+	* Fix default launchers URIs (Mark)
+
+Fish Applet
+
+	* Use root window instead of offscreen popup when creating pixmaps (Mark)
+	* Sanity check some preferences (Mark)
+	* Convert fortune output from user locale to UTF-8 (Miguel Rodríguez Pérez)
+	* Warn the user if we can't locate or execute fortune (Mark)
+
+Workspace Switcher Applet
+
+	* s/Tasklist/Window List/ (Mark)
+	* Consistent padding between frames (Jorn Baayen)
+
+Window List Applet
+
+	* Hack to apply TreeView changes on dialog close (Arvind)
+	* Use of GTK_SHADOW_IN for consistency (Jorn Baayen)
+
+Inbox Monitor Applet
+
+	* Load missing prefs and update schemas (Joerg Wendland)
+	* Atk descriptions (Pasupathi Duraisamy)
+	* Execute everything using gspawn and inform user of errors (Mark)
+
+Clock Applet
+
+	* s/Greenwich Mean Time/Universal Coordinated Time/ (Christian Rose)
+
+Panel Applet Library
+
+	* Some documentation updates (Mark)
+	* Add support for non-NLS enabled factory macros (Mark)
+	* Fix focus line computation (Padraig, Rajkumar Siva)
+
+Help
+
+	* Removal of obsolete documentation (John Fleck, Mark)
+	* Add help button to gnome-panel-screenshot (Glynn)
+	* Fix pointers to panel documentation (Satyajit Kanungo)
+
+Miscellanous
+
+	* Big clean up of gnome-panel-preferances (Mark)
+	* Rename .glade2 files to .glade (Mark)
+	* Compile warnings fixes (Mark)
+	* Check for scrollkeeper at configure time (Ali Akcaagac)
+	* Use private umask and remove temp dir in gnome-panel-screenshot (Rohit R)
+
+Translations
+
+	* Andrew V. Samoilov, Changwoo Ryu, Christian Rose, Christophe Fergeau,
+          Daniel Yacob, Dmitry G. Mastrukov, Hasbullah Bin Pit, Jordi Mallach,
+          Kjartan Maraas, Ole Laursen, Pablo Saratxaga, Peteris Krisjanis, Stanislav
+          Visnovsky, Tõivo Leedjärv, Vincent van Adrighem, Wang Jian and Zbigniew Chyla.
+
+=============
 Version 2.0.1
 =============
 

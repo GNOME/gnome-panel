@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.8\n"
-"POT-Creation-Date: 2002-06-10 18:38+1200\n"
+"POT-Creation-Date: 2002-07-15 10:56+1200\n"
 "PO-Revision-Date: 1999-04-01 17:11+0200\n"
 "Last-Translator: Joseba Bidaurrazaga van Dierdonck <gcpbivaj@lg.ehu.es>\n"
 "Language-Team: euskara <linux-eu@chanae.alphanet.ch>\n"
@@ -15,31 +15,79 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:69
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#, fuzzy
+msgid "_About..."
+msgstr "Honi buruz..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#, fuzzy
+msgid "_Help"
+msgstr "Laguntza"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#, fuzzy
+msgid "_Preferences..."
+msgstr "Hobespenak"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Amusements"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1237
+msgid "Fish"
+msgstr "Arraina"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+msgid "Wanda Factory"
+msgstr ""
+
+#: applets/fish/fish.c:67
 #, fuzzy, c-format
 msgid "%s the GNOME Fish"
 msgstr "%s GNOME arrainak esana:"
 
-#: applets/fish/fish.c:70
+#: applets/fish/fish.c:68
 #, fuzzy, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
 msgstr "%s GNOME arrainak esana:"
 
-#: applets/fish/fish.c:109
+#: applets/fish/fish.c:107
 msgid "GNOME Fish, the fortune teller"
 msgstr ""
 
-#: applets/fish/fish.c:484 applets/fish/fish.c:1151
+#: applets/fish/fish.c:486 applets/fish/fish.c:1204
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s arraina"
 
-#: applets/fish/fish.c:485
+#: applets/fish/fish.c:487
 #, fuzzy, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "%s GNOME arrainak esana:"
 
-#: applets/fish/fish.c:578
+#: applets/fish/fish.c:582
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -52,47 +100,65 @@ msgstr ""
 "Wanda applet-a \"praktiko\" edo baliagarri bihur lezakeen\n"
 "ezertarako ez erabiltzeko gomendioa egiten dizugu."
 
-#: applets/fish/fish.c:709
+#: applets/fish/fish.c:713
 #, fuzzy
 msgid "GNOME Fish Preferences"
 msgstr "GNOME arrainaren propietateak"
 
-#: applets/fish/fish.c:719
+#: applets/fish/fish.c:723
 msgid "_Name of GNOME fish:"
 msgstr ""
 
-#: applets/fish/fish.c:736
+#: applets/fish/fish.c:740
 #, fuzzy
 msgid "_Animation filename:"
 msgstr "Animazio-fitxategiaren izena:"
 
-#: applets/fish/fish.c:738 applets/gen_util/mailcheck.c:1245
-#: gnome-panel/menu-properties.c:498 gnome-panel/menu-properties.c:536
-#: gnome-panel/panel-config.c:1437 gnome-panel/panel-util.c:241
+#: applets/fish/fish.c:742 applets/gen_util/mailcheck.c:1276
+#: gnome-panel/panel-config.c:1400 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Arakatu"
 
-#: applets/fish/fish.c:754
+#: applets/fish/fish.c:758
 #, fuzzy
 msgid "Command to _execute when fish is clicked:"
 msgstr "Arrainean klik egitean exekutatzeko komandoa:"
 
-#: applets/fish/fish.c:771
+#: applets/fish/fish.c:775
 #, fuzzy
 msgid "Frame_s in animation:"
 msgstr "Animazioko irudiak:"
 
-#: applets/fish/fish.c:789
+#: applets/fish/fish.c:793
 #, fuzzy
 msgid "Pause _per frame (s):"
 msgstr "Irudi bakoitzeko pausa (seg):"
 
-#: applets/fish/fish.c:804
+#: applets/fish/fish.c:808
 #, fuzzy
 msgid "_Rotate on vertical panels"
 msgstr "Biratu panel bertikaletan"
 
-#: applets/fish/fish.c:977
+#: applets/fish/fish.c:864
+msgid "Unable to get the name of the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:880
+msgid "Unable to locate the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:1005
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details : %s"
+msgstr ""
+"Huts egin du komando hau exekutatzean:\n"
+"%s\n"
+"%s"
+
+#: applets/fish/fish.c:1025
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -103,7 +169,7 @@ msgstr ""
 "\n"
 "Zoaz arrainaren propietateen elkarrizketara."
 
-#: applets/fish/fish.c:991
+#: applets/fish/fish.c:1040
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -111,16 +177,11 @@ msgstr ""
 "Ura aldatu egin behar da!\n"
 "(Begira gaurko datari)"
 
-#: applets/fish/fish.c:1166
+#: applets/fish/fish.c:1219
 msgid "(with minor help from George)"
 msgstr "(George-ren laguntza pixka batez)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1184
-msgid "Fish"
-msgstr "Arraina"
-
-#: applets/fish/fish.c:1187
+#: applets/fish/fish.c:1240
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -165,48 +226,80 @@ msgstr ""
 msgid "The number of frames in the fish's animation"
 msgstr ""
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "Amusements"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
-msgid "Wanda Factory"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #, fuzzy
-msgid "_About..."
-msgstr "Honi buruz..."
+msgid "Copy _date"
+msgstr "Erakutsi data applet-ean"
 
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#, fuzzy
-msgid "_Help"
-msgstr "Laguntza"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr ""
 
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
 #, fuzzy
-msgid "_Preferences..."
-msgstr "Hobespenak"
+msgid "Alert you when new mail arrives"
+msgstr "Abisatu soinu bidez mezua iristean"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1156
+msgid "Clock"
+msgstr "Erlojua"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "GenUtil Applet Factory"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/mailcheck.c:246 applets/gen_util/mailcheck.c:1721
+#, fuzzy
+msgid "Inbox Monitor"
+msgstr "Monitoreak"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+#, fuzzy
+msgid "Internet"
+msgstr "Internet ordua"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Switch between open windows"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+msgid "Switch between workspaces"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Utility"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+#: applets/gen_util/tasklist.c:713
+#, fuzzy
+msgid "Window List"
+msgstr "Leiho-kudeatzailea"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:814
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+msgid "factory for creating some general applets"
+msgstr ""
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+#, fuzzy
+msgid "_Check for mail"
+msgstr "Begiratu mezurik dagoen"
 
 #: applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 msgid "%I:%M:%S %p"
@@ -242,7 +335,7 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %Y %B %d "
 
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/mailcheck.c:1578 applets/gen_util/mailcheck.c:1783
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
@@ -295,16 +388,11 @@ msgid "Use _UTC"
 msgstr "Erabili GMT"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1708
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:242
 msgid "translator_credits"
 msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1156
-msgid "Clock"
-msgstr "Erlojua"
 
 #: applets/gen_util/clock.c:1157
 #, fuzzy
@@ -328,7 +416,7 @@ msgid "Display seconds in time"
 msgstr ""
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
+msgid "Display time in Universal Coordinated Time zone"
 msgstr ""
 
 #: applets/gen_util/clock.schemas.in.h:5
@@ -364,100 +452,39 @@ msgstr "segundoz behin"
 
 #: applets/gen_util/clock.schemas.in.h:12
 #, fuzzy
-msgid "Use GMT"
-msgstr "Erabili GMT"
-
-#: applets/gen_util/clock.schemas.in.h:13
-#, fuzzy
 msgid "Use Internet time"
 msgstr "Internet ordua"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:13
 #, fuzzy
 msgid "Use UNIX time"
 msgstr "Unix ordua"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/clock.schemas.in.h:14
 #, fuzzy
-msgid "Copy _date"
-msgstr "Erakutsi data applet-ean"
+msgid "Use UTC"
+msgstr "Erabili GMT"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
+#: applets/gen_util/mailcheck.c:176
+#, c-format
+msgid "There was an error executing %s : %s"
 msgstr ""
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#, fuzzy
-msgid "Alert you when new mail arrives"
-msgstr "Abisatu soinu bidez mezua iristean"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "GenUtil Applet Factory"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
-#, fuzzy
-msgid "Inbox Monitor"
-msgstr "Monitoreak"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#, fuzzy
-msgid "Internet"
-msgstr "Internet ordua"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Switch between open windows"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Switch between workspaces"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Utility"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:713
-#, fuzzy
-msgid "Window List"
-msgstr "Leiho-kudeatzailea"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-msgid "factory for creating some general applets"
-msgstr ""
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-#, fuzzy
-msgid "_Check for mail"
-msgstr "Begiratu mezurik dagoen"
-
-#: applets/gen_util/mailcheck.c:224
+#: applets/gen_util/mailcheck.c:252
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:232
+#: applets/gen_util/mailcheck.c:260
 msgid "Please enter your mailserver's _password:"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:278
+#: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
+msgid "Password Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:308
 #, fuzzy
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
@@ -467,181 +494,210 @@ msgstr ""
 "Urruneko bezeroaren errorea gertatu da. Urruneko inkesta desaktibatua. "
 "Beharbada okerreko zerbitzaria/erabiltzaile-izena/pasahitza erabili duzu?"
 
-#: applets/gen_util/mailcheck.c:483
+#: applets/gen_util/mailcheck.c:513
 msgid "You have new mail."
 msgstr "Mezu berriak dituzu."
 
-#: applets/gen_util/mailcheck.c:485
+#: applets/gen_util/mailcheck.c:515
 msgid "You have mail."
 msgstr "Mezu berriak dituzu."
 
-#: applets/gen_util/mailcheck.c:489
+#: applets/gen_util/mailcheck.c:519
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d mezu"
 
-#: applets/gen_util/mailcheck.c:491
+#: applets/gen_util/mailcheck.c:521
 #, c-format
 msgid "%d messages"
 msgstr "%d mezu"
 
-#: applets/gen_util/mailcheck.c:495
+#: applets/gen_util/mailcheck.c:525
 msgid "No mail."
 msgstr "Ez dago mezurik."
 
-#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
+#: applets/gen_util/mailcheck.c:1046 applets/gen_util/mailcheck.c:1048
+#: applets/gen_util/mailcheck.c:1906 applets/gen_util/mailcheck.c:1908
 msgid "Status not updated"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1189
+#: applets/gen_util/mailcheck.c:1220
 #, fuzzy
 msgid "Mailbox _resides on:"
 msgstr "Postontziaren kokalekua:"
 
-#: applets/gen_util/mailcheck.c:1197
+#: applets/gen_util/mailcheck.c:1228
 msgid "Local mailspool"
 msgstr "Posta-ilara lokala"
 
-#: applets/gen_util/mailcheck.c:1205
+#: applets/gen_util/mailcheck.c:1236
 msgid "Local maildir"
 msgstr "Posta-direktorio lokala"
 
-#: applets/gen_util/mailcheck.c:1213
+#: applets/gen_util/mailcheck.c:1244
 msgid "Remote POP3-server"
 msgstr "Urruneko POP3 zerbitzaria"
 
-#: applets/gen_util/mailcheck.c:1221
+#: applets/gen_util/mailcheck.c:1252
 msgid "Remote IMAP-server"
 msgstr "Urruneko IMAP zerbitzaria"
 
-#: applets/gen_util/mailcheck.c:1241
+#: applets/gen_util/mailcheck.c:1272
 #, fuzzy
 msgid "Mail _spool file:"
 msgstr "Posta-ilarako fitxategia:"
 
-#: applets/gen_util/mailcheck.c:1260
+#: applets/gen_util/mailcheck.c:1291
 #, fuzzy
 msgid "Mail s_erver:"
 msgstr "Posta-zerbitzaria:"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1297
+msgid "Mail Server Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1311
 #, fuzzy
 msgid "_Username:"
 msgstr "Erabiltzaile-izena:"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1319
+msgid "Username Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1328
 #, fuzzy
 msgid "_Password:"
 msgstr "Pasahitza:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1349
 #, fuzzy
 msgid "_Folder:"
 msgstr "Karpeta:"
 
-#: applets/gen_util/mailcheck.c:1332
+#: applets/gen_util/mailcheck.c:1357
+msgid "Folder Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1369
 #, fuzzy
 msgid "C_ommand to run before checking for mail:"
 msgstr "Posta begiratu aurretik exekutatzeko komandoa:"
 
-#: applets/gen_util/mailcheck.c:1363
+#: applets/gen_util/mailcheck.c:1377
+#, fuzzy
+msgid "Command Entry box"
+msgstr "Komandoa (aukerakoa)"
+
+#: applets/gen_util/mailcheck.c:1402
 msgid "Execute"
 msgstr "Exekutatu"
 
-#: applets/gen_util/mailcheck.c:1374
+#: applets/gen_util/mailcheck.c:1413
 #, fuzzy
 msgid "Before each _update:"
 msgstr "Eguneratu aurretik:"
 
-#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1428
 #, fuzzy
-msgid "Command to execute"
-msgstr "Komandoa (aukerakoa)"
+msgid "Command to execute before each update"
+msgstr "Arrainean klik egitean exekutatzeko komandoa:"
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1438
 #, fuzzy
 msgid "When new mail _arrives:"
 msgstr "Mezu berriak iristen direnean:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1451 applets/gen_util/mailcheck.schemas.in.h:2
+#, fuzzy
+msgid "Command to execute when new mail arrives"
+msgstr "Arrainean klik egitean exekutatzeko komandoa:"
+
+#: applets/gen_util/mailcheck.c:1461
 #, fuzzy
 msgid "When clicke_d:"
 msgstr "Klik egindakoan:"
 
-#: applets/gen_util/mailcheck.c:1445
+#: applets/gen_util/mailcheck.c:1474
+#, fuzzy
+msgid "Command to execute when clicked"
+msgstr "Arrainean klik egitean exekutatzeko komandoa:"
+
+#: applets/gen_util/mailcheck.c:1484
 msgid "Set the number of unread mails to _zero"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1456
+#: applets/gen_util/mailcheck.c:1495
 #, fuzzy
 msgid "Check for mail _every"
 msgstr "Begiratu mezurik dagoen"
 
-#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
+#: applets/gen_util/mailcheck.c:1507 applets/gen_util/mailcheck.c:1511
 msgid "minutes"
 msgstr "minutuz behin"
 
-#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1507
+msgid "Choose time interval in minutes to check mail"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
 msgid "seconds"
 msgstr "segundoz behin"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1521
+msgid "Choose time interval in seconds to check mail"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1533
 #, fuzzy
 msgid "Play a _sound when new mail arrives"
 msgstr "Abisatu soinu bidez mezua iristean"
 
-#: applets/gen_util/mailcheck.c:1505
+#: applets/gen_util/mailcheck.c:1544
 #, fuzzy
 msgid "Select a_nimation"
 msgstr "Hautatu animazioa"
 
-#: applets/gen_util/mailcheck.c:1580
+#: applets/gen_util/mailcheck.c:1619
 #, fuzzy
 msgid "Inbox Monitor Preferences"
 msgstr "Monitoreak"
 
-#: applets/gen_util/mailcheck.c:1599
+#: applets/gen_util/mailcheck.c:1638
 #, fuzzy
 msgid "_Mail check"
 msgstr "Mezu-abisua"
 
-#: applets/gen_util/mailcheck.c:1603
+#: applets/gen_util/mailcheck.c:1642
 #, fuzzy
 msgid "Mail_box"
 msgstr "Postontzia"
 
-#: applets/gen_util/mailcheck.c:1681
+#: applets/gen_util/mailcheck.c:1722
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(C) 1998-2000 The Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1682
+#: applets/gen_util/mailcheck.c:1723
 #, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Mezu-abisuak mezu berriak iritsi direla jakinarazten dizu"
 
-#: applets/gen_util/mailcheck.c:1841
+#: applets/gen_util/mailcheck.c:1882
 msgid "Text only"
 msgstr "Testu soila"
 
-#: applets/gen_util/mailcheck.c:1868
+#: applets/gen_util/mailcheck.c:1909
 #, fuzzy
 msgid "Mail check"
 msgstr "Mezu-abisua"
 
-#: applets/gen_util/mailcheck.c:1869
+#: applets/gen_util/mailcheck.c:1910
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Mezu-abisuak mezu berriak iritsi direla jakinarazten dizu"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 #, fuzzy
 msgid "Command to execute when checking mail"
-msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-#, fuzzy
-msgid "Command to execute when new mail arrives"
 msgstr "Arrainean klik egitean exekutatzeko komandoa:"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
@@ -761,13 +817,13 @@ msgstr "Mezu-abisua"
 msgid "New Mail"
 msgstr "Mezu berria"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 #: applets/gen_util/pager.glade.h:2
 #, fuzzy
 msgid "Rows"
 msgstr "Arakatu"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 msgid "Columns"
 msgstr ""
 
@@ -901,15 +957,13 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Ezin da applet-a sortu!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
-#: gnome-panel/launcher.c:716 gnome-panel/menu.c:1375 gnome-panel/menu.c:1446
-#: gnome-panel/menu.c:3298 gnome-panel/menu.c:4021
+#: applets/gen_util/printer.c:466
 msgid "Properties..."
 msgstr "Propietateak..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
-#: gnome-panel/launcher.c:718 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4023
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
+#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "Laguntza"
 
@@ -955,22 +1009,22 @@ msgid "Show windows from a_ll workspaces"
 msgstr ""
 
 #: applets/gen_util/tasklist.glade.h:8
-#, fuzzy
-msgid "Tasklist size"
-msgstr "Ataza-zerrendaren propietateak"
-
-#: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
 msgstr ""
 
-#: applets/gen_util/tasklist.glade.h:10
+#: applets/gen_util/tasklist.glade.h:9
 #, fuzzy
 msgid "Window List Preferences"
 msgstr "Leiho-kudeatzailea"
 
-#: applets/gen_util/tasklist.glade.h:11
+#: applets/gen_util/tasklist.glade.h:10
 #, fuzzy
 msgid "Window List content"
+msgstr "Leiho-kudeatzailea"
+
+#: applets/gen_util/tasklist.glade.h:11
+#, fuzzy
+msgid "Window List size"
 msgstr "Leiho-kudeatzailea"
 
 #: applets/gen_util/tasklist.glade.h:12
@@ -1039,34 +1093,40 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Leiho-kudeatzailea"
 
-#: gnome-panel/applet.c:204 gnome-panel/menu.c:1043
-#: gnome-panel/panel-util.c:49
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
+#: gnome-panel/GNOME_Panel.server.in.h:1
+#, fuzzy
+msgid "GNOME Panel Shell"
+msgstr "GNOMEren gune nagusia"
 
-#. Translators: Task with no name, should not really happen, so
-#. * this should signal that the panel is confused by this task
-#. * (thus question marks)
-#: gnome-panel/applet.c:471 gnome-panel/foobar-widget.c:364
-msgid "???"
-msgstr "???"
+#. FIXME: should have a "Move" pixmap.
+#.
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
+msgid "Move"
+msgstr "Lekuz aldatu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
 #, fuzzy
 msgid "Remove From Panel"
 msgstr "Kendu paneletik"
 
-#. FIXME: should have a "Move" pixmap.
-#.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
-msgid "Move"
-msgstr "Lekuz aldatu"
+#. Translators: Task with no name, should not really happen, so
+#. * this should signal that the panel is confused by this task
+#. * (thus question marks)
+#: gnome-panel/applet.c:449 gnome-panel/foobar-widget.c:359
+msgid "???"
+msgstr "???"
 
-#: gnome-panel/applet.c:1147
+#: gnome-panel/applet.c:796
+#, c-format
+msgid "No object_type set for panel object with ID %s\n"
+msgstr ""
+
+#: gnome-panel/applet.c:818
+#, c-format
+msgid "No panel_id set for panel object with ID %s\n"
+msgstr ""
+
+#: gnome-panel/applet.c:1133
 msgid "Can't find an empty spot"
 msgstr "Ezin da leku hutsik aurkitu"
 
@@ -1117,11 +1177,30 @@ msgstr "Ezkutatu panel hau"
 msgid "Show this panel"
 msgstr "Kendu panel hau"
 
-#: gnome-panel/disclosure-widget.c:242
+#: gnome-panel/button-widget.c:341
+msgid "none"
+msgstr ""
+
+#: gnome-panel/button-widget.c:346
+msgid "file not found"
+msgstr ""
+
+#: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
+#, fuzzy, c-format
+msgid ""
+"Failed to load image %s\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Huts egin du komando hau exekutatzean:\n"
+"%s\n"
+"%s"
+
+#: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
 msgstr ""
 
-#: gnome-panel/disclosure-widget.c:243
+#: gnome-panel/disclosure-widget.c:261
 msgid "Size of the expander arrow"
 msgstr ""
 
@@ -1130,7 +1209,8 @@ msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:26
-msgid "Debian menus"
+#, fuzzy
+msgid "Debian Menu"
 msgstr "Debian menuak"
 
 #: gnome-panel/distribution.c:31
@@ -1138,7 +1218,8 @@ msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:31
-msgid "SuSE menus"
+#, fuzzy
+msgid "SuSE Menu"
 msgstr "SuSE menuak"
 
 #: gnome-panel/distribution.c:36
@@ -1148,130 +1229,134 @@ msgstr "Koloreak"
 
 #: gnome-panel/distribution.c:36
 #, fuzzy
-msgid "CDE Menus"
+msgid "CDE Menu"
 msgstr "KDE menuak"
 
-#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:863
-#: gnome-panel/panel-config.c:898 gnome-panel/panel-config.c:969
-#: gnome-panel/panel-config.c:1077
+#: gnome-panel/drawer.c:126
 msgid "Size and Position"
 msgstr "Tamaina eta kokalekua"
 
-#: gnome-panel/drawer.c:144
+#: gnome-panel/drawer.c:134
 msgid "Tooltip/Name"
 msgstr "Argibidea/Izena"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:519
-#: gnome-panel/menu-properties.c:553
+#: gnome-panel/drawer.c:140
 msgid "Icon"
 msgstr "Ikonoa"
 
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:146
 msgid "Applet appearance"
 msgstr "Applet-aren itxura"
 
-#: gnome-panel/drawer.c:161
+#: gnome-panel/drawer.c:151
 msgid "Drawer handle"
 msgstr "Tiraderaren heldulekua"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:166
+#: gnome-panel/drawer.c:156
 msgid "Enable hidebutton"
 msgstr "Gaitu ezkutatzeko botoia"
 
-#: gnome-panel/drawer.c:175
+#: gnome-panel/drawer.c:165
 msgid "Enable hidebutton arrow"
 msgstr "Gaitu ezkutatzeko botoiko gezia"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3168
+#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Tiradera"
 
-#: gnome-panel/foobar-widget.c:147 gnome-panel/menu-util.c:294
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
+#, fuzzy
+msgid "Properties"
+msgstr "Propietateak..."
+
+#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 #, fuzzy
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "Ezin da xscreensaver exekutatu"
 
-#: gnome-panel/foobar-widget.c:158 gnome-panel/menu-util.c:304
+#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3557
 #, fuzzy
 msgid "Cannot execute gnome-search-tool"
 msgstr "Ezin da xscreensaver exekutatu"
 
-#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3591
+#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3680
 #, fuzzy
 msgid "Run Program..."
 msgstr "Exekutatu programa"
 
-#: gnome-panel/foobar-widget.c:171
+#: gnome-panel/foobar-widget.c:164
 msgid "Run applications, if you know the correct command to type in"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3603
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3693
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3606
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3696
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3617
-msgid "Take a Screen Shot..."
-msgstr ""
-
-#: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3620
+#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3707
 #, fuzzy
-msgid "Take a screen shot of your desktop"
+msgid "Screenshot..."
+msgstr "Pantaila-argazkia"
+
+#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3710
+#, fuzzy
+msgid "Take a screenshot of your desktop"
 msgstr "Gorde pantaila-argazkia _mahaigainean"
 
-#: gnome-panel/foobar-widget.c:206
+#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
+#: gnome-panel/menu.c:3460
 #, fuzzy
-msgid "Lock Display"
-msgstr "Bistaratzea"
+msgid "Lock Screen"
+msgstr "Blokeatu pantaila"
 
-#: gnome-panel/foobar-widget.c:210
+#: gnome-panel/foobar-widget.c:203
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:219
+#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3473
 msgid "Log Out"
 msgstr "Amaitu saioa"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:215
 msgid "Quit from the GNOME desktop"
 msgstr ""
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:231
+#: gnome-panel/foobar-widget.c:224
 #, fuzzy
 msgid "Actions"
 msgstr "Ekintza"
 
-#: gnome-panel/foobar-widget.c:446
+#: gnome-panel/foobar-widget.c:441
 msgid "No windows open"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:701 gnome-panel/menu.c:2748
-#: gnome-panel/menu.c:2754 gnome-panel/menu.c:3557
-msgid "Applications"
-msgstr "Aplikazioak"
-
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2633
-#: gnome-panel/menu.c:2677
+#: gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Menu-panela"
 
-#: gnome-panel/foobar-widget.c:734
+#: gnome-panel/foobar-widget.c:678
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "Menu nagusia"
 
-#: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
+#: gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2822
+#: gnome-panel/menu.c:2828 gnome-panel/menu.c:3646
+msgid "Applications"
+msgstr "Aplikazioak"
+
+#: gnome-panel/global-keys.c:289 gnome-panel/global-keys.c:317
 msgid "Can't find the screenshot program"
 msgstr "Ezin da pantaila-argazkien programa aurkitu"
 
-#: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
+#: gnome-panel/global-keys.c:298 gnome-panel/global-keys.c:327
 msgid "Can't execute the screenshot program"
 msgstr "Ezin da pantaila-argazkien programa exekutatu"
 
@@ -1306,73 +1391,71 @@ msgstr ""
 msgid "No panel found\n"
 msgstr ""
 
-#: gnome-panel/gnome-panel-preferences.c:327
+#: gnome-panel/gnome-panel-preferences.c:192
+#: gnome-panel/gnome-panel-screenshot.c:842
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+
+#: gnome-panel/gnome-panel-preferences.c:240
 #, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
-" modification of the panel configuration"
+"modification of the panel configuration"
 msgstr "Sistema-administratzaileak ez du uzten panel-konfigurazioa aldatzen"
 
-#: gnome-panel/gnome-panel-preferences.c:338
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#, fuzzy
-msgid "Panel Preferences"
-msgstr "Hobespenak"
+#: gnome-panel/gnome-panel-preferences.c:270
+#, c-format
+msgid "Error loading glade file %s"
+msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-#, fuzzy
-msgid "Modify the global panel preferences"
-msgstr "Panel-propietate orokorrak"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3633
 msgid "Panel"
 msgstr "Panela"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation"
-msgstr "Animazioa"
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
+msgid "Select preferences for all your panels"
+msgstr ""
 
-#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: gnome-panel/gnome-panel-preferences.glade.h:1
 #, fuzzy
 msgid "Fast"
 msgstr "Azkena"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "General"
-msgstr "Orokorra"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-#: libpanel-applet/panel-test-applets.glade2.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: libpanel-applet/panel-test-applets.glade.h:5
 #, fuzzy
 msgid "Medium"
 msgstr "Menua"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:6 gnome-panel/logout.c:217
+#: gnome-panel/gnome-panel-preferences.glade.h:3
 #, fuzzy
-msgid "Properties"
-msgstr "Propietateak..."
+msgid "Panel Preferences"
+msgstr "Hobespenak"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:7
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 #, fuzzy
 msgid "Slow"
 msgstr "Azpian"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:8
+#: gnome-panel/gnome-panel-preferences.glade.h:5
 #, fuzzy
-msgid "_Animation Speed:"
+msgid "_Animation"
+msgstr "Animazioa"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:6
+#, fuzzy
+msgid "_Animation speed:"
 msgstr "Animazio-abiadura"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:9
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 #, fuzzy
-msgid "_Close drawer if a launcher inside it is pressed"
+msgid "_Close drawer when launcher is clicked"
 msgstr "Itxi tiradera, barruko abiarazle bat sakatzen denean"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:10
-#, fuzzy
-msgid "_Enable panel animation"
-msgstr "Gaitu animazioak"
-
-#: gnome-panel/gnome-panel-screenshot.c:126
+#: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1380,7 +1463,7 @@ msgstr ""
 "Ezin da png egitura hasieratu.\n"
 " Beharbada zure sistemako libpng bertsioa ez da egokia izango"
 
-#: gnome-panel/gnome-panel-screenshot.c:134
+#: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1388,7 +1471,7 @@ msgstr ""
 "Ezin da png informazioa sortu.\n"
 "Beharbada zure sistemako libpng bertsioa ez da egokia izango"
 
-#: gnome-panel/gnome-panel-screenshot.c:141
+#: gnome-panel/gnome-panel-screenshot.c:142
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1396,7 +1479,7 @@ msgstr ""
 "Ezin da png informazioa ezarri.\n"
 "Beharbada zure sistemako libpng bertsioa ez da egokia izango"
 
-#: gnome-panel/gnome-panel-screenshot.c:155
+#: gnome-panel/gnome-panel-screenshot.c:156
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1404,13 +1487,13 @@ msgstr ""
 "Ez dago nahikoa memoria pantaila-argazkia gordetzeko.\n"
 "Libratu baliabideren batzuk eta saiatu berriro. "
 
-#: gnome-panel/gnome-panel-screenshot.c:202
+#: gnome-panel/gnome-panel-screenshot.c:204
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "%s fitxategia badago lehendik ere.Gainidatzi?"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:715
+#: gnome-panel/gnome-panel-screenshot.c:221
+#: gnome-panel/gnome-panel-screenshot.c:727
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1421,52 +1504,52 @@ msgstr ""
 "\"%s\"\n"
 "Egiaztatu direktorio gurasoan dituzun baimenak"
 
-#: gnome-panel/gnome-panel-screenshot.c:481
+#: gnome-panel/gnome-panel-screenshot.c:495
 msgid "Print Screenshot"
 msgstr "Inprimatu pantaila-argazkia"
 
-#: gnome-panel/gnome-panel-screenshot.c:529
+#: gnome-panel/gnome-panel-screenshot.c:543
 msgid "Screenshot Print Preview"
 msgstr "Pantaila-argazkia inprimatzeko aurrebista"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:556
+#: gnome-panel/gnome-panel-screenshot.c:570
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cPantaila-argazkia-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:563
+#: gnome-panel/gnome-panel-screenshot.c:577
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cPantaila-argazkia.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:580
+#: gnome-panel/gnome-panel-screenshot.c:594
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cPantaila-argazkia-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:587
+#: gnome-panel/gnome-panel-screenshot.c:601
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cPantaila-argazkia-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:736
+#: gnome-panel/gnome-panel-screenshot.c:748
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Ez dago nahikoa leku %s fitxategia idazteko"
 
-#: gnome-panel/gnome-panel-screenshot.c:1036
+#: gnome-panel/gnome-panel-screenshot.c:1079
 msgid "Grab a window instead of the entire screen"
 msgstr "Hartu leiho bat pantaila osoaren ordez"
 
-#: gnome-panel/gnome-panel-screenshot.c:1037
+#: gnome-panel/gnome-panel-screenshot.c:1080
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1079
+#: gnome-panel/gnome-panel-screenshot.c:1122
 #, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
@@ -1475,44 +1558,43 @@ msgstr ""
 "Pantaila-argazkiko programaren glade fitxategia falta da.\n"
 "Egiaztatu gnome-core-ren instalazioa"
 
-#: gnome-panel/gnome-panel-screenshot.c:1102
+#: gnome-panel/gnome-panel-screenshot.c:1145
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Ezin da uneko mahaigainaren pantaila-argazkia hartu."
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr ""
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
 msgstr "Aukerak"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "Preview"
 msgstr "Aurrebista"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:3
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "Save screenshot to _desktop"
 msgstr "Gorde pantaila-argazkia _mahaigainean"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:4
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Gorde pantaila-argazkia _web orrialdean (gorde hemen ~/public__html)"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Screenshot"
 msgstr "Pantaila-argazkia"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
 msgstr "_Inprimatu pantaila-argazkia..."
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:7
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
 msgstr "_Gorde pantaila-argazkia fitxategi honetan:"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
-msgid "GNOME Panel Shell"
-msgstr "GNOMEren gune nagusia"
-
-#: gnome-panel/gnome-run.c:239 gnome-panel/gnome-run.c:256
+#: gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
 #, fuzzy, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1520,7 +1602,7 @@ msgid ""
 "Details: %s"
 msgstr "Huts egin du programa hau kargatzean!\n"
 
-#: gnome-panel/gnome-run.c:346 gnome-panel/gnome-run.c:420
+#: gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
 #, fuzzy, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1531,7 +1613,7 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:443
+#: gnome-panel/gnome-run.c:433
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1539,7 +1621,7 @@ msgid ""
 "Details: no application available to open file"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:457
+#: gnome-panel/gnome-run.c:447
 #, fuzzy, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1550,54 +1632,54 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:533
+#: gnome-panel/gnome-run.c:525
 msgid "Choose a file"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:728 gnome-panel/gnome-run.c:729
+#: gnome-panel/gnome-run.c:720 gnome-panel/gnome-run.c:721
 #, fuzzy
 msgid "Known Applications"
 msgstr "Aplikazioak"
 
-#: gnome-panel/gnome-run.c:857
+#: gnome-panel/gnome-run.c:849
 #, fuzzy
 msgid "Command to run"
 msgstr "Komandoa (aukerakoa)"
 
-#: gnome-panel/gnome-run.c:891
+#: gnome-panel/gnome-run.c:883
 #, fuzzy
 msgid "Run in _terminal"
 msgstr "Terminalean exekutatu"
 
-#: gnome-panel/gnome-run.c:896
+#: gnome-panel/gnome-run.c:888
 msgid "_Append File..."
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1276
+#: gnome-panel/gnome-run.c:1268
 #, fuzzy, c-format
 msgid "Will run command: '%s'"
 msgstr "'%s' exekutatuko da."
 
-#: gnome-panel/gnome-run.c:1285
+#: gnome-panel/gnome-run.c:1277
 #, fuzzy
 msgid "No application selected"
 msgstr "Ez da programarik hautatu"
 
-#: gnome-panel/gnome-run.c:1404
+#: gnome-panel/gnome-run.c:1396
 #, fuzzy
 msgid "List of known applications"
 msgstr "Aplikazioak"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1397
 msgid "Choose an application to run from the list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1497
+#: gnome-panel/gnome-run.c:1489
 #, fuzzy
 msgid "_Run"
 msgstr "Exekutatu..."
 
-#: gnome-panel/gnome-run.c:1557
+#: gnome-panel/gnome-run.c:1548
 msgid "Run Program"
 msgstr "Exekutatu programa"
 
@@ -1628,27 +1710,38 @@ msgid ""
 "%s"
 msgstr "Ezin da gmenu-a abiarazi!"
 
-#: gnome-panel/launcher.c:454
+#: gnome-panel/launcher.c:326
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:346
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:457
 #, fuzzy, c-format
 msgid "Help on %s Application"
 msgstr "Aplikazioa"
 
-#. flags
-#. error
-#. watch the enum at the top of the file
-#: gnome-panel/launcher.c:573 gnome-panel/menu-ditem.c:178
-#: gnome-panel/menu-ditem.c:256
+#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
+#: gnome-panel/menu-ditem.c:250
 #, fuzzy
 msgid "Launcher Properties"
 msgstr "Abiarazlearen propietateak"
 
-#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:521
+#: gnome-panel/launcher.c:682
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
 #, fuzzy
 msgid "Create Launcher"
 msgstr "Sortu abiarazlearen applet-a"
 
 #. class
-#: gnome-panel/launcher.c:983
+#: gnome-panel/launcher.c:991
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1656,15 +1749,24 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3413
+#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
+#: gnome-panel/panel-util.c:49
+#, c-format
+msgid ""
+"<b>Cannot display help document</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+
+#: gnome-panel/logout.c:84
 msgid "Log out"
 msgstr "Amaitu saioa"
 
-#: gnome-panel/logout.c:103
+#: gnome-panel/logout.c:105
 msgid "Log out of GNOME"
 msgstr "GNOMEko saioa amaitu"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3400
+#: gnome-panel/logout.c:152 gnome-panel/logout.c:173
 msgid "Lock screen"
 msgstr "Blokeatu pantaila"
 
@@ -1679,21 +1781,16 @@ msgstr "Blokeatu pantaila"
 #. <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 #. <jwz> and "xscreensaver-demo"
 #.
-#: gnome-panel/logout.c:211
+#: gnome-panel/logout.c:213
 msgid "Activate Screensaver"
 msgstr ""
 
-#: gnome-panel/logout.c:212
-#, fuzzy
-msgid "Lock Screen"
-msgstr "Blokeatu pantaila"
-
-#: gnome-panel/logout.c:213
+#: gnome-panel/logout.c:215
 #, fuzzy
 msgid "Kill Screensaver Daemon"
 msgstr "Hil daemon-a"
 
-#: gnome-panel/logout.c:214
+#: gnome-panel/logout.c:216
 #, fuzzy
 msgid "Restart Screensaver Daemon"
 msgstr "Berrabiarazi daemon-a"
@@ -1703,16 +1800,52 @@ msgstr "Berrabiarazi daemon-a"
 msgid "Specify a profile name to load"
 msgstr "Zehaztu saio-izen bat kargatzeko"
 
-#: gnome-panel/menu.c:228
+#: gnome-panel/menu-ditem.c:119
+#, fuzzy, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr "Ezin da sarrera kargatu"
+
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3751
+#: gnome-panel/menu.c:3979
+msgid "Menu"
+msgstr "Menua"
+
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
+msgstr ""
+
+#: gnome-panel/menu-ditem.c:455
+msgid "You have to specify a valid URL or command."
+msgstr ""
+
+#. class
+#: gnome-panel/menu-ditem.c:484
+#, fuzzy, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr "Ezin izan da %s menu-elementua kendu: %s\n"
+
+#: gnome-panel/menu-ditem.c:507
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+
+#: gnome-panel/menu.c:230
 msgid "Many many others ..."
 msgstr "Beste asko eta asko..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:230
+#: gnome-panel/menu.c:232
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "eta azkenik, ... NI dioten zaldunak!"
 
-#: gnome-panel/menu.c:263
+#: gnome-panel/menu.c:265
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1720,7 +1853,7 @@ msgstr ""
 "Programa hau beste aplikazio batzuk abiarazteaz, bere baitan applet txikiak "
 "kapsulatzeaz, munduko bakeaz eta ausazko X erroreez arduratzen da. "
 
-#: gnome-panel/menu.c:269
+#: gnome-panel/menu.c:271
 #, fuzzy
 msgid ""
 "\n"
@@ -1731,20 +1864,20 @@ msgstr ""
 "\"Lockdown\" moduan exekutatzen.   Honek esan nahi du sistema-"
 "administratzaileak panelaren konfigurazioan aldaketak egitea debekatu duela. "
 
-#: gnome-panel/menu.c:275
+#: gnome-panel/menu.c:277
 msgid "The GNOME Panel"
 msgstr "GNOMEren panela"
 
-#: gnome-panel/menu.c:276
+#: gnome-panel/menu.c:278
 #, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(C) 1997-2000 The Free Software Foundation"
 
-#: gnome-panel/menu.c:295
+#: gnome-panel/menu.c:297
 msgid "End world hunger"
 msgstr "Munduko gosearen bukaera"
 
-#: gnome-panel/menu.c:309
+#: gnome-panel/menu.c:312
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1752,7 +1885,7 @@ msgid ""
 "Details: %s probably does not exist"
 msgstr ""
 
-#: gnome-panel/menu.c:329
+#: gnome-panel/menu.c:334
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1760,7 +1893,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:337 gnome-panel/menu.c:1024 gnome-panel/menu.c:1052
+#: gnome-panel/menu.c:343 gnome-panel/menu.c:1037 gnome-panel/menu.c:1069
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1768,7 +1901,7 @@ msgid ""
 "Details: %s"
 msgstr "Ezin da sarrera kargatu"
 
-#: gnome-panel/menu.c:934
+#: gnome-panel/menu.c:942
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1776,17 +1909,17 @@ msgid ""
 "Details: %s\n"
 msgstr "Ezin izan da %s menu-elementua kendu: %s\n"
 
-#: gnome-panel/menu.c:944
+#: gnome-panel/menu.c:952
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Ezin izan da fitxategia eskuratu bide-izen honetatik: %s"
 
-#: gnome-panel/menu.c:951
+#: gnome-panel/menu.c:959
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Ezin izan da direktorio-izena eskuratu bide-izen honetatik: %s"
 
-#: gnome-panel/menu.c:1017
+#: gnome-panel/menu.c:1029
 #, fuzzy
 msgid ""
 "<b>Can't add to run box</b>\n"
@@ -1794,336 +1927,276 @@ msgid ""
 "Details: No 'Exec' or 'URL' field in entry"
 msgstr "Ez dago'Exec' eremurik sarreran"
 
-#: gnome-panel/menu.c:1307
+#: gnome-panel/menu.c:1342
 msgid "Add this launcher to panel"
 msgstr "Gehitu abiarazle hau panelari"
 
-#: gnome-panel/menu.c:1315
+#: gnome-panel/menu.c:1356
 msgid "Remove this item"
 msgstr "Kendu elementu hau"
 
-#: gnome-panel/menu.c:1331
+#: gnome-panel/menu.c:1373
 msgid "Put into run dialog"
 msgstr "Ezarri exekuzio-elkarrizketan"
 
-#: gnome-panel/menu.c:1349
+#: gnome-panel/menu.c:1391
 #, c-format
 msgid "Help on %s"
 msgstr "%s(r)en laguntza"
 
-#: gnome-panel/menu.c:1350
+#: gnome-panel/menu.c:1392
 msgid "Application"
 msgstr "Aplikazioa"
 
-#: gnome-panel/menu.c:1396
+#: gnome-panel/menu.c:1442
 msgid "Entire menu"
 msgstr "Menu osoa"
 
-#: gnome-panel/menu.c:1405
+#: gnome-panel/menu.c:1451
 msgid "Add this as drawer to panel"
 msgstr "Gehitu hau tiradera gisa panelari"
 
-#: gnome-panel/menu.c:1413
+#: gnome-panel/menu.c:1459
 msgid "Add this as menu to panel"
 msgstr "Gehitu hau menu gisa panelean"
 
-#: gnome-panel/menu.c:1421
+#: gnome-panel/menu.c:1472
 msgid "Add new item to this menu"
 msgstr "Gehitu elementu berria menu honi"
 
-#: gnome-panel/menu.c:2337 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2555 gnome-panel/menu.c:2559
+#: gnome-panel/menu.c:2603 gnome-panel/menu.c:2607
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Panel lerragarria"
 
-#: gnome-panel/menu.c:2560
+#: gnome-panel/menu.c:2608
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Panel lerragarria"
 
-#: gnome-panel/menu.c:2576 gnome-panel/menu.c:2579 gnome-panel/menu.c:2696
+#: gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
+#: gnome-panel/panel-config.c:1640
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Ertzeko panela"
 
-#: gnome-panel/menu.c:2580
+#: gnome-panel/menu.c:2628
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "GNOMEren panela"
 
-#: gnome-panel/menu.c:2596 gnome-panel/menu.c:2600 gnome-panel/menu.c:2712
+#: gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
+#: gnome-panel/panel-config.c:1662
 #, fuzzy
 msgid "Sliding Panel"
 msgstr "Panel lerragarria"
 
-#: gnome-panel/menu.c:2601
+#: gnome-panel/menu.c:2649
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Panel lerragarria"
 
-#: gnome-panel/menu.c:2617 gnome-panel/menu.c:2621 gnome-panel/menu.c:2720
+#: gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
+#: gnome-panel/panel-config.c:1673
 #, fuzzy
 msgid "Floating Panel"
 msgstr "Panel mugikorra"
 
-#: gnome-panel/menu.c:2622
+#: gnome-panel/menu.c:2670
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Panel mugikorra"
 
-#: gnome-panel/menu.c:2638
+#: gnome-panel/menu.c:2689
 msgid "You can only have one menu panel at a time."
 msgstr "Menu-panel bakarra eduki dezakezu aldiko."
 
-#: gnome-panel/menu.c:2704
+#: gnome-panel/menu.c:2728
 #, fuzzy
-msgid "Corner Panel"
+msgid "C_orner Panel"
 msgstr "Izkinako panela"
 
+#: gnome-panel/menu.c:2730
+#, fuzzy
+msgid "Create corner panel"
+msgstr "Izkinako panela"
+
+#: gnome-panel/menu.c:2739
+#, fuzzy
+msgid "_Edge Panel"
+msgstr "Ertzeko panela"
+
+#: gnome-panel/menu.c:2741
+#, fuzzy
+msgid "Create edge panel"
+msgstr "Sortu panela"
+
+#: gnome-panel/menu.c:2749
+#, fuzzy
+msgid "_Floating Panel"
+msgstr "Panel mugikorra"
+
+#: gnome-panel/menu.c:2751
+#, fuzzy
+msgid "Create floating panel"
+msgstr "Panel mugikorra"
+
+#: gnome-panel/menu.c:2759
+#, fuzzy
+msgid "_Sliding Panel"
+msgstr "Panel lerragarria"
+
+#: gnome-panel/menu.c:2761
+#, fuzzy
+msgid "Create sliding panel"
+msgstr "Sortu panela"
+
+#: gnome-panel/menu.c:2781
+#, fuzzy
+msgid "_Menu Panel"
+msgstr "Menu-panela"
+
+#: gnome-panel/menu.c:2783
+#, fuzzy
+msgid "Create menu panel"
+msgstr "Sortu panela"
+
 #. force_image
-#: gnome-panel/menu.c:2818 gnome-panel/menu.c:2825 gnome-panel/menu.c:3473
-msgid "KDE menus"
+#: gnome-panel/menu.c:2892 gnome-panel/menu.c:2899 gnome-panel/menu.c:3533
+#, fuzzy
+msgid "KDE Menu"
 msgstr "KDE menuak"
 
-#: gnome-panel/menu.c:2888
+#: gnome-panel/menu.c:2964
 msgid "You cannot remove your last panel."
 msgstr "Ezin duzu azken panela kendu."
 
-#: gnome-panel/menu.c:2900
+#: gnome-panel/menu.c:2977
 #, fuzzy
 msgid ""
-"When a panel is removed, the panel and its\n"
-"applet settings are lost. Delete this panel?"
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
 msgstr ""
 "Panel bat kentzen denean,panela eta bere\n"
 "applet-ezarpenak galdu egiten dira. Panel hau kendu?"
 
-#: gnome-panel/menu.c:3140
+#: gnome-panel/menu.c:3224
 msgid "Launcher..."
 msgstr "Abiarazlea..."
 
-#: gnome-panel/menu.c:3148
+#: gnome-panel/menu.c:3232
 msgid "Launcher from menu"
 msgstr "Menuko abiarazlea"
 
-#: gnome-panel/menu.c:3158
+#: gnome-panel/menu.c:3242 gnome-panel/menu.c:3803 gnome-panel/menu.c:3831
+#: gnome-panel/menu.c:4024
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "Menu nagusia"
 
-#: gnome-panel/menu.c:3178
-msgid "Log out button"
+#: gnome-panel/menu.c:3262
+#, fuzzy
+msgid "Log Out Button"
 msgstr "Saioa amaitzeko botoia"
 
-#: gnome-panel/menu.c:3188
+#: gnome-panel/menu.c:3272
 msgid "Lock button"
 msgstr "Blokeatzeko botoia"
 
-#: gnome-panel/menu.c:3203
+#: gnome-panel/menu.c:3316
 #, fuzzy
-msgid "Cannot execute panel global preferences"
-msgstr "Ezin dira panelaren propietate orokorrak exekutatu"
-
-#: gnome-panel/menu.c:3241
-#, fuzzy
-msgid "Delete this panel..."
+msgid "_Delete This Panel..."
 msgstr "Kendu panel hau..."
 
-#: gnome-panel/menu.c:3243 gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3319 gnome-panel/menu.c:3350
 #, fuzzy
-msgid "Delete this panel"
+msgid "_Delete This Panel"
 msgstr "Kendu panel hau"
 
-#: gnome-panel/menu.c:3261
-msgid "Add to panel"
+#: gnome-panel/menu.c:3337
+#, fuzzy
+msgid "_Add to Panel"
 msgstr "Gehitu panelari"
 
-#: gnome-panel/menu.c:3273
-msgid "Create panel"
-msgstr "Sortu panela"
+#: gnome-panel/menu.c:3364
+#, fuzzy
+msgid "_Properties"
+msgstr "Propietateak..."
 
-#: gnome-panel/menu.c:3310
-msgid "Global Preferences..."
-msgstr "Hobespen orokorrak..."
+#: gnome-panel/menu.c:3377
+#, fuzzy
+msgid "_New Panel"
+msgstr "Panela"
 
-#: gnome-panel/menu.c:3323
-msgid "Panel Manual..."
-msgstr "Panelaren eskuliburua..."
-
-#: gnome-panel/menu.c:3335
+#: gnome-panel/menu.c:3402
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
 "Details: xscreensaver-command not found"
 msgstr ""
 
-#: gnome-panel/menu.c:3355
-msgid "About the panel..."
+#: gnome-panel/menu.c:3422
+#, fuzzy
+msgid "_About Panels"
 msgstr "Panelari buruz..."
 
-#: gnome-panel/menu.c:3369
-msgid "About GNOME..."
+#: gnome-panel/menu.c:3435
+#, fuzzy
+msgid "About _GNOME"
 msgstr "GNOMEri buruz..."
 
-#: gnome-panel/menu.c:3406
+#: gnome-panel/menu.c:3466
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Blokeatu pantaila, ordenagailua aldi baterako utz dezazun"
 
-#: gnome-panel/menu.c:3419
+#: gnome-panel/menu.c:3479
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "ordenagailua itzaltzeko"
 
-#: gnome-panel/menu.c:3574
+#: gnome-panel/menu.c:3663
 msgid "Applets"
 msgstr "Applet-ak"
 
-#: gnome-panel/menu.c:3596
+#: gnome-panel/menu.c:3686
 #, fuzzy
 msgid "Run a command"
 msgstr "Inprimatzeko komandoa:"
 
-#: gnome-panel/menu.c:3641
+#: gnome-panel/menu.c:3723
 msgid "Desktop"
 msgstr "Mahaigaina"
 
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
-#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
-msgid "Menu"
-msgstr "Menua"
-
-#: gnome-panel/menu.c:3674
+#: gnome-panel/menu.c:3753
 #, fuzzy
 msgid "Menu:"
 msgstr "Menua"
 
-#: gnome-panel/menu.c:3724 gnome-panel/menu.c:3752 gnome-panel/menu.c:3937
-msgid "Main Menu"
-msgstr "Menu nagusia"
-
-#: gnome-panel/menu.c:3746
+#: gnome-panel/menu.c:3825
 msgid "Can't create menu, using main menu!"
 msgstr "Ezin da menua sortu, menu nagusia erabiltzen ari da!"
 
-#: gnome-panel/menu-ditem.c:119
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
-msgstr "Ezin da sarrera kargatu"
-
-#: gnome-panel/menu-ditem.c:448
-msgid "You have to specify a name for the launcher."
+#: gnome-panel/menu.c:4332
+#, c-format
+msgid "No path set at %s for panel menu object\n"
 msgstr ""
 
-#: gnome-panel/menu-ditem.c:464
-msgid "You have to specify a valid URL or command."
-msgstr ""
-
-#. class
-#: gnome-panel/menu-ditem.c:493
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr "Ezin izan da %s menu-elementua kendu: %s\n"
-
-#: gnome-panel/menu-ditem.c:516
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-
-#: gnome-panel/menu-properties.c:107
-msgid "Can't open directory, using main menu!"
-msgstr "Ezin da direktorioa ireki, menu nagusia erabiltzen ari da!"
-
-#: gnome-panel/menu-properties.c:127
-msgid "Edit menus..."
-msgstr "Editatu menuak..."
-
-#: gnome-panel/menu-properties.c:308
-msgid "Off"
-msgstr "Desaktibatuta"
-
-#: gnome-panel/menu-properties.c:318
-msgid "In a submenu"
-msgstr "Azpimenu batean"
-
-#: gnome-panel/menu-properties.c:330
-msgid "On the main menu"
-msgstr "Menu nagusian"
-
-#: gnome-panel/menu-properties.c:364
-msgid "Menu properties"
-msgstr "Menu-propietateak"
-
-#: gnome-panel/menu-properties.c:387
-msgid "Menu type"
-msgstr "Menu-mota"
-
-#: gnome-panel/menu-properties.c:394
-msgid "Global main menu"
-msgstr "Menu nagusi orokorra"
-
-#: gnome-panel/menu-properties.c:408 gnome-panel/menu-properties.c:431
-msgid "Main menu"
-msgstr "Menu nagusia"
-
-#: gnome-panel/menu-properties.c:422 gnome-panel/menu-properties.c:485
-msgid "Normal menu"
-msgstr "Menu normala"
-
-#: gnome-panel/menu-properties.c:444
-msgid "Programs: "
-msgstr "Programak: "
-
-#: gnome-panel/menu-properties.c:451
-msgid "Applets: "
-msgstr "Applet-ak: "
-
-#: gnome-panel/menu-properties.c:458
-msgid "Distribution menu (if found): "
-msgstr "Banaketa-menua (aurkitzen bada): "
-
-#: gnome-panel/menu-properties.c:465
-msgid "KDE menu (if found): "
-msgstr "KDE menua (aurkitzen bada): "
-
-#: gnome-panel/menu-properties.c:472
-msgid "Panel menu: "
-msgstr "Panel-menua: "
-
-#: gnome-panel/menu-properties.c:479
-msgid "Desktop menu: "
-msgstr "Mahaigaineko menua: "
-
-#: gnome-panel/menu-properties.c:495
-msgid "Menu path"
-msgstr "Menuaren bide-izena"
-
-#: gnome-panel/menu-properties.c:526
-msgid "Use custom icon for panel button"
-msgstr "Erabili ikono pertsonalizatua panel-botoian"
-
-#: gnome-panel/panel-applet-frame.c:179
+#: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:606
+#: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:699
+#: gnome-panel/panel-applet-frame.c:700
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2131,14 +2204,14 @@ msgid ""
 "Reload this applet?\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
-"clicking on the panel and clicking on the \"Add to panel\" submenu)"
+"clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:795
+#: gnome-panel/panel-applet-frame.c:796
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:921
+#: gnome-panel/panel-applet-frame.c:922
 #, fuzzy, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2146,183 +2219,168 @@ msgid ""
 "Details: %s"
 msgstr "Ezin da sarrera kargatu"
 
-#: gnome-panel/panel.c:930
-#, c-format
-msgid "Open URL: %s"
-msgstr "Ireki URLa: %s"
-
-#: gnome-panel/panel.c:2254
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-
-#: gnome-panel/panel-config.c:537
-msgid "Hiding"
-msgstr "Ezkutatzea"
-
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
-msgid "Enable Auto-hide"
+#: gnome-panel/panel-config.c:541
+#, fuzzy
+msgid "_Autohide"
 msgstr "Gaitu Autoezkutatzea"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
-msgid "Show hide buttons"
+#: gnome-panel/panel-config.c:552
+#, fuzzy
+msgid "Show hide _buttons"
 msgstr "Erakutsi ezkutatzeko botoiak"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:567
-msgid "Show arrows on hide button"
+#: gnome-panel/panel-config.c:564
+#, fuzzy
+msgid "Arro_ws on hide buttons"
 msgstr "Erakutsi ezkutatzeko botoiko geziak"
 
-#: gnome-panel/panel-config.c:605
+#: gnome-panel/panel-config.c:603
 msgid "Miscellaneous"
 msgstr "Hainbat"
 
-#: gnome-panel/panel-config.c:615
+#: gnome-panel/panel-config.c:613
 msgid "Current screen:"
 msgstr "Uneko pantaila:"
 
-#: gnome-panel/panel-config.c:708
+#: gnome-panel/panel-config.c:706
 msgid "Indicates the panel position and orientation on screen"
 msgstr ""
 
-#: gnome-panel/panel-config.c:726
-msgid "Panel Position"
+#: gnome-panel/panel-config.c:724
+#, fuzzy
+msgid "_Position:"
 msgstr "Panelaren kokalekua"
 
-#: gnome-panel/panel-config.c:988
-msgid "Orient panel horizontally"
+#: gnome-panel/panel-config.c:950
+#, fuzzy
+msgid "Orient hori_zontally"
 msgstr "Ezarri panela horizontalki"
 
-#: gnome-panel/panel-config.c:1000
-msgid "Orient panel vertically"
+#: gnome-panel/panel-config.c:962
+#, fuzzy
+msgid "Orient _vertically"
 msgstr "Ezarri panela bertikalki"
 
-#: gnome-panel/panel-config.c:1012
-msgid "Top left corner's position: X"
-msgstr "Goi-ezkerreko izkinaren posizioa: X"
+#: gnome-panel/panel-config.c:976
+msgid "H_orizontal offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1027
-msgid "Y"
-msgstr "Y"
+#: gnome-panel/panel-config.c:996
+msgid "Ver_tical offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1102
-msgid "Offset from screen edge:"
-msgstr "Pantailaren ertzetiko tartea:"
+#: gnome-panel/panel-config.c:1061
+msgid "Screen edge _offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1164
-msgid "Panel size:"
-msgstr "Panel-tamaina:"
+#: gnome-panel/panel-config.c:1120
+msgid "_Size:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1172
+#: gnome-panel/panel-config.c:1128
 #, fuzzy
 msgid "XX Small (12 pixels)"
 msgstr "Txikia (36 pixel)"
 
-#: gnome-panel/panel-config.c:1180
+#: gnome-panel/panel-config.c:1136
 #, fuzzy
 msgid "X Small (24 pixels)"
 msgstr "Txikia (36 pixel)"
 
-#: gnome-panel/panel-config.c:1188
+#: gnome-panel/panel-config.c:1144
 msgid "Small (36 pixels)"
 msgstr "Txikia (36 pixel)"
 
-#: gnome-panel/panel-config.c:1196
+#: gnome-panel/panel-config.c:1152
 #, fuzzy
 msgid "Medium (48 pixels)"
 msgstr "Oso txikia (24 pixel)"
 
-#: gnome-panel/panel-config.c:1204
+#: gnome-panel/panel-config.c:1160
 msgid "Large (64 pixels)"
 msgstr "Handia (64 pixel)"
 
-#: gnome-panel/panel-config.c:1212
+#: gnome-panel/panel-config.c:1168
 #, fuzzy
 msgid "X Large (80 pixels)"
 msgstr "Handia (64 pixel)"
 
-#: gnome-panel/panel-config.c:1220
+#: gnome-panel/panel-config.c:1176
 #, fuzzy
 msgid "XX Large (128 pixels)"
 msgstr "Handia (64 pixel)"
 
-#: gnome-panel/panel-config.c:1236
-msgid ""
-"Note: The panel will size itself to the\n"
-"largest applet in the panel, and that\n"
-"not all applets obey these sizes."
-msgstr ""
-"Oharra: Panelak bere tamaina bertako applet \n"
-"handienera egokituko du, baina applet \n"
-"guztiek ez diete tamaina horiei obeditzen. "
-
-#: gnome-panel/panel-config.c:1370
-msgid "Background Type: "
+#: gnome-panel/panel-config.c:1324
+#, fuzzy
+msgid "Background _type:"
 msgstr "Atzeko planoaren mota: "
 
-#: gnome-panel/panel-config.c:1375
-msgid "Standard"
-msgstr "Estandarra"
+#: gnome-panel/panel-config.c:1332
+msgid "Default"
+msgstr ""
 
-#. color frame
-#: gnome-panel/panel-config.c:1379 gnome-panel/panel-config.c:1395
+#: gnome-panel/panel-config.c:1336
 msgid "Color"
 msgstr "Kolorea"
 
-#: gnome-panel/panel-config.c:1383
-msgid "Pixmap"
-msgstr "Pixmap"
-
-#: gnome-panel/panel-config.c:1407
-msgid "Color to use:"
-msgstr "Erabiltzeko kolorea:"
-
 #. image frame
-#: gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1340 gnome-panel/panel-config.c:1388
 msgid "Image"
 msgstr "Irudia"
 
-#: gnome-panel/panel-config.c:1451
-msgid "Don't scale image to fit"
+#: gnome-panel/panel-config.c:1355
+#, fuzzy
+msgid "Background co_lor:"
+msgstr "Atzeko planoa"
+
+#: gnome-panel/panel-config.c:1414
+#, fuzzy
+msgid "_Do not scale image to fit"
 msgstr "Ez jarri irudia eskalan egokitzeko"
 
-#: gnome-panel/panel-config.c:1457
-msgid "Scale image (keep proportions)"
-msgstr "Jarri eskalan irudia (gorde proportzioak)"
+#: gnome-panel/panel-config.c:1419
+msgid "Sc_ale image"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1462
-msgid "Stretch image (change proportions)"
-msgstr "Tiratu irudia (aldatu proportzioak)"
+#: gnome-panel/panel-config.c:1423
+msgid "St_retch image"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1477
-msgid "Rotate image for vertical panels"
+#: gnome-panel/panel-config.c:1437
+#, fuzzy
+msgid "Rotate image for _vertical panels"
 msgstr "Biratu irudia panel bertikaletan"
 
-#: gnome-panel/panel-config.c:1556 gnome-panel/panel-config.c:1678
+#: gnome-panel/panel-config.c:1516
 msgid "Edge panel"
 msgstr "Ertzeko panela"
 
-#: gnome-panel/panel-config.c:1563 gnome-panel/panel-config.c:1689
+#: gnome-panel/panel-config.c:1523
 msgid "Corner panel"
 msgstr "Izkinako panela"
 
-#: gnome-panel/panel-config.c:1569 gnome-panel/panel-config.c:1700
+#: gnome-panel/panel-config.c:1529
 msgid "Sliding panel"
 msgstr "Panel lerragarria"
 
-#: gnome-panel/panel-config.c:1575 gnome-panel/panel-config.c:1711
+#: gnome-panel/panel-config.c:1535
 msgid "Floating panel"
 msgstr "Panel mugikorra"
 
-#. main window
-#: gnome-panel/panel-config.c:1647
-msgid "Panel properties"
+#: gnome-panel/panel-config.c:1608
+#, fuzzy
+msgid "Panel Properties"
 msgstr "Panel-propietateak"
 
-#: gnome-panel/panel-config.c:1730
+#: gnome-panel/panel-config.c:1651
+#, fuzzy
+msgid "Corner Panel"
+msgstr "Izkinako panela"
+
+#: gnome-panel/panel-config.c:1692
 msgid "Background"
 msgstr "Atzeko planoa"
 
@@ -2401,6 +2459,17 @@ msgstr ""
 msgid "Disabled"
 msgstr "Desgaituta"
 
+#: gnome-panel/panel.c:881
+#, c-format
+msgid "Open URL: %s"
+msgstr "Ireki URLa: %s"
+
+#: gnome-panel/panel.c:2193
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
 msgstr ""
@@ -2414,105 +2483,238 @@ msgstr "Unitate-muntatzailearen applet-a"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:748
+#: libpanel-applet/panel-applet.c:751
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:762
+#: libpanel-applet/panel-applet.c:765
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:771
+#: libpanel-applet/panel-applet.c:774
 #, fuzzy, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 "Huts egin du komando hau exekutatzean:\n"
 "%s"
 
-#: libpanel-applet/panel-applet.c:778
+#: libpanel-applet/panel-applet.c:781
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:947
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:955
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:963
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:971
+#: libpanel-applet/panel-applet.c:980
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:979
+#: libpanel-applet/panel-applet.c:988
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:1
+#: libpanel-applet/panel-test-applets.glade.h:1
 #, fuzzy
 msgid "Applet:"
 msgstr "Applet-ak: "
 
-#: libpanel-applet/panel-test-applets.glade2.h:2
+#: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:3
+#: libpanel-applet/panel-test-applets.glade.h:3
 #, fuzzy
 msgid "Large"
 msgstr "Irudia"
 
-#: libpanel-applet/panel-test-applets.glade2.h:4
+#: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:6
+#: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:7
+#: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:8
+#: libpanel-applet/panel-test-applets.glade.h:8
 #, fuzzy
 msgid "Right"
 msgstr "Altuera"
 
-#: libpanel-applet/panel-test-applets.glade2.h:9
+#: libpanel-applet/panel-test-applets.glade.h:9
 msgid "Size:"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:10
+#: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:11
+#: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:12
+#: libpanel-applet/panel-test-applets.glade.h:12
 msgid "X Large"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:13
+#: libpanel-applet/panel-test-applets.glade.h:13
 msgid "X Small"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:14
+#: libpanel-applet/panel-test-applets.glade.h:14
 msgid "XX Large"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade2.h:15
+#: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Use GMT"
+#~ msgstr "Erabili GMT"
+
+#, fuzzy
+#~ msgid "Command to execute"
+#~ msgstr "Komandoa (aukerakoa)"
+
+#, fuzzy
+#~ msgid "Tasklist size"
+#~ msgstr "Ataza-zerrendaren propietateak"
+
+#, fuzzy
+#~ msgid "Lock Display"
+#~ msgstr "Bistaratzea"
+
+#, fuzzy
+#~ msgid "Modify the global panel preferences"
+#~ msgstr "Panel-propietate orokorrak"
+
+#~ msgid "General"
+#~ msgstr "Orokorra"
+
+#, fuzzy
+#~ msgid "_Enable panel animation"
+#~ msgstr "Gaitu animazioak"
+
+#, fuzzy
+#~ msgid "Cannot execute panel global preferences"
+#~ msgstr "Ezin dira panelaren propietate orokorrak exekutatu"
+
+#~ msgid "Global Preferences..."
+#~ msgstr "Hobespen orokorrak..."
+
+#~ msgid "Panel Manual..."
+#~ msgstr "Panelaren eskuliburua..."
+
+#~ msgid "Main Menu"
+#~ msgstr "Menu nagusia"
+
+#~ msgid "Can't open directory, using main menu!"
+#~ msgstr "Ezin da direktorioa ireki, menu nagusia erabiltzen ari da!"
+
+#~ msgid "Edit menus..."
+#~ msgstr "Editatu menuak..."
+
+#~ msgid "Off"
+#~ msgstr "Desaktibatuta"
+
+#~ msgid "In a submenu"
+#~ msgstr "Azpimenu batean"
+
+#~ msgid "On the main menu"
+#~ msgstr "Menu nagusian"
+
+#~ msgid "Menu properties"
+#~ msgstr "Menu-propietateak"
+
+#~ msgid "Menu type"
+#~ msgstr "Menu-mota"
+
+#~ msgid "Global main menu"
+#~ msgstr "Menu nagusi orokorra"
+
+#~ msgid "Main menu"
+#~ msgstr "Menu nagusia"
+
+#~ msgid "Normal menu"
+#~ msgstr "Menu normala"
+
+#~ msgid "Programs: "
+#~ msgstr "Programak: "
+
+#~ msgid "Applets: "
+#~ msgstr "Applet-ak: "
+
+#~ msgid "Distribution menu (if found): "
+#~ msgstr "Banaketa-menua (aurkitzen bada): "
+
+#~ msgid "KDE menu (if found): "
+#~ msgstr "KDE menua (aurkitzen bada): "
+
+#~ msgid "Panel menu: "
+#~ msgstr "Panel-menua: "
+
+#~ msgid "Desktop menu: "
+#~ msgstr "Mahaigaineko menua: "
+
+#~ msgid "Menu path"
+#~ msgstr "Menuaren bide-izena"
+
+#~ msgid "Use custom icon for panel button"
+#~ msgstr "Erabili ikono pertsonalizatua panel-botoian"
+
+#~ msgid "Hiding"
+#~ msgstr "Ezkutatzea"
+
+#~ msgid "Top left corner's position: X"
+#~ msgstr "Goi-ezkerreko izkinaren posizioa: X"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "Offset from screen edge:"
+#~ msgstr "Pantailaren ertzetiko tartea:"
+
+#~ msgid "Panel size:"
+#~ msgstr "Panel-tamaina:"
+
+#~ msgid ""
+#~ "Note: The panel will size itself to the\n"
+#~ "largest applet in the panel, and that\n"
+#~ "not all applets obey these sizes."
+#~ msgstr ""
+#~ "Oharra: Panelak bere tamaina bertako applet \n"
+#~ "handienera egokituko du, baina applet \n"
+#~ "guztiek ez diete tamaina horiei obeditzen. "
+
+#~ msgid "Standard"
+#~ msgstr "Estandarra"
+
+#~ msgid "Pixmap"
+#~ msgstr "Pixmap"
+
+#~ msgid "Color to use:"
+#~ msgstr "Erabiltzeko kolorea:"
+
+#~ msgid "Scale image (keep proportions)"
+#~ msgstr "Jarri eskalan irudia (gorde proportzioak)"
+
+#~ msgid "Stretch image (change proportions)"
+#~ msgstr "Tiratu irudia (aldatu proportzioak)"
 
 #, fuzzy
 #~ msgid "mode"
@@ -2588,10 +2790,6 @@ msgstr ""
 #~ "the list"
 #~ msgstr ""
 #~ "Onartu komando-lerro bat idaztea, zerrendatik aplikazio bat aukeratu ordez"
-
-#, fuzzy
-#~ msgid "Base Panel"
-#~ msgstr "Panela"
 
 #~ msgid "Desktop entry properties"
 #~ msgstr "Mahaigaineko sarreraren propietateak"

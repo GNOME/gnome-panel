@@ -7,13 +7,58 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-07 17:53+0300\n"
+"POT-Creation-Date: 2002-07-15 10:56+1200\n"
 "PO-Revision-Date: 2002-07-07 17:53+0300\n"
 "Last-Translator: Tõivo Leedjärv <toivo@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+msgid "_About..."
+msgstr "_Info..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+msgid "_Help"
+msgstr "_Abi"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Häälestus..."
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Amusements"
+msgstr "Meelelahutus"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Näitab ujuvat kala või mõnd muud animeeritud elukat"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1237
+msgid "Fish"
+msgstr "Kala"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+msgid "Wanda Factory"
+msgstr "Wanda Factory"
 
 #: applets/fish/fish.c:67
 #, c-format
@@ -29,17 +74,17 @@ msgstr "GNOME kala %s, kaasaegne oraakel"
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME kala, ennustaja"
 
-#: applets/fish/fish.c:478 applets/fish/fish.c:1141
+#: applets/fish/fish.c:486 applets/fish/fish.c:1204
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Kala nimega %s"
 
-#: applets/fish/fish.c:479
+#: applets/fish/fish.c:487
 #, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>GNOME kala %s ütleb:</big></big>"
 
-#: applets/fish/fish.c:572
+#: applets/fish/fish.c:582
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -51,40 +96,59 @@ msgstr ""
 "Me soovitame sul hoiduda tegevustest, mis võiksid teha\n"
 "selle rakendi kuidagimoodi \"praktiliseks\" või kasulikuks."
 
-#: applets/fish/fish.c:703
+#: applets/fish/fish.c:713
 msgid "GNOME Fish Preferences"
 msgstr "GNOME kala omadused"
 
-#: applets/fish/fish.c:713
+#: applets/fish/fish.c:723
 msgid "_Name of GNOME fish:"
 msgstr "Kala _nimi:"
 
-#: applets/fish/fish.c:730
+#: applets/fish/fish.c:740
 msgid "_Animation filename:"
 msgstr "_Animatsioonifail:"
 
-#: applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1247
-#: gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
+#: applets/fish/fish.c:742 applets/gen_util/mailcheck.c:1276
+#: gnome-panel/panel-config.c:1400 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Vali"
 
-#: applets/fish/fish.c:748
+#: applets/fish/fish.c:758
 msgid "Command to _execute when fish is clicked:"
 msgstr "Kala klõpsamisel _käivitatav käsk:"
 
-#: applets/fish/fish.c:765
+#: applets/fish/fish.c:775
 msgid "Frame_s in animation:"
 msgstr "Kaa_dreid animatsioonis:"
 
-#: applets/fish/fish.c:783
+#: applets/fish/fish.c:793
 msgid "Pause _per frame (s):"
 msgstr "Paus kaadrite _vahel (s):"
 
-#: applets/fish/fish.c:798
+#: applets/fish/fish.c:808
 msgid "_Rotate on vertical panels"
 msgstr "Vertikaalsel paneelil on rakend _pööratud"
 
-#: applets/fish/fish.c:971
+#: applets/fish/fish.c:864
+msgid "Unable to get the name of the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:880
+msgid "Unable to locate the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:1005
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details : %s"
+msgstr ""
+"<b>Ei saa käivitada käsku:</b> '%s'\n"
+"\n"
+"Info: %s"
+
+#: applets/fish/fish.c:1025
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -96,7 +160,7 @@ msgstr ""
 "\n"
 "Palun vaata kala omaduste lehele."
 
-#: applets/fish/fish.c:985
+#: applets/fish/fish.c:1040
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -104,16 +168,11 @@ msgstr ""
 "Te peate vett vahetama!\n"
 "(vaadake tänast kuupäeva)"
 
-#: applets/fish/fish.c:1156
+#: applets/fish/fish.c:1219
 msgid "(with minor help from George)"
 msgstr "(pisukese abiga Georgelt)"
 
-#: applets/fish/fish.c:1174
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-msgid "Fish"
-msgstr "Kala"
-
-#: applets/fish/fish.c:1177
+#: applets/fish/fish.c:1240
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -158,45 +217,74 @@ msgstr "Kala nimi"
 msgid "The number of frames in the fish's animation"
 msgstr "Kala animatsiooni kaadrite arv"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "Amusements"
-msgstr "Meelelahutus"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "Kopeeri _kuupäev"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Näitab ujuvat kala või mõnd muud animeeritud elukat"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "Kopeeri k_ellaaeg"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr ""
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Tarvikud"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
-msgid "Wanda Factory"
-msgstr "Wanda Factory"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "Anna märku, kui saabub uusi sõnumeid"
 
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "_Info..."
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1156
+msgid "Clock"
+msgstr "Kell"
 
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3376
-msgid "_Help"
-msgstr "_Abi"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "GenUtil Applet Factory"
+msgstr "GenUtil Applet Factory"
 
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Häälestus..."
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "Võta praegune kuupäev ja kellaaeg"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/mailcheck.c:246 applets/gen_util/mailcheck.c:1721
+msgid "Inbox Monitor"
+msgstr "Postkasti jälgija"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+msgid "Internet"
+msgstr "Internet"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Switch between open windows"
+msgstr "Lülita avatud akende vahel"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+msgid "Switch between workspaces"
+msgstr "Lülita töötsoonide vahel"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Utility"
+msgstr "Utiliit"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+#: applets/gen_util/tasklist.c:713
+msgid "Window List"
+msgstr "Akende nimekiri"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:814
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr "Töölauahaldur"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+msgid "factory for creating some general applets"
+msgstr "factory for creating some general applets"
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "_Kontrolli postkasti"
 
 #: applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 msgid "%I:%M:%S %p"
@@ -232,7 +320,7 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %d. B% %Y"
 
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1549 applets/gen_util/mailcheck.c:1754
+#: applets/gen_util/mailcheck.c:1578 applets/gen_util/mailcheck.c:1783
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
@@ -276,7 +364,7 @@ msgid "Use _UTC"
 msgstr "_UTC aeg"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1708
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:242
 msgid "translator_credits"
@@ -285,11 +373,6 @@ msgstr ""
 "       Lauris Kaplinski <lauris@ariman.ee>, 1999.\n"
 "       Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
 "       Tõivo Leedjärv <toivo@linux.ee>, 2002."
-
-#: applets/gen_util/clock.c:1156
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "Clock"
-msgstr "Kell"
 
 #: applets/gen_util/clock.c:1157
 msgid "(C) 1998-2002 the Free Software Foundation"
@@ -356,71 +439,12 @@ msgstr "UNIXi aeg"
 msgid "Use UTC"
 msgstr "UTC aeg"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "Kopeeri _kuupäev"
+#: applets/gen_util/mailcheck.c:176
+#, fuzzy, c-format
+msgid "There was an error executing %s : %s"
+msgstr "Abiinfo kuvamisel tekkis viga: %s"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "Kopeeri k_ellaaeg"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Tarvikud"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "Anna märku, kui saabub uusi sõnumeid"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "GenUtil Applet Factory"
-msgstr "GenUtil Applet Factory"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr "Võta praegune kuupäev ja kellaaeg"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1692
-msgid "Inbox Monitor"
-msgstr "Postkasti jälgija"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-msgid "Internet"
-msgstr "Internet"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Switch between open windows"
-msgstr "Lülita avatud akende vahel"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Switch between workspaces"
-msgstr "Lülita töötsoonide vahel"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Utility"
-msgstr "Utiliit"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:713
-msgid "Window List"
-msgstr "Akende nimekiri"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "Töölauahaldur"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-msgid "factory for creating some general applets"
-msgstr "factory for creating some general applets"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "_Kontrolli postkasti"
-
-#: applets/gen_util/mailcheck.c:224
+#: applets/gen_util/mailcheck.c:252
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -428,15 +452,15 @@ msgstr ""
 "Sa ei määranud Postijälgija häälestuses oma parooli,\n"
 "nüüd pead sa selle sisestama igal Postijälgija käivitamisel."
 
-#: applets/gen_util/mailcheck.c:232
+#: applets/gen_util/mailcheck.c:260
 msgid "Please enter your mailserver's _password:"
 msgstr "Palun sisesta oma meiliserveri _parool:"
 
-#: applets/gen_util/mailcheck.c:237 applets/gen_util/mailcheck.c:1307
+#: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
 msgid "Password Entry box"
 msgstr "Parooli sisestusväli"
 
-#: applets/gen_util/mailcheck.c:280
+#: applets/gen_util/mailcheck.c:308
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -446,182 +470,182 @@ msgstr ""
 "ajutiselt peatatud.\n"
 "Võibolla sisestasid vale serveri-, kasutajanime või parooli?"
 
-#: applets/gen_util/mailcheck.c:485
+#: applets/gen_util/mailcheck.c:513
 msgid "You have new mail."
 msgstr "Sulle on uusi sõnumeid."
 
-#: applets/gen_util/mailcheck.c:487
+#: applets/gen_util/mailcheck.c:515
 msgid "You have mail."
 msgstr "Sulle on sõnumeid."
 
-#: applets/gen_util/mailcheck.c:491
+#: applets/gen_util/mailcheck.c:519
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d sõnumit"
 
-#: applets/gen_util/mailcheck.c:493
+#: applets/gen_util/mailcheck.c:521
 #, c-format
 msgid "%d messages"
 msgstr "%d sõnumit"
 
-#: applets/gen_util/mailcheck.c:497
+#: applets/gen_util/mailcheck.c:525
 msgid "No mail."
 msgstr "Sõnumeid ei ole."
 
-#: applets/gen_util/mailcheck.c:1017 applets/gen_util/mailcheck.c:1019
-#: applets/gen_util/mailcheck.c:1877 applets/gen_util/mailcheck.c:1879
+#: applets/gen_util/mailcheck.c:1046 applets/gen_util/mailcheck.c:1048
+#: applets/gen_util/mailcheck.c:1906 applets/gen_util/mailcheck.c:1908
 msgid "Status not updated"
 msgstr "Olekut ei ole uuendatud"
 
-#: applets/gen_util/mailcheck.c:1191
+#: applets/gen_util/mailcheck.c:1220
 msgid "Mailbox _resides on:"
 msgstr "Postkast _asub:"
 
-#: applets/gen_util/mailcheck.c:1199
+#: applets/gen_util/mailcheck.c:1228
 msgid "Local mailspool"
 msgstr "Kohalik spoolfail"
 
-#: applets/gen_util/mailcheck.c:1207
+#: applets/gen_util/mailcheck.c:1236
 msgid "Local maildir"
 msgstr "Kohalik meilikataloog"
 
-#: applets/gen_util/mailcheck.c:1215
+#: applets/gen_util/mailcheck.c:1244
 msgid "Remote POP3-server"
 msgstr "POP3 server"
 
-#: applets/gen_util/mailcheck.c:1223
+#: applets/gen_util/mailcheck.c:1252
 msgid "Remote IMAP-server"
 msgstr "IMAP server"
 
-#: applets/gen_util/mailcheck.c:1243
+#: applets/gen_util/mailcheck.c:1272
 msgid "Mail _spool file:"
 msgstr "_Spoolfaili nimi:"
 
-#: applets/gen_util/mailcheck.c:1262
+#: applets/gen_util/mailcheck.c:1291
 msgid "Mail s_erver:"
 msgstr "Meilis_erver:"
 
-#: applets/gen_util/mailcheck.c:1268
+#: applets/gen_util/mailcheck.c:1297
 msgid "Mail Server Entry box"
 msgstr "Meiliserveri sisestusväli"
 
-#: applets/gen_util/mailcheck.c:1282
+#: applets/gen_util/mailcheck.c:1311
 msgid "_Username:"
 msgstr "_Kasutajanimi:"
 
-#: applets/gen_util/mailcheck.c:1290
+#: applets/gen_util/mailcheck.c:1319
 msgid "Username Entry box"
 msgstr "Kasutajanime sisestusväli"
 
-#: applets/gen_util/mailcheck.c:1299
+#: applets/gen_util/mailcheck.c:1328
 msgid "_Password:"
 msgstr "_Parool:"
 
-#: applets/gen_util/mailcheck.c:1320
+#: applets/gen_util/mailcheck.c:1349
 msgid "_Folder:"
 msgstr "Ka_taloog:"
 
-#: applets/gen_util/mailcheck.c:1328
+#: applets/gen_util/mailcheck.c:1357
 msgid "Folder Entry box"
 msgstr "Kataloogi sisestusväli"
 
-#: applets/gen_util/mailcheck.c:1340
+#: applets/gen_util/mailcheck.c:1369
 msgid "C_ommand to run before checking for mail:"
 msgstr "Enne postkasti vaatamist k_äivita käsk:"
 
-#: applets/gen_util/mailcheck.c:1348
+#: applets/gen_util/mailcheck.c:1377
 msgid "Command Entry box"
 msgstr "Käsu sisestusväli"
 
-#: applets/gen_util/mailcheck.c:1373
+#: applets/gen_util/mailcheck.c:1402
 msgid "Execute"
 msgstr "Käivita"
 
-#: applets/gen_util/mailcheck.c:1384
+#: applets/gen_util/mailcheck.c:1413
 msgid "Before each _update:"
 msgstr "Enne igat _uuendust:"
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1428
 msgid "Command to execute before each update"
 msgstr "Enne postkasti kontrollimist käivitatav käsk"
 
-#: applets/gen_util/mailcheck.c:1409
+#: applets/gen_util/mailcheck.c:1438
 msgid "When new mail _arrives:"
 msgstr "Kui _saabub uusi sõnumeid:"
 
-#: applets/gen_util/mailcheck.c:1422 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1451 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Uute sõnumite saabumisel käivitatav käsk"
 
-#: applets/gen_util/mailcheck.c:1432
+#: applets/gen_util/mailcheck.c:1461
 msgid "When clicke_d:"
 msgstr "K_lõpsamisel:"
 
-#: applets/gen_util/mailcheck.c:1445
+#: applets/gen_util/mailcheck.c:1474
 msgid "Command to execute when clicked"
 msgstr "Klõpsamisel käivitatav käsk"
 
-#: applets/gen_util/mailcheck.c:1455
+#: applets/gen_util/mailcheck.c:1484
 msgid "Set the number of unread mails to _zero"
 msgstr "_Nulli lugemata sõnumite arv"
 
-#: applets/gen_util/mailcheck.c:1466
+#: applets/gen_util/mailcheck.c:1495
 msgid "Check for mail _every"
 msgstr "_Vaata postkasti iga"
 
-#: applets/gen_util/mailcheck.c:1478 applets/gen_util/mailcheck.c:1482
+#: applets/gen_util/mailcheck.c:1507 applets/gen_util/mailcheck.c:1511
 msgid "minutes"
 msgstr "minuti"
 
-#: applets/gen_util/mailcheck.c:1478
+#: applets/gen_util/mailcheck.c:1507
 msgid "Choose time interval in minutes to check mail"
 msgstr "Vali postkasti kontrollimise intervall minutites"
 
-#: applets/gen_util/mailcheck.c:1492 applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
 msgid "seconds"
 msgstr "sekundi järel"
 
-#: applets/gen_util/mailcheck.c:1492
+#: applets/gen_util/mailcheck.c:1521
 msgid "Choose time interval in seconds to check mail"
 msgstr "Kui tihti postkasti vaadata (sekundites)"
 
-#: applets/gen_util/mailcheck.c:1504
+#: applets/gen_util/mailcheck.c:1533
 msgid "Play a _sound when new mail arrives"
 msgstr "Tee _häält, kui saabub uusi sõnumeid"
 
-#: applets/gen_util/mailcheck.c:1515
+#: applets/gen_util/mailcheck.c:1544
 msgid "Select a_nimation"
 msgstr "Vali _animatsioon"
 
-#: applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/mailcheck.c:1619
 msgid "Inbox Monitor Preferences"
 msgstr "Postkasti jälgija häälestus"
 
-#: applets/gen_util/mailcheck.c:1609
+#: applets/gen_util/mailcheck.c:1638
 msgid "_Mail check"
 msgstr "_Postkasti kontrollimine"
 
-#: applets/gen_util/mailcheck.c:1613
+#: applets/gen_util/mailcheck.c:1642
 msgid "Mail_box"
 msgstr "Post_kast"
 
-#: applets/gen_util/mailcheck.c:1693
+#: applets/gen_util/mailcheck.c:1722
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1694
+#: applets/gen_util/mailcheck.c:1723
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Postkasti jälgija annab teada, kui su postkasti saabub uusi sõnumeid"
 
-#: applets/gen_util/mailcheck.c:1853
+#: applets/gen_util/mailcheck.c:1882
 msgid "Text only"
 msgstr "Ainult tekst"
 
-#: applets/gen_util/mailcheck.c:1880
+#: applets/gen_util/mailcheck.c:1909
 msgid "Mail check"
 msgstr "Postkasti kontrollimine"
 
-#: applets/gen_util/mailcheck.c:1881
+#: applets/gen_util/mailcheck.c:1910
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Postkasti jälgija annab teada, kui su postkasti saabub uusi sõnumeid"
 
@@ -741,12 +765,12 @@ msgstr "Postkasti jälgija"
 msgid "New Mail"
 msgstr "Uute sõnumite saabumine"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "rida"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 msgid "Columns"
 msgstr "veergu"
 
@@ -893,9 +917,9 @@ msgstr "Ei saa rakendit luua!\n"
 msgid "Properties..."
 msgstr "Omadused..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
-#: gnome-panel/launcher.c:718 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4087
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
+#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "Abi"
 
@@ -1035,6 +1059,20 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Millal aknaid grupeerida"
 
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "GNOME Paneeli kest"
+
+#. FIXME: should have a "Move" pixmap.
+#.
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
+msgid "Move"
+msgstr "Liiguta"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
+msgid "Remove From Panel"
+msgstr "Eemalda paneelilt"
+
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
@@ -1042,17 +1080,17 @@ msgstr "Millal aknaid grupeerida"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:513 gnome-panel/GNOME_Panel_Popup.xml.h:2
-msgid "Remove From Panel"
-msgstr "Eemalda paneelilt"
+#: gnome-panel/applet.c:796
+#, c-format
+msgid "No object_type set for panel object with ID %s\n"
+msgstr ""
 
-#. FIXME: should have a "Move" pixmap.
-#.
-#: gnome-panel/applet.c:524 gnome-panel/GNOME_Panel_Popup.xml.h:1
-msgid "Move"
-msgstr "Liiguta"
+#: gnome-panel/applet.c:818
+#, c-format
+msgid "No panel_id set for panel object with ID %s\n"
+msgstr ""
 
-#: gnome-panel/applet.c:1123
+#: gnome-panel/applet.c:1133
 msgid "Can't find an empty spot"
 msgstr "Ei leia tühja kohta"
 
@@ -1096,6 +1134,26 @@ msgstr "Peida see paneel"
 msgid "Show this panel"
 msgstr "Näita seda paneeli"
 
+#: gnome-panel/button-widget.c:341
+msgid "none"
+msgstr ""
+
+#: gnome-panel/button-widget.c:346
+#, fuzzy
+msgid "file not found"
+msgstr "Ei leia abidokumenti"
+
+#: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
+#, fuzzy, c-format
+msgid ""
+"Failed to load image %s\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ei sa avada faili:</b> '%s'\n"
+"\n"
+"Info: %s"
+
 #: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
 msgstr ""
@@ -1128,56 +1186,54 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE menüü"
 
-#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:863
-#: gnome-panel/panel-config.c:898 gnome-panel/panel-config.c:969
-#: gnome-panel/panel-config.c:1077
+#: gnome-panel/drawer.c:126
 msgid "Size and Position"
 msgstr "Suurus ja asukoht"
 
-#: gnome-panel/drawer.c:144
+#: gnome-panel/drawer.c:134
 msgid "Tooltip/Name"
 msgstr "Vihje/Nimi"
 
-#: gnome-panel/drawer.c:150
+#: gnome-panel/drawer.c:140
 msgid "Icon"
 msgstr "Ikoon"
 
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:146
 msgid "Applet appearance"
 msgstr "Rakendi väljanägemine"
 
-#: gnome-panel/drawer.c:161
+#: gnome-panel/drawer.c:151
 msgid "Drawer handle"
 msgstr "Sahtlinupp"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:166
+#: gnome-panel/drawer.c:156
 msgid "Enable hidebutton"
 msgstr "Näita peitenuppu"
 
-#: gnome-panel/drawer.c:175
+#: gnome-panel/drawer.c:165
 msgid "Enable hidebutton arrow"
 msgstr "Näita petenupul noolt"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3239
+#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Sahtel"
 
-#: gnome-panel/drawer.c:625 gnome-panel/launcher.c:716
-#: gnome-panel/logout.c:217 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
 msgid "Properties"
 msgstr "Omadused"
 
-#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3534
+#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "Ei saa kävitada programmi gnome-panel-screenshot"
 
-#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3544
+#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3557
 msgid "Cannot execute gnome-search-tool"
 msgstr "Ei saa käivitada programmi gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3667
+#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3680
 msgid "Run Program..."
 msgstr "Käivita programm..."
 
@@ -1185,24 +1241,24 @@ msgstr "Käivita programm..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Käivita rakendus, kui tead õiget käsku"
 
-#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3680
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3693
 msgid "Search for Files..."
 msgstr "Otsi faile..."
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3683
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3696
 msgid "Find files, folders, and documents on your computer"
 msgstr "Otsi oma arvutis asuvaid faile, katalooge ning dokumente"
 
-#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3694
+#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3707
 msgid "Screenshot..."
 msgstr "Kuvatõmmis..."
 
-#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3697
+#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3710
 msgid "Take a screenshot of your desktop"
 msgstr "Tee oma töölauast kuvatõmmis"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
-#: gnome-panel/menu.c:3447
+#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
+#: gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Lukusta ekraan"
 
@@ -1210,7 +1266,7 @@ msgstr "Lukusta ekraan"
 msgid "Protect your computer from unauthorized use"
 msgstr "Kaitse oma arvuti autoriseerimata kasutamise eest"
 
-#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3473
 msgid "Log Out"
 msgstr "Logi välja"
 
@@ -1235,16 +1291,16 @@ msgstr "Menüüpaneel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME menüüpaneel"
 
-#: gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
-#: gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
+#: gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2822
+#: gnome-panel/menu.c:2828 gnome-panel/menu.c:3646
 msgid "Applications"
 msgstr "Rakendused"
 
-#: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
+#: gnome-panel/global-keys.c:289 gnome-panel/global-keys.c:317
 msgid "Can't find the screenshot program"
 msgstr "Ei leia kuvatõmmise tegemise programmi"
 
-#: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
+#: gnome-panel/global-keys.c:298 gnome-panel/global-keys.c:327
 msgid "Can't execute the screenshot program"
 msgstr "Ei saa kävitada kuvatõmmise tegemise programmi"
 
@@ -1278,8 +1334,8 @@ msgstr "Sa pead lisama ühe parameetri kasutatava .desktop faili või urliga\n"
 msgid "No panel found\n"
 msgstr "Ei leia paneeli\n"
 
-#: gnome-panel/gnome-panel-preferences.c:201
-#: gnome-panel/gnome-panel-screenshot.c:831
+#: gnome-panel/gnome-panel-preferences.c:192
+#: gnome-panel/gnome-panel-screenshot.c:842
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1288,7 +1344,7 @@ msgstr ""
 "Abiinfo kuvamisel tekkis viga: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:249
+#: gnome-panel/gnome-panel-preferences.c:240
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
@@ -1296,18 +1352,18 @@ msgstr ""
 "Süsteemi administraator on paneeli\n"
 "konfiguratsiooni muutmise ära keelanud"
 
-#: gnome-panel/gnome-panel-preferences.c:279
+#: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "Viga glade faili %s laadimisel"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Modify the global panel preferences"
-msgstr "Muuda üldist paneelide häälestust"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Panel"
 msgstr "Paneel"
+
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
+msgid "Select preferences for all your panels"
+msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
 msgid "Fast"
@@ -1370,13 +1426,13 @@ msgstr ""
 "Kuvatõmmise salvestamiseks pole piisavalt vaba mälu.\n"
 "Palun vabasta natuke mälu ja proovi uuesti."
 
-#: gnome-panel/gnome-panel-screenshot.c:203
+#: gnome-panel/gnome-panel-screenshot.c:204
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Fail %s on juba olemas. Kas kirjutada üle?"
 
-#: gnome-panel/gnome-panel-screenshot.c:217
-#: gnome-panel/gnome-panel-screenshot.c:716
+#: gnome-panel/gnome-panel-screenshot.c:221
+#: gnome-panel/gnome-panel-screenshot.c:727
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1387,52 +1443,52 @@ msgstr ""
 "\"%s\"\n"
 "Palun kontrolli vanem-kataloogi õigusi"
 
-#: gnome-panel/gnome-panel-screenshot.c:482
+#: gnome-panel/gnome-panel-screenshot.c:495
 msgid "Print Screenshot"
 msgstr "Prindi kuvatõmmis"
 
-#: gnome-panel/gnome-panel-screenshot.c:530
+#: gnome-panel/gnome-panel-screenshot.c:543
 msgid "Screenshot Print Preview"
 msgstr "Kuvatõmmise prindivaade"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:557
+#: gnome-panel/gnome-panel-screenshot.c:570
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cKuvatõmmis-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:564
+#: gnome-panel/gnome-panel-screenshot.c:577
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cKuvatõmmis.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:581
+#: gnome-panel/gnome-panel-screenshot.c:594
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cKuvatõmmis-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:588
+#: gnome-panel/gnome-panel-screenshot.c:601
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cKuvatõmmis-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:737
+#: gnome-panel/gnome-panel-screenshot.c:748
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Faili %s kirjutamiseks pole piisavalt ruumi"
 
-#: gnome-panel/gnome-panel-screenshot.c:1068
+#: gnome-panel/gnome-panel-screenshot.c:1079
 msgid "Grab a window instead of the entire screen"
 msgstr "Terve ekraani asemel haara ainult ühte akent"
 
-#: gnome-panel/gnome-panel-screenshot.c:1069
+#: gnome-panel/gnome-panel-screenshot.c:1080
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Tee kuvatõmmis peale määratud viidet [sekundites]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1111
+#: gnome-panel/gnome-panel-screenshot.c:1122
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1440,7 +1496,7 @@ msgstr ""
 "Kuvatõmmise tegemise Glade fail on kadunud.\n"
 "Palun kontrolli oma gnome-panel installi"
 
-#: gnome-panel/gnome-panel-screenshot.c:1134
+#: gnome-panel/gnome-panel-screenshot.c:1145
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Aktiivse töölaua kuvatõmmise tegemine ei õnnestunud."
 
@@ -1475,10 +1531,6 @@ msgstr "_Prindi kuvatõmmis..."
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
 msgstr "_Salvesta kuvatõmmis faili:"
-
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "GNOME Paneeli kest"
 
 #: gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
 #, c-format
@@ -1602,22 +1654,36 @@ msgstr ""
 "Ei saa käivitada ikooni\n"
 "%s"
 
-#: gnome-panel/launcher.c:454
+#: gnome-panel/launcher.c:326
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:346
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:457
 #, c-format
 msgid "Help on %s Application"
 msgstr "Rakenduse %s abiinfo"
 
-#: gnome-panel/launcher.c:573 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Käivitaja häälestus"
 
-#: gnome-panel/launcher.c:766 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:682
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Loo käivitaja"
 
 #. class
-#: gnome-panel/launcher.c:984
+#: gnome-panel/launcher.c:991
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1628,7 +1694,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1644,11 +1710,11 @@ msgstr ""
 msgid "Log out"
 msgstr "Logi välja"
 
-#: gnome-panel/logout.c:103
+#: gnome-panel/logout.c:105
 msgid "Log out of GNOME"
 msgstr "Logi GNOME-st välja"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170
+#: gnome-panel/logout.c:152 gnome-panel/logout.c:173
 msgid "Lock screen"
 msgstr "Lukusta ekraan"
 
@@ -1663,21 +1729,64 @@ msgstr "Lukusta ekraan"
 #. <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 #. <jwz> and "xscreensaver-demo"
 #.
-#: gnome-panel/logout.c:211
+#: gnome-panel/logout.c:213
 msgid "Activate Screensaver"
 msgstr "Käivita ekraanisäästja"
 
-#: gnome-panel/logout.c:213
+#: gnome-panel/logout.c:215
 msgid "Kill Screensaver Daemon"
 msgstr "Tapa ekraanisäästja deemon"
 
-#: gnome-panel/logout.c:214
+#: gnome-panel/logout.c:216
 msgid "Restart Screensaver Daemon"
 msgstr "Taaskäivita ekraanisäästja deemon"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Määra laetava profiili nimi"
+
+#: gnome-panel/menu-ditem.c:119
+#, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ei saa kävitaja muudatusi salvestada</b>\n"
+"\n"
+"Info: %s"
+
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3751
+#: gnome-panel/menu.c:3979
+msgid "Menu"
+msgstr "Menüü"
+
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
+msgstr "Sa pead käivitaja nime määrama."
+
+#: gnome-panel/menu-ditem.c:455
+msgid "You have to specify a valid URL or command."
+msgstr "Sa pead korrektse URLi või käsu määrama."
+
+#. class
+#: gnome-panel/menu-ditem.c:484
+#, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Ei saa menüüelementi kettale salvestada</b>\n"
+"\n"
+"Info: %s"
+
+#: gnome-panel/menu-ditem.c:507
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Sa ei saa siia uut käivitajat lisada, sest see asukoht pole kirjutatav."
 
 #: gnome-panel/menu.c:230
 msgid "Many many others ..."
@@ -1835,7 +1944,7 @@ msgid "GNOME Aligned Panel"
 msgstr "GNOME joondatud paneel"
 
 #: gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
-#: gnome-panel/panel-config.c:1669
+#: gnome-panel/panel-config.c:1640
 msgid "Edge Panel"
 msgstr "Servapaneel"
 
@@ -1844,7 +1953,7 @@ msgid "GNOME Edge Panel"
 msgstr "GNOME servapaneel"
 
 #: gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
-#: gnome-panel/panel-config.c:1691
+#: gnome-panel/panel-config.c:1662
 msgid "Sliding Panel"
 msgstr "Libisev paneel"
 
@@ -1853,7 +1962,7 @@ msgid "GNOME Sliding Panel"
 msgstr "GNOME libisev paneel"
 
 #: gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
-#: gnome-panel/panel-config.c:1702
+#: gnome-panel/panel-config.c:1673
 msgid "Floating Panel"
 msgstr "Ujuv paneel"
 
@@ -1866,55 +1975,55 @@ msgid "You can only have one menu panel at a time."
 msgstr "Sul saab korraga olla ainult üks menüüpaneel."
 
 #: gnome-panel/menu.c:2728
-msgid "_Menu Panel"
-msgstr "_Menüüpaneel"
-
-#: gnome-panel/menu.c:2730
-msgid "Create menu panel"
-msgstr "Loo uus menüüpaneel"
-
-#: gnome-panel/menu.c:2749
-msgid "_Edge Panel"
-msgstr "_Servapaneel"
-
-#: gnome-panel/menu.c:2751
-msgid "Create edge panel"
-msgstr "Loo uus servapaneel"
-
-#: gnome-panel/menu.c:2759
 msgid "C_orner Panel"
 msgstr "_Nurgapaneel"
 
-#: gnome-panel/menu.c:2761
+#: gnome-panel/menu.c:2730
 msgid "Create corner panel"
 msgstr "Loo uus nurgapaneel"
 
-#: gnome-panel/menu.c:2769
-msgid "_Sliding Panel"
-msgstr "_Libisev paneel"
+#: gnome-panel/menu.c:2739
+msgid "_Edge Panel"
+msgstr "_Servapaneel"
 
-#: gnome-panel/menu.c:2771
-msgid "Create sliding panel"
-msgstr "Loo uus libisev paneel"
+#: gnome-panel/menu.c:2741
+msgid "Create edge panel"
+msgstr "Loo uus servapaneel"
 
-#: gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2749
 msgid "_Floating Panel"
 msgstr "_Ujuv paneel"
 
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2751
 msgid "Create floating panel"
 msgstr "Loo uus ujuv paneel"
 
+#: gnome-panel/menu.c:2759
+msgid "_Sliding Panel"
+msgstr "_Libisev paneel"
+
+#: gnome-panel/menu.c:2761
+msgid "Create sliding panel"
+msgstr "Loo uus libisev paneel"
+
+#: gnome-panel/menu.c:2781
+msgid "_Menu Panel"
+msgstr "_Menüüpaneel"
+
+#: gnome-panel/menu.c:2783
+msgid "Create menu panel"
+msgstr "Loo uus menüüpaneel"
+
 #. force_image
-#: gnome-panel/menu.c:2879 gnome-panel/menu.c:2886 gnome-panel/menu.c:3520
+#: gnome-panel/menu.c:2892 gnome-panel/menu.c:2899 gnome-panel/menu.c:3533
 msgid "KDE Menu"
 msgstr "KDE menüü"
 
-#: gnome-panel/menu.c:2951
+#: gnome-panel/menu.c:2964
 msgid "You cannot remove your last panel."
 msgstr "Sa ei saa oma viimast paneeli eemaldada."
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2977
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1922,48 +2031,48 @@ msgstr ""
 "Kui paneel eemaldada, läheb see kaduma koos\n"
 "rakendite häälestusega. Kas eemaldada see paneel?"
 
-#: gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3224
 msgid "Launcher..."
 msgstr "Käivitaja..."
 
-#: gnome-panel/menu.c:3219
+#: gnome-panel/menu.c:3232
 msgid "Launcher from menu"
 msgstr "Käivitaja menüüst"
 
-#: gnome-panel/menu.c:3229 gnome-panel/menu.c:3790 gnome-panel/menu.c:3818
-#: gnome-panel/menu.c:4007
+#: gnome-panel/menu.c:3242 gnome-panel/menu.c:3803 gnome-panel/menu.c:3831
+#: gnome-panel/menu.c:4024
 msgid "GNOME Menu"
 msgstr "GNOME menüü"
 
-#: gnome-panel/menu.c:3249
+#: gnome-panel/menu.c:3262
 msgid "Log Out Button"
 msgstr "Lahkumisnupp"
 
-#: gnome-panel/menu.c:3259
+#: gnome-panel/menu.c:3272
 msgid "Lock button"
 msgstr "Lukustusnupp"
 
-#: gnome-panel/menu.c:3303
+#: gnome-panel/menu.c:3316
 msgid "_Delete This Panel..."
 msgstr "_Kustuta see paneel..."
 
-#: gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
+#: gnome-panel/menu.c:3319 gnome-panel/menu.c:3350
 msgid "_Delete This Panel"
 msgstr "_Kustuta see paneel"
 
-#: gnome-panel/menu.c:3324
+#: gnome-panel/menu.c:3337
 msgid "_Add to Panel"
 msgstr "_Lisa paneelile"
 
-#: gnome-panel/menu.c:3351
+#: gnome-panel/menu.c:3364
 msgid "_Properties"
 msgstr "_Omadused"
 
-#: gnome-panel/menu.c:3364
+#: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "_Uus paneel"
 
-#: gnome-panel/menu.c:3389
+#: gnome-panel/menu.c:3402
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -1973,19 +2082,19 @@ msgstr ""
 "\n"
 "Info: ei leia xscreensaver-command"
 
-#: gnome-panel/menu.c:3409
+#: gnome-panel/menu.c:3422
 msgid "_About Panels"
 msgstr "Paneeli _info"
 
-#: gnome-panel/menu.c:3422
+#: gnome-panel/menu.c:3435
 msgid "About _GNOME"
 msgstr "_GNOME info"
 
-#: gnome-panel/menu.c:3453
+#: gnome-panel/menu.c:3466
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Lukusta ekraan, et võiksid ajutiselt arvuti juurest lahkuda"
 
-#: gnome-panel/menu.c:3466
+#: gnome-panel/menu.c:3479
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1993,68 +2102,30 @@ msgstr ""
 "Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti sisse "
 "logida või arvuti välja lülitada"
 
-#: gnome-panel/menu.c:3650
+#: gnome-panel/menu.c:3663
 msgid "Applets"
 msgstr "Rakendid"
 
-#: gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3686
 msgid "Run a command"
 msgstr "Käivita käsk"
 
-#: gnome-panel/menu.c:3710
+#: gnome-panel/menu.c:3723
 msgid "Desktop"
 msgstr "Töölaud"
 
-#: gnome-panel/menu.c:3738 gnome-panel/menu.c:3967
-#: gnome-panel/menu-ditem.c:282
-msgid "Menu"
-msgstr "Menüü"
-
-#: gnome-panel/menu.c:3740
+#: gnome-panel/menu.c:3753
 msgid "Menu:"
 msgstr "Menüü:"
 
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3825
 msgid "Can't create menu, using main menu!"
 msgstr "Ei suuda luua menüüd ja kasutan põhimenüüd!"
 
-#: gnome-panel/menu-ditem.c:119
+#: gnome-panel/menu.c:4332
 #, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
+msgid "No path set at %s for panel menu object\n"
 msgstr ""
-"<b>Ei saa kävitaja muudatusi salvestada</b>\n"
-"\n"
-"Info: %s"
-
-#: gnome-panel/menu-ditem.c:439
-msgid "You have to specify a name for the launcher."
-msgstr "Sa pead käivitaja nime määrama."
-
-#: gnome-panel/menu-ditem.c:455
-msgid "You have to specify a valid URL or command."
-msgstr "Sa pead korrektse URLi või käsu määrama."
-
-#. class
-#: gnome-panel/menu-ditem.c:484
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Ei saa menüüelementi kettale salvestada</b>\n"
-"\n"
-"Info: %s"
-
-#: gnome-panel/menu-ditem.c:507
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Sa ei saa siia uut käivitajat lisada, sest see asukoht pole kirjutatav."
 
 #: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
@@ -2098,169 +2169,164 @@ msgstr ""
 "\n"
 "Info: %s"
 
-#: gnome-panel/panel.c:881
-#, c-format
-msgid "Open URL: %s"
-msgstr "Ava URL: %s"
-
-#: gnome-panel/panel.c:2193
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-"Sinu konfiguratsioonist ei leitud ühtegi paneeli.  Ma loon nüüd sulle ühe "
-"menüüpaneeli"
-
-#: gnome-panel/panel-config.c:537
-msgid "Hiding"
-msgstr "Peitmine"
-
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
-msgid "Autohide"
+#: gnome-panel/panel-config.c:541
+#, fuzzy
+msgid "_Autohide"
 msgstr "Automaatne peitmine"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
-msgid "Show hide buttons"
+#: gnome-panel/panel-config.c:552
+#, fuzzy
+msgid "Show hide _buttons"
 msgstr "Näita peitmisnuppe"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:567
-msgid "Arrows on hide buttons"
+#: gnome-panel/panel-config.c:564
+#, fuzzy
+msgid "Arro_ws on hide buttons"
 msgstr "Näita peitmisnuppudel noolekesi"
 
-#: gnome-panel/panel-config.c:605
+#: gnome-panel/panel-config.c:603
 msgid "Miscellaneous"
 msgstr "Muud asjad"
 
-#: gnome-panel/panel-config.c:615
+#: gnome-panel/panel-config.c:613
 msgid "Current screen:"
 msgstr "Aktiivne ekraan:"
 
-#: gnome-panel/panel-config.c:708
+#: gnome-panel/panel-config.c:706
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Näitab paneeli asukohta ja suunda ekraanil"
 
-#: gnome-panel/panel-config.c:726
-msgid "Panel position"
+#: gnome-panel/panel-config.c:724
+#, fuzzy
+msgid "_Position:"
 msgstr "Paneeli asukoht"
 
-#: gnome-panel/panel-config.c:988
-msgid "Orient panel horizontally"
+#: gnome-panel/panel-config.c:950
+#, fuzzy
+msgid "Orient hori_zontally"
 msgstr "Paiguta paneel horisontaalselt"
 
-#: gnome-panel/panel-config.c:1000
-msgid "Orient panel vertically"
+#: gnome-panel/panel-config.c:962
+#, fuzzy
+msgid "Orient _vertically"
 msgstr "Paiguta paneel vertikaalselt"
 
-#: gnome-panel/panel-config.c:1012
-msgid "Top left corner's position: X"
-msgstr "Vasaku ülanurga asukoht: X"
+#: gnome-panel/panel-config.c:976
+msgid "H_orizontal offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1027
-msgid "Y"
-msgstr "Y"
+#: gnome-panel/panel-config.c:996
+msgid "Ver_tical offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1102
-msgid "Offset from screen edge:"
-msgstr "Õhuvahe ekraani servast:"
+#: gnome-panel/panel-config.c:1061
+msgid "Screen edge _offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1162
-msgid "Panel size:"
-msgstr "Paneeli suurus:"
+#: gnome-panel/panel-config.c:1120
+#, fuzzy
+msgid "_Size:"
+msgstr "Suurus:"
 
-#: gnome-panel/panel-config.c:1170
+#: gnome-panel/panel-config.c:1128
 msgid "XX Small (12 pixels)"
 msgstr "Tilluke (12 pikslit)"
 
-#: gnome-panel/panel-config.c:1178
+#: gnome-panel/panel-config.c:1136
 msgid "X Small (24 pixels)"
 msgstr "Pisike (24 pikslit)"
 
-#: gnome-panel/panel-config.c:1186
+#: gnome-panel/panel-config.c:1144
 msgid "Small (36 pixels)"
 msgstr "Väike (36 pikslit)"
 
-#: gnome-panel/panel-config.c:1194
+#: gnome-panel/panel-config.c:1152
 msgid "Medium (48 pixels)"
 msgstr "Keskmine (48 pikslit)"
 
-#: gnome-panel/panel-config.c:1202
+#: gnome-panel/panel-config.c:1160
 msgid "Large (64 pixels)"
 msgstr "Suur (64 pikslit)"
 
-#: gnome-panel/panel-config.c:1210
+#: gnome-panel/panel-config.c:1168
 msgid "X Large (80 pixels)"
 msgstr "Väga suur (80 pikslit)"
 
-#: gnome-panel/panel-config.c:1218
+#: gnome-panel/panel-config.c:1176
 msgid "XX Large (128 pixels)"
 msgstr "Ülisuur (128 pikslit)"
 
-#: gnome-panel/panel-config.c:1360
-msgid "Background type: "
+#: gnome-panel/panel-config.c:1324
+#, fuzzy
+msgid "Background _type:"
 msgstr "Tausta tüüp: "
 
-#: gnome-panel/panel-config.c:1365
+#: gnome-panel/panel-config.c:1332
 msgid "Default"
 msgstr "Vaikeväärtus"
 
-#. color frame
-#: gnome-panel/panel-config.c:1369 gnome-panel/panel-config.c:1385
+#: gnome-panel/panel-config.c:1336
 msgid "Color"
 msgstr "Värv"
 
 #. image frame
-#: gnome-panel/panel-config.c:1373 gnome-panel/panel-config.c:1415
+#: gnome-panel/panel-config.c:1340 gnome-panel/panel-config.c:1388
 msgid "Image"
 msgstr "Pilt"
 
-#: gnome-panel/panel-config.c:1397
-msgid "Color to use:"
-msgstr "Kasutatav värv:"
+#: gnome-panel/panel-config.c:1355
+#, fuzzy
+msgid "Background co_lor:"
+msgstr "Taust"
 
-#: gnome-panel/panel-config.c:1441
-msgid "Do not scale image to fit"
+#: gnome-panel/panel-config.c:1414
+#, fuzzy
+msgid "_Do not scale image to fit"
 msgstr "Ära venita pilti sobivaks"
 
-#: gnome-panel/panel-config.c:1447
-msgid "Scale image"
-msgstr ""
-
-#: gnome-panel/panel-config.c:1452
-msgid "Stretch image"
+#: gnome-panel/panel-config.c:1419
+#, fuzzy
+msgid "Sc_ale image"
 msgstr "Venita pilt"
 
-#: gnome-panel/panel-config.c:1467
-msgid "Rotate image for vertical panels"
+#: gnome-panel/panel-config.c:1423
+#, fuzzy
+msgid "St_retch image"
+msgstr "Venita pilt"
+
+#: gnome-panel/panel-config.c:1437
+#, fuzzy
+msgid "Rotate image for _vertical panels"
 msgstr "Pööra pilti vertikaalsetel paneelidel"
 
-#: gnome-panel/panel-config.c:1546
+#: gnome-panel/panel-config.c:1516
 msgid "Edge panel"
 msgstr "Servapaneel"
 
-#: gnome-panel/panel-config.c:1553
+#: gnome-panel/panel-config.c:1523
 msgid "Corner panel"
 msgstr "Nurgapaneel"
 
-#: gnome-panel/panel-config.c:1559
+#: gnome-panel/panel-config.c:1529
 msgid "Sliding panel"
 msgstr "Libisev paneel"
 
-#: gnome-panel/panel-config.c:1565
+#: gnome-panel/panel-config.c:1535
 msgid "Floating panel"
 msgstr "Ujuv paneel"
 
-#: gnome-panel/panel-config.c:1638
+#: gnome-panel/panel-config.c:1608
 msgid "Panel Properties"
 msgstr "Paneeli häälestus"
 
-#: gnome-panel/panel-config.c:1680
+#: gnome-panel/panel-config.c:1651
 msgid "Corner Panel"
 msgstr "Nurgapaneel"
 
-#: gnome-panel/panel-config.c:1721
+#: gnome-panel/panel-config.c:1692
 msgid "Background"
 msgstr "Taust"
 
@@ -2335,6 +2401,19 @@ msgstr "Pole dokumenti, mida näidata"
 #: gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
 msgid "Disabled"
 msgstr "Keelatud"
+
+#: gnome-panel/panel.c:881
+#, c-format
+msgid "Open URL: %s"
+msgstr "Ava URL: %s"
+
+#: gnome-panel/panel.c:2193
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"Sinu konfiguratsioonist ei leitud ühtegi paneeli.  Ma loon nüüd sulle ühe "
+"menüüpaneeli"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2442,6 +2521,27 @@ msgstr "Ülisuur"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Tilluke"
+
+#~ msgid "Modify the global panel preferences"
+#~ msgstr "Muuda üldist paneelide häälestust"
+
+#~ msgid "Hiding"
+#~ msgstr "Peitmine"
+
+#~ msgid "Top left corner's position: X"
+#~ msgstr "Vasaku ülanurga asukoht: X"
+
+#~ msgid "Y"
+#~ msgstr "Y"
+
+#~ msgid "Offset from screen edge:"
+#~ msgstr "Õhuvahe ekraani servast:"
+
+#~ msgid "Panel size:"
+#~ msgstr "Paneeli suurus:"
+
+#~ msgid "Color to use:"
+#~ msgstr "Kasutatav värv:"
 
 #~ msgid "Use GMT"
 #~ msgstr "GMT aeg"

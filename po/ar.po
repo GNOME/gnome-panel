@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-06-10 18:38+1200\n"
+"POT-Creation-Date: 2002-07-15 10:56+1200\n"
 "PO-Revision-Date: 2002-05-31 18:15-0300\n"
 "Last-Translator: Isam Bayazidi <bayazidi@arabeyes.org>\n"
 "Language-Team: Arabic <support@arabeyes.org>\n"
@@ -15,31 +15,76 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.6\n"
 
-#: applets/fish/fish.c:69
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+msgid "_About..."
+msgstr "حول..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+msgid "_Help"
+msgstr "مساعدة"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "تفضيلات..."
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Amusements"
+msgstr "تسالي"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "اعرض سمكة عائمة أو مخلوقا متحركا آخر"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/fish/fish.c:1237
+msgid "Fish"
+msgstr "سمكة"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "من أين أتت تلك السمكة الغبية"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+msgid "Wanda Factory"
+msgstr "معاين واندا"
+
+#: applets/fish/fish.c:67
 #, c-format
 msgid "%s the GNOME Fish"
 msgstr "سمكة جينوم %s"
 
-#: applets/fish/fish.c:70
+#: applets/fish/fish.c:68
 #, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
 msgstr "سمكة جينوم %s، مهتف الوحي المعاصر"
 
-#: applets/fish/fish.c:109
+#: applets/fish/fish.c:107
 msgid "GNOME Fish, the fortune teller"
 msgstr "سمكة جينوم، امين الثروة"
 
-#: applets/fish/fish.c:484 applets/fish/fish.c:1151
+#: applets/fish/fish.c:486 applets/fish/fish.c:1204
 #, no-c-format
 msgid "%s the Fish"
 msgstr "السمكة %s"
 
-#: applets/fish/fish.c:485
+#: applets/fish/fish.c:487
 #, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>سمكة جينوم %s تقول:</big></big>"
 
-#: applets/fish/fish.c:578
+#: applets/fish/fish.c:582
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -51,41 +96,59 @@ msgstr ""
 "نحن ننصحك بشدة عدم أستعمال واندا wanda لأي غرض\n"
 "مهم أو عملي."
 
-#: applets/fish/fish.c:709
+#: applets/fish/fish.c:713
 msgid "GNOME Fish Preferences"
 msgstr "تفضيلات سمكة جينوم"
 
-#: applets/fish/fish.c:719
+#: applets/fish/fish.c:723
 msgid "_Name of GNOME fish:"
 msgstr "اسم سمكة جينوم:"
 
-#: applets/fish/fish.c:736
+#: applets/fish/fish.c:740
 msgid "_Animation filename:"
 msgstr "اسم ملف الرسوم المتحركة:"
 
-#: applets/fish/fish.c:738 applets/gen_util/mailcheck.c:1245
-#: gnome-panel/menu-properties.c:498 gnome-panel/menu-properties.c:536
-#: gnome-panel/panel-config.c:1437 gnome-panel/panel-util.c:241
+#: applets/fish/fish.c:742 applets/gen_util/mailcheck.c:1276
+#: gnome-panel/panel-config.c:1400 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "تصفح"
 
-#: applets/fish/fish.c:754
+#: applets/fish/fish.c:758
 msgid "Command to _execute when fish is clicked:"
 msgstr "الأمر الذي يتم تنفيذه إذا تم نقر السمكة:"
 
-#: applets/fish/fish.c:771
+#: applets/fish/fish.c:775
 msgid "Frame_s in animation:"
 msgstr "إطارات في الرسوم المتحركة:"
 
-#: applets/fish/fish.c:789
+#: applets/fish/fish.c:793
 msgid "Pause _per frame (s):"
 msgstr "مهلة لكل اطار (ث):"
 
-#: applets/fish/fish.c:804
+#: applets/fish/fish.c:808
 msgid "_Rotate on vertical panels"
 msgstr "تدوير على لوحات التحكم العمودية"
 
-#: applets/fish/fish.c:977
+#: applets/fish/fish.c:864
+msgid "Unable to get the name of the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:880
+msgid "Unable to locate the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:1005
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details : %s"
+msgstr ""
+"<b>فشل إجراء اﻷمر:</b> '%s'\n"
+"\n"
+"التفاصيل: %s"
+
+#: applets/fish/fish.c:1025
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -96,7 +159,7 @@ msgstr ""
 "\n"
 "الرجاء الرجوع لشاشة الخصائص."
 
-#: applets/fish/fish.c:991
+#: applets/fish/fish.c:1040
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -104,16 +167,11 @@ msgstr ""
 "يحتاج الماء للتغيير!\n"
 "(لاحظ تاريخ اليوم)"
 
-#: applets/fish/fish.c:1166
+#: applets/fish/fish.c:1219
 msgid "(with minor help from George)"
 msgstr "(بمساعدة بسيطة من جورج)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1184
-msgid "Fish"
-msgstr "سمكة"
-
-#: applets/fish/fish.c:1187
+#: applets/fish/fish.c:1240
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -154,45 +212,74 @@ msgstr "اسم السمكة"
 msgid "The number of frames in the fish's animation"
 msgstr "عدد اﻹطارات لحركة السمكة"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "Amusements"
-msgstr "تسالي"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "انسخ التاريخ"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "اعرض سمكة عائمة أو مخلوقا متحركا آخر"
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "انسخ الوقت"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "من أين أتت تلك السمكة الغبية"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "إكسسوارات"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
-msgid "Wanda Factory"
-msgstr "معاين واندا"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "التنبيه عند وصول رسالة جديد"
 
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "حول..."
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+#: applets/gen_util/clock.c:1156
+msgid "Clock"
+msgstr "ساعة"
 
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-msgid "_Help"
-msgstr "مساعدة"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "GenUtil Applet Factory"
+msgstr "مصنع بريمج جينيوتيل"
 
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "تفضيلات..."
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "تلقى الوقت والتاريخ الحالي"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/mailcheck.c:246 applets/gen_util/mailcheck.c:1721
+msgid "Inbox Monitor"
+msgstr "مراقب البريد"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+msgid "Internet"
+msgstr "انترنت"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Switch between open windows"
+msgstr "تبديل بين النوافذ المفتوحة"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+msgid "Switch between workspaces"
+msgstr "تبديل بين مساحات العمل"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Utility"
+msgstr "مرفق عام"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+#: applets/gen_util/tasklist.c:713
+msgid "Window List"
+msgstr "قائمة النوافذ"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:814
+#: applets/gen_util/pager.glade.h:7
+msgid "Workspace Switcher"
+msgstr "مغيّر بيئات العمل"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+msgid "factory for creating some general applets"
+msgstr "معاين لاحداث عدد من البريمجات العامة"
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "افحص البريد"
 
 #: applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 msgid "%I:%M:%S %p"
@@ -228,7 +315,7 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/mailcheck.c:1578 applets/gen_util/mailcheck.c:1783
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
@@ -272,16 +359,11 @@ msgid "Use _UTC"
 msgstr "استعمل UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1708
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:242
 msgid "translator_credits"
 msgstr "سيد جعفر الموسوي ( mosawi@arabeyes.org)"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1156
-msgid "Clock"
-msgstr "ساعة"
 
 #: applets/gen_util/clock.c:1157
 msgid "(C) 1998-2002 the Free Software Foundation"
@@ -304,7 +386,8 @@ msgid "Display seconds in time"
 msgstr "أظهر الثواني في الوقت"
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
+#, fuzzy
+msgid "Display time in Universal Coordinated Time zone"
 msgstr "أظهر الوقت بتوقيت غرينتش"
 
 #: applets/gen_util/clock.schemas.in.h:5
@@ -336,82 +419,24 @@ msgid "Show time with seconds"
 msgstr "أظهر الوقت بالثواني"
 
 #: applets/gen_util/clock.schemas.in.h:12
-msgid "Use GMT"
-msgstr "استعمل غرينتش"
-
-#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "استخدم وقت الإنترنت"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "استخدم وقت يونيكس"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "انسخ التاريخ"
+#: applets/gen_util/clock.schemas.in.h:14
+#, fuzzy
+msgid "Use UTC"
+msgstr "استعمل UTC"
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "انسخ الوقت"
+#: applets/gen_util/mailcheck.c:176
+#, c-format
+msgid "There was an error executing %s : %s"
+msgstr ""
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "إكسسوارات"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "التنبيه عند وصول رسالة جديد"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "GenUtil Applet Factory"
-msgstr "مصنع بريمج جينيوتيل"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr "تلقى الوقت والتاريخ الحالي"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
-msgid "Inbox Monitor"
-msgstr "مراقب البريد"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-msgid "Internet"
-msgstr "انترنت"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Switch between open windows"
-msgstr "تبديل بين النوافذ المفتوحة"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Switch between workspaces"
-msgstr "تبديل بين مساحات العمل"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Utility"
-msgstr "مرفق عام"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:713
-msgid "Window List"
-msgstr "قائمة النوافذ"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
-#: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher"
-msgstr "مغيّر بيئات العمل"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-msgid "factory for creating some general applets"
-msgstr "معاين لاحداث عدد من البريمجات العامة"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "افحص البريد"
-
-#: applets/gen_util/mailcheck.c:224
+#: applets/gen_util/mailcheck.c:252
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -419,11 +444,15 @@ msgstr ""
 "لم تقم بتعيين كلمة مرور في تفضيلات مراقب بريدك الوارد،\n"
 "لذلك يتوجّب عليك أن تدخلها كل مرة حين البدء."
 
-#: applets/gen_util/mailcheck.c:232
+#: applets/gen_util/mailcheck.c:260
 msgid "Please enter your mailserver's _password:"
 msgstr "رجاء أدخل كلمة المرور لخادم بريدك:"
 
-#: applets/gen_util/mailcheck.c:278
+#: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
+msgid "Password Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:308
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -432,161 +461,192 @@ msgstr ""
 "فشل مراقب البريد الوارد في فحص بريدك ولذلك تم تعطيل التحديث اﻵلي من اﻵن.\n"
 "قد تكون أدخلت معلومات خاطئة عن الخادم أو اسم المستخدم أو كلمة المرور؟"
 
-#: applets/gen_util/mailcheck.c:483
+#: applets/gen_util/mailcheck.c:513
 msgid "You have new mail."
 msgstr "لديك رسائل جديدة."
 
-#: applets/gen_util/mailcheck.c:485
+#: applets/gen_util/mailcheck.c:515
 msgid "You have mail."
 msgstr "لديك رسائل."
 
-#: applets/gen_util/mailcheck.c:489
+#: applets/gen_util/mailcheck.c:519
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d رسالة"
 
-#: applets/gen_util/mailcheck.c:491
+#: applets/gen_util/mailcheck.c:521
 #, c-format
 msgid "%d messages"
 msgstr "%d رسالة"
 
-#: applets/gen_util/mailcheck.c:495
+#: applets/gen_util/mailcheck.c:525
 msgid "No mail."
 msgstr "لا يوجد بريد."
 
-#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
+#: applets/gen_util/mailcheck.c:1046 applets/gen_util/mailcheck.c:1048
+#: applets/gen_util/mailcheck.c:1906 applets/gen_util/mailcheck.c:1908
 msgid "Status not updated"
 msgstr "لم يتم تحديث الحالة"
 
-#: applets/gen_util/mailcheck.c:1189
+#: applets/gen_util/mailcheck.c:1220
 msgid "Mailbox _resides on:"
 msgstr "يوجد صندوق البريد على:"
 
-#: applets/gen_util/mailcheck.c:1197
+#: applets/gen_util/mailcheck.c:1228
 msgid "Local mailspool"
 msgstr "مخزن البريد المحلي"
 
-#: applets/gen_util/mailcheck.c:1205
+#: applets/gen_util/mailcheck.c:1236
 msgid "Local maildir"
 msgstr "مجلد البريد المحلي"
 
-#: applets/gen_util/mailcheck.c:1213
+#: applets/gen_util/mailcheck.c:1244
 msgid "Remote POP3-server"
 msgstr "خادم POP3 عن بعد"
 
-#: applets/gen_util/mailcheck.c:1221
+#: applets/gen_util/mailcheck.c:1252
 msgid "Remote IMAP-server"
 msgstr "خادم IMAP عن بعد"
 
-#: applets/gen_util/mailcheck.c:1241
+#: applets/gen_util/mailcheck.c:1272
 msgid "Mail _spool file:"
 msgstr "ملف مخزن البريد:"
 
-#: applets/gen_util/mailcheck.c:1260
+#: applets/gen_util/mailcheck.c:1291
 msgid "Mail s_erver:"
 msgstr "خادم البريد:"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1297
+msgid "Mail Server Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1311
 msgid "_Username:"
 msgstr "اسم المستخدم:"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1319
+msgid "Username Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1328
 msgid "_Password:"
 msgstr "كلمة المرور:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1349
 msgid "_Folder:"
 msgstr "المجلد:"
 
-#: applets/gen_util/mailcheck.c:1332
+#: applets/gen_util/mailcheck.c:1357
+msgid "Folder Entry box"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1369
 msgid "C_ommand to run before checking for mail:"
 msgstr "اﻷمر الذي يتم تنفيذه قبل فحص البريد:"
 
-#: applets/gen_util/mailcheck.c:1363
+#: applets/gen_util/mailcheck.c:1377
+#, fuzzy
+msgid "Command Entry box"
+msgstr "أمر لتشغيله"
+
+#: applets/gen_util/mailcheck.c:1402
 msgid "Execute"
 msgstr "إجراء"
 
-#: applets/gen_util/mailcheck.c:1374
+#: applets/gen_util/mailcheck.c:1413
 msgid "Before each _update:"
 msgstr "قبل كل تحديث:"
 
-#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
-#: applets/gen_util/mailcheck.c:1435
-msgid "Command to execute"
-msgstr "الأمر الذي يتم تنفيذه"
+#: applets/gen_util/mailcheck.c:1428
+#, fuzzy
+msgid "Command to execute before each update"
+msgstr "اﻷمر الذي يتم تنفيذه حين فحص البريد"
 
-#: applets/gen_util/mailcheck.c:1399
+#: applets/gen_util/mailcheck.c:1438
 msgid "When new mail _arrives:"
 msgstr "حين وصول رسالة جديدة:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1451 applets/gen_util/mailcheck.schemas.in.h:2
+msgid "Command to execute when new mail arrives"
+msgstr "الأمر الذي يتم تنفيذه حين وصول رسائل جديدة"
+
+#: applets/gen_util/mailcheck.c:1461
 msgid "When clicke_d:"
 msgstr "حين النقر:"
 
-#: applets/gen_util/mailcheck.c:1445
+#: applets/gen_util/mailcheck.c:1474
+#, fuzzy
+msgid "Command to execute when clicked"
+msgstr "الأمر الذي يتم تنفيذه إذا تم نقر السمكة:"
+
+#: applets/gen_util/mailcheck.c:1484
 msgid "Set the number of unread mails to _zero"
 msgstr "صفّر عدد البريد غير المقروء"
 
-#: applets/gen_util/mailcheck.c:1456
+#: applets/gen_util/mailcheck.c:1495
 msgid "Check for mail _every"
 msgstr "افحص البريد كل"
 
-#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
+#: applets/gen_util/mailcheck.c:1507 applets/gen_util/mailcheck.c:1511
 msgid "minutes"
 msgstr "دقائق"
 
-#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1507
+msgid "Choose time interval in minutes to check mail"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
 msgid "seconds"
 msgstr "ثواني"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1521
+#, fuzzy
+msgid "Choose time interval in seconds to check mail"
+msgstr "متى (بالميللي ثانية) نفحص الرسائل"
+
+#: applets/gen_util/mailcheck.c:1533
 msgid "Play a _sound when new mail arrives"
 msgstr "شغل صوتا حينما يصل بريد جديد"
 
-#: applets/gen_util/mailcheck.c:1505
+#: applets/gen_util/mailcheck.c:1544
 msgid "Select a_nimation"
 msgstr "اختر رسوما متحركة"
 
-#: applets/gen_util/mailcheck.c:1580
+#: applets/gen_util/mailcheck.c:1619
 msgid "Inbox Monitor Preferences"
 msgstr "تفضيلات مراقب البريد الوارد"
 
-#: applets/gen_util/mailcheck.c:1599
+#: applets/gen_util/mailcheck.c:1638
 msgid "_Mail check"
 msgstr "افحص البريد"
 
-#: applets/gen_util/mailcheck.c:1603
+#: applets/gen_util/mailcheck.c:1642
 msgid "Mail_box"
 msgstr "صندوق البريد الوارد"
 
-#: applets/gen_util/mailcheck.c:1681
+#: applets/gen_util/mailcheck.c:1722
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 مؤسسة البرامج الحرة"
 
-#: applets/gen_util/mailcheck.c:1682
+#: applets/gen_util/mailcheck.c:1723
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "مراقبة البريد تنبّهك بوصول رسائل جديدة إلى صندوق بريدك الوارد"
 
-#: applets/gen_util/mailcheck.c:1841
+#: applets/gen_util/mailcheck.c:1882
 msgid "Text only"
 msgstr "نص فقط"
 
-#: applets/gen_util/mailcheck.c:1868
+#: applets/gen_util/mailcheck.c:1909
 msgid "Mail check"
 msgstr "افحص البريد"
 
-#: applets/gen_util/mailcheck.c:1869
+#: applets/gen_util/mailcheck.c:1910
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "فحص البريد ينبّهك بوصول رسائل جديدة إلى صندوق بريدك الوارد"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
 msgstr "اﻷمر الذي يتم تنفيذه حين فحص البريد"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "Command to execute when new mail arrives"
-msgstr "الأمر الذي يتم تنفيذه حين وصول رسائل جديدة"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
@@ -699,12 +759,12 @@ msgstr "فحص البريد"
 msgid "New Mail"
 msgstr "بريد جديد"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "صفوف"
 
-#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
+#: applets/gen_util/pager.c:130 applets/gen_util/pager.c:737
 msgid "Columns"
 msgstr "أعمدة"
 
@@ -846,15 +906,13 @@ msgstr "يسمح لك بريمج الطباعة بسحب الملفات لطبا
 msgid "Can't create applet!\n"
 msgstr "تعذر إنشاء البريمج!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:625
-#: gnome-panel/launcher.c:716 gnome-panel/menu.c:1375 gnome-panel/menu.c:1446
-#: gnome-panel/menu.c:3298 gnome-panel/menu.c:4021
+#: applets/gen_util/printer.c:466
 msgid "Properties..."
 msgstr "خصائص..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
-#: gnome-panel/launcher.c:718 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:4023
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
+#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "مساعدة"
 
@@ -900,20 +958,21 @@ msgid "Show windows from a_ll workspaces"
 msgstr "أظهر النوافذ من كل بيئات العمل"
 
 #: applets/gen_util/tasklist.glade.h:8
-msgid "Tasklist size"
-msgstr "حجم قائمة المهمات"
-
-#: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
 msgstr "حين استرجاع النوافذ المصغّرة"
 
-#: applets/gen_util/tasklist.glade.h:10
+#: applets/gen_util/tasklist.glade.h:9
 msgid "Window List Preferences"
 msgstr "تفضيلات قائمة النوافذ"
 
-#: applets/gen_util/tasklist.glade.h:11
+#: applets/gen_util/tasklist.glade.h:10
 msgid "Window List content"
 msgstr "محتويات قائمة النوافذ"
+
+#: applets/gen_util/tasklist.glade.h:11
+#, fuzzy
+msgid "Window List size"
+msgstr "قائمة النوافذ"
 
 #: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
@@ -992,36 +1051,38 @@ msgstr ""
 msgid "When to group windows"
 msgstr "متى تجمّع النوافذ"
 
-#: gnome-panel/applet.c:204 gnome-panel/menu.c:1043
-#: gnome-panel/panel-util.c:49
-#, c-format
-msgid ""
-"<b>Cannot display help document</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>تعذر عرض مستند المساعدة</b>\n"
-"\n"
-"التفاصيل: %s"
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "غلاف لوحة المهام جينوم"
+
+#. FIXME: should have a "Move" pixmap.
+#.
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
+msgid "Move"
+msgstr "انقل"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
+msgid "Remove From Panel"
+msgstr "احذف من لوحة التحكم"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:471 gnome-panel/foobar-widget.c:364
+#: gnome-panel/applet.c:449 gnome-panel/foobar-widget.c:359
 msgid "???"
 msgstr "؟؟؟"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
-msgid "Remove From Panel"
-msgstr "احذف من لوحة التحكم"
+#: gnome-panel/applet.c:796
+#, c-format
+msgid "No object_type set for panel object with ID %s\n"
+msgstr ""
 
-#. FIXME: should have a "Move" pixmap.
-#.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:546
-msgid "Move"
-msgstr "انقل"
+#: gnome-panel/applet.c:818
+#, c-format
+msgid "No panel_id set for panel object with ID %s\n"
+msgstr ""
 
-#: gnome-panel/applet.c:1147
+#: gnome-panel/applet.c:1133
 msgid "Can't find an empty spot"
 msgstr "تعذر العثور على بقعة فارغة"
 
@@ -1065,11 +1126,31 @@ msgstr "أخف لوحة التحكم هذه"
 msgid "Show this panel"
 msgstr "أظهر لوحة التحكم هذه"
 
-#: gnome-panel/disclosure-widget.c:242
+#: gnome-panel/button-widget.c:341
+msgid "none"
+msgstr ""
+
+#: gnome-panel/button-widget.c:346
+#, fuzzy
+msgid "file not found"
+msgstr "لم اجد وثيقة المساعدة"
+
+#: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
+#, fuzzy, c-format
+msgid ""
+"Failed to load image %s\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>فشل فتح الملف:</b> '%s'\n"
+"\n"
+"التفاصيل: %s"
+
+#: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
 msgstr "حجم الموسع"
 
-#: gnome-panel/disclosure-widget.c:243
+#: gnome-panel/disclosure-widget.c:261
 msgid "Size of the expander arrow"
 msgstr "حجم سهم الموسع"
 
@@ -1078,7 +1159,8 @@ msgid "Debian GNU/Linux"
 msgstr "ديبيان GNU/Linux"
 
 #: gnome-panel/distribution.c:26
-msgid "Debian menus"
+#, fuzzy
+msgid "Debian Menu"
 msgstr "قوائم ديبيان"
 
 #: gnome-panel/distribution.c:31
@@ -1086,7 +1168,8 @@ msgid "SuSE Linux"
 msgstr "سوزي لينكس"
 
 #: gnome-panel/distribution.c:31
-msgid "SuSE menus"
+#, fuzzy
+msgid "SuSE Menu"
 msgstr "قوائم سوزي"
 
 #: gnome-panel/distribution.c:36
@@ -1094,122 +1177,127 @@ msgid "Solaris"
 msgstr "سولاريس"
 
 #: gnome-panel/distribution.c:36
-msgid "CDE Menus"
+#, fuzzy
+msgid "CDE Menu"
 msgstr "قوائم سيدي"
 
-#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:863
-#: gnome-panel/panel-config.c:898 gnome-panel/panel-config.c:969
-#: gnome-panel/panel-config.c:1077
+#: gnome-panel/drawer.c:126
 msgid "Size and Position"
 msgstr "الحجم والموقع"
 
-#: gnome-panel/drawer.c:144
+#: gnome-panel/drawer.c:134
 msgid "Tooltip/Name"
 msgstr "التلميحة/الاسم"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:519
-#: gnome-panel/menu-properties.c:553
+#: gnome-panel/drawer.c:140
 msgid "Icon"
 msgstr "أيقونة"
 
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:146
 msgid "Applet appearance"
 msgstr "مظهر البريمج"
 
-#: gnome-panel/drawer.c:161
+#: gnome-panel/drawer.c:151
 msgid "Drawer handle"
 msgstr "أداة الرسم"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:166
+#: gnome-panel/drawer.c:156
 msgid "Enable hidebutton"
 msgstr "تفعيل زر اﻹخفاء"
 
-#: gnome-panel/drawer.c:175
+#: gnome-panel/drawer.c:165
 msgid "Enable hidebutton arrow"
 msgstr "تفعيل سهم زر اﻹخفاء"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3168
+#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "الرسام"
 
-#: gnome-panel/foobar-widget.c:147 gnome-panel/menu-util.c:294
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "خصائص"
+
+#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "تعذر تشغيل أخذ صور الشاشة في جينوم"
 
-#: gnome-panel/foobar-widget.c:158 gnome-panel/menu-util.c:304
+#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3557
 msgid "Cannot execute gnome-search-tool"
 msgstr "تعذر تشغيل أداة البحث في جينوم"
 
-#: gnome-panel/foobar-widget.c:168 gnome-panel/menu.c:3591
+#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3680
 msgid "Run Program..."
 msgstr "شغل برنامج..."
 
-#: gnome-panel/foobar-widget.c:171
+#: gnome-panel/foobar-widget.c:164
 msgid "Run applications, if you know the correct command to type in"
 msgstr "شغل التطبيقات، اذا كنت تعرف اﻻمر الصحيح الذي يجب كتابته"
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3603
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3693
 msgid "Search for Files..."
 msgstr "ابحث عن ملفات..."
 
-#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3606
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3696
 msgid "Find files, folders, and documents on your computer"
 msgstr "ابحث عن ملفات ومجلدات ووثائق على حاسوبك"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3617
-msgid "Take a Screen Shot..."
-msgstr "خذ صورة للشاشة..."
+#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3707
+#, fuzzy
+msgid "Screenshot..."
+msgstr "صورة الشاشة"
 
-#: gnome-panel/foobar-widget.c:195 gnome-panel/menu.c:3620
-msgid "Take a screen shot of your desktop"
+#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3710
+#, fuzzy
+msgid "Take a screenshot of your desktop"
 msgstr "خذ صورة الشاشة لسطح المكتب لديك"
 
-#: gnome-panel/foobar-widget.c:206
-msgid "Lock Display"
-msgstr "اقفل العرض"
+#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
+#: gnome-panel/menu.c:3460
+msgid "Lock Screen"
+msgstr "اقفل الشاشة"
 
-#: gnome-panel/foobar-widget.c:210
+#: gnome-panel/foobar-widget.c:203
 msgid "Protect your computer from unauthorized use"
 msgstr "احمي كمبيوترك من المستخدمين غير المرخّص لهم"
 
-#: gnome-panel/foobar-widget.c:219
+#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3473
 msgid "Log Out"
 msgstr "خروج"
 
-#: gnome-panel/foobar-widget.c:222
+#: gnome-panel/foobar-widget.c:215
 msgid "Quit from the GNOME desktop"
 msgstr "إقلاع من سطح مكتب جينوم"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:231
+#: gnome-panel/foobar-widget.c:224
 msgid "Actions"
 msgstr "أعمال"
 
-#: gnome-panel/foobar-widget.c:446
+#: gnome-panel/foobar-widget.c:441
 msgid "No windows open"
 msgstr "لا توجد نوافذ مفتوحة"
 
-#: gnome-panel/foobar-widget.c:701 gnome-panel/menu.c:2748
-#: gnome-panel/menu.c:2754 gnome-panel/menu.c:3557
-msgid "Applications"
-msgstr "التطبيقات"
-
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2633
-#: gnome-panel/menu.c:2677
+#: gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
 msgid "Menu Panel"
 msgstr "لوحة مهام قائمة"
 
-#: gnome-panel/foobar-widget.c:734
+#: gnome-panel/foobar-widget.c:678
 msgid "GNOME Menu Panel"
 msgstr "لوحة مهام قائمة جينوم"
 
-#: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
+#: gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2822
+#: gnome-panel/menu.c:2828 gnome-panel/menu.c:3646
+msgid "Applications"
+msgstr "التطبيقات"
+
+#: gnome-panel/global-keys.c:289 gnome-panel/global-keys.c:317
 msgid "Can't find the screenshot program"
 msgstr "لم يتم العثور على برنامج أخذ صور عن الشاشة"
 
-#: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
+#: gnome-panel/global-keys.c:298 gnome-panel/global-keys.c:327
 msgid "Can't execute the screenshot program"
 msgstr "تعذر تشغيل على برنامج أخذ صور عن الشاشة"
 
@@ -1243,65 +1331,69 @@ msgstr "يجب أن تعطي معامل مفردا كملف .desktop أو  عن�
 msgid "No panel found\n"
 msgstr "لا توجد لوحة مهام\n"
 
-#: gnome-panel/gnome-panel-preferences.c:327
+#: gnome-panel/gnome-panel-preferences.c:192
+#: gnome-panel/gnome-panel-screenshot.c:842
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+
+#: gnome-panel/gnome-panel-preferences.c:240
+#, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
-" modification of the panel configuration"
+"modification of the panel configuration"
 msgstr ""
 "لقد قام مدير النظام بمنع\n"
 " تعديل إعدادات لوحة المهام"
 
-#: gnome-panel/gnome-panel-preferences.c:338
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-msgid "Panel Preferences"
-msgstr "تفضيلات لوحة المهام"
+#: gnome-panel/gnome-panel-preferences.c:270
+#, c-format
+msgid "Error loading glade file %s"
+msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Modify the global panel preferences"
-msgstr "عدّل تفضيلات لوحة المهام الإقليمية"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3633
 msgid "Panel"
 msgstr "لوحة المهام"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation"
-msgstr "رسوم متحركة"
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
+msgid "Select preferences for all your panels"
+msgstr ""
 
-#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: gnome-panel/gnome-panel-preferences.glade.h:1
 msgid "Fast"
 msgstr "سريع"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "General"
-msgstr "عام"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-#: libpanel-applet/panel-test-applets.glade2.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "متوسط"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:6 gnome-panel/logout.c:217
-msgid "Properties"
-msgstr "خصائص"
+#: gnome-panel/gnome-panel-preferences.glade.h:3
+msgid "Panel Preferences"
+msgstr "تفضيلات لوحة المهام"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:7
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Slow"
 msgstr "بطئ"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:8
-msgid "_Animation Speed:"
+#: gnome-panel/gnome-panel-preferences.glade.h:5
+#, fuzzy
+msgid "_Animation"
+msgstr "رسوم متحركة"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:6
+#, fuzzy
+msgid "_Animation speed:"
 msgstr "سرعة الحركة:"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:9
-msgid "_Close drawer if a launcher inside it is pressed"
+#: gnome-panel/gnome-panel-preferences.glade.h:7
+#, fuzzy
+msgid "_Close drawer when launcher is clicked"
 msgstr "أغلق الرسام إذا تم كبس المشغّل الذي بداخله"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:10
-msgid "_Enable panel animation"
-msgstr "فعّل حركة لوحة المهام"
-
-#: gnome-panel/gnome-panel-screenshot.c:126
+#: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1309,7 +1401,7 @@ msgstr ""
 "تعذرت تهيئة بنية png.\n"
 "قد تكون لديك إصدارة غير جيدة من libpng على نظامك"
 
-#: gnome-panel/gnome-panel-screenshot.c:134
+#: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1317,7 +1409,7 @@ msgstr ""
 "تعذر إنشاء معلومات png.\n"
 "قد تكون لديك إصدارة غير جيدة من libpng على نظامك"
 
-#: gnome-panel/gnome-panel-screenshot.c:141
+#: gnome-panel/gnome-panel-screenshot.c:142
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1325,7 +1417,7 @@ msgstr ""
 "تعذر تعيين معلومات png.\n"
 "قد تكون لديك إصدارة غير جيدة من libpng على نظامك"
 
-#: gnome-panel/gnome-panel-screenshot.c:155
+#: gnome-panel/gnome-panel-screenshot.c:156
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1333,13 +1425,13 @@ msgstr ""
 "ليس هناك مساحة كافية من الذاكرة لحفظ صورة الشاشة.\n"
 "رجاء أفرغ بعض الموارد لديك ثم عاود المحاولة."
 
-#: gnome-panel/gnome-panel-screenshot.c:202
+#: gnome-panel/gnome-panel-screenshot.c:204
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "الملف %s موجود مسبقا. هل تريد الكتابة عليه؟"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:715
+#: gnome-panel/gnome-panel-screenshot.c:221
+#: gnome-panel/gnome-panel-screenshot.c:727
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1350,52 +1442,52 @@ msgstr ""
 "\"%s\"\n"
 "رجاء تأكد من صلاحياتك بالنسبة للمجلد اﻷب"
 
-#: gnome-panel/gnome-panel-screenshot.c:481
+#: gnome-panel/gnome-panel-screenshot.c:495
 msgid "Print Screenshot"
 msgstr "اطبع صورة الشاشة"
 
-#: gnome-panel/gnome-panel-screenshot.c:529
+#: gnome-panel/gnome-panel-screenshot.c:543
 msgid "Screenshot Print Preview"
 msgstr "عاين صورة الشاشة قبل الطباعة"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:556
+#: gnome-panel/gnome-panel-screenshot.c:570
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cScreenshot-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:563
+#: gnome-panel/gnome-panel-screenshot.c:577
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cScreenshot.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:580
+#: gnome-panel/gnome-panel-screenshot.c:594
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cScreenshot-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:587
+#: gnome-panel/gnome-panel-screenshot.c:601
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cScreenshot-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:736
+#: gnome-panel/gnome-panel-screenshot.c:748
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "ليست هناك مساحة كافية لكتابة الملف %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1036
+#: gnome-panel/gnome-panel-screenshot.c:1079
 msgid "Grab a window instead of the entire screen"
 msgstr "خذ صورة نافذة بدل الشاشة كلها"
 
-#: gnome-panel/gnome-panel-screenshot.c:1037
+#: gnome-panel/gnome-panel-screenshot.c:1080
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "خذ صورة للشاشة بعد المهلة المحددة [بالثواني]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1079
+#: gnome-panel/gnome-panel-screenshot.c:1122
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1403,43 +1495,43 @@ msgstr ""
 "ملف غليد لبرنامج صور الشاشة مفقود.\n"
 "فضلا تأكد من تنصيبك إلى gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1102
+#: gnome-panel/gnome-panel-screenshot.c:1145
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "تعذر الحصول على صورة شاشة لسطح المكتب الحالي."
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:1
+#: gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr ""
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
 msgstr "خيارات"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "Preview"
 msgstr "معاينة"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:3
+#: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "Save screenshot to _desktop"
 msgstr "احفظ صورة الشاشة لسطح المكتب"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:4
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "احفظ صورة الشاشة لصفحة ويب (احفظها في ~/public__html)"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Screenshot"
 msgstr "صورة الشاشة"
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
 msgstr "اطبع صورة الشاشة..."
 
-#: gnome-panel/gnome-panel-screenshot.glade2.h:7
+#: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
 msgstr "احفظ صورة الشاشة في ملف:"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "غلاف لوحة المهام جينوم"
-
-#: gnome-panel/gnome-run.c:239 gnome-panel/gnome-run.c:256
+#: gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1450,7 +1542,7 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/gnome-run.c:346 gnome-panel/gnome-run.c:420
+#: gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1461,7 +1553,7 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/gnome-run.c:443
+#: gnome-panel/gnome-run.c:433
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1472,7 +1564,7 @@ msgstr ""
 "\n"
 "التفاصيل: لا يوجد تطبيق لفتح الملف"
 
-#: gnome-panel/gnome-run.c:457
+#: gnome-panel/gnome-run.c:447
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1483,48 +1575,48 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/gnome-run.c:533
+#: gnome-panel/gnome-run.c:525
 msgid "Choose a file"
 msgstr "اختر ملفا"
 
-#: gnome-panel/gnome-run.c:728 gnome-panel/gnome-run.c:729
+#: gnome-panel/gnome-run.c:720 gnome-panel/gnome-run.c:721
 msgid "Known Applications"
 msgstr "التطبيقات المعروفة"
 
-#: gnome-panel/gnome-run.c:857
+#: gnome-panel/gnome-run.c:849
 msgid "Command to run"
 msgstr "أمر لتشغيله"
 
-#: gnome-panel/gnome-run.c:891
+#: gnome-panel/gnome-run.c:883
 msgid "Run in _terminal"
 msgstr "شغل في الشاشة الطرفية"
 
-#: gnome-panel/gnome-run.c:896
+#: gnome-panel/gnome-run.c:888
 msgid "_Append File..."
 msgstr "إلحاق بملف..."
 
-#: gnome-panel/gnome-run.c:1276
+#: gnome-panel/gnome-run.c:1268
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "سيتم تشغيل: '%s'"
 
-#: gnome-panel/gnome-run.c:1285
+#: gnome-panel/gnome-run.c:1277
 msgid "No application selected"
 msgstr "لم يتم اختيار أي تطبيق"
 
-#: gnome-panel/gnome-run.c:1404
+#: gnome-panel/gnome-run.c:1396
 msgid "List of known applications"
 msgstr "قائمة التطبيقات المعروفة"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1397
 msgid "Choose an application to run from the list"
 msgstr "اختر تطبيقا من القائمة لتشغيله"
 
-#: gnome-panel/gnome-run.c:1497
+#: gnome-panel/gnome-run.c:1489
 msgid "_Run"
 msgstr "تشغيل"
 
-#: gnome-panel/gnome-run.c:1557
+#: gnome-panel/gnome-run.c:1548
 msgid "Run Program"
 msgstr "شغل البرنامج"
 
@@ -1561,25 +1653,36 @@ msgstr ""
 "تعذر فتح اﻷيقونة\n"
 "%s"
 
-#: gnome-panel/launcher.c:454
+#: gnome-panel/launcher.c:326
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:346
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:457
 #, c-format
 msgid "Help on %s Application"
 msgstr "مساعدة على التطبيق %s"
 
-#. flags
-#. error
-#. watch the enum at the top of the file
-#: gnome-panel/launcher.c:573 gnome-panel/menu-ditem.c:178
-#: gnome-panel/menu-ditem.c:256
+#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
+#: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "خصائص المشغّل"
 
-#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:521
+#: gnome-panel/launcher.c:682
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr ""
+
+#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "أنشيء مشغّلا"
 
 #. class
-#: gnome-panel/launcher.c:983
+#: gnome-panel/launcher.c:991
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1590,15 +1693,27 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3413
+#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
+#: gnome-panel/panel-util.c:49
+#, c-format
+msgid ""
+"<b>Cannot display help document</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>تعذر عرض مستند المساعدة</b>\n"
+"\n"
+"التفاصيل: %s"
+
+#: gnome-panel/logout.c:84
 msgid "Log out"
 msgstr "خروج"
 
-#: gnome-panel/logout.c:103
+#: gnome-panel/logout.c:105
 msgid "Log out of GNOME"
 msgstr "خروج من جينوم"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3400
+#: gnome-panel/logout.c:152 gnome-panel/logout.c:173
 msgid "Lock screen"
 msgstr "اقفل الشاشة"
 
@@ -1613,334 +1728,21 @@ msgstr "اقفل الشاشة"
 #. <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 #. <jwz> and "xscreensaver-demo"
 #.
-#: gnome-panel/logout.c:211
+#: gnome-panel/logout.c:213
 msgid "Activate Screensaver"
 msgstr "شغل شاشة التوقف"
 
-#: gnome-panel/logout.c:212
-msgid "Lock Screen"
-msgstr "اقفل الشاشة"
-
-#: gnome-panel/logout.c:213
+#: gnome-panel/logout.c:215
 msgid "Kill Screensaver Daemon"
 msgstr "أنهي جنّي شاشة التوقف"
 
-#: gnome-panel/logout.c:214
+#: gnome-panel/logout.c:216
 msgid "Restart Screensaver Daemon"
 msgstr "أعد تشغيل جنّي شاشة التوقف"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "حدد اسم واجهة لتحميلها"
-
-#: gnome-panel/menu.c:228
-msgid "Many many others ..."
-msgstr "العديد العديد اﻻخرون"
-
-#. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:230
-msgid "and finally, The Knights Who Say ... NI!"
-msgstr "وأخيرا،الفرسان الذين يقولون ...!"
-
-#: gnome-panel/menu.c:263
-msgid ""
-"This program is responsible for launching other applications, embedding "
-"small applets within itself, world peace, and random X crashes."
-msgstr ""
-"هذا البرنامج مسؤول عن اطلاق تطبيقات اخرى، تضمينبريمجات صغرى ضمن نفسه،السلام "
-"في العالم، و انهيارات عشوائية لإكس."
-
-#: gnome-panel/menu.c:269
-msgid ""
-"\n"
-"\n"
-"Running in \"Lockdown\" mode.  This means your system administrator has "
-"prohibited any changes to the panel's configuration to take place."
-msgstr ""
-"\n"
-"\n"
-"التشغيل في نظام \"Lockdown\".  هذا يعني أن مدير نظامك قام بمنع أخذ إعدادات "
-"لوحة المهام تأثيرها."
-
-#: gnome-panel/menu.c:275
-msgid "The GNOME Panel"
-msgstr "لوحة مهام جينوم"
-
-#: gnome-panel/menu.c:276
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "(C) 1997-2002 مؤسسة البرامج الحرة"
-
-#: gnome-panel/menu.c:295
-msgid "End world hunger"
-msgstr "انهي الجوع في العالم"
-
-#: gnome-panel/menu.c:309
-#, c-format
-msgid ""
-"<b>Can't execute 'About GNOME'</b>\n"
-"\n"
-"Details: %s probably does not exist"
-msgstr ""
-"<b>تعذر إجراء 'حول جينوم'</b>\n"
-"\n"
-"التفاصيل: من المحتمل عدم وجود %s"
-
-#: gnome-panel/menu.c:329
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>تعذر تشغيل الخانة</b>\n"
-"\n"
-"التفاصيل: %s"
-
-#: gnome-panel/menu.c:337 gnome-panel/menu.c:1024 gnome-panel/menu.c:1052
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>تعذر تحميل الخانة</b>\n"
-"\n"
-"التفاصيل: %s"
-
-#: gnome-panel/menu.c:934
-#, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
-msgstr ""
-"<b>تعذر حذف خانة القائمة %s</b>\n"
-"\n"
-"التفاصيل: %s\n"
-
-#: gnome-panel/menu.c:944
-#, c-format
-msgid "Could not get file name from path: %s"
-msgstr "تعذر الحصول على اسم الملف من المسار: %s"
-
-#: gnome-panel/menu.c:951
-#, c-format
-msgid "Could not get directory name from path: %s"
-msgstr "تعذر الحصول على اسم المجلد من المسار: %s"
-
-#: gnome-panel/menu.c:1017
-msgid ""
-"<b>Can't add to run box</b>\n"
-"\n"
-"Details: No 'Exec' or 'URL' field in entry"
-msgstr ""
-"<b>تعذر اﻹضافة إلى صندوق التشغيل</b>\n"
-"\n"
-"لا يوجد حقل 'Exec' أو 'URL' في الخانة"
-
-#: gnome-panel/menu.c:1307
-msgid "Add this launcher to panel"
-msgstr "أضف هذا المشغّل إلى لوحة المهام"
-
-#: gnome-panel/menu.c:1315
-msgid "Remove this item"
-msgstr "احذف هذا العنصر"
-
-#: gnome-panel/menu.c:1331
-msgid "Put into run dialog"
-msgstr "ضع في مربع حوار التشغيل"
-
-#: gnome-panel/menu.c:1349
-#, c-format
-msgid "Help on %s"
-msgstr "مساعدة حول %s"
-
-#: gnome-panel/menu.c:1350
-msgid "Application"
-msgstr "تطبيق"
-
-#: gnome-panel/menu.c:1396
-msgid "Entire menu"
-msgstr "قائمة كاملة"
-
-#: gnome-panel/menu.c:1405
-msgid "Add this as drawer to panel"
-msgstr "أضف هذا كرسام للوحة المهام"
-
-#: gnome-panel/menu.c:1413
-msgid "Add this as menu to panel"
-msgstr "أضف هذا كقائمة للوحة المهام"
-
-#: gnome-panel/menu.c:1421
-msgid "Add new item to this menu"
-msgstr "أضف عنصرا جديدا لهذه القائمة"
-
-#: gnome-panel/menu.c:2337 libpanel-applet/panel-test-applets.c:102
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "الاستعلام أرجع الاستثناء %s\n"
-
-#: gnome-panel/menu.c:2555 gnome-panel/menu.c:2559
-msgid "Aligned Panel"
-msgstr "لوحة مهام مضبطة"
-
-#: gnome-panel/menu.c:2560
-msgid "GNOME Aligned Panel"
-msgstr "لوحة مهام جينوم مضبطة"
-
-#: gnome-panel/menu.c:2576 gnome-panel/menu.c:2579 gnome-panel/menu.c:2696
-msgid "Edge Panel"
-msgstr "لوحة مهام حافة"
-
-#: gnome-panel/menu.c:2580
-msgid "GNOME Edge Panel"
-msgstr "لوحة مهام حافة لجينوم"
-
-#: gnome-panel/menu.c:2596 gnome-panel/menu.c:2600 gnome-panel/menu.c:2712
-msgid "Sliding Panel"
-msgstr "لوحة مهام منزلقة"
-
-#: gnome-panel/menu.c:2601
-msgid "GNOME Sliding Panel"
-msgstr "لوحة مهام منزلقة لجينوم"
-
-#: gnome-panel/menu.c:2617 gnome-panel/menu.c:2621 gnome-panel/menu.c:2720
-msgid "Floating Panel"
-msgstr "لوحة مهام طافية"
-
-#: gnome-panel/menu.c:2622
-msgid "GNOME Floating Panel"
-msgstr "لوحة مهام طافية لجينوم"
-
-#: gnome-panel/menu.c:2638
-msgid "You can only have one menu panel at a time."
-msgstr "لك أن تحصل على لوحة مهام واحدة لقائمة فقط."
-
-#: gnome-panel/menu.c:2704
-msgid "Corner Panel"
-msgstr "لوحة مهام ركن"
-
-#. force_image
-#: gnome-panel/menu.c:2818 gnome-panel/menu.c:2825 gnome-panel/menu.c:3473
-msgid "KDE menus"
-msgstr "قوائم كيدي"
-
-#: gnome-panel/menu.c:2888
-msgid "You cannot remove your last panel."
-msgstr "لا يمكنك حذف لوحة المهام اﻷخيرة لك"
-
-#: gnome-panel/menu.c:2900
-msgid ""
-"When a panel is removed, the panel and its\n"
-"applet settings are lost. Delete this panel?"
-msgstr ""
-"حينما يتم حذف لوحة مهام، فإنه سيتم فقدان اللوحة وإعدادات بريمجاتها.\n"
-"هل تريد حذف لوحة المهام هذه؟"
-
-#: gnome-panel/menu.c:3140
-msgid "Launcher..."
-msgstr "مشغّل..."
-
-#: gnome-panel/menu.c:3148
-msgid "Launcher from menu"
-msgstr "مشغّل من القائمة"
-
-#: gnome-panel/menu.c:3158
-msgid "GNOME Menu"
-msgstr "قائمة جينوم"
-
-#: gnome-panel/menu.c:3178
-msgid "Log out button"
-msgstr "زر خروج"
-
-#: gnome-panel/menu.c:3188
-msgid "Lock button"
-msgstr "زر قفل"
-
-#: gnome-panel/menu.c:3203
-msgid "Cannot execute panel global preferences"
-msgstr "تعذر إجراء التفضيلات اﻹقليمية للوحة المهام"
-
-#: gnome-panel/menu.c:3241
-msgid "Delete this panel..."
-msgstr "حذف لوحة المهام هذه..."
-
-#: gnome-panel/menu.c:3243 gnome-panel/menu.c:3282
-msgid "Delete this panel"
-msgstr "احذف لوحة المهام هذه"
-
-#: gnome-panel/menu.c:3261
-msgid "Add to panel"
-msgstr "أضف للوحة المهام"
-
-#: gnome-panel/menu.c:3273
-msgid "Create panel"
-msgstr "أنشيء لوحة مهام"
-
-#: gnome-panel/menu.c:3310
-msgid "Global Preferences..."
-msgstr "تفضيلات إقليمية..."
-
-#: gnome-panel/menu.c:3323
-msgid "Panel Manual..."
-msgstr "كتيب لوحة المهام..."
-
-#: gnome-panel/menu.c:3335
-msgid ""
-"<b>Cannot execute xscreensaver</b>\n"
-"\n"
-"Details: xscreensaver-command not found"
-msgstr ""
-"<b>تعذر إجراء xscreensaver</b>\n"
-"\n"
-"التفاصيل: أمر xscreensaver غير موجود"
-
-#: gnome-panel/menu.c:3355
-msgid "About the panel..."
-msgstr "حول لوحة المهام..."
-
-#: gnome-panel/menu.c:3369
-msgid "About GNOME..."
-msgstr "حول جينوم..."
-
-#: gnome-panel/menu.c:3406
-msgid "Lock the screen so that you can temporairly leave your computer"
-msgstr "اقفل الشاشة حتى تستطيع ترك كمبيوترك مؤقتا"
-
-#: gnome-panel/menu.c:3419
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr "اخرج من هذه الجلسة حتى تدخل كمستخدم آخر أو لتطفيء كمبيوترك"
-
-#: gnome-panel/menu.c:3574
-msgid "Applets"
-msgstr "بريمجات"
-
-#: gnome-panel/menu.c:3596
-msgid "Run a command"
-msgstr "شغل أمر"
-
-#: gnome-panel/menu.c:3641
-msgid "Desktop"
-msgstr "سطح المكتب"
-
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
-#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
-msgid "Menu"
-msgstr "قائمة"
-
-#: gnome-panel/menu.c:3674
-msgid "Menu:"
-msgstr "القائمة:"
-
-#: gnome-panel/menu.c:3724 gnome-panel/menu.c:3752 gnome-panel/menu.c:3937
-msgid "Main Menu"
-msgstr "القائمة الرئيسية"
-
-#: gnome-panel/menu.c:3746
-msgid "Can't create menu, using main menu!"
-msgstr "تعذر إنشاء قائمة، هل أستخدم القائمة الرئيسية؟"
 
 #: gnome-panel/menu-ditem.c:119
 #, c-format
@@ -1953,16 +1755,21 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/menu-ditem.c:448
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3751
+#: gnome-panel/menu.c:3979
+msgid "Menu"
+msgstr "قائمة"
+
+#: gnome-panel/menu-ditem.c:439
 msgid "You have to specify a name for the launcher."
 msgstr "يتوجب عليك تحديد اسما للمشغل."
 
-#: gnome-panel/menu-ditem.c:464
+#: gnome-panel/menu-ditem.c:455
 msgid "You have to specify a valid URL or command."
 msgstr "يتوجب عليك تحديد عنوان URL أو أمر صحيحين."
 
 #. class
-#: gnome-panel/menu-ditem.c:493
+#: gnome-panel/menu-ditem.c:484
 #, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
@@ -1973,103 +1780,388 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/menu-ditem.c:516
+#: gnome-panel/menu-ditem.c:507
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
 "ليس باستطاعتك إنشاء مشغّل جديد في هذا المكان ﻷن المكان غير قابل للكتابة."
 
-#: gnome-panel/menu-properties.c:107
-msgid "Can't open directory, using main menu!"
-msgstr "لم استطع فتح المجلد،يستعمل القائمة الرئيسية "
+#: gnome-panel/menu.c:230
+msgid "Many many others ..."
+msgstr "العديد العديد اﻻخرون"
 
-#: gnome-panel/menu-properties.c:127
-msgid "Edit menus..."
-msgstr "حرّر القوائم..."
+#. ... from the Monty Pythons show...
+#: gnome-panel/menu.c:232
+msgid "and finally, The Knights Who Say ... NI!"
+msgstr "وأخيرا،الفرسان الذين يقولون ...!"
 
-#: gnome-panel/menu-properties.c:308
-msgid "Off"
-msgstr "معطل"
+#: gnome-panel/menu.c:265
+msgid ""
+"This program is responsible for launching other applications, embedding "
+"small applets within itself, world peace, and random X crashes."
+msgstr ""
+"هذا البرنامج مسؤول عن اطلاق تطبيقات اخرى، تضمينبريمجات صغرى ضمن نفسه،السلام "
+"في العالم، و انهيارات عشوائية لإكس."
 
-#: gnome-panel/menu-properties.c:318
-msgid "In a submenu"
-msgstr "في قائمة جزئية"
+#: gnome-panel/menu.c:271
+msgid ""
+"\n"
+"\n"
+"Running in \"Lockdown\" mode.  This means your system administrator has "
+"prohibited any changes to the panel's configuration to take place."
+msgstr ""
+"\n"
+"\n"
+"التشغيل في نظام \"Lockdown\".  هذا يعني أن مدير نظامك قام بمنع أخذ إعدادات "
+"لوحة المهام تأثيرها."
 
-#: gnome-panel/menu-properties.c:330
-msgid "On the main menu"
-msgstr "في القائمة الرئيسية"
+#: gnome-panel/menu.c:277
+msgid "The GNOME Panel"
+msgstr "لوحة مهام جينوم"
 
-#: gnome-panel/menu-properties.c:364
-msgid "Menu properties"
-msgstr "خصائص القائمة"
+#: gnome-panel/menu.c:278
+msgid "(C) 1997-2002 the Free Software Foundation"
+msgstr "(C) 1997-2002 مؤسسة البرامج الحرة"
 
-#: gnome-panel/menu-properties.c:387
-msgid "Menu type"
-msgstr "نوع القائمة"
+#: gnome-panel/menu.c:297
+msgid "End world hunger"
+msgstr "انهي الجوع في العالم"
 
-#: gnome-panel/menu-properties.c:394
-msgid "Global main menu"
-msgstr "القائمة الرئيسية العامة"
+#: gnome-panel/menu.c:312
+#, c-format
+msgid ""
+"<b>Can't execute 'About GNOME'</b>\n"
+"\n"
+"Details: %s probably does not exist"
+msgstr ""
+"<b>تعذر إجراء 'حول جينوم'</b>\n"
+"\n"
+"التفاصيل: من المحتمل عدم وجود %s"
 
-#: gnome-panel/menu-properties.c:408 gnome-panel/menu-properties.c:431
-msgid "Main menu"
-msgstr "القائمة الرئيسية"
+#: gnome-panel/menu.c:334
+#, c-format
+msgid ""
+"<b>Can't launch entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>تعذر تشغيل الخانة</b>\n"
+"\n"
+"التفاصيل: %s"
 
-#: gnome-panel/menu-properties.c:422 gnome-panel/menu-properties.c:485
-msgid "Normal menu"
-msgstr "قائمة عادية"
+#: gnome-panel/menu.c:343 gnome-panel/menu.c:1037 gnome-panel/menu.c:1069
+#, c-format
+msgid ""
+"<b>Can't load entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>تعذر تحميل الخانة</b>\n"
+"\n"
+"التفاصيل: %s"
 
-#: gnome-panel/menu-properties.c:444
-msgid "Programs: "
-msgstr "برامج"
+#: gnome-panel/menu.c:942
+#, c-format
+msgid ""
+"<b>Could not remove the menu item %s</b>\n"
+"\n"
+"Details: %s\n"
+msgstr ""
+"<b>تعذر حذف خانة القائمة %s</b>\n"
+"\n"
+"التفاصيل: %s\n"
 
-#: gnome-panel/menu-properties.c:451
-msgid "Applets: "
+#: gnome-panel/menu.c:952
+#, c-format
+msgid "Could not get file name from path: %s"
+msgstr "تعذر الحصول على اسم الملف من المسار: %s"
+
+#: gnome-panel/menu.c:959
+#, c-format
+msgid "Could not get directory name from path: %s"
+msgstr "تعذر الحصول على اسم المجلد من المسار: %s"
+
+#: gnome-panel/menu.c:1029
+msgid ""
+"<b>Can't add to run box</b>\n"
+"\n"
+"Details: No 'Exec' or 'URL' field in entry"
+msgstr ""
+"<b>تعذر اﻹضافة إلى صندوق التشغيل</b>\n"
+"\n"
+"لا يوجد حقل 'Exec' أو 'URL' في الخانة"
+
+#: gnome-panel/menu.c:1342
+msgid "Add this launcher to panel"
+msgstr "أضف هذا المشغّل إلى لوحة المهام"
+
+#: gnome-panel/menu.c:1356
+msgid "Remove this item"
+msgstr "احذف هذا العنصر"
+
+#: gnome-panel/menu.c:1373
+msgid "Put into run dialog"
+msgstr "ضع في مربع حوار التشغيل"
+
+#: gnome-panel/menu.c:1391
+#, c-format
+msgid "Help on %s"
+msgstr "مساعدة حول %s"
+
+#: gnome-panel/menu.c:1392
+msgid "Application"
+msgstr "تطبيق"
+
+#: gnome-panel/menu.c:1442
+msgid "Entire menu"
+msgstr "قائمة كاملة"
+
+#: gnome-panel/menu.c:1451
+msgid "Add this as drawer to panel"
+msgstr "أضف هذا كرسام للوحة المهام"
+
+#: gnome-panel/menu.c:1459
+msgid "Add this as menu to panel"
+msgstr "أضف هذا كقائمة للوحة المهام"
+
+#: gnome-panel/menu.c:1472
+msgid "Add new item to this menu"
+msgstr "أضف عنصرا جديدا لهذه القائمة"
+
+#: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "الاستعلام أرجع الاستثناء %s\n"
+
+#: gnome-panel/menu.c:2603 gnome-panel/menu.c:2607
+msgid "Aligned Panel"
+msgstr "لوحة مهام مضبطة"
+
+#: gnome-panel/menu.c:2608
+msgid "GNOME Aligned Panel"
+msgstr "لوحة مهام جينوم مضبطة"
+
+#: gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
+#: gnome-panel/panel-config.c:1640
+msgid "Edge Panel"
+msgstr "لوحة مهام حافة"
+
+#: gnome-panel/menu.c:2628
+msgid "GNOME Edge Panel"
+msgstr "لوحة مهام حافة لجينوم"
+
+#: gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
+#: gnome-panel/panel-config.c:1662
+msgid "Sliding Panel"
+msgstr "لوحة مهام منزلقة"
+
+#: gnome-panel/menu.c:2649
+msgid "GNOME Sliding Panel"
+msgstr "لوحة مهام منزلقة لجينوم"
+
+#: gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
+#: gnome-panel/panel-config.c:1673
+msgid "Floating Panel"
+msgstr "لوحة مهام طافية"
+
+#: gnome-panel/menu.c:2670
+msgid "GNOME Floating Panel"
+msgstr "لوحة مهام طافية لجينوم"
+
+#: gnome-panel/menu.c:2689
+msgid "You can only have one menu panel at a time."
+msgstr "لك أن تحصل على لوحة مهام واحدة لقائمة فقط."
+
+#: gnome-panel/menu.c:2728
+#, fuzzy
+msgid "C_orner Panel"
+msgstr "لوحة مهام ركن"
+
+#: gnome-panel/menu.c:2730
+#, fuzzy
+msgid "Create corner panel"
+msgstr "لوحة مهام ركن"
+
+#: gnome-panel/menu.c:2739
+#, fuzzy
+msgid "_Edge Panel"
+msgstr "لوحة مهام حافة"
+
+#: gnome-panel/menu.c:2741
+#, fuzzy
+msgid "Create edge panel"
+msgstr "أنشيء لوحة مهام"
+
+#: gnome-panel/menu.c:2749
+#, fuzzy
+msgid "_Floating Panel"
+msgstr "لوحة مهام طافية"
+
+#: gnome-panel/menu.c:2751
+#, fuzzy
+msgid "Create floating panel"
+msgstr "لوحة مهام طافية"
+
+#: gnome-panel/menu.c:2759
+#, fuzzy
+msgid "_Sliding Panel"
+msgstr "لوحة مهام منزلقة"
+
+#: gnome-panel/menu.c:2761
+#, fuzzy
+msgid "Create sliding panel"
+msgstr "أنشيء لوحة مهام"
+
+#: gnome-panel/menu.c:2781
+#, fuzzy
+msgid "_Menu Panel"
+msgstr "لوحة مهام قائمة"
+
+#: gnome-panel/menu.c:2783
+#, fuzzy
+msgid "Create menu panel"
+msgstr "أنشيء لوحة مهام"
+
+#. force_image
+#: gnome-panel/menu.c:2892 gnome-panel/menu.c:2899 gnome-panel/menu.c:3533
+#, fuzzy
+msgid "KDE Menu"
+msgstr "قوائم كيدي"
+
+#: gnome-panel/menu.c:2964
+msgid "You cannot remove your last panel."
+msgstr "لا يمكنك حذف لوحة المهام اﻷخيرة لك"
+
+#: gnome-panel/menu.c:2977
+#, fuzzy
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"حينما يتم حذف لوحة مهام، فإنه سيتم فقدان اللوحة وإعدادات بريمجاتها.\n"
+"هل تريد حذف لوحة المهام هذه؟"
+
+#: gnome-panel/menu.c:3224
+msgid "Launcher..."
+msgstr "مشغّل..."
+
+#: gnome-panel/menu.c:3232
+msgid "Launcher from menu"
+msgstr "مشغّل من القائمة"
+
+#: gnome-panel/menu.c:3242 gnome-panel/menu.c:3803 gnome-panel/menu.c:3831
+#: gnome-panel/menu.c:4024
+msgid "GNOME Menu"
+msgstr "قائمة جينوم"
+
+#: gnome-panel/menu.c:3262
+#, fuzzy
+msgid "Log Out Button"
+msgstr "زر خروج"
+
+#: gnome-panel/menu.c:3272
+msgid "Lock button"
+msgstr "زر قفل"
+
+#: gnome-panel/menu.c:3316
+#, fuzzy
+msgid "_Delete This Panel..."
+msgstr "حذف لوحة المهام هذه..."
+
+#: gnome-panel/menu.c:3319 gnome-panel/menu.c:3350
+#, fuzzy
+msgid "_Delete This Panel"
+msgstr "احذف لوحة المهام هذه"
+
+#: gnome-panel/menu.c:3337
+#, fuzzy
+msgid "_Add to Panel"
+msgstr "أضف للوحة المهام"
+
+#: gnome-panel/menu.c:3364
+#, fuzzy
+msgid "_Properties"
+msgstr "خصائص"
+
+#: gnome-panel/menu.c:3377
+#, fuzzy
+msgid "_New Panel"
+msgstr "لوحة المهام الأساسية"
+
+#: gnome-panel/menu.c:3402
+msgid ""
+"<b>Cannot execute xscreensaver</b>\n"
+"\n"
+"Details: xscreensaver-command not found"
+msgstr ""
+"<b>تعذر إجراء xscreensaver</b>\n"
+"\n"
+"التفاصيل: أمر xscreensaver غير موجود"
+
+#: gnome-panel/menu.c:3422
+#, fuzzy
+msgid "_About Panels"
+msgstr "حول لوحة المهام..."
+
+#: gnome-panel/menu.c:3435
+#, fuzzy
+msgid "About _GNOME"
+msgstr "حول جينوم..."
+
+#: gnome-panel/menu.c:3466
+msgid "Lock the screen so that you can temporairly leave your computer"
+msgstr "اقفل الشاشة حتى تستطيع ترك كمبيوترك مؤقتا"
+
+#: gnome-panel/menu.c:3479
+msgid ""
+"Log out of this session to log in as a different user or to shut down your "
+"computer"
+msgstr "اخرج من هذه الجلسة حتى تدخل كمستخدم آخر أو لتطفيء كمبيوترك"
+
+#: gnome-panel/menu.c:3663
+msgid "Applets"
 msgstr "بريمجات"
 
-#: gnome-panel/menu-properties.c:458
-msgid "Distribution menu (if found): "
-msgstr "قائمة ال (اذا وجد): "
+#: gnome-panel/menu.c:3686
+msgid "Run a command"
+msgstr "شغل أمر"
 
-#: gnome-panel/menu-properties.c:465
-msgid "KDE menu (if found): "
-msgstr "قائمة كيدي (إن وجدت): "
+#: gnome-panel/menu.c:3723
+msgid "Desktop"
+msgstr "سطح المكتب"
 
-#: gnome-panel/menu-properties.c:472
-msgid "Panel menu: "
-msgstr "قائمة لوحة المهام: "
+#: gnome-panel/menu.c:3753
+msgid "Menu:"
+msgstr "القائمة:"
 
-#: gnome-panel/menu-properties.c:479
-msgid "Desktop menu: "
-msgstr "قائمة سطح المكتب:"
+#: gnome-panel/menu.c:3825
+msgid "Can't create menu, using main menu!"
+msgstr "تعذر إنشاء قائمة، هل أستخدم القائمة الرئيسية؟"
 
-#: gnome-panel/menu-properties.c:495
-msgid "Menu path"
-msgstr "مسار القائمة"
+#: gnome-panel/menu.c:4332
+#, c-format
+msgid "No path set at %s for panel menu object\n"
+msgstr ""
 
-#: gnome-panel/menu-properties.c:526
-msgid "Use custom icon for panel button"
-msgstr "استعمل أيقونة مخصصة لزر لوحة المهام"
-
-#: gnome-panel/panel-applet-frame.c:179
+#: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
 msgstr "تذعر تسجيل كائن التحكم\n"
 
-#: gnome-panel/panel-applet-frame.c:606
+#: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "ائتثناء من 'popup_menu' '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:699
-#, c-format
+#: gnome-panel/panel-applet-frame.c:700
+#, fuzzy, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
 "Reload this applet?\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
-"clicking on the panel and clicking on the \"Add to panel\" submenu)"
+"clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
 "يبدو أن البريمج %s قد انتهى بصورة غير متوقعة\n"
 "\n"
@@ -2078,11 +2170,11 @@ msgstr ""
 "(إذ اخترت عدم إعادة تحميله في هذه المرة فبإمكانك دائما إضافته بالنقر اﻷيمن "
 "على لوحة المهام ثم النقر على القائمة الفرعية \"أضف للوحة المهام\")"
 
-#: gnome-panel/panel-applet-frame.c:795
+#: gnome-panel/panel-applet-frame.c:796
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "تعذر الحصول على واجهة AppletShell من التحكم\n"
 
-#: gnome-panel/panel-applet-frame.c:921
+#: gnome-panel/panel-applet-frame.c:922
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2093,179 +2185,163 @@ msgstr ""
 "\n"
 "التفاصيل: %s"
 
-#: gnome-panel/panel.c:930
-#, c-format
-msgid "Open URL: %s"
-msgstr "افتح عنوان URL: %s"
-
-#: gnome-panel/panel.c:2254
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-"لم يتم العثور على لوحات مهام في إعداداتك. سأقوم بإنشاء لوحة مهام قائمة لك"
-
-#: gnome-panel/panel-config.c:537
-msgid "Hiding"
-msgstr "إخفاء"
-
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
-msgid "Enable Auto-hide"
+#: gnome-panel/panel-config.c:541
+#, fuzzy
+msgid "_Autohide"
 msgstr "فعّل اﻹخفاء التلقائي"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
-msgid "Show hide buttons"
+#: gnome-panel/panel-config.c:552
+#, fuzzy
+msgid "Show hide _buttons"
 msgstr "أظهر أزرار الإخفاء"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:567
-msgid "Show arrows on hide button"
+#: gnome-panel/panel-config.c:564
+#, fuzzy
+msgid "Arro_ws on hide buttons"
 msgstr "أظهر أسهما على زر اﻹخفاء"
 
-#: gnome-panel/panel-config.c:605
+#: gnome-panel/panel-config.c:603
 msgid "Miscellaneous"
 msgstr "متفرقات"
 
-#: gnome-panel/panel-config.c:615
+#: gnome-panel/panel-config.c:613
 msgid "Current screen:"
 msgstr "الشاشة الحالية:"
 
-#: gnome-panel/panel-config.c:708
+#: gnome-panel/panel-config.c:706
 msgid "Indicates the panel position and orientation on screen"
 msgstr ""
 
-#: gnome-panel/panel-config.c:726
-msgid "Panel Position"
+#: gnome-panel/panel-config.c:724
+#, fuzzy
+msgid "_Position:"
 msgstr "موقع لوحة المهام"
 
-#: gnome-panel/panel-config.c:988
-msgid "Orient panel horizontally"
+#: gnome-panel/panel-config.c:950
+#, fuzzy
+msgid "Orient hori_zontally"
 msgstr "وجّه لوحة المهام أفقيا"
 
-#: gnome-panel/panel-config.c:1000
-msgid "Orient panel vertically"
+#: gnome-panel/panel-config.c:962
+#, fuzzy
+msgid "Orient _vertically"
 msgstr "وجّه لوحة المهام عموديا"
 
-#: gnome-panel/panel-config.c:1012
-msgid "Top left corner's position: X"
-msgstr "موقع الركن اﻷيسر العلوي: س"
+#: gnome-panel/panel-config.c:976
+msgid "H_orizontal offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1027
-msgid "Y"
-msgstr "ص"
+#: gnome-panel/panel-config.c:996
+msgid "Ver_tical offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1102
-msgid "Offset from screen edge:"
-msgstr "الفرق من حافة الشاشة:"
+#: gnome-panel/panel-config.c:1061
+msgid "Screen edge _offset:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1164
-msgid "Panel size:"
-msgstr "حجم لوحة المهام:"
+#: gnome-panel/panel-config.c:1120
+#, fuzzy
+msgid "_Size:"
+msgstr "الحجم:"
 
-#: gnome-panel/panel-config.c:1172
+#: gnome-panel/panel-config.c:1128
 msgid "XX Small (12 pixels)"
 msgstr "صغير جدا جدا (12 بيكسل)"
 
-#: gnome-panel/panel-config.c:1180
+#: gnome-panel/panel-config.c:1136
 msgid "X Small (24 pixels)"
 msgstr "صغير جدا (24 بيكسل)"
 
-#: gnome-panel/panel-config.c:1188
+#: gnome-panel/panel-config.c:1144
 msgid "Small (36 pixels)"
 msgstr "صغير (36 بيكسل)"
 
-#: gnome-panel/panel-config.c:1196
+#: gnome-panel/panel-config.c:1152
 msgid "Medium (48 pixels)"
 msgstr "متوسط (48 بيسكل)"
 
-#: gnome-panel/panel-config.c:1204
+#: gnome-panel/panel-config.c:1160
 msgid "Large (64 pixels)"
 msgstr "كبير (64 بيكسل)"
 
-#: gnome-panel/panel-config.c:1212
+#: gnome-panel/panel-config.c:1168
 msgid "X Large (80 pixels)"
 msgstr "كبير جدا (80 بيكسل)"
 
-#: gnome-panel/panel-config.c:1220
+#: gnome-panel/panel-config.c:1176
 msgid "XX Large (128 pixels)"
 msgstr "كبير جدا جدا (128 بيكسل)"
 
-#: gnome-panel/panel-config.c:1236
-msgid ""
-"Note: The panel will size itself to the\n"
-"largest applet in the panel, and that\n"
-"not all applets obey these sizes."
-msgstr ""
-"ملاحظة: ستقوم لوحة المهام بتحجيم\n"
-"نفسها لتكون بحجم أكبر بريمج في اللوحة.\n"
-"ولكن لن تتبع كل البريمجات هذه اﻷحجام."
-
-#: gnome-panel/panel-config.c:1370
-msgid "Background Type: "
+#: gnome-panel/panel-config.c:1324
+#, fuzzy
+msgid "Background _type:"
 msgstr "نوع الخلفية:"
 
-#: gnome-panel/panel-config.c:1375
-msgid "Standard"
-msgstr "قياسي"
+#: gnome-panel/panel-config.c:1332
+msgid "Default"
+msgstr ""
 
-#. color frame
-#: gnome-panel/panel-config.c:1379 gnome-panel/panel-config.c:1395
+#: gnome-panel/panel-config.c:1336
 msgid "Color"
 msgstr "اللون"
 
-#: gnome-panel/panel-config.c:1383
-msgid "Pixmap"
-msgstr "رسمة بكسلية"
-
-#: gnome-panel/panel-config.c:1407
-msgid "Color to use:"
-msgstr "اللون المستخدم:"
-
 #. image frame
-#: gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1340 gnome-panel/panel-config.c:1388
 msgid "Image"
 msgstr "صورة"
 
-#: gnome-panel/panel-config.c:1451
-msgid "Don't scale image to fit"
+#: gnome-panel/panel-config.c:1355
+#, fuzzy
+msgid "Background co_lor:"
+msgstr "الخلفية"
+
+#: gnome-panel/panel-config.c:1414
+#, fuzzy
+msgid "_Do not scale image to fit"
 msgstr "لا تقم بتحجيم الصورة للملائمة"
 
-#: gnome-panel/panel-config.c:1457
-msgid "Scale image (keep proportions)"
-msgstr "حجّم الصورة (احتفظ بنسبة الأبعاد)"
+#: gnome-panel/panel-config.c:1419
+msgid "Sc_ale image"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1462
-msgid "Stretch image (change proportions)"
-msgstr "مدد الصورة"
+#: gnome-panel/panel-config.c:1423
+msgid "St_retch image"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1477
-msgid "Rotate image for vertical panels"
+#: gnome-panel/panel-config.c:1437
+#, fuzzy
+msgid "Rotate image for _vertical panels"
 msgstr "دوّر الصورة للوحات المهام العمودية"
 
-#: gnome-panel/panel-config.c:1556 gnome-panel/panel-config.c:1678
+#: gnome-panel/panel-config.c:1516
 msgid "Edge panel"
 msgstr "لوحة مهام حافة"
 
-#: gnome-panel/panel-config.c:1563 gnome-panel/panel-config.c:1689
+#: gnome-panel/panel-config.c:1523
 msgid "Corner panel"
 msgstr "لوحة مهام ركن"
 
-#: gnome-panel/panel-config.c:1569 gnome-panel/panel-config.c:1700
+#: gnome-panel/panel-config.c:1529
 msgid "Sliding panel"
 msgstr "لوحة مهام منزلقة"
 
-#: gnome-panel/panel-config.c:1575 gnome-panel/panel-config.c:1711
+#: gnome-panel/panel-config.c:1535
 msgid "Floating panel"
 msgstr "لوحة مهام طافية"
 
-#. main window
-#: gnome-panel/panel-config.c:1647
-msgid "Panel properties"
+#: gnome-panel/panel-config.c:1608
+#, fuzzy
+msgid "Panel Properties"
 msgstr "خصائص لوحة المهام"
 
-#: gnome-panel/panel-config.c:1730
+#: gnome-panel/panel-config.c:1651
+msgid "Corner Panel"
+msgstr "لوحة مهام ركن"
+
+#: gnome-panel/panel-config.c:1692
 msgid "Background"
 msgstr "الخلفية"
 
@@ -2340,6 +2416,18 @@ msgstr "ﻻ وثائق للعرض"
 msgid "Disabled"
 msgstr "معطل"
 
+#: gnome-panel/panel.c:881
+#, c-format
+msgid "Open URL: %s"
+msgstr "افتح عنوان URL: %s"
+
+#: gnome-panel/panel.c:2193
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"لم يتم العثور على لوحات مهام في إعداداتك. سأقوم بإنشاء لوحة مهام قائمة لك"
+
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
 msgstr "بريمج بسيط ﻻختبار لوحة مهام جينوم 2.0"
@@ -2352,100 +2440,229 @@ msgstr "اختبر بريمج بونوبو"
 msgid "Test Bonobo Applet Factory"
 msgstr "اختبر معاين بريمج بونوبو"
 
-#: libpanel-applet/panel-applet.c:748
+#: libpanel-applet/panel-applet.c:751
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "لقد تم استقبال '%s' نوع خلفية غير تام"
 
-#: libpanel-applet/panel-applet.c:762
+#: libpanel-applet/panel-applet.c:765
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "لقد تم استقبال نوع خلفية '%s' غير تام: %s"
 
-#: libpanel-applet/panel-applet.c:771
+#: libpanel-applet/panel-applet.c:774
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "فشل الحصول على الرسمة البيسكلية %s"
 
-#: libpanel-applet/panel-applet.c:778
+#: libpanel-applet/panel-applet.c:781
 msgid "Unknown background type received"
 msgstr "لقد تم استقبال نوع خلفية مجهول"
 
-#: libpanel-applet/panel-applet.c:947
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's orientation"
 msgstr "البريمج الذي يحوي اتجاه لوحة المهام"
 
-#: libpanel-applet/panel-applet.c:955
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "البريمج الذي يحوي حجم لوحة المهام بالبيكسل"
 
-#: libpanel-applet/panel-applet.c:963
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "البريمج الذي يحوي لون خلفية لوحة المهام أو رسمتها البيكسلية"
 
-#: libpanel-applet/panel-applet.c:971
+#: libpanel-applet/panel-applet.c:980
 msgid "The Applet's flags"
 msgstr "أعلام البريمجات"
 
-#: libpanel-applet/panel-applet.c:979
+#: libpanel-applet/panel-applet.c:988
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "المدى الذي يلمح بحجم البريمج المقبول"
 
-#: libpanel-applet/panel-test-applets.glade2.h:1
+#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
 msgstr "البريمج:"
 
-#: libpanel-applet/panel-test-applets.glade2.h:2
+#: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "الأسفل"
 
-#: libpanel-applet/panel-test-applets.glade2.h:3
+#: libpanel-applet/panel-test-applets.glade.h:3
 msgid "Large"
 msgstr "كبير"
 
-#: libpanel-applet/panel-test-applets.glade2.h:4
+#: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "اليسار"
 
-#: libpanel-applet/panel-test-applets.glade2.h:6
+#: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "الاتجاه :"
 
-#: libpanel-applet/panel-test-applets.glade2.h:7
+#: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
 msgstr "مجلد التفضيلات:"
 
-#: libpanel-applet/panel-test-applets.glade2.h:8
+#: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "اليمين"
 
-#: libpanel-applet/panel-test-applets.glade2.h:9
+#: libpanel-applet/panel-test-applets.glade.h:9
 msgid "Size:"
 msgstr "الحجم:"
 
-#: libpanel-applet/panel-test-applets.glade2.h:10
+#: libpanel-applet/panel-test-applets.glade.h:10
 msgid "Small"
 msgstr "صغير"
 
-#: libpanel-applet/panel-test-applets.glade2.h:11
+#: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "الأعلى"
 
-#: libpanel-applet/panel-test-applets.glade2.h:12
+#: libpanel-applet/panel-test-applets.glade.h:12
 msgid "X Large"
 msgstr "كبير جدا"
 
-#: libpanel-applet/panel-test-applets.glade2.h:13
+#: libpanel-applet/panel-test-applets.glade.h:13
 msgid "X Small"
 msgstr "صغير جد"
 
-#: libpanel-applet/panel-test-applets.glade2.h:14
+#: libpanel-applet/panel-test-applets.glade.h:14
 msgid "XX Large"
 msgstr "كبير جدا جدا"
 
-#: libpanel-applet/panel-test-applets.glade2.h:15
+#: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "صغير جدا جدا"
+
+#~ msgid "Use GMT"
+#~ msgstr "استعمل غرينتش"
+
+#~ msgid "Command to execute"
+#~ msgstr "الأمر الذي يتم تنفيذه"
+
+#~ msgid "Tasklist size"
+#~ msgstr "حجم قائمة المهمات"
+
+#~ msgid "Take a Screen Shot..."
+#~ msgstr "خذ صورة للشاشة..."
+
+#~ msgid "Lock Display"
+#~ msgstr "اقفل العرض"
+
+#~ msgid "Modify the global panel preferences"
+#~ msgstr "عدّل تفضيلات لوحة المهام الإقليمية"
+
+#~ msgid "General"
+#~ msgstr "عام"
+
+#~ msgid "_Enable panel animation"
+#~ msgstr "فعّل حركة لوحة المهام"
+
+#~ msgid "Cannot execute panel global preferences"
+#~ msgstr "تعذر إجراء التفضيلات اﻹقليمية للوحة المهام"
+
+#~ msgid "Global Preferences..."
+#~ msgstr "تفضيلات إقليمية..."
+
+#~ msgid "Panel Manual..."
+#~ msgstr "كتيب لوحة المهام..."
+
+#~ msgid "Main Menu"
+#~ msgstr "القائمة الرئيسية"
+
+#~ msgid "Can't open directory, using main menu!"
+#~ msgstr "لم استطع فتح المجلد،يستعمل القائمة الرئيسية "
+
+#~ msgid "Edit menus..."
+#~ msgstr "حرّر القوائم..."
+
+#~ msgid "Off"
+#~ msgstr "معطل"
+
+#~ msgid "In a submenu"
+#~ msgstr "في قائمة جزئية"
+
+#~ msgid "On the main menu"
+#~ msgstr "في القائمة الرئيسية"
+
+#~ msgid "Menu properties"
+#~ msgstr "خصائص القائمة"
+
+#~ msgid "Menu type"
+#~ msgstr "نوع القائمة"
+
+#~ msgid "Global main menu"
+#~ msgstr "القائمة الرئيسية العامة"
+
+#~ msgid "Main menu"
+#~ msgstr "القائمة الرئيسية"
+
+#~ msgid "Normal menu"
+#~ msgstr "قائمة عادية"
+
+#~ msgid "Programs: "
+#~ msgstr "برامج"
+
+#~ msgid "Applets: "
+#~ msgstr "بريمجات"
+
+#~ msgid "Distribution menu (if found): "
+#~ msgstr "قائمة ال (اذا وجد): "
+
+#~ msgid "KDE menu (if found): "
+#~ msgstr "قائمة كيدي (إن وجدت): "
+
+#~ msgid "Panel menu: "
+#~ msgstr "قائمة لوحة المهام: "
+
+#~ msgid "Desktop menu: "
+#~ msgstr "قائمة سطح المكتب:"
+
+#~ msgid "Menu path"
+#~ msgstr "مسار القائمة"
+
+#~ msgid "Use custom icon for panel button"
+#~ msgstr "استعمل أيقونة مخصصة لزر لوحة المهام"
+
+#~ msgid "Hiding"
+#~ msgstr "إخفاء"
+
+#~ msgid "Top left corner's position: X"
+#~ msgstr "موقع الركن اﻷيسر العلوي: س"
+
+#~ msgid "Y"
+#~ msgstr "ص"
+
+#~ msgid "Offset from screen edge:"
+#~ msgstr "الفرق من حافة الشاشة:"
+
+#~ msgid "Panel size:"
+#~ msgstr "حجم لوحة المهام:"
+
+#~ msgid ""
+#~ "Note: The panel will size itself to the\n"
+#~ "largest applet in the panel, and that\n"
+#~ "not all applets obey these sizes."
+#~ msgstr ""
+#~ "ملاحظة: ستقوم لوحة المهام بتحجيم\n"
+#~ "نفسها لتكون بحجم أكبر بريمج في اللوحة.\n"
+#~ "ولكن لن تتبع كل البريمجات هذه اﻷحجام."
+
+#~ msgid "Standard"
+#~ msgstr "قياسي"
+
+#~ msgid "Pixmap"
+#~ msgstr "رسمة بكسلية"
+
+#~ msgid "Color to use:"
+#~ msgstr "اللون المستخدم:"
+
+#~ msgid "Scale image (keep proportions)"
+#~ msgstr "حجّم الصورة (احتفظ بنسبة الأبعاد)"
+
+#~ msgid "Stretch image (change proportions)"
+#~ msgstr "مدد الصورة"
 
 #~ msgid "Rotate on vertaical panels"
 #~ msgstr "تدوير على لوحات التحكم العمودية"
@@ -2464,9 +2681,6 @@ msgstr "صغير جدا جدا"
 
 #~ msgid "CDE Applications"
 #~ msgstr "تطبيقات CDE"
-
-#~ msgid "Base Panel"
-#~ msgstr "لوحة المهام الأساسية"
 
 #~ msgid "Gnome Base Panel"
 #~ msgstr "لوحة المهام الأساسية في جينوم"
