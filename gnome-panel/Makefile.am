@@ -19,6 +19,8 @@ panel_SOURCES = \
 	panel.c		\
 	panel.h
 
+panel_DATA = panelrc
+
 module_test_SOURCES = \
 	module_test.c 
 
