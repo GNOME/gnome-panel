@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 08:31+0100\n"
-"PO-Revision-Date: 2004-04-24 15:02+0900\n"
+"POT-Creation-Date: 2004-07-29 05:17+0900\n"
+"PO-Revision-Date: 2004-07-29 05:41+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "날짜 및 시간 조정(_J)..."
+msgstr "날짜 및 시간 조정(_J)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -35,9 +34,8 @@ msgstr "시각 복사(_T)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "정보(_A)..."
+msgstr "정보(_A)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -56,9 +54,8 @@ msgstr "도움말(_H)"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "기본 설정(_P)..."
+msgstr "기본 설정(_P)"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -137,9 +134,8 @@ msgstr "%b %e일 %A"
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr "%b %e일 (%a)"
+msgstr "%b %e일"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -318,7 +314,6 @@ msgstr ""
 "다. strftime()에서 사용하는 형식으로 특정 형식을 지정할 수 있습니다."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -328,14 +323,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
-"이 키는 시계 애플릿이 사용할 시간 형식을 지정합니다. 가능한 값은 \"12-hour"
-"\", \"24-hour\", \"internet\", \"unix\" 그리고 \"custom\"입니다. \"internet"
-"\"으로 설정하면 시계는 인터넷 시각을 표시합니다. 인터넷 시각은 하루를 1000 "
-"\".beats\"로 표현합니다. 이 시스템에서는 시간대 구분이 없으므로, 세계 어디에"
-"나 시각은 동일합니다. \"unix\"로 설정하면 시계는 \"Epoch\"(1970년 1월 1일)로"
-"부터 몇 초가 지났는지를 표시합니다. \"custom\"이면 custom_format 키값에 따라 "
-"시각을 표시합니다."
+msgstr "이 키는 시계 애플릿이 사용할 시간 형식을 지정합니다. 가능한 값은 \"12-hour\", \"24-hour\", \"internet\", \"unix\" 그리고 \"custom\"입니다. \"internet\"으로 설정하면 시계는 인터넷 시각을 표시합니다. 인터넷 시각은 하루를 1000 \".beats\"로 표현합니다. 이 시스템에서는 시간대 구분이 없으므로, 세계 어디에나 시각은 동일합니다. \"unix\"로 설정하면 시계는 \"Epoch\"(1970년 1월 1일)로부터 몇 초가 지났는지를 표시합니다. \"custom\"이면 custom_format 키값에 따라 시각을 표시합니다."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -346,7 +334,6 @@ msgid "Time configuration tool"
 msgstr "시간 설정 도구"
 
 #: applets/clock/clock.schemas.in.h:17
-#, fuzzy
 msgid "Use Internet time"
 msgstr "인터넷 시각 사용"
 
@@ -1193,9 +1180,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "현재 데스크탑의 스크린샷을 찍을 수 없습니다."
 
 #: gnome-panel/gnome-panel-screenshot.c:1255
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "웹페이지(~/public__html)에 스크린샷 저장(_W)"
+msgstr "웹페이지에 스크린샷 저장 (%s에 저장)(_W)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1311
 msgid "Grab a window instead of the entire screen"
@@ -1423,9 +1410,8 @@ msgid "_Delete This Panel"
 msgstr "이 패널 지우기(_D)"
 
 #: gnome-panel/menu.c:2371
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "패널에 더하기(_A)"
+msgstr "패널에 더하기(_A)..."
 
 #: gnome-panel/menu.c:2416
 msgid "_New Panel"
@@ -1555,28 +1541,24 @@ msgid "Run a command"
 msgstr "명령을 실행합니다"
 
 #: gnome-panel/panel-addto.c:168
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "프로그램 실행"
+msgstr "사용자 지정 프로그램 실행 아이콘"
 
 #: gnome-panel/panel-addto.c:169
-#, fuzzy
 msgid "Create a new launcher"
-msgstr "실행 아이콘 만들기"
+msgstr "새 실행 아이콘 만들기"
 
 #: gnome-panel/panel-addto.c:179
-#, fuzzy
 msgid "Application Launcher..."
-msgstr "프로그램 실행..."
+msgstr "프로그램 실행 아이콘..."
 
 #: gnome-panel/panel-addto.c:180
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "그놈 메뉴에 들어있는 프로그램을 실행합니다"
 
 #: gnome-panel/panel-addto.c:191
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "그놈 패널"
+msgstr "그놈 주메뉴"
 
 #: gnome-panel/panel-addto.c:201
 msgid "Menu Bar"
@@ -1584,15 +1566,15 @@ msgstr "메뉴 모음"
 
 #: gnome-panel/panel-addto.c:202
 msgid "A custom menu bar"
-msgstr ""
+msgstr "사용자 지정 메뉴 모음"
 
 #: gnome-panel/panel-addto.c:213
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "그 안에 여러가지 항목을 집어 넣는 여닫을 수 있는 서랍"
 
 #: gnome-panel/panel-addto.c:301
 msgid "(empty)"
-msgstr ""
+msgstr "(비었음)"
 
 #: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1600,23 +1582,22 @@ msgid "query returned exception %s\n"
 msgstr "질의가 예외 %s을(를) 돌려줌\n"
 
 #: gnome-panel/panel-addto.c:831
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "패널에 더하기(_A)"
+msgstr "%s에 더하기"
 
 #: gnome-panel/panel-addto.c:833
-#, fuzzy
 msgid "Add to the panel"
-msgstr "패널에 더하기(_A)"
+msgstr "패널에 더하기"
 
 #: gnome-panel/panel-addto.c:839
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "%s에 더할 항목을 선택하십시오(_I):"
 
 #: gnome-panel/panel-addto.c:842
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "패널에 더할 항목을 선택하십시오(_I):"
 
 #: gnome-panel/panel-applet-frame.c:746
 #, c-format
@@ -2260,22 +2241,20 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "%s(을)를 여는 중 오류가 생겼습니다"
 
 #: gnome-panel/panel-recent.c:210
-#, fuzzy
 msgid "Clear recent document history?"
-msgstr "최근 문서"
+msgstr "최근 문서 기록을 지우시겠습니까?"
 
 #: gnome-panel/panel-recent.c:211
 msgid "This will clear the contents of the Recent Documents menu."
-msgstr ""
+msgstr "최근 문서 메뉴의 내용을 지웁니다."
 
 #: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
 msgstr "최근 문서"
 
 #: gnome-panel/panel-recent.c:271
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "최근 문서"
+msgstr "최근 문서 지우기"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2384,9 +2363,8 @@ msgid "_Force quit"
 msgstr "강제로 끝내기(_F)"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "달력"
+msgstr "지우기(_L)"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2915,18 +2893,3 @@ msgstr "아주아주 크게"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "아주아주 작게"
-
-#~ msgid "Launcher..."
-#~ msgstr "실행 아이콘..."
-
-#~ msgid "Launcher from menu"
-#~ msgstr "메뉴에서 실행 아이콘"
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "실행 상자에 더할 수 없습니다"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "항목에 'Exec' 또는 'URL' 필드가 없습니다"
-
-#~ msgid "Put into run dialog"
-#~ msgstr "실행 대화창에 넣기"
