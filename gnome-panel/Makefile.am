@@ -236,7 +236,7 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 		$(panel_enum_headers) >  $@
 
 schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = panelglobalconfig.schema
+schema_DATA = panelglobalconfig.schemas
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel.server.in

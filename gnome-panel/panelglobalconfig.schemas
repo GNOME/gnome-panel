@@ -1,0 +1,251 @@
+<gconfschemafile>
+
+<!-- 
+Panel Global Config Schema File -  work in progress
+-->
+
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/panel/tooltips-enabled</key>
+        <applyto>/apps/panel/tooltips-enabled</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/keep-menus-in-memory</key>
+        <applyto>/apps/panel/keep-menus-in-memory</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>FIXME - is this resolved with the new menu stuff?</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/use-large-icons</key>
+        <applyto>/apps/panel/use-large-icons</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/auto-update-menus</key>
+        <applyto>/apps/panel/auto-update-menus</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>FIXME - is this resolved with the new menu stuff?</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/disable-animations</key>
+        <applyto>/apps/panel/disable-animations</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/panel-minimized-size</key>
+        <applyto>/apps/panel/panel-minimized-size</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>3</default>
+        <locale name="C">
+          <short>FIXME - need to define limits</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/panel-show-delay</key>
+        <applyto>/apps/panel/panel-show-delay</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>2</default>
+        <locale name="C">
+          <short>FIXME - need to define limits</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/panel-hide-speed</key>
+        <applyto>/apps/panel/panel-hide-speed</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>80</default>
+        <locale name="C">
+          <short>FIXME - need to define limits</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/panel-hide-delay</key>
+        <applyto>/apps/panel/panel-hide-delay</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>2</default>
+        <locale name="C">
+          <short>FIXME - need to define limits</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/enable-key-bindings</key>
+        <applyto>/apps/panel/enable-key-bindings</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+	<schema>
+        <key>/schemas/apps/panel/menu-key</key>
+        <applyto>/apps/panel/menu-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+	
+	<schema>
+        <key>/schemas/apps/panel/menu-key</key>
+        <applyto>/apps/panel/menu-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+	
+      <schema>
+        <key>/schemas/apps/panel/run-key</key>
+        <applyto>/apps/panel/run-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F2</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/window-screenshot-key</key>
+        <applyto>/apps/panel/window-screenshot-key</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>Mod1-F2</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/autoraise-panel</key>
+        <applyto>/apps/panel/autoraise-panel</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/panel-window-layer</key>
+        <applyto>/apps/panel/panel-window-layer</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>0</default>
+        <locale name="C">
+          <short>Values are - NORMAL, BELOW, ABOVE</short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/drawer-autoclose</key>
+        <applyto>/apps/panel/drawer-autoclose</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/confirm-panel-remove</key>
+        <applyto>/apps/panel/confirm-panel-remove</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/highlight-launchers-on-mouseover</key>
+        <applyto>/apps/panel/highlight-launchers-on-mouseover</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/avoid-panel-overlap</key>
+        <applyto>/apps/panel/avoid-panel-overlap</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+  </schemalist>
+  
+</gconfschemafile>
