@@ -31,8 +31,7 @@ extern GSList *panel_list;
 extern int panels_to_sync;
 
 /*global settings*/
-extern int pw_explicit_step;
-extern int pw_auto_step;
+extern int pw_hiding_step_size;
 extern int pw_minimized_size;
 extern int pw_minimize_delay;
 extern int pw_maximize_delay;
@@ -634,6 +633,9 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
 
+#ifdef PANEL_DEBUG
+	g_warning ("do_hiding with step %d", step);
+#endif
 	if (basep->state != BASEP_MOVING) {
 #ifdef PANEL_DEBUG
 		g_warning ("do_hiding whilst not moving");
@@ -739,6 +741,10 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
+
+#ifdef PANEL_DEBUG
+		g_warning ("do_showing with step %d", step);
+#endif
 
 	if (basep->state != BASEP_MOVING) {
 #ifdef PANEL_DEBUG
@@ -1623,7 +1629,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
-					size, pw_explicit_step);
+					size, pw_hiding_step_size);
 	}
 
 	basep->state = state;
@@ -1664,7 +1670,7 @@ basep_widget_explicit_show (BasePWidget *basep)
 		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
-					 size, pw_explicit_step);
+					 size, pw_hiding_step_size);
 	}
 	
 	basep->state = BASEP_SHOWN;
@@ -1715,7 +1721,7 @@ basep_widget_autoshow (gpointer data)
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
-					 pw_auto_step);
+					 pw_hiding_step_size);
 	}
 
 	basep->state = BASEP_SHOWN;
@@ -1836,7 +1842,7 @@ basep_widget_autohide (gpointer data)
 		basep_widget_do_hiding (basep,
 					hide_orient,
 					size,
-					pw_auto_step);
+					pw_hiding_step_size);
 	}
 
 

@@ -64,9 +64,7 @@ GSList *applets_last = NULL;
 static GtkWidget *enable_animations_cb;
 static GtkWidget *simple_movement_cb;
 static GtkWidget *anim_frame;
-static GtkAdjustment *auto_hide_step_size;
-static GtkAdjustment *explicit_hide_step_size;
-static GtkAdjustment *drawer_step_size;
+static GtkAdjustment *hiding_step_size;
 static GtkAdjustment *minimize_delay;
 static GtkAdjustment *maximize_delay;
 static GtkAdjustment *minimized_size;
@@ -235,7 +233,7 @@ make_int_scale_box (char *title, GtkAdjustment **adj,
 	gtk_box_pack_start (GTK_BOX (box), label, FALSE, TRUE, 0);
 	gtk_widget_show (label);
 
-	/* Animation step_size scale */
+	/* Animation hiding_step_size scale */
 	*adj = GTK_ADJUSTMENT(gtk_adjustment_new(min, min, max, step, step, 0.0));
 	scale = gtk_hscale_new (*adj);
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -277,12 +275,8 @@ sync_animation_page_with_config(GlobalConfig *conf)
 				    !conf->disable_animations);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(simple_movement_cb),
 				    conf->simple_movement);
-	gtk_adjustment_set_value(auto_hide_step_size,
-				 conf->auto_hide_step_size);
-	gtk_adjustment_set_value(explicit_hide_step_size,
-				 conf->explicit_hide_step_size);
-	gtk_adjustment_set_value(drawer_step_size,
-				 conf->drawer_step_size);
+	gtk_adjustment_set_value(hiding_step_size,
+				 conf->hiding_step_size);
 	gtk_adjustment_set_value(minimize_delay,
 				 conf->minimize_delay);
 	gtk_adjustment_set_value(maximize_delay,
@@ -298,9 +292,7 @@ sync_config_with_animation_page(GlobalConfig *conf)
 		! GTK_TOGGLE_BUTTON(enable_animations_cb)->active;
 	conf->simple_movement =
 		GTK_TOGGLE_BUTTON(simple_movement_cb)->active;
-	conf->auto_hide_step_size = auto_hide_step_size->value;
-	conf->explicit_hide_step_size = explicit_hide_step_size->value;
-	conf->drawer_step_size = drawer_step_size->value;
+	conf->hiding_step_size = hiding_step_size->value;
 	conf->minimize_delay = minimize_delay->value;
 	conf->maximize_delay = maximize_delay->value;
 	conf->minimized_size = minimized_size->value;
@@ -309,7 +301,6 @@ sync_config_with_animation_page(GlobalConfig *conf)
 static GtkWidget *
 animation_notebook_page(void)
 {
-	GtkWidget *frame;
 	GtkWidget *box;
 	GtkWidget *vbox;
 	GtkWidget *frame_vbox;
@@ -329,8 +320,8 @@ animation_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (simple_movement_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 
-	/* AutoHide Animation step_size scale frame */
-	anim_frame = gtk_frame_new (_("Animation speed"));
+	/* Auto and Explicit Hide Animation step_size scale frame */
+	anim_frame = gtk_frame_new (_("Panel Animation Settings"));
 	gtk_container_set_border_width(GTK_CONTAINER (anim_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), anim_frame, TRUE, TRUE, 0);
 	gtk_widget_show (anim_frame);
@@ -340,33 +331,11 @@ animation_notebook_page(void)
 	gtk_container_add (GTK_CONTAINER (anim_frame), frame_vbox);
 	gtk_widget_show (frame_vbox);
 
-	box = make_int_scale_box(_("Auto hide"),
-				 &auto_hide_step_size,
-				 1.0, 100.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
-	gtk_widget_show (box);
-
 	/* ExplicitHide Animation step_size scale frame */
-	box = make_int_scale_box(_("Explicit hide"),
-				   &explicit_hide_step_size,
+	box = make_int_scale_box(_("Panel Animation Speed"),
+				   &hiding_step_size,
 				   1.0, 100.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
-
-	/* DrawerHide Animation step_size scale frame */
-	box = make_int_scale_box(_("Drawer sliding"),
-				   &drawer_step_size,
-				   1.0, 100.0, 1.0);
-	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE,0);
-
-	frame = gtk_frame_new (_("Auto hide"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-	gtk_widget_show (frame);
-
-	frame_vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (frame_vbox), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), frame_vbox);
-	gtk_widget_show (frame_vbox);
 
 	/* Minimize Delay scale frame */
 	box = make_int_scale_box (_("Hide delay (ms)"),
@@ -1348,17 +1317,9 @@ loadup_vals (void)
 	global_config.disable_animations =
 		conditional_get_bool ("disable_animations", FALSE, NULL);
 		
-	global_config.auto_hide_step_size =
-		conditional_get_int ("auto_hide_step_size",
-				     DEFAULT_AUTO_HIDE_STEP_SIZE, NULL);
-
-	global_config.explicit_hide_step_size =
-		conditional_get_int ("explicit_hide_step_size", 
-				     DEFAULT_EXPLICIT_HIDE_STEP_SIZE, NULL);
-		
-	global_config.drawer_step_size =
-		conditional_get_int ("drawer_step_size",
-				     DEFAULT_DRAWER_STEP_SIZE, NULL);
+	global_config.hiding_step_size =
+		conditional_get_int ("hiding_step_size", 
+				     DEFAULT_HIDING_STEP_SIZE, NULL);
 		
 	global_config.minimize_delay =
 		conditional_get_int ("minimize_delay",
@@ -1518,12 +1479,8 @@ write_config (GlobalConfig *conf)
 	GString *buf;
 	gnome_config_push_prefix ("/panel/Config/");
 
-	gnome_config_set_int("auto_hide_step_size",
-			     conf->auto_hide_step_size);
-	gnome_config_set_int("explicit_hide_step_size",
-			     conf->explicit_hide_step_size);
-	gnome_config_set_int("drawer_step_size",
-			     conf->drawer_step_size);
+	gnome_config_set_int("hiding_step_size",
+			     conf->hiding_step_size);
 	gnome_config_set_int("minimized_size",
 			     conf->minimized_size);
 	gnome_config_set_int("minimize_delay",

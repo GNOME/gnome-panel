@@ -210,9 +210,7 @@ void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
 
 /*change global params*/
-void		panel_widget_change_global	(int explicit_step,
-						 int auto_step,
-						 int drawer_step,
+void		panel_widget_change_global	(int hiding_step_size,
 						 int minimized_size,
 						 int minimize_delay,
 						 int maximize_delay,

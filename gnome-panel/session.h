@@ -7,9 +7,7 @@
 
 G_BEGIN_DECLS
 
-#define DEFAULT_AUTO_HIDE_STEP_SIZE 10
-#define DEFAULT_EXPLICIT_HIDE_STEP_SIZE 80
-#define DEFAULT_DRAWER_STEP_SIZE 80
+#define DEFAULT_HIDING_STEP_SIZE 50
 
 /* amount of time in ms. to wait before lowering panel */
 #define DEFAULT_MINIMIZE_DELAY 300

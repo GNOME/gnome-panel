@@ -56,9 +56,7 @@ static void applet_move			(PanelWidget      *panel,
 
 
 /*global settings*/
-int pw_explicit_step = 50;
-int pw_drawer_step = 20;
-int pw_auto_step = 10;
+int pw_hiding_step_size = 50;
 int pw_minimized_size = 6;
 int pw_minimize_delay = 300;
 int pw_maximize_delay = 0;
@@ -2816,21 +2814,15 @@ panel_widget_change_orient(PanelWidget *panel,
 
 /*change global params*/
 void
-panel_widget_change_global (int explicit_step,
-			    int auto_step,
-			    int drawer_step,
+panel_widget_change_global (int hiding_step_size,
 			    int minimized_size,
 			    int minimize_delay,
 			    int maximize_delay,
 			    PanelMovementType move_type,
 			    gboolean disable_animations)
 {
-	if (explicit_step > 0)
-		pw_explicit_step=explicit_step;
-	if (auto_step > 0)
-		pw_auto_step=auto_step;
-	if (drawer_step > 0)
-		pw_drawer_step=drawer_step;
+	if (hiding_step_size > 0)
+		pw_hiding_step_size=hiding_step_size;
 	if (minimized_size > 0)
 		pw_minimized_size=minimized_size;
 	if (minimize_delay >= 0)

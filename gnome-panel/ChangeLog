@@ -1,5 +1,13 @@
 2001-10-18  Glynn Foster  <glynn.foster@sun.com>
 
+	* basep-widget.c, gnome-panel-properties.c, 
+	* panel-widget.c, panel-widget.h, panel_config_global.h,
+	* session.c, session.h: Remove 'auto_hide_step_size', 
+	  'explicit_hide_step_size' and 'drawer_hide_step_size' and replace
+	  for a single configuration 'hiding_step_size' for all 
+
+2001-10-18  Glynn Foster  <glynn.foster@sun.com>
+
 	* button-widget.c, gnome-panel-properties.c:
 	* panel_config_global.h, session.c:  Remove fast_button_scaling
 	  and use GDK_INTERP_HYPER as default instead.

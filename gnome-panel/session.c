@@ -109,7 +109,6 @@ apply_global_config (void)
 					  done there are no menu applets*/
 	static int keep_bottom_old = -1;
 	static int normal_layer_old = -1;
-	static int autohide_size_old = -1;
 	static int menu_flags_old = -1;
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
@@ -117,9 +116,7 @@ apply_global_config (void)
 	static int old_avoid_collisions = -1;
 	GSList *li;
 
-	panel_widget_change_global (global_config.explicit_hide_step_size,
-				    global_config.auto_hide_step_size,
-				    global_config.drawer_step_size,
+	panel_widget_change_global (global_config.hiding_step_size,
 				    global_config.minimized_size,
 				    global_config.minimize_delay,
 				    global_config.maximize_delay,
@@ -226,11 +223,6 @@ apply_global_config (void)
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
 		if (IS_BASEP_WIDGET (pd->panel)) {
-			if ((autohide_size_old != global_config.minimized_size) &&
-			    (BASEP_WIDGET (pd->panel)->state == 
-			     BASEP_AUTO_HIDDEN)) {
-				gtk_widget_queue_resize (GTK_WIDGET (pd->panel));
-			}
 			basep_update_frame (BASEP_WIDGET (pd->panel));
 
 			if ((menu_flags_old != global_config.menu_flags) &&
@@ -242,7 +234,6 @@ apply_global_config (void)
 				
 		}
 	}
-	autohide_size_old = global_config.minimized_size;
 	menu_flags_old = global_config.menu_flags;
 
 	if (old_avoid_collisions != global_config.avoid_collisions) {
@@ -1704,18 +1695,10 @@ load_up_globals (void)
 	global_config.disable_animations =
 		conditional_get_bool ("disable_animations", FALSE, NULL);
 		
-	global_config.auto_hide_step_size =
-		conditional_get_int ("auto_hide_step_size",
-				     DEFAULT_AUTO_HIDE_STEP_SIZE, NULL);
-
-	global_config.explicit_hide_step_size =
-		conditional_get_int ("explicit_hide_step_size", 
-				     DEFAULT_EXPLICIT_HIDE_STEP_SIZE, NULL);
-		
-	global_config.drawer_step_size =
-		conditional_get_int ("drawer_step_size",
-				     DEFAULT_DRAWER_STEP_SIZE, NULL);
-		
+	global_config.hiding_step_size =
+		conditional_get_int ("hiding_step_size", 
+				     DEFAULT_HIDING_STEP_SIZE, NULL);
+	
 	global_config.minimize_delay =
 		conditional_get_int ("minimize_delay",
 				     DEFAULT_MINIMIZE_DELAY, NULL);
@@ -1851,12 +1834,8 @@ write_global_config (void)
 
 	gnome_config_push_prefix ("/panel/Config/");
 
-	gnome_config_set_int ("auto_hide_step_size",
-			      global_config.auto_hide_step_size);
-	gnome_config_set_int ("explicit_hide_step_size",
-			      global_config.explicit_hide_step_size);
-	gnome_config_set_int ("drawer_step_size",
-			      global_config.drawer_step_size);
+	gnome_config_set_int ("hiding_step_size",
+			      global_config.hiding_step_size);
 	gnome_config_set_int ("minimized_size",
 			      global_config.minimized_size);
 	gnome_config_set_int ("minimize_delay",
@@ -1946,19 +1925,15 @@ convert_write_config(void)
 	gnome_config_push_prefix("/panel/Config/");
 	
 	/* is there any new config written here */
-	gnome_config_get_int_with_default("auto_hide_step_size", &is_def);
+	gnome_config_get_int_with_default("hiding_step_size", &is_def);
 	if(!is_def) {
 		/* we don't want to overwrite a good config */
 		gnome_config_pop_prefix();
 		return;
 	}
 
-	gnome_config_set_int("auto_hide_step_size",
-			     global_config.auto_hide_step_size);
-	gnome_config_set_int("explicit_hide_step_size",
-			     global_config.explicit_hide_step_size);
-	gnome_config_set_int("drawer_step_size",
-			     global_config.drawer_step_size);
+	gnome_config_set_int("hiding_step_size",
+			     global_config.hiding_step_size);
 	gnome_config_set_int("minimized_size",
 			     global_config.minimized_size);
 	gnome_config_set_int("minimize_delay",
@@ -2053,17 +2028,9 @@ convert_read_old_config(void)
 	global_config.disable_animations =
 		gnome_config_get_bool("disable_animations=FALSE");
 
-	g_string_sprintf(buf,"auto_hide_step_size=%d",
-			 DEFAULT_AUTO_HIDE_STEP_SIZE);
-	global_config.auto_hide_step_size=gnome_config_get_int(buf->str);
-
-	g_string_sprintf(buf,"explicit_hide_step_size=%d",
-			 DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
-	global_config.explicit_hide_step_size=gnome_config_get_int(buf->str);
-
-	g_string_sprintf(buf,"drawer_step_size=%d",
-			 DEFAULT_DRAWER_STEP_SIZE);
-	global_config.drawer_step_size=gnome_config_get_int(buf->str);
+	g_string_sprintf(buf,"hiding_step_size=%d",
+			 DEFAULT_HIDING_STEP_SIZE);
+	global_config.hiding_step_size=gnome_config_get_int(buf->str);
 
 	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf->str);

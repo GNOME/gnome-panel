@@ -6,9 +6,7 @@
 
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
-	int auto_hide_step_size;
-	int explicit_hide_step_size;
-	int drawer_step_size;
+	int hiding_step_size;
 	int minimized_size;
 	int minimize_delay;
 	int maximize_delay;
