@@ -2057,16 +2057,6 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 
 	if(pos==-1) return -1;
 
-	/*this will get done right on size allocate!*/
-	if(panel->orient == PANEL_HORIZONTAL)
-		gtk_fixed_put(GTK_FIXED(panel),applet,
-			      pos,0);
-	else
-		gtk_fixed_put(GTK_FIXED(panel),applet,
-			      0,pos);
-
-	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY,panel);
-	
 	if(!ad) {
 		ad = g_new(AppletData,1);
 		ad->applet = applet;
@@ -2077,6 +2067,17 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 		/*this is a completely new applet, which was not yet bound*/
 		bind_top_applet_events(applet,bind_lower_events);
 	}
+
+	/*this will get done right on size allocate!*/
+	if(panel->orient == PANEL_HORIZONTAL)
+		gtk_fixed_put(GTK_FIXED(panel),applet,
+			      pos,0);
+	else
+		gtk_fixed_put(GTK_FIXED(panel),applet,
+			      0,pos);
+
+
+	gtk_widget_queue_resize(GTK_WIDGET(panel));
 
 	panel->applet_list =
 		g_list_insert_sorted(panel->applet_list,ad,
@@ -2089,8 +2090,6 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
 	
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
-
 	/*NOTE: forbidden list is not updated on addition, use the
 	function above for the panel*/
 
@@ -2120,13 +2119,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->pos = pos;
 
 	/*reparent applet*/
-	if(IS_BUTTON_WIDGET(applet) &&
-	   GTK_WIDGET_MAPPED(applet)) {
-		GTK_WIDGET_UNSET_FLAGS (applet, GTK_MAPPED);
-		gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
-		GTK_WIDGET_SET_FLAGS (applet, GTK_MAPPED);
-	} else
-		gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
+	gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
 
 	return pos;
 }

@@ -364,10 +364,10 @@ applet_widget_new_with_param(const char *param)
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
 	
-	printf("got winid: %ld\n",winid);
+	printf("got winid: %lu\n",winid);
 
 	applet = APPLET_WIDGET (gtk_type_new (applet_widget_get_type ()));
-
+	
 	GTK_PLUG(applet)->socket_window = gdk_window_foreign_new (winid);
 	GTK_PLUG(applet)->same_app = FALSE;
 

@@ -1651,9 +1651,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	}
 
 	/*this HAS to be set everytime we popup the menu*/
-	current_panel =
-		gtk_object_get_data(GTK_OBJECT(menu->button),
-				    PANEL_APPLET_PARENT_KEY);
+	current_panel = PANEL_WIDGET(menu->button->parent);
 	
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 	gtk_grab_remove(menu->button);
@@ -2166,9 +2164,7 @@ applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 	g_return_if_fail(info != NULL);
 	g_return_if_fail(info->widget != NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
-
+	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel != NULL);
 	
 	w = gtk_object_get_data(GTK_OBJECT(panel), PANEL_PARENT);

@@ -132,9 +132,7 @@ static void
 drawer_click(GtkWidget *w, Drawer *drawer)
 {
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
-	PanelWidget *parent =
-		gtk_object_get_data(GTK_OBJECT(drawer->button),
-				    PANEL_APPLET_PARENT_KEY);
+	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
 						PANEL_PARENT);
 	

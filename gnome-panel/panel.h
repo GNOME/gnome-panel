@@ -39,10 +39,7 @@ void send_state_change(void);
 void destroy_all_panels(void);
 
 #define get_panel_parent(appletw) \
-	(gtk_object_get_data( \
-	     gtk_object_get_data(GTK_OBJECT(appletw), \
-				 PANEL_APPLET_PARENT_KEY), \
-	     PANEL_PARENT))
+	(gtk_object_get_data(GTK_OBJECT(appletw->parent), PANEL_PARENT))
 
 
 END_GNOME_DECLS

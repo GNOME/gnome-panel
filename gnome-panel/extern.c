@@ -196,6 +196,8 @@ applet_request_id (const char *path, const char *param,
 	AppletInfo *info;
 	int i;
 	Extern *ext;
+	
+	puts("REQUEST_ID");
 
 	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
 		if(info && info->type == APPLET_EXTERN_PENDING) {
@@ -254,6 +256,8 @@ applet_register (const char * ior, int applet_id)
 	PanelWidget *panel;
 	Extern *ext;
 
+	puts("REGISTER");
+
 	/*start the next applet in queue*/
 	exec_queue_done(applet_id);
 
@@ -284,6 +288,7 @@ static int
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
 	Extern *ext = data;
+	puts("EXTERN_SOCKET_DESTROY");
 	gtk_widget_destroy(ext->ebox);
 	extern_clean(ext);
 	return FALSE;
@@ -296,6 +301,8 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		     AppletType type)
 {
 	GtkWidget *socket;
+
+	puts("RESERVE_SPOT");
 
 	ext->ebox = gtk_event_box_new();
 	gtk_widget_set_events(ext->ebox, (gtk_widget_get_events(ext->ebox) |
@@ -325,7 +332,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	if(!GTK_WIDGET_REALIZED(socket))
 		gtk_widget_realize(socket);
 
-	printf("socket wid: %ld\n", GDK_WINDOW_XWINDOW(socket->window));
+	printf("socket wid: %lu\n", GDK_WINDOW_XWINDOW(socket->window));
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
 

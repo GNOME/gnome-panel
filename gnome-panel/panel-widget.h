@@ -22,7 +22,6 @@ BEGIN_GNOME_DECLS
 
 #define PANEL_MINIMUM_WIDTH 48
 
-#define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"

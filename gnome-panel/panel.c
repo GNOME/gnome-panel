@@ -81,8 +81,7 @@ get_lowest_level_master_pd(PanelWidget *panel)
 	PanelData *pd;
 
 	while(panel->master_widget)
-		panel = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
-					    PANEL_APPLET_PARENT_KEY);
+		panel = PANEL_WIDGET(panel->master_widget->parent);
 	parent = gtk_object_get_data(GTK_OBJECT(panel),PANEL_PARENT);
 	g_return_val_if_fail(parent!=NULL,NULL);
 	
@@ -461,8 +460,7 @@ panel_applet_added_idle(gpointer data)
 {
 	int applet_id = GPOINTER_TO_INT(data);
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-						 PANEL_APPLET_PARENT_KEY);
+	PanelWidget *panel = PANEL_WIDGET(info->widget->parent);
 
 	orientation_change(applet_id,panel);
 

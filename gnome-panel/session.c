@@ -168,8 +168,7 @@ save_applet_configuration(int num)
 		return;
 	}
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
 
 	if((panel_num = g_list_index(panels,panel)) == -1) {
@@ -513,8 +512,7 @@ panel_session_die (GnomeClient *client,
 	    i<applet_count;
 	    i++,info++) {
 		if(info->type == APPLET_EXTERN) {
-			gtk_container_remove(GTK_CONTAINER(info->widget),
-					     GTK_BIN(info->widget)->child);
+			gtk_widget_destroy(info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			XKillClient(GDK_DISPLAY(),

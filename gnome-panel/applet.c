@@ -39,8 +39,7 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 
 	g_return_if_fail(info != NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel!=NULL);
 
 	panel_widget_applet_drag_start(panel,info->widget);
