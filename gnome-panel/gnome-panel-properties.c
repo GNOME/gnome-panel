@@ -355,7 +355,7 @@ static void
 main_dialog_response(GtkWindow *window, int button, gpointer data)
 {
 	switch (button) {
-		case GTK_RESPONSE_OK:
+		case GTK_RESPONSE_CLOSE:
 			gtk_main_quit();
 			break;
 		default:
@@ -380,7 +380,7 @@ main (int argc, char **argv)
   	main_window = gtk_dialog_new();
 
 	gtk_dialog_add_button (GTK_DIALOG(main_window),
-		GTK_STOCK_OK, GTK_RESPONSE_OK);
+		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
 	g_signal_connect (G_OBJECT(main_window), "response",
 			  G_CALLBACK (main_dialog_response),
