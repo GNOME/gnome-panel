@@ -408,7 +408,6 @@ applet_destroy(GtkWidget *w, gpointer data)
 		g_free(umenu);
 		info->user_menu = my_g_list_pop_first(info->user_menu);
 	}
-	mulapp_remove_empty_from_list();
 
 	return FALSE;
 }

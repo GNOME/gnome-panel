@@ -12,23 +12,24 @@ typedef struct _Extern Extern;
 struct _Extern {
         CORBA_Object obj;
 
-        char *path;
-	char *params;
+	char *goad_id;
 	char *cfg;
 	GtkWidget *ebox;
+	GList *goad_ids; /*applet goad_ids which can be started from
+			   this object*/
 };
 void extern_clean(Extern *ext);
 
-void load_extern_applet(char *path, char *params, char *cfgpath,
-			PanelWidget *panel, int pos);
-void load_goad_applet(char *path, char *params, char *cfgpath,
-		      PanelWidget *panel, int pos);
+void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos);
 
 /*stuff for corba*/
-int applet_request_id (const char *path, const char *param,
-		       int dorestart, char **cfgpath,
+int applet_request_id (const char *goad_id,
+		       char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
-void applet_register (CORBA_Object obj, int applet_id, const char *goad_id);
+void applet_register (CORBA_Object obj,
+		      int applet_id,
+		      const char *goad_id,
+		      const char *goad_ids);
 guint32 reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 			     AppletType type);
 void applet_abort_id(int applet_id);

@@ -1,3 +1,22 @@
+Thu Dec 03 02:39:56 1998  George Lebl  <jirka@5z.com>
+
+	* applet-widget.[ch],session.c,extern.[ch],panel.c,menu.c: removed
+	  the params stiff from extern applets and use goad_id's exclusively
+	  for everything
+
+	* orbit-glue.c,orbit-applet-lib.c,applet-lib.h: changed the corba
+	  interface a bit to pass only goad_id's
+
+	* applet-widget.[ch]: removed _new_with_params, and changed the
+	  multiapplet argument to _init is not a list of the goad_id's
+	  that can be passed to the new applet callback
+
+	* extern.c: created a new launch multiapplet framework and dumped
+	  the old mulapp/exec-queue approach
+
+	* exec-queue.[ch],mulapp.[ch]: removed now done in a simpler manner
+	  in extern.c
+
 1998-12-01  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* appletsConf.sh.in (APPLETS_LIBS): Also list `-lpanel_applet'.

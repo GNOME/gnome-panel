@@ -89,10 +89,6 @@ panel_SOURCES = 		\
 	corner-widget.h		\
 	button-widget.c  	\
 	button-widget.h		\
-	exec-queue.c		\
-	exec-queue.h		\
-	mulapp.c		\
-	mulapp.h		\
 	panel-util.c		\
 	panel-util.h		\
 	gdkextra.c		\

@@ -17,9 +17,7 @@ extern int need_complete_save;
 
 static CORBA_short
 server_applet_request_id(POA_GNOME_Panel *servant,
-			 CORBA_char *path,
-			 CORBA_char * param,
-			 CORBA_short dorestart,
+			 CORBA_char *goad_id,
 			 CORBA_char ** cfgpath,
 			 CORBA_char ** globcfgpath,
 			 CORBA_unsigned_long* wid,
@@ -30,6 +28,7 @@ server_applet_register(POA_GNOME_Panel *servant,
 		       CORBA_Object obj,
 		       CORBA_short applet_id,
 		       CORBA_char *goad_id,
+		       CORBA_char *goad_ids,
 		       CORBA_Environment *ev);
 
 static void
@@ -148,9 +147,7 @@ static POA_GNOME_Panel servant = { NULL, &vepv };
 
 static CORBA_short
 server_applet_request_id(POA_GNOME_Panel *servant,
-			 CORBA_char *path,
-			 CORBA_char * param,
-			 CORBA_short dorestart,
+			 CORBA_char *goad_id,
 			 CORBA_char ** cfgpath,
 			 CORBA_char ** globcfgpath,
 			 CORBA_unsigned_long* wid,
@@ -161,8 +158,7 @@ server_applet_request_id(POA_GNOME_Panel *servant,
   int applet_id;
   CORBA_unsigned_long winid;
 
-  applet_id = applet_request_id (path,param,dorestart,
-				 &cfg, &globcfg, &winid);
+  applet_id = applet_request_id (goad_id, &cfg, &globcfg, &winid);
   *wid = winid;
 
   if(cfg) {
@@ -177,15 +173,15 @@ server_applet_request_id(POA_GNOME_Panel *servant,
   return applet_id;
 }
 
-
 static void
 server_applet_register(POA_GNOME_Panel *servant,
 		       CORBA_Object obj,
 		       CORBA_short applet_id,
 		       CORBA_char *goad_id,
+		       CORBA_char *goad_ids,
 		       CORBA_Environment *ev)
 {
-  applet_register(obj, applet_id, goad_id);
+	applet_register(obj, applet_id, goad_id,goad_ids);
 }
 
 
@@ -379,9 +375,9 @@ void send_applet_do_callback (CORBA_Object appl, int applet_id,
     panel_clean_applet(applet_id);
 }
 
-void send_applet_start_new_applet (CORBA_Object appl, const char *param)
+void send_applet_start_new_applet (CORBA_Object appl, const char *goad_id)
 {
-  GNOME_Applet_start_new_applet(appl, (CORBA_char *)param, &ev);
+  GNOME_Applet_start_new_applet(appl, (CORBA_char *)goad_id, &ev);
 }
 
 void send_applet_change_back (CORBA_Object appl, int applet_id,

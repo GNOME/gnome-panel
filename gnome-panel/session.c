@@ -195,10 +195,8 @@ save_applet_configuration(int num)
 						    path, globalcfg)) {
 
 				gnome_config_set_string("id", EXTERN_ID);
-				gnome_config_set_string("execpath",
-							ext->path);
-				gnome_config_set_string("parameters",
-							ext->params);
+				gnome_config_set_string("goad_id",
+							ext->goad_id);
 			} else {
 				g_free(globalcfg);
 				gnome_config_set_string("id", EMPTY_ID);
@@ -616,7 +614,7 @@ static void
 load_default_applets(void)
 {
 	load_menu_applet(NULL,0, panels->data, 0);
-	load_extern_applet("gen_util_applet","--activate-goad-server=clock",NULL,
+	load_extern_applet("gen_util_clock",NULL,
 			   panels->data,INT_MAX/2/*right flush*/);
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/
@@ -670,15 +668,15 @@ init_user_applets(void)
 		pos += gnome_config_get_bool("right_stick=false")?INT_MAX/2:0;
 		
 		if(strcmp(applet_name,EXTERN_ID) == 0) {
-			char *path = gnome_config_get_string("execpath=");
-			char *params = gnome_config_get_string("parameters=");
-			/*this is the config path to be passed to the applet
-			  when it loads*/
-			g_snprintf(buf,256,"%sApplet_%d_Extern/",
-				   old_panel_cfg_path,num);
-			load_extern_applet(path,params,buf,panel,pos);
-			g_free(path);
-			g_free(params);
+			char *goad_id = gnome_config_get_string("goad_id=");
+			if(goad_id) {
+				/*this is the config path to be passed to the
+				  applet when it loads*/
+				g_snprintf(buf,256,"%sApplet_%d_Extern/",
+					   old_panel_cfg_path,num);
+				load_extern_applet(goad_id,buf,panel,pos);
+				g_free(goad_id);
+			}
 		} else if(strcmp(applet_name,LAUNCHER_ID) == 0) { 
 			char *params = gnome_config_get_string("parameters=");
 			load_launcher_applet(params,panel,pos);

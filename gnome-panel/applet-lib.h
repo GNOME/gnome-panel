@@ -21,12 +21,11 @@ BEGIN_GNOME_DECLS
   applet)*/
 
 CORBA_Object gnome_panel_applet_corba_init(const char *goad_id);
-char *gnome_panel_applet_request_id (const char *path, const char *param,
-				     int dorestart,
+char *gnome_panel_applet_request_id (const char *goad_id,
 				     int *applet_id, char **cfgpath,
 				     char **globcfgpath, guint32 *winid);
 char *gnome_panel_applet_register (GtkWidget *widget, int applet_id,
-				   const char *goad_id,
+				   const char *goad_id, const char *goad_ids,
 				   CORBA_Object applet);
 char *gnome_panel_applet_abort_id (int applet_id);
 char *gnome_panel_applet_remove_from_panel (int applet_id, const char *goad_id);
@@ -63,7 +62,7 @@ char * gnome_panel_applet_remove_tooltip (int applet_id);
 void _gnome_applet_change_orient(int applet_id, int orient);
 int _gnome_applet_session_save(int applet_id, const char *cfgpath,
 			       const char *globcfgpath);
-void _gnome_applet_start_new_applet(const char *params);
+void _gnome_applet_start_new_applet(const char *goad_id);
 void _gnome_applet_back_change(int applet_id, int back_type,
 			       const char *pixmap, GdkColor *color);
 void _gnome_applet_tooltips_state(int applet_id, int enabled);

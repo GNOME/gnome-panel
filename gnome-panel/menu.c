@@ -774,44 +774,39 @@ setup_directory_drag (GtkWidget *menuitem, char *directory)
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 }
 
+static char *
+get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
+{
+	int i;
+	int constantlen = strlen("--activate-goad-server");
+	char *goad_id=NULL;
+	/*FIXME:
+	  this is a horrible horrible hack and should be taken out
+	  and shot, once we add proper way to do this*/
+	for(i=1;ii->exec[i];i++) {
+		if(strncmp("--activate-goad-server",
+			   ii->exec[i],constantlen)==0) {
+			if(strlen(ii->exec[i])>constantlen)
+				goad_id = g_strdup(&ii->exec[i][constantlen+1]);
+			else
+				goad_id = g_strdup(ii->exec[i+1]);
+		}
+	}
+	return goad_id;
+}
+
+
 static void
 setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
 {
         static GtkTargetEntry menu_item_targets[] = {
 		{ "application/x-panel-applet", 0, 0 }
 	};
-
-	char *path;
-	char *param;
-	char *data;
-	gint length;
-
-	path = ii->exec[0];
-
-	g_return_if_fail(path!=NULL);
+	char *goad_id = get_applet_goad_id_from_dentry(ii);
 	
-	if((ii->exec[1])!=NULL)
-		param = g_strjoinv (" ", ii->exec + 1);
-	else
-		param = NULL;
-
-	data = g_new (gchar, strlen(path) + 1 + 
-		      (param ? (strlen(param) + 1) : 0));
-
-	length = 0;
-	strcpy(data, path);
-	length += strlen(path);
-	if (param) {
-		data[length] = '\n';
-		length++;
-		strcpy(data + length, param);
-		length += strlen(param);
-		data[length] = '\0';
-	}
-
-	if (param)
-		g_free(param);
-
+	if(!goad_id)
+		return;
+	
 	gtk_drag_source_set(menuitem,
 			    GDK_BUTTON1_MASK,
 			    menu_item_targets, 1,
@@ -819,7 +814,7 @@ setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
 	
 	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
 			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb), NULL,
-			   data, (GtkDestroyNotify)g_free, FALSE, FALSE);
+			   goad_id, (GtkDestroyNotify)g_free, FALSE, FALSE);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 
@@ -863,21 +858,15 @@ static int
 add_applet (GtkWidget *w, gpointer data)
 {
 	GnomeDesktopEntry *ii = data;
-	char *path;
-	char *param;
 
-	path = ii->exec[0];
-
-	g_return_val_if_fail(path!=NULL,FALSE);
+	char *goad_id = get_applet_goad_id_from_dentry(ii);
 	
-	if((ii->exec[1])!=NULL)
-		param = g_strjoinv (" ", ii->exec + 1);
-	else
-		param = NULL;
+	if(!goad_id) {
+		g_warning(_("Can't get goad_id from desktop entry!"));
+		return TRUE;
+	}
+	load_extern_applet(goad_id,NULL,current_panel,0);
 
-	load_extern_applet(path,param,NULL,current_panel,0);
-
-	if(param) g_free(param);
 	return TRUE;
 }
 

@@ -934,15 +934,9 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 	}
 	case TARGET_APPLET: {
 		int pos = panel_widget_get_cursorloc(panel);
-		char *path = (char *)selection_data->data;
-		char *params = strchr (path, '\n');
+		char *goad_id = (char *)selection_data->data;
 
-		if (params) {
-			*params = '\0';
-			params++;
-		}
-		
-		load_extern_applet(path,params,NULL,panel,pos);
+		load_extern_applet(goad_id,NULL,panel,pos);
 		break;
 	}
 	}

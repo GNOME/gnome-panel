@@ -26,9 +26,6 @@
 #include "logout.h"
 #include "extern.h"
 
-#include "mulapp.h"
-#include "exec-queue.h"
-
 #include "orbit-glue.h"
 
 #include "panel-util.h"

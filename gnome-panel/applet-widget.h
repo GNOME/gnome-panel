@@ -42,7 +42,7 @@ typedef struct _AppletWidget		AppletWidget;
 typedef struct _AppletWidgetClass	AppletWidgetClass;
 
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
-typedef void (*AppletStartNewFunc)(const char *param, gpointer data);
+typedef void (*AppletStartNewFunc)(const char *goad_id, gpointer data);
 
 struct _AppletWidget
 {
@@ -53,8 +53,6 @@ struct _AppletWidget
         char                    *goad_id;
 
 	/* use these as prefixes when loading saving data */
-	char			*cfgpath; /*source compatibility SHOULD BE REMOVED
-					    when session_save signal is removed*/
 	char			*globcfgpath; /*a file which applets can use for
 						global settings*/
 	char			*privcfgpath; /*applets own cfg path*/
@@ -89,24 +87,11 @@ struct _AppletWidgetClass
 	int (* save_session) (AppletWidget *applet,
 			      char *cfgpath,
 			      char *globcfgpath);
-
-	/*old version of the signal ... about to be phased out,
-	  DO NOT USE THIS SIGNAL IN NEW APPLETS*/
-	int (* session_save) (AppletWidget *applet,
-			      char *cfgpath,
-			      char *globcfgpath);
 };
 
 guint		applet_widget_get_type		(void);
 
-/*start one but add a parameter that the panel should use next time
-  to start us*/
-GtkWidget*	applet_widget_new_with_param	(const char *param,
-						 const char *goad_id);
-
-/*start a normal applet*/
-#define applet_widget_new(goad_id)	\
-	applet_widget_new_with_param("", goad_id)
+GtkWidget*	applet_widget_new		(const char *goad_id);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
@@ -189,7 +174,7 @@ int		applet_widget_init		(const char *app_id,
 						 unsigned int flags,
 						 poptContext *return_ctx,
 						 int last_die,
-						 int multi_applet,
+						 GList *goad_ids,
 						 AppletStartNewFunc new_func,
 						 gpointer new_func_data);
 
@@ -197,18 +182,10 @@ int		applet_widget_init		(const char *app_id,
 #define \
 applet_widget_init_defaults(app_id,app_version,argc,argv,options,flags,return_ctx) \
 applet_widget_init(app_id,app_version,argc,argv,options,flags,return_ctx, \
-		   TRUE,FALSE,NULL,NULL)
+		   TRUE,NULL,NULL,NULL)
 
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);
-
-/* convenience function for multi applets */
-char *		make_param_string		(int argc, char *argv[]);
-
-#ifndef PANEL_UTIL_H
-/*from panel-util.h*/
-char *get_full_path(char *argv0);
-#endif
 
 END_GNOME_DECLS
 

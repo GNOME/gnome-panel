@@ -29,16 +29,97 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
+static GList *extern_applets = NULL;
+static char *goad_id_starting = NULL; /*the goad id of the applet that is
+					being started right now, before it
+					does applet_register*/
+static GList *start_queue = NULL; /*the queue of the applets to be
+				    started*/
+static int start_timeout = -1; /*id of the timeout for starting new applet*/
+
+/*see if there is an extern applet running capable of doing
+  something with this goad_id*/
+static CORBA_Object
+extern_is_goad_ready(const char *goad_id)
+{
+	GList *li;
+	for(li=extern_applets;li!=NULL;li=g_list_next(li)) {
+		Extern *e = li->data;
+		GList *l;
+		for(l=e->goad_ids;l!=NULL;l=g_list_next(l)) {
+			if(strcmp(l->data,goad_id)==0)
+				/*found one*/
+				return e->obj;
+		}
+	}
+	return CORBA_OBJECT_NIL;
+}
+
+static void extern_start_next(void);
+
+static int
+start_timeout_handler(gpointer data)
+{
+	start_timeout = -1;
+	extern_start_next();
+	return FALSE;
+}
+
+
+/*queue up a new goad id to start or start it if nothing else is
+  starting*/
+static void
+extern_start_new_goad_id(char *goad_id)
+{
+	if(!goad_id_starting) {
+		CORBA_Object obj;
+		obj = extern_is_goad_ready(goad_id);
+		if(obj==CORBA_OBJECT_NIL) {
+			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, 0), NULL);
+		} else {
+			send_applet_start_new_applet(obj,goad_id);
+		}
+		goad_id_starting = g_strdup(goad_id);
+	} else {
+		if(start_timeout>-1)
+			gtk_timeout_remove(start_timeout);
+		start_timeout = -1;
+		start_queue = g_list_append(start_queue,g_strdup(goad_id));
+		start_timeout = gtk_timeout_add(100*1000,start_timeout_handler,NULL);
+	}
+}
+
+static void
+extern_start_next(void)
+{
+	char *goad_id;
+	if(goad_id_starting)
+		g_free(goad_id_starting);
+	goad_id_starting = NULL;
+	if(!start_queue)
+		return;
+	goad_id = start_queue->data;
+	start_queue = g_list_remove(start_queue,goad_id);
+	
+	extern_start_new_goad_id(goad_id);
+	
+	g_free(goad_id);
+}
+
+
 void
 extern_clean(Extern *ext)
 {
-        CORBA_Environment ev;
-	CORBA_exception_init(&ev);
-        CORBA_Object_release(ext->obj, &ev);
-	CORBA_exception_free(&ev);
+	extern_applets = g_list_remove(extern_applets,ext);
 
-	g_free(ext->path);
-	g_free(ext->params);
+	if(ext->obj != CORBA_OBJECT_NIL) {
+		CORBA_Environment ev;
+		CORBA_exception_init(&ev);
+		CORBA_Object_release(ext->obj, &ev);
+		CORBA_exception_free(&ev);
+	}
+
+	g_free(ext->goad_id);
 	g_free(ext->cfg);
 	g_free(ext);
 }
@@ -103,8 +184,16 @@ void
 applet_abort_id(int applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
+	Extern *e;
 
 	g_return_if_fail(info != NULL);
+	
+	e = info->data;
+
+	g_return_if_fail(e != NULL);
+	
+	if(strcmp(e->goad_id,goad_id_starting)==0)
+		extern_start_next();
 
 	/*only reserved spots can be canceled, if an applet
 	  wants to chance a pending applet it needs to first
@@ -164,26 +253,8 @@ applet_drag_stop(int applet_id)
 	panel_widget_applet_drag_end_no_grab(panel);
 }
 
-static int
-compare_params(const char *p1,const char *p2)
-{
-	if(!p1) {
-		if(!p2 || *p2=='\0')
-			return TRUE;
-		else
-			return FALSE;
-	} else if(!p2) {
-		if(!p1 || *p1=='\0')
-			return TRUE;
-		else
-			return FALSE;
-	}
-	return (strcmp(p1,p2)==0);
-}
-
 int
-applet_request_id (const char *path, const char *param,
-		   int dorestart, char **cfgpath,
+applet_request_id (const char *goad_id, char **cfgpath,
 		   char **globcfgpath, guint32 * winid)
 {
 	AppletInfo *info;
@@ -194,8 +265,7 @@ applet_request_id (const char *path, const char *param,
 		if(info && info->type == APPLET_EXTERN_PENDING) {
 			Extern *ext = info->data;
 			g_assert(ext);
-			if(strcmp(ext->path,path)==0 &&
-			   compare_params(param,ext->params)) {
+			if(strcmp(ext->goad_id,goad_id)==0) {
 				/*we started this and already reserved a spot
 				  for it, including the socket widget*/
 				GtkWidget *socket =
@@ -207,9 +277,6 @@ applet_request_id (const char *path, const char *param,
 				*globcfgpath = g_strdup(old_panel_cfg_path);
 				info->type = APPLET_EXTERN_RESERVED;
 				*winid=GDK_WINDOW_XWINDOW(socket->window);
-				if(!dorestart && !mulapp_is_in_list(path))
-					mulapp_add_to_list(path);
-
 				return i;
 			}
 		}
@@ -219,8 +286,7 @@ applet_request_id (const char *path, const char *param,
 	  have already reserved a spot for it*/
 	ext = g_new(Extern,1);
 	ext->obj = CORBA_OBJECT_NIL;
-	ext->path = g_strdup(path);
-	ext->params = g_strdup(param);
+	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = NULL;
 
 	*winid = reserve_applet_spot (ext, panels->data, 0,
@@ -233,28 +299,42 @@ applet_request_id (const char *path, const char *param,
 	*cfgpath = g_copy_strings(old_panel_cfg_path,"Applet_Dummy/",NULL);
 	*globcfgpath = g_strdup(old_panel_cfg_path);
 
-	info = get_applet_info(applet_count-1);
-	if(!dorestart && !mulapp_is_in_list(path))
-		mulapp_add_to_list(path);
-
+	/*the i will now be the applet_id*/
 	return i;
 }
 
 void
-applet_register (CORBA_Object obj, int applet_id, const char *goad_id)
+applet_register (CORBA_Object obj,
+		 int applet_id,
+		 const char *goad_id,
+		 const char *goad_ids)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel;
 	Extern *ext;
 	CORBA_Environment ev;
-
-	/*start the next applet in queue*/
-	exec_queue_done(applet_id);
+	char *s;
+	char *p;
 
 	g_return_if_fail(info != NULL);
-	
+
 	ext = info->data;
 	g_assert(ext);
+
+	s = g_strdup(goad_ids);
+
+	p = strtok(s,",");
+	while(p) {
+		ext->goad_ids = g_list_prepend(ext->goad_ids,
+					       g_strdup(p));
+		p = strtok(NULL,",");
+	}
+	g_free(s);
+	
+	/*if we should start the next applet*/
+	if(strcmp(goad_id,goad_id_starting)==0)
+		extern_start_next();
+
 
 	panel = PANEL_WIDGET(info->widget->parent);
 	g_return_if_fail(panel!=NULL);
@@ -267,8 +347,6 @@ applet_register (CORBA_Object obj, int applet_id, const char *goad_id)
 	CORBA_Object_release(ext->obj, &ev);
 	ext->obj = CORBA_Object_duplicate(obj, &ev);
 	CORBA_exception_free(&ev);
-
-	mulapp_add_obj_and_free_queue(ext->path, ext->obj);
 
 	orientation_change(applet_id,panel);
 	back_change(applet_id,panel);
@@ -334,33 +412,9 @@ applet_set_tooltip(int applet_id, const char *tooltip)
 }
 
 void
-load_extern_applet(char *path, char *params, char *cfgpath,
-		   PanelWidget *panel, int pos)
+load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 {
-	char *fullpath;
-	char *param;
-	char *goad_id = NULL, *ctmp1, *ctmp2;
 	Extern *ext;
-
-	/*start nothing, applet is taking care of everything*/
-	if(path == NULL ||
-	   path[0] == '\0')
-		return;
-
-	if(!params)
-		param = "";
-	else
-		param = params;
-
-	ctmp1 = strstr(params, "--activate-goad-server=");
-	if(ctmp1) {
-	  ctmp2 = strchr(ctmp1, ' ');
-	  if(ctmp2) {
-	    goad_id = g_strndup(ctmp1 + strlen("--activate-goad-server="),
-				ctmp2 - ctmp1 + strlen("--activate-goad-server="));
-	  } else
-	    goad_id = g_strdup(ctmp1 + strlen("--activate-goad-server="));
-	}
 
 	if(!cfgpath || !*cfgpath)
 		cfgpath = g_copy_strings(old_panel_cfg_path,
@@ -368,19 +422,10 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 	else
 		/*we will free this lateer*/
 		cfgpath = g_strdup(cfgpath);
-
-	/*make it an absolute path, same as the applets will
-	  interpret it and the applets will sign themselves as
-	  this, so it has to be exactly the same*/
-	if(path[0]!='#')
-		fullpath = get_full_path(path);
-	else
-		fullpath = g_strdup(path);
 	
 	ext = g_new(Extern,1);
 	ext->obj = CORBA_OBJECT_NIL;
-	ext->path = fullpath;
-	ext->params = g_strdup(params);
+	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = cfgpath;
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
@@ -390,13 +435,5 @@ load_extern_applet(char *path, char *params, char *cfgpath,
 		return;
 	}
 
-	/*'#' marks an applet that will take care of starting
-	  itself but wants us to reserve a spot for it*/
-	if(path[0]!='#') {
-	  if(goad_id)
-	    CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, 0), NULL);
-	  else
-	    exec_prog(applet_count-1,fullpath,param);
-	}
-	g_free(goad_id);
+	extern_start_new_goad_id(goad_id);
 }

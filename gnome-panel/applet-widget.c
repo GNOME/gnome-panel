@@ -2,8 +2,11 @@
 #include <string.h>
 #include <gtk/gtk.h>
 #include <gnome.h>
+
 #include <applet-widget.h>
 #include <applet-lib.h>
+
+#include "gnome-panel.h"
 
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);
@@ -38,9 +41,11 @@ static GtkPlugClass *parent_class;
 static AppletStartNewFunc start_new_func=NULL;
 static gpointer start_new_func_data=NULL;
 
-static char *myinvoc= NULL;
-
 static GtkTooltips *applet_tooltips=NULL;
+
+extern GNOME_Applet applet_obj;
+
+static GList *goad_ids_list = NULL;
 
 guint
 applet_widget_get_type ()
@@ -67,13 +72,12 @@ applet_widget_get_type ()
 enum {
 	CHANGE_ORIENT_SIGNAL,
 	SAVE_SESSION_SIGNAL,
-	SESSION_SAVE_SIGNAL,
 	BACK_CHANGE_SIGNAL,
 	TOOLTIP_STATE_SIGNAL,
 	LAST_SIGNAL
 };
 
-static int applet_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
+static int applet_widget_signals[LAST_SIGNAL] = {0,0,0,0};
 
 static void
 applet_widget_marshal_signal_orient (GtkObject * object,
@@ -101,32 +105,6 @@ applet_widget_marshal_signal_save (GtkObject * object,
 	rfunc = (AppletWidgetSaveSignal) func;
 
 	retval = GTK_RETLOC_BOOL(args[2]);
-
-	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
-		  	    GTK_VALUE_STRING (args[1]),
-		  	    func_data);
-	
-	/*make applets that forget to do this not fsckup*/
-	gnome_config_sync();
-	gnome_config_drop_all();
-}
-
-/*THIS ONE WILL GIVE A WARNING ABOUT USING OLD API*/
-static void
-applet_widget_marshal_signal_save_old (GtkObject * object,
-				       GtkSignalFunc func,
-				       gpointer func_data,
-				       GtkArg * args)
-{
-	AppletWidgetSaveSignal rfunc;
-	int *retval;
-
-	rfunc = (AppletWidgetSaveSignal) func;
-
-	retval = GTK_RETLOC_BOOL(args[2]);
-	
-	g_warning("Do not use the session_save signal on applets, "
-		  "please use the save_session signal");
 
 	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
 		  	    GTK_VALUE_STRING (args[1]),
@@ -197,18 +175,6 @@ applet_widget_class_init (AppletWidgetClass *class)
 			       2,
 			       GTK_TYPE_STRING,
 			       GTK_TYPE_STRING);
-	/*this one should be phased out*/
-	applet_widget_signals[SESSION_SAVE_SIGNAL] =
-		gtk_signal_new("session_save",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(AppletWidgetClass,
-			       			 session_save),
-			       applet_widget_marshal_signal_save_old,
-			       GTK_TYPE_BOOL,
-			       2,
-			       GTK_TYPE_STRING,
-			       GTK_TYPE_STRING);
 	applet_widget_signals[BACK_CHANGE_SIGNAL] =
 		gtk_signal_new("back_change",
 			       GTK_RUN_LAST,
@@ -237,7 +203,6 @@ applet_widget_class_init (AppletWidgetClass *class)
 
 	class->change_orient = NULL;
 	class->save_session = NULL;
-	class->session_save = NULL;
 }
 
 static void
@@ -262,10 +227,8 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 		return FALSE;
 	g_free(applet->privcfgpath);
 	g_free(applet->globcfgpath);
-	g_free(applet->cfgpath);
 	applet->privcfgpath = NULL;
 	applet->globcfgpath = NULL;
-	applet->cfgpath = NULL;
 	gnome_panel_applet_cleanup(applet->applet_id);
 	if(GTK_BIN(w)->child == NULL)
 		gnome_panel_applet_abort_id(applet->applet_id);
@@ -370,8 +333,7 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 
 
 GtkWidget *
-applet_widget_new_with_param(const char *param,
-			     const char *goad_id)
+applet_widget_new(const char *goad_id)
 {
 	AppletWidget *applet;
 	char *result;
@@ -379,17 +341,9 @@ applet_widget_new_with_param(const char *param,
 	char *globcfgpath;
 	guint32 winid;
 	int applet_id;
-	char *btmp;
-	CORBA_Object applet_obj;
-
-	if(!param)
-		param="";
 
 	applet_obj = gnome_panel_applet_corba_init(goad_id);
-	btmp = alloca(strlen(goad_id) + sizeof("--activate-goad-server="));
-	sprintf(btmp, "--activate-goad-server=%s", goad_id);
-	result = gnome_panel_applet_request_id(program_invocation_name, btmp,
-					       do_multi?FALSE:TRUE,
+	result = gnome_panel_applet_request_id(goad_id,
 					       &applet_id,
 					       &privcfgpath, &globcfgpath,
 					       &winid);
@@ -403,23 +357,12 @@ applet_widget_new_with_param(const char *param,
 	applet->applet_id = applet_id;
 	applet->privcfgpath = privcfgpath;
 	applet->globcfgpath = globcfgpath;
-	applet->cfgpath = g_copy_strings(privcfgpath,"dummy_section/",NULL);
 	applet->goad_id = (char *)goad_id;
 
 	gtk_signal_connect(GTK_OBJECT(applet),"destroy",
 			   GTK_SIGNAL_FUNC(applet_widget_destroy),
 			   NULL);
 
-	result = gnome_panel_applet_register(GTK_WIDGET(applet),
-					     applet->applet_id,
-					     applet->goad_id,
-					     applet_obj);
-
-	CORBA_Object_release(applet_obj, NULL);
-
-	if (result)
-	  g_error("Could not talk to the Panel: %s\n", result);
-	
 	applet_widgets = g_list_prepend(applet_widgets,applet);
 
 	applet_count++;
@@ -437,6 +380,7 @@ void
 applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 {
 	char *result;
+	GString *str;
 
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -444,6 +388,29 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 	g_return_if_fail(GTK_IS_WIDGET(widget));
 
 	gtk_container_add(GTK_CONTAINER(applet),widget);
+
+	str = g_string_new("");
+	if(goad_ids_list) {
+		GList *li;
+		g_string_append(str,goad_ids_list->data);
+		g_free(goad_ids_list->data);
+		for(li=goad_ids_list->next;li!=NULL;li=g_list_next(li)) {
+			g_string_append_c(str,',');
+			g_string_append(str,li->data);
+			g_free(li->data);
+		}
+	}
+
+	result = gnome_panel_applet_register(GTK_WIDGET(applet),
+					     applet->applet_id,
+					     applet->goad_id,
+					     str->str,
+					     applet_obj);
+	
+	g_string_free(str,TRUE);
+
+	if (result)
+	  g_error("Could not talk to the Panel: %s\n", result);
 }
 
 void
@@ -501,22 +468,20 @@ int		applet_widget_init		(const char *app_id,
 						 unsigned int flags,
 						 poptContext *return_ctx,
 						 int last_die,
-						 int multi_applet,
+						 GList *goad_ids,
 						 AppletStartNewFunc new_func,
 						 gpointer new_func_data)
 {
-	int ret;
+	int ret = TRUE; /*bogus value, this should be if we succeded or not
+			  or something*/
 	CORBA_Environment ev;
 	CORBA_ORB orb;
 
-	if(argv[0][0] != '#')
-		myinvoc = get_full_path(argv[0]);
-	else
-		myinvoc = g_strdup(argv[0]);
-	if(!myinvoc)
-		g_error("Invalid argv0 argument!\n");
-
-	do_multi = (multi_applet!=FALSE);
+	while(goad_ids) {
+		goad_ids_list = g_list_prepend(goad_ids_list,
+					       g_strdup(goad_ids->data));
+		goad_ids = g_list_next(goad_ids);
+	}
 	start_new_func = new_func;
 	start_new_func_data = new_func_data;
 	die_on_last = last_die;
@@ -571,16 +536,6 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 		gtk_signal_emit(GTK_OBJECT(applet),
 				applet_widget_signals[SAVE_SESSION_SIGNAL],
 				cfg,globcfg,&return_val);
-
-		/*this should be ripped out when session_save is abandoned
-		  for save_session*/
-		{
-			char *oldcfg = g_copy_strings(cfg,"dummy_section/",NULL);
-			gtk_signal_emit(GTK_OBJECT(applet),
-					applet_widget_signals[SESSION_SAVE_SIGNAL],
-					oldcfg,globcfg,&return_val);
-			g_free(oldcfg);
-		}
 	}
 	g_free(cfg);
 	g_free(globcfg);
@@ -592,13 +547,10 @@ _gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globc
 }
 
 void
-_gnome_applet_start_new_applet(const char *param)
+_gnome_applet_start_new_applet(const char *goad_id)
 {
-	if(!do_multi)
-		g_warning("This applet was not started as a multiapplet, yet "
-			  "it recieved a start_new_applet, weird!");
-	else if(start_new_func)
-		(*start_new_func)(param,start_new_func_data);
+	if(start_new_func)
+		(*start_new_func)(goad_id,start_new_func_data);
 }
 
 void
@@ -633,30 +585,4 @@ _gnome_applet_tooltips_state(int applet_id, int enabled)
 				applet_widget_signals[TOOLTIP_STATE_SIGNAL],
 				enabled);
 	}
-}
-
-
-/* convenience function for multi applets */
-char *
-make_param_string(int argc, char *argv[])
-{
-	char *s;
-	int i;
-	int len=0;
-
-	for(i=1;i<argc;i++)
-		len = strlen(argv[i])+1;
-
-	if(len==0)
-		return g_strdup("");
-
-	s = g_malloc(len);
-	s[0]= '\0';
-
-	for(i=1;i<argc;i++) {
-		strcat(s,argv[i]);
-		if((i+1)<argc)
-			strcat(s," ");
-	}
-	return s;
 }

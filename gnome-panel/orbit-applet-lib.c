@@ -18,6 +18,7 @@
 			   GDK_POINTER_MOTION_HINT_MASK)
 
 GNOME_Panel panel_client = NULL;
+GNOME_Applet applet_obj = NULL;
 
 
 typedef struct _CallbackInfo CallbackInfo;
@@ -46,7 +47,7 @@ void server_do_callback(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_
 
 CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_char * cfgpath, CORBA_char * globcfgpath, CORBA_Environment *ev);
 
-void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * param, CORBA_Environment *ev);
+void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * goad_id, CORBA_Environment *ev);
 
 void server_back_change(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev);
 
@@ -92,9 +93,9 @@ CORBA_short server_session_save(POA_GNOME_Applet *servant, CORBA_short applet_id
   return _gnome_applet_session_save(applet_id, cfgpath, globcfgpath);
 }
 
-void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * param, CORBA_Environment *ev)
+void server_start_new_applet(POA_GNOME_Applet *servant, CORBA_char * goad_id, CORBA_Environment *ev)
 {
-  _gnome_applet_start_new_applet(param);
+  _gnome_applet_start_new_applet(goad_id);
 }
 
 void server_back_change(POA_GNOME_Applet *servant, CORBA_short applet_id, CORBA_short back_type, CORBA_char * pixmap, CORBA_short c_red, CORBA_short c_green, CORBA_short c_blue, CORBA_Environment *ev)
@@ -410,9 +411,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 /*id will return a unique id for this applet for the applet to identify
   itself as*/
 char *
-gnome_panel_applet_request_id (const char *path,
-			       const char *param,
-			       int dorestart,
+gnome_panel_applet_request_id (const char *goad_id,
 			       int *applet_id,
 			       char **cfgpath,
 			       char **globcfgpath,
@@ -430,9 +429,7 @@ gnome_panel_applet_request_id (const char *path,
 	for(i=0;i<30;i++) {
 		  /*reserve a spot and get an id for this applet*/
 	  *applet_id = GNOME_Panel_applet_request_id(panel_client,
-						     (CORBA_char *)path,
-						     (CORBA_char *)param,
-						     dorestart,
+						     (char *)goad_id,
 						     &cfg,
 						     &globcfg,
 						     &wid, &ev);
@@ -471,10 +468,7 @@ gnome_panel_applet_request_id (const char *path,
 CORBA_Object
 gnome_panel_applet_corba_init(const char *goad_id)
 {
-  /*the applet implementation, it's only created once*/
-  static GNOME_Applet applet = NULL;
-
-  if(!applet) {
+  if(!applet_obj) {
     PortableServer_POA poa;
 
     PortableServer_ObjectId *objid;
@@ -492,9 +486,9 @@ gnome_panel_applet_corba_init(const char *goad_id)
 					       &ev);
     g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
-    applet = PortableServer_POA_servant_to_reference(poa,
-						     &applet_servant,
-						     &ev);
+    applet_obj = PortableServer_POA_servant_to_reference(poa,
+							 &applet_servant,
+							 &ev);
 
     g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
@@ -508,26 +502,26 @@ gnome_panel_applet_corba_init(const char *goad_id)
     CORBA_char *ior;
 	  
     ns = gnome_name_service_get();
-    goad_server_register(ns, applet, goad_id, "server", &ev);
+    goad_server_register(ns, applet_obj, goad_id, "server", &ev);
     CORBA_Object_release(ns, &ev);
 
-    ior = CORBA_ORB_object_to_string(orb, applet, &ev);
+    ior = CORBA_ORB_object_to_string(orb, applet_obj, &ev);
 
     printf("%s\n", ior); fflush(stdout);
 
     CORBA_free(ior);
   }
 
-  return applet;
+  return applet_obj;
 }
 
 /* this function will register the ior with the panel so it can call us */
 char *
 gnome_panel_applet_register (GtkWidget *widget, int applet_id,
-			     const char *goad_id,
+			     const char *goad_id, const char *goad_ids,
 			     CORBA_Object applet)
 {
-	GNOME_Panel_applet_register(panel_client, applet, applet_id, (char *)goad_id, &ev);
+	GNOME_Panel_applet_register(panel_client, applet, applet_id, (char *)goad_id, (char *)goad_ids, &ev);
 
 	bind_top_applet_events(widget, applet_id);
 

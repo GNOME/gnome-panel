@@ -20,7 +20,7 @@ int send_applet_session_save (CORBA_Object appl, int applet_id,
 void send_applet_change_orient (CORBA_Object appl, int applet_id,  int orient);
 void send_applet_do_callback (CORBA_Object appl, int applet_id,
 			       const char *callback_name);
-void send_applet_start_new_applet (CORBA_Object appl, const char *param);
+void send_applet_start_new_applet (CORBA_Object appl, const char *goad_id);
 void send_applet_change_back (CORBA_Object appl, int applet_id,
 			      PanelBackType back_type, const char *pixmap,
 			      const GdkColor* color);
