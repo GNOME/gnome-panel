@@ -66,6 +66,7 @@ panel_SOURCES = 		\
 	main.c			\
 	main.h			\
 	menu.c  		\
+	cookie.h		\
 	cookie.c		\
 	menu.h  		\
 	swallow.c  		\
