@@ -582,7 +582,7 @@ fill_tasklist_applet(PanelApplet *applet)
 	/* get size preferences */
 	error = NULL;
 	sizepref = panel_applet_gconf_get_int (applet, "minimum_size", &error);
-        if (error) {
+	if (error) {
 		sizepref = 50; /* Default value */
 		g_error_free (error);
 	}
@@ -594,7 +594,7 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	error = NULL;
 	sizepref = panel_applet_gconf_get_int (applet, "maximum_size", &error);
-        if (error) {
+	if (error) {
 		sizepref = 4096; /* Default value */
 		g_error_free (error);
 	}
