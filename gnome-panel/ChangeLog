@@ -1,3 +1,12 @@
+Wed Dec 16 14:54:09 1998  Owen Taylor  <otaylor@redhat.com>
+
+	* applet.c button-widget.c button-widget.h panel-widget.c:
+
+	widget->window cannot be INPUT_ONLY. So, do the same
+	trick as we do for CheckButtons or Scales. Make
+	ButtonWidget NO_WINDOW, with an additional event_window
+	field.
+
 1998-12-16  Jonathan Blandford  <jrb@aware-of-vacuity.labs.redhat.com>
 
 	* menu.c (panel_lock): let's do the correct xscreensaver command

@@ -490,7 +490,7 @@ register_toy(GtkWidget *applet,
 		panel = PANEL_WIDGET(list->data);
 	}
 
-	if(!GTK_WIDGET_NO_WINDOW(applet))
+	if(IS_BUTTON_WIDGET (applet) || !GTK_WIDGET_NO_WINDOW(applet))
 		gtk_signal_connect(GTK_OBJECT(applet),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(applet_button_press),

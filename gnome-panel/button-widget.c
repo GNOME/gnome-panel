@@ -16,6 +16,10 @@ static void button_widget_size_request  (GtkWidget         *widget,
 static void button_widget_size_allocate (GtkWidget         *widget,
 					 GtkAllocation     *allocation);
 static void button_widget_realize	(GtkWidget         *widget);
+static void button_widget_unrealize     (GtkWidget         *widget);
+static void button_widget_map           (GtkWidget         *widget);
+static void button_widget_unmap         (GtkWidget         *widget);
+
 static int  button_widget_button_press	(GtkWidget         *widget,
 					 GdkEventButton    *event);
 static int  button_widget_button_release(GtkWidget         *widget,
@@ -135,6 +139,9 @@ button_widget_class_init (ButtonWidgetClass *class)
 	class->unpressed = button_widget_unpressed;
 
 	widget_class->realize = button_widget_realize;
+	widget_class->unrealize = button_widget_unrealize;
+	widget_class->map = button_widget_map;
+	widget_class->unmap = button_widget_unmap;
 	widget_class->size_allocate = button_widget_size_allocate;
 	widget_class->size_request = button_widget_size_request;
 	widget_class->button_press_event = button_widget_button_press;
@@ -149,9 +156,12 @@ button_widget_realize(GtkWidget *widget)
 {
 	GdkWindowAttr attributes;
 	gint attributes_mask;
+	ButtonWidget *button_widget;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+	button_widget = BUTTON_WIDGET (widget);
 
 	GTK_WIDGET_SET_FLAGS (widget, GTK_REALIZED);
 
@@ -170,11 +180,57 @@ button_widget_realize(GtkWidget *widget)
 				 GDK_LEAVE_NOTIFY_MASK);
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
-	widget->window = gdk_window_new (gtk_widget_get_parent_window (widget),
-					 &attributes, attributes_mask);
-	gdk_window_set_user_data (widget->window, widget);
+	widget->window = gtk_widget_get_parent_window(widget);
+	gdk_window_ref(widget->window);
+      
+	button_widget->event_window = gdk_window_new (gtk_widget_get_parent_window (widget),
+						      &attributes, attributes_mask);
+	gdk_window_set_user_data (button_widget->event_window, widget);
+
+	widget->style = gtk_style_attach (widget->style, widget->window);
 }
 
+static void
+button_widget_unrealize (GtkWidget *widget)
+{
+	ButtonWidget *button_widget;
+  
+	g_return_if_fail (widget != NULL);
+	g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+	button_widget = BUTTON_WIDGET (widget);
+	
+	gdk_window_set_user_data (button_widget->event_window, NULL);
+	gdk_window_destroy (button_widget->event_window);
+	button_widget->event_window = NULL;
+	
+	if (GTK_WIDGET_CLASS (parent_class)->unrealize)
+		(* GTK_WIDGET_CLASS (parent_class)->unrealize) (widget);
+}
+
+static void
+button_widget_map (GtkWidget *widget)
+{
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+  if (GTK_WIDGET_REALIZED (widget) && !GTK_WIDGET_MAPPED (widget))
+      gdk_window_show (BUTTON_WIDGET (widget)->event_window);
+
+  GTK_WIDGET_CLASS (parent_class)->map (widget);
+}
+
+static void
+button_widget_unmap (GtkWidget *widget)
+{
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+  if (GTK_WIDGET_MAPPED (widget))
+      gdk_window_hide (BUTTON_WIDGET (widget)->event_window);
+
+  GTK_WIDGET_CLASS (parent_class)->unmap (widget);
+}
 
 static int
 button_widget_destroy(GtkWidget *w, gpointer data)
@@ -327,9 +383,16 @@ button_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 static void
 button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
+	ButtonWidget *button_widget;
+
+	g_return_if_fail (widget != NULL);
+	g_return_if_fail (IS_BUTTON_WIDGET (widget));
+
+	button_widget = BUTTON_WIDGET (widget);
+
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
+		gdk_window_move_resize (button_widget->event_window,
 					allocation->x, allocation->y,
 					allocation->width, allocation->height);
 }
@@ -340,6 +403,8 @@ static void
 button_widget_init (ButtonWidget *button)
 {
 	buttons = g_list_prepend(buttons,button);
+
+	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
 	button->pixmap = NULL;
 	button->mask = NULL;

@@ -2104,7 +2104,13 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->pos = pos;
 
 	/*reparent applet*/
-	gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
+	if (IS_BUTTON_WIDGET (applet)) {
+		gtk_widget_ref (applet);
+		gtk_container_remove (GTK_CONTAINER (applet->parent), applet);
+		gtk_container_add (GTK_CONTAINER (new_panel), applet);
+		gtk_widget_unref (applet);
+	} else 
+		gtk_widget_reparent(applet,GTK_WIDGET(new_panel));
 
 	return pos;
 }
