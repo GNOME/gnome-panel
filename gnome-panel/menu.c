@@ -502,7 +502,7 @@ init_menus(void)
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
-	char *menu = gnome_datadir_file("apps");
+	char *menu = gnome_datadir_file("gnome/apps");
 	if(menu)
 		fr_read_dir(NULL,menu,NULL,2);
 	g_free(menu);
@@ -1971,7 +1971,7 @@ create_add_panel_submenu (void)
 static GtkWidget *
 create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 {
-	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 	char *menudir;
 	
 	menudir = g_concat_dir_and_file (menu_base, ".");
@@ -2870,7 +2870,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	current_panel = PANEL_WIDGET(menu->button->parent);
 
 	if(!menu->menu) {
-		char *menu_base = gnome_unconditional_datadir_file ("apps");
+		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
 		GSList *list = g_slist_append(NULL,this_menu);
 		
@@ -2976,7 +2976,7 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 	Menu *menu;
 	int main_menu;
 
-	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 	char *this_menu = get_real_menu_path(arguments,menu_base);
 
 	if (!this_menu) {
@@ -3075,7 +3075,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	menu->menu = NULL;
 
 	{
-		char *menu_base = gnome_unconditional_datadir_file ("apps");
+		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
 		GSList *list = g_slist_append(NULL,this_menu);
 		char *pixmap_name = get_pixmap(this_menu,
