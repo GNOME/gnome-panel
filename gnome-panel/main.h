@@ -15,6 +15,14 @@ PanelOrientType get_applet_orient(PanelWidget *panel);
    on, start the next applet */
 void exec_queue_done(gint applet_id);
 
+typedef struct _AppletChild AppletChild;
+/*used in the SIGCHLD handler and as a list of started applets*/
+struct _AppletChild {
+	gint applet_id;
+	pid_t pid;
+};
+
+
 END_GNOME_DECLS
 
 #endif

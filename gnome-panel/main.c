@@ -76,15 +76,7 @@ struct _LoadApplet {
 	gchar *cfgpath;
 };
 
-typedef struct _AppletChild AppletChild;
-static GList * children = NULL;
-
-/*used in the SIGCHLD handler*/
-struct _AppletChild {
-	gint applet_id;
-	pid_t pid;
-};
-
+GList * children = NULL;
 
 GList *load_queue=NULL;
 	
@@ -477,6 +469,8 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 			gtk_widget_hide(drawer->drawer);
 
 		reposition_drawer(drawer);
+		printf("x: %d\n",PANEL_WIDGET(drawer->drawer)->x);
+		printf("y: %d\n",PANEL_WIDGET(drawer->drawer)->y);
 		panel_widget_add_forbidden(PANEL_WIDGET(drawer->drawer));
 
 		gtk_tooltips_set_tip (panel_tooltips,drawer->button->parent,
@@ -1201,7 +1195,9 @@ init_user_panels(void)
 
 		panel_setup(PANEL_WIDGET(panel));
 
-		gtk_widget_show(panel);
+		if(snapped!=PANEL_DRAWER ||
+		   PANEL_WIDGET(panel)->state==PANEL_SHOWN);
+			gtk_widget_show(panel);
 
 		panels = g_list_append(panels,panel);
 	}
