@@ -550,6 +550,12 @@ applet_drag_stop(int id)
 }
 
 void
+applet_add_callback(short id, char *callback_name, char *menuitem_text)
+{
+  g_warning("Unimplemented\n");
+}
+
+void
 reparent_window_id (unsigned long winid, int id)
 {
 	GtkWidget *eb;

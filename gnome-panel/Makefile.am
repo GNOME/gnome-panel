@@ -9,9 +9,37 @@ SUBDIRS  = libapplet clock @PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-I$(includedir) $(X_CFLAGS)
+	-I$(includedir)
 
-bin_PROGRAMS = panel
+bin_PROGRAMS = panel clock_applet
+lib_LTLIBRARIES = libpanel_applet.la
+
+CORBA_SOURCES = \
+	gnome-panel.cc \
+	gnome-panel.h
+
+MICO_VERS = 2.0.3
+MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
+
+libpanel_applet_la_SOURCES = \
+	applet-lib.cc \
+	applet-widget.c \
+	$(CORBA_SOURCES)
+
+libpanel_appletinclude_HEADERS = \
+	applet-lib.h \
+	applet-widget.h
+
+libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
+libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
+
+BUILT_SOURCES = $(CORBA_SOURCES)
+
+gnome-panel.cc: gnome-panel.idl
+## `idl' version 2.0.3 lamely fails to strip the path part of the file
+## name when computing the name of the output file, so we prod it a
+## little.
+	idl --name gnome-panel $(srcdir)/gnome-panel.idl
 
 panel_SOURCES = 		\
 	drawer.c  		\
@@ -30,15 +58,16 @@ panel_SOURCES = 		\
 	panel_config_global.c  	\
 	panel_config_global.h  	\
 	panel-widget.c  	\
-	panel-widget.h
-#	$(CORBA_SOURCES)
+	panel-widget.h		\
+	$(CORBA_SOURCES)
 
-MICO_VERS = 2.0.3
-MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
+panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
-panel_LDADD = libapplet/libapplet.a \
-              $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
-              $(GNOMEUI_LIBS) $(INTLLIBS)
+## FIXME: move clock applet into clock
+clock_applet_SOURCES = \
+	clock.c
+
+clock_applet_LDADD = -lpanel_applet $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 

@@ -45,7 +45,7 @@ load_applet(char *id, char *params, int pos, int panel)
 		Menu *menu;
 
 		menu = create_menu_applet(GTK_WIDGET(panels->data),
-					  params,MENU_UP);
+					  params, MENU_UP);
 
 		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,

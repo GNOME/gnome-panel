@@ -97,7 +97,7 @@ int applet_get_panel(int id);
 int applet_get_pos(int id);
 void applet_drag_start(int id);
 void applet_drag_stop(int id);
-
+void applet_add_callback(short id, char *callback_name, char *menuitem_text);
 
 /*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel);

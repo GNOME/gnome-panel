@@ -655,10 +655,11 @@ create_menu_applet(GtkWidget *window, char *arguments, MenuOrient orient)
 
 	if (*arguments == '/')
 		this_menu = g_strdup (arguments);
-	else 
+	else
 		this_menu = g_concat_dir_and_file (menu_base, arguments);
 
 	if (!g_file_exists (this_menu)) {
+		g_warning("Menu %s does not exist (base is %s, arguments are %s)\n", this_menu, menu_base, arguments);
 		g_free (menu_base);
 		g_free (this_menu);
 		return NULL;
