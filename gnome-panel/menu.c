@@ -259,7 +259,7 @@ static GList *
 get_presorted_from(char *dir)
 {
 	char buf[PATH_MAX+1];
-	GList *list;
+	GList *list = NULL;
 	char *fname = g_concat_dir_and_file(dir,".order");
 	FILE *fp = fopen(fname,"r");
 	
@@ -267,8 +267,11 @@ get_presorted_from(char *dir)
 		g_free(fname);
 		return NULL;
 	}
-	while(fgets(buf,PATH_MAX+1,fp)!=NULL)
+	while(fgets(buf,PATH_MAX+1,fp)!=NULL) {
+		char *p = strchr(buf,'\n');
+		if(p) *p = '\0';
 		list = g_list_append(list,g_strdup(buf));
+	}
 	fclose(fp);
 	g_free(fname);
 	return list;
