@@ -2568,6 +2568,38 @@ find_empty_edge (int screen)
 	return edge;
 }
 
+static BorderEdge
+find_empty_border_and_anchor (int            screen,
+			      SlidingAnchor *anchor)
+{
+	BorderEdge edge;
+	int        posscore[3][3] = { {0, 4096, 0}, {4096, 4096, 4096}, {0, 4096, 0}};
+
+	edge = find_empty_edge (screen);
+
+	find_empty_pos_array (screen, posscore);
+
+	switch (edge) {
+	case BORDER_TOP:
+		*anchor = (posscore [0][0] < posscore [2][0]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
+		break;
+	case BORDER_BOTTOM:
+		*anchor = (posscore [0][2] < posscore [2][2]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
+		break;
+	case BORDER_LEFT:
+		*anchor = (posscore [0][2] < posscore [0][0]) ? SLIDING_ANCHOR_RIGHT : SLIDING_ANCHOR_LEFT;
+		break;
+	case BORDER_RIGHT:
+		*anchor = (posscore [2][0] < posscore [2][2]) ? SLIDING_ANCHOR_LEFT : SLIDING_ANCHOR_RIGHT;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return edge;
+}
+
 static void
 create_new_panel (GtkWidget *w, gpointer data)
 {
@@ -2625,12 +2657,16 @@ create_new_panel (GtkWidget *w, gpointer data)
 				   _("Edge Panel"),
 				   _("GNOME Edge Panel"));
 		break;
-	case SLIDING_PANEL:
-		find_empty_pos (screen, &x, &y);
+	case SLIDING_PANEL: {
+		BorderEdge    edge;
+		SlidingAnchor anchor;
+
+		edge = find_empty_border_and_anchor (screen, &anchor);
+
 		panel = sliding_widget_new (NULL,
 					    screen,
-					    SLIDING_ANCHOR_LEFT, 0,
-					    BORDER_TOP,
+					    anchor, 0,
+					    edge,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
 					    PANEL_SIZE_MEDIUM,
@@ -2641,10 +2677,10 @@ create_new_panel (GtkWidget *w, gpointer data)
 		panel_save_to_gconf (panel_setup (panel));
 		gtk_window_set_title (GTK_WINDOW (panel), _("Sliding Panel"));
 		gtk_widget_show (panel);	
-		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
 				   _("Sliding Panel"),
 				   _("GNOME Sliding Panel"));
+		}
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (screen, &x, &y);

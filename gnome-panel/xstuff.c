@@ -207,29 +207,43 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 void
 xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 {
-       XSizeHints size_hints;
+	XSizeHints size_hints;
+	int old_x, old_y, old_w, old_h;
 
-       /* Do not add USPosition / USSize here, fix the damn WM */
-       size_hints.flags = PPosition | PSize | PMaxSize | PMinSize;
-       size_hints.x = 0; /* window managers aren't supposed to and  */
-       size_hints.y = 0; /* don't use these fields */
-       size_hints.width = w;
-       size_hints.height = h;
-       size_hints.min_width = w;
-       size_hints.min_height = h;
-       size_hints.max_width = w;
-       size_hints.max_height = h;
+	old_x = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window), "xstuff-cached-x"));
+	old_y = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window), "xstuff-cached-y"));
+	old_w = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window), "xstuff-cached-w"));
+	old_h = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window), "xstuff-cached-h"));
+
+	if (x == old_x && y == old_y && w == old_w && h == old_h)
+		return;
+
+	/* Do not add USPosition / USSize here, fix the damn WM */
+	size_hints.flags = PPosition | PSize | PMaxSize | PMinSize;
+	size_hints.x = 0; /* window managers aren't supposed to and  */
+	size_hints.y = 0; /* don't use these fields */
+	size_hints.width = w;
+	size_hints.height = h;
+	size_hints.min_width = w;
+       	size_hints.min_height = h;
+	size_hints.max_width = w;
+	size_hints.max_height = h;
   
-       gdk_error_trap_push ();
+	gdk_error_trap_push ();
 
-       XSetWMNormalHints (GDK_WINDOW_XDISPLAY (window),
-			  GDK_WINDOW_XWINDOW (window),
-			  &size_hints);
+	XSetWMNormalHints (GDK_WINDOW_XDISPLAY (window),
+			   GDK_WINDOW_XWINDOW (window),
+			   &size_hints);
 
-       gdk_window_move_resize (window, x, y, w, h);
+	gdk_window_move_resize (window, x, y, w, h);
 
-       gdk_flush ();
-       gdk_error_trap_pop ();
+	gdk_flush ();
+	gdk_error_trap_pop ();
+
+	g_object_set_data (G_OBJECT (window), "xstuff-cached-x", GINT_TO_POINTER (x));
+	g_object_set_data (G_OBJECT (window), "xstuff-cached-y", GINT_TO_POINTER (y));
+	g_object_set_data (G_OBJECT (window), "xstuff-cached-w", GINT_TO_POINTER (w));
+	g_object_set_data (G_OBJECT (window), "xstuff-cached-h", GINT_TO_POINTER (h));
 }
 
 void
