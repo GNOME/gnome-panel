@@ -1928,6 +1928,7 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 		char *new_id;
 		char *src_dir;
 		char *dest_dir;
+		char *schema_key;
 
 		new_id = g_strdup_printf ("%s_screen%d", default_id, screen_n);
 
@@ -1936,8 +1937,10 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 
 		panel_gconf_copy_dir (client, src_dir, dest_dir);
 
-		key = panel_gconf_sprintf (PANEL_SCHEMAS_DIR "/%s", schemas_str);
+		schema_key = g_strdup_printf (PANEL_SCHEMAS_DIR "/%s", 
+			                      schemas_str);
 		panel_gconf_associate_schemas_in_dir (client, dest_dir, key);
+		g_free (schema_key);
 
 		new_ids = g_slist_prepend (new_ids, new_id);
 

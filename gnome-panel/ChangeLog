@@ -1,3 +1,10 @@
+2003-05-30  Ray Strode  <halfline@hawaii.rr.com>
+
+	* panel-profile.c: (panel_profile_copy_defaults_for_screen):
+	Use g_strdup_printf instead of panel_gconf_sprintf. Fixes 
+	problem where schemas weren't always being associated with
+	new toplevels (bug #113831).
+
 2003-05-29  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-toplevel.c: (panel_toplevel_class_init):
