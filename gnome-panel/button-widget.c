@@ -206,7 +206,8 @@ calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
 	 * case, or something like that, this is ugly, but who gives a fuck,
 	 * this is all going to be rewritten soon (famous last words?) */
 	if(IS_BASEP_WIDGET(parent) &&
-	   BASEP_WIDGET(parent)->state != BASEP_SHOWN) {
+	   BASEP_WIDGET(parent)->state != BASEP_SHOWN &&
+	   BASEP_WIDGET(parent)->state != BASEP_AUTO_HIDDEN) {
 		*x = parent->requisition.width + 1;
 		*y = parent->requisition.height + 1;
 		return;
