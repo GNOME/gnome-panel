@@ -48,7 +48,8 @@ noinst_PROGRAMS = test-bonobo-applet
 
 bin_PROGRAMS = panel-test-applets
 
-panel_test_applets_LDADD =		\
+panel_test_applets_LDFLAGS = -export-dynamic
+panel_test_applets_LDADD   =		\
 	$(LIBPANEL_APPLET_LIBS)		\
 	libpanel-applet-2.la
 
