@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-06 21:42+0100\n"
+"POT-Creation-Date: 2004-08-31 09:29+0100\n"
 "PO-Revision-Date: 2004-07-26 23:45-0400\n"
 "Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
 "Language-Team: \n"
@@ -247,75 +247,72 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "The Clock displays the current time and date"
 
-#: applets/clock/clock.schemas.in.h:1
-msgid ""
-"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
-msgstr ""
-"24"
-
+#. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
-msgid ""
-"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
-"hour\" --> 24-hour"
-msgstr ""
-"24-hour"
+msgid "24"
+msgstr "24"
 
-#: applets/clock/clock.schemas.in.h:3
+#. Translators: the only valid values for this are "12-hour" and "24-hour"
+#: applets/clock/clock.schemas.in.h:4
+msgid "24-hour"
+msgstr "24-hour"
+
+#: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
 msgstr "Custom format of the clock"
 
-#: applets/clock/clock.schemas.in.h:4
+#: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Hour format"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display date in the clock, in addition to time."
 msgstr "If true, display date in the clock, in addition to time."
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, display seconds in time."
 msgstr "If true, display seconds in time."
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:9
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "If true, display time in Universal Coordinated Time zone."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:10
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "If true, show date in a tooltip when the pointer is over the clock."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show date in clock"
 msgstr "Show date in clock"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Show date in tooltip"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:13
 msgid "Show time with seconds"
 msgstr "Show time with seconds"
 
-#: applets/clock/clock.schemas.in.h:12
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-
-#: applets/clock/clock.schemas.in.h:13
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
-msgstr ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
-
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+
+#: applets/clock/clock.schemas.in.h:15
+msgid ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+msgstr ""
+"This key specifies the format used by the clock applet when the format key "
+"is set to \"custom\". You can use conversion specifiers understood by "
+"strftime() to obtain a specific format."
+
+#: applets/clock/clock.schemas.in.h:16
+msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
 "to \"internet\", the clock will display Internet time. The Internet time "
@@ -334,23 +331,23 @@ msgstr ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "This key specifies the program to run in order to configure the time."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:18
 msgid "Time configuration tool"
 msgstr "Time configuration tool"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use Internet time"
 msgstr "Use Internet time"
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:20
 msgid "Use UNIX time"
 msgstr "Use UNIX time"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:21
 msgid "Use UTC"
 msgstr "Use UTC"
 
@@ -1362,8 +1359,8 @@ msgstr "_Add to Panel..."
 msgid "_New Panel"
 msgstr "_New Panel"
 
-#: gnome-panel/menu.c:2381
 #
+#: gnome-panel/menu.c:2381
 msgid "A_bout Panels"
 msgstr "A_bout Panels"
 
@@ -2152,8 +2149,8 @@ msgstr "Cannot open recently used document"
 msgid "An unknown error occurred while trying to open %s"
 msgstr "An unknown error occurred while trying to open %s"
 
-#: gnome-panel/panel-recent.c:212
 #
+#: gnome-panel/panel-recent.c:212
 msgid "Clear the Recent Documents list?"
 msgstr "Clear the Recent Documents list?"
 
@@ -2843,10 +2840,14 @@ msgstr "XX Large"
 msgid "XX Small"
 msgstr "XX Small"
 
-#~ msgid "24"
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12\" and \"24\" --"
+#~ "> 24"
 #~ msgstr "24"
 
-#~ msgid "24-hour"
+#~ msgid ""
+#~ "<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+#~ "hour\" --> 24-hour"
 #~ msgstr "24-hour"
 
 #~ msgid ""
