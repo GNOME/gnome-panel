@@ -1,0 +1,236 @@
+<!-- Deutsche Übersetzung 25. April 2000 von Martin Baulig gegenüber
+   - Version 0.1 des Originals (17. April 2000 - CVS Revision 1.1) -->
+
+  <sect1 id="clock">
+    <title>Uhren-Applet</title>
+
+    <para>
+      Das in <xref linkend="clockapplet-fig"> gezeigte
+      <application>Uhren</application>-Applet, ist ein einfaches Applet,
+      das die Uhrzeit (und optional auch das Datum) in vielen verschiedenen
+      Formaten anzeigt. Um dieses Applet zu einem <interface>Panel</interface>
+      hinzuzufügen, rechtsklicken Sie auf das <interface>Panel</interface>
+      und wählen Sie
+      <menuchoice>
+	<guimenu>Panel</guimenu>
+	<guisubmenu>Zum Panel hinzufügen</guisubmenu>
+	<guisubmenu>Applets</guisubmenu>
+	<guisubmenu>Uhren</guisubmenu>
+	<guimenuitem>Uhr</guimenuitem>
+      </menuchoice>.
+    </para>
+
+    <figure id="clockapplet-fig">
+      <title>Uhren-Applet</title>
+      <screenshot>
+	<screeninfo>Uhren-Applet</screeninfo>
+	<graphic format="png" fileref="clock_applet" 
+	  srccredit="muet">
+	</graphic>
+      </screenshot>
+    </figure>
+
+    <!-- ============= Usage  ================================ -->
+    <sect2 id="clock-usage">
+      <title>Benutzung</title>
+      <para>
+	Das <application>Uhren</application>-Applet benötigt keinerlei
+	Benutzereingabe; Sie können es aber optional wie unten beschrieben
+	konfigurieren.
+      </para>
+
+      <para>
+	Durch Rechtsklick auf das Applet rufen Sie ein Menü auf, das
+	folgende Punkte enthält:
+	<itemizedlist>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>Eigenschaften&hellip;</guimenuitem> &mdash;
+	      startet den <link linkend="clock-prefs">
+		<guilabel>Eigenschaften</guilabel></link>-Dialog.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>Hilfe</guimenuitem> &mdash;
+	      zeigt dieses Dokument an.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>Info&hellip;</guimenuitem> &mdash;
+	      zeigt einige grundlegende Informationen über das
+	      <application>Uhren</application>-Applet an, darunter
+	      die Versionsnummer und der Name des Autors.
+	    </para>
+	  </listitem>
+
+	</itemizedlist>
+      </para>
+    </sect2>
+
+
+    <!-- ============= Customization ============================= -->
+    <sect2 id="clock-prefs">
+      <title>Anpassung</title>
+      <para>
+	Sie können das <application>Uhren</application>-Applet anpassen,
+	indem Sie auf ihm rechtsklicken und 
+	<guimenuitem>Eigenschaften&hellip;</guimenuitem> wählen. Dies
+	öffnet den <interface>Eigenschaften</interface>-Dialog (gezeigt
+	in <xref linkend="clock-settings-fig">), der es Ihnen ermöglicht,
+	zahlreiche Einstellungen zu ändern.
+      </para>
+
+      <figure id="clock-settings-fig">
+	<title>Eigenschaften-Dialog</title>
+	<screenshot>
+	  <screeninfo>Eigenschaften-Dialog</screeninfo>
+	  <graphic format="png" fileref="clock_settings"
+	    srccredit="muet">
+	  </graphic>
+	</screenshot>
+      </figure>
+
+      <para>
+	Die Eigenschaften sind:
+	<itemizedlist>
+
+	  <listitem>
+	    <para>
+	      Zeitangabeformat &mdash; Sie können entweder 
+	      <guilabel>12 Stunden</guilabel> für Zeitangabe in
+	      <quote>AM/PM</quote> oder <guilabel>24 Stunden</guilabel>
+	      für eine 24-Stunden-Uhr.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      Datum im Applet anzeigen &mdash; Aktivieren Sie diese Option
+	      um das Datum im Applet anzuzeigen.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      Datum in Minihilfe anzeigen &mdash; Aktivieren Sie diese Option
+	      um das Datum in der Minihilfe anzuzeigen, die erscheint wenn
+	      Sie den Mauszeiger kurz über dem Applet halten.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      Weltzeit verwenden (GMT) &mdash; Verwenden Sie diese Option,
+	      um Weltzeit (GMT) anstatt Ortszeit anzuzeigen.
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      Unix-Zeit &mdash; Zeigt die Zeit an als die Anzahl von Sekunden,
+	      die seit dem 1. Januar 1970 vergangen sind.
+	    </para>
+	  </listitem>
+
+	</itemizedlist>
+      </para>
+
+      <para> 
+	Wenn Sie mit Ihren Änderungen fertig sind, klicken Sie auf
+	<guibutton>OK</guibutton> um die Änderungen zu übernehmen und den
+	<interface>Eigenschaften</interface>-Dialog zu schließen. Um
+	die Änderungen zu verwerfen, klicken Sie auf
+	<guibutton>Schließen</guibutton>.
+      </para>
+
+      <note>
+	<title>Uhrzeit ändern</title>
+	<para>
+	  Das <application>Uhren</application>-Applet zeigt die Uhrzeit
+	  lediglich an, es erlaubt Ihnen nicht, sie zu ändern. Um die
+	  Uhrzeit auf einem Unix oder Linux-System zu ändern, sollten Sie
+	  den Befehl <command>date</command> verwenden. Um zum Beispiel die
+	  Zeit auf 23:43:01 Uhr und das Datum auf den 4. April zu setzen,
+	  benutzen Sie <command>date --set="Apr 4 23:43:01"</command>.
+	  Beachten Sie bitte, daß Sie als Superuser eingeloggt sein müssen,
+	  um das Datum oder die Uhrzeit zu ändern. Für weitere Informationen
+	  über den Befehl <command>date</command>, geben Sie bitte
+	  <command>man date</command> an einer Eingabeaufforderung in
+	  einem Terminal ein. Die Zeitzone können Sie bei einigen
+	  Linux-Distributionen mit den Befehlen <command>timeconfig</command>
+	  oder <command>tzselect</command> ändern.
+	</para>
+      </note>
+
+    </sect2>
+
+
+    <!-- ============= Bugs ================================== -->
+    <!-- This section should describe known bugs and limitations of
+    the program if there are any - please be frank and list all
+    problems you know of -->
+    <sect2 id="bugs">
+      <title>Bekannte Fehler und Einschränkungen</title>
+      <para>
+	Dieses Applet hat keine bekannten Fehler.
+      </para>
+    </sect2>
+
+
+    <!-- ============= Authors ================================ -->
+
+    <sect2 id="authors">
+      <title>Autoren</title>
+      <para>
+	Das <application>Uhren</application>-Applet wurde von
+	Miguel de Icaza (<email>miguel@kernel.org</email>), Federico Mena
+	(<email>quartic@gimp.org</email>) und Stuart Parmenter
+	(<email>pavlov@innerx.net</email>) geschrieben.
+
+      <para> 
+	Bitte senden Sie alle Kommentare, Anregungen und Fehlerberichte an
+	die <ulink url="http://bugs.gnome.org" type="http">GNOME-Problemdatenbank</ulink>. Eine Anleitung zum Berichten von Fehlern findet sich online unter
+	<ulink url="http://bugs.gnome.org/Reporting.html" type="http">http://bugs.gnome.org/Reporting.html</ulink>. Falls Sie GNOME 1.1 oder neuer verwenden,
+	können Sie auch den Befehl <command>bug-buddy</command> verwenden,
+	um Fehler zu berichten.
+      </para>
+
+      <para>
+	Dieses Handbuch wurde von Dan Mueth
+	(<email>d-mueth@uchicago.edu</email>). Senden Sie bitte
+	alle dieses Handbuch betreffenden Kommentare und Anregungen an das
+	GNOME-Dokumentations-Projekt unter <email>docs@gnome.org</email> oder
+	benutzen Sie das Online-Formular in der
+	<ulink type="http" url="http://www.gnome.org/gdp/doctable">GNOME-Documentations-Status-Tabelle</ulink>.
+      </para>
+      
+      <para>
+	Die deutsche Übersetzung dieses Handbuchs stammt von
+	Martin Baulig (<email>baulig@suse.de</email>).
+      </para>
+
+    </sect2>
+
+  </sect1>
+
+  <!-- Keep this comment at the end of the file
+  Local variables:
+  mode: sgml
+  sgml-omittag:t
+  sgml-shorttag:t
+  sgml-minimize-attributes:nil
+  sgml-always-quote-attributes:t
+  sgml-indent-step:2
+  sgml-indent-data:t
+  sgml-exposed-tags:nil
+  sgml-local-catalogs:nil
+  sgml-local-ecat-files:nil
+  sgml-parent-document:"gen_util-applet.sgml"
+  End:
+  -->
+
