@@ -191,7 +191,7 @@ EXTRA_DIST =					\
 
 gladedir = $(datadir)/gnome/panel
 glade_DATA = gnome-panel-properties.glade2
-glade_src = gnome-panel-properties.glade2
+glade_src = gnome-panel-properties.glade
 glade_msgs = gnome-panel-properties.glade.h
 
 gnome-panel-properties.glade2: gnome-panel-properties.glade $(LIBGLADE_CONVERT)
