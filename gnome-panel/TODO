@@ -16,7 +16,20 @@ Things to do on the panel, in no particular order:
 
 * tabbed panels
 
-* add streching of a background pixmap completely over the panel
+* add a way to do drawers where it would be just a thin button on the side
+  of a launcher, like it is in say os/2 or cde (it would not be the default
+  mode, but an option)
+
+* export more functionality through the CORBA interface, eventually I think
+  we should have a per panel interface so that the panels could be
+  manipulated through corba directly, we especially need to export a way to
+  launch external applets and to add the internal ones, we can also have
+  things to move panels, and to change their background
+
+* add a new signal for changed backgrounds which will be selectable as the
+  position one is, and send rgb of the area for the applet so that applets
+  can do full transparency easily.  This would more be a "draw" signal
+  rather then a change background signal.
 
 Stuff for post-GNOME 2.0:
 
