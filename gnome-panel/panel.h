@@ -6,9 +6,6 @@
 BEGIN_GNOME_DECLS
 
 #define MENU_ID "Menu"
-/*FIXME: maybe add a temporary launcher but these will be provided by the
-  filemanager*/
-/*#define LAUNCHER_ID "Launcher"*/
 #define DRAWER_ID "Drawer"
 #define LOGOUT_ID "Logout"
 #define EXTERN_ID "Extern"
@@ -101,14 +98,14 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
+/*stuff for corba*/
 void reparent_window_id (unsigned long winid, int id);
 int applet_request_id (const char * ior, const char *path, char **cfgpath,
 		       char **globcfgpath);
 void applet_request_glob_cfg (char **globcfgpath);
 void reserve_applet_spot (const char *id, const char *path, int panel,
 			  int pos, char *cfgpath, AppletType type);
-
-/*stuff for corba*/
+void applet_abort_id(int id);
 int applet_get_panel(int id);
 int applet_get_pos(int id);
 void applet_show_menu(int id);

@@ -41,7 +41,7 @@ public:
 		return id;
 	}
 	void applet_abort_id (CORBA::Short id) {
-		/*FIXME: implement, kill of that EXTERN_PENDING*/
+		::applet_abort_id (id);
 	}
 	void applet_request_glob_cfg (char *&globcfgpath) {
 		char *globcfg=NULL;

@@ -379,16 +379,12 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 	panel_widget_applet_drag_start(panel,info->widget);
 }
 
-
 static void
-remove_applet_callback(GtkWidget *widget, gpointer data)
+panel_clean_applet(AppletInfo *info)
 {
-	AppletInfo *info;
-	gchar *id;
-	gint pos;
 	PanelWidget *panel;
 
-	info = data;
+	g_return_if_fail(info != NULL);
 
 	if(info->type == APPLET_EXTERN)
 		send_applet_shutdown_applet(info->id,info->applet_id);
@@ -399,17 +395,26 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 
 	panel_widget_remove(panel,info->widget);
 	gtk_widget_unref(info->widget);
+	info->widget = NULL;
 	/* this should be handeled by the applet itself (hopefully)
 	if(info->assoc)
 		gtk_widget_unref(info->assoc);
 	*/
 	if(info->menu)
 		gtk_widget_unref(info->menu);
+	info->menu = NULL;
 
-	g_free(info->id);
+	if(info->id) g_free(info->id);
 	info->id=NULL;
 	if(info->params) g_free(info->params);
 	info->params=NULL;
+}
+
+static void
+remove_applet_callback(GtkWidget *widget, gpointer data)
+{
+	AppletInfo *info = data;
+	panel_clean_applet(info);
 }
 
 static void
@@ -613,6 +618,21 @@ applet_get_panel(int id)
 			return panel;
 	return -1;
 }
+
+void
+applet_abort_id(int id)
+{
+	AppletInfo *info = get_applet_by_id(id);
+
+	/*only reserved spots can be canceled, if an applet
+	  wants to chance a pending applet it needs to first
+	  user reserve spot to obtain id and make it EXTERN_RESERVED*/
+	if(info->type != APPLET_EXTERN_RESERVED)
+		return;
+
+	panel_clean_applet(info);
+}
+
 
 int
 applet_get_pos(int id)
