@@ -480,7 +480,13 @@ static int
 panel_applet_added_idle(gpointer data)
 {
 	AppletInfo *info = data;
-	PanelWidget *panel = PANEL_WIDGET(info->widget->parent);
+	PanelWidget *panel;
+	
+	g_return_val_if_fail(info,FALSE);
+	g_return_val_if_fail(info->widget,TRUE);
+	g_return_val_if_fail(info->widget->parent,TRUE);
+
+	panel = PANEL_WIDGET(info->widget->parent);
 
 	orientation_change(info,panel);
 	back_change(info,panel);

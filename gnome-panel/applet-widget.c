@@ -831,6 +831,7 @@ applet_widget_init(const char *app_id,
 	CORBA_Environment ev;
 	CORBA_ORB orb;
 
+	/*this is not called for shlib applets so we set it to true here*/
 	die_on_last = TRUE;
 
 	gnome_client_disable_master_connection ();
