@@ -1,3 +1,14 @@
+2003-06-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-background-monitor.c:
+	(panel_background_monitor_tile_background): special case
+	tiling a 1x1 pixmap to increase speed greatly.
+	
+2003-06-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* main.c (main): enable svgs on the icon theme. Fix for
+	bug #114706.
+	
 2003-06-10  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-util.c: (stretch_widget_realize),
