@@ -682,7 +682,11 @@ find_sub_menu(GList *user_menu, gchar *name)
 }
 
 static void
-add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkWidget *submenu,
+add_to_submenus(gint applet_id,
+		char *path,
+		char *name,
+	       	AppletUserMenu *menu,
+	       	GtkWidget *submenu,
 		GList *user_menu)
 {
 	char *n = g_strdup(name);
@@ -695,12 +699,16 @@ add_to_submenus(gint applet_id,char *path,char *name, AppletUserMenu *menu, GtkW
 	   p==(n + strlen(n) - 1)) {
 		g_free(n);
 
+		menu->menuitem = gtk_menu_item_new ();
 		if(menu->stock_item && *(menu->stock_item))
-			menu->menuitem = gnome_stock_menu_item(menu->stock_item,
-							       menu->text);
+			setup_menuitem (menu->menuitem,
+					gnome_stock_pixmap_widget(submenu,
+								  menu->stock_item),
+					menu->text);
 		else
-			menu->menuitem = gtk_menu_item_new_with_label(menu->text);
-		gtk_widget_show(menu->menuitem);
+			setup_menuitem (menu->menuitem,
+					NULL,
+					menu->text);
 		if(menu->submenu)
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menu->menuitem), menu->submenu);
 
@@ -755,20 +763,19 @@ create_applet_menu(AppletInfo *info)
 
 	info->menu = gtk_menu_new();
 
-	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
+	menuitem = gtk_menu_item_new();
+	setup_menuitem(menuitem,0,_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   ITOP(info->applet_id));
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
-	gtk_widget_show(menuitem);
 	info->remove_item = menuitem;
 
-	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
+	setup_menuitem(menuitem,0,_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
 			   ITOP(info->applet_id));
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
-	gtk_widget_show(menuitem);
 	
 	if(user_menu) {
 		menuitem = gtk_menu_item_new();
