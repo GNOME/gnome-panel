@@ -10,12 +10,15 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE 1
 
 #include <panel-applet.h>
+#include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
+#include <gconf/gconf-client.h>
 
 #include "tasklist.h"
 
@@ -25,9 +28,21 @@ typedef struct {
 	GtkWidget *tasklist;
 	
 	WnckScreen *screen;
-	
+
+	gboolean include_all_workspaces;
+	gboolean enable_grouping;
+	gboolean move_unminimized_windows;
+  
 	GtkOrientation orientation;
 	int size;
+
+	/* Properties: */
+	GtkWidget *properties_dialog;
+	GtkWidget *show_current_radio;
+	GtkWidget *show_all_radio;
+	GtkWidget *group_windows_toggle;
+	GtkWidget *move_minimized_radio;
+	GtkWidget *change_workspace_radio;
 } TasklistData;
 
 static void display_properties_dialog (BonoboUIComponent *uic,
@@ -51,6 +66,12 @@ tasklist_update (TasklistData *tasklist)
 		gtk_widget_set_size_request (GTK_WIDGET (tasklist->tasklist),
 					     tasklist->size, -1);
 	}
+
+	wnck_tasklist_set_allow_grouping (WNCK_TASKLIST (tasklist->tasklist),
+					  tasklist->enable_grouping);
+	wnck_tasklist_set_include_all_workspaces (WNCK_TASKLIST (tasklist->tasklist),
+						  tasklist->include_all_workspaces);
+	/* TODO: Set move_unminimized_windows */
 }
 
 
@@ -139,16 +160,176 @@ static const char tasklist_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
+
+
+static void
+tasklist_properties_update_content_radio (TasklistData *tasklist)
+{
+	GtkWidget *button;
+	
+	if (tasklist->show_current_radio == NULL)
+		return;
+
+	if (tasklist->include_all_workspaces) {
+		button = tasklist->show_all_radio;
+	} else {
+		button = tasklist->show_current_radio;
+	}
+	
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+}
+
+static void
+display_all_workspaces_changed (GConfClient  *client,
+				guint         cnxn_id,
+				GConfEntry   *entry,
+				TasklistData *tasklist)
+{
+	gboolean value = FALSE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+	
+	tasklist->include_all_workspaces = (value != 0);
+	tasklist_update (tasklist);
+
+	tasklist_properties_update_content_radio (tasklist);
+}
+
+static void
+group_windows_changed (GConfClient  *client,
+		       guint         cnxn_id,
+		       GConfEntry   *entry,
+		       TasklistData *tasklist)
+{
+	gboolean value = FALSE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+	
+	tasklist->enable_grouping = (value != 0);
+	tasklist_update (tasklist);
+
+	if (tasklist->group_windows_toggle &&
+	    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (tasklist->group_windows_toggle)) != tasklist->enable_grouping) {
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tasklist->group_windows_toggle),
+					      tasklist->enable_grouping);
+	}
+}
+
+static void
+tasklist_update_unminimization_radio (TasklistData *tasklist)
+{
+	GtkWidget *button;
+	
+	if (tasklist->move_minimized_radio == NULL)
+		return;
+
+	if (tasklist->move_unminimized_windows) {
+		button = tasklist->move_minimized_radio;
+	} else {
+		button = tasklist->change_workspace_radio;
+	}
+	
+        if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+}
+
+
+static void
+move_unminimized_windows_changed (GConfClient  *client,
+				  guint         cnxn_id,
+				  GConfEntry   *entry,
+				  TasklistData *tasklist)
+{
+	gboolean value = FALSE; /* Default value */
+	
+	if (entry->value != NULL &&
+	    entry->value->type == GCONF_VALUE_BOOL) {
+		value = gconf_value_get_bool (entry->value);
+	}
+	
+	tasklist->move_unminimized_windows = (value != 0);
+	tasklist_update (tasklist);
+
+	tasklist_update_unminimization_radio (tasklist);
+}
+
+static void
+setup_gconf (TasklistData *tasklist)
+{
+	GConfClient *client;
+	char *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
+					       "display_all_workspaces");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)display_all_workspaces_changed,
+				tasklist,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
+					       "group_windows");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)group_windows_changed,
+				tasklist,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (tasklist->applet),
+					       "move_unminimized_windows");
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)move_unminimized_windows_changed,
+				tasklist,
+				NULL, NULL);
+	g_free (key);
+}
+
+
 gboolean
 fill_tasklist_applet(PanelApplet *applet)
 {
 	TasklistData *tasklist;
+	GError *error;
+
+	panel_applet_add_preferences (applet, "/schemas/apps/tasklist-applet/prefs", NULL);
 	
 	tasklist = g_new0 (TasklistData, 1);
 
 	tasklist->applet = GTK_WIDGET (applet);
 
-	/* FIXME: We need to get the real initial panel data here */
+	setup_gconf (tasklist);
+	
+	error = NULL;
+	tasklist->include_all_workspaces = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
+	if (error) {
+		g_error_free (error);
+		tasklist->include_all_workspaces = FALSE; /* Default value */
+	}
+
+	error = NULL;
+	tasklist->enable_grouping = panel_applet_gconf_get_bool (applet, "group_windows", &error);
+	if (error) {
+		g_error_free (error);
+		tasklist->enable_grouping = TRUE; /* Default value */
+	}
+
+	error = NULL;
+	tasklist->move_unminimized_windows = panel_applet_gconf_get_bool (applet, "move_unminimized_windows", &error);
+	if (error) {
+		g_error_free (error);
+		tasklist->move_unminimized_windows = TRUE; /* Default value */
+	}
+	
+	/* FIXME: Would like to get the real initial panel data here */
 	tasklist->size = 48;
 	tasklist->orientation = GTK_ORIENTATION_HORIZONTAL;
 
@@ -189,17 +370,11 @@ fill_tasklist_applet(PanelApplet *applet)
 	
 	panel_applet_setup_menu (PANEL_APPLET (tasklist->applet), tasklist_menu_xml, tasklist_menu_verbs, tasklist);
 	
+	setup_gconf (tasklist);
+	
 	return TRUE;
 }
 
-
-static void 
-display_properties_dialog (BonoboUIComponent *uic,
-			   TasklistData      *tasklist,
-			   const gchar       *verbname)
-{
-	/* FIXME: Implement this. */ 
-}
 
 static void
 display_help_dialog (BonoboUIComponent *uic,
@@ -258,4 +433,89 @@ display_about_dialog (BonoboUIComponent *uic,
 			  (GCallback)gtk_widget_destroyed, &about);
 	
 	gtk_widget_show (about);
+}
+
+static void
+group_windows_toggled (GtkToggleButton *button,
+		       TasklistData    *tasklist)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (tasklist->applet),
+				     "group_windows",
+				     gtk_toggle_button_get_active (button),
+				     NULL);
+}
+static void
+move_minimized_toggled (GtkToggleButton *button,
+			TasklistData    *tasklist)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (tasklist->applet),
+				     "move_unminimized_windows",
+				     gtk_toggle_button_get_active (button),
+				     NULL);
+}
+static void
+display_all_workspaces_toggled (GtkToggleButton *button,
+				TasklistData    *tasklist)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (tasklist->applet),
+				     "display_all_workspaces",
+				     gtk_toggle_button_get_active (button),
+				     NULL);
+}
+
+
+#define WID(s) glade_xml_get_widget (xml, s)
+
+static void
+setup_dialog (GladeXML     *xml,
+	      TasklistData *tasklist)
+{
+	GConfClient *client;
+	
+	client = gconf_client_get_default ();
+
+	tasklist->show_current_radio = WID ("show_current_radio");
+	tasklist->show_all_radio = WID ("show_all_radio");
+	tasklist->group_windows_toggle = WID ("group_windows_toggle");
+	tasklist->move_minimized_radio = WID ("move_minimized_radio");
+	tasklist->change_workspace_radio = WID ("change_workspace_radio");
+
+	/* Window grouping: */
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tasklist->group_windows_toggle),
+				      tasklist->enable_grouping);
+	g_signal_connect (G_OBJECT (tasklist->group_windows_toggle), "toggled",
+			  (GCallback) group_windows_toggled, tasklist);
+
+	/* move window when unminimizing: */
+	tasklist_update_unminimization_radio (tasklist);
+	g_signal_connect (G_OBJECT (tasklist->move_minimized_radio), "toggled",
+			  (GCallback) move_minimized_toggled, tasklist);
+
+	/* Tasklist content: */
+	tasklist_properties_update_content_radio (tasklist);
+	g_signal_connect (G_OBJECT (tasklist->show_all_radio), "toggled",
+			  (GCallback) display_all_workspaces_toggled, tasklist);
+
+	g_signal_connect_swapped (WID ("done_button"), "pressed",
+				  (GCallback) gtk_widget_hide, tasklist->properties_dialog);
+
+}
+
+static void 
+display_properties_dialog (BonoboUIComponent *uic,
+			   TasklistData      *tasklist,
+			   const gchar       *verbname)
+{
+	if (tasklist->properties_dialog == NULL) {
+		GladeXML  *xml;
+
+		xml = glade_xml_new (TASKLIST_GLADEDIR "/tasklist.glade", NULL, NULL);
+		tasklist->properties_dialog = glade_xml_get_widget (xml, "tasklist_properties_dialog");
+
+		setup_dialog (xml, tasklist);
+		
+		g_object_unref (G_OBJECT (xml));
+	}
+
+	gtk_window_present (GTK_WINDOW (tasklist->properties_dialog));
 }

@@ -277,6 +277,8 @@ fill_pager_applet(PanelApplet *applet)
 
 	pager->applet = GTK_WIDGET (applet);
 
+	setup_gconf (pager);
+	
 	error = NULL;
 	pager->n_rows = panel_applet_gconf_get_int (applet, "num_rows", &error);
 	if (error) {
@@ -344,8 +346,6 @@ fill_pager_applet(PanelApplet *applet)
 	
 	panel_applet_setup_menu (PANEL_APPLET (pager->applet), pager_menu_xml, pager_menu_verbs, pager);
 
-	setup_gconf (pager);
-	
 	return TRUE;
 }
 
@@ -410,8 +410,6 @@ display_about_dialog (BonoboUIComponent *uic,
 }
 
 
-#define WID(s) glade_xml_get_widget (xml, s)
-
 static void
 display_workspace_names_toggled (GtkToggleButton *button,
 				 PagerData       *pager)
@@ -465,9 +463,26 @@ update_workspaces_model (PagerData *pager)
 }
 
 static void
-workspace_created_or_destroyed (WnckScreen *screen,
-				WnckWorkspace *space,
-				PagerData *pager)
+workspace_renamed (WnckWorkspace *space,
+		   PagerData     *pager)
+{
+	update_workspaces_model (pager);
+}
+
+static void
+workspace_created (WnckScreen    *screen,
+		   WnckWorkspace *space,
+		   PagerData     *pager)
+{
+	update_workspaces_model (pager);
+	g_signal_connect (G_OBJECT (space), "name_changed",
+			  (GCallback) workspace_renamed, pager);
+}
+
+static void
+workspace_destroyed (WnckScreen    *screen,
+		     WnckWorkspace *space,
+		     PagerData     *pager)
 {
 	update_workspaces_model (pager);
 }
@@ -526,17 +541,17 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
 	g_slist_free (list);
 }
 
+#define WID(s) glade_xml_get_widget (xml, s)
+
 static void
 setup_dialog (GladeXML  *xml,
 	      PagerData *pager)
 {
 	gboolean value;
-	GConfClient *client;
 	GtkTreeViewColumn *column;
 	GtkCellRenderer *cell;
+	int nr_ws, i;
 	
-	client = gconf_client_get_default ();
-
 	pager->display_workspaces_toggle = WID ("workspace_name_toggle");
 	pager->all_workspaces_radio = WID ("all_workspaces_radio");
 	pager->current_only_radio = WID ("current_only_radio");
@@ -585,9 +600,9 @@ setup_dialog (GladeXML  *xml,
 			  (GCallback) num_workspaces_value_changed, pager);
 	
 	g_signal_connect_swapped (pager->screen, "workspace_created",
-				  (GCallback) workspace_created_or_destroyed, pager);
+				  (GCallback) workspace_created, pager);
 	g_signal_connect_swapped (pager->screen, "workspace_destroyed",
-				  (GCallback) workspace_created_or_destroyed, pager);
+				  (GCallback) workspace_destroyed, pager);
 
 	pager->workspaces_store = gtk_list_store_new (1, G_TYPE_STRING, NULL);
 	update_workspaces_model (pager);
@@ -600,6 +615,12 @@ setup_dialog (GladeXML  *xml,
 	gtk_tree_view_append_column (GTK_TREE_VIEW (pager->workspaces_tree), column);
 	g_signal_connect (cell, "edited",
 			  (GCallback) workspace_name_edited, pager);
+	
+	nr_ws = wnck_screen_get_workspace_count (pager->screen);
+	for (i = 0; i < nr_ws; i++) {
+		g_signal_connect (G_OBJECT (wnck_workspace_get (i)), "name_changed",
+				  (GCallback) workspace_renamed, pager);
+	}
 }
 
 static void 

@@ -1,5 +1,20 @@
 2002-01-13  Alexander Larsson  <alla@lysator.liu.se>
 
+	* Makefile.am:
+	Add TASKLIST_GLADEDIR, tasklist.schemas and tasklist.glade
+
+	* tastklist.glade, tasklist.schemas:
+	New files.
+
+	* pager.c:
+	Set up gconf before reading values to avoid tiny race.
+	Handle workspaces being renamed.
+
+	* tasklist.c:
+	Add properties dialog.
+
+2002-01-13  Alexander Larsson  <alla@lysator.liu.se>
+
 	* pager.c (num_workspaces_value_changed):
 	Change gconf key to number_of_workspaces.
 

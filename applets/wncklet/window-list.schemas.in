@@ -1,0 +1,45 @@
+<gconfschemafile>
+    <schemalist>    
+
+      <schema>
+        <key>/schemas/apps/tasklist-applet/prefs/display_all_workspace</key>
+        <owner>tasklist-applet</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short>Show windows from all workspaces</short>
+          <long>If this is true, the tasklist will show windows from all workspaces,
+	         otherwise it will display windows from the current workspace only.
+	  </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/tasklist-applet/prefs/group_windows</key>
+        <owner>tasklist-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Enable grouping of windows</short>
+          <long>Group windows from the same application on the tasklist when there
+	        is not enough space to show all window.
+	  </long>
+        </locale>
+      </schema>
+                 
+      <schema>
+        <key>/schemas/apps/tasklist-applet/prefs/move_unminimized_windows</key>
+        <owner>tasklist-applet</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short>Move windows to the current workspace when unminimized</short>
+          <long>If true, then when unminimizing a window, bring it to the current workspace.
+	        Otherwise, change to the workspace of the window.
+	  </long>
+        </locale>
+      </schema>
+                 
+  </schemalist>
+  
+</gconfschemafile>

@@ -8,10 +8,11 @@ INCLUDES = -I. -I$(srcdir) 			\
 	$(WARN_CFLAGS) 				\
 	$(WNCKLET_CFLAGS) 			\
 	-DPAGER_GLADEDIR=\""$(gladedir)"\"	\
+	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 
 
 gladedir   = $(datadir)/gen_util
-glade_DATA = pager.glade
+glade_DATA = pager.glade tasklist.glade
 
 libgen_util_applet_2_la_SOURCES = \
 	main.c \
@@ -46,7 +47,7 @@ mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 
 schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = mailcheck.schemas pager.schemas
+schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
