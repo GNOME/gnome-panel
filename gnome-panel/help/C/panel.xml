@@ -47,25 +47,27 @@
      <primary>Panel</primary>
     </indexterm>
     The GNOME Panel is the heart of the GNOME user interface and acts
-    as a repository for applications launchers, applets (applications
-    which run entirely within the panel), and menus.  The Panel was
+    as a repository for <link linkend="launchers">applications
+    launchers</link>, <link linkend="applets">applets</link>
+    (applications which run entirely within the panel), <link
+    linkend="menus">menus</link>, <link
+    linkend="drawers">drawers</link>, and several <link
+    linkend="specialobjects">special objects</link>.  The Panel was
     designed to be highly configurable.  You can easily <link
-    linkend="panelproperties">customize</link> its
-    contents, behavior, and  appearance to suite your personal needs
-    and preferences.  You can even have <link
-    linkend="panelmove">multiple panels</link>, each with its
-    own appearance, properties, and contents.  This flexibility allows
-    you to easily create a comfortable and efficient personalized
-    desktop environment.
+    linkend="panelproperties">customize</link> its contents, behavior,
+    and  appearance to suite your personal needs and preferences.  You
+    can even have <link linkend="panelmove">multiple panels</link>,
+    each with its own appearance, properties, and contents.  This
+    flexibility allows you to easily create a comfortable and
+    efficient personalized desktop environment.
    </para>
     <para> This manual describes version 1.1.3 of GNOME panel.
       </para>
   </sect1>
 
 
-<!-- ########### Panel Basics  ############## -->
-  <sect1 id="panelbasic"> 
-  <title>Panel Basics</title>
+<!-- ########### Panel Basics  ############## --> <sect1
+  id="panelbasic">  <title>Panel Basics</title>
    <para>
     Using the GNOME Panel is very simple and will come easily to
     anyone who has used a graphical desktop environment.  This section
@@ -84,18 +86,17 @@
 	mouse, <guilabel>applets</guilabel> &mdash; applications which
 	run inside of the panel, displaying information for the user,
 	and <guilabel>menus</guilabel> &mdash;.  Each of these types
-	is described in detail in the following sections. You can easily
-	add, move, or remove panel objects &mdash; see <xref
-	linkend="appletadd">. 
+	is described in detail in the following sections. You can
+	easily add, move, or remove panel objects &mdash; see <xref
+	linkend="appletadd">.
       </para>
       <para> To use any of these objects, all you have to do is to
       click on it with the left mouse button. This will produce the
-      default action for this object: for menus, bring up the
-      menu; for application launchers, launch the corresponding
-      application, for applets, it depends on the applet: some of them
-      do nothing (for example, the clock applet); others will execute
-      some commands when clicked. 
-      </para> 
+      default action for this object: for menus, bring up the menu;
+      for application launchers, launch the corresponding application,
+      for applets, it depends on the applet: some of them do nothing
+      (for example, the clock applet); others will execute some
+      commands when clicked.  </para>
 
     <para>For now, a simple example of each panel object will be
      sufficient to get started. The example panel shown below shows
@@ -111,22 +112,21 @@
        </graphic>
      </screenshot>
     </figure>
-      <para> Most important of all items shown here is the <guimenu>Main
-     Menu</guimenu>, shown by the stylized footprint icon in the left
-     side of the panel. This menu provides you access to almost all
-     you can do with GNOME &mdash; all the applications, configuration
-     tools,  command line prompt, <guimenuitem>Logout</guimenuitem>
-     and <guimenuitem>Lock Screen</guimenuitem> commands, and much more.
-     The main menu is described in detail in <xref
-     linkend="mainmenu">. 
+      <para> Most important of all items shown here is the
+     <guimenu>Main Menu</guimenu>, shown by the stylized footprint
+     icon in the left side of the panel. This menu provides you access
+     to almost all you can do with GNOME &mdash; all the applications,
+     configuration tools,  command line prompt,
+     <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
+     Screen</guimenuitem> commands, and much more.  The main menu is
+     described in detail in <xref linkend="mainmenu">.
       </para>
       <para>
- ... The tiger head icon is a launcher, which starts
-     the ... program when clicked.  The square gray box
-     with red and green charts in it is the
-     <application>rp3</application> applet, which activates or ends
-     modem connections, and also plots the data transfer rate when the
-     modem connection is active.  PAGER 
+ ... The tiger head icon is a launcher, which starts the ... program
+     when clicked.  The square gray box with red and green charts in
+     it is the <application>rp3</application> applet, which activates
+     or ends modem connections, and also plots the data transfer rate
+     when the modem connection is active.  PAGER
       </para>
    </sect2>
 
@@ -140,21 +140,21 @@
 	<guimenu>Panel</guimenu> menu, which can be used to change
 	panel properties (both for <link
 	linkend="panelproperties">this panel</link> and <link
-	linkend="globalpanelprefs">global</link>, i.e. for all panels), <link
-	linkend="add">add an object</link>
-	to the panel, or remove the whole panel. In addition, the
-	pop-up menu  also contains some items specific to this
-	object; in most cases, it will contain
-	<guimenuitem>About</guimenuitem>, which would show brief
-	information about the applet, such as author's name and
-	version date, <guimenuitem>Help</guimenuitem>, and
+	linkend="globalpanelprefs">global</link>, i.e. for all
+	panels), <link linkend="add">add an object</link> to the
+	panel, or remove the whole panel. In addition, the pop-up menu
+	also contains some items specific to this object; in most
+	cases, it will contain <guimenuitem>About</guimenuitem>, which
+	would show brief information about the applet, such as
+	author's name and version date,
+	<guimenuitem>Help</guimenuitem>, and
 	<guimenuitem>Properties</guimenuitem>, which allows you to
 	configure preferences and settings for this object.
 	</para>
         <para> You can also right-click on the panel itself. This will
         bring up the <link linkend="mainmenu"><guimenu>Main
         Menu</guimenu></link>. In particular, this menu also contains
-        the <guimenu>Panel</guimenu> menu described above.  
+        the <guimenu>Panel</guimenu> menu described above.
 	</para>
 
     </sect2>
@@ -165,12 +165,10 @@
     <title>Hiding the Panel</title>
     <para>
      <indexterm id="idx-a4">
-      <primary>Panel</primary>
-      <secondary>Hide Buttons</secondary>
+      <primary>Panel</primary> <secondary>Hide Buttons</secondary>
      </indexterm>
      <indexterm id="idx-a5">
-      <primary>Panel</primary>
-      <secondary>Hiding</secondary>
+      <primary>Panel</primary> <secondary>Hiding</secondary>
      </indexterm>
      The left and right arrow icons seen at either end of the example
      panel are used to hide the panel.
@@ -186,13 +184,13 @@
      </para>
      <para>
      Pressing the <guibutton>Hide Button</guibutton>s  will hide the
-     GNOME Panel in the direction of the arrow pressed.  
+     GNOME Panel in the direction of the arrow pressed.
     </para>
     <para>
-     You may decide that you want the Panel to hide on its own when you are not
-     using it. This can be a helpful function if you are unable to run your
-     system in a high resolution.  You can find out how to auto hide
-     the Panel in      <xref linkend="panelproperties">.
+     You may decide that you want the Panel to hide on its own when
+     you are not using it. This can be a helpful function if you are
+     unable to run your system in a high resolution.  You can find out
+     how to auto hide the Panel in <xref linkend="panelproperties">.
     </para>
    </sect2>
 
@@ -202,14 +200,10 @@
 
 <!-- ########### Main Menu ############## -->
 
-
-
-
    <sect1 id="mainmenu">
     <title>The Main Menu</title>
     <para>
-      <indexterm id="idx-a3"> 
-     <primary>Main Menu</primary> 
+      <indexterm id="idx-a3">  <primary>Main Menu</primary>
      </indexterm>
       The footprint icon seen towards the left end of the example
       panel is the <guibutton>Main Menu</guibutton> (yes, you guessed
@@ -254,41 +248,41 @@
 	an easy access to all the documentation installed on your
 	system &mdash; not only GNOME documentation (Users guide,
 	application manuals, &hellip;), but also all other types of
-	documentation (man pages, info pages).  
+	documentation (man pages, info pages).
       </para>
 
 
-      <para> In addition to the <guimenu>Programs</guimenu>,  the
-	main menu can also contains a number of other submenus and useful
+      <para> In addition to the <guimenu>Programs</guimenu>,  the main
+	menu can also contains a number of other submenus and useful
 	commands, listed below. Depending on your configuration, you
 	may not see all of them. Also, some of them may be shown as
 	submenus, and others included as part of the main menu,
-	separated by horizontal lines from other parts. 
+	separated by horizontal lines from other parts.
       </para>
 	<itemizedlist>
 	  <listitem>
 	    <para>
-	      <guisubmenu>Favorites.</guisubmenu> This menu, which
-	      is originally empty, is the place where you can put your
+	      <guisubmenu>Favorites.</guisubmenu> This menu, which is
+	      originally empty, is the place where you can put your
 	      favorite applications for quicker access. You can edit
 	      this menu using the <application>Menu
 	      Editor</application>, which can be accessed from the
 	      <guimenu>Main Menu</guimenu> by choosing
 	      <menuchoice><guisubmenu>Settings</guisubmenu>
-                          <guimenuitem>Menu Editor</guimenuitem>
-	    </menuchoice>. You can also add any item from any other
+	      <guimenuitem>Menu Editor</guimenuitem>
+	      </menuchoice>. You can also add any item from any other
 	      menu (in particular, from the
 	      <guimenu>Programs</guimenu> menu) to
 	      <guisubmenu>Favorites</guisubmenu> by clicking on the
 	      item with the right mouse button and selecting
-	      <guimenuitem>Add this to personal menu</guimenuitem>.   
+	      <guimenuitem>Add this to personal menu</guimenuitem>.
 	    </para>
 	  </listitem>
 
 	  <listitem>
 	    <para>
 	      <guisubmenu>Applets.</guisubmenu> This menu contains all
-	      the applets installed on your system. 
+	      the applets installed on your system.
 	    </para>
 	  </listitem>
 
@@ -307,7 +301,7 @@
 	      </guimenuitem> These menus show the default application
 	      menus for Red Hat Linux (Another Level) and Debian
 	      GNU/Linux. They only make sense for the users of
-	      corresponding distributions. 
+	      corresponding distributions.
 	    </para>
 	  </listitem>
 
@@ -329,21 +323,19 @@
 	      <guimenuitem>Logout</guimenuitem>, which ends your GNOME
 	      session (first asking for confirmation &mdash; see <xref
 	      linkend="loggingout">) and <guimenuitem>Lock
-	      Screen</guimenuitem>. 
+	      Screen</guimenuitem>.
 	    </para>
 	  </listitem>
 	</itemizedlist>
     </sect2>
 
     <sect2 id="mainmenuconfig">
-      <title>Configuring the main menu</title>
-      <para> FIXME
+      <title>Configuring the main menu</title> <para> FIXME
       </para>
     </sect2>
 
     <sect2 id="kbdnav">
-      <title>Keyboard navigation in the main menu</title>
-      <para> FIXME
+      <title>Keyboard navigation in the main menu</title> <para> FIXME
       </para>
     </sect2>
 
@@ -374,7 +366,7 @@
 	<para> The choices <guilabel>Halt</guilabel> and
 	<guilabel>Reboot</guilabel>will only be shown if you have the
 	permission to execute the command
-	<command>/usr/bin/shutdown</command>. 
+	<command>/usr/bin/shutdown</command>.
 	</para>
       </note>
     <figure>
@@ -387,8 +379,8 @@
      </screenshot>
     </figure>
     <para>
-     Within the Logout Dialog there is one option you may choose before
-     you leave GNOME.
+     Within the Logout Dialog there is one option you may choose
+     before you leave GNOME.
     </para>
     <para>
      If you would like to save your current setup, you may select the
@@ -409,10 +401,9 @@
       Finally, you can disable the logout dialog so that pressing the
       logout button will end your GNOME session without asking any
       questions. To do so, start GNOME control center (<menuchoice>
-	  <guimenu>Main Menu</guimenu><guisubmenu>Settings</guisubmenu>
-          <guisubmenu>Startup programs</guisubmenu>
-	</menuchoice>) and uncheck the
-      button <guilabel>Prompt on logout</guilabel>.
+      <guimenu>Main Menu</guimenu><guisubmenu>Settings</guisubmenu>
+      <guisubmenu>Startup programs</guisubmenu> </menuchoice>) and
+      uncheck the button <guilabel>Prompt on logout</guilabel>.
       </para>
 
    </sect2>
@@ -426,17 +417,26 @@
  <sect1 id="menus">
   <title>Menus</title>
   <para>
-   A menu ...
+   A Menu is a list containing applications and other nested
+   lists. Menus are typically created using the <application>Menu
+   Editor</application>. Once an Menu is created with the
+   <application>Menu Editor</application>, you can add it to your
+   panel by finding your Menu in the Main Menu and right click on it,
+   selecting "add this menu to panel".
   </para>
   <figure>
-   <title>Menu Properties Dialog</title>
+   <title>An Example Menu</title>
    <screenshot>
-    <screeninfo>Menu Properties Dialog</screeninfo>
+    <screeninfo>An Example Menu</screeninfo>
      <graphic fileref="./figures/example_menu" format="png"
-     srccredit="dcm">
+     srccredit="muet">
      </graphic>
    </screenshot>
   </figure>
+  <para>
+   The example above shows a menu titled "My Favorites" which includes
+   three application launchers and one sub-menu titled "games".
+  </para>
   <figure>
    <title>Menu Properties Dialog</title>
    <screenshot>
@@ -454,6 +454,54 @@
   <title>Launchers</title>
   <para>
    (Add info about launchers)
+  </para>
+  <figure>
+   <title>Create Launcher/Launcher Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Create Launcher/Launcher Properties Dialog</screeninfo>
+     <graphic fileref="./figures/create_launcher" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+ </sect1>
+
+
+<!-- ###########  Applets  ############## -->
+ <sect1 id="applets">
+  <title>Applets</title>
+  <para>
+   Applets are GNOME applications which reside in the Panel. An
+   Applet's appearance typically reveals the state of the Applet or
+   other information. Applets often have buttons, sliders, entries, or
+   other methods to allow you to control their behavior.
+  </para>
+  <figure>
+   <title>Example Applets</title>
+   <screenshot>
+    <screeninfo>Example Applets</screeninfo>
+     <graphic fileref="./figures/panel_applets" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+  <para>
+   Some example Applets are shown above.  At the very left is  the
+   Sound Monitor, which displays the current volume of sound being
+   played and allows us to control various sound features.  Second is
+   the Mixer, which allows us to turn on/off sound and control its
+   volume by clicking on applet.  This is followed by the Battery
+   Power Applet, useful for monitoring the battery on a laptop. The
+   fourth applet is the GTCD CD player applet, which has all its
+   controls available in the applet and displays the track and
+   time. The next applet is the Drive Mount applet, used to mount and
+   unmount drives with a single click of the mouse. The last applet
+   shown is an analog clock, displaying the current time.
+  </para>
+  <para>
+   GNOME has many useful applets.  Just right click on your Panel and add
+   some applets to your panel to find out what is available and which
+   ones are best for you. 
   </para>
  </sect1>
 
@@ -603,16 +651,24 @@
     typically displayed on the top left edge of the window.  The
     width and height determine the size of the swallowed application
     in the panel in pixels; they must be at least as large as the
-    application window, otherwise the application can't be swallowed. 
+    application window, otherwise the application can't be swallowed.
+    The optional "Command" entry is used to execute a command before
+    swallowing the application.  This can be used to start an
+    application which you will then swallow. 
    </para>
          
-	
-<!-- ## Add info on "command", possibly "xwininfo" or "xprop". ## -->
   </sect2>
   <sect2 id="statusdock">
    <title>Status Dock</title>
    <para>
-    (What is the Status Dock?)    
+    The Status Dock is a Panel object which can hold Status Docklets -
+    small windows which applications place in the Status Dock to
+    provide status information.  GNOME currently does not have many
+    applications which place Status Docklets in the Status Dock.
+    However, GNOME's Status Dock is compatible with that on KDE, so
+    KDE applications (eg: kscd) may place Status Docklets in GNOME's
+    Status Dock.  Future versions of GNOME applications will make use
+    of this recently added Panel object.
    </para>
   </sect2>
  </sect1>
@@ -808,8 +864,6 @@
   <sect1 id="panelmove">
    <title>Creating, Moving, and Removing Panels</title>
 
- 
- 
       <sect2 id="panelmoving">
 	<title> Moving panels </title>
 	<para>   
