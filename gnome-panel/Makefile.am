@@ -133,6 +133,7 @@ panelrc: panelrc.in Makefile
 	  > panelrc.tmp && mv -f panelrc.tmp panelrc
 
 MOSTLYCLEANFILES = panelrc
+MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
 
 EXTRA_DIST = panelrc.in panel.in gnome-panel.idl appletsConf.sh.in
 
