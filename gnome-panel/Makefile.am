@@ -13,7 +13,6 @@ INCLUDES =							\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
-	-DPANELRC=\""$(rcdir)/$(rc_DATA)"\"			\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
 	$(ALLOW_CRACKPOT_MENU_CODE)				\

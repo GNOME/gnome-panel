@@ -874,11 +874,6 @@ panel_event(GtkWidget *widget, GdkEvent *event)
 				return gtk_bindings_activate (GTK_OBJECT (panel), kevent->keyval, kevent->state);
 		}
 		break;
-	case GDK_FOCUS_CHANGE:
-		fevent = (GdkEventFocus *)event;
-		state = (fevent->in) ? GTK_STATE_SELECTED : GTK_STATE_NORMAL;
-		gtk_widget_set_state (GTK_WIDGET (panel), state);
-
 	default:
 		break;
 	}
