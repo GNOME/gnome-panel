@@ -122,8 +122,8 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 		g_signal_new	("move_focus_out",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (FoobarWidgetClass, move_focus_out),				NULL,
-                                NULL,
+				G_STRUCT_OFFSET (FoobarWidgetClass, move_focus_out),
+				NULL, NULL,
                                 panel_marshal_VOID__VOID,
 				G_TYPE_NONE,
 				0);
@@ -328,13 +328,9 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 static void
 focus_window (GtkWidget *w, WnckWindow *window)
 {
-	WnckScreen *screen = wnck_screen_get (0 /* FIXME screen number */);
-	WnckWorkspace *wspace = wnck_screen_get_active_workspace (screen);
-
-	if (wspace != NULL)
-		wnck_window_move_to_workspace (window, wspace);
 	if (wnck_window_is_minimized (window)) 
 		wnck_window_unminimize (window);
+
 	wnck_window_activate (window);
 }
 
@@ -478,12 +474,6 @@ create_task_menu (GtkWidget *w, gpointer data)
 
 	if (GTK_WIDGET_VISIBLE (foo->task_menu))
 		our_gtk_menu_position (GTK_MENU (foo->task_menu));
-
-	/* Owen: don't read the next line */
-#if 0
-	GTK_MENU_SHELL (foo->task_menu)->active = 1;
-	our_gtk_menu_position (GTK_MENU (foo->task_menu));
-#endif
 }
 
 static void
@@ -678,7 +668,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 	GtkWidget *align;
-	GList     *focus_chain = NULL;
 	char      *path;
 
 	window = GTK_WINDOW (foo);
@@ -777,18 +766,6 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), task_bar, FALSE, FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (foo), foo->ebox);
-
-#if 0
-		{
-			GList *focus_chain = NULL;
-
-			focus_chain = g_list_prepend (focus_chain, task_bar);
-			focus_chain = g_list_prepend (focus_chain, foo->panel);
-			focus_chain = g_list_prepend (focus_chain, menu_bar);
-			gtk_container_set_focus_chain (GTK_CONTAINER (foo->hbox), focus_chain);
-			g_list_free (focus_chain);
-		}
-#endif
 
 	gtk_widget_show_all (foo->ebox);
 }
