@@ -2,8 +2,10 @@ AC_INIT(gnome-panel)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE(gnome-panel, 2.9.91)
 
+AC_CONFIG_MACRO_DIR(m4)
+
 dnl make sure we keep ACLOCAL_FLAGS around for maintainer builds to work
-AC_SUBST(ACLOCAL_AMFLAGS, "$ACLOCAL_FLAGS")
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
 
 # Before making a release, the LT_VERSION string should be modified.
 # The string is of the form C:R:A.
