@@ -663,7 +663,7 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 	    socket->window == NULL)
 		return;
 
-	size = panel->sz < 24 ? panel->sz : 24;
+	size = panel->sz < 18 ? panel->sz : 18;
 
 	if ( ! tried_loading) {
 		char *file;
@@ -742,7 +742,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
 
-	size = panel->sz < 24 ? panel->sz : 24;
+	size = panel->sz < 18 ? panel->sz : 18;
 
 	gtk_widget_set_usize (ext->ebox, size, size);
 

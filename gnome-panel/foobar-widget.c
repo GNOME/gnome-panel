@@ -39,8 +39,6 @@ extern GtkTooltips *panel_tooltips;
 static void foobar_widget_class_init	(FoobarWidgetClass	*klass);
 static void foobar_widget_init		(FoobarWidget		*foo);
 static void foobar_widget_realize	(GtkWidget		*w);
-static gboolean foobar_widget_configure_event (GtkWidget        *w,
-					       GdkEventConfigure *event);
 static void foobar_widget_destroy	(GtkObject		*o);
 static void foobar_widget_size_allocate	(GtkWidget		*w,
 					 GtkAllocation		*alloc);
@@ -93,7 +91,6 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	object_class->destroy = foobar_widget_destroy;
 
 	widget_class->realize = foobar_widget_realize;
-	widget_class->configure_event = foobar_widget_configure_event;
 	widget_class->size_allocate = foobar_widget_size_allocate;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
@@ -650,21 +647,6 @@ foobar_widget_realize (GtkWidget *w)
 	xstuff_set_no_group_and_no_input (w->window);
 
 	setup_task_menu (FOOBAR_WIDGET (w));
-}
-
-static gboolean
-foobar_widget_configure_event (GtkWidget *w, GdkEventConfigure *event)
-{
-	g_return_val_if_fail (IS_FOOBAR_WIDGET (w), FALSE);
-
-	if (event->x != 0 ||
-	    event->y != 0)
-		gdk_window_move (w->window, 0, 0);
-
-	if (GTK_WIDGET_CLASS (parent_class)->configure_event != NULL)
-		return GTK_WIDGET_CLASS (parent_class)->configure_event (w, event);
-	else
-		return FALSE;
 }
 
 static void

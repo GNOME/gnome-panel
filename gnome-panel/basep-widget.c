@@ -134,23 +134,6 @@ basep_widget_realize (GtkWidget *w)
 		klass->realize (w);
 }
 
-static gboolean
-basep_widget_configure_event (GtkWidget *w, GdkEventConfigure *event)
-{
-	g_return_val_if_fail (IS_BASEP_WIDGET (w), FALSE);
-
-	if (event->x != w->allocation.x ||
-	    event->y != w->allocation.y ||
-	    event->width != w->allocation.width ||
-	    event->height != w->allocation.height)
-		gtk_widget_queue_resize (w);
-
-	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->configure_event != NULL)
-		return GTK_WIDGET_CLASS (basep_widget_parent_class)->configure_event (w, event);
-	else
-		return FALSE;
-}
-
 static void
 basep_widget_size_request (GtkWidget *widget,
 			   GtkRequisition *requisition)
@@ -354,7 +337,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
-	widget_class->configure_event = basep_widget_configure_event;
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
 	widget_class->style_set = basep_style_set;

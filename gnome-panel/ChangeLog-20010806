@@ -1,3 +1,17 @@
+Thu Mar 29 11:46:53 2001  George Lebl <jirka@5z.com>
+
+	* basep-widget.c, foobar-widget.c:  remove the configure hack as
+	  apparently sawfish isn't too happy with it, this reintroduces the
+	  bug where you can lose panels by dragging them off in deskguide,
+	  but oh well.
+
+	* extern.c: make the "loading" image be 18x18 instead of 24x24 to fix
+	  bugs with drivemounts being separated
+
+	* xstuff.c: ignore panel windows when checking for swallows and
+	  status windows, and don't check for status windows on task changes,
+	  just on task new.
+
 2001-03-28  jacob berkman  <jacob@ximian.com>
 
 	* foobar-widget.c (set_the_task_submenu): make this a scrolled

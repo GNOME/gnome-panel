@@ -98,6 +98,10 @@ xstuff_go_through_client_list (void)
 	/* just for status dock stuff for now */
 	for (li = gwmh_task_list_get (); li != NULL; li = li->next) {
 		GwmhTask *task = li->data;
+		/* skip own windows */
+		if (task->name != NULL &&
+		    strcmp (task->name, "panel") == 0)
+			continue;
 		if (check_swallows != NULL)
 			try_checking_swallows (task);
 		try_adding_status (task->xwin);
@@ -139,12 +143,18 @@ task_notifier (gpointer func_data,
 	       GwmhTaskNotifyType ntype,
 	       GwmhTaskInfoMask imask)
 {
+	/* skip own windows */
+	if (task->name != NULL &&
+	    strcmp (task->name, "panel") == 0)
+		return TRUE;
+
 	switch (ntype) {
-	case GWMH_NOTIFY_INFO_CHANGED:
 	case GWMH_NOTIFY_NEW:
+		try_adding_status (task->xwin);
+		/* fall through */
+	case GWMH_NOTIFY_INFO_CHANGED:
 		if (check_swallows != NULL)
 			try_checking_swallows (task);
-		try_adding_status (task->xwin);
 		break;
 	default:
 		break;
