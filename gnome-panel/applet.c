@@ -306,13 +306,14 @@ add_to_submenus(AppletInfo *info,
 void
 create_applet_menu(AppletInfo *info)
 {
-	GtkWidget *menuitem;
+	GtkWidget *menuitem, *pixmap;
 	GList *user_menu = info->user_menu;
 
 	info->menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new();
-	setup_menuitem(menuitem,NULL,_("Remove from panel"));
+	pixmap = gnome_stock_new_with_icon (GNOME_STOCK_PIXMAP_REMOVE);
+	setup_menuitem(menuitem,pixmap,_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   info);
