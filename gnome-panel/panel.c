@@ -60,6 +60,8 @@ enum {
 
 static GtkTargetEntry panel_drop_types[] = {
 	{ "text/uri-list",       0, TARGET_URL },
+	{ "x-url/http",          0, TARGET_NETSCAPE_URL },
+	{ "x-url/ftp",           0, TARGET_NETSCAPE_URL },
 	{ "_NETSCAPE_URL",       0, TARGET_NETSCAPE_URL },
 	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
 	{ "application/x-panel-applet", 0, TARGET_APPLET },
@@ -871,10 +873,32 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
 		  const char *mimetype, *p;
 
-		  if(stat(ltmp->data, &s) != 0)
-		    continue;
-
 		  mimetype = gnome_mime_type(ltmp->data);
+
+		  if(mimetype &&
+		     (!strcmp(mimetype,"x-url/http") ||
+		      !strcmp(mimetype,"x-url/ftp"))) {
+			  int pos = panel_widget_get_cursorloc(panel);
+			  char *exec[3] = {
+			  	"gnome-moz-remote",
+				ltmp->data,
+				NULL
+			  };
+			  char *p;
+
+			  p = g_strdup_printf("Open URL: %s",
+					      ltmp->data);
+			  load_launcher_applet_from_info(ltmp->data,
+							 p,exec,2,
+							 "netscape.png",
+							 panel,pos);
+			  g_free(p);
+		  }
+
+		  if(stat(ltmp->data, &s) != 0) {
+			  continue;
+		  }
+
 		  if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
 		    panel_widget_set_back_pixmap (panel, ltmp->data);
 		  else if(mimetype
@@ -896,14 +920,17 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 	}
 	case TARGET_NETSCAPE_URL: {
 		int pos = panel_widget_get_cursorloc(panel);
-		char *exec[3] = {"gnome-moz-remote",
-				 selection_data->data,
-				 NULL};
+		char *exec[3] = {
+			"gnome-moz-remote",
+			selection_data->data,
+			NULL
+		};
 		char *p;
 		
 		p = g_strdup_printf("Open URL: %s",selection_data->data);
 		load_launcher_applet_from_info(selection_data->data,p,exec,2,
 					       "netscape.png",panel,pos);
+		g_free(p);
 		break;
 	}
 	case TARGET_COLOR: {
