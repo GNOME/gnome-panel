@@ -506,45 +506,43 @@ panel_widget_right_stick(PanelWidget *panel,gint old_size)
 {
 	gint i,freepos;
 	GtkWidget *applet;
-
-	puts("RIGHT_STICK");
-
-	if(old_size>=panel->size)
-		puts("old_size>=panel->size");
-	if(panel->snapped == PANEL_DRAWER)
-		puts("panel->snapped == PANEL_DRAWER");
-	if(panel->applets[old_size-1].applet == NULL)
-		puts("panel->applets[old_size-1].applet == NULL");
+	GList *aplist = NULL;
+	GList *list;
 
 	if(old_size>=panel->size ||
 	   panel->snapped == PANEL_DRAWER ||
 	   panel->applets[old_size-1].applet == NULL)
 		return;
 
-	puts("RIGHT_STICK 1");
-
 	for(i=1;old_size-1-i>=0 && panel->applets[old_size-1-i].applet;i++)
 		;
 	if(old_size-1-i < 0)
 		return;
 
-	puts("RIGHT_STICK 2");
-
 	freepos = i;
-
-	printf("i=%d\n",i);
 
 	applet = NULL;
 
 	for(i=0;i<freepos;i++) {
-		if(applet !=  panel->applets[old_size-1-i].applet ||
+		if(applet !=  panel->applets[old_size-1-i].applet &&
 		   panel->applets[old_size-1-i].applet != NULL) {
-			gint pos;
+		   	AppletData *ad;
+
 			applet = panel->applets[old_size-1-i].applet;
-			pos = panel_widget_get_pos(panel, applet);
-			panel_widget_move(panel,pos,panel->size-1);
+
+			ad = gtk_object_get_data(GTK_OBJECT(applet),
+						 PANEL_APPLET_DATA);
+
+		   	aplist = g_list_prepend(aplist,ad);
 		}
 	}
+
+	for(list=aplist;list!=NULL;list=g_list_next(list)) {
+		AppletData *ad = list->data;
+		panel_widget_move(panel,ad->pos,panel->size-1);
+	}
+
+	g_list_free(aplist);
 }
 
 static void
@@ -1580,8 +1578,7 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 			break;
 	}
 
-	/*panel_widget_right_stick(panel,old_size);
-	*/
+	panel_widget_right_stick(panel,old_size);
 
 	for(i=0;i<PANEL_MAX;i+=panel->applets[i].cells)
 		if(panel->applets[i].applet &&
@@ -2868,15 +2865,16 @@ panel_widget_change_params(PanelWidget *panel,
 			break;
 		case PANEL_TOP:
 		case PANEL_BOTTOM:
-			panel->size = PANEL_MAX;
 			panel->orient = PANEL_HORIZONTAL;
+			panel_widget_apply_size_limit(panel);
 			break;
 		case PANEL_LEFT:
 		case PANEL_RIGHT:
-			panel->size = PANEL_MAX;
 			panel->orient = PANEL_VERTICAL;
+			panel_widget_apply_size_limit(panel);
 			break;
 	}
+
 	panel_widget_set_hidebuttons(panel);
 
 	panel->thick = panel_widget_get_thick(panel);
