@@ -410,7 +410,8 @@ set_panel_position(void)
 	int i;
 
 	for(i=0;i<PANEL_TABLE_SIZE;i++)
-		if(!the_panel->panel->applets[i]->type==APPLET_PLACEHOLDER) {
+		if(!the_panel->panel->applets[i]->type==APPLET_PLACEHOLDER &&
+		   !the_panel->panel->applets[i]->type==APPLET_EMPTY) {
 			if(the_panel->panel->applets[i]->applet->allocation.width >
 			   width)
 				width = the_panel->panel->applets[i]->
@@ -591,15 +592,19 @@ save_drawer_configuration(PanelDrawer *drawer, GtkWidget *widget, int pos,
 	/* XXX: The increasing number is sort of a hack to guarantee unique
 	   keys */
 
-	sprintf(buf, "_%d/", (*drawernum)++);
+	sprintf(buf, "_%d/", *drawernum);
 	path = g_copy_strings("/panel/Drawer", buf, NULL);
 
 	fullpath = g_copy_strings(path,"name",NULL);
 	gnome_config_set_string(fullpath, drawer->name);
 	g_free(fullpath);
 
-	fullpath = g_copy_strings(path,"icon",NULL);
-	gnome_config_set_string(fullpath, drawer->name);
+	fullpath = g_copy_strings(path,"iconopen",NULL);
+	gnome_config_set_string(fullpath, drawer->iconopen);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"iconclosed",NULL);
+	gnome_config_set_string(fullpath, drawer->iconclosed);
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"geometry",NULL);
@@ -645,6 +650,7 @@ save_applets_on_panel(Panel *panel, gint base, gint *num, gint *drawernum)
 			save_applets_on_panel(panel->applets[i]->drawer->panel,
 					      *drawernum * 1000,
 					      num,drawernum);
+			(*drawernum)++;
 		}
 }
 
@@ -768,22 +774,26 @@ put_applet_in_free_slot_starting_at(Panel *panel, GtkWidget *applet, int start)
 {
 	int i;
 	for(i=start;i<PANEL_TABLE_SIZE;i++)
-		if(panel->applets[i]->type==APPLET_PLACEHOLDER)
+		if(panel->applets[i]->type==APPLET_PLACEHOLDER ||
+		   panel->applets[i]->type==APPLET_EMPTY)
 			break;
 
 	/*panel is full to the right*/
 	if(i==PANEL_TABLE_SIZE) {
 		for(i=start-1;i>=0;i--)
-			if(panel->applets[i]->type==APPLET_PLACEHOLDER)
+			if(panel->applets[i]->type==APPLET_PLACEHOLDER ||
+			   panel->applets[i]->type==APPLET_EMPTY)
 				break;
 		/*panel is full!*/
 		if(i<=0)
 			return FALSE;
 	}
 
-	gtk_container_remove(GTK_CONTAINER(panel->panel),
-			     panel->applets[i]->applet);
-	gtk_widget_destroy(panel->applets[i]->applet);
+	if(panel->applets[i]->type==APPLET_PLACEHOLDER) {
+		gtk_container_remove(GTK_CONTAINER(panel->panel),
+				     panel->applets[i]->applet);
+		gtk_widget_destroy(panel->applets[i]->applet);
+	}
 	
 
 	panel->applets[i]->applet = applet;
@@ -861,16 +871,20 @@ move_applet_n_by_pos(Panel *panel, int n, int pos)
 				applet_being_dragged = tmp.applet;
 			panel->applets[pos+n]->drawer->panel->
 				applet_id_being_dragged = -1;
-			/*put a placeholder on the original spot*/
+			/*put a placeholder on the original spot
+			  this will never be inside a drawer and there are
+			  no empty spots on the main panel*/
 			panel->applets[pos+p]->applet = gtk_event_box_new();
 			panel->applets[pos+p]->type = APPLET_PLACEHOLDER;
 			put_applet_in_slot(panel,panel->applets[pos+p],pos+p);
 			gtk_widget_show(panel->applets[pos+p]->applet);
 			return n;
 		}
-		gtk_container_remove(GTK_CONTAINER(panel->panel),
-				     panel->applets[pos+a]->applet);
-		put_applet_in_slot(panel,panel->applets[pos+a],pos+p);
+		if(panel->applets[pos+a]->type!=APPLET_EMPTY) {
+			gtk_container_remove(GTK_CONTAINER(panel->panel),
+					     panel->applets[pos+a]->applet);
+			put_applet_in_slot(panel,panel->applets[pos+a],pos+p);
+		}
 		panel->applets[pos+p]->type =
 			panel->applets[pos+a]->type;
 		panel->applets[pos+p]->applet =
@@ -1021,6 +1035,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	pos = find_applet(the_panel->panel,applet);
 	gtk_widget_destroy(applet);
 
+	/*FIMXE: no placeholders in drawers!*/
 	the_panel->panel->applets[pos]->applet = gtk_event_box_new();
 	switch (the_panel->panel->pos) {
 		case PANEL_POS_TOP:
@@ -1104,6 +1119,8 @@ show_applet_menu(GtkWidget *applet)
 	long flags;
 	AppletCommand  cmd;
 	gchar *id;
+
+	/*FIXME: DRAWERS crash on this, fix that */
 
 	flags = applet_flags(applet);
 
@@ -1660,16 +1677,20 @@ register_toy(GtkWidget *applet, char *id, int pos, long flags)
 }
 
 static void
-create_drawer(char *name, char *icon, int pos)
+create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
+	int pos)
 {
 	GtkWidget   *button;
 	PanelDrawer *drawer;
 	int          i;
-	int          n;
 
 	if(pos == PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
 
+	if(step_size == PANEL_UNKNOWN_STEP_SIZE)
+		step_size = the_panel->panel->step_size;
+
+	/*FIXME: use the proper icon (oen and close) */
 	button = gtk_button_new_with_label("DRAWER");
 	put_applet_in_free_slot_starting_at(the_panel->panel,button,pos);
 	gtk_tooltips_set_tips(panel_tooltips,button,name);
@@ -1688,6 +1709,10 @@ create_drawer(char *name, char *icon, int pos)
 	the_panel->panel->applets[i]->drawer = drawer;
 
 	drawer->panel = g_new(Panel,1);
+
+	drawer->name = g_strdup(name);
+	drawer->iconopen = g_strdup(iconopen);
+	drawer->iconclosed = g_strdup(iconclosed);
 
 	drawer->panel->window = gtk_window_new(GTK_WINDOW_POPUP);
 
@@ -1717,12 +1742,16 @@ create_drawer(char *name, char *icon, int pos)
 
 	drawer->panel->state = PANEL_SHOWN;
 	drawer->panel->applets = g_new(PanelApplet *,PANEL_TABLE_SIZE);
-	for(n=0;n<PANEL_TABLE_SIZE;n++)
-		drawer->panel->applets[n] = NULL;
+	for(i=0;i<PANEL_TABLE_SIZE;i++) {
+		drawer->panel->applets[i] = g_new(PanelApplet,1);
+		drawer->panel->applets[i]->applet = NULL;
+		drawer->panel->applets[i]->type = APPLET_EMPTY;
+	}
 	drawer->panel->applet_count = 0;
 	drawer->panel->applet_being_dragged = NULL;
 	drawer->panel->applet_id_being_dragged = -1;
 		
+	drawer->panel->step_size = step_size;
 }
 
 static void
@@ -1802,9 +1831,10 @@ panel_reconfigure(PanelMain *newconfig)
 		/*notify each applet that we're changing orientation!*/
 		/*FIXME: this should look into drawers as well*/
 		for(i=0;i<PANEL_TABLE_SIZE;i++)
-			if(!the_panel->panel->applets[i]->type==APPLET_PLACEHOLDER)
+			if(the_panel->panel->applets[i]->type==APPLET_NORMAL)
 				applet_orientation_notify(
-					the_panel->panel->applets[i]->applet,NULL);
+					the_panel->panel->applets[i]->applet,
+					NULL);
 	} else if(oldmode != newconfig->mode) {
 		set_show_hide_buttons_visibility();
 		set_panel_position();
@@ -1858,7 +1888,9 @@ panel_command(PanelCommand *cmd)
 
 		case PANEL_CMD_CREATE_DRAWER:
 			create_drawer(cmd->params.create_drawer.name,
-				      cmd->params.create_drawer.icon,
+				      cmd->params.create_drawer.iconopen,
+				      cmd->params.create_drawer.iconclosed,
+				      cmd->params.create_drawer.step_size,
 				      cmd->params.create_drawer.pos);
 			break;
 

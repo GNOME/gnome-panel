@@ -11,7 +11,6 @@ BEGIN_GNOME_DECLS
 
 #define PANEL_TABLE_SIZE 50
 
-
 typedef enum {
 	PANEL_POS_TOP,
 	PANEL_POS_BOTTOM,
@@ -31,6 +30,7 @@ typedef enum {
 } PanelMode;
 
 typedef enum {
+	APPLET_EMPTY,
 	APPLET_NORMAL,
 	APPLET_PLACEHOLDER,
 	APPLET_DRAWER
@@ -67,7 +67,8 @@ struct _Panel {
 struct _PanelDrawer {
 	Panel        *panel;
 	gchar        *name;
-	gchar        *icon;
+	gchar        *iconopen;
+	gchar        *iconclosed;
 };
 
 struct _PanelMain {

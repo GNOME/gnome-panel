@@ -156,9 +156,11 @@ add_drawer (GtkWidget *widget, void *data)
 	PanelCommand cmd;
 	
 	cmd.cmd = PANEL_CMD_CREATE_DRAWER;
-	cmd.params.create_drawer.name   = "Drawer";
-	cmd.params.create_drawer.icon   = "???";
-	cmd.params.create_drawer.pos    = PANEL_UNKNOWN_APPLET_POSITION;
+	cmd.params.create_drawer.name       = "Drawer";
+	cmd.params.create_drawer.iconopen   = "???";
+	cmd.params.create_drawer.iconclosed = "???";
+	cmd.params.create_drawer.step_size  = PANEL_UNKNOWN_STEP_SIZE;
+	cmd.params.create_drawer.pos        = PANEL_UNKNOWN_APPLET_POSITION;
 
 	(*panel_cmd_func) (&cmd);
 }

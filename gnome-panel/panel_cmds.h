@@ -5,6 +5,7 @@ BEGIN_GNOME_DECLS
 
 
 #define PANEL_UNKNOWN_APPLET_POSITION -1
+#define PANEL_UNKNOWN_STEP_SIZE -1
 
 
 typedef enum {
@@ -49,7 +50,9 @@ typedef struct {
 		/* Create drawer parameters */
 		struct {
 			char      *name;
-			char      *icon;
+			char      *iconopen;
+			char      *iconclosed;
+			int        step_size;
 			int        pos;
 		} create_drawer;
 
