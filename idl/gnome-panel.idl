@@ -28,6 +28,13 @@ module GNOME {
 			case BACK_PIXMAP: string pmap;
 		};
 
+		enum SizeType {
+		        SIZE_TINY,
+	        	SIZE_STANDARD,
+		        SIZE_LARGE,
+		        SIZE_HUGE	
+		};
+
 		/* XXX do activation stuff here - the applet side of it
 		   will be via a GNOME::GenericFactory (ask elliot) */
 		
@@ -68,6 +75,9 @@ module GNOME {
 		/*the orient of the panel on which this applet resides*/
 		readonly attribute Panel::OrientType parent_orient;
 
+		/*the size of the panel on which this applet resides*/
+		readonly attribute Panel::SizeType parent_size;
+
 		/* the applet is all done with building itself
 		   so it just tells us that it's all ready, this
 		   makes the panel start the next applet (otherwise,
@@ -97,6 +107,7 @@ module GNOME {
 
 	interface Applet {
 		oneway void change_orient (in Panel::OrientType orient);
+		oneway void change_size (in Panel::SizeType size);
 		oneway void do_callback (in string callback_name);
 		boolean session_save (in string cfgpath,
 				      in string global_cfgpath);
