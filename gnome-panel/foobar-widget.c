@@ -11,6 +11,7 @@
  */
 
 #include <config.h>
+#include <unistd.h>
 
 #include "foobar-widget.h"
 
@@ -526,10 +527,21 @@ append_format_item (GtkWidget *menu, const char *format)
 			    (gpointer)format);
 }
 
+static void
+set_time_cb (GtkWidget *menu_item, char *path)
+{
+	char *v[2] = { path };
+	
+	if (gnome_execute_async (g_get_home_dir (), 1, v) < 0)
+		panel_error_dialog (_("Could not call time-admin\n"
+						  "Perhaps time-admin is not installed"));
+}
+
 static GtkWidget *
 append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
 	GtkWidget *item, *menu, *menu2;
+	gchar *time_admin_path;
 	int i;
 	const char *cals[] = { 
 		N_("Today"),      "dayview",
@@ -555,6 +567,15 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	add_menu_separator (menu);
 #endif
 
+	time_admin_path = gnome_is_program_in_path ("time-admin");
+	if (time_admin_path) {
+		item = gtk_menu_item_new_with_label (_("Set Time"));
+		gtk_signal_connect (GTK_OBJECT (item), "activate",
+						GTK_SIGNAL_FUNC (set_time_cb), time_admin_path);
+		gtk_menu_append (GTK_MENU (menu), item);
+		add_menu_separator (menu);
+	}
+
 	for (i=0; cals[i]; i+=2)
 		append_gnomecal_item (menu, _(cals[i]), cals[i+1]);
 
@@ -573,6 +594,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	add_tearoff (GTK_MENU (menu));
 
 	item = gtk_menu_item_new ();
+
 	foo->clock_label = gtk_label_new ("");
 	foo->clock_timeout = gtk_timeout_add (1000, timeout_cb, foo);
 
