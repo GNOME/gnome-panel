@@ -3060,7 +3060,7 @@ make_panel_submenu (PanelWidget *panel_widget,
 
 		setup_menuitem (menuitem, 
 				GTK_ICON_SIZE_MENU,
-				gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU),
+				gtk_image_new_from_stock (GTK_STOCK_DELETE, GTK_ICON_SIZE_MENU),
 				_("_Delete This Panel"),
 				FALSE);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
