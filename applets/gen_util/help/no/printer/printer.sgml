@@ -1,0 +1,247 @@
+  <!-- ###############   printer applet   ############### -->
+  <sect1 id="printer">
+   <title>Printer Applet</title> 
+
+   <para> 
+
+      <application>Printer</application> applet, shown in <xref linkend="printer-fig">, 
+      allows you to print files by dragging them onto the
+      applet from the <interface> desktop</interface> or <interface>file
+      manager</interface>.  To add this applet to a <interface>Panel</interface>, 
+      right-click on the <interface>Panel</interface> and choose
+      <menuchoice>
+	<guimenu>Panel</guimenu>
+	<guisubmenu>Add to panel</guisubmenu>
+	<guisubmenu>Applet</guisubmenu>
+	<guisubmenu>Utility</guisubmenu>
+	<guimenuitem>Printer Applet</guimenuitem>
+      </menuchoice>.
+      
+  </para>
+  
+ 
+   <figure id="printer-fig">
+   <title>Printer Applet</title>
+   <screenshot>
+    <screeninfo>Printer Applet</screeninfo>
+    <graphic format="png" fileref="figures/printer-fig" srccredit="Michael Hall">
+    </graphic>
+   </screenshot>
+   </figure>
+
+   <sect2 id="printer-usage">
+    <title>Usage</title>
+
+    <para>
+    To print a file from your <interface>desktop</interface> or <interface>file
+    manager</interface>, drag the file onto the <application>printer</application> applet.
+    
+    </para>
+   </sect2>
+
+   <sect2 id="printer-right-click">
+    <title>Right-Click Pop-Up Menu Items</title>
+    <para>
+      Right-clicking on the applet brings up a menu containing the
+      following items:
+      <itemizedlist> 	
+	<listitem>
+	  <para>
+	    <guimenuitem>Properties...</guimenuitem> &mdash; This menu
+	    item opens the <interface>Properties</interface> dialog (see
+	    <xref linkend="printer-properties">) which allows you to
+	    customize the appearance and behavior of this applet.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <guimenuitem>Help</guimenuitem> &mdash;
+	    displays this document.
+	  </para>
+	</listitem>
+	
+	<listitem>
+	  <para>
+	    <guimenuitem>About&hellip;</guimenuitem> &mdash;
+	    shows basic information about the <application>Printer
+	    Applet</application>, including the applet's version and the
+	    author's name.
+	  </para>
+	</listitem>
+
+      </itemizedlist>	
+    </para>             
+   </sect2>
+
+   <sect2 id="printer-properties">
+    <title>Properties</title>
+    <para>
+     You can configure <application>printer</application> applet by
+     right-clicking on the applet and choosing the
+     <guimenuitem>Properties...</guimenuitem> menu item. This will open the
+     <interface>Properties</interface> dialog, shown in <xref
+     linkend="printer-properties-fig">.
+    </para>
+
+    <figure id="printer-properties-fig">
+     <title>Properties Dialog</title>
+     <screenshot>
+      <screeninfo>Properties Dialog</screeninfo> 
+      <graphic format="png" fileref="figures/printer-properties" srccredit="Michael Hall">
+      </graphic>
+     </screenshot>
+    </figure>
+    
+    <para> 
+
+    To change the label displayed at the bottom of the
+    <application>printer</application> applet, ("Print" in <xref
+    linkend="printer-fig">) type a new name in the <guilabel>Printer
+    name</guilabel> field.  This setting is useful if you have more than one
+    printer available for use and wish to add a
+    <application>printer</application> applet to the
+    <interface>Panel</interface> for each printer. The <guilabel>Printer
+    name</guilabel> does not determine which printer your file will be printed
+    to, it exists as an easy means to to distinguish between printers should you
+    have more than one <application>printer</application> applet installed on
+    your <interface>Panel</interface>.
+
+
+    </para>
+    
+    <para>    
+     To change the command the <application>printer</application> applet uses to
+     print your files, you may enter a new command in the <guilabel>Print
+     command</guilabel> field.  By default, the <application>printer
+     </application> applet uses the command <command>lpr</command>, which is
+     common to many systems.  Your system may use a different command.  If you're
+     unsure, check your system's documentation.
+    </para>
+      <note>
+	<title>Note for advanced users</title>
+	<para> 
+	  If you have more than one printer, you may designate which printer to send
+	  files to by changing the <guilabel>Print command</guilabel> setting.  For
+	  instance, if your system uses the command <command>lpr</command> to print
+	  files and you need to print your file on the printer named "ljet5", you
+	  would change the <guilabel>Print command</guilabel> setting to <command>lpr
+	  -Pljet5</command>.  
+	</para>
+      </note>
+
+    <para> 
+      After you have made all the changes you want, click on
+      <guibutton>OK</guibutton> to apply the changes and close the
+      <interface>Properties</interface> dialog. To cancel the changes
+      and return to previous values, click the
+      <guibutton>Close</guibutton> button.
+    </para>
+   </sect2>
+  
+   <sect2 id="printer-bugs">
+    <title> Known Bugs and Limitations</title>
+    <para>
+     There are no known bugs in the
+     <application>printer</application> applet. 
+    </para>
+   </sect2>
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="authors">
+    <title>Authors</title>
+    <para>
+      <application>Printer Applet</application> was written by 
+      Miguel de Icaza (<email>miguel@kernel.org</email>)
+      and Federico Mena (<email>quartic@gimp.org</email>).  
+      Please send all comments, suggestions, and bug 
+      reports to the <ulink url="http://bugs.gnome.org/" type="http">GNOME
+      bug tracking database</ulink>. (Instructions for submitting bug
+      reports can be found <ulink
+      url="http://bugs.gnome.org/Reporting.html" type="http">
+      on-line</ulink>. You also can use <application>Bug Report
+      Tool</application> (<command>bug-buddy</command>), available in the
+      <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
+      Menu</guimenu>, for submitting bug reports.
+    </para>
+
+    <para>
+      This manual was written by Michael Hall
+      (<email>mphall@cstone.net</email>). Please send all comments and
+      suggestions regarding this manual to the <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/">GNOME
+      Documentation Project</ulink> by sending an email to
+      <email>docs@gnome.org</email>. You can also submit comments
+      online by using the <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/doctable/">GNOME
+      Documentation Status Table</ulink>.
+   </para>
+
+   <!-- For translations: uncomment this:
+
+   <para>  
+    Latin translation was done by ME
+    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
+    suggestions regarding this translation to SOMEWHERE.
+   </para>
+
+   -->
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>License</title>
+   <para>
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> as published by the Free Software
+    Foundation; either version 2 of the License, or (at your option)
+    any later version.
+   </para>
+   <para>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
+    Public License</citetitle></ulink> for more details.
+   </para>
+   <para>
+    A copy of the <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> is included as an appendix to the
+    <citetitle>GNOME Users Guide</citetitle>.  You may also obtain a
+    copy of the <ulink type="help" url="gnome-help:gpl"><citetitle>GNU
+    General Public License</citetitle></ulink> from the Free Software
+    Foundation by visiting <ulink type="http"
+    url="http://www.fsf.org/">their Web site</ulink> or by writing to
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+     <country>USA</country>
+    </address>
+   </para>
+  </sect2>
+
+  </sect1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

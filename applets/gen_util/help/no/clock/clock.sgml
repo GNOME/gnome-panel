@@ -1,0 +1,259 @@
+ <sect1 id="clock">
+  <title>Clock Applet</title>
+
+   <para>
+   <application>Klokke</application>-appleten, vist i <xref
+   linkend="clockapplet-fig">, er en enkel applet som viser tiden
+   (og hvis du vil, datoen også) i et av flere formater. For å
+   legge til denne appleten på et <interface>Panel</interface>, 
+   h&oslash;yreklikk på <interface>Panelet</interface> og velg
+   <menuchoice>
+    <guimenu>Panel</guimenu>
+    <guisubmenu>Legg til på panelet</guisubmenu>
+    <guisubmenu>Appleter</guisubmenu>
+    <guisubmenu>Klokker</guisubmenu>
+    <guimenuitem>Klokke</guimenuitem>
+   </menuchoice>.
+  </para>
+
+  <figure id="clockapplet-fig">
+   <title>Klokke-applet</title>
+   <screenshot>
+    <screeninfo>Klokke-applet</screeninfo>
+    <graphic format="png" fileref="figures/clock_applet" 
+    srccredit="muet">
+    </graphic>
+   </screenshot>
+  </figure>
+
+  <!-- ============= Usage  ================================ -->
+  <sect2 id="clock-usage">
+   <title>Bruk</title>
+   <para>
+    <application>Klokke</application>-appleten trenger ikke inndata
+    fra bruker. Du kan konfigurere den som beskrevet under hvis du vil.
+   </para>
+
+   <para>
+    H&oslash;yreklikk på appleten for å få opp en meny som inneholder
+    f&oslash;lgende oppf&oslash;ringer:
+    <itemizedlist>
+
+     <listitem>
+      <para>
+       <guimenuitem>Egenskaper&hellip;</guimenuitem> &mdash;
+       åpner <link linkend="clock-prefs">
+       <guilabel>Egenskaper</guilabel></link>-dialogen.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>Hjelp</guimenuitem> &mdash;
+       viser dette dokumentet.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guimenuitem>Om&hellip;</guimenuitem> &mdash;
+       viser grunnleggende informasjon om <application>Klokke-
+       appleten</application>, inkludert appletens versjon og navnet
+       på programmereren.
+      </para>
+     </listitem>
+
+    </itemizedlist>
+   </para>
+  </sect2>
+
+
+  <!-- ============= Customization ============================= -->
+  <sect2 id="clock-prefs">
+    <title>Tilpasning</title>
+    <para>
+      Du kan tilpasse <application>Klokke</application>-
+      appleten ved å h&oslash;yreklikke på den og velge
+      <guimenuitem>Egenskaper&hellip;</guimenuitem>. Dette vil åpne
+      <interface>Egenskaper</interface>-dialogen (vist i <xref
+      linkend="clock-settings-fig">), som lar deg endre
+      forskjellige innstillinger.
+    </para>
+
+    <figure id="clock-settings-fig">
+     <title>Egenskaper dialog</title>
+     <screenshot>
+      <screeninfo>Egenskaper dialog</screeninfo>
+      <graphic format="png" fileref="figures/clock_settings"
+      srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     Egenskapene som kan endres er:
+     <itemizedlist>
+
+      <listitem>
+       <para>
+        Tidsformat &mdash; Velg enten <guilabel>12 timers</guilabel>
+        format for <quote>AM/PM</quote> formatert tid, eller
+        <guilabel>24 timers</guilabel> for en 24 timers klokke.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Vis dato i applet &mdash; Velg dette for å vise dato
+        inne i appleten.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Vis dato i verkt&oslash;ytips &mdash; Velg dette for å vise dato i
+        verkt&oslash;ytipset som kommer opp når musen holdes over appleten
+        en liten stund.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Bruk GMT &mdash; Velg dette for å vise Greenwich Mean Time
+        i stedet for lokal tid.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        Unix tid &mdash; Velg dette for å vise tiden i sekunder
+        siden 1 jan 1970.
+       </para>
+      </listitem>
+
+     </itemizedlist>
+    </para>
+
+    <para> 
+      Etter at du har gjort endringene du &oslash;nsker, klikker du på
+      <guibutton>OK</guibutton> for å aktivere endringene og lukke
+      <interface>Egenskaper</interface>-dialogen. For å avbryte endringene
+      og returnere til de tidligere verdiene klikker du på
+      <guibutton>Lukk</guibutton>-knappen.
+    </para>
+
+   <note>
+    <title>Stille klokken</title>
+    <para>
+     <application>Klokke</application>-appleten kan kun vise tiden;
+     den lar deg ikke stille klokken. For å sette klokken på et Unix
+     eller Linux system b&oslash;r du bruke
+     <command>date</command>-kommandoen. For eksempel, for å sette tiden
+     til 11:43:01 og datoen til 4 april, bruk <command>date --set="Apr
+     4 23:43:01"</command>. Merk at du må v&aelig;re logget inn som root for
+     å stille klokken. Mer informasjon om <command>date</command>-kommandoen
+     finner du i <ulink type="man" url="man:date">manualsiden for date</ulink>.
+     Du kan stille tidssonen ved å bruke <command>timeconfig</command> eller
+     <command>tzselect</command>-kommandoene på none Linux-
+     distribusjoner.
+    </para>
+   </note>
+
+  </sect2>
+
+
+  <!-- ============= Bugs ================================== -->
+  <!-- This section should describe known bugs and limitations of
+       the program if there are any - please be frank and list all
+       problems you know of -->
+  <sect2 id="bugs">
+   <title>Kjente feil og begrensninger</title>
+   <para>
+    Denne appleten har ingen kjente feil.
+   </para>
+  </sect2>
+
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="authors">
+   <title>Authors</title>
+   <para>
+    <application>Klokke</application>-appleten er skrevet av Miguel de Icaza
+    (<email>miguel@kernel.org</email>), Federico Mena
+    (<email>quartic@gimp.org</email>), og Stuart Parmenter
+    (<email>pavlov@innerx.net</email>).  Vennligst send kommentarer,
+    forslag og feilrapporter
+    til <ulink url="http://bugzilla.gnome.org/" type="http">GNOME
+    feilhåndteringssystemet</ulink>. (Instruksjoner for å sende inn
+    feilrapporter kan finnes på <ulink
+    url="http://www.mozilla.org/bugs/" type="http">
+    on-line</ulink>. Hvis du bruker
+    GNOME 1.1 eller nyere, kan du også bruke <application>Feilrapporterings
+    verkt&oslash;yet</application> (<command>bug-buddy</command>), som finnes i
+    <guisubmenu>Verkt&oslash;y</guisubmenu> undermenyen i <guimenu>Hoved-
+    menyen</guimenu>, til å sende inn feilrapporter.
+   </para>
+
+   <para>
+    Denne håndboken er skrevet av Dan Mueth
+    (<email>d-mueth@uchicago.edu</email>). Vennligst send alle kommentarer
+    og forslag angående denne håndboken til <ulink type="http"
+    url="http://developer.gnome.org/projects/gdp/">GNOME Documentation Project</ulink> 
+    ved å sende en melding til <email>docs@gnome.org</email>. Du kan også
+    sende inn kommentarer på nett ved å bruke <ulink type="http"
+    url="http://developer.gnome.org/projects/gdp/doctable/">GNOME Documentation Status
+    Table</ulink>.
+   </para>
+
+   <para>
+    Norsk oversettelse av Kjartan Maraas.
+    (<email>kmaraas@gnome.org</email>). Vennligst send kommentarer og
+    forslag som gjelder denne oversettelsen til meg via e-post.
+   </para>
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>License</title>
+   <para>
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> as published by the Free Software
+    Foundation; either version 2 of the License, or (at your option)
+    any later version.
+   </para>
+   <para>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
+    Public License</citetitle></ulink> for more details.
+   </para>
+   <para>
+    A copy of the <ulink type="help"
+    url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> is included with the GNOME
+    documentation.  You may also obtain a copy of the <ulink
+    type="help" url="gnome-help:gpl"><citetitle>GNU General Public
+    License</citetitle></ulink> from the Free Software Foundation by
+    visiting <ulink type="http" url="http://www.fsf.org/">their Web
+    site</ulink> or by writing to
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+     <country>USA</country>
+    </address>
+   </para>
+  </sect2>
+
+ </sect1>
+
+
+
+
