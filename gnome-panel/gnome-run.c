@@ -290,6 +290,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	int argc, temp_argc;
 	char *s = NULL;
 	char *escaped = NULL;
+	char *disk = NULL;
 	char **envv = NULL;
 	int envc;
 	GError *error = NULL;
@@ -325,10 +326,12 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 entry = g_object_get_data (G_OBJECT (w), "entry");
 
                 s = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);
-		escaped = g_markup_escape_text (s, -1);
 
                 if (string_empty (s))
                         goto return_and_close;
+
+		escaped = g_markup_escape_text (s, -1);
+		disk = g_filename_from_utf8 (s, -1, NULL, NULL, NULL);
 
 		/* save command in history */
 		gnome_entry = g_object_get_data (G_OBJECT (w), "gnome_entry");
@@ -367,12 +370,16 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 
                 /* Somewhat of a hack I suppose */
                 if (panel_is_url (s)) {
+			/* FIXME: URLs are in UTF8 ... right? */
                         egg_screen_url_show (
 				gtk_window_get_screen (GTK_WINDOW (run_dialog)), s, NULL);
                         goto return_and_close;
                 }
 
-                if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, &error)) {
+		/* Note, the command is taken to have to be in disk encoding
+		 * even though it could contain strings, but more likely
+		 * it is all filenames and thus should be in disk encoding */
+                if ( ! g_shell_parse_argv (disk, &temp_argc, &temp_argv, &error)) {
 			panel_error_dialog (
 				gtk_window_get_screen (GTK_WINDOW (run_dialog)),
 				"run_error",
@@ -514,6 +521,7 @@ return_and_close:
 	g_strfreev (envv);
 	g_free (s);
 	g_free (escaped);
+	g_free (disk);
 
 	gtk_widget_destroy (w);
         
@@ -536,7 +544,7 @@ quote_string (const char *s)
 }
 
 static void
-append_file (GtkWidget *entry, const char *file)
+append_file_utf8 (GtkWidget *entry, const char *file)
 {
 	const char *text;
 	char *quoted = quote_string (file);
@@ -549,6 +557,16 @@ append_file (GtkWidget *entry, const char *file)
 		g_free (new);
 	}
 	g_free (quoted);
+}
+
+static void
+append_file (GtkWidget *entry, const char *file)
+{
+	char *utf8_file = g_filename_to_utf8 (file, -1, NULL, NULL, NULL);
+	if (utf8_file != NULL) {
+		append_file_utf8 (entry, utf8_file);
+		g_free (utf8_file);
+	}
 }
 
 static void
@@ -888,11 +906,13 @@ drag_data_received (GtkWidget        *widget,
 	for (i = 0; uris[i] != NULL; i++) {
 		char *file = gnome_vfs_get_local_path_from_uri (uris[i]);
 
+		/* FIXME: I assume the file is in utf8 encoding if coming
+		 * from a URI? */
 		if (file != NULL) {
-			append_file (entry, file);
+			append_file_utf8 (entry, file);
 			g_free (file);
 		} else {
-			append_file (entry, uris[i]);
+			append_file_utf8 (entry, uris[i]);
 		}
 	}
 
