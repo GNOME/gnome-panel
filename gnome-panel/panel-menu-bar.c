@@ -453,7 +453,9 @@ panel_menu_bar_append_gtk_bookmarks (PanelMenuBar *menubar,
 		setup_menu_item_with_icon (item, panel_menu_icon_get_size (),
 					   "stock_bookmark", NULL,
 					   _("Bookmarks"), TRUE);
+
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		gtk_widget_show (item);
 
 		add_menu = create_empty_menu ();
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
@@ -530,6 +532,7 @@ panel_menu_bar_append_volumes (PanelMenuBar *menubar,
 			item = gtk_menu_item_new_with_label (_("Removable Media"));
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		gtk_widget_show (item);
 
 		add_menu = create_empty_menu ();
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), add_menu);
