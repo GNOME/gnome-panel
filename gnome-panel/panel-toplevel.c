@@ -24,10 +24,8 @@
 
 /* TODO:
  *
- *  o Saving to GConf, config GUI.
  *  o Initial position when a new panel is created.
  *  o Collision avoidance.
- *  o Search for FIXME_FOR_NEW_TOPLEVEL and fix
  *             
  * Random problems:
  *  o Handling background colors and pictures ? The frame and the buttons
@@ -3587,9 +3585,7 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 				      toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
 						GTK_ORIENTATION_HORIZONTAL :
 						GTK_ORIENTATION_VERTICAL,	
-				      toplevel->priv->size,
-				      PANEL_BACK_NONE, NULL,
-				      FALSE, FALSE, FALSE, NULL);
+				      toplevel->priv->size);
 
 	toplevel->priv->panel_widget = PANEL_WIDGET (container);
 

@@ -70,43 +70,45 @@ struct _PanelBackground {
 	guint                   prepared : 1;
 };
 
-void     panel_background_init (PanelBackground     *background);
-void     panel_background_free (PanelBackground     *background);
-
-gboolean panel_background_set  (PanelBackground     *background,
-				PanelBackgroundType  type,
-				PanelColor          *color,
-				const char          *image,
-				gboolean             fit_image,
-				gboolean             stretch_image,
-				gboolean             rotate_image);
-
-gboolean panel_background_set_none  (PanelBackground *background);
-gboolean panel_background_set_color (PanelBackground *background,
-				     PanelColor      *color);
-gboolean panel_background_set_image (PanelBackground *background,
-				     const char      *image,
-				     gboolean         fit_image,
-				     gboolean         stretch_image,
-				     gboolean         rotate_image);
-
-void panel_background_set_default_style (PanelBackground *background,
-					 GdkColor        *color,
-					 GdkPixmap       *pixmap);
-
-void panel_background_realized   (PanelBackground *background,
-				  GdkWindow       *window);
-void panel_background_unrealized (PanelBackground *background);
-
-void panel_background_change_region (PanelBackground *background,
-				     GtkOrientation   orientation,
-				     int              x,
-				     int              y,
-				     int              width,
-				     int              height);
-
-char *panel_background_make_string  (PanelBackground *background,
-				     int              x,
-				     int              y);
+void  panel_background_init              (PanelBackground     *background);
+void  panel_background_free              (PanelBackground     *background);
+void  panel_background_set               (PanelBackground     *background,
+					  PanelBackgroundType  type,
+					  PanelColor          *color,
+					  const char          *image,
+					  gboolean             fit_image,
+					  gboolean             stretch_image,
+					  gboolean             rotate_image); 
+void  panel_background_set_type          (PanelBackground     *background,
+					  PanelBackgroundType  type);
+void  panel_background_set_pango_color   (PanelBackground     *background,
+					  PangoColor          *pango_color);
+void  panel_background_set_opacity       (PanelBackground     *background,
+					  guint16              opacity);
+void  panel_background_set_color         (PanelBackground     *background,
+					  PanelColor          *color);
+void  panel_background_set_image         (PanelBackground     *background,
+					  const char          *image);
+void  panel_background_set_fit           (PanelBackground     *background,
+					  gboolean             fit_image);
+void  panel_background_set_stretch       (PanelBackground     *background,
+					  gboolean             stretch_image);
+void  panel_background_set_rotate        (PanelBackground     *background,
+					  gboolean             rotate_image);
+void  panel_background_set_default_style (PanelBackground     *background,
+					  GdkColor            *color,
+					  GdkPixmap           *pixmap);
+void  panel_background_realized          (PanelBackground     *background,
+					  GdkWindow           *window);
+void  panel_background_unrealized        (PanelBackground     *background);
+void  panel_background_change_region     (PanelBackground     *background,
+					  GtkOrientation       orientation,
+					  int                  x,
+					  int                  y,
+					  int                  width,
+					  int                  height);
+char *panel_background_make_string       (PanelBackground     *background,
+					  int                  x,
+					  int                  y);
 
 #endif /* __PANEL_BACKGROUND_H__ */

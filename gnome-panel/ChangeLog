@@ -1,3 +1,45 @@
+2003-02-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (panel_applet_register): disable the initial
+	applet background change for now.
+
+	* panel-background.[ch]: re-work this substantially so we
+	can change individual elements of the background configuration
+	seperately. Also remove the "loading" phase.
+
+	* panel-gconf.[c]: (panel_gconf_dirname): impl.
+
+	* panel-profile.[ch]: implement support for the background
+	configuration.
+
+	* panel-properties-dialog.c: add an initial implementation of
+	the background page of the dialog. Still needs a bit of fixage
+	but its mostly done.
+
+	* panel-properties-dialog.glade: re-work the background page,
+	ripping of gnome-terminal's background page.
+
+	* panel-widget.[ch]: (panel_widget_class_init): kill the "back_change"
+	signal.
+	(panel_widget_size_allocate): kill the "inhibit_draw" stuff. Unused.
+	(panel_widget_set_back_pixmap), (panel_widget_set_back_color): kill.
+	(panel_widget_new): remove all 6 background related arguments from
+	this.
+	(panel_widget_change_params): kill. Wohoo.
+	(panel_widget_set_orientation),
+	(panel_widget_set_size): don't use panel_widget_change_params. Do
+	each change individually.
+
+	* panel-toplevel.c: (panel_toplevel_setup_widgets): update for
+	panel-widget changes.
+
+	* panel.c:
+	(panel_applet_added): disable the background change stuff for the
+	moment.
+	(set_background_image_from_uri),
+	(set_background_color): impl these a bit more sanely.
+	(drop_urilist), (panel_receive_dnd_data): upd.
+
 2003-02-21  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-config.c, panel-config.h: kill.

@@ -30,6 +30,7 @@
 
 #include "panel-toplevel.h"
 #include "panel-enums.h"
+#include "panel-types.h"
 
 G_BEGIN_DECLS
 
@@ -77,8 +78,36 @@ void        panel_profile_set_toplevel_enable_arrows  (PanelToplevel *toplevel,
 						       gboolean       enable_arrows);
 gboolean    panel_profile_get_toplevel_enable_arrows  (PanelToplevel *toplevel);
 
+void        panel_profile_set_background_type         (PanelToplevel       *toplevel,
+						       PanelBackgroundType  background_type);
+PanelBackgroundType
+	    panel_profile_get_background_type         (PanelToplevel       *toplevel);
+void        panel_profile_set_background_color        (PanelToplevel       *toplevel,
+						       PanelColor          *color);
+void        panel_profile_get_background_color        (PanelToplevel       *toplevel,
+						       PanelColor          *color);
+void        panel_profile_set_background_pango_color  (PanelToplevel       *toplevel,
+						       PangoColor          *pango_color);
+void        panel_profile_get_background_pango_color  (PanelToplevel       *toplevel,
+						       PangoColor          *pango_color);
+void        panel_profile_set_background_opacity      (PanelToplevel       *toplevel,
+						       guint16              opacity);
+guint16     panel_profile_get_background_opacity      (PanelToplevel       *toplevel);
+void        panel_profile_set_background_image        (PanelToplevel       *toplevel,
+						       const char          *image);
+char       *panel_profile_get_background_image        (PanelToplevel       *toplevel);
+void        panel_profile_set_background_fit          (PanelToplevel       *toplevel,
+						       gboolean             fit);
+gboolean    panel_profile_get_background_fit          (PanelToplevel       *toplevel);
+void        panel_profile_set_background_stretch      (PanelToplevel       *toplevel,
+						       gboolean             stretch);
+gboolean    panel_profile_get_background_stretch      (PanelToplevel       *toplevel);
+void        panel_profile_set_background_rotate       (PanelToplevel       *toplevel,
+						       gboolean             rotate);
+gboolean    panel_profile_get_background_rotate       (PanelToplevel       *toplevel);
 
 guint       panel_profile_toplevel_notify_add         (PanelToplevel         *toplevel,
+						       const char            *key,
 						       GConfClientNotifyFunc  func,
 						       gpointer               data);
 

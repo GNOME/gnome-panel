@@ -40,6 +40,7 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-applet-frame.h"
 #include "global-keys.h"
 #include "panel-action-button.h"
@@ -158,6 +159,7 @@ panel_size_change (GtkWidget *widget, gpointer data)
 #endif /* FIXME_FOR_NEW_CONFIG */
 }
 
+#ifdef FIXME_FOR_NEW_CONFIG
 void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
@@ -190,6 +192,7 @@ panel_back_change (GtkWidget *widget, gpointer data)
 	update_config_back(PANEL_WIDGET(widget));
 #endif /* FIXME_FOR_NEW_CONFIG */
 }
+#endif
 
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
@@ -205,7 +208,9 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
+#ifdef FIXME_FOR_NEW_CONFIG
 	back_change(info,PANEL_WIDGET(widget));
+#endif
 }
 
 static void
@@ -408,6 +413,39 @@ panel_key_press_event (GtkWidget   *widget,
 }
 
 static void
+set_background_image_from_uri (PanelToplevel *toplevel,
+			       const char    *uri)
+{
+	char *image;
+
+	if (!(image = g_filename_from_uri (uri, NULL, NULL)))
+		return;
+
+	panel_profile_set_background_image (toplevel, image);
+	panel_profile_set_background_type (toplevel, PANEL_BACK_IMAGE);
+
+	g_free (image);
+}
+
+static void
+set_background_color (PanelToplevel *toplevel,
+		      guint16       *dropped)
+{
+	PanelColor color;
+
+	if (!dropped)
+		return;
+
+	color.gdk.red   = dropped [0];
+	color.gdk.green = dropped [1];
+	color.gdk.blue  = dropped [2];
+	color.alpha     = 65535;
+
+	panel_profile_set_background_color (toplevel, &color);
+	panel_profile_set_background_type (toplevel, PANEL_BACK_COLOR);
+}
+
+static void
 drop_url(PanelWidget *panel, int pos, const char *url)
 {
 	char *p;
@@ -554,14 +592,11 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 			info = NULL;
 		}
 
-		if (mimetype != NULL &&
-		    strncmp(mimetype, "image", sizeof("image")-1) == 0 &&
-		    /* FIXME: We should probably use a gnome-vfs function here instead. */
-		    /* FIXME: probably port the whole panel background stuff to gnome-vfs */
-		    (filename = g_filename_from_uri (uri, NULL, NULL)) != NULL) {
-			panel_widget_set_back_pixmap (panel, filename);
-			g_free (filename);
-		} else if (basename != NULL &&
+		if (mimetype &&
+		    !strncmp (mimetype, "image", sizeof ("image") - 1))
+			set_background_image_from_uri (panel->toplevel, uri);
+
+		else if (basename != NULL &&
 			   strcmp (basename, ".directory") == 0 &&
 			   dirname != NULL) {
 			/* This is definately a menu */
@@ -613,33 +648,6 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist)
 	}
 
 	gnome_vfs_uri_list_free (files);
-}
-
-static void
-drop_background_reset (PanelWidget *panel)
-{
-	panel_widget_change_params (panel,
-				    panel->orient,
-				    panel->sz,
-				    PANEL_BACK_NONE,
-				    panel->background.image,
-				    panel->background.fit_image,
-				    panel->background.stretch_image,
-				    panel->background.rotate_image,
-				    &panel->background.color);
-}
-
-static void
-drop_bgimage (PanelWidget *panel, const char *bgimage)
-{
-	char *filename;
-
-	filename = g_filename_from_uri (bgimage, NULL, NULL);
-	if (filename != NULL) {
-		panel_widget_set_back_pixmap (panel, filename);
-
-		g_free (filename);
-	}
 }
 
 static void
@@ -741,24 +749,6 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		if (info != NULL)
 			panel_applet_clean (info, TRUE);
 	}
-}
-
-static void
-drop_color (PanelWidget *panel,
-	    int          pos,
-	    guint16     *dropped)
-{
-	PanelColor color;
-
-	if (!dropped)
-		return;
-
-	color.gdk.red   = dropped [0];
-	color.gdk.green = dropped [1];
-	color.gdk.blue  = dropped [2];
-	color.alpha     = 65535;
-
-	panel_widget_set_back_color (panel, &color);
 }
 
 static GtkTargetList *
@@ -964,13 +954,13 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		drop_url (panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_COLOR:
-		drop_color (panel, pos, (guint16 *)selection_data->data);
+		set_background_color (panel->toplevel, (guint16 *) selection_data->data);
 		break;
 	case TARGET_BGIMAGE:
-		drop_bgimage (panel, (char *)selection_data->data);
+		set_background_image_from_uri (panel->toplevel, (char *) selection_data->data);
 		break;
 	case TARGET_BACKGROUND_RESET:
-		drop_background_reset (panel);
+		panel_profile_set_background_type (panel->toplevel, PANEL_BACK_NONE);
 		break;
 	case TARGET_DIRECTORY:
 		drop_directory (panel, pos, (char *)selection_data->data);
@@ -1054,10 +1044,12 @@ panel_widget_setup(PanelWidget *panel)
 			  "applet_move",
 			  G_CALLBACK(panel_applet_move),
 			  NULL);
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 	g_signal_connect (G_OBJECT (panel),
 			  "back_change",
 			  G_CALLBACK (panel_back_change),
 			  NULL);
+#endif
 	g_signal_connect (G_OBJECT (panel),
 			  "size_change",
 			  G_CALLBACK (panel_size_change),

@@ -28,11 +28,17 @@
 
 #include <string.h>
 #include <libgnome/gnome-i18n.h>
+#include <pango/pango-attributes.h>
 
 #include "panel-gconf.h"
 #include "panel-widget.h"
 #include "panel.h"
 #include "applet.h"
+
+/* TODO:
+ *   Detect unwritable keys
+ *   Handle setting up the defaults on new screens
+ */
 
 typedef struct {
 	GdkScreen       *screen;
@@ -301,6 +307,187 @@ panel_profile_get_toplevel_key (PanelToplevel *toplevel,
 }
 
 void
+panel_profile_set_background_type (PanelToplevel       *toplevel,
+				   PanelBackgroundType  background_type)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/type");
+	gconf_client_set_string (client,
+				 key,
+				 gconf_enum_to_string (panel_background_type_map, background_type),
+			         NULL);
+
+	g_object_unref (client);
+}
+
+PanelBackgroundType
+panel_profile_get_background_type (PanelToplevel *toplevel)
+{
+	PanelBackgroundType  background_type;
+	GConfClient         *client;
+	const char          *key;
+	char                *str;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/type");
+	str = gconf_client_get_string (client, key, NULL);
+
+	if (!str || !panel_profile_map_background_type_string (str, &background_type))
+		background_type = PANEL_BACK_NONE;
+
+	g_object_unref (client);
+	g_free (str);
+
+	return background_type;
+}
+
+void
+panel_profile_set_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
+	PangoColor pango_color;
+
+	pango_color.red   = color->gdk.red;
+	pango_color.green = color->gdk.green;
+	pango_color.blue  = color->gdk.blue;
+
+	panel_profile_set_background_pango_color (toplevel, &pango_color);
+	panel_profile_set_background_opacity (toplevel, color->alpha);
+}
+
+void
+panel_profile_get_background_color (PanelToplevel *toplevel,
+				    PanelColor    *color)
+{
+	PangoColor pango_color;
+	guint16    opacity;
+
+	panel_profile_get_background_pango_color (toplevel, &pango_color);
+	opacity = panel_profile_get_background_opacity (toplevel);
+
+	color->gdk.red   = pango_color.red;
+	color->gdk.green = pango_color.green;
+	color->gdk.blue  = pango_color.blue;
+	color->alpha     = opacity;
+}
+
+void
+panel_profile_set_background_pango_color (PanelToplevel *toplevel,
+					  PangoColor    *pango_color)
+{
+	GConfClient *client;
+	const char  *key;
+	char        *color_str;
+
+	client = gconf_client_get_default ();
+
+	color_str = g_strdup_printf ("#%02x%02x%02x",
+				     pango_color->red   / 256,
+				     pango_color->green / 256,
+				     pango_color->blue  / 256);
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/color");
+	gconf_client_set_string (client, key, color_str, NULL);
+
+	g_free (color_str);
+	g_object_unref (client);
+}
+
+void
+panel_profile_get_background_pango_color (PanelToplevel *toplevel,
+					  PangoColor    *pango_color)
+{
+	GConfClient *client;
+	const char  *key;
+	char        *color_str;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/color");
+	color_str = gconf_client_get_string (client, key, NULL);
+	if (!color_str || !pango_color_parse (pango_color, color_str)) {
+		pango_color->red   = 0;
+		pango_color->green = 0;
+		pango_color->blue  = 0;
+	}
+
+	g_free (color_str);
+}
+
+void
+panel_profile_set_background_opacity (PanelToplevel *toplevel,
+				      guint16        opacity)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
+	gconf_client_set_int (client, key, opacity, NULL);
+
+	g_object_unref (client);
+}
+
+guint16
+panel_profile_get_background_opacity (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+	guint16      opacity;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "background/opacity");
+	opacity = gconf_client_get_int (client, key, NULL);
+
+	g_object_unref (client);
+
+	return opacity;
+}
+
+void
+panel_profile_set_background_image (PanelToplevel *toplevel,
+				    const char    *image)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "image");
+
+	if (image && image [0])
+		gconf_client_set_string (client, key, image, NULL);
+	else
+		gconf_client_unset (client, key, NULL);
+
+	g_object_unref (client);
+}
+
+char *
+panel_profile_get_background_image (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+	char        *retval;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "image");
+	retval = gconf_client_get_string (client, key, NULL);
+
+	g_object_unref (client);
+
+	return retval;
+}
+
+void
 panel_profile_set_toplevel_name (PanelToplevel *toplevel,
 				 const char    *name)
 {
@@ -376,9 +563,9 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 	return orientation;
 }
 
-#define TOPLEVEL_GET_SET_FUNCS(k, t, s, a)                            \
+#define TOPLEVEL_GET_SET_FUNCS(k, p, t, s, a)                         \
 	void                                                          \
-	panel_profile_set_toplevel_##s (PanelToplevel *toplevel, a s) \
+	panel_profile_set_##p##_##s (PanelToplevel *toplevel, a s)    \
 	{                                                             \
 		GConfClient *client;                                  \
 		const char  *key;                                     \
@@ -389,7 +576,7 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		g_object_unref (client);                              \
 	}                                                             \
 	a                                                             \
-	panel_profile_get_toplevel_##s (PanelToplevel *toplevel)      \
+	panel_profile_get_##p##_##s (PanelToplevel *toplevel)         \
 	{                                                             \
 		GConfClient *client;                                  \
 		const char  *key;                                     \
@@ -402,11 +589,14 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		return retval;                                        \
 	}
 
-TOPLEVEL_GET_SET_FUNCS ("size",              int,    size,              int)
-TOPLEVEL_GET_SET_FUNCS ("expand",            bool,   expand,            gboolean)
-TOPLEVEL_GET_SET_FUNCS ("auto_hide",         bool,   auto_hide,         gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_buttons",    bool,   enable_buttons,    gboolean)
-TOPLEVEL_GET_SET_FUNCS ("enable_arrows",     bool,   enable_arrows,     gboolean)
+TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,  size,           int)
+TOPLEVEL_GET_SET_FUNCS ("expand",             toplevel,   bool, expand,         gboolean)
+TOPLEVEL_GET_SET_FUNCS ("auto_hide",          toplevel,   bool, auto_hide,      gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable_buttons",     toplevel,   bool, enable_buttons, gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable_arrows",      toplevel,   bool, enable_arrows,  gboolean)
+TOPLEVEL_GET_SET_FUNCS ("background/fit",     background, bool, fit,            gboolean)
+TOPLEVEL_GET_SET_FUNCS ("background/stretch", background, bool, stretch,        gboolean)
+TOPLEVEL_GET_SET_FUNCS ("background/rotate",  background, bool, rotate,         gboolean)
 
 static PanelBackgroundType
 get_background_type (GConfClient *client,
@@ -435,61 +625,51 @@ get_background_type (GConfClient *client,
 }
 
 static void
-get_background_color (PanelBackground *background,
-		      GConfClient     *client,
-		      const char      *toplevel_dir)
+get_background_color (GConfClient *client,
+		      const char  *toplevel_dir,
+		      PanelColor  *color)
 {
-	PanelColor  color;
 	PangoColor  pango_color;
-	GError     *error = NULL;
+	GError     *error;
 	const char *key;
 	char       *color_str;
 
+	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/color", toplevel_dir);
 	color_str = gconf_client_get_string (client, key, &error);
 	if (error) {
 		g_warning (_("Error reading GConf string value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-		panel_background_set_none (background);
-		return;
+	} else if (color_str && pango_color_parse (&pango_color, color_str)) {
+		color->gdk.red   = pango_color.red;
+		color->gdk.green = pango_color.green;
+		color->gdk.blue  = pango_color.blue;
 	}
-
-	if (!color_str || !pango_color_parse (&pango_color, color_str)) {
-		panel_background_set_none (background);
-		g_free (color_str);
-		return;
-	}
-
-	color.gdk.red   = pango_color.red;
-	color.gdk.green = pango_color.green;
-	color.gdk.blue  = pango_color.blue;
 
 	g_free (color_str);
 
+	error = NULL;
 	key = panel_gconf_sprintf ("%s/background/opacity", toplevel_dir);
-	color.alpha = gconf_client_get_int (client, key, &error);
+	color->alpha = gconf_client_get_int (client, key, &error);
 	if (error) {
 		g_warning (_("Error reading GConf integer value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-		color.alpha = 65535; /* fallback to fully opaque */
+		color->alpha = 65535; /* fallback to fully opaque */
 	}
-
-	panel_background_set_color (background, &color);
 }
 
-static void
-get_background_image (PanelBackground *background,
-		      GConfClient     *client,
-		      const char      *toplevel_dir)
+static char *
+get_background_image (GConfClient  *client,
+		      const char   *toplevel_dir,
+		      gboolean     *fit,
+		      gboolean     *stretch,
+		      gboolean     *rotate)
 {
 	const char *key;
 	GError     *error = NULL;
 	char       *image;
-	gboolean    fit;
-	gboolean    stretch;
-	gboolean    rotate;
 
 	key = panel_gconf_sprintf ("%s/background/image", toplevel_dir);
 	image = gconf_client_get_string (client, key, &error);
@@ -497,27 +677,18 @@ get_background_image (PanelBackground *background,
 		g_warning (_("Error reading GConf string value '%s': %s"),
 			   key, error->message);
 		g_error_free (error);
-		panel_background_set_none (background);
-		return;
-	}
-
-	if (!image) {
-		panel_background_set_none (background);
-		return;
 	}
 
 	key = panel_gconf_sprintf ("%s/background/fit", toplevel_dir);
-	fit = gconf_client_get_bool (client, key, NULL);
+	*fit = gconf_client_get_bool (client, key, NULL);
 
 	key = panel_gconf_sprintf ("%s/background/stretch", toplevel_dir);
-	stretch = gconf_client_get_bool (client, key, NULL);
+	*stretch = gconf_client_get_bool (client, key, NULL);
 
 	key = panel_gconf_sprintf ("%s/background/rotate", toplevel_dir);
-	rotate = gconf_client_get_bool (client, key, NULL);
+	*rotate = gconf_client_get_bool (client, key, NULL);
 
-	panel_background_set_image (background, image, fit, stretch, rotate);
-
-	g_free (image);
+	return image;
 }
 
 static void
@@ -528,24 +699,31 @@ panel_profile_load_background (PanelToplevel *toplevel,
 	PanelWidget         *panel_widget;
 	PanelBackground     *background;
 	PanelBackgroundType  background_type;
+	PanelColor           color;
+	char                *image;
+	gboolean             fit;
+	gboolean             stretch;
+	gboolean             rotate;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	background = &panel_widget->background;
 
 	background_type = get_background_type (client, toplevel_dir);
-	switch (background_type) {
-	case PANEL_BACK_NONE:
-		panel_background_set_none (background);
-		break;
-	case PANEL_BACK_COLOR:
-		get_background_color (background, client, toplevel_dir);
-		break;
-	case PANEL_BACK_IMAGE:
-		get_background_image (background, client, toplevel_dir);
-		break;
-	}
-}
 
+	get_background_color (client, toplevel_dir, &color);
+
+	image = get_background_image (client, toplevel_dir, &fit, &stretch, &rotate);
+
+	panel_background_set (background,
+			      background_type,
+			      &color,
+			      image,
+			      fit,
+			      stretch,
+			      rotate);
+
+	g_free (image);
+}
 
 static gboolean
 panel_profile_commit_toplevel_changes (PanelToplevel *toplevel)
@@ -638,7 +816,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	if (change->orientation)
 		gconf_change_set_set_string (
 			queued_changes,
-			 panel_profile_get_toplevel_key (toplevel, "orientation"),
+			panel_profile_get_toplevel_key (toplevel, "orientation"),
 			gconf_enum_to_string (panel_orientation_map, change->orientation));
 
 	commit_timeout = panel_profile_get_commit_timeout (G_OBJECT (toplevel));
@@ -843,8 +1021,70 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 	else UPDATE_INT ("unhide_delay", unhide_delay)
 	else UPDATE_INT ("auto_hide_size", auto_hide_size)
 	else UPDATE_STRING ("animation_speed", animation_speed)
+}
 
-	/* FIXME: handle background changes */
+static void
+panel_profile_background_change_notify (GConfClient   *client,
+					guint          cnxn_id,
+					GConfEntry    *entry,
+					PanelToplevel *toplevel)
+{
+	PanelWidget     *panel_widget;
+	PanelBackground *background;
+	GConfValue      *value;
+	const char      *key;
+
+	key = panel_gconf_basename (gconf_entry_get_key (entry));
+
+	if (!(value = gconf_entry_get_value (entry)))
+		return;
+
+	panel_widget = panel_toplevel_get_panel_widget (toplevel);
+	background = &panel_widget->background;
+
+	if (!strcmp (key, "type")) {
+		if (value->type == GCONF_VALUE_STRING) {
+			PanelBackgroundType  background_type;
+			const char          *str;
+
+			str = gconf_value_get_string (value);
+
+			if (panel_profile_map_background_type_string (
+						gconf_value_get_string (value),
+						&background_type))
+				panel_background_set_type (background, background_type);
+		}
+	} else if (!strcmp (key, "color")) {
+		if (value->type == GCONF_VALUE_STRING) {
+			PangoColor  pango_color;
+			const char *str;
+
+			str = gconf_value_get_string (value);
+
+			if (pango_color_parse (&pango_color, str))
+				panel_background_set_pango_color (background, &pango_color);
+		}
+	} else if (!strcmp (key, "opacity")) {
+		if (value->type == GCONF_VALUE_INT)
+			panel_background_set_opacity (background,
+						      gconf_value_get_int (value));
+	} else if (!strcmp (key, "image")) {
+		if (value->type == GCONF_VALUE_STRING)
+			panel_background_set_image (background,
+						    gconf_value_get_string (value));
+	} else if (!strcmp (key, "fit")) {
+		if (value->type == GCONF_VALUE_BOOL)
+			panel_background_set_fit (background,
+						  gconf_value_get_bool (value));
+	} else if (!strcmp (key, "stretch")) {
+		if (value->type == GCONF_VALUE_BOOL)
+			panel_background_set_stretch (background,
+						      gconf_value_get_bool (value));
+	} else if (!strcmp (key, "fit")) {
+		if (value->type == GCONF_VALUE_BOOL)
+			panel_background_set_rotate (background,
+						     gconf_value_get_bool (value));
+	}
 }
 
 static void
@@ -863,19 +1103,27 @@ panel_profile_disconnect_toplevel (PanelToplevel *toplevel,
 
 guint
 panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
+				   const char            *key,
 				   GConfClientNotifyFunc  func,
 				   gpointer               data)
 {
 	GConfClient *client;
-	const char  *key;
+	const char  *tmp;
 	guint        retval;
 
 	client = gconf_client_get_default ();
 
-	key = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s",
-			       current_profile,
-			       panel_profile_get_toplevel_id (toplevel));
-	retval = gconf_client_notify_add (client, key, func, data, NULL, NULL);
+	if (!key)
+		tmp = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/toplevels/%s",
+					   current_profile,
+					   panel_profile_get_toplevel_id (toplevel));
+	else
+		tmp = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/toplevels/%s/%s",
+					   current_profile,
+					   panel_profile_get_toplevel_id (toplevel),
+					   key);
+
+	retval = gconf_client_notify_add (client, tmp, func, data, NULL, NULL);
 
 	g_object_unref (client);
 
@@ -1033,9 +1281,18 @@ panel_profile_load_toplevel (GConfClient *client,
 
 	notify_id = panel_profile_toplevel_notify_add (
 			toplevel,
+			NULL,
 			(GConfClientNotifyFunc) panel_profile_toplevel_change_notify,
 			toplevel);
+	g_signal_connect (toplevel, "destroy",
+			  G_CALLBACK (panel_profile_disconnect_toplevel),
+			  GUINT_TO_POINTER (notify_id));
 
+	notify_id = panel_profile_toplevel_notify_add (
+			toplevel,
+			"background",
+			(GConfClientNotifyFunc) panel_profile_background_change_notify,
+			toplevel);
 	g_signal_connect (toplevel, "destroy",
 			  G_CALLBACK (panel_profile_disconnect_toplevel),
 			  GUINT_TO_POINTER (notify_id));

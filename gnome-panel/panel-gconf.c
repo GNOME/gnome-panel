@@ -115,6 +115,26 @@ panel_gconf_basename (const char *key)
 	return retval ? retval + 1 : NULL;
 }
 
+char *
+panel_gconf_dirname (const char *key)
+{
+	char *retval;
+	int   len;
+
+	g_return_val_if_fail (key != NULL, NULL);
+
+	retval = strrchr (key, '/');
+	g_assert (retval != NULL);
+
+	len = retval - key;
+	g_assert (len > 0);
+
+	retval = g_new0 (char, len + 1);
+	memcpy (retval, key, len);
+
+	return retval;
+}
+
 GConfClient * 
 panel_gconf_get_client (void)
 {

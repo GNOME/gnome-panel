@@ -28,6 +28,8 @@
 
 #include <string.h>
 #include <glade/glade-xml.h>
+#include <libgnomeui/gnome-color-picker.h>
+#include <libgnomeui/gnome-file-entry.h>
 
 #include "panel-profile.h"
 #include "panel-gconf.h"
@@ -45,8 +47,16 @@ typedef struct {
 	GtkWidget     *autohide_toggle;
 	GtkWidget     *hidebuttons_toggle;
 	GtkWidget     *arrows_toggle;
+	GtkWidget     *default_radio;
+	GtkWidget     *color_radio;
+	GtkWidget     *image_radio;
+	GtkWidget     *transparent_radio;
+	GtkWidget     *color_picker;
+	GtkWidget     *image_entry;
+	GtkWidget     *opacity_scale;
 
-	guint          gconf_notify;
+	guint          toplevel_notify;
+	guint          background_notify;
 } PanelPropertiesDialog;
 
 static GQuark panel_properties_dialog_quark = 0;
@@ -58,9 +68,13 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 
 	client = gconf_client_get_default ();
 
-	if (dialog->gconf_notify)
-		gconf_client_notify_remove (client, dialog->gconf_notify);
-	dialog->gconf_notify = 0;
+	if (dialog->toplevel_notify)
+		gconf_client_notify_remove (client, dialog->toplevel_notify);
+	dialog->toplevel_notify = 0;
+
+	if (dialog->background_notify)
+		gconf_client_notify_remove (client, dialog->background_notify);
+	dialog->background_notify = 0;
 
 	g_object_unref (client);
 
@@ -228,6 +242,180 @@ SETUP_TOGGLE_BUTTON ("hidebuttons_toggle", hidebuttons_toggle, enable_buttons)
 SETUP_TOGGLE_BUTTON ("arrows_toggle",      arrows_toggle,      enable_arrows)
 
 static void
+panel_properties_dialog_color_changed (PanelPropertiesDialog *dialog,
+				       guint16                red,
+				       guint16                green,
+				       guint16                blue)
+{
+	PangoColor pango_color;
+
+	pango_color.red   = red;
+	pango_color.green = green;
+	pango_color.blue  = blue;
+
+	panel_profile_set_background_pango_color (dialog->toplevel, &pango_color);
+}
+
+static void
+panel_properties_dialog_setup_color_picker (PanelPropertiesDialog *dialog,
+					    GladeXML              *gui)
+{
+	PanelColor color;
+
+	dialog->color_picker = glade_xml_get_widget (gui, "color_picker");
+
+	panel_profile_get_background_color (dialog->toplevel, &color);
+
+	gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
+				    color.gdk.red,
+				    color.gdk.green,
+				    color.gdk.blue,
+				    65535);
+
+	g_signal_connect_swapped (dialog->color_picker, "color_set",
+				  G_CALLBACK (panel_properties_dialog_color_changed),
+				  dialog);
+}
+
+static void
+panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
+{
+	GtkWidget *entry;
+
+	entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
+
+	panel_profile_set_background_image (dialog->toplevel,
+					    gtk_entry_get_text (GTK_ENTRY (entry)));
+}
+
+static void
+panel_properties_dialog_setup_image_entry (PanelPropertiesDialog *dialog,
+					   GladeXML              *gui)
+{
+	GtkWidget *entry;
+	char      *image;
+
+	dialog->image_entry = glade_xml_get_widget (gui, "image_entry");
+
+	image = panel_profile_get_background_image (dialog->toplevel);
+
+	entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
+	gtk_entry_set_text (GTK_ENTRY (entry), image);
+
+	g_free (image);
+
+	g_signal_connect_swapped (dialog->image_entry, "changed",
+				  G_CALLBACK (panel_properties_dialog_image_changed),
+				  dialog);
+}
+
+static void
+panel_properties_dialog_opacity_changed (PanelPropertiesDialog *dialog)
+{
+	gdouble percentage;
+	guint16 opacity;
+
+	percentage = gtk_range_get_value (GTK_RANGE (dialog->opacity_scale));
+
+	opacity = (percentage / 100) * 65535;
+
+	panel_profile_set_background_opacity (dialog->toplevel, opacity);
+}
+
+static void
+panel_properties_dialog_setup_opacity_scale (PanelPropertiesDialog *dialog,
+					     GladeXML              *gui)
+{
+	guint16 opacity;
+	gdouble percentage;
+
+	dialog->opacity_scale = glade_xml_get_widget (gui, "opacity_scale");
+
+	opacity = panel_profile_get_background_opacity (dialog->toplevel);
+
+	percentage = (opacity * 100.0) / 65535;
+
+	gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
+
+	g_signal_connect_swapped (dialog->opacity_scale, "value_changed",
+				  G_CALLBACK (panel_properties_dialog_opacity_changed),
+				  dialog);
+}
+
+static void
+panel_properties_dialog_background_toggled (PanelPropertiesDialog *dialog,
+					    GtkWidget             *radio)
+{
+	PanelBackgroundType background_type = PANEL_BACK_NONE;
+
+	if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (radio)))
+		return;
+
+	if (radio == dialog->default_radio)
+		background_type = PANEL_BACK_NONE;
+
+	else if (radio == dialog->color_radio)
+		background_type = PANEL_BACK_COLOR;
+
+	else if (radio == dialog->image_radio)
+		background_type = PANEL_BACK_IMAGE;
+
+	else if (radio == dialog->transparent_radio) {
+		panel_profile_set_background_opacity (dialog->toplevel, 0);
+		background_type = PANEL_BACK_COLOR;
+	}
+
+	panel_profile_set_background_type (dialog->toplevel, background_type);
+}
+				
+static void
+panel_properties_dialog_setup_background_radios (PanelPropertiesDialog *dialog,
+						 GladeXML              *gui)
+{
+	PanelBackgroundType  background_type;
+	GtkWidget           *active_radio;
+
+	dialog->default_radio     = glade_xml_get_widget (gui, "default_radio");
+	dialog->color_radio       = glade_xml_get_widget (gui, "color_radio");
+	dialog->image_radio       = glade_xml_get_widget (gui, "image_radio");
+	dialog->transparent_radio = glade_xml_get_widget (gui, "transparent_radio");
+
+	background_type = panel_profile_get_background_type (dialog->toplevel);
+	switch (background_type) {
+	case PANEL_BACK_NONE:
+		active_radio = dialog->default_radio;
+		break;
+	case PANEL_BACK_COLOR:
+		if (panel_profile_get_background_opacity (dialog->toplevel))
+			active_radio = dialog->color_radio;
+		else
+			active_radio = dialog->transparent_radio;
+		break;
+	case PANEL_BACK_IMAGE:
+		active_radio = dialog->image_radio;
+		break;
+	default:
+		active_radio = NULL;
+		g_assert_not_reached ();
+	}
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (active_radio), TRUE);
+
+	g_signal_connect_swapped (dialog->default_radio, "toggled",
+				  G_CALLBACK (panel_properties_dialog_background_toggled),
+				  dialog);
+	g_signal_connect_swapped (dialog->color_radio, "toggled",
+				  G_CALLBACK (panel_properties_dialog_background_toggled),
+				  dialog);
+	g_signal_connect_swapped (dialog->image_radio, "toggled",
+				  G_CALLBACK (panel_properties_dialog_background_toggled),
+				  dialog);
+	g_signal_connect_swapped (dialog->transparent_radio, "toggled",
+				  G_CALLBACK (panel_properties_dialog_background_toggled),
+				  dialog);
+}
+
+static void
 panel_properties_update_arrows_toggle_visible (PanelPropertiesDialog *dialog,
 					       GtkToggleButton       *toggle)
 {
@@ -293,10 +481,10 @@ panel_properties_dialog_update_size (PanelPropertiesDialog *dialog,
 }
 
 static void
-panel_properties_dialog_notify (GConfClient           *client,
-				guint                  cnxn_id,
-				GConfEntry            *entry,
-				PanelPropertiesDialog *dialog)
+panel_properties_dialog_toplevel_notify (GConfClient           *client,
+					 guint                  cnxn_id,
+					 GConfEntry            *entry,
+					 PanelPropertiesDialog *dialog)
 {
 	GConfValue *value;
 	const char *key;
@@ -324,6 +512,122 @@ panel_properties_dialog_notify (GConfClient           *client,
 	else UPDATE_TOGGLE ("auto_hide",      autohide_toggle)
 	else UPDATE_TOGGLE ("enable_buttons", hidebuttons_toggle)
 	else UPDATE_TOGGLE ("enable_arrows",  arrows_toggle)
+}
+
+static void
+panel_properties_dialog_update_background_type (PanelPropertiesDialog *dialog,
+						GConfValue            *value)
+{
+	PanelBackgroundType  background_type;
+	GtkWidget           *active_radio;
+
+	if (!value || value->type != GCONF_VALUE_STRING)
+		return;
+
+	if (!panel_profile_map_background_type_string (gconf_value_get_string (value),
+						       &background_type))
+		return;
+
+	switch (background_type) {
+	case PANEL_BACK_NONE:
+		active_radio = dialog->default_radio;
+		break;
+	case PANEL_BACK_COLOR:
+		if (panel_profile_get_background_opacity (dialog->toplevel))
+			active_radio = dialog->color_radio;
+		else
+			active_radio = dialog->transparent_radio;
+		break;
+	case PANEL_BACK_IMAGE:
+		active_radio = dialog->image_radio;
+		break;
+	default:
+		active_radio = NULL;
+		g_assert_not_reached ();
+		break;
+	}
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (active_radio), TRUE);
+}
+
+static void
+panel_properties_dialog_update_background_color (PanelPropertiesDialog *dialog,
+						 GConfValue            *value)
+{
+	PangoColor color = { 0, };
+	guint16    red, green, blue;
+
+	if (!value || value->type != GCONF_VALUE_STRING)
+		return;
+	
+	pango_color_parse (&color, gconf_value_get_string (value));
+
+	gnome_color_picker_get_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
+				    &red, &green, &blue, NULL);
+	if (red != color.red || green != color.green || blue != color.blue)
+		gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (dialog->color_picker),
+					    color.red,
+					    color.green,
+					    color.blue,	
+					    65535);
+}
+
+static void
+panel_properties_dialog_update_background_opacity (PanelPropertiesDialog *dialog,
+						   GConfValue            *value)
+{
+	gdouble percentage;
+
+	if (!value || value->type != GCONF_VALUE_INT)
+		return;
+
+	percentage = (gconf_value_get_int (value) * 100) / 65535;
+
+	if ((int) gtk_range_get_value (GTK_RANGE (dialog->opacity_scale)) != (int) percentage)
+		gtk_range_set_value (GTK_RANGE (dialog->opacity_scale), percentage);
+}
+
+static void
+panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
+						 GConfValue            *value)
+{
+	GtkEntry   *entry;
+	const char *old_text;
+	const char *text;
+
+	if (!value || value->type != GCONF_VALUE_STRING)
+		return;
+
+	entry = GTK_ENTRY (gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry)));
+
+	text = gconf_value_get_string (value);
+	old_text = gtk_entry_get_text (entry);
+
+	if (text && (!old_text || strcmp (text, old_text)))
+		gtk_entry_set_text (entry, text);
+}
+
+static void
+panel_properties_dialog_background_notify (GConfClient           *client,
+					   guint                  cnxn_id,
+					   GConfEntry            *entry,
+					   PanelPropertiesDialog *dialog)
+{
+	GConfValue *value;
+	const char *key;
+
+	key = panel_gconf_basename (gconf_entry_get_key (entry));
+
+	value = gconf_entry_get_value (entry);
+
+	if (!strcmp (key, "type"))
+		panel_properties_dialog_update_background_type (dialog, value);
+	else if (!strcmp (key, "color"))
+		panel_properties_dialog_update_background_color (dialog, value);
+	else if (!strcmp (key, "opacity"))
+		panel_properties_dialog_update_background_opacity (dialog, value);
+	else if (!strcmp (key, "image"))
+		panel_properties_dialog_update_background_image (dialog, value);
 }
 
 static PanelPropertiesDialog *
@@ -362,10 +666,24 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 				  G_CALLBACK (panel_properties_update_arrows_toggle_visible),
 				  dialog);
 
-	dialog->gconf_notify = panel_profile_toplevel_notify_add (
-					dialog->toplevel,
-					(GConfClientNotifyFunc) panel_properties_dialog_notify,
-					dialog);
+	dialog->toplevel_notify =
+		panel_profile_toplevel_notify_add (
+			dialog->toplevel,
+			NULL,
+			(GConfClientNotifyFunc) panel_properties_dialog_toplevel_notify,
+			dialog);
+
+	panel_properties_dialog_setup_color_picker      (dialog, gui);
+	panel_properties_dialog_setup_image_entry       (dialog, gui);
+	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
+	panel_properties_dialog_setup_background_radios (dialog, gui);
+
+	dialog->background_notify =
+		panel_profile_toplevel_notify_add (
+			dialog->toplevel,
+			"background",
+			(GConfClientNotifyFunc) panel_properties_dialog_background_notify,
+			dialog);
 
 	gtk_widget_show (dialog->properties_dialog);
 }

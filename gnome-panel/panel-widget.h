@@ -91,8 +91,6 @@ struct _PanelWidget
 	GdkEventKey    *key_event;
 
 	guint           packed : 1;
-
-	guint           inhibit_draw : 1;
 };
 
 struct _PanelWidgetClass
@@ -106,7 +104,6 @@ struct _PanelWidgetClass
 			       GtkWidget *applet);
 	void (* applet_removed) (PanelWidget *panel,
 				 GtkWidget *applet);
-	void (* back_change) (PanelWidget *panel);
 	void (* push_move) (PanelWidget		*panel,
                             GtkDirectionType	 dir);
 	void (* switch_move) (PanelWidget	*panel,
@@ -120,16 +117,10 @@ struct _PanelWidgetClass
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	panel_widget_new		(PanelToplevel *toplevel,
-						 gboolean packed,
-						 GtkOrientation orient,
-						 int sz,
-						 PanelBackgroundType back_type,
-						 const char *back_pixmap,
-						 gboolean fit_pixmap_bg,
-						 gboolean stretch_pixmap_bg,
-						 gboolean rotate_pixmap_bg,
-						 PanelColor *back_color);
+GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
+						 gboolean        packed,
+						 GtkOrientation  orient,
+						 int             sz);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
 int		panel_widget_add		(PanelWidget *panel,
@@ -163,28 +154,12 @@ void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       int drag_off);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 
-/* changing parameters */
-void		panel_widget_change_params	(PanelWidget *panel,
-						 GtkOrientation orient,
-						 int sz,
-						 PanelBackgroundType back_type,
-						 const char *pixmap_name,
-						 gboolean fit_pixmap_bg,
-						 gboolean stretch_pixmap_bg,
-						 gboolean rotate_pixmap_bg,
-						 PanelColor *back_color);
-
 void            panel_widget_set_packed         (PanelWidget    *panel_widget,
 						 gboolean        packed);
 void            panel_widget_set_orientation    (PanelWidget    *panel_widget,
 						 GtkOrientation  orientation);
 void            panel_widget_set_size           (PanelWidget    *panel_widget,
 						 int             size);
-
-void		panel_widget_set_back_pixmap	(PanelWidget *panel,
-						 const char *file);
-void		panel_widget_set_back_color	(PanelWidget *panel,
-						 PanelColor  *color);
 
 /*draw EVERYTHING (meaning icons)*/
 void		panel_widget_draw_all		(PanelWidget *panel,

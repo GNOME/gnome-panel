@@ -35,7 +35,6 @@ enum {
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
-	BACK_CHANGE_SIGNAL,
 	PUSH_MOVE_SIGNAL,
 	SWITCH_MOVE_SIGNAL,
 	FREE_MOVE_SIGNAL,
@@ -358,17 +357,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               1,
                               G_TYPE_POINTER); 
 
-	panel_widget_signals[BACK_CHANGE_SIGNAL] =
-                g_signal_new ("back_change",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, back_change),
-                              NULL,
-                              NULL, 
-                              panel_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-
 	panel_widget_signals[PUSH_MOVE_SIGNAL] =
 		g_signal_new ("push_move",
                               G_TYPE_FROM_CLASS (class),
@@ -432,7 +420,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
-	class->back_change = NULL;
 	class->push_move = panel_widget_push_move_applet;
 	class->switch_move = panel_widget_switch_move_applet;
 	class->free_move = panel_widget_free_move_applet;
@@ -1202,9 +1189,6 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	panel = PANEL_WIDGET(widget);
 
-	/* allow drawing if it was inhibited */
-	panel->inhibit_draw = FALSE;
-	
 	old_size = panel->size;
 	old_thick = panel->thick;
 	
@@ -1395,31 +1379,6 @@ panel_widget_is_cursor(PanelWidget *panel, int overlap)
 	return FALSE;
 }
 
-void
-panel_widget_set_back_pixmap (PanelWidget *panel,
-			      const char  *image_path)
-{
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	g_return_if_fail (image_path != NULL);
-
-	panel_background_set_image (
-		&panel->background, image_path, FALSE, FALSE, FALSE);
-
-	gtk_widget_queue_draw (GTK_WIDGET (panel));
-}
-
-void
-panel_widget_set_back_color (PanelWidget *panel,
-			     PanelColor  *color)
-{
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-	g_return_if_fail (color != NULL);
-
-	panel_background_set_color (&panel->background, color);
-
-	gtk_widget_queue_draw (GTK_WIDGET (panel));
-}
-
 static void
 panel_widget_style_set (GtkWidget *widget,
 			GtkStyle  *previous_style)
@@ -1530,7 +1489,6 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->applet_list   = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget   = widget;
-	panel->inhibit_draw  = FALSE;
 
 	panel_background_init (&panel->background);
 
@@ -1538,16 +1496,10 @@ panel_widget_instance_init (PanelWidget *panel)
 }
 
 GtkWidget *
-panel_widget_new (PanelToplevel       *toplevel,
-		  gboolean             packed,
-		  GtkOrientation       orient,
-		  int                  sz,
-		  PanelBackgroundType  back_type,
-		  const char          *back_pixmap,
-		  gboolean             fit_pixmap_bg,
-		  gboolean             stretch_pixmap_bg,
-		  gboolean             rotate_pixmap_bg,
-		  PanelColor          *back_color)
+panel_widget_new (PanelToplevel  *toplevel,
+		  gboolean        packed,
+		  GtkOrientation  orient,
+		  int             sz)
 {
 	PanelWidget *panel;
 
@@ -1555,10 +1507,6 @@ panel_widget_new (PanelToplevel       *toplevel,
 
         GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
         GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
-
-	panel_background_set (
-		&panel->background, back_type, back_color, back_pixmap,
-		fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg);
 
 	panel->orient = orient;
 	panel->sz = sz;
@@ -2378,47 +2326,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 }
 
 void
-panel_widget_change_params(PanelWidget         *panel,
-			   GtkOrientation       orient,
-			   int                  sz,
-			   PanelBackgroundType  back_type,
-			   const char          *pixmap,
-			   gboolean             fit_pixmap_bg,
-			   gboolean             stretch_pixmap_bg,
-			   gboolean             rotate_pixmap_bg,
-			   PanelColor          *back_color)
-{
-	int oldsz;
-
-	g_return_if_fail (PANEL_IS_WIDGET (panel));
-
-	panel->orient = orient;
-
-	oldsz = panel->sz;
-	panel->sz = sz;
-	
-	queue_resize_on_all_applets (panel);
-
-	if (oldsz != panel->sz)
-	   	g_signal_emit (
-			panel, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
-
-	if (panel_background_set (&panel->background, back_type, back_color, pixmap,
-				  fit_pixmap_bg, stretch_pixmap_bg, rotate_pixmap_bg)) {
-		if (GTK_WIDGET_REALIZED (panel))
-			panel_background_realized (
-				&panel->background,
-				GTK_WIDGET (panel)->window);
-		
-		g_signal_emit (panel, panel_widget_signals [BACK_CHANGE_SIGNAL], 0);
-	}
-
-	/* inhibit draws until we resize */
-	panel->inhibit_draw = TRUE;
-	gtk_widget_queue_resize (GTK_WIDGET (panel));
-}
-
-void
 panel_widget_set_packed (PanelWidget *panel_widget,
 			 gboolean     packed)
 {
@@ -2431,30 +2338,27 @@ void
 panel_widget_set_orientation (PanelWidget    *panel_widget,
 			      GtkOrientation  orientation)
 {
-	panel_widget_change_params (panel_widget,
-				    orientation,	
-				    panel_widget->sz,
-				    panel_widget->background.type,
-				    panel_widget->background.image,
-				    panel_widget->background.fit_image,
-				    panel_widget->background.stretch_image,
-				    panel_widget->background.rotate_image,
-				   &panel_widget->background.color);
+	panel_widget->orient = orientation;
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
 void
 panel_widget_set_size (PanelWidget *panel_widget,
 		       int          size)
 {
-	panel_widget_change_params (panel_widget,
-				    panel_widget->orient,	
-				    size,
-				    panel_widget->background.type,
-				    panel_widget->background.image,
-				    panel_widget->background.fit_image,
-				    panel_widget->background.stretch_image,
-				    panel_widget->background.rotate_image,
-				   &panel_widget->background.color);
+	g_return_if_fail (PANEL_IS_WIDGET (panel_widget));
+
+	if (size == panel_widget->sz)
+		return;
+
+	panel_widget->sz = size;
+	
+	queue_resize_on_all_applets (panel_widget);
+
+	g_signal_emit (panel_widget, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
 }
 
 static void 
