@@ -45,7 +45,7 @@ GlobalConfig global_config = {
 
 typedef struct _LoadApplet LoadApplet;
 struct _LoadApplet {
-	char *id;
+	char *id_str;
 	char *params;
 	int pos;
 	int panel;
@@ -59,12 +59,12 @@ GList *load_queue=NULL;
 static void panel_setup(PanelWidget *panel);
 
 void
-queue_load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
+queue_load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 {
 	LoadApplet *l;
 	l = g_new(LoadApplet,1);
 
-	l->id=g_strdup(id);
+	l->id_str=g_strdup(id_str);
 	l->params=g_strdup(params);
 	l->pos=pos;
 	l->panel=panel;
@@ -74,9 +74,9 @@ queue_load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 }
 
 void
-load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
+load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 {
-	if(strcmp(id,EXTERN_ID) == 0) {
+	if(strcmp(id_str,EXTERN_ID) == 0) {
 		gchar *command;
 		gchar *fullparams;
 
@@ -94,7 +94,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		   params[0] == '\0')
 		   	return;
 
-		reserve_applet_spot (id, fullparams, panel, pos, cfgpath,
+		reserve_applet_spot (id_str, fullparams, panel, pos, cfgpath,
 				     APPLET_EXTERN_PENDING);
 		
 		/*'#' marks an applet that will take care of starting
@@ -109,7 +109,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		}
 
 		g_free(fullparams);
-	} else if(strcmp(id,MENU_ID) == 0) {
+	} else if(strcmp(id_str,MENU_ID) == 0) {
 		Menu *menu;
 
 		menu = create_menu_applet(params, MENU_UP);
@@ -117,7 +117,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,NULL,APPLET_MENU);
-	} else if(strcmp(id,DRAWER_ID) == 0) {
+	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
 		DrawerOrient orient=DRAWER_UP;
@@ -160,7 +160,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
 			     params, pos, panel, NULL, APPLET_DRAWER);
-	} else if(strcmp(id,SWALLOW_ID) == 0) {
+	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
 		swallow = create_swallow_applet(params, SWALLOW_HORIZONTAL);
@@ -176,8 +176,8 @@ load_queued_applets(void)
 
 	for(list = load_queue;list!=NULL;list=g_list_next(list)) {
 		LoadApplet *l=list->data;
-		load_applet(l->id,l->params,l->pos,l->panel,l->cfgpath);
-		g_free(l->id);
+		load_applet(l->id_str,l->params,l->pos,l->panel,l->cfgpath);
+		g_free(l->id_str);
 		g_free(l->params);
 		g_free(l->cfgpath); 
 		g_free(l);
@@ -269,7 +269,7 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 				orient = ORIENT_LEFT;
 				break;
 		}
-		send_applet_change_orient(info->id,info->applet_id,orient);
+		send_applet_change_orient(info->id_str,info->applet_id,orient);
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
 		MenuOrient orient=MENU_UP;

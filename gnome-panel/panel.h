@@ -69,7 +69,7 @@ struct _AppletInfo {
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	GtkWidget *menu; /*the applet menu*/
 	gpointer data;
-	gchar *id; /*used for IOR or string Id*/
+	gchar *id_str; /*used for IOR or string Id*/
 	gchar *cfg; /*used for passing around the per applet config path*/
 	gchar *params; /*used for parameters to internal applets and for path
 			 for external applets*/
@@ -90,7 +90,7 @@ GtkWidget * create_panel_root_menu(PanelWidget *panel);
 void register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,
 		  gpointer data,
-		  char *id,
+		  char *id_str,
 		  char *params,
 		  int pos,
 		  int panel,
@@ -102,20 +102,25 @@ void panel_quit(void);
 void apply_global_config(void);
 
 /*stuff for corba*/
-void reparent_window_id (unsigned long winid, int id);
 int applet_request_id (const char *path, char **cfgpath,
 		       char **globcfgpath, guint32 *winid);
-void applet_register (const char * ior, int id);
+void applet_register (const char * ior, int applet_id);
 void applet_request_glob_cfg (char **globcfgpath);
-guint32 reserve_applet_spot (const char *id, const char *path, int panel,
-			  int pos, char *cfgpath, AppletType type);
-void applet_abort_id(int id);
-int applet_get_panel(int id);
-int applet_get_pos(int id);
-void applet_show_menu(int id);
-void applet_drag_start(int id);
-void applet_drag_stop(int id);
-void applet_add_callback(short id, char *callback_name, char *menuitem_text);
+guint32 reserve_applet_spot (const char *id_str, const char *path,
+			     int panel, int pos, char *cfgpath,
+			     AppletType type);
+void applet_abort_id(gint applet_id);
+int applet_get_panel(gint applet_id);
+int applet_get_pos(gint applet_id);
+void applet_show_menu(gint applet_id);
+void applet_drag_start(gint applet_id);
+void applet_drag_stop(gint applet_id);
+void applet_add_callback(gint applet_id,
+			 char *callback_name,
+			 char *menuitem_text);
+void applet_set_tooltip(gint applet_id, char *tooltip);
+void applet_remove_from_panel(gint applet_id);
+
 
 /*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel, char *cfgpath);

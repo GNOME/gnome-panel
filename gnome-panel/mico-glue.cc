@@ -21,10 +21,10 @@ public:
 					CORBA::ULong &wid) {
 		char *cfg=NULL;
 		char *globcfg=NULL;
-		int id;
+		int applet_id;
 		guint32 winid;
 
-		id = ::applet_request_id (path,&cfg,&globcfg,&winid);
+		applet_id = ::applet_request_id (path,&cfg,&globcfg,&winid);
 		wid = winid;
 
 		if(cfg) {
@@ -37,13 +37,13 @@ public:
 			g_free(globcfg);
 		} else
 			globcfgpath = CORBA::string_dup("");
-		return id;
+		return applet_id;
 	}
-	void applet_register (const char *ior, CORBA::Short id) {
-		::applet_register(ior, id);
+	void applet_register (const char *ior, CORBA::Short applet_id) {
+		::applet_register(ior, applet_id);
 	}
-	void applet_abort_id (CORBA::Short id) {
-		::applet_abort_id (id);
+	void applet_abort_id (CORBA::Short applet_id) {
+		::applet_abort_id (applet_id);
 	}
 	void applet_request_glob_cfg (char *&globcfgpath) {
 		char *globcfg=NULL;
@@ -55,37 +55,36 @@ public:
 		} else
 			globcfgpath = CORBA::string_dup("");
 	}
-	CORBA::Short applet_get_panel (CORBA::Short id) {
-		return ::applet_get_panel (id);
+	CORBA::Short applet_get_panel (CORBA::Short applet_id) {
+		return ::applet_get_panel (applet_id);
 	}
-	CORBA::Short applet_get_pos (CORBA::Short id) {
-		return ::applet_get_pos (id);
+	CORBA::Short applet_get_pos (CORBA::Short applet_id) {
+		return ::applet_get_pos (applet_id);
 	}
-	void applet_show_menu (CORBA::Short id) {
-		::applet_show_menu (id);
+	void applet_show_menu (CORBA::Short applet_id) {
+		::applet_show_menu (applet_id);
 	}
-	void applet_drag_start (CORBA::Short id) {
-		::applet_drag_start (id);
+	void applet_drag_start (CORBA::Short applet_id) {
+		::applet_drag_start (applet_id);
 	}
-	void applet_drag_stop (CORBA::Short id) {
-		::applet_drag_stop (id);
+	void applet_drag_stop (CORBA::Short applet_id) {
+		::applet_drag_stop (applet_id);
 	}
-	void applet_remove_from_panel (CORBA::Short id) {
-		printf ("APPLET_REMOVE_FROM_PANEL not implemented!\n");
-		/*FIXME:  */
+	void applet_remove_from_panel (CORBA::Short applet_id) {
+		applet_remove_from_panel(applet_id);
 	}
-        void applet_add_callback (CORBA::Short id,
+        void applet_add_callback (CORBA::Short applet_id,
 				  const char *callback_name,
 				  const char *menuitem_text) {
-		::applet_add_callback(id,
+		::applet_add_callback(applet_id,
 				      (char *)callback_name,
 				      (char *)menuitem_text);
 	}
-	void applet_add_tooltip (CORBA::Short id, const char *tooltip) {
-		/*FIXME*/
+	void applet_add_tooltip (CORBA::Short applet_id, const char *tooltip) {
+		::applet_set_tooltip(applet_id,tooltip);
 	}
-	void applet_remove_tooltip (CORBA::Short id) {
-		/*FIXME*/
+	void applet_remove_tooltip (CORBA::Short applet_id) {
+		::applet_set_tooltip(applet_id,NULL);
 	}
 	void quit(void) {
 		::panel_quit();
@@ -203,7 +202,7 @@ panel_corba_restart_launchers(void)
 }
 
 void
-send_applet_session_save (const char *ior, int id, const char *cfgpath,
+send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 			  const char *globcfgpath)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
@@ -211,38 +210,38 @@ send_applet_session_save (const char *ior, int id, const char *cfgpath,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->session_save(id,cfgpath,globcfgpath);
+	applet->session_save(applet_id,cfgpath,globcfgpath);
 }
 
 void
-send_applet_shutdown_applet (const char *ior, int id)
+send_applet_shutdown_applet (const char *ior, int applet_id)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->shutdown_applet(id);
+	applet->shutdown_applet(applet_id);
 }
 
 void
-send_applet_change_orient (const char *ior, int id, int orient)
+send_applet_change_orient (const char *ior, int applet_id, int orient)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->change_orient(id,orient);
+	applet->change_orient(applet_id,orient);
 }
 
 void
-send_applet_do_callback (const char *ior, int id, char *callback_name)
+send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->do_callback(id, callback_name);
+	applet->do_callback(applet_id, callback_name);
 }

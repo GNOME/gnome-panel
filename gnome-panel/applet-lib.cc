@@ -39,27 +39,27 @@ CORBA::BOA_ptr boa_ptr;
 
 /*every applet must implement these*/
 BEGIN_GNOME_DECLS
-void change_orient(int id, int orient);
-void session_save(int id, const char *cfgpath, const char *globcfgpath);
-void shutdown_applet(int id);
+void change_orient(int applet_id, int orient);
+void session_save(int applet_id, const char *cfgpath, const char *globcfgpath);
+void shutdown_applet(int applet_id);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
 	GtkWidget *the_widget;
 public:
 	Applet_impl (GtkWidget *widget) { the_widget = widget; };
-	void change_orient (CORBA::Short id, CORBA::Short orient) {
-		::change_orient(id,orient);
+	void change_orient (CORBA::Short applet_id, CORBA::Short orient) {
+		::change_orient(applet_id,orient);
 	}
-	void session_save (CORBA::Short id,
+	void session_save (CORBA::Short applet_id,
 			   const char *cfgpath,
 			   const char *globcfgpath) {
-		::session_save(id,cfgpath,globcfgpath);
+		::session_save(applet_id,cfgpath,globcfgpath);
 	}
-	void shutdown_applet (CORBA::Short id) {
-		::shutdown_applet(id);
+	void shutdown_applet (CORBA::Short applet_id) {
+		::shutdown_applet(applet_id);
 	}
-        void do_callback (CORBA::Short id,
+        void do_callback (CORBA::Short applet_id,
 			  const char *callback_name)
         {
 		GList *list;
@@ -72,8 +72,8 @@ public:
 
 		for(;list!=NULL;list = (GList *) g_list_next (list)) {
 			CallbackInfo *info = (CallbackInfo *)list->data;
-			if(info->applet_id == id) {
-				(*(info->func))(id,info->data);
+			if(info->applet_id == applet_id) {
+				(*(info->func))(applet_id,info->data);
 				return;
 			}
 		}
@@ -153,7 +153,7 @@ gnome_panel_applet_reinit_corba (void)
 
 /*adds a callback to the callback hash*/
 void
-gnome_panel_applet_register_callback(int id,
+gnome_panel_applet_register_callback(int applet_id,
 				     char *name,
 				     char *menutext,
 				     AppletCallbackFunc func,
@@ -165,7 +165,7 @@ gnome_panel_applet_register_callback(int id,
 	if(!applet_callbacks)
 		 applet_callbacks = g_hash_table_new (g_str_hash, g_str_equal);
 
-	info->applet_id = id;
+	info->applet_id = applet_id;
 	info->func = func;
 	info->data = data;
 
@@ -177,7 +177,7 @@ gnome_panel_applet_register_callback(int id,
 	g_hash_table_insert(applet_callbacks,name,list);
 
 	/*register the callback with the panel*/
-	panel_client->applet_add_callback(id,name,menutext);
+	panel_client->applet_add_callback(applet_id,name,menutext);
 }
 
 /*catch events relevant to the panel and notify the panel*/
@@ -266,12 +266,12 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 }
 
 static void
-bind_top_applet_events(GtkWidget *widget, int id)
+bind_top_applet_events(GtkWidget *widget, int applet_id)
 {
 	gtk_signal_connect(GTK_OBJECT(widget),
 			   "event",
 			   GTK_SIGNAL_FUNC(applet_event),
-			   (gpointer)id);
+			   (gpointer)applet_id);
 
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
@@ -282,7 +282,7 @@ bind_top_applet_events(GtkWidget *widget, int id)
   itself as*/
 char *
 gnome_panel_applet_request_id (char *path,
-			       int *id,
+			       int *applet_id,
 			       char **cfgpath,
 			       char **globcfgpath,
 			       guint32 *winid)
@@ -295,24 +295,25 @@ gnome_panel_applet_request_id (char *path,
 
 	/*this is the first call to panel so we'll do a loop and timeout
 	  after 20 seconds if we don't find a panel*/
-	*id = -1;
+	*applet_id = -1;
 
 	for(i=0;i<20;i++) {
 		try {
 			/*reserve a spot and get an id for this applet*/
-			*id = panel_client->applet_request_id(path,cfg,
-							      globcfg,wid);
+			*applet_id = panel_client->applet_request_id(path,cfg,
+							             globcfg,
+								     wid);
 		} catch (...) {
 			sleep(1);
 			gnome_panel_applet_reinit_corba ();
 			continue;
 		}
-		if(*id!=-1)
+		if(*applet_id!=-1)
 			break;
 		sleep(1);
 	}
 	/*if the request_id never completed*/
-	if(*id == -1)
+	if(*applet_id == -1)
 		return g_strdup("Can't talk to a panel\n");
 
 	if(winid)
@@ -341,7 +342,7 @@ gnome_panel_applet_request_id (char *path,
 
 /*this function will register the ior with the panel so it can call us*/
 char *
-gnome_panel_applet_register (GtkWidget *widget, int id)
+gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 {
 	char *result;
 	char *ior;
@@ -359,17 +360,33 @@ gnome_panel_applet_register (GtkWidget *widget, int id)
 
 	ior = orb_ptr->object_to_string (applet);
 
-	panel_client->applet_register(ior,id);
+	panel_client->applet_register(ior,applet_id);
 
-	bind_top_applet_events(widget,id);
+	bind_top_applet_events(widget,applet_id);
 
 	return 0;
 }
 
 char *
-gnome_panel_applet_abort_id (int id)
+gnome_panel_applet_abort_id (gint applet_id)
 {
-	panel_client->applet_abort_id(id);
+	panel_client->applet_abort_id(applet_id);
+
+	return 0;
+}
+
+char *
+gnome_panel_applet_add_tooltip (gint applet_id, char *tooltip)
+{
+	panel_client->applet_add_tooltip(applet_id,tooltip);
+
+	return 0;
+}
+
+char *
+gnome_panel_applet_remove_tooltip (gint applet_id)
+{
+	panel_client->applet_remove_tooltip(applet_id);
 
 	return 0;
 }

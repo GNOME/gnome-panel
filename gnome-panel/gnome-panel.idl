@@ -6,30 +6,30 @@ module GNOME {
 					out string cfgpath,
 					out string globcfgpath,
 					out unsigned long wid);
-		void applet_register(in string ior, in short id);
-		void applet_abort_id(in short id);
+		void applet_register(in string ior, in short applet_id);
+		void applet_abort_id(in short applet_id);
 		void applet_request_glob_cfg(out string globcfgpath);
-		void applet_remove_from_panel (in short id);
-		short applet_get_panel (in short id);
-		short applet_get_pos (in short id);
-		void applet_show_menu (in short id);
-		void applet_drag_start (in short id);
-		void applet_drag_stop (in short id);
-		void applet_add_callback (in short id,
+		void applet_remove_from_panel (in short applet_id);
+		short applet_get_panel (in short applet_id);
+		short applet_get_pos (in short applet_id);
+		void applet_show_menu (in short applet_id);
+		void applet_drag_start (in short applet_id);
+		void applet_drag_stop (in short applet_id);
+		void applet_add_callback (in short applet_id,
 					  in string callback_name,
 					  in string menuitem_text);
-		void applet_add_tooltip (in short id, in string tooltip);
-		void applet_remove_tooltip (in short id);
+		void applet_add_tooltip (in short applet_id, in string tooltip);
+		void applet_remove_tooltip (in short applet_id);
 		void quit();
 	};
 
 	interface Applet {
-		void change_orient (in short id, in short orient);
-		void do_callback (in short id, in string callback_name);
-		void session_save (in short id,
+		void change_orient (in short applet_id, in short orient);
+		void do_callback (in short applet_id, in string callback_name);
+		void session_save (in short applet_id,
 				   in string cfgpath,
 				   in string globcfgpath);
-		void shutdown_applet (in short id);
+		void shutdown_applet (in short applet_id);
 	};
 
 	interface Launcher {

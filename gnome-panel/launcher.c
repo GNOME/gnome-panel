@@ -249,14 +249,8 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 	gnome_desktop_entry_free(prop->dentry);
 	prop->dentry = dentry;
 
-	/* FIXME: should update the button and pixmap */
-
-	/*FIXME: CORBAize*/
-	/*cmd.cmd = PANEL_CMD_SET_TOOLTIP;
-	cmd.params.set_tooltip.applet  = prop->launcher->button;
-	cmd.params.set_tooltip.tooltip = dentry->comment;
-
-	(*panel_cmd_func) (&cmd);*/
+	gnome_panel_applet_add_tooltip(prop->launcher->applet_id,
+				       dentry->comment);
 	
 	pixmap=GTK_BUTTON(prop->launcher->button)->child;
 
@@ -500,15 +494,7 @@ start_new_launcher(const char *path)
 					     properties,
 					     NULL);
 
-	/*FIXME: corbaize*/
-	/*dentry = gnome_desktop_entry_load(launcher->dentry->location);
-
-	cmd.cmd = PANEL_CMD_SET_TOOLTIP;
-	cmd.params.set_tooltip.applet  = launcher->button;
-	cmd.params.set_tooltip.tooltip = dentry->comment;
-
-	(*panel_cmd_func) (&cmd);*/
-
+	gnome_panel_applet_add_tooltip(applet_id, launcher->dentry->comment);
 }
 
 /*destructive call, should be done only on restart*/
