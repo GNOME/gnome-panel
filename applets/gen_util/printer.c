@@ -442,7 +442,7 @@ make_printer_applet(const gchar *goad_id)
 
 /* as long as the dnd in shlib applets is broke, this must be a separate 
    extern applet */
-#if 1
+#if 0
 
 /*when we get a command to start a new widget*/
 static GtkWidget *
