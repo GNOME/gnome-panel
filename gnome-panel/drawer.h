@@ -23,6 +23,9 @@ void set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient);
 
 Drawer * create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient);
 
+void reposition_drawer(Drawer *drawer);
+
+
 END_GNOME_DECLS
 
 #endif

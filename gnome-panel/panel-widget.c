@@ -22,6 +22,10 @@ typedef void (*PanelWidgetStateSignal) (GtkObject * object,
 				        PanelState state,
 				        gpointer data);
 
+typedef void (*PanelWidgetAppletSignal) (GtkObject * object,
+				         GtkWidget * applet,
+				         gpointer data);
+
 guint
 panel_widget_get_type ()
 {
@@ -47,7 +51,7 @@ panel_widget_get_type ()
 enum {
 	ORIENT_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
-	RESTORE_STATE_SIGNAL,
+	APPLET_MOVE_SIGNAL,
 	LAST_SIGNAL
 };
 
@@ -83,6 +87,20 @@ gtk_panel_widget_marshal_signal_orient (GtkObject * object,
 }
 
 static void
+gtk_panel_widget_marshal_signal_applet (GtkObject * object,
+					GtkSignalFunc func,
+					gpointer func_data,
+					GtkArg * args)
+{
+  PanelWidgetAppletSignal rfunc;
+
+  rfunc = (PanelWidgetAppletSignal) func;
+
+  (*rfunc) (object, GTK_VALUE_POINTER (args[0]),
+	    func_data);
+}
+
+static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
 	GtkObjectClass *object_class;
@@ -110,23 +128,23 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_ENUM);
-	panel_widget_signals[RESTORE_STATE_SIGNAL] =
-		gtk_signal_new("restore_state",
+	panel_widget_signals[APPLET_MOVE_SIGNAL] =
+		gtk_signal_new("applet_move",
 			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 restore_state),
-			       gtk_panel_widget_marshal_signal_state,
+			       			 applet_move),
+			       gtk_panel_widget_marshal_signal_applet,
 			       GTK_TYPE_NONE,
 			       1,
-			       GTK_TYPE_ENUM);
+			       GTK_TYPE_POINTER);
 
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
 
 	class->orient_change = NULL;
 	class->state_change = NULL;
-	class->restore_state = NULL;
+	class->applet_move = NULL;
 }
 
 static void
@@ -650,6 +668,10 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 
 	panel = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_PARENT_KEY);
 	panel_widget_adjust_applet(panel,widget);
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_MOVE_SIGNAL],
+			widget);
 
 	return TRUE;
 }
@@ -1283,6 +1305,9 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 
 		panel->currently_dragged_applet_pos =
 			panel_widget_switch_move(panel, pos, moveby);
+		gtk_signal_emit(GTK_OBJECT(panel),
+				panel_widget_signals[APPLET_MOVE_SIGNAL],
+				panel->currently_dragged_applet);
 		return TRUE;
 	}
 	return FALSE;
@@ -1762,9 +1787,6 @@ panel_widget_restore_state(PanelWidget *panel)
 	/*is this needed, probably ... in case we move the panel, this
 	  function should do a complete restore*/
 	panel_widget_set_size(panel,panel->size);
-	gtk_signal_emit(GTK_OBJECT(panel),
-			panel_widget_signals[RESTORE_STATE_SIGNAL],
-			panel->state);
 }
 
 #if 0

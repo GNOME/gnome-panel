@@ -101,6 +101,7 @@ void applet_add_callback(short id, char *callback_name, char *menuitem_text);
 
 /*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel);
+void orientation_change(AppletInfo *info, PanelWidget *panel);
 
 END_GNOME_DECLS
 

@@ -111,8 +111,8 @@ struct _PanelWidgetClass
 				PanelSnapped snapped);
 	void (* state_change) (PanelWidget *panel,
 			       PanelState state);
-	void (* restore_state) (PanelWidget *panel,
-				PanelState state);
+	void (* applet_move) (PanelWidget *panel,
+			      GtkWidget *applet);
 };
 
 guint		panel_widget_get_type		(void);

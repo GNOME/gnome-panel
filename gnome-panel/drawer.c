@@ -27,18 +27,14 @@ static char *gnome_folder = NULL;
 
 extern GlobalConfig global_config;
 
-static gint
-drawer_click(GtkWidget *widget, gpointer data)
+void
+reposition_drawer(Drawer *drawer)
 {
-	Drawer *drawer = data;
-	gint x,y;
-	gint wx, wy;
-
 	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
-		gtk_widget_hide(drawer->drawer);
-		PANEL_WIDGET(drawer->drawer)->state = PANEL_HIDDEN;
-	} else {
-		gdk_window_get_origin (widget->window, &wx, &wy);
+		gint x,y;
+		gint wx, wy;
+
+		gdk_window_get_origin (drawer->button->window, &wx, &wy);
 
 		switch(drawer->orient) {
 			case DRAWER_UP:
@@ -47,21 +43,34 @@ drawer_click(GtkWidget *widget, gpointer data)
 				break;
 			case DRAWER_DOWN:
 				x = wx;
-				y = wy + widget->allocation.height;
+				y = wy + drawer->button->allocation.height;
 				break;
 			case DRAWER_LEFT:
 				x = wx - drawer->drawer->allocation.width;
 				y = wy;
 				break;
 			case DRAWER_RIGHT:
-				x = wx + widget->allocation.width;
+				x = wx + drawer->button->allocation.width;
 				y = wy;
 				break;
 		}
 
 		gtk_widget_set_uposition(drawer->drawer,x,y);
-		gtk_widget_show(drawer->drawer);
+	}
+}
+
+static gint
+drawer_click(GtkWidget *widget, gpointer data)
+{
+	Drawer *drawer = data;
+
+	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
+		gtk_widget_hide(drawer->drawer);
+		PANEL_WIDGET(drawer->drawer)->state = PANEL_HIDDEN;
+	} else {
 		PANEL_WIDGET(drawer->drawer)->state = PANEL_SHOWN;
+		reposition_drawer(drawer);
+		gtk_widget_show(drawer->drawer);
 	}
 	return TRUE;
 }

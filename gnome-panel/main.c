@@ -157,14 +157,12 @@ panel_realize(GtkWidget *widget, gpointer data)
 	change_window_cursor(widget->window, GDK_ARROW);
 }
 
-static void
-orient_change_foreach(gpointer data, gpointer user_data)
+/*we call this recursively*/
+static void orient_change_foreach(gpointer data, gpointer user_data);
+
+void
+orientation_change(AppletInfo *info, PanelWidget *panel)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-	PanelWidget *panel = user_data;
-
-	if(!info) return;
-
 	if(info->type == APPLET_EXTERN) {
 		/*FIXME: call corba*/
 	} else if(info->type == APPLET_MENU) {
@@ -216,12 +214,25 @@ orient_change_foreach(gpointer data, gpointer user_data)
 				orient = DRAWER_LEFT;
 				break;
 		}
+		reposition_drawer(drawer);
 		set_drawer_applet_orient(drawer,orient);
 		panel_widget_foreach(PANEL_WIDGET(info->assoc),
 				     orient_change_foreach,
 				     (gpointer)info->assoc);
 	}
 }
+
+static void
+orient_change_foreach(gpointer data, gpointer user_data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	PanelWidget *panel = user_data;
+
+	if(!info) return;
+
+	orientation_change(info,panel);
+}
+
 
 static int
 panel_orient_change(GtkWidget *widget,
@@ -288,6 +299,33 @@ panel_state_change(GtkWidget *widget,
 				     (gpointer)widget);
 	}
 }
+
+static void
+applet_move_foreach(gpointer data, gpointer user_data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	PanelWidget *panel = user_data;
+
+	if(!info) return;
+
+	if(info->type == APPLET_DRAWER) {
+		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
+			Drawer *drawer = info->data;
+			reposition_drawer(drawer);
+			panel_widget_foreach(PANEL_WIDGET(info->assoc),
+					     state_restore_foreach,
+					     (gpointer)info->assoc);
+		}
+	}
+}
+
+static void
+panel_applet_move(GtkWidget *widget, GtkWidget *applet, gpointer data)
+{
+	applet_move_foreach(applet,widget);
+}
+
+
 
 static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
@@ -373,6 +411,10 @@ init_user_panels(void)
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "state_change",
 				   GTK_SIGNAL_FUNC(panel_state_change),
+				   NULL);
+		gtk_signal_connect(GTK_OBJECT(panel),
+				   "applet_move",
+				   GTK_SIGNAL_FUNC(panel_applet_move),
 				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",

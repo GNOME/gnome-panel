@@ -86,12 +86,6 @@ apply_global_config(void)
 	
 }
 
-/*FIXME this should be somehow done through signals and panel-widget*/
-static void
-applet_orientation_notify(GtkWidget *widget, gpointer data)
-{
-}
-
 static gint
 find_panel(PanelWidget *panel)
 {
@@ -674,7 +668,6 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 	gtk_tooltips_set_tip (panel_tooltips,applet,tooltip,NULL);
 }
 
-
 void
 register_toy(GtkWidget *applet,
 	     GtkWidget * assoc,
@@ -688,10 +681,14 @@ register_toy(GtkWidget *applet,
 {
 	GtkWidget     *eventbox;
 	AppletInfo    *info;
+	PanelWidget   *panelw;
 	
 	g_assert(applet != NULL);
 	g_assert(id != NULL);
 
+	panelw = PANEL_WIDGET(g_list_nth(panels,panel)->data);
+
+	g_assert(panelw != NULL);
 	/* We wrap the applet in a GtkEventBox so that we can capture events over it */
 
 	eventbox = gtk_event_box_new();
@@ -713,8 +710,7 @@ register_toy(GtkWidget *applet,
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	panel_widget_add(PANEL_WIDGET(g_list_nth(panels,panel)->data),
-			 eventbox, pos);
+	panel_widget_add(panelw, eventbox, pos);
 
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);
@@ -726,8 +722,7 @@ register_toy(GtkWidget *applet,
 			   GTK_SIGNAL_FUNC(applet_button_press),
 			   info);
 
-	/*notify the applet of the orientation of the panel!*/
-	/*applet_orientation_notify(eventbox,NULL);*/
+	orientation_change(info,panelw);
 
 	if(strcmp(id,"Menu")==0)
 		menu_count++;
