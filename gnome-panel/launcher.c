@@ -547,13 +547,11 @@ main(int argc, char **argv)
 	  but it will reserve a spot for us on the correct place, and
 	  this is the string that we identify as when we ask for the
 	  spot*/
-	if(argv[0][0] == '/')
-		myinvoc = g_copy_strings("#",argv[0],NULL);
-	else {
-		mypath = getcwd(NULL,0);
-		myinvoc = g_copy_strings("#",mypath,"/",argv[0],NULL);
-		free(mypath);
-	}
+	mypath = get_which_output(argv[0]);
+	if(!mypath)
+		return 1;
+	myinvoc = g_copy_strings("#",mypath,NULL);
+	free(mypath);
 
 	launcher_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
 

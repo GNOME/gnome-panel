@@ -6,15 +6,13 @@
 #include "panel.h"
 #include "mico-parse.h"
 
-#define APPLET_ID "Logout"
-
 GtkWidget *plug;
-int applet_id=-1;
+int applet_id = (-1);
 
 void
 change_orient(int id, int orient)
 {
-  PanelOrientType o = (PanelOrientType)orient;
+	PanelOrientType o = (PanelOrientType) orient;
 }
 
 void
@@ -32,98 +30,86 @@ quit_logout(gpointer data)
 void
 shutdown_applet(int id)
 {
-  gtk_widget_destroy(plug);
-  gtk_idle_add(quit_logout,NULL);
+	gtk_widget_destroy(plug);
+	gtk_idle_add(quit_logout, NULL);
 }
 
 static void
 logout(void)
 {
-  gnome_panel_quit();
+	gnome_panel_quit();
 }
 
 static GtkWidget *
-create_logout_widget (void)
+create_logout_widget(void)
 {
-  GtkWidget *button;
-  GtkWidget *pixmap;
-  char *pixmap_name;
-  
-  pixmap_name=gnome_unconditional_pixmap_file("gnome-term-night.xpm");
+	GtkWidget *button;
+	GtkWidget *pixmap;
+	char *pixmap_name;
 
-  if(!pixmap_name)
-    button = gtk_button_new_with_label (_("Log out"));
-  else {
-    button = gtk_button_new ();
-    pixmap = gnome_pixmap_new_from_file (pixmap_name);
-    g_free(pixmap_name);
-    gtk_container_add(GTK_CONTAINER(button),pixmap);
-    gtk_widget_show(pixmap);
-    gtk_widget_set_usize (button, pixmap->requisition.width,
-			  pixmap->requisition.height);
-  }
+	pixmap_name = gnome_unconditional_pixmap_file("gnome-term-night.xpm");
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked", GTK_SIGNAL_FUNC (logout), NULL);
+	if (!pixmap_name)
+		button = gtk_button_new_with_label(_("Log out"));
+	else {
+		button = gtk_button_new();
+		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		g_free(pixmap_name);
+		gtk_container_add(GTK_CONTAINER(button), pixmap);
+		gtk_widget_show(pixmap);
+		gtk_widget_set_usize(button, pixmap->requisition.width,
+				     pixmap->requisition.height);
+	}
 
-  return button;
+	gtk_signal_connect(GTK_OBJECT(button), "clicked", GTK_SIGNAL_FUNC(logout), NULL);
+
+	return button;
 }
 
 int
 main(int argc, char *argv[])
 {
-  GtkWidget *logout;
-  char *result;
-  char *cfgpath;
-  char *globcfgpath;
-  guint32 winid;
+	GtkWidget *logout;
+	char *result;
+	char *cfgpath;
+	char *globcfgpath;
+	guint32 winid;
+	char *myinvoc;
 
-  panel_corba_register_arguments ();
+	myinvoc = get_which_output(argv[0]);
+	if(!myinvoc)
+		return 1;
 
-  gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
+	panel_corba_register_arguments();
 
-  if(!gnome_panel_applet_init_corba ())
-    {
-      fprintf(stderr, "Could not communicate with the panel\n");
-      exit(1);
-    }
+	gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
+	if (!gnome_panel_applet_init_corba())
+		g_error(stderr, "Could not communicate with the panel\n");
 
-  {
-    char *mypath, *myinvoc;
+	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
+					  &cfgpath, &globcfgpath,
+					       &winid);
+	if (result)
+		g_error("Could not talk to the panel: %s\n", result);
 
-    if(argv[0][0] == '/')
-      myinvoc = g_strdup(argv[0]);
-    else
-      {
-	mypath = getcwd(NULL, 0);
-	myinvoc = g_copy_strings(mypath, "/", argv[0], NULL);
-	free(mypath);
-      }
-    
-    result = gnome_panel_applet_request_id (myinvoc, &applet_id,
-					    &cfgpath,&globcfgpath,
-					    &winid);
-    if(result)
-      g_error("Could not talk to the panel: %s\n", result);
+	g_free(myinvoc);
 
-    g_free(myinvoc);
-  }
+	g_free(cfgpath);	/* We should load up config data first... */
+	g_free(globcfgpath);
 
-  g_free(cfgpath); /* We should load up config data first... */
-  g_free(globcfgpath);
+	plug = gtk_plug_new(winid);
 
-  plug = gtk_plug_new(winid);
+	logout = create_logout_widget();
+	gtk_widget_show(logout);
+	gtk_container_add(GTK_CONTAINER(plug), logout);
+	gtk_widget_show(plug);
 
-  logout = create_logout_widget();
-  gtk_widget_show(logout);
-  gtk_container_add(GTK_CONTAINER(plug), logout);
-  gtk_widget_show(plug);
+	result = gnome_panel_applet_register(plug, applet_id);
+	if (result)
+		g_error("Could not talk to the Panel: %s\n", result);
 
-  result = gnome_panel_applet_register(plug, applet_id);
-  if (result)
-    g_error("Could not talk to the Panel: %s\n", result);
-  
-  applet_corba_gtk_main ("IDL:GNOME/Applet:1.0");
-  
-  return 0;
+	applet_corba_gtk_main("IDL:GNOME/Applet:1.0");
+
+	return 0;
 }
