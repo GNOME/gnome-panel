@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-21 20:57+0100\n"
-"PO-Revision-Date: 2005-01-21 20:57+0100\n"
+"POT-Creation-Date: 2005-01-26 15:10+0100\n"
+"PO-Revision-Date: 2005-01-26 15:13+0100\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,7 +60,7 @@ msgstr "A_cerca de"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "A_yuda"
@@ -200,7 +200,7 @@ msgstr "Formato personalizado"
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -250,7 +250,7 @@ msgstr "Usar _UTC"
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
 #: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -694,8 +694,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fábrica de miniaplicaciones de navegación de ventana"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
-#: applets/wncklet/window-menu.c:903
+#: applets/wncklet/window-menu.c:106 applets/wncklet/window-menu.c:312
 msgid "Window Selector"
 msgstr "Selector de ventanas"
 
@@ -874,24 +873,12 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Cuándo agrupar las ventanas"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:111
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "El selector de ventanas muestra una lista de todas las ventanas y le permite "
 "examinarlas."
-
-#: applets/wncklet/window-menu.c:340
-msgid "Unknown Window"
-msgstr "Ventana desconocida"
-
-#: applets/wncklet/window-menu.c:721
-msgid "No Windows Open"
-msgstr "No hay ventanas abiertas"
-
-#: applets/wncklet/window-menu.c:902
-msgid "Tool to switch between windows"
-msgstr "Herramienta para cambiar entre ventanas"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:922
@@ -1014,11 +1001,11 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "Shell del panel de GNOME"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 msgid "_Lock To Panel"
 msgstr "_Bloquear al panel"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_Mover"
 
@@ -1030,7 +1017,7 @@ msgstr "_Quitar del panel"
 msgid "???"
 msgstr "¿?"
 
-#: gnome-panel/applet.c:1208
+#: gnome-panel/applet.c:1212
 msgid "Can't find an empty spot"
 msgstr "No se pudo encontrar un espacio vacío"
 
@@ -1157,23 +1144,23 @@ msgstr "No se puede lanzar la entrada"
 msgid "Cannot load entry"
 msgstr "No se puede cargar la entrada"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "Añadir este lanzador al panel"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:835
 msgid "Entire menu"
 msgstr "Menú completo"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:845
 msgid "Add this as drawer to panel"
 msgstr "Añadir este cajón al panel"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:857
 msgid "Add this as menu to panel"
 msgstr "Añadir este menú al panel"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
+#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "Aplicaciones"
 
@@ -1712,17 +1699,30 @@ msgstr "Sitios en la red"
 msgid "Removable Media"
 msgstr "Soporte extraíble"
 
-#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
-msgid "Desktop"
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:597
+msgid "Desktop Folder|Desktop"
 msgstr "Escritorio"
 
-#: gnome-panel/panel-menu-bar.c:592
-msgid "Desktop directory"
-msgstr "Directorio del escritorio"
+#: gnome-panel/panel-menu-bar.c:598
+msgid "Open the desktop as a folder"
+msgstr "Abrir el escritorio como una carpeta"
 
-#: gnome-panel/panel-menu-bar.c:771
+#: gnome-panel/panel-menu-bar.c:777
 msgid "Places"
 msgstr "Lugares"
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:786
+msgid "Desktop Environment|Desktop"
+msgstr "Escritorio"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2080,15 +2080,13 @@ msgstr "¿Desea vaciar la lista de documentos recientes?"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Si vacía la lista de documentos recientes,  vaciará lo siguiente:\n"
 "\n"
-"• Todos los elementos del elemento de menú de Acciones → Documentos "
-"recientes.\n"
-"• Todos los elementos de la lista de documentos recientes en todas las "
-"aplicaciones."
+"• Todos los elementos del elemento de menú Lugares → Documentos recientes.\n"
+"• Todos los elementos de la lista de documentos recientes en todas las aplicaciones."
 
 #: gnome-panel/panel-recent.c:222
 msgid "Recent Documents"
@@ -2797,6 +2795,18 @@ msgstr "_Miniaplicación:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "Dir _prefs:"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Ventana desconocida"
+
+#~ msgid "No Windows Open"
+#~ msgstr "No hay ventanas abiertas"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Herramienta para cambiar entre ventanas"
+
+#~ msgid "Desktop"
+#~ msgstr "Escritorio"
 
 #~ msgid "Shut Down"
 #~ msgstr "Apagar"
