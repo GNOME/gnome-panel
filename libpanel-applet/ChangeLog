@@ -1,3 +1,16 @@
+2002-05-23  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* Makefile.am:
+	Add definition for PANELRC
+
+	* panel-applet.c
+	(panel_applet_factory_main):
+	Add call to gtk_rc_parse (PANELRC)
+	(panel_applet_expose): Use style's focus-line-width and
+	focus-padding when drawing focus indicator.
+	(panel_applet_focus): Allow PanelWidget to receive focus during focus
+	traversal if it has a tooltip (bug #81863)
+
 2002-05-23  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-shell.c: (impl_PanelAppletShell_popup_menu):

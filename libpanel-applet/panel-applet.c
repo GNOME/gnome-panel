@@ -33,6 +33,7 @@
 #include <gdk/gdkx.h>
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtkbindings.h>
+#include <gtk/gtktooltips.h>
 #include <bonobo/bonobo-ui-util.h>
 #include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-types.h>
@@ -489,15 +490,24 @@ panel_applet_expose (GtkWidget      *widget,
 
 	GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
 
-        if (GTK_WIDGET_HAS_FOCUS (widget))
+        if (GTK_WIDGET_HAS_FOCUS (widget)) {
+		gint focus_width, focus_pad;
+		gint x, y, width, height;
+
+		gtk_widget_style_get (widget,
+				      "focus-line-width", &focus_width,
+				      "focus-padding", &focus_pad,
+				      NULL);
+		x = widget->allocation.x;
+		y = widget->allocation.y;
+		width = widget->allocation.width - (focus_width + focus_pad);
+		height = widget->allocation.height - (focus_width + focus_pad);
+
 		gtk_paint_focus (widget->style, widget->window,
                                  GTK_WIDGET_STATE (widget),
                                  &event->area, widget, "panel_applet",
-                                 widget->allocation.x + 1,
-                                 widget->allocation.y + 1,
-                                 widget->allocation.width - 3,
-                                 widget->allocation.height - 3);
-
+                                 x, y, width, height);
+	}
 	return FALSE;
 }                
 
@@ -516,12 +526,24 @@ panel_applet_focus (GtkWidget        *widget,
 		return FALSE;
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
+	 if (!previous_focus_child && !GTK_WIDGET_HAS_FOCUS (widget)) {
+		GtkTooltipsData *tooltip;
+
+		tooltip = gtk_tooltips_data_get (widget);
+		if (tooltip) {
+			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
+			gtk_widget_grab_focus (widget);
+			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+			return TRUE;
+		}
+	}
 	ret = GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
 	if (!ret && !previous_focus_child) {
- 		if (!GTK_WIDGET_CAN_FOCUS (widget))  {
+ 		if (!GTK_WIDGET_HAS_FOCUS (widget))  {
 			/*
 			 * Applet does not have a widget which can focus so set
-			 * the focus on the applet.
+			 * the focus on the applet unless it aleready had focus
+			 * because it had a tooltip.
 			 */ 
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
@@ -1432,6 +1454,8 @@ panel_applet_factory_main (const gchar                 *iid,
 
 	g_return_val_if_fail (iid != NULL, 1);
 	g_return_val_if_fail (callback != NULL, 1);
+
+	gtk_rc_parse (PANELRC);
 
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
