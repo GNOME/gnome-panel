@@ -2243,8 +2243,8 @@ panel_widget_applet_button_release_event (GtkWidget      *widget,
 }
 
 static gboolean
-panel_widget_applet_motion_notify_event (GtkWidget      *widget,
-					 GdkEventMotion *event)
+panel_widget_applet_motion_notify_event (GtkWidget *widget,
+					 GdkEvent  *event)
 {
 	PanelWidget *panel;
 	

@@ -69,7 +69,8 @@ panel_binding_set_from_string (PanelBinding *binding,
 		return;
 	}
 
-	if (!egg_accelerator_parse_virtual (str, &binding->keyval, &modifiers)) {
+	if (!egg_accelerator_parse_virtual (str, &binding->keyval,
+					    NULL, &modifiers)) {
 		g_warning ("Enable to parse binding '%s'\n", str);
 		return;
 	}
