@@ -76,6 +76,8 @@ struct _PanelAppletPrivate {
 	gboolean                    moving_focus_out;
 	int                         focusable_child;
 	guint                       hierarchy_changed_id;
+
+	gboolean                    locked_down;
 };
 
 static GObjectClass *parent_class;
@@ -96,6 +98,7 @@ static guint panel_applet_signals [LAST_SIGNAL];
 #define PROPERTY_BACKGROUND "panel-applet-background"
 #define PROPERTY_FLAGS      "panel-applet-flags"
 #define PROPERTY_SIZE_HINTS "panel-applet-size-hints"
+#define PROPERTY_LOCKED_DOWN "panel-applet-locked-down"
 
 enum {
 	PROPERTY_ORIENT_IDX,
@@ -103,6 +106,7 @@ enum {
 	PROPERTY_BACKGROUND_IDX,
 	PROPERTY_FLAGS_IDX,
 	PROPERTY_SIZE_HINTS_IDX,
+	PROPERTY_LOCKED_DOWN_IDX,
 };
 
 static void
@@ -289,6 +293,14 @@ panel_applet_get_orient (PanelApplet *applet)
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), 0);
 
 	return applet->priv->orient;
+}
+
+gboolean
+panel_applet_get_locked_down (PanelApplet *applet)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), FALSE);
+
+	return applet->priv->locked_down;
 }
 
 void
@@ -916,6 +928,9 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 			seq->_buffer [i] = applet->priv->size_hints [i];
 	}
 		break;
+	case PROPERTY_LOCKED_DOWN_IDX:
+		BONOBO_ARG_SET_BOOLEAN (arg, applet->priv->locked_down);
+		break;
 	default:
 		g_assert_not_reached ();
 		break;
@@ -1016,6 +1031,9 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		applet->priv->size_hints_len = seq->_length;;
 	}
 		break;
+	case PROPERTY_LOCKED_DOWN_IDX:
+		applet->priv->locked_down = BONOBO_ARG_GET_BOOLEAN (arg);
+		break;
 	default:
 		g_assert_not_reached ();
 		break;
@@ -1070,6 +1088,14 @@ panel_applet_property_bag (PanelApplet *applet)
 				 NULL,
 				 _("Ranges that hint what sizes are acceptable for the applet"),
 				 Bonobo_PROPERTY_READABLE);
+
+	bonobo_property_bag_add (sack,
+				 PROPERTY_LOCKED_DOWN,
+				 PROPERTY_LOCKED_DOWN_IDX,
+				 BONOBO_ARG_BOOLEAN,
+				 NULL,
+				 _("The Applet's containing Panel is locked down"),
+				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	return sack;
 }
@@ -1196,6 +1222,16 @@ panel_applet_item_handler_get_object (BonoboItemHandler *handler,
 				bonobo_pbclient_set_short (
 					BONOBO_OBJREF (applet->priv->prop_sack), PROPERTY_SIZE,
 					GNOME_Vertigo_PANEL_XX_LARGE, NULL);
+		} else if (!strcmp (option->key, "locked_down")) {
+			gboolean val = FALSE;
+			if (option->value[0] == 'T' ||
+			    option->value[0] == 't' ||
+			    option->value[0] == 'Y' ||
+			    option->value[0] == 'y' ||
+			    atoi (option->value) != 0)
+				val = TRUE;
+			bonobo_pbclient_set_boolean (BONOBO_OBJREF (applet->priv->prop_sack),
+						     PROPERTY_LOCKED_DOWN, val, NULL);
 		}
 	}
 
