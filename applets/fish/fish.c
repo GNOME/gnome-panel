@@ -30,7 +30,10 @@
 /* macro to always pass a non-null string */
 #define sure_string(__x) ((__x)!=NULL?(__x):"")
 
-int fools_day=1, fools_month=3;
+static int fools_day        = 1;
+static int fools_month      = 3;
+static int fools_hour_start = 0;
+static int fools_hour_end   = 12; /* Apparently jokes should stop at midday */
 
 typedef struct {
 	GtkWidget         *applet;
@@ -452,19 +455,24 @@ fish_timeout(gpointer data)
 	time (&ourtime);
 	tm = localtime (&ourtime);
 
-	if(fish->april_fools) {
-		if(tm->tm_mon != fools_month || tm->tm_mday != fools_day) {
+	if (fish->april_fools) {
+		if (tm->tm_mon  != fools_month ||
+		    tm->tm_mday != fools_day   ||
+		    tm->tm_hour >= fools_hour_end) {
 			fish->april_fools = FALSE;
-			load_image_file(fish);
-			setup_size(fish);
-			fish_timeout(fish);
+			load_image_file (fish);
+			setup_size (fish);
+			fish_timeout (fish);
 		}
 	} else {
-		if(tm->tm_mon == fools_month && tm->tm_mday == fools_day) {
+		if (tm->tm_mon  == fools_month      &&
+		    tm->tm_mday == fools_day        &&
+		    tm->tm_hour >= fools_hour_start &&
+		    tm->tm_hour <= fools_hour_end) {
 			fish->april_fools = TRUE;
-			load_image_file(fish);
-			setup_size(fish);
-			fish_timeout(fish);
+			load_image_file (fish);
+			setup_size (fish);
+			fish_timeout (fish);
 		}
 	}
 
