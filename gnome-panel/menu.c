@@ -2896,7 +2896,7 @@ create_panel_root_menu (PanelWidget *panel)
 
 	menu = create_root_menu (NULL, TRUE, get_default_menu_flags (),
 				 BASEP_IS_WIDGET (panel->panel_parent),
-				 TRUE /* run_item */);
+				 TRUE /* extra_items */);
 
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
 
@@ -3466,7 +3466,7 @@ create_root_menu (GtkWidget *root_menu,
 		  gboolean fake_submenus,
 		  int flags,
 		  gboolean is_basep,
-		  gboolean run_item)
+		  gboolean extra_items)
 {
 	const DistributionInfo *distribution_info;
 	GtkWidget              *menu;
@@ -3569,7 +3569,7 @@ create_root_menu (GtkWidget *root_menu,
 				 FALSE /*launcher_add */);
 	}
 
-	if ( ! no_run_box && run_item) {
+	if ( ! no_run_box && extra_items) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
 					   _("Run Program..."));
@@ -3581,7 +3581,8 @@ create_root_menu (GtkWidget *root_menu,
 				      _("Run a command"), NULL);
 	}
 
-	if (panel_is_program_in_path  ("gnome-search-tool")) {
+	if (extra_items &&
+	    panel_is_program_in_path  ("gnome-search-tool")) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-searchtool.png",
 					   _("Search for Files..."));
@@ -3594,7 +3595,8 @@ create_root_menu (GtkWidget *root_menu,
 				  G_CALLBACK (menu_util_search), 0);
 	}
 
-	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
+	if (extra_items &&
+	    panel_is_program_in_path ("gnome-panel-screenshot")) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, "gnome-screenshot.png",
 					   _("Take a Screen Shot..."));
@@ -3701,7 +3703,7 @@ add_menu_widget (Menu *menu,
 		menu->menu = create_root_menu (NULL,
 					       fake_subs, flags,
 					       BASEP_IS_WIDGET (panel->panel_parent),
-					       TRUE /* run_item */);
+					       TRUE /* extra_items */);
 
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
 				      _("Main Menu"), NULL);
@@ -3730,7 +3732,7 @@ add_menu_widget (Menu *menu,
 			menu->menu = create_root_menu(NULL,
 				fake_subs, flags,
 				BASEP_IS_WIDGET (panel->panel_parent),
-				TRUE /* run_item */);
+				TRUE /* extra_items */);
 			gtk_tooltips_set_tip (panel_tooltips, menu->button,
 					      _("Main Menu"), NULL);
 		}

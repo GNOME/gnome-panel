@@ -1,3 +1,14 @@
+Thu May 16 03:25:53 2002  George Lebl <jirka@5z.com>
+
+	* multiscreen-stuff.c: when the screen is invalid, assume the zero
+	  (the first) screen, Fixes #70095.  It is probably the saner
+	  behaviour since that makes sure that at least SOME panel is
+	  visible.
+
+	* menu.[ch], foobar-widget.[ch]: s/run_item/extra_items/ and
+	  don't add the search and screenshot item on foobar like we
+	  do with the run item
+
 Wed May 15 20:11:31 2002  George Lebl <jirka@5z.com>
 
 	* gnome-run.c: remove some dead code, and support dnd on the entry

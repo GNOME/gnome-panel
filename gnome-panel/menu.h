@@ -102,7 +102,7 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 					 gboolean fake_submenus,
 					 int flags,
 					 gboolean is_basep,
-					 gboolean run_item);
+					 gboolean extra_items);
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);

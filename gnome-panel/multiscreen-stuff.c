@@ -131,48 +131,52 @@ int
 multiscreen_x (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0, 0);
 
-	if (screen < screens)
-		return rectangles[screen].x;
-	else
-		return gdk_screen_width () + 10;
+	/* If we don't know what screen we're talking about
+	 * assume screen 0 */
+	if (screen < 0 || screen >= screens)
+		screen = 0;
+
+	return rectangles[screen].x;
 }
 
 int
 multiscreen_y (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0, 0);
 
-	if (screen < screens)
-		return rectangles[screen].y;
-	else
-		return gdk_screen_height () + 10;
+	/* If we don't know what screen we're talking about
+	 * assume screen 0 */
+	if (screen < 0 || screen >= screens)
+		screen = 0;
+
+	return rectangles[screen].y;
 }
 
 int
 multiscreen_width (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0, 0);
 
-	if (screen < screens)
-		return rectangles[screen].width;
-	else
-		return gdk_screen_width ();
+	/* If we don't know what screen we're talking about
+	 * assume screen 0 */
+	if (screen < 0 || screen >= screens)
+		screen = 0;
+
+	return rectangles[screen].width;
 }
 
 int
 multiscreen_height (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
-	g_return_val_if_fail (screen >= 0, 0);
 
-	if (screen < screens)
-		return rectangles[screen].height;
-	else
-		return gdk_screen_height ();
+	/* If we don't know what screen we're talking about
+	 * assume screen 0 */
+	if (screen < 0 || screen >= screens)
+		screen = 0;
+
+	return rectangles[screen].height;
 }
 
 int

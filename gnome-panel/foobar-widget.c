@@ -323,7 +323,7 @@ programs_menu_to_display (GtkWidget *menu)
 			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
 
 		create_root_menu (menu, TRUE, FOOBAR_MENU_FLAGS,
-				  FALSE, FALSE /* run_item */);
+				  FALSE, FALSE /* extra_items */);
 	}
 }
 
@@ -747,7 +747,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 					 TRUE /* force_image */);
 
 	menu = create_root_menu (NULL, TRUE, FOOBAR_MENU_FLAGS,
-				 FALSE, FALSE /* run_item */);
+				 FALSE, FALSE /* extra_items */);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
 	g_signal_connect (G_OBJECT (menu), "show",
