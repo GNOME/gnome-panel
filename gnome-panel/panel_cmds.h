@@ -37,6 +37,7 @@ typedef struct {
 			char *id;
 			char *params;
 			int   pos;
+			int   panel;
 		} create_applet;
 		
 		/* Register toy parameters */
@@ -44,6 +45,7 @@ typedef struct {
 			GtkWidget *applet;
 			char      *id;
 			int        pos;
+			int        panel;
 			long       flags;
 		} register_toy;
 
@@ -54,6 +56,7 @@ typedef struct {
 			char      *iconclosed;
 			int        step_size;
 			int        pos;
+			int        panel;
 		} create_drawer;
 
 		/* Tooltip */

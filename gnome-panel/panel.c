@@ -22,17 +22,6 @@
 #define APPLET_CMD_FUNC "panel_applet_cmd_func"
 #define APPLET_FLAGS    "panel_applet_flags"
 
-#define DEFAULT_STEP_SIZE 40
-#define DEFAULT_DELAY     0
-#define DEFAULT_HEIGHT    DEFAULT_APPLET_HEIGHT
-
-/* amount of time in ms. to wait before lowering panel */
-#define DEFAULT_MINIMIZE_DELAY 300
-
-/* number of pixels it'll stick up from the bottom when using
- * PANEL_GETS_HIDDEN */
-#define DEFAULT_MINIMIZED_SIZE 6
-
 static GtkWidget *applet_menu;
 static GtkWidget *applet_menu_remove_item;
 static GtkWidget *applet_menu_prop_separator;
@@ -40,31 +29,21 @@ static GtkWidget *applet_menu_prop_item;
 
 static GtkWidget *panel_menu;
 
+/*FIXME: get rid of this, menu will be part of panel not an applet*/
 static menu_count=0; /*how many "menu" applets we have ....*/
 			/*FIXME: this should only count "main" menus!*/
 
-PanelWidget *the_panel;
+extern GList *panels;
+extern GList *applets;
 
-static GtkTooltips *panel_tooltips;
+extern GtkTooltips *panel_tooltips;
+
+/*FIXME: a hack for current code to work*/
+#define the_panel (PANEL_WIDGET(panels->data))
+
 
 /* some prototypes */
 static void properties(void);
-
-static void
-change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
-{
-	GdkCursor *cursor;
-
-	cursor = gdk_cursor_new(cursor_type);
-	gdk_window_set_cursor(window, cursor);
-	gdk_cursor_destroy(cursor);
-}
-
-static void
-panel_realize(GtkWidget *widget, gpointer data)
-{
-	change_window_cursor(widget->window, GDK_ARROW);
-}
 
 
 static AppletCmdFunc
@@ -315,7 +294,7 @@ panel_quit(void)
 }
 
 static void
-create_applet(char *id, char *params, int pos)
+create_applet(char *id, char *params, int pos, int panel)
 {
 	AppletCommand cmd;
 	AppletCmdFunc cmd_func;
@@ -508,7 +487,8 @@ panel_log_out_callback(GtkWidget *widget, gpointer data)
 static void
 add_main_menu(GtkWidget *widget, gpointer data)
 {
-	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION);
+	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
+	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
 static void
@@ -575,63 +555,6 @@ get_applet_types(void)
 	g_hash_table_foreach(applet_files_ht, get_applet_type, &list);
 	return list;
 }
-
-void
-panel_init(void)
-{
-	GtkWidget *pixmap;
-	char *pixmap_name;
-	char buf[256];
-	int i;
-
-	/*FIXME: do configuration! also get RID of the_panel!!!!!!!!!!*/
-	the_panel = PANEL_WIDGET(panel_widget_new(0,
-				     PANEL_HORIZONTAL,
-				     PANEL_BOTTOM,
-				     PANEL_EXPLICIT_HIDE,
-				     PANEL_SHOWN,
-				     5,
-				     5,
-				     100));
-
-
-	/*FIXME: (see above)
-	sprintf(buf,"/panel/Config/position=%d",PANEL_POS_BOTTOM);
-	the_panel->panel->pos=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/mode=%d",PANEL_STAYS_PUT);
-	the_panel->mode=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/step_size=%d",DEFAULT_STEP_SIZE);
-	the_panel->panel->step_size=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/delay=%d",DEFAULT_DELAY);
-	the_panel->delay=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/minimize_delay=%d",DEFAULT_MINIMIZE_DELAY);
-	the_panel->minimize_delay=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/minimized_size=%d",DEFAULT_MINIMIZED_SIZE);
-	the_panel->minimized_size=gnome_config_get_int(buf);
-	the_panel->tooltips_enabled=gnome_config_get_bool(
-		"/panel/Config/tooltips_enabled=true");
-	*/
-
-	gtk_signal_connect(GTK_OBJECT(the_panel),
-			   "button_press_event",
-			   GTK_SIGNAL_FUNC(panel_button_press),
-			   NULL);
-	gtk_signal_connect_after(GTK_OBJECT(the_panel), "realize",
-				 GTK_SIGNAL_FUNC(panel_realize),
-				 NULL);
-
-	create_applet_menu();
-	create_panel_menu();
-
-	/*set up the tooltips*/
-	panel_tooltips=gtk_tooltips_new();
-	/*FIXME!*/
-	if(1/*the_panel->tooltips_enabled*/)
-		gtk_tooltips_enable(panel_tooltips);
-	else
-		gtk_tooltips_disable(panel_tooltips);
-}
-
 
 static void
 init_applet_module(gpointer key, gpointer value, gpointer user_data)
@@ -700,7 +623,7 @@ register_toy(GtkWidget *applet, char *id, int pos, long flags)
 
 static void
 create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
-	int pos)
+	int pos, int drawer)
 {
 	/*FIXME: add drawers*/
 	return;
@@ -731,7 +654,8 @@ panel_command(PanelCommand *cmd)
 		case PANEL_CMD_CREATE_APPLET:
 			create_applet(cmd->params.create_applet.id,
 				      cmd->params.create_applet.params,
-				      cmd->params.create_applet.pos);
+				      cmd->params.create_applet.pos,
+				      cmd->params.create_applet.panel);
 			break;
 			
 		case PANEL_CMD_REGISTER_TOY:
@@ -746,7 +670,8 @@ panel_command(PanelCommand *cmd)
 				      cmd->params.create_drawer.iconopen,
 				      cmd->params.create_drawer.iconclosed,
 				      cmd->params.create_drawer.step_size,
-				      cmd->params.create_drawer.pos);
+				      cmd->params.create_drawer.pos,
+				      cmd->params.create_drawer.panel);
 			break;
 
 		case PANEL_CMD_SET_TOOLTIP:

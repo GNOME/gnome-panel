@@ -7,7 +7,16 @@
 
 BEGIN_GNOME_DECLS
 
-extern PanelWidget *the_panel;
+typedef struct _PanelConfig PanelConfig;
+struct _PanelConfig {
+	PanelOrientation orient;
+	PanelSnapped snapped;
+	PanelMode mode;
+	PanelState state;
+	gint step_size;
+	gint minimized_size;
+	gint minimize_delay;
+};
 
 
 void panel_init(void);

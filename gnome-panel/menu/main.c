@@ -127,7 +127,8 @@ add_to_panel (char *applet, char *arg)
 	cmd.cmd = PANEL_CMD_CREATE_APPLET;
 	cmd.params.create_applet.id     = applet;
 	cmd.params.create_applet.params = arg;
-	cmd.params.create_applet.pos   = PANEL_UNKNOWN_APPLET_POSITION;
+	cmd.params.create_applet.pos    = PANEL_UNKNOWN_APPLET_POSITION;
+	cmd.params.create_applet.panel  = 1;
 
 	(*panel_cmd_func) (&cmd);
 }
@@ -157,6 +158,7 @@ add_drawer (GtkWidget *widget, void *data)
 	cmd.params.create_drawer.iconclosed = "???";
 	cmd.params.create_drawer.step_size  = PANEL_UNKNOWN_STEP_SIZE;
 	cmd.params.create_drawer.pos        = PANEL_UNKNOWN_APPLET_POSITION;
+	cmd.params.create_drawer.panel      = 1;
 
 	(*panel_cmd_func) (&cmd);
 }

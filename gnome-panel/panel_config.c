@@ -17,15 +17,7 @@
 
 /* used to temporarily store config values until the 'Apply'
  * button is pressed. */
-struct {
-	PanelOrientation orient;
-	PanelSnapped snapped;
-	PanelMode mode;
-	PanelState state;
-	gint step_size;
-	gint minimized_size;
-	gint minimize_delay;
-} panel_config_struct;
+PanelConfig panel_config_struct;
 
 
 GtkWidget *config_window;
