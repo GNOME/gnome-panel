@@ -368,7 +368,7 @@ create_fish_widget(GtkWidget *window)
 }
 
 /*the most important dialog in the whole application*/
-void
+static void
 about_cb (AppletWidget *widget, gpointer data)
 {
 	GtkWidget *about;
@@ -415,53 +415,86 @@ applet_save_session(GtkWidget *w,
 	return FALSE;
 }
 
+static CORBA_Object
+wanda_activator(PortableServer_POA poa,
+		const char *goad_id,
+		const char **params,
+		gpointer *impl_ptr,
+		CORBA_Environment *ev)
+{
+  GtkWidget *fish, *applet;
+  
+  applet = applet_widget_new(goad_id);
+
+  load_properties(APPLET_WIDGET(applet)->privcfgpath);
+
+  /*gtk_widget_realize(applet);*/
+  fish = create_fish_widget(applet);
+  gtk_widget_show(fish);
+  applet_widget_add(APPLET_WIDGET(applet), fish);
+  gtk_widget_show(applet);
+
+  gtk_signal_connect(GTK_OBJECT(applet),"save_session",
+		     GTK_SIGNAL_FUNC(applet_save_session),
+		     NULL);
+
+  applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					"about",
+					GNOME_STOCK_MENU_ABOUT,
+					_("About..."),
+					about_cb,
+					NULL);
 
 
+  applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					"properties",
+					GNOME_STOCK_MENU_PROP,
+					_("Properties..."),
+					properties_dialog,
+					NULL);
+
+  return applet_widget_corba_activate(applet, poa, goad_id, params,
+				      impl_ptr, ev);
+}
+
+static void
+wanda_deactivator(PortableServer_POA poa,
+		  const char *goad_id,
+		  gpointer impl_ptr,
+		  CORBA_Environment *ev)
+{
+  applet_widget_corba_deactivate(poa, goad_id, impl_ptr, ev);
+}
+
+#if 1 || defined(SHLIB_APPLETS)
+static const char *repo_id[]={"IDL:GNOME/Applet:1.0", NULL};
+static GnomePluginObject applets_list[] = {
+  {repo_id, "fish_applet", NULL, "Wanda the Magnificient",
+   &wanda_activator, &wanda_deactivator},
+  {NULL}
+};
+
+GnomePlugin GNOME_Plugin_info = {
+  applets_list, NULL
+};
+#else
 int
 main(int argc, char *argv[])
 {
-	GtkWidget *fish;
+        gpointer wanda_impl;
 
 	/* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	applet_widget_init_defaults("fish_applet", VERSION, argc, argv, NULL, 0,
-				    NULL);
+	applet_widget_init("fish_applet", VERSION, argc, argv, NULL, 0, NULL);
 
-	applet = applet_widget_new("fish_applet");
-	if (!applet)
-		g_error(_("Can't create applet!\n"));
-
-	load_properties(APPLET_WIDGET(applet)->privcfgpath);
-
-	gtk_widget_realize(applet);
-	fish = create_fish_widget(applet);
-	gtk_widget_show(fish);
-
-	applet_widget_add(APPLET_WIDGET(applet), fish);
-	gtk_widget_show(applet);
-	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
-			   GTK_SIGNAL_FUNC(applet_save_session),
-			   NULL);
-
-	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
-					      "about",
-					      GNOME_STOCK_MENU_ABOUT,
-					      _("About..."),
-					      about_cb,
-					      NULL);
-
-
-	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
-					      "properties",
-					      GNOME_STOCK_MENU_PROP,
-					      _("Properties..."),
-					      properties_dialog,
-					      NULL);
-
+	APPLET_ACTIVATE(wanda_activator, "fish_applet", &wanda_impl);
 	
 	applet_widget_gtk_main();
 
+	APPLET_DEACTIVATE(wanda_deactivator, "fish_applet", wanda_impl);
+
 	return 0;
 }
+#endif
