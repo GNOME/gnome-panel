@@ -29,7 +29,6 @@
 #include "clock.h"
 #include "pager.h"
 #include "tasklist.h"
-//#include "printer.h"
 
 static gboolean
 genutil_factory (PanelApplet *applet,
@@ -37,8 +36,6 @@ genutil_factory (PanelApplet *applet,
 		 gpointer     data)
 {
 	gboolean retval = FALSE;
-
-	g_print ("genutil_factory: %s\n", iid);
 
 	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
 		retval = fill_clock_applet(applet);
