@@ -164,54 +164,6 @@ apply_global_config(void)
 	}
 }
 
-/*shouldn't this be in gnome-dentry?? :)*/
-static void
-gnome_desktop_entry_save_no_sync (GnomeDesktopEntry *dentry)
-{
-	char *prefix;
-	
-	g_assert (dentry != NULL);
-	g_assert (dentry->location != NULL);
-
-	prefix = g_strconcat ("=", dentry->location, "=/Desktop Entry", NULL);
-
-	gnome_config_clean_section (prefix);
-
-	prefix = g_strconcat (prefix, "/", NULL);
-	gnome_config_push_prefix (prefix);
-	g_free (prefix);
-
-	if (dentry->name)
-		gnome_config_set_translated_string ("Name", dentry->name);
-
-	if (dentry->comment)
-		gnome_config_set_translated_string ("Comment", dentry->comment);
-
-	if (dentry->exec)
-		gnome_config_set_vector ("Exec", dentry->exec_length,
-					 (const char * const *) dentry->exec);
-
-	if (dentry->tryexec)
-		gnome_config_set_string ("TryExec", dentry->tryexec);
-
-	if (dentry->icon)
-		gnome_config_set_string ("Icon", dentry->icon);
-
-	if (dentry->geometry)
-		gnome_config_set_string ("Geometry", dentry->geometry);
-	
-	if (dentry->docpath)
-		gnome_config_set_string ("DocPath", dentry->docpath);
-
-	gnome_config_set_bool ("Terminal", dentry->terminal);
-	gnome_config_set_bool ("MultipleArgs", dentry->multiple_args);
-	
-	if (dentry->type)
-		gnome_config_set_string ("Type", dentry->type);
-
-	gnome_config_pop_prefix ();
-}
-
 static int
 send_applet_session_save (AppletInfo *info,
 			  CORBA_Object obj,
@@ -359,7 +311,7 @@ save_applet_configuration(AppletInfo *info)
 					 info->applet_id+1);
 			g_free(launcher->dentry->location);
 			launcher->dentry->location = g_strdup(buf->str);
-			gnome_desktop_entry_save_no_sync(launcher->dentry);
+			gnome_desktop_entry_save(launcher->dentry);
 
 			gnome_config_set_string("id", LAUNCHER_ID);
 			gnome_config_set_string("parameters", buf->str);

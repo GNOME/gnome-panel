@@ -89,6 +89,8 @@ void		basep_widget_get_position	(BasePWidget *basep,
 						 int w,
 						 int h);
 
+#define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
+
 END_GNOME_DECLS
 
 #endif /* __BASEP_WIDGET_H__ */

@@ -99,10 +99,7 @@ corner_widget_realize(GtkWidget *w)
 
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
-		gnome_win_hints_set_hints(w,
-					  WIN_HINTS_SKIP_FOCUS |
-					  WIN_HINTS_SKIP_WINLIST |
-					  WIN_HINTS_SKIP_TASKBAR |
+		gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS |
 					  WIN_HINTS_DO_NOT_COVER);
 		gnome_win_hints_set_state(w,
 					  WIN_STATE_STICKY |
@@ -372,6 +369,9 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 						pw_explicit_step);
 	}
 
+	gnome_win_hints_set_hints(GTK_WIDGET(corner),
+				  GNOME_PANEL_HINTS |
+				  WIN_HINTS_DO_NOT_COVER);
 	gnome_win_hints_set_layer(GTK_WIDGET(corner),
 				  global_config.keep_bottom?
 				  WIN_LAYER_BELOW:
@@ -395,6 +395,8 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 
 	gnome_triggers_vdo("", NULL, supinfo);
 	
+	gnome_win_hints_set_hints(GTK_WIDGET(corner),
+				  GNOME_PANEL_HINTS);
 	gnome_win_hints_set_layer(GTK_WIDGET(corner),
 				  global_config.keep_bottom?
 				  WIN_LAYER_ONTOP:

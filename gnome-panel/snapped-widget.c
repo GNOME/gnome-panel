@@ -108,10 +108,13 @@ snapped_widget_realize(GtkWidget *w)
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
 		if(snapped->mode == SNAPPED_AUTO_HIDE) {
+			gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS);
 			gnome_win_hints_set_layer(w, global_config.keep_bottom?
 						  WIN_LAYER_ONTOP:
 						  WIN_LAYER_ABOVE_DOCK);
 		} else {
+			gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS |
+						  WIN_HINTS_DO_NOT_COVER);
 			gnome_win_hints_set_layer(w, global_config.keep_bottom?
 						  WIN_LAYER_BELOW:
 						  WIN_LAYER_DOCK);
@@ -531,11 +534,16 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 	}
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE) {
+		gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+					  GNOME_PANEL_HINTS);
 		gnome_win_hints_set_layer(GTK_WIDGET(snapped),
 					  global_config.keep_bottom?
 					  WIN_LAYER_ONTOP:
 					  WIN_LAYER_ABOVE_DOCK);
 	} else {
+		gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+					  GNOME_PANEL_HINTS |
+					  WIN_HINTS_DO_NOT_COVER);
 		gnome_win_hints_set_layer(GTK_WIDGET(snapped),
 					  global_config.keep_bottom?
 					  WIN_LAYER_BELOW:
@@ -564,6 +572,8 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 		snapped->leave_notify_timer_tag = 0;
 	}
 
+	gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+				  GNOME_PANEL_HINTS);
 	gnome_win_hints_set_layer(GTK_WIDGET(snapped),
 				  global_config.keep_bottom?
 				  WIN_LAYER_ONTOP:
@@ -848,11 +858,16 @@ snapped_widget_change_params(SnappedWidget *snapped,
 		if (gnome_win_hints_wm_exists()) {
 			GtkWidget *wid = GTK_WIDGET(snapped);
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
+				gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+							  GNOME_PANEL_HINTS);
 				gnome_win_hints_set_layer(wid,
 							  global_config.keep_bottom?
 							  WIN_LAYER_ONTOP:
 							  WIN_LAYER_ABOVE_DOCK);
 			} else {
+				gnome_win_hints_set_hints(GTK_WIDGET(snapped),
+							  GNOME_PANEL_HINTS |
+							  WIN_HINTS_DO_NOT_COVER);
 				gnome_win_hints_set_layer(wid,
 							  global_config.keep_bottom?
 							  WIN_LAYER_BELOW:
