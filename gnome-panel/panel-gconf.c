@@ -240,6 +240,7 @@ panel_gconf_clean_dir (GConfClient *client,
 	GSList *subdirs;
 	GSList *entries;
 	GSList *l;
+	gboolean all_keys_deleted = TRUE;
 
 	subdirs = gconf_client_all_dirs (client, dir, NULL);
 
@@ -258,14 +259,19 @@ panel_gconf_clean_dir (GConfClient *client,
 
 		key = gconf_entry_get_key (entry);
 
-		gconf_engine_associate_schema (client->engine, key, NULL, NULL);
-		gconf_client_unset (client, key, NULL);
+		if (gconf_client_key_is_writable (client, key, NULL)) {
+			gconf_engine_associate_schema (client->engine, key, NULL, NULL);
+			gconf_client_unset (client, key, NULL);
+		} else {
+			all_keys_deleted = FALSE;
+		}
 		gconf_entry_free (entry);
 	}
     		
 	g_slist_free (entries);
 
-	gconf_client_unset (client, dir, NULL);
+	if (all_keys_deleted)
+		gconf_client_unset (client, dir, NULL);
 }
 
 void
