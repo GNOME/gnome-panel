@@ -513,7 +513,7 @@ load_applet(char *id_str, char *path, char *params, int width, int height,
 
 		if(launcher) {
 			register_toy(launcher->button,NULL,launcher,
-				     LAUNCHER_ID,NULL, params,pos,panel,
+				     LAUNCHER_ID,NULL,NULL,pos,panel,
 				     NULL,APPLET_LAUNCHER);
 			
 			gtk_tooltips_set_tip (panel_tooltips,

@@ -18,34 +18,13 @@
 #include "panel.h"
 #include "panel-util.h"
 
+#include "launcher.h"
+
 #define LAUNCHER_PROPERTIES "launcher_properties"
 
 extern GtkTooltips *panel_tooltips;
 
 static char *default_app_pixmap=NULL;
-
-typedef struct {
-	int                applet_id;
-	GtkWidget         *button;
-	int               signal_click_tag;
-	GnomeDesktopEntry *dentry;
-} Launcher;
-
-typedef struct {
-	GtkWidget *dialog;
-
-	GtkWidget *name_entry;
-	GtkWidget *comment_entry;
-	GtkWidget *execute_entry;
-	GtkWidget *icon_entry;
-	GtkWidget *documentation_entry;
-	GtkWidget *terminal_toggle;
-
-	/*information about this launcher*/
-	Launcher *launcher;
-
-	GnomeDesktopEntry *dentry;
-} Properties;
 
 static void
 launch (GtkWidget *widget, void *data)
@@ -90,6 +69,7 @@ create_launcher (char *parameters)
 	launcher = g_new(Launcher,1);
 
 	launcher->button = gtk_button_new ();
+	launcher->dedit = NULL;
 	pixmap = NULL;
 	if(dentry->icon)
 		pixmap = gnome_pixmap_new_from_file (dentry->icon);
@@ -97,7 +77,7 @@ create_launcher (char *parameters)
 		pixmap = NULL;
 	if (!pixmap) {
 		if (default_app_pixmap)
-			pixmap = gnome_pixmap_new_from_file (default_app_pixmap);
+			pixmap = gnome_pixmap_new_from_file(default_app_pixmap);
 		else
 			pixmap = gtk_label_new (_("App"));
 	}
@@ -129,151 +109,71 @@ create_launcher (char *parameters)
 }
 
 static void
-check_dentry_save(GnomeDesktopEntry *dentry)
-{
-	FILE *file;
-	char *pruned;
-	char *new_name;
-	char *appsdir;
-
-	file = fopen(dentry->location, "w");
-	if (file) {
-		fclose(file);
-		return;
-	}
-
-	pruned = strrchr(dentry->location, '/');
-	if (pruned)
-		pruned++; /* skip over slash */
-	else
-		pruned = dentry->location;
-
-	appsdir = gnome_util_home_file ("apps");
-	mkdir (appsdir, 0755);
-
-	new_name = g_concat_dir_and_file(appsdir, pruned);
-	g_free(dentry->location);
-	dentry->location = new_name;
-}
-
-#define free_and_nullify(x) { g_free(x); x = NULL; }
-
-static void
 properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
-	Properties        *prop;
-	GnomeDesktopEntry *dentry;
-	GtkWidget         *pixmap;
-	int i, n_args;
-	char **exec;
-
+	Launcher *launcher = data;
+	GtkWidget *pixmap;
+	char *icon;
+	
 	if (page != -1)
 		return;
 	
-	prop = data;
-	dentry = prop->dentry;
+	gnome_desktop_entry_free(launcher->dentry);
+	launcher->dentry =
+		gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(launcher->dedit));
 
-	free_and_nullify(dentry->name);
-	free_and_nullify(dentry->comment);
-	gnome_string_array_free (dentry->exec);
-	dentry->exec = NULL;
-	free_and_nullify(dentry->exec);
-	free_and_nullify(dentry->tryexec);
-	free_and_nullify(dentry->icon);
-	free_and_nullify(dentry->docpath);
-	free_and_nullify(dentry->type);
-
-	dentry->name      = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->name_entry)));
-	dentry->comment   = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->comment_entry)));
-
-	/* Handle exec specially: split at spaces.  Multiple spaces
-	   must be compacted, hence the weirdness.  This
-	   implementation wastes a little memory in some cases.  Big
-	   deal.  */
-	exec = gnome_string_split (gtk_entry_get_text(GTK_ENTRY(prop->execute_entry)),
-				   " ", -1);
-	for (n_args = i = 0; exec[i]; ++i) {
-		if (! exec[i][0]) {
-			/* Empty item means multiple spaces found.  Remove
-			   it.  */
-			g_free (exec[i]);
-		} else {
-			exec[n_args++] = exec[i];
-		}
-	}
-	exec[n_args] = NULL;
-	dentry->exec_length = n_args;
-	dentry->exec = exec;
-
-	dentry->icon      = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->icon_entry)));
-	dentry->docpath   = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->documentation_entry)));
-	dentry->type      = g_strdup("Application"); /* FIXME: should handle more cases */
-	dentry->terminal  = GTK_TOGGLE_BUTTON(prop->terminal_toggle)->active;
-
-	check_dentry_save(dentry);
-	gnome_desktop_entry_save(dentry);
-
-	dentry=gnome_desktop_entry_load(dentry->location);
-
-	gnome_desktop_entry_free(prop->dentry);
-	prop->dentry = dentry;
-
-	gtk_tooltips_set_tip (panel_tooltips,prop->launcher->button->parent,
-			      dentry->comment,NULL);
+	gtk_tooltips_set_tip (panel_tooltips,launcher->button->parent,
+			      launcher->dentry->comment,NULL);
 	
-	pixmap=GTK_BUTTON(prop->launcher->button)->child;
+	pixmap=GTK_BUTTON(launcher->button)->child;
 
-	gtk_container_remove(GTK_CONTAINER(prop->launcher->button),pixmap);
+	gtk_container_remove(GTK_CONTAINER(launcher->button),pixmap);
 
-	pixmap = gnome_pixmap_new_from_file (dentry->icon);
+	icon = launcher->dentry->icon;
+	if (icon && *icon) {
+		/* Sigh, now we need to make them local to the gnome install */
+		if (*icon != '/') {
+			launcher->dentry->icon = gnome_pixmap_file (icon);
+			g_free (icon);
+		}
+		pixmap = gnome_pixmap_new_from_file (launcher->dentry->icon);
+	}
 	if (!pixmap) {
 		if (default_app_pixmap)
 			pixmap = gnome_pixmap_new_from_file (default_app_pixmap);
 		else
 			pixmap = gtk_label_new (_("App"));
 	}
-	gtk_container_add (GTK_CONTAINER(prop->launcher->button), pixmap);
+	gtk_container_add (GTK_CONTAINER(launcher->button), pixmap);
 	gtk_widget_show(pixmap);
 
 	/*FIXME: a bad hack to keep it all 48x48*/
-	gtk_widget_set_usize (prop->launcher->button, 48, 48);
+	gtk_widget_set_usize (launcher->button, 48, 48);
 
-	/*gtk_widget_set_usize (prop->launcher->button, pixmap->requisition.width,
+	/*gtk_widget_set_usize (launcher->button, pixmap->requisition.width,
 			      pixmap->requisition.height);*/
 
-	gtk_signal_disconnect(GTK_OBJECT(prop->launcher->button),
-			      prop->launcher->signal_click_tag);
+	gtk_signal_disconnect(GTK_OBJECT(launcher->button),
+			      launcher->signal_click_tag);
 
-	prop->launcher->signal_click_tag = gtk_signal_connect (GTK_OBJECT(prop->launcher->button), "clicked",
-							       (GtkSignalFunc) launch,
-							       dentry);
-
-	/*replace the dentry in launcher structure with the new one */
-	gnome_desktop_entry_free(prop->launcher->dentry);
-
-	prop->launcher->dentry=dentry;
+	launcher->signal_click_tag =
+		gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
+				    GTK_SIGNAL_FUNC(launch),
+				    launcher->dentry);
 }
-
-#undef free_and_nullify
 
 static int
 properties_close_callback(GtkWidget *widget, gpointer data)
 {
-	Properties *prop = data;
-	gtk_object_set_data(GTK_OBJECT(prop->launcher->button),
+	Launcher *launcher = data;
+	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,NULL);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->name_entry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->comment_entry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->execute_entry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->icon_entry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->documentation_entry),widget);
-	gtk_signal_disconnect_by_data(GTK_OBJECT(prop->terminal_toggle),widget);
-	g_free (prop);
+	launcher->dedit = NULL;
 	return FALSE;
 }
 
 static void
-notify_entry_change (GtkWidget *widget, void *data)
+notify_change (GtkWidget *widget, void *data)
 {
 	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
 
@@ -283,72 +183,44 @@ notify_entry_change (GtkWidget *widget, void *data)
 static GtkWidget *
 create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 {
-	Properties *prop;
 	GtkWidget  *dialog;
-	GtkWidget  *table;
-	GtkWidget  *toggle;
-	char *exec;
+	GnomePropertyBoxItem *item;
 
-	prop = g_new(Properties, 1);
-	prop->dentry = dentry;
-
-	prop->launcher = launcher;
-
-	prop->dialog = dialog = gnome_property_box_new();
+	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
-
-	table = gtk_table_new(6, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 4);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
-	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
-
-	prop->name_entry          = create_text_entry(table,
-						      "launcher_name", 0,
-						      _("Name"), dentry->name,
-						      dialog);
-	prop->comment_entry       = create_text_entry(table,
-						      "launcher_comment", 1,
-						      _("Comment"),
-						      dentry->comment, dialog);
-	exec = gnome_string_joinv (" ", dentry->exec);
-	prop->execute_entry       = create_file_entry(table,
-						      "execute", 2,
-						      _("Execute"), exec,
-						      dialog);
-	g_free (exec);
-	prop->icon_entry          = create_file_entry(table,
-						      "icon", 3,
-						      _("Icon"), dentry->icon,
-						      dialog);
-	prop->documentation_entry = create_text_entry(table,
-						      "launcher_document", 4,
-						      _("Documentation"),
-						      dentry->docpath, dialog);
-
-	prop->terminal_toggle = toggle =
-		gtk_check_button_new_with_label(_("Run inside terminal"));
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
-				    dentry->terminal ? TRUE : FALSE);
-	gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-			    GTK_SIGNAL_FUNC (notify_entry_change), dialog);
-				    
-	gtk_table_attach(GTK_TABLE(table), toggle,
-			 0, 2, 5, 6,
-			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
-			 GTK_FILL | GTK_SHRINK,
-			 0, 0);
-
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (prop->dialog),
-					table, gtk_label_new (_("Item properties")));
 	
+	launcher->dedit =
+		gnome_dentry_edit_new(
+		      GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+
+	/*FIXME:!!! ugly hack!!! there needs to be a clean way of adding
+	  GnomeDEntryEdit to GnomePropertyBox */
+	item = g_new (GnomePropertyBoxItem, 1);
+	item->dirty = FALSE;
+	GNOME_PROPERTY_BOX(dialog)->items =
+		g_list_append (GNOME_PROPERTY_BOX(dialog)->items, item);
+	item = g_new (GnomePropertyBoxItem, 1);
+	item->dirty = FALSE;
+	GNOME_PROPERTY_BOX(dialog)->items =
+		g_list_append (GNOME_PROPERTY_BOX(dialog)->items, item);
+	
+
+	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
+				     launcher->dentry);
+	
+	gtk_signal_connect(GTK_OBJECT(launcher->dedit), "changed",
+			   GTK_SIGNAL_FUNC(notify_change),
+			   dialog);
+
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) properties_close_callback,
-			   prop);
+			   GTK_SIGNAL_FUNC(properties_close_callback),
+			   launcher);
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
-			   GTK_SIGNAL_FUNC(properties_apply_callback), prop);
+			   GTK_SIGNAL_FUNC(properties_apply_callback),
+			   launcher);
 
 	return dialog;
 }
@@ -364,16 +236,6 @@ launcher_properties(Launcher *launcher)
 				     LAUNCHER_PROPERTIES);
 	if(dialog) {
 		gdk_window_raise(dialog->window);
-		return;
-	}
-
-	path = launcher->dentry->location;
-
-	dentry = gnome_desktop_entry_load(path);
-	if (!dentry) {
-		g_warning("launcher properties: oops, "
-			  "gnome_desktop_entry_load() returned NULL\n"
-			  "                     on \"%s\"\n", path);
 		return;
 	}
 

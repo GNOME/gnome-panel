@@ -14,7 +14,8 @@
 typedef struct {
 	int                applet_id;
 	GtkWidget         *button;
-	int               signal_click_tag;
+	int                signal_click_tag;
+	GtkObject	  *dedit;
 	GnomeDesktopEntry *dentry;
 } Launcher;
 

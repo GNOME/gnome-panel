@@ -183,6 +183,17 @@ save_applet_configuration(int num)
 						info->path);
 			gnome_config_set_int("config/width",swallow->width);
 			gnome_config_set_int("config/height",swallow->height);
+		} else if(strcmp(info->id_str,LAUNCHER_ID) == 0) {
+			Launcher *launcher = info->data;
+			char *s;
+			/*get rid of the trailing slash*/
+			path[strlen(path)-1]='\0';
+			s = g_concat_dir_and_file(gnome_user_dir,path);
+			gnome_config_set_string("config/parameters", s);
+			g_free(launcher->dentry->location);
+			launcher->dentry->location = s;
+			gnome_config_sync();
+			gnome_desktop_entry_save(launcher->dentry);
 		} else {
 			if(info->params)
 				gnome_config_set_string("config/parameters",

@@ -287,16 +287,21 @@ get_presorted_from(char *dir)
 static int
 menu_destroy(GtkWidget *menu, gpointer data)
 {
-	MenuFinfo *mf = gtk_object_get_data(GTK_OBJECT(menu),"mf");
-	while(mf->finfo) {
-		FileInfo *fi = mf->finfo->data;
-		if(fi->name) g_free(fi->name);
-		g_free(fi);
-		mf->finfo = g_list_remove_link(mf->finfo, mf->finfo);
+	GList *mfl = gtk_object_get_data(GTK_OBJECT(menu),"mf");
+	while(mfl) {
+		MenuFinfo *mf = mfl->data;
+		while(mf->finfo) {
+			FileInfo *fi = mf->finfo->data;
+			if(fi->name) g_free(fi->name);
+			g_free(fi);
+			mf->finfo = g_list_remove_link(mf->finfo, mf->finfo);
+		}
+		if(mf->menudir) g_free(mf->menudir);
+		if(mf->dir_name) g_free(mf->dir_name);
+		g_free(mf);
+		mfl = g_list_remove_link(mfl,mfl);
 	}
-	if(mf->menudir) g_free(mf->menudir);
-	if(mf->dir_name) g_free(mf->dir_name);
-	g_free(mf);
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
 	return FALSE;
 }
 
@@ -345,7 +350,8 @@ make_app_menu(GtkWidget *sub, char *pixmap_name,
 }
 
 static void add_menu_widget (Menu *menu, char *menudir, int main_menu);
-static GtkWidget * create_menu_at (char *menudir, int create_app_menu,
+static GtkWidget * create_menu_at (GtkWidget *menu,
+				   char *menudir, int create_app_menu,
 				   int applets, char *dir_name,
 				   int fake_submenus);
 
@@ -354,30 +360,80 @@ static GtkWidget * create_menu_at (char *menudir, int create_app_menu,
 static GtkWidget *
 check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 {
-	MenuFinfo *mf = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+	/*we arecreating a whole new menuf or an applet if menu isn't NULL*/
+	if(menu) {
+		/*FIXME:
+		  if we are creating a menu we don't support multiple
+		  menu dirs (yet), except for the main menu, but that
+		  will handle it's own thing*/
+		GList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+		MenuFinfo *mf;
+		GList *list;
+		int need_reread = FALSE;
 
-	if(!mf)
-		g_warning("Weird menu doesn't have mf entry");
-	else {
-		/*if something has changed or if this is a
-		  fake menu, reread the menu*/
-		if(mf->fake_menu || !check_finfo_list(mf->finfo)) {
+		if(!mfl)
+			g_warning("Weird menu doesn't have mf entry");
+
+		/*check if we need to reread this*/
+		for(list = mfl; list != NULL; list = g_list_next(list)) {
+			MenuFinfo *mf = list->data;
+			if(mf->fake_menu || !check_finfo_list(mf->finfo)) {
+				need_reread = TRUE;
+				break;
+			}
+		}
+
+		mf = mfl->data;
+		if(need_reread) {
 			puts("debug: rereading menu");
-			if(menu) {
-				/*in case it's a main menu, force reread of
-				  the root_menu*/
-				if(main_menu)
-					root_menu = NULL;
-				
-				add_menu_widget(menu,mf->menudir,
-						main_menu);
+			/*in case it's a main menu, force reread of
+			  the root_menu*/
+			if(main_menu)
+				root_menu = NULL;
 
-				gtk_widget_unref(menuw);
-			} else {
+			add_menu_widget(menu,mf->menudir,
+					main_menu);
+
+			gtk_widget_unref(menuw);
+		}
+	} else {
+		GList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+		GList *list;
+		int need_reread = FALSE;
+		int all_fake = TRUE;
+
+		if(!mfl)
+			g_warning("Weird menu doesn't have mf entry");
+
+		/*check if we need to reread this*/
+		for(list = mfl; list != NULL; list = g_list_next(list)) {
+			MenuFinfo *mf = list->data;
+			if(!mf->fake_menu)
+				all_fake = FALSE;
+			if(!need_reread &&
+			   (mf->fake_menu || !check_finfo_list(mf->finfo)))
+				need_reread = TRUE;
+		}
+		if(need_reread) {
+			GtkWidget *old_menu = NULL;
+			/*we are all fake so we want to use the previous
+			  menu widget*/
+			if(all_fake) {
+				old_menu = menuw;
+				gtk_object_set_data(GTK_OBJECT(old_menu), "mf",
+						    NULL);
+			}
+			for(list = mfl; list != NULL;
+			    list = g_list_next(list)) {
+				MenuFinfo *mf = list->data;
 				char *pixmap_name =
 					gtk_object_get_data(GTK_OBJECT(menuw),
 							    "pixmap");
-				menuw = create_menu_at(mf->menudir,
+				puts("debug: rereading menu");
+				if(list != mfl)
+					add_menu_separator(menuw);
+				menuw = create_menu_at(old_menu,
+						       mf->menudir,
 						       mf->create_app_menu,
 						       mf->applets,
 						       mf->dir_name,
@@ -387,6 +443,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 						      pixmap_name,
 						      mf->menudir,
 						      mf->dir_name);
+				old_menu = menuw;
 			}
 		}
 	}
@@ -407,11 +464,11 @@ static GtkWidget *
 create_fake_menu_at (char *menudir,
 		     int create_app_menu,
 		     int applets,
-		     char *dir_name,
-		     int fake_submenus)
+		     char *dir_name)
 {	
 	MenuFinfo *mf;
 	GtkWidget *menu;
+	GList *list;
 	
 	menu = gtk_menu_new ();
 	
@@ -423,7 +480,8 @@ create_fake_menu_at (char *menudir,
 	mf->fake_menu = TRUE;
 	mf->finfo = NULL;
 	
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",mf);
+	list = g_list_prepend(NULL,mf);
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",list);
 	
 	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
 			   GTK_SIGNAL_FUNC(menu_destroy),NULL);
@@ -432,14 +490,14 @@ create_fake_menu_at (char *menudir,
 }
 
 static GtkWidget *
-create_menu_at (char *menudir,
+create_menu_at (GtkWidget *menu,
+		char *menudir,
 		int create_app_menu,
 		int applets,
 		char *dir_name,
 		int fake_submenus)
 {	
 	GnomeDesktopEntry *item_info;
-	GtkWidget *menu;
 	struct dirent *dent;
 	struct stat s;
 	char *filename;
@@ -449,13 +507,14 @@ create_menu_at (char *menudir,
 	GList *finfo = NULL;
 	GList *presorted = NULL;
 	GList *done = NULL;
+	GList *mfl = NULL;
 	char *thisfile;
 	
-	MenuFinfo *mf;
+	MenuFinfo *mf = NULL;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
-		return NULL;
+		return menu;
 	
 	/*add dir to the checked files list*/
 	fi = make_finfo(menudir);
@@ -477,7 +536,12 @@ create_menu_at (char *menudir,
 	g_free(filename);
 
 
-	menu = gtk_menu_new ();
+	if(!menu) {
+		menu = gtk_menu_new ();
+		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
+				   GTK_SIGNAL_FUNC(menu_destroy),NULL);
+	} else
+		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
 	
 	while (presorted ||
 	       (dent = readdir (dir)) != NULL) {
@@ -529,10 +593,10 @@ create_menu_at (char *menudir,
 				sub = create_fake_menu_at (filename,
 							   create_app_menu,
 							   applets,
-							   menuitem_name,
-							   fake_submenus);
+							   menuitem_name);
 			else
-				sub = create_menu_at (filename, create_app_menu,
+				sub = create_menu_at (NULL,
+						      filename, create_app_menu,
 						      applets, menuitem_name,
 						      fake_submenus);
 			if (!sub) {
@@ -621,8 +685,11 @@ create_menu_at (char *menudir,
 	g_list_free(done);
 
 	if (items == 0) {
-		gtk_widget_destroy (menu);
-		return NULL;
+		/*there are no other items in this menu*/
+		if(!mfl) {
+			gtk_widget_destroy (menu);
+			return NULL;
+		} 
 	}
 	
 	mf = g_new(MenuFinfo,1);
@@ -632,10 +699,10 @@ create_menu_at (char *menudir,
 	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
 	mf->fake_menu = FALSE;
 	mf->finfo = finfo;
-	
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",mf);
-	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
-			   GTK_SIGNAL_FUNC(menu_destroy),NULL);
+
+	mfl = g_list_append(mfl,mf);
+
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
 	
 	return menu;
 }
@@ -752,7 +819,7 @@ create_applets_menu(int fake_submenus)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at(menudir,0,TRUE,NULL,fake_submenus);
+	applet_menu = create_menu_at(NULL,menudir,0,TRUE,NULL,fake_submenus);
 	g_free (menudir);
 	return applet_menu;
 }
@@ -943,6 +1010,44 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_men
 
 }
 
+static GtkWidget *
+create_root_menu(int fake_submenus)
+{
+	GtkWidget *root_menu;
+	GtkWidget *app_menu;
+	GtkWidget *applet_menu;
+	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *menudir;
+	char *user_menudir;
+
+	menudir = g_concat_dir_and_file (menu_base, ".");
+	g_free (menu_base);
+	if (!g_file_exists (menudir)) {
+		g_free (menudir);
+		return;
+	}
+
+	root_menu = create_menu_at(NULL,menudir,FALSE,FALSE,NULL,fake_submenus);
+	app_menu = create_menu_at (NULL,menudir, TRUE,FALSE,NULL,fake_submenus);
+	g_free (menudir);
+	
+	menu_base = gnome_util_home_file ("apps");
+	menudir = g_concat_dir_and_file (menu_base, ".");
+	g_free (menu_base);
+	mkdir (menudir, 0755);
+	if (g_file_exists (menudir)) {
+		add_menu_separator(root_menu);
+		root_menu = create_menu_at(root_menu,menudir,FALSE,FALSE,
+					   NULL,fake_submenus);
+	}
+	g_free (menudir);
+
+	applet_menu = create_applets_menu(FALSE);
+	add_special_entries (root_menu, app_menu, applet_menu);
+	
+	return root_menu;
+}
+
 static void
 add_menu_widget (Menu *menu, char *menudir, int main_menu)
 {
@@ -950,19 +1055,12 @@ add_menu_widget (Menu *menu, char *menudir, int main_menu)
 	GtkWidget *applet_menu;
 
 	if (main_menu) {
-		/*this should not happen init root menu should have
-		  been called (unless there are no panels*/
-		if(!root_menu) {
-			root_menu = create_menu_at(menudir,FALSE,FALSE,NULL,
-						   TRUE);
-			app_menu = create_menu_at (menudir,TRUE,FALSE,NULL,
-						   TRUE);
-			applet_menu = create_applets_menu(TRUE);
-			add_special_entries (root_menu, app_menu, applet_menu);
-		}
+		if(!root_menu)
+			root_menu = create_root_menu(TRUE);
 		menu->menu = root_menu;
 	} else
-		menu->menu = create_menu_at (menudir, 0, FALSE,NULL,TRUE);
+		menu->menu = create_menu_at (NULL,menudir, FALSE, FALSE,
+					     NULL,TRUE);
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 }
@@ -1096,23 +1194,7 @@ create_panel_menu (char *menudir, int main_menu,
 void
 init_main_menu(void)
 {
-	GtkWidget *app_menu;
-	GtkWidget *applet_menu;
-	char *menu_base = gnome_unconditional_datadir_file ("apps");
-	char *menudir;
-
-	menudir = g_concat_dir_and_file (menu_base, ".");
-	g_free (menu_base);
-	if (!g_file_exists (menudir)) {
-		g_free (menudir);
-		return;
-	}
-
-	root_menu = create_menu_at(menudir,0,FALSE,NULL,FALSE);
-	app_menu = create_menu_at (menudir, 1,FALSE,NULL,FALSE);
-	applet_menu = create_applets_menu(FALSE);
-	add_special_entries (root_menu, app_menu, applet_menu);
-	g_free (menudir);
+	root_menu = create_root_menu(FALSE);
 }
 
 Menu *
