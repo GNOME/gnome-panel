@@ -268,29 +268,30 @@ applet_remove_callback(AppletInfo *info, const char *callback_name)
 {
 	AppletUserMenu *menu;
 
-	g_return_if_fail(info != NULL);
+	g_return_if_fail (info != NULL);
 	
-	if((menu=applet_get_callback(info->user_menu,callback_name))!=NULL) {
+	menu = applet_get_callback (info->user_menu, callback_name);
+	if (menu != NULL) {
 		info->user_menu = g_list_remove(info->user_menu,menu);
-		if(menu->name)
-			g_free(menu->name);
-		if(menu->stock_item)
-			g_free(menu->stock_item);
-		if(menu->text)
-			g_free(menu->text);
+		g_free(menu->name);
+		menu->name = NULL;
+		g_free(menu->stock_item);
+		menu->stock_item = NULL;
+		g_free(menu->text);
+		menu->text = NULL;
 		g_free(menu);
 	} else
 		return; /*it just isn't there*/
 
 	/*make sure the menu is rebuilt*/
-	if(info->menu) {
+	if (info->menu != NULL) {
 		GList *list;
-		for(list=info->user_menu;list!=NULL;list=g_list_next(list)) {
+		for (list = info->user_menu; list != NULL; list = list->next) {
 			AppletUserMenu *menu = list->data;
-			menu->menuitem=NULL;
-			menu->submenu=NULL;
+			menu->menuitem = NULL;
+			menu->submenu = NULL;
 		}
-		gtk_widget_unref(info->menu);
+		gtk_widget_unref (info->menu);
 		info->menu = NULL;
 		info->menu_age = 0;
 	}
