@@ -67,7 +67,7 @@ help_cb (PanelApplet *applet,
   GError *err;
 
   err = NULL;  
-  gnome_help_display ("notification-area-applet", NULL, &err);
+  gnome_help_display_desktop (NULL, "user-guide", "wgospanel.xml", "gospanel-567", &err);
 
   if (err != NULL)
     {
