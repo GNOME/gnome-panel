@@ -38,7 +38,6 @@
 #include "menu-util.h"
 #include "menu.h"
 #include "panel-util.h"
-#include "panel-config.h"
 #include "panel-config-global.h"
 #include "panel-gconf.h"
 #include "panel-applet-frame.h"
@@ -1111,27 +1110,6 @@ panel_setup (PanelToplevel *toplevel)
 	g_signal_connect (toplevel, "destroy", G_CALLBACK (panel_destroy), pd);
 
 	return pd;
-}
-
-PanelData *
-panel_data_by_id (const char *id)
-{
-	GSList *l;
-
-	if (!id)
-		return NULL;
-
-	for (l = panel_list; l; l = l->next) {
-		PanelData   *pd = l->data;
-		PanelWidget *panel_widget;
-
-		panel_widget = panel_toplevel_get_panel_widget (PANEL_TOPLEVEL (pd->panel));
-
-		if (panel_widget->unique_id && !strcmp (id, panel_widget->unique_id))
-			return pd;
-	}
-
-	return NULL;
 }
 
 void

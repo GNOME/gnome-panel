@@ -947,32 +947,20 @@ panel_applet_frame_get_size_string (PanelAppletFrame *frame,
 {
 	const char *retval = NULL;
 
-	switch (panel->sz) {
-	case PANEL_SIZE_XX_SMALL:
+	if (panel->sz <= PANEL_SIZE_XX_SMALL)
 		retval = "xx-small";
-		break;
-	case PANEL_SIZE_X_SMALL:
+	else if (panel->sz <= PANEL_SIZE_X_SMALL)
 		retval = "x-small";
-		break;
-	case PANEL_SIZE_SMALL:
+	else if (panel->sz <= PANEL_SIZE_SMALL)
 		retval = "small";
-		break;
-	case PANEL_SIZE_MEDIUM:
+	else if (panel->sz <= PANEL_SIZE_MEDIUM)
 		retval = "medium";
-		break;
-	case PANEL_SIZE_LARGE:
+	else if (panel->sz <= PANEL_SIZE_LARGE)
 		retval = "large";
-		break;
-	case PANEL_SIZE_X_LARGE:
+	else if (panel->sz <= PANEL_SIZE_X_LARGE)
 		retval = "x-large";
-		break;
-	case PANEL_SIZE_XX_LARGE:
+	else
 		retval = "xx-large";
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
 
 	return retval;
 }

@@ -73,6 +73,7 @@ gpointer             panel_toplevel_get_panel_widget    (PanelToplevel       *to
 void                 panel_toplevel_set_name            (PanelToplevel       *toplevel,	
 							 const char          *name);
 G_CONST_RETURN char *panel_toplevel_get_name            (PanelToplevel       *toplevel);
+G_CONST_RETURN char *panel_toplevel_get_description     (PanelToplevel       *toplevel);
 void                 panel_toplevel_set_expand          (PanelToplevel       *toplevel,
 							 gboolean             expand);
 gboolean             panel_toplevel_get_expand          (PanelToplevel       *toplevel);

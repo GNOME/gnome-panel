@@ -17,12 +17,6 @@ typedef enum {
 } PanelSize;
 
 typedef enum {
-	PANEL_BACK_NONE = 0,
-	PANEL_BACK_COLOR,
-	PANEL_BACK_IMAGE
-} PanelBackgroundType;
-
-typedef enum {
 	PANEL_SPEED_SLOW,
 	PANEL_SPEED_MEDIUM,
 	PANEL_SPEED_FAST

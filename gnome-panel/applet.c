@@ -19,7 +19,6 @@
 #include "launcher.h"
 #include "menu-util.h"
 #include "menu.h"
-#include "panel-config.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "panel-applet-frame.h"

@@ -1,3 +1,54 @@
+2003-02-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-config.c, panel-config.h: kill.
+
+	* panel-properties-dialog.[ch], panel-properties-dialog.glade:
+	first cut at a new properties dialog. The background settings
+	haven't been implemented yet.
+
+	* panel-profile.[ch]: (panel_profile_map_orientation_string),
+	(panel_profile_map_speed_string),
+	(panel_profile_map_background_type_string): impl helpers for
+	mapping enums.
+	(panel_profile_set_toplevel_name),
+	(panel_profile_get_toplevel_name),
+	(panel_profile_set_toplevel_orientation),
+	(panel_profile_get_toplevel_orientation), (get_background_type),
+	(set_orientation_from_string), (set_animation_speed_from_string):
+	Impl reading/writing various toplevel properties through gconf.
+	(panel_profile_toplevel_notify_add): helper for adding a notify
+	for a given panel.
+	(panel_profile_load_toplevel): use it.
+
+	* Makefile.am: build panel-properties-dialog.[ch] instead of
+	panel-config.[ch] and install panel-properties-dialog.glade.
+
+	* applet.c, drawer.h: don't include panel-config.h.
+
+	* menu.c: (create_toplevel_testing_menu), (make_panel_submenu):
+	kill the "Toggle Animations" item and add back the properties
+	item.
+
+	* panel-applet-frame.c: (panel_applet_frame_get_size_string):
+	fix.
+
+	* panel-background.h: include panel-enums.h.
+
+	* panel-types.h: move PanelBackground Type to panel-enums.h.
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_setup_widgets): upd.
+	(panel_toplevel_get_description): impl.
+
+	* panel-widget.[ch]: (panel_widget_class_init), kill the orient-changed
+	signal - we use the toplevel's orientation now.
+	(panel_widget_finalize), (panel_widget_instance_init),
+	(panel_widget_new), (panel_widget_change_params): kill the panel_id
+	stuff from this widget - the panel id is associated with the toplevel
+	now.
+
+	* panel.c: (panel_data_by_id): kill.
+
 2003-02-20  Mark McLoughlin  <mark@skynet.ie>
 
 	Some fairly extensive, but random, hacking - got the applets

@@ -28,6 +28,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
+#include "panel-enums.h"
 #include "panel-types.h"
 #include "panel-background-monitor.h"
 

@@ -112,7 +112,7 @@ panel_sources =			\
 	panel-util.c		\
 	panel-gconf.c		\
 	global-keys.c		\
-	panel-config.c  	\
+	panel-properties-dialog.c \
 	distribution.c		\
 	gnome-run.c  		\
 	menu.c  		\
@@ -155,7 +155,7 @@ panel_headers =			\
 	drawer.h  		\
 	panel-util.h		\
 	global-keys.h		\
-	panel-config.h		\
+	panel-properties-dialog.h \
 	panel-config-global.h  	\
 	panel-gconf.h		\
 	distribution.h		\
@@ -246,7 +246,8 @@ gnome_panel_screenshot_LDADD = 	\
 gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
 	gnome-panel-preferences.glade		\
-	gnome-panel-screenshot.glade
+	gnome-panel-screenshot.glade		\
+	panel-properties-dialog.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\

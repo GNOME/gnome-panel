@@ -3583,7 +3583,6 @@ panel_toplevel_setup_widgets (PanelToplevel *toplevel)
 	gtk_widget_show (GTK_WIDGET (toplevel->priv->inner_frame));
 
 	container = panel_widget_new (toplevel,
-				      NULL,
 				      !toplevel->priv->expand,
 				      toplevel->priv->orientation & PANEL_HORIZONTAL_MASK ?
 						GTK_ORIENTATION_HORIZONTAL :
@@ -3770,6 +3769,14 @@ panel_toplevel_get_name (PanelToplevel *toplevel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
 
 	return toplevel->priv->name;
+}
+
+G_CONST_RETURN char *
+panel_toplevel_get_description (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->description;
 }
 
 void

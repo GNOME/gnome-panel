@@ -53,23 +53,41 @@ void        panel_profile_delete_toplevel (PanelToplevel *toplevel);
 
 gboolean panel_profile_is_toplevel_list_writeable (void);
 
-void panel_profile_set_toplevel_name              (PanelToplevel *toplevel,
-						   const char    *name);
-void panel_profile_set_toplevel_expand            (PanelToplevel *toplevel,
-						   gboolean       expand);
-void panel_profile_set_toplevel_auto_hide         (PanelToplevel *toplevel,
-						   gboolean       autohide);
-void panel_profile_set_toplevel_enable_buttons    (PanelToplevel *toplevel,
-						   gboolean       enable_buttons);
-void panel_profile_set_toplevel_enable_arrows     (PanelToplevel *toplevel,
-						   gboolean       enable_arrows);
-void panel_profile_set_toplevel_enable_animations (PanelToplevel *toplevel,
-						   gboolean       enable_animations);
 
-void panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
-                                        const char            *key,
-                                        GConfClientNotifyFunc  func,
-                                        GObject               *object);
+void        panel_profile_set_toplevel_name           (PanelToplevel *toplevel,
+						       const char    *name);
+char       *panel_profile_get_toplevel_name           (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_orientation    (PanelToplevel *toplevel,
+						       PanelOrientation orientation);
+PanelOrientation
+            panel_profile_get_toplevel_orientation    (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_size           (PanelToplevel *toplevel,
+						       int            size);
+int         panel_profile_get_toplevel_size           (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_expand         (PanelToplevel *toplevel,
+						       gboolean       expand);
+gboolean    panel_profile_get_toplevel_expand         (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_auto_hide      (PanelToplevel *toplevel,
+						       gboolean       auto_hide);
+gboolean    panel_profile_get_toplevel_auto_hide      (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_enable_buttons (PanelToplevel *toplevel,
+						       gboolean       enable_buttons);
+gboolean    panel_profile_get_toplevel_enable_buttons (PanelToplevel *toplevel);
+void        panel_profile_set_toplevel_enable_arrows  (PanelToplevel *toplevel,
+						       gboolean       enable_arrows);
+gboolean    panel_profile_get_toplevel_enable_arrows  (PanelToplevel *toplevel);
+
+
+guint       panel_profile_toplevel_notify_add         (PanelToplevel         *toplevel,
+						       GConfClientNotifyFunc  func,
+						       gpointer               data);
+
+gboolean    panel_profile_map_orientation_string      (const char            *str,
+						       PanelOrientation      *orientation);
+gboolean    panel_profile_map_speed_string            (const char            *str,
+						       PanelAnimationSpeed   *speed);
+gboolean    panel_profile_map_background_type_string  (const char            *str,
+						       PanelBackgroundType   *background_type);
 
 G_END_DECLS
 

@@ -104,6 +104,57 @@ panel_profile_get_name (void)
 	return current_profile;
 }
 
+gboolean
+panel_profile_map_orientation_string (const char       *str,
+				      PanelOrientation *orientation)
+{
+	int mapped;
+
+	g_return_val_if_fail (str != NULL, FALSE);
+	g_return_val_if_fail (orientation != NULL, FALSE);
+
+	if (!gconf_string_to_enum (panel_orientation_map, str, &mapped))
+		return FALSE;
+
+	*orientation = mapped;
+
+	return TRUE;
+}
+
+gboolean
+panel_profile_map_speed_string (const char          *str,
+				PanelAnimationSpeed *speed)
+{
+	int mapped;
+
+	g_return_val_if_fail (str != NULL, FALSE);
+	g_return_val_if_fail (speed != NULL, FALSE);
+
+	if (!gconf_string_to_enum (panel_animation_speed_map, str, &mapped))
+		return FALSE;
+
+	*speed = mapped;
+
+	return TRUE;
+}
+
+gboolean
+panel_profile_map_background_type_string (const char          *str,
+					  PanelBackgroundType *background_type)
+{
+	int mapped;
+
+	g_return_val_if_fail (str != NULL, FALSE);
+	g_return_val_if_fail (background_type != NULL, FALSE);
+
+	if (!gconf_string_to_enum (panel_background_type_map, str, &mapped))
+		return FALSE;
+
+	*background_type = mapped;
+
+	return TRUE;
+}
+
 static void
 panel_profile_set_toplevel_id (PanelToplevel *toplevel,
 			       char          *id)
@@ -249,34 +300,122 @@ panel_profile_get_toplevel_key (PanelToplevel *toplevel,
 	return panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, current_profile, id, key);
 }
 
-#define TOPLEVEL_SET_FUNC(k, t, s, a)                               \
-	void                                                        \
-	panel_profile_set_toplevel_##s (PanelToplevel *toplevel, a) \
-	{                                                           \
-		GConfClient *client;                                \
-		const char  *key;                                   \
-		client = gconf_client_get_default ();               \
-		d_print ("Setting '%s'\n", k);                      \
-		key = panel_profile_get_toplevel_key (toplevel, k); \
-		gconf_client_set_##t (client, key, s, NULL);        \
-		g_object_unref (client);                            \
+void
+panel_profile_set_toplevel_name (PanelToplevel *toplevel,
+				 const char    *name)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "name");
+
+	if (name && name [0])
+		gconf_client_set_string (client, key, name, NULL);
+	else
+		gconf_client_unset (client, key, NULL);
+
+	g_object_unref (client);
+}
+
+char *
+panel_profile_get_toplevel_name (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+	char        *retval;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "name");
+	retval = gconf_client_get_string (client, key, NULL);
+
+	g_object_unref (client);
+
+	return retval;
+}
+
+void
+panel_profile_set_toplevel_orientation (PanelToplevel    *toplevel,
+					PanelOrientation  orientation)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "orientation");
+	gconf_client_set_string (client,
+				 key,
+				 gconf_enum_to_string (panel_orientation_map, orientation),
+				 NULL);
+
+	g_object_unref (client);
+}
+
+PanelOrientation
+panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
+{
+	PanelOrientation  orientation;
+	GConfClient      *client;
+	const char       *key;
+	char             *str;
+
+	client = gconf_client_get_default ();
+
+	key = panel_profile_get_toplevel_key (toplevel, "orientation");
+	str = gconf_client_get_string (client, key, NULL);
+
+	g_object_unref (client);
+
+	panel_profile_map_orientation_string (str, &orientation);
+
+	g_free (str);
+
+	return orientation;
+}
+
+#define TOPLEVEL_GET_SET_FUNCS(k, t, s, a)                            \
+	void                                                          \
+	panel_profile_set_toplevel_##s (PanelToplevel *toplevel, a s) \
+	{                                                             \
+		GConfClient *client;                                  \
+		const char  *key;                                     \
+		client = gconf_client_get_default ();                 \
+		d_print ("Setting '%s'\n", k);                        \
+		key = panel_profile_get_toplevel_key (toplevel, k);   \
+		gconf_client_set_##t (client, key, s, NULL);          \
+		g_object_unref (client);                              \
+	}                                                             \
+	a                                                             \
+	panel_profile_get_toplevel_##s (PanelToplevel *toplevel)      \
+	{                                                             \
+		GConfClient *client;                                  \
+		const char  *key;                                     \
+		a retval;                                             \
+		client = gconf_client_get_default ();                 \
+		d_print ("Getting '%s'\n", k);                        \
+		key = panel_profile_get_toplevel_key (toplevel, k);   \
+		retval = gconf_client_get_##t (client, key, NULL); \
+		g_object_unref (client);                              \
+		return retval;                                        \
 	}
 
-TOPLEVEL_SET_FUNC ("name",              string, name,              const char *name)
-TOPLEVEL_SET_FUNC ("expand",            bool,   expand,            gboolean expand)
-TOPLEVEL_SET_FUNC ("auto_hide",         bool,   auto_hide,         gboolean auto_hide)
-TOPLEVEL_SET_FUNC ("enable_buttons",    bool,   enable_buttons,    gboolean enable_buttons)
-TOPLEVEL_SET_FUNC ("enable_arrows",     bool,   enable_arrows,     gboolean enable_arrows)
-TOPLEVEL_SET_FUNC ("enable_animations", bool,   enable_animations, gboolean enable_animations)
+TOPLEVEL_GET_SET_FUNCS ("size",              int,    size,              int)
+TOPLEVEL_GET_SET_FUNCS ("expand",            bool,   expand,            gboolean)
+TOPLEVEL_GET_SET_FUNCS ("auto_hide",         bool,   auto_hide,         gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable_buttons",    bool,   enable_buttons,    gboolean)
+TOPLEVEL_GET_SET_FUNCS ("enable_arrows",     bool,   enable_arrows,     gboolean)
 
 static PanelBackgroundType
 get_background_type (GConfClient *client,
 		     const char  *toplevel_dir)
 {
-	GError     *error = NULL;
-	const char *key;
-	char       *type_str;
-	int         background_type;
+	PanelBackgroundType  background_type;
+	GError              *error = NULL;
+	const char          *key;
+	char                *type_str;
 
 	key = panel_gconf_sprintf ("%s/background/type", toplevel_dir);
 	type_str = gconf_client_get_string (client, key, &error);
@@ -287,9 +426,7 @@ get_background_type (GConfClient *client,
 		return PANEL_BACK_NONE;
 	}
 
-	if (!type_str || !gconf_string_to_enum (panel_background_type_map,
-						type_str,
-						&background_type))
+	if (!type_str || !panel_profile_map_background_type_string (type_str, &background_type))
 		background_type = PANEL_BACK_NONE;
 
 	g_free (type_str);
@@ -409,35 +546,6 @@ panel_profile_load_background (PanelToplevel *toplevel,
 	}
 }
 
-static GdkScreen *
-get_toplevel_screen (GConfClient   *client,
-		     const char    *toplevel_dir)
-{
-	GError     *error = NULL;
-	GdkDisplay *display;
-	const char *key;
-	int         screen_n;
-
-	key = panel_gconf_sprintf ("%s/screen", toplevel_dir);
-	screen_n = gconf_client_get_int (client, key, &error);
-	if (error) {
-		g_warning (_("Error reading GConf integer value '%s': %s"),
-			   key, error->message);
-		g_error_free (error);
-		return gdk_screen_get_default ();
-	}
-
-	display = gdk_display_get_default ();
-
-	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
-		g_warning (_("Panel '%s' is set to be displayed on screen %d which "
-			     "is not currently available. Not loading this panel."),
-			   toplevel_dir, screen_n);
-		return NULL;
-	}
-
-	return gdk_display_get_screen (display, screen_n);
-}
 
 static gboolean
 panel_profile_commit_toplevel_changes (PanelToplevel *toplevel)
@@ -620,11 +728,9 @@ static void
 set_orientation_from_string (PanelToplevel *toplevel,
 			     const char    *str)
 {
-	int orientation;
+	PanelOrientation orientation;
 
-	if (!str || !gconf_string_to_enum (panel_orientation_map,
-					   str,
-					   &orientation))
+	if (!str || !panel_profile_map_orientation_string (str, &orientation))
 		return;
 
 	panel_toplevel_set_orientation (toplevel, orientation);
@@ -634,11 +740,9 @@ static void
 set_animation_speed_from_string (PanelToplevel *toplevel,
 				 const char    *str)
 {
-	int animation_speed;
+	PanelAnimationSpeed animation_speed;
 
-	if (!str || !gconf_string_to_enum (panel_animation_speed_map,
-					   str,
-					   &animation_speed))
+	if (!str || !panel_profile_map_speed_string (str, &animation_speed))
 		return;
 
 	panel_toplevel_set_animation_speed (toplevel, animation_speed);
@@ -755,6 +859,57 @@ panel_profile_disconnect_toplevel (PanelToplevel *toplevel,
 	gconf_client_notify_remove (client, notify_id);
 
 	g_object_unref (client);
+}
+
+guint
+panel_profile_toplevel_notify_add (PanelToplevel         *toplevel,
+				   GConfClientNotifyFunc  func,
+				   gpointer               data)
+{
+	GConfClient *client;
+	const char  *key;
+	guint        retval;
+
+	client = gconf_client_get_default ();
+
+	key = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s",
+			       current_profile,
+			       panel_profile_get_toplevel_id (toplevel));
+	retval = gconf_client_notify_add (client, key, func, data, NULL, NULL);
+
+	g_object_unref (client);
+
+	return retval;
+}
+
+static GdkScreen *
+get_toplevel_screen (GConfClient   *client,
+		     const char    *toplevel_dir)
+{
+	GError     *error = NULL;
+	GdkDisplay *display;
+	const char *key;
+	int         screen_n;
+
+	key = panel_gconf_sprintf ("%s/screen", toplevel_dir);
+	screen_n = gconf_client_get_int (client, key, &error);
+	if (error) {
+		g_warning (_("Error reading GConf integer value '%s': %s"),
+			   key, error->message);
+		g_error_free (error);
+		return gdk_screen_get_default ();
+	}
+
+	display = gdk_display_get_default ();
+
+	if (screen_n < 0 || screen_n >= gdk_display_get_n_screens (display)) {
+		g_warning (_("Panel '%s' is set to be displayed on screen %d which "
+			     "is not currently available. Not loading this panel."),
+			   toplevel_dir, screen_n);
+		return NULL;
+	}
+
+	return gdk_display_get_screen (display, screen_n);
 }
 
 static void
@@ -876,10 +1031,10 @@ panel_profile_load_toplevel (GConfClient *client,
 
 	panel_profile_connect_to_toplevel (toplevel);
 
-	notify_id = gconf_client_notify_add (
-			client, toplevel_dir,
+	notify_id = panel_profile_toplevel_notify_add (
+			toplevel,
 			(GConfClientNotifyFunc) panel_profile_toplevel_change_notify,
-			toplevel, NULL, NULL);
+			toplevel);
 
 	g_signal_connect (toplevel, "destroy",
 			  G_CALLBACK (panel_profile_disconnect_toplevel),

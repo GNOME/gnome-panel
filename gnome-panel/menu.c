@@ -64,6 +64,7 @@
 #include "panel-profile.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
+#include "panel-properties-dialog.h"
 
 #undef MENU_DEBUG
 
@@ -2957,13 +2958,6 @@ decrease_size (PanelToplevel *toplevel)
 }
 
 static void
-toggle_animations (PanelToplevel *toplevel)
-{
-	panel_profile_set_toplevel_enable_animations (
-		toplevel, !panel_toplevel_get_animate (toplevel));
-}
-
-static void
 toggle_buttons (PanelToplevel *toplevel)
 {
 	panel_profile_set_toplevel_enable_buttons (
@@ -3029,13 +3023,6 @@ create_toplevel_testing_menu (PanelToplevel *toplevel)
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (
-		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Animations"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (toggle_animations), toplevel);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (
 		menuitem, GTK_ICON_SIZE_MENU, NULL, _("Toggle Buttons"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (retval), menuitem);
 	g_signal_connect_swapped (menuitem, "activate",
@@ -3088,7 +3075,7 @@ make_panel_submenu (PanelWidget *panel_widget,
 			    G_CALLBACK(setup_remove_this_panel),
 			    menuitem);
 
-#if FIXME_FOR_NEW_CONFIG
+#ifndef FIXME_FOR_NEW_CONFIG
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem,
 			GTK_ICON_SIZE_MENU,
@@ -3097,11 +3084,9 @@ make_panel_submenu (PanelWidget *panel_widget,
 			_("_Properties"));
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (current_panel_config), 
-			  NULL);
-#else /* FIXME_FOR_NEW_CONFIG */
-	gtk_widget_set_sensitive (menuitem, FALSE);
+	g_signal_connect_swapped (menuitem, "activate",
+				  G_CALLBACK (panel_properties_dialog_present), 
+				  panel_widget->toplevel);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_stock_menu_item (

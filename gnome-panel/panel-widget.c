@@ -31,7 +31,6 @@ typedef enum {
 } PanelMovementType;
 
 enum {
-	ORIENT_CHANGE_SIGNAL,
 	SIZE_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
@@ -312,17 +311,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
-	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
-                g_signal_new ("orient_change",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, orient_change),
-                              NULL,
-                              NULL, 
-                              panel_marshal_VOID__VOID,
-                              G_TYPE_NONE,
-                              0);
-
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
                 g_signal_new ("size_change",
                               G_TYPE_FROM_CLASS (object_class),
@@ -440,7 +428,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
-	class->orient_change = NULL;
 	class->size_change = NULL;
 	class->applet_move = NULL;
 	class->applet_added = NULL;
@@ -1509,9 +1496,6 @@ panel_widget_finalize (GObject *obj)
 
 	panel_background_free (&panel->background);
 
-	g_free (panel->unique_id);
-	panel->unique_id = NULL;
-
 	G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }
 
@@ -1530,74 +1514,6 @@ panel_widget_destroy (GtkObject *obj)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
 }
 
-static gchar * 
-generate_unique_id (void)
-{
-	gint32 id;
-	GTimeVal tv;
-	static int incr = -1;
-	gchar *retval = NULL;
-
-	if (incr == -1)
-		incr = (rand () >> 3) & 0xFF;
-
-	id = (rand () >> 3) && 0xFFF;
-	id += (incr << 12);
-
-	g_get_current_time (&tv);
-	id += (tv.tv_usec & 0x7FF) << 20;
-
-	incr ++;
-
-	retval = g_strdup_printf ("%u", id);	
-
-	if (panel_widget_get_by_id (retval) != NULL) {
-		g_free (retval);
-		retval = generate_unique_id ();
-	}
-
-	return retval;
-}
-
-PanelWidget *
-panel_widget_get_by_id (gchar *id)
-{
-	GSList *li;
-
-	g_return_val_if_fail (id != NULL, NULL);
-
-	for (li = panels; li != NULL; li = li->next) {
-		PanelWidget *panel = li->data;
-
-		if (panel->unique_id && ! strcmp (panel->unique_id, id))
-			return panel;
-	}
-
-	return NULL;
-}
-
-void
-panel_widget_set_id (PanelWidget *panel, const char *id)
-{
-	g_return_if_fail (id != NULL);
-
-	if (panel->unique_id)
-		g_free (panel->unique_id);
-
-	panel->unique_id = g_strdup (id);
-
-	return;
-}
-
-void
-panel_widget_set_new_id (PanelWidget *panel) 
-{
-	if (panel->unique_id)
-		g_free (panel->unique_id);
-
-	panel->unique_id = generate_unique_id ();
-}
-
 static void
 panel_widget_instance_init (PanelWidget *panel)
 {
@@ -1607,7 +1523,6 @@ panel_widget_instance_init (PanelWidget *panel)
 		widget,
 		gtk_widget_get_events (widget) | GDK_BUTTON_RELEASE_MASK);
 	
-	panel->unique_id     = NULL;
 	panel->packed        = FALSE;
 	panel->orient        = GTK_ORIENTATION_HORIZONTAL;
 	panel->thick         = PANEL_MINIMUM_WIDTH;
@@ -1624,7 +1539,6 @@ panel_widget_instance_init (PanelWidget *panel)
 
 GtkWidget *
 panel_widget_new (PanelToplevel       *toplevel,
-		  const char          *panel_id,
 		  gboolean             packed,
 		  GtkOrientation       orient,
 		  int                  sz,
@@ -1641,11 +1555,6 @@ panel_widget_new (PanelToplevel       *toplevel,
 
         GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
         GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
-
-	if (!panel_id)
-		panel->unique_id = generate_unique_id ();
-	else
-		panel->unique_id = g_strdup (panel_id);
 
 	panel_background_set (
 		&panel->background, back_type, back_color, back_pixmap,
@@ -2479,22 +2388,16 @@ panel_widget_change_params(PanelWidget         *panel,
 			   gboolean             rotate_pixmap_bg,
 			   PanelColor          *back_color)
 {
-	GtkOrientation oldorient;
-	int            oldsz;
+	int oldsz;
 
 	g_return_if_fail (PANEL_IS_WIDGET (panel));
 
-	oldorient = panel->orient;
 	panel->orient = orient;
 
 	oldsz = panel->sz;
 	panel->sz = sz;
 	
 	queue_resize_on_all_applets (panel);
-
-	if (oldorient != panel->orient)
-	   	g_signal_emit (
-			panel, panel_widget_signals [ORIENT_CHANGE_SIGNAL], 0);
 
 	if (oldsz != panel->sz)
 	   	g_signal_emit (
