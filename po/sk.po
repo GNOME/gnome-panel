@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-23 13:47+0200\n"
+"POT-Creation-Date: 2004-06-14 17:47+0100\n"
 "PO-Revision-Date: 2004-04-23 16:58+0200\n"
 "Last-Translator: Stanislav Visnovsky <visnovsky@kde.org>\n"
 "Language-Team: Slovak <sk-i18n@linux.sk>\n"
@@ -18,7 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "<bobo@bobo.bspc.sk>\n"
 "X-Generator: KBabel 1.3.1\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -49,7 +50,7 @@ msgstr "_O programe..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3079
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -67,7 +68,7 @@ msgid "Accessories"
 msgstr "Príslušenstvo"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2419
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -87,16 +88,16 @@ msgstr "Získanie aktuálneho dátumu a času"
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:600
+#: applets/clock/clock.c:282 applets/clock/clock.c:604
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1524
+#: applets/clock/clock.c:284 applets/clock/clock.c:1534
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:602
-#: applets/clock/clock.c:1526
+#: applets/clock/clock.c:284 applets/clock/clock.c:606
+#: applets/clock/clock.c:1536
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -136,44 +137,44 @@ msgstr "%2$s, %1$s"
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:819
+#: applets/clock/clock.c:827
 msgid "Tasks"
 msgstr "Úlohy"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:959
 msgid "All Day"
 msgstr "Celý deň"
 
-#: applets/clock/clock.c:985
+#: applets/clock/clock.c:993
 msgid "Appointments"
 msgstr "Schôdzky"
 
-#: applets/clock/clock.c:1206
+#: applets/clock/clock.c:1214
 msgid "Calendar"
 msgstr "Kalendár"
 
-#: applets/clock/clock.c:1437
+#: applets/clock/clock.c:1445
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:1529
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1521
+#: applets/clock/clock.c:1531
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1561
+#: applets/clock/clock.c:1571
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1613
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nepodarilo sa spustiť nástroj pre nastavenie času: %s"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1652
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -181,11 +182,11 @@ msgstr ""
 "Nepodarilo sa nájsť program pre nastavenie dátumu a času. Možno nie je "
 "nainštalovaný."
 
-#: applets/clock/clock.c:2044
+#: applets/clock/clock.c:2054
 msgid "Custom format"
 msgstr "Vlastný formát"
 
-#: applets/clock/clock.c:2165 applets/clock/clock.c:2355
+#: applets/clock/clock.c:2175 applets/clock/clock.c:2365
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -195,55 +196,56 @@ msgstr "Vlastný formát"
 msgid "There was an error displaying help: %s"
 msgstr "Pri pokuse o zobrazenie Pomocníka nastala chyba: %s"
 
-#: applets/clock/clock.c:2201
+#: applets/clock/clock.c:2211
 msgid "Clock Preferences"
 msgstr "Nastavenie hodín"
 
-#: applets/clock/clock.c:2237
+#: applets/clock/clock.c:2247
 msgid "Clock _type:"
 msgstr "_Typ hodín:"
 
-#: applets/clock/clock.c:2247
+#: applets/clock/clock.c:2257
 msgid "12 hour"
 msgstr "12-hodinový"
 
-#: applets/clock/clock.c:2248
+#: applets/clock/clock.c:2258
 msgid "24 hour"
 msgstr "24-hodinový"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2259
 msgid "UNIX time"
 msgstr "Unixový čas"
 
-#: applets/clock/clock.c:2250
+#: applets/clock/clock.c:2260
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: applets/clock/clock.c:2258
+#: applets/clock/clock.c:2268
 msgid "Custom _format:"
 msgstr "Vlastný _formát:"
 
-#: applets/clock/clock.c:2277
+#: applets/clock/clock.c:2287
 msgid "Show _seconds"
 msgstr "Zobraziť _sekundy"
 
-#: applets/clock/clock.c:2286
+#: applets/clock/clock.c:2296
 msgid "Show _date"
 msgstr "Zobraziť _dátum"
 
-#: applets/clock/clock.c:2295
+#: applets/clock/clock.c:2305
 msgid "Use _UTC"
 msgstr "Používať _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2390 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2400 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
-msgstr "                      Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)"
+msgstr ""
+"                      Stanislav Višňovský (visnovsky@nenya.ms.mff.cuni.cz)"
 
-#: applets/clock/clock.c:2411
+#: applets/clock/clock.c:2421
 msgid "The Clock displays the current time and date"
 msgstr "Applet Hodiny zobrazuje aktuálny dátum a čas"
 
@@ -277,7 +279,8 @@ msgstr "Ak true, čas bude z časovej zóny Universal Coordinated Time."
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Ak true, dátum sa bude zobrazovať v rade pri ukázaní kurzorom myši na applet."
+msgstr ""
+"Ak true, dátum sa bude zobrazovať v rade pri ukázaní kurzorom myši na applet."
 
 #: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
@@ -296,8 +299,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
-"Použitie tohto kľúča je zastaralé v GNOME 2.6. Použite "
-"'format'. Schéma ho necháva iba kvôli spätnej kompatibilite."
+"Použitie tohto kľúča je zastaralé v GNOME 2.6. Použite 'format'. Schéma ho "
+"necháva iba kvôli spätnej kompatibilite."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -305,9 +308,8 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
-"Tento kľúč určuje formát pre applet hodín pri použití formátovacieho "
-"typu \"custom\". Môžete použiť všetky prepínače známe "
-"z funkcie strftime()."
+"Tento kľúč určuje formát pre applet hodín pri použití formátovacieho typu "
+"\"custom\". Môžete použiť všetky prepínače známe z funkcie strftime()."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -320,15 +322,13 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"Tento kľúč určuje formát hodín pre applet. Možné hodnoty "
-"sú \"12-hour\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Ak "
-"použijete \"internet\", hodiny budú zobrazovať internetový čas. "
-"Ten rozdeľuje deň na 1000 \".beats\". V tomto systéme "
-"neexistujú časové zóny, takže je rovnaký na celom svete. "
-"Ak použijete \"unix\", hodiny budú zobrazovať "
-"počet sekúnd od 1.1.1970. Ak použijete \"custom\", hodiny "
-"budú zobrazovať čas podľa formátu, ktorý ste zadali v "
-"custom_format."
+"Tento kľúč určuje formát hodín pre applet. Možné hodnoty sú \"12-hour\", "
+"\"24-hour\", \"internet\", \"unix\" a \"custom\". Ak použijete \"internet\", "
+"hodiny budú zobrazovať internetový čas. Ten rozdeľuje deň na 1000 \".beats"
+"\". V tomto systéme neexistujú časové zóny, takže je rovnaký na celom svete. "
+"Ak použijete \"unix\", hodiny budú zobrazovať počet sekúnd od 1.1.1970. Ak "
+"použijete \"custom\", hodiny budú zobrazovať čas podľa formátu, ktorý ste "
+"zadali v custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -535,8 +535,10 @@ msgid "Frames in fish's animation"
 msgstr "Počet obrázkov v animácii ryby"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid "If true, the fish's animation will be displayed rotated on vertical panels."
-msgstr "Ak je toto true, animácia ryby sa bude na vertikálnych paneloch obrátená."
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr ""
+"Ak je toto true, animácia ryby sa bude na vertikálnych paneloch obrátená."
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -681,7 +683,9 @@ msgstr ""
 
 #: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr "Zoznam okien zobrazuje zoznam všetkých viditeľných okien a umožňuje medzi nimi prechádzať."
+msgstr ""
+"Zoznam okien zobrazuje zoznam všetkých viditeľných okien a umožňuje medzi "
+"nimi prechádzať."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -811,10 +815,11 @@ msgid "When to group windows"
 msgstr "Kedy zoskupovať okná"
 
 #: applets/wncklet/window-menu.c:138
-msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
-"Výber okna zobrazuje zoznam všetkých viditeľných okien a umožňuje medzi "
-"nimi prechádzať."
+"Výber okna zobrazuje zoznam všetkých viditeľných okien a umožňuje medzi nimi "
+"prechádzať."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -842,11 +847,13 @@ msgstr "stĺpce"
 #: applets/wncklet/workspace-switcher.c:358
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Chyba pri načítavaní hodnoty num_rows pre applet prepínania plochy: %s\n"
+msgstr ""
+"Chyba pri načítavaní hodnoty num_rows pre applet prepínania plochy: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid ""
+"Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Chyba pri načítavaní hodnoty display_workspace_names pre applet prepínania "
 "plochy: %s\n"
@@ -1007,11 +1014,11 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE menu"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3188
 msgid "Drawer"
 msgstr "Zásuvka"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
 #: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Vlastnosti"
@@ -1161,15 +1168,7 @@ msgstr "Obrazovka-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Nedostatok miesta pre zápis súboru %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1142
-msgid "Grab a window instead of the entire screen"
-msgstr "Zachytiť okno namiesto celej obrazovky"
-
-#: gnome-panel/gnome-panel-screenshot.c:1143
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "Zachytiť obrazovku po danej dobe [v sekundách]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1193
+#: gnome-panel/gnome-panel-screenshot.c:1159
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1177,9 +1176,17 @@ msgstr ""
 "Súbor Glade pre program na zachytenie obrazovky chýba.\n"
 "Prosím, skontrolujte inštaláciu gnome-panel."
 
-#: gnome-panel/gnome-panel-screenshot.c:1209
+#: gnome-panel/gnome-panel-screenshot.c:1175
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nepodarilo sa zachytiť obsah aktuálnej plochy."
+
+#: gnome-panel/gnome-panel-screenshot.c:1288
+msgid "Grab a window instead of the entire screen"
+msgstr "Zachytiť okno namiesto celej obrazovky"
+
+#: gnome-panel/gnome-panel-screenshot.c:1289
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Zachytiť obrazovku po danej dobe [v sekundách]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1306,7 +1313,8 @@ msgstr "Odhlásiť"
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
-msgstr "Ukončiť toto sedenie a prihlásiť sa ako iný používateľ, alebo vypnúť počítač"
+msgstr ""
+"Ukončiť toto sedenie a prihlásiť sa ako iný používateľ, alebo vypnúť počítač"
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
@@ -1367,7 +1375,7 @@ msgstr ""
 "appletov do seba."
 
 #: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nepodarilo sa spustiť '%s'"
@@ -1597,7 +1605,7 @@ msgstr "_Neodstraňovať"
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Pri načítavaní \"%s\" nastala chyba."
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Detaily: %s"
@@ -1632,8 +1640,10 @@ msgid "Error getting value for '%s': %s"
 msgstr "Chyba pri načítavaní hodnoty pre '%s': %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid "Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr "Kliknutím na okno vynútite ukončenie aplikácie. Akciu zrušíte stlačním <ESC>."
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Kliknutím na okno vynútite ukončenie aplikácie. Akciu zrušíte stlačním <ESC>."
 
 #: gnome-panel/panel-force-quit.c:186
 msgid ""
@@ -1718,11 +1728,10 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
-"Zoznam IID appletov, ktoré bude panel ignorovať. Tým môžete "
-"zakázať niektoré applety, aby sa zobrazovali v menu alebo "
-"spúšťali. Napríklad pre zakázanie mini-commanderu pridajte "
-"'OAFIID:GNOME_MiniCommanderApplet'. Aby sa "
-"toto nastavenie prejavilo, je nutné panel znovu spustiť."
+"Zoznam IID appletov, ktoré bude panel ignorovať. Tým môžete zakázať niektoré "
+"applety, aby sa zobrazovali v menu alebo spúšťali. Napríklad pre zakázanie "
+"mini-commanderu pridajte 'OAFIID:GNOME_MiniCommanderApplet'. Aby sa toto "
+"nastavenie prejavilo, je nutné panel znovu spustiť."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1798,10 +1807,12 @@ msgstr ""
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr "Ak je toto true, zásuvka sa zatvorí automaticky po kliknutí na jeho spúšťač."
+msgstr ""
+"Ak je toto true, zásuvka sa zatvorí automaticky po kliknutí na jeho spúšťač."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid "If true, a launcher is highlighted when the user moves the pointer over it."
+msgid ""
+"If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Ak je toto true, spúšťač bude zvýraznený v prípade, že nad ním bude kurzor "
 "myši."
@@ -1815,24 +1826,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
-"Ak je toto TRUE, panel neumožní vynútené ukončenie aplikácie tým, "
-"že zabráni v prístupe k danému tlačidlu."
+"Ak je toto TRUE, panel neumožní vynútené ukončenie aplikácie tým, že zabráni "
+"v prístupe k danému tlačidlu."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
-"Ak je toto TRUE, panel neumožní uzamknúť obrazovku tým, "
-"že zabráni v prístupe k položkám menu pre uzamknutie."
+"Ak je toto TRUE, panel neumožní uzamknúť obrazovku tým, že zabráni v "
+"prístupe k položkám menu pre uzamknutie."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
-"Ak je toto TRUE, panel neumožní odhlásenie používateľa tým, "
-"že zabráni v prístupe k položkám menu pre odhlásenie."
+"Ak je toto TRUE, panel neumožní odhlásenie používateľa tým, že zabráni v "
+"prístupe k položkám menu pre odhlásenie."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1840,10 +1851,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Ak je toto TRUE, panel neumožní žiadne zmeny v svojom "
-"nastavení. Je možné, že budete jednotlivé applety zamknúť "
-"samostatne. Aby sa zmena tohto nastavenia prejavila, "
-"je nutné panel znovu spustiť."
+"Ak je toto TRUE, panel neumožní žiadne zmeny v svojom nastavení. Je možné, "
+"že budete jednotlivé applety zamknúť samostatne. Aby sa zmena tohto "
+"nastavenia prejavila, je nutné panel znovu spustiť."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1964,8 +1974,8 @@ msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
-"Identifikátor panelu pripojeného k tejto zásuvke. Tento kľúč má zmysel iba ak je "
-"object_type \"drawer-object\"."
+"Identifikátor panelu pripojeného k tejto zásuvke. Tento kľúč má zmysel iba "
+"ak je object_type \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -2002,7 +2012,8 @@ msgstr ""
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr "Pozícia objektu panelu. Je to počet bodov od ľava (pri vertikálnom od vrchu)."
+msgstr ""
+"Pozícia objektu panelu. Je to počet bodov od ľava (pri vertikálnom od vrchu)."
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid ""
@@ -2183,24 +2194,26 @@ msgstr "_Veľkosť:"
 msgid "_Tile"
 msgstr "_Dlaždice"
 
-#: gnome-panel/panel-recent.c:56
+#: gnome-panel/panel-recent.c:60
 msgid "Couldn't find a suitable application"
 msgstr "Nepodarilo sa nájsť vhodnú aplikáciu"
 
-#: gnome-panel/panel-recent.c:82
-msgid "The default application for this type of file cannot handle remote files"
-msgstr "Štandardná aplikácia pre tento typ súborov nepodporuje vzdialené súbory"
+#: gnome-panel/panel-recent.c:86
+msgid ""
+"The default application for this type of file cannot handle remote files"
+msgstr ""
+"Štandardná aplikácia pre tento typ súborov nepodporuje vzdialené súbory"
 
-#: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
 msgid "Cannot open recently used document"
 msgstr "Nie je možné otvoriť nedávno použitý dokument"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:157
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Počas pokusu o otvorenie %s nastala neznáma chyba"
 
-#: gnome-panel/panel-recent.c:174
+#: gnome-panel/panel-recent.c:178
 msgid "Recent Documents"
 msgstr "Nedávne dokumenty"
 
@@ -2219,16 +2232,16 @@ msgstr "Nepodarilo sa zobraziť umiestnenie '%s'"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nie je možné previesť '%s' z UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1044
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte súbor, ktorý sa má predať príkazu..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1233
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustím príkaz: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1239 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikáciu,ktore popis chcete zobraziť."
 
@@ -2236,13 +2249,15 @@ msgstr "Vyberte aplikáciu,ktore popis chcete zobraziť."
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
-msgstr "Stlačením tohto tlačidla môžete vybrať meno súboru, ktorý sa pridá za príkaz."
+msgstr ""
+"Stlačením tohto tlačidla môžete vybrať meno súboru, ktorý sa pridá za príkaz."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
-msgstr "Stlačením tohto tlačidla spustíte vybranú aplikáciu alebo zadaný príkaz."
+msgstr ""
+"Stlačením tohto tlačidla spustíte vybranú aplikáciu alebo zadaný príkaz."
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command entry"
@@ -2702,7 +2717,7 @@ msgstr "Xinerama monitor s panelom"
 msgid "Y co-ordinate of panel"
 msgstr "Súradnica Y panelu"
 
-#: gnome-panel/panel-util.c:69
+#: gnome-panel/panel-util.c:70
 msgid "Cannot display help document"
 msgstr "Nepodarilo sa zobraziť pomocníka"
 
@@ -2711,7 +2726,7 @@ msgstr "Nepodarilo sa zobraziť pomocníka"
 msgid "Open URL: %s"
 msgstr "Otvoriť URL: %s"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1245
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2719,7 +2734,7 @@ msgstr ""
 "Keď je panel odstránený, jeho a nastavenia jeho\n"
 "appletov sú stratené. Odstrániť tento panel?"
 
-#: gnome-panel/panel.c:1251
+#: gnome-panel/panel.c:1254
 msgid "Delete Panel"
 msgstr "Odstrániť panel"
 
@@ -2783,7 +2798,8 @@ msgid "Specify an applet IID to load"
 msgstr "Zadajte IID appletu, ktorý chcete načítať"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid "Specify a gconf location in which the applet preferences should be stored"
+msgid ""
+"Specify a gconf location in which the applet preferences should be stored"
 msgstr "Zadajte umiestnenie gconf, kde sú uložené nastavenia appletu"
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2791,7 +2807,8 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr "Zadajte počiatočnú veľkosť appletu (xx-small, medium, large atď)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid ""
+"Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Zadajte počiatočnú orientáciu appletu (top, bottom, left alebo right)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2833,4 +2850,3 @@ msgstr "Extra extra veľký"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra extra malý"
-
