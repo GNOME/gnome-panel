@@ -1,3 +1,9 @@
+2005-01-14  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-recent.c: (panel_recent_append_documents_menu): connect to the
+	"changed" signal only while the model is alive.
+	Fix crash #150809.
+
 ==================== 2.8.2 ====================
 
 2004-12-05  Vincent Untz  <vincent@vuntz.net>

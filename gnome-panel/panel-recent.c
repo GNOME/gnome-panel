@@ -259,9 +259,9 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	
 	/* a model that shows the global recent doc list */
 	model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
-	g_signal_connect (model, "changed",
-			  G_CALLBACK (panel_recent_model_changed_cb),
-			  menu_item);
+	g_signal_connect_object (model, "changed",
+				 G_CALLBACK (panel_recent_model_changed_cb),
+				 menu_item);
 
 	view = egg_recent_view_gtk_new (menu, NULL);
 
