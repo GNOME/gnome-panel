@@ -974,7 +974,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_widget_show (twentyfourhour);
 	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
 
-	unixtime = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)), _("_UNIX time"));
+	unixtime = gtk_radio_button_new_with_mnemonic (gtk_radio_button_get_group (GTK_RADIO_BUTTON (twelvehour)), _("UNI_X time"));
 	gtk_box_pack_start (GTK_BOX (type_box), unixtime, FALSE, FALSE, 0);
 	gtk_widget_show (unixtime);
 
