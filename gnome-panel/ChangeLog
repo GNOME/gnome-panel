@@ -1,3 +1,10 @@
+2005-04-06  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-force-quit.c: (handle_button_press_event): If the window in
+	question is created by us then don't kill it.
+	Use gdk_xid_table_lookup_for_display() to determine that as suggested
+	by Mark. Fixes #122023
+
 2005-04-03  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-run-dialog.c: (panel_run_dialog_execute): fix usages of

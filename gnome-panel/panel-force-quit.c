@@ -219,8 +219,12 @@ handle_button_press_event (GtkWidget *popup,
 
 	window = find_managed_window (event->subwindow);
 
-	if (window != None && kill_window_question ())
-		XKillClient (gdk_display, window);
+	if (window != None) {
+		if (!gdk_xid_table_lookup_for_display (gdk_display_get_default (), window)) {
+			if (kill_window_question ())
+				XKillClient (gdk_display, window);
+		}
+	}
 }
 
 GdkFilterReturn
