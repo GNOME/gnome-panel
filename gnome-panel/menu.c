@@ -1707,10 +1707,17 @@ create_menu_at_fr (GtkWidget *menu,
 	
 	if(!applets) {
 		GtkWidget *pixmap;
-		menuitem = gtk_menu_item_new();
-		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+		char *menu_name;
+		/*if we actually added anything*/
+		if(first_item < g_list_length(GTK_MENU_SHELL(menu)->children)) {
+			menuitem = gtk_menu_item_new();
+			gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+			gtk_widget_show(menuitem);
+			menu_name = g_strdup(dir_name?dir_name:_("Menu"));
+		} else {
+			menu_name = g_strconcat(dir_name?dir_name:_("Menu"),_(" (empty)"),NULL);
+		}
 
-		gtk_widget_show(menuitem);
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
@@ -1728,11 +1735,20 @@ create_menu_at_fr (GtkWidget *menu,
 		}
 
 		menuitem = gtk_menu_item_new();
-		setup_title_menuitem(menuitem,pixmap,
-				     dir_name?dir_name:_("Menu"),mf);
+		setup_title_menuitem(menuitem,pixmap,menu_name,mf);
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+		
+		g_free(menu_name);
 
 		setup_directory_drag (menuitem, mf->menudir);
+
+		/*add separator*/
+		if(add_separator) {
+			menuitem = gtk_menu_item_new();
+			gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
+			gtk_widget_show(menuitem);
+			add_separator = FALSE;
+		}
 	}
 
 	mfl = g_slist_append(mfl,mf);
