@@ -1078,7 +1078,7 @@ applet_save_session(GtkWidget *w,
 static void
 mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 {
-	GtkWidget *about = NULL;
+	static GtkWidget *about = NULL;
 	static const gchar     *authors [] =
 	{
 		"Miguel de Icaza <miguel@kernel.org>",
@@ -1087,12 +1087,21 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 		"Lennart Poettering <poettering@gmx.net>",
 		NULL
 	};
+
+	if (about != NULL)
+	{
+		gdk_window_show(about->window);
+		gdk_window_raise(about->window);
+		return;
+	}
 	
 	about = gnome_about_new ( _("Mail check Applet"), "1.0",
 				  _("(c) 1998 the Free Software Foundation"),
 				  authors,
 				  _("Mail check notifies you when new mail is on your mailbox"),
 				  NULL);
+	gtk_signal_connect( GTK_OBJECT(about), "destroy",
+			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about );
 	gtk_widget_show(about);
 }
 
