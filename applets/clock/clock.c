@@ -874,7 +874,8 @@ config_date (BonoboUIComponent *uic,
 	screen = gtk_widget_get_screen (cd->applet);
 
 	/* FIXME add other time config tools. */
-	if (cd->config_tool && try_config_tool (screen, cd->config_tool))
+	if (cd->config_tool && cd->config_tool[0]
+	    && try_config_tool (screen, cd->config_tool))
 		return;
 
 	else if (try_config_tool (screen, "redhat-config-date"))

@@ -1,3 +1,8 @@
+2003-10-13  Vincent Untz  <vincent@vuntz.net>
+
+	* clock.c: (config_date): don't try running the gconf-specified config
+	tool if the string for the tool is a void string. Fix bug #124501.
+
 Mon Sep 15 15:09:46 2003  George Lebl <jirka@5z.com>
 
 	* clock.c: when started with the locked_down flag, hide the
