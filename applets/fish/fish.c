@@ -173,56 +173,82 @@ fish_clicked_cb(GtkWidget * widget, GdkEventButton * e,
   return TRUE; 
 }
 
+static void
+fish_draw(GtkWidget *darea)
+{
+	if(!GTK_WIDGET_REALIZED(darea))
+		return;
+	
+	gdk_draw_pixmap(darea->window,
+			darea->style->fg_gc[GTK_WIDGET_STATE(darea)],
+			pix[curpix]->pixmap,
+			0, 0,
+			0, 0,
+			-1, -1);
+}
 
 static gint
 fish_timeout(gpointer data)
 {
-	GtkWidget *pixmap = data;
-
 	curpix++;
 	if(curpix>=3) curpix=0;
-	gtk_pixmap_set(GTK_PIXMAP(pixmap),pix[curpix]->pixmap,
-					  pix[curpix]->shape_mask);
-	gtk_widget_draw(pixmap,NULL);
+	fish_draw(GTK_WIDGET(data));
+
 	return TRUE;
+}
+
+static int
+fish_expose(GtkWidget *darea, GdkEventExpose *event)
+{
+	gdk_draw_pixmap(darea->window,
+			darea->style->fg_gc[GTK_WIDGET_STATE(darea)],
+			pix[curpix]->pixmap,
+			event->area.x, event->area.y,
+			event->area.x, event->area.y,
+			event->area.width, event->area.height);
+        return FALSE;
 }
 
 static GtkWidget *
 create_fish_widget(GtkWidget *window)
 {
 	GtkWidget *frame;
-	GtkWidget *pixmap;
-	GtkWidget *event_box;
+	GtkWidget *darea;
 	GtkStyle *style;
 
 	gtk_widget_push_visual (gdk_imlib_get_visual ());
 	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
 	style = gtk_widget_get_style(window);
 
+	/*we render everything to be the same sizee as the first image*/
 	pix[0] = gdk_imlib_create_image_from_xpm_data((gchar **)fish1_xpm);
 	gdk_imlib_render (pix[0], pix[0]->rgb_width, pix[0]->rgb_height);
 	pix[1] = gdk_imlib_create_image_from_xpm_data((gchar **)fish2_xpm);
-	gdk_imlib_render (pix[1], pix[1]->rgb_width, pix[1]->rgb_height);
+	gdk_imlib_render (pix[1], pix[0]->rgb_width, pix[0]->rgb_height);
 	pix[2] = gdk_imlib_create_image_from_xpm_data((gchar **)fish3_xpm);
-	gdk_imlib_render (pix[2], pix[2]->rgb_width, pix[2]->rgb_height);
+	gdk_imlib_render (pix[2], pix[0]->rgb_width, pix[0]->rgb_height);
 
-        pixmap = gtk_pixmap_new(pix[0]->pixmap,pix[0]->shape_mask);
-        gtk_widget_show(pixmap);
 
-	event_box = gtk_event_box_new();
-	gtk_widget_show(event_box);
-	gtk_widget_set_events(event_box, GDK_BUTTON_PRESS_MASK);
-	gtk_signal_connect(GTK_OBJECT(event_box), "button_press_event",
+	darea = gtk_drawing_area_new();
+	gtk_drawing_area_size(GTK_DRAWING_AREA(darea),
+			      pix[0]->rgb_width,pix[0]->rgb_height);
+	gtk_widget_set_events(darea, gtk_widget_get_events(darea) |
+			      GDK_BUTTON_PRESS_MASK);
+	gtk_signal_connect(GTK_OBJECT(darea), "button_press_event",
 			   GTK_SIGNAL_FUNC(fish_clicked_cb), NULL);
+	gtk_signal_connect_after(GTK_OBJECT(darea), "realized",
+			   GTK_SIGNAL_FUNC(fish_draw), NULL);
+	gtk_signal_connect(GTK_OBJECT(darea), "expose_event",
+			   GTK_SIGNAL_FUNC(fish_expose), NULL);
+        gtk_widget_show(darea);
 
         curpix = 0;
 
-        gtk_timeout_add(300,fish_timeout,pixmap);
+        gtk_timeout_add(300,fish_timeout,darea);
 
         frame = gtk_frame_new(NULL);
         gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_IN);
-        gtk_container_add(GTK_CONTAINER(event_box),pixmap);
-        gtk_container_add(GTK_CONTAINER(frame),event_box);
+        gtk_container_add(GTK_CONTAINER(frame),darea);
 
 	gtk_widget_pop_colormap ();
 	gtk_widget_pop_visual ();
@@ -243,7 +269,7 @@ about_cb (AppletWidget *widget, gpointer data)
 
 	about = gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4",
 			"(C) 1998 the Free Software Foundation",
-			authors,
+			(const gchar **)authors,
 			_("This applet has no use what-so-ever. "
 			  "It only takes up disk space and "
 			  "compilation time, and if loaded it also "
