@@ -11,14 +11,14 @@
 extern GlobalConfig global_config;
 
 static GConfEnumStringPair panel_speed_map [] = {
-        { PANEL_SPEED_MEDIUM, "panel-speed-medium" },
         { PANEL_SPEED_SLOW,   "panel-speed-slow" },
+        { PANEL_SPEED_MEDIUM, "panel-speed-medium" },
         { PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
 
 static GConfEnumStringPair panel_layer_map [] = {
-        { LAYER_NORMAL, "panel-normal-layer" },
         { LAYER_BELOW, "panel-below-layer" },
+        { LAYER_NORMAL, "panel-normal-layer" },
         { LAYER_ABOVE, "panel-above-layer" },
 };
 
@@ -39,6 +39,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 	key = g_path_get_basename (gconf_entry_get_key (entry));
 
+	g_return_if_fail (key != NULL);
 #ifdef PANEL_GLOBAL_CONFIG_DEBUG
 	fprintf (stderr, "global config: handling %s\n", key);
 #endif

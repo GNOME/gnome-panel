@@ -29,6 +29,7 @@
 #include <glade/glade.h>
 
 #include <gdk/gdkx.h>
+#include "panel-gconf.h"
 #include "global-keys.h"
 #include "panel-util.h"
 
@@ -48,12 +49,15 @@ GSList *applets;
 GladeXML *glade_gui;
 GConfClient *gconf_client;
 
-static GConfEnumStringPair global_properties_type_enum_map [] = {
+static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
 	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
-	{ PANEL_SPEED_FAST,   "panel-speed-fast" },	
-	{ LAYER_NORMAL, "panel-normal-layer" },
+	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
+};
+
+static GConfEnumStringPair global_properties_layer_type_enum_map [] = {
 	{ LAYER_BELOW, "panel-below-layer" },
+	{ LAYER_NORMAL, "panel-normal-layer" },
 	{ LAYER_ABOVE, "panel-above-layer" },
 };
 
@@ -215,12 +219,21 @@ checkbox_clicked (GtkWidget *widget, gpointer data)
 static void
 option_menu_changed (GtkWidget *widget, gpointer data)
 {
-	gchar *key = (gchar *)data;
+	gchar *key;
+	key = panel_gconf_global_key ((const gchar *) data);
 
-	gconf_client_set_string (gconf_client,key,
-				 gconf_enum_to_string (global_properties_type_enum_map,
-						       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
-				 NULL);	
+	if (strcmp (data, "panel-animation-speed") == 0) {
+		gconf_client_set_string (gconf_client, key,
+				         gconf_enum_to_string (global_properties_speed_type_enum_map,
+			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
+				 	 NULL);	
+	} else if (strcmp (data, "panel-window-layer") == 0) {
+		gconf_client_set_string (gconf_client, key,
+				         gconf_enum_to_string (global_properties_layer_type_enum_map,
+			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
+				 	 NULL);	
+	}
+	g_free (key);
 }
 
 static void
@@ -265,25 +278,32 @@ load_option_menus (void)
 				 NULL };
 	int i = 0;
 
-	while(optionmenus[i]!=NULL){
+	while (optionmenus[i] != NULL) {
 		GtkWidget *option;
 		gchar *key;
 		gint retval;
 
-        	option = glade_xml_get_widget(glade_gui,optionmenus[i]);
-        	key = g_strdup_printf("/apps/panel/global/%s",optionmenus[i]);
-		gconf_string_to_enum (global_properties_type_enum_map,
-				      gconf_client_get_string (gconf_client, key, NULL),
-				      &retval);
+        	option = glade_xml_get_widget (glade_gui,optionmenus[i]);
+        	key = panel_gconf_global_key (optionmenus[i]);
+		
+		if (strcmp (optionmenus[i], "panel-animation-speed") == 0) {
+			gconf_string_to_enum (global_properties_speed_type_enum_map,
+			      		      gconf_client_get_string (gconf_client, key, NULL),
+			                      &retval);
+		} else if (strcmp (optionmenus[i], "panel-window-layer") ==0) {
+			gconf_string_to_enum (global_properties_layer_type_enum_map,
+			      		      gconf_client_get_string (gconf_client, key, NULL),
+			                      &retval);
+		}
 
-        	gtk_option_menu_set_history(GTK_OPTION_MENU(option),
-					    retval);
+		g_free (key);
 
-        	g_signal_connect_data (G_OBJECT (option), "changed",
-				       G_CALLBACK (option_menu_changed),
-				       key,
-				       (GClosureNotify)g_free,
-				       0 /* connect_flags */);
+        	gtk_option_menu_set_history (GTK_OPTION_MENU (option),
+					     retval);
+
+        	g_signal_connect (option, "changed",
+				  G_CALLBACK (option_menu_changed),
+				  optionmenus[i]);
 		i++;
 	}
 }
@@ -334,7 +354,7 @@ setup_the_ui(GtkWidget *main_window)
 
 	glade_gui = glade_xml_new(glade_file, "main_notebook",NULL);
 	if (!glade_gui) {
-		g_warning("Error loading `%s'",glade_file);
+		g_warning("Error loading %s",glade_file);
 		return;
 	}
 	glade_xml_signal_autoconnect(glade_gui);

@@ -1,3 +1,18 @@
+2002-03-14  Glynn Foster  <glynn.foster@sun.com>
+
+	* Makefile.am: We now use panel_gconf_foo magic in 
+	gnome-panel-properties.
+
+	* gnome-panel-properties.c: (option_menu_changed),
+	(load_option_menus), (setup_the_ui): Fix the properties
+	dialog to correctly handle the option menus. Fixes 
+	#74027 [part of].
+	* panel-config-global.c: (panel_global_config_set_entry),
+	gnome-panel-properties.glade, panel-types.h: Re-order 
+	enums so that we are consistant everywhere.
+	* panel-global-config.schemas: Change default to have 
+	medium animation speed.
+
 2002-03-12  Glynn Foster  <glynn.foster@sun.com>
 
 	* menu.c: s/GNOME menu/GNOME Menu/

@@ -166,7 +166,7 @@ gnome_panel_LDADD =		\
 
 gnome_panel_LDFLAGS = -export-dynamic
 
-gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c
+gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c panel-gconf.c
 
 gnome_panel_properties_LDADD = $(X_LIBS) $(PANELCONFIG_LIBS)           
 

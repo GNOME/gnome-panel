@@ -29,8 +29,8 @@ typedef enum {
 } PanelBackType;
 
 typedef enum {
-	LAYER_NORMAL=0,
 	LAYER_BELOW,
+	LAYER_NORMAL,
 	LAYER_ABOVE
 } PanelLayer;
 
