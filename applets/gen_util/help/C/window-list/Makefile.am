@@ -1,6 +1,4 @@
-figs = \
-	figures/window_list_applet.png  \
-	figures/window_list_group.png 
+figdir = figures
 docname = window-list
 lang = C
 omffile = window-list-C.omf

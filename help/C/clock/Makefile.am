@@ -1,5 +1,4 @@
-figs = \
-	figures/clock_applet.png
+figdir = figures
 docname = clock
 lang = C
 omffile = clock-C.omf

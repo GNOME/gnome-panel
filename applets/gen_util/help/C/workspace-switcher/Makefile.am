@@ -1,4 +1,4 @@
-figs = figures/workspacelist_applet.png
+figdir = figures
 docname = workspace-switcher
 lang = C
 omffile = workspace-switcher-C.omf

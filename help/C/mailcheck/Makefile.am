@@ -1,7 +1,4 @@
-figs = \
-	figures/mailcheck-applet.png			\
-	figures/mailcheck-properties-mailbox.png	\
-	figures/mailcheck-properties-mailcheck.png
+figdir = figures
 docname = mailcheck
 lang = C
 omffile = mailcheck-C.omf
