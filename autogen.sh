@@ -4,7 +4,7 @@
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.
 
-PKG_NAME="GNOME 2.4 Panel"
+PKG_NAME="GNOME 2.5 Panel"
 
 (test -f $srcdir/configure.in \
   && test -f $srcdir/HACKING \
