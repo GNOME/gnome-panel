@@ -190,7 +190,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 					  pixmap_name, -1);
 		g_free(pixmap_name);
 		
-		add_menu_widget(menu, NULL, list, strcmp(menu->path,".")==0, TRUE);
+		add_menu_widget(menu, PANEL_WIDGET(menu->button->parent), list, strcmp(menu->path,".")==0, TRUE);
 		
 		g_free(this_menu);
 

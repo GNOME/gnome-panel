@@ -4242,7 +4242,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 
 	if (main_menu)
 		menu->menu = create_root_menu(
-			fake_subs, menu->main_menu_flags, FALSE,
+			fake_subs, menu->main_menu_flags, TRUE,
 			IS_BASEP_WIDGET (panel->panel_parent), TRUE);
 	else {
 		menu->menu = NULL;
@@ -4253,7 +4253,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		if(!menu->menu) {
 			g_warning(_("Can't create menu, using main menu!"));
 			menu->menu = create_root_menu(
-				fake_subs, menu->main_menu_flags, FALSE,
+				fake_subs, menu->main_menu_flags, TRUE,
 				IS_BASEP_WIDGET (panel->panel_parent),
 				TRUE);
 		}
@@ -4281,7 +4281,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 		GSList *list = g_slist_append(NULL,this_menu);
 		
 		add_menu_widget(menu, PANEL_WIDGET(menu->button->parent),
-				list, strcmp(menu->path,".")==0, TRUE);
+				list, strcmp(menu->path, ".")==0, TRUE);
 		
 		g_free(this_menu);
 
