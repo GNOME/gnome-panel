@@ -22,8 +22,8 @@ CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gno
 # try to make these get cleaned properly
 CLEANFILES += $(CORBA_SRCLIST)
 
-$(CORBA_SRCLIST): gnome-panel.idl
-	orbit-idl $(srcdir)/gnome-panel.idl
+$(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl
+	orbit-idl $(top_srcdir)/idl/gnome-panel.idl
 
 APPLET_LIB = orbit-applet-lib.c applet-lib.h
 

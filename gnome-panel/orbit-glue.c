@@ -503,10 +503,22 @@ static void orb_add_connection(GIOPConnection *cnx)
 						GDK_INPUT_READ|GDK_INPUT_EXCEPTION,
 						(GdkInputFunction)orb_handle_connection,
 						NULL, cnx, NULL);
+#if 0
+  g_message("Adding FD #%d (tag %d)", GIOP_CONNECTION_GET_FD(cnx),
+	    cnx->user_data);
+#endif
 }
 
 static void orb_remove_connection(GIOPConnection *cnx)
 {
+  if(cnx->user_data == (gpointer)-1)
+    return;
+
+#if 0
+  g_message("Removing FD #%d (tag %d)", GIOP_CONNECTION_GET_FD(cnx),
+	    cnx->user_data);
+#endif
+
   gtk_input_remove((guint)cnx->user_data);
   cnx->user_data = (gpointer)-1;
 }
