@@ -1384,6 +1384,8 @@ panel_setup(GtkWidget *panelw)
 		pd->type = DRAWER_PANEL;
 	else if(IS_SNAPPED_WIDGET(panelw))
 		pd->type = SNAPPED_PANEL;
+	else if(IS_CORNER_WIDGET(panelw))
+		pd->type = CORNER_PANEL;
 	else
 		g_warning("unknown panel type");
 	
@@ -1590,7 +1592,7 @@ init_user_panels(void)
 				CornerPos pos;
 				PanelOrientation orient;
 				CornerState state;
-
+				
 				g_snprintf(buf,256,"pos=%d", CORNER_NE);
 				pos=gnome_config_get_int(buf);
 

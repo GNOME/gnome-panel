@@ -148,13 +148,15 @@ corner_widget_set_position(CornerWidget *corner)
 		if(panel->orient == PANEL_HORIZONTAL) {
 			newy = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newx = gdk_screen_width() - corner->hidebutton_w->allocation.width;
+				newx = gdk_screen_width() -
+					corner->hidebutton_w->allocation.width;
 			else /*shown*/
 				newx = gdk_screen_width() - width;
 		} else { /*vertical*/
 			newx = gdk_screen_width() - width;
 			if(corner->state == CORNER_HIDDEN)
-				newy = corner->hidebutton_s->allocation.height - height;
+				newy = corner->hidebutton_s->allocation.height -
+					height;
 			else /*shown*/
 				newy = 0;
 		}
@@ -163,7 +165,8 @@ corner_widget_set_position(CornerWidget *corner)
 		if(panel->orient == PANEL_HORIZONTAL) {
 			newy = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
-				newx = gdk_screen_width() - corner->hidebutton_w->allocation.width;
+				newx = gdk_screen_width() -
+					corner->hidebutton_w->allocation.width;
 			else /*shown*/
 				newx = gdk_screen_width() - width;
 		} else { /*vertical*/
@@ -179,7 +182,8 @@ corner_widget_set_position(CornerWidget *corner)
 		if(panel->orient == PANEL_HORIZONTAL) {
 			newy = gdk_screen_height() - height;
 			if(corner->state == CORNER_HIDDEN)
-				newx = corner->hidebutton_e->allocation.width - width;
+				newx = corner->hidebutton_e->allocation.width -
+					width;
 			else /*shown*/
 				newx = 0;
 		} else { /*vertical*/
@@ -195,13 +199,15 @@ corner_widget_set_position(CornerWidget *corner)
 		if(panel->orient == PANEL_HORIZONTAL) {
 			newy = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newx = corner->hidebutton_e->allocation.width - width;
+				newx = corner->hidebutton_e->allocation.width -
+					width;
 			else /*shown*/
 				newx = 0;
 		} else { /*vertical*/
 			newx = 0;
 			if(corner->state == CORNER_HIDDEN)
-				newy = corner->hidebutton_s->allocation.height - height;
+				newy = corner->hidebutton_s->allocation.height -
+					height;
 			else /*shown*/
 				newy = 0;
 		}
@@ -247,6 +253,7 @@ move_horiz(CornerWidget *corner, int src_x, int dest_x, int step)
 	}
 	
 	move_window(w, dest_x, y);
+	printf("%d,%d\n",dest_x,y);
 }
 
 
@@ -272,6 +279,7 @@ move_vert(CornerWidget *corner, int src_y, int dest_y, int step)
 	}
 
 	move_window(w, x, dest_y);
+	printf("%d,%d\n",x,dest_y);
 }
 
 static void
@@ -294,8 +302,9 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 				   corner->hidebutton_w->allocation.width, 0,
 				   pw_explicit_step);
 		else
-			move_horiz(corner, width -
-				   corner->hidebutton_e->allocation.width, 0,
+			move_horiz(corner, gdk_screen_width() -
+				   corner->hidebutton_e->allocation.width, 
+				   gdk_screen_width() - width,
 				   pw_explicit_step);
 	} else {
 		if(fromright)
@@ -303,8 +312,9 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 				  corner->hidebutton_s->allocation.height, 0,
 				  pw_explicit_step);
 		else
-			move_vert(corner, height -
-				  corner->hidebutton_n->allocation.height, 0,
+			move_vert(corner, gdk_screen_height() -
+				  corner->hidebutton_n->allocation.height, 
+				  gdk_screen_height() - height,
 				  pw_explicit_step);
 	}
 
@@ -339,7 +349,8 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 				   corner->hidebutton_w->allocation.width,
 				   pw_explicit_step);
 		else
-			move_horiz(corner, 0, width -
+			move_horiz(corner, gdk_screen_width() - width,
+				   gdk_screen_width() -
 				   corner->hidebutton_e->allocation.width,
 				   pw_explicit_step);
 	} else {
@@ -348,12 +359,41 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 				  corner->hidebutton_s->allocation.height,
 				  pw_explicit_step);
 		else
-			move_vert(corner, 0, height -
+			move_vert(corner, gdk_screen_height() - height,
+				  gdk_screen_height() -
 				  corner->hidebutton_n->allocation.height,
 				  pw_explicit_step);
 	}
 
 	corner->state = CORNER_HIDDEN;
+}
+
+static int
+is_west(CornerWidget *corner)
+{
+	if(corner->pos == CORNER_NW ||
+	   corner->pos == CORNER_SW)
+		return TRUE;
+	return FALSE;
+}
+
+static int
+is_north(CornerWidget *corner)
+{
+	if(corner->pos == CORNER_NE ||
+	   corner->pos == CORNER_NW)
+		return TRUE;
+	return FALSE;
+}
+
+static int
+is_right(CornerWidget *corner)
+{
+	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	if((panel->orient == PANEL_HORIZONTAL && !is_west(corner)) ||
+	   (panel->orient == PANEL_VERTICAL && !is_north(corner)))
+		return TRUE;
+	return FALSE;
 }
 
 static int
@@ -364,10 +404,13 @@ corner_show_hide_right(GtkWidget *widget, gpointer data)
 	gtk_widget_queue_draw(widget);
 	if(corner->state == CORNER_MOVING) 
 		return FALSE;
-	else if(corner->state == CORNER_SHOWN)
-		corner_widget_pop_hide(corner,TRUE);
-	else
-		corner_widget_pop_show(corner,FALSE);
+	else if(corner->state == CORNER_SHOWN) {
+		if(!is_right(corner))
+			corner_widget_pop_hide(corner,TRUE);
+	} else {
+		if(is_right(corner))
+			corner_widget_pop_show(corner,FALSE);
+	}
 	return FALSE;
 }
 
@@ -379,10 +422,13 @@ corner_show_hide_left(GtkWidget *widget, gpointer data)
 	gtk_widget_queue_draw(widget);
 	if(corner->state == CORNER_MOVING) 
 		return FALSE;
-	else if(corner->state == CORNER_SHOWN)
-		corner_widget_pop_hide(corner,FALSE);
-	else
-		corner_widget_pop_show(corner,TRUE);
+	else if(corner->state == CORNER_SHOWN) {
+		if(is_right(corner))
+			corner_widget_pop_hide(corner,FALSE);
+	} else {
+		if(!is_right(corner))
+			corner_widget_pop_show(corner,TRUE);
+	}
 	return FALSE;
 }
 
