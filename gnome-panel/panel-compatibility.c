@@ -36,14 +36,14 @@ typedef enum {
 	PANEL_ORIENT_UP    = GNOME_Vertigo_PANEL_ORIENT_UP,
 	PANEL_ORIENT_DOWN  = GNOME_Vertigo_PANEL_ORIENT_DOWN,
 	PANEL_ORIENT_LEFT  = GNOME_Vertigo_PANEL_ORIENT_LEFT,
-	PANEL_ORIENT_RIGHT = GNOME_Vertigo_PANEL_ORIENT_RIGHT,
+	PANEL_ORIENT_RIGHT = GNOME_Vertigo_PANEL_ORIENT_RIGHT
 } PanelOrient;
 
 static GConfEnumStringPair panel_orient_map [] = {
 	{ PANEL_ORIENT_UP,    "panel-orient-up" },
 	{ PANEL_ORIENT_DOWN,  "panel-orient-down" },
 	{ PANEL_ORIENT_LEFT,  "panel-orient-left" },
-	{ PANEL_ORIENT_RIGHT, "panel-orient-right" },
+	{ PANEL_ORIENT_RIGHT, "panel-orient-right" }
 };
 
 static gboolean

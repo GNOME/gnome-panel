@@ -38,7 +38,7 @@ G_BEGIN_DECLS
 
 typedef enum {
 	PANEL_XUTILS_TYPE_NORMAL,
-	PANEL_XUTILS_TYPE_DOCK,
+	PANEL_XUTILS_TYPE_DOCK
 } PanelXUtilsWindowType;
 
 void panel_xutils_set_window_type (GdkWindow             *gdk_window,

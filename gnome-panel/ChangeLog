@@ -1,3 +1,21 @@
+2004-01-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from The Written Word in bug #131609.
+	
+	* gnome-panel-screenshot.c: (main): don't initialize
+	with a non-constant address.
+	
+	* button-widget.c, panel-applet-frame.c,
+	  panel-compatibility.c, panel-enums.h,
+	  panel-toplevel.c, panel-xutils.h,
+	  panel.c: remove trailing commas from enums.
+	
+	* panel-menu-bar.c: remove unsused enum.
+	
+	* panel-profile.c: (panel_profile_get_commit_timeout),
+	  quick-desktop-reader.c: (guess_encoding):
+	don't return const ints.
+
 ==================== 2.5.3.1 ====================
 
 ==================== 2.5.3 ====================

@@ -324,7 +324,7 @@ panel_profile_set_commit_timeout (PanelToplevel *toplevel,
 			    GUINT_TO_POINTER (timeout));
 }
 
-static const guint
+static guint
 panel_profile_get_commit_timeout (GObject *object)
 {
 	if (!commit_timeout_quark)

@@ -180,7 +180,7 @@ enum {
 	ENCODING_LEGACY_MIXED
 };
 
-static const int
+static int
 guess_encoding (const char *uri,
 		const char *name,
 		const char *comment,

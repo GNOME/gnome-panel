@@ -81,7 +81,7 @@ typedef enum {
 	APPLET_FLAGS_NONE   = 0,
 	APPLET_EXPAND_MAJOR = 1 << 0,
 	APPLET_EXPAND_MINOR = 1 << 1,
-	APPLET_HAS_HANDLE   = 1 << 2,
+	APPLET_HAS_HANDLE   = 1 << 2
 } PanelAppletFlags;
 
 static void

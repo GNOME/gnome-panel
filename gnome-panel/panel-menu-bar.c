@@ -43,10 +43,6 @@
 
 #define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_DISTRIBUTION_SUB)
 
-enum {
-	PROP_0,
-};
-
 struct _PanelMenuBarPrivate {
 	AppletInfo            *info;
 	PanelWidget           *panel;
