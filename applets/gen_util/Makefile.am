@@ -29,13 +29,13 @@ PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.xpm email-e.xpm
 
 EXTRA_DIST = clock_applet.desktop	\
-	     mailcheck_applet.desktop	\
-	     printer.desktop		\
-	     $PRINTER_BITMAPS		\
-	     $MAILCHECK_BITMAPS
+             mailcheck_applet.desktop	\
+             printer.desktop		\
+             $(PRINTER_BITMAPS)		\
+             $(MAILCHECK_BITMAPS)
 
 mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
-mailcheckbitmaps_DATA = $MAILCHECK_BITMAPS
+mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 
 clocksysdir = $(datadir)/applets/Utility
 clocksys_DATA = clock_applet.desktop
