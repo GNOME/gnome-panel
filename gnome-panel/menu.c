@@ -2422,7 +2422,6 @@ remove_panel (GtkWidget *w, gpointer data)
 {
 	BasePWidget *basep;
 	PanelWidget *panel;
-	g_return_if_fail (IS_BASEP_WIDGET (data));
 
 	panel = get_panel_from_menu_data(w);
 	
