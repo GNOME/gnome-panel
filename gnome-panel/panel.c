@@ -162,18 +162,8 @@ static GConfEnumStringPair panel_speed_type_enum_map [] = {
 };
 
 static void
-change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
-{
-	GdkCursor *cursor = gdk_cursor_new (cursor_type);
-	gdk_window_set_cursor (window, cursor);
-	gdk_cursor_unref (cursor);
-}
-
-static void
 panel_realize (GtkWidget *widget, gpointer data)
 {
-	change_window_cursor (widget->window, GDK_LEFT_PTR);
-	
 	if (BASEP_IS_WIDGET (widget))
 		basep_widget_enable_buttons(BASEP_WIDGET(widget), TRUE);
 	else if (FOOBAR_IS_WIDGET (widget))
