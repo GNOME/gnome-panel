@@ -1,6 +1,7 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish netload dialer webcontrol icewm-pager \
-	 drivemount clockmail fifteen battery charpick 
+	 drivemount clockmail fifteen battery charpick \
+	 slashapp
 
 if HAVE_LIBGTOP
 libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload
