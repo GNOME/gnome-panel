@@ -5,6 +5,11 @@
 
 BEGIN_GNOME_DECLS
 
+/*all the cfgpaths in this interface are load paths (might be an old
+  session different from current) ... except the save_session which gets
+  the current session stuff (not in this file, but implemented in any
+  applet)*/
+
 typedef void (*AppletCallbackFunc)(int applet_id, gpointer data);
 
 char *gnome_panel_applet_request_id (char *path, int *applet_id,

@@ -55,16 +55,16 @@ typedef struct {
 } Properties;
 
 static Launcher *
-find_launcher(int id)
+find_launcher(int applet_id)
 {
 	GList *list;
 
-	if(id < 0)
+	if(applet_id < 0)
 		return NULL;
 
 	for(list=launchers;list!=NULL;list=g_list_next(list)) {
 		Launcher *l = list->data;
-		if(l->applet_id == id)
+		if(l->applet_id == applet_id)
 			return l;
 	}
 
@@ -362,14 +362,14 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 }
 
 static void
-properties(gint id, gpointer data)
+properties(gint applet_id, gpointer data)
 {
 	GnomeDesktopEntry *dentry;
 	char              *path;
 	GtkWidget         *dialog;
 	Launcher          *launcher;
 
-	launcher = find_launcher(id);
+	launcher = find_launcher(applet_id);
 
 	path = launcher->dentry->location;
 
@@ -387,18 +387,18 @@ properties(gint id, gpointer data)
 
 /*these are commands sent over corba:*/
 void
-change_orient(int id, int orient)
+change_orient(int applet_id, int orient)
 {
 	/*PanelOrientType o = (PanelOrientType)orient;*/
 }
 
 void
-session_save(int id, const char *cfgpath, const char *globcfgpath)
+session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 {
 	char *query;
 	Launcher *launcher;
 
-	launcher = find_launcher(id);
+	launcher = find_launcher(applet_id);
 
 	g_return_if_fail(launcher != NULL);
 
@@ -418,9 +418,9 @@ session_save(int id, const char *cfgpath, const char *globcfgpath)
 }
 
 void
-shutdown_applet(int id)
+shutdown_applet(int applet_id)
 {
-	Launcher *launcher = find_launcher(id);
+	Launcher *launcher = find_launcher(applet_id);
 
 	g_return_if_fail(launcher != NULL);
 

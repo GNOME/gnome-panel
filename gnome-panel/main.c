@@ -29,6 +29,7 @@ GList *applets = NULL;
 extern GtkWidget * root_menu;
 
 char *panel_cfg_path=NULL;
+char *old_panel_cfg_path=NULL;
 
 GtkTooltips *panel_tooltips = NULL;
 
@@ -54,6 +55,36 @@ struct _LoadApplet {
 
 GList *load_queue=NULL;
 	
+/* True if parsing determined that all the work is already done.  */
+int just_exit = 0;
+
+/* These are the arguments that our application supports.  */
+static struct argp_option arguments[] =
+{
+#define DISCARD_KEY -1
+  { "discard-session", DISCARD_KEY, N_("ID"), 0, N_("Discard session"), 1 },
+  { NULL, 0, NULL, 0, NULL, 0 }
+};
+
+/* Forward declaration of the function that gets called when one of
+   our arguments is recognized.  */
+static error_t parse_an_arg (int key, char *arg, struct argp_state *state);
+
+/* This structure defines our parser.  It can be used to specify some
+   options for how our parsing function should be called.  */
+static struct argp parser =
+{
+  arguments,			/* Options.  */
+  parse_an_arg,			/* The parser function.  */
+  NULL,				/* Some docs.  */
+  NULL,				/* Some more docs.  */
+  NULL,				/* Child arguments -- gnome_init fills
+				   this in for us.  */
+  NULL,				/* Help filter.  */
+  NULL				/* Translation domain; for the app it
+				   can always be NULL.  */
+};
+
 
 /*needed for drawers*/
 static void panel_setup(PanelWidget *panel);
@@ -203,23 +234,24 @@ init_user_applets(void)
 	char  buf[256];
 	int   count,num;	
 
-	count=gnome_config_get_int("/panel/Config/applet_count=0");
+	sprintf(buf,"%sConfig/applet_count=0",old_panel_cfg_path);
+	count=gnome_config_get_int(buf);
 	if(count<=0)
 		load_default_applets();
 	for(num=1;num<=count;num++) {
-		sprintf(buf,"/panel/Applet_%d/id=Unknown",num);
+		sprintf(buf,"%sApplet_%d/id=Unknown",old_panel_cfg_path,num);
 		applet_name = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Applet_%d/parameters=",num);
+		sprintf(buf,"%sApplet_%d/parameters=",old_panel_cfg_path,num);
 		applet_params = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Applet_%d/position=%d",num,
+		sprintf(buf,"%sApplet_%d/position=%d",old_panel_cfg_path,num,
 			PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Applet_%d/panel=0",num);
+		sprintf(buf,"%sApplet_%d/panel=0",old_panel_cfg_path,num);
 		panel = gnome_config_get_int(buf);
 
 		/*this is the config path to be passed to the applet when it
 		  loads*/
-		sprintf(buf,"/panel/Applet_%d/",num);
+		sprintf(buf,"%sApplet_%d/",old_panel_cfg_path,num);
 		queue_load_applet(applet_name, applet_params, pos, panel, buf);
 		g_free(applet_name);
 		g_free(applet_params);
@@ -617,7 +649,8 @@ init_user_panels(void)
 	PanelState state;
 	DrawerDropZonePos drop_pos;
 
-	count=gnome_config_get_int("/panel/Config/panel_count=0");
+	sprintf(buf,"%sConfig/panel_count=%d",old_panel_cfg_path,num);
+	count=gnome_config_get_int(buf);
 	if(count<=0) count++; /*this will load up a single panel with
 				default settings*/
 
@@ -628,30 +661,31 @@ init_user_panels(void)
 
 	for(num=1;num<=count;num++) {
 		/*these are only for free floating non-drawer like panels */
-		sprintf(buf,"/panel/Panel_%d/size=%d",num, 50);
+		sprintf(buf,"%sPanel_%d/size=%d",old_panel_cfg_path,num, 50);
 		size=gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Panel_%d/position_x=0",num);
+		sprintf(buf,"%sPanel_%d/position_x=0",old_panel_cfg_path,num);
 		x=gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Panel_%d/position_y=0",num);
+		sprintf(buf,"%sPanel_%d/position_y=0",old_panel_cfg_path,num);
 		y=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/snapped=%d",num,
+		sprintf(buf,"%sPanel_%d/snapped=%d",old_panel_cfg_path,num,
 			PANEL_BOTTOM);
 		config.snapped=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/orient=%d",num,
+		sprintf(buf,"%sPanel_%d/orient=%d",old_panel_cfg_path,num,
 			PANEL_HORIZONTAL);
 		config.orient=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/mode=%d",num,
+		sprintf(buf,"%sPanel_%d/mode=%d",old_panel_cfg_path,num,
 			PANEL_EXPLICIT_HIDE);
 		config.mode=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/state=%d",num,
+		sprintf(buf,"%sPanel_%d/state=%d",old_panel_cfg_path,num,
 			PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
-		sprintf(buf,"/panel/Panel_%d/drawer_drop_zone_pos=%d",num,
+		sprintf(buf,"%sPanel_%d/drawer_drop_zone_pos=%d",
+			old_panel_cfg_path,num,
 			DRAWER_LEFT);
 		drop_pos=gnome_config_get_int(buf);
 
@@ -681,16 +715,91 @@ call_launcher_timeout(gpointer data)
 
 	return !(panel_corba_restart_launchers());
 }
+
+/*I guess this should be called after we load up, but the problem is
+  we never know when all the applets are going to finish loading and
+  we don't want to clean the file before they load up, so now we
+  only call it on the discard cmdline argument*/
+void
+discard_session (gchar *id)
+{
+  gchar *sess;
+
+  sess = g_copy_strings ("/panel-Session-", id, NULL);
+
+  gnome_config_clean_file (sess);
+  gnome_config_sync ();
+
+  g_free (sess);
+  return;
+}
+
 	
+static error_t
+parse_an_arg (int key, char *arg, struct argp_state *state)
+{
+  if (key == DISCARD_KEY)
+    {
+      discard_session (arg);
+      just_exit = 1;
+      return 0;
+    }
+
+  /* We didn't recognize it.  */
+  return ARGP_ERR_UNKNOWN;
+}
+
+static void
+panel_connect_client (GnomeClient *client,
+		      gint was_restarted,
+		      gpointer client_data)
+{
+	gchar *session_id;
+
+	session_id = gnome_client_get_previous_id (client);
+	
+	if(session_id) {
+		g_free(old_panel_cfg_path);
+		old_panel_cfg_path = g_copy_strings("/panel-Session-",
+						    session_id,"/",NULL);
+	}
+
+	session_id = gnome_client_get_id (client);
+	if(session_id) {
+		g_free(panel_cfg_path);
+		panel_cfg_path = g_copy_strings("/panel-Session-",session_id,
+						"/",NULL);
+	}
+}
+	
+
+
 
 int
 main(int argc, char **argv)
 {
 	char buf[256];
 
+	panel_cfg_path = g_strdup("/panel/");
+	old_panel_cfg_path = g_strdup("/panel/");
+
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
+	client = gnome_client_new_default ();
+
+	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
+			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
+	gtk_signal_connect (GTK_OBJECT (client), "connect",
+			    GTK_SIGNAL_FUNC (panel_connect_client), NULL);
+
+	panel_corba_register_arguments ();
+
+	gnome_init("panel", &parser, argc, argv, 0, NULL);
+
+	if (just_exit)
+		return 0;
+	
 #ifdef USE_INTERNAL_LAUNCHER
 	launcher_pid=fork();
 
@@ -703,32 +812,22 @@ main(int argc, char **argv)
 	}
 #endif
 
-	client = gnome_client_new_default ();
-	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
-
-	panel_corba_register_arguments ();
-
-	gnome_init("panel", NULL, argc, argv, 0, NULL);
-
-	/*FIXME: this should be session specific*/
-	panel_cfg_path = g_strdup("/panel/");
-
 	/*set up global options*/
-	global_config.tooltips_enabled =
-		gnome_config_get_bool("/panel/Config/tooltips_enabled=TRUE");
-	global_config.show_small_icons =
-		gnome_config_get_bool("/panel/Config/show_small_icons=TRUE");
-	sprintf(buf,"/panel/Config/auto_hide_step_size=%d",
+	
+	sprintf(buf,"%sConfig/tooltips_enabled=TRUE",old_panel_cfg_path);
+	global_config.tooltips_enabled = gnome_config_get_bool(buf);
+	sprintf(buf,"%sConfig/show_small_icons=TRUE",old_panel_cfg_path);
+	global_config.show_small_icons = gnome_config_get_bool(buf);
+	sprintf(buf,"%sConfig/auto_hide_step_size=%d",old_panel_cfg_path,
 		DEFAULT_AUTO_HIDE_STEP_SIZE);
 	global_config.auto_hide_step_size=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/explicit_hide_step_size=%d",
+	sprintf(buf,"%sConfig/explicit_hide_step_size=%d",old_panel_cfg_path,
 		DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
 	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/minimize_delay=%d",
+	sprintf(buf,"%sConfig/minimize_delay=%d",old_panel_cfg_path,
 		DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/minimized_size=%d",
+	sprintf(buf,"%sConfig/minimized_size=%d",old_panel_cfg_path,
 		DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf);
 

@@ -40,6 +40,7 @@ extern GList *small_icons;
 extern GlobalConfig global_config;
 
 extern char *panel_cfg_path;
+extern char *old_panel_cfg_path;
 
 #ifdef USE_INTERNAL_LAUNCHER
 extern int launcher_pid;
@@ -75,9 +76,8 @@ find_panel(PanelWidget *panel)
 static void
 save_applet_configuration(gpointer data, gpointer user_data)
 {
-	char          *path;
 	char          *fullpath;
-	char           buf[256];
+	char           path[256];
 	AppletInfo    *info = data;
 	int           *num = user_data;
 	int            pos;
@@ -100,8 +100,7 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	if(pos == -1)
 		return;
 
-	sprintf(buf, "_%d/", (*num)++);
-	path = g_copy_strings("/panel/Applet", buf, NULL);
+	sprintf(path, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
 	if(info->type==APPLET_EXTERN) {
 		fullpath = g_copy_strings(path,"id",NULL);
@@ -157,22 +156,18 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		}
 		g_free(fullpath);
 	}
-
-	g_free(path);
 }
 
 static void
 save_panel_configuration(gpointer data, gpointer user_data)
 {
-	char          *path;
 	char          *fullpath;
-	char           buf[256];
+	char           path[256];
 	int            x,y;
 	int           *num = user_data;
 	PanelWidget   *panel = data;
 
-	sprintf(buf, "_%d/", (*num)++);
-	path = g_copy_strings("/panel/Panel", buf, NULL);
+	sprintf(path, "%sPanel_%d/", panel_cfg_path, (*num)++);
 
 	fullpath = g_copy_strings(path,"orient",NULL);
 	gnome_config_set_int(fullpath,panel->orient);
@@ -208,8 +203,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	fullpath = g_copy_strings(path,"drawer_drop_zone_pos",NULL);
 	gnome_config_set_int(fullpath,panel->drawer_drop_zone_pos);
 	g_free(fullpath);
-
-	g_free(path);
 }
 
 static void
@@ -222,6 +215,8 @@ destroy_widget_list(gpointer data, gpointer user_data)
    can also be run directly when we don't detect a session manager.
    We assume no interaction is done by the applets.  And we ignore the
    other arguments for now.  Yes, this is lame.  */
+/* update: some SM stuff implemented but we still ignore most of the
+   arguments now*/
 gint
 panel_session_save (GnomeClient *client,
 		    gint phase,
@@ -234,7 +229,10 @@ panel_session_save (GnomeClient *client,
 	gint num;
 	char buf[256];
 
-	for(num=gnome_config_get_int("/panel/Config/applet_count=0");
+	/*we can clean the whole file right????*/
+	gnome_config_clean_file(panel_cfg_path);
+
+	/*for(num=gnome_config_get_int("/panel/Config/applet_count=0");
 		num>0;num--) {
 		sprintf(buf,"/panel/Applet_%d",num);
 		if(gnome_config_has_section(buf))
@@ -251,28 +249,30 @@ panel_session_save (GnomeClient *client,
 		sprintf(buf,"/panel/Panel_%d",num);
 		if(gnome_config_has_section(buf))
 			gnome_config_clean_section(buf);
-	}
+	}*/
 
 	num = 1;
 	g_list_foreach(applets,save_applet_configuration,&num);
-	gnome_config_set_int("/panel/Config/applet_count",num-1);
+	sprintf(buf,"%sConfig/applet_count",panel_cfg_path);
+	gnome_config_set_int(buf,num-1);
 	num = 1;
 	g_list_foreach(panels,save_panel_configuration,&num);
-	gnome_config_set_int("/panel/Config/panel_count",num-1);
+	sprintf(buf,"%sConfig/panel_count",panel_cfg_path);
+	gnome_config_set_int(buf,num-1);
 
 	/*global options*/
-	gnome_config_set_int("/panel/Config/auto_hide_step_size",
-			     global_config.auto_hide_step_size);
-	gnome_config_set_int("/panel/Config/explicit_hide_step_size",
-			     global_config.explicit_hide_step_size);
-	gnome_config_set_int("/panel/Config/minimized_size",
-			     global_config.minimized_size);
-	gnome_config_set_int("/panel/Config/minimize_delay",
-			     global_config.minimize_delay);
-	gnome_config_set_bool("/panel/Config/tooltips_enabled",
-			      global_config.tooltips_enabled);
-	gnome_config_set_bool("/panel/Config/show_small_icons",
-			      global_config.show_small_icons);
+	sprintf(buf,"%sConfig/auto_hide_step_size",panel_cfg_path);
+	gnome_config_set_int(buf, global_config.auto_hide_step_size);
+	sprintf(buf,"%sConfig/explicit_hide_step_size",panel_cfg_path);
+	gnome_config_set_int(buf, global_config.explicit_hide_step_size);
+	sprintf(buf,"%sConfig/minimized_size",panel_cfg_path);
+	gnome_config_set_int(buf, global_config.minimized_size);
+	sprintf(buf,"%sConfig/minimize_delay",panel_cfg_path);
+	gnome_config_set_int(buf, global_config.minimize_delay);
+	sprintf(buf,"%sConfig/tooltips_enabled",panel_cfg_path);
+	gnome_config_set_bool(buf, global_config.tooltips_enabled);
+	sprintf(buf,"%sConfig/show_small_icons",panel_cfg_path);
+	gnome_config_set_bool(buf, global_config.show_small_icons);
 
 	gnome_config_sync();
 
@@ -305,6 +305,11 @@ panel_session_save (GnomeClient *client,
 
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
+
+#ifdef USE_INTERNAL_LAUNCHER
+		puts("killing launcher");
+		kill(launcher_pid,SIGTERM);
+#endif
 	}
 
 	/* Always successful.  */
@@ -317,10 +322,6 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
-#ifdef USE_INTERNAL_LAUNCHER
-		puts("killing launcher");
-		kill(launcher_pid,SIGTERM);
-#endif
 		gtk_exit (0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
@@ -696,7 +697,7 @@ applet_request_id (const char *path, char **cfgpath,
 			  for it, including the socket widget*/
 			*cfgpath = info->cfg;
 			info->cfg = NULL;
-			*globcfgpath = g_strdup(panel_cfg_path);
+			*globcfgpath = g_strdup(old_panel_cfg_path);
 			info->type = APPLET_EXTERN_RESERVED;
 			*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
 			return i;
@@ -706,14 +707,14 @@ applet_request_id (const char *path, char **cfgpath,
 	*winid = reserve_applet_spot (EXTERN_ID, path, 0, 0, NULL,
 				      APPLET_EXTERN_RESERVED);
 	*cfgpath = NULL;
-	*globcfgpath = g_strdup(panel_cfg_path);
+	*globcfgpath = g_strdup(old_panel_cfg_path);
 	return i;
 }
 
 void
 applet_request_glob_cfg (char **globcfgpath)
 {
-	*globcfgpath = g_strdup(panel_cfg_path);
+	*globcfgpath = g_strdup(old_panel_cfg_path);
 }
 
 void

@@ -88,7 +88,7 @@ main(int argc, char *argv[])
 		g_error("Could not communicate with the panel\n");
 
 	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
-					  &cfgpath, &globcfgpath,
+					       &cfgpath, &globcfgpath,
 					       &winid);
 	if (result)
 		g_error("Could not talk to the panel: %s\n", result);
