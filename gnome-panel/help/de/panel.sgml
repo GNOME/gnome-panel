@@ -435,68 +435,65 @@
   <!-- ########### Main Menu ############## -->
 
   <sect1 id="mainmenu">
-    <title>The Main Menu</title>
+    <title>Das Hauptmenü</title>
     <para>
-     <indexterm id="idx-a3">  <primary>Main Menu</primary>
+      <indexterm id="idx-a3">
+	<primary>Hauptmenü</primary>
       </indexterm>
-    The footprint icon seen towards the left end of the example
-    <interface>Panel</interface> (see <xref
-	linkend="examplepanelfig">) and in <xref
-	linkend="main-menu-button-fig"> is the   <guibutton>Main
-    Menu</guibutton> (yes, you guessed  right, it is the footprint of
-    the gnome). This menu provides access to almost all GNOME
-    features  &mdash; all the applications, configuration tools,
-    command line prompt, <guimenuitem>Logout</guimenuitem> and
-    <guimenuitem>Lock Screen</guimenuitem> commands, and much more.
-    To access any of these items, click on the <guibutton>Main
-    Menu</guibutton> button. You should release the mouse after
-    pressing the <guibutton>Main Menu</guibutton> button so that you
-    can take advantage of other mouse-activated features in the
-    <guimenu>Main Menu</guimenu> such as right-click pop-up menus and
-    drag-and-drop from the menu to the desktop or
-    <interface>Panel</interface>.
-   </para>
+      Das Fußabdrucks-Icon auf der linken Seite des
+      Beispiel-<interface>Panels</interface>
+      (siehe <xref linkend="examplepanelfig">) und in
+      <xref linkend="main-menu-button-fig"> ist das
+      <guibutton>Hauptmenü</guibutton> (ja, Sie haben richtig geraten,
+      es ist der Fußabdruck Gnoms). Dieses Menü bietet Zugang zu nahezu
+      allen GNOME-Features &mdash; alle Applikationen, Konfigurationswerkzeuge,
+      Eingabeaufforderung, <guimenuitem>Abmelde</guimenuitem> und
+      <guimenuitem>Bildschirm sperren</guimenuitem> Befehle, und vieles mehr.
+      Um irgendwelche dieser Funktionen zu benutzen, klicken Sie einfach auf
+      den <guibutton>Hauptmenü</guibutton>-Knopf. Sie sollten die Maus
+      loslassen, nachdem Sie auf den <guibutton>Hauptmenü</guibutton>-Knopf
+      geklickt haben, um die anderen mausbasierten Features dieses Menüs wie
+      etwa Kontext-Menüs sowie Drag&amp;Drop vom Menü zum Desktop oder
+      <interface>Panel</interface> zu benutzen.
+    </para>
     <figure id="main-menu-button-fig">
-      <title>The Main Menu Button</title>
+      <title>Der Hauptmenü-Knopf</title>
       <screenshot>
-	<screeninfo>The Main Menu Button</screeninfo>
+	<screeninfo>Der Hauptmenü-Knopf</screeninfo>
 	<graphic fileref="./figures/mm-button" format="png"
        srccredit="dcm">
        </graphic>
       </screenshot>
     </figure>
-    <para>   You can  have several <guibutton>Main
-     Menu</guibutton> buttons on different
-     <interface>Panels</interface>; all of them can be configured
-     independently.
+    <para>
+      Sie können mehrere <guibutton>Hauptmenü</guibutton>-Knöpfe in
+      verschiedenen <interface>Panels</interface> haben und jedem davon
+      separat konfigurieren.
     </para>
 
     <sect2 id="globalmenu">
-      <title>Global menu</title>
+      <title>Globales Menü</title>
       <para>
-     In addition to the <guimenu>Main Menu</guimenu> which you get by
-     clicking of the foot icon, GNOME also provides a <guimenu>Global
-     Menu</guimenu>, which contains the same commands but is not
-     linked to any button. To access the  <guimenu>Global
-     Menu</guimenu>, right-click on any empty place on the
-     <interface>Panel</interface>. You can also  access  
-      the <guimenu>Global  Menu</guimenu> by  pressing  the
-      <keycap>Menu</keycap> key on your keyboard (if you are using a
-      standard PC keyboard, this key usually is located to the left of
-      the space bar and labelled with a picture of a menu); you can
-      change the default key for activating the <guimenu>Global 
-      Menu</guimenu> in the <link
-      linkend="misctab"><guilabel>Miscellaneous</guilabel></link> tab
-      of the <interface><link linkend="globalpanelprefs">Global Panel
-      Preferences</link> dialog</interface>.
+	Zusätzlich zum <guimenu>Hauptmenü</guimenu>, das Sie durch Klick
+	auf das Fußabdrucks-Icon erhalten, bietet GNOME außerdem ein
+	<guimenu>Globales Menü</guimenu>, das dieselbem Befehle enthält,
+	aber nicht mit irgendeinem Knopf verknüpft ist. Um das
+	<guimenu>Globale Menü</guimenu> zu benutzen, klicken Sie mit der
+	rechten Maustaste auf einen freien Bereich im
+	<interface>Panel</interface>. Sie können es ebenfalls mit Hilfe der
+	<keycap>Menü</keycap>-Taste auf Ihrer Tastatur (wenn Sie eine
+	Standard PC-Tastatur haben, befindet sich diese Taste normalerweise
+	links neben der Leertaste und trägt das Bild eines Menüs) aktivieren;
+	dies zur Aktivierung dieses Menüs benutzte Taste läßt sich jedoch auch
+	unter <link linkend="misctab"><guilabel>Verschiedenes</guilabel></link>
+	im <interface><link linkend="globalpanelprefs">Globale Panel-Eigenschaften</link> Dialog</interface> ändern.
       </para>
 
       <para>
-	Note that the <guimenu>Global Menu</guimenu> is configured
-	independently from the <guimenu>Main Menu</guimenu>, by using
-	the <guilabel>Menu</guilabel> tab in the <link
-	linkend="globalpanelprefs"><interface>Global Panel
-	Preferences</interface></link> dialog.
+	Beachten Sie bitte, daß das <guimenu>Globale Menu</guimenu> unabhängig
+	vom <guimenu>Hauptmenü</guimenu> konfiguriert wird, indem Sie
+	<guilabel>Menü</guilabel> im
+	<interface><link linkend="globalpanelprefs">Globale Panel-Eigenschaften</link> Dialog</interface> benutzen.
       </para>
     </sect2>
 
@@ -505,26 +502,26 @@
 
 
     <sect2 id="submenus">
-      <title> Components of the Main Menu</title>
+      <title>Bestandteile des Hauptmenüs</title>
       <para>
-      The primary component of the <guimenu>Main Menu</guimenu> is the
-      <guisubmenu>Programs</guisubmenu> submenu, which contains a list
-      of preconfigured submenus and menu items. Here you will find all
-      the GNOME applications, from the
-      <application>Gnumeric</application> spreadsheet to the
-      <application>Free Cell</application> game, as well as quite a
-      few non-GNOME ones, such as the
-      <application>Netscape</application> web browser and the
-      <application>emacs</application> text editor.  In addition, the
-      <guisubmenu>Programs</guisubmenu> submenu also contains the
-      following commands:
-     </para>
+	Der Hauptbestandteil des <guimenu>Hauptmenüs</guimenu> ist das
+	<guisubmenu>Programme</guisubmenu> Untermenü, das eine Liste
+	vorkonfigurierter Untermenüs und Menüpunkte enthält. Hier finden
+	Sie alle GNOME-Applikationen, von der
+	<application>Gnumeric</application> Tabellenkalkulation bis zum
+	<application>Free Cell</application> Spiel, sowie einer Reihe von
+	nicht-GNOME-Applikationen, wie etwa der
+	<application>Netscape</application> Web-Browser und der
+	<application>emacs</application> Texteditor. Darüberhinaus enthält
+	das <guisubmenu>Programme</guisubmenu> Untermenü außerdem die
+	folgenden Befehle:
+      </para>
       <itemizedlist>
 	<listitem>
 	  <para>
-        <guimenuitem>File Manager</guimenuitem> &mdash;  launches the
-        GNOME graphical file manager.
-       </para>
+	    <guimenuitem>Dateimanager</guimenuitem> &mdash;  startet den
+	    GNOME-Dateimanager.
+	  </para>
 	</listitem>
 	<!-- this was made obsolete by "run..." (see below)
       <listitem>
@@ -535,18 +532,19 @@
       </listitem> -->
 	<listitem>
 	  <para>
-        <guimenuitem>Help system</guimenuitem> &mdash; launches the
-        <application>GNOME Help Browser</application>. The
-        <application>GNOME Help Browser</application> gives you access
-        to most of the documentation installed on your system &mdash;
-        not only GNOME documentation (the GNOME User's Guide,
-        application manuals, &hellip;), but also other types of
-        documentation (man pages, info pages, &hellip;).
-       </para>
+	    <guimenuitem>Hilfe-System</guimenuitem> &mdash; startet die
+	    <application>GNOME-Hilfe</application>. Die
+	    <application>GNOME-Hilfe</application> enthält den größten Teil
+	    aller in Ihrem System installierten Dokumentation &mdash; also
+	    nicht nur die GNOME-Dokumentation (u.a das GNOME-Benutzerhandbuch
+	    und die Handbücher der GNOME-Applikationen, &hellip;), sondern
+	    auch andere Dokumentation (Man-Pages, Info-Seiten, &hellip;).
+	  </para>
 	</listitem>
       </itemizedlist>
 
-      <para>    In addition to the <guisubmenu>Programs</guisubmenu>
+      <para>
+	In addition to the <guisubmenu>Programs</guisubmenu>
       submenu,  the <guimenu>Main Menu</guimenu> also contains a
       number of other submenus and useful commands. Depending on your
       configuration, you may not see all of these. Also, some of them
