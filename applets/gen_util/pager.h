@@ -9,9 +9,12 @@
 #ifndef _PAGER_H_
 #define _PAGER_H_
 
+#include <glib/gmacros.h>
+#include <panel-applet.h>
+
 G_BEGIN_DECLS
 
-BonoboObject *make_pager_applet(void);
+gboolean fill_pager_applet(PanelApplet *applet);
 
 G_END_DECLS
 

@@ -468,6 +468,7 @@ apply_cb (GnomePropertyBox *pb,
 	name    = gtk_object_get_data (GTK_OBJECT (pb), "name");
 	image   = gtk_object_get_data (GTK_OBJECT (pb), "image");
 	frames  = gtk_object_get_data (GTK_OBJECT (pb), "frames");
+	speed   = gtk_object_get_data (GTK_OBJECT (pb), "speed");
 	rotate  = gtk_object_get_data (GTK_OBJECT (pb), "rotate");
 	command = gtk_object_get_data (GTK_OBJECT (pb), "command");
 
@@ -981,13 +982,14 @@ static const char fish_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
-static BonoboObject *
-fish_applet_new ()
+static gboolean
+fish_applet_fill (PanelApplet *applet)
 {
 	Fish *fish;
 
 	fish = g_new0 (Fish, 1);
 
+	fish->applet = GTK_WIDGET (applet);
 	fish->size   = GNOME_Vertigo_PANEL_MEDIUM;
 	fish->orient = PANEL_APPLET_ORIENT_UP;
 
@@ -1010,9 +1012,11 @@ fish_applet_new ()
 
 	create_fish_widget (fish);
 
-	fish->applet = panel_applet_new (fish->frame);
+	gtk_container_add (GTK_CONTAINER (fish->applet), fish->frame);
 
-	gtk_widget_show_all (fish->applet);
+	gtk_widget_show_all (GTK_WIDGET (fish->frame));
+
+	gtk_widget_show (GTK_WIDGET (fish->applet));
 
 #ifdef FIXME
 	g_signal_connect (G_OBJECT (fish->applet),
@@ -1041,20 +1045,20 @@ fish_applet_new ()
 				 fish_menu_verbs,
 				 fish);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (fish->applet)));
+	return TRUE;
 }
 
-static BonoboObject *
-fishy_factory (BonoboGenericFactory *this,
-	       const gchar          *iid,
-	       gpointer              data)
+static gboolean
+fishy_factory (PanelApplet *applet,
+	       const gchar *iid,
+	       gpointer     data)
 {
-	BonoboObject *applet = NULL;
+	gboolean retval = FALSE;
 
 	if (!strcmp (iid, "OAFIID:GNOME_FishApplet"))
-		applet = fish_applet_new ();
+		retval = fish_applet_fill (applet);
 
-	return applet;
+	return retval;
 }
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_FishApplet_Factory",

@@ -125,24 +125,16 @@ test_applet_handle_background_change (PanelApplet               *applet,
 	}
 }
 
-static void
-test_applet_handle_save_yourself (PanelApplet               *applet,
-				  GtkLabel                  *label)
+static gboolean
+test_applet_fill (PanelApplet *applet)
 {
-	g_message ("saveYourself received");
-}
-
-static BonoboObject *
-test_applet_new (void)
-{
-	GtkWidget *applet;
 	GtkWidget *label;
 
 	label = gtk_label_new (NULL);
 
-	applet = panel_applet_new (label);
+	gtk_container_add (GTK_CONTAINER (applet), label);
 
-	gtk_widget_show_all (applet);
+	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	test_applet_handle_size_change (PANEL_APPLET (applet),
 					GNOME_Vertigo_PANEL_MEDIUM,
@@ -170,25 +162,20 @@ test_applet_new (void)
 			  G_CALLBACK (test_applet_handle_background_change),
 			  label);
 
-	g_signal_connect (G_OBJECT (applet),
-			  "save_yourself",
-			  G_CALLBACK (test_applet_handle_save_yourself),
-			  label);
-			  
-	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (applet)));
+	return TRUE;
 }
 
-static BonoboObject *
-test_applet_factory (BonoboGenericFactory *this,
-		     const gchar          *iid,
-		     gpointer              data)
+static gboolean
+test_applet_factory (PanelApplet *applet,
+		     const gchar *iid,
+		     gpointer     data)
 {
-	BonoboObject *applet = NULL;
+	gboolean retval = FALSE;
     
 	if (!strcmp (iid, "OAFIID:GNOME_Panel_TestBonoboApplet"))
-		applet = test_applet_new (); 
+		retval = test_applet_fill (applet); 
     
-	return applet;
+	return retval;
 }
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Panel_TestBonoboApplet_Factory",

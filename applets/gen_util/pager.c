@@ -127,12 +127,14 @@ static const char pager_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
-BonoboObject *
-make_pager_applet(void)
+gboolean
+fill_pager_applet(PanelApplet *applet)
 {
 	PagerData *pager;
 	
 	pager = g_new0 (PagerData, 1);
+
+	pager->applet = GTK_WIDGET (applet);
 
 	/* FIXME: Default value, should be from gconf? */
 	pager->n_rows = 2;
@@ -163,7 +165,8 @@ make_pager_applet(void)
 
 	gtk_widget_show (pager->frame);
 	
-	pager->applet = panel_applet_new (pager->frame);
+	gtk_container_add (GTK_CONTAINER (pager->applet), pager->frame);
+
 	gtk_widget_show (pager->applet);
 
 	g_signal_connect (G_OBJECT (pager->applet),
@@ -177,7 +180,7 @@ make_pager_applet(void)
 	
 	panel_applet_setup_menu (PANEL_APPLET (pager->applet), pager_menu_xml, pager_menu_verbs, pager);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (pager->applet)));
+	return TRUE;
 }
 
 

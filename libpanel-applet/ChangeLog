@@ -1,3 +1,39 @@
+2001-12-17  Mark McLoughlin  <mark@skynet.ie>
+
+	Turn the thing on its head. We now have a BonoboItemHandler
+	so that prefs_key can be set before we start constructing 
+	our widgetry. Unfortunately this means api changes.
+
+	* panel-applet.h:
+	(panel_applet_new): kill widget arg.
+	(panel_applet_construct): ditto.
+	(panel_applet_get_global_key): kill.
+	(panel_applet_get_private_key): kill.
+	(panel_applet_get_preferences_key): impl.
+	(panel_applet_factory_main): change callback to a
+	PanelAppletFactoryCallback.
+	(panel_applet_shlib_factory): impl.
+
+	* panel-applet.c:
+	(panel_applet_get_preferences_key): impl.
+	(panel_applet_finalize): free private_key and iid.
+	(panel_applet_control_bound): impl. Invoked when the control
+	is bound to a control frame. ItemHandler will have been
+	invoked at this stage if there are any args.
+	(panel_applet_item_handler_get_object): impl ItemHandler func.
+	This handles the setting of prefs_key as the applet is being
+	loaded.
+	(panel_applet_instance_init), (panel_applet_construct):
+	(panel_applet_new): upd.
+	(panel_applet_factory_callback): impl our
+	BonoboFactoryCallback.
+	(panel_applet_factory_main): upd.
+	(panel_applet_shlib_factory): impl.
+
+	* test-bonobo-applet.c:
+	(test_applet_fill): rename from test_applet_new and upd.
+	(test_applet_factory): upd for api changes.
+
 2001-12-14  Alex Larsson  <alexl@redhat.com>
 
 	* panel-applet.c (panel_applet_parse_color):

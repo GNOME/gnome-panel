@@ -31,30 +31,27 @@
 #include "tasklist.h"
 //#include "printer.h"
 
-
-static BonoboObject *
-genutil_factory (BonoboGenericFactory *this,
-	       const gchar          *iid,
-	       gpointer              data)
+static gboolean
+genutil_factory (PanelApplet *applet,
+		 const gchar *iid,
+		 gpointer     data)
 {
-	BonoboObject *applet = NULL;
+	gboolean retval = FALSE;
 
 	g_print ("genutil_factory: %s\n", iid);
 	
 	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
-		applet = make_clock_applet();
+		retval = fill_clock_applet(applet);
 	
 	if (!strcmp (iid, "OAFIID:GNOME_PagerApplet"))
-		applet = make_pager_applet();
+		retval = fill_pager_applet(applet);
 
 	if (!strcmp (iid, "OAFIID:GNOME_TasklistApplet"))
-		applet = make_tasklist_applet();
+		retval = fill_tasklist_applet(applet);
 
-	return applet;
+	return retval;
 }
 
-BONOBO_ACTIVATION_SHLIB_FACTORY ("OAFIID:GNOME_GenUtilApplet_Factory",
-				 "GenUtil Applet factory",
-				 genutil_factory, NULL);
-
-
+PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_GenUtilApplet_Factory",
+				   "GenUtil Applet factory",
+				    genutil_factory, NULL);

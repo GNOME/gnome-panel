@@ -520,12 +520,14 @@ static const char clock_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
-BonoboObject *
-make_clock_applet(void)
+gboolean
+fill_clock_applet(PanelApplet *applet)
 {
 	ClockData *cd;
 	
 	cd = g_new0 (ClockData, 1);
+
+	cd->applet = GTK_WIDGET (applet);
 
 	/* FIXME: The config stuff needs to be completely redone... */
 	
@@ -580,7 +582,7 @@ make_clock_applet(void)
 
 	create_clock_widget (cd);
 
-	cd->applet = panel_applet_new (cd->clockw);
+	gtk_container_add (GTK_CONTAINER (cd->applet), cd->clockw);
 
 	gtk_widget_show (cd->applet);
 
@@ -614,7 +616,7 @@ make_clock_applet(void)
 
 	panel_applet_setup_menu (PANEL_APPLET (cd->applet), clock_menu_xml, clock_menu_verbs, cd);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (cd->applet)));
+	return TRUE;
 }
 
 static void

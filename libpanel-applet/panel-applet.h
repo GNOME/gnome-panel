@@ -60,6 +60,10 @@ typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
 typedef struct _PanelAppletPrivate PanelAppletPrivate;
 
+typedef gboolean (*PanelAppletFactoryCallback) (PanelApplet *applet,
+						const gchar *iid,
+						gpointer     user_data);
+
 struct _PanelApplet {
 	GtkEventBox          event_box;
 
@@ -83,17 +87,15 @@ struct _PanelAppletClass {
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;
 
-GtkWidget         *panel_applet_new       (GtkWidget *widget);
+GtkWidget         *panel_applet_new       (void);
 
-void               panel_applet_construct (PanelApplet *applet,
-					   GtkWidget   *widget);
+void               panel_applet_construct (PanelApplet *applet);
 
 PanelAppletOrient panel_applet_get_orient (PanelApplet *applet);
 
 guint              panel_applet_get_size  (PanelApplet *applet);
 
-gchar             *panel_applet_get_global_key  (PanelApplet *applet);
-gchar             *panel_applet_get_private_key (PanelApplet *applet);
+gchar             *panel_applet_get_preferences_key  (PanelApplet *applet);
 
 void      	   panel_applet_get_expand_flags (PanelApplet *applet,
 						  gboolean    *expand_major,
@@ -118,13 +120,21 @@ void               panel_applet_setup_menu_from_file (PanelApplet        *applet
 						      gpointer            user_data);
 
 
-int                panel_applet_factory_main         (int                     argc,
-						      char                  **argv,
-						      const gchar            *iid,
-						      const gchar            *name,
-						      const gchar            *version,
-						      BonoboFactoryCallback   callback,
-						      gpointer                data);
+int                panel_applet_factory_main         (int			   argc,
+						      char			 **argv,
+						      const gchar		  *iid,
+						      const gchar		  *name,
+						      const gchar		  *version,
+						      PanelAppletFactoryCallback   callback,
+						      gpointer			   data);
+
+Bonobo_Unknown     panel_applet_shlib_factory        (const char                 *iid,
+						      PortableServer_POA          poa,
+						      gpointer                    impl_ptr,
+						      PanelAppletFactoryCallback  callback,
+						      gpointer                    user_data,
+						      CORBA_Environment          *ev);
+
 
 #define PANEL_APPLET_BONOBO_FACTORY(iid, name, version, callback, data)		\
 int main (int argc, char *argv [])						\
@@ -134,8 +144,20 @@ int main (int argc, char *argv [])						\
 }
 
 #define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, descr, callback, data)		\
-		BONOBO_ACTIVATION_SHLIB_FACTORY(iid, descr, callback, data)
-
+static Bonobo_Unknown								\
+__panel_applet_shlib_factory (PortableServer_POA  poa,				\
+			      const char         *oafiid,			\
+			      gpointer            impl_ptr,			\
+			      CORBA_Environment  *ev)				\
+{										\
+        return panel_applet_shlib_factory ((iid), poa, impl_ptr,		\
+					   (callback), (data), ev);		\
+}										\
+static BonoboActivationPluginObject plugin_list[] = {				\
+	{ (iid), __panel_applet_shlib_factory },			\
+	{ NULL }								\
+};										\
+const  BonoboActivationPlugin Bonobo_Plugin_info = { plugin_list, (descr) };
 
 G_END_DECLS
 

@@ -26,6 +26,8 @@
 #include <string.h>
 #include <bonobo/bonobo-ui-util.h>
 #include <bonobo/bonobo-property-bag.h>
+#include <bonobo/bonobo-item-handler.h>
+#include <bonobo/bonobo-shlib-factory.h>
 #include <libgnome/gnome-program.h>
 #include <libgnomeui/gnome-ui-init.h>
 
@@ -36,19 +38,22 @@
 #include "panel-applet-enums.h"
 
 struct _PanelAppletPrivate {
-	PanelAppletShell  *shell;
+	PanelAppletShell           *shell;
+	BonoboControl              *control;
+	BonoboItemHandler          *item_handler;
 
-	BonoboControl     *control;
+	gchar                      *iid;
+	PanelAppletFactoryCallback  callback;
+	gpointer                    user_data;
+	gboolean                    bound;
+	gchar                      *prefs_key;
 
-	PanelAppletOrient  orient;
-	guint              size;
-	gchar             *background;
+	PanelAppletOrient           orient;
+	guint                       size;
+	gchar                      *background;
 
-	gchar             *global_key;
-	gchar             *private_key;
-
-	gboolean           expand_major;
-	gboolean           expand_minor;
+	gboolean                    expand_major;
+	gboolean                    expand_minor;
 };
 
 static GObjectClass *parent_class;
@@ -74,21 +79,12 @@ enum {
 };
 
 gchar *
-panel_applet_get_global_key (PanelApplet *applet)
+panel_applet_get_preferences_key (PanelApplet *applet)
 {
-	if (!applet->priv->global_key)
+	if (!applet->priv->prefs_key)
 		return NULL;
 
-	return g_strdup (applet->priv->global_key);
-}
-
-gchar *
-panel_applet_get_private_key (PanelApplet *applet)
-{
-	if (!applet->priv->private_key)
-		return NULL;
-
-	return g_strdup (applet->priv->private_key);
+	return g_strdup (applet->priv->prefs_key);
 }
 
 void
@@ -249,12 +245,12 @@ panel_applet_finalize (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
 
-	if (applet->priv->global_key)
-		g_free (applet->priv->global_key);
+	if (applet->priv->prefs_key)
+		g_free (applet->priv->prefs_key);
 
-	if (applet->priv->private_key)
-		g_free (applet->priv->private_key);
-	
+	if (applet->priv->iid)
+		g_free (applet->priv->iid);
+
 	g_free (applet->priv);
 	applet->priv = NULL;
 
@@ -460,6 +456,59 @@ panel_applet_property_bag (PanelApplet *applet)
 
 	return sack;
 }
+
+static void
+panel_applet_control_bound (BonoboControl *control,
+			    PanelApplet   *applet)
+{
+	gboolean ret;
+
+	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
+	g_return_if_fail (applet->priv->iid && applet->priv->callback);
+
+	if (applet->priv->bound)
+		return;
+
+	ret = applet->priv->callback (applet,
+				      applet->priv->iid,
+				      applet->priv->user_data);
+
+	if (!ret) { /* FIXME */
+		g_warning ("need to free the control here");
+
+		return;
+	}
+
+	applet->priv->bound = TRUE;
+}
+
+static Bonobo_Unknown
+panel_applet_item_handler_get_object (BonoboItemHandler *handler,
+				      const char        *item_name,
+				      gboolean           only_if_exists,
+				      gpointer           user_data,
+				      CORBA_Environment *ev)
+{
+	PanelApplet *applet = user_data;
+	GSList      *options;
+	GSList      *l;
+
+	g_return_val_if_fail (applet && PANEL_IS_APPLET (applet), CORBA_OBJECT_NIL);
+
+	options = bonobo_item_option_parse (item_name);
+
+	for (l = options; l; l = l->next) {
+		BonoboItemOption *option = l->data;
+
+		if (!strcmp (option->key, "prefs_key") && !applet->priv->prefs_key &&
+		    option->value && option->value [0])
+			applet->priv->prefs_key = g_strdup (option->value);
+	}
+
+	bonobo_item_options_free (options);
+
+	return bonobo_object_dup_ref (BONOBO_OBJREF (applet->priv->control), ev);
+}
 			   
 static void
 panel_applet_class_init (PanelAppletClass *klass,
@@ -519,8 +568,13 @@ panel_applet_instance_init (PanelApplet      *applet,
 {
 	applet->priv = g_new0 (PanelAppletPrivate, 1);
 
-	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
-	applet->priv->size   = GNOME_Vertigo_PANEL_MEDIUM;
+	applet->priv->bound        = FALSE;
+
+	applet->priv->orient       = PANEL_APPLET_ORIENT_UP;
+	applet->priv->size         = GNOME_Vertigo_PANEL_MEDIUM;
+
+	applet->priv->expand_major = FALSE;
+	applet->priv->expand_minor = FALSE;
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
@@ -553,16 +607,18 @@ panel_applet_get_type (void)
 }
 
 void
-panel_applet_construct (PanelApplet *applet, 
-			GtkWidget   *widget)
+panel_applet_construct (PanelApplet *applet)
 {
 	PanelAppletPrivate *priv;
 
 	priv = applet->priv;
 
-	gtk_container_add (GTK_CONTAINER (applet), widget);
-
 	priv->control = bonobo_control_new (GTK_WIDGET (applet));
+
+	g_signal_connect (G_OBJECT (priv->control),
+			  "set_frame",
+			  G_CALLBACK (panel_applet_control_bound),
+			  applet);
 
 	bonobo_control_set_properties (priv->control,
 				       BONOBO_OBJREF (panel_applet_property_bag (applet)),
@@ -572,6 +628,13 @@ panel_applet_construct (PanelApplet *applet,
 
 	bonobo_object_add_interface (BONOBO_OBJECT (priv->control),
 				     BONOBO_OBJECT (priv->shell));
+
+	priv->item_handler = bonobo_item_handler_new (NULL,
+						      panel_applet_item_handler_get_object,
+						      applet);
+
+	bonobo_object_add_interface (BONOBO_OBJECT (priv->control),
+				     BONOBO_OBJECT (priv->item_handler));
 }
 
 /**
@@ -584,15 +647,37 @@ panel_applet_construct (PanelApplet *applet,
  * Return value: A #GtkWidget on success, %NULL on failure.
  */
 GtkWidget *
-panel_applet_new (GtkWidget *widget)
+panel_applet_new (void)
 {
 	PanelApplet *applet;
 
 	applet = g_object_new (PANEL_TYPE_APPLET, NULL);
 
-	panel_applet_construct (applet, widget);
+	panel_applet_construct (applet);
 
 	return GTK_WIDGET (applet);
+}
+
+typedef struct {
+	PanelAppletFactoryCallback callback;
+	gpointer                   user_data;
+} PanelAppletClosure;
+
+static BonoboObject *
+panel_applet_factory_callback (BonoboGenericFactory *factory,
+			       const char           *iid,
+			       gpointer              user_data)
+{
+	PanelApplet        *applet;
+	PanelAppletClosure *closure = user_data;
+
+	applet = PANEL_APPLET (panel_applet_new ());
+
+	applet->priv->iid       = g_strdup (iid);
+	applet->priv->callback  = closure->callback;
+	applet->priv->user_data = closure->user_data;
+
+	return BONOBO_OBJECT (applet->priv->control);
 }
 
 /**
@@ -611,23 +696,39 @@ panel_applet_new (GtkWidget *widget)
  * Return value: 0 on success, 1 on failure.
  */
 int
-panel_applet_factory_main (int                     argc,
-			   char                  **argv,
-			   const gchar            *iid,
-			   const gchar            *name,
-			   const gchar            *version,
-			   BonoboFactoryCallback   callback,
-			   gpointer                data)
+panel_applet_factory_main (int                          argc,
+			   char                       **argv,
+			   const gchar                 *iid,
+			   const gchar                 *name,
+			   const gchar                 *version,
+			   PanelAppletFactoryCallback   callback,
+			   gpointer                     data)
 {
-	GnomeProgram *program;
-	int           retval;
+	PanelAppletClosure  closure = { callback, data };
+	GnomeProgram       *program;
+	int                 retval;
 
 	program = gnome_program_init (name, version,
 				      LIBGNOMEUI_MODULE,
 				      argc, argv,
 				      GNOME_PARAM_NONE);
 
-	retval = bonobo_generic_factory_main (iid, callback, data);
+	retval = bonobo_generic_factory_main (iid, panel_applet_factory_callback, &closure);
 
 	return retval;
+}
+
+Bonobo_Unknown
+panel_applet_shlib_factory (const char                 *iid,
+			    PortableServer_POA          poa,
+			    gpointer                    impl_ptr,
+			    PanelAppletFactoryCallback  callback,
+			    gpointer                    user_data,
+			    CORBA_Environment          *ev)
+{
+	PanelAppletClosure closure = { callback, user_data };
+
+	return bonobo_shlib_factory_std (iid, poa, impl_ptr,
+					 panel_applet_factory_callback,
+					 &closure, ev);
 }

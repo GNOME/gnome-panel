@@ -139,12 +139,14 @@ static const char tasklist_menu_xml [] =
 	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
 	"</popup>\n";
 
-BonoboObject *
-make_tasklist_applet(void)
+gboolean
+fill_tasklist_applet(PanelApplet *applet)
 {
 	TasklistData *tasklist;
 	
 	tasklist = g_new0 (TasklistData, 1);
+
+	tasklist->applet = GTK_WIDGET (applet);
 
 	/* FIXME: We need to get the real initial panel data here */
 	tasklist->size = 48;
@@ -164,8 +166,8 @@ make_tasklist_applet(void)
 
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);
-	
-	tasklist->applet = panel_applet_new (tasklist->tasklist);
+
+	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
 	
 	panel_applet_set_expand_flags (PANEL_APPLET (tasklist->applet),
 				       TRUE, TRUE);
@@ -187,7 +189,7 @@ make_tasklist_applet(void)
 	
 	panel_applet_setup_menu (PANEL_APPLET (tasklist->applet), tasklist_menu_xml, tasklist_menu_verbs, tasklist);
 	
-	return BONOBO_OBJECT (panel_applet_get_control (PANEL_APPLET (tasklist->applet)));
+	return TRUE;
 }
 
 
