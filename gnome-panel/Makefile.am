@@ -28,6 +28,7 @@ $(CORBA_SRCLIST): my_gnome_panel_idl
 
 my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
+	touch my_gnome_panel_idl
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
