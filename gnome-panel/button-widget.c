@@ -367,7 +367,7 @@ loadup_file(char *file)
 	if(!file)
 		return NULL;
 
-	if(*file!='/') {
+	if(!g_path_is_absolute(file)) {
 		char *f;
 		f = gnome_pixmap_file (file);
 		if(f) {
@@ -510,9 +510,11 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	panel = PANEL_WIDGET(widget->parent);
 	size = panel->sz;
 	/*offset for pressed buttons*/
-	off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
+	off = (button->in_button && button->pressed) ?
+		SCALE(tile_depth[button->tile]) : 0;
 	/*border to not draw when drawing a tile*/
-	border = tiles_enabled[button->tile]?SCALE(tile_border[button->tile]):0;
+	border = tiles_enabled[button->tile] ?
+		SCALE(tile_border[button->tile]) : 0;
 	 
 	button->size = size;
 	
@@ -521,7 +523,8 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 	if(tiles_enabled[button->tile]) {
 		if(button->pressed && button->in_button) {
 			GdkPixbuf *pb;
-			if(global_config.saturate_when_over && !button->in_button) {
+			if(global_config.saturate_when_over &&
+			   !button->in_button) {
 				pb = tiles.tiles_down_lc[button->tile];
 			} else {
 				pb = tiles.tiles_down[button->tile];
@@ -532,10 +535,12 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 						  gdk_pixbuf_get_width(pb),
 						  gdk_pixbuf_get_height(pb),
 						  size, NULL, NULL);
-				transform_pixbuf(rgb, 0, 0, size, size, rowstride,
-					        pb, affine, ART_FILTER_NEAREST, NULL);
+				transform_pixbuf(rgb, 0, 0, size, size,
+						 rowstride, pb, affine,
+						 ART_FILTER_NEAREST, NULL);
 			}
-		} else if (!global_config.tile_when_over || button->in_button) {
+		} else if (!global_config.tile_when_over ||
+			   button->in_button) {
 			GdkPixbuf *pb;
 			if(global_config.saturate_when_over &&
 			   !button->in_button) {
@@ -549,8 +554,9 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 						  gdk_pixbuf_get_width(pb),
 						  gdk_pixbuf_get_height(pb),
 						  size, NULL, NULL);
-				transform_pixbuf(rgb, 0, 0, size, size, rowstride,
-						pb, affine, ART_FILTER_NEAREST, NULL);
+				transform_pixbuf(rgb, 0, 0, size, size,
+						 rowstride, pb, affine,
+						 ART_FILTER_NEAREST, NULL);
 			}
 		}
 	}
@@ -573,7 +579,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			art_affine_translate(transl,
 					     -border+off + (size-w)/2,
 					     -border+off + (size-h)/2);
-			art_affine_multiply(affine,affine,transl);
+			art_affine_multiply(affine, affine, transl);
 
 			transform_pixbuf((rgb+border*rowstride+border*3),
 				         0, 0,
@@ -601,7 +607,8 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 	size = button->size;
 
 	/*offset for pressed buttons*/
-	off = button->in_button&&button->pressed?SCALE(tile_depth[button->tile]):0;
+	off = (button->in_button && button->pressed) ?
+		SCALE(tile_depth[button->tile]) : 0;
 	 
 	gc = gdk_gc_new(pixmap);
 	
@@ -622,7 +629,7 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 
 		if(!text) text = g_strdup("XXX");
 		
-		font = gdk_font_load("-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*");
+		font = gdk_fontset_load(_("-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*"));
 		if(!font)
 			font = gdk_font_load("fixed");
 		if(!font)
@@ -966,11 +973,17 @@ button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 	g_return_val_if_fail(button != NULL, FALSE);
 	g_return_val_if_fail(IS_BUTTON_WIDGET(button), FALSE);
 
-	if(size<0)
+	if(size < 0)
 		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
 	
+	if(button->pixbuf)
+		gdk_pixbuf_unref(button->pixbuf);
+	if(button->pixbuf_lc)
+		gdk_pixbuf_unref(button->pixbuf_lc);
+
 	button->pixbuf = loadup_file(pixmap);
 	button->pixbuf_lc = make_lc_pixbuf(button->pixbuf);
+
 	g_free(button->filename);
 	button->filename = g_strdup(pixmap);
 	button->size = size;

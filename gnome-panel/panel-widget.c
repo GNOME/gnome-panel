@@ -919,7 +919,7 @@ send_draw_to_all_applets(PanelWidget *panel)
 }
 
 static void
-kill_cache_on_all_buttons(PanelWidget *panel, int even_no_alpha)
+kill_cache_on_all_buttons(PanelWidget *panel, gboolean even_no_alpha)
 {
 	GList *li;
 	for(li = panel->applet_list; li != NULL;
@@ -951,14 +951,11 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 
 	if(panel->back_type == PANEL_BACK_NONE) {
 		if(bg_pixmap && !panel->backpix) {
-			if(panel->backpix)
-				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
 			kill_cache_on_all_buttons(panel, FALSE);
 			send_draw_to_all_applets(panel);
 		} else if(!bg_pixmap && panel->backpix) {
-			if(panel->backpix)
-				gdk_pixbuf_unref(panel->backpix);
+			gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = NULL;
 			kill_cache_on_all_buttons(panel, FALSE);
 			send_draw_to_all_applets(panel);
@@ -1540,13 +1537,13 @@ panel_resize_pixmap(PanelWidget *panel)
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
-	
-	if(!panel->backpix) return;
-	
+
 	if(panel->backpixmap)
 		gdk_pixmap_unref(panel->backpixmap);
 	panel->backpixmap = NULL;
-
+	
+	if(!panel->backpix) return;
+	
 	panel->scale_w = w = gdk_pixbuf_get_width(panel->backpix);
 	panel->scale_h = h = gdk_pixbuf_get_height(panel->backpix);
 	
