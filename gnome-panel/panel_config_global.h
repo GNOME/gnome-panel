@@ -36,6 +36,7 @@ struct _GlobalConfig {
 	guint menu_state;
 	guint run_keycode;
 	guint run_state;
+	int menu_flags;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

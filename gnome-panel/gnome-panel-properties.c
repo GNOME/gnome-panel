@@ -32,6 +32,9 @@
 #include "panel-util.h"
 #include "session.h"
 
+/* for MAIN_MENU_* */
+#include "menu.h"
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_alphagamma.h>
 #include <libart_lgpl/art_filterlevel.h>
@@ -76,11 +79,37 @@ static GtkWidget *movement_type_push_rb;
 static GtkAdjustment *applet_padding;
 
 
-/* miscellaneous page */
+/* menu page */
 static GtkWidget *show_small_icons_cb;
 static GtkWidget *show_dot_buttons_cb;
 static GtkWidget *off_panel_popups_cb;
 static GtkWidget *hungry_menus_cb;
+
+typedef struct {
+	int inline_flag;
+	int submenu_flag;
+	char *label;
+
+	GtkWidget *inline_rb;
+	GtkWidget *submenu_rb;
+	GtkWidget *none_rb;
+} MenuOptions;
+
+/* don't forget to update the table size when changing the num of elements
+   in this array */
+static MenuOptions menu_options[] = {
+	{ MAIN_MENU_SYSTEM,  MAIN_MENU_SYSTEM_SUB,  N_("Programs: ") },
+	{ MAIN_MENU_USER,    MAIN_MENU_USER_SUB,    N_("Favorites: ") },
+	{ MAIN_MENU_APPLETS, MAIN_MENU_APPLETS_SUB, N_("Applets: ") },
+	{ MAIN_MENU_REDHAT,  MAIN_MENU_REDHAT_SUB,  N_("AnotherLevel: ") },
+	{ MAIN_MENU_KDE,     MAIN_MENU_KDE_SUB,     N_("KDE: ") },
+	{ MAIN_MENU_DEBIAN,  MAIN_MENU_DEBIAN_SUB,  N_("Debian: ") },
+	{ MAIN_MENU_PANEL,   MAIN_MENU_PANEL_SUB,   N_("Panel: ") },
+	{ MAIN_MENU_DESKTOP, MAIN_MENU_DESKTOP_SUB, N_("Desktop: ") },
+	{ 0 }
+};
+
+/* miscellaneous page */
 static GtkWidget *tooltips_enabled_cb;
 static GtkWidget *drawer_auto_close_cb;
 static GtkWidget *autoraise_cb;
@@ -578,8 +607,10 @@ applets_notebook_page (void)
 }
 
 static void
-sync_misc_page_with_config(GlobalConfig *conf)
+sync_menu_page_with_config(GlobalConfig *conf)
 {
+	MenuOptions *opt;
+	GtkWidget *w;
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(show_small_icons_cb),
 				    conf->show_small_icons);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(show_dot_buttons_cb),
@@ -588,6 +619,135 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				    conf->off_panel_popups);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(hungry_menus_cb),
 				    conf->hungry_menus);
+
+	for (opt = menu_options; opt->inline_flag; ++opt) {
+		if (conf->menu_flags & opt->inline_flag)
+			w = opt->inline_rb;
+		else if (conf->menu_flags & opt->submenu_flag)
+			w = opt->submenu_rb;
+		else
+			w = opt->none_rb;
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+	}
+}
+
+static void
+sync_config_with_menu_page(GlobalConfig *conf)
+{
+	MenuOptions *opt;
+	conf->show_small_icons =
+		GTK_TOGGLE_BUTTON(show_small_icons_cb)->active;
+	conf->show_dot_buttons =
+		GTK_TOGGLE_BUTTON(show_dot_buttons_cb)->active;
+	conf->off_panel_popups =
+		GTK_TOGGLE_BUTTON(off_panel_popups_cb)->active;
+	conf->hungry_menus =
+		GTK_TOGGLE_BUTTON(hungry_menus_cb)->active;
+
+	conf->menu_flags = 0;
+	for (opt = menu_options; opt->inline_flag; ++opt) {
+		if (GTK_TOGGLE_BUTTON (opt->inline_rb)->active)
+			conf->menu_flags |= opt->inline_flag;
+		else if (GTK_TOGGLE_BUTTON (opt->submenu_rb)->active)
+			conf->menu_flags |= opt->submenu_flag;
+	}
+}
+
+static void
+add_menu_options (GtkTable *table, MenuOptions *opt, int row)
+{
+	GtkWidget *w;
+	GtkRadioButton *rb;
+
+	w = gtk_label_new (_(opt->label));
+	gtk_table_attach_defaults (table, w, 0, 1, row, row+1);
+
+	w = opt->none_rb = gtk_radio_button_new_with_label (NULL, _("Off"));
+	gtk_table_attach_defaults (table, w, 3, 4, row, row+1);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	rb = GTK_RADIO_BUTTON (w);
+
+	w = opt->submenu_rb = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (rb), _("In a submenu"));
+	gtk_table_attach_defaults (table, w, 2, 3, row, row+1);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+
+	w = opt->inline_rb = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (rb), _("In the menu"));
+	gtk_table_attach_defaults (table, w, 1, 2, row, row+1);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+}
+
+static GtkWidget *
+menu_notebook_page(void)
+{
+	GtkWidget *frame;
+	GtkWidget *table;
+	GtkWidget *vbox;
+	int i;
+	
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
+	
+	/* Menu frame */
+	frame = gtk_frame_new (_("Menus"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+	
+	/* table for frame */
+	table = gtk_table_new(2,2,FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+	
+	/* Small Icons */
+	show_small_icons_cb = gtk_check_button_new_with_label (_("Show small icons"));
+	gtk_signal_connect (GTK_OBJECT (show_small_icons_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table),show_small_icons_cb, 0,1,0,1);
+
+	/* Dot Buttons */
+	show_dot_buttons_cb = gtk_check_button_new_with_label (_("Show [...] buttons"));
+	gtk_signal_connect (GTK_OBJECT (show_dot_buttons_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table),show_dot_buttons_cb, 1,2,0,1);
+
+	/* Off Panel Popup menus */
+	off_panel_popups_cb = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
+	gtk_signal_connect (GTK_OBJECT (off_panel_popups_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table),off_panel_popups_cb, 0,1,1,2);
+
+	/* Hungry Menus */
+	hungry_menus_cb = gtk_check_button_new_with_label (_("Keep menus in memory"));
+	gtk_signal_connect (GTK_OBJECT (hungry_menus_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table),hungry_menus_cb, 1,2,1,2);
+
+	
+
+	/* Menu frame */
+	frame = gtk_frame_new (_("Panel menu"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+	
+	/* table for frame */
+	table = gtk_table_new(7,4,FALSE);
+	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+	
+	for (i=0; menu_options[i].inline_flag; ++i)
+		add_menu_options (GTK_TABLE (table), menu_options+i, i);
+	
+	return vbox;
+}
+
+static void
+sync_misc_page_with_config(GlobalConfig *conf)
+{
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tooltips_enabled_cb),
 				    conf->tooltips_enabled);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(drawer_auto_close_cb),
@@ -610,14 +770,6 @@ sync_misc_page_with_config(GlobalConfig *conf)
 static void
 sync_config_with_misc_page(GlobalConfig *conf)
 {
-	conf->show_small_icons =
-		GTK_TOGGLE_BUTTON(show_small_icons_cb)->active;
-	conf->show_dot_buttons =
-		GTK_TOGGLE_BUTTON(show_dot_buttons_cb)->active;
-	conf->off_panel_popups =
-		GTK_TOGGLE_BUTTON(off_panel_popups_cb)->active;
-	conf->hungry_menus =
-		GTK_TOGGLE_BUTTON(hungry_menus_cb)->active;
 	conf->tooltips_enabled =
 		GTK_TOGGLE_BUTTON(tooltips_enabled_cb)->active;
 	conf->drawer_auto_close =
@@ -711,40 +863,6 @@ misc_notebook_page(void)
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-	
-	/* Menu frame */
-	frame = gtk_frame_new (_("Menus"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	
-	/* table for frame */
-	table = gtk_table_new(2,2,FALSE);
-	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), table);
-	
-	/* Small Icons */
-	show_small_icons_cb = gtk_check_button_new_with_label (_("Show small icons"));
-	gtk_signal_connect (GTK_OBJECT (show_small_icons_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),show_small_icons_cb, 0,1,0,1);
-
-	/* Dot Buttons */
-	show_dot_buttons_cb = gtk_check_button_new_with_label (_("Show [...] buttons"));
-	gtk_signal_connect (GTK_OBJECT (show_dot_buttons_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),show_dot_buttons_cb, 1,2,0,1);
-
-	/* Off Panel Popup menus */
-	off_panel_popups_cb = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
-	gtk_signal_connect (GTK_OBJECT (off_panel_popups_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),off_panel_popups_cb, 0,1,1,2);
-
-	/* Hungry Menus */
-	hungry_menus_cb = gtk_check_button_new_with_label (_("Keep menus in memory"));
-	gtk_signal_connect (GTK_OBJECT (hungry_menus_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),hungry_menus_cb, 1,2,1,2);
 	
 	/* Miscellaneous frame */
 	frame = gtk_frame_new (_("Miscellaneous"));
@@ -911,6 +1029,13 @@ loadup_vals(void)
 	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf->str);
 
+	g_string_sprintf(buf,"menu_flags=%d", 
+			 (int)(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB|
+			       MAIN_MENU_APPLETS_SUB | MAIN_MENU_REDHAT_SUB|
+			       MAIN_MENU_DEBIAN_SUB | MAIN_MENU_KDE_SUB|
+			       MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
+	global_config.menu_flags=gnome_config_get_int(buf->str);
+
 	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
 
 	g_string_sprintf(buf,"menu_keycode=%d", XK_LEFT_WIN);
@@ -1026,6 +1151,7 @@ write_config(GlobalConfig *conf)
 			      conf->tile_when_over);
 	gnome_config_set_bool("saturate_when_over",
 			      conf->saturate_when_over);
+	gnome_config_set_int("menu_flags", conf->menu_flags);
 	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
 	gnome_config_set_int("menu_keycode", conf->menu_keycode);
 	gnome_config_set_int("menu_state", conf->menu_state);
@@ -1063,6 +1189,7 @@ try(GtkWidget *capplet, gpointer data)
 	sync_config_with_animation_page(&global_config);
 	sync_config_with_buttons_page(&global_config);
 	sync_config_with_applets_page(&global_config);
+	sync_config_with_menu_page(&global_config);
 	sync_config_with_misc_page(&global_config);
 	write_config(&global_config);
 }
@@ -1073,6 +1200,7 @@ revert(GtkWidget *capplet, gpointer data)
 	sync_animation_page_with_config(&loaded_config);
 	sync_buttons_page_with_config(&loaded_config);
 	sync_applets_page_with_config(&loaded_config);
+	sync_menu_page_with_config(&loaded_config);
 	sync_misc_page_with_config(&loaded_config);
 	global_config = loaded_config;
 	write_config(&global_config);
@@ -1101,6 +1229,11 @@ setup_the_ui(GtkWidget *capplet)
 	page = applets_notebook_page ();
 	gtk_notebook_append_page (GTK_NOTEBOOK (nbook),
 				  page, gtk_label_new (_("Applets")));
+
+	/* Menu notebook page */
+	page = menu_notebook_page ();
+	gtk_notebook_append_page (GTK_NOTEBOOK (nbook),
+				  page, gtk_label_new (_("Menu")));
 		
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();
@@ -1118,6 +1251,7 @@ setup_the_ui(GtkWidget *capplet)
 	sync_animation_page_with_config(&loaded_config);
 	sync_buttons_page_with_config(&loaded_config);
 	sync_applets_page_with_config(&loaded_config);
+	sync_menu_page_with_config(&loaded_config);
 	sync_misc_page_with_config(&loaded_config);
 
 	/* Finished */

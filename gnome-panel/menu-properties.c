@@ -254,11 +254,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	char *p;
 	GtkWidget *w;
 	GtkWidget *rb;
-#if 0
-	/*sanity checks*/
-	if(!on)
-		sub = FALSE;
-#endif
+
 	w = gtk_label_new(title);
 	gtk_table_attach_defaults(table,w,0,1,row,row+1);
 	

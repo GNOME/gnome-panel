@@ -83,6 +83,7 @@ apply_global_config(void)
 	static int small_icons_old = 0; /*same here*/
 	static int keep_bottom_old = -1;
 	static int autohide_size_old = -1;
+	static int menu_flags_old = -1;
 	GSList *li;
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
@@ -162,9 +163,18 @@ apply_global_config(void)
 				gtk_widget_queue_resize (GTK_WIDGET (pd->panel));
 			}
 			basep_update_frame (BASEP_WIDGET (pd->panel));
+
+			if ((menu_flags_old != global_config.menu_flags) &&
+			    pd->menu) {
+				gtk_widget_destroy (pd->menu);
+				pd->menu = NULL;
+				pd->menu_age = 0;
+			}
+				
 		}
 	}
 	autohide_size_old = global_config.minimized_size;
+	menu_flags_old = global_config.menu_flags;
 
 	panel_global_keys_setup();
 }
@@ -727,24 +737,10 @@ load_default_applets1(PanelWidget *panel)
 		"gnome/apps/Applications/Netscape.desktop",
 		NULL };
 	int i;
-	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
-		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
-		MAIN_MENU_DESKTOP_SUB;
 	char *p;
 
-	/*guess redhat menus*/
-	if(g_file_exists(REDHAT_MENUDIR))
-		flags |= MAIN_MENU_REDHAT_SUB;
-
-	/*guess KDE menus*/
-	if(g_file_exists(KDE_MENUDIR))
-		flags |= MAIN_MENU_KDE_SUB;
-
-	/*guess debian menus*/
-	if (g_file_exists(DEBIAN_MENUDIR))
-		flags |= MAIN_MENU_DEBIAN_SUB;
-	
-	load_menu_applet(NULL,flags, panel, 0);
+	load_menu_applet(NULL, get_default_menu_flags (), 
+			 panels->data, 0);
 
 	/* if bigger then 640+50+50 add a logout button */
 	if(gdk_screen_width()>640+50)
@@ -1299,6 +1295,10 @@ load_up_globals(void)
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
+	
+	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
+	global_config.menu_flags = gnome_config_get_int (buf->str);
+
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =

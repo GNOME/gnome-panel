@@ -75,15 +75,24 @@ show_run_dialog ()
 	GtkWidget *entry;
 	GtkWidget *gentry;
 
-	dialog = gnome_dialog_new(_("Run Program"), 
-				  _("Run"), _("Cancel"), NULL);
+	dialog = gnome_dialog_new(_("Run Program"), NULL);
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
+						_("Run"),
+						GNOME_STOCK_PIXMAP_EXEC);
+	gnome_dialog_append_button (GNOME_DIALOG (dialog),
+				    GNOME_STOCK_BUTTON_CANCEL);
 
 	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog), TRUE);
 	
 	fentry = gnome_file_entry_new ("gnome-run",
 				       _("Select a program to run"));
+	gtk_widget_set_usize (GTK_WIDGET (fentry),
+			      gdk_screen_width () / 4, -2);
+
+	gtk_container_set_border_width (GTK_CONTAINER (fentry), GNOME_PAD_BIG);
 	gentry = gnome_file_entry_gnome_entry (GNOME_FILE_ENTRY (fentry));
+
 	gnome_entry_load_history (GNOME_ENTRY (gentry));
 	gnome_entry_prepend_history (GNOME_ENTRY (gentry), FALSE, "");
 	

@@ -770,7 +770,7 @@ make_lc_pixbuf(GdkPixbuf *pb)
 			     gdk_pixbuf_get_bits_per_sample(pb),
 			     gdk_pixbuf_get_width(pb),
 			     gdk_pixbuf_get_height(pb));
-	do_saturate_darken (new, pb, (int)(0.9*255), (int)(0.9*255));
+	do_saturate_darken (new, pb, (int)(0.85*255), (int)(0.85*255));
 
 	return new;
 }

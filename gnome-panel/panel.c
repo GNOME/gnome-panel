@@ -645,13 +645,6 @@ make_popup_panel_menu (void)
 
 	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
 	menu = panel_menu_get (pd);
-	
-	if (!IS_DRAWER_WIDGET (PANEL_WIDGET (current_panel)->panel_parent)) {
-		GtkWidget *menuitem = gtk_object_get_data (GTK_OBJECT (menu),
-							   "remove_item");
-		gtk_widget_set_sensitive (menuitem, base_panels > 1);
-	}
-
 	pd->menu_age = 0;
 	return menu;
 }

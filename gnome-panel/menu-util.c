@@ -73,3 +73,24 @@ applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 					  info->widget->allocation.height);
 }
 
+int
+get_default_menu_flags ()
+{
+	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
+		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
+		MAIN_MENU_DESKTOP;
+	
+	/*guess redhat menus*/
+	if(g_file_exists(REDHAT_MENUDIR))
+		flags |= MAIN_MENU_REDHAT_SUB;
+
+	/*guess KDE menus*/
+	if(g_file_exists(KDE_MENUDIR))
+		flags |= MAIN_MENU_KDE_SUB;
+
+	/*guess debian menus*/
+	if (g_file_exists(DEBIAN_MENUDIR))
+		flags |= MAIN_MENU_DEBIAN_SUB;
+	
+	return flags;
+}

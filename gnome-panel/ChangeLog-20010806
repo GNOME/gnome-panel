@@ -1,3 +1,54 @@
+2000-01-10  Jacob Berkman  <jacob@helixcode.com>
+
+	* session.c (apply_global_config): when menu_flags changes
+	destroy all of the panel's menus
+	(load_default_applets1): get default menu flags from
+	get_default_menu_flags()  (duh)
+	(load_up_globals): load the panel menu flags
+
+	* panel_config_global.h: add menu_flags field
+
+	* panel.c (make_popup_panel_menu): don't try to disable
+	the remove panel menu item
+
+	* menu.c (remove_panel): try to remove a panel.  we have to
+	do this in a function since we have sticky menus
+	(create_panel_root_menu): use create_root_menu() since we have
+	configurable global menu flagsnow
+	(make_panel_submenu): add the 'remove this panel' menu item
+	(create_panel_submenu): put 'About GNOME' here for now...
+	(create_desktop_menu): ...instead of here
+	(create_root_menu): some restructuring
+
+	* menu-util.c (get_default_menu_flags): figure out which
+	flags should be set by default in menus
+
+	* menu-util.h: declare get_default_menu_flags ()
+
+	* menu-properties.c (add_menu_type_options): remove obsoleted
+	sanity check
+
+	* gnome-run.c (show_run_dialog): add the pixmaps back, and
+	make the entry wider	
+
+	* gnome-panel-properties.c: #include "menu.h"
+	(sync_menu_page_with_config): support for menu page
+	right click/menu button menu
+	(sync_config_with_menu_page): ditto
+	(add_menu_options): ditto
+	(menu_notebook_page): add page for configuring the
+	(sync_config_with_misc_page): remove menu frame support
+	(sync_config_with_misc_page): ditto
+	(misc_notebook_page): move the menu frame to the menu tab
+	(loadup_vals): change the default menu back to what it used to
+	be, for the most part
+	(write_config): save menu_flags
+	(try): support for menu tab
+	(revert): ditto
+	(setup_the_ui): ditto again
+
+	* button-widget.c (make_lc_pixbuf): scale by .85 instead of .9
+
 Tue Jan 04 15:12:38 2000  George Lebl <jirka@5z.com>
 
 	* button-widget.c: don't assume rowstride of a newly created
