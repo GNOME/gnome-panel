@@ -47,7 +47,7 @@
   this array.*/
 
 gchar* checkboxes[] = {
-	"drawer-auto-close",
+	"drawer-autoclose",
 	"auto-raise-panel",
 	"confirm-panel-remove",
 	"avoid-panel-overlap",
@@ -387,6 +387,8 @@ main (int argc, char **argv)
 	{
 		setup_the_ui(main_window, gconf_client);
 	}
+
+	gtk_window_set_title(main_window, _("Panel Global Properties"));
 
 	gtk_widget_show_all(main_window);
 

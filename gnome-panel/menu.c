@@ -3341,8 +3341,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 		return;
 	}
 
-	/* if there are no applets just remove the panel */
-	if(!global_config.confirm_panel_remove || !panel->applet_list) {
+	if(!global_config.confirm_panel_remove) {
 		remove_panel (panelw);
 		return;
 	}
