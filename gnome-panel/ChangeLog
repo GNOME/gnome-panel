@@ -1,3 +1,15 @@
+2003-01-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: use @ENUMSHORT@ mkenums substitution pattern
+	instead of @ENUMNAME@. Gives nicer looking names.
+
+	* aligned-widget.c: (aligned_pos_class_init):
+	* basep-widget.c: (basep_widget_class_init):
+	* border-widget.c: (border_pos_class_init):
+	* button-widget.c: (button_widget_class_init):
+	* panel-action-button.c: (panel_action_button_class_init):
+	Update.
+
 2003-01-02  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* button-widget.c (button_widget_leave_notify): Call GtkButton's

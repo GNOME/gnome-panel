@@ -303,7 +303,7 @@ panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
 			--ftail "G_END_DECLS\n\n" \
 			--ftail "#endif /* __PANEL_TYPEBUILTINS_H__ */\n" \
 			--fprod "\n/* --- @filename@ --- */" \
-			--eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
+			--eprod "#define PANEL_TYPE_@ENUMSHORT@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_enum_headers) >  $@
 

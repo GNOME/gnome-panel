@@ -77,7 +77,7 @@ aligned_pos_class_init (AlignedPosClass *klass)
 			      g_cclosure_marshal_VOID__ENUM,
 			      G_TYPE_NONE,
 			      1, 
-			      PANEL_TYPE_ALIGNED_ALIGNMENT);
+			      PANEL_TYPE_ALIGNMENT);
 
 	pos_class->set_pos = aligned_pos_set_pos;
 	pos_class->get_pos = aligned_pos_get_pos;

@@ -158,7 +158,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                         g_param_spec_enum ("mode",
                                                              _("Mode"),
                                                              _("Mode of this panel"),
-							    PANEL_TYPE_BASE_PMODE,
+							    PANEL_TYPE_PMODE,
                                                             BASEP_EXPLICIT_HIDE,
                                                             G_PARAM_READWRITE));
         g_object_class_install_property (object_class,
@@ -166,7 +166,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                         g_param_spec_enum ("state",
                                                              _("State"),
                                                              _("Current state of this panel"),
-							     PANEL_TYPE_BASE_PSTATE,
+							     PANEL_TYPE_PSTATE,
                                                              BASEP_SHOWN,
                                                              G_PARAM_READWRITE));
 
@@ -208,7 +208,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				g_cclosure_marshal_VOID__ENUM,
 				G_TYPE_NONE,
 				1,
-				PANEL_TYPE_BASE_PMODE);
+				PANEL_TYPE_PMODE);
 
 	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
 		g_signal_new	("state_change",
@@ -220,7 +220,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				g_cclosure_marshal_VOID__ENUM,
 				G_TYPE_NONE,
 				1,
-				PANEL_TYPE_BASE_PSTATE);
+				PANEL_TYPE_PSTATE);
 
 	basep_widget_signals [SCREEN_CHANGE_SIGNAL] = 
 		g_signal_new   ("screen_change",

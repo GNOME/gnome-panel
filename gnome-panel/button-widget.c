@@ -885,7 +885,7 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			g_param_spec_enum ("orient",
 					   _("Orientation"),
 					   _("The ButtonWidget orientation"),
-					   PANEL_TYPE_PANEL_ORIENT,
+					   PANEL_TYPE_ORIENT,
 					   PANEL_ORIENT_UP,
 					   G_PARAM_READWRITE));
 

@@ -81,7 +81,7 @@ border_pos_class_init (BorderPosClass *klass)
 			     g_cclosure_marshal_VOID__ENUM,
 			     G_TYPE_NONE,
 			     1,
-			     PANEL_TYPE_BORDER_EDGE);
+			     PANEL_TYPE_EDGE);
 
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = border_pos_set_hidebuttons;

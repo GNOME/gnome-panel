@@ -363,7 +363,7 @@ panel_action_button_class_init (PanelActionButtonClass *klass,
 			g_param_spec_enum ("action-type",
 					   _("Action Type"),
 					   _("The type of action this button implements"),
-					   PANEL_TYPE_PANEL_ACTION_BUTTON_TYPE,
+					   PANEL_TYPE_ACTION_BUTTON_TYPE,
 					   PANEL_ORIENT_UP,
 					   G_PARAM_READWRITE));
 }
