@@ -4395,7 +4395,7 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 			menu->menu = create_menu_at (menu->menu, li->data,
 						     FALSE, NULL, NULL,
 						     fake_subs, FALSE, TRUE);
-		if(menu->menu = NULL) {
+		if(menu->menu == NULL) {
 			int flags;
 			if (menu->global_main)
 				flags = global_config.menu_flags;

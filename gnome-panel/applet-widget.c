@@ -1945,7 +1945,7 @@ typedef struct {
 
 static CORBA_boolean
 server_applet_factory_supports(PortableServer_Servant _servant,
-			       CORBA_char * obj_goad_id,
+			       const CORBA_char * obj_goad_id,
 			       CORBA_Environment * ev)
 {
 	AppletFactory *servant = (AppletFactory *)_servant;
@@ -1960,8 +1960,8 @@ server_applet_factory_supports(PortableServer_Servant _servant,
 
 static CORBA_Object
 server_applet_factory_create_object(PortableServer_Servant _servant,
-				    CORBA_char * goad_id,
-				    GNOME_stringlist * params,
+				    const CORBA_char * goad_id,
+				    const GNOME_stringlist * params,
 				    CORBA_Environment * ev)
 {
 	AppletFactory *servant = (AppletFactory *)_servant;
@@ -1987,7 +1987,7 @@ server_applet_factory_create_object(PortableServer_Servant _servant,
 static POA_GNOME_GenericFactory__epv applet_factory_epv = {
 	NULL,
 	server_applet_factory_supports,
-	server_applet_factory_create_object,  
+	server_applet_factory_create_object
 };
 
 static POA_GNOME_GenericFactory__vepv applet_factory_vepv = {

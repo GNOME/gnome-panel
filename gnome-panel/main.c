@@ -268,7 +268,8 @@ main(int argc, char **argv)
 	/* read, convert and remove old config */
 	convert_old_config();
 
-	/*set the globals*/
+	/* set the globals, it is important this is before
+	 * init_user_applets */
 	load_up_globals();
 	/* this is so the capplet gets the right defaults */
 	write_global_config();
@@ -292,9 +293,9 @@ main(int argc, char **argv)
 
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
-	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);
+	config_sync_timeout = gtk_timeout_add(10*1000, try_config_sync, NULL);
 
-	gtk_timeout_add(10*1000,menu_age_timeout,NULL);
+	gtk_timeout_add(10*1000, menu_age_timeout, NULL);
 	
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
@@ -302,7 +303,6 @@ main(int argc, char **argv)
 
 	status_applet_create_offscreen();
 
-	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();
 
 	return 0;

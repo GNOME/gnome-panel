@@ -986,8 +986,10 @@ init_user_applets(void)
 				gnome_config_get_int("main_menu_type=-1");
 			/* this defaults to false, because we want old menus to
 			 * work in the old style */
+			gboolean global_main_was_default;
 			gboolean global_main =
-				gnome_config_get_bool("global_main=false");
+				gnome_config_get_bool_with_default("global_main=false",
+								   &global_main_was_default);
 			int flags;
 			gboolean old_style = 
 				gnome_config_get_bool("old_style_main=true");
@@ -1000,6 +1002,13 @@ init_user_applets(void)
 						  MAIN_MENU_DESKTOP));
 			flags = gnome_config_get_int(s);
 			g_free(s);
+			
+			/* Hack to try to do the right conversion while trying
+			 * to turn on the feature on as many setups as possible */
+			if (global_main_was_default &&
+			    flags == global_config.menu_flags) {
+				global_main = TRUE;
+			}
 
 			if(type >= 0) {
 				flags = 0;
@@ -1081,14 +1090,14 @@ init_user_panels(void)
 	  it is required to have at least one panel for this all
 	  to work, so this is the way we find out if there was no
 	  config from last time*/
-	if(count<=0)  {
+	if(count <= 0)  {
 		int sz;
 		gboolean hidebutton_pixmaps;
 
-		if(gdk_screen_width()<800) {
+		if(gdk_screen_width() < 800) {
 			sz = SIZE_TINY;
 			hidebutton_pixmaps = FALSE;
-		} else if(gdk_screen_width()<1024) {
+		} else if(gdk_screen_width() < 1024) {
 			sz = SIZE_SMALL;
 			hidebutton_pixmaps = TRUE;
 		} else {
@@ -1114,10 +1123,10 @@ init_user_panels(void)
 		/*load up default applets on the default panel*/
 		load_default_applets1(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
 
-		if(gdk_screen_height()<600) {
+		if(gdk_screen_height() < 600) {
 			sz = SIZE_TINY;
 			hidebutton_pixmaps = FALSE;
-		} else if(gdk_screen_height()<768) {
+		} else if(gdk_screen_height() < 768) {
 			sz = SIZE_SMALL;
 			hidebutton_pixmaps = TRUE;
 		} else {
@@ -1157,7 +1166,7 @@ init_user_panels(void)
 
 	buf = g_string_new(NULL);
 
-	for(num=1;num<=count;num++) {
+	for(num = 1; num <= count; num++) {
 		PanelType type;
 		PanelBackType back_type;
 		int sz;
@@ -1194,11 +1203,12 @@ init_user_panels(void)
 
 		g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
 		sz=gnome_config_get_int(buf->str);
-		if(sz<0) sz = 0;
+		if(sz < 0)
+			sz = 0;
 
 		/*a hack to allow for old config files to be read correctly*/
 		/*don't update this if new sizes (SIZE_SMALL) are added*/
-		if(sz<4) {
+		if(sz < 4) {
 			switch(sz) {
 			case 0: sz = SIZE_TINY; break;
 			case 1: sz = SIZE_STANDARD; break;

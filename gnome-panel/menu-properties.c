@@ -336,7 +336,7 @@ create_properties_dialog(Menu *menu)
 	GtkWidget *w, *w2;
 	GtkWidget *f;
 	GtkWidget *t;
-	GtkWidget *main, *global_main;
+	GtkWidget *main_menu, *global_main;
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
@@ -370,7 +370,7 @@ create_properties_dialog(Menu *menu)
 	w = gtk_radio_button_new_with_label (
 		  gtk_radio_button_group (GTK_RADIO_BUTTON (global_main)),
 		  _("Main menu"));
-	main = w;
+	main_menu = w;
 	gtk_object_set_data(GTK_OBJECT(dialog), "main_menu", w);
 	if((menu->path == NULL ||
 	    strcmp(menu->path, ".") == 0) &&
@@ -472,7 +472,7 @@ create_properties_dialog(Menu *menu)
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   menu);
 	gtk_signal_connect(GTK_OBJECT(dialog), "help",
-			   GTK_SIGNAL_FUNC(phelp_cb), main);
+			   GTK_SIGNAL_FUNC(phelp_cb), main_menu);
 
 	return dialog;
 }
