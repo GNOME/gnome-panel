@@ -351,8 +351,8 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 		   and all that will get updated in the main loop */
 		if(widget->window) {
 			gdk_window_move(widget->window,
-					-widget->allocation.width - 1,
-					-widget->allocation.height - 1);
+					-ABS (widget->allocation.width) - 1,
+					-ABS (widget->allocation.height) - 1);
 		}
 	}
 }

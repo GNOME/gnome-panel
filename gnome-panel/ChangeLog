@@ -1,5 +1,13 @@
 2002-09-12  Mark McLoughlin  <mark@skynet.ie>
 
+	* drawer-widget.c: (drawer_pos_get_pos):
+	* panel.c: (state_hide_foreach): use the
+	absolute value for the width and height when
+	hidding the drawer in case the width or height
+	is negative. Should fix #91636.
+
+2002-09-12  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-config.[ch]:
 	(update_config_back): just set the history on the
 	option menu, don't activate the menu item. Also,
