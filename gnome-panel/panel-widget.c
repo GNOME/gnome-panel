@@ -1352,6 +1352,29 @@ panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return TRUE;
 }*/
 
+static int
+panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
+{
+	GdkImlibImage *im;
+	GdkPixmap *p;
+
+	if (panel->back_pixmap && pixmap && strcmp (panel->back_pixmap, pixmap) == 0)
+		return 1;
+	
+	if (!g_file_exists (pixmap))
+		return 0;
+	
+	im = gdk_imlib_load_image (pixmap);
+	if (!im)
+		return 0;
+	
+	gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+	p = gdk_imlib_move_image (im);
+	gdk_window_set_back_pixmap (panel->fixed->window, p, 0);
+	gdk_imlib_free_pixmap (p);
+	gdk_imlib_destroy_image (im);
+	return 1;
+}
 
 GtkWidget*
 panel_widget_new (gint size,
@@ -1403,21 +1426,9 @@ panel_widget_new (gint size,
 	gtk_widget_show(panel->fixed);
 	gtk_widget_realize (panel->fixed);
 
-	if (g_file_exists (back_pixmap)){
-		GdkImlibImage *im;
-		GdkPixmap *p;
-		
-		im = gdk_imlib_load_image (back_pixmap);
-		if (im){
-			gdk_imlib_render (im, im->rgb_width, im->rgb_height);
-			p = gdk_imlib_move_image (im);
-			gdk_window_set_back_pixmap (panel->fixed->window, p, 0);
-			gdk_imlib_free_pixmap (p);
-			gdk_imlib_destroy_image (im);
-		} else {
-			back_pixmap = 0;
-		}
-	} 
+	if (!panel_try_to_set_pixmap (panel, back_pixmap))
+		back_pixmap = 0;
+
 	panel->back_pixmap = back_pixmap;
 	
 	
@@ -2262,7 +2273,8 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelSnapped snapped,
 			   PanelMode mode,
 			   PanelState state,
-			   DrawerDropZonePos drop_zone_pos)
+			   DrawerDropZonePos drop_zone_pos,
+			   char *pixmap)
 {
 	PanelOrientation oldorient;
 	PanelSnapped oldsnapped;
@@ -2358,6 +2370,11 @@ panel_widget_change_params(PanelWidget *panel,
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
+	if (panel_try_to_set_pixmap (panel, pixmap)){
+		if (panel->back_pixmap)
+			g_free (panel->back_pixmap);
+		panel->back_pixmap = g_strdup (pixmap);
+	}
 }
 
 void
@@ -2369,7 +2386,8 @@ panel_widget_change_orient(PanelWidget *panel,
 				   panel->snapped,
 				   panel->mode,
 				   panel->state,
-				   panel->drawer_drop_zone_pos);
+				   panel->drawer_drop_zone_pos,
+				   panel->back_pixmap);
 }
 
 void
@@ -2381,7 +2399,8 @@ panel_widget_change_drop_zone_pos(PanelWidget *panel,
 				   panel->snapped,
 				   panel->mode,
 				   panel->state,
-				   drop_zone_pos);
+				   drop_zone_pos,
+				   panel->back_pixmap);
 }
 
 

@@ -108,7 +108,6 @@ animation_notebook_page(void)
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
-	gtk_widget_show (vbox);
 
 	/* AutoHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Animation Speed"),
@@ -116,7 +115,6 @@ animation_notebook_page(void)
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 
 	/* ExplicitHide Animation step_size scale frame */
 	frame = make_gint_scale_frame(_("Explicit-Hide Animation Speed"),
@@ -124,7 +122,6 @@ animation_notebook_page(void)
 				      1.0,100.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 
 	/* Minimize Delay scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
@@ -132,7 +129,6 @@ animation_notebook_page(void)
 				      30.0,1000.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 
 	/* Minimized size scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
@@ -140,7 +136,6 @@ animation_notebook_page(void)
 				      1.0,10.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 
 	return (vbox);
 }
@@ -156,20 +151,17 @@ misc_notebook_page(void)
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
-	gtk_widget_show (vbox);
 	
 	/* Tooltips frame */
 	frame = gtk_frame_new (_("Icon Tooltips"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 	
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
-	gtk_widget_show (box);
 	
 	/* Tooltips enable */
 	button = gtk_check_button_new_with_label (_("Tooltips enabled"));
@@ -181,20 +173,17 @@ misc_notebook_page(void)
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 
 	/* Menu frame */
 	frame = gtk_frame_new (_("Menus"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 	
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
-	gtk_widget_show (box);
 	
 	/* Small Icons */
 	button = gtk_check_button_new_with_label (_("Show small icons"));
@@ -206,7 +195,6 @@ misc_notebook_page(void)
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 	
 	return (vbox);
 }
@@ -258,6 +246,6 @@ panel_config_global(void)
 			    GTK_SIGNAL_FUNC (config_apply), NULL);
 
 	/* show main window */
-	gtk_widget_show (config_window);
+	gtk_widget_show_all (config_window);
 }
 

@@ -185,23 +185,23 @@ void		panel_widget_close_drawer	(PanelWidget *panel);
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);
 
-/*needed for corba*/
+/* needed for corba */
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       GtkWidget *applet);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 gint		panel_widget_applet_move_to_cursor(PanelWidget *panel);
 void		panel_widget_applet_move_use_idle(PanelWidget *panel);
 
-/*changing parameters*/
+/* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
 						 PanelState state,
-						 DrawerDropZonePos
-						 	drop_zone_pos);
+						 DrawerDropZonePos drop_zone_pos,
+						 char *pixmap_name);
 
-/*changing parameters (orient only)*/
+/* changing parameters (orient only) */
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
 /*changing parameters (dropzonepos only)*/

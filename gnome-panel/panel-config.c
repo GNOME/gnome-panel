@@ -18,7 +18,7 @@ PanelConfig panel_config_struct;
 extern GlobalConfig global_config;
 
 
-GtkWidget *config_window;
+GtkWidget *config_window, *file_entry;
 
 static gint 
 config_delete (GtkWidget *widget, gpointer data)
@@ -31,6 +31,7 @@ static void
 config_destroy(GtkWidget *widget, gpointer data)
 {
     config_window = NULL;
+    panel_config_struct.config_box = 0;
 }
 
 static void 
@@ -68,21 +69,18 @@ static void
 config_apply (GtkWidget *widget, int page, gpointer data)
 {
 	PanelWidget *panel = data;
-	if(panel_config_struct.mode == PANEL_AUTO_HIDE) {
-		panel_widget_change_params(panel,
-					   panel_config_struct.orient,
-					   panel_config_struct.snapped,
-					   panel_config_struct.mode,
-					   panel->state,
-					   panel->drawer_drop_zone_pos);
-	 } else {
-		panel_widget_change_params(panel,
-					   panel_config_struct.orient,
-					   panel_config_struct.snapped,
-					   panel_config_struct.mode,
-					   panel->state,
-					   panel->drawer_drop_zone_pos);
-	}
+	char *text;
+	
+	text = GTK_ENTRY (gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry)))->text;
+	
+	panel_widget_change_params(panel,
+				   panel_config_struct.orient,
+				   panel_config_struct.snapped,
+				   panel_config_struct.mode,
+				   panel->state,
+				   panel->drawer_drop_zone_pos,
+				   text);
+	gtk_widget_queue_draw (GTK_WIDGET (panel));
 }
 
 GtkWidget *
@@ -98,19 +96,16 @@ position_notebook_page(GtkWidget *propertybox)
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
-	gtk_widget_show (vbox);
 	
 	/* Position frame */
 	frame = gtk_frame_new (_("Position"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 	
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
-	gtk_widget_show (box);
 	
 	/* Top Position */
 	button = gtk_radio_button_new_with_label (NULL, _("Top"));
@@ -121,7 +116,6 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 	
 	/* Bottom Position */
 	button = gtk_radio_button_new_with_label (
@@ -134,7 +128,6 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 	
 	/* Left Position */
 	button = gtk_radio_button_new_with_label (
@@ -147,7 +140,6 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 
 	/* Right Position */
 	button = gtk_radio_button_new_with_label (
@@ -160,19 +152,16 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 
 	/* Auto-hide/stayput frame */
 	frame = gtk_frame_new (_("Minimize Options"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (frame);
 
 	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
-	gtk_widget_show (box);
 	
 	/* Stay Put */
 	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
@@ -183,7 +172,6 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 	
 	/* Auto-hide */
 	button = gtk_radio_button_new_with_label (
@@ -196,21 +184,48 @@ position_notebook_page(GtkWidget *propertybox)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
-	gtk_widget_show (button);
 
 	panel_config_struct.config_box = propertybox;
 
 	return (vbox);
 }
 
+static GtkWidget *
+align (GtkWidget *w, float x)
+{
+	GtkWidget *align = gtk_alignment_new (x, 0.5, 1.0, 1.0);
+
+	gtk_container_add (GTK_CONTAINER (align), w);
+	return align;
+}
+
+static void
+value_changed ()
+{
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+}
+
+static GtkWidget *
+pixmap_page (PanelWidget *panel)
+{
+	GtkWidget *box, *f, *t;
+
+	box = gtk_frame_new (_("Image file"));
+
+	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
+	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC (value_changed), NULL);
+	gtk_container_add (GTK_CONTAINER (box), file_entry);
+	
+	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ? panel->back_pixmap : "");
+	return box;
+}
+	     
 void 
 panel_config(PanelWidget *panel)
 {
-	GtkWidget *box1;
-	GtkWidget *box2;
-	GtkWidget *label;
-	GtkWidget *notebook;
-	GtkWidget *button;
 	GtkWidget *page;
 	
 	/* return if the window is already up. */
@@ -231,19 +246,20 @@ panel_config(PanelWidget *panel)
 			      _("Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
-	/* label for Position notebook page */
-	label = gtk_label_new (_("Orientation"));
-	gtk_widget_show (label);
-	
 	/* Position notebook page */
-	page = position_notebook_page (GNOME_PROPERTY_BOX (config_window));
+	page = position_notebook_page (config_window);
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
 					page, gtk_label_new (_("Orientation")));
 
+	/* Backing pixmap configuration */
+	page = pixmap_page (panel);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
+					page, gtk_label_new (_("Background image")));
+	
 	gtk_signal_connect (GTK_OBJECT (config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), panel);
 	
 	/* show main window */
-	gtk_widget_show (config_window);
+	gtk_widget_show_all (config_window);
 }
 
