@@ -1,3 +1,10 @@
+Tue Aug 12 16:05:34 2003  George Lebl <jirka@5z.com>
+
+	* quick-desktop-reader.c: A "fix" for #119623.  If the encoding is
+	  set explicitly to UTF-8 ignore the encoding from the language just
+	  in case there was any (there isn't supposed to be any!)  This way
+	  we read things that were converted wrongly.
+
 Tue Aug 12 12:52:33 2003  George Lebl <jirka@5z.com>
 
 	* panel-struts.c: Allow passing NULL width/height
