@@ -101,7 +101,8 @@ apply_global_config(void)
 				   global_config.minimize_delay,
 				   global_config.movement_type,
 				   global_config.disable_animations,
-				   global_config.applet_padding);
+				   global_config.applet_padding,
+				   global_config.applet_border_padding);
 
 	if(global_config.tooltips_enabled)
 		gtk_tooltips_enable(panel_tooltips);
@@ -1523,20 +1524,32 @@ load_up_globals(void)
 				       &global_config.run_keysym,
 				       &global_config.run_state);
 
-	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+	global_config.applet_padding =
+		gnome_config_get_int ("applet_padding=3");
+
+	global_config.applet_border_padding =
+		gnome_config_get_int ("applet_border_padding=0");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
 	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=TRUE");
 
-	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
-	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
-	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
-	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
-	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
-	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
-	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
-	global_config.avoid_collisions = gnome_config_get_bool("avoid_collisions=TRUE");
+	global_config.drawer_auto_close =
+		gnome_config_get_bool ("drawer_auto_close=FALSE");
+	global_config.simple_movement =
+		gnome_config_get_bool ("simple_movement=FALSE");
+	global_config.hide_panel_frame =
+		gnome_config_get_bool ("hide_panel_frame=FALSE");
+	global_config.tile_when_over =
+		gnome_config_get_bool ("tile_when_over=FALSE");
+	global_config.saturate_when_over =
+		gnome_config_get_bool ("saturate_when_over=TRUE");
+	global_config.confirm_panel_remove =
+		gnome_config_get_bool ("confirm_panel_remove=TRUE");
+	global_config.fast_button_scaling =
+		gnome_config_get_bool ("fast_button_scaling=FALSE");
+	global_config.avoid_collisions =
+		gnome_config_get_bool ("avoid_collisions=TRUE");
 	
 	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
 	global_config.menu_flags = gnome_config_get_int (buf->str);
@@ -1573,10 +1586,11 @@ load_up_globals(void)
 }
 
 void
-write_global_config(void)
+write_global_config (void)
 {
 	int i;
 	GString *buf;
+
 	gnome_config_push_prefix("/panel/Config/");
 
 	gnome_config_set_int("auto_hide_step_size",
@@ -1607,6 +1621,8 @@ write_global_config(void)
 			      global_config.disable_animations);
 	gnome_config_set_int("applet_padding",
 			     global_config.applet_padding);
+	gnome_config_set_int("applet_border_padding",
+			     global_config.applet_border_padding);
 	gnome_config_set_bool("autoraise",
 			      global_config.autoraise);
 	gnome_config_set_bool("keep_bottom",
@@ -1630,8 +1646,8 @@ write_global_config(void)
 	gnome_config_set_bool("fast_button_scaling", global_config.fast_button_scaling);
 	gnome_config_set_bool("avoid_collisions", global_config.avoid_collisions);
 			     
-	buf = g_string_new(NULL);
-	for(i=0;i<LAST_TILE;i++) {
+	buf = g_string_new (NULL);
+	for (i = 0; i < LAST_TILE; i++) {
 		g_string_sprintf(buf,"new_tiles_enabled_%d",i);
 		gnome_config_set_bool(buf->str,
 				      global_config.tiles_enabled[i]);
@@ -1733,7 +1749,12 @@ convert_write_config(void)
 static gboolean
 convert_read_old_config(void)
 {
-	char *tile_def[]={"normal","purple","green","blue"};
+	char *tile_def[] = {
+		"normal",
+		"purple",
+		"green",
+		"blue"
+	};
 	GString *buf;
 	int i,is_def;
 	int applet_count; /*store this so that we can clean*/
@@ -1789,7 +1810,7 @@ convert_read_old_config(void)
 	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
 	global_config.movement_type=gnome_config_get_int(buf->str);
 
-	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+	global_config.applet_padding = gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 

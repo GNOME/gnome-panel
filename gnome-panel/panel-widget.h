@@ -200,7 +200,8 @@ void		panel_widget_change_global	(int explicit_step,
 						 int minimize_delay,
 						 PanelMovementType move_type,
 						 gboolean disable_animations,
-						 int applet_padding);
+						 int applet_padding,
+						 int applet_border_padding);
 
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
 						 char *file);

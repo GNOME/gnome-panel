@@ -1,3 +1,12 @@
+Sat Oct 14 15:11:24 2000  George Lebl <jirka@5z.com>
+
+	* gnome-panel-properties.c, session.c, panel_config_global.h,
+	  panel-widget.[ch]:  Apply patch from Chris Leith <cleith@home.com>
+	  to add border padding for applets.  By default this is 0 which
+	  was the previous behaviour.  I however did s/applet_applet/applet/
+	  on the patch, since we don't want to change current configuration
+	  names.
+
 Sat Oct 14 14:17:49 2000  George Lebl <jirka@5z.com>
 
 	* panel_config.c, applet-widget.c, gwmthumbnail.c, panel-util.[ch],

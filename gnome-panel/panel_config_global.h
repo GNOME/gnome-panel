@@ -19,6 +19,7 @@ struct _GlobalConfig {
 	PanelMovementType movement_type;
 	gboolean disable_animations;
 	int applet_padding;
+	int applet_border_padding;
 	gboolean autoraise;
 	gboolean keep_bottom;
 	gboolean drawer_auto_close;

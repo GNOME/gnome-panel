@@ -85,6 +85,7 @@ static GtkWidget *movement_type_switch_rb;
 static GtkWidget *movement_type_free_rb;
 static GtkWidget *movement_type_push_rb;
 static GtkAdjustment *applet_padding;
+static GtkAdjustment *applet_border_padding;
 
 
 /* menu page */
@@ -644,7 +645,8 @@ sync_applets_page_with_config(GlobalConfig *conf)
 		break;
 	default: break;
 	}
-	gtk_adjustment_set_value(applet_padding,conf->applet_padding);
+	gtk_adjustment_set_value (applet_padding, conf->applet_padding);
+	gtk_adjustment_set_value (applet_border_padding, conf->applet_border_padding);
 }
 static void
 sync_config_with_applets_page(GlobalConfig *conf)
@@ -657,6 +659,7 @@ sync_config_with_applets_page(GlobalConfig *conf)
 		conf->movement_type = PANEL_PUSH_MOVE;
 	
 	conf->applet_padding = applet_padding->value;
+	conf->applet_border_padding = applet_border_padding->value;
 }
 
 
@@ -703,9 +706,14 @@ applets_notebook_page (void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), movement_type_push_rb, FALSE, FALSE, 0);	
 
-	box = make_int_scale_box(_("Padding"),
-				 &applet_padding,
-				 0.0, 10.0, 1.0);
+	box = make_int_scale_box (_("Padding between applets"),
+				  &applet_padding,
+				  0.0, 10.0, 1.0);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+	
+	box = make_int_scale_box (_("Padding between applets and panel border"),
+				  &applet_border_padding,
+				  0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 	
 
@@ -1150,64 +1158,77 @@ loadup_vals(void)
 	global_config.disable_animations =
 		gnome_config_get_bool("disable_animations=FALSE");
 		
-	g_string_sprintf(buf,"auto_hide_step_size=%d",
-			 DEFAULT_AUTO_HIDE_STEP_SIZE);
-	global_config.auto_hide_step_size=gnome_config_get_int(buf->str);
+	g_string_sprintf (buf, "auto_hide_step_size=%d",
+			  DEFAULT_AUTO_HIDE_STEP_SIZE);
+	global_config.auto_hide_step_size=gnome_config_get_int (buf->str);
 		
-	g_string_sprintf(buf,"explicit_hide_step_size=%d",
-			 DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
-	global_config.explicit_hide_step_size=gnome_config_get_int(buf->str);
+	g_string_sprintf (buf, "explicit_hide_step_size=%d",
+			  DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+	global_config.explicit_hide_step_size=gnome_config_get_int (buf->str);
 		
-	g_string_sprintf(buf,"drawer_step_size=%d",
-			 DEFAULT_DRAWER_STEP_SIZE);
+	g_string_sprintf (buf, "drawer_step_size=%d",
+			  DEFAULT_DRAWER_STEP_SIZE);
 	global_config.drawer_step_size=gnome_config_get_int(buf->str);
 		
-	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay=gnome_config_get_int(buf->str);
+	g_string_sprintf (buf, "minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
+	global_config.minimize_delay=gnome_config_get_int (buf->str);
 		
-	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
-	global_config.minimized_size=gnome_config_get_int(buf->str);
+	g_string_sprintf (buf, "minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
+	global_config.minimized_size=gnome_config_get_int (buf->str);
 		
-	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
-	global_config.movement_type=gnome_config_get_int(buf->str);
+	g_string_sprintf (buf, "movement_type=%d", PANEL_SWITCH_MOVE);
+	global_config.movement_type=gnome_config_get_int (buf->str);
 
-	g_string_sprintf(buf,"menu_flags=%d", 
-			 (int)(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB|
-			       MAIN_MENU_APPLETS_SUB | MAIN_MENU_DISTRIBUTION_SUB|
-			       MAIN_MENU_KDE_SUB | MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
+	g_string_sprintf (buf, "menu_flags=%d", 
+			  (int)(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB|
+				MAIN_MENU_APPLETS_SUB | MAIN_MENU_DISTRIBUTION_SUB|
+				MAIN_MENU_KDE_SUB | MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
 	global_config.menu_flags = gnome_config_get_int(buf->str);
 
-	global_config.keys_enabled = gnome_config_get_bool("keys_enabled=TRUE");
+	global_config.keys_enabled =
+		gnome_config_get_bool ("keys_enabled=TRUE");
 
-	global_config.menu_key = gnome_config_get_string("menu_key=Mod1-F1");
+	global_config.menu_key = gnome_config_get_string ("menu_key=Mod1-F1");
 	/*convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);*/
 
-	global_config.run_key = gnome_config_get_string("run_key=Mod1-F2");
+	global_config.run_key = gnome_config_get_string ("run_key=Mod1-F2");
 	/*convert_string_to_keysym_state(global_config.run_key,
 				       &global_config.run_keysym,
 				       &global_config.run_state);*/
 
-	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
+	global_config.applet_padding =
+		gnome_config_get_int ("applet_padding=3");
+
+	global_config.applet_border_padding =
+		gnome_config_get_int("applet_border_padding=0");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
 	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=TRUE");
 
-	global_config.drawer_auto_close = gnome_config_get_bool("drawer_auto_close=FALSE");
-	global_config.simple_movement = gnome_config_get_bool("simple_movement=FALSE");
-	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
-	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
-	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
-	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
-	global_config.avoid_collisions = gnome_config_get_bool("avoid_collisions=TRUE");
-	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
+	global_config.drawer_auto_close =
+		gnome_config_get_bool ("drawer_auto_close=FALSE");
+	global_config.simple_movement =
+		gnome_config_get_bool ("simple_movement=FALSE");
+	global_config.hide_panel_frame =
+		gnome_config_get_bool ("hide_panel_frame=FALSE");
+	global_config.tile_when_over =
+		gnome_config_get_bool ("tile_when_over=FALSE");
+	global_config.saturate_when_over =
+		gnome_config_get_bool ("saturate_when_over=TRUE");
+	global_config.confirm_panel_remove =
+		gnome_config_get_bool ("confirm_panel_remove=TRUE");
+	global_config.avoid_collisions =
+		gnome_config_get_bool ("avoid_collisions=TRUE");
+	global_config.fast_button_scaling =
+		gnome_config_get_bool ("fast_button_scaling=FALSE");
 
-	for(i=0;i<LAST_TILE;i++) {
-		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
+	for (i = 0; i < LAST_TILE; i++) {
+		g_string_sprintf (buf, "new_tiles_enabled_%d=FALSE", i);
 		global_config.tiles_enabled[i] =
-			gnome_config_get_bool(buf->str);
+			gnome_config_get_bool (buf->str);
 
 		g_free(global_config.tile_up[i]);
 		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
@@ -1282,6 +1303,8 @@ write_config(GlobalConfig *conf)
 			      conf->disable_animations);
 	gnome_config_set_int("applet_padding",
 			     conf->applet_padding);
+	gnome_config_set_int("applet_border_padding",
+			     conf->applet_border_padding);
 	gnome_config_set_bool("autoraise",
 			      conf->autoraise);
 	gnome_config_set_bool("keep_bottom",

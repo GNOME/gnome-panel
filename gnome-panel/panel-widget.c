@@ -59,6 +59,7 @@ int pw_minimize_delay = 300;
 gboolean pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 int pw_applet_padding = 3;
+int pw_applet_border_padding = 0;
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -829,14 +830,14 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		GtkRequisition chreq;
 		gtk_widget_size_request(ad->applet,&chreq);
 		if(panel->orient == PANEL_HORIZONTAL) {
-			if(requisition->height < chreq.height)
-				requisition->height = chreq.height;
+			if(requisition->height - 2*pw_applet_border_padding < chreq.height)
+				requisition->height = chreq.height + 2*pw_applet_border_padding;
 			if(panel->packed)
 				requisition->width += chreq.width +
 					pw_applet_padding;
 		} else {
-			if(requisition->width < chreq.width)
-				requisition->width = chreq.width;
+			if(requisition->width - 2*pw_applet_border_padding < chreq.width)
+				requisition->width = chreq.width + 2*pw_applet_border_padding;
 			if(panel->packed)
 				requisition->height += chreq.height +
 					pw_applet_padding;
@@ -2830,7 +2831,8 @@ panel_widget_change_global(int explicit_step,
 			   int minimize_delay,
 			   PanelMovementType move_type,
 			   gboolean disable_animations,
-			   int applet_padding)
+			   int applet_padding,
+			   int applet_border_padding)
 {
 	if(explicit_step>0)
 		pw_explicit_step=explicit_step;
@@ -2846,9 +2848,10 @@ panel_widget_change_global(int explicit_step,
 	pw_disable_animations = disable_animations;
 
 	/*change padding on all panels NOW*/
-	if(pw_applet_padding != applet_padding) {
+	if((pw_applet_padding != applet_padding) || (pw_applet_border_padding != applet_border_padding)) {
 		GSList *li;
 		pw_applet_padding = applet_padding;
+		pw_applet_border_padding = applet_border_padding;
 		for(li=panels;li!=NULL;li=g_slist_next(li))
 			gtk_widget_queue_resize(li->data);
 	}
