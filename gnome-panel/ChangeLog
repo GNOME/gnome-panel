@@ -1,3 +1,21 @@
+2003-11-13  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-action-button.c, panel-applet-frame.c,
+	  panel-menu-bar.c, panel-toplevel.c,
+	  panel-menu-button.c: use GObject instance
+	private data.
+	
+	* panel-shell.[ch]: cut out a lot of unused crap.
+
+2003-11-13  Mark McLoughlin  <mark@skynet.ie>
+	
+	* panel-profile.c: (panel_profile_delete_dir):
+	Use gconf_client_recursive_unset() instead of
+	panel_gconf_clean_dir(). It seems to work better
+	anyway.
+	
+	* panel-gconf.[ch]: (panel_gconf_clean_dir): kill.
+	
 2003-11-13  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-bar.c: (panel_menu_bar_invoke_menu): show the help

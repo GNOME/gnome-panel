@@ -35,13 +35,7 @@
 #define PANEL_IS_SHELL(o)       (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_SHELL_TYPE))
 #define PANEL_IS_SHELL_CLASS(k) (G_TYPE_CHECK_CLASS_TYPE    ((k), PANEL_SHELL_TYPE))
 
-typedef struct _PanelShellPrivate PanelShellPrivate;
-
-typedef struct {
-	BonoboObject       base;
-
-	PanelShellPrivate *priv;
-} PanelShell;
+typedef BonoboObject PanelShell;
 
 typedef struct {
 	BonoboObjectClass                 parent_class;

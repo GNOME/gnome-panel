@@ -39,6 +39,8 @@
 #include "menu.h"
 #include "quick-desktop-reader.h"
 
+#define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
+
 enum {
 	PROP_0,
 	PROP_MENU_PATH,
@@ -71,7 +73,7 @@ static void
 panel_menu_button_instance_init (PanelMenuButton      *button,
 				 PanelMenuButtonClass *klass)
 {
-	button->priv = g_new0 (PanelMenuButtonPrivate, 1);
+	button->priv = PANEL_MENU_BUTTON_GET_PRIVATE (button);
 
 	button->priv->info         = NULL;
 	button->priv->toplevel     = NULL;
@@ -111,9 +113,6 @@ panel_menu_button_finalize (GObject *object)
 
 	g_free (button->priv->tooltip);
 	button->priv->tooltip = NULL;
-
-	g_free (button->priv);
-	button->priv = NULL;
 
 	parent_class->finalize (object);
 }
@@ -415,8 +414,7 @@ panel_menu_button_clicked (GtkButton *gtk_button)
 }
 
 static void
-panel_menu_button_class_init (PanelMenuButtonClass *klass,
-			   gpointer           dummy)
+panel_menu_button_class_init (PanelMenuButtonClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
@@ -433,6 +431,8 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass,
                                                                                                              
 	button_class->clicked = panel_menu_button_clicked;
 	button_class->pressed = panel_menu_button_pressed;
+
+	g_type_class_add_private (klass, sizeof (PanelMenuButtonPrivate));
 
 	g_object_class_install_property (
 			gobject_class,

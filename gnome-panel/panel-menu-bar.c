@@ -39,6 +39,8 @@
 #include "panel-globals.h"
 #include "panel-profile.h"
 
+#define PANEL_MENU_BAR_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BAR, PanelMenuBarPrivate))
+
 #define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_DISTRIBUTION_SUB)
 
 enum {
@@ -188,7 +190,7 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	GtkWidget *item;
 	GtkWidget *image;
 
-	menubar->priv = g_new0 (PanelMenuBarPrivate, 1);
+	menubar->priv = PANEL_MENU_BAR_GET_PRIVATE (menubar);
 
 	menubar->priv->info = NULL;
 
@@ -223,19 +225,6 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 }
 
 static void
-panel_menu_bar_finalize (GObject *object)
-{
-	PanelMenuBar *menubar = PANEL_MENU_BAR (object);
-
-	menubar->priv->info = NULL;
-
-	g_free (menubar->priv);
-	menubar->priv = NULL;
-
-	parent_class->finalize (object);
-}
-
-static void
 panel_menu_bar_parent_set (GtkWidget *widget,
 			   GtkWidget *previous_parent)
 {
@@ -252,17 +241,15 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 }
 
 static void
-panel_menu_bar_class_init (PanelMenuBarClass *klass,
-			   gpointer           dummy)
+panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
-	GObjectClass   *gobject_class = (GObjectClass   *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);
 
-	gobject_class->finalize = panel_menu_bar_finalize;
-
 	widget_class->parent_set = panel_menu_bar_parent_set;
+
+	g_type_class_add_private (klass, sizeof (PanelMenuBarPrivate));
 
 	gtk_rc_parse_string (
 		"style \"panel-menubar-style\"\n"

@@ -39,6 +39,8 @@
 #include "panel-marshal.h"
 #include "panel-background.h"
 
+#define PANEL_APPLET_FRAME_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFramePrivate))
+
 #undef PANEL_APPLET_FRAME_DEBUG
 
 #define HANDLE_SIZE 10
@@ -463,9 +465,6 @@ panel_applet_frame_finalize (GObject *object)
 
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
-
-        g_free (frame->priv);
-        frame->priv = NULL;
 
         parent_class->finalize (object);
 }
@@ -1007,13 +1006,15 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 	widget_class->size_allocate        = panel_applet_frame_size_allocate;
 	widget_class->button_press_event   = panel_applet_frame_button_changed;
 	widget_class->button_release_event = panel_applet_frame_button_changed;
+
+	g_type_class_add_private (klass, sizeof (PanelAppletFramePrivate));
 }
 
 static void
 panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 				  PanelAppletFrameClass *klass)
 {
-	frame->priv = g_new0 (PanelAppletFramePrivate, 1);
+	frame->priv = PANEL_APPLET_FRAME_GET_PRIVATE (frame);
 
 	frame->priv->applet_shell     = CORBA_OBJECT_NIL;
 	frame->priv->property_bag     = CORBA_OBJECT_NIL;

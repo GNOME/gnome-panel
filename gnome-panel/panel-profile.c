@@ -1873,7 +1873,8 @@ panel_profile_delete_dir (GConfClient       *client,
 	if (type == PANEL_GCONF_TOPLEVELS)
 	    gconf_client_remove_dir (client, key, NULL);
 
-	panel_gconf_clean_dir (client, key);
+	gconf_client_recursive_unset (
+	  client, key, GCONF_UNSET_INCLUDING_SCHEMA_NAMES, NULL);
 }
 
 static gboolean

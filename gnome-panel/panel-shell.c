@@ -31,12 +31,6 @@
 #include "panel-shell.h"
 #include "panel-util.h"
 
-struct _PanelShellPrivate {
-	int dummy;
-};
-
-static GObjectClass *panel_shell_parent_class = NULL;
-
 /*
  * PanelShell is a singleton.
  */
@@ -126,34 +120,14 @@ impl_displayRunDialog (PortableServer_Servant  servant,
 }
 
 static void
-panel_shell_finalize (GObject *object)
-{
-	PanelShell *shell = PANEL_SHELL (object);
-
-	if (shell->priv) {
-		g_free (shell->priv);
-		shell->priv = NULL;
-	}
-
-	panel_shell_parent_class->finalize (object);
-}
-
-static void
 panel_shell_class_init (PanelShellClass *klass)
 {
-	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
 	klass->epv.displayRunDialog = impl_displayRunDialog;
-
-	object_class->finalize = panel_shell_finalize;
-
-	panel_shell_parent_class = g_type_class_peek_parent (klass);
 }
 
 static void
 panel_shell_init (PanelShell *shell)
 {
-	shell->priv = g_new0 (PanelShellPrivate, 1);
 }
 
 BONOBO_TYPE_FUNC_FULL (PanelShell,

@@ -45,6 +45,8 @@
 #include "panel-run-dialog.h"
 #include "panel-a11y.h"
 
+#define PANEL_ACTION_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_ACTION_BUTTON, PanelActionButtonPrivate))
+
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
@@ -262,9 +264,6 @@ panel_action_button_finalize (GObject *object)
 				    button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
 
-	g_free (button->priv);
-	button->priv = NULL;
-
 	parent_class->finalize (object);
 }
 
@@ -371,8 +370,7 @@ panel_action_button_clicked (GtkButton *gtk_button)
 }
 
 static void
-panel_action_button_class_init (PanelActionButtonClass *klass,
-				gpointer               dummy)
+panel_action_button_class_init (PanelActionButtonClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class  = (GtkWidgetClass *) klass;
@@ -387,6 +385,8 @@ panel_action_button_class_init (PanelActionButtonClass *klass,
 	widget_class->drag_data_get = panel_action_button_drag_data_get;
 
 	button_class->clicked       = panel_action_button_clicked;
+
+	g_type_class_add_private (klass, sizeof (PanelActionButtonPrivate));
 
 	g_object_class_install_property (
 			gobject_class,
@@ -412,7 +412,7 @@ static void
 panel_action_button_instance_init (PanelActionButton      *button,
 				   PanelActionButtonClass *klass)
 {
-	button->priv = g_new0 (PanelActionButtonPrivate, 1);
+	button->priv = PANEL_ACTION_BUTTON_GET_PRIVATE (button);
 
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;

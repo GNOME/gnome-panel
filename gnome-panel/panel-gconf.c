@@ -234,47 +234,6 @@ panel_gconf_add_dir (const char *key)
 }
 
 void
-panel_gconf_clean_dir (GConfClient *client,
-		       const char  *dir)
-{
-	GSList *subdirs;
-	GSList *entries;
-	GSList *l;
-	gboolean all_keys_deleted = TRUE;
-
-	subdirs = gconf_client_all_dirs (client, dir, NULL);
-
-	for (l = subdirs; l; l = l->next) {
-		panel_gconf_clean_dir (client, (char *) l->data);
-		g_free (l->data);
-	}
-
-	g_slist_free (subdirs);
- 
-  	entries = gconf_client_all_entries (client, dir, NULL);
-
-	for (l = entries; l; l = l->next) {
-		GConfEntry *entry = l->data;
-		const char *key;
-
-		key = gconf_entry_get_key (entry);
-
-		if (gconf_client_key_is_writable (client, key, NULL)) {
-			gconf_engine_associate_schema (client->engine, key, NULL, NULL);
-			gconf_client_unset (client, key, NULL);
-		} else {
-			all_keys_deleted = FALSE;
-		}
-		gconf_entry_free (entry);
-	}
-    		
-	g_slist_free (entries);
-
-	if (all_keys_deleted)
-		gconf_client_unset (client, dir, NULL);
-}
-
-void
 panel_gconf_copy_dir (GConfClient  *client,
 		      const char   *src_dir,
 		      const char   *dest_dir)

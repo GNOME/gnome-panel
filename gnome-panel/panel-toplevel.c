@@ -46,6 +46,8 @@
 #include "panel-struts.h"
 #include "xstuff.h"
 
+#define PANEL_TOPLEVEL_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_TOPLEVEL, PanelToplevelPrivate))
+
 #define DEFAULT_SIZE              48
 #define DEFAULT_AUTO_HIDE_SIZE    6
 #define DEFAULT_HIDE_DELAY        500
@@ -3526,11 +3528,7 @@ panel_toplevel_finalize (GObject *object)
 		g_free (toplevel->priv->name);
 	toplevel->priv->name = NULL;
 
-        g_free (toplevel->priv);
-        toplevel->priv = NULL;
-
-	if (parent_class->finalize)
-		parent_class->finalize (object);
+	parent_class->finalize (object);
 }
 
 static void
@@ -3579,6 +3577,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->toggle_hidden    = panel_toplevel_toggle_hidden;
 	klass->begin_move       = panel_toplevel_begin_move;
 	klass->begin_resize     = panel_toplevel_begin_resize;
+
+	g_type_class_add_private (klass, sizeof (PanelToplevelPrivate));
 
 	g_object_class_install_property (
 		gobject_class,
@@ -3940,7 +3940,7 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 {
 	int i;
 
-	toplevel->priv = g_new0 (PanelToplevelPrivate, 1);
+	toplevel->priv = PANEL_TOPLEVEL_GET_PRIVATE (toplevel);
 
 	toplevel->priv->expand          = TRUE;
 	toplevel->priv->orientation     = PANEL_ORIENTATION_BOTTOM;
