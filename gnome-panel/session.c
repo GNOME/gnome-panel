@@ -49,10 +49,10 @@ extern char *kde_icondir;
 extern char *kde_mini_icondir;
 
 int ss_cur_applet = 0;
-int ss_done_save = FALSE;
+gboolean ss_done_save = FALSE;
 gushort ss_cookie = 0;
 GtkWidget *ss_timeout_dlg = NULL;
-static int ss_interactive = FALSE;
+static gboolean ss_interactive = FALSE;
 static int ss_timeout = 500;
 
 /*send the tooltips state to all external applets*/
@@ -257,8 +257,10 @@ session_save_timeout (gpointer data)
 #ifdef PANEL_DEBUG	
 	printf("SAVE TIMEOUT (%u)\n",ss_cookie);
 #endif
-	if ( ! ss_interactive)
+	if ( ! ss_interactive) {
+		ss_cookie ++;
 		return FALSE;
+	}
 
 	ss_timeout_dlg =
 		gnome_message_box_new(_("An applet is not "
@@ -644,9 +646,9 @@ save_next_applet(void)
 
 static void
 do_session_save(GnomeClient *client,
-		int complete_sync,
-		int sync_applets,
-		int sync_panels)
+		gboolean complete_sync,
+		gboolean sync_applets,
+		gboolean sync_panels)
 {
 	int num;
 #if PER_SESSION_CONFIGURATION
@@ -743,7 +745,7 @@ panel_config_sync(void)
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			do_session_save(client,ncs,ats,pts);
+			do_session_save (client, ncs, ats, pts);
 #ifdef PER_SESSION_CONFIGURATION
 		} else {
 			/*prevent possible races by doing this before requesting

@@ -45,7 +45,7 @@ extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
 extern int ss_cur_applet;
-extern int ss_done_save;
+extern gboolean ss_done_save;
 extern GtkWidget* ss_timeout_dlg;
 extern gushort ss_cookie;
 
