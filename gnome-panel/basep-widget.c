@@ -9,6 +9,8 @@
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-program.h>
 #include <libgnomeui.h>
 #include "panel-widget.h"
 #include "basep-widget.h"
@@ -102,7 +104,7 @@ basep_widget_get_pos_class (BasePWidget *basep) {
 	g_return_val_if_fail (IS_BASEP_WIDGET(basep), NULL);
 	g_return_val_if_fail (IS_BASEP_POS(basep->pos), NULL);
 
-	klass = BASEP_POS_CLASS(GTK_OBJECT(basep->pos)->klass);
+	klass = BASEP_POS_GET_CLASS(basep);
 
 	g_return_val_if_fail (IS_BASEP_POS_CLASS (klass), NULL);
 
@@ -352,7 +354,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
 		gtk_signal_new("mode_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE(object_class),
 			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
 						 mode_change),
 			       gtk_marshal_NONE__ENUM,
@@ -362,7 +364,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
 		gtk_signal_new("state_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE(object_class),
 			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
 						 state_change),
 			       gtk_marshal_NONE__ENUM,
@@ -372,17 +374,13 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
 		gtk_signal_new("screen_change",
 			       GTK_RUN_LAST,
-			       object_class->type,
+			       GTK_CLASS_TYPE(object_class),
 			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
 						 screen_change),
 			       gtk_marshal_NONE__INT,
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_INT);
-
-	gtk_object_class_add_signals(object_class, 
-				     basep_widget_signals,
-				     WIDGET_LAST_SIGNAL);
 
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
@@ -412,8 +410,8 @@ basep_pos_get_type (void)
 			sizeof (BasePPosClass),
 			(GtkClassInitFunc) basep_pos_class_init,
 			(GtkObjectInitFunc) basep_pos_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL
+			NULL,
+			NULL
 		};
 		
 		basep_pos_type = gtk_type_unique (gtk_object_get_type (),
@@ -867,9 +865,10 @@ make_hidebutton(BasePWidget *basep,
 	else
 		gtk_widget_set_usize(w, PANEL_MINIMUM_WIDTH, 0);
 
-	pixmap_name=gnome_pixmap_file(pixmaparrow);
+	pixmap_name=gnome_program_locate_file(NULL, GNOME_FILE_DOMAIN_PIXMAP,
+					      pixmaparrow, TRUE, NULL);
 	if(pixmap_name) {
-		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		pixmap = gtk_image_new_from_file(pixmap_name);
 		g_free(pixmap_name);
 	} else {
 		pixmap = gtk_label_new("*");

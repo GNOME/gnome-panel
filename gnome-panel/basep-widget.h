@@ -16,12 +16,15 @@ G_BEGIN_DECLS
 #define BASEP_WIDGET_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_WIDGET, BasePWidgetClass))
 #define IS_BASEP_WIDGET(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_WIDGET))
 #define IS_BASEP_WIDGET_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_WIDGET))
+#define BASEP_WIDGET_GET_CLASS(k)(BASEP_WIDGET_CLASS(G_OBJECT_GET_CLASS(k)))
 
 #define TYPE_BASEP_POS        (basep_pos_get_type ())
 #define BASEP_POS(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_POS, BasePPos))
 #define BASEP_POS_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), TYPE_BASEP_POS, BasePPosClass))
 #define IS_BASEP_POS(o)       (GTK_CHECK_TYPE((o), TYPE_BASEP_POS))
 #define IS_BASEP_POS_CLASS(k) (GTK_CHECK_CLASS_TYPE((k), TYPE_BASEP_POS))
+#define BASEP_POS_GET_CLASS(k)(BASEP_POS_CLASS(G_OBJECT_GET_CLASS(BASEP_WIDGET(k)->pos)))
+
 
 typedef struct _BasePWidget		BasePWidget;
 typedef struct _BasePWidgetClass	BasePWidgetClass;
