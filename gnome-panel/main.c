@@ -1837,7 +1837,7 @@ panel_connect_client (GnomeClient *client,
 	
 	if(session_id) {
 		g_free(old_panel_cfg_path);
-		old_panel_cfg_path = g_copy_strings("/panel-Session-",
+		old_panel_cfg_path = g_copy_strings("/panel.d/Session-",
 						    session_id,"/",NULL);
 	}
 	puts("connected");
@@ -1927,7 +1927,7 @@ main(int argc, char **argv)
 
 		if(session_id) {
 			g_free(old_panel_cfg_path);
-			old_panel_cfg_path = g_copy_strings("/panel-Session-",
+			old_panel_cfg_path = g_copy_strings("/panel.d/Session-",
 							    session_id,"/",
 							    NULL);
 		}
