@@ -1,3 +1,13 @@
+Sat Mar 11 02:08:04 2000  George Lebl <jirka@5z.com>
+
+	* gnome-panel-properties.c: read/save the remove confirm flag fixes
+	  #7018
+
+	* session.c,menu.c,launcher.c,gnome-run.c,swallow.c: When the panels
+	  are on top, then put all dialogs above dock.  All except the
+	  properties dialog which I'm not sure about.  And only do it if
+	  the panels are really on to.
+
 2000-03-10  Jacob Berkman  <jacob@helixcode.com>
 
 	* applet-widget.c (applet_widget_get_rgb_bg): use height for the

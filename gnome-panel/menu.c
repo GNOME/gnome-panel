@@ -622,7 +622,11 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 
 	gnome_dialog_set_default(GNOME_DIALOG(d),0);
 
-	gtk_widget_show_all(d);	
+	gtk_widget_show_all (d);
+	gtk_widget_show_now (d);
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(d),
+					   WIN_LAYER_ABOVE_DOCK);
 }
 
 static void
@@ -1576,7 +1580,11 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 					     NULL);
 		gtk_window_set_wmclass(GTK_WINDOW(mbox),
 				       "no_more_status_dialog","Panel");
-		gtk_widget_show_all(mbox);
+		gtk_widget_show_all (mbox);
+		gtk_widget_show_now (mbox);
+		if(!global_config.keep_bottom)
+			gnome_win_hints_set_layer (GTK_WIDGET(mbox),
+						   WIN_LAYER_ABOVE_DOCK);
 	}
 }
 
@@ -2520,7 +2528,11 @@ create_new_panel(GtkWidget *w, gpointer data)
 						GNOME_MESSAGE_BOX_ERROR,
 						GNOME_STOCK_BUTTON_OK,
 						NULL);
-		gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+		gtk_widget_show_all (dialog);
+		gtk_widget_show_now (dialog);
+		if(!global_config.keep_bottom)
+			gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+						   WIN_LAYER_ABOVE_DOCK);
 		break;
 	}
 	default: break;
@@ -2815,7 +2827,11 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	gtk_signal_connect_object_while_alive (GTK_OBJECT(panelw), "destroy",
 					       GTK_SIGNAL_FUNC(gtk_widget_destroy),
 					       GTK_OBJECT(dialog));
-	gtk_widget_show (dialog);
+	gtk_widget_show_all (dialog);
+	gtk_widget_show_now (dialog);
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+					   WIN_LAYER_ABOVE_DOCK);
 }
 
 static void

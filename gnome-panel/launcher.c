@@ -52,7 +52,11 @@ launch (Launcher *launcher, int argc, char *argv[])
 					    NULL);
 		gtk_window_set_wmclass(GTK_WINDOW(dlg),
 				       "no_exec_dialog","Panel");
-		gtk_widget_show_all(dlg);
+		gtk_widget_show_all (dlg);
+		gtk_widget_show_now (dlg);
+		if(!global_config.keep_bottom)
+			gnome_win_hints_set_layer (GTK_WIDGET(dlg),
+						   WIN_LAYER_ABOVE_DOCK);
 		return;
 	}
 	
@@ -586,7 +590,11 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 
 	gnome_dialog_set_default(GNOME_DIALOG(d),0);
 
-	gtk_widget_show_all(d);
+	gtk_widget_show_all (d);
+	gtk_widget_show_now (d);
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(d),
+					   WIN_LAYER_ABOVE_DOCK);
 }
 
 void

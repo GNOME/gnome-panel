@@ -1088,7 +1088,7 @@ loadup_vals(void)
 	global_config.hide_panel_frame = gnome_config_get_bool("hide_panel_frame=FALSE");
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
-	
+	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
 
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=FALSE",i);
@@ -1180,6 +1180,8 @@ write_config(GlobalConfig *conf)
 			      conf->tile_when_over);
 	gnome_config_set_bool("saturate_when_over",
 			      conf->saturate_when_over);
+	gnome_config_set_bool("confirm_panel_remove",
+			      conf->confirm_panel_remove);
 	gnome_config_set_int("menu_flags", conf->menu_flags);
 	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
 	gnome_config_set_string("menu_key", conf->menu_key);

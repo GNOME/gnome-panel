@@ -185,7 +185,15 @@ apply_global_config(void)
 	panel_global_keys_setup();
 }
 
-static int
+static void
+timeout_dlg_realized(GtkWidget *dialog)
+{
+	/* always make top layer */
+	gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+				   WIN_LAYER_ABOVE_DOCK);
+}
+
+static gboolean
 session_save_timeout(gpointer data)
 {
 	int cookie = GPOINTER_TO_INT(data);
@@ -215,6 +223,10 @@ session_save_timeout(gpointer data)
 	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
 						_("Continue waiting"),
 						GNOME_STOCK_PIXMAP_TIMER);
+
+	gtk_signal_connect_after(GTK_OBJECT(ss_timeout_dlg), "realize",
+				 GTK_SIGNAL_FUNC(timeout_dlg_realized),
+				 NULL);
 	
 	if (0 == gnome_dialog_run_and_close (GNOME_DIALOG (ss_timeout_dlg))) {
 		ss_cookie++;

@@ -595,7 +595,7 @@ gnome_panel_applet_register_callback(GtkWidget *applet,
 	
 	info = get_callback_info(applet,name);
 	if(!info) {
-		info = g_new(CallbackInfo,1);
+		info = g_new0(CallbackInfo,1);
 		CD(applet)->callbacks = g_slist_prepend(CD(applet)->callbacks,
 							info);
 	} else

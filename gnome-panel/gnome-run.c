@@ -26,6 +26,10 @@
 
 #include "gnome-run.h"
 
+#include "panel_config_global.h"
+
+extern GlobalConfig global_config;
+
 static void 
 string_callback (GtkWidget *w, int button_num, gpointer data)
 {
@@ -163,8 +167,9 @@ browse(GtkWidget *w, GtkWidget *entry)
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
 	gtk_widget_show_now (GTK_WIDGET (fsel));
-	gnome_win_hints_set_layer (GTK_WIDGET(fsel),
-				   WIN_LAYER_ABOVE_DOCK);
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(fsel),
+					   WIN_LAYER_ABOVE_DOCK);
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 
@@ -231,6 +236,7 @@ show_run_dialog ()
 
 	gtk_widget_show_all (dialog);
 	gtk_widget_show_now (dialog);
-	gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-				   WIN_LAYER_ABOVE_DOCK);
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+					   WIN_LAYER_ABOVE_DOCK);
 }
