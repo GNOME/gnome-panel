@@ -702,7 +702,7 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 			  "Reload this applet?\n\n"
 			  "(If you choose not to reload it at this time"
 			  " you can always add it by right clicking on "
-			  "the panel and clicking on the \"Add to panel\""
+			  "the panel and clicking on the \"Add to Panel\""
 			  " submenu)"), applet_name ? applet_name : "");
 
 	dialog = gtk_message_dialog_new (

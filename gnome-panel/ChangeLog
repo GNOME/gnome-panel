@@ -1,5 +1,26 @@
 2002-07-01  Mark McLoughlin  <mark@skynet.ie>
 
+	String changes and UI consistency changes from
+	#85344, #85619, #85620, #82586 and 85622. Based
+	partially on a patch from Glynn Foster.
+
+	* Makefile.am: remove menu-properties.[ch].
+
+	* applet.c: (applet_callback_callback): remove
+	properties callback.
+
+	* distribution.c, drawer.c, foobar-widget.c,
+	  launcher.c: string changes.
+
+	* menu.c: various string changes, mnemonics, fixing
+	the delete panel dialog, removing global preferences
+	menuitem and removing menu properties menu item.
+
+	* panel-applet-frame.c: (panel_applet_frame_cnx_broken):
+	string change.
+
+2002-07-01  Mark McLoughlin  <mark@skynet.ie>
+
 	Fixes #86459
 
 	* panel-applet-frame.c: (panel_applet_frame_get_name): Sanity

@@ -18,7 +18,6 @@
 #include "drawer.h"
 #include "launcher.h"
 #include "logout.h"
-#include "menu-properties.h"
 #include "menu-util.h"
 #include "menu.h"
 #include "panel-config.h"
@@ -206,10 +205,7 @@ applet_callback_callback (GtkWidget      *widget,
 		}
 		break;
 	case APPLET_MENU:
-		if(strcmp(menu->name,"properties")==0)
-			menu_properties(menu->info->data);
-
-		else if (strcmp (menu->name, "help") == 0) {
+		if (strcmp (menu->name, "help") == 0) {
 			panel_show_help ("wgospanel.xml", "gospanel-37");
 		}
 		break;

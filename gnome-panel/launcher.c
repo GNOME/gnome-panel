@@ -713,7 +713,7 @@ load_launcher_applet_full (const char       *params,
 		panel_applet_add_callback (launcher->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
-					   _("Properties..."));
+					   _("Properties"));
 
 	panel_applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
 

@@ -1556,7 +1556,7 @@ show_run_dialog (void)
 	gtk_window_set_resizable (GTK_WINDOW (run_dialog), FALSE);
 
 	w = gtk_dialog_add_button (GTK_DIALOG (run_dialog),
-				   PANEL_STOCK_RUN,PANEL_RESPONSE_RUN);
+				   PANEL_STOCK_RUN, PANEL_RESPONSE_RUN);
 	gtk_widget_set_sensitive (w, FALSE);
 	g_object_set_data (G_OBJECT (run_dialog), "run_button", w);
 

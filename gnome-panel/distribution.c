@@ -23,17 +23,17 @@
 
 static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
-	  N_("Debian GNU/Linux"), N_("Debian menus"),
+	  N_("Debian GNU/Linux"), N_("Debian Menu"),
 	  "gnome-debian.png", "/var/lib/gnome/Debian/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SUSE, "/etc/SuSE-release",
-	  N_("SuSE Linux"), N_("SuSE menus"), "gnome-suse.png",
+	  N_("SuSE Linux"), N_("SuSE Menu"), "gnome-suse.png",
 	  "gnome/distribution-menus/SuSE/.",
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
-	 N_("Solaris"), N_("CDE Menus"), "cdeappmenu.png", "cdemenu:/",
+	 N_("Solaris"), N_("CDE Menu"), "cdeappmenu.png", "cdemenu:/",
 	 NULL, NULL
 	},
 	{ DISTRIBUTION_UNKNOWN, NULL, NULL, NULL, NULL }
