@@ -43,6 +43,9 @@ GList *panel_list = NULL;
   yes I am too lazy to get the events to work*/
 static int panel_dragged = 0;
 
+/*the number of base panels out there, never let it go below 1*/
+int base_panels = 0;
+
 int config_sync_timeout = 0;
 int config_changed = FALSE;
 
@@ -290,6 +293,8 @@ monitor_drawers(GtkWidget *w, gpointer data)
 		panel[1]->drawers_open++;
 	else
 		panel[1]->drawers_open--;
+	
+	printf("drawers open: %d\n",panel[1]->drawers_open);
 
 	return FALSE;
 }
@@ -513,7 +518,7 @@ load_applet(char *id_str, char *path, char *params,
 		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
 			GtkWidget *wparent;
 			/*drawer is open so we track it*/
-			dr_panel->drawers_open++;
+			parent->drawers_open++;
 			/*pop up, if popped down*/
 			wparent = gtk_object_get_data(GTK_OBJECT(parent),
 						      PANEL_PARENT);
@@ -1028,70 +1033,25 @@ panel_move_callback(GtkWidget *w, GdkEventMotion *event, gpointer data)
 	return FALSE;
 }*/
 
-
-static int
-panel_button_release_callback(GtkWidget *w,GdkEventButton *event, gpointer data)
-{
-	if(panel_dragged) {
-		panel_move(SNAPPED_WIDGET(w), event->x_root, event->y_root);
-		gdk_pointer_ungrab(event->time);
-		gtk_grab_remove(w);
-		gtk_timeout_remove(panel_dragged);
-		SNAPPED_WIDGET(w)->autohide_inhibit = FALSE;
-		snapped_widget_queue_pop_down(SNAPPED_WIDGET(w));
-		panel_dragged = 0;
-	}
-	return FALSE;
-}
-
-static int
-panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
-{
-	GdkCursor *cursor;
-	switch(event->button) {
-		case 3: /* fall through */
-		case 1:
-			if(!panel_applet_in_drag) {
-				if(IS_SNAPPED_WIDGET(widget)) {
-					SnappedWidget *snapped = SNAPPED_WIDGET(widget);
-					snapped->autohide_inhibit = TRUE;
-					snapped_widget_queue_pop_down(snapped);
-				}
-				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
-					       panel_menu_position,
-					       widget, event->button,
-					       event->time);
-				return TRUE;
-			}
-			break;
-		case 2:
-			/*this should probably be in snapped widget*/
-			if(!panel_dragged &&
-			   IS_SNAPPED_WIDGET(widget)) {
-				cursor = gdk_cursor_new (GDK_FLEUR);
-				gtk_grab_add(widget);
-				gdk_pointer_grab (widget->window,
-						  FALSE,
-						  PANEL_EVENT_MASK,
-						  NULL,
-						  cursor,
-						  event->time);
-				gdk_cursor_destroy (cursor);
-				SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
-				panel_dragged = gtk_timeout_add(30,
-						panel_move_timeout,widget);
-				return TRUE;
-			}
-			break;
-	}
-	return FALSE;
-}
-
 static int
 panel_destroy(GtkWidget *widget, gpointer data)
 {
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
 	GtkWidget *panel_menu = data;
+
+	if(IS_DRAWER_WIDGET(widget)) {
+		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
+		if(panel->master_widget) {
+			int applet_id =
+				PTOI(gtk_object_get_user_data(GTK_OBJECT(panel->master_widget)));
+			AppletInfo *info = get_applet_info(applet_id);
+			info->assoc = NULL;
+			panel_clean_applet(applet_id);
+		}
+	} else if(IS_SNAPPED_WIDGET(widget)) {
+		/*this is a base panel and we just lost it*/
+		base_panels--;
+	}
 
 	if(panel_menu)
 		gtk_widget_unref(panel_menu);
@@ -1138,9 +1098,28 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case 3: /* fall through */
 		case 1:
 			if(!panel_applet_in_drag) {
-				if(IS_SNAPPED_WIDGET(widget)) {
+				if(IS_DRAWER_WIDGET(widget)) {
+					PanelWidget *panel =
+						PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
+					GtkWidget *rem = 
+						gtk_object_get_data(GTK_OBJECT(widget),
+								    "remove_item");
+					if(panel_widget_get_applet_count(panel)>0)
+						gtk_widget_set_sensitive(rem,FALSE);
+					else
+						gtk_widget_set_sensitive(rem,TRUE);
+				} else if(IS_SNAPPED_WIDGET(widget)) {
 					SnappedWidget *snapped =
 						SNAPPED_WIDGET(widget);
+					PanelWidget *panel = PANEL_WIDGET(snapped->panel);
+					GtkWidget *rem = 
+						gtk_object_get_data(GTK_OBJECT(widget),
+								    "remove_item");
+					if(panel_widget_get_applet_count(panel)>0 ||
+					   base_panels <= 1)
+						gtk_widget_set_sensitive(rem,FALSE);
+					else
+						gtk_widget_set_sensitive(rem,TRUE);
 					snapped->autohide_inhibit = TRUE;
 					snapped_widget_queue_pop_down(snapped);
 				}
@@ -1315,6 +1294,9 @@ panel_setup(GtkWidget *panelw)
 				   "state_change",
 				   GTK_SIGNAL_FUNC(snapped_state_change),
 				   NULL);
+		
+		/*this is a base panel*/
+		base_panels++;
 	} else
 		g_warning("unknown panel type");
 	
@@ -1326,18 +1308,10 @@ panel_setup(GtkWidget *panelw)
 			   "size_allocate",
 			   GTK_SIGNAL_FUNC(panel_size_allocate),
 			   NULL);
-	/*gtk_signal_connect(GTK_OBJECT(panelw),
-			   "button_press_event",
-			   GTK_SIGNAL_FUNC(panel_button_press),
-			   panel_menu);*/
 	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
-	/*gtk_signal_connect(GTK_OBJECT(panelw),
-			   "button_release_event",
-			   GTK_SIGNAL_FUNC(panel_button_release_callback),
-			   NULL);*/
 
 	/*with this we capture button presses throughout all the widgets of the
 	  panel*/

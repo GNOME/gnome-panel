@@ -503,8 +503,10 @@ panel_clean_applet(int applet_id)
 	}
 	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER && info->assoc) {
-		gtk_widget_destroy(info->assoc);
+		GtkWidget *dw = info->assoc;
 		info->assoc=NULL;
+		PANEL_WIDGET(DRAWER_WIDGET(dw)->panel)->master_widget = NULL;
+		gtk_widget_destroy(dw);
 	}
 	info->assoc=NULL;
 	if(info->menu)
@@ -1166,7 +1168,7 @@ applet_remove_from_panel(int applet_id)
 	panel_clean_applet(applet_id);
 }
 
-static int
+static void
 panel_add_main_menu(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = get_def_panel_widget(data);
@@ -1174,9 +1176,14 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 
 	load_applet(MENU_ID,NULL,NULL,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
 		    panel_num!=-1?panel_num:0,NULL);
-
-	return TRUE;
 }	
+
+static void
+panel_remove_callback(GtkWidget *w, gpointer data)
+{
+	gtk_widget_destroy(data);
+}
+
 
 
 GtkWidget *
@@ -1198,6 +1205,18 @@ create_panel_root_menu(GtkWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_global_properties_callback,
 			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Remove this panel"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) panel_remove_callback,
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
+
+	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
