@@ -2479,14 +2479,18 @@ applet_menu_append (GtkWidget  *menu,
 		gtk_tooltips_set_tip (panel_tooltips, menuitem, applet->description, NULL);
 	
 	if (applet->action_type != PANEL_ACTION_NONE) {
-		setup_internal_applet_drag (menuitem, applet->drag_data);
+		/* only allow dragging objects if we can add objects */
+		if (panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
+			setup_internal_applet_drag (menuitem, applet->drag_data);
 
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (add_action_button_to_panel),
 				  GINT_TO_POINTER (applet->action_type));
 		gtk_widget_set_sensitive (menuitem, objects_writable);
 	} else {
-		setup_applet_drag (menuitem, applet->drag_data);
+		/* only allow dragging applets if we can add applets */
+		if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+			setup_applet_drag (menuitem, applet->drag_data);
 		
 		g_signal_connect_data (menuitem, "activate", G_CALLBACK (add_bonobo_applet),
 				       g_strdup (applet->drag_data), (GClosureNotify) g_free, 0);

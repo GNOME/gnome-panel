@@ -1,3 +1,14 @@
+Mon Jun 30 14:17:22 2003  George Lebl <jirka@5z.com>
+
+	* menu.c: only setup internal dragging of applets/objects if the
+	  relevant gconf lists are actually writable.
+
+	* panel.c: on drop check if we can actually do the action requested,
+	  and if not run the gdk_drag_finish with FALSE for success.  It
+	  would be nicer to just not allow the drop in the first place but
+	  this would likely have a performance hit unless we did lots of
+	  work on caching the writability info which is probably an overkill.
+
 Mon Jun 30 11:25:29 2003  George Lebl <jirka@5z.com>
 
 	* applet.[ch], panel-applet-frame.c: add
