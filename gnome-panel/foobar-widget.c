@@ -245,14 +245,42 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	GtkWidget *menu;
 	int i;
 	char *url[][3] = {
-		{ N_("News (www)"),                N_("http://gnotices.gnome.org/gnome-news/"),          "gnome-news.png" },
-		{ N_("FAQ (www)"),                 N_("http://www.gnome.org/gnomefaq/html/"),            GNOME_STOCK_PIXMAP_HELP },
-		{ N_("Mailing Lists (www)"),       N_("http://mail.gnome.org/mailman/listinfo/"),        GNOME_STOCK_PIXMAP_MAIL },
-		{ NULL, "" },
-		{ N_("Software (www)"),            N_("http://www.gnome.org/applist/list-martin.phtml"), GNOME_STOCK_PIXMAP_SAVE },
-		{ N_("Development (www)"),         N_("http://developer.gnome.org/"),                    "gnome-devel.png" },
-		{ N_("Bug Tracking System (www)"), N_("http://bugs.gnome.org/"),                         "bug-buddy.png" },
-		{ NULL }
+		{ 
+		  N_("News (www)"),
+		  N_("http://gnotices.gnome.org/gnome-news/"),
+		  "gnome-news.png"
+		},
+		{ 
+		  N_("FAQ (www)"),
+		  N_("http://www.gnome.org/gnomefaq/html/"),
+		  GTK_STOCK_HELP 
+		},
+		{ 
+		  N_("Mailing Lists (www)"),
+		  N_("http://mail.gnome.org/mailman/listinfo/"),
+		  GNOME_STOCK_MAIL
+		},
+		{ 
+		  NULL, ""
+		},
+		{ 
+		  N_("Software (www)"),
+		  N_("http://www.gnome.org/applist/list-martin.phtml"),
+		  GTK_STOCK_SAVE
+		},
+		{
+		  N_("Development (www)"),
+		  N_("http://developer.gnome.org/"),
+		  "gnome-devel.png"
+		},
+		{
+		  N_("Bug Tracking System (www)"),
+		  N_("http://bugs.gnome.org/"),
+		  "bug-buddy.png"
+		},
+		{ 
+		  NULL
+		}
 	};
 	
 	
@@ -265,7 +293,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 		
 	add_menu_separator (menu);
 
-	item = pixmap_menu_item_new (_("About GNOME"), GNOME_STOCK_MENU_ABOUT);
+	item = pixmap_menu_item_new (_("About GNOME"), GNOME_STOCK_ABOUT);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
 			    GTK_SIGNAL_FUNC (about_cb), NULL);

@@ -91,13 +91,17 @@ int main(int argc, char *argv[])
 
   BOMB();
 
-  applet_widget_register_stock_callback(APPLET_WIDGET(w), "testitem", GNOME_STOCK_PIXMAP_NEW, "testitem",
-					(AppletCallbackFunc)bomb, GINT_TO_POINTER(assign_stage++));
+  applet_widget_register_stock_callback (APPLET_WIDGET (w), "testitem",
+					 GTK_STOCK_NEW, "testitem",
+					 (AppletCallbackFunc)bomb,
+					 GINT_TO_POINTER (assign_stage++));
 
   TRY_ABORT_REMOVE();
 
-  applet_widget_register_stock_callback(APPLET_WIDGET(w), "test2", GNOME_STOCK_PIXMAP_OPEN, "bomb-quit",
-					(AppletCallbackFunc)bomb_quit, GINT_TO_POINTER(assign_stage++));
+  applet_widget_register_stock_callback (APPLET_WIDGET (w), "test2",
+					 GTK_STOCK_OPEN, "bomb-quit",
+					 (AppletCallbackFunc)bomb_quit,
+					 GINT_TO_POINTER (assign_stage++));
 
   TRY_ABORT_REMOVE();
 

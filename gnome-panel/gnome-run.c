@@ -1199,7 +1199,7 @@ show_run_dialog (void)
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (run_dialog),
 						_("Run"),
-						GNOME_STOCK_PIXMAP_EXEC);
+						GTK_STOCK_EXECUTE);
 	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
 				    GNOME_STOCK_BUTTON_CANCEL);
 	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
@@ -1311,7 +1311,8 @@ load_run_applet(PanelWidget *panel, int pos, gboolean exactpos)
 			  pos, exactpos, APPLET_RUN))
 		return;
 
-	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
-			    _("Help"));
+	applet_add_callback (applets_last->data,
+			     "help",
+			     GTK_STOCK_HELP,
+			     _("Help"));
 }
