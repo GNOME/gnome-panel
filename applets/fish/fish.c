@@ -191,12 +191,6 @@ apply_cb(GnomePropertyBox * pb, int page, Fish *fish)
 	apply_properties(fish);
 }
 
-static void
-destroy_pb(GtkWidget *w, Fish *fish)
-{
-	fish->pb = NULL;
-}
-
 static void 
 properties_dialog(AppletWidget *aw, gpointer data)
 {
@@ -288,7 +282,7 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "apply",
 			   GTK_SIGNAL_FUNC(apply_cb),fish);
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "destroy",
-			   GTK_SIGNAL_FUNC(destroy_pb),fish);
+			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),&fish->pb);
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "help",
 			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
 			   &help_entry);
@@ -414,12 +408,6 @@ create_fish_widget(Fish *fish)
 	gtk_widget_pop_visual ();
 }
 
-static void
-destroy_about(GtkWidget *w, Fish *fish)
-{
-	fish->pb = NULL;
-}
-
 /*the most important dialog in the whole application*/
 static void
 about_cb (AppletWidget *widget, gpointer data)
@@ -451,7 +439,7 @@ about_cb (AppletWidget *widget, gpointer data)
 				   "evaluation."),
 				 NULL);
 	gtk_signal_connect(GTK_OBJECT(fish->aboutbox),"destroy",
-			   GTK_SIGNAL_FUNC(destroy_about),fish);
+			   GTK_SIGNAL_FUNC(gtk_widget_destroyed), &fish->aboutbox);
 	gtk_widget_show (fish->aboutbox);
 
 	g_free(authors[0]);

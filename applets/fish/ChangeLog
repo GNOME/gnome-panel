@@ -1,3 +1,9 @@
+Mon Apr 12 16:46:29 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* fish.c (destroy_pb/about): Use gtk_widget_destroyed - 
+	to fix problem where ->pb was zero'd instead of ->about.
+	Bug #944.
+
 Mon Apr 05 02:15:07 1999  George Lebl  <jirka@5z.com>
 
 	* fish.c: set the gnome-less text thingie thing to at least 80x24
