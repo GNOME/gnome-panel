@@ -147,6 +147,24 @@ apply_global_config(void)
 	old_merge_menus = global_config.merge_menus;
 	send_tooltips_state(global_config.tooltips_enabled);
 
+	/* if we changed global menu flags, cmark all main menus that use
+	 * the global setting as dirty */
+	if(menu_flags_old != global_config.menu_flags) {
+		GSList *li;
+		for(li = applets; li != NULL; li = g_slist_next(li)) {
+			AppletInfo *info = li->data;
+			if(info->type == APPLET_MENU) {
+				Menu *menu = info->data;
+				if(menu->menu != NULL &&
+				   menu->global_main) {
+					gtk_widget_unref(menu->menu);
+					menu->menu = NULL;
+					menu->age = 0;
+				}
+			}
+		}
+	}
+
 	if(keep_bottom_old == -1 ||
 	   keep_bottom_old != global_config.keep_bottom) {
 		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
@@ -435,6 +453,8 @@ save_applet_configuration(AppletInfo *info)
 						menu->path);
 			gnome_config_set_int("main_menu_flags",
 					     menu->main_menu_flags);
+			gnome_config_set_bool("global_main",
+					      menu->global_main);
 			gnome_config_set_bool("old_style_main",FALSE);
 			break;
 		}
@@ -795,19 +815,19 @@ load_default_applets1(PanelWidget *panel)
 	char *p;
 	int sz;
 
-	if(gdk_screen_width()<800)
+	if(gdk_screen_width() < 800)
 		sz = SIZE_TINY;
-	else if(gdk_screen_width()<1024)
+	else if(gdk_screen_width() < 1024)
 		sz = SIZE_SMALL;
 	else
 		sz = SIZE_STANDARD;
 
 	/* load up the foot menu */
-	load_menu_applet(NULL, get_default_menu_flags (), 
-			 panel, 0, TRUE);
+	load_menu_applet(NULL, get_default_menu_flags (),
+			 TRUE, panel, 0, TRUE);
 
 	/*load up some buttons, but only if screen larger then 639*/
-	if(gdk_screen_width()>=640) {
+	if(gdk_screen_width() >= 640) {
 		load_logout_applet(panel, sz, TRUE);
 		load_lock_applet(panel, sz*2, TRUE);
 
@@ -964,6 +984,10 @@ init_user_applets(void)
 			char *s;
 			int type =
 				gnome_config_get_int("main_menu_type=-1");
+			/* this defaults to false, because we want old menus to
+			 * work in the old style */
+			gboolean global_main =
+				gnome_config_get_bool("global_main=false");
 			int flags;
 			gboolean old_style = 
 				gnome_config_get_bool("old_style_main=true");
@@ -977,7 +1001,7 @@ init_user_applets(void)
 			flags = gnome_config_get_int(s);
 			g_free(s);
 
-			if(type>=0) {
+			if(type >= 0) {
 				flags = 0;
 				if(type == X_MAIN_MENU_BOTH) {
 					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
@@ -1020,7 +1044,12 @@ init_user_applets(void)
 					MAIN_MENU_DESKTOP;
 			}
 
-			load_menu_applet(params, flags, panel, pos, TRUE);
+			if (old_style)
+				load_menu_applet(params, flags, FALSE,
+						 panel, pos, TRUE);
+			else
+				load_menu_applet(params, flags, global_main,
+						 panel, pos, TRUE);
 			g_free(params);
 		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
 			int mypanel = gnome_config_get_int("parameters=-1");

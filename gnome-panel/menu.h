@@ -39,11 +39,12 @@ struct _Menu {
 	GtkWidget *menu;
 	char *path;
 	int main_menu_flags;
+	gboolean global_main;
 	int age;
 	AppletInfo *info;
 };
 
-void load_menu_applet(char *params, int main_menu_flags,
+void load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
 		      PanelWidget *panel, int pos, gboolean exactpos);
 void add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		      gboolean main_menu, gboolean fake_subs);

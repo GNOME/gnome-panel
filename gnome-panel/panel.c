@@ -854,7 +854,7 @@ drop_url(PanelWidget *panel, int pos, char *url)
 static void
 drop_menu(PanelWidget *panel, int pos, char *dir)
 {
-	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+	int flags = MAIN_MENU_SYSTEM | MAIN_MENU_USER;
 	DistributionType distribution = get_distribution ();
 
 	/*guess distribution menus*/
@@ -863,7 +863,7 @@ drop_menu(PanelWidget *panel, int pos, char *dir)
 	/* Guess KDE menus */
 	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
-	load_menu_applet(dir, flags, panel, pos, TRUE);
+	load_menu_applet(dir, flags, TRUE, panel, pos, TRUE);
 }
 
 static void
@@ -879,16 +879,16 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist,
 		const char *mimetype;
 		char *filename;
 
-		if(strncmp(li->data,"http:",strlen("http:"))==0 ||
-		   strncmp(li->data,"https:",strlen("https:"))==0 ||
-		   strncmp(li->data,"ftp:",strlen("ftp:"))==0 ||
-		   strncmp(li->data,"gopher:",strlen("gopher:"))==0) {
+		if(strncmp(li->data, "http:", strlen("http:")) == 0 ||
+		   strncmp(li->data, "https:", strlen("https:")) == 0 ||
+		   strncmp(li->data, "ftp:", strlen("ftp:")) == 0 ||
+		   strncmp(li->data, "gopher:", strlen("gopher:")) == 0) {
 			drop_url(panel,pos,li->data);
 			continue;
 		}
 
 		filename = extract_filename(li->data);
-		if(!filename)
+		if(filename == NULL)
 			continue;
 
 		if(stat(filename, &s) != 0) {
@@ -1149,7 +1149,8 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 		drop_color(panel, pos, (guint16 *)selection_data->data);
 		break;
 	case TARGET_BGIMAGE:
-		drop_bgimage(panel, (char *)selection_data->data);
+		if( ! IS_FOOBAR_WIDGET(widget))
+			drop_bgimage(panel, (char *)selection_data->data);
 		break;
 	case TARGET_DIRECTORY:
 		drop_menu(panel, pos, (char *)selection_data->data);
@@ -1170,7 +1171,7 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 		return;
 	}
 
-	gtk_drag_finish(context,TRUE,FALSE,time);
+	gtk_drag_finish(context, TRUE, FALSE, time);
 }
 
 static void
@@ -1245,7 +1246,7 @@ drawer_orient_change_foreach(GtkWidget *w, gpointer data)
 	PanelWidget *panel = data;
 	
 	if(info->type == APPLET_DRAWER)
-		orientation_change(info,panel);
+		orientation_change(info, panel);
 }
 
 static void

@@ -912,7 +912,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	panel = get_panel_from_menu_data (widget);
 
-	load_menu_applet (menudir, flags, panel, 0, FALSE);
+	load_menu_applet (menudir, flags, TRUE, panel, 0, FALSE);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -4375,25 +4375,35 @@ add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
 		menu->menu = NULL;
 	}
 
-	if(!panel) {
+	if(panel == NULL) {
 		g_warning ("Menu is seriously weird");
 		return;
 	}
 
-	if (main_menu)
+	if (main_menu) {
+		int flags;
+		if (menu->global_main)
+			flags = global_config.menu_flags;
+		else
+			flags = menu->main_menu_flags;
 		menu->menu = create_root_menu(NULL,
-			fake_subs, menu->main_menu_flags, TRUE,
+			fake_subs, flags, TRUE,
 			IS_BASEP_WIDGET (panel->panel_parent), TRUE);
-	else {
+	} else {
 		menu->menu = NULL;
-		for(li=menudirl;li!=NULL;li=g_slist_next(li))
-			menu->menu = create_menu_at (menu->menu,li->data,
+		for(li = menudirl; li != NULL; li = li->next)
+			menu->menu = create_menu_at (menu->menu, li->data,
 						     FALSE, NULL, NULL,
 						     fake_subs, FALSE, TRUE);
-		if(!menu->menu) {
+		if(menu->menu = NULL) {
+			int flags;
+			if (menu->global_main)
+				flags = global_config.menu_flags;
+			else
+				flags = menu->main_menu_flags;
 			g_warning(_("Can't create menu, using main menu!"));
 			menu->menu = create_root_menu(NULL,
-				fake_subs, menu->main_menu_flags, TRUE,
+				fake_subs, flags, TRUE,
 				IS_BASEP_WIDGET (panel->panel_parent),
 				TRUE);
 		}
@@ -4415,6 +4425,12 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
 	int main_menu = (strcmp (menu->path, ".") == 0);
+	int flags;
+
+	if (menu->global_main)
+		flags = global_config.menu_flags;
+	else
+		flags = menu->main_menu_flags;
 
 	if(!menu->menu) {
 		char *this_menu = get_real_menu_path(menu->path);
@@ -4427,10 +4443,10 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 
 		g_slist_free(list);
 	} else {
-		if(menu->main_menu_flags&MAIN_MENU_DISTRIBUTION &&
-		   !(menu->main_menu_flags&MAIN_MENU_DISTRIBUTION_SUB) &&
+		if(flags & MAIN_MENU_DISTRIBUTION &&
+		   ! (flags & MAIN_MENU_DISTRIBUTION_SUB) &&
 		   distribution_info && distribution_info->menu_show_func)
-			distribution_info->menu_show_func(NULL,NULL);
+			distribution_info->menu_show_func(NULL, NULL);
 
 		check_and_reread_applet(menu, main_menu);
 	}
@@ -4446,7 +4462,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	gtk_grab_remove(menu->button);
 
 	menu->age = 0;
-	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, 
+	gtk_menu_popup(GTK_MENU(menu->menu), 0, 0, 
 		       applet_menu_position,
 		       menu->info, bevent->button, bevent->time);
 	gdk_event_free((GdkEvent *)bevent);
@@ -4454,17 +4470,19 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 
 static Menu *
 create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
-		   PanelOrientType orient, int main_menu_flags)
+		   PanelOrientType orient, int main_menu_flags,
+		   gboolean global_main)
 {
 	Menu *menu;
 	
 	char *pixmap_name;
 
-	menu = g_new0(Menu,1);
+	menu = g_new0(Menu, 1);
 
-	pixmap_name = get_pixmap(menudir,main_menu);
+	pixmap_name = get_pixmap(menudir, main_menu);
 
 	menu->main_menu_flags = main_menu_flags;
+	menu->global_main = global_main;
 
 	/*make the pixmap*/
 	menu->button = button_widget_new (pixmap_name,-1, MENU_TILE,
@@ -4490,17 +4508,18 @@ create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 
 static Menu *
 create_menu_applet(PanelWidget *panel, char *arguments,
-		   PanelOrientType orient, int main_menu_flags)
+		   PanelOrientType orient, int main_menu_flags,
+		   gboolean global_main)
 {
 	Menu *menu;
 	gboolean main_menu;
 
 	char *this_menu = get_real_menu_path(arguments);
 
-	if (!this_menu)
+	if (this_menu == NULL)
 		return NULL;
 
-	if(!gnome_folder)
+	if(gnome_folder == NULL)
 		gnome_folder = gnome_pixmap_file("gnome-folder.png");
 
 	main_menu = (!arguments ||
@@ -4508,7 +4527,7 @@ create_menu_applet(PanelWidget *panel, char *arguments,
 		     (strcmp (arguments, ".") == 0));
 
 	menu = create_panel_menu (panel, this_menu, main_menu,
-				  orient, main_menu_flags);
+				  orient, main_menu_flags, global_main);
 	if (arguments && *arguments)
 		menu->path = g_strdup(arguments);
 	else
@@ -4530,12 +4549,13 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 }
 
 void
-load_menu_applet(char *params, int main_menu_flags,
+load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
 		 PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Menu *menu;
 
-	menu = create_menu_applet(panel, params, ORIENT_UP, main_menu_flags);
+	menu = create_menu_applet(panel, params, ORIENT_UP,
+				  main_menu_flags, global_main);
 
 	if(menu) {
 		char *tmp;
@@ -4572,7 +4592,9 @@ save_tornoff(void)
 
 	gnome_config_pop_prefix ();
 
-	for(i=0,li=tearoffs;li;i++,li=li->next) {
+	for(i = 0, li = tearoffs;
+	    li != NULL;
+	    i++, li = li->next) {
 		TearoffMenu *tm = li->data;
 		int x = 0,y = 0;
 		GtkWidget *tw;
@@ -4604,8 +4626,9 @@ save_tornoff(void)
 
 		menu_panel_widget = gtk_object_get_data(GTK_OBJECT(tm->menu),
 							"menu_panel");
-		menu_panel = g_slist_index(panels,menu_panel_widget);
-		if(menu_panel<0) menu_panel = 0;
+		menu_panel = g_slist_index(panels, menu_panel_widget);
+		if(menu_panel < 0)
+			menu_panel = 0;
 
 		gnome_config_set_int("menu_panel", menu_panel);
 
@@ -4648,7 +4671,7 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 		menu = create_add_panel_submenu(FALSE);
 	} else if(strncmp(special, "PANEL", strlen("PANEL"))==0) {
 		int flags;
-		if(sscanf(special, "PANEL:%d", &flags)!=1)
+		if(sscanf(special, "PANEL:%d", &flags) != 1)
 			flags = global_config.menu_flags;
 		menu = create_root_menu (NULL, TRUE, flags, FALSE,
 					 IS_BASEP_WIDGET (menu_panel_widget->panel_parent),
