@@ -63,7 +63,6 @@ FileRec * fr_read_dir(DirRec *dr, const char *muri, time_t mtime, int sublevels)
 FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(const char *mdir);
-void fr_force_reread(void);
 
 int fr_compare (FileRec *fra, FileRec *frb);
 

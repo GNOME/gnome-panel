@@ -1,3 +1,12 @@
+2002-10-04  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu-fentry.c: (fr_read_dir): if there's no
+	.directory then use the uri basename as the
+	fullname. Fixes new folder not being sorted
+	correctly in #91810.
+
+	* menu-fentry.h: kill fr_force_reread.
+
 2002-10-03  Alex Graveley  <alex@ximian.com>
 
 	* menu.c (add_new_app_to_menu): The user data passed here is a
