@@ -33,7 +33,7 @@ static DistributionInfo distribution_info [] = {
 	  NULL, NULL
 	},
 	{ DISTRIBUTION_SOLARIS, "/var/sadm/pkg/SUNWdtcor",
-	 N_("Solaris"), N_("CDE Applications"), "cdeappmenu.png", "cdemenu:/",
+	 N_("Solaris"), N_("CDE Menus"), "cdeappmenu.png", "cdemenu:/",
 	 NULL, NULL
 	},
 	{ DISTRIBUTION_UNKNOWN, NULL, NULL, NULL, NULL }
