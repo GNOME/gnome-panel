@@ -33,9 +33,12 @@ extern GList *panel_list;
 
 extern GtkTooltips *panel_tooltips;
 
-static void foobar_widget_class_init (FoobarWidgetClass *klass);
-static void foobar_widget_init (FoobarWidget *foo);
-static void foobar_widget_realize (GtkWidget *w);
+static void foobar_widget_class_init	(FoobarWidgetClass	*klass);
+static void foobar_widget_init		(FoobarWidget		*foo);
+static void foobar_widget_realize	(GtkWidget		*w);
+static void foobar_widget_destroy	(GtkObject		*o);
+static void foobar_widget_size_allocate	(GtkWidget		*w,
+					 GtkAllocation		*alloc);
 
 static GtkWidget *das_global_foobar = NULL;
 static GtkWidget *clock_ebox = NULL;
@@ -70,10 +73,14 @@ static void
 foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
         parent_class = gtk_type_class (gtk_window_get_type ());
 
+	object_class->destroy = foobar_widget_destroy;
+
 	widget_class->realize = foobar_widget_realize;
+	widget_class->size_allocate = foobar_widget_size_allocate;
 }
 
 static GtkWidget *
@@ -165,7 +172,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-append_gnome_menu (GtkWidget *menu_bar)
+append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
 	GtkWidget *item;
 	GtkWidget *menu;
@@ -322,17 +329,16 @@ append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 			    GTK_SIGNAL_FUNC (gnomecal_client), (gpointer)flag);
 }
 
-static int
-timeout_cb (gpointer data)
+static void
+update_clock (FoobarWidget *foo)
 {
 	static int day = 0;
-	GtkWidget *label = GTK_WIDGET (data);
 	struct tm *das_tm;
 	time_t das_time;
 	char hour[256];
 
-	if (!IS_FOOBAR_WIDGET (das_global_foobar))
-		return FALSE;
+	if (foo->clock_label == NULL)
+		return;
 
 	time (&das_time);
 	das_tm = localtime (&das_time);
@@ -351,7 +357,7 @@ timeout_cb (gpointer data)
 		day = das_tm->tm_mday;
 	}
 
-	if(strftime(hour, sizeof(hour), FOOBAR_WIDGET (das_global_foobar)->clock_format, das_tm) == 0) {
+	if(strftime(hour, sizeof(hour), foo->clock_format, das_tm) == 0) {
 		/* according to docs, if the string does not fit, the
 		 * contents of tmp2 are undefined, thus just use
 		 * ??? */
@@ -359,15 +365,22 @@ timeout_cb (gpointer data)
 	}
 	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-	gtk_label_set_text (GTK_LABEL (label), hour);
-
-	return TRUE;
+	gtk_label_set_text (GTK_LABEL (foo->clock_label), hour);
 }
 
-static void
-timeout_remove (GtkWidget *w, gpointer data)
+static int
+timeout_cb (gpointer data)
 {
-	gtk_timeout_remove (GPOINTER_TO_INT (data));
+	FoobarWidget *foo = FOOBAR_WIDGET (data);
+
+	if (foo->clock_label == NULL) {
+		foo->clock_timeout = 0;
+		return FALSE;
+	}
+
+	update_clock (foo);
+
+	return TRUE;
 }
 
 static void
@@ -376,21 +389,25 @@ set_fooclock_format (GtkWidget *w, char *format)
 	if (!IS_FOOBAR_WIDGET (das_global_foobar))
 		return;
 
-	g_free (FOOBAR_WIDGET (das_global_foobar)->clock_format);
-	FOOBAR_WIDGET (das_global_foobar)->clock_format = g_strdup (_(format));
+	foobar_widget_set_clock_format (FOOBAR_WIDGET (das_global_foobar), _(format));
 }
 
 static void
 append_format_item (GtkWidget *menu, const char *format)
 {
-	char hour[20];
+	char hour[256];
 	GtkWidget *item;
 	struct tm *das_tm;
 	time_t das_time = 0;
 
 	das_tm = localtime (&das_time);
-	if (strftime (hour, 20, _(format), das_tm) == 20)
-		hour[19] = '\0';
+	if (strftime (hour, sizeof(hour), _(format), das_tm) == 0) {
+		/* according to docs, if the string does not fit, the
+		 * contents of tmp2 are undefined, thus just use
+		 * ??? */
+		strcpy(hour, "???");
+	}
+	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
 	item = gtk_menu_item_new_with_label (hour);
 	gtk_menu_append (GTK_MENU (menu), item);
@@ -400,10 +417,9 @@ append_format_item (GtkWidget *menu, const char *format)
 }
 
 static GtkWidget *
-append_clock_menu (GtkWidget *menu_bar)
+append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
-	GtkWidget *item, *menu, *label, *menu2;
-	gint timeout;
+	GtkWidget *item, *menu, *menu2;
 	int i;
 	const char *cals[] = { 
 		N_("Today"),      "dayview",
@@ -447,18 +463,25 @@ append_clock_menu (GtkWidget *menu_bar)
 	add_tearoff (GTK_MENU (menu));
 
 	item = gtk_menu_item_new ();
-	label = gtk_label_new ("");
-	timeout = gtk_timeout_add (1000, timeout_cb, label);
-	gtk_signal_connect (GTK_OBJECT (label), "destroy",
-			    GTK_SIGNAL_FUNC (timeout_remove),
-			    GINT_TO_POINTER (timeout));
+	foo->clock_label = gtk_label_new ("");
+	foo->clock_timeout = gtk_timeout_add (1000, timeout_cb, foo);
+
 	clock_ebox = item;
-	gtk_container_add (GTK_CONTAINER (item), label);
+	gtk_container_add (GTK_CONTAINER (item), foo->clock_label);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 
 	return item;
+}
+
+void
+foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
+{
+	g_free (foo->clock_format);
+	foo->clock_format = g_strdup (clock_format);
+
+	update_clock (foo);
 }
 
 void
@@ -487,11 +510,11 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 static void
 foobar_widget_realize (GtkWidget *w)
 {
-	if(GTK_WIDGET_CLASS(parent_class)->realize)
-		GTK_WIDGET_CLASS(parent_class)->realize(w);
+	if (GTK_WIDGET_CLASS (parent_class)->realize)
+		GTK_WIDGET_CLASS (parent_class)->realize (w);
 
-	foobar_widget_update_winhints(FOOBAR_WIDGET(w));
-	xstuff_set_no_group(w->window);
+	foobar_widget_update_winhints (FOOBAR_WIDGET (w));
+	xstuff_set_no_group (w->window);
 }
 
 static void
@@ -522,6 +545,10 @@ foobar_widget_init (FoobarWidget *foo)
 	GtkWidget *menu, *menuitem;
 	/*GtkWidget *align;*/
 	gint flags;
+
+	foo->clock_format = g_strdup (_("%H:%M"));
+	foo->clock_timeout = 0;
+	foo->clock_label = NULL;
 
 	foo->compliant_wm = xstuff_is_compliant_wm ();
 	if(foo->compliant_wm)
@@ -604,8 +631,8 @@ foobar_widget_init (FoobarWidget *foo)
 	menu_bar = gtk_menu_bar_new ();
 	gtk_menu_bar_set_shadow_type (GTK_MENU_BAR (menu_bar),
 				      GTK_SHADOW_NONE);
-	append_clock_menu (menu_bar);
-	append_gnome_menu (menu_bar);
+	append_clock_menu (foo, menu_bar);
+	append_gnome_menu (foo, menu_bar);
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
@@ -630,18 +657,37 @@ queue_panel_resize (gpointer data, gpointer user_data)
 }
 
 static void
-queue_panel_resizes (GtkWidget *w, gpointer data)
+foobar_widget_destroy (GtkObject *o)
 {
-	if (!GTK_WIDGET_REALIZED (w))
-		return;
-	g_list_foreach (panel_list, queue_panel_resize, data);
+	FoobarWidget *foo = FOOBAR_WIDGET (o);
+
+	/* Just sanity */
+	if ((gpointer)das_global_foobar == (gpointer)foo)
+		das_global_foobar = NULL;
+
+	if (foo->clock_timeout != 0)
+		gtk_timeout_remove (foo->clock_timeout);
+	foo->clock_timeout = 0;
+	
+	foo->clock_label = NULL;
+
+	g_free (foo->clock_format);
+	foo->clock_format = NULL;
+
+	g_list_foreach (panel_list, queue_panel_resize, NULL);
+
+	if (GTK_OBJECT_CLASS (parent_class)->destroy)
+		GTK_OBJECT_CLASS (parent_class)->destroy (o);
 }
 
 static void
-foobar_destroyed(GtkWidget *w, gpointer data)
+foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 {
-	das_global_foobar = NULL;
-	g_list_foreach (panel_list, queue_panel_resize, data);
+	if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+		GTK_WIDGET_CLASS (parent_class)->size_allocate (w, alloc);
+
+	if (GTK_WIDGET_REALIZED (w))
+		g_list_foreach (panel_list, queue_panel_resize, NULL);
 }
 
 GtkWidget *
@@ -650,13 +696,6 @@ foobar_widget_new (void)
 	g_return_val_if_fail (das_global_foobar == NULL, NULL);
 
 	das_global_foobar = gtk_type_new (TYPE_FOOBAR_WIDGET);
-
-	gtk_signal_connect_after (GTK_OBJECT (das_global_foobar),
-				  "size-allocate",
-				  GTK_SIGNAL_FUNC (queue_panel_resizes), NULL);
-	gtk_signal_connect (GTK_OBJECT (das_global_foobar), "destroy",
-			    GTK_SIGNAL_FUNC (foobar_destroyed),
-			    NULL);
 
 	return das_global_foobar;
 }
@@ -676,15 +715,15 @@ foobar_widget_force_menu_remake (void)
 
 	foo = FOOBAR_WIDGET(das_global_foobar);
 
-	if(foo->programs != NULL)
-		gtk_object_set_data(GTK_OBJECT(foo->programs),
-				    "need_reread", GINT_TO_POINTER(1));
-	if(foo->settings != NULL)
-		gtk_object_set_data(GTK_OBJECT(foo->settings),
-				    "need_reread", GINT_TO_POINTER(1));
-	if(foo->favorites != NULL)
-		gtk_object_set_data(GTK_OBJECT(foo->favorites),
-				    "need_reread", GINT_TO_POINTER(1));
+	if (foo->programs != NULL)
+		gtk_object_set_data (GTK_OBJECT(foo->programs),
+				     "need_reread", GINT_TO_POINTER(1));
+	if (foo->settings != NULL)
+		gtk_object_set_data (GTK_OBJECT(foo->settings),
+				     "need_reread", GINT_TO_POINTER(1));
+	if (foo->favorites != NULL)
+		gtk_object_set_data (GTK_OBJECT(foo->favorites),
+				     "need_reread", GINT_TO_POINTER(1));
 }
 
 gint
@@ -698,12 +737,12 @@ static void
 reparent_button_widgets(GtkWidget *w, gpointer data)
 {
 	GdkWindow *newwin = data;
-	if(IS_BUTTON_WIDGET(w)) {
+	if (IS_BUTTON_WIDGET (w)) {
 		ButtonWidget *button = BUTTON_WIDGET(w);
 		/* we can just reparent them all to 0,0 as the next thing
 		 * that will happen is a queue_resize and on size allocate
 		 * they will be put into their proper place */
-		gdk_window_reparent(button->event_window, newwin, 0, 0);
+		gdk_window_reparent (button->event_window, newwin, 0, 0);
 	}
 }
 
@@ -719,14 +758,14 @@ foobar_widget_redo_window(FoobarWidget *foo)
 	gboolean comp;
 
 	comp = xstuff_is_compliant_wm();
-	if(comp == foo->compliant_wm)
+	if (comp == foo->compliant_wm)
 		return;
 
 	window = GTK_WINDOW(foo);
 	widget = GTK_WIDGET(foo);
 
 	foo->compliant_wm = comp;
-	if(foo->compliant_wm) {
+	if (foo->compliant_wm) {
 		window->type = GTK_WINDOW_TOPLEVEL;
 		attributes.window_type = GDK_WINDOW_TOPLEVEL;
 	} else {
@@ -734,7 +773,7 @@ foobar_widget_redo_window(FoobarWidget *foo)
 		attributes.window_type = GDK_WINDOW_TEMP;
 	}
 
-	if(!widget->window)
+	if (widget->window == NULL)
 		return;
 
 	/* this is mostly copied from gtkwindow.c realize method */

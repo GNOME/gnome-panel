@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef __FOOBAR_WIDGET_H__
-#define __FOOBAR_WIDGET_H__
+#ifndef FOOBAR_WIDGET_H
+#define FOOBAR_WIDGET_H
 
 #include <gnome.h>
 #include "panel-types.h"
@@ -25,10 +25,14 @@ struct _FoobarWidget
 {
 	GtkWindow window;
 
+	/*< private >*/
+
 	GtkWidget *ebox;
 	GtkWidget *hbox;
 	GtkWidget *panel;
 	GtkWidget *clock_ebox;
+	GtkWidget *clock_label;
+	guint clock_timeout;
 
 	GtkWidget *programs;
 	GtkWidget *favorites;
@@ -48,6 +52,10 @@ GtkWidget *	foobar_widget_new		(void);
 
 void		foobar_widget_update_winhints	(FoobarWidget *foo);
 void		foobar_widget_redo_window	(FoobarWidget *foo);
+
+void		foobar_widget_set_clock_format	(FoobarWidget *foo,
+						 const char *format);
+
 
 gboolean	foobar_widget_exists		(void);
 gint		foobar_widget_get_height	(void);

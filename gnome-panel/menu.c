@@ -2726,8 +2726,13 @@ create_new_panel(GtkWidget *w, gpointer data)
 		char *s;
 		if (!foobar_widget_exists ()) {
 			panel = foobar_widget_new ();
-			FOOBAR_WIDGET (panel)->clock_format = 
-				gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
+
+			/* Don't translate the first part of this string */
+			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+			if (s != NULL)
+				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
+			g_free (s);
+
 			panel_setup (panel);
 			gtk_widget_show (panel);
 			break;

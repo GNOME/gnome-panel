@@ -1102,6 +1102,7 @@ init_user_panels(void)
 {
 	GString *buf;
 	int count, num;	
+	char *s;
 	GtkWidget *panel=NULL;
 
 	count = gnome_config_get_int(PANEL_CONFIG_PATH
@@ -1176,8 +1177,13 @@ init_user_panels(void)
 					   TRUE,
 					   NULL);*/
 		panel = foobar_widget_new();
-		FOOBAR_WIDGET (panel)->clock_format = 
-			gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
+
+		/* Don't translate the first part of this string */
+		s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+		if (s != NULL)
+			foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
+		g_free (s);
+
 		panel_setup(panel);
 		gtk_widget_show(panel);	       
 
@@ -1365,8 +1371,13 @@ init_user_panels(void)
 		}
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new ();
-			FOOBAR_WIDGET (panel)->clock_format = 
-				gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
+
+			/* Don't translate the first part of this string */
+			s = gnome_config_get_string (_("/panel/Config/clock_format=%I:%M:%S %p"));
+			if (s != NULL)
+				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
+			g_free (s);
+
 			break;
 		default:
 			panel = NULL;
