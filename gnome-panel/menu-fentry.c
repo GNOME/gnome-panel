@@ -139,6 +139,8 @@ get_files_from_menudir(char *menudir)
 	if(mergedir != NULL) {
 		list = get_presorted_from(list, mergedir);
 		list = read_directory(list, mergedir);
+
+		g_free (mergedir);
 	}
 
 	return g_slist_reverse(list);

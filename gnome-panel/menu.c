@@ -921,8 +921,6 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		g_free (filename);
 		filename = g_concat_dir_and_file(dirname, li->data);
 
-		g_free (li->data);
-
 		if (stat (filename, &s) != 0) {
 			char *mergedir = fr_get_mergedir(dirname);
 			if(mergedir != NULL) {
@@ -957,6 +955,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		}
 	}
 	g_free(filename);
+	g_slist_foreach(list, (GFunc)g_free, NULL);
 	g_slist_free(list);
 }
 
