@@ -160,6 +160,7 @@ gnome_panel_2_SOURCES =		\
 	$(NULL)
 
 gnome_panel_2_LDADD =		\
+	$(X_LIBS)		\
 	$(PANEL_LIBS)		\
 	$(XINERAMA_LIBS)
 
@@ -167,7 +168,7 @@ gnome_panel_2_LDFLAGS = -export-dynamic
 
 gnome_panel_properties_SOURCES = gnome-panel-properties.c panel-util.c
 
-gnome_panel_properties_LDADD = $(PANELCONFIG_LIBS)           
+gnome_panel_properties_LDADD = $(X_LIBS) $(PANELCONFIG_LIBS)           
 
 gnome_panel_properties_LDFLAGS = -export-dynamic
 
@@ -180,6 +181,7 @@ gnome_desktop_item_edit_SOURCES = \
 gnome_desktop_item_edit_LDFLAGS = -export-dynamic
 
 gnome_desktop_item_edit_LDADD = 	\
+	$(X_LIBS)			\
 	$(PANEL_LIBS)
 
 gnome_panel_screenshot_SOURCES = \
@@ -188,6 +190,7 @@ gnome_panel_screenshot_SOURCES = \
 gnome_panel_screenshot_LDFLAGS = -export-dynamic
 
 gnome_panel_screenshot_LDADD = 	\
+	$(X_LIBS)		\
 	$(PANELCONFIG_LIBS)	\
 	$(PNG_LIBS)
 
