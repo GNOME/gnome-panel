@@ -47,7 +47,7 @@ panel_show_help (const char *doc_name, const char *linkid)
 	if (!gnome_help_display_desktop (NULL, "panel", doc_name, linkid, &error)) {
 		panel_error_dialog ("cannot_show_help",
 				    _("<b>Cannot display help document</b>\n\n"
-				      "Details: %s"), error->message);
+				      "Details: %s"), error != NULL ? error->message : "");
 		g_clear_error (&error);
 	}
 }
