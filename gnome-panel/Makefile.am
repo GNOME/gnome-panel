@@ -13,6 +13,8 @@ INCLUDES =							\
 	-I$(top_srcdir)/gnome-desktop				\
 	-I$(top_builddir)/panel					\
 	-DPANEL_DEBUG						\
+	-DG_DISABLE_DEPRECATED					\
+	-DGNOME_DISABLE_DEPRECATED				\
 	-DGNOME_CORE_INTERNAL					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DGNOME_DATADIR=\""$(datadir)"\"			\
@@ -30,7 +32,6 @@ INCLUDES =							\
 
 	# we want this eventually
 	#-DGTK_DISABLE_DEPRECATED				\
-	#-DGNOME_DISABLE_DEPRECATED				\
 	#
 
 bin_PROGRAMS = \

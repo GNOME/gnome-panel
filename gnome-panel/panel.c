@@ -933,13 +933,16 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 		tmp = g_find_program_in_path  ("gmc-client");
 		if (tmp != NULL) {
 			/* gmc */
+			char *name;
 			char *exec = g_strdup_printf ("gmc-client "
 						      "--create-window=%s",
 						      panel_quote_string (dir));
 
 			g_free (tmp);
 
-			load_launcher_applet_from_info (g_basename (dir),
+
+			name = g_path_get_basename (dir);
+			load_launcher_applet_from_info (name,
 							dir,
 							exec,
 							"gnome-folder.png",
@@ -947,6 +950,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 							pos,
 							TRUE);
 			g_free (exec);
+			g_free (name);
 		} else {
 			drop_menu (panel, pos, dir);
 		}

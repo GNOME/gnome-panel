@@ -392,7 +392,7 @@ panel_session_save_panel (PanelData *pd)
 					      "panel-background-pixmap", sure_string (panel->back_pixmap));
 
 
-	g_string_sprintf(buf, "#%02x%02x%02x",
+	g_string_printf (buf, "#%02x%02x%02x",
 			 (guint)panel->back_color.red/256,
 			 (guint)panel->back_color.green/256,
 			 (guint)panel->back_color.blue/256);

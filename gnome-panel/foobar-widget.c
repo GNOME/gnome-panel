@@ -414,7 +414,7 @@ append_format_items (GtkWidget *menu)
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
 		item = gtk_radio_menu_item_new_with_label (group, hour);
-		group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
+		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
 	
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);	
 		g_signal_connect (G_OBJECT (item), "activate",
