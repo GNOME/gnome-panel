@@ -50,6 +50,7 @@
 #include "global-keys.h"
 #include "panel-action-button.h"
 #include "panel-menu-bar.h"
+#include "panel-compatibility.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\

@@ -106,6 +106,7 @@ panel_sources =			\
 	xstuff.c		\
 	session.c		\
 	foobar-widget.c		\
+	panel-compatibility.c   \
 	border-widget.c		\
 	edge-widget.c		\
 	aligned-widget.c	\
@@ -152,6 +153,7 @@ panel_headers =			\
 	xstuff.h		\
 	session.h		\
 	foobar-widget.h		\
+	panel-compatibility.h   \
 	border-widget.h		\
 	edge-widget.h		\
 	aligned-widget.h	\

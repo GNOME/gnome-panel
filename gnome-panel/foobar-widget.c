@@ -309,9 +309,9 @@ foobar_widget_size_request (GtkWidget      *toplevel,
 }
 
 GtkWidget *
-foobar_widget_new (const char *panel_id,
-		   int         screen,
-		   int         monitor)
+foobar_widget_new_dud (const char *panel_id,
+		       int         screen,
+		       int         monitor)
 {
 	FoobarWidget *foo;
 

@@ -50,7 +50,7 @@ struct _FoobarWidgetClass
 
 GType		foobar_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	foobar_widget_new		(const char *panel_id,
+GtkWidget *	foobar_widget_new_dud		(const char *panel_id,
 						 int         screen,
 						 int         monitor);
 

@@ -1,5 +1,25 @@
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
+	Add the code to make old configurations work. I'll
+	get rid of FoobarWidget properly soon.
+
+	* Makefile.am: add panel-compatibility.[ch] to
+	the build.
+
+	* foobar-widget.[ch]: (foobar_widget_new_dud):
+	rename from foobar_widget_new().
+
+	* menu.c: (create_new_panel): don't cast to
+	a foobar, its a basep now.
+
+	* panel-compatibility.[ch]: (foobar_widget_new):
+	impl loading an edge panel with a menu bar and
+	window menu instead of a menu panel.
+
+	* panel.c: include panel-compatibility.h.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
 	Move the menu bar out of foobar-widget as a seperate
 	internal applet. The default panel configuration looks
 	identical to before, but if you have a menu panel in
