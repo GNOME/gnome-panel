@@ -19,6 +19,8 @@ static void scroll_menu_unmap           (GtkWidget        *widget);
 static void scroll_menu_destroy         (GtkObject        *object);
 static void scroll_menu_remove          (GtkContainer     *container,
 					 GtkWidget        *widget);
+static gboolean scroll_menu_enter_notify(GtkWidget        *widget,
+					 GdkEventCrossing *event);
 
 static GtkMenuClass *parent_class = NULL;
 
@@ -72,6 +74,7 @@ scroll_menu_class_init (ScrollMenuClass *class)
 	widget_class->size_allocate = scroll_menu_size_allocate;
 	widget_class->map = scroll_menu_map;
 	widget_class->unmap = scroll_menu_unmap;
+	widget_class->enter_notify_event = scroll_menu_enter_notify;
 
 	container_class->remove = scroll_menu_remove;
 
@@ -207,7 +210,7 @@ scroll_realize (GtkWidget *scroll, gpointer data)
 }
 
 static gboolean
-scroll_enter_notify (GtkWidget *scroll, GdkEvent *event, gpointer data)
+scroll_enter_notify (GtkWidget *scroll, GdkEventCrossing *event, gpointer data)
 {
 	ScrollMenu *self = SCROLL_MENU (gtk_object_get_user_data (GTK_OBJECT (scroll)));
 	int direction = GPOINTER_TO_INT (data);
@@ -232,7 +235,7 @@ scroll_enter_notify (GtkWidget *scroll, GdkEvent *event, gpointer data)
 }
 
 static gboolean
-scroll_leave_notify (GtkWidget *scroll, GdkEvent *event, gpointer data)
+scroll_leave_notify (GtkWidget *scroll, GdkEventCrossing *event, gpointer data)
 {
 	ScrollMenu *self = SCROLL_MENU (gtk_object_get_user_data (GTK_OBJECT (scroll)));
 	int direction = GPOINTER_TO_INT (data);
@@ -511,6 +514,37 @@ scroll_menu_remove (GtkContainer *container, GtkWidget *widget)
 	} else if (GTK_CONTAINER_CLASS (parent_class)->remove) {
 		GTK_CONTAINER_CLASS (parent_class)->remove (container, widget);
 	}
+}
+
+static gboolean
+scroll_menu_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
+{
+	ScrollMenu *self = SCROLL_MENU (widget);
+	GtkWidget *event_widget;
+
+	event_widget = gtk_get_event_widget ((GdkEvent*) event);
+
+	if (self->up_scroll == event_widget) {
+		return scroll_enter_notify (self->up_scroll, event,
+					    GINT_TO_POINTER (SCROLL_UP));
+	} else if (self->down_scroll == event_widget) {
+		return scroll_enter_notify (self->down_scroll, event,
+					    GINT_TO_POINTER (SCROLL_DOWN));
+	} else if (GTK_WIDGET_CLASS (parent_class)->enter_notify_event) {
+
+		if (event_widget != widget) {
+			if (self->in_up)
+				scroll_leave_notify (self->up_scroll, event,
+						     GINT_TO_POINTER (SCROLL_UP));
+			else if (self->in_down)
+				scroll_leave_notify (self->down_scroll, event,
+						     GINT_TO_POINTER (SCROLL_DOWN));
+		}
+
+		return GTK_WIDGET_CLASS (parent_class)->enter_notify_event (widget, event);
+	}
+
+	return FALSE;
 }
 
 GtkWidget *
