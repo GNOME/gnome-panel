@@ -1905,6 +1905,8 @@ panel_widget_new (gint size,
 	panel->mode = mode;
 	panel->state = state;
 
+	panel->master_widget = NULL;
+
 	panel->thick = PANEL_MINIMUM_WIDTH;
 
 	/*sanity sets, ignore settings that would/might cause bad behaviour*/
@@ -2276,6 +2278,15 @@ panel_widget_nice_move(PanelWidget *panel, AppletData *ad, gint pos)
 	panel_widget_applet_put(panel,ad);
 }
 
+static gint
+panel_widget_is_on_list(PanelWidget *panel, GList *list)
+{
+	for(;list!=NULL;list=g_list_next(list))
+		if(panel == list->data)
+			return TRUE;
+	return FALSE;
+}
+
 
 /*find the cursor position and move the applet to that position*/
 gint
@@ -2286,8 +2297,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		gint moveby;
 		gint pos = panel->currently_dragged_applet->pos;
 		GtkWidget *applet = panel->currently_dragged_applet->applet;
-		PanelWidget *assoc = gtk_object_get_data(GTK_OBJECT(applet),
-						PANEL_APPLET_ASSOC_PANEL_KEY);
+		/*PanelWidget *assoc = gtk_object_get_data(GTK_OBJECT(applet),
+						PANEL_APPLET_ASSOC_PANEL_KEY);*/
+		GList *forb = gtk_object_get_data(GTK_OBJECT(applet),
+						PANEL_APPLET_FORBIDDEN_PANELS);
 
 		if(!panel_widget_is_cursor(panel,10)) {
 			GList *list;
@@ -2299,7 +2312,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 
 			    	if(panel != new_panel &&
 			    	   panel_widget_is_cursor(new_panel,10) &&
-				   new_panel != assoc) {
+				   (!panel_widget_is_on_list(new_panel,forb))) {
 					pos = panel_widget_get_moveby(
 						new_panel,0);
 					if(pos<0)
@@ -2468,10 +2481,57 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 				       bind_applet_events, 0);
 }
 
+static void
+remove_panel_from_forbidden(PanelWidget *panel, PanelWidget *r)
+{
+	GList *list;
+	if(!panel->master_widget)
+		return;
+
+	g_return_if_fail(panel != r);
+
+	list = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				   PANEL_APPLET_FORBIDDEN_PANELS);
+	if(list) {
+		list = g_list_remove(list,r);
+		gtk_object_set_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_FORBIDDEN_PANELS,
+				    list);
+	}
+	panel = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_PARENT_KEY);
+	if(panel)
+		remove_panel_from_forbidden(panel, r);
+}
+
+static void
+add_panel_to_forbidden(PanelWidget *panel, PanelWidget *r)
+{
+	GList *list;
+	if(!panel->master_widget)
+		return;
+
+	list = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				   PANEL_APPLET_FORBIDDEN_PANELS);
+	if(g_list_find(list,r)==NULL) {
+		list = g_list_prepend(list,r);
+
+		gtk_object_set_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_FORBIDDEN_PANELS,
+				    list);
+	}
+
+	panel = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+				    PANEL_APPLET_PARENT_KEY);
+	if(panel)
+		remove_panel_from_forbidden(panel, r);
+}
+
 static gint
 panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 {
 	PanelWidget *panel;
+	PanelWidget *p;
 	AppletData *ad;
 	int i,thick;
 
@@ -2488,6 +2548,11 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 	g_free(ad);
 
 	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
+
+	p = gtk_object_get_data(GTK_OBJECT(applet),
+				PANEL_APPLET_ASSOC_PANEL_KEY);
+	if(p)
+		remove_panel_from_forbidden(panel,p);
 
 	if(panel->snapped==PANEL_DRAWER)
 		panel_widget_pack_applets(panel);
@@ -2631,6 +2696,12 @@ panel_widget_find_empty_pos(PanelWidget *panel, gint pos)
 	}
 }
 
+void
+panel_widget_add_forbidden(PanelWidget *panel)
+{
+	add_panel_to_forbidden(panel,panel);
+}
+
 gint
 panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 {
@@ -2676,6 +2747,9 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
 
+	/*NOTE: forbidden list is not updated on addition, use the
+	function above for the panel*/
+
 	return pos;
 }
 
@@ -2687,6 +2761,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 {
 	int i,w,n, thick;
 	AppletData *ad;
+	GList *list;
+	PanelWidget *p;
 
 	g_return_val_if_fail(old_panel!=NULL,-1);
 	g_return_val_if_fail(new_panel!=NULL,-1);
@@ -2703,6 +2779,13 @@ panel_widget_reparent (PanelWidget *old_panel,
 		pos = panel_widget_find_empty_pos(new_panel,pos);
 
 	if(pos==-1) return -1;
+
+	p = gtk_object_get_data(GTK_OBJECT(applet),
+				PANEL_APPLET_ASSOC_PANEL_KEY);
+	if(p) {
+		remove_panel_from_forbidden(old_panel,p);
+		add_panel_to_forbidden(new_panel,p);
+	}
 
 	gtk_object_set_data(GTK_OBJECT(applet),
 			    PANEL_APPLET_PARENT_KEY,
@@ -2771,12 +2854,12 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, gint pos)
 	pos = panel_widget_make_empty_pos(panel,pos);
 	if(pos==-1) return -1;
 
-	/*reset size to 1*/
 	ad->prevx = -1;
 	ad->prevy = -1;
 	ad->prevwidth = -1;
 	ad->prevheight = -1;
 	ad->pos = pos;
+	/*reset size to 1*/
 	ad->cells = 1;
 	panel->applet_list =
 		g_list_insert_sorted(panel->applet_list,ad,
@@ -2792,6 +2875,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 {
 	AppletData *ad;
 	int i,thick;
+	PanelWidget *p;
 
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(applet!=NULL,FALSE);
@@ -2807,6 +2891,11 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	g_free(ad);
 
 	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
+
+	p = gtk_object_get_data(GTK_OBJECT(applet),
+				PANEL_APPLET_ASSOC_PANEL_KEY);
+	if(p)
+		remove_panel_from_forbidden(panel,p);
 
 	/*remove applet*/
 	gtk_container_remove(GTK_CONTAINER(panel->fixed),applet);

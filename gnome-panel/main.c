@@ -296,9 +296,20 @@ load_queued_applets(void)
 		g_free(l->cfgpath); 
 		g_free(l);
 	}
-	while(load_queue)	
-		load_queue = g_list_remove_link(load_queue,load_queue);
+	g_list_free(load_queue);
 }
+
+static void
+add_forbidden_to_panels(void)
+{
+	GList *list;
+
+	for(list = panels;list!=NULL;list=g_list_next(list)) {
+		PanelWidget *panel = list->data;
+		panel_widget_add_forbidden(panel);
+	}
+}
+
 
 static void
 load_default_applets(void)
@@ -954,6 +965,8 @@ main(int argc, char **argv)
 
 	/*everything is erady ... load up the applets*/
 	load_queued_applets();
+
+	add_forbidden_to_panels();
 
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");

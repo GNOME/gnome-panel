@@ -18,6 +18,7 @@ extern "C" {
 
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
+#define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"
 
 typedef struct _PanelWidget		PanelWidget;
@@ -110,6 +111,9 @@ struct _PanelWidget
 						 to block the autohide, until
 						 it is 0 .. it's set by the
 						 app not the widget*/
+	GtkWidget		*master_widget; /*the drawer button that is
+						  holding this panel*/
+
 	char                    *back_pixmap;
 	gint			pixmap_enabled;
 };
@@ -146,6 +150,9 @@ GtkWidget*	panel_widget_new		(gint size,
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 gint pos);
+/*needs to be called for drawers after add*/
+void		panel_widget_add_forbidden	(PanelWidget *panel);
+
 /*move applet to newpos*/
 gint		panel_widget_move		(PanelWidget *panel,
 						 GtkWidget *applet,

@@ -1,3 +1,10 @@
+Mon May 04 15:05:22 1998  George Lebl  <jirka@5z.com>
+
+	* panelwidget.[ch],main.c,panel.c: maintain a list of
+	  forbidden panels for drawers and make panels aware
+	  of the drawer button widget, this way it's impossible
+	  to "loop" drawers so they don't "run away" :)
+
 Mon May 04 03:36:31 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: fixed an ugly bug in make_empty_pos

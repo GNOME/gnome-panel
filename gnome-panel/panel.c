@@ -970,9 +970,15 @@ register_toy(GtkWidget *applet,
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),ITOP(applet_count));
 
 
-	if(type == APPLET_DRAWER)
+	if(type == APPLET_DRAWER) {
 		gtk_object_set_data(GTK_OBJECT(eventbox),
 				    PANEL_APPLET_ASSOC_PANEL_KEY,assoc);
+		PANEL_WIDGET(assoc)->master_widget = eventbox;
+	} else
+		gtk_object_set_data(GTK_OBJECT(eventbox),
+				    PANEL_APPLET_ASSOC_PANEL_KEY,NULL);
+	gtk_object_set_data(GTK_OBJECT(eventbox),
+			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
