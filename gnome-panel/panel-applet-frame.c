@@ -1019,7 +1019,7 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	}
 
 	gtk_window_set_screen (GTK_WINDOW (dialog),
-			       gtk_window_get_screen (GTK_WINDOW (frame->priv->panel)));
+			       gtk_window_get_screen (GTK_WINDOW (frame->priv->panel->toplevel)));
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (panel_applet_frame_loading_failed_response),
