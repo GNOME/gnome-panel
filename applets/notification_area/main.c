@@ -28,6 +28,7 @@
 
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
+#include <gtk/gtkicontheme.h>
 #include <libgnomeui/libgnomeui.h>
 
 #include <bonobo/bonobo-shlib-factory.h>
@@ -98,12 +99,13 @@ help_cb (PanelApplet *applet,
 
 
 static void
-about_cb (PanelApplet *applet,
-          void        *data)
+about_cb (BonoboUIComponent *uic,
+          SystemTray        *tray,
+          const gchar       *verbname)
 {
   static GtkWidget *about = NULL;
   GdkPixbuf *pixbuf = NULL;
-  gchar *file;
+  GtkIconTheme *icon_theme;
 
   const char *authors[] = {
     "Havoc Pennington <hp@redhat.com>",
@@ -121,10 +123,9 @@ about_cb (PanelApplet *applet,
       return;
     }
 
-  file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "notification-area-applet.png",
-                                    TRUE, NULL);
-  pixbuf = gdk_pixbuf_new_from_file (file, NULL);
-  g_free (file);
+  icon_theme = gtk_icon_theme_get_for_screen (gtk_widget_get_screen (tray->applet));
+  pixbuf = gtk_icon_theme_load_icon (icon_theme, "panel-notification-area",
+                                     48, 0, NULL);
 
   about = gnome_about_new (_("Panel Notification Area"), VERSION,
                            "Copyright \xc2\xa9 2002 Red Hat, Inc.",
@@ -134,6 +135,7 @@ about_cb (PanelApplet *applet,
                            strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
                            pixbuf);
   
+  g_object_unref(pixbuf);
   g_object_add_weak_pointer (G_OBJECT (about),
                              (gpointer) &about);
 
