@@ -448,15 +448,13 @@ load_applet(char *id_str, char *path, char *params,
 
 		menu = create_menu_applet(params, ORIENT_UP);
 
-		register_toy(menu->button,menu->menu,menu,MENU_ID,NULL,params,
-			     pos,panel,NULL,APPLET_MENU);
+		if(menu)
+			register_toy(menu->button,menu->menu,menu,MENU_ID,
+				     NULL,params, pos,panel,NULL,APPLET_MENU);
 	} else if(strcmp(id_str,LAUNCHER_ID) == 0) {
 		Launcher *launcher;
 
 		launcher = create_launcher(params);
-
-		register_toy(launcher->button,NULL,launcher,LAUNCHER_ID,NULL,
-			     params,pos,panel,NULL,APPLET_LAUNCHER);
 
 		if(launcher) {
 			register_toy(launcher->button,NULL,launcher,
@@ -483,7 +481,7 @@ load_applet(char *id_str, char *path, char *params,
 			drawer = create_empty_drawer_applet(
 				tooltip,pixmap,
 				get_applet_orient(parent));
-			panel_setup(drawer->drawer);
+			if(drawer) panel_setup(drawer->drawer);
 		} else {
 			int i;
 			PanelData *dr_pd;
@@ -495,6 +493,9 @@ load_applet(char *id_str, char *path, char *params,
 						    tooltip,pixmap,
 						    get_applet_orient(parent));
 		}
+		
+		if(!drawer)
+			return;
 
 		g_return_if_fail(drawer != NULL);
 
@@ -555,15 +556,18 @@ load_applet(char *id_str, char *path, char *params,
 
 		swallow = create_swallow_applet(params, SWALLOW_HORIZONTAL);
 		
-		register_toy(swallow->table,NULL,swallow,SWALLOW_ID,NULL,
-			     params,pos, panel,NULL,APPLET_SWALLOW);
+		if(swallow)
+			register_toy(swallow->table,NULL,swallow,SWALLOW_ID,
+				     NULL, params,pos, panel,NULL,
+				     APPLET_SWALLOW);
 	} else if(strcmp(id_str,LOGOUT_ID) == 0) {
 		GtkWidget *logout;
 
 		logout = create_logout_widget();
 		
-		register_toy(logout,NULL,NULL,LOGOUT_ID,NULL,params,pos,
-			     panel,NULL,APPLET_LOGOUT);
+		if(logout)
+			register_toy(logout,NULL,NULL,LOGOUT_ID,NULL,params,
+				     pos, panel,NULL,APPLET_LOGOUT);
 	}
 }
 
