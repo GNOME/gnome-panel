@@ -17,7 +17,7 @@
 #include "gnome.h"
 #include "panel.h"
 #include "applet-lib.h"
-#include "applet-widget.h"
+#include "gtkplug.h"
 #include "launcher-lib.h"
 
 
