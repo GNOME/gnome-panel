@@ -32,9 +32,6 @@
 #include <libgnomevfs/gnome-vfs-ops.h>
 #include <libgnomevfs/gnome-vfs-utils.h>
 
-#include <libwnck/screen.h>
-#include <libwnck/workspace.h>
-
 #include "panel-util.h"
 
 #include "applet.h"
@@ -45,6 +42,7 @@
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
 #include "egg-screen-help.h"
+#include "xstuff.h"
 
 extern GlobalConfig global_config;
 
@@ -65,18 +63,9 @@ panel_ditem_launch (const GnomeDesktopItem       *item,
 		    GdkScreen                    *screen,
 		    GError                      **error)
 {
-	WnckScreen *wnck_screen = NULL;
-	int         workspace;
+	int workspace;
 
-	if (screen)
-		wnck_screen = wnck_screen_get (
-				gdk_screen_get_number (screen));
-
-	if (!wnck_screen)
-		wnck_screen = wnck_screen_get_default ();
-
-	workspace = wnck_workspace_get_number (
-			wnck_screen_get_active_workspace (wnck_screen));
+	workspace = xstuff_get_current_workspace (screen);
 
 	return gnome_desktop_item_launch_on_screen (
 			item, file_list, flags, screen, workspace, error);

@@ -1,3 +1,19 @@
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Remove the remaining dependancy on libwnck.
+
+	* Makefile.am: link gnome-desktop-item-edit with xstuff.c
+	'cause it uses panel-util.c.
+
+	* main.c: (main): pass the global_keys_filter to xstuff_init.
+
+	* panel-util.c: (panel_ditem_launch): use
+	xstuff_get_current_workspace instead of libwnck.
+
+	* xstuff.[ch]:
+	(xstuff_init): take a filter handler as an argument.
+	(xstuff_get_current_workspace): impl.
+
 Thu Jan 09 16:39:25 2003  George Lebl <jirka@5z.com>
 
 	* gnome-panel-screenshot.c: actually fix the permission problem

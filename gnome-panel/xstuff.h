@@ -4,7 +4,7 @@
 #include <gdk/gdk.h>
 #include <gtk/gtkwidget.h>
 
-void xstuff_init			(void);
+void xstuff_init			(GdkFilterFunc keys_filter);
 void xstuff_delete_property		(GdkWindow *window,
 					 const char *name);
 gboolean xstuff_is_compliant_wm		(void);
@@ -26,5 +26,8 @@ void xstuff_set_wmspec_strut		(GdkWindow *window,
 
 void xstuff_zoom_animate                (GtkWidget    *widget,
 					 GdkRectangle *opt_src_rect);
+
+int  xstuff_get_current_workspace       (GdkScreen *screen);
+
 
 #endif /* __XSTUFF_H__ */

@@ -24,8 +24,6 @@
 
 #include "xstuff.h"
 
-#include "global-keys.h"
-
 static Atom
 panel_atom_get (const char *atom_name)
 {
@@ -315,7 +313,7 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 }
 
 void
-xstuff_init (void)
+xstuff_init (GdkFilterFunc keys_filter)
 {
 	GdkDisplay *display;
 	int         screens, i;
@@ -330,10 +328,7 @@ xstuff_init (void)
 		screen = gdk_display_get_screen (display, i);
 		root_window = gdk_screen_get_root_window (screen);
 
-		gdk_window_add_filter (
-			root_window,
-			(GdkFilterFunc) panel_global_keys_filter,
-			screen);
+		gdk_window_add_filter (root_window, keys_filter, screen);
 	}
 }
 
@@ -477,4 +472,43 @@ xstuff_zoom_animate (GtkWidget *widget, GdkRectangle *opt_rect)
 			     rect.x, rect.y, rect.width, rect.height,
 			     dest.x, dest.y, dest.width, dest.height,
 			     MINIATURIZE_ANIMATION_DELAY_Z);
+}
+
+int
+xstuff_get_current_workspace (GdkScreen *screen)
+{
+	Window  root_window;
+	Atom    type = None;
+	gulong  nitems;
+	gulong  bytes_after;
+	gulong *num;
+	int     format;
+	int     result;
+	int     retval;
+
+	root_window = gdk_x11_drawable_get_xid (
+				gdk_screen_get_root_window (screen));
+
+	gdk_error_trap_push ();
+	result = XGetWindowProperty (gdk_display,
+				     root_window,
+				     panel_atom_get ("_NET_CURRENT_DESKTOP"),
+				     0, G_MAXLONG,
+				     False, XA_CARDINAL, &type, &format, &nitems,
+				     &bytes_after, (guchar **) &num);
+	if (gdk_error_trap_pop () || result != Success)
+		return -1;
+ 
+	if (type != XA_CARDINAL) {
+		XFree (num);
+		return -1;
+	}
+
+	retval = *num;
+ 
+	XFree (num);
+
+	g_print ("Current workspace %d\n", retval);
+
+	return retval;
 }
