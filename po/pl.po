@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-19 16:35+0100\n"
+"POT-Creation-Date: 2004-06-03 16:03+0100\n"
 "PO-Revision-Date: 2003-09-10 21:43+0100\n"
 "Last-Translator: Gnome PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
@@ -47,7 +47,7 @@ msgstr "_Informacje o..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3022
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -65,7 +65,7 @@ msgid "Accessories"
 msgstr "Akcesoria"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2461
 msgid "Clock"
 msgstr "Zegar"
 
@@ -85,16 +85,16 @@ msgstr "Wyświetla bieżącą datę i czas"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:600
+#: applets/clock/clock.c:282 applets/clock/clock.c:611
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1524
+#: applets/clock/clock.c:284 applets/clock/clock.c:1576
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:602
-#: applets/clock/clock.c:1526
+#: applets/clock/clock.c:284 applets/clock/clock.c:613
+#: applets/clock/clock.c:1578
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -134,44 +134,51 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: applets/clock/clock.c:819
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:618
+#, fuzzy
+msgid "%b %d"
+msgstr "%a %b %e"
+
+#: applets/clock/clock.c:861
 msgid "Tasks"
 msgstr "Zadania"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:995
 msgid "All Day"
 msgstr "Cały dzień"
 
-#: applets/clock/clock.c:985
+#: applets/clock/clock.c:1035
 msgid "Appointments"
 msgstr "Przypomnienia"
 
-#: applets/clock/clock.c:1206
+#: applets/clock/clock.c:1256
 msgid "Calendar"
 msgstr "Kalendarz"
 
-#: applets/clock/clock.c:1437
+#: applets/clock/clock.c:1487
 msgid "Computer Clock"
 msgstr "Zegar komputerowy"
 
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:1571
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:1521
+#: applets/clock/clock.c:1573
 msgid "%I:%M %p"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:1561
+#: applets/clock/clock.c:1613
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1655
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nie można uruchomić narzędzia do konfiguracji czasu: %s"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1694
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -179,11 +186,11 @@ msgstr ""
 "Nie można odnaleźć programu do konfiguracji daty i czasu. Być może żaden nie "
 "jest zainstalowany?"
 
-#: applets/clock/clock.c:2044
+#: applets/clock/clock.c:2096
 msgid "Custom format"
 msgstr "Własny format"
 
-#: applets/clock/clock.c:2165 applets/clock/clock.c:2355
+#: applets/clock/clock.c:2217 applets/clock/clock.c:2407
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -193,55 +200,55 @@ msgstr "Własny format"
 msgid "There was an error displaying help: %s"
 msgstr "Przy wyświetlaniu pomocy wystąpił błąd: %s"
 
-#: applets/clock/clock.c:2201
+#: applets/clock/clock.c:2253
 msgid "Clock Preferences"
 msgstr "Preferencje zegara"
 
-#: applets/clock/clock.c:2237
+#: applets/clock/clock.c:2289
 msgid "Clock _type:"
 msgstr "Typ _zegara:"
 
-#: applets/clock/clock.c:2247
+#: applets/clock/clock.c:2299
 msgid "12 hour"
 msgstr "12-godzinny"
 
-#: applets/clock/clock.c:2248
+#: applets/clock/clock.c:2300
 msgid "24 hour"
 msgstr "24-godzinny"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2301
 msgid "UNIX time"
 msgstr "Czas uniksowy"
 
-#: applets/clock/clock.c:2250
+#: applets/clock/clock.c:2302
 msgid "Internet time"
 msgstr "Czas internetowy"
 
-#: applets/clock/clock.c:2258
+#: applets/clock/clock.c:2310
 msgid "Custom _format:"
 msgstr "Własny _format:"
 
-#: applets/clock/clock.c:2277
+#: applets/clock/clock.c:2329
 msgid "Show _seconds"
 msgstr "Wyświetlanie _sekund"
 
-#: applets/clock/clock.c:2286
+#: applets/clock/clock.c:2338
 msgid "Show _date"
 msgstr "Wyświetlanie _daty"
 
-#: applets/clock/clock.c:2295
+#: applets/clock/clock.c:2347
 msgid "Use _UTC"
 msgstr "Czas _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2390 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2442 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr "GNOME PL Team <translators@gnome.pl>"
 
-#: applets/clock/clock.c:2411
+#: applets/clock/clock.c:2463
 msgid "The Clock displays the current time and date"
 msgstr "Aplet zegara wyświetlający bieżącą datę i czas"
 
@@ -426,7 +433,7 @@ msgstr "Nie można odnaleźć wykonywanego polecenia"
 msgid "%s the Fish Says:"
 msgstr "Rybka %s przemawia:"
 
-#: applets/fish/fish.c:752
+#: applets/fish/fish.c:755
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -437,7 +444,7 @@ msgstr ""
 "\n"
 "Szczegóły: %s"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -449,7 +456,7 @@ msgstr ""
 "\n"
 "Skorzystaj z okna właściwości rybki."
 
-#: applets/fish/fish.c:1377
+#: applets/fish/fish.c:1380
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -457,7 +464,7 @@ msgstr ""
 "Należy zmienić wodę!\n"
 "(Spójrz na dzisiejszą datę)"
 
-#: applets/fish/fish.c:1437
+#: applets/fish/fish.c:1440
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Rybka %s obwieszczająca wróżby"
@@ -646,7 +653,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Generator apletów nawigacji okien"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
+#: applets/wncklet/window-menu.c:728
 msgid "Window Selector"
 msgstr "Menu okien"
 
@@ -836,7 +844,7 @@ msgstr "Nieznane okno"
 msgid "No Windows Open"
 msgstr "Brak otwartych okien"
 
-#: applets/wncklet/window-menu.c:709
+#: applets/wncklet/window-menu.c:727
 msgid "Tool to switch between windows"
 msgstr "Narzędzie do przełączania pomiędzy oknami"
 
@@ -960,28 +968,28 @@ msgid "GNOME Panel Shell"
 msgstr "Powłoka panelu GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:470 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "_Zablokuj"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:478
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:470
 msgid "_Move"
 msgstr "_Przesuń"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:456
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:454
 msgid "_Remove From Panel"
 msgstr "_Usuń z panelu"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:470
+#: gnome-panel/applet.c:103 gnome-panel/applet.c:462
 #: gnome-panel/panel-applet-frame.c:109
 msgid "Un_lock"
 msgstr "_Odblokuj"
 
-#: gnome-panel/applet.c:377
+#: gnome-panel/applet.c:375
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1099
+#: gnome-panel/applet.c:1090
 msgid "Can't find an empty spot"
 msgstr "Nie można znaleźć wolnego miejsca"
 
@@ -1022,12 +1030,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3131
 msgid "Drawer"
 msgstr "Szuflada"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1460
+#: gnome-panel/menu.c:2972 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Właściwości"
 
@@ -1181,15 +1189,7 @@ msgstr "zrzutekranu-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Brak miejsca na zapisanie pliku %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1142
-msgid "Grab a window instead of the entire screen"
-msgstr "Zrzucenie obrazu okna zamiast całego ekranu"
-
-#: gnome-panel/gnome-panel-screenshot.c:1143
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "Pobranie zrzutu z określonym opóźnieniem [w sekundach]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1193
+#: gnome-panel/gnome-panel-screenshot.c:1179
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1197,9 +1197,22 @@ msgstr ""
 "Nie można odnaleźć pliku glade programu wykonującego zrzut ekranu.\n"
 "Zweryfikuj instalację pakietu gnome-panel."
 
-#: gnome-panel/gnome-panel-screenshot.c:1209
+#: gnome-panel/gnome-panel-screenshot.c:1195
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nie można pobrać zrzutu zawartości bieżącego biurka."
+
+#: gnome-panel/gnome-panel-screenshot.c:1255
+#, fuzzy, c-format
+msgid "Save screenshot to _web page (save in %s)"
+msgstr "Zapis zrzutu na stronie _www (zapis w ~/public__html)"
+
+#: gnome-panel/gnome-panel-screenshot.c:1311
+msgid "Grab a window instead of the entire screen"
+msgstr "Zrzucenie obrazu okna zamiast całego ekranu"
+
+#: gnome-panel/gnome-panel-screenshot.c:1312
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Pobranie zrzutu z określonym opóźnieniem [w sekundach]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1264,31 +1277,31 @@ msgstr "Dla pliku aktywatora panelu nie określono URI\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Nie można otworzyć pliku %s z aktywatorem panelu%s%s\n"
 
-#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:712 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Właściwości aktywatora"
 
-#: gnome-panel/launcher.c:864
+#: gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nie jest ustawiony klucz %s, nie można załadować aktywatora\n"
 
-#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
+#: gnome-panel/launcher.c:953 gnome-panel/launcher.c:970
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Nie można utworzyć aktywatora"
 
-#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:954 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Należy podać nazwę."
 
-#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:971 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Należy podać poprawny URL lub polecenie."
 
-#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:1014 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Nowy aktywator"
 
@@ -1300,7 +1313,7 @@ msgstr "Określa nazwę wczytywanego profilu"
 msgid "Cannot save changes to launcher"
 msgstr "Nie można zapisać zmian aktywatora"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1282
 msgid "Menu"
 msgstr "Menu"
 
@@ -1317,12 +1330,12 @@ msgstr ""
 "Nie można utworzyć w tym miejscu nowego aktywatora, ponieważ nie jest ono "
 "zapisywalne."
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3230
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3173
 #: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "Koniec pracy"
 
-#: gnome-panel/menu.c:114 gnome-panel/menu.c:3237
+#: gnome-panel/menu.c:114 gnome-panel/menu.c:3180
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1350,7 +1363,7 @@ msgstr "Wymusza zakończenie źle działającej aplikacji"
 msgid "Screenshot"
 msgstr "Zapisz zrzut ekranu"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3348
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Pobiera zrzut aktualnego stanu ekranu"
@@ -1359,7 +1372,7 @@ msgstr "Pobiera zrzut aktualnego stanu ekranu"
 msgid "Search"
 msgstr "Znajdź"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3329
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Wyszukuje na komputerze pliki, foldery i dokumenty"
@@ -1389,7 +1402,7 @@ msgstr ""
 "zagnieżdżanie w sobie małych apletów."
 
 #: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nie można uruchomić \"%s\""
@@ -1407,7 +1420,7 @@ msgstr "Informacje o GNOME"
 msgid "Cannot launch entry"
 msgstr "Nie można uruchomić pozycji"
 
-#: gnome-panel/menu.c:366 gnome-panel/menu.c:1169
+#: gnome-panel/menu.c:366
 msgid "Cannot load entry"
 msgstr "Nie można wczytać pozycji"
 
@@ -1426,126 +1439,114 @@ msgstr "Nie można pobrać nazwy pliku ze ścieżki: %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Nie można pobrać nazwy katalogu ze ścieżki: %s"
 
-#: gnome-panel/menu.c:1160
-msgid "Cannot add to run box"
-msgstr "Nie można dodać do okna uruchamiania"
-
-#: gnome-panel/menu.c:1161
-msgid "No 'Exec' or 'URL' field in entry"
-msgstr "Element nie zawiera pola \"Exec\" lub \"URL\""
-
-#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3169
+#: gnome-panel/menu.c:1277 gnome-panel/menu.c:3112
 msgid "Main Menu"
 msgstr "Menu główne"
 
-#: gnome-panel/menu.c:1465
+#: gnome-panel/menu.c:1424
 msgid "Add this launcher to panel"
 msgstr "Dodaj aktywator do panelu"
 
-#: gnome-panel/menu.c:1474
+#: gnome-panel/menu.c:1433
 msgid "Remove this item"
 msgstr "Usuń ten element"
 
-#: gnome-panel/menu.c:1491
-msgid "Put into run dialog"
-msgstr "Umieść w oknie uruchamiania programu"
-
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1482
 msgid "Entire menu"
 msgstr "Całe menu"
 
-#: gnome-panel/menu.c:1547
+#: gnome-panel/menu.c:1490
 msgid "Add this as drawer to panel"
 msgstr "Dodaj tę szufladę do panelu"
 
-#: gnome-panel/menu.c:1558
+#: gnome-panel/menu.c:1501
 msgid "Add this as menu to panel"
 msgstr "Dodaj to menu do panelu"
 
-#: gnome-panel/menu.c:1570
+#: gnome-panel/menu.c:1513
 msgid "Add new item to this menu"
 msgstr "Dodaj nowy element do menu"
 
-#: gnome-panel/menu.c:1597
+#: gnome-panel/menu.c:1540
 msgid "Properties"
 msgstr "Właściwości"
 
-#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
+#: gnome-panel/menu.c:2512 gnome-panel/menu.c:2567
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "zapytanie zwróciło wyjątek %s\n"
 
-#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3347
+#: gnome-panel/menu.c:2784 gnome-panel/menu.c:2789 gnome-panel/menu.c:3290
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Aplikacje"
 
-#: gnome-panel/menu.c:2916
+#: gnome-panel/menu.c:2859
 msgid "You cannot remove your last panel."
 msgstr "Nie można usunąć ostatniego panelu."
 
-#: gnome-panel/menu.c:2976
+#: gnome-panel/menu.c:2919
 msgid "_Delete This Panel..."
 msgstr "_Usuń ten panel..."
 
-#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3014
+#: gnome-panel/menu.c:2922 gnome-panel/menu.c:2957
 msgid "_Delete This Panel"
 msgstr "_Usuń ten panel"
 
-#: gnome-panel/menu.c:2993
+#: gnome-panel/menu.c:2936
 msgid "_Add to Panel"
 msgstr "_Dodaj do panelu"
 
-#: gnome-panel/menu.c:3043
+#: gnome-panel/menu.c:2986
 msgid "_New Panel"
 msgstr "_Nowy panel"
 
-#: gnome-panel/menu.c:3090
+#: gnome-panel/menu.c:3033
 msgid "_About Panels"
 msgstr "_Informacje o panelach"
 
-#: gnome-panel/menu.c:3104
+#: gnome-panel/menu.c:3047
 msgid "About _GNOME"
 msgstr "Informacje o _GNOME"
 
-#: gnome-panel/menu.c:3149
+#: gnome-panel/menu.c:3092
 msgid "Launcher..."
 msgstr "Aktywator..."
 
-#: gnome-panel/menu.c:3159
+#: gnome-panel/menu.c:3102
 msgid "Launcher from menu"
 msgstr "Aktywator z elementu menu"
 
-#: gnome-panel/menu.c:3179
+#: gnome-panel/menu.c:3122
 msgid "Menu Bar"
 msgstr "Pasek menu"
 
-#: gnome-panel/menu.c:3208 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:3151 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Zabezpiecz ekran"
 
-#: gnome-panel/menu.c:3214
+#: gnome-panel/menu.c:3157
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Zabezpiecza ekran, pozwalając na chwilowe odejście od komputera."
 
-#: gnome-panel/menu.c:3368 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3311 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Uruchom program..."
 
-#: gnome-panel/menu.c:3375 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:3318 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Uruchamia aplikację po wpisaniu pełnego wiersza polecenia"
 
-#: gnome-panel/menu.c:3383 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3326 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Znajdź pliki..."
 
-#: gnome-panel/menu.c:3402 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:3345 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Zrzut ekranu..."
 
-#: gnome-panel/menu.c:3420
+#: gnome-panel/menu.c:3363
 msgid "Desktop"
 msgstr "Biurko"
 
@@ -1619,7 +1620,7 @@ msgstr "_Nie usuwaj"
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Panel napotkał problem przy ładowaniu \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Szczegóły: %s"
@@ -2217,27 +2218,27 @@ msgstr "_Rozmiar:"
 msgid "_Tile"
 msgstr "_Kafelek"
 
-#: gnome-panel/panel-recent.c:56
+#: gnome-panel/panel-recent.c:60
 msgid "Couldn't find a suitable application"
 msgstr "Nie można odnaleźć odpowiedniej aplikacji"
 
-#: gnome-panel/panel-recent.c:82
+#: gnome-panel/panel-recent.c:86
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 "Domyślna aplikacja dla plików tego typu nie obsługuje zdalnego dostępu do "
 "plików"
 
-#: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
 msgid "Cannot open recently used document"
 msgstr "Nie można otworzyć ostatnio używanego dokumentu"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:157
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Przy otwieraniu pliku %s wystąpił nieznany błąd."
 
-#: gnome-panel/panel-recent.c:174
+#: gnome-panel/panel-recent.c:178
 msgid "Recent Documents"
 msgstr "Ostatnie dokumenty"
 
@@ -2256,16 +2257,16 @@ msgstr "Nie można wyświetlić położenia \"%s\""
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nie można przekonwertować \"%s\" z UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1044
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "Wybór pliku dołączanego do polecenia..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1323
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Zostanie wykonane polecenie: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1329 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Wybierz aplikację, żeby zobaczyć jej opis."
 
@@ -2759,7 +2760,7 @@ msgstr "Monitor Xinerama, na którym wyświetlany jest panel"
 msgid "Y co-ordinate of panel"
 msgstr "Współrzędna Y położenia panelu"
 
-#: gnome-panel/panel-util.c:69
+#: gnome-panel/panel-util.c:70
 msgid "Cannot display help document"
 msgstr "Nie można wyświetlić dokumentu pomocy"
 
@@ -2768,7 +2769,7 @@ msgstr "Nie można wyświetlić dokumentu pomocy"
 msgid "Open URL: %s"
 msgstr "Otwórz URL: %s"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1245
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2776,7 +2777,7 @@ msgstr ""
 "Po usunięciu panelu utracone zostają ustawienia\n"
 "jego i jego apletów. Czy chcesz usunąć ten panel?"
 
-#: gnome-panel/panel.c:1251
+#: gnome-panel/panel.c:1254
 msgid "Delete Panel"
 msgstr "Usunięcie panelu"
 
@@ -2893,6 +2894,15 @@ msgstr "Bardzo bardzo duży"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Bardzo bardzo mały"
+
+#~ msgid "Cannot add to run box"
+#~ msgstr "Nie można dodać do okna uruchamiania"
+
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr "Element nie zawiera pola \"Exec\" lub \"URL\""
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Umieść w oknie uruchamiania programu"
 
 #~ msgid "Error reading GConf list value '%s': %s"
 #~ msgstr "Przy odczycie zmiennej GConf \"%s\" typu lista wystąpił błąd: %s"

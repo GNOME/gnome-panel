@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-19 16:35+0100\n"
+"POT-Creation-Date: 2004-06-03 16:03+0100\n"
 "PO-Revision-Date: 2004-02-18 18:40+0000\n"
 "Last-Translator: Vladimir \"Kaladan\" Petkov <vpetkov@i-space.org>\n"
 "Language-Team: Bulgarian <dict@linux.zonebg.com>\n"
@@ -44,7 +44,7 @@ msgstr "_За програмата..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
+#: gnome-panel/drawer.c:618 gnome-panel/menu.c:3022
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
@@ -62,7 +62,7 @@ msgid "Accessories"
 msgstr "Помощни"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2409
+#: applets/clock/clock.c:2461
 msgid "Clock"
 msgstr "Часовник"
 
@@ -82,16 +82,16 @@ msgstr "Вземи текущото време и дата"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:600
+#: applets/clock/clock.c:282 applets/clock/clock.c:611
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1524
+#: applets/clock/clock.c:284 applets/clock/clock.c:1576
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:602
-#: applets/clock/clock.c:1526
+#: applets/clock/clock.c:284 applets/clock/clock.c:613
+#: applets/clock/clock.c:1578
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -132,45 +132,54 @@ msgstr "%s, %s"
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:819
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:618
+#, fuzzy
+msgid "%b %d"
+msgstr ""
+"%a\n"
+"%b %d"
+
+#: applets/clock/clock.c:861
 msgid "Tasks"
 msgstr "Задачи"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:995
 msgid "All Day"
 msgstr ""
 
-#: applets/clock/clock.c:985
+#: applets/clock/clock.c:1035
 #, fuzzy
 msgid "Appointments"
 msgstr "Добави среща..."
 
-#: applets/clock/clock.c:1206
+#: applets/clock/clock.c:1256
 msgid "Calendar"
 msgstr "Календар"
 
-#: applets/clock/clock.c:1437
+#: applets/clock/clock.c:1487
 msgid "Computer Clock"
 msgstr "Компютърен часовник"
 
-#: applets/clock/clock.c:1519
+#: applets/clock/clock.c:1571
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1521
+#: applets/clock/clock.c:1573
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1561
+#: applets/clock/clock.c:1613
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1655
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Не успях да стартирам инструмента за настройка:·%s"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1694
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -178,13 +187,13 @@ msgstr ""
 "Не успях да намеря програма за конфигуриране на датата и часа. Може би не е "
 "инсталирана?"
 
-#: applets/clock/clock.c:2044
+#: applets/clock/clock.c:2096
 #, fuzzy
 msgid "Custom format"
 msgstr "Други цветове"
 
 # ##
-#: applets/clock/clock.c:2165 applets/clock/clock.c:2355
+#: applets/clock/clock.c:2217 applets/clock/clock.c:2407
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -194,49 +203,49 @@ msgstr "Други цветове"
 msgid "There was an error displaying help: %s"
 msgstr "Имаше грешка при показването на помощта: %s"
 
-#: applets/clock/clock.c:2201
+#: applets/clock/clock.c:2253
 msgid "Clock Preferences"
 msgstr "Настройки на часовника"
 
-#: applets/clock/clock.c:2237
+#: applets/clock/clock.c:2289
 msgid "Clock _type:"
 msgstr "Вид часовник:"
 
-#: applets/clock/clock.c:2247
+#: applets/clock/clock.c:2299
 msgid "12 hour"
 msgstr "12-часов"
 
-#: applets/clock/clock.c:2248
+#: applets/clock/clock.c:2300
 msgid "24 hour"
 msgstr "24-часов"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2301
 msgid "UNIX time"
 msgstr "Uni_x време"
 
-#: applets/clock/clock.c:2250
+#: applets/clock/clock.c:2302
 msgid "Internet time"
 msgstr "Интернет време"
 
-#: applets/clock/clock.c:2258
+#: applets/clock/clock.c:2310
 #, fuzzy
 msgid "Custom _format:"
 msgstr "Формат на часа"
 
-#: applets/clock/clock.c:2277
+#: applets/clock/clock.c:2329
 msgid "Show _seconds"
 msgstr "Показва _секундите"
 
-#: applets/clock/clock.c:2286
+#: applets/clock/clock.c:2338
 msgid "Show _date"
 msgstr "Показва _датата"
 
-#: applets/clock/clock.c:2295
+#: applets/clock/clock.c:2347
 msgid "Use _UTC"
 msgstr "Използва _Гринуич"
 
 #. Translator credits
-#: applets/clock/clock.c:2390 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2442 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -250,7 +259,7 @@ msgstr ""
 "Павел Чолаков\n"
 "Александър Шопов"
 
-#: applets/clock/clock.c:2411
+#: applets/clock/clock.c:2463
 msgid "The Clock displays the current time and date"
 msgstr "Часовникът показва текущото време и дата"
 
@@ -419,7 +428,7 @@ msgstr "Не успях да намеря командата, която да и
 msgid "%s the Fish Says:"
 msgstr "Рибата на GNOME - %s казва:"
 
-#: applets/fish/fish.c:752
+#: applets/fish/fish.c:755
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -430,7 +439,7 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -442,7 +451,7 @@ msgstr ""
 "\n"
 "Проверете настройките на рибата."
 
-#: applets/fish/fish.c:1377
+#: applets/fish/fish.c:1380
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -450,7 +459,7 @@ msgstr ""
 "Водата трябва да се смени!\n"
 "(Вижте коя дата сме)"
 
-#: applets/fish/fish.c:1437
+#: applets/fish/fish.c:1440
 #, fuzzy, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Рибата-гадателка на GNOME"
@@ -639,7 +648,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Фабрика за Аплетите за Навигация между Прозорците"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
+#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
+#: applets/wncklet/window-menu.c:728
 #, fuzzy
 msgid "Window Selector"
 msgstr "Избор на цвят"
@@ -841,7 +851,7 @@ msgstr "Неизвестен Прозорец"
 msgid "No Windows Open"
 msgstr "Няма Отворени Прозорци"
 
-#: applets/wncklet/window-menu.c:709
+#: applets/wncklet/window-menu.c:727
 #, fuzzy
 msgid "Tool to switch between windows"
 msgstr "Превключва между отворените прозорци"
@@ -967,28 +977,28 @@ msgid "GNOME Panel Shell"
 msgstr "Обвивката панел на GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:470 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "Зак_лючва"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:478
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:470
 msgid "_Move"
 msgstr "П_ремества"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:456
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:454
 msgid "_Remove From Panel"
 msgstr "_Премахва от панела"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:470
+#: gnome-panel/applet.c:103 gnome-panel/applet.c:462
 #: gnome-panel/panel-applet-frame.c:109
 msgid "Un_lock"
 msgstr "Отк_лючва"
 
-#: gnome-panel/applet.c:377
+#: gnome-panel/applet.c:375
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1099
+#: gnome-panel/applet.c:1090
 msgid "Can't find an empty spot"
 msgstr "Не мога да намеря празно място"
 
@@ -1029,12 +1039,12 @@ msgstr "Соларис"
 msgid "CDE Menu"
 msgstr "CDE менюта"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356 gnome-panel/menu.c:3131
 msgid "Drawer"
 msgstr "Шкаф"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:789 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1460
+#: gnome-panel/menu.c:2972 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Настройки"
 
@@ -1187,15 +1197,7 @@ msgstr "%s%cScreenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Няма достатъчно място за запис на файл %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1142
-msgid "Grab a window instead of the entire screen"
-msgstr "Снима прозорец вместо целия екран"
-
-#: gnome-panel/gnome-panel-screenshot.c:1143
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "Снима след указаното забавяне [секунди]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1193
+#: gnome-panel/gnome-panel-screenshot.c:1179
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1203,9 +1205,22 @@ msgstr ""
 "Glade интерфейсът за програмата за снимки \n"
 "липсва. Проверете инсталацията на GNOME панела"
 
-#: gnome-panel/gnome-panel-screenshot.c:1209
+#: gnome-panel/gnome-panel-screenshot.c:1195
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Не мога да заснема на текущото работно място"
+
+#: gnome-panel/gnome-panel-screenshot.c:1255
+#, fuzzy, c-format
+msgid "Save screenshot to _web page (save in %s)"
+msgstr "Записва снимката в _уеб страница (запазва в ~/public__html)"
+
+#: gnome-panel/gnome-panel-screenshot.c:1311
+msgid "Grab a window instead of the entire screen"
+msgstr "Снима прозорец вместо целия екран"
+
+#: gnome-panel/gnome-panel-screenshot.c:1312
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Снима след указаното забавяне [секунди]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -1270,31 +1285,31 @@ msgstr "Не е даден URI за файл на средата за панел
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Не мога да отворя файла на средата %s за панелния стартер %s%s\n"
 
-#: gnome-panel/launcher.c:677 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:712 gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Настройки на стартера"
 
-#: gnome-panel/launcher.c:864
+#: gnome-panel/launcher.c:899
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Ключът %s не е установен, не мога да заредя стартера\n"
 
-#: gnome-panel/launcher.c:918 gnome-panel/launcher.c:935
+#: gnome-panel/launcher.c:953 gnome-panel/launcher.c:970
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Не мога да създам стартер"
 
-#: gnome-panel/launcher.c:919 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:954 gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Трябва да укажете име."
 
-#: gnome-panel/launcher.c:936 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:971 gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Трябва да укажете валиден URL или команда"
 
-#: gnome-panel/launcher.c:979 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:1014 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Създава стартер"
 
@@ -1306,7 +1321,7 @@ msgstr "Указва име на профила, който да се заред
 msgid "Cannot save changes to launcher"
 msgstr "Не мога да запиша промените в стартера"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1282
 msgid "Menu"
 msgstr "Меню"
 
@@ -1322,12 +1337,12 @@ msgid ""
 msgstr ""
 "Не можа да създадете нов стартер на това място, защото нямате права за запис."
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3230
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3173
 #: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "Изход"
 
-#: gnome-panel/menu.c:114 gnome-panel/menu.c:3237
+#: gnome-panel/menu.c:114 gnome-panel/menu.c:3180
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1356,7 +1371,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Снимка на екран"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3348
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Прави снимка на екрана Ви"
@@ -1365,7 +1380,7 @@ msgstr "Прави снимка на екрана Ви"
 msgid "Search"
 msgstr "Търсене"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3329
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Търси файлове, папки и документи на компютъра Ви"
@@ -1395,7 +1410,7 @@ msgstr ""
 "на малки аплети в себе си."
 
 #: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Не мога да стартирам '%s'"
@@ -1413,7 +1428,7 @@ msgstr "Информация за GNOME"
 msgid "Cannot launch entry"
 msgstr "Не мога да стартирам това"
 
-#: gnome-panel/menu.c:366 gnome-panel/menu.c:1169
+#: gnome-panel/menu.c:366
 msgid "Cannot load entry"
 msgstr "Не мога да заредя"
 
@@ -1432,127 +1447,115 @@ msgstr "Не мога да взема името на файла от пътя: 
 msgid "Could not get directory name from path: %s"
 msgstr "Не мога да взема името на директорията от пътя: %s"
 
-#: gnome-panel/menu.c:1160
-msgid "Cannot add to run box"
-msgstr "Не мога да го добавя"
-
-#: gnome-panel/menu.c:1161
-msgid "No 'Exec' or 'URL' field in entry"
-msgstr "Липсват полета \"Exec\" и \"URL\" в обекта"
-
-#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3169
+#: gnome-panel/menu.c:1277 gnome-panel/menu.c:3112
 msgid "Main Menu"
 msgstr "Главно меню"
 
-#: gnome-panel/menu.c:1465
+#: gnome-panel/menu.c:1424
 msgid "Add this launcher to panel"
 msgstr "Добавя този стартер към панела"
 
-#: gnome-panel/menu.c:1474
+#: gnome-panel/menu.c:1433
 msgid "Remove this item"
 msgstr "Премахни този елемент"
 
-#: gnome-panel/menu.c:1491
-msgid "Put into run dialog"
-msgstr "Добавя към диалога \"Стартира...\""
-
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1482
 msgid "Entire menu"
 msgstr "Цялото меню"
 
-#: gnome-panel/menu.c:1547
+#: gnome-panel/menu.c:1490
 msgid "Add this as drawer to panel"
 msgstr "Добавя това като шкаф към панела"
 
-#: gnome-panel/menu.c:1558
+#: gnome-panel/menu.c:1501
 msgid "Add this as menu to panel"
 msgstr "Добавя това като меню към панела"
 
-#: gnome-panel/menu.c:1570
+#: gnome-panel/menu.c:1513
 msgid "Add new item to this menu"
 msgstr "Добавя нов елемент към това меню"
 
-#: gnome-panel/menu.c:1597
+#: gnome-panel/menu.c:1540
 msgid "Properties"
 msgstr "Настройки"
 
-#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
+#: gnome-panel/menu.c:2512 gnome-panel/menu.c:2567
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "запитването върна изключение %s\n"
 
-#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3347
+#: gnome-panel/menu.c:2784 gnome-panel/menu.c:2789 gnome-panel/menu.c:3290
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Програми"
 
-#: gnome-panel/menu.c:2916
+#: gnome-panel/menu.c:2859
 msgid "You cannot remove your last panel."
 msgstr "Не може да премахнете последния панел"
 
-#: gnome-panel/menu.c:2976
+#: gnome-panel/menu.c:2919
 msgid "_Delete This Panel..."
 msgstr "_Премахва този панел..."
 
-#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3014
+#: gnome-panel/menu.c:2922 gnome-panel/menu.c:2957
 msgid "_Delete This Panel"
 msgstr "_Премахва този панел"
 
-#: gnome-panel/menu.c:2993
+#: gnome-panel/menu.c:2936
 msgid "_Add to Panel"
 msgstr "_Добавя към панела"
 
-#: gnome-panel/menu.c:3043
+#: gnome-panel/menu.c:2986
 msgid "_New Panel"
 msgstr "_Нов панел"
 
-#: gnome-panel/menu.c:3090
+#: gnome-panel/menu.c:3033
 msgid "_About Panels"
 msgstr "_Информация за панелите..."
 
-#: gnome-panel/menu.c:3104
+#: gnome-panel/menu.c:3047
 msgid "About _GNOME"
 msgstr "_Информация за GNOME"
 
-#: gnome-panel/menu.c:3149
+#: gnome-panel/menu.c:3092
 msgid "Launcher..."
 msgstr "Стартер..."
 
-#: gnome-panel/menu.c:3159
+#: gnome-panel/menu.c:3102
 msgid "Launcher from menu"
 msgstr "Стартер от меню"
 
-#: gnome-panel/menu.c:3179
+#: gnome-panel/menu.c:3122
 msgid "Menu Bar"
 msgstr "Меню"
 
-#: gnome-panel/menu.c:3208 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:3151 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Заключва екрана"
 
-#: gnome-panel/menu.c:3214
+#: gnome-panel/menu.c:3157
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Заключва екрана, така че може временно да оставите компютъра без надзор"
 
-#: gnome-panel/menu.c:3368 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3311 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Стартира Програма..."
 
-#: gnome-panel/menu.c:3375 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:3318 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Стартира приложения, като въведете команда"
 
-#: gnome-panel/menu.c:3383 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3326 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Търсене..."
 
-#: gnome-panel/menu.c:3402 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:3345 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Снима екрана..."
 
-#: gnome-panel/menu.c:3420
+#: gnome-panel/menu.c:3363
 msgid "Desktop"
 msgstr "Работно пространство"
 
@@ -1632,7 +1635,7 @@ msgstr ""
 "\n"
 "Искате ли да изтриете аплета от вашите настройки?"
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:260
 #, c-format
 msgid "Details: %s"
 msgstr "Детайли: %s"
@@ -2226,27 +2229,27 @@ msgstr "_Размери:"
 msgid "_Tile"
 msgstr "Заглавие"
 
-#: gnome-panel/panel-recent.c:56
+#: gnome-panel/panel-recent.c:60
 msgid "Couldn't find a suitable application"
 msgstr "Не мога да открия подходящо приложение"
 
-#: gnome-panel/panel-recent.c:82
+#: gnome-panel/panel-recent.c:86
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 "Приложението по подразбиране за този вид файлове не може да обработва "
 "отдалечени файлове"
 
-#: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
 msgid "Cannot open recently used document"
 msgstr "Не мога да покажа последно отваряните документи"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:157
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Неизвестна грешка при опита за отваряне на %s"
 
-#: gnome-panel/panel-recent.c:174
+#: gnome-panel/panel-recent.c:178
 msgid "Recent Documents"
 msgstr ""
 
@@ -2265,16 +2268,16 @@ msgstr "Не мога да покажа местоположението '%s'"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr ""
 
-#: gnome-panel/panel-run-dialog.c:1044
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "Избира файл към който да приложи командата..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1323
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Ще изпълня \"'%s\""
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1329 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Посочва приложение за да прегледа описанието му."
 
@@ -2772,7 +2775,7 @@ msgstr "Включен е панела в режим Xinerama"
 msgid "Y co-ordinate of panel"
 msgstr "Координатата Y от панела"
 
-#: gnome-panel/panel-util.c:69
+#: gnome-panel/panel-util.c:70
 msgid "Cannot display help document"
 msgstr "Не мога да покажа документа с помощта"
 
@@ -2781,7 +2784,7 @@ msgstr "Не мога да покажа документа с помощта"
 msgid "Open URL: %s"
 msgstr "Отвори URL: %s"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1245
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2789,7 +2792,7 @@ msgstr ""
 "Когато един панел бъде премахнат, настройките му и тези \n"
 "на аплетите му се губят. Да премахна ли този панел?"
 
-#: gnome-panel/panel.c:1251
+#: gnome-panel/panel.c:1254
 msgid "Delete Panel"
 msgstr "Премахва панела"
 
@@ -2906,6 +2909,15 @@ msgstr "най-големи"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "най-малки"
+
+#~ msgid "Cannot add to run box"
+#~ msgstr "Не мога да го добавя"
+
+#~ msgid "No 'Exec' or 'URL' field in entry"
+#~ msgstr "Липсват полета \"Exec\" и \"URL\" в обекта"
+
+#~ msgid "Put into run dialog"
+#~ msgstr "Добавя към диалога \"Стартира...\""
 
 #~ msgid "Error reading GConf list value '%s': %s"
 #~ msgstr "Грешка при четенето на списъка от GConf '%s':·%s"
@@ -4324,13 +4336,6 @@ msgstr "най-малки"
 #~ msgstr ""
 #~ "%I:%M\n"
 #~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
 
 #~ msgid "Time Format"
 #~ msgstr "Формат на часа"
