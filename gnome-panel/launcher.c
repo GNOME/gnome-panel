@@ -324,15 +324,16 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;
-		} else if (strstr (parameters, "file://")) {
-
+		}
 #ifdef LAUNCHER_DEBUG
-	printf ("Creating gnome_desktop_item_new_from_file\n");
+	printf ("Creating gnome_desktop_item_new_from_uri\n");
 #endif
 		ditem = gnome_desktop_item_new_from_uri (parameters,
 							 0 /* flags */,
 							 NULL /* error */);
-		} else {
+
+		
+		if (ditem == NULL) {
 			gchar *entry;
 
 			entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
