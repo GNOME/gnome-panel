@@ -16,12 +16,12 @@ typedef struct {
 	DrawerOrient orient;
 } Drawer;
 
-Drawer * create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
+Drawer * create_drawer_applet(GtkWidget * drawer_panel,
 			      DrawerOrient orient);
 
 void set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient);
 
-Drawer * create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient);
+Drawer * create_empty_drawer_applet(DrawerOrient orient);
 
 void reposition_drawer(Drawer *drawer);
 

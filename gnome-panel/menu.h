@@ -17,9 +17,9 @@ typedef struct {
 	MenuOrient orient;
 } Menu;
 
-GtkWidget * init_main_menu(GtkWidget *window);
+void init_main_menu(void);
 
-Menu * create_menu_applet(GtkWidget *window ,char *arguments,
+Menu * create_menu_applet(char *arguments,
 			  MenuOrient orient);
 
 void set_menu_applet_orient(Menu *menu, MenuOrient orient);

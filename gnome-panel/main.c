@@ -66,8 +66,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 	} else if(strcmp(id,MENU_ID) == 0) {
 		Menu *menu;
 
-		menu = create_menu_applet(GTK_WIDGET(panels->data),
-					  params, MENU_UP);
+		menu = create_menu_applet(params, MENU_UP);
 
 		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
@@ -101,15 +100,13 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 		}
 
 		if(!params) {
-			drawer = create_empty_drawer_applet(GTK_WIDGET(parent),
-							    orient);
+			drawer = create_empty_drawer_applet(orient);
 			panels = g_list_append(panels,drawer->drawer);
 		} else {
 			int i;
 
 			sscanf(params,"%d",&i);
-			drawer = create_drawer_applet(GTK_WIDGET(parent),
-						     g_list_nth(panels,i)->data,
+			drawer = create_drawer_applet(g_list_nth(panels,i)->data,
 						     orient);
 		}
 
@@ -473,9 +470,6 @@ init_user_panels(void)
 					 drop_pos);
 
 
-		/*FIXME: this should be made cleaner I guess*/
-		if(!root_menu) init_main_menu(panel);
-
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
@@ -547,6 +541,7 @@ main(int argc, char **argv)
 		DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf);
 
+	init_main_menu();
 	init_user_panels();
 	init_user_applets();
 

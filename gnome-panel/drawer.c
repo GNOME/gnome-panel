@@ -83,8 +83,7 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 }
 
 Drawer *
-create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
-	DrawerOrient orient)
+create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 {
 	GtkWidget *pixmap;
 	Drawer *drawer;
@@ -146,10 +145,10 @@ create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
 }
 
 Drawer *
-create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
+create_empty_drawer_applet(DrawerOrient orient)
 {
 	if(orient == DRAWER_UP)
-		return create_drawer_applet(window,panel_widget_new(0,
+		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
@@ -159,7 +158,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						DROP_ZONE_LEFT),
 					    orient);
 	else if(orient == DRAWER_DOWN)
-		return create_drawer_applet(window,panel_widget_new(0,
+		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
@@ -169,7 +168,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						DROP_ZONE_RIGHT),
 					    orient);
 	else if(orient == DRAWER_LEFT)
-		return create_drawer_applet(window,panel_widget_new(0,
+		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
@@ -179,7 +178,7 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 						DROP_ZONE_LEFT),
 					    orient);
 	else if(orient == DRAWER_RIGHT)
-		return create_drawer_applet(window,panel_widget_new(0,
+		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
