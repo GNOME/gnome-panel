@@ -166,7 +166,8 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d),"exec_e");
 	GtkWidget *width_s = gtk_object_get_data(GTK_OBJECT(d),"width_s");
 	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d),"height_s");
-
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
+	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
 
 	if(button!=0) {
 		gtk_widget_destroy(d);
@@ -179,7 +180,7 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 						GTK_SPIN_BUTTON(width_s)),
 			    gtk_spin_button_get_value_as_int(
 						GTK_SPIN_BUTTON(height_s)),
-			    current_panel, 0);
+			    panel, pos);
 	gtk_widget_destroy(d);
 }
 
@@ -194,10 +195,10 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 
 /*I couldn't resist the naming of this function*/
 void
-ask_about_swallowing(void)
+ask_about_swallowing(PanelWidget *panel, int pos)
 {
 	GtkWidget *d;
-
+	
 	GtkWidget *title_e;
 	GtkWidget *exec_e;
 	GtkWidget *width_s;
@@ -205,12 +206,16 @@ ask_about_swallowing(void)
 	GtkWidget *w;
 	GtkWidget *box, *i_box;
 	GtkAdjustment *adj;
+	
 	d = gnome_dialog_new(_("Create swallow applet"),
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
 			     NULL);
 	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
+
+	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
+	gtk_object_set_data(GTK_OBJECT(d),"pos",GINT_TO_POINTER(pos));
 
 	box = gtk_hbox_new(FALSE,5);
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box,

@@ -29,7 +29,7 @@ void load_swallow_applet(char *path, char *params, int width, int height,
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 
 /*I couldn't resist the naming of this function*/
-void ask_about_swallowing(void);
+void ask_about_swallowing(PanelWidget *panel, int pos);
 
 END_GNOME_DECLS
 

@@ -1042,13 +1042,13 @@ drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
 }
 
 static void  
-drag_data_get_dir_cb (GtkWidget *widget, GdkDragContext     *context,
+drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 		      GtkSelectionData   *selection_data, guint info,
-		      guint time, char *directory)
+		      guint time, char *string)
 {
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, directory,
-				strlen(directory));
+				selection_data->target, 8, string,
+				strlen(string));
 }
 
 static void
@@ -1215,13 +1215,36 @@ setup_directory_drag (GtkWidget *menuitem, char *directory)
 			    GDK_ACTION_COPY);
 	
 	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
-			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb), NULL,
+			   GTK_SIGNAL_FUNC (drag_data_get_string_cb), NULL,
 			   g_strdup (directory), (GtkDestroyNotify)g_free,
 			   FALSE, FALSE);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 }
 
+static void
+setup_internal_applet_drag (GtkWidget *menuitem, char *applet_type)
+{
+        static GtkTargetEntry menu_item_targets[] = {
+		{ "application/x-panel-applet-internal", 0, 0 }
+	};
+	
+	if(!applet_type)
+		return;
+	
+	gtk_drag_source_set(menuitem,
+			    GDK_BUTTON1_MASK,
+			    menu_item_targets, 1,
+			    GDK_ACTION_COPY);
+	
+	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
+			   GTK_SIGNAL_FUNC (drag_data_get_string_cb), NULL,
+			   g_strdup (applet_type), (GtkDestroyNotify)g_free,
+			   FALSE, FALSE);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
+			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
+
+}
 
 static void
 setup_applet_drag (GtkWidget *menuitem, char *goad_id)
@@ -1240,7 +1263,7 @@ setup_applet_drag (GtkWidget *menuitem, char *goad_id)
 	
 	/*note: goad_id should be alive long enough!!*/
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_data_get",
-			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb),
+			   GTK_SIGNAL_FUNC (drag_data_get_string_cb),
 			   goad_id);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
@@ -2068,6 +2091,12 @@ ask_about_launcher_cb(GtkWidget *w, gpointer data)
 }
 
 static void
+ask_about_swallowing_cb(GtkWidget *w, gpointer data)
+{
+	ask_about_swallowing(current_panel,0);
+}
+
+static void
 convert_to_panel(GtkWidget *w, gpointer data)
 {
 	PanelType type = GPOINTER_TO_INT(data);
@@ -2218,6 +2247,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
 			   NULL);
+	setup_internal_applet_drag(menuitem, "MENU:MAIN");
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add drawer"));
@@ -2225,6 +2255,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_drawer_to_panel,
 			   NULL);
+	setup_internal_applet_drag(menuitem, "DRAWER:NEW");
 
 
 	menuitem = gtk_menu_item_new ();
@@ -2233,19 +2264,22 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_logout_to_panel),
 			   NULL);
+	setup_internal_applet_drag(menuitem, "LOGOUT:NEW");
 
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(ask_about_swallowing),NULL);
+			   GTK_SIGNAL_FUNC(ask_about_swallowing_cb),NULL);
+	setup_internal_applet_drag(menuitem, "SWALLOW:ASK");
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add new launcher"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(ask_about_launcher_cb),NULL);
+	setup_internal_applet_drag(menuitem, "LAUNCHER:ASK");
 
 	add_menu_separator(menu);
 

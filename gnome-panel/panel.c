@@ -53,13 +53,15 @@ enum {
 	TARGET_URL,
 	TARGET_DIRECTORY,
 	TARGET_COLOR,
-	TARGET_APPLET
+	TARGET_APPLET,
+	TARGET_APPLET_INTERNAL
 };
 
 static GtkTargetEntry panel_drop_types[] = {
 	{ "text/uri-list",       0, TARGET_URL },
 	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
 	{ "application/x-panel-applet", 0, TARGET_APPLET },
+	{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
 	{ "application/x-color", 0, TARGET_COLOR }
 };
 
@@ -918,8 +920,33 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 	case TARGET_APPLET: {
 		int pos = panel_widget_get_cursorloc(panel);
 		char *goad_id = (char *)selection_data->data;
-
+		if(!goad_id)
+			return;
 		load_extern_applet(goad_id,NULL,panel,pos,FALSE);
+		break;
+	}
+	case TARGET_APPLET_INTERNAL: {
+		int pos = panel_widget_get_cursorloc(panel);
+		char *applet_type = (char *)selection_data->data;
+		if(!applet_type)
+			return;
+		if(strcmp(applet_type,"MENU:MAIN")==0) {
+			int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+
+			/*guess redhat menus*/
+			if(g_file_exists("/etc/X11/wmconfig"))
+				flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+
+			load_menu_applet(NULL,flags, panel, pos);
+		} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
+			load_drawer_applet(-1,NULL,NULL, panel, pos);
+		} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
+			load_logout_applet(panel, pos);
+		} else if(strcmp(applet_type,"SWALLOW:ASK")==0) {
+			ask_about_swallowing(panel,pos);
+		} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
+			ask_about_launcher(NULL,panel,pos);
+		}
 		break;
 	}
 	}
