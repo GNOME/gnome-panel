@@ -105,6 +105,10 @@ applet_widget_marshal_signal_save (GtkObject * object,
 	*retval = (*rfunc) (object, GTK_VALUE_STRING (args[0]),
 		  	    GTK_VALUE_STRING (args[1]),
 		  	    func_data);
+	
+	/*make applets that forget to do this not fsckup*/
+	gnome_config_sync();
+	gnome_config_drop_all();
 }
 
 static void
