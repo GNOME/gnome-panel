@@ -338,17 +338,20 @@ panel_clean_applet(AppletInfo *info)
 
 	g_return_if_fail(info != NULL);
 
-	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-				    PANEL_APPLET_PARENT_KEY);
+	if(info->widget) {
+		panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					    PANEL_APPLET_PARENT_KEY);
 
-	g_return_if_fail(panel != NULL);
+		g_return_if_fail(panel != NULL);
 
-	panel_widget_remove(panel,info->widget);
+		panel_widget_remove(panel,info->widget);
+	}
 	info->widget = NULL;
 	info->applet_widget = NULL;
 	if(info->type == APPLET_DRAWER && info->assoc) {
 		panels = g_list_remove(panels,info->assoc);
 		gtk_widget_unref(info->assoc);
+		info->assoc=NULL;
 	}
 	if(info->menu)
 		gtk_widget_unref(info->menu);
