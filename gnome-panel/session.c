@@ -1298,13 +1298,13 @@ load_up_globals(void)
 	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
 
 	g_free(global_config.menu_key);
-	global_config.menu_key = gnome_config_get_string("menu_key=Menu");
+	global_config.menu_key = gnome_config_get_string("menu_key=Mod1-F1");
 	convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);
 
 	g_free(global_config.run_key);
-	global_config.run_key = gnome_config_get_string("run_key=Control-Mod1-r");
+	global_config.run_key = gnome_config_get_string("run_key=Mod1-F2");
 	convert_string_to_keysym_state(global_config.run_key,
 				       &global_config.run_keysym,
 				       &global_config.run_state);

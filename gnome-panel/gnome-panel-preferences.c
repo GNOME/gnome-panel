@@ -935,7 +935,8 @@ misc_notebook_page(void)
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 1, 2);
 	
 
-	list = g_list_append(NULL, "Menu");
+	list = g_list_append(NULL, "Mod1-F1");
+	list = g_list_append(list, "Menu");
 	list = g_list_append(list, "Hyper_L");
 	list = g_list_append(list, "Hyper_R");
 	list = g_list_append(list, "Control-Mod1-m");
@@ -960,7 +961,8 @@ misc_notebook_page(void)
 	w = gtk_label_new (_("Run dialog key"));
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 2, 3);
 	
-	list = g_list_append(NULL, "Control-Mod1-r");
+	list = g_list_append(NULL, "Mod1-F2");
+	list = g_list_append(list, "Control-Mod1-r");
 	list = g_list_append(list, "Hyper_R");
 	list = g_list_append(list, "Menu");
 	list = g_list_append(list, _("Disabled"));
@@ -1065,12 +1067,12 @@ loadup_vals(void)
 
 	global_config.keys_enabled = gnome_config_get_bool("keys_enabled=TRUE");
 
-	global_config.menu_key = gnome_config_get_string("menu_key=Menu");
+	global_config.menu_key = gnome_config_get_string("menu_key=Mod1-F1");
 	/*convert_string_to_keysym_state(global_config.menu_key,
 				       &global_config.menu_keysym,
 				       &global_config.menu_state);*/
 
-	global_config.run_key = gnome_config_get_string("run_key=Control-Mod1-r");
+	global_config.run_key = gnome_config_get_string("run_key=Mod1-F2");
 	/*convert_string_to_keysym_state(global_config.run_key,
 				       &global_config.run_keysym,
 				       &global_config.run_state);*/
