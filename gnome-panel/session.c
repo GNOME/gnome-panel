@@ -1379,6 +1379,8 @@ write_global_config(void)
 			      global_config.tile_when_over);
 	gnome_config_set_bool("saturate_when_over",
 			      global_config.saturate_when_over);
+	gnome_config_set_bool("confirm_panel_remove",
+			      global_config.confirm_panel_remove);
 	gnome_config_set_int("menu_flags", global_config.menu_flags);
 	gnome_config_set_bool("keys_enabled", global_config.keys_enabled);
 	gnome_config_set_int("menu_keycode", global_config.menu_keycode);
@@ -1463,10 +1465,6 @@ convert_write_config(void)
 			      global_config.hide_panel_frame);
 	gnome_config_set_bool("tile_when_over",
 			      global_config.tile_when_over);
-	gnome_config_set_bool("saturate_when_over",
-			      global_config.saturate_when_over);
-	gnome_config_set_bool("confirm_panel_remove",
-			      global_config.confirm_panel_remove);
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d",i);
