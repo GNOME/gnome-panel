@@ -3412,7 +3412,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			  G_CALLBACK (submenu_to_display), NULL);
 	
   	menuitem = gtk_image_menu_item_new ();
-	setup_stock_menu_item (menuitem, PANEL_STOCK_GNOME_LOGO, _("GNOME Menu"));
+	setup_stock_menu_item (menuitem, PANEL_STOCK_GNOME_LOGO, _("Main Menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
@@ -3551,7 +3551,7 @@ create_panel_submenu (GtkWidget *menu,
 		      gboolean   is_basep)
 {
 	GtkWidget *menuitem;
-	char *char_tmp;
+	char      *gnome_about;
 
 	if (!menu)
 		menu = menu_new();
@@ -3566,22 +3566,21 @@ create_panel_submenu (GtkWidget *menu,
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (about_cb), NULL);
 	
-	char_tmp = g_find_program_in_path ("gnome-about");
-	if(!char_tmp)
-		char_tmp = g_find_program_in_path ("guname");
+	gnome_about = g_find_program_in_path ("gnome-about");
+	if (gnome_about) {
+		add_menu_separator (menu);
 
-	if (char_tmp) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem (menuitem,
-				gtk_image_new_from_stock (GNOME_STOCK_ABOUT, panel_menu_icon_get_size ()),
+				gtk_image_new_from_stock (
+					GNOME_STOCK_ABOUT, panel_menu_icon_get_size ()),
 				_("About _GNOME"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		g_signal_connect_data (G_OBJECT (menuitem), "activate",
+		g_signal_connect_data (menuitem, "activate",
 				       G_CALLBACK (about_gnome_cb),
-				       char_tmp,
-				       (GClosureNotify)g_free,
-				       G_CONNECT_AFTER);
+				       gnome_about, (GClosureNotify) g_free, 0);
 	}
+
 	return menu;
 }
 
@@ -3914,7 +3913,7 @@ add_menu_widget (Menu *menu,
 				TRUE /* extra_items */);
 
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("GNOME Menu"), NULL);
+				      _("Main Menu"), NULL);
 	} else {
 		char *tooltip;
 
@@ -3942,7 +3941,7 @@ add_menu_widget (Menu *menu,
 					BASEP_IS_WIDGET (panel->panel_parent),
 					TRUE /* extra_items */);
 			gtk_tooltips_set_tip (panel_tooltips, menu->button,
-					      _("GNOME Menu"), NULL);
+					      _("Main Menu"), NULL);
 		}
 
 	}
@@ -4138,7 +4137,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 
 	if (main_menu) {
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
-				      _("GNOME Menu"), NULL);
+				      _("Main Menu"), NULL);
 	} else {
 		char *tooltip = get_menu_tooltip (menu->menu);
 		gtk_tooltips_set_tip (panel_tooltips, menu->button,
