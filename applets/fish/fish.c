@@ -203,6 +203,8 @@ create_fish_widget(GtkWidget *window)
 	GtkWidget *event_box;
 	GtkStyle *style;
 
+	gtk_widget_push_visual (gdk_imlib_get_visual ());
+	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
 	style = gtk_widget_get_style(window);
 
 	pix[0] = gdk_imlib_create_image_from_xpm_data((gchar **)fish1_xpm);
@@ -230,6 +232,8 @@ create_fish_widget(GtkWidget *window)
         gtk_container_add(GTK_CONTAINER(event_box),pixmap);
         gtk_container_add(GTK_CONTAINER(frame),event_box);
 
+	gtk_widget_pop_colormap ();
+	gtk_widget_pop_visual ();
         return frame;
 }
 
