@@ -60,17 +60,17 @@ struct _AppletWidget
 {
 	GtkPlug			window;
 	
-	/* this is the public data */
-	
+	/*< public >*/
 	char			*privcfgpath;
 	char			*globcfgpath;
 	
+	/* you should really use the accessors for these anyway */
 	PanelOrientType		orient;			
 	int			size;			
 	
-	/* below this is private data */
-
-        gpointer                corbadat; /* CORBA stuff */
+	/*< private >*/
+	/* CORBA stuff */
+        gpointer                corbadat;
 	
 	/*change freezing*/
 	int			frozen_level;
@@ -177,7 +177,7 @@ void		applet_widget_add		(AppletWidget *applet,
    just for very special cases*/
 void		applet_widget_add_full		(AppletWidget *applet,
 						 GtkWidget *widget,
-						 int bind_events);
+						 gboolean bind_events);
 
 /* bind the events for button2 and button3 on a widget, this is useful
    when you are added a new widget and want the right click menu and middle
@@ -239,7 +239,7 @@ int		applet_widget_get_applet_count	(void);
 void		applet_widget_sync_config	(AppletWidget *applet);
 
 /* Get the orientation the applet should use */
-GNOME_Panel_OrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
+PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 
 /* Get the pixel size the applet should use */
 int		applet_widget_get_panel_pixel_size	(AppletWidget *applet);
@@ -253,11 +253,11 @@ int		applet_widget_get_free_space	(AppletWidget *applet);
 
 /* sets if the change_position signal is sent*/
 void		applet_widget_send_position	(AppletWidget *applet,
-						 int enable);
+						 gboolean enable);
 
 /* sets if the do_draw signal is sent*/
 void		applet_widget_send_draw		(AppletWidget *applet,
-						 int enable);
+						 gboolean enable);
 
 /* gets the rgb background, useful in conjunction with the do_draw signal */
 void		applet_widget_get_rgb_bg	(AppletWidget *applet,

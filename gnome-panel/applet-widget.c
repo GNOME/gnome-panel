@@ -25,8 +25,6 @@ struct _CallbackInfo {
 
 static GNOME_Panel panel_client = CORBA_OBJECT_NIL;
 
-#define APPLET_ID_KEY "applet_id_key"
-#define APPLET_WIDGET_KEY "applet_widget_key"
 #define pg_return_if_fail(evp,x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return; }}
 #define pg_return_val_if_fail(evp,x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return y;}}
 
@@ -155,10 +153,8 @@ typedef void (*DeprecSizeSignal) (GtkObject * object,
 
 static int applet_count = 0;
 
-static int die_on_last = FALSE;
-
+static gboolean die_on_last = FALSE;
 static GtkPlugClass *parent_class;
-
 static GtkTooltips *applet_tooltips=NULL;
 
 #define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->corbadat)
@@ -438,6 +434,9 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 	applet->globcfgpath = NULL;
 
 	CORBA_exception_init(&ev);
+	/* if nothing has been added as our child, this means we have
+	   not yet fully completed load, so notify the panel that we are
+	   going to die */
 	if(GTK_BIN(w)->child == NULL)
 		GNOME_PanelSpot_abort_load(CD(applet)->pspot, &ev);
 	CORBA_exception_free(&ev);
@@ -594,7 +593,7 @@ void
 applet_widget_unregister_callback(AppletWidget *applet,
 				  const char *name)
 {
-	GSList *ltmp;
+	GSList *li;
 	CallbackInfo *cbi = NULL;
 	CORBA_Environment ev;
 
@@ -606,11 +605,11 @@ applet_widget_unregister_callback(AppletWidget *applet,
 
 	g_return_if_fail(name!=NULL);
 
-	for(ltmp = CD(applet)->callbacks;
-	    ltmp && !cbi;
-	    ltmp = g_slist_next(ltmp)) {
-		if(!strcmp(((CallbackInfo*)ltmp->data)->name, name))
-			cbi = ltmp->data;
+	for(li = CD(applet)->callbacks; li; li = g_slist_next(li)) {
+		if(!strcmp(((CallbackInfo*)li->data)->name, name)) {
+			cbi = li->data;
+			break;
+		}
 	}
 
 	if(!cbi) return;
@@ -740,11 +739,11 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 	applet_servant->servant.vepv = &vepv;
 
 	POA_GNOME_Applet__init((POA_GNOME_Applet *)applet_servant, &ev);
-
 	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	applet_servant->poa = poa = (PortableServer_POA)
 		CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
 	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
@@ -820,6 +819,8 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 	if(ev._major) {
 		g_warning("CORBA Exception, can't get size");
 		applet->size = PIXEL_SIZE_STANDARD;
+		/* no need to recycle the exception here, as we will free it
+		   next */
 	}
 
 	CORBA_exception_free(&ev);
@@ -828,6 +829,19 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 }
 
 
+/**
+ * applet_widget_new:
+ * @goad_id: The goad_id of the applet we are starting
+ *
+ * Description: Make a new applet and register us with the panel, if you
+ * decide to cancel the load before calling #applet_widget_add, you should
+ * call #applet_widget_abort_load.  This widget is a simple container but you
+ * should always use only #applet_widget_add to add a child and you should
+ * only use it once.
+ *
+ * Returns: A pointer to a new widget of type #AppletWidget, or %NULL if 
+ * something went wrong.
+ **/
 GtkWidget *
 applet_widget_new(const char *goad_id)
 {
@@ -839,6 +853,12 @@ applet_widget_new(const char *goad_id)
 	return GTK_WIDGET(applet);
 }
 
+/**
+ * applet_widget_construct:
+ *
+ * Description: For bindings and subclassing only
+ *
+ **/
 void
 applet_widget_construct(AppletWidget* applet, const char *goad_id)
 {
@@ -862,13 +882,22 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 	applet_count++;
 }
 
+/**
+ * applet_widget_get_applet_count:
+ *
+ * Description:  Gets the number of applets loaded in this this process.  If
+ * this is a shared lib applet it will return the total number of shared lib
+ * applets loaded.
+ *
+ * Returns:  The number of applets loaded.
+ **/
 int
-applet_widget_get_applet_count()
+applet_widget_get_applet_count(void)
 {
 	return applet_count;
 }
 
-static int
+static gboolean
 applet_event(GtkWidget *w,GdkEvent *event,GtkPlug *aw)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
@@ -918,9 +947,27 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 				       bind_applet_events, data);
 }
 
+/**
+ * applet_widget_add_full:
+ * @applet: the #AppletWidget to work with
+ * @widget: the child to add
+ * @bind_events: bind 2nd and 3rd button events over the applet if %TRUE
+ *
+ * Description:  Add a child (@widget) to the @applet.  This finishes the
+ * handshaking with the panel started in @applet_widget_new.  You should never
+ * call this function twice for the same @applet and you should always use
+ * this function rather then #gtk_container_add.  If you have already created
+ * an applet widget with #applet_widget_new, but need to cancel the loading
+ * of the applet, use #applet_widget_abort_load.  This function is only for
+ * special applets and you should use #applet_widget_bind_events on some
+ * internal widget if @bind_events was %FALSE.  Normally you'll just want to
+ * use #applet_widget_add.
+ *
+ * Returns:
+ **/
 void
 applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
-		       int bind_events)
+		       gboolean bind_events)
 {
 	CORBA_Environment ev;
 
@@ -940,18 +987,54 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 		bind_applet_events(GTK_WIDGET(applet), applet);
 }
 
+/**
+ * applet_widget_add:
+ * @applet: the #AppletWidget to work with
+ * @widget: the child to add
+ *
+ * Description:  Add a child (@widget) to the @applet.  This finishes the
+ * handshaking with the panel started in @applet_widget_new.  You should never
+ * call this function twice for the same @applet and you should always use
+ * this function rather then #gtk_container_add.  If you have already created
+ * an applet widget with #applet_widget_new, but need to cancel the loading
+ * of the applet, use #applet_widget_abort_load.
+ *
+ * Returns:
+ **/
 void
 applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 {
 	applet_widget_add_full(applet,widget,TRUE);
 }
 
+/**
+ * applet_widget_bind_events:
+ * @applet: the #AppletWidget to work with
+ * @widget: the widget over which to bind events
+ *
+ * Description:  Binds the 2nd and 3rd button clicks over this widget. 
+ * Normally this is done during #applet_widget_add, but if you need to
+ * bind events over a widget which you added later, use this function.
+ *
+ * Returns:
+ **/
 void
 applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
 {
 	bind_applet_events(GTK_WIDGET(applet),widget);
 }
 
+/**
+ * applet_widget_set_widget_tooltip:
+ * @applet: the #AppletWidget to work with
+ * @widget: the widget to set tooltip on
+ * @text: the tooltip text
+ *
+ * Description:  Set a tooltip on the @widget that will follow the tooltip
+ * setting from the panel configuration.
+ *
+ * Returns:
+ **/
 void
 applet_widget_set_widget_tooltip(AppletWidget *applet,
 				 GtkWidget *widget,
@@ -968,6 +1051,16 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
 	gtk_tooltips_set_tip (applet_tooltips,widget,text,NULL);
 }
 
+/**
+ * applet_widget_set_tooltip:
+ * @applet: the #AppletWidget to work with
+ * @text: the tooltip text
+ *
+ * Description:  Set a tooltip on the entire applet that will follow the
+ * tooltip setting from the panel configuration.
+ *
+ * Returns:
+ **/
 void
 applet_widget_set_tooltip(AppletWidget *applet, const char *text)
 {
@@ -980,8 +1073,16 @@ applet_widget_set_tooltip(AppletWidget *applet, const char *text)
 	CORBA_exception_free(&ev);
 }
 
-/* Get the orientation the applet should use */
-GNOME_Panel_OrientType
+/**
+ * applet_widget_get_panel_orient:
+ * @applet: the #AppletWidget to work with
+ *
+ * Description:  Gets the orientation of the panel this widget is on.
+ * it can be one of ORIENT_UP, ORIENT_DOWN, ORIENT_LEFT and ORIENT_RIGHT.
+ *
+ * Returns:  PanelOrientType enum of the orientation
+ **/
+PanelOrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
 	g_return_val_if_fail(applet != NULL,ORIENT_UP);
@@ -990,7 +1091,11 @@ applet_widget_get_panel_orient(AppletWidget *applet)
 	return applet->orient;
 }
 
-/* Get the size the applet should use */
+/**
+ * applet_widget_get_panel_size:
+ *
+ * Description:  Deprecated
+ **/
 GNOME_Panel_SizeType
 applet_widget_get_panel_size(AppletWidget *applet)
 {
@@ -1012,7 +1117,16 @@ applet_widget_get_panel_size(AppletWidget *applet)
 	}
 }
 
-/* Get the size the applet should use */
+/**
+ * applet_widget_get_panel_pixel_size:
+ * @applet: the #AppletWidget to work with
+ *
+ * Description:  Gets the width of the panel in pixels.  This is not the
+ * actual size, but the recomended one.  The panel may be streched if the
+ * applets use larger sizes then this.
+ *
+ * Returns:  Size of panel in pixels
+ **/
 int
 applet_widget_get_panel_pixel_size(AppletWidget *applet)
 {
@@ -1022,8 +1136,17 @@ applet_widget_get_panel_pixel_size(AppletWidget *applet)
 	return applet->size;
 }
 
-/* Get the free space for the applet if it's on an edge panel or 0
-   if on a packed panel or on error */
+/**
+ * applet_widget_get_free_space:
+ * @applet: the #AppletWidget to work with
+ *
+ * Description:  Gets the free space left that you can use for your applet.
+ * This is the number of pixels around your applet to both sides.  If you
+ * strech by this amount you will not disturb any other applets.  If you
+ * are on a packed panel 0 will be returned.
+ *
+ * Returns:  Free space left for your applet.
+ **/
 int
 applet_widget_get_free_space(AppletWidget *applet)
 {
@@ -1038,9 +1161,21 @@ applet_widget_get_free_space(AppletWidget *applet)
 	return r;
 }
 
-/* sets if the change_position signal is sent*/
+/**
+ * applet_widget_send_position:
+ * @applet: the #AppletWidget to work with
+ * @enable: whether to enable or disable change_position signal
+ *
+ * Description:  If you need to get a signal everytime this applet changes
+ * position relative to the screen, you need to run this function with %TRUE
+ * for @enable and bind the change_position signal on the applet.  This signal
+ * can be quite CPU/bandwidth consuming so only applets which need it should
+ * use it.  By default change_position is not sent.
+ *
+ * Returns:
+ **/
 void
-applet_widget_send_position(AppletWidget *applet, int enable)
+applet_widget_send_position(AppletWidget *applet, gboolean enable)
 {
 	CORBA_Environment ev;
 	g_return_if_fail(applet != NULL);
@@ -1051,9 +1186,20 @@ applet_widget_send_position(AppletWidget *applet, int enable)
 	CORBA_exception_free(&ev);
 }
 
-/* sets if the do_draw signal is sent*/
+/**
+ * applet_widget_send_draw:
+ * @applet: the #AppletWidget to work with
+ * @enable: whether to enable or disable do_draw signal
+ *
+ * Description:  If you are using rgb background drawing, call this function
+ * with %TRUE for @enable, and then bind the do_draw signal.  Inside that
+ * signal you can get an RGB buffer to draw on with #applet_widget_get_rgb_bg.
+ * The do_draw signal will only be sent when the RGB truly changed.
+ *
+ * Returns:
+ **/
 void
-applet_widget_send_draw(AppletWidget *applet, int enable)
+applet_widget_send_draw(AppletWidget *applet, gboolean enable)
 {
 	CORBA_Environment ev;
 	g_return_if_fail(applet != NULL);
@@ -1064,7 +1210,20 @@ applet_widget_send_draw(AppletWidget *applet, int enable)
 	CORBA_exception_free(&ev);
 }
 
-/* gets the rgb background, useful in conjunction with the draw signal */
+/**
+ * applet_widget_get_rgb_bg:
+ * @applet: the #AppletWidget to work with
+ * @rgb: pointer to a pointer to which the rgb buffer will be returned
+ * @w: pointer to an integer in which the width will be stored
+ * @h: pointer to an integer in which the height will be stored
+ * @rowstride: pointer to an integer in which the rowstride will be stored
+ *
+ * Description:  Gets an rgb buffer that you can draw your applet on.  Usefull
+ * in conjunction with the do_draw signal and the #applet_widget_send_draw
+ * method.  The rgb should be freed after use with g_free.
+ *
+ * Returns:
+ **/
 void
 applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 			 int *w, int *h, int *rowstride)
@@ -1129,6 +1288,13 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 	CORBA_free(image);
 }
 
+/**
+ * applet_widget_init:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 int	
 applet_widget_init(const char *app_id,
 		   const char *app_version,
@@ -1162,18 +1328,39 @@ applet_widget_init(const char *app_id,
   CORBA STUFF
  *****************************************************************************/
 
+/**
+ * applet_widget_gtk_main:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 void
 applet_widget_gtk_main(void)
 {
 	gtk_main();
 }
 
+/**
+ * applet_widget_gtk_main_quit:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 void
 applet_widget_gtk_main_quit (void)
 {
 	gtk_main_quit();
 }
 
+/**
+ * applet_widget_panel_quit:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 void
 applet_widget_panel_quit (void)
 {
@@ -1509,6 +1696,13 @@ orb_remove_connection(GIOPConnection *cnx)
 */
 
 /* Used by shlib applets */
+/**
+ * applet_widget_corba_activate:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 CORBA_Object
 applet_widget_corba_activate(GtkWidget *applet,
 			     PortableServer_POA poa,
@@ -1520,6 +1714,13 @@ applet_widget_corba_activate(GtkWidget *applet,
 	return CORBA_Object_duplicate(CD(applet)->obj, ev);
 }
 
+/**
+ * applet_widget_corba_deactivate:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 void
 applet_widget_corba_deactivate(PortableServer_POA poa,
 			       const char *goad_id,
@@ -1581,6 +1782,13 @@ static POA_GNOME_GenericFactory__vepv applet_factory_vepv = {
 	&applet_factory_epv
 };
 
+/**
+ * applet_factory_new:
+ *
+ * Description:
+ *
+ * Returns:
+ **/
 void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 			AppletFactoryActivator afunc)
 {
