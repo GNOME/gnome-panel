@@ -1,5 +1,20 @@
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-marshal.list: kill VOID:STRING,STRING.
+
+	* panel-applet.c:
+	(panel_applet_get_global_key): impl.
+	(panel_applet_get_private_key): impl.
+	(panel_applet_save_yourself): upd.
+	(panel_applet_finalize): free keys.
+	(panel_applet_class_init): upd.
+	(panel_applet_new): return a GtkWidget.
+
+	* test-bonobo-applet.c:
+	(test_applet_handle_save_yourself): upd.
+
+2001-11-30  Mark McLoughlin  <mark@skynet.ie>
+
 	* libpanelapplet-2.0.pc.in: fixup.
 
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>

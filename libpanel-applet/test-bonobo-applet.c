@@ -127,11 +127,9 @@ test_applet_handle_background_change (PanelApplet               *applet,
 
 static void
 test_applet_handle_save_yourself (PanelApplet               *applet,
-				  const gchar               *global_key,
-				  const gchar               *private_key,
 				  GtkLabel                  *label)
 {
-	g_message ("saveYourself received '%s' '%s'", global_key, private_key);
+	g_message ("saveYourself received");
 }
 
 static BonoboObject *

@@ -28,6 +28,9 @@ struct _PanelAppletPrivate {
 	PanelAppletOrient  orient;
 	guint              size;
 	gchar             *background;
+
+	gchar             *global_key;
+	gchar             *private_key;
 };
 
 static GObjectClass *parent_class;
@@ -52,16 +55,41 @@ enum {
 	PROPERTY_BACKGROUND_IDX
 };
 
+gchar *
+panel_applet_get_global_key (PanelApplet *applet)
+{
+	if (!applet->priv->global_key)
+		return NULL;
+
+	return g_strdup (applet->priv->global_key);
+}
+
+gchar *
+panel_applet_get_private_key (PanelApplet *applet)
+{
+	if (!applet->priv->private_key)
+		return NULL;
+
+	return g_strdup (applet->priv->private_key);
+}
+
 void
 panel_applet_save_yourself (PanelApplet *applet,
-			    const gchar *global_key, 
+			    const gchar *global_key,
 			    const gchar *private_key)
 {
+	if (applet->priv->global_key)
+		g_free (applet->priv->global_key);
+
+	if (applet->priv->private_key)
+		g_free (applet->priv->private_key);
+
+	applet->priv->global_key  = g_strdup (global_key);
+	applet->priv->private_key = g_strdup (private_key);
+
 	g_signal_emit (G_OBJECT (applet),
 		       panel_applet_signals [SAVE_YOURSELF],
-		       0,
-		       global_key,
-		       private_key);
+		       0);
 }
 
 /**
@@ -203,6 +231,12 @@ static void
 panel_applet_finalize (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
+
+	if (applet->priv->global_key)
+		g_free (applet->priv->global_key);
+
+	if (applet->priv->private_key)
+		g_free (applet->priv->private_key);
 	
 	g_free (applet->priv);
 	applet->priv = NULL;
@@ -468,11 +502,9 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, save_yourself),
                               NULL,
 			      NULL,
-                              panel_applet_marshal_VOID__STRING_STRING,
+                              panel_applet_marshal_VOID__VOID,
                               G_TYPE_NONE,
-			      2,
-			      G_TYPE_STRING,
-			      G_TYPE_STRING);
+			      0);
 }
 
 static void
@@ -554,7 +586,7 @@ panel_applet_new (GtkWidget *widget)
 
 	panel_applet_construct (applet, widget);
 
-	return applet;
+	return GTK_WIDGET (applet);
 }
 
 /**

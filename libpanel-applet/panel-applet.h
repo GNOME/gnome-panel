@@ -65,9 +65,7 @@ struct _PanelAppletClass {
 				   GdkColor                  *color,
 				   const gchar               *pixmap);
 
-	void (*save_yourself) (PanelApplet               *applet,
-			       const gchar               *global_key,
-			       const gchar               *private_key);
+	void (*save_yourself) (PanelApplet *applet);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;
@@ -79,8 +77,10 @@ void               panel_applet_construct (PanelApplet *applet,
 
 PanelAppletOrient panel_applet_get_orient (PanelApplet *applet);
 
-guint             panel_applet_get_size  (PanelApplet *applet);
+guint              panel_applet_get_size  (PanelApplet *applet);
 
+gchar             *panel_applet_get_global_key  (PanelApplet *applet);
+gchar             *panel_applet_get_private_key (PanelApplet *applet);
 
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);
