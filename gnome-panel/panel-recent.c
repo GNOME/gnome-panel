@@ -48,6 +48,10 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	char                    *path;
 	char			*quoted;
 	gboolean                 ret   = TRUE;
+
+	/* Don't allow suspicious looking URIs */
+	if (uri [0] == '-')
+		return FALSE;
 	
 	app = gnome_vfs_mime_get_default_application (mime_type);
 

@@ -480,8 +480,11 @@ drop_nautilus_uri (PanelWidget *panel,
 	if ( ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
 		return FALSE;
 
+	/* Add -- to avoid the possibility of filenames which would
+	 * be interpreted as command line arguments
+	 */
 	quoted = g_shell_quote (uri);
-	exec = g_strdup_printf ("nautilus %s", quoted);
+	exec = g_strdup_printf ("nautilus -- %s", quoted);
 	g_free (quoted);
 
 	base = g_path_get_basename (uri);
