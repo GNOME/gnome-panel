@@ -1,3 +1,11 @@
+Wed Mar 22 16:27:12 2000  George Lebl <jirka@5z.com>
+
+	* gen_util/mailcheck.c: fix leaks and use gdk-pixbuf for all image
+	  loading
+
+	* gen_util/printer.c: completely redo the drawing and use gdk-pixbuf
+	  and the rgb buffer thingie from the panel for nicer backgrounds
+
 Mon Mar 20 17:07:19 2000  George Lebl <jirka@5z.com>
 
 	* gen_util/{clock.c,mailcheck.c,printer.c}: don't use g_error, we're

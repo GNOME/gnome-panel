@@ -18,7 +18,7 @@
 #include <config.h>
 #include <gnome.h>
 #include <applet-widget.h>
-#include <gdk_imlib.h>
+#include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "popcheck.h"
 #include "mailcheck.h"
@@ -107,6 +107,9 @@ struct _MailCheck {
 	GtkWidget *pre_check_cmd_entry, *pre_check_cmd_check;
 	GtkWidget *newmail_cmd_entry, *newmail_cmd_check;
 	GtkWidget *clicked_cmd_entry, *clicked_cmd_check;
+
+	/* the about box */
+	GtkWidget *about;
 
 	gboolean anim_changed;
 
@@ -302,29 +305,47 @@ check_mail_file_status (MailCheck *mc)
 	}	    
 }
 
-static void
+static gboolean
 mailcheck_load_animation (MailCheck *mc, char *fname)
 {
 	int width, height;
-	GdkImlibImage *im;
+	int pbwidth, pbheight;
+	GdkPixbuf *pb;
 
-	im = gdk_imlib_load_image (fname);
+	if(mc->email_pixmap)
+		gdk_pixmap_unref(mc->email_pixmap);
+	if(mc->email_mask)
+		gdk_bitmap_unref(mc->email_mask);
+	mc->email_pixmap = NULL;
+	mc->email_mask = NULL;
+
+	pb = gdk_pixbuf_new_from_file (fname);
+	if(!pb)
+		return FALSE;
+
+	pbwidth = gdk_pixbuf_get_width(pb);
+	pbheight = gdk_pixbuf_get_height(pb);
 
 	height = mc->size;
-	width = im->rgb_width*((double)height/im->rgb_height);
+	width = pbwidth*((double)height/pbheight);
 
-	gdk_imlib_render (im, width, height);
-
-	mc->email_pixmap = gdk_imlib_copy_image (im);
-	mc->email_mask = gdk_imlib_copy_mask (im);
-
-	gdk_imlib_destroy_image (im);
-	
 	/* yeah, they have to be square, in case you were wondering :-) */
 	mc->frames = width / height;
-	if (mc->frames == 3)
+	if (mc->frames < 3)
+		return FALSE;
+	else if (mc->frames == 3)
 		mc->report_mail_mode = REPORT_MAIL_USE_BITMAP;
 	mc->nframe = 0;
+
+
+	gdk_pixbuf_render_pixmap_and_mask(pb,
+					  &mc->email_pixmap,
+					  &mc->email_mask,
+					  128);
+
+	gdk_pixbuf_unref (pb);
+	
+	return TRUE;
 }
 
 static int
@@ -457,7 +478,9 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	mc->bin = NULL;
 
 	if (mc->property_window)
-		close_callback (NULL, mc);
+		gtk_widget_destroy(mc->property_window);
+	if (mc->about)
+		gtk_widget_destroy(mc->about);
 
 	g_free (mc->pre_check_cmd);
 	g_free (mc->newmail_cmd);
@@ -466,8 +489,15 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	g_free(mc->remote_server);
 	g_free(mc->remote_username);
 	g_free(mc->remote_password);
-                
+
+	if(mc->email_pixmap)
+		gdk_pixmap_unref(mc->email_pixmap);
+	if(mc->email_mask)
+		gdk_bitmap_unref(mc->email_mask);
+
 	gtk_timeout_remove (mc->mail_timeout);
+
+	g_free(mc);
 }
 
 static GtkWidget *
@@ -514,8 +544,8 @@ create_mail_widgets (MailCheck *mc)
 	gtk_widget_show (mc->label);
 	gtk_widget_ref (mc->label);
 	
-	if (fname && WANT_BITMAPS (mc->report_mail_mode)) {
-		mailcheck_load_animation (mc,fname);
+	if (fname && WANT_BITMAPS (mc->report_mail_mode) &&
+	    mailcheck_load_animation (mc, fname)) {
 		mc->containee = mc->da;
 	} else {
 		mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
@@ -624,7 +654,6 @@ static void
 close_callback (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = data;
-	gtk_widget_destroy (mc->property_window);
 	mc->property_window = NULL;
 }
 
@@ -637,19 +666,26 @@ load_new_pixmap (MailCheck *mc)
 	if (mc->selected_pixmap_name == mc->mailcheck_text_only) {
 		mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
 		mc->containee = mc->label;
-		if(mc->animation_file) g_free(mc->animation_file);
+		g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	} else {
-		char *fname = g_strconcat ("mailcheck/", mc->selected_pixmap_name, NULL);
+		char *fname = g_strconcat ("mailcheck/",
+					   mc->selected_pixmap_name, NULL);
 		char *full;
 		
-		full = gnome_unconditional_pixmap_file (fname);
+		full = gnome_pixmap_file (fname);
 		free (fname);
 		
-		mailcheck_load_animation (mc,full);
-		mc->containee = mc->da;
-		if(mc->animation_file) g_free(mc->animation_file);
-		mc->animation_file = full;
+		if(full && mailcheck_load_animation (mc, full)) {
+			mc->containee = mc->da;
+			g_free(mc->animation_file);
+			mc->animation_file = full;
+		} else {
+			mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
+			mc->containee = mc->label;
+			g_free(mc->animation_file);
+			mc->animation_file = NULL;
+		}
 	}
 	mail_check_timeout (mc);
 	gtk_widget_set_uposition (GTK_WIDGET (mc->containee), 0, 0);
@@ -1136,7 +1172,7 @@ applet_save_session(GtkWidget *w,
 static void
 mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 {
-	static GtkWidget *about = NULL;
+	MailCheck *mc = a_data;
 	static const gchar     *authors [] =
 	{
 		"Miguel de Icaza <miguel@kernel.org>",
@@ -1146,21 +1182,21 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 		NULL
 	};
 
-	if (about != NULL)
+	if (mc->about != NULL)
 	{
-		gdk_window_show(about->window);
-		gdk_window_raise(about->window);
+		gtk_widget_show_now(mc->about);
+		gdk_window_raise(mc->about->window);
 		return;
 	}
 	
-	about = gnome_about_new ( _("Mail check Applet"), "1.1",
-				  _("(c) 1998-2000 the Free Software Foundation"),
-				  authors,
-				  _("Mail check notifies you when new mail is on your mailbox"),
-				  NULL);
-	gtk_signal_connect( GTK_OBJECT(about), "destroy",
-			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about );
-	gtk_widget_show(about);
+	mc->about = gnome_about_new ( _("Mail check Applet"), "1.1",
+				      _("(c) 1998-2000 the Free Software Foundation"),
+				      authors,
+				      _("Mail check notifies you when new mail is on your mailbox"),
+				      NULL);
+	gtk_signal_connect( GTK_OBJECT(mc->about), "destroy",
+			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &mc->about );
+	gtk_widget_show(mc->about);
 }
 
 /*this is when the panel size changes */
@@ -1288,7 +1324,7 @@ make_mailcheck_applet(const gchar *goad_id)
 					      GNOME_STOCK_MENU_ABOUT,
 					      _("About..."),
 					      mailcheck_about,
-					      NULL);	
+					      mc);	
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "properties",
 					      GNOME_STOCK_MENU_PROP,
