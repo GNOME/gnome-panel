@@ -142,9 +142,19 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	if (page != -1)
 		return;
 	
+			/* remove the old launcher callback */
+	gtk_signal_disconnect_by_func(GTK_OBJECT(launcher->button),
+			(GtkSignalFunc) launch, launcher->dentry);
+
 	gnome_desktop_entry_free(launcher->dentry);
 	launcher->dentry =
 		gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(launcher->dedit));
+
+			/* and install the new one with the right dentry pointer */
+	gtk_signal_connect (GTK_OBJECT(launcher->button),
+			    "clicked",
+			    (GtkSignalFunc) launch,
+			    launcher->dentry);
 
 	gtk_tooltips_set_tip (panel_tooltips,launcher->button,
 			      launcher->dentry->comment,NULL);
