@@ -330,7 +330,6 @@ load_status_applet (PanelWidget *panel,
 	GtkWidget  *ebox;
 
 	g_return_val_if_fail (panel != NULL, FALSE);
-	g_return_val_if_fail (gconf_key != NULL, FALSE);
 
 	if (the_status != NULL)
 		return FALSE;
