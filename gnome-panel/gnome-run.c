@@ -188,7 +188,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
         gboolean add_to_favorites;
         GtkWidget *favorites;
         
-        use_advanced = gnome_config_get_bool ("/panel/Config/"ADVANCED_DIALOG_KEY"=false");
+        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
 	if (button_num == 2/*help*/) {
 		panel_show_help ("specialobjects.html#RUNBUTTON");
@@ -504,9 +504,9 @@ toggle_contents (GtkWidget *button,
 {
         gboolean use_advanced;
         
-        use_advanced = gnome_config_get_bool ("/panel/Config/"ADVANCED_DIALOG_KEY"=false");
+        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
 
-        gnome_config_set_bool ("/panel/Config/"ADVANCED_DIALOG_KEY, !use_advanced);
+        gnome_config_set_bool ("/panel/State/"ADVANCED_DIALOG_KEY, !use_advanced);
         gnome_config_sync ();
 
         update_contents (dialog);
@@ -749,7 +749,11 @@ simple_contents_shown (GtkWidget *vbox,
                 
                         fr = tmp->data;
 
-                        pixbuf = gdk_pixbuf_new_from_file (fr->icon);
+			if (fr->icon != NULL) {
+				pixbuf = gdk_pixbuf_new_from_file (fr->icon);
+			} else {
+				pixbuf = NULL;
+			}
                 
                         if (pixbuf) {
                                 GdkPixbuf *scaled;
@@ -834,10 +838,14 @@ unset_selected (GtkWidget *dialog)
         entry = gtk_object_get_data (GTK_OBJECT (dialog), "entry");
         clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
         
-        text = gtk_editable_get_chars (GTK_EDITABLE (entry),
-                                       0, -1);
+	if (entry != NULL) {
+		text = gtk_editable_get_chars (GTK_EDITABLE (entry),
+					       0, -1);
+	} else {
+		text = NULL;
+	}
 
-        if (text && *text) {
+        if ( ! string_empty (text)) {
                 char *msg;
                 msg = g_strdup_printf (_("Will run '%s'"),
                                        text);
@@ -907,13 +915,26 @@ select_row_handler (GtkCList *clist,
 		if (dentry != NULL) {
                         GdkPixbuf *pixbuf;
 
-                        gtk_label_set_text (GTK_LABEL (label),
-                                            dentry->name);
+			if (label != NULL)
+				gtk_label_set_text (GTK_LABEL (label),
+						    dentry->name);
 
-                        gtk_label_set_text (GTK_LABEL (desc_label),
-                                            dentry->comment);
+			if (desc_label != NULL)
+				gtk_label_set_text (GTK_LABEL (desc_label),
+						    dentry->comment);
+
+			if (dentry->icon != NULL) {
+				pixbuf = gdk_pixbuf_new_from_file (dentry->icon);
+				if (pixbuf == NULL) {
+					char *file = gnome_pixmap_file (dentry->icon);
+					if (file != NULL)
+						pixbuf = gdk_pixbuf_new_from_file (file);
+					g_free (file);
+				}
+			} else {
+				pixbuf = NULL;
+			}
                         
-                        pixbuf = gdk_pixbuf_new_from_file (dentry->icon);
                         if (pixbuf) {
                                 GdkPixmap *pixmap;
                                 GdkBitmap *mask;
@@ -1048,7 +1069,7 @@ update_contents (GtkWidget *dialog)
         gboolean use_advanced;
         GtkWidget *clist;
         
-        use_advanced = gnome_config_get_bool ("/panel/Config/"ADVANCED_DIALOG_KEY"=false");        
+        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");        
         advanced_toggle = gtk_object_get_data (GTK_OBJECT (dialog),
                                                "advanced_toggle_label");
 
@@ -1104,7 +1125,7 @@ show_run_dialog (void)
 		return;
 	}
 
-        use_advanced = gnome_config_get_bool ("/panel/Config/"ADVANCED_DIALOG_KEY"=false");
+        use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");
         
 	run_dialog = gnome_dialog_new(_("Run Program"), NULL);
 
