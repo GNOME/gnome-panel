@@ -413,7 +413,7 @@ gnome_panel_applet_request_glob_cfg (char **globcfgpath)
 
 	g_return_val_if_fail(globcfgpath!=NULL,0);
 
-	panel_client->applet_request_glob_cfg(cookie);
+	panel_client->applet_request_glob_cfg(cookie, globcfg);
 
 	if(globcfg!= NULL) {
 		*globcfgpath = g_strdup(globcfg);
