@@ -679,6 +679,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
+	gtk_widget_set_direction (foo->hbox, GTK_TEXT_DIR_LTR);
 	gtk_container_add(GTK_CONTAINER(foo->ebox), foo->hbox);
 
 	path = panel_pixmap_discovery ("panel-corner-left.png", FALSE /* fallback */);
