@@ -217,6 +217,8 @@ main(int argc, char **argv)
 
 	panel_tooltips = gtk_tooltips_new();
 
+	xstuff_init();
+
 	gnome_win_hints_init ();
 
 	/* read, convert and remove old config */
@@ -251,8 +253,6 @@ main(int argc, char **argv)
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
 	load_queued_externs();
-
-	xstuff_init();
 
 	status_applet_create_offscreen();
 	
