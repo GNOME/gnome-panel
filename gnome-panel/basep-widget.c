@@ -2262,7 +2262,7 @@ basep_calculate_borders (int screen)
 		g_assert (pd != NULL);
 
 		if ( ! EDGE_IS_WIDGET (pd->panel) &&
-		     ! IS_ALIGNED_WIDGET (pd->panel))
+		     ! ALIGNED_IS_WIDGET (pd->panel))
 			continue;
 
 		basep = BASEP_WIDGET (pd->panel);

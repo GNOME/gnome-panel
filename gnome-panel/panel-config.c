@@ -489,7 +489,7 @@ void
 update_config_align (BasePWidget *w)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
-	g_return_if_fail (IS_ALIGNED_WIDGET (w));
+	g_return_if_fail (ALIGNED_IS_WIDGET (w));
 
 	if (ppc == NULL ||
 	    ppc->ppc_origin_change)
@@ -559,7 +559,7 @@ config_apply (PerPanelConfig *ppc)
 					     ppc->strech_pixmap_bg,
 					     ppc->rotate_pixmap_bg,
 					     &ppc->back_color);
-	else if (IS_ALIGNED_WIDGET (ppc->panel))
+	else if (ALIGNED_IS_WIDGET (ppc->panel))
 		aligned_widget_change_params (ALIGNED_WIDGET (ppc->panel),
 					      ppc->screen,
 					      ppc->align,
@@ -1733,7 +1733,7 @@ setup_pertype_defs (BasePWidget *basep, PerPanelConfig *ppc)
 	if (BORDER_IS_WIDGET (basep))
 		ppc->edge = BORDER_POS (basep->pos)->edge;
 	
-	if (IS_ALIGNED_WIDGET(basep)) {
+	if (ALIGNED_IS_WIDGET(basep)) {
 		ppc->align = ALIGNED_POS (basep->pos)->align;
 	} else if (FLOATING_IS_WIDGET (basep)) {
 		FloatingPos *pos = FLOATING_POS (basep->pos);
@@ -1777,7 +1777,7 @@ update_config_type (BasePWidget *w)
 		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
 			      _("Edge panel"));
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-	} else if(IS_ALIGNED_WIDGET(w)) {
+	} else if(ALIGNED_IS_WIDGET(w)) {
 		/* aligned notebook page */
 		page = aligned_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1904,7 +1904,7 @@ panel_config (GtkWidget *panel)
 		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);
-	} else if(IS_ALIGNED_WIDGET(panel)) {
+	} else if(ALIGNED_IS_WIDGET(panel)) {
 		/* aligned notebook page */
 		help_path = "panelproperties";
 		help_linkid = "EDGETAB";

@@ -3227,7 +3227,7 @@ create_menu_at_fr (GtkWidget *menu,
 		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
 		if(GTK_MENU_SHELL(menu)->children &&
 		   !(GTK_MENU_SHELL(menu)->children->next == NULL &&
-		     IS_TEAROFF_ITEM(GTK_MENU_SHELL(menu)->children->data)))
+		     TEAROFF_IS_ITEM(GTK_MENU_SHELL(menu)->children->data)))
 			add_separator = TRUE;
 	}
 	
@@ -4114,7 +4114,7 @@ ask_about_swallowing_cb(GtkWidget *w, gpointer data)
 }
 
 static void
-convert_setup (BasePWidget *basep, GtkType type)
+convert_setup (BasePWidget *basep, GType type)
 {
 	basep->pos = gtk_type_new (type);
 	basep->pos->basep = basep;
@@ -4183,7 +4183,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		BorderEdge edge = BORDER_BOTTOM;
 		AlignedAlignment align;
 
-		convert_setup (basep, TYPE_ALIGNED_POS);
+		convert_setup (basep, ALIGNED_TYPE_POS);
 
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
@@ -4551,7 +4551,7 @@ update_type_menu (GtkWidget *menu, gpointer data)
 	GtkWidget *basep = cur_panel->panel_parent;
 	if (EDGE_IS_WIDGET (basep))
 		s = MENU_TYPE_EDGE;
-	else if (IS_ALIGNED_WIDGET (basep))
+	else if (ALIGNED_IS_WIDGET (basep))
 		s = MENU_TYPE_ALIGNED;
 	else if (SLIDING_IS_WIDGET (basep))
 		s = MENU_TYPE_SLIDING;

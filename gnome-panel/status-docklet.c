@@ -13,41 +13,42 @@
 #define pg_return_if_fail(x) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return; }
 #define pg_return_val_if_fail(x,y) if(!(x)) { g_print("type = %d exid = %s\n", ev._major, ev._repo_id); return y;}
 
-static void status_docklet_class_init	(StatusDockletClass *klass);
-static void status_docklet_init		(StatusDocklet      *status_docklet);
-static void status_docklet_destroy	(GtkObject          *o);
-static void status_docklet_build_plug	(StatusDocklet      *docklet,
-					 GtkWidget          *plug);
+static void status_docklet_class_init	 (StatusDockletClass *klass);
+static void status_docklet_instance_init (StatusDocklet      *status_docklet);
+static void status_docklet_destroy	 (GtkObject          *o);
+static void status_docklet_build_plug	 (StatusDocklet      *docklet,
+					  GtkWidget          *plug);
 
 
 typedef void (*BuildSignal) (GtkObject * object,
 			     GtkWidget * wid,
 			     gpointer data);
 
-static GtkObjectClass *parent_class;
+static GtkObjectClass *status_docklet_parent_class;
 
 GType
 status_docklet_get_type (void)
 {
-	static GType status_docklet_type = 0;
+	static GType object_type= 0;
 
 	if (status_docklet_type == 0) {
-		static const GtkTypeInfo status_docklet_info = {
-			"StatusDocklet",
-			sizeof (StatusDocklet),
-			sizeof (StatusDockletClass),
-			(GtkClassInitFunc) status_docklet_class_init,
-			(GtkObjectInitFunc) status_docklet_init,
-			NULL,
-			NULL,
-			NULL
+		static const GTypeInfo object_info = {
+                    sizeof (StatusDockletClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        status_docklet_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (StatusDocklet),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     status_docklet_instance_init
 		};
 
-		status_docklet_type = gtk_type_unique (gtk_object_get_type (),
-						       &status_docklet_info);
+		object_type = g_type_register_static (GTK_TYPE_OBJECT, "StatusDocklet", &object_info, 0);
+		status_docklet_parent_class = g_type_class_ref (GTK_TYPE_OBJECT);
 	}
 
-	return status_docklet_type;
+	return object_type;
 }
 
 enum {
@@ -95,8 +96,6 @@ status_docklet_class_init (StatusDockletClass *class)
 	GtkObjectClass *object_class;
 
 	object_class = (GtkObjectClass*) class;
-
-	parent_class = gtk_type_class (gtk_object_get_type ());
 
 	status_docklet_signals[BUILD_PLUG_SIGNAL] =
 		gtk_signal_new("build_plug",
@@ -153,8 +152,8 @@ status_docklet_destroy(GtkObject *o)
 		CORBA_exception_free(&ev);
 	}
 	
-	if (GTK_OBJECT_CLASS (parent_class)->destroy)
-		(* GTK_OBJECT_CLASS (parent_class)->destroy) (o);
+	if (GTK_OBJECT_CLASS (status_docklet_parent_class)->destroy)
+		(* GTK_OBJECT_CLASS (status_docklet_parent_class)->destroy) (o);
 }
 
 static void

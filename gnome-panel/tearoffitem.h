@@ -8,11 +8,11 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-#define TYPE_TEAROFF_ITEM	(tearoff_item_get_type())
-#define TEAROFF_ITEM(obj)	(GTK_CHECK_CAST ((obj), tearoff_item_get_type(), TearoffItem))
-#define TEAROFF_ITEM_CLASS(klass)	(GTK_CHECK_CLASS_CAST ((klass), tearoff_item_get_type(), TearoffItemClass))
-#define IS_TEAROFF_ITEM(obj)	(GTK_CHECK_TYPE ((obj), tearoff_item_get_type()))
-#define IS_TEAROFF_ITEM_CLASS(klass)	(GTK_CHECK_CLASS_TYPE ((klass), tearoff_item_get_type()))
+#define TEAROFF_TYPE_ITEM			(tearoff_item_get_type())
+#define TEAROFF_ITEM(object)			(G_TYPE_CHECK_INSTANCE_CAST ((object), TEAROFF_TYPE_ITEM, TearoffItem))
+#define TEAROFF_ITEM_CLASS(klass)		(G_TYPE_CHECK_CLASS_CAST ((klass), TEAROFF_TYPE_ITEM, TearoffItemClass))
+#define TEAROFF_IS_ITEM(object)			(G_TYPE_CHECK_INSTANCE_TYPE ((object), TEAROFF_TYPE_ITEM))
+#define TEAROFF_IS_ITEM_CLASS(klass)		(G_TYPE_CHECK_CLASS_TYPE ((klass), TEAROFF_TYPE_ITEM))
 
 
 typedef struct _TearoffItem       TearoffItem;
@@ -30,6 +30,7 @@ struct _TearoffItemClass
 
 
 GType		tearoff_item_get_type	(void);
+
 GtkWidget*	tearoff_item_new	(void);
 
 #ifdef __cplusplus

@@ -8,31 +8,30 @@
 #include "tearoffitem.h"
 
 static void tearoff_item_class_init	(TearoffItemClass	*klass);
-static void tearoff_item_init		(TearoffItem	*tearoff_menu_item);
+static void tearoff_item_instance_init	(TearoffItem	*tearoff_menu_item);
 
 GType
 tearoff_item_get_type (void)
 {
-	static GType tearoff_menu_item_type = 0;
+	static GType object_type = 0;
 
-	if (!tearoff_menu_item_type) {
-		static const GtkTypeInfo tearoff_menu_item_info = {
-			"TearoffItem",
-			sizeof (TearoffItem),
-			sizeof (TearoffItemClass),
-			(GtkClassInitFunc) tearoff_item_class_init,
-			(GtkObjectInitFunc) tearoff_item_init,
-			/* reserved_1 */ NULL,
-			/* reserved_2 */ NULL,
-			(GtkClassInitFunc) NULL,
+	if (object_type == 0) {
+		static const GTypeInfo object_info = {
+                    sizeof (TearoffItemClass),
+                    (GBaseInitFunc)         NULL,
+                    (GBaseFinalizeFunc)     NULL,
+                    (GClassInitFunc)        tearoff_item_class_init,
+                    NULL,                   /* class_finalize */
+                    NULL,                   /* class_data */
+                    sizeof (TearoffItem),
+                    0,                      /* n_preallocs */
+                    (GInstanceInitFunc)     tearoff_item_instance_init
 		};
 
-		tearoff_menu_item_type =
-			gtk_type_unique(gtk_tearoff_menu_item_get_type(),
-					&tearoff_menu_item_info);
+		object_type = g_type_register_static (GTK_TYPE_TEAROFF_MENU_ITEM, "TearoffItem", &object_info, 0);
 	}
 
-	return tearoff_menu_item_type;
+	return object_type;
 }
 
 GtkWidget*
@@ -57,6 +56,7 @@ tearoff_item_class_init(TearoffItemClass *klass)
 }
 
 static void
-tearoff_item_init(TearoffItem *tearoff_menu_item)
+tearoff_item_instance_init(TearoffItem *tearoff_menu_item)
 {
+	/* Empty */
 }

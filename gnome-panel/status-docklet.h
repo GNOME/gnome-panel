@@ -15,10 +15,10 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_STATUS_DOCKLET          (status_docklet_get_type ())
-#define STATUS_DOCKLET(obj)          GTK_CHECK_CAST (obj, status_docklet_get_type (), StatusDocklet)
-#define STATUS_DOCKLET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, status_docklet_get_type (), StatusDockletClass)
-#define IS_STATUS_DOCKLET(obj)       GTK_CHECK_TYPE (obj, status_docklet_get_type ())
+#define STATUS_TYPE_DOCKLET          	(status_docklet_get_type ())
+#define STATUS_DOCKLET(object)          (G_TYPE_CHECK_INSTANCE_CAST ((object), STATUS_TYPE_DOCKLET, StatusDocklet))
+#define STATUS_DOCKLET_CLASS(klass)  	(G_TYPE_CHECK_CLASS_CAST ((klass), STATUS_TYPE_DOCKLET, StatusDockletClass))
+#define STATUS_IS_DOCKLET(object)       (G_TYPE_CHECK_INSTANCE_TYPE((obj), STATUS_TYPE_DOCKLET))
 
 typedef struct _StatusDocklet		StatusDocklet;
 typedef struct _StatusDockletClass	StatusDockletClass;

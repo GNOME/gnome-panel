@@ -14,7 +14,7 @@ G_BEGIN_DECLS
 
 /* even though edge_pos is currently structurally
    the same as border_pos, make it its own type 
-   since we do need a seperate GtkType
+   since we do need a seperate GType
 */
 
 #define EDGE_TYPE_POS          		(edge_pos_get_type ())

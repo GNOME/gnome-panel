@@ -1508,7 +1508,7 @@ basep_pos_connect_signals (BasePWidget *basep)
 				    basep);
 	}
 
-	if (IS_ALIGNED_WIDGET (basep))
+	if (ALIGNED_IS_WIDGET (basep))
 		gtk_signal_connect_object (GTK_OBJECT (basep->pos),
 					   "align_change",
 					   GTK_SIGNAL_FUNC (update_config_align),
@@ -1555,7 +1555,7 @@ panelw_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 				      orient_change_foreach,
 				      basep->panel);
 		update_config_floating_pos_limits(basep);
-	} else if(IS_ALIGNED_WIDGET(basep)) {
+	} else if(ALIGNED_IS_WIDGET(basep)) {
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      drawer_orient_change_foreach,
 				      basep->panel);
@@ -1597,7 +1597,7 @@ panel_setup(GtkWidget *panelw)
 		pd->type = EDGE_PANEL;
 	else if(DRAWER_IS_WIDGET(panelw))
 		pd->type = DRAWER_PANEL;
-	else if(IS_ALIGNED_WIDGET(panelw))
+	else if(ALIGNED_IS_WIDGET(panelw))
 		pd->type = ALIGNED_PANEL;
 	else if(SLIDING_IS_WIDGET(panelw))
 		pd->type = SLIDING_PANEL;

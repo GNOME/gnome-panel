@@ -1,5 +1,17 @@
 2001-11-19  Glynn Foster  <glynn.foster@sun.com>
 
+	aligned-widget.c, aligned-widget.h, basep-widget.c,
+	edge-widget.h, menu.c, panel-widget.c, panel.c, 
+	panel_config.c, status-docklet.c, status-docklet.h,
+	tearoffitem.c, tearoffitem.h:
+
+	So I grepped for GtkType and realised that I had missed
+	several files. I suck. More GtkType->GType conversion.
+	Also unset GTK_NO_WINDOW from the GtkFixed panel-widget
+	that broke because of gtk+ changes.	
+
+2001-11-19  Glynn Foster  <glynn.foster@sun.com>
+
 	* Makefile.am: Fix one more instance of the new
 	glib-object.h stuff...Guess this one got lost under the
 	carpet.

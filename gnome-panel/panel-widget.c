@@ -1765,7 +1765,8 @@ panel_widget_new (gboolean packed,
 {
 	PanelWidget *panel;
 
-	panel = gtk_type_new(panel_widget_get_type());
+	panel = gtk_type_new(PANEL_TYPE_WIDGET);
+        GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
 
 	panel->back_type = back_type;
 

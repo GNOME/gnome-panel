@@ -12,18 +12,18 @@
 
 G_BEGIN_DECLS
 
-#define TYPE_ALIGNED_POS           (aligned_pos_get_type ())
-#define ALIGNED_POS(o)             (GTK_CHECK_CAST ((o), TYPE_ALIGNED_POS, AlignedPos))
-#define ALIGNED_POS_CLASS(k)       (GTK_CHECK_CLASS_CAST ((k), TYPE_ALIGNED_POS, AlignedPosClass))
-#define IS_ALIGNED_POS(o)          (GTK_CHECK_TYPE ((o), TYPE_ALIGNED_POS))
-#define IS_ALIGNED_POS_CLASS(k)    (GTK_CHECK_CLASS_TYPE ((k), TYPE_ALIGNED_POS))
+#define ALIGNED_TYPE_POS           	(aligned_pos_get_type ())
+#define ALIGNED_POS(object)             (G_TYPE_CHECK_INSTANCE_CAST ((object), ALIGNED_TYPE_POS, AlignedPos))
+#define ALIGNED_POS_CLASS(klass)        (G_TYPE_CHECK_CLASS_CAST ((klass), ALIGNED_TYPE_POS, AlignedPosClass))
+#define ALIGNED_IS_POS(object)          (G_TYPE_CHECK_INSTANCE_TYPE ((object), ALIGNED_TYPE_POS))
+#define ALIGNED_IS_POS_CLASS(klass)     (G_TYPE_CHECK_CLASS_TYPE ((klass), ALIGNED_TYPE_POS))
 
-#define TYPE_ALIGNED_WIDGET        (BORDER_TYPE_WIDGET)
-#define ALIGNED_WIDGET(o)          (BORDER_WIDGET(o))
-#define ALIGNED_WIDGET_CLASS(k)    (BORDER_WIDGET_CLASS(k))
-#define IS_ALIGNED_WIDGET(o)       (BORDER_IS_WIDGET(o) && IS_ALIGNED_POS(BASEP_WIDGET(o)->pos))
+#define ALIGNED_TYPE_WIDGET        	(BORDER_TYPE_WIDGET)
+#define ALIGNED_WIDGET(object)          (BORDER_WIDGET(object))
+#define ALIGNED_WIDGET_CLASS(klass)     (BORDER_WIDGET_CLASS(klass))
+#define ALIGNED_IS_WIDGET(object)       (BORDER_IS_WIDGET(object) && ALIGNED_IS_POS(BASEP_WIDGET(object)->pos))
 /* this is not reliable */
-#define IS_ALIGNED_WIDGET_CLASS(k) (BORDER_IS_WIDGET_CLASS(k))
+#define ALIGNED_IS_WIDGET_CLASS(klass)  (BORDER_IS_WIDGET_CLASS(klass))
 
 typedef BorderWidget            AlignedWidget;
 typedef BorderWidgetClass       AlignedWidgetClass;
