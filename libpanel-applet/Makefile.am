@@ -13,7 +13,6 @@ INCLUDES =							\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
 	-DPANEL_APPLET_GLADEDIR=\""$(gladedir)"\"		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
-	-DPANELRC=\""$(datadir)/gnome-panelrc"\"		\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(WARN_CFLAGS)
 

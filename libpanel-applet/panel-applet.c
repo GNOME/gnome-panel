@@ -1524,8 +1524,6 @@ panel_applet_factory_main (const gchar                 *iid,
 	g_return_val_if_fail (iid != NULL, 1);
 	g_return_val_if_fail (callback != NULL, 1);
 
-	gtk_rc_parse (PANELRC);
-
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
 	return panel_applet_factory_main_closure (iid, applet_type, closure);
