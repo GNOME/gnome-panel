@@ -227,7 +227,7 @@ about_cb (GtkWidget *widget, gpointer data)
 static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
-	if (gnome_execute_async (NULL, 1, &program_path)<0)
+	if (gnome_execute_async (g_get_home_dir (), 1, &program_path)<0)
 		panel_error_dialog (_("Can't execute 'About GNOME'"));
 }
 
@@ -236,8 +236,14 @@ activate_app_def (GtkWidget *widget, const char *item_loc)
 {
 	GnomeDesktopEntry *item = gnome_desktop_entry_load (item_loc);
 	if (item != NULL) {
+		char *curdir = g_get_current_dir ();
+		chdir (g_get_home_dir ());
+
 		gnome_desktop_entry_launch (item);
 		gnome_desktop_entry_free (item);
+
+		chdir (curdir);
+		g_free (curdir);
 	} else {
 		panel_error_dialog (_("Can't load entry"));
 	}
@@ -693,7 +699,7 @@ fake_pixmap_at_size (const char *file, int size)
 
 /* replaces '/' with returns _'s, originally from gmenu */
 static void
-validate_filename(char *file)
+validate_for_filename(char *file)
 {
 	char *ptr;
 
@@ -738,19 +744,23 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 	/* assume we are making a new file */
 	if (dentry->location == NULL) {
 		int i = 2;
+		char *name = g_strdup (dentry->name);
+
+		validate_for_filename (name);
 
 		dentry->location = g_strdup_printf ("%s/%s.desktop",
-						    dir, dentry->name);
-		validate_filename (dentry->location);
+						    dir, name);
 
 		while (panel_file_exists (dentry->location)) {
 			g_free (dentry->location);
 			dentry->location = g_strdup_printf ("%s/%s%d.desktop",
-							    dir, dentry->name,
+							    dir, name,
 							    i ++);
-			validate_filename (dentry->location);
 		}
+		g_free (name);
 	}
+
+	g_print ("location: %s\n", dentry->location);
 
 	file = g_concat_dir_and_file (dir, ".order");
 	fp = fopen (file, "a");
@@ -4628,7 +4638,7 @@ static void
 panel_config_global(void)
 {
 	char *argv[2] = {"gnome-panel-properties-capplet", NULL};
-	if(gnome_execute_async(NULL,1,argv)<0)
+	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
 		panel_error_dialog(_("Cannot execute panel global properties"));
 }
 
@@ -4806,8 +4816,8 @@ void
 panel_lock (GtkWidget *widget, gpointer data)
 {
 	char *argv[3] = {"xscreensaver-command", "-lock", NULL};
-	if(gnome_execute_async(NULL, 2, argv) < 0)
-		panel_error_dialog(_("Cannot execute xscreensaver"));
+	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
+		panel_error_dialog (_("Cannot execute xscreensaver"));
 }
 
 static void

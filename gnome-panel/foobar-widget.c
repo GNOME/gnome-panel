@@ -185,7 +185,7 @@ static void
 about_cb (GtkWidget *w, gpointer data)
 {
 	char *v[2] = { "gnome-about" };
-	gnome_execute_async (NULL, 1, v);
+	gnome_execute_async (g_get_home_dir (), 1, v);
 }
 #endif
 
@@ -194,7 +194,7 @@ gmc_client (GtkWidget *w, gpointer data)
 {
 	char *v[3] = { "gmc-client" };
 	v[1] = data;
-	if(gnome_execute_async (NULL, 2, v) < 0)
+	if(gnome_execute_async (g_get_home_dir (), 2, v) < 0)
 		panel_error_dialog(_("Cannot execute the gmc-client program,\n"
 				     "perhaps gmc is not installed"));
 }
@@ -204,7 +204,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 {
 	char *v[4] = { "gnomecal", "--view" };
 	v[2] = data;
-	if(gnome_execute_async (NULL, 3, v) < 0)
+	if(gnome_execute_async (g_get_home_dir (), 3, v) < 0)
 		panel_error_dialog(_("Cannot execute the gnome calendar,\n"
 				     "perhaps it's not installed.\n"
 				     "It is in the gnome-pim package."));

@@ -1,3 +1,13 @@
+Sat Feb 24 23:49:15 2001  George Lebl <jirka@5z.com>
+
+	* applet.c, foobar-widget.c, gnome-run.c, menu.c, swallow.c,
+	  launcher.c: use g_get_home_dir () as the current directory for the
+	  gnome_execute_* call, and push pop the home directory for
+	  dentry launch.
+
+	* menu.c: validate only the base of the filename so that adding new
+	  items to menus actually works
+
 Sat Feb 24 20:54:31 2001  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c,menu-util.[ch]: check for nautilus desktop each time

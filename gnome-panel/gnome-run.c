@@ -145,7 +145,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 		argc = temp_argc;
 	}
 
-	if (gnome_execute_async (NULL, argc, argv) >= 0) {
+	if (gnome_execute_async (g_get_home_dir (), argc, argv) >= 0) {
 		g_slist_foreach(tofree, (GFunc)g_free, NULL);
 		g_slist_free(tofree);
 		goto return_and_close;

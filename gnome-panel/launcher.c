@@ -85,7 +85,13 @@ launch (Launcher *launcher, int argc, char *argv[])
 
 		g_free (goad_id);
 	} else {
-		gnome_desktop_entry_launch_with_args (item,argc,argv);
+		char *curdir = g_get_current_dir ();
+		chdir (g_get_home_dir ());
+
+		gnome_desktop_entry_launch_with_args (item, argc, argv);
+
+		chdir (curdir);
+		g_free (curdir);
 	}
 	
 	if(global_config.drawer_auto_close) {

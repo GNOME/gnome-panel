@@ -146,7 +146,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		else if(strcmp(menu->name,"edit_menus")==0) {
 			char *tmp;
 			if((tmp = panel_is_program_in_path("gmenu")))  {
-				gnome_execute_async(NULL, 1, &tmp);
+				gnome_execute_async (g_get_home_dir (), 1, &tmp);
 				g_free(tmp);
 			}
 		} else if (strcmp (menu->name, "help") == 0) {
@@ -183,7 +183,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			freeit = TRUE;
 		}
 		if (command)
-			gnome_execute_shell (NULL, command);
+			gnome_execute_shell (g_get_home_dir (), command);
 		if (freeit)
 			g_free (command);
 		break;

@@ -63,10 +63,16 @@ swallow_launch (Swallow *swallow)
 		    strcmp (p, ".kdelnk") == 0) &&
 		   panel_file_exists (swallow->path) &&
 		   (item = gnome_desktop_entry_load (swallow->path)) != NULL) {
+			char *curdir = g_get_current_dir ();
+			chdir (g_get_home_dir ());
+
 			gnome_desktop_entry_launch (item);
 			gnome_desktop_entry_free (item);
+
+			chdir (curdir);
+			g_free (curdir);
 		} else {
-			gnome_execute_shell (NULL, swallow->path);
+			gnome_execute_shell (g_get_home_dir (), swallow->path);
 		}
 	}
 }
