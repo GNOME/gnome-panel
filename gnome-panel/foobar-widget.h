@@ -36,16 +36,15 @@ struct _FoobarWidgetClass
 	GtkWindowClass panel_class;
 };
 
+GtkType		foobar_widget_get_type		(void);
+GtkWidget *	foobar_widget_new		(void);
 
+void		foobar_widget_update_winhints	(GtkWidget *foo,
+						 gpointer ignored);
+void		foobar_widget_redo_window	(FoobarWidget *foo);
 
-GtkType foobar_widget_get_type (void);
-GtkWidget *foobar_widget_new (void);
-
-void foobar_update_winhints (GtkWidget *foo, gpointer ignored);
-void foobar_widget_redo_window (FoobarWidget *foo);
-
-gboolean foobar_widget_exists (void);
-gint foobar_widget_get_height (void);
+gboolean	foobar_widget_exists		(void);
+gint		foobar_widget_get_height	(void);
 
 END_GNOME_DECLS
 

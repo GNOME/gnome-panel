@@ -1608,9 +1608,7 @@ convert_read_old_config(void)
 
 	gnome_config_push_prefix("");
 
-	g_string_sprintf(buf,"%spanel/Config",PANEL_CONFIG_PATH);
-
-	gnome_config_clean_section(buf->str);
+	gnome_config_clean_section(PANEL_CONFIG_PATH "panel/Config");
 
 	gnome_config_set_int(PANEL_CONFIG_PATH "panel/Config/applet_count",
 			     applet_count);

@@ -12,10 +12,11 @@ typedef struct _DirRec DirRec;
 
 struct _MenuFinfo {
 	char *menudir;
-	int applets;
+	gboolean applets;
 	char *dir_name;
 	char *pixmap_name;	
-	int fake_menu;
+	gboolean fake_menu;
+	gboolean title;
 	FileRec *fr;
 };
 
@@ -48,10 +49,10 @@ char * get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii);
 
 GSList * get_files_from_menudir(char *menudir);
 
-FileRec * fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels);
+FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, int sublevels);
 FileRec * fr_replace(FileRec *fr);
 FileRec * fr_check_and_reread(FileRec *fr);
-FileRec * fr_get_dir(char *mdir);
+FileRec * fr_get_dir(const char *mdir);
 
 void init_fr_chunks (void);
 END_GNOME_DECLS

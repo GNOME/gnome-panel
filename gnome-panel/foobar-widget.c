@@ -17,7 +17,7 @@
 #include "menu.h"
 #include "menu-util.h"
 #include "session.h"
-#include "gdk-bufmap.h"
+/*#include "gdk-bufmap.h"*/
 #include "panel-widget.h"
 #include "xstuff.h"
 #include "basep-widget.h"
@@ -25,7 +25,9 @@
 #include "drawer-widget.h"
 
 #define SMALL_ICON_SIZE 20
+
 extern GlobalConfig global_config;
+extern GList *panel_list;
 
 static GtkWindowClass *foobar_widget_parent_class = NULL;
 
@@ -58,32 +60,30 @@ foobar_widget_get_type ()
 	return foobar_widget_type;
 }
 
-
-
-
 static void
 foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	foobar_widget_parent_class = gtk_type_class (FOOBAR_WIDGET_TYPE);
 }
 
-extern GlobalConfig global_config;
 static GtkWidget *
 pixmap_menu_item_new (const char *text, const char *try_file)
 {
 	GtkWidget *item;
-	GtkWidget *pixmap;
 	GtkWidget *label;
 
 	item = gtk_pixmap_menu_item_new ();
 
 	if (try_file && gnome_preferences_get_menus_have_icons ()) {
+		GtkWidget *pixmap;
 		pixmap = gnome_stock_pixmap_widget_at_size (
 			NULL, try_file, SMALL_ICON_SIZE, SMALL_ICON_SIZE);
 
-		gtk_widget_show (pixmap);
-		gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (item),
-						 pixmap);
+		if(pixmap) {
+			gtk_widget_show (pixmap);
+			gtk_pixmap_menu_item_set_pixmap
+				(GTK_PIXMAP_MENU_ITEM (item), pixmap);
+		}
 	}
 
 	if (text) {
@@ -113,11 +113,13 @@ url_menu_item (const char *label, const char *url, const char *pixmap)
 	return item;
 }
 
+#if 0
 static void
 run_cb (GtkWidget *w, gpointer data)
 {
 	show_run_dialog ();
 }
+#endif
 
 static void
 about_cb (GtkWidget *w, gpointer data)
@@ -218,7 +220,7 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 			    GTK_SIGNAL_FUNC (gmc_client), flag);
 }
 
-static GtkWidget *
+static void
 append_desktop_menu (GtkWidget *menu_bar)
 {
 	GtkWidget *menu, *item;
@@ -264,8 +266,9 @@ append_desktop_menu (GtkWidget *menu_bar)
 		gtk_signal_connect (GTK_OBJECT (item), "activate",
 				    GTK_SIGNAL_FUNC (panel_lock), 0);
 		setup_internal_applet_drag(item, "LOCK:NEW");
+
+		g_free (char_tmp);
 	}
-	g_free (char_tmp);
 
 	item = pixmap_menu_item_new (_("Log Out"), "gnome-term-night.png");
 	gtk_menu_append (GTK_MENU (menu), item);
@@ -273,17 +276,14 @@ append_desktop_menu (GtkWidget *menu_bar)
 			    GTK_SIGNAL_FUNC(panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
 
-
 	item = gtk_menu_item_new_with_label (_(" Desktop "));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
-	return item;
 }
 
-void submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem);
-
-static GtkWidget *
-append_folder_menu (GtkWidget *menu_bar, const char *label, const char *pixmap, gboolean system, const char *path)
+static void
+append_folder_menu (GtkWidget *menu_bar, const char *label,
+		    const char *pixmap, gboolean system, const char *path)
 {
 	GtkWidget *item, *menu;
 	char *real_path;
@@ -294,15 +294,15 @@ append_folder_menu (GtkWidget *menu_bar, const char *label, const char *pixmap, 
 
 	if (!real_path) {
 		g_warning (_("can't fine real path"));
-		return NULL;
+		return;
 	}
 
-	menu = create_fake_menu_at (real_path, FALSE, label, NULL);
+	menu = create_fake_menu_at (real_path, FALSE, label, NULL, FALSE);
 	g_free (real_path);
 
 	if (!menu) {
 		g_warning (_("menu wasn't created"));
-		return NULL;
+		return;
 	}
 
 	if (pixmap)
@@ -314,19 +314,16 @@ append_folder_menu (GtkWidget *menu_bar, const char *label, const char *pixmap, 
 
 	gtk_signal_connect (GTK_OBJECT (menu),"show",
 			    GTK_SIGNAL_FUNC (submenu_to_display),
-			    item);
-
-
-	return item;
+			    NULL);
 }
 
 static void
-append_gnomecal_item (GtkWidget *menu, const char *label, char *flag)
+append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
 {
 	GtkWidget *item = gtk_menu_item_new_with_label (label);
 	gtk_menu_append (GTK_MENU (menu), item);
 	gtk_signal_connect (GTK_OBJECT (item), "activate",
-			    GTK_SIGNAL_FUNC (gnomecal_client), flag);
+			    GTK_SIGNAL_FUNC (gnomecal_client), (gpointer)flag);
 }
 
 static int
@@ -415,12 +412,12 @@ foobar_widget_update_winhints (GtkWidget *foo, gpointer ignored)
 static void
 foobar_widget_init (FoobarWidget *foo)
 {
-	gchar *path;
+	/*gchar *path;*/
 	GtkWindow *window = GTK_WINDOW (foo);
-	GtkWidget *bufmap;
+	/*GtkWidget *bufmap;*/
 	GtkWidget *menu_bar;
 	GtkWidget *menu, *menuitem;
-	GtkWidget *align;
+	/*GtkWidget *align;*/
 	gint flags;
 
 	foo->compliant_wm = xstuff_is_compliant_wm ();
@@ -459,7 +456,7 @@ foobar_widget_init (FoobarWidget *foo)
 		 ~(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER | MAIN_MENU_USER_SUB |
 		   MAIN_MENU_PANEL | MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP |
 		   MAIN_MENU_DESKTOP_SUB)) | MAIN_MENU_SYSTEM;
-	menu = create_root_menu (TRUE, flags, TRUE, FALSE);
+	menu = create_root_menu (TRUE, flags, TRUE, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
 
@@ -494,7 +491,7 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_menu_bar_set_shadow_type (GTK_MENU_BAR (menu_bar),
 				      GTK_SHADOW_NONE);
 	append_clock_menu (menu_bar);
-	append_gnome_menu   (menu_bar);
+	append_gnome_menu (menu_bar);
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
@@ -504,7 +501,7 @@ foobar_widget_init (FoobarWidget *foo)
 
 #warning This is probably hackish
 static void
-queue_panel_resize (gpointer *data, gpointer ignored)
+queue_panel_resize (gpointer data, gpointer user_data)
 {
 	PanelData *pd = data;
 	GtkWidget *panel;
@@ -519,19 +516,16 @@ queue_panel_resize (gpointer *data, gpointer ignored)
 		gtk_widget_queue_resize (panel);
 }
 
-extern GList *panel_list;
-
-static gint
-queue_panel_resizes (GtkWidget *w, gpointer ignored)
+static void
+queue_panel_resizes (GtkWidget *w, gpointer data)
 {
 	if (!GTK_WIDGET_REALIZED (w))
-		return TRUE;
-	g_list_foreach (panel_list, queue_panel_resize, ignored);
-	return TRUE;
+		return;
+	g_list_foreach (panel_list, queue_panel_resize, data);
 }
 
 GtkWidget *
-foobar_widget_new ()
+foobar_widget_new (void)
 {
 	g_return_val_if_fail (das_global_foobar == NULL, NULL);
 	das_global_foobar =  gtk_type_new (FOOBAR_WIDGET_TYPE);

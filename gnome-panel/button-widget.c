@@ -39,7 +39,7 @@ static void button_widget_pressed	(ButtonWidget *button);
 static void button_widget_unpressed	(ButtonWidget *button);
 
 /*list of all the button widgets*/
-static GList *buttons=NULL;
+static GList *buttons = NULL;
 
 /*the tiles go here*/
 struct {
@@ -189,48 +189,57 @@ get_frame(BasePWidget *basep)
 }
 
 static void
-calculate_overlay_geometry(PanelWidget *panel, GtkWidget *basep,
-			   GtkWidget *applet,
-			   int *x, int *y, int *w, int *h)
+calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
+			   GtkWidget *applet, int *x, int *y, int *w, int *h)
 {
 	*x = applet->allocation.x;
 	*y = applet->allocation.y;
 	*w = applet->allocation.width;
 	*h = applet->allocation.height;
 
-	translate_to(GTK_WIDGET(panel), basep, x, y);
+	translate_to(GTK_WIDGET(panel), parent, x, y);
 
 	if(panel->orient == PANEL_HORIZONTAL) {
 		*y = 0;
 		/* we use the requisition, since allocation might have not
 		   yet happened if we are inside the allocation, anyway
 		   they are the same for basep */
-		*h = basep->requisition.height;
+		*h = parent->requisition.height;
+
+		if (!IS_BASEP_WIDGET(parent)) {
+			/*don't do the edge flushing on foobar*/
+			return;
+		}
 
 		/* if on the edge (only if padding is 0)
 		   then make the thing flush with the innerebox or frame
 		   of the basep */
 		if(applet->allocation.x == 0) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
 			*w += (*x - frame->allocation.x);
 			*x = frame->allocation.x;
 		} else if(applet->allocation.x + *w == panel->size) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
 			*w = frame->allocation.width - *x;
 		}
 	} else {
 		*x = 0;
-		*w = basep->requisition.width;
+		*w = parent->requisition.width;
+
+		if (!IS_BASEP_WIDGET(parent)) {
+			/*don't do the edge flushing on foobar*/
+			return;
+		}
 
 		/* if on the edge (only if padding is 0)
 		   then make the thing flush with the innerbox of frame
 		   of the basep */
 		if(applet->allocation.y == 0) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
 			*h += (*y - frame->allocation.y);
 			*y = frame->allocation.y;
 		} else if(applet->allocation.y + *h == panel->size) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(basep));
+			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
 			*h = frame->allocation.height - *y;
 		}
 	}
@@ -243,16 +252,16 @@ button_widget_realize(GtkWidget *widget)
 	gint attributes_mask;
 	ButtonWidget *button_widget;
 	PanelWidget *panel;
-	GtkWidget *basep;
+	GtkWidget *parent;
 	int x,y,w,h;
 
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (IS_BUTTON_WIDGET (widget));
 
 	panel = PANEL_WIDGET(widget->parent);
-	basep = panel->panel_parent;
+	parent = panel->panel_parent;
 
-	calculate_overlay_geometry(panel, basep, widget, &x, &y, &w, &h);
+	calculate_overlay_geometry(panel, parent, widget, &x, &y, &w, &h);
 
 	button_widget = BUTTON_WIDGET (widget);
 
@@ -276,7 +285,7 @@ button_widget_realize(GtkWidget *widget)
 	widget->window = gtk_widget_get_parent_window(widget);
 	gdk_window_ref(widget->window);
       
-	button_widget->event_window = gdk_window_new (basep->window,
+	button_widget->event_window = gdk_window_new (parent->window,
 						      &attributes,
 						      attributes_mask);
 	gdk_window_set_user_data (button_widget->event_window, widget);
@@ -679,14 +688,12 @@ button_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		PanelWidget *panel;
-		GtkWidget *basep;
 		int x,y,w,h;
 
 		panel = PANEL_WIDGET(widget->parent);
-		basep = panel->panel_parent;
 
-		calculate_overlay_geometry(panel, basep, widget,
-					   &x, &y, &w, &h);
+		calculate_overlay_geometry(panel, panel->panel_parent,
+					   widget, &x, &y, &w, &h);
 		gdk_window_move_resize (button_widget->event_window,
 					x, y, w, h);
 	}

@@ -225,7 +225,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 }
 
 FileRec *
-fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
+fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, int sublevels)
 {
 	char *fname;
 	struct stat s;
@@ -442,16 +442,16 @@ fr_check_and_reread(FileRec *fr)
 }
 
 FileRec *
-fr_get_dir(char *mdir)
+fr_get_dir(const char *mdir)
 {
 	GSList *li;
-	g_return_val_if_fail(mdir!=NULL,NULL);
-	for(li=dir_list;li!=NULL;li=g_slist_next(li)) {
+	g_return_val_if_fail(mdir!=NULL, NULL);
+	for(li=dir_list; li!=NULL; li=g_slist_next(li)) {
 		FileRec *fr = li->data;
 		g_assert(fr!=NULL);
 		g_assert(fr->name!=NULL);
-		if(strcmp(fr->name,mdir)==0)
+		if(strcmp(fr->name, mdir)==0)
 			return fr_check_and_reread(fr);
 	}
-	return fr_read_dir(NULL,mdir,NULL,1);
+	return fr_read_dir(NULL, mdir, NULL, 1);
 }
