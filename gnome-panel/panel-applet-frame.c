@@ -862,9 +862,7 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 	GtkWidget *dialog;
 	GdkScreen *screen;
 	char      *applet_name = NULL;
-	char      *applet_txt;
 	char      *dialog_txt;
-	gboolean   locked_down;
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 
@@ -873,32 +871,24 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 	if (frame->priv->iid)
 		applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
-	locked_down = panel_lockdown_get_locked_down ();
+	dialog_txt = g_strconcat ("<span weight=\"bold\" size=\"larger\">",
+				  applet_name ?
+					_("\"%s\" Has Quit Unexpectedly") :
+					_("Panel Object Has Quit Unexpectedly"),
+				  "</span>\n\n",
+				  "If you reload a panel object, it will automatically "
+				  "be added back to the panel.",
+				  NULL);
 
-	applet_txt = g_strdup_printf (
-			_("The \"%s\" applet appears to have died "
-			  "unexpectedly.\n\n"
-			  "Do you want to reload this applet?"),
-			applet_name ? applet_name : "");
-	if (!locked_down) {
-		dialog_txt = g_strconcat(applet_txt,
-				_("\n\n"
-				  "(If you choose not to reload it at this time"
-				  " you can always add it by right clicking on "
-				  "the panel and clicking on the "
-				  "\"Add to Panel\" submenu)"),
+	dialog = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+						     GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+						     dialog_txt, applet_name ? applet_name : NULL);
+
+	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+				_("_Don't Reload"), GTK_RESPONSE_NO,
+				_("_Reload"), GTK_RESPONSE_YES,
 				NULL);
-		g_free (applet_txt);
-	} else {
-		dialog_txt = applet_txt;
-	}
 
-	dialog = gtk_message_dialog_new (
-				NULL,
-				GTK_DIALOG_DESTROY_WITH_PARENT,
-				GTK_MESSAGE_QUESTION,
-				GTK_BUTTONS_YES_NO,
-				dialog_txt);
 	gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
 	g_signal_connect (dialog, "response",
