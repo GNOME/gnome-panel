@@ -727,47 +727,47 @@ load_default_applets1(PanelWidget *panel)
 		sz = SIZE_STANDARD;
 
 	load_menu_applet(NULL, get_default_menu_flags (), 
-			 panels->data, 0, FALSE);
+			 panels->data, 0, TRUE);
 
 	/*load up some buttons, but only if screen larger then 639*/
 	if(gdk_screen_width()>=640) {
-		load_logout_applet(panel, sz, FALSE);
-		load_lock_applet(panel, sz*2, FALSE);
+		load_logout_applet(panel, sz, TRUE);
+		load_lock_applet(panel, sz*2, TRUE);
 
 		for(i=0;def_launchers[i]!=NULL;i++) {
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
 				load_launcher_applet(p, panel,
-						     sz*4+i*sz, FALSE);
+						     sz*4+i*sz, TRUE);
 				g_free(p);
 			}
 		}
 	}
+	load_extern_applet("tasklist_applet", NULL,
+			   panel, INT_MAX/2/*flush right*/, TRUE, TRUE);
+	load_status_applet(panel,
+			   INT_MAX/2 + 1000/*flush right*/, TRUE);
 	/* for small panel stick the on the main panel */
 	if(gdk_screen_width()<1024)
 		load_extern_applet("gen_util_clock", NULL,
-				   panel, INT_MAX/2 + 2000, FALSE, TRUE);
-	load_status_applet(panel,
-			   INT_MAX/2 + 1000/*flush right*/, FALSE);
-	load_extern_applet("tasklist_applet", NULL,
-			   panel, INT_MAX/2/*flush right*/, FALSE, TRUE);
+				   panel, INT_MAX/2 + 2000, TRUE, TRUE);
 }
 
 static void
 load_default_applets2(PanelWidget *panel)
 {
 	load_extern_applet("deskguide_applet", NULL,
-			   panel, 0, FALSE, TRUE);
+			   panel, 0, TRUE, TRUE);
 	/* for small panel stick the on the main panel not this one */
 	if(gdk_screen_width()>=1024)
 		load_extern_applet("gen_util_clock", NULL,
-				   panel, 1000, FALSE, TRUE);
+				   panel, 1000, TRUE, TRUE);
 	load_extern_applet("gen_util_mailcheck",NULL,
-			   panel, 2000, FALSE, TRUE);
+			   panel, 2000, TRUE, TRUE);
 	if(g_file_exists("/proc/apm"))
 		load_extern_applet("battery_applet",NULL,
-				   panel, 4000, FALSE, TRUE);
+				   panel, 4000, TRUE, TRUE);
 }
 
 void
@@ -825,26 +825,26 @@ init_user_applets(void)
 				g_string_sprintf(buf,"%sApplet_%d_Extern/",
 						 PANEL_CONFIG_PATH,num);
 				load_extern_applet(goad_id, buf->str, 
-						   panel, pos, FALSE, TRUE);
+						   panel, pos, TRUE, TRUE);
 			}
 			g_free(goad_id);
 		} else if(strcmp(applet_name, LAUNCHER_ID) == 0) { 
 			char *params = gnome_config_get_string("parameters=");
-			load_launcher_applet(params, panel, pos, FALSE);
+			load_launcher_applet(params, panel, pos, TRUE);
 			g_free(params);
 		} else if(strcmp(applet_name, LOGOUT_ID) == 0) { 
-			load_logout_applet(panel, pos, FALSE);
+			load_logout_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, LOCK_ID) == 0) {
-			load_lock_applet(panel, pos, FALSE);
+			load_lock_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, STATUS_ID) == 0) {
-			load_status_applet(panel, pos, FALSE);
+			load_status_applet(panel, pos, TRUE);
 		} else if(strcmp(applet_name, SWALLOW_ID) == 0) {
 			char *path = gnome_config_get_string("execpath=");
 			char *params = gnome_config_get_string("parameters=");
 			int width = gnome_config_get_int("width=0");
 			int height = gnome_config_get_int("height=0");
 			load_swallow_applet(path, params, width, height,
-					    panel, pos, FALSE);
+					    panel, pos, TRUE);
 			g_free(path);
 			g_free(params);
 		} else if(strcmp(applet_name, MENU_ID) == 0) {
@@ -909,14 +909,14 @@ init_user_applets(void)
 					MAIN_MENU_DESKTOP_SUB;
 			}
 
-			load_menu_applet(params, flags, panel, pos, FALSE);
+			load_menu_applet(params, flags, panel, pos, TRUE);
 			g_free(params);
 		} else if(strcmp(applet_name, DRAWER_ID) == 0) {
 			int mypanel = gnome_config_get_int("parameters=-1");
 			char *pixmap = gnome_config_get_string("pixmap=");
 			char *tooltip = gnome_config_get_string("tooltip=");
 			load_drawer_applet(mypanel, pixmap, tooltip,
-					   panel, pos, FALSE);
+					   panel, pos, TRUE);
 			g_free(pixmap);
 			g_free(tooltip);
 		} else
