@@ -1,3 +1,9 @@
+2002-04-15  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am, panel.hints: kill panel.hints.
+
+	* menu-util.c: (get_real_menu_path): fix main menu dragging.
+
 2002-04-15 Stephen Browne <stephen.browne@sun.com>
 
 	* distribution.c:
@@ -83,6 +89,11 @@ Fri Apr 12 13:39:48 2002  George Lebl <jirka@5z.com>
 	  panel-config-global.[ch]: (panel_global_config_set_entry):
 	  panel.c: (panel_save_global_config), (panel_apply_global_config): more
 	window layer culling.
+
+2002-04-10  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu-util.c: (get_real_menu_path): don't crash when dragging
+	a menu (77275)
 
 2002-04-10  Mark McLoughlin  <mark@skynet.ie>
 

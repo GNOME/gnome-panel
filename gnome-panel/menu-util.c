@@ -251,10 +251,10 @@ got_distro_menus (void)
 char *
 get_real_menu_path (const char *arguments, gboolean main_menu)
 {
-        if (main_menu)
+        if (main_menu || !arguments)
                 return g_strdup ("applications:");
 
-        else if (*arguments == '~')
+        if (arguments [0] == '~')
                 /* FIXME: this needs to be a URI */
                 return g_build_filename (g_get_home_dir(),
                                               &arguments[1], NULL);

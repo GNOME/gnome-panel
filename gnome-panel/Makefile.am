@@ -201,7 +201,6 @@ glade_DATA =					\
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
-	panel.hints				\
 	gnome-panel-properties.desktop.in	\
 	gnome-panel-screenshot.desktop.in	\
 	gnome-panel-properties			\
@@ -211,9 +210,6 @@ EXTRA_DIST =					\
 	$(schema_DATA)				\
 	$(ui_DATA)				\
 	panel-marshal.list
-
-hintsdir = $(datadir)/gnome/hints
-hints_DATA = panel.hints
 
 sysdir = $(datadir)/gnome/capplets
 sys_in_files = gnome-panel-properties.desktop.in

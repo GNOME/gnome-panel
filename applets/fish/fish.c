@@ -715,7 +715,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new_with_mnemonic (_("Your GNOME Fish's _Name:"));
+	w = gtk_label_new_with_mnemonic (_("_Name of GNOME fish:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	e = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY(e), name);
@@ -732,7 +732,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	l = gtk_label_new_with_mnemonic (_("The Animation _Filename:"));
+	l = gtk_label_new_with_mnemonic (_("_Animation filename:"));
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	w = gnome_pixmap_entry_new ("fish_animation", _("Browse"), TRUE);
 	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
@@ -767,7 +767,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new_with_mnemonic (_("Frame_s In Animation:"));
+	w = gtk_label_new_with_mnemonic (_("Frame_s in animation:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (frames, 1.0, 255.0, 1.0, 5.0, 0.0);
 	e = gtk_spin_button_new (adj, 0, 0);
@@ -860,9 +860,8 @@ insert_text (Fish *fish, const char *text)
 
 	gtk_text_buffer_get_iter_at_offset (fish->fortune_buffer, &iter, -1);
 
-	gtk_text_buffer_insert_with_tags_by_name (fish->fortune_buffer, &iter,
-						  text, -1,
-						  "monospace", NULL);
+	gtk_text_buffer_insert (fish->fortune_buffer, &iter,
+				text, -1);
 }
 
 static void
@@ -897,7 +896,7 @@ static void
 update_fortune_dialog (Fish *fish)
 {
 	char *fortune_command;
-	FILE *fp;
+	gchar *output = NULL;
 
 	if ( fish->fortune_dialog == NULL ) {
 		GtkWidget *view;
@@ -933,11 +932,6 @@ update_fortune_dialog (Fish *fish)
 		fish->fortune_buffer =
 			gtk_text_view_get_buffer (GTK_TEXT_VIEW (view));
 
-		gtk_text_buffer_create_tag (fish->fortune_buffer, "monospace",
-					    "family", "monospace",
-					    NULL);
-
-
 		sw = gtk_scrolled_window_new (NULL, NULL);
 		gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
 						GTK_POLICY_AUTOMATIC,
@@ -969,20 +963,14 @@ update_fortune_dialog (Fish *fish)
 
 	text_clear (fish);
 
-	fp = NULL;
-
 	fortune_command = fish_locate_fortune_command (fish);
-	if (fortune_command != NULL) {
-		fp = popen (fortune_command, "r");
-	}
+
+	g_spawn_command_line_sync (fortune_command, &output, NULL, NULL, NULL);
+	
 	g_free (fortune_command);
 
-	if (fp != NULL) {
-		char buf[2048];
-		while (fgets (buf, 2048, fp) != NULL) {
-			insert_text (fish, buf);
-		}
-		pclose (fp);
+	if (output) {
+		insert_text (fish, output);
 	} else {
 		insert_text (fish, 
 			     _("You do not have fortune installed "
@@ -990,6 +978,7 @@ update_fortune_dialog (Fish *fish)
 			       "to run.\n\nPlease refer to fish "
 			       "properties dialog."));
 	}
+
 }
 
 static gboolean 
@@ -1098,8 +1087,8 @@ create_fish_widget(Fish *fish)
         fish->timeout_id = gtk_timeout_add (speed * 1000, fish_timeout, fish);
 
         gtk_container_add(GTK_CONTAINER(fish->frame),fish->darea);
-
-	gtk_widget_pop_colormap ();
+        
+        gtk_widget_pop_colormap ();
 }
 
 static void
@@ -1311,7 +1300,7 @@ fish_applet_fill (PanelApplet *applet)
 	load_image_file (fish);
 
 	create_fish_widget (fish);
-
+	
 	set_wanda_day ();
 
 	gtk_container_add (GTK_CONTAINER (fish->applet), fish->frame);
@@ -1321,6 +1310,8 @@ fish_applet_fill (PanelApplet *applet)
 	gtk_widget_show_all (GTK_WIDGET (fish->frame));
 
 	gtk_widget_show (GTK_WIDGET (fish->applet));
+	
+	setup_size (fish);
 
 	panel_applet_setup_menu_from_file (PANEL_APPLET (fish->applet),
 				 NULL,
