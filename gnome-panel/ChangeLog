@@ -1,3 +1,15 @@
+2004-04-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix to make things load in the correct order on
+	non-expanded panels. Bug #122513.
+
+	* applet.c:
+	(panel_applet_load_idle_handler): if its a right stuck
+	applet on a non-expanded panel, just load it at the
+	end of the panel - we load them in the correct order.
+	(panel_applet_compare): sort right stuck applets to
+	the end.
+
 2004-04-07  Frederic Crozat  <fcrozat@mandrakesoft.com>
                                                                                 
 	* gnome-panel/Makefile.am:

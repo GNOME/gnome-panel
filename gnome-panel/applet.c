@@ -728,8 +728,12 @@ panel_applet_load_idle_handler (gpointer dummy)
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	if (applet->right_stick && !panel_widget->packed)
-		applet->position = panel_widget->size - applet->position;
+	if (applet->right_stick) {
+		if (panel_widget->packed)
+			applet->position = panel_widget->size - applet->position;
+		else
+			applet->position = -1;
+	}
 
 	switch (applet->type) {
 	case PANEL_OBJECT_BONOBO:
@@ -829,6 +833,8 @@ panel_applet_compare (const PanelAppletToLoad *a,
 
 	if ((c = strcmp (a->toplevel_id, b->toplevel_id)))
 		return c;
+	else if (a->right_stick != b->right_stick)
+		return b->right_stick ? -1 : 1;
 	else
 		return a->position - b->position;
 }
