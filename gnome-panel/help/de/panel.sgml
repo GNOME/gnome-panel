@@ -2035,219 +2035,226 @@
   <!-- ###############  Individual Panel Properties  ################ -->
 
   <sect1 id="panelproperties">
-    <title>Individual Panel Eigenschaften</title>
+    <title>Individuelle Panel-Eigenschaften</title>
     <para>
-     <indexterm id="idx-a62"> <primary>Panel</primary>
-	<secondary>Individual Panel Eigenschaften</secondary>
+     <indexterm id="idx-a62">
+	<primary>Panel</primary>
+	<secondary>Individuelle Panel-Eigenschaften</secondary>
       </indexterm>
-     <indexterm id="idx-a63">
-	<primary>Panel</primary> <secondary>properties</secondary>
+      <indexterm id="idx-a63">
+	<primary>Panel</primary>
+	<secondary>Eigenschaften</secondary>
       </indexterm>
 
-      In addition to global Panel's properties, described in <xref
-	linkend="globalpanelprefs">, some properties can be configured
-      individually for each panel.  This includes panel type (Edge,
-      Aligned, Sliding, Floating), size, location, background color,
-      and hiding preferences. To change these properties for a panel,
-      click on it with the right mouse button and select
+      Zusätzlich zu den in <xref linkend="globalpanelprefs"> beschriebenen
+      globalen Eigenschaften gibt es noch einige Eigenschaften, die für
+      jedes Panel individuell konfiguriert werden können. Dies beinhaltet
+      etwa den Paneltyp (Kante, Ausgerichtet, Gleitend, Freischwebend),
+      Größe, Position, Hintergrundfarbe und Versteckeinstellungen. Um diese
+      Eigenschaften für ein Panel zu ändern, klicken Sie mit der rechten
+      Maustaste darauf und wählen
       <menuchoice><guimenu>Panel</guimenu>
-	<guisubmenu>Eigenschaften</guisubmenu></menuchoice>. You may also
-      press the <guibutton>Hauptmenü</guibutton> button and select
+	<guisubmenu>Eigenschaften</guisubmenu></menuchoice>. Sie können
+      auch den <guibutton>Hauptmenü</guibutton>-Knopf verwenden und dann
       <menuchoice><guimenu>Panel</guimenu>
-	<guisubmenu>Eigenschaften</guisubmenu></menuchoice>.
-    </para>
-    <para> From the <guisubmenu>Eigenschaften</guisubmenu>, you can
-      choose <guimenuitem>All properties</guimenuitem>, which will
-      launch <interface>Panel properties</interface> dialog.  If you
-      are already familiar with this dialog, you can also quickly
-      change some of the properties &mdash; say, panel size or type
-      &mdash; by selecting the appropriate item  in the
-      <guisubmenu>Eigenschaften</guisubmenu> menu.
+	<guisubmenu>Eigenschaften</guisubmenu></menuchoice> wählen.
     </para>
     <para>
-     The <interface>Panel properties</interface> dialog contains two
-     tabs to help you set the active Panel properties: <guilabel>Edge
-     Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip -
-     depending on your panel type) and
-     <guilabel>Background</guilabel>. Both of these tabs are explained
-     below.
+      Im <guisubmenu>Eigenschaften</guisubmenu>-Menü, können Sie
+      <guimenuitem>Alle Eigenschaften ...</guimenuitem> auswählen, was den
+      <interface>Panel Eigenschaften</interface>-Dialog zum Vorschein bringt.
+      Wenn Sie mit diesem Dialog bereits vertraut sind, können Sie einige
+      dieser Eigenschaften &mdash; etwa Panelgröße und -typ &mdash; schneller
+      Ändern, indem Sie den zugehörigen Eintrag im
+      <guisubmenu>Eigenschaften</guisubmenu>-Menü wählen.
+    </para>
+    <para>
+      Der <interface>Panel Eigenschaften</interface>-Dialog enthält zwei
+      Reiter, um die Panel-Eigenschaften zu ändern: 
+      <guilabel>Kantenpanel</guilabel> (oder <guilabel>Ausgerichtetes
+	Panel</guilabel>, &hellip - abhängig von Ihrem Paneltyp) und
+      <guilabel>Hintergrund</guilabel>. Beide werden nachfolgend beschrieben.
     </para>
 
     <sect2 id="edgetab">
-      <title>Edge Panel Tab</title>
+      <title>Kantenpanel-Reiter</title>
       <figure>
-	<title>Panel Edge Eigenschaften Dialog</title>
+	<title>Dialog "Kantenpanel-Eigenschaften"</title>
 	<screenshot>
-	  <screeninfo>Panel Edge Eigenschaften Dialog</screeninfo>
+	  <screeninfo>Dialog "Kantenpanel-Eigenschaften"</screeninfo>
 	  <graphic fileref="./figures/panel_props_edge"
-      format="png" srccredit="muet">
-      </graphic>
+	    format="png" srccredit="muet">
+	  </graphic>
 	</screenshot>
       </figure>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-	    <guilabel>Panel Position</guilabel> &mdash; This changes
-	    the position of the Panel on the screen. For
-	    <interface>Edge Panel</interface>, you must specify an
-	    edge (<guilabel>Top</guilabel>,
-	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
-	    <guilabel>Bottom</guilabel>). For <interface>Aligned
-	    Panel</interface>, you have to specify an edge and one of
-	    the edge's ends or the center. For <interface>Sliding
-	    Panel</interface>, you must specify the edge and offset
-	    from one of the corners (in pixels). Finally, for
-	    <interface>Floating Panel</interface> you must specify
-	    orientation (horizontal or vertical) and position of
-	    panel's left top corner (relative to the left top corner
-	    of the screen and measured in pixels).
+	    <guilabel>Panel-Position</guilabel> &mdash; Dies ändert die
+	    Position des Panels auf dem Bildschirm. Für ein
+	    <interface>Kantenpanel</interface>, müssen Sie eine Kante
+	    auswählen (<guilabel>Oben</guilabel>, <guilabel>Rechts</guilabel>,
+	    <guilabel>Links</guilabel> oder <guilabel>Unten</guilabel>).
+	    Für ein <interface>Ausgerichtetes Panel</interface> müssen Sie
+	    eine Ecke und eine Ende oder eine Kantenmitte auswählen. Für
+	    <interface>Gleitende Panels</interface> müssen Sie eine Ecke und
+	    den Offset von dieser Ecke (in Pixel) angeben. Für ein
+	    <interface>Freischwebendes Panel</interface> schließlich müssen
+	    Sie Orientierung (horizontal oder vertikal) und Position der
+	    linken oberen Ecke des Panels (relativ zur linken oberen
+	    Bildschirmecke, gemessen in Pixeln) angeben.
 	  </para>
 	  <para>
-	    The Panel will change position once you have pressed
-	    <guibutton>Apply</guibutton> or <guibutton>OK</guibutton>
-	    buttons.
+	    Das Panel ändert seine Position, sobald Sie einen der Knöpfe
+	    <guibutton>Übernehmen</guibutton> oder <guibutton>OK</guibutton>
+	    drücken.
 	  </para>
 	  <tip>
 	    <title>TIP</title>
 	    <para>
-	      You can also change Panel position by dragging it with
-	      the middle mouse button to the new location.
-	      </para>
+	      Sie können die Position eines Panels auch ändern, indem Sie es
+	      mit der mittleren Maustaste an die gewünschte Stelle ziehen.
+	    </para>
 	  </tip>
 	</listitem>
 
 	<listitem>
-	  <para><guilabel>Panel size</guilabel> &mdash; here you can
-	  choose panel width. The default size is 48 pixels, which is
-	  also the default size of icons used by GNOME. Users with low
-	  screen resolution might want to decrease the panel size to
-	  free some screen space; conversely, users with high
-	  resolution displays may try using larger panel sizes.
-	    </para>
 	  <para>
-             Changing panel size automatically resizes all the icons
-             on this panel, which can lead to some quality loss. Also,
-             the panel will ask all the applets to resize
-             themselves. Most of the applets will comply; however, if
-             some applets do not obey this request, then the panel
-             will resize itself so that it can fit all the applets.
+	    <guilabel>Panel Größe</guilabel> &mdash; Hier können Sie die Breite
+	    des Panels angeben. Die Standardgröße sind 48 Pixel, dies ist auch
+	    die Standardgröße aller von GNOME verwendeter Icons. Benutzer mit
+	    niedriger Bildschirmauflösung wollen das Panel oft verkleinern um
+	    Platz zu sparen, und Benutzer mit höherer Auflösung wollen oft auch
+	    größere Panelgrößen ausprobieren.
+	  </para>
+	  <para>
+	    Bei der Änderung der Panelgröse werden automatisch alle Icons an
+	    die Größe des Panels angepaßt, was zu einem Qualitätsverlust
+	    führen kann. Darüberhinaus fragt das Panel alle Applets, sich
+	    der Größe nach anzupassen. Die meisten der Applets werden dieser
+	    Anforderung gehorchen; gibt es jedoch einige, die dies nicht tun,
+	    vergrößert sich das Panel automatisch so, daß alle Applets
+	    reinpassen.
 	  </para>
 	</listitem>
 
 	<listitem>
 	  <para>
-      <indexterm id="idx-a64"> <primary>Panel</primary>
-	      <secondary>Auto-hide</secondary> </indexterm>
+	    <indexterm id="idx-a64">
+	      <primary>Panel</primary>
+	      <secondary>Automatisch verstecken</secondary>
+	    </indexterm>
 
-	    <guilabel>Hiding</guilabel> &mdash; In this section, you
-	    can choose whether you want to enable Panel Auto-hide
-	    &mdash; that is, have the Panel automatically hide when
-	    the mouse is not over the Panel. The autohide parameters
-	    can be configured in <link linkend="animtab">Global
-	    Preferences dialog</link>. If you  choose to Auto-hide you
-	    might want to disable the hide buttons here as well. You
-	    may also disable the hide button arrows graphics on the
-	    Panel.
-      </para>
+	    <guilabel>Verstecken</guilabel> &mdash; In diesem Abschnitt
+	    können Sie bestimmen, ob sich das Panel automatisch verstecken
+	    soll &mdash; in diesem Fall verschwindet das Panel automatisch,
+	    wenn sich der Mauszeiger nicht darüber befindet.
+	    Die Versteckeinstellungen können im
+	    <link linkend="animtab">Globale Einstellungen</link>-Dialog
+	    geändert werden. Wenn Sie das automatische Verstecken aktivieren,
+	    kann es wünschenswert sein, die Versteckknöpfe nicht anzuzeigen.
+	    Die sich darauf befindlichen Pfeilsymbole können ebenfalls
+	    deaktiviert werden.
+	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
 
     <sect2 id="panelbacktab">
-      <title>Background Tab</title>
+      <title>Hintergrund-Reiter</title>
       <indexterm id="idx-a65">
-	<primary>Panel</primary>  <secondary>Background</secondary>
+	<primary>Panel</primary>
+	<secondary>Hintergrund</secondary>
       </indexterm>
       
       <figure>
-	<title>Panel Background Eigenschaften Dialog</title>
+	<title>Dialog "Panel-Hintergrund"</title>
 	<screenshot>
-	  <screeninfo>Panel Background Eigenschaften Dialog</screeninfo>
+	  <screeninfo>Dialog "Panel-Hintergrund"</screeninfo>
 	  <graphic fileref="./figures/panel_props_back"
-	       format="png" srccredit="muet">
+	    format="png" srccredit="muet">
 	  </graphic>
 	</screenshot>
       </figure>
 
-
       <para>
-	These options allow you to change the background of the Panel
-       itself. You may choose, if you wish, to have the
-       <guilabel>Standard</guilabel>, <guilabel>Pixmap</guilabel>, or
-       <guilabel>Color</guilabel> background. The standard look for
-       the Panel is determined by the GTK theme you are running at the
-       time (you can configure the GTK theme using the
-       <application>GNOME Control Center</application>).  The
-       <guilabel>Pixmap</guilabel> option allows you to choose an
-       image to tile or scale to the Panel. The
-       <guilabel>Color</guilabel> option allows you to specify a
-       particular color for the Panel.
+	Diese Optionen erlauben Ihnen die Änderung des Panel-Hintergrunds.
+	Wenn Sie wollen, können Sie hier <guilabel>Standard</guilabel>,
+	<guilabel>Pixmap</guilabel> oder <guilabel>Farbe</guilabel> als
+	Hintergrund wählen. Das Standard-Erscheinungsbild des Panels wird
+	durch das aktuelle GTK-Theme bestimmt (Sie können das GTK-Theme im
+	<application>GNOME-Kontrollzentrum</application> ändern). Die
+	<guilabel>Pixmap</guilabel>-Option ermöglicht Ihnen, ein Bild auf
+	dem Panel zu kacheln oder zu skalieren. Über die
+	<guilabel>Farbe</guilabel>-Option können Sie eine bestimmte Farbe für
+	das Panel benutzen.
       </para>
 
       <itemizedlist mark="bullet">
 
 	<listitem>
 	  <para>
-       <guilabel>Color to use</guilabel> &mdash If you choose to have
-       your <interface>Panel</interface> one color, this button will
-       launch a dialog which allows you to specify which color to use.
-      </para>
+	    <guilabel>Zu verwendende Farbe</guilabel> &mdash Wenn Sie eine
+	    einzige Hintergrundfarbe für Ihr <interface>Panel</interface>
+	    wählen möchten, startet dieser Knopf eine Dialogbox, in der Sie
+	    diese Farbe auswählen können.
+	  </para>
 	</listitem>
 
 
 	<listitem>
 	  <para>
-       <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
-       for the background of your <interface>Panel</interface>, this
-       section of the dialog allows you to choose which image to use.
-       If you press the <guibutton>Browse</guibutton> button, you can
-       search for the file you want to use. The current filename is
-       shown to the left of this button. The window above it shows you
-       the preview of this background.
-      </para>
+	    <guilabel>Grafik</guilabel> &mdash; Wenn Sie ein Pixmap als
+	    <interface>Panel</interface>-Hintergrund haben möchten, können
+	    Sie das gewünschte Bild in diesem Bereich des Dialogs auswählen.
+	    Über den <guibutton>Suchen</guibutton>-Knopf können Sie die zu
+	    verwendende Datei suchen. Der aktuelle Dateiname erscheint links
+	    neben diesem Knopf. Im Fenster darüber erscheint eine Vorschau
+	    auf das gewählte Bild.
+	  </para>
 	</listitem>
       </itemizedlist>
 
       
       <tip>
-	<title>Drag and Drop With Images</title>
+	<title>Bilder ziehen und fallenlassen</title>
 	<para>
-	  An easier way to change the  background of your panel is to
-	  drag and  drop an image  file from  the GNOME  File Manager
-	  onto the Panel.  This will  automatically  change the
-	  background of  the panel to that image.
+	  Ein einfacherer Weg, den Hintergrund des Panels zu ändern, ist
+	  ein Bild vom GNOME-Dateimanager auf das Panel zu ziehen und dort
+	  fallenzulassen. Dies ändert automatisch den Hintergrund des
+	  Panels zu diesem Bild.
 	</para>
       </tip>
       
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-       <guilabel>Don't scale image to fit</guilabel> &mdash; If this
-       button is checked, the background image will be tiled to cover
-       the panel, rather than scaled.
-      </para>
+	    <guilabel>Bild nicht zum Einpassen scalieren</guilabel> &mdash;
+	    Wenn diese Option gewählt ist, wird das Bild über das Panel
+	    gekachelt und nicht skaliert.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Scale image (keep proportions)</guilabel> &mdash; If
-       this button is checked, the background image will be scaled as
-       much as possible preserving image's proportions, and then the
-       scaled image will be used to tile the panel.
-      </para>
+	    <guilabel>Bild skalieren (Proportionen erhalten)</guilabel> &mdash;
+	    Wenn diese Option gewählt ist, wird das Bild soweit wie
+	    möglich unter Beibehaltung der Bildproportionen skaliert und
+	    dann auf dem Panel gekachelt.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Stretch image (change proportions)</guilabel> &mdash;
-       If this button is checked, the background image will be
-       stretched in both dimensions to the size of the panel.
-      </para>
+	    <guilabel>Bild strecken (Proportionen ändern)</guilabel> &mdash;
+	    Wenn diese Option gewählt ist, wird das Hintergrundbild in beiden
+	    Dimensionen auf die Größe des Panels gestreckt.
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-       <guilabel>Rotate image for vertical panel</guilabel> &mdash; If
-         this button is checked, the image will be rotated when you
-         change panel orientation (horizontal/vertical).
-      </para>
+	    <guilabel>Bild für vertikale Panels drehen</guilabel> &mdash;
+	    Wenn dieser Knopf gedrückt ist, wird das Bild gedreht, wenn Sie
+	    die Panel-Orientation ändern (horizontal/vertikal).
+	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
@@ -2257,98 +2264,99 @@
 
   <sect1 id="panelbugs">
 
-    <title>Current bugs and limitations</title>
+    <title>Bekannte Fehler und Limitationen</title>
     <para>
-      Most of the things here are not really bugs; rather, they
-      describe situations when the Panel's behavior is not what you
-      would expect.   </para>
-
-    <para> You can not place an ordinary file or directory on the
-      Panel. If you try to drag and drop a file from the File Manager
-      window to the panel, it won't work. The only type of file that
-      can be placed on the Panel are <filename>.desktop</filename>
-      files, which describe launchers (and
-      <filename>.kdelnk</filename> files, which describe lunchers in
-      the format used by K Desktop Environment); any directory dropped on the
-      panel will be interpreted as a menu &mdash; that is, all the
-      files other than <filename>.desktop</filename> files will be
-      ignored.
-    </para>
-
-    <para> Editing menus other than the <guimenu>Hauptmenü</guimenu>
-      is rather confusing. <application>Menu Editor</application> at
-      the moment can not be used for this, and
-      <guimenuitem>Eigenschaften</guimenuitem> item of the right-click
-      menu is not too helpful either - for example, it doesn't allow
-      one to change menu's icon (see <xref linkend="menusconf"> for
-      instructions for doing this). This will be improved in the next
-      release.
-    </para>
-
-    <para> The <guimenu>Global Menu</guimenu> (which you get by
-      pressing the <keycap>Menu</keycap> key on the keyboard or by
-      right-clicking on the panel itself), and the <guimenu>Main
-      Menu</guimenu> (which you get by clicking on the foot icon)
-      are configured separately. The reason is that you
-      can have several <guimenu>Hauptmenü</guimenu> buttons on
-      different panels.
+      Die meisten der Dinge hier sind nicht wirklich Fehler; vielmehr
+      beschreiben sie Situationen, in denen sich das Panel nicht so verhält
+      wie Sie es erwarten würden.
     </para>
 
     <para>
-     The <guibutton>Screen Lock</guibutton> button does not lock the
-     screen if "No Screensaver" is set in the Control Center.
+      Sie können keine normale Datei oder ein Verzeichnis auf dem Panel
+      ablegen. Wenn Sie versuchen, eine normale Datei vom dem Dateimanager
+      auf das Panel zu ziehen und sie dort loslassen, wird dies nicht
+      funktionieren. Der einzige Typ Dateien, die auf das Panel gelegt werden
+      können, sind <filename>.desktop</filename>-Dateien, die Starter
+      beschreiben (und <filename>.kdelnk</filename>-Dateien, welche Starter
+      im von der K Desktop-Umgebung benutzten Format beschreiben); und jedes
+      Verzeichnis, das Sie versuchen auf das Panel zu legen, wird als ein
+      Menü interpretiert &mdash; das heißt, alle sich darin befindlichen
+      Dateien außer den <filename>.desktop</filename>-Dateien werden ignoriert.
     </para>
 
-    <para>  The only way of changing Panel type (Edge, Aligned, etc.)
-      is by choosing <menuchoice> <guisubmenu>Eigenschaften</guisubmenu>
-	<guisubmenu>Type</guisubmenu>  </menuchoice> from the
-      <guimenu>Panel</guimenu> menu: you can not change Panel type in
-      <interface>Panel Eigenschaften</interface> dialog. Conversely,
-      <menuchoice> <guisubmenu>Eigenschaften</guisubmenu>
-	<guisubmenu>Background type</guisubmenu>  </menuchoice>   allows
-      you to change the background type (Pixmap/Color/Standard), but
-      not to choose the actual color or image to use.  </para>
+    <para>
+      Das Editieren anderen Menüs als dem <guimenu>Hauptmenü</guimenu> ist
+      etwas verwirrend. Der <application>Menü-Editor</application> kann zur
+      Zeit nicht dafür verwendet werden, und der Punkt
+      <guimenuitem>Eigenschaften</guimenuitem> im Kontext-Menü ist ebenfalls
+      nicht sehr hilfreich &mdash; Sie können hiermit zum Beispiel nicht das
+      vom Menü verwendete Icon ändern (siehe <xref linkend="menusconf">, wie
+      man das macht). Dies wird in der nächsten Release verbessert.
+    </para>
+
+    <para>
+      Das <guimenu>Globale Menü</guimenu> (welches Sie über die
+      <keycap>Menü</keycap>-Taste auf der Tastatur oder durch Rechtsklick
+      auf das Panel erreichen) und das <guimenu>Hauptmenü</guimenu>
+      (welches Sie über das Fußabdrucks-Icon erreichen) werden separat
+      voneinander konfiguriert. Der Grund dafür ist, daß Sie mehrere
+      <guimenu>Hauptmenü</guimenu>-Knöpfe auf verschiedenen Panels haben
+      können.
+    </para>
+
+    <para>
+      Der <guibutton>Sperrknopf</guibutton> sperrt nicht dem Bildschirm,
+      wenn kein Bildschirmschoner im Kontrollzentrum gewählt ist.
+    </para>
+
+    <para>
+      Der einzige Weg, den Paneltyp zu ändern (Kante, Ausgerichtet, etc.)
+      ist über <menuchoice> <guisubmenu>Eigenschaften</guisubmenu>
+	<guisubmenu>Typ</guisubmenu>  </menuchoice> im
+      <guimenu>Panel</guimenu>-Menü: Sie können den Paneltyp nicht im
+      <interface>Panel-Eigenschaften</interface>-Dialog ändern. Umgekehrt
+      können Sie über <menuchoice> <guisubmenu>Eigenschaften</guisubmenu>
+	<guisubmenu>Hintergrund-Typ</guisubmenu>  </menuchoice> den Typ
+      des Hintergrunds ändern (Pixmap/Farbe/Standard), aber nicht die
+      eigentlich zu benutzende Farbe bzw. das Bild.
+    </para>
 
   </sect1>
 
 
   <!-- ###############  Authors  ################## -->
   <sect1 id="authors">
-    <title>Authors</title>
+    <title>Autoren</title>
     <para>
-      <application>GNOME Panel</application> was written by many GNOME
-      developers; you can find a partial list in the "About" box. By
-      the way: if you wonder what is the name of the animal shown in
-      the "About" box &mdash; it is called "Gegl" and it has its own
-      <ulink type="http" url="http://www.gegl.org">Web page</ulink>.
+      Das <application>GNOME-Panel</application> wurde von vielen
+      GNOME-Entwicklern geschrieben; Sie finden eine unvollständige
+      Übersicht im <interface>Über das Panel ...</interface>-Dialog.
+      Übrigens, falls Sie sich wundern, wie das in diesem Dialog
+      gezeigte Tier heißt &mdash; es nennt sich "Gegl" und hat seine
+      eigene <ulink type="http" url="http://www.gegl.org">Web-Seite</ulink>.
     </para>
     <para>
-      Please send all comments, suggestions, and bug reports to the
-      <ulink url="http://bugs.gnome.org" type="http">GNOME bug
-      tracking database</ulink>. Instructions for submitting bug
-      reports can be found on-line at <ulink
-      url="http://bugs.gnome.org/Reporting.html" type="http">
-      http://bugs.gnome.org/Reporting.html</ulink>. If you are using
-      GNOME 1.1 or later, you can also use the command
-      <command>bug-buddy</command> for submitting bug reports.
-      </para>
+      Bitte schicken Sie alle Kommentare, Anregungen und Fehlerberichte
+      and die <ulink url="http://bugs.gnome.org" type="http">GNOME-Problemdatenbank</ulink>. Eine Anleitung zum Berichten von Fehlern findet sich on-line
+      unter <ulink url="http://bugs.gnome.org/Reporting.html" type="http">
+	http://bugs.gnome.org/Reporting.html</ulink>. Wenn Sie GNOME 1.1
+      oder neuer verwenden, können Sie auch den Befehl
+      <command>bug-buddy</command> verwenden, um Fehler zu berichten.
+    </para>
     <para>
-      This manual was written by Dave Mason
+      Dieses Handbuch wurde von Dave Mason
       (<email>dcm@redhat.com</email>), Dan Mueth
-      (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
-      (<email>kirillov@math.sunysb.edu</email>). Please send all
-      comments and suggestions regarding this manual to the GNOME
-      Documentation Project at <email>docs@gnome.org</email> or enter
-      your comments online using the <ulink type="http"
-      url="http://www.gnome.org/gdp/doctable">GNOME Documentation
-      Status Table</ulink>.
-      </para>
+      (<email>d-mueth@uchicago.edu</email>), und Alexander Kirillov
+      (<email>kirillov@math.sunysb.edu</email>) verfaßt. Senden Sie bitte
+      alle dieses Handbuch betreffenden Kommentare und Anregungen an das
+      GNOME-Dokumentations-Projekt unter <email>docs@gnome.org</email> oder
+      benutzen Sie das Online-Formular in der
+      <ulink type="http" url="http://www.gnome.org/gdp/doctable">GNOME-Documentations-Status-Tabelle</ulink>.
+    </para>
+    <para>
+      Die deutsche Übersetzung dieses Handbuchs stammt von
+      Martin Baulig (<email>martin@home-of-linux.org</email>).
+    </para>
   </sect1>
 
 </article>
-
-
-
-
-
-
