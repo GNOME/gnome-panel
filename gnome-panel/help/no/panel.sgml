@@ -1,0 +1,2263 @@
+<!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
+]>
+
+
+ <article id="index">
+
+  <artheader> 
+    <title>GNOME Panelet</title>
+    <copyright>
+      <year>2000</year>
+      <holder>Red Hat, Inc., Dan Mueth, og Alexander Kirillov</holder>
+    </copyright>
+
+    <legalnotice>
+      <para>
+       Permission is granted to copy, distribute and/or modify this
+       document under the terms of the GNU Free Documentation License,
+       Version 1.1 or any later version published by the Free Software
+       Foundation; with no Invariant Sections, with no  Front-Cover
+       Texts, and with no Back-Cover Texts.  A copy of the license is
+       available from the Free Software Foundation and can be viewed <ulink
+       url="http://www.gnu.org/copyleft/fdl.html"
+       type="http">online</ulink>.
+      </para>
+
+      <para> UNIX is a trademark of X/Open Group.</para> <para> Linux
+      is a trademark of Linus Torvalds.</para> <para> X Window System
+      is a trademark of X Consortium, Inc.</para> <para> Windows is a
+      trademark of Microsoft Corp.</para>
+    </legalnotice>
+
+    <releaseinfo>
+     Dette er versjon 1.0 av GNOME Panel håndboken.
+    </releaseinfo>
+  </artheader>
+  <sect1>
+   <title>Innledning</title>
+   <para>
+    <indexterm id="idx-a2">
+     <primary>Panel</primary>
+    </indexterm>
+    GNOME <interface>Panelet</interface> er hjørnesteinen i GNOME
+    brukergrensesnitet og fungerer som plassholder for <link
+    linkend="mainmenu">Hovedmenyen</link>, bruker <link
+    linkend="menus">menyene</link>, applikasjon <link
+    linkend="launchers">oppstarterene</link>, <link
+    linkend="applets">appletene</link>  (applikasjoner som kjører helt og
+    holdent i panelet), <link linkend="drawers">skuffer</link>, og
+    flere <link linkend="specialobjects">spesialobjeter</link>.
+    <interface>Panelet</interface> er laget med tanke på å være
+    meget konfigurerbart. Du kan på en enkel måte <link
+    linkend="panelproperties">tilpasse dets oppførsel og utseende</link>,
+    og <link linkend="appletadd">legge til eller fjerne
+    objekter</link> etter ditt eget behov og preferanser. Du
+    kan til og med ha <link linkend="paneladd">flere paneler</link>,
+    hvert med sitt eget utseende, egenskaper, og innhold.  Denne
+    fleksibiliteten lar deg opprette et komfortabelt og effektivt 
+    personlig skrivebordsmiljø på en enkel måte.
+   </para>
+   <para> Denne håndboken beskriver versjon 1.1.5 av GNOME
+    <interface>Panelet</interface>.
+   </para>
+  </sect1>
+
+
+<!-- ########### Panel Basics  ############## -->  <sect1
+  id="panelbasics">   <title>Panel Basics</title>
+   <para>
+    GNOME <interface>Panelet</interface> er meget lett å bruke, og
+    det vil være lett å komme i gang med for en som har brukt et grafisk
+    skrivebordsmiljø før. Denne seksjonen vil gi deg en grunnleggende
+    innføring for å hjelpe deg i gang, og de følgende seksjonene vil ta opp
+    de forskjellige objektene og funksjonene i panelet i detalj.
+   </para>
+
+   <sect2 id="intropanel">
+    <title>Innføring i panelobjekter</title>
+    <para>
+     Et <interface>panel</interface> kan inneholde flere typer av objekter.
+     Eksempel-<interface>panelet</interface>  i  <xref
+     linkend="examplepanelfig"> viser hver type av panelobjekter.
+    </para>
+    <figure id="examplepanelfig">
+     <title>Et eksempel-panel</title>
+     <screenshot>
+      <screeninfo>Et eksempel-panel.</screeninfo>
+       <graphic fileref="./figures/example_panel" format="png"
+       srccredit="muet">
+       </graphic>
+     </screenshot>
+    </figure>
+
+    <para>
+     Dette eksempel-<interface>panelet</interface> inneholder følgende
+     objekter:  <itemizedlist>    <listitem>
+       <formalpara>
+        <title>Menyer</title>
+        <para>
+         Menyer er lister av oppføriger, som alle enten starter en
+         applikasjon, kjører en kommando, eller er en undermeny.  I
+         eksempel-<interface>panelet</interface> i <xref
+         linkend="examplepanelfig"> , er ikonet helt til venstre etter
+         pilen en fotavtrykk (GNOME logoen). Dette er
+         <guimenu>Hovedmenyen</guimenu>, et av de viktigeste objektene
+         i <interface>panelet</interface>.  Denne menyen 
+         gir tilgang til nesten alle applikasjoner, kommandoer og
+         konfigurasjonsvalg som er tilgjengelige i GNOME. <guimenu>Hoved-
+         menyen</guimenu> er beskrevet i detalj i <xref
+         linkend="mainmenu">. Det andre ikonet som er vist er en mappe,
+         standardikonet for brukermenyer.  GNOME lar brukere
+         opprette sine egne menyer med personlig innhold for bruk i 
+         tillegg til <guimenu>hovedmenyen</guimenu>.  For å åpne en
+         meny klikker du bare på ikonet med venstre musknapp.  For
+         mer informasjon om menyer, se <xref linkend="menus">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Oppstartere</title>
+        <para>
+         Oppstartere er knapper som enten starter en applikasjon eller
+         kjører en kommando når du trykker på dem (klikk med venstre
+         musknapp). Det tredje ikonet i eksempel
+         <interface>panelet</interface> er en oppstarter som starter
+         <application>Gnumeric</application> regnearket.  For mer 
+         informasjon om oppstartere, se <xref linkend="launchers">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Appleter</title> <para>  Appleter er applikasjoner som 
+        kjører inne i en liten del av 
+        <interface>panelet</interface>. Fjerde til og med åttende ikon
+        i eksempel-<interface>panelet</interface> er appleter. Den
+        første appleten som er vist er <application>GNOME
+        Værmelding</application> appleten, som henter nåværende værmeldinger
+        ned fra Web med jevne mellomrom, og viser informasjonen.
+        Applet nummer to <application>Diskmontering
+        </application> appleten, som viser om en disk (i dette tilfellet 
+	diskettstasjonen) er montert, og lar deg også montere og 
+        avmontere stasjonen med et enkelt musklikk.
+        Den tredje appleten som er vist er <application>Hurtigstart
+        </application> appleten, som virker som en kontainer for
+        oppstartere, men sparer mer plass enn å plassere oppstarterene
+        direkte på <interface>panelet</interface>. I eksempelet som
+        er vist har <application>Hurtigstart</application> appleten
+        seks oppstartere for applikasjoner. Neste oppføring er
+        <application>GNOME skrivebordsguide</application>, som lar deg
+        kontrollere flere virtuelle skrivebord, som hver kan ha flere
+        skjermområder. Du kan bevege deg mellom skrivebord og skjermområder
+        ved å klikke med venstre musknapp. Den siste appleten som er
+        vist er <application>Oppgavelisten</application>, som lar deg
+        kontrollere applikasjonsvinduene på forskjellige måter,
+        inkludert endring av fokus, ikonifisering, lukking av vinduer
+        og drap av applikasjoner.
+        <application>Oppgavelisten</application> som vises er for en skjerm
+        med kun to vinduer, som begge er <application>Electric
+        Eyes</application>.  For mer informasjon om appleter, se
+        <xref linkend="applets">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Skuffer</title>  <para>   Skuffer er i egentlig
+        utvidelser av <interface>panelet</interface> som kan åpnes
+        eller lukkes. Disse kan inneholde alt som 
+        <interface>panelet</interface> kan inneholde. Det brune ikonet for 
+        skuffen i eksempel-<interface>panelet</interface> er standardikonet
+        for skuffer, selv om ethvert ikon kan brukes. Klikk på ikonet for
+        <guiicon>skuffen</guiicon> med venstre knapp for å åpne eller 
+        lukke den. For mer informasjon om skuffer, se <xref
+        linkend="drawers">.
+        </para>
+       </formalpara>
+      </listitem>
+      <listitem>
+       <formalpara>
+        <title>Spesialobjecter</title>
+        <para>
+         Spesialobjekter er oppføringer du kan legge til på et
+         <interface>Panel</interface> som utfører funksjoner som ikke
+         vanligvis er tilgjengelig gjennom andre
+         <interface>panel</interface>-objekter. Den siste oppføringen i 
+         eksempel-<interface>panelet</interface> er et spesialobjekt
+         kalt <guibutton>Avloggingsknapp</guibutton>. Ved å trykke
+         på denne med venstre musknapp vil du starte utloggingssekvensen
+         for å avslutte GNOME sesjonen. For mer informasjon om spesial-
+         objekter, se <xref linkend="specialobjects">.
+        </para>
+       </formalpara>
+      </listitem>
+     </itemizedlist>
+    </para>
+    <para>
+     Hver av disse objekttypene er beskrevet i detalj i de følgende
+     seksjonene. Du kan på en enkel måte legge til, flytte eller fjerne
+     panelobjekter (se <xref linkend="appletadd">).
+    </para>
+   </sect2>
+
+ 
+   <sect2 id="rightclick">
+    <title>Høyreklikk meny</title>
+    <para>
+     Ved å klikke på et panelobjekt med høyre musknapp henter du opp
+     dette panelobjektets <guimenu>høyreklikk</guimenu>meny. Denne
+     menyen inneholder <guimenuitem>Fjern fra panelet</guimenuitem> for
+     å fjerne objektet fra <interface>Panel</interface>,
+     <guimenuitem>Flytt</guimenuitem> for å flytte objekter rundt på
+     <interface>panelet</interface> eller mellom to forskjellige
+     <interface>paneler</interface>,
+     <guisubmenu>panel</guisubmenu> undermenyen beskrevet under, og
+     typisk en eller flere objektspesifikke menyoppføringer. For skuffer
+     menyer, og oppstartere er den eneste objektspesifikke oppføringen
+     <guimenuitem>Egenskaper...</guimenuitem> som lar deg tilpasse
+     egenskapene og innstillingene for objektet. For applets vil
+     <guimenu>høyreklikk</guimenu>menyen ofte inneholde
+     <guimenuitem>Om...</guimenuitem> for å vise informasjon om
+     appleten, som forfatterens navn og appletens versjon,
+     <guimenuitem>Hjelp</guimenuitem> for å vise appletens
+     dokumentasjon, og <guimenuitem>Egenskaper...</guimenuitem> for
+     konfigurasjon av brukervalg og innstillinger for appleten. Appleter
+     har ofte andre applet-spesifikke kontroller på sine
+     <guimenu>høyreklikk</guimenu> menyer.
+    </para>
+    <para>
+     <guisubmenu>Panel</guisubmenu> undermenyen lar deg <link
+     linkend="panelmove">opprette og fjerne
+     <interface>paneler</interface></link> og <link
+     linkend="appletadd">legge til objekter</link> på 
+     <interface>panelet</interface>.  Den lar deg også modifisere
+     egenskapene for det aktuelle <interface>panelet</interface>
+     ved å bruke <guimenuitem>Egenskaper</guimenuitem> meny-
+     oppføringen (se <xref linkend="panelproperties">) eller egenskapene
+     for alle <interface>paneler</interface> ved å bruke <guimenuitem>Globale
+     brukervalg...</guimenuitem> menyoppføringen (se <xref
+     linkend="globalpanelprefs">).
+    </para>
+    <para>
+     Du kan også høyreklikke på selve <interface>panelet</interface>
+     Dette vil hente opp <link
+     linkend="mainmenu"><guimenu>Hovedmenyen</guimenu></link>.
+     Denne menyen inneholder også <guisubmenu>panel</guisubmenu> undermenyen
+     beskrevet over.
+    </para>
+   </sect2>
+
+   <sect2 id="panelhide">
+    <title>Skjuling av panelet</title>
+    <para>
+     <indexterm id="idx-a4">
+      <primary>Panel</primary> <secondary>Knapper for skjuling</secondary>
+     </indexterm>
+     <indexterm id="idx-a5">
+      <primary>Panel</primary> <secondary>Skjuling</secondary>
+     </indexterm>
+     Ikonene med pil mot venstre og høyre som ses på enden av eksempel-
+     <interface>panelet</interface> og i <xref linkend="fig2">
+     brukes for å skjule <interface>panelet</interface>.
+     <figure id="fig2">
+      <title>Skjul knappen</title>
+      <screenshot>
+       <screeninfo>Skjul knappen</screeninfo>
+        <graphic fileref="./figures/hide-button" format="png"
+        srccredit="dcm">
+        </graphic>
+      </screenshot>
+     </figure>
+    </para>
+    <para>
+     Hvis du trykker på en av disse pilene skjules
+     <interface>panelet</interface> ved å gli ut av skjermen i retningen 
+     som vises på den pilen, slik at den eneste delen av
+     <interface>panelet</interface> som er synlig er selve
+     <guibutton>Skjul</guibutton> knappen.  Trykkes den en gang til
+     hentes <interface>panelet</interface> inn igjen.
+    </para>
+    <para>
+     <interface>Paneler</interface> kan konfigureres slik at de skjules
+     automatisk når du ikke bruker det og hentes inn igjen når du beveger
+     musen til en del av skjermen hvor
+     <interface>panelet</interface> er plassert. Dette kan være nyttig
+     hvis du ikke kan bruke høy oppløsning på ditt system. For å lære
+     hvordan et <interface>panel</interface> auto-skjules, se <xref
+     linkend="panelproperties">.
+    </para>
+   </sect2>
+
+   <sect2 id="loggingout">
+    <title>Logge ut</title>
+    <para>
+     For å logge ut fra GNOME, høyreklikker du 
+     <interface>panelet</interface> og velger <guimenuitem>Logg
+     ut</guimenuitem>. Dette vil hente fram dialogen
+     <interface>Logg ut</interface>, som vist i <xref
+     linkend="logoutdialog-fig">.
+    </para>
+    <figure id="logoutdialog-fig">
+     <title>Dialogen Logg ut</title>
+     <screenshot>
+      <screeninfo>Logg ut</screeninfo>
+      <graphic fileref="./figures/logout-screen" format="png"
+      srccredit="dcm">
+      </graphic>
+     </screenshot>
+    </figure>
+    <para>
+     Hvis du ønsker å lagre ditt nåværende oppsett, velger du
+     <guilabel>Lagre nåværende oppsett</guilabel> avkrysningsboksen. Dette
+     vil lagre informasjon om alle GNOME applikasjoner som er startet, og 
+     konfigurasjonsendringer du har utført i <application>Kontroll-
+     senteret</application>.
+    </para>
+    <para>
+     Den vanlige måten å logge ut er ved å bruke
+     <guilabel>Logg ut</guilabel> alternativet, hvilket avslutter din GNOME
+     sesjon uten å kjøre ned maskinen.  Avhengig av ditt systems
+     konfigurasjon, kan du også velge <guilabel>Stopp</guilabel>
+     valget, som kjører ned datamaskinen, og <guilabel>Start om</guilabel> 
+     valget, som vil starte maskinen på.
+    </para>
+    <note>    <title>Merknad for avanserte brukere</title>   <para>
+     <guilabel>Stopp</guilabel> og <guilabel>Start om</guilabel> valgene
+     vil bare vises hvis du har rettigheter til å kjøre kommandoen
+     <command>/usr/bin/shutdown</command>.
+     </para>
+    </note>
+    <para>
+     Hvis du ikke ønsker å logge ut, trykker du 
+     <guibutton>Nei</guibutton> knappen for å returnere til din
+     GNOME sesjon. Ellers trykker du på <guibutton>Ja</guibutton>
+     knappen for å logge ut.
+    </para>
+    <note>
+     <title>Logge ut og vindushåndterere</title>
+     <para>
+      Hvis du kjører en vindushåndterer som følger GNOME spesifikasjonen,
+      vil logg ut funksjonen avslutte vindushåndtereren i tillgg til GNOME.
+      Hvis du kjører en vindushåndterer som ikke følger denne vil du måtte
+      avslutte vindushåndtereren selv.
+     </para>
+    </note>
+    <para>
+     Du kan slå av <interface>Logg ut</interface> dialogen slik at
+     valg av <guimenuitem>Logg ut</guimenuitem> menyoppføringen vil
+     avslutte din GNOME sesjon uten å spørre noen spørsmål. For å gjøre
+     dette starter du GNOME <application>Kontrollsenter</application> ved
+     å velge <menuchoice> <guimenu>Hovedmeny</guimenu>
+     <guisubmenu>Programmer></guisubmenu><guisubmenu>Innstillinger</guisubmenu> 
+     <guisubmenu>Sesjon</guisubmenu><guisubmenu>Oppstart</guisubmenu> 
+     </menuchoice> og velger bort
+     <guilabel>Spør ved avslutting</guilabel>.  <!-- Commented out
+     - as suggested by Drake You may also control whether changes to
+     your session are automatically saved using the
+     <guilabel>Automatically save changes to session</guilabel>
+     button. -->
+    </para>
+   </sect2>
+   <sect2 id="lockscreen">
+    <title>Låsing av skjermen</title>
+    <para>
+     Noen ganger vil du kanskje forlate maskinen mens GNOME kjører
+     og fremdeles ikke la andre bruke eller se din GNOME sesjon.  GNOME
+     lar deg oppnå dette ved å låse skjermen, slik at et passord trengs
+     for å låse den opp. For å låse din GNOME sesjon kan du høyreklikke på
+     enden av et <interface>panel</interface> og velge
+     <guimenuitem>Lås skjerm</guimenuitem>.  Alternativt, hvis du har
+     <guibutton>Lås knappen</guibutton>(see <xref
+     linkend="lockbutton">) på et <interface>panel</interface>, kan du
+     bare trykke på denne knappen for å låse skjermen. For å låse opp skjermen,
+     skriver du bare inn ditt påloggingspassord.
+    </para>
+    <note>
+     <title>Skjermsparere og lås knappen</title>
+     <para>
+      <guibutton>Lås skjerm</guibutton> knappen bruker en funksjon i
+      <application>xscreensaver</application> programmet. Dette er det
+      samme programmet som <application>Kontrollsenter</application>
+      bruker for å sette din skjermsparer. For at <guibutton>Lås
+      skjerm</guibutton> knappen skal virke riktig, må du ha slått på
+      en skjermsparer i <application>Kontrollsenter</application>.
+     </para>
+    </note>
+   </sect2>
+  </sect1>
+
+
+
+   <!-- ########### Main Menu ############## -->
+
+  <sect1 id="mainmenu">
+   <title>The Main Menu</title>
+   <para>
+     <indexterm id="idx-a3">  <primary>Hovedmeny</primary>
+     </indexterm>
+    Fotavtrykk ikonet som ses i venstre hjørne av eksempel
+    <interface>panelet</interface> (se <xref
+    linkend="examplepanelfig">) og i <xref
+    linkend="main-menu-button-fig"> er <guibutton>Hoved
+    menyen</guibutton> (ja, du gjettet riktig, det er fotavtrykket til
+    gnomen). Denne menyen gir tilgang til nesten alle GNOMEs
+    funksjoner &mdash; alle applikasjonene, konfigurasjonsverktøyene,
+    kommandolinjen, <guimenuitem>Logg ut</guimenuitem> og
+    <guimenuitem>Lås skjerm</guimenuitem> kommandoene, og mye mer.
+    For å bruke disse oppføringen klikker du på <guibutton>Hoved-
+    meny</guibutton> knappen. Du må slippe musknappen etter å ha
+    trykket på <guibutton>Hovedmeny</guibutton> knappen for å gjøre
+    bruk av andre mus-aktiverte funksjoner i
+    <guimenu>Hovedmenyen</guimenu>, slik som høyreklikk pop-up menyer og
+    dra-og-slipp fra menyen til skrivebordet eller
+    <interface>panelet</interface>.
+   </para>
+    <figure id="main-menu-button-fig">
+     <title>Hovedmeny knappen</title>
+     <screenshot>
+      <screeninfo>Hovedmeny knappen</screeninfo>
+       <graphic fileref="./figures/mm-button" format="png"
+       srccredit="dcm">
+       </graphic>
+     </screenshot>
+    </figure>
+    <para>   Du kan ha flere <guibutton>Hovedmeny</guibutton> knapper på
+    forskjellige <interface>paneler</interface>; som alle kan konfigureres
+    hver for seg.
+    </para>
+
+   <sect2 id="globalmenu">
+    <title>Global meny</title>
+    <para>
+     I tillegg til <guimenu>Hovedmenyen</guimenu> som hentes opp ved å
+     klikke på fot-ikonet, har GNOME også en <guimenu>Global
+     meny</guimenu>, som inneholder de samme kommandoene, men ikke 
+     er lenket til en knapp. For å aksessere <guimenu>Global
+     meny</guimenu>, høyreklikker du på et tomt området på
+     <interface>panelet</interface>. Du kan også aksessere  
+     <guimenu>Global meny</guimenu> ved å trykke på
+      <keycap>Meny</keycap> tasten på ditt tastatur (hvis du bruker et
+      standard PC tastatur, denne tasten er vanligvis plassert til venstre
+      for mellomrom tasten og er merket med et bilde av en meny); du kan
+      endre standardtasten for å aktivere <guimenu>Global 
+      meny</guimenu> i <link
+      linkend="misctab"><guilabel>Forskjellig</guilabel></link> fanen
+      i <interface><link linkend="globalpanelprefs">Globale
+      brukervalg</link> dialogen</interface>.
+      </para>
+
+      <para>
+	Merk at <guimenu>Global meny</guimenu> konfigureres 
+	uavhengig av <guimenu>Hovedmenyen</guimenu>, ved å bruke
+	<guilabel>Meny</guilabel> fanen i <link
+	linkend="globalpanelprefs"><interface>Globale
+	brukervalg</interface></link>-dialogen.
+      </para>
+    </sect2>
+
+    <sect2 id="submenus">
+     <title>Hovedmenyens komponenter</title>
+     <para>
+      Den viktigste komponenten i<guimenu>hovedmenyen</guimenu> er
+      <guisubmenu>Programmer</guisubmenu> undermenyen, som inneholder en
+      liste av prekonfigurerte undermenyer og menyoppføringer. Her finner du
+      alle GNOME applikasjonene, fra
+      <application>Gnumeric</application> regnearket til
+      <application>Free Cell</application> spillet, i tillegg til en
+      del ikke-GNOME-programmer, slik som
+      <application>Netscape</application> nettleseren og
+      <application>emacs</application> teksteditoren. I tillegg har
+      <guisubmenu>Programmer</guisubmenu> undermenyen også de følgende
+      kommandoene:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guimenuitem>Filbehandler</guimenuitem> &mdash;  starter GNOME's
+        grafiske filbehandler.
+       </para>
+      </listitem>
+   <!-- this was made obsolete by "run..." (see below)
+     <listitem>
+       <para>
+        <guimenuitem>Kjør program&hellip;</guimenuitem> &mdash; gir
+        deg en kommandolinje fra hvor du kan kjøre enhver kommando.
+       </para>
+      </listitem> -->
+      <listitem>
+       <para>
+        <guimenuitem>Hjelp system</guimenuitem> &mdash; starter
+        <application>GNOME Hjelp leser</application>.
+        <application>GNOME Hjelp leser</application> gir deg tilgang
+        til det meste av dokumentasjonen som er installert på ditt system
+	&mdash; ikke bare GNOME dokumentasjonen (GNOME brukerhåndbok,
+        applikasjonhåndbøker, &hellip;), men også andre typer av
+        dokumentasjon (man sider, info sider, &hellip;).
+       </para>
+      </listitem>
+     </itemizedlist>
+
+     <para>I tillegg til <guisubmenu>Programmer</guisubmenu>
+      undermenyen inneholder <guimenu>hovedmenyen</guimenu> også et
+      antall andre undermenyer og nyttige kommandoer. Avhengig av din
+      konfigurasjon, vil du kanskje ikke se alle disse. Noen vil også
+      dukke opp som undermenyer, og andre er inkludert som en del av
+      <guimenu>Main Menu</guimenu>, separated by horizontal lines from
+      de andre delene. Disse ekstra undermenyene og kommandoene er:
+     </para>
+     <itemizedlist>
+      <listitem>
+       <para>
+        <guisubmenu>Favoritter</guisubmenu>. Denne undermenyen, som 
+        i utgangspunktet er tom, er et sted hvor du kan legge dine favoritt-
+        applikasjoner for rask tilgang. Du kan redigere denne menyen ved
+        bruk av <application>Menyredigering</application>, som kan finnes
+        i <guimenu>hovedmenyen</guimenu> ved å velge
+        <menuchoice><guisubmenu>Innstillinger</guisubmenu>
+        <guimenuitem>Menyredigering</guimenuitem> </menuchoice>. Du kan 
+        også legge til ethvert objekt fra en annen meny (spesielt fra
+        <guimenu>Programmer</guimenu> menu) til
+        <guisubmenu>Favoritter</guisubmenu> menyen ved å klikke på 
+        objektet med høyre musknapp og velge
+        <guimenuitem>Legg til i Favoritter menyen</guimenuitem>.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>Appleter</guisubmenu>. Denne undermenyen inneholder
+        alle appletene som er installert på ditt system. Velg en applet
+        for å legge den til på <interface>panelet</interface>.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>KDE menyer</guisubmenu>. Dette viser menyene for
+        K Desktop Environment (KDE) hvis du har installert det på
+        ditt system.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guisubmenu>AnotherLevel menyer</guisubmenu> og
+        <guisubmenu>Debian menyer</guisubmenu>. Disse undermenyene viser
+        standard applikasjonsmenyer for Red Hat Linux og Debian
+        GNU/Linux, respektivt. Disse vil bare komme til syne for bruker
+        av disse distribusjonene.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guimenuitem>Panel</guimenuitem>. Denne undermenyen kan brukes
+        til å endre <interface>panelets</interface> egenskaper (både for <link
+        linkend="panelproperties">
+        <interface>individuelle paneler</interface></link> og <link
+        linkend="globalpanelprefs">globalt</link>, f.eks. for alle
+        <interface>paneler</interface>), <link linkend="add">legg til
+        object</link> på <interface>panelet</interface>, <link
+        linkend="panelremoving">fjern hele
+        <interface>panelet</interface></link>, <link
+        linkend="paneladd">opprett et nytt
+        <interface>panel</interface></link>, eller vis
+        <citetitle>panel håndboken</citetitle>.
+       </para>
+      </listitem>
+
+      <listitem>
+       <para>
+        <guimenuitem>Skrivebord</guimenuitem>&mdash; Denne undermenyen
+        <guimenuitem>Logg ut</guimenuitem>, som avslutter din GNOME
+        sesjon (se <xref linkend="loggingout">), og
+        <guimenuitem>Lås skjerm</guimenuitem> (se <xref
+        linkend="lockscreen">). 
+       </para>
+      </listitem>
+
+      <listitem id="runcommand">
+       <para>
+        <guimenuitem>Kjør &hellip;</guimenuitem> &mdash; Denne kommandoen
+        gir deg en kommandolinje. Den er ikke det samme som et fullt
+        skall, så den er ikke en ertatning for <application>GNOME
+        terminal</application>, men den er meget hendig når du bare
+        trenger å skrive inn en enkelt kommando raskt. Du kan også starte
+        denne kommandolinjen ved å bruke en tastatursnarvei.  (du
+        må spesifisere tastaturkombinasjonen du ønsker å bruke i <link
+        linkend="misctab"><guilabel>Forkjellig</guilabel></link>
+        fanen i <interface><link linkend="globalpanelprefs">Globale
+        brukervalg</link> dialogen</interface>).
+       </para>
+       <para>
+        Kommandolinjen har en buffer for historikk (du kan hente tilbake
+        tidligere brukte kommandoer ved å trykke pil ned som finnes til
+        høyre på tastaturet og velge kommandoen) og
+        <guibutton>Bla gjennom</guibutton> knappen, som lar deg velge
+        en fil &mdash; filnavnet vil bli lagt til ved slutten av kommandoen
+        For eksempel, du kan skrive inn an e<userinput>emacs</userinput> 
+        (en ekstremt kraftig teksteditor) på kommandolinjen og så bruke
+        <guibutton>Bla gjennom</guibutton> knappen for å velge filen som
+        skal redigeres.
+       </para>
+      </listitem>
+     </itemizedlist>
+    </sect2>
+
+    <sect2 id="mainmenuconfig">
+     <title>Konfigurasjon av hovedmenyen</title>
+     <para>
+      For å endre konfigurasjonen av <guimenu>Hovedmenyen</guimenu>,
+      høyreklikker du på <guibutton>Hovedmeny</guibutton> knappen
+      (vist i <xref linkend="main-menu-button-fig">) og velger
+      <guimenuitem>Egenskaper &hellip;</guimenuitem>  fra pop-up menyen
+      Dette vil vise <interface>Menuegenskaper</interface>
+      dialogen. I denne dialogen kan du, for alle undermenyene i
+      <guimenu>Hovedmeny</guimenu> listet over
+      (<guisubmenu>Programmer</guisubmenu>,
+      <guisubmenu>Favoritter</guisubmenu>, &hellip;) velge om du ønsker
+      at de skal vises som en del av <guimenu>Hovedmenyen</guimenu>, som
+      en undermeny, eller ikke i det hele tatt.
+     </para>
+
+
+     <figure>
+      <title>Menyegenskaper dialogen</title>
+      <screenshot>
+       <screeninfo>Menyegenskaper dialogen</screeninfo>
+       <graphic fileref="./figures/mainmenu_properties" format="png"
+       srccredit="muet">
+       </graphic>
+      </screenshot>
+     </figure>
+
+     <para>
+      Du kan også redigere innholdet av
+      <guisubmenu>Favoritter</guisubmenu> undermenyen (eller, hvis du er
+      en systemadministrator, også av
+      <guisubmenu>Programmer</guisubmenu> undermenyen) ved å bruke
+      <application>GNOME menyredigering</application>. For å starte
+      denne høyreklikker du på <guibutton>Hovedmeny</guibutton> knappen og
+      velger <guimenuitem>Redigér menyer
+      &hellip;</guimenuitem>. Alternativt kan du starte
+      <application>GNOME menyredigering</application> ved å velge
+      <menuchoice> <guisubmenu>Programmer</guisubmenu>
+      <guisubmenu>Innstillinger</guisubmenu> <guimenuitem>Meny-
+      redigering</guimenuitem> </menuchoice> direkte fra 
+      <guimenu>Hovedmenyen</guimenu>.
+     </para>
+    </sect2>
+
+<!-- Do we need it now that we have information about Global menu?
+    <sect2 id="kbdnav">
+     <title>Navigasjon i hovedmenyen med tastaturet</title>
+     
+     <para>   
+      Hvis du ønsker det, kan du bruke tastaturet i stedet for
+      musen til å navigere i <guimenu>Hovedmenyen</guimenu>. For å
+      aktivere <guimenu>Hovedmenyen</guimenu>, trykker du
+      <keycap>Meny</keycap> tasten på tastaturet (hvis du bruker et
+      standard PC-tastatur er denne tasten plassert til venstre for
+      mellomrom tasten og er merket med et bilde av en meny); du kan
+      endre standardtasten for aktivering av <guimenu>Hoved
+      menyen</guimenu> i <link
+      linkend="misctab"><guilabel>Forskjellig</guilabel></link> fanen
+      i <interface><link linkend="globalpanelprefs">Globale
+      brukervalg</link> dialogen</interface>. Bruk
+      <keycap>Opp</keycap> og <keycap>Ned</keycap> piltastene for å
+      flytte i menyen, <keycap>Høyre</keycap> pilen for å gå til en
+      undermeny, og <keycap>Enter</keycap> for å velge en oppføring. For å
+      gå ut av menyen trykker du <keycap>Esc</keycap> tasten.
+     </para>
+    </sect2> -->
+   </sect1>
+
+
+ <!-- ########### Menus  ############## -->
+ <sect1 id="menus">
+  <title>Menyer</title>
+  <para>
+   I tillegg til <guimenu>Hovedmenyen</guimenu>, som nevnes i <xref
+   linkend="mainmenu">, kan du også legge til "normale" menyer til et
+   <interface>Panel</interface>. En eksempelmeny, i dette tilfellet en
+   <guimenu>Favoritter</guimenu> menu som inneholder tre applikasjons-
+   oppstartere og en undermeny kalt <guisubmenu>Spill</guisubmenu>, kan
+   ses i <xref linkend = "example-menu-fig">. Ulikt
+   <guimenu>Hovedmenyen</guimenu>, kan normale menyer kun inneholde de
+   oppstartere og undermenyer du legger i dem - ingen standard undermenyer
+   som <guimenuitem>Kjør...</guimenuitem> kommandoen , etc. slik som <guimenu>Hoved
+   menyen</guimenu> har.  Du kan også legge til enhver undermeny,
+   <guimenu>Favoritter</guimenu> meny eller 
+   <guimenu>Programmer</guimenu> meny som en separat meny på et
+   <interface>Panel</interface>; for å gjøre dette, henter du opp en undermeny fra
+   <guimenu>Hovedmenyen</guimenu>,  høyrekklikker på undermenyens
+   tittel, og velger <guimenuitem>Legg til denne som en meny på
+   panelet</guimenuitem>.
+  </para>
+  <figure id="example-menu-fig">
+   <title>En eksempelmeny</title>
+   <screenshot>
+    <screeninfo>En eksempelmeny</screeninfo>
+     <graphic fileref="./figures/example_menu" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+
+   <sect2 id="addingmenus">
+    <title>Å legge til en meny på panelet</title>  <para> For å lære hvordan
+    du skal legg til en meny på <interface>Panelet</interface>, se <xref
+    linkend="add">.
+    </para>
+   </sect2>
+
+  <sect2 id="tearoff">
+   <title>Trekk av en meny</title>
+   <para>
+    Alle menyer i GNOME har trekk-av funksjonalitet: hvis du venstreklikker på
+    "perforeringen" (tynn streket linje på toppen av menyen, like over
+    menytittelen), vil menyen gjøres om til et separat vindu på ditt
+    skrivebord, som vil forbli der selv etter at du flytter muspekeren til
+    et annet sted. Dette er meget nyttig hvis du skal bruke en kommando
+    som ligger dypt nede i en undermeny ofte. For å fjerne en "avrevet"
+    fra skrivebordet, klikker du på <guibutton>Close</guibutton> knappen
+    på vinduets tittellinje
+    (utseende for denne er avhengig av vindushåndtereren du bruker, men
+    som regel er dette knappen helt til høyre, merket med en "x").
+   </para>
+  </sect2>
+
+   <sect2 id="menusconf">
+    <title> Configuring a Menu</title>
+    <para>
+     You can easily change a menu name and icon (for user menus
+     only, not for submenus taken from the <guimenu>Main
+     Menu</guimenu>). To do so, click on the menu, right-click
+     on the menu title (at the very top of the list, above all other
+     items), and select <guimenuitem>Properties&hellip;</guimenuitem>
+     from the pop-up menu. This will bring up the 
+     <interface>Desktop Entry Properties</interface> dialog, quite similar to
+     the <link linkend="launchers"><interface>Launcher
+     Properties</interface> dialog</link>. 
+    </para>
+    <para>  
+     To add a new item to the menu, click on the menu button,
+     right-click on the Menu name, and select <guimenuitem>Add new
+     item to this menu</guimenuitem>. This will bring  up
+     <interface>Create Menu Item</interface> dialog, in which you
+     can enter the menu item name, comment, command, and type (see <xref
+     linkend="launchers"> for more information).  To remove an item
+     from the menu, right-click on the item and choose <guimenuitem>Remove
+     this item</guimenuitem>.
+    </para>
+    <para>
+     Finally, a frequently asked question is "How I can change the
+     font and the background used by the menus?" The answer is that it
+     is determined by the current GTK Theme, which can be changed
+     using the <application>GNOME Control Center</application> by
+     selecting <menuchoice> <guimenu>Main Menu</guimenu>
+     <guisubmenu>Settings</guisubmenu>
+     <guisubmenu>User Interface</guisubmenu>
+     <guimenuitem>Themes</guimenuitem> 
+     </menuchoice>.
+    </para>
+   </sect2>
+  </sect1>
+
+
+ <!-- ###########  Launchers  ############## -->
+ <sect1 id="launchers">
+  <title>Launchers</title>
+  <para>
+   Launchers are essentially buttons which reside in your panel and
+   start an application or execute a command when clicked.  A launcher
+   can use any icon and has a customized tooltip to display a message
+   when the cursor is passed over the Launcher.
+  </para>
+  <para>  You can change a launcher properties, such as the icon it
+      uses and its name, by right-clicking on a launcher and selecting
+      <guimenuitem>Properties</guimenuitem> from the pop-up menu. This
+      brings up the <interface>Launcher properties dialog</interface>
+      shown in <xref linkend="launcherpropsfig">. The same dialog is
+      used when you create a new launcher (see <xref
+      linkend="add">). Also, internally GNOME makes no distinction
+      between menu items and launchers: these are just different
+      presentations of the same thing. You can place any menu item on
+      the panel, and it will show as a launcher. Therefore, all the
+      information below applies equally to launchers and menu items.
+      </para>
+  <figure id="launcherpropsfig">
+   <title>Create Launcher/Launcher Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Create Launcher/Launcher Properties Dialog</screeninfo>
+     <graphic fileref="./figures/launcher_properties_basic" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+    <para> This dialog has two tabs: <guilabel>Basic</guilabel> and
+    <guilabel>Advanced</guilabel>. In the <guilabel>Basic</guilabel>
+    tab, you can set:
+    </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+	  <guilabel>Name</guilabel> &mdash; this is the application
+	  name, for example, <userinput>GNOME
+	  terminal</userinput>. This name will be used if you later
+	  put this launcher in a menu.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Comment</guilabel> &mdash; this is a brief
+	  explanation of what this application does, for example,
+	  <userinput>Terminal emulation program</userinput>. This will
+	  be used for tooltips.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Command</guilabel> &mdash; the actual command that
+	  runs the application, for example,
+	  <userinput>gnome-terminal</userinput>.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Type</guilabel> &mdash; should be
+	  <guilabel>Application</guilabel>; do not change it unless
+	  you want to create something other than application launcher.
+	</para>
+      </listitem>
+    </itemizedlist>
+    <para>
+      The <guilabel>Basic</guilabel> tab also shows the icon to be
+      used for the launcher; if no icon is specified, a default icon
+      will be used. To change the icon, just click on it to launch the
+      icon browser.  </para>
+    <para>
+      Finally, if the application can only run inside a terminal
+      &mdash; that is, if it doesn't create any windows on its own
+      &mdash; you should also check <guibutton>Run in
+      terminal</guibutton> button. If unsure, leave it unchecked.
+    </para>
+    
+    <para>
+      <guilabel>Advanced</guilabel> tab is shown below. It is intended
+      for advanced users; most of the time, you do not need to change
+      any of the settings here.
+    </para>
+  <figure id="launcheradvpropsfig">
+   <title>Launcher Advanced Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Launcher Advanced Properties Dialog</screeninfo>
+     <graphic fileref="./figures/launcher_properties_advanced" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+    <para> In this tab, you can set:
+    </para>
+    <itemizedlist>
+      <listitem>
+	<para>
+	  <guilabel>Try this before using</guilabel> &mdash; you can
+	  enter here a command, and GNOME will check if this command
+	  can be executed. If not, the launcher (or menu item) will
+	  not be shown even if you added it to the panel or menu. It
+	  is mostly used by people preparing GNOME distributions: for
+	  example, default GNOME <guimenu>Main Menu</guimenu> contains
+	  an item for <application>TkRat</application> e-mail program,
+	  but you will not see it unless you have
+	  <application>TkRat</application> installed on your system.
+	</para>
+      </listitem>
+      <listitem>
+	<para>
+	  <guilabel>Documentation</guilabel> &mdash; currently not
+	  used.
+	</para>
+      </listitem>
+       <listitem>
+	<para>
+	  <guilabel>Name/comment translations</guilabel> &mdash; here
+	  you can set translation of the <guilabel>Name</guilabel> and
+	  <guilabel>Comment</guilabel> to other languages. For
+	  example, for <application>GNOME Terminal</application>, the
+	  translations to Spanish (es) are name:  <userinput>Terminal
+	  UNIX de GNOME</userinput> and comment: <userinput>Emulador
+	  de terminal GNOME</userinput>. This means that if a user
+	  sets his language to Spanish during login (it can be done by
+	  selecting appropriate language from
+	  <guimenu>Languages</guimenu> menu of GNOME login manager
+	  (GDM)), he will see <guimenuitem>Terminal UNIX de
+	  GNOME</guimenuitem> in the menu and <userinput>Emulador de
+	  terminal GNOME</userinput> in the tooltips. Of course, the
+	  actual command that runs the terminal is unchanged.
+	</para>
+	<para>
+	  To add a new translation, enter the language 2-letter code
+	  and translations of <guilabel>Name</guilabel> and
+	  <guilabel>Comment</guilabel>  fields in the empty fields
+	  under the list of current translations, and  press
+	  <guibutton>Add/Set</guibutton> button.  To change one of
+	  existing translations, select it in the list, edit the
+	  fields you want, and press <guibutton>Add/Set</guibutton>
+	  button. To remove one of existing translations, select it
+	  and press <guibutton>Remove</guibutton> button.
+	</para>
+	<para>  You can find the list of all languages supported by
+	  GNOME along with their 2-letter codes  in  <ulink
+	  type="http"
+	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
+	  Frequently Asked Questions</ulink>.
+	</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>
+      All the changes you made in <interface>Launcher
+      Properties</interface> dialog will take effect when you press
+      <guibutton>Apply</guibutton> or
+      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
+      closes this dialog; pressing <guibutton>Apply</guibutton> will
+      allow you to continue editing.
+    </para>
+ </sect1>
+
+
+<!-- ###########  Applets  ############## -->
+ <sect1 id="applets">
+  <title>Applets</title>
+  <para>
+   Applets are GNOME applications which reside in the
+   <interface>Panel</interface>.  An applet's appearance typically
+   reveals the state of the applet or other information. Applets often
+   have buttons, sliders, entries, or other methods to allow you to
+   control their behavior.
+  </para>
+  <figure>
+   <title>Example Applets</title>
+   <screenshot>
+    <screeninfo>Example Applets</screeninfo>
+     <graphic fileref="./figures/panel_applets" format="png"
+     srccredit="muet">
+     </graphic>
+   </screenshot>
+  </figure>
+  <para>
+   Some example applets are shown above.  At the very left is  the
+   <application>Sound Monitor Applet</application>, which displays the
+   current volume of sound being played and allows you to control
+   various sound features.  Second is the <application>Mixer
+   Applet</application>, which allows you to turn on/off sound and
+   control its volume by clicking on applet.  This is followed by the
+   <application>Battery Power Applet</application>, useful for
+   monitoring the battery on a laptop. The fourth applet is the
+   <application>GTCD Applet</application>, a CD player which has all
+   its controls available in the applet and displays the track and
+   time. The next applet is the <application>Drive Mount
+   Applet</application>, used to mount and unmount drives with a
+   single click of the mouse. The last applet shown is an analog
+   clock, displaying the current time.
+  </para>
+  <para>
+   GNOME has many useful applets.  Just right click on your
+   <interface>Panel</interface>  and add some applets to your panel to
+   find out what is available and which ones are best for you.
+  </para>
+ </sect1>
+
+
+<!-- ###########  Drawers  ############## -->
+ <sect1 id="drawers">
+  <title>Drawers</title>
+  <para>
+   The simplest way of thinking about a <interface>Drawer</interface>
+   is that it is a  container to store things.  Typically one may use
+   a Drawer to hold multiple launchers which are related to each other
+   in some way, such as the various applications in GNOME Office. The
+   Drawers in the GNOME <interface>Panel</interface> take this one
+   step further by making a Drawer an actual extension of the
+   <interface>Panel</interface> itself.  Thus, a Drawer is a
+   collapsible branch of an existing <interface>Panel</interface>.  It
+   can contain anything  that a <interface>Panel</interface> can,
+   including launchers, applets, and other Drawers.
+  </para>
+  <figure>
+   <title>An open Drawer</title>
+   <screenshot>
+    <screeninfo>An open Drawer</screeninfo>
+    <graphic fileref="./figures/drawer_open" format="png"
+    srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure>
+  <para>
+   Once you have placed a Drawer on the <interface>Panel</interface>,
+   you may click on it to "open" the Drawer, revealing its contents.
+   You may then add items to the Drawer in the same way you would add
+   items to the panel, right clicking on the end of the drawer with
+   the arrow.  You can close the Drawer by clicking on its icon again
+   or by clicking on the arrow at its end.
+  </para>
+  <para>
+   You can configure a Drawer's properties by right clicking on the
+   Drawer's icon and selecting
+   <guimenuitem>Properties</guimenuitem>. This brings up the
+   <interface>Drawer Properties</interface> dialog. Here you can
+   select the icon used for the drawer by clicking on the icon. A
+   tooltip may be entered by typing in the
+   <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
+   displayed whenever the mouse is moved over the Drawer to remind you
+   what is inside.  One may also select whether the <guibutton>hide
+   button</guibutton> and arrow are displayed at the end of the drawer.
+  </para>
+  <figure>
+   <title>Drawer Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Drawer Properties Dialog</screeninfo>
+    <graphic fileref="./figures/drawer_properties" format="png"
+     srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure>
+  <para>
+   You may also control the background of the Drawer. Just right click
+   on the Drawer and select the <guilabel>Background</guilabel> tab to
+   bring up the standard <interface>Panel Background
+   Dialog</interface> (see <xref linkend="panelbacktab">).  </para>
+ </sect1>
+
+
+
+<!-- ###########  Special Panel Objects  ############## -->
+ <sect1 id="specialobjects">
+  <title>Special Panel Objects</title>
+  <para>
+   There are several special panel objects which are not considered
+   Menus, Applets, or Launchers.  These special objects are described
+   below.
+  </para>
+  <sect2 id="lockbutton">
+   <title>The Lock Button</title>
+   <figure>
+    <title>The Lock Button</title>
+    <screenshot>
+     <screeninfo>The Lock Button</screeninfo>
+     <graphic fileref="./figures/panel_lockbut" format="png"
+     srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    The <guibutton>Lock Button</guibutton> is a
+    <interface>Panel</interface> button which  begins a screensaver
+    which locks the screen. In order to remove the screensaver and
+    access the GNOME session again, you must supply your password.
+    For more information on locking the screen, see <xref
+    linkend="lockscreen">.
+   </para>
+  </sect2>
+  <sect2 id="logoutbutton">
+   <title>The Logout Button</title>
+   <figure id="logoutbuttonfig">
+    <title>The Logout Button</title>
+    <screenshot>
+     <screeninfo>The Logout Button</screeninfo>
+     <graphic fileref="./figures/panel_logoutbut"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    The <guibutton>Logout</guibutton> button is used to exit the GNOME
+    desktop environment.  It initiates the logout sequence, bringing
+    up the <interface>Logout Dialog</interface>, as described in <xref
+    linkend="loggingout">.
+   </para>
+  </sect2>
+  <sect2 id="swallowedapps">
+   <title>Swallowed Applications</title>
+   <para>
+    The GNOME <interface>Panel</interface> allows you to run
+    applications which are not  applets inside the
+    <interface>Panel</interface> as if they were applets.
+    Applications  which you pull into the
+    <interface>Panel</interface>, even though they are not GNOME
+    applets, are called "swallowed applications".  Applications do not
+    have to be GNOME-compliant to be swallowed.  In general, the only
+    constraints for swallowing an application are that the application
+    must be small enough to fit in your panel and you must know the
+    title of the window you would like to swallow.  In many cases, the
+    application can be automatically shrank to fit in the
+    <interface>Panel</interface>,  as specified in the
+    <interface>Create Swallowed Application Dialog.</interface>.
+   </para>
+   <figure id="swallappfig">
+     <title>Create Swallowed Application Dialog</title>
+     <screenshot>
+      <screeninfo>Create Swallowed Application Dialog</screeninfo>
+      <graphic fileref="./figures/panel_swallow" format="png"
+      srccredit="muet">
+      </graphic>
+     </screenshot>
+    </figure>
+   <para>
+    The <guilabel>Title of application to swallow</guilabel> is the
+    window title, typically displayed on the top left edge of the
+    window. (Note that the window title is case sensitive.) The width
+    and height determine the size of the swallowed application in the
+    panel in pixels.
+      </para>
+      <para>
+      If you leave the <guilabel>Command</guilabel> field empty, this
+      dialog will create an empty window of given size on the panel
+      which will sit there waiting for a window with the given title
+      to appear on your desktop. As soon such a window appears (for
+      example, when you choose appropriate item in the menu), it will
+      be swallowed.
+	</para>
+      <para> You can also enter any command in the
+      <guilabel>Command</guilabel> field; this command will be
+      executed before adding the swallowing window to the
+      <interface>Panel</interface> (and  each time the panel is
+      restarted afterwards). This is normally used to start an
+      application which you want the <interface>Panel</interface> to
+      swallow.
+   </para>
+         
+  </sect2>
+  <sect2 id="statusdock">
+   <title>Status Dock</title>
+   <para>
+    The <interface>Status Dock</interface> is a
+    <interface>Panel</interface> object which can  hold Status
+    Docklets &mdash; small windows which applications place in the
+    <interface>Status Dock</interface> to  provide status information.
+    Status Docklets can also be used to control the
+    application. Essentially, Docklets are small (both in size and in
+    complexity) applets.   GNOME currently does not have many
+    applications which place Status Docklets in the <interface>Status
+    Dock</interface>.  However, GNOME's Status Dock is compatible with
+    that of the K Desktop Environment (KDE), so KDE applications, such
+    as <application>kscd</application>, may place Status Docklets in
+    GNOME's <interface>Status Dock</interface>.  Future versions of
+    GNOME applications will  make use of this recently added
+    <interface>Panel</interface> object.
+   </para>
+   <figure id="statusdockfig">
+     <title>Example Status Dock With Docklet</title>
+     <screenshot>
+      <screeninfo>Example Status Dock With Docklet</screeninfo>
+      <graphic fileref="./figures/status_dock" format="png"
+      srccredit="lebl">
+      </graphic>
+     </screenshot>
+    </figure>
+   <para>
+    The above example shows the <interface>Status Dock</interface>
+    with a Status Docklet from  the <application>kscd</application> CD
+    player program.  This particular Docklet is used to open and close
+    the main <application>kscd</application> window without ending the
+    program.
+   </para>
+  </sect2>
+ </sect1>
+
+
+<!-- ########### Adding, Moving, and Removing Panel Objects
+############## -->
+  <sect1 id="appletadd">
+    <title>Adding, Moving, and Removing Panel Objects</title>
+    <sect2 id="moving">
+      <title>Moving objects</title>
+      <para>
+<!--
+     <indexterm id="idx-a14">
+      <primary>Panel</primary> <secondary>launchers</secondary>
+     </indexterm>
+     <indexterm id="idx-a15">
+      <primary>Panel</primary> <secondary>adding applets
+      to</secondary><see>"Applets"</see> </indexterm> -->
+
+	To move any object on the <interface>Panel</interface> to a
+	different location, just  drag it with the middle mouse button
+	to the desired place, or right-click on it and choose
+	<guimenuitem>Move applet</guimenuitem>. You can move it to a
+	dfferent location on the same <interface>Panel</interface>, or
+	to a different <interface>Panel</interface>.  If in the course
+	of this movement it hits other objects, the behavior depends
+	on the global preferences you set (see <xref
+	linkend="appletstab">): the object you are moving can switch
+	places with other objects, "push" all objects it meets, or
+	"jump" over all other objects without disturbing them. You can
+	also override the default behavior by holding
+	<keycap>Shift</keycap> button (for "push" mode),
+	<keycap>Ctrl</keycap> (for "switched" mode), or
+	<keycap>Alt</keycap> (for "free" mode, i.e. jumping other
+	other objects without disturbing them) button while dragging.
+	</para>
+    </sect2>
+
+    <sect2 id="remove">
+      <title> Removing objects from the panel</title>   <para>   To
+      remove an object from the <interface>Panel</interface>,
+      right-click on it and choose  <guimenuitem>Remove from
+      panel</guimenuitem> from the pop-up menu.
+      </para>
+    </sect2>
+
+
+    <sect2 id="add">    <title>Adding objects to the panel</title>
+      
+      <para>
+	<indexterm id="idx-a13">
+	  <primary>Panel</primary> <secondary>adding applications
+	  to</secondary>
+	</indexterm>
+	By default, the GNOME <interface>Panel</interface> contains
+	very few basic objects,  such as the <guimenu>Main
+	Menu</guimenu>. However, there is a number of things you can
+	add to it. For example, every menu item in the <guimenu>Main
+	Menu</guimenu> or its submenus can be added to the panel as an
+	application launcher. GNOME also contains a number of applets
+	that can be added to the panel, ranging from
+	<application>Printer Applet</application>, which prints a file
+	which you drag and drop onto this applet, to
+	<application>Wanda the Fish</application>. If these are not
+	enough, there is also a number of GNOME applets available on
+	the Internet.
+      </para>
+	<variablelist>
+	  <varlistentry>
+	    <term> <emphasis>Applets</emphasis></term>
+	    <listitem>
+	      <para>
+		To add an applet, right-click on the
+		<interface>Panel</interface> and select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Applet</guisubmenu></menuchoice> from the
+		<guimenu>Panel</guimenu> menu. This will show you the
+		menu of all the applets on your system, divided into
+		categories; choosing any applet from this menu will
+		add it to the <interface>Panel</interface>.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+
+	  <varlistentry>
+	    <term> <emphasis>Application launchers</emphasis></term>
+	    <listitem>
+	      <para>
+		To create a new application launcher, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guimenuitem>Launcher</guimenuitem> </menuchoice> from
+		the <guimenu>Panel</guimenu> menu.  You will be
+		presented the <interface>Create Launcher
+		dialog</interface>, shown below.  In this dialog you
+		should enter a name for your launcher, a comment, and
+		the command line to launch the application. This
+		dialog is virtually identical to <interface>Launcher
+		Properties</interface> dialog, so we refer the reader
+		to <xref linkend="launchers"> for detailed description.
+	      </para>
+	      <figure>
+		<title>The Create launcher dialog</title>
+		<screenshot>
+		  <screeninfo>Create launcher dialog</screeninfo>
+		  <graphic fileref="./figures/create_launcher" format="png"
+			   srccredit="muet">
+		  </graphic>
+		</screenshot>
+	      </figure>
+	      <para>
+		You can also add to the <interface>Panel</interface>
+		any existing menu item  or any launcher on your
+		desktop: just drag it to the panel and drop there. Be
+		careful to drop in the empty space on the panel and
+		not on any existing object: for example, if you drop
+		it on the printer applet, it will be printed. For menu
+		items, you can also right-click on an item in the menu
+		and select <guimenuitem>Add this launcher to the
+		panel</guimenuitem>. After this, you can change any
+		options for that launcher by clicking on it with the
+		right mouse button and selecting
+		<guimenuitem>Properties</guimenuitem> menu item.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> <emphasis>Menus</emphasis></term>
+	    <listitem>
+	      <para>To add a menu, select <menuchoice><guisubmenu>Add
+		to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
+		</menuchoice>  from the <guimenu>Panel</guimenu>
+		menu. This gives you a choice of the <guimenu>Main
+		menu</guimenu>, <guimenu>Programs</guimenu> menu, and
+		<guimenu>Favorites</guimenu> menu.
+	      </para>
+	      <para>
+		You can also add the <guimenu>Main Menu</guimenu> or
+		any its submenu  as a new menu to the panel by
+		right-clicking  on the menu title (the top line of the
+		menu, separated from menu items by a thin line) and
+		selecting <guimenuitem>Add this as a menu to the
+		panel</guimenuitem>.
+	      </para>
+	    <para>  Advanced users can also create new menus
+              manually. To do so, you need to know that internally,
+              GNOME represents a menu by a directory, with menu items
+              presented by files of special type
+              (<filename>.desktop</filename> files &mdash; these files
+              also represent the application launchers), and submenus
+              presented by subdirectories. For example, the
+              <guimenu>Favorites</guimenu> menu corresponds to the
+              directory <filename>~/.gnome/apps</filename> (where
+              <filename>~</filename> denotes your home directory), and
+              the <guimenu>Programs</guimenu> menu corresponds to the
+              directory
+              <filename>/usr/share/gnome/apps</filename>. Thus, you
+              can create a new directory, using the GNOME File
+              Manager, drag and drop there any
+              <filename>.desktop</filename> files from any other
+              directories you might have (for example, from
+              <filename>/usr/share/gnome/apps</filename>) or from the
+              desktop, and then drag and drop this directory from the
+              File Manager window to the
+              <interface>Panel</interface>. This will add this
+              directory as a menu to the <interface>Panel</interface>.
+	    </para>
+	    <para>
+	      After you have added a menu to the
+	      <interface>Panel</interface> using any of  the methods
+	      described above, you can modify its properties (for
+	      example, add new items to this menu or change the icon
+	      used by the menu), as described in <xref
+	      linkend="menus">.
+	    </para>
+
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> <emphasis>Drawers</emphasis></term>
+	    <listitem>
+	      <para>
+                 To add a new empty drawer, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Drawer</guisubmenu> </menuchoice> from the
+		<guimenu>Panel</guimenu> menu. After this, you can
+		right-click on this drawer and select
+		<guimenuitem>Properties</guimenuitem> to change its
+		properties (for example, the icon it uses). You can
+		add new items to this drawer in the same way as you
+		add items to the panel: all the methods for adding new
+		objects to the panel described in this section will
+		also work for adding new items to the drawer.
+	    </para>
+	    <para>
+	      You can also add the <guimenu>Main Menu</guimenu> or any
+		its submenu as a new drawer to the panel by
+		right-clicking on the menu title and selecting
+		<guimenuitem>Add this as a drawer to the
+		panel</guimenuitem>.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> <emphasis>Swallowed application</emphasis></term>
+	    <listitem>
+	      <para>To add a new swallowed application, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Swallowed app</guisubmenu> </menuchoice>
+		from the <guimenu>Panel</guimenu> menu. This will
+		produce a <interface>Create Swallowed
+		Application</interface> dialog, which is shown in
+		<xref linkend="swallappfig">. For details, see <xref
+		linkend="swallowedapps">.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
+
+   </sect2>
+ </sect1>
+
+
+
+
+<!-- ########### Creating, Moving, and Removing Panels  ##############
+-->
+  <sect1 id="panelmove">
+   <title>Creating, Moving, and Removing Panels</title>
+
+      <sect2 id="paneladd">  <title>Creating new panels</title>
+	  <para>
+	<indexterm id="idx-a8">
+	  <primary>Panel</primary> <secondary>adding new</secondary>
+	</indexterm>
+	To add a new <interface>Panel</interface> to your desktop,
+	select the <guimenuitem>Create panel</guimenuitem> command
+	from <guisubmenu>Panel</guisubmenu> menu. You have a choice of
+	five possible panel types:
+      </para>
+      <itemizedlist mark="bullet">
+	<listitem>
+	  <para>
+	    <indexterm id="idx-a9">
+	      <primary>Panel</primary> <secondary>Edge</secondary>
+	    </indexterm>
+	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel is
+	    exactly like the main Panel that starts up with GNOME; it
+	    stretches along the whole length of one of screen
+	    edges. By selecting this type of panel you may add a new
+	    Panel to another edge of your screen to give yourself more
+	    functionality.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
+	     is also positioned along one of the screen edges. But
+	     unlike the Edge Panel, the Aligned Panel will not stretch
+	     across the entire edge of the screen it is on: it will
+	     only stretch as much as necessary to  display the icons
+	     and applets it contains. It can be positioned either at
+	     one of the corners (in this case, it will stretch towards
+	     the opposite corner) or at the center of the edge (in
+	     this case, it will stretch in both directions,
+	     automatically recentering when you add new objects).
+            </para>
+	  <para> If the Aligned panel is aligned with one of the
+	    corners, the hide buttons will work slightly differently
+	    than for the Edge Panel.  The hide button closest to the
+	    edge of your screen will hide the Panel as usual but the
+	    other hide button will send the whole panel to the
+	    opposite edge. When the latter move is made it will not
+	    hide the Panel since it is changing the side of the screen
+	    it resides on.  If you want to hide it you will have to
+	    press the hide button once again.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+	        <guilabel>Sliding Panel</guilabel> &mdash; This type
+ 	        of panel is very similar to the Aligned Panel, but can
+ 	        be placed anywhere along the screen edge, not
+ 	        necessarily in one of the corners or in the center. As
+ 	        you add objects, it will only grow in one directions
+ 	        &mdash; it won't automatically recenter.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<guilabel>Floating Panel</guilabel> &mdash;   This
+		type of panel can be placed anywhere on your screen,
+		not necessarily along one of the edges.
+	      </para>
+	    </listitem>
+	    <listitem>
+	      <para>
+		<guilabel>Menu Panel</guilabel> &mdash; The
+		<interface>Menu Panel</interface> is a special panel
+		which is always placed at the top of your screen and
+		contains several pull-down menus.  These are
+		<guimenu>Programs</guimenu>,
+		<guimenu>Favorites</guimenu>,
+		<guimenu>Settings</guimenu>,
+		<guimenu>Desktop</guimenu>, a clock/calendar, and a
+		special launcher which provides quick access to
+		GNOME-related Internet resources (look for the bullet
+		hole icon).  This panel can also hold the other
+		objects which other panels can hold, but it does not
+		have the configuration properties which other panels
+		have. Note that the <interface>Menu Panel</interface> is
+		more restrictive than other panels, and some normal
+		panel operations, such as moving the panel, cannot be
+		performed on it.
+	      </para>
+	    </listitem>
+	  </itemizedlist>
+
+	<tip>
+	  <title> Changing panel type</title>
+	  <para>
+	      <indexterm id="idx-a11">
+	      <primary>Panel</primary> <secondary>changing type
+	      of</secondary>
+	    </indexterm>
+	  You can also change type of existing panel &mdash; for
+	  example, convert edge panel to a floating panel, see <xref
+	  linkend="panelproperties">.
+	  </para>
+	</tip>
+      </sect2>
+
+
+      <sect2 id="panelmoving">
+	<title> Moving panels </title> <para>
+	<indexterm id="idx-a7">
+	  <primary>Panel</primary> <secondary>moving</secondary>
+	</indexterm>
+	  Any <interface>Panel</interface> you have on your desktop
+	  can be moved by using the  middle mouse button, or by
+	  simultaneously pressing the left and right mouse buttons, to
+	  drag the panel to the desired edge of your screen. If you do
+	  not have a middle mouse button and did not configure your
+	  mouse to emulate a middle button you may also move a
+	  <interface>Panel</interface> by changing its location in the
+	  <interface>Panel properties</interface> dialog.  You can
+	  read more about this in <xref linkend="panelproperties"> of
+	  this documentation.
+	</para>
+      </sect2>
+    <sect2 id="panelremoving">
+      <title> Removing panels </title>
+      <para>
+	To remove an existing panel, right-click on it and choose
+	<guimenuitem>Remove this panel</guimenuitem> command from the
+	<guisubmenu>Panel</guisubmenu> menu. You will be prompted for
+	a confirmation.
+      </para>
+      <note>  <title>NOTE</title>
+	<para>
+	  At all times, you must have at least one panel; GNOME will
+	  not allow you to remove your only panel.
+	</para>
+      </note>
+    </sect2>
+
+    </sect1>
+
+
+<!-- ############### Global Panel Preferences  ################## -->
+  <sect1 id="globalpanelprefs">
+   <title>Global Panel Preferences</title>
+    <para>
+      <indexterm id="idx-a61">  <primary>Panel</primary>
+	<secondary>Global Panel Preferences</secondary>
+      </indexterm>
+     To start configuring the GNOME panel, select <guimenuitem>Global
+     Preferences</guimenuitem> from the <guisubmenu>Panel</guisubmenu>
+     submenu of the <guimenu>Main Menu</guimenu> (you can access the
+     main menu by either pressing the foot icon or by right-clicking
+     on the panel).
+    </para>
+    <para>
+     This will bring the <interface>Global Panel
+     Preferences</interface> dialog up (this dialog is one of the
+     components of the <application>GNOME Control
+     Center</application>).  With this dialog you can set properties
+     that will affect all Panels you use now and any panels you add in
+     the future.
+     <figure>
+      <title>The Global Panel Configuration Dialog</title>
+     <screenshot>
+      <screeninfo>The Global Panel Configuration Dialog</screeninfo>
+       <graphic fileref="./figures/glob_pref_anim"
+       format="png" srccredit="muet">
+       </graphic>
+     </screenshot>
+     </figure>
+    </para>
+    <para>
+     The Global Panel Configuration Dialog contains five tabs which
+     help you configure the global properties of the GNOME Panel:
+     <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
+     <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
+     <guilabel>Miscellaneous</guilabel>. Each of these tabs is
+     explained below.
+    </para>
+    <sect2 id="animtab">
+     <title>Animation  Tab</title>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Enable animations</guilabel> &mdash; This allows the
+       animations configurable on this tab to be visible.  The
+       animations must be enabled to use the other features of this
+       tab. The default position is on.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Constant speed animations</guilabel> &mdash; By
+       default, the animations start slowly, but then accelerate. If
+       you enable this option, the animations will not use any
+       acceleration.
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+       <guilabel>Auto hide animation speed</guilabel> &mdash; If you
+       have the panel hiding automatically this will control how fast
+       it occurs. The slowest setting is 1, the fastest, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Explicit hide animation speed</guilabel> &mdash; This
+       controls the hide speed when you press the Panel's
+       <guibutton>Hide Button</guibutton>. The slowest setting is 1,
+       the fastest, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Drawer sliding animation speed</guilabel> &mdash;
+       this will control how fast the drawer menu will raise when you
+       press a Drawer button on the Panel. The slowest setting is 1,
+       the fastest, 100.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Auto hide delay (ms)</guilabel> &mdash; If you have
+       the Panel set to minimize automatically this will allow you to
+       control how much time passes before it minimizes.  The Panel
+       will start the time count once the mouse is no longer over
+       it. It will appear again when the mouse is passed over the
+       portion of the Panel that remains visible. This time is
+       measured in milliseconds.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash;
+       If you have the Panel hiding automatically this determines the
+       number of pixels that will show while the Panel is
+       minimized. To maximize the panel the pointer must enter the
+       Panel area.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   <sect2 id="launchtab">
+    <title>Buttons Tab</title> <para> In this section, you can set
+      appearance of buttons of various types (launcher buttons, menu
+      buttons, drawer buttons, and special (Logout and Lock Screen)
+      buttons).
+      </para>
+    <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tiles enabled</guilabel> &mdash; This checkbox will
+       enable background tiles for buttons of given type on the Panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Normal Tile</guilabel> &mdash; This shows the image
+       used for the tile in the up position (inactive, not
+       pressed). To choose another image file, just click on the
+       image, and it will launch the icon browser. Tiles must be
+       enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Clicked Tile</guilabel> &mdash; This shows the image
+       used for the tile in the down position (active, pressed). To
+       choose another image file, just press on the image, and it will
+       launch the icon browser. Tiles must be enabled to access this
+       option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Border width (tile only)</guilabel> &mdash; This
+       determines the width of the border around an icon. For example,
+       if you set border width equal to 5, this will ensure that at
+       least 5 pixels of the tile will be shown on every side of the
+       icon; if necessary, the icon will be cropped. This is very
+       useful if you have an icon that would normally cover up a tile.
+       Tiles must be enabled to access this option.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Depth (displacement when pressed)</guilabel> &mdash;
+       This determines the depth an icon will displace when
+       pressed. Tiles must be enabled to access this option.
+      </para>
+     </listitem>
+    </itemizedlist>
+      <para> This tab also contains 3 options which affect all types
+      of buttons simultaneously:
+     </para>
+      <itemizedlist>
+	<listitem>  <para> <guilabel>Make buttons flush with panel
+	  edge</guilabel> &mdash; allows you to align the button with
+	  the edge of the panel.  If this option is not set then the
+	  border width setting is obeyed.  By default this option is
+	  off.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para><guilabel>Show button tiles only when cursor is over
+	  the button</guilabel> &mdash; if this option is enabled, the
+	  tiles will only appear when mouse cursor is over the button.
+	  </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel> Keep saturation low when cursor is not over the
+	    button</guilabel> &mdash; Choosing this option will dim
+	    the panel buttons; the button will brighten up when the
+	    mouse cursor is over it.
+	  </para>
+	</listitem>
+      </itemizedlist>
+   </sect2>
+    <sect2 id="appletstab">
+      <title>Panel objects Tab</title>
+      <para>
+	This tab shows some options related to placement and moving
+	objects on the panel.  
+      </para>
+      <itemizedlist>
+	<listitem>
+	  <para>
+	    <guilabel> Default movement mode </guilabel> &mdash; here
+	    you can choose the default mode for moving the objects on
+	    the panel. Possible variants are
+	    </para>
+	    <itemizedlist>
+	      <listitem><para> <emphasis>Switched</emphasis> &mdash;
+		when the object you are moving hits another object,
+		they switch places
+		  </para>
+	      </listitem>
+
+	      <listitem><para>  <emphasis>Free</emphasis> &mdash; when
+		  the object you are moving hits another object, it
+		  "jumps" over it, so no other object is disturbed
+		  &mdash; this is a convenient option if you like the
+		  current arrangement of objects on your panel and
+		  want to lock it
+		</para>
+	      </listitem>
+
+	      <listitem>
+		<para>
+		  <emphasis>Push</emphasis> &mdash; the object you are
+		  moving pushes all other objects in front of it, like
+		  a snow plow.
+		</para>
+	      </listitem>
+	    </itemizedlist>
+	  <para>You can override the default movement mode by dragging
+	    an  object while holding <keycap>Ctrl</keycap> (for
+	    switched movement), <keycap>Alt</keycap> (for free
+	    movement), or <keycap>Shift</keycap> (for push movement)
+	    button pressed.
+	    </para>
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel>Padding</guilabel> &mdash;  This changes
+	    the amount of space (padding) between objects on the
+	    panel. It is measured in pixels.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </sect2>
+
+   <sect2 id="menutab">
+    <title>Menu Tab</title> 
+
+      <para> In this tab, you can set the options determining the
+	appearance of <interface>Panel</interface> menus.
+      </para>
+      
+     <itemizedlist>
+      <listitem>
+      <para>
+       <guilabel>Use large icons</guilabel> &mdash; This will use
+       large icons (rather than the default size) in menus. Only
+       practical for those with high resolution screens (1280x1024 and
+       higher)
+      </para>
+     </listitem>
+      <listitem>
+      <para>
+       <guilabel>Show ... buttons</guilabel> &mdash; This will add
+       small buttons labelled by three dots (...) to all the items of
+       the <guimenu>Main Menu</guimenu>. Clicking on such a button
+       with the left mouse button will bring the
+       <guimenu>pop-up</guimenu> menu for this item, i.e. the same
+       menu which you get by clicking on the menu item wiht the right
+       mouse button.   
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Show popup menus outside of panels</guilabel> &mdash;
+       When this button is on, it allows pop-up menus to appear away
+       from the Panel. When toggled off, the pop-ups will appear over
+       the Panel. This can be useful on smaller screens or cluttered
+       desktops.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Keep menus in memory</guilabel> &mdash; This will
+       keep your menus in memory so that they do not rescan for added
+       items. This can increase the speed of GNOME, but may also
+       result in you missing new items added to your menu.
+	</para>
+	</listitem>
+	<listitem> <para> 
+          <guilabel>Global menu</guilabel> &mdash; This
+	  allows you to configure the  <link linkend="globalmenu">
+          <guimenu>Global Menu</guimenu></link>
+	  which you get by right-clicking on the panel, or by using
+	  the keyboard shortcut. For each of the possible submenus
+	  (<guisubmenu>Programs</guisubmenu>,
+	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
+	  whether it should be included as a part of the <guimenu>Global
+	  Menu</guimenu>, as a submenu, or not included at all. A
+	  description of these submenus is given in <xref
+	  linkend="submenus">.
+	  </para>
+	</listitem>
+      </itemizedlist>
+    </sect2>
+
+
+   <sect2 id="misctab">
+    <title>Miscellaneous Tab</title>    
+      <para>The Miscellaneous group
+      contains options for various customizable behavior that didn't
+      fit anywhere else.
+      </para>
+
+     <itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Tooltips enabled</guilabel> &mdash; This option
+            defines whether GNOME should show a tooltip when the
+            pointer pauses on a panel item.
+      </para>
+	</listitem>
+     <listitem>
+      <para>
+       <guilabel>Close drawer if a launcher inside it is
+       pressed</guilabel> &mdash; By default drawers will remain open
+       when you select an item within one. This can be annoying as the
+       drawer will remain open until you close it with a mouse
+       click. With this option selected drawers will close
+       automatically when you select any item within one.
+      </para>
+     </listitem>
+
+     <listitem>
+      <para>
+       <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
+       are using a window manager that is not GNOME compliant it will
+       not understand its relationship with the Panel. This can cause
+       your <interface>Panel</interface> to be covered by
+       applications. If you enable this feature you can have the
+       <interface>Panel</interface> automatically raise when your
+       mouse is over it.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Keep panel below windows</guilabel> &mdash; If you
+       are using a GNOME compliant window manager the window manager
+       will understand its relationship with the Panel. If you choose
+       this feature the window manager and GNOME will allow
+       applications to appear over the Panel. This can be useful on
+       smaller screens.
+      </para>
+     </listitem>
+
+	  <listitem>
+	    <para>
+	      <guilabel>Confirm removal of panels with a
+	      dialog</guilabel> &mdash; If this option is enabled,
+	      GNOME will ask for confirmation before removing a panel.
+	      </para>
+	  </listitem>
+
+    </itemizedlist>
+      <para>
+      This tab also allows you to configure some global key
+      bindings. At the moment, you can define key bindings for <link
+      linkend="globalmenu"><guimenu>Global Menu</guimenu></link> and
+      for Run Command dialog.  For example, if you are using a
+      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
+      (this key is usually located to the left of the space bar and
+      labelled with a picture of a menu) to the <guimenu>Global
+      Menu</guimenu>, so that pressing this key will bring up the
+      <guimenu>Global Menu</guimenu>; similarly, the common key
+      binding for the Run command dialog is the so-called
+      <keycap>Windows</keycap> key (called so because on most PC
+      keyboards this key is indeed labelled with a flying window).  To
+      change the key bound to <guimenu>Global Menu</guimenu> or to the
+      Run Dialog, you can either select a key from the drop-down list,
+      or click on the <guibutton>Grab</guibutton> button and then
+      press the desired key. </para>
+      <note>
+	<title>NOTE</title>
+	<para>
+	  If you have problems with using <keycap>Menu</keycap> or
+	  <keycap>Windows</keycap> keys, the most probable explanation
+	  is that your X server was incorrectly configured: the
+	  keyboard type chosen during installation  does not match
+	  your actual keyboard. If you are using
+	  <application>XFree86</application> server, you can fix it by
+	  manually editing the configuration file. This file, named
+	  <filename>XF86Config</filename>, is usually located in
+	  <filename>/etc</filename> or <filename>/etc/X11</filename>
+	  directory. Open this file with any text editor (not a
+	  word-processor!), find there the line containing words
+	  <literal>XkbModel</literal> and change it to read
+	  <programlisting>
+              XkbModel "pc104"
+	  </programlisting>
+	  You need to be root (system administrator) to do this. Now,
+	  logout of GNOME and restart the X server by simultaneously
+	  pressing <keycombo> <keycap>Ctrl</keycap>
+	  <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>.
+	</para>
+      </note>
+      <warning>
+	<title>WARNING</title>
+	<para>
+	Making a mistake while editing <filename>XF86Config</filename>
+	file can make you keyboard or screen unusable in X
+	Windows. Therefore, please be careful, make a backup copy of
+	this file and make sure you know how to restore it from backup
+	without using X Windows, i.e., from a terminal. If you don't,
+	then do not edit it at all.  </para>
+      </warning>
+   </sect2>
+   </sect1>
+
+
+<!-- ###############  Individual Panel Properties  ################ -->
+
+   <sect1 id="panelproperties">
+    <title>Individual Panel Properties</title>
+    <para>
+     <indexterm id="idx-a62"> <primary>Panel</primary>
+      <secondary>Individual Panel Properties</secondary>
+     </indexterm>
+     <indexterm id="idx-a63">
+      <primary>Panel</primary> <secondary>properties</secondary>
+      </indexterm>
+
+      In addition to global Panel's properties, described in <xref
+      linkend="globalpanelprefs">, some properties can be configured
+      individually for each panel.  This includes panel type (Edge,
+      Aligned, Sliding, Floating), size, location, background color,
+      and hiding preferences. To change these properties for a panel,
+      click on it with the right mouse button and select
+      <menuchoice><guimenu>Panel</guimenu>
+      <guisubmenu>Properties</guisubmenu></menuchoice>. You may also
+      press the <guibutton>Main Menu</guibutton> button and select
+      <menuchoice><guimenu>Panel</guimenu>
+      <guisubmenu>Properties</guisubmenu></menuchoice>.
+    </para>
+    <para> From the <guisubmenu>Properties</guisubmenu>, you can
+      choose <guimenuitem>All properties</guimenuitem>, which will
+      launch <interface>Panel properties</interface> dialog.  If you
+      are already familiar with this dialog, you can also quickly
+      change some of the properties &mdash; say, panel size or type
+      &mdash; by selecting the appropriate item  in the
+      <guisubmenu>Properties</guisubmenu> menu.
+    </para>
+    <para>
+     The <interface>Panel properties</interface> dialog contains two
+     tabs to help you set the active Panel properties: <guilabel>Edge
+     Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip -
+     depending on your panel type) and
+     <guilabel>Background</guilabel>. Both of these tabs are explained
+     below.
+    </para>
+
+   <sect2 id="edgetab">
+    <title>Edge Panel Tab</title>
+    <figure>
+     <title>Panel Edge Properties Dialog</title>
+    <screenshot>
+     <screeninfo>Panel Edge Properties Dialog</screeninfo>
+      <graphic fileref="./figures/panel_props_edge"
+      format="png" srccredit="muet">
+      </graphic>
+    </screenshot>
+    </figure>
+    <itemizedlist mark="bullet">
+	<listitem>
+	  <para>
+	    <guilabel>Panel Position</guilabel> &mdash; This changes
+	    the position of the Panel on the screen. For
+	    <interface>Edge Panel</interface>, you must specify an
+	    edge (<guilabel>Top</guilabel>,
+	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
+	    <guilabel>Bottom</guilabel>). For <interface>Aligned
+	    Panel</interface>, you have to specify an edge and one of
+	    the edge's ends or the center. For <interface>Sliding
+	    Panel</interface>, you must specify the edge and offset
+	    from one of the corners (in pixels). Finally, for
+	    <interface>Floating Panel</interface> you must specify
+	    orientation (horizontal or vertical) and position of
+	    panel's left top corner (relative to the left top corner
+	    of the screen and measured in pixels).
+	  </para>
+	  <para>
+	    The Panel will change position once you have pressed
+	    <guibutton>Apply</guibutton> or <guibutton>OK</guibutton>
+	    buttons.
+	  </para>
+	  <tip>
+	    <title>TIP</title>
+	    <para>
+	      You can also change Panel position by dragging it with
+	      the middle mouse button to the new location.
+	      </para>
+	  </tip>
+	</listitem>
+
+	<listitem>
+	  <para><guilabel>Panel size</guilabel> &mdash; here you can
+	  choose panel width. The default size is 48 pixels, which is
+	  also the default size of icons used by GNOME. Users with low
+	  screen resolution might want to decrease the panel size to
+	  free some screen space; conversely, users with high
+	  resolution displays may try using larger panel sizes.
+	    </para>
+	    <para>
+             Changing panel size automatically resizes all the icons
+             on this panel, which can lead to some quality loss. Also,
+             the panel will ask all the applets to resize
+             themselves. Most of the applets will comply; however, if
+             some applets do not obey this request, then the panel
+             will resize itself so that it can fit all the applets.
+	  </para>
+	</listitem>
+
+     <listitem>
+      <para>
+      <indexterm id="idx-a64"> <primary>Panel</primary>
+       <secondary>Auto-hide</secondary> </indexterm>
+
+	    <guilabel>Hiding</guilabel> &mdash; In this section, you
+	    can choose whether you want to enable Panel Auto-hide
+	    &mdash; that is, have the Panel automatically hide when
+	    the mouse is not over the Panel. The autohide parameters
+	    can be configured in <link linkend="animtab">Global
+	    Preferences dialog</link>. If you  choose to Auto-hide you
+	    might want to disable the hide buttons here as well. You
+	    may also disable the hide button arrows graphics on the
+	    Panel.
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+
+   <sect2 id="panelbacktab">
+    <title>Background Tab</title>
+      <indexterm id="idx-a65">
+	<primary>Panel</primary>  <secondary>Background</secondary>
+	</indexterm>
+  
+      <figure>
+	<title>Panel Background Properties Dialog</title>
+	<screenshot>
+	  <screeninfo>Panel Background Properties Dialog</screeninfo>
+	  <graphic fileref="./figures/panel_props_back"
+	       format="png" srccredit="muet">
+	  </graphic>
+	</screenshot>
+      </figure>
+
+
+      <para>
+	These options allow you to change the background of the Panel
+       itself. You may choose, if you wish, to have the
+       <guilabel>Standard</guilabel>, <guilabel>Pixmap</guilabel>, or
+       <guilabel>Color</guilabel> background. The standard look for
+       the Panel is determined by the GTK theme you are running at the
+       time (you can configure the GTK theme using the
+       <application>GNOME Control Center</application>).  The
+       <guilabel>Pixmap</guilabel> option allows you to choose an
+       image to tile or scale to the Panel. The
+       <guilabel>Color</guilabel> option allows you to specify a
+       particular color for the Panel.
+      </para>
+
+   <itemizedlist mark="bullet">
+
+     <listitem>
+      <para>
+       <guilabel>Color to use</guilabel> &mdash If you choose to have
+       your <interface>Panel</interface> one color, this button will
+       launch a dialog which allows you to specify which color to use.
+      </para>
+     </listitem>
+
+
+     <listitem>
+      <para>
+       <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
+       for the background of your <interface>Panel</interface>, this
+       section of the dialog allows you to choose which image to use.
+       If you press the <guibutton>Browse</guibutton> button, you can
+       search for the file you want to use. The current filename is
+       shown to the left of this button. The window above it shows you
+       the preview of this background.
+      </para>
+     </listitem>
+</itemizedlist>
+
+      
+      <tip>
+	<title>Drag and Drop With Images</title>
+	<para>
+	  An easier way to change the  background of your panel is to
+	  drag and  drop an image  file from  the GNOME  File Manager
+	  onto the Panel.  This will  automatically  change the
+	  background of  the panel to that image.
+	</para>
+      </tip>
+    
+<itemizedlist mark="bullet">
+     <listitem>
+      <para>
+       <guilabel>Don't scale image to fit</guilabel> &mdash; If this
+       button is checked, the background image will be tiled to cover
+       the panel, rather than scaled.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Scale image (keep proportions)</guilabel> &mdash; If
+       this button is checked, the background image will be scaled as
+       much as possible preserving image's proportions, and then the
+       scaled image will be used to tile the panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Stretch image (change proportions)</guilabel> &mdash;
+       If this button is checked, the background image will be
+       stretched in both dimensions to the size of the panel.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+       <guilabel>Rotate image for vertical panel</guilabel> &mdash; If
+         this button is checked, the image will be rotated when you
+         change panel orientation (horizontal/vertical).
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+   </sect1>
+
+<!-- ############### Current Bugs and Limitations ############### -->
+
+<sect1 id="panelbugs">
+
+    <title>Current bugs and limitations</title>
+    <para>
+      Most of the things here are not really bugs; rather, they
+      describe situations when the Panel's behavior is not what you
+      would expect.   </para>
+
+    <para> You can not place an ordinary file or directory on the
+      Panel. If you try to drag and drop a file from the File Manager
+      window to the panel, it won't work. The only type of file that
+      can be placed on the Panel are <filename>.desktop</filename>
+      files, which describe launchers (and
+      <filename>.kdelnk</filename> files, which describe lunchers in
+      the format used by K Desktop Environment); any directory dropped on the
+      panel will be interpreted as a menu &mdash; that is, all the
+      files other than <filename>.desktop</filename> files will be
+      ignored.
+    </para>
+
+    <para> Editing menus other than the <guimenu>Main Menu</guimenu>
+      is rather confusing. <application>Menu Editor</application> at
+      the moment can not be used for this, and
+      <guimenuitem>Properties</guimenuitem> item of the right-click
+      menu is not too helpful either - for example, it doesn't allow
+      one to change menu's icon (see <xref linkend="menusconf"> for
+      instructions for doing this). This will be improved in the next
+      release.
+    </para>
+
+    <para> The <guimenu>Global Menu</guimenu> (which you get by
+      pressing the <keycap>Menu</keycap> key on the keyboard or by
+      right-clicking on the panel itself), and the <guimenu>Main
+      Menu</guimenu> (which you get by clicking on the foot icon)
+      are configured separately. The reason is that you
+      can have several <guimenu>Main Menu</guimenu> buttons on
+      different panels.
+    </para>
+
+    <para>
+     The <guibutton>Screen Lock</guibutton> button does not lock the
+     screen if "No Screensaver" is set in the Control Center.
+    </para>
+
+    <para>  The only way of changing Panel type (Edge, Aligned, etc.)
+      is by choosing <menuchoice> <guisubmenu>Properties</guisubmenu>
+      <guisubmenu>Type</guisubmenu>  </menuchoice> from the
+      <guimenu>Panel</guimenu> menu: you can not change Panel type in
+      <interface>Panel Properties</interface> dialog. Conversely,
+      <menuchoice> <guisubmenu>Properties</guisubmenu>
+      <guisubmenu>Background type</guisubmenu>  </menuchoice>   allows
+      you to change the background type (Pixmap/Color/Standard), but
+      not to choose the actual color or image to use.  </para>
+
+  </sect1>
+
+
+<!-- ###############  Authors  ################## -->
+  <sect1 id="authors">
+    <title>Authors</title>
+     <para>
+      <application>GNOME Panel</application> was written by many GNOME
+      developers; you can find a partial list in the "About" box. By
+      the way: if you wonder what is the name of the animal shown in
+      the "About" box &mdash; it is called "Gegl" and it has its own
+      <ulink type="http" url="http://www.gegl.org">Web page</ulink>.
+    </para>
+    <para>
+      Please send all comments, suggestions, and bug reports to the
+      <ulink url="http://bugs.gnome.org" type="http">GNOME bug
+      tracking database</ulink>. Instructions for submitting bug
+      reports can be found on-line at <ulink
+      url="http://bugs.gnome.org/Reporting.html" type="http">
+      http://bugs.gnome.org/Reporting.html</ulink>. If you are using
+      GNOME 1.1 or later, you can also use the command
+      <command>bug-buddy</command> for submitting bug reports.
+      </para>
+    <para>
+      This manual was written by Dave Mason
+      (<email>dcm@redhat.com</email>), Dan Mueth
+      (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
+      (<email>kirillov@math.sunysb.edu</email>). Please send all
+      comments and suggestions regarding this manual to the GNOME
+      Documentation Project at <email>docs@gnome.org</email> or enter
+      your comments online using the <ulink type="http"
+      url="http://www.gnome.org/gdp/doctable">GNOME Documentation
+      Status Table</ulink>.
+      </para>
+    </sect1>
+
+ </article>
+
+
+
+
+
+
