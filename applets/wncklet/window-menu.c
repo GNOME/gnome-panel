@@ -66,20 +66,6 @@ static void window_menu_connect_to_window (WindowMenu *window_menu,
 					   WnckWindow *window);
 
 static void
-window_menu_make_label_bold (GtkLabel *label)
-{
-	PangoFontDescription *font_desc;
-
-	font_desc = pango_font_description_new ();
-
-	pango_font_description_set_weight (font_desc, PANGO_WEIGHT_BOLD);
-
-	gtk_widget_modify_font (GTK_WIDGET (label), font_desc);
-
-	pango_font_description_free (font_desc);
-}
-
-static void
 window_menu_help (BonoboUIComponent *uic,
 		  WindowMenu        *window_menu,
 		  const char        *verb) 
@@ -324,6 +310,12 @@ window_menu_get_window_name (WnckWindow *window)
 	else
 		name = g_strdup (const_name);
 
+	if (wnck_window_demands_attention (window)) {
+		return_value = g_strdup_printf ("<b>%s</b>", name);
+		g_free (name);
+		name = return_value;
+	}
+
 	if (wnck_window_is_shaded (window)) {
 		return_value = g_strdup_printf ("=%s=", name);
 		g_free (name);
@@ -340,8 +332,22 @@ static void
 window_menu_window_icon_changed (WnckWindow *window,
 				 WindowMenu *window_menu)
 {
+	window_hash_item *item;
+	GtkWidget        *image;
+
 	if (window_menu->icon_window == window)
 		window_menu_set_active_window (window_menu, window);
+
+	item = NULL;
+
+	item = g_hash_table_lookup (window_menu->window_hash, window);
+	if (item != NULL) {
+		image = gtk_image_new ();
+		window_menu_set_window_icon (window_menu, image, window, TRUE);
+		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
+					       GTK_WIDGET (image));
+		gtk_widget_show (image);
+	}
 }
 
 static void
@@ -433,7 +439,6 @@ window_menu_item_new (WindowMenu  *window_menu,
 	GtkWidget *item;
 	GtkWidget *ellipsizing_label;
 	window_hash_item *hash_item;
-	gboolean make_bold;
 
 	item = gtk_image_menu_item_new ();
 	
@@ -441,18 +446,16 @@ window_menu_item_new (WindowMenu  *window_menu,
 	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
 	gtk_label_set_ellipsize (GTK_LABEL (ellipsizing_label),
 				 PANGO_ELLIPSIZE_END);
+	/* if window demands attention, we need markup */
+	if (window != NULL)
+		gtk_label_set_use_markup (GTK_LABEL (ellipsizing_label), TRUE);
 
-	if (window == NULL)
-		make_bold = FALSE;
-	else {
-		make_bold = wnck_window_demands_attention (window);
+	if (window != NULL) {
 		hash_item = g_new0 (window_hash_item, 1);
 		hash_item->item = item;
 		hash_item->label = ellipsizing_label;
 		g_hash_table_insert (window_menu->window_hash, window, hash_item);
 	}
-	if (make_bold)
-		window_menu_make_label_bold (GTK_LABEL (ellipsizing_label));
 
 	gtk_container_add (GTK_CONTAINER (item), ellipsizing_label);
 
@@ -554,6 +557,10 @@ window_menu_connect_to_window (WindowMenu *window_menu,
 				     window_menu,
 				     window_menu->applet);
 	wncklet_connect_while_alive (window, "name_changed",
+				     G_CALLBACK (window_menu_window_name_changed),
+				     window_menu,
+				     window_menu->applet);
+	wncklet_connect_while_alive (window, "state_changed",
 				     G_CALLBACK (window_menu_window_name_changed),
 				     window_menu,
 				     window_menu->applet);

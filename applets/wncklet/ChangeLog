@@ -1,3 +1,13 @@
+2004-10-30  Vincent Untz  <vincent@vuntz.net>
+
+	* window-menu.c: (window_menu_make_label_bold): kill
+	(window_menu_get_window_name): make the name bold here if the window
+	demands attention (we now use pango markup)
+	(window_menu_window_icon_changed): updated the icon in the menu too
+	(window_menu_item_new): don't set the label bold here
+	(window_menu_connect_to_window): connect to "state_changed" so we
+	update the menu label when the state changes
+
 2004-10-27  Matt T. Proud  <khanreaper@nerp.net>
 
 	* window-menu.c (window_menu_get_window_name): This has become the 
