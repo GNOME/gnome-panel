@@ -1,3 +1,26 @@
+Wed Jul 29 19:49:11 1998  John Ellis  <johne@bellatlantic.net>
+
+	* drivemount/drivemount.c (about_cb): fixed a compile warning.
+	(create_drive_widget): use gnome_is_program_in_path() instead of a
+	system() call to check for the eject program. Properties is now above
+	About in the menu.
+	* drivemount/properties.c (property_apply_cb): added
+	applet_widget_sync_config() as George suggested.
+	* drivemount/drivemount.[ch], properties.c: Upped version to 0.1.1
+	* drivemount/AUTHORS: new file.
+
+	* clockmail/clockmail.c (about_cb): fixed a compile warning.
+	* clockmail/properties.c (property_apply_cb): added
+	applet_widget_sync_config() as George suggested.
+	* clockmail/clockmail.[ch], properties.c: Upped version to 0.1.4
+
+	* modemlights/modemlights.c  (about_cb): fixed a compile warning.
+	(main):  Properties is now above About in the menu.
+	* modemlights/properties.c (property_apply_cb): added
+	applet_widget_sync_config() as George suggested
+	* modemlights/modemlights.[ch], properties.c: Upped version to 0.3.1
+	* modemlights/AUTHORS: new file.
+
 Thu Jul 23 00:38:02 1998  George Lebl  <jirka@5z.com>
 
 	* battery/properties.c: added applet_widget_sync_config
