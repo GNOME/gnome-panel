@@ -1,12 +1,13 @@
 # Ukrainian translation of gnome-core module
 # Copyright (C) 1999-2002 Free Software Foundation, Inc.
 # Yuri Syrota <rasta@renome.rovno.ua>, 1999-2002.
+# Maxim Dzumanenko <mvd@mylinux.com.ua>, 2002
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-core 1.5.4\n"
-"POT-Creation-Date: 2002-11-28 17:24+1300\n"
-"PO-Revision-Date: 2002-06-04 20:25+0200\n"
+"Project-Id-Version: gnome-panel 2.0.11\n"
+"POT-Creation-Date: 2002-12-03 19:18+0200\n"
+"PO-Revision-Date: 2002-12-03 08:24--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,17 +28,18 @@ msgstr "Рибка %s, сучасний оракул"
 msgid "GNOME Fish, the fortune teller"
 msgstr "Рибка-гадалка середовища GNOME"
 
-#: applets/fish/fish.c:502 applets/fish/fish.c:1248
+#: applets/fish/fish.c:512
+#: applets/fish/fish.c:1251
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Рибка %s"
 
-#: applets/fish/fish.c:503
-#, c-format
-msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "<big><big>Рибка %s говорить:</big></big>"
+#: applets/fish/fish.c:517
+#, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "Рибра %s говорить:"
 
-#: applets/fish/fish.c:596
+#: applets/fish/fish.c:599
 #, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
@@ -50,129 +52,89 @@ msgstr ""
 "робити цього. Ми наполегливо рекомендуємо уникати використання\n"
 "Ванди для будь-чого що може зробити цей аплет \"практичним\" чи корисним."
 
-#: applets/fish/fish.c:746
+#: applets/fish/fish.c:749
 msgid "GNOME Fish Preferences"
 msgstr "Властивості рибки"
 
-#: applets/fish/fish.c:756
+#: applets/fish/fish.c:759
 msgid "_Name of GNOME fish:"
 msgstr "_Ім'я рибки:"
 
-#: applets/fish/fish.c:773
+#: applets/fish/fish.c:776
 msgid "_Animation filename:"
 msgstr "Назва файлу _анімації:"
 
-#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
+#: applets/fish/fish.c:778
+#: applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1434
+#: gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Переглянути"
 
-#: applets/fish/fish.c:791
+#: applets/fish/fish.c:794
 msgid "Command to _execute when fish is clicked:"
 msgstr "Команда, що виконуватиметься при клацанні на рибці:"
 
-#: applets/fish/fish.c:808
+#: applets/fish/fish.c:811
 msgid "Frame_s in animation:"
 msgstr "_Кадрів у анімації:"
 
-#: applets/fish/fish.c:826
+#: applets/fish/fish.c:829
 msgid "Pause _per frame (s):"
 msgstr "Затримка _на кадр (с):"
 
-#: applets/fish/fish.c:841
+#: applets/fish/fish.c:844
 msgid "_Rotate on vertical panels"
 msgstr "_Розвертати на вертикальних панелях"
 
-#: applets/fish/fish.c:900
+#: applets/fish/fish.c:903
 msgid "Unable to get the name of the command to execute"
-msgstr ""
+msgstr "Неможливо отримати назву команди для виконання"
 
-#: applets/fish/fish.c:916
+#: applets/fish/fish.c:919
 msgid "Unable to locate the command to execute"
-msgstr ""
+msgstr "Неможливо знайти команду для виконання"
 
-#: applets/fish/fish.c:1045
-#, fuzzy, c-format
+#: applets/fish/fish.c:1048
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details : %s"
 msgstr ""
-"<b>Не вдалося виконати команду:</b> '%s'\n"
+"Неможливо виконати '%s'\n"
 "\n"
-"Подробиці: %s"
+"Подробиці : %s"
 
-#: applets/fish/fish.c:1065
+#: applets/fish/fish.c:1068
 msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
+"You do not have fortune installed or you have not specified a program to run.\n"
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"У вас не встановлено програму fortune чи у вас не вказано програму для "
-"запуску.\n"
+"У вас не встановлено програму fortune чи у вас не вказано програму для запуску.\n"
 "\n"
-"Будь ласка, звертіться до діалогу властивостей рибки."
+"Будь ласка, зверніться до діалогу властивостей рибки."
 
-#: applets/fish/fish.c:1080
-msgid ""
-"The water needs changing!\n"
+#: applets/fish/fish.c:1083
+msgid "The water needs changing!\n"
 "(Look at today's date)"
-msgstr ""
-"Необхідно змінити воду!\n"
+msgstr "Необхідно змінити воду!\n"
 "(Подивіться на сьогоднішню дату)"
 
-#: applets/fish/fish.c:1249
+#: applets/fish/fish.c:1252
 #, fuzzy, c-format
-msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. If "
-"anyone is found using it, he should be promptly sent for a psychiatric "
-"evaluation."
-msgstr ""
-"Цей аплет зовсім нічого не робить. Він лише займає місце на диску та "
-"збільшує час компіляції, а також, будучи завантаженим, він займає місце на "
-"панелі та в пам'яті. Якщо хто-небудь знайшов застосування цьому аплету, то "
-"його необхідно відправити на психіатричне обстеження."
+msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. If anyone is found using it, he should be promptly sent for a psychiatric evaluation."
+msgstr "Цей аплет зовсім нічого не робить. Він лише займає місце на диску та збільшує час компіляції, а також, будучи завантаженим, він займає місце на панелі та в пам'яті. Якщо хто-небудь знайшов застосування цьому аплету, то його необхідно відправити на психіатричне обстеження."
 
-#: applets/fish/fish.c:1273
+#: applets/fish/fish.c:1276
 msgid "(with minor help from George)"
 msgstr "(з невеличкою допомогою від Жоржа)"
 
+#: applets/fish/fish.c:1294
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1291
 msgid "Fish"
 msgstr "Рибка"
-
-#: applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr "Рибка без імені дуже нудна. Додайте життя вашій рибці назвавши її."
-
-#: applets/fish/fish.schemas.in.h:2
-msgid "Command to execute when the fish is clicked"
-msgstr "Команда виконувана при клацанні на рибі"
-
-#: applets/fish/fish.schemas.in.h:3
-msgid "Pause per frame"
-msgstr "Затримка на кадр"
-
-#: applets/fish/fish.schemas.in.h:4
-msgid "Rotate on vertical panels"
-msgstr "Розвертати на вертикальних панелях"
-
-#: applets/fish/fish.schemas.in.h:5
-msgid "The fish's animation pixmap"
-msgstr "Анімаційне зображення рибки"
-
-#: applets/fish/fish.schemas.in.h:6
-msgid "The fish's name"
-msgstr "Ім'я рибки"
-
-#: applets/fish/fish.schemas.in.h:7
-msgid "The number of frames in the fish's animation"
-msgstr "Кількість кадрів у анімації рибки"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -207,8 +169,11 @@ msgstr "_Про..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
-#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681
+#: gnome-panel/launcher.c:803
+#: gnome-panel/menu.c:3542
+#: gnome-panel/menu.c:4219
+#: gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Довідка"
 
@@ -230,15 +195,18 @@ msgstr "%I:%M:%S %p"
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
+#: applets/gen_util/clock.c:176
+#: applets/gen_util/clock.c:487
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:178 applets/gen_util/clock.c:489
+#: applets/gen_util/clock.c:178
+#: applets/gen_util/clock.c:489
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/gen_util/clock.c:187 applets/gen_util/clock.c:189
+#: applets/gen_util/clock.c:187
+#: applets/gen_util/clock.c:189
 msgid "%a %b %d"
 msgstr "%a %d %b"
 
@@ -263,11 +231,16 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
-#: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
-#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
+#: applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137
+#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1810
+#: applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:499
+#: applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123
+#: applets/gen_util/tasklist.c:762
+#: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Сталася помилка відображення довідки: %s"
@@ -289,7 +262,6 @@ msgid "_24 hour"
 msgstr "_24 години"
 
 #: applets/gen_util/clock.c:995
-#, fuzzy
 msgid "UNI_X time"
 msgstr "Час _UNIX"
 
@@ -310,91 +282,30 @@ msgid "Use _UTC"
 msgstr "Використовувати _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
-#: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1173
+#: applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/pager.c:532
+#: applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:794
+#: applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
-msgstr "Юрій Сирота"
+msgstr "Максим Дзюманенко <mvd@mylinux.com.ua>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1192
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Годинник"
 
 #: applets/gen_util/clock.c:1193
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1998-2002 Фундація вільного програмного забезпечення"
+#: applets/gen_util/mailcheck.c:1746
+#: applets/gen_util/printer.c:354
+msgid "(C) 1998 Free Software Foundation, Inc."
+msgstr "© 1998 Фундація Вільного Програмного Забезпечення"
 
 #: applets/gen_util/clock.c:1194
 msgid "The Clock displays the current time and date"
 msgstr "Годинник показує поточну дату і час"
-
-#: applets/gen_util/clock.schemas.in.h:1
-msgid "24"
-msgstr ""
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "Display Internet time, which is same all over the world"
-msgstr "Відображати час Інтернет, однаковий у всьому світі"
-
-#: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
-msgid "Display date in the Clock, in addition to time"
-msgstr "Відображати дату в аплеті, разом з часом"
-
-#: applets/gen_util/clock.schemas.in.h:4
-msgid "Display seconds in time"
-msgstr "Показувати секунди в часі"
-
-#: applets/gen_util/clock.schemas.in.h:5
-#, fuzzy
-msgid "Display time in Universal Coordinated Time zone"
-msgstr "Відображати час за Ґрінвічем (GMT)"
-
-#: applets/gen_util/clock.schemas.in.h:6
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Відображати час у секундах з початку епохи (наприклад, 1970-01-01)"
-
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Hour format"
-msgstr "Формат годин"
-
-#: applets/gen_util/clock.schemas.in.h:8
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Встановити 12 чи 24-годинний формат"
-
-#: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
-msgid "Show date in Clock"
-msgstr "Показувати дату в аплеті"
-
-#: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
-msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr ""
-"Показувати дату в підказці, коли вказівник миші знаходиться над аплетом"
-
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show date in tooltip"
-msgstr "Показувати дату в підказці"
-
-#: applets/gen_util/clock.schemas.in.h:12
-msgid "Show time with seconds"
-msgstr "Показувати час з секундами"
-
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Use Internet time"
-msgstr "Час Internet"
-
-#: applets/gen_util/clock.schemas.in.h:14
-msgid "Use UNIX time"
-msgstr "Час UNIX"
-
-#: applets/gen_util/clock.schemas.in.h:15
-#, fuzzy
-msgid "Use UTC"
-msgstr "Використовувати _UTC"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -425,19 +336,20 @@ msgid "Get the current time and date"
 msgstr "Отримати поточну дату і час"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:268 applets/gen_util/mailcheck.c:1745
+#: applets/gen_util/mailcheck.c:268
+#: applets/gen_util/mailcheck.c:1745
 msgid "Inbox Monitor"
 msgstr "Монітор вхідних листів"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "Internet"
-msgstr "Internet"
+msgstr "Інтернет"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 #: applets/gen_util/showdesktop.c:452
 #, fuzzy
 msgid "Show Desktop Button"
-msgstr "Показувати кнопки прибирання"
+msgstr "Показувати _кнопки прибирання"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Switch between open windows"
@@ -453,12 +365,13 @@ msgid "Utility"
 msgstr "Утиліти"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Список вікон"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:545 applets/gen_util/pager.c:838
+#: applets/gen_util/pager.c:545
+#: applets/gen_util/pager.c:838
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Перемикач робочих областей"
@@ -472,34 +385,29 @@ msgid "_Check for mail"
 msgstr "_Перевірити пошту"
 
 #: applets/gen_util/mailcheck.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s : %s"
-msgstr "Сталася помилка відображення довідки: %s"
+msgstr "Сталася помилка при виконанні %s: %s"
 
 #: applets/gen_util/mailcheck.c:274
-msgid ""
-"You didn't set a password in the preferences for the Inbox Monitor,\n"
+msgid "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
-msgstr ""
-"Пароль не було встановлено в параметрах Монітора вхідних\n"
+msgstr "Пароль не було встановлено в параметрах Монітора вхідних\n"
 "листів і він буде запитуватися щоразу під час запуску."
 
 #: applets/gen_util/mailcheck.c:282
 msgid "Please enter your mailserver's _password:"
 msgstr "Введіть _пароль для поштового сервера:"
 
-#: applets/gen_util/mailcheck.c:287 applets/gen_util/mailcheck.c:1358
+#: applets/gen_util/mailcheck.c:287
+#: applets/gen_util/mailcheck.c:1358
 msgid "Password Entry box"
-msgstr ""
+msgstr "Полу введення паролю"
 
 #: applets/gen_util/mailcheck.c:332
-msgid ""
-"The Inbox Monitor failed to check your mails and thus automatic updating has "
-"been deactivated for now.\n"
+msgid "The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
-msgstr ""
-"Збій перевірки пошти Монітором вхідних листів, автоматичне оновлено "
-"вимкнуто.\n"
+msgstr "Збій перевірки пошти Монітором вхідних листів, автоматичне оновлення вимкнуто.\n"
 "Можливо, було вказано неправильний сервер, користувач чи пароль?"
 
 #: applets/gen_util/mailcheck.c:537
@@ -524,8 +432,10 @@ msgstr "повідомлень: %d"
 msgid "No mail."
 msgstr "Немає пошти."
 
-#: applets/gen_util/mailcheck.c:1069 applets/gen_util/mailcheck.c:1070
-#: applets/gen_util/mailcheck.c:1935 applets/gen_util/mailcheck.c:1936
+#: applets/gen_util/mailcheck.c:1069
+#: applets/gen_util/mailcheck.c:1070
+#: applets/gen_util/mailcheck.c:1935
+#: applets/gen_util/mailcheck.c:1936
 msgid "Status not updated"
 msgstr "Стан не оновлено"
 
@@ -559,7 +469,7 @@ msgstr "Поштовий _сервер:"
 
 #: applets/gen_util/mailcheck.c:1319
 msgid "Mail Server Entry box"
-msgstr ""
+msgstr "Поле введення поштового сервера"
 
 #: applets/gen_util/mailcheck.c:1333
 msgid "_Username:"
@@ -567,7 +477,7 @@ msgstr "_Користувач:"
 
 #: applets/gen_util/mailcheck.c:1341
 msgid "Username Entry box"
-msgstr ""
+msgstr "Поле введення імені користувача"
 
 #: applets/gen_util/mailcheck.c:1350
 msgid "_Password:"
@@ -579,16 +489,15 @@ msgstr "_Тека:"
 
 #: applets/gen_util/mailcheck.c:1379
 msgid "Folder Entry box"
-msgstr ""
+msgstr "Поле введення теки"
 
 #: applets/gen_util/mailcheck.c:1391
 msgid "C_ommand to run before checking for mail:"
 msgstr "_Команда, що виконуватиметься перед перевіркою пошти:"
 
 #: applets/gen_util/mailcheck.c:1399
-#, fuzzy
 msgid "Command Entry box"
-msgstr "Команда до запуску"
+msgstr "Поле введення команди"
 
 #: applets/gen_util/mailcheck.c:1424
 msgid "Execute"
@@ -599,15 +508,14 @@ msgid "Before each _update:"
 msgstr "Перед кожним _оновленням:"
 
 #: applets/gen_util/mailcheck.c:1450
-#, fuzzy
 msgid "Command to execute before each update"
-msgstr "Команда до виконання з перевіркою пошти"
+msgstr "Команда до виконання перед кожним оновленням"
 
 #: applets/gen_util/mailcheck.c:1460
 msgid "When new mail _arrives:"
 msgstr "З _отриманням свіжої пошти:"
 
-#: applets/gen_util/mailcheck.c:1473 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1473
 msgid "Command to execute when new mail arrives"
 msgstr "Команда до виконання з приходом нової пошти"
 
@@ -616,9 +524,8 @@ msgid "When clicke_d:"
 msgstr "На _клацанні:"
 
 #: applets/gen_util/mailcheck.c:1496
-#, fuzzy
 msgid "Command to execute when clicked"
-msgstr "Команда, що виконуватиметься при клацанні на рибці:"
+msgstr "Команда, що виконуватиметься при клацанні"
 
 #: applets/gen_util/mailcheck.c:1506
 msgid "Set the number of unread mails to _zero"
@@ -628,22 +535,23 @@ msgstr "_Обнулити кількість непрочитаних повід
 msgid "Check for mail _every"
 msgstr "Перевіряти пошту _кожні"
 
-#: applets/gen_util/mailcheck.c:1529 applets/gen_util/mailcheck.c:1533
+#: applets/gen_util/mailcheck.c:1529
+#: applets/gen_util/mailcheck.c:1533
 msgid "minutes"
 msgstr "хв"
 
 #: applets/gen_util/mailcheck.c:1529
 msgid "Choose time interval in minutes to check mail"
-msgstr ""
+msgstr "Виберіть період перевірки пошти (у хвилинах)"
 
-#: applets/gen_util/mailcheck.c:1543 applets/gen_util/mailcheck.c:1547
+#: applets/gen_util/mailcheck.c:1543
+#: applets/gen_util/mailcheck.c:1547
 msgid "seconds"
 msgstr "с"
 
 #: applets/gen_util/mailcheck.c:1543
-#, fuzzy
 msgid "Choose time interval in seconds to check mail"
-msgstr "Як часто перевіряти пошту (в мілісекундах)"
+msgstr "Виберіть інтервал перевірки пошти (у секундах)"
 
 #: applets/gen_util/mailcheck.c:1555
 msgid "Play a _sound when new mail arrives"
@@ -665,15 +573,9 @@ msgstr "_Перевірка пошти"
 msgid "Mail_box"
 msgstr "Поштова _скринька"
 
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "© 1998-2000 Фундація Вільного Програмного Забезпечення"
-
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-msgstr ""
-"Монітор вхідних листів сповіщатиме про прихід нової кореспонденції у вашу "
-"поштову скриньку"
+msgstr "Монітор вхідних листів сповіщатиме про прихід нової кореспонденції у вашу поштову скриньку"
 
 #: applets/gen_util/mailcheck.c:1911
 msgid "Text only"
@@ -685,117 +587,7 @@ msgstr "Перевірити пошту"
 
 #: applets/gen_util/mailcheck.c:1938
 msgid "Mail check notifies you when new mail arrives in your mailbox"
-msgstr ""
-"Перевірка пошти сповіщатиме вас про прихід кореспонденції у вашу поштову "
-"скриньку"
-
-#: applets/gen_util/mailcheck.schemas.in.h:1
-msgid "Command to execute when checking mail"
-msgstr "Команда до виконання з перевіркою пошти"
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
-msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "Команда, що виконуватиметься при клацанні на рибці:"
-
-#: applets/gen_util/mailcheck.schemas.in.h:4
-msgid "Command to run before checking mail"
-msgstr "Команда до виконання перед перевіркою пошти"
-
-#: applets/gen_util/mailcheck.schemas.in.h:5
-msgid "Do we run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:6
-msgid "Do we run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:7
-msgid "How often (in milliseconds) we check the mail"
-msgstr "Як часто перевіряти пошту (в мілісекундах)"
-
-#: applets/gen_util/mailcheck.schemas.in.h:8
-msgid "If mail should be checked automatically"
-msgstr "Чи має пошта перевірятися автоматично"
-
-#: applets/gen_util/mailcheck.schemas.in.h:9
-msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:10
-msgid "If this is set, we should run the exec-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:11
-msgid "If this is set, we should run the newmail-command"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:12
-msgid "Interval for checking mail"
-msgstr "Інтервал перевірки пошти"
-
-#: applets/gen_util/mailcheck.schemas.in.h:13
-msgid "Path to the animation file"
-msgstr "Шлях до анімаційного файла"
-
-#: applets/gen_util/mailcheck.schemas.in.h:14
-msgid "Play a sound when mail is recieved"
-msgstr "Звукове сповіщення з отриманням пошти"
-
-#: applets/gen_util/mailcheck.schemas.in.h:15
-msgid "Remote folder for mail retrieval"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:17
-msgid "Run this command before we check the mail"
-msgstr "Виконати цю команду перед перевіркою пошти"
-
-#: applets/gen_util/mailcheck.schemas.in.h:18
-msgid "The mail server"
-msgstr "Поштовий сервер"
-
-#: applets/gen_util/mailcheck.schemas.in.h:19
-msgid "The user's password"
-msgstr "Пароль користувача"
-
-#: applets/gen_util/mailcheck.schemas.in.h:20
-msgid "The user's password for the remote server"
-msgstr "Пароль користувача на віддаленому сервері"
-
-#: applets/gen_util/mailcheck.schemas.in.h:21
-msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr "Як перевіряти пошту, перевіряти пошту, перевіряти пошту..."
-
-#: applets/gen_util/mailcheck.schemas.in.h:22
-msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr "Як обробляти пошту, обробляти пошту, обробляти пошту..."
-
-#: applets/gen_util/mailcheck.schemas.in.h:23
-msgid ""
-"This is the animation that will be displayed during normal Inbox Monitor "
-"usage"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:24
-msgid "Username on the remote server"
-msgstr "Користувач на віддаленому сервері"
-
-#: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
-msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "Команда, що запускається коли користувач клацне на аплеті"
-
-#: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr ""
-
-#: applets/gen_util/mailcheck.schemas.in.h:27
-msgid "You've got mail!"
-msgstr "Ви отримали пошту!"
+msgstr "Перевірка пошти сповіщатиме вас про прихід кореспонденції у вашу поштову скриньку"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -805,40 +597,40 @@ msgstr "Перевірка пошти"
 msgid "New Mail"
 msgstr "Нова пошта"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157
+#: applets/gen_util/pager.c:759
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Рядки"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:759
+#: applets/gen_util/pager.c:157
+#: applets/gen_util/pager.c:759
 msgid "Columns"
 msgstr "Стовпчики"
 
 #: applets/gen_util/pager.c:376
-#, c-format
+#, fuzzy, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr ""
+msgstr "Помилка завантаження значення кількості рядків для аплету перемикання робочих областей: %s\n"
 
 #: applets/gen_util/pager.c:387
 #, fuzzy, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Чи відображати всі робочі області у пейджері."
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "Помилка при завантаженні значення display_workspace_names аплету перемикання робочих областей: %s\n"
 
 #: applets/gen_util/pager.c:402
 #, fuzzy, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Чи відображати всі робочі області у пейджері."
+msgstr "Помилка при завантаженні значення display_all_workspaces аплету перемикання робочих областей: %s\n"
 
 #: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "(c) 2001 Red Hat, Inc."
+#: applets/gen_util/tasklist.c:809
+msgid "(C) 2001 Red Hat, Inc."
+msgstr "© 2001 Red Hat, Inc"
 
 #: applets/gen_util/pager.c:547
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
+msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
+msgstr "Перемикач робочих областей показує зменшену версію ваших робочих місць, що дає змогу керувати вікнами."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -868,42 +660,6 @@ msgstr "Властивості перемикача робочих област�
 msgid "Workspaces"
 msgstr "Робочі області"
 
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Кількість рядків у пейджері"
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr "Чи відображати всі робочі області у пейджері."
-
-#: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
-msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "Чи відображати назви робочих областей у пейджері."
-
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
 msgstr "Неможливо виконати команду друку"
@@ -928,17 +684,9 @@ msgstr "Принтер"
 msgid "Printer Applet"
 msgstr "Аплет принтера"
 
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 Фундація Вільного Програмного Забезпечення"
-
 #: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Аплет принтера дозволяє легко перетягувати файли на друк через вказану "
-"команду"
+msgid "The printer applet lets you easily drag files to be printed via a print command"
+msgstr "Аплет принтера дозволяє легко перетягувати файли на друк через вказану команду"
 
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
@@ -968,31 +716,26 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Failed to load %s: %s\n"
 msgstr ""
-"<b>Не вдалося відкрити файл:</b> '%s'\n"
+"Неможливо завантажити зображення %s\n"
 "\n"
 "Подробиці: %s"
 
 #: applets/gen_util/showdesktop.c:291
 #, fuzzy
 msgid "File not found"
-msgstr "Довідки не знайдено"
+msgstr "файл не знайдено"
 
 #: applets/gen_util/showdesktop.c:453
-#, fuzzy
+#: applets/notification_area/main.c:126
 msgid "(C) 2002 Red Hat, Inc."
-msgstr "(c) 2001 Red Hat, Inc."
+msgstr "© 2002 Red Hat, Inc"
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:768
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "(c) 2001 Red Hat, Inc"
-
-#: applets/gen_util/tasklist.c:769
-msgid ""
-"The Window List shows a list of all visible windows and lets you browse them."
+#: applets/gen_util/tasklist.c:810
+msgid "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "Список вікон дозволяє переглядати список всіх видимих вікон."
 
 #: applets/gen_util/tasklist.glade.h:1
@@ -1017,11 +760,11 @@ msgstr "Відновити в _початкову робочу область"
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
-msgstr "Показати вікна з _поточної робочої області"
+msgstr "Показувати вікна з _поточної робочої області"
 
 #: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
-msgstr "Показати вікна з _усіх робочих областей"
+msgstr "Показувати вікна з _усіх робочих областей"
 
 #: applets/gen_util/tasklist.glade.h:8
 msgid "When restoring minimized windows"
@@ -1036,9 +779,8 @@ msgid "Window List content"
 msgstr "Вміст списку вікон"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "Window List size"
-msgstr "Список вікон"
+msgstr "Розмір списку вікон"
 
 #: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
@@ -1050,61 +792,7 @@ msgstr "_Завжди групувати вікна"
 
 #: applets/gen_util/tasklist.glade.h:14
 msgid "_Never group windows"
-msgstr "_ніколи не групувати вікна"
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are never, auto, and always."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-#, fuzzy
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Показати вікна з _поточної робочої області"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Показувати вікна усіх робочих областей"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-#, fuzzy
-msgid "When to group windows"
-msgstr "_ніколи не групувати вікна"
+msgstr "_Ніколи не групувати вікна"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
@@ -1122,37 +810,33 @@ msgstr ""
 msgid "Panel Notification Area"
 msgstr ""
 
-#: applets/notification_area/main.c:126
-#, fuzzy
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "(c) 2001 Red Hat, Inc."
-
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:423
+#: gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
-#, fuzzy
+#: gnome-panel/applet.c:487
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
-msgstr "Видалити з панелі"
+msgstr "_Видалити з панелі"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
-#, fuzzy
+#: gnome-panel/applet.c:499
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
-msgstr "Перенести"
+msgstr "Пере_нести"
 
 #: gnome-panel/applet.c:803
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
+msgstr "Параметр object_type не встановлено для панелі з ID %s\n"
 
 #: gnome-panel/applet.c:825
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
+msgstr "Параметр panel_id не встановлено для панелі з ID %s\n"
 
 #: gnome-panel/applet.c:1132
 msgid "Can't find an empty spot"
@@ -1176,19 +860,19 @@ msgstr "Поточний стан цієї панелі"
 
 #: gnome-panel/basep-widget.c:177
 msgid "Hidebuttons enabled"
-msgstr "Кнопки ховання увімкнено"
+msgstr "Кнопки приховування увімкнено"
 
 #: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr ""
+msgstr "Чи є видимими кнопки приховування та показу панелі?"
 
 #: gnome-panel/basep-widget.c:185
 msgid "Hidebutton pixmaps enabled"
-msgstr "Піктограми кнопок ховання увімкнено"
+msgstr "Піктограми кнопок приховування увімкнено"
 
 #: gnome-panel/basep-widget.c:186
 msgid "Hidebuttons have pixmaps"
-msgstr "Кнопки ховання містять піктограми"
+msgstr "Кнопки приховування містять піктограми"
 
 #: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
@@ -1199,29 +883,27 @@ msgid "Show this panel"
 msgstr "Показати цю панель"
 
 #: gnome-panel/button-widget.c:322
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Не вдалося відкрити файл:</b> '%s'\n"
+"Неможливо завантажити зображення %s\n"
 "\n"
 "Подробиці: %s"
 
 #: gnome-panel/button-widget.c:537
 msgid "none"
-msgstr ""
+msgstr "немає"
 
 #: gnome-panel/button-widget.c:542
-#, fuzzy
 msgid "file not found"
-msgstr "Довідки не знайдено"
+msgstr "файл не знайдено"
 
 #: gnome-panel/button-widget.c:879
-#, fuzzy
 msgid "Size"
-msgstr "Розмір:"
+msgstr "Розмір"
 
 #: gnome-panel/button-widget.c:880
 msgid "The desired ButtonWidget size"
@@ -1236,9 +918,8 @@ msgid "Whether or not to draw an arrow indicator"
 msgstr ""
 
 #: gnome-panel/button-widget.c:897
-#, fuzzy
 msgid "Orientation"
-msgstr "Орієнтація:"
+msgstr "Орієнтація"
 
 #: gnome-panel/button-widget.c:898
 #, fuzzy
@@ -1259,9 +940,8 @@ msgid "Stock Icon ID"
 msgstr ""
 
 #: gnome-panel/button-widget.c:917
-#, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
-msgstr "Використовувати нетипову піктограму для кнопки панелі"
+msgstr ""
 
 #: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
@@ -1276,7 +956,6 @@ msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
-#, fuzzy
 msgid "Debian Menu"
 msgstr "Меню Debian"
 
@@ -1285,7 +964,6 @@ msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
-#, fuzzy
 msgid "SuSE Menu"
 msgstr "Меню SuSE"
 
@@ -1294,7 +972,6 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
 msgstr "Меню СDE"
 
@@ -1328,21 +1005,25 @@ msgstr "Показати кнопки прибирання"
 msgid "Enable hidebutton arrow"
 msgstr "Показати стрілки на кнопках прибирання"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3359
+#: gnome-panel/drawer.c:183
+#: gnome-panel/menu.c:3423
 msgid "Drawer"
 msgstr "Шухляда"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
-#, fuzzy
+#: gnome-panel/drawer.c:678
+#: gnome-panel/launcher.c:801
+#: gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3517
+#: gnome-panel/panel-action-button.c:89
 msgid "_Properties"
-msgstr "Властивості"
+msgstr "В_ластивості"
 
 #: gnome-panel/egg-recent-vfs-utils.c:90
 msgid " (invalid Unicode)"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:176
+#: gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Виконати програму..."
 
@@ -1350,25 +1031,28 @@ msgstr "Виконати програму..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Запустити додаток, якщо відома правильна команда запуску"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3779
+#: gnome-panel/foobar-widget.c:193
+#: gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr "Пошук файлів..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3782
+#: gnome-panel/foobar-widget.c:198
+#: gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr "Шукати файли, теки і документи на вашому комп'ютері"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3796
-#, fuzzy
+#: gnome-panel/foobar-widget.c:213
+#: gnome-panel/menu.c:3821
 msgid "Screenshot..."
-msgstr "Знімок"
+msgstr "Знімок..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3799
-#, fuzzy
+#: gnome-panel/foobar-widget.c:217
+#: gnome-panel/menu.c:3824
 msgid "Take a screenshot of your desktop"
 msgstr "Зробити знімок вашої стільниці"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:229
+#: gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Замкнути екран"
 
@@ -1376,7 +1060,9 @@ msgstr "Замкнути екран"
 msgid "Protect your computer from unauthorized use"
 msgstr "Захистити ваш комп'ютер від несанкціонованого використання"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:242
+#: gnome-panel/menu.c:3027
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Завершити роботу"
 
@@ -1393,24 +1079,29 @@ msgstr "Дії"
 msgid "No windows open"
 msgstr "Немає відкритих вікон"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:716
+#: gnome-panel/menu.c:2791
 msgid "Menu Panel"
 msgstr "Панель меню"
 
 #: gnome-panel/foobar-widget.c:716
 msgid "GNOME Menu Panel"
-msgstr "Панель меню"
+msgstr "Панель меню GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
-#: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
+#: gnome-panel/foobar-widget.c:736
+#: gnome-panel/menu.c:2924
+#: gnome-panel/menu.c:2929
+#: gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Програми"
 
-#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
+#: gnome-panel/global-keys.c:328
+#: gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "Неможливо знайти програму знімання екрана"
 
-#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
+#: gnome-panel/global-keys.c:337
+#: gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "Неможливо виконати програму xscreensaver"
 
@@ -1436,8 +1127,7 @@ msgid "The argument is a url to add, not a .desktop file"
 msgstr "Аргументом є URL, а не файл типу .desktop"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
-msgid ""
-"You must supply a single argument with the .desktop file or url to use\n"
+msgid "You must supply a single argument with the .desktop file or url to use\n"
 msgstr "Потрібно вказати один аргумент у вигляді файла типу .desktop чи URL\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
@@ -1446,25 +1136,22 @@ msgstr "Не знайдено панелі\n"
 
 #: gnome-panel/gnome-panel-preferences.c:192
 #: gnome-panel/gnome-panel-screenshot.c:857
-#, fuzzy, c-format
-msgid ""
-"There was an error displaying help: \n"
+#, c-format
+msgid "There was an error displaying help: \n"
 "%s"
-msgstr "Сталася помилка відображення довідки: %s"
+msgstr "Сталася помилка відображення довідки: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
-#, fuzzy
-msgid ""
-"The system administrator has disallowed\n"
+msgid "The system administrator has disallowed\n"
 "modification of the panel configuration"
-msgstr ""
-"Системний адміністратор заборонив\n"
-"зміну налаштувань панелі"
+msgstr "Системний адміністратор заборонив\n"
+"зміну параметрів панелі"
 
 #: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
 msgid "Error loading glade file %s"
-msgstr ""
+msgstr "Помилка завантаження glade файла %s"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
@@ -1472,17 +1159,15 @@ msgstr "Панель"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr ""
+msgstr "Вибрати вподобання для всіх ваших панелей"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
-msgstr "Швидкість _анімації:"
+msgstr "_Швидкість анімації:"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
-#, fuzzy
 msgid "Close _drawer when launcher is clicked"
-msgstr "_Засовувати шухляду при натисканні кнопки запуску в ній"
+msgstr "Засовувати шу_хляду при натисканні кнопки запуску в ній"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
 msgid "Fast"
@@ -1509,33 +1194,32 @@ msgstr "Повільна"
 # "переконайтесь,\n"
 # "що ви встановили Інструкцію Користувача GNOME у вашу систему."
 #: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
 msgid "_Animation"
-msgstr "Анімація"
+msgstr "_Анімація"
 
 #: gnome-panel/gnome-panel-screenshot.c:134
-msgid ""
-"Unable to initialize png structure.\n"
+msgid "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
-msgstr ""
+msgstr "Неможливо ініціалізувати png структуру.\n"
+"Можливо у вашій системі пошкоджена версія libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:142
-msgid ""
-"Unable to create png info.\n"
+msgid "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
-msgstr ""
+msgstr "Неможливо створити інформацію про png.\n"
+"Можливо у вашій системі пошкоджена версія libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:149
-msgid ""
-"Unable to set png info.\n"
+msgid "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
-msgstr ""
+msgstr "Неможливо встановити інформацію png.\n"
+"Можливо у вашій системі пошкоджена версія libpng"
 
 #: gnome-panel/gnome-panel-screenshot.c:167
-msgid ""
-"Insufficient memory to save the screenshot.\n"
+msgid "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
-msgstr ""
+msgstr "Не вистачає пам'яті для збереження знімку.\n"
+"Будь ласка, звільніть місце та спробуйте ще."
 
 #: gnome-panel/gnome-panel-screenshot.c:219
 #, c-format
@@ -1550,6 +1234,9 @@ msgid ""
 "\"%s\"\n"
 "Please check your permissions of the parent directory"
 msgstr ""
+"Неможливо створити файл:\n"
+"\"%s\"\n"
+"Перевірте права на батьківський каталог"
 
 #: gnome-panel/gnome-panel-screenshot.c:508
 msgid "Print Screenshot"
@@ -1594,13 +1281,13 @@ msgstr "Знімати вікно замість всього екрана"
 
 #: gnome-panel/gnome-panel-screenshot.c:1199
 msgid "Take screenshot after specified delay [in seconds]"
-msgstr ""
+msgstr "Робити знімок після вказаної затримки (у секундах)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1251
-msgid ""
-"Glade file for the screenshot program is missing.\n"
+msgid "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
-msgstr ""
+msgstr "Відсутній glade файл програми створення знімків екрану.\n"
+"Перевірте встановлення gnome-panel"
 
 #: gnome-panel/gnome-panel-screenshot.c:1275
 msgid "Unable to take a screenshot of the current desktop."
@@ -1608,7 +1295,7 @@ msgstr "Неможливо зробити знімок поточної стіл
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
@@ -1624,36 +1311,28 @@ msgstr "Зберегти знімок на _стільці"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
+msgstr "Зберегти знімок у _web сторінку (зберегти у ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/menu.c:3043
 #: gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Знімок"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
-msgstr "Надрукувати знімок..."
+msgstr "На_друкувати знімок..."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "_Save screenshot to file:"
-msgstr "Зберегти знімок у файлі:"
-
-#: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
-msgid ""
-"The user's directory in which screenshots should be saved so as to appear on "
-"the web."
-msgstr ""
-
-#: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
-msgid "Web directory."
-msgstr ""
+msgstr "З_берегти знімок у файлі:"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "Оболонка панелі"
 
-#: gnome-panel/gnome-run.c:244 gnome-panel/gnome-run.c:265
+#: gnome-panel/gnome-run.c:244
+#: gnome-panel/gnome-run.c:265
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1664,7 +1343,8 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
+#: gnome-panel/gnome-run.c:388
+#: gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1682,6 +1362,9 @@ msgid ""
 "\n"
 "Details: no application available to open file"
 msgstr ""
+"<b>Не вдалось відкрити файл:</b> '%s'\n"
+"\n"
+"Подробиці: немає програми для відкривання файлу"
 
 #: gnome-panel/gnome-run.c:510
 #, c-format
@@ -1698,7 +1381,8 @@ msgstr ""
 msgid "Choose a file"
 msgstr "Виберіть файл"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:838
+#: gnome-panel/gnome-run.c:839
 msgid "Known Applications"
 msgstr "Відомі додатки"
 
@@ -1729,9 +1413,10 @@ msgstr "Список відомих додатків"
 
 #: gnome-panel/gnome-run.c:1523
 msgid "Choose an application to run from the list"
-msgstr ""
+msgstr "Виберіть програму для запуску з списку"
 
-#: gnome-panel/gnome-run.c:1649 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1649
+#: gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Виконати програму"
 
@@ -1741,11 +1426,9 @@ msgstr "В цієї кнопки не визначено URL для відобр
 
 #: gnome-panel/launcher.c:108
 #, c-format
-msgid ""
-"Cannot show %s\n"
+msgid "Cannot show %s\n"
 "%s"
-msgstr ""
-"Неможливо показати %s\n"
+msgstr "Неможливо показати %s\n"
 "%s"
 
 #: gnome-panel/launcher.c:140
@@ -1759,52 +1442,56 @@ msgstr ""
 "\n"
 "Подробиці: %s"
 
-#: gnome-panel/launcher.c:184
+#: gnome-panel/launcher.c:193
 #, c-format
-msgid ""
-"Cannot launch icon\n"
+msgid "Cannot launch icon\n"
 "%s"
-msgstr ""
-"Неможливо запустити піктограму\n"
+msgstr "Неможливо запустити піктограму\n"
 "%s"
 
-#: gnome-panel/launcher.c:381
+#: gnome-panel/launcher.c:390
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr ""
+msgstr "Не встановлено URI для файлу кнопки запуску панелі\n"
 
-#: gnome-panel/launcher.c:401
+#: gnome-panel/launcher.c:410
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr ""
+msgstr "Неможливо відкрити файл %s для кнопки запуску панелі%s%s\n"
 
-#: gnome-panel/launcher.c:512
+#: gnome-panel/launcher.c:524
 #, fuzzy, c-format
 msgid "Help on %s _Application"
 msgstr "Довідка про програму %s"
 
-#: gnome-panel/launcher.c:634 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:646
+#: gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Властивості кнопки запуску"
 
-#: gnome-panel/launcher.c:745
+#: gnome-panel/launcher.c:757
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr ""
+msgstr "Ключ %s не встановлено, неможливо завантажити кнопку запуску\n"
 
-#: gnome-panel/launcher.c:841 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:853
+#: gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Створити кнопку запуску"
 
-#: gnome-panel/launcher.c:1063
+#: gnome-panel/launcher.c:1075
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
 "\n"
 "%s"
 msgstr ""
+"Неможливо зберегти кнопку запуску на диск, сталася така помилка:\n"
+"\n"
+"%s"
 
-#: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1162
+#: gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1818,7 +1505,7 @@ msgstr ""
 
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
-msgstr "Вказати назву профіля для завантаження"
+msgstr "Вказати назву профілю для завантаження"
 
 #: gnome-panel/menu.c:240
 msgid "Many many others ..."
@@ -1830,28 +1517,27 @@ msgid "and finally, The Knights Who Say ... NI!"
 msgstr "і, нарешті, Лицарі, що кажуть \"НІ\"!"
 
 #: gnome-panel/menu.c:277
-msgid ""
-"This program is responsible for launching other applications, embedding "
-"small applets within itself, world peace, and random X crashes."
-msgstr ""
-"Ця програма відповідальна за запуск інших програм, вмонтовування маленьких "
-"аплетів у себе, мир на Землі та випадкові падіння X Window."
+msgid "This program is responsible for launching other applications, embedding small applets within itself, world peace, and random X crashes."
+msgstr "Ця програма відповідальна за запуск інших програм, монтування маленьких аплетів у себе, мир на Землі та випадкові падіння X Window."
 
 #: gnome-panel/menu.c:283
 msgid ""
 "\n"
 "\n"
-"Running in \"Lockdown\" mode.  This means your system administrator has "
-"prohibited any changes to the panel's configuration to take place."
+"Running in \"Lockdown\" mode.  This means your system administrator has prohibited any changes to the panel's configuration to take place."
 msgstr ""
+"\n"
+"\n"
+"Запуск у \"Обмеженому\" режимі.  Це означає, що ваш системний адміністратор заборонив внесення будь-яких змін у параметри панелі."
 
 #: gnome-panel/menu.c:289
 msgid "The GNOME Panel"
 msgstr "Панель GNOME"
 
 #: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 Фундація вільного програмного забезпечення"
+#, fuzzy
+msgid "(C) 1997 Free Software Foundation, Inc."
+msgstr "© 1998 Фундація Вільного Програмного Забезпечення"
 
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
@@ -1864,6 +1550,9 @@ msgid ""
 "\n"
 "Details: %s probably does not exist"
 msgstr ""
+"<b>Неможливо виконати 'Про GNOME'</b>\n"
+"\n"
+"Подробиці: %s ймовірно не існує"
 
 #: gnome-panel/menu.c:353
 #, c-format
@@ -1872,8 +1561,13 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
+"<b>Неможливо запустити елемент</b>\n"
+"\n"
+"Подробиці: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363
+#: gnome-panel/menu.c:1118
+#: gnome-panel/menu.c:1155
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1911,6 +1605,9 @@ msgid ""
 "\n"
 "Details: No 'Exec' or 'URL' field in entry"
 msgstr ""
+"<b>Неможливо додати до діалогу запуску</b>\n"
+"\n"
+"Подробиці: У елементі немає 'Exec' або 'URL' полів"
 
 #: gnome-panel/menu.c:1419
 msgid "Add this launcher to panel"
@@ -1953,12 +1650,14 @@ msgstr "Додати новий елемент до цього меню"
 msgid "Properties"
 msgstr "Властивості"
 
-#: gnome-panel/menu.c:2445 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2445
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "запит викликав виняткову ситуацію %s\n"
 
-#: gnome-panel/menu.c:2701 gnome-panel/menu.c:2706
+#: gnome-panel/menu.c:2701
+#: gnome-panel/menu.c:2706
 msgid "Aligned Panel"
 msgstr "Вирівняна панель"
 
@@ -1966,7 +1665,8 @@ msgstr "Вирівняна панель"
 msgid "GNOME Aligned Panel"
 msgstr "Вирівняна панель"
 
-#: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
+#: gnome-panel/menu.c:2724
+#: gnome-panel/menu.c:2728
 #: gnome-panel/panel-config.c:1663
 msgid "Edge Panel"
 msgstr "Бічна панель"
@@ -1975,7 +1675,8 @@ msgstr "Бічна панель"
 msgid "GNOME Edge Panel"
 msgstr "Бічна панель"
 
-#: gnome-panel/menu.c:2750 gnome-panel/menu.c:2754
+#: gnome-panel/menu.c:2750
+#: gnome-panel/menu.c:2754
 #: gnome-panel/panel-config.c:1685
 msgid "Sliding Panel"
 msgstr "Ковзна панель"
@@ -1984,7 +1685,8 @@ msgstr "Ковзна панель"
 msgid "GNOME Sliding Panel"
 msgstr "Ковзна панель"
 
-#: gnome-panel/menu.c:2773 gnome-panel/menu.c:2778
+#: gnome-panel/menu.c:2773
+#: gnome-panel/menu.c:2778
 #: gnome-panel/panel-config.c:1696
 msgid "Floating Panel"
 msgstr "Відірвана панель"
@@ -1998,179 +1700,160 @@ msgid "You can only have one menu panel at a time."
 msgstr "Ви можете мати лише одну панель меню одночасно."
 
 #: gnome-panel/menu.c:2843
-#, fuzzy
 msgid "C_orner Panel"
-msgstr "Кутова панель"
+msgstr "Ку_това панель"
 
 #: gnome-panel/menu.c:2845
-#, fuzzy
 msgid "Create corner panel"
-msgstr "Кутова панель"
+msgstr "Створити кутову панель"
 
 #: gnome-panel/menu.c:2852
-#, fuzzy
 msgid "_Edge Panel"
-msgstr "Бічна панель"
+msgstr "_Бічна панель"
 
 #: gnome-panel/menu.c:2854
-#, fuzzy
 msgid "Create edge panel"
-msgstr "Створити панель"
+msgstr "Створити бічну панель"
 
 #: gnome-panel/menu.c:2861
-#, fuzzy
 msgid "_Floating Panel"
-msgstr "Відірвана панель"
+msgstr "Віді_рвана панель"
 
 #: gnome-panel/menu.c:2863
-#, fuzzy
 msgid "Create floating panel"
-msgstr "Плаваюча панель"
+msgstr "Створити відірвану панель"
 
 #: gnome-panel/menu.c:2870
-#, fuzzy
 msgid "_Sliding Panel"
-msgstr "Ковзна панель"
+msgstr "Ков_зна панель"
 
 #: gnome-panel/menu.c:2872
-#, fuzzy
 msgid "Create sliding panel"
-msgstr "Створити панель"
+msgstr "Створити ковзну панель"
 
 #: gnome-panel/menu.c:2881
-#, fuzzy
 msgid "_Menu Panel"
-msgstr "Панель меню"
+msgstr "Панель _меню"
 
 #: gnome-panel/menu.c:2883
-#, fuzzy
 msgid "Create menu panel"
-msgstr "Створити панель"
+msgstr "Створити панель меню"
 
-#: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
-#, fuzzy
+#: gnome-panel/menu.c:2972
+#: gnome-panel/menu.c:2978
+#: gnome-panel/menu.c:3672
 msgid "KDE Menu"
 msgstr "Меню KDE"
 
-#: gnome-panel/menu.c:3076
+#: gnome-panel/menu.c:3035
+#, fuzzy
+msgid "Lock"
+msgstr "Годинник"
+
+#: gnome-panel/menu.c:3051
+msgid "Search"
+msgstr ""
+
+#: gnome-panel/menu.c:3059
+#, fuzzy
+msgid "Run"
+msgstr "_Виконати"
+
+#: gnome-panel/menu.c:3131
 msgid "You cannot remove your last panel."
 msgstr "Ви не можете вилучити останню панель."
 
-#: gnome-panel/menu.c:3089
-#, fuzzy
-msgid ""
-"When a panel is deleted, the panel and its\n"
+#: gnome-panel/menu.c:3144
+msgid "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
-msgstr ""
-"З видаленням панелі буде втрачено усі настройки\n"
-"цієї панелі та її аплетів. Видалити цю панель?"
+msgstr "З видаленням панелі буде втрачено усі настройки\n"
+"цієї панелі. Видалити цю панель?"
 
-#: gnome-panel/menu.c:3336
+#: gnome-panel/menu.c:3152
+msgid "Delete Panel"
+msgstr "Видалити панель"
+
+#: gnome-panel/menu.c:3391
 msgid "Launcher..."
 msgstr "Кнопка запуску..."
 
-#: gnome-panel/menu.c:3343
+#: gnome-panel/menu.c:3398
 msgid "Launcher from menu"
 msgstr "Кнопка запуску з меню"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
-#: gnome-panel/menu.c:4116
+#: gnome-panel/menu.c:3406
+msgid "Button"
+msgstr "Кнопка"
+
+#: gnome-panel/menu.c:3415
+#: gnome-panel/menu.c:3917
+#: gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
 msgid "GNOME Menu"
-msgstr "Mеню GNOME"
+msgstr "Меню GNOME"
 
-#: gnome-panel/menu.c:3367
-#, fuzzy
-msgid "Log Out Button"
-msgstr "Кнопка завершення роботи"
-
-#: gnome-panel/menu.c:3375
-#, fuzzy
-msgid "Lock Button"
-msgstr "Кнопка замикання"
-
-#: gnome-panel/menu.c:3383
-#, fuzzy
-msgid "Screenshot Button"
-msgstr "Знімок"
-
-#: gnome-panel/menu.c:3391
-msgid "Search Button"
-msgstr ""
-
-#: gnome-panel/menu.c:3399
-#, fuzzy
-msgid "Run Button"
-msgstr "Кнопка завершення роботи"
-
-#: gnome-panel/menu.c:3443
-#, fuzzy
+#: gnome-panel/menu.c:3468
 msgid "_Delete This Panel..."
-msgstr "Видалити цю панель..."
+msgstr "_Видалити цю панель..."
 
-#: gnome-panel/menu.c:3446 gnome-panel/menu.c:3478
-#, fuzzy
+#: gnome-panel/menu.c:3471
+#: gnome-panel/menu.c:3503
 msgid "_Delete This Panel"
-msgstr "Видалити цю панель"
+msgstr "_Видалити цю панель"
 
-#: gnome-panel/menu.c:3465
-#, fuzzy
+#: gnome-panel/menu.c:3490
 msgid "_Add to Panel"
-msgstr "Додати до панелі"
+msgstr "_Додати до панелі"
 
-#: gnome-panel/menu.c:3505
-#, fuzzy
+#: gnome-panel/menu.c:3530
 msgid "_New Panel"
-msgstr "Бічна панель"
+msgstr "_Нова панель"
 
-#: gnome-panel/menu.c:3539
-#, fuzzy
+#: gnome-panel/menu.c:3564
 msgid "_About Panels"
-msgstr "Про панель..."
+msgstr "_Про панель..."
 
-#: gnome-panel/menu.c:3552
-#, fuzzy
+#: gnome-panel/menu.c:3577
 msgid "About _GNOME"
-msgstr "Про GNOME..."
+msgstr "Про _GNOME..."
 
-#: gnome-panel/menu.c:3581
-#, fuzzy
+#: gnome-panel/menu.c:3606
 msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr "Замкнути екран, щоб тимчасово відійти від комп'ютера"
+msgstr "Замкнути екран, щоб змогли тимчасово відійти від комп'ютера"
 
-#: gnome-panel/menu.c:3592
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr ""
+#: gnome-panel/menu.c:3617
+msgid "Log out of this session to log in as a different user or to shut down your computer"
+msgstr "Вийти з сеансу та зайти під іншим ім'ям або вимкнути комп'ютер"
 
-#: gnome-panel/menu.c:3748
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Аплети"
 
-#: gnome-panel/menu.c:3772
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Виконати команду"
 
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Стільниця"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+#: gnome-panel/menu.c:3865
+#: gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Меню"
 
-#: gnome-panel/menu.c:3842
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Меню:"
 
-#: gnome-panel/menu.c:3914
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "Не вдалося створити меню, використовується головне меню!"
 
-#: gnome-panel/menu.c:4439
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
-msgstr ""
+msgstr "Не встановлено шлях у %s для об'єкту меню панелі\n"
 
 #: gnome-panel/menu-ditem.c:123
 #, c-format
@@ -2204,30 +1887,24 @@ msgstr ""
 "Подробиці: %s"
 
 #: gnome-panel/menu-ditem.c:519
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
+msgid "You can not create a new launcher at this location since the location is not writable."
+msgstr "Ви не можете створити тут кнопку запуску тому, що сюди записати неможливо"
 
 #: gnome-panel/panel-action-button.c:83
-#, fuzzy
 msgid "_Activate Screensaver"
-msgstr "Активувати зберігача екрана"
+msgstr "_Активувати зберігач екрану"
 
 #: gnome-panel/panel-action-button.c:84
-#, fuzzy
 msgid "_Lock Screen"
-msgstr "Замкнути екран"
+msgstr "_Замкнути екран"
 
 #: gnome-panel/panel-action-button.c:85
-#, fuzzy
 msgid "_Kill Screensaver Daemon"
-msgstr "Знищити демон зберігача екрана"
+msgstr "З_нищити демон зберігача екрана"
 
 #: gnome-panel/panel-action-button.c:86
-#, fuzzy
 msgid "Restart _Screensaver Daemon"
-msgstr "Перезапустити демон зберігача екрана"
+msgstr "Перезапустити демон з_берігача екрана"
 
 #: gnome-panel/panel-action-button.c:155
 msgid "Cannot execute gnome-search-tool"
@@ -2251,9 +1928,8 @@ msgid "Search for Files"
 msgstr "Пошук файлів..."
 
 #: gnome-panel/panel-action-button.c:364
-#, fuzzy
 msgid "Action Type"
-msgstr "Дії"
+msgstr "Тип дії"
 
 #: gnome-panel/panel-action-button.c:365
 msgid "The type of action this button implements"
@@ -2269,37 +1945,32 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Виняток із спливного меню \"%s\"\n"
 
 #: gnome-panel/panel-applet-frame.c:750
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
 "Reload this applet?\n"
 "\n"
-"(If you choose not to reload it at this time you can always add it by right "
-"clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+"(If you choose not to reload it at this time you can always add it by right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"Схоже, аплет %s неочікувано припинив роботу\n"
+"Схоже, аплет %s несподівано припинив роботу\n"
 "\n"
 "Перезавантажити цей аплет?\n"
-"(Якщо ви вирішите не перезавантажувати його зараз, ви зможете це зробити "
-"клацнувши правою кнопкою на панелі та додавши його з відповідного пункту "
-"меню)"
+"\n"
+"(Якщо ви вирішите не перезавантажувати його зараз, ви зможете це зробити клацнувши правою кнопкою на панелі та додавши його з відповідного пункту меню)"
 
 #: gnome-panel/panel-applet-frame.c:785
 msgid "D_on't Delete"
 msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:819
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"<b>Виникла проблема завантаження аплету \"%s\"</b>\n"
-"\n"
-"Подробиці: %s"
 
 #: gnome-panel/panel-applet-frame.c:916
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2310,29 +1981,24 @@ msgstr "Неможливо отримати інтерфейс AppletShell з е
 msgid "Open URL: %s"
 msgstr "Відкрити URL: %s"
 
-#: gnome-panel/panel.c:2232
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
+#: gnome-panel/panel.c:2238
+msgid "No panels were found in your configuration.  I will create a menu panel for you"
 msgstr "У вашій конфігурації немає панелей. Для вас буде створено панель меню."
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:545
-#, fuzzy
 msgid "_Autohide"
-msgstr "Увімкнути автоприбирання"
+msgstr "_Автоприбирання"
 
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:556
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "Показувати кнопки прибирання"
+msgstr "Показувати _кнопки прибирання"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:568
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "Показувати стрілки на кнопках прибирання"
+msgstr "Показувати _стрілки на кнопках прибирання"
 
 #: gnome-panel/panel-config.c:622
 msgid "Miscellaneous"
@@ -2343,45 +2009,40 @@ msgid "Current screen:"
 msgstr "Поточний екран:"
 
 #: gnome-panel/panel-config.c:649
-#, fuzzy
 msgid "Current monitor:"
-msgstr "Поточний екран:"
+msgstr "Поточний монітор:"
 
 #: gnome-panel/panel-config.c:741
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Визначає положення і орієнтацію панелі на екрані"
 
 #: gnome-panel/panel-config.c:759
-#, fuzzy
 msgid "_Position:"
-msgstr "Позиція панелі"
+msgstr "П_озиція:"
 
 #: gnome-panel/panel-config.c:986
-#, fuzzy
 msgid "Orient hori_zontally"
-msgstr "Горизонтальна орієнтація"
+msgstr "_Горизонтальна орієнтація"
 
 #: gnome-panel/panel-config.c:998
-#, fuzzy
 msgid "Orient _vertically"
-msgstr "Вертикальна орієнтація"
+msgstr "_Вертикальна орієнтація"
 
 #: gnome-panel/panel-config.c:1012
 msgid "H_orizontal offset:"
-msgstr ""
+msgstr "Г_оризонтальний зсув:"
 
 #: gnome-panel/panel-config.c:1032
 msgid "Ver_tical offset:"
-msgstr ""
+msgstr "Вер_тикальний зсув:"
 
 #: gnome-panel/panel-config.c:1097
 msgid "Screen edge _offset:"
-msgstr ""
+msgstr "З_сув від кута:"
 
 #: gnome-panel/panel-config.c:1156
-#, fuzzy
 msgid "_Size:"
-msgstr "Розмір:"
+msgstr "_Розмір:"
 
 #: gnome-panel/panel-config.c:1164
 msgid "XX Small (12 pixels)"
@@ -2412,45 +2073,42 @@ msgid "XX Large (128 pixels)"
 msgstr "Дуже-дуже великий (128 точок)"
 
 #: gnome-panel/panel-config.c:1367
-#, fuzzy
 msgid "Background _type:"
-msgstr "Тип тла: "
+msgstr "Тип _тла: "
 
 #: gnome-panel/panel-config.c:1376
 msgid "Default"
-msgstr ""
+msgstr "Початковий"
 
 #: gnome-panel/panel-config.c:1378
 msgid "Color"
 msgstr "Колір"
 
 #. image frame
-#: gnome-panel/panel-config.c:1380 gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1380
+#: gnome-panel/panel-config.c:1425
 msgid "Image"
 msgstr "Зображення"
 
 #: gnome-panel/panel-config.c:1395
-#, fuzzy
 msgid "Background co_lor:"
-msgstr "Тло"
+msgstr "Ко_лір тла:"
 
 #: gnome-panel/panel-config.c:1448
-#, fuzzy
 msgid "_Do not scale image to fit"
-msgstr "Не змінювати розміри зображення до розмірів панелі"
+msgstr "_Не масштабувати зображення до розмірів панелі"
 
 #: gnome-panel/panel-config.c:1453
 msgid "Sc_ale image"
-msgstr ""
+msgstr "Мас_штабувати зображення"
 
 #: gnome-panel/panel-config.c:1457
 msgid "St_retch image"
-msgstr ""
+msgstr "Розтя_гувати зображення"
 
 #: gnome-panel/panel-config.c:1471
-#, fuzzy
 msgid "Rotate image for _vertical panels"
-msgstr "Повертати зображення на вертикальних панелях"
+msgstr "Повертати зображення на _вертикальних панелях"
 
 #: gnome-panel/panel-config.c:1532
 msgid "Edge panel"
@@ -2466,10 +2124,9 @@ msgstr "Ковзна панель"
 
 #: gnome-panel/panel-config.c:1551
 msgid "Floating panel"
-msgstr "Плаваюча панель"
+msgstr "Відривна панель"
 
 #: gnome-panel/panel-config.c:1629
-#, fuzzy
 msgid "Panel Properties"
 msgstr "Властивості панелі"
 
@@ -2481,49 +2138,12 @@ msgstr "Кутова панель"
 msgid "Background"
 msgstr "Тло"
 
-#: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-msgid "FIXME - need to define limits"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:4
-msgid "Popup the panel menu"
-msgstr "Викликати меню панелі"
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-msgid "Take a screen shot"
-msgstr "Зробити знімок екрана"
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-msgid "Take a screen shot of a window"
-msgstr "Зробити знімок вікна"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "Enable the program listing in the run box"
-msgstr "Показувати список програм блоці запуску"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:2
-msgid "Show the program listing by default when opening the Run box"
-msgstr "Показувати список програм відразу після відкриття блоку запуску"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-msgid "Show the program listing in the Run box"
-msgstr "Показати список програм у блоці запуску"
-
 #: gnome-panel/panel-recent.c:55
 msgid "Couldn't find a suitable application"
 msgstr ""
 
 #: gnome-panel/panel-recent.c:78
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr ""
 
 #: gnome-panel/panel-recent.c:135
@@ -2536,18 +2156,15 @@ msgid "Open Recent"
 msgstr ""
 
 #: gnome-panel/panel-shell.c:43
-msgid ""
-"I've detected a panel already running,\n"
+msgid "I've detected a panel already running,\n"
 "and will now exit."
-msgstr ""
-"Виявлено вже запущену панель,\n"
+msgstr "Виявлено вже запущену панель,\n"
 "завершення роботи."
 
 #: gnome-panel/panel-shell.c:47
 #, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
+"There was a problem registering the panel with the bonobo-activation server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
@@ -2566,7 +2183,8 @@ msgstr "_Виконати"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:122 gnome-panel/panel-util.c:152
+#: gnome-panel/panel-util.c:122
+#: gnome-panel/panel-util.c:152
 #: gnome-panel/panel-util.c:177
 msgid "Help document not found"
 msgstr "Довідки не знайдено"
@@ -2575,7 +2193,8 @@ msgstr "Довідки не знайдено"
 msgid "No document to show"
 msgstr "Немає документа для показу"
 
-#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
+#: gnome-panel/panel-util.c:632
+#: gnome-panel/panel-util.c:648
 msgid "Disabled"
 msgstr "Вимкнути"
 
@@ -2585,6 +2204,9 @@ msgid ""
 "\n"
 "Details: xscreensaver-command not found"
 msgstr ""
+"<b>Неможливо виконати зберігач екрану</b>\n"
+"\n"
+"Подробиці: немає програми xscreensaver"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2596,7 +2218,7 @@ msgstr "Тестовий аплет Bonobo"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
 msgid "Test Bonobo Applet Factory"
-msgstr ""
+msgstr "Фабрика тестового аплету Bonobo"
 
 #: libpanel-applet/panel-applet.c:858
 #, c-format
@@ -2606,7 +2228,7 @@ msgstr "Отримано незавершений тип тла \"%s\""
 #: libpanel-applet/panel-applet.c:872
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
-msgstr "Incomplete '%s' background type received: %s"
+msgstr "Отримано незавершений тип тла \"%s\": %s"
 
 #: libpanel-applet/panel-applet.c:881
 #, c-format
@@ -2631,11 +2253,11 @@ msgstr "Аплет містить колір чи зображення тла п
 
 #: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's flags"
-msgstr ""
+msgstr "Ознаки аплету"
 
 #: libpanel-applet/panel-applet.c:1097
 msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr ""
+msgstr "Змінює розмір підказки, щоб вона була прийнятна для аплету"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -2693,159 +2315,3 @@ msgstr "Дуже-дуже великий"
 msgid "XX Small"
 msgstr "Дуже-дуже малий"
 
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "Команда до виконання під час клацання на аплеті"
-
-#, fuzzy
-#~ msgid "Wanda"
-#~ msgstr "Стандартне"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Малий"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Принтер"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Тестовий аплет Bonobo"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Бокова панель"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Панель меню"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Тло"
-
-#~ msgid "Log out"
-#~ msgstr "Завершити роботу"
-
-#~ msgid "Use GMT"
-#~ msgstr "Час GMT"
-
-#~ msgid "Command to execute"
-#~ msgstr "Команда до виконання"
-
-#~ msgid "Tasklist size"
-#~ msgstr "Розмір списку завдань"
-
-#~ msgid "Take a Screen Shot..."
-#~ msgstr "Зробити знімок екрана..."
-
-#~ msgid "Lock Display"
-#~ msgstr "Заблокувати дисплей"
-
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Змінити глобальні властивості панелі"
-
-#~ msgid "General"
-#~ msgstr "Загальне"
-
-#~ msgid "_Enable panel animation"
-#~ msgstr "_Увімкнути панельну анімацію"
-
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Неможливо виконати глобальні властивості панелі"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Глобальні настройки..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Довідник панелі..."
-
-#~ msgid "Main Menu"
-#~ msgstr "Головне меню"
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "Не вдалося відкрити каталог, використовується головне меню!"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Редагувати меню..."
-
-#~ msgid "Off"
-#~ msgstr "Вимкнено"
-
-#~ msgid "In a submenu"
-#~ msgstr "В підменю"
-
-#~ msgid "On the main menu"
-#~ msgstr "В головному меню"
-
-#~ msgid "Menu properties"
-#~ msgstr "Властивості меню"
-
-#~ msgid "Menu type"
-#~ msgstr "Тип меню"
-
-#~ msgid "Global main menu"
-#~ msgstr "Загальне головне меню"
-
-#~ msgid "Main menu"
-#~ msgstr "Головне меню"
-
-#~ msgid "Normal menu"
-#~ msgstr "Звичайне меню"
-
-#~ msgid "Programs: "
-#~ msgstr "Програми: "
-
-#~ msgid "Applets: "
-#~ msgstr "Аплети: "
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Меню дистрибутиву (якщо знайдено): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "Меню KDE (якщо знайдено): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Меню панелі: "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Меню стільниці: "
-
-#~ msgid "Menu path"
-#~ msgstr "Шлях меню"
-
-#~ msgid "Hiding"
-#~ msgstr "Прибирання"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Позиція верхнього лівого кута: X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Зсув від краю екрану:"
-
-#~ msgid "Panel size:"
-#~ msgstr "Розмір панелі:"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Примітка: Панель змінить свій розмір до\n"
-#~ "найбільшого аплету у панелі, і не усі\n"
-#~ "аплети звернуть увагу на ці розміри."
-
-#~ msgid "Pixmap"
-#~ msgstr "Зображення"
-
-#~ msgid "Color to use:"
-#~ msgstr "Використовувати колір:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Масштабувати зображення (зберігаючи пропорції)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Розтягнути зображення (змінюючи пропорції)"
