@@ -169,44 +169,43 @@ fish_applet_rotate (Fish *fish)
 	return retval;
 }
 
-static gchar *
-get_location(void)
+static char *
+get_location (void)
 {
-	static gchar location[256];
-	FILE *zone;
+	static char  location [256];
+	char         buffer [256];
+	FILE        *zone;
+	int          i, len, count;
 	
-	/* Now we try old method. Works for glibc < 2.2 */
+	/* Old method : works for glibc < 2.2 */
 	zone = fopen("/etc/timezone", "r");
-	if (zone != NULL) {
-		fscanf(zone, "%255s", location);
-		fclose(zone);
+	if (zone) {
+		fscanf (zone, "%255s", location);
+		fclose (zone);
 		return location;
-	} else { /* We try new method for glibc 2.2 */
-		gchar buf[256];
-		int i, len, count;
-		
-		len = readlink("/etc/localtime", buf, sizeof(buf));
-		if (len <= 0)
-			return NULL;
+	} 
 
-		for (i = len, count = 0; (i > 0) && (count != 2); i--)
-			if (buf[i] == '/')
-				count++;
+	/* New method : works for glibc 2.2 */
+	len = readlink ("/etc/localtime", buffer, sizeof (buffer));
+	if (len <= 0)
+		return NULL;
 
-		if (count != 2)
-			return NULL;
+	for (i = len, count = 0; (i > 0) && (count != 2); i--)
+		if (buffer [i] == '/')
+			count++;
 
-		memcpy(location, &buf[i + 2], len - i - 2);
-		return location;
-	}
-	
-	return NULL;
+	if (count != 2)
+		return NULL;
+
+	memcpy (location, &buffer [i + 2], len - i - 2);
+
+	return location;
 }
 
 static void 
-set_wanda_day(void)
+set_wanda_day (void)
 {
-	const gchar *spanish_timezones[] = {
+	const char *spanish_timezones [] = {
 		"Europe/Madrid",
 		"Africa/Ceuta",
 		"Atlantic/Canary",
@@ -216,14 +215,14 @@ set_wanda_day(void)
 		"Mexico/General",
 		NULL
 	};
-	gchar *location = get_location();
-	int i;
-	gboolean found = FALSE;
+	gboolean  found;
+	char     *location;
+	int       i;
 	
-	if (location == NULL) /* We couldn't guess our location */
+	if (!(location = get_location ()))
 		return;
 	
-	for (i = 0; !found && spanish_timezones[i]; i++)
+	for (i = 0, found = FALSE; !found && spanish_timezones[i]; i++)
 		if (!g_strcasecmp(spanish_timezones[i], location)) {
 			/* Hah!, We are in Spain ot Mexico */
 			/* Spanish fool's day: 28th December */
