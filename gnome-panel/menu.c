@@ -5486,7 +5486,7 @@ create_root_menu (GtkWidget *root_menu,
 	if(!root_menu)
 		root_menu = menu_new ();
 
-	menu_add_tearoff ( GTK_MENU (menu),
+	menu_add_tearoff (GTK_MENU (root_menu),
 			  GTK_SIGNAL_FUNC (panel_tearoff_new_menu),
 			  GINT_TO_POINTER(flags));
 

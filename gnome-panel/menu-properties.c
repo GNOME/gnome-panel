@@ -603,8 +603,8 @@ create_properties_dialog(Menu *menu)
 	w = gtk_label_new(_("Menu path"));
 	gtk_box_pack_start(GTK_BOX(box), w, FALSE, FALSE, 0);
 
-	w = gnome_file_entry_new("menu_path",_("Browse"));
-	gnome_file_entry_set_directory(GNOME_FILE_ENTRY(w), TRUE);
+	w = gnome_file_entry_new ("menu_path", _("Browse"));
+	gnome_file_entry_set_directory_entry (GNOME_FILE_ENTRY (w), TRUE);
 
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
 	menu->dialog_info->pathentry = w;
