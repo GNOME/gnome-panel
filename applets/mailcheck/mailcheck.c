@@ -1051,15 +1051,15 @@ applet_save_session(GtkWidget *w,
 	gnome_config_set_bool("mail/clicked_enabled",mc->clicked_enabled);
 	gnome_config_set_string("mail/mail_file",
 				mc->mail_file?mc->mail_file:"");
-        gnome_config_set_string("mail/remote_server", 
+        gnome_config_private_set_string("mail/remote_server", 
 				mc->remote_server?mc->remote_server:"");
-        gnome_config_set_string("mail/remote_username", 
+        gnome_config_private_set_string("mail/remote_username", 
 				mc->remote_username?mc->remote_username:"");
-        gnome_config_set_string("mail/remote_password", 
+        gnome_config_private_set_string("mail/remote_password", 
 				mc->remote_password?mc->remote_password:"");
         gnome_config_set_int("mail/mailbox_type", (int) mc->mailbox_type);
 	gnome_config_set_bool("mail/play_sound", mc->play_sound);
-        
+
 	gnome_config_pop_prefix();
 
 	gnome_config_sync();
