@@ -1156,7 +1156,7 @@ create_menuitem(GtkWidget *menu,
 	char *filename;
 	struct stat s;
 
-	filename = g_strconcat(menudir,"/",thisfile, NULL);
+	filename = g_concat_dir_and_file(menudir,thisfile);
 
 	if (stat (filename, &s) == -1) {
 		g_warning("Something is wrong, "
@@ -1171,7 +1171,7 @@ create_menuitem(GtkWidget *menu,
 	item_info = NULL;
 	if (S_ISDIR (s.st_mode)) {
 		char *p;
-		p = g_strconcat(filename,"/.directory",NULL);
+		p = g_concat_dir_and_file(filename,".directory");
 		item_info = gnome_desktop_entry_load (p);
 
 		/*add the .directory file to the checked files list*/
@@ -1198,6 +1198,7 @@ create_menuitem(GtkWidget *menu,
 			if(item_info)
 				gnome_desktop_entry_free(item_info);
 			/* free up the string allocated at the top of this block */
+			g_free(filename);
 			g_free(p);
 			return finfo;
 		}
@@ -1205,11 +1206,15 @@ create_menuitem(GtkWidget *menu,
 		g_free(p);
 	} else {
 		char *p = strrchr(filename,'.');
-		if (!p || strcmp(p, ".desktop") != 0)
+		if (!p || strcmp(p, ".desktop") != 0) {
+			g_free(filename);
 			return finfo;
+		}
 		item_info = gnome_desktop_entry_load (filename);
-		if (!item_info)
+		if (!item_info) {
+			g_free(filename);
 			return finfo;
+		}
 		menuitem_name = item_info->name;
 		pix_name = item_info->icon;
 
@@ -1261,6 +1266,7 @@ create_menuitem(GtkWidget *menu,
 	}
 	if(item_info)
 		gnome_desktop_entry_free(item_info);
+	g_free(filename);
 	return finfo;
 }
 
@@ -1289,7 +1295,7 @@ create_menu_at (GtkWidget *menu,
 	if(!force && !g_file_exists(menudir))
 		return menu;
 	
-	filename = g_strconcat(menudir,"/.directory",NULL);
+	filename = g_concat_dir_and_file(menudir,".directory");
 	dir_info = gnome_desktop_entry_load (filename);
 
 	/*add the .directory file to the checked files list,
@@ -1298,6 +1304,8 @@ create_menu_at (GtkWidget *menu,
 	fi = make_finfo(filename,FALSE);
 	if(fi)
 		finfo = g_slist_prepend(finfo,fi);
+	/* free up the filename */
+	g_free(filename);
 
 	/*get this info ONLY if we haven't gotten it already*/
 	if(!dir_name)
@@ -1316,12 +1324,11 @@ create_menu_at (GtkWidget *menu,
 	/*add the order file to the checked files list,
 	  but only if we can stat it (if we can't it probably doesn't
 	  exist)*/
-	/* free up the old filename first */
-	g_free(filename);
-	filename = g_strconcat(menudir,"/.order",NULL);
+	filename = g_concat_dir_and_file(menudir,".order");
 	fi = make_finfo(filename,FALSE);
 	if(fi)
 		finfo = g_slist_prepend(finfo,fi);
+	g_free(filename);
 
 	if(!menu) {
 		menu = gtk_menu_new ();
@@ -1394,8 +1401,6 @@ create_menu_at (GtkWidget *menu,
 
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
 	
-	/* free up the filename from above. */
-	g_free(filename);
 	return menu;
 }
 
@@ -2227,27 +2232,28 @@ make_rh_submenu(char *dir, GSList *rhlist)
 	GSList *li;
 	FILE *fp;
 	char *order_file;
-	order_file = g_strconcat(dir,"/",".order", NULL);
+	order_file = g_concat_dir_and_file(dir,".order");
 	fp = fopen(order_file,"w");
+	g_free(order_file);
 	for(li = rhlist;li!=NULL;li = g_slist_next(li)) {
 		RHMenuItem *ri = li->data;
-		GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
-		dentry->name = ri->name;
+		GnomeDesktopEntry dentry = {0};
+		dentry.name = ri->name;
 		if(ri->type == RH_MENU_GROUP) {
 			char *p;
 			char *s;
 			s = g_strdup(ri->name);
-			dentry->type = "Directory";
+			dentry.type = "Directory";
 			while((p=strchr(s,' '))) *p='_';
 
-			p = g_strconcat(dir,"/",s, NULL);
+			p = g_concat_dir_and_file(dir,s);
+			g_free(s);
 			if(fp) fprintf(fp,"%s\n",g_basename(p));
 			mkdir(p,0755);
-			dentry->location = g_strconcat(p,"/",".directory", NULL);
+			dentry.location = g_concat_dir_and_file(p,".directory");
 			
 			make_rh_submenu(p,ri->u.items);
 			/* free up the strings */
-			g_free(s);
 			g_free(p);
 		} else {
 			char *p;
@@ -2255,28 +2261,24 @@ make_rh_submenu(char *dir, GSList *rhlist)
 			s = g_strconcat(ri->name,".desktop",NULL);
 			while((p=strchr(s,' '))) *p='_';
 
-			dentry->type = "Application";
-			dentry->comment = ri->u.item.description;
-			dentry->icon = ri->u.item.icon?
+			dentry.type = "Application";
+			dentry.comment = ri->u.item.description;
+			dentry.icon = ri->u.item.icon?
 				ri->u.item.icon:
 				ri->u.item.mini_icon;
 			gnome_config_make_vector(ri->u.item.exec,
-						 &dentry->exec_length,
-						 &dentry->exec);
-			dentry->location = g_strconcat(dir,"/",s, NULL);
+						 &dentry.exec_length,
+						 &dentry.exec);
+			dentry.location = g_concat_dir_and_file(dir,s);
 			if(fp) fprintf(fp,"%s\n",s);
 			/* free up the location */
 			g_free(s);
 		}
-		gnome_desktop_entry_save(dentry);
-		if(dentry->exec) g_strfreev(dentry->exec);
-		/* free up the dentry at the top of this block */
-		g_free(dentry->location);
-		g_free(dentry);
+		gnome_desktop_entry_save(&dentry);
+		if(dentry.exec) g_strfreev(dentry.exec);
+		g_free(dentry.location);
 	}
 	if(fp) fclose(fp);
-	/* clean up the order_file from the top of the function */
-	g_free(order_file);
 }
 
 
@@ -2315,8 +2317,10 @@ create_rh_menu(void)
 		if(!dir) continue;
 		while((dent = readdir (dir)) != NULL) {
 			char *p;
-			if(strcmp(dent->d_name,".")==0 ||
-			   strcmp(dent->d_name,"..")==0)
+			if(dent->d_name[0] == '.' &&
+			   (dent->d_name[1] == '\0' ||
+			    (dent->d_name[1] == '.' &&
+			     dent->d_name[2] == '\0')))
 				continue;
 			p = g_strconcat(dirs[i],dent->d_name,NULL);
 			rhlist = add_redhat_entry(rhlist,p);
@@ -2329,16 +2333,15 @@ create_rh_menu(void)
 	mkdir(rhdir,0755);
 	if(rhlist) {
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
-			GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
-			dentry->name = _("Red Hat menus");
-			dentry->type = "Directory";
-			dentry->icon = "/usr/share/icons/mini/mini-redhat.xpm";
-			dentry->location = g_strconcat(rhdir,".directory",
-						       NULL);
-			gnome_desktop_entry_save(dentry);
+			GnomeDesktopEntry dentry = {0};
+			dentry.name = _("Red Hat menus");
+			dentry.type = "Directory";
+			dentry.icon = "/usr/share/icons/mini/mini-redhat.xpm";
+			dentry.location = g_strconcat(rhdir,".directory",
+						      NULL);
+			gnome_desktop_entry_save(&dentry);
 			/* free up the dentry + the location */
-			g_free(dentry->location);
-			g_free(dentry);
+			g_free(dentry.location);
 		}
 		make_rh_submenu(rhdir,rhlist);
 
@@ -2763,6 +2766,7 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	gtk_table_attach_defaults(table,w,3,4,row,row+1);
 	p = g_strconcat(ident,"_off",NULL);
 	gtk_object_set_data(dialog,p,w);
+	g_free(p);
 	if(!on)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
@@ -2772,10 +2776,9 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
 					     _("In a submenu"));
 	gtk_table_attach_defaults(table,w,2,3,row,row+1);
-	/* free it from above... */
-	g_free(p);
 	p = g_strconcat(ident,"_sub",NULL);
 	gtk_object_set_data(dialog,p,w);
+	g_free(p);
 	if(sub)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w),TRUE);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
@@ -2790,8 +2793,6 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
-	/* free up "p" from above */
-	g_free(p);
 }
 	
 
