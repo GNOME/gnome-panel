@@ -35,6 +35,12 @@ int show_small_icons = TRUE;
 
 extern GlobalConfig global_config;
 
+typedef struct _FileInfo FileInfo;
+struct _FileInfo {
+	gchar *name;
+	time_t ctime;
+};
+
 
 /*the most important dialog in the whole application*/
 void
@@ -186,8 +192,69 @@ add_applet (GtkWidget *w, gpointer data)
 	return r;
 }
 
+static gint
+check_finfo_list(GList *finfo)
+{
+	struct stat s;
+	FileInfo *fi;
+
+	for(;finfo!=NULL;finfo=g_list_next(finfo)) {
+		fi = finfo->data;
+		if (stat (fi->name, &s) == -1)
+			continue;
+		if(fi->ctime != s.st_ctime)
+			return FALSE;
+	}
+	return TRUE;
+}
+
+static void
+free_finfo(FileInfo *fi)
+{
+	if(fi) {
+		if(fi->name)
+			g_free(fi->name);
+		g_free(fi);
+	}
+}
+
+static void
+free_finfo_list(GList *finfo)
+{
+	while(finfo) {
+		free_finfo(finfo->data);
+		finfo = g_list_remove_link(finfo,finfo);
+	}
+}
+
+static FileInfo *
+make_finfo(gchar *name)
+{
+	struct stat s;
+	FileInfo *fi;
+
+	if (stat (name, &s) == -1)
+		return NULL;
+
+	fi = g_new(FileInfo,1);
+	fi->name = g_strdup(name);
+	fi->ctime = s.st_ctime;
+	return fi;
+}
+
+static FileInfo *
+make_finfo_s(gchar *name, struct stat *s)
+{
+	FileInfo *fi;
+
+	fi = g_new(FileInfo,1);
+	fi->name = g_strdup(name);
+	fi->ctime = s->st_ctime;
+	return fi;
+}
+
 static GtkWidget *
-create_menu_at (char *menudir, int create_app_menu, int applets)
+create_menu_at (char *menudir, int create_app_menu, int applets, GList **finfo)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;
@@ -196,10 +263,19 @@ create_menu_at (char *menudir, int create_app_menu, int applets)
 	char *filename;
 	DIR *dir;
 	int items = 0;
+	FileInfo *fi;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
 		return NULL;
+	
+	/*add dir to the checked files list*/
+	fi = make_finfo(menudir);
+	if(!fi)
+		g_warning("Something went wrong, directory %s can't be stated",
+			  menudir);
+	else
+		*finfo = g_list_prepend(*finfo,fi);
 
 	menu = gtk_menu_new ();
 	
@@ -212,7 +288,8 @@ create_menu_at (char *menudir, int create_app_menu, int applets)
 		thisfile = dent->d_name;
 		/* Skip over . and .. */
 		if ((thisfile [0] == '.' && thisfile [1] == 0) ||
-		    (thisfile [0] == '.' && thisfile [1] == '.' && thisfile [2] == 0))
+		    (thisfile [0] == '.' && thisfile [1] == '.' &&
+		     thisfile [2] == 0))
 			continue;
 
 		filename = g_concat_dir_and_file (menudir, thisfile);
@@ -227,13 +304,14 @@ create_menu_at (char *menudir, int create_app_menu, int applets)
 			char *dentry_name;
 
 			sub = create_menu_at (filename, create_app_menu,
-					      applets);
+					      applets,finfo);
 			if (!sub) {
 				g_free (filename);
 				continue;
 			}
 
-			dentry_name = g_concat_dir_and_file (filename, ".directory");
+			dentry_name = g_concat_dir_and_file (filename,
+							     ".directory");
 			item_info = gnome_desktop_entry_load (dentry_name);
 			g_free (dentry_name);
 
@@ -291,6 +369,15 @@ create_menu_at (char *menudir, int create_app_menu, int applets)
 			}
 			menuitem_name = item_info->name;
 			pixmap_name = item_info->icon;
+			
+			/*add file to the checked files list*/
+			fi = make_finfo_s(filename,&s);
+			if(!fi)
+				g_warning("Something went wrong, "
+					  "file %s can't be stated",
+					  filename);
+			else
+				*finfo = g_list_prepend(*finfo,fi);
 		}
 		
 		items++;
@@ -397,27 +484,31 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	panel->autohide_inhibit = FALSE;
 }
 
-
-
-static gint
-menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+static gchar *
+get_real_menu_path(gchar *arguments, gchar *menu_base)
 {
-	Menu *menu = data;
-	if(event->button==1) {
-		PanelWidget *panel =
-			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
-					    PANEL_APPLET_PARENT_KEY);
-		/*so that the panel doesn't pop down until we're done with
-		  the menu */
-		panel->autohide_inhibit = TRUE;
-		panel_widget_queue_pop_down(panel);
+	char *this_menu;
 
-		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
-			       data, event->button, event->time);
-		return TRUE;
+	/*if null, let's put the main menu up*/
+	if (arguments == NULL)
+		arguments = ".";
+
+	if (*arguments == '/')
+		this_menu = g_strdup (arguments);
+	else
+		this_menu = g_concat_dir_and_file (menu_base, arguments);
+
+	if (!g_file_exists (this_menu)) {
+		g_warning("menu %s does not exist "
+			  "(base is %s, arguments are %s)",
+			  this_menu, menu_base, arguments);
+		g_free (this_menu);
+		return NULL;
 	}
-	return FALSE;
+	return this_menu;
 }
+
+
 
 void
 panel_configure (GtkWidget *widget, void *data)
@@ -501,7 +592,7 @@ add_swallow_to_panel(GtkWidget *widget, gpointer data)
 
 
 static GtkWidget *
-create_applets_menu(void)
+create_applets_menu(GList **finfo)
 {
 	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("applets");
@@ -514,13 +605,13 @@ create_applets_menu(void)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at(menudir,0,TRUE);
+	applet_menu = create_menu_at(menudir,0,TRUE,finfo);
 	g_free (menudir);
 	return applet_menu;
 }
 
 static GtkWidget *
-create_panel_submenu (GtkWidget *app_menu)
+create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 {
 	GtkWidget *menu, *menuitem;
 
@@ -534,8 +625,7 @@ create_panel_submenu (GtkWidget *app_menu)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-		create_applets_menu());
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applet_menu);
 
 	add_menu_separator(menu);
 
@@ -606,7 +696,7 @@ panel_logout (GtkWidget *widget, void *data)
 }
 
 static void
-add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
+add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_menu)
 {
 	GtkWidget *menuitem;
 	
@@ -617,14 +707,16 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), create_panel_submenu (app_menu));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_panel_submenu (app_menu,applet_menu));
 
 	add_menu_separator (menu);
 	
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Lock screen"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_lock, 0);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(panel_lock), 0);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -632,9 +724,95 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 						  GNOME_STOCK_PIXMAP_QUIT),
 			_("Log out"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_logout, 0);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(panel_logout), 0);
 
 }
+
+static void
+add_menu_widget (Menu *menu, char *menudir, int main_menu)
+{
+	GtkWidget *app_menu;
+	GtkWidget *applet_menu;
+	GList *finfo = NULL;
+	
+	if (main_menu) {
+		/*this should not happen init root menu should have
+		  been called (unless there are no panels*/
+		if(!root_menu) {
+			root_menu = create_menu_at(menudir,0,FALSE,&finfo);
+			app_menu = create_menu_at (menudir, 1,FALSE,&finfo);
+			applet_menu = create_applets_menu(&finfo);
+			add_special_entries (root_menu, app_menu, applet_menu);
+			gtk_object_set_data(GTK_OBJECT(root_menu),"finfo",
+					    finfo);
+		}
+		menu->menu = root_menu;
+	} else {
+		menu->menu = create_menu_at (menudir, 0, FALSE,&finfo);
+		gtk_object_set_data(GTK_OBJECT(menu->menu),"finfo",finfo);
+	}
+	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
+			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
+
+}
+
+static gint
+menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+	Menu *menu = data;
+	if(event->button==1) {
+		PanelWidget *panel =
+			gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+					    PANEL_APPLET_PARENT_KEY);
+		GList *finfo = gtk_object_get_data(GTK_OBJECT(menu->menu),
+						   "finfo");
+		
+		if(!finfo)
+			g_warning("Weird menu doesn't have finfo entry");
+		else {
+			/*if something has changed reread the menu*/
+			if(!check_finfo_list(finfo)) {
+				char *menu_base =
+					gnome_unconditional_datadir_file ("apps");
+				char *this_menu =
+					get_real_menu_path(menu->path,
+							   menu_base);
+				
+				puts("debug: rereading menu");
+
+				if (this_menu) {
+					gint main_menu =
+						(strcmp(menu->path,".")==0);
+					
+					/*free the menu releated data*/
+					gtk_widget_unref(menu->menu);
+					if(menu->menu == root_menu)
+						root_menu = NULL;
+					free_finfo_list(finfo);
+					
+					add_menu_widget(menu,this_menu,
+							main_menu);
+
+					g_free(menu_base);
+					g_free(this_menu);
+				} else
+					g_free (menu_base);
+			}
+		}
+
+		/*so that the panel doesn't pop down until we're done with
+		  the menu */
+		panel->autohide_inhibit = TRUE;
+		panel_widget_queue_pop_down(panel);
+
+		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
+			       data, event->button, event->time);
+		return TRUE;
+	}
+	return FALSE;
+}
+
 
 static Menu *
 create_panel_menu (char *menudir, int main_menu,
@@ -643,6 +821,7 @@ create_panel_menu (char *menudir, int main_menu,
 	GtkWidget *pixmap;
 	Menu *menu;
 	GtkWidget *app_menu;
+	GtkWidget *applet_menu;
 	
 	char *pixmap_name = NULL;
 
@@ -686,26 +865,15 @@ create_panel_menu (char *menudir, int main_menu,
 	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (menu->button);
 
-	if (main_menu) {
-		/*this should not happen init root menu should have
-		  been called (unless there are no panels*/
-		if(!root_menu) {
-			root_menu = create_menu_at(menudir,0,FALSE);
-			app_menu = create_menu_at (menudir, 1,FALSE);
-			add_special_entries (root_menu, app_menu);
-		}
-		menu->menu = root_menu;
-	} else {
-		menu->menu = create_menu_at (menudir, 0, FALSE);
-	}
+	add_menu_widget(menu,menudir,main_menu);
+
 	gtk_signal_connect (GTK_OBJECT (menu->button), "button_press_event",
 			    GTK_SIGNAL_FUNC (menu_button_press), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
-	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
-			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 
 	g_free (pixmap_name);
+
 	return menu;
 }
 
@@ -713,8 +881,10 @@ void
 init_main_menu(void)
 {
 	GtkWidget *app_menu;
+	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *menudir;
+	GList *finfo = NULL;
 
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
@@ -723,10 +893,13 @@ init_main_menu(void)
 		return;
 	}
 
-	root_menu = create_menu_at(menudir,0,FALSE);
-	app_menu = create_menu_at (menudir, 1,FALSE);
-	add_special_entries (root_menu, app_menu);
+	root_menu = create_menu_at(menudir,0,FALSE,&finfo);
+	app_menu = create_menu_at (menudir, 1,FALSE,&finfo);
+	applet_menu = create_applets_menu(&finfo);
+	add_special_entries (root_menu, app_menu, applet_menu);
 	g_free (menudir);
+	
+	gtk_object_set_data(GTK_OBJECT(root_menu),"finfo",finfo);
 }
 
 Menu *
@@ -735,25 +908,15 @@ create_menu_applet(char *arguments, PanelOrientType orient)
 	Menu *menu;
 	int main_menu;
 
-	char *this_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *this_menu = get_real_menu_path(arguments,menu_base);
 
-	/*if null, let's put the main menu up*/
-	if (arguments == NULL)
-		arguments = ".";
-
-	if (*arguments == '/')
-		this_menu = g_strdup (arguments);
-	else
-		this_menu = g_concat_dir_and_file (menu_base, arguments);
-
-	if (!g_file_exists (this_menu)) {
-		g_warning("Menu %s does not exist (base is %s, arguments are %s)\n", this_menu, menu_base, arguments);
+	if (!this_menu) {
 		g_free (menu_base);
-		g_free (this_menu);
 		return NULL;
 	}
 	
+
 	if(!gnome_folder) {
 		gnome_folder = gnome_unconditional_pixmap_file
 					("gnome-folder.png");
@@ -763,10 +926,10 @@ create_menu_applet(char *arguments, PanelOrientType orient)
 		}
 	}
 	
-	main_menu = (strcmp (arguments, ".") == 0);
+	main_menu = (!arguments || (strcmp (arguments, ".") == 0));
 
 	menu = create_panel_menu (this_menu, main_menu, orient);
-	menu->path=g_strdup(arguments);
+	menu->path=g_strdup(arguments?arguments:".");
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 	
