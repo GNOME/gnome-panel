@@ -1,3 +1,9 @@
+Sat Feb 14 01:44:06 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (panel_LDADD): Don't include DL_LIB.  Do include
+	INTLLIBS.
+	(clock_applet_LDADD): Include INTLLIBS.
+
 Sat Feb 14 00:50:44 1998  George Lebl  <jirka@5z.com>
 
 	* Makefile.am, panel.c main.c, panel.h: ripped out all the

@@ -17,14 +17,14 @@ panel_SOURCES = \
 	panel_config.c  \
 	panel_config.h
 
-panel_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(DL_LIB)
+panel_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(INTLLIBS)
 
 
 ## FIXME: move clock applet into clock
 clock_applet_SOURCES = \
 	clock.c
 
-clock_applet_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS)
+clock_applet_LDADD = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
