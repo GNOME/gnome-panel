@@ -20,7 +20,7 @@
 #include "applet.h"
 #include "xstuff.h"
 
-static StatusApplet *the_status = NULL; /*"there can only be one" status
+static StatusApplet *the_status = NULL; /*"there can be only one" status
 					  applet*/
 static GtkWidget *offscreen = NULL; /*offscreen window for putting status
 				      spots if there is no status applet*/
