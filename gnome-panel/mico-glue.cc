@@ -98,6 +98,34 @@ panel_corba_gtk_main (char *service_name)
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
 }
 
+int
+panel_corba_call_launcher(const char *path)
+{
+	char *name;
+	char *iior;
+	char hostname [1024];
+	
+	gethostname (hostname, sizeof (hostname));
+	if (hostname [0] == 0)
+		strcpy (hostname, "unknown-host");
+
+	name = g_copy_strings ("/CORBA-servers/Launcher-", hostname, 
+			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+
+	iior = gnome_config_get_string (name);
+	g_free (name);
+	
+	if (!iior)
+		return 0;
+
+	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
+	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
+
+	launcher_client->start_new_launcher(path);
+	
+	return 1;
+}
+
 void
 send_applet_session_save (const char *ior, int id, const char *cfgpath,
 			  const char *globcfgpath)

@@ -21,9 +21,14 @@
 #define CONFIG_TAG "Launcher"
 #define APPLET_DATA "launcher_data"
 
+static int launcher_count = 0;
+GList *lauchers = NULL;
+
 static char *default_app_pixmap;
 
 typedef struct {
+	int applet_id;
+	GtkWidget         *aw;
 	GtkWidget         *button;
 	gint               signal_click_tag;
 	GnomeDesktopEntry *dentry;
@@ -396,6 +401,106 @@ create_instance (PanelWidget *panel, char *params, int pos)
 	cmd.params.set_tooltip.tooltip = dentry->comment;
 
 	(*panel_cmd_func) (&cmd);
+}
+
+/*these are commands sent over corba:*/
+void
+change_orient(int id, int orient)
+{
+	PanelOrientType o = (PanelOrientType)orient;
+}
+
+void
+session_save(int id, const char *cfgpath, const char *globcfgpath)
+{
+	/*save the session here*/
+}
+
+static gint
+quit_launcher(gpointer data)
+{
+	if(launcher_count<=0)
+		exit(0);
+	return FALSE;
+}
+
+void
+shutdown_applet(int id)
+{
+	/*kill our window using destroy to avoid warnings we need to
+	  kill the aw but we also need to return from this call*/
+	gtk_widget_destroy(aw);
+
+	launcher_count--;
+
+	if(launcher_count<=0)
+		gtk_idle_add(quit_launcher,NULL);
+}
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *clock;
+	char *result;
+	char *cfgpath;
+	char *globcfgpath;
+
+	char *mypath;
+	char *myinvoc;
+
+	panel_corba_register_arguments ();
+	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
+
+	if (!gnome_panel_applet_init_corba ()){
+		g_error ("Could not comunicate with the panel\n");
+		/*fprintf (stderr, "Could not comunicate with the panel\n");*/
+		/*exit (1);*/
+	}
+
+	aw = applet_widget_new ();
+
+	if(argv[0][0] == '/')
+		myinvoc = g_strdup(argv[0]);
+	else {
+		mypath = getcwd(NULL,0);
+		myinvoc = g_copy_strings(mypath,"/",argv[0],NULL);
+		free(mypath);
+	}
+	result = gnome_panel_applet_request_id(aw,myinvoc,&applet_id,
+					       &cfgpath,&globcfgpath);
+	g_free(myinvoc);
+	if (result){
+		g_error ("Could not talk to the Panel: %s\n", result);
+		/*exit (1);*/
+	}
+
+	/*use cfg path for loading up data!*/
+
+	g_free(globcfgpath);
+	g_free(cfgpath);
+
+	gnome_panel_applet_register_callback (APPLET_WIDGET(aw),
+					      applet_id,
+					      "test",
+					      "TEST CALLBACK",
+					      test_callback,
+					      NULL);
+
+	clock = create_clock_widget (GTK_WIDGET(aw));
+	gtk_widget_show(clock);
+	applet_widget_add (APPLET_WIDGET (aw), clock);
+	gtk_widget_show (aw);
+
+	result = gnome_panel_prepare_and_transfer(aw,applet_id);
+	/*printf ("Done\n");*/
+	if (result){
+		g_error ("Could not talk to the Panel: %s\n", result);
+		/*exit (1);*/
+	}
+
+	applet_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
+
+	return 0;
 }
 
 gpointer
