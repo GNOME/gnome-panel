@@ -25,6 +25,7 @@ INCLUDES =							\
 	-DDATADIR=\""$(datadir)"\"				\
 	-DLIBDIR=\""$(libdir)"\"				\
 	$(PANEL_CFLAGS)						\
+	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
