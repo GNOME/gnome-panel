@@ -1,3 +1,12 @@
+2003-05-27  Ray Strode  <halfline@hawaii.rr.com>
+
+	* fish.c: 
+	(delete_event): Add return statement.
+	(display_preferences_dialog): Bypass close_dialog and just 
+	use gtk_widget_hide as the clicked handler directly (Mark's 
+	idea).  
+	(close_dialog): Remove this unused function.
+
 2003-04-28  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* fish.glade:  Fix widget padding per HIG.

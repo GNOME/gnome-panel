@@ -689,6 +689,8 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			dialog);
 
 	gtk_widget_show (dialog->properties_dialog);
+
+	return dialog;
 }
 
 void

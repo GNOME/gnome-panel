@@ -245,13 +245,8 @@ delete_event (GtkWidget  *widget,
 	      FishApplet *fish)
 {
 	gtk_widget_hide (widget);
-}
 
-static gboolean
-close_dialog (GtkWidget  *widget,
-	      FishApplet *fish)
-{
-	gtk_widget_hide (fish->preferences_dialog);
+	return TRUE;
 }
 
 static void
@@ -349,8 +344,9 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (handle_response), fish);
 
 	button = glade_xml_get_widget (xml, "done_button");
-        g_signal_connect (button, "clicked",
-			  (GCallback) close_dialog, fish);
+        g_signal_connect_swapped (button, "clicked",
+				  (GCallback) gtk_widget_hide, 
+				  fish->preferences_dialog);
 
 	g_signal_connect (fish->preferences_dialog, "response",
 			  G_CALLBACK (handle_response), fish);
