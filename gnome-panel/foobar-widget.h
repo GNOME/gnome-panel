@@ -10,7 +10,6 @@
 
 #include <libgnomeui.h>
 #include "panel-types.h"
-#include "gwmh.h"
 
 G_BEGIN_DECLS
 
