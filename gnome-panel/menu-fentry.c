@@ -414,7 +414,8 @@ fr_get_dir(char *mdir)
 	GSList *li;
 	for(li=dir_list;li!=NULL;li=g_slist_next(li)) {
 		FileRec *fr = li->data;
-		if(strcmp(fr->name,mdir)==0)
+		if(fr && fr->name &&
+		   strcmp(fr->name,mdir)==0)
 			return fr_check_and_reread(fr);
 	}
 	return fr_read_dir(NULL,mdir,NULL,1);

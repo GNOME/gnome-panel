@@ -1,5 +1,9 @@
 1999-09-04  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* menu-fentry.c (fr_get_dir): check fr and fr->name
+	for NULLness before strcmp()... this will fix a crash
+	I had last night
+
 	* menu.c (remove_menuitem): don't g_free file -
 	g_filename_pointer() doesn't allocate memory
 	(fixes a crash I just had)
