@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"POT-Creation-Date: 2003-05-18 23:48+0000\n"
-"PO-Revision-Date: 2003-05-18 23:46+0000\n"
+"POT-Creation-Date: 2003-05-20 00:56+0000\n"
+"PO-Revision-Date: 2003-05-20 00:59+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <happyguy_pt@hotmail.com>\n"
 "MIME-Version: 1.0\n"
@@ -271,7 +271,7 @@ msgstr "_Sobre..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:819 gnome-panel/menu.c:3036
+#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:758 gnome-panel/menu.c:3036
 #: gnome-panel/panel-action-button.c:519 gnome-panel/panel-menu-bar.c:307
 #: gnome-panel/panel-menu-button.c:565
 msgid "_Help"
@@ -390,6 +390,7 @@ msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:3
+#: gnome-panel/panel-run-dialog.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -401,7 +402,7 @@ msgstr "<b>Animação</b>"
 msgid "<b>General</b>"
 msgstr "<b>Geral</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:271
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:272
 msgid "Browse"
 msgstr "Procurar"
 
@@ -993,7 +994,7 @@ msgstr "Mostrar seta no botão de esconder"
 msgid "Drawer"
 msgstr "Gaveta"
 
-#: gnome-panel/drawer.c:654 gnome-panel/launcher.c:817 gnome-panel/menu.c:1544
+#: gnome-panel/drawer.c:654 gnome-panel/launcher.c:756 gnome-panel/menu.c:1544
 #: gnome-panel/menu.c:2990 gnome-panel/panel-action-button.c:88
 msgid "_Properties"
 msgstr "_Propriedades"
@@ -1212,92 +1213,7 @@ msgstr "Directório web."
 msgid "GNOME Panel Shell"
 msgstr "Consola de Painel GNOME"
 
-#: gnome-panel/gnome-run.c:243 gnome-panel/gnome-run.c:264
-#, c-format
-msgid ""
-"<b>Failed to run this program</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Falha ao executar esta aplicação</b>\n"
-"\n"
-"Detalhes: %s"
-
-#: gnome-panel/gnome-run.c:387 gnome-panel/gnome-run.c:467
-#, c-format
-msgid ""
-"<b>Failed to execute command:</b> '%s'\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Falha ao executar comando:</b> '%s'\n"
-"\n"
-"Detalhes: %s"
-
-#: gnome-panel/gnome-run.c:494
-#, c-format
-msgid ""
-"<b>Failed to open file:</b> '%s'\n"
-"\n"
-"Details: no application available to open file"
-msgstr ""
-"<b>Falha ao abrir ficheiro:</b> '%s'\n"
-"\n"
-"Detalhes: nenhuma aplicação disponível para abrir ficheiro"
-
-#: gnome-panel/gnome-run.c:509
-#, c-format
-msgid ""
-"<b>Failed to open file:</b> '%s'\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Falha ao abrir ficheiro:</b> '%s'\n"
-"\n"
-"Detalhes: %s"
-
-#: gnome-panel/gnome-run.c:599
-msgid "Choose a file"
-msgstr "Seleccione um ficheiro"
-
-#: gnome-panel/gnome-run.c:825 gnome-panel/gnome-run.c:826
-msgid "Known Applications"
-msgstr "Aplicações Conhecidas"
-
-#: gnome-panel/gnome-run.c:952
-msgid "Command to run"
-msgstr "Comando a executar"
-
-#: gnome-panel/gnome-run.c:987
-msgid "Run in _terminal"
-msgstr "Execu_tar na consola"
-
-#: gnome-panel/gnome-run.c:992
-msgid "Run with _File..."
-msgstr "Executar com _Ficheiro..."
-
-#: gnome-panel/gnome-run.c:1373
-#, c-format
-msgid "Will run command: '%s'"
-msgstr "Irá executar comando: '%s'"
-
-#: gnome-panel/gnome-run.c:1382
-msgid "No application selected"
-msgstr "Nenhuma aplicação seleccionada"
-
-#: gnome-panel/gnome-run.c:1532
-msgid "List of known applications"
-msgstr "Lista de aplicações conhecidas"
-
-#: gnome-panel/gnome-run.c:1533
-msgid "Choose an application to run from the list"
-msgstr "Seleccione da lista uma aplicação a executar"
-
-#: gnome-panel/gnome-run.c:1664 gnome-panel/panel-action-button.c:214
-msgid "Run Application"
-msgstr "Executar Aplicação"
-
-#: gnome-panel/launcher.c:165
+#: gnome-panel/launcher.c:104
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1308,11 +1224,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:193
+#: gnome-panel/launcher.c:132
 msgid "This launch icon does not specify a url to show"
 msgstr "Este ícone não especifica um url para mostrar"
 
-#: gnome-panel/launcher.c:202
+#: gnome-panel/launcher.c:141
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -1321,7 +1237,7 @@ msgstr ""
 "Incapaz de mostrar %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:234
+#: gnome-panel/launcher.c:173
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -1332,7 +1248,7 @@ msgstr ""
 "\n"
 "Detalhes: %s"
 
-#: gnome-panel/launcher.c:279
+#: gnome-panel/launcher.c:218
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1341,38 +1257,38 @@ msgstr ""
 "Incapaz de lançar ícone\n"
 "%s"
 
-#: gnome-panel/launcher.c:475
+#: gnome-panel/launcher.c:414
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "Nenhum URI indicado para o ficheiro de ambiente do lançador de painel\n"
 
-#: gnome-panel/launcher.c:489
+#: gnome-panel/launcher.c:428
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "Incapaz de abrir ficheiro de ambiente %s para o lançador de painel%s%s\n"
 
-#: gnome-panel/launcher.c:603
+#: gnome-panel/launcher.c:542
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Ajuda sobre a _Aplicação %s"
 
-#: gnome-panel/launcher.c:723 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:662 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Propriedades do Iniciador"
 
-#: gnome-panel/launcher.c:881
+#: gnome-panel/launcher.c:820
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Chave %s não está definida, incapaz de carregar lançador\n"
 
-#: gnome-panel/launcher.c:940 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:879 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Criar Iniciador"
 
-#: gnome-panel/launcher.c:1161 gnome-panel/menu.c:1230
-#: gnome-panel/panel-util.c:80
+#: gnome-panel/launcher.c:1100 gnome-panel/menu.c:1230
+#: gnome-panel/panel-util.c:81
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -1753,6 +1669,11 @@ msgstr "Trancar ecrã"
 msgid "Log out of GNOME"
 msgstr "Sair do GNOME"
 
+#: gnome-panel/panel-action-button.c:214
+#: gnome-panel/panel-run-dialog.glade.h:10
+msgid "Run Application"
+msgstr "Executar Aplicação"
+
 #: gnome-panel/panel-action-button.c:219
 msgid "Search for Files"
 msgstr "Procurar Ficheiros"
@@ -1823,12 +1744,12 @@ msgstr "Erro a ler directório gconf '%s': %s"
 msgid "error getting value for '%s': %s"
 msgstr "Erro ao obter valor de '%s': %s"
 
-#: gnome-panel/panel.c:453
+#: gnome-panel/panel.c:452
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:1170
+#: gnome-panel/panel.c:1169
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1836,9 +1757,23 @@ msgstr ""
 "Quando um painel é removido, o painel e as suas\n"
 "configurações são perdidas. Remover este painel?"
 
-#: gnome-panel/panel.c:1179
+#: gnome-panel/panel.c:1178
 msgid "Delete Panel"
 msgstr "Remover Painel"
+
+#: gnome-panel/panel-force-quit.c:73
+msgid ""
+"Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr ""
+"Clique numa janela para forçar a aplicação a terminar. Para cancelar prima <ESC>."
+
+#: gnome-panel/panel-force-quit.c:185
+msgid ""
+"Force this application to exit?\n"
+"(Any open documents will be lost.)"
+msgstr ""
+"Forçar esta aplicação a terminar?\n"
+"(Quaisquer documentos abertos serão perdidos.)"
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
@@ -2321,6 +2256,118 @@ msgstr "Ocorreu um erro desconhecido ao tentar abrir %s"
 msgid "Open Recent"
 msgstr "Abrir Recente"
 
+#: gnome-panel/panel-run-dialog.c:276
+#, c-format
+msgid ""
+"<b>Error launching command: '%s'</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Erro ao lançar comando: '%s'</b>\n"
+"\n"
+"Detalhes: %s"
+
+#: gnome-panel/panel-run-dialog.c:305
+#, c-format
+msgid ""
+"<b>Error displaying location: '%s'</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Erro ao mostrar localização: '%s'</b>\n"
+"\n"
+"Detalhes: %s"
+
+#: gnome-panel/panel-run-dialog.c:1078
+msgid "Choose a file to append to the command..."
+msgstr "Seleccione um ficheiro a acrescentar ao comando..."
+
+#: gnome-panel/panel-run-dialog.c:1257
+#, c-format
+msgid "Will run command: '%s'"
+msgstr "Irá executar comando: '%s'"
+
+#: gnome-panel/panel-run-dialog.c:1263 gnome-panel/panel-run-dialog.glade.h:14
+msgid "Select an application to view its description."
+msgstr "Seleccione uma aplicação para ver a sua descrição."
+
+#: gnome-panel/panel-run-dialog.glade.h:2
+msgid ""
+"A description of the currently selected application or information on the "
+"command that will be run."
+msgstr ""
+"Uma descrição da aplicação actualmente seleccionada ou informação sobre o "
+"comando que será executado."
+
+#: gnome-panel/panel-run-dialog.glade.h:3
+msgid "Application description"
+msgstr "Descrição da Aplicação"
+
+#: gnome-panel/panel-run-dialog.glade.h:4
+msgid ""
+"Click this button to browse for a file whose name to append to the command "
+"string."
+msgstr ""
+"Clique neste botão para procurar um ficheiro cujo nome será adicionado à "
+"expressão de comando."
+
+#: gnome-panel/panel-run-dialog.glade.h:5
+msgid ""
+"Click this button to run the selected application or the command in the "
+"command entry field."
+msgstr ""
+"Clique neste botão para executar a aplicação seleccionada ou o comando "
+"no campo de entrada de comando."
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "Command entry"
+msgstr "Entrada de comando"
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Command icon"
+msgstr "Ícone de comando"
+
+#: gnome-panel/panel-run-dialog.glade.h:8
+msgid "Enter a command string here to run it."
+msgstr "Introduza aqui uma expressão de comando para a executar."
+
+#: gnome-panel/panel-run-dialog.glade.h:9
+msgid "List of known applications"
+msgstr "Lista de aplicações conhecidas"
+
+#: gnome-panel/panel-run-dialog.glade.h:11
+msgid "Run in _terminal"
+msgstr "Execu_tar na consola"
+
+#: gnome-panel/panel-run-dialog.glade.h:12
+msgid "Run with _file..."
+msgstr "Executar com _ficheiro..."
+
+#: gnome-panel/panel-run-dialog.glade.h:13
+msgid "Select an application from the list to run it"
+msgstr "Seleccione da lista uma aplicação a executar"
+
+#: gnome-panel/panel-run-dialog.glade.h:15
+msgid "Select this box to run the command in a terminal window."
+msgstr "Seleccione esta caixa para executar o comando numa janela de consola."
+
+#: gnome-panel/panel-run-dialog.glade.h:16
+msgid "Show list of known _applications"
+msgstr "Mostrar lista de _aplicações conhecidas"
+
+#: gnome-panel/panel-run-dialog.glade.h:17
+msgid "The icon of the command to be run."
+msgstr "O ícone do comando a executar."
+
+#: gnome-panel/panel-run-dialog.glade.h:18
+msgid "When this is selected the list of known applications is displayed."
+msgstr ""
+"Quando esta opção está seleccionada a lista de aplicações conhecidas é apresentada."
+
+#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:147
+msgid "_Run"
+msgstr "Executa_r"
+
 #: gnome-panel/panel-shell.c:67
 msgid ""
 "I've detected a panel already running,\n"
@@ -2345,10 +2392,6 @@ msgstr ""
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "Incapaz de carregar ícone base do painel '%s'\n"
-
-#: gnome-panel/panel-stock-icons.c:147
-msgid "_Run"
-msgstr "Executa_r"
 
 #: gnome-panel/panel-stock-icons.c:148
 msgid "_Force quit"
@@ -2400,7 +2443,7 @@ msgid "The orientation of the panel"
 msgstr "A orientação deste painel"
 
 #: gnome-panel/panel-toplevel.c:3327
-msgid "The height (or width when vertivcal) of the panel"
+msgid "The height (or width when vertical) of the panel"
 msgstr "A altura (ou largura quando vertical) do painel"
 
 #: gnome-panel/panel-toplevel.c:3339
@@ -2848,16 +2891,16 @@ msgstr ""
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:106 gnome-panel/panel-util.c:136
-#: gnome-panel/panel-util.c:161
+#: gnome-panel/panel-util.c:107 gnome-panel/panel-util.c:137
+#: gnome-panel/panel-util.c:162
 msgid "Help document not found"
 msgstr "Documento de ajuda não encontrado"
 
-#: gnome-panel/panel-util.c:175
+#: gnome-panel/panel-util.c:176
 msgid "No document to show"
 msgstr "Nenhum documento para mostrar"
 
-#: gnome-panel/panel-util.c:1439
+#: gnome-panel/panel-util.c:1440
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2980,6 +3023,51 @@ msgstr "XX Grande"
 msgid "XX Small"
 msgstr "XX Pequeno"
 
+#~ msgid ""
+#~ "<b>Failed to run this program</b>\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Falha ao executar esta aplicação</b>\n"
+#~ "\n"
+#~ "Detalhes: %s"
+
+#~ msgid ""
+#~ "<b>Failed to execute command:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Falha ao executar comando:</b> '%s'\n"
+#~ "\n"
+#~ "Detalhes: %s"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: no application available to open file"
+#~ msgstr ""
+#~ "<b>Falha ao abrir ficheiro:</b> '%s'\n"
+#~ "\n"
+#~ "Detalhes: nenhuma aplicação disponível para abrir ficheiro"
+
+#~ msgid ""
+#~ "<b>Failed to open file:</b> '%s'\n"
+#~ "\n"
+#~ "Details: %s"
+#~ msgstr ""
+#~ "<b>Falha ao abrir ficheiro:</b> '%s'\n"
+#~ "\n"
+#~ "Detalhes: %s"
+
+#~ msgid "Choose a file"
+#~ msgstr "Seleccione um ficheiro"
+
+#~ msgid "Known Applications"
+#~ msgstr "Aplicações Conhecidas"
+
+#~ msgid "No application selected"
+#~ msgstr "Nenhuma aplicação seleccionada"
+
 #~ msgid "Command to _execute when fish is clicked:"
 #~ msgstr "Comando a _executar quando o peixe é clicado:"
 
@@ -3086,9 +3174,6 @@ msgstr "XX Pequeno"
 
 #~ msgid "C_ommand to run before checking for mail:"
 #~ msgstr "C_omando a executar antes de verificar o correio:"
-
-#~ msgid "Command Entry box"
-#~ msgstr "Caixa de Entrada de Comando"
 
 #~ msgid "Execute"
 #~ msgstr "Executar"
@@ -3742,9 +3827,6 @@ msgstr "XX Pequeno"
 
 #~ msgid "_Known Applications <<"
 #~ msgstr "Aplicações Con_hecidas <<"
-
-#~ msgid "Hide the list of known applications"
-#~ msgstr "Esconder a lista de aplicações conhecidas"
 
 #~ msgid "_Known Applications >>"
 #~ msgstr "Aplicações Con_hecidas >>"
@@ -4943,9 +5025,6 @@ msgstr "XX Pequeno"
 
 #~ msgid "Starting GNOME"
 #~ msgstr "A iniciar GNOME"
-
-#~ msgid "Applications menu"
-#~ msgstr "Menu das Aplicações"
 
 #~ msgid "Programming"
 #~ msgstr "Programação"
