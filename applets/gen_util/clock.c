@@ -212,7 +212,7 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	ComputerClock *cc;
 
 	frame = gtk_frame_new(NULL);
-	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
 	gtk_widget_show(frame);
 
 	cc = g_new(ComputerClock, 1);
