@@ -191,21 +191,7 @@ get_default_menu_flags (void)
 	if (distribution != DISTRIBUTION_UNKNOWN)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
-	/*guess KDE menus*/
-	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
-		flags |= MAIN_MENU_KDE_SUB;
-
 	return flags;
-}
-
-gboolean
-got_kde_menus (void)
-{
-	/*guess KDE menus*/
-	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
-		return TRUE;
-	else
-		return FALSE;
 }
 
 gboolean

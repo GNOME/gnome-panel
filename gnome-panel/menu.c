@@ -188,9 +188,6 @@ static GtkWidget * create_desktop_menu (GtkWidget *m,
 
 static void add_bonobo_applet (GtkWidget  *widget, const char *iid);
 
-static void add_kde_submenu (GtkWidget *root_menu,
-			     gboolean fake_submenus,
-			     gboolean launcher_add);
 static void add_distribution_submenu (GtkWidget *root_menu,
 				      gboolean fake_submenus,
 				      gboolean launcher_add);
@@ -2846,32 +2843,6 @@ create_distribution_menu (GtkWidget *menu,
 }
 
 static GtkWidget *
-create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
-		 gboolean force, gboolean fake,
-		 gboolean launcher_add)
-{
-	char *uri;
-
-	uri = gnome_vfs_get_uri_from_local_path (kde_menudir);
-
-	if (!fake || menu)
-		menu = create_menu_at (menu, 
-				       uri,
-				       launcher_add,
-				       _("KDE Menu"), 
-				       fake_submenus,
-				       force);
-	else
-		menu = create_fake_menu_at (uri,
-					    launcher_add,
-					    _("KDE Menu"));
-
-	g_free (uri);
-
-	return menu;
-}
-
-static GtkWidget *
 create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 {
 	if (menu == NULL)
@@ -2894,10 +2865,6 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 
 	add_distribution_submenu (menu, fake_submenus,
 				  TRUE /*launcher_add */);
-	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR)) {
-		add_kde_submenu (menu, fake_submenus,
-				 TRUE /*launcher_add */);
-	}
 
 	return menu;
 }
@@ -3278,28 +3245,6 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 			  NULL);
 }
 
-static void
-add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
-		 gboolean launcher_add)
-{
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-
-	menu = create_kde_menu (NULL, fake_submenus, TRUE,
-				TRUE, launcher_add);
-
-	menuitem = gtk_image_menu_item_new ();
-
-	panel_load_menu_image_deferred (
-		menuitem, panel_menu_icon_get_size (), PANEL_STOCK_KDE, NULL, NULL, FALSE);
-
-	setup_menuitem (menuitem, panel_menu_icon_get_size (), NULL, _("KDE Menu"), TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	g_signal_connect (G_OBJECT(menu),"show",
-			  G_CALLBACK(submenu_to_display), NULL);
-}
-
 GtkWidget *
 create_root_menu (GtkWidget   *root_menu,
 		  PanelWidget *panel,
@@ -3314,17 +3259,12 @@ create_root_menu (GtkWidget   *root_menu,
 	gboolean                has_subs;
 	gboolean                has_subs2;
 
-	if ((flags & MAIN_MENU_KDE_SUB) && !got_kde_menus ())
-		flags &= ~MAIN_MENU_KDE_SUB;
-
 	if ((flags & MAIN_MENU_DISTRIBUTION_SUB) && !got_distro_menus ())
 		flags &= ~MAIN_MENU_DISTRIBUTION_SUB;
 
-	has_inline = (flags & (MAIN_MENU_SYSTEM |
-			       MAIN_MENU_KDE));
+	has_inline = (flags & MAIN_MENU_SYSTEM);
 
-	has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
-			     MAIN_MENU_KDE_SUB));
+	has_subs = (flags & MAIN_MENU_SYSTEM_SUB);
 
 	has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
 			      MAIN_MENU_PANEL_SUB));
@@ -3352,9 +3292,6 @@ create_root_menu (GtkWidget   *root_menu,
 		create_distribution_menu(root_menu, fake_submenus, FALSE,
 					 FALSE /* launcher_add */);
 	}
-	if (flags & MAIN_MENU_KDE)
-		create_kde_menu(root_menu, fake_submenus, FALSE, FALSE,
-				FALSE /* launcher_add */);
 
 	/*others here*/
 
@@ -3382,10 +3319,6 @@ create_root_menu (GtkWidget   *root_menu,
 	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
 		add_distribution_submenu (root_menu, fake_submenus,
 					  FALSE /*launcher_add */);
-	}
-	if (flags & MAIN_MENU_KDE_SUB) {
-		add_kde_submenu (root_menu, fake_submenus,
-				 FALSE /*launcher_add */);
 	}
 
 	if ( ! no_run_box && extra_items) {

@@ -61,7 +61,6 @@ G_BEGIN_DECLS
 #define PANEL_STOCK_DRAWER              "panel-drawer"
 #define PANEL_STOCK_APPLETS             "panel-applet"
 #define PANEL_STOCK_DESKTOP             "panel-desktop"
-#define PANEL_STOCK_KDE                 "panel-kde"
 
 /* stock items  - no point in theme the icons one these,
  * they use stock gtk icons and just modify the text

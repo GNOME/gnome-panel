@@ -40,10 +40,6 @@ GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
 
-char *kde_menudir = NULL;
-char *kde_icondir = NULL;
-char *kde_mini_icondir = NULL;
-
 GnomeIconTheme *panel_icon_theme = NULL;
 
 /* FIXME: old lockdown globals */
@@ -51,54 +47,6 @@ gboolean commie_mode = FALSE;
 gboolean no_run_box = FALSE;
 
 static char *profile_arg;
-
-/* Note: similar function is in gnome-desktop-item !!! */
-
-static void
-find_kde_directory (void)
-{
-	int i;
-	const char *kdedir = g_getenv ("KDEDIR");
-	char *try_prefixes[] = {
-		"/usr",
-		"/opt/kde",
-		"/usr/local",
-		"/kde",
-		NULL
-	};
-	if (kdedir != NULL) {
-		kde_menudir = g_build_filename (kdedir, "share", "applnk", NULL);
-		kde_icondir = g_build_filename (kdedir, "share", "icons", NULL);
-		kde_mini_icondir = g_build_filename (kdedir, "share", "icons", "mini", NULL);
-		return;
-	}
-
-	/* if what configure gave us works use that */
-	if (g_file_test (KDE_MENUDIR, G_FILE_TEST_IS_DIR)) {
-		kde_menudir = g_strdup (KDE_MENUDIR);
-		kde_icondir = g_strdup (KDE_ICONDIR);
-		kde_mini_icondir = g_strdup (KDE_MINI_ICONDIR);
-		return;
-	}
-
-	for (i = 0; try_prefixes[i] != NULL; i++) {
-		char *try;
-		try = g_build_filename (try_prefixes[i], "share", "applnk", NULL);
-		if (g_file_test (try, G_FILE_TEST_IS_DIR)) {
-			kde_menudir = try;
-			kde_icondir = g_build_filename (try_prefixes[i], "share", "icons", NULL);
-			kde_mini_icondir = g_build_filename (try_prefixes[i], "share", "icons", "mini", NULL);
-			return;
-		}
-		g_free(try);
-	}
-
-	/* absolute fallback, these don't exist, but we're out of options
-	   here */
-	kde_menudir = g_strdup (KDE_MENUDIR);
-	kde_icondir = g_strdup (KDE_ICONDIR);
-	kde_mini_icondir = g_strdup (KDE_MINI_ICONDIR);
-}
 
 static const struct poptOption options[] = {
   {"profile", '\0', POPT_ARG_STRING, &profile_arg, 0, N_("Specify a profile name to load"), NULL},
@@ -126,8 +74,6 @@ main (int argc, char **argv)
 	panel_icon_theme = gnome_icon_theme_new ();
 	gnome_icon_theme_set_allow_svg (panel_icon_theme, TRUE);
 	
-	find_kde_directory();
-
 	panel_register_window_icon ();
 
 	panel_tooltips = gtk_tooltips_new ();

@@ -35,10 +35,6 @@ extern GSList         *panel_list;
 
 extern GtkTooltips    *panel_tooltips;
 
-extern char           *kde_menudir;
-extern char           *kde_icondir;
-extern char           *kde_mini_icondir;
-
 extern GnomeIconTheme *panel_icon_theme;
 
 extern gboolean        commie_mode;

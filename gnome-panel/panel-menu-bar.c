@@ -39,7 +39,7 @@
 #include "panel-globals.h"
 #include "panel-profile.h"
 
-#define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
+#define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_DISTRIBUTION_SUB)
 
 enum {
 	PROP_0,

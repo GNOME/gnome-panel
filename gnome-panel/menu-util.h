@@ -31,7 +31,6 @@ GtkWidget *stock_menu_item_new (const char *text,
 				gboolean    force_image);
 
 int        get_default_menu_flags (void);
-gboolean   got_kde_menus (void);
 gboolean   got_distro_menus (void);
 
 
