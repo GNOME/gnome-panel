@@ -55,6 +55,9 @@ static void basep_widget_focus_return (BasePWidget *basep);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
+static void basep_widget_set_focus (GtkWindow *window, GtkWidget *widget);
+static gboolean basep_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event);
+static gboolean basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event);
 static void basep_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
 static void basep_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void basep_widget_realize (GtkWidget *w);
@@ -127,6 +130,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+	GtkWindowClass *window_class = GTK_WINDOW_CLASS (klass);
 	GtkBindingSet *binding_set;
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
@@ -136,6 +140,10 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
 
+	window_class->set_focus = basep_widget_set_focus;
+
+	widget_class->focus_in_event = basep_widget_focus_in_event;
+	widget_class->focus_out_event = basep_widget_focus_out_event;
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
@@ -338,6 +346,53 @@ basep_widget_map (GtkWidget *w)
 		GTK_WIDGET_CLASS (basep_widget_parent_class)->map (w);
 
         basep_widget_update_winhints (basep);
+}
+
+static gboolean
+basep_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
+{
+	gboolean ret_val = GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_in_event (widget, event);
+
+	if (!GTK_WINDOW (widget)->focus_widget) {
+		BasePWidget *basep = BASEP_WIDGET (widget);
+
+		gtk_widget_set_state (basep->panel, GTK_STATE_PRELIGHT);
+		gtk_widget_queue_draw (basep->panel);
+	}
+	return ret_val;
+}
+
+static gboolean
+basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
+{
+	gboolean ret_val = GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_out_event (widget, event);
+
+	if (!GTK_WINDOW (widget)->focus_widget) {
+		BasePWidget *basep = BASEP_WIDGET (widget);
+
+		if (GTK_WIDGET_STATE (basep->panel) == GTK_STATE_PRELIGHT) {
+			gtk_widget_set_state (basep->panel, GTK_STATE_NORMAL);
+			gtk_widget_queue_draw (basep->panel);
+		}
+	}
+	return ret_val;
+}
+
+static void
+basep_widget_set_focus (GtkWindow *window, GtkWidget *widget)
+{
+	BasePWidget *basep = BASEP_WIDGET(window);
+
+	if (!widget) {
+		gtk_widget_set_state (basep->panel, GTK_STATE_PRELIGHT);
+		gtk_widget_queue_draw (basep->panel);
+	} else {
+		if (GTK_WIDGET_STATE (basep->panel) == GTK_STATE_PRELIGHT) {
+			gtk_widget_set_state (basep->panel, GTK_STATE_NORMAL);
+			gtk_widget_queue_draw (basep->panel);
+		}
+	}
+	basep_widget_parent_class->set_focus (window, widget);
 }
 
 static void

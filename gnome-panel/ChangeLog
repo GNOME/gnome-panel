@@ -1,3 +1,10 @@
+2002-01-17  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep_widget.c: Fill in panel background with prelight color/pixmap 
+	when panel has focus. This requires introducing new function
+	basep_widget_focus_in_event, base_widget_focus_out_widget,
+	basep_widget_set_focus
+
 Thu Jan 17 01:43:20 2002  George Lebl <jirka@5z.com>
 
 	* panel-util.[ch], applet.c, basep-widget.c, drawer.c, logout.c,
