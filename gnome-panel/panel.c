@@ -1806,8 +1806,8 @@ panel_save_global_config (void)
 	 * panel-global-config.schemas
 	 */
 
-	full_key = panel_gconf_global_key ("enable_tooltips");
-	gconf_change_set_set_bool (change_set, full_key, global_config.enable_tooltips);
+	full_key = panel_gconf_global_key ("tooltips_enabled");
+	gconf_change_set_set_bool (change_set, full_key, global_config.tooltips_enabled);
 
 	full_key = panel_gconf_global_key ("keep_menus_in_memory");
 	gconf_change_set_set_bool (change_set, full_key, global_config.keep_menus_in_memory);
@@ -1864,7 +1864,7 @@ panel_apply_global_config (void)
 {
 	GSList *l;
 
-	if (global_config.enable_tooltips)
+	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
 		gtk_tooltips_disable (panel_tooltips);

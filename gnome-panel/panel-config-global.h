@@ -17,8 +17,9 @@ typedef struct {
  * Corresponding keys in the global config schema:
  *   (+) indicates its in the capplet
  *
- * enable_tooltips
+ * tooltips_enabled
  * keep_menus_in_memory
+ * enable_animations (+)
  *
  * panel_minimized_size
  * panel_show_delay
@@ -38,7 +39,7 @@ typedef struct {
 
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
-	gboolean           enable_tooltips;
+	gboolean           tooltips_enabled;
 	gboolean           keep_menus_in_memory;
 	gboolean           enable_animations;
 
