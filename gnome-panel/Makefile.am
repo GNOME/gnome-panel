@@ -1,5 +1,8 @@
 ## Process this file with automake to produce Makefile.in.
 
+## We require new-style dependency handling.
+AUTOMAKE_OPTIONS = 1.2f
+
 CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
 ## on Linux boxes, the compilation will fail with the default
