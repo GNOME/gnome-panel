@@ -76,7 +76,6 @@ static guint add_items_idle_id = 0;
 static GList *executables = NULL;
 static GCompletion *exe_completion = NULL;
 
-static GtkWidget* create_advanced_contents (void);
 static void       update_contents          (GtkWidget *dialog);
 static void       unset_selected           (GtkWidget *dialog);
 
@@ -221,7 +220,7 @@ launch_selected (GtkTreeModel *model,
 
 	if (!ditem) {
 		panel_error_dialog ("failed_to_load_desktop",
-				    _("Failed to load this program!\n%s"),
+				    _("Failed to run this program: '%s'"),
 				    error->message);
 		g_clear_error (&error);
 		return;
@@ -237,7 +236,7 @@ launch_selected (GtkTreeModel *model,
 
 	if (!gnome_desktop_item_launch (ditem, NULL, 0, &error)) {
 		panel_error_dialog ("failed_to_load_desktop",
-				    _("Failed to load this program!\n%s"),
+				    _("Failed to run this program: '%s'"),
 				    error->message);
 		g_clear_error (&error);
 		return;
@@ -257,13 +256,6 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	const char *s;
 	char **envv = NULL;
 	int envc;
-        gboolean use_advanced;
-        
-	use_advanced = gconf_client_get_bool (
-				panel_gconf_get_client (),
-				panel_gconf_general_key (
-					panel_gconf_get_profile (), "advanced_run_dialog"),
-				NULL);
 
 	if (response == GTK_RESPONSE_HELP) {
 		panel_show_help ("specialobjects", "RUNBUTTON");
@@ -273,13 +265,12 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 		goto return_and_close;
 	}
         
-        list = g_object_get_data (G_OBJECT (run_dialog), "dentry_list");
-        
         if (g_object_get_data (G_OBJECT (run_dialog), "use_list")) {
 		GtkTreeSelection *selection;
 		GtkTreeModel *model;
 		GtkTreeIter iter;
 
+	        list = g_object_get_data (G_OBJECT (run_dialog), "program_list");
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 
 		/* just return if nothing selected */
@@ -330,8 +321,10 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 }
 
                 if ( ! g_shell_parse_argv (s, &temp_argc, &temp_argv, NULL)) {
-                        panel_error_dialog (_("Failed to execute command:\n"
-                                              "%s"), s);
+                        panel_error_dialog ("run_error",
+					    _("Failed to execute command: '%s'"),
+					    s);
+					    
                         goto return_and_close;
                 }
 
@@ -387,9 +380,8 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 if (gnome_execute_async_with_env (g_get_home_dir (),
                                                   argc, argv,
                                                   envc, envv) < 0) {
-                        panel_error_dialog(_("Failed to execute command:\n"
-                                             "%s\n"
-                                             "%s"),
+                        panel_error_dialog("run_error",
+					   _("Failed to execute command: '%s'\n\nDetails: %s"),
                                            s, g_strerror (errno));
                 }
         }
@@ -503,7 +495,7 @@ sync_entry_to_list (GtkWidget *dialog)
         if (blocked)
                 return;
         
-        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        clist = g_object_get_data (G_OBJECT (dialog), "program_list");
         entry = g_object_get_data (G_OBJECT (dialog), "entry");
 
         unset_selected (dialog);
@@ -524,7 +516,7 @@ sync_list_to_entry (GtkWidget *dialog)
 			   "sync_entry_to_list_blocked",
 			   GINT_TO_POINTER (TRUE));
         
-        list = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        list = g_object_get_data (G_OBJECT (dialog), "program_list");
         entry = g_object_get_data (G_OBJECT (dialog), "entry");
         terminal_toggle = g_object_get_data (G_OBJECT (dialog), "terminal");
 
@@ -583,19 +575,19 @@ static void
 toggle_contents (GtkWidget *button,
                  GtkWidget *dialog)
 {
-        gboolean use_advanced;
+        gboolean show_program_list_box;
         
-	use_advanced = gconf_client_get_bool (
+	show_program_list_box = gconf_client_get_bool (
 				panel_gconf_get_client (),
 				panel_gconf_general_key (
-					panel_gconf_get_profile (), "advanced_run_dialog"),
+					panel_gconf_get_profile (), "show_program_list_box"),
 				NULL);
 
 	gconf_client_set_bool (
 		panel_gconf_get_client (),
 		panel_gconf_general_key (
-			panel_gconf_get_profile (), "advanced_run_dialog"),
-		!use_advanced,
+			panel_gconf_get_profile (), "show_program_list_box"),
+		!show_program_list_box,
 		NULL);
 
         update_contents (dialog);
@@ -618,7 +610,7 @@ create_toggle_advanced_button (const char *label)
                             run_dialog);
 
         g_object_set_data (G_OBJECT (run_dialog),
-			   "advanced_toggle_label",
+			   "toggle_label",
 			   GTK_BIN (button)->child);
         
         return align;
@@ -632,13 +624,6 @@ entry_changed (GtkWidget *entry,
 		sync_entry_to_list (run_dialog);
 }
 
-/* Called when advanced contents are switched to or first shown */
-static void
-advanced_contents_shown (GtkWidget *vbox, gpointer data)
-{
-        /* does nothing at the moment */
-}
-
 static void
 activate_run (GtkWidget *entry, gpointer data)
 {
@@ -648,7 +633,7 @@ activate_run (GtkWidget *entry, gpointer data)
 }
 
 static GtkWidget*
-create_advanced_contents (void)
+create_simple_contents (void)
 {
         GtkWidget *vbox;
         GtkWidget *entry;
@@ -657,8 +642,8 @@ create_advanced_contents (void)
         GtkWidget *w;
         
         vbox = gtk_vbox_new (FALSE, 0);
-
-        hbox = gtk_hbox_new(0, FALSE);
+	
+        hbox = gtk_hbox_new (FALSE, 0);
 	
         gentry = gnome_entry_new ("gnome-run");
         gtk_box_pack_start (GTK_BOX (hbox), gentry, TRUE, TRUE, 0);
@@ -676,7 +661,7 @@ create_advanced_contents (void)
 			  G_CALLBACK (kill_completion),
 			  NULL);
 
-	gtk_tooltips_set_tip (panel_tooltips, entry, _("Executable name for selected application"), NULL);
+	gtk_tooltips_set_tip (panel_tooltips, entry, _("Command to run"), NULL);
  
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
@@ -698,10 +683,13 @@ create_advanced_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), hbox,
                             FALSE, FALSE, GNOME_PAD_SMALL);
 
+	hbox = gtk_hbox_new (FALSE, 0);
+
         w = gtk_check_button_new_with_mnemonic(_("Run in _terminal"));
         g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
-        gtk_box_pack_start (GTK_BOX (vbox), w,
-                            FALSE, FALSE, GNOME_PAD_SMALL);
+	
+        gtk_box_pack_start (GTK_BOX (hbox), w,
+                            TRUE, TRUE, GNOME_PAD_SMALL);
         
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"advanced",
@@ -712,12 +700,21 @@ create_advanced_contents (void)
 				"advanced-entry",
 				g_object_ref (entry),
 				(GDestroyNotify) g_object_unref);
+	
+        w = create_toggle_advanced_button ("");
         
-        g_signal_connect (G_OBJECT (vbox),
-			  "show",
-			  G_CALLBACK (advanced_contents_shown),
-			  NULL);
+	gtk_box_pack_start (GTK_BOX (hbox), w,
+			    FALSE, FALSE, GNOME_PAD_SMALL);
 
+        gtk_box_pack_start (GTK_BOX (vbox), hbox,
+                            FALSE, FALSE, GNOME_PAD_SMALL);
+
+        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
+                            vbox,
+                            TRUE, TRUE, 0);
+
+	gtk_widget_show_all (vbox);
+        
         return vbox;
 }
 
@@ -902,18 +899,16 @@ unset_pixmap (GtkWidget *gpixmap)
 static void
 unset_selected (GtkWidget *dialog)
 {
-        GtkWidget *label;
         GtkWidget *gpixmap;
         GtkWidget *desc_label;
         GtkWidget *entry;
         GtkWidget *list;
         char *text;
         
-        label = g_object_get_data (G_OBJECT (dialog), "label");
         gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
         desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
         entry = g_object_get_data (G_OBJECT (dialog), "entry");
-        list = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        list = g_object_get_data (G_OBJECT (dialog), "program_list");
         
 	if (entry != NULL) {
 		text = gtk_editable_get_chars (GTK_EDITABLE (entry),
@@ -924,21 +919,16 @@ unset_selected (GtkWidget *dialog)
 
         if ( ! string_empty (text)) {
                 char *msg;
-                msg = g_strdup_printf (_("Will run '%s'"),
+                msg = g_strdup_printf (_("Will run command: '%s'"),
                                        text);
-                if (label)
-                        gtk_label_set_text (GTK_LABEL (label), msg);
-                
                 if (desc_label)
                         gtk_label_set_text (GTK_LABEL (desc_label), msg);
 
                 g_free (msg);
         } else {
-                if (label)
-                        gtk_label_set_text (GTK_LABEL (label), _("No program selected"));
                 
                 if (desc_label)
-                        gtk_label_set_text (GTK_LABEL (desc_label), _("No program selected"));
+                        gtk_label_set_text (GTK_LABEL (desc_label), _("No application selected"));
         }
 
         g_free (text);
@@ -1040,13 +1030,13 @@ static gboolean
 add_items_idle (gpointer data)
 {
 	GtkWidget *list = data;
-	add_items_idle_id = 0;
 	fill_list (list);
+	add_items_idle_id = 0;
 	return FALSE;
 }
 
 static GtkWidget*
-create_simple_contents (void)
+create_program_list_contents (void)
 {
         GtkWidget *vbox;
         GtkWidget *w;
@@ -1058,17 +1048,17 @@ create_simple_contents (void)
         
         vbox = gtk_vbox_new (FALSE, 1);
         
-        label = gtk_label_new_with_mnemonic (_("A_pplications:"));
+        label = gtk_label_new_with_mnemonic (_("Known A_pplications:"));
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
         list = gtk_tree_view_new ();
-        g_object_set_data (G_OBJECT (run_dialog), "dentry_list", list);
 
+        g_object_set_data (G_OBJECT (run_dialog), "program_list", list);
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
 	gtk_label_set_mnemonic_widget (GTK_LABEL (label), list);
 
-	add_atk_name_desc (list, _("List of Applications"),
+	add_atk_name_desc (list, _("List of known applications"),
 			   _("Choose an application to run from the list"));
 	set_relation (list, GTK_LABEL (label), 0);
 
@@ -1095,49 +1085,30 @@ create_simple_contents (void)
 
 
         w = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
-        gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, GNOME_PAD_SMALL);
         hbox = gtk_hbox_new (FALSE, 3);
         gtk_container_add (GTK_CONTAINER (w), hbox);
         
         pixmap = gtk_image_new ();
-        gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, GNOME_PAD_SMALL);
         g_object_set_data (G_OBJECT (run_dialog), "pixmap", pixmap);
         
         label = gtk_label_new ("");
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_label_set_selectable (GTK_LABEL (label), TRUE);
-        gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+        gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
         g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
 
-#if 0
-        label = gtk_label_new ("");
-        g_object_set_data (G_OBJECT (run_dialog), "label", label);
-        gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-#endif
-
         unset_selected (run_dialog);
-        
+   
         g_object_ref (G_OBJECT (vbox));
         
         g_object_set_data_full (G_OBJECT (run_dialog),
-				"simple",
+				"program_list_box",
 				vbox,
 				(GtkDestroyNotify) g_object_unref);
 
-	if (add_items_idle_id == 0)
-		add_items_idle_id =
-			g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
-					 list, NULL);
-
-        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
-                            vbox,
-                            TRUE, TRUE, 0);
-        
-        w = create_toggle_advanced_button ("");
-        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
-			    w, FALSE, FALSE, GNOME_PAD_SMALL);
-        
         return vbox;
 }
 
@@ -1145,61 +1116,72 @@ create_simple_contents (void)
 static void
 update_contents (GtkWidget *dialog)
 {
-        GtkWidget *advanced = NULL;
-        GtkWidget *advanced_toggle;
-        gboolean use_advanced;
+        GtkWidget *program_list_box = NULL;
+        GtkWidget *program_list_box_toggle;
+        gboolean show_program_list_box;
         
-	use_advanced = gconf_client_get_bool (
-				panel_gconf_get_client (),
-				panel_gconf_general_key (
-					panel_gconf_get_profile (), "advanced_run_dialog"),
-				NULL);
+	show_program_list_box = gconf_client_get_bool (
+				  panel_gconf_get_client (),
+				  panel_gconf_general_key (
+					panel_gconf_get_profile (), "show_program_list_box"),
+				  NULL);
 
-        advanced_toggle = g_object_get_data (G_OBJECT (dialog),
-					     "advanced_toggle_label");
+        program_list_box_toggle = g_object_get_data (G_OBJECT (dialog),
+					         "toggle_label");
 
         
-        if (use_advanced) {
-                advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
+        if (show_program_list_box) {
+                program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
+		if (program_list_box == NULL) {
+			program_list_box = create_program_list_contents ();
+
+			/* start loading the list of applications */
+			if (add_items_idle_id == 0) {
+				GtkWidget *list =
+					g_object_get_data (G_OBJECT (dialog),
+							   "program_list");
+				add_items_idle_id =
+					g_idle_add_full (G_PRIORITY_LOW, add_items_idle,
+					 		 list, NULL);
+			}
+		}
                 
-                if (advanced && advanced->parent == NULL) {
-			GtkWidget *advanced_entry;
-
-			advanced_entry =
-				g_object_get_data (G_OBJECT (dialog), "advanced-entry");
-
-                        gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                                            advanced,
+                if (program_list_box != NULL &&
+		    program_list_box->parent == NULL) {
+                        gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                                            program_list_box,
                                             FALSE, FALSE, 0);
                 
-                        gtk_widget_show_all (advanced);
+                        gtk_widget_show_all (GTK_WIDGET (GTK_DIALOG (dialog)->vbox));
 
-                        gtk_widget_grab_focus (advanced_entry);
                 }
 
-                gtk_label_set_text_with_mnemonic (GTK_LABEL (advanced_toggle),
-                                    		  _("_Advanced <<"));
+                gtk_label_set_text_with_mnemonic (GTK_LABEL (program_list_box_toggle),
+                                    		  _("_Known Applications <<"));
 
-                gtk_tooltips_set_tip (panel_tooltips, advanced_toggle->parent,
-                                      _("Hide the advanced controls below this button."),
+                gtk_tooltips_set_tip (panel_tooltips, program_list_box_toggle->parent,
+                                      _("Hide the list of known applications"),
                                       NULL);                
 
-        } else {                
-		GtkWidget *tree_view;
+        } else {    
+		GtkWidget *entry;           
 
-                advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
+                program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
                 
-                if (advanced && advanced->parent != NULL)
-                        gtk_container_remove (GTK_CONTAINER (advanced->parent), advanced);                
-                gtk_label_set_text_with_mnemonic (GTK_LABEL (advanced_toggle),
-                                    		  _("_Advanced >>"));
+                if (program_list_box != NULL &&
+		    program_list_box->parent != NULL) {
+                        gtk_container_remove (GTK_CONTAINER (program_list_box->parent), program_list_box);
+		}
 
-                gtk_tooltips_set_tip (panel_tooltips, advanced_toggle->parent,
-                                      _("Allow typing in a command line instead of choosing an application from the list"),
+                gtk_label_set_text_with_mnemonic (GTK_LABEL (program_list_box_toggle),
+                                    		  _("_Known Applications >>"));
+
+                gtk_tooltips_set_tip (panel_tooltips, program_list_box_toggle->parent,
+                                      _("Display a list of known applications from the applications menu"),
                                       NULL);
 
-		tree_view = g_object_get_data (G_OBJECT (dialog), "dentry_list");
-                gtk_widget_grab_focus (tree_view);
+		entry = g_object_get_data (G_OBJECT (dialog), "entry");
+                gtk_widget_grab_focus (entry);
         }
 }
 
@@ -1251,7 +1233,7 @@ run_dialog_destroyed (GtkWidget *widget)
 void
 show_run_dialog (void)
 {
-        gboolean  use_advanced;          
+        gboolean  show_program_list_box;          
 	char     *run_icon;
 
 	if (no_run_box)
@@ -1264,10 +1246,10 @@ show_run_dialog (void)
 
 	register_run_stock_item ();
 
-	use_advanced = gconf_client_get_bool (
+	show_program_list_box = gconf_client_get_bool (
 				panel_gconf_get_client (),
 				panel_gconf_general_key (
-					panel_gconf_get_profile (), "advanced_run_dialog"),
+					panel_gconf_get_profile (), "show_program_list_box"),
 				NULL);
         
 	run_dialog = gtk_dialog_new_with_buttons (_("Run Program"),
@@ -1281,20 +1263,6 @@ show_run_dialog (void)
 						  PANEL_RESPONSE_RUN,
 						  NULL);
 
-        /* This is lame in advanced mode, but if you change it on mode
-         * toggle it creates weird effects, so always use this policy
-         */
-	g_object_set (G_OBJECT (run_dialog),
-		      "allow_grow", FALSE,
-		      "allow_shrink", TRUE,
-		      "resizable", TRUE,
-		      NULL);
-
-        /* Get some reasonable height in simple list mode */
-        if (!use_advanced)
-                gtk_window_set_default_size (GTK_WINDOW (run_dialog),
-                                             -1, 400);
-
 	run_icon = gnome_program_locate_file (
 			NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-run.png", TRUE, NULL);
 	if (run_icon) {
@@ -1305,6 +1273,7 @@ show_run_dialog (void)
 	g_signal_connect (G_OBJECT (run_dialog), "destroy",
 			  G_CALLBACK (run_dialog_destroyed),
 			  NULL);
+
 	gtk_window_set_position (GTK_WINDOW (run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
@@ -1314,7 +1283,6 @@ show_run_dialog (void)
 			  G_CALLBACK (run_dialog_response), NULL);
 
         create_simple_contents ();
-        create_advanced_contents ();
         update_contents (run_dialog);
         
 	gtk_widget_show_all (run_dialog);
@@ -1325,15 +1293,15 @@ show_run_dialog_with_text (const char *text)
 {
 	GtkWidget *entry;
 
-	g_return_if_fail(text != NULL);
+	g_return_if_fail (text != NULL);
 
 	show_run_dialog ();
 
-	if(run_dialog == NULL) {
+	if (run_dialog == NULL) {
 		return;
 	}
         
 	entry = g_object_get_data (G_OBJECT (run_dialog), "entry");
 
-	gtk_entry_set_text(GTK_ENTRY(entry), text);
+	gtk_entry_set_text (GTK_ENTRY (entry), text);
 }
