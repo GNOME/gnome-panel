@@ -11,6 +11,7 @@
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "panel-util.h"
+#include "multiscreen-stuff.h"
 
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
@@ -109,6 +110,8 @@ sliding_pos_set_pos (BasePWidget *basep,
 	SlidingAnchor newanchor = pos->anchor;
 	gint16 newoffset = pos->offset;
 	gboolean check_pos = TRUE;
+	int innerx, innery;
+	int screen_width, screen_height;
 
 	gdk_window_get_geometry (GTK_WIDGET(basep)->window, &minx, &miny,
 				 &maxx, &maxy, NULL);
@@ -116,12 +119,19 @@ sliding_pos_set_pos (BasePWidget *basep,
 	maxx += minx;
 	maxy += miny;
 
+	/* FIXME: screenchanging stuff */
+	
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
+
 	/*if in the inner 1/3rd, don't change to avoid fast flickery
 	  movement*/
-	if (x > (gdk_screen_width()/3) &&
-	    x < (2*gdk_screen_width()/3) &&
-	    y > (gdk_screen_height()/3) &&
-	    y < (2*gdk_screen_height()/3))
+	if (innerx > (screen_width / 3) &&
+	    innerx < (2*screen_width / 3) &&
+	    innery > (screen_height / 3) &&
+	    innery < (2*screen_height / 3))
 		return;
 
 	/* don't switch the position if we are along the edge.
@@ -129,29 +139,29 @@ sliding_pos_set_pos (BasePWidget *basep,
 	   the corners */
 	switch (BORDER_POS (pos)->edge) {
 	case BORDER_TOP:
-		check_pos = (y > maxy);
+		check_pos = (innery > maxy);
 		break;
 	case BORDER_BOTTOM:
-		check_pos = (y < miny);
+		check_pos = (innery < miny);
 		break;
 	case BORDER_LEFT:
-		check_pos = (x > maxx);
+		check_pos = (innerx > maxx);
 		break;
 	case BORDER_RIGHT:
-		check_pos = (x < minx);
+		check_pos = (innerx < minx);
 		break;
 	}
 
 	if (check_pos) {
-		if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
-			if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-			   y * gdk_screen_width() )
+		if (innerx * screen_height > innery * screen_width ) {
+			if(screen_height * (screen_width - innerx) >
+			   innery * screen_width)
 				newedge = BORDER_TOP;
 			else
 				newedge = BORDER_RIGHT;
 		} else {
-			if(gdk_screen_height() * (gdk_screen_width()-(x)) >
-			   y * gdk_screen_width() )
+			if(screen_height * (screen_width - innerx) >
+			   innery * screen_width)
 				newedge = BORDER_LEFT;
 			else
 				newedge = BORDER_BOTTOM;
@@ -188,40 +198,40 @@ sliding_pos_set_pos (BasePWidget *basep,
 
 	switch (PANEL_WIDGET (basep->panel)->orient) {
 	case PANEL_HORIZONTAL:
-		newanchor =  (x < 0.1 * gdk_screen_width ()) 
+		newanchor =  (innerx < 0.1 * screen_width) 
 			? SLIDING_ANCHOR_LEFT
-			: ( (x > 0.9 * gdk_screen_width ())
+			: ( (innerx > 0.9 * screen_width)
 			    ? SLIDING_ANCHOR_RIGHT
 			    : newanchor);
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
-			newoffset = x - offset_x;
+			newoffset = innerx - offset_x;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
 				newoffset -= w - get_requisition_width (basep->hidebutton_e);
 		} else {
-			newoffset = gdk_screen_width () -
-				(x - offset_x) - w;
+			newoffset = screen_width -
+				(innerx - offset_x) - w;
 			if (basep->state == BASEP_HIDDEN_LEFT)
 				newoffset -= w - get_requisition_width (basep->hidebutton_w);
 		}
-		newoffset = CLAMP (newoffset, 0, gdk_screen_width () - w);
+		newoffset = CLAMP (newoffset, 0, screen_width - w);
 		break;
 	case PANEL_VERTICAL:
-		newanchor =  (y < 0.1 * gdk_screen_height ()) 
+		newanchor =  (innery < 0.1 * screen_height) 
 			? SLIDING_ANCHOR_LEFT
-			: ( (y > 0.9 * gdk_screen_height ())
+			: ( (innery > 0.9 * screen_height)
 			    ? SLIDING_ANCHOR_RIGHT
 			    : newanchor);
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
-			newoffset = y - offset_y;
+			newoffset = innery - offset_y;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
 				newoffset -= h - get_requisition_height (basep->hidebutton_s);
 		} else {
-			newoffset = gdk_screen_height () -
-				(y - offset_y) - h;
+			newoffset = screen_height -
+				(innery - offset_y) - h;
 			if (basep->state == BASEP_HIDDEN_LEFT)
 				newoffset -= h - get_requisition_height (basep->hidebutton_n);
 		}
-		newoffset = CLAMP (newoffset, 0, gdk_screen_height () - h);
+		newoffset = CLAMP (newoffset, 0, screen_height - h);
 		break;
 	}
 
@@ -243,24 +253,27 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (BORDER_POS (basep->pos)->edge) {
 	case BORDER_BOTTOM:
-		*y = gdk_screen_height () - h - foobar_widget_get_height (basep->screen);
+		*y = multiscreen_height (basep->screen) - h - foobar_widget_get_height (basep->screen);
 		/* fall through */
 	case BORDER_TOP:
 		(*y) += foobar_widget_get_height (basep->screen);
 		*x = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
-			: gdk_screen_width () - pos->offset - w;
+			: multiscreen_width (basep->screen) - pos->offset - w;
 		break;
 	case BORDER_RIGHT:
-		*x = gdk_screen_width () - w;
+		*x = multiscreen_width (basep->screen) - w;
                 /* fall through */
 	case BORDER_LEFT:
 		*y = (pos->anchor == SLIDING_ANCHOR_LEFT)
 			? pos->offset
-			: gdk_screen_height () - pos->offset - h;
+			: multiscreen_height (basep->screen) - pos->offset - h;
 		*y = MAX (*y, foobar_widget_get_height (basep->screen));
 		break;
 	}
+
+	*x += multiscreen_x (basep->screen);
+	*y += multiscreen_y (basep->screen);
 }
 
 GtkWidget *

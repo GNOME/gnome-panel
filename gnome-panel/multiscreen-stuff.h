@@ -32,5 +32,7 @@ int		multiscreen_x			(int screen);
 int		multiscreen_y			(int screen);
 int		multiscreen_width		(int screen);
 int		multiscreen_height		(int screen);
+int		multiscreen_screen_from_pos	(int x,
+						 int y);
 
 #endif /* MULTISCREEN_STUFF_H */

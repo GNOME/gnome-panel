@@ -106,3 +106,17 @@ multiscreen_height (int screen)
 
 	return rectangles[screen].height;
 }
+
+int
+multiscreen_screen_from_pos (int x, int y)
+{
+	int i;
+	for (i = 0; i < screens; i++) {
+		if (x >= rectangles[i].x &&
+		    x <= rectangles[i].x + rectangles[i].width &&
+		    y >= rectangles[i].y &&
+		    y <= rectangles[i].y + rectangles[i].height)
+			return i;
+	}
+	return -1;
+}

@@ -78,11 +78,13 @@ edge_pos_set_pos (BasePWidget *basep,
 {
 	BorderEdge newloc;
 	int minx, miny, maxx, maxy;
+	int innerx, innery;
+	int screen_width, screen_height;
 
-	gdk_window_get_geometry (GTK_WIDGET(basep)->window,
+	gdk_window_get_geometry (GTK_WIDGET (basep)->window,
 				 &minx, &miny, &maxx, &maxy, NULL);
-	gdk_window_get_origin(GTK_WIDGET(basep)->window,
-			      &minx, &miny);
+	gdk_window_get_origin (GTK_WIDGET (basep)->window,
+			       &minx, &miny);
 
 	newloc = BORDER_POS(basep->pos)->edge;
 
@@ -95,29 +97,34 @@ edge_pos_set_pos (BasePWidget *basep,
 	    y <= maxy)
 		return;
 
-	/* FIXME: use the multiscreen x/y offsets */
-	if ( x > (multiscreen_width(basep->screen)/3) &&
-	     x < (2*multiscreen_width(basep->screen)/3) &&
-	     y > (multiscreen_height(basep->screen)/3) &&
-	     y < (2*multiscreen_height(basep->screen)/3))
+	/* FIXME: screenchanging stuff */
+	
+	innerx = x - multiscreen_x (basep->screen);
+	innery = y - multiscreen_y (basep->screen);
+	screen_width = multiscreen_width (basep->screen);
+	screen_height = multiscreen_height (basep->screen);
+
+	if ( innerx > (screen_width / 3) &&
+	     innerx < (2*screen_width / 3) &&
+	     innery > (screen_height / 3) &&
+	     innery < (2*screen_height / 3))
 		return;
 
-	if ((x) * multiscreen_height(basep->screen) > y * multiscreen_width(basep->screen) ) {
-		if(multiscreen_height(basep->screen) * (multiscreen_width(basep->screen)-(x)) >
-		   y * multiscreen_width(basep->screen) )
+	if (innerx * screen_height > innery * screen_width) {
+		if (screen_height * (screen_width - innerx) >
+		    innery * screen_width)
 			newloc = BORDER_TOP;
 		else
 			newloc = BORDER_RIGHT;
 	} else {
-		if(multiscreen_height(basep->screen) * (multiscreen_width(basep->screen)-(x)) >
-		   y * multiscreen_width(basep->screen) )
+		if (screen_height * (screen_width - innerx) >
+		    innery * screen_width)
 			newloc = BORDER_LEFT;
 		else
 			newloc = BORDER_BOTTOM;
 	}
-	if(newloc != BORDER_POS(basep->pos)->edge)
-		border_widget_change_edge(BORDER_WIDGET(basep), 
-					  newloc);
+	if (newloc != BORDER_POS (basep->pos)->edge)
+		border_widget_change_edge (BORDER_WIDGET (basep), newloc);
 }
 
 static void
@@ -166,16 +173,16 @@ edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 	case BORDER_RIGHT:
 		basep_border_get (BORDER_TOP, NULL, NULL, &a);
 		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
-		*h = multiscreen_height(basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
+		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_LEFT:
 		basep_border_get (BORDER_TOP, &a, NULL, NULL);
 		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
-		*h = multiscreen_height(basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
+		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_TOP:
 	case BORDER_BOTTOM:
-		*w = multiscreen_width(basep->screen);
+		*w = multiscreen_width (basep->screen);
 		break;
 	}
 }
