@@ -41,7 +41,7 @@ typedef enum {
 	PANEL_VERTICAL
 } PanelOrientation;
 typedef enum {
-	PANEL_SWITCH_MOVE=0,
+	PANEL_SWITCH_MOVE = 0,
 	PANEL_FREE_MOVE,
 	PANEL_PUSH_MOVE
 } PanelMovementType;
@@ -53,10 +53,12 @@ struct _AppletData
 	int		cells;
 	gboolean	dirty;
 
+	int		drag_off; /* offset on the applet where drag
+				     was started */
+
 	int		no_die; /* if >0 never send the about to die
 				   signal, an int and not a bool for
 				   nesting reasons */
-
 };
 
 struct _PanelWidget
@@ -99,7 +101,7 @@ struct _PanelWidget
 	GtkWidget		*panel_parent;
 	
 	GdkPixbuf		*backpix;	/* background pixmap unscaled */
-	int			scale_w,scale_h;
+	int			scale_w, scale_h;
 	
 	GdkPixmap		*backpixmap;	/* if a background pixmap
 						   was set, this is used
@@ -247,10 +249,7 @@ void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 				    gboolean color_only,
 				    int *r, int *g, int *b);
 
-/*extern GSList *panels;*/
-
 extern gboolean panel_applet_in_drag;
-
 
 END_GNOME_DECLS
 

@@ -742,7 +742,7 @@ load_extern_applet (const char *goad_id, const char *cfgpath,
 	Extern *ext;
 	POA_GNOME_PanelSpot *panelspot_servant;
 
-	if(!cfgpath || !*cfgpath)
+	if (string_empty (cfgpath))
 		cfg = g_strconcat (PANEL_CONFIG_PATH,
 				   "Applet_Dummy/", NULL);
 	else
