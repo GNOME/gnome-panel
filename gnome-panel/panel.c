@@ -664,7 +664,7 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 }
 
 static void
-panel_widget_dnd_drop_internal (GtkWidget *widget,
+panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 				GdkDragContext   *context,
 				gint              x,
 				gint              y,
@@ -673,17 +673,24 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 				guint             time)
 {
 	PanelWidget *panel;
+	int pos;
 
 	g_return_if_fail(widget!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(widget));
+	g_return_if_fail(IS_BASEP_WIDGET(widget));
 
-	panel = PANEL_WIDGET (widget);
+	panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
+
+	pos = panel_widget_get_cursorloc(panel);
+	
+	if(pos < 0)
+		pos = 0;
+	else if(pos > panel->size)
+		pos = panel->size;
 
 	switch (info) {
 	case TARGET_URL: {
 		GList *ltmp, *files;
 		struct stat s;
-		int pos = panel_widget_get_cursorloc(panel);
 
 		files =
 		  gnome_uri_list_extract_filenames(selection_data->data);
@@ -696,7 +703,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		  if(mimetype &&
 		     (!strcmp(mimetype,"x-url/http") ||
 		      !strcmp(mimetype,"x-url/ftp"))) {
-			  int pos = panel_widget_get_cursorloc(panel);
 			  char *exec[3] = {
 			  	"gnome-moz-remote",
 				NULL,
@@ -741,7 +747,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		break;
 	}
 	case TARGET_NETSCAPE_URL: {
-		int pos = panel_widget_get_cursorloc(panel);
 		char *exec[3] = {
 			"gnome-moz-remote",
 			NULL,
@@ -771,7 +776,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		break;
 	}
 	case TARGET_DIRECTORY: {
-		int pos = panel_widget_get_cursorloc(panel);
 		int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
 
 		/*guess redhat menus*/
@@ -785,7 +789,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		break;
 	}
 	case TARGET_APPLET: {
-		int pos = panel_widget_get_cursorloc(panel);
 		char *goad_id = (char *)selection_data->data;
 		if(!goad_id)
 			return;
@@ -793,7 +796,6 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		break;
 	}
 	case TARGET_APPLET_INTERNAL: {
-		int pos = panel_widget_get_cursorloc(panel);
 		char *applet_type = (char *)selection_data->data;
 		if(!applet_type)
 			return;
@@ -844,16 +846,13 @@ panel_widget_setup(PanelWidget *panel)
 			   GTK_SIGNAL_FUNC(panel_back_change),
 			   NULL);
 	gtk_signal_connect(GTK_OBJECT(panel),
-			   "drag_data_received",
-			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop_internal),
+			   "size_change",
+			   GTK_SIGNAL_FUNC(panel_size_change),
 			   NULL);
-
-	gtk_drag_dest_set (GTK_WIDGET (panel),
-			   GTK_DEST_DEFAULT_MOTION |
-			   GTK_DEST_DEFAULT_HIGHLIGHT |
-			   GTK_DEST_DEFAULT_DROP,
-			   panel_drop_types, n_panel_drop_types,
-			   GDK_ACTION_COPY);
+	gtk_signal_connect (GTK_OBJECT (panel),
+			    "orient_change",
+			    GTK_SIGNAL_FUNC (panel_orient_change),
+			    NULL);
 }
 
 void
@@ -935,21 +934,23 @@ panel_setup(GtkWidget *panelw)
 
 	panel_widget_setup(panel);
 
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "size_change",
-			   GTK_SIGNAL_FUNC(panel_size_change),
+	gtk_signal_connect(GTK_OBJECT(basep),
+			   "drag_data_received",
+			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop_internal),
 			   NULL);
-	
+
+	gtk_drag_dest_set (GTK_WIDGET (basep),
+			   GTK_DEST_DEFAULT_MOTION |
+			   GTK_DEST_DEFAULT_HIGHLIGHT |
+			   GTK_DEST_DEFAULT_DROP,
+			   panel_drop_types, n_panel_drop_types,
+			   GDK_ACTION_COPY);
+
 	gtk_signal_connect (GTK_OBJECT (basep),
 			    "state_change",
 			    GTK_SIGNAL_FUNC (basep_state_change),
 			    NULL);
 
-	gtk_signal_connect (GTK_OBJECT (panel),
-			    "orient_change",
-			    GTK_SIGNAL_FUNC (panel_orient_change),
-			    NULL);
-	
 	basep_pos_connect_signals (basep);
 
 	basep_widget_disable_buttons(basep);
