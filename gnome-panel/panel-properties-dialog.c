@@ -29,7 +29,6 @@
 #include <string.h>
 #include <glade/glade-xml.h>
 #include <glib/gi18n.h>
-#include <libgnomeui/gnome-file-entry.h>
 #include <libgnomeui/gnome-icon-entry.h>
 
 #include "panel-profile.h"
@@ -64,7 +63,7 @@ typedef struct {
 	GtkWidget     *image_widgets;
 	GtkWidget     *color_button;
 	GtkWidget     *color_label;
-	GtkWidget     *image_entry;
+	GtkWidget     *image_chooser;
 	GtkWidget     *opacity_scale;
 	GtkWidget     *opacity_label;
 	GtkWidget     *opacity_legend;
@@ -385,38 +384,46 @@ panel_properties_dialog_setup_color_button (PanelPropertiesDialog *dialog,
 static void
 panel_properties_dialog_image_changed (PanelPropertiesDialog *dialog)
 {
-	GtkWidget *entry;
+	char *image;
 
-	entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
+	image = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
-	panel_profile_set_background_image (dialog->toplevel,
-					    gtk_entry_get_text (GTK_ENTRY (entry)));
+	panel_profile_set_background_image (dialog->toplevel, image);
+
+	g_free (image);
 }
 
 static void
-panel_properties_dialog_setup_image_entry (PanelPropertiesDialog *dialog,
-					   GladeXML              *gui)
+panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
+					     GladeXML              *gui)
 {
-	GtkWidget *entry;
-	char      *image;
+	GtkFileFilter *filter;
+	char          *image;
 
-	dialog->image_entry = glade_xml_get_widget (gui, "image_entry");
+	dialog->image_chooser = glade_xml_get_widget (gui, "image_chooser");
+
+	filter = gtk_file_filter_new ();
+	gtk_file_filter_set_name (filter, _("Images"));
+	gtk_file_filter_add_pixbuf_formats (filter);
+	gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
+				     filter);
+	gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog->image_chooser),
+				     filter);
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
 	if (image) {
-		entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
-		gtk_entry_set_text (GTK_ENTRY (entry), image);
-
+		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
+					       image);
 		g_free (image);
 	}
 
-	g_signal_connect_swapped (dialog->image_entry, "changed",
+	g_signal_connect_swapped (dialog->image_chooser, "selection-changed",
 				  G_CALLBACK (panel_properties_dialog_image_changed),
 				  dialog);
 
 	if ( ! panel_profile_is_writable_background_image (dialog->toplevel)) {
-		gtk_widget_set_sensitive (dialog->image_entry, FALSE);
+		gtk_widget_set_sensitive (dialog->image_chooser, FALSE);
 		gtk_widget_show (dialog->writability_warn_background);
 	}
 }
@@ -748,20 +755,20 @@ static void
 panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
 						 GConfValue            *value)
 {
-	GtkEntry   *entry;
-	const char *old_text;
 	const char *text;
+	char       *old_text;
 
 	if (!value || value->type != GCONF_VALUE_STRING)
 		return;
 
-	entry = GTK_ENTRY (gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry)));
-
 	text = gconf_value_get_string (value);
-	old_text = gtk_entry_get_text (entry);
+	old_text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
 	if (text && (!old_text || strcmp (text, old_text)))
-		gtk_entry_set_text (entry, text);
+		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
+					       text);
+
+	g_free (old_text);
 }
 
 static void
@@ -911,7 +918,7 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			dialog);
 
 	panel_properties_dialog_setup_color_button      (dialog, gui);
-	panel_properties_dialog_setup_image_entry       (dialog, gui);
+	panel_properties_dialog_setup_image_chooser     (dialog, gui);
 	panel_properties_dialog_setup_opacity_scale     (dialog, gui);
 	panel_properties_dialog_setup_background_radios (dialog, gui);
 

@@ -831,26 +831,13 @@
 		      </child>
 
 		      <child>
-			<widget class="GnomeFileEntry" id="image_entry">
+			<widget class="GtkFileChooserButton" id="image_chooser">
 			  <property name="visible">True</property>
-			  <property name="max_saved">10</property>
-			  <property name="directory_entry">False</property>
-			  <property name="modal">False</property>
-			  <property name="use_filechooser">True</property>
-
-			  <child internal-child="entry">
-			    <widget class="GtkEntry" id="combo-entry2">
-			      <property name="visible">True</property>
-			      <property name="can_focus">True</property>
-			      <property name="editable">True</property>
-			      <property name="visibility">True</property>
-			      <property name="max_length">0</property>
-			      <property name="text" translatable="yes"></property>
-			      <property name="has_frame">True</property>
-			      <property name="invisible_char" translatable="yes">*</property>
-			      <property name="activates_default">False</property>
-			    </widget>
-			  </child>
+			  <property name="title" translatable="yes">Select background</property>
+			  <property name="action">GTK_FILE_CHOOSER_ACTION_OPEN</property>
+			  <property name="local_only">True</property>
+			  <property name="show_hidden">False</property>
+			  <property name="width_chars">-1</property>
 			</widget>
 			<packing>
 			  <property name="padding">0</property>

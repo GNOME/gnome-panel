@@ -1,5 +1,19 @@
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
+	Port the GnomeFileEntry in the property dialog to
+	GtkFileChooserButton.
+
+	* panel-properties-dialog.c: (panel_properties_dialog_image_changed):
+	updated
+	(panel_properties_dialog_setup_image_entry): renamed to...
+	(panel_properties_dialog_setup_image_chooser): new function, add a
+	filter so only images are shown in the file chooser. Fix bug #129724.
+	(panel_properties_dialog_update_background_image): updated
+	(panel_properties_dialog_new): updated
+	* panel-properties-dialog.glade: updated
+
+2005-01-01  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-addto.c: (panel_addto_selection_changed): use
 	gtk_button_set_use_stock() only once.
 
