@@ -1676,6 +1676,11 @@ panel_widget_destroy (GtkObject *obj)
 
 	panels = g_slist_remove (panels, panel);
 
+	if (panel->master_widget != NULL)
+		g_object_set_data (G_OBJECT (panel->master_widget),
+				   PANEL_APPLET_ASSOC_PANEL_KEY,
+				   NULL);
+
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
 }

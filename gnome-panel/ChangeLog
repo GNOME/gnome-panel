@@ -1,3 +1,14 @@
+Wed Jul 02 16:08:23 2003  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: when panel is destroyed make sure that the
+	  master's widget associated key is wiped so that we don't
+	  try to access freed data and crash (fixes crash and/or warning
+	  on exit when drawers are present)
+
+	* drawer.c: when our toplevel is destroyed, set the
+	  toplevel member to NULL and whack the button.  Fixes
+	  crash and/or warning on exit when drawers are present.
+
 Wed Jul 02 11:43:26 2003  George Lebl <jirka@5z.com>
 
 	* panel-applet-frame.c: when creating new applets be more careful

@@ -197,6 +197,14 @@ drawer_click (GtkWidget *w, Drawer *drawer)
 }
 
 static void
+toplevel_destroyed (GtkWidget *widget,
+		    Drawer    *drawer)
+{
+	drawer->toplevel = NULL;
+	gtk_widget_destroy (drawer->button);
+}
+
+static void
 destroy_drawer (GtkWidget *widget,
 		Drawer    *drawer)
 {
@@ -518,6 +526,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 			  G_CALLBACK (destroy_drawer), drawer);
 	g_signal_connect (drawer->button, "key_press_event",
 			  G_CALLBACK (key_press_drawer), drawer);
+	g_signal_connect (toplevel, "destroy",
+			  G_CALLBACK (toplevel_destroyed), drawer);
 
 	gtk_widget_show (drawer->button);
 
