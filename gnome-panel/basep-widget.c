@@ -1201,10 +1201,11 @@ basep_widget_update_winhints (BasePWidget *basep)
 
 	xstuff_set_wmspec_dock_hints (w->window);
 
-	/* FIXME: non-compiance should be tested! */
+	/* FIXME: non-compliance should be tested! */
 
-	if (BASEP_POS_GET_CLASS (basep->pos)->update_winhints != NULL)
-		BASEP_POS_GET_CLASS (basep->pos)->update_winhints (basep);
+	if (BASEP_POS_GET_CLASS (basep)->update_winhints != NULL)
+		BASEP_POS_GET_CLASS (basep)->update_winhints (basep);
+	
 }
 
 void
