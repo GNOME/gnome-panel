@@ -32,6 +32,7 @@
 #include "launcher.h"
 #include "logout.h"
 #include "extern.h"
+#include "status.h"
 
 #include "panel-util.h"
 

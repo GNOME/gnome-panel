@@ -77,6 +77,10 @@ s_panel_quit(POA_GNOME_Panel *servant, CORBA_Environment *ev);
 static CORBA_boolean
 s_panel_get_in_drag(POA_GNOME_Panel *servant, CORBA_Environment *ev);
 
+static GNOME_StatusSpot
+s_panel_add_status(POA_GNOME_Panel *servant,
+		   CORBA_unsigned_long* wid,
+		   CORBA_Environment *ev);
 
 
 /*** PanelSpot stuff ***/
@@ -169,6 +173,15 @@ s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 			      CORBA_unsigned_long cookie,
 			      CORBA_Environment *ev);
 
+/*** StatusSpot stuff ***/
+
+static void
+s_statusspot_remove(POA_GNOME_StatusSpot *servant,
+		    CORBA_Environment *ev);
+
+
+
+
 static PortableServer_ServantBase__epv panel_base_epv = {
   NULL, /* _private */
   NULL, /* finalize */
@@ -180,7 +193,8 @@ static POA_GNOME_Panel__epv panel_epv = {
   (gpointer)&s_panel_add_applet,
   (gpointer)&s_panel_add_applet_full,
   (gpointer)&s_panel_quit,
-  (gpointer)&s_panel_get_in_drag
+  (gpointer)&s_panel_get_in_drag,
+  (gpointer)&s_panel_add_status
 };
 static POA_GNOME_Panel__vepv panel_vepv = { &panel_base_epv, &panel_epv };
 static POA_GNOME_Panel panel_servant = { NULL, &panel_vepv };
@@ -216,6 +230,18 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_done_session_save
 };
 static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panelspot_epv };
+
+static PortableServer_ServantBase__epv statusspot_base_epv = {
+  NULL, /* _private */
+  NULL, /* finalize */
+  NULL, /* use base default_POA function */
+};
+
+static POA_GNOME_StatusSpot__epv statusspot_epv = {
+  NULL, /* private data */
+  (gpointer)&s_statusspot_remove
+};
+static POA_GNOME_StatusSpot__vepv statusspot_vepv = { &statusspot_base_epv, &statusspot_epv };
 
 /********************* NON-CORBA Stuff *******************/
 
@@ -559,6 +585,38 @@ s_panel_get_in_drag(POA_GNOME_Panel *servant, CORBA_Environment *ev)
 	return panel_applet_in_drag;
 }
 
+static GNOME_StatusSpot
+s_panel_add_status(POA_GNOME_Panel *servant,
+		   CORBA_unsigned_long *wid,
+		   CORBA_Environment *ev)
+{
+	POA_GNOME_StatusSpot *statusspot_servant;
+	GNOME_StatusSpot acc;
+	StatusSpot *ss;
+	
+	ss = new_status_spot();
+	if(!ss)
+		return CORBA_OBJECT_NIL;
+	
+	statusspot_servant = (POA_GNOME_StatusSpot *)ss;
+	statusspot_servant->_private = NULL;
+	statusspot_servant->vepv = &statusspot_vepv;
+
+	POA_GNOME_StatusSpot__init(statusspot_servant, ev);
+	
+	CORBA_free(PortableServer_POA_activate_object(thepoa, statusspot_servant, ev));
+	g_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+
+	acc = PortableServer_POA_servant_to_reference(thepoa, statusspot_servant, ev);
+	g_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+
+	ss->sspot = CORBA_Object_duplicate(acc, ev);
+
+	g_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+
+	*wid = ss->wid;
+	return CORBA_Object_duplicate(acc, ev);
+}
 
 
 /*** PanelSpot stuff ***/
@@ -982,6 +1040,17 @@ s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 	  this call returns*/
 	gtk_idle_add(save_next_idle,NULL);
 }
+
+/*** StatusSpot stuff ***/
+
+static void
+s_statusspot_remove(POA_GNOME_StatusSpot *servant,
+		    CORBA_Environment *ev)
+{
+	StatusSpot *ss = (StatusSpot *)servant;
+	status_spot_remove(ss);
+}
+
 
 void
 panel_corba_clean_up(void)

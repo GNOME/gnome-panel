@@ -78,6 +78,8 @@ base_panel_SOURCES=\
 	logout.h		\
 	extern.c  		\
 	extern.h  		\
+	status.c  		\
+	status.h  		\
 	swallow.c  		\
 	swallow.h  		\
 	drawer.c  		\
