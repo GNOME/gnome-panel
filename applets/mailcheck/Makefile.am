@@ -22,7 +22,7 @@ libgen_util_applet_la_SOURCES = \
 
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
-                    email-tiny.png
+                    email-tiny.png eclouds.png
 
 EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
