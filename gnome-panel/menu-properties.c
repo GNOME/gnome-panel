@@ -74,7 +74,7 @@ get_real_menu_path(const char *arguments)
 	else
 		this_menu = gnome_unconditional_datadir_file (arguments);
 
-	if (!panel_file_exists (this_menu)) {
+	if ( ! g_file_test (this_menu, G_FILE_TEST_EXISTS)) {
 		g_warning("menu %s does not exist "
 			  "(arguments are %s)",
 			  this_menu, arguments);
@@ -124,7 +124,7 @@ got_gmenu (void)
 	if (checked)
 		return got_it;
 
-	tmp = panel_is_program_in_path ("gmenu");
+	tmp = gnome_is_program_in_path ("gmenu");
 	if (tmp != NULL)
 		got_it = TRUE;
 	else
@@ -290,7 +290,7 @@ properties_apply_callback (Menu *menu)
 
 		if (menu->custom_icon &&
 		    menu->custom_icon_file != NULL &&
-		    panel_file_exists (menu->custom_icon_file))
+		    g_file_test (menu->custom_icon_file, G_FILE_TEST_EXISTS))
 			pixmap_name = g_strdup (menu->custom_icon_file);
 		else
 			pixmap_name = get_pixmap(this_menu, (strcmp (menu->path, ".") == 0));

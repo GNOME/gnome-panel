@@ -969,7 +969,7 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 	if(distribution != DISTRIBUTION_UNKNOWN)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 	/* Guess KDE menus */
-	if(panel_file_exists(kde_menudir))
+	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
 		flags |= MAIN_MENU_KDE_SUB;
 	load_menu_applet (dir, flags, TRUE, FALSE, NULL, panel, pos, TRUE);
 }
@@ -980,7 +980,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	char *tmp;
 
 	tmp = g_concat_dir_and_file (dir, ".directory");
-	if (panel_file_exists (tmp)) {
+	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
@@ -988,14 +988,14 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	g_free (tmp);
 
 	tmp = g_concat_dir_and_file (dir, ".order");
-	if (panel_file_exists (tmp)) {
+	if (g_file_test (tmp, G_FILE_TEST_EXISTS)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
 	}
 	g_free (tmp);
 
-	tmp = panel_is_program_in_path ("nautilus");
+	tmp = gnome_is_program_in_path ("nautilus");
 	if (tmp != NULL) {
 		/* nautilus */
 		char *exec[] = { "nautilus", (char *)dir, NULL };
@@ -1011,7 +1011,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 						pos,
 						TRUE);
 	} else {
-		tmp = panel_is_program_in_path ("gmc-client");
+		tmp = gnome_is_program_in_path ("gmc-client");
 		if (tmp != NULL) {
 			/* gmc */
 			char *exec[] = {

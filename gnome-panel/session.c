@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <gnome-desktop/gnome-desktop-item.h>
+#include "gnome-desktop-item.h"
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-init.h>
 #include <libgnome/gnome-config.h>
@@ -913,7 +913,7 @@ try_evil_config_hacks (const char *goad_id, PanelWidget *panel, int pos)
 
 		if(first_time) {
 			char *tmp;
-			tmp = panel_is_program_in_path("gnomepager_applet");
+			tmp = gnome_is_program_in_path("gnomepager_applet");
 			in_path = tmp != NULL;
 			first_time = FALSE;
 			g_free(tmp);
@@ -1171,7 +1171,7 @@ init_user_applets(void)
 
 			if(type >= 0) {
 				flags = 0;
-				if(type == X_MAIN_MENU_BOTH) {
+				if (type == X_MAIN_MENU_BOTH) {
 					flags |= MAIN_MENU_SYSTEM|MAIN_MENU_USER;
 				} else if(type == X_MAIN_MENU_SYSTEM) {
 					flags |= MAIN_MENU_SYSTEM|
@@ -1181,10 +1181,10 @@ init_user_applets(void)
 						MAIN_MENU_USER;
 				}
 				/*guess distribution menus*/
-				if(distribution != DISTRIBUTION_UNKNOWN)
+				if (distribution != DISTRIBUTION_UNKNOWN)
 					flags |= MAIN_MENU_DISTRIBUTION_SUB;
 				/*guess KDE menus */
-				if(panel_file_exists(kde_menudir))
+				if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
 					flags |= MAIN_MENU_KDE_SUB;
 			}
 			if(old_style) {

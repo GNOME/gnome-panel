@@ -304,7 +304,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         } else {
                                 char *check;
                                 int i;
-                                check = panel_is_program_in_path("gnome-terminal");
+                                check = gnome_is_program_in_path("gnome-terminal");
                                 argv = g_new(char *, 2 + temp_argc + 1);
                                 tofree = g_slist_prepend(tofree, argv);
                                 argc = 2 + temp_argc;

@@ -58,7 +58,7 @@ panel_gnome_help_path (const char *docpath)
 
 	g_free (app);
 
-	if ( ! panel_file_exists (fullpath)) {
+	if ( ! g_file_test (fullpath, G_FILE_TEST_EXISTS)) {
 		g_free (fullpath);
 		fullpath = NULL;
 	}
@@ -75,10 +75,9 @@ panel_gnome_help_path (const char *docpath)
 static char *
 panel_kde_help_path (const char *docpath)
 {
-#ifdef FIXME
 	GList *li;
 
-	if ( ! panel_file_exists (KDE_DOCDIR))
+	if ( ! g_file_text (KDE_DOCDIR, G_FILE_TEST_EXISTS))
 		return NULL;
 
 	for (li = gnome_i18n_get_language_list ("LC_MESSAGES");
@@ -88,14 +87,14 @@ panel_kde_help_path (const char *docpath)
 						  KDE_DOCDIR,
 						  (char *)li->data,
 						  docpath);
-		if (panel_file_exists (fullpath)) {
+		if (g_file_test (fullpath, G_FILE_TEST_EXISTS)) {
 			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
 			g_free (fullpath);
 			return uri;
 		}
 		g_free (fullpath);
 	}
-#endif
+
 	return NULL;
 }
 
@@ -844,7 +843,9 @@ panel_reset_dialog_layers (void)
 }
 
 GtkWidget *
-panel_error_dialog (const char *format, ...)
+panel_error_dialog (const char *class,
+		    const char *format,
+		    ...)
 {
 	GtkWidget *w;
 	char *s;
@@ -861,8 +862,11 @@ panel_error_dialog (const char *format, ...)
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
 				    GTK_BUTTONS_OK, s);
+	gtk_window_set_wmclass (GTK_WINDOW (dlg),
+				class, "Panel");
 	g_free (s);
 
+	gtk_widget_show_all (w);
 	panel_set_dialog_layer (w);
 
 	return w;
@@ -922,33 +926,6 @@ strcasecmp_no_locale (const char *s1, const char *s2)
 		return 1; /* s2 is smaller */
 	else
 		return 0; /* equal */
-}
-
-/* stolen from gnome-libs head as they are faster and don't use "stat" */
-gboolean
-panel_file_exists (const char *filename)
-{
-	g_return_val_if_fail (filename != NULL, FALSE);
-	
-	return (access (filename, F_OK) == 0);
-}
-
-char *
-panel_is_program_in_path (const char *program)
-{
-	static char **paths = NULL;
-	char **p;
-	
-	if (paths == NULL)
-		paths = g_strsplit(g_getenv("PATH"), ":", -1);
-
-	for (p = paths; *p != NULL; p++){
-		char *f = g_strconcat (*p, "/", program, NULL);
-		if (access (f, X_OK) == 0)
-			return f;
-		g_free (f);
-	}
-	return 0;
 }
 
 int

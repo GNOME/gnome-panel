@@ -428,7 +428,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 			ditem = gnome_desktop_item_load_unconditional (name);
 			if (ditem != NULL &&
 			    ditem->tryexec != NULL) {
-				tryexec_path = panel_is_program_in_path (ditem->tryexec);
+				tryexec_path = gnome_is_program_in_path (ditem->tryexec);
 				if (tryexec_path == NULL) {
 					dr->tryexecs = g_slist_prepend (dr->tryexecs, ditem->tryexec);
 					ditem->tryexec = NULL;
@@ -632,7 +632,7 @@ fr_check_and_reread (FileRec *fr)
 		/* recheck tryexecs */
 		for (li = dr->tryexecs; ! reread && li != NULL; li = li->next) {
 			char *tryexec = li->data;
-			char *p = panel_is_program_in_path (tryexec);
+			char *p = gnome_is_program_in_path (tryexec);
 
 			if (p != NULL) {
 				reread = TRUE;
@@ -680,7 +680,8 @@ fr_check_and_reread (FileRec *fr)
 				dr->ditemlast_stat = curtime;
 				if(stat(p,&s)==-1) {
 					/* perhaps the directory is gone */
-					if ( ! panel_file_exists (ffr->name)) {
+					if ( ! g_file_test (ffr->name,
+							    G_FILE_TEST_EXISTS)) {
 						reread = TRUE;
 						break;
 					}
@@ -762,7 +763,8 @@ fr_check_and_reread (FileRec *fr)
 					any_change = TRUE;
 				}
 				if (ffr->tryexec_path != NULL &&
-				    ! panel_file_exists (ffr->tryexec_path)) {
+				    ! g_file_test (ffr->tryexec_path,
+						   G_FILE_TEST_EXISTS)) {
 					reread = TRUE;
 				}
 				break;

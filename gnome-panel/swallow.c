@@ -15,7 +15,7 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
-#include <gnome-desktop/gnome-desktop-item.h>
+#include "gnome-desktop-item.h"
 
 #include "panel-include.h"
 #include "panel-widget.h"
@@ -53,7 +53,6 @@ socket_realized (GtkWidget *w, gpointer data)
 static void
 swallow_launch (Swallow *swallow)
 {
-#ifdef FIXME
 	if ( ! string_empty (swallow->path)) {
 		char *p = strrchr (swallow->path, '.');
 		GnomeDesktopItem *item;
@@ -63,13 +62,14 @@ swallow_launch (Swallow *swallow)
 		if(p != NULL &&
 		   (strcmp (p, ".desktop") == 0 ||
 		    strcmp (p, ".kdelnk") == 0) &&
-		   panel_file_exists (swallow->path) &&
-		   (item = gnome_desktop_item_load (swallow->path)) != NULL) {
+		   g_file_test (swallow->path, G_FILE_TEST_EXISTS) &&
+		   (item = gnome_desktop_item_new_from_file (swallow->path)) != NULL) {
 			char *curdir = g_get_current_dir ();
 			chdir (g_get_home_dir ());
 
-			gnome_desktop_item_launch (item);
-			gnome_desktop_item_free (item);
+			gnome_desktop_item_launch (item, 0, NULL, NULL);
+			/* FIXME: handle_errors */
+			gnome_desktop_item_unref (item);
 
 			chdir (curdir);
 			g_free (curdir);
@@ -77,7 +77,6 @@ swallow_launch (Swallow *swallow)
 			gnome_execute_shell (g_get_home_dir (), swallow->path);
 		}
 	}
-#endif
 }
 
 static gboolean

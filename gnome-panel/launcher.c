@@ -18,8 +18,10 @@
 #include <string.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
+#include <libgnomevfs/gnome-vfs.h>
 
-#include <gnome-desktop/gnome-desktop-item.h>
+#include "gnome-desktop-item.h"
+#include "gnome-ditem-edit.h"
 
 #include "panel-include.h"
 
@@ -46,60 +48,60 @@ enum {
 	CLOSE_BUTTON
 };
 
+static void
+launch_url (Launcher *launcher)
+{
+	GnomeDesktopItem *item;
+	const char *url;
+	GError *error = NULL;
+
+	g_return_if_fail (launcher != NULL);
+	g_return_if_fail (launcher->ditem != NULL);
+
+	item = launcher->ditem;
+	url = gnome_desktop_item_get_string (item,
+					     GNOME_DESKTOP_ITEM_URL);
+
+	if (url == NULL) {
+		panel_error_dialog ("no_url_dialog",
+				    _("This launch icon does not "
+				      "specify a url to show"));
+		return;
+	}
+
+	gnome_url_show (url, &error);
+	if (error != NULL) {
+		panel_error_dialog ("cant_show_url_dialog",
+				    _("Cannot show %s\n%s"),
+				    url, error->message);
+		g_error_clear (&error);
+	}
+}
+
 
 static void
 launch (Launcher *launcher, int argc, char *argv[])
 {
-#ifdef FIXME
 	GnomeDesktopItem *item;
-	GNOME_DesktopEntryType type;
-	gchar *command;
+	GnomeDesktopItemType type;
 
 	g_return_if_fail(launcher != NULL);
 	g_return_if_fail(launcher->ditem != NULL);
 
 	item = launcher->ditem;
-	type = gnome_desktop_item_get_type(item);
-	command = gnome_desktop_item_get_command(item);
-	
-	if(!command) {
-		GtkWidget *dlg;
-		dlg = gtk_message_dialog_new(NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-					     GTK_MESSAGE_ERROR,
-					     GTK_BUTTONS_CLOSE,
-					     _("This launch icon does not "
-					       "specify a program to run"));
-		gtk_window_set_wmclass(GTK_WINDOW(dlg),
-				       "no_exec_dialog","Panel");
-		gtk_widget_show_all(dlg);
-		panel_set_dialog_layer(dlg);
-		return;
-	}
-	
-	if (type == GNOME_DESKTOP_ENTRY_TYPE_URL) {
-		gnome_url_show (command);
-	} else if (type == GNOME_DESKTOP_ENTRY_TYPE_PANEL_APPLET) {
-		char *goad_id;
+	type = gnome_desktop_item_get_entry_type (item);
 
-		goad_id = get_applet_goad_id_from_dentry (item);
-
-		if (goad_id != NULL) {
-			load_extern_applet (goad_id, NULL,
-					    NULL, -1,
-					    FALSE, FALSE);
-		} else {
-			g_warning (_("Can't get goad_id from desktop entry!"));
-		}
-
-		g_free (goad_id);
+	if (type == GNOME_DESKTOP_ITEM_TYPE_URL) {
+		launch_url (launcher);
 	} else {
-		char *curdir = g_get_current_dir ();
-		chdir (g_get_home_dir ());
-
-		gnome_desktop_entry_launch_with_args (item, argc, argv);
-
-		chdir (curdir);
-		g_free (curdir);
+		GError *error = NULL;
+		gnome_desktop_item_launch (item, argc, argv, &error);
+		if (error != NULL) {
+			panel_error_dialog ("cannot_launch_icon",
+					    _("Cannot launch icon\n%s"),
+					    error->message);
+			g_error_clear (&error);
+		}
 	}
 	
 	if(global_config.drawer_auto_close) {
@@ -117,13 +119,12 @@ launch (Launcher *launcher, int argc, char *argv[])
 	}
 
 	g_free (command);
-#endif
 }
 
 static void
 launch_cb (GtkWidget *widget, gpointer data)
 {
-	launch(data,0,NULL);
+	launch (data, 0, NULL);
 }
 
 static void
@@ -136,32 +137,26 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-#ifdef FIXME
-	GList *li, *files;
-	int argc;
-	char **argv;
-	int i;
+	GList *list;
+	GError *error = NULL;
 
-	g_return_if_fail(launcher!=NULL);
+	list = gnome_vfs_uri_list_parse ((char *)selection_data->data);
 
-	files = gnome_uri_list_extract_filenames((char *)selection_data->data);
-	argc = g_list_length(files);
-	argv = g_new(char *,argc+1);
-	argv[argc] = NULL;
+	gnome_desktop_item_drop_uri_list (item, list &error);
+	if (error != NULL) {
+		panel_error_dialog ("cannot_launch_icon",
+				    _("Cannot launch icon\n%s"),
+				    error->message);
+		g_error_clear (&error);
+	}
 
-	for(i=0,li = files; li; i++,li = g_list_next(li))
-		argv[i]=li->data;
-	
-	launch(launcher,argc,argv);
-	gnome_uri_list_free_strings (files);
-	g_free(argv);
-#endif
+	gnome_vfs_uri_list_free (list);
 
-	gtk_drag_finish(context,TRUE,FALSE,time);
+	gtk_drag_finish (context, TRUE, FALSE, time);
 }
 
 static void
-destroy_launcher(GtkWidget *widget, gpointer data)
+destroy_launcher (GtkWidget *widget, gpointer data)
 {
 	Launcher *launcher = data;
 	GtkWidget *prop_dialog = launcher->prop_dialog;
@@ -177,18 +172,14 @@ free_launcher(gpointer data)
 {
 	Launcher *launcher = data;
 
-#ifdef FIXME
-	gnome_desktop_item_free(launcher->ditem);
-#endif
+	gnome_desktop_item_unref (launcher->ditem);
 	launcher->ditem = NULL;
 
-#ifdef FIXME
 	if (launcher->revert_ditem != NULL)
-		gnome_desktop_item_free(launcher->revert_ditem);
-#endif
+		gnome_desktop_item_unref (launcher->revert_ditem);
 	launcher->revert_ditem = NULL;
 
-	g_free(launcher);
+	g_free (launcher);
 }
 
 static gboolean
@@ -324,12 +315,11 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	if (default_app_pixmap == NULL)
 		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
 
-	if(ditem == NULL) {
-#ifdef FIXME
+	if (ditem == NULL) {
 		if (parameters == NULL) {
 			return NULL;
 		} else if (*parameters == '/') {
-			dentry = gnome_desktop_entry_load_unconditional (parameters);
+			ditem = gnome_desktop_item_new_from_file (parameters);
 		} else {
 			char *apps_par, *entry, *extension;
 
@@ -353,7 +343,7 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 				entry = g_strconcat (merge_merge_dir, "/",
 						     parameters,
 						     extension, NULL);
-				if ( ! panel_file_exists (entry)) {
+				if ( ! g_file_test (entry, G_FILE_TEST_EXISTS)) {
 					g_free (entry);
 					entry = NULL;
 				}
@@ -979,7 +969,7 @@ launcher_get_unique_file (void)
 		full = launcher_file_name (fname);
 		g_free (fname);
 
-		if ( ! panel_file_exists (full))
+		if ( ! g_file_test (full, G_FILE_TEST_EXISTS))
 			return full;
 	}
 

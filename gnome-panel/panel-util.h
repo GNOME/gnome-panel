@@ -72,16 +72,14 @@ char *		convert_keysym_state_to_string (guint keysym,
 
 void		panel_set_dialog_layer	(GtkWidget *dialog);
 void		panel_reset_dialog_layers (void);
-GtkWidget *	panel_error_dialog	(const char *format, ...) G_GNUC_PRINTF (1, 2);
+GtkWidget *	panel_error_dialog	(const char *class,
+					 const char *format,
+					 ...) G_GNUC_PRINTF (2, 3);
 
 gboolean	is_ext			(const char *file,
 					 const char *ext);
 int		strcasecmp_no_locale	(const char *s1,
 					 const char *s2);
-
-/* stolen from gnome-libs head as they are faster and don't use "stat" */
-gboolean	panel_file_exists	(const char *filename);
-char *		panel_is_program_in_path (const char *program);
 
 int		find_applet		(GtkWidget *widget);
 

@@ -157,21 +157,17 @@ get_default_menu_flags (void)
 {
 	DistributionType distribution = get_distribution_type();
 
-#ifdef FIXME
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 		MAIN_MENU_DESKTOP;
 	
 	/*guess distribution menus*/
-	if(distribution != DISTRIBUTION_UNKNOWN)
+	if (distribution != DISTRIBUTION_UNKNOWN)
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
 	/*guess KDE menus*/
-	if (panel_file_exists (kde_menudir))
+	if (g_file_test (kde_menudir, G_FILE_TEST_IS_DIR))
 		flags |= MAIN_MENU_KDE_SUB;
 
 	return flags;
-#else
-	return MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB;
-#endif
 }

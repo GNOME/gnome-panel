@@ -15,9 +15,11 @@ EXTRA_SUBDIRS = config help
 INCLUDES = \
 	-I.			\
 	-I$(srcdir)		\
+	-I$(top_srcdir)/gnome-desktop	\
 	-I$(top_srcdir)/intl	\
 	-I$(top_builddir)/intl	\
 	-I$(top_builddir)/panel	\
+	-DGNOME_CORE_INTERNAL	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGNOME_DATADIR=\""$(datadir)"\" \
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \

@@ -12,7 +12,7 @@
 #define LAUNCHER_H
 
 #include <panel-widget.h>
-#include <gnome-desktop/gnome-desktop-item.h>
+#include "gnome-desktop-item.h"
 
 G_BEGIN_DECLS
 

@@ -34,7 +34,7 @@ rh_submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 	int r;
 	int do_read = FALSE;
 	char *userrh;
-	if(!panel_file_exists(REDHAT_MENUDIR))
+	if ( ! g_file_test (REDHAT_MENUDIR, G_FILE_TEST_IS_DIR))
 		return;
 	userrh = gnome_util_prepend_user_home(".wmconfig/");
 
@@ -207,7 +207,7 @@ add_redhat_entry(GSList *list, char *file)
 			char *s = read_word(&p);
 			g_free(rh->u.item.icon);
 			if(*s == '/') {
-				if(panel_file_exists(s))
+				if (g_file_test (s, G_FILE_TEST_EXISTS))
 					rh->u.item.icon = s;
 				else {
 					g_free(s);
@@ -215,7 +215,8 @@ add_redhat_entry(GSList *list, char *file)
 				}
 			} else {
 				rh->u.item.icon = g_concat_dir_and_file("/usr/share/icons", s);
-				if(!panel_file_exists(rh->u.item.icon)) {
+				if ( ! g_file_test (rh->u.item.icon,
+						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.icon);
 					rh->u.item.icon = gnome_pixmap_file(s);
 				}
@@ -225,15 +226,16 @@ add_redhat_entry(GSList *list, char *file)
 			char *s = read_word(&p);
 			g_free(rh->u.item.mini_icon);
 			if(*s == '/') {
-				if(panel_file_exists(s))
+				if (g_file_test (s, G_FILE_TEST_EXISTS)) {
 					rh->u.item.mini_icon = s;
-				else {
+				} else {
 					g_free(s);
 					rh->u.item.mini_icon = NULL;
 				}
 			} else {
 				rh->u.item.mini_icon = g_concat_dir_and_file("/usr/share/icons/mini", s);
-				if(!panel_file_exists(rh->u.item.mini_icon)) {
+				if ( ! g_file_test (rh->u.item.mini_icon,
+						    G_FILE_TEST_EXISTS)) {
 					g_free(rh->u.item.mini_icon);
 					rh->u.item.mini_icon = gnome_pixmap_file(s);
 				}

@@ -3,7 +3,7 @@
 
 #include <sys/stat.h>
 #include <unistd.h>
-#include <gnome-desktop/gnome-desktop-item.h>
+#include "gnome-desktop-item.h"
 
 G_BEGIN_DECLS
 

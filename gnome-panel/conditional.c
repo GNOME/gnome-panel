@@ -22,7 +22,7 @@ linux_battery_exists (void)
 	char buf[200] = "";
 	int foo;
 
-	if ( ! panel_file_exists("/proc/apm"))
+	if ( ! g_file_test ("/proc/apm", G_FILE_TEST_EXISTS))
 		return FALSE;
 
 	fp = fopen ("/proc/apm", "r");
@@ -357,7 +357,7 @@ conditional_parse (const char *conditional, int len)
 			}
 
 			cond = FALSE;
-			if (panel_file_exists (file)) {
+			if (g_file_test (file, G_FILE_TEST_EXISTS)) {
 				cond = TRUE;
 			} else {
 				char *full = gnome_datadir_file (file);

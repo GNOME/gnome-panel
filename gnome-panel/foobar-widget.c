@@ -296,7 +296,7 @@ display_gmc_menu (void)
 
 	if ( ! checked_path) {
 		char *gmc_client;
-		gmc_client = panel_is_program_in_path ("gmc-client");
+		gmc_client = gnome_is_program_in_path ("gmc-client");
 
 		if (gmc_client == NULL)
 			got_gmc = FALSE;
@@ -378,7 +378,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 	item = add_menu_separator (menu);
 	gmc_menu_items = g_list_prepend (gmc_menu_items, item);
 	
-	char_tmp = panel_is_program_in_path ("xscreensaver");
+	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
 		item = pixmap_menu_item_new (_("Lock Screen"), 
 					       "gnome-lockscreen.png");
