@@ -38,7 +38,6 @@
 #include "menu.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
-#include "panel-main.h"
 #include "panel-config-global.h"
 #include "session.h"
 #include "sliding-widget.h"
@@ -126,18 +125,6 @@ static GConfEnumStringPair panel_orient_type_enum_map [] = {
 static GConfEnumStringPair panel_orientation_type_enum_map [] = {
 	{ GTK_ORIENTATION_HORIZONTAL, "panel-orientation-horizontal" },
 	{ GTK_ORIENTATION_VERTICAL, "panel-orientation-vertical" },
-};
-
-static GConfEnumStringPair panel_speed_type_enum_map [] = {
-	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
-	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
-	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
-};
-
-static GConfEnumStringPair panel_layer_type_enum_map [] = {
-	{ LAYER_NORMAL, "panel-normal-layer" },
-	{ LAYER_BELOW, "panel-below-layer" },
-	{ LAYER_ABOVE, "panel-above-layer" },
 };
 
 gchar *
@@ -1117,235 +1104,6 @@ load_system_wide (void)
 	gnome_config_pop_prefix ();
 }
 
-void
-session_read_global_config (void)
-{
-	GSList *li, *list;
-
-	list = panel_gconf_all_global_entries ();
-
-	printf ("Loading up global preferences . . .\n");
-
-	for (li = list; li != NULL ; li = li->next) {
-		GConfEntry *entry;
-		GConfValue *value;
-		gchar      *key;
-
-		entry = (GConfEntry *)li->data;
-
-		value = gconf_entry_get_value (entry);
-
-		key = g_path_get_basename (gconf_entry_get_key (entry));
-#ifdef SESSION_DEBUG
-	printf ("Checking global config for %s\n", key);
-#endif
-		/* FIXME: We need to do something more user friendly here */
-		if (!strcmp (key, "panel-animation-speed")) {
-			gconf_string_to_enum (panel_speed_type_enum_map,
-					      gconf_value_get_string (value),
-					      (gint *) &global_config.animation_speed);
-		}
-
-		else if (!strcmp (key, "panel-minimized-speed"))
-			global_config.minimized_size =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-minimized-size"))
-			global_config.minimized_size =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-hide-delay"))
-			global_config.hide_delay =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "panel-show-delay"))
-			global_config.show_delay =
-				gconf_value_get_int (value);
-
-		else if (!strcmp (key, "tooltips-enabled"))
-			global_config.tooltips_enabled =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "keep-menus-in-memory"))
-			global_config.keep_menus_in_memory =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "enable-animations"))
-			global_config.enable_animations =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "autoraise-panel"))
-			global_config.autoraise =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "panel-window-layer"))
-			gconf_string_to_enum (panel_layer_type_enum_map,
-					      gconf_value_get_string (value),
-					      (gint *) &global_config.layer);
-
-		else if (!strcmp (key, "drawer-autoclose"))
-			global_config.drawer_auto_close =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "auto-update-menus"))
-			g_warning ("\nGman: So guys, are we actually gonne do something with this in some sort of GNOME 2.0 timeframe?\n");
-
-		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
-			global_config.highlight_when_over =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "confirm-panel-remove"))
-			global_config.confirm_panel_remove =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "enable-key-bindings"))
-			global_config.keys_enabled =
-				gconf_value_get_bool (value);
-
-		else if (!strcmp (key, "menu-key")) { 
-			if (global_config.menu_key )
-				g_free (global_config.menu_key );
-
-			global_config.menu_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.menu_key,
-							&global_config.menu_keysym,
-							&global_config.menu_state);
-		} else if (!strcmp (key, "run-key")) {
-			if (global_config.run_key )
-				g_free (global_config.run_key );
-
-			global_config.run_key =
-				 g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.run_key,
-							&global_config.run_keysym,
-							&global_config.run_state);
-		} else if (!strcmp (key, "screenshot-key")) {
-			if (global_config.screenshot_key )
-				g_free (global_config.screenshot_key );
-
-			global_config.screenshot_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.screenshot_key,
-							&global_config.screenshot_keysym,
-							&global_config.screenshot_state);
-
-		} else if (!strcmp (key, "window-screenshot-key")) {
-			if (global_config.window_screenshot_key )
-				g_free (global_config.window_screenshot_key );
-
-			global_config.window_screenshot_key =
-				g_strdup (gconf_value_get_string (value));
-
-			convert_string_to_keysym_state (global_config.window_screenshot_key,
-							&global_config.window_screenshot_keysym,
-							&global_config.window_screenshot_state);
-
-		} else  {
-			g_warning ("%s not handled", key);
-		}
-
-		g_free (key);
-		gconf_entry_free (entry);
-	}
-
-	g_slist_free (list);
-
-	/* FIXME STUFF THAT IS BORKED */
-	global_config.menu_check = TRUE;
-	global_config.menu_flags = get_default_menu_flags();
-
-	apply_global_config ();
-}
-
-void
-session_write_global_config (void)
-{
-	GConfChangeSet *global_config_cs;
-	gchar *full_key;
-
-	global_config_cs = gconf_change_set_new ();
-
-	/* FIXME STUFF THAT IS BORKED 
-	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
-	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
-	*/
-
-	/* FIXME: Make this more generic - this currently sucks */
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-minimized-speed");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.minimized_size);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-hide-delay");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.hide_delay);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-show-delay");
-	gconf_change_set_set_int (global_config_cs, full_key, global_config.show_delay);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("tooltips-enabled");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.tooltips_enabled);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("enable-animations");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.enable_animations);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("autoraise-panel");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.autoraise);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("drawer-autoclose");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.drawer_auto_close);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("highlight-launchers-on-mouseover");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.highlight_when_over);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("confirm-panel-remove");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.confirm_panel_remove);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("keep-menus-in-memory");
-	gconf_change_set_set_bool (global_config_cs, full_key, global_config.keep_menus_in_memory);
-	g_free (full_key);
-	
-	full_key = panel_gconf_global_config_get_full_key ("panel-animation-speed");
-	gconf_change_set_set_string (global_config_cs, full_key , gconf_enum_to_string (panel_speed_type_enum_map, global_config.animation_speed));
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("menu-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.menu_key);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("run-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.run_key);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("screenshot-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.screenshot_key);
-	g_free (full_key);
-	
-	full_key = panel_gconf_global_config_get_full_key ("window-screenshot-key");
-	gconf_change_set_set_string (global_config_cs, full_key, global_config.window_screenshot_key);
-	g_free (full_key);
-
-	full_key = panel_gconf_global_config_get_full_key ("panel-window-layer");
-	gconf_change_set_set_string (global_config_cs, full_key, gconf_enum_to_string (panel_layer_type_enum_map, global_config.layer));
-	g_free (full_key);
-
-	gconf_client_commit_change_set (panel_gconf_get_client (), global_config_cs, FALSE, NULL);
-
-	gconf_change_set_unref (global_config_cs);
-			     
-}
-
 void session_load (void) {
 printf ("Loading up panel profile . . .\n");
 
@@ -1353,7 +1111,7 @@ printf ("Loading up panel profile . . .\n");
 	 * load_system_wide ();
 	 */ 
 
-	session_read_global_config ();
+	panel_session_read_global_config ();
 	init_menus ();
 	session_init_panels ();
 

@@ -49,8 +49,8 @@ GladeXML *glade_gui;
 GConfClient *gconf_client;
 
 static GConfEnumStringPair global_properties_type_enum_map [] = {
-	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
 	{ PANEL_SPEED_SLOW,   "panel-speed-slow" },
+	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },	
 	{ LAYER_NORMAL, "panel-normal-layer" },
 	{ LAYER_BELOW, "panel-below-layer" },

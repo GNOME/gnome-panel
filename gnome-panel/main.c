@@ -18,12 +18,11 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "panel-main.h"
-
 #include "drawer-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
 #include "multiscreen-stuff.h"
+#include "panel.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
@@ -186,7 +185,7 @@ tell_user_Im_on_crack (void)
 
 static void
 session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *entry, gpointer user_data) {
-	session_read_global_config ();
+	panel_session_read_global_config ();
 }
 
 static const struct poptOption options[] = {

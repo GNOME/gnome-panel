@@ -41,6 +41,9 @@ void status_unparent (GtkWidget *widget);
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
 
 
+void panel_session_read_global_config (void);
+void panel_session_write_global_config (void);
+
 G_END_DECLS
 
 #endif

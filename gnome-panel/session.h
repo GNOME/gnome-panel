@@ -46,9 +46,6 @@ gchar * session_get_current_profile (void);
 void session_set_current_profile (const gchar *profile_name);
 
 void session_load (void);
-void session_read_global_config (void);
-/* only to be used on beginning, we don't really want to write globals much */
-void session_write_global_config (void);
 
 void session_remove_panel_from_config (PanelWidget *panel);
 

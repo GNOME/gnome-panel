@@ -61,8 +61,8 @@ typedef enum {
 } BorderEdge;
 
 typedef enum {
-	PANEL_SPEED_MEDIUM,
 	PANEL_SPEED_SLOW,
+	PANEL_SPEED_MEDIUM,
 	PANEL_SPEED_FAST
 } PanelSpeed;
 

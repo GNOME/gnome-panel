@@ -85,6 +85,9 @@ enum {
         PROP_HIDEBUTTON_PIXMAPS_ENABLED,
 };
 
+#define PANEL_SLOW_STEP_SIZE 10
+#define PANEL_MEDIUM_STEP_SIZE 60
+#define PANEL_FAST_STEP_SIZE 80
 
 /************************
  widget core
@@ -796,17 +799,17 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
 	switch (animation_step) {
-		case PANEL_SPEED_MEDIUM:
-				step = 60;
-				break;
 		case PANEL_SPEED_SLOW:
-				step = 10;
+				step = PANEL_SLOW_STEP_SIZE;
+				break;
+		case PANEL_SPEED_MEDIUM:
+				step = PANEL_MEDIUM_STEP_SIZE;
 				break;
 		case PANEL_SPEED_FAST:
-				step = 80;
+				step = PANEL_FAST_STEP_SIZE;
 				break;
 		default:
-				step = 60;
+				step = PANEL_MEDIUM_STEP_SIZE; 
 	}
 
 #ifdef BASEP_WIDGET_DEBUG
@@ -924,16 +927,16 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 	
 	switch (animation_step) {
 		case PANEL_SPEED_MEDIUM:
-				step = 60;
+				step = PANEL_MEDIUM_STEP_SIZE;
 				break;
 		case PANEL_SPEED_SLOW:
-				step = 10;
+				step = PANEL_SLOW_STEP_SIZE;
 				break;
 		case PANEL_SPEED_FAST:
-				step = 80;
+				step = PANEL_FAST_STEP_SIZE;
 				break;
 		default:
-				step = 60;
+				step = PANEL_MEDIUM_STEP_SIZE;
 	}
 
 #ifdef BASEP_WIDGET_DEBUG

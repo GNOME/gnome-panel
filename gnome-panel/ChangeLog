@@ -1,3 +1,13 @@
+2002-01-09  Glynn Foster  <glynn.foster@sun.com>
+
+	* basep-widget.c: Use #defines for panel speed for convenience
+	* gnome-panel-properties.c: Fix animation speeds [hopefully].
+	* panel-types.h: Change order of PanelSpeed enum.
+	* main.c, panel.c, panel.h, session.c, session.h: Start to order
+	some stuff around for proper namespacing. 
+	I'm 99.99% sure that this builds...because I looked dumb the last 
+	time [thanks Darin!].
+
 2002-01-09  Darin Adler  <darin@bentspoon.com>
 
 	* menu.c: Another include of conditional.h
