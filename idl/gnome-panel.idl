@@ -29,11 +29,12 @@ module GNOME {
 			case BACK_PIXMAP: string pmap;
 		};
 
+		/* XXX: to be removed soon */
 		enum SizeType {
-		        SIZE_TINY,
-	        	SIZE_STANDARD,
-		        SIZE_LARGE,
-		        SIZE_HUGE	
+			SIZE_TINY,
+			SIZE_STANDARD,
+			SIZE_LARGE,
+			SIZE_HUGE
 		};
 		
 		/* XXX do activation stuff here - the applet side of it
@@ -84,7 +85,7 @@ module GNOME {
 		readonly attribute Panel::OrientType parent_orient;
 
 		/*the size of the panel on which this applet resides*/
-		readonly attribute Panel::SizeType parent_size;
+		readonly attribute short parent_size;
 		
 		/*the maximum amount of free space the applet has without
 		  pushing around other applets, on packed panels this is
@@ -128,7 +129,7 @@ module GNOME {
 
 	interface Applet {
 		oneway void change_orient (in Panel::OrientType orient);
-		oneway void change_size (in Panel::SizeType size);
+		oneway void change_size (in short size);
 		oneway void do_callback (in string callback_name);
 		oneway void session_save (in string cfgpath,
 					  in string global_cfgpath,
