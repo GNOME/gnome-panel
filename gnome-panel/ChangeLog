@@ -1,3 +1,13 @@
+2002-01-09  Glynn Foster  <glynn.foster@sun.com>
+
+	* Makefile.am: Remove building of conditional.[ch]
+	* conditional.c, conditional.h: Kill Kill Kill!!
+	* menu.c: ifdef out, hasn't been implemented using gconf yet
+	* main.c, panel-gconf.c, panel-util.c, session.c: Move stuff around 
+	a little bit to remove as much cruft from main ()
+	* panel-util.c: Add some of the useful [possibly] batter stuff from 
+	conditional.[ch]
+
 2002-01-09  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.c:

@@ -4735,6 +4735,10 @@ panel_load_menu_image_deferred (GtkWidget *image_menu_item,
 			 0 /* connect_flags */);
 }
 
+#ifdef FIXME
+/* FIXME: We need to gconfize all the tearoff stuff still
+ */ 
+
 void
 panel_menu_session_save_tornoffs (void)
 {
@@ -4789,10 +4793,10 @@ panel_menu_session_save_tornoffs (void)
 		
 		if (menu_panel_widget != NULL)
 			menu_panel_id = menu_panel_widget->unique_id;
-#ifdef FIXME
+
 		gnome_config_set_int("menu_panel", menu_panel);
 		gnome_config_set_int("menu_unique_panel_id", menu_panel_id); 
-#endif
+
 		gnome_config_set_string("special",
 					sure_string (tm->special));
 
@@ -4856,6 +4860,7 @@ load_tearoff_menu(void)
 	TearoffMenu *tm;
 	gulong wmclass_num;
 	PanelWidget *menu_panel_widget = NULL;
+
 
 	if ( ! conditional_true ("Conditional"))
 		return;
@@ -4983,9 +4988,6 @@ load_tearoff_menu(void)
 
 	tearoffs = g_slist_prepend(tearoffs,tm);
 }
-
-#ifdef FIXME 
-/* This needs to be gconf'ized */
 
 void
 panel_menu_session_load_tornoffs (void)

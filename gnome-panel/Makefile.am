@@ -66,7 +66,6 @@ panel_sources =			\
 	multiscreen-stuff.c	\
 	xstuff.c		\
 	session.c		\
-	conditional.c		\
 	foobar-widget.c		\
 	border-widget.c		\
 	edge-widget.c		\
@@ -107,7 +106,6 @@ panel_headers =			\
 	multiscreen-stuff.h	\
 	xstuff.h		\
 	session.h		\
-	conditional.h		\
 	foobar-widget.h		\
 	border-widget.h		\
 	edge-widget.h		\

@@ -16,6 +16,12 @@
 #include <fcntl.h>
 #include <dirent.h>
 
+/* includes for the battery stuff */
+#include <signal.h>
+#include <limits.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
 #include <libgnomeui/libgnomeui.h>
 #include <libgnome/libgnome.h>
 
@@ -1366,3 +1372,78 @@ panel_signal_connect_object_while_alive (GObject      *object,
 				  g_cclosure_new_object_swap (func, G_OBJECT (alive_object)),
 				  FALSE);
 }
+
+/* Linux Battery Stuff */
+
+static gboolean
+linux_battery_exists (void)
+{
+        FILE *fp;
+        char buf[200] = "";
+        int foo;
+
+        if ( ! g_file_test ("/proc/apm", G_FILE_TEST_EXISTS))
+                return FALSE;
+
+        fp = fopen ("/proc/apm", "r");
+        if (fp == NULL)
+                return FALSE;
+
+        if (fgets (buf, sizeof (buf), fp) == NULL) {
+                fclose (fp);
+                return FALSE;
+        }
+        fclose (fp);
+
+        foo = -1;
+        sscanf (buf,
+                "%*s %*d.%*d %*x %*x %*x %*x %d%% %*d %*s\n",
+                &foo);
+
+        if (foo >= 0)
+                return TRUE;
+        else
+                return FALSE;
+}
+
+static gboolean
+battery_exists (void)
+{
+#ifndef __linux__
+        return FALSE;
+#else
+        /* This is MUUUUCHO ugly, but apparently RH 7.0 with segv the program
+         * reading /proc/apm on some laptops, and we don't want to crash, thus
+         * we do the check in a forked process */
+        int status;
+        pid_t pid;
+
+        pid = fork ();
+        if (pid == 0) {
+                struct sigaction sa = {{NULL}};
+
+                sa.sa_handler = SIG_DFL;
+
+                sigaction(SIGSEGV, &sa, NULL);
+                sigaction(SIGFPE, &sa, NULL);
+                sigaction(SIGBUS, &sa, NULL);
+
+                if (linux_battery_exists ())
+                        _exit (0);
+                else
+                        _exit (1);
+        }
+
+        status = 0;
+        waitpid (pid, &status, 0);
+
+        if ( ! WIFSIGNALED (status) &&
+            WIFEXITED (status) &&
+            WEXITSTATUS (status) == 0) {
+                return TRUE;
+        } else {
+                return FALSE;
+        }
+#endif
+}
+

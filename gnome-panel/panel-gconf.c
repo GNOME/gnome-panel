@@ -1,7 +1,7 @@
 #include <config.h>
 #include <string.h>
-#include <glib.h>
 
+#include <glib.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/gnome-client.h>
 

@@ -246,28 +246,14 @@ main(int argc, char **argv)
 	xstuff_init ();
 	multiscreen_init ();
 
-	/* FIXME - need to start using gconf to this 
-	load_system_wide (); */
-
-
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/menus");
-
-	/* set the globals, it is important this is before
-	 * init_user_applets */
-	session_read_global_config ();
-
-	/* Do the notification stuff */
 	panel_gconf_notify_add ("/apps/panel/global", session_notify_global_changes, NULL);
-
-	init_menus ();
 
 	session_load ();	
 
 	kill_free_drawers ();
-#ifdef FIXME
-	panel_menu_session_load_tornoffs ();
-#endif
+	
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,

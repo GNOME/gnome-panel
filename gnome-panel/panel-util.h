@@ -138,6 +138,10 @@ ReadBuf *	readbuf_open		(const char *uri);
 gboolean	readbuf_rewind		(ReadBuf *rb);
 void		readbuf_close		(ReadBuf *rb);
 
+
+/* FIXME : make battery stuff public as appropriate */
+
+
 G_END_DECLS
 
 #endif /* PANEL_UTIL_H */

@@ -481,10 +481,11 @@ panel_session_do_save (GnomeClient *client,
 	if (save_panels)
 		for (l = panel_list; l; l = l->next)
 			panel_session_save_panel ((PanelData *) l->data);
-
+#ifdef FIXME
+	/* We need to do tornoff's still */
 	if (complete_save)
 		panel_menu_session_save_tornoffs ();
-
+#endif
 	if (save_applets) {
 		session_unlink_dead_launchers ();
 
@@ -1347,7 +1348,16 @@ session_write_global_config (void)
 
 void session_load (void) {
 printf ("Loading up panel profile . . .\n");
+
+	/* FIXME : We still have to load up system preferences
+	 * load_system_wide ();
+	 */ 
+
+	session_read_global_config ();
+	init_menus ();
 	session_init_panels ();
-/*	session_init_launchers (); */
+
+	/* FIXME: We still need to load up possible tearoffs */
+
 	panel_applet_load_applets_from_gconf ();
 }
