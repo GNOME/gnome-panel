@@ -530,19 +530,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 }
 
 static void
-count_open_drawers(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w),
-					       "applet_info");
-	int *count = data;
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
-			(*count)++;
-	}
-}
-
-static void
 panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(widget),
@@ -550,26 +537,23 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
 					       "applet_info");
 
-	if(IS_SNAPPED_WIDGET(parentw)) {
-		int drawers_open = 0;
-
-		gtk_container_foreach(GTK_CONTAINER(widget),
-				      count_open_drawers,
-				      &drawers_open);
-		SNAPPED_WIDGET(parentw)->drawers_open = drawers_open;
-		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
-	} else if(IS_CORNER_WIDGET(parentw)) {
-		int drawers_open = 0;
-
-		gtk_container_foreach(GTK_CONTAINER(widget),
-				      count_open_drawers,
-				      &drawers_open);
-		CORNER_WIDGET(parentw)->drawers_open = drawers_open;
-		corner_widget_queue_pop_down(CORNER_WIDGET(parentw));
-	}
-
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;
+
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
+			if(IS_SNAPPED_WIDGET(parentw)) {
+				SNAPPED_WIDGET(parentw)->drawers_open--;
+				snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
+			} else if(IS_CORNER_WIDGET(parentw)) {
+				CORNER_WIDGET(parentw)->drawers_open--;
+				corner_widget_queue_pop_down(CORNER_WIDGET(parentw));
+			}
+		}
+		/*it was a drawer so we need to save panels as well*/
+		panels_to_sync = TRUE;
+	}
 }
 
 static void

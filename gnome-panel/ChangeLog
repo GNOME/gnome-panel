@@ -1,3 +1,9 @@
+Mon Mar 15 13:42:31 1999  George Lebl  <jirka@5z.com>
+
+	* panel.c: when an applet is removed don't recount all drawers,
+	  just subtract from open, and queue saving of panels when applet
+	  was a drawer, to prevent bad restarts from a crash
+
 Mon Mar 15 13:32:41 1999  George Lebl  <jirka@5z.com>
 
 	* session.c,*.c: removed incremental applet saving stuff, now
