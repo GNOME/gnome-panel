@@ -8,14 +8,15 @@
 # Benedikt Roth <Benedikt.Roth@gmx.net>, 2000, 2001.
 # Jörgen Scheibengruber <mfcn@gmx.de>, 2002.
 # Christian Neumair <chris@gnome-de.org>, 2002-2004.
+# Hendrik Richter <hendrik@gnome-de.org>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.7.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-31 09:29+0100\n"
+"POT-Creation-Date: 2004-09-04 11:19+0000\n"
 "PO-Revision-Date: 2004-07-03 14:43+0200\n"
-"Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
+"Last-Translator: Hendrik Richter <hendrik@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -256,60 +257,61 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
-msgid "24"
+#: applets/clock/clock.schemas.in.h:1
+msgid ""
+"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
 msgstr "24"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
-msgid "24-hour"
+#: applets/clock/clock.schemas.in.h:2
+msgid ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
 msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
 msgstr "Benutzerdefiniertes Uhrenformat"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Stundenformat"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird in der Uhr zusätzlich zur Zeit das "
 "Datum angezeigt."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird die Zeit sekundengenau angezeigt."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird die Zeit in koordinierter Weltzeit "
 "(UTC) angezeigt."
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Falls dieser Schlüssel wahr ist, wird das Datum in einer Minihilfe "
 "angezeigt, wenn sich die Maus über der Uhr befindet?"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Datum in Uhr anzeigen"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Datum in Minihilfe anzeigen"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Zeit sekundengenau anzeigen"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -318,7 +320,7 @@ msgstr ""
 "Schlüssels für nichtig erklärt. Das Schema wird zwecks "
 "Rückwärtskompatibilität beibehalten."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -328,7 +330,7 @@ msgstr ""
 "Format-Schlüssel »custom« (benutzerdefiniert) ist. Sie können von »strftime"
 "()« akzeptierte Platzhalter verwenden, um ein bestimmtes Format zu erzielen."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -346,25 +348,25 @@ msgstr ""
 "»custom« (benutzerdefiniert, dem vom Schlüssel »custom_format« angegebenen "
 "Format entsprechend)."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
 msgstr ""
 "Dieser Schlüssel gibt das zum Konfigurieren der Zeit auszuführende Programm "
 "an."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
 msgstr "Werkzeug zur Zeitkonfiguration"
 
-#: applets/clock/clock.schemas.in.h:19
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use Internet time"
 msgstr "Internet-Zeit verwenden"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UNIX time"
 msgstr "UNIX-Zeit verwenden"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use UTC"
 msgstr "UTC verwenden"
 
@@ -1409,7 +1411,6 @@ msgid "_New Panel"
 msgstr "Panel a_nlegen"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
 msgstr "_Info zu den Panels"
 
@@ -2230,9 +2231,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Beim Versuch, %s zu öffnen, ist ein unbekannter Fehler aufgetreten"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Zuletzt geöffnete Dokumente"
+msgstr "Liste der zuletzt geöffneten Dokumente löschen?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2241,15 +2241,18 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Das Löschen der Liste der zuletzt geöffneten Dokumente betrifft:\n"
+"\n"
+"• Alle Einträge im Menü Aktionen → Zuletzt geöffnete Dokumente.\n"
+"• Die Liste der zuletzt geöffneten Dokumente in allen Anwendungen."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "Zuletzt geöffnete Dokumente"
 
 #: gnome-panel/panel-recent.c:275
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Zuletzt geöffnete Dokumente"
+msgstr "Liste der zuletzt geöffneten Dokumente löschen"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2369,9 +2372,8 @@ msgid "_Force quit"
 msgstr "Beenden _erzwingen"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Kalender"
+msgstr "_Löschen"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2939,6 +2941,12 @@ msgstr "Extrem groß"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extrem klein"
+
+#~ msgid "24"
+#~ msgstr "24"
+
+#~ msgid "24-hour"
+#~ msgstr "24-hour"
 
 #~ msgid ""
 #~ "The system administrator has disallowed\n"
