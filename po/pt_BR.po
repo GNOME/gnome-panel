@@ -11,14 +11,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-14 22:46-0300\n"
-"PO-Revision-Date: 2003-08-14 22:52-0300\n"
+"POT-Creation-Date: 2003-08-17 00:35-0300\n"
+"PO-Revision-Date: 2003-08-17 00:27-0300\n"
 "Last-Translator: Evandro Fernandes Giovanini <evandrofg@ig.com.br>\n"
-"Language-Team: GNOME-BR <gnome-l10n-br@listas.cipsga.org.br>\n"
+"Language-Team: GNOME-l10n-BR <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
@@ -1758,16 +1758,15 @@ msgstr ""
 "aplicativos é guardada em /apps/panel/general/$(profiles/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 "Uma lista de IDs de objetos de painel. Cada ID identifica um objeto de "
-"painel individual (ex. um lançador, botão de ação ou barra/botão de menu). "
-"As configurações para cada um desses objetos é guardada em /apps/panel/"
-"general/$(profiles)/objects/$(id)."
+"painel (ex. um lançador, botão de ação ou barra/botão de menu). As "
+"configurações para cada um desses objetos é guardada em /apps/panel/general/"
+"$(profiles)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1778,18 +1777,16 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Expandir a lista de programas no diálogo \"Executar Aplicação\""
 
 #: gnome-panel/panel-general.schemas.in.h:6
-#, fuzzy
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
 msgstr ""
-"Se verdadeiro a lista de \"Aplicações Conhecidas\" estará expandida quando o "
-"diálogo for aberto. Essa configuração só é relevante se a configuração "
-"enable_program_list for verdadeira."
+"Se verdadeiro a lista de \"Aplicações Conhecidas\" do diálogo \"Executar "
+"Aplicação\" estará expandida quando o diálogo for aberto. Essa configuração "
+"só é relevante se a configuração enable_program_list for verdadeira."
 
 #: gnome-panel/panel-general.schemas.in.h:7
-#, fuzzy
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1825,9 +1822,8 @@ msgid "Confirm panel removal"
 msgstr "Confirmar remoção de painel"
 
 #: gnome-panel/panel-global.schemas.in.h:4
-#, fuzzy
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Mostrar o diálogo \"Executar\""
+msgstr "Mostrar a combinação de teclas de \"Executar Aplicação\""
 
 #: gnome-panel/panel-global.schemas.in.h:5
 #: gnome-panel/panel-toplevel.schemas.in.h:9
@@ -1852,7 +1848,7 @@ msgstr "FIXME - é necessário definir limites"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Highlight launchers on mouseover"
-msgstr ""
+msgstr "Realçar lançadores quando o ponteiro do mouse estiver sobre eles"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 msgid ""
@@ -1874,6 +1870,8 @@ msgstr ""
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
+"Se verdadeiro, um lançador é realçado quando o usuário move o ponteiro "
+"domouse sobre ele."
 
 #: gnome-panel/panel-global.schemas.in.h:14
 msgid "If true, panel-specific keybindings are enabled."
@@ -1942,14 +1940,13 @@ msgstr "Tipo de ação do botão"
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
-msgstr ""
+msgstr "IID do Applet Bonobo"
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
 msgstr "Ícone usado para o botão do objeto"
 
 #: gnome-panel/panel-object.schemas.in.h:4
-#, fuzzy
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
@@ -1961,7 +1958,6 @@ msgstr ""
 "object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
-#, fuzzy
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
@@ -1973,7 +1969,6 @@ msgstr ""
 "object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
@@ -2011,14 +2006,13 @@ msgstr "Posição do objeto no painel"
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
-msgstr ""
+msgstr "Painel anexado à gaveta"
 
 #: gnome-panel/panel-object.schemas.in.h:14
 msgid "Panel object type"
 msgstr "Tipo do objeto do painel"
 
 #: gnome-panel/panel-object.schemas.in.h:15
-#, fuzzy
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
@@ -2028,7 +2022,6 @@ msgstr ""
 "\"bonobo-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:16
-#, fuzzy
 msgid ""
 "The action type this button represents. Possible values are \"lock\", "
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
@@ -2039,7 +2032,6 @@ msgstr ""
 "relevante se o object_type for \"action-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:17
-#, fuzzy
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
@@ -2048,21 +2040,18 @@ msgstr ""
 "relevante se o object_type é \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
-#, fuzzy
 msgid "The identifier of the toplevel panel which contains this object."
-msgstr "O identificador do alto nível do painel que contém esse objeto."
+msgstr "O identificador do painel de alto nível que contém esse objeto."
 
 #: gnome-panel/panel-object.schemas.in.h:19
-#, fuzzy
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
-"A localização do arquivo .desktop que descreve seu lançador. Essa "
-"configuração só é relevante se o object_type for \"launcher-object\"."
+"A localização do arquivo .desktop que descreve o lançador. Essa configuração "
+"só é relevante se o object_type for \"launcher-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:20
-#, fuzzy
 msgid ""
 "The location of the image file used as the icon for the object's button. "
 "This key is only relevant if the object_type key is \"drawer-object\" or "
@@ -2073,15 +2062,14 @@ msgstr ""
 "\" ou \"menu-object\" e use_custom_icon for verdadeiro."
 
 #: gnome-panel/panel-object.schemas.in.h:21
-#, fuzzy
 msgid ""
 "The path from which the menu contents is contructed. This key is only "
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
-"O caminho do qual os conteúdos do menu são construídos. A configuração só é "
-"relevante se use_menu_path for verdadeiro e o object_type for \"menu-object"
-"\"."
+"O caminho a partir do qual os conteúdos do menu são construídos. A "
+"configuração só é relevante se use_menu_path for verdadeiro e o object_type "
+"for \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
@@ -2092,7 +2080,6 @@ msgstr ""
 "pixels do canto esquerdo (ou superior) do painel."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer. This key is only relevant "
 "if the object_type key is \"drawer-object\"."
@@ -2101,15 +2088,14 @@ msgstr ""
 "configuração só é relevante se o object_type for \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
-#, fuzzy
 msgid ""
 "The type of this panel object. Possible values are \"drawer-object\", \"menu-"
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
 msgstr ""
-"O tipo desse objeto de painel. Há vários valores possíveis - \"drawer-object"
-"\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet"
-"\" e \"menu-bar\"."
+"O tipo desse objeto de painel. Valores possíveis são \"drawer-object\", "
+"\"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" e "
+"\"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer"
@@ -2672,7 +2658,6 @@ msgid "Fit image to panel"
 msgstr "Fazer a imagem caber no painel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
-#, fuzzy
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
@@ -2744,7 +2729,6 @@ msgstr ""
 "mini-aplicativos, lançadores e botões no painel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
-#, fuzzy
 msgid ""
 "If true, the x key is ignored and the panel is placed at the center of the x-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -2752,22 +2736,21 @@ msgid ""
 "location of the panel."
 msgstr ""
 "Se verdadeiro a configuração x é ignorada e o painel é colocado no centro do "
-"eixo x da tela. Se o painel é redimensionada ele continuará naquela posição "
-"- ou seja, o painel irá crescer para ambos os lados. Se falso a configuração "
-"x determina a localização do painel."
+"eixo x da tela. Se o painel é redimensionado ele continuará naquela posição, "
+"ou seja, o painel irá crescer para ambos os lados. Se falso a configuração x "
+"determina a localização do painel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
-#, fuzzy
 msgid ""
 "If true, the y key is ignored and the panel is placed at the center of the y-"
 "axis of the screen. If the panel is resized it will remain at that position "
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
 msgstr ""
-"Se verdadeiro a configuração x é ignorada e o painel é colocado no centro do "
-"eixo x da tela. Se o painel é redimensionada ele continuará naquela posição "
-"- ou seja, o painel irá crescer para ambos os lados. Se falso a configuração "
-"x determina a localização do painel."
+"Se verdadeiro a configuração y é ignorada e o painel é colocado no centro do "
+"eixo y da tela. Se o painel é redimensionada ele continuará naquela posição ,"
+"ou seja, o painel irá crescer para ambos os lados. Se falso a configuração y "
+"determina a localização do painel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2816,7 +2799,6 @@ msgstr ""
 "um canal alpha ele será composto na imagem de fundo da área de trabalho."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
-#, fuzzy
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
@@ -2827,7 +2809,6 @@ msgstr ""
 "Essa preferência só é relevante se auto_hide for verdadeiro."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:34
-#, fuzzy
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
@@ -2838,7 +2819,6 @@ msgstr ""
 "preferência só é relevante se auto_hide for verdadeiro."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-#, fuzzy
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
@@ -2874,29 +2854,26 @@ msgstr ""
 "largura)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:39
-#, fuzzy
 msgid ""
 "The location of the panel along the x-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"A localização do painel através do eixo x. Esse valor só tem significado no "
-"modo não-expandido. Em modo expandido o valor é ignorado e o painel é "
-"colocado no canto da tela indicado pela orientação."
+"A localização do painel no eixo x. Esse valor só tem significado no modo não-"
+"expandido. Em modo expandido o valor é ignorado e o painel é colocado no "
+"canto da tela indicado pela configuração orientation."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
-#, fuzzy
 msgid ""
 "The location of the panel along the y-axis. This key is only relevant in un-"
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
-"A localização do painel através do eixo y. Esse valor só tem significa no "
-"modo não-expandido. Em modo expandido o valor é ignorado e o painel é "
-"colocado no canto da tela indicado pela orientação."
+"A localização do painel no eixo y. Esse valor só tem significa no modo não-"
+"expandido. Em modo expandido o valor é ignorado e o painel é colocado no "
+"canto da tela indicado pela configuração orientation."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
-#, fuzzy
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
 "\", \"right\". In expanded mode the key specifies which screen edge the "
@@ -2917,7 +2894,6 @@ msgstr ""
 "mostrado acima do painel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
-#, fuzzy
 msgid ""
 "The speed in which panel animations should occur. Possible values are \"slow"
 "\", \"medium\" and \"fast\". This key is only relevant if the "
@@ -2928,7 +2904,6 @@ msgstr ""
 "enable_animations for verdadeiro."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
-#, fuzzy
 msgid ""
 "This is a human readable name which you can use to identify a panel. Its "
 "main purpose is to serve as the panel's window title which is useful when "
@@ -2943,7 +2918,6 @@ msgid "Visible pixels when hidden"
 msgstr "Número de pixels visíveis quando escondido"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:45
-#, fuzzy
 msgid ""
 "Which type of background should be used for this panel. Possible values are "
 "\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
@@ -2951,8 +2925,8 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Que tipo de fundo deve ser usado para esse painel. Há três valores "
-"possíveis; ¨gtk\", o fundo do widget padrão do GTK+ será usado, \"color\", a "
-"preferência de cor será usada como fundo ou \"imagem\", a imagem "
+"possíveis: \"gtk\", o fundo do widget padrão do GTK+ será usado; \"color\", "
+"a preferência de cor será usada como fundo; ou \"imagem\", a imagem "
 "especificada na preferências de imagem será usada como fundo."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
