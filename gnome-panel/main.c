@@ -190,6 +190,8 @@ main(int argc, char **argv)
 
 	init_user_applets();
 
+	gnome_triggers_do("Session startup", NULL, "gnome", "login", NULL);
+
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
 

@@ -608,6 +608,10 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 	GtkWidget **box=data;
 
 	if(button==0) {
+
+	        gnome_triggers_do("Session shutdown", NULL,
+				  "gnome", "logout", NULL);
+	  
 		if (! GNOME_CLIENT_CONNECTED (client)) {
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 					    GNOME_INTERACT_NONE, 0, NULL);
