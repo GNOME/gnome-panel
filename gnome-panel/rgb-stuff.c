@@ -173,14 +173,14 @@ tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 				}
 			}
 			x++;
-			if(x>w) {
+			if(x>=w) {
 				x = 0;
 				imgrow = tile + y * rowstride;
 			}
 		}
 		p += off;
 		y++;
-		if(y>h)
+		if(y>=h)
 			y = 0;
 	}
 }
@@ -190,7 +190,6 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate)
 {
 	int i,j;
-	/*guchar *rot = NULL;*/
 
 	gdouble scaleaff[6];
 	gdouble affine[6];
@@ -213,70 +212,17 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		scale_h = scale_w;
 		scale_w = tmp;
 	}
-#if 0
-	if(rotate) {
-		if(pbuf->has_alpha) {
-			rot = g_new(guchar,
-				    pbuf->height *
-				    pbuf->width * 4);
-
-			rgba_rotate270(rot, pbuf->height * 4,
-				       pbuf->pixels,
-				       pbuf->width,
-				       pbuf->height,
-				       pbuf->rowstride);
-		} else {
-			rot = g_new(guchar,
-				    pbuf->height *
-				    pbuf->width * 3);
-
-			rgb_rotate270(rot, pbuf->height * 3,
-				      pbuf->pixels,
-				      pbuf->width,
-				      pbuf->height,
-				      pbuf->rowstride);
-		}
-	}
-#endif
-
 	
 	for(i=-(offx%scale_w);i<dw;i+=scale_w) {
 		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
 			art_affine_translate(affine,i,j);
 			art_affine_multiply(affine,scaleaff,affine);
-#if 0
-			if(rot) {
-				if(pbuf->has_alpha) {
-					art_rgb_rgba_affine(dest,
-							    0,0,dw,dh,drs,
-							    rot,
-							    pbuf->height,
-							    pbuf->width,
-							    pbuf->height*4,
-							    affine,
-							    ART_FILTER_NEAREST,
-							    NULL);
-				} else {
-					art_rgb_affine(dest,
-						       0,0,dw,dh,drs,
-						       rot,
-						       pbuf->height,
-						       pbuf->width,
-						       pbuf->height*3,
-						       affine,
-						       ART_FILTER_NEAREST,
-						       NULL);
-				}
-			} else {
-#endif
-				art_rgb_pixbuf_affine(dest,
-						      0,0,dw,dh,drs,
-						      pbuf,affine,
-						      ART_FILTER_NEAREST,NULL);
-			/*}*/
+			art_rgb_pixbuf_affine(dest,
+					      0,0,dw,dh,drs,
+					      pbuf,affine,
+					      ART_FILTER_NEAREST,NULL);
 		}
 	}
-	/*if(rot) g_free(rot);*/
 }
 
 void

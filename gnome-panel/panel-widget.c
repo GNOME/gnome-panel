@@ -1442,32 +1442,15 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 			      0,0,scale_w,scale_h,scale_w*3,
 			      pb->art_pixbuf,affine,
 			      ART_FILTER_NEAREST,NULL);
-	/*if(0 && rotate) {
-		guchar *rot;
-		rot = g_new0(guchar,scale_w*scale_h*3);
-		rgb_rotate270(rot,scale_h*3,rgb,scale_w,scale_h,scale_w*3);
-		g_free(rgb);
-
-		p = gdk_pixmap_new(w->window, scale_h,scale_w,
-				   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
-		gc = gdk_gc_new(p);
-		gdk_draw_rgb_image(p,gc,0,0,
-				   scale_h,scale_w,
-				   GDK_RGB_DITHER_NORMAL,
-				   rot, scale_h*3);
-		gdk_gc_destroy(gc);
-		g_free(rot);
-	} else {*/
-		p = gdk_pixmap_new(w->window, scale_w,scale_h,
-				   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
-		gc = gdk_gc_new(p);
-		gdk_draw_rgb_image(p,gc,0,0,
-				   scale_w,scale_h,
-				   GDK_RGB_DITHER_NORMAL,
-				   rgb, scale_w*3);
-		g_free(rgb);
-		gdk_gc_destroy(gc);
-	/*}*/
+	p = gdk_pixmap_new(w->window, scale_w,scale_h,
+			   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
+	gc = gdk_gc_new(p);
+	gdk_draw_rgb_image(p,gc,0,0,
+			   scale_w,scale_h,
+			   GDK_RGB_DITHER_NORMAL,
+			   rgb, scale_w*3);
+	g_free(rgb);
+	gdk_gc_destroy(gc);
 
 	return p;
 }
@@ -1489,7 +1472,7 @@ panel_resize_pixmap(PanelWidget *panel)
 	panel->backpixmap = NULL;
 
 	panel->scale_w = w = panel->backpix->art_pixbuf->width;
-	panel->scale_w = h = panel->backpix->art_pixbuf->height;
+	panel->scale_h = h = panel->backpix->art_pixbuf->height;
 	
 	pw = GTK_WIDGET(panel)->allocation.width;
 	ph = GTK_WIDGET(panel)->allocation.height;
