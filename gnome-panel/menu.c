@@ -4010,7 +4010,7 @@ button_style_event_cb (GtkWidget *widget,
 		       GtkStyle  *prev_style, 
 		       Menu      *menu)
 {
-	button_widget_set_stock_id (menu->button, PANEL_STOCK_GNOME_LOGO);
+	button_widget_set_stock_id (BUTTON_WIDGET (menu->button), PANEL_STOCK_GNOME_LOGO);
 }
 
 static Menu *

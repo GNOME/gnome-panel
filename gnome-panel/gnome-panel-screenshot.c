@@ -795,7 +795,7 @@ on_ok_button_clicked (GtkWidget *widget,
 	if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button))) {
 		GtkWidget *entry;
 		GtkWidget *fileentry;
-		gchar *tmp;
+		const gchar *tmp;
 		entry = glade_xml_get_widget (xml, "save_entry");
 		fileentry = glade_xml_get_widget (xml, "save_fileentry");
  		tmp = gtk_entry_get_text (GTK_ENTRY (entry));
