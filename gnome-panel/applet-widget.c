@@ -314,6 +314,12 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 }
 
 void
+applet_widget_abort_load(AppletWidget *applet)
+{
+	GNOME_Panel_applet_abort_id(panel_client, applet->applet_id, &ev);
+}
+
+void
 applet_widget_remove_from_panel(AppletWidget *applet)
 {
 	CORBA_Object ns;

@@ -184,6 +184,11 @@ applet_widget_init_defaults(app_id,app_version,argc,argv,options,flags,return_ct
 applet_widget_init(app_id,app_version,argc,argv,options,flags,return_ctx, \
 		   TRUE,NULL,NULL,NULL)
 
+/*abort the applet loading, once applet has been created, this is a way to
+  tell the panel to forget about us if we decide we want to quit before
+  we add the actual applet to the applet-widget*/
+void		applet_widget_abort_load	(AppletWidget *applet);
+
 /* use this as gtk_main in applets */
 void		applet_widget_gtk_main		(void);
 

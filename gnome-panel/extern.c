@@ -43,15 +43,19 @@ static CORBA_Object
 extern_is_goad_ready(const char *goad_id)
 {
 	GList *li;
+	printf("goad_id:%s\n",goad_id);
 	for(li=extern_applets;li!=NULL;li=g_list_next(li)) {
 		Extern *e = li->data;
 		GList *l;
+		puts("GONE THROUGH ONE");
 		for(l=e->goad_ids;l!=NULL;l=g_list_next(l)) {
+			printf("%s\n",l->data);
 			if(strcmp(l->data,goad_id)==0)
 				/*found one*/
 				return e->obj;
 		}
 	}
+	puts("NOT FOUND");
 	return CORBA_OBJECT_NIL;
 }
 
@@ -287,6 +291,7 @@ applet_request_id (const char *goad_id, char **cfgpath,
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = NULL;
 	ext->goad_ids = NULL;
+	extern_applets = g_list_prepend(extern_applets,ext);
 
 	*winid = reserve_applet_spot (ext, panels->data, 0,
 				      APPLET_EXTERN_RESERVED);
@@ -427,6 +432,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = cfgpath;
 	ext->goad_ids = NULL;
+	extern_applets = g_list_prepend(extern_applets,ext);
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
 		g_warning("Whoops! for some reason we can't add "
