@@ -21,7 +21,7 @@ gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
 		$(GNOME_LIBDIR) $(GNOMEGNORBA_LIBS) $(INTLLIBS) 
 
 PRINTER_BITMAPS = print.xpm
-MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png
+MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png
 
 EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
