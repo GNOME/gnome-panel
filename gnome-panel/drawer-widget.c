@@ -213,7 +213,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 static void
 drawer_pos_hidebutton_click (BasePWidget *basep)
 {
-	Drawer *drawer = drawer_widget_get_drawer (DRAWER_WIDGET (drawer));
+	Drawer *drawer = drawer_widget_get_drawer (DRAWER_WIDGET (basep));
 	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
 	GtkWidget *parent = panel->panel_parent;
 
