@@ -43,7 +43,7 @@ libpanel_appletinclude_HEADERS = \
 	gnome-panel.h		\
 	panel-types.h
 
-libpanel_applet_la_LDFLAGS = -version-info 1:0:0 -rpath $(libdir)
+libpanel_applet_la_LDFLAGS = -version-info 0:1:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)

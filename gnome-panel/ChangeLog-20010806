@@ -1,3 +1,10 @@
+Tue Aug 24 10:54:33 1999  George Lebl  <jirka@5z.com>
+
+	* Makefile.am: changed the library version to 0:1:0 since we are
+	  actually binary compatible with the 0:0:0 that came out with
+	  gnome-core 1.0. this means you need to remove
+	  <prefix>/lib/libpanel_applet.so.1* !!!
+
 Sat Aug 21 18:51:42 1999  George Lebl  <jirka@5z.com>
 
 	* panel.c: don't send the orientation, size and back changes from an
