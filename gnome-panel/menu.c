@@ -3145,7 +3145,7 @@ create_applets_menu (GtkWidget *menu, gboolean fake_submenus, gboolean title)
 }
 
 static void
-find_empty_pos_array (int posscore[3][3])
+find_empty_pos_array (int screen, int posscore[3][3])
 {
 	GSList *li;
 	int i,j;
@@ -3156,8 +3156,8 @@ find_empty_pos_array (int posscore[3][3])
 	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
-	sw2 = 2 * (sw = gdk_screen_width () / 3);
-	sh2 = 2 * (sh = gdk_screen_height () / 3);
+	sw2 = 2 * (sw = multiscreen_width (screen) / 3);
+	sh2 = 2 * (sh = multiscreen_height (screen) / 3);
 	
 	for (li = panel_list; li != NULL; li = li->next) {
 		pd = li->data;
@@ -3167,8 +3167,13 @@ find_empty_pos_array (int posscore[3][3])
 			continue;
 
 		basep = BASEP_WIDGET (pd->panel);
+		
+		if (basep->screen != screen)
+			continue;
 
 		basep_widget_get_pos (basep, &tx, &ty);
+		tx -= multiscreen_x (screen);
+		ty -= multiscreen_y (screen);
 		basep_widget_get_size (basep, &w, &h);
 
 		if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
@@ -3188,12 +3193,12 @@ find_empty_pos_array (int posscore[3][3])
 }
 
 static void
-find_empty_pos (gint16 *x, gint16 *y)
+find_empty_pos (int screen, gint16 *x, gint16 *y)
 {
 	int posscore[3][3] = { {0,0,0}, {0,512,0}, {0,0,0}};
 	int i, j, lowi= 0, lowj = 0;
 
-	find_empty_pos_array (posscore);
+	find_empty_pos_array (screen, posscore);
 
 	for (j = 2; j >= 0; j--) {
 		for (i = 0; i < 3; i++) {
@@ -3204,19 +3209,22 @@ find_empty_pos (gint16 *x, gint16 *y)
 		}
 	}
 
-	*x = ((float)lowi * gdk_screen_width ()) / 2.0;
-	*y = ((float)lowj * gdk_screen_height ()) / 2.0;
+	*x = ((float)lowi * multiscreen_width (screen)) / 2.0;
+	*y = ((float)lowj * multiscreen_height (screen)) / 2.0;
+
+	*x += multiscreen_x (screen);
+	*y += multiscreen_y (screen);
 }
 
 static BorderEdge
-find_empty_edge (void)
+find_empty_edge (int screen)
 {
 	int posscore[3][3] = { {0,0,0}, {0,512,0}, {0,0,0}};
 	int escore [4] = { 0, 0, 0, 0};
 	BorderEdge edge = BORDER_BOTTOM;
 	int low=512, i;
 
-	find_empty_pos_array (posscore);
+	find_empty_pos_array (screen, posscore);
 
 	escore[BORDER_TOP] = posscore[0][0] + posscore[1][0] + posscore[2][0];
 	escore[BORDER_RIGHT] = posscore[2][0] + posscore[2][1] + posscore[2][2];
@@ -3253,7 +3261,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 
 	switch (type) {
 	case ALIGNED_PANEL: 
-		find_empty_pos (&x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = aligned_widget_new (screen,
 					    ALIGNED_LEFT,
 					    BORDER_TOP,
@@ -3274,7 +3282,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case EDGE_PANEL: 
 		panel = edge_widget_new (screen,
-					 find_empty_edge (),
+					 find_empty_edge (screen),
 					 BASEP_EXPLICIT_HIDE,
 					 BASEP_SHOWN,
 					 BASEP_LEVEL_DEFAULT,
@@ -3290,7 +3298,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		gtk_widget_show (panel);	
 		break;
 	case SLIDING_PANEL:
-		find_empty_pos (&x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = sliding_widget_new (screen,
 					    SLIDING_ANCHOR_LEFT, 0,
 					    BORDER_TOP,
@@ -3308,7 +3316,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
 	case FLOATING_PANEL:
-		find_empty_pos (&x, &y);
+		find_empty_pos (screen, &x, &y);
 		panel = floating_widget_new (screen,
 					     x, y,
 					     PANEL_VERTICAL,
@@ -3828,10 +3836,12 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
-			edge = (y > gdk_screen_height () / 2)
+			edge = (y - multiscreen_y (basep->screen) >
+				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
 		else
-			edge = (x > gdk_screen_width () / 2)
+			edge = (x - multiscreen_x (basep->screen) >
+				(multiscreen_width (basep->screen) / 2))
 				? BORDER_RIGHT : BORDER_LEFT;
 
 		border_widget_change_edge (BORDER_WIDGET (basep), edge);
@@ -3848,18 +3858,20 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
-			edge = (y > gdk_screen_height () / 2)
+			edge = (y - multiscreen_y (basep->screen) >
+				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
 		else
-			edge = (x > gdk_screen_width () / 2)
+			edge = (x - multiscreen_x (basep->screen) >
+				(multiscreen_width (basep->screen) / 2))
 				? BORDER_RIGHT : BORDER_LEFT;
 
 		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
-			mid = x + w / 2;
-			max = gdk_screen_width ();
+			mid = x + w / 2 - multiscreen_x (basep->screen);
+			max = multiscreen_width (basep->screen);
 		} else {
-			mid = y + h / 2;
-			max = gdk_screen_height ();
+			mid = y + h / 2 - multiscreen_y (basep->screen);
+			max = multiscreen_height (basep->screen);
 		}
 	
 		if (mid < max / 3)
@@ -3884,18 +3896,20 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		if (IS_BORDER_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
 		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
-			edge = (y > gdk_screen_height () / 2)
+			edge = (y - multiscreen_y (basep->screen) >
+				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
 		else
-			edge = (x > gdk_screen_width () / 2)
+			edge = (x - multiscreen_x (basep->screen) >
+				(multiscreen_width (basep->screen) / 2))
 				? BORDER_RIGHT : BORDER_LEFT;
 		
 		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
-			val = x;
-			max = gdk_screen_width ();
+			val = x - multiscreen_x (basep->screen);
+			max = multiscreen_width (basep->screen);
 		} else {
-			val = y;
-			max = gdk_screen_height ();
+			val = y - multiscreen_y (basep->screen);
+			max = multiscreen_height (basep->screen);
 		}
 		
 		if (val > 0.9 * max) {

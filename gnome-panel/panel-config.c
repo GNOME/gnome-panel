@@ -138,8 +138,8 @@ update_config_floating_pos_limits (BasePWidget *panel)
 	    ppc->ppc_origin_change)
 		return;
 
-	xlimit = gdk_screen_width() - widget->allocation.width;
-	ylimit = gdk_screen_height() - widget->allocation.height;
+	xlimit = multiscreen_width(panel->screen) - widget->allocation.width;
+	ylimit = multiscreen_height(panel->screen) - widget->allocation.height;
 
 	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->x_spin));
 	if((int)adj->upper == xlimit) {
@@ -214,6 +214,11 @@ update_config_screen (BasePWidget *w)
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->screen_spin),
 				   w->screen);
+
+	if (IS_FLOATING_WIDGET (w))
+		update_config_floating_pos_limits (w);
+	else if (IS_SLIDING_WIDGET (w))
+		update_config_offset_limit (w);
 }
 
 void
@@ -439,9 +444,11 @@ update_config_offset_limit (BasePWidget *panel)
 		return;
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
-		range = gdk_screen_height() - widget->allocation.height;
+		range = multiscreen_height (panel->screen)
+			- widget->allocation.height;
 	else
-		range = gdk_screen_width() - widget->allocation.width;
+		range = multiscreen_width (panel->screen)
+			- widget->allocation.width;
 
 	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->offset_spin));
 	if((int)adj->upper == range)
@@ -1016,8 +1023,10 @@ floating_notebook_page (PerPanelConfig *ppc)
 	GtkWidget *hbox;
 	int xlimit, ylimit;
 
-	xlimit = gdk_screen_width () - ppc->panel->allocation.width;
-	ylimit = gdk_screen_height () - ppc->panel->allocation.height;
+	xlimit = multiscreen_width (ppc->screen)
+		- ppc->panel->allocation.width;
+	ylimit = multiscreen_height (ppc->screen)
+		- ppc->panel->allocation.height;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
@@ -1159,9 +1168,11 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
-		range = gdk_screen_height() - ppc->panel->allocation.height;
+		range = multiscreen_height (ppc->screen)
+			- ppc->panel->allocation.height;
 	else
-		range = gdk_screen_width() - ppc->panel->allocation.width;
+		range = multiscreen_width (ppc->screen)
+			- ppc->panel->allocation.width;
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
 		gtk_spin_button_new (adj, 1, 0);
