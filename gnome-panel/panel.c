@@ -464,51 +464,24 @@ drop_menu (PanelWidget *panel,
 }
 
 static gboolean
-drop_nautilus_uri (PanelWidget *panel,
-		   int          position,
-		   const char  *uri,
-		   const char  *icon)
+drop_uri (PanelWidget *panel,
+	  int          position,
+	  const char  *uri,
+	  const char  *icon)
 {
-	char  *quoted;
-	char  *exec;
 	char  *base;
-	char **split;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
-	quoted = g_shell_quote (uri);
-
-	/* Escape any "%" as "%%" */
-        split = g_strsplit (quoted, "%", -1);
-	g_free (quoted);
-	quoted = g_strjoinv ("%%", split);
-	g_strfreev (split);
-
-	/* Add -- to avoid the possibility of filenames which would
-	 * be interpreted as command line arguments
-	 */
-	exec = g_strdup_printf ("nautilus -- %s", quoted);
-	g_free (quoted);
-
 	base = g_path_get_basename (uri);
 
 	panel_launcher_create_from_info (
-		panel->toplevel, position, TRUE, exec, base, uri, icon);
+		panel->toplevel, position, FALSE, uri, base, uri, icon);
 
-	g_free (exec);
 	g_free (base);
 
 	return TRUE;
-}
-
-static gboolean
-drop_directory (PanelWidget *panel, int pos, const char *dir)
-{
-	if (!panel_is_program_in_path ("nautilus"))
-		return FALSE;
-
-	return drop_nautilus_uri (panel, pos, dir, "gnome-fs-directory.png");
 }
 
 static gboolean
@@ -574,10 +547,8 @@ drop_urilist (PanelWidget *panel,
 					panel_launcher_create (panel->toplevel, pos, uri);
 				else
 					success = FALSE;
-			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
-				if (!drop_directory (panel, pos, uri))
-					success = FALSE;
-			} else if (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
+			} else if (info->type != GNOME_VFS_FILE_TYPE_DIRECTORY &&
+				   info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
 				   info->permissions & (GNOME_VFS_PERM_USER_EXEC |
 							GNOME_VFS_PERM_GROUP_EXEC |
 							GNOME_VFS_PERM_OTHER_EXEC) &&
@@ -598,11 +569,11 @@ drop_urilist (PanelWidget *panel,
 				if (!icon)
 					icon = "gnome-unknown.png";
 
-				if (!drop_nautilus_uri (panel, pos, uri, icon))
+				if (!drop_uri (panel, pos, uri, icon))
 					success = FALSE;
 			}
 		} else {
-			if (!drop_nautilus_uri (panel, pos, uri, "gnome-unknown.png"))
+			if (!drop_uri (panel, pos, uri, "gnome-unknown.png"))
 				success = FALSE;
 		}
 
@@ -987,7 +958,7 @@ panel_receive_dnd_data (PanelWidget      *panel,
 		}
 		break;
 	case TARGET_DIRECTORY:
-		success = drop_directory (panel, pos, (char *)selection_data->data);
+		success = drop_uri (panel, pos, (char *)selection_data->data, "gnome-fs-directory.png");
 		break;
 	case TARGET_APPLET:
 		if (!selection_data->data) {

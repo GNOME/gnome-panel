@@ -1,3 +1,14 @@
+2004-11-28  Vincent Untz  <vincent@vuntz.net>
+
+	Why create launcher that call nautilus? Fix bug #159535.
+
+	* panel.c: (drop_nautilus_uri): killed
+	(drop_uri): new, create a link .desktop file
+	(drop_directory): killed
+	(drop_urilist): use drop_uri() instead of drop_nautilus_uri() and
+	don't make a special case for directories
+	(panel_receive_dnd_data): use drop_uri() instead of drop_nautilus_uri()
+
 2004-11-26  Mark McLoughlin  <mark@skynet.ie>
 
 	Patch from Matthias Clasen <mclasen@redhat.com> in
