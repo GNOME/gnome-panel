@@ -664,7 +664,7 @@ fill_clock_applet(PanelApplet *applet)
 	setup_gconf (cd);
 
 	error = NULL;
-	cd->hourformat = panel_applet_gconf_get_bool (applet, KEY_HOUR_FORMAT, &error);
+	cd->hourformat = panel_applet_gconf_get_int (applet, KEY_HOUR_FORMAT, &error);
 	if (error) {
 		/* Do NOT translate the clock/hourformat= part.  What you
 		 * should change is the number 12.  If your country code should use
@@ -679,12 +679,14 @@ fill_clock_applet(PanelApplet *applet)
 			cd->hourformat = 12;
 		} else {
 			cd->hourformat = atoi (transl + len);
-			if (cd->hourformat != 12 && cd->hourformat != 24)
-				cd->hourformat = 12;
 		}
 
 		g_error_free (error);
 	}
+
+	/* ensure value is valid */
+	if (cd->hourformat != 12 && cd->hourformat != 24)
+		cd->hourformat = 12;
 
 	error = NULL;
 	cd->showdate = panel_applet_gconf_get_bool (applet, KEY_SHOW_DATE, &error);
