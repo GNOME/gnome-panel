@@ -3105,7 +3105,7 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 
 	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
 		panel_toplevel_start_animation (toplevel);
-	else
+	else if (toplevel->priv->attached)
 		gtk_widget_hide (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
@@ -3149,7 +3149,7 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 
 	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
 		panel_toplevel_start_animation (toplevel);
-	else
+	else if (toplevel->priv->attached)
 		gtk_widget_show (GTK_WIDGET (toplevel));
 
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
@@ -3171,7 +3171,8 @@ panel_toplevel_auto_unhide_timeout_handler (PanelToplevel *toplevel)
 	if (toplevel->priv->animating)
 		return TRUE;
 
-	if (!panel_toplevel_contains_pointer (toplevel)) {
+	if (!panel_toplevel_contains_pointer (toplevel) &&
+	    toplevel->priv->auto_hide) {
 		toplevel->priv->unhide_timeout = 0;
 		return FALSE;
 	}
