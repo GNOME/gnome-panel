@@ -201,6 +201,38 @@ panel_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
 	return list;
 }
 
+GSList *
+panel_g_slist_make_unique (GSList       *list,
+			   GCompareFunc  compare,
+			   gboolean      free_data)
+{
+	GSList *sorted, *l;
+
+	g_assert (compare != NULL);
+
+	if (!list)
+		return NULL;
+
+	sorted = g_slist_copy (list);
+	sorted = g_slist_sort (sorted, compare);
+
+	for (l = sorted; l; l = l->next) {
+		GSList *next;
+
+		next = l->next;
+		if (l->data && next && next->data)
+			if (!compare (l->data, next->data)) {
+				list = g_slist_remove (list, l->data);
+				if (free_data)
+					g_free (l->data);
+			}
+	}
+
+	g_slist_free (sorted);
+
+	return list;
+}
+
 static GtkWidget *
 panel_dialog (GdkScreen  *screen,
 	      int         type,

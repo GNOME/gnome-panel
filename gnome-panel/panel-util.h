@@ -37,6 +37,10 @@ GList *panel_g_list_resort_item   (GList        *list,
 				   gpointer      data,
 				   GCompareFunc  func);
 
+GSList *panel_g_slist_make_unique (GSList       *list,
+				   GCompareFunc  compare,
+				   gboolean      free_data);
+
 GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
 					 gboolean    auto_destroy,

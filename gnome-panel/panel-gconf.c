@@ -328,3 +328,19 @@ panel_gconf_associate_schemas_in_dir (GConfClient  *client,
 
 	g_slist_free (list);
 }
+
+gint
+panel_gconf_value_strcmp (gconstpointer a,
+			  gconstpointer b)
+{
+	const char *str_a;
+	const char *str_b;
+
+	if (a == b || !a || !b)
+		return 0;
+
+	str_a = gconf_value_get_string (a);
+	str_b = gconf_value_get_string (b);
+
+	return strcmp (str_a, str_b);
+}

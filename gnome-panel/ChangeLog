@@ -1,3 +1,30 @@
+2005-03-27  Vincent Untz  <vincent@vuntz.net>
+
+	Make the panel more robust when the object/applet/toplevel list
+	contains incorrect data.
+	Most probably fixes bug #137308.
+
+	* panel-gconf.[ch]: (panel_gconf_value_strcmp): new, to strcmp strings
+	in GConfValue
+	* panel-profile.c: (panel_profile_save_id_list): make sure there is no
+	duplicate element in the list when saving it
+	(panel_profile_remove_from_list): remove all occurrence of the id in
+	the list (and not only the first one)
+	(panel_profile_load_toplevel): stop monitoring the gconf dir if
+	there's an error
+	(panel_profile_load_object): ditto
+	(panel_profile_toplevel_id_list_notify): make sure there is no
+	duplicate element in the list we get, so we don't add twice the same
+	toplevel
+	(panel_profile_object_id_list_notify): ditto, for the objects
+	(panel_profile_load_list): ditto
+	* panel-util.[ch]: (panel_g_slist_make_unique): new, to remove
+	duplicate elements in a list
+
+	* main.c: (main): updated, stop monitoring a gconf dir
+	* panel-session.[ch]: (panel_session_init): we don't need the argument
+	anymore
+
 2005-03-26  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-properties-dialog.c:
