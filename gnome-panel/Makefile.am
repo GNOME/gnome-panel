@@ -3,7 +3,7 @@ AUTOMAKE_OPTIONS = 1.3
 
 NULL =
 
-SUBDIRS =
+# SUBDIRS =
 
 EXTRA_SUBDIRS = config help
 
