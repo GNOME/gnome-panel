@@ -805,7 +805,8 @@ create_item_context_menu (GtkWidget   *item,
 	id_lists_writable = panel_profile_id_lists_are_writable ();
 
 	entry = g_object_get_data (G_OBJECT (item), "panel-menu-tree-entry");
-	g_assert (entry != NULL);
+	if (!entry)
+		return NULL;
 
 	parent = item->parent;
 
@@ -903,6 +904,9 @@ show_item_menu (GtkWidget      *item,
 
 	if (!menu)
 		menu = create_item_context_menu (item, panel_widget);
+
+	if (!menu)
+		return FALSE;
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (panel_widget->toplevel)));
@@ -1672,14 +1676,14 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
-		retval = TRUE;
 		if (menu_shell->active_menu_item &&
 		    GTK_MENU_ITEM (menu_shell->active_menu_item)->submenu == NULL) {
 			GdkEventButton bevent;
 
 			bevent.button = 3;
 			bevent.time = GDK_CURRENT_TIME;
-			show_item_menu (menu_shell->active_menu_item, &bevent);
+			retval = show_item_menu (menu_shell->active_menu_item,
+						 &bevent);
 		}
 		
 	}

@@ -1,5 +1,14 @@
 2005-02-01  Vincent Untz  <vincent@vuntz.net>
 
+	* menu.c: (create_item_context_menu): don't assert that entry != NULL
+	since this can happen on item other than Entry items
+	(show_item_menu): return FALSE if no menu was created
+	(panel_menu_key_press_handler): return the value returned by
+	show_item_menu
+	Fix bug #161639
+
+2005-02-01  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-properties-dialog.c:
 	(panel_properties_dialog_setup_size_spin): set minimum for the spin to
 	the minimum we calculate in panel-toplevel.c
