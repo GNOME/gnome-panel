@@ -71,6 +71,7 @@ struct _ClockData {
 	GtkWidget *clockw;
         GtkWidget *toggle;
 	GtkWidget *props;
+	GtkWidget *about;
   
 	/* preferences */
 	int hourformat;
@@ -400,6 +401,9 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		g_source_remove (cd->timeout);
 		cd->timeout = 0;
 	}
+
+	if (cd->about)
+		gtk_widget_destroy (cd->about);
 
 	if (cd->props) {
 		gtk_widget_destroy (cd->props);
@@ -1509,7 +1513,6 @@ display_about_dialog (BonoboUIComponent *uic,
 		      ClockData         *cd,
 		      const gchar       *verbname)
 {
-	static GtkWidget *about = NULL;
 	GdkPixbuf *pixbuf = NULL;
 	gchar *file;
 	
@@ -1527,10 +1530,10 @@ display_about_dialog (BonoboUIComponent *uic,
 	/* Translator credits */
 	const char *translator_credits = _("translator_credits");
 
-	if (about) {
-		gtk_window_set_screen (GTK_WINDOW (about),
+	if (cd->about) {
+		gtk_window_set_screen (GTK_WINDOW (cd->about),
 				       gtk_widget_get_screen (cd->applet));
-		gtk_window_present (GTK_WINDOW (about));
+		gtk_window_present (GTK_WINDOW (cd->about));
 		return;
 	}
 
@@ -1544,7 +1547,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	} else
 		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
 
-	about = gnome_about_new (_("Clock"), VERSION,
+	cd->about = gnome_about_new (_("Clock"), VERSION,
 				 "Copyright \xc2\xa9 1998-2002 Free Software Foundation. Inc.",
 				 _("The Clock displays the current time and date"),
 				 authors,
@@ -1552,19 +1555,19 @@ display_about_dialog (BonoboUIComponent *uic,
 				 strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
 				 pixbuf);
 	
-	gtk_window_set_wmclass (GTK_WINDOW (about), "clock", "Clock");
-	gtk_window_set_screen (GTK_WINDOW (about),
+	gtk_window_set_wmclass (GTK_WINDOW (cd->about), "clock", "Clock");
+	gtk_window_set_screen (GTK_WINDOW (cd->about),
 			       gtk_widget_get_screen (cd->applet));
 
 	if (pixbuf) {
-		gtk_window_set_icon (GTK_WINDOW (about), pixbuf);
+		gtk_window_set_icon (GTK_WINDOW (cd->about), pixbuf);
 		g_object_unref (pixbuf);
 	}
 	
-	g_signal_connect (G_OBJECT(about), "destroy",
-			  (GCallback)gtk_widget_destroyed, &about);
+	g_signal_connect (G_OBJECT(cd->about), "destroy",
+			  (GCallback)gtk_widget_destroyed, &cd->about);
 	
-	gtk_widget_show (about);
+	gtk_widget_show (cd->about);
 }
 
 static gboolean

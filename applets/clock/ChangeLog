@@ -1,3 +1,11 @@
+2003-05-21  Leena Gunda  <leena.gunda@wipro.com>
+
+	* applets/gen_util/clock.c:
+	Add the "About" dialog widget as a member to ClockData struct.
+	(display_about_dialog): use the member to hold the dialog widget.
+	(destroy_clock): destroy the "About" dialog if present while
+	deleting the applet. Fixes bug #112983
+
 2003-05-08  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* clock.c:  The clock type label should not be bolded. Also,
