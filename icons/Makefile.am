@@ -10,7 +10,6 @@ icondir   = $(datadir)/icons/hicolor/48x48/apps
 icon_DATA =				\
 	panel-force-quit.png		\
 	gnome-gegl.png			\
-	gnome-run.png			\
 	gnome-main-menu.png		\
 	$(NULL)
 
