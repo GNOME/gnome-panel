@@ -1,24 +1,24 @@
 /*
- * Copyright 2002 Sun Microsystems Inc.
+ * panel-a11y.c: panel accessibility support module
  *
- * Gnome Panel Accessibility support module
+ * Copyright (C) 2002, 2003 Sun Microsystems Inc.
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Street #330, Boston, MA 02111-1307, USA.
  */
 
-#include "panel-util.h"
+#include "panel-a11y.h"
 
 static int
 is_gail_loaded (GtkWidget *widget)
@@ -35,9 +35,9 @@ is_gail_loaded (GtkWidget *widget)
 }
 
 void
-panel_set_atk_name_desc (GtkWidget *widget,
-			 char      *name, 
-			 char      *desc)
+panel_a11y_set_atk_name_desc (GtkWidget  *widget,
+			      const char *name, 
+			      const char *desc)
 {
 	AtkObject *aobj;
 
@@ -56,7 +56,7 @@ panel_set_atk_name_desc (GtkWidget *widget,
 }
 
 /**
- * panel_set_atk_relation
+ * panel_a11y_set_atk_relation
  * @widget : The Gtk widget which is labelled by @label
  * @label : The label for the @widget.
  *
@@ -64,8 +64,8 @@ panel_set_atk_name_desc (GtkWidget *widget,
  * between a gtk widget and a label.
  */
 void
-panel_set_atk_relation (GtkWidget *widget,
-			GtkLabel  *label)
+panel_a11y_set_atk_relation (GtkWidget *widget,
+			     GtkLabel  *label)
 {
 	AtkObject      *aobject;
 	AtkRelationSet *relation_set;

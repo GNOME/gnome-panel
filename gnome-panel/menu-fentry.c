@@ -32,7 +32,7 @@
 
 #include "panel-util.h"
 #include "panel-config-global.h"
-#include "session.h"
+#include "panel-globals.h"
 
 #undef MENU_FENTRY_DEBUG
 
@@ -40,8 +40,6 @@
 #define STAT_EVERY 3
 
 static GSList *dir_list = NULL;
-
-extern GlobalConfig global_config;
 
 static GSList *
 prepend_mfile (GSList *list,

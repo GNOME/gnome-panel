@@ -1,22 +1,22 @@
 /*
- * panel-menu-bar.c:
+ * panel-menu-bar.c: panel Applications/Actions menu bar
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -36,6 +36,8 @@
 #include "applet.h"
 #include "menu.h"
 #include "menu-util.h"
+#include "panel-globals.h"
+#include "panel-profile.h"
 
 #define MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
 
@@ -52,8 +54,6 @@ struct _PanelMenuBarPrivate {
 };
 
 static GObjectClass *parent_class;
-
-extern GtkTooltips *panel_tooltips;
 
 static void
 panel_menu_bar_show_applications_menu (GtkWidget    *menu,
@@ -282,47 +282,49 @@ panel_menu_bar_get_type (void)
 	return type;
 }
 
-GtkWidget *
+static void
 panel_menu_bar_load (PanelWidget *panel,
 		     int          position,
 		     gboolean     exactpos,
-		     const char  *gconf_key)
+		     const char  *id)
 {
 	PanelMenuBar *menubar;
 
-	g_return_val_if_fail (panel != NULL, NULL);
+	g_return_if_fail (panel != NULL);
 
 	menubar = g_object_new (PANEL_TYPE_MENU_BAR, NULL);
 
 	menubar->priv->info = panel_applet_register (
 					GTK_WIDGET (menubar), NULL, NULL, panel,
-					position, exactpos, APPLET_MENU_BAR, gconf_key);
+					position, exactpos, PANEL_OBJECT_MENU_BAR, id);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
-		return NULL;
+		return;
 	}
 
 	panel_applet_add_callback (
 		menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
-
-	return GTK_WIDGET (menubar);
-}
-
-GtkWidget *
-panel_menu_bar_load_from_gconf (PanelWidget *panel,
-				int          position,
-				gboolean     exactpos,
-				const char  *gconf_key)
-{
-	return panel_menu_bar_load (
-			panel, position, exactpos, gconf_key);
 }
 
 void
-panel_menu_bar_save_to_gconf (PanelMenuBar *menubar,
-			      const char   *gconf_key)
+panel_menu_bar_load_from_gconf (PanelWidget *panel,
+				int          position,
+				gboolean     exactpos,
+				const char  *id)
 {
-	/* Nothing */
+	panel_menu_bar_load (panel, position, exactpos, id);
+}
+
+void
+panel_menu_bar_create (PanelToplevel *toplevel,
+		       int            position)
+{
+	char *id;
+
+	id = panel_profile_prepare_object (PANEL_OBJECT_MENU_BAR, toplevel, position);
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
 }
 
 void

@@ -1,3 +1,1037 @@
+2003-03-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am, eggaccelerators.[ch]: re-instate
+	eggaccelerators.[ch].
+
+	* panel.c, panel_widget.c: remove the delete_dialog
+	PanelWidget member and just use object data instead.
+	Adapt the delete dialog code for PanelToplevel.
+
+	* gnome-panel-screenshot.c: fix warning.
+
+2003-03-05  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement migrating background settings and fix drawers.
+
+	* new-toplevel-todo: upd.
+
+	* drawer.c:
+	(create_drawer_toplevel): create the drawer toplevel using
+	GConf.
+	(load_drawer_applet): refactor a little.
+
+	* panel-compatibility.c:
+	(panel_compatibility_map_orient_string),
+	(panel_compatibility_map_orientation_string),
+	(panel_compatibility_map_edge_string),
+	(panel_compatibility_map_panel_type_string),
+	(panel_compatibility_map_panel_size_string): fix assertions.
+	(panel_compatibility_map_background_type_string),
+	(panel_compatibility_migrate_background_settings): implement.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_background_type): impl.
+	(panel_profile_get_toplevel_by_id): return if the id is an
+	empty string.
+	(panel_profile_set_background_type): upd.
+	(panel_profile_add_to_list): don't create a new if if we're
+	passed a valid id.
+	(panel_profile_load_toplevel): don't attempt to load if the
+	id is an empty string.
+
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
+	Don't include drawer toplevels in the toplevel_id_list
+	anymore. We just use the id from the drawer settings.
+	This will prevent loading "orphaned" toplevels.
+
+	* drawer.c:
+	(create_empty_drawer_applet): add FIXME.
+	(drawer_load_from_gconf): load the drawer toplevel from
+	here.
+
+	* panel-applet-frame.c: (panel_applet_frame_load): kill bogus
+	creation of new ids.
+
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_panel_type): set a flag if the
+	panel is a drawer panel.
+	(panel_compatibility_migrate_panel_settings): upd.
+	(panel_compatibility_migrate_panel_id_list): remove drawer
+	panels from the panel_id_list - drawer toplevels aren't on
+	the toplevel_id_list now.
+
+	* panel-profile.[ch]:
+	(panel_profile_find_new_id): make sure new ids are unique
+	within the directories, not only the id_lists. Requires
+	ix just committed to GConf.
+
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
+	* install-defaults.sh: install the config into /apps/panel
+	instead of /apps/new_panel.
+
+	* menu.c: (remove_panel_query): prompt the user for confirmation
+	when deleting panels. Delete the panel through GConf rather than
+	just destroying the widget.
+
+	* new-toplevel-todo: upd.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct_moniker):
+	s/new_panel/panel/.
+
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_panel_settings): auto_hide setting
+	is a bool not an int.
+
+	* panel-gconf.h, panel-general.schemas.in, panel-object.schemas.in,
+	  panel-toplevel.schemas.in: s/new_panel/panel/.
+
+	* panel-profile.c: (panel_profile_map_orientation_string),
+	(panel_profile_map_speed_string),
+	(panel_profile_map_background_type_string),
+	(panel_profile_map_object_type_string): don't assert that the
+	string argument is not NULL.
+	(panel_profile_queue_toplevel_location_change),
+	(panel_profile_toplevel_change_notify): kill debug.
+	(panel_profile_delete_toplevel_objects): remove all the objects
+	on the panel before deleteing it.
+	(panel_profile_delete_toplevel): delete object.
+	(panel_profile_load_toplevel): fix bogosity.
+
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
+	More or less finish of the compatibility code.
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_migrate_menu_panel_settings): mimic
+	a menu panel by adding the menu bar and window menu applets
+	to the configuration here rather than creating them after
+	all other applets have been loaded.
+	(panel_compatibility_migrate_panel_id): split out from
+	migrate_panel_id_list().
+	(panel_compatibility_migrate_drawer_settings),
+	(panel_compatibility_migrate_menu_button_settings),
+	(panel_compatibility_migrate_objects):impl
+	(panel_compatibility_migrate_panel_id_list): upd.
+	(panel_compatibility_warn),
+	(panel_compatibility_load_menu_panel),
+	(panel_compatibility_load_applets): kill.
+
+	* panel-object.schemas.in: s/attached_panel_id/attached_toplevel_id/.
+
+	* panel-profile.[ch]:
+	(panel_profile_prepare_object_with_id): split out from prepare_object()
+	so we can create applets for a toplevel that doesn't yet exist.
+	(panel_profile_prepare_object): upd.
+
+	* applet.c: (panel_applet_load_idle_handler): don't load menu
+	panel applets from here.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_edge_panel_settings),
+	(panel_compatibility_migrate_drawer_panel_settings),
+	(panel_compatibility_migrate_corner_panel_settings),
+	(panel_compatibility_migrate_sliding_panel_settings),
+	(panel_compatibility_migrate_floating_panel_settings),
+	(panel_compatibility_migrate_menu_panel_settings): set whether
+	or not the toplevel is expanded.
+	(panel_compatibility_migrate_panel_settings): copy across the
+	auto hide setting. I never even knew that the old setting was
+	an enum stored as an int. Bork.
+	(panel_compatibility_migrate_panel_ids): iterate across the
+	objects list changing the panel_ids to new toplevel_ids.
+	(panel_compatibility_migrate_panel_id_list): retain a map
+	of our panel_id -> toplevel_id renaming and pass it into
+	migrate_panel_ids().
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c, drawer.c, install-defaults.sh,
+	  panel-object.schemas.in, panel-profile.c:
+	s/panel_id/toplevel_id/ gconf setting for objects. Needed to
+	rename the key as we rename the panels when migrating
+	panel_id_list.
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_migrate_panel_id_list): rename.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_map_orient_string),
+	(panel_compatibility_map_orientation_string),
+	(panel_compatibility_map_edge_string),
+	(panel_compatibility_map_panel_type_string),
+	(panel_compatibility_map_panel_size_string),
+	(panel_compatibility_migrate_background_settings),
+	(panel_compatibility_migrate_edge_panel_settings),
+	(panel_compatibility_migrate_drawer_panel_settings),
+	(panel_compatibility_migrate_corner_panel_settings),
+	(panel_compatibility_migrate_sliding_panel_settings),
+	(panel_compatibility_migrate_floating_panel_settings),
+	(panel_compatibility_migrate_menu_panel_settings),
+	(panel_compatibility_migrate_panel_types),
+	(panel_compatibility_migrate_panel_settings),
+	(panel_compatibility_load_panel_id_list): begin implementing
+	backwards compat with the old settings format.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_orientation): impl.
+	(panel_profile_set_toplevel_orientation): upd.
+	(panel_profile_load): load the old panel_id_list if toplevel_id_list
+	isn't set.
+
+	* panel-toplevel.c: add a TODO item.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	Only register the toplevel keybindings once, remove the toplevel
+	pointer resizing feature, fix applets getting added to the panel
+	in the wrong place and make toplevel bindings work when focus
+	is on an out-of-proc applet.
+
+	* panel-bindings.[ch]:
+	(get_binding_set), (panel_binding_clear_entry),
+	(panel_binding_set_entry), (panel_binding_changed),
+	(panel_bindings_set_entries): set the bindings on PanelToplevel's
+	GtkBindingSet once, rather than for each toplevel.
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_begin_grab_op): make the assert a normal condition.
+	(panel_toplevel_handle_grab_op_motion_event): upd.
+	(panel_toplevel_get_resize_op): kill.
+	(panel_toplevel_button_press_event): kill the resize code.
+	(panel_toplevel_update_cursor_for_resize): don't change the cursor
+	at the edge of the panel.
+	(panel_toplevel_motion_notify_event): kill the resize code.
+	(panel_toplevel_class_init): set the bindings here.
+	(panel_toplevel_instance_init): don't register the toplevel with
+	the bindings code.
+	(panel_toplevel_set_binding), (panel_toplevel_unset_binding): kill.
+
+	* panel.c:
+	(panel_popup_menu): retain the correct axis offset for object
+	insertion.
+	(panel_key_press_event): activate all keybindings when focus is
+	on out-of-proc applets, not just the shift-F10 binding.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix bugs with yesterdays commit - it wasn't as broken as I
+	thought it was.
+
+	* panel-profile.c:
+	(panel_profile_prepare_object): get the directory for applets
+	correct.
+	(panel_profile_object_id_list_notify): split the objects list
+	into a sublist of either applets or objects when searching for
+	removed ids. Also load queued objects.
+
+	* panel-toplevel.c: (panel_toplevel_begin_grab_op): don't warp
+	the pointer if its a pointer based drag.
+
+	* drawer.c: (panel_drawer_create):
+	* launcher.c: (panel_launcher_create):
+	* panel-action-button.c: (panel_action_button_create):
+	* panel-applet-frame.c: (panel_applet_frame_create):
+	* panel-menu-bar.c: (panel_menu_bar_create):
+	* panel-menu-button.c: (panel_menu_button_create): the first
+	arg for panel_profile_prepare_object() is PanelObjectType not
+	PanelGConfKeyType.
+
+2003-03-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Pretty broken patch - just a safety sync. Makes the panel object
+	gconf code a lot more sane and also share code with (and behave
+	similarily to) the toplevel code.
+
+	* new-toplevel-todo: update
+
+	* Makefile.am: don't gen enums from panel-widget.h,
+	panel-action-button.h and panel-toplevel.h.
+
+	* applet.[ch]:
+	(panel_applet_clean_gconf): kill.
+	(panel_applet_clean): do not do any gconf related stuff here.
+	(applet_idle_remove): kill the remove in idle stuff.
+	(applet_remove_callback): delete the object via gconf.
+	(applet_callback_callback), (applet_do_popup_menu),
+	(panel_applet_destroy), (panel_applet_load_idle_handler): various
+	random updates.
+	(panel_applet_queue_applet_to_load): split out the code that
+	reads the object's config into panel-profile.o
+	(panel_applet_load_queued_applets): rename and remove the gconf
+	loading code.
+	(panel_applet_save_position): upd.
+	(panel_applet_get_id), (panel_applet_get_by_id),
+	(panel_applet_list_applets): impl so we don't have to use global
+	variables and poke in structures everywhere.
+	(panel_applet_register): kill the applet count/id thing - unused.
+	
+	* drawer.[ch]:
+	(properties_apply_callback): disable saving change for now.
+	(drag_data_get_cb): upd.
+	(load_drawer_applet): make static, don't return anything.
+	(panel_drawer_create): new function for creating new drawers.
+
+	* gnome-desktop-item-edit.c: (panel_applet_list_applets): hack
+	so that this thing links.
+
+	* launcher.[ch]: 
+	(panel_launcher_save_ditem): split out from launcher_save() so we
+	can save a ditem before loading a launcher.
+	(free_launcher): upd.
+	(create_launcher): don't allow a ditem to be passed in.
+	(properties_apply): disable saving prefs changes for now.
+	(load_launcher_applet): don't return anything, kill _full() variant.
+	(launcher_load_from_gconf): don't hoard all launchers - may want to
+	change this back again, we'll see.
+	(really_add_launcher): save the ditem before creating the launcher.
+	(panel_launcher_create_from_info), (panel_launcher_create): new
+	functions for creating a new launcher object.
+	(launcher_save), (find_launcher): upd.
+
+	* main.c: kill the applets global list - its static in applet.c now.
+
+	* menu.c: (add_app_to_panel), (add_drawers_from_dir),
+	(add_menu_to_panel), (add_drawer_to_panel),
+	(add_action_button_to_panel), (add_menu_bar_to_panel),
+	(add_launcher), (add_bonobo_applet): use the new object creation
+	functions instead of the old loading ones.
+	(remove_panel_accept): delete the object via gconf.
+
+	* panel-action-button.[ch]:
+	(panel_action_button_load): don't return anything.
+	(panel_action_button_create): new function for creating new action
+	buttons.
+	(panel_action_button_load_compatible): impl.
+	(panel_action_button_load_from_gconf): don't return anything.
+	(panel_actoin_button_save_to_gconf): kill.
+	(panel_action_button_load_from_drag): upd.
+
+	* panel-applet-frame.[ch]:
+	(popup_handle_remove): delete the applet via gconf.
+	(panel_applet_frame_load): make static, don't return anything.
+	(panel_applet_frame_create): implement.
+	(panel_applet_frame_reload_response),
+	(panel_applet_frame_loading_failed): update.
+
+	* panel-compatibility.c: (panel_compatibility_load_applets): use
+	new applet creation functions.
+
+	* panel-enums.h: move some enums into here.
+
+	* panel-gconf.[ch]: (panel_gconf_key_type_to_id_list): impl.
+
+	* panel-globals.h: kill the applets list.
+
+	* panel-menu-bar.[ch]:
+	(panel_menu_bar_load): make static, don't return anything.
+	(panel_menu_bar_create): implement.
+
+	* panel-menu-button.[ch]: ditto.
+
+	* panel-profile.[ch]:
+	(panel_profile_map_object_type_string): impl object type mapping
+	utility method.
+	(panel_profile_add_to_list), (panel_profile_remove_from_list),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel),
+	(panel_profile_destroy_toplevel), (panel_profile_prepare_object),
+	(panel_profile_delete_object), (panel_profile_load_object),
+	(panel_profile_destroy_object), (panel_profile_delete_dir),
+	(panel_profile_object_exists), (panel_profile_id_exists),
+	(panel_profile_load_added_ids), (panel_profile_delete_removed_ids),
+	(panel_profile_toplevel_id_list_notify),
+	(panel_profile_object_id_list_notify), (panel_profile_load_list),
+	(panel_profile_copy_default_objects_for_screen): move all the
+	applets loading code into here, merge it with the toplevel loading
+	and notification handling code ... make it all perfect :)
+
+	* panel-toplevel.c: (panel_toplevel_update_attach_orientation),
+	(panel_toplevel_attach_widget_parent_set): move some code around
+	to fix warning.
+
+	* panel-util.c: (panel_find_applet_index): rename.
+
+	* panel.[ch]: (orientation_change), (size_change), (back_change),
+	(panel_applet_removed), (panel_remove_applets), (drop_url),
+	(drop_menu), (drop_nautilus_uri), (drop_directory), (drop_urilist),
+	(drop_internal_icon), (move_applet), (drop_internal_applet),
+	(panel_receive_dnd_data), (panel_screen_from_panel_widget): various
+	update for the changes above.
+
+2003-02-28  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-profile.c: (panel_profile_copy_defaults): rename from
+	panel_configuration_copy_defaults.
+	(panel_profile_copy_defaults_for_screen),
+	(panel_profile_append_new_ids),
+	(panel_profile_load_defaults_on_screen),
+	(panel_profile_ensure_toplevel_per_screen),
+	(panel_profile_load): implement loading the default toplevels
+	on the non-default screens on multiscreen setups.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	Allow drawers to be moved by moving the toplevel.
+
+	* new-toplevel-todo: upd.
+
+	(panel_applet_frame_button_changed): use the event time.
+	* panel-widget.[ch]: (panel_widget_applet_drag_start): accept the
+	event time as an argument.
+	(panel_widget_applet_move_to_cursor): pass in CurrentTime
+	(panel_widget_applet_event): use the event time.
+
+	* panel-toplevel.c:
+	(panel_toplevel_begin_attached_move): when attached, move by
+	initiating a move on the drawer button.
+	(panel_toplevel_begin_grab_op): use it here.
+	(panel_toplevel_update_buttons_showing): shuffle.
+	(panel_toplevel_attach_widget_parent_set): impl handling
+	when the drawer button is moved to another panel.
+	(panel_toplevel_connect_attached): hook it up.
+
+	* applet.c: (move_applet_callback): use CurrentTime for
+	drag event time.
+
+	* panel-applet-frame.c: (popup_handle_move), use CurrentTime.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	Don't draw a bevel around the panel when we've got a color
+	or image background.
+
+	* new-toplevel-todo: upd.
+
+	* panel-background.[ch]: (panel_background_prepare): split out
+	figuring out what type of background we're rendering to
+	(panel_background_effective_type): here.
+
+	* panel-profile.c: (panel_profile_background_change_notify):
+	update the toplevel edges.
+
+	* panel-toplevel.c: (panel_toplevel_update_edges): don't draw
+	any edges if we've got a color or image background.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* new-toplevel-todo: add todo list of what needs to be done
+	before merging back to HEAD.
+
+2003-02-27  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: kill global-keys.[ch]
+
+	* throughout: use panel_gconf_get_client() - gconf_client_get_default
+	isn't a lightweight accessor.
+
+	* panel-config-global.[ch]:
+	(panel_global_config_get_highlight_when_over),
+	(panel_global_config_get_enable_animations),
+	(panel_global_config_get_drawer_auto_close),
+	(panel_global_config_get_tooltips_enabled),
+	(panel_global_config_get_confirm_panel_remove): impl these accessors so
+	we don't have to use a global variable.
+	(panel_global_config_set_entry): actually directly handle changes so we can
+	kill panel_apply_global_config() - also make the function statis.
+	(panel_global_config_notify): make static.
+	(panel_global_config_load): move initialisation from main() to here.
+
+	* panel-session.[ch]:
+	(panel_session_request_logout): don't require passing in a client.
+	(panel_session_handle_die_request): make static.
+	(panel_session_init): move initialisation here from main ().
+
+	* button-widget.c: (button_widget_expose),
+	(button_widget_leave_notify): upd for global_config changes.
+
+	* drawer.c:
+	(load_drawer_applet): add the drawer button to the parent toplevel,
+	not the drawer toplevel - oops :-)
+
+	* launcher.c: (launch_cb): upd for global_config changes.
+
+	* main.c: (main): upd for global_config and session changes.
+
+	* menu.c: (drag_end_menu_cb),
+	(remove_panel_query), (setup_remove_this_panel): global_config changes.
+	(make_panel_submenu): remove the "Toplevel testing" menu.
+
+	* panel-action-button.c:
+	(panel_action_logout),
+	(panel_action_button_clicked):  upd for global_config and session changes.
+
+	* panel-gconf.c:
+	(panel_gconf_all_global_entries), (panel_gconf_get_int),
+	(panel_gconf_get_string), (panel_gconf_get_bool),
+	(panel_gconf_set_int), (panel_gconf_set_string),
+	(panel_gconf_set_bool): kill cruft.
+
+	* panel-globals.h: kill global_config.
+
+	* panel-profile.c:
+	(panel_profile_set_queued_changes),
+	(panel_profile_set_commit_timeout): take a toplevel as the first
+	arg rather than a GObject.
+
+	* panel-util.[ch]: kill accelerator parsing code.
+
+	* panel.c:
+	(panel_destroy): don't kill the properties dialog here - it gets
+	destroyed automagically when the toplevel is destroyed.
+	(panel_load_global_config): move to panel-config-global.c
+	(panel_save_global_config): wtf ? we never change the global
+	configuration anywhere in the panel - why on earth were we saving
+	it ?
+
+	* xstuff.[ch]: kill xstuff_init.
+
+2003-02-25  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (panel_applet_register): disable the initial
+	applet background change for now.
+
+	* panel-background.[ch]: re-work this substantially so we
+	can change individual elements of the background configuration
+	seperately. Also remove the "loading" phase.
+
+	* panel-gconf.[c]: (panel_gconf_dirname): impl.
+
+	* panel-profile.[ch]: implement support for the background
+	configuration.
+
+	* panel-properties-dialog.c: add an initial implementation of
+	the background page of the dialog. Still needs a bit of fixage
+	but its mostly done.
+
+	* panel-properties-dialog.glade: re-work the background page,
+	ripping of gnome-terminal's background page.
+
+	* panel-widget.[ch]: (panel_widget_class_init): kill the "back_change"
+	signal.
+	(panel_widget_size_allocate): kill the "inhibit_draw" stuff. Unused.
+	(panel_widget_set_back_pixmap), (panel_widget_set_back_color): kill.
+	(panel_widget_new): remove all 6 background related arguments from
+	this.
+	(panel_widget_change_params): kill. Wohoo.
+	(panel_widget_set_orientation),
+	(panel_widget_set_size): don't use panel_widget_change_params. Do
+	each change individually.
+
+	* panel-toplevel.c: (panel_toplevel_setup_widgets): update for
+	panel-widget changes.
+
+	* panel.c:
+	(panel_applet_added): disable the background change stuff for the
+	moment.
+	(set_background_image_from_uri),
+	(set_background_color): impl these a bit more sanely.
+	(drop_urilist), (panel_receive_dnd_data): upd.
+
+2003-02-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-config.c, panel-config.h: kill.
+
+	* panel-properties-dialog.[ch], panel-properties-dialog.glade:
+	first cut at a new properties dialog. The background settings
+	haven't been implemented yet.
+
+	* panel-profile.[ch]: (panel_profile_map_orientation_string),
+	(panel_profile_map_speed_string),
+	(panel_profile_map_background_type_string): impl helpers for
+	mapping enums.
+	(panel_profile_set_toplevel_name),
+	(panel_profile_get_toplevel_name),
+	(panel_profile_set_toplevel_orientation),
+	(panel_profile_get_toplevel_orientation), (get_background_type),
+	(set_orientation_from_string), (set_animation_speed_from_string):
+	Impl reading/writing various toplevel properties through gconf.
+	(panel_profile_toplevel_notify_add): helper for adding a notify
+	for a given panel.
+	(panel_profile_load_toplevel): use it.
+
+	* Makefile.am: build panel-properties-dialog.[ch] instead of
+	panel-config.[ch] and install panel-properties-dialog.glade.
+
+	* applet.c, drawer.h: don't include panel-config.h.
+
+	* menu.c: (create_toplevel_testing_menu), (make_panel_submenu):
+	kill the "Toggle Animations" item and add back the properties
+	item.
+
+	* panel-applet-frame.c: (panel_applet_frame_get_size_string):
+	fix.
+
+	* panel-background.h: include panel-enums.h.
+
+	* panel-types.h: move PanelBackground Type to panel-enums.h.
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_setup_widgets): upd.
+	(panel_toplevel_get_description): impl.
+
+	* panel-widget.[ch]: (panel_widget_class_init), kill the orient-changed
+	signal - we use the toplevel's orientation now.
+	(panel_widget_finalize), (panel_widget_instance_init),
+	(panel_widget_new), (panel_widget_change_params): kill the panel_id
+	stuff from this widget - the panel id is associated with the toplevel
+	now.
+
+	* panel.c: (panel_data_by_id): kill.
+
+2003-02-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Some fairly extensive, but random, hacking - got the applets
+	gconf code going again, re-implemented the menu applet ...
+
+	* Makefile.am: remove session.[ch] and panel-main.h. Add
+	panel-menu-button.[ch], panel-session.[ch] and panel-globals.h.
+
+	* install-defaults.sh: add the default applets.
+
+	* applet.[ch]: re-enable the old applets loading/saving code
+	with various fixes.
+
+	* panel-menu-button.[ch]: re-implement the menu applet a bit
+	more sanely.
+
+	* panel-session.[ch]: new files - basically session.[ch] minus
+	all the old config syncing crap.
+
+	* panel-globals.h: lets keep track of all the globals in the
+	one place. 'Course, preferably they shouldn't exist.
+
+	* button-widget.c: include panel-globals.h.
+
+	* drawer.[ch]:
+	(create_empty_drawer_applet): take a toplevel for the parent
+	panel rather than a PanelWidget.
+	(load_drawer_applet): re-factor this.
+	(drawer_save_to_gconf),
+	(drawer_load_from_gconf): impl support for the new schemas.
+
+	* global-keys.c: include panel-globals.h.
+
+	* gnome-run.c: ditto.
+
+	* launcher.[ch]: re-enable the gconf code. Fixup a fair bit of stuff.
+
+	* main.c: (main): remove the menu aging crap, define all globals
+	here and don't bother connecting to "save-yourself".
+
+	* menu-fentry.c: include panel-globals.h.
+
+	* menu-util.[ch]: (get_real_menu_path), (get_pixmap): kill.
+
+	* menu.[ch]: (add_drawers_from_dir): upd.
+	remove the menu applet code.
+
+	* panel-action-button.c: re-enable and fixup the gconf code.
+
+	* panel-applet-frame.[ch]: ditto.
+
+	* panel-compatibility.c: include panel-globals.h.
+
+	* panel-config-global.[ch]: (panel_global_config_set_entry): dump
+	the "keep_menus_in_memory" key.
+
+	* panel-global-config.schemas.in, panel-config.c: ditto.
+
+	* panel-enums.h: move the PanelGConfKeyType enum to here.
+
+	* panel-gconf.h: move the various base dir definitions to here.
+
+	* panel-gconf.c: (panel_gconf_general_key), (panel_gconf_full_key):
+	use them here.
+
+	* panel-profile.[ch]:
+	(panel_profile_get_toplevel_by_id): impl locating a toplevel by its id.
+	(panel_profile_find_new_id): impl finding a sane key for new panels/
+	objects instead of using gconf_unique_key().
+	(panel_profile_get_toplevel_key),
+	(panel_profile_load_toplevel), (panel_profile_delete_toplevel_dir),
+	(panel_profile_create_added_toplevels),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel),
+	(panel_configuration_copy_defaults): upd.
+	(panel_profile_load): load applets.
+	(get_program_listing_setting),
+	(panel_profile_set_show_program_list): fix brokeness.
+
+	* panel-stock-icons.c: include panel-globals.h.
+
+	* panel-toplevel.[ch]: (panel_toplevel_is_last_unattached): impl.
+	finding out is a given panel the last non-drawer one - i.e. can
+	whether or not we delete it.
+
+	* panel-util.c, panel-widget.c: include panel-globals.h
+
+	* panel.[ch]: killall the gconf code and update for the varius
+	menu changes.
+
+2003-02-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-object.schemas.in: fix some typos. Thanks G.
+
+2003-02-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-object.schemas.in: add a set of schemas for
+	applets/launchers etc. Wow, I'd forgotten how big a mess
+	it was before.
+
+	* panel-compatibility.c: list where the new schemas are
+	incompatible from the old keys.
+
+	* Makefile.am: build and install panel-object.schemas.
+
+2003-02-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (create_new_panel), (remove_panel_accept):
+	use panel_profile_(create|delete)_toplevel().
+
+	* panel-gconf.c: (panel_gconf_clean_dir): also unassociate
+	schemas as you go.
+
+	* panel-profile.[ch]:
+	(panel_profile_load_toplevel): if the toplevel doesn't exist,
+	setup the directory.
+	(panel_profile_delete_toplevel_dir), (panel_profile_id_exists),
+	(panel_profile_create_added_toplevels),
+	(panel_profile_toplevel_exists),
+	(panel_profile_delete_removed_toplevels),
+	(panel_profile_toplevel_id_list_notify),
+	(panel_profile_load_toplevel_list): Impl creating and deleting
+	toplevels as the toplevel_id_list is modified.
+	(panel_profile_find_new_id),
+	(panel_profile_create_toplevel), (panel_profile_delete_toplevel):
+	create and delete toplevels by modifying the toplevel_id_list.
+	(panel_profile_load): add the "general" dir for notifications.
+
+	* panel-toplevel.[ch]: (panel_toplevel_list_toplevels),
+	(panel_toplevel_finalize), (panel_toplevel_instance_init):
+	Impl. keeping a track of a list of all toplevels.
+
+2003-02-14  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: make the binary gnome-new-panel for the
+	moment. Build panel-profile.[ch] and use install-defaults.sh
+	to install the default setup.
+
+	* panel-profile.[ch]: start of the new GConf implementation. Loading
+	toplevels, changing toplevels configuration, responding to changes in
+	toplevels setttings work. Need to impl support for applets, objects and
+	the panel background.
+
+	* panel-toplevel.c:
+	(panel_toplevel_move_resize_window): split this out from size_request.
+	(panel_toplevel_realize): use it here.
+	(panel_toplevel_size_request): upd.
+	(panel_toplevel_button_press_event): initialise the grab offsets from
+	the event rather than the current pointer location.
+
+	* install-defaults.sh: gconftool script to install the default
+	panel setup. Will be replaced by a gconftool-2 --load < defaults.xml
+	thing when I get a chance.
+
+	* panel-toplevel.schemas.in: change where these are installed and
+	also split out the opacity from the background color the way it was
+	previously.
+
+	* panel-global.schemas.in: rename from panel-global-config.schemas.in.
+
+	* panel-general.schemas.in: add.
+
+	* panel-gconf.[ch]:
+	(panel_gconf_get_profile): kill.
+	(panel_gconf_basename): basically g_basename(), but hardcodes
+	"/" instead of G_DIR_SEPERATOR.
+	(panel_gconf_copy_dir): impl copying a directory full of entries.
+	(panel_gconf_associate_schemas_in_dir): don't use GError.
+	(panel_gconf_setup_profile): kill.
+	(panel_gconf_load_default_config_for_screen): don't use GError.
+
+	* main.c: (main): use panel_profile_load() instead of session_load().
+
+	* panel.c: (panel_load_panels_from_gconf): kill.
+
+	* session.[ch]: (panel_session_set_restart_command): upd.
+	(session_load): kill.
+
+	* menu.c: (init_menus): um, don't read all the .desktop files for
+	applets on startup - um ... .desktop files for applets ? I think
+	we might have missed some thing while porting :-)
+	(toggle_expand), (toggle_auto_hide),
+	(toggle_animations), (toggle_buttons), (toggle_arrows): make
+	all these changes through GConf instead of to the widget directly.
+
+	* gnome-run.c: (sync_entry_to_list), (toggle_contents),
+	(create_disclosure_widget), (create_simple_contents),
+	(update_contents), (show_run_dialog): use
+	panel_profile_get_(show|enable)_program_list().
+
+	* panel-applet-frame.c: (panel_applet_frame_construct_moniker): the
+	configuration is stored in /apps/new_panel temporarily while this stuff
+	is being worked on.
+
+	* panel-bindings.c: (panel_bindings_register_toplevel): actually set
+	initialise to TRUE. Pointed out by Arvind ... dunno why he didn't
+	commit it.
+
+	* applet.c, drawer.c, launcher.c, panel-action-button.c: disable
+	more gconf related stuff.
+
+2003-02-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.schemas.in: add some schemas.
+
+	* panel-toplevel.c: change the default hide/unhide delays/
+
+2003-02-06  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-toplevel.c: implement keybindings for move/resize
+	etc. Merge with the pointer move/resize code. Fix many
+	little glitches.
+
+	* panel-bindings.c: (panel_bindings_initialise): kill debug.
+
+	* panel-frame.c: (panel_frame_size_request): always request
+	enough room to draw the frame on all edges so we don't get
+	weird resizing glitches.
+
+	* panel-xutils.[ch]: (panel_warp_pointer): impl.
+
+2003-01-31  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add panel-bindings.[ch].
+
+	* panel-bindings.[ch]: read and monitor metacity's
+	window binding preferences to use for keybindings
+	on the toplevel. But metacity grabs these keys even
+	on DOCK windows, so hmm ...
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_toggle_expand), (panel_toplevel_expand),
+	(panel_toplevel_unexpand), (panel_toplevel_toggle_hidden),
+	(panel_toplevel_begin_move), (panel_toplevel_begin_resize):
+	Add stubs for the keybindings. Don't implement until I figure
+	what to do about the metacity problem.
+	(panel_toplevel_class_init): add signals for all these bindings.
+	(panel_toplevel_instance_init): load the bindings.
+	(panel_toplevel_set_binding), (panel_toplevel_unset_binding):
+	methods to set/unset the binding - use by panel-bindings.c.
+
+2003-01-31  Mark McLoughlin  <mark@skynet.ie>
+
+	Make drawers work more or less and implement resizing the
+	panel using the pointer.
+
+	* button-widget.c: (draw_arrow): hmm, I think the semantics
+	of the orientation has been reversed. Fix this bug, but there
+	is probably more.
+
+	* drawer.c:
+	(create_empty_drawer_applet): actually create the toplevel.
+	(set_drawer_applet_orientation): don't set the toplevel
+	orienation.
+
+	* panel-toplevel.c:
+	(panel_toplevel_update_buttons_showing): if this is a drawer,
+	then hide one of the buttons.
+	(panel_toplevel_update_attached_position): snap to the edge
+	of the attach toplevel, not the attach widget.
+	(panel_toplevel_reverse_arrow), (panel_toplevel_reverse_arrows),
+	(panel_toplevel_disconnect_attached),
+	(panel_toplevel_connect_attached): reverse the arrows on the
+	buttons when attached.
+	(panel_toplevel_get_resize_edge): function to get the edge, if
+	any, which we would resize on from this position.
+	(panel_toplevel_edge_to_cursor): return the resize cursor type
+	for a given edge.
+	(panel_toplevel_button_press_event): if we're within a few pixels
+	from the panel edge start a resize drag.
+	(panel_toplevel_button_release_event): unset all drag flags.
+	(panel_toplevel_update_cursor_for_resize): set the resize cursor.
+	(panel_toplevel_resize_to_pointer): resize based on pointer
+	location.
+	(panel_toplevel_motion_notify_event): handle resizing and setting
+	the resize cursor from here.
+	(panel_toplevel_set_size): don't try and maintain the current
+	position on a resize here. We do that in resize_to_pointer().
+
+	* panel.c:
+	(panel_widget_setup): don't connect to the PanelWidget orientation
+	change signal - that only notifies of changes between horiz/vert.
+	(panel_setup): connect to notify::orientation on the toplevel
+	instead.
+
+2003-01-29  Mark McLoughlin  <mark@skynet.ie>
+
+	Replace BasePWidget and co. with a single widget written
+	from scratch. Basically, this means there are is no
+	such thing as panel types any more - you can easily
+	swicth between what was an edge panel to what was a
+	corner/floating/sliding panel. Switching between corner/
+	floating/sliding is just a matter of moving the panel.
+
+	Some other improvements in the widget like auto hiding
+	into corners, stock gtk arrows for the hide buttons,
+	no shadow at the screen edge, simpler (and hopefully
+	smoother) animations.
+
+	This patch isn't finished. Loading/saving Configuration
+	doesn't work, drawers don't work (implemented but crashing),
+	propert keynav for the widget has to be implemented etc.
+	See the TODO in panel-toplevel.c
+
+	* Makefile.am: remove loads of files, add a good few
+	files. Generate enums from panel-enums.h. Only ever
+	generate enum types, not flags types.
+
+	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],
+	  drawer-widget.[ch], edge-widget.[ch], floating-widget.[ch],
+	  sliding-widget.[ch]: remove these.
+
+	* panel-toplevel.[ch]: add a new toplevel panel widget.
+	A complete rewrite BasePWidget and co., and consolidates
+	them all into a single widget.
+
+	* panel-frame.[ch]: new widget which doesn't draw the shadow
+	at the screen edge. Should help us with our Fitt worshipping.
+
+	* applet.c: comment out all gconf/configuration code
+	for the moment and update everything to use PanelToplevel
+	instead of BasePWidget and co.
+
+	* button-widget.[ch]:
+	(calculate_overlay_geometry): remove some overlaying which
+	isn't needed anymore.
+	(button_widget_realize), (button_widget_parent_set),
+	(button_widget_get_property), (button_widget_set_property),
+	(draw_arrow), (button_widget_expose),
+	(button_widget_size_allocate), (button_widget_instance_init),
+	(button_widget_class_init), (button_widget_new),
+	(button_widget_new_from_stock), (button_widget_set_params):
+	Update for toplevel changes plus use PanelOrientation everywhere
+	instead of PanelOrient.
+
+	* drawer.[ch]: re-write big chunks of this to use PanelToplevel.
+	None of this is really tested, though, and is broken atm.
+
+	* global-keys.c: (panel_global_keys_filter): update for new
+	autohide blocking mechanism.
+
+	* gnome-run.c: update for multiscreen/a11y function renaming.
+
+	* launcher.c: update to use PanelToplevel.
+
+	* main.c: (main): various updates and kill initial state change
+	crack.
+
+	* menu-util.c: upd for multiscreen renaming.
+
+	* menu.c: (menuitem_to_screen), (menu_on_screen),
+	(add_app_to_panel), (add_drawers_from_dir),
+	(add_menudrawer_to_panel), (add_menu_to_panel), (show_item_menu),
+	(add_drawer_to_panel), (add_action_button_to_panel),
+	(add_menu_bar_to_panel), (add_launcher), (menu_deactivate),
+	(add_bonobo_applet): various unexciting updates.
+	(find_empty_pos_array), (find_empty_pos),
+	(find_empty_edge), (find_empty_border_and_anchor): disable all
+	this initial panel position code until I figure out how to
+	replace it.
+	(create_new_panel): no more different panel types - this is a
+	tiny function now.
+	(create_add_panel_submenu): no "New Panel" submenu anymore.
+	(remove_panel_accept): upd.
+	(remove_panel_query): disable the "you can't remove your last
+	panel" code for the moment.
+	(setup_remove_this_panel): ditto.
+	(current_panel_config): disable configuration dialog for the
+	moment.
+	(toggle_expand), (toggle_auto_hide), (rotate_clockwise),
+	(rotate_counter_clockwise), (increase_size), (decrease_size),
+	(toggle_animations), (toggle_buttons), (toggle_arrows),
+	(create_toplevel_testing_menu), (make_panel_submenu): replace
+	with a submenu for testing the new toplevel widget.
+	(create_panel_context_menu), (ask_about_launcher_cb),
+	(menu_button_menu_popup), (create_panel_menu),
+	(create_menu_applet), (set_menu_applet_orientation),
+	(load_menu_applet): more unexciting updates.
+
+	* multiscreen-stuff.[ch]: rename to panel-multiscreen.[ch] (wow)
+	and use GdkScreen instead of the screen number everywhere.
+
+	* panel-access.c: rename to panel-a11y.[ch].
+
+	* panel-action-button.c: more unexciting updates.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_change_orientation): give up trying to keep
+	the internal orientation enum in sync with the IDL definition,
+	just map between the two when setting the property.
+	(panel_applet_frame_paint), (panel_applet_frame_constrain_size),
+	(panel_applet_frame_size_request),
+	(panel_applet_frame_size_allocate),
+	(panel_applet_frame_loading_failed),
+	(panel_applet_frame_instance_init),
+	(panel_applet_frame_get_orient_string),
+	(panel_applet_frame_construct): upd for above.
+
+	* panel-compatibility.c:
+	(panel_compatibility_load_menu_panel): disable for the moment.
+
+	* panel-config.[ch]: disable all this too.
+
+	* panel-types.h: remove some enums.
+
+	* panel-util.c: upd.
+
+	* panel-widget.[ch]: (add_all_move_bindings),
+	(panel_widget_size_allocate), (panel_widget_realize),
+	(panel_widget_unrealize), (panel_widget_new),
+	(panel_widget_reparent),(panel_widget_change_params): nothing
+	exciting here.
+	(panel_widget_set_packed), (panel_widget_set_orientation),
+	(panel_widget_set_size): new functions so you don't have to
+	call change_params passing in a multitude of params that you
+	don't want to set.
+	(panel_widget_focus), (panel_widget_get_applet_orientation):
+	upd.
+
+	* panel-xutils.[ch]: some new x utility methods.
+
+	* panel.[ch]: (orientation_change), (panel_orient_change),
+	(panel_size_change), (panel_back_change), (panel_applet_added),
+	(panel_applet_removed), (menu_deactivate), (panel_destroy),
+	(panel_applet_move): updates and remove loads of code. e.g.
+	moving panels with the mouse is handled in panel-toplevel now.
+	(make_popup_panel_menu), (panel_popup_menu),
+	(panel_popup_menu_signal), (panel_button_press_event),
+	(panel_key_press_event): simplify popup menu code and event
+	handling.
+	(drop_background_reset), (drop_bgimage), (drop_color):
+	don't update the frame.
+	(panel_check_dnd_target_data), (do_highlight),
+	(drag_motion_cb), (drag_drop_cb), (drag_data_recieved_cb): more
+	boring stuff.
+	(panel_setup): remove a good bit of code - we're hooked up to
+	a hell off a lot less signals now.
+	(panel_data_by_id),
+	(panel_screen_from_panel_widget),
+	(panel_monitor_from_panel_widget), (panel_is_applet_right_stick),
+	(panel_apply_global_config): boring.
+	(panel_get_string), (panel_get_int), (panel_get_bool),
+	(panel_set_string), (panel_set_int), (panel_set_bool),
+	(panel_load_drawer_panel_from_gconf), (panel_load_panel_from_gconf),
+	(panel_load_fallback_default_panel), (panel_load_panels_from_gconf):
+	disable all the gconf code for now.
+
+	* session.c: (panel_session_do_save), (panel_session_die),
+	(session_load): disable some stuff temporarily.
+
 2003-03-04 Hidetoshi Tajima  <hidetoshi.tajima@sun.com>
 
 	* gnome-panel-screenshot.c (on_ok_button_clicked): Fix #107578 by

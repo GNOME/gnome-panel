@@ -18,35 +18,27 @@
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
 
-#include "drawer-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-config-global.h"
 #include "panel-shell.h"
-#include "session.h"
+#include "panel-multiscreen.h"
+#include "panel-session.h"
 #include "xstuff.h"
 #include "panel-stock-icons.h"
 #include "panel-action-protocol.h"
 
-extern int config_sync_timeout;
+#include "nothing.cP"
 
-extern GSList *panels;
-
-extern GSList *applets;
-
-extern gboolean commie_mode;
-extern GlobalConfig global_config;
-
-/*list of all panel widgets created*/
-extern GSList *panel_list;
+/* globals */
+GSList *panels = NULL;
+GSList *panel_list = NULL;
 
 GtkTooltips *panel_tooltips = NULL;
-
-GnomeClient *client = NULL;
 
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
@@ -54,49 +46,11 @@ char *kde_mini_icondir = NULL;
 
 GnomeIconTheme *panel_icon_theme = NULL;
 
-static gchar *profile_name;
+/* FIXME: old lockdown globals */
+gboolean commie_mode = FALSE;
+gboolean no_run_box = FALSE;
 
-static gboolean
-menu_age_timeout(gpointer data)
-{
-	GSList *li;
-	for(li=applets;li!=NULL;li=g_slist_next(li)) {
-		AppletInfo *info = li->data;
-		if(info->menu && info->menu_age++>=6 &&
-		   !GTK_WIDGET_VISIBLE(info->menu)) {
-			gtk_widget_unref(info->menu);
-			info->menu = NULL;
-			info->menu_age = 0;
-		}
-		/*if we are allowed to, don't destroy applet menus*/
-		if(!global_config.keep_menus_in_memory &&
-		   info->type == APPLET_MENU) {
-			Menu *menu = info->data;
-			if(menu->menu && menu->age++>=6 &&
-			   !GTK_WIDGET_VISIBLE(menu->menu)) {
-				gtk_widget_unref(menu->menu);
-				menu->menu = NULL;
-				menu->age = 0;
-			}
-		}
-	}
-	
-	/*skip panel menus if we are memory hungry*/
-	if(global_config.keep_menus_in_memory)
-		return TRUE;
-	
-	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
-		PanelData *pd = li->data;
-		if(pd->menu && pd->menu_age++>=6 &&
-		   !GTK_WIDGET_VISIBLE(pd->menu)) {
-			gtk_widget_unref(pd->menu);
-			pd->menu = NULL;
-			pd->menu_age = 0;
-		}
-	}
-
-	return TRUE;
-}
+static char *profile_arg;
 
 /* Note: similar function is in gnome-desktop-item !!! */
 
@@ -147,11 +101,10 @@ find_kde_directory (void)
 }
 
 static const struct poptOption options[] = {
-  {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
+  {"profile", '\0', POPT_ARG_STRING, &profile_arg, 0, N_("Specify a profile name to load"), NULL},
   POPT_AUTOHELP
   {NULL, '\0', 0, NULL, 0}
 };
-
 
 int
 main(int argc, char **argv)
@@ -167,10 +120,6 @@ main(int argc, char **argv)
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,
 			    NULL);
 
-	bonobo_activate ();
-
-	panel_gconf_setup_profile (profile_name);
-	
 	if (!panel_shell_register ())
 		return -1;
 
@@ -178,41 +127,27 @@ main(int argc, char **argv)
 	
 	find_kde_directory();
 
-	client = gnome_master_client ();
-
-	panel_session_set_restart_command (client, argv [0]);
-
-	g_signal_connect (client, "save_yourself",
-			  G_CALLBACK (panel_session_save), argv[0]);
-	g_signal_connect (client, "die",
-			  G_CALLBACK (panel_session_die), NULL);
+	panel_session_init (argv [0]);
 
 	panel_register_window_icon ();
 
 	panel_tooltips = gtk_tooltips_new ();
 
 	panel_action_protocol_init ();
-	multiscreen_init ();
+	panel_multiscreen_init ();
 	panel_init_stock_icons_and_items ();
 
-	panel_gconf_add_dir ("/apps/panel/global");
-	panel_gconf_add_dir ("/desktop/gnome/interface");
-	panel_gconf_notify_add ("/apps/panel/global", panel_global_config_notify, NULL);
+        init_menus ();
 
-	session_load ();	
+	panel_gconf_add_dir ("/desktop/gnome/interface");
+
+	panel_global_config_load ();
+	panel_profile_load (profile_arg);
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
 			 NULL);
-
-	/*this will make the drawers be hidden for closed panels etc ...*/
-	send_state_change ();
-
-	panel_session_setup_config_sync ();
-
-	/* add some timeouts */
-	g_timeout_add (10*1000, menu_age_timeout, NULL);
 
 	gtk_main ();
 

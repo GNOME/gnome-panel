@@ -1,22 +1,22 @@
 /*
- * panel-applet-frame.h:
+ * panel-applet-frame.h: panel side container for applets
  *
- * Copyright (C) 2001 Sun Microsystems, Inc.
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -57,26 +57,22 @@ GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
 GtkWidget *panel_applet_frame_new       (PanelWidget *panel,
 					 const char  *iid,
-					 const char  *gconf_key);
+					 const char  *id);
 
 GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
 					 PanelWidget      *panel,
 					 const char       *iid,
-					 const char       *gconf_key);
+					 const char       *id);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
 					
-void       panel_applet_frame_load      (const gchar *iid,
-					 PanelWidget *panel,
-					 int          position,
-					 gboolean     exactpos,
-					 const char  *gconf_key);
+void       panel_applet_frame_create    (PanelToplevel    *toplevel,
+					 int               position,
+					 const char       *iid);
 
-void       panel_applet_frame_load_applets  (void);
-
-void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
-					     PanelOrient       orient);
+void       panel_applet_frame_change_orientation (PanelAppletFrame *frame,
+						  PanelOrientation  orientation);
 
 void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 					     PanelSize         size);
@@ -84,12 +80,9 @@ void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
 						 PanelBackgroundType  type);
 
-void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
-						 const char       *gconf_key);
-
 void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
 						 int          position,
-						 const char  *gconf_key);
+						 const char  *id);
 
 int        panel_applet_frame_get_size_hints    (PanelAppletFrame  *frame,
 						 int              **size_hints);

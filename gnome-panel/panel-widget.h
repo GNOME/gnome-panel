@@ -16,6 +16,7 @@
 #include "button-widget.h"
 #include "panel-types.h"
 #include "panel-background.h"
+#include "panel-toplevel.h"
 
 G_BEGIN_DECLS
 
@@ -66,8 +67,6 @@ struct _PanelWidget
 {
 	GtkFixed        fixed;
 
-	gchar          *unique_id;
-	
 	GList          *applet_list;
 
 	GSList         *create_launcher_dialog_list;	
@@ -89,22 +88,17 @@ struct _PanelWidget
 	                                  * panel widget itself
 	                                  */
 	
-	GtkWidget      *panel_parent;
-
-	GtkWidget      *delete_dialog;
+	PanelToplevel  *toplevel;
 	
 	GdkEventKey    *key_event;
 
 	guint           packed : 1;
-
-	guint           inhibit_draw : 1;
 };
 
 struct _PanelWidgetClass
 {
 	GtkFixedClass parent_class;
 
-	void (* orient_change) (PanelWidget *panel);
 	void (* size_change) (PanelWidget *panel);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
@@ -112,7 +106,6 @@ struct _PanelWidgetClass
 			       GtkWidget *applet);
 	void (* applet_removed) (PanelWidget *panel,
 				 GtkWidget *applet);
-	void (* back_change) (PanelWidget *panel);
 	void (* push_move) (PanelWidget		*panel,
                             GtkDirectionType	 dir);
 	void (* switch_move) (PanelWidget	*panel,
@@ -126,27 +119,16 @@ struct _PanelWidgetClass
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	panel_widget_new		(const char *panel_id,
-						 gboolean packed,
-						 GtkOrientation orient,
-						 int sz,
-						 PanelBackgroundType back_type,
-						 const char *back_pixmap,
-						 gboolean fit_pixmap_bg,
-						 gboolean stretch_pixmap_bg,
-						 gboolean rotate_pixmap_bg,
-						 PanelColor *back_color);
+GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
+						 gboolean        packed,
+						 GtkOrientation  orient,
+						 int             sz);
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
 int		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos,
 						 gboolean insert_at_pos);
-
-PanelWidget *	panel_widget_get_by_id		(gchar *id);
-void		panel_widget_set_id		(PanelWidget *panel,
-						 const char *id);
-void		panel_widget_set_new_id		(PanelWidget *panel);
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);
@@ -162,9 +144,11 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 #define PW_DRAG_OFF_CENTER -2
 
 /*drag*/
+gboolean        panel_applet_is_in_drag         (void);
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
-						 GtkWidget *applet,
-						 int drag_off);
+						 GtkWidget   *applet,
+						 int          drag_off,
+						 guint32      time_);
 void		panel_widget_applet_drag_end	(PanelWidget *panel);
 
 /* needed for corba */
@@ -173,21 +157,12 @@ void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
 						       int drag_off);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 
-/* changing parameters */
-void		panel_widget_change_params	(PanelWidget *panel,
-						 GtkOrientation orient,
-						 int sz,
-						 PanelBackgroundType back_type,
-						 const char *pixmap_name,
-						 gboolean fit_pixmap_bg,
-						 gboolean stretch_pixmap_bg,
-						 gboolean rotate_pixmap_bg,
-						 PanelColor *back_color);
-
-void		panel_widget_set_back_pixmap	(PanelWidget *panel,
-						 const char *file);
-void		panel_widget_set_back_color	(PanelWidget *panel,
-						 PanelColor  *color);
+void            panel_widget_set_packed         (PanelWidget    *panel_widget,
+						 gboolean        packed);
+void            panel_widget_set_orientation    (PanelWidget    *panel_widget,
+						 GtkOrientation  orientation);
+void            panel_widget_set_size           (PanelWidget    *panel_widget,
+						 int             size);
 
 /*draw EVERYTHING (meaning icons)*/
 void		panel_widget_draw_all		(PanelWidget *panel,
@@ -209,17 +184,12 @@ gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 /* set the focus on the panel */
 void            panel_widget_focus              (PanelWidget *panel);
 
-PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
+PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
 void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 GtkWidget   *applet,
 						 gboolean     major,
 						 gboolean     minor);
-
-void         panel_widget_remove_drawers (PanelWidget *panel_widget);
-
-
-extern gboolean panel_applet_in_drag;
 
 G_END_DECLS
 

@@ -40,15 +40,16 @@
 #include "disclosure-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
-#include "multiscreen-stuff.h"
-#include "panel-main.h"
 #include "panel-util.h"
-#include "panel-gconf.h"
+#include "panel-profile.h"
 #include "quick-desktop-reader.h"
 #include "nothing.h"
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
 #include "panel-stock-icons.h"
+#include "panel-multiscreen.h"
+#include "panel-a11y.h"
+#include "panel-globals.h"
 
 enum {
 	COLUMN_ICON,
@@ -66,9 +67,6 @@ typedef enum {
 
 #define ENABLE_LIST_DEFAULT TRUE
 #define SHOW_LIST_DEFAULT FALSE
-
-extern GtkTooltips *panel_tooltips;
-extern gboolean no_run_box;
 
 static GtkWidget *run_dialog = NULL;
 static GSList *add_icon_paths = NULL;
@@ -663,21 +661,15 @@ entry_event (GtkEntry * entry, GdkEventKey * event, gpointer data)
 static void
 sync_entry_to_list (GtkWidget *dialog)
 {
-        gboolean blocked;
-	gboolean enable_program_list;
 	GtkWidget *entry;
-	const char *key;
+        gboolean   blocked;
 
         blocked = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
 						      "sync_entry_to_list_blocked"));
         if (blocked)
                 return;
 
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "enable_program_list"),
-	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
-	
-	if (enable_program_list) {
+	if (panel_profile_get_enable_program_list ()) {
 	        unset_selected (dialog);
 
 		entry = g_object_get_data (G_OBJECT (dialog), "entry");
@@ -817,12 +809,7 @@ static void
 toggle_contents (GtkWidget *disclosure,
                  GtkWidget *dialog)
 {
-	const char *key;
-
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "show_program_list"),
-
-	panel_gconf_set_bool (key, GTK_TOGGLE_BUTTON (disclosure)->active);
+	panel_profile_set_show_program_list (GTK_TOGGLE_BUTTON (disclosure)->active);
 
 	/* FIXME: we need to listen on this key! */
         update_contents (dialog);
@@ -832,18 +819,12 @@ static GtkWidget*
 create_disclosure_widget (void)
 {
         GtkWidget *disclosure;
-        gboolean show_program_list;
-	const char *key;
 
         disclosure = cddb_disclosure_new (_("Known Applications"),
 					  _("Known Applications"));
 
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "show_program_list"),
-	show_program_list = panel_gconf_get_bool (key, SHOW_LIST_DEFAULT);
-
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (disclosure),
-				      show_program_list);
+				      panel_profile_get_show_program_list ());
 		
 	g_object_set_data (G_OBJECT (run_dialog), "disclosure", disclosure);
 	  
@@ -935,8 +916,6 @@ create_simple_contents (GdkScreen *screen)
 	GtkWidget *vbox2;
 	GtkWidget *hbox2;
         GtkWidget *w;
-	const char *key;
-	gboolean enable_program_list;
 	int width_request;
 	static GtkTargetEntry drop_types[] = { { "text/uri-list", 0, 0 } };
         
@@ -963,7 +942,7 @@ create_simple_contents (GdkScreen *screen)
 			    TRUE, TRUE, GNOME_PAD_SMALL);
 
         /* 1/4 the width of the first monitor should be a good value */
-	width_request = multiscreen_width (gdk_screen_get_number (screen), 0) / 4;
+	width_request = panel_multiscreen_width (screen, 0) / 4;
 	g_object_set (G_OBJECT (gentry), "width_request", width_request, NULL);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
@@ -1013,12 +992,8 @@ create_simple_contents (GdkScreen *screen)
 	gtk_box_pack_start (GTK_BOX (hbox2), w,
 			    FALSE, FALSE, 0);
 
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "enable_program_list"),
-	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
-
 	/* only create disclosure widget if really needed */
-	if (enable_program_list) {
+	if (panel_profile_get_enable_program_list ()) {
 	        w = create_disclosure_widget ();
 		gtk_box_pack_start (GTK_BOX (vbox), w,
 				    FALSE, FALSE, GNOME_PAD_SMALL);
@@ -1518,9 +1493,9 @@ create_program_list_contents (void)
 
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
 
-	panel_set_atk_name_desc (list,
-				 _("List of known applications"),
-				 _("Choose an application to run from the list"));
+	panel_a11y_set_atk_name_desc (list,
+				      _("List of known applications"),
+				      _("Choose an application to run from the list"));
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
@@ -1563,14 +1538,8 @@ static void
 update_contents (GtkWidget *dialog)
 {
         GtkWidget *program_list_box = NULL;
-        gboolean show_program_list;
-	const char *key;
 
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "show_program_list"),
-	show_program_list = panel_gconf_get_bool (key, SHOW_LIST_DEFAULT);
-        
-        if (show_program_list) {
+        if (panel_profile_get_show_program_list ()) {
                 program_list_box = g_object_get_data (G_OBJECT (dialog), "program_list_box");
 
                 if (program_list_box && program_list_box->parent == NULL) {
@@ -1628,9 +1597,7 @@ run_dialog_destroyed (GtkWidget *widget)
 void
 show_run_dialog (GdkScreen *screen)
 {
-        gboolean  enable_program_list;
 	GtkWidget *w;
-	const char *key;
 	char      *run_icon;
 
 	if (no_run_box)
@@ -1681,11 +1648,7 @@ show_run_dialog (GdkScreen *screen)
 
         create_simple_contents (screen);
 	
-	key = panel_gconf_general_key
-		(panel_gconf_get_profile (), "enable_program_list"),
-	enable_program_list = panel_gconf_get_bool (key, ENABLE_LIST_DEFAULT);
-
-	if (enable_program_list) {
+	if (panel_profile_get_enable_program_list ()) {
 		create_program_list_contents ();
 	        update_contents (run_dialog);        
 		

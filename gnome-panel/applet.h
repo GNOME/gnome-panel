@@ -5,41 +5,26 @@
 #include <gdk/gdktypes.h>
 #include "panel-widget.h"
 #include "panel-gconf.h"
+#include "panel-enums.h"
 
 G_BEGIN_DECLS
 
-typedef enum {
-	APPLET_DRAWER,
-	APPLET_MENU,
-	APPLET_LAUNCHER,
-	APPLET_STATUS,
-	APPLET_BONOBO,
-	APPLET_ACTION,
-	APPLET_MENU_BAR,
-	APPLET_LOGOUT, /* FIXME:                          */
-	APPLET_LOCK,   /*  Both only for backwards compat */
-
-} AppletType;
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 typedef struct {
-	AppletType      type;
-	int             applet_id;
-	GtkWidget      *widget;
+	PanelObjectType  type;
+	GtkWidget       *widget;
 
-	GtkWidget      *menu;
-	int             menu_age;
-	GList          *user_menu;
+	GtkWidget       *menu;
+	GList           *user_menu;
 
-	gpointer        data;
-	GDestroyNotify  data_destroy;
+	gpointer         data;
+	GDestroyNotify   data_destroy;
 
-	guint		remove_idle;
-
-	char           *gconf_key;
+	char            *id;
 } AppletInfo;
 
 typedef struct {
@@ -54,21 +39,28 @@ typedef struct {
 	GtkWidget    *submenu;
 } AppletUserMenu;
 
-AppletInfo *panel_applet_register    (GtkWidget      *applet,
-				      gpointer        data,
-				      GDestroyNotify  data_destroy,
-				      PanelWidget    *panel,
-				      gint            pos,
-				      gboolean        exactpos,
-				      AppletType      type,
-				      const char     *gconf_key);
+AppletInfo *panel_applet_register    (GtkWidget       *applet,
+				      gpointer         data,
+				      GDestroyNotify   data_destroy,
+				      PanelWidget     *panel,
+				      gint             pos,
+				      gboolean         exactpos,
+				      PanelObjectType  type,
+				      const char      *id);
 
-void        panel_applet_clean       (AppletInfo *info,
-				      gboolean    clean_gconf);
+const char *panel_applet_get_id       (AppletInfo    *info);
+AppletInfo *panel_applet_get_by_id    (const char    *id);
+GSList     *panel_applet_list_applets (void);
 
-void        panel_applet_clean_gconf (AppletType  type,
-				      const char *gconf_key,
-				      gboolean    clean_gconf);
+void        panel_applet_clean        (AppletInfo    *info);
+
+void panel_applet_queue_applet_to_load (char            *id,
+					PanelObjectType  type,
+					PanelToplevel   *toplevel,
+					int              position,
+					gboolean         right_stick);
+void panel_applet_load_queued_applets  (void);
+
 
 void            panel_applet_add_callback    (AppletInfo  *info,
 					      const gchar *callback_name,
@@ -78,21 +70,13 @@ void            panel_applet_add_callback    (AppletInfo  *info,
 void            panel_applet_remove_callback (AppletInfo *info,
 					      const char *callback_name);
 
-void            panel_applet_remove_in_idle  (AppletInfo *info);
-
 AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 
 
-void        panel_applet_load_applets_from_gconf (void);
-void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
 void        panel_applet_save_position           (AppletInfo *applet_info,
-						  const char *gconf_key,
+						  const char *id,
 						  gboolean    immediate);
-
-void panel_applet_load_defaults_for_screen (PanelGConfKeyType  type,
-					    const char        *profile,
-					    int                screen);
 
 int         panel_applet_get_position    (AppletInfo *applet);
 

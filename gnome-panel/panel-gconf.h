@@ -1,46 +1,54 @@
-#ifndef PANEL_GCONF_H
-#define PANEL_GCONF_H
+/*
+ * panel-gconf.h: panel gconf utility methods
+ *
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Mark McLoughlin <mark@skynet.ie>
+ *      Glynn Foster <glynn.foster@sun.com>
+ */
+
+#ifndef __PANEL_GCONF_H__
+#define __PANEL_GCONF_H__
 
 #include <gconf/gconf-client.h>
 
+#include "panel-enums.h"
+
+#define PANEL_CONFIG_DIR   "/apps/panel/profiles"
+#define PANEL_SCHEMAS_DIR  "/schemas/apps/panel"
+#define PANEL_DEFAULTS_DIR "/apps/panel/default_setup"
+
 G_BEGIN_DECLS
 
-typedef enum {
-	PANEL_GCONF_PANELS,
-	PANEL_GCONF_OBJECTS,
-	PANEL_GCONF_APPLETS
-} PanelGConfKeyType;
+GConfClient *panel_gconf_get_client          (void);
 
-G_CONST_RETURN char *panel_gconf_get_profile (void);
-
-GConfClient         *panel_gconf_get_client  (void);
-
-G_CONST_RETURN char *panel_gconf_sprintf     (const char *format,
-					      ...) G_GNUC_PRINTF (1, 2);
-G_CONST_RETURN char *panel_gconf_global_key  (const char *key);
-G_CONST_RETURN char *panel_gconf_general_key (const char *profile,
-					      const char *key);
-G_CONST_RETURN char *panel_gconf_full_key    (PanelGConfKeyType  type,
-					      const char        *profile,
-					      const char        *panel_id,
+const char  *panel_gconf_sprintf             (const char        *format, ...) G_GNUC_PRINTF (1, 2);
+const char  *panel_gconf_basename            (const char        *key);
+char        *panel_gconf_dirname             (const char        *key);
+const char  *panel_gconf_global_key          (const char        *key);
+const char  *panel_gconf_general_key         (const char        *profile,
 					      const char        *key);
-
-
-GSList         *panel_gconf_all_global_entries (void);
-
-int		panel_gconf_get_int     (const char *key,
-					 int         default_val);
-gboolean	panel_gconf_get_bool    (const char *key,
-					 gboolean    default_val);
-char*		panel_gconf_get_string  (const char *key,
-					 const char *default_val);
-
-void 		panel_gconf_set_int     (const char *key,
-					 int         value);
-void 		panel_gconf_set_bool    (const char *key,
-					 gboolean    value);
-void 		panel_gconf_set_string  (const char *key,
-					 const char *value);
+const char  *panel_gconf_full_key            (PanelGConfKeyType  type,
+					      const char        *profile,
+					      const char        *id,
+					      const char        *key);
+const char  *panel_gconf_key_type_to_id_list (PanelGConfKeyType  type);
 
 guint		panel_gconf_notify_add             (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
@@ -49,19 +57,18 @@ guint		panel_gconf_notify_add_while_alive (const char            *key,
 						    GConfClientNotifyFunc  notify_func,
 						    GObject               *alive_object);
 
-void 		panel_gconf_add_dir       (const char  *key);
+void 		panel_gconf_add_dir       (const char   *key);
 
-void		panel_gconf_clean_dir     (GConfClient *client,
-					   const char  *dir);
+void		panel_gconf_clean_dir     (GConfClient  *client,
+					   const char   *dir);
+void            panel_gconf_copy_dir      (GConfClient  *client,
+					   const char   *src_dir,
+					   const char   *dest_dir);
 
-void            panel_gconf_setup_profile (const char  *profile);
-
-char           *panel_gconf_load_default_config_for_screen (PanelGConfKeyType   type,
-							    const char         *profile,
-							    const char         *id,
-							    int                 screen,
-							    GError            **error);
+void            panel_gconf_associate_schemas_in_dir       (GConfClient *client,
+							    const char  *profile_dir,
+							    const char  *schema_dir);
 
 G_END_DECLS
 
-#endif /* PANEL_GCONF_H */
+#endif /* __PANEL_GCONF_H__ */

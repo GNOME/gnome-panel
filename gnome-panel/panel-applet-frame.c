@@ -1,22 +1,22 @@
 /*
- * panel-applet-frame.c:
+ * panel-applet-frame.c: panel side container for applets
  *
- * Copyright (C) 2001 Sun Microsystems, Inc.
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *	Mark McLoughlin <mark@skynet.ie>
@@ -32,10 +32,9 @@
 #include <gdk/gdkx.h>
 
 #include "panel-applet-frame.h"
-#include "panel-gconf.h"
+#include "panel-profile.h"
 #include "panel-util.h"
 #include "panel.h"
-#include "session.h"
 #include "applet.h"
 #include "panel-marshal.h"
 #include "panel-background.h"
@@ -53,7 +52,7 @@ struct _PanelAppletFramePrivate {
 
 	PanelWidget                    *panel;
 	AppletInfo                     *applet_info;
-	PanelOrient                     orient;
+	PanelOrientation                orientation;
 
 	gchar                          *iid;
 	gboolean			moving_focus_out;
@@ -73,45 +72,6 @@ typedef enum {
 	APPLET_HAS_HANDLE   = 1 << 2,
 } PanelAppletFlags;
 
-void
-panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
-				  const char       *gconf_key)
-{
-	GConfClient *client;
-	const char  *profile;
-	const char  *temp_key;
-
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
-
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
-	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
-}
-
-void
-panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
-				    gint         position,
-				    const char  *gconf_key)
-{
-	GConfClient *client;
-	const char  *profile;
-	const char  *temp_key;
-	char        *applet_iid;
-
-	g_return_if_fail (panel_widget != NULL);
-	g_return_if_fail (gconf_key != NULL);
-
-	client  = panel_gconf_get_client ();
-	profile = panel_gconf_get_profile ();
-
-	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
-	applet_iid = gconf_client_get_string (client, temp_key, NULL);
-
-	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, gconf_key);
-
-	g_free (applet_iid);
-}
-
 static void
 popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
@@ -122,7 +82,7 @@ popup_handle_remove (BonoboUIComponent *uic,
 	info = frame->priv->applet_info;
 	frame->priv->applet_info = NULL;
 
-	panel_applet_clean (info, TRUE);
+	panel_profile_delete_object (info);
 }
 
 static void
@@ -140,7 +100,7 @@ popup_handle_move (BonoboUIComponent *uic,
 	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
 	panel_widget_applet_drag_start (
-		frame->priv->panel, widget, PW_DRAG_OFF_CENTER);
+		frame->priv->panel, widget, PW_DRAG_OFF_CENTER, GDK_CURRENT_TIME);
 }
 
 static BonoboUIVerb popup_verbs [] = {
@@ -150,43 +110,76 @@ static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-void
+static void
 panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
 			 int          position,
 			 gboolean     exactpos,
-			 const char  *gconf_key)
+			 const char  *id)
 {
 	GtkWidget  *frame = NULL;
 	AppletInfo *info;
-	char       *real_key;
 
 	g_return_if_fail (iid != NULL);
 	g_return_if_fail (panel != NULL);
+	g_return_if_fail (id != NULL);
 
-	if (gconf_key)
-		real_key = g_strdup (gconf_key);
-	else
-		real_key = gconf_unique_key ();
-
-	frame = panel_applet_frame_new (panel, iid, real_key);
-
-	if (!frame) {
-		g_free (real_key);
+	frame = panel_applet_frame_new (panel, iid, id);
+	if (!frame)
 		return;
-	}
 	
 	gtk_widget_show_all (frame);
 
 	info = panel_applet_register (frame, frame, NULL, panel, position,
-				      exactpos, APPLET_BONOBO, real_key);
-
-	if (!info)
-		g_warning (_("Cannot register control widget\n"));
-
-	g_free (real_key);
+				      exactpos, PANEL_OBJECT_BONOBO, id);
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
+}
+
+void
+panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
+				    int          position,
+				    const char  *id)
+{
+	const char  *profile;
+	const char  *key;
+	char        *applet_iid;
+
+	g_return_if_fail (panel_widget != NULL);
+	g_return_if_fail (id != NULL);
+
+	profile = panel_profile_get_name ();
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
+
+	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
+
+	g_free (applet_iid);
+}
+
+void
+panel_applet_frame_create (PanelToplevel *toplevel,
+			   int            position,
+			   const char    *iid)
+{
+	GConfClient *client;
+	const char  *profile;
+	const char  *key;
+	char        *id;
+
+	g_return_if_fail (iid != NULL);
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+
+	id = panel_profile_prepare_object (PANEL_OBJECT_BONOBO, toplevel, position);
+
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	gconf_client_set_string (client, key, iid, NULL);
+
+	/* frees id */
+	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
 }
 
 static int
@@ -254,13 +247,34 @@ panel_applet_frame_get_size_hints (PanelAppletFrame  *frame,
 }
 
 void
-panel_applet_frame_change_orient (PanelAppletFrame *frame,
-				  PanelOrient       orient)
+panel_applet_frame_change_orientation (PanelAppletFrame *frame,
+				       PanelOrientation  orientation)
 {
-	if (orient == frame->priv->orient)
+	CORBA_unsigned_short orient = 0;
+
+	if (orientation == frame->priv->orientation)
 		return;
 
-	frame->priv->orient = orient;
+	frame->priv->orientation = orientation;
+
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
+		orient = GNOME_Vertigo_PANEL_ORIENT_DOWN;
+		break;
+	case PANEL_ORIENTATION_BOTTOM:
+		orient = GNOME_Vertigo_PANEL_ORIENT_UP;
+		break;
+	case PANEL_ORIENTATION_LEFT:
+		orient = GNOME_Vertigo_PANEL_ORIENT_RIGHT;
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		orient = GNOME_Vertigo_PANEL_ORIENT_LEFT;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
 				   "panel-applet-orient",
 				   orient,
@@ -354,16 +368,16 @@ panel_applet_frame_paint (GtkWidget    *widget,
 		return;
   
 	if (GTK_WIDGET_DRAWABLE (widget)) {
-		GtkOrientation orient = 0;
+		GtkOrientation orientation = GTK_ORIENTATION_HORIZONTAL;
 
-		switch (frame->priv->orient) {
-		case PANEL_ORIENT_UP:
-		case PANEL_ORIENT_DOWN:
-			orient = GTK_ORIENTATION_HORIZONTAL;
+		switch (frame->priv->orientation) {
+		case PANEL_ORIENTATION_TOP:
+		case PANEL_ORIENTATION_BOTTOM:
+			orientation = GTK_ORIENTATION_HORIZONTAL;
 			break;
-		case PANEL_ORIENT_LEFT:
-		case PANEL_ORIENT_RIGHT:
-			orient = GTK_ORIENTATION_VERTICAL;
+		case PANEL_ORIENTATION_LEFT:
+		case PANEL_ORIENTATION_RIGHT:
+			orientation = GTK_ORIENTATION_VERTICAL;
 			break;
 		default:
 			g_assert_not_reached ();
@@ -379,7 +393,7 @@ panel_applet_frame_paint (GtkWidget    *widget,
                         frame->priv->handle_rect.y,
                         frame->priv->handle_rect.width,
                         frame->priv->handle_rect.height,
-                        orient);
+                        orientation);
 	}
 }
 
@@ -407,14 +421,14 @@ panel_applet_frame_constrain_size (PanelAppletFrame *frame,
 
 	panel = frame->priv->panel;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		if (requisition->height > panel->sz)
 			requisition->height = panel->sz;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		if (requisition->width > panel->sz)
 			requisition->width = panel->sz;
 		break;
@@ -456,13 +470,13 @@ panel_applet_frame_size_request (GtkWidget      *widget,
 	requisition->width += GTK_CONTAINER (widget)->border_width;
 	requisition->height += GTK_CONTAINER (widget)->border_width;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		requisition->width += HANDLE_SIZE;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		requisition->height += HANDLE_SIZE;
 		break;
 	default:
@@ -494,9 +508,9 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	frame->priv->handle_rect.x = 0;
 	frame->priv->handle_rect.y = 0;
 
-	switch (frame->priv->orient) {
-	case PANEL_ORIENT_UP:
-	case PANEL_ORIENT_DOWN:
+	switch (frame->priv->orientation) {
+	case PANEL_ORIENTATION_TOP:
+	case PANEL_ORIENTATION_BOTTOM:
 		frame->priv->handle_rect.width  = HANDLE_SIZE;
 		frame->priv->handle_rect.height = allocation->height;
 
@@ -505,8 +519,8 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		new_allocation.width  = allocation->width - HANDLE_SIZE;
 		new_allocation.height = allocation->height;
 		break;
-	case PANEL_ORIENT_LEFT:
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
+	case PANEL_ORIENTATION_RIGHT:
 		frame->priv->handle_rect.width  = allocation->width;
 		frame->priv->handle_rect.height = HANDLE_SIZE;
 
@@ -582,7 +596,8 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 			if (event->type == GDK_BUTTON_PRESS ||
 			    event->type == GDK_2BUTTON_PRESS) {
 				panel_widget_applet_drag_start (
-					frame->priv->panel, GTK_WIDGET (frame), PW_DRAG_OFF_CURSOR);
+					frame->priv->panel, GTK_WIDGET (frame),
+					PW_DRAG_OFF_CURSOR, event->time);
 				handled = TRUE;
 			} else if (event->type == GDK_BUTTON_RELEASE) {
 				panel_widget_applet_drag_end (frame->priv->panel);
@@ -637,25 +652,25 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 	if (response == GTK_RESPONSE_YES) {
 		PanelWidget *panel;
 		char        *iid;
-		char        *gconf_key = NULL;
+		char        *id = NULL;
 		int          position = -1;
 
 		panel = frame->priv->panel;
 		iid   = g_strdup (frame->priv->iid);
 
 		if (info) {
-			gconf_key = g_strdup (info->gconf_key);
+			id = g_strdup (info->id);
 			position  = panel_applet_get_position (info);
-			panel_applet_clean (info, FALSE);
+			panel_applet_clean (info);
 		}
 
-		panel_applet_frame_load (iid, panel, position, TRUE, gconf_key);
+		panel_applet_frame_load (iid, panel, position, TRUE, id);
 
 		g_free (iid);
-		g_free (gconf_key);
+		g_free (id);
 
 	} else if (info)
-		panel_applet_clean (info, TRUE);
+		panel_profile_delete_object (info);
 
 	g_object_unref (frame);
 	gtk_widget_destroy (dialog);
@@ -769,7 +784,7 @@ static void
 panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				   CORBA_Environment *ev,
 				   const char        *iid,
-				   const char        *gconf_key,
+				   const char        *id,
 				   GtkWindow         *panel)
 {
 	GtkWidget *dialog;
@@ -805,7 +820,7 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 	gtk_widget_destroy (dialog);
 
 	if (response == GTK_RESPONSE_OK)
-		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
+		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
 }
 
 static void
@@ -836,7 +851,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->property_bag     = CORBA_OBJECT_NIL;
 	frame->priv->ui_component     = NULL;
 	frame->priv->panel            = NULL;
-	frame->priv->orient           = PANEL_ORIENT_UP;
+	frame->priv->orientation      = PANEL_ORIENTATION_TOP;
 	frame->priv->applet_info      = NULL;
 	frame->priv->moving_focus_out = FALSE;
 }
@@ -894,23 +909,23 @@ static G_CONST_RETURN char *
 panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
 				      PanelWidget      *panel)
 {
-	PanelOrient  orient;
-	const char  *retval = NULL;
+	PanelOrientation  orientation;
+	const char       *retval = NULL;
 
-	orient = panel_widget_get_applet_orient (panel);
+	orientation = panel_widget_get_applet_orientation (panel);
 
-	switch (orient) {
-	case PANEL_ORIENT_UP:
-		retval = "up";
-		break;
-	case PANEL_ORIENT_DOWN:
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
 		retval = "down";
 		break;
-	case PANEL_ORIENT_LEFT:
-		retval = "left";
+	case PANEL_ORIENTATION_BOTTOM:
+		retval = "up";
 		break;
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
 		retval = "right";
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		retval = "left";
 		break;
 	default:
 		g_assert_not_reached ();
@@ -926,32 +941,20 @@ panel_applet_frame_get_size_string (PanelAppletFrame *frame,
 {
 	const char *retval = NULL;
 
-	switch (panel->sz) {
-	case PANEL_SIZE_XX_SMALL:
+	if (panel->sz <= PANEL_SIZE_XX_SMALL)
 		retval = "xx-small";
-		break;
-	case PANEL_SIZE_X_SMALL:
+	else if (panel->sz <= PANEL_SIZE_X_SMALL)
 		retval = "x-small";
-		break;
-	case PANEL_SIZE_SMALL:
+	else if (panel->sz <= PANEL_SIZE_SMALL)
 		retval = "small";
-		break;
-	case PANEL_SIZE_MEDIUM:
+	else if (panel->sz <= PANEL_SIZE_MEDIUM)
 		retval = "medium";
-		break;
-	case PANEL_SIZE_LARGE:
+	else if (panel->sz <= PANEL_SIZE_LARGE)
 		retval = "large";
-		break;
-	case PANEL_SIZE_X_LARGE:
+	else if (panel->sz <= PANEL_SIZE_X_LARGE)
 		retval = "x-large";
-		break;
-	case PANEL_SIZE_XX_LARGE:
+	else
 		retval = "xx-large";
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
 
 	return retval;
 }
@@ -960,7 +963,7 @@ static char *
 panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 				      PanelWidget      *panel,
 				      const char       *iid,
-				      const char       *gconf_key)
+				      const char       *id)
 {
 	char *retval;
 	char *bg_str;
@@ -971,7 +974,7 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s",
-			iid, panel_gconf_get_profile (), gconf_key, bg_str,
+			iid, panel_profile_get_name (), id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel));
 
@@ -984,7 +987,7 @@ GtkWidget *
 panel_applet_frame_construct (PanelAppletFrame *frame,
 			      PanelWidget      *panel,
 			      const char       *iid,
-			      const char       *gconf_key)
+			      const char       *id)
 {
 	BonoboControlFrame    *control_frame;
 	Bonobo_Control         control;
@@ -995,7 +998,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	frame->priv->panel = panel;
 
-	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
+	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, id);
 
 	/* FIXME: this should really use bonobo_get_object_async */
 	CORBA_exception_init (&ev);
@@ -1007,7 +1010,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	if (BONOBO_EX (&ev)) {
 		panel_applet_frame_loading_failed (
-			frame, &ev, iid, gconf_key, GTK_WINDOW (panel->panel_parent));
+			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
 		CORBA_exception_free (&ev);
 		return NULL;
 	}
@@ -1064,15 +1067,15 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 GtkWidget *
 panel_applet_frame_new (PanelWidget *panel,
 			const char  *iid,
-			const char  *gconf_key)
+			const char  *id)
 {
 	PanelAppletFrame *frame;
 
-	g_return_val_if_fail (iid != NULL && gconf_key != NULL, NULL);
+	g_return_val_if_fail (iid != NULL && id != NULL, NULL);
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	if (!panel_applet_frame_construct (frame, panel, iid, gconf_key)) {
+	if (!panel_applet_frame_construct (frame, panel, iid, id)) {
 		gtk_object_sink (GTK_OBJECT (frame));
 		return NULL;
 	}

@@ -1,0 +1,23 @@
+* Toplevel widget
+    + need a resizing variant of animations for drawers
+
+* GConf stuff
+    + detect read-only keys
+    + use our own keybindings directory for toplevel bindings
+    + use_custom_key setting for drawers
+
+* Properties dialog
+   + properties dialog for drawers
+   + allow changing the tiling/scaling/rotating settings
+   + figure out what to do about setting the transparency color
+
+* Fix everything in FIXME_FOR_NEW_CONFIG and FIXME_FOR_NEW_TOPLEVEL
+
+* I've messed up launchers methinks. Not all launchers are "hoarded" now,
+  so if you remove a launcher it will delete the .desktop file. Prolly should
+  only delete hoarded launchers.
+
+* Migrate some of the old global settings to the new per-toplevel version of
+  the settings.
+
+* Check that deleting a drawer works correctly

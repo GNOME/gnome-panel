@@ -1,22 +1,22 @@
 /*
- * panel-background.c:
+ * panel-background.c: panel background rendering
  *
- * Copyright (C) 2002 Sun Microsystems, Inc.
+ * Copyright (C) 2002, 2003 Sun Microsystems, Inc.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Library General Public
- * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Library General Public License for more details.
+ * General Public License for more details.
  *
- * You should have received a copy of the GNU Library General Public
- * License along with this library; if not, write to the
- * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
- * Boston, MA 02111-1307, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
  *
  * Authors:
  *      Mark McLoughlin <mark@skynet.ie>
@@ -81,14 +81,17 @@ set_pixbuf_background (PanelBackground *background)
 static gboolean
 panel_background_prepare (PanelBackground *background)
 {
-	GtkWidget *widget = NULL;
+	PanelBackgroundType  effective_type;
+	GtkWidget           *widget = NULL;
 
 	if (!background->colormap || !background->transformed)
 		return FALSE;
 
 	free_prepared_resources (background);
 
-	switch (background->type) {
+	effective_type = panel_background_effective_type (background);
+
+	switch (effective_type) {
 	case PANEL_BACK_NONE:
 		if (background->default_pixmap)
 			gdk_window_set_back_pixmap (
@@ -284,12 +287,14 @@ panel_background_composite (PanelBackground *background)
 				get_composited_pixbuf (background);
 		break;
 	case PANEL_BACK_IMAGE:
-		if (background->has_alpha)
-			background->composited_image =
-				get_composited_pixbuf (background);
-		else
-			background->composited_image =
-				g_object_ref (background->transformed_image);
+		if (background->transformed_image) {
+			if (background->has_alpha)
+				background->composited_image =
+					get_composited_pixbuf (background);
+			else
+				background->composited_image =
+					g_object_ref (background->transformed_image);
+		}
 		break;
 	default:
 		g_assert_not_reached ();
@@ -326,6 +331,9 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 	int        orig_width, orig_height;
 	int        panel_width, panel_height;
 	int        width, height;
+
+	if (!background->loaded_image)
+		return NULL;
 
 	orig_width  = gdk_pixbuf_get_width  (background->loaded_image);
 	orig_height = gdk_pixbuf_get_height (background->loaded_image);
@@ -412,7 +420,7 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 static gboolean
 panel_background_transform (PanelBackground *background)
 {
-	if (background->region.width == -1 || !background->loaded)
+	if (background->region.width == -1)
 		return FALSE;
 
 	free_transformed_resources (background);
@@ -424,65 +432,6 @@ panel_background_transform (PanelBackground *background)
 	background->transformed = TRUE;
 
 	panel_background_composite (background);
-
-	return TRUE;
-}
-
-static void
-free_loaded_resources (PanelBackground *background)
-{
-	free_transformed_resources (background);
-
-	background->loaded = FALSE;
-
-	switch (background->type) {
-	case PANEL_BACK_NONE:
-		break;
-	case PANEL_BACK_COLOR:
-		break;
-	case PANEL_BACK_IMAGE:
-		if (background->image)
-			g_free (background->image);
-		background->image = NULL;
-	
-		if (background->loaded_image)
-			g_object_unref (background->loaded_image);
-		background->loaded_image = NULL;
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-
-static gboolean
-load_background_file (PanelBackground *background,
-		      const char      *image)
-{
-	GError *error = NULL;
-
-	free_loaded_resources (background);
-
-	if (background->image)
-		g_free (background->image);
-	background->image = g_strdup (image);
-
-	background->loaded_image = 
-		gdk_pixbuf_new_from_file (image, &error);
-	if (!background->loaded_image) {
-		g_assert (error != NULL);
-		g_warning (G_STRLOC ": unable to open '%s' : %s",
-			   image, error->message);
-		g_error_free (error);
-
-		panel_background_set_none (background);
-		return FALSE;
-	}
-
-	background->loaded = TRUE;
-
-	background->has_alpha = gdk_pixbuf_get_has_alpha (
-					background->loaded_image);
 
 	return TRUE;
 }
@@ -503,7 +452,180 @@ disconnect_background_monitor (PanelBackground *background)
 	background->desktop = NULL;
 }
 
-gboolean
+static void
+panel_background_update_has_alpha (PanelBackground *background)
+{
+	gboolean has_alpha = FALSE;
+
+	if (background->type == PANEL_BACK_COLOR)
+		has_alpha = (background->color.alpha != 0xffff);
+
+	else if (background->type == PANEL_BACK_IMAGE &&
+		 background->loaded_image)
+		has_alpha = gdk_pixbuf_get_has_alpha (background->loaded_image);
+
+	background->has_alpha = has_alpha;
+
+	if (!has_alpha)
+		disconnect_background_monitor (background);
+}
+
+static void
+load_background_file (PanelBackground *background)
+{
+	GError *error = NULL;
+
+	background->loaded_image = 
+		gdk_pixbuf_new_from_file (background->image, &error);
+	if (!background->loaded_image) {
+		g_assert (error != NULL);
+		g_warning (G_STRLOC ": unable to open '%s' : %s",
+			   background->image, error->message);
+		g_error_free (error);
+	}
+}
+
+void
+panel_background_set_type (PanelBackground     *background,
+			   PanelBackgroundType  type)
+{
+	if (background->type == type)
+		return;
+
+	free_transformed_resources (background);
+
+	background->type = type;
+
+	panel_background_update_has_alpha (background);
+
+	panel_background_transform (background);
+}
+
+void
+panel_background_set_pango_color (PanelBackground *background,
+				  PangoColor      *pango_color)
+{
+	if (background->color.gdk.red   == pango_color->red &&
+	    background->color.gdk.green == pango_color->green &&
+	    background->color.gdk.blue  == pango_color->blue)
+		return;
+
+	free_transformed_resources (background);
+
+	background->color.gdk.red   = pango_color->red;
+	background->color.gdk.green = pango_color->green;
+	background->color.gdk.blue  = pango_color->blue;
+
+	panel_background_transform (background);
+}
+
+void
+panel_background_set_opacity (PanelBackground *background,
+			      guint16          opacity)
+{
+	if (background->color.alpha == opacity)
+		return;
+
+	free_transformed_resources (background);
+
+	background->color.alpha = opacity;
+
+	panel_background_update_has_alpha (background);
+
+	panel_background_transform (background);
+}
+
+void
+panel_background_set_color (PanelBackground *background,
+			    PanelColor      *color)
+{
+	PangoColor pango_color;
+
+	pango_color.red   = color->gdk.red;
+	pango_color.green = color->gdk.green;
+	pango_color.blue  = color->gdk.blue;
+
+	panel_background_set_pango_color (background, &pango_color);
+	panel_background_set_opacity (background, color->alpha);
+}
+
+void
+panel_background_set_image (PanelBackground *background,
+			    const char      *image)
+{
+	if (!background->image && !image)
+		return;
+
+	if (background->image && image && !strcmp (background->image, image))
+		return;
+
+	free_transformed_resources (background);
+
+	if (background->loaded_image)
+		g_object_unref (background->loaded_image);
+	background->loaded_image = NULL;
+
+	if (background->image)
+		g_free (background->image);
+	background->image = NULL;
+
+	if (image && image [0]) {
+		background->image = g_strdup (image);
+		load_background_file (background);
+	}
+
+	panel_background_update_has_alpha (background);
+}
+
+void
+panel_background_set_fit (PanelBackground *background,
+			  gboolean         fit_image)
+{
+	fit_image = fit_image != FALSE;
+
+	if (background->fit_image == fit_image)
+		return;
+
+	free_transformed_resources (background);
+
+	background->fit_image = fit_image;
+
+	panel_background_transform (background);
+}
+
+void
+panel_background_set_stretch (PanelBackground *background,
+			      gboolean         stretch_image)
+{
+	stretch_image = stretch_image != FALSE;
+
+	if (background->stretch_image == stretch_image)
+		return;
+
+	free_transformed_resources (background);
+
+	background->stretch_image = stretch_image;
+
+	panel_background_transform (background);
+}
+
+void
+panel_background_set_rotate (PanelBackground *background,
+			     gboolean         rotate_image)
+{
+	rotate_image = rotate_image != FALSE;
+
+	if (background->rotate_image == rotate_image)
+		return;
+
+	free_transformed_resources (background);
+
+	background->rotate_image = rotate_image;
+
+	panel_background_transform (background);
+}
+
+void
 panel_background_set (PanelBackground     *background,
 		      PanelBackgroundType  type,
 		      PanelColor          *color,
@@ -512,118 +634,12 @@ panel_background_set (PanelBackground     *background,
 		      gboolean             stretch_image,
 		      gboolean             rotate_image)
 {
-	gboolean background_changed = FALSE;
-
-	if (type == PANEL_BACK_IMAGE && (!image || !image [0])) {
-		if (!background->loaded)
-			return panel_background_set_none (background);
-
-		return FALSE;
-	}
-
-	if (type != background->type)
-		background_changed = TRUE;
-
-	switch (type) {
-	case PANEL_BACK_NONE:
-		free_loaded_resources (background);
-
-		background->type = type;
-
-		background->has_alpha = FALSE;
-		background->loaded    = TRUE;
-		break;
-	case PANEL_BACK_COLOR:
-		if (!background_changed &&
-		     background->color.gdk.red   == color->gdk.red &&
-		     background->color.gdk.green == color->gdk.green &&
-		     background->color.gdk.blue  == color->gdk.blue &&
-		     background->color.alpha     == color->alpha)
-			return FALSE;
-
-		free_loaded_resources (background);
-
-		background->type = type;
-
-		background_changed = TRUE;
-
-		background->color.gdk.red   = color->gdk.red;
-		background->color.gdk.green = color->gdk.green;
-		background->color.gdk.blue  = color->gdk.blue;
-		background->color.gdk.pixel = 0;
-		background->color.alpha     = color->alpha;
-		background->has_alpha       = (color->alpha != 0xffff);
-		background->loaded          = TRUE;
-		break;
-	case PANEL_BACK_IMAGE: {
-		gboolean load_file;
-
-		load_file = !background->image || strcmp (background->image, image);
-
-		if (!background_changed && !load_file &&
-		    background->fit_image == fit_image &&
-		    background->stretch_image == stretch_image &&
-		    background->rotate_image == rotate_image)
-			return FALSE;
-
-		background->fit_image     = fit_image;
-		background->stretch_image = stretch_image;
-		background->rotate_image  = rotate_image;
-
-		if (load_file)
-			load_background_file (background, image);
-		else
-			free_transformed_resources (background);
-
-		background->type = type;
-
-		background_changed = TRUE;
-	}
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	if (!background->has_alpha)
-		disconnect_background_monitor (background);
-
-	panel_background_transform (background);
-
-	return background_changed;
-}
-
-gboolean
-panel_background_set_none (PanelBackground *background)
-{
-	PanelColor black_color = { { 0, 0, 0, 0 }, 0xffff };
-
-	return panel_background_set (
-			background, PANEL_BACK_NONE, &black_color,
-			NULL, FALSE, FALSE, FALSE);
-}
-
-gboolean
-panel_background_set_color (PanelBackground *background,
-			    PanelColor      *color)
-{
-	return panel_background_set (
-			background, PANEL_BACK_COLOR, color,
-			NULL, FALSE, FALSE, FALSE);
-}
-
-gboolean
-panel_background_set_image (PanelBackground *background,
-			    const char      *image,
-			    gboolean         fit_image,
-			    gboolean         stretch_image,
-			    gboolean         rotate_image)
-{
-	PanelColor black_color = { { 0, 0, 0, 0 }, 0xffff };
-
-	return panel_background_set (
-			background, PANEL_BACK_IMAGE, &black_color,
-			image, fit_image, stretch_image, rotate_image);
+	panel_background_set_color (background, color);
+	panel_background_set_image (background, image);
+	panel_background_set_fit (background, fit_image);
+	panel_background_set_stretch (background, stretch_image);
+	panel_background_set_rotate (background, rotate_image);
+	panel_background_set_type (background, type);
 }
 
 void
@@ -755,7 +771,6 @@ panel_background_init (PanelBackground *background)
 
 	background->has_alpha = FALSE;
 
-	background->loaded      = FALSE;
 	background->transformed = FALSE;
 	background->composited  = FALSE;
 	background->prepared    = FALSE;
@@ -766,7 +781,15 @@ panel_background_free (PanelBackground *background)
 {
 	disconnect_background_monitor (background);
 
-	free_loaded_resources (background);
+	free_transformed_resources (background);
+
+	if (background->image)
+		g_free (background->image);
+	background->image = NULL;
+
+	if (background->loaded_image)
+		g_object_unref (background->loaded_image);
+	background->loaded_image = NULL;
 
 	if (background->window)
 		g_object_unref (background->window);
@@ -816,4 +839,20 @@ panel_background_make_string (PanelBackground *background,
 
         return retval;
 
+}
+
+/* What are we actually rendering - e.g. if we're supposed to
+ * be rendering an image, but haven't got a valid image, then
+ * we're rendering the default gtk background.
+ */
+PanelBackgroundType
+panel_background_effective_type (PanelBackground *background)
+{
+	PanelBackgroundType retval;
+
+	retval = background->type;
+	if (background->type == PANEL_BACK_IMAGE && !background->composited_image)
+		retval = PANEL_BACK_NONE;
+
+	return retval;
 }

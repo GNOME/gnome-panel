@@ -11,13 +11,12 @@
 
 #include "button-widget.h"
 #include "panel-widget.h"
-#include "basep-widget.h"
-#include "panel-main.h"
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-marshal.h"
 #include "panel-typebuiltins.h"
+#include "panel-globals.h"
 
 
 static GdkPixbuf *button_load_pixbuf (const char  *file,
@@ -35,8 +34,6 @@ enum {
 
 #define BUTTON_WIDGET_DISPLACEMENT 2
 
-extern GlobalConfig global_config;
-
 static GObjectClass *parent_class;
 
 static void
@@ -48,16 +45,6 @@ translate_to(GtkWidget *from, GtkWidget *to, int *x, int *y)
 			*y += MAX (from->allocation.y, 0);
 		}
 		from = from->parent;
-	}
-}
-
-static GtkWidget *
-get_frame(BasePWidget *basep)
-{
-	if (GTK_WIDGET_VISIBLE (basep->frame)) {
-		return basep->frame;
-	} else {
-		return basep->innerebox;
 	}
 }
 
@@ -94,18 +81,6 @@ calculate_overlay_geometry (PanelWidget *panel,
 		if ((*w + applet->allocation.x) > panel->size) {
 			*w = panel->size - applet->allocation.x;
 		}
-
-		/* if on the edge (only if padding is 0)
-		   then make the thing flush with the innerebox or frame
-		   of the basep */
-		if(applet->allocation.x == 0) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*w += (*x - frame->allocation.x);
-			*x = frame->allocation.x;
-		} else if(applet->allocation.x + *w == panel->size) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*w = frame->allocation.width + frame->allocation.x - *x;
-		}
 	} else {
 		if (applet->allocation.y > panel->size) {
 			*x = parent->requisition.width + 1;
@@ -119,18 +94,6 @@ calculate_overlay_geometry (PanelWidget *panel,
 
 		if ((*h + applet->allocation.y) > panel->size) {
 			*h = panel->size - applet->allocation.y;
-		}
-
-		/* if on the edge (only if padding is 0)
-		   then make the thing flush with the innerbox of frame
-		   of the basep */
-		if(applet->allocation.y == 0) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*h += (*y - frame->allocation.y);
-			*y = frame->allocation.y;
-		} else if(applet->allocation.y + *h == panel->size) {
-			GtkWidget *frame = get_frame(BASEP_WIDGET(parent));
-			*h = frame->allocation.height + frame->allocation.y - *y;
 		}
 	}
 }
@@ -206,8 +169,8 @@ button_widget_realize(GtkWidget *widget)
 	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BUTTON_IS_WIDGET (widget));
 
-	panel = PANEL_WIDGET(widget->parent);
-	parent = panel->panel_parent;
+	panel  = PANEL_WIDGET(widget->parent);
+	parent = GTK_WIDGET (panel->toplevel);
 
 	calculate_overlay_geometry(panel, parent, widget, &x, &y, &w, &h);
 
@@ -253,7 +216,7 @@ button_widget_parent_set (GtkWidget *widget,
 	if (!GTK_WIDGET_REALIZED (widget)|| !widget->parent)
 		return;
 
-	parent = PANEL_WIDGET (widget->parent)->panel_parent;
+	parent = GTK_WIDGET (PANEL_WIDGET (widget->parent)->toplevel);
 
 	calculate_overlay_geometry (
 		PANEL_WIDGET (widget->parent), parent, widget, &x, &y, &w, &h);
@@ -404,7 +367,7 @@ button_widget_get_property (GObject    *object,
 		g_value_set_boolean (value, button->arrow);
 		break;
 	case PROP_ORIENT:
-		g_value_set_enum (value, button->orient);
+		g_value_set_enum (value, button->orientation);
 		break;
 	case PROP_ICON_NAME:
 		g_value_set_string (value, button->filename);
@@ -443,7 +406,7 @@ button_widget_set_property (GObject      *object,
 		gtk_widget_queue_draw (GTK_WIDGET (button));
 		break;
 	case PROP_ORIENT:
-		button->orient = g_value_get_enum (value);
+		button->orientation = g_value_get_enum (value);
 		gtk_widget_queue_draw (GTK_WIDGET (button));
 		break;
 	case PROP_ICON_NAME:
@@ -541,18 +504,12 @@ button_load_pixbuf (const char  *file,
 #define SCALE(x) (((x)*size)/48.0)
 
 static void
-draw_arrow(GdkPoint *points, PanelOrient orient, int size)
+draw_arrow (GdkPoint         *points,
+	    PanelOrientation  orientation,
+	    int               size)
 {
-	switch(orient) {
-	case PANEL_ORIENT_UP:
-		points[0].x = SCALE(48-12);
-		points[0].y = SCALE(10);
-		points[1].x = SCALE(48-4);
-		points[1].y = SCALE(10);
-		points[2].x = SCALE(48-8);
-		points[2].y = SCALE(3);
-		break;
-	case PANEL_ORIENT_DOWN:
+	switch (orientation) {
+	case PANEL_ORIENTATION_TOP:
 		points[0].x = SCALE(4);
 		points[0].y = SCALE(48 - 10);
 		points[1].x = SCALE(12);
@@ -560,21 +517,29 @@ draw_arrow(GdkPoint *points, PanelOrient orient, int size)
 		points[2].x = SCALE(8);
 		points[2].y = SCALE(48 - 3);
 		break;
-	case PANEL_ORIENT_LEFT:
-		points[0].x = SCALE(10);
-		points[0].y = SCALE(4);
-		points[1].x = SCALE(10);
-		points[1].y = SCALE(12);
-		points[2].x = SCALE(3);
-		points[2].y = SCALE(8);
+	case PANEL_ORIENTATION_BOTTOM:
+		points[0].x = SCALE(48-12);
+		points[0].y = SCALE(10);
+		points[1].x = SCALE(48-4);
+		points[1].y = SCALE(10);
+		points[2].x = SCALE(48-8);
+		points[2].y = SCALE(3);
 		break;
-	case PANEL_ORIENT_RIGHT:
+	case PANEL_ORIENTATION_LEFT:
 		points[0].x = SCALE(48 - 10);
 		points[0].y = SCALE(48 - 12);
 		points[1].x = SCALE(48 - 10);
 		points[1].y = SCALE(48 - 4);
 		points[2].x = SCALE(48 - 3);
 		points[2].y = SCALE(48 - 8);
+		break;
+	case PANEL_ORIENTATION_RIGHT:
+		points[0].x = SCALE(10);
+		points[0].y = SCALE(4);
+		points[1].x = SCALE(10);
+		points[1].y = SCALE(12);
+		points[2].x = SCALE(3);
+		points[2].y = SCALE(8);
 		break;
 	}
 }
@@ -617,7 +582,7 @@ button_widget_expose (GtkWidget         *widget,
 	off = (button->in_button && button->button_down) ?
 		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0;
 	
-	if (global_config.highlight_when_over && 
+	if (panel_global_config_get_highlight_when_over () && 
 	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
 		pb = button_widget->scaled_hc;
 	else
@@ -651,7 +616,7 @@ button_widget_expose (GtkWidget         *widget,
 	if(button_widget->arrow) {
 		int i;
 		GdkPoint points[3];
-		draw_arrow (points, button_widget->orient, widget->allocation.height);
+		draw_arrow (points, button_widget->orientation, widget->allocation.height);
 		for (i = 0; i < 3; i++) {
 			points[i].x += off + widget->allocation.x;
 			points[i].y += off + widget->allocation.y;
@@ -720,8 +685,9 @@ button_widget_size_allocate (GtkWidget     *widget,
 
 		panel = PANEL_WIDGET (widget->parent);
 
-		calculate_overlay_geometry (panel, panel->panel_parent,
-					    widget, &x, &y, &w, &h);
+		calculate_overlay_geometry (
+			panel, GTK_WIDGET (panel->toplevel),
+			widget, &x, &y, &w, &h);
 
 		gdk_window_move_resize (button->event_window, x, y, w, h);
 	}
@@ -779,7 +745,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 	in_button = GTK_BUTTON (widget)->in_button;
 	GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
 	if (in_button != GTK_BUTTON (widget)->in_button &&
-	    global_config.highlight_when_over)
+	    panel_global_config_get_highlight_when_over ())
 		gtk_widget_queue_draw (widget);
 
 	return FALSE;
@@ -816,9 +782,9 @@ button_widget_instance_init (ButtonWidget *button)
 	button->scaled    = NULL;
 	button->scaled_hc = NULL;
 	
-	button->arrow  = 0;
-	button->size   = -1;
-	button->orient = PANEL_ORIENT_UP;
+	button->arrow       = 0;
+	button->size        = -1;
+	button->orientation = PANEL_ORIENTATION_TOP;
 	
 	button->ignore_leave  = FALSE;
 	button->dnd_highlight = FALSE;
@@ -875,8 +841,8 @@ button_widget_class_init (ButtonWidgetClass *klass)
 			g_param_spec_enum ("orient",
 					   _("Orientation"),
 					   _("The ButtonWidget orientation"),
-					   PANEL_TYPE_ORIENT,
-					   PANEL_ORIENT_UP,
+					   PANEL_TYPE_ORIENTATION,
+					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE));
 
 	g_object_class_install_property (
@@ -924,10 +890,10 @@ button_widget_get_type (void)
 }
 
 GtkWidget *
-button_widget_new (const char  *filename,
-		   int          size,
-		   gboolean     arrow,
-		   PanelOrient  orient)
+button_widget_new (const char       *filename,
+		   int               size,
+		   gboolean          arrow,
+		   PanelOrientation  orientation)
 {
 	GtkWidget *retval;
 
@@ -935,7 +901,7 @@ button_widget_new (const char  *filename,
 			BUTTON_TYPE_WIDGET,
 			"size", size,
 			"has-arrow", arrow,
-			"orient", orient,
+			"orient", orientation,
 			"icon-name", filename,
 			NULL);
 	
@@ -943,10 +909,10 @@ button_widget_new (const char  *filename,
 }
 
 GtkWidget *
-button_widget_new_from_stock (const char  *stock_id,
-			      int          size,
-			      gboolean     arrow,
-			      PanelOrient  orient)
+button_widget_new_from_stock (const char       *stock_id,
+			      int               size,
+			      gboolean          arrow,
+			      PanelOrientation  orientation)
 {
 	GtkWidget *retval;
 
@@ -954,7 +920,7 @@ button_widget_new_from_stock (const char  *stock_id,
 			BUTTON_TYPE_WIDGET,
 			"size", size,
 			"has-arrow", arrow,
-			"orient", orient,
+			"orient", orientation,
 			"stock-id", stock_id,
 			NULL);
 	
@@ -980,12 +946,12 @@ button_widget_set_stock_id (ButtonWidget *button,
 }
 
 void
-button_widget_set_params(ButtonWidget *button,
-			 gboolean arrow,
-			 PanelOrient orient)
+button_widget_set_params (ButtonWidget     *button,
+			  gboolean          arrow,
+			  PanelOrientation  orientation)
 {
 	g_return_if_fail (BUTTON_IS_WIDGET (button));
 
 	g_object_set (G_OBJECT (button), "has-arrow", arrow, NULL);
-	g_object_set (G_OBJECT (button), "orient", orient, NULL);
+	g_object_set (G_OBJECT (button), "orient", orientation, NULL);
 }

@@ -46,7 +46,7 @@ bin_PROGRAMS = \
 	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
-$(gnome_panel_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+$(gnome_panel_OBJECTS) $(gnome_panel_preferences_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -81,6 +81,11 @@ EGG_SCREEN_EXEC_FILES =         \
 	egg-screen-url.c        \
 	$(NULL)
 
+EGG_ACCELERATORS_FILES =        \
+	eggaccelerators.c       \
+	eggaccelerators.h       \
+	$(NULL)
+
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	panel-typebuiltins.c	\
@@ -95,18 +100,10 @@ panel_sources =			\
 	panel-marshal.h		\
 	main.c			\
 	panel-widget.c  	\
-	basep-widget.c  	\
 	button-widget.c  	\
-	multiscreen-stuff.c	\
 	xstuff.c		\
-	session.c		\
+	panel-session.c		\
 	panel-compatibility.c   \
-	border-widget.c		\
-	edge-widget.c		\
-	aligned-widget.c	\
-	drawer-widget.c		\
-	sliding-widget.c	\
-	floating-widget.c	\
 	disclosure-widget.c	\
 	panel.c			\
 	applet.c		\
@@ -114,7 +111,7 @@ panel_sources =			\
 	panel-config-global.c  	\
 	panel-util.c		\
 	panel-gconf.c		\
-	panel-config.c  	\
+	panel-properties-dialog.c \
 	distribution.c		\
 	gnome-run.c  		\
 	menu.c  		\
@@ -125,40 +122,39 @@ panel_sources =			\
 	panel-applet-frame.c	\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
-	panel-access.c		\
 	panel-background.c	\
 	panel-background-monitor.c \
 	panel-stock-icons.c	\
 	panel-action-button.c	\
 	panel-menu-bar.c        \
+	panel-menu-button.c     \
 	panel-recent.c		\
 	panel-gdk-pixbuf-extensions.c \
 	panel-action-protocol.c	\
+	panel-toplevel.c	\
+	panel-frame.c		\
+	panel-xutils.c		\
+	panel-multiscreen.c	\
+	panel-a11y.c		\
+	panel-bindings.c	\
+	panel-profile.c         \
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
 panel_headers =			\
 	panel-types.h		\
 	panel-widget.h		\
-	panel-main.h		\
-	basep-widget.h		\
+	panel-globals.h		\
 	button-widget.h		\
-	multiscreen-stuff.h	\
 	xstuff.h		\
-	session.h		\
+	panel-session.h		\
 	panel-compatibility.h   \
-	border-widget.h		\
-	edge-widget.h		\
-	aligned-widget.h	\
-	drawer-widget.h		\
-	sliding-widget.h	\
-	floating-widget.h	\
 	disclosure-widget.h	\
 	panel.h         	\
 	applet.h         	\
 	drawer.h  		\
 	panel-util.h		\
-	panel-config.h		\
+	panel-properties-dialog.h \
 	panel-config-global.h  	\
 	panel-gconf.h		\
 	distribution.h		\
@@ -176,15 +172,25 @@ panel_headers =			\
 	panel-stock-icons.h	\
 	panel-action-button.h	\
 	panel-menu-bar.h        \
+	panel-menu-button.h     \
 	panel-recent.h		\
 	panel-gdk-pixbuf-extensions.h \
 	panel-action-protocol.h	\
+	panel-toplevel.h	\
+	panel-frame.h		\
+	panel-xutils.h		\
+	panel-multiscreen.h	\
+	panel-a11y.h		\
+	panel-bindings.h	\
+	panel-profile.h         \
+	panel-enums.h		\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
 gnome_panel_SOURCES =			\
 	$(CORBA_SRCLIST)		\
 	$(EGG_SCREEN_EXEC_FILES)	\
+	$(EGG_ACCELERATORS_FILES)	\
 	$(panel_sources)		\
 	$(panel_headers)		\
 	$(NULL)
@@ -200,7 +206,7 @@ gnome_panel_LDFLAGS = -export-dynamic
 gnome_panel_preferences_SOURCES =	\
 	gnome-panel-preferences.c	\
 	panel-gconf.c			\
-	panel-access.c
+	panel-a11y.c
 
 gnome_panel_preferences_LDADD =		\
 	$(X_LIBS)			\
@@ -214,7 +220,7 @@ gnome_desktop_item_edit_SOURCES = \
 	menu-ditem.c		  \
 	panel-util.c		  \
 	xstuff.c		  \
-	panel-access.c		  \
+	panel-a11y.c		  \
 	egg-screen-exec.c	  \
 	egg-screen-help.c	  \
 	egg-screen-url.c
@@ -240,7 +246,8 @@ gnome_panel_screenshot_LDADD = 	\
 gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
 	gnome-panel-preferences.glade		\
-	gnome-panel-screenshot.glade
+	gnome-panel-screenshot.glade		\
+	panel-properties-dialog.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
@@ -252,7 +259,8 @@ EXTRA_DIST =					\
 	$(ui_DATA)				\
 	panel-marshal.list			\
 	update-from-egg.sh			\
-	gnome-panelrc
+	gnome-panelrc				\
+	install-defaults.sh
 
 sysdir = $(datadir)/control-center-2.0/capplets
 sys_in_files = gnome-panel-preferences.desktop.in
@@ -261,12 +269,8 @@ sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
 panel_enum_headers =					\
+	$(top_srcdir)/gnome-panel/panel-enums.h		\
 	$(top_srcdir)/gnome-panel/panel-types.h		\
-	$(top_srcdir)/gnome-panel/panel-widget.h	\
-	$(top_srcdir)/gnome-panel/basep-widget.h	\
-	$(top_srcdir)/gnome-panel/aligned-widget.h	\
-	$(top_srcdir)/gnome-panel/sliding-widget.h	\
-	$(top_srcdir)/gnome-panel/panel-action-button.h	\
 	$(top_builddir)/gnome-panel/GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
@@ -281,13 +285,13 @@ panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
-			--vhead "static const G@Type@Value _@enum_name@_values[] = {" \
+			--vhead "static const GEnumValue _@enum_name@_values[] = {" \
 			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
 			--vtail "  { 0, NULL, NULL }\n};\n\n" \
 			--vtail "GType\n@enum_name@_get_type (void)\n{\n" \
 			--vtail "  static GType type = 0;\n\n" \
 			--vtail "  if (!type)\n" \
-			--vtail "    type = g_@type@_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
+			--vtail "    type = g_enum_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
 			--vtail "  return type;\n}\n\n" \
 		$(panel_enum_headers) > $@
 
@@ -316,8 +320,10 @@ rc_DATA = gnome-panelrc
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
-	panel-global-config.schemas.in		\
-	panel-per-panel-config.schemas.in	\
+	panel-global.schemas.in 		\
+	panel-general.schemas.in		\
+	panel-toplevel.schemas.in		\
+	panel-object.schemas.in			\
 	gnome-panel-screenshot.schemas.in	\
 	$(NULL)
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
@@ -329,7 +335,8 @@ install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
-		done \
+		done ; \
+		GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) GCONFTOOL=$(GCONFTOOL) $(srcdir)/install-defaults.sh ; \
 	fi
 else
 install-data-local:
@@ -342,8 +349,10 @@ dist-hook:
 
 EGG_SCREEN_EXEC_DIR = $(srcdir)/../../libegg/libegg/screen-exec
 EGG_RECENT_DIR = $(srcdir)/../../libegg/libegg/recent-files
+EGG_ACCELERATORS_DIR = $(srcdir)/../../libegg/libegg/treeviewutils
 
 regenerate-built-sources:
 	EGGFILES="$(EGG_SCREEN_EXEC_FILES)"  EGGDIR="$(EGG_SCREEN_EXEC_DIR)"  $(srcdir)/update-from-egg.sh
 	EGGFILES="$(EGG_RECENT_FILES_C)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh
 	EGGFILES="$(EGG_RECENT_FILES_H)" EGGDIR="$(EGG_RECENT_DIR)" $(srcdir)/update-from-egg.sh
+	EGGFILES="$(EGG_ACCELERATORS_FILES)" EGGDIR="$(EGG_ACCELERATORS_DIR)" $(srcdir)/update-from-egg.sh

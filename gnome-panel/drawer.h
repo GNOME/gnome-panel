@@ -2,45 +2,39 @@
 #define DRAWER_H
 
 #include "panel.h"
-#include "panel-config.h"
 
 G_BEGIN_DECLS
 
 typedef struct {
-	char         *pixmap;
-	char         *tooltip;
+	char          *pixmap;
+	char          *tooltip;
 
-	GtkWidget    *button;
-	GtkWidget    *drawer;
-	GtkWidget    *properties;
+	PanelToplevel *toplevel;
+	GtkWidget     *button;
+	GtkWidget     *properties;
 
-	gboolean      moving_focus;
-	gboolean      opened_for_drag;
-	guint         close_timeout_id;
+	gboolean       opened_for_drag;
+	guint          close_timeout_id;
 
-	guint         focus_out_handler;
-
-	AppletInfo   *info;
+	AppletInfo    *info;
 } Drawer;
 
-Drawer *load_drawer_applet (gchar       *mypanel,
-			    const char  *pixmap,
-			    const char  *tooltip,
-			    PanelWidget *panel,
-			    int          pos,
-			    gboolean     exactpos,
-			    const char  *gconf_key);
-
-void    drawer_save_to_gconf   (Drawer     *drawer,
-				const char *gconf_key);
+void    panel_drawer_create (PanelToplevel *toplevel,
+			     int            position,
+			     const char    *custom_icon,
+			     gboolean       use_custom_icon,
+			     const char    *tooltip);
 
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
-				const char  *gconf_key);
+				const char  *id);
 
-void set_drawer_applet_orient(Drawer *drawer, PanelOrient orient);
+void set_drawer_applet_orientation (Drawer           *drawer,
+				    PanelOrientation  orientation);
 
+#ifdef FIXME_FOR_NEW_TOPLEVEL
 void add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer);
+#endif
 
 G_END_DECLS
 

@@ -1,53 +1,43 @@
-#ifndef PANEL_CONFIG_GLOBAL_H
-#define PANEL_CONFIG_GLOBAL_H
+/*
+ * panel-config-global.h: panel global configuration module
+ *
+ * Copyright (C) 2001 - 2003 Sun Microsystems, Inc.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ *
+ * Authors:
+ *      Mark McLoughlin <mark@skynet.ie>
+ *	Glynn Foster <glynn.foster@sun.com>
+ */
 
-#include <gconf/gconf-client.h>
+#ifndef __PANEL_CONFIG_GLOBAL_H__
+#define __PANEL_CONFIG_GLOBAL_H__
 
-#include "panel-types.h"
+#include <glib.h>
 
 G_BEGIN_DECLS
 
-/*
- * Corresponding keys in the global config schema:
- *   (+) indicates its in the capplet
- *
- * tooltips_enabled
- * keep_menus_in_memory
- * enable_animations (+)
- *
- * panel_minimized_size
- * panel_show_delay
- * panel_animation_speed (+)
- * panel_hide_delay
- *
- * drawer_autoclose (+)
- * confirm_panel_remove
- * highlight_launchers_on_mouseover
- */
+void panel_global_config_load (void);
 
-typedef struct _GlobalConfig GlobalConfig;
-struct _GlobalConfig {
-	gboolean           tooltips_enabled;
-	gboolean           keep_menus_in_memory;
-	gboolean           enable_animations;
-
-	int                minimized_size;
-	int                show_delay;
-	PanelSpeed         animation_speed;
-	int                hide_delay;
-
-	gboolean           drawer_auto_close;
-	gboolean           confirm_panel_remove;
-	gboolean           highlight_when_over;
-};
-
-void panel_global_config_set_entry (GConfEntry  *entry);
-
-void panel_global_config_notify    (GConfClient *client,
-				    guint        cnxn_id,
-				    GConfEntry  *entry,
-				    gpointer     user_data);
+gboolean panel_global_config_get_highlight_when_over  (void);
+gboolean panel_global_config_get_enable_animations    (void);
+gboolean panel_global_config_get_drawer_auto_close    (void);
+gboolean panel_global_config_get_tooltips_enabled     (void);
+gboolean panel_global_config_get_confirm_panel_remove (void);
 
 G_END_DECLS
 
-#endif /* PANEL_CONFIG_GLOBAL_H */
+#endif /* __PANEL_CONFIG_GLOBAL_H__ */

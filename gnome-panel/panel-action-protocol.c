@@ -31,32 +31,28 @@
 #include <X11/Xlib.h>
 #include <libgnome/gnome-i18n.h>
 
+#include "egg-screen-exec.h"
 #include "gnome-run.h"
 #include "menu.h"
-#include "basep-widget.h"
+#include "panel-globals.h"
+#include "panel-toplevel.h"
 #include "panel-util.h"
-#include "egg-screen-exec.h"
 
 static Atom atom_gnome_panel_action            = None;
 static Atom atom_gnome_panel_action_main_menu  = None;
 static Atom atom_gnome_panel_action_run_dialog = None;
-
-extern GSList *panels;
 
 static void
 panel_action_protocol_main_menu (GdkScreen *screen,
 				 guint32    activate_time)
 {
 	PanelWidget *panel_widget;
-	GtkWidget   *panel;
 	GtkWidget   *menu;
 
 	panel_widget = panels->data;
 	menu = create_panel_root_menu (panel_widget);
-	panel = panel_widget->panel_parent;
 
-	BASEP_WIDGET (panel)->autohide_inhibit = TRUE;
-	basep_widget_autohide (BASEP_WIDGET (panel));
+	panel_toplevel_block_auto_hide (panel_widget->toplevel);
 
 	gtk_menu_set_screen (GTK_MENU (menu), screen);
 	gtk_menu_popup (GTK_MENU (menu), NULL, NULL,

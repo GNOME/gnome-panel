@@ -36,17 +36,13 @@
 
 #include "applet.h"
 #include "nothing.h"
-#include "basep-widget.h"
 #include "panel.h"
+#include "panel-a11y.h"
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
 #include "egg-screen-help.h"
 #include "xstuff.h"
-
-extern GlobalConfig global_config;
-
-extern GSList *applets;
-extern GSList *panels;
+#include "panel-globals.h"
 
 GdkScreen *
 panel_screen_from_number (int screen)
@@ -239,7 +235,7 @@ create_text_entry(GtkWidget *table,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	panel_set_atk_relation (entry, GTK_LABEL (wlabel));
+	panel_a11y_set_atk_relation (entry, GTK_LABEL (wlabel));
 
 	if(func) {
 		g_object_set_data (G_OBJECT (t), "update_function", func);
@@ -278,7 +274,7 @@ create_icon_entry(GtkWidget *table,
 	if (text != NULL)
 		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY(entry), text);
 
-	panel_set_atk_relation (entry, GTK_LABEL (wlabel));
+	panel_a11y_set_atk_relation (entry, GTK_LABEL (wlabel));
 	gtk_table_attach(GTK_TABLE(table), entry,
 			 cols, cole, 1, 2,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
@@ -729,13 +725,15 @@ is_ext2 (const char *file,
 }
 
 int
-panel_find_applet (GtkWidget *widget)
+panel_find_applet_index (GtkWidget *widget)
 {
-	int i;
-	GSList *li;
+	GSList *applet_list, *l;
+	int     i;
 
-	for (i = 0, li = applets; li != NULL; i++, li = li->next) {
-		AppletInfo *info = li->data;
+	applet_list = panel_applet_list_applets ();
+
+	for (i = 0, l = applet_list; l; i++, l = l->next) {
+		AppletInfo *info = l->data;
 
 		if (info->widget == widget)
 			return i;

@@ -492,6 +492,7 @@ egg_tray_manager_manage_xscreen (EggTrayManager *manager, Screen *xscreen)
     }
 }
 
+#if EGG_TRAY_ENABLE_MULTIHEAD
 gboolean
 egg_tray_manager_manage_screen (EggTrayManager *manager,
 				GdkScreen      *screen)
@@ -502,6 +503,7 @@ egg_tray_manager_manage_screen (EggTrayManager *manager,
   return egg_tray_manager_manage_xscreen (manager, 
 					  GDK_SCREEN_XSCREEN (screen));
 }
+#endif
 
 gboolean
 egg_tray_manager_manage (EggTrayManager *manager)
