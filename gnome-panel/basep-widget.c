@@ -79,7 +79,7 @@ enum {
         PROP_LEVEL,
         PROP_AVOID_ON_MAXIMIZE,
         PROP_HIDEBUTTONS_ENABLED,
-        PROP_HIDEBUTTONS_PIXMAPS_ENABLED,
+        PROP_HIDEBUTTON_PIXMAPS_ENABLED,
 };
 
 
@@ -173,7 +173,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                                              G_PARAM_READWRITE));
 
         g_object_class_install_property (object_class,
-        			  	PROP_HIDEBUTTONS_PIXMAPS_ENABLED,
+        			  	PROP_HIDEBUTTON_PIXMAPS_ENABLED,
                                         g_param_spec_boolean ("hidebutton_pixmaps_enabled",
                                                              _("hidebutton_pixmaps_enabled"),
                                                              _("hidebutton_pixmaps_enabled"),
@@ -250,11 +250,12 @@ basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, 
         	case PROP_HIDEBUTTONS_ENABLED:
 			basep->hidebuttons_enabled = g_value_get_boolean (value);
 			break;
-		case PROP_HIDEBUTTONS_PIXMAPS_ENABLED:
+		case PROP_HIDEBUTTON_PIXMAPS_ENABLED:
 			basep->hidebutton_pixmaps_enabled = g_value_get_boolean (value);
-       
-		 default:
+			break;
+		default:
                		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+			break;
 	}
 }
 
