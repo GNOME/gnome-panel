@@ -100,7 +100,7 @@ struct _MailCheck {
 
 	char *animation_file;
         
-	GtkWidget *mailfile_entry, *mailfile_label;
+	GtkWidget *mailfile_entry, *mailfile_label, *mailfile_fentry;
         GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
         GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
 	GtkWidget *remote_option_menu;
@@ -641,7 +641,7 @@ static void make_remote_widgets_sensitive(MailCheck *mc)
  {
   gboolean b = mc->mailbox_type_temp != 0;
   
-  gtk_widget_set_sensitive (mc->mailfile_entry, !b);
+  gtk_widget_set_sensitive (mc->mailfile_fentry, !b);
   gtk_widget_set_sensitive (mc->mailfile_label, !b);
 
   gtk_widget_set_sensitive (mc->remote_server_entry, b);
@@ -715,11 +715,12 @@ mailbox_properties_page(MailCheck *mc)
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 
-	mc->mailfile_entry = l = gtk_entry_new();
-	gtk_entry_set_text(GTK_ENTRY(l), mc->mail_file);
+	mc->mailfile_fentry = l = gnome_file_entry_new ("spool file", _("Browse"));
 	gtk_widget_show(l);
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);
 
+	mc->mailfile_entry = l = gnome_file_entry_gtk_entry(GNOME_FILE_ENTRY (l));
+	gtk_entry_set_text(GTK_ENTRY(l), mc->mail_file);
 	gtk_signal_connect(GTK_OBJECT(l), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 
@@ -735,7 +736,7 @@ mailbox_properties_page(MailCheck *mc)
 	if (mc->remote_server)
 		gtk_entry_set_text(GTK_ENTRY(l), mc->remote_server);
   	gtk_widget_show(l);
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
+	gtk_box_pack_start (GTK_BOX (hbox), l, TRUE, TRUE, 0);      
 	
 	gtk_signal_connect(GTK_OBJECT(l), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
@@ -757,11 +758,11 @@ mailbox_properties_page(MailCheck *mc)
   
 	gtk_signal_connect(GTK_OBJECT(l), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
-  
+	/*
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
-  
+	*/
 	mc->remote_password_label = l = gtk_label_new(_("Password:"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
@@ -784,20 +785,36 @@ mailbox_properties_page(MailCheck *mc)
 static GtkWidget *
 mailcheck_properties_page (MailCheck *mc)
 {
-	GtkWidget *freq, *vbox, *hbox, *l, *l2, *entry, *item;
+	GtkWidget *freq, *vbox, *hbox, *l, *l2, *entry, *item, *table, *frame;
 	GtkObject *freq_a;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 	gtk_widget_show (vbox);
 
-	hbox = gtk_hbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbox);  
+	frame = gtk_frame_new (_("Execute"));
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+	gtk_widget_show (frame);
 
-	l = gtk_label_new(_("Execute"));
+	table = gtk_table_new (3, 2, FALSE);
+	gtk_table_set_col_spacings (GTK_TABLE (table), GNOME_PAD/2);
+	gtk_table_set_row_spacings (GTK_TABLE (table), GNOME_PAD/2);
+	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD/2);
+	gtk_widget_show(table);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+
+	/*
+	  hbox = gtk_hbox_new (FALSE, 6);
+	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	  gtk_widget_show (hbox);  
+	*/
+
+	l = gtk_label_new(_("Before each update:"));
 	gtk_widget_show(l);
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+	/* gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0); */
+	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 0, 1, GTK_FILL, 0, 0, 0);
+				   
 	
 	mc->pre_check_cmd_entry = gtk_entry_new();
 	if(mc->pre_check_cmd)
@@ -806,19 +823,24 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_signal_connect(GTK_OBJECT(mc->pre_check_cmd_entry), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(mc->pre_check_cmd_entry);
-	gtk_box_pack_start (GTK_BOX (hbox), mc->pre_check_cmd_entry, FALSE, FALSE, 0);
-	
-	l = gtk_label_new(_("before each update"));
+	/*gtk_box_pack_start (GTK_BOX (hbox), mc->pre_check_cmd_entry, TRUE, TRUE, 0);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), mc->pre_check_cmd_entry,
+				   1, 2, 0, 1);
+	/*
+	  l = gtk_label_new(_("before each update"));
+	  gtk_widget_show(l);
+	  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	*/
+	/*
+	  hbox = gtk_hbox_new (FALSE, 6);
+	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	  gtk_widget_show(hbox);
+	*/
+	l = gtk_label_new (_("When new mail arrives:"));
 	gtk_widget_show(l);
-	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
-
-	hbox = gtk_hbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show(hbox);
-
-	l = gtk_label_new (_("Execute"));
-	gtk_widget_show(l);
-	gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
+	/*gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
 
 	mc->newmail_cmd_entry = gtk_entry_new();
 	if (mc->newmail_cmd) {
@@ -828,19 +850,24 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_signal_connect(GTK_OBJECT (mc->newmail_cmd_entry), "changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(mc->newmail_cmd_entry);
-	gtk_box_pack_start(GTK_BOX(hbox), mc->newmail_cmd_entry, FALSE, FALSE, 0);
-
-	l = gtk_label_new (_("when new mail arrives."));
-	gtk_widget_show(l);
-	gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
-
- 	hbox = gtk_hbox_new (FALSE, 6);
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-	gtk_widget_show (hbox);
-	
-        l = gtk_label_new (_("Execute"));
+	/*gtk_box_pack_start(GTK_BOX(hbox), mc->newmail_cmd_entry, TRUE, TRUE, 0);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), mc->newmail_cmd_entry,
+				    1, 2, 1, 2);
+	/*
+	  l = gtk_label_new (_("when new mail arrives."));
+	  gtk_widget_show(l);
+	  gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+	*/
+	/*
+	  hbox = gtk_hbox_new (FALSE, 6);
+	  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	  gtk_widget_show (hbox);
+	*/
+        l = gtk_label_new (_("When clicked:"));
+	gtk_misc_set_alignment (GTK_MISC (l), 1.0, 0.5);
         gtk_widget_show(l);
-        gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+        /*gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);*/
+	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
 
         mc->clicked_cmd_entry = gtk_entry_new();
         if(mc->clicked_cmd) {
@@ -850,12 +877,14 @@ mailcheck_properties_page (MailCheck *mc)
         gtk_signal_connect(GTK_OBJECT(mc->clicked_cmd_entry), "changed",
                            GTK_SIGNAL_FUNC(property_box_changed), mc);
         gtk_widget_show(mc->clicked_cmd_entry);
-        gtk_box_pack_start (GTK_BOX (hbox), mc->clicked_cmd_entry, FALSE, FALSE, 0);      
-
-        l = gtk_label_new (_("when clicked."));
-        gtk_widget_show(l);
-        gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
-
+        /*gtk_box_pack_start (GTK_BOX (hbox), mc->clicked_cmd_entry, TRUE, TRUE, 0);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), mc->clicked_cmd_entry,
+				   1, 2, 2, 3);
+        /*
+	  l = gtk_label_new (_("when clicked."));
+	  gtk_widget_show(l);
+	  gtk_box_pack_start(GTK_BOX(hbox), l, FALSE, FALSE, 0);
+	*/
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_widget_show (hbox); 
@@ -873,7 +902,7 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), mc->min_spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->min_spin);
 	
-	l = gtk_label_new (_("m"));
+	l = gtk_label_new (_("minutes"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
@@ -886,7 +915,7 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_box_pack_start (GTK_BOX (hbox), mc->sec_spin,  FALSE, FALSE, 0);
 	gtk_widget_show(mc->sec_spin);
 	
-	l = gtk_label_new (_("s"));
+	l = gtk_label_new (_("seconds"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
