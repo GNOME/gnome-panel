@@ -63,6 +63,12 @@ extern char *kde_mini_icondir;
 
 extern GtkTooltips *panel_tooltips;
 
+enum {
+	HELP_BUTTON = 0,
+	REVERT_BUTTON,
+	CLOSE_BUTTON
+};
+
 typedef struct _TearoffMenu TearoffMenu;
 struct _TearoffMenu {
 	GtkWidget *menu;
@@ -1124,8 +1130,16 @@ restore_grabs(GtkWidget *w, gpointer data)
 static void
 ditem_properties_clicked (GtkWidget *w, int button, gpointer data)
 {
-	if (button == 1) { /* help */
+	GnomeDEntryEdit *dee = gtk_object_get_user_data (GTK_OBJECT (w));
+	GnomeDesktopEntry *dentry = data;
+
+	if (button == HELP_BUTTON) {
 		panel_show_help ("launchers.html");
+	} else if (button == REVERT_BUTTON) {
+		if (dentry != NULL)
+			gnome_dentry_edit_set_dentry (dee, dentry);
+		else
+			gnome_dentry_edit_clear (dee);
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
@@ -1219,7 +1233,9 @@ is_item_writable (const ShowItemMenu *sim)
 }
 
 static void
-set_ditem_sensitive (GnomeDEntryEdit *dedit, ShowItemMenu *sim)
+set_ditem_sensitive (GnomeDialog *dialog,
+		     GnomeDEntryEdit *dedit,
+		     ShowItemMenu *sim)
 {
 	gboolean sensitive;
 
@@ -1229,6 +1245,8 @@ set_ditem_sensitive (GnomeDEntryEdit *dedit, ShowItemMenu *sim)
 				  sensitive);
 	gtk_widget_set_sensitive (gnome_dentry_edit_child2 (dedit),
 				  sensitive);
+
+	gnome_dialog_set_sensitive (dialog, REVERT_BUTTON, sensitive);
 }
 
 static void
@@ -1250,9 +1268,11 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 		return;
 	}
 
+	/* watch the enum at the top of the file */
 	dialog = gnome_dialog_new (_("Desktop entry properties"),
-				   GNOME_STOCK_BUTTON_CLOSE,
 				   GNOME_STOCK_BUTTON_HELP,
+				   _("Revert"),
+				   GNOME_STOCK_BUTTON_CLOSE,
 				   NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog),
 				FALSE /* click_closes */);
@@ -1297,12 +1317,11 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 				  g_strdup (sim->item_loc),
 				  (GtkDestroyNotify)g_free);
 
-	if (dentry != NULL) {
+	if (dentry != NULL)
 		gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (dedit), dentry);
-		gnome_desktop_entry_free (dentry);
-	}
 
-	set_ditem_sensitive (GNOME_DENTRY_EDIT (dedit), sim);
+	set_ditem_sensitive (GNOME_DIALOG (dialog),
+			     GNOME_DENTRY_EDIT (dedit), sim);
 
 	gtk_signal_connect (GTK_OBJECT (dedit), "changed",
 			    GTK_SIGNAL_FUNC (ditem_properties_changed),
@@ -1320,9 +1339,21 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 			    GTK_SIGNAL_FUNC (gtk_object_unref),
 			    NULL);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
-			    GTK_SIGNAL_FUNC (ditem_properties_clicked),
-			    NULL);
+	gtk_object_set_user_data (GTK_OBJECT (dialog), dedit);
+
+	if (dentry != NULL) {
+		/* pass the dentry as the data to clicked */
+		gtk_signal_connect_full (GTK_OBJECT (dialog), "clicked",
+					 GTK_SIGNAL_FUNC (ditem_properties_clicked),
+					 NULL,
+					 dentry,
+					 (GtkDestroyNotify) gnome_desktop_entry_free,
+					 FALSE, FALSE);
+	} else {
+		gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+				    GTK_SIGNAL_FUNC (ditem_properties_clicked),
+				    NULL);
+	}
 
 	gtk_widget_show (dialog);
 
@@ -1347,9 +1378,11 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 		return;
 	}
 
+	/* watch the enum at the top of the file */
 	dialog = gnome_dialog_new (_("Desktop entry properties"),
-				   GNOME_STOCK_BUTTON_CLOSE,
 				   GNOME_STOCK_BUTTON_HELP,
+				   _("Revert"),
+				   GNOME_STOCK_BUTTON_CLOSE,
 				   NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog),
 				FALSE /* click_closes */);
@@ -1376,7 +1409,6 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 		gtk_object_set_data_full (dedit, "location",
 					  g_strdup (dentry->location),
 					  (GtkDestroyNotify)g_free);
-		gnome_desktop_entry_free(dentry);
 		g_free (dirfile);
 		dirfile = NULL;
 	} else {
@@ -1392,7 +1424,6 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 					  (GtkDestroyNotify)g_free);
 		dirfile = NULL;
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(dedit), dentry);
-		gnome_desktop_entry_free(dentry);
 	}
 
 	/* This sucks, but there is no other way to do this with the current
@@ -1418,7 +1449,8 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->type_combo, FALSE);
 	gtk_widget_set_sensitive (GNOME_DENTRY_EDIT(dedit)->terminal_button, FALSE);
 
-	set_ditem_sensitive (GNOME_DENTRY_EDIT (dedit), sim);
+	set_ditem_sensitive (GNOME_DIALOG (dialog),
+			     GNOME_DENTRY_EDIT (dedit), sim);
 
 	gtk_signal_connect (GTK_OBJECT (dedit), "changed",
 			    GTK_SIGNAL_FUNC (ditem_properties_changed),
@@ -1436,9 +1468,21 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 			    GTK_SIGNAL_FUNC (gtk_object_unref),
 			    NULL);
 
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
-			    GTK_SIGNAL_FUNC (ditem_properties_clicked),
-			    NULL);
+	gtk_object_set_user_data (GTK_OBJECT (dialog), dedit);
+
+	if (dentry != NULL) {
+		/* pass the dentry as the data to clicked */
+		gtk_signal_connect_full (GTK_OBJECT (dialog), "clicked",
+					 GTK_SIGNAL_FUNC (ditem_properties_clicked),
+					 NULL,
+					 dentry,
+					 (GtkDestroyNotify) gnome_desktop_entry_free,
+					 FALSE, FALSE);
+	} else {
+		gtk_signal_connect (GTK_OBJECT (dialog), "clicked",
+				    GTK_SIGNAL_FUNC (ditem_properties_clicked),
+				    NULL);
+	}
 
 	gtk_widget_show(dialog);
 

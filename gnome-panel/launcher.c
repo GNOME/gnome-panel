@@ -28,11 +28,18 @@ extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
 
-static char *default_app_pixmap=NULL;
+static char *default_app_pixmap = NULL;
 
 extern GlobalConfig global_config;
 
 extern GSList *panels;
+
+enum {
+	HELP_BUTTON = 0,
+	REVERT_BUTTON,
+	CLOSE_BUTTON
+};
+
 
 static void
 launch (Launcher *launcher, int argc, char *argv[])
@@ -154,6 +161,10 @@ free_launcher(gpointer data)
 	gnome_desktop_entry_free(launcher->dentry);
 	launcher->dentry = NULL;
 
+	if (launcher->revert_dentry != NULL)
+		gnome_desktop_entry_free(launcher->revert_dentry);
+	launcher->revert_dentry = NULL;
+
 	g_free(launcher);
 }
 
@@ -272,15 +283,15 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 		{ "text/uri-list", 0, 0 }
 	};
 
-	if (!default_app_pixmap)
+	if (default_app_pixmap == NULL)
 		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
 
-	if(!dentry) {
-		if (!parameters)
+	if(dentry == NULL) {
+		if (parameters == NULL) {
 			return NULL;
-		else if (*parameters == '/')
+		} else if (*parameters == '/') {
 			dentry = gnome_desktop_entry_load_unconditional(parameters);
-		else {
+		} else {
 			char *apps_par, *entry, *extension;
 
 			if (strstr (parameters, ".desktop"))
@@ -293,13 +304,13 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 			entry = gnome_datadir_file (apps_par);
 			g_free (apps_par);
 
-			if (!entry)
+			if (entry == NULL)
 				return NULL;
 			dentry = gnome_desktop_entry_load_unconditional (entry);
 			g_free (entry);
 		}
 	}
-	if (!dentry)
+	if (dentry == NULL)
 		return NULL; /*button is null*/
 
 	launcher = g_new0 (Launcher, 1);
@@ -439,14 +450,23 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	launcher->prop_dialog = NULL;
 	launcher->dedit = NULL;
 
+	if (launcher->revert_dentry != NULL)
+		gnome_desktop_entry_free (launcher->revert_dentry);
+	launcher->revert_dentry = NULL;
+
 	panel_config_sync_schedule ();
 }
 
 static void
 window_clicked (GtkWidget *w, int button, gpointer data)
 {
-	if (button == 1) { /* help */
+	Launcher *launcher = data;
+
+	if (button == HELP_BUTTON) {
 		panel_show_help ("launcher.html");
+	} else if (button == REVERT_BUTTON) { /* revert */
+		gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (launcher->dedit),
+					      launcher->revert_dentry);
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
@@ -461,15 +481,17 @@ launcher_changed (GtkObject *dedit, gpointer data)
 }
 
 static GtkWidget *
-create_properties_dialog(Launcher *launcher)
+create_properties_dialog (Launcher *launcher)
 {
 	GtkWidget *dialog;
 	GtkWidget *notebook;
 	GList *types;
 
+	/* watch the enum at the top of the file */
 	dialog = gnome_dialog_new (_("Launcher properties"),
-				   GNOME_STOCK_BUTTON_CLOSE,
 				   GNOME_STOCK_BUTTON_HELP,
+				   _("Revert"),
+				   GNOME_STOCK_BUTTON_CLOSE,
 				   NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (dialog),
 				FALSE /* click_closes */);
@@ -492,6 +514,10 @@ create_properties_dialog(Launcher *launcher)
 	gtk_combo_set_popdown_strings (GTK_COMBO (GNOME_DENTRY_EDIT (launcher->dedit)->type_combo), types);
 	g_list_free (types);
 	types = NULL;
+
+	if (launcher->revert_dentry != NULL)
+		gnome_desktop_entry_free (launcher->revert_dentry);
+	launcher->revert_dentry = gnome_desktop_entry_copy (launcher->dentry);
 
 	gnome_dentry_edit_set_dentry (GNOME_DENTRY_EDIT (launcher->dedit),
 				      launcher->dentry);

@@ -19,6 +19,7 @@ typedef struct {
 	GtkWidget         *button;
 	GtkObject	  *dedit;
 	GnomeDesktopEntry *dentry;
+	GnomeDesktopEntry *revert_dentry;
 
 	GtkWidget         *prop_dialog;
 } Launcher;
