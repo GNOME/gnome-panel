@@ -37,21 +37,36 @@
 #include "applet.h"
 #include "panel-marshal.h"
 
+#define HANDLE_SIZE 10
+
 #undef PANEL_APPLET_FRAME_DEBUG
 
 struct _PanelAppletFramePrivate {
-	GNOME_Vertigo_PanelAppletShell  applet_shell; /* unused */
+	GNOME_Vertigo_PanelAppletShell  applet_shell;
 	Bonobo_PropertyBag              property_bag;
 	BonoboUIComponent              *ui_component;
 
 	AppletInfo                     *applet_info;
+	PanelOrient                     orient;
 
 	gchar                          *iid;
-
+	gboolean			moving_focus_out;
 	gboolean			clean_remove;
+
+	GtkAllocation                   child_allocation;
+	GdkRectangle                    handle_rect;
 };
 
 static GObjectClass *parent_class;
+
+/* Keep in sync with panel-applet.h. Uggh.
+ */	
+typedef enum {
+	APPLET_FLAGS_NONE   = 0,
+	APPLET_EXPAND_MAJOR = 1 << 0,
+	APPLET_EXPAND_MINOR = 1 << 1,
+	APPLET_HAS_HANDLE   = 1 << 2,
+} PanelAppletFlags;
 
 void
 panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
@@ -167,23 +182,25 @@ panel_applet_frame_load (const gchar *iid,
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
 }
 
+static int
+panel_applet_frame_get_flags (PanelAppletFrame *frame)
+{
+	return bonobo_pbclient_get_short (
+			frame->priv->property_bag, "panel-applet-flags", NULL);
+}
+
 void
 panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
 				     gboolean         *expand_major,
 				     gboolean         *expand_minor)
 {
-	gint16 retval;
+	int flags;
 
-	retval = bonobo_pbclient_get_short (
-			frame->priv->property_bag, "panel-applet-flags", NULL);
+	flags = panel_applet_frame_get_flags (frame);
 
-	/*
-	 * Keep in sync with panel-applet.h. Uggh.
-	 */	
-	*expand_major = retval & (1 << 0);
-	*expand_minor = retval & (1 << 1);
+	*expand_major = flags & APPLET_EXPAND_MAJOR;
+	*expand_minor = flags & APPLET_EXPAND_MINOR;
 }
-
 
 int *
 panel_applet_frame_get_size_hints (PanelAppletFrame *frame,
@@ -220,10 +237,16 @@ void
 panel_applet_frame_change_orient (PanelAppletFrame *frame,
 				  PanelOrient       orient)
 {
+	if (orient == frame->priv->orient)
+		return;
+
+	frame->priv->orient = orient;
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
 				   "panel-applet-orient",
 				   orient,
 				   NULL);
+
+	gtk_widget_queue_resize (GTK_WIDGET (frame));
 }
 
 void
@@ -322,6 +345,10 @@ panel_applet_frame_finalize (GObject *object)
 		bonobo_object_release_unref (
 			frame->priv->property_bag, NULL);
 
+	if (frame->priv->applet_shell)
+		bonobo_object_release_unref (
+			frame->priv->applet_shell, NULL);
+
 	if (frame->priv->ui_component)
 		bonobo_object_unref (
 			BONOBO_OBJECT (frame->priv->ui_component));
@@ -336,15 +363,270 @@ panel_applet_frame_finalize (GObject *object)
 }
 
 static void
+panel_applet_frame_paint (GtkWidget    *widget,
+			  GdkRectangle *area)
+{
+	PanelAppletFrame *frame;
+
+	frame = PANEL_APPLET_FRAME (widget);
+
+	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE))
+		return;
+  
+	if (GTK_WIDGET_DRAWABLE (widget)) {
+		GtkOrientation orient = 0;
+
+		switch (frame->priv->orient) {
+		case PANEL_ORIENT_UP:
+		case PANEL_ORIENT_DOWN:
+			orient = GTK_ORIENTATION_HORIZONTAL;
+			break;
+		case PANEL_ORIENT_LEFT:
+		case PANEL_ORIENT_RIGHT:
+			orient = GTK_ORIENTATION_VERTICAL;
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
+
+		gtk_paint_handle (
+			widget->style, widget->window,
+			GTK_WIDGET_STATE (widget),
+			GTK_SHADOW_OUT,
+			area, widget, "handlebox",
+			frame->priv->handle_rect.x,
+                        frame->priv->handle_rect.y,
+                        frame->priv->handle_rect.width,
+                        frame->priv->handle_rect.height,
+                        orient);
+	}
+}
+
+static gboolean
+panel_applet_frame_expose (GtkWidget      *widget,
+			   GdkEventExpose *event)
+{
+	if (GTK_WIDGET_DRAWABLE (widget)) {
+		GTK_WIDGET_CLASS (parent_class)->expose_event (widget, event);
+
+		panel_applet_frame_paint (widget, &event->area);
+
+	}
+
+	return FALSE;
+}
+
+static void
+panel_applet_frame_size_request (GtkWidget      *widget,
+				 GtkRequisition *requisition)
+{
+	PanelAppletFrame *frame;
+	GtkBin           *bin;
+	GtkRequisition    child_requisition;  
+
+	frame = PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
+	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)) {
+		GTK_WIDGET_CLASS (parent_class)->size_request (widget, requisition);
+		return;
+	}
+  
+	requisition->width = 0;
+	requisition->height = 0;
+  
+	if (bin->child && GTK_WIDGET_VISIBLE (bin->child)) {
+		gtk_widget_size_request (bin->child, &child_requisition);
+
+		requisition->width  = child_requisition.width;
+		requisition->height = child_requisition.height;
+	}
+
+	requisition->width += GTK_CONTAINER (widget)->border_width;
+	requisition->height += GTK_CONTAINER (widget)->border_width;
+
+	switch (frame->priv->orient) {
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
+		requisition->width += HANDLE_SIZE;
+		break;
+	case PANEL_ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
+		requisition->height += HANDLE_SIZE;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+panel_applet_frame_size_allocate (GtkWidget     *widget,
+				  GtkAllocation *allocation)
+{
+	PanelAppletFrame *frame;
+	GtkBin           *bin;
+	GtkAllocation     new_allocation;
+
+	frame = PANEL_APPLET_FRAME (widget);
+	bin = GTK_BIN (widget);
+
+	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)) {
+		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+		return;
+	}
+
+	widget->allocation = *allocation;
+
+	frame->priv->handle_rect.x = 0;
+	frame->priv->handle_rect.y = 0;
+
+	switch (frame->priv->orient) {
+	case PANEL_ORIENT_UP:
+	case PANEL_ORIENT_DOWN:
+		frame->priv->handle_rect.width  = HANDLE_SIZE;
+		frame->priv->handle_rect.height = allocation->height;
+
+		new_allocation.x      = HANDLE_SIZE;
+		new_allocation.y      = 0;
+		new_allocation.width  = allocation->width - HANDLE_SIZE;
+		new_allocation.height = allocation->height;
+		break;
+	case PANEL_ORIENT_LEFT:
+	case PANEL_ORIENT_RIGHT:
+		frame->priv->handle_rect.width  = allocation->width;
+		frame->priv->handle_rect.height = HANDLE_SIZE;
+
+		new_allocation.x      = 0;
+		new_allocation.y      = HANDLE_SIZE;
+		new_allocation.width  = allocation->width;
+		new_allocation.height = allocation->height - HANDLE_SIZE;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	new_allocation.width  = MAX (1, new_allocation.width);
+	new_allocation.height = MAX (1, new_allocation.height);
+
+	/* If the child allocation changed, that means that the frame is drawn
+	 * in a new place, so we must redraw the entire widget.
+	 */
+	if (GTK_WIDGET_MAPPED (widget) &&
+	    (new_allocation.x != frame->priv->child_allocation.x ||
+	     new_allocation.y != frame->priv->child_allocation.y ||
+	     new_allocation.width != frame->priv->child_allocation.width ||
+	     new_allocation.height != frame->priv->child_allocation.height))
+	 	gdk_window_invalidate_rect (widget->window, &widget->allocation, FALSE);
+
+	if (GTK_WIDGET_REALIZED (widget)) {
+		gdk_window_move_resize (widget->window,
+			allocation->x + GTK_CONTAINER (widget)->border_width,
+			allocation->y + GTK_CONTAINER (widget)->border_width,
+			MAX (allocation->width - GTK_CONTAINER (widget)->border_width * 2, 0),
+			MAX (allocation->height - GTK_CONTAINER (widget)->border_width * 2, 0));
+	}
+
+	if (bin->child && GTK_WIDGET_VISIBLE (bin->child))
+		gtk_widget_size_allocate (bin->child, &new_allocation);
+  
+	frame->priv->child_allocation = new_allocation;
+}
+
+static inline gboolean
+button_event_in_rect (GdkEventButton *event,
+		      GdkRectangle   *rect)
+{
+	if (event->x >= rect->x &&
+	    event->x <= (rect->x + rect->width) &&
+	    event->y >= rect->y &&
+	    event->y <= (rect->y + rect->height))
+		return TRUE;
+
+	return FALSE;
+}
+
+static gboolean
+panel_applet_frame_button_changed (GtkWidget      *widget,
+				   GdkEventButton *event)
+{
+	PanelAppletFrame *frame;
+	gboolean          handled = FALSE;
+
+	frame = PANEL_APPLET_FRAME (widget);
+
+	if (!(panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE))
+		return handled;
+
+	if (event->window != widget->window)
+		return FALSE;
+
+	switch (event->button) {
+	case 1:
+	case 2:
+		if (button_event_in_rect (event, &frame->priv->handle_rect)) {
+			PanelWidget *panel;
+
+			panel = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+
+			if (event->type == GDK_BUTTON_PRESS ||
+			    event->type == GDK_2BUTTON_PRESS) {
+				panel_widget_applet_drag_start (
+					panel, GTK_WIDGET (frame), PW_DRAG_OFF_CURSOR);
+				handled = TRUE;
+			} else if (event->type == GDK_BUTTON_RELEASE) {
+				panel_widget_applet_drag_end (panel);
+				handled = TRUE;
+			}
+		}
+		break;
+	case 3: 
+		if (event->type == GDK_BUTTON_PRESS ||
+		    event->type == GDK_2BUTTON_PRESS) {
+			CORBA_Environment env;
+
+			CORBA_exception_init (&env);
+
+			gdk_pointer_ungrab (GDK_CURRENT_TIME);
+
+			GNOME_Vertigo_PanelAppletShell_popup_menu (
+					frame->priv->applet_shell, &env);
+			if (BONOBO_EX (&env))
+				g_warning (_("Exception from popup_menu '%s'\n"), env._id);
+
+			CORBA_exception_free (&env);
+
+			handled = TRUE;
+
+		} else if (event->type == GDK_BUTTON_RELEASE)
+			handled = TRUE;
+		break;
+	default:
+		break;
+	}
+
+	return handled;
+}
+
+static void
 panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			       gpointer               dummy)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkObjectClass *object_class = (GtkObjectClass *) klass;
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->finalize = panel_applet_frame_finalize;
+
+	widget_class->expose_event         = panel_applet_frame_expose;
+	widget_class->size_request         = panel_applet_frame_size_request;
+	widget_class->size_allocate        = panel_applet_frame_size_allocate;
+	widget_class->button_press_event   = panel_applet_frame_button_changed;
+	widget_class->button_release_event = panel_applet_frame_button_changed;
 }
 
 static void
@@ -353,11 +635,13 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 {
 	frame->priv = g_new0 (PanelAppletFramePrivate, 1);
 
-	frame->priv->applet_shell = CORBA_OBJECT_NIL;
-	frame->priv->property_bag = CORBA_OBJECT_NIL;
-	frame->priv->ui_component = NULL;
-	frame->priv->applet_info  = NULL;
-	frame->priv->clean_remove = FALSE;
+	frame->priv->applet_shell     = CORBA_OBJECT_NIL;
+	frame->priv->property_bag     = CORBA_OBJECT_NIL;
+	frame->priv->ui_component     = NULL;
+	frame->priv->orient           = PANEL_ORIENT_UP;
+	frame->priv->applet_info      = NULL;
+	frame->priv->moving_focus_out = FALSE;
+	frame->priv->clean_remove     = FALSE;
 }
 
 GType
@@ -387,8 +671,7 @@ panel_applet_frame_get_type (void)
 	return type;
 }
 
-#if 0
-static void
+static GNOME_Vertigo_PanelAppletShell
 panel_applet_frame_get_applet_shell (Bonobo_Control control)
 {
 	CORBA_Environment              env;
@@ -409,7 +692,6 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 
 	return retval;
 }
-#endif
 
 static G_CONST_RETURN char *
 panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
@@ -565,6 +847,8 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	bonobo_ui_component_add_verb_list_with_data (
 		frame->priv->ui_component, popup_verbs, frame);
+
+	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 

@@ -66,13 +66,13 @@ module GNOME {
 		StatusSpot add_status (out unsigned long winid);
 	};
 
+	interface PanelAppletShell : Bonobo::Unknown {
+		oneway void popup_menu ();
+	};
+
 	interface StatusSpot {
                 oneway void remove ();
         };
-
-	interface PanelAppletShell : Bonobo::Unknown {
-	};
-
  };
 };
 

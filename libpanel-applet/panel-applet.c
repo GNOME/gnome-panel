@@ -451,14 +451,12 @@ panel_applet_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
-static gboolean
-panel_applet_popup_menu (GtkWidget *widget)
+gboolean
+_panel_applet_popup_menu (PanelApplet *applet)
 {
-	PanelApplet *applet = PANEL_APPLET (widget);
-
 	bonobo_control_do_popup_full (applet->priv->control, NULL, NULL,
-				      panel_applet_menu_position, widget,
-				      3,
+				      panel_applet_menu_position,
+				      GTK_WIDGET (applet), 3,
 				      GDK_CURRENT_TIME);
 	return TRUE;
 	
@@ -712,8 +710,6 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 		       gpointer           user_data)
 {
 	PanelApplet *applet = PANEL_APPLET (user_data);
-	CORBA_sequence_CORBA_long *seq;
-	int i;
 
 	switch (arg_id) {
 	case PROPERTY_ORIENT_IDX:
@@ -728,15 +724,19 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 	case PROPERTY_FLAGS_IDX:
 		BONOBO_ARG_SET_SHORT (arg, applet->priv->flags);
 		break;
-	case PROPERTY_SIZE_HINTS_IDX:
+	case PROPERTY_SIZE_HINTS_IDX: {
+		CORBA_sequence_CORBA_long *seq;
+		int                        i;
+
 		seq = arg->_value;
 
-		seq->_buffer = CORBA_sequence_CORBA_long_allocbuf (applet->priv->size_hints_len);
-		seq->_maximum = applet->priv->size_hints_len;
-		seq->_length = applet->priv->size_hints_len;
+		seq->_length  = seq->_maximum = applet->priv->size_hints_len;
+		seq->_buffer  = CORBA_sequence_CORBA_long_allocbuf (seq->_length);
+		seq->_release = CORBA_TRUE;
 		
 		for (i = 0; i < applet->priv->size_hints_len; i++)
 			seq->_buffer [i] = applet->priv->size_hints[i];
+		}
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1179,7 +1179,7 @@ panel_applet_setup (PanelApplet *applet)
 				     BONOBO_OBJECT (priv->item_handler));
 
 	g_signal_connect (applet, "popup_menu",
-			  G_CALLBACK (panel_applet_popup_menu), NULL);
+			  G_CALLBACK (_panel_applet_popup_menu), NULL);
 }
 
 /**

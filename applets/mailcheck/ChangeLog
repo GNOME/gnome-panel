@@ -1,3 +1,11 @@
+2002-04-17  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am, handlebin.[ch]: kill FooHandle.
+
+	* tasklist.c: (applet_change_orient), (applet_size_request),
+	(fill_tasklist_applet): kill handle and set HAS_HANDLE
+	flag on the applet.
+
 2002-04-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* clock.c: (display_properties_dialog): use CET instead

@@ -175,6 +175,8 @@ test_applet_fill (TestApplet *applet)
 
 	test_applet_setup_tooltips (GTK_WIDGET (applet));
 
+	panel_applet_set_flags (PANEL_APPLET (applet), PANEL_APPLET_HAS_HANDLE);
+
 	g_signal_connect (G_OBJECT (applet),
 			  "change_orient",
 			  G_CALLBACK (test_applet_handle_orient_change),

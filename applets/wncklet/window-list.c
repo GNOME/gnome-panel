@@ -27,11 +27,9 @@
 #include <gconf/gconf-client.h>
 
 #include "tasklist.h"
-#include "handlebin.h"
 
 typedef struct {
 	GtkWidget *applet;
-        GtkWidget *frame;
 	GtkWidget *tasklist;
 	
 	WnckScreen *screen;
@@ -112,9 +110,6 @@ applet_change_orient (PanelApplet       *applet,
 	tasklist->orientation = new_orient;
 
 	tasklist_update (tasklist);
-
-        foo_handle_set_orientation (FOO_HANDLE (tasklist->frame),
-                                    new_orient);
 }
 
 static void
@@ -356,7 +351,7 @@ setup_gconf (TasklistData *tasklist)
 }
 
 static void
-frame_size_request  (GtkWidget      *widget,
+applet_size_request (GtkWidget      *widget,
 		     GtkRequisition *requisition,
 		     TasklistData   *tasklist)
 {
@@ -364,7 +359,7 @@ frame_size_request  (GtkWidget      *widget,
 	const int *size_hints;
 	GtkRequisition child_req;
 	
-	gtk_widget_get_child_requisition (tasklist->frame,
+	gtk_widget_get_child_requisition (tasklist->applet,
 					  &child_req);
 	
 	size_hints = wnck_tasklist_get_size_hint_list (WNCK_TASKLIST (tasklist->tasklist),
@@ -386,10 +381,6 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	tasklist->applet = GTK_WIDGET (applet);
 
-        tasklist->frame = foo_handle_new ();
-        foo_handle_set_shadow_type (FOO_HANDLE (tasklist->frame),
-                                    GTK_SHADOW_NONE);
-        
 	setup_gconf (tasklist);
 	
 	error = NULL;
@@ -431,8 +422,6 @@ fill_tasklist_applet(PanelApplet *applet)
 		break;
 	}
 
-	foo_handle_set_orientation (tasklist->frame, tasklist->orientation);
-
 	/* FIXME: Needs to get the screen number from DISPLAY or the panel. */
 	tasklist->screen = wnck_screen_get (0);
 
@@ -445,21 +434,21 @@ fill_tasklist_applet(PanelApplet *applet)
 			  G_CALLBACK (destroy_tasklist),
 			  tasklist);
 
-	g_signal_connect (G_OBJECT (tasklist->frame), "size_request",
-			  G_CALLBACK (frame_size_request),
+	g_signal_connect (G_OBJECT (tasklist->applet), "size_request",
+			  G_CALLBACK (applet_size_request),
 			  tasklist);
 
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);
 
-	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->frame);
-        gtk_container_add (GTK_CONTAINER (tasklist->frame), tasklist->tasklist);
+	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
 	
 	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
-				PANEL_APPLET_EXPAND_MAJOR | PANEL_APPLET_EXPAND_MINOR);
+				PANEL_APPLET_EXPAND_MAJOR |
+				PANEL_APPLET_EXPAND_MINOR |
+				PANEL_APPLET_HAS_HANDLE);
 
 	gtk_widget_show (tasklist->applet);
-        gtk_widget_show (tasklist->frame);
 
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",

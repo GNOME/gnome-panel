@@ -632,8 +632,10 @@ applet_do_popup_menu (GtkWidget      *widget,
 	if (panel_applet_in_drag)
 		return FALSE;
 
-	if (info->type != APPLET_BONOBO)
-		applet_show_menu (info, event);
+	if (info->type == APPLET_BONOBO)
+		return FALSE;
+
+	applet_show_menu (info, event);
 
 	return TRUE;
 }
@@ -655,14 +657,10 @@ applet_button_press (GtkWidget      *widget,
 		     GdkEventButton *event,
 		     AppletInfo     *info)
 {
-	if (event->button == 3) {
+	if (event->button == 3)
 		return applet_do_popup_menu (widget, event, info);
-	}
 
-	if (BUTTON_IS_WIDGET (widget))
-		return FALSE;
-	else
-		return TRUE;
+	return FALSE;
 }
 
 static void

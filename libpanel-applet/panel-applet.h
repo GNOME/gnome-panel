@@ -62,6 +62,7 @@ typedef enum {
 	PANEL_APPLET_FLAGS_NONE   = 0,
 	PANEL_APPLET_EXPAND_MAJOR = 1 << 0,
 	PANEL_APPLET_EXPAND_MINOR = 1 << 1,
+	PANEL_APPLET_HAS_HANDLE   = 1 << 2,
 } PanelAppletFlags;
 
 typedef struct _PanelApplet        PanelApplet;

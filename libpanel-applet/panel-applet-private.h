@@ -29,6 +29,8 @@
 
 G_BEGIN_DECLS
 
+gboolean _panel_applet_popup_menu (PanelApplet *applet);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_PRIVATE_H__ */

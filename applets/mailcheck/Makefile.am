@@ -26,8 +26,6 @@ libgen_util_applet_2_la_SOURCES = \
 	main.c \
 	clock.c \
 	clock.h	\
-	handlebin.c	\
-	handlebin.h	\
 	pager.c	\
 	pager.h	\
 	tasklist.c \

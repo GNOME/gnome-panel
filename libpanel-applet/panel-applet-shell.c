@@ -35,6 +35,19 @@ struct _PanelAppletShellPrivate {
 static GObjectClass *parent_class = NULL;
 
 static void
+impl_PanelAppletShell_popup_menu (PortableServer_Servant  servant,
+				  CORBA_Environment      *ev)
+{
+	PanelAppletShell *applet_shell;
+
+	applet_shell = PANEL_APPLET_SHELL (bonobo_object (servant));
+
+	fprintf (stderr, "popping up menu\n");
+
+	_panel_applet_popup_menu (applet_shell->priv->applet);
+}
+
+static void
 panel_applet_shell_finalize (GObject *object)
 {
 	PanelAppletShell *shell = PANEL_APPLET_SHELL (object);
@@ -51,6 +64,8 @@ static void
 panel_applet_shell_class_init (PanelAppletShellClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+	klass->epv.popup_menu = impl_PanelAppletShell_popup_menu;
 
 	object_class->finalize = panel_applet_shell_finalize;
 

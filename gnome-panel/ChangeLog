@@ -1,3 +1,25 @@
+2002-04-17  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: (applet_do_popup_menu): return FALSE if its
+	a bonobo applet.
+	(applet_button_press): always return FALSE if its not
+	handled.
+
+	* panel-applet-frame.c: (panel_applet_frame_get_flags): impl helper
+	method.
+	(panel_applet_frame_get_expand_flags): use it here.
+	(panel_applet_frame_change_orient): don't set orient and resize
+	unless the orient has actually changed.
+	(panel_applet_frame_finalize): release the AppletShell.
+	(panel_applet_frame_class_init): hook up new methods.
+	(panel_applet_frame_instance_init): initialise new members.
+	(panel_applet_frame_get_applet_shell): switch this back on.
+	(panel_applet_frame_construct): use it here.
+	(panel_applet_frame_paint), (panel_applet_frame_expose),
+	(panel_applet_frame_size_request), (panel_applet_frame_size_allocate),
+	(button_event_in_rect), (panel_applet_frame_button_changed): implement
+	a handle on the AppletFrame. Adapted from Havoc's FooHandle.
+
 2002-04-17  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* basep-widget.c foobar-widget.c: Add key-press handler; 
