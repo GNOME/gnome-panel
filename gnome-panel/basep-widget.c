@@ -34,6 +34,7 @@ extern int pw_drawer_step;
 extern int pw_auto_step;
 extern int pw_minimized_size;
 extern int pw_minimize_delay;
+extern int pw_maximize_delay;
 extern gboolean pw_disable_animations;
 extern PanelMovementType pw_movement_type;
 
@@ -482,7 +483,7 @@ basep_enter_notify (GtkWidget *widget,
 			basep->leave_notify_timer_tag = 0;
 		}
 
-		basep_widget_autoshow (basep);
+		basep_widget_queue_autoshow (basep);
 	}  
 
 	if (global_config.autoraise)
@@ -495,8 +496,8 @@ basep_enter_notify (GtkWidget *widget,
 }
 
 void
-basep_widget_get_position(BasePWidget *basep, PanelOrientType hide_orient,
-			  int *x, int *y, int w, int h)
+basep_widget_get_position (BasePWidget *basep, PanelOrientType hide_orient,
+			   int *x, int *y, int w, int h)
 {
 	*x = *y = 0;
 	switch(hide_orient) {
@@ -1614,23 +1615,24 @@ basep_widget_explicit_show (BasePWidget *basep)
 	panels_to_sync = TRUE;
 }
 
-void
-basep_widget_autoshow (BasePWidget *basep)
+gboolean
+basep_widget_autoshow (gpointer data)
 {
+	BasePWidget *basep = data;
 	static const char *supinfo[] = {"panel", "expand", NULL};
 
-	g_return_if_fail (IS_BASEP_WIDGET(basep));
+	g_return_val_if_fail (IS_BASEP_WIDGET(basep), FALSE);
 
 	if (basep->state == BASEP_MOVING) {
 #ifdef PANEL_DEBUG
 		g_warning ("autoshow whilst moving");
 #endif
-		return;
+		return TRUE;
 	}
 	
 	if ( (basep->mode != BASEP_AUTO_HIDE) ||
 	     (basep->state != BASEP_AUTO_HIDDEN))
-		return;
+		return TRUE;
 
 	if (GTK_WIDGET_REALIZED(basep)) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1663,9 +1665,49 @@ basep_widget_autoshow (BasePWidget *basep)
 	gtk_signal_emit (GTK_OBJECT(basep),
 			 basep_widget_signals[STATE_CHANGE_SIGNAL],
 			 BASEP_SHOWN);
+
+	basep->enter_notify_timer_tag = 0;
+	return FALSE;
 }
 
-int
+void
+basep_widget_queue_autoshow (BasePWidget *basep)
+{
+        /* check if there's already a timeout set, and delete it if 
+         * there was */
+	if (basep->state == BASEP_MOVING) {
+#ifdef PANEL_DEBUG
+		g_print ("return 2");
+#endif
+		return; 
+	}
+
+        if (basep->enter_notify_timer_tag != 0) {
+                gtk_timeout_remove (basep->enter_notify_timer_tag);
+#ifdef PANEL_DEBUG
+		g_print ("<timeout removed>\n");
+#endif
+	}
+
+        if ((basep->mode != BASEP_AUTO_HIDE) ||
+            (basep->state == BASEP_SHOWN)) {
+#ifdef PANEL_DEBUG
+		g_print ("return 1\n");
+#endif
+                return;
+	}
+
+	if (pw_minimize_delay == 0) {
+		basep_widget_autoshow (basep);
+	} else {
+		/* set up our delay for popup. */
+		basep->enter_notify_timer_tag =
+			gtk_timeout_add (pw_maximize_delay,
+					 basep_widget_autoshow, basep);
+	}
+}
+
+gboolean
 basep_widget_autohide (gpointer data)
 {
 	static const char *supinfo[] = {"panel", "collapse", NULL};
@@ -1749,7 +1791,9 @@ basep_widget_queue_autohide(BasePWidget *basep)
         /* check if there's already a timeout set, and delete it if 
          * there was */
 	if (basep->state == BASEP_MOVING) {
+#ifdef PANEL_DEBUG
 		g_print ("return 2");
+#endif
 		return; 
 	}
 

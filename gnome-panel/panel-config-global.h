@@ -11,6 +11,7 @@ struct _GlobalConfig {
 	int drawer_step_size;
 	int minimized_size;
 	int minimize_delay;
+	int maximize_delay;
 	gboolean tooltips_enabled;
 	/*gboolean show_small_icons;*/
 	gboolean show_dot_buttons;

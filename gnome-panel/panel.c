@@ -643,6 +643,8 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		gtk_widget_unref (pd->menu);
 	pd->menu = NULL;
 
+	pd->panel = NULL;
+
 	panel_list = g_slist_remove (panel_list, pd);
 	g_free (pd);
 }

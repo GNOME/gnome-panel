@@ -1,3 +1,14 @@
+Tue Apr 17 13:20:07 2001  George Lebl <jirka@5z.com>
+
+	* basep-widget.[ch], gnome-panep-properties.c, main.c, panel-util.c,
+	  panel-widget.[ch], panel.c, panel_config_global.h, session.[ch]:
+	  Fix bug #17076, so now there is a auto show delay.  By default it
+	  is 0, which is the current behaviour.  Also changed the scale for
+	  the autohide delay to be maximum of 3000 not 10000.  I mean who
+	  wants the delay to be 10s.  This was making the setting hard to
+	  do since the useful range was very thin.  Some other cleanups
+	  and a warning fix.
+
 Mon Apr 09 18:02:27 2001  George Lebl <jirka@5z.com>
 
 	* icon-entry-hack.c: gah! add missing show for the icon entry hack

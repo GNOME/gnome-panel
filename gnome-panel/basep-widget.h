@@ -77,14 +77,13 @@ struct _BasePWidget
 	gboolean		hidebuttons_enabled;
 	gboolean		hidebutton_pixmaps_enabled;
 
+	int                     enter_notify_timer_tag;
 	int                     leave_notify_timer_tag;
 	gboolean                autohide_inhibit;
 	int                     drawers_open;
 
 	gboolean                request_cube;
 	gboolean                keep_in_screen;
-
-	guint32                 autohide_complete;
 
 	gboolean		compliant_wm;
 
@@ -223,10 +222,11 @@ void		basep_widget_set_hidebuttons	(BasePWidget *basep);
 void            basep_widget_update_winhints    (BasePWidget *basep);
 
 /*autohide*/
-void            basep_widget_autoshow           (BasePWidget *basep);
-int             basep_widget_autohide           (gpointer data);
+gboolean        basep_widget_autoshow           (gpointer data);
+gboolean        basep_widget_autohide           (gpointer data);
 
 /*queue an autohide*/
+void            basep_widget_queue_autoshow     (BasePWidget *basep);
 void            basep_widget_queue_autohide     (BasePWidget *basep);
 
 /*explicit hiding*/

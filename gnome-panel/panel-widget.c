@@ -56,6 +56,7 @@ int pw_drawer_step = 20;
 int pw_auto_step = 10;
 int pw_minimized_size = 6;
 int pw_minimize_delay = 300;
+int pw_maximize_delay = 0;
 gboolean pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
 int pw_applet_padding = 3;
@@ -2814,7 +2815,7 @@ panel_widget_change_params(PanelWidget *panel,
 {
 	PanelOrientation oldorient;
 	int oldsz;
-	int change_back = FALSE;
+	gboolean change_back = FALSE;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
@@ -2880,19 +2881,19 @@ panel_widget_change_params(PanelWidget *panel,
 	}
 
 	/* let the applets know we changed the background */
-	if(change_back) {
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[BACK_CHANGE_SIGNAL],
-				panel->back_type,
-				panel->back_pixmap,
-				&panel->back_color);
+	if (change_back) {
+		gtk_signal_emit (GTK_OBJECT (panel),
+				 panel_widget_signals[BACK_CHANGE_SIGNAL],
+				 panel->back_type,
+				 panel->back_pixmap,
+				 &panel->back_color);
 	}
 
 	panel->no_padding_on_ends = no_padding_on_ends;
 
 	/* inhibit draws until we resize */
 	panel->inhibit_draw = TRUE;
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
 
 void
@@ -2914,36 +2915,40 @@ panel_widget_change_orient(PanelWidget *panel,
 
 /*change global params*/
 void
-panel_widget_change_global(int explicit_step,
-			   int auto_step,
-			   int drawer_step,
-			   int minimized_size,
-			   int minimize_delay,
-			   PanelMovementType move_type,
-			   gboolean disable_animations,
-			   int applet_padding,
-			   int applet_border_padding)
+panel_widget_change_global (int explicit_step,
+			    int auto_step,
+			    int drawer_step,
+			    int minimized_size,
+			    int minimize_delay,
+			    int maximize_delay,
+			    PanelMovementType move_type,
+			    gboolean disable_animations,
+			    int applet_padding,
+			    int applet_border_padding)
 {
-	if(explicit_step>0)
+	if (explicit_step > 0)
 		pw_explicit_step=explicit_step;
-	if(auto_step>0)
+	if (auto_step > 0)
 		pw_auto_step=auto_step;
-	if(drawer_step>0)
+	if (drawer_step > 0)
 		pw_drawer_step=drawer_step;
-	if(minimized_size>0)
+	if (minimized_size > 0)
 		pw_minimized_size=minimized_size;
-	if(minimize_delay>=0)
+	if (minimize_delay >= 0)
 		pw_minimize_delay=minimize_delay;
+	if (maximize_delay >= 0)
+		pw_maximize_delay=maximize_delay;
 	pw_movement_type = move_type;
 	pw_disable_animations = disable_animations;
 
 	/*change padding on all panels NOW*/
-	if((pw_applet_padding != applet_padding) || (pw_applet_border_padding != applet_border_padding)) {
+	if( (pw_applet_padding != applet_padding) ||
+	    (pw_applet_border_padding != applet_border_padding)) {
 		GSList *li;
 		pw_applet_padding = applet_padding;
 		pw_applet_border_padding = applet_border_padding;
-		for(li=panels;li!=NULL;li=g_slist_next(li))
-			gtk_widget_queue_resize(li->data);
+		for (li = panels; li != NULL; li = li->next)
+			gtk_widget_queue_resize (li->data);
 	}
 }
 
@@ -2951,13 +2956,13 @@ panel_widget_change_global(int explicit_step,
    color and w, and h to the area if the background is one color
    only, otherwise normally return an rgb and set r, g, b to -1 */
 void
-panel_widget_get_applet_rgb_bg(PanelWidget *panel,
-			       GtkWidget *applet,
-			       guchar **rgb,
-			       int *w, int *h,
-			       int *rowstride,
-			       gboolean color_only,
-			       int *r, int *g, int *b)
+panel_widget_get_applet_rgb_bg (PanelWidget *panel,
+				GtkWidget *applet,
+				guchar **rgb,
+				int *w, int *h,
+				int *rowstride,
+				gboolean color_only,
+				int *r, int *g, int *b)
 {
 	GtkWidget *widget;
 
@@ -2970,24 +2975,25 @@ panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 	*w = *h = *rowstride = 0;
 	*r = *g = *b = -1;
 
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
-	g_return_if_fail(applet!=NULL);
-	g_return_if_fail(GTK_IS_WIDGET(applet));
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (IS_PANEL_WIDGET (panel));
+	g_return_if_fail (applet != NULL);
+	g_return_if_fail (GTK_IS_WIDGET (applet));
 
-	widget = GTK_WIDGET(panel);
+	widget = GTK_WIDGET (panel);
 
-	if(!GTK_WIDGET_DRAWABLE(widget) ||
+	if( ! GTK_WIDGET_DRAWABLE (widget) ||
 	   widget->allocation.width <= 0 ||
 	   widget->allocation.height <= 0)
 		return;
 
-	setup_background(panel, &pb, &scale_w, &scale_h, &rotate);
+	setup_background (panel, &pb, &scale_w, &scale_h, &rotate);
 	
 	*w = applet->allocation.width;
 	*h = applet->allocation.height;
 	
-	if(color_only && !pb) {
+	if (color_only &&
+	    pb == NULL) {
 		if(panel->back_type != PANEL_BACK_COLOR) {
 			GtkWidget *widget = GTK_WIDGET(panel);
 			/* convert to 8 bit per channel */
@@ -3002,12 +3008,13 @@ panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 		}
 		return;
 	}
-	*rowstride = applet->allocation.width*3;
+	*rowstride = applet->allocation.width * 3;
 
-	*rgb = g_new0(guchar, (*h)*(*rowstride));
+	*rgb = g_new0(guchar,
+		      (*h) * (*rowstride));
 
-	make_background(panel, *rgb,
-			applet->allocation.x,
-			applet->allocation.y,
-			*w,*h, pb, scale_w, scale_h, rotate);
+	make_background (panel, *rgb,
+			 applet->allocation.x,
+			 applet->allocation.y,
+			 *w, *h, pb, scale_w, scale_h, rotate);
 }

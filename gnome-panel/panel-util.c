@@ -77,7 +77,7 @@ panel_kde_help_path (const char *docpath)
 	     li = li->next) {
 		char *fullpath = g_strdup_printf ("%s/HTML/%s/%s",
 						  KDE_DOCDIR,
-						  li->data,
+						  (char *)li->data,
 						  docpath);
 		if (panel_file_exists (fullpath)) {
 			char *uri = g_strconcat ("ghelp:", fullpath, NULL);

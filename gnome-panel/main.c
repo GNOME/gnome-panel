@@ -93,6 +93,189 @@ menu_age_timeout(gpointer data)
 	return TRUE;
 }
 
+/* Some important code copied from PonG */
+/* some evilness follows */
+typedef struct _Fish Fish;
+struct _Fish {
+	int state;
+	int x, y, xs, ys;
+	GdkPixmap *fish[4];
+	GdkBitmap *fish_mask[4];
+	int handler;
+	GdkWindow *win;
+};
+Fish fish = {0};
+
+static void
+fish_kill (void)
+{
+	int i;
+	for (i = 0; i < 4; i++) {
+		gdk_pixmap_unref (fish.fish[i]);
+		gdk_bitmap_unref (fish.fish_mask[i]);
+	}
+	gdk_window_destroy (fish.win);
+	gtk_timeout_remove (fish.handler);
+	memset (&fish, 0, sizeof (Fish));
+}
+
+/* I AAAAAM YOUUUUUUR FAAAAAAATTTTTHHHHHHHEEEEERRRRRR */
+static gboolean
+fish_move (gpointer data)
+{
+	int orient, state;
+	gboolean change = TRUE;
+
+	fish.x += fish.xs;
+	fish.y += fish.ys;
+	if (fish.x <= -60 ||
+	    fish.x >= gdk_screen_width ()) {
+		fish_kill ();
+		return FALSE;
+	}
+	if (fish.y <= 0 ||
+	    fish.y >= gdk_screen_height () - 40 ||
+	    rand() % 50 == 0)
+		fish.ys = -fish.ys;
+
+	fish.state ++;
+	if (fish.state % 4 == 0)
+		change = TRUE;
+	if (fish.state >= 8)
+		fish.state = 0;
+
+	state = fish.state >= 4 ? 1 : 0;
+	orient = fish.xs >= 0 ? 0 : 2;
+
+	if (change) {
+		gdk_window_set_back_pixmap (fish.win, fish.fish[orient + state], FALSE);
+		gdk_window_shape_combine_mask (fish.win, fish.fish_mask[orient + state], 0, 0);
+		gdk_window_clear (fish.win);
+	}
+
+	gdk_window_move (fish.win, fish.x, fish.y);
+	gdk_window_raise (fish.win);
+
+	return TRUE;
+}
+
+static void
+fish_reverse (GdkPixbuf *gp)
+{
+	guchar *pixels = gdk_pixbuf_get_pixels (gp);
+	int x, y;
+	int rs = gdk_pixbuf_get_rowstride (gp);
+#define DOSWAP(x,y) tmp = x; x = y; y = tmp;
+	for (y = 0; y < 40; y++, pixels += rs) {
+		guchar *p = pixels;
+		guchar *p2 = pixels + 60*4 - 4;
+		for (x = 0; x < 30; x++, p+=4, p2-=4) {
+			guchar tmp;
+			DOSWAP (p[0], p2[0]);
+			DOSWAP (p[1], p2[1]);
+			DOSWAP (p[2], p2[2]);
+			DOSWAP (p[3], p2[3]);
+		}
+	}
+#undef DOSWAP
+}
+
+static void
+fish_unwater(GdkPixbuf *gp)
+{
+	guchar *pixels = gdk_pixbuf_get_pixels (gp);
+	int x, y;
+	int rs = gdk_pixbuf_get_rowstride (gp);
+	for (y = 0; y < 40; y++, pixels += rs) {
+		guchar *p = pixels;
+		for (x = 0; x < 60; x++, p+=4) {
+			if (p[0] < 55 && p[1] > 100)
+			       p[3] = 0;	
+		}
+	}
+}
+
+/* the incredibly evil function */
+static void
+check_screen (void)
+{
+	GdkWindowAttr attributes;
+	char *fish_file;
+	GdkPixbuf *gp, *tmp;
+
+	if (fish.win != NULL)
+		return;
+
+	fish_file = gnome_pixmap_file ("fish/fishanim.png");
+	if (fish_file == NULL)
+		return;
+
+	tmp = gdk_pixbuf_new_from_file (fish_file);
+	if (tmp == NULL)
+		return;
+
+	g_free (fish_file);
+
+	if (gdk_pixbuf_get_width (tmp) != 180 ||
+	    gdk_pixbuf_get_height (tmp) != 40) {
+		gdk_pixbuf_unref (tmp);
+		return;
+	}
+
+	fish.state = 0;
+
+	gp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
+	gdk_pixbuf_copy_area (tmp, 60, 0, 60, 40, gp, 0, 0);
+
+	fish_unwater (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[2], &fish.fish_mask[2], 128);
+	fish_reverse (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[0], &fish.fish_mask[0], 128);
+
+	gdk_pixbuf_copy_area (tmp, 120, 0, 60, 40, gp, 0, 0);
+
+	fish_unwater (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[3], &fish.fish_mask[3], 128);
+	fish_reverse (gp);
+	gdk_pixbuf_render_pixmap_and_mask (gp, &fish.fish[1], &fish.fish_mask[1], 128);
+	gdk_pixbuf_unref (gp);
+
+	gdk_pixbuf_unref (tmp);
+	
+	fish.x = -60;
+	fish.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
+	fish.xs = 8;
+	fish.ys = (rand() % 2) + 1;
+
+	attributes.window_type = GDK_WINDOW_TEMP;
+	attributes.x = fish.x;
+	attributes.y = fish.y;
+	attributes.width = 60;
+	attributes.height = 40;
+	attributes.wclass = GDK_INPUT_OUTPUT;
+	attributes.visual = gdk_rgb_get_visual();
+	attributes.colormap = gdk_rgb_get_cmap();
+	attributes.event_mask = 0;
+
+	fish.win = gdk_window_new (NULL, &attributes,
+				   GDK_WA_X | GDK_WA_Y |
+				   GDK_WA_VISUAL | GDK_WA_COLORMAP);
+	gdk_window_set_back_pixmap (fish.win, fish.fish[0], FALSE);
+	gdk_window_shape_combine_mask (fish.win, fish.fish_mask[0], 0, 0);
+
+	gdk_window_show (fish.win);
+	fish.handler = gtk_timeout_add (150, fish_move, NULL);
+}
+
+static gboolean
+check_screen_timeout (gpointer data)
+{
+	if (((rand () >> 3) % 4000) == 666) {
+		check_screen ();
+	}
+	return TRUE;
+}
+
 static int
 try_config_sync(gpointer data)
 {
@@ -200,8 +383,8 @@ main(int argc, char **argv)
 	gboolean duplicate;
 	gchar *real_global_path;
 	
-	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
-	textdomain(PACKAGE);
+	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
 
 	CORBA_exception_init(&ev);
 	orb = gnome_CORBA_init("panel", VERSION,
@@ -247,10 +430,10 @@ main(int argc, char **argv)
 					? GNOME_RESTART_NEVER 
 					: GNOME_RESTART_IMMEDIATELY);
 
-	gnome_client_set_priority(client,40);
+	gnome_client_set_priority (client, 40);
 
 
-	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
+	if (gnome_client_get_flags (client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
@@ -271,53 +454,57 @@ main(int argc, char **argv)
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
-	panel_tooltips = gtk_tooltips_new();
+	panel_tooltips = gtk_tooltips_new ();
 
-	xstuff_init();
+	xstuff_init ();
 
 	gnome_win_hints_init ();
 
 	/* read, convert and remove old config */
-	convert_old_config();
+	convert_old_config ();
 
 	/* set the globals, it is important this is before
 	 * init_user_applets */
-	load_up_globals();
+	load_up_globals ();
 	/* this is so the capplet gets the right defaults */
-	write_global_config();
+	write_global_config ();
 
 	gwmh_init ();
 
 	init_fr_chunks ();
 	
-	init_menus();
+	init_menus ();
 	
-	init_user_panels();
-	init_user_applets();
+	init_user_panels ();
+	init_user_applets ();
 
 	kill_free_drawers ();
 
-	load_tornoff();
+	load_tornoff ();
 
-	gnome_triggers_do("Session startup", NULL, "gnome", "login", NULL);
+	gnome_triggers_do ("Session startup", NULL, "gnome", "login", NULL);
 
 	/*add forbidden lists to ALL panels*/
-	g_slist_foreach(panels,(GFunc)panel_widget_add_forbidden,NULL);
+	g_slist_foreach (panels,
+			 (GFunc)panel_widget_add_forbidden,
+			 NULL);
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
-	send_state_change();
+	send_state_change ();
 
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
-	config_sync_timeout = gtk_timeout_add(10*1000, try_config_sync, NULL);
+	config_sync_timeout = gtk_timeout_add (10*1000, try_config_sync, NULL);
 
-	gtk_timeout_add(10*1000, menu_age_timeout, NULL);
+	/* add some timeouts */
+	gtk_timeout_add (10*1000, menu_age_timeout, NULL);
+	gtk_timeout_add (10*60*1000, check_screen_timeout, NULL);
 	
 	/*load these as the last thing to prevent some races any races from
 	  starting multiple goad_id's at once are libgnorba's problem*/
-	load_queued_externs();
+	load_queued_externs ();
 
-	status_applet_create_offscreen();
+	status_applet_create_offscreen ();
 
 	gtk_main ();
 

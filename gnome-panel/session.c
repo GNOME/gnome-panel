@@ -100,20 +100,21 @@ apply_global_config (void)
 	static int old_avoid_collisions = -1;
 	GSList *li;
 
-	panel_widget_change_global(global_config.explicit_hide_step_size,
-				   global_config.auto_hide_step_size,
-				   global_config.drawer_step_size,
-				   global_config.minimized_size,
-				   global_config.minimize_delay,
-				   global_config.movement_type,
-				   global_config.disable_animations,
-				   global_config.applet_padding,
-				   global_config.applet_border_padding);
+	panel_widget_change_global (global_config.explicit_hide_step_size,
+				    global_config.auto_hide_step_size,
+				    global_config.drawer_step_size,
+				    global_config.minimized_size,
+				    global_config.minimize_delay,
+				    global_config.maximize_delay,
+				    global_config.movement_type,
+				    global_config.disable_animations,
+				    global_config.applet_padding,
+				    global_config.applet_border_padding);
 
-	if(global_config.tooltips_enabled)
-		gtk_tooltips_enable(panel_tooltips);
+	if (global_config.tooltips_enabled)
+		gtk_tooltips_enable (panel_tooltips);
 	else
-		gtk_tooltips_disable(panel_tooltips);
+		gtk_tooltips_disable (panel_tooltips);
 	/* not incredibly efficent way to do this, we just make
 	 * sure that all directories are reread */
 	if (old_merge_menus != global_config.merge_menus ||
@@ -1664,6 +1665,9 @@ load_up_globals (void)
 		
 	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf->str);
+
+	g_string_sprintf(buf,"maximize_delay=%d", DEFAULT_MAXIMIZE_DELAY);
+	global_config.maximize_delay=gnome_config_get_int(buf->str);
 		
 	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf->str);
@@ -1774,6 +1778,8 @@ write_global_config (void)
 			     global_config.minimized_size);
 	gnome_config_set_int("minimize_delay",
 			     global_config.minimize_delay);
+	gnome_config_set_int("maximize_delay",
+			     global_config.maximize_delay);
 	gnome_config_set_int("movement_type",
 			     (int)global_config.movement_type);
 	gnome_config_set_bool("tooltips_enabled",

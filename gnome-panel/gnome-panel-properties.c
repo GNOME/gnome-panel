@@ -67,6 +67,7 @@ static GtkAdjustment *auto_hide_step_size;
 static GtkAdjustment *explicit_hide_step_size;
 static GtkAdjustment *drawer_step_size;
 static GtkAdjustment *minimize_delay;
+static GtkAdjustment *maximize_delay;
 static GtkAdjustment *minimized_size;
 
 
@@ -279,6 +280,8 @@ sync_animation_page_with_config(GlobalConfig *conf)
 				 conf->drawer_step_size);
 	gtk_adjustment_set_value(minimize_delay,
 				 conf->minimize_delay);
+	gtk_adjustment_set_value(maximize_delay,
+				 conf->maximize_delay);
 	gtk_adjustment_set_value(minimized_size,
 				 conf->minimized_size);
 }
@@ -294,6 +297,7 @@ sync_config_with_animation_page(GlobalConfig *conf)
 	conf->explicit_hide_step_size = explicit_hide_step_size->value;
 	conf->drawer_step_size = drawer_step_size->value;
 	conf->minimize_delay = minimize_delay->value;
+	conf->maximize_delay = maximize_delay->value;
 	conf->minimized_size = minimized_size->value;
 }
 
@@ -360,9 +364,15 @@ animation_notebook_page(void)
 	gtk_widget_show (frame_vbox);
 
 	/* Minimize Delay scale frame */
-	box = make_int_scale_box (_("Delay (ms)"),
+	box = make_int_scale_box (_("Hide delay (ms)"),
 				  &minimize_delay,
-				  30.0, 10000.0, 10.0);
+				  30.0, 3000.0, 10.0);
+	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE, 0);
+
+	/* Minimize Delay scale frame */
+	box = make_int_scale_box (_("Show delay (ms)"),
+				  &maximize_delay,
+				  0.0, 3000.0, 10.0);
 	gtk_box_pack_start (GTK_BOX (frame_vbox), box, TRUE, FALSE, 0);
 
 	/* Minimized size scale frame */
@@ -1271,7 +1281,10 @@ loadup_vals (void)
 	global_config.drawer_step_size=gnome_config_get_int(buf->str);
 		
 	g_string_sprintf (buf, "minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay=gnome_config_get_int (buf->str);
+	global_config.minimize_delay = gnome_config_get_int (buf->str);
+
+	g_string_sprintf (buf, "maximize_delay=%d", DEFAULT_MAXIMIZE_DELAY);
+	global_config.maximize_delay = gnome_config_get_int (buf->str);
 		
 	g_string_sprintf (buf, "minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int (buf->str);
@@ -1396,6 +1409,8 @@ write_config (GlobalConfig *conf)
 			     conf->minimized_size);
 	gnome_config_set_int("minimize_delay",
 			     conf->minimize_delay);
+	gnome_config_set_int("maximize_delay",
+			     conf->maximize_delay);
 	gnome_config_set_int("movement_type",
 			     (int)conf->movement_type);
 	gnome_config_set_bool("tooltips_enabled",
@@ -1571,7 +1586,7 @@ main (int argc, char **argv)
 			      argv, NULL, 0, NULL) < 0)
 		return 1;
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
-	loadup_vals();
+	loadup_vals ();
 	
 	set_config (&loaded_config, &global_config);
 
