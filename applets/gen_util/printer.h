@@ -11,7 +11,7 @@
 
 BEGIN_GNOME_DECLS
 
-GtkWidget * make_printer_applet(const gchar *param);
+GtkWidget * make_printer_applet(const gchar *goad_id);
 
 END_GNOME_DECLS
 

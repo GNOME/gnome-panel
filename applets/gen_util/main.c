@@ -25,38 +25,30 @@
 #include "clock.h"
 #include "printer.h"
 
-int start_clock = 0, start_mailcheck = 0, start_printer = 0;
-
-static const struct poptOption options[] = {
-  {"clock", '\0', POPT_ARG_NONE, &start_clock, 0, N_("Start in clock mode"), NULL},
-  {"mailcheck", '\0', POPT_ARG_NONE, &start_mailcheck, 0, N_("Start in mailcheck mode"), NULL},
-  {"printer", '\0', POPT_ARG_NONE, &start_printer, 0, N_("Start in printer mode"), NULL},
-  {NULL, '\0', 0, NULL, 0}
-};
-
 static void
-make_new_applet(const gchar *param)
+make_new_applet(const gchar *goad_id)
 {
-	if(strstr(param,"gen_util_mailcheck"))
-		make_mailcheck_applet("");
-	else if(strstr(param,"gen_util_printer"))
-		make_printer_applet("");
-	else if(strstr(param,"gen_util_clock"))
-		make_clock_applet("");
+	if(strstr(goad_id,"gen_util_mailcheck"))
+		make_mailcheck_applet(goad_id);
+	else if(strstr(goad_id,"gen_util_printer"))
+		make_printer_applet(goad_id);
+	else if(strstr(goad_id,"gen_util_clock"))
+		make_clock_applet(goad_id);
 }
 
 /*when we get a command to start a new widget*/
 static void
-applet_start_new_applet(const gchar *param, gpointer data)
+applet_start_new_applet(const gchar *goad_id, gpointer data)
 {
-	make_new_applet(param);
+	make_new_applet(goad_id);
 }
 
 int
 main(int argc, char **argv)
 {
-	gchar *param;
+	gchar *goad_id;
 	char *argstr = NULL;
+	GList *list = NULL;
 
 	/*this is needed for printer applet*/
 	struct sigaction sa;
@@ -69,18 +61,20 @@ main(int argc, char **argv)
 	/* Initialize the i18n stuff */
         bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
+	
+	list = g_list_append(list,"gen_util_clock");
+	list = g_list_append(list,"gen_util_mailcheck");
+	list = g_list_append(list,"gen_util_printer");
 
 	applet_widget_init("gen_util_applet", VERSION, argc, argv,
-			   options, 0, NULL, TRUE, TRUE,
+			   NULL, 0, NULL, TRUE, list,
 			   applet_start_new_applet, NULL);
+	g_list_free(list);
 
-	if(!goad_server_activation_id()
-	   || !strcmp(goad_server_activation_id(), "gen_util_clock"))
-	  make_clock_applet("");
-	if(!strcmp(goad_server_activation_id(), "gen_util_mailcheck"))
-	  make_mailcheck_applet("");
-	if(!strcmp(goad_server_activation_id(), "gen_util_printer"))
-	  make_printer_applet("");
+	goad_id = goad_server_activation_id();
+	if(!goad_id)
+		return 0;
+	make_new_applet(goad_id);
 
 	applet_widget_gtk_main();
 

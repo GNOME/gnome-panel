@@ -18,6 +18,8 @@
 #include "applet-widget.h"
 #include <gdk_imlib.h>
 
+#include "mailcheck.h"
+
 #define WIDGET_HEIGHT 48
 
 GtkWidget *applet = NULL;
@@ -616,10 +618,8 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 	gtk_widget_show(about);
 }
 
-GtkWidget *make_mailcheck_applet(const gchar *param);
-
 GtkWidget *
-make_mailcheck_applet(const gchar *param)
+make_mailcheck_applet(const gchar *goad_id)
 {
 	GtkWidget *mailcheck;
 	MailCheck *mc;
@@ -649,7 +649,7 @@ make_mailcheck_applet(const gchar *param)
 		}
 	}
 
-	applet = applet_widget_new_with_param(param, "gen_util_mailcheck");
+	applet = applet_widget_new(goad_id);
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 

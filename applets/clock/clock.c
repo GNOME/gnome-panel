@@ -21,6 +21,8 @@
 #include <gdk/gdkx.h>
 #include <applet-widget.h>
 
+#include "clock.h"
+
 typedef struct _ClockData ClockData;
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
 struct _ClockData {
@@ -228,15 +230,13 @@ applet_change_orient(GtkWidget * w, PanelOrientType o, gpointer data)
 	(*cd->update_func) (cd, current_time);
 }
 
-GtkWidget * make_clock_applet(const gchar * param);
-
 GtkWidget *
-make_clock_applet(const gchar * param)
+make_clock_applet(const gchar * goad_id)
 {
 	ClockData *cd;
 	GtkWidget *applet;
 
-	applet = applet_widget_new_with_param(param, "gen_util_clock");
+	applet = applet_widget_new(goad_id);
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 
