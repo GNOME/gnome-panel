@@ -43,6 +43,7 @@
 #include "panel-session.h"
 #include "panel-globals.h"
 #include "panel-run-dialog.h"
+#include "panel-a11y.h"
 
 enum {
 	PROP_0,
@@ -461,6 +462,7 @@ panel_action_button_set_type (PanelActionButton     *button,
 
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
 			      _(actions [type].tooltip), NULL);
+	panel_a11y_set_atk_name_desc (GTK_WIDGET (button), _(actions [type].tooltip), NULL);
 }
 
 static void
