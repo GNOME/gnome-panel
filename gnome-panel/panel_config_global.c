@@ -544,10 +544,22 @@ misc_notebook_page(void)
 	return (vbox);
 }
 
+static void
+globalcfg_help(void)
+{
+    gchar *tmp;
+
+    tmp = gnome_help_file_find_file ("users-guide", "confglobal.html");
+    if (tmp) {
+       gnome_help_goto(0, tmp);
+       g_free(tmp);
+    }
+}
+
 void 
 panel_config_global(void)
 {
-        static GnomeHelpMenuEntry help_entry = { NULL, "properties-global" };
+/*      static GnomeHelpMenuEntry help_entry = { NULL, "properties-global" };*/
 	GtkWidget *page;
 	GtkWidget *box;
 	GtkWidget *prop_nbook;
@@ -612,10 +624,14 @@ panel_config_global(void)
 	gtk_signal_connect (GTK_OBJECT (box), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), NULL);
 
-	help_entry.name = gnome_app_id;
+/*	help_entry.name = gnome_app_id;
 	gtk_signal_connect (GTK_OBJECT (box), "help",
 			    GTK_SIGNAL_FUNC (gnome_help_pbox_display),
 			    &help_entry);
+*/
+	gtk_signal_connect (GTK_OBJECT (box), "help",
+			    GTK_SIGNAL_FUNC (globalcfg_help),
+			    NULL);
 
 	gtk_signal_connect (GTK_OBJECT (box), "event",
 			    GTK_SIGNAL_FUNC (config_event),
