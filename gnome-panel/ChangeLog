@@ -1,3 +1,34 @@
+2001-11-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Use BonoboProperty bags ... sigh ... someone shoulda told me ...
+
+	* panel-applet-frame.c: 
+	(panel_applet_frame_change_orient),
+	(panel_applet_frame_change_size),
+	(panel_applet_frame_change_background_pixmap),
+	(panel_applet_frame_change_background_colour),
+	(panel_applet_frame_clear_background): use bonobo_pbclient_*
+	(panel_applet_frame_construct): get property bag.
+
+	* panel-applet-shell.c, panel-applet-private.h:
+	kill useless functions, we now have a very useful useless
+	PanelAppletShell object. 
+
+	* panel-applet.c: 
+	(panel_applet_parse_colour), (panel_applet_get_prop),
+	(panel_applet_set_prop), (panel_applet_property_bag): impl
+	property bag stuff.
+	(panel_applet_class_init): tweak signal defs.
+	(panel_applet_construct): setup the property bag.
+
+	* panel-widget.c: (panel_widget_class_init): tweak signal def.
+
+	* test-bonobo-applet.c:
+	(test_applet_new): do a size change so the entry will have
+	some text before it gets a size change.
+
+	* Makefile.am: add panel-applet.h to glib-mkenus list.
+
 2001-11-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.[ch]: 

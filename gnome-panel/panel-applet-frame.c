@@ -16,8 +16,9 @@
 
 struct _PanelAppletFramePrivate {
 	GNOME_PanelAppletShell  applet_shell;
+	Bonobo_PropertyBag      property_bag;
 
-	AppletInfo            *applet_info;
+	AppletInfo             *applet_info;
 };
 
 static GObjectClass *parent_class;
@@ -98,61 +99,36 @@ void
 panel_applet_frame_change_orient (PanelAppletFrame *frame,
 				  PanelOrient       orient)
 {
-	CORBA_Environment env;
-
-	CORBA_exception_init (&env);
-
-	GNOME_PanelAppletShell_changeOrientation (frame->priv->applet_shell, orient, &env);
-	if (BONOBO_EX (&env))
-		g_warning (_("Exception from changeOrientation: '%s'\n"), 
-			   BONOBO_EX_REPOID (&env));
-
-	CORBA_exception_free (&env);
+	bonobo_pbclient_set_short (frame->priv->property_bag, 
+				   "panel-applet-orient",
+				   orient,
+				   NULL);
 }
 
 void
 panel_applet_frame_change_size (PanelAppletFrame *frame,
 				PanelSize         size)
 {
-	CORBA_Environment env;
-
-	CORBA_exception_init (&env);
-
-	GNOME_PanelAppletShell_changeSize (frame->priv->applet_shell, size, &env);
-	if (BONOBO_EX (&env))
-		g_warning (_("Exception from changeSize: '%s'\n"), BONOBO_EX_REPOID (&env));
-
-	CORBA_exception_free (&env);
-}
-
-static void
-panel_applet_frame_change_background (PanelAppletFrame      *frame,
-				      GNOME_PanelBackground *background)
-{
-	CORBA_Environment     env;
-
-	CORBA_exception_init (&env);
-
-	GNOME_PanelAppletShell_changeBackground (frame->priv->applet_shell,
-						 background,
-						 &env);
-	if (BONOBO_EX (&env))
-		g_warning (_("Exception from changeBackground: '%s'\n"),
-			   BONOBO_EX_REPOID (&env));
-
-	CORBA_exception_free (&env);
+	bonobo_pbclient_set_short (frame->priv->property_bag, 
+				   "panel-applet-size",
+				   size,
+				   NULL);
 }
 
 void
 panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
 					     gchar            *pixmap)
 {
-	GNOME_PanelBackground background;
+	gchar *bg_str;
 
-	background._d        = GNOME_PIXMAP;
-	background._u.pixmap = pixmap;
+	bg_str = g_strdup_printf ("pixmap:%s", pixmap);
 
-	panel_applet_frame_change_background (frame, &background);
+	bonobo_pbclient_set_string (frame->priv->property_bag, 
+				    "panel-applet-background",
+				    bg_str,
+				    NULL);
+
+	g_free (bg_str);
 }
 
 void
@@ -161,24 +137,27 @@ panel_applet_frame_change_background_colour (PanelAppletFrame *frame,
 					     guint16           green,
 					     guint16           blue)
 {
-	GNOME_PanelBackground background;
+	gchar *bg_str;
 
-	background._d             = GNOME_COLOUR;
-	background._u.colour.red   = red;
-	background._u.colour.green = green;
-	background._u.colour.blue  = blue;
+	bg_str = g_strdup_printf ("colour:#%.2x%.2x%.2x", red, green, blue);
 
-	panel_applet_frame_change_background (frame, &background);
+	bonobo_pbclient_set_string (frame->priv->property_bag, 
+				    "panel-applet-background",
+				    bg_str,
+				    NULL);
+
+	g_free (bg_str);
 }
 
 void
 panel_applet_frame_clear_background (PanelAppletFrame *frame)
 {
-	GNOME_PanelBackground background;
+	gchar *bg_str = "none:";
 
-	background._d = GNOME_NONE;
-
-	panel_applet_frame_change_background (frame, &background);
+	bonobo_pbclient_set_string (frame->priv->property_bag, 
+				    "panel-applet-background",
+				    bg_str,
+				    NULL);
 }
 
 void
@@ -216,7 +195,9 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 {
 	frame->priv = g_new0 (PanelAppletFramePrivate, 1);
 
-	frame->priv->applet_info = NULL;
+	frame->priv->applet_shell = CORBA_OBJECT_NIL;
+	frame->priv->property_bag = CORBA_OBJECT_NIL;
+	frame->priv->applet_info  = NULL;
 }
 
 GType
@@ -284,6 +265,9 @@ panel_applet_frame_construct (PanelAppletFrame  *frame,
         control = bonobo_control_frame_get_control (control_frame);
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
+
+	frame->priv->property_bag = 
+		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
         ui_component = bonobo_ui_component_new_default ();
 

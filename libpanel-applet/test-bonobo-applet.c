@@ -102,11 +102,11 @@ test_applet_handle_size_change (PanelApplet *applet,
 }
 
 static void
-test_applet_handle_background_change (PanelApplet         *applet,
-				      PanelBackgroundType  type,
-				      GdkColor            *colour,
-				      const gchar         *pixmap,
-				      GtkLabel            *label)
+test_applet_handle_background_change (PanelApplet               *applet,
+				      PanelAppletBackgroundType  type,
+				      GdkColor                  *colour,
+				      const gchar               *pixmap,
+				      GtkLabel                  *label)
 {
 	switch (type) {
 	case PANEL_NO_BACKGROUND:
@@ -136,6 +136,8 @@ test_applet_new (const gchar *iid)
 	label = gtk_label_new (NULL);
 
 	applet = panel_applet_new (label);
+
+	test_applet_handle_size_change (applet, GNOME_PANEL_MEDIUM, label);
 
 	panel_applet_setup_menu (applet, test_applet_menu_xml, test_applet_menu_verbs, NULL);
 

@@ -263,6 +263,7 @@ panel_enum_headers =      \
 	basep-widget.h    \
 	aligned-widget.h  \
 	sliding-widget.h  \
+	panel-applet.h    \
 	GNOME_Panel.h
 
 $(srcdir)/panel-marshal.h: panel-marshal.list

@@ -8,7 +8,9 @@
  */
 
 #include <unistd.h>
+#include <string.h>
 #include <bonobo/bonobo-ui-util.h>
+#include <bonobo/bonobo-property-bag.h>
 #include <libgnome/gnome-program.h>
 #include <libgnomeui/gnome-ui-init.h>
 
@@ -24,7 +26,8 @@ struct _PanelAppletPrivate {
 	BonoboControl     *control;
 
 	PanelAppletOrient  orient;
-	gint               size;
+	guint              size;
+	gchar             *background;
 };
 
 static GObjectClass *parent_class;
@@ -38,58 +41,15 @@ enum {
 
 static guint panel_applet_signals [LAST_SIGNAL];
 
-void
-panel_applet_change_orient (PanelApplet       *applet,
-			    PanelAppletOrient  orient)
-{
-	if (applet->priv->orient != orient) {
-		applet->priv->orient = orient;
+#define PROPERTY_ORIENT     "panel-applet-orient"
+#define PROPERTY_SIZE       "panel-applet-size"
+#define PROPERTY_BACKGROUND "panel-applet-background"
 
-		g_signal_emit (G_OBJECT (applet),
-			       panel_applet_signals [CHANGE_ORIENT],
-			       0, orient);
-	}
-}
-
-void
-panel_applet_change_size (PanelApplet *applet,
-			  const gint   size)
-{
-	if (applet->priv->size != size) {
-		applet->priv->size = size;
-
-		g_signal_emit (G_OBJECT (applet),
-			       panel_applet_signals [CHANGE_SIZE],
-			       0, size);
-	}
-}
-
-void
-panel_applet_set_background_colour (PanelApplet *applet,
-				    GdkColor    *colour)
-{
-
-	g_signal_emit (G_OBJECT (applet),
-		       panel_applet_signals [CHANGE_BACKGROUND],
-                       0, PANEL_COLOUR_BACKGROUND, colour, NULL);
-}
-
-void
-panel_applet_set_background_pixmap (PanelApplet *applet,
-				    const gchar *pixmap)
-{
-	g_signal_emit (G_OBJECT (applet),
-		       panel_applet_signals [CHANGE_BACKGROUND],
-                       0, PANEL_PIXMAP_BACKGOUND, NULL, pixmap);
-}
-
-void
-panel_applet_clear_background (PanelApplet *applet)
-{
-	g_signal_emit (G_OBJECT (applet),
-		       panel_applet_signals [CHANGE_BACKGROUND],
-                       0, PANEL_NO_BACKGROUND, NULL, NULL);
-}
+enum {
+	PROPERTY_ORIENT_IDX,
+	PROPERTY_SIZE_IDX,
+	PROPERTY_BACKGROUND_IDX
+};
 
 void
 panel_applet_setup_menu (PanelApplet        *applet,
@@ -180,6 +140,190 @@ panel_applet_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
+static gboolean
+panel_applet_parse_colour (const gchar *colour_str,
+			   GdkColor    *colour)
+{
+	int r, g, b;
+
+	g_assert (colour_str && colour);
+
+	if (colour_str [0] != '#')
+		return FALSE;
+
+	if (sscanf (colour_str + 1, "%2x%2x%2x", &r, &g, &b) != 3)
+		return FALSE;
+
+	colour->red   = r;
+	colour->green = g;
+	colour->blue  = b;
+		
+	return TRUE;
+}
+
+static void
+panel_applet_get_prop (BonoboPropertyBag *sack,
+                       BonoboArg         *arg,
+		       guint              arg_id,
+		       CORBA_Environment *ev,
+		       gpointer           user_data)
+{
+	PanelApplet *applet = PANEL_APPLET (user_data);
+
+	switch (arg_id) {
+	case PROPERTY_ORIENT_IDX:
+		BONOBO_ARG_SET_SHORT (arg, applet->priv->orient);
+		break;
+	case PROPERTY_SIZE_IDX:
+		BONOBO_ARG_SET_SHORT (arg, applet->priv->size);
+		break;
+	case PROPERTY_BACKGROUND_IDX:
+		BONOBO_ARG_SET_STRING (arg, applet->priv->background);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
+panel_applet_set_prop (BonoboPropertyBag *sack,
+		       const BonoboArg   *arg,
+		       guint              arg_id,
+		       CORBA_Environment *ev,
+		       gpointer           user_data)
+{
+	PanelApplet *applet = PANEL_APPLET (user_data);
+	
+	switch (arg_id) {
+	case PROPERTY_ORIENT_IDX: {
+		PanelAppletOrient orient;
+
+		orient = BONOBO_ARG_GET_SHORT (arg);
+
+		if (applet->priv->orient != orient) {
+			applet->priv->orient = orient;
+
+			g_signal_emit (G_OBJECT (applet),
+				       panel_applet_signals [CHANGE_ORIENT],
+				       0, orient);
+		}
+		}
+		break;
+	case PROPERTY_SIZE_IDX: {
+		guint size;
+
+		size = BONOBO_ARG_GET_SHORT (arg);
+
+		if (applet->priv->size != size) {
+			applet->priv->size = size;
+
+			g_signal_emit (G_OBJECT (applet),
+                                       panel_applet_signals [CHANGE_SIZE],
+                                       0, size);
+		}
+		}
+		break;
+	case PROPERTY_BACKGROUND_IDX: {
+		gchar  *bg_str;
+		gchar **elements;
+
+		bg_str = BONOBO_ARG_GET_STRING (arg);
+
+		elements = g_strsplit (bg_str, ":", -1);
+
+		if (elements [0] && !strcmp (elements [0], "none" )) {
+			applet->priv->background = NULL;
+
+			g_signal_emit (G_OBJECT (applet),
+				       panel_applet_signals [CHANGE_BACKGROUND],
+				       0, PANEL_NO_BACKGROUND, NULL, NULL);
+		
+		} else if (elements [0] && !strcmp (elements [0], "colour")) {
+			GdkColor colour;
+
+			if (!elements [1] || !panel_applet_parse_colour (elements [1], &colour)) {
+
+				g_warning (_("panel_applet_set_prop: Incomplete '%s'"
+					     " background type received"), elements [0]);
+
+				g_strfreev (elements);
+				return;
+			}
+
+			applet->priv->background = bg_str;
+
+			g_signal_emit (G_OBJECT (applet),
+				       panel_applet_signals [CHANGE_BACKGROUND],
+				       0, PANEL_COLOUR_BACKGROUND, &colour, NULL);
+
+		} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
+			gchar *pixmap = elements [1];
+
+			if (!pixmap) {
+				g_warning (_("panel_applet_set_prop: Incomplete '%s'"
+					     " background type received"), elements [0]);
+
+				g_strfreev (elements);
+				return;
+			}
+
+			applet->priv->background = bg_str;
+
+			g_signal_emit (G_OBJECT (applet),
+				       panel_applet_signals [CHANGE_BACKGROUND],
+				       0, PANEL_PIXMAP_BACKGOUND, NULL, pixmap);
+
+		} else {
+			g_warning (_("panel_applet_set_prop: Unknown backgound type received"));
+			return;
+		}
+
+		g_strfreev (elements);
+		}
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static BonoboPropertyBag *
+panel_applet_property_bag (PanelApplet *applet)
+{
+	BonoboPropertyBag *sack;
+
+	sack = bonobo_property_bag_new (panel_applet_get_prop, 
+					panel_applet_set_prop,
+					applet);
+
+	bonobo_property_bag_add (sack,
+				 PROPERTY_ORIENT,
+				 PROPERTY_ORIENT_IDX,
+				 BONOBO_ARG_SHORT,
+				 NULL,
+				 _("The Applet's containing Panel's orientation"),
+				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
+
+	bonobo_property_bag_add (sack,
+				 PROPERTY_SIZE,
+				 PROPERTY_SIZE_IDX,
+				 BONOBO_ARG_SHORT,
+				 NULL,
+				 _("The Applet's containing Panel's size in pixels"),
+				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
+
+	bonobo_property_bag_add (sack,
+				 PROPERTY_BACKGROUND,
+				 PROPERTY_BACKGROUND_IDX,
+				 BONOBO_ARG_STRING,
+				 NULL,
+				 _("The Applet's containing Panel's background colour or pixmap"),
+				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
+
+	return sack;
+}
+			   
 static void
 panel_applet_class_init (PanelAppletClass *klass,
 			 gpointer          dummy)
@@ -200,10 +344,10 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_STRUCT_OFFSET (PanelAppletClass, change_orient),
                               NULL,
 			      NULL,
-                              panel_marshal_VOID__ENUM,
+                              panel_marshal_VOID__INT,
                               G_TYPE_NONE,
 			      1,
-			      PANEL_TYPE_G_NOME__PANEL_ORIENT);
+			      G_TYPE_INT);
 
 	panel_applet_signals [CHANGE_SIZE] =
                 g_signal_new ("change_size",
@@ -227,7 +371,7 @@ panel_applet_class_init (PanelAppletClass *klass,
                               panel_marshal_VOID__ENUM_POINTER_STRING,
                               G_TYPE_NONE,
 			      3,
-			      PANEL_TYPE_G_NOME__PANEL_BACKGROUND_TYPE,
+			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
 			      G_TYPE_POINTER,
 			      G_TYPE_STRING);
 }
@@ -284,6 +428,10 @@ panel_applet_construct (PanelApplet *applet,
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	priv->control = bonobo_control_new (GTK_WIDGET (applet));
+
+	bonobo_control_set_properties (priv->control,
+				       BONOBO_OBJREF (panel_applet_property_bag (applet)),
+				       NULL);
 
 	priv->shell = panel_applet_shell_new (applet);
 

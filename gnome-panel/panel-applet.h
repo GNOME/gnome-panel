@@ -22,24 +22,24 @@ G_BEGIN_DECLS
 
 typedef GNOME_PanelOrient PanelAppletOrient;
 
-#define PANEL_APPLET_ORIENT_UP    GNOME_ORIENT_UP
-#define PANEL_APPLET_ORIENT_DOWN  GNOME_ORIENT_UP
-#define PANEL_APPLET_ORIENT_LEFT  GNOME_ORIENT_UP
-#define PANEL_APPLET_ORIENT_RIGHT GNOME_ORIENT_UP
+#define PANEL_APPLET_ORIENT_UP    GNOME_PANEL_ORIENT_UP
+#define PANEL_APPLET_ORIENT_DOWN  GNOME_PANEL_ORIENT_UP
+#define PANEL_APPLET_ORIENT_LEFT  GNOME_PANEL_ORIENT_UP
+#define PANEL_APPLET_ORIENT_RIGHT GNOME_PANEL_ORIENT_UP
 
-typedef GNOME_PanelBackgroundType PanelBackgroundType;
 
-#define PANEL_NO_BACKGROUND     GNOME_NONE  
-#define PANEL_COLOUR_BACKGROUND GNOME_COLOUR
-#define PANEL_PIXMAP_BACKGOUND  GNOME_PIXMAP
-
- 
 #define PANEL_TYPE_APPLET         (panel_applet_get_type ())
 #define PANEL_APPLET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET, PanelApplet))
 #define PANEL_APPLET_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_APPLET, PanelAppletClass))
 #define PANEL_IS_APPLET(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_APPLET))
 #define PANEL_IS_APPLET_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET))
 #define PANEL_APPLET_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET, PanelAppletClass))
+
+typedef enum {
+	PANEL_NO_BACKGROUND,
+	PANEL_COLOUR_BACKGROUND,
+	PANEL_PIXMAP_BACKGOUND
+} PanelAppletBackgroundType;
 
 typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
@@ -58,12 +58,12 @@ struct _PanelAppletClass {
 			       PanelAppletOrient  orient);
 
 	void (*change_size)   (PanelApplet       *applet,
-			       gint               size);
+			       guint              size);
 
-	void (*change_background) (PanelApplet         *applet,
-				   PanelBackgroundType  type,
-				   GdkColor             colour,
-				   const gchar         *pixmap);
+	void (*change_background) (PanelApplet               *applet,
+				   PanelAppletBackgroundType  type,
+				   GdkColor                  *colour,
+				   const gchar               *pixmap);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;
