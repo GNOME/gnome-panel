@@ -349,7 +349,7 @@ send_applet_session_save (AppletInfo *info,
 
 /*returns TRUE if the save was completed, FALSE if we need to wait
   for the applet to respond*/
-static int
+static gboolean
 save_applet_configuration(AppletInfo *info)
 {
 	GString       *buf;

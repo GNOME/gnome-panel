@@ -1728,6 +1728,7 @@ save_applet (AppletInfo *info, gboolean ret)
 	
 	gnome_config_set_int ("position", ad->pos);
 	gnome_config_set_int ("panel", panel_num);
+	gnome_config_set_int ("unique_panel_id", panel->unique_id);
 	gnome_config_set_bool ("right_stick",
 			       panel_widget_is_applet_stuck (panel,
 							     info->widget));
