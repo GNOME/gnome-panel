@@ -110,7 +110,8 @@ panel_applet_button_press (GtkWidget      *widget,
 }
 
 static void
-panel_applet_class_init (PanelAppletClass *klass)
+panel_applet_class_init (PanelAppletClass *klass,
+			 gpointer          dummy)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
@@ -123,7 +124,8 @@ panel_applet_class_init (PanelAppletClass *klass)
 }
 
 static void
-panel_applet_instance_init (PanelApplet *applet)
+panel_applet_instance_init (PanelApplet      *applet,
+			    PanelAppletClass *klass)
 {
 	applet->priv = g_new0 (PanelAppletPrivate, 1);
 
@@ -131,24 +133,27 @@ panel_applet_instance_init (PanelApplet *applet)
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 }
 
-GtkType
+GType
 panel_applet_get_type (void)
 {
-	static GtkType type = 0;
+	static GType type = 0;
 
 	if (!type) {
-		static const GtkTypeInfo info = {
-			"PanelApplet",
-			sizeof (PanelApplet),
+		static const GTypeInfo info = {
 			sizeof (PanelAppletClass),
-			(GtkClassInitFunc) panel_applet_class_init,
-			(GtkObjectInitFunc) panel_applet_instance_init,
 			NULL,
 			NULL,
-			(GtkClassInitFunc) NULL
+			(GClassInitFunc) panel_applet_class_init,
+			NULL,
+			NULL,
+			sizeof (PanelApplet),
+			0,
+			(GInstanceInitFunc) panel_applet_instance_init,
+			NULL
 		};
 
-		type = gtk_type_unique (GTK_TYPE_EVENT_BOX, &info);
+		type = g_type_register_static (GTK_TYPE_EVENT_BOX, "PanelApplet",
+					       &info, 0);
 	}
 
 	return type;
@@ -174,7 +179,7 @@ panel_applet_new (GtkWidget *widget)
 {
 	PanelApplet *applet;
 
-	applet = gtk_type_new (PANEL_TYPE_APPLET);
+	applet = g_object_new (PANEL_TYPE_APPLET, NULL);
 
 	panel_applet_construct (applet, widget);
 

@@ -18,11 +18,12 @@
 
 G_BEGIN_DECLS
  
-#define PANEL_TYPE_APPLET        (panel_applet_get_type ())
-#define PANEL_APPLET(o)          (GTK_CHECK_CAST ((o), PANEL_TYPE_APPLET, PanelApplet))
-#define PANEL_APPLET_CLASS(k)    (GTK_CHECK_CLASS_CAST((k), PANEL_TYPE_APPLET, PanelAppletClass))
-#define PANEL_IS_APPLET(o)       (GTK_CHECK_TYPE ((o), PANEL_TYPE_APPLET))
-#define PANEL_IS_APPLET_CLASS(k) (GTK_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET))
+#define PANEL_TYPE_APPLET         (panel_applet_get_type ())
+#define PANEL_APPLET(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET, PanelApplet))
+#define PANEL_APPLET_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_APPLET, PanelAppletClass))
+#define PANEL_IS_APPLET(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_APPLET))
+#define PANEL_IS_APPLET_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET))
+#define BASEP_WIDGET_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET, PanelAppletClass))
 
 typedef struct _PanelApplet        PanelApplet;
 typedef struct _PanelAppletClass   PanelAppletClass;
@@ -38,7 +39,7 @@ struct _PanelAppletClass {
 	GtkEventBoxClass     event_box_class;
 };
 
-GtkType            panel_applet_get_type  (void) G_GNUC_CONST;
+GType              panel_applet_get_type  (void) G_GNUC_CONST;
 
 PanelApplet       *panel_applet_new       (GtkWidget *widget);
 
