@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.4.2\n"
-"POT-Creation-Date: 2002-03-03 16:14+0100\n"
+"POT-Creation-Date: 2002-03-04 19:32+0000\n"
 "PO-Revision-Date: 2002-03-03 16:14+0100\n"
 "Last-Translator: Christopher R. Gabriel <cgabriel@pluto.linux.it>\n"
 "Language-Team: Italiano <it@li.org>\n"
@@ -206,7 +206,7 @@ msgid "Window List"
 msgstr "Lista delle finestre"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:417
+#: applets/gen_util/pager.c:417 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Switcher aree di lavoro"
 
@@ -483,6 +483,44 @@ msgstr "Controllo posta"
 msgid "New Mail"
 msgstr "Nuova posta"
 
+#: applets/gen_util/pager.glade.h:1
+#, fuzzy
+msgid "Number of _workspaces:"
+msgstr "Cambia tra i desktop"
+
+#: applets/gen_util/pager.glade.h:2
+#, fuzzy
+msgid "Rows"
+msgstr "Sfoglia"
+
+#: applets/gen_util/pager.glade.h:3
+#, fuzzy
+msgid "Show _all workspaces"
+msgstr "Cambia tra i desktop"
+
+#: applets/gen_util/pager.glade.h:4
+#, fuzzy
+msgid "Show only the _current workspace"
+msgstr "Cambia tra i desktop"
+
+#: applets/gen_util/pager.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr ""
+
+#: applets/gen_util/pager.glade.h:7
+#, fuzzy
+msgid "Workspace Switcher Properties"
+msgstr "Switcher aree di lavoro"
+
+#: applets/gen_util/pager.glade.h:8
+#, fuzzy
+msgid "Workspaces"
+msgstr "Switcher aree di lavoro"
+
+#: applets/gen_util/pager.glade.h:9 applets/gen_util/tasklist.glade.h:11
+msgid "_Done"
+msgstr ""
+
 #: applets/gen_util/pager.c:418
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
@@ -534,6 +572,54 @@ msgstr ""
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
 msgstr "Impossibile creare l'applet!\n"
+
+#: applets/gen_util/tasklist.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:2
+msgid "Restore to current _workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Restore to na_tive workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
+msgid "Show windows from _current workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:5
+#, fuzzy
+msgid "Show windows from a_ll workspaces"
+msgstr "Cambia tra i desktop"
+
+#: applets/gen_util/tasklist.glade.h:6
+msgid "When restoring minimized windows"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:7
+#, fuzzy
+msgid "Window List Properties"
+msgstr "Proprietà del controllo di posta"
+
+#: applets/gen_util/tasklist.glade.h:8
+#, fuzzy
+msgid "Window List content"
+msgstr "Lista delle finestre"
+
+#: applets/gen_util/tasklist.glade.h:9
+#, fuzzy
+msgid "Window grouping"
+msgstr "Lista delle finestre"
+
+#: applets/gen_util/tasklist.glade.h:10
+msgid "_Always group windows"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:12
+msgid "_Never group windows"
+msgstr ""
 
 #: applets/gen_util/tasklist.c:508
 msgid "(c) 2001 Red Hat, Inc"
@@ -860,24 +946,24 @@ msgid "Global panel properties"
 msgstr "Configurazione globalel del pannello"
 
 #: gnome-panel/gnome-panel-properties.glade.h:1
-msgid "<Alt>F1"
-msgstr "<Alt>F1"
+msgid "&lt;Alt&gt;F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:2
-msgid "<Alt>F1F1"
-msgstr "<Alt>F1F1"
+msgid "&lt;Alt&gt;F1F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:3
-msgid "<Alt>F2"
-msgstr "<Alt>F2"
+msgid "&lt;Alt&gt;F2"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:4
-msgid "<Control><Alt>m"
-msgstr "<Control><Alt>m"
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:5
-msgid "<Control><Alt>r"
-msgstr "<Control><Alt>r"
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:6
 msgid "Animation"
@@ -1965,68 +2051,55 @@ msgstr "Applet Test per Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Factory per Applet Test per Bonobo"
 
-#: libpanel-applet/panel-applet.c:607
+#: libpanel-applet/panel-applet.c:608
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ricevuto tipo di sfondo '%s' incompleto"
 
-#: libpanel-applet/panel-applet.c:621
+#: libpanel-applet/panel-applet.c:622
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ricevuto tipo di sfondo '%s' incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:630
+#: libpanel-applet/panel-applet.c:631
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Impossibile ottenere immagine: %s"
 
-#: libpanel-applet/panel-applet.c:637
+#: libpanel-applet/panel-applet.c:638
 msgid "Unknown background type received"
 msgstr "Ricevuto tipo di sfondo sconosciuto"
 
-#: libpanel-applet/panel-applet.c:792
+#: libpanel-applet/panel-applet.c:793
 msgid "The Applet's containing Panel's orientation"
 msgstr "L'applet contenente l'orientamento del pannello"
 
-#: libpanel-applet/panel-applet.c:800
+#: libpanel-applet/panel-applet.c:801
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "L'applet contenente la dimensione del pannello in pixel"
 
-#: libpanel-applet/panel-applet.c:808
+#: libpanel-applet/panel-applet.c:809
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "L'applet contenente il colore o l'immagine di sfondo del pannello"
 
-#: libpanel-applet/panel-applet.c:816
+#: libpanel-applet/panel-applet.c:817
 msgid "The Applet's flags"
 msgstr "Le proprietà dell'applet"
 
-#, fuzzy
-#~ msgid "Rows"
-#~ msgstr "Sfoglia"
+#~ msgid "<Alt>F1"
+#~ msgstr "<Alt>F1"
 
-#, fuzzy
-#~ msgid "Show _all workspaces"
-#~ msgstr "Cambia tra i desktop"
+#~ msgid "<Alt>F1F1"
+#~ msgstr "<Alt>F1F1"
 
-#, fuzzy
-#~ msgid "Workspace Switcher Properties"
-#~ msgstr "Switcher aree di lavoro"
+#~ msgid "<Alt>F2"
+#~ msgstr "<Alt>F2"
 
-#, fuzzy
-#~ msgid "Workspaces"
-#~ msgstr "Switcher aree di lavoro"
+#~ msgid "<Control><Alt>m"
+#~ msgstr "<Control><Alt>m"
 
-#, fuzzy
-#~ msgid "Window List Properties"
-#~ msgstr "Proprietà del controllo di posta"
-
-#, fuzzy
-#~ msgid "Window List content"
-#~ msgstr "Lista delle finestre"
-
-#, fuzzy
-#~ msgid "Window grouping"
-#~ msgstr "Lista delle finestre"
+#~ msgid "<Control><Alt>r"
+#~ msgstr "<Control><Alt>r"
 
 #~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
 #~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"

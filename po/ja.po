@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.11\n"
-"POT-Creation-Date: 2002-03-02 01:27+0900\n"
+"POT-Creation-Date: 2002-03-04 19:32+0000\n"
 "PO-Revision-Date: 2002-03-02 02:02+0900\n"
 "Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -205,12 +205,12 @@ msgid "Utility"
 msgstr "ユーティリティ"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:496
+#: applets/gen_util/tasklist.c:507
 msgid "Window List"
 msgstr "ウインドウリスト"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:405
+#: applets/gen_util/pager.c:417 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "ワークスペース切り換え器"
 
@@ -284,51 +284,51 @@ msgstr "%Y/%m/%d"
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=12"
 
-#: applets/gen_util/clock.c:862
+#: applets/gen_util/clock.c:864
 msgid "Clock Properties"
 msgstr "時計のプロパティ"
 
-#: applets/gen_util/clock.c:883
+#: applets/gen_util/clock.c:885
 msgid "Time Format"
 msgstr "時間の表記"
 
-#: applets/gen_util/clock.c:895
+#: applets/gen_util/clock.c:897
 msgid "12 hour"
 msgstr "12時間制"
 
-#: applets/gen_util/clock.c:903
+#: applets/gen_util/clock.c:905
 msgid "24 hour"
 msgstr "24時間制"
 
-#: applets/gen_util/clock.c:934
+#: applets/gen_util/clock.c:936
 msgid "Show date in applet"
 msgstr "アプレットに日付を表示"
 
-#: applets/gen_util/clock.c:945
+#: applets/gen_util/clock.c:947
 msgid "Show date in tooltip"
 msgstr "ツールチップに日付を表示"
 
-#: applets/gen_util/clock.c:956
+#: applets/gen_util/clock.c:958
 msgid "Use GMT"
 msgstr "GMTで"
 
-#: applets/gen_util/clock.c:967
+#: applets/gen_util/clock.c:969
 msgid "Unix time"
 msgstr "UNIX時刻"
 
-#: applets/gen_util/clock.c:971
+#: applets/gen_util/clock.c:973
 msgid "Internet time"
 msgstr "インターネット時間"
 
-#: applets/gen_util/clock.c:1076
+#: applets/gen_util/clock.c:1078
 msgid "Clock Applet"
 msgstr "時計アプレット"
 
-#: applets/gen_util/clock.c:1077
+#: applets/gen_util/clock.c:1079
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "(c) 1998-2001 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1078
+#: applets/gen_util/clock.c:1080
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
@@ -485,11 +485,50 @@ msgstr "メールチェック"
 msgid "New Mail"
 msgstr "新しいメイルがあります"
 
-#: applets/gen_util/pager.c:406
+#: applets/gen_util/pager.glade.h:1
+#, fuzzy
+msgid "Number of _workspaces:"
+msgstr "ワークスペース間を切り換え"
+
+#: applets/gen_util/pager.glade.h:2
+#, fuzzy
+msgid "Rows"
+msgstr "参照"
+
+#: applets/gen_util/pager.glade.h:3
+#, fuzzy
+msgid "Show _all workspaces"
+msgstr "ワークスペース間を切り換え"
+
+#: applets/gen_util/pager.glade.h:4
+#, fuzzy
+msgid "Show only the _current workspace"
+msgstr "ワークスペース間を切り換え"
+
+#: applets/gen_util/pager.glade.h:5
+msgid "Show workspace _names in the switcher"
+msgstr ""
+
+#: applets/gen_util/pager.glade.h:7
+#, fuzzy
+msgid "Workspace Switcher Properties"
+msgstr "ワークスペース切り換え器"
+
+#: applets/gen_util/pager.glade.h:8
+#, fuzzy
+msgid "Workspaces"
+msgstr "ワークスペース切り換え器"
+
+#: applets/gen_util/pager.glade.h:9 applets/gen_util/tasklist.glade.h:11
+#, fuzzy
+msgid "_Done"
+msgstr "なし"
+
+#: applets/gen_util/pager.c:418
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:407
+#: applets/gen_util/pager.c:419
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage the windows."
@@ -537,11 +576,61 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "アプレットが生成できませんでした\n"
 
-#: applets/gen_util/tasklist.c:497
+#: applets/gen_util/tasklist.glade.h:1
+msgid "Group windows when _space is limited"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:2
+msgid "Restore to current _workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:3
+msgid "Restore to na_tive workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:4
+msgid "Show windows from _current workspace"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:5
+#, fuzzy
+msgid "Show windows from a_ll workspaces"
+msgstr "ワークスペース間を切り換え"
+
+#: applets/gen_util/tasklist.glade.h:6
+msgid "When restoring minimized windows"
+msgstr ""
+
+#: applets/gen_util/tasklist.glade.h:7
+#, fuzzy
+msgid "Window List Properties"
+msgstr "ウインドウリスト"
+
+#: applets/gen_util/tasklist.glade.h:8
+#, fuzzy
+msgid "Window List content"
+msgstr "ウインドウリスト"
+
+#: applets/gen_util/tasklist.glade.h:9
+#, fuzzy
+msgid "Window grouping"
+msgstr "ウインドウマネージャ"
+
+#: applets/gen_util/tasklist.glade.h:10
+#, fuzzy
+msgid "_Always group windows"
+msgstr "他のウィンドウの下に"
+
+#: applets/gen_util/tasklist.glade.h:12
+#, fuzzy
+msgid "_Never group windows"
+msgstr "他のウィンドウの上に"
+
+#: applets/gen_util/tasklist.c:508
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:498
+#: applets/gen_util/tasklist.c:509
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
@@ -858,24 +947,24 @@ msgid "Global panel properties"
 msgstr "パネル全般の設定"
 
 #: gnome-panel/gnome-panel-properties.glade.h:1
-msgid "<Alt>F1"
-msgstr "<Alt>F1"
+msgid "&lt;Alt&gt;F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:2
-msgid "<Alt>F1F1"
-msgstr "<Alt>F1F1"
+msgid "&lt;Alt&gt;F1F1"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:3
-msgid "<Alt>F2"
-msgstr "<Alt>F2"
+msgid "&lt;Alt&gt;F2"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:4
-msgid "<Control><Alt>m"
-msgstr "<Control><Alt>m"
+msgid "&lt;Control&gt;&lt;Alt&gt;m"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:5
-msgid "<Control><Alt>r"
-msgstr "<Control><Alt>r"
+msgid "&lt;Control&gt;&lt;Alt&gt;r"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.glade.h:6
 msgid "Animation"
@@ -1960,80 +2049,55 @@ msgstr "テスト Bonobo アプレット"
 msgid "Test Bonobo Applet Factory"
 msgstr "テスト Bonobo アプレットファクトリ"
 
-#: libpanel-applet/panel-applet.c:607
+#: libpanel-applet/panel-applet.c:608
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "背景の種類として不完全な '%s' を受信しました"
 
-#: libpanel-applet/panel-applet.c:621
+#: libpanel-applet/panel-applet.c:622
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "背景の種類として不完全な '%s' を受信しました: %s"
 
-#: libpanel-applet/panel-applet.c:630
+#: libpanel-applet/panel-applet.c:631
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "画像 %s の取得に失敗しました"
 
-#: libpanel-applet/panel-applet.c:637
+#: libpanel-applet/panel-applet.c:638
 msgid "Unknown background type received"
 msgstr "不明な背景の種類を受信しました"
 
-#: libpanel-applet/panel-applet.c:792
+#: libpanel-applet/panel-applet.c:793
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:800
+#: libpanel-applet/panel-applet.c:801
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:808
+#: libpanel-applet/panel-applet.c:809
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:816
+#: libpanel-applet/panel-applet.c:817
 msgid "The Applet's flags"
 msgstr ""
 
-#, fuzzy
-#~ msgid "Rows"
-#~ msgstr "参照"
+#~ msgid "<Alt>F1"
+#~ msgstr "<Alt>F1"
 
-#, fuzzy
-#~ msgid "Show _all workspaces"
-#~ msgstr "ワークスペース間を切り換え"
+#~ msgid "<Alt>F1F1"
+#~ msgstr "<Alt>F1F1"
 
-#, fuzzy
-#~ msgid "Workspace Switcher Properties"
-#~ msgstr "ワークスペース切り換え器"
+#~ msgid "<Alt>F2"
+#~ msgstr "<Alt>F2"
 
-#, fuzzy
-#~ msgid "Workspaces"
-#~ msgstr "ワークスペース切り換え器"
+#~ msgid "<Control><Alt>m"
+#~ msgstr "<Control><Alt>m"
 
-#, fuzzy
-#~ msgid "_Done"
-#~ msgstr "なし"
-
-#, fuzzy
-#~ msgid "Window List Properties"
-#~ msgstr "ウインドウリスト"
-
-#, fuzzy
-#~ msgid "Window List content"
-#~ msgstr "ウインドウリスト"
-
-#, fuzzy
-#~ msgid "Window grouping"
-#~ msgstr "ウインドウマネージャ"
-
-#, fuzzy
-#~ msgid "_Always group windows"
-#~ msgstr "他のウィンドウの下に"
-
-#, fuzzy
-#~ msgid "_Never group windows"
-#~ msgstr "他のウィンドウの上に"
+#~ msgid "<Control><Alt>r"
+#~ msgstr "<Control><Alt>r"
 
 #~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
 #~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
