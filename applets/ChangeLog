@@ -1,5 +1,11 @@
 1999-02-07  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
+	* multiload/load-graph.c (load_graph_update): Now this is the
+	timeout handler.
+	(load_graph_draw): Do not update the graph's data, just redraw.
+	(load_graph_properties_update): Redraw the load graphs, to make
+	properties take effect immediately when the user hits Apply.
+
 	* multiload/properties.c (multiload_properties_cb): Invoke the
 	properties for the correct part of the applet.
 	(multiload_show_properties): Show the property page corresponding
