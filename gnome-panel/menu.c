@@ -2469,7 +2469,6 @@ typedef struct {
 	int                    timeout_id;
 } ReloadData;
 
-#ifdef FIXME
 static gboolean
 Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
 			      Bonobo_ServerInfoList *l2)
@@ -2497,13 +2496,10 @@ Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
 
 	return retval;
 }
-#endif
 
 static gboolean
 recheck_applet_list (ReloadData *reload_data)
 {
-	return TRUE;
-#ifdef FIXME
 	Bonobo_ServerInfoList *applet_list;
 	CORBA_Environment      env;
 
@@ -2540,7 +2536,6 @@ recheck_applet_list (ReloadData *reload_data)
 	make_add_submenu (reload_data->menu, applet_list);
 
 	return TRUE;
-#endif
 }
 
 static void

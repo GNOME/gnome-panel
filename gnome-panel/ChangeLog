@@ -1,5 +1,11 @@
 2003-03-06  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu.c: (Bonobo_ServerInfoList_equals), (recheck_applet_list):
+	re-enable the re-loading of the applet menu. It crashes for
+	some people but we need to fix that.
+
+2003-03-06  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-run.c: (find_icon_timeout), (add_icon_idle),
 	(selection_changed): fix leaks - patch from Kjartan Maraas.
 	#105911.
