@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 09:36+0000\n"
-"PO-Revision-Date: 2005-01-30 14:46+0200\n"
+"POT-Creation-Date: 2005-02-05 03:37+0200\n"
+"PO-Revision-Date: 2005-02-05 03:39+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "_Apie"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:608 gnome-panel/panel-action-button.c:743
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:972
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:986
 #: gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Pagalba"
@@ -184,10 +184,7 @@ msgstr "Vartotojo formatas"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:67
-#: applets/wncklet/workspace-switcher.c:267
-#: applets/wncklet/workspace-switcher.c:575
+#: applets/wncklet/window-list.c:114 applets/wncklet/workspace-switcher.c:240
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Įvyko klaida rodant pagalbą: %s"
@@ -234,9 +231,9 @@ msgstr "Naudoti _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
-#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:97
-#: applets/wncklet/workspace-switcher.c:606
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:510
+#: applets/wncklet/window-list.c:736 applets/wncklet/window-menu.c:75
+#: applets/wncklet/workspace-switcher.c:554
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
 msgstr ""
@@ -510,8 +507,6 @@ msgid "    "
 msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/panel-properties-dialog.glade.h:2
-#: gnome-panel/panel-run-dialog.glade.h:1
-#: libpanel-applet/panel-test-applets.glade.h:1
 msgid "*"
 msgstr "*"
 
@@ -668,7 +663,7 @@ msgid "Switch between workspaces"
 msgstr "Persijunginėti tarp darbo erdvių"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:805
+#: applets/wncklet/window-list.c:739
 msgid "Window List"
 msgstr "Langų sąrašas"
 
@@ -677,41 +672,41 @@ msgid "Window Navigation Applet Factory"
 msgstr "Langų navigacijos įtaisų gamykla"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:108 applets/wncklet/window-menu.c:347
+#: applets/wncklet/window-menu.c:78 applets/wncklet/window-menu.c:261
 msgid "Window Selector"
 msgstr "Langų parinkiklis"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:617
+#: applets/wncklet/workspace-switcher.c:557
 msgid "Workspace Switcher"
 msgstr "Darbo erdvių keitiklis"
 
-#: applets/wncklet/showdesktop.c:205
+#: applets/wncklet/showdesktop.c:171
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nepavyko paleisti %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:206 gnome-panel/panel-util.c:567
+#: applets/wncklet/showdesktop.c:172 gnome-panel/panel-util.c:569
 msgid "Icon not found"
 msgstr "Ikona nerasta"
 
-#: applets/wncklet/showdesktop.c:264
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Norėdami atstatyti paslėptus langus, spauskite čia."
 
-#: applets/wncklet/showdesktop.c:267
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Spauskite čia, jei norite paslėpti visus langus ir rodyti darbastalį."
 
-#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
+#: applets/wncklet/showdesktop.c:429 applets/wncklet/showdesktop.c:513
 msgid "Show Desktop Button"
 msgstr "Darbastalio rodymo mygtukas"
 
-#: applets/wncklet/showdesktop.c:582
+#: applets/wncklet/showdesktop.c:515
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "Šis mygtukas leidžia jums paslėpti visus langus ir parodyti darbastalį"
 
-#: applets/wncklet/showdesktop.c:623
+#: applets/wncklet/showdesktop.c:545
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -719,7 +714,7 @@ msgstr ""
 "Jūsų langų tvarkyklė nepalaiko darbastalo rodymo mygtuko, arba Jūs "
 "nenaudojate jokios langų tvarkyklės."
 
-#: applets/wncklet/window-list.c:808
+#: applets/wncklet/window-list.c:741
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "Langų sąrašas rodo visų langų sąrašą ir leidžia persijungti tarp jų."
 
@@ -850,42 +845,42 @@ msgstr "Mažiausias dydis, kurio reikalauja langų sąrašas"
 msgid "When to group windows"
 msgstr "Kada grupuoti langus"
 
-#: applets/wncklet/window-menu.c:113
+#: applets/wncklet/window-menu.c:82
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Langų parinkiklis rodo visų langų sąrašą ir leidžia tarp jų persijungti."
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "eilutės"
 
-#: applets/wncklet/workspace-switcher.c:144
-#: applets/wncklet/workspace-switcher.c:928
+#: applets/wncklet/workspace-switcher.c:130
+#: applets/wncklet/workspace-switcher.c:858
 msgid "columns"
 msgstr "stulpeliai"
 
-#: applets/wncklet/workspace-switcher.c:455
+#: applets/wncklet/workspace-switcher.c:428
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Klaida įkeliant num_rows reikšmę darbalaukių keitikliui: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:466
+#: applets/wncklet/workspace-switcher.c:439
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Klaida įkeliant display_workspace_names reikšmę darbalaukių keitikliui: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:481
+#: applets/wncklet/workspace-switcher.c:454
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Klaida įkeliant display_all_workspaces reikšmę darbo erdvių keitikliui: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:620
+#: applets/wncklet/workspace-switcher.c:559
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -1117,7 +1112,7 @@ msgstr "Įdėti jį į skydelį kaip stalčių"
 msgid "Add this as menu to panel"
 msgstr "Įdėti jį į skydelį kaip meniu"
 
-#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:775
+#: gnome-panel/menu.c:1532 gnome-panel/panel-menu-bar.c:789
 msgid "Applications"
 msgstr "Programos"
 
@@ -1138,7 +1133,7 @@ msgid "Restart _Screensaver Daemon"
 msgstr "Perleisti _užsklandos demoną"
 
 #: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:630
+#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-util.c:632
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Nepavyko paleisti „%s“"
@@ -1248,36 +1243,36 @@ msgstr "Iššokantis stalčiukas, kuriame saugomi leistukai"
 msgid "(empty)"
 msgstr "(tuščia)"
 
-#: gnome-panel/panel-addto.c:373 libpanel-applet/panel-test-applets.c:234
+#: gnome-panel/panel-addto.c:400 libpanel-applet/panel-test-applets.c:234
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "užklausa grąžino išimtį %s\n"
 
-#: gnome-panel/panel-addto.c:913
+#: gnome-panel/panel-addto.c:940
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Pasirinkite _elementą, įdėdamą į „%s“:"
 
-#: gnome-panel/panel-addto.c:917
+#: gnome-panel/panel-addto.c:944
 msgid "Add to Drawer"
 msgstr "Įdėti į stalčių"
 
-#: gnome-panel/panel-addto.c:919
+#: gnome-panel/panel-addto.c:946
 msgid "Select an _item to add to the drawer:"
 msgstr "Pasirinkite _elementą, įdedamą į stalčių:"
 
-#: gnome-panel/panel-addto.c:921
+#: gnome-panel/panel-addto.c:948
 msgid "Add to Panel"
 msgstr "Įdėti į skydelį"
 
-#: gnome-panel/panel-addto.c:923
+#: gnome-panel/panel-addto.c:950
 msgid "Select an _item to add to the panel:"
-msgstr "Pasirinkit _elementą, kurį įdėti į skydelį:"
+msgstr "Pasirinkit _elementą, įdedamą į skydelį:"
 
 #: gnome-panel/panel-applet-frame.c:814
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "Išimtis iš popup_menu '%s'\n"
+msgstr "Išimtis iš popup_menu „%s“\n"
 
 #: gnome-panel/panel-applet-frame.c:933
 #, c-format
@@ -1302,7 +1297,7 @@ msgstr "_Neperkrauti"
 
 #: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
-msgstr "_Perleisti"
+msgstr "_Perkrauti"
 
 #: gnome-panel/panel-applet-frame.c:995
 #, c-format
@@ -1617,26 +1612,26 @@ msgstr "Padaryti ekrano nuotrauką"
 msgid "Take window screenshot"
 msgstr "Padaryti lango nuotrauką"
 
-#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:299
+#: gnome-panel/panel-menu-bar.c:108 gnome-panel/panel-run-dialog.c:310
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Nepavyko parodyti vietos „%s“"
 
-#: gnome-panel/panel-menu-bar.c:470
+#: gnome-panel/panel-menu-bar.c:479
 msgid "Bookmarks"
 msgstr "Žymelės"
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-menu-bar.c:487 gnome-panel/panel-recent.c:200
+#: gnome-panel/panel-menu-bar.c:500 gnome-panel/panel-recent.c:200
 #, c-format
 msgid "Open '%s'"
 msgstr "Atidaryti „%s“"
 
-#: gnome-panel/panel-menu-bar.c:545
+#: gnome-panel/panel-menu-bar.c:559
 msgid "Network Places"
 msgstr "Tinklo vietos"
 
-#: gnome-panel/panel-menu-bar.c:547
+#: gnome-panel/panel-menu-bar.c:561
 msgid "Removable Media"
 msgstr "Išimamos laikmenos"
 
@@ -1646,22 +1641,22 @@ msgstr "Išimamos laikmenos"
 #. * Desktop environment). Do
 #. * not keep "Desktop Folder|"
 #. * in the translation
-#: gnome-panel/panel-menu-bar.c:606
+#: gnome-panel/panel-menu-bar.c:620
 msgid "Desktop Folder|Desktop"
 msgstr "Darbastalis"
 
-#: gnome-panel/panel-menu-bar.c:607
+#: gnome-panel/panel-menu-bar.c:621
 msgid "Open the desktop as a folder"
 msgstr "Atidaryti darbastalį kaip aplanką"
 
-#: gnome-panel/panel-menu-bar.c:786
+#: gnome-panel/panel-menu-bar.c:800
 msgid "Places"
 msgstr "Vietos"
 
 #. Translators: Desktop is used here as in "Desktop Environment" (this
 #. * is not the Desktop folder). Do not keep "Desktop Environment|" in
 #. * the translation.
-#: gnome-panel/panel-menu-bar.c:795
+#: gnome-panel/panel-menu-bar.c:809
 msgid "Desktop Environment|Desktop"
 msgstr "Aplinka"
 
@@ -2035,44 +2030,44 @@ msgstr "Išvalyti paskutiniuosius dokumentus"
 msgid "Clear all items from the recent documents list"
 msgstr "Išvalyti paskutiniųjų dokumentų sąrašą"
 
-#: gnome-panel/panel-run-dialog.c:273
+#: gnome-panel/panel-run-dialog.c:284
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Nepavyko paleisti komandos „%s“"
 
-#: gnome-panel/panel-run-dialog.c:351
+#: gnome-panel/panel-run-dialog.c:362
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Nepavyko konvertuoti „%s“ iš UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1056
+#: gnome-panel/panel-run-dialog.c:1067
 msgid "Choose a file to append to the command..."
 msgstr "Pasirinkite bylą pridedamą prie komandos..."
 
-#: gnome-panel/panel-run-dialog.c:1333
+#: gnome-panel/panel-run-dialog.c:1414
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Bus vykdoma komanda: „%s“"
 
-#: gnome-panel/panel-run-dialog.c:1339 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1421 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Norėdami pažiūrėti programos aprašymą, pasirinkite programą."
 
-#: gnome-panel/panel-run-dialog.c:1374
+#: gnome-panel/panel-run-dialog.c:1456
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
 "URI sąrašas numestas ant paleidimo dialogo yra blogo formato (%d) arba ilgio "
 "(%d)\n"
 
-#: gnome-panel/panel-run-dialog.glade.h:2
+#: gnome-panel/panel-run-dialog.glade.h:1
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
 "Norėdami gauti pridedamos prie komandos bylos vardą spauskite šį mygtuką."
 
-#: gnome-panel/panel-run-dialog.glade.h:3
+#: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
@@ -2080,17 +2075,21 @@ msgstr ""
 "Norėdami paleisti pažymėtą programą arba komandą, komandų įvedimo eilutėje "
 "spauskite šį mygtuką."
 
-#: gnome-panel/panel-run-dialog.glade.h:4
+#: gnome-panel/panel-run-dialog.glade.h:3
 msgid "Command entry"
 msgstr "Komandos įvedimo langelis"
 
-#: gnome-panel/panel-run-dialog.glade.h:5
+#: gnome-panel/panel-run-dialog.glade.h:4
 msgid "Command icon"
 msgstr "Komandos ikona"
 
-#: gnome-panel/panel-run-dialog.glade.h:6
+#: gnome-panel/panel-run-dialog.glade.h:5
 msgid "Enter a command string here to run it."
 msgstr "Norėdami paleisti komandą, įveskite ją čia."
+
+#: gnome-panel/panel-run-dialog.glade.h:6
+msgid "List of known applications"
+msgstr "Žinomų programų sąrašas"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
@@ -2562,11 +2561,11 @@ msgstr "Xinerama monitorius, kuriame rodomas skydelis"
 msgid "Y co-ordinate of panel"
 msgstr "Skydelio Y koordinatė"
 
-#: gnome-panel/panel-util.c:63
+#: gnome-panel/panel-util.c:65
 msgid "Cannot display help document"
 msgstr "Nepavyko parodyti pagalbos"
 
-#: gnome-panel/panel-util.c:253
+#: gnome-panel/panel-util.c:255
 #, c-format
 msgid "Details: %s"
 msgstr "Detalės: %s"
@@ -2709,6 +2708,7 @@ msgstr "X didelis"
 msgid "XX Large"
 msgstr "XX didelis"
 
+#. This is an utility to easily test various applets
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Test applet utility"
 msgstr "Bandomojo įtaiso pagalbinė programa"
