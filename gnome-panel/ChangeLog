@@ -1,3 +1,11 @@
+Thu Mar 05 22:22:53 1998  George Lebl  <jirka@5z.com>
+
+	* main.c,panel-widget.c,drawer.c: new panel-widget signal
+	  "applet_move" and got rid of restore_state signal. this
+	  makes it possible for the drawers to move themselves
+	  appropriately. initialization cleaned up and should work
+	  fine for orientation otehr then bottom
+
 Wed Mar 04 23:28:44 1998  George Lebl  <jirka@5z.com>
 
 	* main.c, panel-widget.c: made signals work better, drawers

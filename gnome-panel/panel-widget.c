@@ -1305,9 +1305,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 
 		panel->currently_dragged_applet_pos =
 			panel_widget_switch_move(panel, pos, moveby);
-		gtk_signal_emit(GTK_OBJECT(panel),
+		/*now done in size_allocate*/
+		/*gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
-				panel->currently_dragged_applet);
+				panel->currently_dragged_applet);*/
 		return TRUE;
 	}
 	return FALSE;

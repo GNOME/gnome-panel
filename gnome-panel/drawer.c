@@ -135,16 +135,11 @@ create_drawer_applet(GtkWidget *window, GtkWidget * drawer_panel,
 
 	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
 
-	/*FIXME: this don't work, make sure the drawer is shown if
-	  it is supposed to be
-	if(PANEL_WIDGET(drawer->drawer)->state == PANEL_SHOWN) {
-		PANEL_WIDGET(drawer->drawer)->state = PANEL_HIDDEN;
-		gtk_signal_connect_after(GTK_OBJECT(drawer->button),
-					 "size_allocate",
-					 GTK_SIGNAL_FUNC(drawer_click),
-					 drawer);
-	}
-	*/
+	if(PANEL_WIDGET(drawer_panel)->state == PANEL_SHOWN)
+		gtk_widget_show(drawer_panel);
+	else
+		gtk_widget_hide(drawer_panel);
+
 
 	g_free (pixmap_name);
 	return drawer;
