@@ -8,20 +8,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 16:01+0100\n"
-"PO-Revision-Date: 2004-04-15 12:18+0200\n"
+"POT-Creation-Date: 2004-08-25 21:57+0200\n"
+"PO-Revision-Date: 2004-08-25 23:17+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.0.2\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "D_oitu data eta ordua..."
+msgstr "D_oitu data eta ordua"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -38,9 +37,8 @@ msgstr "Kopiatu _ordua"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "Ho_ni buruz..."
+msgstr "_Honi buruz"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -59,9 +57,8 @@ msgstr "L_aguntza"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "_Hobespenak..."
+msgstr "_Hobespenak"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: applets/clock/clock.c:2544
@@ -136,11 +133,8 @@ msgstr "%A, %B %d"
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr ""
-"%a\n"
-"%b %d"
+msgstr "%b %d"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -255,69 +249,73 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Uneko data eta ordua erakusten ditu erlojuak"
 
-#. Translators: the only valid values for this are "12" and "24"
-#: applets/clock/clock.schemas.in.h:2
-msgid "24"
+#: applets/clock/clock.schemas.in.h:1
+msgid "<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
 msgstr "24"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
-msgid "24-hour"
-msgstr "24 ordu"
+#: applets/clock/clock.schemas.in.h:2
+msgid ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
+msgstr "24-hour"
 
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
 msgstr "Orduaren formatu pertsonalizatua"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Ordu-formatua"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Ezarrita badago, orduaz gain data ere erakusten du."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Ezarrita badago, segundoak erakusten ditu orduan."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr ""
-"Ezarrita badago, UCT (Universal Coordinated Time) zonako ordua erakusten du."
+msgstr "Ezarrita badago, UCT (Universal Coordinated Time) zonako ordua erakusten du."
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Ezarrita badago, data argibide gisa erakusten du erakuslea erlojuan "
 "dagoenean."
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Erakutsi data erlojuan"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Erakutsi data argibide moduan"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Erakutsi ordua segungoekin"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Giltza honen erabilera GNOME 2.6 bertsioan zaharkitua gelditu zen, 'format' giltzaren "
+"alde. Eskema hau bertsio zaharkituekin parekotasuna mantentzeko jarraitzen da."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Giltza honek ordulari-appletak darabilen formatua zehazten du, giltzaren formatua "
+"\"pertsonalizatua\" bezala ezartzen denean. Bihurtzaile bereziak"
+"(strftime()-ek ulertzen dituenak) erabil dezakezu formatu berezi bat lortzeko."
 
-#: applets/clock/clock.schemas.in.h:16
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -328,25 +326,31 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Giltza honek ordulari-appletak darabilen formatua zehazten du. Dauden "
+"balioak: \"12-hour\", \"24-hour\", \"internet\", \"unix\" eta \"pertsonalizatua\". \"internet\"  "
+"balioarekin ezartzen bada, ordulariak Interneteko ordua bistaratuko du. Interneteko "
+"ordu-sistemak eguna 1000 \".beats\"-etan zatitzen du. sistema honetan ez dago ordu-zonarik. "
+"\"unix\" balioarekin jartzen bada, ordulariak Epoch garaitik (hau da, 1970-01-01) "
+"hasita zenbatuz denbora segundotan bistaratuko du. \"pertsonalizatua\" aukeratuz "
+"ordua \"custom_format\" giltzan zehaztutakoaren arabera bistaratuko du."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
 msgstr "Gako honek ordua konfiguratzeko exekutatuko den programa zehazten du."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
 msgstr "Ordua konfiguratzeko tresna"
 
-#: applets/clock/clock.schemas.in.h:19
-#, fuzzy
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use Internet time"
 msgstr "Erabili Interneteko ordua"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UNIX time"
 msgstr "Erabili UNIX ordua"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use UTC"
 msgstr "Erabili UTC"
 
@@ -533,8 +537,7 @@ msgid "Frames in fish's animation"
 msgstr "Arrainaren animazioko irudiak"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr "Hautatzen bada, animazioa biratu egingo da panel bertikaletan."
 
 #: applets/fish/fish.schemas.in.h:5
@@ -573,8 +576,7 @@ msgstr ""
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr ""
-"Gako honek zehazten du zenbat irudi bistaratuko diren arrainaren animazioan."
+msgstr "Gako honek zehazten du zenbat irudi bistaratuko diren arrainaren animazioan."
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -804,8 +806,7 @@ msgid "When to group windows"
 msgstr "Noiz elkartu leihoak"
 
 #: applets/wncklet/window-menu.c:152
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Leiho hautatzaileak dauden leihoen zerrenda ematen du eta batetik bestera "
 "aldatzeko aukera ematen du."
@@ -840,8 +841,7 @@ msgstr "Errorea laneko arearen aldatzailearen num_rows balioa kargatzean: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Errorea laneko arearen aldatzailearen display_workspace_names balioa "
 "kargatzean: %s\n"
@@ -1121,9 +1121,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Ezin da uneko mahaigainaren pantaila-argazkia hartu."
 
 #: gnome-panel/gnome-panel-screenshot.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "Gorde pantaila-argazkia _web orrian (~/public__html-en)"
+msgstr "Gorde pantaila-argazkia _web orrian (gorde %s-(e)n)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
@@ -1353,16 +1353,14 @@ msgid "_Delete This Panel"
 msgstr "_Ezabatu panel hau"
 
 #: gnome-panel/menu.c:2289
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "_Gehitu panelari"
+msgstr "_Gehitu panelari..."
 
 #: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "_Panel berria"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
 msgstr "Panelei _buruz"
 
@@ -1443,28 +1441,24 @@ msgid "Force a misbehaving application to quit"
 msgstr "Derrigortu portaera akastuna duen aplikazioa ixtera"
 
 #: gnome-panel/panel-addto.c:103
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Exekutatu aplikazioa"
+msgstr "Pertsonalizatutako aplikazioen abiarazlea"
 
 #: gnome-panel/panel-addto.c:104
-#, fuzzy
 msgid "Create a new launcher"
-msgstr "Sortu abiarazlea"
+msgstr "Sortu abiarazle berria"
 
 #: gnome-panel/panel-addto.c:114
-#, fuzzy
 msgid "Application Launcher..."
 msgstr "Exekutatu aplikazioa..."
 
 #: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Abiaratu programa bat, GNOMEren menuan agertzen dena"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "Menu nagusian"
+msgstr "GNOMEren menu nagusia"
 
 #: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
@@ -1472,15 +1466,15 @@ msgstr "Menu-barra"
 
 #: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
-msgstr ""
+msgstr "Menu-barra pertsonalizatua"
 
 #: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Elementuak gordetzeko tiradera bat"
 
 #: gnome-panel/panel-addto.c:236
 msgid "(empty)"
-msgstr ""
+msgstr "(hutsik)"
 
 #: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1488,23 +1482,22 @@ msgid "query returned exception %s\n"
 msgstr "kontsultak %s salbuespena eman du\n"
 
 #: gnome-panel/panel-addto.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "_Gehitu panelari"
+msgstr "Gehitu %s-(r)i"
 
 #: gnome-panel/panel-addto.c:768
-#, fuzzy
 msgid "Add to the panel"
-msgstr "_Gehitu panelari"
+msgstr "Gehitu panelari"
 
 #: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "Hautatu _elementu bat %s-(r)i gehitzeko:"
 
 #: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "Hautatu _elementu bat panelari gehitzeko"
 
 #: gnome-panel/panel-applet-frame.c:757
 #, c-format
@@ -1578,10 +1571,8 @@ msgid "Error getting value for '%s': %s"
 msgstr "Errorea '%s'(r)en balioa lortzean: %s"
 
 #: gnome-panel/panel-force-quit.c:74
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
-msgstr ""
-"Aplikazioa ixtera behartzeko, egin klik leiho batean. Uzteko, sakatu <IHES>."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
+msgstr "Aplikazioa ixtera behartzeko, egin klik leiho batean. Uzteko, sakatu <IHES>."
 
 #: gnome-panel/panel-force-quit.c:186
 msgid ""
@@ -1628,8 +1619,7 @@ msgstr "Gaitu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr ""
-"Zabaldu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
+msgstr "Zabaldu \"Exekutatu aplikazioa\" elkarrizketa-koadroko programa-zerrenda"
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
@@ -1670,6 +1660,10 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Panelak ezikusi egingo dien apleten IID-en zerrenda. Honela zenbait aplet kargatzetik, "
+"edo menuan erakusteaz, sahietsiko du. Adibidez, 'mini-commander' appleta desgaitzeko "
+"gehitu 'OAFIID:GNOME_MiniCommanderApplet' zerrenda honetan. Panela berrabiarazi "
+"beharra dago aldaketak eragina izan dezan."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1706,8 +1700,7 @@ msgstr "Desgaitu saioaren amaiera"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr ""
-"\"Exekutatu aplikazioa\" elkarrizketa-koadroa bistaratzeko laster-teklak"
+msgstr "\"Exekutatu aplikazioa\" elkarrizketa-koadroa bistaratzeko laster-teklak"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
@@ -1751,8 +1744,7 @@ msgstr ""
 "abiarazle batean klik egiten duenean."
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 "Hautatzen bada, abiarazlea nabarmendu egingo da erakuslea gainean jartzen "
 "zaionean."
@@ -1766,18 +1758,22 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Egia bada, panelak ez dio erabiltzaileari aplikazio baten irteera derrigortzen "
+"utziko (derrigorrezko irteerako botoia ezabatuz)"
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Egia bada, panelak ez dio erabiltzaileari bere pantaila blokeatzen utziko, horretarako "
+"menuko sarreretatik pantailako blokeoa kenduz."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
-msgstr ""
+msgstr "Egia bada, panelak ez dio erabiltzaileari saioa amaitzen utziko, menuko sarreretatik saio amaierako botoia kenduz."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1785,6 +1781,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Egia bada, panelak ez dio eraibltzaileari paneleko konfigurazioa aldatzen utziko. Halaere, agian applet "
+"bakunak independenteki blokeatu beharko dira. Panela berrabiarazi beharko da aldaketa hauek eragina "
+"izan dezaten."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -2134,8 +2133,7 @@ msgid "Couldn't find a suitable application"
 msgstr "Ezin da aurkitu aplikazio egokirik"
 
 #: gnome-panel/panel-recent.c:87
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr ""
 "Mota honetako fitxategientzat lehenetsitako aplikazioak ezin du urruneko "
 "fitxategirik maneiatu"
@@ -2150,26 +2148,28 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Errore ezezagun bat gertatu da %s irekitzen saiatu denean"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Azken dokumentuak"
+msgstr "Garbitu azken dokumentuen zerrenda?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
-"• All items from the recent documents list in all applications."
+" All items from the Actions  Recent Documents menu item.\n"
+" All items from the recent documents list in all applications."
 msgstr ""
+"Azken dokumentuen zerrenda garbitzen baduzu, ondorengoa ere garbituko da:\n"
+"\n"
+" Ekintzak menuko -> Azken dokumentuak menuko elementu guztiak.\n"
+" Aplikazio guztietako azken dokumentuen zerrendako elementu guztiak."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "Azken dokumentuak"
 
 #: gnome-panel/panel-recent.c:275
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Azken dokumentuak"
+msgstr "Garbitu azken dokumentuak"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2285,9 +2285,8 @@ msgid "_Force quit"
 msgstr "_Behartu ixtera"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Egutegia"
+msgstr "_Garbitu"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2777,18 +2776,15 @@ msgid "Specify an applet IID to load"
 msgstr "Zehatu applet IID bat kargatzeko"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr "Zehaztu applet-aren hobespenak biltegiratzeko gconf kokaleku bat"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
-msgstr ""
-"Zehaztu applet-aren hasierako tamaina (oso txikia, tartekoa, handia, etab.)"
+msgstr "Zehaztu applet-aren hasierako tamaina (oso txikia, tartekoa, handia, etab.)"
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 "Zehaztu applet-aren hasierako orientazioa (goian, behean, ezkerrean edo "
 "eskuinean)"
@@ -2837,1359 +2833,3 @@ msgstr "Oso handia"
 msgid "XX Small"
 msgstr "Oso txikia"
 
-#~ msgid ""
-#~ "The system administrator has disallowed\n"
-#~ "modification of the panel configuration"
-#~ msgstr ""
-#~ "Sistema-administratzaileak panelaren\n"
-#~ "konfigurazioa aldatzea debekatu du"
-
-#~ msgid "Error loading glade file %s"
-#~ msgstr "Errorea %s glade fitxategia kargatzean"
-
-#~ msgid "Panel"
-#~ msgstr "Panela"
-
-#~ msgid "Select preferences for all your panels"
-#~ msgstr "Hautatu panel guztientzako hobespenak"
-
-#~ msgid "Animation _speed:"
-#~ msgstr "A_nimazio-abiadura:"
-
-#~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "Itxi _tiradera abiarazlean klik egitean"
-
-#~ msgid "Drawer and panel _animation"
-#~ msgstr "Tiraderaren eta panelaren ani_mazioa"
-
-#~ msgid "Fast"
-#~ msgstr "Bizkorra"
-
-#~ msgid "Panel Preferences"
-#~ msgstr "Panel-hobespenak"
-
-#~ msgid "Slow"
-#~ msgstr "Motela"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Blokeatu pantaila"
-
-#~ msgid "Lock the screen so that you can temporarily leave your computer"
-#~ msgstr "Pantaila blokeatzen du, ordenagailutik alde egin behar duzunerako"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "GNOMEko saioa amaitu"
-
-#~ msgid "Search for Files"
-#~ msgstr "Bilatu fitxategiak"
-
-#~ msgid "Screenshot"
-#~ msgstr "Pantaila-argazkia"
-
-#~ msgid "Lock"
-#~ msgstr "Blokeatu"
-
-#~ msgid "Lock the screen so you can temporarily leave your computer"
-#~ msgstr "Pantaila blokeatzen du, ordenagailutik alde egin behar duzunerako."
-
-#~ msgid "Search"
-#~ msgstr "Bilatu"
-
-#~ msgid "Run"
-#~ msgstr "Exekutatu"
-
-#~ msgid "Run a command"
-#~ msgstr "Komandoak exekutatzeko"
-
-#~ msgid "Accessories"
-#~ msgstr "Gehigarriak"
-
-#~ msgid "Amusements"
-#~ msgstr "Denbora-pasak"
-
-#~ msgid "Utility"
-#~ msgstr "Utilitatea"
-
-#, fuzzy
-#~ msgid "Clear recent document history?"
-#~ msgstr "Azken dokumentuak"
-
-#~ msgid "Launcher..."
-#~ msgstr "Abiarazlea..."
-
-#~ msgid "Launcher from menu"
-#~ msgstr "Menuko abiarazlea"
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "Ezin da gehitu exekutatzeko koadroan"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "Ez dago'Exec' edo 'URL' eremurik sarreran"
-
-#~ msgid "Put into run dialog"
-#~ msgstr "Ezarri exekuzio-elkarrizketan"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr ""
-#~ "Ezarrita badago, Interneteko ordua erakusten du, mundu guztirako berdina."
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr ""
-#~ "Ezarrita badago, Aroaren hasieratik (1970-01-01) honako segundoak "
-#~ "erakusten ditu."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Gako honek erlojuaren applet-aren ordu-formatua zehazten du. Aukerak 12 "
-#~ "eta 24 dira."
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s GNOMEren arraina"
-
-#~ msgid "Window Menu"
-#~ msgstr "Leiho-menua"
-
-#~ msgid "Has Arrow"
-#~ msgstr "Gezia du"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Gezi-adierazlea marraztu ala ez"
-
-#~ msgid "DnD Highlight"
-#~ msgstr "Nabarmendu Arrasatu eta Jaregitean"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr "Arrastatu eta jaregitean ikonoa nabarmendu behar den ala ez"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientazioa"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "Botoi-trepetaren orientazioa"
-
-#~ msgid "Icon Name"
-#~ msgstr "Ikono-izena"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "Botoi-trepetarentzako ikonoa"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "Stock-ikonoaren IDa"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "Botoi-trepetarentzako stock-ikonoa"
-
-#~ msgid "Expander Size"
-#~ msgstr "Zabaltzailearen tamaina"
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Zabaltzailearen geziaren tamaina"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Inprimatu pantaila-argazkia"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Pantaila-argazkia inprimatzeko aurrebista"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Inprimatu pantaila-argazkia..."
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "%s _aplikazioaren laguntza"
-
-#~ msgid "%s - command not found"
-#~ msgstr "%s - komandoa ez da aurkitu"
-
-#~ msgid "Help on %s"
-#~ msgstr "%s - laguntza"
-
-#~ msgid "Application"
-#~ msgstr "Aplikazioa"
-
-#~ msgid ""
-#~ "Log out of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Irten saio honetatik beste erabiltzaile-izen batekin sartzeko edo "
-#~ "ordenagailua itzaltzeko"
-
-#~ msgid "Action Type"
-#~ msgstr "Ekintza-mota"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "Botoiak egingo duen ekintza-mota"
-
-#~ msgid "Drag N' Drop enabled"
-#~ msgstr "Arrastatu eta jaregitea gaituta"
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Arrastatu eta jaregitea trepetan gaituta dagoen ala ez"
-
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s\n"
-#~ "\n"
-#~ "Do you want to delete the applet from your configuration?"
-#~ msgstr ""
-#~ "Panelak problemak izan ditu \"%s\" kargatzeko\n"
-#~ "Xehetasunak: %s\n"
-#~ "\n"
-#~ "Applet hori konfiguraziotik ezabatu nahi duzu?"
-
-#~ msgid "Edges"
-#~ msgstr "Ertzak"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "Zein ertz marraztu"
-
-#~ msgid "Quit from the GNOME desktop"
-#~ msgstr "Irten GNOMEren mahaigainetik"
-
-#~ msgid "Menu Path"
-#~ msgstr "Menuaren bide-izena"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "Menua zein bide-izenetatik eraiki behar den"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "Menuaren ikono pertsonalizatua"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Erabili menuaren bide-izena"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Erabili menu-path propietatean zehaztutako bidea"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "Erabili ikono pertsonalizatua"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Erabili custom-icon propietatean zehaztutako ikonoa"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Errorea '%s' Gconf zerrenda-balioa irakurtzean: %s"
-
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>I_konoa:</b>"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Izena:</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Orientazioa:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>Ta_maina:</b>"
-
-#~ msgid "Open Recent"
-#~ msgstr "Ireki oraintsukoa"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Hautatuta dagoen aplikazioaren azalpena edo exekutatzera doan komandoari "
-#~ "buruzko informazioa."
-
-#~ msgid "Application description"
-#~ msgstr "Aplikazioaren azalpena"
-
-#~ msgid "List of known applications"
-#~ msgstr "Aplikazio ezagunen zerrenda"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Hautatu zerrendako aplikazio bat exekutatzeko"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "Hau hautatzen bada, aplikazio ezagunen zerrenda bistaratzen da."
-
-#~ msgid "The name of this panel"
-#~ msgstr "Panel honen izena"
-
-#~ msgid "Expand"
-#~ msgstr "Zabaldu"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Zabaldu monitorearen zabalera/altuera osoa har dezan"
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "Panelaren orientazioa"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "Panelaren altuera (edo zabalera, bertikala bada)"
-
-#~ msgid "X position"
-#~ msgstr "X kokalekua"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "Panelaren X kokalekua"
-
-#~ msgid "X centered"
-#~ msgstr "X zentratua"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "X koordenatuak pantailaren zentroari egiten dio erreferentzia"
-
-#~ msgid "Y position"
-#~ msgstr "Y kokalekua"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "Panelaren Y kokalekua"
-
-#~ msgid "Y centered"
-#~ msgstr "Y zentratua"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "Y koordenatuak pantailaren zentroari egiten dio erreferentzia"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "Xinerama monitorea"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "Zein paneletan dagoen monitorea (Xinerama adieran)"
-
-#~ msgid "Auto hide"
-#~ msgstr "Automatikoki ezkutatu"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr "Automatikoki ezkutatu panela saguak gainetik alde egiten duenean."
-
-#~ msgid "Hide delay"
-#~ msgstr "Ezkutatu arteko denbora"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "Zenbat milisegundo itxarongo duen automatikoki ezkutatu aurretik"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "Desezkutatu arteko denbora"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr "Zenbat milisegundo itxarongo duen automatikoki desezkutatu aurretik"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "Automatikoki ezkutatzeko tamaina"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr "Zenbat pixel ikusiko diren panela automatikoki ezkutatzen denean"
-
-#~ msgid "Animate"
-#~ msgstr "Animatu"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Animazioa ezkutatzea/erakustea gaitu"
-
-#~ msgid "Animation Speed"
-#~ msgstr "Animazio-abiadura"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr "Zein abiaduratan animatu panela ezkutatzea/erakustea"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "Botoiak gaituta"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Gaitu ezkutatzeko/erakusteko botoiak"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "Geziak gaituta"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Gaitu geziak ezkutatzeko/erakusteko botoietan"
-
-#~ msgid "Help document not found"
-#~ msgstr "Laguntza-dokumentua ez da aurkitu"
-
-#~ msgid "No document to show"
-#~ msgstr "Ez dago dokumenturik erakusteko"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "Ezin da exekutatu %s"
-
-#, fuzzy
-#~ msgid ""
-#~ "Failed to load image %s\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Huts egin du komando hau exekutatzean:\n"
-#~ "%s\n"
-#~ "%s"
-
-#~ msgid "Size and Position"
-#~ msgstr "Tamaina eta kokalekua"
-
-#~ msgid "Tooltip/Name"
-#~ msgstr "Argibidea/Izena"
-
-#~ msgid "Applet appearance"
-#~ msgstr "Applet-aren itxura"
-
-#~ msgid "Drawer handle"
-#~ msgstr "Tiraderaren heldulekua"
-
-#~ msgid "Enable hidebutton"
-#~ msgstr "Gaitu ezkutatzeko botoia"
-
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "Gaitu ezkutatzeko botoiko gezia"
-
-#, fuzzy
-#~ msgid "KDE Menu"
-#~ msgstr "KDE menuak"
-
-#, fuzzy
-#~ msgid "_Drawer"
-#~ msgstr "Tiradera"
-
-#, fuzzy
-#~ msgid "_Run Application..."
-#~ msgstr "Aplikazioa"
-
-#, fuzzy
-#~ msgid "_Take Screenshot..."
-#~ msgstr "Pantaila-argazkia"
-
-#, fuzzy
-#~ msgid "_Log Out"
-#~ msgstr "Amaitu saioa"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Ezin da 'GNOMEri buruz' exekutatu"
-
-#, fuzzy
-#~ msgid "Could not remove the menu item"
-#~ msgstr "Ezin izan da %s menu-elementua kendu: %s\n"
-
-#, fuzzy
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Ezin da xscreensaver exekutatu"
-
-#, fuzzy
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Ezin da xscreensaver exekutatu"
-
-#, fuzzy
-#~ msgid "Take a screen shot"
-#~ msgstr "Gorde pantaila-argazkia _mahaigainean"
-
-#, fuzzy
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "Gorde pantaila-argazkia _mahaigainean"
-
-#, fuzzy
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "Unitate-muntatzailearen applet-a"
-
-#, fuzzy
-#~ msgid "The location of the launcher"
-#~ msgstr "Gehitu abiarazle hau panelari"
-
-#, fuzzy
-#~ msgid "Error launching command"
-#~ msgstr ""
-#~ "Huts egin du komando hau exekutatzean:\n"
-#~ "%s\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "The background type."
-#~ msgstr "Atzeko planoaren mota: "
-
-#, fuzzy
-#~ msgid "The orientation of the panel."
-#~ msgstr "Kendu panel hau"
-
-#, fuzzy
-#~ msgid "The size of the panel."
-#~ msgstr "Kendu panel hau"
-
-#, fuzzy
-#~ msgid "and finally, The Knights Who Say... NI!"
-#~ msgstr "eta azkenik, ... NI dioten zaldunak!"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
-#~ "prohibited any changes to the panel's configuration to take place."
-#~ msgstr ""
-#~ "\"Lockdown\" moduan exekutatzen.   Honek esan nahi du sistema-"
-#~ "administratzaileak panelaren konfigurazioan aldaketak egitea debekatu "
-#~ "duela. "
-
-#~ msgid "End world hunger"
-#~ msgstr "Munduko gosearen bukaera"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>Can't load entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr "Ezin da sarrera kargatu"
-
-#, fuzzy
-#~ msgid "Floating"
-#~ msgstr "Panel mugikorra"
-
-#, fuzzy
-#~ msgid "Centered"
-#~ msgstr "Internet ordua"
-
-#, fuzzy
-#~ msgid "%s %s Panel"
-#~ msgstr "Panela"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>Failed to run this program</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr "Huts egin du programa hau kargatzean!\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Huts egin du komando hau exekutatzean:\n"
-#~ "%s\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "Known Applications"
-#~ msgstr "Aplikazioak"
-
-#, fuzzy
-#~ msgid "No application selected"
-#~ msgstr "Ez da programarik hautatu"
-
-#, fuzzy
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "Irudi bakoitzeko pausa (seg):"
-
-#, fuzzy
-#~ msgid "_Animation filename:"
-#~ msgstr "Animazio-fitxategiaren izena:"
-
-#, fuzzy
-#~ msgid "Rows"
-#~ msgstr "Arakatu"
-
-#~ msgid "Run Program"
-#~ msgstr "Exekutatu programa"
-
-#, fuzzy
-#~ msgid "Run Program..."
-#~ msgstr "Exekutatu programa"
-
-#, fuzzy
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Abisatu soinu bidez mezua iristean"
-
-#, fuzzy
-#~ msgid "Inbox Monitor"
-#~ msgstr "Monitoreak"
-
-#, fuzzy
-#~ msgid "_Check for mail"
-#~ msgstr "Begiratu mezurik dagoen"
-
-#, fuzzy
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Urruneko bezeroaren errorea gertatu da. Urruneko inkesta desaktibatua. "
-#~ "Beharbada okerreko zerbitzaria/erabiltzaile-izena/pasahitza erabili duzu?"
-
-#~ msgid "You have new mail."
-#~ msgstr "Mezu berriak dituzu."
-
-#~ msgid "You have mail."
-#~ msgstr "Mezu berriak dituzu."
-
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d mezu"
-
-#~ msgid "%d messages"
-#~ msgstr "%d mezu"
-
-#~ msgid "No mail."
-#~ msgstr "Ez dago mezurik."
-
-#, fuzzy
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "Postontziaren kokalekua:"
-
-#~ msgid "Local mailspool"
-#~ msgstr "Posta-ilara lokala"
-
-#~ msgid "Local maildir"
-#~ msgstr "Posta-direktorio lokala"
-
-#~ msgid "Remote POP3-server"
-#~ msgstr "Urruneko POP3 zerbitzaria"
-
-#~ msgid "Remote IMAP-server"
-#~ msgstr "Urruneko IMAP zerbitzaria"
-
-#, fuzzy
-#~ msgid "Mail _spool file:"
-#~ msgstr "Posta-ilarako fitxategia:"
-
-#, fuzzy
-#~ msgid "Mail s_erver:"
-#~ msgstr "Posta-zerbitzaria:"
-
-#, fuzzy
-#~ msgid "_Password:"
-#~ msgstr "Pasahitza:"
-
-#, fuzzy
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "Posta begiratu aurretik exekutatzeko komandoa:"
-
-#~ msgid "Execute"
-#~ msgstr "Exekutatu"
-
-#, fuzzy
-#~ msgid "Before each _update:"
-#~ msgstr "Eguneratu aurretik:"
-
-#, fuzzy
-#~ msgid "Command to execute before each update"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "When new mail _arrives:"
-#~ msgstr "Mezu berriak iristen direnean:"
-
-#, fuzzy
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "When clicke_d:"
-#~ msgstr "Klik egindakoan:"
-
-#, fuzzy
-#~ msgid "Check for mail _every"
-#~ msgstr "Begiratu mezurik dagoen"
-
-#~ msgid "minutes"
-#~ msgstr "minutuz behin"
-
-#, fuzzy
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "Abisatu soinu bidez mezua iristean"
-
-#, fuzzy
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Monitoreak"
-
-#, fuzzy
-#~ msgid "_Mail check"
-#~ msgstr "Mezu-abisua"
-
-#, fuzzy
-#~ msgid "Mail_box"
-#~ msgstr "Postontzia"
-
-#, fuzzy
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr "Mezu-abisuak mezu berriak iritsi direla jakinarazten dizu"
-
-#~ msgid "Text only"
-#~ msgstr "Testu soila"
-
-#, fuzzy
-#~ msgid "Mail check"
-#~ msgstr "Mezu-abisua"
-
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr "Mezu-abisuak mezu berriak iritsi direla jakinarazten dizu"
-
-#, fuzzy
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Posta begiratu aurretik exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Interval for checking mail"
-#~ msgstr "Posta begiratu aurretik exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr "Abisatu soinu bidez mezua iristean"
-
-#, fuzzy
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Posta begiratu aurretik exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "The mail server"
-#~ msgstr "Posta-zerbitzaria:"
-
-#, fuzzy
-#~ msgid "You've got mail!"
-#~ msgstr "Mezu berriak dituzu."
-
-#~ msgid "Mailcheck"
-#~ msgstr "Mezu-abisua"
-
-#~ msgid "New Mail"
-#~ msgstr "Mezu berria"
-
-#, fuzzy
-#~ msgid "Mode"
-#~ msgstr "Lekuz aldatu"
-
-#, fuzzy
-#~ msgid "State"
-#~ msgstr "Egoera"
-
-#, fuzzy
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Ezkutatzeko botoiak"
-
-#~ msgid "Hide this panel"
-#~ msgstr "Ezkutatu panel hau"
-
-#, fuzzy
-#~ msgid "Show this panel"
-#~ msgstr "Kendu panel hau"
-
-#, fuzzy
-#~ msgid "Menu Panel"
-#~ msgstr "Menu-panela"
-
-#, fuzzy
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Menu nagusia"
-
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Ezin da pantaila-argazkien programa aurkitu"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Ezin da pantaila-argazkien programa exekutatu"
-
-#, fuzzy
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Panel lerragarria"
-
-#, fuzzy
-#~ msgid "Sliding Panel"
-#~ msgstr "Panel lerragarria"
-
-#, fuzzy
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Panel lerragarria"
-
-#, fuzzy
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Panel mugikorra"
-
-#~ msgid "You can only have one menu panel at a time."
-#~ msgstr "Menu-panel bakarra eduki dezakezu aldiko."
-
-#, fuzzy
-#~ msgid "C_orner Panel"
-#~ msgstr "Izkinako panela"
-
-#, fuzzy
-#~ msgid "Create corner panel"
-#~ msgstr "Izkinako panela"
-
-#, fuzzy
-#~ msgid "Create edge panel"
-#~ msgstr "Sortu panela"
-
-#, fuzzy
-#~ msgid "Create floating panel"
-#~ msgstr "Panel mugikorra"
-
-#, fuzzy
-#~ msgid "_Sliding Panel"
-#~ msgstr "Panel lerragarria"
-
-#, fuzzy
-#~ msgid "Create sliding panel"
-#~ msgstr "Sortu panela"
-
-#, fuzzy
-#~ msgid "_Menu Panel"
-#~ msgstr "Menu-panela"
-
-#, fuzzy
-#~ msgid "Create menu panel"
-#~ msgstr "Sortu panela"
-
-#, fuzzy
-#~ msgid "Button"
-#~ msgstr "Saioa amaitzeko botoia"
-
-#, fuzzy
-#~ msgid "Menu:"
-#~ msgstr "Menua"
-
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Ezin da menua sortu, menu nagusia erabiltzen ari da!"
-
-#, fuzzy
-#~ msgid "Miscellaneous:"
-#~ msgstr "Hainbat"
-
-#~ msgid "Current screen:"
-#~ msgstr "Uneko pantaila:"
-
-#, fuzzy
-#~ msgid "Current monitor:"
-#~ msgstr "Uneko pantaila:"
-
-#, fuzzy
-#~ msgid "Hori_zontal"
-#~ msgstr "Ezarri panela horizontalki"
-
-#~ msgid "Image"
-#~ msgstr "Irudia"
-
-#, fuzzy
-#~ msgid "Image:"
-#~ msgstr "Irudia"
-
-#~ msgid "Edge panel"
-#~ msgstr "Ertzeko panela"
-
-#~ msgid "Sliding panel"
-#~ msgstr "Panel lerragarria"
-
-#~ msgid "Floating panel"
-#~ msgstr "Panel mugikorra"
-
-#~ msgid "Disabled"
-#~ msgstr "Desgaituta"
-
-#, fuzzy
-#~ msgid "(C) 1998-2002 the Free Software Foundation"
-#~ msgstr "(C) 1997-2000 The Free Software Foundation"
-
-#~ msgid "(c) 1998-2000 the Free Software Foundation"
-#~ msgstr "(C) 1998-2000 The Free Software Foundation"
-
-#, fuzzy
-#~ msgid "(c) 2001 Red Hat, Inc."
-#~ msgstr "Copyright (c) 1998 Red Hat Software, Inc."
-
-#~ msgid "Can't execute printer command"
-#~ msgstr "Ezin da inprimagailu-komandoa exekutatu"
-
-#~ msgid "Printer properties"
-#~ msgstr "Inprimagailuaren propietateak"
-
-#~ msgid "Printer name:"
-#~ msgstr "Inprimagailuaren izena:"
-
-#~ msgid "Print command:"
-#~ msgstr "Inprimatzeko komandoa:"
-
-#~ msgid "Printer"
-#~ msgstr "Inprimagailua"
-
-#~ msgid "Printer Applet"
-#~ msgstr "Inprimagailuaren applet-a"
-
-#~ msgid "(c) 1998 the Free Software Foundation"
-#~ msgstr "(c) 1998 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The printer applet lets you easily drag files to be printed via a print "
-#~ "command"
-#~ msgstr ""
-#~ "Inprimaketa-komando baten bitartez inprimatu beharreko fitxategiak erraz "
-#~ "arrastatzeko aukera ematen dizu inprimagailuaren applet-ak."
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "Ezin da applet-a sortu!\n"
-
-#~ msgid "Properties..."
-#~ msgstr "Propietateak..."
-
-#~ msgid "Help"
-#~ msgstr "Laguntza"
-
-#~ msgid "About..."
-#~ msgstr "Honi buruz..."
-
-#, fuzzy
-#~ msgid "(C) 2002 Red Hat, Inc."
-#~ msgstr "Copyright (c) 1998 Red Hat Software, Inc."
-
-#, fuzzy
-#~ msgid "Copyright 2002 Red Hat Inc."
-#~ msgstr "Copyright (c) 1998 Red Hat Software, Inc."
-
-#, fuzzy
-#~ msgid "(C) 1997-2002 the Free Software Foundation"
-#~ msgstr "(C) 1997-2000 The Free Software Foundation"
-
-#~ msgid "Applets"
-#~ msgstr "Applet-ak"
-
-#, fuzzy
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "%s GNOME arrainak esana:"
-
-#, fuzzy
-#~ msgid "GNOME Menu"
-#~ msgstr "Menu nagusia"
-
-#, fuzzy
-#~ msgid "Log Out Button"
-#~ msgstr "Saioa amaitzeko botoia"
-
-#, fuzzy
-#~ msgid "Lock Button"
-#~ msgstr "Blokeatzeko botoia"
-
-#, fuzzy
-#~ msgid "Screenshot Button"
-#~ msgstr "Pantaila-argazkia"
-
-#, fuzzy
-#~ msgid "Orient _vertically"
-#~ msgstr "Ezarri panela bertikalki"
-
-#, fuzzy
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "Txikia (36 pixel)"
-
-#, fuzzy
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "Txikia (36 pixel)"
-
-#~ msgid "Small (36 pixels)"
-#~ msgstr "Txikia (36 pixel)"
-
-#, fuzzy
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "Oso txikia (24 pixel)"
-
-#~ msgid "Large (64 pixels)"
-#~ msgstr "Handia (64 pixel)"
-
-#, fuzzy
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "Handia (64 pixel)"
-
-#, fuzzy
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "Handia (64 pixel)"
-
-#, fuzzy
-#~ msgid "_Do not scale image to fit"
-#~ msgstr "Ez jarri irudia eskalan egokitzeko"
-
-#, fuzzy
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "Arrainean klik egitean exekutatzeko komandoa:"
-
-#, fuzzy
-#~ msgid "Wanda"
-#~ msgstr "Estandarra"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Ez dago mezurik."
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Inprimagailua"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "Erlojuaren applet-a"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "Fvwm orrialdekatzailearen applet-a"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Unitate-muntatzailearen applet-a"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Ertzeko panela"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Menu-panela"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Atzeko planoa"
-
-#~ msgid "Log out"
-#~ msgstr "Amaitu saioa"
-
-#, fuzzy
-#~ msgid "Use GMT"
-#~ msgstr "Erabili GMT"
-
-#, fuzzy
-#~ msgid "Tasklist size"
-#~ msgstr "Ataza-zerrendaren propietateak"
-
-#, fuzzy
-#~ msgid "Lock Display"
-#~ msgstr "Bistaratzea"
-
-#, fuzzy
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Panel-propietate orokorrak"
-
-#, fuzzy
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Ezin dira panelaren propietate orokorrak exekutatu"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Hobespen orokorrak..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Panelaren eskuliburua..."
-
-#~ msgid "Edit menus..."
-#~ msgstr "Editatu menuak..."
-
-#~ msgid "Off"
-#~ msgstr "Desaktibatuta"
-
-#~ msgid "In a submenu"
-#~ msgstr "Azpimenu batean"
-
-#~ msgid "Menu properties"
-#~ msgstr "Menu-propietateak"
-
-#~ msgid "Menu type"
-#~ msgstr "Menu-mota"
-
-#~ msgid "Global main menu"
-#~ msgstr "Menu nagusi orokorra"
-
-#~ msgid "Main menu"
-#~ msgstr "Menu nagusia"
-
-#~ msgid "Normal menu"
-#~ msgstr "Menu normala"
-
-#~ msgid "Programs: "
-#~ msgstr "Programak: "
-
-#~ msgid "Applets: "
-#~ msgstr "Applet-ak: "
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Banaketa-menua (aurkitzen bada): "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "KDE menua (aurkitzen bada): "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Panel-menua: "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Mahaigaineko menua: "
-
-#~ msgid "Hiding"
-#~ msgstr "Ezkutatzea"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Goi-ezkerreko izkinaren posizioa: X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Pantailaren ertzetiko tartea:"
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Oharra: Panelak bere tamaina bertako applet \n"
-#~ "handienera egokituko du, baina applet \n"
-#~ "guztiek ez diete tamaina horiei obeditzen. "
-
-#~ msgid "Pixmap"
-#~ msgstr "Pixmap"
-
-#~ msgid "Color to use:"
-#~ msgstr "Erabiltzeko kolorea:"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Jarri eskalan irudia (gorde proportzioak)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Tiratu irudia (aldatu proportzioak)"
-
-#, fuzzy
-#~ msgid "mode"
-#~ msgstr "Kendu"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr "Baduzu lehendik egoera-taula bat panelean.Bakarra eduki dezakezu"
-
-#~ msgid "Status dock"
-#~ msgstr "Egoera-taula"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "GNOME arrainaren applet-a"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Mezu-abisuaren applet-a"
-
-#, fuzzy
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr ""
-#~ "Huts egin du komando hau exekutatzean:\n"
-#~ "%s"
-
-#, fuzzy
-#~ msgid "_Browse..."
-#~ msgstr "Arakatu..."
-
-#, fuzzy
-#~ msgid "_Known Applications <<"
-#~ msgstr "Aplikazioak"
-
-#, fuzzy
-#~ msgid "_Known Applications >>"
-#~ msgstr "Aplikazioak"
-
-#~ msgid "Password:"
-#~ msgstr "Pasahitza:"
-
-#, fuzzy
-#~ msgid "CDE Applications"
-#~ msgstr "Aplikazioak"
-
-#, fuzzy
-#~ msgid "Screenshot Capture"
-#~ msgstr "Pantaila-argazkia"
-
-#, fuzzy
-#~ msgid "_Advanced <<"
-#~ msgstr "Aurreratua..."
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Ezkutatu kontrol aurreratuak botoi honen azpian"
-
-#, fuzzy
-#~ msgid "_Advanced >>"
-#~ msgstr "Aurreratua..."
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr ""
-#~ "Onartu komando-lerro bat idaztea, zerrendatik aplikazio bat aukeratu ordez"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Mahaigaineko sarreraren propietateak"
-
-#~ msgid "Create menu item"
-#~ msgstr "Sortu menu-elementu bat"
-
-#, fuzzy
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Panel lerragarria"
-
-#, fuzzy
-#~ msgid "Global Panel Properties"
-#~ msgstr "Panel-propietate orokorrak"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Berrirakurri menu guztiak"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "GNOME arrainaren izena:"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid "Time Format"
-#~ msgstr "Ordu-formatua:"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Kendu paneletik"
-
-#, fuzzy
-#~ msgid "GNOME Menu:"
-#~ msgstr "Menua"
-
-#~ msgid "Grab key..."
-#~ msgstr "Hartu tekla..."
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Eduki panelak beste leihoen gainean"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Eduki panelak beste leihoen azpian"
-
-#, fuzzy
-#~ msgid "Keep panels on same level as other windows"
-#~ msgstr "Eduki panelak beste leihoen mailan"
-
-#, fuzzy
-#~ msgid "Run Program dialog:"
-#~ msgstr "Exekutatu programa"
-
-#, fuzzy
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "Ultra txikia (12 pixel)"
-
-#, fuzzy
-#~ msgid "Clock Properties"
-#~ msgstr "Erlojuaren propietateak"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Ezin da gnome egutegia exekutatu,\n"
-#~ "beharbada ez da instalatuta egongo.\n"
-#~ "Gnome-pim paketean dago."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "menua ez da sortu"
-
-#~ msgid "Today"
-#~ msgstr "Gaur"
-
-#~ msgid "This Week"
-#~ msgstr "Aste honetan"
-
-#~ msgid "This Month"
-#~ msgstr "Hil honetan"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Ezin zaio time-admin-i deitu\n"
-#~ "Beharbada time-admin ez da instalatuta egongo"
-
-#, fuzzy
-#~ msgid "Set Time..."
-#~ msgstr "Ezarri ordua"
-
-#~ msgid "Format"
-#~ msgstr "Formatua"
-
-#~ msgid "Press a key..."
-#~ msgstr "Sakatu tekla bat..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "Garbitu pantaila orain"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "Blokeatu pantaila orain"
-
-#, fuzzy
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I:%M:%S %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Aplikazio barneratua..."
-
-#~ msgid "Reload"
-#~ msgstr "Berritu"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Sortu barneratutako applet-a"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "Barneratzeko aplikazioaren titulua"
-
-#~ msgid "Width"
-#~ msgstr "Zabalera"
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%A, %B %d"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "(C) 1998-2001 The Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "Erlojuaren applet-ak data eta ordua erraz eta arin bistaratzeko aukera "
-#~ "ematen dio panelari"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "Ezin da aurkitu %s pixmap fitxategia"
-
-#~ msgid "Run..."
-#~ msgstr "Exekutatu..."
-
-#~ msgid "Programs"
-#~ msgstr "Programak"
-
-#, fuzzy
-#~ msgid "Panel Global Properties"
-#~ msgstr "Panel-propietateak"
-
-#, fuzzy
-#~ msgid "Key bindings"
-#~ msgstr "Laster-teklak"
-
-#, fuzzy
-#~ msgid "Popup menu key:"
-#~ msgstr "Laster-menuaren tekla"
-
-#, fuzzy
-#~ msgid "Run dialog key:"
-#~ msgstr "Exekuzio-elkarrizketaren tekla"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "Gehitu applet hau abiarazle gisa panelari"
-
-#~ msgid "Programs menu"
-#~ msgstr "Programak menua"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "Mezu-abisuaren propietateak"
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "Mezu-abisuaren applet-a"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "Ezkutatu aukera aurreratuak"
