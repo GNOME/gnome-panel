@@ -300,9 +300,6 @@ extern_clean(Extern *ext)
 	CORBA_exception_free(&ev);
 }
 
-
-
-
 static void
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
@@ -332,7 +329,6 @@ send_position_change(Extern *ext)
 		
 		CORBA_Environment ev;
 		CORBA_exception_init(&ev);
-		/*g_warning ("Crazy function!\n");*/
 		/*go the the toplevel panel widget*/
 		for(;;) {
 			if(!GTK_WIDGET_NO_WINDOW(wid)) {
@@ -344,9 +340,7 @@ send_position_change(Extern *ext)
 			else
 				break;
 		}
-		GNOME_Applet_change_position(ext->applet,
-					     x,y,
-					     &ev);
+		GNOME_Applet_change_position(ext->applet, x, y, &ev);
 		if(ev._major)
 			panel_clean_applet(ext->info);
 		CORBA_exception_free(&ev);
@@ -444,6 +438,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 				 GTK_SIGNAL_FUNC(socket_size_allocate),
 				 NULL);
 
+	/* here for debugging purposes */
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(sal),NULL);*/
 
@@ -460,7 +455,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	if(!register_toy(ext->ebox,ext,panel,pos,type)) {
 		/* the ebox is destroyed in register_toy */
 		ext->ebox = NULL;
-		g_warning("Couldn't add applet");
+		g_warning(_("Couldn't add applet"));
 		return 0;
 	}
 	ext->info = applets_last->data;
@@ -513,8 +508,8 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 	ext->cfg = cfgpath;
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
-		g_warning("Whoops! for some reason we can't add "
-			  "to the panel");
+		g_warning(_("Whoops! for some reason we can't add "
+			    "to the panel"));
 		extern_clean(ext);
 		return;
 	}

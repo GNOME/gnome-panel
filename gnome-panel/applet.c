@@ -585,7 +585,7 @@ register_toy(GtkWidget *applet,
 			gtk_widget_destroy(applet);
 			info->widget = NULL;
 			panel_clean_applet(info);
-			g_warning("Can't find an empty spot");
+			g_warning(_("Can't find an empty spot"));
 			return FALSE;
 		}
 		panel = PANEL_WIDGET(list->data);
