@@ -440,7 +440,7 @@ setup_button (Launcher *launcher)
 			      str, NULL);
 
 	/* Setup accessible name */
-	add_atk_name_desc (launcher->button, str, NULL);
+	panel_set_atk_name_desc (launcher->button, str, NULL);
 
 	g_free (str);
 

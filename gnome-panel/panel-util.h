@@ -152,8 +152,11 @@ gboolean	readbuf_rewind		(ReadBuf *rb);
 void		readbuf_close		(ReadBuf *rb);
 
 /* Accessibility support routines */
-void add_atk_name_desc (GtkWidget *widget, gchar *name, gchar *desc);
-void set_relation (GtkWidget *widget, GtkLabel *label, int set_for);
+void panel_set_atk_name_desc (GtkWidget *widget,
+			      char      *name,
+			      char      *desc);
+void panel_set_atk_relation  (GtkWidget *widget,
+			      GtkLabel  *label);
 
 GdkPixbuf *	missing_pixbuf		(int size);
 

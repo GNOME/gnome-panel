@@ -2595,9 +2595,10 @@ create_new_panel (GtkWidget *w, gpointer data)
 		gtk_window_set_title (GTK_WINDOW (panel), _("Aligned Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
-		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
-				   _("Aligned Panel"),
-				   _("GNOME Aligned Panel"));
+
+		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
+					 _("Aligned Panel"),
+					 _("GNOME Aligned Panel"));
 		break;
 	case EDGE_PANEL: 
 		panel = edge_widget_new (NULL,
@@ -2614,10 +2615,11 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 &bcolor);
 		panel_save_to_gconf (panel_setup (panel));
 		gtk_window_set_title (GTK_WINDOW (panel), _("Edge Panel"));
-		gtk_widget_show (panel);	
-		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
-				   _("Edge Panel"),
-				   _("GNOME Edge Panel"));
+		gtk_widget_show (panel);
+
+		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
+					 _("Edge Panel"),
+					 _("GNOME Edge Panel"));
 		break;
 	case SLIDING_PANEL: {
 		BorderEdge    edge;
@@ -2638,10 +2640,11 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    &bcolor);
 		panel_save_to_gconf (panel_setup (panel));
 		gtk_window_set_title (GTK_WINDOW (panel), _("Sliding Panel"));
-		gtk_widget_show (panel);	
-		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
-				   _("Sliding Panel"),
-				   _("GNOME Sliding Panel"));
+		gtk_widget_show (panel);
+
+		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
+					 _("Sliding Panel"),
+					 _("GNOME Sliding Panel"));
 		}
 		break;
 	case FLOATING_PANEL:
@@ -2661,9 +2664,10 @@ create_new_panel (GtkWidget *w, gpointer data)
 		gtk_window_set_title (GTK_WINDOW (panel), _("Floating Panel"));
 		gtk_widget_show (panel);
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
-		add_atk_name_desc (BASEP_WIDGET (panel)->panel,
-				   _("Floating Panel"),
-				   _("GNOME Floating Panel"));
+
+		panel_set_atk_name_desc (BASEP_WIDGET (panel)->panel,
+					 _("Floating Panel"),
+					 _("GNOME Floating Panel"));
 		break;
 	case FOOBAR_PANEL: {
 		GtkWidget *dialog;
