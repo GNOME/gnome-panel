@@ -471,6 +471,7 @@ load_new_pixmap (MailCheck *mc)
 static void
 apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
 {
+	char *text;
 	MailCheck *mc = (MailCheck *)data;
 	
 	mc->update_freq = (guint)(gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (mc->spin))*1000);
