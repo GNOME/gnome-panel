@@ -1,23 +1,23 @@
 # gnome-panel Finnish translation
 # Suomennos: http://gnome-fi.sourceforge.net/
-# 
+#
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>, 1998, 2000
 # Mikko Rauhala <mjr@iki.fi>, 1999
-# Pauli Virtanen <pauli.virtanen@hut.fi>, 2000-2002
-# 
+# Pauli Virtanen <pauli.virtanen@hut.fi>, 2000-2004
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-02-04 16:26+0000\n"
-"PO-Revision-Date: 2003-08-22 18:33+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-05 22:04+0200\n"
+"PO-Revision-Date: 2004-02-05 23:46+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
 "sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -107,49 +107,48 @@ msgstr "Hae nykyinen aika ja päiväys"
 
 #: applets/clock/calendar-client.c:177
 msgid "Day"
-msgstr ""
+msgstr "Päivä"
 
 #: applets/clock/calendar-client.c:178
 msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
+msgstr "Nyt näkyvä päivä, väliltä 1-13 (0 merkitsee asettamatonta)"
 
 #: applets/clock/calendar-client.c:185
 msgid "Month"
-msgstr ""
+msgstr "Kuukausi"
 
 #: applets/clock/calendar-client.c:186
 msgid "The currently monitored month between 0 and 11"
-msgstr ""
+msgstr "Nyt näkyvä kuukausi, väliltä 0-11"
 
 #: applets/clock/calendar-client.c:193
-#, fuzzy
 msgid "Year"
-msgstr "Etsi"
+msgstr "Vuosi"
 
 #: applets/clock/calendar-client.c:194
 msgid "The currently monitored year"
-msgstr ""
+msgstr "Nyt näkyvä vuosi"
 
 # applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 #: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
+msgstr "%I:%M:%S %p"
 
 # applets/gen_util/clock.c:154 applets/gen_util/clock.c:464
 #: applets/clock/clock.c:271 applets/clock/clock.c:622
 msgid "%l:%M %p"
-msgstr "%l:%M %p"
+msgstr "%I:%M %p"
 
 # applets/gen_util/clock.c:157 applets/gen_util/clock.c:467
 #: applets/clock/clock.c:273 applets/clock/clock.c:1561
 msgid "%H:%M:%S"
-msgstr "%k:%M:%S"
+msgstr "%H:%M:%S"
 
 # applets/gen_util/clock.c:159 applets/gen_util/clock.c:469
 #: applets/clock/clock.c:273 applets/clock/clock.c:624
 #: applets/clock/clock.c:1563
 msgid "%H:%M"
-msgstr "%k:%M"
+msgstr "%H:%M"
 
 # applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
 #. translators: replace %e with %d if, when the day of the
@@ -158,7 +157,6 @@ msgstr "%k:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:284
-#, fuzzy
 msgid "%a %b %e"
 msgstr "%a %e. %Bta"
 
@@ -167,22 +165,22 @@ msgstr "%a %e. %Bta"
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:291
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 # applets/gen_util/clock.c:273
 #. Show date in tooltip
@@ -192,15 +190,15 @@ msgstr "%A %e. %Bta"
 
 #: applets/clock/clock.c:839
 msgid "Tasks"
-msgstr ""
+msgstr "Tehtävät"
 
 #: applets/clock/clock.c:976
 msgid "All Day"
-msgstr ""
+msgstr "Koko päivä"
 
 #: applets/clock/clock.c:1008
 msgid "Appointments"
-msgstr ""
+msgstr "Tapaamiset"
 
 #: applets/clock/clock.c:1243
 msgid "Calendar"
@@ -272,7 +270,7 @@ msgstr "12 tuntia"
 # applets/gen_util/clock.c:959
 #: applets/clock/clock.c:2261
 msgid "24 hour"
-msgstr "24 tuntia"
+msgstr "24-tuntinen"
 
 # applets/gen_util/clock.c:964
 #: applets/clock/clock.c:2269
@@ -285,15 +283,13 @@ msgid "Internet time"
 msgstr "Internet-aika"
 
 #: applets/clock/clock.c:2285
-#, fuzzy
 msgid "Custom format"
-msgstr "Mukautettu kuvake"
+msgstr "Muu muoto"
 
 # applets/gen_util/clock.schemas.in.h:6
 #: applets/clock/clock.c:2301
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Tuntimuoto"
+msgstr "Muu _muoto:"
 
 # applets/gen_util/clock.c:1005
 #: applets/clock/clock.c:2318
@@ -320,11 +316,11 @@ msgstr "Näytä _UTC-aikaa"
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
-"Pauli Virtanen, 2000-2002\n"
+"Pauli Virtanen, 2000-2004\n"
 "Ville Hautamäki, 1998, 2000\n"
 "Mikko Rauhala, 1999\n"
 "\n"
-"http://gnome-fi.sourceforge.net/"
+"http://gnome-fi.org/"
 
 # applets/gen_util/clock.c:1158
 #: applets/clock/clock.c:2570
@@ -337,13 +333,12 @@ msgstr "24"
 
 # applets/gen_util/clock.c:959
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24 tuntia"
+msgstr "24-tuntinen"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Mukautettu ajan näyttömuoto"
 
 # applets/gen_util/clock.schemas.in.h:6
 #: applets/clock/clock.schemas.in.h:4
@@ -390,6 +385,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Tämän avaimen käyttö ei ole suositeltua GNOME 2.6:ssa. Käytä mieluummin "
+"\"format\"-avainta. Kaavain on olemassa yhteensopivuuden vuoksi."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -397,6 +394,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Tämä avain määrittelee kellosovelman näyttämän ajan muodon, kun avaimen "
+"\"format\" arvo on \"custom\" (mukautettu). Voit käyttää kaikkia strftime:n "
+"ymmärtämiä aikamääreitä."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -409,6 +409,14 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Tämä avain määrittelee kellosovelman näyttämän ajan muodon. Mahdollisia "
+"arvoja ovat \"12-hour\" (12-tuntinen), \"24-hour\" (24-tuntinen), \"internet"
+"\", \"unix\" ja \"custom\" (mukautettu). Jos arvo on \"internet\", kello "
+"näyttää \"Internet-aikaa\", jossa päivä on jaettu tuhanteen \"sykäykseen\". "
+"Aikavyöhykkeitä tässä järjestelmässä ei ole, joten aika on sama kaikkialla. "
+"Jos arvo on \"unix\", niin kello laskee sekunteja alkukohdasta (1.1.1970) "
+"alkaen. Jos arvo on \"custom\", kello näyttää ajan käyttäjän avaimessa "
+"\"custom_format\" määrittelemässä muodossa."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -501,9 +509,9 @@ msgstr "(Georgen pienoisella avustuksella)"
 
 # applets/fish/fish.c:68
 #: applets/fish/fish.c:529
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "Gnome-kala %s, nykyaikainen oraakkeli"
+msgstr "%s-kala, nykyaikainen oraakkeli"
 
 #: applets/fish/fish.c:576
 msgid "Unable to get the name of the command to execute"
@@ -515,9 +523,9 @@ msgstr "Suoritettavan komennon paikannus epäonnistui"
 
 # applets/fish/fish.c:67
 #: applets/fish/fish.c:621
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "Gnome-kala %s sanoo:"
+msgstr "%s-kala sanoo:"
 
 # gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
 #: applets/fish/fish.c:747
@@ -554,9 +562,9 @@ msgstr ""
 
 # applets/fish/fish.c:107
 #: applets/fish/fish.c:1432
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "Gnome-kala - ennustaja"
+msgstr "%s-kala, ennustaja"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -770,9 +778,8 @@ msgstr "Ikkunanavigointisovelmatehdas"
 # applets/gen_util/tasklist.c:713
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:131 applets/wncklet/window-menu.c:705
-#, fuzzy
 msgid "Window Selector"
-msgstr "Ikkunaluettelo"
+msgstr "Ikkunanvalitsin"
 
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
 # applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
@@ -820,7 +827,6 @@ msgstr "Ikkunointiohjelma ei tue työpöytäpainiketta tai se ei ole käynnissä
 
 # applets/gen_util/tasklist.c:715
 #: applets/wncklet/window-list.c:821
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Ikkunaluettelossa ovat kaikki näkyvät ikkunat, ja niitä voi selata sillä."
@@ -980,11 +986,9 @@ msgstr "Milloin ikkunat ryhmittyvät"
 
 # applets/gen_util/tasklist.c:715
 #: applets/wncklet/window-menu.c:135
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"Ikkunaluettelossa ovat kaikki näkyvät ikkunat, ja niitä voi selata sillä."
+msgstr "Ikkunavalitsimessa ovat kaikki näkyvät ikkunat, ja niitä voi selata sillä."
 
 #: applets/wncklet/window-menu.c:415
 msgid "Unknown Window"
@@ -997,9 +1001,8 @@ msgstr "Ei ikkunoita avoinna"
 
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 #: applets/wncklet/window-menu.c:706
-#, fuzzy
 msgid "Tool to switch between windows"
-msgstr "Siirry avoimien ikkunoiden välillä"
+msgstr "Siirry ikkunoiden välillä"
 
 # applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
 # gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
@@ -1194,11 +1197,11 @@ msgstr "tiedostoa ei löydy"
 
 #: gnome-panel/button-widget.c:754
 msgid "Activatable"
-msgstr ""
+msgstr "Aktivoitavissa"
 
 #: gnome-panel/button-widget.c:755
 msgid "Whether the button is activatable"
-msgstr ""
+msgstr "Onko painike aktivoitavissa"
 
 #: gnome-panel/button-widget.c:763
 msgid "Has Arrow"
@@ -1209,7 +1212,6 @@ msgid "Whether or not to draw an arrow indicator"
 msgstr "Näkyykö nuoli-ilmaisin"
 
 #: gnome-panel/button-widget.c:772
-#, fuzzy
 msgid "Drag and drop Highlight"
 msgstr "Hiirellä veto ja pudotus -korostus"
 
@@ -1421,35 +1423,34 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cKuvakaappaus-%s.png"
+msgstr "Kuvakaappaus-%s.png"
 
 # gnome-panel/gnome-panel-screenshot.c:564
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cKuvakaappaus.png"
+msgstr "Kuvakaappaus.png"
 
 # gnome-panel/gnome-panel-screenshot.c:581
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cKuvakaappaus-%s-%d.png"
+msgstr "Kuvakaappaus-%s-%d.png"
 
 # gnome-panel/gnome-panel-screenshot.c:588
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cKuvakaappaus-%d.png"
+msgstr "Kuvakaappaus-%d.png"
 
 # gnome-panel/gnome-panel-screenshot.c:737
 #: gnome-panel/gnome-panel-screenshot.c:607
@@ -1649,7 +1650,7 @@ msgstr "Sulje väkisin"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Pakota väärin toimiva sovellus sulkeutumaan"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:277
@@ -1709,9 +1710,9 @@ msgid "Cannot execute '%s'"
 msgstr "Suorittaminen ei onnistunut: %s"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 # gnome-panel/menu.c:3422
 #: gnome-panel/menu.c:330
@@ -1882,18 +1883,18 @@ msgstr "Lukitse näyttö, jotta voit poistua tietokoneesi äärestä hetkeksi"
 
 # gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3460
 #: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "Kirjaudu ulos"
+msgstr "Kirjaa %s ulos"
 
 # gnome-panel/menu.c:3466
 #: gnome-panel/menu.c:3246
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"Kirjaudu ulos tästä istunnosta, jotta voit kirjautua uudestaan toisena "
+"Kirjaa %s ulos tästä istunnosta, jotta voit kirjautua uudestaan toisena "
 "käyttäjänä tai sammuttaa tietokoneen"
 
 # gnome-panel/menu.c:1392
@@ -1973,7 +1974,6 @@ msgid "The type of action this button implements"
 msgstr "Tämän painikkeen toteuttaman toiminnon tyyppi"
 
 #: gnome-panel/panel-action-button.c:449 gnome-panel/panel-menu-button.c:474
-#, fuzzy
 msgid "Drag and drop enabled"
 msgstr "Hiirellä veto käytössä"
 
@@ -1994,19 +1994,18 @@ msgid ""
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
+"Sovelma \"%s\" vaikuttaa sulkeutuneen odottamatta.\n"
+"\n"
+"Haluatko käynnistää tämän sovelman uudelleen?"
 
 # gnome-panel/panel-applet-frame.c:700
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"Sovelma %s vaikuttaa sulkeutuneen odottamatta.\n"
-"\n"
-"Haluatko käynnistää sen uudelleen?\n"
 "\n"
 "(Jos et halua käynnistää sitä uudelleen nyt, niin voit aina lisätä sen "
 "napsauttamalla paneelia oikealla painikkeella ja avaamalla valikon \"Lisää "
@@ -2018,12 +2017,9 @@ msgstr "_Älä poista"
 
 # gnome-panel/panel-applet-frame.c:922
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"Paneelilla oli ongelmia sovelman \"%s\" lataamisessa.\n"
-"\n"
-"Haluatko poistaa tämän sovelman työpöydältäsi."
+msgstr "Paneelilla oli ongelmia sovelman \"%s\" lataamisessa."
 
 #: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
@@ -2032,15 +2028,14 @@ msgstr "Yksityiskohdat: %s"
 
 # gnome-panel/panel-applet-frame.c:922
 #: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Paneelilla oli ongelmia sovelman \"%s\" lataamisessa.\n"
 "\n"
-"Haluatko poistaa tämän sovelman työpöydältäsi."
+"\n"
+"Haluatko poistaa tämän sovelman työpöydältäsi?"
 
 # gnome-panel/panel-applet-frame.c:796
 #: gnome-panel/panel-applet-frame.c:1084
@@ -2167,6 +2162,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Luettelo sovelmien IID:istä, jotka paneeli jättää huomiotta. Tällä tavoin "
+"voit estää tiettyjen sovelmien latautumisen tai valikoissa näkymisen. "
+"Esimerkiksi jos haluat poistaa sovelman \"mini-commander\" käytöstä, lisää "
+"\"OAFIID:GNOME_MiniCommanderApplet\" tähän luetteloon. Paneeli täytyy "
+"käynnistää uudelleen, jotta tämä tulee voimaan."
 
 # gnome-panel/gnome-panel-preferences.glade.h:6
 #: gnome-panel/panel-global.schemas.in.h:2
@@ -2176,7 +2176,7 @@ msgstr "Animaationopeus"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "IID:t sovelmille, joiden lataus estetään"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -2184,27 +2184,25 @@ msgstr "Sulje laatikko itsestään"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "Täydellinen paneelin lukinta"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
 msgstr "Varmista paneelista poisto"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Sulje väkisin"
+msgstr "Poista väkisin sulkeminen käytöstä"
 
 # gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
 # gnome-panel/menu.c:3447
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Lukitse näyttö"
+msgstr "Poista ruudun lukitseminen käytöstä"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Poista ulos kirjautuminen käytöstä"
 
 # gnome-panel/panel-global-config.schemas.in.h:1
 #: gnome-panel/panel-global.schemas.in.h:10
@@ -2270,18 +2268,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Jos tosi, paneeli ei salli käyttäjän sulkea ohjelmia väkisin, eli "
+"väkisinsulkemispainike poistuu käytöstä."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Jos tosi, paneeli ei salli käyttäjän lukita näyttöruutua, eli näyttöruudun "
+"lukitsemisvalinnat poistuvat valikoista."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Jos tosi, paneeli ei salli käyttäjän kirjautua ulos, eli "
+"uloskirjautumisvalinnat poistuvat valikoista."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -2289,6 +2293,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Jos tosi, paneeli ei salli muutoksia paneelin asetuksiin. Yksittäiset "
+"sovelmat kuitenkin täytynee lukita erikseen. Paneeli täytyy käynnistää "
+"uudelleen, jotta tämä tulee voimaan."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -2316,9 +2323,9 @@ msgstr "Estä tietokoneesi luvatonta käyttöä"
 
 # gnome-panel/foobar-widget.c:215
 #: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Poistu Gnome-ympäristöstä"
+msgstr "Poistu käyttäjän %s Gnome-ympäristöstä"
 
 # gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
 #: gnome-panel/panel-menu-button.c:429
@@ -2339,14 +2346,12 @@ msgstr "Mukautettu kuvake valikolle"
 
 # libpanel-applet/panel-test-applets.glade.h:11
 #: gnome-panel/panel-menu-button.c:447
-#, fuzzy
 msgid "Tooltip"
-msgstr "Ylhäällä"
+msgstr "Vinkki"
 
 #: gnome-panel/panel-menu-button.c:448
-#, fuzzy
 msgid "Tooltip displayed for the menu"
-msgstr "Laatikon vinkki"
+msgstr "Valikon kohdan vinkki"
 
 # gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
 #: gnome-panel/panel-menu-button.c:456
@@ -2513,13 +2518,12 @@ msgstr ""
 "vasemmasta renasta (tai pystypaneeleissa yläreunasta)."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Tämän laatikon vinkissä näkyvä teksti. Tällä on merkitystä vain jos avaimen "
-"\"object_type\" arvo on \"drawer-object\"."
+"Tämän laatikon tai valikon vinkissä näkyvä teksti. Tällä on merkitystä vain "
+"jos avaimen \"object_type\" arvo on \"drawer-object\" tai \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2533,9 +2537,8 @@ msgstr ""
 "\"menu-bar\" (valikkopalkki)."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Laatikon vinkki"
+msgstr "Laatikon tai valikon vinkki"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2688,15 +2691,13 @@ msgstr "_Piilota itsestään"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:3
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "<b>K_uvake:</b>"
+msgstr "K_uvake:"
 
 # gnome-panel/drawer.c:150
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Nimi"
+msgstr "_Nimi:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
@@ -2704,9 +2705,8 @@ msgstr "_Ei mikään (käytä järjestelmän teemaa)"
 
 # libpanel-applet/panel-test-applets.glade.h:6
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Suunta:"
+msgstr "_Asento:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
@@ -2714,9 +2714,8 @@ msgstr "_Sovita"
 
 # libpanel-applet/panel-test-applets.glade.h:9
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Size:"
-msgstr "Koko:"
+msgstr "_Koko:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "_Tile"
@@ -2744,7 +2743,7 @@ msgstr "Tuntematon virhe tapahtui kohteen %s avautuessa"
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Viimeisimmät asiakirjat"
 
 # gnome-panel/launcher.c:152
 #: gnome-panel/panel-run-dialog.c:285
@@ -2762,7 +2761,7 @@ msgstr "Sijaintia \"%s\" ei voi näyttää"
 #: gnome-panel/panel-run-dialog.c:363
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "Tekstiä \"%s\" ei voi muuntaa UTF-8:sta"
 
 #: gnome-panel/panel-run-dialog.c:1041
 msgid "Choose a file to append to the command..."
@@ -2867,9 +2866,8 @@ msgid "_Force quit"
 msgstr "Sulje _väkisin"
 
 #: gnome-panel/panel-toplevel.c:1106
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Piilotusviive"
+msgstr "Piilota paneeli"
 
 # gnome-panel/disclosure-widget.c:260
 #. translators: these string will be shown in MetaCity's switch window
@@ -3420,12 +3418,10 @@ msgid "X co-ordinate of panel"
 msgstr "Paneelin x-koordinaatti"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
 msgstr "X-ruutu, jolla paneeli on"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
 msgstr "Xinerama-näyttöruutu, jolla paneeli on"
 
@@ -3526,9 +3522,8 @@ msgstr "Välit, jotka vihjaavat, mitkä ovat sopivia kokoja sovelmalle"
 
 # libpanel-applet/panel-applet.c:956
 #: libpanel-applet/panel-applet.c:1132
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "Sovelman sisältävän paneelin suunta"
+msgstr "Sovelman sisältävä paneeli on lukittu"
 
 # gnome-panel/main.c:166
 #: libpanel-applet/panel-test-applets.c:33
@@ -3598,161 +3593,3 @@ msgstr "Erikoissuuri"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Erikoispieni"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Taustaväri"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Taustavärin peittävyys"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Taustaväri"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Taustaväri"
-
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "Taustaväri"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "_Venytä"
-
-# gnome-panel/gnome-panel-preferences.desktop.in.h:2
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Paneelin koko"
-
-# gnome-panel/panel-config.c:1721
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Tausta"
-
-#, fuzzy
-#~ msgid "Lock down the panel"
-#~ msgstr "Lukitse kohde paneeliin"
-
-# gnome-panel/menu.c:3389
-#~ msgid "%s - command not found"
-#~ msgstr "%s - komentoa ei löydy"
-
-# gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3534
-#~ msgid "Cannot execute %s"
-#~ msgstr "Käynnistys ei onnistu: %s"
-
-# applets/gen_util/clock.schemas.in.h:5
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr "Jos tosi, aika näkyy sekunteina alkukohdan (1.1.1970) jälkeen"
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Tämä avain määrittelee, miten kellosovelma näyttää tunnit. Mahdollisia "
-#~ "arvoja ovat 12 ja 24."
-
-# gnome-panel/distribution.c:26
-#~ msgid "Window Menu"
-#~ msgstr "Ikkunavalikko"
-
-# gnome-panel/gnome-panel-screenshot.c:482
-#~ msgid "Print Screenshot"
-#~ msgstr "Tulosta kuvakaappaus"
-
-# gnome-panel/gnome-panel-screenshot.c:530
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Kuvakaappauksen esikatselu"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:7
-#~ msgid "_Print screenshot..."
-#~ msgstr "T_ulosta kuvakaappaus..."
-
-# gnome-panel/panel-applet-frame.c:922
-#, fuzzy
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "Kun \"%s\" latautui, tapahtui virhe.\n"
-#~ "Lisätietoja: %s\n"
-#~ "\n"
-#~ "Haluatko poistaa tämän sovelman paneelistasi?"
-
-#~ msgid "Open Recent"
-#~ msgstr "Avaa viimeisin"
-
-# applets/gen_util/clock.schemas.in.h:1
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr "Jos tosi, näytä Internet-aikaa, joka on sama kaikkialla."
-
-# applets/fish/fish.c:67
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "Gnome-kala %s"
-
-# gnome-panel/disclosure-widget.c:260
-#~ msgid "Expander Size"
-#~ msgstr "Laajentimen koko"
-
-# gnome-panel/disclosure-widget.c:261
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Laajenninnuolen koko"
-
-# gnome-panel/launcher.c:454
-#~ msgid "Help on %s _Application"
-#~ msgstr "_Sovelluksen %s ohje"
-
-# gnome-panel/menu.c:1391
-#~ msgid "Help on %s"
-#~ msgstr "Ohje aiheesta %s"
-
-# gnome-panel/menu.c:1392
-#~ msgid "Application"
-#~ msgstr "Sovellus"
-
-# applets/gen_util/mailcheck.c:1278
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Nimi:</b>"
-
-# libpanel-applet/panel-test-applets.glade.h:6
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Asento:</b>"
-
-# gnome-panel/gnome-panel-screenshot.glade.h:3
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Koko:</b>"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Kuvaus valitusta sovelluksesta tai tietoja käynnistettävästä komennosta."
-
-# gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
-# gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
-#~ msgid "Application description"
-#~ msgstr "Sovelluksen kuvaus"
-
-# gnome-panel/gnome-run.c:1396
-#~ msgid "List of known applications"
-#~ msgstr "Luettelo tunnetuista sovelluksista"
-
-# gnome-panel/gnome-run.c:1397
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Valitse luettelosta suoritettava sovellus"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr "Kun tämä on valittuna, luettelo tunnetuista sovelluksista näkyy."
-
-# gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
-# gnome-panel/panel-util.c:132
-#~ msgid "Help document not found"
-#~ msgstr "Ohjeasiakirjaa ei löydy"
-
-# gnome-panel/panel-util.c:145
-#~ msgid "No document to show"
-#~ msgstr "Ei asiakirjaa näytettävänä"
