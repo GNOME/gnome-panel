@@ -77,7 +77,7 @@ extern_start_new_goad_id(char *goad_id)
 		CORBA_Object obj;
 		obj = extern_is_goad_ready(goad_id);
 		if(obj==CORBA_OBJECT_NIL) {
-			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, GOAD_ACTIVATE_NEW_ONLY), NULL);
+			CORBA_Object_release(goad_server_activate_with_id(NULL, goad_id, GOAD_ACTIVATE_NEW_ONLY, NULL), NULL);
 		} else {
 			send_applet_start_new_applet(obj,goad_id);
 		}

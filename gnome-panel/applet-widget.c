@@ -801,7 +801,7 @@ gnome_panel_applet_reinit_corba(CORBA_ORB panel_orb)
   if(panel_client)
     CORBA_Object_release(panel_client, &ev);
 
-  panel_client = goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", 0);
+  panel_client = goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", 0, NULL);
 
   g_return_val_if_fail(!CORBA_Object_is_nil(panel_client, &ev), 0);
 	
