@@ -823,8 +823,6 @@ create_panel_menu (char *menudir, int main_menu,
 {
 	GtkWidget *pixmap;
 	Menu *menu;
-	GtkWidget *app_menu;
-	GtkWidget *applet_menu;
 	
 	char *pixmap_name = NULL;
 
