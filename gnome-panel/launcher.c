@@ -205,7 +205,7 @@ create_properties_dialog(Launcher *launcher)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	launcher->dedit =
-		gnome_dentry_edit_new(
+		gnome_dentry_edit_new_notebook(
 		      GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
@@ -295,7 +295,7 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 	notebook = gtk_notebook_new();
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,5);
-	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new(GTK_NOTEBOOK(notebook)));
+	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
 	
 	if(file)
 		gtk_entry_set_text(GTK_ENTRY(dee->exec_entry), file);

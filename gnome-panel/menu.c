@@ -329,7 +329,7 @@ edit_dentry(GtkWidget *widget, GnomeDesktopEntry *dentry)
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
-	o = gnome_dentry_edit_new(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
 	gtk_object_set_data(o,"location",dentry->location);
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
@@ -364,7 +364,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
-	o = gnome_dentry_edit_new(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
 
 	dentry = gnome_desktop_entry_load_unconditional(dirfile);
 	if (dentry) {
