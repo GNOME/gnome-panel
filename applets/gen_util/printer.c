@@ -151,11 +151,9 @@ printer_widget (Printer *pr)
 	};
 	static gint n_drop_types = sizeof (drop_types) / sizeof(drop_types[0]);
 
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 	pr->darea = gtk_drawing_area_new();
 	gtk_widget_pop_colormap ();
-	gtk_widget_pop_visual ();
 
 	gtk_signal_connect(GTK_OBJECT(pr->darea),"draw",
 			   GTK_SIGNAL_FUNC(darea_draw),
