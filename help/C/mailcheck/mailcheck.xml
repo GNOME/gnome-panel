@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.1">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "August 2002">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
   <!ENTITY applet "Inbox Monitor">
 ]>
 
@@ -99,6 +99,15 @@
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Inbox Monitor Applet Manual V2.1</revnumber> 
+		  <date>August 2002</date> 
 		  <revdescription> 
 			 <para role="author">Sun GNOME Documentation Team
 				<email>gdocteam@sun.com</email></para>
@@ -214,8 +223,7 @@
 			 <listitem> 
 			 <para>Select this option to run a command before <application>&applet;</application>
 			 checks for new mail. Type the command in the text box provided. For example, type the 
-			 command to run the dialup software that you use to connect to the Internet.</para> 
-			 <para>Default: unselected.</para> 
+			 command to run the dialup software that you use to connect to the Internet.</para>  
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -225,7 +233,6 @@
 			 detects new mail. Type the command in the text box provided. For example, type 
 			 <command>fetchmail</command> to run the <application>fetchmail</application> program
 			 to retrieve mail from a remote mail server.</para> 
-			 <para>Default: unselected.</para> 
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -235,7 +242,6 @@
 			 <application>&applet;</application> applet. Type the command in the text box provided. 
 			 For example, to start a <application>Netscape Messenger</application> window when you 
 			 click on the applet, type <command>netscape -mail</command> in the text box.</para> 
-			 <para>Default: unselected.</para> 
 			 </listitem> 
 		  </varlistentry>  
 		  <varlistentry> 
@@ -243,7 +249,6 @@
 			 <listitem> 
 			 <para>Select this option to set the number of unread messages to zero 
 			 when you click on the applet.</para> 
-			 <para>Default: unselected. </para> 
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -251,7 +256,6 @@
 			 <listitem> 
 			 <para>Use this spin box to specify how often <application>&applet;</application>
 			 checks the mail server to determine if there is new mail. </para> 
-			 <para>Default: 2 minutes, 0 seconds.</para> 
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -260,7 +264,6 @@
 			 <para>Select this option to play a default sound when the applet finds new mail 
 			 on the mail server. The default sound file is specified in
 			 <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename>. </para> 
-			 <para>Default: unselected.</para> 
 			 </listitem> 
 		  </varlistentry>
 		  <varlistentry> 
@@ -268,7 +271,6 @@
 			 <listitem> 
 			 <para>Use this drop-down list box to select the type of display to use
 			 in the applet. You can display text, an image, or an animation.</para> 
-			 <para>Default: Text only.</para> 
 			 </listitem> 
 		  </varlistentry> 
 		</variablelist> 
@@ -299,7 +301,6 @@
 			 	<para>If your mailbox resides on a remote Internet Message Access Protocol (IMAP) server.</para>
 			 	</listitem>
 			 </itemizedlist>
-			 <para>Default: <guilabel>Local mailspool</guilabel>.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -308,7 +309,6 @@
 			 <para>If you select <guilabel>Local mailspool</guilabel> or
 			 <guilabel>Local maildir</guilabel> as your mailbox location, 
 			 use this field to specify the location to check for new messages.</para> 
-			 <para>Default: depends on the operating system.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -317,7 +317,6 @@
 			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
 			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
 			 use this text box to specify the name of the remote mail server.</para> 
-			 <para>Default: mail.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -326,7 +325,6 @@
 			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
 			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
 			 use this text box to specify the username to access the remote mail server.</para> 
-			 <para>Default: none.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -335,7 +333,6 @@
 			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
 			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
 			 use this text box to specify the password to access the remote mail server.</para> 
-			 <para>Default: none.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -344,7 +341,6 @@
 			 <para>If you select <guilabel>Remote IMAP-server</guilabel> as your mailbox 
 			 location, use this text box to specify the folder on the server
 			 that contains your mailbox.</para> 
-			 <para>Default: none.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -354,7 +350,6 @@
 			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
 			 use this text box to specify a command to run before <application>&applet;</application> 
 			 checks the mail server for new mail.</para> 
-			 <para>Default: none.</para>
 			 </listitem> 
 		  </varlistentry> 
 		</variablelist> 
