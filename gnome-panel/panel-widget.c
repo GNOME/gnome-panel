@@ -2574,7 +2574,8 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 		if(list)
 			rad = list->data;
 
-		if(!list || ad->pos+ad->cells < rad->pos)
+		if((!list || ad->pos+ad->cells < rad->pos) &&
+		   ad->pos+ad->cells < panel->size)
 			return ad->pos+ad->cells;
 
 		if(panel_widget_push_right(panel,rad))
