@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-06-12 17:49+0100\n"
-"PO-Revision-Date: 2003-06-03 15:28+0300\n"
-"Last-Translator: \"Andrew W. Nosenko\" <awn@bcs.zp.ua>\n"
+"POT-Creation-Date: 2003-06-19 13:08+0400\n"
+"PO-Revision-Date: 2003-06-20 12:44+0400\n"
+"Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -249,7 +249,7 @@ msgstr "Апплет отображает текущие дату и время"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr "_Установить дату и время"
+msgstr "_Установить дату и время..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _date"
@@ -670,7 +670,7 @@ msgstr "никогда _не группировать окна"
 #: applets/wncklet/window-list.glade.h:18
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
-msgstr "точек (px)"
+msgstr "пикселей (px)"
 
 #: applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -718,7 +718,7 @@ msgid ""
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"Это значение - ммаксимальное, которое апплет запросит.Это полезно для "
+"Это значение - максимальное, которое апплет запросит. Это полезно для "
 "ограничения размера, используемого в больших панелях, таких как краевые, где "
 "иначе апплет может заполнить всё доступное место."
 
@@ -811,7 +811,7 @@ msgstr "Показывать _наименования рабочих мест �
 
 #: applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Names"
-msgstr "Названия рабочих мест"
+msgstr "Наименования рабочих мест"
 
 #: applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace Switcher Preferences"
@@ -835,8 +835,8 @@ msgid ""
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"Если установлено, \"Переключатель\" будет отображать названия рабочих мест, "
-"а не их содержимое"
+"Если установлено, \"Переключатель\" будет отображать наименования рабочих "
+"мест, а не их содержимое"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
 msgid "Number of rows in the Workspace Switcher."
@@ -849,7 +849,7 @@ msgid ""
 "shows the workspaces in."
 msgstr ""
 "При отображении всех рабочих мест определяет, во сколько рядов (при "
-"горизонтальном размещении) или столюцов (при вертикальном размещении)  "
+"горизонтальном размещении) или столбцов (при вертикальном размещении)  "
 "\"Переключатель\" будет показывать рабочие места."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
@@ -1024,7 +1024,7 @@ msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
-"Возникла ошибка при отображении справки: \n"
+"Произошла ошибка при отображении справки: \n"
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:307
@@ -1165,7 +1165,7 @@ msgstr "Недостаточно места для записи файла \"%s\
 
 #: gnome-panel/gnome-panel-screenshot.c:1224
 msgid "Grab a window instead of the entire screen"
-msgstr "Сделать снимок окна вместо всего экрана"
+msgstr "Сделать снимок только окна вместо всего экрана"
 
 #: gnome-panel/gnome-panel-screenshot.c:1225
 msgid "Take screenshot after specified delay [in seconds]"
@@ -1252,11 +1252,8 @@ msgstr ""
 "%s"
 
 #: gnome-panel/launcher.c:172
-#, fuzzy
 msgid "Cannot launch icon"
-msgstr ""
-"Невозможно запустить\n"
-"%s"
+msgstr "Невозможно запустить значок"
 
 #: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1092
 #: gnome-panel/menu.c:374 gnome-panel/menu.c:404 gnome-panel/menu.c:421
@@ -1265,7 +1262,7 @@ msgstr ""
 #: gnome-panel/menu-ditem.c:501 gnome-panel/panel-run-dialog.c:278
 #: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:76
 msgid "Details"
-msgstr ""
+msgstr "Подробности"
 
 #: gnome-panel/launcher.c:224
 #, c-format
@@ -1273,7 +1270,7 @@ msgid ""
 "Cannot launch icon\n"
 "%s"
 msgstr ""
-"Невозможно запустить\n"
+"Невозможно запустить значок\n"
 "%s"
 
 #: gnome-panel/launcher.c:415
@@ -1306,12 +1303,8 @@ msgstr "Создать кнопку запуска"
 
 #: gnome-panel/launcher.c:1091 gnome-panel/menu.c:1267
 #: gnome-panel/panel-util.c:75
-#, fuzzy
 msgid "Cannot display help document"
-msgstr ""
-"<b>Невозможно показать справку</b>\n"
-"\n"
-"Подробности: %s"
+msgstr "Невозможно показать справку"
 
 #: gnome-panel/main.c:104
 msgid "Specify a profile name to load"
@@ -1340,7 +1333,7 @@ msgstr "Заблокировать экран, чтобы можно было о
 
 #: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
 msgid "Force Quit"
-msgstr "Кнопка насильственного завершения"
+msgstr "Принудительно выйти"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
 msgid "Screenshot"
@@ -1407,29 +1400,23 @@ msgstr "Конец мирового голода"
 
 #: gnome-panel/menu.c:373
 msgid "Can't execute 'About GNOME'"
-msgstr ""
+msgstr "Невозможно вызвать диалог \"О среде Гном\""
 
 #: gnome-panel/menu.c:375
 msgid "probably does not exist"
-msgstr ""
+msgstr "возможно, не существует"
 
 #: gnome-panel/menu.c:403
-#, fuzzy
 msgid "Can't launch entry"
-msgstr "Создать кнопку запуска"
+msgstr "Невозможно выполнить элемент"
 
 #: gnome-panel/menu.c:420 gnome-panel/menu.c:1235 gnome-panel/menu.c:1285
-#, fuzzy
 msgid "Can't load entry"
-msgstr "Поле ввода команды"
+msgstr "Невозможно загрузить элемент"
 
 #: gnome-panel/menu.c:1125
-#, fuzzy
 msgid "Could not remove the menu item"
-msgstr ""
-"<b>Не удалось убрать элемент меню %s</b>\n"
-"\n"
-"Подробности: %s\n"
+msgstr "Не удалось убрать элемент меню"
 
 #: gnome-panel/menu.c:1142
 #, c-format
@@ -1443,15 +1430,11 @@ msgstr "Не удалось получить имя каталога из пут
 
 #: gnome-panel/menu.c:1218
 msgid "Can't add to run box"
-msgstr ""
+msgstr "Невозможно добавить к диалогу запуска"
 
 #: gnome-panel/menu.c:1219
-#, fuzzy
 msgid "Details: No 'Exec' or 'URL' field in entry"
-msgstr ""
-"<b>Невозможно добавить к ящику запуска</b>\n"
-"\n"
-"Подробности: В записи нет поля \"Exec\" или \"URL\""
+msgstr "Подробности: В элементе нет поля \"Exec\" или \"URL\""
 
 #: gnome-panel/menu.c:1526
 msgid "Add this launcher to panel"
@@ -1590,12 +1573,8 @@ msgid "Desktop"
 msgstr "Рабочий стол"
 
 #: gnome-panel/menu-ditem.c:122
-#, fuzzy
 msgid "Cannot save changes to launcher"
-msgstr ""
-"<b>Невозможно сохранить изменения в кнопке запуска</b>\n"
-"\n"
-"Подробности: %s"
+msgstr "Невозможно сохранить изменения в кнопке запуска"
 
 #: gnome-panel/menu-ditem.c:297
 msgid "Menu"
@@ -1610,12 +1589,8 @@ msgid "You have to specify a valid URL or command."
 msgstr "Необходимо указать допустимую ссылку (URL) или команду"
 
 #: gnome-panel/menu-ditem.c:500
-#, fuzzy
 msgid "Cannot save menu item to disk"
-msgstr ""
-"<b>Невозможно сохранить пункт меню на диск</b>\n"
-"\n"
-"Подробности: %s"
+msgstr "Невозможно сохранить пункт меню на диск"
 
 #: gnome-panel/menu-ditem.c:531
 msgid ""
@@ -1675,12 +1650,11 @@ msgstr "Тип команды, которую выполняет эта кноп
 
 #: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Функция \"Перенеси-и-оставь\" включена"
 
 #: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Отрисовывать ли индикатор-стрелку"
+msgstr "Включена ли функция \"Перенеси-и-оставь\" для этого виджета"
 
 #: gnome-panel/panel-applet-frame.c:661
 #, c-format
@@ -1729,17 +1703,17 @@ msgstr "Невозможно получить интерфейс AppletShell и�
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr "Ошибка наблюдения за gconf ключём '%s': %s"
+msgstr "Произошла ошибка наблюдения за ключём \"%s\" системы GConf: %s"
 
 #: gnome-panel/panel-bindings.c:185
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "Ошибка загрузки gconf каталога '%s': %s"
+msgstr "Произошла ошибка загрузки каталога \"%s\" системы GConf: %s"
 
 #: gnome-panel/panel-bindings.c:199
 #, c-format
 msgid "Error getting value for '%s': %s"
-msgstr "Ошибка получения значения для '%s': %s"
+msgstr "Произошла ошибка получения значения для \"%s\": %s"
 
 #: gnome-panel/panel.c:455
 #, c-format
@@ -1775,11 +1749,11 @@ msgstr ""
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
-msgstr ""
+msgstr "Углы"
 
 #: gnome-panel/panel-frame.c:262
 msgid "Which edges to draw"
-msgstr ""
+msgstr "Какие углы отрисовывать"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid "A list of panel IDs"
@@ -1945,6 +1919,10 @@ msgid ""
 "contents should be constructed. If false, the menu_path setting is ignored. "
 "This setting is only relevant if the object_type is \"menu-object\"."
 msgstr ""
+"Если установлено в \"Истина\", то значение из menu_path используется, как "
+"путь, из которого будет сконструировано меню. Если же установлено в \"Ложь"
+"\", то значение menu_path будет проигнорировано.  Эта настройка имеет смысл "
+"только если object_type содержит значение \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -2038,13 +2016,16 @@ msgstr "Панель верхнего уровня, содержащая дан�
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid "The path for the menu contents"
-msgstr ""
+msgstr "Путь к содержимому меню"
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
 "The path from which the menu contents is contructed. The setting is only "
 "relevant if use_menu_path is true and the object_type is \"menu-object\"."
 msgstr ""
+"Путь, из которого содержимое меню будет сконструировано. Параметр имеет "
+"смысл, только если параметр use_menu_path установлен в \"Истина\" и параметр "
+"object_type имеет значение \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -2091,7 +2072,7 @@ msgstr "Использовать пользовательскую иконку �
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use a custom path for the menu contents"
-msgstr ""
+msgstr "Использовать иной путь к содержимому меню"
 
 #: gnome-panel/panel-profile.c:622 gnome-panel/panel-profile.c:650
 #: gnome-panel/panel-profile.c:686 gnome-panel/panel-profile.c:1348
@@ -2127,7 +2108,7 @@ msgstr "Ошибка чтения из GConf значения типа list: '%s
 # FIXME: awn@bcs.zp.ua: что это???
 #: gnome-panel/panel-properties-dialog.glade.h:2
 msgid "      "
-msgstr ""
+msgstr "      "
 
 # FIXME: awn@bcs.zp.ua: или лучше "Название"? -- предмет всё-таки
 # неодушевлённый...  
@@ -2264,20 +2245,12 @@ msgid "Open Recent"
 msgstr "Открыть недавно использованные файлы"
 
 #: gnome-panel/panel-run-dialog.c:277
-#, fuzzy
 msgid "Error launching command"
-msgstr ""
-"<b>Произошла ошибка при выполнении команды \"%s\"</b>\n"
-"\n"
-"Подробности: %s"
+msgstr "Произошла ошибка при выполнении команды"
 
 #: gnome-panel/panel-run-dialog.c:311
-#, fuzzy
 msgid "Error displaying location"
-msgstr ""
-"<b>Произошла ошибка при отображении местоположения \"%s\"</b>\n"
-"\n"
-"Подробности: %s"
+msgstr "Произошла ошибка при отображении местоположения"
 
 #: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
@@ -2399,84 +2372,68 @@ msgid "_Force quit"
 msgstr "_Убить"
 
 #: gnome-panel/panel-toplevel.c:1349
-#, fuzzy
 msgid "Top Expanded Edge Panel"
-msgstr "расширенная краевая"
+msgstr "Верхняя расширенная краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1350
-#, fuzzy
 msgid "Top Centered Panel"
-msgstr "Угловая панель"
+msgstr "Верхняя центрированная панель"
 
 #: gnome-panel/panel-toplevel.c:1351
-#, fuzzy
 msgid "Top Floating Panel"
-msgstr "_Плавающая панель"
+msgstr "Верхняя плавающая панель"
 
 #: gnome-panel/panel-toplevel.c:1352
-#, fuzzy
 msgid "Top Edge Panel"
-msgstr "Краевая панель"
+msgstr "Верхняя краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1356
-#, fuzzy
 msgid "Bottom Expanded Edge Panel"
-msgstr "расширенная краевая"
+msgstr "Нижняя расширенная краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1357
-#, fuzzy
 msgid "Bottom Centered Panel"
-msgstr "Угловая панель"
+msgstr "Нижняя центрировання панель"
 
 #: gnome-panel/panel-toplevel.c:1358
-#, fuzzy
 msgid "Bottom Floating Panel"
-msgstr "_Плавающая панель"
+msgstr "Нихняя плавающая панель"
 
 #: gnome-panel/panel-toplevel.c:1359
-#, fuzzy
 msgid "Bottom Edge Panel"
-msgstr "Краевая панель"
+msgstr "Нижняя краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1363
-#, fuzzy
 msgid "Left Expanded Edge Panel"
-msgstr "расширенная краевая"
+msgstr "Левая расширенная краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1364
-#, fuzzy
 msgid "Left Centered Panel"
-msgstr "Угловая панель"
+msgstr "Левая центрировання панель"
 
 #: gnome-panel/panel-toplevel.c:1365
-#, fuzzy
 msgid "Left Floating Panel"
-msgstr "_Плавающая панель"
+msgstr "Левая плавающая панель"
 
 #: gnome-panel/panel-toplevel.c:1366
-#, fuzzy
 msgid "Left Edge Panel"
-msgstr "Краевая панель"
+msgstr "Левая краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1370
-#, fuzzy
 msgid "Right Expanded Edge Panel"
-msgstr "расширенная краевая"
+msgstr "Правая расширенная краевая панель"
 
 #: gnome-panel/panel-toplevel.c:1371
-#, fuzzy
 msgid "Right Centered Panel"
-msgstr "Выровненная панель"
+msgstr "Правая центрированная панель"
 
 #: gnome-panel/panel-toplevel.c:1372
-#, fuzzy
 msgid "Right Floating Panel"
-msgstr "_Плавающая панель"
+msgstr "Правая плавающая панель"
 
 #: gnome-panel/panel-toplevel.c:1373
-#, fuzzy
 msgid "Right Edge Panel"
-msgstr "Краевая панель"
+msgstr "Правая краевая панель"
 
 #: gnome-panel/panel-toplevel.c:3417
 msgid "Name"
@@ -2567,11 +2524,8 @@ msgid "Un-hide delay"
 msgstr "Задержка раскрытия"
 
 #: gnome-panel/panel-toplevel.c:3540
-#, fuzzy
 msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-"Количество миллисекунд, которое выжидается прежде, чем принять решение об "
-"автоматическом раскрытии панели."
+msgstr "Количество миллисекунд перед автоматическим раскрытием панели."
 
 #: gnome-panel/panel-toplevel.c:3551
 msgid "Auto-hide size"
@@ -2581,7 +2535,7 @@ msgstr "Размер после автосокрытия"
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
-"Количество точек (pixels), которое остаётся видимым после автосокрытия панели"
+"Количество пикселей, которое остаётся видимым после автосокрытия панели"
 
 #: gnome-panel/panel-toplevel.c:3563
 msgid "Animate"
@@ -2712,6 +2666,8 @@ msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
+"Если установлено в \"Истина\", то фоновое изображение будет повёрнуто, если "
+"панель ориентирована вертикально."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
@@ -2751,10 +2707,12 @@ msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
+"При использовании системы Xinerama, можно помещать панель на индивидуальный "
+"монитор. Этот ключ определяет текущий монитор, на котором панель помещена."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid "Number of visible pixels with a hidden panel."
-msgstr "Количество видимых точек (pixels) у скрытой панели."
+msgstr "Количество видимых пикселей у скрытой панели."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid "Rotate the image on vertical panels."
@@ -2828,7 +2786,7 @@ msgstr "Координата по оси X у панели зафиксиров�
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid "The Xinerama monitor the panel is on."
-msgstr ""
+msgstr "Монитор в системе Xinerama, на котором помещена панель."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid "The Y co-ordinate of the panel."
@@ -2868,6 +2826,9 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Расположение панели по оси X. Это значение имеет эффект только в "
+"нерасширенном режиме. В расширенном режиме это значение игнорируется, и "
+"панель размещается у края экрана в соответствии с ориентацией."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2875,6 +2836,9 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Расположение панели по оси Y. Это значение имеет эффект только в "
+"нерасширенном режиме. В расширенном режиме это значение игнорируется, и "
+"панель размещается у края экрана в соответствии с ориентацией."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid "The orientation of the panel."
@@ -2891,6 +2855,13 @@ msgid ""
 "menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
 "up above the panel."
 msgstr ""
+"Ориентация панели. Возможные значения; \"top\", \"bottom\", \"left\", \"right"
+"\". В расширенном режиме значение определяет, у какой стороны экрана "
+"расположена панель. В нерасширенном режиме разница между \"top\" и \"bottom"
+"\" менее важна - оба значения определяют, что это горизонтальная панель, но "
+"всё же определяет некоторые аспекты поведения объектов на панели. Например, "
+"при значении \"top\" выпадающее меню у кнопки меню будет ориентировано вниз, "
+"тогда как при \"bottom\" - вверх."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "The size of the panel."
@@ -2938,6 +2909,8 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"При настройке с несколькими экранами можно помещать панель на индивидуальный "
+"экран. Данный ключ определяет текущий экран, на который помещена панель."
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2951,17 +2924,12 @@ msgid "No document to show"
 msgstr "Нет документа для отображения"
 
 #: gnome-panel/panel-util.c:933
-#, fuzzy
 msgid "Cannot execute xscreensaver"
-msgstr "Невозможно запустить программу gnome-panel-screenshot"
+msgstr "Невозможно запустить хранитель экрана"
 
 #: gnome-panel/panel-util.c:934
-#, fuzzy
 msgid "Details: xscreensaver-command not found"
-msgstr ""
-"<b>Невозможно запустить хранитель экрана</b>\n"
-"\n"
-"Details: команда xscreensaver не найдена"
+msgstr "Подробности: команда \"xscreensaver\" не найдена"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3022,6 +2990,8 @@ msgstr "Указать идентификатор (IID) апплета для з
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
+"Указывает местоположение в системе GConf, где настройки апплета будут "
+"сохранены"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
@@ -3071,556 +3041,3 @@ msgstr "Сверхбольшая"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Сверхмаленькая"
-
-#~ msgid ""
-#~ "<b>Cannot launch icon</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Невозможно запустить</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Can't execute 'About GNOME'</b>\n"
-#~ "\n"
-#~ "Details: %s probably does not exist"
-#~ msgstr ""
-#~ "<b>Невозможно отобразить окно \"О среде Гном\"</b>\n"
-#~ "\n"
-#~ "Details: Возможно, %s не существует"
-
-#~ msgid ""
-#~ "<b>Can't launch entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Невозможно выполнить элемент</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Can't load entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Невозможно загрузить элемент</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Floating"
-#~ msgstr "плавающая"
-
-#~ msgid "Centered"
-#~ msgstr "центрированная"
-
-#~ msgid "Edge"
-#~ msgstr "краевая"
-
-#~ msgid "%s %s Panel"
-#~ msgstr "%s %s панель"
-
-#~ msgid ""
-#~ "<b>Failed to run this program</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Произошёл сбой при запуске этой программы</b>\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Failed to execute command:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Произошёл сбой при выполнении команды:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: no application available to open file"
-#~ msgstr ""
-#~ "<b>Произошёл сбой при открытии файла:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: Ни одно приложение не может открыть этот файла"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Произошёл сбой при открытии файла:</b> \"%s\"\n"
-#~ "\n"
-#~ "Подробности: %s"
-
-#~ msgid "Choose a file"
-#~ msgstr "Выберите файл"
-
-#~ msgid "Known Applications"
-#~ msgstr "Известные приложения"
-
-#~ msgid "No application selected"
-#~ msgstr "Ни одно приложение не выбрано"
-
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "Команда, _выполняемая при щелчке на рыбке:"
-
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "Задержка _кадра (сек):"
-
-#~ msgid "_Animation filename:"
-#~ msgstr "Имя файла с ани_мацией:"
-
-#~ msgid "Rows"
-#~ msgstr "строку(и)"
-
-#~ msgid "_Append File..."
-#~ msgstr "Доб_авить файл..."
-
-#~ msgid "Run Program"
-#~ msgstr "Запустить программу"
-
-#~ msgid "Run Program..."
-#~ msgstr "Запустить программу..."
-
-#, fuzzy
-#~ msgid "Take a screenshot"
-#~ msgstr "Сделать снимок экрана"
-
-#~ msgid "Transparent"
-#~ msgstr "Прозрачный"
-
-#~ msgid "_Size:"
-#~ msgstr "_Размер:"
-
-#, fuzzy
-#~ msgid "_Transparent background:"
-#~ msgstr "Прозрачный"
-
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Апплет предупреждает о приходе новой почты"
-
-#~ msgid "Inbox Monitor"
-#~ msgstr "Индикатор входящих писем"
-
-#~ msgid "_Check for mail"
-#~ msgstr "_Проверить почту"
-
-#~ msgid "There was an error executing %s: %s"
-#~ msgstr "Произошла ошибка при запуске \"%s\": %s"
-
-#~ msgid ""
-#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
-#~ "so you have to enter it each time it starts up."
-#~ msgstr ""
-#~ "Пароль не был установлен в настройках \"Индикатора входящей почты\"\n"
-#~ "и будет запрашиваться всякий раз при запуске."
-
-#~ msgid "Please enter your mailserver's _password:"
-#~ msgstr "Пожалуйста, введите _пароль для почтового сервера"
-
-#~ msgid "Password Entry box"
-#~ msgstr "Поле ввода пароля"
-
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Произошёл сбой при проверке почты \"Индикатором входящей почты\", "
-#~ "автоматическое обновление отключено.\n"
-#~ "Возможно, были указаны неправильные сервер, имя пользователя или пароль."
-
-#~ msgid "You have new mail."
-#~ msgstr "Есть новая почта."
-
-#~ msgid "You have mail."
-#~ msgstr "Есть почта."
-
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d сообщений"
-
-#~ msgid "%d messages"
-#~ msgstr "%d сообщений"
-
-#~ msgid "No mail."
-#~ msgstr "Нет почты."
-
-#~ msgid "Status not updated"
-#~ msgstr "Состояние не обновлялось"
-
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "Почтовый ящик _находится на:"
-
-#~ msgid "Local mailspool"
-#~ msgstr "Локальный спул почты"
-
-#~ msgid "Local maildir"
-#~ msgstr "Локальный почтовый каталог"
-
-#~ msgid "Remote POP3-server"
-#~ msgstr "Удалённый сервер протокола POP3"
-
-#~ msgid "Remote IMAP-server"
-#~ msgstr "Удалённый сервер протокола IMAP"
-
-#~ msgid "Mail _spool file:"
-#~ msgstr "Файл почтового спу_ла:"
-
-#~ msgid "Mail s_erver:"
-#~ msgstr "Почтовый с_ервер:"
-
-#~ msgid "Mail Server Entry box"
-#~ msgstr "Поле ввода сервера почты"
-
-#~ msgid "Username Entry box"
-#~ msgstr "Поле ввода имени пользователя"
-
-#~ msgid "_Password:"
-#~ msgstr "П_ароль:"
-
-#~ msgid "_Folder:"
-#~ msgstr "_Каталог:"
-
-#~ msgid "Folder Entry box"
-#~ msgstr "Поле ввода каталога"
-
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "Команда, зап_ускаемая перед проверкой почты:"
-
-#~ msgid "Execute"
-#~ msgstr "Выполнять"
-
-#~ msgid "Before each _update:"
-#~ msgstr "перед каждым _обновлением:"
-
-#~ msgid "Command to execute before each update"
-#~ msgstr "Команда, выполняемая перед каждым обновлением"
-
-#~ msgid "When new mail _arrives:"
-#~ msgstr "при при_бытии новой почты:"
-
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Команда, выполняемая при прибытии почты"
-
-#~ msgid "When clicke_d:"
-#~ msgstr "при _щелчке:"
-
-#~ msgid "Set the number of unread mails to _zero"
-#~ msgstr "Установить число непрочитанных сообщений в нол_ь"
-
-#~ msgid "Check for mail _every"
-#~ msgstr "Проверять почтовый ящик ка_ждые"
-
-#~ msgid "minutes"
-#~ msgstr "минут"
-
-#~ msgid "Choose time interval in minutes to check mail"
-#~ msgstr "Выбрать интервал времени в минутах между проверками почты"
-
-#~ msgid "Choose time interval in seconds to check mail"
-#~ msgstr "Выбрать интервал времени в секундах между проверками почты"
-
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "Воспроизводить з_вук при получении новой почты"
-
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Настройки \"Индикатора входящей почты\""
-
-#~ msgid "_Mail check"
-#~ msgstr "Проверка _почты"
-
-#~ msgid "Mail_box"
-#~ msgstr "Почтовый _ящик"
-
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "\"Индикатор входящей почты\" извещает о поступлении новой почты в "
-#~ "почтовый ящик"
-
-#~ msgid "Text only"
-#~ msgstr "Только текст"
-
-#~ msgid "Mail check"
-#~ msgstr "Проверка почты"
-
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "\"Индикатор входящей почты\" извещает о поступлении новой почты в "
-#~ "почтовый ящик"
-
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Команда, выполняемая при проверке почты"
-
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr "Команда, выполняемая при щелчке на \"Индикаторе\""
-
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Команда, запускаемая перед проверкой почты"
-
-#~ msgid "Do we run the exec-command"
-#~ msgstr "Запускать ли команду, выполняемую при щелчке"
-
-#~ msgid "Do we run the newmail-command"
-#~ msgstr "Запускать ли команду, выполняемую при прибытии новой почты"
-
-#~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Как часто (в миллисекундах) проверять почту"
-
-#~ msgid "If mail should be checked automatically"
-#~ msgstr "Следует ли проверять почту автоматически"
-
-#~ msgid "If this is set mail will be checked every update-freq milliseconds"
-#~ msgstr ""
-#~ "Если установлено, почта будет проверяться через установленное число "
-#~ "миллисекунд"
-
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "Если установлено, следует запускать команду, выполняемую при щелчке"
-
-#~ msgid "If this is set, we should run the newmail-command"
-#~ msgstr ""
-#~ "Если установлено, следует запускать программу, выполняемую при прибытии "
-#~ "новой почты"
-
-#~ msgid "Interval for checking mail"
-#~ msgstr "Интервал для проверки почты"
-
-#~ msgid "Path to the animation file"
-#~ msgstr "Путь к файлу анимации"
-
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr "Воспроизводить звук при получении новой почты"
-
-#~ msgid "Remote folder for mail retrieval"
-#~ msgstr "Удалённый каталог для почты"
-
-#~ msgid "Remote server to connect to for our mail"
-#~ msgstr "Удалённый почтовый сервер для подключения"
-
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Команда, запускаемая перед проверкой почты"
-
-#~ msgid "The mail server"
-#~ msgstr "Почтовый сервер:"
-
-#~ msgid "The user's password"
-#~ msgstr "Пароль пользователя"
-
-#~ msgid "The user's password for the remote server"
-#~ msgstr "Пароль пользователя для удалённого сервера"
-
-#~ msgid "This is how we check the mail, check the mail, check the mail..."
-#~ msgstr "Как проверяется почта"
-
-#~ msgid ""
-#~ "This is how we process the mail, process the mail, process the mail..."
-#~ msgstr "Как обрабатывается почта"
-
-#~ msgid ""
-#~ "This is the animation that will be displayed during normal Inbox Monitor "
-#~ "usage"
-#~ msgstr ""
-#~ "Анимированное изображение, которое будет отображаться при использовании "
-#~ "апплета"
-
-#~ msgid "Username on the remote server"
-#~ msgstr "Имя пользователя на удалённом сервере"
-
-#~ msgid "We run this command when the user clicks on Inbox Monitor"
-#~ msgstr "Эта команда будет запущена, если пользователь щёлкнет на апплете"
-
-#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
-#~ msgstr "Сбрасывать ли статус, когда пользователь щёлкнет на апплете"
-
-#~ msgid "You've got mail!"
-#~ msgstr "Пришла почта!"
-
-#~ msgid "Mailcheck"
-#~ msgstr "Проверка почты"
-
-#~ msgid "New Mail"
-#~ msgstr "Пришла почта"
-
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr "Параметр object_type не установлен для объекта панели с ID %s\n"
-
-#~ msgid "Mode"
-#~ msgstr "Режим"
-
-#~ msgid "State"
-#~ msgstr "Состояние"
-
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr "Являются ли кнопки сокрытия и показа панели видимыми?"
-
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Изображения на кнопках сокрытия включены"
-
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "Кнопки сокрытия имеют изображение"
-
-#~ msgid "Hide this panel"
-#~ msgstr "Скрыть эту панель"
-
-#~ msgid "Show this panel"
-#~ msgstr "Показать эту панель"
-
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Панель меню среды Гном"
-
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Невозможно найти программу для получения снимка экрана"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Невозможно запустить программу для получения снимка экрана"
-
-#~ msgid "Panel to add the launcher to"
-#~ msgstr "Панель, к которой добавить кнопку запуска"
-
-#~ msgid "NUMBER"
-#~ msgstr "НОМЕР"
-
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "Аргумент является ссылкой (URL), а не файлом типа .desktop"
-
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr ""
-#~ "Требуется указать один аргумент в виде файла типа .desktop или ссылку "
-#~ "(URL)\n"
-
-#~ msgid "No panel found\n"
-#~ msgstr "Ни одна панель не найдена\n"
-
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Выровненная панель среды Гном"
-
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "Краевая панель среды Гном"
-
-#~ msgid "Sliding Panel"
-#~ msgstr "Скользящая панель"
-
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Скользящая панель среды Гном"
-
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Плавающая панель среды Гном"
-
-#~ msgid "You can only have one menu panel at a time."
-#~ msgstr "Одновременно может быть только одна панель меню."
-
-#~ msgid "C_orner Panel"
-#~ msgstr "_Угловая панель"
-
-#~ msgid "Create corner panel"
-#~ msgstr "Создать угловую панель"
-
-#~ msgid "_Edge Panel"
-#~ msgstr "_Краевая панель"
-
-#~ msgid "Create edge panel"
-#~ msgstr "Создать краевую панель"
-
-#~ msgid "Create floating panel"
-#~ msgstr "Плавающая плавающую панель"
-
-#~ msgid "_Sliding Panel"
-#~ msgstr "_Скользящая панель"
-
-#~ msgid "Create sliding panel"
-#~ msgstr "Создать скользящую панель"
-
-#~ msgid "_Menu Panel"
-#~ msgstr "Панель _меню"
-
-#~ msgid "Create menu panel"
-#~ msgstr "Создать панель меню"
-
-#~ msgid "Button"
-#~ msgstr "Кнопка"
-
-#~ msgid "Menu:"
-#~ msgstr "Меню:"
-
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Невозможно создать меню, используется главное меню!"
-
-#~ msgid "No path set at %s for panel menu object\n"
-#~ msgstr "Путь не установлен в \"%s\" для объекта меню панели\n"
-
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "Невозможно зарегистрировать управляющий виджет\n"
-
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr "В настройках не найдены панели. Будет создана одна панель меню."
-
-#~ msgid "Miscellaneous:"
-#~ msgstr "Разное:"
-
-#~ msgid "Current screen:"
-#~ msgstr "Текущий экран:"
-
-#~ msgid "Current monitor:"
-#~ msgstr "Текущий монитор:"
-
-#~ msgid "Indicates the panel position and orientation on screen"
-#~ msgstr "Определяет расположение панели и её ориентацию на экране"
-
-#~ msgid "_Position:"
-#~ msgstr "Распо_ложение:"
-
-#~ msgid "Hori_zontal"
-#~ msgstr "г_оризонтальная"
-
-#~ msgid "_Vertical"
-#~ msgstr "в_ертикальная"
-
-#~ msgid "H_orizontal:"
-#~ msgstr "Смещение по горизо_нтали:"
-
-#~ msgid "Ver_tical:"
-#~ msgstr "Смещение по верт_икали:"
-
-#~ msgid "_Distance from edge:"
-#~ msgstr "С_мещение от угла:"
-
-#~ msgid "Default"
-#~ msgstr "Исходный"
-
-#~ msgid "Image"
-#~ msgstr "С изображением"
-
-#~ msgid "Image:"
-#~ msgstr "Изображение:"
-
-#~ msgid "Edge panel"
-#~ msgstr "Краевая панель"
-
-#~ msgid "Corner panel"
-#~ msgstr "Угловая панель"
-
-#~ msgid "Sliding panel"
-#~ msgstr "Скользящая панель"
-
-#~ msgid "Floating panel"
-#~ msgstr "Плавающая панель"
-
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr ""
-#~ "Показывать список программ при открытии диалога запуска по умолчанию"
-
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr "Показывать список программ в диалоге запуска"
-
-#~ msgid "Disabled"
-#~ msgstr "Отключено"
-
-#~ msgid " (invalid Unicode)"
-#~ msgstr " (недопустимый Юникод)"
