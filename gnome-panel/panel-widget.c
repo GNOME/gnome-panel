@@ -577,8 +577,12 @@ panel_widget_cadd (GtkContainer *container,
 
 	p = g_object_get_data (G_OBJECT(widget),
 			       PANEL_APPLET_ASSOC_PANEL_KEY);
-	if(p)
-		run_up_forbidden(p,add_panel_to_forbidden);
+	if (p) {
+		panel_toplevel_attach_to_widget (p->toplevel,
+						 PANEL_WIDGET (container)->toplevel,
+						 widget);
+		run_up_forbidden (p, add_panel_to_forbidden);
+	}
 }
 
 static void
@@ -597,8 +601,10 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	p = g_object_get_data (G_OBJECT (widget),
 				 PANEL_APPLET_ASSOC_PANEL_KEY);
 
-	if (p != NULL)
+	if (p != NULL) {
+		panel_toplevel_detach (p->toplevel);
 		run_up_forbidden (p, remove_panel_from_forbidden);
+	}
 
 	panel_widget_reset_focus (container, widget);
 

@@ -1,3 +1,15 @@
+Tue Jul 08 16:44:02 2003  George Lebl <jirka@5z.com>
+
+	* panel-applet-frame.c: Handle more errors in the constructor.  Still
+	  ORBit/Bonobo is broken and crashes, I have a workaround in mind if,
+	  they don't get fixed.  When the applet whacks out during the
+	  construct we now handle it in the same way as if we can't activate
+	  the applet with a gui dialog.  Don't connect to the broken signal
+	  until we're all done with init.
+
+	* panel-widget.c: detach attached toplevel on remove and attach it on
+	  add.  Fixes moving of drawers from one panel to another.
+
 Tue Jul 08 10:35:41 2003  George Lebl <jirka@5z.com>
 
 	* menu.c: when hierarchy changed, remove old mnemonic before adding

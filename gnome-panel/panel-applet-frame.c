@@ -841,21 +841,28 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 				   GtkWindow         *panel)
 {
 	GtkWidget *dialog;
-	char      *error;
 	int        response;
 
-	error = bonobo_exception_get_text (ev);
-
-	dialog = gtk_message_dialog_new (
-				NULL, 0,
-				GTK_MESSAGE_QUESTION,
-				GTK_BUTTONS_NONE,
-				_("The panel encountered a problem while loading \"%s\"\n"
-				  "Details: %s\n\n"
-				  "Do you want to delete the applet from your configuration?"),
-				iid, error);
-
-	g_free (error);
+	if (ev != NULL) {
+		char *error = bonobo_exception_get_text (ev);
+		dialog = gtk_message_dialog_new (
+					NULL, 0,
+					GTK_MESSAGE_QUESTION,
+					GTK_BUTTONS_NONE,
+					_("The panel encountered a problem while loading \"%s\"\n"
+					  "Details: %s\n\n"
+					  "Do you want to delete the applet from your configuration?"),
+					iid, error);
+		g_free (error);
+	} else {
+		dialog = gtk_message_dialog_new (
+					NULL, 0,
+					GTK_MESSAGE_QUESTION,
+					GTK_BUTTONS_NONE,
+					_("The panel encountered a problem while loading \"%s\"\n\n"
+					  "Do you want to delete the applet from your configuration?"),
+					iid);
+	}
 
 	register_stock_item ();
 
@@ -1092,30 +1099,38 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	frame->priv->iid = g_strdup (iid);
 
-	cnx_status = ORBit_small_get_connection_status (control);
-	if (cnx_status != ORBIT_CONNECTION_IN_PROC)
-		g_signal_connect_object (
-			ORBit_small_get_connection (control),
-			"broken",
-			G_CALLBACK (panel_applet_frame_cnx_broken),
-			frame,
-			G_CONNECT_SWAPPED);
-	
-	CORBA_exception_free (&ev);
-
 	widget = bonobo_widget_new_control_from_objref (control, CORBA_OBJECT_NIL);
 
 	bonobo_object_release_unref (control, NULL);
 
 	if (!widget) {
+		CORBA_exception_free (&ev);
+		panel_applet_frame_loading_failed (
+			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
 		g_warning (G_STRLOC ": failed to load applet %s", iid);
 		return NULL;
 	}
 
 	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
+	if (control_frame == NULL) {
+		CORBA_exception_free (&ev);
+		panel_applet_frame_loading_failed (
+			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
+		g_warning (G_STRLOC ": failed to load applet %s (can't get control frame)", iid);
+		gtk_object_sink (GTK_OBJECT (widget));
+		return NULL;
+	}
 
 	frame->priv->property_bag = 
-		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
+		bonobo_control_frame_get_control_property_bag (control_frame, &ev);
+	if (frame->priv->property_bag == NULL || BONOBO_EX (&ev)) {
+		panel_applet_frame_loading_failed (
+			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
+		CORBA_exception_free (&ev);
+		g_warning (G_STRLOC ": failed to load applet %s (can't get property bag)", iid);
+		gtk_object_sink (GTK_OBJECT (widget));
+		return NULL;
+	}
 
 	bonobo_event_source_client_add_listener (frame->priv->property_bag,
 						 (BonoboListenerCallbackFn) panel_applet_frame_event_listener,
@@ -1124,8 +1139,12 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 						 frame);
 	
 	frame->priv->ui_component =
-		bonobo_control_frame_get_popup_component (control_frame, NULL);
-	if (!frame->priv->ui_component) {
+		bonobo_control_frame_get_popup_component (control_frame, &ev);
+	if (frame->priv->ui_component == NULL || BONOBO_EX (&ev)) {
+		panel_applet_frame_loading_failed (
+			frame, &ev, iid, id, GTK_WINDOW (panel->toplevel));
+		CORBA_exception_free (&ev);
+		g_warning (G_STRLOC ": failed to load applet %s (can't get popup component)", iid);
 		gtk_object_sink (GTK_OBJECT (widget));
 		return NULL;
 	}
@@ -1138,15 +1157,46 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	control = bonobo_control_frame_get_control (control_frame);
 	if (!control) {
+		CORBA_exception_free (&ev);
+		panel_applet_frame_loading_failed (
+			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
+		g_warning (G_STRLOC ": failed to load applet %s (can't get control)", iid);
 		gtk_object_sink (GTK_OBJECT (widget));
 		return NULL;
 	}
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 	if (frame->priv->applet_shell == CORBA_OBJECT_NIL) {
+		CORBA_exception_free (&ev);
+		panel_applet_frame_loading_failed (
+			frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
+		g_warning (G_STRLOC ": failed to load applet %s (can't get applet shell)", iid);
 		gtk_object_sink (GTK_OBJECT (widget));
 		return NULL;
 	}
+
+	CORBA_exception_free (&ev);
+
+	cnx_status = ORBit_small_get_connection_status (control);
+	if (cnx_status != ORBIT_CONNECTION_IN_PROC) {
+		ORBitConnection *cnx = ORBit_small_get_connection_ref (control);
+		if (cnx == NULL) {
+			CORBA_exception_free (&ev);
+			panel_applet_frame_loading_failed (
+				frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
+			g_warning (G_STRLOC ": failed to load applet %s (lost connection)", iid);
+			gtk_object_sink (GTK_OBJECT (widget));
+			return NULL;
+		}
+		g_signal_connect_object (
+			cnx,
+			"broken",
+			G_CALLBACK (panel_applet_frame_cnx_broken),
+			frame,
+			G_CONNECT_SWAPPED);
+		ORBit_small_connection_unref (cnx);
+	}
+	
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 
@@ -1165,7 +1215,7 @@ panel_applet_frame_new (PanelWidget *panel,
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
 	if (!panel_applet_frame_construct (frame, panel, iid, id)) {
-		gtk_object_sink (GTK_OBJECT (frame));
+		//gtk_object_sink (GTK_OBJECT (frame));
 		return NULL;
 	}
 
