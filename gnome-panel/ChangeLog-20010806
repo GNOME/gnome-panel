@@ -1,3 +1,14 @@
+Tue Sep 22 00:53:10 1998  George Lebl  <jirka@5z.com>
+
+	* drawer-widget.c: fix drawer open/close code when animations are
+	  disabled
+
+	* session.c: global_config is not initialized, those values were
+	  bogus anyway
+
+	* session.c: fix segfault when quiting with a swallow applet that
+	  didn't ever swallow anything
+
 Thu Sep 17 01:51:47 1998  John Ellis  <johne@bellatlantic.net>
 
 	* corner-widget.c, snapped-widget.c: changed xpm references to png.

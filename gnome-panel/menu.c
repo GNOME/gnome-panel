@@ -819,7 +819,6 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		}
 
 		if(need_reread) {
-			puts("debug: rereading menu");
 			if(main_menu)
 				add_menu_widget(menu,NULL,main_menu,TRUE);
 			else {
@@ -872,7 +871,6 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			for(list = mfl; list != NULL;
 			    list = g_list_next(list)) {
 				MenuFinfo *mf = list->data;
-				puts("debug: rereading menu");
 				menuw = create_menu_at(old_menu,
 						       mf->menudir,
 						       mf->applets,

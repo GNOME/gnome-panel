@@ -27,18 +27,7 @@ extern GtkTooltips *panel_tooltips;
 
 extern GnomeClient *client;
 
-GlobalConfig global_config = {
-		DEFAULT_AUTO_HIDE_STEP_SIZE,
-		DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
-		DEFAULT_MINIMIZED_SIZE,
-		DEFAULT_MINIMIZE_DELAY,
-		TRUE, /*tooltips*/
-		TRUE, /*show small icons*/
-		TRUE, /*logout question*/
-		PANEL_SWITCH_MOVE,
-		FALSE, /*disable anims*/
-		3 /*applet padding*/
-	};
+GlobalConfig global_config;
 
 char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
@@ -376,7 +365,7 @@ do_session_save(GnomeClient *client,
 		gnome_client_set_discard_command (client, 3, new_args);
 	}
 	
-	printf("Saving to [%s]\n",panel_cfg_path);
+	/*DEBUG*/printf("Saving to [%s]\n",panel_cfg_path);
 
 	/*take out the trailing / then call the clean_file function,
 	  otherwise it will make runaway directories*/
@@ -515,8 +504,9 @@ panel_session_die (GnomeClient *client,
 			gtk_widget_destroy(info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
-			XKillClient(GDK_DISPLAY(),
-				    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
+			if(GTK_SOCKET(swallow->socket)->plug_window)
+				XKillClient(GDK_DISPLAY(),
+					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
 		}
 	}
 			

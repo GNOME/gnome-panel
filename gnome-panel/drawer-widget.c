@@ -402,25 +402,23 @@ drawer_widget_open_drawer(DrawerWidget *drawer)
 	ignore_allocate = TRUE;
 	gtk_widget_show_now(GTK_WIDGET(drawer));
 	ignore_allocate = FALSE;
-	if(!pw_disable_animations) {
-		switch(drawer->orient) {
-		case ORIENT_UP:
-			move_vert_d(drawer,x,y,width,height, y+height, y,
-				    pw_drawer_step,FALSE);
-			break;
-		case ORIENT_DOWN:
-			move_vert_d(drawer,x,y,width,height, y-height, y,
-				    pw_drawer_step,FALSE);
-			break;
-		case ORIENT_LEFT:
-			move_horiz_d(drawer,x,y,width,height, x+width, x,
-				     pw_drawer_step,FALSE);
-			break;
-		case ORIENT_RIGHT:
-			move_horiz_d(drawer,x,y,width,height, x-width, x,
-				     pw_drawer_step,FALSE);
-			break;
-		}
+	switch(drawer->orient) {
+	case ORIENT_UP:
+		move_vert_d(drawer,x,y,width,height, y+height, y,
+			    pw_drawer_step,FALSE);
+		break;
+	case ORIENT_DOWN:
+		move_vert_d(drawer,x,y,width,height, y-height, y,
+			    pw_drawer_step,FALSE);
+		break;
+	case ORIENT_LEFT:
+		move_horiz_d(drawer,x,y,width,height, x+width, x,
+			     pw_drawer_step,FALSE);
+		break;
+	case ORIENT_RIGHT:
+		move_horiz_d(drawer,x,y,width,height, x-width, x,
+			     pw_drawer_step,FALSE);
+		break;
 	}
 
 	drawer->state = DRAWER_SHOWN;
