@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-06-06 15:52+0100\n"
-"PO-Revision-Date: 2003-05-29 13:56+0200\n"
+"POT-Creation-Date: 2003-06-07 01:03+0200\n"
+"PO-Revision-Date: 2003-06-07 01:03+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Timformat"
 
 #: applets/clock/clock.schemas.in.h:8
 msgid "Program to run in order to configure the time."
-msgstr ""
+msgstr "Program att köra för att konfigurera tiden."
 
 #: applets/clock/clock.schemas.in.h:9
 msgid "Sets the hour format, may be either 12 or 24"
@@ -224,7 +224,7 @@ msgstr "Visa tid med sekunder"
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
-msgstr ""
+msgstr "Tidskonfigurationsverktyg"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use Internet time"
@@ -601,6 +601,8 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
+"Din fönsterhanterare stöder inte knappen för att visa skrivbordet, eller så "
+"kör du ingen fönsterhanterare."
 
 #: applets/wncklet/window-list.c:797 applets/wncklet/window-menu.c:132
 msgid ""
@@ -658,7 +660,7 @@ msgid "Show windows from a_ll workspaces"
 msgstr "Visa fönster från a_lla arbetsytor"
 
 #: applets/wncklet/window-list.glade.h:14 gnome-panel/button-widget.c:856
-#: gnome-panel/panel-toplevel.c:3326
+#: gnome-panel/panel-toplevel.c:3358
 msgid "Size"
 msgstr "Storlek"
 
@@ -923,7 +925,7 @@ msgstr "Har pil"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Huruvida en pilindikator ska ritas eller inte"
 
-#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3315
+#: gnome-panel/button-widget.c:874 gnome-panel/panel-toplevel.c:3347
 msgid "Orientation"
 msgstr "Orientering"
 
@@ -1988,12 +1990,18 @@ msgid ""
 "contents should be constructed. If false, the menu_path setting is ignored. "
 "This setting is only relevant if the object_type is \"menu-object\"."
 msgstr ""
+"Om sant används inställningen menu_path som den sökväg från vilken "
+"menyinnehållet ska konstrueras. Om falskt ignoreras inställningen menu_path. "
+"Denna inställning är endast relevant om object_type är \"menu-object"
+"\" (menyobjekt)."
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Om sant kan användaren inte flytta panelprogrammet utan att först låsa upp "
+"objektet genom att använda menyposten \"Lås upp\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
@@ -2012,6 +2020,9 @@ msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This setting is only relevant if the object_type is \"bonobo-applet\"."
 msgstr ""
+"Bonobo-implementations-ID för panelprogrammet - t.ex. \"OAFIID:"
+"GNOME_ClockApplet\". Denna inställning är endast relevant om object_type är "
+"\"bonobo-applet\" (bonobo-panelprogram)."
 
 #: gnome-panel/panel-object.schemas.in.h:9
 msgid ""
@@ -2019,26 +2030,35 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This setting is only "
 "relevant if the object_type is \"action-applet\"."
 msgstr ""
+"Åtgärdstypen som denna knapp representerar. Möjliga värden är \"lock"
+"\" (lås), \"logout\" (utloggning), \"run\" (kör), \"search\" (sök) och "
+"\"screenshot\" (skärmdump). Denna inställning är endast relevant om "
+"object_type är \"action-applet\" (åtgärdspanelprogram)."
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "The icon used for the object's button"
-msgstr ""
+msgstr "Ikonen som används för objektets knapp"
 
 #: gnome-panel/panel-object.schemas.in.h:11
 msgid ""
 "The identifier of the panel attached to this drawer. This setting is only "
 "relevant if the object_type is \"drawer-object\"."
 msgstr ""
+"Identifieraren för panelen som är fäst vid denna låda. Denna inställning är "
+"endast relevant om object_type är \"drawer-object\" (lådobjekt)."
 
 #: gnome-panel/panel-object.schemas.in.h:12
 msgid "The identifier of the panel toplevel which contains this object."
-msgstr ""
+msgstr "Identifieraren för den paneltoppnivå som innehåller detta objekt."
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid ""
 "The location of the .desktop file describing the launcher. This setting is "
 "only relevant if the object_type is \"launcher-object\"."
 msgstr ""
+"Platsen för den .desktop-fil som beskriver programstartaren. Denna "
+"inställning är endast relevant om object_type är \"launcher-object"
+"\" (startarobjekt)."
 
 #: gnome-panel/panel-object.schemas.in.h:14
 msgid ""
@@ -2046,6 +2066,9 @@ msgid ""
 "This setting is only relevant if the object_type is \"drawer-object\" or "
 "\"menu-object\" and use_custom_icon is true."
 msgstr ""
+"Platsen för den bildfil som används som ikon för objektets knapp. Denna "
+"inställning är endast relevant om object_type är \"drawer-object"
+"\" (lådobjekt) eller \"menu-object\" och use_custom_icon är sant."
 
 #: gnome-panel/panel-object.schemas.in.h:15
 msgid "The location of the launcher"
@@ -2057,11 +2080,11 @@ msgstr "Objektets position på panelen"
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid "The panel attached to this drawer"
-msgstr ""
+msgstr "Panelen som är fäst vid denna låda"
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The panel toplevel which contains this object"
-msgstr ""
+msgstr "Panel"
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid "The path for the menu contents"
@@ -2072,18 +2095,25 @@ msgid ""
 "The path from which the menu contents is contructed. The setting is only "
 "relevant if use_menu_path is true and the object_type is \"menu-object\"."
 msgstr ""
+"Sökvägen från vilken menyinnehållet konstrueras. Inställningen är endast "
+"relevant om use_menu_path är sant och object_type är \"menu-object"
+"\" (menyobjekt)."
 
 #: gnome-panel/panel-object.schemas.in.h:21
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
 msgstr ""
+"Positionen för detta panelobjekt. Positionen anges som antalet bildpunkter "
+"från vänstra (eller översta om vertikal) panelkanten."
 
 #: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The text to display in a tooltip for this drawer. This setting is only "
 "relevant if the object_type is \"drawer-object\"."
 msgstr ""
+"Texten att visa i ett verktygstips för denna låda. Denna inställning är "
+"endast relevant om object_type är \"drawer-object\" (lådobjekt)."
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid "The tooltip displayed for this drawer"
@@ -2103,6 +2133,10 @@ msgid ""
 "object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
 "applet\" and \"menu-bar\"."
 msgstr ""
+"Typen av panelobjekt. Det finns flera möjliga värden - \"drawer-object"
+"\" (lådobjekt), \"menu-object\" (menyobjekt), \"launcher-object"
+"\" (startarobjekt), \"bonobo-applet\" (bonobo-panelprogram), \"action-applet"
+"\" (åtgärdspanelprogram) och \"menu-bar\" (menyrad)."
 
 #: gnome-panel/panel-object.schemas.in.h:27
 msgid "Use a custom icon for the object's button"
@@ -2130,6 +2164,8 @@ msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
+"Panelen \"%s\" är inställd att visas på skärm %d som för tillfället inte är "
+"tillgänglig. Läser inte in denna panel."
 
 #: gnome-panel/panel-profile.c:1332
 #, c-format
@@ -2178,7 +2214,6 @@ msgid "Background _image:"
 msgstr "Bakgrunds_bild:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
-#: gnome-panel/panel-toplevel.c:1345
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Nederkant"
@@ -2200,7 +2235,6 @@ msgid "Image Background Details"
 msgstr "Bildbakgrundsdetaljer"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
-#: gnome-panel/panel-toplevel.c:1348
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Vänster"
@@ -2214,7 +2248,6 @@ msgid "Pick a color"
 msgstr "Välj en färg"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
-#: gnome-panel/panel-toplevel.c:1351
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Höger"
@@ -2240,7 +2273,6 @@ msgid "St_retch"
 msgstr "St_räck ut"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#: gnome-panel/panel-toplevel.c:1342
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Överkant"
@@ -2420,157 +2452,196 @@ msgstr "Kan inte läsa in standardpanelikonen \"%s\"\n"
 msgid "_Force quit"
 msgstr "_Tvinga avslutande"
 
-#: gnome-panel/panel-toplevel.c:1359
-msgid "Floating"
-msgstr "Flytande"
+#: gnome-panel/panel-toplevel.c:1340
+msgid "Top Expanded Edge Panel"
+msgstr "Utfälld överkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1341
+msgid "Top Centered Panel"
+msgstr "Centrerad överkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1342
+msgid "Top Floating Panel"
+msgstr "Flytande överkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1343
+msgid "Top Edge Panel"
+msgstr "Överkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1347
+msgid "Bottom Expanded Edge Panel"
+msgstr "Utfälld nederkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1348
+msgid "Bottom Centered Panel"
+msgstr "Centrerad nederkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1349
+msgid "Bottom Floating Panel"
+msgstr "Flytande nederkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1350
+msgid "Bottom Edge Panel"
+msgstr "Nederkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1354
+msgid "Left Expanded Edge Panel"
+msgstr "Utfälld vänsterkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1355
+msgid "Left Centered Panel"
+msgstr "Centrerad vänsterkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1356
+msgid "Left Floating Panel"
+msgstr "Flytande vänsterkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1357
+msgid "Left Edge Panel"
+msgstr "Vänsterkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1361
+msgid "Right Expanded Edge Panel"
+msgstr "Utfälld högerkantspanel"
 
 #: gnome-panel/panel-toplevel.c:1362
-msgid "Centered"
-msgstr "Centrerad"
+msgid "Right Centered Panel"
+msgstr "Centrerad högerkantspanel"
+
+#: gnome-panel/panel-toplevel.c:1363
+msgid "Right Floating Panel"
+msgstr "Flytande högerkantspanel"
 
 #: gnome-panel/panel-toplevel.c:1364
-msgid "Expanded Edge"
-msgstr "Utfälld kant"
+msgid "Right Edge Panel"
+msgstr "Högerkantspanel"
 
-#: gnome-panel/panel-toplevel.c:1366
-msgid "Edge"
-msgstr "Kant"
-
-#. Translators: the first argument is the current orientation
-#. * (Top, Bottom, Left or Right) and the second argument is the
-#. * type of panel (Expanded Edge, Edge, Floating or Centered).
-#.
-#: gnome-panel/panel-toplevel.c:1372
-#, c-format
-msgid "%s %s Panel"
-msgstr "%s %s Panel"
-
-#: gnome-panel/panel-toplevel.c:3295
+#: gnome-panel/panel-toplevel.c:3327
 msgid "Name"
 msgstr "Namn"
 
-#: gnome-panel/panel-toplevel.c:3296
+#: gnome-panel/panel-toplevel.c:3328
 msgid "The name of this panel"
 msgstr "Namnet på denna panel"
 
-#: gnome-panel/panel-toplevel.c:3305
+#: gnome-panel/panel-toplevel.c:3337
 msgid "Expand"
 msgstr "Fäll ut"
 
-#: gnome-panel/panel-toplevel.c:3306
+#: gnome-panel/panel-toplevel.c:3338
 msgid "Expand to take up the full monitor width/height"
 msgstr "Expandera så att hela bildskärmshöjden/-bredden tas upp"
 
-#: gnome-panel/panel-toplevel.c:3316
+#: gnome-panel/panel-toplevel.c:3348
 msgid "The orientation of the panel"
 msgstr "Panelens orientering"
 
-#: gnome-panel/panel-toplevel.c:3327
+#: gnome-panel/panel-toplevel.c:3359
 msgid "The height (or width when vertical) of the panel"
 msgstr "Panelens höjd (eller bredd då den är vertikal)"
 
-#: gnome-panel/panel-toplevel.c:3339
+#: gnome-panel/panel-toplevel.c:3371
 msgid "X position"
 msgstr "X-position"
 
-#: gnome-panel/panel-toplevel.c:3340
+#: gnome-panel/panel-toplevel.c:3372
 msgid "The X position of the panel"
 msgstr "Panelens X-position"
 
-#: gnome-panel/panel-toplevel.c:3351
+#: gnome-panel/panel-toplevel.c:3383
 msgid "X centered"
 msgstr "X-centrerad"
 
-#: gnome-panel/panel-toplevel.c:3352
+#: gnome-panel/panel-toplevel.c:3384
 msgid "The x co-ordinate is relative to center screen"
 msgstr "X-koordinaten är relativ till skärmens mitt"
 
-#: gnome-panel/panel-toplevel.c:3361
+#: gnome-panel/panel-toplevel.c:3393
 msgid "Y position"
 msgstr "Y-position"
 
-#: gnome-panel/panel-toplevel.c:3362
+#: gnome-panel/panel-toplevel.c:3394
 msgid "The Y position of the panel"
 msgstr "Panelens Y-position"
 
-#: gnome-panel/panel-toplevel.c:3373
+#: gnome-panel/panel-toplevel.c:3405
 msgid "Y centered"
 msgstr "Y-centrerad"
 
-#: gnome-panel/panel-toplevel.c:3374
+#: gnome-panel/panel-toplevel.c:3406
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Y-koordinaten är relativ till skärmens mitt"
 
-#: gnome-panel/panel-toplevel.c:3383
+#: gnome-panel/panel-toplevel.c:3415
 msgid "Xinerama monitor"
 msgstr "Xinerama-bildskärm"
 
-#: gnome-panel/panel-toplevel.c:3384
+#: gnome-panel/panel-toplevel.c:3416
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Bildskärmen (i Xinerama-termer) som panelen är på"
 
-#: gnome-panel/panel-toplevel.c:3395
+#: gnome-panel/panel-toplevel.c:3427
 msgid "Auto hide"
 msgstr "Dölj automatiskt"
 
-#: gnome-panel/panel-toplevel.c:3396
+#: gnome-panel/panel-toplevel.c:3428
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Dölj automatiskt panelen då muspekaren lämnar panelen"
 
-#: gnome-panel/panel-toplevel.c:3405
+#: gnome-panel/panel-toplevel.c:3437
 msgid "Hide delay"
 msgstr "Döljningsfördröjning"
 
-#: gnome-panel/panel-toplevel.c:3406
+#: gnome-panel/panel-toplevel.c:3438
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Antalet millisekunder att dröja innan panelen automatiskt döljs"
 
-#: gnome-panel/panel-toplevel.c:3417
+#: gnome-panel/panel-toplevel.c:3449
 msgid "Un-hide delay"
 msgstr "Visningsfördröjning"
 
-#: gnome-panel/panel-toplevel.c:3418
+#: gnome-panel/panel-toplevel.c:3450
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
 
-#: gnome-panel/panel-toplevel.c:3429
+#: gnome-panel/panel-toplevel.c:3461
 msgid "Auto-hide size"
 msgstr "Storlek för automatisk döljning"
 
-#: gnome-panel/panel-toplevel.c:3430
+#: gnome-panel/panel-toplevel.c:3462
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Antalet bildpunkter som är synliga när panelen automatiskt har dolts"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3473
 msgid "Animate"
 msgstr "Animera"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3474
 msgid "Enable hiding/showing animations"
 msgstr "Aktivera animationer för döljning/visning"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3483
 msgid "Animation Speed"
 msgstr "Animationshastighet"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3484
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Hastigheten med vilken paneldöljning/-visning ska animeras"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3494
 msgid "Buttons Enabled"
 msgstr "Knappar aktiverade"
 
-#: gnome-panel/panel-toplevel.c:3463
+#: gnome-panel/panel-toplevel.c:3495
 msgid "Enable hide/show buttons"
 msgstr "Aktivera dölj-/visningsdöljknappar"
 
-#: gnome-panel/panel-toplevel.c:3472
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Arrows Enabled"
 msgstr "Pilar aktiverade"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3505
 msgid "Enable arrows on hide/show buttons"
 msgstr "Aktivera pilar på dölj-/visningsknappar"
 
@@ -2612,17 +2683,19 @@ msgstr "Aktivera döljknappar."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
 msgid "Expand to occupy entire screen width."
-msgstr ""
+msgstr "Expandera så att hela skärmbredden tas i anspråk."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:11
 msgid "Fit the image to the panel."
-msgstr ""
+msgstr "Passa in bilden på panelen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid ""
 "If true the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
 msgstr ""
+"Om sant kommer bilden att skalas till paneldimensionerna. Bildens "
+"proportioner kommer inte att bevaras."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 msgid ""
@@ -2631,36 +2704,51 @@ msgid ""
 "position - i.e. the panel will grow on both sides. If false the x setting "
 "determines the location of the panel."
 msgstr ""
+"Om sant kommer x-inställningen att ignoreras och panelen att placeras i "
+"mitten på skärmens x-axel. Om panelens storlek ändras kommer den att finnas "
+"kvar på den positionen, dvs panelen kommer att växa på båda sidor. Om falskt "
+"avgör x-inställningen platsen för panelen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
 "If true, arrows will be placed on the hide buttons. This preference only has "
 "meaning if enable_buttons is true."
 msgstr ""
+"Om sant kommer pilar att placeras på döljknapparna. Denna inställning är "
+"endast meningsfull om enable_buttons är sant."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Om sant kommer knappar som kan användas för att flytta panelen till kanten "
+"på skärmen, och som endast lämnar en knapp synlig, att placeras på var sida "
+"om panelen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantaneously."
 msgstr ""
+"Om sant kommer döljande och visning av panelen att animeras istället för att "
+"ske ögonblickligen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
+"Om sant kommer bakgrundsbilden att roteras då panelen är vertikalt "
+"orienterad."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
+"Om sant kommer bilden att skalas (samtidigt som bildproportionerna bevaras) "
+"till panelhöjden (om horisontell)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
@@ -2669,6 +2757,10 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
+"Om sant kommer panelen att ta hela skärmbredden i anspråk (skärmhöjden om "
+"det är en vertikal panel). I detta läge kan panelen endast placeras på en "
+"skärmkant. Om falskt kommer panelen endast att vara tillräckligt stor för "
+"att panelprogrammen, programstartarna och knapparna ska få plats på panelen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2676,16 +2768,21 @@ msgid ""
 "into a corner of the screen. Moving the pointer to that corner will cause "
 "the panel to re-appear."
 msgstr ""
+"Om sant kommer panelen att automatiskt döljas i ett hörn på skärmen när "
+"pekaren lämnar panelytan. Att flytta pekaren till det hörnet kommer att göra "
+"att panelen åter visas."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
+"I en Xinerama-konfiguration kan du ha paneler på varje enskild bildskärm. "
+"Denna nyckel identifierar den aktuella bildskärm som panelen visas på."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid "Number of visible pixels with a hidden panel."
-msgstr ""
+msgstr "Antal synliga bildpunkter med en dold panel."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid "Rotate the image on vertical panels."
@@ -2701,6 +2798,8 @@ msgid ""
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
 msgstr ""
+"Anger filen som ska användas som bakgrundsbild. Om bilden inenhåller en "
+"alfakanal kommer den att sättas samman ovanpå skrivbordets bakgrundsbild."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid ""
@@ -2708,6 +2807,9 @@ msgid ""
 "panel area before the panel is automatically re-shown. This preference is "
 "only relevant if auto_hide is true."
 msgstr ""
+"Anger fördröjningen i antal millisekunder efter det att muspekaren har "
+"kommit in på panelytan innan panelen automatiskt visas igen. Denna "
+"inställning är endast relevant om auto_hide är sant."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid ""
@@ -2715,6 +2817,9 @@ msgid ""
 "panel area before the panel is automatically hidden. This preference is only "
 "relevant if auto_hide is true."
 msgstr ""
+"Anger fördröjningen i antal millisekunder efter det att muspekaren har "
+"lämnat panelytan innan panelen automatiskt döljs. Denna inställning är "
+"endast relevant om auto_hide är sant."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
 msgid ""
@@ -2722,6 +2827,8 @@ msgid ""
 "hidden into a corner. This preference only has relevance when auto_hide is "
 "true."
 msgstr ""
+"Anger antalet synliga bildpunkter om panelen automatiskt döljs i ett hörn. "
+"Denna inställning är endast meningsfull om auto_hide är sant."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid ""
@@ -2729,6 +2836,9 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
+"Anger genomskinligheten för bakgrundsfärgformatet. Om färgen inte är helt "
+"genomskinlig (ett värde mindre än 65535) kommer färgen att sättas samman "
+"ovanpå skrivbordsbakgrundsbilden."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Stretch the image to the panel."
@@ -2773,6 +2883,10 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
+"Höjden (bredden för en vertikal panel) för panelen. Panelen kommer vid "
+"körning att avgöra en maximal storlek baserad på typsnittsstorlek och andra "
+"indikatorer. Den maximala storleken är låst till en fjärdedel av skärmhöjden "
+"(eller skärmbredden)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2780,6 +2894,9 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Platsen för panelen längs x-axeln. Värdet är endast meningsfullt i "
+"oexpanderat läge. I expanderat läge ignoreras värdet och panelen placeras på "
+"den skärmkant som indikeras av orienteringen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
@@ -2787,6 +2904,9 @@ msgid ""
 "un-expanded mode. In expanded mode the value is ignored and the panel is "
 "placed at the screen edge indicated by the orientation."
 msgstr ""
+"Platsen för panelen längs y-axeln. Värdet är endast meningsfullt i "
+"oexpanderat läge. I expanderat läge ignoreras värdet och panelen placeras på "
+"den skärmkant som indikeras av orienteringen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid "The orientation of the panel."
@@ -2803,6 +2923,14 @@ msgid ""
 "menu below the panel, whereas on a \"bottom\" panel the menu will be popped "
 "up above the panel."
 msgstr ""
+"Orienteringen för panelen. Det finns fyra möjliga värden; \"top"
+"\" (överkant), \"bottom\" (nederkant), \"left\" (vänsterkant), \"right"
+"\" (högerkant). I expanderat läge anger värdet vilken skärmkant som panelen "
+"finns på. I oexpanderat läge är skillnaden mellan \"top\" och \"bottom\" "
+"mindre viktig - båda indikerar att detta är en horisontell panel - men ger "
+"fortfarande en användbar indikering för hur en del panelobjekt ska bete sig. "
+"Till exempel kommer en menyknapp på en överkantspanel visa sin meny nedanför "
+"panelen, medan den på en nederkantspanel kommer att visas ovanför panelen."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "The size of the panel."
@@ -2818,6 +2946,9 @@ msgid ""
 "\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
 "enable_animations is true."
 msgstr ""
+"Hastigheten med vilka animationer ska ske. Det finns tre möjliga värden; "
+"\"slow\" (långsam), \"medium\" (mellan) och \"fast\" (snabb). Denna "
+"inställning är endast relevant om enable_animations är sant."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
@@ -2825,6 +2956,9 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
+"Detta är ett lättläsligt namn som du kan använda för att identifiera "
+"panelen. Dess huvuduppgift är att tjäna som panelens fönstertitel vid "
+"navigering mellan paneler."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid ""
@@ -2833,12 +2967,19 @@ msgid ""
 "the color preference will be used as the background color or \"image\", the "
 "image specified in the image preference will be used as the background."
 msgstr ""
+"Vilken typ av bakgrund som ska användas för denna panel. Det finns 3 möjliga "
+"värden; \"gtk\", GTK+-standardwidgetbakgrunden kommer att användas, \"color"
+"\" (färg), färginställningen kommer att användas som bakgrundsfärg eller "
+"\"image\" (bild), bilden som är angiven i bildinställningen kommer att "
+"användas som bakgrund."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"Med en flerskärmskonfiguration kan du ha paneler på varje enskild skärm. "
+"Denna nyckel identifierar den aktuella skärm som panelen visas på."
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2923,15 +3064,20 @@ msgstr "Ange ett panelprograms-IID att läsa in"
 msgid ""
 "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
+"Ange en plats i gconf på vilken panelprogramsinställningarna kan lagras"
 
 #: libpanel-applet/panel-test-applets.c:35
 msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
+"Ange den ursprungliga storleken för panelprogrammet (jätteliten, mellan, "
+"stor osv)"
 
 #: libpanel-applet/panel-test-applets.c:37
 msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
+"Ange den ursprungliga orienteringen för panelprogrammet (överkant, "
+"nederkant, vänster eller höger)"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -2972,6 +3118,109 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "A name with which to identify this panel"
+#~ msgstr "Ett namn som panelen kan identifieras med"
+
+#~ msgid "Automatically hide the panel into the corner"
+#~ msgstr "Dölj automatiskt panelen i hörnet"
+
+#~ msgid "Center the panel on the x-axis"
+#~ msgstr "Centrera panelen på x-axeln"
+
+#~ msgid "Center the panel on the y-axis"
+#~ msgstr "Centrera panelen på y-axeln"
+
+#~ msgid "Delay before automatically hiding the panel"
+#~ msgstr "Fördröjning innan panelen automatiskt döljs"
+
+#~ msgid "Delay before automatically un-hiding the panel"
+#~ msgstr "Fördröjning innan panelen automatiskt visas"
+
+#~ msgid "Enable arrows on the hide buttons"
+#~ msgstr "Aktivera pilar på döljknapparna"
+
+#~ msgid "Expand to occupy entire screen width"
+#~ msgstr "Expandera så att hela skärmbredden tas i anspråk"
+
+#~ msgid "Fit the image to the panel"
+#~ msgstr "Passa in bilden på panelen"
+
+#~ msgid "Number of visible pixels with a hidden panel"
+#~ msgstr "Antal synliga bildpunkter med en dold panel"
+
+#~ msgid "Rotate the image on vertical panels"
+#~ msgstr "Rotera bilden på vertikala paneler"
+
+#~ msgid "Stretch the image to the panel"
+#~ msgstr "Sträck ut bilden på panelen"
+
+#~ msgid "The X co-ordinate of the panel"
+#~ msgstr "X-koordinaten för panelen"
+
+#~ msgid "The X coordinate of the panel"
+#~ msgstr "X-koordinaten för panelen"
+
+#~ msgid "The X screen the panel is on"
+#~ msgstr "X-skärmen panelen är på"
+
+#~ msgid "The Xinerama monitor the panel is on"
+#~ msgstr "Xinerama-bildskärmen som panelen är på"
+
+#~ msgid "The Y co-ordinate of the panel"
+#~ msgstr "Y-koordinaten för panelen"
+
+#~ msgid "The Y coordinate of the panel"
+#~ msgstr "Y-koordinaten för panelen"
+
+#~ msgid "The background color opacity"
+#~ msgstr "Bakgrundsfärgens genomskinlighet"
+
+#~ msgid "The background color"
+#~ msgstr "Bakgrundsfärgen"
+
+#~ msgid "Background color"
+#~ msgstr "Bakgrundsfärg"
+
+#~ msgid "The background image"
+#~ msgstr "Bakgrundsbilden"
+
+#~ msgid "The background type"
+#~ msgstr "Bakgrundstypen"
+
+#~ msgid "Background type"
+#~ msgstr "Bakgrundstyp"
+
+#~ msgid "The size of the panel"
+#~ msgstr "Storleken på panelen"
+
+#~ msgid "The speed of animations"
+#~ msgstr "Hastigheten för animationer"
+
+#~ msgid ""
+#~ "Which type of background should be used for this panel. There are three "
+#~ "possible values; \"gtk\", the default GTK+ widget background will be "
+#~ "used, \"color\", the color preference will be used as the background "
+#~ "color or \"image\", the image specified in the image preference will be "
+#~ "used as the background."
+#~ msgstr ""
+#~ "Vilken typ av bakgrund som ska användas för denna panel. Det finns tre "
+#~ "möjliga värden; \"gtk\", GTK+-standardwidgetbakgrunden kommer att "
+#~ "användas, \"color\" (färg), färginställningen kommer att användas som "
+#~ "bakgrundsfärg eller \"image\" (bild), bilden som är angiven i "
+#~ "bildinställningen kommer att användas som bakgrund."
+
+#~ msgid "Floating"
+#~ msgstr "Flytande"
+
+#~ msgid "Centered"
+#~ msgstr "Centrerad"
+
+#~ msgid "Edge"
+#~ msgstr "Kant"
+
+#~ msgid "%s %s Panel"
+#~ msgstr "%s %s Panel"
 
 #~ msgid "The number of miliseconds to delay before automatically un-hiding"
 #~ msgstr "Antalet millisekunder att dröja innan panelen automatiskt visas"
@@ -3509,14 +3758,8 @@ msgstr "Jätteliten"
 #~ msgid "No panel found\n"
 #~ msgstr "Hittade ingen panel\n"
 
-#~ msgid "Aligned Panel"
-#~ msgstr "Justerad panel"
-
 #~ msgid "GNOME Aligned Panel"
 #~ msgstr "Justerad GNOME-panel"
-
-#~ msgid "Edge Panel"
-#~ msgstr "Kantpanel"
 
 #~ msgid "GNOME Edge Panel"
 #~ msgstr "GNOME-kantpanel"
@@ -3541,9 +3784,6 @@ msgstr "Jätteliten"
 
 #~ msgid "Create edge panel"
 #~ msgstr "Skapa kantpanel"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "_Flytande panel"
 
 #~ msgid "Create floating panel"
 #~ msgstr "Skapa flytande panel"
@@ -3632,9 +3872,6 @@ msgstr "Jätteliten"
 
 #~ msgid "Floating panel"
 #~ msgstr "Flytande panel"
-
-#~ msgid "Corner Panel"
-#~ msgstr "Hörnpanel"
 
 #~ msgid "Show the program listing by default when opening the Run box"
 #~ msgstr "Visa programlistningen som standard då körrutan öppnas"
@@ -4178,9 +4415,6 @@ msgstr "Jätteliten"
 
 #~ msgid "Gnome Sliding Panel"
 #~ msgstr "Glidande Gnomepanel"
-
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Flytande Gnomepanel"
 
 #~ msgid "Handle shadow"
 #~ msgstr "Handtagsskugga"
