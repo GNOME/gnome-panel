@@ -1,3 +1,27 @@
+2003-09-05  Mark McLoughlin  <mark@skynet.ie>
+
+	Schemas to maintain compatibility with the 2.0/2.2
+	configurations. 
+	
+	The problem being addressed here is that because the
+	2.0/2.2 panel applies schemas to keys at runtime,
+	existing user configurations will end up with
+	dangling references to the old schemas unless we
+	install these old schemas.
+	
+	For example, a 2.0/2.2 panel will apply the
+	medium/general/panel_id_list schema to
+	profiles/default/general/panel_id_list. This
+	association is in the user's configuration, not in
+	the system GConf database. If the user never changes
+	panel_id_list and logs into a machine without this
+	schema, then panel_id_list will be empty. 
+
+	* panel-compatibility.schemas: re-add the old
+	default config schemas.
+	
+	* Makefile.am: install the schemas.
+
 ==================== 2.3.90 ====================
 
 Thu Aug 28 22:02:41 2003  George Lebl <jirka@5z.com>

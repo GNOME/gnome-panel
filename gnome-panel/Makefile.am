@@ -261,6 +261,7 @@ EXTRA_DIST =					\
 	nothing.cP				\
 	nothing.h				\
 	$(schemas_in_files)			\
+	panel-compatibility.schemas		\
 	$(ui_DATA)				\
 	panel-marshal.list			\
 	update-from-egg.sh			\
@@ -334,7 +335,7 @@ schemas_in_files =				\
 	panel-object.schemas.in			\
 	gnome-panel-screenshot.schemas.in	\
 	$(NULL)
-schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
+schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
 
