@@ -256,26 +256,13 @@ panel_session_save (GnomeClient *client,
 		/*don't catch these any more*/
 		signal(SIGCHLD, SIG_DFL);
 
-		g_list_foreach(panels,destroy_widget_list,NULL);
-
-/* clean programming goeas aside, this was causing too many segfaults,
-   exit will do the same thing anyhow*/
-#if 0
+		/*don't catch these either*/
 		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
 		    i++,info++)
-			if(info->menu)
-				gtk_widget_unref(info->menu);
+			gtk_signal_disconnect(GTK_OBJECT(info->widget),
+					      info->destroy_callback);
 
-		g_array_free(applets,TRUE);
-
-		gtk_object_unref(GTK_OBJECT (panel_tooltips));
-
-		/*prevent searches through the g_list to speed
-		  up this thing*/
-		small_icons = NULL;
-
-		gtk_widget_unref(root_menu);
-#endif
+		g_list_foreach(panels,destroy_widget_list,NULL);
 
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
@@ -324,20 +311,34 @@ void
 panel_clean_applet(gint applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
+	AppletType type;
 	PanelWidget *panel;
 
 	g_return_if_fail(info != NULL);
 
+	/*fixes reentrancy problem with this routine*/
+	if(info->type== APPLET_EMPTY)
+		return;
+
+	type = info->type;
+	info->type = APPLET_EMPTY;
+
 	if(info->widget) {
-		panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+		GtkWidget *w = info->widget;
+
+		info->widget = NULL;
+
+		gtk_signal_disconnect(GTK_OBJECT(w),info->destroy_callback);
+		info->destroy_callback = -1;
+
+		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
 
 		if(panel)
-			panel_widget_remove(panel,info->widget);
+			panel_widget_remove(panel,w);
 	}
-	info->widget = NULL;
 	info->applet_widget = NULL;
-	if(info->type == APPLET_DRAWER && info->assoc) {
+	if(type == APPLET_DRAWER && info->assoc) {
 		panels = g_list_remove(panels,info->assoc);
 		gtk_widget_unref(info->assoc);
 		info->assoc=NULL;
@@ -350,8 +351,22 @@ panel_clean_applet(gint applet_id)
 	info->id_str=NULL;
 	if(info->params) g_free(info->params);
 	info->params=NULL;
+	if(info->cfg) g_free(info->cfg);
+	info->cfg=NULL;
 
-	info->type = APPLET_EMPTY;
+	info->data=NULL;
+
+	/*free the user menu*/
+	while(info->user_menu) {
+		AppletUserMenu *umenu = info->user_menu->data;
+		if(umenu->name)
+			g_free(umenu->name);
+		if(umenu->text)
+			g_free(umenu->text);
+		g_free(umenu);
+		info->user_menu = g_list_remove_link(info->user_menu,
+						     info->user_menu);
+	}
 }
 
 static void
@@ -920,10 +935,11 @@ register_toy(GtkWidget *applet,
 			   GTK_SIGNAL_FUNC(applet_button_press),
 			   ITOP(applet_count));
 
-	gtk_signal_connect(GTK_OBJECT(eventbox),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(applet_destroy),
-			   ITOP(applet_count));
+	info.destroy_callback = gtk_signal_connect(GTK_OBJECT(eventbox),
+			   			   "destroy",
+			   			   GTK_SIGNAL_FUNC(
+			   			   	applet_destroy),
+			   			   ITOP(applet_count));
 
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);

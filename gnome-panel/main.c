@@ -56,13 +56,15 @@ struct _LoadApplet {
 	char *cfgpath;
 };
 
+typedef struct _AppletChild AppletChild;
 static GList * children = NULL;
 
-typedef struct _AppletChild AppletChild;
+/*used in the SIGCHLD handler*/
 struct _AppletChild {
 	gint applet_id;
 	pid_t pid;
 };
+
 
 GList *load_queue=NULL;
 	

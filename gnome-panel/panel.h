@@ -75,7 +75,9 @@ struct _AppletInfo {
 	gchar *params; /*used for parameters to internal applets and for path
 			 for external applets*/
 	GList *user_menu; /*list of AppletUserMenu items for callbacks*/
+	gint destroy_callback;
 };
+
 
 
 gint panel_session_save (GnomeClient *client,
