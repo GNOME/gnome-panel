@@ -446,11 +446,11 @@ panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 		switch (frame->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 		case PANEL_ORIENTATION_BOTTOM:
-			x += HANDLE_SIZE;
+			x += frame->priv->handle_rect.width;
 			break;
 		case PANEL_ORIENTATION_LEFT:
 		case PANEL_ORIENTATION_RIGHT:
-			y += HANDLE_SIZE;
+			y += frame->priv->handle_rect.height;
 			break;
 		default:
 			g_assert_not_reached ();
