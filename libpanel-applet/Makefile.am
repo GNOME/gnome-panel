@@ -111,7 +111,7 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 		     --eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_applet_enum_headers) > $@
 
-gladedir   = $(datadir)/gnome-terminal/glade
+gladedir   = $(datadir)/gnome-panel/glade
 glade_DATA = panel-test-applets.glade2
 glade_src  = panel-test-applets.glade
 
