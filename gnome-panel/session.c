@@ -812,13 +812,13 @@ load_default_applets1(PanelWidget *panel)
 		}
 	}
 	load_extern_applet("tasklist_applet", NULL,
-			   panel, INT_MAX/2/*flush right*/, TRUE, TRUE);
+			   panel, G_MAXINT/2/*flush right*/, TRUE, TRUE);
 	load_status_applet(panel,
-			   INT_MAX/2 + 1000/*flush right*/, TRUE);
+			   G_MAXINT/2 + 1000/*flush right*/, TRUE);
 	/* for small panel stick the on the main panel */
 	if(gdk_screen_width()<1024)
 		load_extern_applet("gen_util_clock", NULL,
-				   panel, INT_MAX/2 + 2000, TRUE, TRUE);
+				   panel, G_MAXINT/2 + 2000, TRUE, TRUE);
 }
 
 static void
@@ -912,8 +912,8 @@ init_user_applets(void)
 		}
 		
 		/*if we are to right stick this, make the number large, 
-		 INT_MAX/2 should allways be large enough */
-		pos += gnome_config_get_bool("right_stick=false")?INT_MAX/2:0;
+		 G_MAXINT/2 should allways be large enough */
+		pos += gnome_config_get_bool("right_stick=false")?G_MAXINT/2:0;
 		
 		if(strcmp(applet_name, EXTERN_ID) == 0) {
 			char *goad_id = gnome_config_get_string("goad_id");

@@ -785,7 +785,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		if (stat (filename, &s) != 0)
 			continue;
 		if (S_ISDIR (s.st_mode)) {
-			add_drawers_from_dir(filename,NULL,INT_MAX/2,
+			add_drawers_from_dir(filename, NULL, G_MAXINT/2,
 					     newpanel);
 			continue;
 		}
@@ -800,7 +800,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 				load_launcher_applet_full (filename,
 							   dentry,
 							   newpanel,
-							   INT_MAX/2,
+							   G_MAXINT/2,
 							   FALSE);
 		}
 	}

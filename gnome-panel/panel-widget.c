@@ -1743,7 +1743,7 @@ panel_widget_init (PanelWidget *panel)
 	panel->packed = FALSE;
 	panel->orient = PANEL_HORIZONTAL;
 	panel->thick = PANEL_MINIMUM_WIDTH;
-	panel->size = INT_MAX;
+	panel->size = G_MAXINT;
 	panel->applet_list = NULL;
 	panel->no_window_applet_list = NULL;
 	panel->master_widget = NULL;
@@ -1812,7 +1812,7 @@ panel_widget_new (gboolean packed,
 	if(packed)
 		panel->size = 0;
 	else
-		panel->size = INT_MAX;
+		panel->size = G_MAXINT;
 	
 	gtk_signal_connect_after(GTK_OBJECT(panel),
 				 "realize",
