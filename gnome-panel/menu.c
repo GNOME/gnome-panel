@@ -254,7 +254,10 @@ make_finfo_s(gchar *name, struct stat *s)
 }
 
 static GtkWidget *
-create_menu_at (char *menudir, int create_app_menu, int applets, GList **finfo)
+create_menu_at (char *menudir,
+		int create_app_menu,
+		int applets,
+		GList **finfo)
 {	
 	GnomeDesktopEntry *item_info;
 	GtkWidget *menu;

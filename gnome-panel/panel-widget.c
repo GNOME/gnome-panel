@@ -652,6 +652,37 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 	}
 }
 
+/*tells us if an applet is "stuck" on the right side*/
+gint
+panel_widget_is_applet_stuck(PanelWidget *panel, GtkWidget *applet)
+{
+	AppletData *ad;
+	GList *list;
+	gint i;
+
+	g_return_val_if_fail(panel!=NULL,FALSE);
+	g_return_val_if_fail(applet!=NULL,FALSE);
+
+	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
+
+	g_return_val_if_fail(ad!=NULL,FALSE);
+
+	list = g_list_find(panel->applet_list,ad);
+
+	g_return_val_if_fail(list!=NULL,FALSE);
+	
+	do {
+		i=ad->pos+ad->cells;
+		if(i==panel->size)
+			return TRUE;
+		list = g_list_next(list);
+		if(!list)
+			break;
+		ad = list->data;
+	} while(ad->pos==i);
+	return FALSE;
+}
+
 /*this is a special function and may fail if called improperly, it works
 only under special circumstance when we know there is nothing from
 old_size to panel->size*/

@@ -4,10 +4,7 @@
 
 #include <gtk/gtk.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
+BEGIN_GNOME_DECLS
 
 #define PANEL_WIDGET(obj)          GTK_CHECK_CAST (obj, panel_widget_get_type (), PanelWidget)
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
@@ -261,13 +258,13 @@ void		panel_widget_set_drawer_pos	(PanelWidget *panel,
 /*get the number of applets*/
 gint		panel_widget_get_applet_count	(PanelWidget *panel);
 
+/*tells us if an applet is "stuck" on the right side*/
+gint		panel_widget_is_applet_stuck	(PanelWidget *panel,
+						 GtkWidget *applet);
 extern GList *panels;
 
 extern gint panel_applet_in_drag;
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
+END_GNOME_DECLS
 
 #endif /* __PANEL_WIDGET_H__ */

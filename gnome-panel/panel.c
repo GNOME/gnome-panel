@@ -110,7 +110,6 @@ find_panel(PanelWidget *panel)
 static void
 save_applet_configuration(AppletInfo *info, gint *num)
 {
-	char          *fullpath;
 	char           path[256];
 	int            pos;
 	int            panel;
@@ -151,55 +150,43 @@ save_applet_configuration(AppletInfo *info, gint *num)
 		/*have the applet do it's own session saving*/
 		if(send_applet_session_save(info->id_str,info->applet_id,path,
 					    panel_cfg_path)) {
+			
+			gnome_config_push_prefix(path);
 
-			fullpath = g_copy_strings(path,"id",NULL);
-			gnome_config_set_string(fullpath, EXTERN_ID);
-			g_free(fullpath);
+			gnome_config_set_string("id", EXTERN_ID);
+			gnome_config_set_int("position", pos);
+			gnome_config_set_int("panel", panel);
+			gnome_config_set_string("parameters", info->path);
+			gnome_config_set_string("parameters2", info->params);
+			gnome_config_set_bool("right_stick",
+					      panel_widget_is_applet_stuck(p,info->widget));
 
-			fullpath = g_copy_strings(path,"position",NULL);
-			gnome_config_set_int(fullpath, pos);
-			g_free(fullpath);
-
-			fullpath = g_copy_strings(path,"panel",NULL);
-			gnome_config_set_int(fullpath, panel);
-			g_free(fullpath);
-
-			fullpath = g_copy_strings(path,"parameters",NULL);
-			gnome_config_set_string(fullpath, info->path);
-			g_free(fullpath);
-
-			fullpath = g_copy_strings(path,"parameters2",NULL);
-			gnome_config_set_string(fullpath, info->params);
-			g_free(fullpath);
+			gnome_config_pop_prefix();
 		} else
 			(*num)--;
 	} else {
-		fullpath = g_copy_strings(path,"id",NULL);
-		gnome_config_set_string(fullpath, info->id_str);
-		g_free(fullpath);
+		gnome_config_push_prefix(path);
 
-		fullpath = g_copy_strings(path,"position",NULL);
-		gnome_config_set_int(fullpath, pos);
-		g_free(fullpath);
+		gnome_config_set_string("id", info->id_str);
+		gnome_config_set_int("position", pos);
+		gnome_config_set_int("panel", panel);
+		gnome_config_set_bool("right_stick",
+				      panel_widget_is_applet_stuck(p,info->widget));
 
-		fullpath = g_copy_strings(path,"panel",NULL);
-		gnome_config_set_int(fullpath, panel);
-		g_free(fullpath);
-
-		fullpath = g_copy_strings(path,"parameters",NULL);
 		if(strcmp(info->id_str,DRAWER_ID) == 0) {
 			int i;
 
 			i = find_panel(PANEL_WIDGET(info->assoc));
 			if(i>=0)
-				gnome_config_set_int(fullpath,i);
+				gnome_config_set_int("parameters",i);
 			else
 				g_warning("Drawer not associated with applet!");
 		} else {
 			if(info->params)
-				gnome_config_set_string(fullpath, info->params);
+				gnome_config_set_string("parameters", info->params);
 		}
-		g_free(fullpath);
+
+		gnome_config_pop_prefix();
 	}
 }
 

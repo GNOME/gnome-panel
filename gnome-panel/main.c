@@ -557,6 +557,11 @@ init_user_applets(void)
 			   PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
 		panel = gnome_config_get_int("panel=0");
+		
+		/*if we are to right stick this, make the number large, 9999 would
+		  be 99990 pixels wide screen I doubt we'll have that anytime soon,
+		  by that time somebody will fix this up:)*/
+		pos += gnome_config_get_bool("right_stick=false")?9999:0;
 
 		/*this is the config path to be passed to the applet when it
 		  loads*/
