@@ -841,8 +841,7 @@ add_menu_separator (GtkWidget *menu)
 static int
 add_drawer_to_panel (GtkWidget *widget, void *data)
 {
-	load_drawer_applet(-1,NULL,NULL,
-			   current_panel, 0);
+	load_drawer_applet(-1,NULL,NULL, current_panel, 0);
 	return TRUE;
 }
 
@@ -989,6 +988,8 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		}
 
 		if(need_reread) {
+			/*that will be destroyed in add_menu_widget*/
+			menuw = NULL;
 			if(main_menu)
 				add_menu_widget(menu,NULL,main_menu,TRUE);
 			else {
@@ -1002,14 +1003,11 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 				add_menu_widget(menu,dirlist, main_menu,TRUE);
 				g_slist_free(dirlist);
 			}
-
-			gtk_widget_destroy(menuw);
 		}
 	} else {
 		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 		GSList *list;
 		int need_reread = FALSE;
-		int all_fake = TRUE;
 		
 		/*if(!mfl)
 			g_warning("Weird menu doesn't have mf entry");*/
@@ -1017,8 +1015,6 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		/*check if we need to reread this*/
 		for(list = mfl; list != NULL; list = g_slist_next(list)) {
 			MenuFinfo *mf = list->data;
-			if(!mf->fake_menu)
-				all_fake = FALSE;
 			if(!need_reread &&
 			   (mf->fake_menu || !check_finfo_list(mf->finfo))) {
 				need_reread = TRUE;
@@ -1026,42 +1022,28 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			}
 		}
 		if(need_reread) {
-			GtkWidget *old_menu = NULL;
-			GSList *free_list = NULL;
-			/*we are all fake so we want to use the previous
-			  menu widget*/
-			if(all_fake) {
-				old_menu = menuw;
-				gtk_object_set_data(GTK_OBJECT(old_menu), "mf",
-						    NULL);
-				/*set this so that we free it after we use it,
-				  since it won't be freed during the
-				  destruction of the menu since there will
-				  be none*/
-				free_list = mfl;
-			}
+			menuw = NULL;
 			for(list = mfl; list != NULL;
 			    list = g_slist_next(list)) {
 				MenuFinfo *mf = list->data;
-				menuw = create_menu_at(old_menu,
+				menuw = create_menu_at(menuw,
 						       mf->menudir,
 						       mf->applets,
 						       mf->dir_name,
 						       mf->pixmap_name,
 						       TRUE,
 						       FALSE);
-				old_menu = menuw;
 			}
-			/*free up stuff that won't be freed somewhere else*/
-			for(list = free_list; list != NULL;
-			    list = g_slist_next(list)) {
-				MenuFinfo *mf = list->data;
-				destroy_mf(mf);
-			}
-			g_slist_free(free_list);
 		}
 	}
 	return menuw;
+}
+
+static int
+sel_idle(gpointer data)
+{
+	gtk_item_select(GTK_ITEM(data));
+	return FALSE;
 }
 
 static void
@@ -1073,11 +1055,13 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 	/*THIS IS A HACK, but a cool one at that*/
 	if(menu!=menuitem->submenu) {
 		/*it's not yet displayed we're ok here*/
-		if(!GTK_WIDGET_VISIBLE(menuitem->submenu))
+		if(!GTK_WIDGET_VISIBLE(menuitem->submenu)) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
 		/*now is when the fun begins, we kill the menu and do select
 		  again ... nowdays, we'll be ok though*/
-		else {
+		} else {
+			gtk_signal_emit_stop_by_name(GTK_OBJECT(menuitem),
+						     "select");
 			gtk_widget_destroy(menuitem->submenu);
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
 			gtk_item_select(GTK_ITEM(menuitem));
@@ -2401,6 +2385,8 @@ static void
 add_menu_widget (Menu *menu, GSList *menudirl, int main_menu, int fake_subs)
 {
 	GSList *li;
+	if(menu->menu)
+		gtk_widget_destroy(menu->menu);
 
 	if (main_menu)
 		menu->menu = create_root_menu(fake_subs, menu->main_menu_flags);
@@ -2424,6 +2410,9 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(menu->button),
 					       "applet_info");
 	int main_menu = (strcmp (menu->path, ".") == 0);
+
+	/*this HAS to be set everytime we popup the menu*/
+	current_panel = PANEL_WIDGET(menu->button->parent);
 
 	if(!menu->menu) {
 		char *menu_base = gnome_unconditional_datadir_file ("apps");
@@ -2451,9 +2440,6 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
 	}
 
-	/*this HAS to be set everytime we popup the menu*/
-	current_panel = PANEL_WIDGET(menu->button->parent);
-	
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 	gtk_grab_remove(menu->button);
 
