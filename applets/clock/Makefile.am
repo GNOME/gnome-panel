@@ -55,6 +55,12 @@ MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
 mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 
+soundlistdir = $(sysconfdir)/sound/events
+soundlist_in_files = mailcheck.soundlist.in
+soundlist_DATA = $(soundlist_in_files:.soundlist.in=.soundlist)
+
+@INTLTOOL_SOUNDLIST_RULE@
+
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas clock.schemas
 
@@ -82,6 +88,7 @@ install-data-local:
 EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(PRINTER_BITMAPS)				\
 	$(MAILCHECK_BITMAPS)				\
+	$(soundlist_in_files)				\
 	$(schema_DATA)					\
 	$(glade_DATA)					\
 	$(ui_DATA)
