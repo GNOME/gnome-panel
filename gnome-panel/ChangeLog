@@ -1,3 +1,13 @@
+2004-10-28  Vincent Untz  <vincent@vuntz.net>
+
+	* gnome-panel-screenshot.c: (update_window_icon): kill
+	(icon_theme_changed): kill
+	(set_window_icon): kill
+	(do_screenshot): don't set icon here
+	(main): set default icon here so that all dialogs will have the icon
+
+	* panel-stock-icons.[ch]: remove useless stock definitions
+
 2004-10-27  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-stock-icons.c: use drawer.png from gnome-icon-theme for the
