@@ -17,10 +17,13 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <errno.h>
+#include <poll.h>
 
 #include "popcheck.h"
 
 #include "remote-helper.h"
+
+#define POLLTIMEOUT 5000 /* 5 milliseconds */
 
 typedef struct {
 	pid_t pid;
@@ -116,12 +119,30 @@ fork_new_handler (RemoteHandler handler, gpointer data,
 		return NULL;
 	} else if (pid == 0) {
 		/*child*/
-		close (fd[0]);
 		pid = fork ();
 		if (pid != 0) {
 			write (fd[1], &pid, sizeof (pid));
 			_exit (0);
 		} else {
+			/* grand child */
+
+			/* Make sure that the pid is written first */
+
+			struct pollfd poll_list[1];
+
+			poll_list[0].fd = fd[0];
+			poll_list[0].events = POLLIN;
+			poll (poll_list, 1, POLLTIMEOUT);
+
+			close (fd [0]);
+
+			if (((poll_list[0].revents&POLLHUP) == POLLHUP) ||
+			    ((poll_list[0].revents&POLLERR) == POLLERR) ||
+			    ((poll_list[0].revents&POLLERR) == POLLNVAL)) {
+				g_free (handler_data);
+				return NULL;
+			}
+
 			handler_data->pid = 0;
 			handler_data->fd = fd[1];
 			return handler_data;
@@ -132,7 +153,7 @@ fork_new_handler (RemoteHandler handler, gpointer data,
 		while ((waitpid (pid, 0, 0) == -1) && errno == EINTR);
 		read (fd[0], &pid, sizeof (pid));
 		
-		if (pid < 0) {
+		if (pid <= 0) {
 			close (fd[0]);
 			g_free (handler_data);
 			return NULL;
