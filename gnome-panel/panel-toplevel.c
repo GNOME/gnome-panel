@@ -43,6 +43,7 @@
 #include "panel-marshal.h"
 #include "panel-widget.h"
 #include "panel-bindings.h"
+#include "panel-struts.h"
 #include "xstuff.h"
 
 #define DEFAULT_SIZE              48
@@ -1227,38 +1228,29 @@ panel_toplevel_contains_pointer (PanelToplevel *toplevel)
 	return TRUE;
 }
 
-static void
+static gboolean
 panel_toplevel_update_struts (PanelToplevel *toplevel)
 {
-	GtkWidget        *widget;
 	PanelOrientation  orientation;
 	GdkScreen        *screen;
 	gboolean          topmost, bottommost, leftmost, rightmost;
+	gboolean          geometry_changed = FALSE;;
 	int               strut, strut_start, strut_end;
 	int               x, y, width, height;
-	int               screen_width, screen_height;
 	int               monitor_x, monitor_y;
 	int               monitor_width, monitor_height;
-	int               auto_hide_size;
-
-	widget = GTK_WIDGET (toplevel);
-
-	if (!GTK_WIDGET_REALIZED (widget))
-		return;
 
 	if (toplevel->priv->attached) {
-		panel_xutils_set_strut (widget->window, 0, 0, 0, 0);
-		return;
+		panel_struts_unregister_strut (toplevel);
+		panel_struts_set_window_hint (toplevel);
+		return FALSE;
 	}
 
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel,
-			&screen_width, &screen_height);
-
-	panel_toplevel_get_monitor_geometry (
-			toplevel,
-			&monitor_x, &monitor_y,
-			&monitor_width, &monitor_height);
+	screen = panel_toplevel_get_monitor_geometry (toplevel,
+						      &monitor_x,
+						      &monitor_y,
+						      &monitor_width,
+						      &monitor_height);
 
 	panel_multiscreen_is_at_visible_extreme (screen,
 						 toplevel->priv->monitor,
@@ -1272,35 +1264,34 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 	width  = toplevel->priv->geometry.width;
 	height = toplevel->priv->geometry.height;
 	
-	orientation    = toplevel->priv->orientation;
-	auto_hide_size = toplevel->priv->auto_hide_size;
+	orientation = toplevel->priv->orientation;
 
 	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (topmost && y <= 0) {
+		if (topmost && y <= monitor_y) {
 			orientation = PANEL_ORIENTATION_TOP;
-			strut = y + height;
+			strut = y + height - monitor_y;
 		} else if (bottommost && y >= monitor_y + monitor_height - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
-			strut = screen_height - y;
+			strut = monitor_y + monitor_height - y;
 		}
 
-		if (strut) {
-			strut_start = x;
+		if (strut > 0) {
+			strut_start = MAX (x, 0);
 			strut_end = x + width;
 		}
 	} else {
-		if (leftmost && toplevel->priv->geometry.x <= 0) {
+		if (leftmost && x <= monitor_x) {
 			orientation = PANEL_ORIENTATION_LEFT;
-			strut = x + width;
+			strut = x + width - monitor_x;
 		} else if (rightmost && x >= monitor_x + monitor_width - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
-			strut = screen_width - x;
+			strut = monitor_x + monitor_width - x;
 		}
 
-		if (strut) {
-			strut_start = y;
+		if (strut > 0) {
+			strut_start = MAX (y, 0);
 			strut_end = y + height;
 		}
 	}
@@ -1310,34 +1301,23 @@ panel_toplevel_update_struts (PanelToplevel *toplevel)
 		g_object_notify (G_OBJECT (toplevel), "orientation");
 	}
 
-	if (toplevel->priv->auto_hide) {
-		int offset = 0;
+	if (toplevel->priv->auto_hide && strut > 0)
+		strut = toplevel->priv->auto_hide_size;
 
-		g_assert (toplevel->priv->auto_hide_size > 0);
+	if (strut > 0) {
+		geometry_changed = panel_struts_register_strut (toplevel,
+								screen,
+								toplevel->priv->monitor,
+								orientation,
+								strut,
+								strut_start,
+								strut_end);
+	} else
+		panel_struts_unregister_strut (toplevel);
 
-		switch (orientation) {
-		case PANEL_ORIENTATION_TOP:
-			offset = MAX (y, 0);
-			break;
-		case PANEL_ORIENTATION_BOTTOM:
-			offset = MAX (screen_height - y - height, 0);
-			break;
-		case PANEL_ORIENTATION_LEFT:
-			offset = MAX (x, 0);
-			break;
-		case PANEL_ORIENTATION_RIGHT:
-			offset = MAX (screen_width - x - width, 0);
-			break;
-		}
+	panel_struts_set_window_hint (toplevel);
 
-		strut = auto_hide_size + offset;
-	}
-
-	panel_xutils_set_strut (widget->window,
-				orientation,
-				strut,
-				strut_start,
-				strut_end);
+	return geometry_changed;
 }
 
 void
@@ -1997,6 +1977,11 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		toplevel->priv->geometry.height = h;
 
 	panel_toplevel_update_struts (toplevel);
+	if (toplevel->priv->state == PANEL_STATE_NORMAL && !toplevel->priv->animating)
+		panel_struts_update_toplevel (toplevel,
+					      toplevel->priv->orientation,
+					      &toplevel->priv->geometry);
+
 	panel_toplevel_update_edges (toplevel);
 	panel_toplevel_update_description (toplevel);
 }
@@ -2475,7 +2460,7 @@ panel_toplevel_realize (GtkWidget *widget)
 	if (GTK_WIDGET_CLASS (parent_class)->realize)
 		GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
-	panel_toplevel_update_struts (toplevel);
+	panel_struts_set_window_hint (toplevel);
 	panel_xutils_set_window_type (widget->window, PANEL_XUTILS_TYPE_DOCK);
 	xstuff_set_no_group (widget->window);
 
@@ -3384,6 +3369,8 @@ panel_toplevel_finalize (GObject *object)
 {
 	PanelToplevel *toplevel = (PanelToplevel *) object;
 
+	panel_struts_unregister_strut (toplevel);
+
 	toplevel_list = g_slist_remove (toplevel_list, toplevel);
 
 	if (toplevel->priv->attached) {
@@ -4127,8 +4114,10 @@ panel_toplevel_set_auto_hide_size (PanelToplevel *toplevel,
 
 	toplevel->priv->auto_hide_size = auto_hide_size;
 
-	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN)
-		panel_toplevel_update_struts (toplevel);
+	if (toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN) {
+		if (panel_toplevel_update_struts (toplevel))
+			gtk_widget_queue_resize (GTK_WIDGET (toplevel));
+	}
 
 	g_object_notify (G_OBJECT (toplevel), "auto-hide-size");
 }
@@ -4275,7 +4264,8 @@ panel_toplevel_set_auto_hide (PanelToplevel *toplevel,
 	else
 		panel_toplevel_queue_auto_unhide (toplevel);
 
-	panel_toplevel_update_struts (toplevel);
+	if (panel_toplevel_update_struts (toplevel))
+		gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 
 	g_object_notify (G_OBJECT (toplevel), "auto-hide");
 }

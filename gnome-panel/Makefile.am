@@ -132,6 +132,7 @@ panel_sources =			\
 	panel-gdk-pixbuf-extensions.c \
 	panel-action-protocol.c	\
 	panel-toplevel.c	\
+	panel-struts.c		\
 	panel-frame.c		\
 	panel-xutils.c		\
 	panel-multiscreen.c	\
@@ -178,6 +179,7 @@ panel_headers =			\
 	panel-gdk-pixbuf-extensions.h \
 	panel-action-protocol.h	\
 	panel-toplevel.h	\
+	panel-struts.h		\
 	panel-frame.h		\
 	panel-xutils.h		\
 	panel-multiscreen.h	\

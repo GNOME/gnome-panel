@@ -1,3 +1,18 @@
+2003-08-06  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add panel-struts.[ch].
+	
+	* panel-struts.[ch]: re-implement some degree of "collision
+	avoidance" - i.e. keep panels from overlapping.
+
+	* panel-toplevel.c:
+	(panel_toplevel_update_struts): use it here and also fix
+	struts on non-rectangular Xinerama.
+	(panel_toplevel_update_position), (panel_toplevel_realize),
+	(panel_toplevel_finalize), (panel_toplevel_set_auto_hide_size),
+	(panel_toplevel_set_auto_hide): use the collision avoidance
+	stuff here too.
+
 Tue Aug 05 15:28:14 2003  George Lebl <jirka@5z.com>
 
 	* launcher.[ch]: the theme icon stuff is now fixed in gnome-desktop
