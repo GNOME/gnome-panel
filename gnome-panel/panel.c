@@ -328,6 +328,7 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 		return;
 
 	panel_widget_applet_drag_start(panel,info->widget);
+	panel_widget_applet_move_use_idle(panel);
 }
 
 static void
@@ -616,7 +617,6 @@ applet_drag_start(gint applet_id)
 		return;
 	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 					 PANEL_APPLET_PARENT_KEY)))
-		return;
 
 	panel_widget_applet_drag_start_no_grab(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
