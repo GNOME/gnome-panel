@@ -31,6 +31,7 @@ static char *default_app_pixmap=NULL;
 
 extern GlobalConfig global_config;
 
+extern GSList *panels;
 
 static void
 launch (Launcher *launcher, int argc, char *argv[])
@@ -41,7 +42,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 	g_return_if_fail(launcher->dentry != NULL);
 
 	item = launcher->dentry;
-
+	
 	if(!item->exec) {
 		GtkWidget *dlg;
 		dlg = gnome_message_box_new(_("This launch icon does not "
@@ -54,12 +55,27 @@ launch (Launcher *launcher, int argc, char *argv[])
 		gtk_widget_show_all(dlg);
 		return;
 	}
+	
+	if(item->type && strcmp(item->type,"URL")==0) {
+		char *s;
+		s = g_strjoinv(" ",item->exec);
+		gnome_url_show(s);
+		g_free(s);
+	} else if(item->type && strcmp(item->type,"PanelApplet")==0) {
+		char *goad_id;
 
-	/*UGLY HACK!*/
-	if (item->exec_length > 0
-	    && strstr(item->exec[0], "://"))
-		gnome_url_show(item->exec[0]);
-	else
+		goad_id = get_applet_goad_id_from_dentry(item);
+
+		if(goad_id) {
+			load_extern_applet(goad_id,NULL,
+					   panels->data,
+					   0,FALSE);
+		} else {
+			g_warning(_("Can't get goad_id from desktop entry!"));
+		}
+
+		g_free(goad_id);
+	} else
 		gnome_desktop_entry_launch_with_args (item,argc,argv);
 	
 	if(global_config.drawer_auto_close) {
@@ -311,6 +327,7 @@ static GtkWidget *
 create_properties_dialog(Launcher *launcher)
 {
 	GtkWidget  *dialog;
+	GList *types = NULL;
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
@@ -321,6 +338,12 @@ create_properties_dialog(Launcher *launcher)
 	launcher->dedit =
 		gnome_dentry_edit_new_notebook(
 		      GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
+	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(launcher->dedit)->type_combo), types);
+	g_list_free(types);
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
 				     launcher->dentry);
@@ -425,6 +448,7 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 	GtkWidget *d;
 	GtkWidget *notebook;
 	GnomeDEntryEdit *dee;
+	GList *types = NULL;
 
 	d = gnome_dialog_new(_("Create launcher applet"),
 			     GNOME_STOCK_BUTTON_OK,
@@ -438,6 +462,12 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
+	gtk_combo_set_popdown_strings(GTK_COMBO(dee->type_combo), types);
+	g_list_free(types);
 	
 	if(file)
 		gtk_entry_set_text(GTK_ENTRY(dee->exec_entry), file);
@@ -473,6 +503,30 @@ load_launcher_applet_from_info(char *name, char *comment,
 		dentry->icon = gnome_pixmap_file(icon);
 	else
 		dentry->icon = g_strdup(icon);
+	
+	dentry->type = g_strdup("Application");
+
+	load_launcher_applet_full (NULL,dentry,panel, pos);
+	panel_config_sync();
+}
+
+void
+load_launcher_applet_from_info_url(char *name, char *comment,
+				   char *url, char *icon,
+				   PanelWidget *panel, int pos)
+{
+	char *exec[] = { NULL, NULL };
+	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+	dentry->name = g_strdup(name);
+	dentry->comment = g_strdup(comment);
+	dentry->exec_length = 1;
+	exec[0] = url;
+	dentry->exec = g_copy_vector(exec);
+	if(icon && *icon != '/')
+		dentry->icon = gnome_pixmap_file(icon);
+	else
+		dentry->icon = g_strdup(icon);
+	dentry->type = g_strdup("URL");
 
 	load_launcher_applet_full (NULL,dentry,panel, pos);
 	panel_config_sync();

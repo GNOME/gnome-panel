@@ -219,6 +219,7 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	GtkWidget *d;
 	GtkWidget *notebook;
 	GnomeDEntryEdit *dee;
+	GList *types = NULL;
 
 	d = gnome_dialog_new(_("Create menu item"),
 			     GNOME_STOCK_BUTTON_OK,
@@ -232,6 +233,11 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
 			   TRUE,TRUE,GNOME_PAD_SMALL);
 	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
+	gtk_combo_set_popdown_strings(GTK_COMBO(dee->type_combo), types);
+	g_list_free(types);
 	
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
 			   "Application");
@@ -501,6 +507,7 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	GtkWidget *dialog;
 	GtkObject *o;
 	GnomeDesktopEntry *dentry;
+	GList *types = NULL;
 	
 	g_return_if_fail(item_loc!=NULL);
 
@@ -518,6 +525,12 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	types = g_list_append(types, "Application");
+	types = g_list_append(types, "URL");
+	types = g_list_append(types, "PanelApplet");
+	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(o)->type_combo), types);
+	g_list_free(types);
+
 	/*item loc will be alive all this time*/
 	gtk_object_set_data(o,"location",item_loc);
 
@@ -543,6 +556,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	GtkObject *o;
 	char *dirfile = g_concat_dir_and_file(mf->menudir, ".directory");
 	GnomeDesktopEntry *dentry;
+	GList *types = NULL;
 
 	dentry = gnome_desktop_entry_load_unconditional(dirfile);
 	/* We'll screw up a KDE menu entry if we edit it */
@@ -558,6 +572,9 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	types = g_list_append(types, "Directory");
+	gtk_combo_set_popdown_strings(GTK_COMBO(GNOME_DENTRY_EDIT(o)->type_combo), types);
+	g_list_free(types);
 
 	if (dentry) {
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
@@ -2167,9 +2184,6 @@ status_unparent(GtkWidget *widget)
 	}
 }
 
-/*FIXME: this is horribly wrong, the current_panel will
-  not be set correctly by the time we get done, do something
-  about that*/
 static void
 panel_tearoff_new_menu(GtkWidget *w, GtkWidget *panel)
 {
@@ -2339,7 +2353,6 @@ create_panel_root_menu(GtkWidget *panel, int tearoff)
 
 	return panel_menu;
 }
-
 
 static void
 current_panel_config(GtkWidget *w, gpointer data)

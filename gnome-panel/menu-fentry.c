@@ -83,18 +83,23 @@ get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 
 	g_return_val_if_fail(ii!=NULL,NULL);
 
-	if (!ii->exec)
+	if (!ii->exec || !ii->type)
 		return NULL;
-	/*FIXME:
-	  this is a horrible horrible hack and should be taken out
-	  and shot, once we add proper way to do this*/
-	for(i=1;ii->exec[i];i++) {
-		if(strncmp("--activate-goad-server",
-			   ii->exec[i],constantlen)==0) {
-			if(strlen(ii->exec[i])>constantlen)
-				goad_id = g_strdup(&ii->exec[i][constantlen+1]);
-			else
-				goad_id = g_strdup(ii->exec[i+1]);
+	
+	if(strcmp(ii->type,"PanelApplet")==0) {
+		return g_strjoinv(" ",ii->exec);
+	} else {
+		/*this is here as a horrible hack since that's the way it
+		  used to work, but now one should make the .desktop type
+		  PanelApplet*/
+		for(i=1;ii->exec[i];i++) {
+			if(strncmp("--activate-goad-server",
+				   ii->exec[i],constantlen)==0) {
+				if(strlen(ii->exec[i])>constantlen)
+					goad_id = g_strdup(&ii->exec[i][constantlen+1]);
+				else
+					goad_id = g_strdup(ii->exec[i+1]);
+			}
 		}
 	}
 	return goad_id;
