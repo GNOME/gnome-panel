@@ -109,7 +109,10 @@ window_menu_about (BonoboUIComponent *uic,
 		"Jacob Berkman <jacob@helixcode.com>",
 		NULL
 	};
-	const char *documenters [] = { NULL };
+	const char *documenters [] = { 
+                "Sun GNOME Documentation Team <gdocteam@sun.com>",
+                NULL 
+        };
 	const char *translator_credits = _("translator_credits");
 
 	GdkPixbuf        *pixbuf = NULL;

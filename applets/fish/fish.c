@@ -463,6 +463,11 @@ display_about_dialog (BonoboUIComponent *uic,
 				     "If anyone is found using it, he "
 				     "should be promptly sent for a psychiatric "
 				     "evaluation.");
+	const char  *documenters [] = {
+		"Telsa Gwynne <hobbit@aloss.ukuu.org.uk>",
+		"Sun GNOME Documentation Team <gdocteam@sun.com>",
+          	NULL
+	};
 	char        *authors [3];
 	GdkPixbuf   *pixbuf;
 	GError      *error = NULL;
@@ -498,7 +503,7 @@ display_about_dialog (BonoboUIComponent *uic,
 				 "Copyright \xc2\xa9 1998-2002 Free Software Foundation, Inc.",
 				 descr,
 				 (const char **) authors,
-				 NULL,
+				 documenters,
 				 NULL,
 				 pixbuf);
 

@@ -113,6 +113,7 @@ about_cb (BonoboUIComponent *uic,
     NULL
   };
   const char *documenters [] = {
+    "Sun GNOME Documentation Team <gdocteam@sun.com>",
     NULL
   };
   const char *translator_credits = _("translator_credits");

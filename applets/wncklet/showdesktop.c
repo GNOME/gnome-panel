@@ -439,6 +439,7 @@ display_about_dialog (BonoboUIComponent *uic,
                 NULL
         };
         static const char *documenters[] = {
+                "Sun GNOME Documentation Team <gdocteam@sun.com>",
                 NULL
         };
 

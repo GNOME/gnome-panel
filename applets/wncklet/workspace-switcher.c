@@ -499,7 +499,9 @@ display_about_dialog (BonoboUIComponent *uic,
 		NULL
 	};
 	const char *documenters [] = {
-	  NULL
+                "John Fleck <jfleck@inkstain.net>",
+                "Sun GNOME Documentation Team <gdocteam@sun.com>",
+                NULL
 	};
 	const char *translator_credits = _("translator_credits");
 
