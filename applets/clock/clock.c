@@ -9,8 +9,9 @@
  * Feel free to implement new look and feels :-)
  */
 
+#include "config.h"
+
 #include <stdio.h>
-#include <config.h>
 #include <sys/stat.h>
 #include <unistd.h>
 #include <dirent.h>
@@ -24,6 +25,13 @@
 #include "clock.h"
 
 #define INTERNETSECOND (864/4)
+
+/* values for selection info */
+enum {
+  TARGET_STRING,
+  TARGET_TEXT,
+  TARGET_COMPOUND_TEXT,
+};
 
 typedef struct _ClockData ClockData;
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
@@ -41,14 +49,15 @@ struct _ClockData {
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
 	int size;
+	char *copied_string;
 
 	GtkWidget *props;
 	int prop_hourformat;
-        int prop_showdate;
-	int prop_unixtime;
-	int prop_internettime;
-	int prop_gmt_time;
-	int prop_showtooltip;
+        gboolean prop_showdate;
+	gboolean prop_unixtime;
+	gboolean prop_internettime;
+	gboolean prop_gmt_time;
+	gboolean prop_showtooltip;
 };
 
 typedef struct {
@@ -128,6 +137,19 @@ applet_save_session(GtkWidget * w,
 	return FALSE;
 }
 
+static float
+get_itime (time_t current_time)
+{
+	struct tm *tm;
+	float itime;
+	time_t bmt;
+
+	bmt = current_time + 3600;
+	tm = gmtime(&bmt);
+	itime = (tm->tm_hour*60+tm->tm_min+tm->tm_sec/60.0)*1000.0/1440.0;
+
+	return itime;
+}
 
 static void
 computer_clock_update_func(ClockData * cd, time_t current_time)
@@ -135,7 +157,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	ComputerClock *cc;
 	struct tm *tm;
 	GString *gs = g_string_new("");
-	char date[20], hour[20], tooltip[30];
+	char date[256], hour[256], tooltip[256];
 
 	cc = gtk_object_get_user_data(GTK_OBJECT(cd->clockw));
 
@@ -147,39 +169,34 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	if (cd->unixtime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
 		    cd->size >= PIXEL_SIZE_STANDARD) {
-			g_snprintf(hour,20,"%lu\n%05lu",
+			g_snprintf(hour,sizeof(hour),"%lu\n%05lu",
 				   (unsigned long)(current_time/100000L),
 				   (unsigned long)(current_time%100000L));
 		} else {
-			g_snprintf(hour,20,"%lu",(unsigned long)current_time);
+			g_snprintf(hour,sizeof(hour),"%lu",(unsigned long)current_time);
 		} 
 		g_string_append(gs,hour);
 	} else if (cd->internettime) {
-		float itime;
-		time_t bmt;
-
-		bmt=current_time+3600;
-		tm = gmtime(&bmt);
-		itime=(tm->tm_hour*60+tm->tm_min+tm->tm_sec/60.0)*1000.0/1440.0;
-		g_snprintf(hour,20,"@%3.2f",itime);
+		float itime = get_itime (current_time);
+		g_snprintf(hour,sizeof(hour),"@%3.2f",itime);
 		g_string_append(gs,hour);
 	} else if (cd->hourformat == 12) {
 		/* This format string is used, to display the actual time in
 		   12 hour format.  */
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
 		    cd->size >= PIXEL_SIZE_STANDARD) {
-			if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
-				hour[19] = '\0';
+			if (strftime(hour, sizeof (hour), _("%I:%M\n%p"), tm) <= 0)
+				strcpy (hour, "???");
 		} else {
-			if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
-				hour[19] = '\0';
+			if (strftime(hour, sizeof (hour), _("%I:%M %p"), tm) <= 0)
+				strcpy (hour, "???");
 		} 
 		g_string_append(gs,hour);
 	} else if (cd->hourformat == 24) {
 		/* This format string is used, to display the actual time in
 		   24 hour format.  */
-		if (strftime(hour, 20, _("%H:%M"), tm) == 20)
-			hour[19] = '\0';
+		if (strftime(hour, sizeof (hour), _("%H:%M"), tm) <= 0)
+			strcpy (hour, "???");
 		g_string_append(gs,hour);
 	}
 
@@ -189,13 +206,13 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			/* This format string is used, to display the actual day,
 			   when showing a vertical panel.  For an explanation of
 			   this format string type 'man strftime'.  */
-			if (strftime(date, 20, _("%a\n%b %d"), tm) == 20)
-				date[19] = '\0';
+			if (strftime(date, sizeof (date), _("%a\n%b %d"), tm) <= 0)
+				strcpy (date, "???");
 		} else {
 			/* This format string is used, to display the actual day,
 			   when showing a horizontal panel.  */
-			if (strftime(date, 20, _("%a %b %d"), tm) == 20)
-				date[19] = '\0';
+			if (strftime(date, sizeof (date), _("%a %b %d"), tm) <= 0)
+				strcpy (date, "???");
 		}
 		if(cd->size < PIXEL_SIZE_STANDARD)
 			g_string_append_c(gs,' ');
@@ -206,8 +223,8 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	
 	/* Set the applets tooltip */
 	if (cd->showtooltip && !cd->unixtime && !cd->internettime) {
-		if (strftime(tooltip, 30, _("%A, %B %d"), tm) == 30)
-			date[29] = '\0';
+		if (strftime(tooltip, sizeof (tooltip), _("%A, %B %d"), tm) <= 0)
+			strcpy (tooltip, "???");
 		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), tooltip);
 	}
 	
@@ -240,7 +257,7 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
 	gtk_widget_show(frame);
 
-	cc = g_new(ComputerClock, 1);
+	cc = g_new0 (ComputerClock, 1);
 
 	cc->align = gtk_alignment_new(0.5, 0.5, 0.0, 0.0);
 	gtk_container_set_border_width(GTK_CONTAINER(cc->align), 3);
@@ -269,9 +286,15 @@ static void
 destroy_clock(GtkWidget * widget, gpointer data)
 {
 	ClockData *cd = data;
-	gtk_timeout_remove(cd->timeout);
+
+	if (cd->timeout > 0)
+		gtk_timeout_remove (cd->timeout);
+	cd->timeout = 0;
+
 	if(cd->props)
 		gtk_widget_destroy(cd->props);
+	cd->props = NULL;
+
 	g_free(cd);
 }
 
@@ -347,11 +370,109 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 	(*cd->update_func) (cd, current_time);
 }
 
+static void
+copy_time (AppletWidget *applet, gpointer data)
+{
+	ClockData *cd = data;
+	time_t current_time = time (NULL);
+	struct tm *tm;
+	char string[256];
+
+	if (cd->gmt_time)
+		tm = gmtime(&current_time);
+	else
+		tm = localtime(&current_time);
+
+	if (cd->unixtime) {
+		g_snprintf (string, sizeof(string), "%lu",
+			    (unsigned long)current_time);
+	} else if (cd->internettime) {
+		float itime = get_itime (current_time);
+		g_snprintf (string, sizeof (string), "@%3.2f", itime);
+	} else if (cd->hourformat == 12) {
+		/* This format string is used, to display the actual time in
+		   12 hour format.  */
+		if (strftime(string, sizeof (string), _("%I:%M %p"), tm) <= 0)
+			strcpy (string, "???");
+	} else if (cd->hourformat == 24) {
+		/* This format string is used, to display the actual time in
+		   24 hour format.  */
+		if (strftime(string, sizeof (string), _("%H:%M"), tm) <= 0)
+			strcpy (string, "???");
+	}
+
+	g_free (cd->copied_string);
+	cd->copied_string = g_strdup (string);
+
+	gtk_selection_owner_set (GTK_WIDGET (applet),
+				 GDK_SELECTION_PRIMARY,
+				 GDK_CURRENT_TIME);
+}
+
+static void
+copy_date (AppletWidget *applet, gpointer data)
+{
+	ClockData *cd = data;
+	time_t current_time = time (NULL);
+	struct tm *tm;
+	char string[256];
+
+	if (cd->gmt_time)
+		tm = gmtime(&current_time);
+	else
+		tm = localtime(&current_time);
+
+	if (strftime(string, sizeof (string), _("%A, %B %d"), tm) <= 0)
+		strcpy (string, "???");
+	
+	g_free (cd->copied_string);
+	cd->copied_string = g_strdup (string);
+
+	gtk_selection_owner_set (GTK_WIDGET (applet),
+				 GDK_SELECTION_PRIMARY,
+				 GDK_CURRENT_TIME);
+}
+
+static void
+selection_handle (GtkWidget *widget, 
+		  GtkSelectionData *selection_data,
+		  int info, int time,
+		  gpointer data)
+{
+	ClockData *cd = data;
+
+	if (info == TARGET_STRING) {
+		gtk_selection_data_set (selection_data,
+					GDK_SELECTION_TYPE_STRING,
+					8 * sizeof(gchar),
+					(guchar *)cd->copied_string,
+					strlen (cd->copied_string));
+	} else if ((info == TARGET_TEXT) || (info == TARGET_COMPOUND_TEXT)) {
+		guchar *text;
+		GdkAtom encoding;
+		gint format;
+		gint new_length;
+
+		gdk_string_to_compound_text (cd->copied_string,
+					     &encoding, &format,
+					     &text, &new_length);
+		gtk_selection_data_set (selection_data, encoding, format,
+					text, new_length);
+		gdk_free_compound_text (text);
+	}
+}
+
 GtkWidget *
 make_clock_applet(const gchar * goad_id)
 {
 	ClockData *cd;
 	GtkWidget *applet;
+	GtkTargetEntry targets[] = {
+		{ "STRING", TARGET_STRING },
+		{ "TEXT",   TARGET_TEXT }, 
+		{ "COMPOUND_TEXT", TARGET_COMPOUND_TEXT }
+	};
+	gint n_targets = sizeof(targets) / sizeof(targets[0]);
 
 	applet = applet_widget_new(goad_id);
 	if (!applet) {
@@ -359,7 +480,9 @@ make_clock_applet(const gchar * goad_id)
 		return NULL;
 	}
 
-	cd = g_new(ClockData, 1);
+	cd = g_new0 (ClockData, 1);
+
+	cd->copied_string = NULL;
 
 	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
 
@@ -437,6 +560,20 @@ make_clock_applet(const gchar * goad_id)
 					      clock_properties,
 					      cd);
 
+	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
+					       "copy_time",
+					       GNOME_STOCK_MENU_COPY,
+					       _("Copy time to selection"),
+					       copy_time,
+					       cd);
+
+	applet_widget_register_stock_callback (APPLET_WIDGET (applet),
+					       "copy_date",
+					       GNOME_STOCK_MENU_COPY,
+					       _("Copy date to selection"),
+					       copy_date,
+					       cd);
+
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "help",
 					      GNOME_STOCK_PIXMAP_HELP,
@@ -450,6 +587,13 @@ make_clock_applet(const gchar * goad_id)
 					      _("About..."),
 					      clock_about,
 					      NULL);
+
+	gtk_selection_add_targets (GTK_WIDGET (applet), GDK_SELECTION_PRIMARY,
+				   targets, n_targets);
+
+        gtk_signal_connect (GTK_OBJECT (applet), "selection_get",
+			    GTK_SIGNAL_FUNC (selection_handle), cd);
+
 	return applet;
 }
 
@@ -581,10 +725,12 @@ clock_properties(AppletWidget * applet, gpointer data)
 	ClockData *cd = data;
 
 
-	if(cd->props) {
-		gdk_window_raise(cd->props->window);
+	if (cd->props != NULL) {
+		gtk_widget_show_now (cd->props);
+		gdk_window_raise (cd->props->window);
 		return;
 	}
+
 	cd->props = gnome_property_box_new();
 	gtk_window_set_title (GTK_WINDOW (cd->props),
 			      _("Clock properties"));
@@ -790,18 +936,19 @@ clock_about (AppletWidget *applet, gpointer data)
 		"Miguel de Icaza <miguel@kernel.org>",
 		"Federico Mena <quartic@gimp.org>",
 		"Stuart Parmenter <pavlov@innerx.net>",
+		"George Lebl <jirka@5z.com>",
 		NULL
 	};
 
 	if (about != NULL)
 	{
-		gdk_window_show (about->window);
+		gtk_widget_show_now (about);
 		gdk_window_raise (about->window);
 		return;
 	}
 	
 	about = gnome_about_new (_("Clock Applet"), "1.0",
-				 _("(c) 1998 the Free Software Foundation"),
+				 _("(c) 1998-2001 the Free Software Foundation"),
 				 authors,
 				 _("The clock applet gives your panel a lightweight and simple display of the date and time"),
 				 GNOME_ICONDIR"/gnome-clock.png");
