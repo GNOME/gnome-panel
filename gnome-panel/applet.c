@@ -22,6 +22,13 @@
 GArray *applets = NULL;
 int applet_count = 0;
 
+/*config sync stuff*/
+extern int config_sync_timeout;
+extern GList *applets_to_sync;
+extern int panels_to_sync;
+extern int globals_to_sync;
+extern int need_complete_save;
+
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
@@ -594,7 +601,8 @@ register_toy(GtkWidget *applet,
 	info.data = data;
 	info.user_menu = NULL;
 
-	gtk_object_set_user_data(GTK_OBJECT(eventbox),GINT_TO_POINTER(applet_count));
+	gtk_object_set_user_data(GTK_OBJECT(eventbox),
+				 GINT_TO_POINTER(applet_count));
 
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = data;
@@ -610,6 +618,12 @@ register_toy(GtkWidget *applet,
 	/*add to the array of applets*/
 	applets = g_array_append_val(applets,AppletInfo,info);
 	applet_count++;
+
+	/*we will need to save this applet's config now*/
+	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_count-1))==NULL)
+		applets_to_sync =
+			g_list_prepend(applets_to_sync,
+				       GINT_TO_POINTER(applet_count-1));
 
 	/*for a menu we don't bind other events except for the
 	  eventbox, the menu itself takes care of passing the relevant

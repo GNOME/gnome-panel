@@ -10,7 +10,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#ifndef PANEL_H
+#ifndef APPLET_H
 /*from panel.h*/
 typedef enum {
 	ORIENT_UP,
@@ -161,7 +161,7 @@ AppletWidget*	applet_widget_get_by_id		(int applet_id);
 /*get thenumber of applets*/
 int		applet_widget_get_applet_count	(void);
 
-/*tell the panel to save the session here (just saves no shutdown),
+/*tell the panel to save our session here (just saves no shutdown),
   this should be done when you change some of your config and want
   the panel to save it's config, you should NOT call this in the
   session_save handler as it will result in a locked panel*/

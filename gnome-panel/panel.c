@@ -486,8 +486,6 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	gtk_idle_add(panel_applet_added_idle,GINT_TO_POINTER(applet_id));
-
-	need_complete_save = TRUE;
 }
 
 static void
@@ -508,6 +506,9 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(widget),
 						 PANEL_PARENT);
+	int applet_id =
+		GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(applet)));
+
 	if(IS_SNAPPED_WIDGET(parentw)) {
 		int drawers_open = 0;
 
@@ -518,7 +519,10 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
 	}
 
-	need_complete_save = TRUE;
+	/*we will need to save this applet's config now*/
+	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,
+						 GINT_TO_POINTER(applet_id));
 }
 
 static void
