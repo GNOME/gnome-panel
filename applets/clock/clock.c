@@ -595,7 +595,8 @@ enum {
 
 static char *
 format_time (ClockFormat format,
-             time_t      t)
+             time_t      t,
+             gboolean    use_utc)
 {
         struct tm *tm;
         char      *time_format;
@@ -604,7 +605,10 @@ format_time (ClockFormat format,
         if (!t)
                 return NULL;
 
-        tm = localtime (&t);
+        if (use_utc)
+                tm = gmtime (&t);
+        else
+                tm = localtime (&t);
         if (!tm)
                 return NULL;
 
@@ -961,7 +965,8 @@ handle_appointments_changed (ClockData *cd)
 
                 if (!appointment->is_all_day)
                         start_text = format_time (cd->format,
-                                                  appointment->start_time);
+                                                  appointment->start_time,
+                                                  cd->gmt_time);
                 else
                         start_text = g_strdup (_("All Day"));
 
@@ -1235,7 +1240,10 @@ create_calendar (ClockData *cd,
 	options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
 	gtk_calendar_set_display_options (GTK_CALENDAR (cd->calendar), options);
 
-        tm = localtime (&cd->current_time);
+	if (cd->gmt_time)
+		tm = gmtime (&cd->current_time);
+	else
+		tm = localtime (&cd->current_time);
         gtk_calendar_select_month (GTK_CALENDAR (cd->calendar),
                                    tm->tm_mon,
                                    tm->tm_year + 1900);
