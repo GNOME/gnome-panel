@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-gboolean _panel_applet_popup_menu (PanelApplet *applet);
+gboolean _panel_applet_popup_menu (PanelApplet *applet, guint button, guint32 time);
 
 G_END_DECLS
 

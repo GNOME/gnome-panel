@@ -592,7 +592,8 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 
 			GNOME_Vertigo_PanelAppletShell_popup_menu (
-					frame->priv->applet_shell, &env);
+					frame->priv->applet_shell, event->button,
+					event->time, &env);
 			if (BONOBO_EX (&env))
 				g_warning (_("Exception from popup_menu '%s'\n"), env._id);
 

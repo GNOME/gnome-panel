@@ -413,9 +413,12 @@ panel_applet_menu_position (GtkMenu  *menu,
 			    gpointer  data)
 {
 	GtkWidget *w = data;
+	GtkRequisition requisition;
 	gint wx, wy;
 
 	g_return_if_fail (w != NULL);
+
+	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
 
 	gdk_window_get_origin (w->window, &wx, &wy);
 	/*
@@ -427,10 +430,16 @@ panel_applet_menu_position (GtkMenu  *menu,
 	else if (*x > wx + w->allocation.width)
 		*x = wx + w->allocation.width;
 
+	if (*x + requisition.width > gdk_screen_width())
+		*x = gdk_screen_width() - requisition.width;
+
 	if (*y < wy)
 		*y = wy;
 	 else if (*y > wy + w->allocation.height)
 		*y = wy + w->allocation.height;
+
+	if (*y + requisition.height > gdk_screen_height())
+		*y = gdk_screen_height() - requisition.height;
 
 	*push_in = TRUE;
 }
@@ -452,12 +461,14 @@ panel_applet_button_press (GtkWidget      *widget,
 }
 
 gboolean
-_panel_applet_popup_menu (PanelApplet *applet)
+_panel_applet_popup_menu (PanelApplet *applet,
+			  guint button,
+			  guint32 time)			  
 {
 	bonobo_control_do_popup_full (applet->priv->control, NULL, NULL,
 				      panel_applet_menu_position,
-				      GTK_WIDGET (applet), 3,
-				      GDK_CURRENT_TIME);
+				      GTK_WIDGET (applet), button,
+				      time);
 	return TRUE;
 	
 }

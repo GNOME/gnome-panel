@@ -67,7 +67,7 @@ module GNOME {
 	};
 
 	interface PanelAppletShell : Bonobo::Unknown {
-		oneway void popup_menu ();
+		oneway void popup_menu (in long button, in long time);
 	};
 
 	interface StatusSpot {

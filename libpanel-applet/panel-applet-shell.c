@@ -36,6 +36,8 @@ static GObjectClass *parent_class = NULL;
 
 static void
 impl_PanelAppletShell_popup_menu (PortableServer_Servant  servant,
+				  CORBA_long   button,
+				  CORBA_long   time,
 				  CORBA_Environment      *ev)
 {
 	PanelAppletShell *applet_shell;
@@ -44,7 +46,7 @@ impl_PanelAppletShell_popup_menu (PortableServer_Servant  servant,
 
 	fprintf (stderr, "popping up menu\n");
 
-	_panel_applet_popup_menu (applet_shell->priv->applet);
+	_panel_applet_popup_menu (applet_shell->priv->applet, button, time);
 }
 
 static void
