@@ -1,3 +1,30 @@
+2002-02-04  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	These changes update the changes which give focus to the panel and
+	object on the panel to take account of the fix to bug 50339 which
+	requires that a widget in a GtkWindow have focus initially, rather
+	than the GtkWindow itself.
+
+	* basep-widget.[ch]: Rename focus_return as the more meaningful name
+	focus_panel. Remove the functions basep_widget_focus_in_event,
+	basep_widget_focus_out_event and basep_widget_set_focus. Specify
+	focus chain in basep_widget_construct so that focus goes initially to
+	the panel.
+
+	* panel-widget.[ch]:
+	Add functions panel_widget_focus_in_event, which sets PRELIGHT state
+	for panel and adds keybindings for Tab and Shift+Tab, and 
+	panel_widget_focus_out_event, which unsets the PRELIGHT state for the
+	panel, removes keybindings for Tab and Shift+Tab and unsets 
+	GTK_WIDGET_CAN_FOCUS flag, if focus is going to another widget in the
+	window. Rename move_to_panel to tab_move.
+	Add key bindings for Tab and Shift+Tab when panel has focus or when in
+	move mode. Set GTK_WIDGET_CAN_FOCUS flag on panel when it is created.
+	Add code to panel_widget_tab_move to move focus to object in panel; 
+	this requries unsetting GTK_WIDGET_CAN_FOCUS flag on panel.
+	Add function panel_widget_focus which moves the focus from an object
+	on the panel to the panel.
+	
 2002-02-04  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panel-properties.glade.h:
@@ -40,7 +67,7 @@ Fri Feb 01 17:00:02 2002  George Lebl <jirka@5z.com>
 	necessary to be in Move mode before it is possible to move applets
 	using the keyboard.
 	Tab or Shift+Tab will move applet to next or previous panel.
-	Shift+arraow will push applet a small amount
+	Shift+arrow will push applet a small amount
 	Control+arrow will switch applet
 	Alt+arrow will free move an applet
 	Escape will exit Move mode

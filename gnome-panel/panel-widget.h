@@ -130,8 +130,8 @@ struct _PanelWidgetClass
                               GtkDirectionType	 dir);
 	void (* free_move) (PanelWidget		*panel,
                             GtkDirectionType	 dir);
-	void (* move_to_panel) (PanelWidget	*panel,
-                             gboolean		 next);
+	void (* tab_move) (PanelWidget	*panel,
+                           gboolean	 next);
 	void (* end_move) (PanelWidget	*panel);
 
 };
@@ -232,6 +232,8 @@ int		panel_widget_get_cursorloc	(PanelWidget *panel);
 /*needed for other panel types*/
 gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
+/* set the focus on the panel */
+void            panel_widget_focus              (PanelWidget *panel);
 
 extern gboolean panel_applet_in_drag;
 

@@ -51,14 +51,10 @@ static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_instance_init (BasePPos *pos);
 
 /* Forward declare some static functions for use in the class init */
-static void basep_widget_focus_return (BasePWidget *basep);
+static void basep_widget_focus_panel (BasePWidget *basep);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
-static void basep_widget_set_focus (GtkWindow *window, GtkWidget *widget);
-static void basep_widget_move_focus (GtkWindow *window, GtkDirectionType dir);
-static gboolean basep_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event);
-static gboolean basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event);
 static void basep_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
 static void basep_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 static void basep_widget_realize (GtkWidget *w);
@@ -75,7 +71,7 @@ static BasePPosClass * basep_widget_get_pos_class (BasePWidget *basep);
 
 enum {
 	/*TYPE_CHANGE_SIGNAL,*/
-	FOCUS_RETURN_SIGNAL,
+	FOCUS_PANEL_SIGNAL,
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	SCREEN_CHANGE_SIGNAL,
@@ -131,21 +127,15 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-	GtkWindowClass *window_class = GTK_WINDOW_CLASS (klass);
 	GtkBindingSet *binding_set;
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
-	klass->focus_return = basep_widget_focus_return;
+	klass->focus_panel = basep_widget_focus_panel;
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
 
-	window_class->set_focus = basep_widget_set_focus;
-	window_class->move_focus = basep_widget_move_focus;
-
-	widget_class->focus_in_event = basep_widget_focus_in_event;
-	widget_class->focus_out_event = basep_widget_focus_out_event;
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
@@ -204,11 +194,11 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			      1,
 			      PANEL_TYPE_OBJECT_TYPE); */
 
-	basep_widget_signals[FOCUS_RETURN_SIGNAL] = 
-		g_signal_new	("focus_return",
+	basep_widget_signals[FOCUS_PANEL_SIGNAL] = 
+		g_signal_new	("focus_panel",
 			       	G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (BasePWidgetClass, focus_return),
+				G_STRUCT_OFFSET (BasePWidgetClass, focus_panel),
 				NULL,
 				NULL,
 				panel_marshal_VOID__VOID,
@@ -254,14 +244,13 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	binding_set = gtk_binding_set_by_class (gtk_object_class);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_Tab, GDK_CONTROL_MASK,
-				      "focus_return", 0);
+				      "focus_panel", 0);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_KP_Tab, GDK_CONTROL_MASK,
-				      "focus_return", 0);
+				      "focus_panel", 0);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
-				      "focus_return", 0);
-
+				      "focus_panel", 0);
 }
 
 static void
@@ -348,62 +337,6 @@ basep_widget_map (GtkWidget *w)
 		GTK_WIDGET_CLASS (basep_widget_parent_class)->map (w);
 
         basep_widget_update_winhints (basep);
-}
-
-static gboolean
-basep_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
-{
-	gboolean ret_val = GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_in_event (widget, event);
-
-	if (!GTK_WINDOW (widget)->focus_widget) {
-		BasePWidget *basep = BASEP_WIDGET (widget);
-
-		gtk_widget_set_state (basep->panel, GTK_STATE_PRELIGHT);
-		gtk_widget_queue_draw (basep->panel);
-	}
-	return ret_val;
-}
-
-static gboolean
-basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
-{
-	gboolean ret_val = GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_out_event (widget, event);
-
-	if (!GTK_WINDOW (widget)->focus_widget) {
-		BasePWidget *basep = BASEP_WIDGET (widget);
-
-		if (GTK_WIDGET_STATE (basep->panel) == GTK_STATE_PRELIGHT) {
-			gtk_widget_set_state (basep->panel, GTK_STATE_NORMAL);
-			gtk_widget_queue_draw (basep->panel);
-		}
-	}
-	return ret_val;
-}
-
-static void
-basep_widget_set_focus (GtkWindow *window, GtkWidget *widget)
-{
-	BasePWidget *basep = BASEP_WIDGET (window);
-
-	if (widget == NULL) {
-		gtk_widget_set_state (basep->panel, GTK_STATE_PRELIGHT);
-		gtk_widget_queue_draw (basep->panel);
-	} else {
-		if (GTK_WIDGET_STATE (basep->panel) == GTK_STATE_PRELIGHT) {
-			gtk_widget_set_state (basep->panel, GTK_STATE_NORMAL);
-			gtk_widget_queue_draw (basep->panel);
-		}
-	}
-	basep_widget_parent_class->set_focus (window, widget);
-}
-
-static void 
-basep_widget_move_focus (GtkWindow *window, GtkDirectionType dir)
-{
-	if (window->focus_widget == NULL) 
-		gtk_widget_child_focus (BASEP_WIDGET (window)->panel, dir);
-	else
-		basep_widget_parent_class->move_focus (window, dir);
 }
 
 static void
@@ -619,10 +552,9 @@ basep_widget_size_allocate (GtkWidget *widget,
 }
 
 static void
-basep_widget_focus_return (BasePWidget *basep)
+basep_widget_focus_panel (BasePWidget *basep)
 {
-	gtk_window_set_focus (GTK_WINDOW (basep), NULL);
-	gtk_container_set_focus_child (GTK_CONTAINER (basep->panel), NULL);
+	panel_widget_focus (PANEL_WIDGET (basep->panel));
 }
 
 static void
@@ -1635,6 +1567,8 @@ basep_widget_construct (gchar *panel_id,
 {
 	BasePPosClass *klass = basep_widget_get_pos_class (basep);
 	int x = 0, y = 0;
+	GList *focus_chain = NULL;
+
 	basep->panel = panel_widget_new(panel_id,
 					packed,
 					orient,
@@ -1713,6 +1647,18 @@ basep_widget_construct (gchar *panel_id,
 
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
+
+	/*
+	 * Set focus chain so that focus goes initially to panel.
+	 */
+	focus_chain = g_list_prepend (focus_chain, basep->hidebutton_s);
+	focus_chain = g_list_prepend (focus_chain, basep->hidebutton_e);
+	focus_chain = g_list_prepend (focus_chain, basep->hidebutton_n);
+	focus_chain = g_list_prepend (focus_chain, basep->hidebutton_w);
+	focus_chain = g_list_prepend (focus_chain, basep->frame);
+	focus_chain = g_list_prepend (focus_chain, basep->innerebox);
+	gtk_container_set_focus_chain (GTK_CONTAINER (basep->table), focus_chain);
+	g_list_free (focus_chain);
 
 	basep_widget_set_hidebuttons (basep);
 	basep_widget_show_hidebutton_pixmaps (basep);
