@@ -1,3 +1,9 @@
+2001-12-01  Laszlo Peter <laca@ireland.sun.com>
+
+	* Makefile.am: The Makefile in doc/reference/panel-applet 
+	ignores the CFLAGS and LDFLAGS when building panel-applet-scan 
+	so it breaks if prefix != /usr.
+
 2001-11-30  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-sections.txt: add panel_applet_get_orient
