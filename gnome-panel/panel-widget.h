@@ -19,7 +19,6 @@ BEGIN_GNOME_DECLS
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
-#define PANEL_CELL_SIZE 1
 #define PANEL_MINIMUM_WIDTH 48
 
 #define PANEL_APPLET_PARENT_KEY "panel_applet_parent_key"
@@ -53,19 +52,11 @@ struct _AppletData
 	GtkWidget *applet;
 	int pos;
 	int cells;
-
-	int prevx;
-	int prevy;
-	int prevwidth;
-	int prevheight;
 };
 
 struct _PanelWidget
 {
-	GtkEventBox		ebox;
-
-	GtkWidget		*frame;
-	GtkWidget		*fixed;
+	GtkFixed		fixed;
 
 	GList			*applet_list;
 
@@ -83,24 +74,17 @@ struct _PanelWidget
 	char                    *back_pixmap;
 	GdkColor		back_color;
 	
-	int			postpone_adjust;
-	int			adjust_applet_idle;
-	
 	GtkWidget		*master_widget;
 	
 	GtkWidget		*drop_widget; /*this is the widget that the
 						panel checks for the cursor
 						on drops usually the panel
 					        widget itself*/
-	
-	/*this is used in mass send_moves, if these match we don't need to send
-	  applet_move signal*/
-	int			last_x,last_y,last_w,last_h;
 };
 
 struct _PanelWidgetClass
 {
-	GtkEventBoxClass parent_class;
+	GtkFixedClass parent_class;
 
 	void (* orient_change) (PanelWidget *panel,
 				PanelOrientation orient);
@@ -199,20 +183,10 @@ int		panel_widget_is_applet_stuck	(PanelWidget *panel,
 						 GtkWidget *applet);
 
 /*needed for other panel types*/
-void		panel_widget_pack_applets	(PanelWidget *panel);
-void		panel_widget_applet_put		(PanelWidget *panel,
-						 AppletData *ad,
-						 int force);
-void		panel_widget_put_all		(PanelWidget *panel,
-						 int force);
 AppletData	*get_applet_data_pos		(PanelWidget *panel,
 						 int pos);
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
-
-/*slightly hackish, the widget that owns the widget will call this
-  function when it's window changes position or size ...*/
-void		panel_widget_send_move		(PanelWidget *panel);
 
 extern GList *panels;
 

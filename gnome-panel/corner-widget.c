@@ -535,8 +535,6 @@ corner_widget_configure_event (CornerWidget *corner,
 			       gpointer data)
 {
 	corner_widget_set_position(corner);
-	if(corner->panel)
-		panel_widget_send_move(PANEL_WIDGET(corner->panel));
 }
 
 static void
@@ -617,6 +615,7 @@ corner_widget_new (CornerPos pos,
 		   GdkColor *back_color)
 {
 	CornerWidget *corner;
+	GtkWidget *frame;
 
 	corner = gtk_type_new(corner_widget_get_type());
 
@@ -631,7 +630,13 @@ corner_widget_new (CornerPos pos,
 	PANEL_WIDGET(corner->panel)->drop_widget = GTK_WIDGET(corner);
 
 	gtk_widget_show(corner->panel);
-	gtk_table_attach(GTK_TABLE(corner->table),corner->panel,1,2,1,2,
+
+	frame = gtk_frame_new(NULL);
+	gtk_widget_show(frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
+	gtk_container_add(GTK_CONTAINER(frame),corner->panel);
+
+	gtk_table_attach(GTK_TABLE(corner->table),frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
@@ -683,7 +688,7 @@ corner_widget_change_params(CornerWidget *corner,
 		    list != NULL;
 		    list = g_list_next(list)) {
 			AppletData *ad = list->data;
-			gtk_fixed_move(GTK_FIXED(panel->fixed),ad->applet,0,0);
+			gtk_fixed_move(GTK_FIXED(panel),ad->applet,0,0);
 		}
 	}
 

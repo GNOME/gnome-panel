@@ -405,15 +405,6 @@ make_hidebutton(char *pixmaphandle,
 	return w;
 }
 
-static void
-drawer_configure_event(GtkWidget *w,
-		       GdkEventConfigure *event,
-		       PanelWidget *panel)
-{
-	panel_widget_send_move(panel);
-}
-
-
 static int
 drawer_widget_destroy(GtkWidget *w, gpointer data)
 {
@@ -479,6 +470,7 @@ drawer_widget_new (PanelOrientation orient,
 		   GdkColor *back_color)
 {
 	DrawerWidget *drawer;
+	GtkWidget *frame;
 
 	drawer = gtk_type_new(drawer_widget_get_type());
 
@@ -491,12 +483,15 @@ drawer_widget_new (PanelOrientation orient,
 	gtk_object_set_data(GTK_OBJECT(drawer->panel),PANEL_PARENT,
 			    drawer);
 	PANEL_WIDGET(drawer->panel)->drop_widget = GTK_WIDGET(drawer);
-	gtk_signal_connect(GTK_OBJECT(drawer), "configure_event",
-			   GTK_SIGNAL_FUNC(drawer_configure_event),
-			   drawer->panel);
 
 	gtk_widget_show(drawer->panel);
-	gtk_table_attach(GTK_TABLE(drawer->table),drawer->panel,1,2,1,2,
+
+	frame = gtk_frame_new(NULL);
+	gtk_widget_show(frame);
+	gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_OUT);
+	gtk_container_add(GTK_CONTAINER(frame),drawer->panel);
+
+	gtk_table_attach(GTK_TABLE(drawer->table),frame,1,2,1,2,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);

@@ -773,29 +773,14 @@ panel_destroy(GtkWidget *widget, gpointer data)
 }
 
 static void
-applet_move_foreach(gpointer data, gpointer user_data)
+panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(data)));
+	int applet_id = GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(widget)));
 	AppletInfo *info = get_applet_info(applet_id);
 	
 	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
 		applets_to_sync = g_list_prepend(applets_to_sync,
 						 GINT_TO_POINTER(applet_id));
-
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		reposition_drawer(drawer);
-		panel_widget_foreach(PANEL_WIDGET(dw->panel),
-				     applet_move_foreach,
-				     NULL);
-	}
-}
-
-static void
-panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
-{
-	applet_move_foreach(widget,NULL);
 }
 
 

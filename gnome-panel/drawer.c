@@ -427,6 +427,29 @@ drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 	}
 }
 
+static void
+drawer_move_foreach(gpointer data, gpointer user_data)
+{
+	int applet_id = GPOINTER_TO_INT(gtk_object_get_user_data(GTK_OBJECT(data)));
+	AppletInfo *info = get_applet_info(applet_id);
+	
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		reposition_drawer(drawer);
+		panel_widget_foreach(PANEL_WIDGET(dw->panel),
+				     drawer_move_foreach,
+				     NULL);
+	}
+}
+
+static void
+button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
+{
+	if(!GTK_WIDGET_REALIZED(widget))
+		return;
+	drawer_move_foreach(widget,NULL);
+}
 
 void
 load_drawer_applet(char *params, char *pixmap, char *tooltip,
@@ -461,6 +484,11 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 	/*the panel of the drawer*/
 	dr_panel = PANEL_WIDGET(DRAWER_WIDGET(drawer->drawer)->panel);
 
+	/*slight quick hack*/
+	gtk_signal_connect_after(GTK_OBJECT(drawer->button->parent),
+				 "size_allocate",
+				 GTK_SIGNAL_FUNC(button_size_alloc),
+				 drawer);
 	gtk_signal_connect(GTK_OBJECT(drawer->button), "clicked",
 			   GTK_SIGNAL_FUNC(monitor_drawers),
 			   dr_panel);
