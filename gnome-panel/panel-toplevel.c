@@ -34,6 +34,7 @@
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-program.h>
 
+#include "panel-profile.h"
 #include "panel-frame.h"
 #include "panel-xutils.h"
 #include "panel-multiscreen.h"
@@ -410,6 +411,20 @@ panel_toplevel_begin_grab_op (PanelToplevel   *toplevel,
 	GdkCursor     *cursor;
 
 	if (toplevel->priv->grab_op != PANEL_GRAB_OP_NONE)
+		return;
+
+	/* If orientation is not writable, then we can't move */
+	if (op_type == PANEL_GRAB_OP_MOVE &&
+	    ! panel_profile_is_writable_toplevel_orientation (toplevel))
+		return;
+
+	/* If size is not writable, then we can't resize */
+	if ((op_type == PANEL_GRAB_OP_RESIZE || 
+	     op_type == PANEL_GRAB_OP_RESIZE_UP || 
+	     op_type == PANEL_GRAB_OP_RESIZE_DOWN || 
+	     op_type == PANEL_GRAB_OP_RESIZE_LEFT || 
+	     op_type == PANEL_GRAB_OP_RESIZE_RIGHT) &&
+	    ! panel_profile_is_writable_toplevel_size (toplevel))
 		return;
 
 	if (toplevel->priv->attached && op_type == PANEL_GRAB_OP_MOVE) {

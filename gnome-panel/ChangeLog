@@ -1,3 +1,10 @@
+Fri Jun 27 12:47:58 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.c: if orientation is not writable, then don't allow
+	  moving as that would change orientation, same with size and
+	  resizing.  So panels themselves should now be pretty much
+	  lockdownable by mandatory settings.
+
 Fri Jun 27 12:11:30 2003  George Lebl <jirka@5z.com>
 
 	* panel-profile.[ch], panel-properties-dialog.(c|glade):  Finish
