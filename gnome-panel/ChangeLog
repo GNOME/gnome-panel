@@ -1,3 +1,17 @@
+2001-10-26  Mark McLoughlin  <mark@skynet.ie>
+
+	* GNOME_Panel_TestApplet.server.in: s/TestApplet/Panel_TestApplet/g
+
+	* applet-init.c, applet-init.h: crufty debugging functionality.
+	(applet_debug_log), (applet_debug_init): impl.
+	(applet_factory_main): use it.
+
+	* extern.c: use Applet2 interface.
+
+	* menu.c: (add_test_applet): s/TestApplet/Panel_TestApplet/g.
+
+	* test-applet.c: use logging.
+
 2001-10-25  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet-widget.c, applet-widget.h: kill applet_widget_init.

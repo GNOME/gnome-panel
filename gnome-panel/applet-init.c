@@ -3,6 +3,34 @@
 
 #include "applet-init.h"
 
+#define APPLET_DEBUG_OUTPUT "/tmp/applet-debug"
+
+static FILE *static_applet_debug_fh = NULL;
+
+void
+applet_debug_log (const char *format, ...)
+{
+	va_list args;
+
+	g_return_if_fail (static_applet_debug_fh);
+
+	va_start (args, format);
+
+	vfprintf (static_applet_debug_fh, format, args);
+
+	fflush (static_applet_debug_fh);
+
+	va_end (args);
+}
+
+void
+applet_debug_init (void)
+{
+	g_return_if_fail (!static_applet_debug_fh);
+
+	static_applet_debug_fh = fopen (APPLET_DEBUG_OUTPUT, "w");
+}
+
 int
 applet_factory_main (int                     argc,
 		     char                  **argv,
@@ -13,6 +41,7 @@ applet_factory_main (int                     argc,
 		     gpointer                data)
 {
 	GnomeProgram *program;
+	int           retval;
 
 	program = gnome_program_init (name, version,
 				      LIBGNOMEUI_MODULE,
@@ -23,5 +52,12 @@ applet_factory_main (int                     argc,
 		      GNOME_CLIENT_PARAM_SM_CONNECT,
 		      FALSE, NULL);
 
-	return bonobo_generic_factory_main (iid, callback, data);
+	applet_debug_log ("applet_factory_main starting '%s' '%s' '%s'.\n",
+			  iid, name, version);
+
+	retval = bonobo_generic_factory_main (iid, callback, data);
+
+	applet_debug_log ("applet_factory_main finishing %d.\n", retval);
+
+	return retval;
 }

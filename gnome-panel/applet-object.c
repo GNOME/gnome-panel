@@ -496,7 +496,6 @@ impl_GNOME_Applet2_do_callback (PortableServer_Servant  servant,
 
 static void
 impl_GNOME_Applet2_back_change (PortableServer_Servant          servant,
-	
 				const GNOME_Panel_BackInfoType *backing,
 				CORBA_Environment              *ev)
 {

@@ -2279,7 +2279,7 @@ static void
 add_test_applet (GtkWidget *widget,
 		 gpointer   dummy)
 {
-	extern_load_applet ("OAFIID:GNOME_TestApplet",
+	extern_load_applet ("OAFIID:GNOME_Panel_TestApplet",
 			    NULL,
                             get_panel_from_menu_data (widget, TRUE),
                             -1, FALSE, FALSE);

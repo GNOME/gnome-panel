@@ -3,6 +3,8 @@
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 
+#define APPLET_DEBUG
+
 #include "applet-widget.h"
 #include "applet-init.h"
 
@@ -11,6 +13,8 @@ test_applet_new (const gchar *iid)
 {
 	GtkWidget *widget;
 	GtkWidget *label;
+
+	applet_debug_log ("test_applet_new: %s\n", iid);
 
 	widget = applet_widget_new (iid);
 
@@ -30,13 +34,15 @@ test_applet_factory (BonoboGenericFactory *this,
 {
         BonoboObject *applet = NULL;
 
-        if (!strcmp (iid, "OAFIID:OAFIID:GNOME_Panel_TestApplet"))
+	applet_debug_log ("test_applet_factory: %s\n", iid);
+
+        if (!strcmp (iid, "OAFIID:GNOME_Panel_TestApplet"))
                 applet = test_applet_new (iid);
 
         return applet;
 }
 
-APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Panel_TestApplet",
+APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Panel_TestApplet_Factory",
 		       "A Test Applet for the GNOME-2.0 Panel",
 		       "0",
 		       test_applet_factory,

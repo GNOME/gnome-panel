@@ -45,7 +45,7 @@ struct Extern_struct {
 	POA_GNOME_PanelSpot  servant;
 
 	GNOME_PanelSpot      pspot;
-	GNOME_Applet         applet;
+	GNOME_Applet2        applet;
 
 	gint                 refcount;
 
@@ -465,7 +465,7 @@ extern_unref (Extern ext)
 		g_free (ext);
 }
 
-GNOME_Applet 
+GNOME_Applet2 
 extern_get_applet (Extern ext)
 {
 	return ext->applet;
@@ -505,7 +505,7 @@ extern_handle_back_change (Extern       ext,
 {
 	GNOME_Panel_BackInfoType backing;
 	CORBA_Environment        env;
-	GNOME_Applet             applet = ext->applet;
+	GNOME_Applet2            applet = ext->applet;
 
 	g_assert (ext);
 
@@ -516,16 +516,21 @@ extern_handle_back_change (Extern       ext,
 
 	backing._d = panel->back_type;
 
-	if (panel->back_type == PANEL_BACK_PIXMAP)
+	switch (panel->back_type) {
+	case PANEL_BACK_PIXMAP:
 		backing._u.pmap = panel->back_pixmap;
-
-	else if (panel->back_type == PANEL_BACK_COLOR) {
+		break;
+	case PANEL_BACK_COLOR:
 		backing._u.c.red   = panel->back_color.red;
 		backing._u.c.green = panel->back_color.green;
 		backing._u.c.blue  = panel->back_color.blue;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 
-	GNOME_Applet_back_change (applet, &backing, &env);
+	GNOME_Applet2_back_change (applet, &backing, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -541,7 +546,7 @@ gboolean
 extern_handle_freeze_changes (Extern ext)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -550,7 +555,7 @@ extern_handle_freeze_changes (Extern ext)
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_freeze_changes (applet, &env);
+	GNOME_Applet2_freeze_changes (applet, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -566,7 +571,7 @@ gboolean
 extern_handle_thaw_changes (Extern ext)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -575,7 +580,7 @@ extern_handle_thaw_changes (Extern ext)
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_thaw_changes (applet, &env);
+	GNOME_Applet2_thaw_changes (applet, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -592,7 +597,7 @@ extern_handle_change_orient (Extern ext,
 			     int    orient)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -601,7 +606,7 @@ extern_handle_change_orient (Extern ext,
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_change_orient (applet, orient, &env);
+	GNOME_Applet2_change_orient (applet, orient, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -620,7 +625,7 @@ extern_handle_change_size (Extern ext,
 			   int    size)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -629,7 +634,7 @@ extern_handle_change_size (Extern ext,
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_change_size (applet, size, &env);
+	GNOME_Applet2_change_size (applet, size, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -646,7 +651,7 @@ extern_handle_do_callback (Extern  ext,
 			   char   *name)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -655,7 +660,7 @@ extern_handle_do_callback (Extern  ext,
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_do_callback (applet, name, &env);
+	GNOME_Applet2_do_callback (applet, name, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -672,7 +677,7 @@ extern_handle_set_tooltips_state (Extern   ext,
 				  gboolean enabled)
 {
 	CORBA_Environment env;
-	GNOME_Applet      applet = ext->applet;
+	GNOME_Applet2     applet = ext->applet;
 
 	g_assert (ext);
 
@@ -681,7 +686,7 @@ extern_handle_set_tooltips_state (Extern   ext,
 
 	CORBA_exception_init (&env);
 
-	GNOME_Applet_set_tooltips_state (applet, enabled, &env);
+	GNOME_Applet2_set_tooltips_state (applet, enabled, &env);
 	if (BONOBO_EX (&env)) {
 		extern_remove_applet (ext);
 
@@ -937,7 +942,7 @@ send_position_change (Extern ext)
 				break;
 		}
 
-		GNOME_Applet_change_position (ext->applet, x, y, &env);
+		GNOME_Applet2_change_position (ext->applet, x, y, &env);
 		if (BONOBO_EX (&env))
 			panel_clean_applet (ext->info);
 
@@ -1964,7 +1969,7 @@ s_panelspot_register_us(PortableServer_Servant servant,
 
 	/* just sanity */
 	if (ext->applet != NULL)
-		GNOME_Applet_set_tooltips_state
+		GNOME_Applet2_set_tooltips_state
 			(ext->applet, global_config.tooltips_enabled, ev);
 
 	if (ev->_major) {
@@ -2370,7 +2375,7 @@ send_draw (Extern ext)
 	CORBA_exception_init (&env);
 
 	if (ext->applet != NULL) {
-		GNOME_Applet_draw (ext->applet, &env);
+		GNOME_Applet2_draw (ext->applet, &env);
 		if (BONOBO_EX (&env))
 			panel_clean_applet (ext->info);
 	}
