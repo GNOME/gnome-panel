@@ -2,8 +2,7 @@
 INCLUDES =	 			\
 	-I../../..	 		\
 	-I$(srcdir)/../../..	 	\
-	-I$(includedir)			\
-	$(X_CFLAGS)
+	-I$(includedir)
 
 #bin_PROGRAMS = menx
 #

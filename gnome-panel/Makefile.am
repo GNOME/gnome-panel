@@ -21,10 +21,7 @@ panel_SOURCES = \
 	panel_config.c  \
 	panel_config.h
 
-MYLIBS = \
-	$(GNOMEUI_LIBS)
-
-panel_LDADD = $(MYLIBS) 
+panel_LDADD = $(GNOMEUI_LIBS) $(DL_LIB)
 
 data_DATA = panelrc
 
