@@ -708,6 +708,8 @@ drawer_save_to_gconf (Drawer     *drawer,
 				PANEL_GCONF_OBJECTS, profile, gconf_key, "tooltip");
 		gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
 	}
+
+	panel_save_to_gconf (g_object_get_data (G_OBJECT (drawer->drawer), "PanelData"));
 }
 
 void

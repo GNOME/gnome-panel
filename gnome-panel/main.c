@@ -144,24 +144,6 @@ find_kde_directory (void)
 	kde_mini_icondir = g_strdup (KDE_MINI_ICONDIR);
 }
 
-static void
-kill_free_drawers (void)
-{
-	GSList *li;
-	GSList *to_destroy = NULL;
-	
-	for (li = panel_list; li != NULL; li = li->next) {
-		PanelData *pd = li->data;
-		if (DRAWER_IS_WIDGET (pd->panel) &&
-		    PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->master_widget == NULL) {
-			to_destroy = g_slist_prepend (to_destroy, pd->panel);
-		}
-	}
-
-	g_slist_foreach (to_destroy, (GFunc)gtk_widget_destroy, NULL);
-	g_slist_free (to_destroy);
-}
-
 static const struct poptOption options[] = {
   {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
   POPT_AUTOHELP
@@ -216,8 +198,6 @@ main(int argc, char **argv)
 
 	session_load ();	
 
-	kill_free_drawers ();
-	
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
 			 (GFunc)panel_widget_add_forbidden,
