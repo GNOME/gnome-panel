@@ -470,7 +470,12 @@ _panel_applet_popup_menu (PanelApplet *applet,
 				      GTK_WIDGET (applet), button,
 				      time);
 	return TRUE;
-	
+}
+
+gboolean
+panel_applet_popup_menu (PanelApplet *applet)
+{
+	return _panel_applet_popup_menu (applet, 3, GDK_CURRENT_TIME);
 }
 
 static gboolean
@@ -1187,7 +1192,7 @@ panel_applet_setup (PanelApplet *applet)
 				     BONOBO_OBJECT (priv->item_handler));
 
 	g_signal_connect (applet, "popup_menu",
-			  G_CALLBACK (_panel_applet_popup_menu), NULL);
+			  G_CALLBACK (panel_applet_popup_menu), NULL);
 }
 
 /**
