@@ -6,7 +6,6 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
 lib_LTLIBRARIES = libgen_util_applet.la
-bin_PROGRAMS = printer_applet
 
 libgen_util_applet_la_SOURCES = \
 	main.c		\
