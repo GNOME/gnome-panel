@@ -163,29 +163,6 @@ kill_free_drawers (void)
 }
 
 static void
-tell_user_Im_on_crack (void)
-{
-	GtkWidget *dialog;
-
-	dialog = gtk_message_dialog_new
-	    (NULL /* parent */,
-	     0 /* flags */,
-	     GTK_MESSAGE_WARNING,
-	     GTK_BUTTONS_YES_NO,
-	     _("This is the GNOME2 panel, it is likely that it will crash,\n"
-	       "destroy configuration, cause another world war, and most\n"
-	       "likely just plain not work.  Use at your own risk.\n\n"
-	       "Do you really want to run it?"));
-	
-	gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
-
-	if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_YES)
-		exit (0);
-
-	gtk_widget_destroy (dialog);
-}
-
-static void
 session_notify_global_changes (GConfClient *client, guint cnxn_id, GConfEntry *entry, gpointer user_data) {
 	panel_session_init_global_config ();
 }
@@ -212,9 +189,6 @@ main(int argc, char **argv)
 
 	bonobo_activate ();
 	
-	if (g_getenv ("I_LOVE_PANEL_CRACK") == NULL)
-		tell_user_Im_on_crack ();
-
 	if (profile_name == NULL) {
 		/* FIXME: Do this properly. just a temporary hack */
 		session_set_current_profile ("default");

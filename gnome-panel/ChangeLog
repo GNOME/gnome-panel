@@ -1,3 +1,14 @@
+Mon Jan 21 19:20:06 2002  George Lebl <jirka@5z.com>
+
+	* logout.c: block the logout signal while we're in the signal handler
+
+	* main.c: remove the I'm on crack dialog.  it's pissing the shit out
+	  of me.  So we're no longer elitist.  Plus the panel shouldn't screw
+	  up your old config now so it should be ok.
+
+	* xstuff.[ch]: remove the nautilus check thing, it's broken and
+	  not used anyway
+
 2002-01-21  Glynn Foster  <glynn.foster@sun.com>
 
 	* panel-global-config.schemas, panel-per-panel-config.schemas: Add 

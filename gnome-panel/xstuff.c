@@ -175,43 +175,6 @@ xstuff_init (void)
 	gdk_error_trap_pop ();
 }
 
-gboolean
-xstuff_nautilus_desktop_present (void)
-{
-	gboolean ret = FALSE;
-	guint32 *data;
-	int size;
-
-	gdk_error_trap_push ();
-	data = get_typed_property_data (GDK_DISPLAY (),
-					GDK_ROOT_WINDOW (),
-					ATOM ("NAUTILUS_DESKTOP_WINDOW_ID"),
-					XA_WINDOW,
-					&size, 32);
-
-        /* Get random property off the window to see if the window
-         * still exists.
-         */
-	if (data != NULL &&
-	    *data != 0) {
-		guint32 *desktop;
-		desktop = get_typed_property_data (GDK_DISPLAY (),
-						   *data,
-						   ATOM ("_NET_WM_DESKTOP"),
-						   XA_CARDINAL,
-						   &size, 32);
-		if (size > 0)
-			ret = TRUE;
-		g_free (desktop);
-	}
-	g_free (data);
-
-	gdk_flush ();
-	gdk_error_trap_pop ();
-
-	return ret;
-}
-
 void
 xstuff_set_simple_hint (GdkWindow *w, const char *name, long val)
 {
