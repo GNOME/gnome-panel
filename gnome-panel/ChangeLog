@@ -1,3 +1,11 @@
+2004-10-27  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-properties-dialog.c: (panel_properties_dialog_response): show
+	the help for drawer properties if the user is editing the properties of
+	a drawer. Fix bug #143034
+	* panel.c: (panel_deletion_dialog): fix the text of the deletion dialog
+	in the case of a drawer deletion. Fix bug #145563
+
 Sat Oct 23 20:59:24 2004  Jonathan Blandford  <jrb@redhat.com>
 
 	* gnome-panel-screenshot.c: escape '/' in file names.

@@ -634,13 +634,20 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 				  int                    response,
 				  GtkWidget             *properties_dialog)
 {
+	char *help_id;
+
 	switch (response) {
 	case GTK_RESPONSE_CLOSE:
 		gtk_widget_destroy (properties_dialog);
 		break;
 	case GTK_RESPONSE_HELP:
+		if (panel_toplevel_get_is_attached (dialog->toplevel)) {
+			help_id = "gospanel-550";
+		} else {
+			help_id = "gospanel-28";
+		}
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
-				 "user-guide.xml", "gospanel-28");
+				 "user-guide.xml", help_id);
 		break;
 	default:
 		break;

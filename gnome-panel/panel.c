@@ -1235,22 +1235,32 @@ panel_deletion_dialog (PanelToplevel *toplevel)
 {
 
 	GtkWidget *dialog;
+	char *text;
+	char *title;
+
+	if (panel_toplevel_get_is_attached (toplevel)) {
+		text = _("When a drawer is deleted, the drawer and its\n"
+			 "settings are lost. Delete this drawer?");
+		title = _("Delete Drawer");
+	} else {
+		text = _("When a panel is deleted, the panel and its\n"
+			 "settings are lost. Delete this panel?");
+		title = _("Delete Panel");
+	}
 
 	dialog = gtk_message_dialog_new (
 			GTK_WINDOW (toplevel),
 			GTK_DIALOG_MODAL,
 			GTK_MESSAGE_QUESTION,
 			GTK_BUTTONS_NONE,
-			_("When a panel is deleted, the panel "
-			"and its\n settings are lost. "
-			"Delete this panel?"));
+			text);
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 				NULL);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-	gtk_window_set_title (GTK_WINDOW (dialog), _("Delete Panel"));
+	gtk_window_set_title (GTK_WINDOW (dialog), title);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
