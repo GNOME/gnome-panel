@@ -179,10 +179,6 @@ glade_src = \
 	gnome-panel-properties.glade		\
 	gnome-panel-screenshot.glade
 
-glade_msgs = \
-	gnome-panel-properties.glade.h		\
-	gnome-panel-screenshot.glade.h
-
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
 	panel.hints				\
@@ -190,7 +186,6 @@ EXTRA_DIST =					\
 	gnome-panel-properties			\
 	$(glade_src)				\
 	$(glade_DATA)				\
-	$(glade_msgs)				\
 	nothing.cP				\
 	nothing.h				\
 	$(schema_DATA)				\

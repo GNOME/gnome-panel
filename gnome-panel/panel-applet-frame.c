@@ -75,8 +75,8 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	char        *temp_key;
 	char        *applet_iid;
 
-	g_return_if_fail (panel_widget);
-	g_return_if_fail (gconf_key);
+	g_return_if_fail (panel_widget != NULL);
+	g_return_if_fail (gconf_key != NULL);
 
 	client  = panel_gconf_get_client ();
 
@@ -108,7 +108,7 @@ popup_handle_move (BonoboUIComponent *uic,
 	PanelWidget *panel;
 	GtkWidget   *widget;
 
-	g_return_if_fail (frame && GTK_IS_WIDGET (frame));
+	g_return_if_fail (GTK_IS_WIDGET (frame));
 
 	widget = GTK_WIDGET (frame);
 
@@ -146,8 +146,8 @@ panel_applet_frame_load (const gchar *iid,
 	AppletInfo *info;
 	char       *real_key;
 
-	g_return_if_fail (iid);
-	g_return_if_fail (panel);
+	g_return_if_fail (iid != NULL);
+	g_return_if_fail (panel != NULL);
 
 	if (gconf_key)
 		real_key = g_strdup (gconf_key);
@@ -449,7 +449,7 @@ panel_applet_frame_new (const char *iid,
 {
 	PanelAppletFrame *frame;
 
-	g_return_val_if_fail (iid && gconf_key, NULL);
+	g_return_val_if_fail (iid != NULL && gconf_key != NULL, NULL);
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 

@@ -663,7 +663,7 @@ applet_show_menu (AppletInfo     *info,
 {
 	GtkWidget *panel;
 
-	g_return_if_fail (info);
+	g_return_if_fail (info != NULL);
 
 	panel = get_panel_parent (info->widget);
 
@@ -1080,7 +1080,7 @@ panel_applet_register (GtkWidget      *applet,
 	gboolean insert_at_pos;
 	gboolean expand_major = FALSE, expand_minor = FALSE;
 	
-	g_return_val_if_fail (applet && panel, NULL);
+	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
 	if ( ! GTK_WIDGET_NO_WINDOW (applet))
 		gtk_widget_set_events (applet, (gtk_widget_get_events (applet) |
@@ -1201,7 +1201,7 @@ panel_applet_get_position (AppletInfo *applet)
 {
 	AppletData *applet_data;
 
-	g_return_val_if_fail (applet, 0);
+	g_return_val_if_fail (applet != NULL, 0);
 	g_return_val_if_fail (G_IS_OBJECT (applet->widget), 0);
 
 	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
@@ -1214,7 +1214,7 @@ panel_applet_get_panel_id (AppletInfo *applet)
 {
 	PanelWidget *panel;
 
-	g_return_val_if_fail (applet, NULL);
+	g_return_val_if_fail (applet != NULL, NULL);
 	g_return_val_if_fail (G_IS_OBJECT (applet->widget), NULL);
 
 	panel = PANEL_WIDGET (applet->widget->parent);
@@ -1222,15 +1222,12 @@ panel_applet_get_panel_id (AppletInfo *applet)
 	return panel->unique_id;
 }
 
-/*
- * WTF ?
- */
 gboolean
 panel_applet_get_right_stick (AppletInfo *applet)
 {
 	PanelWidget *panel;
 
-	g_return_val_if_fail (applet, FALSE);
+	g_return_val_if_fail (applet != NULL, FALSE);
 	g_return_val_if_fail (G_IS_OBJECT (applet->widget), FALSE);
 
 	panel = PANEL_WIDGET (applet->widget->parent);
