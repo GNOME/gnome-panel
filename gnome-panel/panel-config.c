@@ -76,7 +76,8 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel->state,
 					   global_config.auto_hide_step_size,
 					   global_config.minimized_size,
-					   global_config.minimize_delay);
+					   global_config.minimize_delay,
+					   panel->drawer_drop_zone_pos);
 	 } else {
 		panel_widget_change_params(panel,
 					   panel_config_struct.orient,
@@ -85,7 +86,8 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel->state,
 					   global_config.explicit_hide_step_size,
 					   global_config.minimized_size,
-					   global_config.minimize_delay);
+					   global_config.minimize_delay,
+					   panel->drawer_drop_zone_pos);
 	}
 }
 

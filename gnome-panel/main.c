@@ -222,7 +222,9 @@ init_user_panels(void)
 					/*the last three will get changed
 					  anyway, they are globals*/
 					 x,
-					 y);
+					 y,
+					 DRAWER_LEFT);
+					 /*FIXME: this is just a decoy*/
 
 
 		/*FIXME: this should be made cleaner I guess*/

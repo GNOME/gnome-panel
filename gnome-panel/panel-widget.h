@@ -114,7 +114,9 @@ GtkWidget*	panel_widget_new		(gint size,
 						 gint minimized_size,
 						 gint minimize_delay,
 						 gint pos_x,
-						 gint pos_y);
+						 gint pos_y,
+						 DrawerDropZonePos
+						 	drop_zone_pos);
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
@@ -148,7 +150,9 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelState state,
 						 gint step_size,
 						 gint minimized_size,
-						 gint minimize_delay);
+						 gint minimize_delay,
+						 DrawerDropZonePos
+						 	drop_zone_pos);
 
 #ifdef __cplusplus
 }

@@ -51,6 +51,9 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->size = 0;
 	panel_widget->leave_notify_timer_tag = 0;
 	panel_widget->currently_dragged_applet = NULL;
+	puts("&&&&&&&&&&&&&&&&&&&&&&");
+	panel_widget->drawer_drop_zone = NULL;
+	panel_widget->drawer_drop_zone_pos = DRAWER_LEFT;
 }
 
 static void
@@ -123,15 +126,27 @@ panel_widget_set_position(PanelWidget *panel)
 }
 
 static void
+drawer_resize_drop_zone(PanelWidget *panel)
+{
+	if(panel->orient == PANEL_HORIZONTAL)
+		gtk_widget_set_usize(panel->drawer_drop_zone,
+				     PANEL_DRAWER_DROP_TARGET_SIZE*
+				     	PANEL_CELL_SIZE,
+				     panel->thick);
+	else
+		gtk_widget_set_usize(panel->drawer_drop_zone, panel->thick,
+				     PANEL_DRAWER_DROP_TARGET_SIZE*
+				     	PANEL_CELL_SIZE);
+}
+
+static void
 panel_widget_set_size(PanelWidget *panel, gint size)
 {
 	if(size == 0)
 		size = panel->size;
 	switch(panel->snapped) {
 		case PANEL_DRAWER:
-			/*???? this should not happen, so ....*/
-			/*panel_widgets_pack_applets(panel);
-			size = panel->size;*/
+			drawer_resize_drop_zone(panel);
 		case PANEL_FREE:
 			if(panel->orient == PANEL_HORIZONTAL)
 				gtk_widget_set_usize(GTK_WIDGET(panel),
@@ -256,16 +271,25 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 	gint i;
 	gint freepos;
 
+	if(panel->snapped == PANEL_DRAWER)
+		puts("TEST");
+	
+
 	for(i=0;pos+i<(panel->snapped==PANEL_DRAWER?PANEL_MAX:panel->size) &&
 	        panel->applets[pos+i].applet;i++)
-		;
+		printf("applet at %d: %lX\n",pos+i,panel->applets[pos+i].applet);
+	printf("applet at %d: %lX\n",pos+i,panel->applets[pos+i].applet);
+	printf("pr i:%d\n",i);
 	if(pos+i >= (panel->snapped==PANEL_DRAWER?PANEL_MAX:panel->size))
 		return FALSE;
 	/*this will only happen for drawers*/
-	if(pos+i > panel->size)
+	if(pos+i > panel->size) {
 		panel->size = pos+i;
+		panel_widget_set_size(panel,panel->size);
+	}
 
 	freepos=i;
+	printf("freepos:%d\n",freepos);
 
 	for(;i>0;i--) {
 		panel->applets[pos+i].applet=
@@ -304,8 +328,8 @@ panel_widget_seize_space(PanelWidget *panel,
 		(panel->applets[pos+i].applet == applet ||
 		 panel->applets[pos+i].applet == NULL);i++)
 		allocated++;
-	if(pos+i>panel->size) {
-	}
+	if(pos+i>panel->size)
+		panel->size = pos+i;
 	for(i=1;(pos-i >= 0) &&
 		(allocated < width) &&
 		(panel->applets[pos-i].applet == NULL);i++)
@@ -348,11 +372,11 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 
 	/*don't adjust applets out of range, wait for
 	  then to be pushed into range*/
-	if(pos>=panel->size)
+	if(panel->snapped != PANEL_DRAWER && pos>=panel->size)
 		return;
 
 	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
-	
+
 	if(panel->orient==PANEL_HORIZONTAL) {
 		if(height > panel->thick) {
 			panel->thick = height;
@@ -442,6 +466,24 @@ panel_widget_switch_applet_left(PanelWidget *panel, gint pos)
 }
 
 static gint
+panel_widget_is_right_drop_zone(PanelWidget *panel, gint pos)
+{
+	if(panel->applets[pos + panel->applets[pos].cells].applet ==
+	   panel->drawer_drop_zone && panel->drawer_drop_zone)
+	   	return TRUE;
+	return FALSE;
+}
+
+static gint
+panel_widget_is_left_drop_zone(PanelWidget *panel, gint pos)
+{
+	if(panel->applets[pos - 1].applet ==
+	   panel->drawer_drop_zone && panel->drawer_drop_zone)
+	   	return TRUE;
+	return FALSE;
+}
+
+static gint
 panel_widget_get_right_switch_pos(PanelWidget *panel, gint pos)
 {
 	pos+=panel->applets[pos + panel->applets[pos].cells].cells;
@@ -475,11 +517,17 @@ panel_widget_switch_move(PanelWidget *panel, gint pos, gint moveby)
 		finalpos = 0;
 
 	while((pos+width-1)<finalpos) {
+		if(panel->snapped == PANEL_DRAWER &&
+		   panel_widget_is_right_drop_zone(panel,pos))
+		   	return pos;
 		if(panel_widget_get_right_switch_pos(panel,pos) > finalpos)
 			return pos;
 		pos = panel_widget_switch_applet_right(panel,pos);
 	}
 	while(pos>finalpos) {
+		if(panel->snapped == PANEL_DRAWER &&
+		   panel_widget_is_left_drop_zone(panel,pos))
+		   	return pos;
 		if((panel_widget_get_left_switch_pos(panel,pos)+width-1) < 
 		   finalpos)
 			return pos;
@@ -878,7 +926,8 @@ panel_widget_new (gint size,
 		  gint minimized_size,
 		  gint minimize_delay,
 		  gint pos_x,
-		  gint pos_y)
+		  gint pos_y,
+		  DrawerDropZonePos drop_zone_pos)
 {
 	PanelWidget *panel;
 	gint i;
@@ -899,6 +948,8 @@ panel_widget_new (gint size,
 			      gtk_widget_get_events(GTK_WIDGET(panel)) |
 			      GDK_BUTTON_RELEASE_MASK);
 
+	panel->thick = PANEL_CELL_SIZE;
+
 	/*sanity sets, ignore settings that would cause bad behaviour*/
 	if(snapped == PANEL_FREE) {
 		panel->size = size;
@@ -909,7 +960,6 @@ panel_widget_new (gint size,
 	} else {
 		panel->size = PANEL_MAX;
 	}
-	panel->thick = PANEL_CELL_SIZE;
 
 	panel->table = gtk_table_new(3,3,FALSE);
 	gtk_container_add(GTK_CONTAINER(panel),panel->table);
@@ -987,9 +1037,29 @@ panel_widget_new (gint size,
 	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
 		panel->state = PANEL_SHOWN;
 
-	panel_widget_set_size(panel,size);
+	panel_widget_set_size(panel,panel->size);
 
 	panel_widget_set_hidebuttons(panel);
+
+	if(panel->snapped == PANEL_DRAWER) {
+		GtkWidget *frame;
+
+		panel->drawer_drop_zone_pos = drop_zone_pos;
+		panel->drawer_drop_zone = gtk_event_box_new();
+		gtk_widget_show(panel->drawer_drop_zone);
+		frame = gtk_frame_new(NULL);
+		gtk_container_add(GTK_CONTAINER(panel->drawer_drop_zone),
+				  frame);
+		gtk_widget_show(frame);
+		for(i=0;i<PANEL_DRAWER_DROP_TARGET_SIZE;i++) {
+			puts("KKKKKKKKKKK");
+			panel->applets[i].applet = panel->drawer_drop_zone;
+			panel->applets[i].cells = PANEL_DRAWER_DROP_TARGET_SIZE;
+		}
+		gtk_fixed_put(GTK_FIXED(panel->fixed),panel->drawer_drop_zone,
+			      0,0);
+		drawer_resize_drop_zone(panel);
+	}
 
 	for(i=0;i<PANEL_MAX;i++) {
 		panel->applets[i].applet = NULL;
@@ -1215,21 +1285,43 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(panel,-1);
 	g_return_val_if_fail(applet,-1);
 	g_return_val_if_fail(pos>=0,-1);
-	if(pos>=panel->size)
-		pos = panel->size - 1;
 
-	for(i=pos;i<panel->size;i += panel->applets[i].cells)
-		if(!panel->applets[i].applet)
-			break;
+	if(panel->snapped == PANEL_DRAWER) {
+		if(pos >= panel->size) {
+			/*FIXME: check for right drop_zone*/
+			i = panel->size++;
+		} else {
+			if(panel->drawer_drop_zone_pos==DRAWER_LEFT)
+				while(pos<PANEL_MAX &&
+				      panel->applets[pos].applet ==
+				      panel->drawer_drop_zone)
+					pos++;
+			for(i=pos;i>=0 && panel->applets[pos].applet ==
+			    panel->applets[i].applet;i--)
+				;
+			i++;
+			printf("i: %d\n",i);
+			printf("size before push: %d\n",panel->size);
+			panel_widget_push_right(panel,i);
+			printf("size after push: %d\n",panel->size);
+		}
+	} else {
+		if(pos>=panel->size)
+			pos = panel->size - 1;
 
-	/*panel is full to the right*/
-	if(i==panel->size) {
-		for(i=pos-1;i>=0;i -= panel->applets[i].cells)
+		for(i=pos;i<panel->size;i += panel->applets[i].cells)
 			if(!panel->applets[i].applet)
 				break;
-		/*panel is full!*/
-		if(i<=0)
-			return -1;
+
+		/*panel is full to the right*/
+		if(i==panel->size) {
+			for(i=pos-1;i>=0;i -= panel->applets[i].cells)
+				if(!panel->applets[i].applet)
+					break;
+			/*panel is full!*/
+			if(i<=0)
+				return -1;
+		}
 	}
 
 	/*this will get done on size allocate!*/
@@ -1382,8 +1474,10 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelState state,
 			   gint step_size,
 			   gint minimized_size,
-			   gint minimize_delay)
+			   gint minimize_delay,
+			   DrawerDropZonePos drop_zone_pos)
 {
+	/*FIXME: change drop_zone_pos!!!!!!!!*/
 	PanelOrientation oldorient;
 	int i;
 
