@@ -419,6 +419,9 @@ create_properties_dialog(Menu *menu)
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   menu);
+	gtk_signal_connect(GTK_OBJECT(dialog), "help",
+			   GTK_SIGNAL_FUNC(panel_pbox_help_cb),
+			   "mainmenu.html#MAINMENUCONFIG");
 
 	return dialog;
 }

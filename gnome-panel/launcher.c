@@ -473,6 +473,9 @@ create_properties_dialog(Launcher *launcher)
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   launcher);
+	gtk_signal_connect(GTK_OBJECT(dialog), "help",
+			   GTK_SIGNAL_FUNC(panel_pbox_help_cb),
+			   "launchers.html");
 
 	return dialog;
 }

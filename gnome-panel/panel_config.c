@@ -1191,15 +1191,11 @@ update_config_type (BasePWidget *w)
 }
 
 static void
-panelcfg_help(void)
+phelp_cb (GtkWidget *w, gint tab, gpointer path)
 {
-    gchar *tmp;
-
-    tmp = gnome_help_file_find_file ("users-guide", "confthis.html");
-    if (tmp) {
-       gnome_help_goto(0, tmp);
-       g_free(tmp);
-    }
+	GnomeHelpMenuEntry help_entry = { "panel" };
+	help_entry.path = tab ? "panelproperties.html#PANELBACKTAB" : path;
+	gnome_help_display(NULL, &help_entry);
 }
 	     
 void 
@@ -1211,7 +1207,7 @@ panel_config(GtkWidget *panel)
 	GtkWidget *prop_nbook;
 	BasePWidget *basep = BASEP_WIDGET(panel);
 	PanelWidget *pw = PANEL_WIDGET(basep->panel);
-	
+	char *help_path = "";
 	ppc = get_config_struct(panel);
 	
 	/* return if the window is already up. */
@@ -1275,6 +1271,7 @@ panel_config(GtkWidget *panel)
 
 	if(IS_EDGE_WIDGET(panel)) {
 		/* edge notebook page */
+		help_path = "panelproperties.html#EDGETAB";
 		page = edge_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1328,14 +1325,8 @@ panel_config(GtkWidget *panel)
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), ppc);
 
-/*	help_entry.name = gnome_app_id; 
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "help",
-			    GTK_SIGNAL_FUNC (gnome_help_pbox_display),
-			    &help_entry);
-*/
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "help",
-			    GTK_SIGNAL_FUNC (panelcfg_help),
-			    NULL);
+			    GTK_SIGNAL_FUNC (phelp_cb), help_path);
 
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
 			    GTK_SIGNAL_FUNC (config_event),

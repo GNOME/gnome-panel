@@ -950,6 +950,9 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(dentry_apply_callback),
 			   o);
+	gtk_signal_connect(GTK_OBJECT(dialog), "help",
+			   GTK_SIGNAL_FUNC(panel_pbox_help_cb),
+			   "launchers.html");
 	gtk_widget_show(dialog);
 }
 
@@ -1013,6 +1016,9 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
 			   GTK_SIGNAL_FUNC(dentry_apply_callback),
 			   o);
+	gtk_signal_connect (GTK_OBJECT(dialog), "apply",
+			    GTK_SIGNAL_FUNC (panel_pbox_help_cb),
+			    "launchers.html");
 	gtk_widget_show(dialog);
 }
 

@@ -19,6 +19,14 @@
 
 extern GlobalConfig global_config;
 
+void
+panel_pbox_help_cb (GtkWidget *w, gint tab, gpointer path)
+{
+	GnomeHelpMenuEntry help_entry = { "panel" };
+	help_entry.path = path;
+	gnome_help_display(NULL, &help_entry);
+}
+
 gboolean
 string_is_in_list(GSList *list,char *text)
 {

@@ -33,6 +33,8 @@ GtkWidget * create_icon_entry(GtkWidget *table,
 			      char *text,
 			      GtkWidget *w);
 
+void panel_pbox_help_cb (GtkWidget *, gint, gpointer);
+
 GList * my_g_list_swap_next(GList *list, GList *dl);
 GList * my_g_list_swap_prev(GList *list, GList *dl);
 /*maybe this should be a glib function?
