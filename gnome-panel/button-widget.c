@@ -746,8 +746,6 @@ button_widget_button_press (GtkWidget *widget, GdkEventButton *event)
 
 	button = BUTTON_WIDGET (widget);
 
-	puts("PRESSED");
-
 	if (button->pressed_timeout)
 		return TRUE;
 

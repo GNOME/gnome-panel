@@ -1524,23 +1524,20 @@ show_tearoff_menu(GtkWidget *menu, char *title, gboolean cursor_position,
 	gtk_window_set_wmclass(GTK_WINDOW(win),
 			       wmclass, "Panel");
 	gtk_widget_set_app_paintable(win, TRUE);
-	gtk_signal_connect(GTK_OBJECT(win),  "event",
+	gtk_signal_connect(GTK_OBJECT(win), "event",
 			   GTK_SIGNAL_FUNC(gtk_menu_window_event), 
 			   GTK_OBJECT(menu));
 	gtk_widget_realize(win);
 	      
-	gdk_window_set_title(win->window,
-			     title);
+	gdk_window_set_title(win->window, title);
 	
 	gdk_window_set_decorations(win->window, 
 				   GDK_DECOR_ALL |
 				   GDK_DECOR_RESIZEH |
 				   GDK_DECOR_MINIMIZE |
 				   GDK_DECOR_MAXIMIZE);
-	gtk_window_set_policy(GTK_WINDOW(win),
-			      FALSE, FALSE, TRUE);
-	gtk_menu_reparent(GTK_MENU(menu), win,
-			  FALSE);
+	gtk_window_set_policy(GTK_WINDOW(win), FALSE, FALSE, TRUE);
+	gtk_menu_reparent(GTK_MENU(menu), win, FALSE);
 	/* set sticky so that we mask the fact that we have no clue
 	   how to restore non sticky windows */
 	gnome_win_hints_set_state(win, gnome_win_hints_get_state(win) |
@@ -1551,7 +1548,7 @@ show_tearoff_menu(GtkWidget *menu, char *title, gboolean cursor_position,
 	if(cursor_position)
 		gtk_menu_position(GTK_MENU(menu));
 	else
-		gtk_widget_set_uposition(win,x,y);
+		gtk_widget_set_uposition(win, x, y);
 
 	gtk_widget_show(GTK_WIDGET(menu));
 	gtk_widget_show(win);
@@ -1643,9 +1640,9 @@ add_tearoff(GtkMenu *menu)
 
 	w = tearoff_item_new();
 	gtk_widget_show(w);
-	gtk_menu_prepend(menu,w);
+	gtk_menu_prepend(menu, w);
 	
-	gtk_signal_connect(GTK_OBJECT(w),"activate",
+	gtk_signal_connect(GTK_OBJECT(w), "activate",
 			   GTK_SIGNAL_FUNC(tearoff_new_menu),
 			   menu);
 }

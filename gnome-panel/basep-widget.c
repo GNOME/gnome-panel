@@ -791,6 +791,19 @@ basep_widget_destroy (BasePWidget *basep)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
 }	
 
+static void
+reparent_button_widgets(GtkWidget *w, gpointer data)
+{
+	GdkWindow *newwin = data;
+	if(IS_BUTTON_WIDGET(w)) {
+		ButtonWidget *button = BUTTON_WIDGET(w);
+		/* we can just reparent them all to 0,0 as the next thing
+		 * that will happen is a queue_resize and on size allocate
+		 * they will be put into their proper place */
+		gdk_window_reparent(button->event_window, newwin, 0, 0);
+	}
+}
+
 void
 basep_widget_redo_window(BasePWidget *basep)
 {
@@ -847,7 +860,14 @@ basep_widget_redo_window(BasePWidget *basep)
 	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
 	gdk_window_set_user_data(newwin, window);
 
+	/* reparent our main panel window */
 	gdk_window_reparent(basep->ebox->window, newwin, 0, 0);
+	/* reparent all the base event windows as they are also children of
+	 * the basep */
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
+			      reparent_button_widgets,
+			      newwin);
+
 
 	widget->window = newwin;
 

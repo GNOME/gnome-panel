@@ -1,3 +1,9 @@
+Tue Feb 15 02:05:20 2000  George Lebl <jirka@5z.com>
+
+	* button-widget.c,basep-widget.c: fix the button freezing bug, the
+	  event windows were on the basep and weren't getting reparented
+	  when the basep was having it's window replaced.
+
 2000-02-15  Jacob Berkman  <jacob@helixcode.com>
 
 	* menu.c (make_panel_submenu): add a menu item to show some help
