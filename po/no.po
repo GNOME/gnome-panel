@@ -5,58 +5,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2002-05-23 21:26+0200\n"
+"POT-Creation-Date: 2002-05-25 10:59+0200\n"
 "PO-Revision-Date: 2002-05-23 21:35+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
-
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-msgid "_About..."
-msgstr "_Om..."
-
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-msgid "_Help"
-msgstr "_Hjelp"
-
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Brukervalg..."
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "Amusements"
-msgstr "Underholdning"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Vis en svømmende fisk eller et annet animert vesen"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1184
-msgid "Fish"
-msgstr "Fisk"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "Den dumme fiskens opphav"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
-msgid "Wanda Factory"
-msgstr "Wanda-factory"
 
 #: applets/fish/fish.c:69
 #, c-format
@@ -152,6 +107,11 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(med litt hjelp fra George)"
 
+#: applets/fish/fish.c:1184
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+msgid "Fish"
+msgstr "Fisk"
+
 #: applets/fish/fish.c:1187
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
@@ -164,73 +124,81 @@ msgstr ""
 "minne. Hvis noen blir tatt i å bruke denne appleten, burde vedkommende "
 "straks sendes til psykisk evaluering."
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-msgid "Copy _date"
-msgstr "Kopier _dato"
+#: applets/fish/fish.schemas.in.h:1
+msgid ""
+"A fish without a name is a pretty dull fish. Bring your fish to life by "
+"naming him."
+msgstr ""
+"En fisk uten et navn er en veldig kjedelig fisk. Gi liv til din fisk ved å "
+"gi den et navn."
 
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy _time"
-msgstr "Kopier _tid"
+#: applets/fish/fish.schemas.in.h:2
+msgid "Command to execute when the fish is clicked"
+msgstr "Kommando som skal utføres ved klikk på fisken"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Tilbehør"
+#: applets/fish/fish.schemas.in.h:3
+msgid "Pause per frame"
+msgstr "Pause for hvert bilde"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-msgid "Alert you when new mail arrives"
-msgstr "Gi beskjed når det kommer ny post"
+#: applets/fish/fish.schemas.in.h:4
+msgid "Rotate on vertaical panels"
+msgstr "Roter på vertikale paneler"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1091
-msgid "Clock"
-msgstr "Klokke"
+#: applets/fish/fish.schemas.in.h:5
+msgid "Rotate on vertical panels"
+msgstr "Roter på vertikale paneler"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "GenUtil Applet Factory"
-msgstr "GenUtil-applet factory"
+#: applets/fish/fish.schemas.in.h:6
+msgid "The fish's animation pixmap"
+msgstr "Fiskens animerte bilde"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr "Hent tid og dato"
+#: applets/fish/fish.schemas.in.h:7
+msgid "The fish's name"
+msgstr "Fiskens navn"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
-msgid "Inbox Monitor"
-msgstr "Innboksovervåker"
+#: applets/fish/fish.schemas.in.h:8
+msgid "The number of frames in the fish's animation"
+msgstr "Antall bilder i fiskens animasjon"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-msgid "Internet"
-msgstr "Internett"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Amusements"
+msgstr "Underholdning"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-msgid "Switch between open windows"
-msgstr "Bytt mellom åpne vinduer"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Vis en svømmende fisk eller et annet animert vesen"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Switch between workspaces"
-msgstr "Spill en lyd"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "Den dumme fiskens opphav"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "Utility"
-msgstr "Verktøy"
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+msgid "Wanda Factory"
+msgstr "Wanda-factory"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:653
-msgid "Window List"
-msgstr "Vinduliste"
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:1
+msgid "_About..."
+msgstr "_Om..."
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
-msgid "Workspace Switcher"
-msgstr "Bytt arbeidsområde"
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2
+msgid "_Help"
+msgstr "_Hjelp"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-msgid "factory for creating some general applets"
-msgstr "factory for oppretting av generelle appleter"
-
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-msgid "_Check for mail"
-msgstr "_Sjekk etter post"
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Brukervalg..."
 
 #: applets/gen_util/clock.c:149 applets/gen_util/clock.c:450
 msgid "%I:%M:%S %p"
@@ -308,6 +276,11 @@ msgstr "Bruk _UTC"
 msgid "translator_credits"
 msgstr "Kjartan Maraas"
 
+#: applets/gen_util/clock.c:1091
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+msgid "Clock"
+msgstr "Klokke"
+
 #: applets/gen_util/clock.c:1092
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "© 1998-2000 Free Software Foundation"
@@ -315,6 +288,125 @@ msgstr "© 1998-2000 Free Software Foundation"
 #: applets/gen_util/clock.c:1093
 msgid "The Clock displays the current time and date"
 msgstr "Klokken viser nåværende klokkeslett og dato"
+
+#: applets/gen_util/clock.schemas.in.h:1
+msgid "Display Internet time, which is same all over the world"
+msgstr "Vis Internett-tid. Denne er lik over hele verden"
+
+#: applets/gen_util/clock.schemas.in.h:2
+msgid "Display date in applet, in addition to time"
+msgstr "Vis dato i appleten, i tillegg til tid"
+
+#: applets/gen_util/clock.schemas.in.h:3
+msgid "Display seconds in time"
+msgstr "Vis sekunder i tid"
+
+#: applets/gen_util/clock.schemas.in.h:4
+msgid "Display time in Greenwich Mean Time zone"
+msgstr "Vis tiden i Greenwich Mean Time sonen"
+
+#: applets/gen_util/clock.schemas.in.h:5
+msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
+msgstr "Vis tiden i sekunder siden Epoch, altså 01.01.1970"
+
+#: applets/gen_util/clock.schemas.in.h:6
+msgid "Hour format"
+msgstr "Timeformat"
+
+#: applets/gen_util/clock.schemas.in.h:7
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Setter timeformatet, kan være 12 eller 24"
+
+#: applets/gen_util/clock.schemas.in.h:8
+msgid "Show date in a tooltip when a mouse is over applet"
+msgstr "Vis dato i verktøytipset når muspekeren holdes over appleten"
+
+#: applets/gen_util/clock.schemas.in.h:9
+msgid "Show date in applet"
+msgstr "Vis dato i appleten"
+
+#: applets/gen_util/clock.schemas.in.h:10
+msgid "Show date in tooltip"
+msgstr "Vis dato i verktøytipset"
+
+#: applets/gen_util/clock.schemas.in.h:11
+msgid "Show time with seconds"
+msgstr "Vis tid med csekunder"
+
+#: applets/gen_util/clock.schemas.in.h:12
+msgid "Use GMT"
+msgstr "Bruk GMT"
+
+#: applets/gen_util/clock.schemas.in.h:13
+msgid "Use Internet time"
+msgstr "Bruk Internett-tid"
+
+#: applets/gen_util/clock.schemas.in.h:14
+msgid "Use UNIX time"
+msgstr "Bruk UNIX tid"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+msgid "Copy _date"
+msgstr "Kopier _dato"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy _time"
+msgstr "Kopier _tid"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Tilbehør"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+msgid "Alert you when new mail arrives"
+msgstr "Gi beskjed når det kommer ny post"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "GenUtil Applet Factory"
+msgstr "GenUtil-applet factory"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "Hent tid og dato"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
+msgid "Inbox Monitor"
+msgstr "Innboksovervåker"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+msgid "Internet"
+msgstr "Internett"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+msgid "Switch between open windows"
+msgstr "Bytt mellom åpne vinduer"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+msgid "Switch between workspaces"
+msgstr "Spill en lyd"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "Utility"
+msgstr "Verktøy"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
+#: applets/gen_util/tasklist.c:653
+msgid "Window List"
+msgstr "Vinduliste"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
+#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
+msgid "Workspace Switcher"
+msgstr "Bytt arbeidsområde"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
+msgid "factory for creating some general applets"
+msgstr "factory for oppretting av generelle appleter"
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+msgid "_Check for mail"
+msgstr "_Sjekk etter post"
 
 #: applets/gen_util/mailcheck.c:224
 msgid ""
@@ -486,6 +578,121 @@ msgstr "Postsjekk"
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "E-post sjekk gir deg beskjed når du har ny e-post i innboksen"
 
+#: applets/gen_util/mailcheck.schemas.in.h:1
+msgid "Command to execute when checking mail"
+msgstr "Kommando som skal utføres ved sjekk av e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:2
+msgid "Command to execute when new mail arrives"
+msgstr "Kommando som skal utføres når ny e-post ankommer"
+
+#: applets/gen_util/mailcheck.schemas.in.h:3
+msgid "Command to execute when the applet is clicked"
+msgstr "Kommando som skal utføres ved klikk på appleten"
+
+#: applets/gen_util/mailcheck.schemas.in.h:4
+msgid "Command to run before checking mail"
+msgstr "Kommando som skal kjøres før sjekk etter e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:5
+msgid "Do we run the exec-command"
+msgstr "Kjører vi exec-command"
+
+#: applets/gen_util/mailcheck.schemas.in.h:6
+msgid "Do we run the newmail-command"
+msgstr "Kjører vi newmail-command"
+
+#: applets/gen_util/mailcheck.schemas.in.h:7
+msgid "How often (in milliseconds) we check the mail"
+msgstr "Hvor ofte (i millisekunder) sjekker vi etter e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:8
+msgid "If mail should be checked automatically"
+msgstr "Skal e-post sjekkes automatisk"
+
+#: applets/gen_util/mailcheck.schemas.in.h:9
+msgid "If this is set mail will be checked every update-freq milliseconds"
+msgstr ""
+"Hvis dette er aktivert vil e-post bli sjekket hvert update-freq millisekund"
+
+#: applets/gen_util/mailcheck.schemas.in.h:10
+msgid "If this is set, we should run the exec-command"
+msgstr "Hvis dette er aktivert kjører vi exec-command"
+
+#: applets/gen_util/mailcheck.schemas.in.h:11
+msgid "If this is set, we should run the newmail-command"
+msgstr "Hvis dette er satt kjører vi newmail-command"
+
+#: applets/gen_util/mailcheck.schemas.in.h:12
+msgid "Interval for checking mail"
+msgstr "Intervall for sjekk etter post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:13
+msgid "Path to the animation file"
+msgstr "Sti til animasjonsfil"
+
+#: applets/gen_util/mailcheck.schemas.in.h:14
+msgid "Play a sound when mail is recieved"
+msgstr "Spill en lyd når det kommer ny e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:15
+msgid "Remote folder for mail retrieval"
+msgstr "Ekstern mappe for henting av e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:16
+msgid "Remove server to connect to for our mail"
+msgstr "Ekstern tjener vi skal koble til for å hente e-post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:17
+msgid "Run this command before we check the mail"
+msgstr "Kjør denne kommandoen før sjekk etter post"
+
+#: applets/gen_util/mailcheck.schemas.in.h:18
+msgid "The mail server"
+msgstr "E-post tjeneren"
+
+#: applets/gen_util/mailcheck.schemas.in.h:19
+msgid "The user's password"
+msgstr "Brukerens passord"
+
+#: applets/gen_util/mailcheck.schemas.in.h:20
+msgid "The user's password for the remote server"
+msgstr "Brukerens passord for den eksterne tjeneren"
+
+#: applets/gen_util/mailcheck.schemas.in.h:21
+msgid "This is how we check the mail, check the mail, check the mail..."
+msgstr ""
+"Dette er hvordan vi sjekker vår post, sjekker vår post, sjekker vår post..."
+
+#: applets/gen_util/mailcheck.schemas.in.h:22
+msgid "This is how we process the mail, process the mail, process the mail..."
+msgstr ""
+"Dette er hvordan vi bearbeider vår post, bearbeider vår post, bearbeider vår "
+"post..."
+
+#: applets/gen_util/mailcheck.schemas.in.h:23
+msgid ""
+"This is the animation that will be displayed during normal use of the "
+"mailcheck applet"
+msgstr ""
+"Dette er animasjonen som vil vises under normal bruk av e-postsjekk appleten"
+
+#: applets/gen_util/mailcheck.schemas.in.h:24
+msgid "Username on the remote server"
+msgstr "Brukernavn på den eksterne tjeneren"
+
+#: applets/gen_util/mailcheck.schemas.in.h:25
+msgid "We run this command when the user clicks on the applet"
+msgstr "Vi kjører denne kommandoen når brukeren klikker på appleten"
+
+#: applets/gen_util/mailcheck.schemas.in.h:26
+msgid "Whether to reset mail status when the applet is clicked"
+msgstr "Om e-poststatus skal nullstilles ved klikk på appleten"
+
+#: applets/gen_util/mailcheck.schemas.in.h:27
+msgid "You've got mail!"
+msgstr "Du har e-post!"
+
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
 msgstr "E-postsjekk"
@@ -563,6 +770,40 @@ msgstr "Brukervalg for arbeidsområdebytter"
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspaces"
 msgstr "Arbeidsområder"
+
+#: applets/gen_util/pager.schemas.in.h:1
+msgid ""
+"If this is true, the pager will show all workspaces, otherwise it will only "
+"show the current workspace."
+msgstr ""
+"Hvis dette er sant vil skrivebordsoversikten vise alle arbeidsområder, "
+"ellers vil kun aktivt arbeidsområde vises."
+
+#: applets/gen_util/pager.schemas.in.h:2
+msgid ""
+"If this is true, the workspaces in the pager will display the names of the "
+"workspaces, otherwise they will display the contents of the workspace."
+msgstr ""
+"Hvis dette er aktivert vil arbeidsområdene i skrivebordsoversikten vise navn "
+"på arbeidsområdene, ellers vil innholdet vises."
+
+#: applets/gen_util/pager.schemas.in.h:3
+msgid "Number of rows in the pager"
+msgstr "Antall rader i skrivebordsbytteren"
+
+#: applets/gen_util/pager.schemas.in.h:4
+msgid ""
+"When showing all the workspaces this determines how many rows(for horizontal "
+"layout) or columns (for vertical layout) the pager shows the workspaces in."
+msgstr ""
+
+#: applets/gen_util/pager.schemas.in.h:5
+msgid "Whether to display the all workspaces in the pager."
+msgstr "Om alle arbeidsområdene skal vises i skrivebordsoversikten."
+
+#: applets/gen_util/pager.schemas.in.h:6
+msgid "Whether to display the names of the workspaces in the pager."
+msgstr "Om navn på arbeidsområdene skal vises i skrivebordsoversikten."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -687,19 +928,57 @@ msgstr "_Alltid grupper vinduer"
 msgid "_Never group windows"
 msgstr "A_ldri grupper vinduer"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "GNOME panel skall"
+#: applets/gen_util/tasklist.schemas.in.h:1
+msgid ""
+"Decides when to group windows from the same application on the tasklist. "
+"valid values are never, auto, and always."
+msgstr ""
 
-#. FIXME: should have a "Move" pixmap.
-#.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:549
-msgid "Move"
-msgstr "Flytt"
+#: applets/gen_util/tasklist.schemas.in.h:2
+msgid ""
+"If this is true, the tasklist will show windows from all workspaces, "
+"otherwise it will display windows from the current workspace only."
+msgstr ""
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:538
-msgid "Remove From Panel"
-msgstr "Fjern fra panelet"
+#: applets/gen_util/tasklist.schemas.in.h:3
+msgid ""
+"If true, then when unminimizing a window, bring it to the current workspace. "
+"Otherwise, change to the workspace of the window."
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:4
+msgid "Maximum size the tasklist applet will request"
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:5
+msgid "Minimum size the tasklist applet will request"
+msgstr "Minimumstørrelse oppgavelisteappleten vil forespørre"
+
+#: applets/gen_util/tasklist.schemas.in.h:6
+msgid "Move windows to the current workspace when unminimized"
+msgstr "Flytt vinuder til aktivt arbeidsområde ved gjenoppretting"
+
+#: applets/gen_util/tasklist.schemas.in.h:7
+msgid "Show windows from all workspaces"
+msgstr "Vis vinduer fra alle arbeidsområder"
+
+#: applets/gen_util/tasklist.schemas.in.h:8
+msgid ""
+"The tasklist applet needs a minimum width to be useful at all. This value is "
+"the minimum width the applet will request. This is useful for sliding and "
+"edge panels, which would otherwise ask for a very small default width."
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:9
+msgid ""
+"This value is the maximum width the applet will request. This is useful to "
+"limit the size used in big panels where this applet could otherwise fill the "
+"entire available space, like in edge panels."
+msgstr ""
+
+#: applets/gen_util/tasklist.schemas.in.h:10
+msgid "When to group windows"
+msgstr "Når skal vinduer grupperes"
 
 #: gnome-panel/applet.c:204 gnome-panel/menu.c:1043
 #: gnome-panel/panel-util.c:49
@@ -720,7 +999,17 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1149
+#: gnome-panel/applet.c:538 gnome-panel/GNOME_Panel_Popup.xml.h:2
+msgid "Remove From Panel"
+msgstr "Fjern fra panelet"
+
+#. FIXME: should have a "Move" pixmap.
+#.
+#: gnome-panel/applet.c:549 gnome-panel/GNOME_Panel_Popup.xml.h:1
+msgid "Move"
+msgstr "Flytt"
+
+#: gnome-panel/applet.c:1150
 msgid "Can't find an empty spot"
 msgstr "Kunne ikke finne en tom plass"
 
@@ -1137,6 +1426,10 @@ msgstr "_Skriv ut skjermdump..."
 msgid "_Save screenshot to file:"
 msgstr "_Lagre skjermdump til fil:"
 
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "GNOME panel skall"
+
 #: gnome-panel/gnome-run.c:239 gnome-panel/gnome-run.c:256
 #, c-format
 msgid ""
@@ -1330,122 +1623,6 @@ msgstr "Start skjermsparer-daemon på nytt"
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
 msgstr "Spesifiserer navn på profil som skal lastes"
-
-#: gnome-panel/menu-ditem.c:119
-#, c-format
-msgid ""
-"<b>Cannot save changes to launcher</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Kan ikke lagre endringer i oppstarter</b>\n"
-"\n"
-"Detaljer: %s"
-
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
-msgid "Menu"
-msgstr "Meny"
-
-#: gnome-panel/menu-ditem.c:439
-msgid "You have to specify a name for the launcher."
-msgstr "Du må spesifisere et navn på oppstarteren."
-
-#: gnome-panel/menu-ditem.c:456
-msgid "You have to specify a valid URL or command."
-msgstr "Du må spesifisere en gyldig URL eller kommando."
-
-#. class
-#: gnome-panel/menu-ditem.c:480
-#, c-format
-msgid ""
-"<b>Cannot save menu item to disk</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Kan ikke lagre menyoppføringen til disk</b>\n"
-"\n"
-"Detaljer: %s"
-
-#: gnome-panel/menu-ditem.c:503
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Du kan ikke opprette en ny oppstarter her fordi denne lokasjonen ikke er "
-"skrivbar."
-
-#: gnome-panel/menu-properties.c:107
-msgid "Can't open directory, using main menu!"
-msgstr "Kan ikke åpne katalogen, bruker hovedmenyen!"
-
-#: gnome-panel/menu-properties.c:127
-msgid "Edit menus..."
-msgstr "Rediger menyer..."
-
-#: gnome-panel/menu-properties.c:308
-msgid "Off"
-msgstr "Av"
-
-#: gnome-panel/menu-properties.c:318
-msgid "In a submenu"
-msgstr "I en undermeny"
-
-#: gnome-panel/menu-properties.c:330
-msgid "On the main menu"
-msgstr "På hovedmenyen"
-
-#: gnome-panel/menu-properties.c:367
-msgid "Menu properties"
-msgstr "Egenskaper for meny"
-
-#: gnome-panel/menu-properties.c:390
-msgid "Menu type"
-msgstr "Menytype"
-
-#: gnome-panel/menu-properties.c:397
-msgid "Global main menu"
-msgstr "Global hovedmeny"
-
-#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
-msgid "Main menu"
-msgstr "Hovedmeny"
-
-#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
-msgid "Normal menu"
-msgstr "Normal meny"
-
-#: gnome-panel/menu-properties.c:447
-msgid "Programs: "
-msgstr "Programmer: "
-
-#: gnome-panel/menu-properties.c:454
-msgid "Applets: "
-msgstr "Appleter: "
-
-#: gnome-panel/menu-properties.c:461
-msgid "Distribution menu (if found): "
-msgstr "Distribusjonsmeny (hvis funnet): "
-
-#: gnome-panel/menu-properties.c:468
-msgid "KDE menu (if found): "
-msgstr "KDE meny (hvis funnet): "
-
-#: gnome-panel/menu-properties.c:475
-msgid "Panel menu: "
-msgstr "Panelmeny: "
-
-#: gnome-panel/menu-properties.c:482
-msgid "Desktop menu: "
-msgstr "Skrivebordsmeny: "
-
-#: gnome-panel/menu-properties.c:498
-msgid "Menu path"
-msgstr "Menysti"
-
-#: gnome-panel/menu-properties.c:529
-msgid "Use custom icon for panel button"
-msgstr "Bruk egendefinert ikon for panelknappen"
 
 #: gnome-panel/menu.c:228
 msgid "Many many others ..."
@@ -1741,6 +1918,11 @@ msgstr "Kjør en kommando"
 msgid "Desktop"
 msgstr "Skrivebord"
 
+#: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+msgid "Menu"
+msgstr "Meny"
+
 #: gnome-panel/menu.c:3674
 msgid "Menu:"
 msgstr "Meny:"
@@ -1752,6 +1934,117 @@ msgstr "Hovedmeny"
 #: gnome-panel/menu.c:3746
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikke opprette meny, bruker hovedmenyen!"
+
+#: gnome-panel/menu-ditem.c:119
+#, c-format
+msgid ""
+"<b>Cannot save changes to launcher</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Kan ikke lagre endringer i oppstarter</b>\n"
+"\n"
+"Detaljer: %s"
+
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
+msgstr "Du må spesifisere et navn på oppstarteren."
+
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
+msgstr "Du må spesifisere en gyldig URL eller kommando."
+
+#. class
+#: gnome-panel/menu-ditem.c:480
+#, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Kan ikke lagre menyoppføringen til disk</b>\n"
+"\n"
+"Detaljer: %s"
+
+#: gnome-panel/menu-ditem.c:503
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Du kan ikke opprette en ny oppstarter her fordi denne lokasjonen ikke er "
+"skrivbar."
+
+#: gnome-panel/menu-properties.c:107
+msgid "Can't open directory, using main menu!"
+msgstr "Kan ikke åpne katalogen, bruker hovedmenyen!"
+
+#: gnome-panel/menu-properties.c:127
+msgid "Edit menus..."
+msgstr "Rediger menyer..."
+
+#: gnome-panel/menu-properties.c:308
+msgid "Off"
+msgstr "Av"
+
+#: gnome-panel/menu-properties.c:318
+msgid "In a submenu"
+msgstr "I en undermeny"
+
+#: gnome-panel/menu-properties.c:330
+msgid "On the main menu"
+msgstr "På hovedmenyen"
+
+#: gnome-panel/menu-properties.c:367
+msgid "Menu properties"
+msgstr "Egenskaper for meny"
+
+#: gnome-panel/menu-properties.c:390
+msgid "Menu type"
+msgstr "Menytype"
+
+#: gnome-panel/menu-properties.c:397
+msgid "Global main menu"
+msgstr "Global hovedmeny"
+
+#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
+msgid "Main menu"
+msgstr "Hovedmeny"
+
+#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
+msgid "Normal menu"
+msgstr "Normal meny"
+
+#: gnome-panel/menu-properties.c:447
+msgid "Programs: "
+msgstr "Programmer: "
+
+#: gnome-panel/menu-properties.c:454
+msgid "Applets: "
+msgstr "Appleter: "
+
+#: gnome-panel/menu-properties.c:461
+msgid "Distribution menu (if found): "
+msgstr "Distribusjonsmeny (hvis funnet): "
+
+#: gnome-panel/menu-properties.c:468
+msgid "KDE menu (if found): "
+msgstr "KDE meny (hvis funnet): "
+
+#: gnome-panel/menu-properties.c:475
+msgid "Panel menu: "
+msgstr "Panelmeny: "
+
+#: gnome-panel/menu-properties.c:482
+msgid "Desktop menu: "
+msgstr "Skrivebordsmeny: "
+
+#: gnome-panel/menu-properties.c:498
+msgid "Menu path"
+msgstr "Menysti"
+
+#: gnome-panel/menu-properties.c:529
+msgid "Use custom icon for panel button"
+msgstr "Bruk egendefinert ikon for panelknappen"
 
 #: gnome-panel/panel-applet-frame.c:179
 msgid "Cannot register control widget\n"
@@ -1793,6 +2086,19 @@ msgstr ""
 "<b>Det oppsto et problem ved lasting av applet «%s»</b>\n"
 "\n"
 "Detaljer: %s"
+
+#: gnome-panel/panel.c:942
+#, c-format
+msgid "Open URL: %s"
+msgstr "Åpne URL: %s"
+
+#: gnome-panel/panel.c:2266
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"Ingen paneler ble funnet i din konfigurasjon. Et menypanel vil bli opprettet "
+"for deg"
 
 #: gnome-panel/panel-config.c:537
 msgid "Hiding"
@@ -1954,6 +2260,42 @@ msgstr "Egenskaper for panelet"
 msgid "Background"
 msgstr "Bakgrunn"
 
+#: gnome-panel/panel-global-config.schemas.in.h:1
+msgid "Display \"Run\" dialog"
+msgstr "Vis «Kjør»-dialog"
+
+#: gnome-panel/panel-global-config.schemas.in.h:2
+msgid "FIXME - is this resolved with the new menu stuff?"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:3
+msgid "FIXME - need to define limits"
+msgstr ""
+
+#: gnome-panel/panel-global-config.schemas.in.h:4
+msgid "Popup the panel menu"
+msgstr "Ta opp panelmenyen"
+
+#: gnome-panel/panel-global-config.schemas.in.h:5
+msgid "Take a screen shot"
+msgstr "Ta et skjermdump"
+
+#: gnome-panel/panel-global-config.schemas.in.h:6
+msgid "Take a screen shot of a window"
+msgstr "Ta et skjermdump av et vindu"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:1
+msgid "Enable the program listing in the run box"
+msgstr "Aktiver programlisten i Kjør-boksen"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:2
+msgid "Show the program listing by default when opening the Run box"
+msgstr "Vis programlisten som forvalg ved åpning av Kjør-boksen"
+
+#: gnome-panel/panel-per-panel-config.schemas.in.h:3
+msgid "Show the program listing in the Run box"
+msgstr "Vis programlisten i Kjør-boksen"
+
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
@@ -1989,19 +2331,6 @@ msgstr "Ingen dokumenter å vise"
 #: gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
 msgid "Disabled"
 msgstr "Slått av"
-
-#: gnome-panel/panel.c:942
-#, c-format
-msgid "Open URL: %s"
-msgstr "Åpne URL: %s"
-
-#: gnome-panel/panel.c:2266
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-"Ingen paneler ble funnet i din konfigurasjon. Et menypanel vil bli opprettet "
-"for deg"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2110,323 +2439,3 @@ msgstr "Ekstra stor"
 #: libpanel-applet/panel-test-applets.glade2.h:15
 msgid "XX Small"
 msgstr "Ekstra liten"
-
-#: applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr ""
-"En fisk uten et navn er en veldig kjedelig fisk. Gi liv til din fisk ved å "
-"gi den et navn."
-
-#: applets/fish/fish.schemas.in.h:2
-msgid "Command to execute when the fish is clicked"
-msgstr "Kommando som skal utføres ved klikk på fisken"
-
-#: applets/fish/fish.schemas.in.h:3
-msgid "Pause per frame"
-msgstr "Pause for hvert bilde"
-
-#: applets/fish/fish.schemas.in.h:4
-msgid "Rotate on vertaical panels"
-msgstr "Roter på vertikale paneler"
-
-#: applets/fish/fish.schemas.in.h:5
-msgid "Rotate on vertical panels"
-msgstr "Roter på vertikale paneler"
-
-#: applets/fish/fish.schemas.in.h:6
-msgid "The fish's animation pixmap"
-msgstr "Fiskens animerte bilde"
-
-#: applets/fish/fish.schemas.in.h:7
-msgid "The fish's name"
-msgstr "Fiskens navn"
-
-#: applets/fish/fish.schemas.in.h:8
-msgid "The number of frames in the fish's animation"
-msgstr "Antall bilder i fiskens animasjon"
-
-#: applets/gen_util/clock.schemas.in.h:1
-msgid "Display Internet time, which is same all over the world"
-msgstr "Vis Internett-tid. Denne er lik over hele verden"
-
-#: applets/gen_util/clock.schemas.in.h:2
-msgid "Display date in applet, in addition to time"
-msgstr "Vis dato i appleten, i tillegg til tid"
-
-#: applets/gen_util/clock.schemas.in.h:3
-msgid "Display seconds in time"
-msgstr "Vis sekunder i tid"
-
-#: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
-msgstr "Vis tiden i Greenwich Mean Time sonen"
-
-#: applets/gen_util/clock.schemas.in.h:5
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Vis tiden i sekunder siden Epoch, altså 01.01.1970"
-
-#: applets/gen_util/clock.schemas.in.h:6
-msgid "Hour format"
-msgstr "Timeformat"
-
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Setter timeformatet, kan være 12 eller 24"
-
-#: applets/gen_util/clock.schemas.in.h:8
-msgid "Show date in a tooltip when a mouse is over applet"
-msgstr "Vis dato i verktøytipset når muspekeren holdes over appleten"
-
-#: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in applet"
-msgstr "Vis dato i appleten"
-
-#: applets/gen_util/clock.schemas.in.h:10
-msgid "Show date in tooltip"
-msgstr "Vis dato i verktøytipset"
-
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show time with seconds"
-msgstr "Vis tid med csekunder"
-
-#: applets/gen_util/clock.schemas.in.h:12
-msgid "Use GMT"
-msgstr "Bruk GMT"
-
-#: applets/gen_util/clock.schemas.in.h:13
-msgid "Use Internet time"
-msgstr "Bruk Internett-tid"
-
-#: applets/gen_util/clock.schemas.in.h:14
-msgid "Use UNIX time"
-msgstr "Bruk UNIX tid"
-
-#: applets/gen_util/mailcheck.schemas.in.h:1
-msgid "Command to execute when checking mail"
-msgstr "Kommando som skal utføres ved sjekk av e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "Command to execute when new mail arrives"
-msgstr "Kommando som skal utføres når ny e-post ankommer"
-
-#: applets/gen_util/mailcheck.schemas.in.h:3
-msgid "Command to execute when the applet is clicked"
-msgstr "Kommando som skal utføres ved klikk på appleten"
-
-#: applets/gen_util/mailcheck.schemas.in.h:4
-msgid "Command to run before checking mail"
-msgstr "Kommando som skal kjøres før sjekk etter e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:5
-msgid "Do we run the exec-command"
-msgstr "Kjører vi exec-command"
-
-#: applets/gen_util/mailcheck.schemas.in.h:6
-msgid "Do we run the newmail-command"
-msgstr "Kjører vi newmail-command"
-
-#: applets/gen_util/mailcheck.schemas.in.h:7
-msgid "How often (in milliseconds) we check the mail"
-msgstr "Hvor ofte (i millisekunder) sjekker vi etter e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:8
-msgid "If mail should be checked automatically"
-msgstr "Skal e-post sjekkes automatisk"
-
-#: applets/gen_util/mailcheck.schemas.in.h:9
-msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr "Hvis dette er aktivert vil e-post bli sjekket hvert update-freq millisekund"
-
-#: applets/gen_util/mailcheck.schemas.in.h:10
-msgid "If this is set, we should run the exec-command"
-msgstr "Hvis dette er aktivert kjører vi exec-command"
-
-#: applets/gen_util/mailcheck.schemas.in.h:11
-msgid "If this is set, we should run the newmail-command"
-msgstr "Hvis dette er satt kjører vi newmail-command"
-
-#: applets/gen_util/mailcheck.schemas.in.h:12
-msgid "Interval for checking mail"
-msgstr "Intervall for sjekk etter post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:13
-msgid "Path to the animation file"
-msgstr "Sti til animasjonsfil"
-
-#: applets/gen_util/mailcheck.schemas.in.h:14
-msgid "Play a sound when mail is recieved"
-msgstr "Spill en lyd når det kommer ny e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:15
-msgid "Remote folder for mail retrieval"
-msgstr "Ekstern mappe for henting av e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:16
-msgid "Remove server to connect to for our mail"
-msgstr "Ekstern tjener vi skal koble til for å hente e-post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:17
-msgid "Run this command before we check the mail"
-msgstr "Kjør denne kommandoen før sjekk etter post"
-
-#: applets/gen_util/mailcheck.schemas.in.h:18
-msgid "The mail server"
-msgstr "E-post tjeneren"
-
-#: applets/gen_util/mailcheck.schemas.in.h:19
-msgid "The user's password"
-msgstr "Brukerens passord"
-
-#: applets/gen_util/mailcheck.schemas.in.h:20
-msgid "The user's password for the remote server"
-msgstr "Brukerens passord for den eksterne tjeneren"
-
-#: applets/gen_util/mailcheck.schemas.in.h:21
-msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr "Dette er hvordan vi sjekker vår post, sjekker vår post, sjekker vår post..."
-
-#: applets/gen_util/mailcheck.schemas.in.h:22
-msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr "Dette er hvordan vi bearbeider vår post, bearbeider vår post, bearbeider vår post..."
-
-#: applets/gen_util/mailcheck.schemas.in.h:23
-msgid ""
-"This is the animation that will be displayed during normal use of the "
-"mailcheck applet"
-msgstr "Dette er animasjonen som vil vises under normal bruk av e-postsjekk appleten"
-
-#: applets/gen_util/mailcheck.schemas.in.h:24
-msgid "Username on the remote server"
-msgstr "Brukernavn på den eksterne tjeneren"
-
-#: applets/gen_util/mailcheck.schemas.in.h:25
-msgid "We run this command when the user clicks on the applet"
-msgstr "Vi kjører denne kommandoen når brukeren klikker på appleten"
-
-#: applets/gen_util/mailcheck.schemas.in.h:26
-msgid "Whether to reset mail status when the applet is clicked"
-msgstr "Om e-poststatus skal nullstilles ved klikk på appleten"
-
-#: applets/gen_util/mailcheck.schemas.in.h:27
-msgid "You've got mail!"
-msgstr "Du har e-post!"
-
-#: applets/gen_util/pager.schemas.in.h:1
-msgid ""
-"If this is true, the pager will show all workspaces, otherwise it will only "
-"show the current workspace."
-msgstr "Hvis dette er sant vil skrivebordsoversikten vise alle arbeidsområder, ellers vil kun aktivt arbeidsområde vises."
-
-#: applets/gen_util/pager.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the pager will display the names of the "
-"workspaces, otherwise they will display the contents of the workspace."
-msgstr "Hvis dette er aktivert vil arbeidsområdene i skrivebordsoversikten vise navn på arbeidsområdene, ellers vil innholdet vises."
-
-#: applets/gen_util/pager.schemas.in.h:3
-msgid "Number of rows in the pager"
-msgstr "Antall rader i skrivebordsbytteren"
-
-#: applets/gen_util/pager.schemas.in.h:4
-msgid ""
-"When showing all the workspaces this determines how many rows(for horizontal "
-"layout) or columns (for vertical layout) the pager shows the workspaces in."
-msgstr ""
-
-#: applets/gen_util/pager.schemas.in.h:5
-msgid "Whether to display the all workspaces in the pager."
-msgstr "Om alle arbeidsområdene skal vises i skrivebordsoversikten."
-
-#: applets/gen_util/pager.schemas.in.h:6
-msgid "Whether to display the names of the workspaces in the pager."
-msgstr "Om navn på arbeidsområdene skal vises i skrivebordsoversikten."
-
-#: applets/gen_util/tasklist.schemas.in.h:1
-msgid ""
-"Decides when to group windows from the same application on the tasklist. "
-"valid values are never, auto, and always."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:2
-msgid ""
-"If this is true, the tasklist will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:3
-msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:4
-msgid "Maximum size the tasklist applet will request"
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:5
-msgid "Minimum size the tasklist applet will request"
-msgstr "Minimumstørrelse oppgavelisteappleten vil forespørre"
-
-#: applets/gen_util/tasklist.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr "Flytt vinuder til aktivt arbeidsområde ved gjenoppretting"
-
-#: applets/gen_util/tasklist.schemas.in.h:7
-msgid "Show windows from all workspaces"
-msgstr "Vis vinduer fra alle arbeidsområder"
-
-#: applets/gen_util/tasklist.schemas.in.h:8
-msgid ""
-"The tasklist applet needs a minimum width to be useful at all. This value is "
-"the minimum width the applet will request. This is useful for sliding and "
-"edge panels, which would otherwise ask for a very small default width."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:9
-msgid ""
-"This value is the maximum width the applet will request. This is useful to "
-"limit the size used in big panels where this applet could otherwise fill the "
-"entire available space, like in edge panels."
-msgstr ""
-
-#: applets/gen_util/tasklist.schemas.in.h:10
-msgid "When to group windows"
-msgstr "Når skal vinduer grupperes"
-
-#: gnome-panel/panel-global-config.schemas.in.h:1
-msgid "Display \"Run\" dialog"
-msgstr "Vis «Kjør»-dialog"
-
-#: gnome-panel/panel-global-config.schemas.in.h:2
-msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:3
-msgid "FIXME - need to define limits"
-msgstr ""
-
-#: gnome-panel/panel-global-config.schemas.in.h:4
-msgid "Popup the panel menu"
-msgstr "Ta opp panelmenyen"
-
-#: gnome-panel/panel-global-config.schemas.in.h:5
-msgid "Take a screen shot"
-msgstr "Ta et skjermdump"
-
-#: gnome-panel/panel-global-config.schemas.in.h:6
-msgid "Take a screen shot of a window"
-msgstr "Ta et skjermdump av et vindu"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:1
-msgid "Enable the program listing in the run box"
-msgstr "Aktiver programlisten i Kjør-boksen"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:2
-msgid "Show the program listing by default when opening the Run box"
-msgstr "Vis programlisten som forvalg ved åpning av Kjør-boksen"
-
-#: gnome-panel/panel-per-panel-config.schemas.in.h:3
-msgid "Show the program listing in the Run box"
-msgstr "Vis programlisten i Kjør-boksen"
