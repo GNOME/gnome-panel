@@ -1,5 +1,13 @@
 2002-11-15  Mark McLoughlin  <mark@skynet.ie>
 
+	* disclosure-widget.c: (finalize), (get_x_y),
+	(expand_collapse_timeout), (do_animation), (class_init):
+	Port over the patches from jaiserca@inf.upv.es and Gman
+	to gsearchtools copy of this widget. Should fix #98213.
+	This widget should be in libegg.
+
+2002-11-15  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-run.c: (run_dialog_response): patch from
 	putte_xvi@tunedal.nu to not crash when passed a
 	symbolic link. Fixes #97534.
