@@ -255,7 +255,7 @@ make_printer_applet(const gchar *param)
 
 	applet = applet_widget_new_with_param (param);
 	if (!applet)
-		g_error("Can't create applet!\n");
+		g_error(_("Can't create applet!\n"));
 
 	pr = g_new(Printer,1);
 	pr->printer_prop = NULL;
@@ -280,7 +280,7 @@ make_printer_applet(const gchar *param)
 
 	applet_widget_register_callback(APPLET_WIDGET(applet),
 					"properties",
-					_("Properties"),
+					_("Properties..."),
 					printer_properties,
 					pr);
 	return applet;
