@@ -1428,7 +1428,6 @@ basep_widget_autohide (gpointer data)
 	if ( (basep->state != BASEP_SHOWN) ||
 	     (basep->mode != BASEP_AUTO_HIDE) ||
 	     (panel_widget_is_cursor(PANEL_WIDGET(basep->panel), 0)) ) {
-		basep->leave_notify_timer_tag = 0;
 		return TRUE;
 	}
 	
