@@ -121,17 +121,16 @@ goat_realize(GtkWidget *widget)
 		}
 		g_free(file);
 
-		goat_width = pb->art_pixbuf->width+12;
-		goat_height = pb->art_pixbuf->height+12;
+		goat_width = gdk_pixbuf_get_width(pb)+12;
+		goat_height = gdk_pixbuf_get_height(pb)+12;
 		rgb = g_new(guchar,goat_width*goat_height*3);
 		for(i=0;i<goat_width*goat_height*3;i++)
 			rgb[i] = 0xFF;
 
 		art_affine_translate(affine,6,6);
-		art_rgb_pixbuf_affine(rgb,
-				      0,0,goat_width,goat_height,goat_width*3,
-				      pb->art_pixbuf,affine,
-				      ART_FILTER_NEAREST,NULL);
+		transform_pixbuf(rgb,
+			         0,0,goat_width,goat_height,goat_width*3,
+			         pb,affine,ART_FILTER_NEAREST,NULL);
 		gdk_pixbuf_unref(pb);
 
 		goat_pix[frame] = gdk_pixmap_new(widget->window,

@@ -39,12 +39,12 @@
 #include "menu.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_alphagamma.h>
-#include <libart_lgpl/art_filterlevel.h>
-#include <libart_lgpl/art_pixbuf.h>
-#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
-#include "nothing.cP"
+#include <libart_lgpl/art_rgb_affine.h>
+#include <libart_lgpl/art_rgb_rgba_affine.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_alphagamma.h>
 
 /* panel-util makes references to this, so yes this is UGLY UGLY UGLY to make
  * it available, but we're not using those parts, so we just want the compiler
@@ -128,6 +128,42 @@ static GtkWidget *confirm_panel_remove_cb;
 
 static gboolean changing = TRUE;
 static GtkWidget *capplet;
+
+/*
+ * GEGL Wants Winners,
+ * GEGL Wants Solutions,
+ * GEGL Wants TV,
+ * GEGL Wants Repeated Code...
+ *
+ * See rgb-stuff.c.
+ */
+
+void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+                      GdkPixbuf *pixbuf, double affine[6],
+                      int level, ArtAlphaGamma *ag);
+
+void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+                      GdkPixbuf *pixbuf, double affine[6],
+                      int level, ArtAlphaGamma *ag)
+{
+        gint w, h, rs;
+
+        rs = gdk_pixbuf_get_rowstride(pixbuf);
+        h =  gdk_pixbuf_get_height(pixbuf);
+        w =  gdk_pixbuf_get_width(pixbuf);
+
+        if (gdk_pixbuf_get_has_alpha(pixbuf)) {
+                art_rgb_rgba_affine(dst, x0, y0, x1, y1, drs,
+                                    gdk_pixbuf_get_pixels(pixbuf),
+                                    w, h, rs, affine, level, ag);
+        } else {
+                art_rgb_affine(dst, x0, y0, x1, y1, drs,
+                               gdk_pixbuf_get_pixels(pixbuf),
+                               w, h, rs, affine, level, ag);
+        }
+}
+
+#include "nothing.cP"
 
 static void 
 changed_cb(void)

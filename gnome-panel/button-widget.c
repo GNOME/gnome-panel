@@ -3,8 +3,9 @@
 #include <gtk/gtk.h>
 #include <gnome.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
-#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_filterlevel.h>
 #include "button-widget.h"
 #include "panel-widget.h"
 #include "basep-widget.h"
@@ -157,11 +158,11 @@ setup_no_alpha(ButtonWidget *button)
 		return;
 	if(button->pressed) {
 		if(tiles.tiles_down[button->tile] &&
-		   !tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
+		   !gdk_pixbuf_get_has_alpha(tiles.tiles_down[button->tile]))
 			button->no_alpha = 1;
 	} else {
 		if(tiles.tiles_up[button->tile] &&
-		   !tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
+		   !gdk_pixbuf_get_has_alpha(tiles.tiles_up[button->tile]))
 			button->no_alpha = 1;
 	}
 }
@@ -528,12 +529,11 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  pb->art_pixbuf->width,
-						  pb->art_pixbuf->height,
+						  gdk_pixbuf_get_width(pb),
+						  gdk_pixbuf_get_height(pb),
 						  size, NULL, NULL);
-				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       pb->art_pixbuf,
-						       affine, ART_FILTER_NEAREST, NULL);
+				transform_pixbuf(rgb, 0, 0, size, size, rowstride,
+					        pb, affine, ART_FILTER_NEAREST, NULL);
 			}
 		} else if (!global_config.tile_when_over || button->in_button) {
 			GdkPixbuf *pb;
@@ -546,12 +546,11 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			if(pb) {
 				double affine[6];
 				make_scale_affine(affine,
-						  pb->art_pixbuf->width,
-						  pb->art_pixbuf->height,
+						  gdk_pixbuf_get_width(pb),
+						  gdk_pixbuf_get_height(pb),
 						  size, NULL, NULL);
-				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
-						       pb->art_pixbuf,
-						       affine, ART_FILTER_NEAREST, NULL);
+				transform_pixbuf(rgb, 0, 0, size, size, rowstride,
+						pb, affine, ART_FILTER_NEAREST, NULL);
 			}
 		}
 	}
@@ -568,20 +567,20 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			double transl[6];
 			int w,h;
 			make_scale_affine(affine,
-					  pb->art_pixbuf->width,
-					  pb->art_pixbuf->height,
+					  gdk_pixbuf_get_width(pb),
+					  gdk_pixbuf_get_height(pb),
 					  size, &w, &h);
 			art_affine_translate(transl,
 					     -border+off + (size-w)/2,
 					     -border+off + (size-h)/2);
 			art_affine_multiply(affine,affine,transl);
 
-			art_rgb_pixbuf_affine((rgb+border*rowstride+border*3),
-					      0, 0,
-					      size-2*border, size-2*border,
-					      rowstride,
-					      pb->art_pixbuf,
-					      affine, ART_FILTER_NEAREST, NULL);
+			transform_pixbuf((rgb+border*rowstride+border*3),
+				         0, 0,
+				         size-2*border, size-2*border,
+				         rowstride,
+				         pb,
+				         affine, ART_FILTER_NEAREST, NULL);
 		}
 	}
 }
@@ -920,7 +919,7 @@ make_lc_pixbuf(GdkPixbuf *pb)
 	if(!pb)
 		return NULL;
 
-	new = gdk_pixbuf_new(gdk_pixbuf_get_format(pb),
+	new = gdk_pixbuf_new(gdk_pixbuf_get_colorspace(pb),
 			     gdk_pixbuf_get_has_alpha(pb),
 			     gdk_pixbuf_get_bits_per_sample(pb),
 			     gdk_pixbuf_get_width(pb),

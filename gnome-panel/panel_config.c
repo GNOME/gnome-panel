@@ -17,11 +17,10 @@
 #include "panel-include.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_alphagamma.h>
-#include <libart_lgpl/art_filterlevel.h>
-#include <libart_lgpl/art_pixbuf.h>
-#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include "rgb-stuff.h"
 #include "nothing.cP"
 
 

@@ -13,11 +13,9 @@
 #include "button-widget.h"
 #include "panel-util.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_alphagamma.h>
-#include <libart_lgpl/art_filterlevel.h>
-#include <libart_lgpl/art_pixbuf.h>
-#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_filterlevel.h>
 #include "rgb-stuff.h"
 
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
@@ -870,14 +868,14 @@ make_background(PanelWidget *panel, guchar *rgb_buf,
 	if(pb) {
 		if(scale_w == 0 || scale_h == 0) {
 			tile_rgb(rgb_buf,w,h,x,y,w*3,
-				 pb->art_pixbuf->pixels,
-				 pb->art_pixbuf->width,
-				 pb->art_pixbuf->height,
-				 pb->art_pixbuf->rowstride,
-				 pb->art_pixbuf->has_alpha);
+				 gdk_pixbuf_get_pixels(pb),
+				 gdk_pixbuf_get_width(pb),
+				 gdk_pixbuf_get_height(pb),
+				 gdk_pixbuf_get_rowstride(pb),
+				 gdk_pixbuf_get_has_alpha(pb));
 		} else {
 			tile_rgb_pixbuf(rgb_buf, w, h, x, y, w*3,
-					pb->art_pixbuf, scale_w, scale_h,
+					pb, scale_w, scale_h,
 					rotate);
 		}
 	} else {
@@ -983,8 +981,8 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 			if(panel->orient == PANEL_VERTICAL &&
 			   panel->rotate_pixmap_bg) {
 				/* we need to set scales to rotate*/
-				*scale_w = (*pb)->art_pixbuf->width;
-				*scale_h = (*pb)->art_pixbuf->height;
+				*scale_w = gdk_pixbuf_get_width((*pb));
+				*scale_h = gdk_pixbuf_get_height((*pb));
 				*rotate = TRUE;
 			}
 		}
@@ -1496,8 +1494,8 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 	
 	affine[1] = affine[2] = affine[4] = affine[5] = 0;
 
-	affine[0] = scale_w / (double)(pb->art_pixbuf->width);
-	affine[3] = scale_h / (double)(pb->art_pixbuf->height);
+	affine[0] = scale_w / (double)(gdk_pixbuf_get_width(pb));
+	affine[3] = scale_h / (double)(gdk_pixbuf_get_height(pb));
 
 	if(rotate) {
 		int tmp;
@@ -1517,10 +1515,9 @@ get_pixmap_from_pixbuf(GtkWidget *w, GdkPixbuf *pb, int scale_w, int scale_h,
 #ifdef PANEL_DEBUG
 	printf("scale_w %d scale_h %d\n",scale_w,scale_h);
 #endif
-	art_rgb_pixbuf_affine(rgb,
-			      0,0,scale_w,scale_h,scale_w*3,
-			      pb->art_pixbuf,affine,
-			      ART_FILTER_NEAREST,NULL);
+	transform_pixbuf(rgb,
+		         0,0,scale_w,scale_h,scale_w*3,
+		         pb,affine,ART_FILTER_NEAREST,NULL);
 	p = gdk_pixmap_new(w->window, scale_w,scale_h,
 			   gtk_widget_get_visual(GTK_WIDGET(w))->depth);
 	gc = gdk_gc_new(p);
@@ -1550,8 +1547,8 @@ panel_resize_pixmap(PanelWidget *panel)
 		gdk_pixmap_unref(panel->backpixmap);
 	panel->backpixmap = NULL;
 
-	panel->scale_w = w = panel->backpix->art_pixbuf->width;
-	panel->scale_h = h = panel->backpix->art_pixbuf->height;
+	panel->scale_w = w = gdk_pixbuf_get_width(panel->backpix);
+	panel->scale_h = h = gdk_pixbuf_get_height(panel->backpix);
 	
 	pw = GTK_WIDGET(panel)->allocation.width;
 	ph = GTK_WIDGET(panel)->allocation.height;
@@ -1593,7 +1590,7 @@ panel_resize_pixmap(PanelWidget *panel)
 					panel->scale_w,
 					panel->scale_h,
 					panel->orient == PANEL_VERTICAL &&
-					  panel->rotate_pixmap_bg);
+					panel->rotate_pixmap_bg);
 }
 
 static int
@@ -1623,8 +1620,8 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!panel->backpix)
 		return FALSE;
 
-	panel->scale_w = panel->backpix->art_pixbuf->width;
-	panel->scale_h = panel->backpix->art_pixbuf->height;
+	panel->scale_w = gdk_pixbuf_get_width(panel->backpix);
+	panel->scale_h = gdk_pixbuf_get_height(panel->backpix);
 
 	return TRUE;
 }

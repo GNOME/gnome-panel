@@ -12,20 +12,17 @@
 #include <glib.h>
 #include <gmodule.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_alphagamma.h>
+#include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_filterlevel.h>
-#include <libart_lgpl/art_pixbuf.h>
-#include <libart_lgpl/art_rgb_pixbuf_affine.h>
-#include <libart_lgpl/art_rgb_rgba_affine.h>
-#include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_affine.h>
+#include <libart_lgpl/art_rgb_affine.h>
+#include <libart_lgpl/art_rgb_rgba_affine.h>
 #include "rgb-stuff.h"
 
 GdkPixbuf *
 my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 {
 	GdkImage *image;
-	ArtPixBuf *art_pixbuf;
 	GdkColormap *colormap;
 	art_u8 *buff;
 	art_u8 *pixels;
@@ -44,7 +41,7 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 
 	rowstride = width * 3;
 
-	buff = art_alloc (rowstride * height);
+	buff = g_malloc (rowstride * height);
 	pixels = buff;
 
 	switch (image->depth)
@@ -109,14 +106,13 @@ my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
 		break;
 
 	default:
-		g_error ("art_pixbuf_from_drawable_core (): Unknown depth.");
+		g_error ("gdk_pixbuf_from_drawable_core (): Unknown depth.");
 	}
 
 	gdk_image_destroy(image);
 
-	art_pixbuf = art_pixbuf_new_rgb (buff, width, height, rowstride);
-
-	return gdk_pixbuf_new_from_art_pixbuf(art_pixbuf);
+	return gdk_pixbuf_new_from_data(buff, GDK_COLORSPACE_RGB, FALSE, 24,
+					width, height, rowstride, NULL, NULL);
 }
 
 void
@@ -189,7 +185,7 @@ tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 
 void
 tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
-		ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate)
+		GdkPixbuf *pbuf, int scale_w, int scale_h, int rotate)
 {
 	int i,j;
 
@@ -198,8 +194,8 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	
 	scaleaff[1] = scaleaff[2] = scaleaff[4] = scaleaff[5] = 0;
 
-	scaleaff[0] = scale_w / (double)(pbuf->width);
-	scaleaff[3] = scale_h / (double)(pbuf->height);
+	scaleaff[0] = scale_w / (double)(gdk_pixbuf_get_width(pbuf));
+	scaleaff[3] = scale_h / (double)(gdk_pixbuf_get_height(pbuf));
 
 	if(rotate) {
 		int tmp;
@@ -218,10 +214,13 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
 			art_affine_translate(affine,i,j);
 			art_affine_multiply(affine,scaleaff,affine);
-			art_rgb_pixbuf_affine(dest,
-					      0,0,dw,dh,drs,
-					      pbuf,affine,
-					      ART_FILTER_NEAREST,NULL);
+			art_rgb_affine(dest,
+				       0,0,dw,dh,drs,
+				       gdk_pixbuf_get_pixels(pbuf),
+				       gdk_pixbuf_get_width(pbuf),
+				       gdk_pixbuf_get_height(pbuf),
+				       gdk_pixbuf_get_rowstride(pbuf),
+				       affine,ART_FILTER_NEAREST,NULL);
 		}
 	}
 }
@@ -250,6 +249,29 @@ make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 	if(outw) *outw = w;
 	if(outh) *outh = h;
 }
+
+void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
+                      GdkPixbuf *pixbuf, double affine[6],
+                      int level, ArtAlphaGamma *ag)
+{
+	gint w, h, rs;
+
+	rs = gdk_pixbuf_get_rowstride(pixbuf);
+	h =  gdk_pixbuf_get_height(pixbuf);
+	w =  gdk_pixbuf_get_width(pixbuf);
+
+        if (gdk_pixbuf_get_has_alpha(pixbuf)) { 
+	        art_rgb_rgba_affine(dst, x0, y0, x1, y1, drs,
+                                    gdk_pixbuf_get_pixels(pixbuf),
+                                    w, h, rs, affine, level, ag);
+        } else {
+                art_rgb_affine(dst, x0, y0, x1, y1, drs,
+                               gdk_pixbuf_get_pixels(pixbuf),
+                               w, h, rs, affine, level, ag);
+	}
+}
+
+
 
 #if 0
 void

@@ -237,25 +237,38 @@ menu_new(void)
  * data is the dest and datao is the source, it will be scaled according
  * to their sizes */
 
+/* Then further hacked by Mark Crichton to use GdkPixBufs */
+
 static void
 scale_down(GtkWidget *window, GtkStateType state,
-	   ArtPixBuf *data, ArtPixBuf *datao)
+	   GdkPixbuf *data, GdkPixbuf *datao)
 {
 	unsigned char *p, *p2, *p3;
 	long x, y, w2, h2, xo, yo, x2, y2, i, x3, y3;
 	long yw, xw, ww, hw, r, g, b, r2, g2, b2;
 	int trans;
 	int wo, ho, w, h;
+	gboolean do_alpha, d_alpha;
+	int d_channels, do_channels, d_rowstride, do_rowstride;
+	guchar *d_pixels, *do_pixels;
 
 	guchar baser = 0xd6;
 	guchar baseg = 0xd6;
 	guchar baseb = 0xd6;
 
-	wo = datao->width;
-	ho = datao->height;
+	wo = gdk_pixbuf_get_width(datao);
+	ho = gdk_pixbuf_get_height(datao);
+	do_channels = gdk_pixbuf_get_n_channels(datao);
+	do_pixels = gdk_pixbuf_get_pixels(datao);
+	do_rowstride = gdk_pixbuf_get_rowstride(datao);
+	do_alpha = gdk_pixbuf_get_has_alpha(datao);
 
-	w = data->width;
-	h = data->height;
+	w = gdk_pixbuf_get_width(data);
+	h = gdk_pixbuf_get_height(data);
+	d_channels = gdk_pixbuf_get_n_channels(data);
+	d_pixels = gdk_pixbuf_get_pixels(data);
+	d_rowstride = gdk_pixbuf_get_rowstride(data);
+	d_alpha = gdk_pixbuf_get_has_alpha(data);
 
 	if (window) {
 		GtkStyle *style = gtk_widget_get_style(window);
@@ -272,13 +285,13 @@ scale_down(GtkWidget *window, GtkStateType state,
 		yo = (y * ho) / h;
 		y2 = yo & 0xff;
 		yo >>= 8;
-		p = data->pixels + (y>>8) * data->rowstride;
+		p = d_pixels + (y>>8) * d_rowstride;
 		for (x = 0; x < w2; x += 0x100) {
 			xo = (x * wo) / w;
 			x2 = xo & 0xff;
 			xo >>= 8;
-			p2 = datao->pixels + xo*datao->n_channels +
-				yo * datao->rowstride;
+			p2 = do_pixels + xo*do_channels +
+				yo * do_rowstride;
 
 			r2 = g2 = b2 = 0;
 			yw = hw;
@@ -294,7 +307,7 @@ scale_down(GtkWidget *window, GtkStateType state,
 						i = 0x100 - x3;
 					else
 						i = xw;
-					if(datao->has_alpha &&
+					if(do_alpha &&
 					   p3[3]<(0xff/2)) {
 						r += baser * i;
 						g += baseg * i;
@@ -305,7 +318,7 @@ scale_down(GtkWidget *window, GtkStateType state,
 						g += p3[1] * i;
 						b += p3[2] * i;
 					}
-					if(datao->has_alpha)
+					if(do_alpha)
 						p3 += 4;
 					else
 						p3 += 3;
@@ -324,13 +337,13 @@ scale_down(GtkWidget *window, GtkStateType state,
 					yw = 0;
 				}
 				y3 = 0;
-				p2 += datao->rowstride;
+				p2 += do_rowstride;
 			}
 			if (trans) {
 				/* we leave garbage there but the
 				 * alpha is 0 so we don't care */
 				p+=3;
-				if(data->has_alpha)
+				if(d_alpha)
 					*(p++) = 0x00;
 			} else {
 				r2 /= ww * hw;
@@ -339,7 +352,7 @@ scale_down(GtkWidget *window, GtkStateType state,
 				*(p++) = r2 & 0xff;
 				*(p++) = g2 & 0xff;
 				*(p++) = b2 & 0xff;
-				if(data->has_alpha)
+				if(d_alpha)
 					*(p++) = 0xff;
 			}
 		}
@@ -409,11 +422,10 @@ load_icons_handler(gpointer data)
 			return TRUE;
 		}
 
-		pb2 = gdk_pixbuf_new(ART_PIX_RGB, pb->art_pixbuf->has_alpha,
+		pb2 = gdk_pixbuf_new(GDK_COLORSPACE_RGB, gdk_pixbuf_get_has_alpha(pb),
 				     8, fake->size, fake->size);
 
-		scale_down(parent, parent->state,
-			   pb2->art_pixbuf, pb->art_pixbuf);
+		scale_down(parent, parent->state, pb2, pb);
 		gdk_pixbuf_unref(pb);
 
 		gdk_pixbuf_render_pixmap_and_mask (pb2, &gp, &gm, 128);
@@ -422,7 +434,9 @@ load_icons_handler(gpointer data)
 
 		pixmap = gtk_pixmap_new(gp, gm);
 		gdk_pixmap_unref(gp);
-		gdk_bitmap_unref(gm);
+
+		if (gm != NULL)   /* Is this right?  Some icons dont seem to have alpha. */
+			gdk_bitmap_unref(gm);
 
 		fake->fake = pixmap;
 		toplevel = gtk_widget_get_toplevel(parent);

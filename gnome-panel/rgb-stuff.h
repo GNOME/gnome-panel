@@ -3,7 +3,7 @@
 
 #include <gdk/gdk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libart_lgpl/art_pixbuf.h>
+#include <libart_lgpl/art_alphagamma.h>
 
 /* combine rgba onto the dest (given the dest has something in it already) */
 void combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
@@ -11,9 +11,9 @@ void combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
 /* tile an rgb onto dest */
 void tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	      guchar *tile, int w, int h, int rowstride, int has_alpha);
-/* tile an art_pixbuf onto an rgb buffer*/
+/* tile an GdkPixBuf onto an rgb buffer*/
 void tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
-		     ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate);
+		     GdkPixbuf *pbuf, int scale_w, int scale_h, int rotate);
 
 /* just copied from pixbuf source */
 GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);
@@ -26,5 +26,10 @@ void make_scale_affine(double affine[], int w, int h, int size,
 void rgb_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs);
 void rgba_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs);
 #endif
+
+/* A little function to help me with the right _affine call */
+void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs, 
+		      GdkPixbuf *pixbuf, double affine[6],
+		      int level, ArtAlphaGamma *ag);
 
 #endif /* _RGB_STUFF_H_ */
