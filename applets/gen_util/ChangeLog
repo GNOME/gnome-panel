@@ -1,3 +1,19 @@
+1998-12-24  Jeff Garzik  <jgarzik@pobox.com>
+
+	* batmon/batmon.c:
+	Changed one strcpy to strncpy
+
+	* clockmail/clockmail.c, cpuload/properties.c, batmon/batmon.c,
+	  diskusage/diskusage.c, diskusage/properties.c,
+	  drivemount/drivemount.c, fifteen/fifteen.c:
+	s/sprintf/g_snprintf/
+
+	* cpuload/properties.[c], diskusage/properties.[ch]:
+	Made load/save routines 'path' arg const-correct.
+
+	* cpuload/properties.c, diskusage/properties.c:
+	Corrected color str size bug.
+
 1998-12-18  Mark Galassi  <rosalia@cygnus.com>
 
 	* netload/properties.c (apply_cb): incorporated Daniel Burrows'
