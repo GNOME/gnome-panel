@@ -193,7 +193,7 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	item = gtk_image_menu_item_new_with_label (_("Applications"));
         image = gtk_image_new_from_stock (
 			PANEL_STOCK_GNOME_LOGO,
-			panel_menu_bar_icon_get_size ()),
+			panel_menu_bar_icon_get_size ());
 	gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item), image);
 
 	menubar->priv->applications_menu =
