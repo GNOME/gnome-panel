@@ -25,6 +25,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <bonobo/bonobo-ui-util.h>
+#include <bonobo/bonobo-types.h>
 #include <bonobo/bonobo-property-bag.h>
 #include <bonobo/bonobo-item-handler.h>
 #include <bonobo/bonobo-shlib-factory.h>
@@ -45,8 +46,7 @@ struct _PanelAppletPrivate {
 	BonoboItemHandler          *item_handler;
 
 	gchar                      *iid;
-	PanelAppletFactoryCallback  callback;
-	gpointer                    user_data;
+	GClosure                   *closure;
 	gboolean                    bound;
 	gchar                      *prefs_key;
 
@@ -564,14 +564,17 @@ panel_applet_control_bound (BonoboControl *control,
 	gboolean ret;
 
 	g_return_if_fail (applet && PANEL_IS_APPLET (applet));
-	g_return_if_fail (applet->priv->iid && applet->priv->callback);
+	g_return_if_fail (applet->priv->iid && applet->priv->closure);
 
 	if (applet->priv->bound)
 		return;
 
-	ret = applet->priv->callback (applet,
-				      applet->priv->iid,
-				      applet->priv->user_data);
+	bonobo_closure_invoke (applet->priv->closure,
+			       G_TYPE_BOOLEAN, &ret,
+			       PANEL_TYPE_APPLET, applet,
+			       G_TYPE_STRING, applet->priv->iid,
+			       0);
+
 
 	if (!ret) { /* FIXME */
 		g_warning ("need to free the control here");
@@ -758,26 +761,63 @@ panel_applet_new (void)
 	return GTK_WIDGET (applet);
 }
 
-typedef struct {
-	PanelAppletFactoryCallback callback;
-	gpointer                   user_data;
-} PanelAppletClosure;
-
 static BonoboObject *
 panel_applet_factory_callback (BonoboGenericFactory *factory,
 			       const char           *iid,
 			       gpointer              user_data)
 {
 	PanelApplet        *applet;
-	PanelAppletClosure *closure = user_data;
 
 	applet = PANEL_APPLET (panel_applet_new ());
 
 	applet->priv->iid       = g_strdup (iid);
-	applet->priv->callback  = closure->callback;
-	applet->priv->user_data = closure->user_data;
+	applet->priv->closure   = g_closure_ref (user_data);
 
 	return BONOBO_OBJECT (applet->priv->control);
+}
+
+/**
+ * panel_applet_factory_main_closure:
+ * @argc: The number of commmand line arguments contained in @argv.
+ * @argv: The array of command line argument strings.
+ * @iid: The bonobo-activation iid of the factory.
+ * @name: The applet ID string.
+ * @version: The applet version string.
+ * @closure: The factory callback closure.
+ *
+ * A generic 'main' routine for applets. This should not normally be
+ * used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
+ *
+ * Return value: 0 on success, 1 on failure.
+ */
+int
+panel_applet_factory_main_closure (int                          argc,
+				   char                       **argv,
+				   const gchar                 *iid,
+				   const gchar                 *name,
+				   const gchar                 *version,
+				   GClosure                    *closure)
+{
+	GnomeProgram       *program;
+	int                 retval;
+
+	/* FIXME: other precondition checks */
+
+	/* FIXME: EVIL, what about the per app domain things and all that,
+	 * we shouldn't really be calling gnome_program_init here, the applet
+	 * should call it itself.  We need to fix this */
+	program = gnome_program_init (name, version,
+				      LIBGNOMEUI_MODULE,
+				      argc, argv,
+				      GNOME_PARAM_NONE);
+
+	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
+
+	retval = bonobo_generic_factory_main (iid, panel_applet_factory_callback, closure);
+
+	g_closure_unref (closure);
+
+	return retval;
 }
 
 /**
@@ -804,18 +844,37 @@ panel_applet_factory_main (int                          argc,
 			   PanelAppletFactoryCallback   callback,
 			   gpointer                     data)
 {
-	PanelAppletClosure  closure = { callback, data };
-	GnomeProgram       *program;
-	int                 retval;
+	GClosure *closure;
 
-	program = gnome_program_init (name, version,
-				      LIBGNOMEUI_MODULE,
-				      argc, argv,
-				      GNOME_PARAM_NONE);
+	/* FIXME: precondition checks */
 
-	retval = bonobo_generic_factory_main (iid, panel_applet_factory_callback, &closure);
+	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
-	return retval;
+	return panel_applet_factory_main_closure (argc, argv, iid, name,
+						  version, closure);
+}
+
+Bonobo_Unknown
+panel_applet_shlib_factory_closure (const char                 *iid,
+				    PortableServer_POA          poa,
+				    gpointer                    impl_ptr,
+				    GClosure                   *closure,
+				    CORBA_Environment          *ev)
+{
+	BonoboShlibFactory *factory;
+
+	/* FIXME: other precondition checks */
+	g_return_val_if_fail (closure != NULL, CORBA_OBJECT_NIL);
+
+	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
+       
+	factory = bonobo_shlib_factory_new_closure
+		(iid, poa, impl_ptr,
+		 g_cclosure_new (G_CALLBACK (panel_applet_factory_callback),
+				 closure,
+				 (GClosureNotify)g_closure_unref));
+
+        return CORBA_Object_duplicate (BONOBO_OBJREF (factory), ev);
 }
 
 Bonobo_Unknown
@@ -826,9 +885,11 @@ panel_applet_shlib_factory (const char                 *iid,
 			    gpointer                    user_data,
 			    CORBA_Environment          *ev)
 {
-	PanelAppletClosure closure = { callback, user_data };
+	/* FIXME: precondition checks */
 
-	return bonobo_shlib_factory_std (iid, poa, impl_ptr,
-					 panel_applet_factory_callback,
-					 &closure, ev);
+	return panel_applet_shlib_factory_closure
+		(iid, poa, impl_ptr,
+		 g_cclosure_new (G_CALLBACK (callback),
+				 user_data, NULL),
+		 ev);
 }

@@ -132,14 +132,31 @@ int                panel_applet_factory_main         (int			   argc,
 						      PanelAppletFactoryCallback   callback,
 						      gpointer			   data);
 
+int                panel_applet_factory_main_closure (int			   argc,
+						      char			 **argv,
+						      const gchar		  *iid,
+						      const gchar		  *name,
+						      const gchar		  *version,
+						      GClosure                    *closure);
+
 Bonobo_Unknown     panel_applet_shlib_factory        (const char                 *iid,
 						      PortableServer_POA          poa,
 						      gpointer                    impl_ptr,
 						      PanelAppletFactoryCallback  callback,
 						      gpointer                    user_data,
 						      CORBA_Environment          *ev);
+Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                 *iid,
+						       PortableServer_POA          poa,
+						       gpointer                    impl_ptr,
+						       GClosure                   *closure,
+						       CORBA_Environment          *ev);
 
 
+
+/* FIXME: there is some evilness related to calling gnome_program_init
+ * inside a library, I think this is evil and should disappear, we're not
+ * really gaining anything by this macro except a few keystrokes and
+ * a lot of clarity */
 #define PANEL_APPLET_BONOBO_FACTORY(iid, name, version, callback, data)		\
 int main (int argc, char *argv [])						\
 {										\

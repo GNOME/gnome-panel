@@ -78,7 +78,7 @@ panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 
 panel-applet-marshal.c: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	echo "#include \"panel-applet-marshal.h\"" > $@ && \
-	$(GLIB_GENMARSHAL) $< --body --prefix=panel_applet_marshal > $@
+	$(GLIB_GENMARSHAL) $< --body --prefix=panel_applet_marshal >> $@
 
 panel_applet_enum_headers = $(top_srcdir)/libpanel-applet/panel-applet.h
 
