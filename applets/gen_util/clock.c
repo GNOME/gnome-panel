@@ -30,7 +30,7 @@
 enum {
   TARGET_STRING,
   TARGET_TEXT,
-  TARGET_COMPOUND_TEXT,
+  TARGET_COMPOUND_TEXT
 };
 
 typedef struct _ClockData ClockData;
