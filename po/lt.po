@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-15 14:47+0200\n"
-"PO-Revision-Date: 2005-01-15 14:48+0200\n"
+"POT-Creation-Date: 2005-01-26 22:46+0200\n"
+"PO-Revision-Date: 2005-01-26 22:48+0200\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr "_Apie"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Pagalba"
@@ -185,7 +185,7 @@ msgstr "Vartotojo formatas"
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -235,7 +235,7 @@ msgstr "Naudoti _UTC"
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
 #: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -659,8 +659,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "Langų navigacijos įtaisų gamykla"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
-#: applets/wncklet/window-menu.c:903
+#: applets/wncklet/window-menu.c:106 applets/wncklet/window-menu.c:312
 msgid "Window Selector"
 msgstr "Langų parinkiklis"
 
@@ -833,23 +832,11 @@ msgstr "Mažiausias dydis, kurio reikalauja langų sąrašas"
 msgid "When to group windows"
 msgstr "Kada grupuoti langus"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:111
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Langų parinkiklis rodo visų langų sąrašą ir leidžia tarp jų persijungti."
-
-#: applets/wncklet/window-menu.c:340
-msgid "Unknown Window"
-msgstr "Nežinomas langas"
-
-#: applets/wncklet/window-menu.c:721
-msgid "No Windows Open"
-msgstr "Neatidarytas nei vienas langas"
-
-#: applets/wncklet/window-menu.c:902
-msgid "Tool to switch between windows"
-msgstr "Įrankis persijunginėjimui tarp langų"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:922
@@ -966,11 +953,11 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME skydelio apvalkalas"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 msgid "_Lock To Panel"
 msgstr "_Prirakinti prie skydelio"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "P_erkelti"
 
@@ -982,7 +969,7 @@ msgstr "_Pašalinti iš skydelio"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1208
+#: gnome-panel/applet.c:1212
 msgid "Can't find an empty spot"
 msgstr "Nepavyko rasti laisvos vietos"
 
@@ -1104,23 +1091,23 @@ msgstr "Neįmanoma paleisti įrašo"
 msgid "Cannot load entry"
 msgstr "Neįmanoma įkrauti įrašo"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "Įdėti šį leistuką į skydelį"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:835
 msgid "Entire menu"
 msgstr "Pačiame meniu"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:845
 msgid "Add this as drawer to panel"
 msgstr "Įdėti jį į skydelį kaip stalčių"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:857
 msgid "Add this as menu to panel"
 msgstr "Įdėti jį į skydelį kaip meniu"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
+#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "Programos"
 
@@ -1324,17 +1311,17 @@ msgstr "Ar norite pašalinti šį įtaisą iš Jūsų konfigūracijos?"
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nepavyko iš valdymo gauti AppletShell sąsajos\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "Įvyko klaida stebint gconf raktą „%s“: %s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Įvyko klaida įkraunant gconf katalogą „%s“: %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Įvyko klaida bandant gauti %s“ reikšmę: %s"
@@ -1647,17 +1634,30 @@ msgstr "Tinklo vietos"
 msgid "Removable Media"
 msgstr "Išimamos laikmenos"
 
-#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
-msgid "Desktop"
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:597
+msgid "Desktop Folder|Desktop"
 msgstr "Darbastalis"
 
-#: gnome-panel/panel-menu-bar.c:592
-msgid "Desktop directory"
-msgstr "Darbastalio aplankas"
+#: gnome-panel/panel-menu-bar.c:598
+msgid "Open the desktop as a folder"
+msgstr "Atidaryti darbastalį kaip aplanką"
 
-#: gnome-panel/panel-menu-bar.c:771
+#: gnome-panel/panel-menu-bar.c:777
 msgid "Places"
 msgstr "Vietos"
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:786
+msgid "Desktop Environment|Desktop"
+msgstr "Aplinka"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2009,12 +2009,12 @@ msgstr "Išvalyti paskutiniųjų dokumentų sąrašą?"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Jeigu išvalysite paskutiniųjų dokumentų sąrašą, Jūs išvalysite:\n"
 "\n"
-"• Visus elementus esančius Veiksmai → Paskutiniieji dokumentai meniu.\n"
+"• Visus elementus esančius meniu Vietos → Paskutinieji dokumentai.\n"
 "• Visus elementus esančius visų programų paskutiniųjų dokumentų sąrašuose."
 
 #: gnome-panel/panel-recent.c:222
@@ -2710,6 +2710,18 @@ msgstr "Įt_aisas:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Nustatymų aplankas:"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Nežinomas langas"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Neatidarytas nei vienas langas"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Įrankis persijunginėjimui tarp langų"
+
+#~ msgid "Desktop"
+#~ msgstr "Darbastalis"
 
 #~ msgid "Shut Down"
 #~ msgstr "Išjungti"
