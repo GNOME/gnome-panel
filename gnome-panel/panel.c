@@ -648,7 +648,8 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 	if (pd->menu != NULL)
 		return pd->menu;
 	
-	pd->menu = create_panel_context_menu (panel);
+	pd->menu = g_object_ref (create_panel_context_menu (panel));
+	gtk_object_sink (GTK_OBJECT (pd->menu));
 	g_signal_connect (G_OBJECT (pd->menu), "deactivate",
 			  G_CALLBACK (menu_deactivate), pd);
 	return pd->menu;

@@ -14,6 +14,8 @@ typedef struct {
 	GtkWidget *button;
 	GtkWidget *drawer;
 	GtkWidget *properties;
+	gboolean moving_focus;
+	gboolean just_focused;
 } Drawer;
 
 Drawer *load_drawer_applet (gchar       *mypanel,

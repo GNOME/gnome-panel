@@ -1,3 +1,39 @@
+2002-02-15  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep-widget.[ch] : Rename "focus_panel" signal to "move_focus_out"
+	as same action (Ctrl+Tab) on DrawerWidget moves focus from
+	DrawerWidget to Drawer. Add code to basep_widget_move_focus_out()
+	to implement moving focus from DrawerWidget to Drawer.
+
+	(basep_widget_construct) Sink BasePPos to avoid warning on panel
+	deletion.
+
+	* drawer-widget.c (drawer_widget_new): Do not allow panel in
+	DrawerWidget to receive focus.
+
+	* drawer.h (Drawer): Add two new fields moving_focus and jyst_focused.
+	The field moving_focus is used to prevent drawer being closed
+	when keyboard focus moves from Drawer to DrawerWidget and being
+	opened whem keyboard focus moves from DrawerWidget to Drawer
+	The field just_focused is used to prevent the drawer being closed
+	when a Drawer, which does not have focus, is clicked.
+
+	* drawer.c: Add signal handlers for focus_in_event, focus_out_event
+	and key_press_event on Drawer.
+	focus_in_drawer ensures that drawer is opened when focused
+	focus_out_drawer ensures that drawer is closed when unfocused
+	key_press_drawer implements arrow keys to move focus from Drawer to
+	DrawerWidget and focus the first or last object on the panel and Escape
+	to close the drawer.
+
+	* foobar-widget.[ch] : Rename "focus_panel" signal to "move_focus_out"
+
+	* panel-widget.c (panel_widget_focus): Do not focus panel for
+	DrawerWidget
+
+	* panel.c (panel_menu_get): Sink menu object to avoid warning on
+	panel deletion
+
 2002-02-14  Seth Nickell  <snickell@stanford.edu>
 
 	* menu.c: (icon_to_load_copy), (load_icons_handler),

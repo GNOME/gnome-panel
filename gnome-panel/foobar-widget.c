@@ -55,7 +55,7 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
-static void foobar_widget_focus_panel   (FoobarWidget *foo);
+static void foobar_widget_move_focus_out   (FoobarWidget *foo);
 static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
@@ -64,7 +64,7 @@ static GList *foobars = NULL;
 static GtkWindowClass *foobar_widget_parent_class = NULL;
 
 enum {
-	FOCUS_PANEL_SIGNAL,
+	MOVE_FOCUS_OUT_SIGNAL,
 	WIDGET_LAST_SIGNAL
 };
 
@@ -110,7 +110,7 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
 
-	klass->focus_panel = foobar_widget_focus_panel;
+	klass->move_focus_out = foobar_widget_move_focus_out;
 
 	gtk_rc_parse_string ("style \"panel-foobar-menubar-style\"\n"
 			     "{\n"
@@ -119,11 +119,11 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 			     "}\n"
 			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
 
-	foobar_widget_signals[FOCUS_PANEL_SIGNAL] =
-		g_signal_new	("focus_panel",
+	foobar_widget_signals[MOVE_FOCUS_OUT_SIGNAL] =
+		g_signal_new	("move_focus_out",
 				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (FoobarWidgetClass, focus_panel),				NULL,
+				G_STRUCT_OFFSET (FoobarWidgetClass, move_focus_out),				NULL,
                                 NULL,
                                 panel_marshal_VOID__VOID,
 				G_TYPE_NONE,
@@ -132,13 +132,13 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	binding_set = gtk_binding_set_by_class (object_class);
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_Tab, GDK_CONTROL_MASK,
-                                      "focus_panel", 0);
+                                      "move_focus_out", 0);
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_KP_Tab, GDK_CONTROL_MASK,
-                                      "focus_panel", 0);
+                                      "move_focus_out", 0);
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
-                                      "focus_panel", 0);
+                                      "move_focus_out", 0);
 
 
 }
@@ -1370,7 +1370,7 @@ foobar_widget_redo_window(FoobarWidget *foo)
 }
 
 static void
-foobar_widget_focus_panel (FoobarWidget *foobar)
+foobar_widget_move_focus_out (FoobarWidget *foobar)
 {
  	panel_widget_focus (PANEL_WIDGET (foobar->panel));
 }

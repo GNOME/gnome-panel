@@ -209,6 +209,9 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 #ifdef DRAWER_DEBUG
 	printf ("Registering drawer click \n");
 #endif	
+	if (drawer->just_focused)
+		return;
+
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
 	case BASEP_AUTO_HIDDEN:
@@ -283,6 +286,142 @@ leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 }
 
+static gboolean
+unset_just_focused (gpointer data)
+{
+	Drawer *drawer = data;
+
+	g_return_val_if_fail (drawer->just_focused, FALSE);
+
+	drawer->just_focused = FALSE;
+	return FALSE;
+}
+
+static gboolean
+focus_in_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+{
+	Drawer *drawer = data;
+	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
+	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
+	GtkWidget *panelw = parent->panel_parent;
+
+	switch (BASEP_WIDGET (drawerw)->state) {
+	case BASEP_HIDDEN_LEFT:
+	case BASEP_HIDDEN_RIGHT:
+		if (drawer->moving_focus) {
+			drawer->moving_focus = FALSE;
+		} else {
+			drawer->just_focused = TRUE;
+			/*
+			 * We unset the just_focused flag when we have
+			 * finished processing pending events. We use this
+			 * flag to prevent drawer being opened and shut
+			 * when it is clicked on when it does not have focus
+			 */
+			gtk_idle_add (unset_just_focused, drawer);
+			drawer_widget_open_drawer (drawerw, panelw);
+		}
+		break;
+	default:
+		break;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+focus_out_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
+{
+	Drawer *drawer = data;
+	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
+	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
+	GtkWidget *panelw = parent->panel_parent;
+
+	switch (BASEP_WIDGET (drawerw)->state) {
+	case BASEP_SHOWN:
+	case BASEP_AUTO_HIDDEN:
+		if (drawer->moving_focus) {
+			drawer->moving_focus = FALSE;
+		} else if (GTK_WINDOW (panelw)->has_focus) {
+			drawer_widget_close_drawer (drawerw, panelw);
+		}
+		break;
+	default:
+		break;
+	}
+
+	return FALSE;
+}
+
+static gboolean
+key_press_drawer (GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+	Drawer *drawer;
+	DrawerWidget *drawerw;
+	PanelWidget *parent;
+	GtkWidget *drawer_panel;
+	GtkDirectionType dir;
+
+	if (event->state == 0) {
+		drawer = data;
+		parent = PANEL_WIDGET (drawer->button->parent);
+		drawerw = DRAWER_WIDGET (drawer->drawer);
+
+		switch (event->keyval) {
+		case GDK_Up:
+		case GDK_KP_Up:
+			if (parent->orient == GTK_ORIENTATION_HORIZONTAL)
+				dir = GTK_DIR_TAB_BACKWARD;
+			else
+				return TRUE;
+			break;
+		case GDK_Left:
+		case GDK_KP_Left:
+			if (parent->orient == GTK_ORIENTATION_VERTICAL)
+				dir = GTK_DIR_TAB_BACKWARD;
+			else
+				return TRUE;
+			break;
+		case GDK_Down:
+		case GDK_KP_Down:
+			if (parent->orient == GTK_ORIENTATION_HORIZONTAL)
+				dir = GTK_DIR_TAB_FORWARD;
+			else
+				return TRUE;
+			break;
+		case GDK_Right:
+		case GDK_KP_Right:
+			if (parent->orient == GTK_ORIENTATION_VERTICAL)
+				dir = GTK_DIR_TAB_FORWARD;
+			else
+				return TRUE;
+			break;
+		case GDK_Escape:
+			switch (BASEP_WIDGET (drawerw)->state) {
+			case BASEP_SHOWN:
+			case BASEP_AUTO_HIDDEN:
+				drawer_widget_close_drawer (drawerw, parent->panel_parent);
+				break;
+			default:
+				break;
+			}
+			return TRUE;
+			break;
+		default:
+			return FALSE;
+			break;
+		}
+		drawer_panel = BASEP_WIDGET (drawerw)->panel;
+		drawer->moving_focus = TRUE;
+		gtk_window_present (GTK_WINDOW (drawerw));
+		gtk_container_set_focus_child (GTK_CONTAINER (drawer_panel), NULL);
+		gtk_widget_child_focus (drawer_panel, dir);
+		return TRUE;
+	} else {
+		return FALSE;
+	}
+}
+
 static void  
 drag_data_get_cb (GtkWidget          *widget,
 		  GdkDragContext     *context,
@@ -351,6 +490,8 @@ create_drawer_applet(GtkWidget * drawer_panel,
 	gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;
+	drawer->moving_focus = FALSE;
+	drawer->just_focused = FALSE;
 
 	g_signal_connect (G_OBJECT (drawer->button), "clicked",
 			    G_CALLBACK (drawer_click), drawer);
@@ -360,6 +501,12 @@ create_drawer_applet(GtkWidget * drawer_panel,
 			    G_CALLBACK (enter_notify_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "leave_notify_event",
 			    G_CALLBACK (leave_notify_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "focus_in_event",
+			    G_CALLBACK (focus_in_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "focus_out_event",
+			    G_CALLBACK (focus_out_drawer), drawer);
+	g_signal_connect (G_OBJECT (drawer->button), "key_press_event",
+			    G_CALLBACK (key_press_drawer), drawer);
 
 	g_object_set_data (G_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
 	gtk_widget_queue_resize (GTK_WIDGET (drawer_panel));

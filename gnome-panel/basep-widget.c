@@ -51,7 +51,7 @@ static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_instance_init (BasePPos *pos);
 
 /* Forward declare some static functions for use in the class init */
-static void basep_widget_focus_panel (BasePWidget *basep);
+static void basep_widget_move_focus_out (BasePWidget *basep);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
@@ -71,7 +71,7 @@ static BasePPosClass * basep_widget_get_pos_class (BasePWidget *basep);
 
 enum {
 	/*TYPE_CHANGE_SIGNAL,*/
-	FOCUS_PANEL_SIGNAL,
+	MOVE_FOCUS_OUT_SIGNAL,
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	SCREEN_CHANGE_SIGNAL,
@@ -131,7 +131,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
-	klass->focus_panel = basep_widget_focus_panel;
+	klass->move_focus_out = basep_widget_move_focus_out;
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
@@ -194,11 +194,11 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			      1,
 			      PANEL_TYPE_OBJECT_TYPE); */
 
-	basep_widget_signals[FOCUS_PANEL_SIGNAL] = 
-		g_signal_new	("focus_panel",
-			       	G_TYPE_FROM_CLASS (object_class),
+	basep_widget_signals[MOVE_FOCUS_OUT_SIGNAL] = 
+		g_signal_new	("move_focus_out",
+				G_TYPE_FROM_CLASS (object_class),
 				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
-				G_STRUCT_OFFSET (BasePWidgetClass, focus_panel),
+				G_STRUCT_OFFSET (BasePWidgetClass, move_focus_out),
 				NULL,
 				NULL,
 				panel_marshal_VOID__VOID,
@@ -244,13 +244,13 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	binding_set = gtk_binding_set_by_class (gtk_object_class);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_Tab, GDK_CONTROL_MASK,
-				      "focus_panel", 0);
+				      "move_focus_out", 0);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_KP_Tab, GDK_CONTROL_MASK,
-				      "focus_panel", 0);
+				      "move_focus_out", 0);
 	gtk_binding_entry_add_signal (binding_set,
 				      GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
-				      "focus_panel", 0);
+				      "move_focus_out", 0);
 }
 
 static void
@@ -558,9 +558,21 @@ basep_widget_size_allocate (GtkWidget *widget,
 }
 
 static void
-basep_widget_focus_panel (BasePWidget *basep)
+basep_widget_move_focus_out (BasePWidget *basep)
 {
-	panel_widget_focus (PANEL_WIDGET (basep->panel));
+	if (DRAWER_IS_WIDGET (basep)) {
+		Drawer *drawer = g_object_get_data (G_OBJECT (basep),
+               		                             DRAWER_PANEL_KEY);
+		PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
+		GtkWidget *parent = panel->panel_parent;
+
+		drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
+		drawer->moving_focus = TRUE;
+		gtk_window_present (GTK_WINDOW (parent));
+		gtk_widget_grab_focus (drawer->button);
+	} else {
+		panel_widget_focus (PANEL_WIDGET (basep->panel));
+	}
 }
 
 static void
@@ -1672,6 +1684,8 @@ basep_widget_construct (gchar *panel_id,
 	basep->mode = mode;
 	basep->state = state;
 
+	g_object_ref (basep->pos);
+	gtk_object_sink (GTK_OBJECT (basep->pos));
 	basep->pos->basep = basep;
 
 	if (state == BASEP_AUTO_HIDDEN &&

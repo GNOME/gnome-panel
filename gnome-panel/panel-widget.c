@@ -26,6 +26,7 @@
 #include "panel-marshal.h"
 #include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
+#include "drawer-widget.h"
 
 #define MOVE_INCREMENT 2
 
@@ -2953,11 +2954,13 @@ void panel_widget_focus (PanelWidget *panel)
 	 * Set the focus back on the panel; we unset the focus child so that
 	 * the next time focus is inside the panel we do not remember the
 	 * previously focused child. We also need to set GTK_CAN_FOCUS flag
-	 * on the panle as it is unset when this function is called.
+	 * on the panel as it is unset when this function is called.
 	 */
-	gtk_container_set_focus_child (GTK_CONTAINER (panel), NULL);
-	GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
-      	gtk_widget_grab_focus (GTK_WIDGET (panel));
+	if (!DRAWER_IS_WIDGET (panel->panel_parent)) {
+		gtk_container_set_focus_child (GTK_CONTAINER (panel), NULL);
+		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
+      		gtk_widget_grab_focus (GTK_WIDGET (panel));
+	}
 }
 
 PanelOrient

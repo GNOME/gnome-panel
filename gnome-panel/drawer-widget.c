@@ -499,6 +499,6 @@ drawer_widget_new (gchar *panel_id,
 				stretch_pixmap_bg,
 				rotate_pixmap_bg,
 				back_color);
-
+	GTK_WIDGET_UNSET_FLAGS (BASEP_WIDGET (drawer)->panel, GTK_CAN_FOCUS);
 	return GTK_WIDGET (drawer);
 }
