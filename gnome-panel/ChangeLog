@@ -1,5 +1,10 @@
 2003-11-20  Vincent Untz  <vincent@vuntz.net>
 
+	* gnome-panel-screenshot.c: (take_window_shot) don't call
+	gdk_pixbuf_get_has_alpha() in the loop but before the loop.
+
+2003-11-20  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler): do
 	not stop unhiding the panel if the cursor is not in the panel but the
 	auto_hide property is FALSE. Fix behaviour when you changed the
