@@ -1049,7 +1049,7 @@ panel_run_dialog_setup_list_expander (PanelRunDialog *dialog,
 				  dialog);
 	
 		client = panel_gconf_get_client ();
-		key = panel_gconf_general_key (panel_profile_get_name (), "show_program_list");
+		key = panel_gconf_general_key ("show_program_list");
 	
 		dialog->content_notify_id =
 			gconf_client_notify_add (client, key,

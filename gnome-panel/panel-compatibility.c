@@ -496,11 +496,8 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 						 const char  *panel_dir)
 {
 	const char *key;
-	const char *profile;
 	const char *toplevel_id;
 	char       *id;
-
-	profile = panel_profile_get_name ();
 
 	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
 	gconf_client_set_bool (client, key, TRUE, NULL);
@@ -520,7 +517,7 @@ panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
 	/* window menu on far left corner */
         id = panel_profile_prepare_object_with_id (PANEL_OBJECT_BONOBO, toplevel_id, 0, TRUE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
         gconf_client_set_string (client, key, "OAFIID:GNOME_WindowMenuApplet", NULL);
 
         panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
@@ -579,7 +576,6 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 					    const char  *panel_id,
 					    gboolean    *is_drawer)
 {
-	const char *profile;
 	const char *key;
 	char       *toplevel_id;
 	char       *toplevel_dir;
@@ -592,12 +588,10 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	gboolean    enable_arrows;
 	gboolean    auto_hide;
 
-	profile = panel_profile_get_name ();
-
 	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 
-	toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s", profile, toplevel_id);
-	panel_dir    = g_strdup_printf (PANEL_CONFIG_DIR "/%s/panels/%s", profile, panel_id);
+	toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/toplevels/%s", toplevel_id);
+	panel_dir    = g_strdup_printf (PANEL_CONFIG_DIR "/panels/%s", panel_id);
 
 	panel_gconf_associate_schemas_in_dir (
 			client, toplevel_dir, PANEL_SCHEMAS_DIR "/toplevels");
@@ -666,20 +660,17 @@ panel_compatibility_migrate_panel_id (GConfClient       *client,
 				      const char        *object_id,
 				      GHashTable        *panel_id_hash)
 {
-	const char *profile;
 	const char *key;
 	char       *panel_id;
 	char       *toplevel_id;
 	gboolean    retval = FALSE;
 
-	profile = panel_profile_get_name ();
-
 	/* panel_id -> toplevel_id */
-	key = panel_gconf_full_key (key_type, profile, object_id, "panel_id");
+	key = panel_gconf_full_key (key_type, object_id, "panel_id");
 	panel_id = gconf_client_get_string (client, key, NULL);
 
 	if (panel_id && (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "toplevel_id");
+		key = panel_gconf_full_key (key_type, object_id, "toplevel_id");
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 
 		retval = TRUE;
@@ -696,42 +687,39 @@ panel_compatibility_migrate_drawer_settings (GConfClient       *client,
 					     const char        *object_id,
 					     GHashTable        *panel_id_hash)
 {
-	const char *profile;
 	const char *key;
 	char       *toplevel_id;
 	char       *panel_id;
 	char       *custom_icon;
 	char       *pixmap;
 
-	profile = panel_profile_get_name ();
-
 	/* unique-drawer-panel-id -> attached_toplevel_id */
-	key = panel_gconf_full_key (key_type, profile, object_id, "attached_toplevel_id");
+	key = panel_gconf_full_key (key_type, object_id, "attached_toplevel_id");
 	toplevel_id = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (key_type, profile, object_id, "unique-drawer-panel-id");
+	key = panel_gconf_full_key (key_type, object_id, "unique-drawer-panel-id");
 	panel_id = gconf_client_get_string (client, key, NULL);
 
 	if (!toplevel_id && panel_id &&
 	    (toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id))) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "attached_toplevel_id");
+		key = panel_gconf_full_key (key_type, object_id, "attached_toplevel_id");
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 
 		toplevel_id = NULL;
 	}
 
 	/* pixmap -> custom_icon */	
-	key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+	key = panel_gconf_full_key (key_type, object_id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (key_type, profile, object_id, "pixmap");
+	key = panel_gconf_full_key (key_type, object_id, "pixmap");
 	pixmap = gconf_client_get_string (client, key, NULL);
 
 	if (!custom_icon && pixmap) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+		key = panel_gconf_full_key (key_type, object_id, "custom_icon");
 		gconf_client_set_string (client, key, pixmap, NULL);
 
-		key = panel_gconf_full_key (key_type, profile, object_id, "use_custom_icon");
+		key = panel_gconf_full_key (key_type, object_id, "use_custom_icon");
 		gconf_client_set_bool (client, key, TRUE, NULL);
 	}
 
@@ -746,44 +734,41 @@ panel_compatibility_migrate_menu_button_settings (GConfClient       *client,
 						  PanelGConfKeyType  key_type,
 						  const char        *object_id)
 {
-	const char *profile;
 	const char *key;
 	gboolean    use_custom_icon;
 	gboolean    use_menu_path;
 	char       *custom_icon;
 	char       *menu_path;
 
-	profile = panel_profile_get_name ();
-
 	/* custom-icon -> use_custom_icon */
-	key = panel_gconf_full_key (key_type, profile, object_id, "custom-icon");
+	key = panel_gconf_full_key (key_type, object_id, "custom-icon");
 	use_custom_icon = gconf_client_get_bool (client, key, NULL);
 
-	key = panel_gconf_full_key (key_type, profile, object_id, "use_custom_icon");
+	key = panel_gconf_full_key (key_type, object_id, "use_custom_icon");
 	gconf_client_set_bool (client, key, use_custom_icon, NULL);
 
 	/* custom-icon-file -> custom_icon */
-	key = panel_gconf_full_key (key_type, profile, object_id, "custom-icon-file");
+	key = panel_gconf_full_key (key_type, object_id, "custom-icon-file");
 	custom_icon = gconf_client_get_string (client, key, NULL);
 
 	if (custom_icon) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "custom_icon");
+		key = panel_gconf_full_key (key_type, object_id, "custom_icon");
 		gconf_client_set_string (client, key, custom_icon, NULL);
 	}
 
 	/* main_menu -> ! use_menu_path */
-	key = panel_gconf_full_key (key_type, profile, object_id, "main-menu");
+	key = panel_gconf_full_key (key_type, object_id, "main-menu");
 	use_menu_path = ! gconf_client_get_bool (client, key, NULL);
 
-	key = panel_gconf_full_key (key_type, profile, object_id, "use_menu_path");
+	key = panel_gconf_full_key (key_type, object_id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
 	/* path -> menu_path */
-	key = panel_gconf_full_key (key_type, profile, object_id, "path");
+	key = panel_gconf_full_key (key_type, object_id, "path");
 	menu_path = gconf_client_get_string (client, key, NULL);
 
 	if (menu_path) {
-		key = panel_gconf_full_key (key_type, profile, object_id, "menu_path");
+		key = panel_gconf_full_key (key_type, object_id, "menu_path");
 		gconf_client_set_string (client, key, menu_path, NULL);
 	}
 
@@ -797,12 +782,9 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 				     GHashTable        *panel_id_hash)
 {
 	const char *key;
-	const char *profile;
 	GSList     *l, *objects;
 
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_general_key (profile, panel_gconf_key_type_to_id_list (key_type));
+	key = panel_gconf_general_key (panel_gconf_key_type_to_id_list (key_type));
 	objects = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
 	for (l = objects; l; l = l->next) {
@@ -815,7 +797,7 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 			continue;
 		}
 
-		key = panel_gconf_full_key (key_type, profile, id, "object_type");
+		key = panel_gconf_full_key (key_type, id, "object_type");
 		object_type_str = gconf_client_get_string (client, key, NULL);
 
 		if (panel_profile_map_object_type_string (object_type_str, &object_type)) {
@@ -841,15 +823,13 @@ panel_compatibility_migrate_objects (GConfClient       *client,
 /* Major hack, but we now set toplevel_id_list in the defaults database,
  * so we need to figure out if its actually set in the users database.
  */
-static gboolean
-panel_compatibility_detect_needs_migration (const char *profile)
+
+static GConfEngine *
+get_homedir_source (void)
 {
 	GConfEngine *engine;
-	GConfValue  *value;
 	GError      *error = NULL;
 	char        *source;
-	const char  *key;
-	gboolean     needs_migration = FALSE;
 
 	source = g_strdup_printf ("xml:readwrite:%s/.gconf", g_get_home_dir ());
 
@@ -860,29 +840,50 @@ panel_compatibility_detect_needs_migration (const char *profile)
 #endif
 		g_error_free (error);
 		g_free (source);
-		return FALSE;
+		return NULL;
 	}
 
 	g_free (source);
 
-	key = panel_gconf_general_key (profile, "panel_id_list");
-	if (!(value = gconf_engine_get_without_default (engine, key, NULL)))
+	return engine;
+}
+
+static gboolean
+is_general_key_set (GConfEngine *engine,
+		    const char  *config_dir,
+		    const char  *general_key)
+{
+	GConfEntry *entry;
+	const char *key;
+	gboolean    retval;
+
+	key = panel_gconf_sprintf ("%s/general/%s", config_dir, general_key);
+
+	if (!(entry = gconf_engine_get_entry (engine, key, NULL, FALSE, NULL)))
+		return FALSE;
+
+	retval = gconf_entry_get_value (entry)       != NULL ||
+		 gconf_entry_get_schema_name (entry) != NULL;
+
+	gconf_entry_unref (entry);
+
+	return retval;
+}
+
+static gboolean
+panel_compatibility_detect_needs_migration (void)
+{
+	GConfEngine *engine;
+	gboolean     needs_migration = FALSE;
+
+	if (!(engine = get_homedir_source ()))
+		return FALSE;
+
+	if (!is_general_key_set (engine, PANEL_CONFIG_DIR, "panel_id_list"))
 		goto no_migration;
 
-	gconf_value_free (value);
-
-	key = panel_gconf_general_key (profile, "toplevel_id_list");
-	value = gconf_engine_get_without_default (engine, key, &error);
-	if (error) {
-		g_warning ("Error reading GConf value from '%s': %s", key, error->message);
-		g_error_free (error);
+	if (is_general_key_set (engine, PANEL_CONFIG_DIR, "toplevel_id_list"))
 		goto no_migration;
-	}
-
-	if (value) {
-		gconf_value_free (value);
-		goto no_migration;
-	}
 
 	needs_migration = TRUE;
 
@@ -899,20 +900,17 @@ void
 panel_compatibility_migrate_panel_id_list (GConfClient *client)
 {
 	GHashTable *panel_id_hash;
-	const char *profile;
 	const char *key;
 	GSList     *panel_id_list;
 	GSList     *toplevel_id_list = NULL;
 	GSList     *l;
 
-	profile = panel_profile_get_name ();
-
-	if (!panel_compatibility_detect_needs_migration (profile))
+	if (!panel_compatibility_detect_needs_migration ())
 		return;
 
 	panel_id_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
 
-	key = panel_gconf_general_key (profile, "panel_id_list");
+	key = panel_gconf_general_key ("panel_id_list");
 	panel_id_list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
 	for (l = panel_id_list; l; l = l->next) {
@@ -931,7 +929,7 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 		g_hash_table_insert (panel_id_hash, l->data, new_id);
 	}
 
-	key = panel_gconf_general_key (profile, "toplevel_id_list");
+	key = panel_gconf_general_key ("toplevel_id_list");
 	gconf_client_set_list (client, key, GCONF_VALUE_STRING, toplevel_id_list, NULL);
 
 	g_slist_free (panel_id_list);
@@ -941,4 +939,85 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 	panel_compatibility_migrate_objects (client, PANEL_GCONF_APPLETS, panel_id_hash);
 
 	g_hash_table_destroy (panel_id_hash);
+}
+
+static void
+copy_gconf_dir (GConfClient  *client,
+		const char   *src_dir,
+		const char   *dest_dir)
+{
+	GSList *list, *l;
+
+	list = gconf_client_all_entries (client, src_dir, NULL);
+	for (l = list; l; l = l->next) {
+		GConfEntry *entry = l->data;
+		const char *key;
+		char       *tmp;
+
+		tmp = g_path_get_basename (gconf_entry_get_key (entry));
+		key = panel_gconf_sprintf ("%s/%s", dest_dir, tmp);
+		g_free (tmp);
+
+		if (gconf_entry_get_schema_name (entry))
+			gconf_engine_associate_schema (client->engine,
+						       key,
+						       gconf_entry_get_schema_name (entry),
+						       NULL);
+
+		if (entry->value)
+			gconf_client_set (client, key, entry->value, NULL);
+
+		gconf_entry_free (entry);
+	}
+	g_slist_free (list);
+
+	list = gconf_client_all_dirs (client, src_dir, NULL);
+	for (l = list; l; l = l->next) {
+		char *subdir = l->data;
+		char *src_subdir;
+		char *dest_subdir;
+		char *tmp;
+
+		tmp = g_path_get_basename (subdir);
+		src_subdir  = gconf_concat_dir_and_key (src_dir,  tmp);
+		dest_subdir = gconf_concat_dir_and_key (dest_dir, tmp);
+		g_free (tmp);
+
+		copy_gconf_dir (client, src_subdir, dest_subdir);
+
+		g_free (src_subdir);
+		g_free (dest_subdir);
+		g_free (subdir);
+	}
+
+	g_slist_free (list);
+}
+
+void
+panel_compatibility_maybe_copy_old_config (GConfClient *client)
+{
+	GConfEngine *engine;
+	const char  *key;
+
+	key = panel_gconf_general_key ("profiles_migrated");
+	if (gconf_client_get_bool (client, key, NULL))
+		return;
+
+	if (!(engine = get_homedir_source ()))
+		goto set_migrated_flag;
+
+	if (!is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "panel_id_list")    &&
+	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "toplevel_id_list") &&
+	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "applet_id_list")   &&
+	    !is_general_key_set (engine, PANEL_OLD_CONFIG_DIR, "object_id_list"))
+		goto set_migrated_flag;
+
+	copy_gconf_dir (client, PANEL_OLD_CONFIG_DIR, PANEL_CONFIG_DIR);
+
+ set_migrated_flag:
+	key = panel_gconf_general_key ("profiles_migrated");
+	gconf_client_set_bool (client, key, TRUE, NULL);
+
+	if (engine)
+		gconf_engine_unref (engine);
 }

@@ -32,28 +32,6 @@
 #include "panel-profile.h"
 #include "panel-shell.h"
 
-static void
-panel_session_set_restart_command (GnomeClient *client,
-				   const char  *argv0)
-{
-#define N_ARGS 4
-        char *argv [N_ARGS];
-
-	g_return_if_fail (GNOME_IS_CLIENT (client));
-
-	argv [0] = (char *) argv0;
-	argv [1] = "--profile";
-	argv [2] = (char *) panel_profile_get_name ();
-	argv [3] = NULL;
-
-        gnome_client_set_restart_command (client, N_ARGS, argv);
-        gnome_client_set_priority (client, 40);
-
-        if (!getenv ("GNOME_PANEL_DEBUG"))
-                gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
-#undef N_ARGS
-}
-
 void
 panel_session_request_logout (void)
 {
@@ -98,7 +76,10 @@ panel_session_init (const char *argv0)
 
 	client = gnome_master_client ();
 
-	panel_session_set_restart_command (client, argv0);
+        if (!getenv ("GNOME_PANEL_DEBUG"))
+                gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
+
+        gnome_client_set_priority (client, 40);
 
 	g_signal_connect (client, "die",
 			  G_CALLBACK (panel_session_handle_die_request), NULL);

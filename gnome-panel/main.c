@@ -42,10 +42,7 @@ GtkTooltips *panel_tooltips = NULL;
 
 GnomeIconTheme *panel_icon_theme = NULL;
 
-static char *profile_arg;
-
 static const struct poptOption options[] = {
-  {"profile", '\0', POPT_ARG_STRING, &profile_arg, 0, N_("Specify a profile name to load"), NULL},
   {NULL, '\0', 0, NULL, 0}
 };
 
@@ -84,7 +81,7 @@ main (int argc, char **argv)
 
 	panel_global_config_load ();
 	panel_lockdown_init ();
-	panel_profile_load (profile_arg);
+	panel_profile_load ();
 
 	panel_session_init (argv [0]);
 

@@ -316,16 +316,13 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 				    int          position,
 				    const char  *id)
 {
-	const char  *profile;
 	const char  *key;
 	char        *applet_iid;
 
 	g_return_if_fail (panel_widget != NULL);
 	g_return_if_fail (id != NULL);
 
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
 	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 
 	panel_applet_frame_load (applet_iid, panel_widget, locked, position, TRUE, id);
@@ -339,18 +336,16 @@ panel_applet_frame_create (PanelToplevel *toplevel,
 			   const char    *iid)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	char        *id;
 
 	g_return_if_fail (iid != NULL);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_BONOBO, toplevel, position, FALSE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
+	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, id, "bonobo_iid");
 	gconf_client_set_string (client, key, iid, NULL);
 
 	panel_profile_add_to_list (PANEL_GCONF_APPLETS, id);
@@ -1167,9 +1162,9 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	locked_down = panel_lockdown_get_locked_down ();
 
 	retval = g_strdup_printf (
-			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
+			"%s!prefs_key=/apps/panel/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s;locked_down=%s",
-			iid, panel_profile_get_name (), id, bg_str,
+			iid, id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel),
 			locked_down ? "true" : "false");

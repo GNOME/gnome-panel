@@ -30,9 +30,10 @@
 
 #include "panel-enums.h"
 
-#define PANEL_CONFIG_DIR   "/apps/panel/profiles"
-#define PANEL_SCHEMAS_DIR  "/schemas/apps/panel"
-#define PANEL_DEFAULTS_DIR "/apps/panel/default_setup"
+#define PANEL_CONFIG_DIR     "/apps/panel"
+#define PANEL_SCHEMAS_DIR    "/schemas/apps/panel"
+#define PANEL_DEFAULTS_DIR   "/apps/panel/default_setup"
+#define PANEL_OLD_CONFIG_DIR "/apps/panel/profiles/default"
 
 G_BEGIN_DECLS
 
@@ -42,10 +43,8 @@ const char  *panel_gconf_sprintf             (const char        *format, ...) G_
 const char  *panel_gconf_basename            (const char        *key);
 char        *panel_gconf_dirname             (const char        *key);
 const char  *panel_gconf_global_key          (const char        *key);
-const char  *panel_gconf_general_key         (const char        *profile,
-					      const char        *key);
+const char  *panel_gconf_general_key         (const char        *key);
 const char  *panel_gconf_full_key            (PanelGConfKeyType  type,
-					      const char        *profile,
 					      const char        *id,
 					      const char        *key);
 const char  *panel_gconf_key_type_to_id_list (PanelGConfKeyType  type);

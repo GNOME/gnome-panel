@@ -927,7 +927,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 	PanelGConfKeyType  key_type;
 	GConfClient       *client;
 	PanelWidget       *panel_widget;
-	const char        *profile;
 	const char        *key;
 	const char        *toplevel_id;
 	char              *old_toplevel_id;
@@ -955,7 +954,6 @@ panel_applet_save_position (AppletInfo *applet_info,
 		return;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	key_type = applet_info->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 	
@@ -964,7 +962,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 	/* FIXME: Instead of getting keys, comparing and setting, there
 	   should be a dirty flag */
 
-	key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
+	key = panel_gconf_full_key (key_type, id, "toplevel_id");
 	old_toplevel_id = gconf_client_get_string (client, key, NULL);
 	if (old_toplevel_id == NULL || strcmp (old_toplevel_id, toplevel_id) != 0)
 		gconf_client_set_string (client, key, toplevel_id, NULL);
@@ -977,7 +975,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	right_stick = panel_is_applet_right_stick (applet_info->widget) ? 1 : 0;
 	key = panel_gconf_full_key (
-			key_type, profile, id, "panel_right_stick");
+			key_type, id, "panel_right_stick");
 	if (gconf_client_key_is_writable (client, key, NULL) &&
 	    (gconf_client_get_bool (client, key, NULL) ? 1 : 0) != right_stick)
 		gconf_client_set_bool (client, key, right_stick, NULL);
@@ -986,13 +984,13 @@ panel_applet_save_position (AppletInfo *applet_info,
 	if (right_stick && !panel_widget->packed)
 		position = panel_widget->size - position;
 
-	key = panel_gconf_full_key (key_type, profile, id, "position");
+	key = panel_gconf_full_key (key_type, id, "position");
 	if (gconf_client_key_is_writable (client, key, NULL) &&
 	    gconf_client_get_int (client, key, NULL) != position)
 		gconf_client_set_int (client, key, position, NULL);
 	
 	locked = panel_widget_get_applet_locked (panel_widget, applet_info->widget) ? 1 : 0;
-	key = panel_gconf_full_key (key_type, profile, id, "locked");
+	key = panel_gconf_full_key (key_type, id, "locked");
 	if (gconf_client_get_bool (client, key, NULL) ? 1 : 0 != locked)
 		gconf_client_set_bool (client, key, locked, NULL);
 }
@@ -1182,7 +1180,6 @@ panel_applet_can_freely_move (AppletInfo *applet)
 	PanelWidget       *panel_widget;
 	GConfClient       *client;
 	PanelGConfKeyType  key_type;
-	const char        *profile;
 	const char        *key;
 
 	if (panel_lockdown_get_locked_down ())
@@ -1191,19 +1188,18 @@ panel_applet_can_freely_move (AppletInfo *applet)
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 	
 	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
        
-	key = panel_gconf_full_key (key_type, profile, applet->id, "position");
+	key = panel_gconf_full_key (key_type, applet->id, "position");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
-	key = panel_gconf_full_key (key_type, profile, applet->id, "toplevel_id");
+	key = panel_gconf_full_key (key_type, applet->id, "toplevel_id");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
-	key = panel_gconf_full_key (key_type, profile, applet->id, "panel_right_stick");
+	key = panel_gconf_full_key (key_type, applet->id, "panel_right_stick");
 	if (!gconf_client_key_is_writable (client, key, NULL))
 		return FALSE;
 
@@ -1216,7 +1212,6 @@ panel_applet_lockable (AppletInfo *applet)
 	GConfClient        *client;
 	PanelWidget        *panel_widget;
 	PanelGConfKeyType   key_type;
-	const char         *profile;
 	const char         *key;
 
 	if (panel_lockdown_get_locked_down ())
@@ -1225,11 +1220,10 @@ panel_applet_lockable (AppletInfo *applet)
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 	
 	key_type = (applet->type == PANEL_OBJECT_BONOBO) ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 
-	key = panel_gconf_full_key (key_type, profile, applet->id, "locked");
+	key = panel_gconf_full_key (key_type, applet->id, "locked");
 
 	return gconf_client_key_is_writable (client, key, NULL);
 }

@@ -530,13 +530,10 @@ panel_menu_button_connect_to_gconf (PanelMenuButton *button)
 {
 	GConfClient *client;
 	const char  *key;
-	const char  *profile;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
-	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s",
-				   profile,
+	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
 				   button->priv->applet_id);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 	button->priv->gconf_notify =
@@ -550,16 +547,13 @@ panel_menu_button_disconnect_from_gconf (PanelMenuButton *button)
 {
 	GConfClient *client;
 	const char  *key;
-	const char  *profile;
 
 	if (!button->priv->gconf_notify)
 		return;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
-	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/objects/%s",
-				   profile,
+	key = panel_gconf_sprintf (PANEL_CONFIG_DIR "/objects/%s",
 				   button->priv->applet_id);
 
 	gconf_client_notify_remove (client, button->priv->gconf_notify);
@@ -788,7 +782,6 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 				   const char  *id)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	char        *menu_path;
 	char        *custom_icon;
@@ -797,21 +790,20 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	gboolean     use_custom_icon;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
 	menu_path = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
 	tooltip = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_menu_path");
 	use_menu_path = gconf_client_get_bool (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_custom_icon");
 	use_custom_icon = gconf_client_get_bool (client, key, NULL);
 
 	panel_menu_button_load (menu_path,
@@ -838,16 +830,14 @@ panel_menu_button_create (PanelToplevel *toplevel,
 			  const char    *tooltip)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	char        *id;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_MENU, toplevel, position, FALSE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_menu_path");
 	gconf_client_set_bool (client, key, use_menu_path, NULL);
 
 	if (use_menu_path && menu_path && menu_path [0]) {
@@ -855,14 +845,14 @@ panel_menu_button_create (PanelToplevel *toplevel,
 
 		menu_uri = g_strconcat ("applications:", menu_path, NULL);
 
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "menu_path");
 		gconf_client_set_string (client, key, menu_uri, NULL);
 
 		g_free (menu_uri);
 	}
 
 	if (tooltip && tooltip [0]) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
 		gconf_client_set_string (client, key, tooltip, NULL);
 	}
 

@@ -127,15 +127,13 @@ panel_gconf_global_key (const char *key)
 }
 
 const char *
-panel_gconf_general_key (const char *profile,
-			 const char *key)
+panel_gconf_general_key (const char *key)
 {
-	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/general/%s", profile, key);
+	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/general/%s", key);
 }
 
 const char *
 panel_gconf_full_key (PanelGConfKeyType  type,
-		      const char        *profile,
 		      const char        *id,
 		      const char        *key)
 {
@@ -156,8 +154,8 @@ panel_gconf_full_key (PanelGConfKeyType  type,
 		break;
 	}
 
-	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s/%s",
-				    profile, subdir, id, key);
+	return panel_gconf_sprintf (PANEL_CONFIG_DIR "/%s/%s/%s",
+				    subdir, id, key);
 }
 
 const char *

@@ -616,13 +616,10 @@ panel_action_button_type_changed (GConfClient       *client,
 static void
 panel_action_button_connect_to_gconf (PanelActionButton *button)
 {
-	const char  *key;
-	const char  *profile;
-
-	profile = panel_profile_get_name ();
+	const char *key;
 
 	key = panel_gconf_full_key (
-			PANEL_GCONF_OBJECTS, profile, button->priv->info->id, "action_type");
+			PANEL_GCONF_OBJECTS, button->priv->info->id, "action_type");
 
 	button->priv->gconf_notify =
 		gconf_client_notify_add (panel_gconf_get_client (), key, 
@@ -696,16 +693,14 @@ panel_action_button_create (PanelToplevel         *toplevel,
 			    PanelActionButtonType  type)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	char        *id;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	id = panel_profile_prepare_object (PANEL_OBJECT_ACTION, toplevel, position, FALSE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "action_type");
 	gconf_client_set_string (client,
 				 key,
 				 gconf_enum_to_string (panel_action_type_map, type),
@@ -747,12 +742,9 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 {
 	int          type;
 	const char  *key;
-	const char  *profile;
 	char        *action_type;
 
-	profile = panel_profile_get_name ();
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "action_type");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "action_type");
 	action_type = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 
 	if (!gconf_string_to_enum (panel_action_type_map, action_type, &type)) {

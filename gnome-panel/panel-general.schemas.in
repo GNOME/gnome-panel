@@ -5,6 +5,7 @@
 
     <schema>
       <key>/schemas/apps/panel/general/enable_program_list</key>
+      <applyto>/apps/panel/general/enable_program_list</applyto>
       <owner>panel</owner>
       <type>bool</type>
       <default>true</default>
@@ -21,6 +22,7 @@
 
     <schema>
       <key>/schemas/apps/panel/general/show_program_list</key>
+      <applyto>/apps/panel/general/show_program_list</applyto>
       <owner>panel</owner>
       <type>bool</type>
       <default>false</default>
@@ -37,6 +39,7 @@
 
     <schema>
       <key>/schemas/apps/panel/general/toplevel_id_list</key>
+      <applyto>/apps/panel/general/toplevel_id_list</applyto>
       <owner>panel</owner>
       <type>list</type>
       <list_type>string</list_type>
@@ -46,13 +49,14 @@
         <long>
           A list of panel IDs. Each ID identifies an individual
           toplevel panel. The settings for each of these panels are
-          stored in /apps/panel/general/$(profile)/toplevels/$(id).
+          stored in /apps/panel/toplevels/$(id).
         </long>
       </locale>
     </schema>
 
     <schema>
       <key>/schemas/apps/panel/general/applet_id_list</key>
+      <applyto>/apps/panel/general/applet_id_list</applyto>
       <owner>panel</owner>
       <list_type>string</list_type>
       <type>list</type>
@@ -63,13 +67,14 @@
           A list of panel applet IDs. Each ID identifies an
           individual panel applet. The settings for each of
           these applets are stored in
-          /apps/panel/general/$(profiles)/applets/$(id).
+          /apps/panel/applets/$(id).
         </long>
       </locale>
     </schema>
 
     <schema>
       <key>/schemas/apps/panel/general/object_id_list</key>
+      <applyto>/apps/panel/general/object_id_list</applyto>
       <owner>panel</owner>
       <type>list</type>
       <list_type>string</list_type>
@@ -81,7 +86,23 @@
           panel object (e.g. a launcher, action button or menu
           button/bar). The settings for each of these objects are
           stored in
-          /apps/panel/general/$(profiles)/objects/$(id).
+          /apps/panel/objects/$(id).
+        </long>
+      </locale>
+    </schema>
+
+    <schema>
+      <key>/schemas/apps/panel/general/profiles_migrated</key>
+      <applyto>/apps/panel/general/profiles_migrated</applyto>
+      <owner>panel</owner>
+      <type>bool</type>
+      <default>false</default>
+      <locale name="C">
+        <short>Old profiles configuration migrated</short>
+        <long>
+          A boolean flag to indicate whether the user's previous
+          configuration in /apps/panel/profiles/default has been
+          copied to the new location in /apps/panel.
         </long>
       </locale>
     </schema>

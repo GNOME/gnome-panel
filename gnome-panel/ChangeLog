@@ -1,3 +1,47 @@
+2004-11-12  Mark McLoughlin  <mark@skynet.ie>
+
+	Back in 2.4, we messed up by not realising that the new
+	configuration format didn't in fact co-exist at all well
+	with the 2.2 configuration. Which means if you share a
+	homedir between a GNOME 2.2 (or before) login and a
+	GNOME 2.4 (or later) login, you're panel is screwed
+	terribly.
+
+	This change belatedly fixes the problem by storing the
+	panel configuration in a different location from where
+	we stored it in GNOME 2.2. It also removes the broken
+	concept of panel profiles. The new layout is the same
+	as before except its store in /apps/panel now - e.g. the
+	list of panels is now /apps/panel/general/toplevel_id_list
+
+	* Makefile.am: install the default setup in /apps/panel.
+
+	* main.c: (main): remove the --profile command line argument.
+	
+	* panel-session.c: (panel_session_init): don't save --profile
+	in the RestartCommand.
+	
+	* panel-gconf.h: set new config location.
+	
+	* panel-compatibility.c:
+	(get_homedir_source): split this out. Yes, it does have
+	xml:readonly:$(HOME)/.gconf hardcoded. No I don't have any
+	better ideas.
+	(panel_compatibility_maybe_copy_old_config): copy the old
+	configuration to /apps/panel if /apps/panel/general/profiles_migrated
+	is not set.
+	
+	* panel-general.schemas.in: add /apps/panel/general/profiles_migrated
+	and apply schemas.
+	
+	* panel-default-setup.entries: don't apply the schemas for
+	general keys - we do that in panel-general.schemas now.
+	
+	* applet.c, drawer.c, launcher.c, panel-action-button.c,
+	  panel-applet-frame.c, panel-gconf.c, panel-menu-button.c,
+	  panel-profile.[ch], panel-run-dialog.c: update for the
+	fact that we don't have profiles anymore.
+
 2004-11-11  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-background-monitor.c:

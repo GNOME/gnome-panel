@@ -395,29 +395,22 @@ create_drawer_toplevel (const char *drawer_id)
 {
 	PanelToplevel *toplevel;
 	GConfClient   *client;
-	const char    *profile;
 	const char    *key;
-	char          *profile_dir;
 	char          *toplevel_id;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
-
-	profile_dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, profile);
 
 	toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 	
-	toplevel = panel_profile_load_toplevel (client, profile_dir,
+	toplevel = panel_profile_load_toplevel (client, PANEL_CONFIG_DIR,
 						PANEL_GCONF_TOPLEVELS, toplevel_id);
-
-	g_free (profile_dir);
 
 	if (!toplevel) {
 		g_free (toplevel_id);
 		return NULL;
 	}
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_toplevel_id");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer_id, "attached_toplevel_id");
 	gconf_client_set_string (client, key, toplevel_id, NULL);
 	g_free (toplevel_id);
 
@@ -455,12 +448,9 @@ panel_drawer_use_custom_icon_changed (GConfClient *client,
 	use_custom_icon = gconf_value_get_bool (entry->value);
 
 	if (use_custom_icon) {
-		const char *profile;
 		const char *key;
 
-		profile = panel_profile_get_name ();
-
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "custom_icon");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "custom_icon");
 		custom_icon = gconf_client_get_string (client, key, NULL);
 	}
 
@@ -483,13 +473,10 @@ panel_drawer_custom_icon_changed (GConfClient *client,
 	custom_icon = gconf_value_get_string (entry->value);
 
 	if (custom_icon && custom_icon [0]) {
-		const char *profile;
 		const char *key;
 		gboolean    use_custom_icon;
 
-		profile = panel_profile_get_name ();
-
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "use_custom_icon");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "use_custom_icon");
 		use_custom_icon = gconf_client_get_bool (client, key, NULL);
 		
 		button_widget_set_icon_name (BUTTON_WIDGET (drawer->button), custom_icon);
@@ -518,25 +505,23 @@ panel_drawer_connect_to_gconf (Drawer *drawer)
 {
 	GConfClient *client;
 	const char  *key;
-	const char  *profile;
 	int          i = 0;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 	
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "use_custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "use_custom_icon");
         drawer->listeners [i++] =
 		gconf_client_notify_add (client, key,
 					 (GConfClientNotifyFunc) panel_drawer_use_custom_icon_changed,
 					 drawer, NULL, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "custom_icon");
         drawer->listeners [i++] =
 		gconf_client_notify_add (client, key,
 					 (GConfClientNotifyFunc) panel_drawer_custom_icon_changed,
 					 drawer, NULL, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "tooltip");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer->info->id, "tooltip");
         drawer->listeners [i++] =
 		gconf_client_notify_add (client, key,
 					 (GConfClientNotifyFunc) panel_drawer_tooltip_changed,
@@ -631,22 +616,20 @@ panel_drawer_prepare (const char  *drawer_id,
 		      char       **attached_toplevel_id)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	if (tooltip) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "tooltip");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer_id, "tooltip");
 		gconf_client_set_string (client, key, tooltip, NULL);
 	}
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "use_custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer_id, "use_custom_icon");
 	gconf_client_set_bool (client, key, use_custom_icon, NULL);
 
 	if (custom_icon) {
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "custom_icon");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer_id, "custom_icon");
 		gconf_client_set_string (client, key, custom_icon, NULL);
 	}
 
@@ -656,18 +639,17 @@ panel_drawer_prepare (const char  *drawer_id,
 
 		toplevel_id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
 
-		toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/%s/toplevels/%s",
-						panel_profile_get_name (),
+		toplevel_dir = g_strdup_printf (PANEL_CONFIG_DIR "/toplevels/%s",
 						toplevel_id);
 		panel_gconf_associate_schemas_in_dir (client, toplevel_dir, PANEL_SCHEMAS_DIR "/toplevels");
 	
-		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_toplevel_id");
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, drawer_id, "attached_toplevel_id");
 		gconf_client_set_string (client, key, toplevel_id, NULL);
 		
-		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, profile, toplevel_id, "enable_buttons");
+		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, toplevel_id, "enable_buttons");
 		gconf_client_set_bool (client, key, TRUE, NULL);
 
-		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, profile, toplevel_id, "enable_arrows");
+		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS, toplevel_id, "enable_arrows");
 		gconf_client_set_bool (client, key, TRUE, NULL);
 
 		*attached_toplevel_id = toplevel_id;
@@ -720,10 +702,8 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			const char  *id)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	gboolean     use_custom_icon;
-	char        *profile_dir;
 	char        *toplevel_id;
 	char        *custom_icon;
 	char        *tooltip;
@@ -732,22 +712,19 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (id != NULL);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
-	profile_dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, profile);
-
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_toplevel_id");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "attached_toplevel_id");
 	toplevel_id = gconf_client_get_string (client, key, NULL);
 
-	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
+	panel_profile_load_toplevel (client, PANEL_CONFIG_DIR, PANEL_GCONF_TOPLEVELS, toplevel_id);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "use_custom_icon");
 	use_custom_icon = gconf_client_get_bool (client, key, NULL);
 	
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "tooltip");
 	tooltip = gconf_client_get_string (client, key, NULL);
 
 	load_drawer_applet (toplevel_id,
@@ -761,7 +738,6 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    id);
 
 	g_free (toplevel_id);
-	g_free (profile_dir);
 	g_free (custom_icon);
 	g_free (tooltip);
 }

@@ -835,7 +835,6 @@ panel_launcher_ensure_hoarded (Launcher   *launcher,
 			       const char *id)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	const char  *new_location = NULL;
 
@@ -843,8 +842,7 @@ panel_launcher_ensure_hoarded (Launcher   *launcher,
 		return; /* already hoarded */
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
 	if ( ! gconf_client_key_is_writable (client, key, NULL)) {
 		/* can't hoard */
 		launcher->non_writable = TRUE;
@@ -878,7 +876,6 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 {
 	GConfClient *client;
 	Launcher    *launcher;
-	const char  *profile;
 	const char  *key;
 	char        *launcher_location;
 
@@ -886,9 +883,8 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (id != NULL);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
 	launcher_location = gconf_client_get_string (client, key, NULL);
 
 	if (!launcher_location) {
@@ -1101,18 +1097,16 @@ panel_launcher_create_with_id (const char    *toplevel_id,
 			       const char    *location)
 {
 	GConfClient *client;
-	const char  *profile;
 	const char  *key;
 	char        *id;
 
 	g_return_if_fail (location != NULL);
 
 	client  = panel_gconf_get_client ();
-	profile = panel_profile_get_name ();
 
 	id = panel_profile_prepare_object_with_id (PANEL_OBJECT_LAUNCHER, toplevel_id, position, FALSE);
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "launcher_location");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, id, "launcher_location");
 	gconf_client_set_string (client, key, location, NULL);
 
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
