@@ -15,13 +15,11 @@
 #include "gdkextra.h"
 #include "panel.h"
 #include "menu.h"
+#include "launcher.h"
 #include "mico-glue.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
-
-/*FIXME: BAD HACK!!*/
-#include <gdk/gdkprivate.h>
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -174,7 +172,6 @@ save_applet_configuration(AppletInfo *info, gint *num)
 static void
 save_panel_configuration(gpointer data, gpointer user_data)
 {
-	char          *fullpath;
 	char           path[256];
 	int            x,y;
 	int           *num = user_data;
@@ -288,7 +285,6 @@ panel_session_save (GnomeClient *client,
 	gnome_config_sync();
 
 	if(is_shutdown) {
-		GList *list;
 		AppletInfo *info;
 
 		/*don't catch these any more*/
@@ -302,11 +298,6 @@ panel_session_save (GnomeClient *client,
 		    	if(info->widget)
 				gtk_signal_disconnect(GTK_OBJECT(info->widget),
 						      info->destroy_callback);
-			/*FIXME: VERY BAD HACK*/
-			if(info->widget && GTK_IS_SOCKET(info->applet_widget))
-				((GdkWindowPrivate *)
-					GTK_SOCKET(info->applet_widget)->
-						plug_window)->colormap = NULL;
 		}
 
 		puts("2");
@@ -435,12 +426,6 @@ panel_clean_applet(gint applet_id)
 		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
 
-		/*FIXME: VERY BAD HACK*/
-		if(info->widget && GTK_IS_SOCKET(info->applet_widget))
-			((GdkWindowPrivate *)
-				GTK_SOCKET(info->applet_widget)->
-					plug_window)->colormap = NULL;
-
 		if(panel)
 			panel_widget_remove(panel,w);
 	}
@@ -509,7 +494,6 @@ static void
 create_applet_menu(AppletInfo *info)
 {
 	GtkWidget *menuitem;
-	GtkWidget *applet_menu;
 	GList *user_menu = info->user_menu;
 
 	info->menu = gtk_menu_new();
@@ -685,13 +669,12 @@ applet_show_menu(gint applet_id)
 int
 applet_get_panel(gint applet_id)
 {
-	int pos = -1;
 	int panel;
 	GList *list;
 	AppletInfo *info = get_applet_info(applet_id);
 	gpointer p;
 
-	g_return_if_fail(info != NULL);
+	g_return_val_if_fail(info != NULL,-1);
 
 	p = gtk_object_get_data(GTK_OBJECT(info->widget),
 				PANEL_APPLET_PARENT_KEY);
@@ -725,7 +708,7 @@ applet_get_pos(gint applet_id)
 	AppletInfo *info = get_applet_info(applet_id);
 	AppletData *ad;
 
-	g_return_if_fail(info != NULL);
+	g_return_val_if_fail(info != NULL,-1);
 
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),
 				 PANEL_APPLET_DATA);
@@ -792,7 +775,6 @@ int
 applet_request_id (const char *path, char **cfgpath,
 		   char **globcfgpath, guint32 * winid)
 {
-	GList *list;
 	AppletInfo *info;
 	int i;
 
@@ -984,7 +966,7 @@ applet_destroy(GtkWidget *w, gpointer data)
 	gint applet_id = PTOI(data);
 	AppletInfo *info = get_applet_info(applet_id);
 
-	g_return_if_fail(info!=NULL);
+	g_return_val_if_fail(info!=NULL,FALSE);
 
 	info->widget = NULL;
 
@@ -1008,7 +990,6 @@ register_toy(GtkWidget *applet,
 	AppletInfo    info;
 	PanelWidget   *panelw;
 	GList         *list;
-	int            i;
 	
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(id_str != NULL, FALSE);
