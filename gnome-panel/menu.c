@@ -3157,8 +3157,8 @@ make_properties_submenu (GtkWidget *menu)
 
 	NameIdEnum backgrounds[] = {
 		{ N_("Standard"), MENU_BACK_NONE, PANEL_BACK_NONE },
-		{ N_("Pixmap"), MENU_BACK_COLOR, PANEL_BACK_COLOR },
-		{ N_("Color"), MENU_BACK_PIXMAP, PANEL_BACK_PIXMAP },
+		{ N_("Color"), MENU_BACK_COLOR, PANEL_BACK_COLOR },
+		{ N_("Pixmap"), MENU_BACK_PIXMAP, PANEL_BACK_PIXMAP },
 		{ NULL, NULL, -1 }
 	};
 
