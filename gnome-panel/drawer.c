@@ -399,7 +399,7 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 
 	/* this doesn't make sense anymore */
 	if ((BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) &&
-	    (IS_BASEP_WIDGET (panel->panel_parent)) {
+	    (IS_BASEP_WIDGET (panel->panel_parent))) {
 		/*pop up, if popped down, if it's not an autohidden
 		  widget then it will just ignore this next call */
 		basep_widget_autoshow(BASEP_WIDGET(panel->panel_parent));
