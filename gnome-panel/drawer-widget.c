@@ -434,6 +434,7 @@ drawer_widget_new (PanelOrientType orient,
 	drawer = gtk_type_new (DRAWER_WIDGET_TYPE);
 	drawer->pos = gtk_type_new (DRAWER_POS_TYPE);
 	pos = DRAWER_POS (drawer->pos);
+	pos->orient = orient;
 
 	switch (orient) {
 	case ORIENT_UP:
