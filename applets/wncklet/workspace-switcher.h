@@ -6,15 +6,15 @@
  *
  */
 
-#ifndef _PAGER_H_
-#define _PAGER_H_
+#ifndef __WORKSPACE_SWITCHER_APPLET_H__
+#define __WORKSPACE_SWITCHER_APPLET_H__
 
 #include <glib/gmacros.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean fill_pager_applet(PanelApplet *applet);
+gboolean workspace_switcher_applet_fill (PanelApplet *applet);
 
 G_END_DECLS
 

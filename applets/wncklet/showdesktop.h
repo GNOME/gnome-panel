@@ -29,7 +29,7 @@
 
 G_BEGIN_DECLS
 
-gboolean fill_show_desktop_applet (PanelApplet *applet);
+gboolean show_desktop_applet_fill (PanelApplet *applet);
 
 G_END_DECLS
 

@@ -29,7 +29,7 @@
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
-#include "pager.h"
+#include "workspace-switcher.h"
 
 #include "egg-screen-help.h"
 
@@ -358,13 +358,13 @@ setup_gconf (PagerData *pager)
 }
 
 gboolean
-fill_pager_applet(PanelApplet *applet)
+workspace_switcher_applet_fill (PanelApplet *applet)
 {
 	PagerData *pager;
 	GError *error;
 	gboolean display_names;
 	
-	panel_applet_add_preferences (applet, "/schemas/apps/pager_applet/prefs", NULL);
+	panel_applet_add_preferences (applet, "/schemas/apps/workspace_switcher_applet/prefs", NULL);
 	
 	pager = g_new0 (PagerData, 1);
 
@@ -462,7 +462,7 @@ fill_pager_applet(PanelApplet *applet)
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
 					   NULL,
-					   "GNOME_PagerApplet.xml",
+					   "GNOME_WorkspaceSwitcherApplet.xml",
 					   NULL,
 					   pager_menu_verbs,
 					   pager);
@@ -807,7 +807,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (pager->properties_dialog == NULL) {
 		GladeXML  *xml;
 
-		xml = glade_xml_new (PAGER_GLADEDIR "/pager.glade", NULL, NULL);
+		xml = glade_xml_new (PAGER_GLADEDIR "/workspace-switcher.glade", NULL, NULL);
 		pager->properties_dialog = glade_xml_get_widget (xml, "pager_properties_dialog");
 
 		g_object_add_weak_pointer (G_OBJECT (pager->properties_dialog), 

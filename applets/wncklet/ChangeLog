@@ -1,3 +1,49 @@
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Move all the window navigation applets into an applet of
+	thier own and add the new Window Menu applet.
+
+	* GNOME_ShowDesktopApplet.xml, GNOME_WindowListApplet.xml,
+	  GNOME_WorkspaceSwitcherApplet.xml,
+	  workspace-switcher.glade, window-list.glade: rename these.
+
+	* GNOME_WindowMenuApplet.xml: add this.
+
+	* GNOME_Wncklet_Factory.server.in.in: add the window list,
+	workspace switcher, showdesktop and new window menu applets.
+	Rename the window list and workspace switcher but retain
+	compatibility for the old iids.
+
+	* Makefile.am, default_icon.png, egg-screen-exec.[ch]
+	  egg-screen-help.[ch], egg-screen-url.[ch],
+	  update-from-egg.sh: add these.
+
+	* showdesktop.[ch]: copy these over from gen_util.
+
+	* window-list.[ch]: copy over and rename
+	(window_list_applet_fill): rename this function, update
+	the schemas location and move the setting of flags to the
+	start to avoid a race.
+	(display_properties_dialog): update the glade filename.
+
+	* window-list.schemas.in, workspace-switcher.schemas.in:
+	rename and change the schemas locations.
+
+	* window-menu.[ch]: add new window menu applet. Yes, that's
+	what we're calling "the thingy on the right side of the menu
+	panel".
+
+	* wncklet.c: add the factory. Again, retain compatibility with
+	old iids.
+
+	* workspace-switcher.[ch]: copy over and rename
+	(workspace_switcher_applet_fill): rename and update the schemas
+	locations.
+
+	(display_properties_dialog): update the glade filename.
+	* workspace-switcher.schemas.in: rename and change the schemas
+	locations.
+
 2003-01-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* mailcheck.schemas.in: s/Remove/Remote/

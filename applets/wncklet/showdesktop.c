@@ -268,7 +268,7 @@ do_not_eat_button_press (GtkWidget      *widget,
 }
 
 gboolean
-fill_show_desktop_applet (PanelApplet *applet)
+show_desktop_applet_fill (PanelApplet *applet)
 {
         ShowDesktopData *sdd;
         char *file;

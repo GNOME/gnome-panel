@@ -28,7 +28,7 @@
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
 
-#include "tasklist.h"
+#include "window-list.h"
 
 #include "egg-screen-help.h"
 
@@ -593,7 +593,7 @@ icon_loader_func (const char  *icon,
 }
 
 gboolean
-fill_tasklist_applet(PanelApplet *applet)
+window_list_applet_fill (PanelApplet *applet)
 {
 	TasklistData *tasklist;
 	GError *error;
@@ -601,11 +601,16 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	gint sizepref;
 
-	panel_applet_add_preferences (applet, "/schemas/apps/tasklist_applet/prefs", NULL);
-	
 	tasklist = g_new0 (TasklistData, 1);
 
 	tasklist->applet = GTK_WIDGET (applet);
+
+	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
+				PANEL_APPLET_EXPAND_MAJOR |
+				PANEL_APPLET_EXPAND_MINOR |
+				PANEL_APPLET_HAS_HANDLE);
+
+	panel_applet_add_preferences (applet, "/schemas/apps/window_list_applet/prefs", NULL);
 
 	setup_gconf (tasklist);
 
@@ -695,11 +700,6 @@ fill_tasklist_applet(PanelApplet *applet)
 	gtk_widget_show (tasklist->tasklist);
 
 	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
-	
-	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
-				PANEL_APPLET_EXPAND_MAJOR |
-				PANEL_APPLET_EXPAND_MINOR |
-				PANEL_APPLET_HAS_HANDLE);
 
 	gtk_widget_show (tasklist->applet);
 
@@ -723,7 +723,7 @@ fill_tasklist_applet(PanelApplet *applet)
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
 					   NULL,
-					   "GNOME_TasklistApplet.xml",
+					   "GNOME_WindowListApplet.xml",
 					   NULL,
 					   tasklist_menu_verbs, 
 					   tasklist);
@@ -984,7 +984,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (tasklist->properties_dialog == NULL) {
 		GladeXML  *xml;
 
-		xml = glade_xml_new (TASKLIST_GLADEDIR "/tasklist.glade", NULL, NULL);
+		xml = glade_xml_new (TASKLIST_GLADEDIR "/window-list.glade", NULL, NULL);
 		tasklist->properties_dialog = glade_xml_get_widget (xml, "tasklist_properties_dialog");
 
 		g_object_add_weak_pointer (G_OBJECT (tasklist->properties_dialog),

@@ -6,15 +6,15 @@
  *
  */
 
-#ifndef _TASKLIST_H_
-#define _TASKLIST_H_
+#ifndef __WINDOW_LIST_H__
+#define __WINDOW_LIST_H__
 
 #include <glib/gmacros.h>
 #include <panel-applet.h>
 
 G_BEGIN_DECLS
 
-gboolean fill_tasklist_applet(PanelApplet *applet);
+gboolean window_list_applet_fill (PanelApplet *applet);
 
 G_END_DECLS
 
