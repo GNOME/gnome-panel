@@ -3,16 +3,23 @@
 
 BEGIN_GNOME_DECLS
 
+typedef enum {
+	MAIN_MENU_BOTH,
+	MAIN_MENU_USER,
+	MAIN_MENU_SYSTEM
+} MainMenuType;
 typedef struct _Menu Menu;
 struct _Menu {
 	GtkWidget *button;
 	GtkWidget *menu;
 	char *path;
+	MainMenuType main_menu_type;
 	PanelOrientType orient;
 };
 
 Menu * create_menu_applet(char *arguments,
-			  PanelOrientType orient);
+			  PanelOrientType orient,
+			  MainMenuType main_menu_type);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 

@@ -158,7 +158,7 @@ save_applet_configuration(int num)
 			      panel_widget_is_applet_stuck(panel,
 							   info->widget));
 
-		if(strcmp(info->id_str,DRAWER_ID) == 0) {
+		if(info->type == APPLET_DRAWER) {
 			int i;
 			Drawer *drawer = info->data;
 
@@ -172,7 +172,7 @@ save_applet_configuration(int num)
 						drawer->pixmap);
 			gnome_config_set_string("config/tooltip",
 						drawer->tooltip);
-		} else if(strcmp(info->id_str,SWALLOW_ID) == 0) {
+		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			gnome_config_set_string("config/parameters",
 						info->params);
@@ -180,7 +180,13 @@ save_applet_configuration(int num)
 						info->path);
 			gnome_config_set_int("config/width",swallow->width);
 			gnome_config_set_int("config/height",swallow->height);
-		} else if(strcmp(info->id_str,LAUNCHER_ID) == 0) {
+		} else if(info->type == APPLET_MENU) {
+			Menu *menu = info->data;
+			gnome_config_set_string("config/parameters",
+						info->params);
+			gnome_config_set_int("config/main_menu_type",
+					     menu->main_menu_type);
+		} else if(info->type == APPLET_LAUNCHER) {
 			Launcher *launcher = info->data;
 			char *s;
 			/*get rid of the trailing slash*/
@@ -1209,9 +1215,9 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = get_def_panel_widget(data);
 
-	load_applet(MENU_ID,NULL,NULL,0,0,NULL,NULL,
-		    PANEL_UNKNOWN_APPLET_POSITION,
-		    panel,NULL);
+	load_menu_applet(NULL,0,
+			 PANEL_UNKNOWN_APPLET_POSITION,
+			 panel);
 }	
 
 GtkWidget *

@@ -25,9 +25,14 @@ struct _PanelData {
   just get the that one*/
 PanelWidget * get_def_panel_widget(GtkWidget *panel);
 
-void load_applet(char *id, char *path, char *params, int width, int height,
-		 char *pixmap, char *tooltip,
+void load_applet(char *id, char *path, char *params,
 		 int pos, PanelWidget *panel, char *cfgpath);
+void load_swallow_applet(char *path, char *params, int width, int height,
+			 int pos, PanelWidget *panel);
+void load_menu_applet(char *params, int main_menu_type,
+		      int pos, PanelWidget *panel);
+void load_drawer_applet(char *params, char *pixmap, char *tooltip,
+			int pos, PanelWidget *panel);
 void orientation_change(int applet_id, PanelWidget *panel);
 void back_change(int applet_id, PanelWidget *panel);
 

@@ -1,3 +1,14 @@
+Sun Jul 19 18:57:19 1998  George Lebl  <jirka@5z.com>
+
+	* main.c: cleaned up the load_applet function mess a bit,
+	  having one function that does it all is not the right choice,
+	  also took  out the applet load queue, I can't remember why it
+	  was there but it was just making things more complicated
+
+	* menu.c: cleaned things up and added a menu parameter for different
+	  usermenu/system menu configurations for the main menu, but no
+	  config fialog yet
+
 Sun Jul 19 15:20:22 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: cleanups, better multiple dir menu support, more
