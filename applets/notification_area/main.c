@@ -53,6 +53,7 @@ typedef struct
   PanelApplet *applet;
 
   GtkWidget *box;
+  GtkWidget *about_dialog;
   GtkWidget *frame;
 
   GtkOrientation orientation;
@@ -103,7 +104,6 @@ about_cb (BonoboUIComponent *uic,
           SystemTray        *tray,
           const gchar       *verbname)
 {
-  static GtkWidget *about = NULL;
   GdkPixbuf *pixbuf = NULL;
   GtkIconTheme *icon_theme;
 
@@ -118,9 +118,9 @@ about_cb (BonoboUIComponent *uic,
   };
   const char *translator_credits = _("translator_credits");
 
-  if (about)
+  if (tray->about_dialog)
     {
-      gtk_window_present (GTK_WINDOW (about));
+      gtk_window_present (GTK_WINDOW (tray->about_dialog));
       return;
     }
 
@@ -128,19 +128,23 @@ about_cb (BonoboUIComponent *uic,
   pixbuf = gtk_icon_theme_load_icon (icon_theme, "panel-notification-area",
                                      48, 0, NULL);
 
-  about = gnome_about_new (_("Panel Notification Area"), VERSION,
-                           "Copyright \xc2\xa9 2002 Red Hat, Inc.",
-                           NULL,
-                           (const char **)authors,
-                           (const char **)documenters,
-                           strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-                           pixbuf);
+  tray->about_dialog = gnome_about_new (_("Panel Notification Area"), VERSION,
+                              "Copyright \xc2\xa9 2002 Red Hat, Inc.",
+                              NULL,
+                              (const char **)authors,
+                              (const char **)documenters,
+                              strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
+                              pixbuf);
   
   g_object_unref(pixbuf);
-  g_object_add_weak_pointer (G_OBJECT (about),
-                             (gpointer) &about);
 
-  gtk_widget_show (about);
+  gtk_window_set_screen (GTK_WINDOW (tray->about_dialog),
+                         gtk_widget_get_screen (GTK_WIDGET (tray->applet)));
+
+  g_object_add_weak_pointer (G_OBJECT (tray->about_dialog),
+                             (gpointer) &tray->about_dialog);
+
+  gtk_widget_show (tray->about_dialog);
 }
 
 static const BonoboUIVerb menu_verbs [] = {
@@ -282,6 +286,14 @@ applet_change_pixel_size (PanelApplet  *applet,
 }
 
 static void
+applet_destroy (PanelApplet *applet,
+		SystemTray  *tray)
+{
+  if (tray->about_dialog)
+    gtk_widget_destroy (tray->about_dialog);
+}
+
+static void
 free_tray (SystemTray *tray)
 {
   all_trays = g_slist_remove (all_trays, tray);
@@ -380,6 +392,11 @@ applet_factory (PanelApplet *applet,
   g_signal_connect (G_OBJECT (tray->applet),
                     "change_background",
                     G_CALLBACK (applet_change_background),
+                    tray);
+
+  g_signal_connect (tray->applet,
+                    "destroy",
+                    G_CALLBACK (applet_destroy),
                     tray);
 
   update_size_and_orientation (tray);
