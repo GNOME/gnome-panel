@@ -1,12 +1,12 @@
-# Lithuanian translation of gnome-core
-# Copyright (C) 2000-2001 Free Software Foundation, Inc.
-# Gediminas Paulauskas <menesis@delfi.lt>, 2000-2001.
+# Lithuanian translation of gnome-panel
+# Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# Gediminas Paulauskas <menesis@delfi.lt>, 2000-2002.
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-core 1.5.3\n"
-"POT-Creation-Date: 2002-04-29 03:19+0100\n"
-"PO-Revision-Date: 2001-12-16 16:25+0200\n"
+"Project-Id-Version: gnome-panel 1.5.20\n"
+"POT-Creation-Date: 2002-05-07 11:41+0200\n"
+"PO-Revision-Date: 2002-05-07 11:47+0200\n"
 "Last-Translator: Gediminas Paulauskas <menesis@delfi.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,6 @@ msgstr ""
 #: applets/gen_util/GNOME_PagerApplet.xml.h:1
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:1
 #: applets/gen_util/printer.c:479
-#, fuzzy
 msgid "About..."
 msgstr "Apie..."
 
@@ -28,9 +27,9 @@ msgstr "Apie..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Pagalba"
 
@@ -39,17 +38,16 @@ msgstr "Pagalba"
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-#, fuzzy
 msgid "Preferences..."
-msgstr "Nuostatos"
+msgstr "Nuostatos..."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
 msgid "Amusements"
-msgstr ""
+msgstr "Pramogos"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
 msgid "Display a swimming fish or another animated creature"
-msgstr ""
+msgstr "Rodyti plaukianèià þuvá ar kità animuotà gyvûnà"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
 msgid "Fish"
@@ -57,25 +55,25 @@ msgstr "Þuvis"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
 msgid "From Whence That Stupid Fish Came"
-msgstr ""
+msgstr "Ið kur ta kvaila þuvis atsirado"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
 msgid "Wanda Factory"
-msgstr ""
+msgstr "Vandø gamykla"
 
 #: applets/fish/fish.c:69
-#, fuzzy, c-format
+#, c-format
 msgid "%s the GNOME Fish"
-msgstr "GNOME Þuvis %s sako:"
+msgstr "%s, GNOME þuvis"
 
 #: applets/fish/fish.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "GNOME Þuvis %s sako:"
+msgstr "GNOME þuvis %s, ðiuolaikinis þynys"
 
 #: applets/fish/fish.c:109
 msgid "GNOME Fish, the fortune teller"
-msgstr ""
+msgstr "GNOME þuvis, fortûnø pasakotoja"
 
 #: applets/fish/fish.c:484 applets/fish/fish.c:1149
 #, no-c-format
@@ -83,9 +81,9 @@ msgid "%s the Fish"
 msgstr "Þuvis %s"
 
 #: applets/fish/fish.c:485
-#, fuzzy, c-format
+#, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "GNOME Þuvis %s sako:"
+msgstr "<big><big>GNOME þuvis %s sako:</big></big>"
 
 #: applets/fish/fish.c:578
 msgid ""
@@ -100,19 +98,17 @@ msgstr ""
 "padaryti átaisà \"praktiðku\" ar naudingu."
 
 #: applets/fish/fish.c:708
-#, fuzzy
 msgid "GNOME Fish Preferences"
-msgstr "GNOME Þuvies savybës"
+msgstr "GNOME þuvies nuostatos"
 
 #: applets/fish/fish.c:718
-#, fuzzy
 msgid "_Name of GNOME fish:"
-msgstr "GNOME Þuvis Wanda"
+msgstr "GNOME þuvies _vardas:"
 
 #: applets/fish/fish.c:735
 #, fuzzy
 msgid "_Animation filename:"
-msgstr "Animuoto paveikslëlio vardas:"
+msgstr "Animuoto paveikslëlio bylos vardas:"
 
 #: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1236
 #: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
@@ -143,10 +139,12 @@ msgstr "Pasukti staèiuose skydeliuose"
 #: applets/fish/fish.c:976
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
-"run.\n"
-"\n"
+"run.\n\n"
 "Please refer to fish properties dialog."
 msgstr ""
+"Tavo sistemoje nëra ádiegta ¥fortune´, arba nëra kelyje.\n"
+"\n"
+"Praðom pataisyti tai Þuvies savybiø dialoge."
 
 #: applets/fish/fish.c:990
 msgid ""
@@ -162,7 +160,7 @@ msgstr "(su maþa Dþordþo pagalba)"
 
 #: applets/fish/fish.c:1182
 msgid "The GNOME Fish Applet"
-msgstr "GNOME Þuvies Akvariumas"
+msgstr "GNOME þuvies átaisas"
 
 #: applets/fish/fish.c:1185
 msgid ""
@@ -178,20 +176,19 @@ msgstr ""
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:2
 msgid "Copy date"
-msgstr ""
+msgstr "Kopijuoti datà"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 msgid "Copy time"
-msgstr ""
+msgstr "Kopijuoti laikà"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 msgid "Accessories"
-msgstr ""
+msgstr "Priemonës"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#, fuzzy
 msgid "Alert you when new mail arrives"
-msgstr "Groti garsà kai ateina nauji laiðkai"
+msgstr "Praneðti, kai ateina nauji laiðkai"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 msgid "Clock"
@@ -203,40 +200,38 @@ msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
-msgstr ""
+msgstr "Gauti dabarties laikà ir datà"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
 #: applets/gen_util/mailcheck.c:214
 msgid "Inbox Monitor"
-msgstr ""
+msgstr "Paðtadëþës stebyklë"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#, fuzzy
 msgid "Internet"
-msgstr "Interneto laikas"
+msgstr "Internetas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
 msgid "Switch between open windows"
-msgstr ""
+msgstr "Ðokinëti tarp atidarytø langø"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 msgid "Switch between workspaces"
-msgstr ""
+msgstr "Ðokinëti tarp darbo erdviø"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Utility"
-msgstr ""
+msgstr "Árankiai"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
 #: applets/gen_util/tasklist.c:522
-#, fuzzy
 msgid "Window List"
-msgstr "_Langas"
+msgstr "Langø sàraðas"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
 #: applets/gen_util/pager.c:432 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
-msgstr ""
+msgstr "Darbo erdviø keitiklis"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
 msgid "factory for creating some general applets"
@@ -247,9 +242,8 @@ msgid "Check for mail"
 msgstr "Tikrinti paðtà"
 
 #: applets/gen_util/clock.c:148 applets/gen_util/clock.c:445
-#, fuzzy
 msgid "%I:%M:%S %p"
-msgstr "%l:%M:%S %p"
+msgstr "%I:%M:%S %p"
 
 #: applets/gen_util/clock.c:150 applets/gen_util/clock.c:447
 msgid "%I:%M %p"
@@ -265,113 +259,105 @@ msgstr "%H:%M"
 
 #: applets/gen_util/clock.c:166 applets/gen_util/clock.c:169
 msgid "%a %b %d"
-msgstr "%a %b %d"
+msgstr "%a, %b %d"
 
 #. Show date in tooltip
 #: applets/gen_util/clock.c:267
 msgid "%A %B %d"
-msgstr "%A, %B %d"
+msgstr "%A, %B %d d."
 
 #: applets/gen_util/clock.c:361
 msgid "Computer Clock"
-msgstr ""
+msgstr "Kompiuterinis laikrodis"
 
 #: applets/gen_util/clock.c:485
 msgid "%A, %B %d %Y"
-msgstr "%A, %Y %B %d"
+msgstr "%A, %Y m. %B %d d."
 
 #: applets/gen_util/clock.c:866
-#, fuzzy
 msgid "Clock Preferences"
-msgstr "Nuostatos"
+msgstr "Laikrodþio nuostatos"
 
 #: applets/gen_util/clock.c:893
-#, fuzzy
 msgid "Clock type"
-msgstr "Laikrodþio átaisas"
+msgstr "Laikrodþio tipas"
 
 #: applets/gen_util/clock.c:903
-#, fuzzy
 msgid "_12 hour"
-msgstr "12 valandø"
+msgstr "_12 valandø"
 
 #: applets/gen_util/clock.c:909
-#, fuzzy
 msgid "_24 hour"
-msgstr "24 valandø"
+msgstr "_24 valandø"
 
 #: applets/gen_util/clock.c:914
-#, fuzzy
 msgid "_UNIX time"
-msgstr "Unix laikas"
+msgstr "_UNIX laikas"
 
 #: applets/gen_util/clock.c:918
-#, fuzzy
 msgid "_Internet time"
-msgstr "Interneto laikas"
+msgstr "_Interneto laikas"
 
 #: applets/gen_util/clock.c:955
-#, fuzzy
 msgid "Show _seconds"
-msgstr "sekundþiø"
+msgstr "Rodyti _sekundes"
 
 #: applets/gen_util/clock.c:965
-#, fuzzy
 msgid "Show _date"
-msgstr "Rodyti datà átaise"
+msgstr "Rodyti _datà"
 
 #: applets/gen_util/clock.c:975
-#, fuzzy
 msgid "Use _UTC"
-msgstr "Naudoti GMT"
+msgstr "Naudoti U_TC"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
-#: gnome-panel/menu.c:237
+#: gnome-panel/menu.c:239
 msgid "translator_credits"
-msgstr ""
+msgstr "Gediminas Paulauskas <menesis@delfi.lt>"
 
 #: applets/gen_util/clock.c:1083
 msgid "Clock Applet"
 msgstr "Laikrodþio átaisas"
 
 #: applets/gen_util/clock.c:1084
-#, fuzzy
 msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 the Free Software Foundation"
+msgstr "(C) 1998-2002 the Free Software Foundation"
 
 #: applets/gen_util/clock.c:1085
 msgid "The Clock Applet displays current time and date"
-msgstr ""
+msgstr "Laikrodþio átaisas rodo dabarties laikà ir datà"
 
 #: applets/gen_util/mailcheck.c:220
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
+"Tu nenurodei slaptaþodþio paðtadëþës stebëtuvo nuostatose,\n"
+"todël turi já ávesti kiekvienà kartà jam pasileidus."
 
 #: applets/gen_util/mailcheck.c:228
 msgid "Please enter your mailserver's _password:"
-msgstr ""
+msgstr "Praðom ávesti tavo paðto serverio _slaptaþodá:"
 
 #: applets/gen_util/mailcheck.c:273
-#, fuzzy
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"Ávyko nutolusio kliento klaida. Nutolæs tikrinimas neveiklus. Galbût "
-"naudojai blogà serverá/vardà/slaptaþodá?"
+"Paðtadëþës stebëtuvui nepavyko patikrinti tavo paðto, todël automatinis "
+"tikrinimas buvo iðjungtas.\n"
+"Galbût áraðei blogà serverá, vardà arba slaptaþodá?"
 
 #: applets/gen_util/mailcheck.c:478
 msgid "You have new mail."
-msgstr "Tu turi naujø laiðkø."
+msgstr "Yra naujø laiðkø."
 
 #: applets/gen_util/mailcheck.c:480
 msgid "You have mail."
-msgstr "Tu turi laiðkø."
+msgstr "Yra laiðkø."
 
 #: applets/gen_util/mailcheck.c:484
 #, c-format
@@ -389,9 +375,8 @@ msgstr "Nëra laiðkø."
 
 #: applets/gen_util/mailcheck.c:1010 applets/gen_util/mailcheck.c:1012
 #: applets/gen_util/mailcheck.c:1734 applets/gen_util/mailcheck.c:1736
-#, fuzzy
 msgid "Status not updated"
-msgstr "Paleisti motd reþimu"
+msgstr "Bûsena neatnaujinta"
 
 #: applets/gen_util/mailcheck.c:1181
 msgid "Mailbox resides on:"
@@ -430,18 +415,16 @@ msgid "Password:"
 msgstr "Slaptaþodis:"
 
 #: applets/gen_util/mailcheck.c:1298
-#, fuzzy
 msgid "Folder:"
-msgstr " Katalogas"
+msgstr "Aplankas:"
 
 #: applets/gen_util/mailcheck.c:1316
-#, fuzzy
 msgid "Command to run before checking for mail:"
-msgstr "KOmanda, paleidþiama prieð tikrinant paðtà:"
+msgstr "Komanda, paleidþiama prieð tikrinant paðtà:"
 
 #: applets/gen_util/mailcheck.c:1346
 msgid "Execute"
-msgstr "Ávykdyti"
+msgstr "Vykdyti"
 
 #: applets/gen_util/mailcheck.c:1357
 msgid "Before each update:"
@@ -453,20 +436,19 @@ msgstr "Kai ateina nauji laiðkai:"
 
 #: applets/gen_util/mailcheck.c:1397
 msgid "When clicked:"
-msgstr "Kai spragtelëtas:"
+msgstr "Spragtelëjus:"
 
 #: applets/gen_util/mailcheck.c:1416
 msgid "Set the number of unread mails to zero"
-msgstr ""
+msgstr "Nustatyti neskaitytø laiðkø skaièiø á nulá"
 
 #: applets/gen_util/mailcheck.c:1427
 msgid "Check for mail every"
 msgstr "Tikrinti paðtà kas"
 
 #: applets/gen_util/mailcheck.c:1441
-#, fuzzy
 msgid "minutes"
-msgstr "Punktais"
+msgstr "minutes"
 
 #: applets/gen_util/mailcheck.c:1452
 msgid "seconds"
@@ -474,31 +456,27 @@ msgstr "sekundþiø"
 
 #: applets/gen_util/mailcheck.c:1456
 msgid "Play a sound when new mail arrives"
-msgstr "Groti garsà kai ateina nauji laiðkai"
+msgstr "Groti garsà, kai ateina nauji laiðkai"
 
 #: applets/gen_util/mailcheck.c:1467
-#, fuzzy
 msgid "Select animation"
-msgstr "L_eisti animacijas"
+msgstr "Pasirink animacijà"
 
 #: applets/gen_util/mailcheck.c:1516
-#, fuzzy
 msgid "Inbox Monitor Preferences"
-msgstr "Darbalaukio áraðo savybës"
+msgstr "Paðtadëþës stebëtuvo nuostatos"
 
 #: applets/gen_util/mailcheck.c:1532
-#, fuzzy
 msgid "_Mail check"
-msgstr "Paðto tikrintuvas"
+msgstr "_Paðto tikrintuvas"
 
 #: applets/gen_util/mailcheck.c:1536
-#, fuzzy
 msgid "Mail_box"
-msgstr "Paðto dëþutë"
+msgstr "_Dëþutë"
 
 #: applets/gen_util/mailcheck.c:1613
 msgid "Mail check Applet"
-msgstr "Paðto tikrintuvas"
+msgstr "Paðto tikrinimo átaisas"
 
 #: applets/gen_util/mailcheck.c:1614
 msgid "(c) 1998-2000 the Free Software Foundation"
@@ -507,6 +485,7 @@ msgstr "(c) 1998-2000 the Free Software Foundation"
 #: applets/gen_util/mailcheck.c:1615
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr ""
+"Paðto tikrintuvas praneða, kai á tavo paðto dëþutæ ateina nauji laiðkai"
 
 #: applets/gen_util/mailcheck.c:1710
 msgid "Text only"
@@ -528,15 +507,14 @@ msgstr ""
 #: applets/gen_util/pager.c:309
 #, c-format
 msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: %"
-"s\n"
+"Error loading display_workspace_names value for workspace switcher applet: "
+"%s\n"
 msgstr ""
 
 #: applets/gen_util/pager.c:324
 #, c-format
 msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %"
-"s\n"
+"Error loading display_all_workspaces value for workspace switcher applet: %s\n"
 msgstr ""
 
 #: applets/gen_util/pager.c:433
@@ -545,40 +523,37 @@ msgstr "(c) 2001 Red Hat, Inc."
 
 #: applets/gen_util/pager.c:434
 msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage the windows."
+"The Workspace Switcher shows you a small version of your workspaces that lets "
+"you manage the windows."
 msgstr ""
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
-msgstr ""
+msgstr "_Darbalaukiø skaièius:"
 
 #: applets/gen_util/pager.glade.h:2
-#, fuzzy
 msgid "Rows"
-msgstr "Narðyti"
+msgstr "Eilutës"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
-msgstr ""
+msgstr "Rodyti _visus darbalaukius"
 
 #: applets/gen_util/pager.glade.h:4
 msgid "Show only the _current workspace"
-msgstr ""
+msgstr "Rodyti _tik dabartiná darbalauká"
 
 #: applets/gen_util/pager.glade.h:5
 msgid "Show workspace _names in the switcher"
-msgstr ""
+msgstr "_Rodyti darbalaukiø vardus perjungiklyje"
 
 #: applets/gen_util/pager.glade.h:7
-#, fuzzy
 msgid "Workspace Switcher Preferences"
-msgstr "Spausdintuvo savybës"
+msgstr "Darbalaukiø perjungiklio savybës"
 
 #: applets/gen_util/pager.glade.h:8
-#, fuzzy
 msgid "Workspaces"
-msgstr "lygiaplotis"
+msgstr "Darbalaukiai"
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -593,18 +568,16 @@ msgid "Printer name:"
 msgstr "Spausdintuvo vardas:"
 
 #: applets/gen_util/printer.c:319
-#, fuzzy
 msgid "Print command:"
 msgstr "Spausdinimo komanda:"
 
 #: applets/gen_util/printer.c:325
 msgid "Printer"
-msgstr "Spausdintuvà"
+msgstr "Spausdintuvas"
 
 #: applets/gen_util/printer.c:353
-#, fuzzy
 msgid "Printer Applet"
-msgstr "Skydelio átaisas"
+msgstr "Spausdintuvo átaisas"
 
 #: applets/gen_util/printer.c:354
 msgid "(c) 1998 the Free Software Foundation"
@@ -622,75 +595,69 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Neina sukurti priedo!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
-#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
 msgid "Properties..."
 msgstr "Savybës..."
 
 #: applets/gen_util/tasklist.c:523
-#, fuzzy
 msgid "(c) 2001 Red Hat, Inc"
-msgstr "(c) 2001 Red Hat, Inc."
+msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:524
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
+"Langø sàraðas rodo visø matomø langø sàraðà ir leidþia tarp jø persijungti."
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
-msgstr ""
+msgstr "_Grupuoti langus kai trûksta vietos"
 
 #: applets/gen_util/tasklist.glade.h:2
 msgid "Restore to current _workspace"
-msgstr ""
+msgstr "Atkurti á _dabartiná darbalauká"
 
 #: applets/gen_util/tasklist.glade.h:3
 msgid "Restore to na_tive workspace"
-msgstr ""
+msgstr "Atkurti á _gimtajá darbalauká"
 
 #: applets/gen_util/tasklist.glade.h:4
 msgid "Show windows from _current workspace"
-msgstr ""
+msgstr "Rodyti langus ið _esamo darbalaukio"
 
 #: applets/gen_util/tasklist.glade.h:5
 msgid "Show windows from a_ll workspaces"
-msgstr ""
+msgstr "Rodyti langus ið _visø darbalaukiø"
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "When restoring minimized windows"
-msgstr ""
+msgstr "Atkuriant sumaþintus langus"
 
 #: applets/gen_util/tasklist.glade.h:7
-#, fuzzy
 msgid "Window List Preferences"
-msgstr "_Langas"
+msgstr "Langø sàraðo nuostatos"
 
 #: applets/gen_util/tasklist.glade.h:8
-#, fuzzy
 msgid "Window List content"
-msgstr "_Langas"
+msgstr "Langø sàraðo turinys"
 
 #: applets/gen_util/tasklist.glade.h:9
-#, fuzzy
 msgid "Window grouping"
-msgstr "Langø tvarkyklë"
+msgstr "Langø grupavimas"
 
 #: applets/gen_util/tasklist.glade.h:10
-#, fuzzy
 msgid "_Always group windows"
-msgstr "Þemiau kitø langø"
+msgstr "_Visada grupuoti langus"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "_Never group windows"
-msgstr "Virð kitø langø"
+msgstr "_Niekada negrupuoti langø"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
 msgid "GNOME Panel Shell"
-msgstr "GNOME Pagrindinë svetainë"
+msgstr "GNOME skydelio apvalkalas"
 
 #. FIXME: should have a "Move" pixmap.
 #.
@@ -699,11 +666,10 @@ msgid "Move"
 msgstr "Perkelti"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:545
-#, fuzzy
 msgid "Remove From Panel"
 msgstr "Paðalinti ið skydelio"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:990 gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:996 gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -714,7 +680,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
@@ -731,9 +697,8 @@ msgid "state"
 msgstr "bûsena"
 
 #: gnome-panel/basep-widget.c:173 gnome-panel/basep-widget.c:174
-#, fuzzy
 msgid "hidebuttons_enabled"
-msgstr "Slëpimo mygtukai"
+msgstr ""
 
 #: gnome-panel/basep-widget.c:181 gnome-panel/basep-widget.c:182
 msgid "hidebutton_pixmaps_enabled"
@@ -744,9 +709,8 @@ msgid "Hide this panel"
 msgstr "Paslëpti ðá skydelá"
 
 #: gnome-panel/basep-widget.c:593
-#, fuzzy
 msgid "Show this panel"
-msgstr "Paðalinti ðá skydelá"
+msgstr "Rodyti ðá skydelá"
 
 #: gnome-panel/distribution.c:26
 msgid "Debian GNU/Linux"
@@ -765,14 +729,12 @@ msgid "SuSE menus"
 msgstr "SuSE meniu"
 
 #: gnome-panel/distribution.c:36
-#, fuzzy
 msgid "Solaris"
-msgstr "Spalvos"
+msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-#, fuzzy
 msgid "CDE Applications"
-msgstr "Programos"
+msgstr "CDE programos"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -807,82 +769,88 @@ msgstr "Rodyti slëpimo mygtukà"
 msgid "Enable hidebutton arrow"
 msgstr "Rodyti rodyklæ ant slëpimo mygtuko"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "Stalèius"
 
-#: gnome-panel/foobar-widget.c:214
-#, fuzzy
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:293
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Negaliu paleisti gnome-panel-screenshot"
+
+#: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:303
 msgid "Cannot execute gnome-search-tool"
-msgstr "Negaliu paleisti xscreensaver"
+msgstr "Negaliu paleisti gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
-#, fuzzy
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3569
 msgid "Run Program..."
-msgstr "Paleisti programà"
+msgstr "Paleisti programà..."
 
-#: gnome-panel/foobar-widget.c:227
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Paleisti programas, jei tu þinai, kokià teisingà komandà áraðyti"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
 msgid "Search for Files..."
-msgstr ""
+msgstr "Ieðkoti bylø..."
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
 msgid "Find files, folders, and documents on your computer"
-msgstr ""
+msgstr "Rasti bylas, aplankus ir dokumentus tavo kompiuteryje"
 
-#: gnome-panel/foobar-widget.c:251
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+msgid "Take a Screen Shot..."
+msgstr "Padaryti ekrano nuotraukà..."
+
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+msgid "Take a screen shot of your desktop"
+msgstr "Padaryti darbalaukio nuotraukà"
+
+#: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
 msgstr "Uþrakinti ekranà"
 
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:257
 msgid "Protect your computer from unauthorized use"
-msgstr ""
+msgstr "Apsaugoti kompiuterá nuo neteisëto panaudojimo"
 
-#: gnome-panel/foobar-widget.c:264
+#: gnome-panel/foobar-widget.c:266
 msgid "Log Out"
 msgstr "Atsijungti"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:269
 msgid "Quit from the GNOME desktop"
 msgstr "Iðeiti ið GNOME darbo aplinkos"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:276
+#: gnome-panel/foobar-widget.c:278
 msgid "Actions"
 msgstr "Veiksmai"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:493
 msgid "No windows open"
 msgstr "Neatidarytas nei vienas langas"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
-#: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
+#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2714
+#: gnome-panel/menu.c:2720 gnome-panel/menu.c:3535
 msgid "Applications"
 msgstr "Programos"
 
-#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
-#: gnome-panel/menu.c:2636
-#, fuzzy
+#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2598
+#: gnome-panel/menu.c:2643
 msgid "Menu Panel"
-msgstr "Meniu skydelis"
+msgstr "Meniu skydeli"
 
-#: gnome-panel/foobar-widget.c:769
-#, fuzzy
+#: gnome-panel/foobar-widget.c:778
 msgid "GNOME Menu Panel"
-msgstr "GNOME skydelis"
+msgstr "GNOME meniu skydelis"
 
 #: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
-#, fuzzy
 msgid "Can't find the screenshot program"
-msgstr "Negaliu paleisti xscreensaver"
+msgstr "Negaliu rasti nuotraukø darymo programos"
 
 #: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
-#, fuzzy
 msgid "Can't execute the screenshot program"
-msgstr "Negaliu paleisti xscreensaver"
+msgstr "Negaliu paleisti nuotraukø darymo programos"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
 #, fuzzy
@@ -926,16 +894,14 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.c:310
 #: gnome-panel/gnome-panel-preferences.glade.h:5
-#, fuzzy
 msgid "Panel Preferences"
-msgstr "Nuostatos"
+msgstr "Skydelio nuostatos"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-#, fuzzy
 msgid "Modify the global panel preferences"
-msgstr "Bendros skydeliø savybës"
+msgstr "Keisti bendras skydeliø savybes"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
 msgid "Panel"
 msgstr "Skydelis"
 
@@ -964,50 +930,48 @@ msgid "Slow"
 msgstr "Lëtas"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:8
-#, fuzzy
 msgid "_Animation Speed:"
-msgstr "Animacijø greitis:"
+msgstr "_Animacijø greitis:"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:9
 msgid "_Close drawer if a launcher inside it is pressed"
 msgstr "_Uþdaryti stalèiø, kai paspaudþiamas leistukas jo viduje"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:10
-#, fuzzy
 msgid "_Enable panel animation"
-msgstr "L_eisti animacijas"
+msgstr "L_eisti skydeliø animacijas"
 
-#: gnome-panel/gnome-panel-screenshot.c:128
+#: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:141
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:157
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:202
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:704
+#: gnome-panel/gnome-panel-screenshot.c:214
+#: gnome-panel/gnome-panel-screenshot.c:702
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1015,93 +979,80 @@ msgid ""
 "Please check your permissions of the parent directory"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:479
+#: gnome-panel/gnome-panel-screenshot.c:477
 msgid "Print Screenshot"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:527
+#: gnome-panel/gnome-panel-screenshot.c:525
 msgid "Screenshot Print Preview"
 msgstr ""
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:553
+#: gnome-panel/gnome-panel-screenshot.c:551
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr ""
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:558
+#: gnome-panel/gnome-panel-screenshot.c:556
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr ""
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:573
+#: gnome-panel/gnome-panel-screenshot.c:571
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr ""
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:578
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:724
+#: gnome-panel/gnome-panel-screenshot.c:722
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1034
+#: gnome-panel/gnome-panel-screenshot.c:1021
 msgid "Grab a window instead of the entire screen"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1035
+#: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1078
+#: gnome-panel/gnome-panel-screenshot.c:1064
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1100
+#: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
-#, fuzzy
-msgid "Screenshot Capture"
-msgstr "Uþsklanda"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
-msgid "Take a picture of the current screen contents"
-msgstr ""
-
 #: gnome-panel/gnome-panel-screenshot.glade2.h:1
-#, fuzzy
 msgid "Options"
-msgstr "Veiksmai"
+msgstr "Nuostatos"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:2
-#, fuzzy
 msgid "Preview"
-msgstr "Perþiûra:"
+msgstr "Perþiûra"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:3
-#, fuzzy
 msgid "Save screenshot to _desktop"
-msgstr "Iðsaugoti esamà bûsenà"
+msgstr "Iðsaugoti nuotraukà ant _darbalaukio"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:4
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:5
-#, fuzzy
 msgid "Screenshot"
-msgstr "Uþsklanda"
+msgstr "Nuotrauka"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:6
 msgid "_Print screenshot..."
@@ -1111,116 +1062,104 @@ msgstr ""
 msgid "_Save screenshot to file:"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:224 gnome-panel/gnome-run.c:240
-#, c-format
-msgid ""
-"Failed to load this program!\n"
-"%s"
+#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
+#, fuzzy, c-format
+msgid "Failed to run this program: '%s'"
 msgstr ""
 "Nepavyko·ákelti ðios programos!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:333
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s"
+#: gnome-panel/gnome-run.c:325
+#, fuzzy, c-format
+msgid "Failed to execute command: '%s'"
 msgstr ""
 "Nepavyko ávykdyti komandos:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:390
-#, c-format
+#: gnome-panel/gnome-run.c:384
+#, fuzzy, c-format
 msgid ""
-"Failed to execute command:\n"
-"%s\n"
-"%s"
+"Failed to execute command: '%s'\n"
+"\n"
+"Details: %s"
 msgstr ""
 "Nepavyko ávykdyti komandos:\n"
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
+msgstr "Pasirink, kokià programà paleisti"
+
+#: gnome-panel/gnome-run.c:664
+msgid "Command to run"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:679
-msgid "Executable name for selected application"
-msgstr ""
-
-#: gnome-panel/gnome-run.c:692
-#, fuzzy
+#: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
-msgstr "Narðyti..."
+msgstr "_Narðyti..."
 
-#: gnome-panel/gnome-run.c:701
-#, fuzzy
+#: gnome-panel/gnome-run.c:688
 msgid "Run in _terminal"
-msgstr "Paleisti terminale"
+msgstr "Paleisti _terminale"
 
-#: gnome-panel/gnome-run.c:927
+#: gnome-panel/gnome-run.c:922
 #, c-format
-msgid "Will run '%s'"
-msgstr "Paleis '%s'"
+msgid "Will run command: '%s'"
+msgstr "Paleis komandà: '%s'"
 
-#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
-msgid "No program selected"
-msgstr "Jokia programa nepasirinkta"
+#: gnome-panel/gnome-run.c:931
+msgid "No application selected"
+msgstr "Jokia programa nepasirinkt"
+
+#: gnome-panel/gnome-run.c:1051
+msgid "Known A_pplications:"
+msgstr "Þi_nomos programos:"
 
 #: gnome-panel/gnome-run.c:1061
-#, fuzzy
-msgid "A_pplications:"
-msgstr "Programos"
+msgid "List of known applications"
+msgstr "Þinomø programø sàraðas"
 
-#: gnome-panel/gnome-run.c:1071
-#, fuzzy
-msgid "List of Applications"
-msgstr "Programos"
-
-#: gnome-panel/gnome-run.c:1072
+#: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1181
-#, fuzzy
-msgid "_Advanced <<"
-msgstr "Iðsamiai"
+#: gnome-panel/gnome-run.c:1160
+msgid "_Known Applications <<"
+msgstr "Þinomos pro_gramos <<"
 
-#: gnome-panel/gnome-run.c:1184
-msgid "Hide the advanced controls below this button."
-msgstr "Paslëpti iðsamias nuostatas þemiau ðio mygtuko."
+#: gnome-panel/gnome-run.c:1163
+msgid "Hide the list of known applications"
+msgstr "Paslëpti þinomø programø sàraðà"
 
-#: gnome-panel/gnome-run.c:1195
-#, fuzzy
-msgid "_Advanced >>"
-msgstr "Iðsamiai"
+#: gnome-panel/gnome-run.c:1177
+msgid "_Known Applications >>"
+msgstr "Þinomos pro_gramos >>"
+
+#: gnome-panel/gnome-run.c:1180
+msgid "Display a list of known applications from the applications menu"
+msgstr ""
 
 #: gnome-panel/gnome-run.c:1198
-msgid ""
-"Allow typing in a command line instead of choosing an application from the "
-"list"
-msgstr "Leisti áraðyti komandinæ eilutæ, ne tik pasirinkti programà ið sàraðo"
-
-#: gnome-panel/gnome-run.c:1216
-#, fuzzy
 msgid "_Run"
-msgstr "Paleisti"
+msgstr "Pa_leisti"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1255
 msgid "Run Program"
 msgstr "Paleisti programà"
 
 #: gnome-panel/launcher.c:74
-#, fuzzy
 msgid "This launch icon does not specify a url to show"
-msgstr "Ði leistuko ikona nenurodo, kokià programà paleisti"
+msgstr "Ði leistuko ikona nenurodo, koká url parodyti"
 
 #: gnome-panel/launcher.c:82
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Cannot show %s\n"
 "%s"
-msgstr "Negaliu atidaryti bylos %s\n"
+msgstr ""
+"Negaliu parodyti %s\n"
+"%s"
 
 #: gnome-panel/launcher.c:109
 #, fuzzy, c-format
@@ -1238,23 +1177,21 @@ msgid ""
 msgstr "Negaliu ákelti dëþutës %s"
 
 #: gnome-panel/launcher.c:453
-#, fuzzy, c-format
+#, c-format
 msgid "Help on %s Application"
-msgstr "_Programa..."
+msgstr "Pagalba apie programà %s"
 
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
-#: gnome-panel/menu-ditem.c:254
-#, fuzzy
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
+#: gnome-panel/menu-ditem.c:256
 msgid "Launcher Properties"
-msgstr "Stalèiaus savybës"
+msgstr "Leistuko savybës"
 
-#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
-#, fuzzy
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
 msgid "Create Launcher"
-msgstr "Sukurti stalèiaus átaisà"
+msgstr "Sukurti leistukà"
 
 #. class
 #: gnome-panel/launcher.c:981
@@ -1265,7 +1202,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3384
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3391
 msgid "Log out"
 msgstr "Atsijungti"
 
@@ -1273,7 +1210,7 @@ msgstr "Atsijungti"
 msgid "Log out of GNOME"
 msgstr "Atsijungti nuo GNOME"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3371
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3378
 msgid "Lock screen"
 msgstr "Uþrakinti ekranà"
 
@@ -1312,37 +1249,37 @@ msgstr "Perleisti demonà"
 msgid "Specify a profile name to load"
 msgstr "Nurodyk ákeliamos sesijos pavadinimà"
 
-#: gnome-panel/menu-ditem.c:117
+#: gnome-panel/menu-ditem.c:119
 #, fuzzy, c-format
 msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
+"<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr "Negaliu ákelti dëþutës %s"
 
-#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
 msgid "Menu"
 msgstr "Meniu"
 
-#: gnome-panel/menu-ditem.c:437
-#, fuzzy
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
-msgstr "Negaliu sukurti laikinos bylos vardu ¥%s´"
-
-#. class
-#: gnome-panel/menu-ditem.c:458
-#, c-format
-msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
-"\n"
-"%s"
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
 msgstr ""
 
-#: gnome-panel/menu-ditem.c:482
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
+msgstr ""
+
+#. class
+#: gnome-panel/menu-ditem.c:480
+#, fuzzy, c-format
+msgid ""
+"<b>Cannot save menu item to disk</b>\n"
+"\n"
+"Details: %s"
+msgstr "Negaliu ákelti dëþutës %s"
+
+#: gnome-panel/menu-ditem.c:503
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1423,24 +1360,24 @@ msgstr "Meniu kelias"
 msgid "Use custom icon for panel button"
 msgstr "Ikona, kai numontuotas:"
 
-#: gnome-panel/menu.c:225
+#: gnome-panel/menu.c:227
 msgid "Many many others ..."
 msgstr "Daug daug kitø..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:227
+#: gnome-panel/menu.c:229
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr ""
 
-#: gnome-panel/menu.c:260
+#: gnome-panel/menu.c:262
 msgid ""
-"This program is responsible for launching other applications, embedding "
-"small applets within itself, world peace, and random X crashes."
+"This program is responsible for launching other applications, embedding small "
+"applets within itself, world peace, and random X crashes."
 msgstr ""
 "Ði programa atsakinga uþ kitø programø paleidimà, átaisø laikymà savyje, "
 "pasaulio taikà ir nenuspëjamus X'ø nulûþimus."
 
-#: gnome-panel/menu.c:266
+#: gnome-panel/menu.c:268
 msgid ""
 "\n"
 "\n"
@@ -1448,24 +1385,23 @@ msgid ""
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
 
-#: gnome-panel/menu.c:272
+#: gnome-panel/menu.c:274
 msgid "The GNOME Panel"
 msgstr "GNOME skydelis"
 
-#: gnome-panel/menu.c:273
-#, fuzzy
+#: gnome-panel/menu.c:275
 msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 the Free Software Foundation"
+msgstr "(C) 1997-2002 the Free Software Foundation"
 
-#: gnome-panel/menu.c:292
+#: gnome-panel/menu.c:294
 msgid "End world hunger"
 msgstr "Baigti pasaulio alká"
 
-#: gnome-panel/menu.c:306
+#: gnome-panel/menu.c:308
 msgid "Can't execute 'About GNOME'"
 msgstr "Negaliu ávykdyti ¥Apie GNOME´"
 
-#: gnome-panel/menu.c:324
+#: gnome-panel/menu.c:326
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1473,7 +1409,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:332 gnome-panel/menu.c:971 gnome-panel/menu.c:999
+#: gnome-panel/menu.c:334 gnome-panel/menu.c:977 gnome-panel/menu.c:1005
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1481,7 +1417,7 @@ msgid ""
 "Details: %s"
 msgstr "Negaliu ákelti áraðo"
 
-#: gnome-panel/menu.c:883
+#: gnome-panel/menu.c:889
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1489,127 +1425,119 @@ msgid ""
 "Details: %s\n"
 msgstr "Negaliu paðalinti meniu punkto %s: %s\n"
 
-#: gnome-panel/menu.c:892
+#: gnome-panel/menu.c:898
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Negaliu gauti bylos vardo ið kelio: %s"
 
-#: gnome-panel/menu.c:899
+#: gnome-panel/menu.c:905
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Negalëjau gauti katalogo vardo ið kelio: %s"
 
-#: gnome-panel/menu.c:965
+#: gnome-panel/menu.c:971
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr ""
 
-#: gnome-panel/menu.c:1252
+#: gnome-panel/menu.c:1258
 msgid "Add this launcher to panel"
 msgstr "Ádëti ðá leistukà á skydelá"
 
-#: gnome-panel/menu.c:1260
+#: gnome-panel/menu.c:1266
 msgid "Remove this item"
 msgstr "Paðalinti ðá punktà"
 
-#: gnome-panel/menu.c:1276
+#: gnome-panel/menu.c:1282
 msgid "Put into run dialog"
 msgstr "Ádëti á ¥Paleisti´ dialogà"
 
-#: gnome-panel/menu.c:1294
+#: gnome-panel/menu.c:1300
 #, c-format
 msgid "Help on %s"
 msgstr "Pagalba apie %s"
 
-#: gnome-panel/menu.c:1295
-#, fuzzy
+#: gnome-panel/menu.c:1301
 msgid "Application"
-msgstr "Animacija"
+msgstr "Programa"
 
-#: gnome-panel/menu.c:1341
+#: gnome-panel/menu.c:1347
 #, fuzzy
 msgid "Entire menu"
 msgstr "Paèiame meniu"
 
-#: gnome-panel/menu.c:1350
+#: gnome-panel/menu.c:1356
 msgid "Add this as drawer to panel"
 msgstr "Ádëti já á skydelá kaip stalèiø"
 
-#: gnome-panel/menu.c:1358
+#: gnome-panel/menu.c:1364
 msgid "Add this as menu to panel"
 msgstr "Ádëti já á skydelá kaip meniu"
 
-#: gnome-panel/menu.c:1366
+#: gnome-panel/menu.c:1372
 msgid "Add new item to this menu"
 msgstr "Ádëti naujà punktà á ðá meniu"
 
-#: gnome-panel/menu.c:1700
+#: gnome-panel/menu.c:1707
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Skydelyje jau yra bûsenos rodiklis. Jis gali bûti tik vienas"
 
-#: gnome-panel/menu.c:2295 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2302 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2513 gnome-panel/menu.c:2517
+#: gnome-panel/menu.c:2520 gnome-panel/menu.c:2524
 #, fuzzy
 msgid "Aligned Panel"
-msgstr "Kampinis skydelis"
+msgstr "Slankiojantis skydelis"
 
-#: gnome-panel/menu.c:2518
+#: gnome-panel/menu.c:2525
 #, fuzzy
 msgid "GNOME Aligned Panel"
-msgstr "Kampinis skydelis"
+msgstr "Slankiojantis skydelis"
 
-#: gnome-panel/menu.c:2534 gnome-panel/menu.c:2537 gnome-panel/menu.c:2655
-#, fuzzy
+#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2544 gnome-panel/menu.c:2662
 msgid "Edge Panel"
-msgstr "Kraðtinis skydelis"
+msgstr "Kraðtinis skydeli"
 
-#: gnome-panel/menu.c:2538
-#, fuzzy
+#: gnome-panel/menu.c:2545
 msgid "GNOME Edge Panel"
-msgstr "GNOME skydelis"
+msgstr "GNOME kraðtinis skydelis"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2558 gnome-panel/menu.c:2671
-#, fuzzy
+#: gnome-panel/menu.c:2561 gnome-panel/menu.c:2565 gnome-panel/menu.c:2678
 msgid "Sliding Panel"
 msgstr "Slankiojantis skydelis"
 
-#: gnome-panel/menu.c:2559
-#, fuzzy
+#: gnome-panel/menu.c:2566
 msgid "GNOME Sliding Panel"
-msgstr "Slankiojantis skydelis"
+msgstr "GNOME Slankiojantis skydelis"
 
-#: gnome-panel/menu.c:2575 gnome-panel/menu.c:2579 gnome-panel/menu.c:2679
-#, fuzzy
+#: gnome-panel/menu.c:2582 gnome-panel/menu.c:2586 gnome-panel/menu.c:2686
 msgid "Floating Panel"
 msgstr "Plaukiojantis skydelis"
 
-#: gnome-panel/menu.c:2580
-#, fuzzy
+#: gnome-panel/menu.c:2587
 msgid "GNOME Floating Panel"
-msgstr "Plaukiojantis skydelis"
+msgstr "GNOME plaukiojantis skydelis"
 
-#: gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2603
 msgid "You can only have one menu panel at a time."
 msgstr "Tu gali turëti tik vienà meniu skydelá."
 
-#: gnome-panel/menu.c:2663
-#, fuzzy
+#: gnome-panel/menu.c:2670
 msgid "Corner Panel"
-msgstr "Sukurti skydelá"
+msgstr "Kampinis skydelis"
 
 #. force_image
-#: gnome-panel/menu.c:2776 gnome-panel/menu.c:2783 gnome-panel/menu.c:3444
+#: gnome-panel/menu.c:2783 gnome-panel/menu.c:2790 gnome-panel/menu.c:3451
 msgid "KDE menus"
 msgstr "KDE meniu"
 
-#: gnome-panel/menu.c:2853
+#: gnome-panel/menu.c:2860
 msgid "You cannot remove your last panel."
 msgstr "Tu negali paðalinti paskutinio skydelio."
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:2872
 #, fuzzy
 msgid ""
 "When a panel is removed, the panel and its\n"
@@ -1618,107 +1546,102 @@ msgstr ""
 "Kai skydelis paðalinamas, jo bei visø jo átaisø\n"
 "nuostatos prarandamos. Paðalinti ðá skydelá?"
 
-#: gnome-panel/menu.c:3105
+#: gnome-panel/menu.c:3112
 msgid "Launcher..."
 msgstr "Leistukas..."
 
-#: gnome-panel/menu.c:3113
+#: gnome-panel/menu.c:3120
 msgid "Launcher from menu"
 msgstr "Leistukas ið meniu"
 
-#: gnome-panel/menu.c:3123
-#, fuzzy
+#: gnome-panel/menu.c:3130
 msgid "GNOME Menu"
-msgstr "GNOME Pagalba"
+msgstr "GNOME meniu"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3150
 msgid "Log out button"
 msgstr "Atsijungimo mygtukas"
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3160
 msgid "Lock button"
 msgstr "Uþrakinimo mygtukas"
 
-#: gnome-panel/menu.c:3161
+#: gnome-panel/menu.c:3168
 msgid "Status dock"
 msgstr "Bûsenos rodiklis"
 
-#: gnome-panel/menu.c:3175
+#: gnome-panel/menu.c:3182
 #, fuzzy
 msgid "Cannot execute panel global preferences"
 msgstr "Negaliu pakeisti bendrø skydeliø savybiø"
 
-#: gnome-panel/menu.c:3213
-#, fuzzy
+#: gnome-panel/menu.c:3220
 msgid "Delete this panel..."
 msgstr "Paðalinti ðá skydelá..."
 
-#: gnome-panel/menu.c:3215 gnome-panel/menu.c:3254
-#, fuzzy
+#: gnome-panel/menu.c:3222 gnome-panel/menu.c:3261
 msgid "Delete this panel"
 msgstr "Paðalinti ðá skydelá"
 
-#: gnome-panel/menu.c:3233
+#: gnome-panel/menu.c:3240
 msgid "Add to panel"
 msgstr "Ádëti á skydelá"
 
-#: gnome-panel/menu.c:3245
+#: gnome-panel/menu.c:3252
 msgid "Create panel"
 msgstr "Sukurti skydelá"
 
-#: gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3289
 msgid "Global Preferences..."
 msgstr "Bendrosios nuostatos..."
 
-#: gnome-panel/menu.c:3295
+#: gnome-panel/menu.c:3302
 msgid "Panel Manual..."
 msgstr "Skydelio þinynas..."
 
-#: gnome-panel/menu.c:3307
+#: gnome-panel/menu.c:3314
 msgid "Cannot execute xscreensaver"
 msgstr "Negaliu paleisti xscreensaver"
 
-#: gnome-panel/menu.c:3326
+#: gnome-panel/menu.c:3333
 msgid "About the panel..."
 msgstr "Apie skydelá..."
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:3347
 msgid "About GNOME..."
 msgstr "Apie GNOME..."
 
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3384
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3390
+#: gnome-panel/menu.c:3397
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3545
+#: gnome-panel/menu.c:3552
 msgid "Applets"
 msgstr "Átaisai"
 
-#: gnome-panel/menu.c:3568
-#, fuzzy
+#: gnome-panel/menu.c:3575
 msgid "Run a command"
-msgstr "Spausdinimo komanda:"
+msgstr "Paleisti komandà"
 
-#: gnome-panel/menu.c:3586
+#: gnome-panel/menu.c:3619
 msgid "Desktop"
 msgstr "Darbalaukis"
 
-#: gnome-panel/menu.c:3619
-#, fuzzy
+#: gnome-panel/menu.c:3652
 msgid "Menu:"
-msgstr "Meniu"
+msgstr "Meniu:"
 
-#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
+#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
 msgid "Main Menu"
 msgstr "Pagrindinis meniu"
 
-#: gnome-panel/menu.c:3691
+#: gnome-panel/menu.c:3724
 msgid "Can't create menu, using main menu!"
 msgstr ""
 "Negaliu sukurti meniu,\n"
@@ -1729,22 +1652,22 @@ msgstr ""
 msgid "Cannot register control widget\n"
 msgstr "Negaliu uþsiregistruoti OAF"
 
-#: gnome-panel/panel-applet-frame.c:597
+#: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:685
+#: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:812
 #, fuzzy, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
 "\n"
 "Details: %s"
-msgstr "Klaida skaitant bylà '%s': %s"
+msgstr "Negaliu ákelti áraðo"
 
 #: gnome-panel/panel-config.c:537
 msgid "Hiding"
@@ -1766,14 +1689,12 @@ msgid "Show arrows on hide button"
 msgstr "Rodyti rodykles ant mygtukø"
 
 #: gnome-panel/panel-config.c:605
-#, fuzzy
 msgid "Miscellaneous"
-msgstr "Á_vairûs"
+msgstr "Ávairûs"
 
 #: gnome-panel/panel-config.c:615
-#, fuzzy
 msgid "Current screen:"
-msgstr "Esama byla:"
+msgstr "Esamas ekranas:"
 
 #: gnome-panel/panel-config.c:674
 msgid "Panel Position"
@@ -1792,9 +1713,8 @@ msgid "Top left corner's position: X"
 msgstr "Virðutinio kairiojo kampo vieta: X"
 
 #: gnome-panel/panel-config.c:959
-#, fuzzy
 msgid "Y"
-msgstr "Y:"
+msgstr "Y"
 
 #: gnome-panel/panel-config.c:1034
 msgid "Offset from screen edge:"
@@ -1807,35 +1727,31 @@ msgstr "Skydelio dydis:"
 #: gnome-panel/panel-config.c:1104
 #, fuzzy
 msgid "XX Small (12 pixels)"
-msgstr "Maþas (36 taðkai)"
+msgstr "Labai maþas (24 taðkai)"
 
 #: gnome-panel/panel-config.c:1112
-#, fuzzy
 msgid "X Small (24 pixels)"
-msgstr "Maþas (36 taðkai)"
+msgstr "Labai maþas (24 taðkai)"
 
 #: gnome-panel/panel-config.c:1120
 msgid "Small (36 pixels)"
 msgstr "Maþas (36 taðkai)"
 
 #: gnome-panel/panel-config.c:1128
-#, fuzzy
 msgid "Medium (48 pixels)"
-msgstr "Smulkus (24 taðkai)"
+msgstr "Vidutinis (48 taðkai)"
 
 #: gnome-panel/panel-config.c:1136
 msgid "Large (64 pixels)"
 msgstr "Didelis (64 taðkai)"
 
 #: gnome-panel/panel-config.c:1144
-#, fuzzy
 msgid "X Large (80 pixels)"
-msgstr "Didelis (64 taðkai)"
+msgstr "Labai didelis (80 taðkø)"
 
 #: gnome-panel/panel-config.c:1152
-#, fuzzy
 msgid "XX Large (128 pixels)"
-msgstr "Didelis (64 taðkai)"
+msgstr "Milþiniðkas (128 taðkai)"
 
 #: gnome-panel/panel-config.c:1168
 msgid ""
@@ -1870,9 +1786,8 @@ msgstr "Naudoti spalvà:"
 
 #. image frame
 #: gnome-panel/panel-config.c:1357
-#, fuzzy
 msgid "Image"
-msgstr "Paveikslëlis:"
+msgstr "Paveikslëlis"
 
 #: gnome-panel/panel-config.c:1383
 msgid "Don't scale image to fit"
@@ -1895,9 +1810,8 @@ msgid "Edge panel"
 msgstr "Kraðtinis skydelis"
 
 #: gnome-panel/panel-config.c:1495 gnome-panel/panel-config.c:1621
-#, fuzzy
 msgid "Corner panel"
-msgstr "Sukurti skydelá"
+msgstr "Kampinis skydelis"
 
 #: gnome-panel/panel-config.c:1501 gnome-panel/panel-config.c:1632
 msgid "Sliding panel"
@@ -1913,9 +1827,8 @@ msgid "Panel properties"
 msgstr "Skydelio savybës"
 
 #: gnome-panel/panel-config.c:1662
-#, fuzzy
 msgid "Background"
-msgstr "Fonas:"
+msgstr "Fonas"
 
 #: gnome-panel/panel-shell.c:43
 #, fuzzy
@@ -1930,8 +1843,7 @@ msgstr ""
 #: gnome-panel/panel-shell.c:47
 #, fuzzy, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
+"There was a problem registering the panel with the bonobo-activation server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
@@ -1977,60 +1889,102 @@ msgstr "Uþduoèiø juostos savybës"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:643
+#: libpanel-applet/panel-applet.c:654
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:657
+#: libpanel-applet/panel-applet.c:668
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:666
+#: libpanel-applet/panel-applet.c:677
 #, fuzzy, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 "Nepavyko ávykdyti komandos:\n"
 "%s"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:684
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:853
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:850
+#: libpanel-applet/panel-applet.c:861
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:869
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:877
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:885
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
+
+#~ msgid "Wanda"
+#~ msgstr "Vanda"
+
+#, fuzzy
+#~ msgid "Your GNOME Fish's _Name:"
+#~ msgstr "Tavo GNOME þuvies vardas:"
+
+#~ msgid "CDE Menus"
+#~ msgstr "CDE meniu"
 
 #, fuzzy
 #~ msgid "Base Panel"
 #~ msgstr "Skydelis"
 
+#~ msgid "Global Panel Properties"
+#~ msgstr "Bendros skydeliø savybës"
+
+#~ msgid "Panel Settings"
+#~ msgstr "Skydelio nuostatos"
+
+#, fuzzy
+#~ msgid "_Raise panels when the mouse moves over them"
+#~ msgstr "_Iðkelti skydelius, kai pelë yra virð jø"
+
+#, fuzzy
+#~ msgid "Screenshot Capture"
+#~ msgstr "Uþsklanda"
+
+#~ msgid "_Advanced <<"
+#~ msgstr "_Iðsamiai <<"
+
+#~ msgid "Hide the advanced controls below this button."
+#~ msgstr "Paslëpti iðsamias nuostatas þemiau ðio mygtuko."
+
+#~ msgid "_Advanced >>"
+#~ msgstr "_Iðsamiai >>"
+
+#~ msgid ""
+#~ "Allow typing in a command line instead of choosing an application from "
+#~ "the list"
+#~ msgstr ""
+#~ "Leisti áraðyti komandinæ eilutæ, ne tik pasirinkti programà ið sàraðo"
+
 #~ msgid "Desktop entry properties"
 #~ msgstr "Darbalaukio áraðo savybës"
 
+#, fuzzy
+#~ msgid ""
+#~ "Cannot create the launcher.\n"
+#~ "\n"
+#~ "No command or url specified."
+#~ msgstr "Negaliu sukurti laikinos bylos vardu ¥%s´"
+
 #~ msgid "Create menu item"
 #~ msgstr "Sukurti meniu punktà"
-
-#, fuzzy
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "Kampinis skydelis"
 
 #, fuzzy
 #~ msgid "Gnome Egde Panel"
@@ -2044,61 +1998,20 @@ msgstr ""
 #~ msgid "Gnome Floating Panel"
 #~ msgstr "Plaukiojantis skydelis"
 
-#, fuzzy
-#~ msgid "Global Panel Properties"
-#~ msgstr "Bendros skydeliø savybës"
-
-#~ msgid "Panel Settings"
-#~ msgstr "Skydelio nuostatos"
-
-#, fuzzy
-#~ msgid "_Raise panels when the mouse moves over them"
-#~ msgstr "_Iðkelti skydelius, kai pelë yra virð jø"
-
-#, fuzzy
 #~ msgid "Cannot launch nautilus!"
-#~ msgstr "Negaliu ákelti dëþutës %s"
+#~ msgstr "Negaliu paleisti nautilus!"
 
 #~ msgid "Reread all menus"
 #~ msgstr "Ið naujo perskaityti meniu"
 
-#, fuzzy
-#~ msgid "Wanda"
-#~ msgstr "Standartinis"
-
-#~ msgid "Your GNOME Fish's Name:"
-#~ msgstr "Tavo GNOME Þuvies vardas:"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%b %d"
-
-#~ msgid "Time Format"
-#~ msgstr "Laiko formatas"
-
 #~ msgid "Remove from panel"
 #~ msgstr "Paðalinti ið skydelio"
-
-#, fuzzy
-#~ msgid "CDE Menus"
-#~ msgstr "KDE meniu"
 
 #~ msgid "Automatically re-check menus for newly installed software"
 #~ msgstr "Automatiðkai patikrinti meniu, ar ádiegtos naujos programos"
 
-#, fuzzy
 #~ msgid "GNOME Menu:"
-#~ msgstr "GNOME Pagalba"
+#~ msgstr "GNOME meniu:"
 
 #~ msgid "Grab key..."
 #~ msgstr "Griebti klaviðà..."
@@ -2112,2385 +2025,8 @@ msgstr ""
 #~ msgid "Keep panels on same level as other windows"
 #~ msgstr "Laikyti skydelius tame paèiame lygyje, kaip kiti langai"
 
-#, fuzzy
 #~ msgid "Run Program dialog:"
-#~ msgstr "Paleisti programà"
+#~ msgstr "Programos paleidimo dialogas:"
 
-#, fuzzy
 #~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "Labai smulkus (12 taðkø)"
-
-#, fuzzy
-#~ msgid "Clock Properties"
-#~ msgstr "Laikrodþio savybës"
-
-#, fuzzy
-#~ msgid "_Password:"
-#~ msgstr "Slaptaþodis:"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Negaliu paleisti Gnome kalendoriaus,\n"
-#~ "tikriausiai jis nëra ádiegtas.\n"
-#~ "Kalendorius yra gnome-pim pakete."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "meniu nebuvo sukurtas"
-
-#~ msgid "Today"
-#~ msgstr "Ðiandien"
-
-#~ msgid "This Week"
-#~ msgstr "Ðià savaitæ"
-
-#~ msgid "This Month"
-#~ msgstr "Ðá mënesá"
-
-#~ msgid "%l:%M %p"
-#~ msgstr "%l:%M %p"
-
-#~ msgid "%l:%M:%S %p"
-#~ msgstr "%l:%M:%S %p"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Negalëjau paleisti time-admin\n"
-#~ "Tikriausiai time-admin nëra ádiegtas"
-
-#, fuzzy
-#~ msgid "Add Appointment..."
-#~ msgstr "Pridëti susitikimà..."
-
-#, fuzzy
-#~ msgid "Set Time..."
-#~ msgstr "Nustatyti laikà"
-
-#~ msgid "Format"
-#~ msgstr "Formatas"
-
-#~ msgid "Press a key..."
-#~ msgstr "Paspausk klaviðà..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "Iðtuðtinti ekranà dabar"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "Uþrakinti ekranà dabar"
-
-#, fuzzy
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%l:%M:%S %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Praryta programa..."
-
-#~ msgid "Reload"
-#~ msgstr "Vël ákelti"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Sukurti praryjantá átaisà"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "Pavadinimas programos, kurià praryti"
-
-#~ msgid "Command (optional)"
-#~ msgstr "Komanda (nebûtina)"
-
-#~ msgid "Width"
-#~ msgstr "Plotis"
-
-#~ msgid "Height"
-#~ msgstr "Aukðtis"
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%A, %B %d"
-
-#~ msgid "clock/hourformat=12"
-#~ msgstr "clock/hourformat=24"
-
-#~ msgid "Show date in tooltip"
-#~ msgstr "Rodyti datà paaiðkinime"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "(c) 1998-2001 the Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "Laikrodþio átaisas tavo skydelyje aiðkiai ir paprastai rodo laikà ir datà"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "Negaliu rasti paveikslëlio bylos %s"
-
-#~ msgid "Run..."
-#~ msgstr "Paleisti..."
-
-#~ msgid "Programs"
-#~ msgstr "Programos"
-
-#~ msgid "Panel Global Properties"
-#~ msgstr "Bendros skydeliø savybës"
-
-#~ msgid "Key bindings"
-#~ msgstr "Klaviðø susiejimai"
-
-#, fuzzy
-#~ msgid "Popup menu key:"
-#~ msgstr "Klaviðas meniu iðkviesti"
-
-#~ msgid "Run dialog key:"
-#~ msgstr "Paleidimo dialogo klaviðas:"
-
-#~ msgid "_Enable key bindings"
-#~ msgstr "_Leisti susieti klaviðus"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "Ádëti ðá átaisà á skydelá, lyg leistukà"
-
-#~ msgid "Programs menu"
-#~ msgstr "Programø meniu"
-
-#, fuzzy
-#~ msgid "_Done"
-#~ msgstr "Be pavadinimo"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "Paðto tikrintuvo savybës"
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "Paðto tikrintuvas"
-
-#, fuzzy
-#~ msgid "Pager Applet"
-#~ msgstr "Skydelio átaisas"
-
-#, fuzzy
-#~ msgid "Tasklist Applet"
-#~ msgstr "Uþduoèiø juostos savybës"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "Paslëpti iðsamias nuostatas"
-
-#~ msgid "Advanced..."
-#~ msgstr "Iðsamiai..."
-
-#, fuzzy
-#~ msgid "_Run ..."
-#~ msgstr "Paleisti..."
-
-#~ msgid "No name"
-#~ msgstr "Be pavadinimo"
-
-#~ msgid "No filename to save to"
-#~ msgstr "Nenurodyta byla, á kurià saugoti"
-
-#~ msgid "No URL to launch"
-#~ msgstr "Nenurodytas URL, kurá parodyti"
-
-#~ msgid "Unknown encoding of: %s"
-#~ msgstr "Neþinoma %s koduotë"
-
-#, fuzzy
-#~ msgid "Error rewinding file '%s': %s"
-#~ msgstr "Klaida atidarant bylà·%s:·%s"
-
-#~ msgid "Error writing file '%s': %s"
-#~ msgstr "Klaida raðant bylà·'%s':·%s"
-
-#~ msgid "URL:"
-#~ msgstr "URL:"
-
-#~ msgid "Command:"
-#~ msgstr "Komanda:"
-
-#~ msgid "Name:"
-#~ msgstr "Pavadinimas:"
-
-#~ msgid "Comment:"
-#~ msgstr "Paaiðkinimas:"
-
-#~ msgid "Type:"
-#~ msgstr "Tipas:"
-
-#~ msgid "Icon:"
-#~ msgstr "Ikona:"
-
-#~ msgid "Browse icons"
-#~ msgstr "Narðyti ikonas"
-
-#~ msgid "Run in Terminal"
-#~ msgstr "Paleisti terminale"
-
-#~ msgid "Try this before using:"
-#~ msgstr "Prieð naudojant pabandyti tai:"
-
-#~ msgid "Documentation:"
-#~ msgstr "Dokumentacija:"
-
-#~ msgid "Name/Comment translations:"
-#~ msgstr "Pavadinimo/Paaiðkinimo vertimai:"
-
-#~ msgid "Language"
-#~ msgstr "Kalba"
-
-#~ msgid "Name"
-#~ msgstr "Pavadinimas"
-
-#~ msgid "Comment"
-#~ msgstr "Paaiðkinimas"
-
-#~ msgid "Add/Set"
-#~ msgstr "Pridëti/Pakeisti"
-
-#~ msgid "Remove"
-#~ msgstr "Paðalinti"
-
-#~ msgid "Basic"
-#~ msgstr "Esmë"
-
-#~ msgid "_Show Hints at Startup"
-#~ msgstr "_Rodyti patarimus pradþioje"
-
-#~ msgid "GNOME Terminal"
-#~ msgstr "GNOME terminalas"
-
-#~ msgid "The GNOME terminal emulation program."
-#~ msgstr "GNOME terminalo emuliavimo programa."
-
-#~ msgid "Default"
-#~ msgstr "Áprastas"
-
-#~ msgid ""
-#~ "You have switched the class of this window. Do you\n"
-#~ " want to reconfigure this window to match the default\n"
-#~ "configuration of the new class?"
-#~ msgstr ""
-#~ "Tu perjungei ðio lango klasæ. Ar nori pertvarkyti\n"
-#~ "ðá langà taip, kad jis tenkintø áprastines ðiai\n"
-#~ "klasei nuostatas?"
-
-#~ msgid "Linux console"
-#~ msgstr "Linux konsolë"
-
-#~ msgid "Color Xterm"
-#~ msgstr "Spalvotas Xterm"
-
-#~ msgid "rxvt"
-#~ msgstr "rxvt"
-
-#~ msgid "Custom"
-#~ msgstr "Pasirinkta"
-
-#~ msgid "White on black"
-#~ msgstr "Balta ant juodo"
-
-#~ msgid "Black on white"
-#~ msgstr "Juoda ant balto"
-
-#~ msgid "Green on black"
-#~ msgstr "Þalia ant juodo"
-
-#~ msgid "Black on light yellow"
-#~ msgstr "Juoda ant gelsvo"
-
-#~ msgid "Custom colors"
-#~ msgstr "Pasirinktos spalvos"
-
-#~ msgid "Left"
-#~ msgstr "Kairëje"
-
-#~ msgid "Right"
-#~ msgstr "Deðinëje"
-
-#~ msgid "Hidden"
-#~ msgstr "Paslëpta"
-
-#~ msgid "Color selector"
-#~ msgstr "Spalvø parinkiklis"
-
-#~ msgid ""
-#~ "There has been an error while trying to log in:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ávyko klaida, bandant prisijungti:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Terminal"
-#~ msgstr "Terminalas"
-
-#~ msgid "Terminal class name"
-#~ msgstr "Terminalo klasës pavadinimas"
-
-#~ msgid "TCLASS"
-#~ msgstr "TKLASË"
-
-#~ msgid "Specifies font name"
-#~ msgstr "Nurodo ðrifto pavadinimà"
-
-#~ msgid "FONT"
-#~ msgstr "ÐRIFTAS"
-
-#~ msgid "Do not start up shells as login shells"
-#~ msgstr "Nepaleisti shell'o kaip login shell'o"
-
-#~ msgid "Start up shells as login shells"
-#~ msgstr "Shell'à paleisti kaip login shell'à"
-
-#~ msgid "Specifies the geometry for the main window"
-#~ msgstr "Nurodo geometrijà pagrindiniam langui"
-
-#~ msgid "GEOMETRY"
-#~ msgstr "GEOMETRIJA"
-
-#~ msgid "Execute this program instead of a shell"
-#~ msgstr "Paleisti ðià programà vietoje shell'o"
-
-#~ msgid "COMMAND"
-#~ msgstr "KOMANDA"
-
-#~ msgid "Execute this program the same way as xterm does"
-#~ msgstr "Paleisti ðià programà taip, kaip tai daro xterm'as"
-
-#~ msgid "Foreground color"
-#~ msgstr "Priekinio plano spalva"
-
-#~ msgid "COLOR"
-#~ msgstr "SPALVA"
-
-#~ msgid "Background color"
-#~ msgstr "Fono spalva"
-
-#~ msgid "Solid background"
-#~ msgstr "Vientisas fonas"
-
-#~ msgid "SOLID"
-#~ msgstr "VIENTISAS"
-
-#~ msgid "Background pixmap"
-#~ msgstr "Paveikslëlis fonui"
-
-#~ msgid "PIXMAP"
-#~ msgstr "PAVEIKSL"
-
-#~ msgid "Background pixmap scrolls"
-#~ msgstr "Fono paveikslëlis slankiojantis"
-
-#~ msgid "BGSCROLL"
-#~ msgstr "SLANK"
-
-#~ msgid "Background pixmap does not scroll"
-#~ msgstr "Fono paveikslëlis neslankiojantis"
-
-#~ msgid "BGNOSCROLL"
-#~ msgstr "NESLANK"
-
-#~ msgid "Shade background"
-#~ msgstr "Patamsinti fonà"
-
-#~ msgid "SHADED"
-#~ msgstr "TAMS"
-
-#~ msgid "Do not shade background"
-#~ msgstr "Netamsinti fono"
-
-#~ msgid "NOSHADED"
-#~ msgstr "NETAMS"
-
-#~ msgid "Transparent background"
-#~ msgstr "Permatomas fonas"
-
-#~ msgid "TRANSPARENT"
-#~ msgstr "PERMATOMAS"
-
-#~ msgid "Update utmp entry"
-#~ msgstr "Atnaujinti utmp áraðà"
-
-#~ msgid "UTMP"
-#~ msgstr "UTMP"
-
-#~ msgid "Do not update utmp entry"
-#~ msgstr "Neatnaujinti utmp áraðo"
-
-#~ msgid "NOUTMP"
-#~ msgstr "NOUTMP"
-
-#~ msgid "Update wtmp entry"
-#~ msgstr "Atnaujinti wtmp áraðà"
-
-#~ msgid "WTMP"
-#~ msgstr "WTMP"
-
-#~ msgid "Do not update wtmp entry"
-#~ msgstr "Neatnaujinti wtmp áraðo"
-
-#~ msgid "NOWTMP"
-#~ msgstr "NOWTMP"
-
-#~ msgid "Update lastlog entry"
-#~ msgstr "Atnaujinti lastlog áraðà"
-
-#~ msgid "LASTLOG"
-#~ msgstr "LASTLOG"
-
-#~ msgid "Do not update lastlog entry"
-#~ msgstr "Neatnaujinti lastlog áraðo"
-
-#~ msgid "NOLASTLOG"
-#~ msgstr "NOLASTLOG"
-
-#~ msgid "Set the window title"
-#~ msgstr "Nurodyti lango pavadinimà"
-
-#~ msgid "TITLE"
-#~ msgstr "PAVADINIMAS"
-
-#~ msgid "Set the window icon"
-#~ msgstr "Nurodyti lango ikonà"
-
-#~ msgid "ICON"
-#~ msgstr "IKONA"
-
-#~ msgid "Set the TERM variable"
-#~ msgstr "Nurodyti TERM kintamàjá"
-
-#~ msgid "TERMNAME"
-#~ msgstr "TERMNAME"
-
-#~ msgid "Try to start a TerminalFactory"
-#~ msgstr "Bandyti paleisti TerminalFactory"
-
-#~ msgid "Try to create the terminal with the TerminalFactory"
-#~ msgstr "Bandyti sukurti terminalà su TerminalFactory"
-
-#~ msgid "Enter UNIX commands"
-#~ msgstr "GNOME terminalo emuliatorius"
-
-#~ msgid "Background color:"
-#~ msgstr "Fono spalva"
-
-#~ msgid "Background should be shaded"
-#~ msgstr "Fonas turi bûti uþtamsintas"
-
-#~ msgid "Background type"
-#~ msgstr "Fono tipas"
-
-#~ msgid "Blinking cursor"
-#~ msgstr "Mirksintis þymeklis"
-
-#~ msgid "Color palette:"
-#~ msgstr "Spalvø paletë:"
-
-#~ msgid "Color scheme:"
-#~ msgstr "Spalvø schema:"
-
-#~ msgid "Colors"
-#~ msgstr "Spalvos"
-
-#~ msgid "Enable bold text"
-#~ msgstr "Leisti pastorintà tekstà"
-
-#~ msgid "Font:"
-#~ msgstr "Ðriftas:"
-
-#~ msgid "Fore/Background Color:"
-#~ msgstr "Raidþiø/Fono spalva:"
-
-#~ msgid "Foreground color:"
-#~ msgstr "Raidþiø spalva:"
-
-#~ msgid "Hide menu bar"
-#~ msgstr "Paslëpti meniu juostà"
-
-#~ msgid "Pick a color"
-#~ msgstr "Pasirink spalvà"
-
-#~ msgid "Pixmap file:"
-#~ msgstr "Paveikslëlio byla:"
-
-#~ msgid "Scroll on keystroke"
-#~ msgstr "Slinkti nuspaudus klaviðà"
-
-#~ msgid "Scroll on output"
-#~ msgstr "Slinkti iðvedant"
-
-#~ msgid "Scrollback lines:"
-#~ msgstr "Ásimenamos eilutës:"
-
-#~ msgid "Scrollbar position:"
-#~ msgstr "Slankiklio vieta:"
-
-#~ msgid "Scrolling"
-#~ msgstr "Slinkimas"
-
-#~ msgid "Select-by-word characters:"
-#~ msgstr "Paþymëti-þodá simboliai:"
-
-#~ msgid "Silence terminal bell"
-#~ msgstr "Uþtildyti terminalo varpelá"
-
-#, fuzzy
-#~ msgid "Swap Delete/Backspace"
-#~ msgstr "Sukeisti DEL/Backspace"
-
-#~ msgid "Terminal Class:"
-#~ msgstr "Terminalo klasë:"
-
-#~ msgid "Transparent"
-#~ msgstr "Skaidrus"
-
-#~ msgid "Use --login by default"
-#~ msgstr "Naudoti --login pasirinktá"
-
-#, fuzzy
-#~ msgid "C_olor selector"
-#~ msgstr "Spalvø parinkiklis"
-
-#, fuzzy
-#~ msgid "Copy _link location"
-#~ msgstr "Animacija"
-
-#~ msgid "Edit"
-#~ msgstr "Keisti"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Filtras"
-
-#, fuzzy
-#~ msgid "GNOME terminal users guide"
-#~ msgstr "GNOME terminalas"
-
-#, fuzzy
-#~ msgid "Reset and _clear"
-#~ msgstr "Nuimti filtrà"
-
-#~ msgid "Settings"
-#~ msgstr "Nuostatos"
-
-#~ msgid "_Close terminal"
-#~ msgstr "_Uþdaryti terminalà"
-
-#~ msgid "_Hide menubar"
-#~ msgstr "_Paslëpti meniu"
-
-#~ msgid "_New terminal"
-#~ msgstr "Naujas _terminalas"
-
-#~ msgid "_Open in browser"
-#~ msgstr "_Atidaryti narðyklëje"
-
-#, fuzzy
-#~ msgid "_Paste"
-#~ msgstr "Greitas"
-
-#, fuzzy
-#~ msgid "_Preferences"
-#~ msgstr "Nuostatos"
-
-#, fuzzy
-#~ msgid "_Reset terminal"
-#~ msgstr "Pe_rkrauti terminalà"
-
-#~ msgid "_Secure keyboard"
-#~ msgstr "_Saugi klaviatûra"
-
-#~ msgid "Foundry:"
-#~ msgstr "Liejykla:"
-
-#~ msgid "Family:"
-#~ msgstr "Ðeima:"
-
-#~ msgid "Weight:"
-#~ msgstr "Svoris:"
-
-#~ msgid "Slant:"
-#~ msgstr "Palinkimas:"
-
-#~ msgid "Set Width:"
-#~ msgstr "Nustatyti plotá:"
-
-#~ msgid "Add Style:"
-#~ msgstr "Pridëti stiliø:"
-
-#~ msgid "Pixel Size:"
-#~ msgstr "Taðkelio dydis:"
-
-#~ msgid "Point Size:"
-#~ msgstr "Punkto dydis:"
-
-#~ msgid "Resolution X:"
-#~ msgstr "Raiðka X:"
-
-#~ msgid "Resolution Y:"
-#~ msgstr "Raiðka Y:"
-
-#~ msgid "Spacing:"
-#~ msgstr "Intervalas:"
-
-#~ msgid "Average Width:"
-#~ msgstr "Vidutinis plotis:"
-
-#~ msgid "Charset:"
-#~ msgstr "Koduotë:"
-
-#~ msgid "Font Property"
-#~ msgstr "Ðrifto savybë"
-
-#~ msgid "Requested Value"
-#~ msgstr "Praðytoji reikðmë"
-
-#~ msgid "Actual Value"
-#~ msgstr "Tikroji reikðmë"
-
-#~ msgid "Font"
-#~ msgstr "Ðriftas"
-
-#~ msgid "Font Style:"
-#~ msgstr "Ðrifto stilius:"
-
-#~ msgid "Size:"
-#~ msgstr "Dydis:"
-
-#~ msgid "Reset Filter"
-#~ msgstr "Nuimti filtrà"
-
-#~ msgid "Metric:"
-#~ msgstr "Matuojama:"
-
-#~ msgid "Points"
-#~ msgstr "Punktais"
-
-#~ msgid "Pixels"
-#~ msgstr "Taðkeliais"
-
-#~ msgid "Preview:"
-#~ msgstr "Perþiûra:"
-
-#~ msgid "Font Information"
-#~ msgstr "Ðrifto informacija"
-
-#~ msgid "Requested Font Name:"
-#~ msgstr "Praðytasis ðrifto vardas:"
-
-#~ msgid "Actual Font Name:"
-#~ msgstr "Tikrasis ðrifto vardas:"
-
-#~ msgid "%i fonts available with a total of %i styles."
-#~ msgstr "Turime %i ðriftø su %i stiliø ið viso."
-
-#~ msgid "Filter"
-#~ msgstr "Filtras"
-
-#~ msgid "Font Types:"
-#~ msgstr "Ðriftø tipai:"
-
-#~ msgid "Bitmap"
-#~ msgstr "Taðkinis"
-
-#~ msgid "Scalable"
-#~ msgstr "Keièiamo dydþio"
-
-#~ msgid "Scaled Bitmap"
-#~ msgstr "Keièiamas taðkinis"
-
-#~ msgid "*"
-#~ msgstr "*"
-
-#~ msgid "(nil)"
-#~ msgstr "(joks)"
-
-#~ msgid "regular"
-#~ msgstr "paprastas"
-
-#~ msgid "italic"
-#~ msgstr "kursyvinis"
-
-#~ msgid "oblique"
-#~ msgstr "pakrypæs"
-
-#~ msgid "reverse italic"
-#~ msgstr "atbulai kursyvinis"
-
-#~ msgid "reverse oblique"
-#~ msgstr "atbulai pasviræs"
-
-#~ msgid "other"
-#~ msgstr "kitoks"
-
-#~ msgid "[M]"
-#~ msgstr "[M]"
-
-#~ msgid "[C]"
-#~ msgstr "[C]"
-
-#~ msgid "The selected font is not available."
-#~ msgstr "Praðomas ðriftas nepasiekiamas."
-
-#~ msgid "The selected font is not a valid font."
-#~ msgstr "Pasirinktas ðriftas nëra sveikas ðriftas."
-
-#~ msgid "This is a 2-byte font and may not be displayed correctly."
-#~ msgstr "Tai yra 2 baitø ðriftas ir negali bûti teisingai parodytas."
-
-#~ msgid "(unknown)"
-#~ msgstr "(neþinomas)"
-
-#~ msgid "roman"
-#~ msgstr "romëniðkas"
-
-#~ msgid "proportional"
-#~ msgstr "ávairiaplotis"
-
-#~ msgid "char cell"
-#~ msgstr "þenklo dydþio"
-
-#~ msgid "Font: (Filter Applied)"
-#~ msgstr "Ðriftas: (Pritaikytas filtras)"
-
-#~ msgid "MAX_FONTS exceeded. Some fonts may be missing."
-#~ msgstr "MAX_FONTS virðytas. Kai kuriø ðriftø gali trûkti."
-
-#~ msgid "Font Selection"
-#~ msgstr "Ðrifto pasirinkimas"
-
-#~ msgid "Select a font"
-#~ msgstr "Pasirink ðriftà"
-
-#~ msgid "About GNOME"
-#~ msgstr "Apie GNOME"
-
-#~ msgid "GNOME News Site"
-#~ msgstr "GNOME Naujienø svetainë"
-
-#~ msgid "http://www.gnome.org/"
-#~ msgstr "http://www.gnome.org/"
-
-#~ msgid "GNOME Main Site"
-#~ msgstr "GNOME Pagrindinë svetainë"
-
-#~ msgid "GNOME Developers' Site"
-#~ msgstr "GNOME Kûrëjø svetainë"
-
-#~ msgid "GNOME was brought to you by"
-#~ msgstr "GNOME jums sukûrë jie:"
-
-#~ msgid "Szabolcs 'Shooby' Ban"
-#~ msgstr "Szabolcs 'Shooby' Ban"
-
-#~ msgid "Frederic Devernay"
-#~ msgstr "Frédéric Devernay"
-
-#~ msgid "Gergo Erdi"
-#~ msgstr "Gergo Érdi"
-
-#~ msgid "The Mysterious GEGL"
-#~ msgstr "Mistiðkasis GEGL"
-
-#~ msgid "Sung-Hyun Nam"
-#~ msgstr "Sung-Hyun Nam"
-
-#~ msgid "Martin Norbaeck"
-#~ msgstr "Martin Norbäck"
-
-#~ msgid "Tomas Oegren"
-#~ msgstr "Tomas Ögren"
-
-#~ msgid "Kazuhiro Sasayama"
-#~ msgstr "Kazuhiro Sasayama"
-
-#~ msgid "Inigo Serna"
-#~ msgstr "Inigo Serna"
-
-#, fuzzy
-#~ msgid "Miroslav Silovic"
-#~ msgstr "Tomislav Jankovic"
-
-#, fuzzy
-#~ msgid "The Squeaky Rubber Gnome"
-#~ msgstr "The Same Gnome"
-
-#~ msgid "... and many more"
-#~ msgstr "... ir daugybë kitø"
-
-#~ msgid "GNOME Login"
-#~ msgstr "GNOME prisijungimas"
-
-#~ msgid "Login"
-#~ msgstr "Vartotojas"
-
-#~ msgid "Start with default programs"
-#~ msgstr "Paleisti su standartinëmis programomis"
-
-#~ msgid "Really reset all GNOME user settings for %s?"
-#~ msgstr "Tikrai ið naujo nustatyti visà GNOME aplinkà vartotojui %s?"
-
-#~ msgid ""
-#~ "The directory /tmp/orbit-%s is not owned\n"
-#~ "by the current user, %s.\n"
-#~ "Please correct the ownership of this directory."
-#~ msgstr ""
-#~ "Katalogas /tmp/orbit-%s nepriklauso\n"
-#~ "esamàjam vartotojui, %s.\n"
-#~ "Pataisyk ðio katalogo priklausomybæ."
-
-#~ msgid "Try again"
-#~ msgstr "Bandyti vël"
-
-#~ msgid "Continue"
-#~ msgstr "Tæsti"
-
-#~ msgid ""
-#~ "Could not look up internet address for %s.\n"
-#~ "This will prevent GNOME from operating correctly.\n"
-#~ "It may be possible to correct the problem by adding\n"
-#~ "%s to the file /etc/hosts."
-#~ msgstr ""
-#~ "Negalëjau ieðkoti %s adreso Internete.\n"
-#~ "Tai neleis GNOME veikti teisingai.\n"
-#~ "Problemà ámanoma pataisyti, priraðius\n"
-#~ "%s á bylà /etc/hosts."
-
-#~ msgid "Order: "
-#~ msgstr "Tvarka: "
-
-#~ msgid "Style: "
-#~ msgstr "Stilius: "
-
-#~ msgid "Order"
-#~ msgstr "Tvarka"
-
-#~ msgid "Style"
-#~ msgstr "Stilius"
-
-#~ msgid "State"
-#~ msgstr "Bûsena"
-
-#~ msgid "Program"
-#~ msgstr "Programa"
-
-#~ msgid "Inactive"
-#~ msgstr "Neaktyvi"
-
-#~ msgid "Waiting to start or already finished."
-#~ msgstr "Laukiu, kol pasileis, arba jau baigësi."
-
-#~ msgid "Starting"
-#~ msgstr "Paleidþiam"
-
-#~ msgid "Started but has not yet reported state."
-#~ msgstr "Paleista, bet kol kas nepraneðë bûsenos."
-
-#~ msgid "Running"
-#~ msgstr "Bëganti"
-
-#~ msgid "A normal member of the session."
-#~ msgstr "Normali sesijos narë."
-
-#~ msgid "Saving"
-#~ msgstr "Iðsaugau"
-
-#~ msgid "Saving session details."
-#~ msgstr "Iðsaugau sesijos detales."
-
-#~ msgid "Unknown"
-#~ msgstr "Neþinoma"
-
-#~ msgid "State not reported within timeout."
-#~ msgstr "Bûsena nepraneðta laiko ribose."
-
-#~ msgid "Normal"
-#~ msgstr "Normaliai"
-
-#~ msgid "Unaffected by logouts but can die."
-#~ msgstr "Nepaveikiama atsijungimo bet gali mirti."
-
-#~ msgid "Respawn"
-#~ msgstr "Prisikelianti"
-
-#~ msgid "Never allowed to die."
-#~ msgstr "Niekada neleidþiama mirti."
-
-#~ msgid "Trash"
-#~ msgstr "Ðiukðlës"
-
-#~ msgid "Discarded on logout and can die."
-#~ msgstr "Atmetama atsijungiant ir gali mirti."
-
-#~ msgid "Always started on every login."
-#~ msgstr "Paleidþiama kaskart prisijungus."
-
-#~ msgid "Remove Program"
-#~ msgstr "Paðalinti programà"
-
-#~ msgid "Really log out?"
-#~ msgstr "Tikrai atsijungti?"
-
-#~ msgid "Save current setup"
-#~ msgstr "Iðsaugoti esamà bûsenà"
-
-#~ msgid "Action"
-#~ msgstr "Veiksmas"
-
-#~ msgid "Logout"
-#~ msgstr "Atsijungti"
-
-#~ msgid "Shut Down"
-#~ msgstr "Iðjungti"
-
-#~ msgid "Reboot"
-#~ msgstr "Perkrauti"
-
-#~ msgid "Specify a session name to load"
-#~ msgstr "Nurodyk ákeliamos sesijos pavadinimà"
-
-#~ msgid "Only read saved sessions from the default.session file"
-#~ msgstr "Tik perskaityti iðsaugotas sesijas ið default.session bylos"
-
-#~ msgid "Millisecond period spent waiting for clients to register (0=forever)"
-#~ msgstr "Kiek milisekundþiø laukti, kol klientai prisiregistruos (0=visada)"
-
-#~ msgid "Millisecond period spent waiting for clients to respond (0=forever)"
-#~ msgstr "Kiek milisekundþiø laukti, kol klientai atsilieps (0=visada)"
-
-#~ msgid "Millisecond period spent waiting for clients to die (0=forever)"
-#~ msgstr "Kiek milisekundþiø laukti, kol klientai numirs (0=forever)"
-
-#~ msgid "Wait abandoned due to conflict."
-#~ msgstr "Kilus konfliktui, laukimo atsisakyta."
-
-#~ msgid "No response to the %s command."
-#~ msgstr "Jokio atsako á komandà %s."
-
-#~ msgid "The program may be slow, stopped or broken."
-#~ msgstr "Programa gali bûti lëta, sustabdyta arba nulûþusi."
-
-#~ msgid "You may wait for it to respond or remove it."
-#~ msgstr "Gali palaukti, kol ji atsakys, arba jà paðalinti"
-
-#~ msgid "Respawn abandoned due to failures."
-#~ msgstr "Prisikëlimas atðauktas, jis suþlugo"
-
-#~ msgid "A session shutdown is in progress."
-#~ msgstr "Sesija ðiuo metu iðjungiama."
-
-#~ msgid "Kill session"
-#~ msgstr "Nuþudyti sesijà"
-
-#~ msgid "Use dialog boxes"
-#~ msgstr "Naudoti dialogus"
-
-#~ msgid "Could not connect to the session manager"
-#~ msgstr "Negaliu prisijungti prie sesijos tvarkyklës"
-
-#~ msgid "Could not connect to gnome-session"
-#~ msgstr "Negaliu prisijungti prie gnome-session"
-
-#~ msgid "Your session has been saved"
-#~ msgstr "Tavo sesija buvo iðsaugota"
-
-#~ msgid "Save Current Session"
-#~ msgstr "Iðsaugoti esamà sesijà"
-
-#, fuzzy
-#~ msgid "Save current state of desktop"
-#~ msgstr "Iðsaugoti esamà bûsenà"
-
-#~ msgid "Try"
-#~ msgstr "Bandyti"
-
-#~ msgid "Revert"
-#~ msgstr "Atstatyti"
-
-#~ msgid "OK"
-#~ msgstr "Gerai"
-
-#~ msgid "Cancel"
-#~ msgstr "Atðaukti"
-
-#~ msgid "Session Properties"
-#~ msgstr "Sesijos savybës"
-
-#~ msgid "Session"
-#~ msgstr "Sesija"
-
-#~ msgid "Session Chooser"
-#~ msgstr "Sesijos parinkiklis"
-
-#~ msgid "Start Session"
-#~ msgstr "Paleisti sesijà"
-
-#~ msgid "Cancel Login"
-#~ msgstr "Atðaukti prisijungimà"
-
-#~ msgid "Initialize session settings"
-#~ msgstr "Inicializuoti sesijos nuostatas"
-
-#, fuzzy
-#~ msgid "Session Properties & Startup Programs"
-#~ msgstr "Sesijos netvarkomos pradþioje paleidþiamos programos"
-
-#~ msgid "Current session managed programs"
-#~ msgstr "Esamos sesijos valdomos programos"
-
-#~ msgid "Audio Settings"
-#~ msgstr "Garso nuostatos"
-
-#~ msgid "Sawfish Window Manager"
-#~ msgstr "Sawfish langø tvarkyklë"
-
-#~ msgid "Enlightenment Window Manager"
-#~ msgstr "Enlightenment langø tvarkyklë"
-
-#~ msgid "Background Settings"
-#~ msgstr "Fono nuostatos"
-
-#~ msgid "Keyboard Bell"
-#~ msgstr "Klaviatûros varpelis"
-
-#~ msgid "Mouse Settings"
-#~ msgstr "Pelës nuostatos"
-
-#~ msgid "Keyboard Settings"
-#~ msgstr "Klaviatûros nuostatos"
-
-#, fuzzy
-#~ msgid "Session Manager Proxy"
-#~ msgstr "Sesijos valdymas"
-
-#~ msgid "Nautilus"
-#~ msgstr "Nautilus"
-
-#~ msgid "Starting GNOME: %s"
-#~ msgstr "Paleidþiam GNOME: %s"
-
-#~ msgid "Starting GNOME: done"
-#~ msgstr "Paleidþiam GNOME: atlikta"
-
-#~ msgid "GNOME"
-#~ msgstr "GNOME"
-
-#~ msgid "Starting GNOME"
-#~ msgstr "Paleidþiam GNOME"
-
-#, fuzzy
-#~ msgid "Applications menu"
-#~ msgstr "Programos"
-
-#~ msgid "Programming"
-#~ msgstr "Programavimas"
-
-#~ msgid "Tools for software development"
-#~ msgstr "Árankiai programinës árangos kûrimui"
-
-#, fuzzy
-#~ msgid "Emacs Text Editor"
-#~ msgstr "XEmacs"
-
-#~ msgid "Create and edit images or photographs"
-#~ msgstr "GNU atvaizdø apdorojimo programa"
-
-#~ msgid "GIMP Image Editor"
-#~ msgstr "GIMP"
-
-#~ msgid "Games"
-#~ msgstr "Þaidimai"
-
-#, fuzzy
-#~ msgid "Games menu"
-#~ msgstr "Programø meniu"
-
-#, fuzzy
-#~ msgid "Graphics menu"
-#~ msgstr "Pagrindinis meniu"
-
-#, fuzzy
-#~ msgid "Multimedia menu"
-#~ msgstr "Paèiame meniu"
-
-#~ msgid "Browse the world wide web"
-#~ msgstr "Netscape Narðyklë"
-
-#, fuzzy
-#~ msgid "Office"
-#~ msgstr "Ofis"
-
-#, fuzzy
-#~ msgid "Office Applications"
-#~ msgstr "Programos"
-
-#~ msgid "Desktop Settings"
-#~ msgstr "Darbo aplinkos nuostatos"
-
-#, fuzzy
-#~ msgid "System Tools"
-#~ msgstr "Kreiptys á sistemà"
-
-#, fuzzy
-#~ msgid "System menu"
-#~ msgstr "Sistemos meniu virðus"
-
-#~ msgid "XEmacs Text Editor"
-#~ msgstr "XEmacs"
-
-#~ msgid "xemacs text editor"
-#~ msgstr "xemacs tekstø editorius"
-
-#~ msgid "rxvt terminal"
-#~ msgstr "rxvt terminalas"
-
-#, fuzzy
-#~ msgid "X Terminal"
-#~ msgstr "Terminalas"
-
-#~ msgid "Looking up internet address for %s"
-#~ msgstr "Ieðkau %s adreso Internete"
-
-#~ msgid "Hide"
-#~ msgstr "Paslëpti"
-
-#~ msgid "Can't get goad_id for applet, ignoring it"
-#~ msgstr ""
-#~ "Negaliu gauti goad_d ið átaiso;\n"
-#~ "nekreipiu á já dëmesio"
-
-#, fuzzy
-#~ msgid ""
-#~ "Cannot load help on %s.\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr "Negaliu ákelti dëþutës %s"
-
-#~ msgid "Applet"
-#~ msgstr "Átaisas"
-
-#, fuzzy
-#~ msgid "Execute a command line"
-#~ msgstr "Paieðkos komandinë eilutë"
-
-#~ msgid "Pick a Font"
-#~ msgstr "Pasirink ðriftà"
-
-#~ msgid "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
-#~ msgstr "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqÀàÈèÆæËëÁáÐðØøÛûÞþ"
-
-#~ msgid "Hide delay (ms):"
-#~ msgstr "Paslëpimo delsa (ms):"
-
-#~ msgid "Show delay (ms):"
-#~ msgstr "Rodymo delsa (ms):"
-
-#~ msgid "Mod1-F1"
-#~ msgstr "Mod1-F1"
-
-#~ msgid "Control-Mod1-m"
-#~ msgstr "Control-Mod1-m"
-
-#~ msgid "Mod1-F2"
-#~ msgstr "Mod1-F2"
-
-#~ msgid "Control-Mod1-r"
-#~ msgstr "Control-Mod1-r"
-
-#~ msgid "Available Programs"
-#~ msgstr "Prieinamos programos"
-
-#~ msgid "Description"
-#~ msgstr "Apibûdinimas"
-
-#~ msgid ""
-#~ "An applet is not responding to a save request.\n"
-#~ "Remove the applet or continue waiting?"
-#~ msgstr ""
-#~ "Átaisas neatsakinëja á praðymà iðsisaugoti.\n"
-#~ "Paðalinti átaisà ar laukti toliau?"
-
-#~ msgid "Remove applet"
-#~ msgstr "Paðalinti átaisà"
-
-#~ msgid "Continue waiting"
-#~ msgstr "Laukti toliau"
-
-#~ msgid "Timed out on sending session save to an applet"
-#~ msgstr "Baigësi laiko riba, besiunèiant átaisui sesijos iðsaugojimà"
-
-#~ msgid "The session name cannot be empty"
-#~ msgstr "Sesijos pavadinimas negali bûti tuðèias"
-
-#~ msgid "The session name already exists"
-#~ msgstr "Jau yra sesija tokiu pavadinimu"
-
-#~ msgid "Add a new session"
-#~ msgstr "Pridëti naujà sesijà"
-
-#~ msgid "Edit session name"
-#~ msgstr "Pervadinti sesijà"
-
-#~ msgid "Prompt on logout"
-#~ msgstr "Paklausti atsisveikinant"
-
-#~ msgid "Automatically save changes to session"
-#~ msgstr "Automatiðkai iðsaugoti sesijos pakeitimus"
-
-#~ msgid "Choose Current Session"
-#~ msgstr "Pasirinkt esamà sesijà"
-
-#~ msgid "Session Name"
-#~ msgstr "Sesijos pavadinimas"
-
-#~ msgid "Add..."
-#~ msgstr "Pridëti..."
-
-#~ msgid "Edit..."
-#~ msgstr "Keisti..."
-
-#~ msgid "Delete"
-#~ msgstr "Iðtrinti"
-
-#~ msgid "Session Options"
-#~ msgstr "Sesijos parinktys"
-
-#~ msgid "Priority"
-#~ msgstr "Svarbumas"
-
-#~ msgid "Command"
-#~ msgstr "Komanda"
-
-#~ msgid "Browse Currently Running Programs..."
-#~ msgstr "Perþiûrëti dabar bëganèias programas..."
-
-#~ msgid ""
-#~ "Programs with smaller values are started before programs with higher "
-#~ "values. The default value should be OK"
-#~ msgstr ""
-#~ "Programos su maþesnëmis reikðmëmis yra paleidþiamos prieð tas su "
-#~ "didesnëmis reikðmëmis. Áprastinë reikðmë turëtø bûti gera."
-
-#~ msgid ""
-#~ "Cannot execute the gmc-client program,\n"
-#~ "perhaps gmc is not installed"
-#~ msgstr ""
-#~ "Negaliu paleisti programos gmc-client,\n"
-#~ "tikriausiai gmc nëra ádiegtas"
-
-#~ msgid "News (www)"
-#~ msgstr "Naujienos (www)"
-
-#~ msgid "http://gnotices.gnome.org/gnome-news/"
-#~ msgstr "http://gnotices.gnome.org/gnome-news/"
-
-#~ msgid "FAQ (www)"
-#~ msgstr "FAQ (www)"
-
-#~ msgid "http://www.gnome.org/gnomefaq/html/"
-#~ msgstr "http://www.gnome.org/gnomefaq/html/"
-
-#~ msgid "Mailing Lists (www)"
-#~ msgstr "Konferencijos (www)"
-
-#~ msgid "http://mail.gnome.org/mailman/listinfo/"
-#~ msgstr "http://mail.gnome.org/mailman/listinfo/"
-
-#~ msgid "Software (www)"
-#~ msgstr "Programinë áranga (www)"
-
-#~ msgid "http://www.gnome.org/applist/list-martin.phtml"
-#~ msgstr "http://www.gnome.org/applist/list-martin.phtml"
-
-#~ msgid "Development (www)"
-#~ msgstr "Programø kûrimas (www)"
-
-#~ msgid "http://developer.gnome.org/"
-#~ msgstr "http://developer.gnome.org/"
-
-#~ msgid "Bug Tracking System (www)"
-#~ msgstr "Klaidø gaudymo sistema (www)"
-
-#~ msgid "http://bugs.gnome.org/"
-#~ msgstr "http://bugs.gnome.org/"
-
-#~ msgid "By Name"
-#~ msgstr "Pagal vardà"
-
-#~ msgid "By Type"
-#~ msgstr "Pagal tipà"
-
-#~ msgid "By Size"
-#~ msgstr "Pagal dydá"
-
-#~ msgid "By Time Last Accessed"
-#~ msgstr "Pagal paskutinio priëjimo laikà"
-
-#~ msgid "By Time Last Modified"
-#~ msgstr "Pagal paskutinio pataisymo laikà"
-
-#~ msgid "By Time Last Changed"
-#~ msgstr "Pagal paskutinio pakeitimo laikà"
-
-#~ msgid "Arrange Icons"
-#~ msgstr "Sutvarkyti ikonas"
-
-#~ msgid "Rescan Desktop Directory"
-#~ msgstr "Atnaujinti darbalaukio katalogà"
-
-#~ msgid "Rescan Desktop Devices"
-#~ msgstr "Atnaujinti darbalaukio árenginius"
-
-#~ msgid " Desktop "
-#~ msgstr " Darbalaukis "
-
-#~ msgid "can't fine real path"
-#~ msgstr "negaliu rasti tikro kelio"
-
-#~ msgid "Favorites"
-#~ msgstr "Favoritai"
-
-#~ msgid "Cannot create an item with an empty command"
-#~ msgstr "Negaliu sukurti punkto su tuðèia komanda"
-
-#~ msgid "Could not get file from path: %s"
-#~ msgstr "Negaliu gauti bylos ið kelio: %s"
-
-#~ msgid "Could not open .order file: %s"
-#~ msgstr "Negaliu atidaryti .order bylos: %s"
-
-#~ msgid "Could not open file '%s' for writing"
-#~ msgstr "Negaliu atidaryti ¥%s´ bylos raðymui"
-
-#~ msgid ""
-#~ "Could not open .order file: %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Negalëjau atidaryti .order bylos: %s\n"
-#~ "%s"
-
-#~ msgid "Could not remove old order file %s: %s\n"
-#~ msgstr "Negalëjau iðtrinti senos order bylos: %s: %s\n"
-
-#~ msgid ""
-#~ "Could not rename tmp file: %s to %s\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Negalëjau pervadinti tmp bylos: %s á %s\n"
-#~ "%s"
-
-#~ msgid "Add this to Favorites menu"
-#~ msgstr "Ádëti já á Mëgstamiausiø meniu"
-
-#~ msgid " (empty)"
-#~ msgstr " (tuðèia)"
-
-#~ msgid "Favorites menu"
-#~ msgstr "Mëgstamiausiø meniu"
-
-#~ msgid "Run button"
-#~ msgstr "Paleidimo mygtukas"
-
-#~ msgid "Favorites: "
-#~ msgstr "Mëgstamiausi: "
-
-#~ msgid "Avoid this panel when maximizing windows"
-#~ msgstr "Vengti ðio skydelio iðdidinant langus"
-
-#~ msgid "Panel window level:"
-#~ msgstr "Skydelio lango lygis:"
-
-#~ msgid "Default (from global preferences)"
-#~ msgstr "Áprastas (ið bendrøjø nuostatø)"
-
-#~ msgid "Layout"
-#~ msgstr "Iðdëstymas"
-
-#~ msgid "Show tasklist arrow"
-#~ msgstr "Rodyti uþduoèiø sàraðo rodyklæ"
-
-#~ msgid "Only show current desktop in pager"
-#~ msgstr "Rodyti tik esamàjá darbalauká"
-
-#~ msgid "Raise area grid over tasks"
-#~ msgstr "Iðkelti erdvës tinklà virð uþduoèiø"
-
-#~ msgid "Tooltips"
-#~ msgstr "Paaiðkinimai"
-
-#~ msgid "Show Desk-Guide tooltips"
-#~ msgstr "Rodyti Darbalaukio Gido paaiðkinimus"
-
-#~ msgid "Desk-Guide tooltip delay [ms]"
-#~ msgstr "Darbalaukio Gido uþdelsimas [ms]"
-
-#~ msgid "Show desktop name tooltips"
-#~ msgstr "Rodyti darbalaukiø vardus"
-
-#~ msgid "Desktop name tooltip delay [ms]"
-#~ msgstr "Darbalaukiø vardø rodymo uþdelsimas [ms]"
-
-#~ msgid "Tasks"
-#~ msgstr "Uþduotys"
-
-#~ msgid "Visibility"
-#~ msgstr "Matomumas"
-
-#~ msgid "Show hidden tasks (HIDDEN)"
-#~ msgstr "Rodyti paslëptas uþduotis (HIDDEN)"
-
-#~ msgid "Show shaded tasks (SHADED)"
-#~ msgstr "Rodyti suvyniotas uþduotis (SHADED)"
-
-#~ msgid "Show tasks which hide from window list (SKIP-WINLIST)"
-#~ msgstr "Rodyti uþduotis kurios slepiasi nuo langø sàraðo (SKIP-WINLIST)"
-
-#~ msgid "Show tasks which hide from taskbar (SKIP-TASKBAR)"
-#~ msgstr "Rodyti uþduotis kurios slepiasi nuo uþduoèiø juostos (SKIP-TASKBAR)"
-
-#~ msgid "Geometry"
-#~ msgstr "Geometrija"
-
-#~ msgid "Horizontal Layout"
-#~ msgstr "Gulsèias iðdëstymas"
-
-#~ msgid "Desktop Height [pixels]"
-#~ msgstr "Darbalaukio vaizdo aukðtis [taðkais]"
-
-#~ msgid "Override desktop height with panel size"
-#~ msgstr "Nustatant aukðtá paisyti tik skydelio dydþio"
-
-#~ msgid "Divide height by number of vertical areas"
-#~ msgstr "Dalinti aukðtá ið staèiø erdviø skaièiaus"
-
-#~ msgid "Rows of Desktops"
-#~ msgstr "Darbalaukiø eilutës"
-
-#~ msgid "Divide height by number of rows"
-#~ msgstr "Dalinti aukðtá ið eiluèiø skaièiaus"
-
-#~ msgid "Vertical Layout"
-#~ msgstr "Staèias iðdëstymas"
-
-#~ msgid "Desktop Width [pixels]"
-#~ msgstr "Darbalaukio vaizdo plotis [taðkais]"
-
-#~ msgid "Override desktop width with panel size"
-#~ msgstr "Nustatant plotá paisyti tik skydelio dydþio"
-
-#~ msgid "Divide width by number of horizontal areas"
-#~ msgstr "Dalinti plotá ið gulsèiø erdviø skaièiaus"
-
-#~ msgid "Columns of Desktops"
-#~ msgstr "Darbalaukiø stulpeliai"
-
-#~ msgid "Divide width by number of columns"
-#~ msgstr "Dalinti plotá ið stulpeliø skaièiaus"
-
-#~ msgid "Window Manager Workarounds"
-#~ msgstr "Langø tvarkykliø priderinimas"
-
-#~ msgid ""
-#~ "Window manager moves decoration window instead\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-#~ msgstr ""
-#~ "Langø tvarkyklë judina dekoracijà vietoj langø\n"
-#~ "(AfterStep, Enlightenment, FVWM, IceWM)"
-
-#~ msgid ""
-#~ "Window manager changes active area on all desktops\n"
-#~ "(FVWM, Sawfish)"
-#~ msgstr ""
-#~ "Langø tvarkyklë keièia aktyvià erdvæ visuose darbalaukiuose\n"
-#~ "(FVWM, Sawfish)"
-
-#~ msgid ""
-#~ "Window manager expects pager to modify area+desktop properties directly\n"
-#~ "(Enlightenment, FVWM)"
-#~ msgstr ""
-#~ "Langø tvarkyklë tikisi kad Gidas pakeis erdvës ir darbalaukio\n"
-#~ "savybes tiesiogiai (Enlightenment, FVWM)"
-
-#~ msgid "Behaviour"
-#~ msgstr "Elgesys"
-
-#~ msgid "Popdown task view automatically"
-#~ msgstr "Rodyti uþduoèiø vaizdà automatiðkai"
-
-#~ msgid ""
-#~ "You are not running a GNOME Compliant\n"
-#~ "Window Manager. GNOME support by the \n"
-#~ "window manager is strongly recommended\n"
-#~ "for proper Desk Guide operation."
-#~ msgstr ""
-#~ "Jûs nenaudojate GNOME palankios\n"
-#~ "langø tvarkyklës. GNOME palaikanti\n"
-#~ "langø tvarkyklë yra labai rekomenduojama,\n"
-#~ "kad Darbalaukio Gidas veiktø teisingai."
-
-#~ msgid "Desk Guide Alert"
-#~ msgstr "Darbalaukio Gido áspëjimas"
-
-#~ msgid "Desk Guide Task View"
-#~ msgstr "Darbalaukio Gido uþduoèiø vaizdas"
-
-#~ msgid "Global"
-#~ msgstr "Visuotiniai"
-
-#~ msgid "Desk Guide Settings"
-#~ msgstr "Darbalaukio Gido nuostatos"
-
-#~ msgid "Don't know how to activate `%s'\n"
-#~ msgstr "Neþinau kaip suþadinti ¥%s´\n"
-
-#~ msgid ""
-#~ "Warning! Unsaved changes will be lost!\n"
-#~ "Proceed?"
-#~ msgstr ""
-#~ "Atsargiai! Neiðsaugoti pakeitimai bus prarasti!\n"
-#~ "Tæsti?"
-
-#~ msgid "Restore"
-#~ msgstr "Atkurti"
-
-#~ msgid "Iconify"
-#~ msgstr "Sumaþinti"
-
-#~ msgid "Unshade"
-#~ msgstr "Iðvynioti"
-
-#~ msgid "Shade"
-#~ msgstr "Suvynioti"
-
-#~ msgid "Unstick"
-#~ msgstr "Atklijuoti"
-
-#~ msgid "Stick"
-#~ msgstr "Priklijuoti"
-
-#~ msgid "To desktop"
-#~ msgstr "Á darbalauká"
-
-#~ msgid "Close window"
-#~ msgstr "Uþdaryti langà"
-
-#~ msgid "Kill app"
-#~ msgstr "Nuþudyti programà"
-
-#~ msgid "Restore All"
-#~ msgstr "Atkurti visus"
-
-#~ msgid "Iconify All"
-#~ msgstr "Sumaþinti visus"
-
-#~ msgid "Unshade All"
-#~ msgstr "Iðvynioti visus"
-
-#~ msgid "Shade All"
-#~ msgstr "Suvynioti visus"
-
-#~ msgid "Unstick All"
-#~ msgstr "Atklijuoti visus"
-
-#~ msgid "Stick All"
-#~ msgstr "Priklijuoti visus"
-
-#~ msgid "Kill All"
-#~ msgstr "Nuþudyti visus"
-
-#~ msgid "Follow panel size"
-#~ msgstr "Sekti skydelio dydþiu"
-
-#~ msgid "Tasklist width:"
-#~ msgstr "Juostos plotis:"
-
-#~ msgid "Rows of tasks:"
-#~ msgstr "Uþduoèiø eilutës:"
-
-#~ msgid "Default task size:"
-#~ msgstr "Áprastas uþduoties dydis:"
-
-#~ msgid "Tasklist width is fixed"
-#~ msgstr "Juostos plotis pastovus"
-
-#~ msgid "Tasklist width is dynamic"
-#~ msgstr "Juostos plotis kintantis"
-
-#~ msgid "Vertical"
-#~ msgstr "Staèias"
-
-#~ msgid "Tasklist height:"
-#~ msgstr "Juostos aukðtis:"
-
-#~ msgid "Tasklist height is fixed"
-#~ msgstr "Juostos aukðtis pastovus"
-
-#~ msgid "Tasklist height is dynamic"
-#~ msgstr "Juostos aukðtis kintantis"
-
-#~ msgid "Tasklist width is that of longest title"
-#~ msgstr "Uþduoèiø sàraðo plotis lygus ilgiausiam pavadinimui"
-
-#~ msgid "Which tasks to show"
-#~ msgstr "Kurias uþduotis rodyti"
-
-#~ msgid "Show normal applications"
-#~ msgstr "Rodyti paprastas programas"
-
-#~ msgid "Show iconified (minimized) applications"
-#~ msgstr "Rodyti sumaþintas programas"
-
-#~ msgid "Show normal applications on all desktops"
-#~ msgstr "Rodyti paprastas programas visuose darbalaukiuose"
-
-#~ msgid "Show iconified (minimized) applications on all desktops"
-#~ msgstr "Rodyti sumaþintas programas visuose darbalaukiuose"
-
-#~ msgid "Show mini icons"
-#~ msgstr "Rodyti maþas ikonas"
-
-#~ msgid "Confirm before killing windows"
-#~ msgstr "Praðyti sutikimo prieð nuþudant langus"
-
-#~ msgid "Move iconified tasks to current workspace when restoring"
-#~ msgstr "Perkelti sumaþintas uþduotis á esamà darbalauká atkuriant"
-
-#~ msgid "Enable task grouping"
-#~ msgstr "Leisti grupuoti uþduotis"
-
-#~ msgid "Number of tasks before grouping occurs"
-#~ msgstr "Uþduoèiø skaièius, iki kurio negrupuoti"
-
-#~ msgid "Save"
-#~ msgstr "Iðsaugoti"
-
-#~ msgid "Favorites (user menus)"
-#~ msgstr "Mëgstamiausi (vartotojo meniu)"
-
-#~ msgid "Programs (system menus)"
-#~ msgstr "Programos (sistemos meniu)"
-
-#~ msgid "Applets (system menus)"
-#~ msgstr "Átaisai (sistemos meniu)"
-
-#~ msgid "_New Submenu..."
-#~ msgstr "_Nauja skiltis..."
-
-#~ msgid "Create a new submenu"
-#~ msgstr "Sukurti naujà meniu skiltá"
-
-#~ msgid "New _Item..."
-#~ msgstr "Naujas _punktas"
-
-#~ msgid "Create a new menu item"
-#~ msgstr "Sukurti naujà meniu punktà"
-
-#~ msgid "_Delete..."
-#~ msgstr "_Paðalinti..."
-
-#~ msgid "_Sort Submenu"
-#~ msgstr "Rikiuoti _skiltá"
-
-#~ msgid "Sort Submenu _Recursive"
-#~ msgstr "Rikiuoti skiltá _rekursiðkai"
-
-#~ msgid "_Sort"
-#~ msgstr "_Rikiuoti"
-
-#~ msgid "New Submenu"
-#~ msgstr "Nauja skiltis"
-
-#~ msgid "New Item"
-#~ msgstr "Naujas punktas"
-
-#~ msgid "Create a new item"
-#~ msgstr "Sukurti naujà punktà"
-
-#~ msgid "Delete selected menu item"
-#~ msgstr "Iðtrinti pasirinktà meniu punktà"
-
-#~ msgid "Move up"
-#~ msgstr "Stumti aukðtyn"
-
-#~ msgid "Move selected menu up"
-#~ msgstr "Stumti pasirinktà meniu punktà aukðtyn"
-
-#~ msgid "Move down"
-#~ msgstr "Stumti þemyn"
-
-#~ msgid "Move selected menu down"
-#~ msgstr "Stumti pasirinktà meniu punktà þemyn"
-
-#~ msgid "Sort Submenu"
-#~ msgstr "Rikiuoti skiltá"
-
-#~ msgid "Sort selected submenu"
-#~ msgstr "Rikiuoti pasirinktà skiltá"
-
-#~ msgid "Sort _Recursive"
-#~ msgstr "Rikiuoti _rekursiðkai"
-
-#~ msgid "GNOME menu editor"
-#~ msgstr "GNOME meniu editorius"
-
-#~ msgid ""
-#~ "Released under the terms of the GNU Public License.\n"
-#~ "GNOME menu editor."
-#~ msgstr ""
-#~ "Iðleistas remiantis GNU Public License sàlygomis.\n"
-#~ "GNOME meniu editorius."
-
-#~ msgid "Unable to retrieve GNOME installation directory\n"
-#~ msgstr "Negaliu vël rasti katalogo, kur ádiegtas GNOME\n"
-
-#~ msgid "Unable to create file: %s\n"
-#~ msgstr "Negaliu sukurti bylos: %s\n"
-
-#~ msgid "unable to remove .order file: %s\n"
-#~ msgstr "Negaliu iðtrinti .order bylos: %s\n"
-
-#~ msgid "The menu item must have a name"
-#~ msgstr "Meniu punktas privalo turëti vardà"
-
-#~ msgid "The menu entry must have a filename"
-#~ msgstr "Meniu áraðas privalo turëti bylos vardà"
-
-#~ msgid "Save changes?"
-#~ msgstr "Iðsaugoti pakeitimus?"
-
-#~ msgid "This change conflicts with an existing menu item"
-#~ msgstr "Ðis pakeitimas nesutaria su jau esanèiu meniu punktu"
-
-#~ msgid "Overwrite existing menu entry?"
-#~ msgstr "Uþraðyti ant jau esanèio meniu punkto?"
-
-#~ msgid ""
-#~ "This change conflicts with an existing menu item.\n"
-#~ "No two menu items in a submenu can have the same name."
-#~ msgstr ""
-#~ "Ðis pakeitimas nesutaria su jau esanèiu meniu punktu.\n"
-#~ "Jokie du punktai skiltyje negali bûti vienodais vardais."
-
-#~ msgid "One moment, reading menus..."
-#~ msgstr "Palauk ðiek tiek, skaitomas meniu..."
-
-#~ msgid "Top of user menus"
-#~ msgstr "Vartotojo meniu virðus"
-
-#~ msgid "Top of applet menus"
-#~ msgstr "Átaisø meniu virðus"
-
-#~ msgid "You can not delete a top level submenu."
-#~ msgstr "Tu negali iðtrinti aukðèiausio lygio meniu."
-
-#~ msgid "Delete this menu item?"
-#~ msgstr "Iðtrinti ðá meniu punktà?"
-
-#~ msgid "Delete empty submenu?"
-#~ msgstr "Iðtrinti tuðèià skiltá?"
-
-#~ msgid "Are you sure you want to delete this submenu and all its contents?"
-#~ msgstr "Ar tu esi tikras, kad nori iðtrinti ðià skiltá ir visà jos turiná?"
-
-#~ msgid ""
-#~ "You can't add an entry to that submenu.\n"
-#~ "You do not have the proper permissions."
-#~ msgstr ""
-#~ "Tu negali ádëti punkto á tà meniu skiltá,\n"
-#~ "nes neturi tam reikalingø teisiø."
-
-#~ msgid "New Folder"
-#~ msgstr "Naujas katalogas"
-
-#~ msgid "Failed to create directory"
-#~ msgstr "Negaliu sukurti katalogo"
-
-#~ msgid "untitled.desktop"
-#~ msgstr "bevardis.desktop"
-
-#~ msgid "untitled"
-#~ msgstr "bevardis"
-
-#~ msgid "creating user directory: %s\n"
-#~ msgstr "kuriamas vartotojo katalogas: %s\n"
-
-#~ msgid "unable to create user directory: %s\n"
-#~ msgstr "nepavyko sukurti vartotojo katalogo: %s\n"
-
-#~ msgid ""
-#~ "Error during execution of chosen editor.\n"
-#~ "\n"
-#~ "The editor you have chosen is probably either not available,\n"
-#~ "or is not on your current path."
-#~ msgstr ""
-#~ "Klaida paleidþiant pasirinktà editoriø.\n"
-#~ "\n"
-#~ "Editoriaus, kurá pasirinkai, tikriausiai neturi,\n"
-#~ "arba jo nëra tavo esamajame kelyje."
-
-#~ msgid ""
-#~ "Alternate editor types are not supported by gnome-edit yet.\n"
-#~ "Please choose a standard executable editor in the gnome-edit capplet\n"
-#~ "in the gnome control center."
-#~ msgstr ""
-#~ "Besikeièiantys editoriø tipai gnome-edit dar nepalaikomi.\n"
-#~ "Pasirinkite standartiná editoriø gnome-edit capplet'e,\n"
-#~ "kuris yra GNOME kontrolës centre"
-
-#~ msgid "Start in hint browsing mode"
-#~ msgstr "Paleisti patarimø narðymo reþimu"
-
-#~ msgid "Start in fortune mode"
-#~ msgstr "Paleisti fortune reþimu"
-
-#~ msgid "Start in session login mode (used from gsm)"
-#~ msgstr "Paleisti sesijos prisijungimo reþimu (naudojama ið gsm)"
-
-#~ msgid ""
-#~ "Click on the GNOME foot icon to open the\n"
-#~ "Main Menu.  This menu contains all\n"
-#~ "GNOME applications, tools, and commands."
-#~ msgstr ""
-#~ "Paspausk ant GNOME pëdos ikonos, kad\n"
-#~ "atidarytum pagrindiná meniu. Tame meniu yra\n"
-#~ "visos GNOME programos, árankiai ir komandos."
-
-#~ msgid "You do not have fortune installed."
-#~ msgstr "Deja, fortune nëra ádiegta"
-
-#~ msgid "fixed"
-#~ msgstr "fixed"
-
-#~ msgid "Fortune"
-#~ msgstr "Fortune"
-
-#~ msgid "Message of The Day"
-#~ msgstr "Message of the Day"
-
-#~ msgid "GNOME Hints"
-#~ msgstr "GNOME Patarimai"
-
-#~ msgid "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-#~ msgstr "-*-helvetica-bold-r-normal-*-*-180-*-*-p-*-*-*"
-
-#~ msgid ""
-#~ "You've chosen to disable the startup hint.\n"
-#~ "To re-enable it, choose \"Startup Hint\"\n"
-#~ "in the GNOME Control Center"
-#~ msgstr ""
-#~ "Tu nusprendei uþdrausti patarimus,\n"
-#~ "pasirodanèius pradþioje. Kad juos vël leistum,\n"
-#~ "nueik á ¥Pradþios patarimai´ GNOME Valdymo centre"
-
-#~ msgid "No message of the day found!"
-#~ msgstr "Nerasta jokios message of the day!"
-
-#~ msgid "Gnome hint"
-#~ msgstr "Gnome patarimai"
-
-#~ msgid "Display this dialog next time"
-#~ msgstr "Rodyti ðiuos patarimus ir kità kartà"
-
-#~ msgid "Enable login hints"
-#~ msgstr "Leisti patarimus pradþioje"
-
-#~ msgid "Display normal hints"
-#~ msgstr "Rodyti paprastus patarimus"
-
-#~ msgid "Display fortunes instead of hints"
-#~ msgstr "Rodyti fortune vietoj patarimø"
-
-#~ msgid "Display message of the day instead of hints"
-#~ msgstr "Rodyti Message of the Day vietoj patarimø"
-
-#~ msgid "Message of the day file to use: "
-#~ msgstr "Byla, ið kurios imti Message of the day:"
-
-#~ msgid "Bookmark"
-#~ msgstr "Skirtukas"
-
-#~ msgid "Page Title"
-#~ msgstr "Puslapio pavadinimas"
-
-#~ msgid "Gnome Help Bookmarks"
-#~ msgstr "GNOME Pagalbos skirtukai"
-
-#~ msgid "X position of window"
-#~ msgstr "Lango X koordinatë"
-
-#~ msgid "X"
-#~ msgstr "X"
-
-#~ msgid "Y position of window"
-#~ msgstr "Lango Y koordinatë"
-
-#~ msgid "Width of window"
-#~ msgstr "Lango plotis"
-
-#~ msgid "WIDTH"
-#~ msgstr "PLOTIS"
-
-#~ msgid "Height of window"
-#~ msgstr "Lango aukðtis"
-
-#~ msgid "HEIGHT"
-#~ msgstr "AUKÐTIS"
-
-#~ msgid "Debug level"
-#~ msgstr "Derinimo lygis"
-
-#~ msgid "Gnome Help Browser"
-#~ msgstr "GNOME Pagalbos narðyklë"
-
-#~ msgid ""
-#~ "GNOME Help Browser allows easy access to various forms of documentation "
-#~ "on your system"
-#~ msgstr ""
-#~ "GNOME Pagalbos narðyklë leidþia lengvai pasiekti ávairias sistemoje "
-#~ "esanèias dokumentacijos formas"
-
-#~ msgid "History size"
-#~ msgstr "Þurnalo dydis"
-
-#~ msgid "History file"
-#~ msgstr "Þurnalo byla"
-
-#~ msgid "Cache size"
-#~ msgstr "Keðo dydis"
-
-#~ msgid "Cache file"
-#~ msgstr "Keðo byla"
-
-#~ msgid "Bookmark file"
-#~ msgstr "Skirtukø byla"
-
-#~ msgid "Man Path"
-#~ msgstr "Man kelias"
-
-#~ msgid "Info Path"
-#~ msgstr "Info kelias"
-
-#~ msgid "GNOME Help Path"
-#~ msgstr "GNOME Pagalbos kelias"
-
-#~ msgid "Gnome Help Configure"
-#~ msgstr "GNOME Pagalbos nuostatos"
-
-#~ msgid "History and cache"
-#~ msgstr "Þurnalas ir keðas"
-
-#~ msgid "Gnome Help History"
-#~ msgstr "GNOME Pagalbos Þurnalas"
-
-#~ msgid "<BODY BGCOLOR=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<body bgcolor=\"#FFFFFF\"><h1>Turinys</h1>\n"
-
-#~ msgid "<h2>Man Pages</h2>\n"
-#~ msgstr "<h2>Man puslapiai</h2>\n"
-
-#~ msgid "<body bgcolor=\"#FFFFFF\"><h1>Table of Contents</h1>\n"
-#~ msgstr "<body bgcolor=\"#FFFFFF\"><h1>Turinys</h1>\n"
-
-#~ msgid "<h2>Info Pages</h2>\n"
-#~ msgstr "<h2>Info puslapiai</h2>\n"
-
-#~ msgid "<h2>GNOME Help</h2>\n"
-#~ msgstr "<h2>GNOME Pagalba</h2>\n"
-
-#~ msgid ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Results of the substring search for the string "
-#~ msgstr ""
-#~ "<HTML>\n"
-#~ "<BODY BGCOLOR=\"#ffffff\">\n"
-#~ "<H2>Rezultatai, paieðkojus puslapyje eilutës "
-
-#~ msgid ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Manual Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>Man puslapiai</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Info Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNU Info puslapiai</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Help Pages</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-#~ msgstr ""
-#~ "\n"
-#~ "<p>\n"
-#~ "<br>\n"
-#~ "<H3>GNOME Pagalbos puslapiai</H3>\n"
-#~ "<p>\n"
-#~ "<UL>\n"
-
-#~ msgid "<br><B>No matches found</B>\n"
-#~ msgstr "<br><B>Ieðkoma eilutë nerasta</B>\n"
-
-#~ msgid "User Commands"
-#~ msgstr "Vartotojo komandos"
-
-#~ msgid "Library Functions"
-#~ msgstr "Bibliotekø funkcijos"
-
-#~ msgid "Special Files"
-#~ msgstr "Specialios bylos"
-
-#~ msgid "File Formats"
-#~ msgstr "Bylø formatai"
-
-#~ msgid "Administration"
-#~ msgstr "Administravimas"
-
-#~ msgid "man9"
-#~ msgstr "man9"
-
-#~ msgid "mann"
-#~ msgstr "mann"
-
-#~ msgid "Man Pages"
-#~ msgstr "Man puslapiai"
-
-#~ msgid "Info Pages"
-#~ msgstr "Info puslapiai"
-
-#~ msgid "<BODY>Could not load default TOC page</BODY>"
-#~ msgstr "<BODY>Negaliu ákelti standartinio Turinio puslapio</BODY>"
-
-#~ msgid "<BODY>Unknown TOC argument</BODY>"
-#~ msgstr "<BODY>Neþinomas Turinio <i>(TOC)</i> argumentas</BODY>"
-
-#~ msgid "_New Window"
-#~ msgstr "_Naujas langas"
-
-#~ msgid "Open new browser window"
-#~ msgstr "Atidaryti naujà narðyklës langà"
-
-#~ msgid "_Add Bookmark"
-#~ msgstr "Á_dëti skirtukà"
-
-#~ msgid "Add bookmark"
-#~ msgstr "Pridëti þymelæ"
-
-#~ msgid "_Back"
-#~ msgstr "_Atgal"
-
-#~ msgid "_Forward"
-#~ msgstr "P_ersiøsti"
-
-#~ msgid "_Reload"
-#~ msgstr "_Vël ákelti"
-
-#~ msgid "_Index"
-#~ msgstr "Tur_inys"
-
-#~ msgid "_History"
-#~ msgstr "Þ_urnalas"
-
-#~ msgid "Show History Window"
-#~ msgstr "Rodyti þurnalo langà"
-
-#~ msgid "_Bookmarks"
-#~ msgstr "Þy_melës"
-
-#~ msgid "Show Bookmarks Window"
-#~ msgstr "Rodyti skirtukø langà"
-
-#~ msgid "_View"
-#~ msgstr "_Rodyti"
-
-#~ msgid "Go to the previous location in the history list"
-#~ msgstr "Gráþti á ankstesnæ vietà þurnalo sàraðe"
-
-#~ msgid "Forward"
-#~ msgstr "Persiøsti"
-
-#~ msgid "Go to the next location in the history list"
-#~ msgstr "Eiti á tolimesnæ vietà þurnalo sàraðe"
-
-#~ msgid "Location: "
-#~ msgstr "Vieta: "
-
-#~ msgid "Whoops! for some reason we can't add to the panel"
-#~ msgstr "Ooj! Kaþkodël negaliu ádëti á skydelá"
-
-#~ msgid "No socket was created"
-#~ msgstr "Nebuvo sukurta jokio lizdo"
-
-#~ msgid "Distribution: "
-#~ msgstr "Distribucija: "
-
-#~ msgid "KDE: "
-#~ msgstr "KDE: "
-
-#~ msgid "Panel: "
-#~ msgstr "Skydelis: "
-
-#~ msgid "Desktop: "
-#~ msgstr "Darbalaukis: "
-
-#~ msgid "Size (pixels)"
-#~ msgstr "Dydis (taðkais)"
-
-#~ msgid "Prelight buttons on mouseover"
-#~ msgstr "Pelei uþvaþiavus, paðviesinti mygtukus"
-
-#~ msgid "In the menu"
-#~ msgstr "Paèiame meniu"
-
-#~ msgid "Use large icons"
-#~ msgstr "Naudoti dideles ikonas"
-
-#~ msgid "Show [...] buttons"
-#~ msgstr "Rodyti [...] mygtukus"
-
-#~ msgid "Show popup menus outside of panels"
-#~ msgstr "Iððokanèius meniu rodyti skydelio iðorëje"
-
-#~ msgid "Keep menus in memory"
-#~ msgstr "Laikyti meniu atmintyje"
-
-#~ msgid "Tooltips enabled"
-#~ msgstr "Leisti paaiðkinimus"
-
-#~ msgid "Confirm the removal of panels with a dialog"
-#~ msgstr "Patvirtinti skydeliø paðalinimà dialogu"
-
-#~ msgid "Try to avoid overlapping panels"
-#~ msgstr "Bandyti iðvengti skydeliø persidengimo"
-
-#~ msgid "Can't get goad_id from desktop entry!"
-#~ msgstr "Negaliu gauti goad_id ið darbalaukio áraðo!"
-
-#~ msgid "Red Hat Linux"
-#~ msgstr "Red Hat Linux"
-
-#~ msgid "Red Hat menus"
-#~ msgstr "Red Hat meniu"
-
-#, fuzzy
-#~ msgid "Copy date to selection"
-#~ msgstr "Kopijuoti paþymëjimà"
-
-#~ msgid "Creates a new terminal window"
-#~ msgstr "Sukuria naujà terminalo langà"
-
-#~ msgid "_Show menubar"
-#~ msgstr "_Rodyti meniu"
-
-#~ msgid "Toggles whether or not the menubar is displayed."
-#~ msgstr "Perjungia, ar meniu matomas ar ne."
-
-#~ msgid "Toggles whether or not the keyboard is grabbed by the terminal."
-#~ msgstr "Perjungia, ar terminalas pagriebia klaviatûrà, ar ne."
-
-#~ msgid "C_olor selector..."
-#~ msgstr "_Spalvø parinkiklis..."
-
-#~ msgid "The error was: %s"
-#~ msgstr "Klaida buvo: %s"
-
-#~ msgid "Only display warnings."
-#~ msgstr "Rodyti tik áspëjimus."
-
-#~ msgid "Close"
-#~ msgstr "Uþdaryti"
-
-#~ msgid "Cannot activate a panel object"
-#~ msgstr "Negaliu suþadinti objekto skydelyje"
-
-#~ msgid "Cannot start CORBA"
-#~ msgstr "Negaliu paleisti CORBA"
-
-#~ msgid "CORBA Exception"
-#~ msgstr "CORBA Iðimtis"
-
-#~ msgid "Cannot create object"
-#~ msgstr "Negaliu sukurti objekto"
-
-#~ msgid "Constant speed animations"
-#~ msgstr "Pastovaus greièio animacijos"
-
-#~ msgid "Auto hide"
-#~ msgstr "Slepiasi savaime"
-
-#~ msgid "Explicit hide"
-#~ msgstr "Slepiasi papraðytas"
-
-#~ msgid "Drawer sliding"
-#~ msgstr "Stalèiaus slydimas"
-
-#~ msgid "Launcher icon"
-#~ msgstr "Leistuko ikona"
-
-#~ msgid "Menu icon"
-#~ msgstr "Meniu ikona"
-
-#~ msgid "Special icon"
-#~ msgstr "Ypatinga ikona"
-
-#~ msgid "Tiles enabled"
-#~ msgstr "Leidþiamos èerpës"
-
-#~ msgid "Normal tile"
-#~ msgstr "Paprasta èerpë"
-
-#~ msgid "Clicked tile"
-#~ msgstr "Áspausta èerpë"
-
-#~ msgid "Border width (tile only)"
-#~ msgstr "Rëmelio storis (tik èerpës)"
-
-#~ msgid "Depth (displacement when pressed)"
-#~ msgstr "Gylis (perkëlimas kai spaudþiama)"
-
-#~ msgid "Launcher"
-#~ msgstr "Leistukas"
-
-#~ msgid "Special"
-#~ msgstr "Ypatingas"
-
-#~ msgid "Button type: "
-#~ msgstr "Mygtuko tipas: "
-
-#~ msgid "Make buttons flush with panel edge"
-#~ msgstr "Sulyginti mygtukus su skydelio kraðtu"
-
-#~ msgid "Show button tiles only when cursor is over the button"
-#~ msgstr "Rodyti èerpes tik kai þymeklis yra ant mygtuko"
-
-#~ msgid "Default movement mode"
-#~ msgstr "Áprastas perkëlimo bûdas"
-
-#~ msgid "Switched movement (or use Ctrl)"
-#~ msgstr "Ðokinëjantis perkëlimas (arba su Ctrl)"
-
-#~ msgid "Free movement (doesn't disturb other applets) (or use Alt)"
-#~ msgstr "Laisvas perkëlimas (netrukdo kitiems átaisams) (arba su Alt)"
-
-#~ msgid "Push movement (or use Shift)"
-#~ msgstr "Stumdantis perkëlimas (arba su Shift)"
-
-#~ msgid "Padding between applets"
-#~ msgstr "Tarpai tarp átaisø"
-
-#~ msgid "Padding between applets and panel border"
-#~ msgstr "Tarpai tarp átaisø ir skydelio rëmelio"
-
-#~ msgid "Panel Objects"
-#~ msgstr "Skydelio objektai"
-
-#~ msgid "App"
-#~ msgstr "Programa"
-
-#~ msgid "..."
-#~ msgstr "..."
-
-#~ msgid "Adding tearoff when tearoffs are disabled"
-#~ msgstr "Pridedamas nuplëðimas, nors nuplëðimai uþdrausti"
-
-#~ msgid "/panel/Config/clock_format=%I:%M:%S %p"
-#~ msgstr "/panel/Config/clock_format=%H:%M:%S"
-
-#~ msgid "No system menus found!"
-#~ msgstr "Neradau jokio sisteminio meniu!"
-
-#~ msgid "With pixmap arrow"
-#~ msgstr "Su rodyklëmis"
-
-#~ msgid "Without pixmap"
-#~ msgstr "Be rodykliø"
-
-#~ msgid "Standard (48 pixels)"
-#~ msgstr "Vidutinis (48 taðkai)"
-
-#~ msgid "Huge (80 pixels)"
-#~ msgstr "Didþiulis (80 taðkø)"
-
-#~ msgid "Ridiculous (128 pixels)"
-#~ msgstr "Milþiniðkas (128 taðkai)"
-
-#~ msgid "Above"
-#~ msgstr "Virð"
-
-#~ msgid "Avoid on maximize"
-#~ msgstr "Vengti iðdidinant"
-
-#~ msgid "Don't avoid on maximize"
-#~ msgstr "Nevengti iðdidinant"
-
-#~ msgid "Hiding policy"
-#~ msgstr "Slëpimasis"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientacija"
-
-#~ msgid "Maximize mode"
-#~ msgstr "Iðdidinimo bûdas"
-
-#~ msgid "All properties..."
-#~ msgstr "Visos savybës..."
-
-#~ msgid "Help system"
-#~ msgstr "Pagalbos sistema"
-
-#~ msgid "Integrated help system (Info, man, HTML)"
-#~ msgstr "Integruota pagalbos sistema (Info, man, HTML)"
-
-#~ msgid "Tasklist"
-#~ msgstr "Uþduoèiø juosta"
-
-#~ msgid "GNOME Tasklist"
-#~ msgstr "GNOME uþduoèiø juosta"
-
-#~ msgid "Desk Guide"
-#~ msgstr "Darbalaukiø gidas"
-
-#~ msgid "GNOME Desktop Guide (Pager)"
-#~ msgstr "GNOME darbalaukiø gidas (peidþeris)"
-
-#~ msgid "Startup Hint"
-#~ msgstr "Pradþios patarimai"
-
-#~ msgid "Browse the startup hints"
-#~ msgstr "Narðyti pradþios patarimus"
-
-#~ msgid "Options for the startup hint dialog"
-#~ msgstr "Pradþios patarimø pasirinktys"
-
-#~ msgid "Menu editor"
-#~ msgstr "Meniu editorius"
-
-#~ msgid "the GNOME menu editor"
-#~ msgstr "Pakeisti GNOME meniu"
+#~ msgstr "Visai maþiukas (12 taðkø)"
