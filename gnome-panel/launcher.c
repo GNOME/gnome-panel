@@ -609,7 +609,8 @@ load_launcher_applet_full (const char *params, GnomeDesktopItem *ditem,
 
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher, panel, pos, 
-						exactpos, APPLET_LAUNCHER);
+						exactpos, APPLET_LAUNCHER,
+						NULL);
 	if (!launcher->info) {
 		/* 
 		 * Don't free launcher here, the button has 

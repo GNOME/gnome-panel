@@ -365,7 +365,7 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_container_add(GTK_CONTAINER(ebox),the_status->handle);
 
 	the_status->info = panel_applet_register (ebox, the_status, free_status, panel,
-						  pos, exactpos, APPLET_STATUS);
+						  pos, exactpos, APPLET_STATUS, NULL);
 	if (the_status->info == NULL)
 		return TRUE;
 

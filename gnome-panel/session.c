@@ -191,13 +191,11 @@ panel_session_save_applets (GSList *applets_list)
 	for (l = applets_list; l; l = l->next) {
 		AppletInfo *info = l->data;
 	
-		g_return_if_fail (info);
+		g_return_if_fail (info && info->widget);
+
+		panel_applet_save_position (info, info->gconf_key);
 
 		switch (info->type) {
-		case APPLET_BONOBO:
-			panel_applet_frame_save_position (
-					PANEL_APPLET_FRAME (info->data));
-			break;
 #ifdef FIXME
 		case APPLET_EMPTY:
 			/*
@@ -618,12 +616,9 @@ panel_session_die (GnomeClient *client,
 	for (l = applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
-		switch (info->type) {
-		case APPLET_BONOBO:
-			panel_applet_frame_save_position (
-				PANEL_APPLET_FRAME (info->data));
-			break;
-		case APPLET_SWALLOW: {
+		panel_applet_save_position (info, info->gconf_key);
+
+		if (info->type == APPLET_SWALLOW) {
 			Swallow   *swallow = info->data;
 			GtkSocket *socket;
 
@@ -635,10 +630,6 @@ panel_session_die (GnomeClient *client,
                                 XKillClient (GDK_DISPLAY (),
 					     GDK_WINDOW_XWINDOW(socket->plug_window));
 
-			}
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -881,6 +872,7 @@ session_init_panels(void)
 					   panel_profile_key,
 					   GCONF_VALUE_STRING,
 					   NULL);
+
 	g_free (panel_profile_key);
 					  
 	for (temp = panel_ids; temp; temp = temp->next) {
@@ -1531,5 +1523,5 @@ session_write_global_config (void)
 void session_load (void) {
 	session_init_panels ();
 /*	session_init_launchers (); */
-	panel_applet_frame_load_applets ();
+	panel_applet_load_applets_from_gconf ();
 }

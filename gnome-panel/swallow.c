@@ -436,7 +436,8 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 
 	info = panel_applet_register (swallow->ebox, ref_swallow (swallow),
 				      (GDestroyNotify) unref_swallow,
-				      panel, pos, exactpos, APPLET_SWALLOW);
+				      panel, pos, exactpos, APPLET_SWALLOW,
+				      NULL);
 	if (!info)
 		return;
 

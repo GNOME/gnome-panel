@@ -472,7 +472,8 @@ load_drawer_applet (gchar *mypanel_id, const char *pixmap, const char *tooltip,
 					      panel,
 					      pos,
 					      exactpos,
-					      APPLET_DRAWER);
+					      APPLET_DRAWER,
+					      NULL);
 
 		if (!info) {
 			gtk_widget_destroy (dw);

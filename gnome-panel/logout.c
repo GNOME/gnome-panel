@@ -118,7 +118,8 @@ load_logout_applet (PanelWidget *panel,
 		return;
 
 	info = panel_applet_register (logout, NULL, NULL, panel,
-				      pos, exactpos, APPLET_LOGOUT);
+				      pos, exactpos, APPLET_LOGOUT,
+				      NULL);
 	if (!info)
 		return;
 
@@ -183,7 +184,7 @@ load_lock_applet (PanelWidget *panel,
 		return;
 
 	info = panel_applet_register (lock, NULL, NULL, panel, pos,
-				      exactpos, APPLET_LOCK);
+				      exactpos, APPLET_LOCK, NULL);
 	if (!info)
 		return;
 

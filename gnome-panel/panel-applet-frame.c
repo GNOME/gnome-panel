@@ -42,113 +42,24 @@ struct _PanelAppletFramePrivate {
 	AppletInfo                     *applet_info;
 
 	gchar                          *iid;
-	gchar                          *unique_key;
 };
 
 static GObjectClass *parent_class;
 
-static void panel_applet_frame_save_to_gconf (PanelAppletFrame *frame);
-
-static void
-panel_applet_frame_load_from_unique_id (GConfClient *gconf_client,
-					const char  *profile,
-					const char  *unique_id)
-{
-	PanelWidget *panel_widget;
-	char        *temp_key;
-	char        *panel_id;
-	char        *applet_iid;
-	int          position;
-	gboolean     right_stick;
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "bonobo-iid");
-	applet_iid = gconf_client_get_string (gconf_client, temp_key, NULL);
-	g_free (temp_key);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "position");
-	position = gconf_client_get_int (gconf_client, temp_key, NULL);
-	g_free (temp_key);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "panel-id");
-	panel_id = gconf_client_get_string (gconf_client, temp_key, NULL);
-	g_free (temp_key);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, unique_id, "right-stick");
-	right_stick = gconf_client_get_bool (gconf_client, temp_key, NULL);
-	g_free (temp_key);
-
-	panel_widget = panel_widget_get_by_id (panel_id);
-
-	/*
-	 * A hack from the old panel to make sure the applet is on the right
-	 */
-	position += right_stick ? G_MAXINT/2 : 0;
-
-	panel_applet_frame_load (applet_iid, panel_widget, position, unique_id);
-
-	g_free (panel_id);
-	g_free (applet_iid);
-}
-
 void
-panel_applet_frame_load_applets (void)
-{
-	GConfClient *client;
-	GSList      *applet_id_list, *l;
-	char        *temp_key;
-	char        *profile;
-
-        client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
-
-        temp_key = panel_gconf_general_profile_get_full_key (profile, "applet-id-list");
-
-        applet_id_list = gconf_client_get_list (panel_gconf_get_client (),
-						temp_key,
-						GCONF_VALUE_STRING,
-						NULL);
-
-        for (l = applet_id_list; l; l = l->next)
-		panel_applet_frame_load_from_unique_id (client, profile, (char *) l->data);
-
-        g_free (temp_key);
-        g_slist_foreach (applet_id_list, (GFunc) g_free, NULL);
-        g_slist_free (applet_id_list);
-}
-
-static void
-panel_applet_frame_save_to_gconf (PanelAppletFrame *frame)
+panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
+				  const char       *gconf_key)
 {
 	GConfClient *client;
 	char        *profile;
 	char        *temp_key;
-	GSList      *applet_id_list, *l;
 
 	client  = panel_gconf_get_client ();
 	profile = session_get_current_profile ();
 
-	temp_key = panel_gconf_general_profile_get_full_key (profile, "applet-id-list");
-
-	applet_id_list = gconf_client_get_list (client, temp_key, GCONF_VALUE_STRING, NULL);
-	
-	for (l = applet_id_list; l; l = l->next)
-		if (!strcmp (frame->priv->unique_key, (gchar *) l->data))
-			g_warning ("%s unique applet id already registered",
-				   frame->priv->unique_key);
-
-	applet_id_list = g_slist_prepend (applet_id_list, g_strdup (frame->priv->unique_key));
-
-	gconf_client_set_list (client, temp_key, GCONF_VALUE_STRING, applet_id_list, NULL);
-
-	g_free (temp_key);
-	g_slist_foreach (applet_id_list, (GFunc) g_free, NULL);
-	g_slist_free (applet_id_list);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "bonobo-iid");
+	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, gconf_key, "bonobo-iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 	g_free (temp_key);
-
-	panel_applet_frame_save_position (frame);
 }
 
 static void
@@ -156,48 +67,6 @@ popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
 		     const gchar       *verbname)
 {
-	GConfClient *client;
-	GSList      *applet_id_list, *l;
-	char        *temp_key;
-	char        *profile;
-
-	g_return_if_fail (frame && PANEL_IS_APPLET_FRAME (frame));
-
-        client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
-
-        temp_key = panel_gconf_general_profile_get_full_key (profile, "applet-id-list");
-
-        applet_id_list = gconf_client_get_list (panel_gconf_get_client (),
-						temp_key,
-						GCONF_VALUE_STRING,
-						NULL);
-
-        for (l = applet_id_list; l; l = l->next)
-                if (!strcmp (frame->priv->unique_key, (char *) l->data))
-                        break;
-
-        if (l) {
-		char *tmp;
-
-                applet_id_list = g_slist_remove_link (applet_id_list, l);
-
-		g_free (l->data);
-		g_slist_free (l);
-
-                gconf_client_set_list (client, temp_key, GCONF_VALUE_STRING, applet_id_list, NULL);
-
-		tmp = g_strdup_printf ("/apps/panel/profiles/%s/applets/%s", profile, frame->priv->unique_key);
-
-		panel_gconf_directory_recursive_clean (client, tmp);
-
-		g_free (tmp);
-        }
-
-        g_free (temp_key);
-        g_slist_foreach (applet_id_list, (GFunc) g_free, NULL);
-        g_slist_free (applet_id_list);
-
 	panel_applet_clean (frame->priv->applet_info);
 }
 
@@ -243,13 +112,19 @@ panel_applet_frame_load (const gchar *iid,
 			 gint         pos,
 			 const char  *gconf_key)
 {
-	GtkWidget  *frame;
+	GtkWidget  *frame = NULL;
 	AppletInfo *info;
+	char       *real_key;
 
 	g_return_if_fail (iid);
 	g_return_if_fail (panel);
 
-	frame = panel_applet_frame_new (iid, gconf_key);
+	if (gconf_key)
+		real_key = g_strdup (gconf_key);
+	else
+		real_key = gconf_unique_key ();
+
+	frame = panel_applet_frame_new (iid, real_key);
 
 	if (!frame) {
 		GtkWidget *dialog;
@@ -274,41 +149,15 @@ panel_applet_frame_load (const gchar *iid,
 				      panel,
 				      pos,
 				      FALSE,
-				      APPLET_BONOBO);
+				      APPLET_BONOBO,
+				      real_key);
 
 	if (!info)
 		g_warning (_("Cannot register control widget\n"));
 
+	g_free (real_key);
+
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
-
-	if (!gconf_key)
-		panel_applet_frame_save_to_gconf (PANEL_APPLET_FRAME (frame));
-}
-
-void
-panel_applet_frame_save_position (PanelAppletFrame *frame)
-{
-	GConfClient *client;
-	AppletInfo  *info;
-	char        *profile;
-	char        *temp_key;
-
-	client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
-
-	info = frame->priv->applet_info;
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "position");
-	gconf_client_set_int (client, temp_key, panel_applet_get_position (info), NULL);
-	g_free (temp_key);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "panel-id");
-	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (info), NULL);
-	g_free (temp_key);
-
-	temp_key = panel_gconf_applets_default_profile_get_full_key (profile, frame->priv->unique_key, "right-stick");
-	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (info), NULL);
-	g_free (temp_key);
 }
 
 void
@@ -414,7 +263,6 @@ panel_applet_frame_finalize (GObject *object)
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
 
 	g_free (frame->priv->iid);
-	g_free (frame->priv->unique_key);
 
         g_free (frame->priv);
         frame->priv = NULL;
@@ -504,15 +352,10 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	GtkWidget          *widget;
 	gchar              *moniker;
 
-	if (gconf_key)
-		frame->priv->unique_key = g_strdup (gconf_key);
-	else
-		frame->priv->unique_key = gconf_unique_key ();
-
 	moniker = g_strdup_printf ("%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs", 
 				   iid,
 				   session_get_current_profile (),
-				   frame->priv->unique_key);
+				   gconf_key);
 
         widget = bonobo_widget_new_control (moniker, NULL);
 
@@ -563,6 +406,8 @@ panel_applet_frame_new (const char *iid,
 			const char *gconf_key)
 {
 	PanelAppletFrame *frame;
+
+	g_return_val_if_fail (iid && gconf_key, NULL);
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 

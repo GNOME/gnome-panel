@@ -59,8 +59,8 @@ GtkWidget *panel_applet_frame_new       (const char *iid,
 					 const char *gconf_key);
 
 GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
-					 const gchar      *iid,
-					 const char       *gconf_key);
+					 const char      *iid,
+					 const char      *gconf_key);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
@@ -71,6 +71,9 @@ void       panel_applet_frame_load      (const gchar *iid,
 					 const char  *gconf_key);
 
 void       panel_applet_frame_load_applets  (void);
+
+void       panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
+					     const char       *gconf_key);
 
 void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 					     PanelOrient       orient);
@@ -87,8 +90,6 @@ void       panel_applet_frame_change_background_color  (PanelAppletFrame *frame,
 							guint16           blue);
 
 void       panel_applet_frame_clear_background         (PanelAppletFrame *frame);
-
-void       panel_applet_frame_save_position            (PanelAppletFrame *frame);
 
 void       panel_applet_frame_get_expand_flags         (PanelAppletFrame *frame,
 							gboolean         *expand_major,

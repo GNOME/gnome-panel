@@ -4648,7 +4648,7 @@ load_menu_applet (const char *params,
 		AppletInfo *info;
 
 		info = panel_applet_register (menu->button, menu, free_menu, panel, 
-					      pos, exactpos, APPLET_MENU);
+					      pos, exactpos, APPLET_MENU, NULL);
 		if (!info)
 			return;
 

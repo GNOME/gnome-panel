@@ -514,19 +514,12 @@ panel_remove_applets (PanelWidget *panel)
 		info = g_object_get_data (G_OBJECT (ad->applet),
 					  "applet_info");
 
-		switch (info->type) {
-		case APPLET_BONOBO:
-			panel_applet_frame_save_position (
-				PANEL_APPLET_FRAME (info->data));
-			break;
-		case APPLET_SWALLOW: {
+		panel_applet_save_position (info, info->gconf_key);
+
+		if (info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 
 			swallow->clean_remove = TRUE;
-			}
-			break;
-		default:
-			break;
 		}
 	}
 

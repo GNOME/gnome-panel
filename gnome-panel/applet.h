@@ -46,6 +46,8 @@ typedef struct {
 
 	gpointer        data;
 	GDestroyNotify  data_destroy;
+
+	char           *gconf_key;
 } AppletInfo;
 
 typedef struct {
@@ -66,7 +68,8 @@ AppletInfo *panel_applet_register    (GtkWidget      *applet,
 				      PanelWidget    *panel,
 				      gint            pos,
 				      gboolean        exactpos,
-				      AppletType      type);
+				      AppletType      type,
+				      const char     *gconf_key);
 
 void        panel_applet_clean       (AppletInfo *info);
 
@@ -89,6 +92,11 @@ AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 void        panel_applet_callback_set_sensitive (AppletInfo *info,
 						 const char *callback_name,
 						 gint        sensitive);
+
+void        panel_applet_load_applets_from_gconf (void);
+void        panel_applet_save_to_gconf           (AppletInfo *applet_info);
+void        panel_applet_save_position           (AppletInfo *applet_info,
+						  const char *gconf_key);
 
 int         panel_applet_get_position    (AppletInfo *applet);
 gchar      *panel_applet_get_panel_id    (AppletInfo *applet);

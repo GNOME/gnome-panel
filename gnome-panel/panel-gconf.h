@@ -17,13 +17,13 @@ gchar *		panel_gconf_global_config_get_full_key (const gchar *key);
 gchar * 	panel_gconf_general_profile_get_full_key (const gchar * profile, const gchar *key);
 gchar *		panel_gconf_panel_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key);
 gchar *		panel_gconf_applets_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
-gchar *         panel_gconf_launchers_profile_get_full_key (const gchar *profile, const gchar *launcher_id, const gchar *key);
+gchar *		panel_gconf_objects_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key);
 
 /* Default Profiles */
 gchar *		panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key);
 gchar *		panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key);
 gchar *		panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
-gchar *         panel_gconf_launchers_default_profile_get_full_key (const gchar *profile, const gchar *launcher_id, const gchar *key);
+gchar *		panel_gconf_objects_default_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key);
 
 gboolean	panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val);
 gchar *		panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val);

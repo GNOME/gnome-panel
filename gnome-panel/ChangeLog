@@ -1,3 +1,52 @@
+2002-01-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Move applet loading/saving to/from gconf into applet.c where
+	it can be used by all type of panel objects.
+
+	* applet.[ch]:
+	(panel_applet_clean_gconf): impl.
+	(panel_applet_clean): clean_gconf and remove the applet from
+	the list.
+	(applet_idle_remove): save position for all object.
+	(applet_destroy): free gconf_key.
+	(panel_applet_get_full_gconf_key),
+	(panel_applet_load_from_unique_id), (panel_applet_load_list),
+	(panel_applet_load_applets_from_gconf),
+	(panel_applet_save_position),
+	(panel_applet_save_to_gconf): impl.
+	(panel_applet_register): add gconf_key arg, save_to_gconf.
+	(panel_applet_get_position),
+	(panel_applet_get_panel_id), (panel_applet_get_right_stick):
+	add preconditions.
+
+	* drawer.c: (load_drawer_applet):
+	* launcher.c: (load_launcher_applet_full):
+	* logout.c: (load_logout_applet), (load_lock_applet):
+	* menu.c: (load_menu_applet):
+	* status.c: (load_status_applet):
+	* swallow.c: (load_swallow_applet): update for
+	panel_applet_register param change.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_save_to_gconf): only save the bonobo iid.
+	(popup_handle_remove): kill gconf stuff.
+	(panel_applet_frame_load): generate a gconf_keyt if we're
+	loading the applet for the first time.
+	(panel_applet_frame_finalize), (panel_applet_frame_construct),
+	(panel_applet_frame_new): upd.
+
+	* panel-gconf.[ch]: (panel_gconf_objects_profile_get_full_key),
+	(panel_gconf_objects_default_profile_get_full_key): rename
+	from panel_gconf_launchers_*.
+
+	* panel.c: (panel_remove_applets): save position for all
+	objects.
+
+	* session.c:
+	(panel_session_save_applets): save position for all object.
+	(panel_session_die): ditto.
+	(session_load): use panel_applet_load_applets_from_gconf.
+
 2002-01-07  Mikael Hallendal  <micke@codefactory.se>
 
 	* gnome-panel-screenshot.c: always include locale.h, it's used in
