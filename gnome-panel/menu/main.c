@@ -150,6 +150,20 @@ add_dir_to_panel (GtkWidget *widget, void *data)
 	add_to_panel (APPLET_ID, data);
 }
 
+void
+add_drawer (GtkWidget *widget, void *data)
+{
+	PanelCommand cmd;
+	
+	cmd.cmd = PANEL_CMD_CREATE_DRAWER;
+	cmd.params.create_drawer.name   = "Drawer";
+	cmd.params.create_drawer.icon   = "???";
+	cmd.params.create_drawer.pos    = PANEL_UNKNOWN_APPLET_POSITION;
+
+	(*panel_cmd_func) (&cmd);
+}
+
+
 GtkWidget *
 create_menu_at (GtkWidget *window, char *menudir, int create_app_menu,
 	GList ** small_icons)
@@ -473,12 +487,19 @@ create_panel_submenu (GtkWidget *app_menu, GList ** small_icons)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 		create_applets_menu(small_icons));
 
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add Drawer"),small_icons);
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+        gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    (GtkSignalFunc) add_drawer, 0);
+
 	add_menu_separator(menu);
 	
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Configure"),small_icons);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-        gtk_signal_connect (GTK_OBJECT (menuitem), "activate", (GtkSignalFunc) panel_configure, 0);
+        gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    (GtkSignalFunc) panel_configure, 0);
 
 	/*FIXME: this is not needed, or is it?, so take it out unless we
 	  do need it!

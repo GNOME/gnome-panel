@@ -1571,6 +1571,70 @@ register_toy(GtkWidget *applet, char *id, int pos, long flags)
 				 NULL);
 }
 
+static void
+create_drawer(char *name, char *icon, int pos)
+{
+	GtkWidget *drawer;
+	int i;
+	int n;
+
+	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
+		pos=0;
+
+	drawer = gtk_button_new_with_label("DRAWER");
+	put_applet_in_free_slot_starting_at(the_panel,drawer,pos);
+	gtk_tooltips_set_tips(panel_tooltips,drawer,name);
+	gtk_widget_show(drawer);
+	gtk_widget_set_events(drawer, gtk_widget_get_events(drawer) |
+			      APPLET_EVENT_MASK);
+	gtk_signal_connect(GTK_OBJECT(drawer), "event",
+			   (GtkSignalFunc) panel_applet_event, NULL);
+	bind_applet_events(drawer, NULL);
+
+	i = find_applet(the_panel,drawer);
+
+	the_panel->applets[i]->type = APPLET_DRAWER;
+	the_panel->applets[i]->drawer = g_new(PanelDrawer,1);
+
+	the_panel->applets[i]->drawer->window = 
+		gtk_window_new(GTK_WINDOW_POPUP);
+
+	the_panel->applets[i]->drawer->panel_eb = gtk_event_box_new();
+	gtk_widget_show(the_panel->applets[i]->drawer->panel_eb);
+
+	gtk_container_add(GTK_CONTAINER(the_panel->applets[i]->drawer->window),
+			  the_panel->applets[i]->drawer->panel_eb);
+			  
+	/*the panel table*/
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->applets[i]->drawer->panel =
+				gtk_table_new(1,PANEL_TABLE_SIZE,FALSE);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->applets[i]->drawer->panel =
+				gtk_table_new(PANEL_TABLE_SIZE,1,FALSE);
+			break;
+	}
+	gtk_widget_show(the_panel->applets[i]->drawer->panel);
+
+	gtk_container_add(GTK_CONTAINER(the_panel->applets[i]->
+			  drawer->panel_eb),
+			  the_panel->applets[i]->drawer->panel);
+			  
+
+	the_panel->applets[i]->drawer->state = PANEL_SHOWN;
+	the_panel->applets[i]->drawer->applets =
+		g_new(PanelApplet *,PANEL_TABLE_SIZE);
+	for(n=0;n<PANEL_TABLE_SIZE;n++)
+		the_panel->applets[i]->drawer->applets[n] = NULL;
+	the_panel->applets[i]->drawer->applet_count = 0;
+	the_panel->applets[i]->drawer->applet_being_dragged = NULL;
+	the_panel->applets[i]->drawer->applet_id_being_dragged = -1;
+		
+}
 
 static void
 panel_change_orient(void)
@@ -1720,7 +1784,7 @@ panel_command(PanelCommand *cmd)
 			break;
 
 		case PANEL_CMD_CREATE_DRAWER:
-			create_applet(cmd->params.create_drawer.name,
+			create_drawer(cmd->params.create_drawer.name,
 				      cmd->params.create_drawer.icon,
 				      cmd->params.create_drawer.pos);
 			break;
