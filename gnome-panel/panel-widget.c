@@ -229,12 +229,16 @@ add_all_move_bindings (PanelWidget *panel)
 	add_move_bindings (binding_set, GDK_SHIFT_MASK, "push_move");
 	add_move_bindings (binding_set, GDK_CONTROL_MASK, "switch_move");
 	add_move_bindings (binding_set, GDK_MOD1_MASK, "free_move");
+	add_move_bindings (binding_set, 0, "free_move");
 
 	add_tab_bindings (binding_set, 0, TRUE);
 	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_Escape, 0,
+                                      "end_move", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_KP_Enter, 0,
                                       "end_move", 0);
 }
 
@@ -271,10 +275,12 @@ remove_all_move_bindings (PanelWidget *panel)
 	remove_move_bindings (binding_set, GDK_SHIFT_MASK);
 	remove_move_bindings (binding_set, GDK_CONTROL_MASK);
 	remove_move_bindings (binding_set, GDK_MOD1_MASK);
+	remove_move_bindings (binding_set, 0);
 	remove_tab_bindings (binding_set, 0, TRUE);
 	remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 
 	gtk_binding_entry_clear (binding_set, GDK_Escape, 0);
+	gtk_binding_entry_clear (binding_set, GDK_KP_Enter, 0);
 }
 
 static void
