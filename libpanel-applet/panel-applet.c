@@ -87,7 +87,6 @@ enum {
 
 static void
 panel_applet_associate_schemas_in_dir (GConfClient  *client,
-				       GConfEngine  *engine,
 				       const gchar  *prefs_key,
 				       const gchar  *schema_dir,
 				       GError      **error)
@@ -110,14 +109,8 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 
 		g_free (tmp);
 
-		/*
-		 * FIXME:
-		 * 	we're not supposed to be using GConfEngine here
-		 * 	but we've no choice since there's no
-		 * 	gconf_client_associate_schema.
-		 */
 		gconf_engine_associate_schema (
-			engine, key, gconf_entry_get_key (entry), error);
+			client->engine, key, gconf_entry_get_key (entry), error);
 
 		g_free (key);
 
@@ -142,7 +135,7 @@ panel_applet_associate_schemas_in_dir (GConfClient  *client,
 		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, subdir);
 
 		panel_applet_associate_schemas_in_dir (
-			client, engine, prefs_subdir, schema_subdir, error);
+			client, prefs_subdir, schema_subdir, error);
 
 		g_free (prefs_subdir);
 		g_free (schema_subdir);
@@ -162,7 +155,6 @@ panel_applet_add_preferences (PanelApplet  *applet,
 			      const gchar  *schema_dir,
 			      GError      **opt_error)
 {
-	GConfEngine  *engine;
 	GConfClient  *client;
 	GError      **error = NULL;
 	GError       *our_error = NULL;
@@ -175,10 +167,9 @@ panel_applet_add_preferences (PanelApplet  *applet,
 		error = &our_error;
 
 	client = gconf_client_get_default ();
-	engine = gconf_engine_get_default ();
 
 	panel_applet_associate_schemas_in_dir (
-		client, engine, applet->priv->prefs_key, schema_dir, error);
+		client, applet->priv->prefs_key, schema_dir, error);
 
 	if (!opt_error && our_error) {
 		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",

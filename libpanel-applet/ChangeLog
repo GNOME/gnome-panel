@@ -1,5 +1,11 @@
 2002-02-11  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet.c: (panel_applet_associate_schemas_in_dir),
+	(panel_applet_add_preferences): use client->engine to stop
+	gconf spewing warnings. Thanks to Gediminas Paulauskas.
+
+2002-02-11  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet.c:
 	(panel_applet_handle_background_string): impl method to unify
 	background string parsing.
