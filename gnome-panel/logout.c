@@ -3,7 +3,6 @@
 /* uncorbized by George Lebl */
 
 #include <config.h>
-#include <libgnomeui.h>
 
 #include "panel-include.h"
 
@@ -112,7 +111,7 @@ load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos)
 		return;
 
 	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
+			    GTK_STOCK_HELP,
 			    _("Help"));
 }
 
@@ -194,7 +193,7 @@ load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos)
 		applet_add_callback(applets_last->data, "prefs",
 				    NULL, _("Preferences"));
 	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
+			    GTK_STOCK_HELP,
 			    _("Help"));
 }
 
