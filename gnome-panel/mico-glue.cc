@@ -6,6 +6,7 @@
 #include "gnome-panel.h"
 #include "panel.h"
 
+
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
  * "instances" of the panel, as there is only one panel running on the
@@ -73,8 +74,7 @@ panel_corba_gtk_main (int *argc, char ***argv, char *service_name)
 	char hostname [4096];
 	char *name;
 
-	orb_ptr = CORBA::ORB_init (*argc, *argv, "mico-local-orb");
-	boa_ptr = orb_ptr->BOA_init (*argc, *argv, "mico-local-boa");
+	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
 	gethostname (hostname, sizeof (hostname));
 	if (hostname [0] == 0)

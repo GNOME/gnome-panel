@@ -445,29 +445,22 @@ init_user_panels(void)
 }
 	
 
-/* FIXME: session management not complete.  In particular, we should:
-   1. Actually save state in a useful way.  */
-static void
-init_session_management (int argc, char *argv[])
-{
-  client = gnome_client_new (argc, argv);
-  
-  gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
-		      GTK_SIGNAL_FUNC (panel_session_save), NULL);
-}
-
 int
 main(int argc, char **argv)
 {
 	GtkWidget *base_panel;
 	char buf[256];
 
-	gnome_init("panel", &argc, &argv);
-
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
-	init_session_management (argc, argv);
+	client = gnome_client_new_default ();
+	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
+			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
+
+	panel_corba_register_arguments ();
+
+	gnome_init("panel", NULL, argc, argv, 0, NULL);
 
 	create_applet_menu();
 
@@ -499,6 +492,6 @@ main(int argc, char **argv)
 	printf ("starting corba looop\n");
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main (&argc, &argv, "IDL:GNOME/Panel:1.0");
-	
+
 	return 0;
 }

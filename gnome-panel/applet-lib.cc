@@ -73,10 +73,9 @@ gnome_panel_applet_init_corba (int *argc, char ***argv)
 	
 	if (!iior)
 		return 0;
-	
-	orb_ptr = CORBA::ORB_init (*argc, *argv, "mico-local-orb");
-	boa_ptr = orb_ptr->BOA_init (*argc, *argv, "mico-local-boa");
-	
+
+	panel_initialize_corba (&orb_ptr, &boa_ptr)
+
 	orb_ptr->dispatcher (new GtkDispatcher ());
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);

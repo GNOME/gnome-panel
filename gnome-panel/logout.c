@@ -48,7 +48,8 @@ main(int argc, char *argv[])
   GtkWidget *logout;
   char *result;
 
-  gnome_init("logout_applet", &argc, &argv);
+  panel_corba_register_arguments ();
+  gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
   if(!gnome_panel_applet_init_corba(&argc, &argv))
     {

@@ -1,3 +1,24 @@
+Sun Mar  8 18:55:09 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (INCLUDES): Include GNOME_INCLUDEDIR.
+
+Sat Mar  7 13:39:41 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* Makefile.am (libpanel_applet_la_SOURCES): Added mico-parse.cc.
+	(panel_SOURCES): Likewise.
+	* cdplayer/cdplayer.c (main): Use new gnome_init.
+	* logout.c (main): Use new gnome_init.
+	* clock.c (main): Use new gnome_init.
+	* applet-lib.cc (gnome_panel_applet_init_corba): Use
+	panel_initialize_corba.
+	* mico-parse.cc: New file.
+	* mico-glue.cc (panel_corba_gtk_main): Use
+	panel_initialize_corba.
+	* main.c (init_session_management): Removed.
+	(main): Use new session and argument parsing code.
+	* mico-glue.h (corba_gtk_main): Removed.
+	(panel_corba_register_arguments): Declare.
+
 Fri Mar 06 20:57:04 1998  George Lebl  <jirka@5z.com>
 
 	* main.c,panel.c: external applets are now started

@@ -10,7 +10,7 @@ test:
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
-	-I$(includedir)
+	-I$(includedir) $(GNOME_INCLUDEDIR)
 
 bin_PROGRAMS = panel clock_applet launcher_applet logout_applet
 
@@ -26,6 +26,7 @@ lib_LTLIBRARIES = libpanel_applet.la
 libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	applet-widget.c \
+	mico-parse.cc \
 	$(CORBA_SOURCES)
 
 #libpanel_appletinclude_HEADERS = applet-lib.h \
@@ -52,6 +53,7 @@ panel_SOURCES = 		\
 	menu.h  		\
 	mico-glue.cc		\
 	mico-glue.h		\
+	mico-parse.cc		\
 	panel.c			\
 	panel.h         	\
 	panel_config.c  	\

@@ -211,8 +211,9 @@ main(int argc, char **argv)
 {
 	GtkWidget *clock;
 	char *result;
-	
-	gnome_init("clock_applet", &argc, &argv);
+
+	panel_corba_register_arguments ();
+	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
 
 	if (!gnome_panel_applet_init_corba (&argc, &argv)){
 		fprintf (stderr, "Could not comunicate with the panel\n");
