@@ -1852,9 +1852,9 @@ create_menu_at (GtkWidget *menu,
 		gboolean fake_submenus,
 		gboolean force)
 {
-	return create_menu_at_fr(menu,fr_get_dir(menudir),
-				 applets,dir_name,pixmap_name,
-				 fake_submenus,force);
+	return create_menu_at_fr(menu, fr_get_dir(menudir),
+				 applets, dir_name, pixmap_name,
+				 fake_submenus, force);
 }
 
 static GtkWidget *
@@ -4132,12 +4132,24 @@ load_tearoff_menu(void)
 			g_snprintf(propname, 256, "pixmap_name_%d=", i);
 			pixmap_name = gnome_config_get_string(propname);
 
+			if(!menu) {
+				menu = gtk_menu_new ();
+				gtk_signal_connect(GTK_OBJECT(menu), "show",
+						   GTK_SIGNAL_FUNC(setup_menu_panel),
+						   NULL);
+			}
+
 			menu = create_menu_at(menu, name, applets, dir_name,
 					      pixmap_name, TRUE, FALSE);
 
 			g_free(name);
 			g_free(dir_name);
 			g_free(pixmap_name);
+		}
+
+		if(menu && !gtk_object_get_data(GTK_OBJECT(menu), "mf")) {
+			gtk_widget_destroy(menu);
+			menu = NULL;
 		}
 	}
 
@@ -4149,7 +4161,7 @@ load_tearoff_menu(void)
 	}
 
 	/*set the panel to use as the data, or we will use current_panel*/
-	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",
+	gtk_object_set_data(GTK_OBJECT(menu), "menu_panel",
 			    menu_panel_widget);
 	gtk_signal_connect_object_while_alive(
 	      GTK_OBJECT(menu_panel_widget),
