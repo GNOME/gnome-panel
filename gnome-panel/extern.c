@@ -537,8 +537,8 @@ s_panel_add_applet(PortableServer_Servant servant,
 		   CORBA_unsigned_long* wid,
 		   CORBA_Environment *ev)
 {
-	return s_panel_add_applet_full(servant,panel_applet,goad_id,0,0,
-				       cfgpath,globcfgpath,wid,ev);
+	return s_panel_add_applet_full(servant, panel_applet, goad_id, 0, 0,
+				       cfgpath, globcfgpath, wid, ev);
 }
 
 static GNOME_PanelSpot
@@ -557,13 +557,14 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 	POA_GNOME_PanelSpot *panelspot_servant;
 	GNOME_PanelSpot acc;
 	
-	for(li=applets;li!=NULL;li=g_slist_next(li)) {
+	for (li = applets; li != NULL; li = li->next) {
 		AppletInfo *info = li->data;
-		if(info && info->type == APPLET_EXTERN_PENDING) {
+		if (info && info->type == APPLET_EXTERN_PENDING) {
 			Extern *ext = info->data;
 			g_assert(ext);
 			g_assert(ext->info == info);
-			if(strcmp(ext->goad_id,goad_id)==0) {
+			g_assert(ext->goad_id != NULL);
+			if (strcmp(ext->goad_id, goad_id)==0) {
 				/*we started this and already reserved a spot
 				  for it, including the socket widget*/
 				GtkWidget *socket =
@@ -579,7 +580,7 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 				ext->cfg = NULL;
 				*globcfgpath = CORBA_string_dup(PANEL_CONFIG_PATH);
 				info->type = APPLET_EXTERN_RESERVED;
-				*wid=GDK_WINDOW_XWINDOW(socket->window);
+				*wid = GDK_WINDOW_XWINDOW(socket->window);
 #ifdef PANEL_DEBUG
 				printf("\nSOCKET XID: %lX\n\n", (long)*wid);
 #endif
@@ -597,12 +598,15 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 	
 	/*this is an applet that was started from outside, otherwise we would
 	  have already reserved a spot for it*/
-	ext = g_new0(Extern,1);
+	ext = g_new0(Extern, 1);
 	ext->started = FALSE;
 	ext->exactpos = FALSE;
 	ext->send_position = FALSE;
 	ext->send_draw = FALSE;
 	ext->orient = -1;
+	ext->applet = CORBA_Object_duplicate(panel_applet, ev);
+	ext->goad_id = g_strdup(goad_id);
+	ext->cfg = NULL;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -623,20 +627,19 @@ s_panel_add_applet_full(PortableServer_Servant servant,
 	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
 			      CORBA_OBJECT_NIL);
 
-	ext->applet = CORBA_Object_duplicate(panel_applet, ev);
-	ext->goad_id = g_strdup(goad_id);
-	ext->cfg = NULL;
-
 	/*select the nth panel*/
 	if(panel)
-		li = g_slist_nth(panels,panel);
+		li = g_slist_nth(panels, panel);
 	else
 		li = NULL;
-	if(!li)
+	if(li == NULL)
 		li = panels;
 
+	/* There's always at least one */
+	g_assert (li != NULL);
+
 	*wid = reserve_applet_spot (ext, li->data, pos,
-				      APPLET_EXTERN_RESERVED);
+				    APPLET_EXTERN_RESERVED);
 	if(*wid == 0) {
 		extern_clean(ext);
 		*globcfgpath = NULL;
