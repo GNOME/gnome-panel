@@ -7,12 +7,6 @@
 
 G_BEGIN_DECLS
 
-typedef struct {
-	char  *str;
-	guint  keysym;
-	guint  state;
-} GlobalConfigKey;
-
 /*
  * Corresponding keys in the global config schema:
  *   (+) indicates its in the capplet
@@ -25,12 +19,6 @@ typedef struct {
  * panel_show_delay
  * panel_animation_speed (+)
  * panel_hide_delay
- *
- * enable_key_bindings
- * menu_key
- * menu_key
- * run_key
- * window_screenshot_key
  *
  * drawer_autoclose (+)
  * confirm_panel_remove
@@ -47,12 +35,6 @@ struct _GlobalConfig {
 	int                show_delay;
 	PanelSpeed         animation_speed;
 	int                hide_delay;
-
-	gboolean           keys_enabled;
-	GlobalConfigKey    menu_key;
-	GlobalConfigKey    run_key;
-	GlobalConfigKey    screenshot_key;
-	GlobalConfigKey    window_screenshot_key;
 
 	gboolean           drawer_auto_close;
 	gboolean           confirm_panel_remove;

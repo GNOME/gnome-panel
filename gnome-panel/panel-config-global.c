@@ -71,47 +71,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 		global_config.hide_delay =
 				gconf_value_get_int (value);
 
-	else if (strcmp (key, "enable_key_bindings") == 0)
-		global_config.keys_enabled =
-				gconf_value_get_bool (value);
-
-	else if (strcmp (key, "menu_key") == 0) { 
-		if (global_config.menu_key.str)
-			g_free (global_config.menu_key.str);
-
-		global_config.menu_key.str =
-			g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.menu_key);
-
-	} else if (strcmp (key, "run_key") == 0) {
-		if (global_config.run_key.str)
-			g_free (global_config.run_key.str);
-
-		global_config.run_key.str =
-			g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.run_key);
-
-	} else if (strcmp (key, "screenshot_key") == 0) {
-		if (global_config.screenshot_key.str)
-			g_free (global_config.screenshot_key.str);
-
-		global_config.screenshot_key.str =
-			 g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.screenshot_key);
-
-	} else if (strcmp (key, "window_screenshot_key") == 0) {
-		if (global_config.window_screenshot_key.str)
-			g_free (global_config.window_screenshot_key.str);
-
-		global_config.window_screenshot_key.str =
-			 g_strdup (gconf_value_get_string (value));
-
-		panel_parse_accelerator (&global_config.window_screenshot_key);
-
-	} else if (strcmp (key, "drawer_autoclose") == 0)
+	else if (strcmp (key, "drawer_autoclose") == 0)
 		global_config.drawer_auto_close =
 			gconf_value_get_bool (value);
 
@@ -123,8 +83,11 @@ panel_global_config_set_entry (GConfEntry *entry)
 		global_config.highlight_when_over =
 			gconf_value_get_bool (value);
 
+#if 0
 	else
 		g_warning ("%s not handled", key);
+
+#endif
 
 	g_free (key);
 }

@@ -1,5 +1,21 @@
 2003-02-24  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am:
+	* eggaccelerators.c:
+	* eggaccelerators.h: kill eggaccelerators.[ch]. Not used
+	anymore.
+
+	* panel-config-global.c: (panel_global_config_set_entry):
+	* panel-config-global.h:
+	* panel-global-config.schemas.in:
+	* panel.c: (panel_save_global_config): kill support for
+	the keybindings related global keys.
+
+	* panel-util.[ch]: kill a couple of accelerator related
+	utility methods.
+
+2003-02-24  Mark McLoughlin  <mark@skynet.ie>
+
 	Move responsibility for the various global keybindings
 	from the panel to the winow manager. Window managers can
 	invoke the keybindings using the _GNOME_PANEL_ACTION

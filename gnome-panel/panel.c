@@ -1957,21 +1957,6 @@ panel_save_global_config (void)
 	full_key = panel_gconf_global_key ("panel_hide_delay");
 	gconf_change_set_set_int (change_set, full_key, global_config.hide_delay);
 
-	full_key = panel_gconf_global_key ("enable_key_bindings");
-	gconf_change_set_set_bool (change_set, full_key, global_config.keys_enabled);
-
-	full_key = panel_gconf_global_key ("menu_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.menu_key.str);
-
-	full_key = panel_gconf_global_key ("run_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.run_key.str);
-
-	full_key = panel_gconf_global_key ("screenshot-key");
-	gconf_change_set_set_string (change_set, full_key, global_config.screenshot_key.str);
-	
-	full_key = panel_gconf_global_key ("window_screenshot_key");
-	gconf_change_set_set_string (change_set, full_key, global_config.window_screenshot_key.str);
-
 	full_key = panel_gconf_global_key ("drawer_autoclose");
 	gconf_change_set_set_bool (change_set, full_key, global_config.drawer_auto_close);
 
