@@ -1294,12 +1294,15 @@ add_menudrawer_to_panel (GtkWidget *menuitem,
 
 static void
 add_menu_to_panel (GtkWidget  *widget,
-		   const char *menu_path)
+		   MenuFinfo  *menu_info)
 {
 	PanelWidget   *panel_widget;
 	PanelToplevel *toplevel;
 	PanelData     *pd;
 	int            position;
+	char          *menu_path;
+	gboolean       use_menu_path;
+	char          *tooltip;
 
 	panel_widget = menu_get_panel (widget);
 	toplevel = panel_widget->toplevel;
@@ -1307,7 +1310,19 @@ add_menu_to_panel (GtkWidget  *widget,
 	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 	position = pd ? pd->insertion_pos : -1;
 
-	panel_menu_button_create (toplevel, position, menu_path, menu_path != NULL);
+	if (!menu_info) {
+		menu_path     = NULL;
+		use_menu_path = FALSE;
+		tooltip       = _("Main Menu");
+	} else {
+		menu_path     = menu_info->menudir;
+		use_menu_path = TRUE;
+		tooltip       = menu_info->dir_name ? menu_info->dir_name :
+						      _("Menu");
+	}
+
+	panel_menu_button_create (toplevel, position, menu_path,
+				  use_menu_path, tooltip);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -1540,7 +1555,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
 				g_signal_connect (G_OBJECT(menuitem), "activate",
 						  G_CALLBACK(add_menu_to_panel),
-						  sim->mf->menudir);
+						  sim->mf);
 				gtk_widget_set_sensitive (menuitem,
 							  objects_writable &&
 							  toplevels_writable);

@@ -43,6 +43,7 @@ enum {
 	PROP_0,
 	PROP_MENU_PATH,
 	PROP_CUSTOM_ICON,
+	PROP_TOOLTIP,
 	PROP_USE_MENU_PATH,
 	PROP_USE_CUSTOM_ICON,
 	PROP_DND_ENABLED
@@ -57,6 +58,7 @@ struct _PanelMenuButtonPrivate {
 
 	char                  *menu_path;
 	char                  *custom_icon;
+	char                  *tooltip;
 
 	guint                  use_menu_path : 1;
 	guint                  use_custom_icon : 1;
@@ -77,13 +79,12 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 
 	button->priv->menu_path   = NULL;
 	button->priv->custom_icon = NULL;
+	button->priv->tooltip = NULL;
 
 	button->priv->use_menu_path   = FALSE;
 	button->priv->use_custom_icon = FALSE;
 
 	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_MAIN_MENU);
-
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button), _("Main Menu"), NULL);
 }
 
 static void
@@ -107,6 +108,9 @@ panel_menu_button_finalize (GObject *object)
 
 	g_free (button->priv->custom_icon);
 	button->priv->custom_icon = NULL;
+
+	g_free (button->priv->tooltip);
+	button->priv->tooltip = NULL;
 
 	g_free (button->priv);
 	button->priv = NULL;
@@ -132,6 +136,9 @@ panel_menu_button_get_property (GObject    *object,
 		break;
 	case PROP_CUSTOM_ICON:
 		g_value_set_string (value, button->priv->custom_icon);
+		break;
+	case PROP_TOOLTIP:
+		g_value_set_string (value, button->priv->tooltip);
 		break;
 	case PROP_USE_MENU_PATH:
 		g_value_set_boolean (value, button->priv->use_menu_path);
@@ -167,6 +174,9 @@ panel_menu_button_set_property (GObject      *object,
 	case PROP_CUSTOM_ICON:
                 panel_menu_button_set_custom_icon (button, g_value_get_string (value));
                 break;
+	case PROP_TOOLTIP:
+		panel_menu_button_set_tooltip (button, g_value_get_string (value));
+		break;
 	case PROP_USE_MENU_PATH:
 		panel_menu_button_set_use_menu_path (button, g_value_get_boolean (value));
 		break;
@@ -444,6 +454,15 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass,
 
 	g_object_class_install_property (
 			gobject_class,
+			PROP_TOOLTIP,
+			g_param_spec_string ("tooltip",
+					     _("Tooltip"),
+					     _("Tooltip displayed for the menu"),
+					     NULL,
+					     G_PARAM_READWRITE));
+
+	g_object_class_install_property (
+			gobject_class,
 			PROP_USE_MENU_PATH,
                         g_param_spec_boolean ("use-menu-path",
 					      _("Use Menu Path"),
@@ -517,6 +536,10 @@ panel_menu_button_gconf_notify (GConfClient     *client,
 		if (value && value->type == GCONF_VALUE_STRING)
 			panel_menu_button_set_custom_icon (button,
 							   gconf_value_get_string (value));
+	} else if (!strcmp (key, "tooltip")) {
+		if (value && value->type == GCONF_VALUE_STRING)
+			panel_menu_button_set_tooltip (button,
+						       gconf_value_get_string (value));
 	} else if (!strcmp (key, "use_menu_path")) {
 		if (value && value->type == GCONF_VALUE_BOOL)
 			panel_menu_button_set_use_menu_path (button,
@@ -553,6 +576,7 @@ panel_menu_button_load (const char  *menu_path,
 			gboolean     use_menu_path,
 			const char  *custom_icon,
 			gboolean     use_custom_icon,
+			const char  *tooltip,
 			PanelWidget *panel,
 			gboolean     locked,
 			int          position,
@@ -566,6 +590,7 @@ panel_menu_button_load (const char  *menu_path,
 	button = g_object_new (PANEL_TYPE_MENU_BUTTON,
 			       "menu-path", menu_path,
 			       "custom-icon", custom_icon,
+			       "tooltip", tooltip,
 			       "use-menu-path", use_menu_path,
 			       "use-custom-icon", use_custom_icon,
 			       "has-arrow", TRUE,
@@ -674,6 +699,21 @@ panel_menu_button_set_custom_icon (PanelMenuButton *button,
 }
 
 void
+panel_menu_button_set_tooltip (PanelMenuButton *button,
+			       const char      *tooltip)
+{
+	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
+
+	g_free (button->priv->tooltip);
+	button->priv->tooltip = NULL;
+
+	if (tooltip && tooltip [0])
+		button->priv->tooltip = g_strdup (tooltip);
+
+	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button), tooltip, NULL);
+}
+
+void
 panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 				     gboolean         use_menu_path)
 {
@@ -724,6 +764,7 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	const char  *key;
 	char        *menu_path;
 	char        *custom_icon;
+	char        *tooltip;
 	gboolean     use_menu_path;
 	gboolean     use_custom_icon;
 
@@ -739,6 +780,9 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
 	custom_icon = gconf_client_get_string (client, key, NULL);
 
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+	tooltip = gconf_client_get_string (client, key, NULL);
+
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_menu_path");
 	use_menu_path = gconf_client_get_bool (client, key, NULL);
 
@@ -749,6 +793,7 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 				use_menu_path,
 				custom_icon,
 				use_custom_icon,
+				tooltip,
 				panel,
 				locked,
 				position,
@@ -757,13 +802,15 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 
 	g_free (menu_path);
 	g_free (custom_icon);
+	g_free (tooltip);
 }
 
 void
 panel_menu_button_create (PanelToplevel *toplevel,
 			  int            position,
 			  const char    *menu_path,
-			  gboolean       use_menu_path)
+			  gboolean       use_menu_path,
+			  const char    *tooltip)
 {
 	GConfClient *client;
 	const char  *profile;
@@ -782,6 +829,9 @@ panel_menu_button_create (PanelToplevel *toplevel,
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "menu_path");
 		gconf_client_set_string (client, key, menu_path, NULL);
 	}
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
+	gconf_client_set_string (client, key, tooltip, NULL);
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);

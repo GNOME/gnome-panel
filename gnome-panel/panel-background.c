@@ -513,7 +513,7 @@ load_background_file (PanelBackground *background)
 		gdk_pixbuf_new_from_file (background->image, &error);
 	if (!background->loaded_image) {
 		g_assert (error != NULL);
-		g_warning (G_STRLOC ": unable to open '%s' : %s",
+		g_warning (G_STRLOC ": unable to open '%s': %s",
 			   background->image, error->message);
 		g_error_free (error);
 	}

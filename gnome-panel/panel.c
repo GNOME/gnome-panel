@@ -448,7 +448,8 @@ drop_menu (PanelWidget *panel,
 	if ( ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))
 		return FALSE;
 
-	panel_menu_button_create (panel->toplevel, position, menu_path, menu_path != NULL);
+	panel_menu_button_create (panel->toplevel, position, menu_path,
+				  menu_path != NULL, menu_path);
 
 	return TRUE;
 }

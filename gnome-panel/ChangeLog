@@ -1,3 +1,28 @@
+2003-11-13  Vincent Untz  <vincent@vuntz.net>
+
+	Add a configurable tooltip to the menu buttons.
+	Fixes bug #122303.
+	* panel-menu-button.c: (panel_menu_button_instance_init),
+	(panel_menu_button_finalize), (panel_menu_button_get_property),
+	(panel_menu_button_set_property), (panel_menu_button_class_init),
+	(panel_menu_button_gconf_notify),
+	(panel_menu_button_connect_to_gconf), (panel_menu_button_set_tooltip),
+	(panel_menu_button_load_from_gconf): we now have a tooltip property,
+	so do all the stuff we need for a property.
+	(panel_menu_button_instance_init): don't set a constant tooltip.
+	(panel_menu_button_create): add a tooltip argument to specify the
+	tooltip for the menu button.
+	* panel-menu-button.h: reflected above changes here.
+	* panel-object.schemas.in: updated the description for the tooltip key
+	so it specifies the key is valid for drawer and menus.
+	* menu.c: (add_menu_to_panel): updated to use the tooltip when calling
+	panel_menu_button_create.
+	(show_item_menu): updated the call to add_menu_to_panel
+	* panel.c: (drop_menu) updated to use the tooltip when calling
+	panel_menu_button_create.
+
+	* panel-background.c: removed useless space in a string.
+
 ==================== 2.5.1 ====================
 
 2003-11-11  Mark McLoughlin  <mark@skynet.ie>
