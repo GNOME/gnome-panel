@@ -38,16 +38,11 @@ set_mode (GtkWidget *widget, gpointer data)
 	PanelMode mode = (PanelMode) data;
 	
 	config_panel.mode = mode;
-	
-	g_print ("setting mode to %d\n", mode);
 }
 
 static void
 config_apply (GtkWidget *widget, gpointer data)
 {
-	/*the_panel->mode = config_panel.mode;
-	the_panel->pos = config_panel.pos;*/
-	
 	panel_reconfigure(&config_panel);
 }
 
@@ -90,7 +85,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    PANEL_POS_BOTTOM);
-	if (config_panel.pos == PANEL_POS_TOP) {
+	if (config_panel.pos == PANEL_POS_BOTTOM) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
@@ -103,7 +98,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    PANEL_POS_LEFT);
-	if (config_panel.pos == PANEL_POS_TOP) {
+	if (config_panel.pos == PANEL_POS_LEFT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
@@ -116,7 +111,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    PANEL_POS_RIGHT);
-	if (config_panel.pos == PANEL_POS_TOP) {
+	if (config_panel.pos == PANEL_POS_RIGHT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 5);
@@ -187,6 +182,12 @@ panel_config(void)
 	/* so far, these are the only ones that can be set */
 	config_panel.mode = the_panel->mode;
 	config_panel.pos = the_panel->pos;
+	
+	/* FIXME: config to be implemented */
+	config_panel.step_size = the_panel->step_size;
+	config_panel.delay = the_panel->delay;
+	config_panel.minimize_delay = the_panel->minimize_delay;
+	config_panel.minimized_size = the_panel->minimized_size;
  
 	
 	/* main window */

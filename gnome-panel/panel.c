@@ -1369,7 +1369,7 @@ panel_change_orient(void)
 void
 panel_reconfigure(Panel *newconfig)
 {
-	if(newconfig->pos!=the_panel->pos) {
+	if(newconfig->pos != the_panel->pos) {
 		switch (the_panel->pos) {
 			case PANEL_POS_TOP:
 				the_panel->pos=newconfig->pos;
