@@ -1,4 +1,5 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
+	 fish gticker netload dialer webcontrol icewm-pager \
 	 fish dialer webcontrol icewm-pager \
 	 drivemount clockmail fifteen battery charpick \
 	 gnome-pager
@@ -17,6 +18,7 @@ endif
 
 if HAVE_LIBGHTTP
 bussign = bussign
+gticker = gticker
 slashapp = slashapp
 endif
 
