@@ -792,7 +792,8 @@ panel_applet_factory_main_closure (const gchar                 *iid,
 {
 	int                 retval;
 
-	/* FIXME: other precondition checks */
+	g_return_val_if_fail (iid, 1);
+	g_return_val_if_fail (closure, 1);
 
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
 
@@ -821,7 +822,9 @@ panel_applet_factory_main (const gchar                 *iid,
 {
 	GClosure *closure;
 
-	/* FIXME: precondition checks */
+	g_return_val_if_fail (iid, 1);
+	g_return_val_if_fail (callback, 1);
+
 
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
@@ -837,8 +840,8 @@ panel_applet_shlib_factory_closure (const char                 *iid,
 {
 	BonoboShlibFactory *factory;
 
-	/* FIXME: other precondition checks */
-	g_return_val_if_fail (closure != NULL, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (iid, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (closure, CORBA_OBJECT_NIL);
 
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
        
@@ -859,7 +862,8 @@ panel_applet_shlib_factory (const char                 *iid,
 			    gpointer                    user_data,
 			    CORBA_Environment          *ev)
 {
-	/* FIXME: precondition checks */
+	g_return_val_if_fail (iid, CORBA_OBJECT_NIL);
+	g_return_val_if_fail (callback, CORBA_OBJECT_NIL);
 
 	return panel_applet_shlib_factory_closure
 		(iid, poa, impl_ptr,
