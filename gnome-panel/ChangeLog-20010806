@@ -1,3 +1,9 @@
+Mon Mar 15 17:38:36 1999  George Lebl  <jirka@5z.com>
+
+	* Makefile.am: add libpanel_applet.la to LDADD for the panel, so
+	  that shared lib applets work again, DOH! ... (Thanks to the avid
+	  gnome fish fan: David Miller <davem@twiddle.net>)
+
 Mon Mar 15 13:42:31 1999  George Lebl  <jirka@5z.com>
 
 	* panel.c: when an applet is removed don't recount all drawers,
