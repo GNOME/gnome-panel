@@ -865,7 +865,7 @@ task_notify (gpointer data, GwmhTask *task,
 			add_task (task, foo);
 		break;
 	case GWMH_NOTIFY_DESTROY:
-#warning Whoa; leak?
+		/* FIXME: Whoa; leak? */
 		if (foo->tasks != NULL) {
 			item = g_hash_table_lookup (foo->tasks, task);
 			if (item) {

@@ -917,7 +917,9 @@ launcher_file_name (const char *base)
 #ifdef PER_SESSION_CONFIGURATION
 	/* FIXME: this needs to do stuff, or perhaps just ignore per session
 	 * configs */
+#ifdef __GNUC__
 #warning FIXME: per session config must be done for launchers
+#endif
 #else
 	return g_strdup_printf ("%s/.gnome/panel.d/default/launchers/%s",
 				g_get_home_dir (),
