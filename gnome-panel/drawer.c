@@ -317,6 +317,7 @@ create_drawer_applet (PanelToplevel    *toplevel,
 		      PanelOrientation  orientation)
 {
 	Drawer *drawer;
+	AtkObject *atk_obj;
 	
 	drawer = g_new0 (Drawer, 1);
 
@@ -334,6 +335,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 		g_free (drawer);
 		return NULL;
 	}
+	atk_obj = gtk_widget_get_accessible (drawer->button);
+	atk_object_set_name (atk_obj, _("Drawer")); 
 
 	if (tooltip && tooltip [0]) {
 		panel_toplevel_set_name (toplevel, tooltip);
