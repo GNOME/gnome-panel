@@ -486,9 +486,9 @@ do_session_save(GnomeClient *client,
 	int num;
 	char *s;
 	int i;
+#if 0
 	gchar *new_args[] = { "rm", "-r", NULL };
 
-#if 0
 	if (panel_cfg_path)
 		g_free(panel_cfg_path);
 
@@ -721,6 +721,7 @@ load_default_applets(void)
 	int i;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER|
 		MAIN_MENU_SYSTEM_SUB|MAIN_MENU_USER_SUB;
+	char *p;
 
 	/*guess redhat menus*/
 	if(g_file_exists("/etc/X11/wmconfig"))
@@ -732,6 +733,11 @@ load_default_applets(void)
 	if (g_file_exists("/etc/menu-methods/gnome"))
 		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 	load_menu_applet(NULL,flags, panels->data, 0);
+	p = gnome_datadir_file ("gnome/apps");
+	/*it really should exist*/
+	if(g_file_exists(p))
+		load_menu_applet(p,flags, panels->data, 1);
+	g_free(p);
 	
 	for(i=0;def_launchers[i]!=NULL;i++) {
 		char *p = gnome_datadir_file (def_launchers[i]);
