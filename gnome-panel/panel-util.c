@@ -16,9 +16,10 @@
 #include <fcntl.h>
 #include <dirent.h>
 
-#include "panel-include.h"
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-program.h>
 
-#include "icon-entry-hack.h"
+#include "panel-include.h"
 
 extern GlobalConfig global_config;
 
@@ -28,14 +29,17 @@ extern GSList *applets_last;
 void
 panel_show_help (const char *path)
 {
+#ifdef FIXME
 	GnomeHelpMenuEntry help_entry = { "panel" };
 	help_entry.path = (char *)path;
 	gnome_help_display (NULL, &help_entry);
+#endif
 }
 
 static char *
 panel_gnome_help_path (const char *docpath)
 {
+#ifdef FIXME
 	char *fullpath, *app, *p, *path, *uri;
 
 	app = g_strdup (docpath);
@@ -63,11 +67,15 @@ panel_gnome_help_path (const char *docpath)
 	g_free (fullpath);
 
 	return uri;
+#else
+	return NULL;
+#endif
 }
 
 static char *
 panel_kde_help_path (const char *docpath)
 {
+#ifdef FIXME
 	GList *li;
 
 	if ( ! panel_file_exists (KDE_DOCDIR))
@@ -87,12 +95,14 @@ panel_kde_help_path (const char *docpath)
 		}
 		g_free (fullpath);
 	}
+#endif
 	return NULL;
 }
 
 char *
 panel_gnome_kde_help_path (const char *docpath)
 {
+#ifdef FIXME
 	char *path;
 
 	if (string_empty (docpath))
@@ -107,6 +117,9 @@ panel_gnome_kde_help_path (const char *docpath)
 		path = panel_kde_help_path (docpath);
 
 	return path;
+#else
+	return NULL;
+#endif
 }
 
 gboolean
@@ -135,6 +148,7 @@ create_text_entry(GtkWidget *table,
 		  UpdateFunction func,
 		  gpointer data)
 {
+#ifdef FIXME
 	GtkWidget *wlabel;
 	GtkWidget *entry;
 	GtkWidget *t;
@@ -165,6 +179,9 @@ create_text_entry(GtkWidget *table,
 				    data);
 	}
 	return entry;
+#else
+	return NULL;
+#endif
 }
 
 GtkWidget *
@@ -177,6 +194,7 @@ create_icon_entry(GtkWidget *table,
 		  UpdateFunction func,
 		  gpointer data)
 {
+#ifdef FIXME
 	GtkWidget *wlabel;
 	GtkWidget *entry;
 	GtkWidget *t;
@@ -212,6 +230,9 @@ create_icon_entry(GtkWidget *table,
 	}
 
 	return entry;
+#else
+	return NULL;
+#endif
 }
 
 GList *
@@ -538,7 +559,7 @@ remove_directory(const char *dirname, gboolean just_clean)
 		if(strcmp(dent->d_name,".")==0 ||
 		   strcmp(dent->d_name,"..")==0)
 			continue;
-		if(g_file_test(dent->d_name,G_FILE_TEST_ISDIR))
+		if(g_file_test(dent->d_name,G_FILE_TEST_IS_DIR))
 			remove_directory(dent->d_name, FALSE);
 		else
 			unlink(dent->d_name);
@@ -832,7 +853,8 @@ panel_error_dialog (const char *format, ...)
 		va_end (ap);
 	}
 
-	w = gnome_error_dialog (s);
+	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
+				    GTK_BUTTONS_OK, s);
 	g_free (s);
 
 	panel_set_dialog_layer (w);
