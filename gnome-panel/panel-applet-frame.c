@@ -106,7 +106,7 @@ static void panel_applet_frame_activated (Bonobo_Unknown     object,
 					  CORBA_Environment *ev,
 					  gpointer          *data);
 
-static void
+void
 panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 {
 	PanelWidget *panel_widget;
@@ -308,7 +308,6 @@ static BonoboUIVerb popup_verbs [] = {
 
         BONOBO_UI_VERB_END
 };
-
 
 static void
 panel_applet_frame_load (const gchar *iid,

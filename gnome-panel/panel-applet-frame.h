@@ -59,6 +59,8 @@ void       panel_applet_frame_create    (PanelToplevel    *toplevel,
 					 int               position,
 					 const char       *iid);
 
+void       panel_applet_frame_sync_menu_state    (PanelAppletFrame *frame);
+
 void       panel_applet_frame_change_orientation (PanelAppletFrame *frame,
 						  PanelOrientation  orientation);
 

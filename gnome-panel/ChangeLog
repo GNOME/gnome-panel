@@ -1,5 +1,21 @@
 2005-01-02  Vincent Untz  <vincent@vuntz.net>
 
+	Update the Lock check menu item when the gconf key changes
+	Based on a patch from Leena Gunda <leena.gunda@wipro.com>
+	Fix bug #156827.
+
+	* applet.c: (panel_applet_locked_change_notify): new, update the
+	object context menu when the lock gconf key changes
+	(panel_applet_create_menu): add mnemonic for "Lock To Panel"
+	(panel_applet_destroy): only remove the lockdown notify if the object
+	is not a bonobo object
+	(panel_applet_register): only add the lockdown notify if the object is
+	not a bonobo object, connect to the "locked" gconf key
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state): make
+	this non static
+
+2005-01-02  Vincent Untz  <vincent@vuntz.net>
+
 	Make Lock menu item HIG compliant.
 	Based on patch from Madhan Raj M <raj_madan@rediffmail.com>
 	Fix bug #114055

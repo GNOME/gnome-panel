@@ -157,6 +157,46 @@ panel_applet_recreate_menu (AppletInfo	*info)
 }
 
 static void
+panel_applet_locked_change_notify (GConfClient *client,
+				   guint        cnxn_id,
+				   GConfEntry  *entry,
+				   GtkWidget   *applet)
+{
+	GConfValue  *value;
+	gboolean     locked;
+	gboolean     applet_locked;
+	AppletInfo  *info;
+	PanelWidget *panel_widget;
+
+	g_assert (applet != NULL);
+
+	info = (AppletInfo  *) g_object_get_data (G_OBJECT (applet),
+						  "applet_info");
+	if (info == NULL)
+		return;
+
+	value = gconf_entry_get_value (entry);
+	if (value->type != GCONF_VALUE_BOOL)
+		return;
+
+	locked = gconf_value_get_bool (value);
+
+	panel_widget = PANEL_WIDGET (info->widget->parent);
+	applet_locked = panel_widget_get_applet_locked (panel_widget,
+							info->widget);
+
+	if ((locked && applet_locked) || !(locked || applet_locked))
+		return;
+
+	panel_applet_toggle_locked (info);
+
+	if (info->type == PANEL_OBJECT_BONOBO)
+		panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (info->widget));
+	else
+		panel_applet_recreate_menu (info);
+}
+
+static void
 applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
@@ -475,7 +515,7 @@ panel_applet_create_menu (AppletInfo *info)
 		gtk_widget_set_sensitive (menuitem, removable);
 
 		menuitem = gtk_check_menu_item_new ();
-		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("Lock To Panel"), FALSE);
+		setup_menuitem (menuitem, GTK_ICON_SIZE_MENU, NULL, _("_Lock To Panel"), FALSE);
 		gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 						locked);
 		g_signal_connect (menuitem, "toggled",
@@ -676,8 +716,9 @@ panel_applet_destroy (GtkWidget  *widget,
 		}
 	}
 
-	panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menu),
-				      info);
+	if (info->type != PANEL_OBJECT_BONOBO)
+		panel_lockdown_notify_remove (G_CALLBACK (panel_applet_recreate_menu),
+					      info);
 
 	if (info->menu)
 		g_object_unref (info->menu);
@@ -1087,6 +1128,7 @@ panel_applet_register (GtkWidget       *applet,
 		       const char      *id)
 {
 	AppletInfo *info;
+	const char *key;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1108,8 +1150,16 @@ panel_applet_register (GtkWidget       *applet,
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
-	panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menu),
-				   info);
+	if (type != PANEL_OBJECT_BONOBO)
+		panel_lockdown_notify_add (G_CALLBACK (panel_applet_recreate_menu),
+					   info);
+
+	key = panel_gconf_full_key ((type == PANEL_OBJECT_BONOBO) ?
+				     PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS,
+				    id, "locked");
+	panel_gconf_notify_add_while_alive (key,
+					    (GConfClientNotifyFunc) panel_applet_locked_change_notify,
+					    G_OBJECT (applet));
 
 	if (type == PANEL_OBJECT_DRAWER) {
 		Drawer *drawer = data;
