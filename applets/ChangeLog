@@ -1,3 +1,26 @@
+1999-02-04  Nat Friedman  <nat@nat.org>
+
+	* battery/read-battery.c (battery_read_charge): The Linux support
+ 	has been completely rewritten.  I am now caching the fd of
+ 	/proc/apm, and then using dup() when I need to fetch new battery
+ 	data to ensure that we only call open() once.  Now the battery
+ 	applet never touches the disk while it's running.  Nice for laptops.
+
+	* battery/properties.c (col_value_changed_cb): New function.
+	(adj_value_changed_cb): Likewise.
+	(col_value_changed_cb): Likewise.  This fixes a bug as reported by
+ 	Roberto Zunino <zunino@cli.di.unipi.it>.  Thanks!
+	(prop_apply): Call battery_update so the changes take effect
+ 	immediately.
+
+	* battery/battery.h: Added force_update.
+
+	* battery/battery.c (battery_update): Only update the pictures if
+ 	the battery data has changed.  Pay attention to bat->force_update.
+	(battery_configure_handler): Call battery_update.
+	(battery_setup_picture): More readable.
+	(battery_set_size): Call battery_update.
+
 1999-02-03  Jonathan Blandford  <jrb@redhat.com>
 
 	* mixer/vslider.c (vslider_class_init): now we no longer draw the
