@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
-"POT-Creation-Date: 2002-10-14 14:20+1300\n"
-"PO-Revision-Date: 2002-09-19 09:53+0700\n"
+"POT-Creation-Date: 2002-09-18 05:04+0200\n"
+"PO-Revision-Date: 2002-10-20 19:02+0700\n"
 "Last-Translator: pclouds <pclouds@gmx.net>\n"
 "Language-Team: GnomeVI <gnomevi-list@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr "_Giới thiệu..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:672
-#: gnome-panel/launcher.c:756 gnome-panel/logout.c:134
+#: gnome-panel/launcher.c:736 gnome-panel/logout.c:134
 #: gnome-panel/logout.c:221 gnome-panel/menu.c:3447 gnome-panel/menu.c:4150
 msgid "_Help"
 msgstr "Trợ _giúp"
@@ -383,49 +383,50 @@ msgid "Display date in applet, in addition to time"
 msgstr "Hiện ngày trong applet (cùng với giờ)"
 
 #: applets/gen_util/clock.schemas.in.h:3
+msgid "Display seconds in time"
+msgstr "Hiện giây"
+
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Hiện thời gian theo Universal Coordinated Time zone"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Hiện giờ theo giây kể từ 1/1/1970"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Dạng thức giờ"
 
-#: applets/gen_util/clock.schemas.in.h:6
-msgid ""
-"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
-"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
-"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
-"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
-"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
-"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
-"seconds in time"
-msgstr ""
-
 #: applets/gen_util/clock.schemas.in.h:7
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
+
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Hiện ngày trong tooltip khi chuột di chuyển qua applet"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in applet"
 msgstr "Hiện ngày trong applet"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Hiện ngày trong tooltip"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
+msgid "Show time with seconds"
+msgstr "Hiện thời gian theo giây"
+
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use Internet time"
 msgstr "Dùng giờ Internet"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "Dùng giờ UNIX"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UTC"
 msgstr "Dùng UTC"
 
@@ -629,7 +630,7 @@ msgstr "Bộ theo dõi thư thông báo cho bạn mỗi khi có thư mới."
 
 #: applets/gen_util/mailcheck.c:1897
 msgid "Text only"
-msgstr "Chỉ có text."
+msgstr "Chỉ có chữ"
 
 #: applets/gen_util/mailcheck.c:1923
 msgid "Mail check"
@@ -1200,7 +1201,7 @@ msgstr "Hiện mũi tên"
 msgid "Drawer"
 msgstr "Ngăn kéo"
 
-#: gnome-panel/drawer.c:669 gnome-panel/launcher.c:754
+#: gnome-panel/drawer.c:669 gnome-panel/launcher.c:734
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1447 gnome-panel/menu.c:3422
 msgid "_Properties"
 msgstr "T_huộc tính"
@@ -1256,7 +1257,7 @@ msgstr "Thoát khỏi GNOME Desktop"
 #. FIXME: shutdown or reboot
 #: gnome-panel/foobar-widget.c:259
 msgid "Actions"
-msgstr "Hoạt động"
+msgstr "Hành động"
 
 #: gnome-panel/foobar-widget.c:476
 msgid "No windows open"
@@ -1627,36 +1628,36 @@ msgstr ""
 "Không thể phóng biểu tượng\n"
 "%s"
 
-#: gnome-panel/launcher.c:349
+#: gnome-panel/launcher.c:333
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Không có URI cho tập tin desktop bộ phóng panel\n"
 
-#: gnome-panel/launcher.c:369
+#: gnome-panel/launcher.c:353
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Không thể mở tập tin desktop %s cho bộ phóng panel %s%s\n"
 
-#: gnome-panel/launcher.c:484
+#: gnome-panel/launcher.c:464
 #, c-format
 msgid "Help on %s Application"
 msgstr "Trợ giúp cho ứng dụng %s"
 
-#: gnome-panel/launcher.c:603 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:583 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Thuộc tính Bộ phóng"
 
-#: gnome-panel/launcher.c:710
+#: gnome-panel/launcher.c:690
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Khóa %s chưa có, không thể nạp bộ phóng\n"
 
-#: gnome-panel/launcher.c:804 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:784 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Không thể tạo Bộ phóng"
 
 #. class
-#: gnome-panel/launcher.c:1024
+#: gnome-panel/launcher.c:1004
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1667,7 +1668,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1110 gnome-panel/menu.c:1107
+#: gnome-panel/launcher.c:1090 gnome-panel/menu.c:1107
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -2348,10 +2349,6 @@ msgstr ""
 "Mã lỗi là: %d\n"
 "Panel sẽ thoát ngay."
 
-#: gnome-panel/panel-stock-icons.c:130
-msgid "_Run"
-msgstr "_Thực hiện"
-
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
 #: gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
@@ -2487,51 +2484,8 @@ msgstr "XX Lớn"
 msgid "XX Small"
 msgstr "XX Nhỏ"
 
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
-
-#~ msgid "Display seconds in time"
-#~ msgstr "Hiện giây"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Đặt dạng thức giờ, có thể là 12 hoặc 24"
-
-#~ msgid "Show time with seconds"
-#~ msgstr "Hiện thời gian theo giây"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Nhỏ"
-
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
-
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "&lt;Alt&gt;Print"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Máy in"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Kiểm tra Applet Bonobo"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Panel cạnh"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Panel menu"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Nền"
+#~ msgid "_Run"
+#~ msgstr "_Thực hiện"
 
 #~ msgid "Use GMT"
 #~ msgstr "Dùng GMT"
@@ -2662,6 +2616,9 @@ msgstr "XX Nhỏ"
 #~ msgid "Stretch image (change proportions)"
 #~ msgstr "Kéo dãn ảnh (không cân đối)"
 
+#~ msgid "Wanda"
+#~ msgstr "Wanda"
+
 #~ msgid "Your GNOME Fish's Name:"
 #~ msgstr "Tên con cá GNOME của bạn:"
 
@@ -2755,8 +2712,14 @@ msgstr "XX Nhỏ"
 #~ msgid "Global Panel Properties"
 #~ msgstr "Thuộc tính của panel chung"
 
+#~ msgid "&lt;Alt&gt;F1"
+#~ msgstr "&lt;Alt&gt;F1"
+
 #~ msgid "&lt;Alt&gt;F1F1"
 #~ msgstr "&lt;Alt&gt;F1F1"
+
+#~ msgid "&lt;Alt&gt;F2"
+#~ msgstr "&lt;Alt&gt;F2"
 
 #~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
 #~ msgstr "&lt;Control&gt;&lt;Alt&gt;m"
