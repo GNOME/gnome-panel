@@ -1,5 +1,23 @@
 1999-03-25  Nat Friedman  <nat@nat.org>
 
+	* battery/properties.c (prop_apply): Set the size before allowing
+ 	the update function to run.
+
+	* battery/battery.c (battery_update): Always update the graph when
+ 	we're called.
+	(battery_update): Don't set the graph_height/graph_width greater
+ 	than bat->height and bat->width.
+	(battery_change_mode): Fixed a subtle memory leak with
+ 	bat->mode_string.
+	(battery_set_size): Ignore bat->setup.
+
+	* battery/properties.c (battery_properties_window): Don't let the
+ 	user set the applet size to 0.
+	(battery_properties_window): Fix memory leak with bat->mode_string.
+
+
+1999-03-25  Nat Friedman  <nat@nat.org>
+
 	* battery/properties.h: Added copyright statement.
 
 	* battery/session.h: Added copyright statement.
