@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME 2.0\n"
-"POT-Creation-Date: 2002-02-13 11:47+0000\n"
+"POT-Creation-Date: 2002-02-18 19:51+0000\n"
 "PO-Revision-Date: 2002-01-30 21:36+0100\n"
 "Last-Translator: Juan Manuel García Molina <juanma_gm@wanadoo.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -19,7 +19,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.5\n"
 
-#: applets/fish/fish.c:385 applets/fish/fish.c:874
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "From Whence That Stupid Fish Came"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#, fuzzy
+msgid "Wanda"
+msgstr "Estándar"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "Wanda Factory"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+#, fuzzy
+msgid "About..."
+msgstr "_Acerca de..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
+#: gnome-panel/drawer.c:661 gnome-panel/launcher.c:699
+#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4383
+#: gnome-panel/status.c:372 gnome-panel/swallow.c:453
+msgid "Help"
+msgstr "Ayuda"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
+#: gnome-panel/drawer.c:659 gnome-panel/launcher.c:697 gnome-panel/menu.c:1752
+#: gnome-panel/menu.c:1824 gnome-panel/menu.c:3671 gnome-panel/menu.c:4373
+msgid "Properties..."
+msgstr "Propiedades..."
+
+#: applets/fish/fish.c:385 applets/fish/fish.c:872
 #, no-c-format
 msgid "%s the Fish"
 msgstr "El pez %s"
@@ -99,15 +143,15 @@ msgstr ""
 "¡El agua está contaminada!\n"
 "(Mira la fecha de hoy)"
 
-#: applets/fish/fish.c:890
+#: applets/fish/fish.c:888
 msgid "(with minor help from George)"
 msgstr "(con un poco de ayuda de George)"
 
-#: applets/fish/fish.c:908
+#: applets/fish/fish.c:906
 msgid "The GNOME Fish Applet"
 msgstr "El Aplique del Pececillo de GNOME"
 
-#: applets/fish/fish.c:911
+#: applets/fish/fish.c:909
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -120,22 +164,63 @@ msgstr ""
 "aplique debería ser enviado inmediatamente a que le hagan un examen "
 "psiquiátrico."
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "From Whence That Stupid Fish Came"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "That Stupid Fish"
-msgstr ""
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 #, fuzzy
-msgid "Wanda"
-msgstr "Estándar"
+msgid "Alert you when new mail arrives"
+msgstr "Reproducir un sonido cuando llegue correo"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "Wanda Factory"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+#: applets/gen_util/clock.c:940
+msgid "Clock"
+msgstr "Reloj"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+msgid "GenUtil Applet Factory"
 msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Inbox Monitor"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+msgid "Switch between open windows"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+msgid "Switch between workspaces"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/tasklist.c:492
+#, fuzzy
+msgid "Window List"
+msgstr "Gestor de Ventanas"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/pager.c:405
+msgid "Workspace Switcher"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "factory for creating some general applets"
+msgstr ""
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy date"
+msgstr ""
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+msgid "Copy time"
+msgstr ""
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+#, fuzzy
+msgid "Check for mail"
+msgstr "Comprobar el correo cada"
 
 #: applets/gen_util/clock.c:199
 msgid ""
@@ -193,113 +278,61 @@ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
 #. * should change is the 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:544
+#: applets/gen_util/clock.c:530
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=12"
 
-#: applets/gen_util/clock.c:774
+#: applets/gen_util/clock.c:765
 msgid "Clock properties"
 msgstr "Propiedades del reloj"
 
-#: applets/gen_util/clock.c:791
+#: applets/gen_util/clock.c:782
 msgid "Time Format"
 msgstr "Formato de la hora"
 
-#: applets/gen_util/clock.c:803
+#: applets/gen_util/clock.c:794
 msgid "12 hour"
 msgstr "12 horas"
 
-#: applets/gen_util/clock.c:811
+#: applets/gen_util/clock.c:802
 msgid "24 hour"
 msgstr "24 horas"
 
-#: applets/gen_util/clock.c:846
+#: applets/gen_util/clock.c:837
 msgid "Show date in applet"
 msgstr "Mostrar la fecha en el aplique"
 
-#: applets/gen_util/clock.c:860
+#: applets/gen_util/clock.c:851
 msgid "Show date in tooltip"
 msgstr "Mostrar la fecha en un consejo"
 
-#: applets/gen_util/clock.c:874
+#: applets/gen_util/clock.c:865
 msgid "Use GMT"
 msgstr "Usar GMT"
 
-#: applets/gen_util/clock.c:888
+#: applets/gen_util/clock.c:879
 msgid "Unix time"
 msgstr "Tiempo Unix"
 
-#: applets/gen_util/clock.c:892
+#: applets/gen_util/clock.c:883
 msgid "Internet time"
 msgstr "Tiempo de Internet"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:1
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-#: applets/gen_util/clock.c:949
-msgid "Clock"
-msgstr "Reloj"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:2
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#: applets/gen_util/clock.c:1015
+#: applets/gen_util/clock.c:1008
 msgid "Clock Applet"
 msgstr "Aplique del reloj"
 
-#: applets/gen_util/clock.c:1016
+#: applets/gen_util/clock.c:1009
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "(C) 1998-2001 la Free Software Foundation"
 
-#: applets/gen_util/clock.c:1017
+#: applets/gen_util/clock.c:1010
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
 msgstr ""
 "El aplique de reloj muestra en su panel la fecha y la hora de forma simple \n"
 "y ligero "
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:3
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "GenUtil Applet Factory"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:4
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "Inbox Monitor"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:5
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-#, fuzzy
-msgid "Mailcheck Applet"
-msgstr "Applet de comprobación de correo"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:6
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/pager.c:401
-msgid "Pager Applet"
-msgstr "Aplique del paginador"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:7
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/tasklist.c:431
-msgid "Tasklist Applet"
-msgstr "Aplique de la lista de tareas"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:8
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-#, fuzzy
-msgid "Window Bar"
-msgstr "Gestor de Ventanas"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:9
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Workspace Switcher"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:10
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "factory for creating some general applets"
-msgstr ""
 
 #: applets/gen_util/mailcheck.c:210 applets/gen_util/mailcheck.c:1067
 msgid "Password:"
@@ -435,7 +468,7 @@ msgstr "(C) 1998-2002 la Free Software Foundation"
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "El comprobador de correo le informa cuando llegue correo a su buzón"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1487
 msgid "Text only"
 msgstr "Sólo texto"
 
@@ -447,14 +480,15 @@ msgstr "Buzón"
 msgid "New Mail"
 msgstr "Nuevos mensajes"
 
-#: applets/gen_util/pager.c:402
+#: applets/gen_util/pager.c:406
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:403
+#: applets/gen_util/pager.c:407
+#, fuzzy
 msgid ""
-"The pager applet shows you a small version of your workspaces that lets you "
-"manage the windows."
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage the windows."
 msgstr ""
 "El aplique paginador le muestra una pequeña versión de sus espacios de "
 "trabajo que le permite gestionar las ventanas."
@@ -466,132 +500,64 @@ msgstr ""
 "No se puedo ejecutar el comando:\n"
 "%s"
 
-#: applets/gen_util/printer.c:308
+#: applets/gen_util/printer.c:306
 #, fuzzy
 msgid "Printer properties"
 msgstr "Propiedades del panel"
 
-#: applets/gen_util/printer.c:317
+#: applets/gen_util/printer.c:315
 #, fuzzy
 msgid "Printer name:"
 msgstr "Usuario:"
 
-#: applets/gen_util/printer.c:321
+#: applets/gen_util/printer.c:319
 #, fuzzy
 msgid "Print command:"
 msgstr "Ejecutar una línea de comando"
 
-#: applets/gen_util/printer.c:327
+#: applets/gen_util/printer.c:325
 #, fuzzy
 msgid "Printer"
 msgstr "Puntos"
 
-#: applets/gen_util/printer.c:355
+#: applets/gen_util/printer.c:353
 #, fuzzy
 msgid "Printer Applet"
 msgstr "Aplique del paginador"
 
-#: applets/gen_util/printer.c:356
+#: applets/gen_util/printer.c:354
 #, fuzzy
 msgid "(c) 1998 the Free Software Foundation"
 msgstr "(C) 1998-2002 la Free Software Foundation"
 
-#: applets/gen_util/printer.c:358
+#: applets/gen_util/printer.c:356
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
 msgstr ""
 
-#: applets/gen_util/printer.c:425
+#: applets/gen_util/printer.c:423
 #, fuzzy
 msgid "Can't create applet!\n"
 msgstr "Crear aplique englobado"
 
-#: applets/gen_util/printer.c:468 gnome-panel/drawer.c:512
-#: gnome-panel/launcher.c:677 gnome-panel/menu.c:1744 gnome-panel/menu.c:1816
-#: gnome-panel/menu.c:3635 gnome-panel/menu.c:4337
-msgid "Properties..."
-msgstr "Propiedades..."
-
-#: applets/gen_util/printer.c:475 gnome-panel/drawer.c:514
-#: gnome-panel/launcher.c:679 gnome-panel/logout.c:130
-#: gnome-panel/logout.c:215 gnome-panel/menu.c:4347 gnome-panel/status.c:372
-#: gnome-panel/swallow.c:453
-msgid "Help"
-msgstr "Ayuda"
-
-#: applets/gen_util/printer.c:481
-#, fuzzy
-msgid "About..."
-msgstr "_Acerca de..."
-
-#: applets/gen_util/tasklist.c:432
+#: applets/gen_util/tasklist.c:493
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:433
+#: applets/gen_util/tasklist.c:494
+#, fuzzy
 msgid ""
-"The tasklist applet shows a list of all visible windows and let you browse "
-"them."
+"The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
 "El aplique de la lista de tareas le muestra una lista de todas las ventanas "
 "visibles y le permite navegar por ellas."
 
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
-msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr ""
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Shell del panel de GNOME"
 
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-#, fuzzy
-msgid "Test Bonobo Applet"
-msgstr "Aplique de la lista de tareas"
-
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
-msgid "Test Bonobo Applet Factory"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:607
-#, fuzzy, c-format
-msgid "Incomplete '%s' background type received"
-msgstr "panel_applet_set_prop: Tipo de fondo '%s' recibido incompleto"
-
-#: libpanel-applet/panel-applet.c:621
-#, fuzzy, c-format
-msgid "Incomplete '%s' background type received: %s"
-msgstr "panel_applet_set_prop: Tipo de fondo '%s' recibido incompleto: %s"
-
-#: libpanel-applet/panel-applet.c:630
-#, fuzzy, c-format
-msgid "Failed to get pixmap %s"
-msgstr "panel_applet_set_prop: Fallo al obtener pixmap %s"
-
-#: libpanel-applet/panel-applet.c:637
-#, fuzzy
-msgid "Unknown background type received"
-msgstr "panel_applet_set_prop: Tipo de fondo recibido desconocido"
-
-#: libpanel-applet/panel-applet.c:792
-msgid "The Applet's containing Panel's orientation"
-msgstr "El aplique que contiene la orientación del panel"
-
-#: libpanel-applet/panel-applet.c:800
-msgid "The Applet's containing Panel's size in pixels"
-msgstr "El aplique que contiene el tamaño del panel en píxeles"
-
-#: libpanel-applet/panel-applet.c:808
-msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "El aplique que contiene el color o pixmap de fondo del panel"
-
-#: libpanel-applet/panel-applet.c:816
-msgid "The Applet's flags"
-msgstr ""
-
-#: gnome-panel/menu.c:2666 libpanel-applet/panel-test-applets.c:107
-#, c-format
-msgid "query returned exception %s\n"
-msgstr "La consulta ha devuelto la excepción %s\n"
-
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:1115
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:1123
 #: gnome-panel/panel-util.c:52
 #, c-format
 msgid ""
@@ -608,7 +574,7 @@ msgid "???"
 msgstr "¿¿¿???"
 
 #: gnome-panel/applet.c:551 gnome-panel/applet.c:557
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3953
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3989
 msgid "Panel"
 msgstr "Panel"
 
@@ -648,11 +614,11 @@ msgstr "ocultarbotones_activado"
 msgid "hidebutton_pixmaps_enabled"
 msgstr "ocultarbotones_pixmaps_activado"
 
-#: gnome-panel/basep-widget.c:578
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "Ocultar este panel"
 
-#: gnome-panel/basep-widget.c:581
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Muestra este panel"
 
@@ -714,7 +680,7 @@ msgstr "Activar el botón de escondido"
 msgid "Enable hidebutton arrow"
 msgstr "Activar flecha del botón de escondido"
 
-#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:332 gnome-panel/menu.c:3478
+#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:471 gnome-panel/menu.c:3514
 msgid "Drawer"
 msgstr "Cajón"
 
@@ -728,7 +694,7 @@ msgstr ""
 "tal vez no este instalado.\n"
 "Esta en el paquete gnome-pim"
 
-#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3937
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3973
 msgid "Run..."
 msgstr "Lanzar..."
 
@@ -800,7 +766,7 @@ msgstr "%l:%M %p"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/foobar-widget.c:438 gnome-panel/panel.c:2549
+#: gnome-panel/foobar-widget.c:438 gnome-panel/panel.c:2550
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -832,8 +798,8 @@ msgstr "Formato"
 msgid "No windows open"
 msgstr "No hay ventanas abiertas"
 
-#: gnome-panel/foobar-widget.c:1065 gnome-panel/gnome-run.c:718
-#: gnome-panel/menu.c:3034 gnome-panel/menu.c:3040
+#: gnome-panel/foobar-widget.c:1065 gnome-panel/menu.c:3070
+#: gnome-panel/menu.c:3076
 msgid "Applications"
 msgstr "Aplicaciones"
 
@@ -844,6 +810,33 @@ msgstr "No se puede encontrar el programa de captura de pantalla"
 #: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
 msgid "Can't execute the screenshot program"
 msgstr "No puede ejecutar el programa de captura de pantalla"
+
+#: gnome-panel/gnome-panel-add-launcher.c:34
+#, fuzzy
+msgid "Panel to add the launcher to"
+msgstr "Añadir este lanzador al panel"
+
+#: gnome-panel/gnome-panel-add-launcher.c:34
+#: gnome-panel/gnome-panel-add-launcher.c:35
+msgid "NUMBER"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:35
+msgid "Position to add the launcher to"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:36
+msgid "The argument is a url to add, not a .desktop file"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:67
+msgid ""
+"You must supply a single argument with the .desktop file or url to use\n"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:81
+msgid "No panel found\n"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.c:185
 msgid "Press a key..."
@@ -936,8 +929,8 @@ msgid "Medium"
 msgstr "Medio"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18
-#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1580
-#: gnome-panel/menu.c:3431 gnome-panel/menu.c:3992 gnome-panel/menu.c:4215
+#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1588
+#: gnome-panel/menu.c:3467 gnome-panel/menu.c:4028 gnome-panel/menu.c:4251
 msgid "Menu"
 msgstr "Menú"
 
@@ -1106,10 +1099,6 @@ msgstr "Im_primir captura de pantalla..."
 msgid "_Save screenshot to file:"
 msgstr "_Guardar captura de pantalla en archivo:"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Shell del panel de GNOME"
-
 #: gnome-panel/gnome-run.c:262 gnome-panel/gnome-run.c:270
 #, c-format
 msgid ""
@@ -1139,36 +1128,49 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:421 gnome-panel/gnome-run.c:668
-msgid "Browse..."
+#: gnome-panel/gnome-run.c:421
+msgid "Choose a program to run"
+msgstr ""
+
+#: gnome-panel/gnome-run.c:668
+#, fuzzy
+msgid "_Browse..."
 msgstr "Buscar..."
 
 #: gnome-panel/gnome-run.c:677
-msgid "Run in terminal"
+#, fuzzy
+msgid "Run in _terminal"
 msgstr "Ejecutar en terminal"
 
-#: gnome-panel/gnome-run.c:887
+#: gnome-panel/gnome-run.c:883
 #, c-format
 msgid "Will run '%s'"
 msgstr "Se ejecutará '%s'"
 
-#: gnome-panel/gnome-run.c:898 gnome-panel/gnome-run.c:901
+#: gnome-panel/gnome-run.c:894 gnome-panel/gnome-run.c:897
 msgid "No program selected"
 msgstr "No hay programa seleccionado"
 
-#: gnome-panel/gnome-run.c:1097
-msgid "Hide advanced options"
-msgstr "Ocultar las opciones avanzadas"
+#: gnome-panel/gnome-run.c:992
+#, fuzzy
+msgid "A_pplications:"
+msgstr "Aplicaciones"
 
-#: gnome-panel/gnome-run.c:1100
+#: gnome-panel/gnome-run.c:1095
+#, fuzzy
+msgid "_Advanced <<"
+msgstr "Avanzado"
+
+#: gnome-panel/gnome-run.c:1098
 msgid "Hide the advanced controls below this button."
 msgstr "Ocultar los controles avanzados bajo este botón."
 
-#: gnome-panel/gnome-run.c:1109
-msgid "Advanced..."
-msgstr "Avanzado..."
+#: gnome-panel/gnome-run.c:1107
+#, fuzzy
+msgid "_Advanced >>"
+msgstr "Avanzado"
 
-#: gnome-panel/gnome-run.c:1112
+#: gnome-panel/gnome-run.c:1110
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
@@ -1176,12 +1178,12 @@ msgstr ""
 "Permitir teclear una línea de comandos en lugar de seleccionar una "
 "aplicación de la lista"
 
-#: gnome-panel/gnome-run.c:1129
+#: gnome-panel/gnome-run.c:1127
 #, fuzzy
-msgid "_Run ..."
+msgid "_Run"
 msgstr "Lanzar..."
 
-#: gnome-panel/gnome-run.c:1164
+#: gnome-panel/gnome-run.c:1162
 msgid "Run Program"
 msgstr "Lanzar Programa"
 
@@ -1223,16 +1225,16 @@ msgid "Help on %s Application"
 msgstr "Ayuda de la aplicación %s"
 
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:543
+#: gnome-panel/launcher.c:563
 msgid "Launcher properties"
 msgstr "Propiedades del lanzado de programas"
 
-#: gnome-panel/launcher.c:723
+#: gnome-panel/launcher.c:743
 msgid "Create launcher applet"
 msgstr "Crear un aplique de lanzado de programas"
 
 #. class
-#: gnome-panel/launcher.c:943
+#: gnome-panel/launcher.c:963
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1243,7 +1245,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3769
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3805
 msgid "Log out"
 msgstr "Terminar sesión"
 
@@ -1251,7 +1253,7 @@ msgstr "Terminar sesión"
 msgid "Log out of GNOME"
 msgstr "Salir del entorno GNOME"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3756
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3792
 msgid "Lock screen"
 msgstr "Bloquear la pantalla"
 
@@ -1290,365 +1292,14 @@ msgstr "Preferencias"
 msgid "Specify a profile name to load"
 msgstr "Especifique un nombre de perfil para cargarlo"
 
-#: gnome-panel/menu.c:270
-msgid "Many many others ..."
-msgstr "Y muchos muchos más ..."
-
-#. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:272
-msgid "and finally, The Knights Who Say ... NI!"
-msgstr "y finalmente, los Caballeros que Dicen ... ¡NI!"
-
-#. Translator credits
-#: gnome-panel/menu.c:282
-msgid "translator_credits"
-msgstr ""
-
-#: gnome-panel/menu.c:307
-msgid ""
-"This program is responsible for launching other applications, embedding "
-"small applets within itself, world peace, and random X crashes."
-msgstr ""
-"Este programa es responsable de lanzar otras aplicaciones, de incluir "
-"pequeños apliques dentro de si mismo, de la paz en el mundo, y de cuelgues "
-"aleatorios del sistema X."
-
-#: gnome-panel/menu.c:313
-#, fuzzy
-msgid ""
-"\n"
-"\n"
-"Running in \"Lockdown\" mode.  This means your system administrator has "
-"prohibited any changes to the panel's configuration to take place."
-msgstr ""
-"Ejecutar en modo \"bloqueado\". Esto significa que su administrador ha "
-"prohibido que suceda cualquier cambio a la configuración del panel."
-
-#: gnome-panel/menu.c:319
-msgid "The GNOME Panel"
-msgstr "El Panel de GNOME"
-
-#: gnome-panel/menu.c:320
-#, fuzzy
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "(C) 1997-2000 la Free Software Foundation"
-
-#: gnome-panel/menu.c:339
-msgid "End world hunger"
-msgstr "Fin del hambre mundial"
-
-#: gnome-panel/menu.c:353
-msgid "Can't execute 'About GNOME'"
-msgstr "No pude ejecutar 'Acerca de GNOME'"
-
-#: gnome-panel/menu.c:371 gnome-panel/swallow.c:84
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-
-#: gnome-panel/menu.c:379 gnome-panel/menu.c:1096 gnome-panel/menu.c:1124
-#, fuzzy, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr "Imposible cargar la entrada"
-
-#: gnome-panel/menu.c:910
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
-msgstr ""
-"No se puede crear el lanzador.\n"
-"\n"
-"No se especificó comando o URL."
-
-#. class
-#: gnome-panel/menu.c:939
-#, c-format
-msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-"No se puede guardar el elemento del menú a disco. Ocurrió el siguiente "
-"error:\n"
-"\n"
-"%s"
-
-#: gnome-panel/menu.c:960
-msgid "Create menu item"
-msgstr "Crear un elemento de menú"
-
-#: gnome-panel/menu.c:1009
-#, fuzzy, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
-msgstr "No pude quitar el elemento %s: %s\n"
-
-#: gnome-panel/menu.c:1017
-#, c-format
-msgid "Could not get file name from path: %s"
-msgstr "No pude obtener el archivo en la ruta: %s"
-
-#: gnome-panel/menu.c:1024
-#, c-format
-msgid "Could not get directory name from path: %s"
-msgstr "No pude obtener el nombre de directorio en la ruta: %s"
-
-#: gnome-panel/menu.c:1090
-msgid "No 'Exec' or 'URL' field in entry"
-msgstr "No hay campo 'Exec' en la entrada"
-
-#: gnome-panel/menu.c:1405
-#, fuzzy, c-format
-msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"No se puede lanzar el icono\n"
-"%s"
-
-#. flags
-#. error
-#. watch the enum at the top of the file
-#: gnome-panel/menu.c:1469 gnome-panel/menu.c:1545
-msgid "Desktop entry properties"
-msgstr "Propiedades de la entrada escritorio"
-
-#: gnome-panel/menu.c:1671
-msgid "Add this launcher to panel"
-msgstr "Añadir este lanzador al panel"
-
-#: gnome-panel/menu.c:1674
-msgid "Add this applet as a launcher to panel"
-msgstr "Añadir este aplique como lanzador al panel"
-
-#: gnome-panel/menu.c:1682
-msgid "Remove this item"
-msgstr "Quitar este elemento"
-
-#: gnome-panel/menu.c:1699
-msgid "Put into run dialog"
-msgstr "Poner en el formulario de ejecución"
-
-#: gnome-panel/menu.c:1718
-#, c-format
-msgid "Help on %s"
-msgstr "Ayuda sobre %s"
-
-#: gnome-panel/menu.c:1719
-msgid "Application"
-msgstr "Aplicación"
-
-#: gnome-panel/menu.c:1765
-msgid "Entire menu"
-msgstr "Menú completo"
-
-#: gnome-panel/menu.c:1774
-msgid "Add this as drawer to panel"
-msgstr "Añadir este cajón al panel"
-
-#: gnome-panel/menu.c:1782
-msgid "Add this as menu to panel"
-msgstr "Añadir este menú al panel"
-
-#: gnome-panel/menu.c:1790
-msgid "Add new item to this menu"
-msgstr "Añade este nuevo elemento a este menú"
-
-#: gnome-panel/menu.c:2083
-msgid "You already have a status dock on the panel. You can only have one"
-msgstr "Ya tienes un tablón de estado en el panel. Sólo puedes tener uno"
-
-#: gnome-panel/menu.c:2945
-msgid "%I: %M: %S: %p"
-msgstr "%I: %M: %S: %p"
-
-#: gnome-panel/menu.c:2952
-msgid "You can only have one menu panel at a time."
-msgstr "Solo puede tener un menú de panel simultáneamente"
-
-#: gnome-panel/menu.c:2974
-msgid "Menu panel"
-msgstr "Panel con menú"
-
-#: gnome-panel/menu.c:2982 gnome-panel/panel-config.c:1494
-#: gnome-panel/panel-config.c:1616
-msgid "Edge panel"
-msgstr "Panel de lado"
-
-#: gnome-panel/menu.c:2990 gnome-panel/panel-config.c:1501
-#: gnome-panel/panel-config.c:1627
-#, fuzzy
-msgid "Corner panel"
-msgstr "Crear un  panel"
-
-#: gnome-panel/menu.c:2998 gnome-panel/panel-config.c:1507
-#: gnome-panel/panel-config.c:1638
-msgid "Sliding panel"
-msgstr "Panel deslizante"
-
-#: gnome-panel/menu.c:3006 gnome-panel/panel-config.c:1513
-#: gnome-panel/panel-config.c:1649
-msgid "Floating panel"
-msgstr "Panel flotante"
-
-#. force_image
-#: gnome-panel/menu.c:3103 gnome-panel/menu.c:3110 gnome-panel/menu.c:3829
-msgid "KDE menus"
-msgstr "Menús KDE"
-
-#: gnome-panel/menu.c:3183
-msgid "You cannot remove your last panel."
-msgstr "No puedes quitar tu último panel."
-
-#: gnome-panel/menu.c:3195
-msgid ""
-"When a panel is removed, the panel and its\n"
-"applet settings are lost. Remove this panel?"
-msgstr ""
-"Cuando se quita un panel, el panel y las\n"
-"propiedades de sus apliques se pierden. ¿Quitar este panel?"
-
-#: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
-#: gnome-panel/menu.c:3440
-msgid "Main menu"
-msgstr "Menú principal"
-
-#: gnome-panel/menu.c:3450
-msgid "Programs menu"
-msgstr "Menú de programas: "
-
-#: gnome-panel/menu.c:3460
-msgid "Launcher..."
-msgstr "Lanzador..."
-
-#: gnome-panel/menu.c:3468
-msgid "Launcher from menu"
-msgstr "Lanzador desde menú"
-
-#: gnome-panel/menu.c:3488
-msgid "Log out button"
-msgstr "Botón de salida de sesión"
-
-#: gnome-panel/menu.c:3498
-msgid "Lock button"
-msgstr "Botón de bloquear pantalla"
-
-#: gnome-panel/menu.c:3508
-msgid "Swallowed app..."
-msgstr "Aplicación miniaturizada"
-
-#: gnome-panel/menu.c:3515
-msgid "Status dock"
-msgstr "Tablón de estado"
-
-#: gnome-panel/menu.c:3529
-msgid "Cannot execute panel global properties"
-msgstr "No pude ejecutar las propiedades globales del panel"
-
-#: gnome-panel/menu.c:3569
-msgid "Remove this panel..."
-msgstr "Quitar este panel..."
-
-#: gnome-panel/menu.c:3571 gnome-panel/menu.c:3619
-msgid "Remove this panel"
-msgstr "Quitar este panel"
-
-#: gnome-panel/menu.c:3586
-msgid "Cannot launch nautilus!"
-msgstr "¡No se puede lanzar nautilus!"
-
-#: gnome-panel/menu.c:3598
-msgid "Add to panel"
-msgstr "Añadir al panel"
-
-#: gnome-panel/menu.c:3610
-msgid "Create panel"
-msgstr "Crear un  panel"
-
-#: gnome-panel/menu.c:3647
-msgid "Global Preferences..."
-msgstr "Propiedades globales..."
-
-#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3656
-#: gnome-panel/menu.c:4343
-msgid "Edit menus..."
-msgstr "Editar menús..."
-
-#: gnome-panel/menu.c:3666
-msgid "Reread all menus"
-msgstr "Recargar todos los menús"
-
-#: gnome-panel/menu.c:3680
-msgid "Panel Manual..."
-msgstr "Menú principal"
-
-#: gnome-panel/menu.c:3692
-msgid "Cannot execute xscreensaver"
-msgstr "No puede ejecutar xscreensaver"
-
-#: gnome-panel/menu.c:3711
-msgid "About the panel..."
-msgstr "Acerca del panel..."
-
-#: gnome-panel/menu.c:3725
-msgid "About GNOME..."
-msgstr "Acerca de GNOME..."
-
-#: gnome-panel/menu.c:3762
-msgid "Lock the screen so that you can temporairly leave your computer"
-msgstr "Bloquear la pantalla para que pueda dejar temporalmente su ordenador"
-
-#: gnome-panel/menu.c:3775
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr ""
-"Salir de esta sesión para entrar como un usuario diferente o apagar su "
-"ordenador"
-
-#: gnome-panel/menu.c:3903
-msgid "Programs"
-msgstr "Programas"
-
-#: gnome-panel/menu.c:3920
-msgid "Applets"
-msgstr "Apliques"
-
-#: gnome-panel/menu.c:3943
-#, fuzzy
-msgid "Run a command"
-msgstr "Ejecutar una línea de comando"
-
-#: gnome-panel/menu.c:3961
-msgid "Desktop"
-msgstr "Escritorio"
-
-#: gnome-panel/menu.c:3994
-#, fuzzy
-msgid "Menu:"
-msgstr "Menú"
-
-#: gnome-panel/menu.c:4044 gnome-panel/menu.c:4072 gnome-panel/menu.c:4253
-msgid "Main Menu"
-msgstr "Menú Principal"
-
-#: gnome-panel/menu.c:4066
-msgid "Can't create menu, using main menu!"
-msgstr "¡Imposible de abrir el menú, usando el menú principal!"
-
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
 msgstr "¡Imposible de abrir el directorio, usando el menú principal!"
+
+#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3692
+#: gnome-panel/menu.c:4379
+msgid "Edit menus..."
+msgstr "Editar menús..."
 
 #: gnome-panel/menu-properties.c:357
 msgid "Off"
@@ -1673,6 +1324,11 @@ msgstr "Tipo de menú"
 #: gnome-panel/menu-properties.c:446
 msgid "Global main menu"
 msgstr "Menú principal global"
+
+#: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
+#: gnome-panel/menu.c:3476
+msgid "Main menu"
+msgstr "Menú principal"
 
 #: gnome-panel/menu-properties.c:474 gnome-panel/menu-properties.c:537
 msgid "Normal menu"
@@ -1710,6 +1366,357 @@ msgstr "Ruta para el Menú"
 msgid "Use custom icon for panel button"
 msgstr "Utilizar icono personalizado para el botón del panel"
 
+#: gnome-panel/menu.c:278
+msgid "Many many others ..."
+msgstr "Y muchos muchos más ..."
+
+#. ... from the Monty Pythons show...
+#: gnome-panel/menu.c:280
+msgid "and finally, The Knights Who Say ... NI!"
+msgstr "y finalmente, los Caballeros que Dicen ... ¡NI!"
+
+#. Translator credits
+#: gnome-panel/menu.c:290
+msgid "translator_credits"
+msgstr ""
+
+#: gnome-panel/menu.c:315
+msgid ""
+"This program is responsible for launching other applications, embedding "
+"small applets within itself, world peace, and random X crashes."
+msgstr ""
+"Este programa es responsable de lanzar otras aplicaciones, de incluir "
+"pequeños apliques dentro de si mismo, de la paz en el mundo, y de cuelgues "
+"aleatorios del sistema X."
+
+#: gnome-panel/menu.c:321
+#, fuzzy
+msgid ""
+"\n"
+"\n"
+"Running in \"Lockdown\" mode.  This means your system administrator has "
+"prohibited any changes to the panel's configuration to take place."
+msgstr ""
+"Ejecutar en modo \"bloqueado\". Esto significa que su administrador ha "
+"prohibido que suceda cualquier cambio a la configuración del panel."
+
+#: gnome-panel/menu.c:327
+msgid "The GNOME Panel"
+msgstr "El Panel de GNOME"
+
+#: gnome-panel/menu.c:328
+#, fuzzy
+msgid "(C) 1997-2002 the Free Software Foundation"
+msgstr "(C) 1997-2000 la Free Software Foundation"
+
+#: gnome-panel/menu.c:347
+msgid "End world hunger"
+msgstr "Fin del hambre mundial"
+
+#: gnome-panel/menu.c:361
+msgid "Can't execute 'About GNOME'"
+msgstr "No pude ejecutar 'Acerca de GNOME'"
+
+#: gnome-panel/menu.c:379 gnome-panel/swallow.c:84
+#, c-format
+msgid ""
+"<b>Can't launch entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+
+#: gnome-panel/menu.c:387 gnome-panel/menu.c:1104 gnome-panel/menu.c:1132
+#, fuzzy, c-format
+msgid ""
+"<b>Can't load entry</b>\n"
+"\n"
+"Details: %s"
+msgstr "Imposible cargar la entrada"
+
+#: gnome-panel/menu.c:918
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+"No se puede crear el lanzador.\n"
+"\n"
+"No se especificó comando o URL."
+
+#. class
+#: gnome-panel/menu.c:947
+#, c-format
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"No se puede guardar el elemento del menú a disco. Ocurrió el siguiente "
+"error:\n"
+"\n"
+"%s"
+
+#: gnome-panel/menu.c:968
+msgid "Create menu item"
+msgstr "Crear un elemento de menú"
+
+#: gnome-panel/menu.c:1017
+#, fuzzy, c-format
+msgid ""
+"<b>Could not remove the menu item %s</b>\n"
+"\n"
+"Details: %s\n"
+msgstr "No pude quitar el elemento %s: %s\n"
+
+#: gnome-panel/menu.c:1025
+#, c-format
+msgid "Could not get file name from path: %s"
+msgstr "No pude obtener el archivo en la ruta: %s"
+
+#: gnome-panel/menu.c:1032
+#, c-format
+msgid "Could not get directory name from path: %s"
+msgstr "No pude obtener el nombre de directorio en la ruta: %s"
+
+#: gnome-panel/menu.c:1098
+msgid "No 'Exec' or 'URL' field in entry"
+msgstr "No hay campo 'Exec' en la entrada"
+
+#: gnome-panel/menu.c:1413
+#, fuzzy, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"No se puede lanzar el icono\n"
+"%s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu.c:1477 gnome-panel/menu.c:1553
+msgid "Desktop entry properties"
+msgstr "Propiedades de la entrada escritorio"
+
+#: gnome-panel/menu.c:1679
+msgid "Add this launcher to panel"
+msgstr "Añadir este lanzador al panel"
+
+#: gnome-panel/menu.c:1682
+msgid "Add this applet as a launcher to panel"
+msgstr "Añadir este aplique como lanzador al panel"
+
+#: gnome-panel/menu.c:1690
+msgid "Remove this item"
+msgstr "Quitar este elemento"
+
+#: gnome-panel/menu.c:1707
+msgid "Put into run dialog"
+msgstr "Poner en el formulario de ejecución"
+
+#: gnome-panel/menu.c:1726
+#, c-format
+msgid "Help on %s"
+msgstr "Ayuda sobre %s"
+
+#: gnome-panel/menu.c:1727
+msgid "Application"
+msgstr "Aplicación"
+
+#: gnome-panel/menu.c:1773
+msgid "Entire menu"
+msgstr "Menú completo"
+
+#: gnome-panel/menu.c:1782
+msgid "Add this as drawer to panel"
+msgstr "Añadir este cajón al panel"
+
+#: gnome-panel/menu.c:1790
+msgid "Add this as menu to panel"
+msgstr "Añadir este menú al panel"
+
+#: gnome-panel/menu.c:1798
+msgid "Add new item to this menu"
+msgstr "Añade este nuevo elemento a este menú"
+
+#: gnome-panel/menu.c:2091
+msgid "You already have a status dock on the panel. You can only have one"
+msgstr "Ya tienes un tablón de estado en el panel. Sólo puedes tener uno"
+
+#: gnome-panel/menu.c:2702 libpanel-applet/panel-test-applets.c:107
+#, c-format
+msgid "query returned exception %s\n"
+msgstr "La consulta ha devuelto la excepción %s\n"
+
+#: gnome-panel/menu.c:2981
+msgid "%I: %M: %S: %p"
+msgstr "%I: %M: %S: %p"
+
+#: gnome-panel/menu.c:2988
+msgid "You can only have one menu panel at a time."
+msgstr "Solo puede tener un menú de panel simultáneamente"
+
+#: gnome-panel/menu.c:3010
+msgid "Menu panel"
+msgstr "Panel con menú"
+
+#: gnome-panel/menu.c:3018 gnome-panel/panel-config.c:1494
+#: gnome-panel/panel-config.c:1616
+msgid "Edge panel"
+msgstr "Panel de lado"
+
+#: gnome-panel/menu.c:3026 gnome-panel/panel-config.c:1501
+#: gnome-panel/panel-config.c:1627
+#, fuzzy
+msgid "Corner panel"
+msgstr "Crear un  panel"
+
+#: gnome-panel/menu.c:3034 gnome-panel/panel-config.c:1507
+#: gnome-panel/panel-config.c:1638
+msgid "Sliding panel"
+msgstr "Panel deslizante"
+
+#: gnome-panel/menu.c:3042 gnome-panel/panel-config.c:1513
+#: gnome-panel/panel-config.c:1649
+msgid "Floating panel"
+msgstr "Panel flotante"
+
+#. force_image
+#: gnome-panel/menu.c:3139 gnome-panel/menu.c:3146 gnome-panel/menu.c:3865
+msgid "KDE menus"
+msgstr "Menús KDE"
+
+#: gnome-panel/menu.c:3219
+msgid "You cannot remove your last panel."
+msgstr "No puedes quitar tu último panel."
+
+#: gnome-panel/menu.c:3231
+msgid ""
+"When a panel is removed, the panel and its\n"
+"applet settings are lost. Remove this panel?"
+msgstr ""
+"Cuando se quita un panel, el panel y las\n"
+"propiedades de sus apliques se pierden. ¿Quitar este panel?"
+
+#: gnome-panel/menu.c:3486
+msgid "Programs menu"
+msgstr "Menú de programas: "
+
+#: gnome-panel/menu.c:3496
+msgid "Launcher..."
+msgstr "Lanzador..."
+
+#: gnome-panel/menu.c:3504
+msgid "Launcher from menu"
+msgstr "Lanzador desde menú"
+
+#: gnome-panel/menu.c:3524
+msgid "Log out button"
+msgstr "Botón de salida de sesión"
+
+#: gnome-panel/menu.c:3534
+msgid "Lock button"
+msgstr "Botón de bloquear pantalla"
+
+#: gnome-panel/menu.c:3544
+msgid "Swallowed app..."
+msgstr "Aplicación miniaturizada"
+
+#: gnome-panel/menu.c:3551
+msgid "Status dock"
+msgstr "Tablón de estado"
+
+#: gnome-panel/menu.c:3565
+msgid "Cannot execute panel global properties"
+msgstr "No pude ejecutar las propiedades globales del panel"
+
+#: gnome-panel/menu.c:3605
+msgid "Remove this panel..."
+msgstr "Quitar este panel..."
+
+#: gnome-panel/menu.c:3607 gnome-panel/menu.c:3655
+msgid "Remove this panel"
+msgstr "Quitar este panel"
+
+#: gnome-panel/menu.c:3622
+msgid "Cannot launch nautilus!"
+msgstr "¡No se puede lanzar nautilus!"
+
+#: gnome-panel/menu.c:3634
+msgid "Add to panel"
+msgstr "Añadir al panel"
+
+#: gnome-panel/menu.c:3646
+msgid "Create panel"
+msgstr "Crear un  panel"
+
+#: gnome-panel/menu.c:3683
+msgid "Global Preferences..."
+msgstr "Propiedades globales..."
+
+#: gnome-panel/menu.c:3702
+msgid "Reread all menus"
+msgstr "Recargar todos los menús"
+
+#: gnome-panel/menu.c:3716
+msgid "Panel Manual..."
+msgstr "Menú principal"
+
+#: gnome-panel/menu.c:3728
+msgid "Cannot execute xscreensaver"
+msgstr "No puede ejecutar xscreensaver"
+
+#: gnome-panel/menu.c:3747
+msgid "About the panel..."
+msgstr "Acerca del panel..."
+
+#: gnome-panel/menu.c:3761
+msgid "About GNOME..."
+msgstr "Acerca de GNOME..."
+
+#: gnome-panel/menu.c:3798
+msgid "Lock the screen so that you can temporairly leave your computer"
+msgstr "Bloquear la pantalla para que pueda dejar temporalmente su ordenador"
+
+#: gnome-panel/menu.c:3811
+msgid ""
+"Log out of this session to log in as a different user or to shut down your "
+"computer"
+msgstr ""
+"Salir de esta sesión para entrar como un usuario diferente o apagar su "
+"ordenador"
+
+#: gnome-panel/menu.c:3939
+msgid "Programs"
+msgstr "Programas"
+
+#: gnome-panel/menu.c:3956
+msgid "Applets"
+msgstr "Apliques"
+
+#: gnome-panel/menu.c:3979
+#, fuzzy
+msgid "Run a command"
+msgstr "Ejecutar una línea de comando"
+
+#: gnome-panel/menu.c:3997
+msgid "Desktop"
+msgstr "Escritorio"
+
+#: gnome-panel/menu.c:4030
+#, fuzzy
+msgid "Menu:"
+msgstr "Menú"
+
+#: gnome-panel/menu.c:4080 gnome-panel/menu.c:4108 gnome-panel/menu.c:4289
+msgid "Main Menu"
+msgstr "Menú Principal"
+
+#: gnome-panel/menu.c:4102
+msgid "Can't create menu, using main menu!"
+msgstr "¡Imposible de abrir el menú, usando el menú principal!"
+
 #: gnome-panel/panel-applet-frame.c:179
 msgid "There was a problem loading the applet."
 msgstr "Hubo un problema al cargar el aplique."
@@ -1718,21 +1725,9 @@ msgstr "Hubo un problema al cargar el aplique."
 msgid "Cannot register control widget\n"
 msgstr "No se puede registrar el widget de control\n"
 
-#: gnome-panel/panel-applet-frame.c:452
+#: gnome-panel/panel-applet-frame.c:453
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No se puede obtener el interfaz AppletShell del control\n"
-
-#: gnome-panel/panel.c:898
-#, c-format
-msgid "Open URL: %s"
-msgstr "Abrir URL: %s"
-
-#: gnome-panel/panel.c:2574
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
-msgstr ""
-"No se encontraron paneles en su configuración. Ahora se creará un panel."
 
 #: gnome-panel/panel-config.c:537
 msgid "Hiding"
@@ -1909,6 +1904,18 @@ msgstr ""
 msgid "No document to show"
 msgstr ""
 
+#: gnome-panel/panel.c:899
+#, c-format
+msgid "Open URL: %s"
+msgstr "Abrir URL: %s"
+
+#: gnome-panel/panel.c:2575
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+"No se encontraron paneles en su configuración. Ahora se creará un panel."
+
 #: gnome-panel/swallow.c:106
 msgid ""
 "A swallowed application appears to have died unexpectedly.\n"
@@ -1940,6 +1947,71 @@ msgstr "Ancho"
 #: gnome-panel/swallow.c:305
 msgid "Height"
 msgstr "Alto"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr ""
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+#, fuzzy
+msgid "Test Bonobo Applet"
+msgstr "Aplique de la lista de tareas"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:607
+#, fuzzy, c-format
+msgid "Incomplete '%s' background type received"
+msgstr "panel_applet_set_prop: Tipo de fondo '%s' recibido incompleto"
+
+#: libpanel-applet/panel-applet.c:621
+#, fuzzy, c-format
+msgid "Incomplete '%s' background type received: %s"
+msgstr "panel_applet_set_prop: Tipo de fondo '%s' recibido incompleto: %s"
+
+#: libpanel-applet/panel-applet.c:630
+#, fuzzy, c-format
+msgid "Failed to get pixmap %s"
+msgstr "panel_applet_set_prop: Fallo al obtener pixmap %s"
+
+#: libpanel-applet/panel-applet.c:637
+#, fuzzy
+msgid "Unknown background type received"
+msgstr "panel_applet_set_prop: Tipo de fondo recibido desconocido"
+
+#: libpanel-applet/panel-applet.c:792
+msgid "The Applet's containing Panel's orientation"
+msgstr "El aplique que contiene la orientación del panel"
+
+#: libpanel-applet/panel-applet.c:800
+msgid "The Applet's containing Panel's size in pixels"
+msgstr "El aplique que contiene el tamaño del panel en píxeles"
+
+#: libpanel-applet/panel-applet.c:808
+msgid "The Applet's containing Panel's background color or pixmap"
+msgstr "El aplique que contiene el color o pixmap de fondo del panel"
+
+#: libpanel-applet/panel-applet.c:816
+msgid "The Applet's flags"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Mailcheck Applet"
+#~ msgstr "Applet de comprobación de correo"
+
+#~ msgid "Pager Applet"
+#~ msgstr "Aplique del paginador"
+
+#~ msgid "Tasklist Applet"
+#~ msgstr "Aplique de la lista de tareas"
+
+#~ msgid "Hide advanced options"
+#~ msgstr "Ocultar las opciones avanzadas"
+
+#~ msgid "Advanced..."
+#~ msgstr "Avanzado..."
 
 #~ msgid "No name"
 #~ msgstr "Sin nombre"
@@ -2027,9 +2099,6 @@ msgstr "Alto"
 
 #~ msgid "Basic"
 #~ msgstr "Básico"
-
-#~ msgid "Advanced"
-#~ msgstr "Avanzado"
 
 #~ msgid "_Show Hints at Startup"
 #~ msgstr "Mo_strar consejos al inicio"

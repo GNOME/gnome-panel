@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-02-17 01:28+0200\n"
+"POT-Creation-Date: 2002-02-18 19:51+0000\n"
 "PO-Revision-Date: 2002-02-17 02:19+0200\n"
 "Last-Translator: Tõivo Leedjärv <leedjarv@interest.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
@@ -34,16 +34,16 @@ msgstr ""
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1
-msgid "About ..."
-msgstr "Info ..."
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+msgid "About..."
+msgstr "Info..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:475
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
 #: gnome-panel/drawer.c:661 gnome-panel/launcher.c:699
-#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4378
+#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4383
 #: gnome-panel/status.c:372 gnome-panel/swallow.c:453
 msgid "Help"
 msgstr "Abi"
@@ -51,11 +51,13 @@ msgstr "Abi"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3
-msgid "Properties ..."
-msgstr "Omadused ..."
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
+#: gnome-panel/drawer.c:659 gnome-panel/launcher.c:697 gnome-panel/menu.c:1752
+#: gnome-panel/menu.c:1824 gnome-panel/menu.c:3671 gnome-panel/menu.c:4373
+msgid "Properties..."
+msgstr "Omadused..."
 
-#: applets/fish/fish.c:385 applets/fish/fish.c:874
+#: applets/fish/fish.c:385 applets/fish/fish.c:872
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Kala nimega %s"
@@ -136,15 +138,15 @@ msgstr ""
 "Te peate vett vahetama!\n"
 "(vaadake tänast kuupäeva)"
 
-#: applets/fish/fish.c:890
+#: applets/fish/fish.c:888
 msgid "(with minor help from George)"
 msgstr "(pisukese abiga Georgelt)"
 
-#: applets/fish/fish.c:908
+#: applets/fish/fish.c:906
 msgid "The GNOME Fish Applet"
 msgstr "GNOME kala aplet"
 
-#: applets/fish/fish.c:911
+#: applets/fish/fish.c:909
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -187,7 +189,7 @@ msgid "Switch between workspaces"
 msgstr ""
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-#: applets/gen_util/tasklist.c:438
+#: applets/gen_util/tasklist.c:492
 msgid "Window List"
 msgstr ""
 
@@ -490,56 +492,46 @@ msgstr ""
 "Ei suuda käivitada käsku:\n"
 "%s"
 
-#: applets/gen_util/printer.c:308
+#: applets/gen_util/printer.c:306
 msgid "Printer properties"
 msgstr "Printeri omadused"
 
-#: applets/gen_util/printer.c:317
+#: applets/gen_util/printer.c:315
 msgid "Printer name:"
 msgstr "Printeri nimi:"
 
-#: applets/gen_util/printer.c:321
+#: applets/gen_util/printer.c:319
 msgid "Print command:"
 msgstr "Printimiskäsk:"
 
-#: applets/gen_util/printer.c:327
+#: applets/gen_util/printer.c:325
 msgid "Printer"
 msgstr "Printer"
 
-#: applets/gen_util/printer.c:355
+#: applets/gen_util/printer.c:353
 #, fuzzy
 msgid "Printer Applet"
 msgstr "Töölauahalduri aplet"
 
-#: applets/gen_util/printer.c:356
+#: applets/gen_util/printer.c:354
 msgid "(c) 1998 the Free Software Foundation"
 msgstr "(c) 1998 the Free Software Foundation"
 
-#: applets/gen_util/printer.c:358
+#: applets/gen_util/printer.c:356
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
 msgstr ""
 
-#: applets/gen_util/printer.c:425
+#: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
 msgstr "Ei saa apletit luua!\n"
 
-#: applets/gen_util/printer.c:468 gnome-panel/drawer.c:659
-#: gnome-panel/launcher.c:697 gnome-panel/menu.c:1753 gnome-panel/menu.c:1825
-#: gnome-panel/menu.c:3666 gnome-panel/menu.c:4368
-msgid "Properties..."
-msgstr "Omadused..."
-
-#: applets/gen_util/printer.c:481
-msgid "About..."
-msgstr "Info..."
-
-#: applets/gen_util/tasklist.c:439
+#: applets/gen_util/tasklist.c:493
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:440
+#: applets/gen_util/tasklist.c:494
 #, fuzzy
 msgid ""
 "The Window List shows a list of all visible windows and let you browse them."
@@ -551,7 +543,7 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr ""
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:1124
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:1123
 #: gnome-panel/panel-util.c:52
 #, c-format
 msgid ""
@@ -568,7 +560,7 @@ msgid "???"
 msgstr "???"
 
 #: gnome-panel/applet.c:551 gnome-panel/applet.c:557
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3984
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3989
 msgid "Panel"
 msgstr "Paneel"
 
@@ -673,7 +665,7 @@ msgstr "Näita sulgemisnuppu"
 msgid "Enable hidebutton arrow"
 msgstr "Näita sulgemisnupul noolt"
 
-#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:471 gnome-panel/menu.c:3509
+#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:471 gnome-panel/menu.c:3514
 msgid "Drawer"
 msgstr "Sahtel"
 
@@ -687,7 +679,7 @@ msgstr ""
 "see ei pruugi sul olla installitud.\n"
 "See asub gnome-pim paketis."
 
-#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3968
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3973
 msgid "Run..."
 msgstr "Käivita..."
 
@@ -791,8 +783,8 @@ msgstr "Vorming"
 msgid "No windows open"
 msgstr "Ühtegi akent pole lahti"
 
-#: gnome-panel/foobar-widget.c:1065 gnome-panel/gnome-run.c:718
-#: gnome-panel/menu.c:3065 gnome-panel/menu.c:3071
+#: gnome-panel/foobar-widget.c:1065 gnome-panel/menu.c:3070
+#: gnome-panel/menu.c:3076
 msgid "Applications"
 msgstr "Rakendused"
 
@@ -922,8 +914,8 @@ msgid "Medium"
 msgstr "Keskmine"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18
-#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1589
-#: gnome-panel/menu.c:3462 gnome-panel/menu.c:4023 gnome-panel/menu.c:4246
+#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1588
+#: gnome-panel/menu.c:3467 gnome-panel/menu.c:4028 gnome-panel/menu.c:4251
 msgid "Menu"
 msgstr "Menüü"
 
@@ -1119,47 +1111,60 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:421 gnome-panel/gnome-run.c:668
-msgid "Browse..."
+#: gnome-panel/gnome-run.c:421
+msgid "Choose a program to run"
+msgstr ""
+
+#: gnome-panel/gnome-run.c:668
+#, fuzzy
+msgid "_Browse..."
 msgstr "Vali..."
 
 #: gnome-panel/gnome-run.c:677
-msgid "Run in terminal"
+#, fuzzy
+msgid "Run in _terminal"
 msgstr "Käivita terminalis"
 
-#: gnome-panel/gnome-run.c:887
+#: gnome-panel/gnome-run.c:883
 #, c-format
 msgid "Will run '%s'"
 msgstr "Käivitab '%s'"
 
-#: gnome-panel/gnome-run.c:898 gnome-panel/gnome-run.c:901
+#: gnome-panel/gnome-run.c:894 gnome-panel/gnome-run.c:897
 msgid "No program selected"
 msgstr "Programmi ei ole valitud"
 
-#: gnome-panel/gnome-run.c:1097
-msgid "Hide advanced options"
-msgstr "Peida edasijõudnutele mõeldud häälestus"
+#: gnome-panel/gnome-run.c:992
+#, fuzzy
+msgid "A_pplications:"
+msgstr "Rakendused"
 
-#: gnome-panel/gnome-run.c:1100
+#: gnome-panel/gnome-run.c:1095
+#, fuzzy
+msgid "_Advanced <<"
+msgstr "Edasijõudnutele..."
+
+#: gnome-panel/gnome-run.c:1098
 msgid "Hide the advanced controls below this button."
 msgstr "Peida selle nupu all olevad edasijõudnutele mõeldud hoovad"
 
-#: gnome-panel/gnome-run.c:1109
-msgid "Advanced..."
+#: gnome-panel/gnome-run.c:1107
+#, fuzzy
+msgid "_Advanced >>"
 msgstr "Edasijõudnutele..."
 
-#: gnome-panel/gnome-run.c:1112
+#: gnome-panel/gnome-run.c:1110
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
 msgstr "Luba rakendus nimekirjast valimise asemel selle käsurea sisestamine"
 
-#: gnome-panel/gnome-run.c:1129
+#: gnome-panel/gnome-run.c:1127
 #, fuzzy
-msgid "_Run ..."
+msgid "_Run"
 msgstr "Käivita..."
 
-#: gnome-panel/gnome-run.c:1164
+#: gnome-panel/gnome-run.c:1162
 msgid "Run Program"
 msgstr "Käivita programm"
 
@@ -1221,7 +1226,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3800
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3805
 msgid "Log out"
 msgstr "Logi välja"
 
@@ -1229,7 +1234,7 @@ msgstr "Logi välja"
 msgid "Log out of GNOME"
 msgstr "Logib GNOME-st välja"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3787
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3792
 msgid "Lock screen"
 msgstr "Lukusta ekraan"
 
@@ -1272,8 +1277,8 @@ msgstr "Määra laetava profiili nimi"
 msgid "Can't open directory, using main menu!"
 msgstr "Ei suuda avada kataloogi, kasutan põhimenüüd!"
 
-#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3687
-#: gnome-panel/menu.c:4374
+#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3692
+#: gnome-panel/menu.c:4379
 msgid "Edit menus..."
 msgstr "Menüüredaktor..."
 
@@ -1302,7 +1307,7 @@ msgid "Global main menu"
 msgstr "Üldine peamenüü"
 
 #: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
-#: gnome-panel/menu.c:3471
+#: gnome-panel/menu.c:3476
 msgid "Main menu"
 msgstr "Peamenüü"
 
@@ -1354,7 +1359,8 @@ msgstr "ja lõpuks, Rüütlid, Kes Ütlevad ... NI!"
 #. Translator credits
 #: gnome-panel/menu.c:290
 msgid "translator_credits"
-msgstr "Tõlge eesti keelde:\n"
+msgstr ""
+"Tõlge eesti keelde:\n"
 "       Lauris Kaplinski <lauris@ariman.ee>, 1999.\n"
 "       Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
 "       Tõivo Leedjärv <leedjarv@interest.ee>, 2002."
@@ -1403,7 +1409,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:387 gnome-panel/menu.c:1105 gnome-panel/menu.c:1133
+#: gnome-panel/menu.c:387 gnome-panel/menu.c:1104 gnome-panel/menu.c:1132
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1411,7 +1417,7 @@ msgid ""
 "Details: %s"
 msgstr "Ei suuda lugeda rida"
 
-#: gnome-panel/menu.c:919
+#: gnome-panel/menu.c:918
 msgid ""
 "Cannot create the launcher.\n"
 "\n"
@@ -1422,7 +1428,7 @@ msgstr ""
 "Käsk või url on märkimata."
 
 #. class
-#: gnome-panel/menu.c:948
+#: gnome-panel/menu.c:947
 #, c-format
 msgid ""
 "Cannot save menu item to disk, the following error occured:\n"
@@ -1433,11 +1439,11 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/menu.c:969
+#: gnome-panel/menu.c:968
 msgid "Create menu item"
 msgstr "Loo menüüelement"
 
-#: gnome-panel/menu.c:1018
+#: gnome-panel/menu.c:1017
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1445,21 +1451,21 @@ msgid ""
 "Details: %s\n"
 msgstr "Ei suuda kustutada menüüelementi %s: %s\n"
 
-#: gnome-panel/menu.c:1026
+#: gnome-panel/menu.c:1025
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Ei suuda lugeda failinime rajalt: %s"
 
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1032
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Ei suuda lugeda katalooginime kataloogiteelt: %s"
 
-#: gnome-panel/menu.c:1099
+#: gnome-panel/menu.c:1098
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Sisendis puudub 'Exec' või 'URL' väli"
 
-#: gnome-panel/menu.c:1414
+#: gnome-panel/menu.c:1413
 #, c-format
 msgid ""
 "<b>Cannot save changes to menu entry</b>\n"
@@ -1470,103 +1476,102 @@ msgstr ""
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/menu.c:1478 gnome-panel/menu.c:1554
+#: gnome-panel/menu.c:1477 gnome-panel/menu.c:1553
 msgid "Desktop entry properties"
 msgstr "Desktop kirje häälestus"
 
-#: gnome-panel/menu.c:1680
+#: gnome-panel/menu.c:1679
 msgid "Add this launcher to panel"
 msgstr "Lisa see käivitaja paneelile"
 
-#: gnome-panel/menu.c:1683
+#: gnome-panel/menu.c:1682
 msgid "Add this applet as a launcher to panel"
 msgstr "Lisa see aplet käivitajana paneelile"
 
-#: gnome-panel/menu.c:1691
+#: gnome-panel/menu.c:1690
 msgid "Remove this item"
 msgstr "Eemalda see rida"
 
-#: gnome-panel/menu.c:1708
+#: gnome-panel/menu.c:1707
 msgid "Put into run dialog"
 msgstr "Lisa käivitamise dialoogile"
 
-#: gnome-panel/menu.c:1727
+#: gnome-panel/menu.c:1726
 #, c-format
 msgid "Help on %s"
 msgstr "%s abi"
 
-#: gnome-panel/menu.c:1728
+#: gnome-panel/menu.c:1727
 msgid "Application"
 msgstr "Rakendus"
 
-#: gnome-panel/menu.c:1774
+#: gnome-panel/menu.c:1773
 msgid "Entire menu"
 msgstr "Terve menüü"
 
-#: gnome-panel/menu.c:1783
+#: gnome-panel/menu.c:1782
 msgid "Add this as drawer to panel"
 msgstr "Tee sellest sahtel paneelil"
 
-#: gnome-panel/menu.c:1791
+#: gnome-panel/menu.c:1790
 msgid "Add this as menu to panel"
 msgstr "Tee sellest menüü paneelil"
 
-#: gnome-panel/menu.c:1799
+#: gnome-panel/menu.c:1798
 msgid "Add new item to this menu"
 msgstr "Lisa sellesse menüüsse uus rida"
 
-#: gnome-panel/menu.c:2092
+#: gnome-panel/menu.c:2091
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Teil juba on paneelil staatusdokk. Rohkem kui üks ei saa neid olla"
 
-#: gnome-panel/menu.c:2697 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2702 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "päring tagastas erandi %s\n"
 
-#: gnome-panel/menu.c:2976
-#. FIXME: Mis-mis??
+#: gnome-panel/menu.c:2981
 msgid "%I: %M: %S: %p"
 msgstr "%H:%M:%S"
 
-#: gnome-panel/menu.c:2983
+#: gnome-panel/menu.c:2988
 msgid "You can only have one menu panel at a time."
 msgstr "Sul saab korraga olla ainult üks menüüpaneel."
 
-#: gnome-panel/menu.c:3005
+#: gnome-panel/menu.c:3010
 msgid "Menu panel"
 msgstr "Menüüpaneel"
 
-#: gnome-panel/menu.c:3013 gnome-panel/panel-config.c:1494
+#: gnome-panel/menu.c:3018 gnome-panel/panel-config.c:1494
 #: gnome-panel/panel-config.c:1616
 msgid "Edge panel"
 msgstr "Servapaneel"
 
-#: gnome-panel/menu.c:3021 gnome-panel/panel-config.c:1501
+#: gnome-panel/menu.c:3026 gnome-panel/panel-config.c:1501
 #: gnome-panel/panel-config.c:1627
 msgid "Corner panel"
 msgstr "Nurgapaneel"
 
-#: gnome-panel/menu.c:3029 gnome-panel/panel-config.c:1507
+#: gnome-panel/menu.c:3034 gnome-panel/panel-config.c:1507
 #: gnome-panel/panel-config.c:1638
 msgid "Sliding panel"
 msgstr "Libisev paneel"
 
-#: gnome-panel/menu.c:3037 gnome-panel/panel-config.c:1513
+#: gnome-panel/menu.c:3042 gnome-panel/panel-config.c:1513
 #: gnome-panel/panel-config.c:1649
 msgid "Floating panel"
 msgstr "Ujuv paneel"
 
 #. force_image
-#: gnome-panel/menu.c:3134 gnome-panel/menu.c:3141 gnome-panel/menu.c:3860
+#: gnome-panel/menu.c:3139 gnome-panel/menu.c:3146 gnome-panel/menu.c:3865
 msgid "KDE menus"
 msgstr "KDE menüüd"
 
-#: gnome-panel/menu.c:3214
+#: gnome-panel/menu.c:3219
 msgid "You cannot remove your last panel."
 msgstr "Te ei saa oma viimast paneeli eemaldada."
 
-#: gnome-panel/menu.c:3226
+#: gnome-panel/menu.c:3231
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1574,87 +1579,87 @@ msgstr ""
 "Kui paneel eemaldada, unustatakse see koos\n"
 "apletite häälestusega. Kas eemaldada see paneel?"
 
-#: gnome-panel/menu.c:3481
+#: gnome-panel/menu.c:3486
 msgid "Programs menu"
 msgstr "Programmimenüü"
 
-#: gnome-panel/menu.c:3491
+#: gnome-panel/menu.c:3496
 msgid "Launcher..."
 msgstr "Käivitaja..."
 
-#: gnome-panel/menu.c:3499
+#: gnome-panel/menu.c:3504
 msgid "Launcher from menu"
 msgstr "Käivitaja menüüst"
 
-#: gnome-panel/menu.c:3519
+#: gnome-panel/menu.c:3524
 msgid "Log out button"
 msgstr "Lahkumisnupp"
 
-#: gnome-panel/menu.c:3529
+#: gnome-panel/menu.c:3534
 msgid "Lock button"
 msgstr "Lukustusnupp"
 
-#: gnome-panel/menu.c:3539
+#: gnome-panel/menu.c:3544
 msgid "Swallowed app..."
 msgstr "Allaneelatud proge..."
 
-#: gnome-panel/menu.c:3546
+#: gnome-panel/menu.c:3551
 msgid "Status dock"
 msgstr "Staatusdokk"
 
-#: gnome-panel/menu.c:3560
+#: gnome-panel/menu.c:3565
 msgid "Cannot execute panel global properties"
 msgstr "Ei suuda käivitada paneeli üldisi määranguid"
 
-#: gnome-panel/menu.c:3600
+#: gnome-panel/menu.c:3605
 msgid "Remove this panel..."
 msgstr "Eemalda see paneel..."
 
-#: gnome-panel/menu.c:3602 gnome-panel/menu.c:3650
+#: gnome-panel/menu.c:3607 gnome-panel/menu.c:3655
 msgid "Remove this panel"
 msgstr "Eemalda see paneel"
 
-#: gnome-panel/menu.c:3617
+#: gnome-panel/menu.c:3622
 msgid "Cannot launch nautilus!"
 msgstr "Ei saa käivitada nautilust!"
 
-#: gnome-panel/menu.c:3629
+#: gnome-panel/menu.c:3634
 msgid "Add to panel"
 msgstr "Lisa paneelile"
 
-#: gnome-panel/menu.c:3641
+#: gnome-panel/menu.c:3646
 msgid "Create panel"
 msgstr "Loo uus paneel"
 
-#: gnome-panel/menu.c:3678
+#: gnome-panel/menu.c:3683
 msgid "Global Preferences..."
 msgstr "Üldine häälestus..."
 
-#: gnome-panel/menu.c:3697
+#: gnome-panel/menu.c:3702
 msgid "Reread all menus"
 msgstr "Loe kõik menüüd uuesti"
 
-#: gnome-panel/menu.c:3711
+#: gnome-panel/menu.c:3716
 msgid "Panel Manual..."
 msgstr "Paneeli juhend..."
 
-#: gnome-panel/menu.c:3723
+#: gnome-panel/menu.c:3728
 msgid "Cannot execute xscreensaver"
 msgstr "Ei suuda kävitada programmi xscreensaver"
 
-#: gnome-panel/menu.c:3742
+#: gnome-panel/menu.c:3747
 msgid "About the panel..."
 msgstr "Info paneelist..."
 
-#: gnome-panel/menu.c:3756
+#: gnome-panel/menu.c:3761
 msgid "About GNOME..."
 msgstr "GNOME info..."
 
-#: gnome-panel/menu.c:3793
+#: gnome-panel/menu.c:3798
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Lukusta ekraan, et võiksid ajutiselt arvuti juurest lahkuda"
 
-#: gnome-panel/menu.c:3806
+#: gnome-panel/menu.c:3811
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1662,32 +1667,32 @@ msgstr ""
 "Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti sisse "
 "logida või arvuti välja lülitada"
 
-#: gnome-panel/menu.c:3934
+#: gnome-panel/menu.c:3939
 msgid "Programs"
 msgstr "Programmid"
 
-#: gnome-panel/menu.c:3951
+#: gnome-panel/menu.c:3956
 msgid "Applets"
 msgstr "Apletid"
 
-#: gnome-panel/menu.c:3974
+#: gnome-panel/menu.c:3979
 #, fuzzy
 msgid "Run a command"
 msgstr "Käivita käsurida"
 
-#: gnome-panel/menu.c:3992
+#: gnome-panel/menu.c:3997
 msgid "Desktop"
 msgstr "Töölaud"
 
-#: gnome-panel/menu.c:4025
+#: gnome-panel/menu.c:4030
 msgid "Menu:"
 msgstr "Menüü:"
 
-#: gnome-panel/menu.c:4075 gnome-panel/menu.c:4103 gnome-panel/menu.c:4284
+#: gnome-panel/menu.c:4080 gnome-panel/menu.c:4108 gnome-panel/menu.c:4289
 msgid "Main Menu"
 msgstr "Peamenüü"
 
-#: gnome-panel/menu.c:4097
+#: gnome-panel/menu.c:4102
 msgid "Can't create menu, using main menu!"
 msgstr "Ei suuda luua menüüd ja kasutan põhimenüüd!"
 
@@ -1970,3 +1975,12 @@ msgstr ""
 #: libpanel-applet/panel-applet.c:816
 msgid "The Applet's flags"
 msgstr ""
+
+#~ msgid "About ..."
+#~ msgstr "Info ..."
+
+#~ msgid "Properties ..."
+#~ msgstr "Omadused ..."
+
+#~ msgid "Hide advanced options"
+#~ msgstr "Peida edasijõudnutele mõeldud häälestus"

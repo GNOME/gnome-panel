@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.8\n"
-"POT-Creation-Date: 2002-02-13 11:47+0000\n"
+"POT-Creation-Date: 2002-02-18 19:51+0000\n"
 "PO-Revision-Date: 1999-03-18 23:11+0100\n"
 "Last-Translator: Pablo Saratxaga <srtxg@chanae.alphanet.ch>\n"
 "Language-Team: walon <linux-wa@chanae.alphanet.ch>\n"
@@ -20,7 +20,49 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:385 applets/fish/fish.c:874
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+msgid "Display a swimming fish or another animated creature"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+msgid "From Whence That Stupid Fish Came"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
+msgid "Wanda"
+msgstr "Wande"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+msgid "Wanda Factory"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+msgid "About..."
+msgstr "Å dfait..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
+#: gnome-panel/drawer.c:661 gnome-panel/launcher.c:699
+#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4383
+#: gnome-panel/status.c:372 gnome-panel/swallow.c:453
+msgid "Help"
+msgstr "Aidance"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
+#: gnome-panel/drawer.c:659 gnome-panel/launcher.c:697 gnome-panel/menu.c:1752
+#: gnome-panel/menu.c:1824 gnome-panel/menu.c:3671 gnome-panel/menu.c:4373
+msgid "Properties..."
+msgstr "Prôpietés..."
+
+#: applets/fish/fish.c:385 applets/fish/fish.c:872
 #, no-c-format
 msgid "%s the Fish"
 msgstr "%s li Pexhon"
@@ -94,15 +136,15 @@ msgstr ""
 "I sreut tins di candjî l' aiwe!\n"
 "(Loukîz al date d' oûy)"
 
-#: applets/fish/fish.c:890
+#: applets/fish/fish.c:888
 msgid "(with minor help from George)"
 msgstr "(avou on pitit côp d' mwin di George)"
 
-#: applets/fish/fish.c:908
+#: applets/fish/fish.c:906
 msgid "The GNOME Fish Applet"
 msgstr "Li Aplikete Pexhon di GNOME"
 
-#: applets/fish/fish.c:911
+#: applets/fish/fish.c:909
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -114,21 +156,63 @@ msgstr ""
 "memwere. Li ci ou li cene ki s' fwait apicî a eployî ciste aplikete duvreut "
 "esse evoyî sin tårdjî vey on psi!"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
-msgid "From Whence That Stupid Fish Came"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
+#, fuzzy
+msgid "Alert you when new mail arrives"
+msgstr "Djkower on son cwand on novea emile arive"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
+#: applets/gen_util/clock.c:940
+msgid "Clock"
+msgstr "Ôrlodje"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
+msgid "GenUtil Applet Factory"
 msgstr ""
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
-msgid "That Stupid Fish"
-msgstr "Ci biesse di pexhon"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-msgid "Wanda"
-msgstr "Wande"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
-msgid "Wanda Factory"
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+msgid "Get the current time and date"
 msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
+msgid "Inbox Monitor"
+msgstr "Corwaitaedje des emiles en intrêye"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+msgid "Switch between open windows"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
+msgid "Switch between workspaces"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
+#: applets/gen_util/tasklist.c:492
+#, fuzzy
+msgid "Window List"
+msgstr "Manaedjeu di purneas"
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
+#: applets/gen_util/pager.c:405
+msgid "Workspace Switcher"
+msgstr ""
+
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
+msgid "factory for creating some general applets"
+msgstr ""
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy date"
+msgstr ""
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+msgid "Copy time"
+msgstr ""
+
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
+#, fuzzy
+msgid "Check for mail"
+msgstr "Waitî après des emiles tos les"
 
 #: applets/gen_util/clock.c:199
 msgid ""
@@ -186,112 +270,58 @@ msgstr "%A %d di %B %Y %H:%M:%S %z"
 #. * should change is the 12.  If your country code should use
 #. * 12 hour format by default, leave it at 12, otherwise use 24
 #. * for 24 hour format.  Those are the only two supported
-#: applets/gen_util/clock.c:544
+#: applets/gen_util/clock.c:530
 msgid "clock/hourformat=12"
 msgstr "clock/hourformat=24"
 
-#: applets/gen_util/clock.c:774
+#: applets/gen_util/clock.c:765
 msgid "Clock properties"
 msgstr "Prôpietés del ôrlodje"
 
-#: applets/gen_util/clock.c:791
+#: applets/gen_util/clock.c:782
 msgid "Time Format"
 msgstr "Cogne di l' Eure"
 
-#: applets/gen_util/clock.c:803
+#: applets/gen_util/clock.c:794
 msgid "12 hour"
 msgstr "12 eures"
 
-#: applets/gen_util/clock.c:811
+#: applets/gen_util/clock.c:802
 msgid "24 hour"
 msgstr "24 eures"
 
-#: applets/gen_util/clock.c:846
+#: applets/gen_util/clock.c:837
 msgid "Show date in applet"
 msgstr "Mostrer l' date el aplikete"
 
-#: applets/gen_util/clock.c:860
+#: applets/gen_util/clock.c:851
 msgid "Show date in tooltip"
 msgstr "Mostrer l' date dvins ene racsegne"
 
-#: applets/gen_util/clock.c:874
+#: applets/gen_util/clock.c:865
 msgid "Use GMT"
 msgstr "Eployî GMT"
 
-#: applets/gen_util/clock.c:888
+#: applets/gen_util/clock.c:879
 msgid "Unix time"
 msgstr "Tins Unix"
 
-#: applets/gen_util/clock.c:892
+#: applets/gen_util/clock.c:883
 msgid "Internet time"
 msgstr ""
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:1
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
-#: applets/gen_util/clock.c:949
-msgid "Clock"
-msgstr "Ôrlodje"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:2
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:2
-#: applets/gen_util/clock.c:1015
+#: applets/gen_util/clock.c:1008
 msgid "Clock Applet"
 msgstr "Aplikete Ôrlodje"
 
-#: applets/gen_util/clock.c:1016
+#: applets/gen_util/clock.c:1009
 msgid "(c) 1998-2001 the Free Software Foundation"
 msgstr "© 1998-2001 li Free Software Foundation"
 
-#: applets/gen_util/clock.c:1017
+#: applets/gen_util/clock.c:1010
 msgid ""
 "The clock applet gives your panel a lightweight and simple display of the "
 "date and time"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:3
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-msgid "GenUtil Applet Factory"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:4
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-msgid "Inbox Monitor"
-msgstr "Corwaitaedje des emiles en intrêye"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:5
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
-#, fuzzy
-msgid "Mailcheck Applet"
-msgstr "Aplikete po waitî après des emiles"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:6
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/pager.c:401
-#, fuzzy
-msgid "Pager Applet"
-msgstr "Aplikete di Scrirece"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:7
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/tasklist.c:431
-#, fuzzy
-msgid "Tasklist Applet"
-msgstr "Prôpietés del djîveye di bouyes"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:8
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:8
-#, fuzzy
-msgid "Window Bar"
-msgstr "Manaedjeu di purneas"
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:9
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-msgid "Workspace Switcher"
-msgstr ""
-
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.h:10
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
-msgid "factory for creating some general applets"
 msgstr ""
 
 #: applets/gen_util/mailcheck.c:210 applets/gen_util/mailcheck.c:1067
@@ -426,7 +456,7 @@ msgstr "© 1998-2000 li Free Software Foundation"
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "L' aplikete vos prevént cwand gn a des noveas emiles dins vosse boesse"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1487
 msgid "Text only"
 msgstr "Rén ki do tecse"
 
@@ -438,45 +468,45 @@ msgstr "Boesse ås emiles"
 msgid "New Mail"
 msgstr "Noveas messaedjes"
 
-#: applets/gen_util/pager.c:402
+#: applets/gen_util/pager.c:406
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "Copyright © 2001 Red Hat Software, Inc."
 
-#: applets/gen_util/pager.c:403
+#: applets/gen_util/pager.c:407
 msgid ""
-"The pager applet shows you a small version of your workspaces that lets you "
-"manage the windows."
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage the windows."
 msgstr ""
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
 msgstr ""
 
-#: applets/gen_util/printer.c:308
+#: applets/gen_util/printer.c:306
 msgid "Printer properties"
 msgstr "Prôpieté del sicrirece"
 
-#: applets/gen_util/printer.c:317
+#: applets/gen_util/printer.c:315
 msgid "Printer name:"
 msgstr "No del sicrirece:"
 
-#: applets/gen_util/printer.c:321
+#: applets/gen_util/printer.c:319
 msgid "Print command:"
 msgstr "Comande po rexhe:"
 
-#: applets/gen_util/printer.c:327
+#: applets/gen_util/printer.c:325
 msgid "Printer"
 msgstr "Sicrirece"
 
-#: applets/gen_util/printer.c:355
+#: applets/gen_util/printer.c:353
 msgid "Printer Applet"
 msgstr "Aplikete di Scrirece"
 
-#: applets/gen_util/printer.c:356
+#: applets/gen_util/printer.c:354
 msgid "(c) 1998 the Free Software Foundation"
 msgstr "© 1998 li Free Software Foundation"
 
-#: applets/gen_util/printer.c:358
+#: applets/gen_util/printer.c:356
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
@@ -484,90 +514,25 @@ msgstr ""
 "Avou l' aplikete di scrirece vos poloz saetchî des fitchîs po zels rexhe sol "
 "scrirece"
 
-#: applets/gen_util/printer.c:425
+#: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
 msgstr "Dji n' pout nén enonder l' aplikete\n"
 
-#: applets/gen_util/printer.c:468 gnome-panel/drawer.c:512
-#: gnome-panel/launcher.c:677 gnome-panel/menu.c:1744 gnome-panel/menu.c:1816
-#: gnome-panel/menu.c:3635 gnome-panel/menu.c:4337
-msgid "Properties..."
-msgstr "Prôpietés..."
-
-#: applets/gen_util/printer.c:475 gnome-panel/drawer.c:514
-#: gnome-panel/launcher.c:679 gnome-panel/logout.c:130
-#: gnome-panel/logout.c:215 gnome-panel/menu.c:4347 gnome-panel/status.c:372
-#: gnome-panel/swallow.c:453
-msgid "Help"
-msgstr "Aidance"
-
-#: applets/gen_util/printer.c:481
-msgid "About..."
-msgstr "Å dfait..."
-
-#: applets/gen_util/tasklist.c:432
+#: applets/gen_util/tasklist.c:493
 msgid "(c) 2001 Red Hat, Inc"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:433
+#: applets/gen_util/tasklist.c:494
 msgid ""
-"The tasklist applet shows a list of all visible windows and let you browse "
-"them."
+"The Window List shows a list of all visible windows and let you browse them."
 msgstr ""
 
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
-msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr ""
+#: gnome-panel/GNOME_Panel.server.in.h:1
+#, fuzzy
+msgid "GNOME Panel Shell"
+msgstr "Maisse waibe di GNOME"
 
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
-msgid "Test Bonobo Applet"
-msgstr ""
-
-#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
-msgid "Test Bonobo Applet Factory"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:607
-#, c-format
-msgid "Incomplete '%s' background type received"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:621
-#, c-format
-msgid "Incomplete '%s' background type received: %s"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:630
-#, c-format
-msgid "Failed to get pixmap %s"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:637
-msgid "Unknown background type received"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:792
-msgid "The Applet's containing Panel's orientation"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:800
-msgid "The Applet's containing Panel's size in pixels"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:808
-msgid "The Applet's containing Panel's background color or pixmap"
-msgstr ""
-
-#: libpanel-applet/panel-applet.c:816
-msgid "The Applet's flags"
-msgstr ""
-
-#: gnome-panel/menu.c:2666 libpanel-applet/panel-test-applets.c:107
-#, c-format
-msgid "query returned exception %s\n"
-msgstr ""
-
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:1115
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:1123
 #: gnome-panel/panel-util.c:52
 #, c-format
 msgid ""
@@ -584,7 +549,7 @@ msgid "???"
 msgstr "???"
 
 #: gnome-panel/applet.c:551 gnome-panel/applet.c:557
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3953
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3989
 msgid "Panel"
 msgstr "Scriftôr"
 
@@ -625,11 +590,11 @@ msgstr "Botons po catchî"
 msgid "hidebutton_pixmaps_enabled"
 msgstr ""
 
-#: gnome-panel/basep-widget.c:578
+#: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
 msgstr "Catchî ci scriftôr chal"
 
-#: gnome-panel/basep-widget.c:581
+#: gnome-panel/basep-widget.c:593
 msgid "Show this panel"
 msgstr "Mostrer ci scriftôr"
 
@@ -690,7 +655,7 @@ msgstr "Mete en oûve li boton po catchî"
 msgid "Enable hidebutton arrow"
 msgstr "Mete en oûve li fretche sol boton po catchî"
 
-#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:332 gnome-panel/menu.c:3478
+#: gnome-panel/drawer.c:191 gnome-panel/drawer.c:471 gnome-panel/menu.c:3514
 msgid "Drawer"
 msgstr "Ridant"
 
@@ -701,7 +666,7 @@ msgid ""
 "It is in the gnome-pim package."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3937
+#: gnome-panel/foobar-widget.c:210 gnome-panel/menu.c:3973
 msgid "Run..."
 msgstr "Enonder..."
 
@@ -774,7 +739,7 @@ msgstr "%l:%M %p"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: gnome-panel/foobar-widget.c:438 gnome-panel/panel.c:2549
+#: gnome-panel/foobar-widget.c:438 gnome-panel/panel.c:2550
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
@@ -804,8 +769,8 @@ msgstr "Cogne"
 msgid "No windows open"
 msgstr "Nou purnea di drovou"
 
-#: gnome-panel/foobar-widget.c:1065 gnome-panel/gnome-run.c:718
-#: gnome-panel/menu.c:3034 gnome-panel/menu.c:3040
+#: gnome-panel/foobar-widget.c:1065 gnome-panel/menu.c:3070
+#: gnome-panel/menu.c:3076
 msgid "Applications"
 msgstr "Programes"
 
@@ -816,6 +781,33 @@ msgstr ""
 #: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
 msgid "Can't execute the screenshot program"
 msgstr "Dji n' sai enonder li programe po fé des waitroûlêyes"
+
+#: gnome-panel/gnome-panel-add-launcher.c:34
+#, fuzzy
+msgid "Panel to add the launcher to"
+msgstr "Radjouter cist enondeu e scriftôr"
+
+#: gnome-panel/gnome-panel-add-launcher.c:34
+#: gnome-panel/gnome-panel-add-launcher.c:35
+msgid "NUMBER"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:35
+msgid "Position to add the launcher to"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:36
+msgid "The argument is a url to add, not a .desktop file"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:67
+msgid ""
+"You must supply a single argument with the .desktop file or url to use\n"
+msgstr ""
+
+#: gnome-panel/gnome-panel-add-launcher.c:81
+msgid "No panel found\n"
+msgstr ""
 
 #: gnome-panel/gnome-panel-properties.c:185
 msgid "Press a key..."
@@ -909,8 +901,8 @@ msgid "Medium"
 msgstr "Menu"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18
-#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1580
-#: gnome-panel/menu.c:3431 gnome-panel/menu.c:3992 gnome-panel/menu.c:4215
+#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:1588
+#: gnome-panel/menu.c:3467 gnome-panel/menu.c:4028 gnome-panel/menu.c:4251
 msgid "Menu"
 msgstr "Menu"
 
@@ -1064,11 +1056,6 @@ msgstr "_Eprimer li waitroûlêye..."
 msgid "_Save screenshot to file:"
 msgstr "Schaper li waitroûlêye viè on _fitchî:"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
-msgid "GNOME Panel Shell"
-msgstr "Maisse waibe di GNOME"
-
 #: gnome-panel/gnome-run.c:262 gnome-panel/gnome-run.c:270
 #, c-format
 msgid ""
@@ -1091,47 +1078,60 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:421 gnome-panel/gnome-run.c:668
-msgid "Browse..."
+#: gnome-panel/gnome-run.c:421
+msgid "Choose a program to run"
+msgstr ""
+
+#: gnome-panel/gnome-run.c:668
+#, fuzzy
+msgid "_Browse..."
 msgstr "Foyter..."
 
 #: gnome-panel/gnome-run.c:677
-msgid "Run in terminal"
+#, fuzzy
+msgid "Run in _terminal"
 msgstr "Enonder dvins on terminå"
 
-#: gnome-panel/gnome-run.c:887
+#: gnome-panel/gnome-run.c:883
 #, c-format
 msgid "Will run '%s'"
 msgstr "Dji va-st enonder «%s»"
 
-#: gnome-panel/gnome-run.c:898 gnome-panel/gnome-run.c:901
+#: gnome-panel/gnome-run.c:894 gnome-panel/gnome-run.c:897
 msgid "No program selected"
 msgstr "Nou programe di tchoezi"
 
-#: gnome-panel/gnome-run.c:1097
+#: gnome-panel/gnome-run.c:992
 #, fuzzy
-msgid "Hide advanced options"
-msgstr "Grandeu et eplaeçmint"
+msgid "A_pplications:"
+msgstr "Programes"
 
-#: gnome-panel/gnome-run.c:1100
+#: gnome-panel/gnome-run.c:1095
+#, fuzzy
+msgid "_Advanced <<"
+msgstr "Po les spepieus..."
+
+#: gnome-panel/gnome-run.c:1098
 msgid "Hide the advanced controls below this button."
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1109
-msgid "Advanced..."
+#: gnome-panel/gnome-run.c:1107
+#, fuzzy
+msgid "_Advanced >>"
 msgstr "Po les spepieus..."
 
-#: gnome-panel/gnome-run.c:1112
+#: gnome-panel/gnome-run.c:1110
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1129
-msgid "_Run ..."
+#: gnome-panel/gnome-run.c:1127
+#, fuzzy
+msgid "_Run"
 msgstr "_Enonder..."
 
-#: gnome-panel/gnome-run.c:1164
+#: gnome-panel/gnome-run.c:1162
 msgid "Run Program"
 msgstr "Enonder Programe"
 
@@ -1168,16 +1168,16 @@ msgid "Help on %s Application"
 msgstr "Programe"
 
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:543
+#: gnome-panel/launcher.c:563
 msgid "Launcher properties"
 msgstr "Prôpietés di l' enondeu"
 
-#: gnome-panel/launcher.c:723
+#: gnome-panel/launcher.c:743
 msgid "Create launcher applet"
 msgstr "Fé ene aplikete d' enondaedje"
 
 #. class
-#: gnome-panel/launcher.c:943
+#: gnome-panel/launcher.c:963
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1185,7 +1185,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3769
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3805
 msgid "Log out"
 msgstr "Moussî foû"
 
@@ -1193,7 +1193,7 @@ msgstr "Moussî foû"
 msgid "Log out of GNOME"
 msgstr "Moussî foû di Gnome"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3756
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3792
 msgid "Lock screen"
 msgstr "Eclawer li waitroûle"
 
@@ -1232,351 +1232,14 @@ msgstr "Preferinces"
 msgid "Specify a profile name to load"
 msgstr "Specifyî on no di profile a tcherdjî"
 
-#: gnome-panel/menu.c:270
-msgid "Many many others ..."
-msgstr "Bråmint bråmint des ôtes ..."
-
-#. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:272
-msgid "and finally, The Knights Who Say ... NI!"
-msgstr "et finålmint, les Tchvaliers ki Djhèt ... NI!"
-
-#. Translator credits
-#: gnome-panel/menu.c:282
-msgid "translator_credits"
-msgstr ""
-
-#: gnome-panel/menu.c:307
-msgid ""
-"This program is responsible for launching other applications, embedding "
-"small applets within itself, world peace, and random X crashes."
-msgstr ""
-"Les bouyes di ci programe chal, c' est d' enonder des ôtes programes, di tni "
-"des apliketes so s' schoû, di wårder li monde e påye et di fé toumer X e rac "
-"a l' astcheyance."
-
-#: gnome-panel/menu.c:313
-msgid ""
-"\n"
-"\n"
-"Running in \"Lockdown\" mode.  This means your system administrator has "
-"prohibited any changes to the panel's configuration to take place."
-msgstr ""
-
-#: gnome-panel/menu.c:319
-msgid "The GNOME Panel"
-msgstr "Li Scriftôr di GNOME"
-
-#: gnome-panel/menu.c:320
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 li Free Software Foundation"
-
-#: gnome-panel/menu.c:339
-msgid "End world hunger"
-msgstr ""
-
-#: gnome-panel/menu.c:353
-msgid "Can't execute 'About GNOME'"
-msgstr "Dji n' sai egzecuter «Å dfait di GNOME»"
-
-#: gnome-panel/menu.c:371 gnome-panel/swallow.c:84
-#, c-format
-msgid ""
-"<b>Can't launch entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-
-#: gnome-panel/menu.c:379 gnome-panel/menu.c:1096 gnome-panel/menu.c:1124
-#, c-format
-msgid ""
-"<b>Can't load entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-"<b>Dji n' sai tcherdjî ciste intreye</b>\n"
-"Detays: %s"
-
-#: gnome-panel/menu.c:910
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
-msgstr ""
-
-#. class
-#: gnome-panel/menu.c:939
-#, c-format
-msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-
-#: gnome-panel/menu.c:960
-msgid "Create menu item"
-msgstr "Fé in elemint do menu"
-
-#: gnome-panel/menu.c:1009
-#, fuzzy, c-format
-msgid ""
-"<b>Could not remove the menu item %s</b>\n"
-"\n"
-"Details: %s\n"
-msgstr "Dji n' a savou drovî li fitchî .order: %s"
-
-#: gnome-panel/menu.c:1017
-#, fuzzy, c-format
-msgid "Could not get file name from path: %s"
-msgstr "Dji n' a savou fé on dup() do discrijheu di fitchî APM: %s\n"
-
-#: gnome-panel/menu.c:1024
-#, fuzzy, c-format
-msgid "Could not get directory name from path: %s"
-msgstr "Dji n' a savou fé on dup() do discrijheu di fitchî APM: %s\n"
-
-#: gnome-panel/menu.c:1090
-msgid "No 'Exec' or 'URL' field in entry"
-msgstr "Nou tchamp «Exec» ou «URL» el intrêye"
-
-#: gnome-panel/menu.c:1405
-#, c-format
-msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
-"\n"
-"Details: %s"
-msgstr ""
-
-#. flags
-#. error
-#. watch the enum at the top of the file
-#: gnome-panel/menu.c:1469 gnome-panel/menu.c:1545
-msgid "Desktop entry properties"
-msgstr "Prôpietés di l' intreye do scribanne"
-
-#: gnome-panel/menu.c:1671
-msgid "Add this launcher to panel"
-msgstr "Radjouter cist enondeu e scriftôr"
-
-#: gnome-panel/menu.c:1674
-msgid "Add this applet as a launcher to panel"
-msgstr "Radjouter ciste aplikete come enondeu e scriftôr"
-
-#: gnome-panel/menu.c:1682
-msgid "Remove this item"
-msgstr "Bodjî ci cayet"
-
-#: gnome-panel/menu.c:1699
-msgid "Put into run dialog"
-msgstr ""
-
-#: gnome-panel/menu.c:1718
-#, c-format
-msgid "Help on %s"
-msgstr "Aidance so %s"
-
-#: gnome-panel/menu.c:1719
-msgid "Application"
-msgstr "Programe"
-
-#: gnome-panel/menu.c:1765
-msgid "Entire menu"
-msgstr "Li menu etir"
-
-#: gnome-panel/menu.c:1774
-msgid "Add this as drawer to panel"
-msgstr "Radjouter çouci come ridant e scriftôr"
-
-#: gnome-panel/menu.c:1782
-msgid "Add this as menu to panel"
-msgstr "Radjouter çouci come menu e scriftôr"
-
-#: gnome-panel/menu.c:1790
-msgid "Add new item to this menu"
-msgstr "Radjouter on novea cayet el menu"
-
-#: gnome-panel/menu.c:2083
-msgid "You already have a status dock on the panel. You can only have one"
-msgstr ""
-
-#: gnome-panel/menu.c:2945
-msgid "%I: %M: %S: %p"
-msgstr "%I: %M: %S: %p"
-
-#: gnome-panel/menu.c:2952
-msgid "You can only have one menu panel at a time."
-msgstr "Vos ploz aveur rén k' on scriftôr avou menu å minme tins."
-
-#: gnome-panel/menu.c:2974
-msgid "Menu panel"
-msgstr "Scriftôr avou menu"
-
-#: gnome-panel/menu.c:2982 gnome-panel/panel-config.c:1494
-#: gnome-panel/panel-config.c:1616
-msgid "Edge panel"
-msgstr "Scriftôr di costé"
-
-#: gnome-panel/menu.c:2990 gnome-panel/panel-config.c:1501
-#: gnome-panel/panel-config.c:1627
-msgid "Corner panel"
-msgstr "Sicriftôr di coine"
-
-#: gnome-panel/menu.c:2998 gnome-panel/panel-config.c:1507
-#: gnome-panel/panel-config.c:1638
-#, fuzzy
-msgid "Sliding panel"
-msgstr "Scriftôr di costé"
-
-#: gnome-panel/menu.c:3006 gnome-panel/panel-config.c:1513
-#: gnome-panel/panel-config.c:1649
-msgid "Floating panel"
-msgstr "Scriftôr flotant"
-
-#. force_image
-#: gnome-panel/menu.c:3103 gnome-panel/menu.c:3110 gnome-panel/menu.c:3829
-msgid "KDE menus"
-msgstr "Menus di KDE"
-
-#: gnome-panel/menu.c:3183
-msgid "You cannot remove your last panel."
-msgstr "Vos n' ploz bodjî foû vosse dierin scriftôr."
-
-#: gnome-panel/menu.c:3195
-msgid ""
-"When a panel is removed, the panel and its\n"
-"applet settings are lost. Remove this panel?"
-msgstr ""
-"Cwand on scriftôr est bodjî foû, li scriftôr et totes\n"
-"les apliketes å dvins sont pierdowes. Bodjî ci scriftôr chal?"
-
-#: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
-#: gnome-panel/menu.c:3440
-msgid "Main menu"
-msgstr "Maisse menu"
-
-#: gnome-panel/menu.c:3450
-msgid "Programs menu"
-msgstr "Menu des programes"
-
-#: gnome-panel/menu.c:3460
-msgid "Launcher..."
-msgstr "Enondeu..."
-
-#: gnome-panel/menu.c:3468
-#, fuzzy
-msgid "Launcher from menu"
-msgstr "Imådjete Enondaedje"
-
-#: gnome-panel/menu.c:3488
-msgid "Log out button"
-msgstr "Boton po moussî foû"
-
-#: gnome-panel/menu.c:3498
-msgid "Lock button"
-msgstr "Boton d' eclawaedje"
-
-#: gnome-panel/menu.c:3508
-msgid "Swallowed app..."
-msgstr "Aplikete avalêye..."
-
-#: gnome-panel/menu.c:3515
-msgid "Status dock"
-msgstr ""
-
-#: gnome-panel/menu.c:3529
-msgid "Cannot execute panel global properties"
-msgstr ""
-
-#: gnome-panel/menu.c:3569
-msgid "Remove this panel..."
-msgstr "Waester ci scriftôr..."
-
-#: gnome-panel/menu.c:3571 gnome-panel/menu.c:3619
-msgid "Remove this panel"
-msgstr "Waester ci scriftôr"
-
-#: gnome-panel/menu.c:3586
-msgid "Cannot launch nautilus!"
-msgstr ""
-
-#: gnome-panel/menu.c:3598
-msgid "Add to panel"
-msgstr "Radjouter e scriftôr"
-
-#: gnome-panel/menu.c:3610
-msgid "Create panel"
-msgstr "Fé on scriftôr"
-
-#: gnome-panel/menu.c:3647
-msgid "Global Preferences..."
-msgstr "Preferinces globåles..."
-
-#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3656
-#: gnome-panel/menu.c:4343
-msgid "Edit menus..."
-msgstr "Askepyî menus..."
-
-#: gnome-panel/menu.c:3666
-msgid "Reread all menus"
-msgstr ""
-
-#: gnome-panel/menu.c:3680
-msgid "Panel Manual..."
-msgstr "Manuel do scriftôr..."
-
-#: gnome-panel/menu.c:3692
-msgid "Cannot execute xscreensaver"
-msgstr "Dji n' a savou enonder xscreensaver"
-
-#: gnome-panel/menu.c:3711
-msgid "About the panel..."
-msgstr "Å dfait do scriftôr..."
-
-#: gnome-panel/menu.c:3725
-msgid "About GNOME..."
-msgstr "Å dfait di GNOME..."
-
-#: gnome-panel/menu.c:3762
-msgid "Lock the screen so that you can temporairly leave your computer"
-msgstr ""
-
-#: gnome-panel/menu.c:3775
-msgid ""
-"Log out of this session to log in as a different user or to shut down your "
-"computer"
-msgstr ""
-
-#: gnome-panel/menu.c:3903
-msgid "Programs"
-msgstr "Programes"
-
-#: gnome-panel/menu.c:3920
-msgid "Applets"
-msgstr "Apliketes"
-
-#: gnome-panel/menu.c:3943
-msgid "Run a command"
-msgstr "Enonder ene comande"
-
-#: gnome-panel/menu.c:3961
-msgid "Desktop"
-msgstr "Sicribanne"
-
-#: gnome-panel/menu.c:3994
-msgid "Menu:"
-msgstr "Menu:"
-
-#: gnome-panel/menu.c:4044 gnome-panel/menu.c:4072 gnome-panel/menu.c:4253
-msgid "Main Menu"
-msgstr "Maisse menu"
-
-#: gnome-panel/menu.c:4066
-msgid "Can't create menu, using main menu!"
-msgstr "Dji n' sai fé on menu, dji m' va siervî do mwaisse menu!"
-
 #: gnome-panel/menu-properties.c:156
 msgid "Can't open directory, using main menu!"
 msgstr "Dji n' sai drovî ci ridant la, dji m' va siervî do mwaisse menu!"
+
+#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3692
+#: gnome-panel/menu.c:4379
+msgid "Edit menus..."
+msgstr "Askepyî menus..."
 
 #: gnome-panel/menu-properties.c:357
 msgid "Off"
@@ -1601,6 +1264,11 @@ msgstr "Sôrte di menu"
 #: gnome-panel/menu-properties.c:446
 msgid "Global main menu"
 msgstr "Maisse menu globå"
+
+#: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
+#: gnome-panel/menu.c:3476
+msgid "Main menu"
+msgstr "Maisse menu"
 
 #: gnome-panel/menu-properties.c:474 gnome-panel/menu-properties.c:537
 msgid "Normal menu"
@@ -1638,6 +1306,343 @@ msgstr "Tchimin do menu"
 msgid "Use custom icon for panel button"
 msgstr ""
 
+#: gnome-panel/menu.c:278
+msgid "Many many others ..."
+msgstr "Bråmint bråmint des ôtes ..."
+
+#. ... from the Monty Pythons show...
+#: gnome-panel/menu.c:280
+msgid "and finally, The Knights Who Say ... NI!"
+msgstr "et finålmint, les Tchvaliers ki Djhèt ... NI!"
+
+#. Translator credits
+#: gnome-panel/menu.c:290
+msgid "translator_credits"
+msgstr ""
+
+#: gnome-panel/menu.c:315
+msgid ""
+"This program is responsible for launching other applications, embedding "
+"small applets within itself, world peace, and random X crashes."
+msgstr ""
+"Les bouyes di ci programe chal, c' est d' enonder des ôtes programes, di tni "
+"des apliketes so s' schoû, di wårder li monde e påye et di fé toumer X e rac "
+"a l' astcheyance."
+
+#: gnome-panel/menu.c:321
+msgid ""
+"\n"
+"\n"
+"Running in \"Lockdown\" mode.  This means your system administrator has "
+"prohibited any changes to the panel's configuration to take place."
+msgstr ""
+
+#: gnome-panel/menu.c:327
+msgid "The GNOME Panel"
+msgstr "Li Scriftôr di GNOME"
+
+#: gnome-panel/menu.c:328
+msgid "(C) 1997-2002 the Free Software Foundation"
+msgstr "© 1997-2002 li Free Software Foundation"
+
+#: gnome-panel/menu.c:347
+msgid "End world hunger"
+msgstr ""
+
+#: gnome-panel/menu.c:361
+msgid "Can't execute 'About GNOME'"
+msgstr "Dji n' sai egzecuter «Å dfait di GNOME»"
+
+#: gnome-panel/menu.c:379 gnome-panel/swallow.c:84
+#, c-format
+msgid ""
+"<b>Can't launch entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+
+#: gnome-panel/menu.c:387 gnome-panel/menu.c:1104 gnome-panel/menu.c:1132
+#, c-format
+msgid ""
+"<b>Can't load entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Dji n' sai tcherdjî ciste intreye</b>\n"
+"Detays: %s"
+
+#: gnome-panel/menu.c:918
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+
+#. class
+#: gnome-panel/menu.c:947
+#, c-format
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+
+#: gnome-panel/menu.c:968
+msgid "Create menu item"
+msgstr "Fé in elemint do menu"
+
+#: gnome-panel/menu.c:1017
+#, fuzzy, c-format
+msgid ""
+"<b>Could not remove the menu item %s</b>\n"
+"\n"
+"Details: %s\n"
+msgstr "Dji n' a savou drovî li fitchî .order: %s"
+
+#: gnome-panel/menu.c:1025
+#, fuzzy, c-format
+msgid "Could not get file name from path: %s"
+msgstr "Dji n' a savou fé on dup() do discrijheu di fitchî APM: %s\n"
+
+#: gnome-panel/menu.c:1032
+#, fuzzy, c-format
+msgid "Could not get directory name from path: %s"
+msgstr "Dji n' a savou fé on dup() do discrijheu di fitchî APM: %s\n"
+
+#: gnome-panel/menu.c:1098
+msgid "No 'Exec' or 'URL' field in entry"
+msgstr "Nou tchamp «Exec» ou «URL» el intrêye"
+
+#: gnome-panel/menu.c:1413
+#, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu.c:1477 gnome-panel/menu.c:1553
+msgid "Desktop entry properties"
+msgstr "Prôpietés di l' intreye do scribanne"
+
+#: gnome-panel/menu.c:1679
+msgid "Add this launcher to panel"
+msgstr "Radjouter cist enondeu e scriftôr"
+
+#: gnome-panel/menu.c:1682
+msgid "Add this applet as a launcher to panel"
+msgstr "Radjouter ciste aplikete come enondeu e scriftôr"
+
+#: gnome-panel/menu.c:1690
+msgid "Remove this item"
+msgstr "Bodjî ci cayet"
+
+#: gnome-panel/menu.c:1707
+msgid "Put into run dialog"
+msgstr ""
+
+#: gnome-panel/menu.c:1726
+#, c-format
+msgid "Help on %s"
+msgstr "Aidance so %s"
+
+#: gnome-panel/menu.c:1727
+msgid "Application"
+msgstr "Programe"
+
+#: gnome-panel/menu.c:1773
+msgid "Entire menu"
+msgstr "Li menu etir"
+
+#: gnome-panel/menu.c:1782
+msgid "Add this as drawer to panel"
+msgstr "Radjouter çouci come ridant e scriftôr"
+
+#: gnome-panel/menu.c:1790
+msgid "Add this as menu to panel"
+msgstr "Radjouter çouci come menu e scriftôr"
+
+#: gnome-panel/menu.c:1798
+msgid "Add new item to this menu"
+msgstr "Radjouter on novea cayet el menu"
+
+#: gnome-panel/menu.c:2091
+msgid "You already have a status dock on the panel. You can only have one"
+msgstr ""
+
+#: gnome-panel/menu.c:2702 libpanel-applet/panel-test-applets.c:107
+#, c-format
+msgid "query returned exception %s\n"
+msgstr ""
+
+#: gnome-panel/menu.c:2981
+msgid "%I: %M: %S: %p"
+msgstr "%I: %M: %S: %p"
+
+#: gnome-panel/menu.c:2988
+msgid "You can only have one menu panel at a time."
+msgstr "Vos ploz aveur rén k' on scriftôr avou menu å minme tins."
+
+#: gnome-panel/menu.c:3010
+msgid "Menu panel"
+msgstr "Scriftôr avou menu"
+
+#: gnome-panel/menu.c:3018 gnome-panel/panel-config.c:1494
+#: gnome-panel/panel-config.c:1616
+msgid "Edge panel"
+msgstr "Scriftôr di costé"
+
+#: gnome-panel/menu.c:3026 gnome-panel/panel-config.c:1501
+#: gnome-panel/panel-config.c:1627
+msgid "Corner panel"
+msgstr "Sicriftôr di coine"
+
+#: gnome-panel/menu.c:3034 gnome-panel/panel-config.c:1507
+#: gnome-panel/panel-config.c:1638
+#, fuzzy
+msgid "Sliding panel"
+msgstr "Scriftôr di costé"
+
+#: gnome-panel/menu.c:3042 gnome-panel/panel-config.c:1513
+#: gnome-panel/panel-config.c:1649
+msgid "Floating panel"
+msgstr "Scriftôr flotant"
+
+#. force_image
+#: gnome-panel/menu.c:3139 gnome-panel/menu.c:3146 gnome-panel/menu.c:3865
+msgid "KDE menus"
+msgstr "Menus di KDE"
+
+#: gnome-panel/menu.c:3219
+msgid "You cannot remove your last panel."
+msgstr "Vos n' ploz bodjî foû vosse dierin scriftôr."
+
+#: gnome-panel/menu.c:3231
+msgid ""
+"When a panel is removed, the panel and its\n"
+"applet settings are lost. Remove this panel?"
+msgstr ""
+"Cwand on scriftôr est bodjî foû, li scriftôr et totes\n"
+"les apliketes å dvins sont pierdowes. Bodjî ci scriftôr chal?"
+
+#: gnome-panel/menu.c:3486
+msgid "Programs menu"
+msgstr "Menu des programes"
+
+#: gnome-panel/menu.c:3496
+msgid "Launcher..."
+msgstr "Enondeu..."
+
+#: gnome-panel/menu.c:3504
+#, fuzzy
+msgid "Launcher from menu"
+msgstr "Imådjete Enondaedje"
+
+#: gnome-panel/menu.c:3524
+msgid "Log out button"
+msgstr "Boton po moussî foû"
+
+#: gnome-panel/menu.c:3534
+msgid "Lock button"
+msgstr "Boton d' eclawaedje"
+
+#: gnome-panel/menu.c:3544
+msgid "Swallowed app..."
+msgstr "Aplikete avalêye..."
+
+#: gnome-panel/menu.c:3551
+msgid "Status dock"
+msgstr ""
+
+#: gnome-panel/menu.c:3565
+msgid "Cannot execute panel global properties"
+msgstr ""
+
+#: gnome-panel/menu.c:3605
+msgid "Remove this panel..."
+msgstr "Waester ci scriftôr..."
+
+#: gnome-panel/menu.c:3607 gnome-panel/menu.c:3655
+msgid "Remove this panel"
+msgstr "Waester ci scriftôr"
+
+#: gnome-panel/menu.c:3622
+msgid "Cannot launch nautilus!"
+msgstr ""
+
+#: gnome-panel/menu.c:3634
+msgid "Add to panel"
+msgstr "Radjouter e scriftôr"
+
+#: gnome-panel/menu.c:3646
+msgid "Create panel"
+msgstr "Fé on scriftôr"
+
+#: gnome-panel/menu.c:3683
+msgid "Global Preferences..."
+msgstr "Preferinces globåles..."
+
+#: gnome-panel/menu.c:3702
+msgid "Reread all menus"
+msgstr ""
+
+#: gnome-panel/menu.c:3716
+msgid "Panel Manual..."
+msgstr "Manuel do scriftôr..."
+
+#: gnome-panel/menu.c:3728
+msgid "Cannot execute xscreensaver"
+msgstr "Dji n' a savou enonder xscreensaver"
+
+#: gnome-panel/menu.c:3747
+msgid "About the panel..."
+msgstr "Å dfait do scriftôr..."
+
+#: gnome-panel/menu.c:3761
+msgid "About GNOME..."
+msgstr "Å dfait di GNOME..."
+
+#: gnome-panel/menu.c:3798
+msgid "Lock the screen so that you can temporairly leave your computer"
+msgstr ""
+
+#: gnome-panel/menu.c:3811
+msgid ""
+"Log out of this session to log in as a different user or to shut down your "
+"computer"
+msgstr ""
+
+#: gnome-panel/menu.c:3939
+msgid "Programs"
+msgstr "Programes"
+
+#: gnome-panel/menu.c:3956
+msgid "Applets"
+msgstr "Apliketes"
+
+#: gnome-panel/menu.c:3979
+msgid "Run a command"
+msgstr "Enonder ene comande"
+
+#: gnome-panel/menu.c:3997
+msgid "Desktop"
+msgstr "Sicribanne"
+
+#: gnome-panel/menu.c:4030
+msgid "Menu:"
+msgstr "Menu:"
+
+#: gnome-panel/menu.c:4080 gnome-panel/menu.c:4108 gnome-panel/menu.c:4289
+msgid "Main Menu"
+msgstr "Maisse menu"
+
+#: gnome-panel/menu.c:4102
+msgid "Can't create menu, using main menu!"
+msgstr "Dji n' sai fé on menu, dji m' va siervî do mwaisse menu!"
+
 #: gnome-panel/panel-applet-frame.c:179
 msgid "There was a problem loading the applet."
 msgstr ""
@@ -1646,19 +1651,8 @@ msgstr ""
 msgid "Cannot register control widget\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:452
+#: gnome-panel/panel-applet-frame.c:453
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr ""
-
-#: gnome-panel/panel.c:898
-#, c-format
-msgid "Open URL: %s"
-msgstr "Drovî hårdeye: %s"
-
-#: gnome-panel/panel.c:2574
-msgid ""
-"No panels were found in your configuration.  I will create a menu panel for "
-"you"
 msgstr ""
 
 #: gnome-panel/panel-config.c:537
@@ -1834,6 +1828,17 @@ msgstr ""
 msgid "No document to show"
 msgstr ""
 
+#: gnome-panel/panel.c:899
+#, c-format
+msgid "Open URL: %s"
+msgstr "Drovî hårdeye: %s"
+
+#: gnome-panel/panel.c:2575
+msgid ""
+"No panels were found in your configuration.  I will create a menu panel for "
+"you"
+msgstr ""
+
 #: gnome-panel/swallow.c:106
 msgid ""
 "A swallowed application appears to have died unexpectedly.\n"
@@ -1863,3 +1868,69 @@ msgstr "Lårdjeu"
 #: gnome-panel/swallow.c:305
 msgid "Height"
 msgstr "Hôteu"
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
+msgid "A simple applet for testing the GNOME-2.0 panel"
+msgstr ""
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
+msgid "Test Bonobo Applet"
+msgstr ""
+
+#: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:3
+msgid "Test Bonobo Applet Factory"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:607
+#, c-format
+msgid "Incomplete '%s' background type received"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:621
+#, c-format
+msgid "Incomplete '%s' background type received: %s"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:630
+#, c-format
+msgid "Failed to get pixmap %s"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:637
+msgid "Unknown background type received"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:792
+msgid "The Applet's containing Panel's orientation"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:800
+msgid "The Applet's containing Panel's size in pixels"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:808
+msgid "The Applet's containing Panel's background color or pixmap"
+msgstr ""
+
+#: libpanel-applet/panel-applet.c:816
+msgid "The Applet's flags"
+msgstr ""
+
+#~ msgid "That Stupid Fish"
+#~ msgstr "Ci biesse di pexhon"
+
+#, fuzzy
+#~ msgid "Mailcheck Applet"
+#~ msgstr "Aplikete po waitî après des emiles"
+
+#, fuzzy
+#~ msgid "Pager Applet"
+#~ msgstr "Aplikete di Scrirece"
+
+#, fuzzy
+#~ msgid "Tasklist Applet"
+#~ msgstr "Prôpietés del djîveye di bouyes"
+
+#, fuzzy
+#~ msgid "Hide advanced options"
+#~ msgstr "Grandeu et eplaeçmint"
