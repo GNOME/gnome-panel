@@ -22,9 +22,7 @@ mailcheck.h \
 popcheck.c \
 popcheck.h \
 remote-helper.c \
-remote-helper.h \
-gconf-extensions.c \
-gconf-extensions.h
+remote-helper.h
 
 libgen_util_applet_2_la_LIBADD = \
 ../../libpanel-applet/libpanel-applet-2.la	\

@@ -8,7 +8,7 @@
 #ifndef _MAILCHECK_H_
 #define _MAILCHECK_H_
 
-#include <gnome.h>
+#include <libgnome/libgnome.h>
 
 #include <panel-applet.h>
 

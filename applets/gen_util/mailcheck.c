@@ -20,14 +20,12 @@
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
 #include <panel-applet.h>
+#include <panel-applet-gconf.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include "popcheck.h"
 #include "remote-helper.h"
-#include "gconf-extensions.h"
 #include "mailcheck.h"
-
-GtkWidget *applet = NULL;
 
 typedef enum {
 	MAILBOX_LOCAL,
@@ -1318,55 +1316,48 @@ check_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 static void
 applet_load_prefs(MailCheck *mc)
 {
-	gchar *prefs_path;
 	gchar *query;
 
-	prefs_path = panel_applet_get_preferences_key(mc->applet);
-
 	query = gnome_unconditional_pixmap_file("mailcheck/email.png");
-	mc->animation_file = gconf_extensions_get_string(prefs_path, "animation-file", query);
+	mc->animation_file = panel_applet_gconf_get_conditional_string(mc->applet, "animation-file", query, NULL);
 	g_free(query);
-	mc->update_freq = gconf_extensions_get_integer(prefs_path, "update-frequency", 120000);
-	mc->pre_check_cmd = gconf_extensions_get_string(prefs_path, "exec-command", NULL);
-	mc->pre_check_enabled = gconf_extensions_get_boolean(prefs_path, "exec-enabled", FALSE);
-	mc->newmail_cmd = gconf_extensions_get_string(prefs_path, "newmail-command", NULL);
-	mc->newmail_enabled = gconf_extensions_get_boolean(prefs_path, "newmail-enabled", FALSE);
-	mc->clicked_cmd = gconf_extensions_get_string(prefs_path, "clicked-command", NULL);
-	mc->clicked_enabled = gconf_extensions_get_boolean(prefs_path, "clicked-enabled", FALSE);
-	mc->remote_server = gconf_extensions_get_string(prefs_path, "remote-server", "mail");
-	mc->pre_remote_command = gconf_extensions_get_string(prefs_path, "pre-remote-command", NULL);
-	mc->remote_username = gconf_extensions_get_string(prefs_path, "remote-username", (gchar *)g_getenv("USER"));
-	mc->remote_password = gconf_extensions_get_string(prefs_path, "remote-password", NULL);
-	mc->remote_folder = gconf_extensions_get_string(prefs_path, "remote-folder", NULL);
-	mc->mailbox_type = gconf_extensions_get_integer(prefs_path, "mailbox-type", 0);
-	mc->play_sound = gconf_extensions_get_boolean(prefs_path, "play-sound", FALSE);
-	g_free(prefs_path);
+#if 0
+	mc->update_freq = panel_applet_gconf_get_conditional_int(mc->applet, "update-frequency", 120000, NULL);
+	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec-command", NULL);
+	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec-enabled", NULL);
+	mc->newmail_cmd = panel_applet_gconf_get_string(mc->applet, "newmail-command", NULL);
+	mc->newmail_enabled = panel_applet_gconf_get_bool(mc->applet, "newmail-enabled", NULL);
+	mc->clicked_cmd = panel_applet_gconf_get_string(mc->applet, "clicked-command", NULL);
+	mc->clicked_enabled = panel_applet_gconf_get_bool(mc->applet, "clicked-enabled", NULL);
+	mc->remote_server = panel_applet_gconf_get_conditional_string(mc->applet, "remote-server", "mail", NULL);
+	mc->pre_remote_command = panel_applet_gconf_get_string(mc->applet, "pre-remote-command", NULL);
+	mc->remote_username = panel_applet_gconf_get_conditional_string(mc->applet, "remote-username", g_getenv("USER"), NULL);
+	mc->remote_password = panel_applet_gconf_get_string(mc->applet, "remote-password", NULL);
+	mc->remote_folder = panel_applet_gconf_get_string(mc->applet, "remote-folder", NULL);
+	mc->mailbox_type = panel_applet_gconf_get_int(mc->applet, "mailbox-type", NULL);
+	mc->play_sound = panel_applet_gconf_get_bool(mc->applet, "play-sound", NULL);
+#endif
 }
 
 static void
 applet_save_prefs(MailCheck *mc)
 {
-	gchar *prefs_path;
-
-	prefs_path = panel_applet_get_preferences_key(mc->applet);
-
-	gconf_extensions_set_string(prefs_path, "animation-file", mc->animation_file);
-	gconf_extensions_set_integer(prefs_path, "update-frequency", mc->update_freq);
-	gconf_extensions_set_string(prefs_path, "exec-command", mc->pre_check_cmd);
-	gconf_extensions_set_boolean(prefs_path, "exec-enabled", mc->pre_check_enabled);
-	gconf_extensions_set_string(prefs_path, "newmail-command", mc->newmail_cmd);
-	gconf_extensions_set_boolean(prefs_path, "newmail-enabled", mc->newmail_enabled);
-	gconf_extensions_set_string(prefs_path, "clicked-command", mc->clicked_cmd);
-	gconf_extensions_set_boolean(prefs_path, "clicked-enabled", mc->clicked_enabled);
-	gconf_extensions_set_string(prefs_path, "mail-file", mc->mail_file);
-	gconf_extensions_set_string(prefs_path, "remote-server", mc->remote_server);
-	gconf_extensions_set_string(prefs_path, "remote-username", mc->remote_username);
-	gconf_extensions_set_string(prefs_path, "remote-password", mc->remote_password);
-	gconf_extensions_set_string(prefs_path, "remote-folder", mc->remote_folder);
-	gconf_extensions_set_string(prefs_path, "pre-remote-command", mc->pre_remote_command);
-	gconf_extensions_set_integer(prefs_path, "mailbox-type", (int)mc->mailbox_type);
-	gconf_extensions_set_boolean(prefs_path, "play-sound", mc->play_sound);
-	gconf_extensions_suggest_sync();
+	panel_applet_gconf_set_string(mc->applet, "animation-file", mc->animation_file, NULL);
+	panel_applet_gconf_set_int(mc->applet, "update-frequency", mc->update_freq, NULL);
+	panel_applet_gconf_set_string(mc->applet, "exec-command", mc->pre_check_cmd, NULL);
+	panel_applet_gconf_set_bool(mc->applet, "exec-enabled", mc->pre_check_enabled, NULL);
+	panel_applet_gconf_set_string(mc->applet, "newmail-command", mc->newmail_cmd, NULL);
+	panel_applet_gconf_set_bool(mc->applet, "newmail-enabled", mc->newmail_enabled, NULL);
+	panel_applet_gconf_set_string(mc->applet, "clicked-command", mc->clicked_cmd, NULL);
+	panel_applet_gconf_set_bool(mc->applet, "clicked-enabled", mc->clicked_enabled, NULL);
+	panel_applet_gconf_set_string(mc->applet, "mail-file", mc->mail_file, NULL);
+	panel_applet_gconf_set_string(mc->applet, "remote-server", mc->remote_server, NULL);
+	panel_applet_gconf_set_string(mc->applet, "remote-username", mc->remote_username, NULL);
+	panel_applet_gconf_set_string(mc->applet, "remote-password", mc->remote_password, NULL);
+	panel_applet_gconf_set_string(mc->applet, "remote-folder", mc->remote_folder, NULL);
+	panel_applet_gconf_set_string(mc->applet, "pre-remote-command", mc->pre_remote_command, NULL);
+	panel_applet_gconf_set_int(mc->applet, "mailbox-type", (gint)mc->mailbox_type, NULL);
+	panel_applet_gconf_set_bool(mc->applet, "play-sound", mc->play_sound, NULL);
 }
 
 static void

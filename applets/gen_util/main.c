@@ -29,7 +29,6 @@
 #include "clock.h"
 #include "pager.h"
 #include "tasklist.h"
-#include "gconf-extensions.h"
 //#include "printer.h"
 
 static gboolean
@@ -41,8 +40,6 @@ genutil_factory (PanelApplet *applet,
 
 	g_print ("genutil_factory: %s\n", iid);
 
-    gconf_extensions_client_setup();
-	
 	if (!strcmp (iid, "OAFIID:GNOME_ClockApplet"))
 		retval = fill_clock_applet(applet);
 	

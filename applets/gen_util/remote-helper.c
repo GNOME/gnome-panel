@@ -7,7 +7,7 @@
  */
 
 #include "config.h"
-#include <gnome.h>
+#include <libgnome/libgnome.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
