@@ -397,7 +397,7 @@ orientation_change(gint applet_id, PanelWidget *panel)
 static void
 orient_change_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	PanelWidget *panel = user_data;
 
 	orientation_change(applet_id,panel);
@@ -418,7 +418,7 @@ panel_orient_change(GtkWidget *widget,
 static void
 state_restore_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -434,7 +434,7 @@ state_restore_foreach(gpointer data, gpointer user_data)
 static void
 state_hide_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -465,7 +465,7 @@ panel_state_change(GtkWidget *widget,
 static gint
 applet_move_foreach(gpointer data, gpointer user_data)
 {
-	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
@@ -518,7 +518,7 @@ panel_applet_added_idle(gpointer data)
 static gint
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(applet));
+	gint applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
 	PanelWidget *panel = PANEL_WIDGET(widget);
 	struct _added_info *ai = g_new(struct _added_info,1);
 

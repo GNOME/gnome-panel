@@ -317,7 +317,7 @@ panel_quit(void)
 static void
 move_applet_callback(GtkWidget *widget, gpointer data)
 {
-	AppletInfo     *info = get_applet_info((gint)data);
+	AppletInfo     *info = get_applet_info(PTOI(data));
 	PanelWidget    *panel;
 
 	g_return_if_fail(info != NULL);
@@ -368,7 +368,7 @@ panel_clean_applet(gint applet_id)
 static void
 remove_applet_callback(GtkWidget *widget, gpointer data)
 {
-	panel_clean_applet((gint)data);
+	panel_clean_applet(PTOI(data));
 }
 
 static void
@@ -399,14 +399,14 @@ create_applet_menu(gint applet_id, GList *user_menu)
 	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
-			   (gpointer)applet_id);
+			   ITOP(applet_id));
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 	
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
-			   (gpointer)applet_id);
+			   ITOP(applet_id));
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 	
@@ -433,7 +433,7 @@ static void
 applet_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 {
 	int wx, wy;
-	AppletInfo *info = get_applet_info((gint)data);
+	AppletInfo *info = get_applet_info(PTOI(data));
 	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 					 	 PANEL_APPLET_PARENT_KEY);
 
@@ -491,7 +491,7 @@ show_applet_menu(gint applet_id)
 		info->menu = create_applet_menu(applet_id,info->user_menu);
 
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       (gpointer)applet_id, 0/*3*/, time(NULL));
+		       ITOP(applet_id), 0/*3*/, time(NULL));
 }
 
 
@@ -500,7 +500,7 @@ static gint
 applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	if(event->button==3) {
-		show_applet_menu((gint)data);
+		show_applet_menu(PTOI(data));
 		return TRUE;
 	}
 	return FALSE;
@@ -860,7 +860,7 @@ register_toy(GtkWidget *applet,
 		info.cfg = NULL;
 	info.user_menu = NULL;
 
-	gtk_object_set_user_data(GTK_OBJECT(eventbox),(gpointer)applet_count);
+	gtk_object_set_user_data(GTK_OBJECT(eventbox),ITOP(applet_count));
 
 
 	if(type == APPLET_DRAWER)
@@ -902,7 +902,7 @@ register_toy(GtkWidget *applet,
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",
 			   GTK_SIGNAL_FUNC(applet_button_press),
-			   (gpointer)(applet_count-1));
+			   ITOP(applet_count-1));
 
 	orientation_change(applet_count-1,panelw);
 

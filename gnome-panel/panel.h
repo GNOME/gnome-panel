@@ -1,6 +1,7 @@
 #ifndef PANEL_H
 #define PANEL_H
 
+#include <glib.h>
 #include "panel-widget.h"
 
 BEGIN_GNOME_DECLS
@@ -130,6 +131,20 @@ void orientation_change(gint applet_id, PanelWidget *panel);
 
 #define get_applet_info(applet_id) \
 	(&g_array_index(applets,AppletInfo,applet_id))
+
+/*a few macros to reduce compiler warnings*/
+#if (SIZEOF_INT == SIZEOF_VOID_P)
+#	define PTOI(p) (gint)((gpointer)p)
+#	define ITOP(i) (gpointer)((gint)i)
+#elif (SIZEOF_LONG == SIZEOF_VOID_P)
+#	define PTOI(p) (glong)((gpointer)p)
+#	define ITOP(i) (gpointer)((glong)i)
+/*I doubt there is a such a platform, but why not*/
+#elif (SIZEOF_SHORT == SIZEOF_VOID_P)
+#	define PTOI(p) (gshort)((gpointer)p)
+#	define ITOP(i) (gpointer)((gshort)i)
+#endif
+
 
 END_GNOME_DECLS
 
