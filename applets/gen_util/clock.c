@@ -134,7 +134,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	if (cd->unixtime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
 		    cd->size >= PIXEL_SIZE_STANDARD) {
-			g_snprintf(hour,20,"%lu\n%lu",
+			g_snprintf(hour,20,"%lu\n%05lu",
 				   (unsigned long)(current_time/100000L),
 				   (unsigned long)(current_time%100000L));
 		} else {
