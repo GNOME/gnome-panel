@@ -31,25 +31,28 @@ extern int applets_to_sync;
 extern int need_complete_save;
 
 char *
-get_real_menu_path(char *arguments, char *menu_base)
+get_real_menu_path(char *arguments)
 {
 	char *this_menu;
 	
-	g_return_val_if_fail(menu_base!=NULL,NULL);
-
 	/*if null, let's put the main menu up*/
 	if (!arguments || !*arguments)
 		arguments = ".";
 
-	if (*arguments == '/')
+	if(strcmp(arguments,".")==0)
+		this_menu = gnome_unconditional_datadir_file ("gnome/apps");
+	else if (*arguments == '/')
 		this_menu = g_strdup (arguments);
+	else if (*arguments == '~')
+		this_menu = g_concat_dir_and_file (g_get_home_dir(),
+						   &arguments[1]);
 	else
-		this_menu = g_concat_dir_and_file (menu_base, arguments);
+		this_menu = gnome_unconditional_datadir_file (arguments);
 
 	if (!g_file_exists (this_menu)) {
 		g_warning("menu %s does not exist "
-			  "(base is %s, arguments are %s)",
-			  this_menu, menu_base, arguments);
+			  "(arguments are %s)",
+			  this_menu, arguments);
 		g_free (this_menu);
 		return NULL;
 	}
@@ -72,13 +75,13 @@ get_pixmap(char *menudir, int main_menu)
 		g_free (dentry_name);
 
 		if(item_info && item_info->icon)
-		  pixmap_name = g_strdup(item_info->icon);
+			pixmap_name = g_strdup(item_info->icon);
 		else
-		  pixmap_name =
-		    gnome_unconditional_pixmap_file ("gnome-folder.png");
+			pixmap_name =
+				gnome_unconditional_pixmap_file ("gnome-folder.png");
 
 		if(item_info)
-		  gnome_desktop_entry_free(item_info);
+			gnome_desktop_entry_free(item_info);
 	}
 	return pixmap_name;
 }
@@ -178,9 +181,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->main_menu_flags |= MAIN_MENU_DESKTOP;
 
 	{
-		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
-		char *this_menu = get_real_menu_path(menu->path,menu_base);
-		GSList *list = g_slist_append(NULL,this_menu);
+		char *this_menu = get_real_menu_path(menu->path);
+		GSList *list = g_slist_append(NULL, this_menu);
 		char *pixmap_name = get_pixmap(this_menu,
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
@@ -190,7 +192,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		
 		add_menu_widget(menu, NULL, list, strcmp(menu->path,".")==0, TRUE);
 		
-		g_free(menu_base);
 		g_free(this_menu);
 
 		g_slist_free(list);
@@ -398,8 +399,11 @@ create_properties_dialog(Menu *menu)
 
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
 	gtk_object_set_data(GTK_OBJECT(dialog),"path",w);
-	if (menu->path)
-		gtk_entry_set_text(GTK_ENTRY(t), menu->path);
+	if (menu->path) {
+		char *s = get_real_menu_path(menu->path);
+		gtk_entry_set_text(GTK_ENTRY(t), s);
+		g_free(s);
+	}
 	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (t), "changed",
 					       GTK_SIGNAL_FUNC(gnome_property_box_changed),

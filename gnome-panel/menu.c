@@ -486,7 +486,7 @@ add_menudrawer_to_panel(GtkWidget *w, gpointer data)
 static void
 add_menu_to_panel (GtkWidget *widget, gpointer data)
 {
-	MenuFinfo *mf = data;
+	char *menudir = data;
 	PanelWidget *panel;
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
@@ -506,8 +506,8 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	panel = get_panel_from_menu_data (widget);
 
-	if(mf)
-		load_menu_applet(mf->menudir, flags, panel, 0, FALSE);
+	if(menudir)
+		load_menu_applet(menudir, flags, panel, 0, FALSE);
 	else
 		load_menu_applet(NULL, flags, panel, 0, FALSE);
 }
@@ -790,7 +790,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_menu_to_panel),
-					   sim->mf);
+					   sim->mf->menudir);
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
 					_("Add this to personal menu"));
@@ -1334,11 +1334,11 @@ static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
 
 /*reread the applet menu, not a submenu*/
 static void
-check_and_reread_applet(Menu *menu,int main_menu)
+check_and_reread_applet(Menu *menu, gboolean main_menu)
 {
 	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menu->menu), "mf");
 	GSList *list;
-	int need_reread = FALSE;
+	gboolean need_reread = FALSE;
 
 	/*we shouldn't warn, this is more for debugging anyway,
 	  and nowdays we do have menus that don't have one, this
@@ -1370,7 +1370,7 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	if(need_reread) {
 		/*that will be destroyed in add_menu_widget*/
 		if(main_menu)
-			add_menu_widget(menu,NULL,NULL,main_menu,TRUE);
+			add_menu_widget(menu, NULL, NULL, main_menu, TRUE);
 		else {
 			GSList *dirlist = NULL;
 			for(list = mfl; list != NULL;
@@ -1379,9 +1379,9 @@ check_and_reread_applet(Menu *menu,int main_menu)
 				dirlist = g_slist_append(dirlist,
 							 g_strdup(mf->menudir));
 			}
-			add_menu_widget(menu,NULL,dirlist, main_menu,TRUE);
+			add_menu_widget(menu, NULL, dirlist, main_menu, TRUE);
 
-			g_slist_foreach(dirlist,(GFunc)g_free,NULL);
+			g_slist_foreach(dirlist, (GFunc)g_free, NULL);
 			g_slist_free(dirlist);
 		}
 	}
@@ -3137,13 +3137,33 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_menu_item_new ();
-	setup_menuitem (submenuitem, 0, _("Main menu"));
+	setup_menuitem_try_pixmap (submenuitem,
+				   "gnome-logo-icon-transparent.png",
+				   _("Main menu"), SMALL_ICON_SIZE);
 	gtk_menu_append (GTK_MENU (submenu), submenuitem);
 	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
 			   NULL);
 	setup_internal_applet_drag(submenuitem, "MENU:MAIN");
 
+	submenuitem = gtk_menu_item_new ();
+	setup_menuitem_try_pixmap (submenuitem, 
+				   "gnome-logo-icon-transparent.png",
+				   _("Programs menu"), SMALL_ICON_SIZE);
+	gtk_menu_append (GTK_MENU (submenu), submenuitem);
+	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
+			   GTK_SIGNAL_FUNC(add_menu_to_panel),
+			   "gnome/apps/");
+	setup_internal_applet_drag(submenuitem, "MENU:gnome/apps/");
+
+	submenuitem = gtk_menu_item_new ();
+	setup_menuitem_try_pixmap (submenuitem, "gnome-favorites.png",
+				   _("Favorites menu"), SMALL_ICON_SIZE);
+	gtk_menu_append (GTK_MENU (submenu), submenuitem);
+	gtk_signal_connect(GTK_OBJECT(submenuitem), "activate",
+			   GTK_SIGNAL_FUNC(add_menu_to_panel),
+			   "~/.gnome/apps/");
+	setup_internal_applet_drag(submenuitem, "MENU:~/.gnome/apps/");
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3790,14 +3810,12 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	int main_menu = (strcmp (menu->path, ".") == 0);
 
 	if(!menu->menu) {
-		char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
-		char *this_menu = get_real_menu_path(menu->path,menu_base);
+		char *this_menu = get_real_menu_path(menu->path);
 		GSList *list = g_slist_append(NULL,this_menu);
 		
 		add_menu_widget(menu, PANEL_WIDGET(menu->button->parent),
 				list, strcmp(menu->path,".")==0, TRUE);
 		
-		g_free(menu_base);
 		g_free(this_menu);
 
 		g_slist_free(list);
@@ -3806,7 +3824,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 		   !(menu->main_menu_flags&MAIN_MENU_REDHAT_SUB))
 			rh_submenu_to_display(NULL,NULL);
 
-		check_and_reread_applet(menu,main_menu);
+		check_and_reread_applet(menu, main_menu);
 	}
 
 	/*so that the panel doesn't pop down until we're
@@ -3863,19 +3881,16 @@ create_panel_menu (PanelWidget *panel, char *menudir, gboolean main_menu,
 }
 
 static Menu *
-create_menu_applet(PanelWidget *panel, char *arguments, PanelOrientType orient,
-		   int main_menu_flags)
+create_menu_applet(PanelWidget *panel, char *arguments,
+		   PanelOrientType orient, int main_menu_flags)
 {
 	Menu *menu;
 	gboolean main_menu;
 
-	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
-	char *this_menu = get_real_menu_path(arguments, menu_base);
+	char *this_menu = get_real_menu_path(arguments);
 
-	if (!this_menu) {
-		g_free (menu_base);
+	if (!this_menu)
 		return NULL;
-	}
 
 	if(!gnome_folder) {
 		gnome_folder =
@@ -3899,7 +3914,6 @@ create_menu_applet(PanelWidget *panel, char *arguments, PanelOrientType orient,
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button), menu);
 
-	g_free(menu_base);
 	g_free (this_menu);
 	return menu;
 }

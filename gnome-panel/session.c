@@ -843,7 +843,7 @@ init_user_applets(void)
 			g_free(path);
 			g_free(params);
 		} else if(strcmp(applet_name, MENU_ID) == 0) {
-			char *params = gnome_config_get_string("parameters=");
+			char *params = gnome_config_get_string("parameters=.");
 			char *s;
 			int type =
 				gnome_config_get_int("main_menu_type=-1");

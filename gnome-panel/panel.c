@@ -901,8 +901,12 @@ drop_internal_applet(PanelWidget *panel, int pos, char *applet_type)
 {
 	if(!applet_type)
 		return;
-	if(strcmp(applet_type,"MENU:MAIN")==0) {
-		drop_menu(panel, pos, NULL);
+	if(strncmp(applet_type,"MENU:",strlen("MENU:"))==0) {
+		char *menu = &applet_type[strlen("MENU:")];
+		if(strcmp(menu,"MAIN")==0)
+			drop_menu(panel, pos, NULL);
+		else
+			drop_menu(panel, pos, menu);
 	} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
 		load_drawer_applet(-1, NULL, NULL, panel, pos, TRUE);
 	} else if(strcmp(applet_type,"LOGOUT:NEW")==0) {
