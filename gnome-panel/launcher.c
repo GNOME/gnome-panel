@@ -34,8 +34,9 @@
 
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
+#include "quick-desktop-reader.h"
 
-#undef LAUNCHER_DEBUG 1
+#undef LAUNCHER_DEBUG
 
 static void properties_apply (Launcher *launcher);
 
@@ -332,27 +333,16 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 							 0 /* flags */,
 							 NULL /* error */);
 		} else {
-			char *apps_par, *entry;
+			gchar *entry;
 
 			entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
 							   parameters, TRUE, NULL);
 
-			g_free (apps_par);
-
-			if (entry == NULL) {
-				/* perhaps just datadir? */
-				entry = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
-								   parameters, TRUE, NULL);
-			}
-
-			/* eek, not found */
-			if (entry == NULL) {
+			if (!entry)
 				return NULL;
-			}
 
-			ditem = gnome_desktop_item_new_from_file (entry,
-								  0 /* flags */,
-								  NULL /* error */);
+			ditem = gnome_desktop_item_new_from_file (entry, 0, NULL);
+
 			g_free (entry);
 		}
 	}
