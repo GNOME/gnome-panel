@@ -130,13 +130,19 @@ update_config_size(GtkWidget *panel)
 		break;
 	}
 	
+	/* this actually won't activate the size item that it needs to
+	   so we need to do a slight hack by doing what that should do
+	   ourselves */
 	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->size_menu), i);
+	ppc->sz = p->sz;
+	REGISTER_CHANGES (ppc);
 }
 
 void
 update_config_back(PanelWidget *pw)
 {
-	GtkWidget *t, *toggle = NULL;
+	GtkWidget *t, *item = NULL;
+	int history = 0;
 	PerPanelConfig *ppc;
 	
 	g_return_if_fail(pw);
@@ -149,7 +155,8 @@ update_config_back(PanelWidget *pw)
 		return;
 	switch(pw->back_type) {
 	case PANEL_BACK_NONE:
-		toggle = ppc->non;
+		item = ppc->non;
+		history = 0;
 		break;
 	case PANEL_BACK_COLOR:
 		gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
@@ -157,19 +164,23 @@ update_config_back(PanelWidget *pw)
 					   pw->back_color.green,
 					   pw->back_color.blue,
 					   65535);
-		toggle = ppc->col;
+		item = ppc->col;
+		history = 1;
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 		gtk_entry_set_text(GTK_ENTRY(t),
 				   pw->back_pixmap?pw->back_pixmap:"");
-		toggle = ppc->pix;
+		item = ppc->pix;
+		history = 2;
 		break;
 	}
 
-	if (toggle)
-		gtk_toggle_button_set_active(
-			GTK_TOGGLE_BUTTON(toggle), TRUE);
+	if (item) {
+		gtk_menu_item_activate(GTK_MENU_ITEM(item));
+		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om),
+					    history);
+	}
 }
 
 void
@@ -789,23 +800,23 @@ make_size_widget (PerPanelConfig *ppc)
 	GtkWidget *menuitem;
 	GtkWidget *w;
 	gchar *s;
+	int i;
 
 	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, 0);
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
-	/* box for radio buttons */
 	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE,
-			    GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
 	gtk_box_pack_start (GTK_BOX (box),
 			    gtk_label_new (_("Panel size:")),
-			    FALSE, FALSE, GNOME_PAD_SMALL);
+			    FALSE, FALSE, 0);
 
 	
 	menu = gtk_menu_new ();
 
 	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
+	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -813,6 +824,7 @@ make_size_widget (PerPanelConfig *ppc)
 			    GINT_TO_POINTER (SIZE_TINY));
 	
 	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
+	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -820,6 +832,7 @@ make_size_widget (PerPanelConfig *ppc)
 			    GINT_TO_POINTER (SIZE_SMALL));
 
 	menuitem = gtk_menu_item_new_with_label (_("Standard (48 pixels)"));
+	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -827,6 +840,7 @@ make_size_widget (PerPanelConfig *ppc)
 			    GINT_TO_POINTER (SIZE_STANDARD));
 
 	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
+	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -834,6 +848,7 @@ make_size_widget (PerPanelConfig *ppc)
 			    GINT_TO_POINTER (SIZE_LARGE));
 
 	menuitem = gtk_menu_item_new_with_label (_("Huge (80 pixels)"));
+	gtk_widget_show(menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
@@ -852,7 +867,28 @@ make_size_widget (PerPanelConfig *ppc)
 
 	w = gtk_label_new (s);
 	gtk_label_set_justify (GTK_LABEL (w), GTK_JUSTIFY_LEFT);
-	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+
+	switch(ppc->sz) {
+	case SIZE_TINY:
+		i = 0;
+		break;
+	case SIZE_SMALL:
+		i = 1;
+		break;
+	default:
+	case SIZE_STANDARD:
+		i = 2;
+		break;
+	case SIZE_LARGE:
+		i = 3;
+		break;
+	case SIZE_HUGE:
+		i = 4;
+		break;
+	}
+
+	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->size_menu), i);
 
 	return vbox;
 }
@@ -916,9 +952,6 @@ set_back (GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	PanelBackType back_type = GPOINTER_TO_INT(data);
 
-	if(!GTK_TOGGLE_BUTTON(widget)->active)
-		return FALSE;
-
 	pixf = gtk_object_get_data(GTK_OBJECT(widget),"pix");
 	colf = gtk_object_get_data(GTK_OBJECT(widget),"col");
 	
@@ -946,39 +979,35 @@ background_page (PerPanelConfig *ppc)
 {
 	GtkWidget *box, *f, *t;
 	GtkWidget *vbox, *noscale, *fit, *strech;
-	GtkWidget *w;
+	GtkWidget *w, *m;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
 
-	/*selector frame*/
-	f = gtk_frame_new (_("Background Type"));
-	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
+	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
 
-	box = gtk_vbox_new (FALSE, 0);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (f), box);
-	
-	/*standard background*/
-	ppc->non = gtk_radio_button_new_with_label (NULL, _("None"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->non, FALSE, FALSE,0);
+	w = gtk_label_new(_("Background Type: "));
+	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
+
+	/*background type option menu*/
+	m = gtk_menu_new ();
+	ppc->non = gtk_menu_item_new_with_label (_("None"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
-
-	/* color */
-	ppc->col = gtk_radio_button_new_with_label (
-		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->non)),
-		_("Color"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->col, FALSE, FALSE,0);
+	gtk_widget_show (ppc->non);
+	gtk_menu_append (GTK_MENU (m), ppc->non);
+	ppc->col = gtk_menu_item_new_with_label (_("Color"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->col),ppc);
-
-	/* pixmap */
-	ppc->pix = gtk_radio_button_new_with_label (
-		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->non)),
-		_("Image"));
-	gtk_box_pack_start (GTK_BOX (box), ppc->pix, FALSE, FALSE,0);
+	gtk_widget_show (ppc->col);
+	gtk_menu_append (GTK_MENU (m), ppc->col);
+	ppc->pix = gtk_menu_item_new_with_label (_("Pixmap"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
-	
+	gtk_widget_show (ppc->pix);
+	gtk_menu_append (GTK_MENU (m), ppc->pix);
+
+	ppc->back_om = gtk_option_menu_new ();
+	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->back_om), m);
+	gtk_box_pack_start (GTK_BOX (box), ppc->back_om, FALSE, FALSE, 0);
 
 
 	/*color frame*/
@@ -1022,6 +1051,9 @@ background_page (PerPanelConfig *ppc)
 	gtk_container_add (GTK_CONTAINER (f), box);
 
 	ppc->pix_entry = gnome_pixmap_entry_new ("pixmap", _("Browse"), TRUE);
+	if(gdk_screen_height()<600)
+		gnome_pixmap_entry_set_preview_size (GNOME_PIXMAP_ENTRY (ppc->pix_entry),
+						     0,50);
 	t = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (ppc->pix_entry));
 	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
 					GTK_SIGNAL_FUNC (value_changed), ppc,
@@ -1065,22 +1097,26 @@ background_page (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (set_rotate_pixmap_bg), ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
 
-	gtk_signal_connect (GTK_OBJECT (ppc->non), "toggled", 
+	gtk_signal_connect (GTK_OBJECT (ppc->non), "activate", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_NONE));
-	gtk_signal_connect (GTK_OBJECT (ppc->pix), "toggled", 
+	gtk_signal_connect (GTK_OBJECT (ppc->pix), "activate", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_PIXMAP));
-	gtk_signal_connect (GTK_OBJECT (ppc->col), "toggled", 
+	gtk_signal_connect (GTK_OBJECT (ppc->col), "activate", 
 			    GTK_SIGNAL_FUNC (set_back), 
 			    GINT_TO_POINTER(PANEL_BACK_COLOR));
 	
-	if(ppc->back_type == PANEL_BACK_NONE)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->non), TRUE);
-	else if(ppc->back_type == PANEL_BACK_COLOR)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->col), TRUE);
-	else
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ppc->pix), TRUE);
+	if(ppc->back_type == PANEL_BACK_NONE) {
+		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 0);
+		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->non));
+	} else if(ppc->back_type == PANEL_BACK_COLOR) {
+		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 1);
+		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->col));
+	} else {
+		gtk_option_menu_set_history(GTK_OPTION_MENU(ppc->back_om), 2);
+		gtk_menu_item_activate (GTK_MENU_ITEM (ppc->pix));
+	}
 
 	return vbox;
 }

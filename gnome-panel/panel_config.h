@@ -50,6 +50,7 @@ struct _PerPanelConfig {
 	GtkWidget		*pix;
 	GtkWidget		*col;
 	GtkWidget		*backsel;
+	GtkWidget		*back_om; /* the back type option menu */
 
 	/*position widgets*/
 	GtkWidget               *toggle[4][3];    /* left */
