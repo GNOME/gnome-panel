@@ -23,7 +23,7 @@ lib_LTLIBRARIES = libpanel_applet.la
 CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
 
 # try to make these get cleaned properly
-CLEANFILES += $(CORBA_SRCLIST)
+CLEANFILES += $(CORBA_SRCLIST) my_gnome_panel_idl
 
 $(CORBA_SRCLIST): my_gnome_panel_idl
 
