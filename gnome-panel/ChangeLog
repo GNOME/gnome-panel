@@ -1,5 +1,13 @@
 2005-03-31  Vincent Untz  <vincent@vuntz.net>
 
+	* launcher.c: (setup_button): fix tooltips not appearing when it
+	contains a %, without breaking tooltips with escaped uri
+	* panel.c: (drop_uri): unescape the name and the comment since there's
+	no reason to have them escaped in the launcher
+	Fix bug #170516
+
+2005-03-31  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-properties-dialog.glade: only accept numeric values for the
 	spinner
 	Fix bug #171769, based on patch by Pradeep MN <itsnexgen@gmail.com>
