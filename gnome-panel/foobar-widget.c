@@ -54,6 +54,9 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
+static gboolean foobar_key_press	(GtkWidget *widget,
+					 GdkEventKey *event);
+static void foobar_widget_move_focus_out   (FoobarWidget *foo);
 static void foobar_widget_move_focus_out   (FoobarWidget *foo);
 static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
@@ -108,6 +111,7 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	widget_class->size_allocate = foobar_widget_size_allocate;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
+	widget_class->key_press_event = foobar_key_press;
 
 	klass->move_focus_out = foobar_widget_move_focus_out;
 
@@ -160,6 +164,24 @@ pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_ima
 	}
 
 	return item;
+}
+
+static gboolean
+foobar_key_press (GtkWidget *widget, GdkEventKey *event)
+{
+ 	FoobarWidget *foobar;
+	PanelWidget *panel;
+
+	g_return_val_if_fail (FOOBAR_IS_WIDGET (widget), FALSE);
+
+	foobar = FOOBAR_WIDGET (widget);
+
+	g_return_val_if_fail (PANEL_IS_WIDGET (foobar->panel), FALSE);
+
+	panel = PANEL_WIDGET (foobar->panel);
+
+	panel_widget_save_key_event (panel, event);
+	return GTK_WIDGET_CLASS (foobar_widget_parent_class)->key_press_event (widget, event);
 }
 
 static gboolean

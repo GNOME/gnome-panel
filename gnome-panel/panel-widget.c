@@ -1698,6 +1698,9 @@ panel_widget_finalize (GObject *obj)
 	g_free (panel->unique_id);
 	panel->unique_id = NULL;
 
+	if (panel->key_event)
+		gdk_event_free ((GdkEvent *)panel->key_event);
+
 	if (G_OBJECT_CLASS (panel_widget_parent_class)->finalize)
 		G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }
@@ -2931,7 +2934,9 @@ panel_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
 static gboolean
 panel_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
 {
-	if (GTK_WINDOW (PANEL_WIDGET (widget)->panel_parent)->has_focus)
+	PanelWidget *panel_widget = PANEL_WIDGET (widget);
+
+	if (GTK_WINDOW (panel_widget->panel_parent)->has_focus)
 		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
 
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_out_event (widget, event);
@@ -2943,9 +2948,22 @@ static gboolean
 panel_widget_real_focus (GtkWidget        *widget,
                          GtkDirectionType  direction)
 {
-	if (GTK_WIDGET_HAS_FOCUS (widget))
-		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+	PanelWidget *panel = PANEL_WIDGET (widget);
 
+	if (panel->key_event) {
+		if (panel->key_event->state & GDK_CONTROL_MASK) {
+			/*
+	 		 * Ctrl+Tab was pressed when focus was in applet in
+			 * another process
+			 */
+			panel_widget_focus (PANEL_WIDGET (widget));
+			return TRUE;
+		}
+	}
+
+	if (GTK_WIDGET_HAS_FOCUS (widget)) {
+		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+	}
 	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
 }
 
@@ -2975,3 +2993,14 @@ panel_widget_get_applet_orient (PanelWidget *panel)
 
 	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
 }
+
+void 
+panel_widget_save_key_event (PanelWidget *panel,
+			     GdkEventKey *key_event)
+{
+	if (panel->key_event) {
+		gdk_event_free ((GdkEvent *)panel->key_event);
+	}
+	panel->key_event = (GdkEventKey *) gdk_event_copy ((GdkEvent *)key_event);
+}
+

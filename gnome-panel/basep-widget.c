@@ -60,6 +60,7 @@ static void basep_widget_realize (GtkWidget *w);
 static void basep_widget_map (GtkWidget *w);
 static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
 static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
+static gboolean basep_key_press (GtkWidget *widget, GdkEventKey *event);
 static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 static void basep_widget_destroy (GtkObject *o);
 
@@ -141,6 +142,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->map = basep_widget_map;
 	widget_class->enter_notify_event = basep_enter_notify;
 	widget_class->leave_notify_event = basep_leave_notify;
+	widget_class->key_press_event = basep_key_press;
 	widget_class->style_set = basep_style_set;
 
 	gtk_object_class->destroy = basep_widget_destroy;
@@ -570,7 +572,9 @@ basep_widget_move_focus_out (BasePWidget *basep)
 		gtk_window_present (GTK_WINDOW (parent));
 		gtk_widget_grab_focus (drawer->button);
 	} else {
-		panel_widget_focus (PANEL_WIDGET (basep->panel));
+		PanelWidget *panel = PANEL_WIDGET (basep->panel);
+
+		panel_widget_focus (panel);
 	}
 }
 
@@ -823,6 +827,24 @@ basep_pos_instance_init (BasePPos *pos)
 	return;
 }
 
+static gboolean 
+basep_key_press (GtkWidget *widget, GdkEventKey *event)
+{
+	BasePWidget *basep;
+	PanelWidget *panel;
+
+	g_return_val_if_fail (BASEP_IS_WIDGET (widget), FALSE);
+
+	basep = BASEP_WIDGET (widget);
+
+	g_return_val_if_fail (PANEL_IS_WIDGET (basep->panel), FALSE);
+
+	panel = PANEL_WIDGET (basep->panel);
+	
+	panel_widget_save_key_event (panel, event);
+	return GTK_WIDGET_CLASS (basep_widget_parent_class)->key_press_event (widget, event);
+}
+ 
 static gboolean
 basep_leave_notify (GtkWidget *widget,
 		    GdkEventCrossing *event)

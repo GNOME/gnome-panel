@@ -1,3 +1,17 @@
+2002-04-17  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep-widget.c foobar-widget.c: Add key-press handler; 
+	this function calls panel_widget_save_key_event()
+	so that if the focus is within an applet in a different process and 
+	Ctrl+Tab is the key event panel_widget_real_focus() can focus the
+	PanelWidget
+
+	* panel-widget.[ch]: Add key_event field to PanelWidget data structure
+	and function panel_widget_save_key_event.
+	(panel_widget_finalize): Free the saved key event
+	(panel_widget_real_focus): Check whether the previous key event had a 
+	modifier of Ctrl and if so set the focus on the panel.
+
 2002-04-16  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-applet-frame.[ch]
