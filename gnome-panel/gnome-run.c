@@ -146,23 +146,26 @@ browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
 static void
 browse(GtkWidget *w, GtkWidget *entry)
 {
-         GtkFileSelection *fsel;
+	GtkFileSelection *fsel;
 
-         fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Browse...")));
-	 gtk_object_set_user_data(GTK_OBJECT(fsel), entry);
+	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Browse...")));
+	gtk_object_set_user_data(GTK_OBJECT(fsel), entry);
 
-         gtk_signal_connect (GTK_OBJECT (fsel->ok_button), "clicked",
-                             GTK_SIGNAL_FUNC (browse_ok), fsel);
-         gtk_signal_connect_object
-                 (GTK_OBJECT (fsel->cancel_button), "clicked",
-                  GTK_SIGNAL_FUNC (gtk_widget_destroy), 
-                  GTK_OBJECT(fsel));
-	 gtk_signal_connect_object_while_alive(GTK_OBJECT(entry), "destroy",
-					       GTK_SIGNAL_FUNC(gtk_widget_destroy),
-					       GTK_OBJECT(fsel));
+	gtk_signal_connect (GTK_OBJECT (fsel->ok_button), "clicked",
+			    GTK_SIGNAL_FUNC (browse_ok), fsel);
+	gtk_signal_connect_object
+		(GTK_OBJECT (fsel->cancel_button), "clicked",
+		 GTK_SIGNAL_FUNC (gtk_widget_destroy), 
+		 GTK_OBJECT(fsel));
+	gtk_signal_connect_object_while_alive(GTK_OBJECT(entry), "destroy",
+					      GTK_SIGNAL_FUNC(gtk_widget_destroy),
+					      GTK_OBJECT(fsel));
 
-         gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
-         gtk_widget_show (GTK_WIDGET (fsel));
+	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
+	gtk_widget_show_now (GTK_WIDGET (fsel));
+	gnome_win_hints_set_layer (GTK_WIDGET(fsel),
+				   WIN_LAYER_ABOVE_DOCK);
+	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 
 void
