@@ -133,6 +133,7 @@ struct _PanelToplevelPrivate {
 	gulong                  attach_toplevel_signals [N_ATTACH_TOPLEVEL_SIGNALS];
 	GtkWidget              *attach_widget;
 	gulong                  attach_widget_signals [N_ATTACH_WIDGET_SIGNALS];
+	gint			n_autohide_disablers;
 
 	guint                   auto_hide : 1;
 	guint                   animate : 1;
@@ -1005,6 +1006,30 @@ panel_toplevel_calc_floating (PanelToplevel *toplevel)
 	else
 		toplevel->priv->floating =
 			(x > SNAP_TOLERANCE) && (x < (screen_width - toplevel->priv->geometry.width - SNAP_TOLERANCE));
+}
+
+static void 
+panel_toplevel_push_autohide_disabler (PanelToplevel *toplevel)
+{
+	g_return_if_fail (toplevel != NULL);
+
+	toplevel->priv->n_autohide_disablers++;
+}
+
+static void
+panel_toplevel_pop_autohide_disabler (PanelToplevel *toplevel)
+{
+	g_return_if_fail (toplevel != NULL);
+
+	g_return_if_fail (toplevel->priv->n_autohide_disablers > 0);
+
+	toplevel->priv->n_autohide_disablers--;		
+}
+
+static gboolean
+panel_toplevel_get_autohide_disabled (PanelToplevel *toplevel)
+{
+	return toplevel->priv->n_autohide_disablers > 0 ? TRUE : FALSE;
 }
 
 static gboolean
@@ -2352,6 +2377,8 @@ panel_toplevel_detach (PanelToplevel *toplevel)
 	if (!toplevel->priv->attached)
 		return;
 
+	panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
+
 	panel_toplevel_disconnect_attached (toplevel);
 	
 	panel_toplevel_reverse_arrows (toplevel);
@@ -3026,6 +3053,9 @@ panel_toplevel_hide (PanelToplevel    *toplevel,
 
 	g_signal_emit (toplevel, toplevel_signals [HIDE_SIGNAL], 0);
 
+	if (toplevel->priv->attach_toplevel)
+		panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
+
 	if (auto_hide)
 		toplevel->priv->state = PANEL_STATE_AUTO_HIDDEN;
 	else {
@@ -3102,6 +3132,9 @@ panel_toplevel_unhide (PanelToplevel *toplevel)
 
 	panel_toplevel_update_hide_buttons (toplevel);
 
+	if (toplevel->priv->attach_toplevel)
+		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
+
 	if (toplevel->priv->animate && GTK_WIDGET_REALIZED (toplevel))
 		panel_toplevel_start_animation (toplevel);
 	else
@@ -3157,7 +3190,8 @@ panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 	if ( ! toplevel->priv->auto_hide ||
 	    toplevel->priv->hide_timeout ||
 	    toplevel->priv->state != PANEL_STATE_NORMAL ||
-	    panel_toplevel_contains_pointer (toplevel))
+	    panel_toplevel_contains_pointer (toplevel) ||
+	    panel_toplevel_get_autohide_disabled (toplevel))
 		return;
 
 	if (toplevel->priv->unhide_timeout)
@@ -3946,6 +3980,7 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 
 	toplevel->priv->attach_toplevel = NULL;
 	toplevel->priv->attach_widget   = NULL;
+	toplevel->priv->n_autohide_disablers = 0;
 
 	for (i = 0; i < N_ATTACH_TOPLEVEL_SIGNALS; i++)
 		toplevel->priv->attach_toplevel_signals [i] = 0;

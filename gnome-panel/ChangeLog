@@ -1,3 +1,13 @@
+2003-10-09  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-toplevel.c : (panel_toplevel_push_autohide_disabler)
+	(panel_toplevel_pop_autohide_disabler) : Use them to increment and 
+	decrement the open drawers  count attached to a toplevel panel.
+	(panel_toplevel_get_autohide_disabled): Returns True if panel has 
+	open drawers.
+	(panel_toplevel_unhide) panel_toplevel_hide) : Use the above methods.
+	(bug #124016)
+
 2003-10-06  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-widget.[ch] : (panel_widget_register_open_dialog):
