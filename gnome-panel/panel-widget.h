@@ -235,6 +235,8 @@ void		panel_widget_set_drawer_pos	(PanelWidget *panel,
 						 gint x,
 						 gint y);
 
+/*get the number of applets*/
+gint		panel_widget_get_applet_count	(PanelWidget *panel);
 
 extern GList *panels;
 

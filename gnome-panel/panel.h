@@ -72,6 +72,7 @@ struct _AppletInfo {
 	GtkWidget *applet_widget; /*the actual applet widget*/
 	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
 	GtkWidget *menu; /*the applet menu*/
+	GtkWidget *remove_item; /*remove item in the applet_menu*/
 	gpointer data;
 	gchar *id_str; /*used for IOR or string Id*/
 	gchar *cfg; /*used for passing around the per applet config path*/

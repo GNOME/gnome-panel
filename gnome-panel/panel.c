@@ -45,6 +45,8 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
+extern gint main_menu_count;
+
 void
 apply_global_config(void)
 {
@@ -384,10 +386,14 @@ panel_clean_applet(gint applet_id)
 		gtk_widget_destroy(info->assoc);
 		info->assoc=NULL;
 	}
+	if(type == APPLET_MENU && (!info->params ||
+				   strcmp(info->params,".")==0))
+		main_menu_count--;
 	info->assoc=NULL;
 	if(info->menu)
 		gtk_widget_unref(info->menu);
 	info->menu = NULL;
+	info->remove_item = NULL;
 
 	if(info->id_str) g_free(info->id_str);
 	info->id_str=NULL;
@@ -435,32 +441,33 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	}
 }
 
-static GtkWidget *
-create_applet_menu(gint applet_id, GList *user_menu)
+static void
+create_applet_menu(AppletInfo *info)
 {
 	GtkWidget *menuitem;
 	GtkWidget *applet_menu;
-	AppletInfo *info = get_applet_info(applet_id);
+	GList *user_menu = info->user_menu;
 
-	applet_menu = gtk_menu_new();
+	info->menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
-			   ITOP(applet_id));
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+			   ITOP(info->applet_id));
+	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	gtk_widget_show(menuitem);
+	info->remove_item = menuitem;
 
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
-			   ITOP(applet_id));
-	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+			   ITOP(info->applet_id));
+	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	gtk_widget_show(menuitem);
 	
 	if(user_menu) {
 		menuitem = gtk_menu_item_new();
-		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_menu_append(GTK_MENU(info->menu), menuitem);
 		gtk_widget_show(menuitem);
 	}
 
@@ -470,11 +477,9 @@ create_applet_menu(gint applet_id, GList *user_menu)
 		gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 				   (GtkSignalFunc) applet_callback_callback,
 				   menu);
-		gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+		gtk_menu_append(GTK_MENU(info->menu), menuitem);
 		gtk_widget_show(menuitem);
 	}
-
-	return applet_menu;
 }
 
 static void
@@ -541,7 +546,17 @@ show_applet_menu(gint applet_id)
 	g_return_if_fail(info!=NULL);
 
 	if (!info->menu)
-		info->menu = create_applet_menu(applet_id,info->user_menu);
+		create_applet_menu(info);
+
+	if((info->type == APPLET_DRAWER &&
+	    panel_widget_get_applet_count(PANEL_WIDGET(info->assoc))>0) ||
+	   (info->type == APPLET_MENU &&
+	    main_menu_count <= 1 &&
+	    (!info->params ||
+	     strcmp(info->params,".")==0)))
+	   	gtk_widget_set_sensitive(info->remove_item,FALSE);
+	else
+	   	gtk_widget_set_sensitive(info->remove_item,TRUE);
 
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
 		       ITOP(applet_id), 0/*3*/, time(NULL));
@@ -586,7 +601,7 @@ applet_show_menu(gint applet_id)
 	g_return_if_fail(info != NULL);
 
 	if (!info->menu)
-		info->menu = create_applet_menu(applet_id,info->user_menu);
+		create_applet_menu(info);
 
 	if(!arrow)
 		arrow = gdk_cursor_new(GDK_ARROW);

@@ -33,6 +33,8 @@ extern GtkWidget * root_menu;
 char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
 
+gint main_menu_count=0;
+
 GtkTooltips *panel_tooltips = NULL;
 
 GnomeClient *client = NULL;
@@ -203,6 +205,8 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,NULL,APPLET_MENU);
+		if(!params || strcmp(params,".")==0)
+			main_menu_count++;
 	} else if(strcmp(id_str,LAUNCHER_ID) == 0) {
 		Launcher *launcher;
 

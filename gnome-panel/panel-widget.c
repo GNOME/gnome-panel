@@ -473,6 +473,18 @@ panel_widget_set_size(PanelWidget *panel, gint size)
 	}
 }
 
+/*get the number of applets*/
+gint
+panel_widget_get_applet_count(PanelWidget *panel)
+{
+	gint i;
+	GList *list;
+
+	for(i=0,list=panel->applet_list;list!=NULL;list=g_list_next(list),i++)
+		;
+	return i;
+}
+
 static AppletData *
 get_applet_data_pos(PanelWidget *panel, gint pos)
 {
