@@ -275,12 +275,15 @@ show_desktop_applet_fill (PanelApplet *applet)
         ShowDesktopData *sdd;
         char *file;
         GError *error;
+        AtkObject *atk_obj;
 
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 
         sdd = g_new0 (ShowDesktopData, 1);
 
         sdd->applet = GTK_WIDGET (applet);
+        atk_obj = gtk_widget_get_accessible (sdd->button);
+        atk_object_set_name (atk_obj, _("Show Desktop Button"));
 
         file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
                                           "gnome-show-desktop.png", TRUE, NULL);
