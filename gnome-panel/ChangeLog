@@ -1,3 +1,20 @@
+2004-12-15  Vincent Untz  <vincent@vuntz.net>
+
+	* menu.[ch]: (create_menuitem): add FIXME so we don't forget to add
+	the right icon for drag and drop when the GTK+ API will be available
+	(menu_create_action_item): new function
+	(append_lock_screen): killed
+	(append_log_out): killed
+	(create_main_menu): use menu_create_action_item ()
+	* panel-action-button.[ch]: (panel_action_get_invoke): new
+	(panel_action_lock_screen), (panel_action_logout),
+	(panel_action_run_program), (panel_action_search),
+	(panel_action_screenshot): make them static since other modules use
+	panel_action_get_invoke () now
+	* panel-menu-bar.c: (panel_menu_bar_append_action_item): killed
+	(panel_menu_bar_recreate_actions_menu): updated with
+	menu_create_action_item () and add_menu_separator ()
+
 2004-12-12  Vincent Untz  <vincent@vuntz.net>
 
 	First step in trying to make menu.c cleaner: move the panel context

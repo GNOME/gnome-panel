@@ -77,7 +77,7 @@ static GConfEnumStringPair panel_action_type_map [] = {
 
 /* Lock Screen
  */
-void
+static void
 panel_action_lock_screen (GtkWidget *widget)
 {
 	panel_lock_screen (gtk_widget_get_screen (widget));
@@ -159,7 +159,7 @@ panel_action_lock_invoke_menu (PanelActionButton *button,
 
 /* Log Out
  */
-void
+static void
 panel_action_logout (GtkWidget *widget)
 {
 	static int recursion_guard = 0;
@@ -176,7 +176,7 @@ panel_action_logout (GtkWidget *widget)
 
 /* Run Application
  */
-void
+static void
 panel_action_run_program (GtkWidget *widget)
 {
 	panel_run_dialog_present (gtk_widget_get_screen (widget), gtk_get_current_event_time ());
@@ -184,7 +184,7 @@ panel_action_run_program (GtkWidget *widget)
 
 /* Search For Files
  */
-void
+static void
 panel_action_search (GtkWidget *widget)
 {
 	GdkScreen *screen;
@@ -208,7 +208,7 @@ panel_action_search (GtkWidget *widget)
 
 /* Take Screenshot
  */
-void
+static void
 panel_action_screenshot (GtkWidget *widget)
 {
 	GdkScreen *screen;
@@ -338,6 +338,16 @@ panel_action_get_is_disabled (PanelActionButtonType type)
 		return actions [type].is_disabled ();
 
 	return FALSE;
+}
+
+GCallback
+panel_action_get_invoke (PanelActionButtonType type)
+{
+	g_return_val_if_fail (type > PANEL_ACTION_NONE && type < PANEL_ACTION_LAST, NULL);
+
+	g_assert (actions[type].invoke != NULL);
+
+	return G_CALLBACK (actions[type].invoke);
 }
 
 G_CONST_RETURN char*

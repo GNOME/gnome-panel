@@ -84,34 +84,6 @@ panel_menu_bar_connect_menu_signals (PanelMenuBar *menubar,
 }
 
 static void
-panel_menu_bar_append_action_item (PanelMenuBar          *menubar,
-				   PanelActionButtonType  action_type,
-				   GtkWidget             *menu,
-				   GCallback              callback)
-{
-	GtkWidget *item;
-
-	item = gtk_image_menu_item_new ();
-	setup_menu_item_with_icon (item,
-				   panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (action_type),
-				   panel_action_get_stock_icon (action_type),
-				   panel_action_get_text (action_type),
-				   TRUE);
-
-	gtk_tooltips_set_tip (panel_tooltips,
-			      item,
-			      panel_action_get_tooltip (action_type),
-			      NULL);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	g_signal_connect (item, "activate", callback, NULL);
-	g_signal_connect (G_OBJECT (item), "button_press_event",
-			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_internal_applet_drag (item, action_type);
-}
-
-static void
 panel_menu_bar_recreate_actions_menu (PanelMenuBar *menubar)
 {
 	if (menubar->priv->actions_menu) {
@@ -129,74 +101,60 @@ panel_menu_bar_create_actions_menu (PanelMenuBar *menubar)
 {
 	GtkWidget *actions_menu;
 	GtkWidget *item;
-	gboolean   enable_log_out;
-	gboolean   enable_lock_screen;
+	gboolean   separator_inserted;
 	gboolean   last_is_separator;
 
 	actions_menu = panel_create_menu ();
 
 	last_is_separator = FALSE;
 
-	if (!panel_lockdown_get_disable_command_line ()) {
-		panel_menu_bar_append_action_item (menubar,
-						   PANEL_ACTION_RUN,
-						   actions_menu,
-						   G_CALLBACK (panel_action_run_program));
-
-		item = gtk_separator_menu_item_new ();
+	item = menu_create_action_item (PANEL_ACTION_RUN);
+	if (item != NULL) {
 		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
-		gtk_widget_show (item);
+		add_menu_separator (actions_menu);
 		last_is_separator = TRUE;
 	}
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
-		panel_menu_bar_append_action_item (menubar,
-						   PANEL_ACTION_SEARCH,
-						   actions_menu,
-						   G_CALLBACK (panel_action_search));
-		last_is_separator = FALSE;
+		item = menu_create_action_item (PANEL_ACTION_SEARCH);
+		if (item != NULL) {
+			gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu),
+					       item);
+			last_is_separator = FALSE;
+		}
 	}
 
 	panel_recent_append_documents_menu (actions_menu);
 
 	if (panel_is_program_in_path ("gnome-screenshot")) {
-		if (!last_is_separator) {
-			item = gtk_separator_menu_item_new ();
+		item = menu_create_action_item (PANEL_ACTION_SCREENSHOT);
+		if (item != NULL) {
+			if (!last_is_separator)
+				add_menu_separator (actions_menu);
 			gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu),
 					       item);
-			gtk_widget_show (item);
+			last_is_separator = FALSE;
 		}
-
-		panel_menu_bar_append_action_item (menubar,
-						   PANEL_ACTION_SCREENSHOT,
-						   actions_menu,
-						   G_CALLBACK (panel_action_screenshot));
-		last_is_separator = FALSE;
 	}
 
-	enable_log_out = !panel_lockdown_get_disable_log_out ();
-	enable_lock_screen =
-		(!panel_lockdown_get_disable_lock_screen () &&
-		 panel_is_program_in_path  ("xscreensaver"));
-		
+	separator_inserted = FALSE;
 
-	if ((enable_log_out || enable_lock_screen) && !last_is_separator) {
-		item = gtk_separator_menu_item_new ();
+	item = menu_create_action_item (PANEL_ACTION_LOCK);
+	if (item != NULL) {
+		add_menu_separator (actions_menu);
 		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
-		gtk_widget_show (item);
+		separator_inserted = TRUE;
 	}
 
-	if (enable_lock_screen)
-		panel_menu_bar_append_action_item (menubar,
-						   PANEL_ACTION_LOCK,
-						   actions_menu,
-						   G_CALLBACK (panel_action_lock_screen));
+	if (panel_is_program_in_path ("xscreensaver")) {
+		item = menu_create_action_item (PANEL_ACTION_LOGOUT);
 
-	if (enable_log_out) {
-		panel_menu_bar_append_action_item (menubar,
-						   PANEL_ACTION_LOGOUT,
-						   actions_menu,
-						   G_CALLBACK (panel_action_logout));
+		if (item != NULL) {
+			if (!separator_inserted)
+				add_menu_separator (actions_menu);
+			gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu),
+					       item);
+		}
 	}
 
 	return actions_menu;

@@ -87,13 +87,8 @@ gboolean   panel_action_button_load_from_drag   (PanelToplevel          *topleve
 						 const char             *drag_string,
 						 int                    *old_applet_idx);
 
-void       panel_action_lock_screen (GtkWidget *widget);
-void       panel_action_logout      (GtkWidget *widget);
-void       panel_action_run_program (GtkWidget *widget);
-void       panel_action_search      (GtkWidget *widget);
-void       panel_action_screenshot  (GtkWidget *widget);
-
 gboolean             panel_action_get_is_disabled (PanelActionButtonType type);
+GCallback            panel_action_get_invoke      (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_stock_icon  (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_icon_name   (PanelActionButtonType type);
 G_CONST_RETURN char *panel_action_get_text        (PanelActionButtonType type);

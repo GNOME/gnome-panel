@@ -1255,6 +1255,10 @@ create_menuitem (GtkWidget     *menu,
 				     menu_item_targets, 1,
 				     GDK_ACTION_COPY);
 
+		/* FIXME: waiting for bug #116577
+		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
+					menu_tree_entry_get_icon (entry));
+		*/
 		g_signal_connect (menuitem, "drag_data_get",
 				  G_CALLBACK (drag_data_get_menu_cb), entry);
 		g_signal_connect (menuitem, "drag_end",
@@ -1391,55 +1395,35 @@ setup_menu_item_with_icon (GtkWidget   *item,
 
 	setup_menuitem (item, icon_size, NULL, title, invisible_mnemonic);
 }
-	  
-static void
-append_lock_screen (GtkWidget *menu)
+  
+GtkWidget *
+menu_create_action_item (PanelActionButtonType action_type)
 {
-	GtkWidget  *menuitem;
+	GtkWidget *item;
 
-	if (panel_lockdown_get_disable_lock_screen () ||
-	    !panel_is_program_in_path ("xscreensaver"))
-		return;
+	if (panel_action_get_is_disabled (action_type))
+		return NULL;
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menu_item_with_icon (menuitem, panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (PANEL_ACTION_LOCK),
-				   panel_action_get_stock_icon (PANEL_ACTION_LOCK),
-				   panel_action_get_text (PANEL_ACTION_LOCK),
-				   TRUE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_action_lock_screen), NULL);
-	setup_internal_applet_drag (menuitem, PANEL_ACTION_LOCK);
-	gtk_tooltips_set_tip (panel_tooltips, menuitem,
-			      panel_action_get_tooltip (PANEL_ACTION_LOCK),
-			      NULL);
-}
-
-static void
-append_log_out (GtkWidget *menu)
-{
-	GtkWidget *menuitem;
-
-	if (panel_lockdown_get_disable_log_out ())
-		return;
-
-	menuitem = gtk_image_menu_item_new ();
-
-	setup_menu_item_with_icon (menuitem, panel_menu_icon_get_size (),
-				   panel_action_get_icon_name (PANEL_ACTION_LOGOUT),
-				   panel_action_get_stock_icon (PANEL_ACTION_LOGOUT),
-				   panel_action_get_text (PANEL_ACTION_LOGOUT),
+	item = gtk_image_menu_item_new ();
+        setup_menu_item_with_icon (item,
+				   panel_menu_icon_get_size (),
+				   panel_action_get_icon_name (action_type),
+				   panel_action_get_stock_icon (action_type),
+				   panel_action_get_text (action_type),
 				   TRUE);
 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_action_logout), NULL);
-	setup_internal_applet_drag (menuitem, PANEL_ACTION_LOGOUT);
-
-	gtk_tooltips_set_tip (panel_tooltips, menuitem,
-			      panel_action_get_tooltip (PANEL_ACTION_LOGOUT),
+	gtk_tooltips_set_tip (panel_tooltips,
+			      item,
+			      panel_action_get_tooltip (action_type),
 			      NULL);
+
+	g_signal_connect (item, "activate",
+			  panel_action_get_invoke (action_type), NULL);
+	g_signal_connect (G_OBJECT (item), "button_press_event",
+			  G_CALLBACK (menu_dummy_button_press_event), NULL);
+	setup_internal_applet_drag (item, action_type);
+
+	return item;
 }
 
 GtkWidget *
@@ -1461,45 +1445,21 @@ create_main_menu (PanelWidget *panel)
 				   TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 
-	applications_menu = create_applications_menu ("applications.menu", NULL);
+	applications_menu = create_applications_menu ("applications.menu",
+						      NULL);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applications_menu);
 
 	add_menu_separator (main_menu);
 
-	if (!panel_lockdown_get_disable_command_line ()) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menu_item_with_icon (menuitem,
-					   panel_menu_icon_get_size (),
-					   panel_action_get_icon_name (PANEL_ACTION_RUN),
-					   panel_action_get_stock_icon (PANEL_ACTION_RUN),
-					   panel_action_get_text (PANEL_ACTION_RUN),
-					   TRUE);
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_action_run_program), NULL);
-		gtk_tooltips_set_tip (panel_tooltips,
-				      menuitem,
-				      panel_action_get_tooltip (PANEL_ACTION_RUN),
-				      NULL);
-		setup_internal_applet_drag (menuitem, PANEL_ACTION_RUN);
+	menuitem = menu_create_action_item (PANEL_ACTION_RUN);
+	if (menuitem != NULL)
 		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
-	}
 
 	if (panel_is_program_in_path  ("gnome-search-tool")) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menu_item_with_icon (menuitem,
-					   panel_menu_icon_get_size (),
-					   panel_action_get_icon_name (PANEL_ACTION_SEARCH),
-					   panel_action_get_stock_icon (PANEL_ACTION_SEARCH),
-					   panel_action_get_text (PANEL_ACTION_SEARCH),
-					   TRUE);
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_action_search), NULL);
-		gtk_tooltips_set_tip (panel_tooltips,
-				      menuitem,
-				      panel_action_get_tooltip (PANEL_ACTION_SEARCH),
-				      NULL);
-		setup_internal_applet_drag (menuitem, PANEL_ACTION_SEARCH);
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
+		menuitem = menu_create_action_item (PANEL_ACTION_SEARCH);
+		if (menuitem != NULL)
+			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
+					       menuitem);
 	}
 
 	panel_recent_append_documents_menu (main_menu);
@@ -1507,27 +1467,24 @@ create_main_menu (PanelWidget *panel)
 	add_menu_separator (main_menu);
 
 	if (panel_is_program_in_path ("gnome-screenshot")) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menu_item_with_icon (menuitem,
-					   panel_menu_icon_get_size (),
-					   panel_action_get_icon_name (PANEL_ACTION_SCREENSHOT),
-					   panel_action_get_stock_icon (PANEL_ACTION_SCREENSHOT),
-					   panel_action_get_text (PANEL_ACTION_SCREENSHOT),
-					   TRUE);
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (panel_action_screenshot), NULL);
-		gtk_tooltips_set_tip (panel_tooltips,
-				      menuitem,
-				      panel_action_get_tooltip (PANEL_ACTION_SCREENSHOT),
-				      NULL);
-		setup_internal_applet_drag (menuitem, PANEL_ACTION_SCREENSHOT);
-		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
+		menuitem = menu_create_action_item (PANEL_ACTION_SCREENSHOT);
+		if (menuitem != NULL)
+			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
+					       menuitem);
 
 		add_menu_separator (main_menu);
 	}
 
-	append_lock_screen (main_menu);
-	append_log_out (main_menu);
+	if (panel_is_program_in_path  ("xscreensaver")) {
+		menuitem = menu_create_action_item (PANEL_ACTION_LOCK);
+		if (menuitem != NULL)
+			gtk_menu_shell_append (GTK_MENU_SHELL (main_menu),
+					       menuitem);
+	}
+
+	menuitem = menu_create_action_item (PANEL_ACTION_LOGOUT);
+	if (menuitem != NULL)
+		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 
 	return main_menu;
 }
