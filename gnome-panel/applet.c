@@ -1102,15 +1102,20 @@ panel_applet_list_applets (void)
 }
 
 AppletInfo *
-panel_applet_get_by_type (PanelObjectType object_type)
+panel_applet_get_by_type (PanelObjectType object_type, GdkScreen *screen)
 {
 	GSList *l;
 
 	for (l = registered_applets; l; l = l->next) {
 		AppletInfo *info = l->data;
 
-		if (info->type == object_type)
-			return info;
+		if (info->type == object_type) {
+			if (screen) {
+				if (screen == gtk_widget_get_screen (info->widget))
+					return info;
+			} else
+				return info;
+		}
 	}
 
 	return NULL;

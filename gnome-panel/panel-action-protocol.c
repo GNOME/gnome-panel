@@ -51,14 +51,14 @@ panel_action_protocol_main_menu (GdkScreen *screen,
 	GtkWidget   *menu;
 	AppletInfo  *info;
 
-	info = panel_applet_get_by_type (PANEL_OBJECT_MENU_BAR);
+	info = panel_applet_get_by_type (PANEL_OBJECT_MENU_BAR, screen);
 	if (info) {
 		panel_menu_bar_popup_menu (PANEL_MENU_BAR (info->widget),
 					   activate_time);
 		return;
 	}
 
-	info = panel_applet_get_by_type (PANEL_OBJECT_MENU);
+	info = panel_applet_get_by_type (PANEL_OBJECT_MENU, screen);
 	if (info && !panel_menu_button_get_use_menu_path (PANEL_MENU_BUTTON (info->widget))) {
 		panel_menu_button_popup_menu (PANEL_MENU_BUTTON (info->widget),
 					      1, activate_time);
