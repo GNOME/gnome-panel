@@ -611,15 +611,6 @@ misc_notebook_page(void)
 			    &(temp_config.tooltips_enabled));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);	
 	
-	/* only show tiles when mouse is over the button */
-	button = gtk_check_button_new_with_label (_("Show hints on panel startup"));
-	if (temp_config.show_startup_hints)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			    GTK_SIGNAL_FUNC (set_toggle_button_value),
-			    &(temp_config.show_startup_hints));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
 	/* Drawer/launcher auto close */
 	button = gtk_check_button_new_with_label (_("Close drawer if a launcher inside it is pressed"));
 	if (temp_config.drawer_auto_close)

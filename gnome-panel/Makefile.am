@@ -115,8 +115,6 @@ base_panel_SOURCES=\
 	button-widget.h		\
 	panel-util.c		\
 	panel-util.h		\
-	hints.c			\
-	hints.h			\
 	tearoffitem.c		\
 	tearoffitem.h
 
@@ -157,7 +155,7 @@ EXTRA_DIST = \
 	panel.gnorba		\
 	panel.soundlist		\
 	APPLET_WRITING		\
-	hintsdata.c
+	panel.hints
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
@@ -191,5 +189,8 @@ panelgnorba_DATA = panel.gnorba
 
 soundlistdir = $(sysconfdir)/sound/events
 soundlist_DATA = panel.soundlist
+
+hintsdir = $(datadir)/gnome/hints
+hints_DATA = panel.hints
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)

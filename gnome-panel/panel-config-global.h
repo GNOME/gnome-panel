@@ -30,7 +30,6 @@ struct _GlobalConfig {
 	int tile_depth[LAST_TILE];
 	int hide_panel_frame;
 	int tile_when_over;
-	int show_startup_hints;
 };
 
 void panel_config_global(void);

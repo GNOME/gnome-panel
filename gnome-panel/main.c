@@ -280,9 +280,6 @@ main(int argc, char **argv)
 	/* we will select the events later when we actually need them */
 	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);
 	
-	if(global_config.show_startup_hints)
-		show_hint(is_first);
-	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();
 
