@@ -2522,7 +2522,7 @@ create_root_menu (GtkWidget   *root_menu,
 	}
 
 	if (extra_items &&
-	    panel_is_program_in_path ("gnome-panel-screenshot")) {
+	    panel_is_program_in_path ("gnome-screenshot")) {
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),

@@ -1,3 +1,13 @@
+2004-11-06  Vincent Untz  <vincent@vuntz.net>
+
+	* menu.c: (create_root_menu):
+	* panel-action-button.c: (panel_action_screenshot):
+	* panel-menu-bar.c: (panel_menu_bar_append_actions_menu):
+	gnome-panel-screenshot was renamed to gnome-screenshot
+	* panel-addto.c: (panel_addto_make_text): use g_markup_printf_escaped
+	* panel-util.c: (panel_dialog): don't remove separator since it's
+	causing a GTK+ warning and it's useless now
+
 Wed Nov  3 12:00:20 2004  Jonathan Blandford  <jrb@redhat.com>
 
 	* gnome-panel-screenshot: Migrated to gnome-utils.  All code is

@@ -234,22 +234,19 @@ static char *
 panel_addto_make_text (const char *name,
 		       const char *desc)
 {
-	char *esc_name;
-	char *esc_desc;
-	char *result; 
+	const char *real_name;
+	char       *result; 
 
-	esc_name = name ? g_markup_escape_text (name, -1) :
-			  g_strdup(_("(empty)"));
-	if (desc != NULL) {
-		esc_desc = g_markup_escape_text (desc, -1);
-		result = g_strdup_printf ("<span size=\"larger\" weight=\"bold\">%s</span>\n%s",
-					  esc_name, esc_desc);
-		g_free (esc_desc);
+	real_name = name ? name : _("(empty)");
+
+	if (desc != NULL && desc[0] != '\0') {
+		result = g_markup_printf_escaped ("<span size=\"larger\" weight=\"bold\">%s</span>\n%s",
+						  real_name, desc);
 	} else {
-		result = g_strdup_printf ("<span size=\"larger\" weight=\"bold\">%s</span>",
-					  esc_name);
+		result = g_markup_printf_escaped ("<span size=\"larger\" weight=\"bold\">%s</span>",
+						  real_name);
 	}
-	g_free (esc_name);
+
 	return result;
 }
 

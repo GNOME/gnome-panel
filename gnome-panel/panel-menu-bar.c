@@ -147,7 +147,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 
 	panel_recent_append_documents_menu (menubar->priv->actions_menu);
 
-	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
+	if (panel_is_program_in_path ("gnome-screenshot")) {
 		item = gtk_separator_menu_item_new ();
 		gtk_menu_shell_append (GTK_MENU_SHELL (menubar->priv->actions_menu), item);
 		gtk_widget_show (item);

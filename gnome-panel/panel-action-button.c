@@ -213,7 +213,7 @@ panel_action_screenshot (GtkWidget *widget)
 {
 	GdkScreen *screen;
 	GError    *error = NULL;
-	char      *argv [2] = {"gnome-panel-screenshot", NULL};
+	char      *argv [2] = {"gnome-screenshot", NULL};
 
 	screen = gtk_widget_get_screen (widget);
 
@@ -221,10 +221,10 @@ panel_action_screenshot (GtkWidget *widget)
 				  G_SPAWN_SEARCH_PATH,
 				  NULL, NULL, NULL, &error)) {
 		panel_error_dialog (screen,
-				    "cannot_exec_gnome-panel-screenshot",
+				    "cannot_exec_gnome-screenshot",
 				    _("Cannot execute '%s'"),
 				    "%s",
-				    "gnome-panel-screenshot",
+				    "gnome-screenshot",
 				    error->message);
 		g_error_free (error);
 	}
