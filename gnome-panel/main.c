@@ -17,6 +17,7 @@
 #include "menu.h"
 #include "drawer.h"
 #include "swallow.h"
+#include "logout.h"
 #include "mico-glue.h"
 #include "mico-parse.h"
 #include "panel-util.h"
@@ -286,6 +287,13 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		
 		register_toy(swallow->table,NULL,swallow,SWALLOW_ID,params,pos,
 			     panel,NULL,APPLET_SWALLOW);
+	} else if(strcmp(id_str,LOGOUT_ID) == 0) {
+		GtkWidget *logout;
+
+		logout = create_logout_widget();
+		
+		register_toy(logout,NULL,NULL,LOGOUT_ID,params,pos,
+			     panel,NULL,APPLET_LOGOUT);
 	}
 }
 

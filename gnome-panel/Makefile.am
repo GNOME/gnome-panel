@@ -20,9 +20,7 @@ INCLUDES = -I. -I$(srcdir) 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
-## FIXME: logout should really be an internal applets since it is just
-## too trivial 
-bin_PROGRAMS = panel logout_applet fish_applet #launcher_applet
+bin_PROGRAMS = panel fish_applet #launcher_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -80,6 +78,8 @@ panel_SOURCES = 		\
 	panel-util.c		\
 	launcher.c		\
 	launcher.h		\
+	logout.c		\
+	logout.h		\
 	$(CORBA_SOURCES)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
@@ -99,16 +99,6 @@ fish_applet_SOURCES = \
 fish_applet_LINK = $(CXXLINK)
 
 fish_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
-		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
-
-
-logout_applet_SOURCES = \
-	logout.c
-## Must define linker for logout_applet -- it needs a C++ linker, but
-## automake doesn't discover that automatically.
-logout_applet_LINK = $(CXXLINK)
-
-logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
 		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc

@@ -434,6 +434,13 @@ create_panel_submenu (GtkWidget *app_menu)
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   MENU_ID);
 
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add log out button"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) add_applet_to_panel_data,
+			   LOGOUT_ID);
+
 #ifdef _DRAWER_
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add drawer"));
