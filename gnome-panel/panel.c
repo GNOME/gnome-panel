@@ -20,7 +20,6 @@
 #include <libbonobo.h>
 #include <libgnomevfs/gnome-vfs-uri.h>
 #include <libgnomevfs/gnome-vfs-ops.h>
-#include <libgnomevfs/gnome-vfs-mime.h>
 #include <libgnomevfs/gnome-vfs-mime-handlers.h>
 #include <libgnomevfs/gnome-vfs-file-info.h>
 
@@ -527,7 +526,7 @@ drop_urilist (PanelWidget *panel,
 	for (i = 0; uris[i]; i++) {
 		GnomeVFSURI      *vfs_uri;
 		GnomeVFSFileInfo *info;
-		const char       *mimetype;
+		GnomeVFSResult    res;
 		const char       *uri;
 		char             *basename;
 		char             *dirname;
@@ -555,64 +554,59 @@ drop_urilist (PanelWidget *panel,
 			continue;
 		}
 
-		mimetype = gnome_vfs_mime_type_from_name (uri);
 		basename = gnome_vfs_uri_extract_short_path_name (vfs_uri);
 		dirname = gnome_vfs_uri_extract_dirname (vfs_uri);
+
 		info = gnome_vfs_file_info_new ();
+		res = gnome_vfs_get_file_info_uri (vfs_uri, info,
+						   GNOME_VFS_FILE_INFO_GET_MIME_TYPE |
+						   GNOME_VFS_FILE_INFO_FOLLOW_LINKS);
+		if (res == GNOME_VFS_OK) {
+			if (info->mime_type &&
+			    !strncmp (info->mime_type, "image", sizeof ("image") - 1)) {
+				if (!set_background_image_from_uri (panel->toplevel, uri))
+					success = FALSE;
+			} else if (info->mime_type != NULL &&
+				   (!strcmp (info->mime_type, "application/x-gnome-app-info") ||
+				    !strcmp (info->mime_type, "application/x-desktop") ||
+				    !strcmp (info->mime_type, "application/x-kde-app-info"))) {
+				if (panel_profile_id_lists_are_writable ())
+					panel_launcher_create (panel->toplevel, pos, uri);
+				else
+					success = FALSE;
+			} else if (info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
+				if (!drop_directory (panel, pos, uri))
+					success = FALSE;
+			} else if (info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
+				   info->permissions & (GNOME_VFS_PERM_USER_EXEC |
+							GNOME_VFS_PERM_GROUP_EXEC |
+							GNOME_VFS_PERM_OTHER_EXEC) &&
+				   (filename = g_filename_from_uri (uri, NULL, NULL))) {
+				if (panel_profile_id_lists_are_writable ())
+					/* executable and local, so add a launcher with it
+					 */
+					ask_about_launcher (filename, panel, pos, TRUE);
+				else
+					success = FALSE;
+				g_free (filename);
+			} else {
+				const char *icon;
 
-		if (gnome_vfs_get_file_info_uri (vfs_uri, info,
-						 GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
-			gnome_vfs_file_info_unref (info);
-			info = NULL;
-		}
+				icon = NULL;
+				if (info->mime_type)
+					icon = gnome_vfs_mime_get_icon (info->mime_type);
+				if (!icon)
+					icon = "gnome-unknown.png";
 
-		if (mimetype &&
-		    !strncmp (mimetype, "image", sizeof ("image") - 1)) {
-			if ( ! set_background_image_from_uri (panel->toplevel, uri))
-				success = FALSE;
-		} else if (mimetype != NULL &&
-			   (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
-			    strcmp(mimetype, "application/x-desktop") == 0 ||
-			    strcmp(mimetype, "application/x-kde-app-info") == 0)) {
-			if (panel_profile_id_lists_are_writable ())
-				panel_launcher_create (panel->toplevel, pos, uri);
-			else
-				success = FALSE;
-		} else if (info != NULL &&
-			   info->type == GNOME_VFS_FILE_TYPE_DIRECTORY) {
-			if ( ! drop_directory (panel, pos, uri))
-				success = FALSE;
-		} else if (info != NULL &&
-			   info->valid_fields & GNOME_VFS_FILE_INFO_FIELDS_PERMISSIONS &&
-			   info->permissions &
-			     (GNOME_VFS_PERM_USER_EXEC |
-			      GNOME_VFS_PERM_GROUP_EXEC |
-			      GNOME_VFS_PERM_OTHER_EXEC) &&
-			   (filename = g_filename_from_uri (uri, NULL, NULL)) != NULL) {
-			if (panel_profile_id_lists_are_writable ())
-				/* executable and local, so add a launcher with
-				 * it */
-				ask_about_launcher (filename, panel, pos, TRUE);
-			else
-				success = FALSE;
-			g_free (filename);
+				if (!drop_nautilus_uri (panel, pos, uri, icon))
+					success = FALSE;
+			}
 		} else {
-			/* FIXME: add a launcher that will launch the app
-			 * associated with this file */
-			/* FIXME: For now just add a launcher that launches
-			 * nautilus on this uri */
-			const char *icon = NULL;
-			if (mimetype != NULL)
-		        	icon = gnome_vfs_mime_get_icon (mimetype);
-			if (icon == NULL)
-				icon = "gnome-unknown.png";
-			if ( ! drop_nautilus_uri (panel, pos, uri, icon))
+			if (!drop_nautilus_uri (panel, pos, uri, "gnome-unknown.png"))
 				success = FALSE;
 		}
 
-		if (info != NULL)
-			gnome_vfs_file_info_unref (info);
-
+		gnome_vfs_file_info_unref (info);
 
 		g_free (basename);
 		g_free (dirname);

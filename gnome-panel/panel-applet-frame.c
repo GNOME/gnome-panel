@@ -826,16 +826,18 @@ panel_applet_frame_get_name (char *iid)
 	list = bonobo_activation_query (query, NULL, NULL);
 	if (list && list->_length > 0 && list->_buffer) {
 		Bonobo_ServerInfo  *info = &list->_buffer [0];
-		const char * const *langs_pointer;
+		const char * const *langs;
 		GSList             *langs_gslist;
 		int                 i;
 
+		langs = g_get_language_names ();
+
 		langs_gslist = NULL;
-		langs_pointer = g_get_language_names ();
-		for (i = 0; langs_pointer[i] != NULL; i++) {
-			langs_gslist = g_slist_append (langs_gslist,
-						       langs_pointer[i]);
-		}
+		for (i = 0; langs[i]; i++)
+			langs_gslist = g_slist_prepend (langs_gslist,
+							(char *) langs[i]);
+
+		langs_gslist = g_slist_reverse (langs_gslist);
 
 		retval = g_strdup (bonobo_server_info_prop_lookup (
 						info, "name", langs_gslist));

@@ -365,7 +365,7 @@ panel_addto_query_applets (GSList *list)
 {
 	Bonobo_ServerInfoList *applet_list;
 	CORBA_Environment   env;
-	const char * const *langs_pointer;
+	const char * const *langs;
 	GSList             *langs_gslist;
 	int                 i;
 
@@ -385,13 +385,13 @@ panel_addto_query_applets (GSList *list)
 
 	CORBA_exception_free (&env);
 
-	/* Evil evil evil evil, we need to convery from a
-	   GList to a GSList */
+	langs = g_get_language_names ();
+
 	langs_gslist = NULL;
-	langs_pointer = g_get_language_names ();
-	for (i = 0; langs_pointer[i] != NULL; i++) {
-		langs_gslist = g_slist_append (langs_gslist, langs_pointer[i]);
-	}
+	for (i = 0; langs[i]; i++)
+		langs_gslist = g_slist_prepend (langs_gslist, (char *) langs[i]);
+
+	langs_gslist = g_slist_reverse (langs_gslist);
 
 	for (i = 0; i < applet_list->_length; i++) {
 		Bonobo_ServerInfo *info;
