@@ -620,7 +620,9 @@ convert_string_to_keysym_state(char *string,
 		} else if(strcmp(p, "Mod5")==0) {
 			*state |= GDK_MOD5_MASK;
 		} else {
+			gdk_error_trap_push();
 			*keysym = gdk_keyval_from_name(p);
+			gdk_error_trap_pop();
 			if(*keysym == 0) {
 				g_free(s);
 				return FALSE;
@@ -648,7 +650,9 @@ convert_keysym_state_to_string(guint keysym,
 	if(keysym == 0)
 		return g_strdup(_("Disabled"));
 
+	gdk_error_trap_push();
 	key = gdk_keyval_name(keysym);
+	gdk_error_trap_pop();
 	if(!key) return NULL;
 
 	gs = g_string_new(NULL);

@@ -13,12 +13,6 @@ extern GlobalConfig global_config;
 extern GSList *panel_list;
 extern GSList *panels;
 
-static int
-watch_xerrors(Display *disp, XErrorEvent *errev)
-{
-	return 0;
-}
-
 void
 panel_global_keys_setup(void)
 {
@@ -26,13 +20,12 @@ panel_global_keys_setup(void)
 	static guint laststate_menu = 0;
 	static guint lastkey_run = 0;
 	static guint laststate_run = 0;
-	XErrorHandler old_err_handler;
 	gboolean same;
 
 	same = (lastkey_menu == lastkey_run &&
 		laststate_menu == laststate_run);
 
-	old_err_handler = XSetErrorHandler (watch_xerrors);
+	gdk_error_trap_push();
 	if (lastkey_menu)
 		XUngrabKey (GDK_DISPLAY(), lastkey_menu, laststate_menu,
 			    GDK_ROOT_WINDOW());
@@ -65,7 +58,8 @@ panel_global_keys_setup(void)
 				  GrabModeAsync, GrabModeAsync);
 	} else
 		lastkey_run = 0;
-	XSetErrorHandler (old_err_handler);
+
+	gdk_error_trap_pop();
 }
 
 GdkFilterReturn
