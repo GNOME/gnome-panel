@@ -54,7 +54,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Tom Tromey (tromey@cygnus.com)",
 	  "Ian Main (slow@intergate.bc.ca)",
 	  "and finally, The Knights Who Say ... NI!",
-	  NULL
+	  "gnome-gegl.png"
 	  };
 
 	about = gnome_about_new ( "The GNOME Panel", VERSION,
