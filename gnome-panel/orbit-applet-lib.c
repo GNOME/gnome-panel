@@ -519,6 +519,8 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 
 	CORBA_free(ior);
 
+	ior = NULL;
+
 	bind_top_applet_events(widget, applet_id);
 
 	return 0;
