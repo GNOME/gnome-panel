@@ -39,16 +39,19 @@ extern GlobalConfig global_config;
 extern PanelWidget *current_panel;
 
 static void
-move_applet_callback(GtkWidget *widget, AppletInfo *info)
+move_applet_callback (GtkWidget *widget, AppletInfo *info)
 {
-	PanelWidget    *panel;
+	PanelWidget *panel;
 
-	g_return_if_fail(info != NULL);
+	g_return_if_fail (info != NULL);
+	g_return_if_fail (info->widget != NULL);
+	g_return_if_fail (info->widget->parent != NULL);
+	g_return_if_fail (IS_PANEL_WIDGET (info->widget->parent));
 
-	panel = PANEL_WIDGET(info->widget->parent);
-	g_return_if_fail(panel!=NULL);
+	panel = PANEL_WIDGET (info->widget->parent);
 
-	panel_widget_applet_drag_start(panel, info->widget);
+	panel_widget_applet_drag_start (panel, info->widget,
+					PW_DRAG_OFF_CENTER);
 }
 
 /*destroy widgets and call the above cleanup function*/

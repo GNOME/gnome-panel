@@ -768,7 +768,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 			     !panel_applet_in_drag) {
 				panel_widget_applet_drag_start (
 					PANEL_WIDGET(panel->master_widget->parent),
-					panel->master_widget);
+					panel->master_widget,
+					PW_DRAG_OFF_CURSOR);
 				return TRUE;
 			}
 			break;

@@ -1857,7 +1857,9 @@ static gboolean been_moved = FALSE;
 static gboolean repeat_if_outside = FALSE;
 
 void
-panel_widget_applet_drag_start_no_grab (PanelWidget *panel, GtkWidget *applet)
+panel_widget_applet_drag_start_no_grab (PanelWidget *panel,
+					GtkWidget *applet,
+					int drag_off)
 {
 	AppletData *ad;
 
@@ -1880,17 +1882,22 @@ panel_widget_applet_drag_start_no_grab (PanelWidget *panel, GtkWidget *applet)
 		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
 	panel->currently_dragged_applet = ad;
-	ad->drag_off = panel_widget_get_cursorloc (panel) - ad->pos;
+	if (drag_off == PW_DRAG_OFF_CURSOR)
+		ad->drag_off = panel_widget_get_cursorloc (panel) - ad->pos;
+	else if (drag_off == PW_DRAG_OFF_CENTER)
+		ad->drag_off = ad->cells / 2;
+	else
+		ad->drag_off = drag_off;
 
 	panel_applet_in_drag = TRUE;
 }
 
 
 void
-panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
+panel_widget_applet_drag_end_no_grab (PanelWidget *panel)
 {
-	g_return_if_fail(panel!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(panel));
+	g_return_if_fail (panel != NULL);
+	g_return_if_fail (IS_PANEL_WIDGET (panel));
 
 #ifdef PANEL_DEBUG
 	g_message("Ending drag\n");
@@ -1898,15 +1905,17 @@ panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 	panel->currently_dragged_applet = NULL;
 	panel_applet_in_drag = FALSE;
 
-	if(moving_timeout != 0) {
-		gtk_timeout_remove(moving_timeout);
+	if (moving_timeout != 0) {
+		gtk_timeout_remove (moving_timeout);
 		moving_timeout = 0;
 		been_moved = FALSE;
 	}
 }
 
 void
-panel_widget_applet_drag_start (PanelWidget *panel, GtkWidget *applet)
+panel_widget_applet_drag_start (PanelWidget *panel,
+				GtkWidget *applet,
+				int drag_off)
 {
 	g_return_if_fail (panel !=NULL);
 	g_return_if_fail (IS_PANEL_WIDGET (panel));
@@ -1917,7 +1926,7 @@ panel_widget_applet_drag_start (PanelWidget *panel, GtkWidget *applet)
 	g_message("Starting drag [grabbed] on a %s at %p\n",
 		  gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
-	panel_widget_applet_drag_start_no_grab (panel, applet);
+	panel_widget_applet_drag_start_no_grab (panel, applet, drag_off);
 
 	gtk_grab_add (applet);
 	if (applet->window != NULL) {
@@ -2219,12 +2228,15 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 							   new_panel,
 							   applet,
 							   pos) == -1) {
-					panel_widget_applet_drag_start (panel, applet);
+					panel_widget_applet_drag_start
+						(panel, applet, ad->drag_off);
 					/*can't find a free pos
 					  so cancel the reparent*/
 					continue;
 				}
-				panel_widget_applet_drag_start (new_panel, applet);
+				panel_widget_applet_drag_start (new_panel,
+								applet,
+								ad->drag_off);
 				/* schedule a move, the thing might have
 				 * gone outside the cursor, thus we need to
 				 * schedule a move */
@@ -2348,7 +2360,8 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 			if(bevent->button == 2) {
 				/* Start drag */
-				panel_widget_applet_drag_start(panel, widget);
+				panel_widget_applet_drag_start
+					(panel, widget, PW_DRAG_OFF_CURSOR);
 				return TRUE;
 			}
 

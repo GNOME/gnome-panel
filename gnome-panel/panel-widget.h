@@ -175,14 +175,20 @@ int		panel_widget_get_pos		(PanelWidget *panel,
 int		panel_widget_get_free_space	(PanelWidget *panel,
 						 GtkWidget *applet);
 
+/* use these for drag_off for special cases */
+#define PW_DRAG_OFF_CURSOR -1
+#define PW_DRAG_OFF_CENTER -2
+
 /*drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
-						 GtkWidget *applet);
+						 GtkWidget *applet,
+						 int drag_off);
 void		panel_widget_applet_drag_end	(PanelWidget *panel);
 
 /* needed for corba */
 void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
-						       GtkWidget *applet);
+						       GtkWidget *applet,
+						       int drag_off);
 void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 
 /* changing parameters */

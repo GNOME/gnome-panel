@@ -1463,19 +1463,18 @@ s_panelspot_drag_start(PortableServer_Servant servant,
 	PanelWidget *panel;
 	Extern *ext = (Extern *)servant;
 
-	g_assert(ext != NULL);
-	g_assert(ext->info != NULL);
+	g_assert (ext != NULL);
+	g_assert (ext->info != NULL);
 
-	panel = PANEL_WIDGET(ext->info->widget->parent);
+	panel = PANEL_WIDGET (ext->info->widget->parent);
 	if (panel == NULL) {
 		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return;
 	}
 
-	/*panel_widget_applet_drag_start(panel,info->widget);
-	panel_widget_applet_drag_end(panel);*/
-	panel_widget_applet_drag_start(panel,ext->info->widget);
+	panel_widget_applet_drag_start (panel, ext->info->widget,
+					PW_DRAG_OFF_CENTER);
 }
 
 static void
