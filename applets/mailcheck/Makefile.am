@@ -70,12 +70,13 @@ server_DATA     = $(server_in_files:.server.in=.server)
 
 @INTLTOOL_SERVER_RULE@
 
-schemasdir       = $(sysconfdir)/gconf/schemas
+schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files = mailcheck.schemas.in
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
 
+if GCONF_SCHEMAS_INSTALL
 # don't do this if we are building in eg. rpm
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
@@ -83,6 +84,9 @@ install-data-local:
 		        GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/applets/mailcheck/$$p ; \
 		done \
 	fi
+else
+install-data-local:
+endif
 
 EXTRA_DIST =						\
 	GNOME_MailcheckApplet_Factory.server.in.in	\

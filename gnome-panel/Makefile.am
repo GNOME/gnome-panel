@@ -320,7 +320,7 @@ rc_DATA = gnome-panelrc
 
 @INTLTOOL_SERVER_RULE@
 
-schemasdir       = $(sysconfdir)/gconf/schemas
+schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
 	panel-global-config.schemas.in		\
 	panel-per-panel-config.schemas.in	\
@@ -330,12 +330,16 @@ schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@
 
+if GCONF_SCHEMAS_INSTALL
 install-data-local:
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
 		done \
 	fi
+else
+install-data-local:
+endif
 
 CLEANFILES = $(BUILT_SOURCES)
 
