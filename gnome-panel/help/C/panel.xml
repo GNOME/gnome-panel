@@ -36,9 +36,9 @@
       <para> Windows is a trademark of Microsoft Corp.</para>
     </legalnotice>
 
-    <releaseinfo> 
-		  This is version 1.0 of gnome-panel manual.
-     </releaseinfo>
+    <releaseinfo>
+     This is version 1.0 of The GNOME Panel.
+    </releaseinfo>
   </artheader> 
   <sect1>
    <title>Introduction</title>
@@ -46,43 +46,46 @@
     <indexterm id="idx-a2">
      <primary>Panel</primary>
     </indexterm>
-    The GNOME Panel is the heart of the GNOME user interface and acts
-    as a repository for the <link linkend="mainmenu">Main Menu</link>,
-    user <link linkend="menus">menus</link>,
-    application <link linkend="launchers">launchers</link>, <link
-    linkend="applets">applets</link> 
-    (applications which run entirely within the panel), <link
-    linkend="drawers">drawers</link>, and several <link
-    linkend="specialobjects">special objects</link>.  The Panel was
-    designed to be highly configurable.  You can easily <link
+    The GNOME <interface>Panel</interface> is the heart of the GNOME
+    user interface and acts as a repository for the <link
+    linkend="mainmenu">Main Menu</link>, user <link
+    linkend="menus">menus</link>, application <link
+    linkend="launchers">launchers</link>, <link
+    linkend="applets">applets</link>  (applications which run entirely
+    within the panel), <link linkend="drawers">drawers</link>, and
+    several <link linkend="specialobjects">special objects</link>.
+    The <interface>Panel</interface> was designed to be highly
+    configurable.  You can easily <link
     linkend="panelproperties">customize its behavior and
     appearance</link> and <link linkend="appletadd">add or remove
     objects</link> to suite your personal needs and preferences.  You
-    can even have <link linkend="panelmove">multiple panels</link>,
+    can even have <link linkend="paneladd">multiple panels</link>,
     each with its own appearance, properties, and contents.  This
     flexibility allows you to easily create a comfortable and
     efficient personalized desktop environment.
    </para>
-    <para> This manual describes version 1.1.4 of GNOME panel.
-      </para>
+   <para> This manual describes version 1.1.5 of the GNOME
+    <interface>Panel</interface>.
+   </para>
   </sect1>
 
 
 <!-- ########### Panel Basics  ############## --> 
-  <sect1 id="panelbasic">  
+  <sect1 id="panelbasics">  
    <title>Panel Basics</title>
    <para>
-    Using the GNOME Panel is very simple and will come easily to
-    anyone who has used a graphical desktop environment.  This section
-    will give you a basic introduction to help you get started, and
-    the following sections will discuss the various panel objects and
-    features in more detail.
+    Using the GNOME <interface>Panel</interface> is very simple and
+    will come easily to anyone who has used a graphical desktop
+    environment.  This section will give you a basic introduction to
+    help you get started, and the following sections will discuss the
+    various Panel objects and features in more detail.
    </para>
 
    <sect2 id="intropanel">
     <title>Introduction to Panel Objects</title>
     <para>
-     The Panel can hold several types of objects.  The example Panel
+     A <interface>Panel</interface> can hold several types of
+     objects.  The example <interface>Panel</interface> 
      in  <xref linkend="examplepanelfig"> shows each type of Panel
      object. 
     </para>
@@ -97,171 +100,161 @@
     </figure>
 
     <para>
-     This example Panel contains the following objects:
-     <itemizedlist>  
+     This example <interface>Panel</interface> contains the following
+     objects: 
+     <itemizedlist>   
       <listitem> 
        <formalpara>
-        <title>Menus</title>
-        <para> 
-         <guilabel>Menus</guilabel> are lists of items, each of which
-         either starts an application, executes a command, or is a
-         sub-menu.  In the example Panel, the left-most
-         icon after the arrow is a stylized footprint icon (the GNOME
-         logo). This is the <guimenu>Main Menu</guimenu>, one of the
-         most important objects in the Panel.  This menu provides
-         access to almost all the applications, commands, and
+        <title>Menus</title> 
+        <para>
+         Menus are lists of items, each of which either starts an
+         application, executes a command, or is a sub-menu.  In the
+         example <interface>Panel</interface> in <xref
+         linkend="examplepanelfig"> , the left-most  icon  after the
+         arrow is a stylized footprint icon (the GNOME logo). This is
+         the <guimenu>Main Menu</guimenu>, one of the most important
+         objects in the <interface>Panel</interface>.  This menu
+         provides access to almost all the applications, commands, and
          configuration options available in GNOME. The <guimenu>Main
          Menu</guimenu> is described in detail in <xref
          linkend="mainmenu">. The second icon shown is a folder, the
-         default icon used for user <guilabel>Menus</guilabel>.  GNOME
-         allows users to create their own <guilabel>Menus</guilabel>
-         with personalized contents to use in addition to the
-         <guimenu>Main Menu</guimenu>.  To open a
-         <guimenu>Menu</guimenu>, just click on the icon with the left
-         mouse button.  For more information on
-         <guilabel>Menus</guilabel>, see <xref linkend="menus">.
+         default icon used for user menus.  GNOME allows users to
+         create their own menus with personalized contents to use in
+         addition to the <guimenu>Main Menu</guimenu>.  To open a
+         menu, just click on the icon with the left mouse button.  For
+         more information on menus, see <xref linkend="menus">.
         </para>
        </formalpara>
       </listitem>
-      <listitem>  
+      <listitem>
        <formalpara>
         <title>Launchers</title>
-        <para> 
-         <guilabel>Launchers</guilabel> are buttons which either start
-         an application or execute a command when you press them(click
-         with the left mouse button).
-         The third icon in the example Panel is a
-         <guilabel>Launcher</guilabel> which starts the
+        <para>
+         Launchers are buttons which either start an application or
+         execute a command when you press them(click with the left
+         mouse button). The third icon in the example
+         <interface>Panel</interface> is a launcher which starts the
          <application>Gnumeric</application> spreadsheet.  For more
-         information on <guilabel>Launchers</guilabel>, see <xref
-        linkend="launchers">.  
+         information on launchers, see <xref linkend="launchers">.
         </para>
        </formalpara>
       </listitem>
-      <listitem>  
+      <listitem>
        <formalpara>
-        <title>Applets</title>
-        <para> 
-         <guilabel>Applets</guilabel> are applications which run inside
-         a small part of the Panel. The fourth through eighth icons
-         in the example Panel 
-         are <guilabel>Applets</guilabel>. The first
-         <guilabel>Applet</guilabel> shown is <application>GNOME
-         Weather</application>, which periodically downloads the current
-         weather conditions off the Web and displays the
-         information. The second <guilabel>Applet</guilabel> is the
-         <application>Drive Mount Applet</application>, which shows
-         whether a disk (in this case, the floppy drive) is mounted and
-         allows you to mount and unmount the drive with a single click
-         of the mouse.  The third <guilabel>Applet</guilabel> shown is
-         the <application>Quick Launch Applet</application>, which acts
-         as a container for <guilabel>Launchers</guilabel>, but saves
-         more space than placing your <guilabel>Launchers</guilabel>
-         directly on the Panel. In the example shown the
-         <application>Quick Launch Applet</application> contains six
-         application <guilabel>Launchers</guilabel>.  Next is the 
-         <guilabel>GNOME Desk Guide</guilabel>, which allows you to
-         control multiple virtual desktops, each of which can have
-         multiple screens.  You can move between desktops and screens
-         by clicking with your left mouse button.  The final 
-         <guilabel>Applet</guilabel> shown is the
-         <guilabel>Tasklist</guilabel>, which allows you to control
-         your windows in various ways, including changing the focus,
-         iconifying windows, closing windows, and killing applications.
-         The <guilabel>Tasklist</guilabel> shown is for a screen with
-         only two windows, both of which are <application>Electric
-         Eyes</application>.  For more information on
-         <guilabel>Applets</guilabel>, see <xref linkend="applets">.
+        <title>Applets</title> <para>  Applets are applications which
+        run inside a small part of the
+        <interface>Panel</interface>. The fourth through eighth icons
+        in the example Panel  are applets. The first applet shown is
+        the <application>GNOME Weather</application> applet, which
+        periodically downloads the current weather conditions off the
+        Web and displays the information. The second applet shown is
+        the <application>Drive Mount</application> applet, which shows
+        whether a disk (in this case, the floppy drive) is mounted and
+        allows you to mount and unmount the drive with a single click
+        of the mouse.  The third applet shown is the
+        <application>Quick Launch</application> applet, which acts as
+        a container for launchers, but saves more space than placing
+        your launchers directly on the
+        <interface>Panel</interface>. In the example shown the
+        <application>Quick Launch</application> applet contains six
+        application launchers.  Next is the  <application>GNOME Desk
+        Guide</application>, which allows you to control multiple
+        virtual desktops, each of which can have multiple screens.
+        You can move between desktops and screens by clicking with
+        your left mouse button.  The final  applet shown is the
+        <application>Tasklist</application>, which allows you to
+        control your application windows in various ways, including
+        changing the focus,  iconifying windows, closing windows, and
+        killing applications.  The <application>Tasklist</application>
+        shown is for a screen with only two windows, both of which are
+        <application>Electric Eyes</application>.  For more
+        information on applets, see <xref linkend="applets">.
         </para>
        </formalpara>
       </listitem>
-      <listitem>    
+      <listitem>
        <formalpara>
-        <title>Drawers</title>
-        <para> 
-         <guilabel>Drawers</guilabel> are essentially extensions of the
-         Panel which can be opened or closed.  They can hold anything
-         the panel can.  The brown icon of a drawer in the example
-         Panel is the default icon for
-         <guilabel>Drawers</guilabel>, although any icon can be
-         used. Click on the <guilabel>Drawer</guilabel> with the left
-         mouse button to open or close it.  For more information on
-         <guilabel>Drawers</guilabel>, see <xref linkend="drawers">.
+        <title>Drawers</title> <para>  Drawers are essentially
+        extensions of a <interface>Panel</interface> which can be
+        opened or closed.  They can hold anything the
+        <interface>Panel</interface> can.  The brown icon of a drawer
+        in the example  <interface>Panel</interface> is the default
+        icon for drawers, although any icon can be used. Click on the
+        <guiicon>Drawer</guiicon> icon with the left mouse button to
+        open or close it.  For more information on drawers, see <xref
+        linkend="drawers">.
         </para>
        </formalpara>
       </listitem>
-      <listitem>    
+      <listitem>
        <formalpara>
         <title>Special Objects</title>
-        <para> 
-         <guilabel>Special Objects</guilabel> are items you can
-         add to the Panel which perform functions which are generally
-         not available through the other Panel objects. The last
-         item in the example Panel is a <guilabel>Special
-         Object</guilabel> called the <guibutton>Logout
-         Button</guibutton>. Pressing this with the left mouse button
-         begins the logout sequence to end 
-         your GNOME session. For more
-         information on <guilabel>Special Objects</guilabel>, see <xref
-         linkend="specialobjects">.
+        <para>
+         Special objects are items you can add to a
+         <interface>Panel</interface> which perform functions which
+         are generally not available through the other
+         <interface>Panel</interface> objects. The last item in the
+         example <interface>Panel</interface> is a special object
+         called the <guibutton>Logout Button</guibutton>. Pressing
+         this with the left mouse button  begins the logout sequence
+         to end your GNOME session. For more information on special
+         objects, see <xref linkend="specialobjects">.
         </para>
        </formalpara>
       </listitem>
      </itemizedlist>
-    </para>    
+    </para>
     <para>
-     Each of these object types is described in detail in the following
-     sections. You can easily add, move, or remove Panel objects
-     (see <xref linkend="appletadd">).
+     Each of these object types is described in detail in the
+     following sections. You can easily add, move, or remove Panel
+     objects (see <xref linkend="appletadd">).
     </para>
    </sect2>
 
  
    <sect2 id="rightclick">
-    <title>Right-click menu</title>
+    <title>Right-Click Menu</title>
     <para>
-     Clicking on any panel object with the right mouse button brings
-     up the Panel object <guimenu>Pop-up Menu</guimenu>. This
-     <guilabel>Menu</guilabel> contains 
-     <guimenuitem>Remove from panel</guimenuitem> for removing the
-     object from the panel, <guimenuitem>Move applet</guimenuitem> for
-     moving objects within the Panel or between Panels, 
-     the <guimenu>Panel Submenu</guimenu> described below, and 
-     object-specific items.  For <guilabel>Drawers</guilabel>,
-     <guilabel>Menus</guilabel>, and <guilabel>Launchers</guilabel>
-      the only object-specific item is the
-     <guimenuitem>Properties...</guimenuitem> item which allows you
-     to customize the properties and settings of the object. For
-     <guilabel>Applets</guilabel>, the
-     <guimenu>Pop-up Menu</guimenu> will often contain
-     <guimenuitem>About</guimenuitem> for viewing information about
-     the <guilabel>Applet</guilabel> such as the author's name and the
-     <guilabel>Applet</guilabel> version, 
+     Clicking on any Panel object with the right mouse button brings
+     up the Panel object's <guimenu>right-click</guimenu> menu. This
+     menu contains <guimenuitem>Remove from panel</guimenuitem> for
+     removing the object from the <interface>Panel</interface>,
+     <guimenuitem>Move</guimenuitem> for  moving objects within the
+     <interface>Panel</interface> or between two
+     <interface>Panels</interface>,  the
+     <guisubmenu>Panel</guisubmenu> sub-menu described below, and
+     typically one or more object-specific menu items.  For drawers,
+     menus, and launchers the only object-specific item is
+     <guimenuitem>Properties...</guimenuitem> which allows you to
+     customize the properties and settings of the object. For applets,
+     the <guimenu>right-click</guimenu> menu will often contain
+     <guimenuitem>About...</guimenuitem> for viewing information about
+     the applet such as the author's name and the applet version,
      <guimenuitem>Help</guimenuitem> for viewing documentation about
-     the <guilabel>Applet</guilabel>, and
-     <guimenuitem>Properties</guimenuitem> for 
-     configuring preferences and settings for the
-     <guilabel>Applet</guilabel>.  <guilabel>Applets</guilabel> 
-     often have other <guilabel>Applet</guilabel>-specific controls in the
-     <guimenu>Pop-up Menu</guimenu>.
+     the applet, and <guimenuitem>Properties...</guimenuitem> for
+     configuring preferences and settings for the applet.  Applets
+     often have other applet-specific controls in their
+     <guimenu>right-click</guimenu> menus.
     </para>
     <para>
-     The <guimenu>Panel Submenu</guimenu> allows you to <link
-     linkend="panelmove">create and remove Panels</link> and <link
+     The <guisubmenu>Panel</guisubmenu> sub-menu allows you to <link
+     linkend="panelmove">create and remove
+     <interface>Panels</interface></link> and <link
      linkend="appletadd">add objects</link> to the
-     Panel.  It also allows you to modify the properties of the
-     particular Panel of interest using the
-     <guimenuitem>Properties</guimenuitem> menu item (see <xref
-     linkend="panelproperties">) or the properties of all panels using
-     <guimenuitem>Global Preferences...</guimenuitem> menu item (see <xref
+     <interface>Panel</interface>.  It also allows you to modify the
+     properties of the particular <interface>Panel</interface> of
+     interest using the  <guimenuitem>Properties</guimenuitem> menu
+     item (see <xref linkend="panelproperties">) or the properties of
+     all <interface>Panels</interface> using the <guimenuitem>Global
+     Preferences...</guimenuitem> menu item (see <xref
      linkend="globalpanelprefs">).
     </para>
     <para>
-     You can also right-click on the Panel itself. This will
-     bring up the <link linkend="mainmenu"><guimenu>Main
+     You can also right-click on the <interface>Panel</interface>
+     itself. This will bring up the <link linkend="mainmenu"><guimenu>Main
      Menu</guimenu></link>. In particular, this
-     <guilabel>Menu</guilabel> also contains the 
-     <guimenu>Panel Submenu</guimenu> described above.
+     menu also contains the <guisubmenu>Panel</guisubmenu> submenu
+     described above. 
     </para>
    </sect2>
 
@@ -275,8 +268,8 @@
       <primary>Panel</primary> <secondary>Hiding</secondary>
      </indexterm>
      The left and right arrow icons seen at either end of the example
-     panel are used to hide the panel. These arrows are shown in <xref
-     linkend="fig2">.
+     <interface>Panel</interface> and in <xref linkend="fig2"> are
+     used to hide the <interface>Panel</interface>.
      <figure id="fig2">
       <title>The Hide Button</title>
       <screenshot>
@@ -288,18 +281,20 @@
      </figure>
     </para>
     <para>
-     Pressing one of these arrows will hide the GNOME Panel by sliding
-     it in the direction of the arrow pressed, so that the only
-     part of the panel which remain visible is the
+     Pressing one of these arrows will hide the
+     <interface>Panel</interface> by sliding   it in the direction of
+     the arrow pressed, so that the only part of the
+     <interface>Panel</interface> which remains visible is the
      <guibutton>Hide</guibutton> button itself.   Pressing it a second
-     time will expand the Panel.
+     time will expand the <interface>Panel</interface>.
     </para>
     <para>
-     The Panel can be configured to automatically hide when you are
-     not using it and reappear when you move the mouse to the part of
-     the screen where the Panel resides. This can be a helpful
-     function if you are unable to run your system in a high
-     resolution.  To learn how to have the Panel auto-hide, see <xref
+     <interface>Panels</interface> can be configured to
+     automatically hide when you are  not using it and reappear when
+     you move the mouse to the part of the screen where the Panel
+     resides. This can be useful if you are unable to run your system
+     in a high resolution.  To learn how to have a
+     <interface>Panel</interface> auto-hide, see <xref
      linkend="panelproperties">.
     </para>
    </sect2>
@@ -307,11 +302,12 @@
    <sect2 id="loggingout">
     <title>Logging Out</title>
     <para>
-     To log out of GNOME, right click on either end of the Panel and
+     To log out of GNOME, right click on the <interface>Panel</interface> and
      select <guimenuitem>Log out</guimenuitem>. This will bring up the
-     Logout Dialog seen below.
+     <interface>Logout</interface> dialog, shown in <xref
+     linkend="logoutdialog-fig">. 
     </para>
-    <figure>
+    <figure id="logoutdialog-fig">
      <title>The Logout Dialog</title>
      <screenshot>
       <screeninfo>Logout</screeninfo>
@@ -323,11 +319,11 @@
     <para>
      If you would like to save your current setup, select the
      <guilabel>Save current setup</guilabel> checkbox. This will save
-     any GNOME programs you have open and configuration changes you
-     may have made in the Control Center.
+     any GNOME applications you have open and configuration changes you
+     may have made in the <application>Control Center</application>.
     </para>
     <para>
-     The default way of logging out is by using the
+     The default way to log out is by using the
      <guilabel>Logout</guilabel> option, which ends your GNOME session
      but does not shut down the computer.  Depending on your system
      configuration, you may also have the <guilabel>Halt</guilabel>
@@ -335,10 +331,12 @@
      <guilabel>Reboot</guilabel> option, which will reboot the
      computer.
     </para>
-    <note>   <title>Note for advanced users</title>  <para>   The
-     <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
-     will only be shown if you have the permission to execute the
-     command <command>/usr/bin/shutdown</command>.
+    <note>   
+     <title>Note for advanced users</title>  
+     <para>   
+      The <guilabel>Halt</guilabel> and <guilabel>Reboot</guilabel> choices
+      will only be shown if you have permission to execute the
+      command <command>/usr/bin/shutdown</command>.
      </para>
     </note>
     <para>
@@ -357,19 +355,18 @@
      </para>
     </note>
     <para>
-     You can disable the Logout Dialog so that pressing the logout
-     button will end your GNOME session without asking any
-     questions. To do so, start <application>GNOME control
-     center</application>, by selecting   <menuchoice>
-	  <guimenu>Main Menu</guimenu>
-	  <guisubmenu>Settings</guisubmenu>
-     <guisubmenu>Startup programs</guisubmenu> </menuchoice> and
-     uncheck the button <guilabel>Prompt on logout</guilabel>. 
-	<!-- Commented out - as suggested by Drake
-      You may
-     also control whether changes to your session are automatically
-     saved using the <guilabel>Automatically save changes to
-     session</guilabel> button. -->
+     You can disable the <interface>Logout</interface> dialog so that
+     selecting the <guimenuitem>Log out</guimenuitem> menu item will
+     end your GNOME session without asking any questions. To do so,
+     start the GNOME <application>Control Center</application> by
+     selecting <menuchoice> <guimenu>Main Menu</guimenu>
+     <guisubmenu>Settings</guisubmenu> <guisubmenu>Startup
+     programs</guisubmenu> </menuchoice> and uncheck the
+     <guilabel>Prompt on logout</guilabel> button.  <!-- Commented out
+     - as suggested by Drake You may also control whether changes to
+     your session are automatically saved using the
+     <guilabel>Automatically save changes to session</guilabel>
+     button. -->
     </para>
    </sect2>
    <sect2 id="lockscreen">
@@ -379,17 +376,19 @@
      and not allow others to use or view your GNOME session.  GNOME
      allows you to do this by locking the screen, requiring a password
      to unlock it. To lock your GNOME session, right click on either
-     end of a Panel and select <guimenuitem>Lock screen</guimenuitem>.
+     end of a <interface>Panel</interface> and select
+     <guimenuitem>Lock screen</guimenuitem>.
     </para>
     <note>
      <title>Screensavers and The Lock Button</title>
      <para>
-      The <guibutton>Lock Button</guibutton> uses a feature of the
-      <application>xscreensaver</application> program. This is the same
-      program that the Control Center uses to set your screensaver. In
-      order for the <guibutton>Lock Button</guibutton> to work
-      properly, you must have a screensaver enabled in the Control
-      Center.
+      The <guibutton>Lock screen</guibutton> button uses a feature of
+      the <application>xscreensaver</application> program. This is the
+      same program that the <application>Control Center</application>
+      uses to set your screensaver. In  order for the <guibutton>Lock
+      screen</guibutton> button to work properly, you must have a
+      screensaver enabled in the <application>Control
+      Center</application>.
      </para>
     </note>  
    </sect2>
