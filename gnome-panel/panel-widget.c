@@ -706,6 +706,7 @@ allocate_dirty_child(gpointer data)
 	AppletData *ad = data;
 	AppletData *nad;
 	PanelWidget *panel;
+	GtkWidget *widget;
 	GtkAllocation challoc;
 	GtkRequisition chreq;
 	
@@ -713,10 +714,22 @@ allocate_dirty_child(gpointer data)
 	g_return_val_if_fail(ad->applet != NULL,FALSE);
 	g_return_val_if_fail(PANEL_IS_WIDGET(ad->applet->parent),FALSE);
 
-	panel = PANEL_WIDGET(ad->applet->parent);
+	panel = PANEL_WIDGET (ad->applet->parent);
+	widget = GTK_WIDGET (panel);
 	
 	if(!ad->dirty)
 		return FALSE;
+
+	/* If a packed panel is not given all the space it wants
+	   and this is an expanding applet we must reallocate everything */
+	if (panel->packed &&
+	    ad->expand_major &&
+	    (widget->requisition.width > widget->allocation.width ||
+	     widget->requisition.height > widget->allocation.height)) {
+		gtk_widget_queue_resize (widget);
+		return FALSE;
+	}
+		
 	
 	gtk_widget_get_child_requisition(ad->applet,&chreq);
 
@@ -1364,8 +1377,10 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		}
 	} 
 	
-	requisition->width = CLAMP (requisition->width, 12, gdk_screen_width ());
-	requisition->height = CLAMP (requisition->height, 12, gdk_screen_height ());
+	if (requisition->width < 12)
+		requisition->width = 12;
+	if (requisition->height < 12)
+		requisition->height = 12;
 }
 
 static void
@@ -1397,6 +1412,22 @@ panel_widget_set_background_region (PanelWidget *panel)
 		origin_x, origin_y,
 		widget->allocation.width,
 		widget->allocation.height);
+}
+
+static int
+panel_widget_count_expanded_applets (PanelWidget *panel)
+{
+	GList *li;
+	int count = 0;
+
+	for (li = panel->applet_list; li != NULL; li = li->next) {
+		AppletData *ad = li->data;
+
+		if (ad->expand_major)
+			count ++;
+	}
+
+	return count;
 }
 
 static void
@@ -1434,7 +1465,22 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	if(old_size<panel->size)
 		panel_widget_right_stick(panel,old_size);
 
-	if(panel->packed) {
+	if (panel->packed) {
+		int compression = 0;
+		int applets_to_compress = 0;
+
+		if (panel->orient == GTK_ORIENTATION_HORIZONTAL &&
+		    widget->requisition.width > allocation->width) {
+			compression = widget->requisition.width - allocation->width;
+		} else if (panel->orient == GTK_ORIENTATION_VERTICAL &&
+			   widget->requisition.height > allocation->height) {
+			compression = widget->requisition.height - allocation->height;
+		}
+
+		if (compression > 0) {
+			applets_to_compress = panel_widget_count_expanded_applets (panel);
+		}
+
 		i = 0;
 		for(list = panel->applet_list;
 		    list!=NULL;
@@ -1452,10 +1498,17 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				if (ad->expand_minor)
 					challoc.height = allocation->height;
 
-				if (ad->expand_major && ad->size_hints)
-					challoc.width = CLAMP (MAX (ad->size_hints [0], chreq.width),
+				if (ad->expand_major && ad->size_hints) {
+					int width = ad->size_hints [0];
+					if (applets_to_compress > 0) {
+						width -= (compression / applets_to_compress);
+						compression -= (compression / applets_to_compress);
+						applets_to_compress --;
+					}
+					challoc.width = CLAMP (MAX (width, chreq.width),
 							       chreq.width,
 							       allocation->width - i);
+				}
 
 				ad->cells = challoc.width;
 				challoc.x = ad->constrained;
@@ -1464,10 +1517,17 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				if (ad->expand_minor)
 					challoc.width = allocation->width;
 
-				if (ad->expand_major && ad->size_hints)
-					challoc.height = CLAMP (MAX (ad->size_hints [0], chreq.height),
+				if (ad->expand_major && ad->size_hints) {
+					int height = ad->size_hints [0];
+					if (applets_to_compress > 0) {
+						height -= (compression / applets_to_compress);
+						compression -= (compression / applets_to_compress);
+						applets_to_compress --;
+					}
+					challoc.height = CLAMP (MAX (height, chreq.height),
 								chreq.height,
 								allocation->height - i);
+				}
 
 				ad->cells = challoc.height;
 				challoc.x = allocation->width / 2 - challoc.width / 2;

@@ -1,3 +1,13 @@
+Tue Aug 19 14:20:17 2003  George Lebl <jirka@5z.com>
+
+	* panel-widget.c: Fixing #120107 where a non-expanded panel would
+	  always use the biggest hint of the expaned applets.  Check if
+	  allocation didn't give us all the space we needed and compress
+	  expanded applets within possibilities.  Don't clamp the upper
+	  size of the size request, it is not necessary and in fact
+	  just makes trouble since then we wouldn't know how much space
+	  we were denied.
+
 Tue Aug 19 13:18:20 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: Fix #119984 and RH #102631 by properly
