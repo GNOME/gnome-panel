@@ -11,27 +11,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 04:13+0100\n"
-"PO-Revision-Date: 2004-01-07 19:45+0100\n"
+"POT-Creation-Date: 2004-01-13 04:40+0100\n"
+"PO-Revision-Date: 2004-01-13 14:51+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:232
+#: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:232
+#: applets/clock/clock.c:263 applets/clock/clock.c:610
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:830
+#: applets/clock/clock.c:265 applets/clock/clock.c:1501
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:832
+#: applets/clock/clock.c:265 applets/clock/clock.c:612
+#: applets/clock/clock.c:1503
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -40,7 +41,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:245
+#: applets/clock/clock.c:276
 msgid "%a %b %e"
 msgstr "%a, %e. %b"
 
@@ -48,7 +49,7 @@ msgstr "%a, %e. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:252
+#: applets/clock/clock.c:283
 #, c-format
 msgid ""
 "%1$s\n"
@@ -61,48 +62,62 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:259
+#: applets/clock/clock.c:290
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:374
+#: applets/clock/clock.c:407
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:508
+#: applets/clock/clock.c:826
+msgid "Tasks"
+msgstr "Úkoly"
+
+#: applets/clock/clock.c:954
+msgid "All Day"
+msgstr "Celý den"
+
+#: applets/clock/clock.c:985
+msgid "Appointments"
+msgstr "Události"
+
+#: applets/clock/clock.c:1201
 msgid "Calendar"
 msgstr "Kalendář"
 
-#: applets/clock/clock.c:736
+#: applets/clock/clock.c:1414
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: applets/clock/clock.c:825
+#: applets/clock/clock.c:1496
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S"
 
-#: applets/clock/clock.c:827
+#: applets/clock/clock.c:1498
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
-#: applets/clock/clock.c:868
+#: applets/clock/clock.c:1538
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: applets/clock/clock.c:910
+#: applets/clock/clock.c:1580
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nemohu spustit nástroj pro nastavení času: %s"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:1621
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
-msgstr "Nemohu nalézt program pro nastavení data a času. Možná není žádný nainstalován?"
+msgstr ""
+"Nemohu nalézt program pro nastavení data a času. Možná není žádný "
+"nainstalován?"
 
-#: applets/clock/clock.c:1418 applets/clock/clock.c:1775
+#: applets/clock/clock.c:2079 applets/clock/clock.c:2436
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -112,52 +127,52 @@ msgstr "Nemohu nalézt program pro nastavení data a času. Možná není žádn
 msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:2128
 msgid "Clock Preferences"
 msgstr "Nastavení hodin"
 
-#: applets/clock/clock.c:1503
+#: applets/clock/clock.c:2164
 msgid "Clock _type:"
 msgstr "_Typ hodin:"
 
-#: applets/clock/clock.c:1514
+#: applets/clock/clock.c:2175
 msgid "12 hour"
 msgstr "Dvanáctihodinové"
 
-#: applets/clock/clock.c:1522
+#: applets/clock/clock.c:2183
 msgid "24 hour"
 msgstr "Dvacetičtyřhodinové"
 
-#: applets/clock/clock.c:1530
+#: applets/clock/clock.c:2191
 msgid "UNIX time"
 msgstr "UNIXový čas"
 
-#: applets/clock/clock.c:1538
+#: applets/clock/clock.c:2199
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:2207
 msgid "Custom format"
 msgstr "Vlastní formát"
 
-#: applets/clock/clock.c:1562
+#: applets/clock/clock.c:2223
 msgid "Custom _format:"
 msgstr "Vlastní _formát:"
 
-#: applets/clock/clock.c:1579
+#: applets/clock/clock.c:2240
 msgid "Show _seconds"
 msgstr "Zobrazovat _sekundy"
 
-#: applets/clock/clock.c:1588
+#: applets/clock/clock.c:2249
 msgid "Show _date"
 msgstr "Zobrazovat _datum"
 
-#: applets/clock/clock.c:1597
+#: applets/clock/clock.c:2258
 msgid "Use _UTC"
 msgstr "Použít _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1810 applets/notification_area/main.c:116
+#: applets/clock/clock.c:2471 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
 #: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:502
 #: gnome-panel/menu.c:283
@@ -168,12 +183,12 @@ msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: applets/clock/clock.c:1829
+#: applets/clock/clock.c:2490
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Hodiny"
 
-#: applets/clock/clock.c:1831
+#: applets/clock/clock.c:2492
 msgid "The Clock displays the current time and date"
 msgstr "Hodiny zobrazují aktuální datum a čas"
 
@@ -234,7 +249,10 @@ msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr "Tento klíč určuje formát používaný apletem hodin, když je klíč format nastaven na \"custom\". Pro získání konkrétního formátu můžete použít specifikátory převodu, kterým rozumí strftime()."
+msgstr ""
+"Tento klíč určuje formát používaný apletem hodin, když je klíč format "
+"nastaven na \"custom\". Pro získání konkrétního formátu můžete použít "
+"specifikátory převodu, kterým rozumí strftime()."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -246,7 +264,15 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr "Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou \"12-hour\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Je-li klíč nastaven na \"internet\", budou hodiny zobrazovat internetový čas. Systém internetového času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné časové zóny, takže čas je všude na světě stejný. Je-li klíč nastaven na \"unix\", budou hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970. Je-li klíč nastaven na \"custom\", budou hodiny zobrazovat čas podle formátu určeného v klíči custom_format."
+msgstr ""
+"Tento klíč určuje formát hodin používaný apletem hodin. Možné hodnoty jsou "
+"\"12-hour\", \"24-hour\", \"internet\", \"unix\" a \"custom\". Je-li klíč "
+"nastaven na \"internet\", budou hodiny zobrazovat internetový čas. Systém "
+"internetového času dělí den do 1000 \".úderů\". V tomto systému nejsou žádné "
+"časové zóny, takže čas je všude na světě stejný. Je-li klíč nastaven na "
+"\"unix\", budou hodiny zobrazovat čas v sekundách od epoch, tj. 1. 1. 1970. "
+"Je-li klíč nastaven na \"custom\", budou hodiny zobrazovat čas podle formátu "
+"určeného v klíči custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -1282,7 +1308,21 @@ msgstr "Vlastnosti spouštěče"
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Klíč %s není nastaven, nemohu načíst spouštěč\n"
 
-#: gnome-panel/launcher.c:897 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:867 gnome-panel/launcher.c:884
+#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:536
+msgid "Cannot create launcher"
+msgstr "Nemohu vytvořit spouštěč"
+
+#: gnome-panel/launcher.c:868 gnome-panel/menu-ditem.c:464
+msgid "You have to specify a name."
+msgstr "Musíte zadat název."
+
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:481
+msgid "You have to specify a valid URL or command."
+msgstr "Musíte zadat platné URL nebo příkaz."
+
+#: gnome-panel/launcher.c:928 gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Vytvořit spouštěč"
 
@@ -1516,7 +1556,9 @@ msgstr "Odhlásit uživatele %s"
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
-msgstr "Odhlásit uživatele %s z tohoto sezení, aby bylo možno přihlásit se jako jiný uživatel nebo vypnout počítač"
+msgstr ""
+"Odhlásit uživatele %s z tohoto sezení, aby bylo možno přihlásit se jako jiný "
+"uživatel nebo vypnout počítač"
 
 #: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
 msgid "Run Application..."
@@ -1541,19 +1583,6 @@ msgstr "Plocha"
 #: gnome-panel/menu-ditem.c:127
 msgid "Cannot save changes to launcher"
 msgstr "Nemohu uložit změny spouštěče"
-
-#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
-#: gnome-panel/menu-ditem.c:536
-msgid "Cannot create launcher"
-msgstr "Nemohu vytvořit spouštěč"
-
-#: gnome-panel/menu-ditem.c:464
-msgid "You have to specify a name."
-msgstr "Musíte zadat název."
-
-#: gnome-panel/menu-ditem.c:481
-msgid "You have to specify a valid URL or command."
-msgstr "Musíte zadat platné URL nebo příkaz."
 
 #. class
 #: gnome-panel/menu-ditem.c:511
@@ -2296,7 +2325,8 @@ msgstr "Nelze nalézt vhodnou aplikaci"
 #: gnome-panel/panel-recent.c:82
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr "Implicitní aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
+msgstr ""
+"Implicitní aplikace pro tento typ souboru neumí zpracovat vzdálené soubory"
 
 #: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
 msgid "Cannot open recently used document"
