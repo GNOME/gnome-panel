@@ -213,7 +213,7 @@ panel_session_save (GnomeClient *client,
 		    gpointer client_data)
 {
 	gint num;
-	char buf[256];
+	char *buf;
 	char *session_id;
 	gint i;
 
@@ -230,10 +230,11 @@ panel_session_save (GnomeClient *client,
 		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
 					  &num);
 
-	g_snprintf(buf, 256, "%sConfig", panel_cfg_path);
+	buf = g_copy_strings(panel_cfg_path,"Config/",NULL);
 	gnome_config_push_prefix (buf);
+	g_free(buf);
 
-	gnome_config_set_int ("/applet_count", num-1);
+	gnome_config_set_int ("applet_count", num-1);
 	num = 1;
 	g_list_foreach(panels, save_panel_configuration,&num);
 	gnome_config_set_int("panel_count",num-1);
