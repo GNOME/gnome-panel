@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-15 18:19-0400\n"
-"PO-Revision-Date: 2004-05-15 18:16-0400\n"
-"Last-Translator: Alexander Winston <alexander.winston@comcast.net>\n"
+"POT-Creation-Date: 2004-05-30 14:43-0700\n"
+"PO-Revision-Date: 2004-05-30 14:44-0700\n"
+"Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -63,7 +63,7 @@ msgid "Accessories"
 msgstr "Accessories"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2413
+#: applets/clock/clock.c:2459
 msgid "Clock"
 msgstr "Clock"
 
@@ -83,16 +83,16 @@ msgstr "Get the current time and date"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:604
+#: applets/clock/clock.c:282 applets/clock/clock.c:611
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1528
+#: applets/clock/clock.c:284 applets/clock/clock.c:1574
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:606
-#: applets/clock/clock.c:1530
+#: applets/clock/clock.c:284 applets/clock/clock.c:613
+#: applets/clock/clock.c:1576
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -132,44 +132,50 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: applets/clock/clock.c:823
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:618
+msgid "%b %d"
+msgstr "%d %b"
+
+#: applets/clock/clock.c:861
 msgid "Tasks"
 msgstr "Tasks"
 
-#: applets/clock/clock.c:955
+#: applets/clock/clock.c:995
 msgid "All Day"
 msgstr "All Day"
 
-#: applets/clock/clock.c:989
+#: applets/clock/clock.c:1035
 msgid "Appointments"
 msgstr "Appointments"
 
-#: applets/clock/clock.c:1210
+#: applets/clock/clock.c:1256
 msgid "Calendar"
 msgstr "Calendar"
 
-#: applets/clock/clock.c:1441
+#: applets/clock/clock.c:1487
 msgid "Computer Clock"
 msgstr "Computer Clock"
 
-#: applets/clock/clock.c:1523
+#: applets/clock/clock.c:1569
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1525
+#: applets/clock/clock.c:1571
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:1611
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1607
+#: applets/clock/clock.c:1653
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Failed to launch time configuration tool: %s"
 
-#: applets/clock/clock.c:1646
+#: applets/clock/clock.c:1692
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -177,11 +183,11 @@ msgstr ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 
-#: applets/clock/clock.c:2048
+#: applets/clock/clock.c:2094
 msgid "Custom format"
 msgstr "Custom format"
 
-#: applets/clock/clock.c:2169 applets/clock/clock.c:2359
+#: applets/clock/clock.c:2215 applets/clock/clock.c:2405
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -191,48 +197,48 @@ msgstr "Custom format"
 msgid "There was an error displaying help: %s"
 msgstr "There was an error displaying help: %s"
 
-#: applets/clock/clock.c:2205
+#: applets/clock/clock.c:2251
 msgid "Clock Preferences"
 msgstr "Clock Preferences"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2287
 msgid "Clock _type:"
 msgstr "Clock _type:"
 
-#: applets/clock/clock.c:2251
+#: applets/clock/clock.c:2297
 msgid "12 hour"
 msgstr "12 hour"
 
-#: applets/clock/clock.c:2252
+#: applets/clock/clock.c:2298
 msgid "24 hour"
 msgstr "24 hour"
 
-#: applets/clock/clock.c:2253
+#: applets/clock/clock.c:2299
 msgid "UNIX time"
 msgstr "UNIX time"
 
-#: applets/clock/clock.c:2254
+#: applets/clock/clock.c:2300
 msgid "Internet time"
 msgstr "Internet time"
 
-#: applets/clock/clock.c:2262
+#: applets/clock/clock.c:2308
 msgid "Custom _format:"
 msgstr "Custom _format:"
 
-#: applets/clock/clock.c:2281
+#: applets/clock/clock.c:2327
 msgid "Show _seconds"
 msgstr "Show _seconds"
 
-#: applets/clock/clock.c:2290
+#: applets/clock/clock.c:2336
 msgid "Show _date"
 msgstr "Show _date"
 
-#: applets/clock/clock.c:2299
+#: applets/clock/clock.c:2345
 msgid "Use _UTC"
 msgstr "Use _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2394 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2440 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -241,7 +247,7 @@ msgstr ""
 "Adam Weinberger <adamw@gnome.org>\n"
 "Alexander Winston <alexander.winston@comcast.net>"
 
-#: applets/clock/clock.c:2415
+#: applets/clock/clock.c:2461
 msgid "The Clock displays the current time and date"
 msgstr "The Clock displays the current time and date"
 
@@ -2206,26 +2212,26 @@ msgstr "_Size:"
 msgid "_Tile"
 msgstr "_Tile"
 
-#: gnome-panel/panel-recent.c:56
+#: gnome-panel/panel-recent.c:60
 msgid "Couldn't find a suitable application"
 msgstr "Couldn't find a suitable application"
 
-#: gnome-panel/panel-recent.c:82
+#: gnome-panel/panel-recent.c:86
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 "The default application for this type of file cannot handle remote files"
 
-#: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
 msgid "Cannot open recently used document"
 msgstr "Cannot open recently used document"
 
-#: gnome-panel/panel-recent.c:153
+#: gnome-panel/panel-recent.c:157
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "An unknown error occurred while trying to open %s"
 
-#: gnome-panel/panel-recent.c:174
+#: gnome-panel/panel-recent.c:178
 msgid "Recent Documents"
 msgstr "Recent Documents"
 
@@ -2244,16 +2250,16 @@ msgstr "Cannot display location '%s'"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Cannot convert '%s' from UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1044
+#: gnome-panel/panel-run-dialog.c:1045
 msgid "Choose a file to append to the command..."
 msgstr "Choose a file to append to the command..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1323
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Will run command: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1329 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Select an application to view its description."
 
@@ -2756,7 +2762,7 @@ msgstr "Cannot display help document"
 msgid "Open URL: %s"
 msgstr "Open URL: %s"
 
-#: gnome-panel/panel.c:1242
+#: gnome-panel/panel.c:1245
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2764,7 +2770,7 @@ msgstr ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 
-#: gnome-panel/panel.c:1251
+#: gnome-panel/panel.c:1254
 msgid "Delete Panel"
 msgstr "Delete Panel"
 
@@ -2883,5 +2889,3 @@ msgstr "XX Large"
 msgid "XX Small"
 msgstr "XX Small"
 
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Error reading GConf list value '%s': %s"
