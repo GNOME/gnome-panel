@@ -9,7 +9,6 @@
 #include <libintl.h>
 #endif
 #include <string.h>
-#include <gdk/gdkx.h>
 #include "gnome.h"
 #include "applet_files.h"
 #include "gdkextra.h"
@@ -713,6 +712,8 @@ show_applet_menu(GtkWidget *applet)
 
 typedef struct _applet_pos {
 	gint x,y,width,height;
+	gint xlimit,ylimit;
+	gint repair;
 	gint ok;
 	GtkWidget *w;
 } applet_pos;
@@ -722,6 +723,8 @@ is_applet_pos_ok(GtkWidget *applet, gpointer data)
 {
 	applet_pos *newpos;
 	int x, y, width, height;
+	int diffx, diffy;
+	int nx, ny;
 
 	newpos=(applet_pos *)data;
 
@@ -733,26 +736,91 @@ is_applet_pos_ok(GtkWidget *applet, gpointer data)
 	if((	newpos->x<(x+width) &&
 		(newpos->x+newpos->width)>x) &&
 		(newpos->y<(y+height) &&
-		(newpos->y+newpos->height)>y))
+		(newpos->y+newpos->height)>y)) {
 		/*it's overlapping some other applet so scratch that*/
 		newpos->ok=FALSE;
-	else
-		return;
+		if(!(newpos->repair))
+			return;
+		diffx=(newpos->x+(newpos->width/2))-(x+(width/2));
+		diffy=(newpos->y+(newpos->height/2))-(y+(height/2));
+		nx=newpos->x+x-(newpos->x+newpos->width);
+		ny=newpos->y+y-(newpos->y+newpos->height);
+		if(diffx>0) nx+=width+newpos->width;
+		if(diffy>0) ny+=height+newpos->height;
+		if( (abs(diffy)<abs(diffx)
+			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+			newpos->x=nx;
+			newpos->repair=FALSE;
+			return;
+		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+			newpos->y=ny;
+			newpos->repair=FALSE;
+			return;
+		}
+		if(diffx>0) nx-=width+newpos->width;
+		if(diffy>0) ny-=height+newpos->height;
+		if( (abs(diffy)<abs(diffx)
+			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+			newpos->x=nx;
+			newpos->repair=FALSE;
+			return;
+		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+			newpos->y=ny;
+			newpos->repair=FALSE;
+			return;
+		}
+		nx+=width+newpos->width;
+		ny+=height+newpos->height;
+		if( (abs(diffy)<abs(diffx)
+			|| (ny<0 && (ny+newpos->height)>newpos->ylimit))
+			&& nx>=0 && (nx+newpos->width)<=newpos->xlimit) {
+			newpos->x=nx;
+			newpos->repair=FALSE;
+			return;
+		} else if(ny>=0 && (ny+newpos->height)<=newpos->ylimit)  {
+			newpos->y=ny;
+			newpos->repair=FALSE;
+			return;
+		}
+	}
 }
 
 static gint
-panel_is_spot_clean(GtkWidget *widget, gint x, gint y, gint width,
+panel_find_clean_spot(GtkWidget *widget, gint *x, gint *y, gint width,
 	gint height)
 {
 	/*set up the applet_pos structure*/
-	applet_pos newpos={x,y,width,height,TRUE,widget};
+	applet_pos newpos={*x,*y,width,height,0,0,TRUE,TRUE,widget};
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			newpos.xlimit=the_panel->fixed->allocation.width;
+			newpos.ylimit=the_panel->window->allocation.height;
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			newpos.xlimit=the_panel->window->allocation.width;
+			newpos.ylimit=the_panel->fixed->allocation.height;
+			break;
+	}
 
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
 		      is_applet_pos_ok,
 		      &newpos);
-	if(newpos.ok)
+	if(newpos.repair==FALSE) {
+		newpos.ok=TRUE;
+		gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
+			      is_applet_pos_ok,
+			      &newpos);
+	}
+
+	if(newpos.ok) {
+		*x=newpos.x;
+		*y=newpos.y;
 		return TRUE;
-	else
+	} else
 		return FALSE;
 }
 
@@ -837,9 +905,7 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 
 	/*move the applet as close as we can to the
 	  one blocking it*/
-	while(!panel_is_spot_clean(widget,*x,*y,
-		width,height)) {
-
+	while(!panel_find_clean_spot(widget,x,y,width,height)) {
 		if(movedown) {
 			if(--(*adjvar)<0) {
 				movedown=FALSE;
