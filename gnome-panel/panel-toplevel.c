@@ -4046,6 +4046,14 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 	panel_toplevel_update_description (toplevel);
 	
 	toplevel_list = g_slist_prepend (toplevel_list, toplevel);
+
+	/* Prevent the window from being deleted via Alt+F4 by accident.  This
+	 * happens with "alternative" window managers such as Sawfish or XFWM4.
+	 */
+	g_signal_connect (GTK_WIDGET (toplevel),
+	                  "delete-event",
+	                  G_CALLBACK (gtk_true),
+	                  NULL);
 }
 
 GType
