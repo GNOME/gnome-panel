@@ -30,13 +30,14 @@
 extern GlobalConfig global_config;
 extern GList *panel_list;
 
+extern GtkTooltips *panel_tooltips;
+
 static void foobar_widget_class_init (FoobarWidgetClass *klass);
 static void foobar_widget_init (FoobarWidget *foo);
 static void foobar_widget_realize (GtkWidget *w);
 
 static GtkWidget *das_global_foobar = NULL;
 static GtkWidget *clock_ebox = NULL;
-static GtkTooltips *tooltips = NULL;
 
 static GtkWindowClass *parent_class = NULL;
 
@@ -348,11 +349,7 @@ timeout_cb (gpointer data)
 	if (das_tm->tm_mday != day) {
 		if (strftime (hour, 20, _("%A %B %d"), das_tm) == 20)
 			hour[19] = '\0';
-		if(!tooltips) {
-			tooltips = gtk_tooltips_new ();
-			gtk_tooltips_enable (tooltips);
-		}
-		gtk_tooltips_set_tip (tooltips, clock_ebox, hour, NULL);
+		gtk_tooltips_set_tip (panel_tooltips, clock_ebox, hour, NULL);
 
 		day = das_tm->tm_mday;
 	}

@@ -89,6 +89,41 @@ update_config_floating_pos (BasePWidget *panel)
 }
 
 void
+update_config_floating_pos_limits (BasePWidget *panel)
+{
+	GtkWidget *widget = GTK_WIDGET(panel);
+	PerPanelConfig *ppc = get_config_struct (widget);
+	int xlimit, ylimit;
+	int val;
+	GtkAdjustment *adj;
+	if (!ppc)
+		return;
+
+	xlimit = gdk_screen_width() - widget->allocation.width;
+	ylimit = gdk_screen_height() - widget->allocation.height;
+
+	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->x_spin));
+	if((int)adj->upper == xlimit) {
+		adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->y_spin));
+		if((int)adj->upper == ylimit)
+			return;
+	}
+
+
+	val = FLOATING_POS (panel->pos)->x;
+	if(val > xlimit) val = xlimit;
+	adj = GTK_ADJUSTMENT(gtk_adjustment_new (val, 0, xlimit, 1, 10, 10));
+	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ppc->x_spin), adj);
+	gtk_adjustment_value_changed(adj);
+
+	val = FLOATING_POS (panel->pos)->y;
+	if(val > ylimit) val = ylimit;
+	adj = GTK_ADJUSTMENT(gtk_adjustment_new (val, 0, ylimit, 1, 10, 10));
+	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ppc->y_spin), adj);
+	gtk_adjustment_value_changed(adj);
+}
+
+void
 update_config_floating_orient (BasePWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
@@ -207,6 +242,33 @@ update_config_offset (BasePWidget *w)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->offset_spin),
 				   SLIDING_POS (w->pos)->offset);
 }
+
+void
+update_config_offset_limit (BasePWidget *panel)
+{
+	GtkWidget *widget = GTK_WIDGET(panel);
+	PerPanelConfig *ppc = get_config_struct (widget);
+	int range, val;
+	GtkAdjustment *adj;
+	if (!ppc)
+		return;
+
+	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
+		range = gdk_screen_height() - widget->allocation.height;
+	else
+		range = gdk_screen_width() - widget->allocation.width;
+
+	adj = gtk_spin_button_get_adjustment(GTK_SPIN_BUTTON (ppc->offset_spin));
+	if((int)adj->upper == range)
+		return;
+
+	val = SLIDING_POS (panel->pos)->offset;
+	if(val > range) val = range;
+	adj = GTK_ADJUSTMENT(gtk_adjustment_new (val, 0, range, 1, 10, 10));
+	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ppc->offset_spin), adj);
+	gtk_adjustment_value_changed(adj);
+}
+
 
 void
 update_config_align (BasePWidget *w)
@@ -639,6 +701,10 @@ floating_notebook_page (PerPanelConfig *ppc)
 	GtkObject *range;
 	GtkWidget *f, *w;
 	GtkWidget *hbox;
+	int xlimit, ylimit;
+
+	xlimit = gdk_screen_width() - ppc->panel->allocation.width;
+	ylimit = gdk_screen_height() - ppc->panel->allocation.height;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
 	
@@ -684,8 +750,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	button = gtk_label_new (_("Top left corner's position: X"));
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-	range = gtk_adjustment_new (ppc->x, 0, gdk_screen_width (),
-				    1, 10, 10);
+	range = gtk_adjustment_new (ppc->x, 0, xlimit, 1, 10, 10);
 	ppc->x_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
 	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
@@ -699,8 +764,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	button = gtk_label_new (_("Y"));
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 	
-	range = gtk_adjustment_new (ppc->y, 0, gdk_screen_height (),
-				    1, 10, 10);
+	range = gtk_adjustment_new (ppc->y, 0, ylimit, 1, 10, 10);
 	ppc->y_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
 	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
@@ -737,6 +801,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	GtkWidget *w, *f;
 	GtkWidget *l;
 	GtkWidget *button;
+	GtkAdjustment *adj;
 	int range;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -756,11 +821,13 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	l = gtk_label_new (_("Offset from screen edge:"));
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, GNOME_PAD_SMALL);
 
-#warning FIXME: do the range correctly
-	range = MAX (gdk_screen_width (), gdk_screen_height ());
-	ppc->offset_adj = gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10);
+	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
+		range = gdk_screen_height() - ppc->panel->allocation.height;
+	else
+		range = gdk_screen_width() - ppc->panel->allocation.width;
+	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
-		gtk_spin_button_new (GTK_ADJUSTMENT (ppc->offset_adj), 1, 0);
+		gtk_spin_button_new (adj, 1, 0);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
 	gtk_signal_connect (GTK_OBJECT (button), "changed",
 			    GTK_SIGNAL_FUNC (sliding_set_offset), ppc);
@@ -1156,9 +1223,8 @@ update_config_type (BasePWidget *w)
 	ppc->register_changes = FALSE;
 	gtk_widget_destroy(GTK_BIN(ppc->type_tab)->child);
 
-	/*FIXME: magic numbers */
-	for(i=0;i<4;i++)
-		for(j=0;j<3;j++)
+	for(i = 0; i < POSITION_EDGES; i++)
+		for(j = 0; j < POSITION_ALIGNS; j++)
 			ppc->toggle[i][j] = NULL;
 	if(IS_EDGE_WIDGET(w)) {
 		/* edge notebook page */

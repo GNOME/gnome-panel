@@ -62,7 +62,9 @@ struct _PerPanelConfig {
 	GtkWidget		*back_om; /* the back type option menu */
 
 	/*position widgets*/
-	GtkWidget               *toggle[4][3];    /* left */
+#define POSITION_EDGES 4
+#define POSITION_ALIGNS 3
+	GtkWidget               *toggle[POSITION_EDGES][POSITION_ALIGNS];
 
 	/*floating buttons*/
 	GtkWidget               *h_orient;
@@ -72,7 +74,6 @@ struct _PerPanelConfig {
 
 	/*sliding buttons*/
 	GtkWidget               *offset_spin;
-	GtkObject               *offset_adj;
 };
 
 void panel_config (GtkWidget *panel);
@@ -81,9 +82,11 @@ void update_config_back (PanelWidget *panel);
 void update_config_edge (BasePWidget *w);
 void update_config_anchor (BasePWidget *w);
 void update_config_offset (BasePWidget *w);
+void update_config_offset_limit (BasePWidget *panel);
 void update_config_align (BasePWidget *w);
-void update_config_floating_pos (BasePWidget *w);
-void update_config_floating_orient (BasePWidget *w);
-void update_config_type (BasePWidget *w);
+void update_config_floating_pos (BasePWidget *panel);
+void update_config_floating_orient (BasePWidget *panel);
+void update_config_floating_pos_limits (BasePWidget *panel);
+void update_config_type (BasePWidget *panel);
 void kill_config_dialog (GtkWidget *panel);
 #endif /* PANEL_CONFIG_H */
