@@ -6,7 +6,9 @@
 #launcher_applet and that should be persistent though more then
 #one panel sessions. that works but I've had it not work a few
 #times so this works 100% even though it's not very "clean"
-kill `ps x|awk '/[l]auncher_applet/ {print $1}'`
 
-launcher_applet &
+#now started in panel binary
+#kill `ps x|awk '/[l]auncher_applet/ {print $1}'`
+#launcher_applet &
+
 panel

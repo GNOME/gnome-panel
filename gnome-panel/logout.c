@@ -85,7 +85,7 @@ main(int argc, char *argv[])
 	gnome_init("logout_applet", NULL, argc, argv, 0, NULL);
 
 	if (!gnome_panel_applet_init_corba())
-		g_error(stderr, "Could not communicate with the panel\n");
+		g_error("Could not communicate with the panel\n");
 
 	result = gnome_panel_applet_request_id(myinvoc, &applet_id,
 					  &cfgpath, &globcfgpath,

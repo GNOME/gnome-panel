@@ -3,6 +3,7 @@
  *
  * Authors: Federico Mena
  *          Miguel de Icaza
+ *          George Lebl
  */
 
 #include <config.h>
@@ -17,6 +18,10 @@
 #include "mico-glue.h"
 #include "mico-parse.h"
 #include "panel-util.h"
+
+#ifdef USE_INTERNAL_LAUNCHER
+int launcher_pid=0;
+#endif
 
 /*GList *panels = NULL;*/
 GList *applets = NULL;
@@ -160,7 +165,7 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 
 		swallow = create_swallow_applet(params, SWALLOW_HORIZONTAL);
 		
-		register_toy(swallow->table,NULL,swallow,MENU_ID,params,pos,
+		register_toy(swallow->table,NULL,swallow,SWALLOW_ID,params,pos,
 			     panel,NULL,APPLET_SWALLOW);
 	}
 }
@@ -684,6 +689,18 @@ main(int argc, char **argv)
 
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
+
+#ifdef USE_INTERNAL_LAUNCHER
+	launcher_pid=fork();
+
+	if(launcher_pid==-1)
+		g_error("Can't fork!");
+	if(launcher_pid==0) {
+		execlp("launcher_applet","launcher_applet",NULL);
+		g_error("Can't execlp!");
+		_exit(1);
+	}
+#endif
 
 	client = gnome_client_new_default ();
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",

@@ -1648,7 +1648,7 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    		PANEL_WIDGET(list->data);
 
 			    	if(panel != new_panel &&
-			    	   panel_widget_is_cursor(new_panel,0) &&
+			    	   panel_widget_is_cursor(new_panel,20) &&
 				   new_panel != assoc) {
 					pos = panel_widget_get_moveby(panel,0);
 					panel_widget_reparent(panel,
@@ -1664,7 +1664,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			    	   	return FALSE;
 			    	}
 			}
-			return TRUE;
+			/*FIXME: without this it's sometimes hard to get
+			  applets onto drawers, but it's an annoying
+			  behaviour*/
+			/*return TRUE;*/
 		}
 
 		gtk_widget_get_pointer(panel->fixed, &x, &y);

@@ -131,8 +131,6 @@ panel_corba_clean_up(void)
 
 
 	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, NULL);
-	puts("cleaning...");
-	puts(name);
 	if(gnome_config_has_section(name))
 		gnome_config_clean_section(name);
 

@@ -19,7 +19,6 @@
 #include "menu.h"
 #include "mico-glue.h"
 
-
 #define SMALL_ICON_SIZE 20
 #define BIG_ICON_SIZE   48
 
@@ -393,6 +392,7 @@ create_panel_submenu (GtkWidget *app_menu)
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   MENU_ID);
 
+#ifdef DRAWER_AND_SWALLOW
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add drawer"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
@@ -406,6 +406,7 @@ create_panel_submenu (GtkWidget *app_menu)
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   SWALLOW_ID);
+#endif
 
 	add_menu_separator(menu);
 	

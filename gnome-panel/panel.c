@@ -3,10 +3,12 @@
  *
  * Authors: Federico Mena
  *          Miguel de Icaza
+ *          George Lebl
  */
 
 #include <config.h>
 #include <string.h>
+#include <signal.h>
 #include <gnome.h>
 
 #include "panel-widget.h"
@@ -38,6 +40,10 @@ extern GList *small_icons;
 extern GlobalConfig global_config;
 
 extern char *panel_cfg_path;
+
+#ifdef USE_INTERNAL_LAUNCHER
+extern int launcher_pid;
+#endif
 
 void
 apply_global_config(void)
@@ -311,6 +317,10 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
+#ifdef USE_INTERNAL_LAUNCHER
+		puts("killing launcher");
+		kill(launcher_pid,SIGTERM);
+#endif
 		gtk_exit (0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
