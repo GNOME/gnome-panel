@@ -66,7 +66,6 @@
 #undef MENU_DEBUG
 
 #define ICON_SIZE 20
-#define ICON_SIZE_MENU_ITEM 32
 
 static char *gnome_folder = NULL;
 
@@ -111,7 +110,7 @@ typedef struct {
 	char *image;
 	char *fallback_image;
 	gboolean force_image;
-        guint size;
+	guint size;
 } IconToLoad;
 
 static guint load_icons_id = 0;
@@ -145,11 +144,11 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
 				       const char *title);
 
-void panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
-					       const char *image_filename,
-					       const char *fallback_image_filename,
-					       gboolean force_image,
-					       guint icon_size);
+static void panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
+						      const char *image_filename,
+						      const char *fallback_image_filename,
+						      gboolean force_image,
+						      guint icon_size);
 
 static gboolean panel_menus_have_icons   = TRUE;
 
@@ -2376,9 +2375,8 @@ create_menuitem (GtkWidget *menu,
 	}
 
 	if (icon != NULL) {
-		panel_load_menu_image_deferred_with_size (menuitem, icon, fallback,
-							  FALSE /* force_image */,
-							  ICON_SIZE_MENU_ITEM);
+		panel_load_menu_image_deferred (menuitem, icon, fallback,
+						FALSE /* force_image */);
 	}
 
 	if (sub) {
@@ -4399,7 +4397,7 @@ image_menu_shown (GtkWidget *image, gpointer data)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);
 }
 
-void
+static void
 panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
 					  const char *image_filename,
 					  const char *fallback_image_filename,
