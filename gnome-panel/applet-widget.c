@@ -931,8 +931,8 @@ void
 applet_widget_send_position(AppletWidget *applet, int enable)
 {
 	CORBA_Environment ev;
-	g_return_val_if_fail(applet != NULL,0);
-	g_return_val_if_fail(IS_APPLET_WIDGET(applet), 0);
+	g_return_if_fail(applet != NULL);
+	g_return_if_fail(IS_APPLET_WIDGET(applet));
 	
 	CORBA_exception_init(&ev);
 	GNOME_PanelSpot__set_send_position(CD(applet)->pspot, enable, &ev);
