@@ -884,13 +884,19 @@ panel_addto_selection_changed (GtkTreeSelection *selection,
 	PanelAddtoItemInfo *data;
 	char               *iid;
 
-	if (!gtk_tree_selection_get_selected (selection, &model, &iter))
+	if (!gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 		return;
+	}
 
 	gtk_tree_model_get (model, &iter, COLUMN_DATA, &data, -1);
 
-	if (!data)
+	if (!data) {
+		gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 		return;
+	}
+
+	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), TRUE);
 
 	if (data->type == PANEL_ADDTO_LAUNCHER_MENU) {
 		gtk_button_set_label (GTK_BUTTON (dialog->add_button),
@@ -1005,6 +1011,7 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	dialog->add_button = gtk_dialog_add_button (GTK_DIALOG (dialog->addto_dialog),
 						     GTK_STOCK_ADD,
 						     PANEL_ADDTO_RESPONSE_ADD);
+	gtk_widget_set_sensitive (GTK_WIDGET (dialog->add_button), FALSE);
 	gtk_dialog_set_has_separator (GTK_DIALOG (dialog->addto_dialog),
 				      FALSE);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog->addto_dialog),
