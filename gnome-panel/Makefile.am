@@ -34,10 +34,9 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 
 bin_PROGRAMS = \
 	gnome-panel 			\
-	gnome-panel-screenshot		\
 	gnome-desktop-item-edit
 
-$(gnome_panel_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
+$(gnome_panel_OBJECTS): $(BUILT_SOURCES)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -201,31 +200,8 @@ gnome_desktop_item_edit_LDADD = 	\
 	$(PANEL_LIBS)			\
 	-lpopt
 
-gnome_panel_screenshot_SOURCES = \
-	gnome-panel-screenshot.c	\
-	screenshot-dialog.c		\
-	screenshot-dialog.h		\
-	screenshot-shadow.c		\
-	screenshot-shadow.h		\
-	screenshot-utils.c		\
-	screenshot-utils.h		\
-	screenshot-save.c		\
-	screenshot-save.h		\
-	screenshot-xfer.c		\
-	screenshot-xfer.h		\
-	$(NULL)
-
-gnome_panel_screenshot_LDFLAGS = -export-dynamic
-
-gnome_panel_screenshot_LDADD = 	\
-	$(XSHAPE_LIBS)		 \
-	$(X_LIBS)		 \
-	$(PANEL_SCREENSHOT_LIBS) \
-	$(PNG_LIBS)
-
 gladedir = $(datadir)/gnome/panel/glade
 glade_DATA =					\
-	gnome-panel-screenshot.glade		\
 	panel-properties-dialog.glade		\
 	panel-run-dialog.glade
 
@@ -303,7 +279,6 @@ schemas_in_files =				\
 	panel-general.schemas.in		\
 	panel-toplevel.schemas.in		\
 	panel-object.schemas.in			\
-	gnome-panel-screenshot.schemas.in	\
 	$(NULL)
 schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.schemas)
 

@@ -83,10 +83,6 @@ PKG_CHECK_MODULES(PANEL, ORBit-2.0 >= $ORBIT_REQUIRED gdk-pixbuf-2.0 >= $GDK_PIX
 AC_SUBST(PANEL_CFLAGS)
 AC_SUBST(PANEL_LIBS)
 
-PKG_CHECK_MODULES(PANEL_SCREENSHOT, gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED)
-AC_SUBST(PANEL_SCREENSHOT_CFLAGS)
-AC_SUBST(PANEL_SCREENSHOT_LIBS)
-
 PKG_CHECK_MODULES(LIBPANEL_APPLET, ORBit-2.0 >= $ORBIT_REQUIRED gdk-pixbuf-2.0 >= $GDK_PIXBUF_REQUIRED gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED libbonoboui-2.0 >= $LIBBONOBOUI_REQUIRED)
 AC_SUBST(LIBPANEL_APPLET_CFLAGS)
 AC_SUBST(LIBPANEL_APPLET_LIBS)
@@ -130,13 +126,6 @@ AC_SUBST(MAILCHECK_LIBS)
 PKG_CHECK_MODULES(FISH, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED libglade-2.0 >= $LIBGLADE_REQUIRED)
 AC_SUBST(FISH_CFLAGS)
 AC_SUBST(FISH_LIBS)
-
-dnl shape extenstion for gnome-panel-screenshot
-savecppflags=$CPPFLAGS
-CPPFLAGS="$CPPFLAGS $X_CFLAGS"
-AC_CHECK_HEADERS(X11/extensions/shape.h, XSHAPE_LIBS="-lXext")
-AC_SUBST(XSHAPE_LIBS)
-CPPFLAGS=$savecppflags
 
 # For egg-recent-files
 AC_CHECK_FUNCS(lockf)
@@ -193,14 +182,6 @@ AC_SUBST(GETTEXT_PACKAGE)
 ALL_LINGUAS="af am ar az be bg bn bs ca cs cy da de el en_CA en_GB eo es et eu fa fi fr ga gl gu he hi hr hu id it ja ko li lt lv mi mk ml mn mr ms nb nl nn no or pa pl pt pt_BR ro ru sk sl sq sr sr@ije sr@Latn sv ta th tr uk vi wa yi zh_CN zh_TW"
 AM_GLIB_GNU_GETTEXT
 
-
-dnl Check for libpng
-
-PNG_LIBS=
-AC_CHECK_LIB(png, png_init_io, [
-	     PNG_LIBS="-lpng"],[
-	     AC_MSG_ERROR(libpng is required for gnome-panel)], -lm -lz)
-AC_SUBST(PNG_LIBS)
 
 
 dnl Place to look for KDE menus 
