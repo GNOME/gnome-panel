@@ -17,11 +17,22 @@ GdkAtom KWM_MODULE_DOCKWIN_ADD = 0;
 GdkAtom KWM_MODULE_DOCKWIN_REMOVE = 0;
 GdkAtom KWM_DOCKWINDOW = 0;
 GdkAtom _WIN_CLIENT_LIST = 0;
+GdkAtom _WIN_SUPPORTING_WM_CHECK = 0;
 
 extern GList *check_swallows;
 
 static guint32 *client_list = NULL;
 static int client_list_size = 0;
+
+/* if wm_restart is TRUE, then we should reget the wm check */
+static gboolean wm_restart = TRUE;
+/* cached value */
+static gboolean compliant_wm = FALSE;
+/* the wm window thingie */
+static Window compliant_wm_win = None;
+
+/*list of all panel widgets created*/
+extern GSList *panel_list;
 
 static int
 get_window_id(Window win, char *title, guint32 *wid)
@@ -124,6 +135,54 @@ go_through_client_list(void)
 	}
 }
 
+static int redo_interface_timeout_handle = 0;
+
+static gboolean
+redo_interface_timeout(gpointer data)
+{
+	gboolean old_compliant = compliant_wm;
+
+	redo_interface_timeout_handle = 0;
+
+	wm_restart = TRUE;
+	/* redo the compliancy stuff */
+	if(old_compliant != xstuff_is_compliant_wm()) {
+		GSList *li;
+		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+			PanelData *pd = li->data;
+			if(!IS_BASEP_WIDGET(pd->panel))
+				continue;
+			basep_widget_redo_window(BASEP_WIDGET(pd->panel));
+		}
+	}
+
+	return FALSE;
+}
+
+static void
+redo_interface(void)
+{
+	if(redo_interface_timeout_handle)
+		gtk_timeout_remove(redo_interface_timeout_handle);
+
+	redo_interface_timeout_handle = 
+		gtk_timeout_add(1000,redo_interface_timeout,NULL);
+}
+
+static GdkFilterReturn
+wm_event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent;
+
+	xevent = (XEvent *)gdk_xevent;
+
+	if(xevent->type == DestroyNotify) {
+		if(compliant_wm_win != None &&
+		   compliant_wm_win == xevent->xdestroywindow.window)
+			redo_interface();
+	}
+}
+
 static GdkFilterReturn
 event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
@@ -131,47 +190,52 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
 	xevent = (XEvent *)gdk_xevent;
 
-	if (xevent->type == KeyPress || xevent->type == KeyRelease)
+	switch(xevent->type) {
+	case KeyPress:
+	case KeyRelease:
 		return panel_global_keys_filter(gdk_xevent, event);
-
-	if(xevent->type == PropertyNotify &&
-	   xevent->xproperty.atom == _WIN_CLIENT_LIST) {
-		g_free(client_list);
-		client_list = get_typed_property_data (GDK_DISPLAY(),
-						       GDK_ROOT_WINDOW(),
-						       _WIN_CLIENT_LIST,
-						       XA_CARDINAL,
-						       &client_list_size,32);
-		go_through_client_list();
-	}
-
-	if (xevent->type == MapNotify && check_swallows) {
-		GList *li;
-		int remove; /* counts the number of NULLs we should remove
-			       from the check_swallows_list */
-
-		gdk_error_trap_push ();
-
-		remove = 0;
-		for(li = check_swallows; li; li = g_list_next(li)) {
-			Swallow *swallow = li->data;
-			if(get_window_id(xevent->xmap.window,swallow->title,
-					 &(swallow->wid))) {
-				gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
-				li->data = NULL;
-				remove++;
-			}
+	case PropertyNotify:
+		if(xevent->xproperty.atom == _WIN_CLIENT_LIST) {
+			g_free(client_list);
+			client_list = get_typed_property_data (GDK_DISPLAY(),
+							       GDK_ROOT_WINDOW(),
+							       _WIN_CLIENT_LIST,
+							       XA_CARDINAL,
+							       &client_list_size,32);
+			go_through_client_list();
+		} else if(xevent->xproperty.atom == _WIN_SUPPORTING_WM_CHECK) {
+			redo_interface();
 		}
-		while(remove--)
-			check_swallows = g_list_remove(check_swallows,NULL);
-		
-		gdk_error_trap_pop ();
+		break;
+	case MapNotify:
+		if (check_swallows) {
+			GList *li;
+			int remove; /* counts the number of NULLs we should remove
+				       from the check_swallows_list */
+
+			gdk_error_trap_push ();
+
+			remove = 0;
+			for(li = check_swallows; li; li = g_list_next(li)) {
+				Swallow *swallow = li->data;
+				if(get_window_id(xevent->xmap.window,swallow->title,
+						 &(swallow->wid))) {
+					gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
+					li->data = NULL;
+					remove++;
+				}
+			}
+			while(remove--)
+				check_swallows = g_list_remove(check_swallows,NULL);
+
+			gdk_error_trap_pop ();
+		}
 	}
-	if ((event->any.window) &&
+	/*if ((event->any.window) &&
 	    (gdk_window_get_type(event->any.window) == GDK_WINDOW_FOREIGN))
 		return GDK_FILTER_REMOVE;
-	else
-		return GDK_FILTER_CONTINUE;
+	else*/
+	return GDK_FILTER_CONTINUE;
 }
 
 void
@@ -186,6 +250,7 @@ xstuff_init(void)
 		gdk_atom_intern("KWM_MODULE_DOCKWIN_REMOVE",FALSE);
 	KWM_DOCKWINDOW = gdk_atom_intern("KWM_DOCKWINDOW", FALSE);
 	_WIN_CLIENT_LIST = gdk_atom_intern("_WIN_CLIENT_LIST",FALSE);
+	_WIN_SUPPORTING_WM_CHECK = gdk_atom_intern("_WIN_SUPPORTING_WM_CHECK",FALSE);
 
 	/* set up a filter on the root window to get map requests */
 	/* we will select the events later when we actually need them */
@@ -382,3 +447,64 @@ send_client_message_1L (Window recipient,
   return !gdk_error_trap_pop ();
 }
 
+/* also quite stolen from deskguide */
+gboolean
+xstuff_is_compliant_wm(void)
+{
+	guint32 *prop_data;
+	int size;
+
+	if(!wm_restart)
+		return compliant_wm;
+
+	compliant_wm_win = None;
+
+	prop_data = get_typed_property_data (GDK_DISPLAY (),
+					     GDK_ROOT_WINDOW (),
+					     _WIN_SUPPORTING_WM_CHECK,
+					     XA_CARDINAL,
+					     &size, 32);
+	if(prop_data) {
+		Window check_window = prop_data[0];
+		guint32 *wm_check_data;
+
+		wm_check_data = get_typed_property_data (GDK_DISPLAY (),
+							 check_window,
+							 _WIN_SUPPORTING_WM_CHECK,
+							 XA_CARDINAL,
+							 &size, 32);
+		if (wm_check_data && wm_check_data[0] == check_window)
+			compliant_wm_win = check_window;
+		g_free (wm_check_data);
+		g_free (prop_data);
+	}
+	compliant_wm = (compliant_wm_win!=None);
+
+	if(compliant_wm_win) {
+		XWindowAttributes attribs = { 0 };
+		GdkWindow *win;
+
+		win = gdk_window_foreign_new(compliant_wm_win);
+
+		/* set up a filter on the root window to get map requests */
+		/* we will select the events later when we actually need them */
+		gdk_window_add_filter(win, wm_event_filter, NULL);
+
+		gdk_error_trap_push ();
+
+		XGetWindowAttributes(GDK_DISPLAY (),
+				     compliant_wm_win,
+				     &attribs);
+		XSelectInput(GDK_DISPLAY (),
+			     compliant_wm_win,
+			     attribs.your_event_mask |
+			     StructureNotifyMask);
+		gdk_flush ();
+
+		gdk_error_trap_pop ();
+	}
+
+	wm_restart = FALSE;
+
+	return compliant_wm;
+}

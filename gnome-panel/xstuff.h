@@ -11,10 +11,13 @@ extern GdkAtom KWM_MODULE_DOCKWIN_ADD;
 extern GdkAtom KWM_MODULE_DOCKWIN_REMOVE;
 extern GdkAtom KWM_DOCKWINDOW;
 extern GdkAtom _WIN_CLIENT_LIST;
+extern GdkAtom _WIN_SUPPORTING_WM_CHECK;
 
 void xstuff_init(void);
 void xstuff_set_simple_hint(GdkWindow *w, GdkAtom atom, int val);
 void xstuff_setup_kde_dock_thingie(GdkWindow *w);
+
+gboolean xstuff_is_compliant_wm(void);
 
 gpointer get_typed_property_data (Display *xdisplay,
 				  Window   xwindow,
@@ -27,5 +30,6 @@ gboolean send_client_message_1L (Window recipient,
 				 Atom   message_type,
 				 long   event_mask,
 				 glong  long1);
+
 
 #endif

@@ -15,6 +15,8 @@
 #include "panel-util.h"
 #include "panel_config_global.h"
 
+#include "xstuff.h"
+
 extern int panel_applet_in_drag;
 
 static void basep_widget_class_init	(BasePWidgetClass *klass);
@@ -420,7 +422,7 @@ basep_enter_notify(BasePWidget *basep,
 		basep_widget_autoshow (basep);
 	}  
 
-	if (!gnome_win_hints_wm_exists() &&
+	if (!xstuff_is_compliant_wm() &&
 	    global_config.autoraise)
 		gdk_window_raise(GTK_WIDGET(basep)->window);
 
@@ -777,11 +779,88 @@ basep_widget_destroy (BasePWidget *basep)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
 }	
 
+void
+basep_widget_redo_window(BasePWidget *basep)
+{
+	GtkWindow *window;
+	GtkWidget *widget;
+	GdkWindowAttr attributes;
+	gint attributes_mask;
+	GdkWindow *oldwin;
+	GdkWindow *newwin;
+	gboolean comp;
+
+	comp = xstuff_is_compliant_wm();
+	if(comp == basep->compliant_wm)
+		return;
+
+	window = GTK_WINDOW(basep);
+	widget = GTK_WIDGET(basep);
+
+	basep->compliant_wm = comp;
+	if(basep->compliant_wm) {
+		window->type = GTK_WINDOW_TOPLEVEL;
+		attributes.window_type = GDK_WINDOW_TOPLEVEL;
+	} else {
+		window->type = GTK_WINDOW_POPUP;
+		attributes.window_type = GDK_WINDOW_TEMP;
+	}
+
+	if(!widget->window)
+		return;
+
+	/* this is mostly copied from gtkwindow.c realize method */
+	attributes.title = window->title;
+	attributes.wmclass_name = window->wmclass_name;
+	attributes.wmclass_class = window->wmclass_class;
+	attributes.width = widget->allocation.width;
+	attributes.height = widget->allocation.height;
+	attributes.wclass = GDK_INPUT_OUTPUT;
+	attributes.visual = gtk_widget_get_visual (widget);
+	attributes.colormap = gtk_widget_get_colormap (widget);
+	attributes.event_mask = gtk_widget_get_events (widget);
+	attributes.event_mask |= (GDK_EXPOSURE_MASK |
+				  GDK_KEY_PRESS_MASK |
+				  GDK_ENTER_NOTIFY_MASK |
+				  GDK_LEAVE_NOTIFY_MASK |
+				  GDK_FOCUS_CHANGE_MASK |
+				  GDK_STRUCTURE_MASK);
+
+	attributes_mask = GDK_WA_VISUAL | GDK_WA_COLORMAP;
+	attributes_mask |= (window->title ? GDK_WA_TITLE : 0);
+	attributes_mask |= (window->wmclass_name ? GDK_WA_WMCLASS : 0);
+   
+	oldwin = widget->window;
+
+	newwin = gdk_window_new(NULL, &attributes, attributes_mask);
+	gdk_window_set_user_data(newwin, window);
+
+	gdk_window_reparent(basep->ebox->window, newwin, 0, 0);
+
+	widget->window = newwin;
+
+	gdk_window_set_user_data(oldwin, NULL);
+	gdk_window_destroy(oldwin);
+
+	widget->style = gtk_style_attach(widget->style, widget->window);
+	gtk_style_set_background(widget->style, widget->window, GTK_STATE_NORMAL);
+
+	GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+
+	gtk_widget_queue_resize(widget);
+
+	basep_widget_update_winhints (basep);
+
+	gtk_widget_map(widget);
+}
+
+
 static void
 basep_widget_init (BasePWidget *basep)
 {
 	/*if we set the gnomewm hints it will have to be changed to TOPLEVEL*/
-	if (gnome_win_hints_wm_exists())
+	basep->compliant_wm = xstuff_is_compliant_wm();
+	if(basep->compliant_wm)
 		GTK_WINDOW(basep)->type = GTK_WINDOW_TOPLEVEL;
 	else
 		GTK_WINDOW(basep)->type = GTK_WINDOW_POPUP;
@@ -881,9 +960,9 @@ void
 basep_widget_update_winhints (BasePWidget *basep)
 {
 	GtkWidget *w = GTK_WIDGET (basep);
-	if (!gnome_win_hints_wm_exists ())
+	if (!basep->compliant_wm)
 		return;
-		
+
 	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
 	gdk_window_set_decorations(w->window, 0);
 	gnome_win_hints_set_state (w, WIN_STATE_STICKY |

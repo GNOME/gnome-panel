@@ -76,6 +76,8 @@ struct _BasePWidget
 	gboolean                keep_in_screen;
 
 	guint32                 autohide_complete;
+
+	gboolean		compliant_wm;
 };
 
 struct _BasePWidgetClass
@@ -184,8 +186,8 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 
-gboolean       basep_widget_convert_to         (BasePWidget *basep,
-						 PanelType type);
+/*gboolean       basep_widget_convert_to         (BasePWidget *basep,
+						 PanelType type);*/
 
 void            _basep_widget_enable_buttons (BasePWidget *basep,
 					      gboolean enabled);
@@ -260,6 +262,9 @@ void            basep_widget_set_state         (BasePWidget *basep,
 						gboolean emit);
 
 void            basep_update_frame             (BasePWidget *basep);
+
+/* redo the widget->window based on new compliancy setting */
+void		basep_widget_redo_window	(BasePWidget *basep);
 
 #define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
 

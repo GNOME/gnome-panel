@@ -18,6 +18,8 @@
 
 #include "panel-include.h"
 
+#include "xstuff.h"
+
 extern GSList *applets;
 extern GSList *applets_last;
 extern int applet_count;
@@ -207,7 +209,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	Drawer *drawer = data;
 	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
 
-	if (!gnome_win_hints_wm_exists())
+	if (!xstuff_is_compliant_wm())
 		gdk_window_raise(drawer->drawer->window);
 
 	if (basep->state == BASEP_MOVING)
