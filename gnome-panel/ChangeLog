@@ -1,3 +1,18 @@
+2002-02-06  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* panel-applet-frame.[ch]
+	Add action signal move-focus_out_of_panel to move focus from applet to
+	next or previous object on panel. Currently Tab and Shift+Tab are the 
+	keys which do this.
+
+	* foobar-widget.[ch]
+	Add action signal focus_panel to support moving focus to the panel
+
+	* panel.c:
+	Remove unused argument PanelData specified for panel_event()
+	Set focus on panel if button release happens in panel and panel is
+	not focus widget.
+
 2002-02-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-run.c:
@@ -50,7 +65,7 @@ Tue Feb 05 17:48:58 2002  George Lebl <jirka@5z.com>
 
 2002-02-04  Padraig O'Briain  <padraig.obriain@sun.com>
 
-	* panel.c: Correct popping up of panel's context meny using keyboard.
+	* panel.c: Correct popping up of panel's context menu using keyboard.
 
 2002-02-04  Padraig O'Briain  <padraig.obriain@sun.com>
 

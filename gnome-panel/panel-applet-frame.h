@@ -51,6 +51,9 @@ struct _PanelAppletFrame{
 
 struct _PanelAppletFrameClass {
         GtkEventBoxClass          event_box_class;
+
+	void (* move_focus_out_of_applet) (PanelAppletFrame *frame,
+					   GtkDirectionType  direction);
 };
 
 GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;

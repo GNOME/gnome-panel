@@ -794,8 +794,26 @@ panel_popup_menu (GtkWidget *widget, gpointer data)
 	return panel_do_popup_menu (panel, basep, widget, 3, GDK_CURRENT_TIME);
 }
 
+static gboolean pointer_in_widget (GtkWidget *widget, GdkEventButton *event)
+{
+	int x, y;
+	int wx, wy;
+	int width, height;
+
+	x = (int) event->x_root;
+	y = (int) event->y_root;
+	gdk_window_get_origin (widget->window, &wx, &wy);
+	width = widget->allocation.width;
+	height = widget->allocation.height;
+	if ((x < wx || x >= wx + width) ||
+            (y < wy || y >= wy + height))
+		return FALSE;
+	else
+		return TRUE;
+}
+
 static gboolean
-panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
+panel_event(GtkWidget *widget, GdkEvent *event)
 {
 	PanelWidget *panel = NULL;
 	BasePWidget *basep = NULL;
@@ -828,22 +846,24 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 	case GDK_BUTTON_RELEASE:
 		bevent = (GdkEventButton *) event;
 		if(panel_dragged) {
-			if (!basep)
-				return TRUE;
-			basep_widget_set_pos(basep,
-					     (gint16)bevent->x_root, 
-					     (gint16)bevent->y_root);
-			basep->autohide_inhibit = FALSE;
-			basep_widget_queue_autohide(BASEP_WIDGET(widget));
+			if (basep) {
+				basep_widget_set_pos(basep,
+						     (gint16)bevent->x_root, 
+						     (gint16)bevent->y_root);
+				basep->autohide_inhibit = FALSE;
+				basep_widget_queue_autohide(BASEP_WIDGET(widget));
 
-			gdk_pointer_ungrab(bevent->time);
-			gtk_grab_remove(widget);
-			panel_dragged = FALSE;
-			panel_dragged_timeout = -1;
-			panel_been_moved = FALSE;
+				gdk_pointer_ungrab(bevent->time);
+				gtk_grab_remove(widget);
+				panel_dragged = FALSE;
+				panel_dragged_timeout = -1;
+				panel_been_moved = FALSE;
+			}
+			if (pointer_in_widget (basep->panel, bevent) &&
+			    !gtk_widget_is_focus (basep->panel))
+				panel_widget_focus (panel);
 			return TRUE;
 		}
-
 		break;
 	case GDK_MOTION_NOTIFY:
 		if (panel_dragged) {
@@ -1736,7 +1756,7 @@ panel_setup(GtkWidget *panelw)
 			   0, NULL, 0, 0);
 
 	g_signal_connect (G_OBJECT (panelw), "event",
-			  G_CALLBACK (panel_event), pd);
+			  G_CALLBACK (panel_event), NULL);
 	g_signal_connect (G_OBJECT (panel), "popup_menu",
                           G_CALLBACK (panel_popup_menu), panelw);
 	g_signal_connect (G_OBJECT (panel), "event",

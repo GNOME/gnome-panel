@@ -29,11 +29,13 @@
 #include <gconf/gconf.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
 #include "session.h"
 #include "applet.h"
+#include "panel-marshal.h"
 
 #undef PANEL_APPLET_FRAME_DEBUG
 
@@ -44,9 +46,22 @@ struct _PanelAppletFramePrivate {
 	AppletInfo                     *applet_info;
 
 	gchar                          *iid;
+	gboolean			moving_focus_out;
 };
 
+static void panel_applet_frame_move_focus_out_of_applet (PanelAppletFrame *frame,
+							 GtkDirectionType  dir);
+static gboolean panel_applet_focus (GtkWidget *widget,
+				    GtkDirectionType  dir);
+
 static GObjectClass *parent_class;
+
+enum {
+	MOVE_FOCUS_OUT_OF_APPLET,
+	LAST_SIGNAL
+};
+
+static guint panel_applet_frame_signals [LAST_SIGNAL];
 
 void
 panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
@@ -313,14 +328,53 @@ panel_applet_frame_finalize (GObject *object)
 }
 
 static void
+add_tab_bindings (GtkBindingSet	   *binding_set,
+		  GdkModifierType   modifiers,
+		  GtkDirectionType  direction)
+{
+  gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+				"move_focus_out_of_applet", 1,
+				GTK_TYPE_DIRECTION_TYPE, direction);
+  gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+				"move_focus_out_of_applet", 1,
+				GTK_TYPE_DIRECTION_TYPE, direction);
+  gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
+				"move_focus_out_of_applet", 1,
+				GTK_TYPE_DIRECTION_TYPE, direction);
+}
+
+static void
 panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			       gpointer               dummy)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
+	GtkObjectClass *object_class = (GtkObjectClass *) klass;
+	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
+	GtkBindingSet  *binding_set;
 
 	parent_class = g_type_class_peek_parent (klass);
 
 	gobject_class->finalize = panel_applet_frame_finalize;
+
+	widget_class->focus = panel_applet_focus;
+
+	klass->move_focus_out_of_applet = panel_applet_frame_move_focus_out_of_applet;
+
+	panel_applet_frame_signals [MOVE_FOCUS_OUT_OF_APPLET] =
+		g_signal_new ("move_focus_out_of_applet",
+			      G_TYPE_FROM_CLASS (klass),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelAppletFrameClass, move_focus_out_of_applet),
+			      NULL,
+			      NULL,
+			      panel_marshal_VOID__ENUM,
+			      G_TYPE_NONE,
+			      1,
+			      GTK_TYPE_DIRECTION_TYPE);
+
+	binding_set = gtk_binding_set_by_class (object_class);
+	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
+	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 }
 
 static void
@@ -332,6 +386,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 	frame->priv->applet_shell = CORBA_OBJECT_NIL;
 	frame->priv->property_bag = CORBA_OBJECT_NIL;
 	frame->priv->applet_info  = NULL;
+	frame->priv->moving_focus_out = FALSE;
 }
 
 GType
@@ -460,3 +515,33 @@ panel_applet_frame_new (const char *iid,
 
 	return GTK_WIDGET (frame);
 }
+
+static void 
+panel_applet_frame_move_focus_out_of_applet (PanelAppletFrame *frame,
+					     GtkDirectionType  dir)
+{
+	GtkWidget *toplevel;
+
+	frame->priv->moving_focus_out = TRUE;
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (frame));
+	g_return_if_fail (toplevel);
+
+	gtk_widget_child_focus (toplevel, dir);
+	frame->priv->moving_focus_out = FALSE;
+}
+
+static gboolean
+panel_applet_focus (GtkWidget         *widget,
+		    GtkDirectionType   dir)
+{
+	PanelAppletFrame *frame;
+
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (widget), FALSE);
+	frame = PANEL_APPLET_FRAME (widget);
+	if (frame->priv->moving_focus_out) {
+		return FALSE;
+	} else {
+		return GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
+	}
+}
+

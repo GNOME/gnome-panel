@@ -20,6 +20,7 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
+#include <gdk/gdkkeysyms.h>
 
 #include "foobar-widget.h"
 
@@ -35,6 +36,7 @@
 #include "gnome-run.h"
 #include "multiscreen-stuff.h"
 #include "panel-gconf.h"
+#include "panel-marshal.h"
 
 #define ICON_SIZE 20
 
@@ -53,12 +55,20 @@ static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
+static void foobar_widget_focus_panel   (FoobarWidget *foo);
 static void append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar);
 static void setup_task_menu (FoobarWidget *foo);
 
 static GList *foobars = NULL;
 
 static GtkWindowClass *foobar_widget_parent_class = NULL;
+
+enum {
+	FOCUS_PANEL_SIGNAL,
+	WIDGET_LAST_SIGNAL
+};
+
+static guint foobar_widget_signals[WIDGET_LAST_SIGNAL] = { 0 };
 
 GType
 foobar_widget_get_type (void)
@@ -91,6 +101,7 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 {
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
+	GtkBindingSet *binding_set;
 
 	object_class->destroy = foobar_widget_destroy;
 
@@ -99,12 +110,36 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
 
+	klass->focus_panel = foobar_widget_focus_panel;
+
 	gtk_rc_parse_string ("style \"panel-foobar-menubar-style\"\n"
 			     "{\n"
 			     "GtkMenuBar::shadow-type = none\n"
 			     "GtkMenuBar::internal-padding = 0\n"
 			     "}\n"
 			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
+
+	foobar_widget_signals[FOCUS_PANEL_SIGNAL] =
+		g_signal_new	("focus_panel",
+				G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+				G_STRUCT_OFFSET (FoobarWidgetClass, focus_panel),				NULL,
+                                NULL,
+                                panel_marshal_VOID__VOID,
+				G_TYPE_NONE,
+				0);
+
+	binding_set = gtk_binding_set_by_class (object_class);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Tab, GDK_CONTROL_MASK,
+                                      "focus_panel", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_KP_Tab, GDK_CONTROL_MASK,
+                                      "focus_panel", 0);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
+                                      "focus_panel", 0);
+
 
 }
 
@@ -1345,3 +1380,11 @@ foobar_widget_redo_window(FoobarWidget *foo)
 
 	gtk_widget_map(widget);
 }
+
+static void
+foobar_widget_focus_panel (FoobarWidget *foobar)
+{
+ 	panel_widget_focus (PANEL_WIDGET (foobar->panel));
+}
+
+
