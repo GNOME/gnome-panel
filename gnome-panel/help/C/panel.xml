@@ -1,7 +1,6 @@
 <!DOCTYPE article PUBLIC "-//GNOME//DTD DocBook PNG Variant V1.1//EN"[
 ]>
 
-
  <article id="index">
 
   <artheader> 
@@ -704,7 +703,7 @@
   </sect2>
 
    <sect2 id="menusconf">
-    <title> Configuring a Menu</title>
+    <title>Configuring a Menu</title>
     <para>
      You can easily change a menu name and icon (for user menus
      only, not for submenus taken from the <guimenu>Main
@@ -922,13 +921,13 @@
  <sect1 id="applets">
   <title>Applets</title>
   <para>
-   Applets are GNOME applications which reside in the
+   Applets are GNOME applications which reside in a 
    <interface>Panel</interface>.  An applet's appearance typically
    reveals the state of the applet or other information. Applets often
    have buttons, sliders, entries, or other methods to allow you to
    control their behavior.
   </para>
-  <figure>
+  <figure id="example-applets-fig">
    <title>Example Applets</title>
    <screenshot>
     <screeninfo>Example Applets</screeninfo>
@@ -938,22 +937,30 @@
    </screenshot>
   </figure>
   <para>
-   Some example applets are shown above.  At the very left is the
-   <application>Mixer Applet</application> which allows you to change the volume
-   level and mute the sound. Next is the<application>Sound Monitor
-   Applet</application>, which displays the current volume of sound being played
+   Some example applets are shown above(see <xref
+   linkend="example-applets-fig">).  At the very left is the
+   <application>Mixer Applet</application> which allows you to change
+   the volume level and mute the sound. Next is the<application>Sound Monitor
+   Applet</application>, which displays the current volume of sound
+   being played
    and allows you to control various sound features. The third applet is the
    <application>GTCD Applet</application>, a CD player which has all its
    controls available in the applet and displays the track and time.The next
    applet is the <application>Drive Mount Applet</application>, used to mount
    and unmount drives with a single click of the mouse. This is followed by the
    <application>Desk-Guide Applet</application> which shows you your desktops
-   and the applications which are running on them.
+   and the applications which are running on them. The last applet
+   shown is the <application>Tasklist Applet</application> which
+   allows you to control certain aspects of each application or window
+   which is open.
   </para>
   <para>
-   GNOME has many useful applets.  Just right click on your
-   <interface>Panel</interface>  and add some applets to your panel to
-   find out what is available and which ones are best for you.
+   GNOME has many useful applets.  Just right click on a
+   <interface>Panel</interface> and add some applets to your
+   <interface>Panel</interface> to find out which applets are available and
+   which ones are best for you.  Right click on each applet to see
+   a menu listing various commands and operations the applet can do
+   and to access the documentation for the applet.
   </para>
  </sect1>
 
@@ -962,16 +969,16 @@
  <sect1 id="drawers">
   <title>Drawers</title>
   <para>
-   The simplest way of thinking about a <interface>Drawer</interface>
-   is that it is a  container to store things.  Typically one may use
-   a Drawer to hold multiple launchers which are related to each other
+   The simplest way to think about a drawer
+   is that it is a container to store things.  Typically one may use
+   a drawer to hold multiple launchers which are related to each other
    in some way, such as the various applications in GNOME Office. The
-   Drawers in the GNOME <interface>Panel</interface> take this one
-   step further by making a Drawer an actual extension of the
-   <interface>Panel</interface> itself.  Thus, a Drawer is a
+   drawers in the GNOME <interface>Panel</interface> take this one
+   step further by making a drawer an actual extension of the
+   <interface>Panel</interface> itself.  Thus, a drawer is a
    collapsible branch of an existing <interface>Panel</interface>.  It
-   can contain anything  that a <interface>Panel</interface> can,
-   including launchers, applets, and other Drawers.
+   can contain anything that a <interface>Panel</interface> can,
+   including launchers, applets, and other drawers.
   </para>
   <figure>
    <title>An open Drawer</title>
@@ -983,22 +990,24 @@
    </screenshot>
   </figure>
   <para>
-   Once you have placed a Drawer on the <interface>Panel</interface>,
-   you may click on it to "open" the Drawer, revealing its contents.
-   You may then add items to the Drawer in the same way you would add
-   items to the panel, right clicking on the end of the drawer with
-   the arrow.  You can close the Drawer by clicking on its icon again
-   or by clicking on the arrow at its end.
+   Once you have placed a drawer on a <interface>Panel</interface>,
+   you may click on it to "open" the drawer, revealing its contents.
+   You may then add items to the drawer in the same way you would add
+   items to a <interface>Panel</interface>, right clicking on the end
+   of the drawer with the arrow to open the <link
+   linkend="globalmenu"><interface>Global Menu</interface></link>.
+   You can close the drawer by clicking
+   on its icon again or by clicking on the arrow at its end.
   </para>
   <para>
-   You can configure a Drawer's properties by right clicking on the
-   Drawer's icon and selecting
-   <guimenuitem>Properties</guimenuitem>. This brings up the
+   You can configure a drawer's properties by right clicking on the
+   drawer's icon and selecting
+   <guimenuitem>Properties...</guimenuitem>. This brings up the
    <interface>Drawer Properties</interface> dialog. Here you can
    select the icon used for the drawer by clicking on the icon. A
    tooltip may be entered by typing in the
    <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
-   displayed whenever the mouse is moved over the Drawer to remind you
+   displayed whenever the mouse is moved over the drawer to remind you
    what is inside.  One may also select whether the <guibutton>hide
    button</guibutton> and arrow are displayed at the end of the drawer.
   </para>
@@ -1012,10 +1021,14 @@
    </screenshot>
   </figure>
   <para>
-   You may also control the background of the Drawer. Just right click
-   on the Drawer and select the <guilabel>Background</guilabel> tab to
-   bring up the standard <interface>Panel Background
-   Dialog</interface> (see <xref linkend="panelbacktab">).  </para>
+   You may also control the background color or image of the
+   drawer. Just right click
+   on the drawer and select <guimenuitem>Properties...</guimenuitem>
+   to open the <interface>Drawer Properties</interface> dialog. Then
+   select the <guilabel>Background</guilabel> tab to
+   bring up the <interface>Panel Background
+   Dialog</interface> (see <xref linkend="panelbacktab">).
+  </para>
  </sect1>
 
 
@@ -1024,8 +1037,8 @@
  <sect1 id="specialobjects">
   <title>Special Panel Objects</title>
   <para>
-   There are several special panel objects which are not considered
-   Menus, Applets, or Launchers.  These special objects are described
+   There are several special Panel objects which are not considered
+   menus, applets, or launchers.  These special objects are described
    below.
   </para>
   <sect2 id="lockbutton">
@@ -1041,7 +1054,7 @@
    </figure>
    <para>
     The <guibutton>Lock Button</guibutton> is a
-    <interface>Panel</interface> button which  begins a screensaver
+    <interface>Panel</interface> button which starts a screensaver
     which locks the screen. In order to remove the screensaver and
     access the GNOME session again, you must supply your password.
     For more information on locking the screen, see <xref
