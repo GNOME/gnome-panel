@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-14 04:11+0200\n"
-"PO-Revision-Date: 2004-05-14 17:03+0200\n"
+"POT-Creation-Date: 2004-05-27 03:57+0200\n"
+"PO-Revision-Date: 2004-05-27 14:05+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,7 +66,7 @@ msgid "Accessories"
 msgstr "Příslušenství"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2413
+#: applets/clock/clock.c:2459
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -86,16 +86,16 @@ msgstr "Získat aktuální datum a čas"
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:282 applets/clock/clock.c:604
+#: applets/clock/clock.c:282 applets/clock/clock.c:611
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:1528
+#: applets/clock/clock.c:284 applets/clock/clock.c:1574
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:284 applets/clock/clock.c:606
-#: applets/clock/clock.c:1530
+#: applets/clock/clock.c:284 applets/clock/clock.c:613
+#: applets/clock/clock.c:1576
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -135,44 +135,50 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:823
+#. Translators: If the event did not start on the current day
+#. we will display the start date in the most abbreviated way possible.
+#: applets/clock/clock.c:618
+msgid "%b %d"
+msgstr "%e. %b"
+
+#: applets/clock/clock.c:861
 msgid "Tasks"
 msgstr "Úkoly"
 
-#: applets/clock/clock.c:955
+#: applets/clock/clock.c:995
 msgid "All Day"
 msgstr "Celý den"
 
-#: applets/clock/clock.c:989
+#: applets/clock/clock.c:1035
 msgid "Appointments"
 msgstr "Události"
 
-#: applets/clock/clock.c:1210
+#: applets/clock/clock.c:1256
 msgid "Calendar"
 msgstr "Kalendář"
 
-#: applets/clock/clock.c:1441
+#: applets/clock/clock.c:1487
 msgid "Computer Clock"
 msgstr "Počítačové hodiny"
 
-#: applets/clock/clock.c:1523
+#: applets/clock/clock.c:1569
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S"
 
-#: applets/clock/clock.c:1525
+#: applets/clock/clock.c:1571
 msgid "%I:%M %p"
 msgstr "%I:%M"
 
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:1611
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-#: applets/clock/clock.c:1607
+#: applets/clock/clock.c:1653
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Nemohu spustit nástroj pro nastavení času: %s"
 
-#: applets/clock/clock.c:1646
+#: applets/clock/clock.c:1692
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -180,11 +186,11 @@ msgstr ""
 "Nemohu nalézt program pro nastavení data a času. Možná není žádný "
 "nainstalován?"
 
-#: applets/clock/clock.c:2048
+#: applets/clock/clock.c:2094
 msgid "Custom format"
 msgstr "Vlastní formát"
 
-#: applets/clock/clock.c:2169 applets/clock/clock.c:2359
+#: applets/clock/clock.c:2215 applets/clock/clock.c:2405
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -194,48 +200,48 @@ msgstr "Vlastní formát"
 msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
 
-#: applets/clock/clock.c:2205
+#: applets/clock/clock.c:2251
 msgid "Clock Preferences"
 msgstr "Nastavení hodin"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2287
 msgid "Clock _type:"
 msgstr "_Typ hodin:"
 
-#: applets/clock/clock.c:2251
+#: applets/clock/clock.c:2297
 msgid "12 hour"
 msgstr "Dvanáctihodinové"
 
-#: applets/clock/clock.c:2252
+#: applets/clock/clock.c:2298
 msgid "24 hour"
 msgstr "Dvacetičtyřhodinové"
 
-#: applets/clock/clock.c:2253
+#: applets/clock/clock.c:2299
 msgid "UNIX time"
 msgstr "UNIXový čas"
 
-#: applets/clock/clock.c:2254
+#: applets/clock/clock.c:2300
 msgid "Internet time"
 msgstr "Internetový čas"
 
-#: applets/clock/clock.c:2262
+#: applets/clock/clock.c:2308
 msgid "Custom _format:"
 msgstr "Vlastní _formát:"
 
-#: applets/clock/clock.c:2281
+#: applets/clock/clock.c:2327
 msgid "Show _seconds"
 msgstr "Zobrazovat _sekundy"
 
-#: applets/clock/clock.c:2290
+#: applets/clock/clock.c:2336
 msgid "Show _date"
 msgstr "Zobrazovat _datum"
 
-#: applets/clock/clock.c:2299
+#: applets/clock/clock.c:2345
 msgid "Use _UTC"
 msgstr "Používat _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2394 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2440 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -246,7 +252,7 @@ msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: applets/clock/clock.c:2415
+#: applets/clock/clock.c:2461
 msgid "The Clock displays the current time and date"
 msgstr "Hodiny zobrazují aktuální datum a čas"
 
@@ -1175,15 +1181,7 @@ msgstr "Obrazovka-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Nedostatek místa k vytvoření %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1160
-msgid "Grab a window instead of the entire screen"
-msgstr "Zachytit okno namísto celé obrazovky"
-
-#: gnome-panel/gnome-panel-screenshot.c:1161
-msgid "Take screenshot after specified delay [in seconds]"
-msgstr "Zachytit obrazovku po specifikované pauze [vteřiny]"
-
-#: gnome-panel/gnome-panel-screenshot.c:1211
+#: gnome-panel/gnome-panel-screenshot.c:1179
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1191,14 +1189,22 @@ msgstr ""
 "Soubor glade pro program snímku obrazovky chybí.\n"
 "Prosím zkontrolujte svou instalaci gnome-panel."
 
-#: gnome-panel/gnome-panel-screenshot.c:1227
+#: gnome-panel/gnome-panel-screenshot.c:1195
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nemohu zachytit aktuální plochu."
 
-#: gnome-panel/gnome-panel-screenshot.c:1287
+#: gnome-panel/gnome-panel-screenshot.c:1255
 #, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "Uložit snímek obrazovky na _WWW stránku (uložit do %s)"
+
+#: gnome-panel/gnome-panel-screenshot.c:1311
+msgid "Grab a window instead of the entire screen"
+msgstr "Zachytit okno namísto celé obrazovky"
+
+#: gnome-panel/gnome-panel-screenshot.c:1312
+msgid "Take screenshot after specified delay [in seconds]"
+msgstr "Zachytit obrazovku po specifikované pauze [vteřiny]"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
@@ -2255,12 +2261,12 @@ msgstr "Nemohu převést '%s' z UTF-8"
 msgid "Choose a file to append to the command..."
 msgstr "Vyberte soubor, který připojit k příkazu..."
 
-#: gnome-panel/panel-run-dialog.c:1232
+#: gnome-panel/panel-run-dialog.c:1322
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Spustím příkaz: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1238 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1328 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Vyberte aplikaci pro zobrazení jejího popisu."
 
