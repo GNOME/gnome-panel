@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.hi\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-21 18:29+0530\n"
+"POT-Creation-Date: 2004-08-09 18:06+0100\n"
 "PO-Revision-Date: 2004-07-18 14:16+0530\n"
 "Last-Translator: Ravishankar Shrivastava <raviratlami@yahoo.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
@@ -48,9 +48,9 @@ msgstr "के बारे में (_A)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:618 gnome-panel/menu.c:2452
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
-#: gnome-panel/panel-menu-button.c:621
+#: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "मदद (_H)"
 
@@ -62,23 +62,19 @@ msgid "_Preferences"
 msgstr "वरीयताएँ (_P)"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "सहायक प्रोग्राम"
-
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 #: applets/clock/clock.c:2543
 msgid "Clock"
 msgstr "घड़ी"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
 msgstr "घड़ी एप्लेट फैक्ट्री"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
 msgstr "घड़ी एप्लेट बनाने हेतु फैक्ट्री"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
 msgstr "वर्तमान समय और तिथि प्राप्त करें"
 
@@ -206,8 +202,8 @@ msgstr "अनुकूलित प्रारूप"
 
 #: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
-#: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
-#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
+#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
@@ -257,9 +253,9 @@ msgstr "यूटीसी उपयोग में लें ( _U)"
 #  Translator credits
 #. Translator credits
 #: applets/clock/clock.c:2524 applets/notification_area/main.c:120
-#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
-#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
-#: gnome-panel/menu.c:206
+#: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
+#: gnome-panel/menu.c:201
 msgid "translator_credits"
 msgstr "रविशंकर श्रीवास्तव <raviratlami@yahoo.com>"
 
@@ -357,23 +353,19 @@ msgid "Use UTC"
 msgstr "यूटीसी उपयोग करें"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "आमोद-प्रमोद"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
 msgstr "तैरती मछली या अन्य एनीमेटेड जंतु दिखाएँ"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "मछली"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
 msgstr "यह बेवकूफ मछली कहां से आई"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
 msgstr "वांडा फैक्ट्री"
 
@@ -598,88 +590,78 @@ msgstr "नोटिफिकेशन क्षेत्र"
 msgid "Notification Area Factory"
 msgstr "नोटिफिकेशन क्षेत्र फैक्ट्री"
 
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-msgid "Utility"
-msgstr "यूटिलिटी"
-
 #: applets/notification_area/main.c:138 applets/notification_area/main.c:364
 msgid "Panel Notification Area"
 msgstr "पटल नोटिफिकेशन क्षेत्र"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/panel-menu-bar.c:208
-msgid "Actions"
-msgstr "क्रियाएँ"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Factory for the window navigation related applets"
 msgstr "विंडो नेविगेशन से सम्बन्धित एप्लेट्स हेतु फैक्ट्री"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
 msgstr "अनुप्रयोग विंडो को छुपाएँ और डेस्कटॉप दिखाएँ"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
 msgstr "डेस्कटॉप दिखाएँ"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows"
 msgstr "खुले विंडोज़ के बीच स्विच करें"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between workspaces"
 msgstr "कार्यस्थानों के बीच स्विच करें"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 #: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "विंडो सूची"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 msgid "Window Navigation Applet Factory"
 msgstr "विंडो नेविगेशन एप्लेट फैक्ट्री"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
-#: applets/wncklet/window-menu.c:728
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
+#: applets/wncklet/window-menu.c:748
 msgid "Window Selector"
 msgstr "विंडो चयनक"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/workspace-switcher.c:519
 #: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "कार्यस्थान स्विचर"
 
-#: applets/wncklet/showdesktop.c:221
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "छुपे विंडोज़ पुनर्स्थापित करने हेतु यहां क्लिक करें."
 
-#: applets/wncklet/showdesktop.c:224
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "विंडोज़ को छुपाने और डेस्कटॉप दिखाने हेतु यहां क्लिक करें."
 
-#: applets/wncklet/showdesktop.c:306
+#: applets/wncklet/showdesktop.c:315
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr " %s लोड करने में असफल: %s\n"
 
 # libgnomevfs/gnome-vfs-result.c:36
-#: applets/wncklet/showdesktop.c:307
+#: applets/wncklet/showdesktop.c:316
 msgid "File not found"
 msgstr "फ़ाइल नहीं मिली"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
+#: applets/wncklet/showdesktop.c:346 applets/wncklet/showdesktop.c:465
 msgid "Show Desktop Button"
 msgstr "डेस्कटॉप दिखाने वाला बटन"
 
-#: applets/wncklet/showdesktop.c:458
+#: applets/wncklet/showdesktop.c:467
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "यह बटन सभी विंडोज़ को छुपाने और डेस्कटॉप दिखाने देता है"
 
-#: applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:507
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -816,20 +798,20 @@ msgstr "यह कुंजी विंडो सूची द्वारा �
 msgid "When to group windows"
 msgstr "विंडोज़ को कब समूहबद्ध करें"
 
-#: applets/wncklet/window-menu.c:138
+#: applets/wncklet/window-menu.c:152
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "विंडो चयनक सभी विंडोज़ की सूची दिखाता है तथा उसमें ब्राउज़ करने देता है."
 
-#: applets/wncklet/window-menu.c:418
+#: applets/wncklet/window-menu.c:435
 msgid "Unknown Window"
 msgstr "अज्ञात विंडो"
 
-#: applets/wncklet/window-menu.c:621
+#: applets/wncklet/window-menu.c:640
 msgid "No Windows Open"
 msgstr "कोई विंडो खुले नहीं हैं"
 
-#: applets/wncklet/window-menu.c:727
+#: applets/wncklet/window-menu.c:747
 msgid "Tool to switch between windows"
 msgstr "विंडोज़ के बीच बदलने का उपकरण"
 
@@ -1014,8 +996,8 @@ msgstr "सीडीई मेनू "
 msgid "Drawer"
 msgstr "दराज़"
 
-#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1381
-#: gnome-panel/menu.c:2402 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "गुण (_P)"
 
@@ -1176,7 +1158,7 @@ msgstr "स्क्रीनशॉट-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "फ़ाइल %s में लिखने को पर्याप्त जगह नहीं"
 
-#: gnome-panel/gnome-panel-screenshot.c:1179
+#: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1184,20 +1166,20 @@ msgstr ""
 "स्क्रीनशॉट प्रोग्राम हेतु ग्लेड फ़ाइल नहीं है.\n"
 "कृपया अपने गनोम पटल की संस्थापना जाँचें"
 
-#: gnome-panel/gnome-panel-screenshot.c:1195
+#: gnome-panel/gnome-panel-screenshot.c:1205
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "वर्तमान डेस्कटॉप का स्क्रीनशॉट लेने में अक्षम."
 
-#: gnome-panel/gnome-panel-screenshot.c:1255
+#: gnome-panel/gnome-panel-screenshot.c:1265
 #, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "वेब पृष्ठ में स्क्रीनशॉट सहेजें (_w) (%s में सहेजें)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1311
+#: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
 msgstr "संपूर्ण स्क्रीन के बजाए एक विंडो ग्रेब करें"
 
-#: gnome-panel/gnome-panel-screenshot.c:1312
+#: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "निर्दिष्ट देरी (सेकण्ड्स में) के बाद स्क्रीनशॉट लें"
 
@@ -1298,7 +1280,7 @@ msgstr "लोड करने हेतु कोई प्रोफ़ाइ�
 msgid "Cannot save changes to launcher"
 msgstr "परिवर्तनों को लांचर में सहेज नहीं सकते"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1203
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1198
 msgid "Menu"
 msgstr "मेनू"
 
@@ -1314,173 +1296,174 @@ msgid ""
 "writable."
 msgstr "आप इस स्थान पर नया लांचर नहीं बना सकते क्योंकि यह स्थान लिखने योग्य नहीं है."
 
-#: gnome-panel/menu.c:196
+#: gnome-panel/menu.c:191
 msgid "And many, many others..."
 msgstr "और भी बहुत, बहुत से..."
 
-#: gnome-panel/menu.c:219
+#: gnome-panel/menu.c:214
 msgid "The GNOME Panel"
 msgstr "गनोम पटल"
 
-#: gnome-panel/menu.c:222
+#: gnome-panel/menu.c:217
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
 "यह प्रोग्राम अन्य अनुप्रयोगों को लांच करने हेतु जिम्मेदार है, छोटे एप्लेट्स को अपने में समाए हुए."
 
-#: gnome-panel/menu.c:251 gnome-panel/panel-action-button.c:200
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
 #: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "'%s' को चला नहीं सका"
 
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:247
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: gnome-panel/menu.c:253
+#: gnome-panel/menu.c:248
 msgid "About GNOME"
 msgstr "गनोम के बारे में"
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:272
 msgid "Cannot launch entry"
 msgstr "प्रविष्टि लांच नहीं कर पाए"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:284
 msgid "Cannot load entry"
 msgstr "प्रविष्टि लोड नही कर पाया"
 
-#: gnome-panel/menu.c:996
+#: gnome-panel/menu.c:991
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "मेनू आइटम %s को मिटा नहीं सकते"
 
-#: gnome-panel/menu.c:1007
+#: gnome-panel/menu.c:1002
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "पथ: %s से फ़ाइल नाम नहीं पा सका"
 
-#: gnome-panel/menu.c:1014
+#: gnome-panel/menu.c:1009
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "पथ: %s से डिरेक्ट्री नाम नहीं पा सका"
 
-#: gnome-panel/menu.c:1198 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
 msgid "Main Menu"
 msgstr "मुख्य मेनू"
 
-#: gnome-panel/menu.c:1345
+#: gnome-panel/menu.c:1340
 msgid "Add this launcher to panel"
 msgstr "इस लांचर को पटल में जोडें"
 
-#: gnome-panel/menu.c:1354
+#: gnome-panel/menu.c:1349
 msgid "Remove this item"
 msgstr "इस सामग्री को मिटाएँ"
 
-#: gnome-panel/menu.c:1403
+#: gnome-panel/menu.c:1398
 msgid "Entire menu"
 msgstr "सम्पूर्ण मेनू"
 
-#: gnome-panel/menu.c:1411
+#: gnome-panel/menu.c:1406
 msgid "Add this as drawer to panel"
 msgstr "इसे पटल में दराज की तरह जोड़ें"
 
-#: gnome-panel/menu.c:1422
+#: gnome-panel/menu.c:1417
 msgid "Add this as menu to panel"
 msgstr "इसे पटल में मेनू के रूप में जोड़ें"
 
-#: gnome-panel/menu.c:1434
+#: gnome-panel/menu.c:1429
 msgid "Add new item to this menu"
 msgstr "इस मेनू में नई सामग्री जोड़ें"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1456
 msgid "Properties"
 msgstr "गुण"
 
-#: gnome-panel/menu.c:2220 gnome-panel/menu.c:2225 gnome-panel/menu.c:2640
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "अनुप्रयोग"
 
-#: gnome-panel/menu.c:2295
+#: gnome-panel/menu.c:2213
 msgid "You cannot remove your last panel."
 msgstr "आप अपने आखिरी पटल को मिटा नहीं सकते."
 
-#: gnome-panel/menu.c:2355
+#: gnome-panel/menu.c:2273
 msgid "_Delete This Panel..."
 msgstr "यह पटल मिटाएँ (_D)..."
 
-#: gnome-panel/menu.c:2358 gnome-panel/menu.c:2387
+#: gnome-panel/menu.c:2276 gnome-panel/menu.c:2305
 msgid "_Delete This Panel"
 msgstr "यह पटल मिटाएँ (_D)"
 
-#: gnome-panel/menu.c:2371
+#: gnome-panel/menu.c:2289
 #, fuzzy
 msgid "_Add to Panel..."
 msgstr "पटल में जोडें (_A)"
 
-#: gnome-panel/menu.c:2416
+#: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "नया पटल (_N)"
 
-#: gnome-panel/menu.c:2463
-msgid "_About Panels"
+#: gnome-panel/menu.c:2381
+#, fuzzy
+msgid "A_bout Panels"
 msgstr "पटल के बारे में (_A)"
 
-#: gnome-panel/menu.c:2477
+#: gnome-panel/menu.c:2395
 msgid "About _GNOME"
 msgstr "गनोम के बारे में (_G)"
 
-#: gnome-panel/menu.c:2501 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "स्क्रीन पर ताला लगाएँ"
 
-#: gnome-panel/menu.c:2507
+#: gnome-panel/menu.c:2425
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "स्क्रीन पर ताला लगाएँ ताकि आप अस्थायी रूप से अपने कम्प्यूटर को छोड़ सकें"
 
-#: gnome-panel/menu.c:2523 gnome-panel/panel-addto.c:102
+#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
 #: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "लॉग आउट"
 
-#: gnome-panel/menu.c:2530 gnome-panel/panel-addto.c:103
+#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr ""
 "अन्य उपयोगकर्ता के रूप में लॉगइन करने या कम्प्यूटर बन्द करने हेतु इस सत्र से लॉग आउट करें"
 
-#: gnome-panel/menu.c:2661 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "अनुप्रयोग चलाएँ ..."
 
-#: gnome-panel/menu.c:2668 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "कमांड प्रविष्ट कर एक अनुप्रयोग चलाएँ"
 
-#: gnome-panel/menu.c:2676 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "फ़ाइलों हेतु ढूंढें..."
 
-#: gnome-panel/menu.c:2679 gnome-panel/panel-addto.c:147
+#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "कंप्यूटर में फ़ाइल, फ़ोल्डर और दस्तावेज़ ढूंढें"
 
-#: gnome-panel/menu.c:2695 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "स्क्रीन का चित्र लें..."
 
-#: gnome-panel/menu.c:2698 gnome-panel/panel-addto.c:136
+#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "डेस्कटॉप का एक स्क्रीनशॉट लें"
 
 # gnome-session/splash.c:72
-#: gnome-panel/menu.c:2713
+#: gnome-panel/menu.c:2626
 msgid "Desktop"
 msgstr "डेस्कटॉप"
 
@@ -1893,6 +1876,10 @@ msgstr "विंडो का स्क्रीन चित्र लें"
 msgid "Protect your computer from unauthorized use"
 msgstr "अपने कम्प्यूटर को अनाधिकृत उपयोग से रोकें"
 
+#: gnome-panel/panel-menu-bar.c:208
+msgid "Actions"
+msgstr "क्रियाएँ"
+
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
 msgstr "क्रिया बटन प्रकार"
@@ -2202,20 +2189,24 @@ msgstr "हाल ही में उपयोग किए दस्ताव�
 msgid "An unknown error occurred while trying to open %s"
 msgstr " %s को खोलने की कोशिश के दौरान अज्ञात त्रुटि हुई"
 
-#: gnome-panel/panel-recent.c:210
+#: gnome-panel/panel-recent.c:212
 #, fuzzy
-msgid "Clear recent document history?"
+msgid "Clear the Recent Documents list?"
 msgstr "हाल ही में प्रयुक्त दस्तावेज़"
 
-#: gnome-panel/panel-recent.c:211
-msgid "This will clear the contents of the Recent Documents menu."
+#: gnome-panel/panel-recent.c:213
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 
-#: gnome-panel/panel-recent.c:245
+#: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "हाल ही में प्रयुक्त दस्तावेज़"
 
-#: gnome-panel/panel-recent.c:271
+#: gnome-panel/panel-recent.c:275
 #, fuzzy
 msgid "Clear Recent Documents"
 msgstr "हाल ही में प्रयुक्त दस्तावेज़"
@@ -2706,46 +2697,46 @@ msgstr "बोनोबो एप्लेट जाँचें"
 msgid "Test Bonobo Applet Factory"
 msgstr "बोनोबो एप्लेट फैक्टरी जाँचें"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:847
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "अपूर्ण पृष्ठ भूमि प्रकार प्राप्त '%s' "
 
-#: libpanel-applet/panel-applet.c:891
+#: libpanel-applet/panel-applet.c:861
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "अपूर्ण '%s'  पृष्ठभूमि प्रकार प्राप्त: %s"
 
-#: libpanel-applet/panel-applet.c:900
+#: libpanel-applet/panel-applet.c:870
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "पिक्समैप पाने में असफल %s"
 
-#: libpanel-applet/panel-applet.c:907
+#: libpanel-applet/panel-applet.c:877
 msgid "Unknown background type received"
 msgstr "अज्ञात पृष्ठभूमि प्रकार प्राप्त"
 
-#: libpanel-applet/panel-applet.c:1092
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's containing Panel's orientation"
 msgstr "एप्लेट में पटल की दिशा सम्मिलित है"
 
-#: libpanel-applet/panel-applet.c:1100
+#: libpanel-applet/panel-applet.c:1070
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "एप्लेट में पटल का पिक्सेल में आकार सम्मिलित है"
 
-#: libpanel-applet/panel-applet.c:1108
+#: libpanel-applet/panel-applet.c:1078
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "एप्लेट में पटल का पृष्ठ भूमि रंग या पिक्समैप सम्मिलित है"
 
-#: libpanel-applet/panel-applet.c:1116
+#: libpanel-applet/panel-applet.c:1086
 msgid "The Applet's flags"
 msgstr "एप्लेट्स के ध्वज"
 
-#: libpanel-applet/panel-applet.c:1124
+#: libpanel-applet/panel-applet.c:1094
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "श्रेणियाँ जो संकेत करती हैं कि एप्लेट हेतु क्या आकार स्वीकार्य होगा"
 
-#: libpanel-applet/panel-applet.c:1132
+#: libpanel-applet/panel-applet.c:1102
 msgid "The Applet's containing Panel is locked down"
 msgstr "पटल जिसमें एप्लेट है, ताला बन्द है"
 
@@ -2806,6 +2797,19 @@ msgstr "XX विशाल"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX छोटा"
+
+#~ msgid "Accessories"
+#~ msgstr "सहायक प्रोग्राम"
+
+#~ msgid "Amusements"
+#~ msgstr "आमोद-प्रमोद"
+
+#~ msgid "Utility"
+#~ msgstr "यूटिलिटी"
+
+#, fuzzy
+#~ msgid "Clear recent document history?"
+#~ msgstr "हाल ही में प्रयुक्त दस्तावेज़"
 
 #~ msgid "Launcher..."
 #~ msgstr "लांचर..."

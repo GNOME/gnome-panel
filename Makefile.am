@@ -18,9 +18,6 @@ distuninstallcheck:
 
 distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out' | grep -v 'legal.xml'
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
-
-
 SUBDIRS =			\
 	po 			\
 	idl 			\

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.92\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 08:31+0100\n"
+"POT-Creation-Date: 2004-08-09 18:06+0100\n"
 "PO-Revision-Date: 2004-03-15 07:28+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -54,9 +54,9 @@ msgstr "關於(_A)..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:618 gnome-panel/menu.c:2452
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
-#: gnome-panel/panel-menu-button.c:621
+#: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "求助(_H)"
 
@@ -69,23 +69,19 @@ msgid "_Preferences"
 msgstr "偏好設定(_P)..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "附屬應用程式"
-
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 #: applets/clock/clock.c:2543
 msgid "Clock"
 msgstr "時鐘"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
 msgstr "時鐘面板程式工廠"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
 msgstr "產生時鐘面板程式的工廠"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
 msgstr "獲取目前的時間及日期"
 
@@ -198,8 +194,8 @@ msgstr "自選格式"
 
 #: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
-#: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
-#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
+#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
@@ -248,9 +244,9 @@ msgstr "使用 _UTC 時間"
 
 #. Translator credits
 #: applets/clock/clock.c:2524 applets/notification_area/main.c:120
-#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
-#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
-#: gnome-panel/menu.c:206
+#: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
+#: gnome-panel/menu.c:201
 msgid "translator_credits"
 msgstr ""
 "i18n 程式中文化計劃\n"
@@ -369,23 +365,19 @@ msgid "Use UTC"
 msgstr "使用 UTC 時間"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "娛樂"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
 msgstr "顯示游泳中的魚兒或其它生物"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "小魚"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
 msgstr "那條蠢魚是從哪裡來的"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
 msgstr "Wanda 工廠"
 
@@ -606,87 +598,77 @@ msgstr "程式狀態通知區"
 msgid "Notification Area Factory"
 msgstr "「程式狀態通知區」工廠"
 
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-msgid "Utility"
-msgstr "公用程式"
-
 #: applets/notification_area/main.c:138 applets/notification_area/main.c:364
 msgid "Panel Notification Area"
 msgstr "面板程式狀態通知區"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/panel-menu-bar.c:208
-msgid "Actions"
-msgstr "行動"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Factory for the window navigation related applets"
 msgstr "用來產生和視窗瀏覽有關的面板程式的工廠"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
 msgstr "隱藏所有程式視窗並顯示桌面"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
 msgstr "顯示桌面"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows"
 msgstr "在已開啟的視窗之間切換"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between workspaces"
 msgstr "切換工作區"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 #: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "視窗清單"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 msgid "Window Navigation Applet Factory"
 msgstr "視窗瀏覽面板程式工廠"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
-#: applets/wncklet/window-menu.c:728
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
+#: applets/wncklet/window-menu.c:748
 msgid "Window Selector"
 msgstr "視窗選擇器"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/workspace-switcher.c:519
 #: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "工作區切換程式"
 
-#: applets/wncklet/showdesktop.c:221
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "按下這裡可以將所有已經隱藏的視窗回復原狀。"
 
-#: applets/wncklet/showdesktop.c:224
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "按下這裡可以隱藏所有視窗並顯示桌面。"
 
-#: applets/wncklet/showdesktop.c:306
+#: applets/wncklet/showdesktop.c:315
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "無法載入 %s：%s\n"
 
-#: applets/wncklet/showdesktop.c:307
+#: applets/wncklet/showdesktop.c:316
 msgid "File not found"
 msgstr "找不到檔案"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
+#: applets/wncklet/showdesktop.c:346 applets/wncklet/showdesktop.c:465
 msgid "Show Desktop Button"
 msgstr "顯示桌面按鈕"
 
-#: applets/wncklet/showdesktop.c:458
+#: applets/wncklet/showdesktop.c:467
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "本按鈕可以隱藏所有視窗並顯示桌面"
 
-#: applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:507
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -823,20 +805,20 @@ msgstr "「視窗清單」要求的寬度下限"
 msgid "When to group windows"
 msgstr "何時合併同類的視窗"
 
-#: applets/wncklet/window-menu.c:138
+#: applets/wncklet/window-menu.c:152
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr "「視窗選擇器」列出所有可供瀏覽的視窗。"
 
-#: applets/wncklet/window-menu.c:418
+#: applets/wncklet/window-menu.c:435
 msgid "Unknown Window"
 msgstr "不明的視窗"
 
-#: applets/wncklet/window-menu.c:621
+#: applets/wncklet/window-menu.c:640
 msgid "No Windows Open"
 msgstr "沒有開啟的視窗"
 
-#: applets/wncklet/window-menu.c:727
+#: applets/wncklet/window-menu.c:747
 msgid "Tool to switch between windows"
 msgstr "用來切換至不同視窗的工具"
 
@@ -1020,8 +1002,8 @@ msgstr "CDE 選單"
 msgid "Drawer"
 msgstr "抽屜"
 
-#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1381
-#: gnome-panel/menu.c:2402 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "屬性(_P)"
 
@@ -1170,7 +1152,7 @@ msgstr "Screenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "磁碟空間不夠寫入檔案 %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1179
+#: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1178,20 +1160,20 @@ msgstr ""
 "找不到擷取畫面的程式所需的 glade 檔案。\n"
 "請檢查 gnome-panel 是否已正確安裝"
 
-#: gnome-panel/gnome-panel-screenshot.c:1195
+#: gnome-panel/gnome-panel-screenshot.c:1205
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "無法擷取目前桌面的畫面快照。"
 
-#: gnome-panel/gnome-panel-screenshot.c:1255
+#: gnome-panel/gnome-panel-screenshot.c:1265
 #, fuzzy, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "將畫面快照儲存到網頁 (在 ~/_public__html 目錄)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1311
+#: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
 msgstr "只擷取一個視窗而非整個螢幕"
 
-#: gnome-panel/gnome-panel-screenshot.c:1312
+#: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "在指定秒數之後擷取畫面"
 
@@ -1292,7 +1274,7 @@ msgstr "指定準備載入的設定組合名稱"
 msgid "Cannot save changes to launcher"
 msgstr "無法儲存已更改的啟動圖示"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1203
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1198
 msgid "Menu"
 msgstr "選單"
 
@@ -1307,170 +1289,171 @@ msgid ""
 "writable."
 msgstr "無法在這個位置建立啟動圖示，因為沒有寫入這個位置的權限。"
 
-#: gnome-panel/menu.c:196
+#: gnome-panel/menu.c:191
 msgid "And many, many others..."
 msgstr "還有很多人..."
 
-#: gnome-panel/menu.c:219
+#: gnome-panel/menu.c:214
 msgid "The GNOME Panel"
 msgstr "GNOME 面板"
 
-#: gnome-panel/menu.c:222
+#: gnome-panel/menu.c:217
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr "本程式負責啟動其它程式和啟動內嵌式面板程式。"
 
-#: gnome-panel/menu.c:251 gnome-panel/panel-action-button.c:200
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
 #: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "無法執行 '%s'"
 
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:247
 #, c-format
 msgid "%s: %s"
 msgstr "%s：%s"
 
-#: gnome-panel/menu.c:253
+#: gnome-panel/menu.c:248
 msgid "About GNOME"
 msgstr "關於 GNOME"
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:272
 msgid "Cannot launch entry"
 msgstr "無法啟動該項目"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:284
 msgid "Cannot load entry"
 msgstr "無法載入該項目"
 
-#: gnome-panel/menu.c:996
+#: gnome-panel/menu.c:991
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "無法移除選單項目 %s"
 
-#: gnome-panel/menu.c:1007
+#: gnome-panel/menu.c:1002
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "無法從路徑決定檔案名稱：%s"
 
-#: gnome-panel/menu.c:1014
+#: gnome-panel/menu.c:1009
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "無法從路徑決定目錄名稱：%s"
 
-#: gnome-panel/menu.c:1198 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
 msgid "Main Menu"
 msgstr "主選單"
 
-#: gnome-panel/menu.c:1345
+#: gnome-panel/menu.c:1340
 msgid "Add this launcher to panel"
 msgstr "將這個啟動圖示加入面板"
 
-#: gnome-panel/menu.c:1354
+#: gnome-panel/menu.c:1349
 msgid "Remove this item"
 msgstr "移除這個項目"
 
-#: gnome-panel/menu.c:1403
+#: gnome-panel/menu.c:1398
 msgid "Entire menu"
 msgstr "整個選單"
 
-#: gnome-panel/menu.c:1411
+#: gnome-panel/menu.c:1406
 msgid "Add this as drawer to panel"
 msgstr "以抽屜方式加入面板"
 
-#: gnome-panel/menu.c:1422
+#: gnome-panel/menu.c:1417
 msgid "Add this as menu to panel"
 msgstr "以選單方式加入面板"
 
-#: gnome-panel/menu.c:1434
+#: gnome-panel/menu.c:1429
 msgid "Add new item to this menu"
 msgstr "在這個選單中新增項目"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1456
 msgid "Properties"
 msgstr "屬性"
 
-#: gnome-panel/menu.c:2220 gnome-panel/menu.c:2225 gnome-panel/menu.c:2640
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "應用程式"
 
-#: gnome-panel/menu.c:2295
+#: gnome-panel/menu.c:2213
 msgid "You cannot remove your last panel."
 msgstr "不可以移除最後一個面板。"
 
-#: gnome-panel/menu.c:2355
+#: gnome-panel/menu.c:2273
 msgid "_Delete This Panel..."
 msgstr "刪除本面板(_D)..."
 
-#: gnome-panel/menu.c:2358 gnome-panel/menu.c:2387
+#: gnome-panel/menu.c:2276 gnome-panel/menu.c:2305
 msgid "_Delete This Panel"
 msgstr "刪除本面板(_D)"
 
-#: gnome-panel/menu.c:2371
+#: gnome-panel/menu.c:2289
 #, fuzzy
 msgid "_Add to Panel..."
 msgstr "加入至面板(_A)"
 
-#: gnome-panel/menu.c:2416
+#: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "新增面板(_N)"
 
-#: gnome-panel/menu.c:2463
-msgid "_About Panels"
+#: gnome-panel/menu.c:2381
+#, fuzzy
+msgid "A_bout Panels"
 msgstr "關於面板(_A)"
 
-#: gnome-panel/menu.c:2477
+#: gnome-panel/menu.c:2395
 msgid "About _GNOME"
 msgstr "關於 _GNOME"
 
-#: gnome-panel/menu.c:2501 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "鎖定畫面"
 
-#: gnome-panel/menu.c:2507
+#: gnome-panel/menu.c:2425
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "鎖定畫面，讓使用者可暫時離開電腦"
 
-#: gnome-panel/menu.c:2523 gnome-panel/panel-addto.c:102
+#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
 #: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "登出"
 
-#: gnome-panel/menu.c:2530 gnome-panel/panel-addto.c:103
+#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 msgstr "結束這個作業階段，之後以其它身分登入或關掉電腦"
 
-#: gnome-panel/menu.c:2661 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "執行程式..."
 
-#: gnome-panel/menu.c:2668 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "透過輸入指令來執行程式"
 
-#: gnome-panel/menu.c:2676 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "搜尋檔案..."
 
-#: gnome-panel/menu.c:2679 gnome-panel/panel-addto.c:147
+#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "在電腦中搜尋檔案、資料夾及文件"
 
-#: gnome-panel/menu.c:2695 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "擷取畫面快照..."
 
-#: gnome-panel/menu.c:2698 gnome-panel/panel-addto.c:136
+#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "擷取螢幕畫面"
 
-#: gnome-panel/menu.c:2713
+#: gnome-panel/menu.c:2626
 msgid "Desktop"
 msgstr "桌面"
 
@@ -1896,6 +1879,10 @@ msgstr "擷取視窗畫面"
 msgid "Protect your computer from unauthorized use"
 msgstr "保護電腦，避免別人在未經授權的情況下使用"
 
+#: gnome-panel/panel-menu-bar.c:208
+msgid "Actions"
+msgstr "行動"
+
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
 msgstr "行動按鈕的類型"
@@ -2226,20 +2213,24 @@ msgstr "無法開啟最近使用的文件"
 msgid "An unknown error occurred while trying to open %s"
 msgstr "當嘗試開啟 %s 時出現不明的錯誤"
 
-#: gnome-panel/panel-recent.c:210
+#: gnome-panel/panel-recent.c:212
 #, fuzzy
-msgid "Clear recent document history?"
+msgid "Clear the Recent Documents list?"
 msgstr "最近存取的文件"
 
-#: gnome-panel/panel-recent.c:211
-msgid "This will clear the contents of the Recent Documents menu."
+#: gnome-panel/panel-recent.c:213
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 
-#: gnome-panel/panel-recent.c:245
+#: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "最近存取的文件"
 
-#: gnome-panel/panel-recent.c:271
+#: gnome-panel/panel-recent.c:275
 #, fuzzy
 msgid "Clear Recent Documents"
 msgstr "最近存取的文件"
@@ -2770,46 +2761,46 @@ msgstr "Bonobo 面板測試程式"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo 面板測試程式工廠"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:847
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "接收到不完整的背景圖案類型‘%s’"
 
-#: libpanel-applet/panel-applet.c:891
+#: libpanel-applet/panel-applet.c:861
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "接收到不完整的背景圖案類型‘%s’：%s"
 
-#: libpanel-applet/panel-applet.c:900
+#: libpanel-applet/panel-applet.c:870
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "無法獲取 pixmap %s"
 
-#: libpanel-applet/panel-applet.c:907
+#: libpanel-applet/panel-applet.c:877
 msgid "Unknown background type received"
 msgstr "接收到不明的背景圖案類型"
 
-#: libpanel-applet/panel-applet.c:1092
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有該面板程式的面板的方向"
 
-#: libpanel-applet/panel-applet.c:1100
+#: libpanel-applet/panel-applet.c:1070
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有該面板程式的面板的大小，以像素為單位"
 
-#: libpanel-applet/panel-applet.c:1108
+#: libpanel-applet/panel-applet.c:1078
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有該面板程式的面板的底色或 pixmap"
 
-#: libpanel-applet/panel-applet.c:1116
+#: libpanel-applet/panel-applet.c:1086
 msgid "The Applet's flags"
 msgstr "面板程式的旗標"
 
-#: libpanel-applet/panel-applet.c:1124
+#: libpanel-applet/panel-applet.c:1094
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "提示該面板程式可接受的尺寸範圍"
 
-#: libpanel-applet/panel-applet.c:1132
+#: libpanel-applet/panel-applet.c:1102
 msgid "The Applet's containing Panel is locked down"
 msgstr "含有該面板程式的面板已被鎖定"
 
@@ -2870,6 +2861,19 @@ msgstr "極巨型"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "極微型"
+
+#~ msgid "Accessories"
+#~ msgstr "附屬應用程式"
+
+#~ msgid "Amusements"
+#~ msgstr "娛樂"
+
+#~ msgid "Utility"
+#~ msgstr "公用程式"
+
+#, fuzzy
+#~ msgid "Clear recent document history?"
+#~ msgstr "最近存取的文件"
 
 #~ msgid "Launcher..."
 #~ msgstr "啟動圖示..."

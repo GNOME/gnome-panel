@@ -1,3 +1,59 @@
+==============
+Version 2.7.90
+==============
+
+  Panel
+
+	* Make the menu key popup the panel context menu (Sagar Rastogi)
+	* Fix mnemonic conflict between _Add to Panel and _About Panels (Vincent Untz)
+	* Remove remaining bits of the add launcher menu (Christian Neumair)
+	* Revise the "Clear Recent Documents" confirmation dialog text (William Jon McCann)
+	* Sync with recent-files from libegg (Kjartan Maraas)
+	* Fix invalid usage of de-allocated memory (Kjartan Maraas)
+	* Fix various strange behaviour with button presses on panel objects (Arvind Samptur)
+	* Fix fontilus entries appearing escaped in Recent Documents menu (Federico)
+
+  Applets
+
+	* Fix nasty libpanel-applet issue causing unneccessary padding around Window List (Soeren Sandmann)
+	* Make DEMANDS_ATTENTION windows appear bold in the Window Selector (Vincent Noel)
+	* Make the Show Desktop button correctly resize (Vincent Untz)
+	* Display floating date-times in the calendar relative to localtime (William Jon McCann)
+	* Make the appointment/task list in the clock use SHADOW_IN (Jonathan Blandford)
+	* Remove usage of obselete panel:category attribute and update docs (Mark)
+
+  Screenshooter
+
+	* Make it use the window title rather than the window class for the filename (Bryan Clark)
+
+  Build Stuff
+
+	* Fix various compiler warnings (Mark)
+	* Indicate that strings to be translated are encoded in UTF-8 (Christian Neumair)
+	* Require a xgettext which supports --from-code (Mark)
+	* add DISTCHECK_CONFIGURE_FLAGS=--enable-gtk-doc (Mark)
+
+  Translators
+
+	* Rostislav Raykov (bg)
+	* Miloslav Trmac (cs)
+	* Martin Willemoes Hansen (da)
+	* Adam Weinberger (en_CA)
+	* Gareth Owen (en_GB)
+	* Francisco Javier F. Serrador (es)
+	* Ravishankar Shrivastava (hi)
+	* Laszlo Dvornik (hu)
+	* Takeshi AIHANA (ja)
+	* Changwoo Ryu (ko)
+	* Žygimantas Beručka (lt)
+	* Hasbullah Bin Pit (ms)
+	* Kjartan Maraas (no)
+	* Duarte Loreto (pt)
+	* Dmitry G. Mastrukov (ru)
+	* Elian Myftiu (sq)
+	* Данило Шеган (sr)
+	* Baris Cicek (tr)
+
 ===============
 Version 2.7.4.1
 ===============

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 08:31+0100\n"
+"POT-Creation-Date: 2004-08-09 18:06+0100\n"
 "PO-Revision-Date: 2004-02-16 00:48+0100\n"
 "Last-Translator: Reinout van Schouwen <reinout@cs.vu.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -53,9 +53,9 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:618 gnome-panel/menu.c:2452
+#: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
 #: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
-#: gnome-panel/panel-menu-button.c:621
+#: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "_Hulp"
 
@@ -68,23 +68,19 @@ msgid "_Preferences"
 msgstr "_Voorkeuren..."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Accesoires"
-
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 #: applets/clock/clock.c:2543
 msgid "Clock"
 msgstr "Klok"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock Applet Factory"
 msgstr "Klok-appletfabriek"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
 msgstr "Fabriek om klok-applets aan te maken."
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
 msgstr "Huidige tijd en datum"
 
@@ -199,8 +195,8 @@ msgstr "Aangepaste formattering"
 
 #: applets/clock/clock.c:2299 applets/clock/clock.c:2489
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
-#: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
-#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:426 applets/wncklet/window-list.c:115
+#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:100
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
@@ -249,9 +245,9 @@ msgstr "_UTC gebruiken"
 
 #. Translator credits
 #: applets/clock/clock.c:2524 applets/notification_area/main.c:120
-#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
-#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
-#: gnome-panel/menu.c:206
+#: applets/wncklet/showdesktop.c:456 applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:130 applets/wncklet/workspace-switcher.c:506
+#: gnome-panel/menu.c:201
 msgid "translator_credits"
 msgstr ""
 "Dirk-Jan C. Binnema <djcb@dds.nl>\n"
@@ -379,23 +375,19 @@ msgid "Use UTC"
 msgstr "UTC gebruiken"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Amusement"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
 msgstr "Een zwemmende vis of een ander bewegend beest weergeven"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 #: applets/fish/fish.c:501
 msgid "Fish"
 msgstr "Vis"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "From Whence That Stupid Fish Came"
 msgstr "Waar Die Stomme Vis Vandaan Kwam"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "Wanda Factory"
 msgstr "Wanda-fabriek"
 
@@ -633,89 +625,79 @@ msgstr "Mededelingengebied"
 msgid "Notification Area Factory"
 msgstr "Fabriek voor mededelingengebieden"
 
-#: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:4
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
-msgid "Utility"
-msgstr "Hulpmiddel"
-
 #: applets/notification_area/main.c:138 applets/notification_area/main.c:364
 msgid "Panel Notification Area"
 msgstr "Paneel-mededelingengebied"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/panel-menu-bar.c:208
-msgid "Actions"
-msgstr "Acties"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Factory for the window navigation related applets"
 msgstr "Fabriek voor vensternavigatie-gerelateerde applets"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
 msgstr "Toepassingsvensters verbergen en het bureaublad tonen"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
 msgstr "Werkblad tonen"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
 msgid "Switch between open windows"
 msgstr "Wisselen tussen open vensters"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between workspaces"
 msgstr "Wisselen tussen werkbladen"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 #: applets/wncklet/window-list.c:820
 msgid "Window List"
 msgstr "Vensterlijst"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:7
 msgid "Window Navigation Applet Factory"
 msgstr "Vensternavigatie-appletfabriek"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:726
-#: applets/wncklet/window-menu.c:728
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
+#: applets/wncklet/window-menu.c:748
 msgid "Window Selector"
 msgstr "Vensterselectiescherm"
 
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/workspace-switcher.c:519
 #: applets/wncklet/workspace-switcher.c:928
 msgid "Workspace Switcher"
 msgstr "Werkbladwisselaar"
 
-#: applets/wncklet/showdesktop.c:221
+#: applets/wncklet/showdesktop.c:230
 msgid "Click here to restore hidden windows."
 msgstr "Klik hier om verborgen vensters te herstellen."
 
-#: applets/wncklet/showdesktop.c:224
+#: applets/wncklet/showdesktop.c:233
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik hier om alle vensters te verbergen en het bureaublad te tonen."
 
-#: applets/wncklet/showdesktop.c:306
+#: applets/wncklet/showdesktop.c:315
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Het laden van %s is mislukt: %s\n"
 
-#: applets/wncklet/showdesktop.c:307
+#: applets/wncklet/showdesktop.c:316
 msgid "File not found"
 msgstr "Bestand niet gevonden"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
+#: applets/wncklet/showdesktop.c:346 applets/wncklet/showdesktop.c:465
 msgid "Show Desktop Button"
 msgstr "Werkblad tonen-knop"
 
-#: applets/wncklet/showdesktop.c:458
+#: applets/wncklet/showdesktop.c:467
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Deze knop stelt je in staat alle vensters te verbergen en het bureaublad te "
 "zien"
 
-#: applets/wncklet/showdesktop.c:498
+#: applets/wncklet/showdesktop.c:507
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -858,22 +840,22 @@ msgstr "Deze sleutel is de minimale breedte die de vensterlijst aanvraagt."
 msgid "When to group windows"
 msgstr "Wanneer vensters te groeperen"
 
-#: applets/wncklet/window-menu.c:138
+#: applets/wncklet/window-menu.c:152
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Het vensterselectiescherm toont een lijst van alle vensters waar u doorheen "
 "kunt bladeren."
 
-#: applets/wncklet/window-menu.c:418
+#: applets/wncklet/window-menu.c:435
 msgid "Unknown Window"
 msgstr "Onbekend venster"
 
-#: applets/wncklet/window-menu.c:621
+#: applets/wncklet/window-menu.c:640
 msgid "No Windows Open"
 msgstr "Geen vensters open"
 
-#: applets/wncklet/window-menu.c:727
+#: applets/wncklet/window-menu.c:747
 msgid "Tool to switch between windows"
 msgstr "Hulpmiddel om te wisselen tussen vensters"
 
@@ -1065,8 +1047,8 @@ msgstr "CDE-menu"
 msgid "Drawer"
 msgstr "Opberglade"
 
-#: gnome-panel/drawer.c:612 gnome-panel/launcher.c:824 gnome-panel/menu.c:1381
-#: gnome-panel/menu.c:2402 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Eigenschappen"
 
@@ -1220,7 +1202,7 @@ msgstr "Schermafdruk-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Niet genoeg vrije ruimte voor bestand %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1179
+#: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1228,20 +1210,20 @@ msgstr ""
 "Glade bestand voor het schermafdrukprogramma mist.\n"
 "Controleert u uw installatie van gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1195
+#: gnome-panel/gnome-panel-screenshot.c:1205
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan geen schermafdruk maken van het huidige bureaublad."
 
-#: gnome-panel/gnome-panel-screenshot.c:1255
+#: gnome-panel/gnome-panel-screenshot.c:1265
 #, fuzzy, c-format
 msgid "Save screenshot to _web page (save in %s)"
 msgstr "Schermafdruk opslaan als _webpagina (opslaan in ~/public__html)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1311
+#: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
 msgstr "Een enkel venster vastleggen in plaats van het hele scherm"
 
-#: gnome-panel/gnome-panel-screenshot.c:1312
+#: gnome-panel/gnome-panel-screenshot.c:1322
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Schermafdruk na aangegeven vertraging [in seconden] maken"
 
@@ -1345,7 +1327,7 @@ msgstr "Specificeer een profiel naam om te laden"
 msgid "Cannot save changes to launcher"
 msgstr "Kan wijzigingen aan starter niet opslaan"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1203
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1198
 msgid "Menu"
 msgstr "Menu"
 
@@ -1362,15 +1344,15 @@ msgstr ""
 "U kunt op deze plaats geen nieuwe starter aanmaken omdat deze plaats niet "
 "beschrijfbaar is."
 
-#: gnome-panel/menu.c:196
+#: gnome-panel/menu.c:191
 msgid "And many, many others..."
 msgstr "En vele, vele anderen..."
 
-#: gnome-panel/menu.c:219
+#: gnome-panel/menu.c:214
 msgid "The GNOME Panel"
 msgstr "Het GNOME-paneel"
 
-#: gnome-panel/menu.c:222
+#: gnome-panel/menu.c:217
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
@@ -1378,124 +1360,125 @@ msgstr ""
 "Dit programma is verantwoordelijk voor het starten van andere toepassingen "
 "en het in zichzelf inbedden van applets."
 
-#: gnome-panel/menu.c:251 gnome-panel/panel-action-button.c:200
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
 #: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kan '%s' niet uitvoeren"
 
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:247
 #, c-format
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: gnome-panel/menu.c:253
+#: gnome-panel/menu.c:248
 msgid "About GNOME"
 msgstr "GNOME-info"
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:272
 msgid "Cannot launch entry"
 msgstr "Kan item niet starten"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:284
 msgid "Cannot load entry"
 msgstr "Kan item niet laden"
 
-#: gnome-panel/menu.c:996
+#: gnome-panel/menu.c:991
 #, c-format
 msgid "Cannot remove menu item %s"
 msgstr "Kan menu-item %s niet verwijderen"
 
-#: gnome-panel/menu.c:1007
+#: gnome-panel/menu.c:1002
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Bestand niet gevonden in pad: %s"
 
-#: gnome-panel/menu.c:1014
+#: gnome-panel/menu.c:1009
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kon map naam van pad %s niet vinden."
 
-#: gnome-panel/menu.c:1198 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
 msgid "Main Menu"
 msgstr "Hoofdmenu"
 
-#: gnome-panel/menu.c:1345
+#: gnome-panel/menu.c:1340
 msgid "Add this launcher to panel"
 msgstr "Deze starter toevoegen aan het paneel"
 
-#: gnome-panel/menu.c:1354
+#: gnome-panel/menu.c:1349
 msgid "Remove this item"
 msgstr "Dit item verwijderen"
 
-#: gnome-panel/menu.c:1403
+#: gnome-panel/menu.c:1398
 msgid "Entire menu"
 msgstr "Hele menu"
 
-#: gnome-panel/menu.c:1411
+#: gnome-panel/menu.c:1406
 msgid "Add this as drawer to panel"
 msgstr "Als opberglade aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1422
+#: gnome-panel/menu.c:1417
 msgid "Add this as menu to panel"
 msgstr "Als menu aan paneel toevoegen"
 
-#: gnome-panel/menu.c:1434
+#: gnome-panel/menu.c:1429
 msgid "Add new item to this menu"
 msgstr "Nieuw item toevoegen aan dit menu"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1456
 msgid "Properties"
 msgstr "Eigenschappen"
 
-#: gnome-panel/menu.c:2220 gnome-panel/menu.c:2225 gnome-panel/menu.c:2640
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
 #: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Toepassingen"
 
-#: gnome-panel/menu.c:2295
+#: gnome-panel/menu.c:2213
 msgid "You cannot remove your last panel."
 msgstr "Het laatste paneel kan niet verwijderd worden."
 
-#: gnome-panel/menu.c:2355
+#: gnome-panel/menu.c:2273
 msgid "_Delete This Panel..."
 msgstr "Dit paneel _verwijderen..."
 
-#: gnome-panel/menu.c:2358 gnome-panel/menu.c:2387
+#: gnome-panel/menu.c:2276 gnome-panel/menu.c:2305
 msgid "_Delete This Panel"
 msgstr "Dit paneel _verwijderen"
 
-#: gnome-panel/menu.c:2371
+#: gnome-panel/menu.c:2289
 #, fuzzy
 msgid "_Add to Panel..."
 msgstr "_Toevoegen aan paneel"
 
-#: gnome-panel/menu.c:2416
+#: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "_Nieuw paneel"
 
-#: gnome-panel/menu.c:2463
-msgid "_About Panels"
+#: gnome-panel/menu.c:2381
+#, fuzzy
+msgid "A_bout Panels"
 msgstr "_Paneel-info"
 
-#: gnome-panel/menu.c:2477
+#: gnome-panel/menu.c:2395
 msgid "About _GNOME"
 msgstr "_GNOME-info"
 
-#: gnome-panel/menu.c:2501 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Beeldscherm vergrendelen"
 
-#: gnome-panel/menu.c:2507
+#: gnome-panel/menu.c:2425
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Het scherm vergrendelen zodat u uw computer tijdelijk kunt verlaten"
 
-#: gnome-panel/menu.c:2523 gnome-panel/panel-addto.c:102
+#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
 #: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "Afmelden"
 
-#: gnome-panel/menu.c:2530 gnome-panel/panel-addto.c:103
+#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1503,33 +1486,33 @@ msgstr ""
 "Deze sessie afsluiten zodat u zich aan kunt melden als een andere gebruiker, "
 "of uw computer uitzetten"
 
-#: gnome-panel/menu.c:2661 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Toepassing uitvoeren..."
 
-#: gnome-panel/menu.c:2668 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Een toepassing uitvoeren door het ingeven van een opdracht"
 
-#: gnome-panel/menu.c:2676 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Zoeken naar bestanden..."
 
-#: gnome-panel/menu.c:2679 gnome-panel/panel-addto.c:147
+#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Bestanden, mappen en documenten vinden op uw computer"
 
-#: gnome-panel/menu.c:2695 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Schermafdruk maken..."
 
-#: gnome-panel/menu.c:2698 gnome-panel/panel-addto.c:136
+#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Schermafdruk van uw bureaublad maken"
 
-#: gnome-panel/menu.c:2713
+#: gnome-panel/menu.c:2626
 msgid "Desktop"
 msgstr "Bureaublad"
 
@@ -1985,6 +1968,10 @@ msgstr "Schermafdruk van venster maken"
 msgid "Protect your computer from unauthorized use"
 msgstr "Uw computer tegen ongeautoriseerd gebruik beschermen"
 
+#: gnome-panel/panel-menu-bar.c:208
+msgid "Actions"
+msgstr "Acties"
+
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
 msgstr "Type actieknop"
@@ -2337,20 +2324,24 @@ msgstr "Kan het recent gebruikte document niet openen"
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Een onbekende fout is opgetreden bij een poging om %s te openen"
 
-#: gnome-panel/panel-recent.c:210
+#: gnome-panel/panel-recent.c:212
 #, fuzzy
-msgid "Clear recent document history?"
+msgid "Clear the Recent Documents list?"
 msgstr "Recente documenten"
 
-#: gnome-panel/panel-recent.c:211
-msgid "This will clear the contents of the Recent Documents menu."
+#: gnome-panel/panel-recent.c:213
+msgid ""
+"If you clear the Recent Documents list, you clear the following:\n"
+"\n"
+"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the recent documents list in all applications."
 msgstr ""
 
-#: gnome-panel/panel-recent.c:245
+#: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "Recente documenten"
 
-#: gnome-panel/panel-recent.c:271
+#: gnome-panel/panel-recent.c:275
 #, fuzzy
 msgid "Clear Recent Documents"
 msgstr "Recente documenten"
@@ -2921,46 +2912,46 @@ msgstr "Test Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Fabriek"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:847
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Niet-compleet achtergrond type '%s' ontvangen"
 
-#: libpanel-applet/panel-applet.c:891
+#: libpanel-applet/panel-applet.c:861
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Niet-compleet achtergrond type '%s' ontvangen:%s"
 
-#: libpanel-applet/panel-applet.c:900
+#: libpanel-applet/panel-applet.c:870
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Het ophalen van afbeelding %s is mislukt"
 
-#: libpanel-applet/panel-applet.c:907
+#: libpanel-applet/panel-applet.c:877
 msgid "Unknown background type received"
 msgstr "Onbekend achtergrondtype ontvangen"
 
-#: libpanel-applet/panel-applet.c:1092
+#: libpanel-applet/panel-applet.c:1062
 msgid "The Applet's containing Panel's orientation"
 msgstr "Paneel-oriëntatie van het applet"
 
-#: libpanel-applet/panel-applet.c:1100
+#: libpanel-applet/panel-applet.c:1070
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Paneelgrootte in pixels van het applet"
 
-#: libpanel-applet/panel-applet.c:1108
+#: libpanel-applet/panel-applet.c:1078
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Achtergrondkleur of -afbeelding van het applet-bevattende paneel"
 
-#: libpanel-applet/panel-applet.c:1116
+#: libpanel-applet/panel-applet.c:1086
 msgid "The Applet's flags"
 msgstr "Appletvlaggen"
 
-#: libpanel-applet/panel-applet.c:1124
+#: libpanel-applet/panel-applet.c:1094
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Bereiken die aangeven welke afmetingen voor het applet acceptabel zijn"
 
-#: libpanel-applet/panel-applet.c:1132
+#: libpanel-applet/panel-applet.c:1102
 msgid "The Applet's containing Panel is locked down"
 msgstr "Het paneel waarin het applet is bevat, is vastgezet"
 
@@ -3026,6 +3017,19 @@ msgstr "Gigantisch"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Miniem"
+
+#~ msgid "Accessories"
+#~ msgstr "Accesoires"
+
+#~ msgid "Amusements"
+#~ msgstr "Amusement"
+
+#~ msgid "Utility"
+#~ msgstr "Hulpmiddel"
+
+#, fuzzy
+#~ msgid "Clear recent document history?"
+#~ msgstr "Recente documenten"
 
 #~ msgid "Launcher..."
 #~ msgstr "Starter..."
