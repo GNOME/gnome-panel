@@ -890,9 +890,6 @@ basep_enter_notify (GtkWidget *widget,
 		basep_widget_queue_autoshow (basep);
 	}  
 
-	if (global_config.autoraise)
-		gdk_window_raise (GTK_WIDGET(basep)->window);
-
 	if (GTK_WIDGET_CLASS (basep_widget_parent_class)->enter_notify_event)
 		return GTK_WIDGET_CLASS (basep_widget_parent_class)->enter_notify_event (widget, event);
 	else

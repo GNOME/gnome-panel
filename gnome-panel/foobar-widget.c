@@ -203,9 +203,6 @@ foobar_enter_notify (GtkWidget *widget,
 		GTK_WIDGET_CLASS (foobar_widget_parent_class)->enter_notify_event (widget,
 								     event);
 
-	if (global_config.autoraise)
-		gdk_window_raise (widget->window);
-
 	return FALSE;
 }
 

@@ -55,7 +55,6 @@ struct _GlobalConfig {
 	GlobalConfigKey    screenshot_key;
 	GlobalConfigKey    window_screenshot_key;
 
-	gboolean           autoraise;
 	gboolean           drawer_auto_close;
 	gboolean           confirm_panel_remove;
 	gboolean           highlight_when_over;

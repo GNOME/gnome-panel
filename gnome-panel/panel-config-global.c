@@ -107,11 +107,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.window_screenshot_key);
 
-	} else if (!strcmp (key, "auto_raise_panel"))
-		global_config.autoraise =
-			gconf_value_get_bool (value);
-
-	else if (!strcmp (key, "drawer_autoclose"))
+	} else if (!strcmp (key, "drawer_autoclose"))
 		global_config.drawer_auto_close =
 			gconf_value_get_bool (value);
 

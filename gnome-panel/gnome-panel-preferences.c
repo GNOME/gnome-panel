@@ -140,7 +140,6 @@ load_checkboxes (void)
 {
 	static char *checkboxes [] = {
 		"drawer_autoclose",
-		"auto_raise_panel",
         	"enable_animations",
 		NULL
 	};

@@ -1,5 +1,19 @@
 2002-04-18  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-config-global.c: (panel_global_config_set_entry):
+	* panel-config-global.h:
+	* panel.c: (panel_save_global_config): 
+	* gnome-panel-preferences.c: (load_checkboxes):
+	* gnome-panel-preferences.glade: remove 'Raise panels on
+	mouseover' option. We're not a window manager.
+
+	* basep-widget.c: (basep_enter_notify):
+	* drawer.c: (enter_notify_drawer):
+	* foobar-widget.c: (foobar_enter_notify): don't do the
+	crackpot auto raise thing.
+	
+2002-04-18  Mark McLoughlin  <mark@skynet.ie>
+
 	Might as well rename the files while I'm at it.
 
 	* menu.c: (panel_config_global): upd binary name.
