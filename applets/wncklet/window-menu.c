@@ -206,6 +206,33 @@ window_menu_get_default_window_icon (void)
 }
 
 static void
+window_menu_dimm_icon (GdkPixbuf *pixbuf)
+{
+	int x, y, pixel_stride, row_stride;
+	guchar *row, *pixels;
+	int w, h;
+
+	w = gdk_pixbuf_get_width (pixbuf);
+	h = gdk_pixbuf_get_height (pixbuf);
+	
+	g_assert (gdk_pixbuf_get_has_alpha (pixbuf));
+	
+	pixel_stride = 4;
+	
+	row = gdk_pixbuf_get_pixels (pixbuf);
+	row_stride = gdk_pixbuf_get_rowstride (pixbuf);
+	
+	for (y = 0; y < h; y++) {
+			pixels = row;			
+			for (x = 0; x < w; x++) {
+				pixels[3] /= 2;				
+				pixels += pixel_stride;
+			}			
+			row += row_stride;
+	}
+}
+
+static void
 window_menu_set_window_icon (WindowMenu *window_menu,
 			     GtkWidget  *image,
 			     WnckWindow *window,
@@ -245,6 +272,9 @@ window_menu_set_window_icon (WindowMenu *window_menu,
 		freeme = pixbuf;
 	}
 
+	if (wnck_window_is_minimized (window))
+		window_menu_dimm_icon (pixbuf);
+	
 	gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
 
 	if (freeme)
@@ -344,7 +374,7 @@ window_menu_window_icon_changed (WnckWindow *window,
 	item = g_hash_table_lookup (window_menu->window_hash, window);
 	if (item != NULL) {
 		image = gtk_image_new ();
-		window_menu_set_window_icon (window_menu, image, window, TRUE);
+		window_menu_set_window_icon (window_menu, image, window, TRUE);		    
 		gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (item->item),
 					       GTK_WIDGET (image));
 		gtk_widget_show (image);
