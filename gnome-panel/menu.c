@@ -234,16 +234,85 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 	load_menu_applet(mf->menudir,0, 0, current_panel);
 }
 
-/*static int
-ignore_event(GtkWidget *w, GdkEvent *event, gpointer data)
+static int
+show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 {
-	if(event->type == GDK_ENTER_NOTIFY ||
-	   event->type == GDK_LEAVE_NOTIFY ||
-	   event->type == GDK_BUTTON_PRESS ||
-	   event->type == GDK_BUTTON_RELEASE)
-		return TRUE;
+	GtkWidget *menu, *menuitem, *prop_item;
+	GdkEventButton *bevent = (GdkEventButton *)event;
+	GnomeDesktopEntry *dentry;
+	MenuFinfo *mf;
+	int type = GPOINTER_TO_INT(data);
+
+	if(event->type!=GDK_BUTTON_PRESS)
+		return FALSE;
+	
+	dentry = gtk_object_get_data(GTK_OBJECT(w),"dentry");
+	mf = gtk_object_get_data(GTK_OBJECT(w),"mf");
+	menu = gtk_object_get_data(GTK_OBJECT(w),"menu");
+	prop_item = gtk_object_get_data(GTK_OBJECT(w),"prop_item");
+	
+	if(!menu) {
+		menu = gtk_menu_new ();
+		gtk_object_set_data(GTK_OBJECT(w),"menu",menu);
+
+		if(type == 1) {
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add this launcher to panel"));
+			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_app_to_panel),
+					   dentry);
+		} else {
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add this as drawer to panel"));
+			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+				   GTK_SIGNAL_FUNC(add_menudrawer_to_panel),
+				   mf);
+
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add this as menu to panel"));
+			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_menu_to_panel),
+					   mf);
+		}
+
+		prop_item = gtk_menu_item_new ();
+		gtk_object_set_data(GTK_OBJECT(w),"prop_item",prop_item);
+		setup_menuitem (prop_item, 0, _("Properties ..."));
+		gtk_menu_append (GTK_MENU (menu), prop_item);
+	}
+	
+	/*FIXME: do properties*/
+	gtk_widget_set_sensitive(prop_item,FALSE);
+
+	gtk_menu_popup (GTK_MENU (menu),
+			NULL,
+			NULL,
+			NULL,
+			NULL,
+			bevent->button,
+			0);
+	
+	return TRUE;
+}
+
+static int
+destroy_item_menu(GtkWidget *w, gpointer data)
+{
+	GtkWidget *menu;
+
+	menu = gtk_object_get_data(GTK_OBJECT(w),"menu");
+	
+	if(menu)
+		gtk_widget_destroy(menu);
 	return FALSE;
-}*/
+}
+
 
 static void
 setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
@@ -277,32 +346,20 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
-		GtkWidget *w = gtk_button_new_with_label(_("drawer"));
-		gtk_signal_connect(GTK_OBJECT(w),"clicked",
-				   GTK_SIGNAL_FUNC(add_menudrawer_to_panel),
-				   mf);
+		GtkWidget *w = gtk_button_new_with_label(_("..."));
+		gtk_object_set_data(GTK_OBJECT(w),"mf",mf);
+		gtk_signal_connect(GTK_OBJECT(w),"event",
+				   GTK_SIGNAL_FUNC(show_item_menu),
+				   GINT_TO_POINTER(0));
+		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+				   GTK_SIGNAL_FUNC(destroy_item_menu),
+				   NULL);
 		gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+		/*this is not really a problem for large fonts but it
+		  makes the button smaller*/
 		gtk_widget_set_usize(w,0,16);
-		/*gtk_signal_connect_object(GTK_OBJECT(menuitem),"select",
-					  GTK_SIGNAL_FUNC(gtk_widget_show),
-					  GTK_OBJECT(w));
-		gtk_signal_connect_object(GTK_OBJECT(menuitem),"deselect",
-					  GTK_SIGNAL_FUNC(gtk_widget_hide),
-					  GTK_OBJECT(w));*/
-		w = gtk_button_new_with_label(_("menu"));
-		gtk_signal_connect(GTK_OBJECT(w),"clicked",
-				   GTK_SIGNAL_FUNC(add_menu_to_panel),
-				   mf);
-		gtk_widget_show(w);
-		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
-		gtk_widget_set_usize(w,0,16);
-		/*gtk_signal_connect_object(GTK_OBJECT(menuitem),"select",
-					  GTK_SIGNAL_FUNC(gtk_widget_show),
-					  GTK_OBJECT(w));
-		gtk_signal_connect_object(GTK_OBJECT(menuitem),"deselect",
-					  GTK_SIGNAL_FUNC(gtk_widget_hide),
-					  GTK_OBJECT(w));*/
+
 	}
 	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
@@ -312,8 +369,6 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_signal_connect_object(GTK_OBJECT(menuitem),"select",
 				  GTK_SIGNAL_FUNC(gtk_item_deselect),
 				  GTK_OBJECT(menuitem));
-	/*gtk_signal_connect(GTK_OBJECT(menuitem),"event",
-			   GTK_SIGNAL_FUNC(ignore_event),NULL);*/
 }
 
 static void
@@ -349,22 +404,19 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(dentry) {
-		GtkWidget *w = gtk_button_new_with_label(_("add"));
-		gtk_signal_connect(GTK_OBJECT(w),"clicked",
-				   GTK_SIGNAL_FUNC(add_app_to_panel),
-				   dentry);
+		GtkWidget *w = gtk_button_new_with_label(_("..."));
+		gtk_object_set_data(GTK_OBJECT(w),"dentry",dentry);
+		gtk_signal_connect(GTK_OBJECT(w),"event",
+				   GTK_SIGNAL_FUNC(show_item_menu),
+				   GINT_TO_POINTER(1));
+		gtk_signal_connect(GTK_OBJECT(w),"destroy",
+				   GTK_SIGNAL_FUNC(destroy_item_menu),
+				   NULL);
 		gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 		/*this is not really a problem for large fonts but it
 		  makes the button smaller*/
 		gtk_widget_set_usize(w,0,16);
-
-		/*gtk_signal_connect_object(GTK_OBJECT(menuitem),"select",
-					  GTK_SIGNAL_FUNC(gtk_widget_show),
-					  GTK_OBJECT(w));
-		gtk_signal_connect_object(GTK_OBJECT(menuitem),"deselect",
-					  GTK_SIGNAL_FUNC(gtk_widget_hide),
-					  GTK_OBJECT(w));*/
 	}
 	gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 
