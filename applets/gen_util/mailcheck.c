@@ -856,7 +856,7 @@ mailcheck_properties_page (MailCheck *mc)
 
 	l = gtk_check_button_new_with_label(_("Before each update:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->pre_check_enabled);
-	gtk_signal_connect(GTK_OBJECT(l), "changed",
+	gtk_signal_connect(GTK_OBJECT(l), "toggled",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(l);
 	mc->pre_check_cmd_check = l;
@@ -877,7 +877,7 @@ mailcheck_properties_page (MailCheck *mc)
 
 	l = gtk_check_button_new_with_label (_("When new mail arrives:"));
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(l), mc->newmail_enabled);
-	gtk_signal_connect(GTK_OBJECT(l), "changed",
+	gtk_signal_connect(GTK_OBJECT(l), "toggled",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
 	gtk_widget_show(l);
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 1, 2, GTK_FILL, 0, 0, 0);
@@ -895,7 +895,7 @@ mailcheck_properties_page (MailCheck *mc)
 				    1, 2, 1, 2);
 
         l = gtk_check_button_new_with_label (_("When clicked:"));
-	gtk_signal_connect(GTK_OBJECT(l), "changed",
+	gtk_signal_connect(GTK_OBJECT(l), "toggled",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
         gtk_widget_show(l);
 	gtk_table_attach (GTK_TABLE (table), l, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
