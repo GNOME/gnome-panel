@@ -784,10 +784,10 @@ fr_compare (FileRec *fra, FileRec *frb)
 	}
 
 	if (fra->name_collate_key == NULL) {
-		fra->name_collate_key = g_utf8_collate_key (fra->fullname, -1);
+		fra->name_collate_key = g_utf8_collate_key (sure_string (fra->fullname), -1);
 	}
 	if (frb->name_collate_key == NULL) {
-		frb->name_collate_key = g_utf8_collate_key (frb->fullname, -1);
+		frb->name_collate_key = g_utf8_collate_key (sure_string (frb->fullname), -1);
 	}
         return strcmp (fra->name_collate_key, frb->name_collate_key);
 }
