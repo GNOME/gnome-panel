@@ -1472,7 +1472,6 @@ void
 panel_run_dialog_present (GdkScreen *screen)
 {
 	GladeXML *gui;
-	char     *glade_file;
 
 	if (panel_lockdown_get_disable_command_line ())
 		return;
@@ -1484,12 +1483,9 @@ panel_run_dialog_present (GdkScreen *screen)
 		return;
 	}
 
-	if (g_file_test ("panel-run-dialog.glade", G_FILE_TEST_EXISTS))
-		glade_file = "panel-run-dialog.glade";
-	else
-		glade_file = GLADEDIR "/panel-run-dialog.glade";
-
-	gui = glade_xml_new (glade_file, "panel_run_dialog", NULL);
+	gui = glade_xml_new (GLADEDIR "/panel-run-dialog.glade",
+			     "panel_run_dialog",
+			     NULL);
 
 	static_dialog = panel_run_dialog_new (screen, gui);
 

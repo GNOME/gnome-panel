@@ -994,7 +994,6 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 {
 	PanelPropertiesDialog *dialog;
 	GladeXML              *gui;
-	char                  *glade_file;
 
 	if (!panel_properties_dialog_quark)
 		panel_properties_dialog_quark =
@@ -1008,12 +1007,9 @@ panel_properties_dialog_present (PanelToplevel *toplevel)
 		return;
 	}
 
-	if (g_file_test ("panel-properties-dialog.glade", G_FILE_TEST_EXISTS))
-		glade_file = "panel-properties-dialog.glade";
-	else
-		glade_file = GLADEDIR "/panel-properties-dialog.glade";
-
-	gui = glade_xml_new (glade_file, "panel_properties_dialog", NULL);
+	gui = glade_xml_new (GLADEDIR "/panel-properties-dialog.glade",
+			     "panel_properties_dialog",
+			     NULL);
 
 	dialog = panel_properties_dialog_new (toplevel, gui);
 
