@@ -21,6 +21,7 @@ struct _GlobalConfig {
 	int disable_animations;
 	int applet_padding;
 	int autoraise;
+	int keep_bottom;
 	int tiles_enabled[LAST_TILE];
 	char *tile_up[LAST_TILE];
 	char *tile_down[LAST_TILE];

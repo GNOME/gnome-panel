@@ -107,9 +107,13 @@ snapped_widget_realize(GtkWidget *w)
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
 		if(snapped->mode == SNAPPED_AUTO_HIDE) {
-			gnome_win_hints_set_layer(w, WIN_LAYER_ABOVE_DOCK);
+			gnome_win_hints_set_layer(w, global_config.keep_bottom?
+						  WIN_LAYER_ONTOP:
+						  WIN_LAYER_ABOVE_DOCK);
 		} else {
-			gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+			gnome_win_hints_set_layer(w, global_config.keep_bottom?
+						  WIN_LAYER_BELOW:
+						  WIN_LAYER_DOCK);
 		}
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
@@ -526,9 +530,15 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 	}
 
 	if(snapped->mode == SNAPPED_AUTO_HIDE) {
-		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+					  global_config.keep_bottom?
+					  WIN_LAYER_ONTOP:
+					  WIN_LAYER_ABOVE_DOCK);
 	} else {
-		gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_DOCK);
+		gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+					  global_config.keep_bottom?
+					  WIN_LAYER_BELOW:
+					  WIN_LAYER_DOCK);
 	}
 
 	snapped->state = SNAPPED_SHOWN;
@@ -553,7 +563,10 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 		snapped->leave_notify_timer_tag = 0;
 	}
 
-	gnome_win_hints_set_layer(GTK_WIDGET(snapped), WIN_LAYER_ABOVE_DOCK);
+	gnome_win_hints_set_layer(GTK_WIDGET(snapped),
+				  global_config.keep_bottom?
+				  WIN_LAYER_ONTOP:
+				  WIN_LAYER_ABOVE_DOCK);
 
 	if(fromright)
 	   	gtk_signal_emit(GTK_OBJECT(snapped),
@@ -835,9 +848,13 @@ snapped_widget_change_params(SnappedWidget *snapped,
 			GtkWidget *wid = GTK_WIDGET(snapped);
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
 				gnome_win_hints_set_layer(wid,
+							  global_config.keep_bottom?
+							  WIN_LAYER_ONTOP:
 							  WIN_LAYER_ABOVE_DOCK);
 			} else {
 				gnome_win_hints_set_layer(wid,
+							  global_config.keep_bottom?
+							  WIN_LAYER_BELOW:
 							  WIN_LAYER_DOCK);
 			}
 		}

@@ -522,12 +522,22 @@ misc_notebook_page(void)
 			    CONFIG_PADDING_SIZE);
 
 	/* Autoraise */
-	button = gtk_check_button_new_with_label (_("Raise panels on mouse-over"));
+	button = gtk_check_button_new_with_label (_("Raise panels on mouse-over (non GNOME compliant window managers only)"));
 	if (temp_config.autoraise)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
 			    &(temp_config.autoraise));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
+	/* Keep on bottom */
+	button = gtk_check_button_new_with_label (_("Keep panel below windows (GNOME compliant window managers only)"));
+	if (temp_config.keep_bottom)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.keep_bottom));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 

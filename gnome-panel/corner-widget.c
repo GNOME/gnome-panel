@@ -106,7 +106,9 @@ corner_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_state(w,
 					  WIN_STATE_STICKY |
 					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
+		gnome_win_hints_set_layer(w, global_config.keep_bottom?
+					  WIN_LAYER_BELOW:
+					  WIN_LAYER_DOCK);
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}
@@ -370,6 +372,8 @@ corner_widget_pop_show(CornerWidget *corner, int fromright)
 	}
 
 	gnome_win_hints_set_layer(GTK_WIDGET(corner),
+				  global_config.keep_bottom?
+				  WIN_LAYER_BELOW:
 				  WIN_LAYER_DOCK);
 
 	corner->state = CORNER_SHOWN;
@@ -391,6 +395,8 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 	gnome_triggers_vdo("", NULL, supinfo);
 	
 	gnome_win_hints_set_layer(GTK_WIDGET(corner),
+				  global_config.keep_bottom?
+				  WIN_LAYER_ONTOP:
 				  WIN_LAYER_ABOVE_DOCK);
 
 	gtk_signal_emit(GTK_OBJECT(corner),

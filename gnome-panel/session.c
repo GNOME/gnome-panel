@@ -73,6 +73,7 @@ apply_global_config(void)
 	static int dot_buttons_old = 0; /*doesn't matter first time this is
 					  done there are no menu applets*/
 	static int small_icons_old = 0; /*same here*/
+	static int keep_bottom_old = -1;
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.drawer_step_size,
@@ -119,6 +120,39 @@ apply_global_config(void)
 	dot_buttons_old = global_config.show_dot_buttons;
 	small_icons_old = global_config.show_small_icons;
 	send_tooltips_state(global_config.tooltips_enabled);
+
+	if(keep_bottom_old == -1 ||
+	   keep_bottom_old != global_config.keep_bottom) {
+		GSList *li;
+		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+			PanelData *pd = li->data;
+			if(!GTK_WIDGET_REALIZED(pd->panel))
+				continue;
+			if((IS_SNAPPED_WIDGET(pd->panel) &&
+			    SNAPPED_WIDGET(pd->panel)->mode != SNAPPED_AUTO_HIDE &&
+			    SNAPPED_WIDGET(pd->panel)->state == SNAPPED_SHOWN) ||
+			   (IS_CORNER_WIDGET(pd->panel) &&
+			    CORNER_WIDGET(pd->panel)->state == SNAPPED_SHOWN)) {
+				if(global_config.keep_bottom)
+					gnome_win_hints_set_layer(pd->panel, WIN_LAYER_BELOW);
+				else
+					gnome_win_hints_set_layer(pd->panel, WIN_LAYER_DOCK);
+			} else if(IS_DRAWER_WIDGET(pd->panel)) {
+				if(global_config.keep_bottom)
+					gnome_win_hints_set_layer(pd->panel, WIN_LAYER_BELOW);
+				else
+					gnome_win_hints_set_layer(pd->panel,
+								  WIN_LAYER_ABOVE_DOCK);
+			} else {
+				if(global_config.keep_bottom)
+					gnome_win_hints_set_layer(pd->panel, WIN_LAYER_ONTOP);
+				else
+					gnome_win_hints_set_layer(pd->panel,
+								  WIN_LAYER_ABOVE_DOCK);
+			}
+		}
+	}
+	keep_bottom_old = global_config.keep_bottom;
 
 	for(i=0;i<LAST_TILE;i++) {
 		button_widget_set_flags(i, global_config.tiles_enabled[i],
@@ -504,6 +538,8 @@ do_session_save(GnomeClient *client,
 				     global_config.applet_padding);
 		gnome_config_set_bool("autoraise",
 				      global_config.autoraise);
+		gnome_config_set_bool("keep_bottom",
+				      global_config.keep_bottom);
 		buf = g_string_new(NULL);
 		for(i=0;i<LAST_TILE;i++) {
 			g_string_sprintf(buf,"tiles_enabled_%d",i);
@@ -1058,6 +1094,8 @@ load_up_globals(void)
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
+
+	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=FALSE");
 
 	for(i=0;i<LAST_TILE;i++) {
 		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
