@@ -217,13 +217,23 @@ panel_menu_bar_parent_set (GtkWidget *widget,
 }
 
 static void
-panel_menu_bar_realized (GtkWidget     *widget,
-			 GtkAllocation *allocation,
-			 gpointer       user_data)
+panel_menu_bar_size_allocate (GtkWidget     *widget,
+			      GtkAllocation *allocation)
 {
-	g_signal_handlers_disconnect_by_func (widget,
-					      G_CALLBACK (panel_menu_bar_realized),
-					      NULL);
+	GtkAllocation old_allocation;
+
+	old_allocation.x      = widget->allocation.x;
+	old_allocation.y      = widget->allocation.y;
+	old_allocation.width  = widget->allocation.width;
+	old_allocation.height = widget->allocation.height;
+
+	GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+	if (old_allocation.x      == allocation->x &&
+	    old_allocation.y      == allocation->y &&
+	    old_allocation.width  == allocation->width &&
+	    old_allocation.height == allocation->height)
+		return;
 
 	panel_menu_bar_change_background (PANEL_MENU_BAR (widget));
 }
@@ -236,6 +246,7 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 	parent_class = g_type_class_peek_parent (klass);
 
 	widget_class->parent_set = panel_menu_bar_parent_set;
+	widget_class->size_allocate = panel_menu_bar_size_allocate;
 
 	g_type_class_add_private (klass, sizeof (PanelMenuBarPrivate));
 
@@ -303,13 +314,6 @@ panel_menu_bar_load (PanelWidget *panel,
 				   NULL);
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
-	
-	/* FIXME: eeeeek, bad hack
-	 * If the panel background is an image (or translucent color), we
-	 * can't have the right image now because the menubar has no
-	 * size. So we wait for the first size-allocate signal... */
-	g_signal_connect (GTK_WIDGET (menubar), "size-allocate",
-			  G_CALLBACK (panel_menu_bar_realized), NULL);
 }
 
 void

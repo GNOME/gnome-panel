@@ -1,5 +1,15 @@
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
+	Fix pixmap background when moving the menu bar.
+
+	* panel-menu-bar.c: (panel_menu_bar_realized): killed
+	(panel_menu_bar_size_allocate): new size allocation function, update
+	the background if the allocation has changed
+	(panel_menu_bar_class_init): declare the size allocation function
+	(panel_menu_bar_load): remove hack :-)
+
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-applet-frame.c: (panel_applet_frame_get_background_string):
 	better fix.
 
