@@ -28,6 +28,3 @@ void xstuff_zoom_animate                (GtkWidget    *widget,
 					 GdkRectangle *opt_src_rect);
 
 #endif /* __XSTUFF_H__ */
-void xstuff_grab_key_on_all_screens     (int      keycode,
-					 guint    modifiers,
-					 gboolean grab);

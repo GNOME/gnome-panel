@@ -47,7 +47,6 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	GString                 *str;
 	char                    *cmd   = NULL;
 	char                    *path;
-	char			*quoted;
 	gboolean                 ret   = TRUE;
 	
 	app = gnome_vfs_mime_get_default_application (mime_type);
@@ -72,11 +71,8 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_PATHS:
 		path = gnome_vfs_get_local_path_from_uri (uri);
 		if (path != NULL) {
-			quoted = g_shell_quote (path);
+			g_string_append_printf (str, " %s", path);
 			g_free (path);
-
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
 		} else {
 			gnome_vfs_mime_application_free (app);
 			g_string_free (str, TRUE);
@@ -88,25 +84,18 @@ show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 		break;
 
 	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_URIS:
-		quoted = g_shell_quote (uri);
-		g_string_append_printf (str, " %s", quoted);
-		g_free (quoted);
+		g_string_append_printf (str, " %s", uri);
 		break;
 
 	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_URIS_FOR_NON_FILES:
 		path = gnome_vfs_get_local_path_from_uri (uri);
 
-		if (path != NULL) {
-			quoted = g_shell_quote (path);
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
-			g_free (path);
-		} else {
-			quoted = g_shell_quote (uri);
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
-		}
+		if (path != NULL)
+			g_string_append_printf (str, " %s", path);
+		else
+			g_string_append_printf (str, " %s", uri);
 
+		g_free (path);
 		break;
 	}
 

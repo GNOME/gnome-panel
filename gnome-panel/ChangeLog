@@ -1,30 +1,3 @@
-2003-01-30  Arvind Samptur <arvind.samptur@wipro.com>
-	* panel-widget.[ch]: Add a GSList to the PanelWidget struct
-	to keep track of all the open 'Create Launcher' dialogs.
-	
-	* panel.c: (panel_remove_open_create_launcher_dialogs) : Destroy
-	all the open 'Create Launcher' dialogs while deleting the panel.
-
-	* menu.c (remove_panel_query) ( remove_panel_accept) : Store the
-	'Delete Panel' dialog. Avoid creating multiple instances of it.
-	
-2003-01-22  Mark McLoughlin  <mark@skynet.ie>
-
-	* egg-recent-model.c:
-	* egg-recent-util.c:
-	* egg-recent-view-gtk.c: sync with libegg.
-
-2003-01-21  Mark McLoughlin  <mark@skynet.ie>
-
-	Makes keybindings work on multi-screen setups.
-	Fixes #93757 - based on a patch from Erwann.
-
-	* xstuff.[ch]: (xstuff_grab_key_on_all_screens):
-	Grab/Ungrab the key on all screens.
-
-	* global-keys.c: (do_grab_key), (do_ungrab_key):
-	use it here.
-
 2003-01-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (instrument_add_submenu_for_reload): disable

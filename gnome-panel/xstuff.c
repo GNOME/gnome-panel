@@ -478,33 +478,3 @@ xstuff_zoom_animate (GtkWidget *widget, GdkRectangle *opt_rect)
 			     dest.x, dest.y, dest.width, dest.height,
 			     MINIATURIZE_ANIMATION_DELAY_Z);
 }
-
-void
-xstuff_grab_key_on_all_screens (int      keycode,
-				guint    modifiers,
-				gboolean grab)
-{
-	GdkDisplay *display;
-	int         n_screens;
-	int         i;
-
-	display   = gdk_display_get_default ();
-	n_screens = gdk_display_get_n_screens (display);
-
-	for (i = 0; i < n_screens; i++) {
-		GdkWindow *root;
-
-		root = gdk_screen_get_root_window (
-				gdk_display_get_screen (display, i));
-
-		if (grab)
-			XGrabKey (gdk_x11_display_get_xdisplay (display),
-				  keycode, modifiers,
-				  gdk_x11_drawable_get_xid (root),
-				  True, GrabModeAsync, GrabModeAsync);
-		else
-			XUngrabKey (gdk_x11_display_get_xdisplay (display),
-				    keycode, modifiers,
-				    gdk_x11_drawable_get_xid (root));
-	}
-}

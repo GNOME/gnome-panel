@@ -1,27 +1,3 @@
-2003-01-22  Arvind Samptur <arvind.samptur@wipro.com>
-	* pager.c: (workspace_name_edited): ignore the
-	leading and trailing whitespaces on a workspace rename.
-	Fixes #104129
-
-2003-01-23  Satyajit Kanungo  <satyajit.kanungo@wipro.com>
-
-        * mailcheck.c : Replaced g_spawn_command_line_async with
-          egg_screen_execute_command_line_async() to execute the 
-	  application in the correct screen.
-          Added a new function applet_realized_cb() which will call 
-	  the function to check the mails only after the applet is 
-	  realized.  Fixes bug #104032.
-
-2003-01-21  Arvind Samptur <arvind.samptur@wipro.com>
-        * pager.c: (pager_connect_while_alive) :Get rid
-        of signal emissions occuring on libwnck data after the
-        pager has been destroyed.
-        (destroy_pager): Destroy the properties dialog when
-        destroying the pager.
-
-        * tasklist.c (destroy_tasklist): Destroy the properties dialog
-        when destroying the tasklist.
-
 2003-01-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* mailcheck.schemas.in: s/Remove/Remote/

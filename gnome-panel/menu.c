@@ -3272,12 +3272,11 @@ remove_panel_accept (GtkWidget *w,
 		     int        response,
 		     GtkWidget *panel)
 {
-	PanelWidget *panel_widget = NULL;
-
 	if (response == GTK_RESPONSE_OK) {
 
 		/* Destroy the drawers button before destroying the drawer */
 		if (DRAWER_IS_WIDGET (panel)) {
+			PanelWidget *panel_widget = NULL;
 
 			if (BASEP_IS_WIDGET (panel))
 				panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
@@ -3311,11 +3310,6 @@ remove_panel_accept (GtkWidget *w,
 		gtk_widget_destroy (panel);
 		panel_pop_window_busy (w);
 	}
-	else {
-		panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-		panel_widget->delete_dialog = NULL;
-	}
 
 	gtk_widget_destroy (w);
 }
@@ -3344,14 +3338,8 @@ remove_panel_query (GtkWidget *menuitem,
 		return;
 	}
 
-	if (panel_widget->delete_dialog) {
-		gtk_window_present (GTK_WINDOW (panel_widget->delete_dialog));
-		return;
-	}
-
 	dialog = gtk_message_dialog_new (
-			GTK_WINDOW (panel_widget->panel_parent), 
-			0 /* flags */,
+			NULL, 0 /* flags */,
 			GTK_MESSAGE_QUESTION,
 			GTK_BUTTONS_NONE,
 			_("When a panel is deleted, the panel "
@@ -3361,7 +3349,6 @@ remove_panel_query (GtkWidget *menuitem,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 				NULL);
-
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 	gtk_window_set_title (GTK_WINDOW (dialog), _("Delete Panel"));
 
@@ -3369,8 +3356,6 @@ remove_panel_query (GtkWidget *menuitem,
 				"panel_remove_query", "Panel");
 	gtk_window_set_screen (GTK_WINDOW (dialog),
 			       gtk_window_get_screen (GTK_WINDOW (panel)));
-
-	panel_widget->delete_dialog = dialog;
 
 	g_signal_connect (dialog, "response",
 			  G_CALLBACK (remove_panel_accept),

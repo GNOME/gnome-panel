@@ -837,10 +837,6 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		return;
 	}
 
-	panel->create_launcher_dialog_list = 
-					g_slist_remove (panel->create_launcher_dialog_list, 
-							dialog);
-
 	gtk_widget_destroy (dialog);
 }
 
@@ -870,10 +866,6 @@ ask_about_launcher (const char  *file,
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    GTK_WIDGET (dee),
 			    TRUE, TRUE, GNOME_PAD_SMALL);
-
-	panel->create_launcher_dialog_list = 
-					g_slist_append (panel->create_launcher_dialog_list,
-							dialog);
 
 	ditem = gnome_desktop_item_new ();
 	gnome_desktop_item_set_string (ditem, GNOME_DESKTOP_ITEM_EXEC, file);
