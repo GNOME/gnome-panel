@@ -1,3 +1,33 @@
+2002-10-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes problem with keybindings not working on any screen
+	but the default. Root cause identified by Erwan Chenede.
+
+	* global-keys.[ch]: 
+	(screen_from_event): kill.
+	(panel_global_keys_filter): don't use screen_from_event,
+	just use the passed in screen.
+
+	* xstuff.c: (xstuff_init): register the GdkScreen as
+	the filter data.
+
+2002-10-07 Mark McLoughlin  <mark@skynet.ie>
+
+	Support RandR extension by resizing the toplevel panels
+	if the screen size has changed. Based on patch from
+	Keith Packard - #94561. Requires gtk+ HEAD.
+
+	* basep-widget.[ch]: (basep_widget_screen_size_changed):
+	* foobar-widget.[ch]: (foobar_widget_screen_size_changed):
+	resize the toplevels when the screen size changed.
+
+	* multiscreen-stuff.c:
+	(multiscreen_screen_size_changed): re-initialise and request
+	a resize on the toplevels.
+	(multiscreen_support_init): connect to the "size_changed"
+	signal on all screens.
+	(multiscreen_reinit): re-initialise the monitor geometries.
+
 2002-10-04  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
         * applet.c: (panel_applet_load_from_unique_id):

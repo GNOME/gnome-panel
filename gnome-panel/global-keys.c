@@ -238,17 +238,10 @@ check_for_grabs (void)
 	}
 }
 
-static inline GdkScreen *
-screen_from_event (GdkEvent *event)
-{
-	return gdk_drawable_get_screen (
-			GDK_DRAWABLE (event->any.window));
-}
-
 GdkFilterReturn
 panel_global_keys_filter (GdkXEvent *gdk_xevent,
-			  GdkEvent *event,
-			  gpointer data)
+			  GdkEvent  *event,
+			  GdkScreen *screen)
 {
 	XEvent *xevent = (XEvent *)gdk_xevent;
 	guint keycode, state;
@@ -257,6 +250,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	guint screenshot_keycode, screenshot_state;
 	guint window_screenshot_keycode, window_screenshot_state;
         guint ignored_mods;
+
+	g_return_val_if_fail (GDK_IS_SCREEN (screen), GDK_FILTER_CONTINUE);
         
 	if(xevent->type != KeyPress)
 		return GDK_FILTER_CONTINUE;
@@ -302,8 +297,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			basep_widget_autohide (BASEP_WIDGET (panel));
 		}
 
-		gtk_menu_set_screen (GTK_MENU (menu),
-				     panel_screen_from_toplevel (panel));
+		gtk_menu_set_screen (GTK_MENU (menu), screen);
 		gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
 				NULL, NULL, 0, GDK_CURRENT_TIME);
 		return GDK_FILTER_REMOVE;
@@ -314,13 +308,12 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			return GDK_FILTER_CONTINUE;
 		}
 
-		show_run_dialog (screen_from_event (event));
+		show_run_dialog (screen);
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == screenshot_keycode &&
 		   (state & (~ignored_mods)) == screenshot_state) {
-		GdkScreen *screen;
-		char      *argv [2];
-		char      *proggie;
+		char *argv [2];
+		char *proggie;
 
 		/* check if anybody else has a grab */
 		if (check_for_grabs ()) {
@@ -330,15 +323,13 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		proggie = g_find_program_in_path  ("gnome-panel-screenshot");
 		if (proggie == NULL) {
 			panel_error_dialog (
-				screen_from_event (event),
+				screen,
 				"cannot_find_ss_program",
 				_("Can't find the screenshot program"));
 			return GDK_FILTER_REMOVE;
 		}
 		argv[0] = proggie;
 		argv[1] = NULL;
-
-		screen = screen_from_event (event);
 
 		if (egg_screen_execute_async (screen, g_get_home_dir (), 1, argv) < 0)
 			panel_error_dialog (screen,
@@ -350,9 +341,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == window_screenshot_keycode &&
 		   (state & (~ignored_mods)) == window_screenshot_state) {
-		GdkScreen *screen;
-		char      *argv [3];
-		char      *proggie;
+		char *argv [3];
+		char *proggie;
 
 		/* check if anybody else has a grab */
 		if (check_for_grabs ()) {
@@ -362,7 +352,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		proggie = g_find_program_in_path  ("gnome-panel-screenshot");
 		if (proggie == NULL) {
 			panel_error_dialog (
-				screen_from_event (event),
+				screen,
 				"cannot_find_ss_program",
 				_("Can't find the screenshot program"));
 			return GDK_FILTER_REMOVE;
@@ -370,8 +360,6 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		argv[0] = proggie;
 		argv[1] = "--window";
 		argv[2] = NULL;
-
-		screen = screen_from_event (event);
 
 		if (egg_screen_execute_async (screen, g_get_home_dir (), 2, argv) < 0)
 			panel_error_dialog (screen,

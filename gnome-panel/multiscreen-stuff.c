@@ -28,11 +28,37 @@
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
 #include "panel.h"
+#include "basep-widget.h"
+#include "foobar-widget.h"
+
+extern GSList *panel_list;
 
 static int            screens     = 0;
 static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean	      initialized = FALSE;
+
+static void
+multiscreen_screen_size_changed (GdkScreen *screen)
+{
+	GSList *l;
+
+	multiscreen_reinit ();
+
+	for (l = panel_list; l; l = l->next) {
+		PanelData *panel_data = l->data;
+
+		g_assert (panel_data->panel != NULL);
+
+		if (BASEP_IS_WIDGET (panel_data->panel))
+			basep_widget_screen_size_changed (
+				BASEP_WIDGET (panel_data->panel), screen);
+
+		else if (FOOBAR_IS_WIDGET (panel_data->panel))
+			foobar_widget_screen_size_changed (
+				FOOBAR_WIDGET (panel_data->panel), screen);
+	}
+}
 
 static void
 multiscreen_support_init (void)
@@ -51,6 +77,9 @@ multiscreen_support_init (void)
 		int        j;
 
 		screen = gdk_display_get_screen (display, i);
+
+		g_signal_connect (screen, "size_changed",
+				  G_CALLBACK (multiscreen_screen_size_changed), NULL);
 
 		monitors   [i] = gdk_screen_get_n_monitors (screen);
 		geometries [i] = g_new0 (GdkRectangle, monitors [i]);
@@ -100,6 +129,24 @@ multiscreen_init (void)
 	initialized = TRUE;
 }
 
+void
+multiscreen_reinit (void)
+{
+	if (monitors)
+		g_free (monitors);
+
+	if (geometries) {
+		int i;
+
+		for (i = 0; i < screens; i++)
+			g_free (geometries[i]);
+		g_free (geometries);
+	}
+
+	initialized = FALSE;
+	multiscreen_init ();
+}
+	
 int
 multiscreen_screens ()
 {

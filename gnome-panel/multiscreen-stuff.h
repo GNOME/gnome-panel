@@ -29,6 +29,7 @@
 #include <gtk/gtk.h>
 
 void	multiscreen_init		(void);
+void	multiscreen_reinit		(void);
 
 int	multiscreen_screens		(void);
 int	multiscreen_monitors		(int        screen);

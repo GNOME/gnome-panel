@@ -284,6 +284,26 @@ basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, 
 	}
 }
 
+void
+basep_widget_screen_size_changed (BasePWidget *basep,
+				  GdkScreen   *screen)
+{
+	GtkWindow *window;
+	int        w, h;
+	int        x, y;
+
+	window = GTK_WINDOW (basep);
+
+	basep_widget_get_pos (basep, &x, &y);
+	basep_widget_get_size (basep, &w, &h);
+
+	gtk_window_move (window, x, y);
+
+	gtk_window_set_resizable (window, TRUE);
+	gtk_widget_set_size_request (GTK_WIDGET (basep), w, h);
+	gtk_window_resize (window, w, h);
+}
+
 static void
 basep_widget_realize (GtkWidget *w)
 {

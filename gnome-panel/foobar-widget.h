@@ -73,6 +73,9 @@ int		foobar_widget_get_height	(int screen,
 
 void		foobar_widget_force_menu_remake	(void);
 
+void            foobar_widget_screen_size_changed (FoobarWidget *foo,
+						   GdkScreen    *screen);
+
 G_END_DECLS
 
 #endif

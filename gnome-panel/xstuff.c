@@ -331,7 +331,9 @@ xstuff_init (void)
 		root_window = gdk_screen_get_root_window (screen);
 
 		gdk_window_add_filter (
-			root_window, panel_global_keys_filter, NULL);
+			root_window,
+			(GdkFilterFunc) panel_global_keys_filter,
+			screen);
 	}
 }
 

@@ -210,6 +210,9 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 
+void            basep_widget_screen_size_changed (BasePWidget *basep,
+						  GdkScreen   *screen);
+
 /*gboolean       basep_widget_convert_to         (BasePWidget *basep,
 						 PanelType type);*/
 

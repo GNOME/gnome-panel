@@ -801,6 +801,31 @@ foobar_widget_destroy (GtkObject *o)
 		GTK_OBJECT_CLASS (foobar_widget_parent_class)->destroy (o);
 }
 
+void
+foobar_widget_screen_size_changed (FoobarWidget *foo,
+				   GdkScreen    *screen)
+{
+	GtkWindow *window;
+	int        w, h;
+
+	window = GTK_WINDOW (foo);
+	
+	gtk_window_get_size (window, &w, &h);
+
+	gtk_window_move (window,
+			 multiscreen_x (foo->screen, foo->monitor),
+			 multiscreen_y (foo->screen, foo->monitor));
+
+	g_object_set (G_OBJECT (foo), "width_request",
+		      multiscreen_width (foo->screen, foo->monitor),
+		      NULL);
+
+	gtk_window_set_resizable (window, TRUE);
+	gtk_window_resize (window,
+			   multiscreen_width (foo->screen, foo->monitor),
+			   h);
+}
+
 static void
 foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 {
