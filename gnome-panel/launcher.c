@@ -551,7 +551,7 @@ main(int argc, char **argv)
 	  this is the string that we identify as when we ask for the
 	  spot*/
 	/*
-	mypath = get_which_output(argv[0]);
+	mypath = get_full_path(argv[0]);
 	if(!mypath)
 		return 1;*/
 	/* we pass an id starting with # to the panel to identify us,

@@ -86,18 +86,25 @@ gnome_panel_applet_init_corba (void)
 	char *name;
 	char *iior;
 	char hostname [1024];
+	int i;
 	
 	gethostname (hostname, sizeof (hostname));
 	if (hostname [0] == 0)
 		strcpy (hostname, "unknown-host");
 
-	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
-			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+	/*do a 20 second timeout until we get the iior*/
+	for(i=0;i<20;i++) {
+		name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
+				       "/DISPLAY-", getenv ("DISPLAY"), NULL);
 
-	iior = gnome_config_get_string (name);
-	g_free (name);
-	
-	if (!iior)
+		iior = gnome_config_get_string (name);
+		g_free (name);
+
+		if(iior)
+			break;
+		sleep(1);
+	}
+	if(!iior)
 		return 0;
 
 	panel_initialize_corba (&orb_ptr, &boa_ptr);
@@ -117,18 +124,25 @@ gnome_panel_applet_reinit_corba (void)
 	char *name;
 	char *iior;
 	char hostname [1024];
+	int i;
 	
 	gethostname (hostname, sizeof (hostname));
 	if (hostname [0] == 0)
 		strcpy (hostname, "unknown-host");
 
-	name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
-			       "/DISPLAY-", getenv ("DISPLAY"), NULL);
+	/*do a 20 second timeout until we get the iior*/
+	for(i=0;i<20;i++) {
+		name = g_copy_strings ("/CORBA-servers/Panel-", hostname, 
+				       "/DISPLAY-", getenv ("DISPLAY"), NULL);
 
-	iior = gnome_config_get_string (name);
-	g_free (name);
-	
-	if (!iior)
+		iior = gnome_config_get_string (name);
+		g_free (name);
+
+		if(iior)
+			break;
+		sleep(1);
+	}
+	if(!iior)
 		return 0;
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
@@ -277,9 +291,27 @@ gnome_panel_applet_request_id (char *path,
 	char *cfg = NULL;
 	char *globcfg = NULL;
 	guint32 wid;
+	int i;
 
-	/*reserve a spot and get an id for this applet*/
-	*id = panel_client->applet_request_id(path,cfg,globcfg,wid);
+	/*this is the first call to panel so we'll do a loop and timeout
+	  after 20 seconds if we don't find a panel*/
+	*id = -1;
+
+	for(i=0;i<20;i++) {
+		try {
+			/*reserve a spot and get an id for this applet*/
+			*id = panel_client->applet_request_id(path,cfg,
+							      globcfg,wid);
+		} catch (...) {
+			sleep(1);
+			gnome_panel_applet_reinit_corba ();
+			continue;
+		}
+		break;
+	}
+	/*if the request_id never completed*/
+	if(*id == -1)
+		return g_strdup("Can't talk to a panel\n");
 
 	if(winid)
 		*winid = wid;
@@ -398,70 +430,4 @@ move_grab_remove (GtkWidget *applet)
 {
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
 	gtk_grab_remove(applet);
-}
-
-/* this function might be a slight overkill, but it should work
-   perfect, hopefully it should be 100% buffer overrun safe too*/
-char *
-get_which_output(char *argv0)
-{
-	char buf[PATH_MAX+2];
-	int cmdsize=100;
-	char *cmdbuf;
-	int i;
-	int fd[2];
-
-	if(!argv0)
-		return NULL;
-
-	if(*argv0 == '/')
-		return g_strdup(argv0);
-
-
-	if(strchr(argv0,'/')) {
-		char *curpath = getcwd(NULL,0);
-		char *outbuf;
-
-		if(!curpath)
-			return NULL;
-
-		outbuf = g_copy_strings(curpath,"/",argv0,NULL);
-		free(curpath);
-
-		realpath(outbuf,buf);
-	
-		return g_strdup(buf);
-	}
-
-	if(pipe(fd) == -1)
-		return NULL;
-
-	/*dynamically reallocates cmdbuf until the command fits*/
-	for(;;) {
-		cmdbuf = (char *)g_malloc(cmdsize);
-		if(g_snprintf(cmdbuf, cmdsize, "sh -c 'which %s > /dev/fd/%d'",
-			      argv0,fd[1])>-1)
-			break;
-	
-		g_free(cmdbuf);
-		cmdsize*=2;
-	}
-		
-	system(cmdbuf);
-	g_free(cmdbuf);
-
-	i=read(fd[0],buf,PATH_MAX+1);
-	close(fd[0]);
-	close(fd[1]);
-	if(i <= 0)
-		return NULL;
-
-	buf[i]='\0';
-	if(buf[i-1]=='\n')
-		buf[i-1]='\0';
-
-	if(buf[0]=='\0')
-		return NULL;
-	
-	return g_strdup(buf);
 }

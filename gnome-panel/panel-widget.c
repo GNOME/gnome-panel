@@ -1091,6 +1091,7 @@ panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
 		return FALSE;
 
 	panel_widget_add(PANEL_WIDGET(panel),applet,pos);
+	puts("\n\nDROP\n\n");
 
 	return TRUE;
 }
@@ -1276,12 +1277,12 @@ panel_widget_new (gint size,
 		panel_widget_pop_down(panel);
 
 	/*set up drag'n'drop (the drop)*/
-	gtk_signal_connect (GTK_OBJECT (panel), 
+	/*gtk_signal_connect (GTK_OBJECT (panel), 
 			    "drop_data_available_event",
 			    GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
 			    NULL);
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
-				 applet_drop_types, 1, FALSE);
+				 applet_drop_types, 1, FALSE);*/
 	
 
 	return GTK_WIDGET(panel);
@@ -1350,6 +1351,9 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		/*gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				panel->currently_dragged_applet);*/
+		/*gtk_signal_emit_by_name(
+			GTK_OBJECT(panel->currently_dragged_applet),
+			"drag_request_event");*/
 		return TRUE;
 	}
 	return FALSE;
@@ -1515,8 +1519,6 @@ panel_widget_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 	
 	gtk_widget_dnd_data_set (widget, event, &widget, sizeof(widget));
 
-	puts("test");
-
 	return TRUE;
 }
 
@@ -1530,6 +1532,8 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(panel,-1);
 	g_return_val_if_fail(applet,-1);
 	g_return_val_if_fail(pos>=0,-1);
+
+	printf("ADDING at pos: %d\n",pos);
 
 	if(panel->snapped == PANEL_DRAWER) {
 		if(pos >= panel->size &&
@@ -1579,12 +1583,12 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	bind_top_applet_events(panel,applet);
 
 	/*set up drag'n'drop (the drag)*/
-	gtk_signal_connect (GTK_OBJECT (panel), 
+	/*gtk_signal_connect (GTK_OBJECT (panel), 
 			    "drag_request_event",
 			    GTK_SIGNAL_FUNC(panel_widget_dnd_drag_request),
 			    NULL);
 	gtk_widget_dnd_drag_set (GTK_WIDGET(panel), TRUE,
-				 applet_drag_types, 1);
+				 applet_drag_types, 1);*/
 
 	return i;
 }
@@ -1855,6 +1859,8 @@ panel_widget_restore_state(PanelWidget *panel)
 }
 
 #if 0
+/*this does not really work, it's old test code, in the unlikely event
+of a water landing, you can use this piece of code as a floatation device*/
 
 int
 main(int argc, char **argv)

@@ -31,6 +31,7 @@ lib_LTLIBRARIES = libpanel_applet.la
 libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	mico-parse.cc \
+	panel-util.c  \
 	$(CORBA_SOURCES)
 
 #libpanel_appletinclude_HEADERS = applet-lib.h \
@@ -67,6 +68,7 @@ panel_SOURCES = 		\
 	panel_config_global.h  	\
 	panel-widget.c  	\
 	panel-widget.h		\
+	panel-util.c		\
 	$(CORBA_SOURCES)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)

@@ -1,3 +1,19 @@
+Sat Mar 28 15:23:33 1998  George Lebl  <jirka@5z.com>
+
+	* panel-util.[ch]: riped out get_which_output from
+	  applet-lib and put it in these new files while renaming
+	  it to get_full_path.
+
+	* Makefile.am: link in the new files
+
+	* panel-widget.c: temporairly disable dnd code as it
+	  doesn't work
+
+	* main.c: call get_full_path from load applet
+
+	* applet-lib.cc: add timeouts for contacting the panel
+	  so that applets don't get "lost" due to a race
+
 Fri Mar 27 01:48:57 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: dnd code in, but it doesn't work, needs

@@ -15,6 +15,7 @@
 #include "drawer.h"
 #include "mico-glue.h"
 #include "mico-parse.h"
+#include "panel-util.h"
 
 GList *panels = NULL;
 GList *applets = NULL;
@@ -42,26 +43,33 @@ load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 {
 	if(strcmp(id,EXTERN_ID) == 0) {
 		gchar *command;
+		gchar *fullparams;
+
+		/*make it an absolute path, same as the applets will
+		  interpret it and the applets will sign themselves as
+		  this, so it has to be exactly the same*/
+		fullparams = get_full_path(params);
 
 		/*start nothing, applet is taking care of everything*/
 		if(params == NULL ||
 		   params[0] == '\0')
 		   	return;
 
-		reserve_applet_spot (id, params, panel, pos, cfgpath,
+		reserve_applet_spot (id, fullparams, panel, pos, cfgpath,
 				     APPLET_EXTERN_PENDING);
 		
 		/*'#' marks an applet that will take care of starting
 		  itself but wants us to reserve a spot for it*/
 		if(params[0]!='#') {
 			/*this applet is dumb and wants us to start it :)*/
-			command = g_copy_strings ("(true;", params, ") &",
+			command = g_copy_strings ("(true;", fullparams, ") &",
 						  NULL);
 
 			system (command);
 			g_free (command);
 		}
 
+		g_free(fullparams);
 	} else if(strcmp(id,MENU_ID) == 0) {
 		Menu *menu;
 

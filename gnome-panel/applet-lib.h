@@ -1,6 +1,8 @@
 #ifndef APPLET_LIB_H
 #define APPLET_LIB_H
 
+#include "panel-util.h"
+
 BEGIN_GNOME_DECLS
 
 typedef void (*AppletCallbackFunc)(int id, gpointer data);
@@ -23,8 +25,6 @@ void applet_corba_gtk_main (char *str);
 
 void move_grab_add (GtkWidget *applet);
 void move_grab_remove (GtkWidget *applet);
-
-char * get_which_output(char *argv0);
 
 END_GNOME_DECLS
 
