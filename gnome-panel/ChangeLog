@@ -1,5 +1,16 @@
 2003-07-14  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c: (panel_applet_frame_change_size):
+	normalise the applet size to the values defined in the
+	IDL so we don't break some applets. What a mess.
+	
+	* panel-util.h: remove the G_GNUC_PRINTF stuff for 
+	panel_error_dialog since we've obfuscated the function
+	enough now that the compiler can't have a hope of
+	knowing what we're at.
+
+2003-07-14  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-run-dialog.c:
 	(set_window_icon_from_stock): impl.
 	(panel_run_dialog_set_icon),

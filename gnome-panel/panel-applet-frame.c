@@ -364,6 +364,16 @@ void
 panel_applet_frame_change_size (PanelAppletFrame *frame,
 				PanelSize         size)
 {
+	/* Normalise the size to the constants defined in
+	 * the IDL.
+	 */
+	size = size <= PANEL_SIZE_XX_SMALL ? PANEL_SIZE_XX_SMALL :
+	       size <= PANEL_SIZE_X_SMALL  ? PANEL_SIZE_X_SMALL  :
+	       size <= PANEL_SIZE_SMALL    ? PANEL_SIZE_SMALL    :
+	       size <= PANEL_SIZE_MEDIUM   ? PANEL_SIZE_MEDIUM   :
+	       size <= PANEL_SIZE_LARGE    ? PANEL_SIZE_LARGE    :
+	       size <= PANEL_SIZE_X_LARGE  ? PANEL_SIZE_X_LARGE  : PANEL_SIZE_XX_LARGE;
+		 
 	bonobo_pbclient_set_short (frame->priv->property_bag, 
 				   PROPERTY_SIZE,
 				   size,

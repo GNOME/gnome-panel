@@ -65,7 +65,7 @@ GtkWidget      *panel_error_dialog      (GdkScreen  *screen,
 					 const char *class,
 					 const char *primary_format,
 					 const char *secondary_format,
-					 ...) G_GNUC_PRINTF (4, 5);
+					 ...);
 
 int		panel_find_applet_index	(GtkWidget *widget);
 
