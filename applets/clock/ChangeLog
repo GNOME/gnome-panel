@@ -1,3 +1,13 @@
+Tue Aug 19 16:39:45 2003  George Lebl <jirka@5z.com>
+
+	* clock.c: To fix #110005 and #120188 remember the last requisition
+	  and only request larger size.  That way we won't jump around all
+	  the time with proportional fonts.  When options or font changes,
+	  then we start over.  Also add an alignment in between the label
+	  and the toggle, this way the panel won't get size allocated
+	  all the time as the resizes from setting the label will stop at
+	  the button.
+
 ==================== 2.3.6.2 ====================
 
 ==================== 2.3.6.1 ====================

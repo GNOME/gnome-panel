@@ -92,6 +92,9 @@ struct _ClockData {
 	PanelAppletOrient orient;
 	int size;
 
+	int fixed_width;
+	int fixed_height;
+
 	guint listeners [N_GCONF_PREFS];
 };
 
@@ -109,6 +112,14 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
+
+static void
+unfix_size (ClockData *cd)
+{
+	cd->fixed_width = -1;
+	cd->fixed_height = -1;
+	gtk_widget_queue_resize (cd->clockw);
+}
 
 static void
 set_tooltip (GtkWidget  *applet,
@@ -345,6 +356,8 @@ refresh_clock (ClockData *cd)
 {
 	time_t current_time;
 	
+	unfix_size (cd);
+
 	time (&current_time);
 	update_clock (cd, current_time);
 }
@@ -353,6 +366,8 @@ static void
 refresh_clock_timeout(ClockData *cd)
 {
 	time_t current_time;
+
+	unfix_size (cd);
 	
 	update_timeformat (cd);
 
@@ -597,22 +612,50 @@ do_not_eat_button_press (GtkWidget      *widget,
 	return FALSE;
 }
 
+/* Don't request smaller size then the last one we did, this avoids
+   jumping when proportional fonts are used.  We must take care to 
+   call "unfix_size" whenever options are changed or such where
+   we'd want to forget the fixed size */
+static void
+clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
+{
+	ClockData *cd = data;
+
+	if (req->width > cd->fixed_width)
+		cd->fixed_width = req->width;
+	if (req->height > cd->fixed_height)
+		cd->fixed_height = req->height;
+	req->width = cd->fixed_width;
+	req->height = cd->fixed_height;
+}
 
 static void
 create_clock_widget (ClockData *cd)
 {
 	GtkWidget *clock;
 	GtkWidget *toggle;
+	GtkWidget *alignment;
 
 	clock = gtk_label_new ("hmm?");
+	g_signal_connect (clock, "size_request",
+			  G_CALLBACK (clock_size_request),
+			  cd);
+	g_signal_connect_swapped (clock, "style_set",
+				  G_CALLBACK (unfix_size),
+				  cd);
 	gtk_label_set_justify (GTK_LABEL (clock), GTK_JUSTIFY_CENTER);
 	gtk_label_set_line_wrap (GTK_LABEL (clock), TRUE);
 	gtk_widget_show (clock);
 
 	toggle = gtk_toggle_button_new ();
+	gtk_container_set_resize_mode (GTK_CONTAINER (toggle), GTK_RESIZE_IMMEDIATE);
 	gtk_button_set_relief (GTK_BUTTON (toggle), GTK_RELIEF_NONE);
         
-	gtk_container_add (GTK_CONTAINER (toggle), clock);
+	alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
+	gtk_container_add (GTK_CONTAINER (alignment), clock);
+	gtk_container_set_resize_mode (GTK_CONTAINER (alignment), GTK_RESIZE_IMMEDIATE);
+	gtk_widget_show (alignment);
+	gtk_container_add (GTK_CONTAINER (toggle), alignment);
 
 	g_signal_connect (toggle, "button_press_event",
 			  G_CALLBACK (do_not_eat_button_press), NULL);
@@ -1076,6 +1119,8 @@ fill_clock_applet (PanelApplet *applet)
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
 	
 	cd = g_new0 (ClockData, 1);
+	cd->fixed_width = -1;
+	cd->fixed_height = -1;
 
 	cd->applet = GTK_WIDGET (applet);
 
