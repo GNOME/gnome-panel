@@ -95,13 +95,7 @@ about_cb (GtkWidget *widget, gpointer data)
 static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
-  if(!fork()) {
-    int i;
-    for(i = 0; i < 255; i++)
-      close(i);
-    execlp(program_path, program_path, NULL);
-    _exit(1);
-  }
+  gnome_execute_async(NULL, 1, &program_path);
 }
 
 static void

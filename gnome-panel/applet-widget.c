@@ -605,7 +605,6 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
   CORBA_ORB orb;
   CORBA_char *privcfg;
   CORBA_char *globcfg;
-  static volatile int stop_here = 0;
 
   CORBA_exception_init(&ev);
 
@@ -641,7 +640,8 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 					NULL);
 
 
-  while(stop_here);
+{  static volatile int stop_here = 0;
+ while(stop_here);}
 
   applet_servant->pspot = GNOME_Panel_add_applet(panel_client, applet_obj,
 						 (char *)goad_id,
