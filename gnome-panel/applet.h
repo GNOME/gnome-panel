@@ -96,6 +96,8 @@ gboolean    panel_applet_can_freely_move (AppletInfo *applet);
 /* True if the locked flag is writable */
 gboolean    panel_applet_lockable (AppletInfo *applet);
 
+GtkWidget  *panel_applet_create_menu (AppletInfo *info);
+
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,
 					   gpointer     data);

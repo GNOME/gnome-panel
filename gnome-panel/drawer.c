@@ -531,7 +531,7 @@ panel_drawer_connect_to_gconf (Drawer *drawer)
 }
 
 static gboolean
-drawer_properties_enabled (void)
+drawer_changes_enabled (void)
 {
   return !panel_lockdown_get_locked_down ();
 }
@@ -594,10 +594,16 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
 
 	panel_applet_add_callback (drawer->info,
+				   "add",
+				   GTK_STOCK_ADD,
+				   _("_Add to drawer..."),
+				   drawer_changes_enabled);
+
+	panel_applet_add_callback (drawer->info,
 				   "properties",
 				   GTK_STOCK_PROPERTIES,
 				   _("_Properties"),
-				   drawer_properties_enabled);
+				   drawer_changes_enabled);
 
 	panel_applet_add_callback (drawer->info,
 				   "help",

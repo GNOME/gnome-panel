@@ -228,12 +228,20 @@ deactivate_idle (gpointer data)
 }
 
 static void
-menu_deactivate(GtkWidget *w, PanelData *pd)
+context_menu_deactivate (GtkWidget *w,
+			 PanelData *pd)
 {
 	if (pd->deactivate_idle == 0)
 		pd->deactivate_idle = g_idle_add (deactivate_idle, pd);
 
 	panel_toplevel_pop_autohide_disabler (PANEL_TOPLEVEL (pd->panel));
+}
+
+static void
+context_menu_show (GtkWidget *w,
+		   PanelData *pd)
+{
+	panel_toplevel_push_autohide_disabler (PANEL_TOPLEVEL (pd->panel));
 }
 
 static void
@@ -288,9 +296,14 @@ panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
 	if (!pd->menu) {
 		pd->menu = g_object_ref (panel_context_menu_create (panel));
-		gtk_object_sink (GTK_OBJECT (pd->menu));
-		g_signal_connect (pd->menu, "deactivate",
-				  G_CALLBACK (menu_deactivate), pd);
+		if (pd->menu) {
+			gtk_object_sink (GTK_OBJECT (pd->menu));
+			g_signal_connect (pd->menu, "deactivate",
+					  G_CALLBACK (context_menu_deactivate),
+					  pd);
+			g_signal_connect (pd->menu, "show",
+					  G_CALLBACK (context_menu_show), pd);
+		}
 	}
 
 	return pd->menu;
@@ -341,8 +354,8 @@ panel_popup_menu (PanelToplevel *toplevel,
 		panel_data->insertion_pos = -1;
 	
 	menu = make_popup_panel_menu (panel_widget);
-
-	panel_toplevel_push_autohide_disabler (toplevel);
+	if (!menu)
+		return FALSE;
 
 	gtk_menu_set_screen (GTK_MENU (menu),
 			     gtk_window_get_screen (GTK_WINDOW (toplevel)));

@@ -17,6 +17,7 @@
 #include "drawer.h"
 #include "launcher.h"
 #include "menu.h"
+#include "panel-addto.h"
 #include "panel-gconf.h"
 #include "panel-config-global.h"
 #include "panel-applet-frame.h"
@@ -32,9 +33,6 @@
 #include "panel-lockdown.h"
 
 #define SMALL_ICON_SIZE 20
-
-static GtkWidget *panel_applet_create_menu (AppletInfo  *info,
-					    PanelWidget *panel_widget);
 
 static GSList *registered_applets = NULL;
 static GSList *queued_position_saves = NULL;
@@ -156,8 +154,7 @@ panel_applet_recreate_menu (AppletInfo	*info)
 	}
 
 	gtk_widget_unref (info->menu);
-	info->menu = panel_applet_create_menu (info,
-					       PANEL_WIDGET (info->widget->parent));
+	info->menu = panel_applet_create_menu (info);
 }
 
 static void
@@ -198,7 +195,12 @@ applet_callback_callback (GtkWidget      *widget,
 				menu->info->data, screen);
 		break;
 	case PANEL_OBJECT_DRAWER: 
-		if (strcmp (menu->name, "properties")==0) {
+		if (strcmp (menu->name, "add") == 0) {
+			Drawer *drawer = menu->info->data;
+
+			panel_addto_present (GTK_MENU_ITEM (widget),
+					     panel_toplevel_get_panel_widget (drawer->toplevel));
+		} else if (strcmp (menu->name, "properties") == 0) {
 			Drawer *drawer = menu->info->data;
 
 			panel_properties_dialog_present (drawer->toplevel);
@@ -233,7 +235,20 @@ applet_callback_callback (GtkWidget      *widget,
 }
 
 static void
-applet_menu_deactivate (GtkWidget *w, AppletInfo *info)
+applet_menu_show (GtkWidget *w,
+		  AppletInfo *info)
+{
+	PanelWidget *panel_widget;
+
+	panel_widget = PANEL_WIDGET (info->widget->parent);
+
+	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
+}
+
+
+static void
+applet_menu_deactivate (GtkWidget *w,
+			AppletInfo *info)
 {
 	PanelWidget *panel_widget;
 
@@ -397,21 +412,25 @@ add_to_submenus (AppletInfo *info,
 	g_free(n);
 }
 
-static GtkWidget *
-panel_applet_create_menu (AppletInfo  *info,
-			  PanelWidget *panel_widget)
+GtkWidget *
+panel_applet_create_menu (AppletInfo *info)
 {
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-	GList     *l;
-	gboolean   added_anything = FALSE;
+	GtkWidget   *menu;
+	GtkWidget   *menuitem;
+	GList       *l;
+	PanelWidget *panel_widget;
+	gboolean     added_anything = FALSE;
+
+	panel_widget = PANEL_WIDGET (info->widget->parent);
 
 	menu = g_object_ref (panel_create_menu ());
 	gtk_object_sink (GTK_OBJECT (menu));
 
-	/* connect the deactivate signal, so that we can "re-allow" 
-	 * autohide when the menu is deactivated.
+	/* connect the show & deactivate signal, so that we can "disallow" and
+	 * "re-allow" autohide when the menu is shown/deactivated.
 	 */
+	g_signal_connect (menu, "show",
+			  G_CALLBACK (applet_menu_show), info);
 	g_signal_connect (menu, "deactivate",
 			  G_CALLBACK (applet_menu_deactivate), info);
 
@@ -564,12 +583,10 @@ applet_show_menu (AppletInfo     *info,
 	panel_widget = PANEL_WIDGET (info->widget->parent);
 
 	if (info->menu == NULL)
-		info->menu = panel_applet_create_menu (info, panel_widget);
+		info->menu = panel_applet_create_menu (info);
 
 	if (info->menu == NULL)
 		return;
-
-	panel_toplevel_push_autohide_disabler (panel_widget->toplevel);
 
 	panel_applet_menu_set_recurse (GTK_MENU (info->menu),
 				       "menu_panel",

@@ -38,6 +38,7 @@
 #include "panel-util.h"
 #include "panel.h"
 #include "menu.h"
+#include "applet.h"
 #include "panel-config-global.h"
 #include "panel-profile.h"
 #include "panel-properties-dialog.h"
@@ -312,6 +313,25 @@ panel_context_menu_create (PanelWidget *panel)
 	GtkWidget *retval;
 	GtkWidget *menuitem;
 	char      *gnome_about;
+
+	if (panel->master_widget) {
+		gpointer    *pointer;
+		AppletInfo  *info;
+		PanelWidget *parent_panel;
+
+		pointer = g_object_get_data (G_OBJECT (panel->master_widget),
+					     "applet_info");
+
+		g_assert (pointer != NULL);
+		info = (AppletInfo *) pointer;
+
+		if (info->menu == NULL) {
+			parent_panel = PANEL_WIDGET (info->widget->parent);
+			info->menu = panel_applet_create_menu (info);
+		}
+
+		return info->menu;
+	}
 
 	retval = create_empty_menu ();
 

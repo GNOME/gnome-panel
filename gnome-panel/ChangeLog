@@ -1,3 +1,33 @@
+2004-12-19  Vincent Untz  <vincent@vuntz.net>
+
+	The drawer context menu is now the same if you click on the drawer
+	toplevel or on the drawer button widget. This should be more
+	consistent.
+
+	* applet.[ch]: (panel_applet_create_menu): we don't need the second
+	argument, connect to the "show" signal of the menu so we can push
+	the auto-hide disabler. Doing it in a signal callback is better
+	since drawer menus are not always shown through applet_show_menu ()
+	(panel_applet_recreate_menu): updated
+	(applet_callback_callback): handle the "Add to drawer..." menu item
+	for drawers
+	(applet_menu_show): new function, to push the autohide disabler
+	(applet_show_menu): updated, and do not push auto-hide disabler here
+	* drawer.c: (drawer_properties_enabled): renamed to...
+	(drawer_changes_enabled): new function
+	(load_drawer_applet): add a "Add to drawer..." menu item to the
+	context menu
+	* panel-context-menu.c: (panel_context_menu_create): for drawers,
+	create the applet context menu
+	* panel.c: (menu_deactivate): renamed to...
+	(context_menu_deactivate): new function
+	(context_menu_show): new function, to push the auto-hide disabler
+	(panel_menu_get): connect to the "show" signal of the menu so we can
+	push the auto-hide disabler (same rationale as before), handle the
+	fact that the menu can be NULL
+	(panel_popup_menu): do not push auto-hide disabler here, handle the
+	fact that the menu can be NULL
+
 2004-12-18  Vincent Untz  <vincent@vuntz.net>
 
 	* panel.c: (drag_motion_cb): don't queue auto-hide here
