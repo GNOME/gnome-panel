@@ -297,9 +297,13 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc
 
-schemadir = $(sysconfdir)/gconf/schemas
+schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = panelglobalconfig.schema
-CLEANFILES    = $(BUILT_SOURCES)
+
+install-data-local:
+	GCONF_CONFIG_SOURCE=$(GCONF_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(srcdir)/$(schema_DATA)
+
+CLEANFILES = $(BUILT_SOURCES)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
