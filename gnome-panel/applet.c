@@ -352,14 +352,18 @@ applet_button_press (GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	int applet_id = GPOINTER_TO_INT(data);
 	AppletInfo *info = get_applet_info (applet_id);
-	Swallow *swallow = info->data;
-	GtkWidget *handle_box = swallow->handle_box;
 	
 	if(event->button==3) {
-		if(!panel_applet_in_drag)
-			if(! ((info->type == APPLET_SWALLOW)
-			      && GTK_HANDLE_BOX(handle_box)->child_detached))
+		if(!panel_applet_in_drag) {
+			if(info->type == APPLET_SWALLOW) {
+				Swallow *swallow = info->data;
+				GtkWidget *handle_box = swallow->handle_box;
+				if(!GTK_HANDLE_BOX(handle_box)->child_detached)
+					show_applet_menu(GPOINTER_TO_INT(data),
+							 event);
+			} else
 				show_applet_menu(GPOINTER_TO_INT(data), event);
+		}
 	}
 	/*stop all button press events here so that they don't get to the
 	  panel*/
