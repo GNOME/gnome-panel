@@ -1,3 +1,4 @@
+/* -*- Mode: C; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 /*
  * panel-applet-frame.c: panel side container for applets
  *
@@ -864,18 +865,20 @@ panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
 	if (frame->priv->iid)
 		applet_name = panel_applet_frame_get_name (frame->priv->iid);
 
-	dialog_txt = g_strconcat ("<span weight=\"bold\" size=\"larger\">",
-				  applet_name ?
-					_("\"%s\" Has Quit Unexpectedly") :
-					_("Panel Object Has Quit Unexpectedly"),
-				  "</span>\n\n",
-				  "If you reload a panel object, it will automatically "
-				  "be added back to the panel.",
-				  NULL);
+	if (applet_name)
+		dialog_txt = g_strdup_printf (_("\"%s\" has quit unexpectedly"), applet_name);
+	else
+		dialog_txt = g_strdup (_("Panel object has quit unexpectedly"));
 
-	dialog = gtk_message_dialog_new_with_markup (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
-						     GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
-						     dialog_txt, applet_name ? applet_name : NULL);
+	dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_DESTROY_WITH_PARENT,
+					 GTK_MESSAGE_WARNING, GTK_BUTTONS_NONE,
+					 dialog_txt, applet_name ? applet_name : NULL);
+
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
+						  _("If you reload a panel object, it will automatically "
+						    "be added back to the panel."));
+
+	gtk_container_set_border_width (GTK_CONTAINER (dialog), 6);
 
 	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
 				_("_Don't Reload"), GTK_RESPONSE_NO,

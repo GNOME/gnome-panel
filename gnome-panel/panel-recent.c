@@ -205,15 +205,15 @@ recent_documents_clear_cb (GtkMenuItem    *menuitem,
 		return;
 	}
 
-	clear_recent_dialog = gtk_message_dialog_new_with_markup (NULL,
-								  0 /* flags */,
-								  GTK_MESSAGE_QUESTION,
-								  GTK_BUTTONS_NONE,
-								  "<big><b>%s</b></big>\n\n%s",
-								  _("Clear the Recent Documents list?"),
-								  _("If you clear the Recent Documents list, you clear the following:\n\n"
-								    "\342\200\242 All items from the Actions \342\206\222 Recent Documents menu item.\n"
-								    "\342\200\242 All items from the recent documents list in all applications."));
+	clear_recent_dialog = gtk_message_dialog_new (NULL,
+						      0 /* flags */,
+						      GTK_MESSAGE_QUESTION,
+						      GTK_BUTTONS_NONE,
+						      _("Clear the Recent Documents list?"));
+	gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (clear_recent_dialog),
+						  _("If you clear the Recent Documents list, you clear the following:\n\n"
+						    "\342\200\242 All items from the Actions \342\206\222 Recent Documents menu item.\n"
+						    "\342\200\242 All items from the recent documents list in all applications."));
 
 	gtk_dialog_add_buttons (GTK_DIALOG (clear_recent_dialog),
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
