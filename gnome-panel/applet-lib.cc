@@ -1,14 +1,27 @@
 #include <config.h>
 #include <mico/gtkmico.h>
 #include <mico/naming.h>
+#include <fcntl.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include "panel.h"
 #include "gnome-panel.h"
 #include "applet-lib.h"
+#include "applet-widget.h"
 #include "panel-widget.h"
 #include "mico-parse.h"
-#include <fcntl.h>
+
+/*
+ *
+ * there is a lot of functionality in this file that is then slightly
+ * redundant in the applet-widget ... this is because I wish to keep
+ * applet-widget a clean C file, while applet-lib as the corba interface
+ * after we have a C orb, we can do everything in applet-widget
+ *
+ */
+
+
+
 
 #include "cookie.h"
 
@@ -21,12 +34,13 @@ GNOME::Panel_var panel_client;
 
 typedef struct _CallbackInfo CallbackInfo;
 struct _CallbackInfo {
+	char *name;
 	gint applet_id;
 	AppletCallbackFunc func;
 	gpointer data;
 };
 
-GHashTable *applet_callbacks=NULL;
+GList *applet_callbacks = NULL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
@@ -36,10 +50,10 @@ CORBA::BOA_ptr boa_ptr;
 
 char *cookie;
 
-/*every applet must implement these*/
 BEGIN_GNOME_DECLS
-void change_orient(int applet_id, int orient);
-int session_save(int applet_id, const char *cfgpath, const char *globcfgpath);
+void _gnome_applet_change_orient(int applet_id, int orient);
+int _gnome_applet_session_save(int applet_id, const char *cfgpath,
+			       const char *globcfgpath);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
@@ -49,14 +63,15 @@ public:
 	void change_orient (const char *ccookie, CORBA::Short applet_id,
 			    CORBA::Short orient) {
 		CHECK_COOKIE ();
-		::change_orient(applet_id,orient);
+		::_gnome_applet_change_orient(applet_id,orient);
 	}
 	CORBA::Short session_save (const char *ccookie,
 				   CORBA::Short applet_id,
 			   	   const char *cfgpath,
 			   	   const char *globcfgpath) {
 		CHECK_COOKIE_V (0);
-		return ::session_save(applet_id,cfgpath,globcfgpath);
+		return ::_gnome_applet_session_save(applet_id,cfgpath,
+						    globcfgpath);
 	}
         void do_callback (const char *ccookie,
 			  CORBA::Short applet_id,
@@ -65,16 +80,15 @@ public:
 		GList *list;
 
 		CHECK_COOKIE ();
-		if(!applet_callbacks)
-			return;
 
-		list = (GList *)g_hash_table_lookup(applet_callbacks,
-						    (char *)callback_name);
-
-		for(;list!=NULL;list = (GList *) g_list_next (list)) {
+		for(list = applet_callbacks;
+		    list!=NULL;list = (GList *) g_list_next (list)) {
 			CallbackInfo *info = (CallbackInfo *)list->data;
-			if(info->applet_id == applet_id) {
-				(*(info->func))(applet_id,info->data);
+			if(info->applet_id == applet_id &&
+			   strcmp(info->name,(char *)callback_name)==0) {
+				(*(info->func)) (
+					applet_widget_get_by_id(applet_id),
+					info->data);
 				return;
 			}
 		}
@@ -167,19 +181,12 @@ gnome_panel_applet_register_callback(int applet_id,
 	CallbackInfo *info = g_new(CallbackInfo,1);
 	GList *list;
 
-	if(!applet_callbacks)
-		 applet_callbacks = g_hash_table_new (g_str_hash, g_str_equal);
-
+	info->name = g_strdup(name);
 	info->applet_id = applet_id;
 	info->func = func;
 	info->data = data;
 
-	list = (GList *)g_hash_table_lookup(applet_callbacks,name);
-
-	if(list)
-		g_hash_table_remove(applet_callbacks,name);
-	list = g_list_prepend(list,info);
-	g_hash_table_insert(applet_callbacks,name,list);
+	applet_callbacks = g_list_prepend(applet_callbacks,info);
 
 	/*register the callback with the panel*/
 	panel_client->applet_add_callback(cookie,
@@ -382,6 +389,14 @@ gnome_panel_applet_abort_id (gint applet_id)
 }
 
 char *
+gnome_panel_applet_remove_from_panel (gint applet_id)
+{
+	panel_client->applet_remove_from_panel(cookie, applet_id);
+
+	return 0;
+}
+
+char *
 gnome_panel_applet_add_tooltip (gint applet_id, char *tooltip)
 {
 	panel_client->applet_add_tooltip(cookie, applet_id,tooltip);
@@ -416,6 +431,25 @@ gnome_panel_applet_request_glob_cfg (char **globcfgpath)
 	}
 
 	return 0;
+}
+
+void
+gnome_panel_applet_cleanup(gint applet_id)
+{
+	GList *list;
+	GList *nlist;
+
+	for(list = applet_callbacks;list!=NULL;) {
+		CallbackInfo *info = (CallbackInfo *)list->data;
+		nlist = g_list_next(list);
+		if(info->applet_id == applet_id) {
+			g_free(info->name);
+			g_list_remove_link(applet_callbacks,list);
+			g_free(info);
+
+		}
+		list = nlist;
+	}
 }
 
 

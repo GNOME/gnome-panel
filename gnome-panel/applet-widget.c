@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <gnome.h>
 #include <applet-widget.h>
+#include <applet-lib.h>
 
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void applet_widget_init		(AppletWidget      *applet_widget);
@@ -121,9 +122,34 @@ static gint
 applet_widget_destroy(GtkWidget *w,gpointer data)
 {
 	AppletWidget *applet = APPLET_WIDGET(w);
+	if(!applet->cfgpath)
+		return FALSE;
 	g_free(applet->cfgpath);
 	g_free(applet->globcfgpath);
+	applet->cfgpath = NULL;
+	applet->globcfgpath = NULL;
+	gnome_panel_applet_cleanup(applet->applet_id);
+	if(GTK_BIN(w)->child == NULL) {
+		gnome_panel_applet_abort_id(applet->applet_id);
+	}
 	return FALSE;
+}
+
+void
+applet_widget_remove_from_panel(AppletWidget *applet)
+{
+	gnome_panel_applet_remove_from_panel(applet->applet_id);
+}
+
+void
+applet_widget_register_callback(AppletWidget *applet,
+				char *name,
+				char *menutext,
+				AppletCallbackFunc func,
+				gpointer data)
+{
+	gnome_panel_applet_register_callback (applet->applet_id,name,
+					      menutext,func,data);
 }
 
 GtkWidget *
@@ -186,7 +212,22 @@ applet_widget_add(AppletWidget *applet, GtkWidget *widget)
 void
 applet_widget_set_tooltip(AppletWidget *applet, gchar *text)
 {
-	gnome_panel_applet_add_tooltip (applet->applet_id, text);
+	if(text)
+		gnome_panel_applet_add_tooltip (applet->applet_id, text);
+	else
+		gnome_panel_applet_remove_tooltip (applet->applet_id);
+}
+
+AppletWidget*
+applet_widget_get_by_id(gint applet_id)
+{
+	GList *list;
+	for(list = applet_widgets;list!=NULL;list=g_list_next(list)) {
+		AppletWidget *applet = list->data;
+		if(applet->applet_id == applet_id)
+			return applet;
+	}
+	return NULL;
 }
 
 void
@@ -196,43 +237,37 @@ applet_widget_gtk_main(void)
 }
 
 void
-change_orient(int applet_id, int orient)
+_gnome_applet_change_orient(int applet_id, int orient)
 {
-	GList *list;
+	AppletWidget *applet;
 	PanelOrientType o = (PanelOrientType) orient;
 
-	for(list = applet_widgets;list!=NULL;list=g_list_next(list)) {
-		AppletWidget *applet = list->data;
-		if(applet->applet_id == applet_id) {
-			gtk_signal_emit(GTK_OBJECT(applet),
-					applet_widget_signals[
-						CHANGE_ORIENT_SIGNAL],
-					o);
-			return;
-		}
+	applet = applet_widget_get_by_id(applet_id);
+	if(applet) {
+		gtk_signal_emit(GTK_OBJECT(applet),
+				applet_widget_signals[
+					CHANGE_ORIENT_SIGNAL],
+				o);
 	}
 }
 
 int
-session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
+_gnome_applet_session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 {
-	GList *list;
+	AppletWidget *applet;
 
 	char *cfg = g_strdup(cfgpath);
 	char *globcfg = g_strdup(globcfgpath);
 
-	for(list = applet_widgets;list!=NULL;list=g_list_next(list)) {
-		AppletWidget *applet = list->data;
-		if(applet->applet_id == applet_id) {
-			gtk_signal_emit(GTK_OBJECT(applet),
-					applet_widget_signals[
-						SESSION_SAVE_SIGNAL],
-					cfg,globcfg);
-			break;
-		}
+	applet = applet_widget_get_by_id(applet_id);
+	if(applet) {
+		gtk_signal_emit(GTK_OBJECT(applet),
+				applet_widget_signals[
+					SESSION_SAVE_SIGNAL],
+				cfg,globcfg);
 	}
 	g_free(cfg);
 	g_free(globcfg);
-	/*need to implement a return type from widget!*/
+	/*FIXME: need to implement a return type from widget!*/
 	return TRUE;
 }
