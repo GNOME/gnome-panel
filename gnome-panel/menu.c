@@ -1082,6 +1082,8 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	/* allow the panel to hide again */
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	BUTTON_WIDGET(menu->button)->in_button = FALSE;
+	BUTTON_WIDGET(menu->button)->ignore_leave = FALSE;
 	button_widget_up(BUTTON_WIDGET(menu->button));
 }
 
@@ -1511,14 +1513,14 @@ add_menu_widget (Menu *menu, GList *menudirl, int main_menu, int fake_subs)
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 }
 
-static int
+static void
 menu_button_pressed(GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
 	int main_menu = (strcmp (menu->path, ".") == 0);
-
+	
 	check_and_reread(menu->menu,menu,main_menu);
 
 	/*so that the panel doesn't pop down until we're
@@ -1532,11 +1534,12 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	current_panel =
 		gtk_object_get_data(GTK_OBJECT(menu->button),
 				    PANEL_APPLET_PARENT_KEY);
+	
+	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
+	gtk_grab_remove(menu->button);
 
 	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
 		       data, bevent->button, bevent->time);
-
-	return TRUE;
 }
 
 static char *
@@ -1585,8 +1588,8 @@ create_panel_menu (char *menudir, int main_menu,
 	menu->button = button_widget_new_from_file (pixmap_name,
 						    MENU_TILE,
 						    TRUE,orient);
-	gtk_signal_connect (GTK_OBJECT (menu->button), "pressed",
-			    GTK_SIGNAL_FUNC (menu_button_pressed), menu);
+	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
+				  GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 	gtk_widget_show(menu->button);

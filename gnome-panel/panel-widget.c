@@ -75,10 +75,6 @@ typedef void (*AppletSignal) (GtkObject * object,
 			      GtkWidget * applet,
 			      gpointer data);
 
-typedef int (*Button1Signal) (GtkObject * object,
-			      GtkWidget * applet,
-			      gpointer data);
-
 /************************
  debugging
  ************************/
@@ -137,8 +133,6 @@ enum {
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
-	APPLET_CLICKED_SIGNAL, /*these two are only for NO WINDOW applets, other*/
-	APPLET_BUTTON1_SIGNAL, /*applets won't get these two*/
 	LAST_SIGNAL
 };
 
@@ -190,24 +184,6 @@ marshal_signal_back (GtkObject * object,
 		  func_data);
 }
 
-static void
-marshal_signal_button1 (GtkObject * object,
-			GtkSignalFunc func,
-			gpointer func_data,
-			GtkArg * args)
-{
-	Button1Signal rfunc;
-	int *retval;
-
-	rfunc = (Button1Signal) func;
-
-	retval = GTK_RETLOC_BOOL(args[1]);
-
-	*retval = (*rfunc) (object, GTK_VALUE_POINTER (args[0]),
-		  	    func_data);
-}
-
- 
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
@@ -268,26 +244,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       3,
 			       GTK_TYPE_ENUM,
 			       GTK_TYPE_POINTER,
-			       GTK_TYPE_POINTER);
-	panel_widget_signals[APPLET_CLICKED_SIGNAL] =
-		gtk_signal_new("applet_clicked",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_clicked),
-			       marshal_signal_applet,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_POINTER);
-	panel_widget_signals[APPLET_BUTTON1_SIGNAL] =
-		gtk_signal_new("applet_button1",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
-			       			 applet_button1),
-			       marshal_signal_button1,
-			       GTK_TYPE_BOOL,
-			       1,
 			       GTK_TYPE_POINTER);
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
@@ -717,7 +673,7 @@ panel_widget_draw_all(PanelWidget *panel)
 	gdk_gc_set_fill(gc, GDK_SOLID);
 	gdk_gc_set_tile(gc, NULL);
 	
-	for(li = panel->no_window_applet_list; li != NULL;
+	for(li = panel->applet_list; li != NULL;
 	    li = g_list_next(li)) {
 		AppletData *ad = li->data;
 		if(IS_BUTTON_WIDGET(ad->applet))
@@ -1252,7 +1208,6 @@ is_in_widget(GdkEventButton *bevent, GtkWidget *widget)
 	return FALSE;
 }
 
-static GtkWidget *pressed_applet = NULL;
 static int
 panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
@@ -1265,59 +1220,13 @@ panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	   bevent->window != widget->window)
 		return FALSE;
 
-	/*this would be a button release event and it would be right after
-	  a button press*/
-	if(pressed_applet) {
-		gdk_pointer_ungrab(GDK_CURRENT_TIME);
-		gtk_grab_remove(pressed_applet);
-		if(IS_BUTTON_WIDGET(pressed_applet))
-			button_widget_up(BUTTON_WIDGET(pressed_applet));
-
-		if(is_in_widget(bevent,pressed_applet)) {
-			if(IS_BUTTON_WIDGET(pressed_applet))
-				button_widget_clicked(BUTTON_WIDGET(pressed_applet));
-			else
-				gtk_signal_emit(GTK_OBJECT(panel),
-						panel_widget_signals[APPLET_CLICKED_SIGNAL],
-						pressed_applet);
-		}
-		pressed_applet = NULL;
-		return TRUE;
-	}
-
 	for(list = panel->no_window_applet_list; list!=NULL;
 	    list = g_list_next(list)) {
 		AppletData *ad = list->data;
-		if(is_in_widget(bevent,ad->applet)) {
-			if(bevent->button != 1) {
-				return panel_widget_applet_event(ad->applet,
-								 event,data);
-			} else if(event->type == GDK_BUTTON_PRESS) {
-				if(IS_BUTTON_WIDGET(ad->applet)) {
-					if(!button_widget_down(BUTTON_WIDGET(ad->applet))) {
-						pressed_applet = ad->applet;
-						gtk_grab_add(pressed_applet);
-						gdk_pointer_grab(widget->window,
-								 FALSE,
-								 APPLET_EVENT_MASK,
-								 NULL,
-								 NULL,
-								 GDK_CURRENT_TIME);
-					}
-				} else {
-					int return_val = FALSE;
-					gtk_signal_emit(GTK_OBJECT(panel),
-							panel_widget_signals[APPLET_BUTTON1_SIGNAL],
-							ad->applet,&return_val);
-
-					if(!return_val) {
-						pressed_applet = ad->applet;
-						gtk_grab_add(pressed_applet);
-					}
-				}
-				return TRUE;
-			}
-		}
+		if(is_in_widget(bevent,ad->applet) &&
+		   bevent->button != 1)
+			return panel_widget_applet_event(ad->applet,
+							 event,data);
 	}
 	return FALSE;
 }

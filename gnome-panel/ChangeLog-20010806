@@ -1,3 +1,14 @@
+Fri Aug 28 01:10:47 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: removed support for no_window clicking since
+	  it's not needed
+
+	* button-widget.[ch]: added support for "depth" pressing, added an
+	  inputonly xwindow, and other minor improvements, including a button
+	  like behaviour
+
+	* menu.c: adapt to the new pressed semantics for button-widget
+
 Thu Aug 27 02:33:44 1998  George Lebl  <jirka@5z.com>
 
 	* button-widget.c: fixes, made pressed return bool

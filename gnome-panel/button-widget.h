@@ -25,10 +25,16 @@ struct _ButtonWidget
 	GdkPixmap		*pixmap; /*this is the one we start from*/
 	GdkBitmap		*mask;
 	
-	int			pressed; /*true if the button is pressed*/
+	guint			pressed:1; /*true if the button is pressed*/
+	guint			in_button:1;
+
+	guint			ignore_leave:1; /*ignore the leave notify,
+						  if you do this remember to
+						  set the in_button properly
+						  later!*/
 	
-	int			tile; /*the tile number, only used if tiles are on*/
-	int			arrow; /*0 no arrow, 1 simple arrow, more to do*/
+	guint			tile:2; /*the tile number, only used if tiles are on*/
+	guint			arrow:1; /*0 no arrow, 1 simple arrow, more to do*/
 	PanelOrientType		orient;
 };
 
@@ -37,7 +43,7 @@ struct _ButtonWidgetClass
 	GtkWidgetClass parent_class;
 
 	void (* clicked) (ButtonWidget *button);
-	int (* pressed) (ButtonWidget *button);
+	void (* pressed) (ButtonWidget *button);
 	void (* unpressed) (ButtonWidget *button);
 };
 
@@ -45,12 +51,12 @@ guint		button_widget_get_type		(void);
 
 GtkWidget*	button_widget_new		(GdkPixmap *pixmap,
 						 GdkBitmap *mask,
-						 int tile,
-						 int arrow,
+						 guint tile,
+						 guint arrow,
 						 PanelOrientType orient);
 GtkWidget*	button_widget_new_from_file	(char *pixmap,
-						 int tile,
-						 int arrow,
+						 guint tile,
+						 guint arrow,
 						 PanelOrientType orient);
 
 void		button_widget_draw		(ButtonWidget *button,
@@ -63,17 +69,19 @@ int		button_widget_set_pixmap_from_file(ButtonWidget *button,
 						   char *pixmap);
 
 void		button_widget_set_params	(ButtonWidget *button,
-						 int tile,
-						 int arrow,
+						 guint tile,
+						 guint arrow,
 						 PanelOrientType orient);
 
 void		button_widget_clicked		(ButtonWidget *button);
-int		button_widget_down		(ButtonWidget *button);
+void		button_widget_down		(ButtonWidget *button);
 void		button_widget_up		(ButtonWidget *button);
 
 void		button_widget_load_tile		(int tile,
 						 char *tile_up,
-						 char *tile_down);
+						 char *tile_down,
+						 int border,
+						 int depth);
 
 void		button_widget_tile_enable	(int enabled);
 

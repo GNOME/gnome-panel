@@ -104,10 +104,6 @@ struct _PanelWidgetClass
 			      PanelBackType type,
 			      char *pixmap,
 			      GdkColor *color);
-	void (* applet_clicked) (PanelWidget *panel,
-				 GtkWidget *applet);
-	int (* applet_button1) (PanelWidget *panel,
-				GtkWidget *applet);
 };
 
 guint		panel_widget_get_type		(void);
