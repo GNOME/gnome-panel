@@ -155,24 +155,21 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 			   const char     *icon_path)
 {
 	GdkPixbuf *pixbuf = NULL;
-	char      *icon = NULL;
 
 	g_free (dialog->icon_path);
 	dialog->icon_path = NULL;
 		
+	if (icon_path && dialog->icon_path &&
+	    !strcmp (icon_path, dialog->icon_path))
+		return;
+
 	if (icon_path)
-		icon = panel_find_icon (gtk_icon_theme_get_default (),
-					icon_path, ICON_SIZE);
-						     
-	if (icon)
-		pixbuf = gdk_pixbuf_new_from_file_at_size (icon,
-							   ICON_SIZE,
-							   ICON_SIZE,
-							   NULL);
+		pixbuf = panel_load_icon (gtk_icon_theme_get_default (),
+					  icon_path, ICON_SIZE, NULL);
 
                         
 	if (pixbuf) {
-		dialog->icon_path = icon;
+		dialog->icon_path = g_strdup (icon_path);
 
 		/* Don't bother scaling the image if it's too small.
 		 * Scaled looks worse than a smaller image.
@@ -184,8 +181,6 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		/* Don't unref pixbuf here, GTK will do it for us. */
 		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);		
 	} else {
-		g_free (icon);
-		
 		gtk_image_set_from_icon_name (GTK_IMAGE (dialog->pixmap),
 					      PANEL_RUN_ICON,
 					      GTK_ICON_SIZE_DIALOG);
