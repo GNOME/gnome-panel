@@ -1,10 +1,10 @@
 /* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 8 -*- */
 module GNOME {
 	interface capplet {
-                void try();
-                boolean revert();
-                boolean ok ();
-                void help ();
+                void try(in long id);
+                boolean revert(in long id);
+                boolean ok (in long id);
+                void help (in long id);
 	};
 	interface control_center {
                 void register_capplet (in long id, in capplet cap);
