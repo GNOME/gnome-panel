@@ -1327,9 +1327,8 @@ handle_keypress (GtkWidget   *widget,
 }
 
 static gboolean 
-handle_button_press (GtkWidget      *widget,
-		     GdkEventButton *event,
-		     FishApplet     *fish)
+handle_button_press (FishApplet     *fish,
+		     GdkEventButton *event)
 {
 	if (event->button != 1)
 		return FALSE; 
@@ -1392,11 +1391,13 @@ setup_fish_widget (FishApplet *fish)
 	g_signal_connect (fish->drawing_area, "expose-event",
 			  G_CALLBACK (fish_applet_expose_event), fish);
 
-	gtk_widget_set_events (
-		fish->drawing_area,
-		gtk_widget_get_events (fish->drawing_area) | GDK_BUTTON_PRESS_MASK);
-	g_signal_connect (fish->drawing_area, "button_press_event",
-			  G_CALLBACK (handle_button_press), fish);
+	gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
+	g_signal_connect_swapped (widget, "button_press_event",
+				  G_CALLBACK (handle_button_press), fish);
+
+	gtk_widget_add_events (fish->drawing_area, GDK_BUTTON_PRESS_MASK);
+	g_signal_connect_swapped (fish->drawing_area, "button_press_event",
+				  G_CALLBACK (handle_button_press), fish);
 
 	load_fish_image (fish);
 
