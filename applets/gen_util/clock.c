@@ -28,11 +28,13 @@ struct _ClockData {
 	GtkWidget *clockw;
 	int timeout;
 	int hourformat;
+        int showdate;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
 
 	GtkWidget *props;
 	int prop_hourformat;
+        int prop_showdate;
 };
 
 
@@ -72,6 +74,7 @@ applet_save_session(GtkWidget * w,
 	ClockData *cd = data;
 	gnome_config_push_prefix(privcfgpath);
 	gnome_config_set_int("clock/hourformat", cd->hourformat);
+	gnome_config_set_int("clock/showdate", cd->showdate);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -91,34 +94,41 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 
 	tm = localtime(&current_time);
 
-	if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-		/* This format string is used, to display the actual day,
+	if (cd->showdate) {
+	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
+	        /* This format string is used, to display the actual day,
 		   when showing a vertical panel.  For an explanation of
 		   this format string type 'man strftime'.  */
-		if (strftime(date, 20, _("%a\n%b %d"), tm) == 20)
-			date[19] = '\0';
-	} else {
-		/* This format string is used, to display the actual day,
+	        if (strftime(date, 20, _("%a\n%b %d"), tm) == 20)
+		    date[19] = '\0';
+	    } else {
+	        /* This format string is used, to display the actual day,
 		   when showing a horizontal panel.  */
-		if (strftime(date, 20, _("%a %b %d"), tm) == 20)
-			date[19] = '\0';
-	}
-	gtk_label_set(GTK_LABEL(cc->date), date);
+	        if (strftime(date, 20, _("%a %b %d"), tm) == 20)
+		    date[19] = '\0';
+	    }
+	    gtk_label_set(GTK_LABEL(cc->date), date);
+	    if (!GTK_WIDGET_VISIBLE(cc->date))
+	         gtk_widget_show (cc->date);
+	  } else {
+	      if (GTK_WIDGET_VISIBLE(cc->date))
+	          gtk_widget_hide (cc->date);
+	  }
 
 	if (cd->hourformat == 0) {
-	  /* This format string is used, to display the actual time in
-             12 hour format.  */
-		if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
-			if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
-				hour[19] = '\0';
-		} else {
-			if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
-				hour[19] = '\0';
-		}
+	    /* This format string is used, to display the actual time in
+	       12 hour format.  */
+	    if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
+	        if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
+		        hour[19] = '\0';
+	    } else {
+	        if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
+	                hour[19] = '\0';
+	    } 
 	} else if (cd->hourformat == 1) {
-	  /* This format string is used, to display the actual time in
-             24 hour format.  */
-		if (strftime(hour, 20, _("%H:%M"), tm) == 20)
+	    /* This format string is used, to display the actual time in
+               24 hour format.  */
+	    if (strftime(hour, 20, _("%H:%M"), tm) == 20)
 			hour[19] = '\0';
 	}
 	gtk_label_set(GTK_LABEL(cc->time), hour);
@@ -198,9 +208,7 @@ create_clock_widget(GtkWidget * applet)
 			   (GtkSignalFunc) destroy_clock,
 			   cd);
 	/* Call the clock's update function so that it paints its first state */
-
 	time(&current_time);
-
 	(*cd->update_func) (cd, current_time);
 
 	return cd;
@@ -236,8 +244,8 @@ make_clock_applet(const gchar * param)
 
 	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
 	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
+	cd->showdate = gnome_config_get_int("clock/showdate=1");
 	gnome_config_pop_prefix();
-
 
 	/*we have to bind change_orient before we do applet_widget_add 
 	   since we need to get an initial change_orient signal to set our
@@ -271,9 +279,12 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	time_t current_time;
 
 	cd->hourformat = cd->prop_hourformat;
+	cd->showdate = cd->prop_showdate;
 
 	time(&current_time);
 	(*cd->update_func) (cd, current_time);
+
+	gtk_widget_queue_resize (cd->clockw);
 }
 
 static int
@@ -297,11 +308,24 @@ set_hour_format_cb(GtkWidget * w, gpointer data)
 }
 
 static void
+set_show_date_cb(GtkWidget * w, gpointer data)
+{
+	ClockData *cd = data;
+
+	cd->prop_showdate = GTK_TOGGLE_BUTTON(w)->active;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+}
+
+
+static void
 clock_properties(AppletWidget * applet, gpointer data)
 {
+        GtkWidget *hbox;
+        GtkWidget *frame;
 	GtkWidget *table;
 	GtkWidget *twelvehour;
 	GtkWidget *twentyfourhour;
+	GtkWidget *showdate;
 	ClockData *cd = data;
 
 	if(cd->props) {
@@ -312,13 +336,19 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_window_set_title (GTK_WINDOW (cd->props),
 			      _("Clock properties"));
 
+	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
+
+	frame = gtk_frame_new(_("Time Format"));
+	gtk_container_set_border_width(GTK_CONTAINER(frame), GNOME_PAD);
+	gtk_box_pack_start (GTK_BOX(hbox), frame, FALSE, FALSE, 0);
+
 	table = gtk_table_new(2, 2, FALSE);
+	gtk_container_add(GTK_CONTAINER(frame), table);
 	gtk_widget_show(table);
 
 	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD);
 	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
 	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
-
 
 	twelvehour = gtk_radio_button_new_with_label(NULL, _("12 hour"));
 	gtk_table_attach(GTK_TABLE(table), twelvehour, 0, 1, 0, 1,
@@ -360,8 +390,24 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   (GtkSignalFunc) set_hour_format_cb,
 			   (gpointer) 1);
 
+	showdate = gtk_check_button_new_with_label(_("Show date"));
+	gtk_box_pack_start_defaults(GTK_BOX(hbox), showdate);
+	gtk_widget_show(showdate);
+	
+	if (cd->showdate)
+	  gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(showdate),
+				      TRUE);
+	cd->prop_showdate = cd->showdate;
+	
+	gtk_signal_connect(GTK_OBJECT(showdate),
+			   "toggled",
+			   (GtkSignalFunc) set_show_date_cb,
+			   data);
 
-	gnome_property_box_append_page(GNOME_PROPERTY_BOX(cd->props), table,
+	gtk_widget_show(frame);
+	gtk_widget_show(hbox);
+
+	gnome_property_box_append_page(GNOME_PROPERTY_BOX(cd->props), hbox,
 				       gtk_label_new(_("Clock")));
 	gtk_signal_connect(GTK_OBJECT(cd->props), "apply",
 			   GTK_SIGNAL_FUNC(apply_properties), data);
