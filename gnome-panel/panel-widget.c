@@ -33,7 +33,7 @@ typedef enum {
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
 /*define for some debug output*/
-#undef PANEL_WIDGET_DEBUG  
+#undef PANEL_WIDGET_DEBUG
 
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */

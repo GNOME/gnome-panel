@@ -1500,12 +1500,6 @@ session_read_global_config (void)
 		else if (!strcmp (key, "avoid-panel-overlap"))
 			global_config.avoid_collisions =
 				gconf_value_get_bool (value);
-		else if (!strcmp (key, "clock-format")) {
-			g_free (key);
-			gconf_entry_free (l->data);
-			g_slist_free (l);
-			return;
-		}
 		else 
 			g_warning ("%s not handled", key);
 

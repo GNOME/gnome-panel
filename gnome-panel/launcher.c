@@ -37,7 +37,7 @@
 #include "gnome-ditem-edit.h"
 #include "quick-desktop-reader.h"
 
-#undef LAUNCHER_DEBUG 
+#undef LAUNCHER_DEBUG
 
 static void properties_apply (Launcher *launcher);
 
