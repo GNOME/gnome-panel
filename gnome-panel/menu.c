@@ -1012,7 +1012,6 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
 	if (gnome_preferences_get_menus_have_icons ()) {
-		puts("ICON!");
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
