@@ -1035,7 +1035,6 @@ panel_applet_register (GtkWidget       *applet,
 		       const char      *id)
 {
 	AppletInfo *info;
-	gboolean    insert_at_pos = FALSE;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1079,24 +1078,22 @@ panel_applet_register (GtkWidget       *applet,
 
 	registered_applets = g_slist_append (registered_applets, info);
 
-	/* if exact pos is on then insert at that precise location */
-	if (exactpos)
-		insert_at_pos = TRUE;
-
-	if (panel_widget_add (panel, applet, locked, pos, insert_at_pos) == -1) {
+	if (panel_widget_add (panel, applet, locked, pos, exactpos) == -1 &&
+	    panel_widget_add (panel, applet, locked, 0, TRUE) == -1) {
 		GSList *l;
 
-		for (l = panels; l; l = l->next)
+		for (l = panels; l; l = l->next) {
+			panel = PANEL_WIDGET (l->data);
+
 			if (panel_widget_add (panel, applet, locked, 0, TRUE) != -1)
 				break;
+		}
 
 		if (!l) {
 			g_warning (_("Can't find an empty spot"));
 			panel_profile_delete_object (info);
 			return NULL;
 		}
-
-		panel = PANEL_WIDGET (l->data);
 	}
 
 	if (BUTTON_IS_WIDGET (applet) ||

@@ -1,5 +1,14 @@
 2004-02-16  Mark McLoughlin  <mark@skynet.ie>
 
+	Resolve the mystery of the disappearing applets. Fix for
+	bug #128567 based on a patch from Leena gunda.
+
+	* applet.c: (panel_applet_register): if adding at the
+	saved position fails, try adding at the beginning of the
+	panel.
+
+2004-02-16  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel.c: (panel_key_press_event): correctly fix bug #134134
 	so as to trigger *only* with Ctrl-F10.
 
