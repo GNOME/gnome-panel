@@ -1,3 +1,11 @@
+2003-11-03  Vincent Untz  <vincent@vuntz.net>
+
+	Based on a patch from John Ellis <johne@bellatlantic.net>.
+
+	* panel-applet.c: (panel_applet_get_pixmap): lookup for a pixmap instead
+	of a window for the background.
+	This is one part of the fix for bug #107146.
+
 2003-10-14  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* panel-applet.c: (panel_applet_finalize): Merge

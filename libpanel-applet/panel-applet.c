@@ -68,8 +68,6 @@ struct _PanelAppletPrivate {
 	guint                       size;
 	char                       *background;
 
-	GdkPixmap                  *bg_pixmap;
-
         int                        *size_hints;
         int                         size_hints_len;
 
@@ -780,24 +778,27 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 			 int              x,
 			 int              y)
 {
-	GdkWindow *window;
-	GdkPixmap *retval;
-	GdkGC     *gc;
-	int        width;
-	int        height;
+	GdkPixmap  *pixmap;
+	GdkDisplay *display;
+	GdkPixmap  *retval;
+	GdkGC      *gc;
+	int         width;
+	int         height;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
 	if (!GTK_WIDGET_REALIZED (applet))
 		return NULL;
 
-	window = gdk_window_lookup (xid);
-	if (window)
-		g_object_ref (window);
+	display = gdk_display_get_default ();
+	
+	pixmap = gdk_pixmap_lookup_for_display (display, xid);
+	if (pixmap)
+		g_object_ref (pixmap);
 	else
-		window = gdk_window_foreign_new (xid);
+		pixmap = gdk_pixmap_foreign_new_for_display (display, xid);
 
-	g_return_val_if_fail (window != NULL, NULL);
+	g_return_val_if_fail (pixmap != NULL, NULL);
 
 	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
 			       &width, &height);
@@ -810,13 +811,13 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	gdk_draw_drawable (GDK_DRAWABLE (retval),
 			   gc, 
-			   GDK_DRAWABLE (window),
+			   GDK_DRAWABLE (pixmap),
 			   x, y,
 			   0, 0,
 			   width, height);
 
 	g_object_unref (gc);
-	g_object_unref (window);
+	g_object_unref (pixmap);
 
 	return retval;
 }
