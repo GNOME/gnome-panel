@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core HEAD\n"
-"POT-Creation-Date: 2002-07-19 04:46+0800\n"
+"POT-Creation-Date: 2002-07-27 03:41+0800\n"
 "PO-Revision-Date: 2002-03-15 12:20+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: ms <sebol@ikhlas.com>\n"
@@ -28,7 +28,9 @@ msgstr "_Perihal..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "_Bantuan"
 
@@ -914,9 +916,7 @@ msgstr "Tak dapat mencipta aplet!\n"
 msgid "Properties..."
 msgstr "Ciri-ciri..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Bantuan"
 
@@ -1062,12 +1062,12 @@ msgstr "Shell Utama GNOME"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Pindah"
+msgid "_Move"
+msgstr "_Pindah"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Buang daripada Panel"
+msgid "_Remove From Panel"
+msgstr "_Buang Daripada Panel"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1183,44 +1183,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "Saiz dan Posisi"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "Tooltip/Nama"
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "Ikon"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "Penampilan aplet"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "Pengendali laci"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "Hidupkan butang sembunyi"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "Hidupkan panah butang sembunyi"
 
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Laci"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Ciri-ciri"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Ciri-ciri"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1254,8 +1254,7 @@ msgstr "Cekupanskrin..."
 msgid "Take a screenshot of your desktop"
 msgstr "Ambil cekupan skrin desktop anda"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Kunci Skrin"
 
@@ -1365,33 +1364,33 @@ msgid "Select preferences for all your panels"
 msgstr "Pilih keutamaan bagi semua panel anda"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
+msgid "Animation _speed:"
+msgstr "Kelajuan _animasi:"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:2
+msgid "Close _drawer when launcher is clicked"
+msgstr "_Tutup laci jika pelancar diklik"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:3
 msgid "Fast"
 msgstr "Laju"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "Sederhana"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:3
+#: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "Keutamaan Panel"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:4
+#: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Slow"
 msgstr "Perlahan"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "_Animation"
 msgstr "_Animasi"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "_Animation speed:"
-msgstr "Kelajuan _animasi:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "_Close drawer when launcher is clicked"
-msgstr "_Tutup laci jika pelancar diklik"
 
 #: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
@@ -1654,36 +1653,36 @@ msgstr ""
 "Tak dapat melancarkan ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:326
+#: gnome-panel/launcher.c:333
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Tiada URI dibekalkan untuk fail desktop pelancar panel\n"
 
-#: gnome-panel/launcher.c:346
+#: gnome-panel/launcher.c:353
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Tak dapat membuka fail desktop %s bagi pelancar%s%s panel\n"
 
-#: gnome-panel/launcher.c:457
+#: gnome-panel/launcher.c:464
 #, c-format
 msgid "Help on %s Application"
 msgstr "Bantuan pada Aplikasi %s"
 
-#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:583 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Ciri-ciri Pelancar"
 
-#: gnome-panel/launcher.c:682
+#: gnome-panel/launcher.c:689
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Kekunci %s tidak ditetapkan, tak dpaat memuatkan pelancar\n"
 
-#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:780 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Cipta Pelancar"
 
 #. class
-#: gnome-panel/launcher.c:991
+#: gnome-panel/launcher.c:1000
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1694,7 +1693,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1730,16 +1729,20 @@ msgstr "Kunci skrin"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Aktifkan Screensaver"
+msgid "_Activate Screensaver"
+msgstr "_Aktifkan Screensaver"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "_Kunci Skrin"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Bunuh Daemon Screensaver"
+msgid "_Kill Screensaver Daemon"
+msgstr "_Bunuh Daemon Screensaver"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Ulanghidupkan Daemon Screensaver"
+msgid "Restart _Screensaver Daemon"
+msgstr "Ulanghidupkan Daemon _Screensaver"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1931,6 +1934,10 @@ msgstr "Tambah menu ini pada panel"
 msgid "Add new item to this menu"
 msgstr "Tambah item baru pada menu ini"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Ciri-ciri"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2065,10 +2072,6 @@ msgstr "_Padam Panel Ini"
 msgid "_Add to Panel"
 msgstr "_Tambah ke Panel"
 
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Ciri-ciri"
-
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
 msgstr "Panel _Baru"
@@ -2137,7 +2140,7 @@ msgstr "Tak dpaat daftar widget kawalan\n"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Pengecualian dari popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2155,11 +2158,11 @@ msgstr ""
 "(Jika anda pilih untuk tidak ulangmuatnya kali ini, anda boleh menambahnya "
 "dengan klik-kanan pada panel dan klik pada submenu \"Tambah ke panel\")"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Tak boleh mendapatkan antaramuka AppletShell daripada kawalan\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2389,12 +2392,12 @@ msgstr "Tiada dokumen untuk dipaparkan"
 msgid "Disabled"
 msgstr "Dimatikan"
 
-#: gnome-panel/panel.c:881
+#: gnome-panel/panel.c:884
 #, c-format
 msgid "Open URL: %s"
 msgstr "Buka URL: %s"
 
-#: gnome-panel/panel.c:2193
+#: gnome-panel/panel.c:2197
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
