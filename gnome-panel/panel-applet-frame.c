@@ -38,6 +38,7 @@
 #include "session.h"
 #include "applet.h"
 #include "panel-marshal.h"
+#include "panel-background.h"
 
 #define HANDLE_SIZE 10
 
@@ -276,54 +277,19 @@ panel_applet_frame_change_size (PanelAppletFrame *frame,
 }
 
 static char *
-panel_applet_frame_get_background_string (PanelAppletFrame *frame,
-					  PanelWidget      *panel,
-					  PanelBackType     type)
+panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
+					  PanelWidget         *panel,
+					  PanelBackgroundType  type)
 {
-	char *retval = NULL;
-
-	switch (type) {
-	case PANEL_BACK_PIXMAP: {
-		GdkNativeWindow pixmap_xid;
-
-		/* If we don't actually have a pixmap background,
-		 * then don't force the applet to copy from our
-		 * window.
-		 */
-		if (!panel->background_pixmap)
-			return panel_applet_frame_get_background_string (
-					frame, panel, PANEL_BACK_NONE);
-
-		pixmap_xid = gdk_x11_drawable_get_xid (
-				GDK_DRAWABLE (panel->background_pixmap));
-
-		retval = g_strdup_printf (
-				"pixmap:%d,%d,%d", pixmap_xid,
-				GTK_WIDGET (frame)->allocation.x,
-				GTK_WIDGET (frame)->allocation.y);
-		}
-		break;
-	case PANEL_BACK_COLOR:
-		retval = g_strdup_printf (
-				"color:%.4x%.4x%.4x", 
-				panel->back_color.red, 
-				panel->back_color.green, 
-				panel->back_color.blue);
-		break;
-	case PANEL_BACK_NONE:
-		retval = g_strdup ("none:");
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	return retval;
+	return panel_background_make_string (
+			&panel->background,
+			GTK_WIDGET (frame)->allocation.x,
+			GTK_WIDGET (frame)->allocation.y);
 }
 
 void
-panel_applet_frame_change_background (PanelAppletFrame *frame,
-				      PanelBackType     type)
+panel_applet_frame_change_background (PanelAppletFrame    *frame,
+				      PanelBackgroundType  type)
 {
 	char *bg_str;
 
@@ -998,7 +964,8 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	char *retval;
 	char *bg_str;
 
-	bg_str = panel_applet_frame_get_background_string (frame, panel, panel->back_type);
+	bg_str = panel_applet_frame_get_background_string (
+				frame, panel, panel->background.type);
 
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"

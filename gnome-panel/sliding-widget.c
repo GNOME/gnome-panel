@@ -286,7 +286,7 @@ sliding_widget_new (gchar *panel_id,
 		    int sz,
 		    gboolean hidebuttons_enabled,
 		    gboolean hidebutton_pixmaps_enabled,
-		    PanelBackType back_type,
+		    PanelBackgroundType back_type,
 		    char *back_pixmap,
 		    gboolean fit_pixmap_bg,
 		    gboolean stretch_pixmap_bg,
@@ -334,7 +334,7 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      BasePState state,
 			      gboolean hidebuttons_enabled,
 			      gboolean hidebutton_pixmaps_enabled,
-			      PanelBackType back_type,
+			      PanelBackgroundType back_type,
 			      char *pixmap_name,
 			      gboolean fit_pixmap_bg,
 			      gboolean stretch_pixmap_bg,
@@ -394,12 +394,12 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
 				      basep->state,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
-				      panel->back_type,
-				      panel->back_pixmap,
-				      panel->fit_pixmap_bg,
-				      panel->stretch_pixmap_bg,
-				      panel->rotate_pixmap_bg,
-				      &panel->back_color);
+				      panel->background.type,
+				      panel->background.image,
+				      panel->background.fit_image,
+				      panel->background.stretch_image,
+				      panel->background.rotate_image,
+				      &panel->background.color);
 }
 
 void 
@@ -423,12 +423,12 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 				      basep->state,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
-				      panel->back_type,
-				      panel->back_pixmap,
-				      panel->fit_pixmap_bg,
-				      panel->stretch_pixmap_bg,
-				      panel->rotate_pixmap_bg,
-				      &panel->back_color);
+				      panel->background.type,
+				      panel->background.image,
+				      panel->background.fit_image,
+				      panel->background.stretch_image,
+				      panel->background.rotate_image,
+				      &panel->background.color);
 }
 
 void 
@@ -451,10 +451,10 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 				      basep->state,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
-				      panel->back_type,
-				      panel->back_pixmap,
-				      panel->fit_pixmap_bg,
-				      panel->stretch_pixmap_bg,
-				      panel->rotate_pixmap_bg,
-				      &panel->back_color);
+				      panel->background.type,
+				      panel->background.image,
+				      panel->background.fit_image,
+				      panel->background.stretch_image,
+				      panel->background.rotate_image,
+				      &panel->background.color);
 }

@@ -110,7 +110,7 @@ static GConfEnumStringPair panel_type_type_enum_map [] = {
 static GConfEnumStringPair background_type_enum_map [] = {
 	{ PANEL_BACK_NONE,   "no-background" },
 	{ PANEL_BACK_COLOR,  "color-background" },
-	{ PANEL_BACK_PIXMAP, "pixmap-background" },
+	{ PANEL_BACK_IMAGE,  "pixmap-background" },
 };
 
 static GConfEnumStringPair panel_size_type_enum_map [] = {
@@ -281,7 +281,7 @@ back_change (AppletInfo  *info,
 {
 	if (info->type == APPLET_BONOBO)
 		panel_applet_frame_change_background (
-			PANEL_APPLET_FRAME (info->widget), panel->back_type);
+			PANEL_APPLET_FRAME (info->widget), panel->background.type);
 }
 
 static void
@@ -1085,11 +1085,14 @@ drop_background_reset (PanelWidget *panel)
 				    panel->orient,
 				    panel->sz,
 				    PANEL_BACK_NONE,
-				    panel->back_pixmap,
-				    panel->fit_pixmap_bg,
-				    panel->stretch_pixmap_bg,
-				    panel->rotate_pixmap_bg,
-				    &panel->back_color);
+				    panel->background.image,
+				    panel->background.fit_image,
+				    panel->background.stretch_image,
+				    panel->background.rotate_image,
+				    &panel->background.color);
+
+	if (BASEP_IS_WIDGET (panel->panel_parent))
+		basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static void
@@ -1103,6 +1106,9 @@ drop_bgimage (PanelWidget *panel, const char *bgimage)
 
 		g_free (filename);
 	}
+
+	if (BASEP_IS_WIDGET (panel->panel_parent))
+		basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static void
@@ -1208,17 +1214,20 @@ drop_color (PanelWidget *panel,
 	    int          pos,
 	    guint16     *dropped)
 {
-	PanelColor c;
+	PanelColor color;
 
 	if (!dropped)
 		return;
 
-	c.red   = dropped [0];
-	c.green = dropped [1];
-	c.blue  = dropped [2];
-	c.alpha = 65535;
+	color.gdk.red   = dropped [0];
+	color.gdk.green = dropped [1];
+	color.gdk.blue  = dropped [2];
+	color.alpha     = 65535;
 
-	panel_widget_set_back_color (panel, &c);
+	panel_widget_set_back_color (panel, &color);
+
+	if (BASEP_IS_WIDGET (panel->panel_parent))
+		basep_update_frame (BASEP_WIDGET (panel->panel_parent));
 }
 
 static GtkTargetList *
@@ -1975,24 +1984,24 @@ panel_load_panels_from_gconf (void)
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
 	for (l = panel_ids; l; l = l->next) {
-		GtkWidget     *panel = NULL;
-		PanelType      type = EDGE_PANEL;
-		PanelBackType  back_type = PANEL_BACK_NONE;
-		BasePState     state;
-		BasePMode      mode;
-		PanelColor     back_color = {0, 0, 0, 0xFFFF};
-		GdkColor       gdkcolor = {0, 0, 0, 1};
-		gboolean       fit_pixmap_bg;
-		gboolean       stretch_pixmap_bg;
-		gboolean       rotate_pixmap_bg;
-		gboolean       hidebuttons_enabled;
-		gboolean       hidebutton_pixmaps_enabled;
-		int            screen;
-		int            monitor;
-		int            size = PANEL_SIZE_SMALL;
-		char          *panel_id;
-		char          *back_pixmap;
-		char          *tmp_str;
+		GtkWidget           *panel = NULL;
+		PanelType            type = EDGE_PANEL;
+		PanelBackgroundType  back_type = PANEL_BACK_NONE;
+		BasePState           state;
+		BasePMode            mode;
+		PanelColor           back_color = { { 0, 0, 0, 0 }, 0xffff};
+		GdkColor             gdkcolor = {0, 0, 0, 1};
+		gboolean             fit_pixmap_bg;
+		gboolean             stretch_pixmap_bg;
+		gboolean             rotate_pixmap_bg;
+		gboolean             hidebuttons_enabled;
+		gboolean             hidebutton_pixmaps_enabled;
+		int                  screen;
+		int                  monitor;
+		int                  size = PANEL_SIZE_SMALL;
+		char                *panel_id;
+		char                *back_pixmap;
+		char                *tmp_str;
 
 		panel_id = l->data;
 
@@ -2021,9 +2030,7 @@ panel_load_panels_from_gconf (void)
 		tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
 		if (!tmp_str || !tmp_str [0]) {
 			gdk_color_parse (tmp_str, &gdkcolor);
-			back_color.red   = gdkcolor.red;
-			back_color.green = gdkcolor.green;
-			back_color.blue  = gdkcolor.blue;
+			back_color.gdk = gdkcolor;
 		}
 		g_free (tmp_str);
 
@@ -2326,24 +2333,24 @@ panel_save_to_gconf (PanelData *pd)
 
 	panel_set_bool (profile, panel->unique_id,
 			"panel_background_pixmap_fit",
-			panel->fit_pixmap_bg);
+			panel->background.fit_image);
 
 	panel_set_bool (profile, panel->unique_id,
 			"panel_background_pixmap_stretch",
-			panel->stretch_pixmap_bg);
+			panel->background.stretch_image);
 
 	panel_set_bool (profile, panel->unique_id,
 			"panel_background_pixmap_rotate",
-			panel->rotate_pixmap_bg);
+			panel->background.rotate_image);
 
 	panel_set_string (profile, panel->unique_id,
 			  "panel_background_pixmap",
-			  sure_string (panel->back_pixmap));
+			  sure_string (panel->background.image));
 
 	color = g_strdup_printf ("#%02x%02x%02x",
-			 (guint) panel->back_color.red / 256,
-			 (guint) panel->back_color.green / 256,
-			 (guint) panel->back_color.blue / 256);
+			 (guint) panel->background.color.gdk.red   / 256,
+			 (guint) panel->background.color.gdk.green / 256,
+			 (guint) panel->background.color.gdk.blue  / 256);
 	
 	panel_set_string (profile, panel->unique_id,
 			  "panel_background_color", color);
@@ -2351,11 +2358,12 @@ panel_save_to_gconf (PanelData *pd)
 
 	panel_set_int (profile, panel->unique_id,
 		       "panel_background_color_alpha",
-		       panel->back_color.alpha);
+		       panel->background.color.alpha);
 
 	panel_set_string (profile, panel->unique_id,
 			  "panel_background_type", 
-			  gconf_enum_to_string (background_type_enum_map, panel->back_type));
+			  gconf_enum_to_string (background_type_enum_map,
+			  panel->background.type));
 	
 	if (BORDER_IS_WIDGET (pd->panel))
 		panel_set_string (profile, panel->unique_id,

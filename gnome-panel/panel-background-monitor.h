@@ -60,8 +60,5 @@ GdkPixbuf              *panel_background_monitor_get_region (PanelBackgroundMoni
 							     int                     y,
 							     int                     width,
 							     int                     height);
-GdkPixbuf              *panel_background_monitor_get_widget_background (
-							     PanelBackgroundMonitor *monitor,
-							     GtkWidget              *widget);
 
 #endif /* __PANEL_BACKGROUND_MONITOR_H__ */

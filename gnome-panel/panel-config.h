@@ -40,7 +40,7 @@ struct _PerPanelConfig {
 	gboolean		fit_pixmap_bg;
 	gboolean		stretch_pixmap_bg;
 	gboolean		rotate_pixmap_bg;
-	PanelBackType		back_type;
+	PanelBackgroundType	back_type;
 	char			*back_pixmap;
 	PanelColor		back_color;
 	

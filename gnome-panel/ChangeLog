@@ -1,5 +1,56 @@
 2002-12-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Re-write the background rendering code to be
+	less buggy and to be less resource hungry for
+	opaque backgrounds. Code is a lot clearer now.
+
+	* Makefile.am: add panel-background.[ch] to the
+	build.
+
+	* panel-background.[ch]: re-written implementation
+	of the background rendering. Less resource hungry
+	for non-alpha backgrounds and colours. And a lot,
+	lot less buggy.
+
+	* launcher.c: include egg-screen-exec.h to fix
+	warning.
+
+	* menu.c: (create_new_panel): initialise colour
+	correctly.
+
+	* panel-applet-frame.c:
+	(panel_applet_frame_get_background_string): move the
+	implementation of this to panel-background.c.
+	(panel_applet_frame_change_background),
+	(panel_applet_frame_construct_moniker): upd.
+
+	* panel-background-monitor.[ch]:
+	(panel_background_monitor_finalize): don't unref
+	NULL references.
+	(panel_background_monitor_get): ref the return
+	value so we can destroy it when not needed.
+	(panel_background_monitor_setup_pixmap): don't leak
+	the property data.
+	(panel_background_monitor_get_widget_background): kill.
+
+	* panel-types.h: rename PanelBackType to PanelBackgroundType
+	and PANEL_BACK_PIXMAP to PANEL_BACK_IMAGE.
+
+	* panel-widget.[ch]: Kill all the old background code and:
+	(panel_widget_style_set), (panel_widget_state_changed):
+	set the theme defaults on the PanelBackground when they change.
+	(toplevel_configure_event): change the desktop background
+	region when the toplevel is moved or resized.
+	(panel_widget_realize), (panel_widget_unrealize): impl
+
+	* aligned-widget.[ch], basep-widget.[ch], border-widget.[ch],
+	  drawer-widget.[ch], edge-widget.[ch], floating-widget.[ch],
+	  panel-config.[ch], panel-util.c, panel.c, sliding-widget.[ch]:
+	Mucho minor and boring updates for changes in the various
+	background structs and enums.
+
+2002-12-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (about_cb): no whitespace before punctuation marks.
 
 2002-11-18  Fernando Herrera <fherrera@onirica.com>

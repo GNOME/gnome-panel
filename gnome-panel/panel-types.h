@@ -2,6 +2,7 @@
 #ifndef PANEL_TYPES_H
 #define PANEL_TYPES_H
 
+#include <gdk/gdkcolor.h>
 #include <gtk/gtktypeutils.h>
 #include "GNOME_Panel.h"
 
@@ -23,10 +24,10 @@ typedef enum {
 } PanelSize;
 
 typedef enum {
-	PANEL_BACK_NONE,
+	PANEL_BACK_NONE = 0,
 	PANEL_BACK_COLOR,
-	PANEL_BACK_PIXMAP
-} PanelBackType;
+	PANEL_BACK_IMAGE
+} PanelBackgroundType;
 
 /* XXX: if you add any here you need to make the tile type larger
  * for button-widget, as it's 2 bits only for now */
@@ -54,10 +55,8 @@ typedef enum {
 } PanelSpeed;
 
 typedef struct {
-	guint16 red;
-	guint16 green;
-	guint16 blue;
-	guint16 alpha;
+	GdkColor gdk;
+	guint16  alpha;
 } PanelColor;
 
 #endif

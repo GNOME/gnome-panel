@@ -1514,8 +1514,8 @@ basep_update_frame (BasePWidget *basep)
 
 	panel = PANEL_WIDGET (basep->panel);
 
-	if (panel->back_type == PANEL_BACK_PIXMAP ||
-	    panel->back_type == PANEL_BACK_COLOR)
+	if (panel->background.type == PANEL_BACK_IMAGE ||
+	    panel->background.type == PANEL_BACK_COLOR)
 		hide_frame = TRUE;
 
 	if (hide_frame && GTK_WIDGET_VISIBLE (basep->frame)) {
@@ -1645,7 +1645,7 @@ basep_widget_construct (gchar *panel_id,
 			BasePState state,
 			gboolean hidebuttons_enabled,
 			gboolean hidebutton_pixmaps_enabled,
-			PanelBackType back_type,
+			PanelBackgroundType back_type,
 			char *back_pixmap,
 			gboolean fit_pixmap_bg,
 			gboolean stretch_pixmap_bg,
@@ -1683,12 +1683,13 @@ basep_widget_construct (gchar *panel_id,
 
 	gtk_widget_show(basep->panel);
 
-	if(back_type != PANEL_BACK_PIXMAP) {
-		gtk_widget_show(basep->frame);
-		gtk_container_add(GTK_CONTAINER(basep->frame),basep->panel);
+	if (back_type != PANEL_BACK_IMAGE &&
+	    back_type != PANEL_BACK_COLOR) {
+		gtk_widget_show (basep->frame);
+		gtk_container_add (GTK_CONTAINER (basep->frame), basep->panel);
 	} else {
-		gtk_widget_show(basep->innerebox);
-		gtk_container_add(GTK_CONTAINER(basep->innerebox),basep->panel);
+		gtk_widget_show (basep->innerebox);
+		gtk_container_add (GTK_CONTAINER (basep->innerebox), basep->panel);
 	}
 
 	/*we add all the hide buttons to the table here*/
@@ -1790,7 +1791,7 @@ basep_widget_change_params (BasePWidget *basep,
 			    BasePState state,
 			    gboolean hidebuttons_enabled,
 			    gboolean hidebutton_pixmaps_enabled,
-			    PanelBackType back_type,
+			    PanelBackgroundType back_type,
 			    char *pixmap_name,
 			    gboolean fit_pixmap_bg,
 			    gboolean stretch_pixmap_bg,

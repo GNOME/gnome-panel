@@ -41,6 +41,7 @@
 
 #include "quick-desktop-reader.h"
 
+#include "egg-screen-exec.h"
 #include "egg-screen-url.h"
 
 #undef LAUNCHER_DEBUG

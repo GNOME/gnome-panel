@@ -72,11 +72,16 @@ panel_background_monitor_finalize (GObject *object)
 
 	monitor = PANEL_BACKGROUND_MONITOR (object);
 
-	g_object_unref (monitor->gdkpixmap);
-	g_object_unref (monitor->gdkpixbuf);
-
 	gdk_window_remove_filter (
 		monitor->gdkwindow, panel_background_monitor_xevent_filter, monitor);
+
+	if (monitor->gdkpixmap)
+		g_object_unref (monitor->gdkpixmap);
+	monitor->gdkpixmap = NULL;
+
+	if (monitor->gdkpixbuf)
+		g_object_unref (monitor->gdkpixbuf);
+	monitor->gdkpixbuf = NULL;
 }
 
 static void
@@ -154,10 +159,16 @@ panel_background_monitor_new (void)
 PanelBackgroundMonitor *
 panel_background_monitor_get (void)
 {
-	if (!global_background_monitor)
+	if (!global_background_monitor) {
 		global_background_monitor = panel_background_monitor_new ();
 
-	return global_background_monitor;
+		g_object_add_weak_pointer (G_OBJECT (global_background_monitor),
+                                           (void **) &global_background_monitor);
+
+		return global_background_monitor;
+	}
+
+	return g_object_ref (global_background_monitor);
 }
 
 static GdkFilterReturn
@@ -192,7 +203,7 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 
 	gdk_property_get (
 		monitor->gdkwindow, monitor->gdkatom, 0, 0, 10, 
-		FALSE, &prop_type, NULL, NULL, (guchar**) &prop_data);
+		FALSE, &prop_type, NULL, NULL, (guchar **) &prop_data);
 
 	if ((prop_type == GDK_TARGET_PIXMAP) && prop_data && prop_data [0]) {
 		monitor->gdkpixmap = gdk_pixmap_foreign_new (prop_data [0]);
@@ -200,6 +211,8 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 		if (!monitor->gdkpixmap)
 			g_warning ("couldn't get background pixmap\n");
 	}
+
+	g_free (prop_data);
 }
 
 static void 
@@ -277,22 +290,4 @@ panel_background_monitor_get_region (PanelBackgroundMonitor *monitor,
 	}
 
 	return pixbuf;
-}
-
-GdkPixbuf *
-panel_background_monitor_get_widget_background (PanelBackgroundMonitor *monitor,
-						GtkWidget              *widget)
-{
-	int x, y;
-
-	/* FIXME: do we need deskrelative_origin?
-	 */
-	gdk_window_get_origin (widget->window, &x, &y);
-
-	return panel_background_monitor_get_region (
-			monitor,
-			x + widget->allocation.x, 
-			y + widget->allocation.y, 
-			widget->allocation.width, 
-			widget->allocation.height);
 }

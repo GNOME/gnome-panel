@@ -81,8 +81,8 @@ void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 					     PanelSize         size);
 
-void       panel_applet_frame_change_background (PanelAppletFrame *frame,
-						 PanelBackType     type);
+void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
+						 PanelBackgroundType  type);
 
 void       panel_applet_frame_get_expand_flags  (PanelAppletFrame *frame,
 						 gboolean         *expand_major,

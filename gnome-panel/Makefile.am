@@ -134,6 +134,7 @@ panel_sources =			\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
 	panel-access.c		\
+	panel-background.c	\
 	panel-background-monitor.c \
 	panel-stock-icons.c	\
 	panel-action-button.c	\
@@ -177,6 +178,7 @@ panel_headers =			\
 	panel-applet-frame.h	\
 	quick-desktop-reader.h	\
 	panel-shell.h		\
+	panel-background.h	\
 	panel-background-monitor.h \
 	panel-stock-icons.h	\
 	panel-action-button.h	\

@@ -571,9 +571,7 @@ set_color_back (GtkWidget *widget, PanelWidget *panel)
 	GdkColor  gdkcolor = {0, };
 	int       i;
 
-	gdkcolor.red   = panel->back_color.red;
-	gdkcolor.green = panel->back_color.green;
-	gdkcolor.blue  = panel->back_color.blue;
+	gdkcolor = panel->background.color.gdk;
 
 	gtk_widget_set_style (widget, NULL);
 	ns = gtk_style_copy (gtk_widget_get_style (widget));
@@ -603,7 +601,7 @@ panel_set_frame_colors (PanelWidget *panel, GtkWidget *frame,
 			GtkWidget *but1, GtkWidget *but2,
 			GtkWidget *but3, GtkWidget *but4)
 {
-	if (panel->back_type == PANEL_BACK_COLOR) {
+	if (panel->background.type == PANEL_BACK_COLOR) {
 		set_color_back (frame, panel);
 		set_color_back (but1, panel);
 		set_color_back (but2, panel);

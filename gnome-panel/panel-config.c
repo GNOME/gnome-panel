@@ -277,18 +277,18 @@ update_config_back (PanelWidget *pw)
 	    ppc->ppc_origin_change)
 		return;
 
-	switch (pw->back_type) {
+	switch (pw->background.type) {
 	default:
 	case PANEL_BACK_NONE:
 		break;
 	case PANEL_BACK_COLOR:
 		gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
-					   pw->back_color.red,
-					   pw->back_color.green,
-					   pw->back_color.blue,
-					   pw->back_color.alpha);
+					   pw->background.color.gdk.red,
+					   pw->background.color.gdk.green,
+					   pw->background.color.gdk.blue,
+					   pw->background.color.alpha);
 		break;
-	case PANEL_BACK_PIXMAP: {
+	case PANEL_BACK_IMAGE: {
 		GtkWidget   *t;
 		const gchar *text;
 
@@ -296,15 +296,16 @@ update_config_back (PanelWidget *pw)
 
 		text = gtk_entry_get_text (GTK_ENTRY (t));
 
-		if (strcmp (sure_string (pw->back_pixmap), text))
+		if (strcmp (sure_string (pw->background.image), text))
 			gtk_entry_set_text (GTK_ENTRY (t),
-					    sure_string (pw->back_pixmap));
+					    sure_string (pw->background.image));
 
 		}
 		break;
 	}
 
-	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->back_om), pw->back_type);
+	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->back_om),
+				     pw->background.type);
 }
 
 void
@@ -1298,14 +1299,17 @@ set_rotate_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 }
 
 static void
-color_set_cb (GtkWidget *w, int r, int g, int b, int a, gpointer data)
+color_set_cb (GtkWidget      *widget,
+	      int             red,
+	      int             green,
+	      int             blue,
+	      int             alpha,
+	      PerPanelConfig *ppc)
 {
-	PerPanelConfig *ppc = data;
-
-	ppc->back_color.red = r;
-	ppc->back_color.green = g;
-	ppc->back_color.blue = b;
-	ppc->back_color.alpha = a;
+	ppc->back_color.gdk.red   = red;
+	ppc->back_color.gdk.green = green;
+	ppc->back_color.gdk.blue  = blue;
+	ppc->back_color.alpha     = alpha;
 	
 	panel_config_register_changes (ppc);
 }
@@ -1314,7 +1318,7 @@ static void
 background_type_changed (GtkOptionMenu  *option_menu,
 			 PerPanelConfig *ppc)
 {
-	PanelBackType back_type;
+	PanelBackgroundType back_type;
 
 	g_return_if_fail (GTK_IS_OPTION_MENU (option_menu));
 
@@ -1336,7 +1340,7 @@ background_type_changed (GtkOptionMenu  *option_menu,
 		gtk_widget_set_sensitive (ppc->backsel, TRUE);
 		gtk_widget_set_sensitive (ppc->col_label, TRUE);
 		break;
-	case PANEL_BACK_PIXMAP:
+	case PANEL_BACK_IMAGE:
 		gtk_widget_set_sensitive (ppc->pix_frame, TRUE);
 		gtk_widget_set_sensitive (ppc->backsel, FALSE);
 		gtk_widget_set_sensitive (ppc->col_label, FALSE);
@@ -1409,9 +1413,9 @@ background_page (PerPanelConfig *ppc)
 	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
 			  G_CALLBACK(color_set_cb), ppc);
         gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
-				   ppc->back_color.red,
-				   ppc->back_color.green,
-				   ppc->back_color.blue,
+				   ppc->back_color.gdk.red,
+				   ppc->back_color.gdk.green,
+				   ppc->back_color.gdk.blue,
 				   ppc->back_color.alpha);
 
 	panel_set_atk_relation (ppc->backsel, GTK_LABEL (ppc->col_label));
@@ -1423,7 +1427,7 @@ background_page (PerPanelConfig *ppc)
 
 	/*image frame*/
 	ppc->pix_frame = gtk_frame_new (_("Image"));
-	gtk_widget_set_sensitive (ppc->pix_frame, ppc->back_type == PANEL_BACK_PIXMAP);
+	gtk_widget_set_sensitive (ppc->pix_frame, ppc->back_type == PANEL_BACK_IMAGE);
 	gtk_container_set_border_width (GTK_CONTAINER (ppc->pix_frame), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), ppc->pix_frame, FALSE, FALSE, 0);
 
@@ -1610,12 +1614,12 @@ panel_config (GtkWidget *panel)
 	ppc->monitor = basep->monitor;
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
-	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
-	ppc->stretch_pixmap_bg = pw->stretch_pixmap_bg;
-	ppc->rotate_pixmap_bg = pw->rotate_pixmap_bg;
-	ppc->back_pixmap = g_strdup(pw->back_pixmap);
-	ppc->back_color = pw->back_color;
-	ppc->back_type = pw->back_type;
+	ppc->fit_pixmap_bg = pw->background.fit_image;
+	ppc->stretch_pixmap_bg = pw->background.stretch_image;
+	ppc->rotate_pixmap_bg = pw->background.rotate_image;
+	ppc->back_pixmap = g_strdup(pw->background.image);
+	ppc->back_color = pw->background.color;
+	ppc->back_type = pw->background.type;
 	ppc->mode = basep->mode;
 	ppc->update_function = NULL;
 	ppc->update_data = NULL;

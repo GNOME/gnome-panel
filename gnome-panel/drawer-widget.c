@@ -332,21 +332,21 @@ drawer_pos_pre_convert_hook (BasePWidget *basep)
 }
 
 void
-drawer_widget_change_params (DrawerWidget  *drawer,
-			     int            screen,
-			     int            monitor,
-			     PanelOrient    orient,
-			     BasePMode      mode,
-			     BasePState     state,
-			     int            sz,
-			     gboolean       hidebuttons_enabled,
-			     gboolean       hidebutton_pixmap_enabled,
-			     PanelBackType  back_type,
-			     char          *back_pixmap,
-			     gboolean       fit_pixmap_bg,
-			     gboolean       stretch_pixmap_bg,
-			     gboolean       rotate_pixmap_bg,
-			     PanelColor    *back_color)
+drawer_widget_change_params (DrawerWidget        *drawer,
+			     int                  screen,
+			     int                  monitor,
+			     PanelOrient          orient,
+			     BasePMode            mode,
+			     BasePState           state,
+			     int                  sz,
+			     gboolean             hidebuttons_enabled,
+			     gboolean             hidebutton_pixmap_enabled,
+			     PanelBackgroundType  back_type,
+			     char                *back_pixmap,
+			     gboolean             fit_pixmap_bg,
+			     gboolean             stretch_pixmap_bg,
+			     gboolean             rotate_pixmap_bg,
+			     PanelColor          *back_color)
 {
 	GtkOrientation porient;
 	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
@@ -422,31 +422,31 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 					     panel->sz,
 					     basep->hidebuttons_enabled,
 					     basep->hidebutton_pixmaps_enabled,
-					     panel->back_type,
-					     panel->back_pixmap,
-					     panel->fit_pixmap_bg,
-					     panel->stretch_pixmap_bg,
-					     panel->rotate_pixmap_bg,
-					     &panel->back_color);
+					     panel->background.type,
+					     panel->background.image,
+					     panel->background.fit_image,
+					     panel->background.stretch_image,
+					     panel->background.rotate_image,
+					     &panel->background.color);
 	}
 }
 
 GtkWidget *
-drawer_widget_new (char          *panel_id,
-		   int            screen,
-		   int            monitor,
-		   PanelOrient    orient,
-		   BasePMode      mode,
-		   BasePState     state,
-		   int            sz,
-		   gboolean       hidebuttons_enabled,
-		   gboolean       hidebutton_pixmap_enabled,
-		   PanelBackType  back_type,
-		   char          *back_pixmap,
-		   gboolean       fit_pixmap_bg,
-		   gboolean       stretch_pixmap_bg,
-		   gboolean       rotate_pixmap_bg,
-		   PanelColor    *back_color)
+drawer_widget_new (char                *panel_id,
+		   int                  screen,
+		   int                  monitor,
+		   PanelOrient          orient,
+		   BasePMode            mode,
+		   BasePState           state,
+		   int                  sz,
+		   gboolean             hidebuttons_enabled,
+		   gboolean             hidebutton_pixmap_enabled,
+		   PanelBackgroundType  back_type,
+		   char                *back_pixmap,
+		   gboolean             fit_pixmap_bg,
+		   gboolean             stretch_pixmap_bg,
+		   gboolean             rotate_pixmap_bg,
+		   PanelColor          *back_color)
 {
 	DrawerWidget *drawer;
 	DrawerPos *pos;

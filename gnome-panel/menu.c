@@ -2667,7 +2667,7 @@ static void
 create_new_panel (GtkWidget *w, gpointer data)
 {
 	PanelType  type = GPOINTER_TO_INT (data);
-	PanelColor bcolor = {0, 0, 0, 1};
+	PanelColor bcolor = { { 0, 0, 0, 0 }, 0xffff };
 	gint16     x, y;
 	GtkWidget *panel = NULL;
 	int        screen;

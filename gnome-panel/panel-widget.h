@@ -15,6 +15,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include "button-widget.h"
 #include "panel-types.h"
+#include "panel-background.h"
 
 G_BEGIN_DECLS
 
@@ -77,9 +78,7 @@ struct _PanelWidget
 
 	int             thick;
 
-	PanelBackType   back_type;
-	char           *back_pixmap;
-	PanelColor      back_color;
+	PanelBackground background;
 
 	GtkWidget      *master_widget;
 	
@@ -91,19 +90,6 @@ struct _PanelWidget
 	GtkWidget      *panel_parent;
 	
 	GdkEventKey    *key_event;
-
-	GdkPixbuf      *backpix;           /* background pixmap unscaled */
-	GdkPixbuf      *backpix_scaled;    /* pixmap scaled to panel size */
-
-	GdkPixbuf      *desktop_image;     /* whats on the desktop */
-	GdkPixbuf      *background_image;  /* what to draw on the panel */
-	GdkPixmap      *background_pixmap; /* pixmap to give to applets */
-
-	gulong          background_changed_signal_handler;
-
-	guint           fit_pixmap_bg : 1;     /* fit pixmap while keeping ratio */
-	guint           stretch_pixmap_bg : 1; /* stretch pixmap to the size of the panel */
-	guint           rotate_pixmap_bg : 1;  /* rotate pixmap on vertical panels */
 
 	guint           packed : 1;
 
@@ -140,7 +126,7 @@ GtkWidget *	panel_widget_new		(gchar *panel_id,
 						 gboolean packed,
 						 GtkOrientation orient,
 						 int sz,
-						 PanelBackType back_type,
+						 PanelBackgroundType back_type,
 						 char *back_pixmap,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
@@ -189,7 +175,7 @@ void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 void		panel_widget_change_params	(PanelWidget *panel,
 						 GtkOrientation orient,
 						 int sz,
-						 PanelBackType back_type,
+						 PanelBackgroundType back_type,
 						 char *pixmap_name,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
