@@ -1,0 +1,244 @@
+<sect1 id="fish">
+  <title>Applet Pesce</title>
+
+  <para>
+    L'applet <application>Pesce</application>, mostrata in <xref
+    linkend="fishapplet-fig">, mostra un piccolo pesce nel vostro
+    <interface>Pannello</interface> e non fa niente altro di utile oltre a
+    ciò. Per aggiungere questa applet al <interface>Pannello</interface>
+    cliccate sul <interface>Pannello</interface> e scegliete
+      <menuchoice>
+	<guimenu>Pannello</guimenu>
+	<guisubmenu>Aggiungi al pannello</guisubmenu>
+	<guisubmenu>Applet</guisubmenu>
+	<guisubmenu>Divertimento</guisubmenu>
+	<guimenuitem>Pesce</guimenuitem>
+      </menuchoice>.
+  </para>
+
+  <figure id="fishapplet-fig">
+    <title>Applet Pesce</title>
+    <screenshot>
+      <screeninfo>Applet Pesce</screeninfo>
+      <graphic format="png" fileref="figures/fish_applet" 
+	       srccredit="muet">
+      </graphic>
+    </screenshot>
+  </figure>
+
+  <!-- ============= Usage  ================================ -->
+  <sect2 id="fish-usage">
+    <title>Uso</title>
+    <para>
+      A differenza di altri pesci questo richiede un po' di cura ma non ha
+      bisogno che gli puliate l'acquario: nuota felice nella sua acqua e se
+      glieli chiedete vi fornirà interessanti pensieri.
+    </para>
+
+    <para>
+      Cliccando con il tasto destro sull'applet appare un menù contenente le
+      seguenti voci:
+      <itemizedlist>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Proprietà&hellip;</guimenuitem> &mdash; apre la
+	    finestra di dialogo <guilabel>Proprietà</guilabel>.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Aiuto</guimenuitem> &mdash; mostra questo documento.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Informazioni su&hellip;</guimenuitem> &mdash; mostra
+	    informazioni a proposito dell'<application>Applet
+	      Pesce</application>, come la versione e il nome dell'autore.
+	  </para>
+	</listitem>
+	
+      </itemizedlist>
+    </para>
+  </sect2>
+
+
+  <!-- ============= Customization ============================= -->
+  <sect2 id="fish-prefs">
+    <title>Personalizzazione</title>
+    <para>
+      È possibile personalizzare l'applet <application>Pesce</application>
+      cliccando con il tasto destro e scegliendo
+      <guimenuitem>Proprietà&hellip;</guimenuitem>. Si aprirà così la finestra
+      di dialogo <interface>Proprietà</interface> (mostrata in <xref
+      linkend="fish-settings-fig">), da dove è possibile cambiare molte
+      impostazioni.
+    </para>
+
+    <figure id="fish-settings-fig">
+      <title>Finestra di dialogo Proprietà</title>
+      <screenshot>
+	<screeninfo>Finestra di dialogo Proprietà</screeninfo>
+	<graphic format="png" fileref="figures/fish_settings"
+		 srccredit="muet">
+	</graphic>
+      </screenshot>
+    </figure>
+
+    <para>
+      Le proprietà sono:
+      <itemizedlist>
+
+	<listitem>
+	  <para>
+	    Il nome del tuo pesce GNOME &mdash; Potete cambiare il nome del
+	    vostro pesce: quello predefinito è Wanda.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    File dell'animazione: Potete selezionare un differente insieme di
+	    immagini: la directory predefinita per le immagini è
+	    <filename>$PREFIX/pixmaps/fish/</filename>, da dove potete
+	    scegliere, ma è possibile scegliere un'altra directory contenente
+	    altre immagini.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Numero di frame nell'animazione &mdash; Il numero di frame che
+	    costituiscono l'animazione: il valore predefinito è tre ma si può
+	    variare da 1 a 255.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Pausa per frame (s) &mdash; Il ritardo in secondi per aggiornare
+	    l'immagine: il valore predefinito è un secondo ma si può variare da
+	    0,10 a 10 secondi.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Ruota nei pannelli verticali &mdash; Questa casella di spunta viene
+	    usata per i pannelli verticali e quando viene selezionata il pesce
+	    nuoterà verso il basso quando si trova su un
+	    <interface>Pannello</interface> verticale; se invece non viene
+	    selezionata apparirà nello stesso modo come su un
+	    <interface>Pannello</interface> orizzontale, costringendo il
+	    <interface>Pannello</interface> verticale ad assumere la sua
+	    dimensione.
+	  </para>
+	</listitem>
+
+
+      </itemizedlist>
+    </para>
+
+    <para> 
+      Dopo aver fatto i cambiamenti voluti, cliccate sul bottone
+      <guibutton>OK</guibutton> per applicare i cambiamenti e chiudere la
+      finestra di dialogo <interfaces>Proprietà</interfaces>. Per non salvare i
+      cambiamenti e per tornare ai precedenti valori cliccate sul bottone
+      <guibutton>Applica</guibutton>.
+    </para>
+  </sect2>
+
+
+  <!-- ============= Bugs ================================== -->
+  <!-- This section should describe known bugs and limitations of
+  the program if there are any - please be frank and list all
+  problems you know of -->
+  <sect2 id="fish-bugs">
+    <title>Bug conosciuti e limitazioni</title>
+    <para>
+      Quest'applet non ha bug conosciuti.
+    </para>
+  </sect2>
+
+
+  <!-- ============= Authors ================================ -->
+  
+  <sect2 id="fish-authors">
+    <title>Autori</title>
+    <para>
+      <application>Pesce</application> è stato scritto da George Lebl
+      (<email>jirka@5z.com</email>). Inviate i commenti, suggerimenti e
+      segnalazioni di bug al <ulink url="http://bugs.gnome.org/" type="http">GNOME
+	bug tracking database</ulink>. (Le istruzioni per inviare le segnalazioni di
+      bug possono essere trovate <ulink
+      url="http://bugs.gnome.org/Reporting.html"t type="http">on-line</ulink>. Se
+      state usando GNOME 1.1 o più recente potete usare anche il
+      <application>Bug Report Tool</application> (<command>bug-buddy</command>),
+      disponibile nel sottomenù <guisubmenu>Utilità</guisubmenu> del menù
+      <guimenu>Programmi</guimenu>,per inviare segnalazioni di bug.
+    </para>
+
+    <para>
+      Questo manuale è stato scritto da Telsa Gwynne
+      (<email>hobbit@aloss.ukuu.org.uk</email>). Inviate i commenti e i
+      suggerimenti riguardanti questo manuale al <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/">GNOME Documentation
+      Project</ulink> inviando un messaggio a
+      <email>docs@gnome.org</email>. Potete inviare i commenti anche via rete
+      usando il <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/doctable/">GNOME
+      Documentation Status Table</ulink>.
+    </para>
+
+   <para>
+      Traduzione italiana a cura di Leandro Noferini
+      (<email>lnoferin@cybervalley.org</email>). Inviate tutti i commenti sulla
+      traduzione a <email>webmaster@it.gnome.org</email>.
+    </para>
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+    <title>Licenza</title>
+    <para>
+      This program is free software; you can redistribute it and/or
+      modify it under the terms of the <ulink type="help"
+      url="gnome-help:gpl"><citetitle>GNU General Public
+      License</citetitle></ulink> as published by the Free Software Foundation;
+      either version 2 of the License, or (at your option) any later version.
+    </para>
+    <para>
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
+	  Public License</citetitle></ulink> for more details.
+    </para>
+    <para>
+      A copy of the <ulink type="help" url="gnome-help:gpl"><citetitle>GNU
+      General Public License</citetitle></ulink> is included with the GNOME
+      documentation.  You also may obtain a copy of the <ulink type="help"
+      url="gnome-help:gpl"><citetitle>GNU General Public
+      License</citetitle></ulink> from the Free Software Foundation by visiting
+      <ulink type="http" url="http://www.fsf.org/">their Web site</ulink> or by
+      writing to
+      <address>
+	Free Software Foundation, Inc.
+	<street>59 Temple Place</street> - Suite 330
+	<city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+	<country>USA</country>
+      </address>
+    </para>
+  </sect2>
+
+</sect1>
+
+
+
+
