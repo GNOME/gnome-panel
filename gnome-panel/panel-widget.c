@@ -85,6 +85,8 @@ static void panel_widget_free_move_applet   (PanelWidget      *panel,
 static void panel_widget_tab_move           (PanelWidget      *panel,
                                              gboolean          next);
 static void panel_widget_end_move           (PanelWidget      *panel);
+static gboolean panel_widget_real_focus     (GtkWidget        *widget,
+                                             GtkDirectionType  direction);
 
 
 typedef void (*BackSignal) (GtkObject * object,
@@ -228,10 +230,9 @@ add_all_move_bindings (PanelWidget *panel)
 	add_move_bindings (binding_set, GDK_CONTROL_MASK, "switch_move");
 	add_move_bindings (binding_set, GDK_MOD1_MASK, "free_move");
 
-	if (!GTK_WIDGET_HAS_FOCUS (panel)) {
-		add_tab_bindings (binding_set, 0, TRUE);
-		add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
-	}
+	add_tab_bindings (binding_set, 0, TRUE);
+	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
+
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_Escape, 0,
                                       "end_move", 0);
@@ -270,10 +271,9 @@ remove_all_move_bindings (PanelWidget *panel)
 	remove_move_bindings (binding_set, GDK_SHIFT_MASK);
 	remove_move_bindings (binding_set, GDK_CONTROL_MASK);
 	remove_move_bindings (binding_set, GDK_MOD1_MASK);
-	if (!GTK_WIDGET_HAS_FOCUS (panel)) {
-		remove_tab_bindings (binding_set, 0, TRUE);
-		remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
-	}
+	remove_tab_bindings (binding_set, 0, TRUE);
+	remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
+
 	gtk_binding_entry_clear (binding_set, GDK_Escape, 0);
 }
 
@@ -284,8 +284,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	GObjectClass *gobject_class = (GObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
-
-	GtkBindingSet *binding_set;
 
 	panel_widget_signals[ORIENT_CHANGE_SIGNAL] =
                 g_signal_new ("orient_change",
@@ -455,13 +453,10 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->style_set = panel_widget_style_set;
 	widget_class->focus_in_event = panel_widget_focus_in_event;
 	widget_class->focus_out_event = panel_widget_focus_out_event;
+	widget_class->focus = panel_widget_real_focus;
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
-
-	binding_set = gtk_binding_set_by_class (class);
-	add_tab_bindings (binding_set, 0, TRUE);
-	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 }
 
 static void
@@ -2889,16 +2884,8 @@ panel_widget_tab_move (PanelWidget *panel,
 
 	ad = panel->currently_dragged_applet;
 
-	if (!ad) {
-		g_return_if_fail (GTK_WIDGET_HAS_FOCUS (panel));
-		
-		GTK_WIDGET_UNSET_FLAGS (GTK_WIDGET (panel), GTK_CAN_FOCUS);
-		gtk_widget_child_focus (GTK_WIDGET (panel),
-					next ?
-						GTK_DIR_TAB_FORWARD :
-						GTK_DIR_TAB_BACKWARD);
+	if (!ad)
 		return;	
-	}
 	
 	for (li = panels; li; li = li->next) {
 		PanelWidget *previous_panel = NULL;
@@ -2931,15 +2918,8 @@ panel_widget_end_move (PanelWidget *panel)
 static gboolean
 panel_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event)
 {
-	GtkWidgetClass *class;
-	GtkBindingSet *binding_set;
-
 	gtk_widget_set_state (widget, GTK_STATE_PRELIGHT);
 
-	class = GTK_WIDGET_GET_CLASS (widget);
-	binding_set = gtk_binding_set_by_class (class);
-	add_tab_bindings (binding_set, 0, TRUE);
-	add_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_in_event (widget, event);
 	return FALSE;
 }
@@ -2950,17 +2930,20 @@ panel_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event)
 	gtk_widget_set_state (widget, GTK_STATE_NORMAL);
 
 	if (GTK_WINDOW (PANEL_WIDGET (widget)->panel_parent)->has_focus) {
-		GtkWidgetClass *class;
-		GtkBindingSet *binding_set;
-
 		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
-		class = GTK_WIDGET_GET_CLASS (widget);
-		binding_set = gtk_binding_set_by_class (class);
-		remove_tab_bindings (binding_set, 0, TRUE);
-		remove_tab_bindings (binding_set, GDK_SHIFT_MASK, FALSE);
 	}
 	GTK_WIDGET_CLASS (panel_widget_parent_class)->focus_out_event (widget, event);
 	return FALSE;
+}
+
+static gboolean
+panel_widget_real_focus (GtkWidget        *widget,
+                         GtkDirectionType  direction)
+{
+	if (GTK_WIDGET_HAS_FOCUS (widget))
+		GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
+
+	return GTK_WIDGET_CLASS (panel_widget_parent_class)->focus (widget, direction);
 }
 
 void panel_widget_focus (PanelWidget *panel)

@@ -1,3 +1,11 @@
+2002-03-04  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* panel-widget.c:
+	Tidy up keynav code: use keybindings for Tab and arrow keys only
+	for moving applets; define panel_widget_real_focus as default
+	signal handler for GtkWidget's focus signal so GtkWindow's
+	key bindings are used to move focus when the PanelWidget has focus.
+
 Fri Mar  1 22:09:26 2002  Soeren Sandmann  <sandmann@daimi.au.dk>
 
 	* panel-config-global.c (panel_global_config_set_entry): fix typo:
