@@ -1,4 +1,57 @@
 =============
+Version 2.0.3
+=============
+
+Panel
+
+	* Correcrly handle dropping .desktop file (Frederic Crozat)
+	* Various run dialog fixes (Frank Worsley)
+	* Fix RTL issues with the menu panel (George)
+	* Fix mnemonics clash with gnome-panel-screenshot (Mark)
+	* Destroy the launcher properties dialog correctly (Mark, Arvind)
+	* Only reload the applet with a 'yes' response (Mark)
+	* Don't try to reload an applet if the panel has been removed (Mark)
+	* Add mnemonics to applet popup menu (Deepa Natarajan)
+	* Fix drawer properties heap corruption (Mark)
+	* Impl new keybindings for drawers (Padraig)
+	* Fix options frame expansion in gnome-panel-screenshot (Frank Worsley)
+	* Ensure shift-F10 has no effect on menus without a context menu (Padraig)
+	* Fix printf ("%s", NULL) issues in gnome-panel-screenshot (Mark)
+	* Delete and applet if loading fails (Mark)
+	* Remove bogus showing of autohidden panel on focus in (Mark)
+	* Do not set an empty string as a menuitem tooltip (Mark, Arvind)
+	* Fixup file selector in gnome-panel-screenshot (Mark)
+	* Don't allow moving an applet to a hidden panel (Mark)
+	* Small menuitem context menu efficiency win (Mark)
+
+Mailcheck Applet
+
+	* Fix crash when pixmap dir not found (Mark)
+	* Handle interuppted waitpid() - no more zombies (Deepa Chacko Pillai)
+
+Window List Applet
+
+	* Handle GConf errors better (Mark)
+	* Don't spew errors on shutdown (Padraig)
+
+Fish Applet
+
+	* Warning fixes (Mark)
+
+Miscellanous
+
+	* Install applets into libexec (Mark)
+	* Update man page names (Mark)
+	* Sort out libtool versioning (Mark)
+
+Translations
+
+	* Changwoo Ryu, Christian Meyer, Christian Rose, Christophe Merlet,
+	  Dmitry G. Mastrukov, Frederic Crozat, Hasbullah Bin Pit, Jordi Mallach,
+	  Kjartan Maraas,  Ole Laursen, Pablo Saratxaga, Pauli Virtanen and
+	  Zbigniew Chyla.
+
+=============
 Version 2.0.2
 =============
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core-1.0.7\n"
-"POT-Creation-Date: 2002-07-15 10:56+1200\n"
+"POT-Creation-Date: 2002-07-30 14:21+1200\n"
 "PO-Revision-Date: 2002-07-09 23:21+0800\n"
 "Last-Translator: WangLi <charlesw1234@163.com>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -41,7 +41,9 @@ msgstr "关于(_A)..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3387 gnome-panel/menu.c:4100
 msgid "_Help"
 msgstr "帮助(_H)"
 
@@ -53,25 +55,25 @@ msgstr "帮助(_H)"
 msgid "_Preferences..."
 msgstr "首选项(_P)..."
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
 msgstr "娱乐"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:2
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
 msgid "Display a swimming fish or another animated creature"
 msgstr "显示一条正在游泳的鱼或其它活动的生物"
 
 # applets/fish/fish.c:290
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1237
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:1236
 msgid "Fish"
 msgstr "小鱼"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:4
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "From Whence That Stupid Fish Came"
 msgstr "自从那只蠢鱼来了以后"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
 msgid "Wanda Factory"
 msgstr "Wanda Factory"
 
@@ -92,18 +94,18 @@ msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME 小鱼，幸运的宣示者"
 
 # applets/fish/fish.c:136 applets/fish/fish.c:427
-#: applets/fish/fish.c:486 applets/fish/fish.c:1204
+#: applets/fish/fish.c:485 applets/fish/fish.c:1203
 #, no-c-format
 msgid "%s the Fish"
 msgstr "小鱼 %s"
 
 # applets/fish/fish.c:137
-#: applets/fish/fish.c:487
+#: applets/fish/fish.c:486
 #, c-format
 msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>%s GNOME 小鱼说：</big></big>"
 
-#: applets/fish/fish.c:582
+#: applets/fish/fish.c:581
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -116,55 +118,55 @@ msgstr ""
 "或有用的事情。"
 
 # applets/fish/fish.c:223
-#: applets/fish/fish.c:713
+#: applets/fish/fish.c:712
 msgid "GNOME Fish Preferences"
 msgstr "GNOME 小鱼首选项"
 
 # applets/fish/fish.c:137
-#: applets/fish/fish.c:723
+#: applets/fish/fish.c:722
 msgid "_Name of GNOME fish:"
 msgstr "GNOME 小鱼的名字(_N)："
 
 # applets/fish/fish.c:245
-#: applets/fish/fish.c:740
+#: applets/fish/fish.c:739
 msgid "_Animation filename:"
 msgstr "动画文件名(_A)："
 
 # applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
 # panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
 # panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
-#: applets/fish/fish.c:742 applets/gen_util/mailcheck.c:1276
-#: gnome-panel/panel-config.c:1400 gnome-panel/panel-util.c:241
+#: applets/fish/fish.c:741 applets/gen_util/mailcheck.c:1276
+#: gnome-panel/panel-config.c:1401 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "浏览"
 
-#: applets/fish/fish.c:758
+#: applets/fish/fish.c:757
 msgid "Command to _execute when fish is clicked:"
 msgstr "点击小鱼时执行的命令(_E)："
 
 # applets/fish/fish.c:260
-#: applets/fish/fish.c:775
+#: applets/fish/fish.c:774
 msgid "Frame_s in animation:"
 msgstr "动画的帧数(_S)："
 
 # applets/fish/fish.c:276
-#: applets/fish/fish.c:793
+#: applets/fish/fish.c:792
 msgid "Pause _per frame (s):"
 msgstr "显示每帧的暂停时间(秒)(_P)："
 
-#: applets/fish/fish.c:808
+#: applets/fish/fish.c:807
 msgid "_Rotate on vertical panels"
 msgstr "在垂直面板上作相应旋转(_R)"
 
-#: applets/fish/fish.c:864
+#: applets/fish/fish.c:863
 msgid "Unable to get the name of the command to execute"
 msgstr ""
 
-#: applets/fish/fish.c:880
+#: applets/fish/fish.c:879
 msgid "Unable to locate the command to execute"
 msgstr ""
 
-#: applets/fish/fish.c:1005
+#: applets/fish/fish.c:1004
 #, fuzzy, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -175,7 +177,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: applets/fish/fish.c:1025
+#: applets/fish/fish.c:1024
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -186,7 +188,7 @@ msgstr ""
 "\n"
 "请参见小鱼的属性表框。"
 
-#: applets/fish/fish.c:1040
+#: applets/fish/fish.c:1039
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -195,12 +197,12 @@ msgstr ""
 "(看看今天几号了)"
 
 # applets/fish/fish.c:436
-#: applets/fish/fish.c:1219
+#: applets/fish/fish.c:1218
 msgid "(with minor help from George)"
 msgstr "(还有 George 的小帮助)"
 
 # applets/fish/fish.c:443
-#: applets/fish/fish.c:1240
+#: applets/fish/fish.c:1239
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -295,7 +297,7 @@ msgstr "工具"
 
 # help-browser/window.c:180
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:713
+#: applets/gen_util/tasklist.c:723
 msgid "Window List"
 msgstr "窗口列表"
 
@@ -357,7 +359,7 @@ msgstr "%Y %B %d, %A"
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
 #: applets/gen_util/mailcheck.c:1578 applets/gen_util/mailcheck.c:1783
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
-#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
+#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:681
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "显示求助时发生错误：%s"
@@ -405,7 +407,7 @@ msgstr "使用 UTC(_U)"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1708
-#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
+#: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:711
 #: gnome-panel/menu.c:242
 msgid "translator_credits"
 msgstr ""
@@ -1006,9 +1008,7 @@ msgstr "属性..."
 # applets/mini-commander/src/mini-commander_applet.c:257
 # gnome-terminal/gnome-terminal.c:1595 gsm/session-properties.c:176
 # help-browser/window.c:207
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "帮助"
 
@@ -1027,11 +1027,11 @@ msgstr "帮助"
 msgid "About..."
 msgstr "关于..."
 
-#: applets/gen_util/tasklist.c:714
+#: applets/gen_util/tasklist.c:724
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(C) 2001 Red Hat，公司"
 
-#: applets/gen_util/tasklist.c:715
+#: applets/gen_util/tasklist.c:725
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
@@ -1168,12 +1168,14 @@ msgstr "GNOME 面板 Shell"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
+#, fuzzy
+msgid "_Move"
 msgstr "移动"
 
 # panel/applet.c:337
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
+#, fuzzy
+msgid "_Remove From Panel"
 msgstr "从面板上删除"
 
 # panel/applet.c:297
@@ -1311,63 +1313,64 @@ msgid "CDE Menu"
 msgstr "CDE 菜单"
 
 # panel/panel_config.c:283 panel/panel_config.c:462
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "尺寸和位置"
 
 # panel/drawer.c:112
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "提示/名称"
 
 # panel/drawer.c:116
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "图标"
 
 # panel/drawer.c:120
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "插件外观"
 
 # panel/drawer.c:127
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "抽屉把手"
 
 # panel/drawer.c:132
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "启用隐藏按钮"
 
 # panel/drawer.c:141
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "启用隐藏箭头"
 
 # panel/drawer.c:160 panel/drawer.c:242
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3250
 msgid "Drawer"
 msgstr "抽屉"
 
 # applets/fvwm-pager/fvwm-pager.c:412
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3362
+#, fuzzy
+msgid "_Properties"
 msgstr "属性"
 
-#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
+#: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3545
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "无法执行 gnome-panel-screenshot"
 
-#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3557
+#: gnome-panel/foobar-widget.c:151 gnome-panel/menu.c:3555
 msgid "Cannot execute gnome-search-tool"
 msgstr "无法执行 gnome-search-tool"
 
 # applets/gkb/gkb.c:262
-#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3680
+#: gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3678
 msgid "Run Program..."
 msgstr "运行程序..."
 
@@ -1375,28 +1378,27 @@ msgstr "运行程序..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "如果您知道输入正确的命令，运行应用程序"
 
-#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3693
+#: gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3691
 msgid "Search for Files..."
 msgstr "搜索文件..."
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3696
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3694
 msgid "Find files, folders, and documents on your computer"
 msgstr "在您的计算机中寻找文件、文件夹以及文档"
 
-#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3707
+#: gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3705
 #, fuzzy
 msgid "Screenshot..."
 msgstr "屏幕抓图"
 
 # gsm/logout.c:221
-#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3710
+#: gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3708
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "获取一个您的桌面的抓图"
 
 # panel/menu.c:2591
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3458
 msgid "Lock Screen"
 msgstr "锁住屏幕"
 
@@ -1405,7 +1407,7 @@ msgid "Protect your computer from unauthorized use"
 msgstr "保护您的计算机免遭未授权的使用"
 
 # panel/logout.c:51 panel/menu.c:2290 panel/menu.c:2625
-#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3473
+#: gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3471
 msgid "Log Out"
 msgstr "注销"
 
@@ -1424,7 +1426,7 @@ msgid "No windows open"
 msgstr "没有打开窗口"
 
 # panel/menu.c:3516
-#: gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
+#: gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2680
 msgid "Menu Panel"
 msgstr "菜单面板"
 
@@ -1434,8 +1436,8 @@ msgid "GNOME Menu Panel"
 msgstr "GNOME 菜单面板"
 
 # gsm/logout.c:240
-#: gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2822
-#: gnome-panel/menu.c:2828 gnome-panel/menu.c:3646
+#: gnome-panel/foobar-widget.c:698 gnome-panel/menu.c:2820
+#: gnome-panel/menu.c:2826 gnome-panel/menu.c:3644
 msgid "Applications"
 msgstr "应用程序"
 
@@ -1510,43 +1512,43 @@ msgstr "面板"
 msgid "Select preferences for all your panels"
 msgstr ""
 
-# help-browser/history.c:257
+# panel/panel_config_global.c:238
 #: gnome-panel/gnome-panel-preferences.glade.h:1
+#, fuzzy
+msgid "Animation _speed:"
+msgstr "动画速度(_A)："
+
+# panel/panel_config_global.c:531
+#: gnome-panel/gnome-panel-preferences.glade.h:2
+#, fuzzy
+msgid "Close _drawer when launcher is clicked"
+msgstr "点击启动器后关闭抽屉(_C)"
+
+# help-browser/history.c:257
+#: gnome-panel/gnome-panel-preferences.glade.h:3
 msgid "Fast"
 msgstr "快速"
 
 # applets/gkb/gkb.c:288 panel/menu.c:1759 panel/menu.c:1803 panel/menu.c:1805
 # panel/menu.c:3233 panel/menu.c:3600
-#: gnome-panel/gnome-panel-preferences.glade.h:2
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "中速"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:3
+#: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "面板首选项"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:4
+#: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Slow"
 msgstr "慢速"
 
 # panel/panel_config_global.c:603
-#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 #, fuzzy
 msgid "_Animation"
 msgstr "动画"
-
-# panel/panel_config_global.c:238
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-#, fuzzy
-msgid "_Animation speed:"
-msgstr "动画速度(_A)："
-
-# panel/panel_config_global.c:531
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
-msgid "_Close drawer when launcher is clicked"
-msgstr "点击启动器后关闭抽屉(_C)"
 
 #: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
@@ -1688,7 +1690,7 @@ msgstr "打印屏幕抓图(_P)..."
 msgid "_Save screenshot to file:"
 msgstr "将抓图保存到文件(_S)："
 
-#: gnome-panel/gnome-run.c:229 gnome-panel/gnome-run.c:246
+#: gnome-panel/gnome-run.c:231 gnome-panel/gnome-run.c:248
 #, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
@@ -1699,7 +1701,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
+#: gnome-panel/gnome-run.c:350 gnome-panel/gnome-run.c:424
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1710,7 +1712,7 @@ msgstr ""
 "\n"
 "细节：%s"
 
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:447
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1721,7 +1723,7 @@ msgstr ""
 "\n"
 "细节：没有可用于打开文件的应用程序"
 
-#: gnome-panel/gnome-run.c:447
+#: gnome-panel/gnome-run.c:461
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1733,54 +1735,54 @@ msgstr ""
 "细节：%s"
 
 # help-browser/gnome-help-browser.c:603
-#: gnome-panel/gnome-run.c:525
+#: gnome-panel/gnome-run.c:539
 msgid "Choose a file"
 msgstr "选择一个文件"
 
 # gsm/logout.c:240
-#: gnome-panel/gnome-run.c:720 gnome-panel/gnome-run.c:721
+#: gnome-panel/gnome-run.c:734 gnome-panel/gnome-run.c:735
 msgid "Known Applications"
 msgstr "已知的应用程序"
 
 # panel/swallow.c:235
-#: gnome-panel/gnome-run.c:849
+#: gnome-panel/gnome-run.c:863
 msgid "Command to run"
 msgstr "要运行的命令"
 
 # gnome-terminal/gnome-terminal.c:1517 gnome-terminal/gnome-terminal.c:1534
-#: gnome-panel/gnome-run.c:883
+#: gnome-panel/gnome-run.c:898
 msgid "Run in _terminal"
 msgstr "在终端里运行(_T)"
 
-#: gnome-panel/gnome-run.c:888
+#: gnome-panel/gnome-run.c:903
 msgid "_Append File..."
 msgstr "附加文件(_A)..."
 
-#: gnome-panel/gnome-run.c:1268
+#: gnome-panel/gnome-run.c:1283
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
 # gnome-terminal/gnome-terminal.c:1430
-#: gnome-panel/gnome-run.c:1277
+#: gnome-panel/gnome-run.c:1292
 msgid "No application selected"
 msgstr "没有选中应用程序"
 
 # gsm/logout.c:240
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1411
 msgid "List of known applications"
 msgstr "已知应用程序的列表"
 
-#: gnome-panel/gnome-run.c:1397
+#: gnome-panel/gnome-run.c:1412
 msgid "Choose an application to run from the list"
 msgstr "从列表中选择一个应用程序来运行"
 
-#: gnome-panel/gnome-run.c:1489
+#: gnome-panel/gnome-run.c:1506
 msgid "_Run"
 msgstr "运行(_R)"
 
 # applets/gkb/gkb.c:262
-#: gnome-panel/gnome-run.c:1548
+#: gnome-panel/gnome-run.c:1565
 msgid "Run Program"
 msgstr "运行程序"
 
@@ -1818,39 +1820,39 @@ msgstr ""
 "无法启动图标\n"
 "%s"
 
-#: gnome-panel/launcher.c:326
+#: gnome-panel/launcher.c:333
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:346
+#: gnome-panel/launcher.c:353
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 
 # gsm/logout.c:240
-#: gnome-panel/launcher.c:457
+#: gnome-panel/launcher.c:464
 #, c-format
 msgid "Help on %s Application"
 msgstr "%s 应用程序的帮助"
 
 # panel/launcher.c:276
-#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:583 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "启动器属性"
 
-#: gnome-panel/launcher.c:682
+#: gnome-panel/launcher.c:689
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 
 # panel/launcher.c:386
-#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:780 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "建立启动器"
 
 #. class
-#: gnome-panel/launcher.c:991
+#: gnome-panel/launcher.c:1000
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1861,7 +1863,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1086 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -1900,16 +1902,25 @@ msgstr "锁住屏幕"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
+#, fuzzy
+msgid "_Activate Screensaver"
 msgstr "激活屏幕保护程序"
+
+# panel/menu.c:2591
+#: gnome-panel/logout.c:214
+#, fuzzy
+msgid "_Lock Screen"
+msgstr "锁住屏幕"
 
 # gsm/save-session.c:41
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
+#, fuzzy
+msgid "_Kill Screensaver Daemon"
 msgstr "杀死屏幕保护 Daemon"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
+#, fuzzy
+msgid "Restart _Screensaver Daemon"
 msgstr "重新启动屏幕保护 Daemon"
 
 #: gnome-panel/main.c:166
@@ -1929,8 +1940,8 @@ msgstr ""
 
 # applets/gkb/gkb.c:288 panel/menu.c:1759 panel/menu.c:1803 panel/menu.c:1805
 # panel/menu.c:3233 panel/menu.c:3600
-#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3751
-#: gnome-panel/menu.c:3979
+#: gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3749
+#: gnome-panel/menu.c:3977
 msgid "Menu"
 msgstr "菜单"
 
@@ -2114,130 +2125,135 @@ msgstr "将它作为菜单加进面板"
 msgid "Add new item to this menu"
 msgstr "给该菜单添加新项"
 
-#: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
+# applets/fvwm-pager/fvwm-pager.c:412
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "属性"
+
+#: gnome-panel/menu.c:2389 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "查询返回异常 %s\n"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2603 gnome-panel/menu.c:2607
+#: gnome-panel/menu.c:2601 gnome-panel/menu.c:2605
 msgid "Aligned Panel"
 msgstr "对齐的面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2608
+#: gnome-panel/menu.c:2606
 msgid "GNOME Aligned Panel"
 msgstr "对齐的 GNOME 面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
-#: gnome-panel/panel-config.c:1640
+#: gnome-panel/menu.c:2622 gnome-panel/menu.c:2625
+#: gnome-panel/panel-config.c:1641
 msgid "Edge Panel"
 msgstr "边缘面板"
 
 # panel/menu.c:543
-#: gnome-panel/menu.c:2628
+#: gnome-panel/menu.c:2626
 msgid "GNOME Edge Panel"
 msgstr "GNOME 边缘面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
-#: gnome-panel/panel-config.c:1662
+#: gnome-panel/menu.c:2642 gnome-panel/menu.c:2646
+#: gnome-panel/panel-config.c:1663
 msgid "Sliding Panel"
 msgstr "滑动面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2649
+#: gnome-panel/menu.c:2647
 msgid "GNOME Sliding Panel"
 msgstr "GNOME 滑动面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
-#: gnome-panel/panel-config.c:1673
+#: gnome-panel/menu.c:2663 gnome-panel/menu.c:2667
+#: gnome-panel/panel-config.c:1674
 msgid "Floating Panel"
 msgstr "浮动面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/menu.c:2670
+#: gnome-panel/menu.c:2668
 msgid "GNOME Floating Panel"
 msgstr "GNOME 浮动面板"
 
-#: gnome-panel/menu.c:2689
+#: gnome-panel/menu.c:2687
 msgid "You can only have one menu panel at a time."
 msgstr "在同一时刻您只能有一个菜单面板。"
 
 # panel/menu.c:2542
-#: gnome-panel/menu.c:2728
+#: gnome-panel/menu.c:2726
 #, fuzzy
 msgid "C_orner Panel"
 msgstr "角落面板"
 
 # panel/menu.c:2542
-#: gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2728
 #, fuzzy
 msgid "Create corner panel"
 msgstr "角落面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2739
+#: gnome-panel/menu.c:2737
 #, fuzzy
 msgid "_Edge Panel"
 msgstr "边缘面板"
 
 # panel/menu.c:2542
-#: gnome-panel/menu.c:2741
+#: gnome-panel/menu.c:2739
 #, fuzzy
 msgid "Create edge panel"
 msgstr "创建面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/menu.c:2749
+#: gnome-panel/menu.c:2747
 #, fuzzy
 msgid "_Floating Panel"
 msgstr "浮动面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/menu.c:2751
+#: gnome-panel/menu.c:2749
 #, fuzzy
 msgid "Create floating panel"
 msgstr "漂浮面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/menu.c:2759
+#: gnome-panel/menu.c:2757
 #, fuzzy
 msgid "_Sliding Panel"
 msgstr "滑动面板"
 
 # panel/menu.c:2542
-#: gnome-panel/menu.c:2761
+#: gnome-panel/menu.c:2759
 #, fuzzy
 msgid "Create sliding panel"
 msgstr "创建面板"
 
 # panel/menu.c:3516
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2779
 #, fuzzy
 msgid "_Menu Panel"
 msgstr "菜单面板"
 
 # panel/menu.c:2542
-#: gnome-panel/menu.c:2783
+#: gnome-panel/menu.c:2781
 #, fuzzy
 msgid "Create menu panel"
 msgstr "创建面板"
 
 # panel/menu.c:2161 panel/menu.c:2167 panel/menu.c:2257 panel/menu.c:3102
 #. force_image
-#: gnome-panel/menu.c:2892 gnome-panel/menu.c:2899 gnome-panel/menu.c:3533
+#: gnome-panel/menu.c:2890 gnome-panel/menu.c:2897 gnome-panel/menu.c:3531
 #, fuzzy
 msgid "KDE Menu"
 msgstr "KDE 菜单"
 
-#: gnome-panel/menu.c:2964
+#: gnome-panel/menu.c:2962
 msgid "You cannot remove your last panel."
 msgstr "您不能删除最后一个面板。"
 
-#: gnome-panel/menu.c:2977
+#: gnome-panel/menu.c:2975
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2247,62 +2263,56 @@ msgstr ""
 "设置都会丢失。真要删除该面板？"
 
 # panel/panel_config_global.c:568
-#: gnome-panel/menu.c:3224
+#: gnome-panel/menu.c:3222
 msgid "Launcher..."
 msgstr "启动器..."
 
 # panel/panel_config_global.c:568
-#: gnome-panel/menu.c:3232
+#: gnome-panel/menu.c:3230
 msgid "Launcher from menu"
 msgstr "从菜单启动"
 
 # help-browser/toc.c:159
-#: gnome-panel/menu.c:3242 gnome-panel/menu.c:3803 gnome-panel/menu.c:3831
-#: gnome-panel/menu.c:4024
+#: gnome-panel/menu.c:3240 gnome-panel/menu.c:3801 gnome-panel/menu.c:3829
+#: gnome-panel/menu.c:4022
 msgid "GNOME Menu"
 msgstr "GNOME 帮助"
 
 # panel/menu.c:2465
-#: gnome-panel/menu.c:3262
+#: gnome-panel/menu.c:3260
 #, fuzzy
 msgid "Log Out Button"
 msgstr "注销按钮"
 
-#: gnome-panel/menu.c:3272
+#: gnome-panel/menu.c:3270
 msgid "Lock button"
 msgstr "屏幕锁定按钮"
 
 # panel/menu.c:2276
-#: gnome-panel/menu.c:3316
+#: gnome-panel/menu.c:3314
 #, fuzzy
 msgid "_Delete This Panel..."
 msgstr "删除该面板..."
 
 # panel/menu.c:2276
-#: gnome-panel/menu.c:3319 gnome-panel/menu.c:3350
+#: gnome-panel/menu.c:3317 gnome-panel/menu.c:3348
 #, fuzzy
 msgid "_Delete This Panel"
 msgstr "删除该面板"
 
 # panel/menu.c:912
-#: gnome-panel/menu.c:3337
+#: gnome-panel/menu.c:3335
 #, fuzzy
 msgid "_Add to Panel"
 msgstr "添加到面板"
 
-# applets/fvwm-pager/fvwm-pager.c:412
-#: gnome-panel/menu.c:3364
-#, fuzzy
-msgid "_Properties"
-msgstr "属性"
-
 # panel/menu.c:543
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3375
 #, fuzzy
 msgid "_New Panel"
 msgstr "GNOME 面板程序"
 
-#: gnome-panel/menu.c:3402
+#: gnome-panel/menu.c:3400
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2323,54 +2333,54 @@ msgstr ""
 # applets/modemlights/modemlights.c:992 applets/netload/netload.c:339
 # applets/slashapp/slashapp.c:636 applets/tasklist/tasklist_applet.c:683
 # applets/webcontrol/webcontrol.c:307 panel/menu.c:2602
-#: gnome-panel/menu.c:3422
+#: gnome-panel/menu.c:3420
 #, fuzzy
 msgid "_About Panels"
 msgstr "关于面板..."
 
 # panel/menu.c:2614
-#: gnome-panel/menu.c:3435
+#: gnome-panel/menu.c:3433
 #, fuzzy
 msgid "About _GNOME"
 msgstr "关于 GNOME"
 
-#: gnome-panel/menu.c:3466
+#: gnome-panel/menu.c:3464
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "锁住屏幕，以便您暂时离开您的计算机"
 
-#: gnome-panel/menu.c:3479
+#: gnome-panel/menu.c:3477
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "注销本会话以便让不同的用户登录，或关闭您的计算机"
 
 # panel/menu.c:1918
-#: gnome-panel/menu.c:3663
+#: gnome-panel/menu.c:3661
 msgid "Applets"
 msgstr "插件"
 
 # applets/gen_util/printer.c:353
-#: gnome-panel/menu.c:3686
+#: gnome-panel/menu.c:3684
 msgid "Run a command"
 msgstr "运行一个命令"
 
 # applets/tasklist/tasklist_menu.c:201
-#: gnome-panel/menu.c:3723
+#: gnome-panel/menu.c:3721
 msgid "Desktop"
 msgstr "桌面"
 
 # applets/gkb/gkb.c:288 panel/menu.c:1759 panel/menu.c:1803 panel/menu.c:1805
 # panel/menu.c:3233 panel/menu.c:3600
-#: gnome-panel/menu.c:3753
+#: gnome-panel/menu.c:3751
 msgid "Menu:"
 msgstr "菜单："
 
 # panel/menu.c:3327
-#: gnome-panel/menu.c:3825
+#: gnome-panel/menu.c:3823
 msgid "Can't create menu, using main menu!"
 msgstr "无法创建菜单，使用主菜单！"
 
-#: gnome-panel/menu.c:4332
+#: gnome-panel/menu.c:4330
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2384,7 +2394,7 @@ msgstr "无法注册控制构件\n"
 msgid "Exception from popup_menu '%s'\n"
 msgstr "来自弹出菜单“%s”的例外\n"
 
-#: gnome-panel/panel-applet-frame.c:700
+#: gnome-panel/panel-applet-frame.c:710
 #, fuzzy, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2401,11 +2411,11 @@ msgstr ""
 "(若您此时不重新装入，您还是可以在面板上点击鼠标右键而后点击“添加到面板”子菜单"
 "来添加的)"
 
-#: gnome-panel/panel-applet-frame.c:796
+#: gnome-panel/panel-applet-frame.c:806
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "无法从控制得到插件外壳界面\n"
 
-#: gnome-panel/panel-applet-frame.c:922
+#: gnome-panel/panel-applet-frame.c:932
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -2458,148 +2468,148 @@ msgstr "指定面板在屏幕上的位置和方向"
 msgid "_Position:"
 msgstr "面板位置"
 
-#: gnome-panel/panel-config.c:950
+#: gnome-panel/panel-config.c:951
 #, fuzzy
 msgid "Orient hori_zontally"
 msgstr "面板水平对齐"
 
-#: gnome-panel/panel-config.c:962
+#: gnome-panel/panel-config.c:963
 #, fuzzy
 msgid "Orient _vertically"
 msgstr "面板垂直对齐"
 
 # applets/desk-guide/deskguide_applet.c:103
-#: gnome-panel/panel-config.c:976
+#: gnome-panel/panel-config.c:977
 #, fuzzy
 msgid "H_orizontal offset:"
 msgstr "水平布局"
 
 # applets/desk-guide/deskguide_applet.c:116
-#: gnome-panel/panel-config.c:996
+#: gnome-panel/panel-config.c:997
 #, fuzzy
 msgid "Ver_tical offset:"
 msgstr "垂直布局"
 
-#: gnome-panel/panel-config.c:1061
+#: gnome-panel/panel-config.c:1062
 msgid "Screen edge _offset:"
 msgstr ""
 
 # applets/mini-commander/src/preferences.c:487
 # applets/tasklist/tasklist_properties.c:220
-#: gnome-panel/panel-config.c:1120
+#: gnome-panel/panel-config.c:1121
 #, fuzzy
 msgid "_Size:"
 msgstr "尺寸："
 
-#: gnome-panel/panel-config.c:1128
+#: gnome-panel/panel-config.c:1129
 msgid "XX Small (12 pixels)"
 msgstr "XX 极小 (12 象素)"
 
-#: gnome-panel/panel-config.c:1136
+#: gnome-panel/panel-config.c:1137
 msgid "X Small (24 pixels)"
 msgstr "X 很小 (24 象素)"
 
-#: gnome-panel/panel-config.c:1144
+#: gnome-panel/panel-config.c:1145
 msgid "Small (36 pixels)"
 msgstr "小 (36 象素)"
 
-#: gnome-panel/panel-config.c:1152
+#: gnome-panel/panel-config.c:1153
 msgid "Medium (48 pixels)"
 msgstr "中 (48 象素)"
 
-#: gnome-panel/panel-config.c:1160
+#: gnome-panel/panel-config.c:1161
 msgid "Large (64 pixels)"
 msgstr "大 (64 象素)"
 
-#: gnome-panel/panel-config.c:1168
+#: gnome-panel/panel-config.c:1169
 msgid "X Large (80 pixels)"
 msgstr "X 很大 (80 象素)"
 
-#: gnome-panel/panel-config.c:1176
+#: gnome-panel/panel-config.c:1177
 msgid "XX Large (128 pixels)"
 msgstr "XX 极大 (128 象素)"
 
 # gnome-terminal/gnome-terminal.c:1193
-#: gnome-panel/panel-config.c:1324
+#: gnome-panel/panel-config.c:1325
 #, fuzzy
 msgid "Background _type:"
 msgstr "背景类型"
 
 # gnome-terminal/gnome-terminal.c:563 gnome-terminal/gnome-terminal.c:1105
 # gnome-terminal/gnome-terminal.c:1115 gnome-terminal/gnome-terminal.c:2226
-#: gnome-panel/panel-config.c:1332
+#: gnome-panel/panel-config.c:1333
 msgid "Default"
 msgstr "默认"
 
 # panel/panel_config.c:719
-#: gnome-panel/panel-config.c:1336
+#: gnome-panel/panel-config.c:1337
 msgid "Color"
 msgstr "颜色"
 
 # gnome-terminal/gnome-terminal.c:1191
 #. image frame
-#: gnome-panel/panel-config.c:1340 gnome-panel/panel-config.c:1388
+#: gnome-panel/panel-config.c:1341 gnome-panel/panel-config.c:1389
 msgid "Image"
 msgstr "图像"
 
 # gnome-terminal/gnome-terminal.c:1316
-#: gnome-panel/panel-config.c:1355
+#: gnome-panel/panel-config.c:1356
 #, fuzzy
 msgid "Background co_lor:"
 msgstr "背景色："
 
 # panel/panel_config.c:751
-#: gnome-panel/panel-config.c:1414
+#: gnome-panel/panel-config.c:1415
 #, fuzzy
 msgid "_Do not scale image to fit"
 msgstr "不缩放图像来适应面板"
 
-#: gnome-panel/panel-config.c:1419
+#: gnome-panel/panel-config.c:1420
 msgid "Sc_ale image"
 msgstr ""
 
-#: gnome-panel/panel-config.c:1423
+#: gnome-panel/panel-config.c:1424
 msgid "St_retch image"
 msgstr ""
 
-#: gnome-panel/panel-config.c:1437
+#: gnome-panel/panel-config.c:1438
 #, fuzzy
 msgid "Rotate image for _vertical panels"
 msgstr "旋转垂直面板上的图像"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/panel-config.c:1516
+#: gnome-panel/panel-config.c:1517
 msgid "Edge panel"
 msgstr "边缘面板"
 
 # panel/menu.c:2542
-#: gnome-panel/panel-config.c:1523
+#: gnome-panel/panel-config.c:1524
 msgid "Corner panel"
 msgstr "角落面板"
 
 # panel/menu.c:2046 panel/panel_config.c:890
-#: gnome-panel/panel-config.c:1529
+#: gnome-panel/panel-config.c:1530
 msgid "Sliding panel"
 msgstr "滑动面板"
 
 # applets/gkb/gkb.c:200
-#: gnome-panel/panel-config.c:1535
+#: gnome-panel/panel-config.c:1536
 msgid "Floating panel"
 msgstr "漂浮面板"
 
 # panel/panel_config.c:879
-#: gnome-panel/panel-config.c:1608
+#: gnome-panel/panel-config.c:1609
 #, fuzzy
 msgid "Panel Properties"
 msgstr "面板属性"
 
 # panel/menu.c:2542
-#: gnome-panel/panel-config.c:1651
+#: gnome-panel/panel-config.c:1652
 msgid "Corner Panel"
 msgstr "角落面板"
 
 # panel/panel_config.c:696 panel/panel_config.c:909
-#: gnome-panel/panel-config.c:1692
+#: gnome-panel/panel-config.c:1693
 msgid "Background"
 msgstr "背景"
 
@@ -2678,12 +2688,12 @@ msgstr "没有要显示的文档"
 msgid "Disabled"
 msgstr "禁用"
 
-#: gnome-panel/panel.c:881
+#: gnome-panel/panel.c:884
 #, c-format
 msgid "Open URL: %s"
 msgstr "打开 URL：%s"
 
-#: gnome-panel/panel.c:2193
+#: gnome-panel/panel.c:2197
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2701,42 +2711,42 @@ msgstr "测试 Bonobo 插件"
 msgid "Test Bonobo Applet Factory"
 msgstr "测试 Bonobo 插件车间"
 
-#: libpanel-applet/panel-applet.c:751
+#: libpanel-applet/panel-applet.c:813
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "收到不完整的“%s”背景"
 
-#: libpanel-applet/panel-applet.c:765
+#: libpanel-applet/panel-applet.c:827
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "收到不完整的“%s”背景：%s"
 
-#: libpanel-applet/panel-applet.c:774
+#: libpanel-applet/panel-applet.c:836
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "获取位图 %s 失败"
 
-#: libpanel-applet/panel-applet.c:781
+#: libpanel-applet/panel-applet.c:843
 msgid "Unknown background type received"
 msgstr "收到未知的背景类型"
 
-#: libpanel-applet/panel-applet.c:956
+#: libpanel-applet/panel-applet.c:1018
 msgid "The Applet's containing Panel's orientation"
 msgstr "插件含有面板的方向"
 
-#: libpanel-applet/panel-applet.c:964
+#: libpanel-applet/panel-applet.c:1026
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "插件含有以像素为单位的面板尺寸"
 
-#: libpanel-applet/panel-applet.c:972
+#: libpanel-applet/panel-applet.c:1034
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "插件含有面板的背景颜色或图片"
 
-#: libpanel-applet/panel-applet.c:980
+#: libpanel-applet/panel-applet.c:1042
 msgid "The Applet's flags"
 msgstr "插件的标志"
 
-#: libpanel-applet/panel-applet.c:988
+#: libpanel-applet/panel-applet.c:1050
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "界定关于插件所能接受的尺寸的提示"
 
