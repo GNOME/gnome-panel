@@ -4481,7 +4481,7 @@ menu_save_to_gconf (Menu       *menu,
 		    const char *gconf_key)
 {
         GConfClient *client;
-        char        *profile;
+        const char  *profile;
         char        *temp_key;
 
         client  = panel_gconf_get_client ();
@@ -4512,7 +4512,6 @@ menu_save_to_gconf (Menu       *menu,
         temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "main-menu-flags");
         gconf_client_set_int (client, temp_key, menu->main_menu_flags, NULL);
         g_free (temp_key);
-	g_free (profile);
 }
 
 void
@@ -4522,7 +4521,7 @@ menu_load_from_gconf (PanelWidget *panel_widget,
 		      gboolean     use_default)
 {
         GConfClient *client;
-        char        *profile;
+        const char  *profile;
         char        *temp_key;
 	gboolean     main_menu;
 	gboolean     global_main;
@@ -4537,7 +4536,7 @@ menu_load_from_gconf (PanelWidget *panel_widget,
         client  = panel_gconf_get_client ();
 	/* FIXME : screeen checks */
 	if (use_default)
-		profile = g_strdup ("medium");
+		profile = "medium";
 	else
 		profile = session_get_current_profile ();
 
@@ -4573,5 +4572,4 @@ menu_load_from_gconf (PanelWidget *panel_widget,
 
         g_free (path);
         g_free (custom_icon_file);
-	g_free (profile);
 }

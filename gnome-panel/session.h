@@ -42,8 +42,8 @@ void panel_config_sync_schedule (void);
 
 void load_system_wide (void);
 
-gchar * session_get_current_profile (void);
-void session_set_current_profile (const gchar *profile_name);
+G_CONST_RETURN gchar *session_get_current_profile (void);
+void                  session_set_current_profile (const gchar *profile_name);
 
 void session_load (void);
 

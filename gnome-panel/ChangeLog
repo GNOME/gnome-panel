@@ -1,5 +1,22 @@
 2002-02-08  Mark McLoughlin  <mark@skynet.ie>
 
+	* session.[ch]: (panel_session_save): don't dup string. it
+	was been leaked allmost everywhere anyway.
+
+	* applet.c: (panel_applet_clean_gconf), (panel_applet_load_list),
+	(panel_applet_save_position), (panel_applet_save_to_gconf):
+	* drawer.c: (drawer_save_to_gconf), (drawer_load_from_gconf):
+	* launcher.c: (launcher_save_to_gconf):
+	* menu.c: (menu_save_to_gconf), (menu_load_from_gconf):
+	* panel-applet-frame.c: (panel_applet_frame_save_to_gconf):
+	* panel.c: (panel_session_save_panel):
+	* swallow.c: (swallow_save_to_gconf), (swallow_load_from_gconf):
+	update for above change.
+
+	* distribution.c: (get_distribution_info): fix warning.
+
+2002-02-08  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: (setup_button): free icon string.
 
 	* menu-fentry.c: (fr_check_and_reread): unref the vfs file

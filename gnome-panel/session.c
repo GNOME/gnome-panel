@@ -69,9 +69,10 @@ GlobalConfig            global_config;
 
 static gchar *panel_profile_name = NULL;
 
-gchar *
-session_get_current_profile (void) {
-	return g_strdup (panel_profile_name);
+G_CONST_RETURN gchar *
+session_get_current_profile (void)
+{
+	return panel_profile_name;
 }
 
 void
@@ -247,12 +248,12 @@ panel_session_save (GnomeClient        *client,
 	gchar **argv;
 	gint argc;
 
-	argv = g_malloc0(sizeof(gchar*)*4);
+	argv = g_malloc0 (sizeof (gchar *) * 4);
 
 	argc = 3;
 	argv[0] = client_data;
 	argv[1] = "--profile";
-      	argv[2] =  session_get_current_profile ();;
+      	argv[2] = (char *) session_get_current_profile ();;
 
 	gnome_client_set_restart_command (client, argc, argv);
         gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);

@@ -76,7 +76,7 @@ panel_applet_clean_gconf (AppletInfo *info)
 	GConfClient *client;
 	GSList      *id_list, *l;
 	char        *temp_key = NULL;
-	char        *profile;
+	const char  *profile;
 
 	g_return_if_fail (info != NULL);
 	g_return_if_fail (info->gconf_key != NULL);
@@ -921,7 +921,7 @@ panel_applet_load_list (AppletType   type,
 {
 	GConfClient *client;
 	GSList      *id_list, *l;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key = NULL;
 	
 	client = panel_gconf_get_client ();
@@ -969,7 +969,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 			    const char *gconf_key)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 
 	client  = panel_gconf_get_client ();
@@ -994,7 +994,7 @@ void
 panel_applet_save_to_gconf (AppletInfo *applet_info)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 	GSList      *id_list, *l;
 

@@ -68,7 +68,7 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 				  const char       *gconf_key)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 
 	client  = panel_gconf_get_client ();
@@ -77,7 +77,6 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 	temp_key = panel_gconf_applets_profile_get_full_key (profile, gconf_key, "bonobo-iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 	g_free (temp_key);
-	g_free (profile);
 }
 
 void

@@ -461,7 +461,7 @@ swallow_save_to_gconf (Swallow    *swallow,
 		       const char *gconf_key)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 
 	g_return_if_fail (swallow);
@@ -484,8 +484,6 @@ swallow_save_to_gconf (Swallow    *swallow,
 	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "height");
 	gconf_client_set_int (client, temp_key, swallow->height, NULL);
 	g_free (temp_key);
-	
-	g_free (profile);
 }
 
 void
@@ -495,7 +493,7 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 			 gboolean     use_default)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 	char        *path;
 	char        *params;
@@ -507,7 +505,7 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 
 	client  = panel_gconf_get_client ();
 	if (use_default)
-		profile = g_strdup ("medium");
+		profile = "medium";
 	else
 		profile = session_get_current_profile ();
 
@@ -527,11 +525,8 @@ swallow_load_from_gconf (PanelWidget *panel_widget,
 	height = gconf_client_get_int (client, temp_key, NULL);
 	g_free (temp_key);
 
-	g_free (profile);
-
 	load_swallow_applet (path, params, width, height, panel_widget, position, TRUE, gconf_key);
 
 	g_free (path);
 	g_free (params);
-	g_free (profile);
 }

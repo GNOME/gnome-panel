@@ -51,7 +51,7 @@ internal_get_distribution_type (void)
 	return DISTRIBUTION_UNKNOWN;
 }
 
-static const DistributionInfo *
+static DistributionInfo *
 internal_get_distribution_info (DistributionType type)
 {
 	DistributionInfo *ptr;
@@ -85,7 +85,7 @@ const DistributionInfo *
 get_distribution_info (void)
 {
 	static gboolean cached = FALSE;
-	static const DistributionInfo *cache = NULL;
+	static DistributionInfo *cache = NULL;
 	DistributionType type;
 
 	if (cached) {

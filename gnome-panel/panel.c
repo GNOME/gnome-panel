@@ -2605,12 +2605,12 @@ panel_session_save_panel (PanelData *pd)
 {
 	BasePWidget *basep = NULL; 
 	PanelWidget *panel = NULL;
-	GString	*buf;
-	GSList *panel_id_list;
-	GSList *temp;
-	gboolean exists= FALSE;
-	gchar *panel_profile;
-	gchar *panel_id_key;
+	GString	    *buf;
+	GSList      *panel_id_list;
+	GSList      *temp;
+	gboolean     exists= FALSE;
+	const gchar *panel_profile;
+	gchar       *panel_id_key;
 	
 	buf = g_string_new (NULL);
 
@@ -2752,7 +2752,6 @@ panel_session_save_panel (PanelData *pd)
 #ifdef PANEL_SESSION_DEBUG
 	printf ("Done saving\n");
 #endif
-	g_free (panel_profile);
 	g_string_free (buf, TRUE);
 }
 

@@ -519,7 +519,7 @@ drawer_save_to_gconf (Drawer     *drawer,
 		      const char *gconf_key)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 
 	g_return_if_fail (drawer && BASEP_IS_WIDGET (drawer->drawer));
@@ -547,8 +547,6 @@ drawer_save_to_gconf (Drawer     *drawer,
 	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "tooltip");
 	gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
 	g_free (temp_key);
-
-	g_free (profile);
 }
 
 void
@@ -558,7 +556,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			gboolean     use_default)
 {
 	GConfClient *client;
-	char        *profile;
+	const char  *profile;
 	char        *temp_key;
 	int          panel;
 	char        *panel_id;
@@ -572,7 +570,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 
 	/* FIXME: Screen widths etc.. */
 	if (use_default)
-		profile = g_strdup ("medium");
+		profile = "medium";
 	else
 		profile = session_get_current_profile ();
 
@@ -604,5 +602,4 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_free (panel_id);
 	g_free (pixmap);
 	g_free (tooltip);
-	g_free (profile);
 }

@@ -605,7 +605,7 @@ launcher_save_to_gconf (Launcher   *launcher,
 	location = gnome_desktop_item_get_location (launcher->ditem);
 	if (location) {
 		GConfClient *client;
-		char        *profile;
+		const char  *profile;
 		char        *temp_key;
 
 		client  = panel_gconf_get_client ();
