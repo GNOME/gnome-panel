@@ -1,0 +1,29 @@
+<oaf_info>
+
+<oaf_server iid="OAFIID:GNOME_GenUtilApplet_Factory"
+	    type="shlib"
+	    location="@APPLET_LIBDIR@/libgen_util_applet-2.so">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/GenericFactory:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" value="GenUtil Applet Factory"/>
+	<oaf_attribute name="description" type="string" value="factory for creating some general applets"/>
+
+</oaf_server>
+
+<oaf_server iid="OAFIID:GNOME_ClockApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_GenUtilApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" value="ClockApplet"/>
+	<oaf_attribute name="description" type="string" value="Clock Applet"/>
+
+</oaf_server>
+
+</oaf_info>

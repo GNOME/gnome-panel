@@ -1,54 +1,54 @@
-SUBDIRS = help
+#SUBDIRS = help
 
 INCLUDES = -I. -I$(srcdir) 				\
-	-I$(top_srcdir)/intl -I$(top_builddir)/intl	\
+	-I$(top_srcdir)/intl 				\
+	-I$(top_builddir)/intl				\
 	-I$(srcdir)/../../panel				\
 	-I$(top_builddir)/panel				\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-I$(includedir) $(GNOME_INCLUDEDIR)
+	-I$(includedir)                                 \
+	$(GNOME_INCLUDEDIR)				\
+	$(WARN_CFLAGS)					\
+	$(PANEL_CFLAGS)
 
-lib_LTLIBRARIES = libgen_util_applet.la
 
-libgen_util_applet_la_SOURCES = \
+libgen_util_applet_2_la_SOURCES = \
 	main.c		\
-	mailcheck.c	\
-	mailcheck.h	\
-	popcheck.c	\
-	popcheck.h	\
-	printer.c	\
-	printer.h	\
 	clock.c		\
-	clock.h		\
-	remote-helper.c	\
-	remote-helper.h
+	clock.h		
+
+#	mailcheck.c	\
+#	mailcheck.h	\
+#	popcheck.c	\
+#	popcheck.h	\
+#	printer.c	\
+#	printer.h	\
+#	remote-helper.c	\
+#	remote-helper.h \
+
+libgen_util_applet_2_la_LIBADD =	\
+	../../panel/libpanel-applet-2.la	\
+	$(PANEL_LIBS)
+
+appletdir = $(libdir)
+applet_LTLIBRARIES = libgen_util_applet-2.la
+
+GNOME_GenUtilApplet_Factory.server.in: GNOME_GenUtilApplet_Factory.server.in.in
+	sed -e "s|\@APPLET_LIBDIR\@|$(appletdir)|" $< > $@
 
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
                     email-tiny.png eclouds.png
 
-EXTRA_DIST = clock_applet.desktop	\
-             mailcheck_applet.desktop	\
-             mailcheck.soundlist	\
-             printer.desktop		\
+EXTRA_DIST = GNOME_GenUtilApplet_Factory.in.in \
              $(PRINTER_BITMAPS)		\
-             $(MAILCHECK_BITMAPS)	\
-	     gen_util.gnorba
+             $(MAILCHECK_BITMAPS)
+
+serverdir       = $(libdir)/bonobo/servers
+server_in_files = GNOME_GenUtilApplet_Factory.server.in
+server_DATA     = $(server_in_files:.server.in=.server)
+
+@INTLTOOL_SERVER_RULE@
 
 mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
-
-clocksysdir = $(datadir)/applets/Clocks
-clocksys_DATA = clock_applet.desktop
-
-malchecksysdir = $(datadir)/applets/Network
-malchecksys_DATA = mailcheck_applet.desktop
-
-printersysdir = $(datadir)/applets/Utility
-printersys_DATA = printer.desktop
-
-genutilgnorbadir  = $(sysconfdir)/CORBA/servers
-genutilgnorba_DATA = gen_util.gnorba
-
-soundlistdir = $(sysconfdir)/sound/events
-soundlist_DATA = mailcheck.soundlist
-

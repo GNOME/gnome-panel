@@ -5003,6 +5003,16 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (add_test_bonobo_applet),
 			    "OAFIID:GNOME_FishApplet");
+
+	/*
+	 * FIXME: only a temporary testing menuitem
+	 */
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Clock Applet"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC (add_test_bonobo_applet),
+			    "OAFIID:GNOME_ClockApplet");
 }
 
 static void

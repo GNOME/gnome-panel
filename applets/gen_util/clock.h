@@ -11,10 +11,10 @@
 #ifndef _CLOCK_H_
 #define _CLOCK_H_
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
-GtkWidget * make_clock_applet(const gchar *goad_id);
+BonoboObject *make_clock_applet(void);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif
