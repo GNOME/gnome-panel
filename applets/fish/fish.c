@@ -200,6 +200,8 @@ destroy_pb(GtkWidget *w, Fish *fish)
 static void 
 properties_dialog(AppletWidget *aw, gpointer data)
 {
+        static GnomeHelpMenuEntry help_entry = { "fish_applet",
+						 "properties" };
 	Fish *fish = data;
 	GtkWidget *vbox;
 	GtkWidget *hbox;
@@ -288,6 +290,9 @@ properties_dialog(AppletWidget *aw, gpointer data)
 			   GTK_SIGNAL_FUNC(apply_cb),fish);
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "destroy",
 			   GTK_SIGNAL_FUNC(destroy_pb),fish);
+	gtk_signal_connect(GTK_OBJECT(fish->pb), "help",
+			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
+			   &help_entry);
 
 	gtk_widget_show_all(fish->pb);
 }
