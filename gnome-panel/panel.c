@@ -31,6 +31,7 @@ static menu_count=0; /*how many "menu" applets we have ....*/
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
+/*FIXME: THESE CANNOT REALLY BE LINKED LISTS!! THEY SHOULD BE ARRAYS*/
 extern GList *panels;
 extern GList *applets;
 
@@ -499,6 +500,26 @@ applet_get_pos(int id)
 {
 	return 0;
 }
+
+void
+applet_drag_start(int id)
+{
+	AppletInfo *info = g_list_nth(applets,id)->data;
+	PanelWidget *panel = find_applet_panel(info->widget);
+
+	panel_widget_applet_drag_start_no_grab(panel,info->widget);
+	panel_widget_applet_move_use_idle(panel);
+}
+
+void
+applet_drag_stop(int id)
+{
+	AppletInfo *info = g_list_nth(applets,id)->data;
+	PanelWidget *panel = find_applet_panel(info->widget);
+
+	panel_widget_applet_drag_end_no_grab(panel);
+}
+
 
 /*int
 applet_button_press_event(int id, int button)

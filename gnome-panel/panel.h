@@ -83,8 +83,11 @@ void apply_global_config(void);
 
 int reparent_window_id (unsigned long id, int panel, int pos);
 
+/*stuff for corba*/
 int applet_get_panel(int id);
 int applet_get_pos(int id);
+void applet_drag_start(int id);
+void applet_drag_stop(int id);
 
 
 /*this is in main.c*/

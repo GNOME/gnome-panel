@@ -144,6 +144,13 @@ void		panel_widget_foreach		(PanelWidget *panel,
 void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 GtkWidget *applet);
 
+/*needed for corba*/
+void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
+						       GtkWidget *applet);
+void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
+int		panel_widget_applet_move_to_cursor(PanelWidget *panel);
+void		panel_widget_applet_move_use_idle(PanelWidget *panel);
+
 /*changing parameters*/
 void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,

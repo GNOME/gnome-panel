@@ -43,13 +43,19 @@ public:
 
 		return ::applet_get_pos (id);
 	}
-	void applet_moved_to (CORBA::Short id,
-			      CORBA::Short x,
-			      CORBA::Short y) {
-		printf ("APPLET_MOVED_TO!\n");
+	void applet_drag_start (CORBA::Short id) {
+		printf ("APPLET_DRAG_START!\n");
+
+		::applet_drag_start (id);
+	}
+	void applet_drag_stop (CORBA::Short id) {
+		printf ("APPLET_DRAG_STOP!\n");
+
+		::applet_drag_stop (id);
 	}
 	void applet_remove_from_panel (CORBA::Short id) {
 		printf ("APPLET_REMOVE_FROM_PANEL!\n");
+		/*FIXME:  */
 	}
 };
 

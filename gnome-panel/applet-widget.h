@@ -36,6 +36,9 @@ void		applet_widget_add		(AppletWidget *applet,
 /*remove a widget from the applet*/
 void		applet_widget_remove		(AppletWidget *applet,
 						 GtkWidget *widget);
+void		applet_widget_move_grab_add	(AppletWidget *applet);
+
+void		applet_widget_move_grab_remove	(AppletWidget *applet);
 
 #ifdef __cplusplus
 }

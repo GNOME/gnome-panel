@@ -1113,11 +1113,23 @@ panel_widget_new (gint size,
 }
 
 void
-panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
+panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
 	panel->currently_dragged_applet = applet;
 	panel->currently_dragged_applet_pos =
 		panel_widget_get_pos(panel,applet);
+}
+
+void
+panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
+{
+	panel->currently_dragged_applet = NULL;
+}
+
+void
+panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
+{
+	panel_widget_applet_drag_start_no_grab(panel,applet);
 
 	/*if (warp)
 	gdk_pointer_warp(NULL, applet->window,
@@ -1139,8 +1151,46 @@ panel_widget_applet_drag_end(PanelWidget *panel)
 {
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
 	gtk_grab_remove(panel->currently_dragged_applet);
-	panel->currently_dragged_applet = NULL;
+	panel_widget_applet_drag_end_no_grab(panel);
 }
+
+int
+panel_widget_applet_move_to_cursor(PanelWidget *panel)
+{
+	if (panel->currently_dragged_applet) {
+		gint x,y;
+		gint moveby;
+		gint pos = panel->currently_dragged_applet_pos;
+
+		gtk_widget_get_pointer(panel->fixed, &x, &y);
+
+		printf("%d %d\n",x,y);
+
+		if(panel->orient == PANEL_HORIZONTAL)
+			moveby = (x/PANEL_CELL_SIZE)- pos;
+		else
+			moveby = (y/PANEL_CELL_SIZE)- pos;
+
+		panel->currently_dragged_applet_pos =
+			panel_widget_switch_move(panel, pos, moveby);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+static gint
+move_timeout_handler(gpointer data)
+{
+	return panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
+}
+
+void
+panel_widget_applet_move_use_idle(PanelWidget *panel)
+{
+	gtk_timeout_add (30,move_timeout_handler,panel);
+}
+
+
 
 static gint
 panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -1175,24 +1225,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			break;
 
 		case GDK_MOTION_NOTIFY:
-			if (panel->currently_dragged_applet) {
-				gint x,y;
-				gint moveby;
-				gint pos = panel->currently_dragged_applet_pos;
-
-				gtk_widget_get_pointer(panel->fixed, &x, &y);
-
-				if(panel->orient == PANEL_HORIZONTAL)
-					moveby = (x/PANEL_CELL_SIZE)- pos;
-				else
-					moveby = (y/PANEL_CELL_SIZE)- pos;
-
-				panel->currently_dragged_applet_pos =
-					panel_widget_switch_move(panel, pos,
-								 moveby);
-				return TRUE;
-			}
-			break;
+			return panel_widget_applet_move_to_cursor(panel);
 
 		default:
 			break;
