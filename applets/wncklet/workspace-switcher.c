@@ -678,9 +678,13 @@ workspace_name_edited (GtkCellRendererText *cell_renderer_text,
         indices = gtk_tree_path_get_indices (p);
         workspace = wnck_screen_get_workspace (pager->screen,
                                                indices[0]);
-        if (workspace != NULL)
+        if (workspace != NULL) {
+                gchar* temp_name = g_strdup(new_text);
+
                 wnck_workspace_change_name (workspace,
-                                            new_text);
+                                            g_strstrip(temp_name));
+                g_free (temp_name);
+        }
         else
                 g_warning ("Edited name of workspace %d which no longer exists",
                            indices[0]);
