@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.1\n"
-"POT-Creation-Date: 2004-02-23 17:42+0000\n"
+"POT-Creation-Date: 2004-03-02 09:46+0000\n"
 "PO-Revision-Date: 2003-11-17 14:53+0100\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -46,7 +46,7 @@ msgstr "_Quant a..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "A_juda"
@@ -63,7 +63,7 @@ msgid "Accessories"
 msgstr "Accessoris"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2570
+#: applets/clock/clock.c:2556
 msgid "Clock"
 msgstr "Rellotge"
 
@@ -79,20 +79,20 @@ msgstr "Factoria per a crear applets de rellotge."
 msgid "Get the current time and date"
 msgstr "Dona la hora i data actual"
 
-#: applets/clock/clock.c:271
+#: applets/clock/clock.c:272
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:271 applets/clock/clock.c:622
+#: applets/clock/clock.c:272 applets/clock/clock.c:625
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:1563
+#: applets/clock/clock.c:274 applets/clock/clock.c:1549
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:624
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:274 applets/clock/clock.c:627
+#: applets/clock/clock.c:1551
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -101,7 +101,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:284
+#: applets/clock/clock.c:285
 msgid "%a %b %e"
 msgstr "%a, %e de %b"
 
@@ -109,7 +109,7 @@ msgstr "%a, %e de %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:291
+#: applets/clock/clock.c:292
 #, fuzzy, c-format
 msgid ""
 "%1$s\n"
@@ -122,21 +122,21 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:298
+#: applets/clock/clock.c:299
 #, fuzzy, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:415
+#: applets/clock/clock.c:418
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:839
+#: applets/clock/clock.c:844
 msgid "Tasks"
 msgstr "Tasques"
 
-#: applets/clock/clock.c:978
+#: applets/clock/clock.c:976
 msgid "All Day"
 msgstr ""
 
@@ -145,32 +145,32 @@ msgstr ""
 msgid "Appointments"
 msgstr "Afegeix una cita..."
 
-#: applets/clock/clock.c:1245
+#: applets/clock/clock.c:1231
 msgid "Calendar"
 msgstr "Calendari"
 
-#: applets/clock/clock.c:1476
+#: applets/clock/clock.c:1462
 msgid "Computer Clock"
 msgstr "Rellotge del sistema"
 
-#: applets/clock/clock.c:1558
+#: applets/clock/clock.c:1544
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1560
+#: applets/clock/clock.c:1546
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1600
+#: applets/clock/clock.c:1586
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d de %B"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1628
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "No s'ha pogut executar l'eina de configuració: %s"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1667
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -178,7 +178,7 @@ msgstr ""
 "No s'ha trobat un programa per a configurar la data i hora. Potser no hi ha "
 "cap instal·lada?"
 
-#: applets/clock/clock.c:2159 applets/clock/clock.c:2516
+#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -188,55 +188,55 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "S'ha produït un error en mostrar l'ajuda: %s"
 
-#: applets/clock/clock.c:2208
+#: applets/clock/clock.c:2194
 msgid "Clock Preferences"
 msgstr "Preferències del rellotge"
 
-#: applets/clock/clock.c:2244
+#: applets/clock/clock.c:2230
 msgid "Clock _type:"
 msgstr "_Tipus de rellotge:"
 
-#: applets/clock/clock.c:2255
+#: applets/clock/clock.c:2241
 msgid "12 hour"
 msgstr "12 hores"
 
-#: applets/clock/clock.c:2263
+#: applets/clock/clock.c:2249
 msgid "24 hour"
 msgstr "24 hores"
 
 # La u de «Unix» és semiconsonant, no? iv
-#: applets/clock/clock.c:2271
+#: applets/clock/clock.c:2257
 msgid "UNIX time"
 msgstr "Hora de UNIX"
 
-#: applets/clock/clock.c:2279
+#: applets/clock/clock.c:2265
 msgid "Internet time"
 msgstr "Hora d'Internet"
 
-#: applets/clock/clock.c:2287
+#: applets/clock/clock.c:2273
 #, fuzzy
 msgid "Custom format"
 msgstr "Icona personalitzada"
 
-#: applets/clock/clock.c:2303
+#: applets/clock/clock.c:2289
 #, fuzzy
 msgid "Custom _format:"
 msgstr "Format de l'hora"
 
-#: applets/clock/clock.c:2320
+#: applets/clock/clock.c:2306
 msgid "Show _seconds"
 msgstr "Mostra els _segons"
 
-#: applets/clock/clock.c:2329
+#: applets/clock/clock.c:2315
 msgid "Show _date"
 msgstr "Mostra la _data"
 
-#: applets/clock/clock.c:2338
+#: applets/clock/clock.c:2324
 msgid "Use _UTC"
 msgstr "Utilitza _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2551 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -246,7 +246,7 @@ msgstr ""
 "Quico Llach <quico@softcatala.org>\n"
 "Jordi Mallach <jordi@sindominio.net>"
 
-#: applets/clock/clock.c:2572
+#: applets/clock/clock.c:2558
 msgid "The Clock displays the current time and date"
 msgstr "El rellotge mostra l'hora i data actual"
 
@@ -602,14 +602,14 @@ msgstr "Factoria de l'àrea de notificació"
 msgid "Utility"
 msgstr "Utilitat"
 
-#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:364
 msgid "Panel Notification Area"
 msgstr "Àrea de notificació del quadre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:223
+#: gnome-panel/panel-menu-bar.c:208
 msgid "Actions"
 msgstr "Accions"
 
@@ -1328,11 +1328,12 @@ msgstr ""
 "No podeu crear un llançador nou en aquest punt, ja que no es pot escriure en "
 "aquest lloc."
 
-#: gnome-panel/menu.c:111
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3230
+#: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "Surt"
 
-#: gnome-panel/menu.c:114
+#: gnome-panel/menu.c:114 gnome-panel/menu.c:3237
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1361,7 +1362,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Captura de pantalla"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3419
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
@@ -1370,7 +1371,7 @@ msgstr "Fa una captura del vostre escriptori"
 msgid "Search"
 msgstr "Cerca"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
@@ -1487,8 +1488,8 @@ msgstr "Propietats"
 msgid "query returned exception %s\n"
 msgstr "la petició ha tornat l'excepció %s\n"
 
-#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3361
-#: gnome-panel/panel-menu-bar.c:241
+#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3347
+#: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Aplicacions"
 
@@ -1541,37 +1542,23 @@ msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Bloca la pantalla per a que pugueu anar-vos de l'ordinador temporalment"
 
-#: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, fuzzy, c-format
-msgid "Log Out %s"
-msgstr "Surt"
-
-#: gnome-panel/menu.c:3246
-#, fuzzy, c-format
-msgid ""
-"Log out %s of this session to log in as a different user or to shut down "
-"your computer"
-msgstr ""
-"Surt d'aquesta sessió per a entrar com un usuari diferent o per a tancar "
-"l'ordinador"
-
-#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3368 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Executa una aplicació..."
 
-#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:3375 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Executa una aplicació, introduint una ordre"
 
-#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3383 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Cerca fitxers..."
 
-#: gnome-panel/menu.c:3416 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:3402 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Pren una captura de pantalla..."
 
-#: gnome-panel/menu.c:3434
+#: gnome-panel/menu.c:3420
 msgid "Desktop"
 msgstr "Escriptori"
 
@@ -1595,7 +1582,7 @@ msgstr "Reinicia el dimoni del _protector de pantalla"
 msgid "Lock screen"
 msgstr "Bloca la pantalla"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
 msgid "Log out of GNOME"
 msgstr "Surt de GNOME"
 
@@ -1919,11 +1906,6 @@ msgstr "Pren una captura de finestra"
 #: gnome-panel/panel-menu-bar.c:193
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
-
-#: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
-msgid "Quit from %s's desktop"
-msgstr "Surt de l'escriptori GNOME"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2394,74 +2376,74 @@ msgstr "No s'ha pogut carregar la icona integrada del quadre «%s»\n"
 msgid "_Force quit"
 msgstr "_Força la sortida"
 
-#: gnome-panel/panel-toplevel.c:1107
+#: gnome-panel/panel-toplevel.c:1111
 #, fuzzy
 msgid "Hide Panel"
 msgstr "Quadre a un _costat"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Top Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat superior"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Top Centered Panel"
 msgstr "Quadre centrat superior"
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1466
 msgid "Top Floating Panel"
 msgstr "Quadre flotant superior"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1467
 msgid "Top Edge Panel"
 msgstr "Quadre a un costat superior"
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Bottom Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat inferior"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Bottom Centered Panel"
 msgstr "Quadre centrat inferior"
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Bottom Floating Panel"
 msgstr "Quadre flotant inferior"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Bottom Edge Panel"
 msgstr "Quadre a un costat inferior"
 
-#: gnome-panel/panel-toplevel.c:1482
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Left Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Left Centered Panel"
 msgstr "Quadre centrat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Left Floating Panel"
 msgstr "Quadre flotant a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Left Edge Panel"
 msgstr "Quadre a un costat a l'esquerra"
 
-#: gnome-panel/panel-toplevel.c:1489
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Right Expanded Edge Panel"
 msgstr "Quadre a un costat expansionat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Right Centered Panel"
 msgstr "Quadre centrat a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Right Floating Panel"
 msgstr "Quadre flotant a la dreta"
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Right Edge Panel"
 msgstr "Quadre a un costat a la dreta"
 
@@ -2949,6 +2931,22 @@ msgstr "Extra gran"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra petit"
+
+#, fuzzy
+#~ msgid "Log Out %s"
+#~ msgstr "Surt"
+
+#, fuzzy
+#~ msgid ""
+#~ "Log out %s of this session to log in as a different user or to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Surt d'aquesta sessió per a entrar com un usuari diferent o per a tancar "
+#~ "l'ordinador"
+
+#, fuzzy
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Surt de l'escriptori GNOME"
 
 #, fuzzy
 #~ msgid "Month"

@@ -9,14 +9,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-23 17:42+0000\n"
+"POT-Creation-Date: 2004-03-02 09:46+0000\n"
 "PO-Revision-Date: 2003-10-26 13:24+0000\n"
 "Last-Translator: Alastair McKinstry <mckinstry@computer.org>\n"
 "Language-Team: Irish <gaeilge-gnulinux@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -48,7 +48,7 @@ msgstr "_Faoi..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:364
+#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "C_uidiú"
@@ -65,7 +65,7 @@ msgid "Accessories"
 msgstr "Oiriúintí"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2570
+#: applets/clock/clock.c:2556
 msgid "Clock"
 msgstr "Clog"
 
@@ -81,20 +81,20 @@ msgstr ""
 msgid "Get the current time and date"
 msgstr "Faigh an am agus dáta anois"
 
-#: applets/clock/clock.c:271
+#: applets/clock/clock.c:272
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:271 applets/clock/clock.c:622
+#: applets/clock/clock.c:272 applets/clock/clock.c:625
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:1563
+#: applets/clock/clock.c:274 applets/clock/clock.c:1549
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:624
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:274 applets/clock/clock.c:627
+#: applets/clock/clock.c:1551
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -103,7 +103,7 @@ msgstr "%H:%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:284
+#: applets/clock/clock.c:285
 msgid "%a %b %e"
 msgstr "%a %b %e"
 
@@ -111,7 +111,7 @@ msgstr "%a %b %e"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:291
+#: applets/clock/clock.c:292
 #, c-format
 msgid ""
 "%1$s\n"
@@ -124,21 +124,21 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:298
+#: applets/clock/clock.c:299
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:415
+#: applets/clock/clock.c:418
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:839
+#: applets/clock/clock.c:844
 msgid "Tasks"
 msgstr "Tascanna"
 
-#: applets/clock/clock.c:978
+#: applets/clock/clock.c:976
 msgid "All Day"
 msgstr ""
 
@@ -146,32 +146,32 @@ msgstr ""
 msgid "Appointments"
 msgstr ""
 
-#: applets/clock/clock.c:1245
+#: applets/clock/clock.c:1231
 msgid "Calendar"
 msgstr "Féilire"
 
-#: applets/clock/clock.c:1476
+#: applets/clock/clock.c:1462
 msgid "Computer Clock"
 msgstr "Cloig an Ríomhaire"
 
-#: applets/clock/clock.c:1558
+#: applets/clock/clock.c:1544
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1560
+#: applets/clock/clock.c:1546
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1600
+#: applets/clock/clock.c:1586
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1628
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Níorbh fhéidir uirlis cumraíocht ama a lainseáil: %s"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1667
 #, fuzzy
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
@@ -180,7 +180,7 @@ msgstr ""
 "Níl aon fháil ar clár /for configuring the date and time/. B'fhéidir nach "
 "bhfuil ceann insealbhaithe?"
 
-#: applets/clock/clock.c:2159 applets/clock/clock.c:2516
+#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -190,59 +190,59 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Ní fhéadadh cabhair a thaispeáint: %s"
 
-#: applets/clock/clock.c:2208
+#: applets/clock/clock.c:2194
 msgid "Clock Preferences"
 msgstr "Airíonna an Chloig"
 
-#: applets/clock/clock.c:2244
+#: applets/clock/clock.c:2230
 msgid "Clock _type:"
 msgstr "_Saghas an Cloig:"
 
-#: applets/clock/clock.c:2255
+#: applets/clock/clock.c:2241
 msgid "12 hour"
 msgstr "12 uair"
 
-#: applets/clock/clock.c:2263
+#: applets/clock/clock.c:2249
 msgid "24 hour"
 msgstr "24 uair"
 
-#: applets/clock/clock.c:2271
+#: applets/clock/clock.c:2257
 msgid "UNIX time"
 msgstr "Am Unix"
 
-#: applets/clock/clock.c:2279
+#: applets/clock/clock.c:2265
 msgid "Internet time"
 msgstr "Am Idirlín"
 
-#: applets/clock/clock.c:2287
+#: applets/clock/clock.c:2273
 msgid "Custom format"
 msgstr ""
 
-#: applets/clock/clock.c:2303
+#: applets/clock/clock.c:2289
 msgid "Custom _format:"
 msgstr ""
 
-#: applets/clock/clock.c:2320
+#: applets/clock/clock.c:2306
 msgid "Show _seconds"
 msgstr "Taispeáin na _soicind"
 
-#: applets/clock/clock.c:2329
+#: applets/clock/clock.c:2315
 msgid "Show _date"
 msgstr "Taispeáin an _dáta"
 
-#: applets/clock/clock.c:2338
+#: applets/clock/clock.c:2324
 msgid "Use _UTC"
 msgstr "Baint úsáid as _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2551 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr "Seán Ó Ceallaigh, Paul Duffy, David O'Callaghan"
 
-#: applets/clock/clock.c:2572
+#: applets/clock/clock.c:2558
 msgid "The Clock displays the current time and date"
 msgstr "Taispeáin an clog an t-am agus an dáta anois"
 
@@ -569,14 +569,14 @@ msgstr ""
 msgid "Utility"
 msgstr ""
 
-#: applets/notification_area/main.c:138 applets/notification_area/main.c:361
+#: applets/notification_area/main.c:138 applets/notification_area/main.c:364
 msgid "Panel Notification Area"
 msgstr ""
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:223
+#: gnome-panel/panel-menu-bar.c:208
 msgid "Actions"
 msgstr "Gníomhartha"
 
@@ -1243,11 +1243,12 @@ msgid ""
 "writable."
 msgstr ""
 
-#: gnome-panel/menu.c:111
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3230
+#: gnome-panel/panel-menu-bar.c:200
 msgid "Log Out"
 msgstr "Éirigh as"
 
-#: gnome-panel/menu.c:114
+#: gnome-panel/menu.c:114 gnome-panel/menu.c:3237
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1273,7 +1274,7 @@ msgstr ""
 msgid "Screenshot"
 msgstr "Pictiúr Scáileán"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3419
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Tóg pictiúr Scáileán"
@@ -1282,7 +1283,7 @@ msgstr "Tóg pictiúr Scáileán"
 msgid "Search"
 msgstr "Cuardaigh"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
@@ -1398,8 +1399,8 @@ msgstr "Ábaltachtaí"
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3361
-#: gnome-panel/panel-menu-bar.c:241
+#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3347
+#: gnome-panel/panel-menu-bar.c:226
 msgid "Applications"
 msgstr "Feidhmcláranna"
 
@@ -1451,35 +1452,23 @@ msgstr "Glasáil an scathán"
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, c-format
-msgid "Log Out %s"
-msgstr "Éirigh as %s"
-
-#: gnome-panel/menu.c:3246
-#, c-format
-msgid ""
-"Log out %s of this session to log in as a different user or to shut down "
-"your computer"
-msgstr ""
-
-#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3368 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Rith Feidhmchlár..."
 
-#: gnome-panel/menu.c:3389 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:3375 gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr ""
 
-#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3383 gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Cuardaigh Comhad..."
 
-#: gnome-panel/menu.c:3416 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:3402 gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr ""
 
-#: gnome-panel/menu.c:3434
+#: gnome-panel/menu.c:3420
 msgid "Desktop"
 msgstr "Deasc"
 
@@ -1503,7 +1492,7 @@ msgstr ""
 msgid "Lock screen"
 msgstr "Glasáil an scathán"
 
-#: gnome-panel/panel-action-button.c:266
+#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
 msgid "Log out of GNOME"
 msgstr "Éirigh as an GNOME"
 
@@ -1779,11 +1768,6 @@ msgstr ""
 #: gnome-panel/panel-menu-bar.c:193
 msgid "Protect your computer from unauthorized use"
 msgstr ""
-
-#: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
-msgid "Quit from %s's desktop"
-msgstr "Ealu as an deasc GNOME"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2202,76 +2186,76 @@ msgstr ""
 msgid "_Force quit"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1107
+#: gnome-panel/panel-toplevel.c:1111
 #, fuzzy
 msgid "Hide Panel"
 msgstr "Folaitheach"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Top Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1465
 msgid "Top Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1470
+#: gnome-panel/panel-toplevel.c:1466
 msgid "Top Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1467
 msgid "Top Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Bottom Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1477
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Bottom Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Bottom Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1482
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Left Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1483
+#: gnome-panel/panel-toplevel.c:1479
 #, fuzzy
 msgid "Left Centered Panel"
 msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:1484
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Left Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1481
 #, fuzzy
 msgid "Left Edge Panel"
 msgstr "Scríos an paineál seo"
 
-#: gnome-panel/panel-toplevel.c:1489
+#: gnome-panel/panel-toplevel.c:1485
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1490
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Right Centered Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1491
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Right Floating Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1492
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Right Edge Panel"
 msgstr ""
 
@@ -2673,151 +2657,156 @@ msgstr "XX Mór"
 msgid "XX Small"
 msgstr "XX Beag"
 
-msgid "Day"
-msgstr "Lá"
-
-msgid "Month"
-msgstr "Mí"
-
-msgid "Year"
-msgstr "Blian"
-
-msgid "Orientation"
-msgstr "Treoshuíomh"
-
-msgid "Icon Name"
-msgstr "Ainm Dealbh"
-
-msgid "Action Type"
-msgstr "Saghas Gníomh"
-
-msgid "Menu Path"
-msgstr "Slí Roghchláir"
-
-msgid "Custom Icon"
-msgstr "Saindealbh"
-
-msgid "Tooltip"
-msgstr "Leasfhocal"
-
-msgid "Use Menu Path"
-msgstr "Úsáid Slí chlâr"
-
-msgid "Name"
-msgstr "Ainm"
-
-msgid "X position"
-msgstr "Áit X"
-
-msgid "X centered"
-msgstr "Curtha i lár X"
-
-msgid "Y position"
-msgstr "Áit Y"
-
-msgid "Y centered"
-msgstr "Curtha i lár Y"
-
-msgid "Xinerama monitor"
-msgstr "Monatóir Xinerama"
+#~ msgid "Log Out %s"
+#~ msgstr "Éirigh as %s"
 
 #, fuzzy
-msgid "Auto hide"
-msgstr "Cuir ar súil Auto-hide"
+#~ msgid "Quit from %s's desktop"
+#~ msgstr "Ealu as an deasc GNOME"
+
+#~ msgid "Day"
+#~ msgstr "Lá"
+
+#~ msgid "Month"
+#~ msgstr "Mí"
+
+#~ msgid "Year"
+#~ msgstr "Blian"
+
+#~ msgid "Orientation"
+#~ msgstr "Treoshuíomh"
+
+#~ msgid "Icon Name"
+#~ msgstr "Ainm Dealbh"
+
+#~ msgid "Action Type"
+#~ msgstr "Saghas Gníomh"
+
+#~ msgid "Menu Path"
+#~ msgstr "Slí Roghchláir"
+
+#~ msgid "Custom Icon"
+#~ msgstr "Saindealbh"
+
+#~ msgid "Tooltip"
+#~ msgstr "Leasfhocal"
+
+#~ msgid "Use Menu Path"
+#~ msgstr "Úsáid Slí chlâr"
+
+#~ msgid "Name"
+#~ msgstr "Ainm"
+
+#~ msgid "X position"
+#~ msgstr "Áit X"
+
+#~ msgid "X centered"
+#~ msgstr "Curtha i lár X"
+
+#~ msgid "Y position"
+#~ msgstr "Áit Y"
+
+#~ msgid "Y centered"
+#~ msgstr "Curtha i lár Y"
+
+#~ msgid "Xinerama monitor"
+#~ msgstr "Monatóir Xinerama"
 
 #, fuzzy
-msgid "Hide delay"
-msgstr "Folaitheach"
+#~ msgid "Auto hide"
+#~ msgstr "Cuir ar súil Auto-hide"
 
 #, fuzzy
-msgid "Auto-hide size"
-msgstr "Cuir ar súil Auto-hide"
-
-msgid "Animate"
-msgstr "Beoigh"
-
-msgid "Animation Speed"
-msgstr "Luas Beochana"
-
-msgid "Background color name"
-msgstr "Ainm an dath cúlra"
+#~ msgid "Hide delay"
+#~ msgstr "Folaitheach"
 
 #, fuzzy
-msgid "Background color as a string"
-msgstr "Teimhneacht dath cúlra"
+#~ msgid "Auto-hide size"
+#~ msgstr "Cuir ar súil Auto-hide"
 
-msgid "Background color as a GdkColor"
-msgstr ""
+#~ msgid "Animate"
+#~ msgstr "Beoigh"
 
-msgid "Foreground color name"
-msgstr "Ainm an dath dulra"
+#~ msgid "Animation Speed"
+#~ msgstr "Luas Beochana"
 
-msgid "Foreground color"
-msgstr "Dath dulra"
-
-msgid "Font"
-msgstr "Clófhoireann"
+#~ msgid "Background color name"
+#~ msgstr "Ainm an dath cúlra"
 
 #, fuzzy
-msgid "Font size"
-msgstr "Méid Chlófhoireann"
+#~ msgid "Background color as a string"
+#~ msgstr "Teimhneacht dath cúlra"
 
-msgid "Cannot execute %s"
-msgstr "Ní féidir %s a chur i gcrích"
+#~ msgid "Foreground color name"
+#~ msgstr "Ainm an dath dulra"
 
-msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
+#~ msgid "Foreground color"
+#~ msgstr "Dath dulra"
 
-msgid "Window Menu"
-msgstr "Roghchlár Fuinneoige"
+#~ msgid "Font"
+#~ msgstr "Clófhoireann"
 
-msgid "If true, display internet time, which is same all over the world."
-msgstr "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
+#, fuzzy
+#~ msgid "Font size"
+#~ msgstr "Méid Chlófhoireann"
 
-msgid "%s the GNOME Fish"
-msgstr "%s an t-Iasc GNOME"
+#~ msgid "Cannot execute %s"
+#~ msgstr "Ní féidir %s a chur i gcrích"
 
-msgid "Help on %s _Application"
-msgstr "Cabhair le haighaidh Cl_áir %s"
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr "Má tá fíor, taispeáin mar soicind ón ré, 1970-01-01."
 
-msgid "Help on %s"
-msgstr "Cabhair le haighaidh %s"
+#~ msgid "Window Menu"
+#~ msgstr "Roghchlár Fuinneoige"
 
-msgid "Application"
-msgstr "Feidhmchlár"
+#~ msgid "If true, display internet time, which is same all over the world."
+#~ msgstr ""
+#~ "Má tá fíor, taispeáin am Idirlín, /which is same all over the world/."
 
-msgid "<b>_Icon:</b>"
-msgstr "<b>_Dealbh:</b>"
+#~ msgid "%s the GNOME Fish"
+#~ msgstr "%s an t-Iasc GNOME"
 
-msgid "<b>_Name:</b>"
-msgstr "<b>Ai_nm:</b>"
+#~ msgid "Help on %s _Application"
+#~ msgstr "Cabhair le haighaidh Cl_áir %s"
 
-msgid "<b>_Orientation:</b>"
-msgstr "<b>Tre_oshuíomh:</b>"
+#~ msgid "Help on %s"
+#~ msgstr "Cabhair le haighaidh %s"
 
-msgid "<b>_Size:</b>"
-msgstr "<b>_Méid:</b>"
+#~ msgid "Application"
+#~ msgstr "Feidhmchlár"
 
-msgid "Application description"
-msgstr "Cur síos feidhmchláir"
+#~ msgid "<b>_Icon:</b>"
+#~ msgstr "<b>_Dealbh:</b>"
 
-msgid "List of known applications"
-msgstr "Liosta feidhmchláranna"
+#~ msgid "<b>_Name:</b>"
+#~ msgstr "<b>Ai_nm:</b>"
 
-msgid "KDE Menu"
-msgstr "Cláranna KDE"
+#~ msgid "<b>_Orientation:</b>"
+#~ msgstr "<b>Tre_oshuíomh:</b>"
 
-msgid "_Drawer"
-msgstr "_Taisceadá¡n"
+#~ msgid "<b>_Size:</b>"
+#~ msgstr "<b>_Méid:</b>"
 
-msgid "_Run Application..."
-msgstr "_Rith Feidhmclár..."
+#~ msgid "Application description"
+#~ msgstr "Cur síos feidhmchláir"
 
-msgid "_Search for Files..."
-msgstr "_Curdaigh le haighaidh Comhad..."
+#~ msgid "List of known applications"
+#~ msgstr "Liosta feidhmchláranna"
 
-msgid "_Log Out"
-msgstr "Éirigh as"
+#~ msgid "KDE Menu"
+#~ msgstr "Cláranna KDE"
+
+#~ msgid "_Drawer"
+#~ msgstr "_Taisceadá¡n"
+
+#~ msgid "_Run Application..."
+#~ msgstr "_Rith Feidhmclár..."
+
+#~ msgid "_Search for Files..."
+#~ msgstr "_Curdaigh le haighaidh Comhad..."
+
+#~ msgid "_Log Out"
+#~ msgstr "Éirigh as"
 
 #~ msgid "Text"
 #~ msgstr "Teacs"
