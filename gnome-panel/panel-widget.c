@@ -1508,7 +1508,7 @@ panel_widget_new (int packed,
 	panel->back_type = back_type;
 
 	panel->fit_pixmap_bg = fit_pixmap_bg;
-	panel->back_pixmap = g_strdup (back_pixmap);
+	panel->back_pixmap = g_strdup (back_pixmap ? back_pixmap : "");
 	
 	if(back_color)
 		panel->back_color = *back_color;
