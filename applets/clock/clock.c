@@ -450,7 +450,7 @@ create_calendar (ClockData *cd,
 
 	window = GTK_WINDOW (gtk_window_new (GTK_WINDOW_TOPLEVEL));
 
-	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_UTILITY);
+	gtk_window_set_type_hint (window, GDK_WINDOW_TYPE_HINT_DOCK);
 	gtk_window_set_decorated (window, FALSE);
 	gtk_window_set_resizable (window, FALSE);
 	gtk_window_stick (window);
@@ -478,10 +478,12 @@ present_calendar_popup (ClockData *cd,
 {
 	GtkRequisition  req;
 	GdkScreen      *screen;
+	GdkRectangle    monitor;
 	int             button_w, button_h;
-	int             screen_w, screen_h;
 	int             x, y;
 	int             w, h;
+	int             i, n;
+	gboolean        found_monitor = FALSE;
 		
 	/* Get root origin of the toggle button, and position above that. */
 	gdk_window_get_origin (button->window, &x, &y);
@@ -496,11 +498,25 @@ present_calendar_popup (ClockData *cd,
 
 	screen = gtk_window_get_screen (GTK_WINDOW (window));
 
-	/* FIXME use xinerama extents for xinerama containing
-	 * the applet.
-	 */
-	screen_w = gdk_screen_get_width (screen);
-	screen_h = gdk_screen_get_height (screen);
+	n = gdk_screen_get_n_monitors (screen);
+	for (i = 0; i < n; i++) {
+		gdk_screen_get_monitor_geometry (screen, i, &monitor);
+		if (x >= monitor.x && x <= monitor.x + monitor.width &&
+		    y >= monitor.y && y <= monitor.y + monitor.height) {
+			found_monitor = TRUE;
+			break;
+		}
+	}
+
+
+	if ( ! found_monitor) {
+		/* eek, we should be on one of those xinerama
+		   monitors */
+		monitor.x = 0;
+		monitor.y = 0;
+		monitor.width = gdk_screen_get_width (screen);
+		monitor.height = gdk_screen_get_height (screen);
+	}
 		
 	/* Based on panel orientation, position the popup.
 	 * Ignore window gravity since the window is undecorated.
@@ -510,23 +526,23 @@ present_calendar_popup (ClockData *cd,
 	switch (cd->orient) {
 	case PANEL_APPLET_ORIENT_RIGHT:
 		x += button_w;
-		if ((y + h) > screen_h)
-			y -= (y + h) - screen_h;
-			break;
+		if ((y + h) > monitor.y + monitor.height)
+			y -= (y + h) - (monitor.y + monitor.height);
+		break;
 	case PANEL_APPLET_ORIENT_LEFT:
 		x -= w;
-		if ((y + h) > screen_h)
-			y -= (y + h) - screen_h;
+		if ((y + h) > monitor.y + monitor.height)
+			y -= (y + h) - (monitor.y + monitor.height);
 		break;
 	case PANEL_APPLET_ORIENT_DOWN:
 		y += button_h;
-		if ((x + w) > screen_w)
-			x -= (x + w) - screen_w;
+		if ((x + w) > monitor.x + monitor.width)
+			x -= (x + w) - (monitor.x + monitor.width);
 		break;
 	case PANEL_APPLET_ORIENT_UP:
 		y -= h;
-		if ((x + w) > screen_w)
-			x -= (x + w) - screen_w;
+		if ((x + w) > monitor.x + monitor.width)
+			x -= (x + w) - (monitor.x + monitor.width);
 		break;
 	}
 		
