@@ -1,3 +1,13 @@
+2004-04-05  Mark McLoughlin  <mark@skynet.ie>
+
+	* *.po: don't translate the "24-hour" clock_format value
+	from clock.schemas.in into anything but "12-hour" or
+	"24-hour". Do not translate the "hour" part into your
+	native language - GConf won't understand it.
+
+	* mr.po, pa.po: don't translate the "24" hour_format value
+	in clock.schemas.in into anything other than "12" or "24".
+
 2004-03-30  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
