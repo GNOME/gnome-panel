@@ -509,6 +509,11 @@ main(int argc, char **argv)
 
 	tell_user_Im_on_crack ();
 
+	/*
+	 * Let applets spew.
+	 */
+	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
+
 	switch (extern_init ()) {
 	case EXTERN_SUCCESS: 
 		break;

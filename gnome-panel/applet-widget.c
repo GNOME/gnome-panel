@@ -433,9 +433,7 @@ applet_widget_construct (AppletWidget *applet,
 
 	applet->object = applet_object_new (GTK_WIDGET (applet), iid, &winid);
 
-	applet_debug_log ("applet_widget_construct: winid = %d\n", winid);
-
-	win = gdk_window_lookup (winid);
+	g_message ("applet_widget_construct: winid = %d\n", winid);
 
 	gtk_plug_construct (GTK_PLUG (applet), winid);
 
@@ -443,6 +441,8 @@ applet_widget_construct (AppletWidget *applet,
 	 * after doing all that we just take the 
 	 * socket and put it in limbo
 	 */
+
+	win = gdk_window_lookup (winid);
 	if (win) {
 		GtkWidget *socket;
 

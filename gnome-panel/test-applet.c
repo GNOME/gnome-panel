@@ -14,7 +14,7 @@ test_applet_new (const gchar *iid)
 	GtkWidget *widget;
 	GtkWidget *label;
 
-	applet_debug_log ("test_applet_new: %s\n", iid);
+	g_message ("test_applet_new: %s\n", iid);
 
 	widget = applet_widget_new (iid);
 
@@ -34,10 +34,12 @@ test_applet_factory (BonoboGenericFactory *this,
 {
         BonoboObject *applet = NULL;
 
-	applet_debug_log ("test_applet_factory: %s\n", iid);
+	g_message ("test_applet_factory: %s\n", iid);
 
         if (!strcmp (iid, "OAFIID:GNOME_Panel_TestApplet"))
                 applet = test_applet_new (iid);
+
+	g_message ("test_applet_factory: returning %p\n", applet);
 
         return applet;
 }

@@ -514,6 +514,8 @@ impl_GNOME_Applet2_back_change (PortableServer_Servant          servant,
 	case GNOME_Panel_BACK_PIXMAP:
 		pixmap = backing->_u.pmap;
 		break;
+	case GNOME_Panel_BACK_NONE:
+		break;
 	default:
 		g_assert_not_reached ();
 		break;

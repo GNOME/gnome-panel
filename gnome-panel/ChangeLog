@@ -1,5 +1,16 @@
 2001-11-01  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet-object.c: (impl_GNOME_Applet2_back_change): add case
+	for PANEL_BACK_NONE.
+
+	* main.c: (main): set BONOBO_ACTIVATION_DEBUG_OUTPUT for easy
+	applet debugging.
+
+	* applet-init.c, applet-init.h:, applet-widget.c, 
+	  test-applet.c: remove crufty debugging stuff. sigh.
+
+2001-11-01  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-util.c: (panel_show_help): update for gnome-help
 	changes.
 
