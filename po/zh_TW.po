@@ -13,10 +13,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.90.1\n"
-"POT-Creation-Date: 2003-01-13 20:12+0100\n"
-"PO-Revision-Date: 2003-01-10 09:38+0800\n"
+"POT-Creation-Date: 2003-01-20 10:32+0800\n"
+"PO-Revision-Date: 2003-01-20 10:53+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
-"Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
+"Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
@@ -40,7 +40,7 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "警告：此指令像是有用的指令。因為這是個沒用的\n"
-"面板程式，您或者應該避免這樣做。強烈建議不要\n"
+"面板程式，閣下應該避免這樣做。強烈建議不要\n"
 "用任何方法用 %s 來進行任何「實際」或有用的事。"
 
 #: applets/fish/fish.c:378 applets/fish/fish.c:536
@@ -299,7 +299,7 @@ msgstr "%p %I:%M"
 
 #: applets/gen_util/clock.c:535
 msgid "%A, %B %d %Y"
-msgstr "%x(%A)"
+msgstr "%Y年%m月%d日 (%A)"
 
 #: applets/gen_util/clock.c:957
 msgid "Clock Preferences"
@@ -699,7 +699,7 @@ msgstr "「郵件檢查」"
 
 #: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
-msgstr "「郵件檢查」會在收到新電郵的時候通知您"
+msgstr "「郵件檢查」會在收到新電郵的時候通知閣下"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
@@ -731,15 +731,15 @@ msgstr "是否自動檢查郵件"
 
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr "如果設定此選項，則每隔 update-freq 亳秒檢查一次電郵"
+msgstr "如選用本選項，則每隔 update-freq 亳秒檢查一次電郵"
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
-msgstr "如果設定本選項，則應執行 exec-command"
+msgstr "如選用本選項，則應執行 exec-command"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr "如果設定本選項，則應執行 newmail-command"
+msgstr "如選用本選項，則應執行 newmail-command"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
@@ -805,7 +805,7 @@ msgstr "在「郵箱檢查」中按下滑鼠按鈕時是否重設郵箱的狀態
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
-msgstr "您有郵件！"
+msgstr "閣下有郵件！"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -902,8 +902,8 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"當顯示所有工作區時，本選項會決定「工作區切換程式」使用多少行（水平排列）或多"
-"少列（垂直排列）來顯示工作區。"
+"當顯示所有工作區時，本選項會決定「工作區切換程式」使用多少行 (水平排列) 或多"
+"少列 (垂直排列) 來顯示工作區。"
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the Workspace Switcher."
@@ -1022,11 +1022,11 @@ msgstr ""
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size that Window List requests"
-msgstr "「視窗清單」要求的最大尺寸"
+msgstr "「視窗清單」要求的尺寸上限"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size that Window List requests"
-msgstr "「視窗清單」要求的最小尺寸"
+msgstr "「視窗清單」要求的尺寸下限"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
@@ -1123,11 +1123,11 @@ msgstr "本面板目前的狀態"
 
 #: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
-msgstr "啟用隱藏按鈕"
+msgstr "顯示隱藏按鈕"
 
 #: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr "是否啟用隱藏按鈕 (即用來隱藏或顯示面板的按鈕)？"
+msgstr "是否顯示隱藏按鈕 (即用來隱藏或顯示面板的按鈕)？"
 
 #: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
