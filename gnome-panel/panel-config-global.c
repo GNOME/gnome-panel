@@ -35,14 +35,13 @@ panel_global_config_set_entry (GConfEntry *entry)
 	GConfValue *value;
 	gchar      *key;
 
+	g_return_if_fail (entry != NULL);
+
 	value = gconf_entry_get_value (entry);
+	key   = g_path_get_basename (gconf_entry_get_key (entry));
 
-	key = g_path_get_basename (gconf_entry_get_key (entry));
-
-	g_return_if_fail (key != NULL);
-#ifdef PANEL_GLOBAL_CONFIG_DEBUG
-	fprintf (stderr, "global config: handling %s\n", key);
-#endif
+	if (!value || !key)
+		return;
 
 	if (!strcmp (key, "tooltips-enabled"))
 		global_config.tooltips_enabled =

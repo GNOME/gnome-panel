@@ -1,5 +1,10 @@
 2002-03-19  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-config-global.c: (panel_global_config_set_entry): check value
+	as well as key, and don't do it in a g_return ... This isn't debugging.
+
+2002-03-19  Mark McLoughlin  <mark@skynet.ie>
+
 	* basep-widget.c: (basep_widget_construct):
 	* foobar-widget.c: (foobar_widget_new): don't setup the default
 	window icon here.
