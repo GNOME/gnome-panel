@@ -1,3 +1,14 @@
+2005-01-25  Vincent Noel  <vnoel@cox.net>
+
+	Remove all the widget creation code, which is now in libwnck. Use
+	the new WnckSelector widget from libwnck. Fixes #156917.
+	
+	* window-menu.c: (window_menu_help), (window_menu_about),
+	(window_menu_destroy), (window_menu_change_background),
+	(set_tooltip), (window_menu_on_expose),
+	(window_menu_key_press_event), (filter_button_press),
+	(applet_get_screen), (window_menu_applet_fill)
+
 ==================== 2.9.90 ====================
 
 2005-01-12  Vincent Noel  <vnoel@cox.net>
