@@ -441,42 +441,32 @@ fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 				     GNOME_VFS_FILE_INFO_DEFAULT)
 	    == GNOME_VFS_OK) {
 		QuickDesktopItem *qitem;
+
+		g_free (fr->icon);             fr->icon = NULL;
+		g_free (fr->fullname);         fr->fullname = NULL;
+		g_free (fr->name_collate_key); fr->name_collate_key = NULL;
+		g_free (fr->comment);          fr->comment = NULL;
+
 		qitem = quick_desktop_item_load_uri (furi /* uri */,
 						     NULL /* expected_type */,
 						     TRUE /* run_tryexec */);
-		if (qitem != NULL) {
-			g_free (fr->icon);
-			fr->icon = g_strdup (qitem->icon);
-
-			g_free (fr->fullname);
+		if (qitem) {
 			fr->fullname = g_strdup (qitem->name);
-
-			g_free (fr->name_collate_key);
-			fr->name_collate_key = NULL;
-
-			g_free (fr->comment);
-			fr->comment = g_strdup (qitem->comment);
+			fr->icon     = g_strdup (qitem->icon);
+			fr->comment  = g_strdup (qitem->comment);
 
 			quick_desktop_item_destroy (qitem);
-		} else {
-			g_free (fr->icon);
-			fr->icon = NULL;
-
-			g_free (fr->fullname);
-			fr->fullname = NULL;
-
-			g_free (fr->name_collate_key);
-			fr->name_collate_key = NULL;
-
-			g_free (fr->comment);
-			fr->comment = NULL;
 		}
+
 		/*if we statted*/
 		if (info->mtime != 0)
 			dr->ditemlast_stat = curtime;
 		dr->ditemmtime = info->mtime;
 	}
 	g_free (furi);
+
+	if (!fr->fullname)
+		fr->fullname = g_path_get_basename (muri);
 	
 	/* add if missing from list of directories */
 	if (g_slist_find (dir_list, fr) == NULL)

@@ -1,5 +1,14 @@
 2002-10-04  Mark McLoughlin  <mark@skynet.ie>
 
+	* menu-fentry.c: (fr_read_dir): if there's no
+	.directory then use the uri basename as the
+	fullname. Fixes new folder not being sorted
+	correctly in #91810.
+
+	* menu-fentry.h: kill fr_force_reread.
+
+2002-10-04  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (menu_button_menu_popup): pass the
 	widget to the menu position fuction, rather
 	than the AppletInfo struct.
