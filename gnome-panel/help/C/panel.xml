@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS/DTD DocBook XML V4.1.2//EN"
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
     "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY gnomeversion "2">
   <!ENTITY manrevision "1.0">
@@ -345,30 +345,20 @@
 				<row>
 				  <entry>
 					 <para>
-						<guimenu>Programs</guimenu> menu</para></entry>
+						<guimenu>Applications</guimenu> menu</para></entry>
 				  <entry>
 					 <para> The 
-						<guimenu>Programs</guimenu> menu contains the standard GNOME
+						<guimenu>Applications</guimenu> menu contains the standard GNOME
 						applications. </para></entry>
 				</row>
+				
 				<row>
 				  <entry>
 					 <para>
-						<guimenu>Favorites</guimenu> menu </para></entry>
-				  <entry>
-					 <para> You can customize the 
-						<guimenu>Favorites</guimenu> menu to help you work more
-						efficiently. You can add items that you use frequently to the 
-						<guimenu>Favorites </guimenu> menu, and organize the items
-						into submenus.</para></entry>
-				</row>
-				<row>
-				  <entry>
-					 <para>
-						<guimenu>Settings</guimenu> menu </para></entry>
+						<guimenu>Actions</guimenu> menu </para></entry>
 				  <entry>
 					 <para> The 
-						<guimenu>Settings</guimenu> menu contains menu items to
+						<guimenu>Actions</guimenu> menu contains menu items to
 						configure and customize your desktop. </para></entry>
 				</row>
 				<row>
@@ -377,17 +367,11 @@
 						<guimenu>Desktop</guimenu> menu</para></entry>
 				  <entry>
 					 <para> The 
-						<guimenu>Desktop</guimenu> menu provides menu items that
-						relate to the current status of your desktop. </para></entry>
+						<guimenu>Desktop</guimenu> menu
+						provides menu contans commonly
+		  performed actions, including <guimenuitem>Log Out</guimenuitem>. </para></entry>
 				</row>
-				<row>
-				  <entry colname="COLSPEC3">
-					 <para><application>Desk Guide</application>
-						applet</para></entry>
-				  <entry colname="COLSPEC4">
-					 <para>The <application>Desk Guide</application> applet enables
-						you to navigate between your workspaces and viewports.</para></entry>
-				</row>
+				
 				<row>
 				  <entry colname="COLSPEC3">
 					 <para><application>Mailcheck</application>
@@ -404,14 +388,7 @@
 						on the time readout to display a menu of calendar commands. You can also use
 						this menu to change the format of the time readout. </para></entry>
 				</row>
-				<row>
-				  <entry colname="COLSPEC3">
-					 <para>Window list icon</para></entry>
-				  <entry colname="COLSPEC4">
-					 <para>The window list is a list of all open windows on the
-						desktop. To give focus to a window click on the icon at the extreme right of
-						the Menu Panel then choose the window.</para></entry>
-				</row>
+				
 			 </tbody>
 		  </tgroup>
 		</informaltable>
@@ -450,7 +427,7 @@
 		  <tbody>
 			 <row>
 				<entry colname="COLSPEC0">
-				  <para>Aligned panel</para></entry>
+				  <para>Corner panel</para></entry>
 				<entry colname="COLSPEC1">
 				  <para> Snaps to one of the edges of the screen, but can only snap
 					 to the center or the corner of the edge. </para></entry>
@@ -510,7 +487,6 @@
 		  <listitem>
 			 <para>Choose 
 				<menuchoice>
-				  <guimenu>Panel</guimenu>
 				  <guimenuitem> Create panel</guimenuitem>
 				</menuchoice>.</para>
 		  </listitem>
@@ -560,7 +536,7 @@
 		  panel to the new location.</para>
 		<para>When you drag a floating panel, the panel follows the mouse
 		  pointer. The panel does not snap to any part of the desktop. When you drag an
-		  edge panel, an aligned panel, or a sliding panel, the panel snaps to the edge
+		  edge panel, a corner panel, or a sliding panel, the panel snaps to the edge
 		  of the screen.</para>
 		<note>
 		  <para>You can not move the Menu Panel.</para>
@@ -595,7 +571,7 @@
 		  reappears when you point to the part of the screen where the panel resides. To
 		  set your panel to autohide, modify the properties of the panel.</para>
 		<note>
-		  <para>On an aligned panel, the behavior of the hide buttons is slightly
+		  <para>On an corner panel, the behavior of the hide buttons is slightly
 			 different. If the panel is aligned with one of the corners of the screen, you
 			 can use the hide buttons as follows:</para>
 		  <itemizedlist>
@@ -662,31 +638,7 @@
 							 <para>For more information see
 								<xref linkend="gospanel-30"/>.</para></entry>
 						</row>
-						<row>
-						  <entry>
-							 <para>Type</para></entry>
-						  <entry>
-							 <para>Choose the type of the panel you want. Choose from
-								the following types of panel: </para>
-							 <itemizedlist>
-								<listitem>
-								  <para>
-									 <guilabel>Edge panel</guilabel></para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Aligned panel</guilabel></para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Sliding panel</guilabel></para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Floating panel</guilabel></para>
-								</listitem>
-							 </itemizedlist></entry>
-						</row>
+						
 						<row>
 						  <entry>
 							 <para>Hiding policy</para></entry>
@@ -696,41 +648,20 @@
 							 <itemizedlist>
 								<listitem>
 								  <para>
-									 <guilabel>Explicit hide</guilabel>: Select this
-									 option if you want to use the hide buttons to hide the panel.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Auto hide</guilabel>: Select this option
+									 <guilabel>Enable
+									 Auto-hide</guilabel>:  Select this option
 									 if you want to enable autohide <emphasis>and</emphasis> use the hide buttons to
 									 hide the panel.</para>
 								</listitem>
+			<listitem>
+			  <para><guilabel>Show hide buttons</guilabel></para>
+			</listitem>
+			<listitem>
+			  <para><guilabel>Show arrows on hide buttons</guilabel></para>
+			</listitem>
 							 </itemizedlist></entry>
 						</row>
-						<row>
-						  <entry>
-							 <para>Hide buttons</para></entry>
-						  <entry>
-							 <para>Select how to display the hide buttons. Select from
-								the following options: </para>
-							 <itemizedlist>
-								<listitem>
-								  <para>
-									 <guilabel>With pixmap arrows</guilabel>: Select
-									 this option to display arrow icons on the hide buttons.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Without pixmap</guilabel>: Select this
-									 option to display no arrow icons on the hide buttons.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>None</guilabel>: Select this option if
-									 you do not want to display the hide buttons.</para>
-								</listitem>
-							 </itemizedlist></entry>
-						</row>
+						
 						<row>
 						  <entry>
 							 <para>Size</para></entry>
@@ -755,57 +686,7 @@
 								the color and image. For more information see <xref linkend="gospanel-30"/>.
 								</para></entry>
 						</row>
-						<row>
-						  <entry colname="COLSPEC0">
-							 <para>Level</para></entry>
-						  <entry colname="COLSPEC1">
-							 <para> Select the level at which you want the panel to
-								appear. Select from one of the following options:</para>
-							 <itemizedlist>
-								<listitem>
-								  <para>
-									 <guilabel>Default</guilabel>: Select this option to
-									 use the default setting that is specified in the
-									 <application>Panel</application> capplet.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Below</guilabel>: Select this option if
-									 you want the panel to appear below windows. </para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Normal</guilabel>: Select this option if
-									 you want the panel to appear at the same level as windows. </para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Above</guilabel>: Select this option if
-									 you want the panel to appear above windows.</para>
-								</listitem>
-							 </itemizedlist></entry>
-						</row>
-						<row>
-						  <entry colname="COLSPEC0">
-							 <para>Maximize mode</para></entry>
-						  <entry colname="COLSPEC1">
-							 <para> Select whether you want maximized windows to avoid
-								the panel or cover the panel.</para>
-							 <itemizedlist>
-								<listitem>
-								  <para>
-									 <guilabel>Avoid on maximize</guilabel>: Select this
-									 option if you do not want to overlap the panel when you maximize
-									 windows.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Don't avoid on maximize</guilabel>:
-									 Select this option if you want to overlap the panel when you maximize windows.
-									 </para>
-								</listitem>
-							 </itemizedlist></entry>
-						</row>
+						
 					 </tbody>
 				  </tgroup>
 				</informaltable>
@@ -881,88 +762,14 @@
 						<row>
 						  <entry>
 							 <para>
-								<guilabel>Panel size</guilabel></para></entry>
+								<guilabel>Size
+								and Position</guilabel></para></entry>
 						  <entry>
 							 <para> Choose the size of the panel.</para></entry>
 						</row>
-						<row>
-						  <entry>
-							 <para>
-								<guilabel>Panel position</guilabel></para></entry>
-						  <entry>
-							 <para> Choose the position of the panel on your desktop.
-								Click on the required position for the panel. </para></entry>
-						</row>
-						<row>
-						  <entry colname="COLSPEC0">
-							 <para>
-								<guilabel>Panel window level</guilabel></para></entry>
-						  <entry colname="COLSPEC1">
-							 <para>Select the level or layer at which you want the
-								panel to appear. Select from one of the following options:</para>
-							 <itemizedlist>
-								<listitem>
-								  <para>
-									 <guilabel>Default (from global preferences)
-										</guilabel>: Select this option to use the default setting that is specified in
-									 the <application> Panel</application> capplet.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Below other windows</guilabel>: Select
-									 this option if you want the panel to appear below windows.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Normal</guilabel>: Select this option if
-									 you want the panel to appear at the same level as windows.</para>
-								</listitem>
-								<listitem>
-								  <para>
-									 <guilabel>Above other windows</guilabel>: Select
-									 this option if you want the panel to appear above windows.</para>
-								</listitem>
-							 </itemizedlist></entry>
-						</row>
-						<row>
-						  <entry>
-							 <para>
-								<guilabel>Orient panel
-								  horizontally</guilabel></para></entry>
-						  <entry>
-							 <para>Floating panel only. Select this option to display
-								the panel horizontally. </para></entry>
-						</row>
-						<row>
-						  <entry>
-							 <para>
-								<guilabel>Orient panel
-								  vertically</guilabel></para></entry>
-						  <entry>
-							 <para>Floating panel only. Select this option to display
-								the panel vertically.</para></entry>
-						</row>
-						<row>
-						  <entry>
-							 <para>
-								<guilabel>Top left corner's
-								  position</guilabel></para></entry>
-						  <entry>
-							 <para>Floating panel only. Use the 
-								<guilabel>X</guilabel> and 
-								<guilabel> Y</guilabel> spin boxes to specify the
-								coordinates for the top-left corner of the panel. </para></entry>
-						</row>
-						<row>
-						  <entry>
-							 <para>
-								<guilabel>Offset from screen
-								  edge</guilabel></para></entry>
-						  <entry>
-							 <para>Sliding panel only. Use this spin box to specify
-								the distance between your panel and the edge of the screen, in pixels.
-								</para></entry>
-						</row>
+						
+						
+						
 						<row>
 						  <entry>
 							 <para>
@@ -988,15 +795,7 @@
 							 <para>Select this option to display arrows on the hide
 								buttons, if the hide button is enabled.</para></entry>
 						</row>
-						<row>
-						  <entry colname="COLSPEC0">
-							 <para>
-								<guilabel>Avoid this panel when maximizing
-								  windows</guilabel></para></entry>
-						  <entry colname="COLSPEC1">
-							 <para>Select this option if you do not want to overlap
-								the panel when you maximize windows. </para></entry>
-						</row>
+						
 					 </tbody>
 				  </tgroup>
 				</informaltable>
@@ -1108,25 +907,10 @@
 				  </tgroup>
 				</informaltable>
 			 </listitem>
-			 <listitem>
-				<para>Click 
-				  <guibutton>OK</guibutton> to apply the changes and close the 
-				  <guilabel>Panel Properties</guilabel> dialog.</para>
-			 </listitem>
+			 
 		  </orderedlist>
 		</sect3>
-		<sect3 id="gospanel-61">
-		  <title>To Drag a Color or Image to the Background of a Panel</title>
-		  <para>You can drag a color or image on to a panel to set the color or
-			 image as the background of the panel. You can drag a color or image from many
-			 applications. For example, you can drag a color from the <application>Color
-			 Browser</application> application to a panel to set the color as the background
-			 of the panel. You can also drag a color from any color selector dialog.</para>
-		  <para>You can drag an image from a file manager to a panel to set the
-			 image as the background of the panel. You can also drag colors and pattern
-			 images from the <application>Nautilus</application> file manager application to
-			 set the background of the panel.</para>
-		</sect3>
+		
 	 </sect2>
 	 <sect2 id="gospanel-31">
 		<title>To Delete a Panel</title>
@@ -1138,7 +922,6 @@
 		  <listitem>
 			 <para>Choose 
 				<menuchoice>
-				  <guimenu>Panel</guimenu>
 				  <guimenuitem> Remove this panel</guimenuitem>
 				</menuchoice> to remove the panel from the desktop. </para>
 		  </listitem>
@@ -1262,57 +1045,7 @@
 		  </listitem>
 		</itemizedlist>
 	 </sect2>
-	 <sect2 id="gospanel-9">
-		<title>To Modify the Properties of an Object</title>
-		<para>Some panel objects have a set of associated properties. The
-		  properties are different for each type of object. The properties specify
-		  details such as the following: 
-		  <itemizedlist>
-			 <listitem>
-				<para>The command that starts a launcher application.</para>
-			 </listitem>
-			 <listitem>
-				<para>The location of the source files for a menu.</para>
-			 </listitem>
-			 <listitem>
-				<para>The icon that represents the object.</para>
-			 </listitem>
-		  </itemizedlist></para>
-		<para>To modify the properties of an object perform the following steps:
-		  </para>
-		<orderedlist>
-		  <listitem>
-			 <para>Right-click on the object to open the panel object popup menu,
-				as shown in <xref linkend="gospanel-FIG-54"/>.</para>
-			 <figure id="gospanel-FIG-54">
-				<title>Panel Object Popup Menu</title>
-				<screenshot> 
-				  <mediaobject> 
-					 <imageobject>
-						<imagedata fileref="figures/panel_object_popup_menu.png" format="PNG"/> 
-					 </imageobject> 
-					 <textobject> 
-						<phrase>Screenshot of panel object popup menu</phrase> 
-					 </textobject> 
-				  </mediaobject> 
-				</screenshot>
-			 </figure>
-		  </listitem>
-		  <listitem>
-			 <para>Choose 
-				<guimenuitem>Properties</guimenuitem>. Use the 
-				<guilabel> Properties</guilabel> dialog to modify the properties as
-				required. The properties in the 
-				<guilabel> Properties</guilabel> dialog depend on which object you
-				select in step 1. </para>
-		  </listitem>
-		  <listitem>
-			 <para>Click 
-				<guibutton>OK</guibutton> to apply the changes, then close the 
-				<guilabel>Properties</guilabel> dialog.</para>
-		  </listitem>
-		</orderedlist>
-	 </sect2>
+	 
 	 <sect2 id="gospanel-32">
 		<title>To Move a Panel Object</title>
 		<para>You can move panel objects within a panel, and from one panel to
@@ -1945,17 +1678,14 @@
 		</para>
 	 <itemizedlist>
 		<listitem>
-		  <para><application>Tasklist</application>: Displays the windows
+		  <para><application>Window list</application>: Displays the windows
 			 currently open on your system.</para>
 		</listitem>
 		<listitem>
-		  <para><application>CD Player</application>: Enables you to control the
-			 compact disc player on your system.</para>
+		  <para><application>Mini-commander</application>: Allows you to
+		  type in commands.</para>
 		</listitem>
-		<listitem>
-		  <para><application>Screen-Shooter</application>: Enables you to take
-			 screenshots of desktop areas.</para>
-		</listitem>
+		
 	 </itemizedlist>
 	 <screenshot> 
 		<mediaobject> 
@@ -2138,7 +1868,6 @@
 			 <para>Right-click on any vacant space on the panel to open the 
 				<guimenu>Global Menu</guimenu>. Choose 
 				<menuchoice>
-				  <guimenu>Panel</guimenu>
 				  <guisubmenu> Add to panel</guisubmenu>
 				  <guimenuitem>Drawer</guimenuitem>
 				</menuchoice>. </para>
@@ -2319,8 +2048,7 @@
 		<sect3 id="gospanel-60">
 		  <title>To Drag a Color or Image to the Background of a Drawer</title>
 		  <para>You can drag a color or image on to a drawer to set the color or
-			 image as the background of the drawer. For more information see
-			 <xref linkend="gospanel-61"/>. </para>
+			 image as the background of the drawer.</para>
 		</sect3>
 	 </sect2>
   </sect1>
