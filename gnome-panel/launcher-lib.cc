@@ -15,13 +15,16 @@ extern CORBA::BOA_ptr boa_ptr;
 /*every launcher must implement these*/
 BEGIN_GNOME_DECLS
 void start_new_launcher(const char *path);
+void restart_all_launchers(void);
 END_GNOME_DECLS
 
 class Launcher_impl : virtual public GNOME::Launcher_skel {
 public:
 	void start_new_launcher (const char *path) {
-		puts("START_NEW_LAUNCHER");
 		::start_new_launcher(path);
+	}
+	void restart_all_launchers (void) {
+		::restart_all_launchers ();
 	}
 };
 

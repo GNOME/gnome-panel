@@ -501,6 +501,34 @@ start_new_launcher(const char *path)
 
 }
 
+/*destructive call, should be done only on restart*/
+void
+restart_all_launchers(void)
+{
+	char *globcfg;
+	char *query;
+
+	launcher_count=0;
+	while(launchers) {
+		Launcher *launcher=launchers->data;
+		/*FIXME: somehow unref or something this, so we don't leak,
+		  unref gives me a bunch of warnings here*/
+		if(launcher->plug)
+			gtk_widget_destroy(launcher->plug);
+		launchers = g_list_remove(launchers,launcher);
+	}
+
+	gnome_panel_applet_request_glob_cfg(&globcfg);
+
+	query = g_copy_strings(globcfg,CONFIG_TAG,"/count=0",NULL);
+	count = gnome_config_get_int(query);
+	g_free(query);
+	g_free(globcfg);
+
+	for(i=0;i<count;i++)
+		start_new_launcher(NULL);
+}
+
 int
 main(int argc, char **argv)
 {
