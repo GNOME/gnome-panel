@@ -1,6 +1,6 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon asclock \
 	 fish netload dialer webcontrol icewm-pager \
-	 drivemount clockmail fifteen battery
+	 drivemount clockmail fifteen battery charpick
 
 if HAVE_LIBGTOP
 libgtop_SUBDIRS = cpuload cpumemusage diskusage multiload
@@ -32,4 +32,3 @@ endif
 SUBDIRS = $(always_built_SUBDIRS) $(libgtop_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist) \
          $(bussign)
-
