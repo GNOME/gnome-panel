@@ -84,10 +84,6 @@ void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 void       panel_applet_frame_change_background (PanelAppletFrame    *frame,
 						 PanelBackgroundType  type);
 
-void       panel_applet_frame_get_expand_flags  (PanelAppletFrame *frame,
-						 gboolean         *expand_major,
-						 gboolean         *expand_minor);
-
 void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
 						 const char       *gconf_key);
 

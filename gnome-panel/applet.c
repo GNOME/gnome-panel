@@ -1181,7 +1181,6 @@ panel_applet_register (GtkWidget      *applet,
 	AppletInfo *info;
 	int newpos;
 	gboolean insert_at_pos;
-	gboolean expand_major = FALSE, expand_minor = FALSE;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1218,11 +1217,6 @@ panel_applet_register (GtkWidget      *applet,
 	g_object_set_data (G_OBJECT (applet),
 			   PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 
-	if (type == APPLET_BONOBO)
-		panel_applet_frame_get_expand_flags (PANEL_APPLET_FRAME (applet),
-						     &expand_major,
-						     &expand_minor);
-	
 	applets = g_slist_append (applets, info);
 
 	applet_count++;
@@ -1242,13 +1236,11 @@ panel_applet_register (GtkWidget      *applet,
 	if (exactpos)
 		insert_at_pos = TRUE;
 
-	if (panel_widget_add (panel, applet, newpos,
-			      insert_at_pos, expand_major, expand_minor) == -1) {
+	if (panel_widget_add (panel, applet, newpos, insert_at_pos) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next)
-			if (panel_widget_add (panel, applet, 0, TRUE,
-					      expand_major, expand_minor) != -1)
+			if (panel_widget_add (panel, applet, 0, TRUE) != -1)
 				break;
 
 		if (!l) {

@@ -1,5 +1,27 @@
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
+	Fix a race with applets that use expand flags. Applet
+	filling happens asynchronously, so you can never be sure
+	that the flags have been set by the time you add it to
+	the PanelWidget.
+
+	* applet.c: (panel_applet_register): don't set expand flags
+	from here.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_update_expand_flags): rename this function
+	and make it private. It now sets the expand flags (as used
+	by PanelWidget) itself.
+	(panel_applet_frame_constrain_size): use it here.
+
+	* panel-widget.[ch]:
+	(panel_widget_cadd): update.
+	(panel_widget_add): don't accept expand flags as args.
+	(panel_widget_set_applet_expandable): impl setting the
+	expand flags here.
+
+2003-01-10  Mark McLoughlin  <mark@skynet.ie>
+
 	Remove the remaining dependancy on libwnck.
 
 	* Makefile.am: link gnome-desktop-item-edit with xstuff.c

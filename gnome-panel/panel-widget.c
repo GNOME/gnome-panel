@@ -590,8 +590,7 @@ panel_widget_cadd (GtkContainer *container,
 	g_return_if_fail (PANEL_IS_WIDGET (container));
 	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	panel_widget_add (PANEL_WIDGET (container), widget, 0,
-			  FALSE, FALSE, FALSE);
+	panel_widget_add (PANEL_WIDGET (container), widget, 0, FALSE);
 
 	p = g_object_get_data (G_OBJECT(widget),
 			       PANEL_APPLET_ASSOC_PANEL_KEY);
@@ -2336,9 +2335,7 @@ int
 panel_widget_add (PanelWidget *panel,
 		  GtkWidget   *applet,
 		  int          pos,
-		  gboolean     insert_at_pos,
-		  gboolean     expand_major,
-		  gboolean     expand_minor)
+		  gboolean     insert_at_pos)
 {
 	AppletData *ad = NULL;
 
@@ -2384,8 +2381,8 @@ panel_widget_add (PanelWidget *panel,
 		ad->drag_off = 0;
 		ad->dirty = FALSE;
 		ad->no_die = 0;
-		ad->expand_major = expand_major;
-		ad->expand_minor = expand_minor;
+		ad->expand_major = FALSE;
+		ad->expand_minor = FALSE;
 		ad->size_hints = NULL;
 		g_object_set_data (G_OBJECT (applet),
 				   PANEL_APPLET_DATA, ad);
@@ -2698,4 +2695,25 @@ panel_widget_get_applet_orient (PanelWidget *panel)
 		return PANEL_ORIENT_DOWN;
 
 	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
+}
+
+void
+panel_widget_set_applet_expandable (PanelWidget *panel,
+				    GtkWidget   *applet,
+				    gboolean     major,
+				    gboolean     minor)
+{
+	AppletData *ad;
+
+	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
+	if (!ad)
+		return;
+
+	if (ad->expand_major == major && ad->expand_minor == minor)
+		return;
+
+	ad->expand_major = major;
+	ad->expand_minor = minor;
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }

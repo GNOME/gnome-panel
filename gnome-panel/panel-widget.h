@@ -137,9 +137,7 @@ GtkWidget *	panel_widget_new		(const char *panel_id,
 int		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos,
-						 gboolean insert_at_pos,
-						 gboolean expand_major,
-						 gboolean expand_minor);
+						 gboolean insert_at_pos);
 
 PanelWidget *	panel_widget_get_by_id		(gchar *id);
 void		panel_widget_set_id		(PanelWidget *panel,
@@ -208,6 +206,12 @@ gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
+
+void         panel_widget_set_applet_expandable (PanelWidget *panel,
+						 GtkWidget   *applet,
+						 gboolean     major,
+						 gboolean     minor);
+
 
 extern gboolean panel_applet_in_drag;
 

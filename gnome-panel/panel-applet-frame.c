@@ -196,17 +196,20 @@ panel_applet_frame_get_flags (PanelAppletFrame *frame)
 			frame->priv->property_bag, "panel-applet-flags", NULL);
 }
 
-void
-panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
-				     gboolean         *expand_major,
-				     gboolean         *expand_minor)
+static void
+panel_applet_frame_update_expand_flags (PanelAppletFrame *frame)
 {
-	int flags;
+	gboolean major;
+	gboolean minor;
+	int      flags;
 
 	flags = panel_applet_frame_get_flags (frame);
 
-	*expand_major = flags & APPLET_EXPAND_MAJOR;
-	*expand_minor = flags & APPLET_EXPAND_MINOR;
+	major = flags & APPLET_EXPAND_MAJOR;
+	minor = flags & APPLET_EXPAND_MINOR;
+
+	panel_widget_set_applet_expandable (
+			frame->priv->panel, GTK_WIDGET (frame), major, minor);
 }
 
 int 
@@ -419,6 +422,8 @@ panel_applet_frame_constrain_size (PanelAppletFrame *frame,
 		g_assert_not_reached ();
 		break;
 	}
+
+	panel_applet_frame_update_expand_flags (frame);
 }
 
 static void
