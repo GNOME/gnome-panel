@@ -1,5 +1,5 @@
 always_built_SUBDIRS = applet-dirs gen_util asclock \
-	 fish dialer webcontrol \
+	 fish webcontrol \
 	 drivemount clockmail fifteen life battery charpick \
 	 gnome-pager mini-commander gkb jbc another_clock
 
