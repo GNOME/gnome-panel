@@ -1,3 +1,11 @@
+1998-04-04  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* batmon/Makefile.am (batmon_applet_LINK): Use this to specify a
+	C++ link rather than including `-lstdc++' in LDADD.
+	* cdplayer/Makefile.am (cdplayer_applet_LINK): Likewise.
+	* clock/Makefile.am (clock_applet_LINK): Likewise.
+	* mailcheck/Makefile.am (mailcheck_applet_LINK): Likewise.
+	
 Sat Mar 28 15:25:28 1998  George Lebl  <jirka@5z.com>
 
 	* **/*.c: updated to use gtk_full_path instead of
