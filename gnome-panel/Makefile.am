@@ -55,10 +55,6 @@ bad_applet_SOURCES=bad-applet.c
 
 bad_applet_LDADD=libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
-EXTRA_DIST = \
-	bad-applet.desktop \
-	bad-applet.goad
-
 sysdir=$(datadir)/applets/Utility
 sys_DATA=bad-applet.desktop
 
@@ -141,7 +137,10 @@ EXTRA_DIST = \
 	appletsConf.sh.in	\
 	panel.gnorba		\
 	panel.soundlist		\
-	APPLET_WRITING
+	APPLET_WRITING		\
+	bad-applet.desktop	\
+	bad-applet.goad
+
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
