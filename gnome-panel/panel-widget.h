@@ -19,6 +19,8 @@ extern "C" {
   use when calculating how many cells a panel should have*/
 #define PANEL_CELL_SIZE 48
 
+#define PANEL_MAX 100
+
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
@@ -27,33 +29,60 @@ typedef enum {
 	PANEL_HORIZONTAL,
 	PANEL_VERTICAL
 } PanelOrientation;
+typedef enum {
+	PANEL_FREE,
+	PANEL_TOP,
+	PANEL_BOTTOM,
+	PANEL_LEFT,
+	PANEL_RIGHT
+} PanelSnapped;
+typedef enum {
+	PANEL_EXPLICIT_HIDE,
+	PANEL_AUTOH_IDE
+} PanelMode;
+typedef enum {
+	PANEL_SHOWN,
+	PANEL_HIDDEN
+} PanelState;
 
 struct _AppletRecord
 {
-	GtkWidget		*widget;
-	gboolean		is_applet;
+	GtkWidget		*applet;
+	GtkWidget		*drawer;
 };
 
 struct _PanelWidget
 {
-	GtkEventBox		event_box;
+	GtkFixed		fixed;
 
-	AppletRecord		**applets;
-	gint	 		applet_count;
+	GtkWidget		*window;
 	GtkWidget		*table;
+	GtkWidget		*hidebutton_n;
+	GtkWidget		*hidebutton_e;
+	GtkWidget		*hidebutton_w;
+	GtkWidget		*hidebutton_s;
+
+	AppletRecord		applets[PANEL_MAX];
+	gint	 		applet_count;
 
 	gint			size;
-	PanelOrientation	orientation;
+	PanelOrientation	orient;
+	PanelSnapped		snapped;
+	PanelMode		mode;
+	PanelState		state;
 };
 
 struct _PanelWidgetClass
 {
-	GtkEventBoxClass parent_class;
+	GtkFixedClass parent_class;
 };
 
 guint		panel_widget_get_type		(void);
-GtkWidget*	panel_widget_new		(gint size,
-						 PanelOrientation orient);
+GtkWidget*	panel_widget_new		(gint length,
+						 PanelOrientation orient,
+						 PanelSnapped snapped,
+						 PanelMode mode,
+						 PanelState state);
 /*add an applet to the panel, preferably at position pos*/
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
