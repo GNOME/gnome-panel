@@ -46,7 +46,8 @@ STANDARD_PROPERTIES_CFLAGS = 					\
 bin_PROGRAMS = \
 	gnome-panel-2 			\
 	gnome-panel-properties		\
-	gnome-panel-screenshot
+	gnome-panel-screenshot		\
+	gnome-desktop-item-edit
 
 $(gnome_panel_2_OBJECTS) $(gnome_panel_properties_OBJECTS) $(gnome_panel_screenshot_OBJECTS): $(BUILT_SOURCES)
 
@@ -101,6 +102,7 @@ panel_sources =			\
 	gnome-run.c  		\
 	menu.c  		\
 	menu-util.c		\
+	menu-ditem.c		\
 	menu-fentry.c  		\
 	swallow.c  		\
 	menu-properties.c	\
@@ -141,6 +143,7 @@ panel_headers =			\
 	gnome-run.h  		\
 	menu.h  		\
 	menu-util.h		\
+	menu-ditem.h		\
 	menu-fentry.h  		\
 	swallow.h  		\
 	menu-properties.h	\
@@ -168,6 +171,16 @@ gnome_panel_properties_LDADD = $(PANELCONFIG_LIBS)
 
 gnome_panel_properties_LDFLAGS = -export-dynamic
 
+gnome_desktop_item_edit_SOURCES = \
+	gnome-desktop-item-edit.c \
+	menu-ditem.c		  \
+	panel-util.c		  \
+	rgb-stuff.c
+
+gnome_desktop_item_edit_LDFLAGS = -export-dynamic
+
+gnome_desktop_item_edit_LDADD = 	\
+	$(PANEL_LIBS)
 
 gnome_panel_screenshot_SOURCES = \
 	gnome-panel-screenshot.c
