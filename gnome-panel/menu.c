@@ -575,7 +575,8 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   NULL);
-		gtk_widget_show(w);
+		if(global_config.show_dot_buttons)
+			gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 		/*this is not really a problem for large fonts but it
 		  makes the button smaller*/
@@ -641,7 +642,8 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
 				   NULL);
-		gtk_widget_show(w);
+		if(global_config.show_dot_buttons)
+			gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 		/*this is not really a problem for large fonts but it
 		  makes the button smaller*/
