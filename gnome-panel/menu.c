@@ -66,6 +66,7 @@
 #undef MENU_DEBUG
 
 #define ICON_SIZE 20
+#define ICON_SIZE_MENU_ITEM 32
 
 static char *gnome_folder = NULL;
 
@@ -110,6 +111,7 @@ typedef struct {
 	char *image;
 	char *fallback_image;
 	gboolean force_image;
+        guint size;
 } IconToLoad;
 
 static guint load_icons_id = 0;
@@ -142,6 +144,12 @@ static GtkWidget * create_add_launcher_menu (GtkWidget *menu,
 static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
 				       const char *title);
+
+void panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
+					       const char *image_filename,
+					       const char *fallback_image_filename,
+					       gboolean force_image,
+					       guint icon_size);
 
 static gboolean panel_menus_have_icons   = TRUE;
 
@@ -745,6 +753,7 @@ icon_to_load_copy (IconToLoad *icon)
 	        new_icon->image = g_strdup (icon->image);
 		new_icon->fallback_image = g_strdup (icon->fallback_image);
 		new_icon->force_image = icon->force_image;
+		new_icon->size = icon->size;
 	}
 	return new_icon;
 }
@@ -822,10 +831,10 @@ load_icons_handler_again:
 		return TRUE;
 	}
 
-	if (gdk_pixbuf_get_width (pb) != ICON_SIZE ||
-	    gdk_pixbuf_get_height (pb) != ICON_SIZE) {
+	if (gdk_pixbuf_get_width (pb) != icon->size ||
+	    gdk_pixbuf_get_height (pb) != icon->size) {
 		GdkPixbuf *pb2;
-		pb2 = gdk_pixbuf_scale_simple (pb, ICON_SIZE, ICON_SIZE,
+		pb2 = gdk_pixbuf_scale_simple (pb, icon->size, icon->size,
 					       GDK_INTERP_BILINEAR);
 		g_object_unref (G_OBJECT (pb));
 		pb = pb2;
@@ -2368,8 +2377,9 @@ create_menuitem (GtkWidget *menu,
 	}
 
 	if (icon != NULL) {
-		panel_load_menu_image_deferred (menuitem, icon, fallback,
-						FALSE /* force_image */);
+		panel_load_menu_image_deferred_with_size (menuitem, icon, fallback,
+							  FALSE /* force_image */,
+							  ICON_SIZE_MENU_ITEM);
 	}
 
 	if (sub) {
@@ -4363,12 +4373,12 @@ image_menu_shown (GtkWidget *image, gpointer data)
 		load_icons_id = g_idle_add (load_icons_handler, NULL);
 }
 
-
 void
-panel_load_menu_image_deferred (GtkWidget *image_menu_item,
-				const char *image_filename,
-				const char *fallback_image_filename,
-				gboolean force_image)
+panel_load_menu_image_deferred_with_size (GtkWidget *image_menu_item,
+					  const char *image_filename,
+					  const char *fallback_image_filename,
+					  gboolean force_image,
+					  guint icon_size)
 {
   IconToLoad *icon;
   GtkWidget *image;
@@ -4376,8 +4386,8 @@ panel_load_menu_image_deferred (GtkWidget *image_menu_item,
   icon = g_new (IconToLoad, 1);
 
   image = gtk_image_new ();
-  image->requisition.width = ICON_SIZE;
-  image->requisition.height = ICON_SIZE;
+  image->requisition.width = icon_size;
+  image->requisition.height = icon_size;
 
   /* this takes over the floating ref */
   icon->pixmap = g_object_ref (G_OBJECT (image));
@@ -4386,6 +4396,7 @@ panel_load_menu_image_deferred (GtkWidget *image_menu_item,
   icon->image = g_strdup (image_filename);
   icon->fallback_image = g_strdup (fallback_image_filename);
   icon->force_image = force_image;
+  icon->size = icon_size;
 
   gtk_widget_show (image);
 
@@ -4406,6 +4417,17 @@ panel_load_menu_image_deferred (GtkWidget *image_menu_item,
 			 icon,
 			 (GClosureNotify) icon_to_load_free,
 			 0 /* connect_flags */);
+}
+
+void
+panel_load_menu_image_deferred (GtkWidget *image_menu_item,
+				const char *image_filename,
+				const char *fallback_image_filename,
+				gboolean force_image)
+{
+  panel_load_menu_image_deferred_with_size (image_menu_item, image_filename, 
+					    fallback_image_filename, force_image,
+					    ICON_SIZE);
 }
 
 #ifdef FIXME
