@@ -16,10 +16,12 @@ INCLUDES = \
 	-I$(top_builddir)/panel	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGNOME_DATADIR=\""$(datadir)"\" \
+	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)		\
 	$(GNOME_INCLUDEDIR)	\
 	$(ORB_CFLAGS)		\
+	@GLADE_CFLAGS@		\
 	@PIXBUF_CFLAGS@
 
 gwmh_dir = $(top_srcdir)/applets/desk-guide
@@ -27,7 +29,8 @@ gwmh_dir = $(top_srcdir)/applets/desk-guide
 bin_PROGRAMS = \
 	panel				\
 	gnome-panel-properties-capplet	\
-	gnome-panel-add-launcher
+	gnome-panel-add-launcher	\
+	gnome-panel-screenshot
 
 noinst_PROGRAMS = bad-applet
 
@@ -212,12 +215,23 @@ gnome_panel_add_launcher_SOURCES = \
 	gnome-panel-add-launcher.c	\
 	$(CORBA_SRCLIST)
 
+gnome_panel_screenshot_SOURCES = \
+	gnome-panel-screenshot.c
+
 gnome_panel_add_launcher_LDADD = \
 	$(GNOME_LIBDIR)		\
 	$(GNOMEUI_LIBS)		\
 	$(GNORBA_LIBS)		\
 	$(ORB_LIBS)		\
 	$(INTLLIBS)		\
+	@PIXBUF_LIBS@
+
+gnome_panel_screenshot_LDADD = \
+	$(GNOME_LIBDIR)		\
+	$(GNOMEUI_LIBS)		\
+	@GLADE_LIBS@		\
+	$(INTLLIBS)		\
+	@PNG_LIBS@		\
 	@PIXBUF_LIBS@
 
 MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
@@ -231,7 +245,9 @@ EXTRA_DIST = \
 	panel.hints			\
 	gnome-panel-properties.desktop	\
 	nothing.cP			\
-	title-item.gob
+	title-item.gob			\
+	gnome-panel-screenshot.glade	\
+	gnome-panel-screenshot.glade.h
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
@@ -265,6 +281,9 @@ panelgnorba_DATA = panel.gnorba
 
 soundlistdir = $(sysconfdir)/sound/events
 soundlist_DATA = panel.soundlist
+
+gladedir = $(datadir)/gnome/panel
+glade_DATA =gnome-panel-screenshot.glade
 
 hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints

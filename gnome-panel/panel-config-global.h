@@ -42,6 +42,9 @@ struct _GlobalConfig {
 	char *run_key;
 	  guint run_keysym;   /* these are not really properties but */
 	  guint run_state;    /* from the above */
+	char *screenshot_key;
+	  guint screenshot_keysym;   /* these are not really properties but */
+	  guint screenshot_state;    /* from the above */
 	int menu_flags;
 	gboolean use_large_icons;
 	gboolean merge_menus;

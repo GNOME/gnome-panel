@@ -101,40 +101,83 @@ panel_global_keys_setup (void)
 	static guint laststate_menu = 0;
 	static guint lastkey_run = 0;
 	static guint laststate_run = 0;
-	gboolean same;
+	static guint lastkey_screenshot = 0;
+	static guint laststate_screenshot = 0;
 
-	same = (lastkey_menu == lastkey_run &&
-		laststate_menu == laststate_run);
+	/* FIXME: the if trees are horrible, this shoul dbe cleaned up with
+	 * lists or something */
 
 	gdk_error_trap_push();
-	if (lastkey_menu)
+	if (lastkey_menu != 0) {
 		ungrab_key (laststate_menu, lastkey_menu);
-	if (lastkey_run && !same)
+	}
+	if (lastkey_run != 0 &&
+	    (lastkey_menu != lastkey_run ||
+	     laststate_menu != laststate_run)) {
 		ungrab_key (laststate_run, lastkey_run);
+	}
+	if (lastkey_run != 0 &&
+	    (lastkey_menu != lastkey_screenshot ||
+	     laststate_menu != laststate_screenshot) &&
+	    (lastkey_run != lastkey_screenshot ||
+	     laststate_run != laststate_screenshot)) {
+		ungrab_key (laststate_screenshot, lastkey_screenshot);
+	}
 	
 	if (global_config.keys_enabled && 
 	    global_config.menu_keysym) {
 		lastkey_menu = XKeysymToKeycode(GDK_DISPLAY(),
 						global_config.menu_keysym);
 		laststate_menu = global_config.menu_state;
-		if(lastkey_menu)
-		grab_key (laststate_menu, lastkey_menu);
-	} else
+		if (lastkey_menu != 0)
+			grab_key (laststate_menu, lastkey_menu);
+	} else {
 		lastkey_menu = 0;
+	}
 
 	if (global_config.keys_enabled && 
 	    global_config.run_keysym) {
-		lastkey_run = XKeysymToKeycode(GDK_DISPLAY(),
+		lastkey_run = XKeysymToKeycode (GDK_DISPLAY (),
 						global_config.run_keysym);
 		laststate_run = global_config.run_state;
-		if(lastkey_run &&
-		   (lastkey_menu != lastkey_run ||
-		    laststate_menu != laststate_run))
+		if (lastkey_run != 0 &&
+		    (lastkey_menu != lastkey_run ||
+		     laststate_menu != laststate_run))
 			grab_key (laststate_run, lastkey_run);
-	} else
+	} else {
 		lastkey_run = 0;
+	}
+
+	if (global_config.keys_enabled && 
+	    global_config.screenshot_keysym) {
+		lastkey_screenshot = XKeysymToKeycode
+			(GDK_DISPLAY (), global_config.screenshot_keysym);
+		laststate_screenshot = global_config.screenshot_state;
+		if (lastkey_screenshot != 0 &&
+		    (lastkey_menu != lastkey_screenshot ||
+		     laststate_menu != laststate_screenshot) &&
+		    (lastkey_run != lastkey_screenshot ||
+		     laststate_run != laststate_screenshot))
+			grab_key (laststate_screenshot, lastkey_screenshot);
+	} else {
+		lastkey_screenshot = 0;
+	}
+
 	gdk_flush ();
 	gdk_error_trap_pop();
+}
+
+static gboolean
+check_for_grabs (void)
+{
+	if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+			      0, NULL, NULL, GDK_CURRENT_TIME)
+	    != GrabSuccess) {
+		return TRUE;
+	} else {
+		gdk_pointer_ungrab (GDK_CURRENT_TIME);
+		return FALSE;
+	}
 }
 
 GdkFilterReturn
@@ -146,6 +189,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	guint keycode, state;
 	guint menu_keycode, menu_state;
 	guint run_keycode, run_state;
+	guint screenshot_keycode, screenshot_state;
 
 	if(xevent->type != KeyPress)
 		return GDK_FILTER_CONTINUE;
@@ -161,17 +205,17 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 					global_config.run_keysym);
 	run_state = global_config.run_state;
 
+	screenshot_keycode = XKeysymToKeycode (GDK_DISPLAY (),
+					       global_config.screenshot_keysym);
+	screenshot_state = global_config.screenshot_state;
+
 	if (keycode == menu_keycode &&
 	    (state & menu_state) == menu_state) {
 		PanelWidget *panel;
 		GtkWidget *menu, *basep;
 		/* check if anybody else has a grab */
-		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
-				      0, NULL, NULL, GDK_CURRENT_TIME)
-		    != GrabSuccess) {
+		if (check_for_grabs ()) {
 			return GDK_FILTER_CONTINUE;
-		} else {
-			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 		}
 
 		panel = panels->data;
@@ -187,15 +231,37 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	} else if (keycode == run_keycode &&
 		   (state & run_state) == run_state) {
 		/* check if anybody else has a grab */
-		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
-				      0, NULL, NULL, GDK_CURRENT_TIME)
-		    != GrabSuccess) {
+		if (check_for_grabs ()) {
 			return GDK_FILTER_CONTINUE;
-		} else {
-			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 		}
 
 		show_run_dialog ();
+		return GDK_FILTER_REMOVE;
+	} else if (keycode == screenshot_keycode &&
+		   (state & run_state) == screenshot_state) {
+		char *argv[2];
+		char *proggie;
+
+		/* check if anybody else has a grab */
+		if (check_for_grabs ()) {
+			return GDK_FILTER_CONTINUE;
+		}
+
+		proggie = gnome_is_program_in_path ("gnome-panel-screenshot");
+		if (proggie == NULL) {
+			panel_error_dialog (_("Can't find the screenshot "
+					      "program"));
+			return GDK_FILTER_REMOVE;
+		}
+		argv[0] = proggie;
+		argv[1] = NULL;
+
+		if (gnome_execute_async (g_get_home_dir (), 1, argv)<0)
+			panel_error_dialog (_("Can't execute the screenshot "
+					      "program"));
+
+		g_free (proggie);
+
 		return GDK_FILTER_REMOVE;
 	}
 
