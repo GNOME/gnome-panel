@@ -227,7 +227,7 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 }
 
 void
-make_scale_affine(double affine[], int w, int h, int size)
+make_scale_affine(double affine[], int w, int h, int size, int *outw, int *outh)
 {
 	int oh, ow;
 	oh = h;
@@ -246,6 +246,9 @@ make_scale_affine(double affine[], int w, int h, int size)
 
 	affine[0] = w / (double)(ow);
 	affine[3] = h / (double)(oh);
+
+	if(outw) *outw = w;
+	if(outh) *outh = h;
 }
 
 #if 0

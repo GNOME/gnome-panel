@@ -352,7 +352,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 				make_scale_affine(affine,
 						  tiles.tiles_down[button->tile]->art_pixbuf->width,
 						  tiles.tiles_down[button->tile]->art_pixbuf->height,
-						  size);
+						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
 						       tiles.tiles_down[button->tile]->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
@@ -363,7 +363,7 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 				make_scale_affine(affine,
 						  tiles.tiles_up[button->tile]->art_pixbuf->width,
 						  tiles.tiles_up[button->tile]->art_pixbuf->height,
-						  size);
+						  size, NULL, NULL);
 				art_rgb_pixbuf_affine (rgb, 0, 0, size, size, rowstride,
 						       tiles.tiles_up[button->tile]->art_pixbuf,
 						       affine, ART_FILTER_NEAREST, NULL);
@@ -375,11 +375,14 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 		if(button->pixbuf) {
 			double affine[6];
 			double transl[6];
+			int w,h;
 			make_scale_affine(affine,
 					  button->pixbuf->art_pixbuf->width,
 					  button->pixbuf->art_pixbuf->height,
-					  size);
-			art_affine_translate(transl,-border+off,-border+off);
+					  size, &w, &h);
+			art_affine_translate(transl,
+					     -border+off + (size-w)/2,
+					     -border+off + (size-h)/2);
 			art_affine_multiply(affine,affine,transl);
 
 			art_rgb_pixbuf_affine((rgb+border*rowstride+border*3),
