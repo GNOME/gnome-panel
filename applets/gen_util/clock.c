@@ -695,7 +695,6 @@ fill_clock_applet(PanelApplet *applet)
 	error = NULL;
 	cd->hourformat = panel_applet_gconf_get_bool (applet, KEY_HOUR_FORMAT, &error);
 	if (error) {
-		g_error_free (error);
 		/* Do NOT translate the clock/hourformat= part.  What you
 		 * should change is the number 12.  If your country code should use
 		 * 12 hour format by default, leave it at 12, otherwise use 24
@@ -712,6 +711,8 @@ fill_clock_applet(PanelApplet *applet)
 			if (cd->hourformat != 12 && cd->hourformat != 24)
 				cd->hourformat = 12;
 		}
+
+		g_error_free (error);
 	}
 
 	error = NULL;
