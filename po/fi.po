@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-12-10 13:27+1300\n"
-"PO-Revision-Date: 2002-11-30 22:31+0200\n"
+"POT-Creation-Date: 2002-12-11 21:33+0200\n"
+"PO-Revision-Date: 2002-12-11 23:44+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
 "sourceforge.net>\n"
@@ -34,7 +34,7 @@ msgstr "Ohjeen näyttämisessä tapahtui virhe: %s"
 
 # applets/fish/fish.c:572
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -42,7 +42,7 @@ msgid ""
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Varoitus:  Komento vaikuttaa itse asiassa hyödylliseltä.\n"
-"Koska tämä on hyödytön sovelma, et halua välttämättä tehdä\n"
+"Koska tämä on hyödytön sovelma, et varmaankaan halua tehdä\n"
 "tätä. Mielestämme %s ei sovi mihinkään, mikä tekisi siitä\n"
 "\"käytännöllisen\" tai hyödyllisen."
 
@@ -73,8 +73,8 @@ msgstr "(Georgen pienoisella avustuksella)"
 
 # applets/fish/GNOME_FishApplet_Factory.server.in.h:3
 # applets/fish/fish.c:1174
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:416
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Kala"
 
@@ -100,19 +100,19 @@ msgstr "Suoritettavan komennon paikannus epäonnistui"
 
 # applets/fish/fish.c:67
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "Gnome-kala %s"
+msgstr "Gnome-kala %s sanoo:"
 
 # gnome-panel/gnome-run.c:336 gnome-panel/gnome-run.c:410
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Komennon suorittaminen epäonnistui: \"%s\"\n"
+"Komennon \"%s\" suorittaminen epäonnistui.\n"
 "\n"
 "Lisätiedot: %s"
 
@@ -166,7 +166,6 @@ msgstr "_Ruutuja animaatiossa:"
 
 # applets/fish/fish.c:703
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME FIsh Preferences"
 msgstr "Gnome-kalan asetukset"
 
@@ -315,7 +314,7 @@ msgstr "%k:%M"
 # applets/gen_util/clock.c:170 applets/gen_util/clock.c:173
 #: applets/gen_util/clock.c:187 applets/gen_util/clock.c:189
 msgid "%a %b %d"
-msgstr "%a %d. %b"
+msgstr "%a %d. %Bta"
 
 # applets/gen_util/clock.c:273
 #. Show date in tooltip
@@ -401,8 +400,8 @@ msgstr "Suomennos: http://gnome-fi.sourceforge.net/"
 
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1192
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Kello"
 
@@ -589,9 +588,9 @@ msgstr "_Tarkista posti"
 # applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 # applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #: applets/gen_util/mailcheck.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s: %s"
-msgstr "Komennon %s käynnistäminen epäonnistui: %s"
+msgstr "Komennon %s suorittaminen epäonnistui: %s"
 
 # applets/gen_util/mailcheck.c:224
 #: applets/gen_util/mailcheck.c:274
@@ -1018,7 +1017,7 @@ msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Virhe display_all_workspaces-arvon latautuessa työtilanvaihtajaa varten: %s\n"
 
-# applets/gen_util/pager.c:504
+# applets/gen_util/tasklist.c:714
 #: applets/gen_util/pager.c:546
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
@@ -1142,10 +1141,10 @@ msgstr "Tulostin"
 msgid "Printer Applet"
 msgstr "Tulostinsovelma"
 
-# applets/gen_util/printer.c:354
+# applets/gen_util/mailcheck.c:1681
 #: applets/gen_util/printer.c:354
 msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation"
+msgstr "© 1998-2000 Free Software Foundation"
 
 # applets/gen_util/printer.c:356
 #: applets/gen_util/printer.c:356
@@ -1291,7 +1290,6 @@ msgstr "_Älä ryhmittele ikkunoita"
 
 # applets/gen_util/tasklist.schemas.in.h:1
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
@@ -1396,12 +1394,12 @@ msgid "???"
 msgstr "???"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/applet.c:493 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "_Poista paneelista"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Siirrä"
 
@@ -1804,9 +1802,8 @@ msgstr "_Sulje vetolaatikko, kun käynnistintä napsautetaan"
 
 # applets/fish/fish.c:765
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "_Ruutuja animaatiossa:"
+msgstr "Laatikoiden ja paneelin _animaatio"
 
 # gnome-panel/gnome-panel-preferences.glade.h:1
 #: gnome-panel/gnome-panel-preferences.glade.h:4
@@ -1819,7 +1816,7 @@ msgstr "Nopea"
 #: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
-msgstr "Keskinopea"
+msgstr "Kohtalainen"
 
 # gnome-panel/gnome-panel-preferences.glade.h:3
 #: gnome-panel/gnome-panel-preferences.glade.h:6
@@ -1957,21 +1954,18 @@ msgstr "Kuvakaappauksen otto koko työpöydästä ei onnistu."
 
 # gnome-panel/gnome-panel-screenshot.glade.h:2
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Valinnat"
+msgstr "<b>Valinnat</b>"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:3
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "Esikatselu"
+msgstr "<b>Esikatselu</b>"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "Kuvakaappaus"
+msgstr "Tallenna kuvakaappaus"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:4
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
@@ -2211,16 +2205,14 @@ msgstr "Anna ladattavan profiilin nimi"
 
 # gnome-panel/menu.c:230
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
-msgstr "Ja monet muut ..."
+msgstr "Monet muut ..."
 
 # gnome-panel/menu.c:232
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-#, fuzzy
 msgid "and finally, The Knights Who Say... NI!"
-msgstr "sekä ritarit, jotka sanovat... NI!"
+msgstr "ja lisäksi ritarit, jotka sanovat... NI!"
 
 # gnome-panel/menu.c:265
 #: gnome-panel/menu.c:277
@@ -2534,9 +2526,8 @@ msgstr ""
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
 #: gnome-panel/menu.c:3153
-#, fuzzy
 msgid "Delete Panel"
-msgstr "_Poista tämä paneeli"
+msgstr "Poista paneeli"
 
 # gnome-panel/menu.c:3211
 #: gnome-panel/menu.c:3392
@@ -2556,9 +2547,8 @@ msgstr "Painike"
 # gnome-panel/distribution.c:26
 #: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
 #: gnome-panel/menu.c:4141
-#, fuzzy
 msgid "Main Menu"
-msgstr "Debianin valikko"
+msgstr "Päävalikko"
 
 # gnome-panel/menu.c:3303
 #: gnome-panel/menu.c:3469
@@ -2621,7 +2611,7 @@ msgstr "Työpöytä"
 
 # gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3738
 # gnome-panel/menu.c:3967
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
+#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Valikko"
 
@@ -2824,9 +2814,8 @@ msgstr "Näytä piilotuspainikkeiden _nuolet"
 
 # gnome-panel/panel-config.c:605
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "Sekalaiset"
+msgstr "Sekalaiset:"
 
 # gnome-panel/panel-config.c:615
 #: gnome-panel/panel-config.c:642
@@ -2854,34 +2843,29 @@ msgid "Orientation:"
 msgstr "Suunta:"
 
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "_Vaakasijainti:"
+msgstr "_Vaaka"
 
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "_Pystysijainti:"
+msgstr "_Pysty"
 
 # gnome-panel/panel-config.c:726
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "_Sijainti:"
+msgstr "Sijainti:"
 
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "_Vaakasijainti:"
+msgstr "V_aaka:"
 
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "_Pystysijainti:"
+msgstr "P_ysty:"
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "_Etäisyys reunasta:"
 
 # libpanel-applet/panel-test-applets.glade.h:9
 #: gnome-panel/panel-config.c:1189
@@ -2926,7 +2910,7 @@ msgstr "Erikoissuuri"
 
 #: gnome-panel/panel-config.c:1420
 msgid "_Type:"
-msgstr ""
+msgstr "T_yyppi:"
 
 # gnome-panel/panel-config.c:1365
 #: gnome-panel/panel-config.c:1429
@@ -2945,39 +2929,35 @@ msgstr "Taustakuva"
 
 #: gnome-panel/panel-config.c:1435
 msgid "Transparent"
-msgstr ""
+msgstr "Läpinäkyvä"
 
 # gnome-panel/panel-config.c:1369 gnome-panel/panel-config.c:1385
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "Väri"
+msgstr "_Väri:"
 
 # gnome-panel/panel-config.c:1373 gnome-panel/panel-config.c:1415
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "Taustakuva"
+msgstr "Kuva:"
 
 #: gnome-panel/panel-config.c:1512
 msgid "T_ile"
-msgstr ""
+msgstr "V_ierekkäin"
 
 #: gnome-panel/panel-config.c:1517
 msgid "_Scale"
-msgstr ""
+msgstr "_Sovita"
 
 #: gnome-panel/panel-config.c:1521
-#, fuzzy
 msgid "St_retch"
-msgstr "_Venytä kuva"
+msgstr "_Venytä"
 
 # gnome-panel/panel-config.c:1467
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "Kierrä kuvaa p_ystypaneeleissa"
+msgstr "Kierrä kuva p_ystypaneeleissa"
 
 # gnome-panel/panel-config.c:1546
 #: gnome-panel/panel-config.c:1596
@@ -3237,69 +3217,3 @@ msgstr "Koko:"
 msgid "Top"
 msgstr "Ylhäällä"
 
-# applets/fish/fish.c:479
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "<big><big>Gnome-kala %s sanoo:</big></big>"
-
-# gnome-panel/gnome-panel-preferences.glade.h:5
-#~ msgid "_Animation"
-#~ msgstr "_Animaatio"
-
-# gnome-panel/menu.c:3229 gnome-panel/menu.c:3790 gnome-panel/menu.c:3818
-# gnome-panel/menu.c:4007
-#~ msgid "GNOME Menu"
-#~ msgstr "Gnomen valikko"
-
-# gnome-panel/panel-config.c:988
-#~ msgid "Orient hori_zontally"
-#~ msgstr "Muuta v_aakasuuntaiseksi"
-
-# gnome-panel/panel-config.c:1000
-#~ msgid "Orient _vertically"
-#~ msgstr "Muuta p_ystysuuntaiseksi"
-
-#~ msgid "Screen edge _offset:"
-#~ msgstr "Ruudun reunan _sijainti:"
-
-# gnome-panel/panel-config.c:1170
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "Erikoispieni (12 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1178
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "Hyvin pieni (24 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1186
-#~ msgid "Small (36 pixels)"
-#~ msgstr "Pieni (36 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1194
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "Keskikokoinen (48 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1202
-#~ msgid "Large (64 pixels)"
-#~ msgstr "Suuri (64 pikseliä)"
-
-# gnome-panel/panel-config.c:1210
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "Hyvin suuri (80 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1218
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "Erikoissuuri (128 kuvapistettä)"
-
-# gnome-panel/panel-config.c:1360
-#~ msgid "Background _type:"
-#~ msgstr "Taustan _tyyppi:"
-
-# gnome-panel/panel-config.c:1721
-#~ msgid "Background co_lor:"
-#~ msgstr "Taustavä_ri:"
-
-# gnome-panel/panel-config.c:1441
-#~ msgid "_Do not scale image to fit"
-#~ msgstr "_Älä venytä kuvaa paneeliin sopivaksi"
-
-#~ msgid "Sc_ale image"
-#~ msgstr "_Sovita kuva"
