@@ -97,14 +97,23 @@ panel_gconf_all_global_entries (void)
 gint 
 panel_gconf_get_int (const gchar *key, gint default_val) {
 	GConfValue *value;
-	
-	value =  gconf_client_get (panel_gconf_get_client (), key, NULL);
+	GError *error = NULL;
+
+	value =  gconf_client_get (panel_gconf_get_client (), key, &error);
 
 	if (value != NULL) {
-		gint retval;
+		gint retval; 
+	
+		g_assert (error == NULL);
 
-		retval = gconf_value_get_int (value);
+		if (value->type == GCONF_VALUE_INT)  {
+			retval = gconf_value_get_int (value);
+		} else {
+			/* FIXME : We still need to handle errors better than this */
+			retval = default_val;
+		}
 		gconf_value_free (value);
+
 		return retval;
 	} else {
 		return default_val;
@@ -114,14 +123,24 @@ panel_gconf_get_int (const gchar *key, gint default_val) {
 gboolean
 panel_gconf_get_bool (const gchar *key, gboolean default_val) {
 	GConfValue *value;
+	GError *error = NULL;
 
-	value = gconf_client_get (panel_gconf_get_client (), key, NULL);
+	value = gconf_client_get (panel_gconf_get_client (), key, &error);
 	
 	if (value != NULL) {
 		gboolean retval;
 
-		retval = gconf_value_get_bool (value);
+		g_assert (error == NULL);
+
+		if (value->type == GCONF_VALUE_BOOL) {
+			retval = gconf_value_get_bool (value);
+		} else {
+			/* FIXME : We still need to handle errors better than this */
+			retval = default_val;
+		}
+
 		gconf_value_free (value);
+
 		return retval;
 	} else {
 		return default_val;
@@ -131,14 +150,24 @@ panel_gconf_get_bool (const gchar *key, gboolean default_val) {
 gchar * 
 panel_gconf_get_string (const gchar *key, const gchar *default_val) {
 	GConfValue *value;
+	GError *error = NULL;
 
-	value = gconf_client_get (panel_gconf_get_client (), key, NULL);
+	value = gconf_client_get (panel_gconf_get_client (), key, &error);
 
 	if (value != NULL) {
 		gchar *retval;
-		
-		retval = g_strdup (gconf_value_get_string (value));
+	
+		g_assert (error == NULL);
+
+		if (value->type == GCONF_VALUE_STRING) {	
+			retval = g_strdup (gconf_value_get_string (value));
+		} else {
+			/* FIXME : We still need to handle errors better than this */
+			retval = g_strdup (default_val);
+		}
+
 		gconf_value_free (value);
+
 		return retval;
 	} else {
 		return g_strdup (default_val);
