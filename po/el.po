@@ -22,7 +22,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.17\n"
-"POT-Creation-Date: 2002-04-29 03:19+0100\n"
+"POT-Creation-Date: 2002-05-07 16:18+0100\n"
 "PO-Revision-Date: 2002-04-21 22:04+0100\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -44,9 +44,9 @@ msgstr "Περί..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Βοήθεια"
 
@@ -341,7 +341,7 @@ msgstr "Χρήση GMT"
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
-#: gnome-panel/menu.c:237
+#: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr "Συμεών (σίμος) Ξενιτέλλης <simos@hellug.gr>"
 
@@ -635,9 +635,9 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Αδύνατη η δημιουργία εφαρμογίδιου!\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
-#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
 msgid "Properties..."
 msgstr "Ιδιότητες..."
 
@@ -715,7 +715,7 @@ msgstr "Μετακίνηση"
 msgid "Remove From Panel"
 msgstr "Αφαίρεση από το ταμπλώ"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:990 gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:996 gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -726,7 +726,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr ";;;"
 
@@ -816,68 +816,83 @@ msgstr "Ενεργοποίηση κουμπιού απόκρυψης"
 msgid "Enable hidebutton arrow"
 msgstr "Ενεργοποίηση βέλους κουμπιού απόκρυψης"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "Συρτάρι"
 
-#: gnome-panel/foobar-widget.c:214
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:293
+#, fuzzy
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
+
+#: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:303
 #, fuzzy
 msgid "Cannot execute gnome-search-tool"
 msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
 
-#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3569
 msgid "Run Program..."
 msgstr "Εκτέλεση Προγράμματος..."
 
-#: gnome-panel/foobar-widget.c:227
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Εκτελεί προγράμματα, αν γνωρίζετε το ακριβές όνομα εντολής"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
 msgid "Search for Files..."
 msgstr "Αναζήτηση Αρχείων..."
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:251
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+#, fuzzy
+msgid "Take a Screen Shot..."
+msgstr "Λήψη πλήκτρου αρπαγής οθόνης"
+
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+#, fuzzy
+msgid "Take a screen shot of your desktop"
+msgstr "Αποθήκευση αρπαγής οθόνης στην _επιφάνεια εργασίας"
+
+#: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
 msgstr "Κλείδωμα Οθόνης"
 
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:257
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:264
+#: gnome-panel/foobar-widget.c:266
 msgid "Log Out"
 msgstr "Τερματισμός"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:269
 msgid "Quit from the GNOME desktop"
 msgstr "Έξοδος από το περιβάλλον εργασίας GNOME"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:276
+#: gnome-panel/foobar-widget.c:278
 msgid "Actions"
 msgstr "Ενέργειες"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:493
 msgid "No windows open"
 msgstr "Δεν υπάρχουν ανοιχτά παράθυρα"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
-#: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
+#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2714
+#: gnome-panel/menu.c:2720 gnome-panel/menu.c:3535
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
-#: gnome-panel/menu.c:2636
+#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2598
+#: gnome-panel/menu.c:2643
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Μενού ταμπλώ"
 
-#: gnome-panel/foobar-widget.c:769
+#: gnome-panel/foobar-widget.c:778
 #, fuzzy
 msgid "GNOME Menu Panel"
 msgstr "Το Ταμπλώ του GNOME"
@@ -943,7 +958,7 @@ msgstr "Προτιμήσεις Ρολογιού"
 msgid "Modify the global panel preferences"
 msgstr "Καθολικές ρυθμίσεις ταμπλώ"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
 msgid "Panel"
 msgstr "Ταμπλώ"
 
@@ -989,7 +1004,7 @@ msgstr "Κλείσιμο συρταριού όταν πατηθεί εκκινη
 msgid "_Enable panel animation"
 msgstr "Ενεργοποίηση κινούμενων σχεδίων"
 
-#: gnome-panel/gnome-panel-screenshot.c:128
+#: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -997,7 +1012,7 @@ msgstr ""
 "Αδύνατη η αρχικοποίηση της δομής png.\n"
 "Πιθανών να έχετε λάθος έκδοση του libpng στο σύστημά σας"
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1005,7 +1020,7 @@ msgstr ""
 "Αδύνατη η δημιουργία πληροφοριών png.\n"
 "Πιθανών να έχετε λάθος έκδοση του libpng στο σύστημά σας"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:141
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1013,7 +1028,7 @@ msgstr ""
 "Αδύνατος ο καθορισμός πληροφοριών png.\n"
 "Πιθανών να έχετε λάθος έκδοση του libpng στο σύστημά σας"
 
-#: gnome-panel/gnome-panel-screenshot.c:157
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1021,13 +1036,13 @@ msgstr ""
 "Ανεπαρκής μνήμη για την αποθήκευση της αρπαγής οθόνης.\n"
 "Παρακαλώ ελευθερώστε μερικούς πόρους και δοκιμάστε ξανά."
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:202
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Το αρχείο %s υπάρχει ήδη. Θέλετε να το γράψετε από πάνω του;"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:704
+#: gnome-panel/gnome-panel-screenshot.c:214
+#: gnome-panel/gnome-panel-screenshot.c:702
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1038,52 +1053,52 @@ msgstr ""
 "\"%s\"\n"
 "Παρακαλώ ελέγξτε τα δικαιώματα στο γονικό σας κατάλογο"
 
-#: gnome-panel/gnome-panel-screenshot.c:479
+#: gnome-panel/gnome-panel-screenshot.c:477
 msgid "Print Screenshot"
 msgstr "Εκτύπωση Αρπαγής Οθόνης"
 
-#: gnome-panel/gnome-panel-screenshot.c:527
+#: gnome-panel/gnome-panel-screenshot.c:525
 msgid "Screenshot Print Preview"
 msgstr "Προεπισκόπηση Εκτύπωσης Αρπαγής Οθόνης"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:553
+#: gnome-panel/gnome-panel-screenshot.c:551
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cΑρπαγήΟθόνης-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:558
+#: gnome-panel/gnome-panel-screenshot.c:556
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cΑρπαγήΟθόνης.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:573
+#: gnome-panel/gnome-panel-screenshot.c:571
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cΑρπαγήΟθόνης-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:578
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cΑρπαγήΟθόνης-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:724
+#: gnome-panel/gnome-panel-screenshot.c:722
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Δεν υπάρχει διαθέσιμος χώρος για να αποθηκευθεί το αρχείο %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1034
+#: gnome-panel/gnome-panel-screenshot.c:1021
 msgid "Grab a window instead of the entire screen"
 msgstr "Αρπαγή παραθύρου αντί ολόκληρης της οθόνης"
 
-#: gnome-panel/gnome-panel-screenshot.c:1035
+#: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1078
+#: gnome-panel/gnome-panel-screenshot.c:1064
 #, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
@@ -1092,18 +1107,9 @@ msgstr ""
 "Λείπει το αρχείο glade για το πρόγραμμα αρπαγής οθόνης.\n"
 "Παρακαλώ ελέγξτε την εγκατάσταση του gnome-core"
 
-#: gnome-panel/gnome-panel-screenshot.c:1100
+#: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Αδύνατη η αρπαγή οθόνης της τρέχουσας επιφάνειας γραφείου."
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
-#, fuzzy
-msgid "Screenshot Capture"
-msgstr "Αρπαγή οθόνης"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
-msgid "Take a picture of the current screen contents"
-msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:1
 msgid "Options"
@@ -1135,97 +1141,96 @@ msgstr "_Εκτύπωση αρπαγής οθόνης..."
 msgid "_Save screenshot to file:"
 msgstr "_Αποθήκευση αρπαγής οθόνης σε αρχείο:"
 
-#: gnome-panel/gnome-run.c:224 gnome-panel/gnome-run.c:240
-#, c-format
-msgid ""
-"Failed to load this program!\n"
-"%s"
+#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
+#, fuzzy, c-format
+msgid "Failed to run this program: '%s'"
 msgstr ""
 "Αποτυχία φόρτωσης του προγράμματος!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:333
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s"
+#: gnome-panel/gnome-run.c:325
+#, fuzzy, c-format
+msgid "Failed to execute command: '%s'"
 msgstr ""
 "Αποτυχία εκτέλεσης εντολής:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:390
-#, c-format
+#: gnome-panel/gnome-run.c:384
+#, fuzzy, c-format
 msgid ""
-"Failed to execute command:\n"
-"%s\n"
-"%s"
+"Failed to execute command: '%s'\n"
+"\n"
+"Details: %s"
 msgstr ""
 "Αδύνατη εκτέλεση εντολής:\n"
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:679
-msgid "Executable name for selected application"
-msgstr ""
+#: gnome-panel/gnome-run.c:664
+#, fuzzy
+msgid "Command to run"
+msgstr "Εντολή (προαιρετική)"
 
-#: gnome-panel/gnome-run.c:692
+#: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
 msgstr "Εξε_ρεύνηση..."
 
-#: gnome-panel/gnome-run.c:701
+#: gnome-panel/gnome-run.c:688
 msgid "Run in _terminal"
 msgstr "Εκτέλεση σε τερματι_κό"
 
-#: gnome-panel/gnome-run.c:927
-#, c-format
-msgid "Will run '%s'"
+#: gnome-panel/gnome-run.c:922
+#, fuzzy, c-format
+msgid "Will run command: '%s'"
 msgstr "Θα εκτελεστεί το '%s'"
 
-#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
-msgid "No program selected"
+#: gnome-panel/gnome-run.c:931
+#, fuzzy
+msgid "No application selected"
 msgstr "Δεν επιλέχθηκε πρόγραμμα"
 
-#: gnome-panel/gnome-run.c:1061
-msgid "A_pplications:"
+#: gnome-panel/gnome-run.c:1051
+#, fuzzy
+msgid "Known A_pplications:"
 msgstr "Εφαρμο_γές:"
 
-#: gnome-panel/gnome-run.c:1071
-msgid "List of Applications"
+#: gnome-panel/gnome-run.c:1061
+#, fuzzy
+msgid "List of known applications"
 msgstr "Λίστα Εφαρμογών"
 
-#: gnome-panel/gnome-run.c:1072
+#: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
 msgstr ""
 
-#: gnome-panel/gnome-run.c:1181
-msgid "_Advanced <<"
-msgstr "Για προχωρη_μένους <<"
+#: gnome-panel/gnome-run.c:1160
+#, fuzzy
+msgid "_Known Applications <<"
+msgstr "Εφαρμογές"
 
-#: gnome-panel/gnome-run.c:1184
-msgid "Hide the advanced controls below this button."
-msgstr "Απόκρυψη προχωρημένων ρυθμίσεων κάτω από αυτό το κουμπί."
+#: gnome-panel/gnome-run.c:1163
+#, fuzzy
+msgid "Hide the list of known applications"
+msgstr "Λίστα Εφαρμογών"
 
-#: gnome-panel/gnome-run.c:1195
-msgid "_Advanced >>"
-msgstr "Για προχωρη_μένους >>"
+#: gnome-panel/gnome-run.c:1177
+#, fuzzy
+msgid "_Known Applications >>"
+msgstr "Εφαρμογές"
+
+#: gnome-panel/gnome-run.c:1180
+msgid "Display a list of known applications from the applications menu"
+msgstr ""
 
 #: gnome-panel/gnome-run.c:1198
-msgid ""
-"Allow typing in a command line instead of choosing an application from the "
-"list"
-msgstr ""
-"Δυνατότητα πληκτρολόγησης σε γραμμή εντολών αντί της επιλογής εφαρμογής από "
-"τη λίστα"
-
-#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "_Εκτέλεση"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1255
 msgid "Run Program"
 msgstr "Εκτέλεση προγράμματος"
 
@@ -1269,13 +1274,13 @@ msgstr "Βοήθεια στην Εφαρμογή %s"
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
-#: gnome-panel/menu-ditem.c:254
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
+#: gnome-panel/menu-ditem.c:256
 #, fuzzy
 msgid "Launcher Properties"
 msgstr "Ιδιότητες εκκινητή"
 
-#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
 #, fuzzy
 msgid "Create Launcher"
 msgstr "Δημιουργία εφαρμογιδίου εκκινητή"
@@ -1289,7 +1294,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3384
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3391
 msgid "Log out"
 msgstr "Τερματισμός"
 
@@ -1297,7 +1302,7 @@ msgstr "Τερματισμός"
 msgid "Log out of GNOME"
 msgstr "Τερματισμός GNOME"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3371
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3378
 msgid "Lock screen"
 msgstr "Κλείδωμα οθόνης"
 
@@ -1333,38 +1338,41 @@ msgstr "Επανεκκίνηση Υπηρεσίας Προφύλαξης Οθό�
 msgid "Specify a profile name to load"
 msgstr "Καθορίζει ένα όνομα συνεδρίας προς φόρτωση"
 
-#: gnome-panel/menu-ditem.c:117
+#: gnome-panel/menu-ditem.c:119
 #, fuzzy, c-format
 msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
+"<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
 "Αδύνατη η εκκίνηση του εικονιδίου\n"
 "%s"
 
-#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
 msgid "Menu"
 msgstr "Μενού"
 
-#: gnome-panel/menu-ditem.c:437
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
+msgstr ""
+
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
 msgstr ""
 
 #. class
-#: gnome-panel/menu-ditem.c:458
-#, c-format
+#: gnome-panel/menu-ditem.c:480
+#, fuzzy, c-format
 msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
+"<b>Cannot save menu item to disk</b>\n"
 "\n"
-"%s"
+"Details: %s"
 msgstr ""
+"Αδύνατη η εκκίνηση του εικονιδίου\n"
+"%s"
 
-#: gnome-panel/menu-ditem.c:482
+#: gnome-panel/menu-ditem.c:503
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1442,16 +1450,16 @@ msgstr "Διαδρομή μενού"
 msgid "Use custom icon for panel button"
 msgstr "Χρήση παραμετροποιημένου εικονιδίου για το κουμπί του ταμπλώ"
 
-#: gnome-panel/menu.c:225
+#: gnome-panel/menu.c:227
 msgid "Many many others ..."
 msgstr "Πολλά πολλά άλλα ..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:227
+#: gnome-panel/menu.c:229
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "και τελικά, Οι Ιππότες Που Λένε ... Νι!"
 
-#: gnome-panel/menu.c:260
+#: gnome-panel/menu.c:262
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1459,7 +1467,7 @@ msgstr ""
 "Το παρόν πρόγραμμα είναι υπέυθυνο για την εκκίνηση άλλων εφαρμογών, την "
 "ενσωμάτωση εφαρμογιδίων, την παγκόσμια ειρήνη, και τυχαία κρεμάσματα των X."
 
-#: gnome-panel/menu.c:266
+#: gnome-panel/menu.c:268
 #, fuzzy
 msgid ""
 "\n"
@@ -1470,24 +1478,24 @@ msgstr ""
 "Εκτέλεση σε κατάσταση \"Κλειδώματος\". Αυτό σημαίνει ότι ο διαχειριστής "
 "συστήματος έχει απαγορέψει της αλλαγές στις ρυθμίσεις του ταμπλώ."
 
-#: gnome-panel/menu.c:272
+#: gnome-panel/menu.c:274
 msgid "The GNOME Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/menu.c:273
+#: gnome-panel/menu.c:275
 #, fuzzy
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(C) 1997-2000 το Free Software Foundation"
 
-#: gnome-panel/menu.c:292
+#: gnome-panel/menu.c:294
 msgid "End world hunger"
 msgstr "Τερματισμός της παγκόσμιας ασιτίας"
 
-#: gnome-panel/menu.c:306
+#: gnome-panel/menu.c:308
 msgid "Can't execute 'About GNOME'"
 msgstr "Αδύνατη η εκτέλεση του 'Περί GNOME'"
 
-#: gnome-panel/menu.c:324
+#: gnome-panel/menu.c:326
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1495,7 +1503,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:332 gnome-panel/menu.c:971 gnome-panel/menu.c:999
+#: gnome-panel/menu.c:334 gnome-panel/menu.c:977 gnome-panel/menu.c:1005
 #, fuzzy, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1503,7 +1511,7 @@ msgid ""
 "Details: %s"
 msgstr "Αδύνατη η ανάγνωση καταχώρησης"
 
-#: gnome-panel/menu.c:883
+#: gnome-panel/menu.c:889
 #, fuzzy, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1511,126 +1519,126 @@ msgid ""
 "Details: %s\n"
 msgstr "Αδύνατη η αφαίρεση στοιχείου μενού %s: %s\n"
 
-#: gnome-panel/menu.c:892
+#: gnome-panel/menu.c:898
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Αδύνατη η εύρεση ονόματος αρχείου από τη διαδρομή: %s"
 
-#: gnome-panel/menu.c:899
+#: gnome-panel/menu.c:905
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Αδύνατη η εύρεση ονόματος καταλόγου από τη διαδρομή: %s"
 
-#: gnome-panel/menu.c:965
+#: gnome-panel/menu.c:971
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Δεν υπάρχει πεδίο 'Exec' ή 'URL' στην εγγραφή"
 
-#: gnome-panel/menu.c:1252
+#: gnome-panel/menu.c:1258
 msgid "Add this launcher to panel"
 msgstr "Προσθήκη του εκκινητή στο ταμπλώ"
 
-#: gnome-panel/menu.c:1260
+#: gnome-panel/menu.c:1266
 msgid "Remove this item"
 msgstr "Αφαίρεση του στοιχείου"
 
-#: gnome-panel/menu.c:1276
+#: gnome-panel/menu.c:1282
 msgid "Put into run dialog"
 msgstr "Τοποθέτηση στο διάλογο εκτέλεσης"
 
-#: gnome-panel/menu.c:1294
+#: gnome-panel/menu.c:1300
 #, c-format
 msgid "Help on %s"
 msgstr "Βοήθεια για %s"
 
-#: gnome-panel/menu.c:1295
+#: gnome-panel/menu.c:1301
 msgid "Application"
 msgstr "Εφαρμογή"
 
-#: gnome-panel/menu.c:1341
+#: gnome-panel/menu.c:1347
 msgid "Entire menu"
 msgstr "Ολόκληρο το μενού"
 
-#: gnome-panel/menu.c:1350
+#: gnome-panel/menu.c:1356
 msgid "Add this as drawer to panel"
 msgstr "Προσθήκη του παρόντος ως συρτάρι στο ταμπλώ"
 
-#: gnome-panel/menu.c:1358
+#: gnome-panel/menu.c:1364
 msgid "Add this as menu to panel"
 msgstr "Προσθήκη του παρόντος ως μενού στο ταμπλώ"
 
-#: gnome-panel/menu.c:1366
+#: gnome-panel/menu.c:1372
 msgid "Add new item to this menu"
 msgstr "Προσθήκη νέου στοιχείου στο μενού"
 
-#: gnome-panel/menu.c:1700
+#: gnome-panel/menu.c:1707
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr ""
 "Έχετε ήδη μια προσκόλληση κατάστασης στο ταμπλώ. Μπορείτε να έχετε μόνο μια"
 
-#: gnome-panel/menu.c:2295 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2302 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "η επερώτηση επέστρεψε την εξαίρεση %s\n"
 
-#: gnome-panel/menu.c:2513 gnome-panel/menu.c:2517
+#: gnome-panel/menu.c:2520 gnome-panel/menu.c:2524
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Ισοζυγισμένο ταμπλώ"
 
-#: gnome-panel/menu.c:2518
+#: gnome-panel/menu.c:2525
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Ισοζυγισμένο ταμπλώ"
 
-#: gnome-panel/menu.c:2534 gnome-panel/menu.c:2537 gnome-panel/menu.c:2655
+#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2544 gnome-panel/menu.c:2662
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Ακραίο ταμπλώ"
 
-#: gnome-panel/menu.c:2538
+#: gnome-panel/menu.c:2545
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "Το Ταμπλώ του GNOME"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2558 gnome-panel/menu.c:2671
+#: gnome-panel/menu.c:2561 gnome-panel/menu.c:2565 gnome-panel/menu.c:2678
 #, fuzzy
 msgid "Sliding Panel"
 msgstr "Συρρόμενο ταμπλώ"
 
-#: gnome-panel/menu.c:2559
+#: gnome-panel/menu.c:2566
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Συρρόμενο ταμπλώ"
 
-#: gnome-panel/menu.c:2575 gnome-panel/menu.c:2579 gnome-panel/menu.c:2679
+#: gnome-panel/menu.c:2582 gnome-panel/menu.c:2586 gnome-panel/menu.c:2686
 #, fuzzy
 msgid "Floating Panel"
 msgstr "Πλωτό ταμπλώ"
 
-#: gnome-panel/menu.c:2580
+#: gnome-panel/menu.c:2587
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Πλωτό ταμπλώ"
 
-#: gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2603
 msgid "You can only have one menu panel at a time."
 msgstr "Μπορείτε να έχετε μόνο ένα μενού ταμπλώ κάθε φορά."
 
-#: gnome-panel/menu.c:2663
+#: gnome-panel/menu.c:2670
 #, fuzzy
 msgid "Corner Panel"
 msgstr "Δημιουργία ταμπλώ"
 
 #. force_image
-#: gnome-panel/menu.c:2776 gnome-panel/menu.c:2783 gnome-panel/menu.c:3444
+#: gnome-panel/menu.c:2783 gnome-panel/menu.c:2790 gnome-panel/menu.c:3451
 msgid "KDE menus"
 msgstr "Μενού KDE"
 
-#: gnome-panel/menu.c:2853
+#: gnome-panel/menu.c:2860
 msgid "You cannot remove your last panel."
 msgstr "Δεν μπορείτε να αφαιρέσετε το τελευταίο σας ταμπλώ."
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:2872
 #, fuzzy
 msgid ""
 "When a panel is removed, the panel and its\n"
@@ -1639,81 +1647,81 @@ msgstr ""
 "Όταν ένα ταμπλώ αφαιρείται, οι ρυθμίσεις του\n"
 "και των εφαμογιδίων του χάνονται. Αφαίρεση του ταμπλώ αυτού;"
 
-#: gnome-panel/menu.c:3105
+#: gnome-panel/menu.c:3112
 msgid "Launcher..."
 msgstr "Εκκινητής..."
 
-#: gnome-panel/menu.c:3113
+#: gnome-panel/menu.c:3120
 msgid "Launcher from menu"
 msgstr "Εκκινητής από μενού"
 
-#: gnome-panel/menu.c:3123
+#: gnome-panel/menu.c:3130
 #, fuzzy
 msgid "GNOME Menu"
 msgstr "Βοήθεια GNOME"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3150
 msgid "Log out button"
 msgstr "Kουμπί τερματισμού"
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3160
 msgid "Lock button"
 msgstr "Κουμπί κλειδώματος"
 
-#: gnome-panel/menu.c:3161
+#: gnome-panel/menu.c:3168
 msgid "Status dock"
 msgstr "Προσκόλληση κατάστασης"
 
-#: gnome-panel/menu.c:3175
+#: gnome-panel/menu.c:3182
 #, fuzzy
 msgid "Cannot execute panel global preferences"
 msgstr "Αδύνατη η εκτέλεση καθολικών ιδιοτήτων ταμπλώ"
 
-#: gnome-panel/menu.c:3213
+#: gnome-panel/menu.c:3220
 #, fuzzy
 msgid "Delete this panel..."
 msgstr "Αφαίρεση παρόντος ταμπλώ..."
 
-#: gnome-panel/menu.c:3215 gnome-panel/menu.c:3254
+#: gnome-panel/menu.c:3222 gnome-panel/menu.c:3261
 #, fuzzy
 msgid "Delete this panel"
 msgstr "Αφαίρεση παρόντος ταμπλώ"
 
-#: gnome-panel/menu.c:3233
+#: gnome-panel/menu.c:3240
 msgid "Add to panel"
 msgstr "Προσθήκη στο ταμπλώ"
 
-#: gnome-panel/menu.c:3245
+#: gnome-panel/menu.c:3252
 msgid "Create panel"
 msgstr "Δημιουργία ταμπλώ"
 
-#: gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3289
 msgid "Global Preferences..."
 msgstr "Καθολικές Προτιμήσεις..."
 
-#: gnome-panel/menu.c:3295
+#: gnome-panel/menu.c:3302
 msgid "Panel Manual..."
 msgstr "Εγχειρίδιο Ταμπλώ..."
 
-#: gnome-panel/menu.c:3307
+#: gnome-panel/menu.c:3314
 msgid "Cannot execute xscreensaver"
 msgstr "Αδύνατη η εκτέλεση του προγράμματος προφύλαξης οθόνης"
 
-#: gnome-panel/menu.c:3326
+#: gnome-panel/menu.c:3333
 msgid "About the panel..."
 msgstr "Περί ταμπλώ..."
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:3347
 msgid "About GNOME..."
 msgstr "Περί GNOME..."
 
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3384
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr ""
 "Κλείδωμα της οθόνης ούτως ώστε να μπορέσετε να φύγετε προσωρινά από τον "
 "υπολογιστή σας"
 
-#: gnome-panel/menu.c:3390
+#: gnome-panel/menu.c:3397
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1721,28 +1729,28 @@ msgstr ""
 "Αποσυνδεθείτε από αυτή τη συνεδρία για να συνδεθείτε ως διαφορετικος χρήστης "
 "ή για να κλείσετε τον υπολογιστή σας"
 
-#: gnome-panel/menu.c:3545
+#: gnome-panel/menu.c:3552
 msgid "Applets"
 msgstr "Εφαρμογίδια"
 
-#: gnome-panel/menu.c:3568
+#: gnome-panel/menu.c:3575
 #, fuzzy
 msgid "Run a command"
 msgstr "Εντολή εκτύπωσης:"
 
-#: gnome-panel/menu.c:3586
+#: gnome-panel/menu.c:3619
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3652
 msgid "Menu:"
 msgstr "Μενού:"
 
-#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
+#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
 msgid "Main Menu"
 msgstr "Κυρίως Mενού"
 
-#: gnome-panel/menu.c:3691
+#: gnome-panel/menu.c:3724
 msgid "Can't create menu, using main menu!"
 msgstr "Αδύνατη η δημιουργία μενού, χρήση του κυρίως μενού!"
 
@@ -1750,16 +1758,16 @@ msgstr "Αδύνατη η δημιουργία μενού, χρήση του κ�
 msgid "Cannot register control widget\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:597
+#: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:685
+#: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:812
 #, fuzzy, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1988,46 +1996,66 @@ msgstr "Εφαρμογίδιο"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:643
+#: libpanel-applet/panel-applet.c:654
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:657
+#: libpanel-applet/panel-applet.c:668
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:666
+#: libpanel-applet/panel-applet.c:677
 #, fuzzy, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 "Αποτυχία εκτέλεσης εντολής:\n"
 "%s"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:684
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:853
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:850
+#: libpanel-applet/panel-applet.c:861
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:869
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:877
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:885
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Screenshot Capture"
+#~ msgstr "Αρπαγή οθόνης"
+
+#~ msgid "_Advanced <<"
+#~ msgstr "Για προχωρη_μένους <<"
+
+#~ msgid "Hide the advanced controls below this button."
+#~ msgstr "Απόκρυψη προχωρημένων ρυθμίσεων κάτω από αυτό το κουμπί."
+
+#~ msgid "_Advanced >>"
+#~ msgstr "Για προχωρη_μένους >>"
+
+#~ msgid ""
+#~ "Allow typing in a command line instead of choosing an application from "
+#~ "the list"
+#~ msgstr ""
+#~ "Δυνατότητα πληκτρολόγησης σε γραμμή εντολών αντί της επιλογής εφαρμογής "
+#~ "από τη λίστα"
 
 #, fuzzy
 #~ msgid "Base Panel"
@@ -2219,9 +2247,6 @@ msgstr ""
 
 #~ msgid "Title of application to swallow"
 #~ msgstr "Τίτλος εφαρμογής προς ενσωμάτωση"
-
-#~ msgid "Command (optional)"
-#~ msgstr "Εντολή (προαιρετική)"
 
 #~ msgid "Width"
 #~ msgstr "Πλάτος"
@@ -4464,9 +4489,6 @@ msgstr ""
 #~ msgid "Panel treatment (GNOME compliant window managers only)"
 #~ msgstr ""
 #~ "Μεταχείριση ταμπλώ (μόνο για συμβατούς με GNOME διαχειριστές παραθύρων)"
-
-#~ msgid "Take screenshot key"
-#~ msgstr "Λήψη πλήκτρου αρπαγής οθόνης"
 
 #~ msgid "Take window screenshot key"
 #~ msgstr "Λήψη πλήκτρου αρπαγής παραθύρου"

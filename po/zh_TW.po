@@ -13,7 +13,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.5.19\n"
-"POT-Creation-Date: 2002-04-29 15:33+0800\n"
+"POT-Creation-Date: 2002-05-07 16:18+0100\n"
 "PO-Revision-Date: 2002-04-29 15:53+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -35,9 +35,9 @@ msgstr "關於..."
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:658
+#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:632
 #: gnome-panel/launcher.c:717 gnome-panel/logout.c:132
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:3968 gnome-panel/status.c:377
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:4001 gnome-panel/status.c:377
 msgid "Help"
 msgstr "說明"
 
@@ -314,7 +314,7 @@ msgstr "使用 _UTC 時間"
 #. Translator credits
 #: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
-#: gnome-panel/menu.c:237
+#: gnome-panel/menu.c:239
 msgid "translator_credits"
 msgstr "Abel Cheung <maddog@linux.org.hk>"
 
@@ -595,9 +595,9 @@ msgstr "印表機面板程式可以讓你簡單地拖曳及使用列印指令列
 msgid "Can't create applet!\n"
 msgstr "無法建立面板程式！\n"
 
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:655
-#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1320 gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:3270 gnome-panel/menu.c:3966
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:629
+#: gnome-panel/launcher.c:715 gnome-panel/menu.c:1326 gnome-panel/menu.c:1397
+#: gnome-panel/menu.c:3277 gnome-panel/menu.c:3999
 msgid "Properties..."
 msgstr "屬性..."
 
@@ -668,7 +668,7 @@ msgstr "移動"
 msgid "Remove From Panel"
 msgstr "從面板中移除"
 
-#: gnome-panel/applet.c:207 gnome-panel/menu.c:990 gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:996 gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -682,7 +682,7 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:402
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:411
 msgid "???"
 msgstr "???"
 
@@ -771,66 +771,81 @@ msgstr "啟用隱藏按鈕"
 msgid "Enable hidebutton arrow"
 msgstr "啟用隱藏按鈕箭頭"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:471 gnome-panel/menu.c:3133
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:446 gnome-panel/menu.c:3140
 msgid "Drawer"
 msgstr "抽屜"
 
-#: gnome-panel/foobar-widget.c:214
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:293
+#, fuzzy
+msgid "Cannot execute gnome-panel-screenshot"
+msgstr "無法執行 gnome-search-tool"
+
+#: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:303
 msgid "Cannot execute gnome-search-tool"
 msgstr "無法執行 gnome-search-tool"
 
-#: gnome-panel/foobar-widget.c:224 gnome-panel/menu.c:3562
+#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3569
 msgid "Run Program..."
 msgstr "執行程式..."
 
-#: gnome-panel/foobar-widget.c:227
+#: gnome-panel/foobar-widget.c:217
 msgid "Run applications, if you know the correct command to type in"
 msgstr "執行程式 (假設能夠正確輸入指令)"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:227 gnome-panel/menu.c:3581
 msgid "Search for Files..."
 msgstr "搜尋檔案..."
 
-#: gnome-panel/foobar-widget.c:240
+#: gnome-panel/foobar-widget.c:230 gnome-panel/menu.c:3584
 msgid "Find files, folders, and documents on your computer"
 msgstr "在電腦中搜尋檔案、資料夾及文件"
 
-#: gnome-panel/foobar-widget.c:251
+#: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
+#, fuzzy
+msgid "Take a Screen Shot..."
+msgstr "用於擷取畫面的按鍵"
+
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
+#, fuzzy
+msgid "Take a screen shot of your desktop"
+msgstr "將螢幕畫面儲存到桌面(_D)"
+
+#: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
 msgstr "鎖定畫面"
 
-#: gnome-panel/foobar-widget.c:255
+#: gnome-panel/foobar-widget.c:257
 msgid "Protect your computer from unauthorized use"
 msgstr "保護電腦，避免別人在未經授權的情況下使用"
 
-#: gnome-panel/foobar-widget.c:264
+#: gnome-panel/foobar-widget.c:266
 msgid "Log Out"
 msgstr "登出"
 
-#: gnome-panel/foobar-widget.c:267
+#: gnome-panel/foobar-widget.c:269
 msgid "Quit from the GNOME desktop"
 msgstr "離開 GNOME 桌面"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:276
+#: gnome-panel/foobar-widget.c:278
 msgid "Actions"
 msgstr "行動"
 
-#: gnome-panel/foobar-widget.c:484
+#: gnome-panel/foobar-widget.c:493
 msgid "No windows open"
 msgstr "沒有開啟的視窗"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2707
-#: gnome-panel/menu.c:2713 gnome-panel/menu.c:3528
+#: gnome-panel/foobar-widget.c:745 gnome-panel/menu.c:2714
+#: gnome-panel/menu.c:2720 gnome-panel/menu.c:3535
 msgid "Applications"
 msgstr "應用程式"
 
-#: gnome-panel/foobar-widget.c:769 gnome-panel/menu.c:2591
-#: gnome-panel/menu.c:2636
+#: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2598
+#: gnome-panel/menu.c:2643
 msgid "Menu Panel"
 msgstr "選單面板"
 
-#: gnome-panel/foobar-widget.c:769
+#: gnome-panel/foobar-widget.c:778
 msgid "GNOME Menu Panel"
 msgstr "GNOME 選單面板"
 
@@ -887,7 +902,7 @@ msgstr "面板偏好設定"
 msgid "Modify the global panel preferences"
 msgstr "修改整體的面板屬性"
 
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3578
+#: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
 msgid "Panel"
 msgstr "面板"
 
@@ -927,7 +942,7 @@ msgstr "按下抽屜內的啟動圖示後會關閉抽屜(_C)"
 msgid "_Enable panel animation"
 msgstr "以平滑方式移動面板(_E)"
 
-#: gnome-panel/gnome-panel-screenshot.c:128
+#: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -935,7 +950,7 @@ msgstr ""
 "無法初始化 png 結構。\n"
 "系統裡可能有一個已損毀的 libpng 版本"
 
-#: gnome-panel/gnome-panel-screenshot.c:136
+#: gnome-panel/gnome-panel-screenshot.c:134
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -943,7 +958,7 @@ msgstr ""
 "無法建立 png 資料。\n"
 "系統裡可能有一個已損毀的 libpng 版本"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:141
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -951,7 +966,7 @@ msgstr ""
 "無法設定 png 資料。\n"
 "系統裡可能有一個已損毀的 libpng 版本"
 
-#: gnome-panel/gnome-panel-screenshot.c:157
+#: gnome-panel/gnome-panel-screenshot.c:155
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -959,13 +974,13 @@ msgstr ""
 "記憶體不足以儲存抓到的螢幕畫面。\n"
 "請釋放一些資源並再嘗試。"
 
-#: gnome-panel/gnome-panel-screenshot.c:204
+#: gnome-panel/gnome-panel-screenshot.c:202
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "檔案 %s 已存在。要覆寫？"
 
-#: gnome-panel/gnome-panel-screenshot.c:216
-#: gnome-panel/gnome-panel-screenshot.c:704
+#: gnome-panel/gnome-panel-screenshot.c:214
+#: gnome-panel/gnome-panel-screenshot.c:702
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -976,52 +991,52 @@ msgstr ""
 "\"%s\"\n"
 "請檢查該目錄的權限"
 
-#: gnome-panel/gnome-panel-screenshot.c:479
+#: gnome-panel/gnome-panel-screenshot.c:477
 msgid "Print Screenshot"
 msgstr "列印畫面快照"
 
-#: gnome-panel/gnome-panel-screenshot.c:527
+#: gnome-panel/gnome-panel-screenshot.c:525
 msgid "Screenshot Print Preview"
 msgstr "畫面快照列印預覽"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:553
+#: gnome-panel/gnome-panel-screenshot.c:551
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cScreenshot-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:558
+#: gnome-panel/gnome-panel-screenshot.c:556
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cScreenshot.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:573
+#: gnome-panel/gnome-panel-screenshot.c:571
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cScreenshot-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:578
+#: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cScreenshot-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:724
+#: gnome-panel/gnome-panel-screenshot.c:722
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "磁碟空間不夠寫入檔案 %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1034
+#: gnome-panel/gnome-panel-screenshot.c:1021
 msgid "Grab a window instead of the entire screen"
 msgstr "只擷取一個視窗而非整個螢幕"
 
-#: gnome-panel/gnome-panel-screenshot.c:1035
+#: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "在指定秒數之後擷取畫面快照"
 
-#: gnome-panel/gnome-panel-screenshot.c:1078
+#: gnome-panel/gnome-panel-screenshot.c:1064
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1029,17 +1044,9 @@ msgstr ""
 "找不到抓取螢幕畫面程式所需的 glade 檔案。\n"
 "請檢查 gnome-panel 是否已正確安裝"
 
-#: gnome-panel/gnome-panel-screenshot.c:1100
+#: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "無法抓取現時桌面的畫面。"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:1
-msgid "Screenshot Capture"
-msgstr "畫面快照"
-
-#: gnome-panel/gnome-panel-screenshot.desktop.in.h:2
-msgid "Take a picture of the current screen contents"
-msgstr "擷取目前畫面的內容"
 
 #: gnome-panel/gnome-panel-screenshot.glade2.h:1
 msgid "Options"
@@ -1069,95 +1076,96 @@ msgstr "列印螢幕畫面(_P)..."
 msgid "_Save screenshot to file:"
 msgstr "將螢幕畫面存入檔案(_S)："
 
-#: gnome-panel/gnome-run.c:224 gnome-panel/gnome-run.c:240
-#, c-format
-msgid ""
-"Failed to load this program!\n"
-"%s"
+#: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
+#, fuzzy, c-format
+msgid "Failed to run this program: '%s'"
 msgstr ""
 "無法載入此程式！\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:333
-#, c-format
-msgid ""
-"Failed to execute command:\n"
-"%s"
+#: gnome-panel/gnome-run.c:325
+#, fuzzy, c-format
+msgid "Failed to execute command: '%s'"
 msgstr ""
 "無法執行指令：\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:390
-#, c-format
+#: gnome-panel/gnome-run.c:384
+#, fuzzy, c-format
 msgid ""
-"Failed to execute command:\n"
-"%s\n"
-"%s"
+"Failed to execute command: '%s'\n"
+"\n"
+"Details: %s"
 msgstr ""
 "無法執行指令：\n"
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:433
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr "選擇要執行的程式"
 
-#: gnome-panel/gnome-run.c:679
-msgid "Executable name for selected application"
-msgstr "所選取的應用程式的可執行檔名稱"
+#: gnome-panel/gnome-run.c:664
+#, fuzzy
+msgid "Command to run"
+msgstr "指令（選擇性）"
 
-#: gnome-panel/gnome-run.c:692
+#: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
-#: gnome-panel/gnome-run.c:701
+#: gnome-panel/gnome-run.c:688
 msgid "Run in _terminal"
 msgstr "在終端機中執行(_T)"
 
-#: gnome-panel/gnome-run.c:927
-#, c-format
-msgid "Will run '%s'"
+#: gnome-panel/gnome-run.c:922
+#, fuzzy, c-format
+msgid "Will run command: '%s'"
 msgstr "將要執行‘%s’"
 
-#: gnome-panel/gnome-run.c:938 gnome-panel/gnome-run.c:941
-msgid "No program selected"
+#: gnome-panel/gnome-run.c:931
+#, fuzzy
+msgid "No application selected"
 msgstr "未選擇程式"
 
-#: gnome-panel/gnome-run.c:1061
-msgid "A_pplications:"
+#: gnome-panel/gnome-run.c:1051
+#, fuzzy
+msgid "Known A_pplications:"
 msgstr "應用程式(_P)"
 
-#: gnome-panel/gnome-run.c:1071
-msgid "List of Applications"
+#: gnome-panel/gnome-run.c:1061
+#, fuzzy
+msgid "List of known applications"
 msgstr "應用程式清單"
 
-#: gnome-panel/gnome-run.c:1072
+#: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
 msgstr "在清單中選擇要執行的應用程式"
 
-#: gnome-panel/gnome-run.c:1181
-msgid "_Advanced <<"
-msgstr "進階選項(_A) <<"
+#: gnome-panel/gnome-run.c:1160
+#, fuzzy
+msgid "_Known Applications <<"
+msgstr "應用程式"
 
-#: gnome-panel/gnome-run.c:1184
-msgid "Hide the advanced controls below this button."
-msgstr "隱藏此按鈕之下的進階選項。"
+#: gnome-panel/gnome-run.c:1163
+#, fuzzy
+msgid "Hide the list of known applications"
+msgstr "應用程式清單"
 
-#: gnome-panel/gnome-run.c:1195
-msgid "_Advanced >>"
-msgstr "進階選項(_A) >>"
+#: gnome-panel/gnome-run.c:1177
+#, fuzzy
+msgid "_Known Applications >>"
+msgstr "應用程式"
+
+#: gnome-panel/gnome-run.c:1180
+msgid "Display a list of known applications from the applications menu"
+msgstr ""
 
 #: gnome-panel/gnome-run.c:1198
-msgid ""
-"Allow typing in a command line instead of choosing an application from the "
-"list"
-msgstr "允許直接輸入指令列來代替由列表中選擇應用程式"
-
-#: gnome-panel/gnome-run.c:1216
 msgid "_Run"
 msgstr "執行(_R)"
 
-#: gnome-panel/gnome-run.c:1273
+#: gnome-panel/gnome-run.c:1255
 msgid "Run Program"
 msgstr "執行程式"
 
@@ -1202,12 +1210,12 @@ msgstr "應用程式 %s 的說明"
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:176
-#: gnome-panel/menu-ditem.c:254
+#: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
+#: gnome-panel/menu-ditem.c:256
 msgid "Launcher Properties"
 msgstr "啟動圖示屬性"
 
-#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
 msgid "Create Launcher"
 msgstr "建立啟動圖示"
 
@@ -1223,7 +1231,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3384
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3391
 msgid "Log out"
 msgstr "登出"
 
@@ -1231,7 +1239,7 @@ msgstr "登出"
 msgid "Log out of GNOME"
 msgstr "登出 GNOME 環境"
 
-#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3371
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3378
 msgid "Lock screen"
 msgstr "鎖定畫面"
 
@@ -1266,10 +1274,10 @@ msgstr "重新啟動螢幕保護伺服程式"
 msgid "Specify a profile name to load"
 msgstr "指定要載入的設定樣本名稱"
 
-#: gnome-panel/menu-ditem.c:117
-#, c-format
+#: gnome-panel/menu-ditem.c:119
+#, fuzzy, c-format
 msgid ""
-"<b>Cannot save changes to menu entry</b>\n"
+"<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
@@ -1277,34 +1285,32 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu-ditem.c:287 gnome-panel/menu-properties.c:517
-#: gnome-panel/menu.c:3617 gnome-panel/menu.c:3842
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
+#: gnome-panel/menu.c:3650 gnome-panel/menu.c:3875
 msgid "Menu"
 msgstr "選單"
 
-#: gnome-panel/menu-ditem.c:437
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
+#: gnome-panel/menu-ditem.c:439
+msgid "You have to specify a name for the launcher."
 msgstr ""
-"無法產生啟動圖示。\n"
-"\n"
-"未指定指令或 URL。"
+
+#: gnome-panel/menu-ditem.c:456
+msgid "You have to specify a valid URL or command."
+msgstr ""
 
 #. class
-#: gnome-panel/menu-ditem.c:458
-#, c-format
+#: gnome-panel/menu-ditem.c:480
+#, fuzzy, c-format
 msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
+"<b>Cannot save menu item to disk</b>\n"
 "\n"
-"%s"
+"Details: %s"
 msgstr ""
-"無法將選單項目儲存進磁碟內，因為出現以下的錯誤：\n"
+"<b>無法儲存已更改的選單項目</b>\n"
 "\n"
-"%s"
+"原因：%s"
 
-#: gnome-panel/menu-ditem.c:482
+#: gnome-panel/menu-ditem.c:503
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1382,16 +1388,16 @@ msgstr "選單路徑"
 msgid "Use custom icon for panel button"
 msgstr "面板按鈕使用自訂圖示"
 
-#: gnome-panel/menu.c:225
+#: gnome-panel/menu.c:227
 msgid "Many many others ..."
 msgstr "還有很多..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:227
+#: gnome-panel/menu.c:229
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "最後還有說 NI 的騎士!"
 
-#: gnome-panel/menu.c:260
+#: gnome-panel/menu.c:262
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1399,7 +1405,7 @@ msgstr ""
 "此程式負責啟動其它的應用程式、啟動內嵌式面板程式、令世界和平和隨時令 X 不正常"
 "地終止。"
 
-#: gnome-panel/menu.c:266
+#: gnome-panel/menu.c:268
 msgid ""
 "\n"
 "\n"
@@ -1410,23 +1416,23 @@ msgstr ""
 "\n"
 "正在「鎖定」模式執行。這表示系統管理員禁止修改任何面板設定。"
 
-#: gnome-panel/menu.c:272
+#: gnome-panel/menu.c:274
 msgid "The GNOME Panel"
 msgstr "GNOME 面板程式"
 
-#: gnome-panel/menu.c:273
+#: gnome-panel/menu.c:275
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "(C) 1997-2002 the Free Software Foundation"
 
-#: gnome-panel/menu.c:292
+#: gnome-panel/menu.c:294
 msgid "End world hunger"
 msgstr "結束世界飢荒"
 
-#: gnome-panel/menu.c:306
+#: gnome-panel/menu.c:308
 msgid "Can't execute 'About GNOME'"
 msgstr "無法執行 '關於 GNOME'"
 
-#: gnome-panel/menu.c:324
+#: gnome-panel/menu.c:326
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1437,7 +1443,7 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu.c:332 gnome-panel/menu.c:971 gnome-panel/menu.c:999
+#: gnome-panel/menu.c:334 gnome-panel/menu.c:977 gnome-panel/menu.c:1005
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1448,7 +1454,7 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu.c:883
+#: gnome-panel/menu.c:889
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1459,116 +1465,116 @@ msgstr ""
 "\n"
 "原因：%s\n"
 
-#: gnome-panel/menu.c:892
+#: gnome-panel/menu.c:898
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "無法從路徑取得檔案名稱：%s"
 
-#: gnome-panel/menu.c:899
+#: gnome-panel/menu.c:905
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "無法從路徑取得目錄名稱：%s"
 
-#: gnome-panel/menu.c:965
+#: gnome-panel/menu.c:971
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "項目中沒有「執行」或「URL」欄位"
 
-#: gnome-panel/menu.c:1252
+#: gnome-panel/menu.c:1258
 msgid "Add this launcher to panel"
 msgstr "將此啟動圖示加入面板"
 
-#: gnome-panel/menu.c:1260
+#: gnome-panel/menu.c:1266
 msgid "Remove this item"
 msgstr "移除這個項目"
 
-#: gnome-panel/menu.c:1276
+#: gnome-panel/menu.c:1282
 msgid "Put into run dialog"
 msgstr "放到執行對話窗"
 
-#: gnome-panel/menu.c:1294
+#: gnome-panel/menu.c:1300
 #, c-format
 msgid "Help on %s"
 msgstr "%s 的說明"
 
-#: gnome-panel/menu.c:1295
+#: gnome-panel/menu.c:1301
 msgid "Application"
 msgstr "應用程式"
 
-#: gnome-panel/menu.c:1341
+#: gnome-panel/menu.c:1347
 msgid "Entire menu"
 msgstr "整個選單"
 
-#: gnome-panel/menu.c:1350
+#: gnome-panel/menu.c:1356
 msgid "Add this as drawer to panel"
 msgstr "以抽屜方式加入面板"
 
-#: gnome-panel/menu.c:1358
+#: gnome-panel/menu.c:1364
 msgid "Add this as menu to panel"
 msgstr "以選單方式加入面板"
 
-#: gnome-panel/menu.c:1366
+#: gnome-panel/menu.c:1372
 msgid "Add new item to this menu"
 msgstr "增加項目到此選單中"
 
-#: gnome-panel/menu.c:1700
+#: gnome-panel/menu.c:1707
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "已經有一個嵌入式程式顯示工具放置於面板中。此工具只能有一個。"
 
-#: gnome-panel/menu.c:2295 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2302 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "詢問時回傳 exception %s\n"
 
-#: gnome-panel/menu.c:2513 gnome-panel/menu.c:2517
+#: gnome-panel/menu.c:2520 gnome-panel/menu.c:2524
 msgid "Aligned Panel"
 msgstr "對齊面板"
 
-#: gnome-panel/menu.c:2518
+#: gnome-panel/menu.c:2525
 msgid "GNOME Aligned Panel"
 msgstr "GNOME 對齊面板"
 
-#: gnome-panel/menu.c:2534 gnome-panel/menu.c:2537 gnome-panel/menu.c:2655
+#: gnome-panel/menu.c:2541 gnome-panel/menu.c:2544 gnome-panel/menu.c:2662
 msgid "Edge Panel"
 msgstr "邊界面板"
 
-#: gnome-panel/menu.c:2538
+#: gnome-panel/menu.c:2545
 msgid "GNOME Edge Panel"
 msgstr "GNOME 邊界面板"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2558 gnome-panel/menu.c:2671
+#: gnome-panel/menu.c:2561 gnome-panel/menu.c:2565 gnome-panel/menu.c:2678
 msgid "Sliding Panel"
 msgstr "滑動面板"
 
-#: gnome-panel/menu.c:2559
+#: gnome-panel/menu.c:2566
 msgid "GNOME Sliding Panel"
 msgstr "GNOME 滑動面板"
 
-#: gnome-panel/menu.c:2575 gnome-panel/menu.c:2579 gnome-panel/menu.c:2679
+#: gnome-panel/menu.c:2582 gnome-panel/menu.c:2586 gnome-panel/menu.c:2686
 msgid "Floating Panel"
 msgstr "浮動面板"
 
-#: gnome-panel/menu.c:2580
+#: gnome-panel/menu.c:2587
 msgid "GNOME Floating Panel"
 msgstr "GNOME 浮動面板"
 
-#: gnome-panel/menu.c:2596
+#: gnome-panel/menu.c:2603
 msgid "You can only have one menu panel at a time."
 msgstr "一次只能有一個選單面板出現。"
 
-#: gnome-panel/menu.c:2663
+#: gnome-panel/menu.c:2670
 msgid "Corner Panel"
 msgstr "邊角面板"
 
 #. force_image
-#: gnome-panel/menu.c:2776 gnome-panel/menu.c:2783 gnome-panel/menu.c:3444
+#: gnome-panel/menu.c:2783 gnome-panel/menu.c:2790 gnome-panel/menu.c:3451
 msgid "KDE menus"
 msgstr "KDE 選單"
 
-#: gnome-panel/menu.c:2853
+#: gnome-panel/menu.c:2860
 msgid "You cannot remove your last panel."
 msgstr "不可以移除最後一個面板。"
 
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:2872
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Delete this panel?"
@@ -1576,101 +1582,101 @@ msgstr ""
 "當移除面板後，面板與其面板程式\n"
 "的設定都會消失。是否要移除這個面板？"
 
-#: gnome-panel/menu.c:3105
+#: gnome-panel/menu.c:3112
 msgid "Launcher..."
 msgstr "啟動圖示..."
 
-#: gnome-panel/menu.c:3113
+#: gnome-panel/menu.c:3120
 msgid "Launcher from menu"
 msgstr "選單的啟動圖示"
 
-#: gnome-panel/menu.c:3123
+#: gnome-panel/menu.c:3130
 msgid "GNOME Menu"
 msgstr "GNOME 選單"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3150
 msgid "Log out button"
 msgstr "登出按鈕"
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3160
 msgid "Lock button"
 msgstr "畫面鎖定按鈕"
 
-#: gnome-panel/menu.c:3161
+#: gnome-panel/menu.c:3168
 msgid "Status dock"
 msgstr "嵌入式狀態顯示工具"
 
-#: gnome-panel/menu.c:3175
+#: gnome-panel/menu.c:3182
 msgid "Cannot execute panel global preferences"
 msgstr "無法執行整體的面板屬性設定"
 
-#: gnome-panel/menu.c:3213
+#: gnome-panel/menu.c:3220
 msgid "Delete this panel..."
 msgstr "刪除此面板..."
 
-#: gnome-panel/menu.c:3215 gnome-panel/menu.c:3254
+#: gnome-panel/menu.c:3222 gnome-panel/menu.c:3261
 msgid "Delete this panel"
 msgstr "刪除此面板"
 
-#: gnome-panel/menu.c:3233
+#: gnome-panel/menu.c:3240
 msgid "Add to panel"
 msgstr "增加至面板"
 
-#: gnome-panel/menu.c:3245
+#: gnome-panel/menu.c:3252
 msgid "Create panel"
 msgstr "建立面板"
 
-#: gnome-panel/menu.c:3282
+#: gnome-panel/menu.c:3289
 msgid "Global Preferences..."
 msgstr "整體的偏好設定..."
 
-#: gnome-panel/menu.c:3295
+#: gnome-panel/menu.c:3302
 msgid "Panel Manual..."
 msgstr "面板說明書..."
 
-#: gnome-panel/menu.c:3307
+#: gnome-panel/menu.c:3314
 msgid "Cannot execute xscreensaver"
 msgstr "無法執行 xscreensaver"
 
-#: gnome-panel/menu.c:3326
+#: gnome-panel/menu.c:3333
 msgid "About the panel..."
 msgstr "關於此面板..."
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:3347
 msgid "About GNOME..."
 msgstr "關於 GNOME..."
 
-#: gnome-panel/menu.c:3377
+#: gnome-panel/menu.c:3384
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "鎖定螢幕，讓使用者可暫時離開電腦"
 
-#: gnome-panel/menu.c:3390
+#: gnome-panel/menu.c:3397
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "登出此工作階段來以其它身份登入或關掉電腦"
 
-#: gnome-panel/menu.c:3545
+#: gnome-panel/menu.c:3552
 msgid "Applets"
 msgstr "面板程式"
 
-#: gnome-panel/menu.c:3568
+#: gnome-panel/menu.c:3575
 msgid "Run a command"
 msgstr "執行指令"
 
-#: gnome-panel/menu.c:3586
+#: gnome-panel/menu.c:3619
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/menu.c:3619
+#: gnome-panel/menu.c:3652
 msgid "Menu:"
 msgstr "選單："
 
-#: gnome-panel/menu.c:3669 gnome-panel/menu.c:3697 gnome-panel/menu.c:3882
+#: gnome-panel/menu.c:3702 gnome-panel/menu.c:3730 gnome-panel/menu.c:3915
 msgid "Main Menu"
 msgstr "主選單"
 
-#: gnome-panel/menu.c:3691
+#: gnome-panel/menu.c:3724
 msgid "Can't create menu, using main menu!"
 msgstr "無法建立選單，使用主選單！"
 
@@ -1678,16 +1684,16 @@ msgstr "無法建立選單，使用主選單！"
 msgid "Cannot register control widget\n"
 msgstr "無法登記視窗控制元件\n"
 
-#: gnome-panel/panel-applet-frame.c:597
+#: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu‘%s’出現 exception 情況\n"
 
-#: gnome-panel/panel-applet-frame.c:685
+#: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "無法從 control 取得 AppletShell interface\n"
 
-#: gnome-panel/panel-applet-frame.c:810
+#: gnome-panel/panel-applet-frame.c:812
 #, c-format
 msgid ""
 "<b>There was a problem loading applet '%s'</b>\n"
@@ -1916,44 +1922,85 @@ msgstr "Bonobo 面板測試程式"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo 面板測試程式工廠"
 
-#: libpanel-applet/panel-applet.c:643
+#: libpanel-applet/panel-applet.c:654
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "接收到不完整的背景圖案類型‘%s’"
 
-#: libpanel-applet/panel-applet.c:657
+#: libpanel-applet/panel-applet.c:668
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "接收到不完整的背景圖案類型‘%s’：%s"
 
-#: libpanel-applet/panel-applet.c:666
+#: libpanel-applet/panel-applet.c:677
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "無法取得 pixmap %s"
 
-#: libpanel-applet/panel-applet.c:673
+#: libpanel-applet/panel-applet.c:684
 msgid "Unknown background type received"
 msgstr "接收到不明的背景圖案類型"
 
-#: libpanel-applet/panel-applet.c:842
+#: libpanel-applet/panel-applet.c:853
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有該面板程式的面板的方向"
 
-#: libpanel-applet/panel-applet.c:850
+#: libpanel-applet/panel-applet.c:861
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有該面板程式的面板的大小，以像素為單位"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:869
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有該面板程式的面板的背景顏色或 pixmap"
 
-#: libpanel-applet/panel-applet.c:866
+#: libpanel-applet/panel-applet.c:877
 msgid "The Applet's flags"
 msgstr "面板程式的旗標"
 
-#: libpanel-applet/panel-applet.c:874
+#: libpanel-applet/panel-applet.c:885
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "提示該面板程式可接受的尺寸範圍"
+
+#~ msgid "Screenshot Capture"
+#~ msgstr "畫面快照"
+
+#~ msgid "Take a picture of the current screen contents"
+#~ msgstr "擷取目前畫面的內容"
+
+#~ msgid "Executable name for selected application"
+#~ msgstr "所選取的應用程式的可執行檔名稱"
+
+#~ msgid "_Advanced <<"
+#~ msgstr "進階選項(_A) <<"
+
+#~ msgid "Hide the advanced controls below this button."
+#~ msgstr "隱藏此按鈕之下的進階選項。"
+
+#~ msgid "_Advanced >>"
+#~ msgstr "進階選項(_A) >>"
+
+#~ msgid ""
+#~ "Allow typing in a command line instead of choosing an application from "
+#~ "the list"
+#~ msgstr "允許直接輸入指令列來代替由列表中選擇應用程式"
+
+#~ msgid ""
+#~ "Cannot create the launcher.\n"
+#~ "\n"
+#~ "No command or url specified."
+#~ msgstr ""
+#~ "無法產生啟動圖示。\n"
+#~ "\n"
+#~ "未指定指令或 URL。"
+
+#~ msgid ""
+#~ "Cannot save menu item to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "無法將選單項目儲存進磁碟內，因為出現以下的錯誤：\n"
+#~ "\n"
+#~ "%s"
 
 #~ msgid "Base Panel"
 #~ msgstr "基本面板"
@@ -2062,9 +2109,6 @@ msgstr "提示該面板程式可接受的尺寸範圍"
 
 #~ msgid "Title of application to swallow"
 #~ msgstr "要嵌入的程式標題"
-
-#~ msgid "Command (optional)"
-#~ msgstr "指令（選擇性）"
 
 #~ msgid "Width"
 #~ msgstr "寬度"
@@ -2670,9 +2714,6 @@ msgstr "提示該面板程式可接受的尺寸範圍"
 
 #~ msgid "Panel treatment (GNOME compliant window managers only)"
 #~ msgstr "面板處理（只有與 GNOME 相容的視窗管理程式適用）"
-
-#~ msgid "Take screenshot key"
-#~ msgstr "用於擷取畫面的按鍵"
 
 #~ msgid "Take window screenshot key"
 #~ msgstr "用於擷取視窗畫面的按鍵"
