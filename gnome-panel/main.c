@@ -43,9 +43,6 @@ GtkTooltips *panel_tooltips = NULL;
 
 GnomeClient *client = NULL;
 
-/*a list of started extern applet child processes*/
-extern GList * children;
-
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
@@ -54,7 +51,7 @@ char *merge_merge_dir = NULL;
 int merge_main_dir_len = 0;
 char *merge_main_dir = NULL;
 
-static int
+static gboolean
 menu_age_timeout(gpointer data)
 {
 	GSList *li;
@@ -107,7 +104,7 @@ static void
 find_kde_directory(void)
 {
 	int i;
-	char *kdedir = getenv("KDEDIR");
+	char *kdedir = g_getenv ("KDEDIR");
 	char *try_prefixes[] = {
 		"/usr",
 		"/opt/kde",
@@ -187,7 +184,7 @@ main(int argc, char **argv)
 {
 	CORBA_ORB orb;
 	CORBA_Environment ev;
-	gint duplicate;
+	gboolean duplicate;
 	gchar *real_global_path;
 	
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
@@ -203,7 +200,7 @@ main(int argc, char **argv)
 
 	switch (panel_corba_gtk_init (orb)) {
 	case 0: 
-		duplicate = 0;
+		duplicate = FALSE;
 		break; /* success */
 	case -4: {
 		GtkWidget* box = gnome_question_dialog
@@ -213,7 +210,7 @@ main(int argc, char **argv)
 		panel_set_dialog_layer (box);
 		if (gnome_dialog_run_and_close (GNOME_DIALOG (box)))
 			return 0;
-		duplicate = 1;
+		duplicate = TRUE;
 		break;
 	}
 	default: {
