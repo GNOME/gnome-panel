@@ -265,11 +265,11 @@ static Drawer *
 create_empty_drawer_applet(char *tooltip, char *pixmap,
 			   PanelOrientType orient)
 {
-	return create_drawer_applet(drawer_widget_new(orient,
-						      DRAWER_SHOWN,
-						      PANEL_BACK_NONE, NULL,
-						      TRUE, NULL, TRUE, TRUE),
-				    tooltip,pixmap,orient);
+	DrawerWidget *dw = drawer_widget_new(orient,
+					     DRAWER_SHOWN,
+					     PANEL_BACK_NONE, NULL,
+					     TRUE, NULL, TRUE, TRUE);
+	return create_drawer_applet(dw, tooltip,pixmap,orient);
 }
 
 void
@@ -311,9 +311,6 @@ drawer_move_foreach(GtkWidget *w, gpointer user_data)
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
 		gtk_widget_queue_resize(drawer->drawer);
-		gtk_container_foreach(GTK_CONTAINER(basep->panel),
-				      drawer_move_foreach,
-				      NULL);
 	}
 }
 
@@ -323,6 +320,7 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 	if(!GTK_WIDGET_REALIZED(widget))
 		return;
 	drawer_move_foreach(widget,NULL);
+	gtk_object_set_data(GTK_OBJECT(widget),"allocated",GINT_TO_POINTER(1));
 }
 
 void
@@ -352,8 +350,6 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 
 	if(!drawer)
 		return;
-
-	g_return_if_fail(drawer != NULL);
 
 	register_toy(drawer->button,drawer, panel, pos, APPLET_DRAWER);
 

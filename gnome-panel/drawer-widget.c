@@ -183,7 +183,10 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(drawer)->panel);
 
 	if (panel->master_widget &&
-	    GTK_WIDGET_REALIZED (panel->master_widget)) {
+	    GTK_WIDGET_REALIZED (panel->master_widget) &&
+	    /*"allocated" data will be set on each allocation, until then,
+	      don't show the actual panel*/
+	    gtk_object_get_data(GTK_OBJECT(panel->master_widget),"allocated")) {
 		int bx, by, bw, bh;
 		int px, py, pw, ph;
 		GtkWidget *ppanel; /*parent panel*/
@@ -237,7 +240,8 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		return;
 	}
 	/*if we fail*/
-	*x = *y = -3000;
+	*x = -width-1;
+	*y = -height-1;
 }
 
 static void
@@ -279,10 +283,6 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		allocation->y = -allocation->height -1;
 	}
 	
-	/*ugly optimisation: XXX fix this to work with temp_hidden*/
-	/*if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
-		return;*/
-
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		gdk_window_move_resize (widget->window,
@@ -294,6 +294,8 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				      allocation->x,
 				      allocation->y,
 				      0,0,0,0, GDK_HINT_POS);
+	} else if(widget->window) {
+		puts("NON_REALIZED_WINDOW");
 	}
 	
 
