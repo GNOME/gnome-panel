@@ -338,7 +338,7 @@ activate_app_def (GtkWidget  *menuitem,
 
 	item = gnome_desktop_item_new_from_uri (
 			item_loc,
-			GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+			0,
 			&error);
 
 	if (item) {
