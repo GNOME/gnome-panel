@@ -1830,6 +1830,7 @@ sigchld_handler(int type)
 			char *s;
 			int i;
 			if(!info) return;
+#if 0 /* Check me, is this ok, why were we iterating here? */
 			s = g_strdup(info->id_str);
 			for(i=0,info=(AppletInfo *)applets->data;
 			    i<applet_count;
@@ -1839,7 +1840,8 @@ sigchld_handler(int type)
 					panel_clean_applet(info->applet_id);
 			}
 			g_free(s);
-
+#endif
+			panel_clean_applet(info->applet_id);
 			exec_queue_done(child->applet_id);
 
 			g_free(child);
