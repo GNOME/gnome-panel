@@ -3,7 +3,6 @@
 
 #include "panel_cmds.h"
 #include "panel-widget.h"
-#include "libgnomeui/gnome-session.h"
 
 BEGIN_GNOME_DECLS
 
@@ -60,11 +59,13 @@ struct _AppletInfo {
 
 gpointer panel_command(PanelCommand *cmd);
 
-int panel_session_save (gpointer client_data,
-			GnomeSaveStyle save_style,
-			int is_shutdown,
-			GnomeInteractStyle interact_style,
-			int is_fast);
+gint panel_session_save (GnomeClient *client,
+			 gint phase,
+			 GnomeSaveStyle save_style,
+			 gint shutdown,
+			 GnomeInteractStyle interact_style,
+			 gint fast,
+			 gpointer client_data);
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
 

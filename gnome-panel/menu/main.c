@@ -19,7 +19,6 @@
 #include "../applet_cmds.h"
 #include "../panel.h"
 
-#include "libgnomeui/gnome-session.h"
 
 
 #define APPLET_ID "Menu"
