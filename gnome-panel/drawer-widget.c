@@ -176,7 +176,7 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		GtkWidget *ppanel; /*parent panel*/
 
 		/*get the parent of the applet*/
-		ppanel = PANEL_WIDGET(panel->master_widget->parent);
+		ppanel = panel->master_widget->parent;
 		if (GTK_WIDGET_REALIZED (ppanel)) {
 			gdk_window_get_origin (panel->master_widget->window, &bx, &by);
 			if(GTK_WIDGET_NO_WINDOW(panel->master_widget)) {

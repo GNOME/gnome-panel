@@ -357,7 +357,7 @@ applet_destroy(GtkWidget *w, gpointer data)
 	AppletInfo *info = get_applet_info(applet_id);
 	AppletType type;
 	
-	g_return_if_fail(info != NULL);
+	g_return_val_if_fail(info != NULL,FALSE);
 
 	info->widget = NULL;
 

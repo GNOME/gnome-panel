@@ -112,7 +112,6 @@ int
 main(int argc, char **argv)
 {
 	char buf[256];
-	struct sigaction sa;
 	
 	panel_cfg_path = g_strdup("/panel.d/default/");
 	old_panel_cfg_path = g_strdup("/panel.d/default/");

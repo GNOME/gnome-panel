@@ -76,6 +76,7 @@ socket_getwindow_timeout(Swallow *swallow)
 {
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &(swallow->wid)))
 		return TRUE;
+	swallow->timeout = -1;
 	gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 	return FALSE;
 }
@@ -88,8 +89,10 @@ socket_realized(GtkWidget *w, gpointer data)
 	g_return_val_if_fail(swallow->title!=NULL,FALSE);
 
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid))
-		gtk_timeout_add(500,(GtkFunction)socket_getwindow_timeout,
-				swallow);
+		swallow->timeout = 
+			gtk_timeout_add(500,
+					(GtkFunction)socket_getwindow_timeout,
+					swallow);
 	else
 		gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 
@@ -100,6 +103,11 @@ static int
 socket_destroyed(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = data;
+	
+	if(swallow->timeout!=-1) {
+		gtk_timeout_remove(swallow->timeout);
+		swallow->timeout = -1;
+	}
 	
 	gtk_widget_destroy(swallow->ebox);
 
@@ -305,6 +313,7 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 	swallow->width = width;
 	swallow->height = height;
 	swallow->wid = -1;
+	swallow->timeout = -1;
 
 	set_swallow_applet_orient(swallow, orient);
 

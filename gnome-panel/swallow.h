@@ -20,6 +20,7 @@ typedef struct {
 	int width;
 	int height;
 	guint32 wid;
+	int timeout;
 } Swallow;
 
 void load_swallow_applet(char *path, char *params, int width, int height,
