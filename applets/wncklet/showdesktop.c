@@ -146,7 +146,7 @@ applet_change_background (PanelApplet               *applet,
 /* this is when the panel size changes */
 static void
 applet_size_allocated (PanelApplet       *applet,
-                       gint               size,
+		       GtkAllocation     *allocation,
                        ShowDesktopData   *sdd)
 {
 	if (((sdd->orient == GTK_ORIENTATION_HORIZONTAL)
