@@ -21,7 +21,7 @@
 #include "panel-widget.h"
 
 #define SMALL_ICON_SIZE 20
-#define BIG_ICON_SIZE   PANEL_MINIMUM_WIDTH
+#define BIG_ICON_SIZE   48
 
 
 #define MENU_PATH "menu_path"

@@ -20,7 +20,7 @@ BEGIN_GNOME_DECLS
 #define PANEL_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, panel_widget_get_type (), PanelWidgetClass)
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
-#define PANEL_MINIMUM_WIDTH 48
+#define PANEL_MINIMUM_WIDTH 24
 
 #define PANEL_APPLET_ASSOC_PANEL_KEY "panel_applet_assoc_panel_key"
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
