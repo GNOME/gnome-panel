@@ -865,7 +865,7 @@ drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
 {
 	gchar *uri_list = g_strconcat ("file:", item_loc, "\r\n", NULL);
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, uri_list,
+				selection_data->target, 8, (guchar *)uri_list,
 				strlen(uri_list));
 	g_free(uri_list);
 }
@@ -876,7 +876,7 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 		      guint time, char *string)
 {
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, string,
+				selection_data->target, 8, (guchar *)string,
 				strlen(string));
 }
 
@@ -3325,7 +3325,7 @@ add_menu_widget (Menu *menu, GSList *menudirl, int main_menu, int fake_subs)
 						     FALSE, NULL, NULL,
 						     fake_subs, FALSE);
 		if(!menu->menu) {
-			g_warning("Can't create menu, using main menu!");
+			g_warning(_("Can't create menu, using main menu!"));
 			menu->menu = create_root_menu(fake_subs,
 						      menu->main_menu_flags);
 		}

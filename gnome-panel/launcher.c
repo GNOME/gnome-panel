@@ -140,7 +140,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 	uri_list = g_strconcat ("file:", launcher->dentry->location, "\r\n", NULL);
 
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, uri_list,
+				selection_data->target, 8, (guchar *)uri_list,
 				strlen(uri_list));
 	g_free(uri_list);
 }
@@ -334,6 +334,24 @@ create_properties_dialog(Launcher *launcher)
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
 				     launcher->dentry);
+
+	/* This sucks, but there is no other way to do this with the current
+	   GnomeDEntry API.  */
+
+#define SETUP_EDITABLE(entry_name)					\
+	gnome_dialog_editable_enters					\
+		(GNOME_DIALOG (dialog),					\
+		 GTK_EDITABLE (gnome_dentry_get_##entry_name##_entry  	\
+			       (GNOME_DENTRY_EDIT (launcher->dedit))));
+
+	SETUP_EDITABLE (name);
+	SETUP_EDITABLE (comment);
+	SETUP_EDITABLE (exec);
+	SETUP_EDITABLE (tryexec);
+	SETUP_EDITABLE (doc);
+	SETUP_EDITABLE (icon);
+
+#undef SETUP_EDITABLE
 	
 	gtk_signal_connect_object(GTK_OBJECT(launcher->dedit), "changed",
 				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
@@ -388,6 +406,7 @@ load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
 		applet_add_callback(applets_last->data,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
+		panel_config_sync();
 	}
 }
 

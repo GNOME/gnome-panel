@@ -667,8 +667,11 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit(void)
 {
-	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-				   GNOME_INTERACT_ANY, 0, 1);
+	if(GNOME_CLIENT_CONNECTED(client))
+		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+					   GNOME_INTERACT_ANY, 0, 1);
+	else
+		gtk_main_quit();
 }
 
 static void
@@ -679,6 +682,7 @@ load_default_applets1(PanelWidget *panel)
 		"gnome/apps/Utilities/gnome-terminal.desktop",
 		"gnome/apps/Settings/gnomecc.desktop",
 		"gnome/apps/Applications/Netscape.desktop",
+		"gnome/apps/Utilities/gnome-terminal.desktop",
 		NULL };
 	int i;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER|

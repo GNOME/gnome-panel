@@ -1,3 +1,27 @@
+Tue Oct 19 22:21:45 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: add _() around warning string
+
+	* from 1-0:
+	Friday July 29, 1999 Elliot Lee <sopwith@redhat.com>
+	* session.c: If not connected to session manager, exit the panel.
+
+	* menu.c,launcher.c: mystery warning fixes from Elliot without a
+	  changelog
+
+	* launcher.c: sync panel config after creating launcher, port
+	  of a mystery 1-0 fix for #900 by Elliot
+
+	* from 1-0:
+	1999-09-16  Ettore Perazzoli  <ettore@comm2000.it>
+	* launcher.c (create_properties_dialog): Call
+	`gnome_dialog_editable_enters()' on all the entries in the edit
+	widget.
+
+	* from 1-0:
+	Tues Sep 21, 1999 Elliot Lee <sopwith@redhat.com>
+	* session.c: Add gnome-terminal to the list of default launchers.
+
 Sat Oct 16 16:57:33 1999  George Lebl  <jirka@5z.com>
 
 	* applet-widget.c: add applet_widget_send_position implementation,
