@@ -1,3 +1,9 @@
+Sat Dec 02 21:49:34 2000  George Lebl <jirka@5z.com>
+
+	* session.c:  apparently reading /proc/apm can crash on some
+	  laptops with rh7, so since that would be mucho bad, we fork
+	  during the check.  Ugly you say?  Yes, but it works.
+
 Thu Nov 30 14:05:56 2000  George Lebl <jirka@5z.com>
 
 	* panel.hints: Translate two entries to Czech while trying to

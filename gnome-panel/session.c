@@ -11,6 +11,8 @@
 #include <signal.h>
 #include <limits.h>
 #include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
@@ -910,9 +912,8 @@ load_default_applets1(PanelWidget *panel)
 }
 
 static gboolean
-battery_exists (void)
+linux_battery_exists (void)
 {
-#ifdef __linux__
 	FILE *fp;
 	char buf[200] = "";
 	int foo;
@@ -939,10 +940,49 @@ battery_exists (void)
 		return TRUE;
 	else
 		return FALSE;
-#else
+}
+
+static gboolean
+battery_exists (void)
+{
+#ifndef __linux__
 	return FALSE;
+#else
+	/* This is MUUUUCHO ugly, but apparently RH 7.0 with segv the program
+ 	 * reading /proc/apm on some laptops, and we don't want to crash, thus
+ 	 * we do the check in a forked process */
+	int status;
+	pid_t pid;
+
+	pid = fork ();
+	if (pid == 0) {
+                struct sigaction sa = {{NULL}};
+
+		sa.sa_handler = SIG_DFL;
+
+                sigaction(SIGSEGV, &sa, NULL);
+                sigaction(SIGFPE, &sa, NULL);
+                sigaction(SIGBUS, &sa, NULL);
+
+		if (linux_battery_exists ())
+			_exit (0);
+		else
+			_exit (1);
+	}
+
+	status = 0;
+	waitpid (pid, &status, 0);
+
+	if ( ! WIFSIGNALED (status) &&
+	    WIFEXITED (status) &&
+	    WEXITSTATUS (status) == 0) {
+		return TRUE;
+	} else {
+		return FALSE;
+	}
 #endif
 }
+
 
 static void
 load_default_applets2(PanelWidget *panel)
