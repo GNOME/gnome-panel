@@ -489,28 +489,34 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 	/*the applet implementation, it's only created once*/
 	static GNOME_Applet applet = NULL;
 
-	if(!ior) {
+	if(!applet) {
 	  PortableServer_POA poa;
 
-	  static const PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
-							"GNOME/Applet"};
+	  PortableServer_ObjectId *objid;
 	  POA_GNOME_Applet__init(&applet_servant, &ev);
 
-	  poa = orb->root_poa; /* non-portable temp hack */
+	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+
+	  poa = (PortableServer_POA)
+	    CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
 
 	  PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
+	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
-	  PortableServer_POA_activate_object_with_id(poa,
-						     &objid, &applet_servant,
+	  objid = PortableServer_POA_activate_object(poa, &applet_servant,
 						     &ev);
+	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	  applet = PortableServer_POA_servant_to_reference(poa,
 							   &applet_servant,
 							   &ev);
 
+	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+
 	/* Now a way to find out the CORBA impl from the widget */
 
 	  ior = CORBA_ORB_object_to_string(orb, applet, &ev);
+	  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 	}
 
 	gtk_object_set_data (GTK_OBJECT (widget), "CORBA_object", applet);
@@ -649,17 +655,13 @@ static void orb_remove_connection(GIOPConnection *cnx)
 void
 applet_corba_gtk_main (char *str)
 {
-  static const PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
-					  "GNOME/Applet"};
   gtk_main();
-
-  PortableServer_POA_deactivate_object(orb->root_poa, &objid, &ev);
 }
 
 void
 applet_corba_gtk_main_quit (void)
 {
-  CORBA_ORB_shutdown(orb, CORBA_FALSE, &ev);
+  CORBA_ORB_shutdown(orb, CORBA_TRUE, &ev);
   gtk_main_quit();
 }
 

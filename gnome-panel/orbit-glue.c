@@ -570,17 +570,23 @@ panel_corba_gtk_init(void)
   IIOPRemoveConnectionHandler = orb_remove_connection;
 
   /* It's not like ORBit reads the cmdline anyways, right now */
-  orb = CORBA_ORB_init(&n, &name /* dummy */, "mico-local-orb", &ev);
+  orb = CORBA_ORB_init(&n, &name /* dummy */, "orbit-local-orb", &ev);
 
   POA_GNOME_Panel__init(&servant, &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
-  thepoa = (PortableServer_POA)orb->root_poa; /* non-portable temporary hack */
+  thepoa = (PortableServer_POA)
+    CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
   PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
-  PortableServer_POA_activate_object_with_id((PortableServer_POA)orb->root_poa, &objid, &servant, &ev);
+  PortableServer_POA_activate_object_with_id(thepoa, &objid, &servant, &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
-  acc = PortableServer_POA_servant_to_reference((PortableServer_POA)orb->root_poa, &servant, &ev);
+  acc = PortableServer_POA_servant_to_reference(thepoa, &servant, &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
   ior = CORBA_ORB_object_to_string(orb, acc, &ev);
   
@@ -597,6 +603,8 @@ panel_corba_gtk_init(void)
   CORBA_free(ior);
 
   CORBA_Object_release(acc, &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 
   ORBit_custom_run_setup(orb, &ev);
+  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 }
