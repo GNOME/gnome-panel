@@ -85,7 +85,7 @@
 	mouse, <guilabel>applets</guilabel> &mdash; applications which
 	run inside of the panel, displaying information for the user,
 	and <guilabel>menus</guilabel> &mdash;.  Each of these types
-	is described in detail in <xref linkend="objects">. You can easily
+	is described in detail in the following sections. You can easily
 	add, move, or remove panel objects &mdash; see <xref
 	linkend="appletadd">. 
       </para>
@@ -391,94 +391,173 @@
 
 
 
-<!-- Panel Objects -->
-  <sect1 id="objects">
-    <title>Types of Panel Objects</title>
 
 <!-- ########### Menus  ############## -->
-  <sect2 id="menus">
-   <title>Menus</title>
-   <para>
-    (Add info about menus)
-    <figure>
-     <title>The Main Menu</title>
-     <screenshot>
-      <screeninfo>The Main Menu</screeninfo>
-       <graphic fileref="./figures/newtest/panel_menu" format="png"
-       srccredit="dcm">
-       </graphic>
-     </screenshot>
-     </figure>
-   </para>
-  </sect2>
+ <sect1 id="menus">
+  <title>Menus</title>
+  <para>
+   A menu ...
+  </para>
+  <figure>
+   <title>Menu Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Menu Properties Dialog</screeninfo>
+     <graphic fileref="./figures/example_menu" format="png"
+     srccredit="dcm">
+     </graphic>
+   </screenshot>
+  </figure>
+  <figure>
+   <title>Menu Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Menu Properties Dialog</screeninfo>
+     <graphic fileref="./figures/menu_properties" format="png"
+     srccredit="dcm">
+     </graphic>
+   </screenshot>
+  </figure>
+ </sect1>
 
 
 <!-- ###########  Launchers  ############## -->
-  <sect2 id="launchers">
-   <title>Launchers</title>
-   <para>
-    (Add info about launchers)
-   </para>
-  </sect2>
+ <sect1 id="launchers">
+  <title>Launchers</title>
+  <para>
+   (Add info about launchers)
+  </para>
+ </sect1>
 
 
 <!-- ###########  Drawers  ############## -->
-  <sect2 id="drawers">
-   <title>Drawers</title>
-   <para>
-    A Drawer is simply a small menu-like button that sits on your
-    panel that groups application  launchers together in one place; it
-    is very much like a menu, but instead of showing its contents as
-    commands, it shows them as launcher buttons.  Once you have placed
-    a Drawer on the Panel you may click on it to raise the menu of
-    applications and click again to lower them.
-   </para>
-   <para>
-    (I'M NOT SURE THIS IS THE BEST WAY TO EXPLAIN THINGS.  First,
-    drawers can hold applets too.  They can hold other drawers. They
-    can hold menus.  Hmm.  I think we should say that a drawer is just
-    a "branch" of panel, which can contain anything a panel can hold.)
-
-    <figure>
-     <title>An open Drawer</title>
-     <screenshot>
-      <screeninfo>An open Drawer</screeninfo>
-      <graphic fileref="./figures/old/drawer" format="png"
-      srccredit="dcm">
-      </graphic>
-     </screenshot>
-    </figure> 
-   </para>
-  </sect2>
-
+ <sect1 id="drawers">
+  <title>Drawers</title>
+  <para>
+   The simplest way of thinking about a Drawer is that it is a
+   container to store things.  Typically one may use a Drawer to hold
+   multiple launchers which are related to each other in some way,
+   such as the various applications in GNOME Office. The Drawers in
+   the GNOME Panel take this one step further by making a Drawer an
+   actual extension of the Panel itself.  Thus, a Drawer is a
+   collapsable branch of an existing Panel.  It can contain anything
+   that a Panel can, including Launchers, Applets, and other Drawers.
+  </para>
+  <figure>
+   <title>An open Drawer</title>
+   <screenshot>
+    <screeninfo>An open Drawer</screeninfo>
+    <graphic fileref="./figures/drawer_open" format="png"
+    srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure>
+  <para>
+   Once you have placed a Drawer on the Panel, you may click on it to
+   "open" the Drawer, revealing its contents.   You may then add
+   items to the Drawer in the same way you would add items to the
+   panel, right clicking on the end of the drawer with the arrow.
+   You can close the Drawer by clicking on its icon again or by
+   clicking on the arrow at its end.
+  </para>
+  <para>
+   You can configure a Drawer's properties by right clicking on the
+   Drawer's icon and selecting "Properties". This brings up the
+   Drawer Properties Dialog. Here you can select the icon used for
+   the drawer by clicking on the icon. A tooltip may be entered by
+   typing in the "Tooltip/Name" entry. This tooltip will be displayed
+   whenever the mouse is moved over the Drawer to remind you what is
+   inside.  One may also select whether the <guibutton>hide
+   button</guibutton> and arrow are displayed at the end of the
+   drawer.  
+  </para>
+  <figure>
+   <title>Drawer Properties Dialog</title>
+   <screenshot>
+    <screeninfo>Drawer Properties Dialog</screeninfo>
+    <graphic fileref="./figures/drawer_properties" format="png"
+     srccredit="dcm">
+    </graphic>
+   </screenshot>
+  </figure> 
+  <para>
+   You may also control the background of the Drawer. Just
+   right click on the Drawer and select the "Background" tab to bring
+   up the standard Panel Background Dialog (see <xref
+   linkend="panelbacktab">).
+  </para> 
+ </sect1>
 
 
 
 <!-- ###########  Special Panel Objects  ############## -->
-  <sect2 id="specialobjects">
-   <title>Special Panel Objects</title>
+ <sect1 id="specialobjects">
+  <title>Special Panel Objects</title>
+  <para>
+   There are several special panel objects which are not
+   considered menus, applets, or launchers.  These special objects
+   are described below.
+  </para>
+  <sect2 id="lockbutton">
+   <title>The Lock Button</title>
+   <figure>
+    <title>The Lock Button</title>
+    <screenshot>
+     <screeninfo>The Lock Button</screeninfo>
+     <graphic fileref="./figures/newtest/panel_lockbut" format="png"
+     srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure> 
    <para>
-    (Add info about special objects: Log Out Button, Lock Button, ?)
-    (Does the Status Dock also go here?  What the heck is it?)
-    (Swallowed apps)
-    <figure>
-     <title>The Lock Button</title>
-     <screenshot>
-      <screeninfo>The Lock Button</screeninfo>
-      <graphic fileref="./figures/newtest/panel_lockbut" format="png"
-      srccredit="muet">
-      </graphic>
-     </screenshot>
-    </figure> 
-    <figure>
-     <title>The Logout Button</title>
-     <screenshot>
-      <screeninfo>The Logout Button</screeninfo>
-      <graphic fileref="./figures/newtest/panel_logoutbut"
-      format="png" srccredit="muet">
-      </graphic>
-     </screenshot>
-    </figure> 
+    The <guibutton>Lock Button</guibutton> is a panel button which
+    begins a screensaver which locks the screen. In order to remove
+    the screensaver and access the GNOME session again, you must
+    supply your password.  This is typically used when you must
+    leave your computer for a while and do not want to log out or
+    allow other people to use your computer. To lock your screen,
+    simply click on the <guibutton>Lock Button</guibutton>.
+   </para>
+   <note>
+    <title>Screensavers and The Lock Button</title>
+    <para>
+     The <guibutton>Lock Button</guibutton> uses a feature of the
+     <application>xscreensaver</application> program. This is the
+     same program that the Control Center uses to set your
+     screensaver. In order for the <guibutton>Lock Button</guibutton>
+     to work properly, you must have a screensaver enabled in the
+     Control Center.
+    </para>
+   </note>
+  </sect2>
+  <sect2 id="logoutbutton">
+   <title>The Logout Button</title>
+   <figure>
+    <title>The Logout Button</title>
+    <screenshot>
+     <screeninfo>The Logout Button</screeninfo>
+     <graphic fileref="./figures/newtest/panel_logoutbut"
+     format="png" srccredit="muet">
+     </graphic>
+    </screenshot>
+   </figure>
+   <para>
+    The <guibutton>Logout</guibutton> button is used to exit the
+    GNOME desktop environment.  It initiates the logout sequence,
+    bringing up the Logout Dialog, as described in <xref
+    linkend="loggingout">.
+   </para>
+  </sect2>
+  <sect2 id="swallowedapps">
+   <title>Swallowed Applications</title>
+   <para>
+    The GNOME panel allows you to run applications which are not
+    applets inside the panel as if they were applets.  Applications
+    which you pull into the panel, even though they are not GNOME
+    applets are called "swallowed applications".  Applications do not
+    have to be GNOME-compliant to be swallowed.  In general, the only
+    constraints for swallowing an application are that the
+    application must be small enough to fit in your panel and you must know
+    the title of the window you would like to swallow. 
+   </para>
     <figure>
      <title>Create Swallowed Application Dialog</title>
      <screenshot>
@@ -487,10 +566,22 @@
       srccredit="muet">
       </graphic>
      </screenshot>
-    </figure> 
+    </figure>
+   <para>
+    The "Title of application to swallow" is the window title,
+    typically displayed on the top left edge of the window.  The
+    width and height determine the size of the swallowed application
+    in the panel in pixels.
    </para>
-    </sect2>
-  </sect1>
+<!-- ## Add info on "command", possibly "xwininfo" or "xprop". ## -->
+  </sect2>
+  <sect2 id="statusdock">
+   <title>Status Dock</title>
+   <para>
+    (What is the Status Dock?)    
+   </para>
+  </sect2>
+ </sect1>
 
 
 <!-- ########### Adding, Moving, and Removing Panel Objects  ############## -->
@@ -1261,7 +1352,7 @@
       reports can be found on-line at <ulink
       url="http://bugs.gnome.org/Reporting.html" type="http">
       http://bugs.gnome.org/Reporting.html</ulink>. If you are using
-      GNOME 1.1 or later, you can also use command
+      GNOME 1.1 or later, you can also use the command
       <command>bug-buddy</command> for submitting bug reports.
       </para>
     <para>
@@ -1276,4 +1367,9 @@
 
 
  </article>
+
+
+
+
+
 
