@@ -1,5 +1,5 @@
 # gnome-panel ja.po.
-# Copyright (C) 1998-2003 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004 Free Software Foundation, Inc.
 # Yukihiro Nakai <Nakai@abricot.co.jp>, 1998
 # Yasuyuki Furukawa <yasu@on.cs.keio.ac.jp>, 1999
 # Eiichiro ITANI <emu@ceres.dti.ne.jp>, 1999
@@ -7,20 +7,20 @@
 # Yuusuke Tahara <tahara@gnome.gr.jp>, 2000
 # Shingo Akagaki <dora@kondara.org>, 2000
 # Akira TAGOH <tagoh@gnome.gr.jp>, 2001
-# Takeshi AIHANA <aihana@gnome.gr.jp>, 2003.
+# Takeshi AIHANA <aihana@gnome.gr.jp>, 2003-2004.
 # KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2004-01-15 12:14+0000\n"
-"PO-Revision-Date: 2003-12-22 15:31+0900\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-01-16 23:04+0900\n"
+"PO-Revision-Date: 2004-01-16 18:48+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -87,28 +87,27 @@ msgstr "現在の時刻と日付を取得します"
 
 #: applets/clock/calendar-client.c:177
 msgid "Day"
-msgstr ""
+msgstr "日"
 
 #: applets/clock/calendar-client.c:178
 msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
-msgstr ""
+msgstr "現在、表示している日で 1〜31 で表示します (0 :未設定)"
 
 #: applets/clock/calendar-client.c:185
 msgid "Month"
-msgstr ""
+msgstr "月"
 
 #: applets/clock/calendar-client.c:186
 msgid "The currently monitored month between 0 and 11"
-msgstr ""
+msgstr "現在、表示している月で 0 〜 11 で表示します"
 
 #: applets/clock/calendar-client.c:193
-#, fuzzy
 msgid "Year"
-msgstr "ファイルの検索"
+msgstr "年"
 
 #: applets/clock/calendar-client.c:194
 msgid "The currently monitored year"
-msgstr ""
+msgstr "現在、表示している年です"
 
 #: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
@@ -134,7 +133,7 @@ msgstr "%H:%M"
 #.
 #: applets/clock/clock.c:276
 msgid "%a %b %e"
-msgstr "%b%d日 (%a)"
+msgstr "%b%e日 (%a)"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -161,19 +160,19 @@ msgstr "%1$s %2$s"
 #. Show date in tooltip
 #: applets/clock/clock.c:407
 msgid "%A %B %d"
-msgstr "%B%d日 %A"
+msgstr "%B%e日 %A"
 
 #: applets/clock/clock.c:825
 msgid "Tasks"
-msgstr ""
+msgstr "タスク"
 
 #: applets/clock/clock.c:961
 msgid "All Day"
-msgstr ""
+msgstr "全日"
 
 #: applets/clock/clock.c:991
 msgid "Appointments"
-msgstr ""
+msgstr "予定"
 
 #: applets/clock/clock.c:1217
 msgid "Calendar"
@@ -193,7 +192,7 @@ msgstr "%p %I:%M"
 
 #: applets/clock/clock.c:1554
 msgid "%A, %B %d %Y"
-msgstr "%Y/%m/%d (%a)"
+msgstr "%Y/%m/%e (%a)"
 
 #: applets/clock/clock.c:1596
 #, c-format
@@ -243,14 +242,12 @@ msgid "Internet time"
 msgstr "インターネット時間"
 
 #: applets/clock/clock.c:2223
-#, fuzzy
 msgid "Custom format"
-msgstr "カスタム・アイコン"
+msgstr "書式のカスタマイズ"
 
 #: applets/clock/clock.c:2239
-#, fuzzy
 msgid "Custom _format:"
-msgstr "\"時\" の書式"
+msgstr "書式のカスタマイズ(_F):"
 
 #: applets/clock/clock.c:2256
 msgid "Show _seconds"
@@ -295,7 +292,7 @@ msgstr "24-hour"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "カスタマイズした時計の書式"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -345,9 +342,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"このキーは時計アプレットで 'format' キーが \"custom\" にセットされている時に"
+"使用される書式を指定します。特定の書式を指定するために、strftime() 関数で利用"
+"できる書式指定子を利用できます。"
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -358,12 +357,13 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
-"このキーで時計アプレットが使用する時刻の書式を指定します (利用可能な値: \"12-"
-"hour\", \"24-hour\", \"internet\" と \"unix\")。\"internet\" をセットすると、"
-"時計はインターネット時刻を表示します。インターネット時刻システムは一日を "
-"1000 \".beats\" に分割します。このシステムにはタイムゾーンは存在しないので、"
-"時刻は世界中で全て同じになります。\"unix\" にセットすると、時計は時刻を "
-"Epoch (1970-01-01) からの秒数で表示します。"
+"このキーで時計アプレットが使用する '時 (hour)' の書式を指定します (利用可能な"
+"値: \"12-hour\", \"24-hour\", \"internet\", \"unix\" と \"custom\")。"
+"\"internet\" をセットすると、時計はインターネット時刻を表示します。インター"
+"ネット時刻システムは一日を 1000 \".beats\" に分割します。このシステムにはタイ"
+"ムゾーンは存在しないので、時刻は世界中で全て同じになります。\"unix\" をセット"
+"すると、時計は時刻を Epoch (1970-01-01) からの秒数で表示します。\"custom\" を"
+"セットすると、custom_key キーで指定した書式に従って時刻が表示されます。"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -387,45 +387,44 @@ msgstr "インターネット時間を使用する"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:186
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:187
 msgid "Text to render"
-msgstr ""
+msgstr "レンダリングするテキスト"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:194
 msgid "Markup"
-msgstr ""
+msgstr "マークアップ"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:195
 msgid "Marked up text to render"
-msgstr ""
+msgstr "レンダリングするマークアップ・テキスト"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:202
 msgid "Attributes"
-msgstr ""
+msgstr "属性"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:203
 msgid "A list of style attributes to apply to the text of the renderer"
-msgstr ""
+msgstr "レンダリングするテキストに適用するスタイルの属性のリスト"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:210
 msgid "Ellipsize"
-msgstr ""
+msgstr "Ellipsize"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:211
 msgid "Whether to crop the text and display \"...\" when space is limited"
 msgstr ""
+"テキストの表示範囲を越えた際にテキストを切り詰めて \"...\" を表示するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:218
-#, fuzzy
 msgid "Background color name"
-msgstr "背景色"
+msgstr "背景色の名前"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:219
-#, fuzzy
 msgid "Background color as a string"
-msgstr "背景色の透明度"
+msgstr "背景色を示す文字列"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:226
 #: gnome-panel/panel-toplevel.schemas.in.h:3
@@ -433,229 +432,225 @@ msgid "Background color"
 msgstr "背景色"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:227
-#, fuzzy
 msgid "Background color as a GdkColor"
-msgstr "背景色"
+msgstr "背景色の GdkColor 値"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:234
-#, fuzzy
 msgid "Foreground color name"
-msgstr "背景色"
+msgstr "前景色の名前"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:235
 msgid "Foreground color as a string"
-msgstr ""
+msgstr "前景色を示す文字列"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:242
-#, fuzzy
 msgid "Foreground color"
-msgstr "背景色"
+msgstr "前景色"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:243
 msgid "Foreground color as a GdkColor"
-msgstr ""
+msgstr "前景色の GdkColor 値"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:251
 msgid "Editable"
-msgstr ""
+msgstr "編集可否"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:252
 msgid "Whether the text can be modified by the user"
-msgstr ""
+msgstr "ユーザがテキストを編集できるかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:259
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:267
 msgid "Font"
-msgstr ""
+msgstr "フォント"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:260
 msgid "Font description as a string"
-msgstr ""
+msgstr "フォント記述子を示す文字列"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:268
 msgid "Font description as a PangoFontDescription struct"
-msgstr ""
+msgstr "フォント記述子を示す PangoFontDescription 構造体"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:276
 msgid "Font family"
-msgstr ""
+msgstr "フォント・ファミリ"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:277
 msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
-msgstr ""
+msgstr "フォント・ファミリの名前 (例: Sans, Helvetica, Times, Monosace)"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:284
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:285
 msgid "Font style"
-msgstr ""
+msgstr "フォントのスタイル"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:293
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:294
 msgid "Font variant"
-msgstr ""
+msgstr "フォントの縦横比"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:302
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:303
 msgid "Font weight"
-msgstr ""
+msgstr "フォントの太さ"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:312
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:313
-#, fuzzy
 msgid "Font stretch"
-msgstr "引き伸ばす(比率を変更)(_R)"
+msgstr "フォントの幅"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:321
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:322
-#, fuzzy
 msgid "Font size"
-msgstr "パネルのサイズ"
+msgstr "フォントの大きさ"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:331
 msgid "Font points"
-msgstr ""
+msgstr "フォントの大きさ (ポイント)"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:332
 msgid "Font size in points"
-msgstr ""
+msgstr "フォントの大きさ (ポイント単位)"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:341
 msgid "Font scale"
-msgstr ""
+msgstr "フォントの倍率"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:342
 msgid "Font scaling factor"
-msgstr ""
+msgstr "フォントの倍率"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:351
 msgid "Rise"
-msgstr ""
+msgstr "Rise"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:352
 msgid ""
 "Offset of text above the baseline (below the baseline if rise is negative)"
 msgstr ""
+"基点 (ベースライン) より上側にあるテキストのオフセット (Rise が負の場合は基点"
+"より下側)"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:362
 msgid "Strikethrough"
-msgstr ""
+msgstr "取消し線"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:363
 msgid "Whether to strike through the text"
-msgstr ""
+msgstr "テキストに取消し線が付与するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:370
 msgid "Underline"
-msgstr ""
+msgstr "下線"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:371
 msgid "Style of underline for this text"
-msgstr ""
+msgstr "このテキストの下線のスタイル"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:381
-#, fuzzy
 msgid "Background set"
-msgstr "背景"
+msgstr "背景の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:382
 msgid "Whether this tag affects the background color"
-msgstr ""
+msgstr "このタグが背景に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:385
 msgid "Foreground set"
-msgstr ""
+msgstr "前景の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:386
 msgid "Whether this tag affects the foreground color"
-msgstr ""
+msgstr "このタグが前景に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:389
 msgid "Editability set"
-msgstr ""
+msgstr "編集可否の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:390
 msgid "Whether this tag affects text editability"
-msgstr ""
+msgstr "このタグがテキストの編集可否に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:393
 msgid "Font family set"
-msgstr ""
+msgstr "フォント・ファミリの設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:394
 msgid "Whether this tag affects the font family"
-msgstr ""
+msgstr "このタグがフォント・ファミリに影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:397
 msgid "Font style set"
-msgstr ""
+msgstr "フォント・スタイルの設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:398
 msgid "Whether this tag affects the font style"
-msgstr ""
+msgstr "このタグがフォント・スタイルに影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:401
 msgid "Font variant set"
-msgstr ""
+msgstr "フォントの縦横比の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:402
 msgid "Whether this tag affects the font variant"
-msgstr ""
+msgstr "このタグがフォントの縦横比に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:405
 msgid "Font weight set"
-msgstr ""
+msgstr "フォントの太さの設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:406
 msgid "Whether this tag affects the font weight"
-msgstr ""
+msgstr "このタグがフォントの太さに影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:409
 msgid "Font stretch set"
-msgstr ""
+msgstr "フォントの幅の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:410
 msgid "Whether this tag affects the font stretch"
-msgstr ""
+msgstr "このタグがフォントの幅に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:413
 msgid "Font size set"
-msgstr ""
+msgstr "フォントの大きさの設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:414
 msgid "Whether this tag affects the font size"
-msgstr ""
+msgstr "このタグがフォントの大きさに影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:417
 msgid "Font scale set"
-msgstr ""
+msgstr "フォントの倍率の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:418
 msgid "Whether this tag scales the font size by a factor"
-msgstr ""
+msgstr "このタグがフォントの倍率に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:421
 msgid "Rise set"
-msgstr ""
+msgstr "Rise の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:422
 msgid "Whether this tag affects the rise"
-msgstr ""
+msgstr "このタグが Rise に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:425
 msgid "Strikethrough set"
-msgstr ""
+msgstr "取消し線の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:426
 msgid "Whether this tag affects strikethrough"
-msgstr ""
+msgstr "このタグが取消し線に影響するかどうか"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:429
 msgid "Underline set"
-msgstr ""
+msgstr "下線の設定"
 
 #: applets/clock/cut-n-paste/eggcellrenderertext.c:430
 msgid "Whether this tag affects underlining"
-msgstr ""
+msgstr "このタグが下線に影響するかどうか"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -1777,11 +1772,11 @@ msgstr "メイン・メニュー"
 
 #: gnome-panel/menu.c:1461
 msgid "Add this launcher to panel"
-msgstr "ランチャをパネルへ追加する"
+msgstr "パネルへ追加"
 
 #: gnome-panel/menu.c:1471
 msgid "Remove this item"
-msgstr "この項目を削除する"
+msgstr "この項目の削除"
 
 #: gnome-panel/menu.c:1488
 msgid "Put into run dialog"
@@ -1793,15 +1788,15 @@ msgstr "メニュー全体"
 
 #: gnome-panel/menu.c:1545
 msgid "Add this as drawer to panel"
-msgstr "引き出しとしてパネルへ追加する"
+msgstr "引き出しとしてパネルへ追加"
 
 #: gnome-panel/menu.c:1556
 msgid "Add this as menu to panel"
-msgstr "メニューとしてパネルへ追加する"
+msgstr "メニューとしてパネルへ追加"
 
 #: gnome-panel/menu.c:1569
 msgid "Add new item to this menu"
-msgstr "このメニューに新しい項目を追加する"
+msgstr "新しい項目の追加"
 
 #: gnome-panel/menu.c:1596
 msgid "Properties"
@@ -1867,17 +1862,17 @@ msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "画面をロックして一時的にコンピュータを離れることができます"
 
 #: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "ログアウト"
+msgstr "%s のログアウト"
 
 #: gnome-panel/menu.c:3252
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"このセッションからログアウトして、別のユーザでログインするか、コンピュータを"
+"%s のセッションからログアウトして、別のユーザでログインするか、コンピュータを"
 "シャットダウンできます"
 
 #: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
@@ -2234,9 +2229,9 @@ msgid "Protect your computer from unauthorized use"
 msgstr "不正な使用からコンピュータを守ります"
 
 #: gnome-panel/panel-menu-bar.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "GNOME デスクトップを終了します"
+msgstr "%s の GNOME デスクトップを終了します"
 
 #: gnome-panel/panel-menu-button.c:416
 msgid "Menu Path"
