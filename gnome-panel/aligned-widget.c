@@ -267,7 +267,9 @@ void aligned_widget_change_params (AlignedWidget *aligned,
 				   int hidebutton_pixmaps_enabled,
 				   PanelBackType back_type,
 				   char *pixmap_name,
-				   int fit_pixmap_bg,
+				   gboolean fit_pixmap_bg,
+				   gboolean strech_pixmap_bg,
+				   gboolean rotate_pixmap_bg,
 				   GdkColor *back_color)
 {
 	AlignedPos *pos = ALIGNED_POS (BASEP_WIDGET (aligned)->pos);
@@ -284,7 +286,9 @@ void aligned_widget_change_params (AlignedWidget *aligned,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
 				     back_type, pixmap_name,
-				     fit_pixmap_bg, back_color);
+				     fit_pixmap_bg, strech_pixmap_bg,
+				     rotate_pixmap_bg,
+				     back_color);
 }
 
 
@@ -308,6 +312,8 @@ aligned_widget_change_align (AlignedWidget *aligned,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
+				      panel->strech_pixmap_bg,
+				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
 
@@ -327,6 +333,8 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
+				      panel->strech_pixmap_bg,
+				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
 				 
@@ -340,7 +348,9 @@ aligned_widget_new (AlignedAlignment align,
 		    int hidebutton_pixmaps_enabled,
 		    PanelBackType back_type,
 		    char *back_pixmap,
-		    int fit_pixmap_bg,
+		    gboolean fit_pixmap_bg,
+		    gboolean strech_pixmap_bg,
+		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
 	AlignedWidget *aligned = gtk_type_new (ALIGNED_WIDGET_TYPE);
@@ -355,8 +365,9 @@ aligned_widget_new (AlignedAlignment align,
 				 sz, mode, state,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
-				 back_type, 
-				 back_pixmap, fit_pixmap_bg,
+				 back_type, back_pixmap,
+				 fit_pixmap_bg, strech_pixmap_bg,
+				 rotate_pixmap_bg,
 				 back_color);
 
 	return GTK_WIDGET (aligned);

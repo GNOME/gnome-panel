@@ -58,7 +58,9 @@ GtkWidget *drawer_widget_new (PanelOrientType orient,
 			      int hidebutton_pixmap_enabled,
 			      PanelBackType back_type,
 			      char *back_pixmap,
-			      int fit_pixmap_bg,
+			      gboolean fit_pixmap_bg,
+			      gboolean strech_pixmap_bg,
+			      gboolean rotate_pixmap_bg,
 			      GdkColor *back_color);
 
 void drawer_widget_change_params (DrawerWidget *drawer,
@@ -70,7 +72,9 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 				  int hidebutton_pixmap_enabled,
 				  PanelBackType back_type,
 				  char *back_pixmap,
-				  int fit_pixmap_bg,
+				  gboolean fit_pixmap_bg,
+				  gboolean strech_pixmap_bg,
+				  gboolean rotate_pixmap_bg,
 				  GdkColor *back_color);
 
 void drawer_widget_change_orient (DrawerWidget *drawer,

@@ -158,7 +158,9 @@ edge_widget_new (BorderEdge edge,
 		 int hidebutton_pixmaps_enabled,
 		 PanelBackType back_type,
 		 char *back_pixmap,
-		 int fit_pixmap_bg,
+		 gboolean fit_pixmap_bg,
+		 gboolean strech_pixmap_bg,
+		 gboolean rotate_pixmap_bg,
 		 GdkColor *back_color)
 {
 	EdgeWidget *edgew = gtk_type_new (EDGE_WIDGET_TYPE);
@@ -172,8 +174,9 @@ edge_widget_new (BorderEdge edge,
 				 sz, mode, state,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
-				 back_type, 
-				 back_pixmap, fit_pixmap_bg,
+				 back_type, back_pixmap,
+				 fit_pixmap_bg, strech_pixmap_bg,
+				 rotate_pixmap_bg,
 				 back_color);
 
 	PANEL_WIDGET (basep->panel)->packed = FALSE;

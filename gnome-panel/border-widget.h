@@ -70,7 +70,9 @@ GtkWidget *border_widget_construct (BorderWidget *border,
 				    int hidebutton_pixmaps_enabled,
 				    PanelBackType back_type,
 				    char *back_pixmap,
-				    int fit_pixmap_bg,
+				    gboolean fit_pixmap_bg,
+				    gboolean strech_pixmap_bg,
+				    gboolean rotate_pixmap_bg,
 				    GdkColor *back_color);
 
 void border_widget_change_params (BorderWidget *border,
@@ -82,7 +84,9 @@ void border_widget_change_params (BorderWidget *border,
 				  int hidebutton_pixmaps_enabled,
 				  PanelBackType back_type,
 				  char *pixmap_name,
-				  int fit_pixmap_bg,
+				  gboolean fit_pixmap_bg,
+				  gboolean strech_pixmap_bg,
+				  gboolean rotate_pixmap_bg,
 				  GdkColor *back_color);
 
 

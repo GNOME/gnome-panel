@@ -253,6 +253,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
+					    ppc->strech_pixmap_bg,
+					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
 	else if(IS_SLIDING_WIDGET(ppc->panel))
 		sliding_widget_change_params(SLIDING_WIDGET(ppc->panel),
@@ -267,6 +269,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
+					     ppc->strech_pixmap_bg,
+					     ppc->rotate_pixmap_bg,
 					     &ppc->back_color);
 	else if (IS_ALIGNED_WIDGET (ppc->panel))
 		aligned_widget_change_params (ALIGNED_WIDGET (ppc->panel),
@@ -280,6 +284,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					      ppc->back_type,
 					      ppc->back_pixmap,
 					      ppc->fit_pixmap_bg,
+					      ppc->strech_pixmap_bg,
+					      ppc->rotate_pixmap_bg,
 					      &ppc->back_color);
 	else if (IS_FLOATING_WIDGET (ppc->panel))
 		floating_widget_change_params (FLOATING_WIDGET (ppc->panel), 
@@ -293,6 +299,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					       ppc->back_type,
 					       ppc->back_pixmap,
 					       ppc->fit_pixmap_bg,
+					       ppc->strech_pixmap_bg,
+					       ppc->rotate_pixmap_bg,
 					       &ppc->back_color);
 	else if(IS_DRAWER_WIDGET(ppc->panel)) {
 	        DrawerPos *dp = DRAWER_POS (BASEP_WIDGET (ppc->panel)->pos);
@@ -306,6 +314,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
+					    ppc->strech_pixmap_bg,
+					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
 	}
 
@@ -985,6 +995,24 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 }
 
 static void
+set_strech_pixmap_bg (GtkToggleButton *toggle, gpointer data)
+{
+	PerPanelConfig *ppc = data;
+	ppc->strech_pixmap_bg = toggle->active;
+
+	REGISTER_CHANGES (ppc);
+}
+
+static void
+set_rotate_pixmap_bg (GtkToggleButton *toggle, gpointer data)
+{
+	PerPanelConfig *ppc = data;
+	ppc->rotate_pixmap_bg = toggle->active;
+
+	REGISTER_CHANGES (ppc);
+}
+
+static void
 color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -1032,7 +1060,7 @@ static GtkWidget *
 background_page (PerPanelConfig *ppc)
 {
 	GtkWidget *box, *f, *t;
-	GtkWidget *vbox;
+	GtkWidget *vbox, *hbox, *noscale, *fit, *strech;
 	GtkWidget *w;
 
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -1093,15 +1121,42 @@ background_page (PerPanelConfig *ppc)
 	
 	gtk_entry_set_text (GTK_ENTRY(t),
 			    ppc->back_pixmap?ppc->back_pixmap:"");
+	
+	hbox = gtk_hbox_new (0, 0);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE,0);
 
-	w = gtk_check_button_new_with_label (_("Scale image to fit panel"));
+	noscale = gtk_radio_button_new_with_label (NULL,_("No scaling"));
+	gtk_box_pack_start (GTK_BOX (hbox), noscale, FALSE, FALSE,0);
+
+	fit = gtk_radio_button_new_with_label (
+		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
+		_("Scale image to fit panel"));
+	gtk_box_pack_start (GTK_BOX (hbox), fit, FALSE, FALSE,0);
+
+	strech = gtk_radio_button_new_with_label (
+		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
+		_("Strech image to fit panel"));
+	gtk_box_pack_start (GTK_BOX (hbox), strech, FALSE, FALSE,0);
+
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (noscale),
+				      ppc->strech_pixmap_bg &&
+				      ppc->strech_pixmap_bg);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (strech),
+				      ppc->strech_pixmap_bg);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (fit),
+				      ppc->fit_pixmap_bg);
+	gtk_signal_connect (GTK_OBJECT (fit), "toggled",
+			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg), ppc);
+	gtk_signal_connect (GTK_OBJECT (strech), "toggled",
+			    GTK_SIGNAL_FUNC (set_strech_pixmap_bg), ppc);
+
+	w = gtk_check_button_new_with_label (_("Rotate pixmap on vertical panels"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w),
-				     ppc->fit_pixmap_bg);
+				      ppc->rotate_pixmap_bg);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled",
-			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg),
-			    ppc);
+			    GTK_SIGNAL_FUNC (set_rotate_pixmap_bg), ppc);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,0);
-
 
 	/*color frame*/
 	box = gtk_hbox_new (0, 0);
@@ -1193,6 +1248,8 @@ panel_config(GtkWidget *panel)
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
 	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
+	ppc->strech_pixmap_bg = pw->strech_pixmap_bg;
+	ppc->rotate_pixmap_bg = pw->rotate_pixmap_bg;
 	ppc->back_pixmap = g_strdup(pw->back_pixmap);
 	ppc->back_color = pw->back_color;
 	ppc->back_type = pw->back_type;

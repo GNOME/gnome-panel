@@ -438,6 +438,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int("sz", panel->sz);
 
 	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
+	gnome_config_set_bool("strech_pixmap_bg", panel->strech_pixmap_bg);
+	gnome_config_set_bool("rotate_pixmap_bg", panel->rotate_pixmap_bg);
 
 	gnome_config_set_string("backpixmap",
 				panel->back_pixmap ? panel->back_pixmap : "");
@@ -893,6 +895,8 @@ init_user_panels(void)
 					PANEL_BACK_NONE,
 					NULL,
 					TRUE,
+					FALSE,
+					TRUE,
 					NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);
@@ -909,6 +913,8 @@ init_user_panels(void)
 					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
+					   TRUE,
+					   FALSE,
 					   TRUE,
 					   NULL);
 		panel_setup(panel);
@@ -935,7 +941,9 @@ init_user_panels(void)
 		BorderEdge edge;
 		char *back_pixmap, *color;
 		GdkColor back_color = {0,0,0,1};
-		int fit_pixmap_bg;
+		gboolean fit_pixmap_bg;
+		gboolean strech_pixmap_bg;
+		gboolean rotate_pixmap_bg;
 		int hidebuttons_enabled;
 		int hidebutton_pixmaps_enabled;
 		
@@ -956,6 +964,8 @@ init_user_panels(void)
 		g_string_sprintf(buf,"back_type=%d",PANEL_BACK_NONE);
 		back_type=gnome_config_get_int(buf->str);
 		fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
+		strech_pixmap_bg = gnome_config_get_bool ("strech_pixmap_bg=FALSE");
+		rotate_pixmap_bg = gnome_config_get_bool ("rotate_pixmap_bg=FALSE");
 
 		g_string_sprintf(buf,"sz=%d", SIZE_STANDARD);
 		sz=gnome_config_get_int(buf->str);
@@ -997,7 +1007,10 @@ init_user_panels(void)
 						 hidebuttons_enabled,
 						 hidebutton_pixmaps_enabled,
 						 back_type, back_pixmap,
-						 fit_pixmap_bg, &back_color);
+						 fit_pixmap_bg,
+						 strech_pixmap_bg,
+						 rotate_pixmap_bg,
+						 &back_color);
 			break;
 		case ALIGNED_PANEL: {
 			AlignedAlignment align;
@@ -1012,7 +1025,10 @@ init_user_panels(void)
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
 						    back_type, back_pixmap,
-						    fit_pixmap_bg, &back_color);
+						    fit_pixmap_bg,
+						    strech_pixmap_bg,
+						    rotate_pixmap_bg,
+						    &back_color);
 			break;
 		}
 		case SLIDING_PANEL: {
@@ -1031,7 +1047,10 @@ init_user_panels(void)
 						    hidebuttons_enabled,
 						    hidebutton_pixmaps_enabled,
 						    back_type, back_pixmap,
-						    fit_pixmap_bg, &back_color);
+						    fit_pixmap_bg,
+						    strech_pixmap_bg,
+						    rotate_pixmap_bg,
+						    &back_color);
 			break;
 		}
 		case DRAWER_PANEL: {
@@ -1048,7 +1067,10 @@ init_user_panels(void)
 						   hidebuttons_enabled,
 						   hidebutton_pixmaps_enabled,
 						   back_type, back_pixmap,
-						   fit_pixmap_bg, &back_color);
+						   fit_pixmap_bg,
+						   strech_pixmap_bg,
+						   rotate_pixmap_bg,
+						   &back_color);
 #if 0
 			g_string_sprintf (buf, "temp_state=%d", BASEP_SHOWN);
 			temp_state = gnome_config_get_int (buf->str);
@@ -1071,7 +1093,10 @@ init_user_panels(void)
 						     hidebuttons_enabled,
 						     hidebutton_pixmaps_enabled,
 						     back_type, back_pixmap,
-						     fit_pixmap_bg, &back_color);
+						     fit_pixmap_bg,
+						     strech_pixmap_bg,
+						     rotate_pixmap_bg,
+						     &back_color);
 			break;
 		}
 		default:

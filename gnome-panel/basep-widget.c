@@ -1008,7 +1008,9 @@ basep_widget_construct (BasePWidget *basep,
 			int hidebutton_pixmaps_enabled,
 			PanelBackType back_type,
 			char *back_pixmap,
-			int fit_pixmap_bg,
+			gboolean fit_pixmap_bg,
+			gboolean strech_pixmap_bg,
+			gboolean rotate_pixmap_bg,
 			GdkColor *back_color)
 {
 	BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1019,6 +1021,8 @@ basep_widget_construct (BasePWidget *basep,
 					back_type,
 					back_pixmap,
 					fit_pixmap_bg,
+					strech_pixmap_bg,
+					rotate_pixmap_bg,
 					back_color);
 
 	gtk_signal_connect_after(GTK_OBJECT(basep->panel), "back_change",
@@ -1122,7 +1126,9 @@ basep_widget_change_params(BasePWidget *basep,
 			   int hidebutton_pixmaps_enabled,
 			   PanelBackType back_type,
 			   char *pixmap_name,
-			   int fit_pixmap_bg,
+			   gboolean fit_pixmap_bg,
+			   gboolean strech_pixmap_bg,
+			   gboolean rotate_pixmap_bg,
 			   GdkColor *back_color)
 {
 	g_return_if_fail(basep);
@@ -1167,6 +1173,8 @@ basep_widget_change_params(BasePWidget *basep,
 				   back_type,
 				   pixmap_name,
 				   fit_pixmap_bg,
+				   strech_pixmap_bg,
+				   rotate_pixmap_bg,
 				   back_color);
 
 	basep_widget_set_hidebuttons(basep);

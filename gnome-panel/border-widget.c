@@ -202,7 +202,9 @@ border_widget_change_params (BorderWidget *border,
 			     int hidebutton_pixmaps_enabled,
 			     PanelBackType back_type,
 			     char *pixmap_name,
-			     int fit_pixmap_bg,
+			     gboolean fit_pixmap_bg,
+			     gboolean strech_pixmap_bg,
+			     gboolean rotate_pixmap_bg,
 			     GdkColor *back_color)
 {
 	PanelOrientation new_orient;
@@ -227,7 +229,8 @@ border_widget_change_params (BorderWidget *border,
 				    hidebutton_pixmaps_enabled,
 				    back_type,
 				    pixmap_name,
-				    fit_pixmap_bg,
+				    fit_pixmap_bg, strech_pixmap_bg,
+				    rotate_pixmap_bg,
 				    back_color);
 }
 
@@ -299,6 +302,8 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 				     panel->back_type,
 				     panel->back_pixmap,
 				     panel->fit_pixmap_bg,
+				     panel->strech_pixmap_bg,
+				     panel->rotate_pixmap_bg,
 				     &panel->back_color);
 	
 }
@@ -315,7 +320,9 @@ border_widget_construct (BorderWidget *border,
 			 int hidebutton_pixmaps_enabled,
 			 PanelBackType back_type,
 			 char *back_pixmap,
-			 int fit_pixmap_bg,
+			 gboolean fit_pixmap_bg,
+			 gboolean strech_pixmap_bg,
+			 gboolean rotate_pixmap_bg,
 			 GdkColor *back_color)
 {
 	BasePWidget *basep = BASEP_WIDGET (border);
@@ -342,6 +349,8 @@ border_widget_construct (BorderWidget *border,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
+				strech_pixmap_bg,
+				rotate_pixmap_bg,
 				back_color);
 
 	return GTK_WIDGET(basep);

@@ -354,7 +354,9 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 				  int hidebutton_pixmap_enabled,
 				  PanelBackType back_type,
 				  char *back_pixmap,
-				  int fit_pixmap_bg,
+				  gboolean fit_pixmap_bg,
+				  gboolean strech_pixmap_bg,
+				  gboolean rotate_pixmap_bg,
 				  GdkColor *back_color)
 {
 	PanelOrientation porient;
@@ -389,7 +391,9 @@ void drawer_widget_change_params (DrawerWidget *drawer,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
 				    back_type, back_pixmap,
-				    fit_pixmap_bg, back_color);
+				    fit_pixmap_bg, strech_pixmap_bg,
+				    rotate_pixmap_bg,
+				    back_color);
 				    
 }
 
@@ -410,6 +414,8 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 					     panel->back_type,
 					     panel->back_pixmap,
 					     panel->fit_pixmap_bg,
+					     panel->strech_pixmap_bg,
+					     panel->rotate_pixmap_bg,
 					     &panel->back_color);
 	}
 }
@@ -423,7 +429,9 @@ drawer_widget_new (PanelOrientType orient,
 		   int hidebutton_pixmap_enabled,
 		   PanelBackType back_type,
 		   char *back_pixmap,
-		   int fit_pixmap_bg,
+		   gboolean fit_pixmap_bg,
+		   gboolean strech_pixmap_bg,
+		   gboolean rotate_pixmap_bg,
 		   GdkColor *back_color)
 {
 	DrawerWidget *drawer;
@@ -454,6 +462,8 @@ drawer_widget_new (PanelOrientType orient,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
+				strech_pixmap_bg,
+				rotate_pixmap_bg,
 				back_color);
 
 	return GTK_WIDGET (drawer);

@@ -375,7 +375,9 @@ floating_widget_change_params (FloatingWidget *floating,
 			       int hidebutton_pixmap_enabled,
 			       PanelBackType back_type,
 			       char *back_pixmap,
-			       int fit_pixmap_bg,
+			       gboolean fit_pixmap_bg,
+			       gboolean strech_pixmap_bg,
+			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color)
 {
 	FloatingPos *pos = FLOATING_POS (BASEP_WIDGET (floating)->pos);
@@ -401,7 +403,9 @@ floating_widget_change_params (FloatingWidget *floating,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
 				    back_type, back_pixmap,
-				    fit_pixmap_bg, back_color);
+				    fit_pixmap_bg, strech_pixmap_bg,
+				    rotate_pixmap_bg,
+				    back_color);
 				    
 }
 
@@ -424,6 +428,8 @@ floating_widget_change_orient (FloatingWidget *floating,
 					       panel->back_type,
 					       panel->back_pixmap,
 					       panel->fit_pixmap_bg,
+					       panel->strech_pixmap_bg,
+					       panel->rotate_pixmap_bg,
 					       &panel->back_color);
 	}
 }
@@ -447,6 +453,8 @@ floating_widget_change_coords (FloatingWidget *floating,
 					       panel->back_type,
 					       panel->back_pixmap,
 					       panel->fit_pixmap_bg,
+					       panel->strech_pixmap_bg,
+					       panel->rotate_pixmap_bg,
 					       &panel->back_color);
 	}
 }
@@ -461,7 +469,9 @@ floating_widget_new (gint16 x, gint16 y,
 		     int hidebutton_pixmap_enabled,
 		     PanelBackType back_type,
 		     char *back_pixmap,
-		     int fit_pixmap_bg,
+		     gboolean fit_pixmap_bg,
+		     gboolean strech_pixmap_bg,
+		     gboolean rotate_pixmap_bg,
 		     GdkColor *back_color)
 {
 	FloatingWidget *floating;
@@ -483,6 +493,8 @@ floating_widget_new (gint16 x, gint16 y,
 				back_type,
 				back_pixmap,
 				fit_pixmap_bg,
+				strech_pixmap_bg,
+				rotate_pixmap_bg,
 				back_color);
 
 	return GTK_WIDGET (floating);

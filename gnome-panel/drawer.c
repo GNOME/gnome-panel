@@ -299,7 +299,7 @@ create_empty_drawer_applet(char *tooltip, char *pixmap,
 					  SIZE_STANDARD,
 					  TRUE, TRUE,
 					  PANEL_BACK_NONE, NULL,
-					  TRUE, NULL);
+					  TRUE, FALSE, TRUE, NULL);
 	return create_drawer_applet(dw, tooltip,pixmap,orient);
 }
 

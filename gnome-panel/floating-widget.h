@@ -54,7 +54,9 @@ GtkWidget *floating_widget_new (gint16 x, gint16 y,
 				int hidebutton_pixmap_enabled,
 				PanelBackType back_type,
 				char *back_pixmap,
-				int fit_pixmap_bg,
+				gboolean fit_pixmap_bg,
+				gboolean strech_pixmap_bg,
+				gboolean rotate_pixmap_bg,
 				GdkColor *back_color);
 
 void floating_widget_change_params (FloatingWidget *floating,
@@ -67,7 +69,9 @@ void floating_widget_change_params (FloatingWidget *floating,
 				    int hidebutton_pixmap_enabled,
 				    PanelBackType back_type,
 				    char *back_pixmap,
-				    int fit_pixmap_bg,
+				    gboolean fit_pixmap_bg,
+				    gboolean strech_pixmap_bg,
+				    gboolean rotate_pixmap_bg,
 				    GdkColor *back_color);
 
 void floating_widget_change_coords (FloatingWidget *floating,

@@ -1929,7 +1929,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					   TRUE,
 					   PANEL_BACK_NONE,
 					   NULL,
-					   TRUE,
+					   TRUE, FALSE, TRUE,
 					   &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);
@@ -1944,7 +1944,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					TRUE,
 					PANEL_BACK_NONE,
 					NULL,
-					TRUE,
+					TRUE, FALSE, TRUE,
 					&bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
@@ -1958,7 +1958,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					    SIZE_STANDARD,
 					    TRUE, TRUE,
 					    PANEL_BACK_NONE,
-					    NULL, TRUE,
+					    NULL, TRUE, FALSE, TRUE,
 					    &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);	
@@ -1973,7 +1973,7 @@ create_new_panel(GtkWidget *w,gpointer data)
 					     SIZE_STANDARD,
 					     TRUE, TRUE,
 					     PANEL_BACK_NONE,
-					     NULL, TRUE,
+					     NULL, TRUE, FALSE, TRUE,
 					     &bcolor);
 		panel_setup (panel);
 		gtk_widget_show (panel);
@@ -2539,6 +2539,8 @@ change_hiding_mode (GtkWidget *widget, gpointer data)
 				    cur_panel->back_type,
 				    cur_panel->back_pixmap,
 				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
 }
 
@@ -2556,6 +2558,8 @@ change_size (GtkWidget *widget, gpointer data)
 				    cur_panel->back_type,
 				    cur_panel->back_pixmap,
 				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
 }
 
@@ -2587,6 +2591,8 @@ change_orient (GtkWidget *widget, gpointer data)
 				    cur_panel->back_type,
 				    cur_panel->back_pixmap,
 				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
 }
 
@@ -2605,6 +2611,8 @@ change_background (GtkWidget *widget, gpointer data)
 				    GPOINTER_TO_INT (data),
 				    cur_panel->back_pixmap,
 				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
 }
 
@@ -2653,6 +2661,8 @@ change_hidebuttons (GtkWidget *widget, gpointer data)
 				    cur_panel->back_type,
 				    cur_panel->back_pixmap,
 				    cur_panel->fit_pixmap_bg,
+				    cur_panel->strech_pixmap_bg,
+				    cur_panel->rotate_pixmap_bg,
 				    &cur_panel->back_color);
 }
 

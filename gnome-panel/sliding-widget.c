@@ -254,7 +254,9 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 			       int hidebutton_pixmaps_enabled,
 			       PanelBackType back_type,
 			       char *back_pixmap,
-			       int fit_pixmap_bg,
+			       gboolean fit_pixmap_bg,
+			       gboolean strech_pixmap_bg,
+			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color)
 {
 	SlidingWidget *sliding = gtk_type_new (SLIDING_WIDGET_TYPE);
@@ -271,7 +273,9 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
 				 back_type, back_pixmap,
-				 fit_pixmap_bg, back_color);
+				 fit_pixmap_bg, strech_pixmap_bg,
+				 rotate_pixmap_bg,
+				 back_color);
 
 	return GTK_WIDGET (sliding);
 }
@@ -288,7 +292,9 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      int hidebutton_pixmaps_enabled,
 			      PanelBackType back_type,
 			      char *pixmap_name,
-			      int fit_pixmap_bg,
+			      gboolean fit_pixmap_bg,
+			      gboolean strech_pixmap_bg,
+			      gboolean rotate_pixmap_bg,
 			      GdkColor *back_color)
 {
 	SlidingPos *pos = SLIDING_POS (BASEP_WIDGET (sliding)->pos);
@@ -313,7 +319,9 @@ sliding_widget_change_params (SlidingWidget *sliding,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
 				     back_type, pixmap_name,
-				     fit_pixmap_bg, back_color);
+				     fit_pixmap_bg, strech_pixmap_bg,
+				     rotate_pixmap_bg,
+				     back_color);
 }
 
 void
@@ -334,6 +342,8 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset) {
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
+				      panel->strech_pixmap_bg,
+				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
 
@@ -356,6 +366,8 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
+				      panel->strech_pixmap_bg,
+				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }
 
@@ -376,5 +388,7 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 				      panel->back_type,
 				      panel->back_pixmap,
 				      panel->fit_pixmap_bg,
+				      panel->strech_pixmap_bg,
+				      panel->rotate_pixmap_bg,
 				      &panel->back_color);
 }

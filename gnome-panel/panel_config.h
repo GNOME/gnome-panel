@@ -33,7 +33,9 @@ struct _PerPanelConfig {
 	
 	/*panel types*/
 	int			sz;
-	int			fit_pixmap_bg;
+	gboolean		fit_pixmap_bg;
+	gboolean		strech_pixmap_bg;
+	gboolean		rotate_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;
 	GdkColor		back_color;

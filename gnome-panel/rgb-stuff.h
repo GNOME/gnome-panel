@@ -13,7 +13,7 @@ void tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	      guchar *tile, int w, int h, int rowstride, int has_alpha);
 /* tile an art_pixbuf onto an rgb buffer*/
 void tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
-		     ArtPixBuf *pbuf, int scale_w, int scale_h);
+		     ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate);
 
 /* just copied from pixbuf source */
 GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);

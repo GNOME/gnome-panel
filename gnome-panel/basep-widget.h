@@ -164,7 +164,9 @@ GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 int hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *back_pixmap,
-						 int fit_pixmap_bg,
+						 gboolean fit_pixmap_bg,
+						 gboolean strech_pixmap_bg,
+						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 
 /* changing parameters */
@@ -177,7 +179,9 @@ void		basep_widget_change_params	(BasePWidget *basep,
 						 int hidebutton_pixmaps_enabled,
 						 PanelBackType back_type,
 						 char *pixmap_name,
-						 int fit_pixmap_bg,
+						 gboolean fit_pixmap_bg,
+						 gboolean strech_pixmap_bg,
+						 gboolean rotate_pixmap_bg,
 						 GdkColor *back_color);
 
 gboolean       basep_widget_convert_to         (BasePWidget *basep,

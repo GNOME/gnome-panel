@@ -65,7 +65,9 @@ GtkWidget *sliding_widget_new (SlidingAnchor anchor,
 			       int hidebutton_pixmaps_enabled,
 			       PanelBackType back_type,
 			       char *back_pixmap,
-			       int fit_pixmap_bg,
+			       gboolean fit_pixmap_bg,
+			       gboolean strech_pixmap_bg,
+			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color);
 
 void sliding_widget_change_params (SlidingWidget *slidingw,
@@ -79,7 +81,9 @@ void sliding_widget_change_params (SlidingWidget *slidingw,
 				   int hidebutton_pixmaps_enabled,
 				   PanelBackType back_type,
 				   char *pixmap_name,
-				   int fit_pixmap_bg,
+				   gboolean fit_pixmap_bg,
+				   gboolean strech_pixmap_bg,
+				   gboolean rotate_pixmap_bg,
 				   GdkColor *back_color);
 
 void sliding_widget_change_anchor (SlidingWidget *sliding,

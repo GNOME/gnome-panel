@@ -61,7 +61,9 @@ GtkWidget *aligned_widget_new (AlignedAlignment aligned,
 			       int hidebutton_pixmaps_enabled,
 			       PanelBackType back_type,
 			       char *back_pixmap,
-			       int fit_pixmap_bg,
+			       gboolean fit_pixmap_bg,
+			       gboolean strech_pixmap_bg,
+			       gboolean rotate_pixmap_bg,
 			       GdkColor *back_color);
 
 void aligned_widget_change_params (AlignedWidget *alignedw,
@@ -74,7 +76,9 @@ void aligned_widget_change_params (AlignedWidget *alignedw,
 				   int hidebutton_pixmaps_enabled,
 				   PanelBackType back_type,
 				   char *pixmap_name,
-				   int fit_pixmap_bg,
+				   gboolean fit_pixmap_bg,
+				   gboolean strech_pixmap_bg,
+				   gboolean rotate_pixmap_bg,
 				   GdkColor *back_color);
 
 void aligned_widget_change_align (AlignedWidget *aligned,

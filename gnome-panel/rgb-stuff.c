@@ -185,7 +185,7 @@ tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 
 void
 tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
-		ArtPixBuf *pbuf, int scale_w, int scale_h)
+		ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate)
 {
 	int i,j;
 
@@ -196,6 +196,19 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 
 	scaleaff[0] = scale_w / (double)(pbuf->width);
 	scaleaff[3] = scale_h / (double)(pbuf->height);
+
+	if(rotate) {
+		int tmp;
+
+		art_affine_rotate(affine,270);
+		art_affine_multiply(scaleaff,scaleaff,affine);
+		art_affine_translate(affine,0,scale_w);
+		art_affine_multiply(scaleaff,scaleaff,affine);
+		
+		tmp = scale_h;
+		scale_h = scale_w;
+		scale_w = tmp;
+	}
 	
 	for(i=-(offx%scale_w);i<dw;i+=scale_w) {
 		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
