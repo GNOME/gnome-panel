@@ -179,9 +179,6 @@ applet_callback_callback (GtkWidget      *widget,
 			launcher_properties (
 				menu->info->data, screen);
 
-		else if (!strcmp (menu->name, "help"))
-			panel_show_help (screen, "wgospanel.xml", "gospanel-16");
-
 		else if (!strcmp (menu->name, "help_on_app"))
 			launcher_show_help (menu->info->data, screen);
 		break;

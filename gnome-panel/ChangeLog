@@ -1,3 +1,14 @@
+2003-06-19  Mark McLoughlin  <mark@skynet.ie>
+
+	Remove panel help from launcher's context menus.
+	Fixes bug #96350.
+
+	* applet.c: (applet_callback_callback): don't
+	add help callback.
+	
+	* launcher.c: (load_launcher_applet): don't handle
+	help callback.
+
 2003-06-18  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (create_root_menu):
