@@ -1,7 +1,8 @@
 #include <config.h>
 #include <string.h>
 #include <gtk/gtk.h>
-#include <libgnomeui.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-program.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
@@ -26,8 +27,6 @@ static void button_widget_realize	(GtkWidget         *widget);
 static void button_widget_unrealize     (GtkWidget         *widget);
 static void button_widget_map           (GtkWidget         *widget);
 static void button_widget_unmap         (GtkWidget         *widget);
-static void button_widget_real_draw     (GtkWidget         *widget,
-					 GdkRectangle      *area);
 
 static gboolean  button_widget_button_press	(GtkWidget         *widget,
 						 GdkEventButton    *event);
@@ -74,8 +73,8 @@ button_widget_get_type (void)
 			sizeof (ButtonWidgetClass),
 			(GtkClassInitFunc) button_widget_class_init,
 			(GtkObjectInitFunc) button_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
 		};
 
 		button_widget_type = gtk_type_unique (GTK_TYPE_WIDGET,
@@ -138,7 +137,6 @@ button_widget_class_init (ButtonWidgetClass *class)
 
 	widget_class->realize = button_widget_realize;
 	widget_class->unrealize = button_widget_unrealize;
-	widget_class->draw = button_widget_real_draw;
 	widget_class->map = button_widget_map;
 	widget_class->unmap = button_widget_unmap;
 	widget_class->size_allocate = button_widget_size_allocate;
@@ -404,13 +402,14 @@ loadup_file(const char *file)
 
 	if ( ! g_path_is_absolute(file)) {
 		char *f;
-		f = gnome_pixmap_file (file);
+		f = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
+					       file, TRUE, NULL);
 		if (f != NULL) {
-			pb = gdk_pixbuf_new_from_file(f);
+			pb = gdk_pixbuf_new_from_file (f, NULL);
 			g_free (f);
 		}
 	} else {
-		pb = gdk_pixbuf_new_from_file (file);
+		pb = gdk_pixbuf_new_from_file (file, NULL);
 	}
 	return pb;
 }
@@ -566,14 +565,6 @@ button_widget_set_dnd_highlight(ButtonWidget *button, gboolean highlight)
 		panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 				       button);
 	}
-}
-
-static void
-button_widget_real_draw(GtkWidget *widget, GdkRectangle *area)
-{
-	if(widget->parent && IS_PANEL_WIDGET(widget->parent))
-		panel_widget_draw_icon(PANEL_WIDGET(widget->parent), BUTTON_WIDGET(widget));
-
 }
 
 void
