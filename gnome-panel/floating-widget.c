@@ -13,9 +13,8 @@
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "panel-util.h"
+#include "panel-gconf.h"
 #include "multiscreen-stuff.h"
-
-extern int pw_minimized_size;
 
 static void floating_pos_class_init (FloatingPosClass *klass);
 static void floating_pos_init (FloatingPos *pos);
@@ -313,11 +312,11 @@ floating_pos_get_hide_size (BasePWidget *basep,
 		switch (hide_orient) {
 		case ORIENT_UP:
 		case ORIENT_DOWN:
-			*h = pw_minimized_size;
+			*h = panel_gconf_get_int ("panel_minimized_size");
 			break;
 		case ORIENT_LEFT:
 		case ORIENT_RIGHT:
-			*w = pw_minimized_size;
+			*w = panel_gconf_get_int ("panel_minimized_size");
 			break;
 		}
 	} else {
@@ -355,13 +354,13 @@ floating_pos_get_hide_pos (BasePWidget *basep,
 	case ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
-			   ? pw_minimized_size
+			   ? panel_gconf_get_int ("panel_minimized_size")
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN &&
 			    ! basep->hidebuttons_enabled)
-			   ? pw_minimized_size
+			   ? panel_gconf_get_int ("panel_minimized_size")
 			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}

@@ -209,14 +209,6 @@ void		panel_widget_change_params	(PanelWidget *panel,
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
 
-/*change global params*/
-void		panel_widget_change_global	(int hiding_step_size,
-						 int minimized_size,
-						 int minimize_delay,
-						 int maximize_delay,
-						 PanelMovementType move_type,
-						 gboolean disable_animations);
-
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
 						 char *file);
 void		panel_widget_set_back_color	(PanelWidget *panel,

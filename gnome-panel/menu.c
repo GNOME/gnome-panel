@@ -47,6 +47,7 @@
 #include "menu-util.h"
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
+#include "panel-gconf.h"
 #include "panel.h"
 #include "panel_config_global.h"
 #include "session.h"
@@ -170,7 +171,7 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 static gboolean
 menus_have_icons (void)
 {
-	return gconf_client_get_bool (panel_main_gconf_client (),
+	return gconf_client_get_bool (panel_gconf_get_client (),
 				      "/desktop/gnome/interface/menus-have-icons",
 				      NULL);
 }
@@ -2797,7 +2798,7 @@ menu_add_tearoff (GtkMenu       *menu,
 {
 	GtkWidget *menuitem;
 
-        if (!gconf_client_get_bool (panel_main_gconf_client (),
+        if (!gconf_client_get_bool (panel_gconf_get_client (),
 				    "/desktop/gnome/interface/menus-have-tearoff",
 				    NULL))
 		return FALSE;

@@ -1,3 +1,15 @@
+2001-11-05  Glynn Foster  <glynn.foster@sun.com>
+
+	* Makefile.am, basep-widget.c, border-widget.c,
+	  floating-widget.c, foobar-widget.c, gnome-panel-properties.c,
+	  main.c, main.h, menu.c, panel-gconf.c, panel-gconf.h, panel-widget.c,
+	  panel-widget.h, panel_config_global.h, panelglobalconfig.schema,
+	  session.c, tearoffitem.c: More work getting the global properties into
+	  shape. Removed the option to have the movement type in the capplet - these
+	  are now a keybinding only - according to usability happiness. Also moved
+	  basep, basepos over to gobject a little bit more. Added the startings of
+	  a wrapper around gconf stuff for panel config.
+
 2001-11-05  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet-frame.c: 

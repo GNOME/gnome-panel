@@ -114,14 +114,14 @@ apply_global_config (void)
 	static int old_menu_check = -1;
 	static int old_avoid_collisions = -1;
 	GSList *li;
-
+/* FIXME
 	panel_widget_change_global (global_config.hiding_step_size,
 				    global_config.minimized_size,
 				    global_config.minimize_delay,
 				    global_config.maximize_delay,
 				    global_config.movement_type,
 				    global_config.disable_animations);
-
+*/
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
@@ -1690,10 +1690,6 @@ load_up_globals (void)
 		conditional_get_int("minimized_size",
 				    DEFAULT_MINIMIZED_SIZE, NULL);
 		
-	global_config.movement_type =
-		conditional_get_int("movement_type", 
-				    PANEL_SWITCH_MOVE, NULL);
-
 	global_config.keys_enabled = conditional_get_bool ("keys_enabled",
 							   TRUE, NULL);
 
@@ -1777,8 +1773,6 @@ write_global_config (void)
 			      global_config.minimize_delay);
 	gnome_config_set_int ("maximize_delay",
 			      global_config.maximize_delay);
-	gnome_config_set_int ("movement_type",
-			      (int)global_config.movement_type);
 	gnome_config_set_bool ("tooltips_enabled",
 			       global_config.tooltips_enabled);
 	gnome_config_set_bool ("show_dot_buttons",
@@ -1848,8 +1842,6 @@ convert_write_config(void)
 			     global_config.minimized_size);
 	gnome_config_set_int("minimize_delay",
 			     global_config.minimize_delay);
-	gnome_config_set_int("movement_type",
-			     (int)global_config.movement_type);
 	gnome_config_set_bool("tooltips_enabled",
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
@@ -1916,9 +1908,6 @@ convert_read_old_config(void)
 
 	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf->str);
-
-	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
-	global_config.movement_type=gnome_config_get_int(buf->str);
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 

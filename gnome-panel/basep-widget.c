@@ -25,6 +25,7 @@
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
+#include "panel-gconf.h"
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
@@ -32,29 +33,55 @@ extern GSList *panel_list;
 extern int panels_to_sync;
 
 /*global settings*/
-extern int pw_hiding_step_size;
-extern int pw_minimized_size;
-extern int pw_minimize_delay;
-extern int pw_maximize_delay;
-extern gboolean pw_disable_animations;
 
 extern GtkTooltips *panel_tooltips;
-
 extern GlobalConfig global_config;
+
+static GtkWindowClass *basep_widget_parent_class = NULL;
+static GtkObjectClass *basep_pos_parent_class = NULL;
 
 static void basep_widget_class_init (BasePWidgetClass *klass);
 static void basep_widget_instance_init (BasePWidget *basep);
 
 static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_instance_init (BasePPos *pos);
-static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
-static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
-static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 
+/* Forward declare some static functions for use in the class init */
+static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
+static void basep_widget_state_change (BasePWidget *basep, BasePState state);
+static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
+static void basep_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
+static void basep_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation);
+static void basep_widget_realize (GtkWidget *w);
+static void basep_widget_map (GtkWidget *w);
+static gboolean basep_enter_notify (GtkWidget *widget, GdkEventCrossing *event);
+static gboolean basep_leave_notify (GtkWidget *widget, GdkEventCrossing *event);
+static void basep_style_set (GtkWidget *widget, GtkStyle *previous_style);
 static void basep_widget_destroy (GtkObject *o);
 
-static GtkWindowClass *basep_widget_parent_class = NULL;
-static GtkObjectClass *basep_pos_parent_class = NULL;
+static void basep_widget_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec);
+static void basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec);
+
+static BasePPosClass * basep_widget_get_pos_class (BasePWidget *basep);
+
+enum {
+	/*TYPE_CHANGE_SIGNAL,*/
+	MODE_CHANGE_SIGNAL,
+	STATE_CHANGE_SIGNAL,
+	SCREEN_CHANGE_SIGNAL,
+	WIDGET_LAST_SIGNAL
+};
+
+enum { 
+	PROP_0,
+        PROP_MODE,
+        PROP_STATE,
+        PROP_LEVEL,
+        PROP_AVOID_ON_MAXIMIZE,
+        PROP_HIDEBUTTONS_ENABLED,
+        PROP_HIDEBUTTONS_PIXMAPS_ENABLED,
+};
+
 
 /************************
  widget core
@@ -83,29 +110,152 @@ basep_widget_get_type (void)
 	return object_type;
 }
 
-
-enum {
-	/*TYPE_CHANGE_SIGNAL,*/
-	MODE_CHANGE_SIGNAL,
-	STATE_CHANGE_SIGNAL,
-	SCREEN_CHANGE_SIGNAL,
-	WIDGET_LAST_SIGNAL
-};
-
 static guint basep_widget_signals[WIDGET_LAST_SIGNAL] = { 0 };
 
-static BasePPosClass *
-basep_widget_get_pos_class (BasePWidget *basep) {
-	BasePPosClass *klass;
+static void
+basep_widget_class_init (BasePWidgetClass *klass)
+{
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+	
+	basep_widget_parent_class = gtk_type_class (gtk_window_get_type ());
 
-	g_return_val_if_fail (BASEP_IS_WIDGET(basep), NULL);
-	g_return_val_if_fail (BASEP_IS_POS(basep->pos), NULL);
+	klass->mode_change = basep_widget_mode_change;
+	klass->state_change = basep_widget_state_change;
+	klass->screen_change = basep_widget_real_screen_change;
 
-	klass = BASEP_POS_GET_CLASS(basep);
+	widget_class->size_request = basep_widget_size_request;
+	widget_class->size_allocate = basep_widget_size_allocate;
+	widget_class->realize = basep_widget_realize;
+	widget_class->map = basep_widget_map;
+	widget_class->enter_notify_event = basep_enter_notify;
+	widget_class->leave_notify_event = basep_leave_notify;
+	widget_class->style_set = basep_style_set;
 
-	g_return_val_if_fail (BASEP_IS_POS_CLASS (klass), NULL);
+	gtk_object_class->destroy = basep_widget_destroy;
 
-	return klass;
+	object_class->set_property = basep_widget_set_property;
+	object_class->get_property = basep_widget_get_property;
+
+        g_object_class_install_property (object_class,
+                                        PROP_MODE,
+                                        g_param_spec_enum ("mode",
+                                                             _("mode"),
+                                                             _("mode"),
+							    PANEL_TYPE_BASE_PMODE,
+                                                            BASEP_EXPLICIT_HIDE,
+                                                            G_PARAM_READWRITE));
+        g_object_class_install_property (object_class,
+                                        PROP_STATE,
+                                        g_param_spec_enum ("state",
+                                                             _("state"),
+                                                             _("state"),
+							     PANEL_TYPE_BASE_PSTATE,
+                                                             BASEP_SHOWN,
+                                                             G_PARAM_READWRITE));
+
+        g_object_class_install_property (object_class,
+                                        PROP_LEVEL,
+                                        g_param_spec_enum ("level",
+                                                             _("level"),
+                                                             _("level"),
+							     PANEL_TYPE_BASE_PLEVEL,
+                                                             BASEP_LEVEL_DEFAULT,
+                                                             G_PARAM_READWRITE));
+
+        g_object_class_install_property (object_class,
+        			  	PROP_HIDEBUTTONS_ENABLED,
+                                        g_param_spec_boolean ("hidebuttons_enabled",
+                                                             _("hidebuttons_enabled"),
+                                                             _("hidebuttons_enabled"),
+                                                             TRUE,
+                                                             G_PARAM_READWRITE));
+
+        g_object_class_install_property (object_class,
+        			  	PROP_HIDEBUTTONS_PIXMAPS_ENABLED,
+                                        g_param_spec_boolean ("hidebutton_pixmaps_enabled",
+                                                             _("hidebutton_pixmaps_enabled"),
+                                                             _("hidebutton_pixmaps_enabled"),
+                                                             TRUE,
+                                                             G_PARAM_READWRITE));
+
+	/*basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
+		gtk_signal_new("type_change",
+			       GTK_RUN_LAST,
+			       gtk_object_class->type,
+			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
+						 type_change),
+			       gtk_marshal_NONE__ENUM,
+			       GTK_TYPE_NONE,
+			       1, PANEL_TYPE_PANEL_TYPE);*/
+
+	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
+		gtk_signal_new("mode_change",
+			       GTK_RUN_LAST,
+			       GTK_CLASS_TYPE(gtk_object_class),
+			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
+						 mode_change),
+			       gtk_marshal_NONE__ENUM,
+			       GTK_TYPE_NONE,
+			       1, PANEL_TYPE_BASE_PMODE);
+
+	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
+		gtk_signal_new("state_change",
+			       GTK_RUN_LAST,
+			       GTK_CLASS_TYPE(gtk_object_class),
+			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
+						 state_change),
+			       gtk_marshal_NONE__ENUM,
+			       GTK_TYPE_NONE,
+			       1, PANEL_TYPE_BASE_PSTATE);
+
+	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
+		gtk_signal_new("screen_change",
+			       GTK_RUN_LAST,
+			       GTK_CLASS_TYPE(gtk_object_class),
+			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
+						 screen_change),
+			       gtk_marshal_NONE__INT,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_INT);
+
+}
+
+static void
+basep_widget_get_property (GObject *object, guint prop_id, GValue *value, GParamSpec *pspec)
+{
+
+		/* Does nothing yet */
+}
+
+static void
+basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, GParamSpec *pspec)
+{
+	BasePWidget *basep;
+
+	basep = BASEP_WIDGET (object);
+
+	switch (prop_id) {
+        	case PROP_MODE:
+			basep->mode = g_value_get_enum (value);
+			break;
+        	case PROP_STATE:
+			basep->state = g_value_get_enum (value);
+			break;
+		case PROP_LEVEL:
+			basep->level = g_value_get_enum (value);
+			break;
+        	case PROP_HIDEBUTTONS_ENABLED:
+			basep->hidebuttons_enabled = g_value_get_boolean (value);
+			break;
+		case PROP_HIDEBUTTONS_PIXMAPS_ENABLED:
+			basep->hidebutton_pixmaps_enabled = g_value_get_boolean (value);
+       
+		 default:
+               		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+	}
 }
 
 static void
@@ -330,71 +480,21 @@ basep_widget_real_screen_change (BasePWidget *basep, int screen)
 	}
 }
 
-static void
-basep_widget_class_init (BasePWidgetClass *klass)
-{
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
-	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-
-        basep_widget_parent_class = gtk_type_class (gtk_window_get_type ());
-
-	/*basep_widget_signals[TYPE_CHANGE_SIGNAL] = 
-		gtk_signal_new("type_change",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 type_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_PANEL_TYPE);*/
-
-	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
-		gtk_signal_new("mode_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 mode_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_BASE_PMODE);
-
-	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
-		gtk_signal_new("state_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 state_change),
-			       gtk_marshal_NONE__ENUM,
-			       GTK_TYPE_NONE,
-			       1, PANEL_TYPE_BASE_PSTATE);
-
-	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
-		gtk_signal_new("screen_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE(object_class),
-			       GTK_SIGNAL_OFFSET(BasePWidgetClass,
-						 screen_change),
-			       gtk_marshal_NONE__INT,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_INT);
-
-	klass->mode_change = basep_widget_mode_change;
-	klass->state_change = basep_widget_state_change;
-	klass->screen_change = basep_widget_real_screen_change;
-
-	widget_class->size_request = basep_widget_size_request;
-	widget_class->size_allocate = basep_widget_size_allocate;
-	widget_class->realize = basep_widget_realize;
-	widget_class->map = basep_widget_map;
-	widget_class->enter_notify_event = basep_enter_notify;
-	widget_class->leave_notify_event = basep_leave_notify;
-	widget_class->style_set = basep_style_set;
-
-	object_class->destroy = basep_widget_destroy;
-}
-
 /* pos core */
+
+static BasePPosClass *
+basep_widget_get_pos_class (BasePWidget *basep) {
+	BasePPosClass *klass;
+
+	g_return_val_if_fail (BASEP_IS_WIDGET(basep), NULL);
+	g_return_val_if_fail (BASEP_IS_POS(basep->pos), NULL);
+
+	klass = BASEP_POS_GET_CLASS(basep);
+
+	g_return_val_if_fail (BASEP_IS_POS_CLASS (klass), NULL);
+
+	return klass;
+}
 
 GType									\
 basep_pos_get_type (void)					
@@ -428,13 +528,13 @@ basep_pos_get_hide_size (BasePWidget *basep,
 	case ORIENT_UP:
 	case ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
-			? pw_minimized_size
+			? panel_gconf_get_int ("panel_minimized_size")
 			: get_requisition_height (basep->hidebutton_n);
 		break;
 	case ORIENT_RIGHT:
 	case ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
-			? pw_minimized_size
+			? panel_gconf_get_int ("panel_minimized_size")
 			: get_requisition_width (basep->hidebutton_e);
 		break;
 	}
@@ -454,12 +554,12 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 		break;
 	case ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? pw_minimized_size
+			   ? panel_gconf_get_int ("panel_minimized_size")
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? pw_minimized_size
+			   ? panel_gconf_get_int ("panel_minimized_size")
 			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
@@ -673,7 +773,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		break;
 	}
 
-	if(!pw_disable_animations && step != 0) {
+	if(!panel_gconf_get_bool ("disable_animations") && step != 0) {
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
@@ -777,7 +877,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		break;
 	}
 	
-	if(!pw_disable_animations && step != 0) {
+	if(!panel_gconf_get_bool ("disable_animations") && step != 0) {
 		int i;
 		GTimeVal tval;
 		long start_secs;
@@ -1011,6 +1111,7 @@ basep_widget_instance_init (BasePWidget *basep)
 
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
+
 #ifdef FIXME
 	GTK_WINDOW(basep)->auto_shrink = TRUE;
 #endif
@@ -1050,17 +1151,19 @@ basep_widget_instance_init (BasePWidget *basep)
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 GTK_FILL|GTK_EXPAND|GTK_SHRINK,
 			 0,0);
+	
+	g_object_set (G_OBJECT (basep),
+		      "mode", BASEP_EXPLICIT_HIDE,
+		      "state", BASEP_SHOWN,
+		      "level", BASEP_LEVEL_DEFAULT, 
+		      "hidebuttons_enabled", TRUE,
+		      "hidebutton_pixmaps_enabled", TRUE,
+		      NULL);
 
-	basep->mode = BASEP_EXPLICIT_HIDE;
-	basep->state = BASEP_SHOWN;
-	basep->level = BASEP_LEVEL_DEFAULT;
 	basep->avoid_on_maximize = TRUE;
 	basep->leave_notify_timer_tag = 0;
 	basep->autohide_inhibit = FALSE;
 	basep->drawers_open = 0;
-
-	basep->hidebuttons_enabled = TRUE;
-	basep->hidebutton_pixmaps_enabled = TRUE;
 }
 
 static void
@@ -1610,7 +1713,8 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
-					size, pw_hiding_step_size);
+					size, 
+					panel_gconf_get_int ("panel_hide_speed"));
 	}
 
 	basep->state = state;
@@ -1649,7 +1753,8 @@ basep_widget_explicit_show (BasePWidget *basep)
 		basep->state = BASEP_MOVING;
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
-					 size, pw_hiding_step_size);
+					 size, 
+					 panel_gconf_get_int ("panel_hide_speed"));
 	}
 	
 	basep->state = BASEP_SHOWN;
@@ -1699,7 +1804,7 @@ basep_widget_autoshow (gpointer data)
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
-					 pw_hiding_step_size);
+					 panel_gconf_get_int ("panel_hide_speed"));
 	}
 
 	basep->state = BASEP_SHOWN;
@@ -1745,12 +1850,12 @@ basep_widget_queue_autoshow (BasePWidget *basep)
                 return;
 	}
 
-	if (pw_minimize_delay == 0) {
+	if (panel_gconf_get_int ("panel_hide_delay") == 0) {
 		basep_widget_autoshow (basep);
 	} else {
 		/* set up our delay for popup. */
 		basep->enter_notify_timer_tag =
-			gtk_timeout_add (pw_maximize_delay,
+			gtk_timeout_add (panel_gconf_get_int ("panel_show_delay"),
 					 basep_widget_autoshow, basep);
 	}
 }
@@ -1819,7 +1924,7 @@ basep_widget_autohide (gpointer data)
 		basep_widget_do_hiding (basep,
 					hide_orient,
 					size,
-					pw_hiding_step_size);
+					panel_gconf_get_int ("panel_hide_speed"));
 	}
 
 
@@ -1864,7 +1969,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
                 
        /* set up our delay for popup. */
         basep->leave_notify_timer_tag =
-                gtk_timeout_add (pw_minimize_delay,
+                gtk_timeout_add (panel_gconf_get_int ("panel_hide_delay"),
                                  basep_widget_autohide, basep);
 }
 
@@ -2323,4 +2428,5 @@ basep_border_get (int screen, BorderEdge edge,
 		*center = sb->borders[edge].center;
 	if (right != NULL)
 		*right = sb->borders[edge].right;
+
 }

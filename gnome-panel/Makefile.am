@@ -139,6 +139,7 @@ panel_sources = \
 	logout.c		\
 	drawer.c  		\
 	panel-util.c		\
+	panel-gconf.c		\
 	global-keys.c		\
 	panel_config.c  	\
 	status.c  		\
@@ -186,6 +187,7 @@ panel_headers = \
 	global-keys.h		\
 	panel_config.h		\
 	panel_config_global.h  	\
+	panel-gconf.h		\
 	status.h  		\
 	distribution.h		\
 	gnome-run.h  		\

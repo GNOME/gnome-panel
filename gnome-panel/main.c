@@ -17,7 +17,6 @@
 
 #include <libbonoboui.h>
 #include <bonobo-activation/bonobo-activation.h>
-#include <gconf/gconf-client.h>
 
 #include "main.h"
 
@@ -28,6 +27,7 @@
 #include "menu.h"
 #include "multiscreen-stuff.h"
 #include "panel-util.h"
+#include "panel-gconf.h"
 #include "panel_config_global.h"
 #include "session.h"
 #include "status.h"
@@ -442,17 +442,6 @@ kill_free_drawers (void)
 
 	g_slist_foreach (to_destroy, (GFunc)gtk_widget_destroy, NULL);
 	g_slist_free (to_destroy);
-}
-
-GConfClient *
-panel_main_gconf_client (void)
-{
-	static GConfClient *client = NULL;
-
-	if (!client)
-		client = gconf_client_get_default ();
-
-	return client;
 }
 
 static void

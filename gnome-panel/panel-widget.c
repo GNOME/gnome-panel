@@ -56,15 +56,6 @@ static int  panel_widget_expose		(GtkWidget        *widget,
 static void applet_move			(PanelWidget      *panel,
 					 GtkWidget        *applet);
 
-
-/*global settings*/
-int pw_hiding_step_size = 50;
-int pw_minimized_size = 6;
-int pw_minimize_delay = 300;
-int pw_maximize_delay = 0;
-gboolean pw_disable_animations = FALSE;
-PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
-
 typedef void (*BackSignal) (GtkObject * object,
 			    PanelBackType type,
 			    char *pixmap,
@@ -2198,7 +2189,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 	gdk_window_get_pointer(GTK_WIDGET(panel)->window,
 			       NULL,NULL,&mods);
 
-	movement = pw_movement_type;
+	movement = PANEL_SWITCH_MOVE;
 
 	if (panel->packed) {
 		movement = PANEL_SWITCH_MOVE;
@@ -2210,7 +2201,7 @@ panel_widget_applet_move_to_cursor (PanelWidget *panel)
 		else if (mods & GDK_MOD1_MASK)
 			movement = PANEL_FREE_MOVE;
 	}
-
+	
 	switch(movement) {
 	case PANEL_SWITCH_MOVE:
 		moveby = panel_widget_get_moveby (panel, pos, ad->drag_off);
@@ -2808,27 +2799,6 @@ panel_widget_change_orient(PanelWidget *panel,
 				   &panel->back_color);
 }
 
-
-/*change global params*/
-void
-panel_widget_change_global (int hiding_step_size,
-			    int minimized_size,
-			    int minimize_delay,
-			    int maximize_delay,
-			    PanelMovementType move_type,
-			    gboolean disable_animations)
-{
-	if (hiding_step_size > 0)
-		pw_hiding_step_size=hiding_step_size;
-	if (minimized_size > 0)
-		pw_minimized_size=minimized_size;
-	if (minimize_delay >= 0)
-		pw_minimize_delay=minimize_delay;
-	if (maximize_delay >= 0)
-		pw_maximize_delay=maximize_delay;
-	pw_movement_type = move_type;
-	pw_disable_animations = disable_animations;
-}
 
 /* when we get color_only, we also optionally set r, g, b to the
    color and w, and h to the area if the background is one color

@@ -15,7 +15,6 @@ struct _GlobalConfig {
 	gboolean show_menu_titles;
 	gboolean hungry_menus;
 	gboolean off_panel_popups;
-	PanelMovementType movement_type;
 	gboolean disable_animations;
 	gboolean autoraise;
 	gboolean keep_bottom;

@@ -13,7 +13,6 @@
 #include "panel-typebuiltins.h"
 
 extern GlobalConfig global_config;
-extern int pw_minimized_size;
 
 static void border_pos_class_init (BorderPosClass *klass);
 static void border_pos_init (BorderPos *pos);

@@ -76,12 +76,6 @@ static GtkWidget *entry_down[LAST_POBJECT];
 static GtkWidget *saturate_when_over_cb;
 
 
-/* applet page*/
-static GtkWidget *movement_type_switch_rb;
-static GtkWidget *movement_type_free_rb;
-static GtkWidget *movement_type_push_rb;
-
-
 /* menu page */
 
 static GtkWidget *show_dot_buttons_cb;
@@ -379,84 +373,6 @@ buttons_notebook_page (void)
 	  return (vbox);
 }
 
-
-static void
-sync_applets_page_with_config(GlobalConfig *conf)
-{
-	switch(conf->movement_type) {
-	case PANEL_SWITCH_MOVE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(movement_type_switch_rb),
-					    TRUE);
-		break;
-	case PANEL_FREE_MOVE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(movement_type_free_rb),
-					    TRUE);
-		break;
-	case PANEL_PUSH_MOVE:
-		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(movement_type_push_rb),
-					    TRUE);
-		break;
-	default: break;
-	}
-}
-static void
-sync_config_with_applets_page(GlobalConfig *conf)
-{
-	if(GTK_TOGGLE_BUTTON(movement_type_switch_rb)->active)
-		conf->movement_type = PANEL_SWITCH_MOVE;
-	else if(GTK_TOGGLE_BUTTON(movement_type_free_rb)->active)
-		conf->movement_type = PANEL_FREE_MOVE;
-	else if(GTK_TOGGLE_BUTTON(movement_type_push_rb)->active)
-		conf->movement_type = PANEL_PUSH_MOVE;
-	
-}
-
-
-static GtkWidget *
-applets_notebook_page (void)
-{
-	GtkWidget *frame;
-	GtkWidget *box;
-	GtkWidget *vbox;
-
-	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (vbox), GNOME_PAD_SMALL);
-
-	/* Movement frame */
-	frame = gtk_frame_new (_("Default movement mode"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-	
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	
-	/* Switched */
-	movement_type_switch_rb = gtk_radio_button_new_with_label (NULL, _("Switched movement (or use Ctrl)"));
-	gtk_signal_connect (GTK_OBJECT (movement_type_switch_rb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_box_pack_start (GTK_BOX (box), movement_type_switch_rb, FALSE, FALSE, 0);
-
-	/* Free */
-	movement_type_free_rb = gtk_radio_button_new_with_label (
-		gtk_radio_button_group (GTK_RADIO_BUTTON (movement_type_switch_rb)),
-		_("Free movement (doesn't disturb other applets) (or use Alt)"));
-	gtk_signal_connect (GTK_OBJECT (movement_type_free_rb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_box_pack_start (GTK_BOX (box), movement_type_free_rb, FALSE, FALSE, 0);
-
-	/* Push */
-	movement_type_push_rb = gtk_radio_button_new_with_label (
-		gtk_radio_button_group (GTK_RADIO_BUTTON (movement_type_switch_rb)),
-		_("Push movement (or use Shift)"));
-	gtk_signal_connect (GTK_OBJECT (movement_type_push_rb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_box_pack_start (GTK_BOX (box), movement_type_push_rb, FALSE, FALSE, 0);	
-
-	return vbox;
-}
 
 static void
 sync_menu_page_with_config(GlobalConfig *conf)
@@ -1095,10 +1011,6 @@ loadup_vals (void)
 		conditional_get_int("minimized_size",
 				    DEFAULT_MINIMIZED_SIZE, NULL);
 		
-	global_config.movement_type =
-		conditional_get_int("movement_type", 
-				    PANEL_SWITCH_MOVE, NULL);
-
 	global_config.keys_enabled = conditional_get_bool ("keys_enabled",
 							   TRUE, NULL);
 
@@ -1207,8 +1119,6 @@ write_config (GlobalConfig *conf)
 			     conf->minimize_delay);
 	gnome_config_set_int("maximize_delay",
 			     conf->maximize_delay);
-	gnome_config_set_int("movement_type",
-			     (int)conf->movement_type);
 	gnome_config_set_bool("tooltips_enabled",
 			      conf->tooltips_enabled);
 	gnome_config_set_bool("show_dot_buttons",
@@ -1300,11 +1210,6 @@ setup_the_ui(GtkWidget *capplet)
 	page = buttons_notebook_page ();
 	gtk_notebook_append_page (GTK_NOTEBOOK(nbook),
 				    page, gtk_label_new (_("Buttons")));
-
-	/* applet settings */
-	page = applets_notebook_page ();
-	gtk_notebook_append_page (GTK_NOTEBOOK (nbook),
-				  page, gtk_label_new (_("Panel Objects")));
 
 	/* Menu notebook page */
 	page = menu_notebook_page ();
