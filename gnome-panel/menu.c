@@ -3966,10 +3966,9 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 	if (char_tmp) {
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem (menuitem,
-				gnome_stock_pixmap_widget(menu,
-							  GNOME_STOCK_PIXMAP_ABOUT),
-				_("About GNOME..."));
+		setup_menuitem_try_pixmap (menuitem,
+								   "gnome-about-gnome.png",
+								   _("About GNOME..."), SMALL_ICON_SIZE);
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		gtk_signal_connect_full(GTK_OBJECT (menuitem), "activate",
 					GTK_SIGNAL_FUNC(about_gnome_cb),NULL,
