@@ -1,7 +1,7 @@
 SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout
 
 INCLUDES =	 			\
-	-I../.. 			\
+	-I$(top_srcdir)			\
 	-I$(srcdir)/../..	 	\
 	-I$(includedir)			\
 	$(X_CFLAGS)
