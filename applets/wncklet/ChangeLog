@@ -1,3 +1,16 @@
+2003-01-21  Arvind Samptur <arvind.samptur@wipro.com>
+	* wncklet.[ch]: (wncklet_connect_while_alive) : Get rid
+	of signal emissions occuring on libwnck data after the 
+	applets have been destroyed.
+	window-menu.c,showdesktop.c: Use the above function on
+	all signals connecting to libwnck data.
+	
+	* workspace-switcher.c:(destroy_pager): Destroy the properties
+	dialog when destroying the pager.
+
+	* window-list.c: (destroy_tasklist): Destroy the propertites
+	dialog when destroying the tasklist.
+
 2003-01-10  Mark McLoughlin  <mark@skynet.ie>
 
 	Move all the window navigation applets into an applet of

@@ -33,6 +33,7 @@
 #define WNCK_I_KNOW_THIS_IS_UNSTABLE
 #include <libwnck/screen.h>
 #include "egg-screen-help.h"
+#include "wncklet.h"
 
 #include <string.h>
 
@@ -334,10 +335,10 @@ show_desktop_applet_fill (PanelApplet *applet)
                 wnck_screen_get (gdk_screen_get_number (gtk_widget_get_screen (sdd->applet)));
 
         if (sdd->wnck_screen != NULL)
-                g_signal_connect (G_OBJECT (sdd->wnck_screen),
-                                  "showing_desktop_changed",
-                                  G_CALLBACK (show_desktop_changed_callback),
-                                  sdd);
+		wncklet_connect_while_alive (sdd->wnck_screen, "showing_desktop_changed",
+					     G_CALLBACK (show_desktop_changed_callback),
+					     sdd,
+					     sdd->applet);
         else
                 g_warning ("Could not get WnckScreen!");
 

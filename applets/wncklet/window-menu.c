@@ -40,6 +40,7 @@
 
 #include "inlinepixbufs.h"
 #include "egg-screen-help.h"
+#include "wncklet.h"
 
 typedef struct {
 	GtkWidget    *applet;
@@ -410,51 +411,33 @@ window_menu_window_closed (WnckScreen *screen,
 }
 
 static void
-window_menu_connect_while_alive (gpointer    object,
-				 const char *signal,
-				 GCallback   func,
-				 gpointer    func_data,
-				 gpointer    alive_object)
-{
-	GClosure *closure;
-
-	closure = g_cclosure_new (func, func_data, NULL);
-	g_object_watch_closure (G_OBJECT (alive_object), closure);
-	g_signal_connect_closure_by_id (
-			object,
-			g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
-			closure,
-			FALSE);
-}
-
-static void
 window_menu_connect_to_window (WindowMenu *window_menu,
 			       WnckWindow *window)
 {
-	window_menu_connect_while_alive (window, "icon_changed",
-					 G_CALLBACK (window_menu_window_icon_changed),
-					 window_menu,
-					 window_menu->applet);
+	wncklet_connect_while_alive (window, "icon_changed",
+				     G_CALLBACK (window_menu_window_icon_changed),
+				     window_menu,
+				     window_menu->applet);
 }
 
 static void
 window_menu_connect_to_screen (WindowMenu *window_menu,
 			       WnckScreen *screen)
 {
-	window_menu_connect_while_alive (screen, "active_window_changed",
-					 G_CALLBACK (window_menu_active_window_changed),
-					 window_menu,
-					 window_menu->applet);
+	wncklet_connect_while_alive (screen, "active_window_changed",
+				     G_CALLBACK (window_menu_active_window_changed),
+				     window_menu,
+				     window_menu->applet);
 
-	window_menu_connect_while_alive (screen, "window_opened",
-					 G_CALLBACK (window_menu_window_opened),
-					 window_menu,
-					 window_menu->applet);
+	wncklet_connect_while_alive (screen, "window_opened",
+				     G_CALLBACK (window_menu_window_opened),
+				     window_menu,
+				     window_menu->applet);
 
-	window_menu_connect_while_alive (screen, "window_closed",
-					 G_CALLBACK (window_menu_window_closed),
-					 window_menu,
-					 window_menu->applet);
+	wncklet_connect_while_alive (screen, "window_closed",
+				     G_CALLBACK (window_menu_window_closed),
+				     window_menu,
+				     window_menu->applet);
 }
 
 static void

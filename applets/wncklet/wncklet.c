@@ -25,10 +25,29 @@
 #include <string.h>
 #include <panel-applet.h>
 
+#include "wncklet.h"
 #include "window-menu.h"
 #include "workspace-switcher.h"
 #include "window-list.h"
 #include "showdesktop.h"
+
+void
+wncklet_connect_while_alive (gpointer    object,
+			     const char *signal,
+			     GCallback   func,
+			     gpointer    func_data,
+			     gpointer    alive_object)
+{
+	GClosure *closure;
+
+	closure = g_cclosure_new (func, func_data, NULL);
+	g_object_watch_closure (G_OBJECT (alive_object), closure);
+	g_signal_connect_closure_by_id (
+			object	,
+			g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
+			closure,
+			FALSE);
+}
 
 static gboolean 
 wncklet_factory (PanelApplet *applet,
@@ -53,6 +72,7 @@ wncklet_factory (PanelApplet *applet,
 
 	return retval;
 }
+
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
                              PANEL_TYPE_APPLET,
