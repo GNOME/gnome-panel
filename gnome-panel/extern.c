@@ -2290,58 +2290,46 @@ panel_corba_clean_up (void)
 ExternResult
 extern_init ()
 {
-	CORBA_ORB                 orb;
 	PortableServer_POA        poa;
 	CORBA_Environment         env;
 	GNOME_Panel               panel;
-	CORBA_Object              old_panel;
 	Bonobo_RegistrationResult result;
+	ExternResult              retval;
 
 	CORBA_exception_init (&env);
 
-	orb = bonobo_orb ();
 	poa = bonobo_poa ();
 
 	POA_GNOME_Panel2__init (&panel_servant, &env);
-	if (BONOBO_EX (&env)) {
-		CORBA_exception_free (&env);
-		return EXTERN_FAILURE;
-		}
 
 	panel = PortableServer_POA_servant_to_reference (poa,
 							 &panel_servant,
 							 &env);
-
-	bonobo_activate ();
-
-	old_panel = bonobo_activation_activate_from_id (
-					"OAFIID:GNOME_Panel",
-					Bonobo_ACTIVATION_FLAG_EXISTING_ONLY,
-					NULL,
-					&env);
 	if (BONOBO_EX (&env)) {
 		CORBA_exception_free (&env);
 		return EXTERN_FAILURE;
 		}
 
-	if (old_panel != CORBA_OBJECT_NIL) {
-		CORBA_Object_release (old_panel, &env);
-		return EXTERN_ALREADY_ACTIVE;
-	}
-
-#ifdef FIXME
 	result = bonobo_activation_active_server_register (
 					"OAFIID:GNOME_Panel",
 					panel);
-	if (result != Bonobo_ACTIVATION_REG_SUCCESS)
-		return EXTERN_FAILURE;
-#endif /* FIXME */
+	switch (result) {
+	case Bonobo_ACTIVATION_REG_SUCCESS:
+		retval = EXTERN_SUCCESS;
+		break;
+	case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
+		retval = EXTERN_ALREADY_ACTIVE;
+		break;
+	default:
+		retval = EXTERN_FAILURE;
+		break;
+	}
 
 	CORBA_Object_release (panel, &env);
 
 	CORBA_exception_free (&env);
 
-	return EXTERN_SUCCESS;
+	return retval;
 }
 
 static void

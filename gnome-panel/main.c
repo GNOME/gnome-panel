@@ -506,6 +506,24 @@ main(int argc, char **argv)
 
 	tell_user_Im_on_crack ();
 
+	switch (extern_init ()) {
+	case EXTERN_SUCCESS: 
+		break;
+	case EXTERN_ALREADY_ACTIVE:
+		message = _("I've detected a panel already running,\n"
+			    "and will now exit.");
+		break;
+	case EXTERN_FAILURE: {
+		message = _("There was a problem registering the panel "
+			    "with the bonobo-activation server.\n"
+			    "The panel will now exit.");
+		break;
+		}
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
 	shell = panel_get_shell ();
 
 	reg_res = bonobo_activation_active_server_register (
@@ -526,7 +544,6 @@ main(int argc, char **argv)
 			    "The panel will now exit.");
 		break;
 	}
-
 
 	if (message) {
 		GtkWidget *box;

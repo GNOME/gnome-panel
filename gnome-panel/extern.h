@@ -6,8 +6,6 @@
 #include "panel-widget.h"
 #include "GNOME_Panel.h"
 
-#include <bonobo-activation/bonobo-activation.h>
-
 G_BEGIN_DECLS
 
 typedef struct Extern_struct *Extern;
