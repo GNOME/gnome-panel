@@ -195,7 +195,7 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 		file = g_concat_dir_and_file(dir, ".order");
 		fp = fopen(file, "a");
 		if (fp) {
-			char *file2 = g_filename_pointer(dentry->location);
+			char *file2 = g_basename(dentry->location);
 			if (file2)
 				fprintf(fp, "%s\n", file2);
 			else
@@ -268,7 +268,7 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 		return;
 	}
 
-	file = g_filename_pointer(item_loc);
+	file = g_basename(item_loc);
 	if (!file) {
 		g_warning(_("Could not get file name from path: %s"),
 			  item_loc);
@@ -276,7 +276,7 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	}
 
 	dir = g_strdup(item_loc);
-	dir[g_filename_index(dir)] = '\0';
+	dir[g_basename(dir)-dir] = '\0';
 	
 	order_in_name = g_concat_dir_and_file(dir, ".order");
 	order_in_file = fopen(order_in_name, "r");
