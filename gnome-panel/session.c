@@ -596,11 +596,13 @@ do_session_save(GnomeClient *client,
 #ifdef SESSION_DEBUG
 	printf(" 3"); fflush(stdout);
 #endif
+
 	if(complete_sync || sync_panels) {
 		num = 1;
 		g_slist_foreach(panel_list, save_panel_configuration, &num);
 		gnome_config_set_int("panel_count",num-1);
 	}
+
 #ifdef SESSION_DEBUG
 	printf(" 4\n"); fflush(stdout);
 #endif
@@ -645,7 +647,7 @@ panel_config_sync(void)
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
-			do_session_save (client, ncs, ats, pts);
+			/* do_session_save (client, ncs, ats, pts); */
 	}
 }
 
@@ -694,7 +696,7 @@ panel_session_save (GnomeClient *client,
 		ss_timeout = 1500;
 		ss_interactive = TRUE;
 	}
-	do_session_save(client,TRUE,FALSE,FALSE);
+	/* do_session_save(client,TRUE,FALSE,FALSE); */
 	if (is_shutdown) {
 		while(!ss_done_save)
 			gtk_main_iteration_do(TRUE);
