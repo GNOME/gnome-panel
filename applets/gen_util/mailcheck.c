@@ -1091,16 +1091,19 @@ mailcheck_properties_page (MailCheck *mc)
 }
 
 static void
+phelp_cb (GtkWidget *w, gint tab, gpointer data)
+{
+	GnomeHelpMenuEntry help_entry = { "mailcheck_applet",
+					  "index.html#mailcheck-prefs" };
+	gnome_help_display(NULL, &help_entry);
+}	
+
+static void
 mailcheck_properties (AppletWidget *applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = {
-		NULL, "properties-mailcheck"
-	};
 	GtkWidget *p;
 
 	MailCheck *mc = data;
-
-	help_entry.name = gnome_app_id;
 
 	if (mc->property_window != NULL) {
 		gdk_window_raise(mc->property_window->window);
@@ -1123,8 +1126,7 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "destroy",
 			    GTK_SIGNAL_FUNC(close_callback), mc);
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "help",
-			    GTK_SIGNAL_FUNC(gnome_help_pbox_display),
-			    &help_entry);
+			    GTK_SIGNAL_FUNC(phelp_cb), NULL);
 
 	gtk_widget_show (mc->property_window);
 }
@@ -1222,7 +1224,7 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 static void
 help_callback (AppletWidget *widget, gpointer data)
 {
-	GnomeHelpMenuEntry help_ref = { "mailcheck", "index.html"};
+	GnomeHelpMenuEntry help_ref = { "mailcheck_applet", "index.html"};
 	gnome_help_display (NULL, &help_ref);
 }
 
@@ -1320,12 +1322,6 @@ make_mailcheck_applet(const gchar *goad_id)
 			   mc);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
-					      "about",
-					      GNOME_STOCK_MENU_ABOUT,
-					      _("About..."),
-					      mailcheck_about,
-					      mc);	
-	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "properties",
 					      GNOME_STOCK_MENU_PROP,
 					      _("Properties..."),
@@ -1337,6 +1333,12 @@ make_mailcheck_applet(const gchar *goad_id)
 					      _("Help"),
 					      help_callback,
 					      NULL);
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      mailcheck_about,
+					      mc);	
 
 	gtk_widget_show (applet);
 	return applet;

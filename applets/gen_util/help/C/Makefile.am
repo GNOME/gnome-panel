@@ -1,4 +1,4 @@
-mailcheck_helpdir = $(datadir)/gnome/help/mailcheck/C
+mailcheck_helpdir = $(datadir)/gnome/help/mailcheck_applet/C
 mailcheck_help_DATA = \
 	index.html	\
 	topic.dat

@@ -341,10 +341,17 @@ apply_cb(GnomePropertyBox * pb, int page, Fish *fish)
 	apply_properties(fish);
 }
 
+static void
+phelp_cb (GtkWidget *w, gint tab, gpointer data)
+{
+	GnomeHelpMenuEntry help_entry = { "fish_applet",
+					  "index.html#wanda-prefs" };
+	gnome_help_display(NULL, &help_entry);
+}
+
 static void 
 properties_dialog(AppletWidget *aw, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { "fish_applet", "properties" };
 	Fish *fish = data;
 	GtkWidget *vbox;
 	GtkWidget *hbox;
@@ -442,8 +449,7 @@ properties_dialog(AppletWidget *aw, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),&fish->pb);
 	gtk_signal_connect(GTK_OBJECT(fish->pb), "help",
-			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
-			   &help_entry);
+			   GTK_SIGNAL_FUNC(phelp_cb), NULL);
 
 	gtk_widget_show_all(fish->pb);
 }

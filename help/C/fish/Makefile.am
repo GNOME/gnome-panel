@@ -1,4 +1,4 @@
-fish_helpdir = $(datadir)/gnome/help/fish/C
+fish_helpdir = $(datadir)/gnome/help/fish_applet/C
 fish_help_DATA = \
 	index.html	\
 	topic.dat
