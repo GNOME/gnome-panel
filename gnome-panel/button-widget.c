@@ -518,45 +518,48 @@ button_load_pixbuf (const char  *file,
 #undef PREFERRED_SIZE
 }
 
-#define SCALE(x) (((x)*size)/48.0)
-
 static void
 draw_arrow (GdkPoint         *points,
 	    PanelOrientation  orientation,
-	    int               size)
+	    int               width,
+	    int               height)
 {
+	double scale;
+
+	scale = (orientation & PANEL_HORIZONTAL_MASK ? height : width) / 48.0;
+
 	switch (orientation) {
 	case PANEL_ORIENTATION_TOP:
-		points[0].x = SCALE(4);
-		points[0].y = SCALE(48 - 10);
-		points[1].x = SCALE(12);
-		points[1].y = SCALE(48 - 10);
-		points[2].x = SCALE(8);
-		points[2].y = SCALE(48 - 3);
+		points [0].x = 4 * scale;
+		points [0].y = height - 10 * scale;
+		points [1].x = 12 * scale;
+		points [1].y = height - 10 * scale;
+		points [2].x = 8 * scale;
+		points [2].y = height - 3 * scale;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		points[0].x = SCALE(48-12);
-		points[0].y = SCALE(10);
-		points[1].x = SCALE(48-4);
-		points[1].y = SCALE(10);
-		points[2].x = SCALE(48-8);
-		points[2].y = SCALE(3);
+		points [0].x = width - 12 * scale;
+		points [0].y = 10 * scale;
+		points [1].x = width - 4 * scale;
+		points [1].y = 10 * scale;
+		points [2].x = width - 8 * scale;
+		points [2].y = 3 * scale;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		points[0].x = SCALE(48 - 10);
-		points[0].y = SCALE(48 - 12);
-		points[1].x = SCALE(48 - 10);
-		points[1].y = SCALE(48 - 4);
-		points[2].x = SCALE(48 - 3);
-		points[2].y = SCALE(48 - 8);
+		points [0].x = width  - 10 * scale;
+		points [0].y = height - 12 * scale;
+		points [1].x = width  - 10 * scale;
+		points [1].y = height - 4 * scale;
+		points [2].x = width  - 3 * scale;
+		points [2].y = height - 8 * scale;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		points[0].x = SCALE(10);
-		points[0].y = SCALE(4);
-		points[1].x = SCALE(10);
-		points[1].y = SCALE(12);
-		points[2].x = SCALE(3);
-		points[2].y = SCALE(8);
+		points [0].x = 10 * scale;
+		points [0].y = 4  * scale;
+		points [1].x = 10 * scale;
+		points [1].y = 12 * scale;
+		points [2].x = 3  * scale;
+		points [2].y = 8  * scale;
 		break;
 	}
 }
@@ -580,7 +583,7 @@ button_widget_expose (GtkWidget         *widget,
 	ButtonWidget *button_widget;
 	GtkButton *button;
 	GdkRectangle area, image_bound;
-	int off, size;
+	int off;
 	int x, y, w, h;
 	GdkPixbuf *pb = NULL;
   
@@ -594,10 +597,9 @@ button_widget_expose (GtkWidget         *widget,
 		return FALSE;
 	}
 
-	size = widget->allocation.height;
 	/* offset for pressed buttons */
 	off = (button->in_button && button->button_down) ?
-		SCALE(BUTTON_WIDGET_DISPLACEMENT) : 0;
+		BUTTON_WIDGET_DISPLACEMENT * widget->allocation.height / 48.0 : 0;
 	
 	if (panel_global_config_get_highlight_when_over () && 
 	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
@@ -632,7 +634,7 @@ button_widget_expose (GtkWidget         *widget,
 	if (button_widget->arrow) {
 		int i;
 		GdkPoint points[3];
-		draw_arrow (points, button_widget->orientation, widget->allocation.height);
+		draw_arrow (points, button_widget->orientation, widget->allocation.width, widget->allocation.height);
 		for (i = 0; i < 3; i++) {
 			points[i].x += off + widget->allocation.x;
 			points[i].y += off + widget->allocation.y;

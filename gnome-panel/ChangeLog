@@ -1,3 +1,34 @@
+2003-07-01  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix location of arrow on non-rectangular menu buttons and
+	fix problem where you can't make the panel smaller because
+	launchers etc. refuse to get smaller.
+
+	* button-widget.c:
+	(draw_arrow), (button_widget_expose): redo the calculation
+	of arrow co-ordinates to not assume the icon is square.
+	
+	* panel-widget.[ch]:
+	(panel_widget_size_request): if an applet has its size
+	constrained don't increase the panel's requisition if the
+	applet's requisition is larger.
+	(panel_widget_add): initialize size_constrained.
+	(panel_widget_set_applet_size_constrained): add per-applet
+	flag to specify whether the panel should expand when an
+	applet is larger than the panel.
+	
+	* panel-applet-frame.c:
+	(panel_applet_frame_load): set size_constrained.
+	(panel_applet_frame_size_constrain),
+	(panel_applet_frame_size_request): don't constrain the
+	applet's size here.
+	
+	* drawer.c: (load_drawer_applet):
+	* launcher.c: (load_launcher_applet):
+	* panel-action-button.c: (panel_action_button_load):
+	* panel-menu-button.c: (panel_menu_button_load): set
+	size_constrained.
+
 ==================== 2.3.3.2 ====================
 
 2003-07-01  Mark McLoughlin  <mark@skynet.ie>

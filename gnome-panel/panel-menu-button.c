@@ -579,6 +579,7 @@ panel_menu_button_load (const char  *menu_path,
 		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
+	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
 	panel_menu_button_connect_to_gconf (button);
 }

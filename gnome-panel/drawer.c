@@ -636,6 +636,7 @@ load_drawer_applet (char          *toplevel_id,
 
 	panel_widget_add_forbidden (panel_toplevel_get_panel_widget (drawer->toplevel));
 	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
+	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
 
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button, drawer->tooltip, NULL);
 	gtk_window_present (GTK_WINDOW (drawer->toplevel));

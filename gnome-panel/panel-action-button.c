@@ -530,6 +530,7 @@ panel_action_button_load (PanelActionButtonType  type,
 		button->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
 
 	panel_widget_set_applet_expandable (panel, GTK_WIDGET (button), FALSE, TRUE);
+	panel_widget_set_applet_size_constrained (panel, GTK_WIDGET (button), TRUE);
 
 	if (actions [button->priv->type].setup_menu)
 		actions [button->priv->type].setup_menu (button);

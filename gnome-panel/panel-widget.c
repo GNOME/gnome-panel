@@ -1330,7 +1330,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		gtk_widget_size_request(ad->applet,&chreq);
 
 		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
-			if (requisition->height < chreq.height)
+			if (requisition->height < chreq.height && !ad->size_constrained)
 				requisition->height = chreq.height;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
@@ -1339,7 +1339,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 			else if (panel->packed)
 				requisition->width += chreq.width;
 		} else {
-			if (requisition->width < chreq.width)
+			if (requisition->width < chreq.width && !ad->size_constrained)
 				requisition->width = chreq.width;
 
 			if (panel->packed && ad->expand_major && ad->size_hints)
@@ -2462,6 +2462,7 @@ panel_widget_add (PanelWidget *panel,
 		ad->drag_off = 0;
 		ad->dirty = FALSE;
 		ad->no_die = 0;
+		ad->size_constrained = FALSE;
 		ad->expand_major = FALSE;
 		ad->expand_minor = FALSE;
 		ad->locked = locked;
@@ -2766,6 +2767,27 @@ panel_widget_get_applet_orientation (PanelWidget *panel)
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (panel->toplevel), PANEL_ORIENTATION_TOP);
 
 	return panel_toplevel_get_orientation (panel->toplevel);
+}
+
+void
+panel_widget_set_applet_size_constrained (PanelWidget *panel,
+					  GtkWidget   *applet,
+					  gboolean     size_constrained)
+{
+	AppletData *ad;
+
+	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
+	if (!ad)
+		return;
+
+	size_constrained = size_constrained != FALSE;
+
+	if (ad->size_constrained == size_constrained)
+		return;
+
+	ad->size_constrained = size_constrained;
+
+	gtk_widget_queue_resize (GTK_WIDGET (panel));
 }
 
 void

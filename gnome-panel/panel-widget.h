@@ -46,9 +46,6 @@ struct _AppletData
 	int		cells;
 	int             min_cells;
 
-	gboolean        expand_major;
-	gboolean        expand_minor;
-	gboolean        locked;
 	
 	gboolean	dirty;
 
@@ -62,6 +59,11 @@ struct _AppletData
 	/* Valid size ranges for expanded applets */
 	int *           size_hints; 
 	int             size_hints_len;
+  
+	guint           size_constrained : 1;
+	guint           expand_major : 1;
+	guint           expand_minor : 1;
+	gboolean        locked : 1;
   
 };
 
@@ -183,22 +185,27 @@ void            panel_widget_focus              (PanelWidget *panel);
 
 PanelOrientation panel_widget_get_applet_orientation (PanelWidget *panel);
 
-void         panel_widget_set_applet_expandable (PanelWidget *panel,
-						 GtkWidget   *applet,
-						 gboolean     major,
-						 gboolean     minor);
-void         panel_widget_set_applet_size_hints (PanelWidget *panel,
-						 GtkWidget   *applet,
-						 int         *size_hints,
-						 int          size_hints_len);
 
-void         panel_widget_set_applet_locked     (PanelWidget *panel,
-						 GtkWidget   *applet,
-						 gboolean     locked);
-gboolean     panel_widget_get_applet_locked     (PanelWidget *panel,
-						 GtkWidget   *applet);
-gboolean     panel_widget_toggle_applet_locked  (PanelWidget *panel,
-						 GtkWidget   *applet);
+void     panel_widget_set_applet_size_constrained (PanelWidget *panel,
+						   GtkWidget   *applet,
+						   gboolean     size_constrained);
+void     panel_widget_set_applet_expandable       (PanelWidget *panel,
+						   GtkWidget   *applet,
+						   gboolean     major,
+						   gboolean     minor);
+void     panel_widget_set_applet_size_hints       (PanelWidget *panel,
+						   GtkWidget   *applet,
+						   int         *size_hints,
+						   int          size_hints_len);
+
+void     panel_widget_set_applet_locked           (PanelWidget *panel,
+						   GtkWidget   *applet,
+						   gboolean     locked);
+gboolean panel_widget_get_applet_locked           (PanelWidget *panel,
+						   GtkWidget   *applet);
+gboolean panel_widget_toggle_applet_locked        (PanelWidget *panel,
+						   GtkWidget   *applet);
+
 
 G_END_DECLS
 
