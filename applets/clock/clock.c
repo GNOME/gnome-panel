@@ -602,7 +602,12 @@ fill_clock_applet(PanelApplet *applet)
 			  cd);
 #endif
 
-	panel_applet_setup_menu (PANEL_APPLET (cd->applet), clock_menu_xml, clock_menu_verbs, cd);
+	panel_applet_setup_menu_from_file (PANEL_APPLET (cd->applet),
+					   NULL,
+					   "GNOME_ClockApplet.xml",
+					   NULL,
+					   clock_menu_verbs,
+					   cd);
 	
 	return TRUE;
 }
