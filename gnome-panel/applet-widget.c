@@ -8,7 +8,6 @@
 
 #include <applet-widget.h>
 #include <bonobo-activation/bonobo-activation.h>
-#include <libgnorba/gnome-factory.h>
 
 #include "gnome-panel.h"
 
