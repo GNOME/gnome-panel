@@ -28,7 +28,6 @@
 
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
-#include <gtk/gtkicontheme.h>
 #include <libgnomeui/libgnomeui.h>
 
 #include <bonobo/bonobo-shlib-factory.h>
@@ -104,8 +103,6 @@ about_cb (BonoboUIComponent *uic,
           SystemTray        *tray,
           const gchar       *verbname)
 {
-  GdkPixbuf    *pixbuf;
-  GtkIconTheme *icon_theme;
   GdkScreen    *screen;
 
   const char *authors[] = {
@@ -117,7 +114,7 @@ about_cb (BonoboUIComponent *uic,
     "Sun GNOME Documentation Team <gdocteam@sun.com>",
     NULL
   };
-  const char *translator_credits = _("translator_credits");
+  const char *translator_credits = _("translator-credits");
 
   screen = gtk_widget_get_screen (GTK_WIDGET (tray->applet));
 
@@ -128,27 +125,17 @@ about_cb (BonoboUIComponent *uic,
       return;
     }
 
-  icon_theme = gtk_icon_theme_get_for_screen (screen);
-  pixbuf = gtk_icon_theme_load_icon (icon_theme,
-				     "panel-notification-area",
-                                     48,
-				     0,
-				     NULL);
-
-  tray->about_dialog = gnome_about_new (_("Panel Notification Area"), VERSION,
-					"Copyright \xc2\xa9 2002 Red Hat, Inc.",
-					NULL,
-					(const char **) authors,
-					(const char **) documenters,
-					strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
-					pixbuf);
+  tray->about_dialog = gtk_about_dialog_new ();
+  g_object_set (tray->about_dialog,
+                "name", _("Panel Notification Area"),
+                "version", VERSION,
+                "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
+                "authors", (const char **) authors,
+                "documenters", (const char **) documenters,
+                "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
+                "logo_icon_name", "panel-notification-area",
+                NULL);
   
-  if (pixbuf)
-    {
-      gtk_window_set_icon (GTK_WINDOW (tray->about_dialog), pixbuf);
-      g_object_unref (pixbuf);
-    }
-
   gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
 
   g_object_add_weak_pointer (G_OBJECT (tray->about_dialog),
@@ -413,6 +400,7 @@ applet_factory (PanelApplet *applet,
   
   gtk_container_add (GTK_CONTAINER (tray->applet), tray->frame);
   
+  gtk_window_set_default_icon_name ("panel-notification-area");
   gtk_widget_show_all (GTK_WIDGET (tray->applet));
   
   panel_applet_setup_menu_from_file (PANEL_APPLET (applet), 
