@@ -315,7 +315,9 @@ void		basep_border_get		(int screen,
 						 int *center,
 						 int *right);
 
+/* FIXME:
 #define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
+*/
 
 G_END_DECLS
 

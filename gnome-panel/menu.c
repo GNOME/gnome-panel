@@ -22,8 +22,8 @@
 #include <errno.h>
 #include <math.h>
 #include <gdk/gdkkeysyms.h>
-#include <libgnome/gnome-util.h>
-#include <libgnome/gnome-config.h>
+#include <libgnome.h>
+#include <libgnomeui.h>
 
 #include "panel-include.h"
 #include "panel-widget.h"
@@ -2664,10 +2664,12 @@ show_tearoff_menu (GtkWidget *menu, const char *title, gboolean cursor_position,
 				    GDK_DECOR_MAXIMIZE);
 	gtk_window_set_policy (GTK_WINDOW (win), FALSE, FALSE, TRUE);
 	my_gtk_menu_reparent (GTK_MENU (menu), win, FALSE);
+#if FIXME
 	/* set sticky so that we mask the fact that we have no clue
 	   how to restore non sticky windows */
 	gnome_win_hints_set_state (win, gnome_win_hints_get_state (win) |
 				   WIN_STATE_STICKY);
+#endif
 	
 	GTK_MENU (menu)->torn_off = TRUE;
 
@@ -6019,12 +6021,14 @@ save_tornoff (void)
 		gnome_config_set_int("menu_panel", menu_panel);
 		gnome_config_set_int("menu_unique_panel_id", menu_panel_id);
 
+#if FIXME
 		gnome_config_set_int("workspace",
 				     gnome_win_hints_get_workspace(tw));
 		gnome_config_set_int("hints",
 				     gnome_win_hints_get_hints(tw));
 		gnome_config_set_int("state",
 				     gnome_win_hints_get_state(tw));
+#endif
 
 		gnome_config_set_string("special",
 					sure_string (tm->special));
@@ -6217,9 +6221,11 @@ load_tearoff_menu(void)
 
 	{
 		GtkWidget *window = GTK_MENU(menu)->tearoff_window;
+#if FIXME
 		gnome_win_hints_set_workspace(window,workspace);
 		gnome_win_hints_set_hints(window,hints);
 		gnome_win_hints_set_state(window,state);
+#endif
 	}
 
 	tm = g_new0(TearoffMenu,1);

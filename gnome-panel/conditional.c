@@ -11,6 +11,7 @@
 #include <sys/wait.h>
 
 #include "panel-include.h"
+#include <libgnome/gnome-config.h>
 
 #include "conditional.h"
 

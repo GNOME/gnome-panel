@@ -780,6 +780,7 @@ static GSList *layered_dialogs = NULL;
 static void
 panel_dialog_realized (GtkWidget *dialog)
 {
+#if FIXME
 	if ( ! global_config.keep_bottom &&
 	     ! global_config.normal_layer)
 		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
@@ -787,6 +788,7 @@ panel_dialog_realized (GtkWidget *dialog)
 	else
 		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
 					   WIN_LAYER_NORMAL);
+#endif
 }
 
 static void
@@ -798,6 +800,7 @@ remove_from_layered (GtkWidget *w)
 void
 panel_set_dialog_layer (GtkWidget *dialog)
 {
+#if FIXME
 	if (g_slist_find (layered_dialogs, dialog) == NULL) {
 		layered_dialogs = g_slist_prepend (layered_dialogs, dialog);
 		gtk_signal_connect (GTK_OBJECT (dialog), "destroy",
@@ -814,11 +817,13 @@ panel_set_dialog_layer (GtkWidget *dialog)
 	gtk_signal_connect (GTK_OBJECT (dialog), "realize",
 			    GTK_SIGNAL_FUNC (panel_dialog_realized),
 			    NULL);
+#endif
 }
 
 void
 panel_reset_dialog_layers (void)
 {
+#if FIXME
 	GSList *li;
 
 	for (li = layered_dialogs; li != NULL; li = li->next) {
@@ -835,6 +840,7 @@ panel_reset_dialog_layers (void)
 			gnome_win_hints_set_layer (GTK_WIDGET (dialog),
 						   WIN_LAYER_NORMAL);
 	}
+#endif
 }
 
 GtkWidget *

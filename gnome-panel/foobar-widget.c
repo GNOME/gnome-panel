@@ -660,6 +660,7 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 void
 foobar_widget_update_winhints (FoobarWidget *foo)
 {
+#if FIXME
 	GtkWidget *w = GTK_WIDGET (foo);
 	GnomeWinLayer layer;
 
@@ -687,6 +688,7 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 		layer = WIN_LAYER_DOCK;
 	}
 	gnome_win_hints_set_layer (w, layer);
+#endif
 }
 
 static void

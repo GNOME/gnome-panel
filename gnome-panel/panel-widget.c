@@ -47,8 +47,6 @@ static void panel_widget_cremove	(GtkContainer     *container,
 					 GtkWidget        *widget);
 static int  panel_widget_expose		(GtkWidget        *widget,
 					 GdkEventExpose   *event);
-static void panel_widget_draw		(GtkWidget        *widget,
-					 GdkRectangle     *area);
 static void applet_move			(PanelWidget      *panel,
 					 GtkWidget        *applet);
 
@@ -247,8 +245,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	widget_class->size_request = panel_widget_size_request;
 	widget_class->size_allocate = panel_widget_size_allocate;
 	widget_class->expose_event = panel_widget_expose;
-	/* FIXME:2 is this necessary in GTK2? Compression stuff shouldn't be done */
-	/* widget_class->draw = panel_widget_draw; */
 
 	container_class->add = panel_widget_cadd;
 	container_class->remove = panel_widget_cremove;
@@ -1138,42 +1134,6 @@ panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 	area.height = widget->allocation.height;
 
 	panel_widget_draw_all(panel, &area);
-}
-
-static void
-panel_widget_draw(GtkWidget *widget, GdkRectangle *area)
-{
-	GList *li;
-	PanelWidget *panel;
-
-	g_return_if_fail(widget!=NULL);
-	g_return_if_fail(IS_PANEL_WIDGET(widget));
-	
-#ifdef PANEL_DEBUG
-	puts("PANEL_WIDGET_DRAW");
-	
-	printf("allocation %d x %d\n",
-	       widget->allocation.width,
-	       widget->allocation.height);
-#endif
-
-	panel = PANEL_WIDGET(widget);
-
-	if(!GTK_WIDGET_DRAWABLE(widget) ||
-	   panel->inhibit_draw)
-		return;
-
-	panel_widget_draw_all(panel, area);
-
-	for(li = panel->applet_list;
-	    li != NULL;
-	    li = g_list_next(li)) {
-		AppletData *ad = li->data;
-		GdkRectangle ch_area;
-		if(!IS_BUTTON_WIDGET(ad->applet) &&
-		   gtk_widget_intersect(ad->applet, area, &ch_area))
-			gtk_widget_draw(ad->applet, &ch_area);
-	}
 }
 
 static int

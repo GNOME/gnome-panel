@@ -15,6 +15,8 @@
 #include <sys/wait.h>
 #include <gnome-desktop/gnome-desktop-item.h>
 #include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-init.h>
+#include <libgnome/gnome-config.h>
 #include <gdk/gdkx.h>
 #include <X11/keysym.h>
 #include "panel-include.h"
@@ -256,9 +258,11 @@ apply_global_config (void)
 static void
 timeout_dlg_realized (GtkWidget *dialog)
 {
+#if FIXME
 	/* always make top layer */
 	gnome_win_hints_set_layer (GTK_WIDGET(dialog),
 				   WIN_LAYER_ABOVE_DOCK);
+#endif
 }
 
 static gboolean
@@ -414,6 +418,7 @@ save_applet_configuration(AppletInfo *info)
 	case APPLET_EXTERN:
 		{
 			Extern *ext = info->data;
+			char *s;
 
 			/*just in case the applet times out*/
 			gnome_config_set_string("id", EMPTY_ID);
@@ -429,11 +434,9 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_pop_prefix();
 			gnome_config_sync();*/
 			/* but gnome-config.[ch] is broken ! */
-#ifdef FIXME
 			s = gnome_config_get_real_path (buf->str);
 			unlink(s);
 			g_free(s);
-#endif
 
 			gnome_config_sync();
 
@@ -758,7 +761,6 @@ static gboolean sync_handler_needed = FALSE;
 void
 panel_config_sync(void)
 {
-#ifdef FIXME
 	int ncs = need_complete_save;
 	int ats = applets_to_sync;
 	int pts = panels_to_sync;
@@ -793,7 +795,6 @@ panel_config_sync(void)
 		}
 #endif /* PER_SESSION_CONFIGURATION */
 	}
-#endif
 }
 
 static gboolean
@@ -895,10 +896,8 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit (void)
 {
-#ifdef FIXME
 	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
 				   GNOME_INTERACT_ANY, 0, 1);
-#endif
 }
 
 /* try evil hacks to rewrite panel config from old applets (gnomepager for
@@ -1120,9 +1119,7 @@ init_user_applets(void)
 			load_status_applet (panel, pos, TRUE);
 			
 		} else if (strcmp (applet_name, RUN_ID) == 0) {
-#ifdef FIXME
 			load_run_applet (panel, pos, TRUE);
-#endif
 
 		} else if (strcmp (applet_name, SWALLOW_ID) == 0) {
 			char *path = conditional_get_string ("execpath",

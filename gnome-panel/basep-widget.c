@@ -1100,6 +1100,7 @@ basep_widget_show_hidebutton_pixmaps(BasePWidget *basep)
 void
 basep_widget_update_winhints (BasePWidget *basep)
 {
+#if FIXME
 	GtkWidget *w = GTK_WIDGET (basep);
 	GnomeWinLayer layer;
 	guint coverhint;
@@ -1168,6 +1169,7 @@ basep_widget_update_winhints (BasePWidget *basep)
 					   : WIN_LAYER_ABOVE_DOCK);
 		break;
 	}
+#endif
 }
 
 void

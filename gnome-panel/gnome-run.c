@@ -22,7 +22,8 @@
  */
 
 #include <config.h>
-#include <libgnomeui/gnome-window-icon.h>
+#include <libgnome.h>
+#include <libgnomeui.h>
 #include <errno.h>
 #include <sys/types.h>
 #include <dirent.h>
@@ -78,7 +79,7 @@ static void
 fill_executables (void)
 {
 	int i;
-	char *path;
+	const char *path;
 	char **pathv;
 
 	g_list_foreach (executables, (GFunc) g_free, NULL);
@@ -178,9 +179,10 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	GtkEntry *entry;
         GtkWidget *clist;
 	GtkToggleButton *terminal;
-	char **argv, **temp_argv = NULL;
+	char **argv;
+	char **temp_argv = NULL;
 	int argc, temp_argc;
-	char *s;
+	const char *s;
 	GSList *tofree = NULL;
 	char **envv = NULL;
 	int envc;
@@ -216,6 +218,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                 name = gtk_clist_get_row_data (GTK_CLIST (clist),
                                                GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
                 if (name) {
+#if FIXME
                         GnomeDesktopEntry *dentry;
                         
                         dentry = gnome_desktop_entry_load (name);
@@ -231,6 +234,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
                         } else {
                                 panel_error_dialog (_("Failed to load this program!\n"));
                         }
+#endif
                 }
         } else {
                 entry = GTK_ENTRY (gtk_object_get_data(GTK_OBJECT(w), "entry"));
@@ -265,13 +269,13 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 
                 /* Somewhat of a hack I suppose */
                 if (panel_is_url (s)) {
-                        gnome_url_show (s);
+                        gnome_url_show (s, NULL);
                         goto return_and_close;
                 }
 
                 /* we use a popt function as it does exactly what we want to do and
                    gnome already uses popt */
-                if (poptParseArgvString (s, &temp_argc, &temp_argv) != 0) {
+                if (poptParseArgvString (s, &temp_argc, (const char ***)&temp_argv) != 0) {
                         panel_error_dialog (_("Failed to execute command:\n"
                                               "%s"), s);
                         goto return_and_close;
@@ -345,7 +349,7 @@ return_and_close:
 static void
 browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
 {
-	char *fname;
+	const char *fname;
 	GtkWidget *entry;
 
 	g_return_if_fail(GTK_IS_FILE_SELECTION(fsel));
@@ -354,13 +358,13 @@ browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
 
 	fname = gtk_file_selection_get_filename(fsel);
 	if(fname != NULL) {
-		char *s = gtk_entry_get_text (GTK_ENTRY (entry));
+		const char *s = gtk_entry_get_text (GTK_ENTRY (entry));
 		if (string_empty (s)) {
 			gtk_entry_set_text (GTK_ENTRY (entry), fname);
 		} else {
-			s = g_strconcat (s, " ", fname, NULL);
-			gtk_entry_set_text (GTK_ENTRY (entry), s);
-			g_free (s);
+			char *str = g_strconcat (s, " ", fname, NULL);
+			gtk_entry_set_text (GTK_ENTRY (entry), str);
+			g_free (str);
 		}
 	}
 	gtk_widget_destroy(GTK_WIDGET(fsel));
@@ -410,7 +414,7 @@ entry_event (GtkEntry * entry, GdkEventKey * event, gpointer data)
 
 		ensure_completion ();
 
-		pos = GTK_EDITABLE (entry)->current_pos;
+		pos = gtk_editable_get_position (GTK_EDITABLE (entry));
 		prefix = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, pos);
 
 		g_completion_complete (exe_completion, prefix, &nprefix);
@@ -422,7 +426,7 @@ entry_event (GtkEntry * entry, GdkEventKey * event, gpointer data)
 						  strlen (nprefix) -
 						    strlen (prefix),
 						  &pos);
-			GTK_EDITABLE (entry)->current_pos = pos;
+			gtk_editable_set_position (GTK_EDITABLE (entry), pos);
 		} else {
                         gdk_beep ();
                 }
@@ -474,6 +478,7 @@ sync_list_to_entry (GtkWidget *dialog)
                 name = gtk_clist_get_row_data (GTK_CLIST (clist),
                                                GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
                 if (name) {
+#if FIXME
                         GnomeDesktopEntry *dentry;
 
                         dentry = gnome_desktop_entry_load (name);
@@ -491,6 +496,7 @@ sync_list_to_entry (GtkWidget *dialog)
                                 gnome_desktop_entry_free (dentry);
                                 g_free (command);
                         }
+#endif
                 }
         }
 
@@ -754,12 +760,12 @@ simple_contents_shown (GtkWidget *vbox,
                         fr = tmp->data;
 
 			if (fr->icon != NULL) {
-				pixbuf = gdk_pixbuf_new_from_file (fr->icon);
+				pixbuf = gdk_pixbuf_new_from_file (fr->icon, NULL);
 			} else {
 				pixbuf = NULL;
 			}
                 
-                        if (pixbuf) {
+                        if (pixbuf != NULL) {
                                 GdkPixbuf *scaled;
                                 scaled = gdk_pixbuf_scale_simple (pixbuf, CLIST_ICON_SIZE, CLIST_ICON_SIZE, GDK_INTERP_BILINEAR);
                                 gdk_pixbuf_render_pixmap_and_mask (scaled,
@@ -913,6 +919,7 @@ select_row_handler (GtkCList *clist,
                                        row);
 
         if (name) {
+#if FIXME
                 GnomeDesktopEntry *dentry;
                 
                 dentry = gnome_desktop_entry_load (name);
@@ -959,6 +966,7 @@ select_row_handler (GtkCList *clist,
                         
 			gnome_desktop_entry_free (dentry);
                 }
+#endif
         }
 
         sync_list_to_entry (dialog);
@@ -1144,8 +1152,10 @@ show_run_dialog (void)
                 gtk_window_set_default_size (GTK_WINDOW (run_dialog),
                                              -1, 400);
         
+#if FIXME
 	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
 					 GNOME_ICONDIR"/gnome-run.png");
+#endif
 	gtk_signal_connect(GTK_OBJECT(run_dialog), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
 			   &run_dialog);

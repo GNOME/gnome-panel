@@ -11,9 +11,8 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <libgnome/gnome-i18n.h>
-#include <libgnome/gnome-util.h>
-#include <libgnomeui/gnome-ui-init.h>
+#include <libgnome.h>
+#include <libgnomeui.h>
 #include <bonobo-activation/bonobo-activation.h>
 #include <bonobo/bonobo-ui-main.h>
 
@@ -46,9 +45,7 @@ extern GSList *panel_list;
 
 GtkTooltips *panel_tooltips = NULL;
 
-#ifdef FIXME
 GnomeClient *client = NULL;
-#endif
 
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
@@ -242,7 +239,6 @@ check_screen (void)
 		return;
 
 	tmp = gdk_pixbuf_new_from_file (phsh_file, NULL);
-	/* FIXME:2 check error, for, well, errors */
 	if (tmp == NULL)
 		return;
 
@@ -389,8 +385,10 @@ setup_merge_directory(void)
 {
 	int len;
 
-	/* FIXME:2 this used to be gnome_datadir_file("gnome/apps") */
-	merge_main_dir = "/gnome/GNOME20/share/gnome/apps/";
+	merge_main_dir = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
+						    "gnome/apps",
+						    FALSE /* only if exists */,
+						    NULL /* ret locations */);
 	merge_main_dir_len = merge_main_dir != NULL ? strlen (merge_main_dir) : 0;
 	merge_merge_dir = conditional_get_string ("/panel/Merge/Directory",
 						  "/etc/X11/applnk/",
@@ -471,14 +469,13 @@ main(int argc, char **argv)
 {
 	CORBA_ORB orb;
 	gboolean duplicate;
-#ifdef FIXME
 	gchar *real_global_path;
-#endif
 	
 	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	gnome_program_init ("panel", VERSION, &libgnomeui_module_info,
+	gnome_program_init ("panel", VERSION,
+			    LIBGNOMEUI_MODULE,
 			    argc, argv, NULL);
 
 	do_the_roswell_check ();
@@ -525,7 +522,6 @@ main(int argc, char **argv)
 
 	find_kde_directory();
 
-#ifdef FIXME
 	client = gnome_master_client ();
 
 	gnome_client_set_restart_style (client, duplicate 
@@ -541,8 +537,7 @@ main(int argc, char **argv)
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
 
 #ifndef PER_SESSION_CONFIGURATION
-	/*FIXME:2 why did I comment this out ??? It complained 'gnome_user_dir' undeclared */
-	/* real_global_path = gnome_config_get_real_path (old_panel_cfg_path); */
+	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
 	real_global_path = "";
 	if ( ! panel_file_exists (real_global_path)) {
 		g_free (old_panel_cfg_path);
@@ -557,14 +552,15 @@ main(int argc, char **argv)
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
-#endif
 
 	panel_tooltips = gtk_tooltips_new ();
 
 	xstuff_init ();
 	multiscreen_init ();
 
+#if FIXME
 	gnome_win_hints_init ();
+#endif
 
 	load_system_wide ();
 

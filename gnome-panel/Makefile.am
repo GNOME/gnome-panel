@@ -136,6 +136,7 @@ panel_sources = \
 	panel_config.c  	\
 	status.c  		\
 	distribution.c		\
+	gnome-run.c  		\
 	menu.c  		\
 	menu-util.c		\
 	menu-rh.c  		\
@@ -179,6 +180,7 @@ panel_headers = \
 	panel_config_global.h  	\
 	status.h  		\
 	distribution.h		\
+	gnome-run.h  		\
 	menu.h  		\
 	menu-util.h		\
 	menu-rh.h  		\
