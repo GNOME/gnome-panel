@@ -1,3 +1,14 @@
+2003-02-28  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-profile.c: (panel_profile_copy_defaults): rename from
+	panel_configuration_copy_defaults.
+	(panel_profile_copy_defaults_for_screen),
+	(panel_profile_append_new_ids),
+	(panel_profile_load_defaults_on_screen),
+	(panel_profile_ensure_toplevel_per_screen),
+	(panel_profile_load): implement loading the default toplevels
+	on the non-default screens on multiscreen setups.
+
 2003-02-27  Mark McLoughlin  <mark@skynet.ie>
 
 	Allow drawers to be moved by moving the toplevel.

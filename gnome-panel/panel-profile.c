@@ -1533,8 +1533,8 @@ panel_profile_apply_schemas (GConfClient *client,
 }
 
 static void
-panel_configuration_copy_defaults (GConfClient *client,
-				   const char  *profile_dir)
+panel_profile_copy_defaults (GConfClient *client,
+			     const char  *profile_dir)
 {
 	char *dir;
 
@@ -1561,6 +1561,140 @@ panel_configuration_copy_defaults (GConfClient *client,
 				     "objects");
 }
 
+static GSList *
+panel_profile_copy_defaults_for_screen (GConfClient *client,
+					const char  *profile_dir,
+					int          screen_n,
+					const char  *id_list,
+					const char  *type)
+{
+	GSList     *default_ids, *l;
+	GSList     *new_ids = NULL;
+	const char *key;
+
+	key = panel_gconf_sprintf (PANEL_DEFAULTS_DIR "/general/%s", id_list);
+	default_ids = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	for (l = default_ids; l; l = l->next) {
+		char *default_id = l->data;
+		char *new_id;
+		char *src_dir;
+		char *dest_dir;
+
+		new_id = g_strdup_printf ("%s_screen%d", default_id, screen_n);
+
+		src_dir  = g_strdup_printf (PANEL_DEFAULTS_DIR "/%s/%s", type, default_id);
+		dest_dir = g_strdup_printf ("%s/%s/%s", profile_dir, type, new_id);
+
+		panel_gconf_copy_dir (client, src_dir, dest_dir);
+
+		key = panel_gconf_sprintf (PANEL_SCHEMAS_DIR "/%s", type);
+		panel_gconf_associate_schemas_in_dir (client, dest_dir, key);
+
+		new_ids = g_slist_prepend (new_ids, new_id);
+
+		g_free (src_dir);
+		g_free (dest_dir);
+		g_free (l->data);
+	}
+	g_slist_free (default_ids);
+
+	return new_ids;
+}
+
+static void
+panel_profile_append_new_ids (GConfClient *client,
+			      const char  *id_list,
+			      GSList      *new_ids)
+{
+	GSList     *list, *l;
+	const char *key;
+
+	key = panel_gconf_general_key (current_profile, id_list);
+	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	for (l = new_ids; l; l = l->next)
+		list = g_slist_append (list, l->data);
+
+	g_slist_free (new_ids);
+
+	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
+	
+	for (l = list; l; l = l->next)
+		g_free (l->data);
+	g_slist_free (list);
+}
+
+static void
+panel_profile_load_defaults_on_screen (GConfClient *client,
+				       const char  *profile_dir,
+				       GdkScreen   *screen)
+{
+	GSList *new_toplevels, *l;
+	int     screen_n;
+
+	screen_n = gdk_screen_get_number (screen);
+
+	new_toplevels = panel_profile_copy_defaults_for_screen (client,
+								profile_dir,
+								screen_n,
+								"toplevel_id_list",
+								"toplevels");
+
+	for (l = new_toplevels; l; l = l->next) {
+		char       *toplevel_id = l->data;
+		const char *key;
+
+		key = panel_gconf_full_key (PANEL_GCONF_TOPLEVELS,
+					    current_profile,
+					    toplevel_id,
+					    "screen");
+		gconf_client_set_int (client, key, screen_n, NULL);
+	}
+
+	/* FIXME: Need to copy the applets and fix up the panel ids */
+	/* FIXME: decide which id lists to append first */
+
+	panel_profile_append_new_ids (client, "toplevel_id_list", new_toplevels);
+}
+
+static void
+panel_profile_ensure_toplevel_per_screen (GConfClient *client,
+					  const char  *profile_dir)
+{
+	GSList     *toplevels;
+	GSList     *empty_screens = NULL;
+	GSList     *l;
+	GdkDisplay *display;
+	int         n_screens, i;
+
+	toplevels = panel_toplevel_list_toplevels ();
+
+	display = gdk_display_get_default ();
+
+	n_screens = gdk_display_get_n_screens (display);
+	for (i = 0; i < n_screens; i++) {
+		GdkScreen *screen;
+
+		screen = gdk_display_get_screen (display, i);
+
+		for (l = toplevels; l; l = l->next)
+			if (gtk_window_get_screen (l->data) == screen)
+				break;
+
+		if (!l)
+			empty_screens = g_slist_prepend (empty_screens, screen);
+	}
+
+	for (l = empty_screens; l; l = l->next)
+		panel_profile_load_defaults_on_screen (client, profile_dir, l->data);
+		/* FIXME: if we fail to load the defaults for whatever reason we
+		 *        should load a fallback panel.
+		 */
+
+	g_slist_free (empty_screens);
+}
+
 void
 panel_profile_load (char *profile_name)
 {
@@ -1579,18 +1713,18 @@ panel_profile_load (char *profile_name)
 
 	dir = gconf_concat_dir_and_key (PANEL_CONFIG_DIR, current_profile);
 	if (!gconf_client_dir_exists (client, dir, NULL))
-		panel_configuration_copy_defaults (client, dir);
+		panel_profile_copy_defaults (client, dir);
 
 	key = panel_gconf_sprintf ("%s/general", dir);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 
 	panel_profile_load_toplevel_list (client, dir);
 
-	g_free (dir);
-
 	panel_applet_load_applets_from_gconf ();
 
-	/* FIXME: need to load the defaults on any new screens */
+	panel_profile_ensure_toplevel_per_screen (client, dir);
+
+	g_free (dir);
 }
 
 static gboolean
