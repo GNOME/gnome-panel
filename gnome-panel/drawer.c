@@ -343,26 +343,6 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 	gtk_object_set_data(GTK_OBJECT(widget),"allocated",GINT_TO_POINTER(1));
 }
 
-static void
-drawer_orient_change_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-	PanelWidget *panel = data;
-	
-	orientation_change(info,panel);
-}
-
-static void
-drawer_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
-{
-	if(!GTK_WIDGET_REALIZED(basep))
-		return;
-
-	gtk_container_foreach(GTK_CONTAINER(basep->panel),
-			      drawer_orient_change_foreach,
-			      basep->panel);
-}
-
 gboolean
 load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		   PanelWidget *panel, int pos, gboolean exactpos)
@@ -406,25 +386,17 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		}
 	}
 
-	gtk_signal_connect_after(GTK_OBJECT(drawer->drawer),
-				 "size_allocate",
-				 GTK_SIGNAL_FUNC(drawer_size_alloc),
-				 NULL);
-
 	gtk_signal_connect_after(GTK_OBJECT(drawer->button),
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(button_size_alloc),
 				 drawer);
 
-#if 0
-	/*FIXME: there used to be something here, what was it????*/
 	/* this doesn't make sense anymore */
 	if(BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) {
-		GtkWidget *wpanel;
-		/*pop up, if popped down*/
-		wpanel = panel->panel_parent;
+		/*pop up, if popped down, if it's not an autohidden
+		  widget then it will just ignore this next call */
+		basep_widget_autoshow(BASEP_WIDGET(panel->panel_parent));
 	} 
-#endif
 
 	panel_widget_add_forbidden(PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel));
 

@@ -128,20 +128,6 @@ drawer_pos_set_hidebuttons (BasePWidget *basep)
 	}
 }
 
-static void
-get_widget_pos(GtkWidget *widget, int *x, int *y)
-{
-       if(!widget->window) {
-               *x = *y = 0;
-               return;
-       }
-       gdk_window_get_origin (widget->window, x, y);
-       if(GTK_WIDGET_NO_WINDOW(widget)) {
-               *x += widget->allocation.x;
-               *y += widget->allocation.y;
-       }
-}
-
 static PanelOrientType
 drawer_pos_get_applet_orient (BasePWidget *basep)
 {
@@ -149,7 +135,8 @@ drawer_pos_get_applet_orient (BasePWidget *basep)
 	PanelOrientation porient = panel->orient;
 	int x,y;
 
-	get_widget_pos(GTK_WIDGET(basep),&x,&y);
+	x = GTK_WIDGET(basep)->allocation.x;
+	y = GTK_WIDGET(basep)->allocation.y;
 
 	if(porient == PANEL_VERTICAL) {
 		if(x > (gdk_screen_width()/2))

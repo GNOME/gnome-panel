@@ -210,7 +210,7 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 	} else if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		set_drawer_applet_orient(drawer,get_applet_orient(panel));
+		set_drawer_applet_orient(drawer, get_applet_orient(panel));
 		gtk_widget_queue_resize(drawer->drawer);
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      orient_change_foreach,
@@ -1328,7 +1328,8 @@ panel_setup(GtkWidget *panelw)
 					 GTK_SIGNAL_FUNC(panel_realize),
 					 NULL);
 
-	if(IS_FLOATING_WIDGET(panelw))
+	if(IS_FLOATING_WIDGET(panelw) ||
+	   IS_DRAWER_WIDGET(panelw))
 		gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
 					 GTK_SIGNAL_FUNC(floating_size_alloc),
 					 NULL);
