@@ -1,3 +1,11 @@
+Sat May 16 01:40:14 1998  Tom Tromey  <tromey@cygnus.com>
+
+	* menu.c (get_path_param): Removed.
+	(add_applet): Treat `exec' item as a vector, not a string.
+	* launcher.c (properties_apply_callback): Treat `exec' item as a
+	vector, not a string.
+	(create_properties_dialog): Likewise.
+
 Sat May 16 11:47:43 1998  George Lebl  <jirka@5z.com>
 
 	* panel_config.c: no position page for drawers

@@ -162,28 +162,6 @@ add_dir_to_panel (GtkWidget *widget, void *data)
 }
 
 
-/* a fairly dumb parser, spaces have to be escaped with \ not in
-   quotes!!!*/
-static void
-get_path_param(gchar *in, gchar **path, gchar **param)
-{
-	gchar *p;
-
-	*path = g_strdup(in);
-	p = *path;
-
-	do
-		p=strchr(p,' ');
-	while(p && p>*path && *(p-1)=='\\');
-	
-	if(!p || p>*path) {
-		*param = g_strdup("");
-	} else {
-		*p = '\0';
-		*param = g_strdup(p+1);
-	}
-}
-
 static gint
 add_applet (GtkWidget *w, gpointer data)
 {
@@ -193,8 +171,8 @@ add_applet (GtkWidget *w, gpointer data)
 	gint r;
 	gint dorestart;
 
-	/*parse out the path and arguments with this really REALLY dumb*/
-	get_path_param(ii->exec,&path,&param);
+	path = ii->exec[0];
+	param = gnome_string_joinv (" ", ii->exec + 1);
 
 	/*slightly ugly but should work fine, if the applet executable ends
 	  with multi_applet, we start this as a dorestart==FALSE type applet,
@@ -205,7 +183,7 @@ add_applet (GtkWidget *w, gpointer data)
 		dorestart = TRUE;
 
 	r = add_to_panel(EXTERN_ID,path,param,dorestart);
-	g_free(path);
+
 	g_free(param);
 	return r;
 }

@@ -194,6 +194,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	Properties        *prop;
 	GnomeDesktopEntry *dentry;
 	GtkWidget         *pixmap;
+	int i, n_args;
+	char **exec;
 
 	if (page != -1)
 		return;
@@ -203,6 +205,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 
 	free_and_nullify(dentry->name);
 	free_and_nullify(dentry->comment);
+	gnome_string_array_free (dentry->exec);
+	dentry->exec = NULL;
 	free_and_nullify(dentry->exec);
 	free_and_nullify(dentry->tryexec);
 	free_and_nullify(dentry->icon);
@@ -211,7 +215,26 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 
 	dentry->name      = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->name_entry)));
 	dentry->comment   = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->comment_entry)));
-	dentry->exec      = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->execute_entry)));
+
+	/* Handle exec specially: split at spaces.  Multiple spaces
+	   must be compacted, hence the weirdness.  This
+	   implementation wastes a little memory in some cases.  Big
+	   deal.  */
+	exec = gnome_string_split (gtk_entry_get_text(GTK_ENTRY(prop->execute_entry)),
+				   " ", -1);
+	for (n_args = i = 0; exec[i]; ++i) {
+		if (! exec[i][0]) {
+			/* Empty item means multiple spaces found.  Remove
+			   it.  */
+			g_free (exec[i]);
+		} else {
+			exec[n_args++] = exec[i];
+		}
+	}
+	exec[n_args] = NULL;
+	dentry->exec_length = n_args;
+	dentry->exec = exec;
+
 	dentry->icon      = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->icon_entry)));
 	dentry->docpath   = g_strdup(gtk_entry_get_text(GTK_ENTRY(prop->documentation_entry)));
 	dentry->type      = g_strdup("Application"); /* FIXME: should handle more cases */
@@ -278,6 +301,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	GtkWidget  *table;
 	GtkWidget  *button;
 	GtkWidget  *toggle;
+	gchar *exec;
 
 	prop = g_new(Properties, 1);
 	prop->dentry = dentry;
@@ -296,7 +320,9 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 
 	prop->name_entry          = create_text_entry(table, 0, _("Name"), dentry->name, dialog);
 	prop->comment_entry       = create_text_entry(table, 1, _("Comment"), dentry->comment, dialog);
-	prop->execute_entry       = create_text_entry(table, 2, _("Execute"), dentry->exec, dialog);
+	exec = gnome_string_joinv (" ", dentry->exec);
+	prop->execute_entry       = create_text_entry(table, 2, _("Execute"), exec, dialog);
+	g_free (exec);
 	prop->icon_entry          = create_text_entry(table, 3, _("Icon"), dentry->icon, dialog);
 	prop->documentation_entry = create_text_entry(table, 4, _("Documentation"), dentry->docpath, dialog);
 
