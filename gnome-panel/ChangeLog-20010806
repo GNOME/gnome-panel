@@ -1,3 +1,10 @@
+Sat Feb 19 16:26:06 2000  George Lebl <jirka@5z.com>
+
+	* menu.c: Use gdk-pixbuf and GtkPixmap for icons.  Also create all
+	  menus in the gdkrgb visual.  Port the scale_down function to work
+	  on ArtPixBufs and work with alpha channel to get nicer scaling then
+	  gdk-pixbufs.
+
 Sat Feb 19 04:15:28 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: use an alignment instead of "X" label

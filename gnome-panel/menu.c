@@ -167,46 +167,114 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	g_free(s);
 }
 
-struct scale_color {
-	unsigned char r, g, b;
-};
-
-static struct scale_color scale_base = { 0xd6, 0xd6, 0xd6 };
-static struct scale_color scale_trans = { 0xff, 0x00, 0xff };
-
-static char *
-scale_down(GtkWidget *window, GtkStateType state, unsigned char *datao,
-	   gint wo, gint ho, gint w, gint h)
+static PanelWidget *
+get_panel_from_menu_data(GtkWidget *menu)
 {
-	unsigned char *data, *p, *p2, *p3;
-	long x, y, w2, h2, xo, yo, wo3, x2, y2, i, x3, y3;
+	g_return_val_if_fail (menu != NULL, NULL);
+	g_return_val_if_fail (GTK_IS_MENU(menu) || GTK_IS_MENU_ITEM(menu),
+			      NULL);
+
+	if(GTK_IS_MENU_ITEM(menu))
+		menu = menu->parent;
+
+	while(menu) {
+		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
+							 "menu_panel");
+		if(panel) {
+			if(IS_PANEL_WIDGET(panel))
+				return panel;
+			else
+				g_warning("Menu is on crack");
+		}
+		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
+	}
+	g_warning("Something went quite terribly wrong and we can't "
+		  "find where this menu belongs");
+	return panels->data;
+}
+
+
+
+static void
+setup_menu_panel(GtkWidget *menu)
+{
+	PanelWidget *menu_panel = gtk_object_get_data(GTK_OBJECT(menu),
+						      "menu_panel");
+	if(!menu_panel) {
+		menu_panel = get_panel_from_menu_data(menu);
+		gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	}
+}
+
+
+static GtkWidget *
+menu_new(void)
+{
+	GtkWidget *ret;
+	if (gnome_preferences_get_menus_have_icons ()) {
+		gtk_widget_push_visual (gdk_rgb_get_visual ());
+		gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+	}
+	ret = gtk_menu_new();
+	if (gnome_preferences_get_menus_have_icons ()) {
+		gtk_widget_pop_colormap ();
+		gtk_widget_pop_visual ();
+	}
+	gtk_signal_connect(GTK_OBJECT(ret), "show",
+			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
+
+	return ret;
+}
+
+
+/* the following is taken from gnome_stock, and beaten with a stick
+ * until it worked with ArtPixBufs and alpha channel, it scales down
+ * and makes a bi-level alpha channel at threshold of 0xff/2,
+ * data is the dest and datao is the source, it will be scaled according
+ * to their sizes */
+
+static void
+scale_down(GtkWidget *window, GtkStateType state,
+	   ArtPixBuf *data, ArtPixBuf *datao)
+{
+	unsigned char *p, *p2, *p3;
+	long x, y, w2, h2, xo, yo, x2, y2, i, x3, y3;
 	long yw, xw, ww, hw, r, g, b, r2, g2, b2;
 	int trans;
+	int wo, ho, w, h;
+
+	guchar baser = 0xd6;
+	guchar baseg = 0xd6;
+	guchar baseb = 0xd6;
+
+	wo = datao->width;
+	ho = datao->height;
+
+	w = data->width;
+	h = data->height;
 
 	if (window) {
 		GtkStyle *style = gtk_widget_get_style(window);
-		scale_base.r = style->bg[state].red >> 8;
-		scale_base.g = style->bg[state].green >> 8;
-		scale_base.b = style->bg[state].blue >> 8;
+		baser = style->bg[state].red >> 8;
+		baseg = style->bg[state].green >> 8;
+		baseb = style->bg[state].blue >> 8;
 	}
-	data = g_malloc(w * h * 3);
-	p = data;
 
 	ww = (wo << 8) / w;
 	hw = (ho << 8) / h;
 	h2 = h << 8;
 	w2 = w << 8;
-	wo3 = wo * 3;
 	for (y = 0; y < h2; y += 0x100) {
 		yo = (y * ho) / h;
 		y2 = yo & 0xff;
 		yo >>= 8;
+		p = data->pixels + (y>>8) * data->rowstride;
 		for (x = 0; x < w2; x += 0x100) {
 			xo = (x * wo) / w;
 			x2 = xo & 0xff;
 			xo >>= 8;
-			i = xo + (yo * wo);
-			p2 = datao + (i * 3);
+			p2 = datao->pixels + xo*datao->n_channels +
+				yo * datao->rowstride;
 
 			r2 = g2 = b2 = 0;
 			yw = hw;
@@ -222,19 +290,21 @@ scale_down(GtkWidget *window, GtkStateType state, unsigned char *datao,
 						i = 0x100 - x3;
 					else
 						i = xw;
-					if ((p3[0] == scale_trans.r) &&
-					    (p3[1] == scale_trans.g) &&
-					    (p3[2] == scale_trans.b)) {
-						r += scale_base.r * i;
-						g += scale_base.g * i;
-						b += scale_base.b * i;
+					if(datao->has_alpha &&
+					   p3[3]<(0xff/2)) {
+						r += baser * i;
+						g += baseg * i;
+						b += baseb * i;
 					} else {
 						trans = 0;
 						r += p3[0] * i;
 						g += p3[1] * i;
 						b += p3[2] * i;
 					}
-					p3 += 3;
+					if(datao->has_alpha)
+						p3 += 4;
+					else
+						p3 += 3;
 					xw -= i;
 					x3 = 0;
 				}
@@ -250,12 +320,14 @@ scale_down(GtkWidget *window, GtkStateType state, unsigned char *datao,
 					yw = 0;
 				}
 				y3 = 0;
-				p2 += wo3;
+				p2 += datao->rowstride;
 			}
 			if (trans) {
-				*(p++) = scale_trans.r;
-				*(p++) = scale_trans.g;
-				*(p++) = scale_trans.b;
+				/* we leave garbage there but the
+				 * alpha is 0 so we don't care */
+				p+=3;
+				if(data->has_alpha)
+					*(p++) = 0x00;
 			} else {
 				r2 /= ww * hw;
 				g2 /= ww * hw;
@@ -263,11 +335,11 @@ scale_down(GtkWidget *window, GtkStateType state, unsigned char *datao,
 				*(p++) = r2 & 0xff;
 				*(p++) = g2 & 0xff;
 				*(p++) = b2 & 0xff;
+				if(data->has_alpha)
+					*(p++) = 0xff;
 			}
 		}
 	}
-
-	return data;
 }
 
 
@@ -310,12 +382,13 @@ static gboolean
 load_icons_handler(gpointer data)
 {
 	if(icons_to_load) {
-		GdkImlibColor shape_color = { 0xff, 0, 0xff, 0 };
 		GtkWidget *parent;
 		GtkWidget *pixmap = NULL;
 		GtkWidget *toplevel;
-		GdkImlibImage *im;
-		char *d;
+		GdkPixbuf *pb, *pb2;
+		GdkPixmap *gp;
+		GdkBitmap *gm;
+
 		FakeIcon *fake = icons_to_load->data;
 		icons_to_load = g_slist_remove(icons_to_load, fake);
 
@@ -325,23 +398,27 @@ load_icons_handler(gpointer data)
 		gtk_signal_disconnect_by_data(GTK_OBJECT(fake->fake), fake);
 		gtk_widget_destroy(fake->fake);
  
-		im = gdk_imlib_load_image(fake->file);
-		if(!im) {
+		pb = gdk_pixbuf_new_from_file(fake->file);
+		if(!pb) {
 			g_free(fake->file);
 			g_free(fake);
 			return TRUE;
 		}
 
-		d = scale_down(parent, fake->fake->state,
-			       (char *)im->rgb_data,
-			       im->rgb_width, im->rgb_height,
-			       fake->size, fake->size);
-		gdk_imlib_destroy_image(im);
-		pixmap = gnome_pixmap_new_from_rgb_d_shaped(d, NULL,
-							    fake->size,
-							    fake->size,
-							    &shape_color);
-		g_free(d);
+		pb2 = gdk_pixbuf_new(ART_PIX_RGB, pb->art_pixbuf->has_alpha,
+				     8, fake->size, fake->size);
+
+		scale_down(parent, fake->fake->state,
+			   pb2->art_pixbuf, pb->art_pixbuf);
+		gdk_pixbuf_unref(pb);
+
+		gdk_pixbuf_render_pixmap_and_mask (pb2, &gp, &gm, 128);
+
+		gdk_pixbuf_unref(pb2);
+
+		pixmap = gtk_pixmap_new(gp, gm);
+		gdk_pixmap_unref(gp);
+		gdk_bitmap_unref(gm);
 
 		fake->fake = pixmap;
 		toplevel = gtk_widget_get_toplevel(parent);
@@ -617,33 +694,6 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	g_free(order_in_name);
 }
 
-static PanelWidget *
-get_panel_from_menu_data(GtkWidget *menu)
-{
-	g_return_val_if_fail (menu != NULL, NULL);
-	g_return_val_if_fail (GTK_IS_MENU(menu) || GTK_IS_MENU_ITEM(menu),
-			      NULL);
-
-	if(GTK_IS_MENU_ITEM(menu))
-		menu = menu->parent;
-
-	while(menu) {
-		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
-							 "menu_panel");
-		if(panel) {
-			if(IS_PANEL_WIDGET(panel))
-				return panel;
-			else
-				g_warning("Menu is on crack");
-		}
-		menu = GTK_MENU_SHELL(menu)->parent_menu_shell;
-	}
-	g_warning("Something went quite terribly wrong and we can't "
-		  "find where this menu belongs");
-	return panels->data;
-}
-
-
 static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
@@ -770,17 +820,6 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 		load_menu_applet(menudir, flags, panel, 0, FALSE);
 	else
 		load_menu_applet(NULL, flags, panel, 0, FALSE);
-}
-
-static void
-setup_menu_panel(GtkWidget *menu)
-{
-	PanelWidget *menu_panel = gtk_object_get_data(GTK_OBJECT(menu),
-						      "menu_panel");
-	if(!menu_panel) {
-		menu_panel = get_panel_from_menu_data(menu);
-		gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
-	}
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -984,7 +1023,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 	GtkWidget *menuitem;
 
 	if(!sim->menu) {
-		sim->menu = gtk_menu_new ();
+		sim->menu = menu_new ();
 
 		gtk_object_set_data (GTK_OBJECT(sim->menu), "menu_panel",
 				     get_panel_from_menu_data (sim->menuitem));
@@ -1840,9 +1879,7 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 	if(!mfl)
 		return;
 
-	menu = gtk_menu_new();
-	gtk_signal_connect(GTK_OBJECT(menu), "show",
-			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
+	menu = menu_new();
 
 	menu_panel = get_panel_from_menu_data(menuw);
 
@@ -1990,9 +2027,7 @@ create_fake_menu_at (char *menudir,
 	GtkWidget *menu;
 	GSList *list;
 	
-	menu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(menu), "show",
-			   setup_menu_panel, NULL);
+	menu = menu_new ();
 
 	mf = g_new0(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
@@ -2161,9 +2196,7 @@ create_menu_at_fr (GtkWidget *menu,
 		pixmap_name = (fr&&fr->icon)?fr->icon:gnome_folder;
 	
 	if(!menu) {
-		menu = gtk_menu_new ();
-		gtk_signal_connect(GTK_OBJECT(menu), "show",
-				   setup_menu_panel, NULL);
+		menu = menu_new ();
 #ifdef TEAROFF_MENUS
 		if (gnome_preferences_get_menus_have_tearoff ()) {
 			add_tearoff(GTK_MENU(menu));
@@ -2507,9 +2540,7 @@ create_add_panel_submenu (gboolean tearoff)
 {
 	GtkWidget *menu, *menuitem;
 
-	menu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(menu), "show",
-			   setup_menu_panel, NULL);
+	menu = menu_new ();
 	
 	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		menuitem = tearoff_item_new();
@@ -3342,9 +3373,7 @@ add_radio_menu (GtkWidget *menu, char *menutext,
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_object_set_data (GTK_OBJECT (menu), menu_key, menuitem);
 
-	submenu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(submenu), "show",
-			   setup_menu_panel, NULL);
+	submenu = menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 	add_radios_to_menu (submenu, items, change_func);
 	gtk_signal_connect (GTK_OBJECT (submenu), "show",
@@ -3448,9 +3477,7 @@ make_add_submenu (GtkWidget *menu, int fake_submenus)
 				   _("Menu"), SMALL_ICON_SIZE);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	submenu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(submenu), "show",
-			   setup_menu_panel, NULL);
+	submenu = menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_menu_item_new ();
@@ -3556,9 +3583,7 @@ add_to_panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 	char *wmclass = get_unique_tearoff_wmclass();
 	PanelWidget *menu_panel;
 
-	menu = gtk_menu_new();
-	gtk_signal_connect(GTK_OBJECT(menu), "show",
-			   setup_menu_panel, NULL);
+	menu = menu_new();
 	make_add_submenu(menu, TRUE);
 	
 	/*set the panel to use as the data*/
@@ -3653,9 +3678,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 			_("Add to panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	submenu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(submenu), "show",
-			   setup_menu_panel, NULL);
+	submenu = menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 				   submenu);
 	
@@ -3707,9 +3730,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 			_("Properties"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	submenu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(submenu), "show",
-			   setup_menu_panel, NULL);
+	submenu = menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_menu_item_new ();
@@ -3838,9 +3859,7 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	char *char_tmp;
 
 	if (!menu) {
-		menu = gtk_menu_new();
-		gtk_signal_connect(GTK_OBJECT(menu), "show",
-				   setup_menu_panel, NULL);
+		menu = menu_new();
 	}
 
 	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
@@ -3900,9 +3919,7 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	/* Panel entry */
 
 	if (!menu) {
-		menu = gtk_menu_new ();
-		gtk_signal_connect(GTK_OBJECT(menu), "show",
-				   setup_menu_panel, NULL);
+		menu = menu_new ();
 	}
 
 	if(tearoff && gnome_preferences_get_menus_have_tearoff ()) {
@@ -3971,9 +3988,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff)
 	IconSize size = global_config.use_large_icons 
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
 
-	root_menu = gtk_menu_new ();
-	gtk_signal_connect(GTK_OBJECT(root_menu), "show",
-			   setup_menu_panel, NULL);
+	root_menu = menu_new ();
 	if (tearoff && gnome_preferences_get_menus_have_tearoff ()) {
 		GtkWidget *menuitem = tearoff_item_new ();
 		gtk_widget_show (menuitem);
@@ -4454,10 +4469,7 @@ create_special_menu(char *special, PanelWidget *menu_panel_widget)
 	} else if(strcmp(special,"DESKTOP")==0) {
 		menu = create_desktop_menu (NULL, TRUE, FALSE);
 	} else if(strcmp(special,"ADD_TO_PANEL")==0) {
-		menu = gtk_menu_new();
-		gtk_signal_connect(GTK_OBJECT(menu), "show",
-				   GTK_SIGNAL_FUNC(setup_menu_panel),
-				   NULL);
+		menu = menu_new();
 		make_add_submenu(menu, TRUE);
 	} else if(strcmp(special,"PANEL_SUBMENU")==0) {
 		menu = create_panel_submenu (NULL, TRUE, FALSE);
@@ -4540,10 +4552,7 @@ load_tearoff_menu(void)
 			pixmap_name = gnome_config_get_string(propname);
 
 			if(!menu) {
-				menu = gtk_menu_new ();
-				gtk_signal_connect(GTK_OBJECT(menu), "show",
-						   GTK_SIGNAL_FUNC(setup_menu_panel),
-						   NULL);
+				menu = menu_new ();
 			}
 
 			menu = create_menu_at(menu, name, applets, dir_name,

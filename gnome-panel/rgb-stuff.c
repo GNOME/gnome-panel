@@ -136,11 +136,11 @@ combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
 			g = *(imgrow++);
 			b = *(imgrow++);
 			a = *(imgrow++);
-			*dstrow = (r*a + *dstrow * (256-a))>>8;
+			*dstrow = (r*a + *dstrow * (255-a))>>8;
 			dstrow++;
-			*dstrow = (g*a + *dstrow * (256-a))>>8;
+			*dstrow = (g*a + *dstrow * (255-a))>>8;
 			dstrow++;
-			*dstrow = (b*a + *dstrow * (256-a))>>8;
+			*dstrow = (b*a + *dstrow * (255-a))>>8;
 			dstrow++;
 		}
 	}
