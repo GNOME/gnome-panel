@@ -24,7 +24,9 @@ CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gno
 # try to make these get cleaned properly
 CLEANFILES += $(CORBA_SRCLIST)
 
-$(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
+$(CORBA_SRCLIST): my_gnome_panel_idl
+
+my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
 
 # We need explicit dependencies here for people building out
