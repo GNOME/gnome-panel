@@ -27,6 +27,7 @@
 
 #include <glib/gmacros.h>
 #include <gtk/gtkeventbox.h>
+#include <libgnomeui/gnome-ui-init.h>
 #include <bonobo/bonobo-control.h>
 #include <bonobo/bonobo-ui-component.h>
 #include <bonobo/bonobo-generic-factory.h>
@@ -124,19 +125,11 @@ void               panel_applet_setup_menu_from_file (PanelApplet        *applet
 						      gpointer            user_data);
 
 
-int                panel_applet_factory_main         (int			   argc,
-						      char			 **argv,
-						      const gchar		  *iid,
-						      const gchar		  *name,
-						      const gchar		  *version,
+int                panel_applet_factory_main         (const gchar		  *iid,
 						      PanelAppletFactoryCallback   callback,
 						      gpointer			   data);
 
-int                panel_applet_factory_main_closure (int			   argc,
-						      char			 **argv,
-						      const gchar		  *iid,
-						      const gchar		  *name,
-						      const gchar		  *version,
+int                panel_applet_factory_main_closure (const gchar		  *iid,
 						      GClosure                    *closure);
 
 Bonobo_Unknown     panel_applet_shlib_factory        (const char                 *iid,
@@ -153,16 +146,28 @@ Bonobo_Unknown	   panel_applet_shlib_factory_closure (const char                
 
 
 
-/* FIXME: there is some evilness related to calling gnome_program_init
- * inside a library, I think this is evil and should disappear, we're not
- * really gaining anything by this macro except a few keystrokes and
- * a lot of clarity */
+#if defined(PREFIX) && defined(SYSCONFDIR) && defined(DATADIR) && defined(LIBDIR)
 #define PANEL_APPLET_BONOBO_FACTORY(iid, name, version, callback, data)		\
 int main (int argc, char *argv [])						\
 {										\
-        return panel_applet_factory_main (argc, argv, iid, name,		\
-					  version, callback, data);		\
+	gnome_program_init (name, version,					\
+			    LIBGNOMEUI_MODULE,					\
+			    argc, argv,						\
+			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
+			    NULL);						\
+        return panel_applet_factory_main (iid, callback, data);			\
 }
+#else
+#define PANEL_APPLET_BONOBO_FACTORY(iid, name, version, callback, data)		\
+int main (int argc, char *argv [])						\
+{										\
+	gnome_program_init (name, version,					\
+			    LIBGNOMEUI_MODULE,					\
+			    argc, argv,						\
+			    GNOME_PARAM_NONE);					\
+        return panel_applet_factory_main (iid, callback, data);			\
+}
+#endif
 
 #define PANEL_APPLET_BONOBO_SHLIB_FACTORY(iid, descr, callback, data)		\
 static Bonobo_Unknown								\

@@ -778,11 +778,7 @@ panel_applet_factory_callback (BonoboGenericFactory *factory,
 
 /**
  * panel_applet_factory_main_closure:
- * @argc: The number of commmand line arguments contained in @argv.
- * @argv: The array of command line argument strings.
  * @iid: The bonobo-activation iid of the factory.
- * @name: The applet ID string.
- * @version: The applet version string.
  * @closure: The factory callback closure.
  *
  * A generic 'main' routine for applets. This should not normally be
@@ -791,25 +787,12 @@ panel_applet_factory_callback (BonoboGenericFactory *factory,
  * Return value: 0 on success, 1 on failure.
  */
 int
-panel_applet_factory_main_closure (int                          argc,
-				   char                       **argv,
-				   const gchar                 *iid,
-				   const gchar                 *name,
-				   const gchar                 *version,
+panel_applet_factory_main_closure (const gchar                 *iid,
 				   GClosure                    *closure)
 {
-	GnomeProgram       *program;
 	int                 retval;
 
 	/* FIXME: other precondition checks */
-
-	/* FIXME: EVIL, what about the per app domain things and all that,
-	 * we shouldn't really be calling gnome_program_init here, the applet
-	 * should call it itself.  We need to fix this */
-	program = gnome_program_init (name, version,
-				      LIBGNOMEUI_MODULE,
-				      argc, argv,
-				      GNOME_PARAM_NONE);
 
 	closure = bonobo_closure_store (closure, panel_applet_marshal_BOOLEAN__STRING);
 
@@ -822,11 +805,7 @@ panel_applet_factory_main_closure (int                          argc,
 
 /**
  * panel_applet_factory_main:
- * @argc: The number of commmand line arguments contained in @argv.
- * @argv: The array of command line argument strings.
  * @iid: The bonobo-activation iid of the factory.
- * @name: The applet ID string.
- * @version: The applet version string.
  * @callback: The factory callback.
  * @data: The factory user data pointer.
  *
@@ -836,11 +815,7 @@ panel_applet_factory_main_closure (int                          argc,
  * Return value: 0 on success, 1 on failure.
  */
 int
-panel_applet_factory_main (int                          argc,
-			   char                       **argv,
-			   const gchar                 *iid,
-			   const gchar                 *name,
-			   const gchar                 *version,
+panel_applet_factory_main (const gchar                 *iid,
 			   PanelAppletFactoryCallback   callback,
 			   gpointer                     data)
 {
@@ -850,8 +825,7 @@ panel_applet_factory_main (int                          argc,
 
 	closure = g_cclosure_new (G_CALLBACK (callback), data, NULL);
 
-	return panel_applet_factory_main_closure (argc, argv, iid, name,
-						  version, closure);
+	return panel_applet_factory_main_closure (iid, closure);
 }
 
 Bonobo_Unknown

@@ -1,3 +1,10 @@
+Thu Jan 03 12:48:23 2002  George Lebl <jirka@5z.com>
+
+	* panel-applet.[ch]: mvoe gnome_program_init into the macro and
+	  remove unused parameters from the main functions.  though applets
+	  using the macro should see no difference and I don't think anyone
+	  used the main functions directly.
+
 Thu Dec 27 23:30:15 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am: fix including of marshal header file in the .c file
