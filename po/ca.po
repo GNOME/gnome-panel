@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.1\n"
-"POT-Creation-Date: 2004-03-09 18:46+0000\n"
-"PO-Revision-Date: 2003-11-17 14:53+0100\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-11 00:53+0100\n"
+"PO-Revision-Date: 2004-03-11 14:34+0100\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -110,22 +110,22 @@ msgstr "%a, %e de %b"
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:301
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:392
@@ -138,12 +138,11 @@ msgstr "Tasques"
 
 #: applets/clock/clock.c:950
 msgid "All Day"
-msgstr ""
+msgstr "Tot el dia"
 
 #: applets/clock/clock.c:984
-#, fuzzy
 msgid "Appointments"
-msgstr "Afegeix una cita..."
+msgstr "Cites"
 
 #: applets/clock/clock.c:1205
 msgid "Calendar"
@@ -179,9 +178,8 @@ msgstr ""
 "cap instal·lada?"
 
 #: applets/clock/clock.c:2047
-#, fuzzy
 msgid "Custom format"
-msgstr "Icona personalitzada"
+msgstr "Format personalitzat"
 
 #: applets/clock/clock.c:2167 applets/clock/clock.c:2356
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
@@ -219,9 +217,8 @@ msgid "Internet time"
 msgstr "Hora d'Internet"
 
 #: applets/clock/clock.c:2260
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Format de l'hora"
+msgstr "_Format personalitzat:"
 
 #: applets/clock/clock.c:2279
 msgid "Show _seconds"
@@ -255,13 +252,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
 msgstr "24 hores"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Format personalitzat del rellotge"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -302,14 +298,14 @@ msgstr "Mostra l'hora amb segons"
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
-msgstr ""
+msgstr "L'ús d'aquesta clau es va desaconsellar en GNOME 2.6 en favor a la clau «format». L'esquema es reté per compatibilitat amb versions anteriors."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
-msgstr ""
+msgstr "Aquesta clau especifica el format usat per l'applet del rellotge quan la clau format està establerta a «custom». Podeu usar especificadors de conversió suportats per strftime() per a obtenir un format específic."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -321,7 +317,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
+msgstr "Aquesta clau especifica el format de l'hora usat per l'applet del rellotge. Els valors possibles són «12-hour», «24-hour», «internet», «unix» i «custom». Si s'estableix a «internet», el rellotge mostrarà l'hora d'internet. L'hora d'internet divideix el dia en 1000 «.batecs». No hi ha cap fus horari en aquest sistema, així que l'hora és la mateixa a tot el món. Si s'estableix a «unix», el rellotge mostrarà l'hora en segons des de l'Època, és a dir, 01/01/1970. Si s'estableix a «custom», el rellotge mostrarà l'hora segons el format especificat en la clau «custom_format»."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -645,9 +641,8 @@ msgstr "Factoria d'applets de navegació de finestres"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
-#, fuzzy
 msgid "Window Selector"
-msgstr "Selector de color"
+msgstr "Selector de finestres"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:519
@@ -826,12 +821,9 @@ msgid "When to group windows"
 msgstr "Quan agrupar les finestres"
 
 #: applets/wncklet/window-menu.c:138
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"El menú de finestres mostra una llista de totes les finestres visibles i vos "
-"permet navegar per elles."
+msgstr "El selector de finestres mostra una llista de totes les finestres i vos permet navegar per elles."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -1158,32 +1150,31 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cCaptura-%s.png"
+msgstr "Captura-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cCaptura.png"
+msgstr "Captura.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cCaptura-%s-%d.png"
+msgstr "Captura-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cCaptura-%d.png"
+msgstr "Captura-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1356,7 +1347,7 @@ msgstr "Força la sortida"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Força la sortida d'una aplicació que no es comporta correctament"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
@@ -1407,9 +1398,9 @@ msgid "Cannot execute '%s'"
 msgstr "No es pot executar «%s»"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1601,15 +1592,15 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepció de popup_menu «%s»\n"
 
 #: gnome-panel/panel-applet-frame.c:866
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
-"L'applet %s sembla haver mort inesperadament\n"
+"L'applet «%s» sembla haver mort inesperadament.\n"
 "\n"
-"Voleu recarregar aquest applet?%s"
+"Voleu recarregar aquest applet?"
 
 #: gnome-panel/panel-applet-frame.c:872
 msgid ""
@@ -1628,9 +1619,9 @@ msgid "D_on't Delete"
 msgstr "N_o suprimeixes"
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr "El quadre ha trobat un problema en carregar «%s»%s"
+msgstr "El quadre ha trobat un problema en carregar «%s»."
 
 #: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
@@ -1786,18 +1777,16 @@ msgid "Confirm panel removal"
 msgstr "Confirma la supressió dels quadres"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Força la sortida"
+msgstr "Inhabilita la sortida forçada"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Bloca la pantalla"
+msgstr "Inhabilita el blocat de pantalla"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Inhabilita la sortida"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1861,19 +1850,19 @@ msgstr ""
 msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
-msgstr ""
+msgstr "Si és vertader, el quadre no permetrà a l'usuari forçar la sortida d'una aplicació suprimint l'accés al botó de sortida forçada."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
-msgstr ""
+msgstr "Si és vertader, el quadre no permetrà a l'usuari blocar la pantalla, suprimint les entrades del menú de blocatge de pantalla."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
-msgstr ""
+msgstr "Si és vertader, el quadre no permetrà a l'usuari sortir, suprimint l'accés a les entrades del menú de sortida."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -2263,7 +2252,7 @@ msgstr "S'ha produït un error desconegut en intentar obrir %s"
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Documents recents"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2278,7 +2267,7 @@ msgstr "No es pot mostrar la ubicació «%s»"
 #: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "No es pot convertir «%s» des d'UTF-8"
 
 #: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
@@ -2377,9 +2366,8 @@ msgid "_Force quit"
 msgstr "_Força la sortida"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Quadre a un _costat"
+msgstr "Amaga el quadre"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2779,14 +2767,12 @@ msgid "X co-ordinate of panel"
 msgstr "La coordenada X del quadre"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "La pantalla d'X en la que està el quadre"
+msgstr "La pantalla d'X en la que es mostra el quadre"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "El monitor Xinerama en el que està el quadre"
+msgstr "El monitor Xinerama en el que es mostra el quadre"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
@@ -2931,38 +2917,6 @@ msgstr "Extra gran"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra petit"
-
-#, fuzzy
-#~ msgid "Log Out %s"
-#~ msgstr "Surt"
-
-#, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Surt d'aquesta sessió per a entrar com un usuari diferent o per a tancar "
-#~ "l'ordinador"
-
-#, fuzzy
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "Surt de l'escriptori GNOME"
-
-#, fuzzy
-#~ msgid "Month"
-#~ msgstr "Aquest mes"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Cerca"
-
-#, fuzzy
-#~ msgid "The currently monitored year"
-#~ msgstr "Monitor actual:"
-
-#, fuzzy
-#~ msgid "Activatable"
-#~ msgstr "Edició"
 
 #~ msgid "Has Arrow"
 #~ msgstr "Té fletxa"
@@ -3140,72 +3094,8 @@ msgstr "Extra petit"
 #~ msgid "Enable arrows on hide/show buttons"
 #~ msgstr "Habilita les fletxes al botó d'ocultació/mostra"
 
-#, fuzzy
-#~ msgid "Text"
-#~ msgstr "Només text"
-
-#, fuzzy
-#~ msgid "Text to render"
-#~ msgstr "Només text"
-
-#, fuzzy
-#~ msgid "Markup"
-#~ msgstr "Preferits"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Color del fons"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Opacitat del color de fons"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Color del fons"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Color del text"
-
-#, fuzzy
-#~ msgid "Foreground color as a string"
-#~ msgstr "Color del text"
-
 #~ msgid "Foreground color"
 #~ msgstr "Color del text"
-
-#, fuzzy
-#~ msgid "Foreground color as a GdkColor"
-#~ msgstr "Color del text"
-
-#, fuzzy
-#~ msgid "Font"
-#~ msgstr "Font:"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "Est_reta"
-
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Mida del quadre"
-
-#, fuzzy
-#~ msgid "Font points"
-#~ msgstr "Punt de muntatge:"
-
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Fons"
-
-#, fuzzy
-#~ msgid "Foreground set"
-#~ msgstr "Color del text"
-
-#, fuzzy
-#~ msgid "Font scale set"
-#~ msgstr "No es_cala la imatge per ajustar-la"
 
 #~ msgid ""
 #~ "If true, the panel will be locked in place, properties won't be "
