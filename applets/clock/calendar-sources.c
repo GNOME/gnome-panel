@@ -69,6 +69,8 @@ struct _CalendarSourceData
   guint            selected_sources_listener;
   char            *selected_sources_dir;
 
+  guint            timeout_id;
+
   guint            loaded : 1;
 };
 
@@ -167,10 +169,12 @@ calendar_sources_init (CalendarSources *sources)
   sources->priv->appointment_sources.source_type    = E_CAL_SOURCE_TYPE_EVENT;
   sources->priv->appointment_sources.sources        = sources;
   sources->priv->appointment_sources.changed_signal = signals [APPOINTMENT_SOURCES_CHANGED];
+  sources->priv->appointment_sources.timeout_id     = 0;
 
   sources->priv->task_sources.source_type    = E_CAL_SOURCE_TYPE_TODO;
   sources->priv->task_sources.sources        = sources;
   sources->priv->task_sources.changed_signal = signals [TASK_SOURCES_CHANGED];
+  sources->priv->task_sources.timeout_id     = 0;
 
   sources->priv->gconf_client = gconf_client_get_default ();
 }
@@ -212,6 +216,12 @@ calendar_sources_finalize_source_data (CalendarSources    *sources,
 	g_free (l->data);
       g_slist_free (source_data->selected_sources);
       source_data->selected_sources = NULL;
+
+      if (source_data->timeout_id != 0)
+        {
+          g_source_remove (source_data->timeout_id);
+          source_data->timeout_id = 0;
+        }
 
       source_data->loaded = FALSE;
     }
@@ -378,10 +388,49 @@ debug_dump_ecal_list (GSList *ecal_list)
 }
 
 static void
+calendar_sources_load_esource_list (CalendarSourceData *source_data);
+
+static gboolean
+backend_restart (gpointer data)
+{
+  CalendarSourceData *source_data = data;
+
+  calendar_sources_load_esource_list (source_data);
+
+  source_data->timeout_id = 0;
+    
+  return FALSE;
+}
+
+static void
+backend_died_cb (ECal *client, CalendarSourceData *source_data)
+{
+  const char *uristr;
+
+  source_data->clients = g_slist_remove (source_data->clients, client);
+  if (g_slist_length (source_data->clients) < 1) 
+    {
+      g_slist_free (source_data->clients);
+      source_data->clients = NULL;
+    }
+  uristr = e_cal_get_uri (client);
+  g_warning ("The calendar backend for %s has crashed.", uristr);
+
+  if (source_data->timeout_id != 0)
+    {
+      g_source_remove (source_data->timeout_id);
+      source_data->timeout_id = 0;
+    }
+
+  source_data->timeout_id = g_timeout_add (2000, backend_restart, source_data);
+}
+
+static void
 calendar_sources_load_esource_list (CalendarSourceData *source_data)
 {
-  GSList *loaded_clients = NULL;
-  GSList *groups, *l;
+  GSList  *loaded_clients = NULL;
+  GSList  *groups, *l;
+  gboolean emit_signal = FALSE;
 
   g_return_if_fail (source_data->esource_list != NULL);
 
@@ -411,19 +460,25 @@ calendar_sources_load_esource_list (CalendarSourceData *source_data)
 	  if (is_source_selected (esource, source_data->selected_sources) &&
 	      (client = load_esource (esource, source_data->source_type, source_data->clients)))
 	    {
+              g_signal_connect (G_OBJECT (client), "backend_died",
+                                G_CALLBACK (backend_died_cb), source_data);
+
 	      loaded_clients = g_slist_prepend (loaded_clients, client);
 	    }
 	}
     }
   dprintf ("\n");
 
+  if (source_data->loaded && 
+      !compare_ecal_lists (source_data->clients, loaded_clients))
+    emit_signal = TRUE;
+
   for (l = source_data->clients; l; l = l->next)
     g_object_unref (l->data);
   g_slist_free (source_data->clients);
   source_data->clients = g_slist_reverse (loaded_clients);
 
-  if (source_data->loaded && 
-      !compare_ecal_lists (source_data->clients, loaded_clients))
+  if (emit_signal) 
     {
       dprintf ("Emitting %s-sources-changed signal\n",
 	       source_data->source_type == E_CAL_SOURCE_TYPE_EVENT ? "appointment" : "task");

@@ -1,3 +1,18 @@
+2004-05-26  William Jon McCann  <mccann@jhu.edu>
+
+	* calendar-sources.c (backend_died_cb) 
+	(calendar_sources_load_esource_list): Reload clients when backend dies.
+	(backend_restart): Reload backends after a timeout to avoid restarting
+	too fast or more times than necessary for each backend.
+	(calendar_sources_finalize_source_data): Remove timeout.
+	(calendar_sources_init): Initialize timeout_id.
+
+	* calendar-sources.c (calendar_sources_load_esource_list):
+	Compare client lists before resetting source list and emitting
+	changed signal.
+
+	Fixes bug #138530
+	
 2004-05-13  Jorn Baayen  <jbaayen@gnome.org>
 
 	* clock.c: (create_calendar):
