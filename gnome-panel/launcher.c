@@ -258,14 +258,14 @@ launcher_properties(Launcher *launcher)
 
 static void
 _load_launcher_applet(char *params, GnomeDesktopEntry *dentry,
-		      int pos, PanelWidget *panel)
+		      PanelWidget *panel, int pos)
 {
 	Launcher *launcher;
 
 	launcher = create_launcher(params,dentry);
 
 	if(launcher) {
-		register_toy(launcher->button,launcher, pos,panel,
+		register_toy(launcher->button,launcher, panel, pos,
 			     APPLET_LAUNCHER);
 
 		gtk_tooltips_set_tip (panel_tooltips,
@@ -284,7 +284,7 @@ really_add_launcher(GtkWidget *d,int button, gpointer data)
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
 	if(button==0)
 		_load_launcher_applet(NULL, gnome_dentry_get_dentry(dedit),
-				      0, current_panel);
+				      current_panel, 0);
 	gtk_widget_destroy(d);
 }
 
@@ -318,7 +318,7 @@ ask_about_launcher(void)
 }
 
 void
-load_launcher_applet(char *params, int pos, PanelWidget *panel)
+load_launcher_applet(char *params, PanelWidget *panel, int pos)
 {
-	_load_launcher_applet(params,NULL,pos,panel);
+	_load_launcher_applet(params,NULL,panel, pos);
 }

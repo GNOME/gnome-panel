@@ -316,7 +316,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/
-	if(!register_toy(socket,ext,pos,panel,type)) {
+	if(!register_toy(socket,ext,panel,pos,type)) {
 		g_warning("Couldn't add applet");
 		return 0;
 	}
@@ -334,8 +334,8 @@ applet_set_tooltip(int applet_id, const char *tooltip)
 }
 
 void
-load_extern_applet(char *path, char *params, int pos, PanelWidget *panel,
-		   char *cfgpath)
+load_extern_applet(char *path, char *params, char *cfgpath,
+		   PanelWidget *panel, int pos)
 {
 	char *fullpath;
 	char *param;

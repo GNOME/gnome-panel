@@ -16,8 +16,8 @@ struct _Extern {
 };
 void extern_clean(Extern *ext);
 
-void load_extern_applet(char *path, char *params, int pos, PanelWidget *panel,
-			char *cfgpath);
+void load_extern_applet(char *path, char *params, char *cfgpath,
+			PanelWidget *panel, int pos);
 
 /*stuff for corba*/
 int applet_request_id (const char *path, const char *param,

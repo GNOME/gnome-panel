@@ -106,7 +106,7 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 	
-	load_launcher_applet(ii->location,0,current_panel);
+	load_launcher_applet(ii->location,current_panel,0);
 }
 
 /*reads in the order file and makes a list*/
@@ -182,7 +182,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	pixmap_name = item_info?item_info->icon:NULL;
 
 	load_drawer_applet(NULL,pixmap_name,subdir_name,
-			   pos, panel);
+			   panel,pos);
 	
 	info = get_applet_info(applet_count -1);
 	g_return_if_fail(info);
@@ -206,8 +206,8 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 					/*we load the applet at the right
 					  side, that is end of the drawer*/
 					load_launcher_applet(filename,
-							     INT_MAX/2,
-							     newpanel);
+							     newpanel,
+							     INT_MAX/2);
 			}
 		}
 		g_free(filename);
@@ -232,9 +232,9 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 {
 	MenuFinfo *mf = data;
 	if(mf)
-		load_menu_applet(mf->menudir,0, 0, current_panel);
+		load_menu_applet(mf->menudir,0, current_panel, 0);
 	else
-		load_menu_applet(NULL,0, 0, current_panel);
+		load_menu_applet(NULL,0, current_panel, 0);
 }
 
 
@@ -513,14 +513,14 @@ static int
 add_drawer_to_panel (GtkWidget *widget, void *data)
 {
 	load_drawer_applet(NULL,NULL,NULL,
-			   0, current_panel);
+			   current_panel, 0);
 	return TRUE;
 }
 
 static int
 add_logout_to_panel (GtkWidget *widget, void *data)
 {
-	load_logout_applet(0,current_panel);
+	load_logout_applet(current_panel, 0);
 	return TRUE;
 }
 
@@ -540,7 +540,7 @@ add_applet (GtkWidget *w, gpointer data)
 	else
 		param = NULL;
 
-	load_extern_applet(path,param,0,current_panel,NULL);
+	load_extern_applet(path,param,NULL,current_panel,0);
 
 	if(param) g_free(param);
 	return TRUE;
@@ -1686,7 +1686,7 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 
 void
 load_menu_applet(char *params, int main_menu_type,
-		 int pos, PanelWidget *panel)
+		 PanelWidget *panel, int pos)
 {
 	Menu *menu;
 
@@ -1694,5 +1694,5 @@ load_menu_applet(char *params, int main_menu_type,
 
 	if(menu)
 		register_toy(menu->button,menu,
-			     pos,panel,APPLET_MENU);
+			     panel,pos,APPLET_MENU);
 }

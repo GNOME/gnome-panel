@@ -42,13 +42,13 @@ create_logout_widget(void)
 }
 
 void
-load_logout_applet(int pos, PanelWidget *panel)
+load_logout_applet(PanelWidget *panel, int pos)
 {
 	GtkWidget *logout;
 
 	logout = create_logout_widget();
 
 	if(logout)
-		register_toy(logout,NULL, pos, panel,APPLET_LOGOUT);
+		register_toy(logout, NULL, panel, pos, APPLET_LOGOUT);
 }
 

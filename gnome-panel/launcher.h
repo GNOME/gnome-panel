@@ -23,7 +23,7 @@ typedef struct {
 	GnomeDesktopEntry *dentry;
 } Launcher;
 
-void load_launcher_applet(char *params, int pos, PanelWidget *panel);
+void load_launcher_applet(char *params, PanelWidget *panel, int pos);
 void launcher_properties(Launcher *launcher);
 
 void ask_about_launcher(void);

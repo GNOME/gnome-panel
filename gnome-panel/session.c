@@ -595,9 +595,9 @@ panel_quit(void)
 static void
 load_default_applets(void)
 {
-	load_menu_applet(NULL,0, 0,panels->data);
-	load_extern_applet("gen_util_applet","--clock",
-			   INT_MAX/2/*right flush*/,panels->data,NULL);
+	load_menu_applet(NULL,0, panels->data, 0);
+	load_extern_applet("gen_util_applet","--clock",NULL,
+			   panels->data,INT_MAX/2/*right flush*/);
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/
 	need_complete_save = TRUE;
@@ -656,34 +656,34 @@ init_user_applets(void)
 			  when it loads*/
 			g_snprintf(buf,256,"%sApplet_%d_Extern/",
 				   old_panel_cfg_path,num);
-			load_extern_applet(path,params,pos,panel,buf);
+			load_extern_applet(path,params,buf,panel,pos);
 			g_free(path);
 			g_free(params);
 		} else if(strcmp(applet_name,LAUNCHER_ID) == 0) { 
 			char *params = gnome_config_get_string("parameters=");
-			load_launcher_applet(params,pos,panel);
+			load_launcher_applet(params,panel,pos);
 			g_free(params);
 		} else if(strcmp(applet_name,LOGOUT_ID) == 0) { 
-			load_logout_applet(pos,panel);
+			load_logout_applet(panel,pos);
 		} else if(strcmp(applet_name,SWALLOW_ID) == 0) {
 			char *path = gnome_config_get_string("execpath=");
 			char *params = gnome_config_get_string("parameters=");
 			int width = gnome_config_get_int("width=0");
 			int height = gnome_config_get_int("height=0");
-			load_swallow_applet(path,params,width,height,pos,panel);
+			load_swallow_applet(path,params,width,height,panel,pos);
 			g_free(path);
 			g_free(params);
 		} else if(strcmp(applet_name,MENU_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
 			int main_menu_type =
 				gnome_config_get_int("main_menu_type=0");
-			load_menu_applet(params,main_menu_type,pos,panel);
+			load_menu_applet(params,main_menu_type,panel,pos);
 			g_free(params);
 		} else if(strcmp(applet_name,DRAWER_ID) == 0) {
 			char *params = gnome_config_get_string("parameters=");
 			char *pixmap = gnome_config_get_string("pixmap=");
 			char *tooltip = gnome_config_get_string("tooltip=");
-			load_drawer_applet(params,pixmap,tooltip,pos,panel);
+			load_drawer_applet(params,pixmap,tooltip,panel,pos);
 			g_free(params);
 			g_free(pixmap);
 			g_free(tooltip);

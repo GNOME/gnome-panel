@@ -20,7 +20,7 @@ struct _Menu {
 };
 
 void load_menu_applet(char *params, int main_menu_type,
-		      int pos, PanelWidget *panel);
+		      PanelWidget *panel, int pos);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 

@@ -129,7 +129,7 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 						GTK_SPIN_BUTTON(width_s)),
 			    gtk_spin_button_get_value_as_int(
 						GTK_SPIN_BUTTON(height_s)),
-			    0, current_panel);
+			    current_panel, 0);
 	gtk_widget_destroy(d);
 }
 
@@ -318,7 +318,7 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 
 void
 load_swallow_applet(char *path, char *params, int width, int height,
-		    int pos, PanelWidget *panel)
+		    PanelWidget *panel, int pos)
 {
 	Swallow *swallow;
 
@@ -327,7 +327,7 @@ load_swallow_applet(char *path, char *params, int width, int height,
 	if(!swallow)
 		return;
 
-	register_toy(swallow->table,swallow, pos, panel, APPLET_SWALLOW);
+	register_toy(swallow->table,swallow, panel, pos, APPLET_SWALLOW);
 
 	if(path && *path) {
 		char *s = g_copy_strings("(true; ",path," &)",NULL);

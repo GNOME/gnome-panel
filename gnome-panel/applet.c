@@ -494,8 +494,8 @@ applet_destroy(GtkWidget *w, gpointer data)
 int
 register_toy(GtkWidget *applet,
 	     gpointer data,
-	     int pos,
 	     PanelWidget *panel,
+	     int pos,
 	     AppletType type)
 {
 	GtkWidget     *eventbox;

@@ -12,7 +12,7 @@
 
 BEGIN_GNOME_DECLS
 
-void load_logout_applet(int pos, PanelWidget *panel);
+void load_logout_applet(PanelWidget *panel, int pos);
 
 END_GNOME_DECLS
 

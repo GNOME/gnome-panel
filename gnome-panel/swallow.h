@@ -23,7 +23,7 @@ typedef struct {
 } Swallow;
 
 void load_swallow_applet(char *path, char *params, int width, int height,
-			 int pos, PanelWidget *panel);
+			 PanelWidget *panela, int pos);
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 
 /*I couldn't resist the naming of this function*/

@@ -16,7 +16,7 @@ typedef struct {
 } Drawer;
 
 void load_drawer_applet(char *params, char *pixmap, char *tooltip,
-			int pos, PanelWidget *panel);
+			PanelWidget *panel, int pos);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
 

@@ -57,8 +57,8 @@ struct _AppletInfo {
 
 int register_toy(GtkWidget *applet,
 		 gpointer data,
-		 int pos,
 		 PanelWidget *panel,
+		 int pos,
 		 AppletType type);
 
 void panel_clean_applet(int applet_id);

@@ -443,7 +443,7 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 
 void
 load_drawer_applet(char *params, char *pixmap, char *tooltip,
-		   int pos, PanelWidget *panel)
+		   PanelWidget *panel, int pos)
 {
 	Drawer *drawer;
 
@@ -468,7 +468,7 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 
 	g_return_if_fail(drawer != NULL);
 
-	register_toy(drawer->button,drawer, pos, panel, APPLET_DRAWER);
+	register_toy(drawer->button,drawer, panel, pos, APPLET_DRAWER);
 
 	gtk_signal_connect_after(GTK_OBJECT(drawer->button),
 				 "size_allocate",
