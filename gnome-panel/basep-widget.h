@@ -87,6 +87,11 @@ struct _BasePWidget
 	guint32                 autohide_complete;
 
 	gboolean		compliant_wm;
+
+	/* drag offsets, where the panel was clicked when started
+	 * to be moved */
+	int			offset_x;
+	int			offset_y;
 };
 
 struct _BasePWidgetClass
@@ -251,6 +256,9 @@ void            basep_widget_get_menu_pos  (BasePWidget *basep,
 					    int ww, int wh);
 
 PanelOrientType basep_widget_get_applet_orient (BasePWidget *basep);
+
+/* initialize drag offsets according to cursor */
+void            basep_widget_init_offsets      (BasePWidget *basep);
 
 void            basep_widget_set_pos           (BasePWidget *basep,
 						int x, int y);

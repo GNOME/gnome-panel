@@ -206,72 +206,54 @@ floating_pos_set_pos (BasePWidget *basep,
 		      int x, int y,
 		      int w, int h)
 {
-	int minx, miny, maxx, maxy;
 	FloatingPos *pos = FLOATING_POS(basep->pos);
 	gint16 newx, newy;
 
-	gdk_window_get_geometry (GTK_WIDGET(basep)->window,
-				 &minx, &miny, &maxx, &maxy, NULL);
-	gdk_window_get_origin (GTK_WIDGET(basep)->window, &minx, &miny);
-	maxx += minx;
-	maxy += miny;
-	if (x >= minx &&
-	    x <= maxx &&
-	    y >= miny &&
-	    y <= maxy)
- 	        return;
+	x -= basep->offset_x;
+	y -= basep->offset_y;
 
 	newx = pos->x;
 	newy = pos->y;
 
-	if (x < minx || x > maxx) {
-		int w2 = w;
-		int x2 = x;
-		if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
-			switch (basep->state) {
-			case BASEP_SHOWN:
-			case BASEP_MOVING:
-				break;
-			case BASEP_AUTO_HIDDEN:
-			case BASEP_HIDDEN_LEFT:
-				w2 = basep->hidebutton_w->allocation.width;
-				break;
-			case BASEP_HIDDEN_RIGHT:
-				w2 = basep->hidebutton_e->allocation.width;
-				x2 -= w - w2;
-				break;
-			}
+	if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
+		switch (basep->state) {
+		case BASEP_SHOWN:
+		case BASEP_MOVING:
+			break;
+		case BASEP_AUTO_HIDDEN:
+		case BASEP_HIDDEN_LEFT:
+			w = basep->hidebutton_w->allocation.width;
+			break;
+		case BASEP_HIDDEN_RIGHT:
+			w = basep->hidebutton_e->allocation.width;
+			break;
 		}
-		newx = CLAMP (x < minx ? x2 : x2 - w2, 0, gdk_screen_width () - w);
 	}
 
-	if (y < miny || y > maxy) {
-		int h2 = h;
-		int y2 = y;
-		if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
-			switch (basep->state) {
-			case BASEP_SHOWN:
-			case BASEP_MOVING:
-				break;
-			case BASEP_AUTO_HIDDEN:
-			case BASEP_HIDDEN_LEFT:
-				h2 = basep->hidebutton_n->allocation.height;
-				break;
-			case BASEP_HIDDEN_RIGHT:
-				h2 = basep->hidebutton_s->allocation.height;
-				y2 -= h - h2;
-				break;
-			}
+	newx = CLAMP (x, 0, gdk_screen_width () - w);
+
+	if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
+		switch (basep->state) {
+		case BASEP_SHOWN:
+		case BASEP_MOVING:
+			break;
+		case BASEP_AUTO_HIDDEN:
+		case BASEP_HIDDEN_LEFT:
+			h = basep->hidebutton_n->allocation.height;
+			break;
+		case BASEP_HIDDEN_RIGHT:
+			h = basep->hidebutton_s->allocation.height;
+			break;
 		}
-		newy = CLAMP (y < miny ? y2 : y2 - h2, 0, gdk_screen_height () - h);
 	}
+	newy = CLAMP (y, 0, gdk_screen_height () - h);
 
 	if (newy != pos->y || newx != pos->x) {
 		pos->x = newx;
 		pos->y = newy;
 		gtk_signal_emit (GTK_OBJECT (pos),
 				 floating_pos_signals[COORDS_CHANGE_SIGNAL],
-				 x, y);
+				 pos->x, pos->y);
 		gtk_widget_queue_resize (GTK_WIDGET (basep));
 	}
 }

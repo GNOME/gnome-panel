@@ -1887,6 +1887,24 @@ basep_widget_get_pos (BasePWidget *basep,
 }
 
 void
+basep_widget_init_offsets (BasePWidget *basep)
+{
+	g_return_if_fail (basep != NULL);
+	g_return_if_fail (IS_BASEP_WIDGET (basep));
+
+	if (GTK_WIDGET (basep)->window != NULL) {
+		int x, y;
+		gdk_window_get_pointer (GTK_WIDGET (basep)->window,
+					&x, &y, NULL);
+		basep->offset_x = x;
+		basep->offset_y = y;
+	} else {
+		basep->offset_x = GTK_WIDGET (basep)->requisition.width / 2;
+		basep->offset_y = GTK_WIDGET (basep)->requisition.height / 2;
+	}
+}
+
+void
 basep_widget_set_pos (BasePWidget *basep,
 		      int x, int y)
 {

@@ -735,8 +735,10 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 				  event_time);
 		gdk_cursor_destroy (cursor);
 
-		if (basep)
+		if (basep) {
 			basep->autohide_inhibit = TRUE;
+			basep_widget_init_offsets (basep);
+		}
 
 		panel_dragged = TRUE;
 		return TRUE;

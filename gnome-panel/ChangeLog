@@ -1,3 +1,12 @@
+Thu Feb 08 23:29:26 2001  George Lebl <jirka@5z.com>
+
+	* basep-widget.[ch], panel.c, floating-widget.c, sliding-widget.c:
+	  remember the position of the click offsets for panel moving, so
+	  that moving floating and sliding panels is more natural, that is
+	  it holds onto the same point on the panel rather then moving when
+	  over the edge which felt too weird.  Also simplifies the code a
+	  bit.
+
 Tue Feb 06 18:34:05 2001  George Lebl <jirka@5z.com>
 
 	* basep-widget.c, foobar-widget.c: Set wmname/wmclass to

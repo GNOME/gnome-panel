@@ -100,32 +100,27 @@ sliding_pos_set_pos (BasePWidget *basep,
 		     int x, int y,
 		     int w, int h)
 {
-	int minx, miny, maxx, maxy;
+	int minx, miny, maxx, maxy, offset_x, offset_y;
 	SlidingPos *pos = SLIDING_POS(basep->pos);
 	BorderEdge newedge = BORDER_POS(basep->pos)->edge;
 	SlidingAnchor newanchor = pos->anchor;
 	gint16 newoffset = pos->offset;
 	gboolean check_pos = TRUE;
 
-	gdk_window_get_geometry (GTK_WIDGET(basep)->window,
-				 &minx, &miny, &maxx, &maxy, NULL);
+	gdk_window_get_geometry (GTK_WIDGET(basep)->window, &minx, &miny,
+				 &maxx, &maxy, NULL);
 	gdk_window_get_origin (GTK_WIDGET(basep)->window, &minx, &miny);
 	maxx += minx;
 	maxy += miny;
-	if (x >= minx &&
-	    x <= maxx &&
-	    y >= miny &&
-	    y <= maxy)
- 	        return;
 
 	/*if in the inner 1/3rd, don't change to avoid fast flickery
 	  movement*/
-	if ( x>(gdk_screen_width()/3) &&
-	     x<(2*gdk_screen_width()/3) &&
-	     y>(gdk_screen_height()/3) &&
-	     y<(2*gdk_screen_height()/3))
+	if (x > (gdk_screen_width()/3) &&
+	    x < (2*gdk_screen_width()/3) &&
+	    y > (gdk_screen_height()/3) &&
+	    y < (2*gdk_screen_height()/3))
 		return;
-	
+
 	/* don't switch the position if we are along the edge.
 	   do this so that it won't flip-flop orientations in
 	   the corners */
@@ -162,48 +157,64 @@ sliding_pos_set_pos (BasePWidget *basep,
 		/* we need to do this since the sizes might have changed 
 		   (orientation changes and what not) */
 		if(newedge != BORDER_POS(basep->pos)->edge) {
-			border_widget_change_edge (BORDER_WIDGET(basep), newedge);
+			PanelOrientation old_orient;
+			old_orient = PANEL_WIDGET (basep->panel)->orient;
+
+			border_widget_change_edge (BORDER_WIDGET(basep),
+						   newedge);
 			basep_widget_get_size (basep, &w, &h);
+
+			/* if change of orient, swap offsets */
+			if (old_orient != PANEL_WIDGET (basep->panel)->orient) {
+				int tmp = basep->offset_x;
+				basep->offset_x = basep->offset_y;
+				basep->offset_y = tmp;
+			}
 		}
 	}
+
+	offset_x = basep->offset_x;
+	if (offset_x > w)
+		offset_x = 0.99 * w; /* not completely on the edge */
+	offset_y = basep->offset_y;
+	if (offset_y > h)
+		offset_y = 0.99 * h; /* not completely on the edge */
 
 	g_assert (newedge == BORDER_POS (pos)->edge);
 	g_assert (newanchor == pos->anchor);
 
 	switch (PANEL_WIDGET (basep->panel)->orient) {
 	case PANEL_HORIZONTAL:
-		if (x >= minx && x <= maxx)
-			break; /* we are still "inside" the panel */
 		newanchor =  (x < 0.1 * gdk_screen_width ()) 
 			? SLIDING_ANCHOR_LEFT
 			: ( (x > 0.9 * gdk_screen_width ())
 			    ? SLIDING_ANCHOR_RIGHT
 			    : newanchor);
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
-			newoffset = (x > maxx) ? x - (maxx - minx) : x;
+			newoffset = x - offset_x;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
 				newoffset -= w - basep->hidebutton_e->allocation.width;
 		} else {
-			newoffset =gdk_screen_width () - ((x < minx) ? x + (maxx - minx) : x);
+			newoffset = gdk_screen_width () -
+				(x - offset_x) - w;
 			if (basep->state == BASEP_HIDDEN_LEFT)
 				newoffset -= w - basep->hidebutton_w->allocation.width;
 		}
 		newoffset = CLAMP (newoffset, 0, gdk_screen_width () - w);
 		break;
 	case PANEL_VERTICAL:
-		if (y >= miny && y <= maxy)
-			break; /* bleh */
 		newanchor =  (y < 0.1 * gdk_screen_height ()) 
 			? SLIDING_ANCHOR_LEFT
 			: ( (y > 0.9 * gdk_screen_height ())
 			    ? SLIDING_ANCHOR_RIGHT
 			    : newanchor);
 		if (newanchor == SLIDING_ANCHOR_LEFT) {
-			newoffset = (y > maxy) ? y - (maxy - miny) : y;
+			newoffset = y - offset_y;
 			if (basep->state == BASEP_HIDDEN_RIGHT)
 				newoffset -= h - basep->hidebutton_s->allocation.height;
 		} else {
-			newoffset = gdk_screen_height () - ((y < miny) ? y + (maxy - miny) : y);
+			newoffset = gdk_screen_height () -
+				(y - offset_y) - h;
 			if (basep->state == BASEP_HIDDEN_LEFT)
 				newoffset -= h - basep->hidebutton_n->allocation.height;
 		}
