@@ -33,7 +33,7 @@ extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-extern GtkTooltips *panel_tooltips;
+extern GlobalConfig global_config;
 
 static void
 move_applet_callback(GtkWidget *widget, AppletInfo *info)
@@ -344,7 +344,8 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
 	}
 	info->menu_age = 0;
-	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
+	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL,
+		       global_config.off_panel_popups?applet_menu_position:NULL,
 		       info, event->button, event->time);
 }
 

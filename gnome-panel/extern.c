@@ -591,7 +591,7 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 
 	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
-		       applet_menu_position,
+		       global_config.off_panel_popups?applet_menu_position:NULL,
 		       ext->info, 3, GDK_CURRENT_TIME);
 }
 

@@ -13,6 +13,7 @@ typedef enum {
 	LAUNCHER_TILE=0,
 	DRAWER_TILE,
 	MENU_TILE,
+	LOGOUT_TILE,
 	LAST_TILE
 } PanelTileType;
 

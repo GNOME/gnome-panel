@@ -448,6 +448,16 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
+	/* Off Panel Popup menus */
+	button = gtk_check_button_new_with_label (_("Show popup menus outside of panels"));
+	if (temp_config.off_panel_popups)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.off_panel_popups));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+
 	/* Movement frame */
 	frame = gtk_frame_new (_("Movement"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
@@ -521,7 +531,8 @@ panel_config_global(void)
 	char *icon_titles[]={
 		_("Launcher icon"),
 		_("Drawer icon"),
-		_("Menu icon")};
+		_("Menu icon"),
+		_("Logout icon")};
 	int i;
 	
 	/* return if the window is already up. */

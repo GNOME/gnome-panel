@@ -1,3 +1,17 @@
+Tue Jan 05 01:22:33 1999  George Lebl  <jirka@5z.com>
+
+	* logout.c,panel_config_global.c,panel-types.h,session.c: add a
+	  tooltip and use button-widget and a tile for logout
+
+	* button-widget.c: scale large icons while preserving aspect
+
+	* drawer-widget.c: get the toplevel panel and place drawers next to
+	  panels in the correct(tm) way
+
+	* extern.c,applet.c,panel.c,session.c,panel_config_global.[ch]:
+	  made the popup menu placement be optionally not placed outside
+	  of the panel
+
 Mon Jan 04 01:33:53 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: reverse redhat check for menu properties, fix properties

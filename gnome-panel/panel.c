@@ -38,6 +38,8 @@ extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
+extern GlobalConfig global_config;
+
 extern GtkTooltips *panel_tooltips;
 
 /*???? this might be ugly, but I guess we can safely assume that we can only
@@ -784,7 +786,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 								 TRUE);
 				pd->menu_age = 0;
 				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
-					       panel_menu_position,
+					       global_config.off_panel_popups?
+					        panel_menu_position:NULL,
 					       widget, bevent->button,
 					       bevent->time);
 				return TRUE;

@@ -494,6 +494,8 @@ do_session_save(GnomeClient *client,
 				      global_config.show_small_icons);
 		gnome_config_set_bool("show_dot_buttons",
 				      global_config.show_dot_buttons);
+		gnome_config_set_bool("off_panel_popups",
+				      global_config.off_panel_popups);
 		gnome_config_set_bool("prompt_for_logout",
 				      global_config.prompt_for_logout);
 		gnome_config_set_bool("disable_animations",
@@ -1006,7 +1008,7 @@ void
 load_up_globals(void)
 {
 	GString *buf;
-	char *tile_def[]={"normal","purple","green"};
+	char *tile_def[]={"normal","purple","green","blue"};
 	int i;
 	
 	buf = g_string_new(NULL);
@@ -1024,6 +1026,9 @@ load_up_globals(void)
 
 	global_config.show_dot_buttons =
 		gnome_config_get_bool("show_dot_buttons=FALSE");
+
+	global_config.off_panel_popups =
+		gnome_config_get_bool("off_panel_popups=TRUE");
 		
 	global_config.prompt_for_logout =
 		gnome_config_get_bool("prompt_for_logout=TRUE");

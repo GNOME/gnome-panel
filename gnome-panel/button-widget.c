@@ -38,15 +38,15 @@ typedef void (*VoidSignal) (GtkObject * object,
 static GList *buttons=NULL;
 
 /*the tiles go here*/
-static GdkPixmap *tiles_up[LAST_TILE]={NULL,NULL,NULL};
-static GdkBitmap *tiles_up_mask[LAST_TILE]={NULL,NULL,NULL};
-static GdkPixmap *tiles_down[LAST_TILE]={NULL,NULL,NULL};
-static GdkBitmap *tiles_down_mask[LAST_TILE]={NULL,NULL,NULL};
-static int tile_border[LAST_TILE]={0,0,0};
-static int tile_depth[LAST_TILE]={0,0,0};
+static GdkPixmap *tiles_up[LAST_TILE]={NULL,NULL,NULL,NULL};
+static GdkBitmap *tiles_up_mask[LAST_TILE]={NULL,NULL,NULL,NULL};
+static GdkPixmap *tiles_down[LAST_TILE]={NULL,NULL,NULL,NULL};
+static GdkBitmap *tiles_down_mask[LAST_TILE]={NULL,NULL,NULL,NULL};
+static int tile_border[LAST_TILE]={0,0,0,0};
+static int tile_depth[LAST_TILE]={0,0,0,0};
 
 /*are tiles enabled*/
-static int tiles_enabled[LAST_TILE]={FALSE,FALSE,FALSE};
+static int tiles_enabled[LAST_TILE]={FALSE,FALSE,FALSE,FALSE};
 
 static GtkWidgetClass *parent_class;
 
@@ -561,6 +561,7 @@ static void
 loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
 {
 	GdkImlibImage *im = NULL;
+	int w,h;
 
 	if(*file!='/') {
 		char *f;
@@ -577,7 +578,22 @@ loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
 		return;
 	}
 
-	gdk_imlib_render (im, BIG_ICON_SIZE, BIG_ICON_SIZE);
+	w = im->rgb_width;
+	h = im->rgb_height;
+	if(w>h) {
+		if(w>BIG_ICON_SIZE) {
+			h = h*((double)BIG_ICON_SIZE/w);
+			w = BIG_ICON_SIZE;
+		}
+	} else {
+		if(h>BIG_ICON_SIZE) {
+			w = w*((double)BIG_ICON_SIZE/h);
+			h = BIG_ICON_SIZE;
+		}
+	}
+	w = w>0?w:1;
+	h = h>0?h:1;
+	gdk_imlib_render (im, w, h);
 
 	*pixmap = gdk_imlib_copy_image (im);
 	*mask = gdk_imlib_copy_mask (im);

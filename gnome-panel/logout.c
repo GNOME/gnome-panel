@@ -7,6 +7,8 @@
 
 #include "panel-include.h"
 
+extern GtkTooltips *panel_tooltips;
+
 static void
 logout(void)
 {
@@ -20,20 +22,19 @@ create_logout_widget(void)
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	pixmap_name = gnome_unconditional_pixmap_file("gnome-term-night.png");
+	pixmap_name = gnome_pixmap_file("gnome-term-night.png");
 
 	if (!pixmap_name)
 		button = gtk_button_new_with_label(_("Log out"));
 	else {
 		button = gtk_button_new();
-		pixmap = gnome_pixmap_new_from_file(pixmap_name);
+		button = button_widget_new_from_file(pixmap_name,
+						     LOGOUT_TILE,
+						     FALSE,
+						     ORIENT_UP);
 		g_free(pixmap_name);
-		gtk_container_add(GTK_CONTAINER(button), pixmap);
-		gtk_widget_show(pixmap);
-		gtk_widget_set_usize(button, 48, 48);
-		/*gtk_widget_set_usize(button, pixmap->requisition.width,
-				     pixmap->requisition.height);*/
 	}
+	gtk_tooltips_set_tip (panel_tooltips,button,_("Log out of GNOME"),NULL);
 
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
 			   GTK_SIGNAL_FUNC(logout), NULL);

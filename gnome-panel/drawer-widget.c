@@ -194,6 +194,9 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 
 		/*get the parent of the applet*/
 		ppanel = panel->master_widget->parent;
+		/*go the the toplevel panel widget*/
+		while(ppanel->parent)
+			ppanel = ppanel->parent;
 		if (GTK_WIDGET_REALIZED (ppanel)) {
 			gdk_window_get_origin (panel->master_widget->window, &bx, &by);
 			if(GTK_WIDGET_NO_WINDOW(panel->master_widget)) {
@@ -205,24 +208,21 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 			gdk_window_get_origin (ppanel->window, &px, &py);
 			gdk_window_get_size (ppanel->window, &pw, &ph);
 
-			/*FIXME: THE +/- 2 is a HACK!, the border of a frame
-			  could be different ... we'd better figure out the
-			  GoodSolution(tm) for this*/
 			switch(drawer->orient) {
 			case ORIENT_UP:
 				*x = bx+(bw-width)/2;
-				*y = py - height - 2;
+				*y = py - height;
 				break;
 			case ORIENT_DOWN:
 				*x = bx+(bw-width)/2;
-				*y = py + ph + 2;
+				*y = py + ph;
 				break;
 			case ORIENT_LEFT:
-				*x = px - width - 2;
+				*x = px - width;
 				*y = by+(bh-height)/2;
 				break;
 			case ORIENT_RIGHT:
-				*x = px + pw + 2;
+				*x = px + pw;
 				*y = by+(bh-height)/2;
 				break;
 			}
