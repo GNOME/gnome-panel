@@ -2687,7 +2687,7 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 	
 	file = gnome_pixmap_file (try_file);
 	if (!file) {
-		g_warning (_("Cannot find pixmap file %s"), try_file);
+		g_message (_("Cannot find pixmap file %s"), try_file);
 		setup_menuitem (menuitem, NULL, title);
 	} else
 		setup_menuitem_with_size (menuitem,

@@ -1,3 +1,11 @@
+2000-05-18  Jacob Berkman  <jacob@helixcode.com>
+
+	* applet.c (create_applet_menu): 
+	* menu.c (setup_menuitem_try_pixmap): s/warning/message/
+
+	* panel-widget.c (panel_widget_destroy): This either fixes a leak
+	or makes stuff crash
+
 Thu May 18 20:13:00 2000  George Lebl <jirka@5z.com>
 
 	* launcher.c, menu.c: on "destroy" of gnome-dentry-edit, unref it,

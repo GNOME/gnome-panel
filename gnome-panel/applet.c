@@ -61,6 +61,7 @@ panel_clean_applet(AppletInfo *info)
 			status_applet_put_offscreen(info->data);
 		}
 		gtk_widget_destroy(info->widget);
+		info->widget = NULL;
 	}
 }
 
@@ -449,7 +450,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 
 	pixmap = gnome_pixmap_file ("gnome-panel.png");
 	if (!pixmap) {
-		g_warning (_("Cannot find pixmap file %s"), "gnome-panel.png");
+		g_message (_("Cannot find pixmap file %s"), "gnome-panel.png");
 		setup_menuitem (menuitem, NULL, _("Panel"));
 	} else {
 		setup_menuitem (menuitem, 

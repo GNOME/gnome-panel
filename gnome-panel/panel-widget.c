@@ -1662,7 +1662,9 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	if(panel->backpix)
 		gdk_pixbuf_unref(panel->backpix);
 	panel->backpix = NULL;
-	
+
+	g_free (panel->back_pixmap);
+
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
 }
