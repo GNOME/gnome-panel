@@ -70,7 +70,7 @@ panel_session_handle_die_request (GnomeClient *client)
 }
 
 void
-panel_session_init (const char *argv0)
+panel_session_init (void)
 {
 	GnomeClient *client;
 

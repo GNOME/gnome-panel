@@ -1251,6 +1251,13 @@ panel_profile_save_id_list (PanelGConfKeyType  type,
 	key = panel_gconf_general_key (id_list);
 	if (resave)
 		list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+	else {
+		/* Make sure the elements in the list appear only once. We only
+		 * do it when we save a list with new elements. */
+		list = panel_g_slist_make_unique (list,
+						  (GCompareFunc) strcmp,
+						  TRUE);
+	}
 
 	gconf_client_set_list (client, key, GCONF_VALUE_STRING, list, NULL);
 
@@ -1312,12 +1319,20 @@ panel_profile_remove_from_list (PanelGConfKeyType  type,
 	key = panel_gconf_general_key (id_list);
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
-	for (l = list; l; l = l->next)
-		if (!strcmp (id, l->data))
-			break;
-	if (l) {
-		g_free (l->data);
-		list = g_slist_delete_link (list, l);
+	/* Remove all occurrence of id and not just the first. We're more solid
+	 * this way (see bug #137308 for example). */
+	l = list;
+	while (l) {
+		GSList *next;
+
+		next = l->next;
+
+		if (!strcmp (id, l->data)) {
+			g_free (l->data);
+			list = g_slist_delete_link (list, l);
+		}
+
+		l = next;
 	}
 
 	panel_profile_save_id_list (type, list, FALSE);
@@ -1560,6 +1575,8 @@ panel_profile_load_toplevel (GConfClient       *client,
 			      NULL);
 
 	if (!(screen = get_toplevel_screen (client, toplevel_dir))) {
+		gconf_client_remove_dir (client, key, NULL);
+		gconf_client_remove_dir (client, toplevel_dir, NULL);
 		g_free (toplevel_dir);
 		return NULL;
 	}
@@ -1800,6 +1817,7 @@ panel_profile_load_object (GConfClient       *client,
 	if (!panel_profile_map_object_type_string (type_string, &object_type)) {
 		g_free (type_string);
 		g_free (object_dir);
+		gconf_client_remove_dir (client, object_dir, NULL);
 		return;
 	}
 	
@@ -1999,7 +2017,10 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 		return;
 	}
 
-	toplevel_ids = gconf_value_get_list (value);
+	toplevel_ids = g_slist_copy (gconf_value_get_list (value));
+	toplevel_ids = panel_g_slist_make_unique (toplevel_ids,
+						  panel_gconf_value_strcmp,
+						  FALSE);
 
 	existing_toplevels = NULL;
 	for (l = panel_toplevel_list_toplevels (); l; l = l->next) {
@@ -2028,6 +2049,7 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 					  (PanelProfileDestroyFunc) panel_profile_destroy_toplevel);
 
 	g_slist_free (existing_toplevels);
+	g_slist_free (toplevel_ids);
 }
 
 static void
@@ -2051,7 +2073,10 @@ panel_profile_object_id_list_notify (GConfClient *client,
 		return;
 	}
 
-	object_ids = gconf_value_get_list (value);
+	object_ids = g_slist_copy (gconf_value_get_list (value));
+	object_ids = panel_g_slist_make_unique (object_ids,
+						panel_gconf_value_strcmp,
+						FALSE);
 
 	existing_applets = panel_applet_list_applets ();
 
@@ -2079,6 +2104,7 @@ panel_profile_object_id_list_notify (GConfClient *client,
 					  (PanelProfileDestroyFunc) panel_profile_destroy_object);
 
 	g_slist_free (sublist);
+	g_slist_free (object_ids);
 
 	panel_applet_load_queued_applets ();
 }
@@ -2105,6 +2131,10 @@ panel_profile_load_list (GConfClient           *client,
 				 NULL, NULL);
 
 	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+	list = panel_g_slist_make_unique (list,
+					  (GCompareFunc) strcmp,
+					  TRUE);
+
 	for (l = list; l; l = l->next) {
 		load_handler (client, profile_dir, type, l->data);
 

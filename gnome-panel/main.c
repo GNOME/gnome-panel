@@ -80,7 +80,7 @@ main (int argc, char **argv)
 	panel_lockdown_init ();
 	panel_profile_load ();
 
-	panel_session_init (argv [0]);
+	panel_session_init ();
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
@@ -90,6 +90,10 @@ main (int argc, char **argv)
 	gtk_main ();
 
 	panel_lockdown_finalize ();
+
+	gconf_client_remove_dir (panel_gconf_get_client (),
+				 "/desktop/gnome/interface",
+				 NULL);
 
 	return 0;
 }

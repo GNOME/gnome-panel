@@ -64,6 +64,9 @@ void            panel_gconf_associate_schemas_in_dir       (GConfClient *client,
 							    const char  *profile_dir,
 							    const char  *schema_dir);
 
+gint            panel_gconf_value_strcmp (gconstpointer a,
+					  gconstpointer b);
+
 G_END_DECLS
 
 #endif /* __PANEL_GCONF_H__ */
