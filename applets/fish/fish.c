@@ -3,6 +3,7 @@
  * to break the monotony of finals
  */
 
+#include <config.h>
 #include <string.h>
 #include <gnome.h>
 #include <gdk_imlib.h>
@@ -239,19 +240,19 @@ about_cb (AppletWidget *widget, gpointer data)
 	const gchar * author_format = _("%s the Fish");
 
 	authors[0] = splice_name(author_format, properties.name);
-	authors[1] = "(with minor help from George)";
+	authors[1] = _("(with minor help from George)");
 	authors[2] = NULL;
 
-	about = gnome_about_new ( "The GNOME Fish Applet", "3.4.7.4",
+	about = gnome_about_new (_("The GNOME Fish Applet"), "3.4.7.4",
 			"(C) 1998 the Free Software Foundation",
 			authors,
-			"This applet has no use what-so-ever. "
-			"It only takes up disk space and "
-			"compilation time, and if loaded it also "
-			"takes up precious panel space and memory. "
-			"If anyone is found using this applet, he "
-			"should be promptly sent for a psychiatric "
-			"evaluation.",
+			_("This applet has no use what-so-ever. "
+			  "It only takes up disk space and "
+			  "compilation time, and if loaded it also "
+			  "takes up precious panel space and memory. "
+			  "If anyone is found using this applet, he "
+			  "should be promptly sent for a psychiatric "
+			  "evaluation."),
 			NULL);
 	gtk_widget_show (about);
 
@@ -284,12 +285,16 @@ main(int argc, char *argv[])
 {
 	GtkWidget *fish;
 
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+
 	applet_widget_init_defaults("fish_applet", NULL, argc, argv, 0, NULL,
 				    argv[0]);
 
 	applet = applet_widget_new();
 	if (!applet)
-		g_error("Can't create applet!\n");
+		g_error(_("Can't create applet!\n"));
 
 	gtk_widget_realize(applet);
 	fish = create_fish_widget(applet);
