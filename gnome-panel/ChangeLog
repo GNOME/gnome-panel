@@ -1,5 +1,15 @@
 2005-01-09  Vincent Untz  <vincent@vuntz.net>
 
+	Don't draw handles for drawers. Fix bug #142656.
+
+	* panel-toplevel.c: (panel_toplevel_update_size): we don't need
+	handles if the toplevel is attached
+	(panel_toplevel_size_allocate): ditto
+	(panel_toplevel_expose): don't draw handles if the toplevel is
+	attached
+
+2005-01-09  Vincent Untz  <vincent@vuntz.net>
+
 	New menu layout. See bug #161613
 
 	* menu.[ch]: (setup_uri_drag): new

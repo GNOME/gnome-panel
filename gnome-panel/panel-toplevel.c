@@ -2208,7 +2208,8 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 		if (toplevel->priv->expand)
 			width  = monitor_width;
-		else if (!toplevel->priv->buttons_enabled)
+		else if (!toplevel->priv->buttons_enabled &&
+			 !toplevel->priv->attached)
 			width = MAX (MINIMUM_WIDTH, width + 2 * HANDLE_SIZE);
 		else
 			width  = MAX (MINIMUM_WIDTH, width);
@@ -2217,7 +2218,8 @@ panel_toplevel_update_size (PanelToplevel  *toplevel,
 
 		if (toplevel->priv->expand)
 			height = monitor_height;
-		else if (!toplevel->priv->buttons_enabled)
+		else if (!toplevel->priv->buttons_enabled &&
+			 !toplevel->priv->attached)
 			height = MAX (MINIMUM_WIDTH, height + 2 * HANDLE_SIZE);
 		else
 			height = MAX (MINIMUM_WIDTH, height);
@@ -2755,7 +2757,9 @@ panel_toplevel_size_allocate (GtkWidget     *widget,
 
 	widget->allocation = *allocation;
 
-	if (toplevel->priv->expand || toplevel->priv->buttons_enabled)
+	if (toplevel->priv->expand ||
+	    toplevel->priv->buttons_enabled ||
+	    toplevel->priv->attached)
 		challoc = *allocation;
 	else {
 		if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
@@ -2818,7 +2822,9 @@ panel_toplevel_expose (GtkWidget      *widget,
 	edges = toplevel->priv->edges;
 	panel_frame_draw (widget, edges);
 
-	if (toplevel->priv->expand || toplevel->priv->buttons_enabled)
+	if (toplevel->priv->expand ||
+	    toplevel->priv->buttons_enabled ||
+	    toplevel->priv->attached)
 		return retval;
 
 	if (toplevel->priv->orientation & PANEL_HORIZONTAL_MASK) {
