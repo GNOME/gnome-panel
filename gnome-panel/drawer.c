@@ -211,8 +211,6 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 #ifdef DRAWER_DEBUG
 	printf ("Registering drawer click \n");
 #endif	
-	if (drawer->just_focused)
-		return;
 
 	switch (BASEP_WIDGET (drawerw)->state) {
 	case BASEP_SHOWN:
@@ -287,17 +285,6 @@ leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 }
 
 static gboolean
-unset_just_focused (gpointer data)
-{
-	Drawer *drawer = data;
-
-	g_return_val_if_fail (drawer->just_focused, FALSE);
-
-	drawer->just_focused = FALSE;
-	return FALSE;
-}
-
-static gboolean
 focus_in_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
 	Drawer *drawer = data;
@@ -310,16 +297,6 @@ focus_in_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 	case BASEP_HIDDEN_RIGHT:
 		if (drawer->moving_focus) {
 			drawer->moving_focus = FALSE;
-		} else {
-			drawer->just_focused = TRUE;
-			/*
-			 * We unset the just_focused flag when we have
-			 * finished processing pending events. We use this
-			 * flag to prevent drawer being opened and shut
-			 * when it is clicked on when it does not have focus
-			 */
-			gtk_idle_add (unset_just_focused, drawer);
-			drawer_widget_open_drawer (drawerw, panelw);
 		}
 		break;
 	default:
@@ -342,8 +319,6 @@ focus_out_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 	case BASEP_AUTO_HIDDEN:
 		if (drawer->moving_focus) {
 			drawer->moving_focus = FALSE;
-		} else if (GTK_WINDOW (panelw)->has_focus) {
-			drawer_widget_close_drawer (drawerw, panelw);
 		}
 		break;
 	default:
@@ -491,7 +466,6 @@ create_drawer_applet(GtkWidget * drawer_panel,
 
 	drawer->drawer = drawer_panel;
 	drawer->moving_focus = FALSE;
-	drawer->just_focused = FALSE;
 
 	g_signal_connect (G_OBJECT (drawer->button), "clicked",
 			    G_CALLBACK (drawer_click), drawer);

@@ -17,7 +17,6 @@ typedef struct {
 	GtkWidget    *properties;
 
 	gboolean      moving_focus;
-	gboolean      just_focused;
 
 	AppletInfo   *info;
 } Drawer;

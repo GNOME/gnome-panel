@@ -1,3 +1,13 @@
+2002-05-03  Padraig O'Briain  <padraig.obriain@sun.com>
+ 
+	* drawer.[ch]:
+	focus_in_drawer: Do not open a drawer when it is focused 
+	focus_out_drawer: Do not close a drawer when it is unfocused
+	it unfocused.
+	Remove just_focused flag in Drawer data structure and 
+	unset_just_focused
+	Fixed #78782
+
 2002-05-02  Glynn Foster  <glynn.foster@sun.com>
 
 	* foobar-widget.c, menu-util.c, menu-util.h, menu.c: Add 'Search
@@ -84,7 +94,7 @@ Mon Apr 29 12:47:15 2002  Jonathan Blandford  <jrb@gnome.org>
 2002-04-25  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-widget.c:
-	If applet's height is odd  and orientation is norizontal set its 
+	If applet's height is odd and orientation is horizontal set its 
 	position 1 pixel lower so that the tab order will be correct 
 	(bug 79465); similarly for width and vertical orientation.
 
