@@ -1,5 +1,6 @@
-#include "nothing.h"
 #include <string.h>
+#include "panel-util.h"
+#include "nothing.h"
 
 /*code snippet, not to be compiled separately*/
 static int goat_pages=0;
@@ -12,9 +13,7 @@ static int goat_timeout = 0;
 static int goat_x = -1, goat_y = -1;
 static int goat_accx = -1, goat_accy = -1;
 
-#ifdef FIXME
 static char *goat_filename = NULL;
-#endif /* FIXME */
 
 static void
 destroy_egg(GtkWidget *widget, gpointer data)
@@ -53,32 +52,24 @@ goat_timeout_func(gpointer data)
 	if(goat_x>goat_darea->allocation.width-6-goat_width) {
 		goat_accx = -(rand()%4 +3);
 		goat_x = goat_darea->allocation.width-6-goat_width;
-#ifdef FIXME	
-		if(goat_filename)
+		if (goat_filename != NULL)
 			gnome_sound_play (goat_filename);
-#endif
 	} else if(goat_x<6) {
 		goat_accx = rand()%4 +3;
 		goat_x = 6;
-#ifdef FIXME	
-		if(goat_filename)
+		if (goat_filename != NULL)
 			gnome_sound_play (goat_filename);
-#endif
 	}
 	if(goat_y>goat_darea->allocation.height-6-goat_height) {
 		goat_accy = -(rand()%4 +3);
 		goat_y = goat_darea->allocation.height-6-goat_height;
-#ifdef FIXME	
-		if(goat_filename)
+		if (goat_filename != NULL)
 			gnome_sound_play (goat_filename);
-#endif
 	} else if(goat_y<6) {
 		goat_accy = rand()%4 +3;
 		goat_y = 6;
-#ifdef FIXME	
-		if(goat_filename)
+		if (goat_filename != NULL)
 			gnome_sound_play (goat_filename);
-#endif
 	}
 
 	real_goat_frame = goat_frame/2;
@@ -127,7 +118,7 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = gnome_pixmap_file (files[frame]);
+		file = panel_pixmap_discovery (files[frame], FALSE /* fallback */);
 		if(!file || 
 		   !(pb=gdk_pixbuf_new_from_file (file, NULL))) {
 			g_warning("Goat is not available!");
@@ -204,11 +195,12 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 	clicks = 0;
 	
 	if(goat_pages==0) {
-#ifdef FIXME
-		if(!goat_filename)
+		if (goat_filename == NULL)
 			goat_filename =
-				gnome_sound_file ("ricochet.wav");
-#endif
+				gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_SOUND, 
+							   "ricochet.wav",
+							   TRUE /* only_if_exists */,
+							   NULL /* ret_locations */);
 
 		goat_darea = gtk_drawing_area_new();
 

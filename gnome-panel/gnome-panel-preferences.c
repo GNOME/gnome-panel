@@ -162,7 +162,11 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	gdk_keyboard_grab (GDK_ROOT_PARENT(), FALSE, GDK_CURRENT_TIME);
 	gdk_window_add_filter (GDK_ROOT_PARENT(), grab_key_filter, data);
 
-	gtk_window_set_policy (GTK_WINDOW (grab_dialog), FALSE, FALSE, TRUE);
+	g_object_set (G_OBJECT (grab_dialog),
+		      "allow_grow", FALSE,
+		      "allow_shrink", FALSE,
+		      "resizable", TRUE,
+		      NULL);
 	gtk_window_set_position (GTK_WINDOW (grab_dialog), GTK_WIN_POS_CENTER);
 	gtk_window_set_modal (GTK_WINDOW (grab_dialog), TRUE);
 
@@ -364,11 +368,13 @@ main (int argc, char **argv)
 	gtk_dialog_add_button (GTK_DIALOG(main_window),
 		GTK_STOCK_OK, GTK_RESPONSE_OK);
 
-	gtk_signal_connect(GTK_OBJECT(main_window), "response",
-        	GTK_SIGNAL_FUNC(main_dialog_response), main_window);
+	g_signal_connect (G_OBJECT(main_window), "response",
+			  GTK_CALLBACK (main_dialog_response),
+			  main_window);
 
-	g_signal_connect(G_OBJECT(main_window), "destroy",
-		G_CALLBACK(gtk_main_quit),NULL);
+	g_signal_connect (G_OBJECT (main_window), "destroy",
+			  G_CALLBACK (gtk_main_quit),
+			  NULL);
 
 	gconf_client = gconf_client_get_default();
 
@@ -386,7 +392,7 @@ main (int argc, char **argv)
 		gtk_box_pack_start (GTK_BOX(GTK_DIALOG(main_window)->vbox),
 			label,TRUE,TRUE,0);
 
-		gtk_widget_set_usize(main_window,350,350);
+		gtk_widget_set_size_request (main_window, 350, 350);
 	}
 	else
 	{

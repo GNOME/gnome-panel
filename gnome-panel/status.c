@@ -168,8 +168,8 @@ new_status_spot(void)
 	spots = g_slist_prepend(spots,ss);
 	nspots++;
 
-	ss->socket = gtk_socket_new();
-	gtk_widget_set_usize(ss->socket,DOCKLET_SPOT,DOCKLET_SPOT);
+	ss->socket = gtk_socket_new ();
+	gtk_widget_set_size_request (ss->socket, DOCKLET_SPOT, DOCKLET_SPOT);
 
 	/* ensures that fixed and offscreen exist, even though they
 	 * should have been created long ago, but I guess it's better
@@ -268,18 +268,12 @@ void
 status_applet_create_offscreen(void)
 {
 	DPUTS("CREATE OFFSCREEN");
-	offscreen = gtk_window_new(GTK_WINDOW_POPUP);
-#ifdef STATUS_DEBUG
-	gtk_widget_set_uposition(offscreen,10,10);
-#else
-	gtk_widget_set_uposition(offscreen, gdk_screen_width()+10,
-				 gdk_screen_height()+10);
-#endif
-	if(!fixed) {
-		fixed = gtk_fixed_new();
-		gtk_widget_show(fixed);
+	offscreen = gtk_invisible_new ();
+	if (fixed == NULL) {
+		fixed = gtk_fixed_new ();
+		gtk_widget_show (fixed);
 
-		gtk_container_add(GTK_CONTAINER(offscreen), fixed);
+		gtk_container_add (GTK_CONTAINER (offscreen), fixed);
 	}
 
 	gtk_widget_show_now(offscreen);

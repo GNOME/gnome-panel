@@ -819,8 +819,8 @@ extern_before_remove (Extern ext)
 
 	if (ext->info->widget != NULL) {
 		AppletData *ad;
-		ad = gtk_object_get_data (GTK_OBJECT (ext->info->widget),
-					  PANEL_APPLET_DATA);
+		ad = g_object_get_data (G_OBJECT (ext->info->widget),
+					PANEL_APPLET_DATA);
 		d->pos = ad->pos;
 		d->panel = g_slist_index (panels,
 					  ext->info->widget->parent);
@@ -1764,8 +1764,8 @@ s_panelspot_get_spot_pos(PortableServer_Servant servant,
 	g_assert(ext);
 	g_assert(ext->info);
 	
-	ad = gtk_object_get_data(GTK_OBJECT(ext->info->widget),
-				 PANEL_APPLET_DATA);
+	ad = g_object_get_data (G_OBJECT (ext->info->widget),
+				PANEL_APPLET_DATA);
 	if(!ad)
 		return -1;
 	return ad->pos;
@@ -2185,8 +2185,8 @@ extern_save_applet (AppletInfo *info,
 	g_free (buf);
 
 	panel = PANEL_WIDGET (info->widget->parent);
-	ad = gtk_object_get_data (GTK_OBJECT (info->widget),
-				  PANEL_APPLET_DATA);
+	ad = g_object_get_data (G_OBJECT (info->widget),
+				PANEL_APPLET_DATA);
 
 	panel_num = g_slist_index (panels, panel);
 	if (panel_num == -1) {
@@ -2456,8 +2456,8 @@ extern_save_last_position (Extern ext, gboolean sync)
 	gnome_config_push_prefix (key);
 	g_free (key);
 
-	ad = gtk_object_get_data (GTK_OBJECT (ext->info->widget),
-				  PANEL_APPLET_DATA);
+	ad = g_object_get_data (G_OBJECT (ext->info->widget),
+				PANEL_APPLET_DATA);
 
 	panel_num = g_slist_index (panels, ext->info->widget->parent);
 

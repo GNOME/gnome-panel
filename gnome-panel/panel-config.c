@@ -556,7 +556,7 @@ config_apply (PerPanelConfig *ppc)
 static void
 set_toggle (GtkWidget *widget, gpointer data)
 {
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 	int *the_toggle = data;
 
 	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
@@ -573,7 +573,7 @@ set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 static void
 basep_set_auto_hide (GtkWidget *widget, gpointer data)
 {
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 	
 	ppc->mode = (GTK_TOGGLE_BUTTON (widget)->active)
 		? BASEP_AUTO_HIDE
@@ -601,7 +601,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	/* Auto-hide */
 	button = gtk_check_button_new_with_label(_("Enable Auto-hide"));
 	ppc->autohide_button = button;
-	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->mode == BASEP_AUTO_HIDE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_signal_connect (G_OBJECT (button), "toggled", 
@@ -612,7 +612,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Show hide buttons"));
 	ppc->hidebuttons_button = button;
-	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_signal_connect (G_OBJECT (button), "toggled", 
@@ -628,7 +628,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 			  button);
 	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
-	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_signal_connect (G_OBJECT (button), "toggled", 
@@ -642,7 +642,7 @@ make_hidebuttons_widget (PerPanelConfig *ppc)
 static void
 screen_set (GtkWidget *widget, gpointer data)
 {
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	ppc->screen = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 	panel_config_register_changes (ppc);	
@@ -680,7 +680,7 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 		ppc->screen_spin = button =
 			gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
 		gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
-		gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+		g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
 		g_signal_connect (G_OBJECT (button), "changed",
 				  G_CALLBACK (screen_set), NULL);
@@ -694,7 +694,7 @@ static void
 border_set_edge (GtkWidget *widget, gpointer data)
 {
 	int edge = GPOINTER_TO_INT (data);
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	if (ppc->edge == edge)
 		return;
@@ -708,7 +708,7 @@ static void
 border_set_align (GtkWidget *widget, gpointer data)
 {
 	int align = GPOINTER_TO_INT (data);
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	if (ppc->align == align)
 		return;
@@ -748,9 +748,9 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				GTK_RADIO_BUTTON (w))
 			: gtk_radio_button_new (NULL);
 		ppc->toggle[BORDER_LEFT][align] = w;
-		gtk_widget_set_usize (w, 18, 18);
+		gtk_widget_set_size_request (w, 18, 18);
 		gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (w), FALSE);
-		gtk_object_set_user_data (GTK_OBJECT (w), ppc);
+		g_object_set_data (G_OBJECT (w), "PerPanelConfig", ppc);
 		gtk_table_attach (GTK_TABLE (table), w, 0, 1,
 				  1 + align, 2 + align,
 				  GTK_FILL,
@@ -769,9 +769,9 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 		w = gtk_radio_button_new_from_widget (
 			GTK_RADIO_BUTTON (w));
 		ppc->toggle[BORDER_TOP][align] = w;
-		gtk_widget_set_usize (w, 18, 18);
+		gtk_widget_set_size_request (w, 18, 18);
 		gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (w), FALSE);
-		gtk_object_set_user_data (GTK_OBJECT (w), ppc);
+		g_object_set_data (G_OBJECT (w), "PerPanelConfig", ppc);
 		gtk_table_attach (GTK_TABLE (table), w,
 				  1 + align, 2 + align, 0, 1,
 				  GTK_EXPAND | GTK_FILL,
@@ -790,9 +790,9 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 		w = gtk_radio_button_new_from_widget (
 			GTK_RADIO_BUTTON (w));
 		ppc->toggle[BORDER_RIGHT][align] = w;
-		gtk_widget_set_usize (w, 18, 18);
+		gtk_widget_set_size_request (w, 18, 18);
 		gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (w), FALSE);
-		gtk_object_set_user_data (GTK_OBJECT (w), ppc);
+		g_object_set_data (G_OBJECT (w), "PerPanelConfig", ppc);
 		gtk_table_attach (GTK_TABLE (table), w,
 				  1 + aligns, 2 + aligns,
 				  1 + align, 2 + align,
@@ -812,9 +812,9 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 		w = gtk_radio_button_new_from_widget (
 			GTK_RADIO_BUTTON (w));
 		ppc->toggle[BORDER_BOTTOM][align] = w;
-		gtk_widget_set_usize (w, 18, 18);
+		gtk_widget_set_size_request (w, 18, 18);
 		gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (w), FALSE);
-		gtk_object_set_user_data (GTK_OBJECT (w), ppc);
+		g_object_set_data (G_OBJECT (w), "PerPanelConfig", ppc);
 		gtk_table_attach (GTK_TABLE (table), w,
 				  1 + align, 2 + align,
 				  1 + aligns, 2 + aligns,
@@ -836,7 +836,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 			  1, 1 + aligns,
 			  1, 1 + aligns,
 			  GTK_FILL, GTK_FILL, 0, 0);
-	gtk_widget_set_usize (w, 103, 77);
+	gtk_widget_set_size_request (w, 103, 77);
 
 	return pos_box;
 }
@@ -915,7 +915,7 @@ static void
 floating_set_orient (GtkWidget *widget, gpointer data)
 {
 	GtkOrientation orient = GPOINTER_TO_INT (data);
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	if (!(GTK_TOGGLE_BUTTON (widget)->active))
 		return;
@@ -929,7 +929,7 @@ static void
 floating_set_xy (GtkWidget *widget, gpointer data)
 {
 	gint16 *xy = data;
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
 	*xy = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
 	panel_config_register_changes (ppc);	
@@ -977,7 +977,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 		NULL, _("Orient panel horizontally"));
 	if(ppc->orient == GTK_ORIENTATION_HORIZONTAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			  G_CALLBACK (floating_set_orient),
 			  GINT_TO_POINTER (GTK_ORIENTATION_HORIZONTAL));
@@ -989,7 +989,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 			_("Orient panel vertically"));
 	if(ppc->orient == GTK_ORIENTATION_VERTICAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			  G_CALLBACK (floating_set_orient),
 			  GINT_TO_POINTER (GTK_ORIENTATION_VERTICAL));
@@ -1004,8 +1004,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	range = gtk_adjustment_new (ppc->x, 0, xlimit, 1, 10, 10);
 	ppc->x_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
-	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->x);
 	g_signal_connect (G_OBJECT (button), "changed",
 			  G_CALLBACK (floating_set_xy),
@@ -1018,8 +1018,8 @@ floating_notebook_page (PerPanelConfig *ppc)
 	range = gtk_adjustment_new (ppc->y, 0, ylimit, 1, 10, 10);
 	ppc->y_spin = button =
 		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-	gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
-	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
 	g_signal_connect (G_OBJECT (button), "changed",
 			  G_CALLBACK (floating_set_xy),
@@ -1098,7 +1098,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10));
 	ppc->offset_spin = button = 
 		gtk_spin_button_new (adj, 1, 0);
-	gtk_widget_set_usize (button, 100, 0);
+	gtk_widget_set_size_request (button, 100, 0);
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
 	g_signal_connect (G_OBJECT (button), "changed",
 			  G_CALLBACK (sliding_set_offset), ppc);
@@ -1118,9 +1118,9 @@ static void
 size_set_size (GtkWidget *widget, gpointer data)
 {
 	int sz = GPOINTER_TO_INT(data);
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 
-	if(ppc->sz == sz)
+	if (ppc->sz == sz)
 		return;
 
 	ppc->sz = sz;
@@ -1170,7 +1170,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("XX Small Tiny (12 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_XX_SMALL));
@@ -1178,7 +1178,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("X Small (24 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_X_SMALL));
@@ -1186,7 +1186,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_SMALL));
@@ -1194,7 +1194,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("Medium (48 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_MEDIUM));
@@ -1202,7 +1202,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_LARGE));
@@ -1210,7 +1210,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("X Large (80 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_X_LARGE));
@@ -1218,7 +1218,7 @@ make_size_widget (PerPanelConfig *ppc)
 	menuitem = gtk_menu_item_new_with_label (_("XX Large (128 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
+	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);
 	g_signal_connect (G_OBJECT (menuitem), "activate",
 			  G_CALLBACK (size_set_size),
 			  GINT_TO_POINTER (PANEL_SIZE_XX_LARGE));
@@ -1324,7 +1324,7 @@ static void
 set_back (GtkWidget *widget, gpointer data)
 {
 	GtkWidget *pixf,*colf;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 	PanelBackType back_type = GPOINTER_TO_INT (data);
 
 	if (ppc->back_type == back_type)
@@ -1371,15 +1371,15 @@ background_page (PerPanelConfig *ppc)
 			  G_CALLBACK (activate_proper_item), 
 			  NULL);
 	ppc->non = gtk_menu_item_new_with_label (_("Standard"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->non),ppc);
+	g_object_set_data (G_OBJECT (ppc->non), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->non);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->non);
 	ppc->col = gtk_menu_item_new_with_label (_("Color"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->col),ppc);
+	g_object_set_data (G_OBJECT (ppc->col), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->col);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->col);
 	ppc->pix = gtk_menu_item_new_with_label (_("Pixmap"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->pix),ppc);
+	g_object_set_data (G_OBJECT (ppc->pix), "PerPanelConfig", ppc);
 	gtk_widget_show (ppc->pix);
 	gtk_menu_shell_append (GTK_MENU_SHELL (m), ppc->pix);
 
@@ -1419,9 +1419,9 @@ background_page (PerPanelConfig *ppc)
 	/*image frame*/
 	f = gtk_frame_new (_("Image"));
 	gtk_widget_set_sensitive (f, ppc->back_type == PANEL_BACK_PIXMAP);
-	gtk_object_set_data(GTK_OBJECT(ppc->pix),"pix",f);
-	gtk_object_set_data(GTK_OBJECT(ppc->col),"pix",f);
-	gtk_object_set_data(GTK_OBJECT(ppc->non),"pix",f);
+	g_object_set_data (G_OBJECT (ppc->pix), "pix", f);
+	g_object_set_data (G_OBJECT (ppc->col), "pix", f);
+	g_object_set_data (G_OBJECT (ppc->non), "pix", f);
 	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
 
@@ -1652,8 +1652,11 @@ panel_config (GtkWidget *panel)
 			       gtk_widget_get_events (ppc->config_window) |
 			       GDK_BUTTON_PRESS_MASK);
 	/*gtk_window_set_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy (GTK_WINDOW (ppc->config_window),
-			       FALSE, FALSE, TRUE);
+	g_object_set (G_OBJECT (ppc->config_window),
+		      "allow_grow", FALSE,
+		      "allow_shrink", FALSE,
+		      "resizable", TRUE,
+		      NULL);
 
 	g_signal_connect (G_OBJECT (ppc->config_window), "destroy",
 			  G_CALLBACK (config_destroy), ppc);
@@ -1724,10 +1727,10 @@ panel_config (GtkWidget *panel)
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Background")));
 
-	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_path",
-			     help_path);
-	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_linkid",
-			     help_linkid);
+	g_object_set_data (G_OBJECT (ppc->config_window), "help_path",
+			   help_path);
+	g_object_set_data (G_OBJECT (ppc->config_window), "help_linkid",
+			   help_linkid);
 	g_signal_connect (G_OBJECT (ppc->config_window), "response",
 			  G_CALLBACK (window_response),
 			  prop_nbook);

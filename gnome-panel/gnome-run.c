@@ -215,7 +215,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
         terminal = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT(w),
 							 "terminal"));
         
-        if (gtk_object_get_data (GTK_OBJECT (run_dialog), "use_list")) {
+        if (g_object_get_data (G_OBJECT (run_dialog), "use_list")) {
                 char *name;
                 
                 if (GTK_CLIST (clist)->selection == NULL)
@@ -365,17 +365,17 @@ return_and_close:
 }
 
 static void
-browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
+browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 {
 	const char *fname;
 	GtkWidget *entry;
 
-	g_return_if_fail(GTK_IS_FILE_SELECTION(fsel));
+	g_return_if_fail (GTK_IS_FILE_SELECTION (fsel));
 
-	entry = gtk_object_get_user_data(GTK_OBJECT(fsel));
+	entry = g_object_get_data (G_OBJECT (fsel), "entry");
 
-	fname = gtk_file_selection_get_filename(fsel);
-	if(fname != NULL) {
+	fname = gtk_file_selection_get_filename (fsel);
+	if (fname != NULL) {
 		const char *s = gtk_entry_get_text (GTK_ENTRY (entry));
 		if (string_empty (s)) {
 			gtk_entry_set_text (GTK_ENTRY (entry), fname);
@@ -385,24 +385,24 @@ browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
 			g_free (str);
 		}
 	}
-	gtk_widget_destroy(GTK_WIDGET(fsel));
+	gtk_widget_destroy (GTK_WIDGET (fsel));
 }
 
 static void
-browse(GtkWidget *w, GtkWidget *entry)
+browse (GtkWidget *w, GtkWidget *entry)
 {
 	GtkFileSelection *fsel;
 
 	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Browse...")));
 	gtk_window_set_transient_for (GTK_WINDOW (fsel),
 				      GTK_WINDOW (run_dialog));
-	gtk_object_set_user_data(GTK_OBJECT(fsel), entry);
+	g_object_set_data (G_OBJECT (fsel), "entry", entry);
 
 	g_signal_connect (G_OBJECT (fsel->ok_button), "clicked",
 			    G_CALLBACK (browse_ok), fsel);
 	g_signal_connect_swapped (G_OBJECT (fsel->cancel_button), "clicked",
 		 		  G_CALLBACK (gtk_widget_destroy), 
-		 		  G_OBJECT(fsel));
+		 		  G_OBJECT (fsel));
 	panel_signal_connect_object_while_alive
 		(G_OBJECT (entry), "destroy",
 		 G_CALLBACK (gtk_widget_destroy),
@@ -461,8 +461,8 @@ sync_entry_to_list (GtkWidget *dialog)
         GtkWidget *entry;
         gboolean blocked;
 
-        blocked = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (dialog),
-                                                        "sync_entry_to_list_blocked"));
+        blocked = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog),
+						      "sync_entry_to_list_blocked"));
         if (blocked)
                 return;
         
@@ -521,12 +521,12 @@ sync_list_to_entry (GtkWidget *dialog)
                 }
         }
 
-        gtk_object_set_data (GTK_OBJECT (dialog),
-                             "sync_entry_to_list_blocked",
-                             GINT_TO_POINTER (FALSE));
+	g_object_set_data (G_OBJECT (dialog),
+			   "sync_entry_to_list_blocked",
+			   GINT_TO_POINTER (FALSE));
 
-        gtk_object_set_data (GTK_OBJECT (dialog), "use_list",
-                             GINT_TO_POINTER (TRUE));
+	g_object_set_data (G_OBJECT (dialog), "use_list",
+			   GINT_TO_POINTER (TRUE));
 }
 
 static void
@@ -559,9 +559,9 @@ create_toggle_advanced_button (const char *label)
                             G_CALLBACK (toggle_contents),
                             run_dialog);
 
-        gtk_object_set_data (GTK_OBJECT (run_dialog),
-                             "advanced_toggle_label",
-                             GTK_BIN (button)->child);
+        g_object_set_data (G_OBJECT (run_dialog),
+			   "advanced_toggle_label",
+			   GTK_BIN (button)->child);
         
         return align;
 }
@@ -617,7 +617,7 @@ create_advanced_contents (void)
  
         gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "entry", entry);
+        g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
 
 	g_signal_connect (G_OBJECT (entry), "activate",
 			    G_CALLBACK (activate_run),
@@ -637,7 +637,7 @@ create_advanced_contents (void)
                             FALSE, FALSE, GNOME_PAD_SMALL);
 
         w = gtk_check_button_new_with_label(_("Run in terminal"));
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "terminal", w);
+        g_object_set_data (G_OBJECT (run_dialog), "terminal", w);
         gtk_box_pack_start (GTK_BOX (vbox), w,
                             FALSE, FALSE, GNOME_PAD_SMALL);
         
@@ -646,12 +646,12 @@ create_advanced_contents (void)
         g_object_set_data_full (G_OBJECT (run_dialog),
 				"advanced",
 				vbox,
-				(GDestroyNotify) gtk_object_unref);
+				(GDestroyNotify) g_object_unref);
         
         g_signal_connect (G_OBJECT (vbox),
-                            "show",
-                            G_CALLBACK (advanced_contents_shown),
-                            run_dialog);
+			  "show",
+			  G_CALLBACK (advanced_contents_shown),
+			  run_dialog);
 
         return vbox;
 }
@@ -701,8 +701,8 @@ simple_contents_shown (GtkWidget *vbox,
         GtkWidget *clist;
         char *prev_name;
         
-        clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
-        advanced = gtk_object_get_data (GTK_OBJECT (dialog), "advanced");
+        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
         
         if (advanced) {
                 /* If we have advanced contents containing a command,
@@ -865,11 +865,11 @@ unset_selected (GtkWidget *dialog)
         GtkWidget *clist;
         char *text;
         
-        label = gtk_object_get_data (GTK_OBJECT (dialog), "label");
-        gpixmap = gtk_object_get_data (GTK_OBJECT (dialog), "pixmap");
-        desc_label = gtk_object_get_data (GTK_OBJECT (dialog), "desc_label");
-        entry = gtk_object_get_data (GTK_OBJECT (dialog), "entry");
-        clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
+        label = g_object_get_data (G_OBJECT (dialog), "label");
+        gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
+        desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
+        entry = g_object_get_data (G_OBJECT (dialog), "entry");
+        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
         
 	if (entry != NULL) {
 		text = gtk_editable_get_chars (GTK_EDITABLE (entry),
@@ -901,8 +901,8 @@ unset_selected (GtkWidget *dialog)
         
         unset_pixmap (gpixmap);
 
-        gtk_object_set_data (GTK_OBJECT (dialog), "use_list",
-                             GPOINTER_TO_INT (FALSE));
+        g_object_set_data (G_OBJECT (dialog), "use_list",
+			   GPOINTER_TO_INT (FALSE));
 
         gtk_clist_set_selection_mode (GTK_CLIST (clist),
                                       GTK_SELECTION_SINGLE);
@@ -929,9 +929,9 @@ select_row_handler (GtkCList *clist,
         gtk_clist_set_selection_mode (GTK_CLIST (clist),
                                       GTK_SELECTION_BROWSE);
         
-        label = gtk_object_get_data (GTK_OBJECT (dialog), "label");
-        gpixmap = gtk_object_get_data (GTK_OBJECT (dialog), "pixmap");
-        desc_label = gtk_object_get_data (GTK_OBJECT (dialog), "desc_label");
+        label = g_object_get_data (G_OBJECT (dialog), "label");
+        gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
+        desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
 
         name = gtk_clist_get_row_data (GTK_CLIST (clist),
                                        row);
@@ -992,7 +992,7 @@ create_simple_contents (void)
         titles[0] = _("Available Programs");
         titles[1] = _("Description");
         clist = gtk_clist_new_with_titles (1 /* 2 */, titles);
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "dentry_list", clist);
+        g_object_set_data (G_OBJECT (run_dialog), "dentry_list", clist);
 
         gtk_clist_set_selection_mode (GTK_CLIST (clist),
                                       GTK_SELECTION_SINGLE);
@@ -1029,17 +1029,17 @@ create_simple_contents (void)
         
         pixmap = gtk_image_new ();
         gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 0);
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "pixmap", pixmap);
+        g_object_set_data (G_OBJECT (run_dialog), "pixmap", pixmap);
         
         label = gtk_label_new ("");
         gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "desc_label", label);        
+        g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);        
 
 #if 0
         label = gtk_label_new ("");
-        gtk_object_set_data (GTK_OBJECT (run_dialog), "label", label);
+        g_object_set_data (G_OBJECT (run_dialog), "label", label);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 #endif
 
@@ -1049,12 +1049,12 @@ create_simple_contents (void)
         gtk_box_pack_end (GTK_BOX (GTK_DIALOG (run_dialog)->vbox), w,
                           FALSE, FALSE, GNOME_PAD_SMALL);
         
-        gtk_object_ref (GTK_OBJECT (vbox));
+        g_object_ref (G_OBJECT (vbox));
         
-        gtk_object_set_data_full (GTK_OBJECT (run_dialog),
-                                  "simple",
-                                  vbox,
-                                  (GtkDestroyNotify) gtk_object_unref);
+        g_object_set_data_full (G_OBJECT (run_dialog),
+				"simple",
+				vbox,
+				(GtkDestroyNotify) g_object_unref);
 
         g_signal_connect (G_OBJECT (vbox),
                             "show",
@@ -1078,13 +1078,13 @@ update_contents (GtkWidget *dialog)
         GtkWidget *clist;
         
         use_advanced = gnome_config_get_bool ("/panel/State/"ADVANCED_DIALOG_KEY"=false");        
-        advanced_toggle = gtk_object_get_data (GTK_OBJECT (dialog),
-                                               "advanced_toggle_label");
+        advanced_toggle = g_object_get_data (G_OBJECT (dialog),
+					     "advanced_toggle_label");
 
-        clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
+        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
         
         if (use_advanced) {
-                advanced = gtk_object_get_data (GTK_OBJECT (dialog), "advanced");
+                advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
                 
                 if (advanced && advanced->parent == NULL) {
                         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
@@ -1104,7 +1104,7 @@ update_contents (GtkWidget *dialog)
                                       NULL);                
 
         } else {                
-                advanced = gtk_object_get_data (GTK_OBJECT (dialog), "advanced");
+                advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
                 
                 if (advanced && advanced->parent != NULL)
                         gtk_container_remove (GTK_CONTAINER (advanced->parent), advanced);                
@@ -1150,8 +1150,11 @@ show_run_dialog (void)
         /* This is lame in advanced mode, but if you change it on mode
          * toggle it creates weird effects, so always use this policy
          */
-        gtk_window_set_policy (GTK_WINDOW (run_dialog),
-                               FALSE, TRUE, FALSE);
+	g_object_set (G_OBJECT (run_dialog),
+		      "allow_grow", FALSE,
+		      "allow_shrink", TRUE,
+		      "resizable", FALSE,
+		      NULL);
 
         /* Get some reasonable height in simple list mode */
         if (!use_advanced)
@@ -1165,14 +1168,14 @@ show_run_dialog (void)
 	g_signal_connect(G_OBJECT(run_dialog), "destroy",
 			   G_CALLBACK(gtk_widget_destroyed),
 			   &run_dialog);
-	gtk_window_position(GTK_WINDOW(run_dialog), GTK_WIN_POS_MOUSE);
+	gtk_window_set_position (GTK_WINDOW (run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
 	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), 
 					 RUN_BUTTON);
 
         g_signal_connect (G_OBJECT (run_dialog), "response", 
-                            G_CALLBACK (run_dialog_response), NULL);
+			  G_CALLBACK (run_dialog_response), NULL);
 
         create_simple_contents ();
         create_advanced_contents ();
@@ -1194,7 +1197,7 @@ show_run_dialog_with_text (const char *text)
 		return;
 	}
         
-	entry = gtk_object_get_data(GTK_OBJECT(run_dialog), "entry");
+	entry = g_object_get_data (G_OBJECT (run_dialog), "entry");
 
 	gtk_entry_set_text(GTK_ENTRY(entry), text);
 }

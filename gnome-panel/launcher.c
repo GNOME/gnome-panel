@@ -409,8 +409,6 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 			    G_CALLBACK(destroy_launcher),
 			    launcher);
 
-	gtk_object_set_user_data(GTK_OBJECT(launcher->button), launcher);
-
 	launcher->ditem = ditem;
 
 	return launcher;
@@ -559,7 +557,11 @@ create_properties_dialog (Launcher *launcher)
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "launcher_properties", "Panel");
-	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, TRUE);
+	g_object_set (G_OBJECT (dialog),
+		      "allow_grow", FALSE,
+		      "allow_shrink", FALSE,
+		      "resizable", TRUE,
+		      NULL);
 	
 	if (launcher->revert_ditem != NULL)
 		gnome_desktop_item_unref (launcher->revert_ditem);
@@ -640,9 +642,9 @@ static void
 really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 {
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
-	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"pos"));
-	gboolean exactpos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(dialog),"exactpos"));
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(dialog),"panel");
+	int pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "pos"));
+	gboolean exactpos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "exactpos"));
+	PanelWidget *panel = g_object_get_data (G_OBJECT (dialog), "panel");
 	GnomeDesktopItem *ditem;
 	
 	if (response == GTK_RESPONSE_OK) {
@@ -700,10 +702,10 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 
 	gnome_desktop_item_unref (ditem);
 	
-	gtk_object_set_data (GTK_OBJECT(dialog), "pos", GINT_TO_POINTER (pos));
-	gtk_object_set_data (GTK_OBJECT(dialog), "exactpos",
-			     GINT_TO_POINTER (exactpos));
-	gtk_object_set_data (GTK_OBJECT (dialog), "panel", panel);
+	g_object_set_data (G_OBJECT(dialog), "pos", GINT_TO_POINTER (pos));
+	g_object_set_data (G_OBJECT(dialog), "exactpos",
+			   GINT_TO_POINTER (exactpos));
+	g_object_set_data (G_OBJECT (dialog), "panel", panel);
 
 	g_signal_connect (G_OBJECT (dialog), "response",
 			    G_CALLBACK (really_add_launcher),

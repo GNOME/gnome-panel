@@ -363,9 +363,9 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 			  G_CALLBACK (toggle_prop), 
 			  menu);
 	
-	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
+	w = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (rb)),
 					     _("In a submenu"));
-	gtk_table_attach_defaults(table, w, 2, 3, row, row+1);
+	gtk_table_attach_defaults (table, w, 2, 3, row, row+1);
 
 	*widget_sub = w;
 
@@ -375,7 +375,7 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 			  G_CALLBACK (toggle_prop), 
 			  menu);
 	
-	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
+	w = gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (rb)),
 					     _("On the main menu"));
 	*widget = w;
 	gtk_table_attach_defaults(table, w, 1, 2, row, row+1);
@@ -433,7 +433,11 @@ create_properties_dialog (Menu *menu)
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "menu_properties", "Panel");
 	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	g_object_set (G_OBJECT (dialog),
+		      "allow_grow", FALSE,
+		      "allow_shrink", FALSE,
+		      "resizable", TRUE,
+		      NULL);
 	
 	vbox = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),GNOME_PAD_SMALL);
@@ -458,7 +462,7 @@ create_properties_dialog (Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w = gtk_radio_button_new_with_label (
-		  gtk_radio_button_group (GTK_RADIO_BUTTON (global_main)),
+		  gtk_radio_button_get_group (GTK_RADIO_BUTTON (global_main)),
 		  _("Main menu"));
 	main_menu = w;
 	menu->dialog_info->main_menu = w;
@@ -472,7 +476,7 @@ create_properties_dialog (Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box), w, TRUE, TRUE, 0);
 
 	w2 = gtk_radio_button_new_with_label (
-		  gtk_radio_button_group (GTK_RADIO_BUTTON (global_main)),
+		  gtk_radio_button_get_group (GTK_RADIO_BUTTON (global_main)),
 		  _("Normal menu"));
 	if ( ! menu->main_menu)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);

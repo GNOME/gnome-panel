@@ -122,7 +122,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 	
-	basep_widget_parent_class = gtk_type_class (gtk_window_get_type ());
+	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
@@ -644,7 +644,7 @@ basep_pos_class_init (BasePPosClass *klass)
 {
 	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
 
-	basep_pos_parent_class = gtk_type_class(gtk_object_get_type ());
+	basep_pos_parent_class = g_type_class_ref (gtk_object_get_type ());
 
 	klass->get_hide_size = basep_pos_get_hide_size;
 	klass->get_hide_pos = basep_pos_get_hide_pos;
@@ -997,10 +997,18 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 			
 			/*drawing the entire table flickers, so don't
 			  do it often*/
-			if(i++%10)
-				gtk_widget_draw(basep->panel, NULL);
-			else
-				gtk_widget_draw(basep->table, NULL);
+			/* FIXME: does it still flicker? */
+			if (i++ % 10) {
+				/* FIXME: is invalidation needed, and if so it should only be
+				 * partial */
+				gdk_window_invalidate_rect (basep->panel->window,
+							    NULL, TRUE);
+				gdk_window_process_updates (basep->panel->window, TRUE);
+			} else {
+				gdk_window_invalidate_rect (GTK_WIDGET (basep)->window,
+							    NULL, TRUE);
+				gdk_window_process_updates (GTK_WIDGET (basep)->window, TRUE);
+			}
 			gdk_flush();
 			g_usleep (1000);
 		}
@@ -1011,8 +1019,8 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
-	gtk_widget_draw(basep->table, NULL);
-	gtk_widget_queue_resize(wid);
+	gtk_widget_queue_draw (basep->table);
+	gtk_widget_queue_resize (wid);
 }
 
 
@@ -1043,10 +1051,9 @@ make_hidebutton(BasePWidget *basep,
 	}
 	gtk_widget_show(pixmap);
 
-	gtk_container_add(GTK_CONTAINER(w),pixmap);
-	gtk_object_set_user_data(GTK_OBJECT(w), pixmap);
-	gtk_object_set_data(GTK_OBJECT(w), "gnome_disable_sound_events",
-			    GINT_TO_POINTER(1));
+	gtk_container_add (GTK_CONTAINER (w), pixmap);
+	g_object_set_data (G_OBJECT (w), "gnome_disable_sound_events",
+			   GINT_TO_POINTER (TRUE));
 
 	gtk_tooltips_set_tip (panel_tooltips, w,
 			      _("Hide this panel"), NULL);
@@ -1249,28 +1256,27 @@ basep_widget_instance_init (BasePWidget *basep)
 }
 
 static void
-show_hidebutton_pixmap(GtkWidget *hidebutton, int show)
+show_hidebutton_pixmap (GtkWidget *hidebutton, gboolean show)
 {
-	GtkWidget *pixmap;
+	GtkWidget *pixmap = GTK_BIN (hidebutton)->child;
 
-	pixmap = gtk_object_get_user_data(GTK_OBJECT(hidebutton));
-
-	if (!pixmap) return;
+	if (pixmap == NULL)
+		return;
 
 	if (show)
-		gtk_widget_show(pixmap);
+		gtk_widget_show (pixmap);
 	else
-		gtk_widget_hide(pixmap);
+		gtk_widget_hide (pixmap);
 }
 
 static void
-basep_widget_show_hidebutton_pixmaps(BasePWidget *basep)
+basep_widget_show_hidebutton_pixmaps (BasePWidget *basep)
 {
-	int show = basep->hidebutton_pixmaps_enabled;
-	show_hidebutton_pixmap(basep->hidebutton_n, show);
-	show_hidebutton_pixmap(basep->hidebutton_e, show);
-	show_hidebutton_pixmap(basep->hidebutton_w, show);
-	show_hidebutton_pixmap(basep->hidebutton_s, show);
+	gboolean show = basep->hidebutton_pixmaps_enabled;
+	show_hidebutton_pixmap (basep->hidebutton_n, show);
+	show_hidebutton_pixmap (basep->hidebutton_e, show);
+	show_hidebutton_pixmap (basep->hidebutton_w, show);
+	show_hidebutton_pixmap (basep->hidebutton_s, show);
 }
 
 void

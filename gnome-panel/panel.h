@@ -30,8 +30,8 @@ void send_state_change(void);
 
 GtkWidget * make_popup_panel_menu (PanelWidget *panel);
 
-PanelData * panel_data_by_id (gchar *id);
-void panel_set_id (GtkWidget *widget, gchar *id);
+PanelData * panel_data_by_id (const char *id);
+void panel_set_id (GtkWidget *widget, const char *id);
 
 void status_unparent (GtkWidget *widget);
 

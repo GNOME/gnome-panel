@@ -221,7 +221,7 @@ create_icon_entry(GtkWidget *table,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	if(func) {
-		gtk_object_set_data (GTK_OBJECT (entry), "update_function", func);
+		g_object_set_data (G_OBJECT (entry), "update_function", func);
 		g_signal_connect (G_OBJECT (entry), "changed",
 				  G_CALLBACK (updated), 
 				  data);
@@ -493,7 +493,7 @@ set_color_back (GtkWidget *widget, PanelWidget *panel)
 	GtkStyle *ns;
 	int i;
 
-	gtk_widget_set_rc_style (widget);
+	gtk_widget_set_style (widget, NULL);
 	ns = gtk_style_copy (gtk_widget_get_style (widget));
 
 	ns->bg[GTK_STATE_NORMAL] =
@@ -514,7 +514,7 @@ set_color_back (GtkWidget *widget, PanelWidget *panel)
 		ns->mid[i].blue = (ns->light[i].blue + ns->dark[i].blue) / 2;
 	}
 	gtk_widget_set_style (widget, ns);
-	gtk_style_unref (ns);
+	g_object_unref (G_OBJECT (ns));
 }
 
 void
@@ -529,11 +529,11 @@ set_frame_colors (PanelWidget *panel, GtkWidget *frame,
 		set_color_back (but3, panel);
 		set_color_back (but4, panel);
 	} else {
-		gtk_widget_set_rc_style (frame);
-		gtk_widget_set_rc_style (but1);
-		gtk_widget_set_rc_style (but2);
-		gtk_widget_set_rc_style (but3);
-		gtk_widget_set_rc_style (but4);
+		gtk_widget_set_style (frame, NULL);
+		gtk_widget_set_style (but1, NULL);
+		gtk_widget_set_style (but2, NULL);
+		gtk_widget_set_style (but3, NULL);
+		gtk_widget_set_style (but4, NULL);
 	}
 }
 
@@ -986,8 +986,8 @@ panel_quote_string (const char *str)
 void
 panel_push_window_busy (GtkWidget *window)
 {
-	int busy = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (window),
-							 "Panel:WindowBusy"));
+	int busy = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window),
+						       "Panel:WindowBusy"));
 
 	busy ++;
 
@@ -1001,15 +1001,15 @@ panel_push_window_busy (GtkWidget *window)
 		}
 	}
 
-	gtk_object_set_data (GTK_OBJECT (window), "Panel:WindowBusy",
-			     GINT_TO_POINTER (busy));
+	g_object_set_data (G_OBJECT (window), "Panel:WindowBusy",
+			   GINT_TO_POINTER (busy));
 }
 
 void
 panel_pop_window_busy (GtkWidget *window)
 {
-	int busy = GPOINTER_TO_INT (gtk_object_get_data (GTK_OBJECT (window),
-							 "Panel:WindowBusy"));
+	int busy = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (window),
+						       "Panel:WindowBusy"));
 	busy --;
 
 	if (busy <= 0) {

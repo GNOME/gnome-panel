@@ -44,7 +44,7 @@ static void socket_realized (GtkWidget *w, gpointer data);
 static void
 socket_realized (GtkWidget *w, gpointer data)
 {
-	Swallow *swallow = gtk_object_get_user_data (GTK_OBJECT (w));
+	Swallow *swallow = data;
 
 	g_return_if_fail (swallow->title != NULL);
 	
@@ -121,17 +121,15 @@ before_remove (Swallow *swallow)
 
 		/* make the socket again */
 		swallow->socket = gtk_socket_new ();
-		gtk_object_set_user_data (GTK_OBJECT (swallow->socket),
-					  swallow);
 
 		if (swallow->width != 0 || swallow->height != 0)
-			gtk_widget_set_usize(swallow->socket,
-					     swallow->width, swallow->height);
+			gtk_widget_set_size_request (swallow->socket,
+						     swallow->width, swallow->height);
 
 		g_signal_connect_after (G_OBJECT (swallow->socket),
 					"realize",
 					G_CALLBACK (socket_realized),
-					NULL);
+					swallow);
 		g_signal_connect (G_OBJECT (swallow->socket), "destroy",
 				  G_CALLBACK (socket_destroyed),
 				  swallow);
@@ -197,14 +195,14 @@ socket_destroyed (GtkWidget *w, gpointer data)
 static void
 really_add_swallow (GtkWidget *d, int response, gpointer data)
 {
-	GtkWidget *title_e = gtk_object_get_data(GTK_OBJECT(d), "title_e");
-	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d), "exec_e");
-	GtkWidget *width_s = gtk_object_get_data(GTK_OBJECT(d), "width_s");
-	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d), "height_s");
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d), "panel");
-	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "pos"));
+	GtkWidget *title_e = g_object_get_data (G_OBJECT (d), "title_e");
+	GtkWidget *exec_e = g_object_get_data (G_OBJECT (d), "exec_e");
+	GtkWidget *width_s = g_object_get_data (G_OBJECT (d), "width_s");
+	GtkWidget *height_s = g_object_get_data (G_OBJECT (d), "height_s");
+	PanelWidget *panel = g_object_get_data (G_OBJECT (d), "panel");
+	int pos = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (d), "pos"));
 	gboolean exactpos =
-		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "exactpos"));
+		GPOINTER_TO_INT (g_object_get_data (G_OBJECT (d), "exactpos"));
 
 	switch (response) {
 	case GTK_RESPONSE_CANCEL:
@@ -263,11 +261,15 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_window_set_wmclass (GTK_WINDOW (d),
 				"create_swallow", "Panel");
 	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
+	g_object_set (G_OBJECT (d),
+		      "allow_grow", FALSE,
+		      "allow_shrink", FALSE,
+		      "resizable", TRUE,
+		      NULL);
 
-	gtk_object_set_data(GTK_OBJECT(d),"panel",panel);
-	gtk_object_set_data(GTK_OBJECT(d),"pos",GINT_TO_POINTER(pos));
-	gtk_object_set_data(GTK_OBJECT(d),"exactpos",GINT_TO_POINTER(exactpos));
+	g_object_set_data (G_OBJECT (d), "panel", panel);
+	g_object_set_data (G_OBJECT (d), "pos", GINT_TO_POINTER (pos));
+	g_object_set_data (G_OBJECT (d), "exactpos", GINT_TO_POINTER (exactpos));
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
@@ -316,10 +318,10 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	
 	g_signal_connect (G_OBJECT (d), "response",
 			  G_CALLBACK (really_add_swallow), NULL);
-	gtk_object_set_data(GTK_OBJECT(d),"title_e",title_e);
-	gtk_object_set_data(GTK_OBJECT(d),"exec_e",exec_e);
-	gtk_object_set_data(GTK_OBJECT(d),"width_s",width_s);
-	gtk_object_set_data(GTK_OBJECT(d),"height_s",height_s);
+	g_object_set_data (G_OBJECT (d), "title_e", title_e);
+	g_object_set_data (G_OBJECT (d), "exec_e", exec_e);
+	g_object_set_data (G_OBJECT (d), "width_s", width_s);
+	g_object_set_data (G_OBJECT (d), "height_s", height_s);
 
 
 	gtk_dialog_set_default_response (GTK_DIALOG (d), GTK_RESPONSE_OK);
@@ -359,9 +361,9 @@ create_swallow_applet(const char *title, const char *path, int width, int height
 
 	swallow->socket = gtk_socket_new ();
 	if (width != 0 || height != 0)
-		gtk_widget_set_usize(swallow->socket, width, height);
+		gtk_widget_set_size_request (swallow->socket, width, height);
 	g_signal_connect_after (G_OBJECT (swallow->socket), "realize",
-				G_CALLBACK (socket_realized), NULL);
+				G_CALLBACK (socket_realized), swallow);
 	g_signal_connect (G_OBJECT (swallow->socket), "destroy",
 			  G_CALLBACK (socket_destroyed), swallow);
 	
@@ -383,7 +385,6 @@ create_swallow_applet(const char *title, const char *path, int width, int height
 			   swallow->socket);
 
 	gtk_widget_show (swallow->socket);
-	gtk_object_set_user_data (GTK_OBJECT (swallow->socket), swallow);
 
 	swallow->title = g_strdup (title);
 	swallow->path = path ? g_strdup (path) : NULL;
@@ -402,23 +403,23 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 	if (GTK_HANDLE_BOX(swallow->handle_box)->child_detached) {
 		if (orient == SWALLOW_VERTICAL) {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-			gtk_widget_set_usize (swallow->handle_box, swallow->width,
-					      DRAG_HANDLE_SIZE);
+			gtk_widget_set_size_request (swallow->handle_box, swallow->width,
+						     DRAG_HANDLE_SIZE);
 		} else {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-			gtk_widget_set_usize (swallow->handle_box, DRAG_HANDLE_SIZE,
-					      swallow->height);
+			gtk_widget_set_size_request (swallow->handle_box, DRAG_HANDLE_SIZE,
+						     swallow->height);
 		}
 	} else {
 		if (orient == SWALLOW_VERTICAL) {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_TOP;
-			gtk_widget_set_usize (swallow->handle_box, swallow->width,
-					      swallow->height + DRAG_HANDLE_SIZE);
+			gtk_widget_set_size_request (swallow->handle_box, swallow->width,
+						     swallow->height + DRAG_HANDLE_SIZE);
 		} else {
 			GTK_HANDLE_BOX(swallow->handle_box)->handle_position = GTK_POS_LEFT;
-			gtk_widget_set_usize (swallow->handle_box,
-					      swallow->width + DRAG_HANDLE_SIZE,
-					      swallow->height);
+			gtk_widget_set_size_request (swallow->handle_box,
+						     swallow->width + DRAG_HANDLE_SIZE,
+						     swallow->height);
 		}
 	}
 }

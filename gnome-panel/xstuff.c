@@ -68,7 +68,7 @@ steal_statusspot(StatusSpot *ss, Window winid)
 {
 	GdkDragProtocol protocol;
 
-	gtk_socket_steal(GTK_SOCKET(ss->socket), winid);
+	gtk_socket_add_id (GTK_SOCKET (ss->socket), winid);
 	if (gdk_drag_get_protocol (winid, &protocol))
 		gtk_drag_dest_set_proxy (GTK_WIDGET (ss->socket),
 					 GTK_SOCKET(ss->socket)->plug_window,

@@ -268,7 +268,7 @@ drawer_pos_get_pos(BasePWidget *basep,
 	    GTK_WIDGET_REALIZED (panel->master_widget) &&
 	    /*"allocated" data will be set on each allocation, until then,
 	      don't show the actual panel*/
-	    gtk_object_get_data(GTK_OBJECT(panel->master_widget),"allocated")) {
+	    g_object_get_data (G_OBJECT (panel->master_widget), "allocated")) {
 		int bx, by, bw, bh;
 		int px, py, pw, ph;
 		GtkWidget *ppanel; /*parent panel*/

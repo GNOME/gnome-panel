@@ -98,29 +98,32 @@ status_docklet_destroy(GtkObject *o)
 {
 	StatusDocklet *docklet;
 
-	g_return_if_fail(o != NULL);
-	g_return_if_fail(IS_STATUS_DOCKLET(o));
+	g_return_if_fail (o != NULL);
+	g_return_if_fail (IS_STATUS_DOCKLET(o));
 	
 	docklet = STATUS_DOCKLET(o);
 	
-	if(docklet->timeout_handle != -1)
+	if (docklet->timeout_handle != -1)
 		gtk_timeout_remove(docklet->timeout_handle);
+	docklet->timeout_handle = -1;
 	
 	/*if we do have a plug, set the "status_docklet" data to NULL,
 	  so that any timeout on it fails*/
-	if(docklet->plug)
-		gtk_object_set_data(GTK_OBJECT(docklet->plug),"status_docklet",NULL);
+	if (docklet->plug != NULL)
+		g_object_set_data (G_OBJECT (docklet->plug), "status_docklet", NULL);
+	docklet->plug = NULL;
 	
 	/*this will actually kill the status spot, including destroying the
 	  plug for us, so we don't really want to destroy it if we can just
 	  do this*/
-	if(docklet->sspot != CORBA_OBJECT_NIL) {
+	if (docklet->sspot != CORBA_OBJECT_NIL) {
 		CORBA_Environment ev;
 
 		CORBA_exception_init(&ev);
 		GNOME_StatusSpot_remove(docklet->sspot, &ev);
 		CORBA_Object_release(docklet->sspot, &ev);
 		CORBA_exception_free(&ev);
+		docklet->sspot = CORBA_OBJECT_NIL;
 	}
 	
 	if (GTK_OBJECT_CLASS (status_docklet_parent_class)->destroy)
@@ -152,16 +155,18 @@ status_docklet_build_plug(StatusDocklet *docklet, GtkWidget *plug)
  * Returns: new status docklet object.
  **/
 GtkObject*
-status_docklet_new(void)
+status_docklet_new (void)
 {
-	return status_docklet_new_full(STATUS_DOCKLET_DEFAULT_RETRIES,TRUE);
+	return status_docklet_new_full (STATUS_DOCKLET_DEFAULT_RETRIES, TRUE);
 }
 
 static void
 plug_destroyed(GtkWidget *plug, gpointer data)
 {
-	StatusDocklet *docklet = gtk_object_get_data(GTK_OBJECT(plug),"status_docklet");
-	if(!docklet) return;
+	StatusDocklet *docklet = g_object_get_data (G_OBJECT (plug), "status_docklet");
+
+	if (docklet == NULL)
+		return;
 
 	docklet->plug = NULL;
 
@@ -173,9 +178,9 @@ plug_destroyed(GtkWidget *plug, gpointer data)
 		CORBA_exception_free(&ev);
 	}
 	
-	if(docklet->handle_restarts) {
+	if (docklet->handle_restarts) {
 		docklet->tries = 0;
-		status_docklet_run(docklet);
+		status_docklet_run (docklet);
 	}
 }
 
@@ -191,13 +196,13 @@ try_getting_plug(StatusDocklet *docklet)
 
 	/*huh? what's going on here, just smash this and let's do it over*/
 	if(docklet->plug != NULL) {
-		gtk_object_set_data(GTK_OBJECT(docklet->plug), "status_docklet", NULL);
-		gtk_widget_destroy(docklet->plug);
+		g_object_set_data (G_OBJECT (docklet->plug), "status_docklet", NULL);
+		gtk_widget_destroy (docklet->plug);
 		docklet->plug = NULL;
 	}
 
 	/*huh? yet again, something is terribly wrong*/
-	if(docklet->sspot != CORBA_OBJECT_NIL) {
+	if (docklet->sspot != CORBA_OBJECT_NIL) {
 		CORBA_exception_init(&ev);
 		CORBA_Object_release(docklet->sspot, &ev);
 		docklet->sspot = CORBA_OBJECT_NIL;
@@ -210,13 +215,13 @@ try_getting_plug(StatusDocklet *docklet)
 						  GOAD_ACTIVATE_EXISTING_ONLY,
 						  NULL);
 	
-	if(panel_client == NULL)
+	if (panel_client == NULL)
 		return FALSE;
 
 	CORBA_exception_init(&ev);
 	spot = GNOME_Panel_add_status(panel_client, &wid, &ev);
 	/*something must have gone wrong*/
-	if(ev._major != CORBA_NO_EXCEPTION) {
+	if (ev._major != CORBA_NO_EXCEPTION) {
 		CORBA_exception_free(&ev);
 		return FALSE;
 	}
@@ -242,15 +247,15 @@ try_getting_plug(StatusDocklet *docklet)
 
 	CORBA_exception_free(&ev);
 
-	gtk_object_set_data(GTK_OBJECT(docklet->plug), "status_docklet", docklet);
+	g_object_set_data (G_OBJECT (docklet->plug), "status_docklet", docklet);
 	g_signal_connect(G_OBJECT(docklet->plug), "destroy",
 			 G_CALLBACK (plug_destroyed),
-			   NULL);
+			 NULL);
 	gtk_widget_show(docklet->plug);
 
 	g_signal_emit(G_OBJECT(docklet),
-			status_docklet_signals[BUILD_PLUG_SIGNAL],
-		  	0, docklet->plug);
+		      status_docklet_signals[BUILD_PLUG_SIGNAL],
+		      0, docklet->plug);
 	
 	return TRUE;
 }

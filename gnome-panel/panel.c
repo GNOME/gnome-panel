@@ -533,7 +533,7 @@ panel_remove_applets (PanelWidget *panel)
 static void
 panel_destroy (GtkWidget *widget, gpointer data)
 {
-	PanelData *pd = gtk_object_get_user_data (GTK_OBJECT (widget));
+	PanelData *pd = g_object_get_data (G_OBJECT (widget), "PanelData");
 	PanelWidget *panel = NULL;
 
 	if (BASEP_IS_WIDGET (widget))
@@ -625,7 +625,7 @@ make_popup_panel_menu (PanelWidget *panel)
 	} else
 		panelw = panel->panel_parent;
 
-	pd = gtk_object_get_user_data (GTK_OBJECT (panelw));
+	pd = g_object_get_data (G_OBJECT (panelw), "PanelData");
 	menu = panel_menu_get (panel, pd);
 	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
 
@@ -1254,8 +1254,8 @@ do_highlight (GtkWidget *widget, gboolean highlight)
 		}
 	} else {
 		if(have_drag) {
-			gtk_object_remove_data (GTK_OBJECT (widget),
-						"have-drag");
+			g_object_set_data (G_OBJECT (widget),
+					   "have-drag", NULL);
 			gtk_drag_unhighlight (widget);
 		}
 	}
@@ -1585,11 +1585,11 @@ panel_setup(GtkWidget *panelw)
 	
 	panel_list = g_slist_append(panel_list,pd);
 	
-	gtk_object_set_user_data(GTK_OBJECT(panelw),pd);
+	g_object_set_data (G_OBJECT (panelw), "PanelData", pd);
 
 	panel_widget_setup(panel);
 
-	if (basep) {
+	if (basep != NULL) {
 		g_signal_connect (G_OBJECT(basep->hidebutton_e), "event",
 				  G_CALLBACK (panel_sub_event_handler),
 				  panelw);
@@ -1665,36 +1665,35 @@ send_state_change(void)
 }
 
 PanelData *
-panel_data_by_id (gchar *id)
+panel_data_by_id (const char *id)
 {
 	GSList *list;
-	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
+	if (id == NULL)
+		return NULL;
+	for (list = panel_list; list != NULL; list = list->next) {
 		PanelData *pd = list->data;
-		gchar *pd_id = NULL;
+		const char *pd_id = NULL;
 
 		if (BASEP_IS_WIDGET (pd->panel))
-		       pd_id = g_strdup (PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id);
+		       pd_id = PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id;
 		else if (FOOBAR_IS_WIDGET (pd->panel))
-		       pd_id = g_strdup (PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id);
+		       pd_id = PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id;
 
-		if (strcmp (id, pd_id) == 0) {
-			g_free (pd_id);
+		if (pd_id != NULL && strcmp (id, pd_id) == 0) {
 			return pd;
 		}
-		g_free (pd_id);
 	}
 	return NULL;
 }
 
 void
-panel_set_id (GtkWidget *widget, gchar *id)
+panel_set_id (GtkWidget *widget, const char *id)
 {
 	if (BASEP_IS_WIDGET (widget))  {
 		if (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id != NULL)
 			g_free (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id);	
 		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = g_strdup (id);
-	}
-	else if (FOOBAR_IS_WIDGET (widget)) {
+	} else if (FOOBAR_IS_WIDGET (widget)) {
 		if (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id != NULL)
 			g_free (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id);
 		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = g_strdup (id);

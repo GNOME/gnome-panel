@@ -92,7 +92,7 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 static void
 set_toggle (GtkWidget *widget, gpointer data)
 {
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
 	int *the_toggle = data;
 
 	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
@@ -147,7 +147,7 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 			      NULL, drawer->pixmap,
 			      (UpdateFunction)panel_config_register_changes,
 			      ppc);
-	gtk_object_set_data(GTK_OBJECT(dialog), "pixmap", w);
+	g_object_set_data (G_OBJECT (dialog), "pixmap", w);
 
 	f = gtk_frame_new(_("Applet appearance"));
 	gtk_container_add(GTK_CONTAINER(f),table);
@@ -160,7 +160,7 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 	/*we store this in w for later use!, so don't use w as temp from now
 	  on*/
 	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_signal_connect (G_OBJECT (button), "toggled", 
@@ -174,7 +174,7 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 			    button);
 	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
 	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	g_signal_connect (G_OBJECT (button), "toggled", 
@@ -347,8 +347,8 @@ create_drawer_applet(GtkWidget * drawer_panel,
 	GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
 
 	g_signal_connect (G_OBJECT (drawer->button), "drag_data_get",
-			    G_CALLBACK (drag_data_get_cb),
-			    NULL);
+			  G_CALLBACK (drag_data_get_cb),
+			  NULL);
 
 	gtk_widget_show(drawer->button);
 
@@ -363,8 +363,7 @@ create_drawer_applet(GtkWidget * drawer_panel,
 	g_signal_connect (G_OBJECT (drawer->button), "leave_notify_event",
 			    G_CALLBACK (leave_notify_drawer), drawer);
 
-	gtk_object_set_user_data (GTK_OBJECT (drawer->button), drawer);
-	gtk_object_set_data (GTK_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
+	g_object_set_data (G_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
 	gtk_widget_queue_resize (GTK_WIDGET (drawer_panel));
 
 	return drawer;
@@ -419,9 +418,9 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 	if(!GTK_WIDGET_REALIZED(widget))
 		return;
 
-	gtk_widget_queue_resize(drawer->drawer);
+	gtk_widget_queue_resize (drawer->drawer);
 
-	gtk_object_set_data(GTK_OBJECT(widget),"allocated",GINT_TO_POINTER(1));
+	g_object_set_data (G_OBJECT (widget), "allocated", GINT_TO_POINTER (TRUE));
 }
 
 Drawer *

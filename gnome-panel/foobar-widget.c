@@ -1033,8 +1033,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	gtk_window_move (GTK_WINDOW (foo),
 			 multiscreen_x (foo->screen),
 			 multiscreen_y (foo->screen));
-	gtk_widget_set_usize (GTK_WIDGET (foo),
-			      multiscreen_width (foo->screen), -2);
+	gtk_widget_set_size_request (GTK_WIDGET (foo),
+				     multiscreen_width (foo->screen), -2);
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
@@ -1201,11 +1201,11 @@ foobar_widget_new (const char *panel_id, int screen)
 		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
 
 	foo->screen = screen;
-	gtk_widget_set_uposition (GTK_WIDGET (foo),
-				  multiscreen_x (foo->screen),
-				  multiscreen_y (foo->screen));
-	gtk_widget_set_usize (GTK_WIDGET (foo),
-			      multiscreen_width (foo->screen), -2);
+	gtk_window_move (GTK_WINDOW (foo),
+			 multiscreen_x (foo->screen),
+			 multiscreen_y (foo->screen));
+	gtk_widget_set_size_request (GTK_WIDGET (foo),
+				     multiscreen_width (foo->screen), -2);
 
 	foobars = g_list_prepend (foobars, foo);
 
@@ -1236,8 +1236,9 @@ foobar_widget_force_menu_remake (void)
 		foo = FOOBAR_WIDGET(li->data);
 
 		if (foo->programs != NULL)
-			gtk_object_set_data (GTK_OBJECT(foo->programs),
-					     "need_reread", GINT_TO_POINTER(1));
+			g_object_set_data (G_OBJECT (foo->programs),
+					   "need_reread",
+					   GINT_TO_POINTER (TRUE));
 	}
 }
 
