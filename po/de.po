@@ -12,28 +12,117 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-10 23:26+0100\n"
+"POT-Creation-Date: 2004-01-14 14:24+0000\n"
 "PO-Revision-Date: 2004-01-10 23:26+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: applets/clock/clock.c:232
+#: applets/clock/GNOME_ClockApplet.xml.h:1
+msgid "Ad_just Date & Time..."
+msgstr "Datum und Uhrzeit _anpassen..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:2
+msgid "Copy _Date"
+msgstr "_Datum kopieren"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:3
+msgid "Copy _Time"
+msgstr "_Uhrzeit kopieren"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:4
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
+msgid "_About..."
+msgstr "_Info..."
+
+#: applets/clock/GNOME_ClockApplet.xml.h:5
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
+#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
+#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
+#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
+#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
+#: gnome-panel/panel-menu-button.c:608
+msgid "_Help"
+msgstr "_Hilfe"
+
+#: applets/clock/GNOME_ClockApplet.xml.h:6
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
+#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
+msgid "_Preferences..."
+msgstr "_Einstellungen..."
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
+msgid "Accessories"
+msgstr "Zubehör"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
+#: applets/clock/clock.c:2506
+msgid "Clock"
+msgstr "Uhr"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
+msgid "Clock Applet Factory"
+msgstr "Uhrenapplet-Fabrik"
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
+msgid "Factory for creating clock applets."
+msgstr "Fabrik zum Erzeugen von Uhrenapplets."
+
+#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
+msgid "Get the current time and date"
+msgstr "Die aktuelle Zeit und das heutige Datum ermitteln"
+
+#: applets/clock/calendar-client.c:177
+msgid "Day"
+msgstr ""
+
+#: applets/clock/calendar-client.c:178
+msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
+msgstr ""
+
+#: applets/clock/calendar-client.c:185
+msgid "Month"
+msgstr ""
+
+#: applets/clock/calendar-client.c:186
+msgid "The currently monitored month between 0 and 11"
+msgstr ""
+
+#: applets/clock/calendar-client.c:193
+#, fuzzy
+msgid "Year"
+msgstr "Suchen"
+
+#: applets/clock/calendar-client.c:194
+msgid "The currently monitored year"
+msgstr ""
+
+#: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:232
+#: applets/clock/clock.c:263 applets/clock/clock.c:610
 msgid "%l:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:830
+#: applets/clock/clock.c:265 applets/clock/clock.c:1517
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:234 applets/clock/clock.c:832
+#: applets/clock/clock.c:265 applets/clock/clock.c:612
+#: applets/clock/clock.c:1519
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -42,7 +131,7 @@ msgstr "%H.%M"
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
-#: applets/clock/clock.c:245
+#: applets/clock/clock.c:276
 msgid "%a %b %e"
 msgstr "%a, %d. %b"
 
@@ -50,7 +139,7 @@ msgstr "%a, %d. %b"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:252
+#: applets/clock/clock.c:283
 #, c-format
 msgid ""
 "%1$s\n"
@@ -63,42 +152,54 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:259
+#: applets/clock/clock.c:290
 #, c-format
 msgid "%1$s, %2$s"
 msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:374
+#: applets/clock/clock.c:407
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:508
+#: applets/clock/clock.c:825
+msgid "Tasks"
+msgstr ""
+
+#: applets/clock/clock.c:961
+msgid "All Day"
+msgstr ""
+
+#: applets/clock/clock.c:991
+msgid "Appointments"
+msgstr ""
+
+#: applets/clock/clock.c:1217
 msgid "Calendar"
 msgstr "Kalender"
 
-#: applets/clock/clock.c:736
+#: applets/clock/clock.c:1430
 msgid "Computer Clock"
 msgstr "Computer-Uhr"
 
-#: applets/clock/clock.c:825
+#: applets/clock/clock.c:1512
 msgid "%I:%M:%S %p"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:827
+#: applets/clock/clock.c:1514
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:868
+#: applets/clock/clock.c:1554
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:910
+#: applets/clock/clock.c:1596
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Das Zeit-Konfigurationswerkzeug konnte nicht gestartet werden: %s"
 
-#: applets/clock/clock.c:951
+#: applets/clock/clock.c:1637
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -106,64 +207,64 @@ msgstr ""
 "Es konnte kein Programm zum Anpassen von Datum und Zeit gefunden werden. "
 "Vermutlich ist keines installiert."
 
-#: applets/clock/clock.c:1418 applets/clock/clock.c:1775
+#: applets/clock/clock.c:2095 applets/clock/clock.c:2452
 #: applets/fish/fish.c:127 applets/notification_area/main.c:82
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
-#: applets/wncklet/workspace-switcher.c:168
-#: applets/wncklet/workspace-switcher.c:470
+#: applets/wncklet/workspace-switcher.c:170
+#: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:2144
 msgid "Clock Preferences"
 msgstr "Einstellungen der Uhr"
 
-#: applets/clock/clock.c:1503
+#: applets/clock/clock.c:2180
 msgid "Clock _type:"
 msgstr "Uhren_typ:"
 
-#: applets/clock/clock.c:1514
+#: applets/clock/clock.c:2191
 msgid "12 hour"
 msgstr "12 Stunden"
 
-#: applets/clock/clock.c:1522
+#: applets/clock/clock.c:2199
 msgid "24 hour"
 msgstr "24 Stunden"
 
-#: applets/clock/clock.c:1530
+#: applets/clock/clock.c:2207
 msgid "UNIX time"
 msgstr "UNIX-Zeit"
 
-#: applets/clock/clock.c:1538
+#: applets/clock/clock.c:2215
 msgid "Internet time"
 msgstr "Internet-Zeit"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:2223
 msgid "Custom format"
 msgstr "Benutzerdefiniertes Format"
 
-#: applets/clock/clock.c:1562
+#: applets/clock/clock.c:2239
 msgid "Custom _format:"
 msgstr "_Benutzerdefiniertes Format"
 
-#: applets/clock/clock.c:1579
+#: applets/clock/clock.c:2256
 msgid "Show _seconds"
 msgstr "_Sekunden anzeigen"
 
-#: applets/clock/clock.c:1588
+#: applets/clock/clock.c:2265
 msgid "Show _date"
 msgstr "_Datum anzeigen"
 
-#: applets/clock/clock.c:1597
+#: applets/clock/clock.c:2274
 msgid "Use _UTC"
 msgstr "_Koordinierte Weltzeit (UTC) verwenden"
 
 #. Translator credits
-#: applets/clock/clock.c:1810 applets/notification_area/main.c:116
+#: applets/clock/clock.c:2487 applets/notification_area/main.c:116
 #: applets/wncklet/showdesktop.c:446 applets/wncklet/window-list.c:803
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:502
+#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -174,12 +275,7 @@ msgstr ""
 "Jörgen Scheibengruber <mfcn@gmx.de>\n"
 "Matthias Warkus <mawarkus@gnome.org>"
 
-#: applets/clock/clock.c:1829
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-msgid "Clock"
-msgstr "Uhr"
-
-#: applets/clock/clock.c:1831
+#: applets/clock/clock.c:2508
 msgid "The Clock displays the current time and date"
 msgstr "Die Uhr zeigt die aktuelle Uhrzeit und das heutige Datum an"
 
@@ -293,63 +389,298 @@ msgstr "UTC verwenden"
 msgid "Use internet time"
 msgstr "Internet-Zeit verwenden"
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
-msgid "Accessories"
-msgstr "Zubehör"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:186
+msgid "Text"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-msgid "Clock Applet Factory"
-msgstr "Uhrenapplet-Fabrik"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:187
+msgid "Text to render"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-msgid "Factory for creating clock applets."
-msgstr "Fabrik zum Erzeugen von Uhrenapplets."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:194
+msgid "Markup"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
-msgid "Get the current time and date"
-msgstr "Die aktuelle Zeit und das heutige Datum ermitteln"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:195
+msgid "Marked up text to render"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet.xml.h:1
-msgid "Ad_just Date & Time..."
-msgstr "Datum und Uhrzeit _anpassen..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:202
+msgid "Attributes"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet.xml.h:2
-msgid "Copy _Date"
-msgstr "_Datum kopieren"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:203
+msgid "A list of style attributes to apply to the text of the renderer"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet.xml.h:3
-msgid "Copy _Time"
-msgstr "_Uhrzeit kopieren"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:210
+msgid "Ellipsize"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet.xml.h:4
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:1
-#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:1
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:1
-#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-msgid "_About..."
-msgstr "_Info..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:211
+msgid "Whether to crop the text and display \"...\" when space is limited"
+msgstr ""
 
-#: applets/clock/GNOME_ClockApplet.xml.h:5
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: applets/wncklet/GNOME_ShowDesktopApplet.xml.h:2
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:2
-#: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
-#: gnome-panel/panel-menu-button.c:608
-msgid "_Help"
-msgstr "_Hilfe"
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:218
+#, fuzzy
+msgid "Background color name"
+msgstr "Hintergrundfarbe"
 
-#: applets/clock/GNOME_ClockApplet.xml.h:6
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/wncklet/GNOME_WindowListApplet.xml.h:3
-#: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-msgid "_Preferences..."
-msgstr "_Einstellungen..."
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:219
+#, fuzzy
+msgid "Background color as a string"
+msgstr "Deckkraft der Hintergrundfarbe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:226
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Hintergrundfarbe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:227
+#, fuzzy
+msgid "Background color as a GdkColor"
+msgstr "Hintergrundfarbe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:234
+#, fuzzy
+msgid "Foreground color name"
+msgstr "Hintergrundfarbe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:235
+msgid "Foreground color as a string"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:242
+#, fuzzy
+msgid "Foreground color"
+msgstr "Hintergrundfarbe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:243
+msgid "Foreground color as a GdkColor"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:251
+msgid "Editable"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:252
+msgid "Whether the text can be modified by the user"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:259
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:267
+msgid "Font"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:260
+msgid "Font description as a string"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:268
+msgid "Font description as a PangoFontDescription struct"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:276
+msgid "Font family"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:277
+msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:284
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:285
+msgid "Font style"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:293
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:294
+msgid "Font variant"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:302
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:303
+msgid "Font weight"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:312
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:313
+#, fuzzy
+msgid "Font stretch"
+msgstr "St_recken"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:321
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:322
+#, fuzzy
+msgid "Font size"
+msgstr "Panel-Größe"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:331
+msgid "Font points"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:332
+msgid "Font size in points"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:341
+msgid "Font scale"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:342
+msgid "Font scaling factor"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:351
+msgid "Rise"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:352
+msgid ""
+"Offset of text above the baseline (below the baseline if rise is negative)"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:362
+msgid "Strikethrough"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:363
+msgid "Whether to strike through the text"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:370
+msgid "Underline"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:371
+msgid "Style of underline for this text"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:381
+#, fuzzy
+msgid "Background set"
+msgstr "Hintergrund"
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:382
+msgid "Whether this tag affects the background color"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:385
+msgid "Foreground set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:386
+msgid "Whether this tag affects the foreground color"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:389
+msgid "Editability set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:390
+msgid "Whether this tag affects text editability"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:393
+msgid "Font family set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:394
+msgid "Whether this tag affects the font family"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:397
+msgid "Font style set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:398
+msgid "Whether this tag affects the font style"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:401
+msgid "Font variant set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:402
+msgid "Whether this tag affects the font variant"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:405
+msgid "Font weight set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:406
+msgid "Whether this tag affects the font weight"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:409
+msgid "Font stretch set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:410
+msgid "Whether this tag affects the font stretch"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:413
+msgid "Font size set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:414
+msgid "Whether this tag affects the font size"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:417
+msgid "Font scale set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:418
+msgid "Whether this tag scales the font size by a factor"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:421
+msgid "Rise set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:422
+msgid "Whether this tag affects the rise"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:425
+msgid "Strikethrough set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:426
+msgid "Whether this tag affects strikethrough"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:429
+msgid "Underline set"
+msgstr ""
+
+#: applets/clock/cut-n-paste/eggcellrenderertext.c:430
+msgid "Whether this tag affects underlining"
+msgstr ""
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
+msgid "Amusements"
+msgstr "Unterhaltung"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
+msgid "Display a swimming fish or another animated creature"
+msgstr "Einen schwimmenden Fisch oder andere animierte Lebewesen anzeigen"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:493
+msgid "Fish"
+msgstr "Fisch"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
+msgid "From Whence That Stupid Fish Came"
+msgstr "Da wo dieser dämliche Fisch herkam"
+
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
+msgid "Wanda Factory"
+msgstr "Wanda-Fabrik"
 
 #: applets/fish/fish.c:194
 #, c-format
@@ -388,11 +719,6 @@ msgstr ""
 #: applets/fish/fish.c:477
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
-
-#: applets/fish/fish.c:493
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-msgid "Fish"
-msgstr "Fisch"
 
 #: applets/fish/fish.c:526
 #, c-format
@@ -579,22 +905,6 @@ msgstr ""
 "Dieser Schlüssel legt die Anzahl der Sekunden fest, die jedes Einzelbild "
 "angezeigt werden soll."
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
-msgid "Amusements"
-msgstr "Unterhaltung"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:2
-msgid "Display a swimming fish or another animated creature"
-msgstr "Einen schwimmenden Fisch oder andere animierte Lebewesen anzeigen"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
-msgid "From Whence That Stupid Fish Came"
-msgstr "Da wo dieser dämliche Fisch herkam"
-
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:5
-msgid "Wanda Factory"
-msgstr "Wanda-Fabrik"
-
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
 msgstr "Ein Feld, in dem Benachrichtigungssymbole angezeigt werden"
@@ -659,8 +969,8 @@ msgid "Window Selector"
 msgstr "Fensterwähler"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
-#: applets/wncklet/workspace-switcher.c:515
-#: applets/wncklet/workspace-switcher.c:910
+#: applets/wncklet/workspace-switcher.c:517
+#: applets/wncklet/workspace-switcher.c:926
 msgid "Workspace Switcher"
 msgstr "Arbeitsflächenumschalter"
 
@@ -863,24 +1173,24 @@ msgstr "Keine Fenster geöffnet"
 msgid "Tool to switch between windows"
 msgstr "Werkzeug zum Wechseln zwischen Fenstern"
 
-#: applets/wncklet/workspace-switcher.c:145
-#: applets/wncklet/workspace-switcher.c:814
+#: applets/wncklet/workspace-switcher.c:147
+#: applets/wncklet/workspace-switcher.c:830
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "Zeilen"
 
-#: applets/wncklet/workspace-switcher.c:145
-#: applets/wncklet/workspace-switcher.c:814
+#: applets/wncklet/workspace-switcher.c:147
+#: applets/wncklet/workspace-switcher.c:830
 msgid "columns"
 msgstr "Spalten"
 
-#: applets/wncklet/workspace-switcher.c:356
+#: applets/wncklet/workspace-switcher.c:358
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »num_rows«-Wertes des Arbeitsflächenumschalters: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:367
+#: applets/wncklet/workspace-switcher.c:369
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -888,14 +1198,14 @@ msgstr ""
 "Fehler beim Laden des »display_workspace_names«-Wertes des "
 "Arbeitsflächenumschalters: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:382
+#: applets/wncklet/workspace-switcher.c:384
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »display_all_workspaces«-Wertes des "
 "Arbeitsflächenumschalters: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:517
+#: applets/wncklet/workspace-switcher.c:519
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -979,27 +1289,31 @@ msgstr ""
 "Arbeitsflächen anzeigt. Dieser Schlüssel kommt ausschließlich zum Tragen, "
 "falls der Schlüssel »display_all_workspaces« wahr ist."
 
+#: gnome-panel/GNOME_Panel.server.in.h:1
+msgid "GNOME Panel Shell"
+msgstr "Befehlszeile des GNOME-Panels"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
+#: gnome-panel/applet.c:497 gnome-panel/panel-applet-frame.c:111
+msgid "_Lock"
+msgstr "_Sperren"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:505
+msgid "_Move"
+msgstr "_Verschieben"
+
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:483
+msgid "_Remove From Panel"
+msgstr "Aus dem Panel _entfernen"
+
 #: gnome-panel/applet.c:103 gnome-panel/applet.c:497
 #: gnome-panel/panel-applet-frame.c:111
 msgid "Un_lock"
 msgstr "_Freigeben"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:497
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:111
-msgid "_Lock"
-msgstr "_Sperren"
-
 #: gnome-panel/applet.c:406
 msgid "???"
 msgstr "???"
-
-#: gnome-panel/applet.c:483 gnome-panel/GNOME_Panel_Popup.xml.h:3
-msgid "_Remove From Panel"
-msgstr "Aus dem Panel _entfernen"
-
-#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:2
-msgid "_Move"
-msgstr "_Verschieben"
 
 #: gnome-panel/applet.c:1115
 msgid "Can't find an empty spot"
@@ -1297,10 +1611,6 @@ msgstr ""
 msgid "Web directory"
 msgstr "Web-Verzeichnis"
 
-#: gnome-panel/GNOME_Panel.server.in.h:1
-msgid "GNOME Panel Shell"
-msgstr "Befehlszeile des GNOME-Panels"
-
 #: gnome-panel/launcher.c:101
 msgid "Cannot save launcher to disk"
 msgstr "Der Starter konnte nicht auf der Platte gespeichert werden"
@@ -1359,6 +1669,27 @@ msgstr "Einen Starter anlegen"
 #: gnome-panel/main.c:48
 msgid "Specify a profile name to load"
 msgstr "Geben Sie den Namen des zu ladenden Profils an"
+
+#: gnome-panel/menu-ditem.c:127
+msgid "Cannot save changes to launcher"
+msgstr "Die Änderungen am Menüeintrag konnten nicht gespeichert werden"
+
+#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+msgid "Menu"
+msgstr "Menü"
+
+#. class
+#: gnome-panel/menu-ditem.c:511
+msgid "Cannot save menu item to disk"
+msgstr "Der Menüeintrag konnte nicht auf der Platte gespeichert werden"
+
+#: gnome-panel/menu-ditem.c:537
+msgid ""
+"You can not create a new launcher at this location since the location is not "
+"writable."
+msgstr ""
+"Sie können an diesem Ort keinen neuen Starter anlegen, da er nicht "
+"beschreibbar ist."
 
 #: gnome-panel/menu.c:110
 msgid "Log Out"
@@ -1483,10 +1814,6 @@ msgstr "Kein »Exec« oder »URL«-Feld im Eintrag"
 #: gnome-panel/menu.c:1318 gnome-panel/menu.c:3180
 msgid "Main Menu"
 msgstr "Hauptmenü"
-
-#: gnome-panel/menu.c:1323 gnome-panel/menu-ditem.c:309
-msgid "Menu"
-msgstr "Menü"
 
 #: gnome-panel/menu.c:1461
 msgid "Add this launcher to panel"
@@ -1615,23 +1942,6 @@ msgstr "Bildschirmfoto aufnehmen..."
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu-ditem.c:127
-msgid "Cannot save changes to launcher"
-msgstr "Die Änderungen am Menüeintrag konnten nicht gespeichert werden"
-
-#. class
-#: gnome-panel/menu-ditem.c:511
-msgid "Cannot save menu item to disk"
-msgstr "Der Menüeintrag konnte nicht auf der Platte gespeichert werden"
-
-#: gnome-panel/menu-ditem.c:537
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Sie können an diesem Ort keinen neuen Starter anlegen, da er nicht "
-"beschreibbar ist."
-
 #: gnome-panel/panel-action-button.c:87
 msgid "_Activate Screensaver"
 msgstr "Bildschirmschoner _aktivieren"
@@ -1754,23 +2064,6 @@ msgstr "Fehler beim Laden des GConf-Verzeichnisses »%s«: %s"
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Fehler beim Ermitteln des Wertes von »%s«: %s"
-
-#: gnome-panel/panel.c:433
-#, c-format
-msgid "Open URL: %s"
-msgstr "URL öffnen: %s"
-
-#: gnome-panel/panel.c:1228
-msgid ""
-"When a panel is deleted, the panel and its\n"
-" settings are lost. Delete this panel?"
-msgstr ""
-"Beim Löschen eines Panels gehen seine gesamten\n"
-"Einstellungen verloren. Dieses Panel löschen?"
-
-#: gnome-panel/panel.c:1237
-msgid "Delete Panel"
-msgstr "Panel löschen"
 
 #: gnome-panel/panel-force-quit.c:73
 msgid ""
@@ -2720,10 +3013,6 @@ msgstr "Pfeile auf den Anzeigen/Verbergen-Knöpfen anzeigen"
 msgid "Automatically hide panel into corner"
 msgstr "Panel automatisch in der Ecke verbergen."
 
-#: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Hintergrundfarbe"
-
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
 msgstr "Deckkraft der Hintergrundfarbe"
@@ -3094,6 +3383,23 @@ msgstr "Y-Koordinate des Panels"
 #: gnome-panel/panel-util.c:69
 msgid "Cannot display help document"
 msgstr "Ein Hilfedokument konnte nicht dargestellt werden"
+
+#: gnome-panel/panel.c:433
+#, c-format
+msgid "Open URL: %s"
+msgstr "URL öffnen: %s"
+
+#: gnome-panel/panel.c:1228
+msgid ""
+"When a panel is deleted, the panel and its\n"
+" settings are lost. Delete this panel?"
+msgstr ""
+"Beim Löschen eines Panels gehen seine gesamten\n"
+"Einstellungen verloren. Dieses Panel löschen?"
+
+#: gnome-panel/panel.c:1237
+msgid "Delete Panel"
+msgstr "Panel löschen"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"

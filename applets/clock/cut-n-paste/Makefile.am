@@ -5,6 +5,8 @@ noinst_LTLIBRARIES = libclockcnp.la
 libclockcnp_la_SOURCES = \
 	eggcellrenderertext.h \
 	eggcellrenderertext.c \
+	eggtreeprivate.h \
+	eggintl.h \
 	$(EELFILES) \
 	eggmarshalers.h \
 	eggmarshalers.c

@@ -12,11 +12,12 @@
 #  This overrides the uninstall check so distcheck
 #  passes
 #
-distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out' | grep -v 'legal.xml'
-distuninstallcheck_listfiles = find . -type f -print | grep -v '^\./var/scrollkeeper' | grep -v 'omf' | grep -v 'figures'
-
+# distuninstallcheck_listfiles = find . -type f -print | grep -v 'scrollkeeper' | grep -v 'omf' | grep -v 'figures'
 distuninstallcheck:
 	@:
+
+distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out' | grep -v 'legal.xml'
+
 
 SUBDIRS =			\
 	po 			\
