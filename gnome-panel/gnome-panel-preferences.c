@@ -1264,8 +1264,8 @@ misc_notebook_page(void)
 	gtk_table_attach (GTK_TABLE (table), w, 0, 1, 4, 5,
 			  GTK_FILL, GTK_FILL, 0, 0);
 	
-	list = g_list_append (NULL, "Control-Print");
-	list = g_list_append (list, "Mod1-Print");
+	list = g_list_append (NULL, "Shift-Print");
+	list = g_list_append (list, "Control-Print");
 	list = g_list_append (list, "Control-Mod1-w");
 	list = g_list_append (list, _("Disabled"));
 	w = gtk_combo_new ();
@@ -1416,7 +1416,7 @@ loadup_vals (void)
 	g_free(global_config.window_screenshot_key);
 	global_config.window_screenshot_key =
 		conditional_get_string ("window_screenshot_key",
-					"Control-Print", NULL);
+					"Shift-Print", NULL);
 	convert_string_to_keysym_state(global_config.window_screenshot_key,
 				       &global_config.window_screenshot_keysym,
 				       &global_config.window_screenshot_state);

@@ -1736,7 +1736,7 @@ load_up_globals (void)
 	g_free(global_config.window_screenshot_key);
 	global_config.window_screenshot_key =
 		conditional_get_string ("window_screenshot_key",
-					"Control-Print", NULL);
+					"Shift-Print", NULL);
 	convert_string_to_keysym_state (global_config.window_screenshot_key,
 					&global_config.window_screenshot_keysym,
 					&global_config.window_screenshot_state);
