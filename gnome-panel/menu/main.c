@@ -92,7 +92,6 @@ setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	(*small_icons)=g_list_prepend(*small_icons,align);
 
 	gtk_widget_show (align);
 	gtk_widget_show (hbox);
@@ -602,10 +601,15 @@ create_menu_widget (GtkWidget *window, char *arguments, char *menudir,
 static void
 set_show_small_icons(gpointer data, gpointer user_data)
 {
+	GtkWidget *w = data;
+	if(!w) {
+		g_warning("Internal error in set_show_small_icons (!w)");
+		return;
+	}
 	if(*(int *)user_data)
-		gtk_widget_show(GTK_WIDGET(data));
+		gtk_widget_show(w);
 	else
-		gtk_widget_hide(GTK_WIDGET(data));
+		gtk_widget_hide(w);
 }
 
 
@@ -652,6 +656,7 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 	}
 
 	menu = g_new(Menu,1);
+	menu->small_icons = NULL;
 	menu->button = create_menu_widget (panel->window, params, this_menu,
 					   &(menu->small_icons));
 	menu->path = g_strdup(params);
