@@ -466,7 +466,9 @@ panel_applet_frame_get_background_string (PanelAppletFrame    *frame,
 		switch (frame->priv->orientation) {
 		case PANEL_ORIENTATION_TOP:
 		case PANEL_ORIENTATION_BOTTOM:
-			x += frame->priv->handle_rect.width;
+			if (gtk_widget_get_direction (GTK_WIDGET (frame)) !=
+			    GTK_TEXT_DIR_RTL)
+				x += frame->priv->handle_rect.width;
 			break;
 		case PANEL_ORIENTATION_LEFT:
 		case PANEL_ORIENTATION_RIGHT:
@@ -693,7 +695,15 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		frame->priv->handle_rect.width  = HANDLE_SIZE;
 		frame->priv->handle_rect.height = allocation->height;
 
-		new_allocation.x      = HANDLE_SIZE;
+		if (gtk_widget_get_direction (GTK_WIDGET (frame)) !=
+		    GTK_TEXT_DIR_RTL) {
+			frame->priv->handle_rect.x = 0;
+			new_allocation.x = HANDLE_SIZE;
+		} else {
+			frame->priv->handle_rect.x = allocation->width - HANDLE_SIZE;
+			new_allocation.x = 0;
+		}
+
 		new_allocation.y      = 0;
 		new_allocation.width  = allocation->width - HANDLE_SIZE;
 		new_allocation.height = allocation->height;
