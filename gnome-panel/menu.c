@@ -287,7 +287,7 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	}
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			_("(C) 1997-2002 the Free Software Foundation"),
+			_("(C) 1997 Free Software Foundation, Inc."),
 			comment->str,
 			(const char **)authors,
 			(const char **)documenters,
@@ -3149,7 +3149,7 @@ remove_panel_query (GtkWidget *menuitem,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 				NULL);
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
-	gtk_window_set_title (GTK_WINDOW (dialog), "Delete Panel");
+	gtk_window_set_title (GTK_WINDOW (dialog), _("Delete Panel"));
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"panel_remove_query", "Panel");
