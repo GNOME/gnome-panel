@@ -309,6 +309,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 {
 	GladeXML  *xml;
 	GtkWidget *button;
+	GConfClient *client;
 
 	if (fish->preferences_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
@@ -369,6 +370,19 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			   "command_label" /* label */,
 			   NULL /* label_post */,
 			   "command" /* key */);
+
+	client = gconf_client_get_default ();
+	if (gconf_client_get_bool (client, "/desktop/gnome/lockdown/inhibit_command_line", NULL)) {
+		GtkWidget *w;
+
+		w = glade_xml_get_widget (xml, "command_entry");
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+
+		w = glade_xml_get_widget (xml, "command_label");
+		g_assert (w != NULL);
+		gtk_widget_set_sensitive (w, FALSE);
+	}
 
 	fish->frames_spin = glade_xml_get_widget (xml, "frames_spin");
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (fish->frames_spin),
