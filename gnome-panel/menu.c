@@ -942,7 +942,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
       parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
     }
   
-  if (xgrab_shell)
+  if (xgrab_shell && !GTK_MENU(xgrab_shell)->torn_off)
     {
       GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
 
