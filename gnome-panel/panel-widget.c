@@ -135,7 +135,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int panel_widget_signals[LAST_SIGNAL] = {0};
+static guint panel_widget_signals[LAST_SIGNAL] = {0};
 static GtkFixedClass *parent_class = NULL;
 
 

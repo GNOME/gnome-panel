@@ -1,3 +1,14 @@
+Wed Jan 26 20:52:55 2000  George Lebl <jirka@5z.com>
+
+	* *.[ch]: pedantic warning fixes
+
+	* menu.c,drawer.[ch]: return boolean from load_drawer_applet and
+	  when adding a menu as a drawer check this and exit properly
+
+	* basep-widget.[ch],*-widget.c: all the guint16/gint16/gint stuff
+	  especially around pointers is replaced by int and we no longer
+	  assume types inside the GtkAllocation and GtkRequisition structure
+
 Wed Jan 26 13:36:11 2000  George Lebl <jirka@5z.com>
 
 	* menu.c: fixed a right click segfault on items

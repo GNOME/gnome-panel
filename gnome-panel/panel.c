@@ -971,16 +971,16 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 
 	switch (info) {
 	case TARGET_URL:
-		drop_urilist(panel, pos, selection_data->data);
+		drop_urilist(panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_NETSCAPE_URL:
-		drop_url(panel, pos, selection_data->data);
+		drop_url(panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_COLOR:
 		drop_color(panel, pos, (guint16 *)selection_data->data);
 		break;
 	case TARGET_DIRECTORY:
-		drop_menu(panel, pos, selection_data->data);
+		drop_menu(panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_APPLET:
 		if(!selection_data->data)
@@ -989,7 +989,7 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 				   panel, pos, TRUE, FALSE);
 		break;
 	case TARGET_APPLET_INTERNAL:
-		drop_internal_applet(panel, pos, selection_data->data);
+		drop_internal_applet(panel, pos, (char *)selection_data->data);
 		break;
 	}
 }

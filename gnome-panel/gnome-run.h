@@ -25,4 +25,4 @@
 
 void show_run_dialog (void);
 
-#endif __GNOME_RUN_H__
+#endif /*__GNOME_RUN_H__*/

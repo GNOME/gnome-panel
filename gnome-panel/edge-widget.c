@@ -15,14 +15,14 @@ static void edge_pos_class_init (EdgePosClass *klass);
 static void edge_pos_init (EdgePos *pos);
 
 static void edge_pos_set_pos (BasePWidget *basep,
-			      gint16 x, gint16 y,
-			      guint16 w, guint16 h);
+			      int x, int y,
+			      int w, int h);
 static void edge_pos_get_pos (BasePWidget *basep,
-			      gint16 *x, gint16 *y,
-			      guint16 w, guint16 h);
+			      int *x, int *y,
+			      int w, int h);
 
 static void edge_pos_get_size (BasePWidget *basep,
-			       guint16 *w, guint16 *h);
+			       int *w, int *h);
 
 static void edge_pos_pre_convert_hook (BasePWidget *basep);
 
@@ -68,8 +68,8 @@ edge_pos_init (EdgePos *pos) { }
 
 static void
 edge_pos_set_pos (BasePWidget *basep,
-		  gint16 x, gint16 y,
-		  guint16 w, guint16 h)
+		  int x, int y,
+		  int w, int h)
 {
 	BorderEdge newloc;
 	int minx, miny, maxx, maxy;
@@ -115,8 +115,8 @@ edge_pos_set_pos (BasePWidget *basep,
 }
 
 static void
-edge_pos_get_pos (BasePWidget *basep, gint16 *x, gint16 *y,
-		  guint16 w, guint16 h)
+edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
+		  int w, int h)
 {
 	*x = *y = 0;
 	switch (BORDER_POS(basep->pos)->edge) {
@@ -133,7 +133,7 @@ edge_pos_get_pos (BasePWidget *basep, gint16 *x, gint16 *y,
 }
 
 static void
-edge_pos_get_size (BasePWidget *basep, guint16 *w, guint16 *h)
+edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 {
 	if (PANEL_WIDGET(basep->panel)->orient == 
 	    PANEL_HORIZONTAL)

@@ -363,7 +363,7 @@ drawer_size_alloc(BasePWidget *basep, GtkAllocation *alloc, gpointer data)
 			      basep->panel);
 }
 
-void
+gboolean
 load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		   PanelWidget *panel, int pos, gboolean exactpos)
 {
@@ -375,21 +375,24 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		if(drawer) panel_setup(drawer->drawer);
 	} else {
 		PanelData *dr_pd;
-		GSList *li;
 
-		li = g_slist_nth(panel_list,mypanel);
-		g_return_if_fail(li != NULL);
-		dr_pd = li->data;
+		dr_pd = g_slist_nth_data(panel_list,mypanel);
 
-		drawer = create_drawer_applet(dr_pd->panel, tooltip,
-					      pixmap, orient);
+		if(!dr_pd) {
+			g_warning ("Can't find the panel for drawer, making a new panel");
+			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
+			if(drawer) panel_setup(drawer->drawer);
+		} else {
+			drawer = create_drawer_applet(dr_pd->panel, tooltip,
+						      pixmap, orient);
 
-		drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
-					    orient);
+			drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
+						    orient);
+		}
 	}
 
 	if(!drawer)
-		return;
+		return FALSE;
 
 	{
 		GtkWidget *dw = drawer->drawer;
@@ -399,7 +402,7 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 			/* by this time drawer has been freed as register_toy
 			   has destroyed drawer->button */
 			gtk_widget_destroy(dw);
-			return;
+			return FALSE;
 		}
 	}
 
@@ -429,10 +432,12 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 			      drawer->tooltip,NULL);
 	drawer_setup(drawer);
 
-	g_return_if_fail(applets_last!=NULL);
+	g_assert(applets_last!=NULL);
 
 	applet_add_callback(applets_last->data,"properties",
 			    GNOME_STOCK_MENU_PROP,
 			    _("Properties..."));
+
+	return TRUE;
 }
 

@@ -22,9 +22,9 @@ static PanelOrientType border_pos_get_hide_orient (BasePWidget *basep);
 static void border_pos_get_menu_pos (BasePWidget *basep,
 				     GtkWidget *widget,
 				     GtkRequisition *mreq,
-				     gint *x, gint *y,
-				     gint16 wx, gint16 wy,
-				     guint16 ww, guint16 wh);
+				     int *x, int *y,
+				     int wx, int wy,
+				     int ww, int wh);
 
 static int border_pos_show_hide_left (BasePWidget *basep);
 static int border_pos_show_hide_right (BasePWidget *basep);
@@ -60,7 +60,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int border_pos_signals[LAST_SIGNAL] = { 0 };
+static guint border_pos_signals[LAST_SIGNAL] = { 0 };
 
 static void
 border_pos_class_init (BorderPosClass *klass)
@@ -168,9 +168,9 @@ static void
 border_pos_get_menu_pos (BasePWidget *basep,
 			 GtkWidget *widget,
 			 GtkRequisition *mreq,
-			 gint *x, gint *y,
-			 gint16 wx, gint16 wy,
-			 guint16 ww, guint16 wh)
+			 int *x, int *y,
+			 int wx, int wy,
+			 int ww, int wh)
 {
 	switch (BORDER_POS(basep->pos)->edge) {
 	case BORDER_TOP:

@@ -22,27 +22,27 @@ static PanelOrientType floating_pos_get_applet_orient (BasePWidget *basep);
 static PanelOrientType floating_pos_get_hide_orient (BasePWidget *basep);
 static void floating_pos_get_hide_pos (BasePWidget *basep,
 				     PanelOrientType hide_orient,
-				     gint16 *x, gint16 *y,
-				     guint16 w, guint16 h);
+				     int *x, int *y,
+				     int w, int h);
 
 static void floating_pos_get_pos(BasePWidget *basep,
-				 gint16 *x, gint16 *y,
-				 guint16 w, guint16 h);
+				 int *x, int *y,
+				 int w, int h);
 
 static void floating_pos_set_pos (BasePWidget *basep,
-				  gint16 x, gint16 y,
-				  guint16 w, guint16 h);
+				  int x, int y,
+				  int w, int h);
 
 static void floating_pos_get_hide_size (BasePWidget *basep,
 					PanelOrientType hide_orient,
-					guint16 *x, guint16 *y);
+					int *x, int *y);
 
 static void floating_pos_get_menu_pos (BasePWidget *basep,
 				       GtkWidget *widget,
 				       GtkRequisition *mreq,
-				       gint *x, gint *y,
-				       gint16 wx, gint16 wy,
-				       guint16 ww, guint16 wh);
+				       int *x, int *y,
+				       int wx, int wy,
+				       int ww, int wh);
 
 static void floating_pos_pre_convert_hook (BasePWidget *basep);
 
@@ -77,7 +77,7 @@ enum {
 	COORDS_CHANGE_SIGNAL,
 	LAST_SIGNAL
 };
-static int floating_pos_signals[LAST_SIGNAL] = { 0 };
+static guint floating_pos_signals[LAST_SIGNAL] = { 0 };
 
 static void
 floating_pos_class_init (FloatingPosClass *klass)
@@ -174,9 +174,9 @@ static void
 floating_pos_get_menu_pos (BasePWidget *basep,
 			   GtkWidget *widget,
 			   GtkRequisition *mreq,
-			   gint *x, gint *y,
-			   gint16 wx, gint16 wy,
-			   guint16 ww, guint16 wh)
+			   int *x, int *y,
+			   int wx, int wy,
+			   int ww, int wh)
 {	
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	
@@ -191,8 +191,8 @@ floating_pos_get_menu_pos (BasePWidget *basep,
 
 static void
 floating_pos_set_pos (BasePWidget *basep,
-		      gint16 x, gint16 y,
-		      guint16 w, guint16 h)
+		      int x, int y,
+		      int w, int h)
 {
 	int minx, miny, maxx, maxy;
 	FloatingPos *pos = FLOATING_POS(basep->pos);
@@ -266,8 +266,8 @@ floating_pos_set_pos (BasePWidget *basep,
 
 static void
 floating_pos_get_pos(BasePWidget *basep,
-		     gint16 *x, gint16 *y,
-		     guint16 w, guint16 h)
+		     int *x, int *y,
+		     int w, int h)
 {
 	*x = CLAMP (FLOATING_POS (basep->pos)->x, 0, gdk_screen_width () - w);
 	*y = CLAMP (FLOATING_POS (basep->pos)->y, 0, gdk_screen_height () - h);
@@ -276,7 +276,7 @@ floating_pos_get_pos(BasePWidget *basep,
 static void
 floating_pos_get_hide_size (BasePWidget *basep, 
 			    PanelOrientType hide_orient,
-			    guint16 *w, guint16 *h)
+			    int *w, int *h)
 {
 	switch (hide_orient) {
 	case ORIENT_UP:
@@ -299,8 +299,8 @@ floating_pos_get_hide_size (BasePWidget *basep,
 static void
 floating_pos_get_hide_pos (BasePWidget *basep,
 			   PanelOrientType hide_orient,
-			   gint16 *x, gint16 *y,
-			   guint16 w, guint16 h)
+			   int *x, int *y,
+			   int w, int h)
 {
 	switch (hide_orient) {
 	case ORIENT_UP:

@@ -89,7 +89,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int button_widget_signals[LAST_SIGNAL] = {0};
+static guint button_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 button_widget_class_init (ButtonWidgetClass *class)

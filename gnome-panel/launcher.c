@@ -126,7 +126,7 @@ drag_data_received_cb (GtkWidget        *widget,
 		return;
 	}
 
-	files = gnome_uri_list_extract_filenames(selection_data->data);
+	files = gnome_uri_list_extract_filenames((char *)selection_data->data);
 	argc = g_list_length(files);
 	argv = g_new(char *,argc+1);
 	argv[argc] = NULL;

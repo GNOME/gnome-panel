@@ -23,22 +23,22 @@ static PanelOrientType drawer_pos_get_applet_orient (BasePWidget *basep);
 static PanelOrientType drawer_pos_get_hide_orient (BasePWidget *basep);
 static void drawer_pos_get_hide_pos (BasePWidget *basep,
 				     PanelOrientType hide_orient,
-				     gint16 *x, gint16 *y,
-				     guint16 w, guint16 h);
+				     int *x, int *y,
+				     int w, int h);
 static void drawer_pos_get_hide_size (BasePWidget *basep, 
 				      PanelOrientType hide_orient,
-				      guint16 *w, guint16 *h);
+				      int *w, int *h);
 
 static void drawer_pos_get_pos(BasePWidget *basep,
-			       gint16 *x, gint16 *y,
-			       guint16 width, guint16 height);
+			       int *x, int *y,
+			       int width, int height);
 
 static void drawer_pos_get_menu_pos (BasePWidget *basep,
 				     GtkWidget *widget,
 				     GtkRequisition *mreq,
-				     gint *x, gint *y,
-				     gint16 wx, gint16 wy,
-				     guint16 ww, guint16 wh);
+				     int *x, int *y,
+				     int wx, int wy,
+				     int ww, int wh);
 
 static int drawer_pos_hidebutton_click (BasePWidget *basep);
 
@@ -237,9 +237,9 @@ static void
 drawer_pos_get_menu_pos (BasePWidget *basep,
 			 GtkWidget *widget,
 			 GtkRequisition *mreq,
-			 gint *x, gint *y,
-			 gint16 wx, gint16 wy,
-			 guint16 ww, guint16 wh)
+			 int *x, int *y,
+			 int wx, int wy,
+			 int ww, int wh)
 {	
 	PanelWidget *panel =
 		PANEL_WIDGET(basep->panel);
@@ -255,8 +255,8 @@ drawer_pos_get_menu_pos (BasePWidget *basep,
 
 static void
 drawer_pos_get_pos(BasePWidget *basep,
-		   gint16 *x, gint16 *y,
-		   guint16 width, guint16 height)
+		   int *x, int *y,
+		   int width, int height)
 {
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	DrawerPos *pos = DRAWER_POS (basep->pos);
@@ -317,8 +317,8 @@ drawer_pos_get_pos(BasePWidget *basep,
 static void
 drawer_pos_get_hide_pos (BasePWidget *basep,
 			 PanelOrientType hide_orient,
-			 gint16 *x, gint16 *y,
-			 guint16 w, guint16 h)
+			 int *x, int *y,
+			 int w, int h)
 {
 	if (basep->state != BASEP_SHOWN ||
 	    DRAWER_POS (basep->pos)->temp_hidden) {
@@ -330,7 +330,7 @@ drawer_pos_get_hide_pos (BasePWidget *basep,
 static void
 drawer_pos_get_hide_size (BasePWidget *basep, 
 			  PanelOrientType hide_orient,
-			  guint16 *w, guint16 *h)
+			  int *w, int *h)
 {
 	switch (hide_orient) {
 	case ORIENT_UP:

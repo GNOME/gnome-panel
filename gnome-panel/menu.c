@@ -395,14 +395,20 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		subdir_name = name;
 	pixmap_name = item_info?item_info->icon:NULL;
 
-	load_drawer_applet(-1, pixmap_name, subdir_name, panel, pos, FALSE);
-	
-	g_return_if_fail(applets_last!=NULL);
+	if(!load_drawer_applet(-1, pixmap_name, subdir_name, panel, pos, FALSE) ||
+	   !applets_last) {
+		g_warning("Can't load a drawer");
+		return;
+	}
 	info = applets_last->data;
-	g_return_if_fail(info!=NULL);
+	g_assert(info!=NULL);
+	if(info->type != APPLET_DRAWER) {
+		g_warning("Something weird happened and we didn't get a drawer");
+		return;
+	}
 	
 	drawer = info->data;
-	g_return_if_fail(drawer);
+	g_assert(drawer);
 	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
 	
 	list = get_files_from_menudir(dirname);
@@ -2002,8 +2008,8 @@ find_empty_pos_array (int posscore[3][3])
 	PanelData *pd;
 	BasePWidget *basep;
 	
-	gint16 tx, ty;
-	guint16 w, h;
+	int tx, ty;
+	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
 	sw2 = 2 * (sw = gdk_screen_width () / 3);
@@ -2465,8 +2471,8 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 {
 	PanelType type = GPOINTER_TO_INT(data);
 	PanelData *pd;
-	gint16 x, y;
-	guint16 w, h;
+	int x, y;
+	int w, h;
 	BasePWidget *basep;
 	BasePPos *old_pos;
 	PanelWidget *cur_panel = get_panel_from_menu_data(widget->parent);

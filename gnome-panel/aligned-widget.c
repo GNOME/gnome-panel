@@ -15,11 +15,11 @@ static void aligned_pos_class_init (AlignedPosClass *klass);
 static void aligned_pos_init (AlignedPos *pos);
 
 static void aligned_pos_set_pos (BasePWidget *basep,
-				 gint16 x, gint16 y,
-				 guint16 w, guint16 h);
+				 int x, int y,
+				 int w, int h);
 static void aligned_pos_get_pos (BasePWidget *basep,
-				 gint16 *x, gint16 *y,
-				 guint16 w, guint16 h);
+				 int *x, int *y,
+				 int w, int h);
 
 static int aligned_pos_show_hide_left (BasePWidget *basep);
 static int aligned_pos_show_hide_right (BasePWidget *basep);
@@ -52,7 +52,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int aligned_pos_signals[LAST_SIGNAL] = { 0 };
+static guint aligned_pos_signals[LAST_SIGNAL] = { 0 };
 
 static void
 aligned_pos_class_init (AlignedPosClass *klass)
@@ -88,8 +88,8 @@ aligned_pos_init (AlignedPos *pos) { }
 
 static void
 aligned_pos_set_pos (BasePWidget *basep,
-		     gint16 x, gint16 y,
-		     guint16 w, guint16 h)
+		     int x, int y,
+		     int w, int h)
 {
 	int minx, miny, maxx, maxy;
 
@@ -164,8 +164,8 @@ aligned_pos_set_pos (BasePWidget *basep,
 }
 
 static void
-aligned_pos_get_pos (BasePWidget *basep, gint16 *x, gint16 *y,
-		     guint16 w, guint16 h)
+aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
+		     int w, int h)
 {
 	*x = *y = 0;
 	switch (BORDER_POS(basep->pos)->edge) {

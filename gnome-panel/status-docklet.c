@@ -56,7 +56,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int status_docklet_signals[LAST_SIGNAL] = {0};
+static guint status_docklet_signals[LAST_SIGNAL] = {0};
 
 static void
 marshal_signal_build (GtkObject * object,

@@ -431,6 +431,11 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	socket = gtk_socket_new();
 
+	if(!socket) {
+		g_warning("Can't create a socket");
+		return 0;
+	}
+
 	gtk_signal_connect_after(GTK_OBJECT(socket),"size_request",
 				 GTK_SIGNAL_FUNC(socket_size_request),
 				 NULL);
@@ -441,9 +446,6 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	/* here for debugging purposes */
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(sal),NULL);*/
-
-
-	g_return_val_if_fail(socket!=NULL,0);
 
 	gtk_container_add(GTK_CONTAINER(ext->ebox), socket);
 

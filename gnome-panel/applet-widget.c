@@ -197,7 +197,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int applet_widget_signals[LAST_SIGNAL] = {0};
+static guint applet_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 marshal_signal_save (GtkObject * object,
@@ -843,7 +843,7 @@ applet_widget_construct(AppletWidget* applet, const char *goad_id)
 	
 	g_return_if_fail(goad_id != NULL);
 
-	CD(applet) = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
+	applet->corbadat = corbadat = gnome_panel_applet_corba_init(applet,goad_id);
 
 	g_return_if_fail(corbadat!=NULL);
 
@@ -1323,6 +1323,7 @@ server_applet_back_change(CustomAppletServant *servant,
 		pptr = backing->_u.pmap;
 		break;
 	default:
+		break;
 	}
 
 	if(servant->appwidget->frozen_level>0) {

@@ -15,11 +15,11 @@ static void sliding_pos_class_init (SlidingPosClass *klass);
 static void sliding_pos_init (SlidingPos *pos);
 
 static void sliding_pos_set_pos (BasePWidget *basep,
-				 gint16 x, gint16 y,
-				 guint16 w, guint16 h);
+				 int x, int y,
+				 int w, int h);
 static void sliding_pos_get_pos (BasePWidget *basep,
-				 gint16 *x, gint16 *y,
-				 guint16 w, guint16 h);
+				 int *x, int *y,
+				 int w, int h);
 
 static BorderPosClass *parent_class;
 
@@ -51,7 +51,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int sliding_pos_signals[LAST_SIGNAL] = { 0, 0 };
+static guint sliding_pos_signals[LAST_SIGNAL] = { 0, 0 };
 
 static void
 sliding_pos_class_init (SlidingPosClass *klass)
@@ -94,8 +94,8 @@ sliding_pos_init (SlidingPos *pos) { }
 
 static void
 sliding_pos_set_pos (BasePWidget *basep,
-		     gint16 x, gint16 y,
-		     guint16 w, guint16 h)
+		     int x, int y,
+		     int w, int h)
 {
 	int minx, miny, maxx, maxy;
 	SlidingPos *pos = SLIDING_POS(basep->pos);
@@ -218,8 +218,8 @@ sliding_pos_set_pos (BasePWidget *basep,
 }
 
 static void
-sliding_pos_get_pos (BasePWidget *basep, gint16 *x, gint16 *y,
-		     guint16 w, guint16 h)
+sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
+		     int w, int h)
 {
 	SlidingPos *pos = SLIDING_POS (basep->pos);
 	*x = *y = 0;
