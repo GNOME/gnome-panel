@@ -494,6 +494,9 @@ config_apply (PerPanelConfig *ppc)
 	ppc->ppc_origin_change = FALSE;
 
 	gtk_widget_queue_draw (ppc->panel);
+
+	panel_save_to_gconf (
+		g_object_get_data (G_OBJECT (ppc->panel), "PanelData"));
 }
 
 static void

@@ -82,6 +82,8 @@ properties_apply_callback(gpointer data)
 
 	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
 			      drawer->tooltip, NULL);
+
+	drawer_save_to_gconf (drawer, drawer->info->gconf_key);
 }
 
 static void
@@ -579,7 +581,6 @@ load_drawer_applet (gchar       *mypanel_id,
 {
 	Drawer      *drawer;
 	PanelOrient  orient;
-	AppletInfo  *info;
 
 	orient = panel_widget_get_applet_orient (panel);
 
@@ -618,16 +619,13 @@ load_drawer_applet (gchar       *mypanel_id,
 	{
 		GtkWidget  *dw = drawer->drawer;
 
-		info = panel_applet_register (drawer->button,
-					      drawer,
-					      (GDestroyNotify) g_free,
-					      panel,
-					      pos,
-					      exactpos,
-					      APPLET_DRAWER,
-					      gconf_key);
+		drawer->info = panel_applet_register (
+					drawer->button, drawer,
+					(GDestroyNotify) g_free,
+					panel, pos, exactpos,
+					APPLET_DRAWER, gconf_key);
 
-		if (!info) {
+		if (!drawer->info) {
 			gtk_widget_destroy (dw);
 			return NULL;
 		}
@@ -653,12 +651,13 @@ load_drawer_applet (gchar       *mypanel_id,
 	drawer_setup (drawer);
 
 	if (!commie_mode)
-		panel_applet_add_callback (info,
+		panel_applet_add_callback (drawer->info,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
 					   _("Properties..."));
 
-	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
+	panel_applet_add_callback (
+		drawer->info, "help", GTK_STOCK_HELP, _("Help"));
 
 	return drawer;
 }
@@ -675,34 +674,39 @@ drawer_save_to_gconf (Drawer     *drawer,
 	g_return_if_fail (PANEL_IS_WIDGET (BASEP_WIDGET (drawer->drawer)->panel));
 
 	client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
+	profile = panel_gconf_get_profile ();
 
-	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "parameters");
+	temp_key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, gconf_key, "parameters");
 	gconf_client_set_int (client, temp_key,
 			      g_slist_index (panels, BASEP_WIDGET (drawer->drawer)->panel),
 			      NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "unique-drawer-panel-id");
+	temp_key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, gconf_key, "unique-drawer-panel-id");
 	gconf_client_set_string (client, temp_key,
 				 PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel)->unique_id,
 				 NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "pixmap");
+	temp_key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, gconf_key, "pixmap");
 	gconf_client_set_string (client, temp_key, drawer->pixmap, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "tooltip");
-	gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
-	g_free (temp_key);
+	if (drawer->tooltip) {
+		temp_key = panel_gconf_full_key (
+				PANEL_GCONF_OBJECTS, profile, gconf_key, "tooltip");
+		gconf_client_set_string (client, temp_key, drawer->tooltip, NULL);
+		g_free (temp_key);
+	}
 }
 
 void
 drawer_load_from_gconf (PanelWidget *panel_widget,
 			gint         position,
-			const char  *gconf_key,
-			gboolean     use_default)
+			const char  *gconf_key)
 {
 	GConfClient *client;
 	const char  *profile;
@@ -716,26 +720,25 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (gconf_key);
 
 	client  = panel_gconf_get_client ();
+	profile = panel_gconf_get_profile ();
 
-	/* FIXME: Screen widths etc.. */
-	if (use_default)
-		profile = "medium";
-	else
-		profile = session_get_current_profile ();
-
-	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "parameters", use_default);
+	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
+					 gconf_key, "parameters");
 	panel = gconf_client_get_int (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "unique-drawer-panel-id", use_default);
+	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
+					 gconf_key, "unique-drawer-panel-id");
 	panel_id = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "pixmap", use_default);
+	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
+					 gconf_key, "pixmap");
 	pixmap = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 
-	temp_key = panel_gconf_objects_get_full_key (profile, gconf_key, "tooltip", use_default);
+	temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
+					 gconf_key, "tooltip");
 	tooltip = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 

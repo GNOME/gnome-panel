@@ -9,13 +9,17 @@ G_BEGIN_DECLS
 #define DRAWER_PANEL_KEY "drawer_panel"
 
 typedef struct {
-	char *pixmap;
-	char *tooltip;
-	GtkWidget *button;
-	GtkWidget *drawer;
-	GtkWidget *properties;
-	gboolean moving_focus;
-	gboolean just_focused;
+	char         *pixmap;
+	char         *tooltip;
+
+	GtkWidget    *button;
+	GtkWidget    *drawer;
+	GtkWidget    *properties;
+
+	gboolean      moving_focus;
+	gboolean      just_focused;
+
+	AppletInfo   *info;
 } Drawer;
 
 Drawer *load_drawer_applet (gchar       *mypanel,
@@ -31,8 +35,7 @@ void    drawer_save_to_gconf   (Drawer     *drawer,
 
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
 				gint         position,
-				const char  *gconf_key,
-				gboolean     use_default);
+				const char  *gconf_key);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrient orient);
 

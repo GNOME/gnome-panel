@@ -1624,7 +1624,7 @@ panel_widget_destroy (GtkObject *obj)
 
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
-	panel_session_remove_panel_from_config (panel);
+	panel_remove_from_gconf (panel);
 
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
@@ -1684,25 +1684,13 @@ panel_widget_get_by_id (gchar *id)
 
 	g_return_val_if_fail (id != NULL, NULL);
 
-#ifdef PANEL_WIDGET_DEBUG
-	printf ("Call panel_widget_get_by_id (%s) \n", id);
-#endif
 	for (li = panels; li != NULL; li = li->next) {
 		PanelWidget *panel = li->data;
 
-#ifdef PANEL_WIDGET_DEBUG
-		printf ("Testing panel id %s\n", panel->unique_id);
-#endif
-		if (panel->unique_id != NULL) {
-			if (strcmp (panel->unique_id, id) == 0) {
-
-#ifdef PANEL_WIDGET_DEBUG
-	printf ("We have found our panel!\n");
-#endif
-				return panel;
-			}
-		}
+		if (panel->unique_id && ! strcmp (panel->unique_id, id))
+			return panel;
 	}
+
 	return NULL;
 }
 
@@ -1710,12 +1698,12 @@ void
 panel_widget_set_id (PanelWidget *panel, const char *id)
 {
 	g_return_if_fail (id != NULL);
-	if (panel->unique_id != NULL)
+
+	if (panel->unique_id)
 		g_free (panel->unique_id);
+
 	panel->unique_id = g_strdup (id);
-#ifdef PANEL_WIDGET_DEBUG
-	printf ("panel_widget_set_id : TO %s\n", panel->unique_id);
-#endif
+
 	return;
 }
 

@@ -39,8 +39,7 @@ void swallow_save_to_gconf   (Swallow    *swallow,
 
 void swallow_load_from_gconf (PanelWidget *panel_widget,
 			      gint         position,
-			      const char  *gconf_key,
-			      gboolean     use_default);
+			      const char  *gconf_key);
 
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 

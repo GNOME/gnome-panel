@@ -188,14 +188,9 @@ main(int argc, char **argv)
 			    NULL);
 
 	bonobo_activate ();
-	
-	if (profile_name == NULL) {
-		/* FIXME: Do this properly. just a temporary hack */
-		session_set_current_profile ("default");
-	} else {
-		session_set_current_profile (profile_name);
-	}
 
+	panel_gconf_setup_profile (profile_name);
+	
 	if (!panel_shell_register ())
 		return -1;
 	find_kde_directory();

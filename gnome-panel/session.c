@@ -66,24 +66,6 @@ gboolean                commie_mode = FALSE;
 gboolean                no_run_box = FALSE;
 GlobalConfig            global_config;
 
-static gchar *panel_profile_name = NULL;
-
-G_CONST_RETURN gchar *
-session_get_current_profile (void)
-{
-	return panel_profile_name;
-}
-
-void
-session_set_current_profile (const gchar *profile_name) {
-
-	g_return_if_fail (profile_name != NULL);
-
-	if (panel_profile_name != NULL);
-		g_free (panel_profile_name);
-	panel_profile_name = g_strdup (profile_name);
-}
-
 static void
 panel_session_save_applets (GSList *applets_list)
 {
@@ -151,7 +133,7 @@ panel_session_do_save (GnomeClient *client,
 
 	if (save_panels)
 		for (l = panel_list; l; l = l->next)
-			panel_session_save_panel ((PanelData *) l->data);
+			panel_save_to_gconf ((PanelData *) l->data);
 
 	if (save_applets) {
 		session_unlink_dead_launchers ();
@@ -252,7 +234,7 @@ panel_session_save (GnomeClient        *client,
 	argc = 3;
 	argv[0] = client_data;
 	argv[1] = "--profile";
-      	argv[2] = (char *) session_get_current_profile ();;
+      	argv[2] = (char *) panel_gconf_get_profile ();
 
 	gnome_client_set_restart_command (client, argc, argv);
         gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
@@ -388,7 +370,7 @@ void session_load (void) {
 
 	panel_load_global_config ();
 	init_menus ();
-	panel_session_init_panels ();
+	panel_load_panels_from_gconf ();
 
 	panel_applet_load_applets_from_gconf ();
 }

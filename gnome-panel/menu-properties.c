@@ -259,7 +259,7 @@ properties_apply_callback (Menu *menu)
 					 pixmap_name, -1);
 	}
 
-	panel_applet_save_to_gconf (menu->info);
+	menu_save_to_gconf (menu, menu->info->gconf_key);
 }
 
 static void

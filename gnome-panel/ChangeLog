@@ -1,3 +1,81 @@
+2002-02-25  Mark McLoughlin  <mark@skynet.ie>
+
+	Dynamically apply the schemas to new profiles as they are
+	created. Removes a lot of conditional 'use_default' code
+	and the bugs lurking there. Also lots of gconf related cleanups
+	and bug fixes.
+
+	* panel-gconf.[ch]: kill default_profile functions.
+	(panel_gconf_get_profile): move here from session.c
+	(panel_gconf_global_key), (panel_gconf_general_key),
+	(panel_gconf_full_key): rename from really long names.
+	(panel_gconf_dir_exists): kill unused.
+	(panel_gconf_clean_dir): rename.
+	(panel_gconf_associate_schemas_in_dir): impl.
+	(panel_gconf_setup_profile): impl.
+
+	* panel-per-panel-config.schemas: kill all applytos.
+
+	* applet.c: update for gconf function name changes. Remove all
+	use_default stuff. Pass gconf key to logout, lock and status loader
+	to fix #69716.
+
+	* drawer.[ch]:
+	(properties_apply_callback): actually save properties changes.
+	(load_drawer_applet): save the AppletInfo.
+	(drawer_save_to_gconf), (drawer_load_from_gconf): update for gconf
+	function name changes, cleanupa and don't try and save the tooltip
+	when its null. Kill use_default stuff.
+
+	* floating-widget.c: (floating_pos_get_hide_size),
+	(floating_pos_get_hide_pos): read minimized size from the global_config
+	struct, not gconf.
+
+	* foobar-widget.c: (append_format_items): clock format is not in global
+	config.
+
+	* launcher.c:
+	(properties_apply): actually save properties changes.
+	(launcher_save_to_gconf), (launcher_load_from_gconf): update for gconf
+	function name changes.
+	(launcher_file_name): use PANEL_LAUNCHERS_PATH.
+
+	* launcher.h: define PANEL_LAUNCHERS_PATH. Nobody else was using
+	PANEL_CONFIG_PATH.
+
+	* logout.[ch]l: (load_logout_applet),
+	(load_lock_applet): add gconf_key arg.
+
+	* main.c: (main): use panel_gconf_setup_profile.
+
+	* menu-properties.c: (properties_apply_callback): only save menu props.
+
+	* menu.c: kill use_default stuff, update for gconf function changes.
+
+	* panel-applet-frame.c: ditto.
+
+	* panel-config-global.c: use panel_apply_global_config.
+
+	* panel-config.c: (config_apply): actually save config changes.
+
+	* panel-widget.c: (panel_widget_destroy), (panel_widget_get_by_id),
+	(panel_widget_set_id): update for gconf renaming. Clean up.
+
+	* panel.[ch]: lots of cleanups, update for gconf name changes, shorten
+	function names, kill use_default stuff.
+
+	* session.c:
+	(session_get_current_profile), (session_get_current_profile): kill
+	(panel_session_do_save), (panel_session_save),
+	(session_load): updates.
+
+	* session.h: kill unused cruft.
+
+	* status.[ch]: (load_status_applet): add gconf_key arg.
+
+	* swallow.c: (swallow_save_to_gconf), (swallow_load_from_gconf):
+	updates, kill use_default stuff etc.
+
 Fri Feb 22 15:27:35 2002  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: when a clock format is set, make sure the format

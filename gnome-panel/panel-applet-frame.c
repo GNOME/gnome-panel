@@ -67,9 +67,9 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 	char        *temp_key;
 
 	client  = panel_gconf_get_client ();
-	profile = session_get_current_profile ();
+	profile = panel_gconf_get_profile ();
 
-	temp_key = panel_gconf_applets_profile_get_full_key (profile, gconf_key, "bonobo-iid");
+	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo-iid");
 	gconf_client_set_string (client, temp_key, frame->priv->iid, NULL);
 	g_free (temp_key);
 }
@@ -77,10 +77,10 @@ panel_applet_frame_save_to_gconf (PanelAppletFrame *frame,
 void
 panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 				    gint         position,
-				    const char  *gconf_key,
-				    gboolean     use_default)
+				    const char  *gconf_key)
 {
 	GConfClient *client;
+	const char  *profile;
 	char        *temp_key;
 	char        *applet_iid;
 
@@ -88,9 +88,9 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	g_return_if_fail (gconf_key != NULL);
 
 	client  = panel_gconf_get_client ();
+	profile = panel_gconf_get_profile ();
 
-	temp_key = use_default ? panel_gconf_applets_default_profile_get_full_key ("medium", gconf_key, "bonobo-iid") :
-		panel_gconf_applets_profile_get_full_key (session_get_current_profile (), gconf_key, "bonobo-iid");
+	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo-iid");
 	applet_iid = gconf_client_get_string (client, temp_key, NULL);
 	g_free (temp_key);
 
@@ -172,14 +172,8 @@ panel_applet_frame_load (const gchar *iid,
 	
 	gtk_widget_show_all (frame);
 
-	info = panel_applet_register (frame, 
-				      NULL /* data */,
-				      NULL /* data_destroy */,
-				      panel,
-				      pos,
-				      FALSE,
-				      APPLET_BONOBO,
-				      real_key);
+	info = panel_applet_register (frame, NULL, NULL, panel, pos,
+				      FALSE, APPLET_BONOBO, real_key);
 
 	if (!info)
 		g_warning (_("Cannot register control widget\n"));
@@ -527,7 +521,7 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s",
-			iid, session_get_current_profile (), gconf_key, bg_str,
+			iid, panel_gconf_get_profile (), gconf_key, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
 			panel_applet_frame_get_size_string (frame, panel));
 

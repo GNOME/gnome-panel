@@ -152,5 +152,5 @@ panel_global_config_notify (GConfClient *client,
 	 * FIXME: we should handle config changes
 	 *        per config item.
 	 */
-	panel_session_apply_global_config ();
+	panel_apply_global_config ();
 }

@@ -115,8 +115,7 @@ void            menu_save_to_gconf   (Menu       *menu,
 
 void            menu_load_from_gconf (PanelWidget *panel_widget,
 				      gint         position,
-				      const char  *gconf_key,
-				      gboolean     use_default);
+				      const char  *gconf_key);
 
 /* perhaps into basep-widget.h? */
 enum {

@@ -112,7 +112,7 @@ void
 load_logout_applet (PanelWidget *panel,
 		    gint         pos,
 		    gboolean     exactpos,
-		    gboolean     use_default)
+		    const char  *gconf_key)
 {
 	GtkWidget  *logout;
 	AppletInfo *info;
@@ -121,9 +121,9 @@ load_logout_applet (PanelWidget *panel,
 	if (!logout)
 		return;
 
-	info = panel_applet_register (logout, NULL, NULL, panel,
-				      pos, exactpos, APPLET_LOGOUT,
-				      NULL);
+	info = panel_applet_register (logout, NULL, NULL,
+				      panel, pos, exactpos,
+				      APPLET_LOGOUT, gconf_key);
 	if (!info)
 		return;
 
@@ -175,9 +175,9 @@ create_lock_widget(void)
 
 void
 load_lock_applet (PanelWidget *panel,
-		  gint         pos,
+		  int          pos,
 		  gboolean     exactpos,
-		  gboolean     use_default)
+		  const char  *gconf_key)
 {
 	GtkWidget  *lock;
 	AppletInfo *info;
@@ -188,7 +188,7 @@ load_lock_applet (PanelWidget *panel,
 		return;
 
 	info = panel_applet_register (lock, NULL, NULL, panel, pos,
-				      exactpos, APPLET_LOCK, NULL);
+				      exactpos, APPLET_LOCK, gconf_key);
 	if (!info)
 		return;
 

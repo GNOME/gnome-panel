@@ -494,6 +494,8 @@ properties_apply (Launcher *launcher)
 
 	/* Setup the button look */
 	setup_button (launcher);
+
+	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
 }
 
 static void
@@ -629,9 +631,10 @@ launcher_save_to_gconf (Launcher   *launcher,
 		char        *temp_key;
 
 		client  = panel_gconf_get_client ();
-		profile = session_get_current_profile ();
+		profile = panel_gconf_get_profile ();
 
-		temp_key = panel_gconf_objects_profile_get_full_key (profile, gconf_key, "launcher-location");
+		temp_key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile,
+						 gconf_key, "launcher-location");
 		gconf_client_set_string (client, temp_key, location, NULL);
 		g_free (temp_key);
 	}
@@ -640,26 +643,27 @@ launcher_save_to_gconf (Launcher   *launcher,
 void
 launcher_load_from_gconf (PanelWidget *panel_widget,
 			  gint         position,
-			  const char  *gconf_key,
-			  gboolean     use_default)
+			  const char  *gconf_key)
 {
-        GConfClient *client;
-        char        *temp_key;
-        char        *launcher_location;
+	GConfClient *client;
+	const char  *profile;
+	char        *temp_key;
+	char        *launcher_location;
 
-        g_return_if_fail (panel_widget);
-        g_return_if_fail (gconf_key);
+	g_return_if_fail (panel_widget);
+	g_return_if_fail (gconf_key);
 
-        client  = panel_gconf_get_client ();
-	/* FIXME : We need to do checking of screen dimensions for default */
-        temp_key = use_default ? panel_gconf_objects_default_profile_get_full_key ("medium", gconf_key, "launcher-location") :
-		panel_gconf_objects_profile_get_full_key (session_get_current_profile (), gconf_key, "launcher-location");
-        launcher_location = gconf_client_get_string (client, temp_key, NULL);
-        g_free (temp_key);
+	client  = panel_gconf_get_client ();
+	profile = panel_gconf_get_profile ();
+
+	temp_key = panel_gconf_full_key (
+			PANEL_GCONF_OBJECTS, profile, gconf_key, "launcher-location");
+	launcher_location = gconf_client_get_string (client, temp_key, NULL);
+	g_free (temp_key);
 
 	load_launcher_applet (launcher_location, panel_widget, position, TRUE, gconf_key);
 
-        g_free (launcher_location);
+	g_free (launcher_location);
 }
 
 Launcher *
@@ -670,7 +674,7 @@ load_launcher_applet_full (const char       *params,
 			   gboolean          exactpos,
 			   const char       *gconf_key)
 {
-	Launcher   *launcher;
+	Launcher *launcher;
 
 	launcher = create_launcher (params, ditem);
 
@@ -887,7 +891,7 @@ launcher_file_name (const char *location)
 
 	g_return_val_if_fail (location!= NULL, NULL);
 
-	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
+	tmp = gnome_util_home_file (PANEL_LAUNCHERS_PATH);
 	/* Make sure the launcher directory exists */
 	if (!g_file_test (tmp, G_FILE_TEST_EXISTS)) {
 		panel_ensure_dir (tmp);

@@ -416,7 +416,8 @@ set_fooclock_format (GtkWidget *w, const char *format)
 }
 
 static void
-append_format_items (GtkWidget *menu)
+append_format_items (FoobarWidget *foo,
+		     GtkWidget    *menu)
 {
 	char hour[256];
 	GSList *group = NULL;
@@ -433,7 +434,11 @@ append_format_items (GtkWidget *menu)
 		N_("%l:%M:%S %p")
 	};
 
-	key = panel_gconf_global_config_get_full_key ("clock-format");
+	key = panel_gconf_full_key (
+			PANEL_GCONF_PANELS,
+			panel_gconf_get_profile (),
+			PANEL_WIDGET (foo->panel)->unique_id,
+			"clock-format");
 	s = panel_gconf_get_string (key, _("%I:%M:%S %p"));
 	g_free (key);
 	
@@ -461,10 +466,10 @@ append_format_items (GtkWidget *menu)
 				  G_CALLBACK (set_fooclock_format),
 				  _(formats[i]));
 
-		if (strcmp (sure_string (s), _(formats[i])) == 0) {
+		if (!strcmp (sure_string (s), _(formats[i])))
 			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (format_items[i]), TRUE);
-		}
 	}
+
 	g_free (s);
 }
 
@@ -511,7 +516,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	}
 
 	menu2 = panel_menu_new ();
-	append_format_items (menu2); 
+	append_format_items (foo, menu2); 
 
 	item = gtk_image_menu_item_new_with_label (_("Format"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);

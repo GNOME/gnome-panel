@@ -9,59 +9,63 @@
 
 #undef PANEL_GCONF_DEBUG
 
-gchar * 
-panel_gconf_global_config_get_full_key (const gchar *key) {
-	return g_strdup_printf ("/apps/panel/global/%s", key);
+static GConfClient *panel_gconf_client = NULL;
+static char        *panel_gconf_profile = NULL;
+
+G_CONST_RETURN char *
+panel_gconf_get_profile (void)
+{
+	return panel_gconf_profile;
 }
 
-gchar *
-panel_gconf_general_profile_get_full_key (const gchar *profile, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/general/%s", profile, key);
+char * 
+panel_gconf_global_key (const gchar *key)
+{
+	return g_strconcat ("/apps/panel/global/", key, NULL);
 }
 
-gchar *
-panel_gconf_panel_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/panels/%s/%s", profile, panel_id, key);
+char *
+panel_gconf_general_key (const char *profile,
+			 const char *key)
+{
+	return g_strdup_printf ("/apps/panel/profiles/%s/general/%s",
+				profile, key);
 }
 
-gchar *
-panel_gconf_applets_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/applets/%s/%s", profile, applet_id, key);
-}
+char *
+panel_gconf_full_key (PanelGConfKeyType  type,
+		      const char        *profile,
+		      const char        *id,
+		      const char        *key)
+{
+	char *subdir = NULL;
 
-gchar *
-panel_gconf_objects_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/profiles/%s/objects/%s/%s", profile, object_id, key);
-}
+	switch (type) {
+	case PANEL_GCONF_PANELS:
+		subdir = "panels";
+		break;
+	case PANEL_GCONF_OBJECTS:
+		subdir = "objects";
+		break;
+	case PANEL_GCONF_APPLETS:
+		subdir = "applets";
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
 
-gchar *
-panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/default-profiles/%s/general/%s", profile, key);
-}
-
-gchar *
-panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/default-profiles/%s/panels/%s/%s", profile, panel_id, key);
-}
-
-gchar *
-panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/default-profiles/%s/applets/%s/%s", profile, applet_id, key);
-}
-
-gchar *
-panel_gconf_objects_default_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key) {
-	return g_strdup_printf ("/apps/panel/default-profiles/%s/objects/%s/%s", profile, object_id, key);
+	return g_strdup_printf ("/apps/panel/profiles/%s/%s/%s/%s",
+				profile, subdir, id, key);
 }
 
 GConfClient * 
-panel_gconf_get_client (void) {
-	static GConfClient *client = NULL;
+panel_gconf_get_client (void)
+{
+        if (!panel_gconf_client)
+                panel_gconf_client = gconf_client_get_default ();
 
-        if (!client)
-                client = gconf_client_get_default ();
-
-        return client;
+        return panel_gconf_client;
 }
 
 GSList *
@@ -69,239 +73,297 @@ panel_gconf_all_global_entries (void)
 {
 	GSList *list;
 
-	list = gconf_client_all_entries (panel_gconf_get_client (),
-					 "/apps/panel/global",
-					 NULL);
+	list = gconf_client_all_entries (
+			panel_gconf_get_client (), "/apps/panel/global", NULL);
 
 	return list;
 }
 
-gint 
-panel_gconf_get_int (const gchar *key, gint default_val) {
+int 
+panel_gconf_get_int (const char *key,
+		     int         default_val)
+{
 	GConfValue *value;
-	GError *error = NULL;
+	GError     *error = NULL;
 
-	value =  gconf_client_get (panel_gconf_get_client (), key, &error);
+	value = gconf_client_get (panel_gconf_get_client (), key, &error);
 
-	if (value != NULL) {
-		gint retval; 
+	if (value) {
+		int retval; 
 	
-		g_assert (error == NULL);
-
-		if (value->type == GCONF_VALUE_INT)  {
+		if (value->type == GCONF_VALUE_INT) 
 			retval = gconf_value_get_int (value);
-		} else {
-			/* FIXME : We still need to handle errors better than this */
+		else
 			retval = default_val;
-		}
+
 		gconf_value_free (value);
 
 		return retval;
-	} else {
-		return default_val;
 	}
+
+	return default_val;
 }
 
 gboolean
-panel_gconf_get_bool (const gchar *key, gboolean default_val) {
+panel_gconf_get_bool (const char *key,
+		      gboolean    default_val)
+{
 	GConfValue *value;
-	GError *error = NULL;
+	GError     *error = NULL;
 
 	value = gconf_client_get (panel_gconf_get_client (), key, &error);
 	
-	if (value != NULL) {
+	if (value) {
 		gboolean retval;
 
-		g_assert (error == NULL);
-
-		if (value->type == GCONF_VALUE_BOOL) {
+		if (value->type == GCONF_VALUE_BOOL)
 			retval = gconf_value_get_bool (value);
-		} else {
-			/* FIXME : We still need to handle errors better than this */
+		else
 			retval = default_val;
-		}
 
 		gconf_value_free (value);
 
 		return retval;
-	} else {
-		return default_val;
 	}
+
+	return default_val;
 }
 
-gchar * 
-panel_gconf_get_string (const gchar *key, const gchar *default_val) {
+char * 
+panel_gconf_get_string (const char *key,
+			const char *default_val)
+{
 	GConfValue *value;
-	GError *error = NULL;
+	GError     *error = NULL;
 
 	value = gconf_client_get (panel_gconf_get_client (), key, &error);
 
-	if (value != NULL) {
-		gchar *retval;
+	if (value) {
+		char *retval;
 	
-		g_assert (error == NULL);
-
-		if (value->type == GCONF_VALUE_STRING) {	
+		if (value->type == GCONF_VALUE_STRING)
 			retval = g_strdup (gconf_value_get_string (value));
-		} else {
-			/* FIXME : We still need to handle errors better than this */
+		else
 			retval = g_strdup (default_val);
-		}
 
 		gconf_value_free (value);
 
 		return retval;
-	} else {
-		return g_strdup (default_val);
 	}
+
+	return g_strdup (default_val);
 }
 
 void 
-panel_gconf_set_int (const gchar *key, gint value) {
-
+panel_gconf_set_int (const gchar *key,
+		     gint         value)
+{
 	gconf_client_set_int (panel_gconf_get_client (), key, value, NULL);
-			      
-	return;
 }
 
 void 
-panel_gconf_set_bool (const gchar *key, gboolean value) {
-
+panel_gconf_set_bool (const gchar *key,
+		      gboolean     value)
+{
 	gconf_client_set_bool (panel_gconf_get_client (), key, value, NULL);
-
-	return;
 }
 
 void 
-panel_gconf_set_string (const gchar *key, const gchar *value) {
-
+panel_gconf_set_string (const gchar *key,
+			const gchar *value)
+{
 	gconf_client_set_string (panel_gconf_get_client (), key, value, NULL);
-
-	return;
 }
 
 guint 
-panel_gconf_notify_add (const gchar *key, GConfClientNotifyFunc notify_func, gpointer user_data) {
-	guint notify_id;
-	notify_id = gconf_client_notify_add (panel_gconf_get_client (), 
-					     key, 
-					     notify_func, 
-					     user_data, 
-					     NULL, NULL);
-	return notify_id;
+panel_gconf_notify_add (const char            *key,
+		        GConfClientNotifyFunc  notify_func,
+			gpointer               user_data)
+{
+	return gconf_client_notify_add (
+			panel_gconf_get_client (), key, notify_func,
+			user_data, NULL, NULL);
 }
 
 static void
 panel_notify_object_dead (guint notify_id)
 {
-	gconf_client_notify_remove (panel_gconf_get_client (),
-				    notify_id);
+	gconf_client_notify_remove (panel_gconf_get_client (), notify_id);
 }
 
 guint
-panel_gconf_notify_add_while_alive (const gchar *key, 
-				    GConfClientNotifyFunc notify_func, 
-				    GObject *alive_object)
+panel_gconf_notify_add_while_alive (const gchar           *key, 
+				    GConfClientNotifyFunc  notify_func, 
+				    GObject               *alive_object)
 {
 	guint notify_id;
 
 	g_return_val_if_fail (G_IS_OBJECT (alive_object), 0);
 
 	notify_id = panel_gconf_notify_add (key, notify_func, alive_object);
+
 	if (notify_id > 0) {
 		/* Add a weak reference to the object so that we can
-		 * remove the notification when the object's gone. */
+		 * remove the notification when the object's gone.
+		 */
 		g_object_weak_ref (alive_object,
-				   (GWeakNotify)panel_notify_object_dead,
+				   (GWeakNotify) panel_notify_object_dead,
 				   GUINT_TO_POINTER (notify_id));
 	}
+
 	return notify_id;
 }
 
 void
-panel_gconf_add_dir (const gchar *key) {
-	gconf_client_add_dir (panel_gconf_get_client (),
-			      key,
-			      GCONF_CLIENT_PRELOAD_NONE,
-			      NULL);
-	return;
-}
-
-gboolean
-panel_gconf_dir_exists (const gchar *key) {
-	GError   *error = NULL;
-	gboolean  retval = FALSE;
-
-	g_return_val_if_fail (key != NULL, FALSE);
-	
-	retval = gconf_client_dir_exists (panel_gconf_get_client (), key, &error);
-	if (error) {
-		g_warning (G_STRLOC ": gconf error from dir_exists(): %s", error->message);
-		g_error_free (error);
-	}
-
-	return retval;
-}
-
-char *
-panel_gconf_objects_get_full_key (const gchar *profile,
-				  const gchar *object_id,
-				  const gchar *key,
-				  gboolean     use_default)
+panel_gconf_add_dir (const char *key)
 {
-	char *retval = NULL;
-
-   	retval = use_default ? panel_gconf_objects_default_profile_get_full_key (profile, object_id, key) :
-		panel_gconf_objects_profile_get_full_key (profile, object_id, key);
-
-	return retval;
+	gconf_client_add_dir (
+		panel_gconf_get_client (), key, GCONF_CLIENT_PRELOAD_NONE, NULL);
 }
-
-/* FIXME: cut and paste code from gconf - hopefully this will be public API for future releases */
 
 void
-panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
+panel_gconf_clean_dir (GConfClient *client,
+		       const char  *dir)
+{
 	GSList *subdirs;
 	GSList *entries;
-	GSList *tmp;
+	GSList *l;
 
 	subdirs = gconf_client_all_dirs (client, dir, NULL);
 
-#ifdef PANEL_GCONF_DEBUG
-	printf ("Recursive Clean for %s\n", dir);
-#endif 
+	for (l = subdirs; l; l = l->next) {
+		panel_gconf_clean_dir (client, (char *) l->data);
+		g_free (l->data);
+	}
 
-	if (subdirs != NULL) {
-    		tmp = subdirs;
-
-    		while (tmp != NULL) {
-      			gchar *s = tmp->data;
-      			panel_gconf_directory_recursive_clean (client, s);
-      			g_free (s);
-      			tmp = g_slist_next (tmp);
-    		}
-
-	    	g_slist_free (subdirs);
-  	}
+	g_slist_free (subdirs);
  
   	entries = gconf_client_all_entries (client, dir, NULL);
 
-  	if (entries != NULL) {
-    		tmp = entries;
+	for (l = entries; l; l = l->next) {
+		GConfEntry *entry = l->data;
 
-    		while (tmp != NULL) {
- 			GConfEntry *entry = tmp->data;
-
-#ifdef PANEL_GCONF_DEBUG
-			printf ("Unsetting %s\n", gconf_entry_get_key (entry));
-#endif 
-      			gconf_client_unset (client, gconf_entry_get_key (entry), NULL);
-      			gconf_entry_free (entry);
-      			tmp = g_slist_next (tmp);
-    		}
+		gconf_client_unset (client, gconf_entry_get_key (entry), NULL);
+		gconf_entry_free (entry);
+	}
     		
-		g_slist_free (entries);
-  	}
+	g_slist_free (entries);
 
 	gconf_client_unset (client, dir, NULL);
+}
+
+static void
+panel_gconf_associate_schemas_in_dir (GConfClient  *client,
+				      const gchar  *profile_dir,
+				      const gchar  *schema_dir,
+				      GError      **error)
+{
+	GSList *list, *l;
+
+#ifdef PANEL_GCONF_DEBUG
+	fprintf (stderr, "associating schemas in %s to %s\n", schema_dir, profile_dir);
+#endif
+
+	list = gconf_client_all_entries (client, schema_dir, error);
+
+	g_return_if_fail (*error == NULL);
+
+	for (l = list; l; l = l->next) {
+		GConfEntry *entry = l->data;
+		gchar      *key;
+		gchar      *tmp;
+
+		tmp = g_path_get_basename (gconf_entry_get_key (entry));
+
+		key = g_strdup_printf ("%s/%s", profile_dir, tmp);
+
+		g_free (tmp);
+
+		gconf_engine_associate_schema (
+			client->engine, key, gconf_entry_get_key (entry), error);
+
+		g_free (key);
+
+		gconf_entry_free (entry);
+
+		if (*error) {
+			g_slist_free (list);
+			return;
+		}
+	}
+
+	g_slist_free (list);
+
+	list = gconf_client_all_dirs (client, schema_dir, error);
+
+	for (l = list; l; l = l->next) {
+		char *subdir = l->data;
+		char *prefs_subdir;
+		char *schema_subdir;
+		char *tmp;
+
+		tmp = g_path_get_basename (subdir);
+
+		prefs_subdir  = g_strdup_printf ("%s/%s", profile_dir, tmp);
+		schema_subdir = g_strdup_printf ("%s/%s", schema_dir, tmp);
+
+		panel_gconf_associate_schemas_in_dir (
+			client, prefs_subdir, schema_subdir, error);
+
+		g_free (prefs_subdir);
+		g_free (schema_subdir);
+		g_free (subdir);
+		g_free (tmp);
+
+		if (*error) {
+			g_slist_free (list);
+			return;
+		}
+	}
+
+	g_slist_free (list);
+}
+
+void
+panel_gconf_setup_profile (const char *profile)
+{
+	GError *error = NULL;
+	char   *profile_dir;
+	char   *schema_dir;
+
+	if (profile)
+		panel_gconf_profile = g_strdup (profile);
+	else
+		panel_gconf_profile = g_strdup ("default");
+
+	profile_dir = g_strconcat ("/apps/panel/profiles/", panel_gconf_profile, NULL);
+
+	if (gconf_client_dir_exists (panel_gconf_get_client (), profile_dir, NULL)) {
+		g_free (profile_dir);
+		return;
+	}
+
+#ifdef PANEL_GCONF_DEBUG
+	fprintf (stderr, "%s does not exist\n", profile_dir);
+#endif
+
+	/*
+	 * FIXME: work out what set of defaults we want to use
+	 */
+	schema_dir = g_strconcat ("/schemas/apps/panel/default-profiles/", "medium", NULL);
+
+	panel_gconf_associate_schemas_in_dir (
+		panel_gconf_client, profile_dir, schema_dir, &error);
+
+	if (error) {
+		g_warning ("gconf error: %s", error->message);
+		g_error_free (error);
+	}
+
+	g_free (profile_dir);
+	g_free (schema_dir);
+
+	/*
+	 * FIXME: setup notifies
+	 */
 }

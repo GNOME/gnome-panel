@@ -1,52 +1,58 @@
 #ifndef PANEL_GCONF_H
-#define PANEL_CONF_H
+#define PANEL_GCONF_H
 
 #include <gconf/gconf-client.h>
-#include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-#define PANEL_GCONF_DEFAULT_PROFILE	"medium"
+typedef enum {
+	PANEL_GCONF_PANELS,
+	PANEL_GCONF_OBJECTS,
+	PANEL_GCONF_APPLETS
+} PanelGConfKeyType;
 
-/* FIXME : I guess we really need to do some sort of error checking with all of this */
+G_CONST_RETURN char *panel_gconf_get_profile (void);
 
-GConfClient*	panel_gconf_get_client (void);
+GConfClient    *panel_gconf_get_client  (void);
+char           *panel_gconf_global_key  (const gchar *key);
+char           *panel_gconf_general_key (const gchar *profile,
+					 const gchar *key);
 
-/* Global Configuration */
-gchar *		panel_gconf_global_config_get_full_key (const gchar *key);
-
-/* User defined Profiles */
-gchar * 	panel_gconf_general_profile_get_full_key (const gchar * profile, const gchar *key);
-gchar *		panel_gconf_panel_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key);
-gchar *		panel_gconf_applets_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
-gchar *		panel_gconf_objects_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key);
-
-gchar *         panel_gconf_objects_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key, gboolean use_default);
-
-/* Default Profiles */
-gchar *		panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key);
-gchar *		panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gchar *panel_id, const gchar *key);
-gchar *		panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key);
-gchar *		panel_gconf_objects_default_profile_get_full_key (const gchar *profile, const gchar *object_id, const gchar *key);
+char           *panel_gconf_full_key    (PanelGConfKeyType  type,
+					 const gchar       *profile,
+					 const gchar       *panel_id,
+					 const gchar       *key);
 
 GSList         *panel_gconf_all_global_entries (void);
 
-gint		panel_gconf_get_int (const gchar *key, gint default_val);
-gboolean	panel_gconf_get_bool (const gchar *key, gboolean default_val);
-gchar*		panel_gconf_get_string (const gchar *key, const gchar *default_val);
+int		panel_gconf_get_int     (const char *key,
+					 int         default_val);
+gboolean	panel_gconf_get_bool    (const char *key,
+					 gboolean    default_val);
+char*		panel_gconf_get_string  (const char *key,
+					 const char *default_val);
 
-void 		panel_gconf_set_int (const gchar *key, gint value);
-void 		panel_gconf_set_bool (const gchar *key, gboolean value);
-void 		panel_gconf_set_string (const gchar *key, const gchar *value);
+void 		panel_gconf_set_int     (const gchar *key,
+					 int         value);
+void 		panel_gconf_set_bool    (const char *key,
+					 gboolean    value);
+void 		panel_gconf_set_string  (const char *key,
+					 const char *value);
 
-guint		panel_gconf_notify_add (const gchar *key, GConfClientNotifyFunc notify_func, gpointer user_data);
-guint		panel_gconf_notify_add_while_alive (const gchar *key, GConfClientNotifyFunc notify_func, GObject *alive_object);
+guint		panel_gconf_notify_add             (const gchar           *key,
+						    GConfClientNotifyFunc  notify_func,
+						    gpointer               user_data);
+guint		panel_gconf_notify_add_while_alive (const gchar           *key,
+						    GConfClientNotifyFunc  notify_func,
+						    GObject               *alive_object);
 
-void 		panel_gconf_add_dir (const gchar *key);
+void 		panel_gconf_add_dir       (const gchar *key);
 
-gboolean	panel_gconf_dir_exists (const gchar *key);
+void		panel_gconf_clean_dir     (GConfClient *client,
+					   const gchar *dir);
 
-void		panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir);
+void            panel_gconf_setup_profile (const char  *profile);
+
 G_END_DECLS
 
 #endif /* PANEL_GCONF_H */
