@@ -26,6 +26,8 @@ libgen_util_applet_2_la_SOURCES = \
 	main.c \
 	clock.c \
 	clock.h	\
+	handlebin.c	\
+	handlebin.h	\
 	pager.c	\
 	pager.h	\
 	tasklist.c \
@@ -70,7 +72,7 @@ ui_DATA		= \
 	GNOME_MailCheckApplet.xml	\
 	GNOME_PagerApplet.xml		\
 	GNOME_TasklistApplet.xml	
-	
+
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)

@@ -27,10 +27,11 @@
 #include <gconf/gconf-client.h>
 
 #include "tasklist.h"
+#include "handlebin.h"
 
 typedef struct {
 	GtkWidget *applet;
-
+        GtkWidget *frame;
 	GtkWidget *tasklist;
 	
 	WnckScreen *screen;
@@ -65,7 +66,6 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       TasklistData      *tasklist,
 				       const gchar       *verbname);
-
 
 static void
 tasklist_update (TasklistData *tasklist)
@@ -112,6 +112,9 @@ applet_change_orient (PanelApplet       *applet,
 	tasklist->orientation = new_orient;
 
 	tasklist_update (tasklist);
+
+        foo_handle_set_orientation (FOO_HANDLE (tasklist->frame),
+                                    new_orient);
 }
 
 static void
@@ -366,6 +369,10 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	tasklist->applet = GTK_WIDGET (applet);
 
+        tasklist->frame = foo_handle_new ();
+        foo_handle_set_shadow_type (FOO_HANDLE (tasklist->frame),
+                                    GTK_SHADOW_NONE);
+        
 	setup_gconf (tasklist);
 	
 	error = NULL;
@@ -422,12 +429,14 @@ fill_tasklist_applet(PanelApplet *applet)
 	tasklist_update (tasklist);
 	gtk_widget_show (tasklist->tasklist);
 
-	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
+	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->frame);
+        gtk_container_add (GTK_CONTAINER (tasklist->frame), tasklist->tasklist);
 	
 	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
 				PANEL_APPLET_EXPAND_MAJOR | PANEL_APPLET_EXPAND_MINOR);
 
 	gtk_widget_show (tasklist->applet);
+        gtk_widget_show (tasklist->frame);
 
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_orient",
@@ -613,7 +622,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 		tasklist->properties_dialog = glade_xml_get_widget (xml, "tasklist_properties_dialog");
 
 		g_object_add_weak_pointer (G_OBJECT (tasklist->properties_dialog),
-					   &tasklist->properties_dialog);
+					   (void**) &tasklist->properties_dialog);
 
 		setup_dialog (xml, tasklist);
 		
