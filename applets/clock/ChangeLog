@@ -1,5 +1,14 @@
 2002-02-23  Gediminas Paulauskas <menesis@delfi.lt>
 
+	Properties now work.
+	
+	* clock.c: move preferences to gconf, made properties dialog
+	instant-apply.
+	* clock.schemas: new file for clock properties.
+	* Makefile.am: install clock.schemas
+
+2002-02-23  Gediminas Paulauskas <menesis@delfi.lt>
+
 	* clock.c: make tooltip work. Convert everything we get from strftime
 	to UTF-8, so copy date works right.
 	* tasklist.c: remove duplicate setup_gconf call

@@ -49,7 +49,7 @@ mailcheckbitmapsdir = $(datadir)/pixmaps/mailcheck
 mailcheckbitmaps_DATA = $(MAILCHECK_BITMAPS)
 
 schemadir   = $(sysconfdir)/gconf/schemas
-schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas
+schema_DATA = mailcheck.schemas pager.schemas tasklist.schemas clock.schemas
 
 uidir 		= $(datadir)/gnome-2.0/ui
 ui_DATA		= \

@@ -20,15 +20,24 @@
 #include <time.h>
 
 #include <panel-applet.h>
+#include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
 #include <libbonobo.h>
 #include <libgnomeui/libgnomeui.h>
 #include <libgnome/libgnome.h>
+#include <gconf/gconf-client.h>
 
 #include "clock.h"
 
 #define INTERNETSECOND (864/4)
+
+static const char* KEY_HOUR_FORMAT	= "hour_format";
+static const char* KEY_SHOW_DATE 	= "show_date";
+static const char* KEY_SHOW_TOOLTIP	= "show_tooltip";
+static const char* KEY_GMT_TIME		= "gmt_time";
+static const char* KEY_UNIX_TIME	= "unix_time";
+static const char* KEY_INTERNET_TIME	= "internet_time";
 
 extern GtkTooltips *panel_tooltips;
 
@@ -53,12 +62,6 @@ struct _ClockData {
 	int size;
 
 	GtkWidget *props;
-	int prop_hourformat;
-        gboolean prop_showdate;
-	gboolean prop_unixtime;
-	gboolean prop_internettime;
-	gboolean prop_gmt_time;
-	gboolean prop_showtooltip;
 };
 
 typedef struct {
@@ -116,29 +119,6 @@ clock_timeout_callback (gpointer data)
 
 	return TRUE;
 }
-
-#ifdef FIXME
-static gboolean
-applet_save_session(GtkWidget * w,
-		    const char *privcfgpath,
-		    const char *globcfgpath,
-		    gpointer data)
-{
-	ClockData *cd = data;
-	gnome_config_push_prefix(privcfgpath);
-	gnome_config_set_int("clock/hourformat", cd->hourformat);
-	gnome_config_set_int("clock/showdate", cd->showdate);
-	gnome_config_set_int("clock/unixtime", cd->unixtime);
-	gnome_config_set_int("clock/internettime", cd->internettime);
-	gnome_config_set_int("clock/showtooltip", cd->showtooltip);
-	gnome_config_set_int("clock/gmt_time", cd->gmt_time);
-	gnome_config_pop_prefix();
-	gnome_config_sync();
-	gnome_config_drop_all();
-
-	return FALSE;
-}
-#endif
 
 static float
 get_itime (time_t current_time)
@@ -263,6 +243,45 @@ computer_clock_update_func (ClockData * cd,
 }
 
 static void
+refresh_clock (ClockData *cd)
+{
+	time_t current_time;
+	
+	time (&current_time);
+	(*cd->update_func) (cd, current_time);
+}
+
+static void
+refresh_clock_timeout(ClockData *cd)
+{
+	time_t current_time;
+	struct tm *tm;
+	
+	if (cd->timeout)
+		g_source_remove (cd->timeout);
+
+	time (&current_time);
+	(*cd->update_func) (cd, current_time);
+	
+	/* Install timeout handler */
+	if (cd->gmt_time)
+		tm = gmtime (&current_time);
+	else
+		tm = localtime (&current_time);
+
+	if(cd->unixtime)
+		cd->timeouttime = 1000;
+        else if (cd->internettime)
+                cd->timeouttime = INTERNETSECOND;
+	else
+		cd->timeouttime = 36000-(tm->tm_sec*600);
+	
+	cd->timeout = g_timeout_add (cd->timeouttime,
+				     clock_timeout_callback,
+				     cd);
+}
+
+static void
 create_computer_clock_widget (GtkWidget ** clock, ClockUpdateFunc * update_func)
 {
 	GtkWidget *frame;
@@ -318,8 +337,6 @@ static void
 create_clock_widget (ClockData *cd)
 {
 	GtkWidget *clock;
-	struct tm *tm;
-	time_t current_time;
 
 	/*FIXME: different clock types here */
 	create_computer_clock_widget (&clock, &cd->update_func);
@@ -335,26 +352,8 @@ create_clock_widget (ClockData *cd)
 			    (GtkSignalFunc) destroy_clock,
 			    cd);
 	
-	/* Call the clock's update function so that it paints its first state */
-	time (&current_time);
-	(*cd->update_func) (cd, current_time);
-
-	/* Install timeout handler */
-	if (cd->gmt_time)
-		tm = gmtime (&current_time);
-	else
-		tm = localtime (&current_time);
-    
-	if (cd->unixtime)
-		cd->timeouttime = 1000;
-        else if (cd->internettime)
-                cd->timeouttime = INTERNETSECOND;
-	else
-		cd->timeouttime = 36000 - (tm->tm_sec*600);
-	
-	cd->timeout = g_timeout_add (cd->timeouttime,
-				     clock_timeout_callback,
-				     cd);
+	/* Refresh the clock so that it paints its first state */
+	refresh_clock_timeout(cd);
 }
 
 /* this is when the panel orientation changes */
@@ -513,65 +512,226 @@ static const BonoboUIVerb clock_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
+static void
+hour_format_changed (GConfClient  *client,
+		     guint         cnxn_id,
+		     GConfEntry   *entry,
+		     ClockData *clock)
+{
+	int value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
+		return;
+
+	value = gconf_value_get_int (entry->value);
+	
+	if (value == 12 || value == 24)
+		clock->hourformat = value;
+	else
+		clock->hourformat = 12;
+
+	refresh_clock (clock);
+}
+
+static void
+show_date_changed (GConfClient  *client,
+		   guint         cnxn_id,
+		   GConfEntry   *entry,
+		   ClockData *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->showdate = (value != 0);
+	refresh_clock (clock);
+}
+
+static void
+internet_time_changed (GConfClient  *client,
+		       guint         cnxn_id,
+		       GConfEntry   *entry,
+		       ClockData *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->internettime = (value != 0);
+	refresh_clock_timeout (clock);
+}
+
+static void
+unix_time_changed (GConfClient  *client,
+		  guint         cnxn_id,
+		  GConfEntry   *entry,
+		  ClockData *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->unixtime = (value != 0);
+	refresh_clock_timeout (clock);
+}
+
+static void
+gmt_time_changed (GConfClient  *client,
+		  guint         cnxn_id,
+		  GConfEntry   *entry,
+		  ClockData *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->gmt_time = (value != 0);
+	refresh_clock_timeout (clock);
+}
+
+static void
+show_tooltip_changed (GConfClient  *client,
+		      guint         cnxn_id,
+		      GConfEntry   *entry,
+		      ClockData *clock)
+{
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	clock->showtooltip = (value != 0);
+	refresh_clock (clock);
+}
+
+static void
+setup_gconf (ClockData *clock)
+{
+	GConfClient *client;
+	char *key;
+
+	client = gconf_client_get_default ();
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_HOUR_FORMAT);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)hour_format_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_SHOW_DATE);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)show_date_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_SHOW_TOOLTIP);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)show_tooltip_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_GMT_TIME);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)gmt_time_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_UNIX_TIME);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)unix_time_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_INTERNET_TIME);
+	gconf_client_notify_add(client, key,
+				(GConfClientNotifyFunc)internet_time_changed,
+				clock,
+				NULL, NULL);
+	g_free (key);
+}
+
 gboolean
 fill_clock_applet(PanelApplet *applet)
 {
 	ClockData *cd;
+	GError *error;
+	
+	panel_applet_add_preferences (applet, "/schemas/apps/clock-applet/prefs", NULL);
 	
 	cd = g_new0 (ClockData, 1);
 
 	cd->applet = GTK_WIDGET (applet);
 
-	/* FIXME: The config stuff needs to be completely redone... */
-	
-	//	gnome_config_push_prefix(APPLET_WIDGET(applet)->privcfgpath);
+	setup_gconf (cd);
 
-	/* A kluge to allow translation of default hour format to 12 or
-	 * 24 hour format */
-	{
-		/* Do NOT translate the clock/hourformat part.  What you
-		 * should change is the 12.  If your country code should use
+	error = NULL;
+	cd->hourformat = panel_applet_gconf_get_bool (applet, KEY_HOUR_FORMAT, &error);
+	if (error) {
+		g_error_free (error);
+		/* Do NOT translate the clock/hourformat= part.  What you
+		 * should change is the number 12.  If your country code should use
 		 * 12 hour format by default, leave it at 12, otherwise use 24
 		 * for 24 hour format.  Those are the only two supported */
 		char *transl = _("clock/hourformat=12");
+		const int len = strlen ("clock/hourformat=");
 		/* sanity */
-		if (strncmp (transl, "clock/hourformat=",
-			     strlen ("clock/hourformat=") != 0)) {
+		if (strncmp (transl, "clock/hourformat=", len)) {
 			g_warning("Clock applet string clock/hourformat=12 "
 				  "was not translated correctly in this locale.");
-			transl = "clock/hourformat=12";
-		}
-		
-		cd->hourformat = gnome_config_get_int (transl);
-
-		/* support the old syntax */
-		if (cd->hourformat == 0)
 			cd->hourformat = 12;
-		else if (cd->hourformat == 1)
-			cd->hourformat = 24;
-
-		/* make sure it's a sane value, we use 24 otherwise */
-		if (cd->hourformat != 12 && cd->hourformat != 24)
-			cd->hourformat = 24;
+		} else {
+			cd->hourformat = atoi (transl + len);
+			if (cd->hourformat != 12 && cd->hourformat != 24)
+				cd->hourformat = 12;
+		}
 	}
-	/* if on a small screen don't show data by default */
-	if (gdk_screen_width () <= 800)
-		cd->showdate = gnome_config_get_int ("clock/showdate=0");
-	else
-		cd->showdate = gnome_config_get_int ("clock/showdate=1");
 
-	cd->unixtime = gnome_config_get_int ("clock/unixtime=0");
-	cd->internettime = gnome_config_get_int ("clock/internettime=0");
-	
-	/* if on a small screen show tooltip with date by default */
-	if (gdk_screen_width() <= 800)
-		cd->showtooltip = gnome_config_get_int ("clock/showtooltip=1");
-	else
-		cd->showtooltip = gnome_config_get_int ("clock/showtooltip=0");
-	
-	cd->gmt_time = gnome_config_get_int ("clock/gmt_time=0");
-	
-	//gnome_config_pop_prefix();
+	error = NULL;
+	cd->showdate = panel_applet_gconf_get_bool (applet, KEY_SHOW_DATE, &error);
+	if (error) {
+		g_error_free (error);
+		/* if on a small screen don't show data by default */
+		if (gdk_screen_width () <= 800)
+			cd->showdate = FALSE;
+		else
+			cd->showdate = TRUE;
+	}
+
+	error = NULL;
+	cd->showtooltip = panel_applet_gconf_get_bool (applet, KEY_SHOW_TOOLTIP, &error);
+	if (error) {
+		g_error_free (error);
+		cd->showtooltip = TRUE; /* Default value*/
+	}
+
+	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
+	cd->unixtime = panel_applet_gconf_get_bool (applet, KEY_UNIX_TIME, NULL);
+	cd->internettime = panel_applet_gconf_get_bool (applet, KEY_INTERNET_TIME, NULL);
 
 	create_clock_widget (cd);
 
@@ -600,14 +760,6 @@ fill_clock_applet(PanelApplet *applet)
 			  G_CALLBACK (applet_change_background),
 			  cd);
 
-	
-#ifdef FIXME
-	g_signal_connect (G_OBJECT (cd->applet),
-			  "save_session",
-			  G_CALLBACK (applet_save_session),
-			  cd);
-#endif
-
 	panel_applet_setup_menu_from_file (PANEL_APPLET (cd->applet),
 					   NULL,
 					   "GNOME_ClockApplet.xml",
@@ -619,82 +771,6 @@ fill_clock_applet(PanelApplet *applet)
 }
 
 static void
-apply_properties (GtkWidget * widget, gint button_num, gpointer data)
-{
-	ClockData *cd = data;
-	time_t current_time;
-	struct tm *tm;
-
-	cd->hourformat = cd->prop_hourformat;
-	cd->showdate = cd->prop_showdate;
-	cd->unixtime = cd->prop_unixtime;
-   	cd->internettime = cd->prop_internettime;
-	cd->gmt_time = cd->prop_gmt_time;
-	cd->showtooltip = cd->prop_showtooltip;
-
-	/* Call the clock's update function so that it paints its first state */
-	time (&current_time);
-	(*cd->update_func) (cd, current_time);
-	
-	g_source_remove (cd->timeout);
-
-	/* Install timeout handler */
-	if (cd->gmt_time)
-		tm = gmtime (&current_time);
-	else
-		tm = localtime (&current_time);
-
-	if(cd->unixtime)
-		cd->timeouttime = 1000;
-        else if (cd->internettime)
-                cd->timeouttime = INTERNETSECOND;
-	else
-		cd->timeouttime = 36000-(tm->tm_sec*600);
-	
-	cd->timeout = g_timeout_add (cd->timeouttime,
-				     clock_timeout_callback,
-				     cd);
-#ifdef FIXME
-	if(!cd->showtooltip || cd->unixtime || cd->internettime)
-  		applet_widget_set_tooltip(APPLET_WIDGET(cd->applet), "");
-#endif
-				      
-	/* gtk_widget_queue_resize (cd->clockw);*/
-}
-
-static void
-close_properties (GtkWidget *w,
-		  gpointer   data)
-{
-	ClockData *cd = data;
-
-	cd->props = NULL;
-}
-
-static void
-set_hour_format_cb (GtkWidget *w,
-		    gpointer   data)
-{
-	g_return_if_fail (w != NULL);
-	
-	if (GTK_TOGGLE_BUTTON (w)->active) {
-		ClockData *cd = gtk_object_get_user_data (GTK_OBJECT (w));
-		cd->prop_hourformat = GPOINTER_TO_INT (data);
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
-	}
-}
-
-static void
-set_show_date_cb (GtkWidget *w,
-		  gpointer   data)
-{
-	ClockData *cd = data;
-
-	cd->prop_showdate = GTK_TOGGLE_BUTTON (w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
-}
-
-static void
 set_datasensitive_cb (GtkWidget *w,
 		      GtkWidget *wid)
 {
@@ -702,43 +778,86 @@ set_datasensitive_cb (GtkWidget *w,
 }
 
 static void
-set_internettime_cb (GtkWidget *w,
-		     gpointer   data)
+set_hour_format_cb (GtkWidget *w,
+		    gpointer data)
 {
-	ClockData *cd = data;
+	if (GTK_TOGGLE_BUTTON (w)->active) {
+		ClockData *clock = gtk_object_get_user_data (GTK_OBJECT (w));
+		panel_applet_gconf_set_int (PANEL_APPLET (clock->applet),
+					    KEY_HOUR_FORMAT,
+					    GPOINTER_TO_INT (data),
+					    NULL);
+	}
+}
 
-	cd->prop_internettime = GTK_TOGGLE_BUTTON (w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+static void
+set_show_date_cb (GtkWidget *w,
+		  ClockData *clock)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_SHOW_DATE,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
+}
+
+static void
+set_internettime_cb (GtkWidget *w,
+		     ClockData *clock)
+{
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_INTERNET_TIME,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
 }
 
 static void
 set_unixtime_cb (GtkWidget *w,
-		 gpointer   data)
+		 ClockData *clock)
 {
-	ClockData *cd = data;
-
-	cd->prop_unixtime = GTK_TOGGLE_BUTTON (w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_UNIX_TIME,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
 }
 
 static void
 set_gmt_time_cb (GtkWidget *w,
-		 gpointer   data)
+		 ClockData *clock)
 {
-	ClockData *cd = data;
-
-	cd->prop_gmt_time = GTK_TOGGLE_BUTTON (w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_GMT_TIME,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
 }
 
 static void
 set_show_tooltip_cb (GtkWidget * w,
-		     gpointer data)
+		     ClockData *clock)
 {
-	ClockData *cd = data;
+	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
+				     KEY_SHOW_TOOLTIP,
+				     GTK_TOGGLE_BUTTON (w)->active,
+				     NULL);
+}
 
-	cd->prop_showtooltip = GTK_TOGGLE_BUTTON (w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+static void
+properties_response_cb (GtkWidget *widget, gint id, gpointer data)
+{
+	
+	if (id == GTK_RESPONSE_HELP) {
+		GError *error = NULL;
+
+		gnome_help_display_desktop (NULL, "clock", "clock",
+				            "CLOCK-SETTINGS", &error);
+		if (error) {
+			g_warning ("help error: %s\n", error->message);
+			g_error_free (error);
+		}
+	} else {
+		gtk_widget_destroy (widget);
+	}
+	
+	return;
 }
 
 static void 
@@ -761,15 +880,16 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gchar *file;
 
 	if (cd->props != NULL) {
-		gtk_widget_show (cd->props);
 		gtk_window_present (GTK_WINDOW (cd->props));
 		return;
 	}
 
-	cd->props = gnome_property_box_new();
-	gtk_window_set_title (GTK_WINDOW (cd->props),
-			      _("Clock properties"));
-	gtk_window_set_wmclass (GTK_WINDOW (cd->props), "clock", "Clock");
+	cd->props = gtk_dialog_new_with_buttons (_("Clock Properties"), NULL, 0,
+						 GTK_STOCK_HELP,
+						 GTK_RESPONSE_HELP,
+						 GTK_STOCK_CLOSE,
+						 GTK_RESPONSE_CLOSE,
+						 NULL);
 
 	pixbuf = NULL;
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-clock.png", TRUE, NULL);
@@ -784,7 +904,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	}
 
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
-
+	
 	hour_frame = gtk_frame_new (_("Time Format"));
 	gtk_container_set_border_width (GTK_CONTAINER (hour_frame), GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (hbox), hour_frame, FALSE, FALSE, 0);
@@ -825,8 +945,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 		break;
 	}
 
-	cd->prop_hourformat = cd->hourformat;
-
 	gtk_signal_connect (GTK_OBJECT (twelvehour),
 			    "toggled",
 			    (GtkSignalFunc) set_hour_format_cb,
@@ -847,8 +965,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->showdate)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showdate),
 					TRUE);
-	cd->prop_showdate = cd->showdate;
-	
 	gtk_signal_connect (GTK_OBJECT (showdate),
 			    "toggled",
 			    (GtkSignalFunc) set_show_date_cb,
@@ -861,8 +977,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->showtooltip)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showtooltip),
 					TRUE);
-	cd->prop_showtooltip = cd->showtooltip;
-	
 	gtk_signal_connect (GTK_OBJECT (showtooltip),
 			    "toggled",
 			    (GtkSignalFunc) set_show_tooltip_cb,
@@ -875,8 +989,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	if (cd->gmt_time)
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_gmt_time),
 					TRUE);
-	cd->prop_gmt_time = cd->gmt_time;
-	
 	gtk_signal_connect (GTK_OBJECT (use_gmt_time),
 			    "toggled",
 			    (GtkSignalFunc) set_gmt_time_cb,
@@ -898,9 +1010,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 			    showdate);
 	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
 			    (GtkSignalFunc) set_datasensitive_cb,
-			    showtooltip);
-	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
-			    (GtkSignalFunc) set_datasensitive_cb,
 			    use_gmt_time);
 	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
 			    (GtkSignalFunc) set_datasensitive_cb,
@@ -908,19 +1017,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 			   
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (unixtime),
 				      cd->unixtime);
-	cd->prop_unixtime = cd->unixtime;
-
 
 /* internet time */
 	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
 			    (GtkSignalFunc) set_datasensitive_cb,
 			    hour_frame);
 	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
-			   (GtkSignalFunc) set_datasensitive_cb,
-			    showdate);
-	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
 			    (GtkSignalFunc) set_datasensitive_cb,
-			    showtooltip);
+			    showdate);
 	gtk_signal_connect (GTK_OBJECT (internettime), "toggled",
 			    (GtkSignalFunc) set_datasensitive_cb,
 			    use_gmt_time);   
@@ -930,7 +1034,6 @@ display_properties_dialog (BonoboUIComponent *uic,
    
         gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (internettime),
 				      cd->internettime);
-	cd->prop_internettime = cd->internettime;
    
 	gtk_signal_connect (GTK_OBJECT (unixtime), "toggled",
 			    (GtkSignalFunc) set_unixtime_cb,
@@ -942,16 +1045,14 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_widget_show (hour_frame);
 	gtk_widget_show (hbox);
 
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (cd->props), hbox,
-					gtk_label_new (_("Clock")));
-	gtk_signal_connect (GTK_OBJECT (cd->props), "apply",
-			    GTK_SIGNAL_FUNC (apply_properties), cd);
-	gtk_signal_connect (GTK_OBJECT (cd->props), "destroy",
-			    GTK_SIGNAL_FUNC (close_properties), cd);
-	gtk_signal_connect (GTK_OBJECT (cd->props), "help",
-			    GTK_SIGNAL_FUNC (phelp_cb),
-			    "index.html#CLOCK-PREFS");
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), hbox, FALSE, FALSE, 0);
+
 	
+	g_signal_connect (G_OBJECT (cd->props), "destroy",
+			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
+	g_signal_connect (G_OBJECT (cd->props), "response",
+			  G_CALLBACK (properties_response_cb), NULL);
+				
 	gtk_widget_show (cd->props);
 }
 
@@ -967,14 +1068,6 @@ display_help_dialog (BonoboUIComponent *uic,
 		g_warning ("help error: %s\n", error->message);
 		g_error_free (error);
 	}
-}
-
-static void
-phelp_cb (GtkWidget *w, gint tab, gpointer data)
-{
-#ifdef FIXME
-		help_cb (NULL, data);
-#endif
 }
 
 static void
@@ -998,7 +1091,6 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	if (about != NULL)
 	{
-		gtk_widget_show (about);
 		gtk_window_present (GTK_WINDOW (about));
 		return;
 	}
@@ -1031,3 +1123,4 @@ display_about_dialog (BonoboUIComponent *uic,
 	
 	gtk_widget_show (about);
 }
+
