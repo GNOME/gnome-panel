@@ -37,7 +37,6 @@
 
 #include "aligned-widget.h"
 #include "button-widget.h"
-#include "conditional.h"
 #include "distribution.h"
 #include "drawer-widget.h"
 #include "edge-widget.h"
