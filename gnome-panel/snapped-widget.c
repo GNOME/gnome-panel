@@ -201,7 +201,7 @@ snapped_widget_get_hidepos(SnappedWidget *snapped,
 {
 	BasePWidget *basep = BASEP_WIDGET(snapped);
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
-	
+
 	*w = GTK_WIDGET(snapped)->allocation.width;
 	*h = GTK_WIDGET(snapped)->allocation.height;
 	*hide_orient = -1;
@@ -290,7 +290,7 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	  because we don't want to change our size, ever*/
 	gtk_widget_size_request (basep->ebox,
 				 &basep->ebox->requisition);
-	
+
 	/*ignore the allocation we get, we want to be this large*/
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
@@ -304,7 +304,7 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			allocation->width = basep->ebox->requisition.width;
 			break;
 	}
-	
+
 	snapped_widget_get_pos(snapped,
 			       &allocation->x,
 			       &allocation->y,
@@ -330,7 +330,6 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 		allocation->width = w;
 		allocation->height = h;
-		printf("w: %d, h: %d\n",w,h);
 	}
 
 	widget->allocation = *allocation;
@@ -377,7 +376,8 @@ snapped_widget_set_initial_pos(SnappedWidget *snapped)
 void
 snapped_widget_pop_up(SnappedWidget *snapped)
 {
-	if ((snapped->state == SNAPPED_MOVING) ||
+	if ((snapped->mode != SNAPPED_AUTO_HIDE) ||
+	    (snapped->state == SNAPPED_MOVING) ||
 	    (snapped->state == SNAPPED_SHOWN))
 		return;
 
@@ -804,7 +804,7 @@ snapped_widget_new (SnappedPos pos,
 		snapped->state = state;
 
 	snapped->autohide_inhibit = FALSE;
-	
+
 	/*sanity check ... this is a case which should never happen*/
 	if(snapped->mode == SNAPPED_EXPLICIT_HIDE &&
 	   snapped->state == SNAPPED_HIDDEN)

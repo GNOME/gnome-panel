@@ -265,10 +265,10 @@ static Drawer *
 create_empty_drawer_applet(char *tooltip, char *pixmap,
 			   PanelOrientType orient)
 {
-	DrawerWidget *dw = drawer_widget_new(orient,
-					     DRAWER_SHOWN,
-					     PANEL_BACK_NONE, NULL,
-					     TRUE, NULL, TRUE, TRUE);
+	GtkWidget *dw = drawer_widget_new(orient,
+					  DRAWER_SHOWN,
+					  PANEL_BACK_NONE, NULL,
+					  TRUE, NULL, TRUE, TRUE);
 	return create_drawer_applet(dw, tooltip,pixmap,orient);
 }
 
