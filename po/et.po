@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-07-02 11:42+0300\n"
-"PO-Revision-Date: 2002-07-02 11:53+0300\n"
+"POT-Creation-Date: 2002-07-07 17:53+0300\n"
+"PO-Revision-Date: 2002-07-07 17:53+0300\n"
 "Last-Translator: Tõivo Leedjärv <toivo@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "Kala _nimi:"
 msgid "_Animation filename:"
 msgstr "_Animatsioonifail:"
 
-#: applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1245
+#: applets/fish/fish.c:732 applets/gen_util/mailcheck.c:1247
 #: gnome-panel/panel-config.c:1427 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Vali"
@@ -232,7 +232,7 @@ msgid "%A, %B %d %Y"
 msgstr "%A, %d. B% %Y"
 
 #: applets/gen_util/clock.c:872 applets/gen_util/clock.c:1104
-#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/mailcheck.c:1549 applets/gen_util/mailcheck.c:1754
 #: applets/gen_util/pager.c:157 applets/gen_util/pager.c:460
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
@@ -276,7 +276,7 @@ msgid "Use _UTC"
 msgstr "_UTC aeg"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/clock.c:1138 applets/gen_util/mailcheck.c:1679
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:242
 msgid "translator_credits"
@@ -312,7 +312,8 @@ msgid "Display seconds in time"
 msgstr "Näitab kellaajas sekundeid"
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
+#, fuzzy
+msgid "Display time in Universal Coordinated Time zone"
 msgstr "Näitab kellaaega Greenwichi ajavööndis"
 
 #: applets/gen_util/clock.schemas.in.h:5
@@ -344,16 +345,16 @@ msgid "Show time with seconds"
 msgstr "Näita sekundeid"
 
 #: applets/gen_util/clock.schemas.in.h:12
-msgid "Use GMT"
-msgstr "GMT aeg"
-
-#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Internetiaeg"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "UNIXi aeg"
+
+#: applets/gen_util/clock.schemas.in.h:14
+msgid "Use UTC"
+msgstr "UTC aeg"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -380,7 +381,7 @@ msgid "Get the current time and date"
 msgstr "Võta praegune kuupäev ja kellaaeg"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1692
 msgid "Inbox Monitor"
 msgstr "Postkasti jälgija"
 
@@ -431,7 +432,11 @@ msgstr ""
 msgid "Please enter your mailserver's _password:"
 msgstr "Palun sisesta oma meiliserveri _parool:"
 
-#: applets/gen_util/mailcheck.c:278
+#: applets/gen_util/mailcheck.c:237 applets/gen_util/mailcheck.c:1307
+msgid "Password Entry box"
+msgstr "Parooli sisestusväli"
+
+#: applets/gen_util/mailcheck.c:280
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -441,161 +446,188 @@ msgstr ""
 "ajutiselt peatatud.\n"
 "Võibolla sisestasid vale serveri-, kasutajanime või parooli?"
 
-#: applets/gen_util/mailcheck.c:483
+#: applets/gen_util/mailcheck.c:485
 msgid "You have new mail."
 msgstr "Sulle on uusi sõnumeid."
 
-#: applets/gen_util/mailcheck.c:485
+#: applets/gen_util/mailcheck.c:487
 msgid "You have mail."
 msgstr "Sulle on sõnumeid."
 
-#: applets/gen_util/mailcheck.c:489
+#: applets/gen_util/mailcheck.c:491
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d sõnumit"
 
-#: applets/gen_util/mailcheck.c:491
+#: applets/gen_util/mailcheck.c:493
 #, c-format
 msgid "%d messages"
 msgstr "%d sõnumit"
 
-#: applets/gen_util/mailcheck.c:495
+#: applets/gen_util/mailcheck.c:497
 msgid "No mail."
 msgstr "Sõnumeid ei ole."
 
-#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
+#: applets/gen_util/mailcheck.c:1017 applets/gen_util/mailcheck.c:1019
+#: applets/gen_util/mailcheck.c:1877 applets/gen_util/mailcheck.c:1879
 msgid "Status not updated"
 msgstr "Olekut ei ole uuendatud"
 
-#: applets/gen_util/mailcheck.c:1189
+#: applets/gen_util/mailcheck.c:1191
 msgid "Mailbox _resides on:"
 msgstr "Postkast _asub:"
 
-#: applets/gen_util/mailcheck.c:1197
+#: applets/gen_util/mailcheck.c:1199
 msgid "Local mailspool"
 msgstr "Kohalik spoolfail"
 
-#: applets/gen_util/mailcheck.c:1205
+#: applets/gen_util/mailcheck.c:1207
 msgid "Local maildir"
 msgstr "Kohalik meilikataloog"
 
-#: applets/gen_util/mailcheck.c:1213
+#: applets/gen_util/mailcheck.c:1215
 msgid "Remote POP3-server"
 msgstr "POP3 server"
 
-#: applets/gen_util/mailcheck.c:1221
+#: applets/gen_util/mailcheck.c:1223
 msgid "Remote IMAP-server"
 msgstr "IMAP server"
 
-#: applets/gen_util/mailcheck.c:1241
+#: applets/gen_util/mailcheck.c:1243
 msgid "Mail _spool file:"
 msgstr "_Spoolfaili nimi:"
 
-#: applets/gen_util/mailcheck.c:1260
+#: applets/gen_util/mailcheck.c:1262
 msgid "Mail s_erver:"
 msgstr "Meilis_erver:"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1268
+msgid "Mail Server Entry box"
+msgstr "Meiliserveri sisestusväli"
+
+#: applets/gen_util/mailcheck.c:1282
 msgid "_Username:"
 msgstr "_Kasutajanimi:"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1290
+msgid "Username Entry box"
+msgstr "Kasutajanime sisestusväli"
+
+#: applets/gen_util/mailcheck.c:1299
 msgid "_Password:"
 msgstr "_Parool:"
 
-#: applets/gen_util/mailcheck.c:1313
+#: applets/gen_util/mailcheck.c:1320
 msgid "_Folder:"
 msgstr "Ka_taloog:"
 
-#: applets/gen_util/mailcheck.c:1332
+#: applets/gen_util/mailcheck.c:1328
+msgid "Folder Entry box"
+msgstr "Kataloogi sisestusväli"
+
+#: applets/gen_util/mailcheck.c:1340
 msgid "C_ommand to run before checking for mail:"
 msgstr "Enne postkasti vaatamist k_äivita käsk:"
 
-#: applets/gen_util/mailcheck.c:1363
+#: applets/gen_util/mailcheck.c:1348
+msgid "Command Entry box"
+msgstr "Käsu sisestusväli"
+
+#: applets/gen_util/mailcheck.c:1373
 msgid "Execute"
 msgstr "Käivita"
 
-#: applets/gen_util/mailcheck.c:1374
+#: applets/gen_util/mailcheck.c:1384
 msgid "Before each _update:"
 msgstr "Enne igat _uuendust:"
 
-#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
-#: applets/gen_util/mailcheck.c:1435
-msgid "Command to execute"
-msgstr "Käivitatav käsk"
-
 #: applets/gen_util/mailcheck.c:1399
+msgid "Command to execute before each update"
+msgstr "Enne postkasti kontrollimist käivitatav käsk"
+
+#: applets/gen_util/mailcheck.c:1409
 msgid "When new mail _arrives:"
 msgstr "Kui _saabub uusi sõnumeid:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1422 applets/gen_util/mailcheck.schemas.in.h:2
+msgid "Command to execute when new mail arrives"
+msgstr "Uute sõnumite saabumisel käivitatav käsk"
+
+#: applets/gen_util/mailcheck.c:1432
 msgid "When clicke_d:"
 msgstr "K_lõpsamisel:"
 
 #: applets/gen_util/mailcheck.c:1445
+msgid "Command to execute when clicked"
+msgstr "Klõpsamisel käivitatav käsk"
+
+#: applets/gen_util/mailcheck.c:1455
 msgid "Set the number of unread mails to _zero"
 msgstr "_Nulli lugemata sõnumite arv"
 
-#: applets/gen_util/mailcheck.c:1456
+#: applets/gen_util/mailcheck.c:1466
 msgid "Check for mail _every"
 msgstr "_Vaata postkasti iga"
 
-#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
+#: applets/gen_util/mailcheck.c:1478 applets/gen_util/mailcheck.c:1482
 msgid "minutes"
 msgstr "minuti"
 
-#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1478
+msgid "Choose time interval in minutes to check mail"
+msgstr "Vali postkasti kontrollimise intervall minutites"
+
+#: applets/gen_util/mailcheck.c:1492 applets/gen_util/mailcheck.c:1496
 msgid "seconds"
 msgstr "sekundi järel"
 
-#: applets/gen_util/mailcheck.c:1494
+#: applets/gen_util/mailcheck.c:1492
+msgid "Choose time interval in seconds to check mail"
+msgstr "Kui tihti postkasti vaadata (sekundites)"
+
+#: applets/gen_util/mailcheck.c:1504
 msgid "Play a _sound when new mail arrives"
 msgstr "Tee _häält, kui saabub uusi sõnumeid"
 
-#: applets/gen_util/mailcheck.c:1505
+#: applets/gen_util/mailcheck.c:1515
 msgid "Select a_nimation"
 msgstr "Vali _animatsioon"
 
-#: applets/gen_util/mailcheck.c:1580
+#: applets/gen_util/mailcheck.c:1590
 msgid "Inbox Monitor Preferences"
 msgstr "Postkasti jälgija häälestus"
 
-#: applets/gen_util/mailcheck.c:1599
+#: applets/gen_util/mailcheck.c:1609
 msgid "_Mail check"
 msgstr "_Postkasti kontrollimine"
 
-#: applets/gen_util/mailcheck.c:1603
+#: applets/gen_util/mailcheck.c:1613
 msgid "Mail_box"
 msgstr "Post_kast"
 
-#: applets/gen_util/mailcheck.c:1681
+#: applets/gen_util/mailcheck.c:1693
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1682
+#: applets/gen_util/mailcheck.c:1694
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Postkasti jälgija annab teada, kui su postkasti saabub uusi sõnumeid"
 
-#: applets/gen_util/mailcheck.c:1841
+#: applets/gen_util/mailcheck.c:1853
 msgid "Text only"
 msgstr "Ainult tekst"
 
-#: applets/gen_util/mailcheck.c:1868
+#: applets/gen_util/mailcheck.c:1880
 msgid "Mail check"
 msgstr "Postkasti kontrollimine"
 
-#: applets/gen_util/mailcheck.c:1869
+#: applets/gen_util/mailcheck.c:1881
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Postkasti jälgija annab teada, kui su postkasti saabub uusi sõnumeid"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
 msgstr "Postkasti kontrollimisel käivitatav käsk"
-
-#: applets/gen_util/mailcheck.schemas.in.h:2
-msgid "Command to execute when new mail arrives"
-msgstr "Uute sõnumite saabumisel käivitatav käsk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when the applet is clicked"
@@ -1267,7 +1299,7 @@ msgstr ""
 #: gnome-panel/gnome-panel-preferences.c:279
 #, c-format
 msgid "Error loading glade file %s"
-msgstr ""
+msgstr "Viga glade faili %s laadimisel"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Modify the global panel preferences"
@@ -1414,7 +1446,7 @@ msgstr "Aktiivse töölaua kuvatõmmise tegemine ei õnnestunud."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
-msgstr ""
+msgstr "*"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "Options"
@@ -2316,42 +2348,42 @@ msgstr "Bonobo testrakend"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:748
+#: libpanel-applet/panel-applet.c:751
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Vastu võeti poolik '%s' tausta tüüp"
 
-#: libpanel-applet/panel-applet.c:762
+#: libpanel-applet/panel-applet.c:765
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Vastu võeti poolik '%s' tausta tüüp: %s"
 
-#: libpanel-applet/panel-applet.c:771
+#: libpanel-applet/panel-applet.c:774
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Ebaõnnestus pikselrastri %s saamine"
 
-#: libpanel-applet/panel-applet.c:778
+#: libpanel-applet/panel-applet.c:781
 msgid "Unknown background type received"
 msgstr "Vastu võeti tundmatu tausta tüüp"
 
-#: libpanel-applet/panel-applet.c:953
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's orientation"
 msgstr "Rakendit omava paneeli suund"
 
-#: libpanel-applet/panel-applet.c:961
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Rakendit omava paneeli suurus pikslites"
 
-#: libpanel-applet/panel-applet.c:969
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Rakendit omava paneeli taustavärv või -pilt"
 
-#: libpanel-applet/panel-applet.c:977
+#: libpanel-applet/panel-applet.c:980
 msgid "The Applet's flags"
 msgstr "Rakendi sätted"
 
-#: libpanel-applet/panel-applet.c:985
+#: libpanel-applet/panel-applet.c:988
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Vahemikud, mis näitavad, millised suurused on rakendile vastuvõetavad"
 
@@ -2410,6 +2442,12 @@ msgstr "Ülisuur"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Tilluke"
+
+#~ msgid "Use GMT"
+#~ msgstr "GMT aeg"
+
+#~ msgid "Command to execute"
+#~ msgstr "Käivitatav käsk"
 
 #~ msgid "Tasklist size"
 #~ msgstr "Nimistu suurus"
