@@ -19,6 +19,10 @@
 #include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_rgb_rgba_affine.h>
 
+/* The place where we will guess where we are */
+#define TIMEZONESPEC "/etc/timezone"
+int fools_day=1, fools_month=3;
+
 typedef struct _FishProp FishProp;
 struct _FishProp {
 	char *name;
@@ -196,6 +200,25 @@ static void
 load_properties(Fish *fish)
 {
 	char buf[256];
+	/* I think theese is a good place to guess where we are */
+	FILE *zone;
+	
+	zone = fopen(TIMEZONESPEC, "r");
+	if (zone != NULL) { /* If file doesn't exists we will stick to
+			       "Standard" fools day */
+	  fscanf(zone, "%255s", buf);
+	  fclose(zone);
+	  if (!strcmp("Europe/Madrid", buf) ||
+	      !strcmp("Africa/Ceuta", buf) ||
+	      !strcmp("Atlantic/Canary", buf)) { /* Hah!, We are in Spain */
+	    fools_day = 28;
+	    fools_month = 11; /* Spanish fool's day: 28th December*/
+	  } else {
+	    fools_day = 1; /* everybody? else fool's day */
+	    fools_month = 3;
+	  }
+	}
+
 	if(!defaults.image)
 		defaults.image = gnome_unconditional_pixmap_file ("fish/fishanim.png");
 
@@ -269,14 +292,14 @@ fish_timeout(gpointer data)
 	tm = localtime(&ourtime);
 
 	if(fish->april_fools) {
-		if(tm->tm_mon != 3 || tm->tm_mday != 1) {
+		if(tm->tm_mon != fools_month || tm->tm_mday != fools_day) {
 			fish->april_fools = FALSE;
 			load_image_file(fish);
 			setup_size(fish);
 			fish_timeout(fish);
 		}
 	} else {
-		if(tm->tm_mon == 3 && tm->tm_mday == 1) {
+		if(tm->tm_mon == fools_month && tm->tm_mday == fools_day) {
 			fish->april_fools = TRUE;
 			load_image_file(fish);
 			setup_size(fish);
@@ -285,6 +308,7 @@ fish_timeout(gpointer data)
 	}
 
 	/* on april fools, the fish id dead! */
+	/* on "Santos Inocentes" (spanish fool's day) the fish is dead */
 	if(!fish->april_fools) {
 		fish->curpix++;
 		if(fish->curpix>=fish->prop.frames) fish->curpix=0;
