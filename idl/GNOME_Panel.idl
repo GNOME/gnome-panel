@@ -77,6 +77,11 @@ module GNOME {
 
 		/*the size of the panel on which this applet resides*/
 		readonly attribute Panel::SizeType parent_size;
+		
+		/*the maximum amount of free space the applet has without
+		  pushing around other applets, on packed panels this is
+		  always 0*/
+		readonly attribute short free_space;
 
 		/* the applet is all done with building itself
 		   so it just tells us that it's all ready, this
