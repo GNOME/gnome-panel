@@ -142,6 +142,7 @@ static void
 update_timeformat(ClockData *cd)
 {
 	const char *time;
+	gchar *loc;
 
 	if (cd->hourformat == 12) {
 		if (cd->showseconds)
@@ -162,14 +163,16 @@ update_timeformat(ClockData *cd)
 		if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		    cd->orient == PANEL_APPLET_ORIENT_RIGHT ||
 		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM)
-			cd->timeformat = g_strconcat (time, "\n",
-					              _("%a %b %d"), NULL);
+			loc = g_strconcat (time, "\n",
+					   _("%a %b %d"), NULL);
 		else
-			cd->timeformat = g_strconcat (time, " ",
-					              _("%a %b %d"), NULL);
+			loc = g_strconcat (time, " ",
+					   _("%a %b %d"), NULL);
 	} else {
-		cd->timeformat = g_strdup (time);
+		loc = g_strdup (time);
 	}
+	cd->timeformat = g_locale_from_utf8 (loc, -1, NULL, NULL, NULL);
+	g_free (loc);
 }
 
 /* sets accessible name and description for the widget */
@@ -231,7 +234,7 @@ update_clock (ClockData * cd, time_t current_time)
 {
 	struct tm *tm;
 	char date[256], hour[256];
-	char *utf8;
+	char *utf8, *loc;
 	
 	if (cd->gmt_time)
 		tm = gmtime (&current_time);
@@ -264,8 +267,10 @@ update_clock (ClockData * cd, time_t current_time)
 	g_free (utf8);
 
 	/* Show date in tooltip */
-	if (strftime (date, sizeof (date), _("%A %B %d"), tm) <= 0)
+	loc = g_locale_from_utf8 (_("%A %B %d"), -1, NULL, NULL, NULL);
+	if (strftime (date, sizeof (date), loc, tm) <= 0)
 		strcpy (date, "???");
+	g_free (loc);
 
 	utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
 	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
@@ -442,14 +447,14 @@ copy_time (BonoboUIComponent *uic,
 
 		if (cd->hourformat == 12) {
 			if (cd->showseconds)
-				format = _("%I:%M:%S %p");
+				format = g_locale_from_utf8 (_("%I:%M:%S %p"), -1, NULL, NULL, NULL);
 			else
-				format = _("%I:%M %p");
+				format = g_locale_from_utf8 (_("%I:%M %p"), -1, NULL, NULL, NULL);
 		} else {
 			if (cd->showseconds)
-				format = _("%H:%M:%S");
+				format = g_locale_from_utf8 (_("%H:%M:%S"), -1, NULL, NULL, NULL);
 			else
-				format = _("%H:%M");
+				format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
 		}
 
 		if (cd->gmt_time)
@@ -459,6 +464,7 @@ copy_time (BonoboUIComponent *uic,
 
 		if (strftime (string, sizeof (string), format, tm) <= 0)
 			strcpy (string, "???");
+		g_free (format);
 	}
 
 	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
@@ -475,15 +481,17 @@ copy_date (BonoboUIComponent *uic,
 	time_t current_time = time (NULL);
 	struct tm *tm;
 	char string[256];
-	char *utf8;
+	char *utf8, *loc;
 
 	if (cd->gmt_time)
 		tm = gmtime (&current_time);
 	else
 		tm = localtime (&current_time);
 
-	if (strftime (string, sizeof (string), _("%A, %B %d %Y"), tm) <= 0)
+	loc = g_locale_from_utf8 (_("%A, %B %d %Y"), -1, NULL, NULL, NULL);
+	if (strftime (string, sizeof (string), loc, tm) <= 0)
 		strcpy (string, "???");
+	g_free (loc);
 	
 	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),

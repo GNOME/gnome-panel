@@ -1,3 +1,11 @@
+2002-05-24  Akira TAGOH  <tagoh@gnome.gr.jp>
+
+	* clock.c (update_timeformat): need to convert UTF-8 to the locale
+	encoding (Bug#80539).
+	(update_clock): ditto.
+	(copy_time): ditto.
+	(copy_date): ditto.
+
 2002-05-21  Eric Baudais  <baudais@okstate.edu>
 
 	* help/C/mailcheck/mailcheck.xml: Updated the help to the new UI.
