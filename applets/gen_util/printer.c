@@ -88,7 +88,6 @@ drag_data_received (GtkWidget        *widget,
 		    guint             time,
 		    gpointer          data)
 {
-	gchar *str;
 	Printer *pr = data;
 	GList *names;
 
@@ -109,7 +108,6 @@ printer_widget (Printer *pr)
 {
 	GtkWidget *fixed;
 	GtkWidget *printer;
-	int height;
 	static GtkTargetEntry drop_types [] = { 
 		{ "text/uri-list", 0, TARGET_URI_LIST }
 	};

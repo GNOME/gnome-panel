@@ -136,7 +136,6 @@ static char *read_line(int s)
 
 static int write_line(int s, char *p)
  {
-  int ch;
   char *p2;
   p2 = g_malloc(strlen(p)+2);
   strcat(strcpy(p2, p), "\n");
@@ -163,7 +162,7 @@ static int is_pop3_answer_ok(char *p)
 int pop3_check(char *h, char* n, char* e)
 {
   int s;
-  char *c, *c2;
+  char *c;
   char *x;
   int r = -1, msg = 0, last = 0;
   

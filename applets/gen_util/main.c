@@ -49,7 +49,6 @@ int
 main(int argc, char **argv)
 {
 	const gchar *goad_id;
-	char *argstr = NULL;
 
 	/*this is needed for printer applet*/
 	struct sigaction sa;

@@ -35,9 +35,6 @@ typedef struct _MailCheck MailCheck;
 struct _MailCheck {
 	char *mail_file;
 
-	/* If set, the user has launched the mail viewer */
-	int mailcleared;
-
 	/* Does the user have any mail at all? */
 	int anymail;
 
@@ -176,7 +173,7 @@ check_mail_file_status (MailCheck *mc)
 	static off_t oldsize = 0;
 	struct stat s;
 	off_t newsize;
-	int status;
+	int status, old_unreadmail;
 	
 	if ((mc->mailbox_type == MAILBOX_POP3) || 
 	    (mc->mailbox_type == MAILBOX_IMAP)) {
@@ -202,7 +199,12 @@ check_mail_file_status (MailCheck *mc)
 			mc->anymail = mc->newmail = 0;
 #endif
 		} else {
-			mc->unreadmail = mc->newmail = (signed int) (((unsigned int) v) >> 16) ? 1 : 0;
+      old_unreadmail = mc->unreadmail;
+			mc->unreadmail = (signed int) (((unsigned int) v) >> 16);
+      if(mc->unreadmail > 0 && old_unreadmail != mc->unreadmail)
+        mc->newmail = 1;
+      else
+        mc->newmail = 0;
 			mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
 		} 
 	} else {
@@ -217,13 +219,9 @@ check_mail_file_status (MailCheck *mc)
 		mc->anymail = newsize > 0;
 		mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 		
-		/* FIXME: mailcleared is only used here, so we
-		   need to check for newsize >= oldsize, not just >
-		*/
-		if (newsize >= oldsize && mc->unreadmail) {
+		if (newsize != oldsize && mc->unreadmail)
 			mc->newmail = 1;
-			mc->mailcleared = 0;
-		} else
+		else
 			mc->newmail = 0;
 		
 		oldsize = newsize;
@@ -271,7 +269,6 @@ static int
 mail_check_timeout (gpointer data)
 {
 	static const char *supinfo[] = {"mailcheck", "new-mail", NULL};
-	int old_unread_mail;
 	MailCheck *mc = data;
 
 	if (mc->pre_check_enabled &&
@@ -289,13 +286,11 @@ mail_check_timeout (gpointer data)
 		mc->mail_timeout = gtk_timeout_add(mc->update_freq, mail_check_timeout, mc);
 	}
 
-	old_unread_mail = mc->unreadmail;
-
 	check_mail_file_status (mc);
 
-	if(mc->newmail && (old_unread_mail > mc->unreadmail)) {
-		if (mc->play_sound)
-			gnome_triggers_vdo("", "program", supinfo);
+	if(mc->newmail) {
+    if(mc->play_sound)
+      gnome_triggers_vdo("", "program", supinfo);
 
 		if (mc->newmail_enabled && 
 		    mc->newmail_cmd && 
@@ -306,7 +301,7 @@ mail_check_timeout (gpointer data)
 	switch (mc->report_mail_mode){
 	case REPORT_MAIL_USE_ANIMATION:
 		if (mc->anymail){
-			if (mc->newmail){
+			if (mc->unreadmail){
 				if (mc->animation_tag == -1){
 					mc->animation_tag = gtk_timeout_add (150, next_frame, mc);
 					mc->nframe = 1;
