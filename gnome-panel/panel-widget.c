@@ -1614,12 +1614,12 @@ panel_widget_instance_init (PanelWidget *panel)
 }
 
 GtkWidget *
-panel_widget_new (char                *panel_id,
+panel_widget_new (const char          *panel_id,
 		  gboolean             packed,
 		  GtkOrientation       orient,
 		  int                  sz,
 		  PanelBackgroundType  back_type,
-		  char                *back_pixmap,
+		  const char          *back_pixmap,
 		  gboolean             fit_pixmap_bg,
 		  gboolean             stretch_pixmap_bg,
 		  gboolean             rotate_pixmap_bg,
@@ -2465,7 +2465,7 @@ panel_widget_change_params(PanelWidget         *panel,
 			   GtkOrientation       orient,
 			   int                  sz,
 			   PanelBackgroundType  back_type,
-			   char                *pixmap,
+			   const char          *pixmap,
 			   gboolean             fit_pixmap_bg,
 			   gboolean             stretch_pixmap_bg,
 			   gboolean             rotate_pixmap_bg,

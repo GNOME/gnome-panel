@@ -276,7 +276,7 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 }
 
 GtkWidget *
-border_widget_construct (gchar *panel_id,
+border_widget_construct (const char *panel_id,
 			 BorderWidget *border,
 			 int screen,
 			 int monitor,
@@ -289,7 +289,7 @@ border_widget_construct (gchar *panel_id,
 			 gboolean hidebuttons_enabled,
 			 gboolean hidebutton_pixmaps_enabled,
 			 PanelBackgroundType back_type,
-			 char *back_pixmap,
+			 const char *back_pixmap,
 			 gboolean fit_pixmap_bg,
 			 gboolean stretch_pixmap_bg,
 			 gboolean rotate_pixmap_bg,

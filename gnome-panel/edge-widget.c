@@ -200,7 +200,7 @@ edge_pos_pre_convert_hook (BasePWidget *basep)
 }
 
 GtkWidget *
-edge_widget_new (gchar *panel_id,
+edge_widget_new (const char *panel_id,
 		 int screen,
 		 int monitor,
 		 BorderEdge edge,
@@ -210,7 +210,7 @@ edge_widget_new (gchar *panel_id,
 		 gboolean hidebuttons_enabled,
 		 gboolean hidebutton_pixmaps_enabled,
 		 PanelBackgroundType back_type,
-		 char *back_pixmap,
+		 const char *back_pixmap,
 		 gboolean fit_pixmap_bg,
 		 gboolean stretch_pixmap_bg,
 		 gboolean rotate_pixmap_bg,

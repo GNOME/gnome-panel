@@ -122,12 +122,12 @@ struct _PanelWidgetClass
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	panel_widget_new		(gchar *panel_id,
+GtkWidget *	panel_widget_new		(const char *panel_id,
 						 gboolean packed,
 						 GtkOrientation orient,
 						 int sz,
 						 PanelBackgroundType back_type,
-						 char *back_pixmap,
+						 const char *back_pixmap,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,
@@ -176,7 +176,7 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 GtkOrientation orient,
 						 int sz,
 						 PanelBackgroundType back_type,
-						 char *pixmap_name,
+						 const char *pixmap_name,
 						 gboolean fit_pixmap_bg,
 						 gboolean stretch_pixmap_bg,
 						 gboolean rotate_pixmap_bg,

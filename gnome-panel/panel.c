@@ -1988,6 +1988,390 @@ panel_set_bool (const char *profile,
 	panel_gconf_set_bool (full_key, value);	
 }
 
+static GtkWidget *
+panel_load_edge_panel_from_gconf (const char          *profile,
+				  const char          *panel_id,
+				  int                  screen,
+				  int                  monitor,
+				  BasePMode            mode,
+				  BasePState           state,
+				  int                  size,
+				  gboolean             hidebuttons_enabled,
+				  gboolean             hidebutton_pixmaps_enabled,
+				  PanelBackgroundType  back_type,
+				  const char          *back_pixmap,
+				  gboolean             fit_pixmap_bg,
+				  gboolean             stretch_pixmap_bg,
+				  gboolean             rotate_pixmap_bg,
+				  PanelColor          *back_color)
+{
+	BorderEdge  edge = BORDER_BOTTOM;
+	char       *tmp_str;
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "screen_edge", "panel-edge-bottom");
+	gconf_string_to_enum (
+		panel_edge_type_enum_map, tmp_str, (int *) &edge);
+	g_free (tmp_str);
+			
+	return edge_widget_new (panel_id,
+				screen,
+				monitor,
+				edge, 
+				mode, state,
+				size,
+				hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg,
+				stretch_pixmap_bg,
+				rotate_pixmap_bg,
+				back_color);
+	
+}
+
+static GtkWidget *
+panel_load_aligned_panel_from_gconf (const char          *profile,
+				     const char          *panel_id,
+				     int                  screen,
+				     int                  monitor,
+				     BasePMode            mode,
+				     BasePState           state,
+				     int                  size,
+				     gboolean             hidebuttons_enabled,
+				     gboolean             hidebutton_pixmaps_enabled,
+				     PanelBackgroundType  back_type,
+				     const char          *back_pixmap,
+				     gboolean             fit_pixmap_bg,
+				     gboolean             stretch_pixmap_bg,
+				     gboolean             rotate_pixmap_bg,
+				     PanelColor          *back_color)
+{
+	AlignedAlignment  align = ALIGNED_LEFT;
+	BorderEdge        edge = BORDER_BOTTOM;
+	char             *tmp_str;
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "screen_edge", "panel-edge-bottom");
+	gconf_string_to_enum (
+		panel_edge_type_enum_map, tmp_str, (int *) &edge);
+	g_free (tmp_str);
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "panel_align", "panel-alignment-left");
+	gconf_string_to_enum (
+		panel_alignment_type_enum_map, tmp_str, (int *) &align);
+	g_free (tmp_str);
+
+	return aligned_widget_new (panel_id,
+				   screen,
+				   monitor,
+				   align,
+				   edge,
+				   mode,
+				   state,
+				   size,
+				   hidebuttons_enabled,
+				   hidebutton_pixmaps_enabled,
+				   back_type, back_pixmap,
+				   fit_pixmap_bg,
+				   stretch_pixmap_bg,
+				   rotate_pixmap_bg,
+				   back_color);
+}
+
+static GtkWidget *
+panel_load_sliding_panel_from_gconf (const char          *profile,
+				     const char          *panel_id,
+				     int                  screen,
+				     int                  monitor,
+				     BasePMode            mode,
+				     BasePState           state,
+				     int                  size,
+				     gboolean             hidebuttons_enabled,
+				     gboolean             hidebutton_pixmaps_enabled,
+				     PanelBackgroundType  back_type,
+				     const char          *back_pixmap,
+				     gboolean             fit_pixmap_bg,
+				     gboolean             stretch_pixmap_bg,
+				     gboolean             rotate_pixmap_bg,
+				     PanelColor          *back_color)
+{
+	SlidingAnchor  anchor = SLIDING_ANCHOR_LEFT;
+	BorderEdge     edge = BORDER_BOTTOM;
+	gint16         offset;
+	char          *tmp_str;
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "screen_edge", "panel-edge-bottom");
+	gconf_string_to_enum (
+		panel_edge_type_enum_map, tmp_str, (int *) &edge);
+	g_free (tmp_str);
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "panel_anchor", "panel-anchor-left");
+	gconf_string_to_enum (
+		panel_anchor_type_enum_map, tmp_str, (int *) &anchor);
+	g_free (tmp_str);
+			
+	offset = panel_get_int (profile, panel_id, "panel_offset", 0);
+	
+	return sliding_widget_new (panel_id,
+				   screen,
+				   monitor,
+				   anchor,
+				   offset,
+				   edge,
+				   mode,
+				   state,
+				   size,
+				   hidebuttons_enabled,
+				   hidebutton_pixmaps_enabled,
+				   back_type, back_pixmap,
+				   fit_pixmap_bg,
+				   stretch_pixmap_bg,
+				   rotate_pixmap_bg,
+				   back_color);
+}
+
+static GtkWidget *
+panel_load_drawer_panel_from_gconf (const char          *profile,
+				    const char          *panel_id,
+				    int                  screen,
+				    int                  monitor,
+				    BasePState           state,
+				    int                  size,
+				    gboolean             hidebuttons_enabled,
+				    gboolean             hidebutton_pixmaps_enabled,
+				    PanelBackgroundType  back_type,
+				    const char          *back_pixmap,
+				    gboolean             fit_pixmap_bg,
+				    gboolean             stretch_pixmap_bg,
+				    gboolean             rotate_pixmap_bg,
+				    PanelColor          *back_color)
+{
+	int   orient = PANEL_ORIENT_UP;
+	char *tmp_str;
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "panel_orient", "panel-orient-up");
+	gconf_string_to_enum (
+		panel_orient_type_enum_map, tmp_str, (int *) &orient);
+	g_free (tmp_str);
+
+	return drawer_widget_new (panel_id,
+				  screen,
+				  monitor,
+				  (PanelOrient) orient,
+				  BASEP_EXPLICIT_HIDE, 
+				  state,
+				  size,
+				  hidebuttons_enabled,
+				  hidebutton_pixmaps_enabled,
+				  back_type, back_pixmap,
+				  fit_pixmap_bg,
+				  stretch_pixmap_bg,
+				  rotate_pixmap_bg,
+				  back_color);
+}
+
+static GtkWidget *
+panel_load_floating_panel_from_gconf (const char          *profile,
+				      const char          *panel_id,
+				      int                  screen,
+				      int                  monitor,
+				      BasePMode            mode,
+				      BasePState           state,
+				      int                  size,
+				      gboolean             hidebuttons_enabled,
+				      gboolean             hidebutton_pixmaps_enabled,
+				      PanelBackgroundType  back_type,
+				      const char          *back_pixmap,
+				      gboolean             fit_pixmap_bg,
+				      gboolean             stretch_pixmap_bg,
+				      gboolean             rotate_pixmap_bg,
+				      PanelColor          *back_color)
+{
+	GtkOrientation  orient = GTK_ORIENTATION_HORIZONTAL;
+	int             x, y;
+	char           *tmp_str;
+
+	tmp_str = panel_get_string (profile, panel_id,
+				    "panel_orient", "panel-orientation-horizontal");
+	gconf_string_to_enum (
+		panel_orientation_type_enum_map, tmp_str, (int *) &orient);
+	g_free (tmp_str);
+
+	x = panel_get_int (profile, panel_id, "panel_x_position", 0);
+	y = panel_get_int (profile, panel_id, "panel_y_position", 0);
+			
+	return floating_widget_new (panel_id,
+				    screen,
+				    monitor,
+				    x,
+				    y,
+				    orient,
+				    mode,
+				    state,
+				    size,
+				    hidebuttons_enabled,
+				    hidebutton_pixmaps_enabled,
+				    back_type, back_pixmap,
+				    fit_pixmap_bg,
+				    stretch_pixmap_bg,
+				    rotate_pixmap_bg,
+				    back_color);
+}
+	
+static void
+panel_load_panel_from_gconf (const char *profile,
+			     const char *panel_id)
+{
+	GtkWidget           *panel = NULL;
+	PanelType            type = EDGE_PANEL;
+	PanelBackgroundType  back_type = PANEL_BACK_NONE;
+	BasePState           state;
+	BasePMode            mode;
+	PanelColor           back_color = { { 0, 0, 0, 0 }, 0xffff};
+	GdkColor             gdkcolor = {0, 0, 0, 1};
+	gboolean             fit_pixmap_bg;
+	gboolean             stretch_pixmap_bg;
+	gboolean             rotate_pixmap_bg;
+	gboolean             hidebuttons_enabled;
+	gboolean             hidebutton_pixmaps_enabled;
+	int                  screen;
+	int                  monitor;
+	int                  size = PANEL_SIZE_SMALL;
+	char                *back_pixmap;
+	char                *tmp_str;
+
+	screen  = panel_get_int (profile, panel_id, "screen", -1);
+	monitor = panel_get_int (profile, panel_id, "monitor", -1);
+	if (screen == -1 || monitor == -1) {
+		/* Backwards compat:
+		 *   In 2.0.0, we only had Xinerama support and the
+		 *   monitor number was saved as "screen_id".
+		 */
+		screen = 0;
+		monitor = panel_get_int (profile, panel_id, "screen_id", 0);
+	}
+
+	if (screen >= multiscreen_screens () ||
+	    monitor >= multiscreen_monitors (screen))
+		return;
+
+	back_pixmap = panel_get_string (profile, panel_id,
+					"panel_background_pixmap", NULL);
+	if (string_empty (back_pixmap)) {
+		g_free (back_pixmap);
+		back_pixmap = NULL;
+	}
+
+	tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
+	if (!tmp_str || !tmp_str [0]) {
+		gdk_color_parse (tmp_str, &gdkcolor);
+		back_color.gdk = gdkcolor;
+	}
+	g_free (tmp_str);
+
+	back_color.alpha = panel_get_int (
+				profile, panel_id, "panel_background_color_alpha", 0xFFFF);
+
+	tmp_str = panel_get_string (
+			profile, panel_id, "panel_background_type", "no-background");
+	gconf_string_to_enum (background_type_enum_map, tmp_str, (int *) &back_type);
+	g_free (tmp_str);
+		
+	fit_pixmap_bg = panel_get_bool (profile, panel_id,
+					"panel_background_pixmap_fit", FALSE);
+
+	stretch_pixmap_bg = panel_get_bool (profile, panel_id,
+					    "panel_background_pixmap_stretch", FALSE);
+
+	rotate_pixmap_bg = panel_get_bool (profile, panel_id,
+					   "panel_background_pixmap_rotate", FALSE);
+	
+	tmp_str = panel_get_string (profile, panel_id, "panel_size", "panel-size-small");
+	gconf_string_to_enum (panel_size_type_enum_map, tmp_str, &size);
+	g_free (tmp_str);
+		
+	hidebuttons_enabled =
+		panel_get_bool (profile, panel_id, "hide_buttons_enabled", TRUE);
+		
+	hidebutton_pixmaps_enabled =
+		panel_get_bool (profile, panel_id, "hide_button_pixmaps_enabled", TRUE);
+
+	state   = panel_get_int (profile, panel_id, "panel_hide_state", 0);
+	mode    = panel_get_int (profile, panel_id, "panel_hide_mode", 0);
+
+	tmp_str = panel_get_string (profile, panel_id, "panel_type", "edge-panel");
+	gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (int *) &type);
+	g_free (tmp_str);
+
+	switch (type) {
+	case EDGE_PANEL:
+		panel = panel_load_edge_panel_from_gconf (
+				profile, panel_id, screen, monitor,
+				mode, state, size, hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg, stretch_pixmap_bg,
+				rotate_pixmap_bg, &back_color);
+		break;
+	case ALIGNED_PANEL:
+		panel = panel_load_aligned_panel_from_gconf (
+				profile, panel_id, screen, monitor,
+				mode, state, size, hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg, stretch_pixmap_bg,
+				rotate_pixmap_bg, &back_color);
+		break;
+
+	case SLIDING_PANEL:
+		panel = panel_load_sliding_panel_from_gconf (
+				profile, panel_id, screen, monitor,
+				mode, state, size, hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg, stretch_pixmap_bg,
+				rotate_pixmap_bg, &back_color);
+		break;
+	case DRAWER_PANEL:
+		panel = panel_load_drawer_panel_from_gconf (
+				profile, panel_id, screen, monitor,
+				state, size, hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg, stretch_pixmap_bg,
+				rotate_pixmap_bg, &back_color);
+		break;
+	case FLOATING_PANEL:
+		panel = panel_load_floating_panel_from_gconf (
+				profile, panel_id, screen, monitor,
+				mode, state, size, hidebuttons_enabled,
+				hidebutton_pixmaps_enabled,
+				back_type, back_pixmap,
+				fit_pixmap_bg, stretch_pixmap_bg,
+				rotate_pixmap_bg, &back_color);
+	
+		break;
+	case FOOBAR_PANEL:
+		panel = foobar_widget_new (panel_id, screen, monitor);
+		break;
+	default:
+		g_warning ("Unkown panel type: %d; ignoring.", type);
+		break;
+	}
+
+	g_free (back_pixmap);
+
+	if (panel) {
+		panel_setup (panel);
+		gtk_widget_show (panel);
+	}
+}
+
 void
 panel_load_panels_from_gconf (void)
 {
@@ -2004,257 +2388,8 @@ panel_load_panels_from_gconf (void)
 	panel_ids = gconf_client_get_list (
 			panel_gconf_get_client (), key, GCONF_VALUE_STRING, NULL);
 
-	for (l = panel_ids; l; l = l->next) {
-		GtkWidget           *panel = NULL;
-		PanelType            type = EDGE_PANEL;
-		PanelBackgroundType  back_type = PANEL_BACK_NONE;
-		BasePState           state;
-		BasePMode            mode;
-		PanelColor           back_color = { { 0, 0, 0, 0 }, 0xffff};
-		GdkColor             gdkcolor = {0, 0, 0, 1};
-		gboolean             fit_pixmap_bg;
-		gboolean             stretch_pixmap_bg;
-		gboolean             rotate_pixmap_bg;
-		gboolean             hidebuttons_enabled;
-		gboolean             hidebutton_pixmaps_enabled;
-		int                  screen;
-		int                  monitor;
-		int                  size = PANEL_SIZE_SMALL;
-		char                *panel_id;
-		char                *back_pixmap;
-		char                *tmp_str;
-
-		panel_id = l->data;
-
-		screen  = panel_get_int (profile, panel_id, "screen", -1);
-		monitor = panel_get_int (profile, panel_id, "monitor", -1);
-		if (screen == -1 || monitor == -1) {
-			/* Backwards compat:
-			 *   In 2.0.0, we only had Xinerama support and the
-			 *   monitor number was saved as "screen_id".
-			 */
-			screen = 0;
-			monitor = panel_get_int (profile, panel_id, "screen_id", 0);
-		}
-
-		if (screen >= multiscreen_screens () ||
-		    monitor >= multiscreen_monitors (screen))
-			continue;
-
-		back_pixmap = panel_get_string (profile, panel_id,
-						"panel_background_pixmap", NULL);
-		if (string_empty (back_pixmap)) {
-			g_free (back_pixmap);
-			back_pixmap = NULL;
-		}
-
-		tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
-		if (!tmp_str || !tmp_str [0]) {
-			gdk_color_parse (tmp_str, &gdkcolor);
-			back_color.gdk = gdkcolor;
-		}
-		g_free (tmp_str);
-
-		back_color.alpha = panel_get_int (
-					profile, panel_id, "panel_background_color_alpha", 0xFFFF);
-
-		tmp_str = panel_get_string (
-				profile, panel_id, "panel_background_type", "no-background");
-		gconf_string_to_enum (background_type_enum_map, tmp_str, (int *) &back_type);
-		g_free (tmp_str);
-		
-		fit_pixmap_bg = panel_get_bool (profile, panel_id,
-						"panel_background_pixmap_fit", FALSE);
-
-		stretch_pixmap_bg = panel_get_bool (profile, panel_id,
-						    "panel_background_pixmap_stretch", FALSE);
-
-		rotate_pixmap_bg = panel_get_bool (profile, panel_id,
-						   "panel_background_pixmap_rotate", FALSE);
-	
-		tmp_str = panel_get_string (profile, panel_id, "panel_size", "panel-size-small");
-		gconf_string_to_enum (panel_size_type_enum_map, tmp_str, &size);
-		g_free (tmp_str);
-		
-		hidebuttons_enabled =
-			panel_get_bool (profile, panel_id, "hide_buttons_enabled", TRUE);
-		
-		hidebutton_pixmaps_enabled =
-			panel_get_bool (profile, panel_id, "hide_button_pixmaps_enabled", TRUE);
-
-		state   = panel_get_int (profile, panel_id, "panel_hide_state", 0);
-		mode    = panel_get_int (profile, panel_id, "panel_hide_mode", 0);
-
-		tmp_str = panel_get_string (profile, panel_id, "panel_type", "edge-panel");
-		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (int *) &type);
-		g_free (tmp_str);
-
-		switch (type) {
-		case EDGE_PANEL: {
-			BorderEdge edge = BORDER_BOTTOM;
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "screen_edge", "panel-edge-bottom");
-			gconf_string_to_enum (
-				panel_edge_type_enum_map, tmp_str, (int *) &edge);
-			g_free (tmp_str);
-			
-			panel = edge_widget_new (panel_id,
-						 screen,
-						 monitor,
-						 edge, 
-						 mode, state,
-						 size,
-						 hidebuttons_enabled,
-						 hidebutton_pixmaps_enabled,
-						 back_type, back_pixmap,
-						 fit_pixmap_bg,
-						 stretch_pixmap_bg,
-						 rotate_pixmap_bg,
-						 &back_color);
-			}
-			break;
-		case ALIGNED_PANEL: {
-			AlignedAlignment align = ALIGNED_LEFT;
-			BorderEdge       edge = BORDER_BOTTOM;
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "screen_edge", "panel-edge-bottom");
-			gconf_string_to_enum (
-				panel_edge_type_enum_map, tmp_str, (int *) &edge);
-			g_free (tmp_str);
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "panel_align", "panel-alignment-left");
-			gconf_string_to_enum (
-				panel_alignment_type_enum_map, tmp_str, (int *) &align);
-			g_free (tmp_str);
-
-			panel = aligned_widget_new (panel_id,
-						    screen,
-						    monitor,
-						    align,
-						    edge,
-						    mode,
-						    state,
-						    size,
-						    hidebuttons_enabled,
-						    hidebutton_pixmaps_enabled,
-						    back_type, back_pixmap,
-						    fit_pixmap_bg,
-						    stretch_pixmap_bg,
-						    rotate_pixmap_bg,
-						    &back_color);
-			}
-			break;
-		case SLIDING_PANEL: {
-			SlidingAnchor anchor = SLIDING_ANCHOR_LEFT;
-			BorderEdge    edge = BORDER_BOTTOM;
-			gint16        offset;
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "screen_edge", "panel-edge-bottom");
-			gconf_string_to_enum (
-				panel_edge_type_enum_map, tmp_str, (int *) &edge);
-			g_free (tmp_str);
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "panel_anchor", "panel-anchor-left");
-			gconf_string_to_enum (
-				panel_anchor_type_enum_map, tmp_str, (int *) &anchor);
-			g_free (tmp_str);
-			
-			offset = panel_get_int (profile, panel_id, "panel_offset", 0);
-	
-			panel = sliding_widget_new (panel_id,
-						    screen,
-						    monitor,
-						    anchor,
-						    offset,
-						    edge,
-						    mode,
-						    state,
-						    size,
-						    hidebuttons_enabled,
-						    hidebutton_pixmaps_enabled,
-						    back_type, back_pixmap,
-						    fit_pixmap_bg,
-						    stretch_pixmap_bg,
-						    rotate_pixmap_bg,
-						    &back_color);
-			}
-			break;
-		case DRAWER_PANEL: {
-			int orient = PANEL_ORIENT_UP;
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "panel_orient", "panel-orient-up");
-			gconf_string_to_enum (
-				panel_orient_type_enum_map, tmp_str, (int *) &orient);
-			g_free (tmp_str);
-
-			panel = drawer_widget_new (panel_id,
-						   screen,
-						   monitor,
-						   (PanelOrient) orient,
-						   BASEP_EXPLICIT_HIDE, 
-						   state,
-						   size,
-						   hidebuttons_enabled,
-						   hidebutton_pixmaps_enabled,
-						   back_type, back_pixmap,
-						   fit_pixmap_bg,
-						   stretch_pixmap_bg,
-						   rotate_pixmap_bg,
-						   &back_color);
-			}
-			break;
-		case FLOATING_PANEL: {
-			GtkOrientation orient = GTK_ORIENTATION_HORIZONTAL;
-			int            x, y;
-
-			tmp_str = panel_get_string (profile, panel_id,
-						    "panel_orient", "panel-orientation-horizontal");
-			gconf_string_to_enum (
-				panel_orientation_type_enum_map, tmp_str, (int *) &orient);
-			g_free (tmp_str);
-
-			x = panel_get_int (profile, panel_id, "panel_x_position", 0);
-			y = panel_get_int (profile, panel_id, "panel_y_position", 0);
-			
-			panel = floating_widget_new (panel_id,
-						     screen,
-						     monitor,
-						     x,
-						     y,
-						     orient,
-						     mode,
-						     state,
-						     size,
-						     hidebuttons_enabled,
-						     hidebutton_pixmaps_enabled,
-						     back_type, back_pixmap,
-						     fit_pixmap_bg,
-						     stretch_pixmap_bg,
-						     rotate_pixmap_bg,
-						     &back_color);
-			}
-			break;
-		case FOOBAR_PANEL:
-			panel = foobar_widget_new (panel_id, screen, monitor);
-			break;
-		default:
-			g_warning ("Unkown panel type: %d; ignoring.", type);
-			break;
-		}
-
-		g_free (back_pixmap);
-
-		if (panel) {
-			panel_setup (panel);
-			gtk_widget_show (panel);
-		}
-	}
+	for (l = panel_ids; l; l = l->next)
+		panel_load_panel_from_gconf (profile, l->data);
 
 	/* Failsafe! */
 	if (panel_ids == NULL) {
