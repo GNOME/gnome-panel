@@ -86,12 +86,35 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 	g_free(launcher);
 }
 
+static void  
+drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
+		  GtkSelectionData   *selection_data, guint info,
+		  guint time, Launcher *launcher)
+{
+	gchar *uri_list;
+	
+	g_return_if_fail(launcher!=NULL);
+	g_return_if_fail(launcher->dentry!=NULL);
+	g_return_if_fail(launcher->dentry->location!=NULL);
+       
+	uri_list = g_strconcat ("file:", launcher->dentry->location, NULL);
+
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, uri_list,
+				strlen(uri_list));
+	g_free(uri_list);
+}
+
+
 
 static Launcher *
 create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 {
 	char *icon;
 	Launcher *launcher;
+        static GtkTargetEntry drag_targets[] = {
+		{ "text/uri-list", 0, 0 }
+	};
 
 	if (!default_app_pixmap)
 		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
@@ -148,6 +171,18 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 						    _("App"));
 	}
 	gtk_widget_show (launcher->button);
+
+	/*A hack since this function only pretends to work on window
+	  widgets (which we actually kind of are)*/
+	GTK_WIDGET_UNSET_FLAGS(launcher->button,GTK_NO_WINDOW);
+	gtk_drag_source_set(launcher->button,
+			    GDK_BUTTON1_MASK,
+			    drag_targets, 1,
+			    GDK_ACTION_COPY);
+	GTK_WIDGET_SET_FLAGS(launcher->button,GTK_NO_WINDOW);
+
+	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_get",
+			   drag_data_get_cb, launcher);
 
 	gtk_signal_connect (GTK_OBJECT(launcher->button),
 			    "clicked",

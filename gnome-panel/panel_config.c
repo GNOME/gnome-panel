@@ -99,7 +99,8 @@ update_config_back(PanelWidget *pw)
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
-		gtk_entry_set_text(GTK_ENTRY(t),pw->back_pixmap);
+		gtk_entry_set_text(GTK_ENTRY(t),
+				   pw->back_pixmap?pw->back_pixmap:"");
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->pix),
 					    TRUE);
 		break;
