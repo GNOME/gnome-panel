@@ -128,8 +128,6 @@ button_widget_class_init (ButtonWidgetClass *class)
 			       gtk_signal_default_marshaller,
 			       GTK_TYPE_NONE,
 			       0);
-	gtk_object_class_add_signals(object_class,button_widget_signals,
-				     LAST_SIGNAL);
 	
 	class->clicked = NULL;
 	class->pressed = button_widget_pressed;

@@ -235,8 +235,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       GTK_TYPE_NONE,
 			       1,
 			       GTK_TYPE_POINTER);
-	gtk_object_class_add_signals(object_class,panel_widget_signals,
-				     LAST_SIGNAL);
 
 	class->orient_change = NULL;
 	class->size_change = NULL;

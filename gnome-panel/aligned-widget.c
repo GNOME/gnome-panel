@@ -77,10 +77,6 @@ aligned_pos_class_init (AlignedPosClass *klass)
 				GTK_TYPE_NONE,
 				1, GTK_TYPE_ENUM);
 
-	gtk_object_class_add_signals (object_class,
-				      aligned_pos_signals,
-				      LAST_SIGNAL);
-
 	pos_class->set_pos = aligned_pos_set_pos;
 	pos_class->get_pos = aligned_pos_get_pos;
 	pos_class->north_clicked = pos_class->west_clicked = 

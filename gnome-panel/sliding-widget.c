@@ -89,10 +89,6 @@ sliding_pos_class_init (SlidingPosClass *klass)
 			       2, GTK_TYPE_INT,
 			       GTK_TYPE_INT);
 
-	gtk_object_class_add_signals (object_class,
-				      sliding_pos_signals,
-				      LAST_SIGNAL);
-	
 	pos_class->set_pos = sliding_pos_set_pos;
 	pos_class->get_pos = sliding_pos_get_pos;
 }

@@ -84,10 +84,6 @@ border_pos_class_init (BorderPosClass *klass)
 			       GTK_TYPE_NONE, 1,
 			       GTK_TYPE_ENUM);
 
-	gtk_object_class_add_signals (object_class, 
-				      border_pos_signals,
-				      LAST_SIGNAL);
-
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = border_pos_set_hidebuttons;
 	pos_class->get_applet_orient = border_pos_get_applet_orient;

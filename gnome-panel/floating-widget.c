@@ -105,10 +105,6 @@ floating_pos_class_init (FloatingPosClass *klass)
 				GTK_TYPE_NONE,
 				2, GTK_TYPE_INT, GTK_TYPE_INT);
 	
-	gtk_object_class_add_signals (object_class,
-				      floating_pos_signals,
-				      LAST_SIGNAL);
-	
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = floating_pos_set_hidebuttons;
 	pos_class->get_applet_orient = floating_pos_get_applet_orient;
