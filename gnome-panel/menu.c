@@ -564,16 +564,16 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	if (main_menu)
 		switch(orient) {
 			case MENU_DOWN:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
 				break;
 			case MENU_UP:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
 				break;
 			case MENU_RIGHT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
 				break;
 			case MENU_LEFT:
-				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.xpm");
+				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
 				break;
 		}
 	else
@@ -709,19 +709,19 @@ set_orientation(GtkWidget *window, Menu *menu)
 		switch (menu->orient) {
 			case MENU_DOWN:
 				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-down.xpm");
+					"gnome-menu-down.png");
 				break;
 			case MENU_UP:
 				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-up.xpm");
+					"gnome-menu-up.png");
 				break;
 			case MENU_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-right.xpm");
+					"gnome-menu-right.png");
 				break;
 			case MENU_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-left.xpm");
+					"gnome-menu-left.png");
 				break;
 		}
 	else
