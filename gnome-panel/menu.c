@@ -2528,6 +2528,8 @@ Bonobo_ServerInfoList_equals (Bonobo_ServerInfoList *l1,
 static gboolean
 recheck_applet_list (ReloadData *reload_data)
 {
+	return TRUE;
+#if FIXME_FOR_NEW_TOPLEVEL
 	Bonobo_ServerInfoList *applet_list;
 	CORBA_Environment      env;
 
@@ -2564,6 +2566,7 @@ recheck_applet_list (ReloadData *reload_data)
 	make_add_submenu (reload_data->menu, applet_list);
 
 	return TRUE;
+#endif
 }
 
 static void
