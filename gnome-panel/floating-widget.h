@@ -88,6 +88,6 @@ void floating_widget_change_coords (FloatingWidget *floating,
 void floating_widget_change_orient (FloatingWidget *floating,
 				    PanelOrientation orient);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

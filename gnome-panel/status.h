@@ -48,6 +48,6 @@ StatusSpot * status_applet_get_ss(guint32 winid);
 /*inhibit adding and updating for the purpose of quitting*/
 extern gboolean status_inhibit;
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

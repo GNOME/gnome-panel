@@ -21,6 +21,6 @@ int		conditional_get_int	(const char *key,
 /* get key and treat it as a conditional, if missing, it's true */
 gboolean	conditional_true	(const char *key);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

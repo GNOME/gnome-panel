@@ -79,6 +79,6 @@ void		foobar_widget_force_menu_remake	(void);
 
 void		foobar_widget_global_set_clock_format (const char *format);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

@@ -33,6 +33,6 @@ DistributionType get_distribution_type (void) G_GNUC_CONST;
  * would be really going overboard */
 const DistributionInfo *get_distribution_info (void) G_GNUC_CONST;
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

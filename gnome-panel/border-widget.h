@@ -91,5 +91,5 @@ void border_widget_change_params (BorderWidget *border,
 
 void border_widget_change_edge (BorderWidget *border, BorderEdge edge);
 
-END_GNOME_DECLS
+G_END_DECLS
 #endif

@@ -75,7 +75,7 @@ void	save_applet		(AppletInfo *info,
 
 void	extern_save_last_position (Extern *ext, gboolean sync);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 
 

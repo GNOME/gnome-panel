@@ -72,6 +72,6 @@ Launcher *	find_launcher			(const char *path);
 /* make file name from base */
 char *		launcher_file_name		(const char *base);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

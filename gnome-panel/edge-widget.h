@@ -61,6 +61,6 @@ GtkWidget *edge_widget_new (int screen,
 			    gboolean rotate_pixmap_bg,
 			    GdkColor *back_color);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

@@ -93,6 +93,6 @@ void aligned_widget_change_align (AlignedWidget *aligned,
 void aligned_widget_change_align_edge (AlignedWidget *aligned,
 				       AlignedAlignment align,
 				       BorderEdge edge);
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

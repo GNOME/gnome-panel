@@ -94,6 +94,6 @@ void		drawer_widget_close_drawer	(DrawerWidget *panel,
 
 void            drawer_widget_restore_state     (DrawerWidget *drawer);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

@@ -79,6 +79,6 @@ void init_fr_chunks (void);
 void free_mfile (MFile *mfile);
 void free_mfile_list (GSList *list);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

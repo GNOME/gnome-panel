@@ -102,6 +102,6 @@ void sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 					       SlidingAnchor anchor, 
 					       gint16 offset,
 					       BorderEdge edge);
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

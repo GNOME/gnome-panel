@@ -58,6 +58,6 @@ void convert_old_config(void);
 char * get_correct_prefix (char const **sep);
 void push_correct_global_prefix (void);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

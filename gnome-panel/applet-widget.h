@@ -287,6 +287,6 @@ CORBA_Object_release(func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB()
 #define APPLET_DEACTIVATE(func, goad_id, apldat) { CORBA_Environment ev; CORBA_exception_init(&ev); \
 func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB(), "RootPOA", &ev), goad_id, apldat, &ev); CORBA_exception_free(&ev); }
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif /* __APPLET_WIDGET_H__ */

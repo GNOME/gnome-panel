@@ -24,6 +24,6 @@ void set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient);
 
 void add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

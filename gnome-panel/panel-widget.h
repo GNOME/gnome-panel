@@ -264,6 +264,6 @@ void panel_widget_get_applet_rgb_bg(PanelWidget *panel,
 
 extern gboolean panel_applet_in_drag;
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif /* PANEL_WIDGET_H */

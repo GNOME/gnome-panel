@@ -75,6 +75,6 @@ GtkObject*	status_docklet_new_full		(int maximum_retries,
    calls the build_plug signal with the plug that it has added */
 void		status_docklet_run		(StatusDocklet *docklet);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif /* __STATUS_DOCKLET_H__ */

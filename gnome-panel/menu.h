@@ -184,6 +184,6 @@ enum {
 #define MENU_LEVEL_NORMAL "level-normal"
 #define MENU_LEVEL_BELOW "level-below"
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

@@ -84,6 +84,6 @@ void show_applet_menu (AppletInfo *info, GdkEventButton *event);
  * removed launchers */
 void remove_unused_launchers (void);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

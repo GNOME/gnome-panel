@@ -47,6 +47,6 @@ void status_unparent (GtkWidget *widget);
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
 
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif

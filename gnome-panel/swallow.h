@@ -32,6 +32,6 @@ void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 /*I couldn't resist the naming of this function*/
 void ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos);
 
-END_GNOME_DECLS
+G_END_DECLS
 
 #endif
