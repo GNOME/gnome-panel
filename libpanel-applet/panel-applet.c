@@ -794,7 +794,7 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 			 int              x,
 			 int              y)
 {
-	GdkPixmap *pixmap;
+	GdkWindow *window;
 	GdkPixmap *retval;
 	GdkGC     *gc;
 	int        width;
@@ -802,13 +802,16 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
-	pixmap = gdk_pixmap_lookup (xid);
-	if (pixmap)
-		g_object_ref (G_OBJECT (pixmap));
-	else
-		pixmap = gdk_pixmap_foreign_new (xid);
+	if (!GTK_WIDGET_REALIZED (applet))
+		return NULL;
 
-	g_return_val_if_fail (pixmap != NULL, NULL);
+	window = gdk_window_lookup (xid);
+	if (window)
+		g_object_ref (window);
+	else
+		window = gdk_window_foreign_new (xid);
+
+	g_return_val_if_fail (window != NULL, NULL);
 
 	gdk_drawable_get_size (GDK_DRAWABLE (GTK_WIDGET (applet)->window),
 			       &width, &height);
@@ -821,13 +824,13 @@ panel_applet_get_pixmap (PanelApplet     *applet,
 
 	gdk_draw_drawable (GDK_DRAWABLE (retval),
 			   gc, 
-			   GDK_DRAWABLE (pixmap),
+			   GDK_DRAWABLE (window),
 			   x, y,
 			   0, 0,
 			   width, height);
 
 	g_object_unref (gc);
-	g_object_unref (pixmap);
+	g_object_unref (window);
 
 	return retval;
 }
@@ -842,7 +845,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 
 	retval = PANEL_NO_BACKGROUND;
 
-	if (!applet->priv->background)
+	if (!GTK_WIDGET_REALIZED (applet) || !applet->priv->background)
 		return retval;
 
 	elements = g_strsplit (applet->priv->background, ":", -1);
@@ -968,6 +971,39 @@ panel_applet_get_prop (BonoboPropertyBag *sack,
 }
 
 static void
+panel_applet_handle_background (PanelApplet *applet)
+{
+	PanelAppletBackgroundType  type;
+	GdkColor                   color;
+	GdkPixmap                 *pixmap = NULL;
+
+	type = panel_applet_handle_background_string (applet, &color, &pixmap);
+
+	switch (type) {
+	case PANEL_NO_BACKGROUND:
+		g_signal_emit (G_OBJECT (applet),
+			       panel_applet_signals [CHANGE_BACKGROUND],
+			       0, PANEL_NO_BACKGROUND, NULL, NULL);
+		break;
+	case PANEL_COLOR_BACKGROUND:
+		g_signal_emit (G_OBJECT (applet),
+			       panel_applet_signals [CHANGE_BACKGROUND],
+			       0, PANEL_COLOR_BACKGROUND, &color, NULL);
+		break;
+	case PANEL_PIXMAP_BACKGROUND:
+		g_signal_emit (G_OBJECT (applet),
+			       panel_applet_signals [CHANGE_BACKGROUND],
+			       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
+
+		g_object_unref (pixmap);
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
+static void
 panel_applet_set_prop (BonoboPropertyBag *sack,
 		       const BonoboArg   *arg,
 		       guint              arg_id,
@@ -1005,42 +1041,13 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 		}
 		}
 		break;
-	case PROPERTY_BACKGROUND_IDX: {
-		PanelAppletBackgroundType  type;
-		GdkColor                   color;
-		GdkPixmap                 *pixmap = NULL;
-
-
+	case PROPERTY_BACKGROUND_IDX:
 		if (applet->priv->background)
 			g_free (applet->priv->background);
 
 		applet->priv->background = g_strdup (BONOBO_ARG_GET_STRING (arg));
 
-		type = panel_applet_handle_background_string (applet, &color, &pixmap);
-
-		switch (type) {
-		case PANEL_NO_BACKGROUND:
-			g_signal_emit (G_OBJECT (applet),
-				       panel_applet_signals [CHANGE_BACKGROUND],
-				       0, PANEL_NO_BACKGROUND, NULL, NULL);
-			break;
-		case PANEL_COLOR_BACKGROUND:
-			g_signal_emit (G_OBJECT (applet),
-				       panel_applet_signals [CHANGE_BACKGROUND],
-				       0, PANEL_COLOR_BACKGROUND, &color, NULL);
-			break;
-		case PANEL_PIXMAP_BACKGROUND:
-			g_signal_emit (G_OBJECT (applet),
-				       panel_applet_signals [CHANGE_BACKGROUND],
-				       0, PANEL_PIXMAP_BACKGROUND, NULL, pixmap);
-
-			g_object_unref (pixmap);
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-		}
-		}
+		panel_applet_handle_background (applet);
 		break;
 	default:
 		g_assert_not_reached ();
@@ -1098,6 +1105,15 @@ panel_applet_property_bag (PanelApplet *applet)
 				 Bonobo_PROPERTY_READABLE);
 
 	return sack;
+}
+
+static void
+panel_applet_realize (GtkWidget *widget)
+{
+	GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+	if (PANEL_APPLET (widget)->priv->background)
+		panel_applet_handle_background (PANEL_APPLET (widget));
 }
 
 static void
@@ -1266,6 +1282,7 @@ panel_applet_class_init (PanelAppletClass *klass,
 	widget_class->size_allocate = panel_applet_size_allocate;
 	widget_class->expose_event = panel_applet_expose;
 	widget_class->focus = panel_applet_focus;
+	widget_class->realize = panel_applet_realize;
 
 	gobject_class->finalize = panel_applet_finalize;
 

@@ -1,3 +1,17 @@
+2002-12-04  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c:
+	(panel_applet_get_pixmap): its a window we're copying
+	from, not a pixmap.
+	(panel_applet_handle_background_string): don't attempt
+	this until the applet is realized.
+	(panel_applet_handle_background):
+	(panel_applet_set_prop): split out background handling
+	and signal emission into a seperate function.
+	(panel_applet_realize): and invoke it here when the
+	applet is realized.
+	(panel_applet_class_init): hook up the realized handler.
+
 2002-11-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c: kill custom lifecycle management
