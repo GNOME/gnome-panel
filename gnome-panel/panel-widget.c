@@ -447,7 +447,7 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 	int i,pos;
 	GList *list,*prev;
 	AppletData *ad;
-
+	
 	if(old_size>=panel->size ||
 	   panel->packed)
 	   	return;
@@ -668,7 +668,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			i += ad->cells;
 		}
 	} else { /*not packed*/
-		i = panel->size - 1;
+		i = panel->size;
 		for(list = g_list_last(panel->applet_list);
 		    list!=NULL;
 		    list = g_list_previous(list)) {
