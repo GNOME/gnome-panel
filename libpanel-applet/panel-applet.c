@@ -801,15 +801,18 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 				       GdkColor     *color,
 				       GdkPixmap   **pixmap)
 {
-	gchar **elements;
+	PanelAppletBackgroundType   retval;
+	char                      **elements;
+
+	retval = PANEL_NO_BACKGROUND;
 
 	if (!applet->priv->background)
-		return PANEL_NO_BACKGROUND;
+		return retval;
 
 	elements = g_strsplit (applet->priv->background, ":", -1);
 
 	if (elements [0] && !strcmp (elements [0], "none" )) {
-		return PANEL_NO_BACKGROUND;
+		retval = PANEL_NO_BACKGROUND;
 		
 	} else if (elements [0] && !strcmp (elements [0], "color")) {
 		g_return_val_if_fail (color != NULL, PANEL_NO_BACKGROUND);
@@ -821,7 +824,7 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 			return PANEL_NO_BACKGROUND;
 		}
 
-		return PANEL_COLOR_BACKGROUND;
+		retval = PANEL_COLOR_BACKGROUND;
 
 	} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
 		GdkNativeWindow pixmap_id;
@@ -844,11 +847,13 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 			return PANEL_NO_BACKGROUND;
 		}
 
-		return PANEL_PIXMAP_BACKGROUND;
+		retval = PANEL_PIXMAP_BACKGROUND;
 	} else
 		g_warning (_("Unknown background type received"));
 
-	return PANEL_NO_BACKGROUND;
+	g_strfreev (elements);
+
+	return retval;
 }
 
 

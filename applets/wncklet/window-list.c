@@ -219,6 +219,8 @@ applet_change_background (PanelApplet               *applet,
 		GtkRcStyle *rc_style = gtk_rc_style_new ();
 
 		gtk_widget_modify_style (tasklist->applet, rc_style);
+
+		g_object_unref (rc_style);
 	}
 	else if (type == PANEL_COLOR_BACKGROUND) {
 		gtk_widget_modify_bg (tasklist->applet,

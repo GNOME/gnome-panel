@@ -404,20 +404,21 @@ applet_change_background (PanelApplet               *applet,
 			  const gchar               *pixmap,
 			  ClockData                 *cd)
 {
-  if (type == PANEL_NO_BACKGROUND)
-    {
-      GtkRcStyle *rc_style = gtk_rc_style_new ();
+	if (type == PANEL_NO_BACKGROUND) {
+		GtkRcStyle *rc_style;
 
-      gtk_widget_modify_style (cd->applet, rc_style);
-    }
-  else if (type == PANEL_COLOR_BACKGROUND)
-    {
-      gtk_widget_modify_bg (cd->applet,
-			    GTK_STATE_NORMAL,
-			    color);
-    } else { /* pixmap */
-      /* FIXME: Handle this when the panel support works again */
-    }
+		rc_style = gtk_rc_style_new ();
+
+		gtk_widget_modify_style (cd->applet, rc_style);
+
+		g_object_unref (rc_style);
+
+	} else if (type == PANEL_COLOR_BACKGROUND)
+		gtk_widget_modify_bg (cd->applet, GTK_STATE_NORMAL, color);
+
+	/* else if (type == PANEL_PIXMAP_BACKGROUND)
+	 * FIXME: Handle this when the panel support works again
+	 */
 }
 
 
