@@ -433,6 +433,8 @@ applet_widget_construct (AppletWidget *applet,
 
 	applet->object = applet_object_new (GTK_WIDGET (applet), iid, &winid);
 
+	applet_debug_log ("applet_widget_construct: winid = %d\n", winid);
+
 	win = gdk_window_lookup (winid);
 
 	gtk_plug_construct (GTK_PLUG (applet), winid);
@@ -579,26 +581,26 @@ applet_widget_add_full (AppletWidget *applet,
 			gboolean      bind_events)
 {
 
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
-	g_return_if_fail(widget != NULL);
-	g_return_if_fail(GTK_IS_WIDGET(widget));
+	g_return_if_fail (applet && IS_APPLET_WIDGET(applet));
+	g_return_if_fail (widget && GTK_IS_WIDGET(widget));
 
-	if(applet->priv->ebox) {
-		gtk_container_add(GTK_CONTAINER(applet->priv->ebox), widget);
-		gtk_signal_connect(GTK_OBJECT(widget), "destroy",
-				   GTK_SIGNAL_FUNC(destroy_the_applet),
-				   applet);
+	if (applet->priv->ebox) {
+		gtk_container_add (GTK_CONTAINER (applet->priv->ebox), widget);
+
+		gtk_signal_connect (GTK_OBJECT (widget),
+				    "destroy",
+				    GTK_SIGNAL_FUNC (destroy_the_applet),
+				    applet);
 	} else
-		gtk_container_add(GTK_CONTAINER(applet), widget);
+		gtk_container_add (GTK_CONTAINER (applet), widget);
 
 	applet_object_register (applet->object);
 
-	if(bind_events) {
-		if(applet->priv->ebox)
-			bind_applet_events(widget, applet);
+	if (bind_events) {
+		if (applet->priv->ebox)
+			bind_applet_events (widget, applet);
 		else
-			bind_applet_events(GTK_WIDGET(applet), applet);
+			bind_applet_events (GTK_WIDGET (applet), applet);
 	}
 
 	applet->priv->added_child = TRUE;
@@ -617,9 +619,10 @@ applet_widget_add_full (AppletWidget *applet,
  * of the applet, use #applet_widget_abort_load.
  **/
 void
-applet_widget_add(AppletWidget *applet, GtkWidget *widget)
+applet_widget_add (AppletWidget *applet,
+		   GtkWidget    *widget)
 {
-	applet_widget_add_full(applet, widget, TRUE);
+	applet_widget_add_full (applet, widget, TRUE);
 }
 
 /**

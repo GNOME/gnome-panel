@@ -31,8 +31,7 @@ extern GSList *applets;
 void
 panel_show_help (const char *doc_name, const char *linkid)
 {
-	gnome_help_display (NULL /* program */,
-			    doc_name,
+	gnome_help_display (doc_name,
 			    linkid,
 			    NULL);
 
@@ -766,7 +765,9 @@ convert_keysym_state_to_string(guint keysym,
 	}
 }
 
+#if FIXME
 static GSList *layered_dialogs = NULL;
+#endif /* FIXME */
 
 #if FIXME
 static void

@@ -500,9 +500,11 @@ extern_handle_back_change (Extern       ext,
 {
 	GNOME_Panel_BackInfoType backing;
 	CORBA_Environment        env;
-	GNOME_Applet2            applet = ext->applet;
+	GNOME_Applet2            applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -519,6 +521,8 @@ extern_handle_back_change (Extern       ext,
 		backing._u.c.red   = panel->back_color.red;
 		backing._u.c.green = panel->back_color.green;
 		backing._u.c.blue  = panel->back_color.blue;
+		break;
+	case PANEL_BACK_NONE:
 		break;
 	default:
 		g_assert_not_reached ();
@@ -541,9 +545,11 @@ gboolean
 extern_handle_freeze_changes (Extern ext)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -566,9 +572,11 @@ gboolean
 extern_handle_thaw_changes (Extern ext)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -592,9 +600,11 @@ extern_handle_change_orient (Extern ext,
 			     int    orient)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL || ext->orient == orient)
 		return TRUE;
@@ -620,9 +630,11 @@ extern_handle_change_size (Extern ext,
 			   int    size)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -646,9 +658,11 @@ extern_handle_do_callback (Extern  ext,
 			   char   *name)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -672,9 +686,11 @@ extern_handle_set_tooltips_state (Extern   ext,
 				  gboolean enabled)
 {
 	CORBA_Environment env;
-	GNOME_Applet2     applet = ext->applet;
+	GNOME_Applet2     applet;
 
 	g_assert (ext);
+
+	applet = ext->applet;
 
 	if (applet == CORBA_OBJECT_NIL)
 		return TRUE;
@@ -978,16 +994,14 @@ socket_size_allocate (GtkWidget *applet, GtkAllocation *alloc)
 static void
 socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 {
-	static gboolean tried_loading = FALSE;
+	static gboolean   tried_loading = FALSE;
 	static GdkPixbuf *pb = NULL;
-	int size;
+	int               size;
 
-	/* sanity */
-	if (socket == NULL ||
-	    socket->window == NULL)
+	if (!socket || !socket->window)
 		return;
 
-	size = panel->sz < 14 ? panel->sz : 14;
+	size = CLAMP (panel->sz, 0, 14);
 
 	if (!tried_loading) {
 		char *file;
@@ -1003,11 +1017,11 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 	}
 	tried_loading = TRUE;
 
-	if (pb != NULL) {
+	if (pb) {
 		GdkPixmap *pm = NULL;
 		GdkPixbuf *scaled;
 
-		if (gdk_pixbuf_get_width (pb) != size ||
+		if (gdk_pixbuf_get_width (pb)  != size ||
 		    gdk_pixbuf_get_height (pb) != size) {
 			scaled = gdk_pixbuf_scale_simple (pb, size, size,
 							  GDK_INTERP_BILINEAR);
@@ -1019,7 +1033,7 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 
 		gdk_pixbuf_unref (scaled);
 
-		if (pm != NULL) {
+		if (pm) {
 			gdk_window_set_back_pixmap (socket->window, pm, FALSE);
 
 			gdk_pixmap_unref (pm);
@@ -1030,24 +1044,21 @@ socket_set_loading (GtkWidget *socket, PanelWidget *panel)
 static void
 socket_unset_loading (GtkWidget *socket)
 {
-	/* sanity */
-	if (socket == NULL)
-		return;
+	g_return_if_fail (socket);
 
-	/* sanity */
-	if (socket->parent != NULL)
+	if (socket->parent)
 		gtk_widget_queue_resize (socket->parent);
 
-	/* sanity */
-	if (socket->window != NULL)
+	if (socket->window)
 		gdk_window_set_back_pixmap (socket->window, NULL, FALSE);
 
-	/* sanity */
-	if (socket->parent != NULL) {
+	if (socket->parent) {
 		gtk_widget_set_usize (socket->parent, -1, -1);
-		gtk_signal_connect_after
-			(GTK_OBJECT (socket),"size_allocate",
-			 GTK_SIGNAL_FUNC (socket_size_allocate), NULL);
+
+		gtk_signal_connect_after (GTK_OBJECT (socket),
+					  "size_allocate",
+					  GTK_SIGNAL_FUNC (socket_size_allocate),
+					  NULL);
 	}
 }
 
@@ -1067,6 +1078,9 @@ reserve_applet_spot (Extern       ext,
 
 	ext->ebox = gtk_event_box_new ();
 
+	/*
+	 * FIXME: duplicated in applet.c:register_toy ?
+	 */
 	events  = gtk_widget_get_events (ext->ebox) | APPLET_EVENT_MASK;
 	events &= ~(GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
 
@@ -1081,12 +1095,14 @@ reserve_applet_spot (Extern       ext,
 				  GTK_SIGNAL_FUNC (ebox_size_allocate),
 				  ext);
 
+	gtk_widget_show (ext->ebox);
+
 	socket = gtk_socket_new ();
 
 	gtk_container_add (GTK_CONTAINER (ext->ebox), socket);
 
-	gtk_widget_show_all (ext->ebox);
-	
+	gtk_widget_show (socket);
+
 	/*
 	 * we save the obj in the id field of the 
 	 * appletinfo and the path in the path field.
@@ -1329,7 +1345,6 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 	PortableServer_POA       poa;
 	GNOME_PanelAppletBooter  booter;
 	POA_GNOME_PanelSpot     *panelspot_servant;
-	GNOME_PanelSpot          acc;
 	PanelWidget             *pw;
 	Extern                   ext;
 	GSList                  *l;
@@ -1343,18 +1358,19 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 	booter = pop_outside_extern (goad_id);
 
 	if (booter != CORBA_OBJECT_NIL) {
+		GNOME_PanelSpot psot;
 		/* 
 		 * yeah, we do dump the panel and pos, since they
 		 * really don't make any sesnse, and aren't really
 		 * used anywhere in the first place 
 		 */
-		acc = GNOME_PanelAppletBooter_add_applet (booter,
-							  panel_applet,
-							  goad_id,
-							  cfgpath,
-							  globcfgpath,
-							  wid,
-							  ev);
+		psot = GNOME_PanelAppletBooter_add_applet (booter,
+							   panel_applet,
+							   goad_id,
+							   cfgpath,
+							   globcfgpath,
+							   wid,
+							   ev);
 
 		/* 
 		 * if we succeeded, then all fine and dandy, otherwise
@@ -1364,7 +1380,7 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 		 * had a stale one around 
 		 */
 		if (!BONOBO_EX (ev))
-			return acc;
+			return psot;
 
 		CORBA_exception_free (ev);
 		CORBA_exception_init (ev);
@@ -1408,19 +1424,13 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 
 				panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 
-				acc = PortableServer_POA_servant_to_reference (
+				ext->pspot = PortableServer_POA_servant_to_reference (
 								poa,
 								panelspot_servant,
 								ev);
 				BONOBO_RET_VAL_EX (ev, CORBA_OBJECT_NIL);
 
-				ext->pspot = CORBA_Object_duplicate (acc, ev);
-				BONOBO_RET_VAL_EX (ev, CORBA_OBJECT_NIL);
-
-				/*
-				 * FIXME: is this second dup needed?
-				 */
-				return CORBA_Object_duplicate (acc, ev);
+				return CORBA_Object_duplicate (ext->pspot, ev);
 			}
 		}
 	}
@@ -1445,12 +1455,10 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 
-	acc = PortableServer_POA_servant_to_reference (poa,
-						       panelspot_servant,
-						       ev);
-	BONOBO_RET_VAL_EX (ev, CORBA_OBJECT_NIL);
-
-	ext->pspot = CORBA_Object_duplicate (acc, ev);
+	ext->pspot = PortableServer_POA_servant_to_reference (
+						poa,
+						panelspot_servant,
+						ev);
 	BONOBO_RET_VAL_EX (ev, CORBA_OBJECT_NIL);
 
 	pw = get_us_position (panel, pos, goad_id, &newpos, &ext->exactpos);
@@ -1469,10 +1477,7 @@ s_panel_add_applet_full (PortableServer_Servant   servant,
 	*cfgpath     = CORBA_string_dup (PANEL_CONFIG_PATH "Applet_Dummy/");
 	*globcfgpath = CORBA_string_dup (PANEL_CONFIG_PATH);
 
-	/*
-	 * FIXME: is this second dup needed?
-	 */
-	return CORBA_Object_duplicate (acc, ev);
+	return CORBA_Object_duplicate (ext->pspot, ev);
 }
 
 static void
@@ -1929,58 +1934,67 @@ s_panelspot_get_rgb_background(PortableServer_Servant servant,
 }
 
 static void
-s_panelspot_register_us(PortableServer_Servant servant,
-			CORBA_Environment *ev)
+s_panelspot_register_us (PortableServer_Servant  servant,
+			 CORBA_Environment      *ev)
 {
 	PanelWidget *panel;
-	Extern ext = (Extern)servant;
+	Extern       ext = (Extern)servant;
 
-	g_assert (ext != NULL);
-	g_assert (ext->info != NULL);
+	g_assert (ext && ext->info);
 	
-	dprintf("register ext: %lX\n",(long)ext);
-	dprintf("register ext->info: %lX\n",(long)(ext->info));
+	dprintf ("register ext: %lX\n", (long)ext);
+	dprintf ("register ext->info: %lX\n", (long)(ext->info));
 
 	panel = PANEL_WIDGET (ext->info->widget->parent);
-	if (panel == NULL) {
+	if (!panel) {
 		g_warning ("%s:%d ??? Applet with no panel ???",
 			   __FILE__, __LINE__);
 		return;
 	}
 
-	/*no longer pending*/
+	/*
+	 * no longer pending
+	 */
 	ext->info->type = APPLET_EXTERN;
-	/* from now on warn on unclean removal */
+
+	/*
+	 * from now on warn on unclean removal
+	 */
 	ext->clean_remove = FALSE;
 
-	if (ext->ebox != NULL)
+	if (ext->ebox)
 		socket_unset_loading (GTK_BIN (ext->ebox)->child);
 
-	/* make sure things don't screw up */
 	extern_ref (ext);
 
-	freeze_changes (ext->info);
-	if (ext->info != NULL)
+	if (ext->info) {
+		freeze_changes (ext->info);
+
 		orientation_change (ext->info, panel);
-	if (ext->info != NULL)
+
 		size_change (ext->info, panel);
-	if (ext->info != NULL)
+
 		back_change (ext->info, panel);
-	if (ext->info != NULL &&
-	    ext->send_position)
-		send_position_change(ext);
-	if (ext->info != NULL)
+
+		if (ext->send_position)
+			send_position_change (ext);
+
 		thaw_changes (ext->info);
+	}
 
-	/* just sanity */
-	if (ext->applet != NULL)
-		GNOME_Applet2_set_tooltips_state
-			(ext->applet, global_config.tooltips_enabled, ev);
+	if (ext->applet)
+		GNOME_Applet2_set_tooltips_state (ext->applet,
+						  global_config.tooltips_enabled,
+						  ev);
 
-	if (ev->_major) {
-		/* well, we haven't really gotten anywhere, so it's not
-		 * a good idea to bother the user with restarting us */
+	if (BONOBO_EX (ev)) {
+		/*
+		 * well, we haven't really gotten anywhere, 
+		 * so it's not a good idea to bother the user
+		 * with restarting us
+		 */
 		ext->clean_remove = TRUE;
+
 		panel_clean_applet (ext->info);
 	}
 
