@@ -98,7 +98,7 @@ save_applet_configuration(AppletInfo *info, gint *num)
 	if(pos == -1)
 		return;
 
-	sprintf(path, "%sApplet_%d/", panel_cfg_path, (*num)++);
+	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
 	if(info->type==APPLET_EXTERN) {
 		/*sync before the applet does it's stuff*/
@@ -167,7 +167,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	int           *num = user_data;
 	PanelWidget   *panel = data;
 
-	sprintf(path, "%sPanel_%d/", panel_cfg_path, (*num)++);
+	g_snprintf(path,256, "%sPanel_%d/", panel_cfg_path, (*num)++);
 
 	fullpath = g_copy_strings(path,"orient",NULL);
 	gnome_config_set_int(fullpath,panel->orient);
@@ -243,25 +243,25 @@ panel_session_save (GnomeClient *client,
 	for(num=1,i=0;i<applet_count;i++)
 		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
 					  &num);
-	sprintf(buf,"%sConfig/applet_count",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/applet_count",panel_cfg_path);
 	gnome_config_set_int(buf,num-1);
 	num = 1;
 	g_list_foreach(panels,save_panel_configuration,&num);
-	sprintf(buf,"%sConfig/panel_count",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/panel_count",panel_cfg_path);
 	gnome_config_set_int(buf,num-1);
 
 	/*global options*/
-	sprintf(buf,"%sConfig/auto_hide_step_size",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/auto_hide_step_size",panel_cfg_path);
 	gnome_config_set_int(buf, global_config.auto_hide_step_size);
-	sprintf(buf,"%sConfig/explicit_hide_step_size",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/explicit_hide_step_size",panel_cfg_path);
 	gnome_config_set_int(buf, global_config.explicit_hide_step_size);
-	sprintf(buf,"%sConfig/minimized_size",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/minimized_size",panel_cfg_path);
 	gnome_config_set_int(buf, global_config.minimized_size);
-	sprintf(buf,"%sConfig/minimize_delay",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/minimize_delay",panel_cfg_path);
 	gnome_config_set_int(buf, global_config.minimize_delay);
-	sprintf(buf,"%sConfig/tooltips_enabled",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/tooltips_enabled",panel_cfg_path);
 	gnome_config_set_bool(buf, global_config.tooltips_enabled);
-	sprintf(buf,"%sConfig/show_small_icons",panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/show_small_icons",panel_cfg_path);
 	gnome_config_set_bool(buf, global_config.show_small_icons);
 
 	gnome_config_sync();

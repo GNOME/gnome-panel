@@ -107,6 +107,11 @@ struct _PanelWidget
 	DrawerDropZonePos	drawer_drop_zone_pos;
 
 	gint			thick;
+
+	gint			drawers_open; /* a count which can be used
+						 to block the autohide, until
+						 it is 0 .. it's set by the
+						 app not the widget*/
 };
 
 struct _PanelWidgetClass
@@ -203,6 +208,10 @@ void		panel_widget_change_global	(gint explicit_step,
 						 gint auto_step,
 						 gint minimized_size,
 						 gint minimize_delay);
+
+/*popup the widget if it's popped down (autohide)*/
+void		panel_widget_pop_up		(PanelWidget *panel);
+
 
 extern GList *panels;
 

@@ -115,12 +115,29 @@ queue_load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 	load_queue = g_list_append(load_queue,l);
 }
 
+static gint
+monitor_drawers(GtkWidget *w, gpointer data)
+{
+	PanelWidget **panel=data;
+
+	if(panel[0]->state==PANEL_SHOWN)
+		panel[1]->drawers_open++;
+	else
+		panel[1]->drawers_open--;
+
+	return FALSE;
+}
+
 void
 load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
-		/*gchar *command;*/
 		gchar *fullparams;
+
+		/*start nothing, applet is taking care of everything*/
+		if(params == NULL ||
+		   params[0] == '\0')
+		   	return;
 
 		/*make it an absolute path, same as the applets will
 		  interpret it and the applets will sign themselves as
@@ -131,18 +148,16 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 			fullparams = g_strdup(params);
 	
 
-		/*start nothing, applet is taking care of everything*/
-		if(params == NULL ||
-		   params[0] == '\0')
-		   	return;
-
-		if(reserve_applet_spot (id_str, fullparams, panel, pos, cfgpath,
-				        APPLET_EXTERN_PENDING)==0)
+		if(reserve_applet_spot (id_str, fullparams, panel, pos,
+					cfgpath, APPLET_EXTERN_PENDING)==0) {
+			g_free(fullparams);
 			return;
+		}
 		
 		/*'#' marks an applet that will take care of starting
 		  itself but wants us to reserve a spot for it*/
 		if(params[0]!='#') {
+			/*this applet is dumb and wants us to start it :)*/
 			AppletChild *child;
 			GList *list;
 
@@ -157,16 +172,10 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 				g_error("Can't execlp!");
 				_exit(1);
 			}
-			/*this applet is dumb and wants us to start it :)*/
-			/*command = g_copy_strings ("(true;", fullparams, ") &",
-						  NULL);*/
 
 			child->applet_id = applet_count-1;
 				
 			children = g_list_prepend(children,child);
-
-			/*system (command);
-			g_free (command);*/
 		}
 
 		g_free(fullparams);
@@ -181,6 +190,7 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 		Drawer *drawer;
 		PanelWidget *parent;
 		DrawerOrient orient=DRAWER_UP;
+		PanelWidget **panelarr;
 
 		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 
@@ -220,6 +230,19 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 
 		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
 			     params, pos, panel, NULL, APPLET_DRAWER);
+
+
+		panelarr = g_new(PanelWidget *,2);
+		panelarr[0] = PANEL_WIDGET(drawer->drawer);
+		panelarr[1] = g_list_nth(panels,panel)->data;
+		gtk_signal_connect(GTK_OBJECT(drawer->button), "clicked",
+				   GTK_SIGNAL_FUNC(monitor_drawers),
+				   panelarr);
+		/*default is open so we track it*/
+		panelarr[1]->drawers_open++;
+		/*pop up, if popped down*/
+		panel_widget_pop_up(panelarr[1]);
+			   	
 	} else if(strcmp(id_str,SWALLOW_ID) == 0) {
 		Swallow *swallow;
 
@@ -229,6 +252,7 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 			     panel,NULL,APPLET_SWALLOW);
 	}
 }
+
 static void
 load_queued_applets(void)
 {
@@ -263,24 +287,28 @@ init_user_applets(void)
 	char  buf[256];
 	int   count,num;	
 
-	sprintf(buf,"%sConfig/applet_count=0",old_panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/applet_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
 	if(count<=0)
 		load_default_applets();
 	for(num=1;num<=count;num++) {
-		sprintf(buf,"%sApplet_%d/id=Unknown",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sApplet_%d/id=Unknown",
+			   old_panel_cfg_path, num);
 		applet_name = gnome_config_get_string(buf);
-		sprintf(buf,"%sApplet_%d/parameters=",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sApplet_%d/parameters=",
+			   old_panel_cfg_path, num);
 		applet_params = gnome_config_get_string(buf);
-		sprintf(buf,"%sApplet_%d/position=%d",old_panel_cfg_path,num,
-			PANEL_UNKNOWN_APPLET_POSITION);
+		g_snprintf(buf,256,"%sApplet_%d/position=%d",
+			   old_panel_cfg_path, num,
+			   PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
-		sprintf(buf,"%sApplet_%d/panel=0",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sApplet_%d/panel=0",
+			   old_panel_cfg_path, num);
 		panel = gnome_config_get_int(buf);
 
 		/*this is the config path to be passed to the applet when it
 		  loads*/
-		sprintf(buf,"%sApplet_%d/",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sApplet_%d/",old_panel_cfg_path,num);
 		queue_load_applet(applet_name, applet_params, pos, panel, buf);
 		g_free(applet_name);
 		g_free(applet_params);
@@ -673,7 +701,7 @@ init_user_panels(void)
 	PanelState state;
 	DrawerDropZonePos drop_pos;
 
-	sprintf(buf,"%sConfig/panel_count=0",old_panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
 	if(count<=0) count++; /*this will load up a single panel with
 				default settings*/
@@ -685,32 +713,39 @@ init_user_panels(void)
 
 	for(num=1;num<=count;num++) {
 		/*these are only for free floating non-drawer like panels */
-		sprintf(buf,"%sPanel_%d/size=%d",old_panel_cfg_path,num, 50);
+		g_snprintf(buf,256,"%sPanel_%d/size=%d",old_panel_cfg_path,
+			   num, 50);
 		size=gnome_config_get_int(buf);
-		sprintf(buf,"%sPanel_%d/position_x=0",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sPanel_%d/position_x=0",
+			   old_panel_cfg_path,num);
 		x=gnome_config_get_int(buf);
-		sprintf(buf,"%sPanel_%d/position_y=0",old_panel_cfg_path,num);
+		g_snprintf(buf,256,"%sPanel_%d/position_y=0",
+			   old_panel_cfg_path,num);
 		y=gnome_config_get_int(buf);
 
-		sprintf(buf,"%sPanel_%d/snapped=%d",old_panel_cfg_path,num,
-			PANEL_BOTTOM);
+		g_snprintf(buf,256,"%sPanel_%d/snapped=%d",
+			   old_panel_cfg_path,num,
+			   PANEL_BOTTOM);
 		config.snapped=gnome_config_get_int(buf);
 
-		sprintf(buf,"%sPanel_%d/orient=%d",old_panel_cfg_path,num,
-			PANEL_HORIZONTAL);
+		g_snprintf(buf,256,"%sPanel_%d/orient=%d",
+			   old_panel_cfg_path,num,
+			   PANEL_HORIZONTAL);
 		config.orient=gnome_config_get_int(buf);
 
-		sprintf(buf,"%sPanel_%d/mode=%d",old_panel_cfg_path,num,
-			PANEL_EXPLICIT_HIDE);
+		g_snprintf(buf,256,"%sPanel_%d/mode=%d",
+			   old_panel_cfg_path,num,
+			   PANEL_EXPLICIT_HIDE);
 		config.mode=gnome_config_get_int(buf);
 
-		sprintf(buf,"%sPanel_%d/state=%d",old_panel_cfg_path,num,
-			PANEL_SHOWN);
+		g_snprintf(buf,256,"%sPanel_%d/state=%d",
+			   old_panel_cfg_path,num,
+			   PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
-		sprintf(buf,"%sPanel_%d/drawer_drop_zone_pos=%d",
-			old_panel_cfg_path,num,
-			DRAWER_LEFT);
+		g_snprintf(buf,256,"%sPanel_%d/drawer_drop_zone_pos=%d",
+			   old_panel_cfg_path,num,
+			   DRAWER_LEFT);
 		drop_pos=gnome_config_get_int(buf);
 
 
@@ -857,21 +892,23 @@ main(int argc, char **argv)
 
 	/*set up global options*/
 	
-	sprintf(buf,"%sConfig/tooltips_enabled=TRUE",old_panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/tooltips_enabled=TRUE",
+		   old_panel_cfg_path);
 	global_config.tooltips_enabled = gnome_config_get_bool(buf);
-	sprintf(buf,"%sConfig/show_small_icons=TRUE",old_panel_cfg_path);
+	g_snprintf(buf,256,"%sConfig/show_small_icons=TRUE",
+		   old_panel_cfg_path);
 	global_config.show_small_icons = gnome_config_get_bool(buf);
-	sprintf(buf,"%sConfig/auto_hide_step_size=%d",old_panel_cfg_path,
-		DEFAULT_AUTO_HIDE_STEP_SIZE);
+	g_snprintf(buf,256,"%sConfig/auto_hide_step_size=%d",
+		   old_panel_cfg_path, DEFAULT_AUTO_HIDE_STEP_SIZE);
 	global_config.auto_hide_step_size=gnome_config_get_int(buf);
-	sprintf(buf,"%sConfig/explicit_hide_step_size=%d",old_panel_cfg_path,
-		DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+	g_snprintf(buf,256,"%sConfig/explicit_hide_step_size=%d",
+		   old_panel_cfg_path, DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
 	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
-	sprintf(buf,"%sConfig/minimize_delay=%d",old_panel_cfg_path,
-		DEFAULT_MINIMIZE_DELAY);
+	g_snprintf(buf,256,"%sConfig/minimize_delay=%d",old_panel_cfg_path,
+		   DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf);
-	sprintf(buf,"%sConfig/minimized_size=%d",old_panel_cfg_path,
-		DEFAULT_MINIMIZED_SIZE);
+	g_snprintf(buf,256,"%sConfig/minimized_size=%d",old_panel_cfg_path,
+		   DEFAULT_MINIMIZED_SIZE);
 	global_config.minimized_size=gnome_config_get_int(buf);
 
 	init_main_menu();

@@ -200,6 +200,7 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->currently_dragged_applet = NULL;
 	panel_widget->drawer_drop_zone = NULL;
 	panel_widget->drawer_drop_zone_pos = DROP_ZONE_LEFT;
+	panel_widget->drawers_open = 0;
 }
 
 /*this is used to do an immediate move instead of set_uposition, which
@@ -849,7 +850,7 @@ move_vert(PanelWidget *panel, gint src_y, gint dest_y, gint step)
 
 
 
-static void
+void
 panel_widget_pop_up(PanelWidget *panel)
 {
 	int width, height;
@@ -909,13 +910,10 @@ panel_widget_pop_down(gpointer data)
 	   (panel->snapped == PANEL_DRAWER) ||
 	   (panel->snapped == PANEL_FREE))
 		return FALSE;
-	/*we are moving, so wait with the pop_down*/
-	if(panel->currently_dragged_applet) {
-		panel->leave_notify_timer_tag =
-			gtk_timeout_add (pw_minimize_delay,
-					 panel_widget_pop_down, panel);
-		return FALSE;
-	}
+	/*we are moving, or have drawers open, so wait with the
+	  pop_down*/
+	if(panel->currently_dragged_applet || panel->drawers_open>0)
+		return TRUE;
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[STATE_CHANGE_SIGNAL],

@@ -222,11 +222,6 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 	pixmap=GTK_BUTTON(drawer->button)->child;
 	gtk_container_remove(GTK_CONTAINER(drawer->button),pixmap);
 
-	/* Doesn't need to be
-	   destroyed since the drawer holds the only reference to
-	   it, and removing it will kill it */
-	/* gtk_widget_destroy(pixmap); */
-
 	/*make the pixmap*/
 	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 
