@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.2.0\n"
-"POT-Creation-Date: 2003-01-25 23:33+0900\n"
+"POT-Creation-Date: 2003-02-04 12:29+1300\n"
 "PO-Revision-Date: 2003-01-25 14:33+0900\n"
 "Last-Translator: Young-Ho, Cha <ganadist@chollian.net>\n"
 "Language-Team: GTP Korean <gnome-kr-translation@gnome.or.kr>\n"
@@ -16,10 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
-#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -61,8 +61,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(George의 작은 도움으로)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "물고기"
 
@@ -127,7 +127,7 @@ msgstr "그놈 물고기, fortune teller"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "찾아보기"
@@ -338,9 +338,9 @@ msgid "Use _UTC"
 msgstr "UTC 사용(_U)"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -348,8 +348,8 @@ msgstr ""
 "류창우 <cwryu@debian.org>\n"
 "차영호 <ganadist@mizi.net>"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "시계"
 
@@ -446,7 +446,7 @@ msgid "Get the current time and date"
 msgstr "현재 시각과 날짜를 보여 줍니다"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "받은 편지함 모니터"
 
@@ -473,12 +473,12 @@ msgid "Utility"
 msgstr "유틸리티"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "창 목록"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "작업공간 전환"
@@ -491,12 +491,12 @@ msgstr "몇몇 일반적인 애플릿을 만드는 데 쓰이는 팩토리"
 msgid "_Check for mail"
 msgstr "편지 확인(_C)"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "%s(을)를 보이는 데 오류가 발생했습니다 : %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -504,15 +504,15 @@ msgstr ""
 "받은 편지함 모니터의 기본 설정에서 암호를 설정하지 않았습니다.\n"
 "매번 시작할 때마다 암호를 입력해야 합니다."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "메일 서버의 암호를 입력하십시오(_P):"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "암호 엔트리 상자"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -522,178 +522,178 @@ msgstr ""
 "트를 하지 않습니다.\n"
 "아마 서버, 사용자명, 혹은 암호가 틀렸을 것입니다."
 
-#: applets/gen_util/mailcheck.c:573
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "새 편지가 왔습니다"
 
-#: applets/gen_util/mailcheck.c:575
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "편지가 왔습니다"
 
-#: applets/gen_util/mailcheck.c:579
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d 메세지"
 
-#: applets/gen_util/mailcheck.c:581
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d 메세지"
 
-#: applets/gen_util/mailcheck.c:585
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "편지 없음"
 
-#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
-#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "상태가 업데이트되지 않았습니다"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "편지함의 위치(_R):"
 
-#: applets/gen_util/mailcheck.c:1286
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "로컬 메일스풀"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "로컬 메일디렉토리"
 
-#: applets/gen_util/mailcheck.c:1302
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "원격 POP3 서버"
 
-#: applets/gen_util/mailcheck.c:1310
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "원격 IMAP 서버"
 
-#: applets/gen_util/mailcheck.c:1330
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "메일 스풀파일(_S):"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "메일 서버(_E):"
 
-#: applets/gen_util/mailcheck.c:1355
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "메일 서버 엔트리 상자"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "사용자이름(_U):"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "사용자이름 엔트리 상자"
 
-#: applets/gen_util/mailcheck.c:1386
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "비밀번호(_P):"
 
-#: applets/gen_util/mailcheck.c:1407
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "폴더(_F):"
 
-#: applets/gen_util/mailcheck.c:1415
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "폴더 엔트리 상자"
 
-#: applets/gen_util/mailcheck.c:1427
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "메일 확인 전에 실행할 명령(_O):"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "명령어 엔트리 상자"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "실행"
 
-#: applets/gen_util/mailcheck.c:1471
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "업데이트하기 전에(_U):"
 
-#: applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "각 업데이트 전에 실행할 명령"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "새 편지가 도착했을 때(_A):"
 
-#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "새 편지가 도착했을 때 실행할 명령"
 
-#: applets/gen_util/mailcheck.c:1519
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "누르면(_D):"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "클릭했을때 실행할 명령"
 
-#: applets/gen_util/mailcheck.c:1542
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "읽지 않은 메일의 수를 0으로 설정합니다(_Z)"
 
-#: applets/gen_util/mailcheck.c:1553
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "편지 확인은 매(_E)"
 
-#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "분"
 
-#: applets/gen_util/mailcheck.c:1565
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "편지 확인할 간격을 분 단위로 선택하십시오"
 
-#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "초"
 
-#: applets/gen_util/mailcheck.c:1579
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr "편지 확인할 간격을 초 단위로 선택하십시오"
 
-#: applets/gen_util/mailcheck.c:1591
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "새 편지가 오면 소리 연주(_S)"
 
-#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "움지이는 그림 선택(_N)"
 
-#: applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "받은 편지함 모니터 기본 설정"
 
-#: applets/gen_util/mailcheck.c:1699
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "편지 확인(_M)"
 
-#: applets/gen_util/mailcheck.c:1703
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "편지함(_B)"
 
-#: applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "편지 확인은 편지함에 새 편지가 도착했을 때 알려 줍니다"
 
-#: applets/gen_util/mailcheck.c:1948
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "글자만"
 
-#: applets/gen_util/mailcheck.c:1974
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "편지 확인"
 
-#: applets/gen_util/mailcheck.c:1975
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "편지 확인은 편지함에 새 편지가 도착했을 때 알려 줍니다"
 
@@ -811,22 +811,22 @@ msgstr "편지 확인"
 msgid "New Mail"
 msgstr "새 편지"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "행"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "열"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "작업공간 전환 애플릿의 num_rows 값을 읽어들이는 데 오류가 발생했습니다: %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -834,14 +834,14 @@ msgstr ""
 "작업공간 전환 애플릿의 display_workspace_names 값을 읽어들이는 데 오류가 발생"
 "했습니다: %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "작업공간 전환 애플릿의 display_all_workspaces 값을 읽어들이는 데 오류가 발생"
 "했습니다: %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -937,7 +937,7 @@ msgstr "파일을 찾을 수 없습니다"
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "이 단추는 모든 창을 숨기고 바탕화면을 보여줍니다"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1087,11 +1087,11 @@ msgstr "패널 알림 구역"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "패널에서 지우기(_R)"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "옮기기(_M)"
 
@@ -1343,11 +1343,11 @@ msgstr "그놈 메뉴 패널"
 msgid "Applications"
 msgstr "프로그램"
 
-#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "화면잡기 프로그램을 찾을 수 없습니다"
 
-#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "화면잡기 프로그램을 실행할 수 없습니다"
 
@@ -2086,7 +2086,7 @@ msgstr "명령 실행"
 msgid "Desktop"
 msgstr "바탕화면"
 
-#: gnome-panel/menu.c:3889 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "메뉴"
 

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.5\n"
-"POT-Creation-Date: 2003-01-25 14:18+0100\n"
+"POT-Creation-Date: 2003-02-04 12:29+1300\n"
 "PO-Revision-Date: 2003-01-25 14:19+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -17,10 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
-#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -34,9 +34,8 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"Avertissement : La commande semble être quelque chose "
-"d'actuellement\nutile. Vu que c'est une appliquette inutile, vous ne devriez "
-"pas\n"
+"Avertissement : La commande semble être quelque chose d'actuellement\n"
+"utile. Vu que c'est une appliquette inutile, vous ne devriez pas\n"
 "faire cela. Nous vous déconseillons l'usage de %s pour n'importe\n"
 "quoi qui puisse paraitre « pratique » ou utile."
 
@@ -48,22 +47,23 @@ msgstr "%s le poisson"
 #: applets/fish/fish.c:379
 #, c-format
 msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation time, "
-"and if loaded it also takes up precious panel space and memory. If anyone is "
-"found using it, he should be promptly sent for a psychiatric evaluation."
+"%s has no use what-so-ever. It only takes up disk space and compilation "
+"time, and if loaded it also takes up precious panel space and memory. If "
+"anyone is found using it, he should be promptly sent for a psychiatric "
+"evaluation."
 msgstr ""
 "%s n'a absolument aucun utilitée. Elle gaspille seulement de l'espace "
 "disque, du temps de compilation, et si elle est chargée, elle gaspille "
-"également de l'espace dans le tableau de bord et en mémoire. Si une "
-"personne est trouvée en flagrant délit d'utilisation de cette applet, elle "
-"devra être envoyée sans délai subir une évaluation psychiatrique."
+"également de l'espace dans le tableau de bord et en mémoire. Si une personne "
+"est trouvée en flagrant délit d'utilisation de cette applet, elle devra être "
+"envoyée sans délai subir une évaluation psychiatrique."
 
 #: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(avec un peu d'aide de la part de George)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Poisson"
 
@@ -104,11 +104,12 @@ msgstr ""
 #: applets/fish/fish.c:687
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
-"run.\n\n"
+"run.\n"
+"\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"Vous n'avez pas de fortune installé ou vous n'avez pas spécifié de "
-"programme à exécuter.\n"
+"Vous n'avez pas de fortune installé ou vous n'avez pas spécifié de programme "
+"à exécuter.\n"
 "\n"
 "Veuillez vous référer à la boîte de dialogue des propriétés du poisson."
 
@@ -128,7 +129,7 @@ msgstr "Poisson GNOME, le diseur de bonne aventure"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Parcourir"
@@ -339,9 +340,9 @@ msgid "Use _UTC"
 msgstr "Utiliser _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -351,8 +352,8 @@ msgstr ""
 "Contributeur :\n"
 "Christophe Fergeau <teuf@users.sourceforge.net>"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Horloge"
 
@@ -450,7 +451,7 @@ msgid "Get the current time and date"
 msgstr "Donne l'heure et la date actuelle"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Moniteur de boîte à lettres"
 
@@ -477,12 +478,12 @@ msgid "Utility"
 msgstr "Utilitaires"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Liste des fenêtres"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Changeur de bureau"
@@ -495,29 +496,29 @@ msgstr "Fabrique pour créer quelques applets générales"
 msgid "_Check for mail"
 msgstr "_Vérifier le courrier"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Il y a eu une erreur lors de l'exécution de %s : %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"Vous n'avez pas indiqué de mot de passe dans les préférences du moniteur "
-"de boîtes à lettres, \n"
+"Vous n'avez pas indiqué de mot de passe dans les préférences du moniteur de "
+"boîtes à lettres, \n"
 "il faudra donc que vous le saisissiez à chaque démarrage."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "Veuillez saisir le mot de _passe de votre serveur de messagerie :"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "Boîte d'entrée de mot de passe"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -527,184 +528,184 @@ msgstr ""
 "messages. La vérification automatic est désormais désactivée.\n"
 "Vous avez du utiliser un mauvais serveur/nom d'utilisateur/mot de passe ?"
 
-#: applets/gen_util/mailcheck.c:573
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Vous avez un nouveau courrier."
 
-#: applets/gen_util/mailcheck.c:575
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Vous avez du courrier."
 
-#: applets/gen_util/mailcheck.c:579
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "messages %d/%d"
 
-#: applets/gen_util/mailcheck.c:581
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "messages %d"
 
-#: applets/gen_util/mailcheck.c:585
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Pas de courrier."
 
-#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
-#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "État non mis à jour"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "La boîte à lettres _réside sur :"
 
-#: applets/gen_util/mailcheck.c:1286
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Spool de courrier local"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Maildir local"
 
-#: applets/gen_util/mailcheck.c:1302
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "Serveur POP3 distant"
 
-#: applets/gen_util/mailcheck.c:1310
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "Serveur IMAP distant"
 
-#: applets/gen_util/mailcheck.c:1330
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "Fichier d'_arrivée de courrier :"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "S_erveur de messagerie :"
 
-#: applets/gen_util/mailcheck.c:1355
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "Boîte d'entrée du serveur de mail"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "_Identifiant :"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "Boîte d'entrée du nom d'utilisateur"
 
-#: applets/gen_util/mailcheck.c:1386
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "_Mot de passe :"
 
-#: applets/gen_util/mailcheck.c:1407
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "_Dossier :"
 
-#: applets/gen_util/mailcheck.c:1415
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "Boîte d'entrée du dossier"
 
-#: applets/gen_util/mailcheck.c:1427
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "C_ommande à exécuter avant de vérifier les messages :"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "Boîte d'entrée de commande"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Exécuter"
 
-#: applets/gen_util/mailcheck.c:1471
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "Avant chaque _mise à jour :"
 
-#: applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "Commande à lancer avant chaque mise à jour"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "Lorsqu'un nouveau message _arrive :"
 
-#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Commande à exécuter quand un nouveau message arrive"
 
-#: applets/gen_util/mailcheck.c:1519
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "Lorsque _cliqué :"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "Commande à lancer lors d'un clic"
 
-#: applets/gen_util/mailcheck.c:1542
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "Met à _zéro le nombre de courriers non lus"
 
-#: applets/gen_util/mailcheck.c:1553
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "Vérifier le courrier _toutes les"
 
-#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "minutes"
 
-#: applets/gen_util/mailcheck.c:1565
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "Intervalle de vérification des mails (en minutes)"
 
-#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "secondes"
 
-#: applets/gen_util/mailcheck.c:1579
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr "Intervalle de vérification des mails (en secondes)"
 
-#: applets/gen_util/mailcheck.c:1591
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "Joue un _son lorsqu'un nouveau message arrive"
 
-#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "Sélectionner l'a_nimation"
 
-#: applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "Préférences du moniteur de boîte à lettres"
 
-#: applets/gen_util/mailcheck.c:1699
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "_Vérification du courrier"
 
-#: applets/gen_util/mailcheck.c:1703
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "_Boîte à lettres"
 
-#: applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
 "Le moniteur de boîte à lettres vous prévient lorsqu'un nouveau message "
 "arrive dans votre boîte à lettres."
 
-#: applets/gen_util/mailcheck.c:1948
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Texte seulement"
 
-#: applets/gen_util/mailcheck.c:1974
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "Vérification du courrier"
 
-#: applets/gen_util/mailcheck.c:1975
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr ""
-"Mail check vous prévient lorsqu'un nouveau message arrive dans votre boîte "
-"à lettres."
+"Mail check vous prévient lorsqu'un nouveau message arrive dans votre boîte à "
+"lettres."
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
 msgid "Command to execute when checking mail"
@@ -713,8 +714,7 @@ msgstr "Commande à exécuter quand le courrier est vérifié"
 #: applets/gen_util/mailcheck.schemas.in.h:3
 msgid "Command to execute when you click on the Inbox Monitor"
 msgstr ""
-"Commande à lancer lorsque vous cliquez sur le moniteur de boîte de "
-"réception"
+"Commande à lancer lorsque vous cliquez sur le moniteur de boîte de réception"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -834,23 +834,23 @@ msgstr "Boite à lettres"
 msgid "New Mail"
 msgstr "Nouveau courrier"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Lignes"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Colonnes"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Erreur lors de la lecture de la valeur num_rows pour l'applet de changement "
 "de bureau : %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -858,17 +858,17 @@ msgstr ""
 "Erreur lors du chargement de la valeur display_workspace_names pour l'applet "
 "de changement de bureau : %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Erreur lors du chargement de la valeur display_all_workspaces pour l'applet "
 "de changement de bureau : %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that lets "
-"you manage your windows."
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage your windows."
 msgstr ""
 "Le sélecteur de bureau affiche une version miniature de vos bureaux qui vous "
 "permet de gérer vos fenêtres."
@@ -906,8 +906,8 @@ msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"Si c'est vrai, le pageur affichera tous les bureaux, sinon il n'affichera que "
-"le bureau en cours"
+"Si c'est vrai, le pageur affichera tous les bureaux, sinon il n'affichera "
+"que le bureau en cours"
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
@@ -924,9 +924,9 @@ msgstr "Nombre de rangées dans le pageur."
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
-"When showing all the workspaces this determines how many rows (for horizontal "
-"layout) or columns (for vertical layout) the Workspace Switcher shows the "
-"workspaces in."
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
+"shows the workspaces in."
 msgstr ""
 "Quand on affiche tous les espaces de travail, cela détermine combien de "
 "rangées (pour les agencements horizontaux) ou de colonnes (pour les "
@@ -963,7 +963,7 @@ msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Ce bouton vous permets de cacher toutes les fenêtres et d'afficher le bureau"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1032,8 +1032,8 @@ msgid ""
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Indique si les différentes fenêtre d'une même application doivent être "
-"regroupées dans la liste des fenêtres. Les valeurs valides sont "
-"« never », « auto » et « always »."
+"regroupées dans la liste des fenêtres. Les valeurs valides sont « never », "
+"« auto » et « always »."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1049,9 +1049,8 @@ msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
-"Si c'est vrai, quand une fenêtre sera déminimisée, l'afficher dans "
-"l'espace de travail en cours, sinon, changer dans l'espace de travail de la "
-"fenêtre."
+"Si c'est vrai, quand une fenêtre sera déminimisée, l'afficher dans l'espace "
+"de travail en cours, sinon, changer dans l'espace de travail de la fenêtre."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size that Window List requests"
@@ -1080,19 +1079,18 @@ msgstr ""
 "Cette valeur est la largeur maximum que la liste des fenêtres demandera. Le "
 "réglage de la largeur maximale est utile pour limiter la taille de la liste "
 "des fenêtres dans les grands tableaux de bord comme les tableaux de bords "
-"latéraux où la liste des fenêtres pourrait remplir tout l'espace "
-"disponible."
+"latéraux où la liste des fenêtres pourrait remplir tout l'espace disponible."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
-"To be usable, Window List requires a minimum width. Window List requests this "
-"minimum width. The minimum width setting is useful for sliding and edge "
+"To be usable, Window List requires a minimum width. Window List requests "
+"this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"Pour être utilisable, la liste des fenêtres a besoin d'une largeur "
-"minimale. Cette valeur est la largeur minimum que l'applet demandera. Ceci "
-"est utile pour faire glisser les tableaux de bord, qui vous demanderont sinon "
-"pour une petite valeur par défaut."
+"Pour être utilisable, la liste des fenêtres a besoin d'une largeur minimale. "
+"Cette valeur est la largeur minimum que l'applet demandera. Ceci est utile "
+"pour faire glisser les tableaux de bord, qui vous demanderont sinon pour une "
+"petite valeur par défaut."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1121,11 +1119,11 @@ msgstr "Zone de notification du tableaux de bord"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "_Enlever du tableau de bord"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Déplacer"
 
@@ -1380,11 +1378,11 @@ msgstr "Tableau de bord GNOME « Menu »"
 msgid "Applications"
 msgstr "Applications"
 
-#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "Ne peut trouver le programme de capture d'écran"
 
-#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "Ne peut exécuter le programme de capture d'écran"
 
@@ -1759,8 +1757,8 @@ msgstr ""
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
-"Incapable d'ouvrir le fichier de bureau %s pour le lanceur de tableau de "
-"bord%s%s\n"
+"Incapable d'ouvrir le fichier de bureau %s pour le lanceur de tableau de bord"
+"%s%s\n"
 
 #: gnome-panel/launcher.c:525
 #, c-format
@@ -1789,8 +1787,8 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Impossible d'enregistrer le lanceur, l'erreur suivante est "
-"survenue :\n\n"
+"Impossible d'enregistrer le lanceur, l'erreur suivante est survenue :\n"
+"\n"
 "%s"
 
 #: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1188
@@ -1820,12 +1818,12 @@ msgstr "et enfin, Les Chevaliers Qui Disent ... NI!"
 
 #: gnome-panel/menu.c:277
 msgid ""
-"This program is responsible for launching other applications, embedding small "
-"applets within itself, world peace, and random X crashes."
+"This program is responsible for launching other applications, embedding "
+"small applets within itself, world peace, and random X crashes."
 msgstr ""
 "Ce programme est responsable du lancement des autres applications, de "
-"l'inclusion de petites applets à l'intérieur de lui-même, de la paix dans "
-"le monde et de plantages aléatoires de X."
+"l'inclusion de petites applets à l'intérieur de lui-même, de la paix dans le "
+"monde et de plantages aléatoires de X."
 
 #: gnome-panel/menu.c:283
 msgid ""
@@ -1996,8 +1994,7 @@ msgstr "Tableau de bord GNOME flottant"
 
 #: gnome-panel/menu.c:2992
 msgid "You can only have one menu panel at a time."
-msgstr ""
-"Vous ne pouvez avoir qu'un seul tableau de bord « menu » à la fois."
+msgstr "Vous ne pouvez avoir qu'un seul tableau de bord « menu » à la fois."
 
 #: gnome-panel/menu.c:3037
 msgid "C_orner Panel"
@@ -2138,7 +2135,7 @@ msgstr "Lance une commande"
 msgid "Desktop"
 msgstr "Bureau"
 
-#: gnome-panel/menu.c:3889 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Menu"
 
@@ -2277,8 +2274,7 @@ msgid ""
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Le tableau de bord a rencontré un problème lors du chargement de  "
-"« %s »\n"
+"Le tableau de bord a rencontré un problème lors du chargement de  « %s »\n"
 "Détails : %s\n"
 "\n"
 "Voulez-vous supprimer l'applet de votre configuration ?"
@@ -2541,7 +2537,8 @@ msgstr ""
 #: gnome-panel/panel-shell.c:47
 #, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation server.\n"
+"There was a problem registering the panel with the bonobo-activation "
+"server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""

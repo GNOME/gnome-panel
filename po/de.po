@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.2\n"
-"POT-Creation-Date: 2003-01-21 20:23+0100\n"
+"POT-Creation-Date: 2003-02-04 12:29+1300\n"
 "PO-Revision-Date: 2003-01-21 20:23+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -23,8 +23,8 @@ msgstr ""
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
 #: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
 #: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -67,8 +67,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Fisch"
 
@@ -347,8 +347,8 @@ msgstr "Koordinierte Weltzeit (_UTC) verwenden"
 
 #. Translator credits
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -359,8 +359,8 @@ msgstr ""
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Christian Neumair <chris@gnome-de.org>"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Uhr"
 
@@ -488,12 +488,12 @@ msgid "Utility"
 msgstr "Werkzeug"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Fensterliste"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:876
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Arbeitsflächen-Umschalter"
@@ -843,22 +843,22 @@ msgstr "E-Mail-Anzeige"
 msgid "New Mail"
 msgstr "Neue Mail"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:786
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Zeilen"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:786
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Spalten"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »num_rows«-Wertes des Arbeitsflächen-Umschalters: %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -866,14 +866,14 @@ msgstr ""
 "Fehler beim Laden des »display_workspace_names«-Wertes des Arbeitsflächen-"
 "Umschalters: %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fehler beim Laden des »display_all_workspaces«-Wertes des Arbeitsflächen-"
 "Umschalters: %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -977,7 +977,7 @@ msgstr ""
 "Beim Anklicken dieses Knopfes werden alle Fenster verborgen und der Desktop "
 "angezeigt"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1135,11 +1135,11 @@ msgstr "Panel-Benachrichtigungsfeld"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "Aus dem Panel _entfernen"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Verschieben"
 
@@ -1392,11 +1392,11 @@ msgstr "GNOME-Menüpanel"
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "Das Bildschirmfoto-Programm kann nicht gefunden werden"
 
-#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "Das Bildschirmfoto-Programm kann nicht ausgeführt werden"
 
@@ -2150,7 +2150,7 @@ msgstr "Einen Befehl ausführen"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu.c:3889 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Menü"
 

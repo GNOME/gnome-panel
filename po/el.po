@@ -28,7 +28,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.10\n"
-"POT-Creation-Date: 2003-01-28 13:02+0200\n"
+"POT-Creation-Date: 2003-02-04 12:29+1300\n"
 "PO-Revision-Date: 2003-01-28 13:01+0200\n"
 "Last-Translator: Kostas Papadimas <pkst@gmx.net>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -38,10 +38,10 @@ msgstr ""
 "X-Generator: KBabel 0.9.6\n"
 
 #: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
-#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1623
+#: applets/gen_util/mailcheck.c:1831 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -82,8 +82,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(με λίγη βοήθεια από το George)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Ψάρι"
 
@@ -149,7 +149,7 @@ msgstr "Το ψάρι του GNOME, το μέντιουμ της τύχης"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1319
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Εξερεύνηση"
@@ -360,9 +360,9 @@ msgid "Use _UTC"
 msgstr "Χρήση _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1753
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:443
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -371,8 +371,8 @@ msgstr ""
 "Σαράντης Πασχάλης <paskalis@di.uoa.gr>, 2000\n"
 "Σπύρος Παπαδημητρίου <spapadim+@cs.cmu.edu>, 1999"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Ρολόι"
 
@@ -381,59 +381,63 @@ msgid "The Clock displays the current time and date"
 msgstr "Το Ρολόϊ προβάλλει την τρέχουσα ημερομηνία και ώρα"
 
 #: applets/gen_util/clock.schemas.in.h:1
+msgid "24"
+msgstr "24"
+
+#: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Προβολή ώρας διαδικτύου, η οποία είναι ίδια σε όλο τον κόσμο"
 
-#: applets/gen_util/clock.schemas.in.h:2
+#: applets/gen_util/clock.schemas.in.h:3
 msgid "Display date in the Clock, in addition to time"
 msgstr "Εμφανίζει εκτός από την ώρα και  την ημερομηνία στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:3
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
 msgstr "Εμφάνιση δευτερολέπτων στην ώρα"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Προβάλλει την ώρα σε ζώνη UTC"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Εμφανίζει την ώρα σε δευτερόλεπτα από την Epoch, π.χ. 1970-01-01"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Τύπος ώρας"
 
-#: applets/gen_util/clock.schemas.in.h:7
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Ορίζει το τύπο της ώρας, που μπορεί να είναι είτε 12 ή 24"
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in Clock"
 msgstr "Εμφάνιση ημερομηνίας στο Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Show date in a tooltip when a mouse is over the Clock"
 msgstr ""
 "Προβάλλει την ώρα σαν συμβουλή όταν περνάει το ποντίκι πάνω από το Ρολόϊ"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
 msgstr "Εμφάνιση ημερομηνίας στο βοήθημα"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Show time with seconds"
 msgstr "Εμφάνιση  ώρας με δευτερόλεπτα"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Χρήση ώρας Διαδικτύου"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UNIX time"
 msgstr "Χρήση ώρας Unix"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:15
 msgid "Use UTC"
 msgstr "Χρήση UTC"
 
@@ -468,7 +472,7 @@ msgid "Get the current time and date"
 msgstr "Λήψη της τρέχουσας ημερομηνίας και ώρας"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
+#: applets/gen_util/mailcheck.c:322 applets/gen_util/mailcheck.c:1766
 msgid "Inbox Monitor"
 msgstr "Παρακολούθηση αλληλογραφίας"
 
@@ -495,12 +499,12 @@ msgid "Utility"
 msgstr "Εργαλείο"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Λίστα παραθύρων"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:840
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Εναλλάκτης χώρων εργασίας"
@@ -513,12 +517,12 @@ msgstr "εργοστάσιο για τη δημιουργία μερικών γ�
 msgid "_Check for mail"
 msgstr "_Έλεγχος για αλληλογραφία"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:200
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Προέκυψε σφάλμα κατά την εκτέλεση %s: %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:328
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -527,15 +531,15 @@ msgstr ""
 "Αλληλογραφίας,\n"
 "και έτσι θα πρέπει να τον εισάγετε κάθε φορά που ξεκινάει."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:336
 msgid "Please enter your mailserver's _password:"
 msgstr "Εισάγετε τον κωδικό του διακομιστή_αληλογραφίας σας"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
+#: applets/gen_util/mailcheck.c:341 applets/gen_util/mailcheck.c:1379
 msgid "Password Entry box"
 msgstr "Κουτ'ι καταχώρησης κωδικού"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:382
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -545,181 +549,181 @@ msgstr ""
 "αλληλογραφία σας και έτσι απενεργοποιήθηκε η αυτόματη ενημέρωση προς το "
 "παρόν. Μήπως χρησιμοποιήσατε λάθος εξυπηρετητή/όνομα χρήστη/κωδικό χρήστη;"
 
-#: applets/gen_util/mailcheck.c:573
+#: applets/gen_util/mailcheck.c:558
 msgid "You have new mail."
 msgstr "Έχετε νέα αλληλογραφία."
 
-#: applets/gen_util/mailcheck.c:575
+#: applets/gen_util/mailcheck.c:560
 msgid "You have mail."
 msgstr "Έχετε αλληλογραφία."
 
-#: applets/gen_util/mailcheck.c:579
+#: applets/gen_util/mailcheck.c:564
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d μηνύματα"
 
-#: applets/gen_util/mailcheck.c:581
+#: applets/gen_util/mailcheck.c:566
 #, c-format
 msgid "%d messages"
 msgstr "%d μηνύματα"
 
-#: applets/gen_util/mailcheck.c:585
+#: applets/gen_util/mailcheck.c:570
 msgid "No mail."
 msgstr "Δεν υπάρχει αλληλογραφία."
 
-#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
-#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
+#: applets/gen_util/mailcheck.c:1090 applets/gen_util/mailcheck.c:1091
+#: applets/gen_util/mailcheck.c:1957 applets/gen_util/mailcheck.c:1958
 msgid "Status not updated"
 msgstr "Δεν έγινε ενημέρωση κατάστασης"
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1263
 msgid "Mailbox _resides on:"
 msgstr "Το γραμματοκιβώτιο _βρίσκεται στο:"
 
-#: applets/gen_util/mailcheck.c:1286
+#: applets/gen_util/mailcheck.c:1271
 msgid "Local mailspool"
 msgstr "Τοπική αποθήκη αλληλογραφίας (mailspool)"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1279
 msgid "Local maildir"
 msgstr "Τοπικός κατάλογος αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1302
+#: applets/gen_util/mailcheck.c:1287
 msgid "Remote POP3-server"
 msgstr "Απομακρυσμένος εξυπηρέτης POP3"
 
-#: applets/gen_util/mailcheck.c:1310
+#: applets/gen_util/mailcheck.c:1295
 msgid "Remote IMAP-server"
 msgstr "Απομακρυσμένος εξυπηρέτης IMAP"
 
-#: applets/gen_util/mailcheck.c:1330
+#: applets/gen_util/mailcheck.c:1315
 msgid "Mail _spool file:"
 msgstr "Αρχείο απο_θήκευσης αλληλογραφίας (mailspool):"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1334
 msgid "Mail s_erver:"
 msgstr "Εξυ_πηρετητής  αλληλογραφίας:"
 
-#: applets/gen_util/mailcheck.c:1355
+#: applets/gen_util/mailcheck.c:1340
 msgid "Mail Server Entry box"
 msgstr "Κουτί καταχώρησης Διακομιστή Αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1354
 msgid "_Username:"
 msgstr "_Όνομα χρήστη:"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1362
 msgid "Username Entry box"
 msgstr "Κουτί καταχώρισης ονόματος χρήστη"
 
-#: applets/gen_util/mailcheck.c:1386
+#: applets/gen_util/mailcheck.c:1371
 msgid "_Password:"
 msgstr "_Κωδικός:"
 
-#: applets/gen_util/mailcheck.c:1407
+#: applets/gen_util/mailcheck.c:1392
 msgid "_Folder:"
 msgstr "_Φάκελος:"
 
-#: applets/gen_util/mailcheck.c:1415
+#: applets/gen_util/mailcheck.c:1400
 msgid "Folder Entry box"
 msgstr "Κουτί καταχώρισης Φακέλου"
 
-#: applets/gen_util/mailcheck.c:1427
+#: applets/gen_util/mailcheck.c:1412
 msgid "C_ommand to run before checking for mail:"
 msgstr "Ε_ντολή για εκτέλεση πριν τον έλεγχο αλληλογραφίας:"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1420
 msgid "Command Entry box"
 msgstr "Κουτί καταχώρησης εντολής"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1445
 msgid "Execute"
 msgstr "Εκτέλεση"
 
-#: applets/gen_util/mailcheck.c:1471
+#: applets/gen_util/mailcheck.c:1456
 msgid "Before each _update:"
 msgstr "Πριν από κάθε_ενημέρωση:"
 
-#: applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1471
 msgid "Command to execute before each update"
 msgstr "Εντολή προς εκτέλεση πριν από κάθε ενημέρωση:"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1481
 msgid "When new mail _arrives:"
 msgstr "Όταν καταφθάνει_ νέα αλληλογραφία:"
 
-#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1494 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Εντολή προς εκτέλεση όταν καταφθάνει νέα αλληλογραφία:"
 
-#: applets/gen_util/mailcheck.c:1519
+#: applets/gen_util/mailcheck.c:1504
 msgid "When clicke_d:"
 msgstr "Στα κλικ:"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1517
 msgid "Command to execute when clicked"
 msgstr "Εντολή προς εκτέλεσησ τα κλικ:"
 
-#: applets/gen_util/mailcheck.c:1542
+#: applets/gen_util/mailcheck.c:1527
 msgid "Set the number of unread mails to _zero"
 msgstr "Ορισμός αριθμού μή αναγνωσμένων μηνυμάτων σε_μηδέν"
 
-#: applets/gen_util/mailcheck.c:1553
+#: applets/gen_util/mailcheck.c:1538
 msgid "Check for mail _every"
 msgstr "Έλεγχος αλληλογραφίας_κάθε"
 
-#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
+#: applets/gen_util/mailcheck.c:1550 applets/gen_util/mailcheck.c:1554
 msgid "minutes"
 msgstr "λεπτά"
 
-#: applets/gen_util/mailcheck.c:1565
+#: applets/gen_util/mailcheck.c:1550
 msgid "Choose time interval in minutes to check mail"
 msgstr "Επιλέξτε το χρονικό διάστημα σε λεπτά για τον έλεγχο αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
+#: applets/gen_util/mailcheck.c:1564 applets/gen_util/mailcheck.c:1568
 msgid "seconds"
 msgstr "δευτερόλεπτα"
 
-#: applets/gen_util/mailcheck.c:1579
+#: applets/gen_util/mailcheck.c:1564
 msgid "Choose time interval in seconds to check mail"
 msgstr ""
 "Επιλέξτε το χρονικό διάστημα σε δευτερόλεπτα για τον έλεγχο αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1591
+#: applets/gen_util/mailcheck.c:1576
 msgid "Play a _sound when new mail arrives"
 msgstr "Αναπαραγωγή_ενός ήχου όταν καταφθάνει νέα αλληλογραφία"
 
-#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1587
 msgid "Select a_nimation"
 msgstr "Ενεργοποίηση κινούμενων_σχεδίων"
 
-#: applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/mailcheck.c:1664
 msgid "Inbox Monitor Preferences"
 msgstr "Ιδιότητες παρακολούθησης αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1699
+#: applets/gen_util/mailcheck.c:1684
 msgid "_Mail check"
 msgstr "_Έλεγχος αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1703
+#: applets/gen_util/mailcheck.c:1688
 msgid "Mail_box"
 msgstr "Γραμμα_τοκιβώτιο"
 
-#: applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/mailcheck.c:1768
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
 "Η παρακολούθηση αλληλογραφίας σας ειδοποιεί όταν καταφθάνει νέα αλληλογραφία "
 "στο γραμματοκιβώτιό σας"
 
-#: applets/gen_util/mailcheck.c:1948
+#: applets/gen_util/mailcheck.c:1933
 msgid "Text only"
 msgstr "Μόνο κείμενο"
 
-#: applets/gen_util/mailcheck.c:1974
+#: applets/gen_util/mailcheck.c:1959
 msgid "Mail check"
 msgstr "Έλεγχος αλληλογραφίας"
 
-#: applets/gen_util/mailcheck.c:1975
+#: applets/gen_util/mailcheck.c:1960
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr ""
 "Ο έλεγχος αλληλογραφίας σάς ειδοποιεί όταν καταφθάνει νέα αλληλογραφία στο "
@@ -848,23 +852,23 @@ msgstr "Έλεγχος Αλληλογραφίας"
 msgid "New Mail"
 msgstr "Νέα αλληλογραφία"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:761
 msgid "Columns"
 msgstr "Στήλες"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:378
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Σφάλμα φόρτωσης τιμής αριθμού γραμμών για το εφαρμογίδιο εναλλαγής χώρων "
 "εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:389
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -872,14 +876,14 @@ msgstr ""
 "Σφάλμα φόρτωσης τιμής προβολής_όλων_των ονομάτων_χώρων_εργασίας για το "
 "εφαρμογίδιο εναλλαγής χώρων εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:404
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Σφάλμα φόρτωσης τιμής προβολής_όλων_των_χώρων_εργασίας για το εφαρμογίδιο "
 "εναλλαγής χώρων εργασίας : %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -982,7 +986,7 @@ msgstr ""
 "Αυτό το κουμπί επιτρέπει την απόκρυψη όλων των παραθύρων και εμφάνιση της "
 "επιφάνειας εργασίας."
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1135,11 +1139,11 @@ msgstr "Περιοχή ειδοποίησης ταμπλώ"
 msgid "???"
 msgstr ";;;"
 
-#: gnome-panel/applet.c:492 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "_Αφαίρεση από το ταμπλώ"
 
-#: gnome-panel/applet.c:504 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Μετακίνηση"
 
@@ -1392,11 +1396,11 @@ msgstr "Το Ταμπλώ του GNOME"
 msgid "Applications"
 msgstr "Εφαρμογές"
 
-#: gnome-panel/global-keys.c:327 gnome-panel/global-keys.c:356
+#: gnome-panel/global-keys.c:328 gnome-panel/global-keys.c:357
 msgid "Can't find the screenshot program"
 msgstr "Αδύνατη η εύρεση προγράμματος αρπαγής οθόνης"
 
-#: gnome-panel/global-keys.c:336 gnome-panel/global-keys.c:366
+#: gnome-panel/global-keys.c:337 gnome-panel/global-keys.c:367
 msgid "Can't execute the screenshot program"
 msgstr "Αδύνατη η εκτέλεση του προγράμματος αρπαγής οθόνης"
 
@@ -2147,7 +2151,7 @@ msgstr "Εκτέλεση εντολής"
 msgid "Desktop"
 msgstr "Επιφάνεια εργασίας"
 
-#: gnome-panel/menu.c:3889 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3889
 msgid "Menu"
 msgstr "Μενού"
 
@@ -2670,9 +2674,6 @@ msgstr "Μέγεθος:"
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Πάνω"
-
-#~ msgid "24"
-#~ msgstr "24"
 
 #~ msgid "(C) 1998-2002 the Free Software Foundation"
 #~ msgstr "(C) 1997-2002 το Free Software Foundation"
