@@ -1,5 +1,10 @@
 2002-02-08  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-widget.c: (panel_widget_set_new_id),
+	(panel_widget_new): kill more leaks.
+
+2002-02-08  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel.c: (panel_gconf_profile_set_string),
 	(panel_gconf_profile_set_int), (panel_gconf_profile_set_bool):
 	fix more hideous leaks and re-name like below.

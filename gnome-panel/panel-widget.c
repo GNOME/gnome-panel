@@ -1721,10 +1721,10 @@ panel_widget_set_id (PanelWidget *panel, const char *id)
 void
 panel_widget_set_new_id (PanelWidget *panel) 
 {
-	if (panel->unique_id != NULL) {
+	if (panel->unique_id)
 		g_free (panel->unique_id);
-	}
-	panel->unique_id = g_strdup (generate_unique_id ());
+
+	panel->unique_id = generate_unique_id ();
 }
 
 static void
@@ -1779,12 +1779,12 @@ panel_widget_new (gchar *panel_id,
         GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
         GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
 
-	if (panel_id == NULL) {
-	panel->unique_id = g_strdup (generate_unique_id ());
-	}
+	if (!panel_id)
+		panel->unique_id = generate_unique_id ();
+
 	else {
-	  g_free (panel->unique_id);
-	  panel->unique_id = g_strdup (panel_id);
+		g_free (panel->unique_id);
+		panel->unique_id = g_strdup (panel_id);
 	} 
 
 	panel->back_type = back_type;
