@@ -1,5 +1,16 @@
 2005-01-12  Vincent Untz  <vincent@vuntz.net>
 
+	Try to make the menu position algorithm better.
+	Fix bug #116028
+
+	* applet.c: (panel_applet_position_menu): position the menu
+	left-aligned at the left of the applet if the mouse pointer can reach
+	it without moving or right-aligned at the right of the applet (if the
+	mouse...) or aligned with the mouse pointer. Sounds complex but try it
+	and you'll understand :-)
+
+2005-01-12  Vincent Untz  <vincent@vuntz.net>
+
 	 Use gtk dnd threshold value for snap tolerance
 	 Fix bug #107776.
 
