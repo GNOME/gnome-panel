@@ -536,11 +536,18 @@ mailcheck_load_animation (MailCheck *mc, const char *fname)
 		mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
 	mc->nframe = 0;
 
-	gdk_pixbuf_render_pixmap_and_mask(pb,
-					  &mc->email_pixmap,
-					  &mc->email_mask,
-					  128);
+	mc->email_pixmap = gdk_pixmap_new (gdk_screen_get_root_window (
+					   gtk_widget_get_screen (GTK_WIDGET (mc->applet))),
+					   width, height, -1);
 
+	gdk_pixbuf_render_to_drawable (pb,
+				       mc->email_pixmap,
+				       mc->da->style->black_gc,
+				       0, 0, 0, 0,
+				       width, height,
+				       GDK_RGB_DITHER_NORMAL,
+				       0, 0);
+	
 	g_object_unref (pb);
 	
 	return TRUE;
