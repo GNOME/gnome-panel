@@ -1,3 +1,12 @@
+Wed Mar 31 16:30:41 1999  George Lebl  <jirka@5z.com>
+
+	* cdplayer/{cdrom-interface.h,cdrom-solaris.c,cdrom-linux.c,
+	  cdplayer.c}: sort of reverted the patch for the eject/load, I left
+	  the functionality in, and added new status errors for finding
+	  out if the tray is open, however this seems to be broke at least
+	  on my box, so the eject button only ejects, however, the play
+	  button will now try to load the cd if it detects an open tray
+
 Wed Mar 31 02:28:36 1999  George Lebl  <jirka@5z.com>
 
 	* cdplayer/{cdrom-interface.h,cdrom-linux.c,cdrom-solaris.c,
