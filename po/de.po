@@ -15,9 +15,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-22 10:41+0100\n"
-"PO-Revision-Date: 2005-03-22 10:35+0100\n"
-"Last-Translator: Frank Arnold <frank@scirocco-5v-turbo.de>\n"
+"POT-Creation-Date: 2005-04-01 00:11+0200\n"
+"PO-Revision-Date: 2005-04-01 00:11+0200\n"
+"Last-Translator: Hendrik Richter <hendrik@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,7 +53,7 @@ msgstr "_Info"
 #: ../applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: ../applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: ../gnome-panel/drawer.c:608 ../gnome-panel/panel-action-button.c:743
-#: ../gnome-panel/panel-context-menu.c:325 ../gnome-panel/panel-menu-bar.c:302
+#: ../gnome-panel/panel-context-menu.c:324 ../gnome-panel/panel-menu-bar.c:225
 #: ../gnome-panel/panel-menu-button.c:688
 msgid "_Help"
 msgstr "_Hilfe"
@@ -721,7 +721,7 @@ msgstr "Arbeitsflächenumschalter"
 msgid "Failed to load %s: %s\n"
 msgstr "%s konnte nicht geladen werden: %s\n"
 
-#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:569
+#: ../applets/wncklet/showdesktop.c:172 ../gnome-panel/panel-util.c:601
 msgid "Icon not found"
 msgstr "Symbol nicht gefunden"
 
@@ -1043,7 +1043,7 @@ msgstr "???"
 msgid "Can't find an empty spot"
 msgstr "Kein Platz mehr im Panel"
 
-#: ../gnome-panel/button-widget.c:196
+#: ../gnome-panel/button-widget.c:198
 #, c-format
 msgid "Failed to load image %s"
 msgstr "Das Bild %s konnte nicht geladen werden"
@@ -1059,7 +1059,7 @@ msgstr "Zur Schublade _hinzufügen..."
 
 #: ../gnome-panel/drawer.c:602 ../gnome-panel/launcher.c:846
 #: ../gnome-panel/panel-action-button.c:132
-#: ../gnome-panel/panel-context-menu.c:263
+#: ../gnome-panel/panel-context-menu.c:247
 msgid "_Properties"
 msgstr "Ei_genschaften"
 
@@ -1147,19 +1147,19 @@ msgstr ""
 "Sie können an diesem Ort keinen neuen Starter anlegen, da er nicht "
 "beschreibbar ist."
 
-#: ../gnome-panel/menu.c:818
+#: ../gnome-panel/menu.c:857
 msgid "Add this launcher to panel"
 msgstr "Als Starter zum Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:838
+#: ../gnome-panel/menu.c:877
 msgid "Entire menu"
 msgstr "Gesamtes Menü"
 
-#: ../gnome-panel/menu.c:848
+#: ../gnome-panel/menu.c:887
 msgid "Add this as drawer to panel"
 msgstr "Als Schublade zum Panel hinzufügen"
 
-#: ../gnome-panel/menu.c:860
+#: ../gnome-panel/menu.c:899
 msgid "Add this as menu to panel"
 msgstr "Als Menü zum Panel hinzufügen"
 
@@ -1181,7 +1181,7 @@ msgstr "Bildschirmschoner-Dämon _neu starten"
 
 #: ../gnome-panel/panel-action-button.c:209
 #: ../gnome-panel/panel-action-button.c:222
-#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:633
+#: ../gnome-panel/panel-action-button.c:246 ../gnome-panel/panel-util.c:665
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "»%s« konnte nicht ausgeführt werden"
@@ -1299,24 +1299,24 @@ msgstr "(leer)"
 msgid "query returned exception %s\n"
 msgstr "Anfrage lieferte Ausnahmefehler %s\n"
 
-#: ../gnome-panel/panel-addto.c:952
+#: ../gnome-panel/panel-addto.c:1006
 #, c-format
 msgid "Select an _item to add to \"%s\":"
 msgstr "Wählen Sie ein _Objekt, das zu »%s« hinzugefügt werden soll:"
 
-#: ../gnome-panel/panel-addto.c:956
+#: ../gnome-panel/panel-addto.c:1010
 msgid "Add to Drawer"
 msgstr "Zur Schublade hinzufügen"
 
-#: ../gnome-panel/panel-addto.c:958
+#: ../gnome-panel/panel-addto.c:1012
 msgid "Select an _item to add to the drawer:"
 msgstr "Wählen Sie ein _Objekt, das zur Schublade hinzugefügt werden soll:"
 
-#: ../gnome-panel/panel-addto.c:960
+#: ../gnome-panel/panel-addto.c:1014
 msgid "Add to Panel"
 msgstr "Zum Panel hinzufügen"
 
-#: ../gnome-panel/panel-addto.c:962
+#: ../gnome-panel/panel-addto.c:1016
 msgid "Select an _item to add to the panel:"
 msgstr "Wählen Sie ein _Objekt, das zum Panel hinzugefügt werden soll:"
 
@@ -1405,7 +1405,7 @@ msgid "_Delete This Panel..."
 msgstr "Dieses Panel _löschen..."
 
 #: ../gnome-panel/panel-context-menu.c:218
-#: ../gnome-panel/panel-context-menu.c:248
+#: ../gnome-panel/panel-context-menu.c:260
 msgid "_Delete This Panel"
 msgstr "Dieses Panel _löschen"
 
@@ -1413,11 +1413,11 @@ msgstr "Dieses Panel _löschen"
 msgid "_Add to Panel..."
 msgstr "Zum Panel _hinzufügen..."
 
-#: ../gnome-panel/panel-context-menu.c:278
+#: ../gnome-panel/panel-context-menu.c:277
 msgid "_New Panel"
 msgstr "Panel a_nlegen"
 
-#: ../gnome-panel/panel-context-menu.c:336
+#: ../gnome-panel/panel-context-menu.c:335
 msgid "A_bout Panels"
 msgstr "_Info zu den Panels"
 
@@ -1475,14 +1475,24 @@ msgstr ""
 "dieser Panel-Objekte werden unter »/apps/panel/objects/$(id)« abgelegt."
 
 #: ../gnome-panel/panel-general.schemas.in.h:5
-msgid "Enable program list in \"Run Application\" dialog"
+#, fuzzy
+msgid "Enable autocompletion in \"Run Application\" dialog"
 msgstr "Programmliste im »Anwendung ausführen«-Dialog aktivieren"
 
 #: ../gnome-panel/panel-general.schemas.in.h:6
+msgid "Enable program list in \"Run Application\" dialog"
+msgstr "Programmliste im »Anwendung ausführen«-Dialog aktivieren"
+
+#: ../gnome-panel/panel-general.schemas.in.h:7
 msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Programmliste im »Anwendung ausführen«-Dialog ausklappen"
 
-#: ../gnome-panel/panel-general.schemas.in.h:7
+#: ../gnome-panel/panel-general.schemas.in.h:8
+msgid ""
+"If true, autocompletion in the \"Run Application\" dialog is made available."
+msgstr ""
+
+#: ../gnome-panel/panel-general.schemas.in.h:9
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
@@ -1493,7 +1503,7 @@ msgstr ""
 "wird. Dieser Schlüssel kommt ausschließlich zum Tragen, falls der Schlüssel "
 "»enable_program_list« wahr ist."
 
-#: ../gnome-panel/panel-general.schemas.in.h:8
+#: ../gnome-panel/panel-general.schemas.in.h:10
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
@@ -1503,19 +1513,19 @@ msgstr ""
 "»Anwendung ausführen«-Dialog angezeigt. Der Schlüssel »show_program_list« "
 "legt fest, ob die Größe der Liste der des Fensters angepasst werden soll."
 
-#: ../gnome-panel/panel-general.schemas.in.h:9
+#: ../gnome-panel/panel-general.schemas.in.h:11
 msgid "Old profiles configuration migrated"
 msgstr "Konfiguration der alten Profile wurde übernommen"
 
-#: ../gnome-panel/panel-general.schemas.in.h:10
+#: ../gnome-panel/panel-general.schemas.in.h:12
 msgid "Panel ID list"
 msgstr "Liste Panel-Kennungen"
 
-#: ../gnome-panel/panel-general.schemas.in.h:11
+#: ../gnome-panel/panel-general.schemas.in.h:13
 msgid "Panel applet ID list"
 msgstr "Liste der Panel-Applet-Kennungen"
 
-#: ../gnome-panel/panel-general.schemas.in.h:12
+#: ../gnome-panel/panel-general.schemas.in.h:14
 msgid "Panel object ID list"
 msgstr "Liste der Panel-Objektkennungen"
 
@@ -1680,7 +1690,7 @@ msgstr "Bildschirmfoto aufnehmen"
 msgid "Take window screenshot"
 msgstr "Bildschirmfoto eines Fensters aufnehmen"
 
-#: ../gnome-panel/panel-menu-bar.c:132
+#: ../gnome-panel/panel-menu-bar.c:71
 msgid "Applications"
 msgstr "Anwendungen"
 
@@ -1713,7 +1723,7 @@ msgstr "Wechselmedium"
 #. * in the translation
 #: ../gnome-panel/panel-menu-items.c:477
 msgid "Desktop Folder|Desktop"
-msgstr "Desktop-Verzeichnis"
+msgstr "Desktop"
 
 #: ../gnome-panel/panel-menu-items.c:478
 msgid "Open the desktop as a folder"
@@ -1728,7 +1738,7 @@ msgstr "Orte"
 #. * the translation.
 #: ../gnome-panel/panel-menu-items.c:843
 msgid "Desktop Environment|Desktop"
-msgstr "Desktop"
+msgstr "System"
 
 #: ../gnome-panel/panel-menu-items.c:984
 msgid "Cannot launch entry"
@@ -1927,18 +1937,18 @@ msgid "Use custom path for menu contents"
 msgstr "Benutzerdefinierten Pfad für Menüinhalt verwenden"
 
 #: ../gnome-panel/panel-profile.c:743 ../gnome-panel/panel-profile.c:770
-#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1611
+#: ../gnome-panel/panel-profile.c:806 ../gnome-panel/panel-profile.c:1628
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr "Fehler beim Ermitteln des Wertes der GConf-Zeichenkette %s: %s"
 
-#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1509
-#: ../gnome-panel/panel-profile.c:1580 ../gnome-panel/panel-profile.c:1643
+#: ../gnome-panel/panel-profile.c:785 ../gnome-panel/panel-profile.c:1524
+#: ../gnome-panel/panel-profile.c:1597 ../gnome-panel/panel-profile.c:1660
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr "Fehler beim Ermitteln des ganzzahligen GConf-Wertes %s: %s"
 
-#: ../gnome-panel/panel-profile.c:1519
+#: ../gnome-panel/panel-profile.c:1534
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
@@ -1947,7 +1957,7 @@ msgstr ""
 "Panel »%s« soll auf Bildschirm %d angezeigt werden. Dieser ist jedoch "
 "momentan nicht verfügbar. Das Panel wird nicht geladen."
 
-#: ../gnome-panel/panel-profile.c:1595
+#: ../gnome-panel/panel-profile.c:1612
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Fehler beim Ermitteln des booleschen GConf-Wertes %s: %s"
@@ -2129,21 +2139,21 @@ msgstr "Befehl »%s« konnte nicht gestartet werden"
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "»%s« konnte nicht aus UTF-8 konvertiert werden"
 
-#: ../gnome-panel/panel-run-dialog.c:1067
+#: ../gnome-panel/panel-run-dialog.c:1109
 msgid "Choose a file to append to the command..."
 msgstr "Wählen Sie eine an den Befehl anzuhängende Datei..."
 
-#: ../gnome-panel/panel-run-dialog.c:1420
+#: ../gnome-panel/panel-run-dialog.c:1465
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Den Befehl »%s« ausführen"
 
-#: ../gnome-panel/panel-run-dialog.c:1427
+#: ../gnome-panel/panel-run-dialog.c:1472
 #: ../gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Wählen Sie eine Anwendung, um ihre Beschreibung anzuzeigen."
 
-#: ../gnome-panel/panel-run-dialog.c:1462
+#: ../gnome-panel/panel-run-dialog.c:1507
 #, c-format
 msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
 msgstr ""
@@ -2676,7 +2686,7 @@ msgstr "Y-Koordinate des Panels"
 msgid "Cannot display help document"
 msgstr "Ein Hilfedokument konnte nicht dargestellt werden"
 
-#: ../gnome-panel/panel-util.c:255
+#: ../gnome-panel/panel-util.c:287
 #, c-format
 msgid "Details: %s"
 msgstr "Details: %s"
