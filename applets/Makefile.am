@@ -1,6 +1,6 @@
 always_built_SUBDIRS = applet-dirs gen_util batmon cpuload cpumemusage	\
 	 fish bussign netload dialer webcontrol diskusage icewm-pager	\
-	 drivemount clockmail fifteen
+	 drivemount clockmail fifteen battery
 
 sometimes_built_SUBDIRS = cdplayer mixer modemlights
 
