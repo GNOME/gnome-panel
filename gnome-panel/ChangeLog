@@ -1,3 +1,11 @@
+Tue Jan 05 17:46:54 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: merge check_and_reread into submenu_to_display to make
+	  it all simpler, split of the applet aprt of check_and_reread,
+	  and destroy the menu before creating a newone, so that memory
+	  can be reclaimed better. Plus added a minor hack that saves
+	  an extra 8k on full menu read!:)
+
 Tue Jan 05 16:52:05 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: some possible leak fixes (I don't think they were real),

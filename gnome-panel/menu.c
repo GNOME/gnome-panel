@@ -960,83 +960,46 @@ static GtkWidget * create_menu_at (GtkWidget *menu,
 				   int force);
 static void create_rh_menu(void);
 
-/*if menu is NULL that means just reread the menu don't do anything with the
-  applet*/
-static GtkWidget *
-check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
+/*reread the applet menu, not a submenu*/
+static void
+check_and_reread_applet(Menu *menu,int main_menu)
 {
-	/*we are creating a whole new menuf or an applet if menu isn't NULL*/
-	if(menu) {
-		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
-		GSList *list;
-		int need_reread = FALSE;
-		
-		/*we shouldn't warn, this is more for debugging anyway,
-		  and nowdays we do have menus that don't have one, this
-		  however might be needed for further debugging*/
-		/*if(!mfl)
-			g_warning("Weird menu doesn't have mf entry");*/
+	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menu->menu), "mf");
+	GSList *list;
+	int need_reread = FALSE;
 
-		/*check if we need to reread this*/
-		for(list = mfl; list != NULL; list = g_slist_next(list)) {
-			MenuFinfo *mf = list->data;
-			if(mf->fake_menu ||
-			   !check_finfo_list(mf->finfo)) {
-				need_reread = TRUE;
-				break;
-			}
+	/*we shouldn't warn, this is more for debugging anyway,
+	  and nowdays we do have menus that don't have one, this
+	  however might be needed for further debugging*/
+	/*if(!mfl)
+	  g_warning("Weird menu doesn't have mf entry");*/
+
+	/*check if we need to reread this*/
+	for(list = mfl; list != NULL; list = g_slist_next(list)) {
+		MenuFinfo *mf = list->data;
+		if(mf->fake_menu ||
+		   !check_finfo_list(mf->finfo)) {
+			need_reread = TRUE;
+			break;
 		}
+	}
 
-		if(need_reread) {
-			/*that will be destroyed in add_menu_widget*/
-			menuw = NULL;
-			if(main_menu)
-				add_menu_widget(menu,NULL,main_menu,TRUE);
-			else {
-				GSList *dirlist = NULL;
-				for(list = mfl; list != NULL;
-				    list = g_slist_next(list)) {
-					MenuFinfo *mf = list->data;
-					dirlist = g_slist_append(dirlist,
-								 mf->menudir);
-				}
-				add_menu_widget(menu,dirlist, main_menu,TRUE);
-				g_slist_free(dirlist);
-			}
-		}
-	} else {
-		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
-		GSList *list;
-		int need_reread = FALSE;
-		
-		/*if(!mfl)
-			g_warning("Weird menu doesn't have mf entry");*/
-
-		/*check if we need to reread this*/
-		for(list = mfl; list != NULL; list = g_slist_next(list)) {
-			MenuFinfo *mf = list->data;
-			if(!need_reread &&
-			   (mf->fake_menu || !check_finfo_list(mf->finfo))) {
-				need_reread = TRUE;
-
-			}
-		}
-		if(need_reread) {
-			menuw = NULL;
+	if(need_reread) {
+		/*that will be destroyed in add_menu_widget*/
+		if(main_menu)
+			add_menu_widget(menu,NULL,main_menu,TRUE);
+		else {
+			GSList *dirlist = NULL;
 			for(list = mfl; list != NULL;
 			    list = g_slist_next(list)) {
 				MenuFinfo *mf = list->data;
-				menuw = create_menu_at(menuw,
-						       mf->menudir,
-						       mf->applets,
-						       mf->dir_name,
-						       mf->pixmap_name,
-						       TRUE,
-						       FALSE);
+				dirlist = g_slist_append(dirlist,
+							 mf->menudir);
 			}
+			add_menu_widget(menu,dirlist, main_menu,TRUE);
+			g_slist_free(dirlist);
 		}
 	}
-	return menuw;
 }
 
 static int
@@ -1049,21 +1012,69 @@ sel_idle(gpointer data)
 static void
 submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 {
-	GtkWidget *menu = check_and_reread(menuitem->submenu,
-					   NULL,FALSE);
-	g_return_if_fail(menu!=NULL);
+	GtkWidget *menuw = menuitem->submenu;
+	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+	GSList *list;
+	int need_reread = FALSE;
+
+	/*if(!mfl)
+	  g_warning("Weird menu doesn't have mf entry");*/
+
+	/*check if we need to reread this*/
+	for(list = mfl; list != NULL; list = g_slist_next(list)) {
+		MenuFinfo *mf = list->data;
+		if(!need_reread &&
+		   (mf->fake_menu || !check_finfo_list(mf->finfo))) {
+			need_reread = TRUE;
+
+		}
+	}
 	/*THIS IS A HACK, but a cool one at that*/
-	if(menu!=menuitem->submenu) {
+	if(need_reread) {
+		int was_visible = GTK_WIDGET_VISIBLE(menuw);
+		/*prevent the mfl from being destroyed now*/
+		gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
+		gtk_widget_destroy(menuw);
+		menuw = NULL;
+		for(list = mfl; list != NULL;
+		    list = g_slist_next(list)) {
+			GSList *li;
+			MenuFinfo *mf = list->data;
+
+			/*mem efficency hack, free this since we'll
+			  be creating such a list again at create_menu_at
+			  so we'd use this memory instead of allocationg
+			  more*/
+			for(li=mf->finfo;li!=NULL;li=g_slist_next(li)) {
+				FileInfo *fi = li->data;
+				g_free(fi->name);
+				g_free(fi);
+			}
+			g_slist_free(mf->finfo);
+			mf->finfo = NULL;
+
+			menuw = create_menu_at(menuw,
+					       mf->menudir,
+					       mf->applets,
+					       mf->dir_name,
+					       mf->pixmap_name,
+					       TRUE,
+					       FALSE);
+			destroy_mf(mf);
+		}
+		g_slist_free(mfl);
+
 		/*it's not yet displayed we're ok here*/
-		if(!GTK_WIDGET_VISIBLE(menuitem->submenu)) {
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+		if(!was_visible) {
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
+						   menuw);
 		/*now is when the fun begins, we kill the menu and do select
 		  again ... nowdays, we'll be ok though*/
 		} else {
 			gtk_signal_emit_stop_by_name(GTK_OBJECT(menuitem),
 						     "select");
-			gtk_widget_destroy(menuitem->submenu);
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem),
+						   menuw);
 			gtk_item_select(GTK_ITEM(menuitem));
 		}
 	}
@@ -2430,7 +2441,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 		   !(menu->main_menu_flags&MAIN_MENU_REDHAT_SUB))
 			rh_submenu_to_display(NULL,NULL);
 
-		check_and_reread(menu->menu,menu,main_menu);
+		check_and_reread_applet(menu,main_menu);
 	}
 
 	/*so that the panel doesn't pop down until we're
