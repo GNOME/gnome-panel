@@ -247,7 +247,7 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
 						    5.0, 0.0);
-	gtk_adjustment_set_value(adj, PANEL_MINIMUM_WIDTH); 
+	gtk_adjustment_set_value(adj, 48); 
 	width_s = gtk_spin_button_new(adj,0,0);
 	gtk_box_pack_start(GTK_BOX(box),width_s,FALSE,FALSE,0);
 
@@ -259,7 +259,7 @@ ask_about_swallowing(PanelWidget *panel, int pos)
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 0.0, 255.0, 1.0,
 						    5.0, 0.0);
-	gtk_adjustment_set_value(adj, PANEL_MINIMUM_WIDTH); 
+	gtk_adjustment_set_value(adj, 48); 
 	height_s = gtk_spin_button_new(adj,0,0);
 	gtk_box_pack_start(GTK_BOX(box),height_s,FALSE,FALSE,0);
 	
