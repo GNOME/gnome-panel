@@ -3510,9 +3510,6 @@ create_panel_root_menu(PanelWidget *panel, gboolean tearoff)
 				 TRUE);
 
 	gtk_object_set_data (GTK_OBJECT(menu), "menu_panel", panel);
-	gtk_signal_connect_object_while_alive(GTK_OBJECT(panel),
-		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_unref),
-		      GTK_OBJECT(menu));
 
 	return menu;
 }

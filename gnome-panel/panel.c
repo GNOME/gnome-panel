@@ -576,7 +576,7 @@ static void
 clean_kill_applets (PanelWidget *panel)
 {
 	GList *li;
-	for(li = panel->applet_list; li != NULL; li = li->next) {
+	for (li = panel->applet_list; li != NULL; li = li->next) {
 		AppletData *ad = li->data;
 		AppletInfo *info =
 			gtk_object_get_data (GTK_OBJECT (ad->applet),
@@ -594,7 +594,7 @@ clean_kill_applets (PanelWidget *panel)
 static void
 panel_destroy (GtkWidget *widget, gpointer data)
 {
-	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
+	PanelData *pd = gtk_object_get_user_data (GTK_OBJECT (widget));
 	PanelWidget *panel = NULL;
 
 	if (IS_BASEP_WIDGET (widget))
@@ -607,13 +607,16 @@ panel_destroy (GtkWidget *widget, gpointer data)
 	kill_config_dialog(widget);
 
 	if (IS_DRAWER_WIDGET(widget)) {
-		if (panel->master_widget != NULL) {
-			AppletInfo *info = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
-							       "applet_info");
+		GtkWidget *master_widget = panel->master_widget;
+
+		if (master_widget != NULL) {
+			AppletInfo *info =
+				gtk_object_get_data(GTK_OBJECT(master_widget),
+						    "applet_info");
 			Drawer *drawer = info->data;
 			drawer->drawer = NULL;
 			panel_clean_applet (info);
-			gtk_object_remove_data (GTK_OBJECT (panel->master_widget),
+			gtk_object_remove_data (GTK_OBJECT (master_widget),
 						"applet_info");
 		}
 	} else if ((IS_BASEP_WIDGET(widget)
@@ -623,21 +626,12 @@ panel_destroy (GtkWidget *widget, gpointer data)
 		base_panels--;
 	}
 
-/* don't unref this, since we unref from a signal connected to the
- * destroy signal of the panel
- *
- * Broken, maybe.  1.2 needs to go out, definitely.
- *
- * Oh, and null it anyway since we should be done with it.
- */
-#if 0	
-	if(pd->menu)
-		gtk_widget_unref(pd->menu);
-#endif
+	if (pd->menu != NULL)
+		gtk_widget_unref (pd->menu);
 	pd->menu = NULL;
 
-	panel_list = g_slist_remove(panel_list,pd);
-	g_free(pd);
+	panel_list = g_slist_remove (panel_list, pd);
+	g_free (pd);
 }
 
 static void
@@ -674,14 +668,14 @@ panel_applet_about_to_die (GtkWidget *panel, GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *
-panel_menu_get(PanelWidget *panel, PanelData *pd)
+panel_menu_get (PanelWidget *panel, PanelData *pd)
 {
-	if(pd->menu)
+	if (pd->menu != NULL)
 		return pd->menu;
 	
-	pd->menu = create_panel_root_menu(panel, TRUE);
-	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
-			   GTK_SIGNAL_FUNC(menu_deactivate), pd);
+	pd->menu = create_panel_root_menu (panel, TRUE);
+	gtk_signal_connect (GTK_OBJECT (pd->menu), "deactivate",
+			    GTK_SIGNAL_FUNC (menu_deactivate), pd);
 	return pd->menu;
 }
 
