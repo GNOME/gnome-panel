@@ -4,21 +4,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # Gil Osher <dolfin@rpg.org.il>, 2002
 # Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2002
+# Gil "Dolfin" Osher <dolfin@rpg.org.il>, 2002
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.HEAD.he\n"
-"POT-Creation-Date: 2002-12-09 06:09+0100\n"
-"PO-Revision-Date: 2002-12-09 15:14+0200\n"
-"Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
+"POT-Creation-Date: 2002-12-20 05:53+0100\n"
+"PO-Revision-Date: 2002-12-20 13:56+0200\n"
+"Last-Translator: Gil "Dolfin" Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
-#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
+#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1602
 #: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
 #: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
 #: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
@@ -123,6 +124,43 @@ msgstr ""
 msgid "GNOME Fish, the fortune teller"
 msgstr "דג GNOME, מגלה העתידות"
 
+#: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+msgid "Browse"
+msgstr "עיין"
+
+#: applets/fish/fish.glade.h:3
+msgid "Command to _execute when fish is clicked:"
+msgstr "פקודה _להפעלה בלחיצה על הדג:"
+
+#: applets/fish/fish.glade.h:4
+msgid "Frame_s in animation:"
+msgstr "פריי_מים בהנפשה:"
+
+#: applets/fish/fish.glade.h:5
+msgid "GNOME Fish Preferences"
+msgstr "עדיפויות דג GNOME"
+
+#: applets/fish/fish.glade.h:6
+msgid "Pause _per frame (s):"
+msgstr "_הפסקה לכל פריים:"
+
+#: applets/fish/fish.glade.h:7
+msgid "_Animation filename:"
+msgstr "_קובץ הנפשה:"
+
+#: applets/fish/fish.glade.h:8
+msgid "_Name of GNOME fish:"
+msgstr "_שם הדג של GNOME:"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Rotate on vertical panels"
+msgstr "_סובב בלוחות אנכיים"
+
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
@@ -186,8 +224,8 @@ msgstr "_אודות..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
-#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3577
+#: gnome-panel/menu.c:4253 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_עזרה"
 
@@ -199,85 +237,107 @@ msgstr "_עזרה"
 msgid "_Preferences..."
 msgstr "_העדפות..."
 
-#: applets/gen_util/clock.c:171
+#: applets/gen_util/clock.c:178
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/gen_util/clock.c:173
+#: applets/gen_util/clock.c:178
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/gen_util/clock.c:176 applets/gen_util/clock.c:487
+#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:499
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/gen_util/clock.c:178 applets/gen_util/clock.c:489
+#: applets/gen_util/clock.c:180 applets/gen_util/clock.c:501
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/gen_util/clock.c:187 applets/gen_util/clock.c:189
+#: applets/gen_util/clock.c:186
 msgid "%a %b %d"
 msgstr "%a %b %d"
 
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/gen_util/clock.c:193
+#, c-format
+msgid ""
+"%s\n"
+"%s"
+msgstr ""
+"%s\n"
+"%s"
+
+#. translators: reverse the order of these arguments
+#. *              if the time should come before the
+#. *              date on a clock in your locale.
+#.
+#: applets/gen_util/clock.c:200
+#, c-format
+msgid "%s, %s"
+msgstr "%s, %s"
+
 #. Show date in tooltip
-#: applets/gen_util/clock.c:291
+#: applets/gen_util/clock.c:303
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/gen_util/clock.c:397
+#: applets/gen_util/clock.c:409
 msgid "Computer Clock"
 msgstr "שעון מחשב"
 
-#: applets/gen_util/clock.c:482
+#: applets/gen_util/clock.c:494
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/gen_util/clock.c:484
+#: applets/gen_util/clock.c:496
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/gen_util/clock.c:523
+#: applets/gen_util/clock.c:535
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:945
+#: applets/gen_util/clock.c:957
 msgid "Clock Preferences"
 msgstr "העדפות שעון"
 
-#: applets/gen_util/clock.c:974
+#: applets/gen_util/clock.c:986
 msgid "Clock type"
 msgstr "סוג שעון"
 
-#: applets/gen_util/clock.c:984
+#: applets/gen_util/clock.c:996
 msgid "_12 hour"
 msgstr "_12 שעות"
 
-#: applets/gen_util/clock.c:990
+#: applets/gen_util/clock.c:1002
 msgid "_24 hour"
 msgstr "_24 שעות"
 
-#: applets/gen_util/clock.c:995
+#: applets/gen_util/clock.c:1007
 msgid "UNI_X time"
 msgstr "זמן UNI_X"
 
-#: applets/gen_util/clock.c:999
+#: applets/gen_util/clock.c:1011
 msgid "_Internet time"
 msgstr "זמן _אינטרנט"
 
-#: applets/gen_util/clock.c:1036
+#: applets/gen_util/clock.c:1048
 msgid "Show _seconds"
 msgstr "הצג _שניות"
 
-#: applets/gen_util/clock.c:1046
+#: applets/gen_util/clock.c:1058
 msgid "Show _date"
 msgstr "הצג _תאריך"
 
-#: applets/gen_util/clock.c:1056
+#: applets/gen_util/clock.c:1068
 msgid "Use _UTC"
 msgstr "השתמש ב _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
+#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
@@ -289,17 +349,16 @@ msgstr ""
 "פרוייקט linBrew\n"
 "http://linbrew.sourceforge.net"
 
-#: applets/gen_util/clock.c:1192
+#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "שעון"
 
-#: applets/gen_util/clock.c:1193 applets/gen_util/mailcheck.c:1746
-#: applets/gen_util/printer.c:354
-msgid "(C) 1998 Free Software Foundation, Inc."
-msgstr "(C) 1998 ארגון התוכנה החופשית"
+#: applets/gen_util/clock.c:1205
+msgid "Copyright  1998-2002 Free Software Foundation. Inc."
+msgstr "כל הזכויות שמורות  1998-2002 ארגון התוכנה החופשית"
 
-#: applets/gen_util/clock.c:1194
+#: applets/gen_util/clock.c:1206
 msgid "The Clock displays the current time and date"
 msgstr "השעון מציג את הזמן והתאריך הנוכחיים"
 
@@ -518,11 +577,6 @@ msgstr "שרת IMAP מרוחק"
 msgid "Mail _spool file:"
 msgstr "קובץ דואר _מקומי:"
 
-#: applets/gen_util/mailcheck.c:1298 gnome-panel/panel-config.c:1498
-#: gnome-panel/panel-util.c:287
-msgid "Browse"
-msgstr "עיין"
-
 #: applets/gen_util/mailcheck.c:1313
 msgid "Mail s_erver:"
 msgstr "_שרת דואר:"
@@ -630,6 +684,10 @@ msgstr "_בדיקת דואר"
 #: applets/gen_util/mailcheck.c:1667
 msgid "Mail_box"
 msgstr "_תיבת דואר"
+
+#: applets/gen_util/mailcheck.c:1746
+msgid "Copyright  1998-2002 Free Software Foundation, Inc."
+msgstr "כל הזכויות שמורות  1992-2002 ארגון התוכנה החופשית"
 
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
@@ -785,10 +843,6 @@ msgstr "שגיאה בטעינת הערך הצגת שמות סביבות עבוד
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "שגיאה בטעינת הערך הצג את כל סביבות העבודה למחליף סביבות העבודה: %s\n"
 
-#: applets/gen_util/pager.c:546 applets/gen_util/tasklist.c:809
-msgid "(C) 2001 Red Hat, Inc."
-msgstr "(C) 2001 Red Hat, Inc."
-
 #: applets/gen_util/pager.c:547
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
@@ -863,52 +917,6 @@ msgstr "האם להציג את כל סביבות העבודה במחליף סב�
 msgid "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr "האם להציג את שמות סביבות העבודה במחליף סביבות העבודה."
 
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "לא ניתן להפעיל פקודת הדפסה"
-
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "מאפייני מדפסת"
-
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "שם מדפסת:"
-
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "פקודת הדפסה:"
-
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "מדפסת"
-
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "יישומון מדפסת"
-
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr "יישומון המדפסת נותן לך בקלות לגרור קבצים להדפסה דרך פקודת ההדפסה"
-
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "לא ניתן ליצור יישומון!\n"
-
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "מאפיינים..."
-
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "עזרה"
-
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "אודות..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr "לחץ כאן כדי להחזיר חלונות מוסתרים."
@@ -925,10 +933,6 @@ msgstr "שגיאה בטעינת %s: %s\n"
 #: applets/gen_util/showdesktop.c:291
 msgid "File not found"
 msgstr "קובץ לא נמצא"
-
-#: applets/gen_util/showdesktop.c:453 applets/notification_area/main.c:126
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "(C) 2002 Red Hat, Inc."
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
@@ -999,8 +1003,8 @@ msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"מחליט מתי לקבץ חלונות של אותו היישום ברשימת החלונות. "
-"ערכים תקינים הם \"לעולם\", \"אוטומטי\", ו\"תמיד\"."
+"מחליט מתי לקבץ חלונות של אותו היישום ברשימת החלונות. ערכים תקינים הם \"לעולם"
+"\", \"אוטומטי\", ו\"תמיד\"."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1077,69 +1081,69 @@ msgstr "אזור התרעת לוח"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:487 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:493 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "_הסר מהלוח"
 
-#: gnome-panel/applet.c:499 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_הזז"
 
-#: gnome-panel/applet.c:803
+#: gnome-panel/applet.c:809
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "אין סוג אובייקט או אובייקט לוח עם הזיהוי %s\n"
 
-#: gnome-panel/applet.c:825
+#: gnome-panel/applet.c:831
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "אין זיהוי לוח לאובייקט לוח עם הזיהוי %s\n"
 
-#: gnome-panel/applet.c:1132
+#: gnome-panel/applet.c:1157
 msgid "Can't find an empty spot"
 msgstr "לא ניתן למצוא נקודה ריקה"
 
-#: gnome-panel/basep-widget.c:160
+#: gnome-panel/basep-widget.c:159
 msgid "Mode"
 msgstr "מצב"
 
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:160
 msgid "Mode of this panel"
 msgstr "מצב הלוח"
 
-#: gnome-panel/basep-widget.c:168
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "מצב"
 
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:168
 msgid "Current state of this panel"
 msgstr "מצב נוכחי של לוח זה"
 
-#: gnome-panel/basep-widget.c:177
+#: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
 msgstr "כפתורי הסתרה מאופשרים"
 
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr "האם כפתורי הסתרה (כפתורים המסתירים או מציגים את הלוח) מאופשרים?"
 
-#: gnome-panel/basep-widget.c:185
+#: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
 msgstr "תמונות כפתורי הסתרה מאופשרות"
 
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr "לכפתורי הסתרה יש תמונות"
 
-#: gnome-panel/basep-widget.c:590
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "הסתר לוח זה"
 
-#: gnome-panel/basep-widget.c:593
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "הצג לוח זה"
 
@@ -1202,11 +1206,11 @@ msgstr "זיהוי מחסנית סמל"
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "מחסנית הסמל הרצוי ל ButtonWidget"
 
-#: gnome-panel/disclosure-widget.c:251
+#: gnome-panel/disclosure-widget.c:259
 msgid "Expander Size"
 msgstr "גודל מרחיב"
 
-#: gnome-panel/disclosure-widget.c:252
+#: gnome-panel/disclosure-widget.c:260
 msgid "Size of the expander arrow"
 msgstr "גודלו של החץ המרחיב"
 
@@ -1264,12 +1268,12 @@ msgstr "אפשר כפתורי הסתרה"
 msgid "Enable hidebutton arrow"
 msgstr "אפשר חצי כפתורי הסתרה"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3458
 msgid "Drawer"
 msgstr "מגירה"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1521
+#: gnome-panel/menu.c:3552 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_מאפיינים"
 
@@ -1277,7 +1281,7 @@ msgstr "_מאפיינים"
 msgid " (invalid Unicode)"
 msgstr " (יוניקוד לא תקני)"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3824
 msgid "Run Program..."
 msgstr "הפעל תוכנית..."
 
@@ -1285,23 +1289,23 @@ msgstr "הפעל תוכנית..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "מפעיל תוכניות, אם אתה יודע את הפקודה המדוייקת לכתיבה"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3838
 msgid "Search for Files..."
 msgstr "חפש קבצים..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3841
 msgid "Find files, folders, and documents on your computer"
 msgstr "חפש קבצים, תיקיות ומסמכים במחשב שלך"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3855
 msgid "Screenshot..."
 msgstr "תמונת מסך..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3858
 msgid "Take a screenshot of your desktop"
 msgstr "קח תמונת מסך של שולחן העבודה שלך"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3634
 msgid "Lock Screen"
 msgstr "נעל מסך"
 
@@ -1309,8 +1313,8 @@ msgstr "נעל מסך"
 msgid "Protect your computer from unauthorized use"
 msgstr "הגן על מחשבך משימוש לא מאושר"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
-#: gnome-panel/menu.c:3611
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3062
+#: gnome-panel/menu.c:3645
 msgid "Log Out"
 msgstr "התנתק"
 
@@ -1327,7 +1331,7 @@ msgstr "פעולות"
 msgid "No windows open"
 msgstr "אין חלונות פתוחים"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2826
 msgid "Menu Panel"
 msgstr "לוח תפריט"
 
@@ -1335,8 +1339,8 @@ msgstr "לוח תפריט"
 msgid "GNOME Menu Panel"
 msgstr "לוח התפריט של GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
-#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2959
+#: gnome-panel/menu.c:2964 gnome-panel/menu.c:3791
 msgid "Applications"
 msgstr "יישומים"
 
@@ -1377,7 +1381,7 @@ msgstr "אתה חייב לציין ארגומנט יחיד לקובץ .desktop �
 msgid "No panel found\n"
 msgstr "לא נמצא לוח\n"
 
-#: gnome-panel/gnome-panel-preferences.c:192
+#: gnome-panel/gnome-panel-preferences.c:259
 #: gnome-panel/gnome-panel-screenshot.c:862
 #, c-format
 msgid ""
@@ -1387,7 +1391,7 @@ msgstr ""
 "ארעה שגיאה בהצגת העזרה: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:240
+#: gnome-panel/gnome-panel-preferences.c:307
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
@@ -1395,7 +1399,7 @@ msgstr ""
 "מנהל המערכת לא מרשה\n"
 "שינויים בהגדרות הלוח"
 
-#: gnome-panel/gnome-panel-preferences.c:270
+#: gnome-panel/gnome-panel-preferences.c:337
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "שגיאה בטעינת קובץ glade %s"
@@ -1543,10 +1547,6 @@ msgstr ""
 #: gnome-panel/gnome-panel-screenshot.c:1290
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "לא ניתן לקחת תמונת מסך של שולחן העבודה הנוכחי."
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:1
-msgid "*"
-msgstr "*"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "<b>Options</b>"
@@ -1747,7 +1747,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1178
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1796,8 +1796,8 @@ msgid "The GNOME Panel"
 msgstr "הלוח של GNOME"
 
 #: gnome-panel/menu.c:290
-msgid "(C) 1997 Free Software Foundation, Inc."
-msgstr "(C) 1997 ארגון התוכנה החופשית"
+msgid "Copyright  1997-2002 Free Software Foundation, Inc."
+msgstr "כל הזכויות שמורות  1997-2002 ארגון התוכנה החופשית"
 
 #: gnome-panel/menu.c:311
 msgid "End world hunger"
@@ -1825,7 +1825,7 @@ msgstr ""
 "\n"
 "פרטים: %s"
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1118 gnome-panel/menu.c:1155
+#: gnome-panel/menu.c:363 gnome-panel/menu.c:1152 gnome-panel/menu.c:1189
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1836,7 +1836,7 @@ msgstr ""
 "\n"
 "פרטים: %s"
 
-#: gnome-panel/menu.c:1022
+#: gnome-panel/menu.c:1056
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1847,17 +1847,17 @@ msgstr ""
 "\n"
 "פרטים: %s\n"
 
-#: gnome-panel/menu.c:1032
+#: gnome-panel/menu.c:1066
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "לא ניתן לקבל את שם הקובץ מהנתיב: %s"
 
-#: gnome-panel/menu.c:1039
+#: gnome-panel/menu.c:1073
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "לא ניתן לקבל את שם הסיפרייה מהנתיב: %s"
 
-#: gnome-panel/menu.c:1109
+#: gnome-panel/menu.c:1143
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1867,241 +1867,241 @@ msgstr ""
 "\n"
 "פרטים: אין שדה 'ביצוע' או 'כתובת' בקלט"
 
-#: gnome-panel/menu.c:1419
+#: gnome-panel/menu.c:1453
 msgid "Add this launcher to panel"
 msgstr "הוסף משגר זה ללוח"
 
-#: gnome-panel/menu.c:1427
+#: gnome-panel/menu.c:1461
 msgid "Remove this item"
 msgstr "הסר פריט זה"
 
-#: gnome-panel/menu.c:1443
+#: gnome-panel/menu.c:1477
 msgid "Put into run dialog"
 msgstr "הכנס לתוך דו-שיח הפעלה"
 
-#: gnome-panel/menu.c:1461
+#: gnome-panel/menu.c:1495
 #, c-format
 msgid "Help on %s"
 msgstr "עזרה ב %s"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1496
 msgid "Application"
 msgstr "יישום"
 
-#: gnome-panel/menu.c:1506
+#: gnome-panel/menu.c:1540
 msgid "Entire menu"
 msgstr "הפריט השלם"
 
-#: gnome-panel/menu.c:1515
+#: gnome-panel/menu.c:1549
 msgid "Add this as drawer to panel"
 msgstr "הוסף זאת כמגירה ללוח"
 
-#: gnome-panel/menu.c:1523
+#: gnome-panel/menu.c:1557
 msgid "Add this as menu to panel"
 msgstr "הוסף זאת כתפריט ללוח"
 
-#: gnome-panel/menu.c:1531
+#: gnome-panel/menu.c:1565
 msgid "Add new item to this menu"
 msgstr "הוסף פריט חדש לתפריט הזה"
 
-#: gnome-panel/menu.c:1556
+#: gnome-panel/menu.c:1590
 msgid "Properties"
 msgstr "מאפיינים"
 
-#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2480 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "שאילתה החזירה חריגה %s\n"
 
-#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2736 gnome-panel/menu.c:2741
 msgid "Aligned Panel"
 msgstr "לוח מיושר"
 
-#: gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2742
 msgid "GNOME Aligned Panel"
 msgstr "לוח מיושר של GNOME"
 
-#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
+#: gnome-panel/menu.c:2759 gnome-panel/menu.c:2763
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "לוח קצה"
 
-#: gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2764
 msgid "GNOME Edge Panel"
 msgstr "לוח קצה של GNOME"
 
-#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
+#: gnome-panel/menu.c:2785 gnome-panel/menu.c:2789
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "לוח מחליק"
 
-#: gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2790
 msgid "GNOME Sliding Panel"
 msgstr "לוח מחליק של GNOME"
 
-#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2808 gnome-panel/menu.c:2813
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "לוח צף"
 
-#: gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2814
 msgid "GNOME Floating Panel"
 msgstr "לוח צף של GNOME"
 
-#: gnome-panel/menu.c:2800
+#: gnome-panel/menu.c:2834
 msgid "You can only have one menu panel at a time."
 msgstr "ניתן שיהיה רק לוח תפריט אחד בכל זמן."
 
-#: gnome-panel/menu.c:2844
+#: gnome-panel/menu.c:2878
 msgid "C_orner Panel"
 msgstr "לוח _פינה"
 
-#: gnome-panel/menu.c:2846
+#: gnome-panel/menu.c:2880
 msgid "Create corner panel"
 msgstr "צור לוח פינה"
 
-#: gnome-panel/menu.c:2853
+#: gnome-panel/menu.c:2887
 msgid "_Edge Panel"
 msgstr "לוח _קצה"
 
-#: gnome-panel/menu.c:2855
+#: gnome-panel/menu.c:2889
 msgid "Create edge panel"
 msgstr "צור לוח קצה"
 
-#: gnome-panel/menu.c:2862
+#: gnome-panel/menu.c:2896
 msgid "_Floating Panel"
 msgstr "לוח _צף"
 
-#: gnome-panel/menu.c:2864
+#: gnome-panel/menu.c:2898
 msgid "Create floating panel"
 msgstr "צור לוח צף"
 
-#: gnome-panel/menu.c:2871
+#: gnome-panel/menu.c:2905
 msgid "_Sliding Panel"
 msgstr "לוח _מחליק"
 
-#: gnome-panel/menu.c:2873
+#: gnome-panel/menu.c:2907
 msgid "Create sliding panel"
 msgstr "צור לוח מחליק"
 
-#: gnome-panel/menu.c:2882
+#: gnome-panel/menu.c:2916
 msgid "_Menu Panel"
 msgstr "לוח _תפריט"
 
-#: gnome-panel/menu.c:2884
+#: gnome-panel/menu.c:2918
 msgid "Create menu panel"
 msgstr "צור לוח תפריט"
 
-#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
+#: gnome-panel/menu.c:3007 gnome-panel/menu.c:3013 gnome-panel/menu.c:3706
 msgid "KDE Menu"
 msgstr "תפריט KDE"
 
-#: gnome-panel/menu.c:3036
+#: gnome-panel/menu.c:3070
 msgid "Lock"
 msgstr "נעילה"
 
-#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3078 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "תמונת מסך"
 
-#: gnome-panel/menu.c:3052
+#: gnome-panel/menu.c:3086
 msgid "Search"
 msgstr "חיפוש"
 
-#: gnome-panel/menu.c:3060
+#: gnome-panel/menu.c:3094
 msgid "Run"
 msgstr "הפעלה"
 
-#: gnome-panel/menu.c:3132
+#: gnome-panel/menu.c:3166
 msgid "You cannot remove your last panel."
 msgstr "אתה לא יכול להסיר את הלוח האחרון שלך."
 
-#: gnome-panel/menu.c:3145
+#: gnome-panel/menu.c:3179
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr "כאשר לוח נמחק, הלוח והגדרותיו נאבדים. למחוק לוח זה?"
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3187
 msgid "Delete Panel"
 msgstr "מחק לוח"
 
-#: gnome-panel/menu.c:3392
+#: gnome-panel/menu.c:3426
 msgid "Launcher..."
 msgstr "משגר..."
 
-#: gnome-panel/menu.c:3399
+#: gnome-panel/menu.c:3433
 msgid "Launcher from menu"
 msgstr "משגר מתפריט"
 
-#: gnome-panel/menu.c:3407
+#: gnome-panel/menu.c:3441
 msgid "Button"
 msgstr "כפתור"
 
-#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
-#: gnome-panel/menu.c:4141
+#: gnome-panel/menu.c:3450 gnome-panel/menu.c:3951 gnome-panel/menu.c:3979
+#: gnome-panel/menu.c:4175
 msgid "Main Menu"
 msgstr "תפריט ראשי"
 
-#: gnome-panel/menu.c:3469
+#: gnome-panel/menu.c:3503
 msgid "_Delete This Panel..."
 msgstr "_מחק לוח זה..."
 
-#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
+#: gnome-panel/menu.c:3506 gnome-panel/menu.c:3538
 msgid "_Delete This Panel"
 msgstr "_מחק לוח זה"
 
-#: gnome-panel/menu.c:3491
+#: gnome-panel/menu.c:3525
 msgid "_Add to Panel"
 msgstr "_הוסף ללוח"
 
-#: gnome-panel/menu.c:3531
+#: gnome-panel/menu.c:3565
 msgid "_New Panel"
 msgstr "לוח _חדש"
 
-#: gnome-panel/menu.c:3565
+#: gnome-panel/menu.c:3599
 msgid "_About Panels"
 msgstr "_אודות הלוחות"
 
-#: gnome-panel/menu.c:3578
+#: gnome-panel/menu.c:3612
 msgid "About _GNOME"
 msgstr "אודות _GNOME"
 
-#: gnome-panel/menu.c:3606
+#: gnome-panel/menu.c:3640
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "נעל את המסך כך שתוכל לעזוב זמנית את המחשב שלך"
 
-#: gnome-panel/menu.c:3617
+#: gnome-panel/menu.c:3651
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "התנתק מתצורת הפעלה זו כדי להתחבר כמשתמש אחר או כדי לכבות את מחשבך."
 
-#: gnome-panel/menu.c:3773
+#: gnome-panel/menu.c:3807
 msgid "Applets"
 msgstr "יישומונים"
 
-#: gnome-panel/menu.c:3797
+#: gnome-panel/menu.c:3831
 msgid "Run a command"
 msgstr "הפעל פקודה"
 
-#: gnome-panel/menu.c:3837
+#: gnome-panel/menu.c:3871
 msgid "Desktop"
 msgstr "שולחן עבודה"
 
-#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu.c:3899 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "תפריט"
 
-#: gnome-panel/menu.c:3867
+#: gnome-panel/menu.c:3901
 msgid "Menu:"
 msgstr "תפריט:"
 
-#: gnome-panel/menu.c:3939
+#: gnome-panel/menu.c:3973
 msgid "Can't create menu, using main menu!"
 msgstr "לוח יכול ליצור תפריט, משתמש בתפריט ראשי!"
 
-#: gnome-panel/menu.c:4464
+#: gnome-panel/menu.c:4496
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "לא נקבע נתיב ב %s לאובייקט תפריט הלוח\n"
@@ -2191,12 +2191,12 @@ msgstr "סוג הפעולה שכפתור זה מבצע"
 msgid "Cannot register control widget\n"
 msgstr "לא יכול לרשום פריט בקרה\n"
 
-#: gnome-panel/panel-applet-frame.c:606
+#: gnome-panel/panel-applet-frame.c:602
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "חריגה מתפריט קופץ '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:716
+#: gnome-panel/panel-applet-frame.c:711
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2213,11 +2213,11 @@ msgstr ""
 "(אם תבחר לא לטעון אותו מחדש עכשיו, ץמיד תוכל להוסיף אותו על-ידי לחיצה ימינית "
 "על הלוח ולחיצה על תת-התפריט \"הוסף ללוח\")"
 
-#: gnome-panel/panel-applet-frame.c:751
+#: gnome-panel/panel-applet-frame.c:746
 msgid "D_on't Delete"
 msgstr "_אל תמחק"
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:780
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2230,7 +2230,7 @@ msgstr ""
 "\n"
 "האם אתה רוצה למחוק יישומון זה מהגדרותיך?"
 
-#: gnome-panel/panel-applet-frame.c:882
+#: gnome-panel/panel-applet-frame.c:878
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "לא ניתן לקבל את ממשק AppletShell מהבקרה\n"
 
@@ -2239,7 +2239,7 @@ msgstr "לא ניתן לקבל את ממשק AppletShell מהבקרה\n"
 msgid "Open URL: %s"
 msgstr "פתח כתובת: %s"
 
-#: gnome-panel/panel.c:2245
+#: gnome-panel/panel.c:2401
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2488,12 +2488,12 @@ msgstr ""
 "קוד השגיאה הינו: %d\n"
 "הלוח עכשיו יסגר."
 
-#: gnome-panel/panel-stock-icons.c:102
+#: gnome-panel/panel-stock-icons.c:113
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "נכשל בטעינת מחסנית סמלי הלוח '%s'\n"
 
-#: gnome-panel/panel-stock-icons.c:131
+#: gnome-panel/panel-stock-icons.c:142
 msgid "_Run"
 msgstr "_הפעל"
 
@@ -2534,42 +2534,42 @@ msgstr "יישומון בדיקת Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "סוג רקע '%s' לא גמור התקבל"
 
-#: libpanel-applet/panel-applet.c:875
+#: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "סוג רקע '%s' לא גמור התקבל: %s"
 
-#: libpanel-applet/panel-applet.c:884
+#: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "נכשל בקבלת מפת פיקסלים %s"
 
-#: libpanel-applet/panel-applet.c:891
+#: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
 msgstr "סוג רקע לא ידוע התקבל"
 
-#: libpanel-applet/panel-applet.c:1072
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "היישומון כולל יישור לוח"
 
-#: libpanel-applet/panel-applet.c:1080
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "היישומון כולל גודל לוח בפיקסלים"
 
-#: libpanel-applet/panel-applet.c:1088
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "היישומון כולל צבע קרע או תמונה ללוח"
 
-#: libpanel-applet/panel-applet.c:1096
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "דגלי היישומון"
 
-#: libpanel-applet/panel-applet.c:1104
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "טווח שמורה מה הגדלים שמקובלים על יישומון זה"
 
@@ -2601,26 +2601,49 @@ msgstr "גודל:"
 msgid "Top"
 msgstr "למעלה"
 
+#~ msgid "(C) 2001 Red Hat, Inc."
+#~ msgstr "(C) 2001 Red Hat, Inc."
+
+#~ msgid "Can't execute printer command"
+#~ msgstr "לא ניתן להפעיל פקודת הדפסה"
+
+#~ msgid "Printer properties"
+#~ msgstr "מאפייני מדפסת"
+
+#~ msgid "Printer name:"
+#~ msgstr "שם מדפסת:"
+
+#~ msgid "Print command:"
+#~ msgstr "פקודת הדפסה:"
+
+#~ msgid "Printer"
+#~ msgstr "מדפסת"
+
+#~ msgid "Printer Applet"
+#~ msgstr "יישומון מדפסת"
+
+#~ msgid ""
+#~ "The printer applet lets you easily drag files to be printed via a print "
+#~ "command"
+#~ msgstr "יישומון המדפסת נותן לך בקלות לגרור קבצים להדפסה דרך פקודת ההדפסה"
+
+#~ msgid "Can't create applet!\n"
+#~ msgstr "לא ניתן ליצור יישומון!\n"
+
+#~ msgid "Properties..."
+#~ msgstr "מאפיינים..."
+
+#~ msgid "Help"
+#~ msgstr "עזרה"
+
+#~ msgid "About..."
+#~ msgstr "אודות..."
+
+#~ msgid "(C) 2002 Red Hat, Inc."
+#~ msgstr "(C) 2002 Red Hat, Inc."
+
 #~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 #~ msgstr "<big><big>%s הדג של GNOME אומר:</big></big>"
-
-#~ msgid "GNOME Fish Preferences"
-#~ msgstr "עדיפויות דג GNOME"
-
-#~ msgid "_Name of GNOME fish:"
-#~ msgstr "_שם הדג של GNOME:"
-
-#~ msgid "_Animation filename:"
-#~ msgstr "_קובץ הנפשה:"
-
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "פקודה _להפעלה בלחיצה על הדג:"
-
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "_הפסקה לכל פריים:"
-
-#~ msgid "_Rotate on vertical panels"
-#~ msgstr "_סובב בלוחות אנכיים"
 
 #~ msgid "(C) 1998-2002 the Free Software Foundation"
 #~ msgstr "(C) 1998-2002 ארגון התוכנה החופשית"
