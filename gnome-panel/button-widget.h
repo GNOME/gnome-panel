@@ -67,12 +67,12 @@ struct _ButtonWidgetClass
 
 guint		button_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget*	button_widget_new		(char *pixmap,
+GtkWidget*	button_widget_new		(const char *pixmap,
 						 int size,
 						 int tile,
 						 gboolean arrow,
 						 PanelOrientType orient,
-						 char *text);
+						 const char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
 						 guchar *rgb,
@@ -82,11 +82,11 @@ void		button_widget_draw_xlib		(ButtonWidget *button,
 						 GdkPixmap *pixmap);
 
 gboolean	button_widget_set_pixmap	(ButtonWidget *button,
-						 char *pixmap,
+						 const char *pixmap,
 						 int size);
 
 void		button_widget_set_text		(ButtonWidget *button,
-						 char *text);
+						 const char *text);
 
 void		button_widget_set_params	(ButtonWidget *button,
 						 int tile,
@@ -104,8 +104,8 @@ void		button_widget_up		(ButtonWidget *button);
   wheather or not there is a tile or not, so this is basically a class
   initialization function*/
 void		button_widget_load_tile		(int tile,
-						 char *tile_up,
-						 char *tile_down,
+						 const char *tile_up,
+						 const char *tile_down,
 						 int border,
 						 int depth);
 
