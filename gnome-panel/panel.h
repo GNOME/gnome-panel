@@ -19,6 +19,11 @@ typedef enum {
 } PanelPos;
 
 typedef enum {
+	PANEL_ORIENT_HORIZ,
+	PANEL_ORIENT_VERT
+} PanelOrient;
+
+typedef enum {
 	PANEL_HIDDEN,
 	PANEL_MOVING,
 	PANEL_SHOWN
@@ -57,6 +62,7 @@ struct _Panel {
 	PanelApplet **applets;        
 	gint          applet_count;
 	PanelPos      pos;
+	PanelOrient   orient;
 	PanelState    state;
 	gint          step_size;
 	GtkWidget    *applet_being_dragged;

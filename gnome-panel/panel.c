@@ -226,23 +226,18 @@ set_show_hide_buttons_visibility(void)
 		gtk_widget_hide(the_panel->hidebutton_r_h);
 		gtk_widget_hide(the_panel->hidebutton_l_v);
 		gtk_widget_hide(the_panel->hidebutton_r_v);
-		return;
-	}
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
+	} else {
+		if(the_panel->panel->orient == PANEL_ORIENT_HORIZ) {
 			gtk_widget_show(the_panel->hidebutton_l_h);
 			gtk_widget_show(the_panel->hidebutton_r_h);
 			gtk_widget_hide(the_panel->hidebutton_l_v);
 			gtk_widget_hide(the_panel->hidebutton_r_v);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
+		} else {
 			gtk_widget_hide(the_panel->hidebutton_l_h);
 			gtk_widget_hide(the_panel->hidebutton_r_h);
 			gtk_widget_show(the_panel->hidebutton_l_v);
 			gtk_widget_show(the_panel->hidebutton_r_v);
-			break;
+		}
 	}
 }
 
@@ -260,33 +255,28 @@ pop_show(int fromright)
 	width   = the_panel->panel->window->allocation.width;
 	height  = the_panel->panel->window->allocation.height;
 
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			if(fromright)
-				move_horiz(the_panel->panel,
-					   -width +
-					   the_panel->hidebutton_r_h->
-					   allocation.width, 0);
-			else
-				move_horiz(the_panel->panel,
-					   width -
-					   the_panel->hidebutton_l_h->
-					   allocation.width, 0);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			if(fromright)
-				move_vert(the_panel->panel,
-					  -height +
-					  the_panel->hidebutton_r_v->
-					  allocation.height, 0);
-			else
-				move_vert(the_panel->panel,
-					  height -
-					  the_panel->hidebutton_l_v->
-					  allocation.height, 0);
-			break;
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ) {
+		if(fromright)
+			move_horiz(the_panel->panel,
+				   -width +
+				   the_panel->hidebutton_r_h->allocation.width,
+				   0);
+		else
+			move_horiz(the_panel->panel,
+				   width -
+				   the_panel->hidebutton_l_h->allocation.width,
+				   0);
+	} else {
+		if(fromright)
+			move_vert(the_panel->panel,
+				  -height +
+				  the_panel->hidebutton_r_v->allocation.height,
+				  0);
+		else
+			move_vert(the_panel->panel,
+				  height -
+				  the_panel->hidebutton_l_v->allocation.height,
+				  0);
 	}
 
 	the_panel->panel->state = PANEL_SHOWN;
@@ -308,33 +298,24 @@ pop_hide(int fromright)
 	width   = the_panel->panel->window->allocation.width;
 	height  = the_panel->panel->window->allocation.height;
 
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			if(fromright)
-				move_horiz(the_panel->panel,
-				  	   0, -width +
-					   the_panel->hidebutton_r_h->
-					   allocation.width);
-			else
-				move_horiz(the_panel->panel,
-				  	   0, width -
-					   the_panel->hidebutton_l_h->
-					   allocation.width);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			if(fromright)
-				move_vert(the_panel->panel,
-				          0, -height +
-					  the_panel->hidebutton_r_v->
-					  allocation.height);
-			else
-				move_vert(the_panel->panel,
-					  0, height -
-					  the_panel->hidebutton_l_v->
-					  allocation.height);
-			break;
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ) {
+		if(fromright)
+			move_horiz(the_panel->panel,
+				   0, -width +
+				   the_panel->hidebutton_r_h->allocation.width);
+		else
+			move_horiz(the_panel->panel,
+				   0, width -
+				   the_panel->hidebutton_l_h->allocation.width);
+	} else {
+		if(fromright)
+			move_vert(the_panel->panel,
+				  0, -height +
+				  the_panel->hidebutton_r_v->allocation.height);
+		else
+			move_vert(the_panel->panel,
+				  0, height -
+				  the_panel->hidebutton_l_v->allocation.height);
 	}
 
 	the_panel->panel->state = PANEL_HIDDEN;
@@ -538,7 +519,8 @@ applet_orientation_notify(GtkWidget *widget, gpointer data)
 	AppletCommand  cmd;
 
 	cmd.cmd = APPLET_CMD_ORIENTATION_CHANGE_NOTIFY;
-	cmd.params.orientation_change_notify.pos = the_panel->panel->pos;
+	cmd.params.orientation_change_notify.pos    = the_panel->panel->pos;
+	cmd.params.orientation_change_notify.orient = the_panel->panel->orient;
 
 	call_applet(widget, &cmd);
 }
@@ -738,33 +720,22 @@ panel_quit(void)
 static void
 put_applet_in_slot(Panel *panel, PanelApplet *applet, int pos)
 {
-	switch (panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			gtk_table_attach(GTK_TABLE(panel->panel),
-					 applet->applet,
-					 pos,pos+1,0,1,
-					 GTK_SHRINK|
-					 (applet->type==APPLET_PLACEHOLDER?
-					  GTK_EXPAND|GTK_FILL:0),
-					 GTK_SHRINK|
-					 (applet->type==APPLET_PLACEHOLDER?
-					  GTK_EXPAND|GTK_FILL:0),
-					 0,0);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			gtk_table_attach(GTK_TABLE(panel->panel),
-					 applet->applet,
-					 0,1,pos,pos+1,
-					 GTK_SHRINK|
-					 (applet->type==APPLET_PLACEHOLDER?
-					  GTK_EXPAND|GTK_FILL:0),
-					 GTK_SHRINK|
-					 (applet->type==APPLET_PLACEHOLDER?
-					  GTK_EXPAND|GTK_FILL:0),
-					 0,0);
-			break;
+	if(panel->orient == PANEL_ORIENT_HORIZ) {
+		gtk_table_attach(GTK_TABLE(panel->panel),applet->applet,
+				 pos,pos+1,0,1,
+				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
+				  GTK_EXPAND|GTK_FILL:0),
+				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
+				  GTK_EXPAND|GTK_FILL:0),
+				 0,0);
+	} else {
+		gtk_table_attach(GTK_TABLE(panel->panel),applet->applet,
+				 0,1,pos,pos+1,
+				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
+				  GTK_EXPAND|GTK_FILL:0),
+				 GTK_SHRINK|(applet->type==APPLET_PLACEHOLDER?
+				  GTK_EXPAND|GTK_FILL:0),
+				 0,0);
 	}
 }
 
@@ -1037,28 +1008,11 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 
 	/*FIMXE: no placeholders in drawers!*/
 	the_panel->panel->applets[pos]->applet = gtk_event_box_new();
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			gtk_table_attach(GTK_TABLE(the_panel->panel->panel),
-					 the_panel->panel->applets[pos]->applet,
-					 pos,pos+1,0,1,
-					 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
-					 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
-					 0,0);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			gtk_table_attach(GTK_TABLE(the_panel->panel->panel),
-					 the_panel->panel->applets[pos]->applet,
-					 0,1,pos,pos+1,
-					 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
-					 GTK_SHRINK|GTK_EXPAND|GTK_FILL,
-					 0,0);
-			break;
-	}
 	gtk_widget_show(the_panel->panel->applets[pos]->applet);
 	the_panel->panel->applets[pos]->type = APPLET_PLACEHOLDER;
+
+	put_applet_in_slot(the_panel->panel,
+			   the_panel->panel->applets[pos],pos);
 }
 
 
@@ -1217,37 +1171,32 @@ find_delta(Panel *panel, gint x, gint y, gint id)
 	int i;
 	int oldpos,newpos;
 
-	switch (panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			oldpos=0;
-			for(i=0;i<PANEL_TABLE_SIZE;i++) {
-				newpos=panel->applets[i]->applet->allocation.x+
-				   panel->applets[i]->applet->allocation.width;
-				
-				if(newpos > x) {
-					if((newpos-x)>(x-oldpos))
-						i--;
-					break;
-				}
-				oldpos=newpos;
+	if(panel->orient == PANEL_ORIENT_HORIZ) {
+		oldpos=0;
+		for(i=0;i<PANEL_TABLE_SIZE;i++) {
+			newpos = panel->applets[i]->applet->allocation.x +
+				 panel->applets[i]->applet->allocation.width;
+			
+			if(newpos > x) {
+				if((newpos-x)>(x-oldpos))
+					i--;
+				break;
 			}
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			oldpos=0;
-			for(i=0;i<PANEL_TABLE_SIZE;i++) {
-				newpos=panel->applets[i]->applet->allocation.y+
-				   panel->applets[i]->applet->allocation.height;
-				
-				if(newpos > y) {
-					if((newpos-y)>(y-oldpos))
-						i--;
-					break;
-				}
-				oldpos=newpos;
+			oldpos=newpos;
+		}
+	} else {
+		oldpos=0;
+		for(i=0;i<PANEL_TABLE_SIZE;i++) {
+			newpos = panel->applets[i]->applet->allocation.y +
+				 panel->applets[i]->applet->allocation.height;
+			
+			if(newpos > y) {
+				if((newpos-y)>(y-oldpos))
+					i--;
+				break;
 			}
-			break;
+			oldpos=newpos;
+		}
 	}
 	return i-id;
 }
@@ -1444,6 +1393,16 @@ panel_init(void)
 	the_panel->tooltips_enabled=gnome_config_get_bool(
 		"/panel/Config/tooltips_enabled=true");
 
+	switch (the_panel->panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->panel->orient = PANEL_ORIENT_HORIZ;
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->panel->orient = PANEL_ORIENT_VERT;
+			break;
+	}
 
 	the_panel->table = gtk_table_new(3,3,FALSE);
 
@@ -1475,20 +1434,12 @@ panel_init(void)
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	
 	/*the panel table*/
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			the_panel->panel->panel = gtk_table_new(
-							1,PANEL_TABLE_SIZE,
+	if(the_panel->panel->pos == PANEL_ORIENT_HORIZ)
+		the_panel->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
 							FALSE);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			the_panel->panel->panel = gtk_table_new(
-							PANEL_TABLE_SIZE,1,
+	else 
+		the_panel->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
 							FALSE);
-			break;
-	}
 
 	the_panel->panel->panel_eb=gtk_event_box_new();
 
@@ -1723,17 +1674,11 @@ create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
 			  drawer->panel->panel_eb);
 			  
 	/*the panel table*/
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			drawer->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
-							     FALSE);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			drawer->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,							     FALSE);
-			break;
-	}
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ)
+		drawer->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,FALSE);
+	else
+		drawer->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,FALSE);
+
 	gtk_widget_show(drawer->panel->panel);
 
 	gtk_container_add(GTK_CONTAINER(drawer->panel->panel_eb),
@@ -1763,23 +1708,18 @@ panel_change_orient(void)
 		gtk_container_remove(GTK_CONTAINER(the_panel->panel->panel),
 				     the_panel->panel->applets[i]->applet);
 	gtk_widget_destroy(the_panel->panel->panel);
-	switch (the_panel->panel->pos) {
-		case PANEL_POS_TOP:
-		case PANEL_POS_BOTTOM:
-			the_panel->panel->panel =
-				gtk_table_new(1,PANEL_TABLE_SIZE,FALSE);
-			gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
-					  the_panel->panel->panel);
-			gtk_widget_show(the_panel->panel->panel);
-			break;
-		case PANEL_POS_LEFT:
-		case PANEL_POS_RIGHT:
-			the_panel->panel->panel =
-				gtk_table_new(PANEL_TABLE_SIZE,1,FALSE);
-			gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
-					  the_panel->panel->panel);
-			gtk_widget_show(the_panel->panel->panel);
-			break;
+	if(the_panel->panel->orient == PANEL_ORIENT_HORIZ)
+		the_panel->panel->panel = gtk_table_new(1,PANEL_TABLE_SIZE,
+							FALSE);
+		gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
+				  the_panel->panel->panel);
+		gtk_widget_show(the_panel->panel->panel);
+	} else {
+		the_panel->panel->panel = gtk_table_new(PANEL_TABLE_SIZE,1,
+							FALSE);
+		gtk_container_add(GTK_CONTAINER(the_panel->panel->panel_eb),
+				  the_panel->panel->panel);
+		gtk_widget_show(the_panel->panel->panel);
 	}
 	for(i=0;i<PANEL_TABLE_SIZE;i++)
 		put_applet_in_slot(the_panel->panel,
@@ -1807,6 +1747,16 @@ panel_reconfigure(PanelMain *newconfig)
 	the_panel->mode = newconfig->mode;
 	oldpos=the_panel->panel->pos;
 	the_panel->panel->pos = newconfig->panel->pos;
+	switch (oldpos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->panel->orient = PANEL_ORIENT_HORIZ;
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->panel->orient = PANEL_ORIENT_VERT;
+			break;
+	}
 	if(newconfig->panel->pos != oldpos) {
 		set_show_hide_buttons_visibility();
 		set_panel_position();

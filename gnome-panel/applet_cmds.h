@@ -38,7 +38,8 @@ typedef struct {
 
 		/* Orientation change notify parameters */
 		struct {
-			PanelPos pos;
+			PanelPos    pos;
+			PanelOrient orient;
 		} orientation_change_notify;
 	} params;
 } AppletCommand;
