@@ -634,7 +634,7 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
     PortableServer_POA_servant_to_reference(poa, applet_servant, &ev);
   pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
   
-  goad_server_register(CORBA_OBJECT_NIL, applet_obj, goad_id, "server", &ev));
+  goad_server_register(CORBA_OBJECT_NIL, applet_obj, goad_id, "server", &ev);
   pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
   if(!panel_client)
