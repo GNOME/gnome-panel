@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel.gnome-2-4.hu\n"
-"POT-Creation-Date: 2003-09-19 14:56+0200\n"
-"PO-Revision-Date: 2003-09-19 15:12+0200\n"
+"POT-Creation-Date: 2003-09-28 21:33+0200\n"
+"PO-Revision-Date: 2003-09-28 21:40+0200\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -20,23 +20,23 @@ msgstr ""
 
 #: applets/clock/clock.c:219
 msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
+msgstr "%l.%M.%S %p"
 
 #: applets/clock/clock.c:219
 msgid "%l:%M %p"
-msgstr "%l:%M %p"
+msgstr "%l.%M %p"
 
 #: applets/clock/clock.c:221 applets/clock/clock.c:773
 msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
+msgstr "%H.%M.%S"
 
 #: applets/clock/clock.c:221 applets/clock/clock.c:775
 msgid "%H:%M"
-msgstr "%H:%M"
+msgstr "%H.%M"
 
 #: applets/clock/clock.c:227
 msgid "%a %b %d"
-msgstr "%b %d, %a"
+msgstr "%b. %-d., %A"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -63,7 +63,7 @@ msgstr "%s, %s"
 #. Show date in tooltip
 #: applets/clock/clock.c:344
 msgid "%A %B %d"
-msgstr "%B %d, %A"
+msgstr "%B %-d., %A"
 
 #: applets/clock/clock.c:472
 msgid "Calendar"
@@ -75,15 +75,15 @@ msgstr "Számítógép óra"
 
 #: applets/clock/clock.c:768
 msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
+msgstr "%l.%M.%S %p"
 
 #: applets/clock/clock.c:770
 msgid "%I:%M %p"
-msgstr "%I:%M %p"
+msgstr "%l.%M %p"
 
 #: applets/clock/clock.c:809
 msgid "%A, %B %d %Y"
-msgstr "%Y %B %d, %A"
+msgstr "%Y. %B %-d., %A"
 
 #: applets/clock/clock.c:850
 #, c-format
@@ -227,7 +227,7 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
-msgstr ""
+msgstr "Időbeállító eszköz"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use UNIX time"
@@ -238,7 +238,6 @@ msgid "Use UTC"
 msgstr "UTC használata"
 
 #: applets/clock/clock.schemas.in.h:17
-#, fuzzy
 msgid "Use internet time"
 msgstr "Internet idő használata"
 
@@ -262,7 +261,7 @@ msgstr "A pontos időt és dátumot jeleníti meg"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr ""
+msgstr "Dátum és idő _beállítása"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -1396,22 +1395,17 @@ msgid "About GNOME"
 msgstr "A GNOME névjegye"
 
 #: gnome-panel/menu.c:350
-#, fuzzy
 msgid "Cannot launch entry"
-msgstr "Indítóikon létrehozása"
+msgstr "A menüelem indítása sikertelen"
 
 #: gnome-panel/menu.c:362 gnome-panel/menu.c:1158 gnome-panel/menu.c:1198
-#, fuzzy
 msgid "Cannot load entry"
-msgstr "Parancsbeviteli mező"
+msgstr "A menüelem betöltése sikertelen"
 
 #: gnome-panel/menu.c:1062
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot remove menu item %s"
-msgstr ""
-"<b>A menüelem mentése sikertelen</b>\n"
-"\n"
-"Részletek: %s"
+msgstr "A menüelem eltávolítása sikertelen: %s"
 
 #: gnome-panel/menu.c:1073
 #, c-format
@@ -1589,9 +1583,8 @@ msgstr "Menü"
 
 #: gnome-panel/menu-ditem.c:451 gnome-panel/menu-ditem.c:468
 #: gnome-panel/menu-ditem.c:524
-#, fuzzy
 msgid "Cannot create launcher"
-msgstr "Indítóikon létrehozása"
+msgstr "Indítóikon létrehozása sikertelen"
 
 #: gnome-panel/menu-ditem.c:452
 #, fuzzy
@@ -1604,12 +1597,8 @@ msgstr "Meg kell adnod egy érvényes URL-t vagy parancsot."
 
 #. class
 #: gnome-panel/menu-ditem.c:499
-#, fuzzy
 msgid "Cannot save menu item to disk"
-msgstr ""
-"<b>A menüelem mentése sikertelen</b>\n"
-"\n"
-"Részletek: %s"
+msgstr "A menüelem lemezre mentése sikertelen"
 
 #: gnome-panel/menu-ditem.c:525
 msgid ""
@@ -1660,7 +1649,7 @@ msgstr "A művelet típusa, amelyet ez a gomb valósít meg"
 
 #: gnome-panel/panel-action-button.c:393 gnome-panel/panel-menu-button.c:467
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Húzd és ejtsd engedélyezve"
 
 #: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:468
 #, fuzzy
@@ -2185,9 +2174,8 @@ msgid "Co_lor:"
 msgstr "S_zín:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:14
-#, fuzzy
 msgid "E_xpand"
-msgstr "Expander mérete"
+msgstr "S_zéthúzás"
 
 #: gnome-panel/panel-properties-dialog.glade.h:15
 msgid "General"
@@ -2195,7 +2183,7 @@ msgstr "Általános"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Image Background Details"
-msgstr ""
+msgstr "Kép hattérének beállításai"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 #: libpanel-applet/panel-test-applets.glade.h:4
@@ -2228,9 +2216,8 @@ msgid "Show hide _buttons"
 msgstr "Elrejtő_gombok megjelenítése"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#, fuzzy
 msgid "Solid c_olor"
-msgstr "_Szín:"
+msgstr "Homogén _szín"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "Some of these properties are locked down"
@@ -2574,9 +2561,8 @@ msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3641
-#, fuzzy
 msgid "Auto hide"
-msgstr "_Automatikus elrejtés"
+msgstr "Automatikus elrejtés"
 
 #: gnome-panel/panel-toplevel.c:3642
 msgid "Automatically hide the panel when the mouse leaves the panel"
@@ -2617,32 +2603,28 @@ msgid "Enable hiding/showing animations"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3697
-#, fuzzy
 msgid "Animation Speed"
-msgstr "Animáció _sebessége:"
+msgstr "Animáció sebessége:"
 
 #: gnome-panel/panel-toplevel.c:3698
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.c:3708
-#, fuzzy
 msgid "Buttons Enabled"
-msgstr "Elrejtőgombok engedélyezve"
+msgstr "Gombok engedélyezve"
 
 #: gnome-panel/panel-toplevel.c:3709
-#, fuzzy
 msgid "Enable hide/show buttons"
 msgstr "Az elrejtőgomb engedélyezése"
 
 #: gnome-panel/panel-toplevel.c:3718
 msgid "Arrows Enabled"
-msgstr ""
+msgstr "Nyilak engedélyezve"
 
 #: gnome-panel/panel-toplevel.c:3719
-#, fuzzy
 msgid "Enable arrows on hide/show buttons"
-msgstr "_Nyilak megjelenítése az elrejtőgombokon"
+msgstr "Nyilak megjelenítése az elrejtőgombokon"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
