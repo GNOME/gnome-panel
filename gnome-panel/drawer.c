@@ -113,9 +113,9 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 			      drawer->tooltip, dialog);
 	gtk_object_set_data(GTK_OBJECT(dialog),"tooltip",w);
 	
-	w = create_icon_entry(table, "icon", 0, 2, _("Icon"), drawer->pixmap,
-			      dialog);
-	gtk_object_set_data(GTK_OBJECT(dialog),"pixmap",w);
+	w = create_icon_entry(table, "icon", 0, 2, _("Icon"),
+			      NULL, drawer->pixmap, dialog);
+	gtk_object_set_data(GTK_OBJECT(dialog), "pixmap", w);
 
 	f = gtk_frame_new(_("Applet appearance"));
 	gtk_container_add(GTK_CONTAINER(f),table);

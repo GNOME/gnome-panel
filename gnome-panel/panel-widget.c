@@ -951,7 +951,11 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 
 	if(panel->back_type == PANEL_BACK_NONE) {
 		if(bg_pixmap && !panel->backpix) {
-			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
+			int w, h;
+			gdk_window_get_size(bg_pixmap, &w, &h);
+			panel->backpix = gdk_pixbuf_get_from_drawable
+				(NULL, bg_pixmap, widget->style->colormap,
+				 0, 0, 0, 0, w, h);
 			kill_cache_on_all_buttons(panel, FALSE);
 			send_draw_to_all_applets(panel);
 		} else if(!bg_pixmap && panel->backpix) {

@@ -336,6 +336,15 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
+static char *
+get_full_tile(char *file)
+{
+	if(g_path_is_absolute(file))
+		return g_strdup(file);
+	else
+		return gnome_unconditional_pixmap_file(file);
+}
+
 static void
 sync_buttons_page_with_config(GlobalConfig *conf)
 {
@@ -348,14 +357,18 @@ sync_buttons_page_with_config(GlobalConfig *conf)
 				    conf->saturate_when_over);
 	
 	for(i=0;i<LAST_TILE;i++) {
+		char *file;
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tile_enable_cb[i]),
 					    conf->tiles_enabled[i]);
-		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_up[i]),
-					  conf->tile_up[i]);
-		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_down[i]),
-					  conf->tile_down[i]);
-		gtk_adjustment_set_value(tile_border[i],conf->tile_border[i]);
-		gtk_adjustment_set_value(tile_depth[i],conf->tile_depth[i]);
+
+		file = get_full_tile(conf->tile_up[i]);
+		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_up[i]), file);
+		g_free(file);
+		file = get_full_tile(conf->tile_down[i]);
+		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_down[i]), file);
+		g_free(file);
+		gtk_adjustment_set_value(tile_border[i], conf->tile_border[i]);
+		gtk_adjustment_set_value(tile_depth[i], conf->tile_depth[i]);
 	}
 }
 static void
@@ -417,6 +430,7 @@ icon_notebook_page(int i)
 	GtkWidget *w;
 	GtkWidget *table;
 	GtkWidget *vbox;
+	char *file;
 
         char *icon_titles[]={
                 N_("Launcher icon"),
@@ -447,24 +461,26 @@ icon_notebook_page(int i)
 	gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 	
 	/* image file entry widgets */
+	file = get_full_tile(global_config.tile_up[i]);
 	entry_up[i] = create_icon_entry(table,"tile_file",0, 1,
 					_("Normal tile"),
-					global_config.tile_up[i],
+					"tiles",
+					file,
 					NULL);
-	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_up[i]),
-					   "tiles");
+	g_free(file);
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_up[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
 				       GTK_SIGNAL_FUNC(changed_cb), 
 				       NULL,
 				       GTK_OBJECT(capplet));
 
+	file = get_full_tile(global_config.tile_down[i]);
 	entry_down[i] = create_icon_entry(table,"tile_file",1, 2,
 					  _("Clicked tile"),
-					  global_config.tile_down[i],
+					  "tiles",
+					  file,
 					  NULL);
-	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_down[i]),
-					   "tiles");
+	g_free(file);
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_down[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
 				       GTK_SIGNAL_FUNC(changed_cb), 

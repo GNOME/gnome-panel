@@ -15,9 +15,6 @@ void tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 void tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		     GdkPixbuf *pbuf, int scale_w, int scale_h, int rotate);
 
-/* just copied from pixbuf source */
-GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);
-
 /* scale a w by h pixmap into a square of size 'size', optionally rerurn
    outw and outh */
 void make_scale_affine(double affine[], int w, int h, int size,

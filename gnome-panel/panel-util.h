@@ -30,6 +30,7 @@ GtkWidget * create_icon_entry(GtkWidget *table,
 			      int cols,
 			      int cole,
 			      char *label,
+			      char *subdir,
 			      char *text,
 			      GtkWidget *w);
 

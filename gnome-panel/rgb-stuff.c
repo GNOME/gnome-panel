@@ -3,6 +3,7 @@
  *
  * Code taken from gdk-pixbuf, so parts of it are authored by:
  *   Cody Russell <bratsche@dfw.net>
+ * Actually I don't think it contains much if any of this code any more.
  * Rest is:
  *   George Lebl <jirka@5z.com>
  */
@@ -18,103 +19,6 @@
 #include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_rgb_rgba_affine.h>
 #include "rgb-stuff.h"
-
-GdkPixbuf *
-my_gdk_pixbuf_rgb_from_drawable (GdkWindow *window)
-{
-	GdkImage *image;
-	GdkColormap *colormap;
-	art_u8 *buff;
-	gulong pixel;
-	gint rowstride;
-	art_u8 r, g, b;
-	gint xx, yy;
-	int width, height;
-	GdkPixbuf *pb;
-
-	g_return_val_if_fail (window != NULL, NULL);
-	
-	gdk_window_get_size(window, &width, &height);
-
-	image = gdk_image_get (window, 0, 0, width, height);
-	colormap = gdk_rgb_get_cmap ();
-
-	rowstride = width * 3;
-
-	buff = g_malloc (rowstride * height);
-
-	switch (image->depth)
-	{
-	case 0:
-	case 1:
-	case 2:
-	case 3:
-	case 4:
-	case 5:
-	case 6:
-	case 7:
-	case 8:
-		for (yy = 0; yy < height; yy++)
-		{
-			for (xx = 0; xx < width; xx++)
-			{
-				pixel = gdk_image_get_pixel (image, xx, yy);
-				buff[0] = colormap->colors[pixel].red;
-				buff[1] = colormap->colors[pixel].green;
-				buff[2] = colormap->colors[pixel].blue;
-				buff += 3;
-           
-			}
-		}
-		break;
-
-	case 16:
-	case 15:
-		for (yy = 0; yy < height; yy++)
-		{
-			for (xx = 0; xx < width; xx++)
-			{
-				pixel = gdk_image_get_pixel (image, xx, yy);
-				r =  (pixel >> 8) & 0xf8;
-				g =  (pixel >> 3) & 0xfc;
-				b =  (pixel << 3) & 0xf8;
-				buff[0] = r;
-				buff[1] = g;
-				buff[2] = b;
-				buff += 3;
-			}
-		}
-		break;
-
-	case 24:
-	case 32:
-		for (yy = 0; yy < height; yy++)
-		{
-			for (xx = 0; xx < width; xx++)
-			{
-				pixel = gdk_image_get_pixel (image, xx, yy);
-				r =  (pixel >> 16) & 0xff;
-				g =  (pixel >> 8)  & 0xff;
-				b = pixel & 0xff;
-				buff[0] = r;
-				buff[1] = g;
-				buff[2] = b;
-				buff += 3;
-			}
-		}
-		break;
-
-	default:
-		g_error ("gdk_pixbuf_from_drawable_core (): Unknown depth.");
-	}
-
-	gdk_image_destroy(image);
-
-	pb = gdk_pixbuf_new_from_data(buff, GDK_COLORSPACE_RGB, FALSE, 8,
-				      width, height, rowstride, NULL, NULL);
-	if (!pb) g_free(buff);
-	return pb;
-}
 
 void
 combine_rgb_rgba(guchar *dest, int dx, int dy, int dw, int dh, int drs,
