@@ -10,7 +10,6 @@
 #include <libgnome/libgnome.h>
 
 #include "distribution.h"
-#include "menu-rh.h"
 
 /* Note for distribution vendors:
  *
@@ -20,19 +19,11 @@
  *
  */
 
-static void rh_menu_init_func (void);
-static void rh_menu_show_func (GtkWidget *, GtkMenuItem *);
-
 static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
 	  N_("Debian GNU/Linux"), N_("Debian menus"),
 	  "gnome-debian.png", "/var/lib/gnome/Debian/.",
 	  NULL, NULL
-	},
-	{ DISTRIBUTION_REDHAT, "/etc/redhat-release",
-	  N_("Red Hat Linux"), N_("Red Hat menus"), NULL,
-	  "apps-redhat",
-	  rh_menu_init_func, rh_menu_show_func
 	},
 	{ DISTRIBUTION_SUSE, "/etc/SuSE-release",
 	  N_("SuSE Linux"), N_("SuSE menus"), "gnome-suse.png",
@@ -102,21 +93,3 @@ get_distribution_info (void)
 
 	return cache;
 }
-
-/*
- * Distribution specific menu functions.
- */
-
-static void
-rh_menu_init_func (void)
-{
-	/* Use the fork version to create the Red Hat menus. */
-	create_rh_menu (TRUE);
-}
-
-static void
-rh_menu_show_func (GtkWidget *menuw, GtkMenuItem *menuitem)
-{
-	rh_submenu_to_display (menuw, menuitem);
-}
-

@@ -340,8 +340,10 @@ try_config_sync(gpointer data)
 	return TRUE;
 }
 
+/* Note: similar function is in gnome-desktop-item !!! */
+
 static void
-find_kde_directory(void)
+find_kde_directory (void)
 {
 	int i;
 	const char *kdedir = g_getenv ("KDEDIR");
@@ -352,7 +354,7 @@ find_kde_directory(void)
 		"/kde",
 		NULL
 	};
-	if(kdedir) {
+	if (kdedir != NULL) {
 		kde_menudir = g_build_filename (kdedir, "share", "applnk", NULL);
 		kde_icondir = g_build_filename (kdedir, "share", "icons", NULL);
 		kde_mini_icondir = g_build_filename (kdedir, "share", "icons", "mini", NULL);
@@ -360,17 +362,17 @@ find_kde_directory(void)
 	}
 
 	/* if what configure gave us works use that */
-	if(g_file_test(KDE_MENUDIR,G_FILE_TEST_IS_DIR)) {
-		kde_menudir = g_strdup(KDE_MENUDIR);
-		kde_icondir = g_strdup(KDE_ICONDIR);
-		kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
+	if (g_file_test (KDE_MENUDIR, G_FILE_TEST_IS_DIR)) {
+		kde_menudir = g_strdup (KDE_MENUDIR);
+		kde_icondir = g_strdup (KDE_ICONDIR);
+		kde_mini_icondir = g_strdup (KDE_MINI_ICONDIR);
 		return;
 	}
 
-	for(i=0;try_prefixes[i];i++) {
+	for (i = 0; try_prefixes[i] != NULL; i++) {
 		char *try;
 		try = g_build_filename (try_prefixes[i], "share", "applnk", NULL);
-		if(g_file_test(try,G_FILE_TEST_IS_DIR)) {
+		if (g_file_test (try, G_FILE_TEST_IS_DIR)) {
 			kde_menudir = try;
 			kde_icondir = g_build_filename (try_prefixes[i], "share", "icons", NULL);
 			kde_mini_icondir = g_build_filename (try_prefixes[i], "share", "icons", "mini", NULL);
@@ -381,9 +383,9 @@ find_kde_directory(void)
 
 	/* absolute fallback, these don't exist, but we're out of options
 	   here */
-	kde_menudir = g_strdup(KDE_MENUDIR);
-	kde_icondir = g_strdup(KDE_ICONDIR);
-	kde_mini_icondir = g_strdup(KDE_MINI_ICONDIR);
+	kde_menudir = g_strdup (KDE_MENUDIR);
+	kde_icondir = g_strdup (KDE_ICONDIR);
+	kde_mini_icondir = g_strdup (KDE_MINI_ICONDIR);
 }
 
 static void

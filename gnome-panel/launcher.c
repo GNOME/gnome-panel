@@ -315,10 +315,8 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	};
 
 	if (!default_app_pixmap)
-		default_app_pixmap = gnome_program_locate_file (NULL, 
-								GNOME_FILE_DOMAIN_PIXMAP, 
-								"gnome-unknown.png", TRUE, 
-								NULL);
+		default_app_pixmap = panel_pixmap_discovery ("gnome-unknown.png",
+							     FALSE /* fallback */);
 #ifdef LAUNCHER_DEBUG
 	printf ("Creating Launcher %s\n", parameters);
 #endif
@@ -774,20 +772,7 @@ ditem_set_icon (GnomeDesktopItem *ditem, const char *icon)
 {
 	if (icon != NULL &&
 	    icon[0] != G_DIR_SEPARATOR) {
-		char *full = gnome_program_locate_file
-			(NULL,
-			 GNOME_FILE_DOMAIN_PIXMAP,
-			 icon,
-			 TRUE /* only_if_exists */,
-			 NULL /* ret_locations */);
-		if (full == NULL) {
-			full = gnome_program_locate_file
-				(NULL,
-				 GNOME_FILE_DOMAIN_APP_PIXMAP,
-				 icon,
-				 TRUE /* only_if_exists */,
-				 NULL /* ret_locations */);
-		}
+		char *full = quick_desktop_item_find_icon (icon);
 		if (full != NULL) {
 			gnome_desktop_item_set_string (ditem,
 						       GNOME_DESKTOP_ITEM_ICON,

@@ -485,7 +485,7 @@ get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 	while(menu) {
 		PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(menu),
 							 "menu_panel");
-		if(panel) {
+		if (panel != NULL) {
 			if(PANEL_IS_WIDGET(panel))
 				return panel;
 			else
@@ -503,23 +503,23 @@ get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 }
 
 static void
-setup_menu_panel(GtkWidget *menu)
+setup_menu_panel (GtkWidget *menu)
 {
-	PanelWidget *menu_panel = gtk_object_get_data(GTK_OBJECT(menu),
-						      "menu_panel");
-	if(!menu_panel) {
-		menu_panel = get_panel_from_menu_data(menu, TRUE);
-		gtk_object_set_data(GTK_OBJECT(menu), "menu_panel", menu_panel);
+	PanelWidget *menu_panel = gtk_object_get_data (GTK_OBJECT (menu),
+						       "menu_panel");
+	if (menu_panel != NULL) {
+		menu_panel = get_panel_from_menu_data (menu, TRUE);
+		gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", menu_panel);
 	}
 }
 
 static GtkWidget *
-menu_new(void)
+menu_new (void)
 {
 	GtkWidget *ret;
 	ret = gtk_menu_new ();
-	g_signal_connect (G_OBJECT(ret), "show",
-			   G_CALLBACK(setup_menu_panel), NULL);
+	g_signal_connect (G_OBJECT (ret), "show",
+			  G_CALLBACK (setup_menu_panel), NULL);
 
 	return ret;
 }
@@ -784,10 +784,10 @@ fake_unmapped (GtkWidget *w, FakeIcon *fake)
 static void
 fake_mapped(GtkWidget *w, FakeIcon *fake)
 {
-	if(!g_slist_find(icons_to_load, fake))
-		icons_to_load = g_slist_append(icons_to_load, fake);
-	if(!load_icons_id)
-		load_icons_id = g_idle_add(load_icons_handler, NULL);
+	if (g_slist_find(icons_to_load, fake) == NULL)
+		icons_to_load = g_slist_prepend (icons_to_load, fake);
+	if (load_icons_id == 0)
+		load_icons_id = g_idle_add (load_icons_handler, NULL);
 }
 
 
@@ -795,15 +795,14 @@ static void
 fake_mapped_fake(GtkWidget *w, FakeIcon *fake)
 {
 	GtkWidget *toplevel;
-	if(!g_slist_find(icons_to_load, fake))
-		icons_to_load = g_slist_append(icons_to_load, fake);
-	if(!load_icons_id)
-		load_icons_id = g_idle_add(load_icons_handler, NULL);
+	if (g_slist_find(icons_to_load, fake) == NULL)
+		icons_to_load = g_slist_prepend (icons_to_load, fake);
+	if (load_icons_id == 0)
+		load_icons_id = g_idle_add (load_icons_handler, NULL);
 
 	g_signal_handlers_disconnect_by_func (G_OBJECT(w),
 					      G_CALLBACK (fake_mapped_fake),
 					      fake);
-					      
 
 	toplevel = gtk_widget_get_toplevel(w);
 	gtk_signal_connect_while_alive(GTK_OBJECT(toplevel), "map",
@@ -2396,77 +2395,21 @@ check_and_reread_applet (Menu *menu)
 	}
 }
 
-/* XXX: hmmm stolen GTK code, the gtk_menu_reposition only calls
+/* XXX: hmmm the gtk_menu_reposition only calls
    gtk_menu_position if the widget is drawable, but that's not the
    case when we want to do it*/
 void
 our_gtk_menu_position (GtkMenu *menu)
 {
-#ifdef FIXME
-  GtkWidget *widget;
-  GtkRequisition requisition;
-  gint x, y;
- 
-  g_return_if_fail (menu != NULL);
-  g_return_if_fail (GTK_IS_MENU (menu));
-
-  widget = GTK_WIDGET (menu);
-
-  gdk_window_get_pointer (NULL, &x, &y, NULL);
-
-  /* We need the requisition to figure out the right place to
-   * popup the menu. In fact, we always need to ask here, since
-   * if one a size_request was queued while we weren't popped up,
-   * the requisition won't have been recomputed yet.
-   */
-  gtk_widget_size_request (widget, &requisition);
-      
-  if (menu->position_func)
-    (* menu->position_func) (menu, &x, &y, menu->position_func_data);
-  else
-    {
-      gint screen_width;
-      gint screen_height;
-      int screen_basex, screen_basey;
-      int screen;
-
-      screen = multiscreen_screen_from_pos (x, y);
-      
-      if (screen < 0) {
-	      screen_width = gdk_screen_width ();
-	      screen_height = gdk_screen_height ();
-	      screen_basex = 0;
-	      screen_basey = 0;
-      } else {
-	      screen_width = multiscreen_width (screen);
-	      screen_height = multiscreen_height (screen);
-	      screen_basex = multiscreen_x (screen);
-	      screen_basey = multiscreen_y (screen);
-      }
-
-      x -= screen_basex;
-      y -= screen_basey;
-
-      x -= 2;
-      y -= 2;
-      
-      if ((x + requisition.width) > screen_width)
-	x -= ((x + requisition.width) - screen_width);
-      if (x < 0)
-	x = 0;
-      if ((y + requisition.height) > screen_height)
-	y -= ((y + requisition.height) - screen_height);
-      if (y < 0)
-	y = 0;
-
-      x += screen_basex;
-      y += screen_basey;
-    }
-  
-  gtk_widget_set_uposition (GTK_MENU_SHELL (menu)->active ?
-			        menu->toplevel : menu->tearoff_window, 
-			    x, y);
-#endif
+	/* HACK! */
+	gboolean old_visible = GTK_WIDGET_VISIBLE (menu);
+	gboolean old_mapped = GTK_WIDGET_MAPPED (menu);
+	GTK_WIDGET_SET_FLAGS (menu, GTK_VISIBLE | GTK_MAPPED);
+	gtk_menu_reposition (menu);
+	if ( ! old_visible)
+		GTK_WIDGET_UNSET_FLAGS (menu, GTK_VISIBLE);
+	if ( ! old_mapped)
+		GTK_WIDGET_UNSET_FLAGS (menu, GTK_MAPPED);
 }
 
 /* Stolen from GTK+
@@ -4860,8 +4803,8 @@ add_distribution_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 				   G_CALLBACK(distribution_info->menu_show_func),
 				   menuitem);
 	g_signal_connect (G_OBJECT(menu),"show",
-			   G_CALLBACK(submenu_to_display),
-			   NULL);
+			  G_CALLBACK(submenu_to_display),
+			  NULL);
 }
 
 static void
@@ -4892,7 +4835,7 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 	gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	g_signal_connect (G_OBJECT(menu),"show",
-			   G_CALLBACK(submenu_to_display), NULL);
+			  G_CALLBACK(submenu_to_display), NULL);
 }
 
 GtkWidget *
@@ -4992,9 +4935,9 @@ create_root_menu (GtkWidget *root_menu,
 		if(menu) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 						   menu);
-			g_signal_connect (G_OBJECT(menu),"show",
-					   G_CALLBACK(submenu_to_display),
-					   NULL);
+			g_signal_connect (G_OBJECT (menu),"show",
+					  G_CALLBACK (submenu_to_display),
+					  NULL);
 		}
 	}
 

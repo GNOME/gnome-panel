@@ -1,3 +1,16 @@
+Tue Nov 27 00:42:05 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, menu-rh.[ch], distribution.[ch]: whack the redhat
+	  menu stuff.  Note this was the OLD redhat menu stuff which was
+	  just plain crack.  Though this reduces the overall ugliness
+	  quotient of the menu*.c files by quite a bit, but I'll live.
+
+	* panel-utils.[ch], quick-desktop-reader.c, menu.c,
+	  menu-properties.c, launcher.c: Make pixmap finding work better
+	  also find kde icons from kde2 properly (well ... properly ...
+	  somewhat properly).  Load last mapped first for fakes.  Fix
+	  the gtk_menu_reposition hack to be shorter but just as evil.
+
 2001-11-27  Glynn Foster  <glynn.foster@sun.com>
 
 	* menu.c, panel.c: Revert Mark's reverts...Yay, commit war!

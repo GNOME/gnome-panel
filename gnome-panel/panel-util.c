@@ -1230,3 +1230,25 @@ panel_is_program_in_path (const char *program)
 		return FALSE;
 	}
 }
+
+char *
+panel_pixmap_discovery (const char *name, gboolean fallback)
+{
+	char *pixmap;
+	pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					    name,
+					    TRUE /* only_if_exists */,
+					    NULL /* ret_locations */);
+	if (pixmap == NULL)
+		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP, 
+						    name,
+						    TRUE /* only_if_exists */,
+						    NULL /* ret_locations */);
+	/* just as a fallback return something */
+	if (pixmap == NULL && fallback)
+		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						    name,
+						    FALSE /* only_if_exists */,
+						    NULL /* ret_locations */);
+	return pixmap;
+}

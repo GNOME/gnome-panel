@@ -161,7 +161,6 @@ panel_sources = \
 	gnome-run.c  		\
 	menu.c  		\
 	menu-util.c		\
-	menu-rh.c  		\
 	menu-fentry.c  		\
 	swallow.c  		\
 	menu-properties.c	\
@@ -208,7 +207,6 @@ panel_headers = \
 	gnome-run.h  		\
 	menu.h  		\
 	menu-util.h		\
-	menu-rh.h  		\
 	menu-fentry.h  		\
 	swallow.h  		\
 	menu-properties.h	\

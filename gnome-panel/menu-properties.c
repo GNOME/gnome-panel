@@ -81,9 +81,8 @@ get_pixmap (const char *menudir, gboolean main_menu)
 	char *pixmap_name = NULL;
 
 	if (main_menu) {
-		pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-							 "gnome-logo-icon-transparent.png",
-							 FALSE, NULL);
+		pixmap_name = panel_pixmap_discovery ("gnome-logo-icon-transparent.png",
+						      TRUE /* fallback */);
 	} else {
 		char *dentry_name;
 		QuickDesktopItem *qitem;
@@ -101,10 +100,8 @@ get_pixmap (const char *menudir, gboolean main_menu)
 			pixmap_name = quick_desktop_item_find_icon (qitem->icon);
 
 		if (pixmap_name == NULL)
-			pixmap_name = gnome_program_locate_file (NULL, 
-								 GNOME_FILE_DOMAIN_PIXMAP, 
-								 "gnome-folder.png",
-								 FALSE, NULL);
+			pixmap_name = panel_pixmap_discovery ("gnome-folder.png",
+							      TRUE /* fallback */);
 
 		if (qitem != NULL)
 			quick_desktop_item_destroy (qitem);

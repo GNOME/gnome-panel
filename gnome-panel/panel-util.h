@@ -109,6 +109,9 @@ void		panel_pop_window_busy	(GtkWidget *window);
 
 gboolean	panel_is_program_in_path (const char *program);
 
+char *		panel_pixmap_discovery	(const char *name,
+					 gboolean fallback);
+
 
 /* GnomeVFS reading utils */
 
