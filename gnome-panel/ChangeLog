@@ -1,3 +1,11 @@
+2003-05-23  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Ray Strode in bug #112122 to fix a crash with the
+	panel properties dialog.
+
+	* panel-profile.c: (panel_profile_get_toplevel_orientation):
+	Check we didn't get a duff orientation from GConf.
+
 2003-05-22  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-run-dialog.c:
