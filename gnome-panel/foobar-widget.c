@@ -52,8 +52,10 @@ static void foobar_widget_class_init	(FoobarWidgetClass *klass);
 static void foobar_widget_instance_init (FoobarWidget *foo);
 static void foobar_widget_realize	(GtkWidget *w);
 static void foobar_widget_destroy	(GtkObject *o);
-static void foobar_widget_size_allocate	(GtkWidget *w,
-					 GtkAllocation *alloc);
+static void foobar_widget_size_allocate	(GtkWidget *toplevel,
+					 GtkAllocation *allocation);
+static void foobar_widget_size_request	(GtkWidget *toplevel,
+					 GtkRequisition *requisition);
 static gboolean foobar_leave_notify	(GtkWidget *widget,
 					 GdkEventCrossing *event);
 static gboolean foobar_enter_notify	(GtkWidget *widget,
@@ -113,8 +115,9 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 
 	object_class->destroy = foobar_widget_destroy;
 
-	widget_class->realize = foobar_widget_realize;
-	widget_class->size_allocate = foobar_widget_size_allocate;
+	widget_class->realize            = foobar_widget_realize;
+	widget_class->size_allocate      = foobar_widget_size_allocate;
+	widget_class->size_request       = foobar_widget_size_request;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
 
@@ -824,10 +827,6 @@ foobar_widget_screen_size_changed (FoobarWidget *foo,
 			 multiscreen_x (foo->screen, foo->monitor),
 			 multiscreen_y (foo->screen, foo->monitor));
 
-	g_object_set (G_OBJECT (foo), "width_request",
-		      multiscreen_width (foo->screen, foo->monitor),
-		      NULL);
-
 	gtk_window_set_resizable (window, TRUE);
 	gtk_window_resize (window,
 			   multiscreen_width (foo->screen, foo->monitor),
@@ -835,29 +834,52 @@ foobar_widget_screen_size_changed (FoobarWidget *foo,
 }
 
 static void
-foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
+foobar_widget_size_allocate (GtkWidget     *toplevel,
+			     GtkAllocation *allocation)
 {
-	if (GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_allocate)
-		GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_allocate (w, alloc);
+	FoobarWidget *foo;
 
-	if (GTK_WIDGET_REALIZED (w)) {
-		FoobarWidget *foo = FOOBAR_WIDGET (w);
+	GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_allocate (toplevel, allocation);
 
-		xstuff_set_pos_size (w->window,
-				     multiscreen_x (foo->screen, foo->monitor),
-				     multiscreen_y (foo->screen, foo->monitor),
-				     alloc->width,
-				     alloc->height);
+	if (!GTK_WIDGET_REALIZED (toplevel))
+		return;
 
-		g_slist_foreach (panel_list, queue_panel_resize, NULL);
-		basep_border_queue_recalc (foo->screen, foo->monitor);
+	foo = FOOBAR_WIDGET (toplevel);
 
-		xstuff_set_wmspec_strut (w->window,
-					 0 /* left */,
-					 0 /* right */,
-					 alloc->height /* top */,
-					 0 /* bottom */);
-	}
+	g_slist_foreach (panel_list, queue_panel_resize, NULL);
+	basep_border_queue_recalc (foo->screen, foo->monitor);
+
+	xstuff_set_wmspec_strut (toplevel->window, 0, 0, allocation->height, 0);
+}
+
+static void
+foobar_widget_size_request (GtkWidget      *toplevel,
+			    GtkRequisition *requisition)
+{
+	FoobarWidget *foo;
+	int           old_height;
+
+	foo = FOOBAR_WIDGET (toplevel);
+
+	old_height = toplevel->requisition.height;
+
+	GTK_WIDGET_CLASS (foobar_widget_parent_class)->size_request (toplevel, requisition);
+
+	if (!GTK_WIDGET_REALIZED (toplevel))
+		return;
+
+	requisition->width = multiscreen_width (foo->screen, foo->monitor);
+
+	if (requisition->height != old_height)
+		gtk_window_resize (GTK_WINDOW (toplevel),
+				   requisition->width,
+				   requisition->height);
+
+	xstuff_set_pos_size (toplevel->window,
+			     multiscreen_x (foo->screen, foo->monitor),
+			     multiscreen_y (foo->screen, foo->monitor),
+			     requisition->width,
+			     requisition->height);
 }
 
 GtkWidget *
@@ -873,9 +895,7 @@ foobar_widget_new (const char *panel_id,
 	if (foobar_widget_exists (screen, monitor))
 		return NULL;
 
-	foo = g_object_new (FOOBAR_TYPE_WIDGET,
-			    "width_request", multiscreen_width (screen, monitor),
-			    NULL);
+	foo = g_object_new (FOOBAR_TYPE_WIDGET, NULL);
 
 	if (panel_id)
 		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
