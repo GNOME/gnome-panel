@@ -555,11 +555,47 @@ icon_loader_func (const char  *icon,
                   void        *data)
 {
         TasklistData *tasklist;
+	GdkPixbuf    *retval;
+	char         *icon_no_extension;
+	char         *p;
         
         tasklist = data;
 
-	return gtk_icon_theme_load_icon (tasklist->icon_theme,
-					 icon, size, 0, NULL);
+	if (icon == NULL || strcmp (icon, "") == 0)
+		return NULL;
+
+	if (g_path_is_absolute (icon)) {
+		if (g_file_test (icon, G_FILE_TEST_EXISTS)) {
+			return gdk_pixbuf_new_from_file_at_size (icon,
+								 size, size,
+								 NULL);
+		} else {
+			char *basename;
+
+			basename = g_path_get_basename (icon);
+			retval = icon_loader_func (basename, size, flags, data);
+			g_free (basename);
+
+			return retval;
+		}
+	}
+
+	/* This is needed because some .desktop files have an icon name *and*
+	 * an extension as icon */
+	icon_no_extension = g_strdup (icon);
+	p = strrchr (icon_no_extension, '.');
+	if (p &&
+	    (strcmp (p, ".png") == 0 ||
+	     strcmp (p, ".xpm") == 0 ||
+	     strcmp (p, ".svg") == 0)) {
+	    *p = 0;
+	}
+
+	retval = gtk_icon_theme_load_icon (tasklist->icon_theme,
+					   icon_no_extension, size, 0, NULL);
+	g_free (icon_no_extension);
+
+	return retval;
 }
 
 gboolean
