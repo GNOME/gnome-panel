@@ -1332,6 +1332,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_window_set_screen (GTK_WINDOW (cd->props),
 			       gtk_widget_get_screen (cd->applet));
 	gtk_container_set_border_width (GTK_CONTAINER (cd->props), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (cd->props)->vbox), 2);
 		
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 	                                  "gnome-clock.png", TRUE, NULL);
