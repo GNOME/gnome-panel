@@ -14,7 +14,7 @@
 
 #undef BUTTON_WIDGET_DEBUG
 
-#define BUTTON_WIDGET_DISPLACEMENT 5
+#define BUTTON_WIDGET_DISPLACEMENT 2
 
 extern GlobalConfig global_config;
 
