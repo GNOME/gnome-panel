@@ -13,10 +13,9 @@ int panel_corba_call_launcher(const char *path);
 int panel_corba_restart_launchers(void);
 
 
-void send_applet_session_save (const char *ior, int id,
+int send_applet_session_save (const char *ior, int id,
 			       const char *cfgpath,
 			       const char *globcfgpath);
-void send_applet_shutdown_applet (const char *ior, int id);
 void send_applet_change_orient (const char *ior, int id,  int orient);
 void send_applet_do_callback (const char *ior, int id, char *callback_name);
 

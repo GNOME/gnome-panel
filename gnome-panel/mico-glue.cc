@@ -201,7 +201,7 @@ panel_corba_restart_launchers(void)
 	return TRUE;
 }
 
-void
+int
 send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 			  const char *globcfgpath)
 {
@@ -210,7 +210,7 @@ send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->session_save(applet_id,cfgpath,globcfgpath);
+	return applet->session_save(applet_id,cfgpath,globcfgpath);
 }
 
 void

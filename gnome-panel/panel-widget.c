@@ -1898,6 +1898,7 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 	if(ad) g_free(ad);
+	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
 
 	/*this will trigger size_allocate of all applets and thus the
 	  panel will again be set to the largest thickness*/
@@ -2163,6 +2164,10 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 		panel->applets[i+n].cells = 1;
 	}
 
+	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
+	if(ad) g_free(ad);
+	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
+
 	/*remove applet*/
 	gtk_container_remove(GTK_CONTAINER(panel->fixed),applet);
 
@@ -2173,9 +2178,6 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	  panel will again be set to the largest thickness*/
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
-
-	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
-	if(ad) g_free(ad);
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL]);

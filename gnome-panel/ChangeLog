@@ -1,3 +1,19 @@
+Fri Apr 17 00:10:22 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.c: fixed double g_free that was causing
+	  some very weird stuff to happen.
+
+	* panel.c: implemented the scheme for applets requesting
+	  their stuff not to be saved by returning false on
+	  session_save
+
+Thu Apr 16 22:07:13 1998  George Lebl  <jirka@5z.com>
+
+	* gnome-panel.idl, mico-glue.(cc|h), applet-lib.(cc|h),
+	  logout.c, launcher.c: save_session corba call now
+	  returns TRUE/FALSE. not yet completely implemented
+	  but applets should return TRUE
+
 Thu Apr 16 21:19:38 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: fixes for size changes, performance

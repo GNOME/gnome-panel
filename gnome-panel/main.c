@@ -589,7 +589,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	if(panel_menu)
 		gtk_widget_unref(panel_menu);
 
-	return TRUE;
+	return FALSE;
 }
 
 static void

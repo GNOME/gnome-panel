@@ -26,9 +26,9 @@ module GNOME {
 	interface Applet {
 		void change_orient (in short applet_id, in short orient);
 		void do_callback (in short applet_id, in string callback_name);
-		void session_save (in short applet_id,
-				   in string cfgpath,
-				   in string globcfgpath);
+		short session_save (in short applet_id,
+				    in string cfgpath,
+				    in string globcfgpath);
 	};
 
 	interface Launcher {

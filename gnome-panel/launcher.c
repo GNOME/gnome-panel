@@ -380,7 +380,7 @@ change_orient(int applet_id, int orient)
 	/*PanelOrientType o = (PanelOrientType)orient;*/
 }
 
-void
+int
 session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 {
 	char *query;
@@ -403,6 +403,8 @@ session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 
 	gnome_config_sync();
 	gnome_config_drop_all();
+	
+	return TRUE;
 }
 
 static gint

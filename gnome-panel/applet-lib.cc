@@ -40,7 +40,7 @@ CORBA::BOA_ptr boa_ptr;
 /*every applet must implement these*/
 BEGIN_GNOME_DECLS
 void change_orient(int applet_id, int orient);
-void session_save(int applet_id, const char *cfgpath, const char *globcfgpath);
+int session_save(int applet_id, const char *cfgpath, const char *globcfgpath);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
@@ -50,10 +50,10 @@ public:
 	void change_orient (CORBA::Short applet_id, CORBA::Short orient) {
 		::change_orient(applet_id,orient);
 	}
-	void session_save (CORBA::Short applet_id,
-			   const char *cfgpath,
-			   const char *globcfgpath) {
-		::session_save(applet_id,cfgpath,globcfgpath);
+	CORBA::Short session_save (CORBA::Short applet_id,
+			   	   const char *cfgpath,
+			   	   const char *globcfgpath) {
+		return ::session_save(applet_id,cfgpath,globcfgpath);
 	}
         void do_callback (CORBA::Short applet_id,
 			  const char *callback_name)

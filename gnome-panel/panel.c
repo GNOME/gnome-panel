@@ -103,22 +103,6 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	sprintf(path, "%sApplet_%d/", panel_cfg_path, (*num)++);
 
 	if(info->type==APPLET_EXTERN) {
-		fullpath = g_copy_strings(path,"id",NULL);
-		gnome_config_set_string(fullpath, EXTERN_ID);
-		g_free(fullpath);
-
-		fullpath = g_copy_strings(path,"position",NULL);
-		gnome_config_set_int(fullpath, pos);
-		g_free(fullpath);
-
-		fullpath = g_copy_strings(path,"panel",NULL);
-		gnome_config_set_int(fullpath, panel);
-		g_free(fullpath);
-
-		fullpath = g_copy_strings(path,"parameters",NULL);
-		gnome_config_set_string(fullpath, info->params);
-		g_free(fullpath);
-
 		/*sync before the applet does it's stuff*/
 		gnome_config_sync();
 		/*I think this should be done at sync and also that there
@@ -126,8 +110,26 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		gnome_config_drop_all();
 
 		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id_str,info->applet_id,path,
-					 panel_cfg_path);
+		if(send_applet_session_save(info->id_str,info->applet_id,path,
+					    panel_cfg_path)) {
+
+			fullpath = g_copy_strings(path,"id",NULL);
+			gnome_config_set_string(fullpath, EXTERN_ID);
+			g_free(fullpath);
+
+			fullpath = g_copy_strings(path,"position",NULL);
+			gnome_config_set_int(fullpath, pos);
+			g_free(fullpath);
+
+			fullpath = g_copy_strings(path,"panel",NULL);
+			gnome_config_set_int(fullpath, panel);
+			g_free(fullpath);
+
+			fullpath = g_copy_strings(path,"parameters",NULL);
+			gnome_config_set_string(fullpath, info->params);
+			g_free(fullpath);
+		} else
+			(*num)--;
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
 		gnome_config_set_string(fullpath, info->id_str);
@@ -335,15 +337,14 @@ panel_clean_applet(AppletInfo *info)
 
 	g_return_if_fail(info != NULL);
 
-	info->type = APPLET_EMPTY;
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
 
-	if(!(panel = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY)))
-		return;
+	g_return_if_fail(panel != NULL);
 
 	panel_widget_remove(panel,info->widget);
-	//gtk_widget_unref(info->widget);
 	info->widget = NULL;
+	info->applet_widget = NULL;
 	if(info->type == APPLET_DRAWER && info->assoc) {
 		panels = g_list_remove(panels,info->assoc);
 		gtk_widget_unref(info->assoc);
@@ -356,6 +357,8 @@ panel_clean_applet(AppletInfo *info)
 	info->id_str=NULL;
 	if(info->params) g_free(info->params);
 	info->params=NULL;
+
+	info->type = APPLET_EMPTY;
 }
 
 static void
@@ -773,10 +776,12 @@ create_panel_root_menu(PanelWidget *panel)
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
+	/*FIXME: fix GTK so we can do this safely!
 	menuitem = gtk_menu_item_new_with_label(_("Main menu"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), root_menu);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
+	*/
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
