@@ -105,12 +105,12 @@ get_window_id(Window win, char *title, guint32 *wid)
 {
 	Window root_return;
 	Window parent_return;
-	Window *children;
+	Window *children = NULL;
 	unsigned int nchildren;
 	unsigned int i;
 	char *tit;
 	int ret = FALSE;
-
+	
 	if(XFetchName(GDK_DISPLAY(), win, &tit) && tit) {
 		if(strstr(tit,title)!=NULL) {
 			if(wid) *wid = win;
@@ -127,11 +127,13 @@ get_window_id(Window win, char *title, guint32 *wid)
 		   &parent_return,
 		   &children,
 		   &nchildren);
-
-	for(i=0;!ret && i<nchildren;i++)
-		ret=get_window_id(children[i],title,wid);
-	if(children)
+	
+	/*otherwise we got a problem*/
+	if(children) {
+		for(i=0;!ret && i<nchildren;i++)
+			ret=get_window_id(children[i],title,wid);
 		XFree(children);
+	}
 	return ret;
 }
 
@@ -161,6 +163,9 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 		}
 		while(remove--)
 			check_swallows = g_list_remove(check_swallows,NULL);
+		
+		if(!check_swallows)
+			XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(), 0);
 		
 		XSetErrorHandler(oldErrorHandler);
 	}
@@ -250,10 +255,8 @@ main(int argc, char **argv)
 	  starting multiple goad_id's at once are libgnorba's problem*/
 	load_queued_externs();
 
-	/* set up a filter on the root window to get map requests*/
-	/* make sure we get the events */
-	XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(),
-		     SubstructureNotifyMask);
+	/* set up a filter on the root window to get map requests */
+	/* we will select the events later when we actually need them */
 	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);
 	
 	/* I use the glue code to avoid making this a C++ file */
