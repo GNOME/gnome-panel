@@ -99,89 +99,101 @@ $(GWMH_SRCLIST):
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
 	$(GWMH_SRCLIST)		\
+	panel-typebuiltins.c	\
+	panel-typebuiltins.h	\
 	panel-marshal.c		\
 	panel-marshal.h
 
-panel_2_SOURCES=\
-	$(CORBA_SRCLIST)	\
-	gwmh.h			\
-	panel-include.h		\
-	panel-types.h		\
+panel_sources = \
+	panel-typebuiltins.c	\
+	panel-typebuiltins.h	\
 	panel-marshal-main.c	\
 	main.c			\
-	main.h			\
 	panel-widget.c  	\
-	panel-widget.h		\
 	basep-widget.c  	\
-	basep-widget.h		\
 	button-widget.c  	\
-	button-widget.h		\
 	multiscreen-stuff.c	\
-	multiscreen-stuff.h	\
 	xstuff.c		\
-	xstuff.h		\
 	session.c		\
-	session.h		\
 	conditional.c		\
-	conditional.h		\
-	foobar-widget.h		\
 	foobar-widget.c		\
 	tasklist_icon.c		\
-	tasklist_icon.h		\
 	border-widget.c		\
-	border-widget.h		\
 	edge-widget.c		\
-	edge-widget.h		\
 	aligned-widget.c	\
-	aligned-widget.h	\
 	drawer-widget.c		\
-	drawer-widget.h		\
 	sliding-widget.c	\
-	sliding-widget.h	\
 	floating-widget.c	\
-	floating-widget.h	\
-	rgb-stuff.h		\
 	rgb-stuff.c		\
 	tearoffitem.c		\
+	title-item.c		\
+	panel.c			\
+	applet.c		\
+	logout.c		\
+	drawer.c  		\
+	panel-util.c		\
+	global-keys.c		\
+	panel_config.c  	\
+	status.c  		\
+	distribution.c		\
+	menu.c  		\
+	menu-util.c		\
+	menu-rh.c  		\
+	menu-fentry.c  		\
+	swallow.c  		\
+	menu-properties.c	\
+	launcher.c		\
+	extern.c  		\
+	$(NULL)
+
+panel_headers = \
+	panel-types.h		\
+	panel-include.h		\
+	main.h			\
+	panel-widget.h		\
+	basep-widget.h		\
+	button-widget.h		\
+	multiscreen-stuff.h	\
+	xstuff.h		\
+	session.h		\
+	conditional.h		\
+	foobar-widget.h		\
+	tasklist_icon.h		\
+	border-widget.h		\
+	edge-widget.h		\
+	aligned-widget.h	\
+	drawer-widget.h		\
+	sliding-widget.h	\
+	floating-widget.h	\
+	rgb-stuff.h		\
 	tearoffitem.h		\
 	title-item.h		\
-	title-item.c		\
 	title-item-private.h	\
-	panel.c			\
 	panel.h         	\
-	applet.c		\
 	applet.h         	\
-	logout.c		\
 	logout.h		\
-	drawer.c  		\
 	drawer.h  		\
-	panel-util.c		\
 	panel-util.h		\
-	global-keys.c		\
 	global-keys.h		\
-	panel_config.c  	\
 	panel_config.h		\
 	panel_config_global.h  	\
-	status.c  		\
 	status.h  		\
-	distribution.c		\
 	distribution.h		\
-	menu.c  		\
 	menu.h  		\
-	menu-util.c		\
 	menu-util.h		\
-	menu-rh.c  		\
 	menu-rh.h  		\
-	menu-fentry.c  		\
 	menu-fentry.h  		\
-	swallow.c  		\
 	swallow.h  		\
-	menu-properties.c	\
 	menu-properties.h	\
-	launcher.c		\
 	launcher.h		\
-	extern.c  		\
 	extern.h  		\
+	$(NULL)
+
+panel_2_SOURCES = \
+	$(CORBA_SRCLIST)	\
+	gwmh.h			\
+	$(panel_sources)	\
+	$(panel_headers)	\
 	$(NULL)
 
 panel_2_LDADD=\
@@ -226,3 +238,38 @@ deskdir = $(datadir)/gnome/apps/Settings/Desktop/
 desk_DATA = gnome-panel-properties.desktop
 
 $(srcdir)/panel-util.c: $(CORBA_SRCLIST)
+
+$(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_headers)
+	cd $(srcdir) \
+	&& glib-mkenums \
+			--fhead "#include <gobject/genums.h>\n" \
+			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
+			--fprod "\n/* enumerations from \"@filename@\" */" \
+			--vhead "static const G@Type@Value _@enum_name@_values[] = {" \
+			--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+			--vtail "  { 0, NULL, NULL }\n};\n\n" \
+			--vtail "GType\n@enum_name@_get_type (void)\n{\n" \
+			--vtail "  static GType type = 0;\n\n" \
+			--vtail "  if (!type)\n" \
+			--vtail "    type = g_@type@_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
+			--vtail "  return type;\n}\n\n" \
+		$(panel_headers) > xgen-gtbec \
+	&& cp xgen-gtbec $(@F) \
+	&& rm -f xgen-gtbec
+
+$(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_headers)
+	cd $(srcdir) \
+	&& glib-mkenums \
+			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
+			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
+			--fhead "#include <panel-include.h>\n\n" \
+			--fhead "G_BEGIN_DECLS\n\n" \
+			--ftail "G_END_DECLS\n\n" \
+			--ftail "#endif /* __PANEL_TYPEBUILTINS_H__ */\n" \
+			--fprod "\n/* --- @filename@ --- */" \
+			--eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
+			--eprod "GType @enum_name@_get_type (void);\n" \
+		$(panel_headers) > xgen-gth \
+	&& cp xgen-gth $(@F) \
+	&& rm -f xgen-gth
+

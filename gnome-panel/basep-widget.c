@@ -24,6 +24,7 @@
 #include "aligned-widget.h"
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
+#include "panel-typebuiltins.h"
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
@@ -360,7 +361,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 						 mode_change),
 			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);
+			       1, PANEL_TYPE_BASE_PMODE);
 
 	basep_widget_signals[STATE_CHANGE_SIGNAL] = 
 		gtk_signal_new("state_change",
@@ -370,7 +371,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 						 state_change),
 			       gtk_marshal_NONE__ENUM,
 			       GTK_TYPE_NONE,
-			       1, GTK_TYPE_ENUM);
+			       1, PANEL_TYPE_BASE_PSTATE);
 
 	basep_widget_signals[SCREEN_CHANGE_SIGNAL] = 
 		gtk_signal_new("screen_change",
