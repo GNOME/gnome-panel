@@ -58,6 +58,7 @@
 
 struct _PanelAppletFramePrivate {
 	GNOME_Vertigo_PanelAppletShell  applet_shell;
+	CORBA_Object                    control;
 	Bonobo_PropertyBag              property_bag;
 	BonoboUIComponent              *ui_component;
 
@@ -84,6 +85,9 @@ typedef enum {
 	APPLET_EXPAND_MINOR = 1 << 1,
 	APPLET_HAS_HANDLE   = 1 << 2
 } PanelAppletFlags;
+
+static void panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
+					   PanelAppletFrame *frame);
 
 static void
 panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
@@ -470,6 +474,13 @@ panel_applet_frame_finalize (GObject *object)
 		bonobo_object_unref (
 			BONOBO_OBJECT (frame->priv->ui_component));
 
+	if (frame->priv->control) {
+		ORBit_small_unlisten_for_broken (frame->priv->control,
+						 G_CALLBACK (panel_applet_frame_cnx_broken));
+		CORBA_Object_release (frame->priv->control, NULL);
+		frame->priv->control = CORBA_OBJECT_NIL;
+	}
+
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 
@@ -845,7 +856,8 @@ panel_applet_frame_get_name (char *iid)
 }
 
 static void
-panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
+panel_applet_frame_cnx_broken (ORBitConnection  *cnx,
+			       PanelAppletFrame *frame)
 {
 	GtkWidget *dialog;
 	GdkScreen *screen;
@@ -1197,12 +1209,11 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 			      const char       *iid,
 			      const char       *id)
 {
-	BonoboControlFrame    *control_frame;
-	Bonobo_Control         control;
-	CORBA_Environment      ev;
-	ORBitConnectionStatus  cnx_status;
-	GtkWidget             *widget;
-	char                  *moniker;
+	BonoboControlFrame *control_frame;
+	Bonobo_Control      control;
+	CORBA_Environment   ev;
+	GtkWidget          *widget;
+	char               *moniker;
 
 	frame->priv->panel = panel;
 
@@ -1229,6 +1240,11 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	}
 
 	frame->priv->iid = g_strdup (iid);
+
+	frame->priv->control = CORBA_Object_duplicate (control, NULL);
+	ORBit_small_listen_for_broken (control,
+				       G_CALLBACK (panel_applet_frame_cnx_broken),
+				       frame);
 
 	widget = bonobo_widget_new_control_from_objref (control, CORBA_OBJECT_NIL);
 
@@ -1308,27 +1324,6 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	CORBA_exception_free (&ev);
 
-	cnx_status = ORBit_small_get_connection_status (control);
-	if (cnx_status != ORBIT_CONNECTION_IN_PROC) {
-		ORBitConnection *cnx = ORBit_small_get_connection (control);
-
-		if (cnx == NULL) {
-			CORBA_exception_free (&ev);
-			panel_applet_frame_loading_failed (
-				frame, NULL, iid, id, GTK_WINDOW (panel->toplevel));
-			g_warning (G_STRLOC ": failed to load applet %s (lost connection)", iid);
-			gtk_object_sink (GTK_OBJECT (widget));
-			return NULL;
-		}
-
-		g_signal_connect_object (
-			cnx,
-			"broken",
-			G_CALLBACK (panel_applet_frame_cnx_broken),
-			frame,
-			G_CONNECT_SWAPPED);
-	}
-	
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 
 	return widget;

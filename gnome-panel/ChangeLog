@@ -1,3 +1,15 @@
+2004-08-16  Mark McLoughlin  <mark@skynet.ie>
+
+	Hopefully fix bug #149244 - root cause identified through
+	debugging from virgo@teleportsv.net and Vincent Untz.
+
+	* panel-applet-frame.c:
+	(panel_applet_frame_finalize): disconnect from the broken
+	signal and release the control.
+	(panel_applet_frame_construct): use ORBit_small_listen_for_broken()
+	instead of manually connecting to signal and inevitably screwing
+	it up by naively using g_signal_connect_object().
+
 2004-08-11  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix for nested drawer craziness reported at:
