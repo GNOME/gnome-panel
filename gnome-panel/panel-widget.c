@@ -354,6 +354,7 @@ panel_widget_pack_applets(PanelWidget *panel)
 	}
 	for(i=0;i<panel->size;i+=panel->applets[i].cells)
 		panel_widget_applet_put(panel,i);
+	panel_widget_set_size(panel,panel->size);
 }
 
 
@@ -1100,9 +1101,13 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 			   gpointer data)
 {
 	PanelWidget *panel = PANEL_WIDGET(widget);
+
+	if(!GTK_WIDGET_REALIZED(GTK_WIDGET(panel)))
+		return FALSE;
+
 	panel_widget_set_position(panel);
 	panel_widget_apply_size_limit(panel);
-	return FALSE;
+	return TRUE;
 }
 
 /*static gint
