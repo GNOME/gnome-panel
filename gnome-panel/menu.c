@@ -977,9 +977,7 @@ show_help_on (GtkWidget *widget, const char *item_loc)
 	if (item != NULL) {
 		char *path = panel_gnome_kde_help_path (item->docpath);
 		if (path != NULL) {
-			char *fullpath = g_strconcat ("ghelp:", path, NULL);
-			gnome_url_show (fullpath);
-			g_free (fullpath);
+			gnome_url_show (path);
 			g_free (path);
 		}
 		gnome_desktop_entry_free (item);

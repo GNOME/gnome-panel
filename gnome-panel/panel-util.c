@@ -35,7 +35,7 @@ panel_show_help (const char *path)
 static char *
 panel_gnome_help_path (const char *docpath)
 {
-	char *fullpath, *app, *p, *path;
+	char *fullpath, *app, *p, *path, *uri;
 
 	app = g_strdup (docpath);
 
@@ -58,7 +58,10 @@ panel_gnome_help_path (const char *docpath)
 		fullpath = NULL;
 	}
 
-	return fullpath;
+	uri = g_strconcat ("ghelp:", fullpath, NULL);
+	g_free (fullpath);
+
+	return uri;
 }
 
 static char *
@@ -76,8 +79,11 @@ panel_kde_help_path (const char *docpath)
 						  KDE_DOCDIR,
 						  li->data,
 						  docpath);
-		if (panel_file_exists (fullpath))
-			return fullpath;
+		if (panel_file_exists (fullpath)) {
+			char *uri = g_strconcat ("ghelp:", fullpath, NULL);
+			g_free (fullpath);
+			return uri;
+		}
 		g_free (fullpath);
 	}
 	return NULL;
@@ -90,6 +96,9 @@ panel_gnome_kde_help_path (const char *docpath)
 
 	if (string_empty (docpath))
 		return NULL;
+
+	if (panel_is_url (docpath))
+		return g_strdup (docpath);
 
 	path = panel_gnome_help_path (docpath);
 
@@ -941,4 +950,22 @@ get_requisition_height (GtkWidget *widget)
 	gtk_widget_get_child_requisition (widget, &req);
 
 	return req.height;
+}
+
+/* is url showable by gnome_url_show */
+gboolean
+panel_is_url (const char *url)
+{
+	if (strncmp (url, "http://", strlen ("http://")) == 0 ||
+	    strncmp (url, "https://", strlen ("https://")) == 0 ||
+	    strncmp (url, "gopher://", strlen ("gopher://")) == 0 ||
+	    strncmp (url, "ftp://", strlen ("ftp://")) == 0 ||
+	    strncmp (url, "file:", strlen ("file:")) == 0 ||
+	    strncmp (url, "ghelp:", strlen ("ghelp:")) == 0 ||
+	    strncmp (url, "help:", strlen ("help:")) == 0 ||
+	    strncmp (url, "man:", strlen ("man:")) == 0 ||
+	    strncmp (url, "info:", strlen ("info:")) == 0)
+		return TRUE;
+	else
+		return FALSE;
 }

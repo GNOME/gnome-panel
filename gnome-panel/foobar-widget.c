@@ -654,7 +654,7 @@ foobar_widget_realize (GtkWidget *w)
 static gboolean
 foobar_widget_configure_event (GtkWidget *w, GdkEventConfigure *event)
 {
-	g_return_if_fail (IS_FOOBAR_WIDGET (w));
+	g_return_val_if_fail (IS_FOOBAR_WIDGET (w), FALSE);
 
 	if (event->x != 0 ||
 	    event->y != 0)

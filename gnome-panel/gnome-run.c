@@ -210,15 +210,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	}
 
 	/* Somewhat of a hack I suppose */
-	if (strncmp (s, "http://", strlen ("http://")) == 0 ||
-	    strncmp (s, "https://", strlen ("https://")) == 0 ||
-	    strncmp (s, "gopher://", strlen ("gopher://")) == 0 ||
-	    strncmp (s, "ftp://", strlen ("ftp://")) == 0 ||
-	    strncmp (s, "file:", strlen ("file:")) == 0 ||
-	    strncmp (s, "ghelp:", strlen ("ghelp:")) == 0 ||
-	    strncmp (s, "help:", strlen ("help:")) == 0 ||
-	    strncmp (s, "man:", strlen ("man:")) == 0 ||
-	    strncmp (s, "info:", strlen ("info:")) == 0) {
+	if (panel_is_url (s)) {
 		gnome_url_show (s);
 		goto return_and_close;
 	}

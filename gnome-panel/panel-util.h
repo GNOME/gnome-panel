@@ -92,6 +92,8 @@ int		get_requisition_height	(GtkWidget *widget);
 
 char *		panel_gnome_kde_help_path (const char *docpath);
 
+gboolean	panel_is_url		(const char *url);
+
 END_GNOME_DECLS
 
 #endif /* PANEL_UTIL_H */

@@ -126,11 +126,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 				char *path = panel_gnome_kde_help_path
 					(launcher->dentry->docpath);
 				if (path != NULL) {
-					char *fullpath = g_strconcat ("ghelp:",
-								      path,
-								      NULL);
-					gnome_url_show (fullpath);
-					g_free (fullpath);
+					gnome_url_show (path);
 					g_free (path);
 				}
 			}

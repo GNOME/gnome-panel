@@ -137,7 +137,7 @@ basep_widget_realize (GtkWidget *w)
 static gboolean
 basep_widget_configure_event (GtkWidget *w, GdkEventConfigure *event)
 {
-	g_return_if_fail (IS_BASEP_WIDGET (w));
+	g_return_val_if_fail (IS_BASEP_WIDGET (w), FALSE);
 
 	if (event->x != w->allocation.x ||
 	    event->y != w->allocation.y ||
