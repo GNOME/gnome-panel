@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: sk\n"
-"POT-Creation-Date: 2002-07-02 16:44+0200\n"
-"PO-Revision-Date: 2002-07-02 16:48+0200\n"
+"POT-Creation-Date: 2002-07-03 16:51+0200\n"
+"PO-Revision-Date: 2002-07-03 16:51+0200\n"
 "Last-Translator: Stanislav Višňovský <visnovsky@nenya.ms.mff.cuni.cz>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -302,8 +302,8 @@ msgid "Display seconds in time"
 msgstr "Zobraziť v čase aj sekundy"
 
 #: applets/gen_util/clock.schemas.in.h:4
-msgid "Display time in Greenwich Mean Time zone"
-msgstr "Zobraziť čas z časovej zóny Greenwich Mean Time"
+msgid "Display time in Universal Coordinated Time zone"
+msgstr "Zobraziť čas z časovej zóny Universal Coordinated Time"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
@@ -334,16 +334,16 @@ msgid "Show time with seconds"
 msgstr "Zobraziť sekundy"
 
 #: applets/gen_util/clock.schemas.in.h:12
-msgid "Use GMT"
-msgstr "Používať GMT"
-
-#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use Internet time"
 msgstr "Používať Internetový čas"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "Používať Unixový čas"
+
+#: applets/gen_util/clock.schemas.in.h:14
+msgid "Use UTC"
+msgstr "Používať UTC"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
 msgid "Copy _date"
@@ -2298,42 +2298,42 @@ msgstr "Applet pre test Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Vytváracie rozhranie pre applet Test Bonobo"
 
-#: libpanel-applet/panel-applet.c:748
+#: libpanel-applet/panel-applet.c:751
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Prijatý neúplný typ pozadia '%s'"
 
-#: libpanel-applet/panel-applet.c:762
+#: libpanel-applet/panel-applet.c:765
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Prijatý neúplný typ pozadia '%s': %s"
 
-#: libpanel-applet/panel-applet.c:771
+#: libpanel-applet/panel-applet.c:774
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nepodarilo sa získať obrázok %s"
 
-#: libpanel-applet/panel-applet.c:778
+#: libpanel-applet/panel-applet.c:781
 msgid "Unknown background type received"
 msgstr "Prijatý neznámy typ pozadia"
 
-#: libpanel-applet/panel-applet.c:953
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's orientation"
 msgstr "Applet obsahujúci orientáciu panelu"
 
-#: libpanel-applet/panel-applet.c:961
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Applet obsahujúci veľkosť panelu v oodoch"
 
-#: libpanel-applet/panel-applet.c:969
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet obsahujúci farbu pozadia panelu alebo obrázok pozadia"
 
-#: libpanel-applet/panel-applet.c:977
+#: libpanel-applet/panel-applet.c:980
 msgid "The Applet's flags"
 msgstr "Príznaky appletu"
 
-#: libpanel-applet/panel-applet.c:985
+#: libpanel-applet/panel-applet.c:988
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Rozsahy ako rada pre akceptovateľnú veľkosť appletu"
 
@@ -2392,6 +2392,9 @@ msgstr "Extra extra veľký"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra extra malý"
+
+#~ msgid "Use GMT"
+#~ msgstr "Používať GMT"
 
 #~ msgid "Tasklist size"
 #~ msgstr "Veľkosť zoznamu úloh"
