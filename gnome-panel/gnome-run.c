@@ -87,6 +87,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	    strncmp (s, "ftp://", strlen ("ftp://")) == 0 ||
 	    strncmp (s, "file:", strlen ("file:")) == 0 ||
 	    strncmp (s, "ghelp:", strlen ("ghelp:")) == 0 ||
+	    strncmp (s, "help:", strlen ("help:")) == 0 ||
 	    strncmp (s, "man:", strlen ("man:")) == 0 ||
 	    strncmp (s, "info:", strlen ("info:")) == 0) {
 		gnome_url_show (s);
