@@ -22,10 +22,14 @@ FISH_BITMAPS = fishanim.png oldwanda.png footguy.png
 EXTRA_DIST = \
 	fish_applet.desktop \
 	$(FISH_BITMAPS)	\
+	gnome-fish.png \
 	fish_applet.gnorba
 
 fishbitmapsdir = $(datadir)/pixmaps/fish
 fishbitmaps_DATA = $(FISH_BITMAPS)
+
+pixmapdir = $(datadir)/pixmaps
+pixmap_DATA = gnome-fish.png
 
 sysdir = $(datadir)/applets/Amusements
 sys_DATA = fish_applet.desktop
