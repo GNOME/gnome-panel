@@ -15,7 +15,6 @@
 
 #define HAVE_SAVE_SESSION_SIGNAL 1
 #define HAVE_APPLET_BIND_EVENTS 1
-#define HAVE_PANEL_SIZE 1
 #define HAVE_PANEL_PIXEL_SIZE 1
 #define HAVE_PANEL_DRAW_SIGNAL 1
 
@@ -26,12 +25,6 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 #define ORIENT_DOWN GNOME_Panel_ORIENT_DOWN
 #define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
 #define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
-
-typedef GNOME_Panel_SizeType PanelSizeType;
-#define SIZE_TINY GNOME_Panel_SIZE_TINY
-#define SIZE_STANDARD GNOME_Panel_SIZE_STANDARD
-#define SIZE_LARGE GNOME_Panel_SIZE_LARGE
-#define SIZE_HUGE GNOME_Panel_SIZE_HUGE
 
 enum {
 	PIXEL_SIZE_TINY = 24,
@@ -101,9 +94,6 @@ struct _AppletWidgetClass
 	   that you can update your orientation properly */
 	void (* change_orient) (AppletWidget *applet,
 				GNOME_Panel_OrientType orient);
-	/* DEPRECATED: when the panel size changes, semantics are the same as above */
-	void (* change_size) (AppletWidget *applet,
-			      GNOME_Panel_SizeType size);
 	/* the panel background changes, the pixmap handeling is likely
 	   to change */
 	void (* back_change) (AppletWidget *applet,
@@ -244,9 +234,6 @@ PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 /* Get the pixel size the applet should use */
 int		applet_widget_get_panel_pixel_size	(AppletWidget *applet);
 
-/* DEPRECATED: Get the size the applet should use */
-GNOME_Panel_SizeType	applet_widget_get_panel_size	(AppletWidget *applet);
-
 /* Get the free space for the applet if it's on an edge panel or 0
    if on a packed panel or on error */
 int		applet_widget_get_free_space	(AppletWidget *applet);
@@ -265,10 +252,8 @@ void		applet_widget_get_rgb_bg	(AppletWidget *applet,
 						 int *w, int *h,
 						 int *rowstride);
 
-/*use this instead of gnome init, if you want multi applet, you also
-  have to specify a "start new applet" function which will launch a new
-  applet*/
-int		applet_widget_init		(const char *app_id,
+/*use this instead of gnome init*/
+gboolean	applet_widget_init		(const char *app_id,
 						 const char *app_version,
 						 int argc,
 						 char **argv,

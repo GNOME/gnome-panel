@@ -54,139 +54,139 @@ PortableServer_POA thepoa;
 
 /***Panel stuff***/
 static GNOME_PanelSpot
-s_panel_add_applet(POA_GNOME_Panel *servant,
-		   GNOME_Applet panel_applet,
-		   CORBA_char *goad_id,
+s_panel_add_applet(PortableServer_Servant servant,
+		   const GNOME_Applet panel_applet,
+		   const CORBA_char *goad_id,
 		   CORBA_char ** cfgpath,
 		   CORBA_char ** globcfgpath,
 		   CORBA_unsigned_long* wid,
 		   CORBA_Environment *ev);
 
 static GNOME_PanelSpot
-s_panel_add_applet_full(POA_GNOME_Panel *servant,
-			GNOME_Applet panel_applet,
-			CORBA_char *goad_id,
-			CORBA_short panel,
-			CORBA_short pos,
+s_panel_add_applet_full(PortableServer_Servant servant,
+			const GNOME_Applet panel_applet,
+			const CORBA_char *goad_id,
+			const CORBA_short panel,
+			const CORBA_short pos,
 			CORBA_char ** cfgpath,
 			CORBA_char ** globcfgpath,
 			CORBA_unsigned_long* wid,
 			CORBA_Environment *ev);
 
 static void
-s_panel_quit(POA_GNOME_Panel *servant, CORBA_Environment *ev);
+s_panel_quit(PortableServer_Servant servant, CORBA_Environment *ev);
 
 static CORBA_boolean
-s_panel_get_in_drag(POA_GNOME_Panel *servant, CORBA_Environment *ev);
+s_panel_get_in_drag(PortableServer_Servant servant, CORBA_Environment *ev);
 
 static GNOME_StatusSpot
-s_panel_add_status(POA_GNOME_Panel *servant,
+s_panel_add_status(PortableServer_Servant servant,
 		   CORBA_unsigned_long* wid,
 		   CORBA_Environment *ev);
 
 static void
-s_panel_notice_config_changes(POA_GNOME_Panel *servant,
+s_panel_notice_config_changes(PortableServer_Servant servant,
 			      CORBA_Environment *ev);
 
 
 /*** PanelSpot stuff ***/
 
 static CORBA_char *
-s_panelspot_get_tooltip(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_tooltip(PortableServer_Servant servant,
 			CORBA_Environment *ev);
 
 static void
-s_panelspot_set_tooltip(POA_GNOME_PanelSpot *servant,
-			CORBA_char *val,
+s_panelspot_set_tooltip(PortableServer_Servant servant,
+			const CORBA_char *val,
 			CORBA_Environment *ev);
 
 static CORBA_short
-s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_parent_panel(PortableServer_Servant servant,
 			     CORBA_Environment *ev);
 
 static CORBA_short
-s_panelspot_get_spot_pos(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_spot_pos(PortableServer_Servant servant,
 			 CORBA_Environment *ev);
 
 static GNOME_Panel_OrientType
-s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_parent_orient(PortableServer_Servant servant,
 			      CORBA_Environment *ev);
 
-static GNOME_Panel_SizeType
-s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
+static CORBA_short
+s_panelspot_get_parent_size(PortableServer_Servant servant,
 			    CORBA_Environment *ev);
 
 static CORBA_short
-s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_free_space(PortableServer_Servant servant,
 			   CORBA_Environment *ev);
 
 static CORBA_boolean
-s_panelspot_get_send_position(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_send_position(PortableServer_Servant servant,
 			      CORBA_Environment *ev);
 static void
-s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
+s_panelspot_set_send_position(PortableServer_Servant servant,
 			      CORBA_boolean,
 			      CORBA_Environment *ev);
 
 static CORBA_boolean
-s_panelspot_get_send_draw(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_send_draw(PortableServer_Servant servant,
 			  CORBA_Environment *ev);
 static void
-s_panelspot_set_send_draw(POA_GNOME_PanelSpot *servant,
+s_panelspot_set_send_draw(PortableServer_Servant servant,
 			  CORBA_boolean,
 			  CORBA_Environment *ev);
 
 static GNOME_Panel_RgbImage *
-s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_rgb_background(PortableServer_Servant servant,
 			       CORBA_Environment *ev);
 
 static void
-s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
+s_panelspot_register_us(PortableServer_Servant servant,
 		     CORBA_Environment *ev);
 
 static void
-s_panelspot_unregister_us(POA_GNOME_PanelSpot *servant,
+s_panelspot_unregister_us(PortableServer_Servant servant,
 		       CORBA_Environment *ev);
 
 static void
-s_panelspot_abort_load(POA_GNOME_PanelSpot *servant,
+s_panelspot_abort_load(PortableServer_Servant servant,
 		       CORBA_Environment *ev);
 
 static void
-s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
+s_panelspot_show_menu(PortableServer_Servant servant,
 		      CORBA_Environment *ev);
 
 static void
-s_panelspot_drag_start(POA_GNOME_PanelSpot *servant,
+s_panelspot_drag_start(PortableServer_Servant servant,
 		       CORBA_Environment *ev);
 
 static void
-s_panelspot_drag_stop(POA_GNOME_PanelSpot *servant,
+s_panelspot_drag_stop(PortableServer_Servant servant,
 		      CORBA_Environment *ev);
 
 static void
-s_panelspot_add_callback(POA_GNOME_PanelSpot *servant,
-			 CORBA_char *callback_name,
-			 CORBA_char *stock_item,
-			 CORBA_char *menuitem_text,
+s_panelspot_add_callback(PortableServer_Servant servant,
+			 const CORBA_char *callback_name,
+			 const CORBA_char *stock_item,
+			 const CORBA_char *menuitem_text,
 			 CORBA_Environment *ev);
 
 static void
-s_panelspot_remove_callback(POA_GNOME_PanelSpot *servant,
-			    CORBA_char *callback_name,
+s_panelspot_remove_callback(PortableServer_Servant servant,
+			    const CORBA_char *callback_name,
 			    CORBA_Environment *ev);
 static void
-s_panelspot_callback_set_sensitive(POA_GNOME_PanelSpot *servant,
-				   CORBA_char *callback_name,
-				   CORBA_boolean sensitive,
+s_panelspot_callback_set_sensitive(PortableServer_Servant servant,
+				   const CORBA_char *callback_name,
+				   const CORBA_boolean sensitive,
 				   CORBA_Environment *ev);
 
 static void
-s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
+s_panelspot_sync_config(PortableServer_Servant servant,
 			CORBA_Environment *ev);
 
 static void
-s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
+s_panelspot_done_session_save(PortableServer_Servant servant,
 			      CORBA_boolean ret,
 			      CORBA_unsigned_long cookie,
 			      CORBA_Environment *ev);
@@ -208,12 +208,12 @@ static PortableServer_ServantBase__epv panel_base_epv = {
 
 static POA_GNOME_Panel__epv panel_epv = {
   NULL, /* private data */
-  (gpointer)&s_panel_add_applet,
-  (gpointer)&s_panel_add_applet_full,
-  (gpointer)&s_panel_quit,
-  (gpointer)&s_panel_get_in_drag,
-  (gpointer)&s_panel_add_status,
-  (gpointer)&s_panel_notice_config_changes
+  s_panel_add_applet,
+  s_panel_add_applet_full,
+  s_panel_quit,
+  s_panel_get_in_drag,
+  s_panel_add_status,
+  s_panel_notice_config_changes
 };
 static POA_GNOME_Panel__vepv panel_vepv = { &panel_base_epv, &panel_epv };
 static POA_GNOME_Panel panel_servant = { NULL, &panel_vepv };
@@ -227,29 +227,29 @@ static PortableServer_ServantBase__epv panelspot_base_epv = {
 
 static POA_GNOME_PanelSpot__epv panelspot_epv = {
   NULL, /* private data */
-  (gpointer)&s_panelspot_get_tooltip,
-  (gpointer)&s_panelspot_set_tooltip,
-  (gpointer)&s_panelspot_get_parent_panel,
-  (gpointer)&s_panelspot_get_spot_pos,
-  (gpointer)&s_panelspot_get_parent_orient,
-  (gpointer)&s_panelspot_get_parent_size,
-  (gpointer)&s_panelspot_get_free_space,
-  (gpointer)&s_panelspot_get_send_position,
-  (gpointer)&s_panelspot_set_send_position,
-  (gpointer)&s_panelspot_get_send_draw,
-  (gpointer)&s_panelspot_set_send_draw,
-  (gpointer)&s_panelspot_get_rgb_background,
-  (gpointer)&s_panelspot_register_us,
-  (gpointer)&s_panelspot_unregister_us,
-  (gpointer)&s_panelspot_abort_load,
-  (gpointer)&s_panelspot_show_menu,
-  (gpointer)&s_panelspot_drag_start,
-  (gpointer)&s_panelspot_drag_stop,
-  (gpointer)&s_panelspot_add_callback,
-  (gpointer)&s_panelspot_remove_callback,
-  (gpointer)&s_panelspot_callback_set_sensitive,
-  (gpointer)&s_panelspot_sync_config,
-  (gpointer)&s_panelspot_done_session_save
+  s_panelspot_get_tooltip,
+  s_panelspot_set_tooltip,
+  s_panelspot_get_parent_panel,
+  s_panelspot_get_spot_pos,
+  s_panelspot_get_parent_orient,
+  s_panelspot_get_parent_size,
+  s_panelspot_get_free_space,
+  s_panelspot_get_send_position,
+  s_panelspot_set_send_position,
+  s_panelspot_get_send_draw,
+  s_panelspot_set_send_draw,
+  s_panelspot_get_rgb_background,
+  s_panelspot_register_us,
+  s_panelspot_unregister_us,
+  s_panelspot_abort_load,
+  s_panelspot_show_menu,
+  s_panelspot_drag_start,
+  s_panelspot_drag_stop,
+  s_panelspot_add_callback,
+  s_panelspot_remove_callback,
+  s_panelspot_callback_set_sensitive,
+  s_panelspot_sync_config,
+  s_panelspot_done_session_save
 };
 static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panelspot_epv };
 
@@ -548,9 +548,9 @@ load_queued_externs(void)
 
 
 static GNOME_PanelSpot
-s_panel_add_applet(POA_GNOME_Panel *servant,
-		   GNOME_Applet panel_applet,
-		   CORBA_char *goad_id,
+s_panel_add_applet(PortableServer_Servant servant,
+		   const GNOME_Applet panel_applet,
+		   const CORBA_char *goad_id,
 		   CORBA_char ** cfgpath,
 		   CORBA_char ** globcfgpath,
 		   CORBA_unsigned_long* wid,
@@ -561,11 +561,11 @@ s_panel_add_applet(POA_GNOME_Panel *servant,
 }
 
 static GNOME_PanelSpot
-s_panel_add_applet_full(POA_GNOME_Panel *servant,
-			GNOME_Applet panel_applet,
-			CORBA_char *goad_id,
-			CORBA_short panel,
-			CORBA_short pos,
+s_panel_add_applet_full(PortableServer_Servant servant,
+			const GNOME_Applet panel_applet,
+			const CORBA_char *goad_id,
+			const CORBA_short panel,
+			const CORBA_short pos,
 			CORBA_char ** cfgpath,
 			CORBA_char ** globcfgpath,
 			CORBA_unsigned_long* wid,
@@ -669,19 +669,19 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 }
 
 static void
-s_panel_quit(POA_GNOME_Panel *servant, CORBA_Environment *ev)
+s_panel_quit(PortableServer_Servant servant, CORBA_Environment *ev)
 {
 	panel_quit();
 }
 
 static CORBA_boolean
-s_panel_get_in_drag(POA_GNOME_Panel *servant, CORBA_Environment *ev)
+s_panel_get_in_drag(PortableServer_Servant servant, CORBA_Environment *ev)
 {
 	return panel_applet_in_drag;
 }
 
 static GNOME_StatusSpot
-s_panel_add_status(POA_GNOME_Panel *servant,
+s_panel_add_status(PortableServer_Servant servant,
 		   CORBA_unsigned_long *wid,
 		   CORBA_Environment *ev)
 {
@@ -719,7 +719,7 @@ s_panel_add_status(POA_GNOME_Panel *servant,
 }
 
 static void
-s_panel_notice_config_changes(POA_GNOME_Panel *servant,
+s_panel_notice_config_changes(PortableServer_Servant servant,
 			      CORBA_Environment *ev)
 {
 	load_up_globals();
@@ -729,7 +729,7 @@ s_panel_notice_config_changes(POA_GNOME_Panel *servant,
 /*** PanelSpot stuff ***/
 
 static CORBA_char *
-s_panelspot_get_tooltip(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_tooltip(PortableServer_Servant servant,
 			CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -741,19 +741,19 @@ s_panelspot_get_tooltip(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_set_tooltip(POA_GNOME_PanelSpot *servant,
-			CORBA_char *val,
+s_panelspot_set_tooltip(PortableServer_Servant servant,
+			const CORBA_char *val,
 			CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
 	if(val && *val)
-		gtk_tooltips_set_tip (panel_tooltips,ext->ebox,val,NULL);
+		gtk_tooltips_set_tip (panel_tooltips, ext->ebox, val, NULL);
 	else
-		gtk_tooltips_set_tip (panel_tooltips,ext->ebox,NULL,NULL);
+		gtk_tooltips_set_tip (panel_tooltips, ext->ebox, NULL, NULL);
 }
 
 static CORBA_short
-s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_parent_panel(PortableServer_Servant servant,
 			     CORBA_Environment *ev)
 {
 	int panel;
@@ -773,7 +773,7 @@ s_panelspot_get_parent_panel(POA_GNOME_PanelSpot *servant,
 }
 
 static CORBA_short
-s_panelspot_get_spot_pos(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_spot_pos(PortableServer_Servant servant,
 			 CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -790,7 +790,7 @@ s_panelspot_get_spot_pos(POA_GNOME_PanelSpot *servant,
 }
 
 static GNOME_Panel_OrientType
-s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_parent_orient(PortableServer_Servant servant,
 			      CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -810,8 +810,8 @@ s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
 	return get_applet_orient(panel);
 }
 
-static GNOME_Panel_SizeType
-s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
+static CORBA_short
+s_panelspot_get_parent_size(PortableServer_Servant servant,
 			    CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -832,7 +832,7 @@ s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
 }
 
 static CORBA_short
-s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_free_space(PortableServer_Servant servant,
 			   CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -853,7 +853,7 @@ s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
 }
 
 static CORBA_boolean
-s_panelspot_get_send_position(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_send_position(PortableServer_Servant servant,
 			      CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -864,7 +864,7 @@ s_panelspot_get_send_position(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
+s_panelspot_set_send_position(PortableServer_Servant servant,
 			      CORBA_boolean enable,
 			      CORBA_Environment *ev)
 {
@@ -876,7 +876,7 @@ s_panelspot_set_send_position(POA_GNOME_PanelSpot *servant,
 }
 
 static CORBA_boolean
-s_panelspot_get_send_draw(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_send_draw(PortableServer_Servant servant,
 			  CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -887,7 +887,7 @@ s_panelspot_get_send_draw(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_set_send_draw(POA_GNOME_PanelSpot *servant,
+s_panelspot_set_send_draw(PortableServer_Servant servant,
 			  CORBA_boolean enable,
 			  CORBA_Environment *ev)
 {
@@ -899,7 +899,7 @@ s_panelspot_set_send_draw(POA_GNOME_PanelSpot *servant,
 }
 
 static GNOME_Panel_RgbImage *
-s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
+s_panelspot_get_rgb_background(PortableServer_Servant servant,
 			       CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -944,7 +944,7 @@ s_panelspot_get_rgb_background(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
+s_panelspot_register_us(PortableServer_Servant servant,
 			CORBA_Environment *ev)
 {
 	PanelWidget *panel;
@@ -981,7 +981,7 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_unregister_us(POA_GNOME_PanelSpot *servant,
+s_panelspot_unregister_us(PortableServer_Servant servant,
 			  CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -989,7 +989,7 @@ s_panelspot_unregister_us(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_abort_load(POA_GNOME_PanelSpot *servant,
+s_panelspot_abort_load(PortableServer_Servant servant,
 		       CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -1007,7 +1007,7 @@ s_panelspot_abort_load(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
+s_panelspot_show_menu(PortableServer_Servant servant,
 		      CORBA_Environment *ev)
 {
 	GtkWidget *panel;
@@ -1037,7 +1037,7 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 
 
 static void
-s_panelspot_drag_start(POA_GNOME_PanelSpot *servant,
+s_panelspot_drag_start(PortableServer_Servant servant,
 		       CORBA_Environment *ev)
 {
 	PanelWidget *panel;
@@ -1059,7 +1059,7 @@ s_panelspot_drag_start(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_drag_stop(POA_GNOME_PanelSpot *servant,
+s_panelspot_drag_stop(PortableServer_Servant servant,
 		      CORBA_Environment *ev)
 {
 	PanelWidget *panel;
@@ -1079,10 +1079,10 @@ s_panelspot_drag_stop(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_add_callback(POA_GNOME_PanelSpot *servant,
-			 CORBA_char *callback_name,
-			 CORBA_char *stock_item,
-			 CORBA_char *menuitem_text,
+s_panelspot_add_callback(PortableServer_Servant servant,
+			 const CORBA_char *callback_name,
+			 const CORBA_char *stock_item,
+			 const CORBA_char *menuitem_text,
 			 CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -1098,8 +1098,8 @@ s_panelspot_add_callback(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_remove_callback(POA_GNOME_PanelSpot *servant,
-			    CORBA_char *callback_name,
+s_panelspot_remove_callback(PortableServer_Servant servant,
+			    const CORBA_char *callback_name,
 			    CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -1110,9 +1110,9 @@ s_panelspot_remove_callback(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_callback_set_sensitive(POA_GNOME_PanelSpot *servant,
-				   CORBA_char *callback_name,
-				   CORBA_boolean sensitive,
+s_panelspot_callback_set_sensitive(PortableServer_Servant servant,
+				   const CORBA_char *callback_name,
+				   const CORBA_boolean sensitive,
 				   CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -1123,7 +1123,7 @@ s_panelspot_callback_set_sensitive(POA_GNOME_PanelSpot *servant,
 }
 
 static void
-s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
+s_panelspot_sync_config(PortableServer_Servant servant,
 			CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
@@ -1142,7 +1142,7 @@ save_next_idle(gpointer data)
 }
 
 static void
-s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
+s_panelspot_done_session_save(PortableServer_Servant servant,
 			      CORBA_boolean ret,
 			      CORBA_unsigned_long cookie,
 			      CORBA_Environment *ev)
