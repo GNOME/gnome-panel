@@ -901,16 +901,6 @@ drop_menu (PanelWidget *panel, int pos, const char *dir)
 	load_menu_applet (dir, FALSE /* main_menu */, flags, TRUE, FALSE, NULL, panel, pos, TRUE, NULL);
 }
 
-static gboolean
-uri_exists (const char *uri)
-{
-	gboolean ret;
-	GnomeVFSURI *vfs_uri = gnome_vfs_uri_new (uri);
-	ret = gnome_vfs_uri_exists (vfs_uri);
-	gnome_vfs_uri_unref (vfs_uri);
-	return ret;
-}
-
 static void
 drop_nautilus_uri (PanelWidget *panel,
 		   int pos,
@@ -944,7 +934,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	/* not filename, but path, these are uris, not local
 	 * files */
 	tmp = g_build_path ("/", dir, ".directory", NULL);
-	if (uri_exists (tmp)) {
+	if (panel_uri_exists (tmp)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
@@ -952,7 +942,7 @@ drop_directory (PanelWidget *panel, int pos, const char *dir)
 	g_free (tmp);
 
 	tmp = g_build_path ("/", dir, ".order", NULL);
-	if (uri_exists (tmp)) {
+	if (panel_uri_exists (tmp)) {
 		g_free (tmp);
 		drop_menu (panel, pos, dir);
 		return;
