@@ -104,6 +104,7 @@ static void
 about_cb (GtkWidget *widget, gpointer data)
 {
 	static GtkWidget *about;
+	GtkWidget *hbox, *l;
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
 	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
@@ -135,6 +136,15 @@ about_cb (GtkWidget *widget, gpointer data)
 	gtk_signal_connect (GTK_OBJECT (about), "destroy",
 			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 			    &about);
+
+	hbox = gtk_hbox_new (TRUE, 0);
+	l = gnome_href_new ("http://www.wfp.org/",
+			    _("End world hunger"));
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (about)->vbox),
+			    hbox, TRUE, FALSE, 0);
+	gtk_widget_show_all (hbox);
+
 	gtk_widget_show (about);
 }
 
