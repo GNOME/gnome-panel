@@ -20,8 +20,8 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-#include <gnome.h>
 #include <math.h>
+#include <gnome.h>
 
 #include "panel-include.h"
 #include "panel-widget.h"
