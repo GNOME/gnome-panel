@@ -1134,47 +1134,6 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 }
 
 static void
-add_to_run_dialog (GtkWidget    *widget,
-		   ShowItemMenu *sim)
-{
-	GError           *error = NULL;
-	GnomeDesktopItem *item;
-
-	item = gnome_desktop_item_new_from_uri (sim->item_loc,
-						GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-						&error);
-	if (item != NULL) {
-		const char *exec;
-
-		exec = gnome_desktop_item_get_string (
-				item, GNOME_DESKTOP_ITEM_EXEC);
-		if (!exec)
-			exec = gnome_desktop_item_get_string (
-				item, GNOME_DESKTOP_ITEM_URL);
-
-		if (exec != NULL)
-			panel_run_dialog_present_with_text (menuitem_to_screen (sim->menuitem), exec);
-		else
-			panel_error_dialog (menuitem_to_screen (sim->menuitem),
-					    "no_exec_or_url_field",
-					    _("Cannot add to run box"),
-					    _("No 'Exec' or 'URL' field in entry"));
-
-		gnome_desktop_item_unref (item);
-	} else {
-		g_assert (error != NULL);
-
-		panel_error_dialog (menuitem_to_screen (sim->menuitem),
-				    "cannot_load_entry",
-				    _("Cannot load entry"),
-				    "%s",
-				    error->message);
-
-		g_clear_error (&error);
-	}
-}
-
-static void
 add_app_to_panel (GtkWidget    *item,
 		  ShowItemMenu *sim)
 {
@@ -1484,22 +1443,6 @@ show_item_menu (GtkWidget      *item,
 						   "activate",
 						   G_CALLBACK (gtk_menu_shell_deactivate),
 						   G_OBJECT (item->parent));
-
-			if (!panel_lockdown_get_disable_command_line ()) {
-				menuitem = gtk_image_menu_item_new ();
-				setup_menuitem (menuitem, panel_menu_icon_get_size (),
-						NULL, _("Put into run dialog"), FALSE);
-				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
-						       menuitem);
-				g_signal_connect (menuitem, "activate",
-						  G_CALLBACK (add_to_run_dialog),
-						  sim);
-				g_signal_connect_swapped
-					(G_OBJECT(menuitem),
-					 "activate",
-					 G_CALLBACK(gtk_menu_shell_deactivate),
-					 G_OBJECT(item->parent));
-			}
 
 			if (!panel_lockdown_get_disable_command_line ()) {
 				menuitem = gtk_image_menu_item_new ();
