@@ -46,9 +46,9 @@ load_default_applets(void)
 	 */
 
 	/*we set the x value rediculously high for right align*/
+	load_applet("Menu", NULL, 0, 0);
 	load_applet("Clock", NULL, 0, 0);
 	load_applet("Mail check", NULL, 9999, 0);
-	load_applet("Menu", NULL, 0, 0);
 }
 
 

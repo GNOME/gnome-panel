@@ -405,7 +405,18 @@ save_applet_configuration(GtkWidget *widget, gpointer data)
 
 	sprintf(buf, "%d,", (*num)++);
 	path = g_copy_strings("/panel/Applets/", buf, id, ",", params, NULL);
-	sprintf(buf, "%d %d", xpos, ypos);
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			sprintf(buf, "%d %d", xpos, ypos);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			/*x and y are reversed!*/
+			/*this is done for loading the app position as well!!!*/
+			sprintf(buf, "%d %d", ypos, xpos);
+			break;
+	}
 
 	gnome_config_set_string(path, buf);
 
@@ -1174,6 +1185,9 @@ fix_applet_position(GtkWidget *applet, int *xpos, int *ypos)
 	g_list_free(applets);
 }
 
+static applet_pos applet_stack[100];
+static gint applet_stacktop=-1;
+static gint have_idle_func=FALSE;
 
 static gint
 fix_an_applet_idle_func(gpointer data)
@@ -1181,30 +1195,18 @@ fix_an_applet_idle_func(gpointer data)
 	int xpos;
 	int ypos;
 	GtkWidget *applet;
-	static GtkWidget *occupied;
 
-	if(!data)
-		return FALSE;
-
-	applet=(GtkWidget *)data;
-
-	if(occupied) {
-		/*this time it's occupied, wait for next time*/
-		if(occupied!=applet)
-			return TRUE;
-		/*free up the function*/
-		occupied=NULL;
+	if(applet_stacktop<0) {
+		have_idle_func=FALSE;
 		return FALSE;
 	}
-	occupied=applet;
 
-	if(GTK_WIDGET(applet)->allocation.width<=1) {
-		occupied=NULL;
+	applet=applet_stack[applet_stacktop].w;
+	xpos=applet_stack[applet_stacktop].x;
+	ypos=applet_stack[applet_stacktop].y;
+
+	if(GTK_WIDGET(applet)->allocation.width<=1)
 		return TRUE;
-	}
-
-	xpos=GTK_WIDGET(applet)->allocation.x;
-	ypos=GTK_WIDGET(applet)->allocation.y;
 
 	/*we probably want to do something like this but we need to
 	  refine that function*/
@@ -1214,6 +1216,31 @@ fix_an_applet_idle_func(gpointer data)
 		GTK_WIDGET(applet)->allocation.width,
 		GTK_WIDGET(applet)->allocation.height);
 	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
+	if((--applet_stacktop)<0) {
+		have_idle_func=FALSE;
+		return FALSE;
+	}
+	return TRUE;
+}
+
+/*add an applet to the stack of applets to fix up and create an
+  idle function if we haven't made it yet*/
+static gint
+fix_an_applet(GtkWidget *applet,gint x, gint y)
+{
+	if((++applet_stacktop)>=100) {
+		applet_stacktop--;
+		return FALSE;
+	}
+	applet_stack[applet_stacktop].w=applet;
+	applet_stack[applet_stacktop].x=x;
+	applet_stack[applet_stacktop].y=y;
+	/*we don't use the rest of applet_pos structure*/
+	if(have_idle_func)
+		return TRUE;
+
+	gtk_idle_add((void *)fix_an_applet_idle_func, NULL);
+	have_idle_func=TRUE;
 	return TRUE;
 }
 
@@ -1240,11 +1267,23 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC, get_applet_cmd_func(id));
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
 
-	/*fix_applet_position(eventbox, &xpos, &ypos);*/
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			fix_an_applet(eventbox,xpos,ypos);
+			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
+				      xpos, ypos);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			/*x and y are reversed!*/
+			/*this is done for saving the app position as well!!!*/
+			fix_an_applet(eventbox,ypos,xpos);
+			gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox,
+				      ypos, xpos);
+			break;
+	}
 
-	gtk_idle_add((void *)fix_an_applet_idle_func, eventbox);
-
-	gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox, xpos, ypos);
 
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
