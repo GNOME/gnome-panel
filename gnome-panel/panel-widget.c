@@ -2528,6 +2528,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 	ad->dirty = FALSE;
 	
 	ad->pos = ad->constrained = panel_widget_get_free_spot (new_panel, ad, pos);
+	if (ad->pos == -1)
+		ad->pos = ad->constrained = 0;
 	panel_widget_queue_applet_for_resize (ad);
 
 	ad->no_die++;
