@@ -601,13 +601,15 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 	/*convert width from pixels to cells*/
 	width = (width/PANEL_CELL_SIZE) + 1;
 
-	if(panel->snapped == PANEL_DRAWER)
-		panel_widget_pack_applets(panel);
-
 	if(width >= ad->cells)
 		return;
 
 	ad->cells = width;
+
+	if(panel->snapped == PANEL_DRAWER) {
+		panel_widget_pack_applets(panel);
+		panel_widget_set_size(panel,panel->size);
+	}
 }
 
 /*this is a special function and may fail if called improperly, it works
@@ -1857,10 +1859,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 		return 1;
 	}
 
-	if (panel->back_pixmap && pixmap &&
-	    strcmp (panel->back_pixmap, pixmap) == 0)
-		return 1;
-	
 	if (!g_file_exists (pixmap))
 		return 0;
 	
@@ -1878,11 +1876,11 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 
 		switch (panel->orient) {
 		case PANEL_HORIZONTAL:
-			gdk_imlib_render (im, w * 48 / h, 48);
+			gdk_imlib_render (im, w * panel->thick / h, panel->thick);
 			break;
 
 		case PANEL_VERTICAL:
-			gdk_imlib_render (im, 48, h * 48 / w);
+			gdk_imlib_render (im, panel->thick, h * panel->thick / w);
 			break;
 
 		default:
@@ -1944,6 +1942,20 @@ make_hidebutton(PanelWidget *panel,
 	return w;
 }
 
+static gint
+panel_widget_realize(GtkWidget *w, gpointer data)
+{
+	PanelWidget *panel = PANEL_WIDGET(w);
+
+	if (!panel_try_to_set_pixmap (panel, panel->back_pixmap)) {
+		if(panel->back_pixmap) {
+			g_free(panel->back_pixmap);
+			panel->back_pixmap = 0;
+		}
+	}
+	return FALSE;
+}
+
 GtkWidget*
 panel_widget_new (gint size,
 		  PanelOrientation orient,
@@ -1999,10 +2011,11 @@ panel_widget_new (gint size,
 	gtk_widget_show(panel->fixed);
 	gtk_widget_realize (panel->fixed);
 
-	if (!panel_try_to_set_pixmap (panel, back_pixmap))
-		back_pixmap = 0;
-
-	panel->back_pixmap = back_pixmap;
+	panel->fit_pixmap_bg = fit_pixmap_bg;
+	if(back_pixmap)
+		panel->back_pixmap = g_strdup(back_pixmap);
+	else
+		panel->back_pixmap = NULL;
 
 	if(back_color && back_color->pixel)
 		panel_try_to_set_back_color(panel, back_color);
@@ -2042,7 +2055,6 @@ panel_widget_new (gint size,
 	panel->snapped = snapped;
 	panel->orient = orient;
 	panel->mode = mode;
-	panel->fit_pixmap_bg = fit_pixmap_bg;
 	panel->state = state;
 
 	panel->master_widget = NULL;
@@ -2095,6 +2107,20 @@ panel_widget_new (gint size,
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
 				 panel);
+
+	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel))) {
+		if (!panel_try_to_set_pixmap (panel, back_pixmap)) {
+			if(panel->back_pixmap) {
+				g_free(panel->back_pixmap);
+				panel->back_pixmap = 0;
+			}
+		}
+	} else
+		gtk_signal_connect_after(GTK_OBJECT(panel),
+					 "realize",
+					 GTK_SIGNAL_FUNC(panel_widget_realize),
+					 panel);
+
 
 	panel_widget_set_size(panel,panel->size);
 	panel_widget_set_position(panel);
@@ -3159,7 +3185,7 @@ panel_widget_change_params(PanelWidget *panel,
 		panel->state = PANEL_SHOWN;
 
 	/*reduce flicker here*/
-	{
+	if(oldorient != panel->orient) {
 		gint w,h;
 		gdk_window_get_size(GTK_WIDGET(panel)->window,&w,&h);
 		if(w>h)
@@ -3189,11 +3215,21 @@ panel_widget_change_params(PanelWidget *panel,
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 
-	panel->fit_pixmap_bg = fit_pixmap_bg;
-	if (panel_try_to_set_pixmap (panel, pixmap)){
-		if (panel->back_pixmap)
-			g_free (panel->back_pixmap);
-		panel->back_pixmap = g_strdup (pixmap);
+	if(!pixmap ||
+	   !panel->back_pixmap ||
+	   panel->fit_pixmap_bg != fit_pixmap_bg ||
+	   strcmp(pixmap,panel->back_pixmap)!=0) {
+		panel->fit_pixmap_bg = fit_pixmap_bg;
+		if (panel_try_to_set_pixmap (panel, pixmap)){
+			if (panel->back_pixmap)
+				g_free (panel->back_pixmap);
+			panel->back_pixmap = g_strdup (pixmap);
+		} else {
+			if (panel->back_pixmap) {
+				g_free (panel->back_pixmap);
+				panel->back_pixmap=NULL;
+			}
+		}
 	}
 }
 

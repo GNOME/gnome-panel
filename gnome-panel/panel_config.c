@@ -214,12 +214,12 @@ value_changed ()
 static void 
 set_pixmap_enable (GtkWidget *widget, gpointer data)
 {
-	GtkWidget *entry = data;
+	GtkWidget *w = data;
 	gint enabled = GTK_TOGGLE_BUTTON(widget)->active;
 
 	panel_config_struct.pixmap_enable = enabled;
 
-	gtk_widget_set_sensitive(entry,enabled);
+	gtk_widget_set_sensitive(w,enabled);
 
 	if (panel_config_struct.config_box)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
@@ -234,6 +234,32 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
 }
 
+static void
+color_changed_cb( GnomeColorSelector *widget, gchar **color )
+{
+        char *tmp;
+ 	int r,g,b;
+
+	/*FIXME*/
+	return;
+
+	/* FIXME ugh, mem leak..anyone have a better way of doing this? */
+	tmp = g_malloc(24);
+        if( !tmp )
+        {
+	        g_warning(_("Can't allocate memory for color\n"));
+                return;
+        }
+        gnome_color_selector_get_color_int(
+        	widget, &r, &g, &b, 255 );
+	
+	sprintf( tmp, "#%02x%02x%02x", r, g, b );
+        *color = tmp;
+	if (panel_config_struct.config_box)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+}
+			   
+
 static GtkWidget *
 pixmap_page (PanelWidget *panel)
 {
@@ -245,6 +271,7 @@ pixmap_page (PanelWidget *panel)
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
 
+	/*image frame*/
 	f = gtk_frame_new (_("Image file"));
 	gtk_container_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 
@@ -255,8 +282,8 @@ pixmap_page (PanelWidget *panel)
 	gtk_container_add (GTK_CONTAINER (f), box);
 
 	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
-	fit = gtk_check_button_new_with_label (_("Scale image to fit panel"));
 
+	fit = gtk_check_button_new_with_label (_("Scale image to fit panel"));
 	w = gtk_check_button_new_with_label (_("Enable Background Image"));
 	/*always set to true, because in the beginning we don't have
 	  any pixmap so it's not gonna be set by default anyhow*/
@@ -279,13 +306,32 @@ pixmap_page (PanelWidget *panel)
 	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ?
 			    panel->back_pixmap : "");
 
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (fit), panel->fit_pixmap_bg);
-	gtk_signal_connect (GTK_OBJECT (w), "toggled",
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (fit),
+				     panel->fit_pixmap_bg);
+	gtk_signal_connect (GTK_OBJECT (fit), "toggled",
 			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg),
 			    NULL);
 	gtk_box_pack_start (GTK_BOX (box), fit, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
-			   
+
+
+#if 0
+	/*color frame*/
+	f = gtk_frame_new (_("Background color"));
+	gtk_container_border_width(GTK_CONTAINER (f), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 
+			    CONFIG_PADDING_SIZE);
+
+	box = gtk_vbox_new (0, 0);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (f), box);
+
+	w = gnome_color_selector_new((SetColorFunc)color_changed_cb, NULL);
+
+	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+#endif
+
 	return vbox;
 }
 	     
@@ -306,6 +352,7 @@ panel_config(PanelWidget *panel)
 	panel_config_struct.orient = panel->orient;
 	panel_config_struct.snapped = panel->snapped;
 	panel_config_struct.mode = panel->mode;
+	panel_config_struct.fit_pixmap_bg = panel->fit_pixmap_bg;
 	/*panel_config_struct.pixmap_enable = panel->back_pixmap != NULL;*/
 	panel_config_struct.pixmap_enable = TRUE;
 	
