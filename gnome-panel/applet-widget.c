@@ -647,10 +647,12 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
   goad_server_register(CORBA_OBJECT_NIL, applet_obj, goad_id, "server", &ev);
   pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
 
-  if(!panel_client)
+  if(!panel_client) {
     panel_client =
       goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", 0,
 					NULL);
+    pg_return_val_if_fail(panel_client != NULL, NULL);
+  }
 
 
 {  static volatile int stop_here = 0;
