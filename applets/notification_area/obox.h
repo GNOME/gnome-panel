@@ -25,48 +25,45 @@
  * GTK+ at ftp://ftp.gtk.org/pub/gtk/. 
  */
 
-#ifndef __GTK_OBOX_H__
-#define __GTK_OBOX_H__
+#ifndef __TRAY_OBOX_H__
+#define __TRAY_OBOX_H__
 
-
-#include <gdk/gdk.h>
 #include <gtk/gtkbox.h>
-
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 
-#define GTK_TYPE_OBOX            (gtk_obox_get_type ())
-#define GTK_OBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GTK_TYPE_OBOX, GtkOBox))
-#define GTK_OBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_OBOX, GtkOBoxClass))
-#define GTK_IS_OBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_OBOX))
-#define GTK_IS_OBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GTK_TYPE_OBOX))
-#define GTK_OBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GTK_TYPE_OBOX, GtkOBoxClass))
+#define TRAY_TYPE_OBOX            (tray_obox_get_type ())
+#define TRAY_OBOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), TRAY_TYPE_OBOX, TrayOBox))
+#define TRAY_OBOX_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), TRAY_TYPE_OBOX, TrayOBoxClass))
+#define TRAY_IS_OBOX(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), TRAY_TYPE_OBOX))
+#define TRAY_IS_OBOX_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), TRAY_TYPE_OBOX))
+#define TRAY_OBOX_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), TRAY_TYPE_OBOX, TrayOBoxClass))
 
 
-typedef struct _GtkOBox	      GtkOBox;
-typedef struct _GtkOBoxClass  GtkOBoxClass;
+typedef struct _TrayOBox       TrayOBox;
+typedef struct _TrayOBoxClass  TrayOBoxClass;
 
-struct _GtkOBox
+struct _TrayOBox
 {
   GtkBox box;
 
   GtkOrientation orientation;
 };
 
-struct _GtkOBoxClass
+struct _TrayOBoxClass
 {
   GtkBoxClass parent_class;
 };
 
 
-GType	   gtk_obox_get_type (void) G_GNUC_CONST;
-GtkWidget* gtk_obox_new	     (void);
+GType	   tray_obox_get_type (void) G_GNUC_CONST;
+GtkWidget* tray_obox_new      (void);
 
-void gtk_obox_set_orientation (GtkOBox       *obox,
-                               GtkOrientation orientation);
+void tray_obox_set_orientation (TrayOBox       *obox,
+                                GtkOrientation  orientation);
 
 
 #ifdef __cplusplus
@@ -74,4 +71,4 @@ void gtk_obox_set_orientation (GtkOBox       *obox,
 #endif /* __cplusplus */
 
 
-#endif /* __GTK_OBOX_H__ */
+#endif /* __TRAY_OBOX_H__ */

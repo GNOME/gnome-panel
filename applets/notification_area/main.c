@@ -193,8 +193,7 @@ message_cancelled (EggTrayManager *manager, GtkWidget *icon, glong id,
 static void
 update_size_and_orientation (SystemTray *tray)
 {
-  gtk_obox_set_orientation (GTK_OBOX (tray->box),
-                            tray->orientation);
+  tray_obox_set_orientation (TRAY_OBOX (tray->box), tray->orientation);
 
   /* note, you want this larger if the frame has non-NONE relief by default. */
 #define MIN_BOX_SIZE 3
@@ -351,7 +350,7 @@ applet_factory (PanelApplet *applet,
   atk_object_set_name (atko, _("Panel Notification Area"));
 
   tray->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
-  tray->box = gtk_obox_new ();
+  tray->box = tray_obox_new ();
   gtk_box_set_spacing (GTK_BOX (tray->box), 1);
 
   gtk_container_add (GTK_CONTAINER (tray->frame), tray->box);

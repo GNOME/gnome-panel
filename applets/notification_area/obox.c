@@ -30,16 +30,16 @@
 #include <gtk/gtkhbox.h>
 #include <gtk/gtkvbox.h>
 
-static void gtk_obox_class_init    (GtkOBoxClass   *klass);
-static void gtk_obox_init          (GtkOBox        *box);
-static void gtk_obox_size_request  (GtkWidget      *widget,
-				    GtkRequisition *requisition);
-static void gtk_obox_size_allocate (GtkWidget      *widget,
-				    GtkAllocation  *allocation);
+static void tray_obox_class_init    (TrayOBoxClass   *klass);
+static void tray_obox_init          (TrayOBox        *box);
+static void tray_obox_size_request  (GtkWidget       *widget,
+				     GtkRequisition  *requisition);
+static void tray_obox_size_allocate (GtkWidget       *widget,
+				     GtkAllocation   *allocation);
 
 
 GType
-gtk_obox_get_type (void)
+tray_obox_get_type (void)
 {
   static GType obox_type = 0;
 
@@ -47,18 +47,18 @@ gtk_obox_get_type (void)
     {
       static const GTypeInfo obox_info =
       {
-        sizeof (GtkOBoxClass),
+        sizeof (TrayOBoxClass),
         (GBaseInitFunc)         NULL,
         (GBaseFinalizeFunc)     NULL,
-        (GClassInitFunc)        gtk_obox_class_init,
+        (GClassInitFunc)        tray_obox_class_init,
         NULL,                   /* class_finalize */
         NULL,                   /* class_data */
-        sizeof (GtkOBox),
+        sizeof (TrayOBox),
         0,                      /* n_preallocs */
-        (GInstanceInitFunc)     gtk_obox_init 
+        (GInstanceInitFunc)     tray_obox_init 
       };
 
-      obox_type = g_type_register_static (GTK_TYPE_BOX, "GtkOBox",
+      obox_type = g_type_register_static (GTK_TYPE_BOX, "TrayOBox",
                                           &obox_info, 0);
     }
 
@@ -66,34 +66,34 @@ gtk_obox_get_type (void)
 }
 
 static void
-gtk_obox_class_init (GtkOBoxClass *class)
+tray_obox_class_init (TrayOBoxClass *class)
 {
   GtkWidgetClass *widget_class;
 
   widget_class = (GtkWidgetClass*) class;
 
-  widget_class->size_request = gtk_obox_size_request;
-  widget_class->size_allocate = gtk_obox_size_allocate;
+  widget_class->size_request = tray_obox_size_request;
+  widget_class->size_allocate = tray_obox_size_allocate;
 }
 
 static void
-gtk_obox_init (GtkOBox *obox)
+tray_obox_init (TrayOBox *obox)
 {
   obox->orientation = GTK_ORIENTATION_HORIZONTAL;
 }
 
 GtkWidget*
-gtk_obox_new (void)
+tray_obox_new (void)
 {
-  GtkOBox *obox;
+  TrayOBox *obox;
 
-  obox = g_object_new (GTK_TYPE_OBOX, NULL);
+  obox = g_object_new (TRAY_TYPE_OBOX, NULL);
 
   return GTK_WIDGET (obox);
 }
 
 static GtkWidgetClass*
-get_class (GtkOBox *obox)     
+get_class (TrayOBox *obox)     
 {
   GtkWidgetClass *klass;
 
@@ -115,13 +115,13 @@ get_class (GtkOBox *obox)
 }
 
 static void
-gtk_obox_size_request (GtkWidget      *widget,
-		       GtkRequisition *requisition)
+tray_obox_size_request (GtkWidget      *widget,
+		        GtkRequisition *requisition)
 {
   GtkWidgetClass *klass;
-  GtkOBox *obox;
+  TrayOBox *obox;
 
-  obox = GTK_OBOX (widget);
+  obox = TRAY_OBOX (widget);
 
   klass = get_class (obox);
 
@@ -129,13 +129,13 @@ gtk_obox_size_request (GtkWidget      *widget,
 }
 
 static void
-gtk_obox_size_allocate (GtkWidget     *widget,
-			GtkAllocation *allocation)
+tray_obox_size_allocate (GtkWidget     *widget,
+			 GtkAllocation *allocation)
 {
   GtkWidgetClass *klass;
-  GtkOBox *obox;
+  TrayOBox *obox;
 
-  obox = GTK_OBOX (widget);
+  obox = TRAY_OBOX (widget);
 
   klass = get_class (obox);
 
@@ -143,10 +143,10 @@ gtk_obox_size_allocate (GtkWidget     *widget,
 }
 
 void
-gtk_obox_set_orientation (GtkOBox       *obox,
-                          GtkOrientation orientation)
+tray_obox_set_orientation (TrayOBox       *obox,
+                           GtkOrientation  orientation)
 {
-  g_return_if_fail (GTK_IS_OBOX (obox));
+  g_return_if_fail (TRAY_IS_OBOX (obox));
 
   if (obox->orientation == orientation)
     return;
