@@ -287,7 +287,7 @@ about_cb (GtkWidget *menuitem, gpointer data)
 	}
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			"Copyright \xc2\xa9 1997-2002 Free Software Foundation, Inc."),
+			_("Copyright \xc2\xa9 1997-2002 Free Software Foundation, Inc."),
 			comment->str,
 			(const char **)authors,
 			(const char **)documenters,
