@@ -710,8 +710,12 @@ xstuff_window_raise_on_current_wspace (GtkWidget *window)
 		if (wspace != NULL)
 			wnck_window_move_to_workspace (wnck_window, wspace);
 	}
-
+	
 	gdk_window_raise (window->window);
+
+	if (wnck_window != NULL) {
+		wnck_window_activate (wnck_window);
+	}
 }
 
 
