@@ -53,10 +53,12 @@
 #include <panel-applet-gconf.h>
 
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 #include <libbonobo.h>
-#include <libgnomeui/libgnomeui.h>
-#include <libgnome/libgnome.h>
 #include <gconf/gconf-client.h>
+#include <libgnomeui/gnome-help.h>
+#include <libgnome/gnome-init.h>
+#include <libgnomeui/gnome-url.h>
 
 #ifdef HAVE_LIBECAL
 #include "calendar-client.h"
@@ -802,7 +804,6 @@ task_activated_cb (GtkTreeView       *view,
                    GtkTreeViewColumn *column,
                    ClockData         *cd)
 {
-        GError     *err = NULL;
         GtkTreeIter iter;
         char       *uri;
 
@@ -811,7 +812,9 @@ task_activated_cb (GtkTreeView       *view,
                             TASK_COLUMN_URL, &uri, -1);
 
         if (uri)
-                gnome_url_show (uri, &err);
+                gnome_url_show_on_screen (uri,
+					  gtk_widget_get_screen (cd->applet),
+					  NULL);
 
         return TRUE;
 }
