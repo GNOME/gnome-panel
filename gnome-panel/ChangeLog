@@ -1,3 +1,14 @@
+Tue May 14 11:37:24 2002  George Lebl <jirka@5z.com>
+
+	* menu.c: move the screenshot/search to a more appropriate location,
+	  one where it actually works all the time, and now it's not such a
+	  dirty hack (since that's the way the runbox is done) so remove
+	  that comment
+
+	* multiscreen-stuff.c: add checking for "GNOME_PANEL_NO_XINERAMA"
+	  env var, and if it exists ignore xinerama.  This is a quick
+	  and simple workaround for #73475
+
 2002-05-14  Anders Carlsson  <andersca@gnu.org>
 
 	* foobar-widget.c: (add_window), (create_task_menu),

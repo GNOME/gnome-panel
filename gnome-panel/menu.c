@@ -3575,6 +3575,31 @@ create_root_menu (GtkWidget *root_menu,
 				      _("Run a command"), NULL);
 	}
 
+	if (panel_is_program_in_path  ("gnome-search-tool")) {
+		menuitem = gtk_image_menu_item_new ();
+		setup_menuitem_try_pixmap (menuitem, "gnome-searchtool.png",
+					   _("Search for Files..."));
+		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
+		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				      _("Find files, folders, and documents "
+					"on your computer"),
+				      NULL);
+		g_signal_connect (menuitem, "activate",
+				  G_CALLBACK (menu_util_search), 0);
+	}
+
+	if (panel_is_program_in_path ("gnome-panel-screenshot")) {
+		menuitem = gtk_image_menu_item_new ();
+		setup_menuitem_try_pixmap (menuitem, "gnome-screenshot.png",
+					   _("Take a Screen Shot..."));
+		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
+		gtk_tooltips_set_tip (panel_tooltips, menuitem,
+				      _("Take a screen shot of your desktop"),
+				      NULL);
+		g_signal_connect (G_OBJECT (menuitem), "activate",
+				  G_CALLBACK (menu_util_screenshot), 0);
+	}
+
 	if (((has_inline && !has_subs) || has_subs) && has_subs2)
 		add_menu_separator (root_menu);
 
@@ -3610,7 +3635,7 @@ create_root_menu (GtkWidget *root_menu,
 			add_menu_separator (root_menu);
 		create_desktop_menu (root_menu, fake_submenus);
 	}
-	
+
 	return root_menu;
 }
 
@@ -3879,39 +3904,8 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	/*if we are allowed to be pigs and load all the menus to increase
 	  speed, load them*/
 	if(global_config.keep_menus_in_memory) {
-		GtkWidget *menuitem;
 		GSList *list = g_slist_append(NULL, (gpointer)menudir);
 		add_menu_widget (menu, panel, list, TRUE);
-
-		/* Evil Evil, adding gnome-search tool and gnome-panel-screenshot in GNOME Menu.
-		Right now there is no way to add this without making it appear in Applications menu.
-		*/
-
-		if (panel_is_program_in_path  ("gnome-search-tool")) {
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem_try_pixmap (menuitem, "gnome-searchtool.png",
-						  _("Search for Files..."));
-			gtk_menu_shell_insert (GTK_MENU_SHELL (menu->menu), menuitem, 2);
-			gtk_tooltips_set_tip (panel_tooltips, menuitem,
-					     _("Find files, folders, and documents "
-					     "on your computer"),
-					     NULL);
-			g_signal_connect (menuitem, "activate",
-					  G_CALLBACK (menu_util_search), 0);
-		}
-
-		if (panel_is_program_in_path ("gnome-panel-screenshot")) {
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem_try_pixmap (menuitem, "gnome-screenshot.png",
-						  _("Take a Screen Shot..."));
-			gtk_menu_shell_insert (GTK_MENU_SHELL (menu->menu), menuitem, 3);
-			gtk_tooltips_set_tip (panel_tooltips, menuitem,
-					     _("Take a screen shot of your desktop"),
-					     NULL);
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					  G_CALLBACK (menu_util_screenshot), 0);
-		}
-
 		g_slist_free(list);
 	}
 

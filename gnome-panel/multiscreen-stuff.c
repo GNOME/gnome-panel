@@ -75,6 +75,9 @@ multiscreen_init (void)
 	if (gdk_error_trap_pop () != 0)
 		have_xinerama = FALSE;
 
+	if (g_getenv ("GNOME_PANEL_NO_XINERAMA") != NULL)
+		have_xinerama = FALSE;
+
 	if (have_xinerama) {
 		int screen_num, i;
 		XineramaScreenInfo *xscreens =
