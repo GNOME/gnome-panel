@@ -3144,7 +3144,7 @@ create_properties_dialog(Menu *menu)
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
-	/*gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
+	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	vbox = gtk_vbox_new(FALSE,5);

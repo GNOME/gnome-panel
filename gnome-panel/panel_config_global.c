@@ -564,7 +564,7 @@ panel_config_global(void)
 	gtk_widget_set_events(box,
 			      gtk_widget_get_events(box) |
 			      GDK_BUTTON_PRESS_MASK);
-	/*gtk_window_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
+	/*gtk_window_set_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
 	gtk_signal_connect(GTK_OBJECT(box), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), NULL);

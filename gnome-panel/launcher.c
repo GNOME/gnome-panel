@@ -200,7 +200,7 @@ create_properties_dialog(Launcher *launcher)
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Launcher properties"));
-	/*gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
+	/*gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	launcher->dedit =
@@ -288,7 +288,7 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 			     GNOME_STOCK_BUTTON_OK,
 			     GNOME_STOCK_BUTTON_CANCEL,
 			     NULL);
-	/*gtk_window_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
+	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 	
 	notebook = gtk_notebook_new();
