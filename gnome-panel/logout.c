@@ -12,7 +12,7 @@ int applet_id = (-1);
 void
 change_orient(int id, int orient)
 {
-	PanelOrientType o = (PanelOrientType) orient;
+	/*PanelOrientType o = (PanelOrientType) orient;*/
 }
 
 void

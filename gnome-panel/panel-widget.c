@@ -1704,7 +1704,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 	panel = gtk_object_get_data(GTK_OBJECT(widget),PANEL_APPLET_PARENT_KEY);
 
-	g_return_if_fail(panel!=NULL);
+	g_return_val_if_fail(panel!=NULL,TRUE);
 
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:

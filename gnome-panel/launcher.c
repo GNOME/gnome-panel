@@ -338,7 +338,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle),
 				    dentry->terminal ? TRUE : FALSE);
 	gtk_table_attach(GTK_TABLE(table), toggle,
-			 0, 2, 4, 5,
+			 0, 2, 5, 6,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 0, 0);
@@ -368,14 +368,15 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 }
 
 static void
-properties(GtkWidget *widget)
+properties(gint id, gpointer data)
 {
 	GnomeDesktopEntry *dentry;
 	char              *path;
 	GtkWidget         *dialog;
 	Launcher          *launcher;
 
-	launcher = gtk_object_get_user_data(GTK_OBJECT(widget));
+	launcher = find_launcher(id);
+
 	path = launcher->dentry->location;
 
 	dentry = gnome_desktop_entry_load(path);
@@ -394,7 +395,7 @@ properties(GtkWidget *widget)
 void
 change_orient(int id, int orient)
 {
-	PanelOrientType o = (PanelOrientType)orient;
+	/*PanelOrientType o = (PanelOrientType)orient;*/
 }
 
 void
@@ -492,6 +493,12 @@ start_new_launcher(const char *path)
 
 	launchers = g_list_append(launchers,launcher);
 	launcher_count++;
+
+	gnome_panel_applet_register_callback(applet_id,
+					     "properties",
+					     _("Properties ..."),
+					     properties,
+					     NULL);
 
 	/*FIXME: corbaize*/
 	/*dentry = gnome_desktop_entry_load(launcher->dentry->location);

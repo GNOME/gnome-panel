@@ -10,10 +10,10 @@ char *
 get_full_path(char *argv0)
 {
 	char buf[PATH_MAX+2];
-	int cmdsize=100;
 	char *cmdbuf;
 	int i;
 #if 0
+	int cmdsize=100;
 	int fd[2];
 #else
 	FILE *fwhich;

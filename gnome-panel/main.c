@@ -249,7 +249,7 @@ void
 orientation_change(AppletInfo *info, PanelWidget *panel)
 {
 	if(info->type == APPLET_EXTERN) {
-		PanelOrientType orient;
+		PanelOrientType orient=ORIENT_UP;
 		switch(panel->snapped) {
 			case PANEL_FREE:
 			case PANEL_DRAWER:
@@ -558,6 +558,8 @@ panel_destroy(GtkWidget *widget, gpointer data)
 
 	if(panel_menu)
 		gtk_widget_unref(panel_menu);
+
+	return TRUE;
 }
 
 static void
