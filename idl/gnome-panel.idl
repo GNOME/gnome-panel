@@ -34,7 +34,7 @@ module GNOME {
 		        SIZE_LARGE,
 		        SIZE_HUGE	
 		};
-
+		
 		/* XXX do activation stuff here - the applet side of it
 		   will be via a GNOME::GenericFactory (ask elliot) */
 		
@@ -82,6 +82,10 @@ module GNOME {
 		  pushing around other applets, on packed panels this is
 		  always 0*/
 		readonly attribute short free_space;
+		
+		/*true or false, sets if the spot should send the applet
+		  position changes*/
+		attribute boolean send_position;
 
 		/* the applet is all done with building itself
 		   so it just tells us that it's all ready, this
@@ -121,6 +125,7 @@ module GNOME {
 					  in unsigned long cookie);
 		oneway void back_change (in Panel::BackInfoType backing);
 		oneway void set_tooltips_state (in boolean enabled);
+		oneway void change_position (in short x, in short y);
 		readonly attribute string goad_id;
 	};
 };
