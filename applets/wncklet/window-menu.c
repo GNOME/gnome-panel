@@ -244,14 +244,17 @@ window_menu_size_allocate (PanelApplet	 *applet,
 			   GtkAllocation *allocation,
 			   WindowMenu	 *window_menu)
 {
-	GList *children;
-	GtkWidget *child;
-	PanelAppletOrient orient;
+	PanelAppletOrient          orient;
+	GList                     *children;
+	GtkWidget                 *child;
+	PanelAppletBackgroundType  bg_type;
+	GdkColor                   bg_color;
+	GdkPixmap                 *bg_pixmap;
 
 	orient = panel_applet_get_orient (applet);
 
-	children = gtk_container_get_children(GTK_CONTAINER (window_menu->selector));
-	child = GTK_WIDGET(children->data);
+	children = gtk_container_get_children (GTK_CONTAINER (window_menu->selector));
+	child = GTK_WIDGET (children->data);
 	g_list_free (children);
 
 	if (orient == PANEL_APPLET_ORIENT_LEFT || 
@@ -270,6 +273,12 @@ window_menu_size_allocate (PanelApplet	 *applet,
 	}
 
 	window_menu->orient = orient;
+
+	bg_type = panel_applet_get_background (PANEL_APPLET (window_menu->applet),
+					       &bg_color, &bg_pixmap);
+	window_menu_change_background (PANEL_APPLET (window_menu->applet),
+				       bg_type, &bg_color, bg_pixmap,
+				       window_menu);
 }
 
 static gboolean
