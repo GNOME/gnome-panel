@@ -304,9 +304,10 @@ void		basep_widget_redo_window	(BasePWidget *basep);
 
 /* -1 means don't set, caller will not get queue resized as optimization */
 
-void		basep_border_recalc		(void);
-void		basep_border_queue_recalc	(void);
-void		basep_border_get		(BorderEdge edge,
+void		basep_border_recalc		(int screen);
+void		basep_border_queue_recalc	(int screen);
+void		basep_border_get		(int screen,
+						 BorderEdge edge,
 						 int *left,
 						 int *center,
 						 int *right);

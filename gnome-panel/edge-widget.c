@@ -142,13 +142,13 @@ edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 
 	switch (edge) {
 	case BORDER_RIGHT:
-		basep_border_get (BORDER_TOP, NULL, NULL, y);
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, y);
 		*y += foobar_widget_get_height (basep->screen);
 		*x = multiscreen_width(basep->screen) - w;
 
 		break;
 	case BORDER_LEFT:
-		basep_border_get (BORDER_TOP, y, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_TOP, y, NULL, NULL);
 		*y += foobar_widget_get_height (basep->screen);
 		break;
 	case BORDER_TOP:
@@ -162,7 +162,7 @@ edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x += multiscreen_x (basep->screen);
 	*y += multiscreen_y (basep->screen);
 
-	basep_border_queue_recalc ();
+	basep_border_queue_recalc (basep->screen);
 }
 
 static void
@@ -174,13 +174,13 @@ edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 
 	switch (edge) {
 	case BORDER_RIGHT:
-		basep_border_get (BORDER_TOP, NULL, NULL, &a);
-		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (basep->screen, BORDER_BOTTOM, NULL, NULL, &b);
 		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_LEFT:
-		basep_border_get (BORDER_TOP, &a, NULL, NULL);
-		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_BOTTOM, &b, NULL, NULL);
 		*h = multiscreen_height (basep->screen) - foobar_widget_get_height (basep->screen) - a - b;
 		break;
 	case BORDER_TOP:

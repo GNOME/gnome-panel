@@ -1154,7 +1154,7 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 
 	if (GTK_WIDGET_REALIZED (w)) {
 		g_slist_foreach (panel_list, queue_panel_resize, NULL);
-		basep_border_queue_recalc ();
+		basep_border_queue_recalc (FOOBAR_WIDGET (w)->screen);
 	}
 }
 

@@ -26,6 +26,13 @@
 #include "panel-include.h"
 #include "foobar-widget.h"
 
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <gdk/gdkx.h>
+#ifdef HAVE_LIBXINERAMA
+#include <X11/extensions/Xinerama.h>
+#endif
+
 #include "multiscreen-stuff.h"
 
 /* some globals */
@@ -33,10 +40,13 @@ static int		screens = 1;
 static GdkRectangle *	rectangles = NULL;
 static gboolean		initialized = FALSE;
 
-
 void
 multiscreen_init (void)
 {
+#ifdef HAVE_LIBXINERAMA
+	gboolean have_xinerama = FALSE;
+#endif
+
 	if (initialized)
 		return;
 
@@ -52,7 +62,52 @@ multiscreen_init (void)
 		rectangles[0].y = gdk_screen_height () / 2;
 		rectangles[0].width = gdk_screen_width () / 2;
 		rectangles[0].height = gdk_screen_height () / 2;
-	} else {
+
+		initialized = TRUE;
+
+		return;
+	}
+
+#ifdef HAVE_LIBXINERAMA
+	gdk_flush ();
+	gdk_error_trap_push ();
+	have_xinerama = XineramaIsActive (GDK_DISPLAY ());
+	gdk_flush ();
+	if (gdk_error_trap_pop () != 0)
+		have_xinerama = FALSE;
+
+	if (have_xinerama) {
+		int screen_num, i;
+		XineramaScreenInfo *xscreens =
+			XineramaQueryScreens (GDK_DISPLAY (),
+					      &screen_num);
+
+
+		if (screen_num <= 0) {
+			/* EEEEEK!, should never happen */
+			goto no_xinerama;
+		}
+
+		if (screen_num <= GdmXineramaScreen)
+			GdmXineramaScreen = 0;
+
+		rectangles = g_new0 (GdkRectangle, screen_num);
+		screens = screen_num;
+
+		for (i = 0; i < screen_num; i++) {
+			rectangles[i].x = xscreens[i].x_org;
+			rectangles[i].y = xscreens[i].y_org;
+			rectangles[i].width = xscreens[i].width;
+			rectangles[i].height = xscreens[i].height;
+		}
+
+		XFree (xscreens);
+	} else
+#endif
+	{
+#ifdef HAVE_LIBXINERAMA
+no_xinerama:
+#endif
 		/* no xinerama */
 		screens = 1;
 		rectangles = g_new0 (GdkRectangle, 1);

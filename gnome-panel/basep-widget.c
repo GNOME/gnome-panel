@@ -298,14 +298,14 @@ static void
 basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
 {
 	if (IS_BORDER_WIDGET (basep))
-		basep_border_queue_recalc ();
+		basep_border_queue_recalc (basep->screen);
 }
 
 static void
 basep_widget_state_change (BasePWidget *basep, BasePState state)
 {
 	if (IS_BORDER_WIDGET (basep))
-		basep_border_queue_recalc ();
+		basep_border_queue_recalc (basep->screen);
 }
 
 static void
@@ -893,7 +893,7 @@ basep_widget_destroy (GtkObject *o)
 	basep->leave_notify_timer_tag = 0;
 
 	if (IS_BORDER_WIDGET (basep))
-		basep_border_queue_recalc ();
+		basep_border_queue_recalc (basep->screen);
 
 	gtk_object_unref (GTK_OBJECT (basep->pos));
 	basep->pos = NULL;
@@ -2102,12 +2102,43 @@ typedef struct {
 	int right;
 } Border;
 
-static Border borders[4] = {{0}};
+typedef struct {
+	int screen;
+	Border borders[4];
+	int left;
+	int right;
+	int top;
+	int bottom;
+} ScreenBorders;
+
+static GList *border_list = NULL;
+
+static ScreenBorders *
+get_borders (int screen)
+{
+	GList *li;
+	ScreenBorders *sb;
+
+	for (li = border_list; li != NULL; li = li->next) {
+		sb = li->data;
+		if (sb->screen == screen)
+			return sb;
+	}
+
+	sb = g_new0 (ScreenBorders, 1);
+	sb->screen = screen;
+	border_list = g_list_prepend (border_list, sb);
+
+	return sb;
+}
 
 static void
-basep_calculate_borders (void)
+basep_calculate_borders (int screen)
 {
 	GSList *li;
+	ScreenBorders *sb;
+
+	sb = get_borders (screen);
 
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
@@ -2123,7 +2154,8 @@ basep_calculate_borders (void)
 
 		basep = BASEP_WIDGET (pd->panel);
 
-		if (basep->mode == BASEP_AUTO_HIDE)
+		if (basep->mode == BASEP_AUTO_HIDE ||
+		    basep->screen != screen)
 			continue;
 
 		gtk_widget_get_child_requisition (basep->ebox, &chreq);
@@ -2134,87 +2166,93 @@ basep_calculate_borders (void)
 			BasePState state = basep->state;
 			if (PANEL_WIDGET (basep->panel)->orient ==
 			    PANEL_VERTICAL) {
-				if (borders[edge].left < chreq.width &&
+				if (sb->borders[edge].left < chreq.width &&
 				    state != BASEP_HIDDEN_RIGHT)
-					borders[edge].left = chreq.width;
-				if (borders[edge].center < chreq.width &&
+					sb->borders[edge].left = chreq.width;
+				if (sb->borders[edge].center < chreq.width &&
 				    state != BASEP_HIDDEN_RIGHT &&
 				    state != BASEP_HIDDEN_LEFT)
-					borders[edge].center = chreq.width;
-				if (borders[edge].right < chreq.width &&
+					sb->borders[edge].center = chreq.width;
+				if (sb->borders[edge].right < chreq.width &&
 				    state != BASEP_HIDDEN_LEFT)
-					borders[edge].right = chreq.width;
+					sb->borders[edge].right = chreq.width;
 			} else {
-				if (borders[edge].left < chreq.height &&
+				if (sb->borders[edge].left < chreq.height &&
 				    state != BASEP_HIDDEN_RIGHT)
-					borders[edge].left = chreq.height;
-				if (borders[edge].center < chreq.height &&
+					sb->borders[edge].left = chreq.height;
+				if (sb->borders[edge].center < chreq.height &&
 				    state != BASEP_HIDDEN_RIGHT &&
 				    state != BASEP_HIDDEN_LEFT)
-					borders[edge].center = chreq.height;
-				if (borders[edge].right < chreq.height &&
+					sb->borders[edge].center = chreq.height;
+				if (sb->borders[edge].right < chreq.height &&
 				    state != BASEP_HIDDEN_LEFT)
-					borders[edge].right = chreq.height;
+					sb->borders[edge].right = chreq.height;
 			}
 		} else /* ALIGNED */ {
 			AlignedAlignment align = ALIGNED_POS(basep->pos)->align;
 			if (PANEL_WIDGET (basep->panel)->orient ==
 			    PANEL_VERTICAL) {
 				if (align == ALIGNED_LEFT &&
-				    borders[edge].left < chreq.width)
-					borders[edge].left = chreq.width;
+				    sb->borders[edge].left < chreq.width)
+					sb->borders[edge].left = chreq.width;
 				else if (align == ALIGNED_CENTER &&
-					 borders[edge].center < chreq.width)
-					borders[edge].center = chreq.width;
+					 sb->borders[edge].center < chreq.width)
+					sb->borders[edge].center = chreq.width;
 				else if (align == ALIGNED_RIGHT &&
-					 borders[edge].right < chreq.width)
-					borders[edge].right = chreq.width;
+					 sb->borders[edge].right < chreq.width)
+					sb->borders[edge].right = chreq.width;
 			} else {
 				if (align == ALIGNED_LEFT &&
-				    borders[edge].left < chreq.height)
-					borders[edge].left = chreq.height;
+				    sb->borders[edge].left < chreq.height)
+					sb->borders[edge].left = chreq.height;
 				else if (align == ALIGNED_CENTER &&
-					 borders[edge].center < chreq.height)
-					borders[edge].center = chreq.height;
+					 sb->borders[edge].center < chreq.height)
+					sb->borders[edge].center = chreq.height;
 				else if (align == ALIGNED_RIGHT &&
-					 borders[edge].right < chreq.height)
-					borders[edge].right = chreq.height;
+					 sb->borders[edge].right < chreq.height)
+					sb->borders[edge].right = chreq.height;
 			}
 		}
 	}
 }
 
 static int
-border_max (BorderEdge edge)
+border_max (ScreenBorders *sb, BorderEdge edge)
 {
-	return MAX (borders[edge].center,
-		    MAX (borders[edge].left, borders[edge].right));
+	return MAX (sb->borders[edge].center,
+		    MAX (sb->borders[edge].left, sb->borders[edge].right));
 }
 
 void
-basep_border_recalc (void)
+basep_border_recalc (int screen)
 {
 	int i;
 	GSList *li;
-	Border old[4];
+	ScreenBorders *sb;
+	ScreenBorders old;
 
-	/* FIXME! */
-	/* SHIT!, this needs to be kept per screen! */
+	sb = get_borders (screen);
 
-	memcpy (old, borders, 4 * sizeof (Border));
+	memcpy (&old, sb, sizeof (ScreenBorders));
 
 	for (i = 0; i < 4; i++) {
-		borders[i].left = 0;
-		borders[i].center = 0;
-		borders[i].right = 0;
+		sb->borders[i].left = 0;
+		sb->borders[i].center = 0;
+		sb->borders[i].right = 0;
 	}
 
 	/* if not avoiding collisions, keeping things at 0 is a safe bet */
 	if (global_config.avoid_collisions) {
-		basep_calculate_borders ();
+		basep_calculate_borders (screen);
 	}
 
-	if (memcmp (old, borders, 4 * sizeof (Border)) != 0) {
+	sb->left = border_max (sb, BORDER_LEFT);
+	sb->right = border_max (sb, BORDER_RIGHT);
+	sb->top = border_max (sb, BORDER_TOP) +
+		foobar_widget_get_height (screen);
+	sb->bottom = border_max (sb, BORDER_BOTTOM);
+
+	if (memcmp (&old, sb, sizeof (ScreenBorders)) != 0) {
 		for (li = panel_list; li != NULL; li = li->next) {
 			PanelData *pd = li->data;
 			GtkWidget *panel;
@@ -2223,17 +2261,22 @@ basep_border_recalc (void)
 
 			panel = pd->panel;
 
-			if (IS_BORDER_WIDGET (panel))
+			if (IS_BORDER_WIDGET (panel) &&
+			    BASEP_WIDGET (panel)->screen == screen) {
 				gtk_widget_queue_resize (panel);
+			}
 		}
-	}
 
-	/* this does not generate xtraffic if not needed */
-	xstuff_setup_desktop_area (border_max (BORDER_LEFT),
-				   border_max (BORDER_RIGHT),
-				   border_max (BORDER_TOP) +
-				     foobar_widget_get_height (0 /* FIXME */),
-				   border_max (BORDER_BOTTOM));
+		if (sb->left != old.left ||
+		    sb->right != old.right ||
+		    sb->top != old.top ||
+		    sb->bottom != old.bottom)
+			xstuff_setup_desktop_area (screen,
+						   sb->left,
+						   sb->right,
+						   sb->top,
+						   sb->bottom);
+	}
 }
 
 static guint queue_recalc_id = 0;
@@ -2241,30 +2284,38 @@ static guint queue_recalc_id = 0;
 static gboolean
 queue_recalc_handler (gpointer data)
 {
+	int screen = GPOINTER_TO_INT (data);
 	queue_recalc_id = 0;
 
-	basep_border_recalc ();
+	basep_border_recalc (screen);
 
 	return FALSE;
 }
 
 void
-basep_border_queue_recalc (void)
+basep_border_queue_recalc (int screen)
 {
 	if (queue_recalc_id == 0) {
-		queue_recalc_id = gtk_idle_add (queue_recalc_handler, NULL);
+		queue_recalc_id = gtk_idle_add (queue_recalc_handler, 
+						GINT_TO_POINTER (screen));
 	}
 }
 
 void
-basep_border_get (BorderEdge edge, int *left, int *center, int *right)
+basep_border_get (int screen, BorderEdge edge,
+		  int *left, int *center, int *right)
 {
+	ScreenBorders *sb;
+
+	g_assert (screen >=0);
 	g_assert (edge >=0 && edge <= 3);
 
+	sb = get_borders (screen);
+
 	if (left != NULL)
-		*left = borders[edge].left;
+		*left = sb->borders[edge].left;
 	if (center != NULL)
-		*center = borders[edge].center;
+		*center = sb->borders[edge].center;
 	if (right != NULL)
-		*right = borders[edge].right;
+		*right = sb->borders[edge].right;
 }

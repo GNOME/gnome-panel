@@ -206,8 +206,8 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		break;
 	case BORDER_RIGHT:
 		*x = multiscreen_width(basep->screen) - w;
-		basep_border_get (BORDER_TOP, NULL, NULL, &a);
-		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
+		basep_border_get (basep->screen, BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (basep->screen, BORDER_BOTTOM, NULL, NULL, &b);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
 			*y = foobar_widget_get_height (basep->screen) + a;
@@ -221,8 +221,8 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		}
 		break;
 	case BORDER_LEFT:
-		basep_border_get (BORDER_TOP, &a, NULL, NULL);
-		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (basep->screen, BORDER_BOTTOM, &b, NULL, NULL);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
 			*y = foobar_widget_get_height (basep->screen) + a;
@@ -240,7 +240,7 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 	*x += multiscreen_x (basep->screen);
 	*y += multiscreen_y (basep->screen);
 
-	basep_border_queue_recalc ();
+	basep_border_queue_recalc (basep->screen);
 }
 
 static void

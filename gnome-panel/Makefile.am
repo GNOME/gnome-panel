@@ -183,7 +183,8 @@ panel_LDADD = \
 	$(ORB_LIBS)		\
 	$(GNOMEUI_LIBS)		\
 	$(INTLLIBS)		\
-	@PIXBUF_LIBS@
+	@PIXBUF_LIBS@		\
+	@XINERAMA_LIBS@
 
 panel_LDFLAGS=-export-dynamic
 

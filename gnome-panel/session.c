@@ -20,6 +20,7 @@
 #include "gnome-run.h"
 #include "global-keys.h"
 #include "xstuff.h"
+#include "multiscreen-stuff.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -234,7 +235,9 @@ apply_global_config (void)
 	menu_flags_old = global_config.menu_flags;
 
 	if (old_avoid_collisions != global_config.avoid_collisions) {
-		basep_border_queue_recalc ();
+		int i;
+		for (i = 0; i < multiscreen_screens (); i++)
+			basep_border_queue_recalc (i);
 	}
 	old_avoid_collisions = global_config.avoid_collisions;
 
