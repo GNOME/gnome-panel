@@ -84,12 +84,6 @@ computer_clock_update_func(GtkWidget *clock, time_t current_time)
 	gtk_label_set (GTK_LABEL (cc->time), hour);
 }
 
-static gint
-testbutton_c(GtkWidget *widget, gpointer data)
-{
-	puts("CLICKED TEST!");
-}
-
 static void
 create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 {
@@ -97,7 +91,6 @@ create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 	GtkWidget     *align;
 	GtkWidget     *vbox;
 	ComputerClock *cc;
-	GtkWidget *testbutton;
 
 	frame = gtk_frame_new(NULL);
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
@@ -120,13 +113,6 @@ create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), cc->time);
 	gtk_widget_show(cc->date);
 	gtk_widget_show(cc->time);
-
-	testbutton = gtk_button_new_with_label("TEST");
-	gtk_signal_connect(GTK_OBJECT(testbutton), "clicked",
-			   (GtkSignalFunc) testbutton_c,
-			   NULL);
-	gtk_box_pack_start_defaults(GTK_BOX(vbox), testbutton);
-	gtk_widget_show(testbutton);
 
 	gtk_object_set_user_data(GTK_OBJECT(frame), cc);
 	gtk_signal_connect(GTK_OBJECT(frame), "destroy",
