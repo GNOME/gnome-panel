@@ -53,6 +53,9 @@ finalize (GObject *object)
 		return;
 	}
 
+	if (disclosure->priv->expand_id > 0)
+		g_source_remove (disclosure->priv->expand_id);
+
 	if (disclosure->priv->container != NULL) {
 		g_object_unref (G_OBJECT (disclosure->priv->container));
 	}
@@ -150,6 +153,9 @@ expand_collapse_timeout (gpointer data)
 		g_object_set (G_OBJECT (disclosure),
 			      "label", disclosure->priv->hidden,
 			      NULL);
+
+		disclosure->priv->expand_id = 0;
+
 		return FALSE;
 	} else if ((int) disclosure->priv->style < (int) GTK_EXPANDER_COLLAPSED) {
 		disclosure->priv->style = GTK_EXPANDER_COLLAPSED;
@@ -161,6 +167,8 @@ expand_collapse_timeout (gpointer data)
 		g_object_set (G_OBJECT (disclosure),
 			      "label", disclosure->priv->shown,
 			      NULL);
+
+		disclosure->priv->expand_id = 0;
 
 		return FALSE;
 	} else {

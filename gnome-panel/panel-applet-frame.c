@@ -103,8 +103,6 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	temp_key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, gconf_key, "bonobo_iid");
 	applet_iid = gconf_client_get_string (client, temp_key, NULL);
 
-	fprintf (stderr, "Loading %s %d\n", applet_iid, position);
-
 	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, gconf_key);
 
 	g_free (applet_iid);

@@ -1,4 +1,16 @@
 2002-07-01  Mark McLoughlin  <mark@skynet.ie>
+	
+	Fixes #86455
+
+	* disclosure-widget.c:
+	(finalize): remove the timeout.
+	(expand_collapse_timeout): unset timeout tag if last time
+	running.
+
+	* panel-applet-frame.c: (panel_applet_frame_load_from_gconf):
+	kill debug.
+
+2002-07-01  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel.c: (drag_data_recieved_cb), (panel_monitor_from_toplevel),
 	(panel_is_applet_right_stick): move here from applet.c
