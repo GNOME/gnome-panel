@@ -208,8 +208,10 @@ panel_applet_add_preferences (PanelApplet  *applet,
 		g_error_free (our_error);
 	}
 
-	gconf_client_add_dir (
-		client, applet->priv->prefs_key, GCONF_CLIENT_PRELOAD_NONE, NULL);
+	gconf_client_add_dir (client,
+			      applet->priv->prefs_key,
+			      GCONF_CLIENT_PRELOAD_RECURSIVE,
+			      NULL);
 }
 
 gchar *
