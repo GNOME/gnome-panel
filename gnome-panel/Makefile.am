@@ -34,6 +34,7 @@ lib_LTLIBRARIES = libpanel_applet.la
 libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	mico-parse.cc \
+	mico-parse.h \
 	panel-util.c  \
 	panel-util.h  \
 	applet-widget.c \
@@ -42,9 +43,6 @@ libpanel_applet_la_SOURCES = \
 libpanel_appletinclude_HEADERS = \
 	applet-lib.h \
 	applet-widget.h
-
-#libpanel_appletinclude_HEADERS = applet-lib.h \
-#	applet-widget.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
