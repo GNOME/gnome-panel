@@ -129,7 +129,7 @@ fork_new_handler (RemoteHandler handler, gpointer data,
 	} else {
 		/*parent*/
 		close (fd[1]);
-		waitpid (pid, 0, 0);
+		while ((waitpid (pid, 0, 0) == -1) && errno == EINTR);
 		read (fd[0], &pid, sizeof (pid));
 		
 		if (pid < 0) {

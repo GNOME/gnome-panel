@@ -1,3 +1,14 @@
+2002-07-11  Deepa Chacko Pillai <deepa.chacko@wipro.com>
+
+	* remote-helper.c: Added check for waitpid ()
+	returning -1 and errno EINTR. Fixes bug 88005.
+
+2002-07-29  Mark McLoughlin  <mark@skynet.ie>
+
+	reviewed by: <delete if not using a buddy>
+
+	* remote-helper.c: (fork_new_handler):
+
 2002-07-29  Mark McLoughlin  <mark@skynet.ie>
 
 	* tasklist.c: (fill_tasklist_applet): handle
