@@ -1,3 +1,15 @@
+2003-11-20  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler): do
+	not stop unhiding the panel if the cursor is not in the panel but the
+	auto_hide property is FALSE. Fix behaviour when you changed the
+	auto_hide key in GConf and the panel did not unhide.
+	(panel_toplevel_hide), (panel_toplevel_unhide): if the animation is
+	disabled, do gtk_widget_hide/show only if the toplevel is a drawer.
+	This fix a bug where a panel was totally hidden and the user could not
+	bring it back to the screen.
+	Fix bug #127439
+
 2003-11-19  Vincent Untz  <vincent@vuntz.net>
  
 	* gnome-panel-screenshot.c: (take_window_shot): don't crash when using
