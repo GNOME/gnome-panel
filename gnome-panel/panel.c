@@ -604,7 +604,7 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 {
 	if(!applet)
 		return;
-	gtk_tooltips_set_tips(panel_tooltips,applet,tooltip);
+	gtk_tooltips_set_tip (panel_tooltips,applet,tooltip,NULL);
 }
 
 
