@@ -104,6 +104,10 @@ else
    AC_MSG_RESULT(no)
    LIBECAL_REQUIREMENT=
 fi
+if test -n "$LIBECAL_REQUIREMENT"; then
+  AC_DEFINE([HAVE_LIBECAL], 1,
+            [Defined when evolution-data-server libecal-1.0 is detected])
+fi
 AM_CONDITIONAL(HAVE_LIBECAL, test -n "$LIBECAL_REQUIREMENT")
 
 PKG_CHECK_MODULES(CLOCK, gtk+-2.0 >= $GTK_REQUIRED libgnomeui-2.0 >= $LIBGNOMEUI_REQUIRED $LIBECAL_REQUIREMENT)
