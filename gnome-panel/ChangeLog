@@ -1,3 +1,19 @@
+2004-02-28  Rob Adams  <readams@readams.net>
+
+	Some fixes for xinerama positioning and collision detection code.
+	Fixes #112566.
+	
+	* panel-struts.c (panel_struts_set_window_hint): don't set the
+	strut at all if not at a visible extreme.
+
+	* panel-toplevel.c (panel_toplevel_calc_new_orientation): support
+	xinerama properly.
+	(panel_toplevel_update_struts): keep the struts updated even for
+	internal edges; this way collision detection will work on these
+	edges.
+	(panel_toplevel_update_expanded_position): add the appropriate
+	xinerama monitor offsets.
+
 2004-02-28  Vincent Untz  <vincent@vuntz.net>
 
 	* menu.c: (append_log_out): remove the username from the log out menu

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2003 Sun Microsystems, Inc.
+ * Copyright (C) 2003,2004 Rob Adams
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -286,20 +287,24 @@ panel_struts_set_window_hint (PanelToplevel *toplevel)
 
 	switch (strut->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		if (topmost && monitor_y > 0)
+		if (monitor_y > 0)
 			strut_size += monitor_y;
+		if (!topmost) strut_size = 0;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		if (bottommost && monitor_y + monitor_height < screen_height)
+		if (monitor_y + monitor_height < screen_height)
 			strut_size += screen_height - (monitor_y + monitor_height);
+		if (!bottommost) strut_size = 0;
 		break;
 	case PANEL_ORIENTATION_LEFT:
 		if (leftmost && monitor_x > 0)
 			strut_size += monitor_x;
+		if (!leftmost) strut_size = 0;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		if (rightmost && monitor_x + monitor_width < screen_width)
+		if (monitor_x + monitor_width < screen_width)
 			strut_size += screen_width - (monitor_x + monitor_width);
+		if (!rightmost) strut_size = 0;
 		break;
 	default:
 		g_assert_not_reached ();

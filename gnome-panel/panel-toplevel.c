@@ -2,6 +2,7 @@
  * panel-toplevel.c: The panel's toplevel window object.
  *
  * Copyright (C) 2003 Sun Microsystems, Inc.
+ * Copyright (C) 2004 Rob Adams
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -568,12 +569,12 @@ panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
 {
 	PanelOrientation  new_orientation;
 	GdkScreen        *screen;
-	int               screen_width, screen_height;
 	int               hborder, vborder;
 	int               monitor;
+	int               monitor_width, monitor_height;
+	int               new_x, new_y;
 
-	screen = panel_toplevel_get_screen_geometry (
-			toplevel, &screen_width, &screen_height);
+	screen = gtk_window_get_screen (GTK_WINDOW (toplevel));
 
 	monitor = gdk_screen_get_monitor_at_point (screen, pointer_x, pointer_y);
 
@@ -582,62 +583,64 @@ panel_toplevel_calc_new_orientation (PanelToplevel *toplevel,
 	else
 		vborder = hborder = (3 * toplevel->priv->geometry.width)  >> 1;
 
+	new_x = pointer_x - panel_multiscreen_x (screen, monitor);
+	new_y = pointer_y - panel_multiscreen_y (screen, monitor);
+	monitor_width = panel_multiscreen_width (screen, monitor);
+	monitor_height = panel_multiscreen_height (screen, monitor);
+
 	new_orientation = toplevel->priv->orientation;
 
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
-		if (pointer_y > (screen_height - hborder))
+		if (new_y > (monitor_height - hborder))
 			new_orientation = PANEL_ORIENTATION_BOTTOM;
 
-		else if (pointer_y > hborder) {
-			if (pointer_x > (screen_width - vborder))
+		else if (new_y > hborder) {
+			if (new_x > (monitor_width - vborder))
 				new_orientation = PANEL_ORIENTATION_RIGHT;
-			else if (pointer_x < vborder)
+			else if (new_x < vborder)
 				new_orientation = PANEL_ORIENTATION_LEFT;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
+		} 
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
-		if (pointer_y < hborder)
+		if (new_y < hborder)
 			new_orientation = PANEL_ORIENTATION_TOP;
 
-		else if (pointer_y < (screen_height - hborder)) {
-			if (pointer_x > (screen_width - vborder))
+		else if (new_y < (monitor_height - hborder)) {
+			if (new_x > (monitor_width - vborder))
 				new_orientation = PANEL_ORIENTATION_RIGHT;
-			else if (pointer_x < vborder)
+			else if (new_x < vborder)
 				new_orientation = PANEL_ORIENTATION_LEFT;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
+		} 
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		if (pointer_x > (screen_width - vborder))
+		if (new_x > (monitor_width - vborder))
 			new_orientation = PANEL_ORIENTATION_RIGHT;
 
-		else if (pointer_x > vborder) {
-			if (pointer_y > (screen_height - hborder))
+		else if (new_x > vborder) {
+			if (new_y > (monitor_height - hborder))
 				new_orientation = PANEL_ORIENTATION_BOTTOM;
-			else if (pointer_y < hborder)
+			else if (new_y < hborder)
 				new_orientation = PANEL_ORIENTATION_TOP;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
+		} 
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		if (pointer_x < vborder)
+		if (new_x < vborder)
 			new_orientation = PANEL_ORIENTATION_LEFT;
 
-		else if (pointer_x < (screen_width - vborder)) {
-			if (pointer_y > (screen_height - hborder))
+		else if (new_x < (monitor_width - vborder)) {
+			if (new_y > (monitor_height - hborder))
 				new_orientation = PANEL_ORIENTATION_BOTTOM;
-			else if (pointer_y < hborder)
+			else if (new_y < hborder)
 				new_orientation = PANEL_ORIENTATION_TOP;
-		} else
-			panel_toplevel_set_monitor (toplevel, monitor);
+		}
 		break;
 	default:
 		g_assert_not_reached ();
 		break;
 	}
 
+	panel_toplevel_set_monitor (toplevel, monitor);
 	panel_toplevel_set_orientation (toplevel, new_orientation);
 }
 
@@ -1305,13 +1308,6 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 						      &monitor_width,
 						      &monitor_height);
 
-	panel_multiscreen_is_at_visible_extreme (screen,
-						 toplevel->priv->monitor,
-						 &leftmost,
-						 &rightmost,
-						 &topmost,
-						 &bottommost);
-
 	if (end_of_animation) {
 		x = toplevel->priv->animation_end_x;
 		y = toplevel->priv->animation_end_y;
@@ -1337,10 +1333,10 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 	strut = strut_start = strut_end = 0;
 
 	if (orientation & PANEL_HORIZONTAL_MASK) {
-		if (topmost && y <= monitor_y) {
+		if (y <= monitor_y) {
 			orientation = PANEL_ORIENTATION_TOP;
 			strut = y + height - monitor_y;
-		} else if (bottommost && y >= monitor_y + monitor_height - height) {
+		} else if (y >= monitor_y + monitor_height - height) {
 			orientation = PANEL_ORIENTATION_BOTTOM;
 			strut = monitor_y + monitor_height - y;
 		}
@@ -1350,10 +1346,10 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 			strut_end = MIN (x + width, monitor_x + monitor_width) - 1;
 		}
 	} else {
-		if (leftmost && x <= monitor_x) {
+		if (x <= monitor_x) {
 			orientation = PANEL_ORIENTATION_LEFT;
 			strut = x + width - monitor_x;
-		} else if (rightmost && x >= monitor_x + monitor_width - width) {
+		} else if (x >= monitor_x + monitor_width - width) {
 			orientation = PANEL_ORIENTATION_RIGHT;
 			strut = monitor_x + monitor_width - x;
 		}
@@ -1929,18 +1925,18 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 	switch (toplevel->priv->orientation) {
 	case PANEL_ORIENTATION_TOP:
 		x = monitor_x;
-		y = 0;
+		y = monitor_y;
 		break;
 	case PANEL_ORIENTATION_LEFT:
-		x = 0;
+		x = monitor_x;
 		y = monitor_y;
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		x = monitor_x;
-		y = monitor_height - toplevel->priv->geometry.height;
+		y = monitor_y + monitor_height - toplevel->priv->geometry.height;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		x = monitor_width - toplevel->priv->geometry.width;
+		x = monitor_x + monitor_width - toplevel->priv->geometry.width;
 		y = monitor_y;
 		break;
 	default:
