@@ -418,11 +418,14 @@ panel_properties_dialog_setup_image_chooser (PanelPropertiesDialog *dialog,
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
-	if (image) {
+	if (string_empty (image))
+		gtk_file_chooser_unselect_all (GTK_FILE_CHOOSER (dialog->image_chooser));
+	else
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
 					       image);
+	
+	if (image)
 		g_free (image);
-	}
 
 	g_signal_connect_swapped (dialog->image_chooser, "selection-changed",
 				  G_CALLBACK (panel_properties_dialog_image_changed),
@@ -770,11 +773,14 @@ panel_properties_dialog_update_background_image (PanelPropertiesDialog *dialog,
 	text = gconf_value_get_string (value);
 	old_text = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog->image_chooser));
 
-	if (text && (!old_text || strcmp (text, old_text)))
+	if (string_empty (text) && old_text)
+		gtk_file_chooser_unselect_all (GTK_FILE_CHOOSER (dialog->image_chooser));
+	else if (!string_empty (text) && (!old_text || strcmp (text, old_text)))
 		gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog->image_chooser),
 					       text);
 
-	g_free (old_text);
+	if (old_text)
+		g_free (old_text);
 }
 
 static void
