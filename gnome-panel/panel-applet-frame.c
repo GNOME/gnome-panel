@@ -871,8 +871,13 @@ panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
 
 	gtk_widget_destroy (dialog);
 
-	if (response == GTK_RESPONSE_OK)
-		panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+	if (response == GTK_RESPONSE_OK) {
+		/* if we can't write to applets list we can't really delete
+		   it, so we'll just ignore this.  There's nothing we can
+		   do about it. */
+		if (panel_profile_list_is_writable (PANEL_GCONF_APPLETS))
+			panel_profile_remove_from_list (PANEL_GCONF_APPLETS, id);
+	}
 }
 
 static void

@@ -1,3 +1,8 @@
+Tue Jul 01 16:54:53 2003  George Lebl <jirka@5z.com>
+
+	* panel-applet-frame.c: only delete the applet from config (when we
+	  can't load) if we can actually write to the applets list
+
 Tue Jul 01 16:00:06 2003  George Lebl <jirka@5z.com>
 
 	* applet.[ch], panel-profile.c: kill reentrancy issues on the
