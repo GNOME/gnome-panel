@@ -38,6 +38,9 @@ static gint
 set_snapped (GtkWidget *widget, gpointer data)
 {
 	PanelSnapped snapped = (PanelSnapped) data;
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return FALSE;
 	
 	panel_config_struct.snapped = snapped;
 	if (panel_config_struct.config_box)
@@ -49,6 +52,9 @@ static gint
 set_mode (GtkWidget *widget, gpointer data)
 {
 	PanelMode mode = (PanelMode) data;
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return FALSE;
 	
 	panel_config_struct.mode = mode;
 	if (panel_config_struct.config_box)

@@ -25,7 +25,7 @@ static GtkWidget *aniframe[3];
 
 static GtkWidget *config_window;
 
-static int
+static gint
 config_destroy(GtkWidget *widget, gpointer data)
 {
 	config_window = NULL;
@@ -179,15 +179,19 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
-static void 
+static gint
 set_movement (GtkWidget *widget, gpointer data)
 {
 	PanelMovementType move_type = (PanelMovementType) data;
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return FALSE;
 
 	temp_config.movement_type = move_type;
 	
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
+	return FALSE;
 }
 
 

@@ -1,3 +1,11 @@
+Fri May 15 23:47:35 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: killed the "panel likes the top position"
+	  bug, it was not the order of the binding of the signal
+	  (which just hid teh real problem) ... it was the fact
+	  that radio buttons got toggled off, but the set routine
+	  still worked as if we said "on"
+
 1998-05-15  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* gnome-panel.idl: Use a more correct comment notation (/**/
