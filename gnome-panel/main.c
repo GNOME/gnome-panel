@@ -17,6 +17,8 @@
 
 #include "panel-include.h"
 
+#include "gwmh.h"
+
 #include "xstuff.h"
 
 extern int config_sync_timeout;

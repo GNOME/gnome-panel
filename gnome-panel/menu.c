@@ -1874,7 +1874,7 @@ check_and_reread_applet(Menu *menu, gboolean main_menu)
    gtk_menu_position if the widget is drawable, but that's not the
    case when we want to do it*/
 void
-gtk_menu_position (GtkMenu *menu)
+our_gtk_menu_position (GtkMenu *menu)
 {
   GtkWidget *widget;
   GtkRequisition requisition;
@@ -2023,7 +2023,7 @@ show_tearoff_menu(GtkWidget *menu, char *title, gboolean cursor_position,
 	GTK_MENU(menu)->torn_off = TRUE;
 
 	if(cursor_position)
-		gtk_menu_position(GTK_MENU(menu));
+		our_gtk_menu_position(GTK_MENU(menu));
 	else
 		gtk_widget_set_uposition(win, x, y);
 
@@ -2203,7 +2203,7 @@ submenu_to_display(GtkWidget *menuw, gpointer data)
 		}
 		g_slist_free(mfl);
 
-		gtk_menu_position(GTK_MENU(menuw));
+		our_gtk_menu_position(GTK_MENU(menuw));
 	}
 }
 

@@ -1,9 +1,13 @@
+#include "config.h"
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <gdk/gdkx.h>
 #include <gnome.h>
 #include "gwmh.h"
+
+#include "tasklist_icon.h"
 
 /* so this stuff goes pixmap -> pixbuf -> pixmap, which sucks.
  * it doesn't need to, except for visuals etc.
@@ -17,6 +21,7 @@ static GdkPixbuf *tasklist_icon_check_x (GwmhTask *task, GtkWidget *widget);
 
 /* Shamelessly stolen from gwmh.c by Tim Janik */
 
+#if 0
 Pixmap
 tasklist_icon_get_pixmap (GwmhTask *task)
 {
@@ -39,6 +44,7 @@ tasklist_icon_get_pixmap (GwmhTask *task)
 
 	return pixmap;
 }
+#endif
 
 static gpointer
 get_typed_property_data (Display *xdisplay,
@@ -312,7 +318,7 @@ tasklist_icon_check_x (GwmhTask *task,  GtkWidget *widget)
 GtkWidget *
 get_task_icon (GwmhTask *task, GtkWidget *widget)
 {
-	GtkPixmap *pixmap2;
+	GtkWidget *pixmap2;
 	GdkPixmap *pixmap;
 	GdkBitmap *mask;
 	GdkPixbuf *pixbuf;

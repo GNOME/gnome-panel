@@ -26,6 +26,7 @@
 #include "gnome-run.h"
 #include "scroll-menu.h"
 #include "gwmh.h"
+#include "tasklist_icon.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -128,6 +129,7 @@ add_tearoff (GtkMenu *menu)
 	gtk_menu_prepend (menu, item);
 }
 
+#if 0
 static void
 url_show (GtkWidget *w, const char *url)
 {
@@ -152,6 +154,7 @@ about_cb (GtkWidget *w, gpointer data)
 	char *v[2] = { "gnome-about" };
 	gnome_execute_async (NULL, 1, v);
 }
+#endif
 
 static void
 gmc_client (GtkWidget *w, gpointer data)
@@ -174,6 +177,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 				     "It is in the gnome-pim package."));
 }
 
+#if 0
 static GtkWidget *
 append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
@@ -214,6 +218,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), item);
 	return item;
 }
+#endif
 
 static void
 append_gmc_item (GtkWidget *menu, const char *label, char *flag)
@@ -561,7 +566,7 @@ append_task (GwmhTask *task, FoobarWidget *foo)
 	GtkWidget *item, *label;
 	char *title = NULL;
 	int slen;
-	GtkPixmap *pixmap  = NULL;
+	GtkWidget *pixmap  = NULL;
 
 	g_assert (foo->tasks);
 
@@ -572,9 +577,9 @@ append_task (GwmhTask *task, FoobarWidget *foo)
 	if (slen > 43)
 		title = g_strdup_printf ("%.20s...%s", task->name, task->name+slen-20);
 	item = gtk_pixmap_menu_item_new ();
-	pixmap = get_task_icon (task, foo);
-	if (pixmap) {
-		gtk_widget_show (GTK_WIDGET (pixmap));
+	pixmap = get_task_icon (task, GTK_WIDGET (foo));
+	if (pixmap != NULL) {
+		gtk_widget_show (pixmap);
 		gtk_pixmap_menu_item_set_pixmap (GTK_PIXMAP_MENU_ITEM (item),
 						 pixmap);
 	}
@@ -596,14 +601,16 @@ static void
 create_task_menu (GtkWidget *w, gpointer data)
 {
 	FoobarWidget *foo = FOOBAR_WIDGET (data);
-	GtkWidget *menu;
 	GList *tasks = gwmh_task_list_get ();
+
 	/*g_message ("creating...");*/
 	foo->tasks = g_hash_table_new (g_direct_hash, g_direct_equal);
-	g_list_foreach (tasks, append_task, foo);
+
+	g_list_foreach (tasks, (GFunc)append_task, foo);
+
 	/* Owen: don't read the next line */
 	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
-	gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
+	our_gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
 }
 
 static void
@@ -627,7 +634,7 @@ set_das_pixmap (FoobarWidget *foo, GwmhTask *task)
 	foo->task_pixmap = NULL;
 
 	if (task)
-		foo->task_pixmap = get_task_icon (task, foo);
+		foo->task_pixmap = get_task_icon (task, GTK_WIDGET (foo));
 
 	if (!foo->task_pixmap) {
 		if (!pixmap) {
@@ -719,7 +726,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
 
 	foo->notify = gwmh_task_notifier_add (task_notify, foo);
 
-	gtk_menu_bar_append (GTK_WIDGET (menu_bar), foo->task_item);
+	gtk_menu_bar_append (menu_bar, foo->task_item);
 }
 
 static void
@@ -823,7 +830,7 @@ foobar_widget_init (FoobarWidget *foo)
 	/* TODO: use the gnome menu if no gnome compliant WM or tasklist disabled */
 	append_gnome_menu (foo, menu_bar);
 #endif
-	append_task_menu (foo, bar);
+	append_task_menu (foo, GTK_MENU_BAR (bar));
 
 
 	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);

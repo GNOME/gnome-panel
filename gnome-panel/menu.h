@@ -92,6 +92,9 @@ GtkWidget * create_root_menu(GtkWidget *root_menu,
 			     gboolean tearoff, gboolean is_basep,
 			     gboolean title);
 
+/* some gtk code cut-n-paste action */
+void our_gtk_menu_position (GtkMenu *menu);
+
 
 
 #define MENU_PATH "menu_path"
