@@ -418,8 +418,7 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 	char *real_path;
 
 	real_path = system 
-		? gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR,
-					     path, FALSE, NULL)
+		? gnome_unconditional_datadir_file (path)
 		: gnome_util_home_file (path);
 
 	if (real_path == NULL) {

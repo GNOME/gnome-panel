@@ -400,8 +400,7 @@ loadup_file(const char *file)
 
 	if ( ! g_path_is_absolute(file)) {
 		char *f;
-		f = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					       file, TRUE, NULL);
+		f = gnome_pixmap_file (file);
 		if (f != NULL) {
 			pb = gdk_pixbuf_new_from_file (f, NULL);
 			g_free (f);

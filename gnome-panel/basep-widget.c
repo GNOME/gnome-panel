@@ -865,8 +865,7 @@ make_hidebutton(BasePWidget *basep,
 	else
 		gtk_widget_set_usize(w, PANEL_MINIMUM_WIDTH, 0);
 
-	pixmap_name=gnome_program_locate_file(NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					      pixmaparrow, TRUE, NULL);
+	pixmap_name=gnome_pixmap_file(pixmaparrow);
 	if(pixmap_name) {
 		pixmap = gtk_image_new_from_file(pixmap_name);
 		g_free(pixmap_name);

@@ -233,8 +233,7 @@ check_screen (void)
 
 	name = g_strdup_printf ("%cish/%cishanim.png",
 				'f', 'f');
-	phsh_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
-					       name, TRUE, NULL);
+	phsh_file = gnome_pixmap_file (name);
 	g_free (name);
 	if (phsh_file == NULL)
 		return;
