@@ -942,7 +942,7 @@ panel_widget_switch_move (PanelWidget *panel, AppletData *ad, int moveby)
 		while (ad->pos < finalpos) {
 			pos = panel_widget_get_right_switch_pos (panel, list);
 			if (pos + ad->min_cells > panel->size ||
-			    abs (pos - finalpos) > abs (ad->pos - finalpos))
+			    abs (pos - finalpos) >= abs (ad->pos - finalpos))
 				break;
 			panel_widget_switch_applet_right (panel, list);
 		}
@@ -954,7 +954,7 @@ panel_widget_switch_move (PanelWidget *panel, AppletData *ad, int moveby)
 	} else {
 		while (ad->pos > finalpos) {
 			pos = panel_widget_get_left_switch_pos (panel, list);
-			if (pos < 0 || abs (pos - finalpos) > abs (ad->pos - finalpos))
+			if (pos < 0 || abs (pos - finalpos) >= abs (ad->pos - finalpos))
 				break;
 			panel_widget_switch_applet_left (panel, list);
 		}
