@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-06 08:55+0100\n"
-"PO-Revision-Date: 2004-06-03 00:42+0900\n"
+"POT-Creation-Date: 2004-07-10 15:53+0900\n"
+"PO-Revision-Date: 2004-07-10 15:52+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -23,9 +23,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "日付と時刻の調整(_J)..."
+msgstr "日付と時刻の調整(_J)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -42,9 +41,8 @@ msgstr "時刻のコピー(_T)"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "情報(_A)..."
+msgstr "情報(_A)"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -63,9 +61,8 @@ msgstr "ヘルプ(_H)"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "設定(_P)..."
+msgstr "設定(_P)"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -333,7 +330,6 @@ msgstr ""
 "できる書式指定子を利用できます。"
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -350,7 +346,7 @@ msgstr ""
 "ネット時刻システムは一日を 1000 \".beats\" に分割します。このシステムにはタイ"
 "ムゾーンは存在しないので、時刻は世界中で全て同じになります。\"unix\" をセット"
 "すると、時計は時刻を Epoch (1970-01-01) からの秒数で表示します。\"custom\" を"
-"セットすると、custom_key キーで指定した書式に従って時刻が表示されます。"
+"セットすると、custom_format キーで指定した書式に従って時刻が表示されます。"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -361,7 +357,6 @@ msgid "Time configuration tool"
 msgstr "時刻設定ツール"
 
 #: applets/clock/clock.schemas.in.h:17
-#, fuzzy
 msgid "Use Internet time"
 msgstr "インターネット時間を使用する"
 
@@ -1440,13 +1435,12 @@ msgid "_Delete This Panel"
 msgstr "このパネルの削除(_D)"
 
 #: gnome-panel/menu.c:2371
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "パネルへ追加(_A)"
+msgstr "パネルへ追加(_A)..."
 
 #: gnome-panel/menu.c:2416
 msgid "_New Panel"
-msgstr "新規パネル(_N)"
+msgstr "新しいパネル(_N)"
 
 #: gnome-panel/menu.c:2463
 msgid "_About Panels"
@@ -1573,28 +1567,24 @@ msgid "Run a command"
 msgstr "コマンドを実行します"
 
 #: gnome-panel/panel-addto.c:168
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "アプリケーションの実行"
+msgstr "カスタム・アプリケーションのランチャ"
 
 #: gnome-panel/panel-addto.c:169
-#, fuzzy
 msgid "Create a new launcher"
-msgstr "ランチャの作成"
+msgstr "新しいランチャを生成します"
 
 #: gnome-panel/panel-addto.c:179
-#, fuzzy
 msgid "Application Launcher..."
-msgstr "アプリケーションの実行..."
+msgstr "アプリケーションのランチャ..."
 
 #: gnome-panel/panel-addto.c:180
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "GNOME メニューの中にあるプログラムのランチャです"
 
 #: gnome-panel/panel-addto.c:191
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "GNOME パネル"
+msgstr "GNOME メイン・メニュー"
 
 #: gnome-panel/panel-addto.c:201
 msgid "Menu Bar"
@@ -1602,15 +1592,15 @@ msgstr "メニュー・バー"
 
 #: gnome-panel/panel-addto.c:202
 msgid "A custom menu bar"
-msgstr ""
+msgstr "カスタム・メニュー・バー"
 
 #: gnome-panel/panel-addto.c:213
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "他のアイテムを格納するポップアップ式の引き出しです"
 
 #: gnome-panel/panel-addto.c:301
 msgid "(empty)"
-msgstr ""
+msgstr "(空)"
 
 #: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1618,23 +1608,22 @@ msgid "query returned exception %s\n"
 msgstr "問い合わせが例外 %s を返しました\n"
 
 #: gnome-panel/panel-addto.c:831
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "パネルへ追加(_A)"
+msgstr "\"%s\" へ追加"
 
 #: gnome-panel/panel-addto.c:833
-#, fuzzy
 msgid "Add to the panel"
-msgstr "パネルへ追加(_A)"
+msgstr "パネルへ追加"
 
 #: gnome-panel/panel-addto.c:839
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "%s へ追加するアイテムを選択して下さい(_I):"
 
 #: gnome-panel/panel-addto.c:842
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "パネルへ追加するアイテムを選択して下さい(_I):"
 
 #: gnome-panel/panel-applet-frame.c:746
 #, c-format
@@ -2939,9 +2928,3 @@ msgstr "とても大きい"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "とても小さい"
-
-#~ msgid "Launcher..."
-#~ msgstr "ランチャ..."
-
-#~ msgid "Launcher from menu"
-#~ msgstr "メニューのランチャ"
