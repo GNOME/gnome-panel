@@ -1,0 +1,327 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Window List">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="de">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet-Handbuch V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME-Dokumentationsprojekt </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME-Dokumentationsteam</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME-Dokumentationsprojekt</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet-Handbuch V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Fensterlisten-Applet-Handbuch V2.1</revnumber> 
+		  <date>Juli 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Fensterlisten-Applet-HandbuchV2.0</revnumber> 
+		  <date>M&auml;rz 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Tasklisten-Applet-Handbuch</revnumber> 
+		  <date>2001</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>In diesem Handbuch wird Version &appletversion; von &applet; beschrieben.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Feedback</title>
+		<para> Wenn Sie einen Programmfehler melden m&ouml;chten oder Vorschl&auml;ge zum Applet &applet; oder zu diesem Handbuch haben,
+		  folgen Sie den Anweisungen auf der
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Fensterliste</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction"> 
+	 <title>Einf&uuml;hrung</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowlist-applet-fig"> 
+		<title>&applet;-Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_applet.png"  format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>&Ouml;ffnet das Fensterlisten-Applet.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	 <para>Mit dem <application>&applet;</application>-Applet k&ouml;nnen Sie die ge&ouml;ffneten 
+	 Fenster auf dem GNOME-Desktop verwalten. Das <application>&applet;</application>-Applet stellt die einzelnen Fenster 
+	 oder Fenstergruppen durch Schaltfl&auml;chen dar. Das Aussehen der Schaltfl&auml;chen &auml;ndert sich, 
+	 je nachdem, welchen Status die zugeh&ouml;rigen Fenster haben. Die m&ouml;glichen Stati der 
+	 <application>&applet;</application>-Schaltfl&auml;chen werden in folgender Tabelle beschrieben:</para>
+	<informaltable>
+	<tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	<row valign="top">
+	<entry colname="col1"><para>Status</para></entry>
+	<entry colname="col2"><para>Zeigt an...</para></entry>
+	<entry colname="col3"><para>Beispiel in <xref linkend="windowlist-applet-fig"/></para></entry>
+	</row>
+	</thead>
+	<tbody>
+	<row valign="top">
+	<entry colname="col1"><para>Die Schaltfl&auml;che ist gedr&uuml;ckt.</para></entry>
+	<entry colname="col2"><para>Das Fenster ist das aktive Fenster.</para></entry>
+	<entry colname="col3"><para><guibutton>gedit</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Fenstertitel in eckigen Klammern, Schaltfl&auml;cheninhalt abgeblendet.</para></entry>
+	<entry colname="col2"><para>Das Fenster ist minimiert.</para></entry>
+	<entry colname="col3"><para><guibutton>W&ouml;rterbuch</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Die Schaltfl&auml;che ist nicht gedr&uuml;ckt, keine eckigen Klammern um Titel.</para></entry>
+	<entry colname="col2"><para>Das Fenster wird auf dem Desktop angezeigt und ist nicht auf Symbolgr&ouml;&szlig;e verkleinert.</para></entry>
+	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Gepunktetes Dreieck im rechten oberen Bereich der Schaltfl&auml;che und eine in Klammern gesetzte Nummer</para></entry>
+	<entry colname="col2"><para>Die Schaltfl&auml;che repr&auml;sentiert eine Gruppe von Schaltfl&auml;chen. </para></entry>
+	<entry colname="col3"><para><guibutton>Gnome-Terminal</guibutton></para></entry>
+	</row>
+	</tbody>
+	</tgroup>
+	</informaltable>
+	 <para>Zum Hinzuf&uuml;gen von <application>&applet;</application> in ein Panel klicken Sie mit der rechten Maustaste auf das Panel, und w&auml;hlen Sie 
+		<menuchoice> 
+		  <guimenu>Zum Panel hinzuf&uuml;gen</guimenu> 
+		  <guisubmenu>Dienstprogramm</guisubmenu> 
+		  <guimenuitem>Fensterliste</guimenuitem> 
+		</menuchoice>. 
+	Die Anzahl der Zeilen, in denen <application>&applet;</application> die Schaltfl&auml;chen anzeigt, h&auml;ngt von der Gr&ouml;&szlig;e des Panels ab, in dem sich das Applet befindet.</para>
+	
+	<sect2 id="window-groups">
+	<title>Gruppenschaltfl&auml;chen</title>
+	<para>Reicht der Platz in einem Panel nicht aus, kann <application>&applet;</application> Schaltfl&auml;chen, 
+	die Fenster der gleichen Klasse repr&auml;sentieren, in einer <application>&applet;</application>-Schaltfl&auml;che
+	zusammenfassen. Die Schaltfl&auml;chen einer Schaltfl&auml;chengruppe zeigen Sie an, indem Sie auf die 
+	<application>&applet;</application>-Schaltfl&auml;che der Schaltfl&auml;chengruppe klicken. Die Schaltfl&auml;che 
+	<guibutton>Gnome-terminal</guibutton> in <xref linkend="windowlist-applet-fig"/> 
+	ist beispielsweise eine Gruppenschaltfl&auml;che.
+	Folgende Abbildung stellt das <application>&applet;</application>-Applet mit einer ge&ouml;ffneten Schaltfl&auml;chengruppe dar.</para>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowgroup-open-fig"> 
+		<title>&applet; Applet mit ge&ouml;ffneter Schaltfl&auml;chengruppe</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Zeigt das Fensterlisten-Applet mit einer ge&ouml;ffneten Schaltfl&auml;chengruppe.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+ 
+	</sect2>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage"> 
+	 <title>Verwendung</title>
+	 <para>Mit dem <application>&applet;</application>-Applet k&ouml;nnen Sie folgende Aufgaben ausf&uuml;hren:</para>
+	<itemizedlist>
+	<listitem>
+	<para>Ein Fenster w&auml;hlen und aktivieren</para>
+	<para>Wenn Sie auf die <application>&applet;</application>-Schaltfl&auml;che eines Fensters klicken, das zwar auf dem Desktop ge&ouml;ffnet ist, 
+	jedoch nicht das aktive Fenster ist, wird das Fenster aktiviert. </para>
+	</listitem>
+	<listitem>
+	<para>Ein Fenster auf Symbolgr&ouml;&szlig;e verkleinern</para>
+	<para>Wenn Sie auf die <application>&applet;</application>-Schaltfl&auml;che des aktiven Fensters klicken, wird das Fenster 
+	minimiert. </para>
+	</listitem>
+	<listitem>
+	<para>Ein auf Symbolgr&ouml;&szlig;e verkleinertes Fenster wiederherstellen</para>
+	<para>Wenn Sie auf die <application>&applet;</application>-Schaltfl&auml;che eines auf Symbolgr&ouml;&szlig;e verkleinerten Fensters klicken, 
+	wird die urspr&uuml;ngliche Gr&ouml;&szlig;e des Fensters wiederhergestellt.</para>
+	</listitem>
+	</itemizedlist>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+  <sect1 id="windowlist-prefs"> 
+	 <title>Einstellungen</title>
+	 <para>Zur Konfiguration von <application>&applet;</application> klicken Sie mit der rechten Maustaste auf das 
+	 Applet, und w&auml;hlen Sie <guimenuitem>Einstellungen</guimenuitem>. 
+	 </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Inhalt der Fensterliste</guilabel> </term>
+	 <listitem>
+	 <para>Mit den folgenden Optionen legen Sie fest, welche Fenster in <application>&applet;</application> angezeigt werden: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Fenster der aktuellen Arbeitsfl&auml;che anzeigen</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um nur die ge&ouml;ffneten Fenster der aktuellen Arbeitsfl&auml;che anzuzeigen.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Fenster aus allen Arbeitsfl&auml;chen anzeigen</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um die ge&ouml;ffneten Fenster aller Arbeitsfl&auml;chen anzuzeigen.</para>
+	 	</listitem>
+	 	</itemizedlist>
+	 <para>Standard:  <guilabel>Fenster der aktuellen Arbeitsfl&auml;che anzeigen</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Wiederherstellen auf Symbolgr&ouml;&szlig;e verkleinerter Fenster</guilabel> </term>
+	 <listitem>
+	 <para>Mit den folgenden Optionen legen Sie fest, wie <application>&applet;</application> auf Symbolgr&ouml;&szlig;e verkleinerte Fenster wiederherstellt: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Auf aktuelle Arbeitsfl&auml;che wiederherstellen</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um ein Fenster aus dem Applet auf der aktuellen Arbeitsfl&auml;che wiederherzustellen, selbst 
+	 	wenn sich das Fenster zuvor nicht auf der aktuellen Arbeitsfl&auml;che befunden hat.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Auf urspr&uuml;nglicher Arbeitsfl&auml;che wiederherstellen</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um ein Fenster aus dem Applet auf der Arbeitsfl&auml;che wiederherzustellen, auf der es sich 
+		vor der Verkleinerung auf Symbolgr&ouml;&szlig;e befunden hat. </para>
+	 	</listitem>
+	 	</itemizedlist>
+
+	 <para>Standard:  <guilabel>Auf aktuelle Arbeitsfl&auml;che wiederherstellen</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Fenstergruppen</guilabel> </term>
+	 <listitem>
+	 <para>Mit den folgenden Optionen legen Sie fest, wann <application>&applet;</application> Fenster der gleichen Klasse zu Gruppen zusammenfasst: </para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Fenster nie gruppieren</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um Fenster der gleichen Klasse nicht unter einer <application>&applet;</application>-Schaltfl&auml;che zu gruppieren.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Fenster gruppieren, wenn Platz begrenzt ist</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um Fenster der gleichen Klasse unter einer <application>&applet;</application>-Schaltfl&auml;che zu gruppieren, 
+	 	wenn der Platz im Panel begrenzt ist.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Fenster immer gruppieren</guilabel></para>
+	 	<para>W&auml;hlen Sie diese Option, um Fenster der gleichen Klasse immer unter einer <application>&applet;</application>-Schaltfl&auml;che zu gruppieren.</para>
+		</listitem>
+		</itemizedlist>
+	 <para>Standard:  <guilabel>Fenster gruppieren, wenn Platz begrenzt ist</guilabel>.</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Gr&ouml;&szlig;e der Fensterliste</guilabel> </term>
+	 <listitem>
+	 <para>Die Gr&ouml;&szlig;e des Applets <application>&applet;</application> richtet sich nach der Gr&ouml;&szlig;e des Panels, in 
+	 dem sich das Applet befindet. Mit den folgenden Drehfeldern k&ouml;nnen Sie die Gr&ouml;&szlig;e des Applets begrenzen:</para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Mindestgr&ouml;&szlig;e</guilabel></para>
+	 	<para>Legen Sie die Mindestgr&ouml;&szlig;e des Applets fest. Falls das Panel kleiner als die Mindestgr&ouml;&szlig;e ist, wird das Panel 
+	 	an die Appletgr&ouml;&szlig;e angepasst.</para>
+		<para>Standard:  50 Pixel</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Maximalgr&ouml;&szlig;e</guilabel></para>
+	 	<para>Legen Sie die Maximalgr&ouml;&szlig;e des Applets fest.</para>
+		<para>Standard:  4096 Pixel</para>
+		</listitem>
+		</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

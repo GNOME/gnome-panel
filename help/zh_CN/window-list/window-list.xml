@@ -1,0 +1,304 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Window List">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="zh_cn">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; 小程序手册 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME Documentation Project </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; 小程序手册 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>窗口列表小程序手册 V2.1</revnumber> 
+		  <date>2002 年 7 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>窗口列表小程序手册 V2.0</revnumber> 
+		  <date>2002 年 3 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>任务列表小程序手册</revnumber> 
+		  <date>2001</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>本手册介绍 &applet; &appletversion; 版。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>反馈</title>
+		<para>要报告关于 &applet; 小程序或本手册的错误或提出建议，请遵循 <ulink url="ghelp:gnome-feedback" type="help">GNOME 反馈页</ulink>中的指导。</para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>窗口列表</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction"> 
+	 <title>简介</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowlist-applet-fig"> 
+		<title>&applet; 小程序</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_applet.png"  format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>显示窗口列表小程序。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	 <para><application>&applet;</application> 小程序使您可以管理在 GNOME 桌面上打开的窗口。<application>&applet;</application> 使用一个按钮来代表打开的每个窗口或每组窗口。该小程序中的按钮状态会随着按钮代表的窗口的状态而变化。下表会介绍 <application>&applet;</application> 按钮的可能状态：</para>
+	<informaltable>
+	<tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	<row valign="top">
+	<entry colname="col1"><para>状态</para></entry>
+	<entry colname="col2"><para>指明...</para></entry>
+	<entry colname="col3"><para><xref linkend="windowlist-applet-fig"/> 中的示例</para></entry>
+	</row>
+	</thead>
+	<tbody>
+	<row valign="top">
+	<entry colname="col1"><para>按钮被按下。</para></entry>
+	<entry colname="col2"><para>窗口已聚焦。</para></entry>
+	<entry colname="col3"><para><guibutton>gedit</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>窗口标题周围有方括号，按钮内容变淡。</para></entry>
+	<entry colname="col2"><para>窗口最小化。</para></entry>
+	<entry colname="col3"><para><guibutton>Dictionary</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>按钮没按下，标题周围没有方括号。
+</para></entry>
+	<entry colname="col2"><para>窗口显示在桌面上而且没有最小化。</para></entry>
+	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>按钮右上角有带点三角形和圆括号中的数字。</para></entry>
+	<entry colname="col2"><para>该按钮代表一组按钮。</para></entry>
+	<entry colname="col3"><para><guibutton>Gnome-terminal</guibutton></para></entry>
+	</row>
+	</tbody>
+	</tgroup>
+	</informaltable>
+	 <para>要将 <application>&applet;</application> 添加到面板，请右击该面板，然后选择<menuchoice><guimenu>"添加到面板"</guimenu><guisubmenu>"实用程序"</guisubmenu><guimenuitem>"窗口列表"</guimenuitem></menuchoice>。 
+	<application>&applet;</application> 用来显示按钮的行数取决于小程序所在面板的大小。</para>
+	
+	<sect2 id="window-groups">
+	<title>分组按钮</title>
+	<para>如果面板的空间有限，<application>&applet;</application> 可以将代表同一类窗口的按钮分组到一个 <application>&applet;</application> 按钮下。要打开按钮组中的一列按钮，单击代表该按钮组的 <application>&applet;</application> 按钮。<xref linkend="windowlist-applet-fig"/> 中的 <guibutton>Gnome-termina</guibutton> 按钮就是这样一个代表一组按钮的按钮示例。
+	下图显示一个打开了一个按钮组的 <application>&applet;</application> 小程序示例。</para>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowgroup-open-fig"><title>打开一个按钮组的 &applet; 小程序</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>显示打开了一个按钮组的窗口列表小程序。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+ 
+	</sect2>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage"> 
+	 <title>用法</title>
+	 <para>您可以使用 <application>&applet;</application> 来执行以下任务：</para>
+	<itemizedlist>
+	<listitem>
+	<para>聚焦到窗口</para>
+	<para>如果在一个 <application>&applet;</application> 按钮上单击，而该按钮代表在桌面上显示、但还没有焦点的窗口，小程序就会聚焦到该窗口。</para>
+	</listitem>
+	<listitem>
+	<para>最小化窗口</para>
+	<para>如果单击代表已聚焦窗口的 <application>&applet;</application> 按钮，小程序就最小化该窗口。</para>
+	</listitem>
+	<listitem>
+	<para>恢复一个最小化窗口</para>
+	<para>如果单击代表最小化窗口的 <application>&applet;</application> 按钮，小程序就会恢复该窗口。</para>
+	</listitem>
+	</itemizedlist>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="windowlist-prefs"> 
+	 <title>首选项</title>
+	 <para>要配置 <application>&applet;</application>，请右击小程序，然后选择<guimenuitem>"首选项"</guimenuitem>。
+	  </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>窗口列表内容</guilabel> </term>
+	 <listitem>
+	 <para>要指定在 <application>&applet;</application> 中显示哪些窗口，请选择以下其中一个选项：  </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>显示当前工作区中的窗口</guilabel></para>
+	 	<para>选择该选项会只显示当前工作区中已打开的窗口。</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>显示所有工作区中的窗口</guilabel></para>
+	 	<para>选择该选项会显示所有工作区中打开的窗口。</para>
+	 	</listitem>
+	 	</itemizedlist>
+	 <para>默认值： <guilabel>显示当前工作区中的窗口</guilabel>。</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>在恢复最小化的窗口时</guilabel> </term>
+	 <listitem>
+	 <para>要定义 <application>&applet;</application> 在恢复窗口时的行为方式，请以下其中一个选项：  </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>恢复到当前工作区</guilabel></para>
+	 	<para>选择此选项会将窗口从小程序恢复到当前工作区，即使该窗口以前不在当前工作区中也是如此。</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>恢复到原来的工作区</guilabel></para>
+	 	<para>选择此选项，当您从小程序恢复窗口时，系统将会切换到该窗口原来所在的工作区。</para>
+	 	</listitem>
+	 	</itemizedlist>
+
+	 <para>默认值： <guilabel>恢复到当前工作区</guilabel>。</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>窗口分组</guilabel> </term>
+	 <listitem>
+	 <para>要指定 <application>&applet;</application> 何时对同类窗口进行分组，请选择以下其中一个选项：  </para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>从不分组窗口</guilabel></para>
+	 	<para>选择此选项，系统就绝对不会将同类窗口分组到一个 <application>&applet;</application> 按钮下。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>空间有限时分组窗口</guilabel></para>
+	 	<para>选择此选项，系统会在面板空间受到限制时将同类窗口分组到一个 <application>&applet;</application> 按钮下。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>始终分组窗口</guilabel></para>
+	 	<para>选择此选项，系统会始终将同类窗口分组到一个 <application>&applet;</application> 按钮下。</para>
+		</listitem>
+		</itemizedlist>
+	 <para>默认值： <guilabel>空间有限时分组窗口</guilabel>。</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>窗口列表大小</guilabel> </term>
+	 <listitem>
+	 <para><application>&applet;</application> 小程序的大小会随着小程序所在面板的大小而变化。使用以下旋转框来设置小程序大小的限制：</para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>最小大小</guilabel></para>
+	 	<para>指定小程序的最小大小。如果面板比指定的最小大小还小，面板就会调整自己的大小以适应小程序的大小。</para>
+		<para>默认值：50 像素。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>最大大小</guilabel></para>
+	 	<para>指定了小程序的最大大小。</para>
+		<para>默认值：4096 像素。</para>
+		</listitem>
+		</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

@@ -1,0 +1,204 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Workspace Switcher">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="zh_tw">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet 手冊 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME 文件專案 </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME 文件小組</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+<surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME 文件專案</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet 手冊 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組 <email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Workspace Switcher (工作區切換器) Applet 手冊 V2.1</revnumber> 
+<date>2002 年 7 月</date> <revdescription> 
+			 <para role="author">Sun GNOME 文件小組 <email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>工作區切換器 Applet 手冊 V&manrevision;</revnumber> 
+<date>2002 年 3 月</date> <revdescription> 
+			 <para role="author">Sun GNOME 文件小組	<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>桌面指南 Applet 手冊</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck <email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> 本手冊的內容是說明 &appletversion; 版的 &applet;。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>回饋</title>
+		<para> 關於 &applet; applet 或本手冊，如果要報告錯誤或是提出建議，請遵照 <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink> 的指示。 </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>工作區切換器</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="workspacelist-introduction"> 
+	 <title>介紹</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="workspacelist-fig"> 
+		<title>&applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"  				format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>顯示工作區切換器 applet。 含有代表每個工作區的按鈕。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	<para><application>&applet;</application> applet 會顯示 GNOME 桌面上的工作區。工作區是指桌面上您工作的各個區域。桌面上的每個工作區，都有相同的桌面背景、面板及功能表。 不過，您可以在每個工作區中，執行不同的應用程式，並開啟不同的視窗。 您一次只能在桌面上顯示一個工作區， 但是同時其他的工作區卻仍然可以有開啟的視窗。 </para>
+	
+	<para>依預設值，<application>&applet;</application> applet 會將桌面上的工作區以圖示的方式表示，如<xref linkend="workspacelist-fig"/> 中所示。 此 applet 會顯示工作區中所開啟的應用程式視窗和對話方塊。 applet 也會將目前工作區的背景和有焦點的視窗背景，加以反白顯示。您可以變更 applet 的預設值，使得 applet 中只顯示工作區的名稱。如需如何配置 applet 組態的相關詳細資訊，請參閱<xref linkend="workspacelist-prefs"/>。</para>
+	
+	<para><xref linkend="workspacelist-fig"/> 顯示 <application>&applet;</application> applet，其中的 GNOME 階段作業有四個工作區。 此 applet 會 applet 的各列中，從左到右顯示工作區。 
+	在<xref linkend="workspacelist-fig"/> 中，applet 是設定成在單一列中顯示工作區。如需關於變更 applet 列數的詳細資訊，請參閱<xref linkend="workspacelist-prefs"/>。 </para>
+	
+	<para>如果要將 <application>&applet;</application> 加入面板，請在面板上按滑鼠右鍵，然後選擇 <menuchoice><guimenu>加入面板</guimenu> <guisubmenu>公用程式</guisubmenu> <guimenuitem>Workspace Switcher</guimenuitem></menuchoice>。
+	</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="workspacelist-usage"> 
+	 <title>使用</title>
+	<sect2 id="workspacelist-navigate">
+	<title>導覽工作區</title>
+	<para>在 applet 中，代表目前工作區的按鈕，其背景會以反白顯示。 如果要切換到另一個工作區，請按一下代表新工作區的按鈕。 如果您在代表某個工作區的按鈕上， 按一下的特定視窗，<application>&applet;</application> 會切換至新的工作區，並將焦點給予該視窗。 如果要返回原來的工作區，請在 <application>&applet;</application> 中，按一下代表該工作區的按鈕。</para>
+	<para>切換到不同工作區時，<application>視窗清單</application> applet 的內容會變更，以反應新工作區中開啟的視窗。</para>
+	</sect2>
+	<sect2 id="workspacelist-move-window">
+	<title>將視窗從一個工作區移動到另一個工作區</title>
+	<para>如果要使用 <application>&applet;</application> 將視窗從一個工作區移動到另一個工作區，請將視窗從目前的工作區拖曳到新的工作區。 </para>
+	</sect2>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="workspacelist-prefs"> 
+	 <title>個人喜好</title>
+	 <para>如果要配置 <application>&applet;</application>，請在 applet 上按滑鼠右鍵，然後選擇<guimenuitem>個人喜好</guimenuitem>。</para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>在切換器中，顯示工作區名稱</guilabel> </term>
+	 	<listitem>
+	 	<para>選取這個選項，便可以在 applet 中顯示工作區的名稱，而不是以視覺方式表示工作區。</para>
+	 	<para>預設值：未選取。</para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term>工作區切換器內容</term>
+	 	<listitem>
+	 	<para>請選取下列任一項選項，以決定 <application>&applet;</application> 所要顯示的工作區：</para>
+	 		<itemizedlist>
+	 		<listitem><para><guilabel>僅顯示目前的工作區</guilabel></para>
+	 		<para>選取這個選項，在 <application>&applet;</application> applet 中，便只會顯示目前的工作區。</para>
+	 		</listitem>
+	 		<listitem><para><guilabel>顯示所有的工作區</guilabel></para>
+	 		<para>選取這個選項，則在 GNOME 桌面上所有的工作區，都會顯示在 <application>&applet;</application> applet 中。 請使用<guilabel>列</guilabel>旋轉方塊，指定在 applet 中用來顯示工作區的列數。 </para>
+	 		</listitem>
+	 		</itemizedlist>
+	 	<para>預設值： <guilabel>顯示所有的工作區</guilabel>，1 列。</para>
+		</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>工作區</guilabel> </term>
+	 	<listitem>	 
+	 	<para>請使用這個清單方塊，編輯桌面上工作區的名稱。 如果要編輯工作區的名稱，請先選取名稱，然後再鍵入新的名稱。</para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>工作區數目</guilabel> </term>
+	 	<listitem>
+	 	<para>請使用這個這個旋轉方塊，增加或減少 GNOME 階段作業中的工作區數目。</para>
+	 	<para>預設值： 4 個。</para>
+	 	</listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

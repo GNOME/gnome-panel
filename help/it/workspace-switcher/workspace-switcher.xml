@@ -1,0 +1,217 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "Agosto 2002">
+  <!ENTITY applet "Selettore aree di lavoro">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="it">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manuale dell'applet &applet; V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME Documentation Project </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet; V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet; V2.1</revnumber> 
+		  <date>Luglio 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet; V&manrevision;</revnumber> 
+		  <date>Marzo 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Desk Guide </revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> Questo manuale descrive la versione &appletversion; del &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Commenti</title>
+		<para> Per segnalare un problema o inviare suggerimenti sull'applet &applet; o su questo manuale, seguire le istruzioni presenti alla <ulink url="ghelp:gnome-feedback" type="help">Pagina di commenti su GNOME</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Selettore aree di lavoro</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="workspacelist-introduction">  
+	 <title>Introduzione</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="workspacelist-fig"> 
+		<title>Applet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"  				format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Mostra l'applet Selettore aree di lavoro. Contiene un pulsante per ogni area di lavoro.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	<para>L'applet <application>&applet;</application> visualizza le aree di lavoro presenti sul desktop di GNOME. 
+	Un'area di lavoro &egrave; uno spazio definito del desktop in cui &egrave; possibile lavorare. Ogni area di lavoro sul desktop presenta lo stesso sfondo, gli stessi pannelli e gli stessi menu. Tuttavia, in ognuna &egrave; possibile eseguire applicazioni differenti e aprire finestre differenti. Sul desktop &egrave; possibile visualizzare una sola area di lavoro alla volta, ma &egrave; possibile avere finestre aperte in altre aree di lavoro. </para>
+	
+	<para>Nella configurazione predefinita, l'applet <application>&applet;</application> presenta una rappresentazione visiva delle aree di lavoro del desktop, come illustrato nella <xref linkend="workspacelist-fig"/>. Vengono visualizzate le finestre delle applicazioni e le finestre di dialogo aperte nelle aree di lavoro. Lo sfondo dell'area di lavoro corrente e la finestra attiva appaiono evidenziati. 
+	&Egrave; possibile cambiare il comportamento predefinito dell'applet in modo da visualizzare solo i nomi delle aree di lavoro. Per maggiori informazioni sulla configurazione dell'applet, vedere la sezione <xref linkend="workspacelist-prefs"/>.</para>
+	
+	<para>La <xref linkend="workspacelist-fig"/> mostra l'aspetto dell'applet <application>&applet;</application> in una sessione di GNOME con quattro aree di lavoro. Le aree di lavoro vengono presentate da sinistra a destra lungo le righe dell'applet. 
+	Nella <xref linkend="workspacelist-fig"/>, l'applet &egrave; configurata per visualizzare le aree di lavoro in una sola riga. 
+	Per informazioni su come modificare il numero di righe dell'applet, vedere la sezione <xref linkend="workspacelist-prefs"/>. </para>
+	
+	<para>Per aggiungere il <application>&applet;</application> a un pannello, fare clic con il pulsante destro del mouse sul pannello, quindi scegliere 
+	<menuchoice>
+	<guimenu>Aggiungi al pannello</guimenu> 
+	<guisubmenu>Utilit&agrave;</guisubmenu>
+	<guimenuitem>Selettore aree di lavoro</guimenuitem>
+	</menuchoice>.
+	</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="workspacelist-usage"> 
+	 <title>Utilizzo</title>
+	<sect2 id="workspacelist-navigate">
+	<title>Spostarsi tra le aree di lavoro</title>
+	<para>Lo sfondo del pulsante dell'applet che rappresenta l'area di lavoro corrente appare evidenziato. 
+Per spostarsi in un altra area di lavoro, fare clic sul pulsante che rappresenta la nuova area di lavoro. Se si fa clic su una specifica finestra di un pulsante dell'area di lavoro, il <application>&applet;</application> passa all'area di lavoro indicata e rende attiva la finestra selezionata. Per tornare all'area di lavoro iniziale, fare clic sul pulsante che la rappresenta nel <application>&applet;</application>.</para>
+	<para>Quando si passa ad una diversa area di lavoro, il contenuto dell'applet <application>Elenco finestre</application> visualizza le finestre aperte nella nuova area di lavoro.</para>
+	</sect2>
+	<sect2 id="workspacelist-move-window">
+	<title>Spostare una finestra da un'area di lavoro ad un'altra</title>
+	<para>Per spostare una finestra da un'area di lavoro ad un'altra, trascinare la finestra dall'area di lavoro corrente alla nuova area di lavoro. </para>
+	</sect2>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+  <sect1 id="workspacelist-prefs"> 
+	 <title>Preferenze</title>
+	 <para>Per configurare il <application>&applet;</application>, fare clic con il pulsante destro del mouse sull'applet, quindi scegliere <guimenuitem>Preferenze</guimenuitem>. </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Mostra i nomi delle aree di lavoro nel selettore</guilabel> </term>
+	 	<listitem>
+	 	<para>Selezionare questa opzione per visualizzare i nomi delle aree di lavoro anzich&eacute; una loro rappresentazione visiva.</para>
+	 	<para>Impostazione predefinita:  non selezionato.</para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term>Contenuto del Selettore aree di lavoro</term>
+	 	<listitem>
+	 	<para>Selezionare una delle seguenti opzioni per determinare quali aree di lavoro debbano essere visualizzate:</para>
+	 		<itemizedlist>
+	 		<listitem><para><guilabel>Mostra solo area di lavoro corrente</guilabel></para>
+	 		<para>Selezionare questa opzione per visualizzare solo l'area di lavoro corrente.</para>
+	 		</listitem>
+	 		<listitem><para><guilabel>Mostra tutte le aree di lavoro</guilabel></para>
+	 		<para>Selezionare questa opzione per mostrare tutte le aree di lavoro presenti sul desktop di GNOME. Usare la casella di selezione <guilabel>Righe</guilabel> per specificare il numero di righe da usare per visualizzare le aree di lavoro. </para>
+	 		</listitem>
+	 		</itemizedlist>
+	 	<para>Impostazione predefinita:  <guilabel>Mostra tutte le aree di lavoro</guilabel>, 1 riga.</para>
+		</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Aree di lavoro</guilabel> </term>
+	 	<listitem>	 
+	 	<para>Usare la casella di riepilogo per modificare i nomi delle aree di lavoro sul desktop. Per modificare il nome di un'area di lavoro, selezionare il nome da modificare e digitare quello nuovo. </para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Numero di aree di lavoro</guilabel> </term>
+	 	<listitem>
+	 	<para>Usare questa casella di selezione per aumentare o diminuire il numero delle aree di lavoro nella sessione di GNOME.</para>
+	 	<para>Impostazione predefinita:  4.</para>
+	 	</listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

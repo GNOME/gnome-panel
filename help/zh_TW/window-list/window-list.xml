@@ -1,0 +1,304 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Window List">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="zh_tw">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet 手冊 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> GNOME 文件專案 </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME 文件小組</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>GNOME 文件專案</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet 手冊 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組 <email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Window List (視窗清單) Applet 手冊 V2.1</revnumber> 
+		  <date>2002 年 7 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet 手冊 V2.0</revnumber> 
+		  <date>2002 年 3 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組 <email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>工作清單 Applet 手冊</revnumber> 
+		  <date>2001</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck <email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> 本手冊的內容是說明 &appletversion; 版的 &applet;。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>回饋</title>
+		<para> 關於 &applet; applet 或本手冊，如果要報告錯誤或是提出建議，請遵照 <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink> 的指示。 </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>視窗清單</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction"> 
+	 <title>介紹</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowlist-applet-fig"> 
+		<title>&applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_applet.png"  format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>顯示視窗清單 applet。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	 <para>使用 <application>&applet;</application> applet，您可以管理 GNOME 桌面上所開啟的視窗。 <application>&applet;</application> 是以按鈕來代表每個開啟的視窗或視窗群組。 Applet 中的按鈕狀態，會根據該按鈕所代表的視窗狀態而改變。 下列表格說明了 <application>&applet;</application> 按鈕的可能狀態：</para>
+	<informaltable>
+	<tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	<row valign="top">
+	<entry colname="col1"><para>狀態</para></entry>
+	<entry colname="col2"><para>代表...</para></entry>
+	<entry colname="col3"><para><xref linkend="windowlist-applet-fig"/> 中的範例</para></entry>
+	</row>
+	</thead>
+	<tbody>
+	<row valign="top">
+	<entry colname="col1"><para>按鈕呈壓入狀態。</para></entry>
+	<entry colname="col2"><para>視窗為使用中。</para></entry>
+	<entry colname="col3"><para><guibutton>gedit</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>視窗標題以方括號括住，按鈕內容呈淡出狀。</para></entry>
+	<entry colname="col2"><para>視窗最小化。</para></entry>
+	<entry colname="col3"><para><guibutton>字典</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>按鈕不呈壓入狀態，標題周圍沒有方括號。</para></entry>
+	<entry colname="col2"><para>視窗顯示在桌面上，而且沒有最小化。</para></entry>
+	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>按鈕的右上角有虛線三角形，同時還有以括號括住的號碼。</para></entry>
+	<entry colname="col2"><para>此按鈕代表按鈕群組。 </para></entry>
+	<entry colname="col3"><para><guibutton>Gnome 終端機</guibutton></para></entry>
+	</row>
+	</tbody>
+	</tgroup>
+	</informaltable>
+	 <para>如果要將 <application>&applet;</application> 加入面板，請在面板上按滑鼠右鍵，然後選擇<menuchoice><guimenu>加入面板</guimenu><guisubmenu>公用程式</guisubmenu><guimenuitem>Window List</guimenuitem></menuchoice>。  
+	<application>&applet;</application> 用來顯示按鈕的列數，是根據 applet 所在面板的大小而定。</para>
+	
+	<sect2 id="window-groups">
+	<title>將按鈕集合成群組</title>
+	<para>如果面板上的空間有限，<application>&applet;</application> 可將 
+	代表相同類別視窗的按鈕集合成群組，放在一個  <application>&applet;</application>按鈕之下。 如果要開啟按鈕群組中按鈕的清單，請在代表按鈕群組的 
+	<application>&applet;</application> 按鈕上按一下。  
+	<xref linkend="windowlist-applet-fig"/> 中的 <guibutton>Gnome-terminal</guibutton> 按鈕，便  
+	是一個按鈕群組之按鈕的範例。下圖便是一個 <application>&applet;</application> applet 範例，其中按鈕群組為開啟狀態。</para>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowgroup-open-fig"> 
+		<title>開啟了一個按鈕群組的 &applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>顯示有開啟一個按鈕群組的視窗清單 applet。</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+ 
+	</sect2>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage"> 
+	 <title>使用</title>
+	 <para>您可以使用 <application>&applet;</application> 執行下列的工作：</para>
+	<itemizedlist>
+	<listitem>
+	<para>給視窗焦點</para>
+	<para>如果您在 <application>&applet;</application> 按鈕上按一下，而該按鈕代表的視窗本來只是顯示於桌面上，並沒有焦點，那麼此 applet 會將焦點傳給該視窗。 </para>
+	</listitem>
+	<listitem>
+	<para>最小化視窗</para>
+	<para>如果您在 <application>&applet;</application> 按鈕上按一下，而該按鈕代表的視窗本來就有焦點，那麼此 applet 便會將該視窗最小化。 </para>
+	</listitem>
+	<listitem>
+	<para>復原最小化視窗</para>
+	<para>如果您在 <application>&applet;</application> 按鈕上按一下，而該按鈕代表的是一個最小化的視窗，那麼此 applet 便會復原該視窗。</para>
+	</listitem>
+	</itemizedlist>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="windowlist-prefs"> 
+	 <title>個人喜好</title>
+	 <para>如果要配置 <application>&applet;</application>，請在 applet 上按滑鼠右鍵，然後選擇<guimenuitem>個人喜好</guimenuitem>。
+	   </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>視窗清單內容</guilabel> </term>
+	 <listitem>
+	 <para>如果要指定 <application>&applet;</application> 中所顯示的視窗，請選取下列任一項選項：   </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>顯示目前工作區中的視窗</guilabel></para>
+	 	<para>選取這個選項，便只會顯示目前工作區中開啟的視窗。</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>顯示所有工作區中的視窗</guilabel></para>
+	 	<para>選取這個選項，則會顯示所有工作區中開啟的視窗。</para>
+	 	</listitem>
+	 	</itemizedlist>
+	 <para>預設值： <guilabel>顯示目前工作區中的視窗</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>復原最小化視窗時</guilabel> </term>
+	 <listitem>
+	 <para>如果要定義 <application>&applet;</application> 在復原視窗時的動作，請選取下列任一項選項：   </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>復原到目前的工作區</guilabel></para>
+	 	<para>選取這個選項，就算該視窗之前並不位於目前的工作區中，也可以將視窗從 applet 復原到目前的工作區。</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>復原到原生的工作區</guilabel></para>
+	 	<para>選取這個選項，視窗復原時便會復原至原生的工作區，也就是視窗原來的工作區。 </para>
+	 	</listitem>
+	 	</itemizedlist>
+
+	 <para>預設值： <guilabel>復原到目前的工作區</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>視窗群組</guilabel> </term>
+	 <listitem>
+	 <para>如果要指定 <application>&applet;</application> 何時要將同一類別的視窗集合成群組，請選取下列任一項選項：   </para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>永遠不要將視窗集合成群組</guilabel></para>
+	 	<para>選取這個選項，便永遠不會把相同類別的視窗集合成群組，並放入同一個 <application>&applet;</application> 按鈕下。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>在空間有限時將視窗集合成群組</guilabel></para>
+	 	<para>當面板上的空間有限時，請選取這個選項，將相同類別的視窗集合成群組，放入同一個 <application>&applet;</application>按鈕下。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>永遠將視窗集合成群組</guilabel></para>
+	 	<para>選取這個選項，便永遠會將相同類別的視窗集合成群組，放入同一個 <application>&applet;</application> 按鈕下。</para>
+		</listitem>
+		</itemizedlist>
+	 <para>預設值： <guilabel>在空間有限時將視窗集合成群組</guilabel>。</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>視窗清單大小</guilabel> </term>
+	 <listitem>
+	 <para><application>&applet;</application> applet 的大小，是根據 applet 所在面板的大小而定。 請使用下列的旋轉方塊，設定 applet 大小的限制。</para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>最小</guilabel></para>
+	 	<para>指定 applet 的最小值。 如果面板比指定的最小值還小，程式會調整面板的大小，以符合 applet 的大小。</para>
+		<para>預設值： 50 像素。</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>最大</guilabel></para>
+	 	<para>指定 applet 的最大值。 </para>
+		<para>預設值： 4096 像素。</para>
+		</listitem>
+		</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

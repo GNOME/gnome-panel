@@ -1,0 +1,235 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Workspace Switcher">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="sv">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manual f&ouml;r panelprogrammet &applet;, version&nbsp;&manrevision;</title>
+	 <copyright> 
+		<year>2003</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> Dokumentationsprojekt f&ouml;r GNOME </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Suns</firstname> 
+		  <surname>GNOME-dokumentationsteam</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>Dokumentationsprojekt f&ouml;r GNOME</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet &applet;, version &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet Arbetsytebytare, version 2.1</revnumber> 
+		  <date>Juli 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet Arbetsytebytare, version&nbsp;&manrevision;</revnumber> 
+		  <date>Mars 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet Skrivbordsguide</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> I den h&auml;r manualen beskrivs version &appletversion; av &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Feedback</title>
+		<para> Om du vill rapportera ett fel eller ge f&ouml;rslag om panelprogrammet &applet;
+		  eller den h&auml;r manualen f&ouml;ljer du instruktionerna p&aring; 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME:s feedbacksida</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Arbetsytebytare</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="workspacelist-introduction"> 
+
+	 <title>Introduktion</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="workspacelist-fig"> 
+		<title>Panelprogrammet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"  				format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Visar panelprogrammet Arbetsytebytare. Inneh&aring;ller en knapp f&ouml;r varje arbetsyta.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	<para>Panelprogrammet <application>&applet;</application> visar de arbetsytor som finns p&aring; GNOME-skrivbordet. 
+	En arbetsyta &auml;r ett avskiljt omr&aring;de p&aring; skrivbordet d&auml;r du kan arbeta. Alla arbetsytor p&aring; skrivbordet inneh&aring;ller 
+	likadan skrivbordsbakgrund, likadana paneler och likadana menyer. Du kan dock k&ouml;ra olika program 
+	och &ouml;ppna olika f&ouml;nster p&aring; varje arbetsyta. Du kan bara visa en arbetsyta i taget, men du kan ha f&ouml;nster &ouml;ppna i andra arbetsytor. </para>
+	
+	<para>Som standard visar panelprogrammet <application>&applet;</application> en visuell representation av arbetsytorna 
+	p&aring; skrivbordet. Se exempel i <xref linkend="workspacelist-fig"/>. Panelprogrammet visar de programf&ouml;nster och dialogrutor 
+	som &auml;r &ouml;ppna p&aring; en arbetsyta. Bakgrunden f&ouml;r aktuell arbetsyta och f&ouml;r det f&ouml;nster som har fokus markeras. 
+	Du kan &auml;ndra detta s&aring; att endast namnen p&aring; arbetsytorna visas i panelprogrammet. Mer information om hur du konfigurerar panelprogrammet hittar du i 
+	<xref linkend="workspacelist-prefs"/>.</para>
+	
+	<para>I <xref linkend="workspacelist-fig"/> visas panelprogrammet  <application>&applet;</application> n&auml;r  
+	GNOME-sessionen inneh&aring;ller fyra arbetsytor. Panelprogrammet visar arbetsytorna i ordning fr&aring;n v&auml;nster till h&ouml;ger 
+	&ouml;ver raderna i panelprogrammet. 
+	I <xref linkend="workspacelist-fig"/> &auml;r panelprogrammet inst&auml;llt s&aring; att arbetsytorna visas p&aring; en rad. 
+	Mer information om hur du &auml;ndrar antalet rader i panelprogrammet hittar du i <xref linkend="workspacelist-prefs"/>. </para>
+	
+	<para>Du l&auml;gger till <application>&applet;</application> p&aring; en panel genom att h&ouml;gerklicka p&aring; panelen och v&auml;lja <menuchoice>
+	<guimenu>L&auml;gg till p&aring; panelen</guimenu>
+	<guisubmenu>Verktyg</guisubmenu>
+	<guimenuitem>Arbetsytebytare</guimenuitem>
+	</menuchoice>.
+	</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="workspacelist-usage">
+	 <title>Anv&auml;ndning</title>
+	<sect2 id="workspacelist-navigate">
+	<title>S&aring; h&auml;r flyttar du mellan olika arbetsytor</title>
+	<para>Knappens bakgrund i panelprogrammet f&ouml;r aktuell arbetsyta markeras. Om du vill byta
+	till en annan arbetsyta klickar du p&aring; den knapp som representerar den nya arbetsytan. Om du klickar p&aring; ett visst f&ouml;nster p&aring; en arbetsyteknapp v&auml;xlar <application>&applet;</application> till den nya arbetsytan och g&ouml;r det f&ouml;nstret aktivt. Om du vill &aring;terst&auml;lla den ursprungliga arbetsytan klickar du p&aring; den knapp
+	som motsvarar arbetsytan i <application>&applet;</application>.</para>
+	<para>N&auml;r du v&auml;xlar till en annan arbetsyta &auml;ndras inneh&aring;llet i panelprogrammet 
+	<application>F&ouml;nsterlista</application> och visar de f&ouml;nster som &auml;r &ouml;ppna i den nya 
+	arbetsytan.</para>
+	</sect2>
+	<sect2 id="workspacelist-move-window">
+	<title>S&aring; h&auml;r flyttar du ett f&ouml;nster fr&aring;n en arbetsyta till en annan</title>
+	<para>Om du vill anv&auml;nda <application>&applet;</application> f&ouml;r att flytta ett f&ouml;nster fr&aring;n en arbetsyta till en annan 
+	drar du f&ouml;nstret fr&aring;n aktuell arbetsyta till den nya arbetsytan. </para>
+	</sect2>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+  <sect1 id="workspacelist-prefs"> 
+	 <title>Inst&auml;llningar</title>
+	 <para>Du konfigurerar panelprogrammet <application>&applet;</application> genom att h&ouml;gerklicka
+         p&aring; panelprogrammet och v&auml;lja <guimenuitem>Inst&auml;llningar</guimenuitem>. </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Visa namn p&aring; arbetsytor i bytaren</guilabel> </term>
+	 	<listitem>
+	 	<para>Om du vill visa namnen p&aring; arbetsytorna i panelprogrammet i st&auml;llet f&ouml;r en visuell representation markerar du det
+			 h&auml;r alternativet.</para>
+	 	<para>Standard: ej markerat.</para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term>Inneh&aring;ll i arbetsytebytaren</term>
+	 	<listitem>
+	 	<para>Markera n&aring;got av f&ouml;ljande alternativ f&ouml;r att best&auml;mma vilka arbetsytor som ska visas i <application>&applet;</application>:</para>
+	 		<itemizedlist>
+	 		<listitem><para><guilabel>Visa endast aktuell arbetsyta</guilabel></para>
+	 		<para>Markera det h&auml;r alternativet om du endast vill visa aktuell arbetsyta i panelprogrammet <application>&applet;</application>.</para>
+	 		</listitem>
+	 		<listitem><para><guilabel>Visa alla arbetsytor</guilabel></para>
+	 		<para>Markera det h&auml;r alternativet om du vill visa alla arbetsytor p&aring; GNOME-skrivbordet i 
+			panelprogrammet <application>&applet;</application>. Anv&auml;nd rotationsrutan <guilabel>Rader</guilabel> om 
+			du vill ange det antal rader som ska visas p&aring; arbetsytan i panelprogrammet. </para>
+	 		</listitem>
+	 		</itemizedlist>
+	 	<para>Standard: <guilabel>Visa alla arbetsytor</guilabel>, 1 rad.</para>
+		</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Arbetsytor</guilabel> </term>
+	 	<listitem>	 
+	 	<para>Anv&auml;nd den h&auml;r listrutan om du vill redigera arbetsytornas namn p&aring; skrivbordet. Om du vill redigera namnet p&aring; en arbetsyta 
+		markerar du namnet och skriver sedan det nya namnet. </para>
+	 	</listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Antal arbetsytor</guilabel> </term>
+	 	<listitem>
+	 	<para>Anv&auml;nd den h&auml;r rotationsrutan om du vill &ouml;ka eller minska antalet arbetsytor i GNOME-sessionen.</para>
+	 	<para>Standard: 4.</para>
+	 	</listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>
