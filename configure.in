@@ -76,6 +76,15 @@ else
    AC_MSG_RESULT(no)
 fi
 
+dnl
+dnl Check for wnck_pager_set_screen and wnck_tasklist_set_screen
+dnl
+__save_LIBS=$LIBS
+LIBS="$LIBS $WNCKLET_LIBS"
+AC_CHECK_FUNCS(wnck_pager_set_screen)
+AC_CHECK_FUNCS(wnck_tasklist_set_screen)
+LIBS=$___save_LIBS
+
 dnl X development libraries check
 
 #

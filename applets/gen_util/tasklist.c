@@ -152,11 +152,13 @@ static void
 applet_realized (PanelApplet  *applet,
 		 TasklistData *tasklist)
 {
+#ifdef WNCK_TASKLIST_SET_SCREEN
 	WnckScreen *screen;
 
 	screen = applet_get_screen (GTK_WIDGET (applet));
 
 	wnck_tasklist_set_screen (WNCK_TASKLIST (tasklist->tasklist), screen);
+#endif
 }
 
 static void
