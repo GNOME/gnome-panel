@@ -5,7 +5,7 @@ test:
 #SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 #	@PROGRAMS_PANEL_CDPLAYER@
 
-SUBDIRS  = libapplet clock @PROGRAMS_PANEL_CDPLAYER@
+SUBDIRS  = clock @PROGRAMS_PANEL_CDPLAYER@
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
