@@ -492,8 +492,8 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 	if(!ior) {
 	  PortableServer_POA poa;
 
-	  static PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
-						  "GNOME/Applet"};
+	  static const PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
+							"GNOME/Applet"};
 	  POA_GNOME_Applet__init(&applet_servant, &ev);
 
 	  poa = orb->root_poa; /* non-portable temp hack */
@@ -649,7 +649,11 @@ static void orb_remove_connection(GIOPConnection *cnx)
 void
 applet_corba_gtk_main (char *str)
 {
+  static const PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
+					  "GNOME/Applet"};
   gtk_main();
+
+  PortableServer_POA_deactivate_object(orb->root_poa, &objid, &ev);
 }
 
 void

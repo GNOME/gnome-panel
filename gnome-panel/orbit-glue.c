@@ -381,9 +381,9 @@ server_sync_config(POA_GNOME_Panel *servant,
 {
   CHECK_COOKIE();
 
-  if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
+  if(g_list_find(applets_to_sync, GINT_TO_POINTER(((int)applet_id)))==NULL)
     applets_to_sync = g_list_prepend(applets_to_sync,
-				     GINT_TO_POINTER(applet_id));
+				     GINT_TO_POINTER(((int)applet_id)));
   panel_config_sync();
  
 }
@@ -574,7 +574,7 @@ panel_corba_gtk_init(void)
 
   POA_GNOME_Panel__init(&servant, &ev);
 
-  thepoa = orb->root_poa; /* non-portable temporary hack */
+  thepoa = (PortableServer_POA)orb->root_poa; /* non-portable temporary hack */
 
   PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);
 
