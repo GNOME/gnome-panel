@@ -23,4 +23,4 @@ SUBDIRS = $(always_built_SUBDIRS) \
 	 $(cdplayer) $(mixer) $(modemlights) $(winlist)
 
 sometimes_built_SUBDIRS = cdplayer mixer modemlights winlist
-#DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
+DIST_SUBDIRS = $(always_built_SUBDIRS) $(sometimes_built_SUBDIRS)
