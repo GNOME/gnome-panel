@@ -2342,7 +2342,7 @@ create_applets_menu(GtkWidget *menu, gboolean fake_submenus, gboolean title)
 	
 	applet_menu = create_menu_at(menu, menudir, TRUE,
 				     _("Applets"),
-				     GNOME_STOCK_PIXMAP_EXEC,
+				     "gnome-applets.png",
 				     fake_submenus, FALSE, title);
 	g_free (menudir);
 	return applet_menu;
@@ -3507,10 +3507,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem (menuitem, 
-			gnome_stock_pixmap_widget (menu,
-						   GNOME_STOCK_MENU_EXEC),
-			_("Applet"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
+				   _("Applet"), SMALL_ICON_SIZE);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	m = create_applets_menu(NULL, fake_submenus, TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),m);
@@ -4122,11 +4120,7 @@ create_root_menu(GtkWidget *root_menu,
 		menu = create_applets_menu(NULL, fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem_with_size (menuitem,
-					  gnome_stock_pixmap_widget_at_size (
-						  NULL,
-						  GNOME_STOCK_PIXMAP_EXEC,
-						  size, size),
+		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
 					  _("Applets"), size);
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
