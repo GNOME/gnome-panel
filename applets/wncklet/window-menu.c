@@ -39,6 +39,7 @@
 #include <libwnck/libwnck.h>
 
 #include "inlinepixbufs.h"
+#include "eel/eel-ellipsizing-label.h"
 #include "egg-screen-help.h"
 #include "wncklet.h"
 
@@ -323,6 +324,29 @@ window_menu_activate_window (WnckWindow *window)
 	wnck_window_activate (window);
 }
 
+static GtkWidget*
+window_menu_item_new (WindowMenu  *window_menu,
+		      const gchar *label)
+{
+	GtkWidget *item;
+	GtkWidget *ellipsizing_label;
+	int screen_width;
+
+	item = gtk_image_menu_item_new ();
+
+	screen_width = gdk_screen_get_width (
+				gtk_widget_get_screen (window_menu->applet));
+	gtk_widget_set_size_request (item, screen_width / 6, -1);
+
+	ellipsizing_label = eel_ellipsizing_label_new (label);
+	gtk_misc_set_alignment (GTK_MISC (ellipsizing_label), 0.0, 0.5);
+
+	gtk_container_add (GTK_CONTAINER (item), ellipsizing_label);
+	gtk_widget_show (ellipsizing_label);
+
+	return item;
+}
+
 static void
 window_menu_add_window (WindowMenu *window_menu,
 			WnckWindow *window)
@@ -348,7 +372,7 @@ window_menu_add_window (WindowMenu *window_menu,
 		freeme = label;
 	}
 
-	item = gtk_image_menu_item_new_with_label (label);
+	item = window_menu_item_new (window_menu, label);
 	if (freeme)
 		g_free (freeme);
 
@@ -535,7 +559,7 @@ window_menu_popup_menu (WindowMenu *window_menu,
 	if (!l) {
 		GtkWidget *item;
 		
-		item = gtk_menu_item_new_with_label (_("No Windows Open"));
+		item = window_menu_item_new (window_menu, _("No Windows Open"));
 
 		gtk_widget_set_sensitive (item, FALSE);
 		gtk_widget_show (item);	

@@ -1,3 +1,17 @@
+2003-10-09  Vincent Untz  <vincent@vuntz.net>
+
+	* eel/Makefile.am, eel/eel-ellipsizing-label.[ch],
+	eel/eel-gtk-macros.h, eel/eel-pango-extensions.[ch],
+	eel/eel-string.[ch], eel/update-from-eel.sh, eel/.cvsignore: added
+	these.
+
+	* Makefile.am: added the stuff for eel/.
+
+	* window-menu.c: (window_menu_item_new): function to create an image
+	menu item containing an ellipsizing label.
+	(window_menu_add_window), (window_menu_popup_menu): use above function.
+	Fix bug #119647.
+
 2003-10-07  Padraig O'Briain <padraig.obriain@sun.com>
 
 	* showdesktop.c (show_desktop_applet_fill): Set accessible name for
