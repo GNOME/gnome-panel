@@ -49,6 +49,7 @@ BUILT_SOURCES = $(CORBA_SRCLIST)
 
 base_panel_SOURCES=\
 	panel-include.h		\
+	panel-types.h		\
 	main.c			\
 	main.h			\
 	applet.c		\
