@@ -624,6 +624,27 @@ panel_really_logout(GtkWidget *w, int button, gpointer data)
 			gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
 						   GNOME_INTERACT_ANY, 0, 1);
 		}
+	} else if(button==2) {
+		GtkWidget *dlg =
+			gnome_message_box_new(_("Are you sure you want to "
+						"just terminate the panel?\n\n"
+						"If you need to restart the "
+						"panel after terminating it "
+						"here, you will need to type "
+						"panel in a terminal window\n\n"
+						"Press OK to terminate the "
+						"panel!"),
+					      GNOME_MESSAGE_BOX_WARNING,
+					      GNOME_STOCK_BUTTON_OK,
+					      GNOME_STOCK_BUTTON_CANCEL,
+					      NULL);
+		if(gnome_dialog_run_and_close(dlg)==0) {
+			gnome_client_set_restart_style (client,
+							GNOME_RESTART_NEVER);
+			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
+					    GNOME_INTERACT_NONE, 0, NULL);
+			panel_session_die (client, NULL);
+		}
 	}
 	if(box)
 		*box = NULL;
@@ -670,6 +691,8 @@ panel_quit(void)
 				     GNOME_MESSAGE_BOX_QUESTION,
 				     GNOME_STOCK_BUTTON_YES,
 				     GNOME_STOCK_BUTTON_NO,
+				     GNOME_CLIENT_CONNECTED (client)?
+				       _("Only terminate panel"):NULL,
 				     NULL);
 	gtk_window_set_wmclass(GTK_WINDOW(box),
 			       "logout_dialog","Panel");
