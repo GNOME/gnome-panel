@@ -1,3 +1,10 @@
+Tue Oct 15 19:59:07 2002  HideToshi Tajima  <hidetoshi.tajima@sun.com>
+
+	* gnome-run.c: Reverting fix #91766 - use g_locale_from_utf8()
+	instead of g_filename_from_utf8() to get locale text,
+	and try to run command with utf8 name when it failes with
+	locale name.
+
 2002-10-11  Arvind Samptur <arvind.samptur@wipro.com>
 	* gnome-run.c: (show_run_dialog_with_text)
 	Remove the parameters from the exec field when putting a menu
