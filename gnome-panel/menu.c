@@ -2330,30 +2330,6 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			   menuitem);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add new panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   create_add_panel_submenu());
-
-	add_menu_separator(menu);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Convert to corner panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) convert_to_panel,
-			   GINT_TO_POINTER(CORNER_PANEL));
-	gtk_object_set_data(GTK_OBJECT(menu),"convcorn",menuitem);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Convert to edge panel"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) convert_to_panel,
-			   GINT_TO_POINTER(SNAPPED_PANEL));
-	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
-
-	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add main menu"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -2415,6 +2391,29 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
 
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Convert to corner panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) convert_to_panel,
+			   GINT_TO_POINTER(CORNER_PANEL));
+	gtk_object_set_data(GTK_OBJECT(menu),"convcorn",menuitem);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Convert to edge panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) convert_to_panel,
+			   GINT_TO_POINTER(SNAPPED_PANEL));
+	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
+
+	add_menu_separator(menu);
+
+        menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Create new panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_add_panel_submenu());
 }
 
 static void
