@@ -186,7 +186,8 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	
 	gnome_config_set_int("position_x",x);
 	gnome_config_set_int("position_y",y);
-	gnome_config_set_int("drawer_drop_zone_pos",panel->drawer_drop_zone_pos);
+	gnome_config_set_int("drawer_drop_zone_pos",
+			     panel->drawer_drop_zone_pos);
 	
 	gnome_config_pop_prefix ();
 }
@@ -247,12 +248,16 @@ panel_session_save (GnomeClient *client,
 	gnome_config_set_int("panel_count",num-1);
 
 	/*global options*/
-	gnome_config_set_int("auto_hide_step_size", global_config.auto_hide_step_size);
-	gnome_config_set_int("explicit_hide_step_size", global_config.explicit_hide_step_size);
+	gnome_config_set_int("auto_hide_step_size",
+			     global_config.auto_hide_step_size);
+	gnome_config_set_int("explicit_hide_step_size",
+			     global_config.explicit_hide_step_size);
 	gnome_config_set_int("minimized_size", global_config.minimized_size);
 	gnome_config_set_int("minimize_delay", global_config.minimize_delay);
-	gnome_config_set_bool("tooltips_enabled", global_config.tooltips_enabled);
-	gnome_config_set_bool("show_small_icons", global_config.show_small_icons);
+	gnome_config_set_bool("tooltips_enabled",
+			      global_config.tooltips_enabled);
+	gnome_config_set_bool("show_small_icons",
+			      global_config.show_small_icons);
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();

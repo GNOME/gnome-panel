@@ -433,7 +433,11 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 	gint i;
 	gint freepos;
 
-	for(i=0;pos-i>=0 && panel->applets[pos-i].applet;i++)
+	if(!panel->applets[pos].applet) {
+		puts("push left already empty");
+		return TRUE;
+	}
+	for(i=1;pos-i>=0 && panel->applets[pos-i].applet;i++)
 		;
 	if(pos-i < 0)
 		return FALSE;
@@ -546,8 +550,10 @@ panel_widget_seize_space(PanelWidget *panel,
 		      panel_widget_push_right(panel,pos+allocated))
 			allocated++;
 		if(panel->snapped != PANEL_DRAWER) {
+			puts("need pushing left");
 			while(allocated < width &&
 			      panel_widget_push_left(panel,pos-1)) {
+			        puts("pushing left");
 				pos--;
 				allocated++;
 			}
@@ -2017,16 +2023,20 @@ panel_widget_make_empty_pos(PanelWidget *panel, gint pos)
 		    panel->applets[i].applet;i++)
 			;
 		if(i>=panel->size) {
-			if(panel_widget_push_left(panel,panel->size-1))
+			puts("over on the right");
+			if(panel_widget_push_left(panel,panel->size-1)) {
+				puts("pushed ok");
 				return panel->size-1;
+			}
+			puts("can't push");
 			return -1;
 		}
 
 		if(panel_widget_push_right(panel,i))
 			return i;
 
-		if(panel_widget_push_left(panel,i))
-			return i;
+		if(i>0 && panel_widget_push_left(panel,i-1))
+			return i-1;
 
 		/*panel is full!*/
 		return -1;
