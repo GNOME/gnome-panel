@@ -4189,7 +4189,7 @@ create_root_menu(gboolean fake_submenus, int flags, gboolean tearoff,
 
 	menuitem = gtk_menu_item_new ();
 	gtk_widget_lock_accelerators (menuitem);
-	setup_menuitem_try_pixmap (menuitem, "gnome-tigert.png", 
+	setup_menuitem_try_pixmap (menuitem, "gnome-run.png", 
 				   _("Run..."), size);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (run_cb), NULL);

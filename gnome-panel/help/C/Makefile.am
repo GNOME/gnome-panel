@@ -1,11 +1,12 @@
 # it does things aphabetically, we need these dirs there
-a_newfigsdir = $(panel_helpdir)/figures/newtest/
-a_newfigs_DATA =
 
-a_oldfigsdir = $(panel_helpdir)/figures/old/
-a_oldfigs_DATA =
+panel_helpdir = $(datadir)/gnome/help/panel/C
+panel_help_DATA = \
+	index.html	\
+	topic.dat
 
-figs = \
+figsdir = $(panel_helpdir)/figures/old/
+figs_DATA = \
 	figures/create_launcher.png	\
 	figures/drawer_open.png		\
 	figures/drawer_properties.png	\
@@ -26,15 +27,7 @@ figs = \
 	figures/panel_swallow.png	\
 	figures/status_dock.png
 
-
-
-panel_helpdir = $(datadir)/gnome/help/panel/C
-panel_help_DATA = \
-	index.html	\
-	topic.dat	\
-	$(figs)
-
-EXTRA_DIST = panel.sgml topic.dat index.html $(figs)
+EXTRA_DIST = panel.sgml $(panel_help_DATA) $(figs_DATA)
 
 all: index.html
 
@@ -54,14 +47,20 @@ panel/index.html: $(srcdir)/panel.sgml
 	db2html $$srcdir/panel.sgml
 
 dist-hook: index.html
-	mkdir $(distdir)/panel
+	mkdir -p $(distdir)/panel/stylesheet-images
 	-cp panel/*.html $(distdir)/panel
 	-cp panel/*.css $(distdir)/panel
+	-cp panel/stylesheet-images/*.gif $(distdir)/panel/stylesheet-images
 
 install-data-local: index.html
 	-for file in $(srcdir)/panel/*.html $(srcdir)/panel/*.css; do \
 	  basefile=`echo $$file | sed -e 's,^.*/,,'`; \
 	  $(INSTALL_DATA) $$file $(DESTDIR)$(panel_helpdir)/$$basefile; \
+	done
+	-mkdir -p $(DESTDIR)$(panel_helpdir)/stylesheet-images
+	-for file in $(srcdir)/panel/stylesheet-images/*.gif; do \
+	  basefile=`echo $$file | sed -e  's,^.*/,,'`; \
+	  $(INSTALL_DATA) $$file $(DESTDIR)$(panel_helpdir)/stylesheet-images/$$basefile; \
 	done
 
 panel.ps: panel.sgml
