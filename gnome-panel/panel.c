@@ -1865,10 +1865,6 @@ panel_load_global_config (void)
 
 	g_slist_free (list);
 
-	/* FIXME STUFF THAT IS BORKED */
-	global_config.menu_check = TRUE;
-	global_config.menu_flags = get_default_menu_flags();
-
 	panel_apply_global_config ();
 }
 
@@ -1879,11 +1875,6 @@ panel_save_global_config (void)
 	const char     *full_key;
 
 	change_set = gconf_change_set_new ();
-
-	/* FIXME STUFF THAT IS BORKED 
-	panel_gconf_global_config_set_int ("menu-flags", global_config.menu_flags);
-	panel_gconf_global_config_set_bool ("menu-check", global_config.menu_check);
-	*/
 
 	/*
 	 * keep in sync with panel-config-global.h and
@@ -1949,84 +1940,21 @@ panel_save_global_config (void)
 void
 panel_apply_global_config (void)
 {
-	static int menu_flags_old = -1;
-	static int old_menu_check = -1;
-	GSList *li;
+	GSList *l;
 
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
 		gtk_tooltips_disable (panel_tooltips);
-	/* not incredibly efficent way to do this, we just make
-	 * sure that all directories are reread */
-	if (old_menu_check != global_config.menu_check) {
-		fr_force_reread ();
-	}
-	if(old_menu_check != global_config.menu_check) {
-		GSList *li;
-		for(li = applets; li != NULL; li = g_slist_next(li)) {
-			AppletInfo *info = li->data;
-			if(info->menu != NULL) {
-				gtk_widget_unref(info->menu);
-				info->menu = NULL;
-				info->menu_age = 0;
-			}
-			if(info->type == APPLET_MENU) {
-				Menu *menu = info->data;
-				if(menu->menu != NULL) {
-					gtk_widget_unref(menu->menu);
-					menu->menu = NULL;
-					menu->age = 0;
-				}
-			}
-		}
-		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
-			PanelData *pd = li->data;
-			if(pd->menu != NULL) {
-				gtk_widget_unref(pd->menu);
-				pd->menu = NULL;
-				pd->menu_age = 0;
-			}
-		}
-		foobar_widget_force_menu_remake();
-	}
-	old_menu_check = global_config.menu_check;
 
-	/* if we changed global menu flags, cmark all main menus that use
-	 * the global setting as dirty */
-	if(menu_flags_old != global_config.menu_flags) {
-		GSList *li;
-		for(li = applets; li != NULL; li = g_slist_next(li)) {
-			AppletInfo *info = li->data;
-			if(info->type == APPLET_MENU) {
-				Menu *menu = info->data;
-				if(menu->menu != NULL &&
-				   menu->global_main) {
-					gtk_widget_unref(menu->menu);
-					menu->menu = NULL;
-					menu->age = 0;
-				}
-			}
-		}
-	}
+	for (l = panel_list; l; l = l->next) {
+		PanelData *pd = l->data;
 
-	for (li = panel_list; li != NULL; li = li->next) {
-		PanelData *pd = li->data;
-		if (BASEP_IS_WIDGET (pd->panel)) {
+		if (BASEP_IS_WIDGET (pd->panel))
 			basep_update_frame (BASEP_WIDGET (pd->panel));
-
-			if ((menu_flags_old != global_config.menu_flags) &&
-			    pd->menu) {
-				gtk_widget_unref (pd->menu);
-				pd->menu = NULL;
-				pd->menu_age = 0;
-			}
-				
-		}
 	}
-	menu_flags_old = global_config.menu_flags;
 
-	panel_global_keys_setup();
+	panel_global_keys_setup ();
 }
 
 

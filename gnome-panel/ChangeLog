@@ -1,3 +1,32 @@
+2002-04-18  Mark McLoughlin  <mark@skynet.ie>
+
+	* gnome-panel-screenshot.c: (main): fixed warning.
+
+	* menu-fentry.[ch]:
+	(fr_read_dir), (fr_check_and_reread), (fr_get_dir): kill
+	DirRec.force_reread and all its uses.
+	(fr_force_reread): kill, we always do check for re-reads now.
+
+	* panel-config-global.h: kill menu_check and menu_flags.
+
+	* menu.c: (panel_launch_nautilus): kill.
+	(make_panel_submenu): kill 'Edit menus...' item (#75977).
+	(create_panel_root_menu), (make_panel_submenu),
+	(add_menu_widget), (menu_button_menu_popup): use default menu
+	flags. They're not configurable anymore.
+	(load_menu_applet): kill 'Edit menus...' here too.
+
+	* panel-applet-frame.c: (panel_applet_frame_class_init): fix
+	warning.
+
+	* panel-shell.c: include panel-util.h to fix warning.
+
+	* panel.c:
+	(panel_load_global_config), (panel_save_global_config): remove
+	'FIXME STUFF THAT IS BORKED' options.
+	(panel_apply_global_config): don't handle applying these
+	options.
+
 2002-04-17  Arvind S N  <arvind.samptur@wipro.com>
 
 	* button-widget.c: workaround to get the drawer panel

@@ -615,7 +615,6 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			       gpointer               dummy)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
-	GtkObjectClass *object_class = (GtkObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
 
 	parent_class = g_type_class_peek_parent (klass);

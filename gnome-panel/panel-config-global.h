@@ -59,9 +59,6 @@ struct _GlobalConfig {
 	gboolean           drawer_auto_close;
 	gboolean           confirm_panel_remove;
 	gboolean           highlight_when_over;
-
-	int                menu_flags;
-	gboolean           menu_check;
 };
 
 void panel_global_config_set_entry (GConfEntry  *entry);

@@ -399,7 +399,6 @@ fr_read_dir (DirRec *dr, const char *muri, time_t mtime, int sublevels)
 	/*this will zero all fields*/
 	if (dr == NULL) {
 		dr = g_new0 (DirRec, 1);
-		dr->force_reread = FALSE;
 		/* this must be set otherwise we may messup on
 		   fr_free */
 		dr->frec.type = FILE_REC_DIR;
@@ -537,15 +536,6 @@ fr_check_and_reread (FileRec *fr)
 		gboolean reread = FALSE;
 		gboolean any_change = FALSE;
 		GSList *li;
-
-		if ( ! global_config.menu_check) {
-			gnome_vfs_file_info_unref (info);
-			return ret;
-		}
-
-		if (dr->force_reread)
-			reread = TRUE;
-		dr->force_reread = FALSE;
 
 		/* recheck tryexecs */
 		for (li = dr->tryexecs; ! reread && li != NULL; li = li->next) {
@@ -760,18 +750,6 @@ fr_get_dir (const char *mdir)
 			return fr_check_and_reread (fr);
 	}
 	return fr_read_dir (NULL, mdir, 0, 1);
-}
-
-void
-fr_force_reread (void)
-{
-	GSList *li;
-	for(li = dir_list; li != NULL; li = li->next) {
-		DirRec *dr = li->data;
-		g_assert (dr != NULL);
-
-		dr->force_reread = TRUE;
-	}
 }
 
 int

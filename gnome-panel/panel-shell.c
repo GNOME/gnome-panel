@@ -4,6 +4,7 @@
 #include <gtk/gtk.h>
 
 #include "panel-shell.h"
+#include "panel-util.h"
 
 struct _PanelShellPrivate {
 	int dummy;

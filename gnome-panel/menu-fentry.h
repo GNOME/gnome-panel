@@ -52,7 +52,6 @@ struct _DirRec {
 	FileRec frec;
 	time_t ditemmtime;
 	time_t ditemlast_stat;
-	gboolean force_reread;
 	GSList *tryexecs;
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/

@@ -2877,7 +2877,7 @@ create_panel_root_menu (PanelWidget *panel)
 {
 	GtkWidget *menu;
 
-	menu = create_root_menu (NULL, TRUE, global_config.menu_flags,
+	menu = create_root_menu (NULL, TRUE, get_default_menu_flags (),
 				 BASEP_IS_WIDGET (panel->panel_parent),
 				 TRUE /* run_item */);
 
@@ -3217,15 +3217,6 @@ show_panel_help (GtkWidget *w, gpointer data)
 }
 
 static void
-panel_launch_nautilus (GtkWidget *widget, gpointer data)
-{
-	char *argv[3] = {"nautilus", data, NULL};
-	if (gnome_execute_async (g_get_home_dir (), 2, argv) < 0)
-		   panel_error_dialog ("cannot_launch_nautilus",
-				       _("Cannot launch nautilus!"));
-}
-
-static void
 make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 {
 	GtkWidget *menuitem, *submenu;
@@ -3288,26 +3279,6 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				    G_CALLBACK(panel_config_global), 
 				    NULL);
-
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem_try_pixmap (menuitem,
-					   "gnome-gmenu.png",
-					   _("Edit menus..."));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		g_signal_connect (G_OBJECT (menuitem), "activate",
-				  G_CALLBACK (panel_launch_nautilus), 
-				  "applications:/");
-
-		if ( ! global_config.menu_check) {
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem,
-					NULL,
-					_("Reread all menus"));
-			gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-			g_signal_connect (G_OBJECT (menuitem), "activate",
-					    G_CALLBACK (fr_force_reread), 
-					    NULL);
-		}
 
 		add_menu_separator (menu);
 	}
@@ -3681,7 +3652,7 @@ add_menu_widget (Menu *menu,
 	if (menu->main_menu) {
 		int flags;
 		if (menu->global_main)
-			flags = global_config.menu_flags;
+			flags = get_default_menu_flags ();
 		else
 			flags = menu->main_menu_flags;
 		menu->menu = create_root_menu (NULL,
@@ -3709,7 +3680,7 @@ add_menu_widget (Menu *menu,
 		if(menu->menu == NULL) {
 			int flags;
 			if (menu->global_main)
-				flags = global_config.menu_flags;
+				flags = get_default_menu_flags ();
 			else
 				flags = menu->main_menu_flags;
 			g_warning(_("Can't create menu, using main menu!"));
@@ -3740,7 +3711,7 @@ menu_button_menu_popup (Menu* menu, guint button, guint32 activate_time)
 	const DistributionInfo *distribution_info = get_distribution_info ();
 
 	if (menu->global_main)
-		flags = global_config.menu_flags;
+		flags = get_default_menu_flags ();
 	else
 		flags = menu->main_menu_flags;
 
@@ -3983,19 +3954,11 @@ load_menu_applet (const char  *params,
 
 		menu->info = info;
 
-		if (!commie_mode) {
+		if (!commie_mode)
 			panel_applet_add_callback (info, 
 						   "properties",
 						   GTK_STOCK_PROPERTIES,
 						   _("Properties..."));
-
-			if (menu->main_menu) {
-				panel_applet_add_callback (info,
-							   "edit_menus",
-							    NULL,
-							    _("Edit menus..."));
-			}
-		}
 
 		panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 	}
