@@ -5,13 +5,39 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-03-11 19:24+0000\n"
+"POT-Creation-Date: 2002-03-12 23:08+0100\n"
 "PO-Revision-Date: 2001-07-29 12:32+0200\n"
 "Last-Translator: Andraz Tori <andraz.tori1@guest.arnes.si>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: applets/fish/GNOME_FishApplet.xml.h:1
+#: applets/gen_util/GNOME_ClockApplet.xml.h:1
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
+#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
+msgid "About..."
+msgstr "O programu..."
+
+#: applets/fish/GNOME_FishApplet.xml.h:2
+#: applets/gen_util/GNOME_ClockApplet.xml.h:4
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
+#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
+#: gnome-panel/drawer.c:660 gnome-panel/launcher.c:725
+#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4003
+#: gnome-panel/status.c:375 gnome-panel/swallow.c:453
+msgid "Help"
+msgstr "Pomoč"
+
+#: applets/fish/GNOME_FishApplet.xml.h:3
+#: applets/gen_util/GNOME_ClockApplet.xml.h:5
+#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
+#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
+#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:723 gnome-panel/menu.c:1363
+#: gnome-panel/menu.c:1435 gnome-panel/menu.c:3287 gnome-panel/menu.c:3993
+msgid "Properties..."
+msgstr "Lastnosti..."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
 msgid "Amusements"
@@ -32,32 +58,6 @@ msgstr "Wanda"
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
 msgid "Wanda Factory"
 msgstr "Tovarna wanda"
-
-#: applets/fish/GNOME_FishApplet.xml.h:1
-#: applets/gen_util/GNOME_ClockApplet.xml.h:1
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
-#: applets/gen_util/GNOME_PagerApplet.xml.h:1 applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "O programu..."
-
-#: applets/fish/GNOME_FishApplet.xml.h:2
-#: applets/gen_util/GNOME_ClockApplet.xml.h:4
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
-#: applets/gen_util/GNOME_PagerApplet.xml.h:2 applets/gen_util/printer.c:473
-#: gnome-panel/drawer.c:660 gnome-panel/launcher.c:725
-#: gnome-panel/logout.c:130 gnome-panel/logout.c:215 gnome-panel/menu.c:4147
-#: gnome-panel/status.c:375 gnome-panel/swallow.c:453
-msgid "Help"
-msgstr "Pomoč"
-
-#: applets/fish/GNOME_FishApplet.xml.h:3
-#: applets/gen_util/GNOME_ClockApplet.xml.h:5
-#: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
-#: applets/gen_util/GNOME_PagerApplet.xml.h:3 applets/gen_util/printer.c:466
-#: gnome-panel/drawer.c:657 gnome-panel/launcher.c:723 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:1560 gnome-panel/menu.c:3431 gnome-panel/menu.c:4137
-msgid "Properties..."
-msgstr "Lastnosti..."
 
 #: applets/fish/fish.c:391 applets/fish/fish.c:974
 #, no-c-format
@@ -93,8 +93,8 @@ msgstr "Ime vaše GNOME ribe:"
 msgid "The Animation Filename:"
 msgstr "Datoteka z animacijo:"
 
-#: applets/fish/fish.c:602 applets/gen_util/mailcheck.c:1145
-#: gnome-panel/menu-properties.c:550 gnome-panel/menu-properties.c:588
+#: applets/fish/fish.c:602 applets/gen_util/mailcheck.c:1148
+#: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
 #: gnome-panel/panel-config.c:1378 gnome-panel/panel-util.c:240
 #: gnome-panel/swallow.c:283
 msgid "Browse"
@@ -160,6 +160,14 @@ msgstr ""
 "prostora na pultu in v pomnilniku. Če kdo najde kakšnega uporabnika tega "
 "vstavka, ga je priporočljivo poslati k psihiatru."
 
+#: applets/gen_util/GNOME_ClockApplet.xml.h:2
+msgid "Copy date"
+msgstr "Kopiraj datum"
+
+#: applets/gen_util/GNOME_ClockApplet.xml.h:3
+msgid "Copy time"
+msgstr "Kopiraj uro"
+
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 msgid "Accessories"
 msgstr "Pripomočki"
@@ -201,26 +209,18 @@ msgid "Utility"
 msgstr "Pripomoček"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:507
+#: applets/gen_util/tasklist.c:506
 msgid "Window List"
 msgstr "Seznam oken"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:431 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:430 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "Preklopnik med delovnimi površinami"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
 msgid "factory for creating some general applets"
 msgstr "tovarna za ustvarjanje nekaj splošnih vstavkov"
-
-#: applets/gen_util/GNOME_ClockApplet.xml.h:2
-msgid "Copy date"
-msgstr "Kopiraj datum"
-
-#: applets/gen_util/GNOME_ClockApplet.xml.h:3
-msgid "Copy time"
-msgstr "Kopiraj uro"
 
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
 msgid "Check for mail"
@@ -316,6 +316,13 @@ msgstr "Unix čas"
 msgid "Internet time"
 msgstr "Internetni čas"
 
+#. Translator credits
+#: applets/gen_util/clock.c:1069 applets/gen_util/mailcheck.c:1515
+#: applets/gen_util/pager.c:418 applets/gen_util/tasklist.c:494
+#: gnome-panel/menu.c:280
+msgid "translator_credits"
+msgstr "Andraž Tori"
+
 #: applets/gen_util/clock.c:1081
 msgid "Clock Applet"
 msgstr "Vstavek Ura"
@@ -330,15 +337,15 @@ msgid ""
 "date and time"
 msgstr "Vstavek ura doda pultu enostaven prikazovalnik datuma in ure"
 
-#: applets/gen_util/mailcheck.c:207 applets/gen_util/mailcheck.c:1514
+#: applets/gen_util/mailcheck.c:208 applets/gen_util/mailcheck.c:1528
 msgid "Mail check Applet"
 msgstr "Vstavek za preverjanje pošte"
 
-#: applets/gen_util/mailcheck.c:217
+#: applets/gen_util/mailcheck.c:218
 msgid "_Password:"
 msgstr "_Geslo:"
 
-#: applets/gen_util/mailcheck.c:250
+#: applets/gen_util/mailcheck.c:251
 msgid ""
 "Remote-client-error occured. Remote-polling deactivated. Maybe you used a "
 "wrong server/username/password?"
@@ -346,129 +353,129 @@ msgstr ""
 "Zgodila se je napaka na oddaljenem odjemalcu. Remote-polling deaktiviran. "
 "Morda ste uporabili napačen strežnik/uporabniško ime/geslo?"
 
-#: applets/gen_util/mailcheck.c:498
+#: applets/gen_util/mailcheck.c:449
 msgid "You have new mail."
 msgstr "Imate novo pošto."
 
-#: applets/gen_util/mailcheck.c:500
+#: applets/gen_util/mailcheck.c:451
 msgid "You have mail."
 msgstr "Imate pošto."
 
-#: applets/gen_util/mailcheck.c:504
+#: applets/gen_util/mailcheck.c:455
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d sporočil"
 
-#: applets/gen_util/mailcheck.c:506
+#: applets/gen_util/mailcheck.c:457
 #, c-format
 msgid "%d messages"
 msgstr "%d sporočil"
 
-#: applets/gen_util/mailcheck.c:510
+#: applets/gen_util/mailcheck.c:461
 msgid "No mail."
 msgstr "Ni pošte."
 
-#: applets/gen_util/mailcheck.c:1090
+#: applets/gen_util/mailcheck.c:1093
 msgid "Mailbox resides on:"
 msgstr "Poštni nabiralnik se nahaja na:"
 
-#: applets/gen_util/mailcheck.c:1097
+#: applets/gen_util/mailcheck.c:1100
 msgid "Local mailspool"
 msgstr "Krajevni poštni čakalnik"
 
-#: applets/gen_util/mailcheck.c:1105
+#: applets/gen_util/mailcheck.c:1108
 msgid "Local maildir"
 msgstr "Krajevni imenik za pošto"
 
-#: applets/gen_util/mailcheck.c:1113
+#: applets/gen_util/mailcheck.c:1116
 msgid "Remote POP3-server"
 msgstr "Oddaljen POP3-strežnik"
 
-#: applets/gen_util/mailcheck.c:1121
+#: applets/gen_util/mailcheck.c:1124
 msgid "Remote IMAP-server"
 msgstr "Oddaljen IMAP-strežnik"
 
-#: applets/gen_util/mailcheck.c:1141
+#: applets/gen_util/mailcheck.c:1144
 msgid "Mail spool file:"
 msgstr "Datoteka s čakajočo pošto:"
 
-#: applets/gen_util/mailcheck.c:1158
+#: applets/gen_util/mailcheck.c:1161
 msgid "Mail server:"
 msgstr "Poštni strežnik:"
 
-#: applets/gen_util/mailcheck.c:1175
+#: applets/gen_util/mailcheck.c:1178
 msgid "Username:"
 msgstr "Uporabniško ime:"
 
-#: applets/gen_util/mailcheck.c:1189
+#: applets/gen_util/mailcheck.c:1192
 msgid "Password:"
 msgstr "Geslo:"
 
-#: applets/gen_util/mailcheck.c:1207
+#: applets/gen_util/mailcheck.c:1210
 msgid "Folder:"
 msgstr "Mapa:"
 
-#: applets/gen_util/mailcheck.c:1225
+#: applets/gen_util/mailcheck.c:1228
 msgid "Command to run before checking for mail:"
 msgstr "Ukaz, ki naj se požene pred preverjanjem za pošto:"
 
-#: applets/gen_util/mailcheck.c:1255
+#: applets/gen_util/mailcheck.c:1258
 msgid "Execute"
 msgstr "Izvedi"
 
-#: applets/gen_util/mailcheck.c:1266
+#: applets/gen_util/mailcheck.c:1269
 msgid "Before each update:"
 msgstr "Pred vsako osvežitvijo:"
 
-#: applets/gen_util/mailcheck.c:1287
+#: applets/gen_util/mailcheck.c:1290
 msgid "When new mail arrives:"
 msgstr "Ko pride nova pošta:"
 
-#: applets/gen_util/mailcheck.c:1306
+#: applets/gen_util/mailcheck.c:1309
 msgid "When clicked:"
 msgstr "Ob kliku:"
 
-#: applets/gen_util/mailcheck.c:1329
+#: applets/gen_util/mailcheck.c:1332
 msgid "Check for mail every"
 msgstr "Preveri pošto vsakih"
 
-#: applets/gen_util/mailcheck.c:1344
+#: applets/gen_util/mailcheck.c:1347
 msgid "minutes"
 msgstr "minut"
 
-#: applets/gen_util/mailcheck.c:1359
+#: applets/gen_util/mailcheck.c:1362
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1363
+#: applets/gen_util/mailcheck.c:1366
 msgid "Play a sound when new mail arrives"
 msgstr "Naredi zvok, ko pride nova pošta"
 
-#: applets/gen_util/mailcheck.c:1374
+#: applets/gen_util/mailcheck.c:1377
 msgid "Select animation"
 msgstr "Izberi animacijo"
 
-#: applets/gen_util/mailcheck.c:1421
+#: applets/gen_util/mailcheck.c:1424
 msgid "Inbox Monitor Properties"
 msgstr "Lastnosti nadzornika poštnega predala"
 
-#: applets/gen_util/mailcheck.c:1437
+#: applets/gen_util/mailcheck.c:1440
 msgid "_Mail check"
 msgstr "Preverjanje pošte"
 
-#: applets/gen_util/mailcheck.c:1441
+#: applets/gen_util/mailcheck.c:1444
 msgid "Mail_box"
 msgstr "_Poštni predal"
 
-#: applets/gen_util/mailcheck.c:1515
+#: applets/gen_util/mailcheck.c:1529
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 Fundacija za prosto programje"
 
-#: applets/gen_util/mailcheck.c:1516
+#: applets/gen_util/mailcheck.c:1530
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Preverjalnik pošte vas obvesti, ko v vaš nabiralnik prispe nova pošta"
 
-#: applets/gen_util/mailcheck.c:1610
+#: applets/gen_util/mailcheck.c:1625
 msgid "Text only"
 msgstr "Le besedilo"
 
@@ -479,6 +486,38 @@ msgstr "Preverjalnik pošte"
 #: applets/gen_util/mailcheck.soundlist.in.h:2
 msgid "New Mail"
 msgstr "Nova pošta"
+
+#: applets/gen_util/pager.c:296
+#, c-format
+msgid "Error loading num_rows value for workspace switcher applet: %s\n"
+msgstr "Napaka ob nalaganju vrednosti num_rows za vstavek preklopnika delovnih površin: %s\n"
+
+#: applets/gen_util/pager.c:307
+#, c-format
+msgid ""
+"Error loading display_workspace_names value for workspace switcher applet: %"
+"s\n"
+msgstr "Napaka ob nalaganju vrednosti display_workspace_names za vstavek preklopnika delovnih površin: %s\n"
+
+#: applets/gen_util/pager.c:322
+#, c-format
+msgid ""
+"Error loading display_all_workspaces value for workspace switcher applet: %"
+"s\n"
+msgstr "Napaka ob nalaganju vrednosti display_all_workspaces za vstavek preklopnika delovnih površin: %s\n"
+
+
+#: applets/gen_util/pager.c:431
+msgid "(c) 2001 Red Hat, Inc."
+msgstr "(c) 2001 Red Hat, Inc."
+
+#: applets/gen_util/pager.c:432
+msgid ""
+"The Workspace Switcher shows you a small version of your workspaces that "
+"lets you manage the windows."
+msgstr ""
+"Preklopnik delovnih površin vam kaže majhne različice vaših delovnih "
+"površin, ki vam omogočajo upravljanje z okni."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -507,37 +546,6 @@ msgstr "Lastnosti preklopnika delovnih površin"
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspaces"
 msgstr "Delovne površine"
-
-#: applets/gen_util/pager.c:296
-#, c-format
-msgid "Error loading num_rows value for workspace switcher applet: %s\n"
-msgstr ""
-
-#: applets/gen_util/pager.c:307
-#, c-format
-msgid ""
-"Error loading display_workspace_names value for workspace switcher applet: %"
-"s\n"
-msgstr ""
-
-#: applets/gen_util/pager.c:322
-#, c-format
-msgid ""
-"Error loading display_all_workspaces value for workspace switcher applet: %"
-"s\n"
-msgstr ""
-
-#: applets/gen_util/pager.c:432
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "(c) 2001 Red Hat, Inc."
-
-#: applets/gen_util/pager.c:433
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage the windows."
-msgstr ""
-"Preklopnik delovnih površin vam kaže majhne različice vaših delovnih "
-"površin, ki vam omogočajo upravljanje z okni."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -578,6 +586,16 @@ msgstr ""
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
 msgstr "Ne morem ustvariti vstavka!\n"
+
+#: applets/gen_util/tasklist.c:507
+msgid "(c) 2001 Red Hat, Inc"
+msgstr "(c) 2001 Red hat, Inc"
+
+#: applets/gen_util/tasklist.c:508
+msgid ""
+"The Window List shows a list of all visible windows and let you browse them."
+msgstr ""
+"Seznam oken kaže seznam vseh vidnih oken in vam omogoča brskanje po njih."
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
@@ -623,16 +641,6 @@ msgstr "_Vedno daj okna v skupino"
 msgid "_Never group windows"
 msgstr "Oken _nikoli ne daj v skupino"
 
-#: applets/gen_util/tasklist.c:508
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "(c) 2001 Red hat, Inc"
-
-#: applets/gen_util/tasklist.c:509
-msgid ""
-"The Window List shows a list of all visible windows and let you browse them."
-msgstr ""
-"Seznam oken kaže seznam vseh vidnih oken in vam omogoča brskanje po njih."
-
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "Lupina pulta GNOME"
@@ -648,7 +656,7 @@ msgstr "Premakni"
 msgid "Remove From Panel"
 msgstr "Odstrani s pulta"
 
-#: gnome-panel/applet.c:213 gnome-panel/menu.c:1152
+#: gnome-panel/applet.c:213 gnome-panel/menu.c:1030
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -668,7 +676,7 @@ msgid "???"
 msgstr "???"
 
 #: gnome-panel/applet.c:547 gnome-panel/applet.c:551
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3749
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3605
 msgid "Panel"
 msgstr "Pult"
 
@@ -685,27 +693,27 @@ msgstr "Odstrani s pulta"
 msgid "Can't find an empty spot"
 msgstr "Ne najdem praznega prostora"
 
-#: gnome-panel/basep-widget.c:155 gnome-panel/basep-widget.c:156
+#: gnome-panel/basep-widget.c:156 gnome-panel/basep-widget.c:157
 msgid "mode"
 msgstr "način"
 
-#: gnome-panel/basep-widget.c:163 gnome-panel/basep-widget.c:164
+#: gnome-panel/basep-widget.c:164 gnome-panel/basep-widget.c:165
 msgid "state"
 msgstr "stanje"
 
-#: gnome-panel/basep-widget.c:172 gnome-panel/basep-widget.c:173
+#: gnome-panel/basep-widget.c:173 gnome-panel/basep-widget.c:174
 msgid "hidebuttons_enabled"
 msgstr "skritigumbi_vključeni"
 
-#: gnome-panel/basep-widget.c:180 gnome-panel/basep-widget.c:181
+#: gnome-panel/basep-widget.c:181 gnome-panel/basep-widget.c:182
 msgid "hidebutton_pixmaps_enabled"
 msgstr "skritigumbi_slike_vključeni"
 
-#: gnome-panel/basep-widget.c:590
+#: gnome-panel/basep-widget.c:591
 msgid "Hide this panel"
 msgstr "Skrij ta pult"
 
-#: gnome-panel/basep-widget.c:593
+#: gnome-panel/basep-widget.c:594
 msgid "Show this panel"
 msgstr "Kaži ta pult"
 
@@ -743,8 +751,8 @@ msgstr "Velikost in mesto"
 msgid "Tooltip/Name"
 msgstr "Namig/ime"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:571
-#: gnome-panel/menu-properties.c:605
+#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:522
+#: gnome-panel/menu-properties.c:556
 msgid "Icon"
 msgstr "Ikona"
 
@@ -766,7 +774,7 @@ msgstr "Vključi gumb za skrivanje"
 msgid "Enable hidebutton arrow"
 msgstr "Vključi puščico na gumbu za skrivanje"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3276
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3132
 msgid "Drawer"
 msgstr "predal"
 
@@ -780,7 +788,7 @@ msgstr ""
 "morda ni nameščen.\n"
 "Najdete ga lahko v paketu gnome-pim."
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3733
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3589
 msgid "Run..."
 msgstr "Poženi..."
 
@@ -884,8 +892,8 @@ msgstr "Oblika izpisa"
 msgid "No windows open"
 msgstr "Ni odprtih oken"
 
-#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2812
-#: gnome-panel/menu.c:2818
+#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2687
+#: gnome-panel/menu.c:2693
 msgid "Applications"
 msgstr "Programi"
 
@@ -896,6 +904,10 @@ msgstr "Nisem mogel najti programa za zajem zaslona"
 #: gnome-panel/global-keys.c:297 gnome-panel/global-keys.c:326
 msgid "Can't execute the screenshot program"
 msgstr "Ne morem pognati programa za zajem zaslona'"
+
+#: gnome-panel/gnome-desktop-item-edit.c:27
+msgid "Create new file in the given directory"
+msgstr "Ustvari novo datoteko v danem imeniku"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
@@ -936,7 +948,7 @@ msgid ""
 msgstr "Sistemski administrator je preprečil spremembe nastavitve pulta"
 
 #: gnome-panel/gnome-panel-properties.c:417
-msgid "Panel Global Properties"
+msgid "Global Panel Properties"
 msgstr "Globalne lastnosti pulta"
 
 #: gnome-panel/gnome-panel-properties.desktop.in.h:1
@@ -985,36 +997,36 @@ msgid "Fast"
 msgstr "Hitro"
 
 #: gnome-panel/gnome-panel-properties.glade.h:11
+msgid "GNOME Menu:"
+msgstr "Menu GNOME:"
+
+#: gnome-panel/gnome-panel-properties.glade.h:12
 msgid "General"
 msgstr "Splošno"
 
-#: gnome-panel/gnome-panel-properties.glade.h:12
+#: gnome-panel/gnome-panel-properties.glade.h:13
 msgid "Grab key..."
 msgstr "Preberi tipko..."
 
-#: gnome-panel/gnome-panel-properties.glade.h:13
+#: gnome-panel/gnome-panel-properties.glade.h:14
 msgid "Keep panels above other windows"
 msgstr "Ohrani pulte nad ostalimi okni"
 
-#: gnome-panel/gnome-panel-properties.glade.h:14
+#: gnome-panel/gnome-panel-properties.glade.h:15
 msgid "Keep panels below other windows"
 msgstr "Pulte ohrani pod drugimi okni"
 
-#: gnome-panel/gnome-panel-properties.glade.h:15
+#: gnome-panel/gnome-panel-properties.glade.h:16
 msgid "Keep panels on same level as other windows"
 msgstr "Pulti naj bodo na enakem nivoju kot druga okna"
-
-#: gnome-panel/gnome-panel-properties.glade.h:16
-msgid "Key bindings"
-msgstr "Tipkovne vezi"
 
 #: gnome-panel/gnome-panel-properties.glade.h:17
 msgid "Medium"
 msgstr "Srednji"
 
-#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:301
-#: gnome-panel/menu-properties.c:566 gnome-panel/menu.c:3229
-#: gnome-panel/menu.c:3788 gnome-panel/menu.c:4013
+#: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3644
+#: gnome-panel/menu.c:3869
 msgid "Menu"
 msgstr "Menu"
 
@@ -1023,12 +1035,12 @@ msgid "Panel Settings"
 msgstr "Nastavitve pulta"
 
 #: gnome-panel/gnome-panel-properties.glade.h:20
-msgid "Popup menu key:"
-msgstr "Tipka za priklic menuja:"
+msgid "Run Program dialog:"
+msgstr "Dialog poganjanja programa:"
 
 #: gnome-panel/gnome-panel-properties.glade.h:21
-msgid "Run dialog key:"
-msgstr "Tipka za zagon programa:"
+msgid "Shortcut keys"
+msgstr "Tipke bližnjice"
 
 #: gnome-panel/gnome-panel-properties.glade.h:22
 msgid "Slow"
@@ -1043,8 +1055,8 @@ msgid "_Enable animation"
 msgstr "_Vključi animacije"
 
 #: gnome-panel/gnome-panel-properties.glade.h:25
-msgid "_Enable key bindings"
-msgstr "_Vključi vezne tipke"
+msgid "_Enable shortcut keys"
+msgstr "_Vključi tipkovnične bližnjice"
 
 #: gnome-panel/gnome-panel-properties.glade.h:26
 msgid "_Raise panels when the mouse moves over them"
@@ -1318,7 +1330,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3565
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3421
 msgid "Log out"
 msgstr "Odjava"
 
@@ -1326,7 +1338,7 @@ msgstr "Odjava"
 msgid "Log out of GNOME"
 msgstr "Odjavi se iz GNOME-a"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3552
+#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3408
 msgid "Lock screen"
 msgstr "Zakleni zaslon"
 
@@ -1379,81 +1391,106 @@ msgstr ""
 #. flags
 #. error
 #. watch the enum at the top of the file
-#: gnome-panel/menu-ditem.c:186 gnome-panel/menu-ditem.c:266
+#: gnome-panel/menu-ditem.c:179 gnome-panel/menu-ditem.c:255
 msgid "Desktop entry properties"
 msgstr "Lastnosti vnosa na namizju"
 
-#: gnome-panel/menu-properties.c:156
+#: gnome-panel/menu-ditem.c:396
+msgid ""
+"Cannot create the launcher.\n"
+"\n"
+"No command or url specified."
+msgstr ""
+"Ne morem ustvariti zaganjalnika.\n"
+"\n"
+"Ukaz ali url ni naveden."
+
+#. class
+#: gnome-panel/menu-ditem.c:427
+#, c-format
+msgid ""
+"Cannot save menu item to disk, the following error occured:\n"
+"\n"
+"%s"
+msgstr ""
+"Ne morem shraniti predmeta menuja na disk. Zgodila se je sledeča napaka:\n"
+"\n"
+"%s"
+
+#: gnome-panel/menu-ditem.c:448
+msgid "Create menu item"
+msgstr "Ustvari predmet menuja"
+
+#: gnome-panel/menu-properties.c:107
 msgid "Can't open directory, using main menu!"
 msgstr "Ne morem odpreti imenika, uporabljam glavni menu!"
 
-#: gnome-panel/menu-properties.c:176 gnome-panel/menu.c:3452
-#: gnome-panel/menu.c:4143
+#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3308
+#: gnome-panel/menu.c:3999
 msgid "Edit menus..."
 msgstr "Uredi menuje..."
 
-#: gnome-panel/menu-properties.c:357
+#: gnome-panel/menu-properties.c:308
 msgid "Off"
 msgstr "Izključeno"
 
-#: gnome-panel/menu-properties.c:367
+#: gnome-panel/menu-properties.c:318
 msgid "In a submenu"
 msgstr "V podmenuju"
 
-#: gnome-panel/menu-properties.c:379
+#: gnome-panel/menu-properties.c:330
 msgid "On the main menu"
 msgstr "v glavnem menuju"
 
-#: gnome-panel/menu-properties.c:416
+#: gnome-panel/menu-properties.c:367
 msgid "Menu properties"
 msgstr "Lastnosti menuja"
 
-#: gnome-panel/menu-properties.c:439
+#: gnome-panel/menu-properties.c:390
 msgid "Menu type"
 msgstr "Tip menuja"
 
-#: gnome-panel/menu-properties.c:446
+#: gnome-panel/menu-properties.c:397
 msgid "Global main menu"
 msgstr "Globalni glavni menu"
 
-#: gnome-panel/menu-properties.c:460 gnome-panel/menu-properties.c:483
-#: gnome-panel/menu.c:3238
+#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
 msgid "Main menu"
 msgstr "Glavni menu"
 
-#: gnome-panel/menu-properties.c:474 gnome-panel/menu-properties.c:537
+#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
 msgid "Normal menu"
 msgstr "Običajni menu"
 
-#: gnome-panel/menu-properties.c:496
+#: gnome-panel/menu-properties.c:447
 msgid "Programs: "
 msgstr "Programi: "
 
-#: gnome-panel/menu-properties.c:503
+#: gnome-panel/menu-properties.c:454
 msgid "Applets: "
 msgstr "Vstavki: "
 
-#: gnome-panel/menu-properties.c:510
+#: gnome-panel/menu-properties.c:461
 msgid "Distribution menu (if found): "
 msgstr "Menu distribucije (če je najden): "
 
-#: gnome-panel/menu-properties.c:517
+#: gnome-panel/menu-properties.c:468
 msgid "KDE menu (if found): "
 msgstr "KDE menu (če je najden): "
 
-#: gnome-panel/menu-properties.c:524
+#: gnome-panel/menu-properties.c:475
 msgid "Panel menu: "
 msgstr "Pultni menu: "
 
-#: gnome-panel/menu-properties.c:531
+#: gnome-panel/menu-properties.c:482
 msgid "Desktop menu: "
 msgstr "Namizni menu: "
 
-#: gnome-panel/menu-properties.c:547
+#: gnome-panel/menu-properties.c:498
 msgid "Menu path"
 msgstr "Pot menuja"
 
-#: gnome-panel/menu-properties.c:578
+#: gnome-panel/menu-properties.c:529
 msgid "Use custom icon for panel button"
 msgstr "Za gumb pulta uporabi prikrojeno ikono"
 
@@ -1465,11 +1502,6 @@ msgstr "Veliko veliko drugih ..."
 #: gnome-panel/menu.c:270
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "in končno, Vitezi, ki rečejo ... NI!"
-
-#. Translator credits
-#: gnome-panel/menu.c:280
-msgid "translator_credits"
-msgstr "Andraz Tori"
 
 #: gnome-panel/menu.c:303
 msgid ""
@@ -1518,7 +1550,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: gnome-panel/menu.c:375 gnome-panel/menu.c:1133 gnome-panel/menu.c:1161
+#: gnome-panel/menu.c:375 gnome-panel/menu.c:1011 gnome-panel/menu.c:1039
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1529,33 +1561,7 @@ msgstr ""
 "\n"
 "Podrobnosti: %s"
 
-#: gnome-panel/menu.c:947
-msgid ""
-"Cannot create the launcher.\n"
-"\n"
-"No command or url specified."
-msgstr ""
-"Ne morem ustvariti zaganjalnika.\n"
-"\n"
-"Ukaz ali url ni naveden."
-
-#. class
-#: gnome-panel/menu.c:976
-#, c-format
-msgid ""
-"Cannot save menu item to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-"Ne morem shraniti predmeta menuja na disk. Zgodila se je sledeča napaka:\n"
-"\n"
-"%s"
-
-#: gnome-panel/menu.c:997
-msgid "Create menu item"
-msgstr "Ustvari predmet menuja"
-
-#: gnome-panel/menu.c:1046
+#: gnome-panel/menu.c:924
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1566,112 +1572,108 @@ msgstr ""
 "\n"
 "Podrobnosti: %s\n"
 
-#: gnome-panel/menu.c:1054
+#: gnome-panel/menu.c:932
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Nisem mogel dobiti imena datoteke iz poti: %s"
 
-#: gnome-panel/menu.c:1061
+#: gnome-panel/menu.c:939
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Nisem mogel dobiti imena imenika iz poti: %s"
 
-#: gnome-panel/menu.c:1127
+#: gnome-panel/menu.c:1005
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "V vnosu ni polja 'Exec' ali 'URL'"
 
-#: gnome-panel/menu.c:1415
+#: gnome-panel/menu.c:1293
 msgid "Add this launcher to panel"
 msgstr "Dodaj pultu kot zaganjalnik"
 
-#: gnome-panel/menu.c:1418
-msgid "Add this applet as a launcher to panel"
-msgstr "Ta vstavek dodaj pultu kot zaganjalnik"
-
-#: gnome-panel/menu.c:1426
+#: gnome-panel/menu.c:1301
 msgid "Remove this item"
 msgstr "Odstrani ta predmet"
 
-#: gnome-panel/menu.c:1443
+#: gnome-panel/menu.c:1318
 msgid "Put into run dialog"
 msgstr "Poženi z dodatnimi možnostmi"
 
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1337
 #, c-format
 msgid "Help on %s"
 msgstr "Pomoč o %s"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1338
 msgid "Application"
 msgstr "Program"
 
-#: gnome-panel/menu.c:1509
+#: gnome-panel/menu.c:1384
 msgid "Entire menu"
 msgstr "Celoten menu"
 
-#: gnome-panel/menu.c:1518
+#: gnome-panel/menu.c:1393
 msgid "Add this as drawer to panel"
 msgstr "Dodaj pultu kot predal"
 
-#: gnome-panel/menu.c:1526
+#: gnome-panel/menu.c:1401
 msgid "Add this as menu to panel"
 msgstr "Dodaj pultu kot menu"
 
-#: gnome-panel/menu.c:1534
+#: gnome-panel/menu.c:1409
 msgid "Add new item to this menu"
 msgstr "Dodaj nov predmet temu menuju"
 
-#: gnome-panel/menu.c:1858
+#: gnome-panel/menu.c:1733
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Na tem pultu že imate prikazovalnik stanja. Lahko imate le enega"
 
-#: gnome-panel/menu.c:2452 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2327 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "poizvedba je vrnila izjemo %s\n"
 
-#: gnome-panel/menu.c:2723
+#: gnome-panel/menu.c:2598
 msgid "%I: %M: %S: %p"
 msgstr "%I: %M: %S: %p"
 
-#: gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2605
 msgid "You can only have one menu panel at a time."
 msgstr "Lahko imate samo en menujski pult hkrati."
 
-#: gnome-panel/menu.c:2752
+#: gnome-panel/menu.c:2627
 msgid "Menu panel"
 msgstr "menujski pult"
 
-#: gnome-panel/menu.c:2760 gnome-panel/panel-config.c:1497
+#: gnome-panel/menu.c:2635 gnome-panel/panel-config.c:1497
 #: gnome-panel/panel-config.c:1619
 msgid "Edge panel"
 msgstr "robni pult"
 
-#: gnome-panel/menu.c:2768 gnome-panel/panel-config.c:1504
+#: gnome-panel/menu.c:2643 gnome-panel/panel-config.c:1504
 #: gnome-panel/panel-config.c:1630
 msgid "Corner panel"
 msgstr "kotni pult"
 
-#: gnome-panel/menu.c:2776 gnome-panel/panel-config.c:1510
+#: gnome-panel/menu.c:2651 gnome-panel/panel-config.c:1510
 #: gnome-panel/panel-config.c:1641
 msgid "Sliding panel"
 msgstr "drseč pult"
 
-#: gnome-panel/menu.c:2784 gnome-panel/panel-config.c:1516
+#: gnome-panel/menu.c:2659 gnome-panel/panel-config.c:1516
 #: gnome-panel/panel-config.c:1652
 msgid "Floating panel"
 msgstr "lebdeč pult"
 
 #. force_image
-#: gnome-panel/menu.c:2881 gnome-panel/menu.c:2888 gnome-panel/menu.c:3625
+#: gnome-panel/menu.c:2756 gnome-panel/menu.c:2763 gnome-panel/menu.c:3481
 msgid "KDE menus"
 msgstr "Menuji KDE"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:2836
 msgid "You cannot remove your last panel."
 msgstr "Ne morete odstraniti vašega zadnjega pulta."
 
-#: gnome-panel/menu.c:2973
+#: gnome-panel/menu.c:2848
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1679,132 +1681,132 @@ msgstr ""
 "Ko je pult odstranjen so njegove nastavitve in\n"
 "nastavitve njegovih vstavkov izgubljene. Odstranim ta pult?"
 
-#: gnome-panel/menu.c:3248
-msgid "Programs menu"
-msgstr "Menu programov"
-
-#: gnome-panel/menu.c:3258
+#: gnome-panel/menu.c:3104
 msgid "Launcher..."
 msgstr "Zaganjalnik..."
 
-#: gnome-panel/menu.c:3266
+#: gnome-panel/menu.c:3112
 msgid "Launcher from menu"
 msgstr "Zaganjalnik iz menuja"
 
-#: gnome-panel/menu.c:3286
+#: gnome-panel/menu.c:3122
+msgid "GNOME Menu"
+msgstr "Menu GNOME"
+
+#: gnome-panel/menu.c:3142
 msgid "Log out button"
 msgstr "Gumb za odjavo"
 
-#: gnome-panel/menu.c:3296
+#: gnome-panel/menu.c:3152
 msgid "Lock button"
 msgstr "Gumb za zaklepanje"
 
-#: gnome-panel/menu.c:3306
+#: gnome-panel/menu.c:3162
 msgid "Swallowed app..."
 msgstr "Pogoltnjen program..."
 
-#: gnome-panel/menu.c:3313
+#: gnome-panel/menu.c:3169
 msgid "Status dock"
 msgstr "Dok stanja"
 
-#: gnome-panel/menu.c:3327
+#: gnome-panel/menu.c:3183
 msgid "Cannot execute panel global properties"
 msgstr "Ne morem izvesti pultovih globalnih lastnosti"
 
-#: gnome-panel/menu.c:3365
+#: gnome-panel/menu.c:3221
 msgid "Remove this panel..."
 msgstr "Odstrani ta pult..."
 
-#: gnome-panel/menu.c:3367 gnome-panel/menu.c:3415
+#: gnome-panel/menu.c:3223 gnome-panel/menu.c:3271
 msgid "Remove this panel"
 msgstr "Odstrani ta pult"
 
-#: gnome-panel/menu.c:3382
+#: gnome-panel/menu.c:3238
 msgid "Cannot launch nautilus!"
 msgstr "Ne morem zagnati nautilusa!"
 
-#: gnome-panel/menu.c:3394
+#: gnome-panel/menu.c:3250
 msgid "Add to panel"
 msgstr "Dodaj pultu"
 
-#: gnome-panel/menu.c:3406
+#: gnome-panel/menu.c:3262
 msgid "Create panel"
 msgstr "Ustvari pult"
 
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3299
 msgid "Global Preferences..."
 msgstr "Globalne nastavitve..."
 
-#: gnome-panel/menu.c:3462
+#: gnome-panel/menu.c:3318
 msgid "Reread all menus"
 msgstr "Znova preberi vse menuje"
 
-#: gnome-panel/menu.c:3476
+#: gnome-panel/menu.c:3332
 msgid "Panel Manual..."
 msgstr "Pultov priročnik..."
 
-#: gnome-panel/menu.c:3488
+#: gnome-panel/menu.c:3344
 msgid "Cannot execute xscreensaver"
 msgstr "Ne morem pognati programa 'xscreensaver'"
 
-#: gnome-panel/menu.c:3507
+#: gnome-panel/menu.c:3363
 msgid "About the panel..."
 msgstr "O pultu..."
 
-#: gnome-panel/menu.c:3521
+#: gnome-panel/menu.c:3377
 msgid "About GNOME..."
 msgstr "O GNOME..."
 
-#: gnome-panel/menu.c:3558
+#: gnome-panel/menu.c:3414
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Zakleni zaslon tako, da lahko začasno zapustite računalnik"
 
-#: gnome-panel/menu.c:3571
+#: gnome-panel/menu.c:3427
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 "Odjavi se iz seje, da bi se prijavil kot drug upoabnik ali ugasnil računalnik"
 
-#: gnome-panel/menu.c:3699
+#: gnome-panel/menu.c:3555
 msgid "Programs"
 msgstr "Programi"
 
-#: gnome-panel/menu.c:3716
+#: gnome-panel/menu.c:3572
 msgid "Applets"
 msgstr "Vstavki"
 
-#: gnome-panel/menu.c:3739
+#: gnome-panel/menu.c:3595
 msgid "Run a command"
 msgstr "Poženi ukaz"
 
-#: gnome-panel/menu.c:3757
+#: gnome-panel/menu.c:3613
 msgid "Desktop"
 msgstr "Namizje"
 
-#: gnome-panel/menu.c:3790
+#: gnome-panel/menu.c:3646
 msgid "Menu:"
 msgstr "Menu:"
 
-#: gnome-panel/menu.c:3840 gnome-panel/menu.c:3868 gnome-panel/menu.c:4053
+#: gnome-panel/menu.c:3696 gnome-panel/menu.c:3724 gnome-panel/menu.c:3909
 msgid "Main Menu"
 msgstr "Glavni menu"
 
-#: gnome-panel/menu.c:3862
+#: gnome-panel/menu.c:3718
 msgid "Can't create menu, using main menu!"
 msgstr "Ne morem ustvariti menujev, uporabljam glavni menu!"
 
-#: gnome-panel/panel-applet-frame.c:167
-msgid "There was a problem loading the applet."
-msgstr "Z nalaganjem vstavka so bile težave."
-
-#: gnome-panel/panel-applet-frame.c:183
+#: gnome-panel/panel-applet-frame.c:171
 msgid "Cannot register control widget\n"
 msgstr "Ne morem registrirati nadzornega gradnika\n"
 
-#: gnome-panel/panel-applet-frame.c:451
+#: gnome-panel/panel-applet-frame.c:439
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Od nadzornika ne morem dobiti vmesnika AppletShell\n"
+
+#: gnome-panel/panel-applet-frame.c:566
+msgid "There was a problem loading applet '%s': %s"
+msgstr "Ob nalaganju vstavka '%s' se je pojavil problem: %s"
 
 #: gnome-panel/panel-config.c:540
 msgid "Hiding"
@@ -2037,40 +2039,61 @@ msgstr "Preizkusni vstavek bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Tovarna preizkusnih vstavkov bonobo"
 
-#: libpanel-applet/panel-applet.c:607
+#: libpanel-applet/panel-applet.c:609
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Prejel sem nepopolno vrsto ozadja '%s'"
 
-#: libpanel-applet/panel-applet.c:621
+#: libpanel-applet/panel-applet.c:623
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Prejel sem nepopolno vrsto ozadja '%s': %s"
 
-#: libpanel-applet/panel-applet.c:630
+#: libpanel-applet/panel-applet.c:632
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nisem uspel dobiti slike %s"
 
-#: libpanel-applet/panel-applet.c:637
+#: libpanel-applet/panel-applet.c:639
 msgid "Unknown background type received"
 msgstr "Prejel sem neznano vrsto ozadja"
 
-#: libpanel-applet/panel-applet.c:792
+#: libpanel-applet/panel-applet.c:794
 msgid "The Applet's containing Panel's orientation"
 msgstr "Vstavek vsebuje usmerjenost pulta"
 
-#: libpanel-applet/panel-applet.c:800
+#: libpanel-applet/panel-applet.c:802
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Vstavek vsebuje velikost pulta v pikslih"
 
-#: libpanel-applet/panel-applet.c:808
+#: libpanel-applet/panel-applet.c:810
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Vstavek vsebuje barvo ozadja ali sliko v ozadj pulta"
 
-#: libpanel-applet/panel-applet.c:816
+#: libpanel-applet/panel-applet.c:818
 msgid "The Applet's flags"
 msgstr "Zastavice vstavka"
+
+#~ msgid "Panel Global Properties"
+#~ msgstr "Globalne lastnosti pulta"
+
+#~ msgid "Key bindings"
+#~ msgstr "Tipkovne vezi"
+
+#~ msgid "Popup menu key:"
+#~ msgstr "Tipka za priklic menuja:"
+
+#~ msgid "Run dialog key:"
+#~ msgstr "Tipka za zagon programa:"
+
+#~ msgid "_Enable key bindings"
+#~ msgstr "_Vključi vezne tipke"
+
+#~ msgid "Add this applet as a launcher to panel"
+#~ msgstr "Ta vstavek dodaj pultu kot zaganjalnik"
+
+#~ msgid "Programs menu"
+#~ msgstr "Menu programov"
 
 #~ msgid "_Done"
 #~ msgstr "_Opravljeno"
