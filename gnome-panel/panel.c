@@ -282,6 +282,7 @@ panel_show_hide(GtkWidget *widget, gpointer data)
 static gint
 panel_enter_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
+	gdk_window_raise(widget->window);
 	if ((the_panel->mode == PANEL_STAYS_PUT) ||
 	    (event->detail == GDK_NOTIFY_INFERIOR))
 		return FALSE;
@@ -315,7 +316,6 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 	return FALSE;
 }
-
 
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
@@ -659,18 +659,87 @@ panel_is_spot_clean(GtkWidget *widget, gint x, gint y, gint width,
 		return FALSE;
 }
 
+/*find a free spot for the applet*/
+static void
+fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
+	gint height)
+{
+	gint moveright,movedown; /*used for moving the applet
+						into acceptable position*/
+	gint x2,y2,xpos,ypos;
+
+
+	if(!widget)
+		return;
+
+	xpos=widget->allocation.x;
+	ypos=widget->allocation.y;
+
+	x2 = *x + width;
+	y2 = *y + height;
+
+	if (x2 > the_panel->fixed->allocation.width)
+		*x = the_panel->fixed->allocation.width - width;
+
+	if (y2 > the_panel->fixed->allocation.height)
+		*y = the_panel->fixed->allocation.height - height;
+
+	if (*x < 0)
+		*x = 0;
+
+	if (*y < 0)
+		*y = 0;
+
+	/*where did we move?*/
+	moveright=(xpos<*x || xpos<=0 ||
+		xpos>=the_panel->fixed->allocation.width)?TRUE:FALSE;
+	movedown=(ypos<*y || ypos<=0 ||
+		ypos>=the_panel->fixed->allocation.height)?TRUE:FALSE;
+
+	/*move the applet as close as we can to the
+	  one blocking it*/
+	while(!panel_is_spot_clean(widget,*x,*y,
+		width,height)) {
+
+		if(moveright) {
+			if(--(*x)<0) {
+				moveright=FALSE;
+				*x=xpos;
+			}
+		} else
+			(*x)++;
+		/* FIXME: should be done for
+		   vertical bar as well */
+	}
+
+	/*ajust positions again!, in the worst case
+	  we don't have enough room and we will have
+	  to overlap applets*/
+	x2 = *x + width;
+	y2 = *y + height;
+
+	if (x2 > the_panel->fixed->allocation.width)
+		*x = the_panel->fixed->allocation.width - width;
+
+	if (y2 > the_panel->fixed->allocation.height)
+		*y = the_panel->fixed->allocation.height - height;
+
+	if (*x < 0)
+		*x = 0;
+
+	if (*y < 0)
+		*y = 0;
+}
 
 static gint
 panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	GdkEventButton *bevent;
 	gint            x, y;
-	int             x1, y1, x2, y2;
+	int             x1, y1;
 	int             dx, dy;
 	int             xpos, ypos;
 	int             width, height;
-	int		moveright,movedown; /*used for moving the applet
-						into acceptable position*/
 
 	get_applet_geometry(widget, &xpos, &ypos, &width, &height);
 
@@ -715,57 +784,9 @@ panel_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 				x1 = the_panel->applet_drag_orig_x + dx;
 				y1 = the_panel->applet_drag_orig_y + dy;
-				x2 = x1 + width;
-				y2 = y1 + height;
 
-				if (x2 > the_panel->fixed->allocation.width)
-					x1 = the_panel->fixed->allocation.width - width;
-
-				if (y2 > the_panel->fixed->allocation.height)
-					y1 = the_panel->fixed->allocation.height - height;
-
-				if (x1 < 0)
-					x1 = 0;
-
-				if (y1 < 0)
-					y1 = 0;
-
-				/*where did we move?*/
-				moveright=(xpos<x1 || xpos<=0)?TRUE:FALSE;
-				movedown=(ypos<y1 || ypos<=0)?TRUE:FALSE;
-
-				/*move the applet as close as we can to the
-				  one blocking it*/
-				while(!panel_is_spot_clean(widget,x1,y1,
-					width,height)) {
-					if(moveright) {
-						if(--x1<0) {
-							moveright=FALSE;
-							x1=xpos;
-						}
-					} else
-						x1++;
-					/* FIXME: should be done for
-					   vertical bar as well */
-				}
-
-				/*ajust positions again!, in the worst case
-				  we don't have enough room and we will have
-				  to overlap applets*/
-				x2 = x1 + width;
-				y2 = y1 + height;
-
-				if (x2 > the_panel->fixed->allocation.width)
-					x1 = the_panel->fixed->allocation.width - width;
-
-				if (y2 > the_panel->fixed->allocation.height)
-					y1 = the_panel->fixed->allocation.height - height;
-
-				if (x1 < 0)
-					x1 = 0;
-
-				if (y1 < 0)
-					y1 = 0;
+				fixup_applet_position(widget,&x1,&y1,
+					width,height);
 
 				if ((x1 != xpos) || (y1 != ypos))
 					gtk_fixed_move(GTK_FIXED(the_panel->fixed), widget, x1, y1);
@@ -935,10 +956,6 @@ panel_init(void)
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
 	create_applet_menu();
-
-	GTK_WIDGET_SET_FLAGS(the_panel->window,
-		GTK_OBJECT_FLAGS(the_panel->window) | GTK_PROPAGATE_STATE);
-
 }
 
 
@@ -1135,32 +1152,45 @@ fix_applet_position(GtkWidget *applet, int *xpos, int *ypos)
 
 
 static gint
-fix_an_applet(gpointer data)
+fix_an_applet_idle_func(gpointer data)
 {
 	int xpos;
 	int ypos;
-	GtkWidget* applet;
+	GtkWidget *applet;
+	static GtkWidget *occupied;
 
 	if(!data)
 		return FALSE;
 
 	applet=(GtkWidget *)data;
 
-	if(GTK_WIDGET(applet)->allocation.width<=1)
+	if(occupied) {
+		/*this time it's occupied, wait for next time*/
+		if(occupied!=applet)
+			return TRUE;
+		/*free up the function*/
+		occupied=NULL;
+		return FALSE;
+	}
+	occupied=applet;
+
+	if(GTK_WIDGET(applet)->allocation.width<=1) {
+		occupied=NULL;
 		return TRUE;
+	}
 
 	xpos=GTK_WIDGET(applet)->allocation.x;
 	ypos=GTK_WIDGET(applet)->allocation.y;
 
-	while(!panel_is_spot_clean(applet,xpos,ypos,
+	/*we probably want to do something like this but we need to
+	  refine that function*/
+	/*fix_applet_position(applet, &xpos, &ypos);*/
+
+	fixup_applet_position(applet,&xpos,&ypos,
 		GTK_WIDGET(applet)->allocation.width,
-		GTK_WIDGET(applet)->allocation.height)) {
-		xpos++;
-		/* FIXME: should be done for
-		   vertical bar as well */
-	}
+		GTK_WIDGET(applet)->allocation.height);
 	gtk_fixed_move(GTK_FIXED(the_panel->fixed), applet, xpos, ypos);
-	return FALSE;
+	return TRUE;
 }
 
 
@@ -1188,7 +1218,7 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 
 	/*fix_applet_position(eventbox, &xpos, &ypos);*/
 
-	gtk_idle_add((void *)fix_an_applet, eventbox);
+	gtk_idle_add((void *)fix_an_applet_idle_func, eventbox);
 
 	gtk_fixed_put(GTK_FIXED(the_panel->fixed), eventbox, xpos, ypos);
 
