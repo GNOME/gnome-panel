@@ -15,34 +15,37 @@
 
 module GNOME {
 
-    typedef Bonobo::PropertySet ExtraAttributes;
+    module Desktop {
 
-    enum DesktopEntryType {
-	DESKTOP_ENTRY_TYPE_UNKNOWN,
-	DESKTOP_ENTRY_TYPE_APPLICATION,
-	DESKTOP_ENTRY_TYPE_URL,
-	DESKTOP_ENTRY_TYPE_LINK,
-	DESKTOP_ENTRY_TYPE_FSDEVICE,
-	DESKTOP_ENTRY_TYPE_MIMETYPE,
-	DESKTOP_ENTRY_TYPE_DIRECTORY,
-	DESKTOP_ENTRY_TYPE_SERVICE,
-	DESKTOP_ENTRY_TYPE_SERVICETYPE,
-	DESKTOP_ENTRY_TYPE_PANEL_APPLET
+	typedef Bonobo::PropertySet ExtraAttributes;
+
+	enum EntryType {
+	    ENTRY_TYPE_UNKNOWN,
+	    ENTRY_TYPE_APPLICATION,
+	    ENTRY_TYPE_URL,
+	    ENTRY_TYPE_LINK,
+	    ENTRY_TYPE_FSDEVICE,
+	    ENTRY_TYPE_MIMETYPE,
+	    ENTRY_TYPE_DIRECTORY,
+	    ENTRY_TYPE_SERVICE,
+	    ENTRY_TYPE_SERVICETYPE,
+	    ENTRY_TYPE_PANEL_APPLET
+	};
+
+	struct Entry {
+	    LocalizedStringList Name;
+	    LocalizedStringList Comment;
+	    string Icon;
+	    string Exec;
+	    string TryExec;
+	    string URL;
+	    stringlist SortOrder;
+	    ExtraAttributes Attributes;
+	    EntryType Type;
+	    boolean Terminal;
+	};
+
     };
-
-    struct DesktopEntry {
-	LocalizedStringList Name;
-	LocalizedStringList Comment;
-	string Icon;
-	string Exec;
-	string TryExec;
-	string URL;
-	stringlist SortOrder;
-	ExtraAttributes Attributes;
-	DesktopEntryType Type;
-	boolean Terminal;
-    };
-
 };
 
 #endif
