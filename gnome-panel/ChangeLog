@@ -1,3 +1,12 @@
+2003-11-19  Vincent Untz  <vincent@vuntz.net>
+
+	Patch from <linchuan@cse.ogi.edu>.
+	Fix bug #125852.
+
+	* panel-multiscreen.c: (panel_multiscreen_is_at_visible_extreme)
+	* panel-toplevel.c: (panel_toplevel_update_expanded_position) use the
+	monitor size and not the screen size to position the toplevel.
+
 2003-11-19  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel.c: (panel_popup_menu): Pass the PanelToplevel

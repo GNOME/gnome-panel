@@ -1917,10 +1917,10 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 		break;
 	case PANEL_ORIENTATION_BOTTOM:
 		x = monitor_x;
-		y = screen_height - toplevel->priv->geometry.height;
+		y = monitor_height - toplevel->priv->geometry.height;
 		break;
 	case PANEL_ORIENTATION_RIGHT:
-		x = screen_width - toplevel->priv->geometry.width;
+		x = monitor_width - toplevel->priv->geometry.width;
 		y = monitor_y;
 		break;
 	default:

@@ -296,18 +296,18 @@ panel_multiscreen_is_at_visible_extreme (GdkScreen *screen,
 
 		if (i == n_monitor) continue;
 
-		get_monitor_bounds (n_screen, n_monitor, &iter);
+		get_monitor_bounds (n_screen, i, &iter);
 
-		if ((iter.y0 >= monitor.y0 && iter.y0 <= monitor.y1) ||
-		    (iter.y1 >  monitor.y0 && iter.y1 <  monitor.y1)) {
+		if ((iter.y0 >= monitor.y0 && iter.y0 <  monitor.y1) ||
+		    (iter.y1 >  monitor.y0 && iter.y1 <= monitor.y1)) {
 			if (iter.x0 < monitor.x0)
 				*leftmost = FALSE;
 			if (iter.x1 > monitor.x1)
 				*rightmost = FALSE;
 		}
 
-		if ((iter.x0 >= monitor.x0 && iter.x0 <= monitor.x1) ||
-		    (iter.x1 >  monitor.x0 && iter.x1 <  monitor.x1)) {
+		if ((iter.x0 >= monitor.x0 && iter.x0 <  monitor.x1) ||
+		    (iter.x1 >  monitor.x0 && iter.x1 <= monitor.x1)) {
 			if (iter.y0 < monitor.y0)
 				*topmost = FALSE;
 			if (iter.y1 > monitor.y1)
