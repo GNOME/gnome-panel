@@ -1,3 +1,12 @@
+1999-06-21  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gen_util/mailcheck.c: add support for playing sounds when new
+	mail arrives. based on a patch submitted by Eric M. Hopper
+	<hopper@omnifarious.omnifarious.mn.org>.
+	* gen_util/mailcheck.soundlist: just that. still looking for a
+	better sound than phone.wav.
+	* gen_util/Makefile.am: install mailcheck.soundlist.
+	
 1999-06-08  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* gen_util/mailcheck.c (create_mail_widgets): don't check mail

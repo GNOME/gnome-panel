@@ -27,6 +27,7 @@ MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png
 
 EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
+             mailcheck.soundlist	\
              printer.desktop		\
              $(PRINTER_BITMAPS)		\
              $(MAILCHECK_BITMAPS)	\
@@ -46,3 +47,7 @@ printersys_DATA = printer.desktop
 
 genutilgnorbadir  = $(sysconfdir)/CORBA/servers
 genutilgnorba_DATA = gen_util.gnorba
+
+soundlistdir = $(sysconfdir)/sound/events
+soundlist_DATA = mailcheck.soundlist
+

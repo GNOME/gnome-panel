@@ -1,8 +1,9 @@
 /* GNOME panel mail check module.
- * (C) 1997, 1998 The Free Software Foundation
+ * (C) 1997, 1998, 1999 The Free Software Foundation
  *
- * Author: Miguel de Icaza
- *         Lennart Poettering
+ * Authors: Miguel de Icaza
+ *          Jaka Mocnik
+ *          Lennart Poettering
  *
  */
 
@@ -28,6 +29,9 @@ struct _MailCheck {
 
 	/* If set, the user has launched the mail viewer */
 	int mailcleared;
+
+	/* Has the sound been played for this bunch of new mail? */
+	int soundplayed;
 
 	/* Does the user have any mail at all? */
 	int anymail;
@@ -99,13 +103,16 @@ struct _MailCheck {
 	char *animation_file;
         
 	GtkWidget *mailfile_entry, *mailfile_label, *mailfile_fentry;
-        GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
-        GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
+  GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
+  GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
 	GtkWidget *remote_option_menu;
+  GtkWidget *play_sound_check;
         
 	char *remote_server, *remote_username, *remote_password;
 	int mailbox_type; /* local = 0; pop3 = 1; imap = 2 */
         int mailbox_type_temp;
+
+  gboolean play_sound;
 	
 	PanelSizeType size;
 };
@@ -156,20 +163,21 @@ mail_animation_filename (MailCheck *mc)
 static void
 check_mail_file_status (MailCheck *mc)
 {
+	static const char *supinfo[] = {"mailcheck", "new-mail", NULL};
 	static off_t oldsize = 0;
 	struct stat s;
 	off_t newsize;
-	int status;
-        if ((mc->mailbox_type == 1) || (mc->mailbox_type == 2)) {
+	int status, suppress_sound;
+
+  if ((mc->mailbox_type == 1) || (mc->mailbox_type == 2)) {
 		int v;
-		
+
 		if (mc->mailbox_type == 1)
 			v = pop3_check(mc->remote_server, mc->remote_username, mc->remote_password);
 		else
 			v = imap_check(mc->remote_server, mc->remote_username, mc->remote_password);
 		
-		if (v == -1) 
-		{
+		if (v == -1) {
 #if 0
 			/* don't notify about an error: think of people with
 			 * dial-up connections; keep the current mail status
@@ -183,15 +191,15 @@ check_mail_file_status (MailCheck *mc)
 			mc->mailbox_type = 0;
 			mc->anymail = mc->newmail = 0;
 #endif
-		}
-		else
-		{
-			mc->newmail = (signed int) (((unsigned int) v) >> 16) ? 1 : 0;
-			mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
-		} 
-        } else {
+    }
+		else {
+      mc->unreadmail = mc->newmail = (signed int) (((unsigned int) v) >> 16) ? 1 : 0;
+      mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
+    } 
+  }
+  else {
 		status = stat (mc->mail_file, &s);
-		if (status < 0){
+		if (status < 0) {
 			oldsize = 0;
 			mc->anymail = mc->newmail = mc->unreadmail = 0;
 			return;
@@ -201,14 +209,23 @@ check_mail_file_status (MailCheck *mc)
 		mc->anymail = newsize > 0;
 		mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 		
-		if (newsize >= oldsize && mc->unreadmail){
+		if (newsize > oldsize && mc->unreadmail) {
 			mc->newmail = 1;
 			mc->mailcleared = 0;
-		} else
-			mc->newmail = 0;
-		oldsize = newsize;
-        }
+    } else
+      mc->newmail = 0;
 
+    oldsize = newsize;
+  }
+
+  if(mc->newmail && mc->play_sound) {
+    if(!mc->soundplayed) {
+      gnome_triggers_vdo("", "program", supinfo);
+      mc->soundplayed = TRUE;
+    }
+  }
+  else
+    mc->soundplayed = FALSE;
 }
 
 static void
@@ -647,7 +664,9 @@ apply_properties_callback (GtkWidget *widget, gint page, gpointer data)
 	if (strlen(text) > 0)
 		mc->remote_password = g_strdup(text);
         
-        mc->mailbox_type = mc->mailbox_type_temp;
+  mc->mailbox_type = mc->mailbox_type_temp;
+
+  mc->play_sound = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(mc->play_sound_check));
 }
 
 static void make_remote_widgets_sensitive(MailCheck *mc)
@@ -863,7 +882,7 @@ mailcheck_properties_page (MailCheck *mc)
         hbox = gtk_hbox_new (FALSE, 6);
         gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
         gtk_widget_show (hbox); 
-
+        
         l = gtk_label_new (_("Check for mail every"));
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
@@ -894,6 +913,13 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
+  mc->play_sound_check = gtk_check_button_new_with_label(_("Play a sound when new mail arrives"));
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(mc->play_sound_check), mc->play_sound);
+	gtk_signal_connect(GTK_OBJECT(mc->play_sound_check), "toggled",
+                     GTK_SIGNAL_FUNC(property_box_changed), mc);
+  gtk_widget_show(mc->play_sound_check);
+  gtk_box_pack_start(GTK_BOX (vbox), mc->play_sound_check, FALSE, FALSE, 0);
+
 	hbox = gtk_hbox_new (FALSE, 6);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show (hbox);  
@@ -973,6 +999,7 @@ applet_save_session(GtkWidget *w,
         gnome_config_set_string("mail/remote_password", 
 				mc->remote_password?mc->remote_password:"");
         gnome_config_set_int("mail/mailbox_type", (int) mc->mailbox_type);
+  gnome_config_set_bool("mail/play_sound", mc->play_sound);
         
 	gnome_config_pop_prefix();
 
@@ -1030,11 +1057,13 @@ make_mailcheck_applet(const gchar *goad_id)
 	char *emailfile;
 	char *query;
 
-	mc = g_new(MailCheck,1);
+	mc = g_new0(MailCheck,1);
 	mc->animation_tag = -1;
 	mc->animation_file = NULL;
 	mc->property_window = NULL;
 	mc->anim_changed = FALSE;
+  mc->soundplayed= FALSE;
+  mc->anymail = mc->unreadmail = mc->newmail = FALSE;
 
 	/*initial state*/
 	mc->report_mail_mode = REPORT_MAIL_USE_ANIMATION;
@@ -1083,6 +1112,8 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	mc->remote_password = gnome_config_get_string("mail/remote_password");
 	mc->mailbox_type = gnome_config_get_int("mail/mailbox_type=0");
+
+  mc->play_sound = gnome_config_get_bool("mail/play_sound=false");
 
 	gnome_config_pop_prefix();
 
