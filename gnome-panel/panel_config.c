@@ -86,9 +86,7 @@ update_config_size(GtkWidget *panel)
 	
 	if (toggle)
 		gtk_toggle_button_set_active(
-			GTK_TOGGLE_BUTTON(ppc->s_huge), TRUE);
-	
-
+			GTK_TOGGLE_BUTTON(toggle), TRUE);
 }
 
 void
