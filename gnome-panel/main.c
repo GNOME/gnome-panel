@@ -788,13 +788,32 @@ static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	PanelWidget *panel = PANEL_WIDGET(widget);
-	if((event->button==3 || event->button==1) &&
-	   !panel->currently_dragged_applet) {
-		panel->autohide_inhibit = TRUE;
-		panel_widget_queue_pop_down(panel);
-		gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
-			       widget, event->button, event->time);
-		return TRUE;
+	GdkCursor *cursor;
+	switch( event->button )
+	{
+		case 3: /* fall through */
+		case 1:
+			if( !panel->currently_dragged_applet) 
+			{
+				panel->autohide_inhibit = TRUE;
+				panel_widget_queue_pop_down(panel);
+				gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
+			       		widget, event->button, event->time);
+				return TRUE;
+			}
+			break;
+		case 2:
+			cursor = gdk_cursor_new (GDK_FLEUR);
+			gdk_pointer_grab (GTK_WIDGET (panel)->window,
+					  FALSE,
+					  GDK_POINTER_MOTION_HINT_MASK |
+					  GDK_BUTTON1_MOTION_MASK |
+					  GDK_BUTTON_RELEASE_MASK,
+					  NULL,
+					  cursor,
+					  event->time);
+			gdk_cursor_destroy (cursor);
+			
 	}
 	return FALSE;
 }
@@ -832,6 +851,75 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
+static gint panel_move( GtkWidget *widget, double x, double y )
+{
+	gint panel_space;
+	gint width, height;
+	PanelSnapped newloc;
+	PanelWidget *panel = PANEL_WIDGET( widget );
+
+	if ((x) * gdk_screen_height() > y * gdk_screen_width() )
+	{
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
+			newloc = PANEL_TOP;
+		else
+			newloc = PANEL_RIGHT;
+	}
+	else
+	{
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
+			newloc = PANEL_LEFT;
+		else
+			newloc = PANEL_BOTTOM;
+	}
+	if( newloc != panel->snapped)
+	{
+		panel_widget_change_params( panel, panel->orient, newloc, panel->mode, panel->fit_pixmap_bg, panel->state, panel->drawer_drop_zone_pos, panel->pixmap_enabled?panel->back_pixmap: NULL);
+	}
+	return TRUE;
+#if 0
+	gdk_window_get_geometry( panel->window->window, NULL, NULL, &width, &height, NULL );
+	switch(panel->snapped)
+	{	
+		case PANEL_TOP:  /* Fall through */
+		case PANEL_BOTTOM:
+			panel_space=height;
+			break;
+		case PANEL_LEFT:  /* Fall through */
+		case PANEL_RIGHT:
+			panel_space=width;
+			break;
+	}
+	switch(PANEL_WIDGET(panel)->location_snapped)
+	{	
+		case PANEL_TOP:  /* Fall through */
+		case PANEL_LEFT:
+			panel_space=height;
+			break;
+		case PANEL_RIGHT:  /* Fall through */
+		case PANEL_BOTTOM:
+			panel_space=width;
+			break;
+	}
+	x;
+	y;
+	gdk_screen_width();
+	gdk_screen_height();
+#endif
+}
+
+static gint
+panel_move_callback(GtkWidget *panel,GdkEventMotion *event, gpointer data)
+{
+	return panel_move( panel, event->x_root, event->y_root );
+}
+
+
+static gint
+panel_move_release_callback(GtkWidget *panel,GdkEventButton *event, gpointer data)
+{
+	return panel_move( panel, event->x_root, event->y_root );
+}
 
 static void
 panel_setup(PanelWidget *panel)
@@ -871,6 +959,14 @@ panel_setup(PanelWidget *panel)
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
+	gtk_signal_connect(GTK_OBJECT(panel),
+				"motion_notify_event",
+				GTK_SIGNAL_FUNC(panel_move_callback),
+				panel);
+	gtk_signal_connect(GTK_OBJECT(panel),
+				"release_event",
+				GTK_SIGNAL_FUNC(panel_move_release_callback),
+				panel);
 
 	gtk_signal_connect(GTK_OBJECT(panel_menu),
 			   "deactivate",
