@@ -1207,6 +1207,46 @@ panel_signal_connect_object_while_alive (GObject      *object,
 				  FALSE);
 }
 
+gboolean
+panel_ensure_dir (const char *dirname)
+{
+	char *parsed, *p;
+
+	if (dirname == NULL)
+		return FALSE;
+
+	parsed = g_strdup (dirname);
+
+	if (g_file_test (parsed, G_FILE_TEST_IS_DIR)) {
+		g_free (parsed);
+		return TRUE;
+	}
+
+	p = strchr (parsed, '/');
+	if (p == parsed)
+		p = strchr (p+1, '/');
+
+	while (p != NULL) {
+		*p = '\0';
+		if (mkdir (parsed, 0700) != 0 &&
+		    errno != EEXIST) {
+			g_free (parsed);
+			return FALSE;
+		}
+		*p = '/';
+		p = strchr (p+1, '/');
+	}
+
+	if (mkdir (parsed, 0700) != 0 &&
+	    errno != EEXIST) {
+		g_free (parsed);
+		return FALSE;
+	}
+
+	g_free (parsed);
+	return TRUE;
+}
+
 #if 0
 /* hmmm, we need to use this I think to add a battery applet
  *  -George */

@@ -112,6 +112,8 @@ void		panel_signal_connect_object_while_alive (GObject      *object,
 							 GObject      *alive_object);
 
 
+gboolean	panel_ensure_dir	(const char *dirname);
+
 /* GnomeVFS reading utils */
 
 typedef struct _ReadBuf ReadBuf;

@@ -1,3 +1,9 @@
+Mon Jan 14 01:40:25 2002  George Lebl <jirka@5z.com>
+
+	* launcher.c, panel-util.[ch]: Add a directory ensuring function
+	  that ensures the whole path exists and use it instead of mkdir
+	  when hoarding launchers.  This seems to make things work for me.
+
 2002-01-14  Glynn Foster  <glynn.foster@sun.com>
 
 	* Makefile.am: Make dist fixes. Actually these probably don't

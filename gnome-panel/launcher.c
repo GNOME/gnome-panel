@@ -910,7 +910,7 @@ launcher_file_name (const char *location)
 	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
 	/* Make sure the launcher directory exists */
 	if (!g_file_test (tmp, G_FILE_TEST_EXISTS)) {
-		mkdir (tmp, 0700);
+		panel_ensure_dir (tmp);
 	}
 
 	retval = g_build_filename (tmp, location, NULL);
