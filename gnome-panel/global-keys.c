@@ -11,6 +11,7 @@
 #include "applet.h"
 #include "gnome-run.h"
 #include "panel.h"
+#include "menu.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
 
@@ -254,7 +255,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		}
 
 		panel = panels->data;
-		menu = make_popup_panel_menu (panel);
+		menu = create_panel_root_menu (panel);
 		basep = panel->panel_parent;
 		if (BASEP_IS_WIDGET(basep)) {
 			BASEP_WIDGET(basep)->autohide_inhibit = TRUE;
