@@ -1,3 +1,12 @@
+Sun Feb 07 06:06:08 1999  George Lebl  <jirka@5z.com>
+
+	* drawer-widget.c, panel.c: fix drawer positioning under compliant
+	  WM's, reduce the number of X calls necessary for drawer allocation
+	  as well
+
+	* basep-widget.c,session.h: optimizations, do animations using time
+	  instead of position, which makes the animations smoother
+
 Sun Feb 07 03:41:47 1999  George Lebl  <jirka@5z.com>
 
 	* basep-widget.c,drawer-widget.c: optimizations and some display bugs

@@ -445,14 +445,40 @@ drawer_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
+static void
+queue_resize_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+
+	if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
+		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		
+		if(dw->state == DRAWER_SHOWN &&
+		   !dw->temp_hidden) {
+			gtk_widget_queue_resize(drawer->drawer);
+			gtk_container_foreach(GTK_CONTAINER(basep->panel),
+					      queue_resize_foreach,
+					      NULL);
+		}
+	}
+}
+
 static int
 panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 {
-	if(IS_DRAWER_WIDGET(widget)) {
+	/*if(IS_DRAWER_WIDGET(widget)) {
 		if(DRAWER_WIDGET(widget)->state == DRAWER_SHOWN)
 			gtk_widget_queue_resize(widget);
 		panels_to_sync = TRUE;
-	}
+	}*/
+	BasePWidget *basep = BASEP_WIDGET(widget);
+
+	gtk_container_foreach(GTK_CONTAINER(basep->panel),
+			      queue_resize_foreach,
+			      NULL);
+
 	return FALSE;
 }
 
@@ -1138,8 +1164,8 @@ panel_setup(GtkWidget *panelw)
 			      gtk_widget_get_events(panelw) |
 			      PANEL_EVENT_MASK);
 
-	gtk_signal_connect(GTK_OBJECT(panelw), "size_allocate",
-			   GTK_SIGNAL_FUNC(panel_size_allocate), NULL);
+	gtk_signal_connect_after(GTK_OBJECT(panelw), "size_allocate",
+				 GTK_SIGNAL_FUNC(panel_size_allocate), NULL);
 	gtk_signal_connect(GTK_OBJECT(panelw), "destroy",
 			   GTK_SIGNAL_FUNC(panel_destroy),NULL);
 

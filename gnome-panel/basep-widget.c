@@ -207,6 +207,23 @@ basep_widget_add_fake(BasePWidget *basep,
 }
 
 static int
+move_step(int src, int dest, long start_time, long end_time, long cur_time)
+{
+	double percentage;
+	
+	if(src == dest)
+		return dest;
+
+	percentage = ((double)(cur_time-start_time))/(end_time-start_time);
+	
+	if(percentage>1.0)
+		percentage = 1.0;
+	
+	return  src + ((dest - src)*percentage);
+}
+
+#if 0
+static int
 move_step(int src, int dest, int pos, int step)
 {
 	int range;
@@ -232,6 +249,7 @@ move_step(int src, int dest, int pos, int step)
 	}
 	return ret;
 }
+#endif
 
 void
 basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
@@ -241,6 +259,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	int ox,oy,ow,oh;
 	int x,y,w,h;
 	int dx,dy,dw,dh;
+	int diff;
 	
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
@@ -254,24 +273,28 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	switch(hide_orient) {
 	case ORIENT_UP:
+		diff = h-leftover;
 		dx = x;
 		dy = y;
 		dw = w;
 		dh = leftover;
 		break;
 	case ORIENT_DOWN:
+		diff = h-leftover;
 		dx = x;
 		dy = y+h-leftover;
 		dw = w;
 		dh = leftover;
 		break;
 	case ORIENT_LEFT:
+		diff = w-leftover;
 		dx = x;
 		dy = y;
 		dw = leftover;
 		dh = h;
 		break;
 	case ORIENT_RIGHT:
+		diff = w-leftover;
 		dx = x+w-leftover;
 		dy = y;
 		dw = leftover;
@@ -279,6 +302,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		break;
 	default:
 		/*fix warning*/ dx = dy = dw = dh = 0;
+		diff = 1;
 		g_assert_not_reached();
 		break;
 	}
@@ -286,9 +310,21 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 	if(!pw_disable_animations && step != 0) {
 		GdkWindow * win = NULL;
 		int i;
+		GTimeVal tval;
+		long start_secs;
+		long start_time;
+		long end_time;
+		long cur_time;
+
+		g_get_current_time(&tval);
+		
+		start_secs = tval.tv_sec;
+		start_time = tval.tv_usec;
+		
+		end_time = start_time +
+			(diff/1000.0)*200*(10001-(step*step));
+
 		if (gnome_win_hints_wm_exists()) {
-			win = basep_widget_add_fake(basep, hide_orient,
-						    -1,-1,-1,-1,TRUE);
 			if(dw == 0 || dh == 0) {
 				gdk_window_move(wid->window,
 						-wid->allocation.width-1,
@@ -298,7 +334,11 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 						      -wid->allocation.height-1,
 						      0,0,0,0,
 						      GDK_HINT_POS);
-			}
+			} else
+				gdk_window_move_resize(wid->window,
+						       dx,dy,dw,dh);
+			win = basep_widget_add_fake(basep, hide_orient,
+						    -1,-1,-1,-1,TRUE);
 			gdk_window_hide(wid->window);
 		} else  {
 			basep_widget_set_ebox_orient(basep, hide_orient);
@@ -310,10 +350,15 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		      y != dy ||
 		      w != dw ||
 		      h != dh) {
-			x += move_step(ox,dx,x,step);
-			y += move_step(oy,dy,y,step);
-			w += move_step(ow,dw,w,step);
-			h += move_step(oh,dh,h,step);
+			g_get_current_time(&tval);
+			
+			cur_time = ((tval.tv_sec-start_secs)*1000000) +
+				tval.tv_usec;
+
+			x = move_step(ox,dx,start_time,end_time,cur_time);
+			y = move_step(oy,dy,start_time,end_time,cur_time);
+			w = move_step(ow,dw,start_time,end_time,cur_time);
+			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(win, x,y,w,h);
 			/*drawing the entire table flickers, so don't do it
 			  often*/
@@ -321,6 +366,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 				gtk_widget_draw(basep->panel, NULL);
 			else
 				gtk_widget_draw(basep->table, NULL);
+			gdk_flush();
 		}
 		
 		/*a hack to remove all the expose events that we generated
@@ -381,6 +427,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	int ox,oy,ow,oh;
 	int x,y,w,h;
 	int dx,dy,dw,dh;
+	int diff;
 
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(basep));
@@ -398,27 +445,32 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		dy = y;
 		ow = w = dw;
 		oh = h = leftover;
+		diff = dh-leftover;
 		break;
 	case ORIENT_DOWN:
 		dx = x;
 		dy = y - dh + leftover;
 		ow = w = dw;
 		oh = h = leftover;
+		diff = dh-leftover;
 		break;
 	case ORIENT_LEFT:
 		dx = x;
 		dy = y;
 		ow = w = leftover;
 		oh = h = dh;
+		diff = dw-leftover;
 		break;
 	case ORIENT_RIGHT:
 		dx = x - dw + leftover;
 		dy = y;
 		ow = w = leftover;
 		oh = h = dh;
+		diff = dw-leftover;
 		break;
 	default:
 		/*fix warning*/ dx = dy = ow = oh = w = h = 0;
+		diff = 1;
 		g_assert_not_reached();
 		break;
 	}
@@ -426,6 +478,20 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	if(!pw_disable_animations && step != 0) {
 		GdkWindow *win = NULL;
 		int i;
+		GTimeVal tval;
+		long start_secs;
+		long start_time;
+		long end_time;
+		long cur_time;
+
+		g_get_current_time(&tval);
+		
+		start_secs = tval.tv_sec;
+		start_time = tval.tv_usec;
+		
+		end_time = start_time +
+			(diff/1000.0)*200*(10001-(step*step));
+		
 		if (gnome_win_hints_wm_exists()) {
 			win = basep_widget_add_fake(basep, hide_orient,
 						    ox,oy,ow,oh,FALSE);
@@ -456,10 +522,15 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		      y != dy ||
 		      w != dw ||
 		      h != dh) {
-			x += move_step(ox,dx,x,step);
-			y += move_step(oy,dy,y,step);
-			w += move_step(ow,dw,w,step);
-			h += move_step(oh,dh,h,step);
+			g_get_current_time(&tval);
+			
+			cur_time = ((tval.tv_sec-start_secs)*1000000) +
+				tval.tv_usec;
+
+			x = move_step(ox,dx,start_time,end_time,cur_time);
+			y = move_step(oy,dy,start_time,end_time,cur_time);
+			w = move_step(ow,dw,start_time,end_time,cur_time);
+			h = move_step(oh,dh,start_time,end_time,cur_time);
 			gdk_window_move_resize(win, x,y,w,h);
 			/*drawing the entire table flickers, so don't do it
 			  often*/
@@ -467,6 +538,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 				gtk_widget_draw(basep->panel, NULL);
 			else
 				gtk_widget_draw(basep->table, NULL);
+			gdk_flush();
 		}
 		/*a hack to remove all the expose events that we generated
 		  above*/
@@ -484,13 +556,13 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			g_slist_free(list);
 		}
 		if (gnome_win_hints_wm_exists()) {
-			gdk_window_reparent(basep->ebox->window,wid->window,0,0);
 			gdk_window_resize(wid->window,dw,dh);
 			gdk_window_set_hints (wid->window,
 					      dx,dy,0,0,0,0,
 					      GDK_HINT_POS);
 			gdk_window_show(wid->window);
 			gdk_window_move(wid->window,dx,dy);
+			gdk_window_reparent(basep->ebox->window,wid->window,0,0);
 			gdk_window_destroy(win);
 		} else {
 			gdk_window_resize(wid->window,dw,dh);

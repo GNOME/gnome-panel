@@ -143,9 +143,6 @@ drawer_widget_class_init (DrawerWidgetClass *class)
 	widget_class->realize = drawer_widget_realize;
 }
 
-/*if this is set, the size request and size alloc calls are ignored*/
-static int ignore_allocate = FALSE;
-
 /*if this is true the size request will request a 48x48 cube, this is used
   during orientation changes to make no flicker*/
 static int drawer_widget_request_cube = FALSE;
@@ -156,8 +153,6 @@ drawer_widget_size_request(GtkWidget *widget,
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	int w,h;
-	if(ignore_allocate)
-		return;
 	if(drawer_widget_request_cube) {
 		requisition->width = 48;
 		requisition->height = 48;
@@ -193,42 +188,53 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		int px, py, pw, ph;
 		GtkWidget *ppanel; /*parent panel*/
 
+		BasePWidget *basep;
+		
 		/*get the parent of the applet*/
 		ppanel = panel->master_widget->parent;
+		bx = panel->master_widget->allocation.x +
+			ppanel->allocation.x;
+		by = panel->master_widget->allocation.y +
+			ppanel->allocation.y;
 		/*go the the toplevel panel widget*/
-		while(ppanel->parent)
+		while(ppanel->parent) {
 			ppanel = ppanel->parent;
-		if (GTK_WIDGET_REALIZED (ppanel)) {
-			gdk_window_get_origin (panel->master_widget->window, &bx, &by);
-			if(GTK_WIDGET_NO_WINDOW(panel->master_widget)) {
-				bx+=panel->master_widget->allocation.x;
-				by+=panel->master_widget->allocation.y;
-			}
-			bw = panel->master_widget->allocation.width;
-			bh = panel->master_widget->allocation.height;
-			gdk_window_get_origin (ppanel->window, &px, &py);
-			gdk_window_get_size (ppanel->window, &pw, &ph);
-
-			switch(drawer->orient) {
-			case ORIENT_UP:
-				*x = bx+(bw-width)/2;
-				*y = py - height;
-				break;
-			case ORIENT_DOWN:
-				*x = bx+(bw-width)/2;
-				*y = py + ph;
-				break;
-			case ORIENT_LEFT:
-				*x = px - width;
-				*y = by+(bh-height)/2;
-				break;
-			case ORIENT_RIGHT:
-				*x = px + pw;
-				*y = by+(bh-height)/2;
-				break;
-			}
-			return;
+			bx += ppanel->allocation.x;
+			by += ppanel->allocation.y;
 		}
+		basep = BASEP_WIDGET(ppanel);
+		/*a hack as the above just doesn't work perfectly*/
+		if(GTK_WIDGET_VISIBLE(basep->hidebutton_n))
+			by -= basep->hidebutton_n->allocation.height;
+		if(GTK_WIDGET_VISIBLE(basep->hidebutton_w))
+			bx -= basep->hidebutton_w->allocation.width;
+
+		bw = panel->master_widget->allocation.width;
+		bh = panel->master_widget->allocation.height;
+		px = ppanel->allocation.x;
+		py = ppanel->allocation.y;
+		pw = ppanel->allocation.width;
+		ph = ppanel->allocation.height;
+
+		switch(drawer->orient) {
+		case ORIENT_UP:
+			*x = bx+(bw-width)/2;
+			*y = py - height;
+			break;
+		case ORIENT_DOWN:
+			*x = bx+(bw-width)/2;
+			*y = py + ph;
+			break;
+		case ORIENT_LEFT:
+			*x = px - width;
+			*y = by+(bh-height)/2;
+			break;
+		case ORIENT_RIGHT:
+			*x = px + pw;
+			*y = by+(bh-height)/2;
+			break;
+		}
+		return;
 	}
 	/*if we fail*/
 	*x = *y = -3000;
@@ -241,9 +247,6 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	BasePWidget *basep = BASEP_WIDGET(widget);
 	GtkAllocation challoc;
 	int w,h;
-
-	if(ignore_allocate)
-		return;
 
 	/*we actually want to ignore the size_reqeusts since they are sometimes
 	  a cube for the flicker prevention*/
@@ -267,11 +270,10 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			      allocation->width,
 			      allocation->height);
 	
-	/*ugly optimisation, XXX: most likely won't work, test this
-	 more*/
+	/*ugly optimisation: XXX fix this to work with temp_hidden*/
 	/*if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
 		return;*/
-
+	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
 		int x = allocation->x;
