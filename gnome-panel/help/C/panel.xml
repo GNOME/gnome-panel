@@ -47,15 +47,17 @@
      <primary>Panel</primary>
     </indexterm>
     The GNOME Panel is the heart of the GNOME user interface and acts
-    as a repository for <link linkend="launchers">applications
-    launchers</link>, <link linkend="applets">applets</link>
+    as a repository for <link linkend="mainmenu">the Main Menu</link>,
+    user <link linkend="menus">menus</link>,
+    application <link linkend="launchers">launchers</link>, <link
+    linkend="applets">applets</link> 
     (applications which run entirely within the panel), <link
-    linkend="menus">menus</link>, <link
     linkend="drawers">drawers</link>, and several <link
     linkend="specialobjects">special objects</link>.  The Panel was
     designed to be highly configurable.  You can easily <link
-    linkend="panelproperties">customize</link> its contents, behavior,
-    and  appearance to suite your personal needs and preferences.  You
+    linkend="panelproperties">customize its behavior and
+    appearance</link> and <link linkend="appletadd">add or remove
+    objects</link> to suite your personal needs and preferences.  You
     can even have <link linkend="panelmove">multiple panels</link>,
     each with its own appearance, properties, and contents.  This
     flexibility allows you to easily create a comfortable and
@@ -73,17 +75,18 @@
     Using the GNOME Panel is very simple and will come easily to
     anyone who has used a graphical desktop environment.  This section
     will give you a basic introduction to help you get started, and
-    the following sections will discuss the various panel contents and
+    the following sections will discuss the various panel objects and
     features in more detail.
    </para>
 
    <sect2 id="intropanel">
     <title>Introduction to Panel Objects</title>
     <para>
-     The Panel can hold several types of objects. The following
-     example Panel shows each type of Panel object.
+     The Panel can hold several types of objects.  The example Panel
+     in  <xref linkend="examplepanelfig"> shows each type of Panel
+     object. 
     </para>
-    <figure>
+    <figure id="examplepanelfig">
      <title>An Example Panel</title>
      <screenshot>
       <screeninfo>An Example Panel.</screeninfo>
@@ -92,110 +95,124 @@
        </graphic>
      </screenshot>
     </figure>
+
     <para>
      This example Panel contains the following objects:
      <itemizedlist>  
       <listitem> 
-   
-       <para>   <guilabel>Menus</guilabel> &mdash;
-        <guilabel>Menus</guilabel> are lists of items, each of which
-        either starts an application, executes a command, or is a
-        sub-menu.  In the example Panel shown above, the left-most
-        icon after the arrow is a stylized footprint icon(the GNOME
-        logo). This is the <guimenu>Main Menu</guimenu>, one of the
-        most important objects in the Panel.  This menu provides
-        access to almost all the applications, commands, and
-        configuration options available in GNOME. The <guimenu>Main
-        Menu</guimenu> is described in detail in <xref
-        linkend="mainmenu">. The second icon shown is a folder, the
-        default icon used for user <guilabel>Menus</guilabel>.  GNOME
-        allows users to create their own <guilabel>Menus</guilabel>
-        with personalized contents to use in addition to the
-        <guimenu>Main Menu</guimenu>.  To open a
-        <guimenu>Menu</guimenu>, just click on the icon with the left
-        mouse button.  For more information on
-        <guilabel>Menus</guilabel>, see <xref linkend="menus">.
-       </para>
-
+       <formalpara>
+        <title>Menus</title>
+        <para> 
+         <guilabel>Menus</guilabel> are lists of items, each of which
+         either starts an application, executes a command, or is a
+         sub-menu.  In the example Panel, the left-most
+         icon after the arrow is a stylized footprint icon(the GNOME
+         logo). This is the <guimenu>Main Menu</guimenu>, one of the
+         most important objects in the Panel.  This menu provides
+         access to almost all the applications, commands, and
+         configuration options available in GNOME. The <guimenu>Main
+         Menu</guimenu> is described in detail in <xref
+         linkend="mainmenu">. The second icon shown is a folder, the
+         default icon used for user <guilabel>Menus</guilabel>.  GNOME
+         allows users to create their own <guilabel>Menus</guilabel>
+         with personalized contents to use in addition to the
+         <guimenu>Main Menu</guimenu>.  To open a
+         <guimenu>Menu</guimenu>, just click on the icon with the left
+         mouse button.  For more information on
+         <guilabel>Menus</guilabel>, see <xref linkend="menus">.
+        </para>
+       </formalpara>
       </listitem>
       <listitem>  
-
-       <para> 
-        <guilabel>Launchers</guilabel> &mdash; 
-        <guilabel>Launchers</guilabel> are buttons which either start
-        an application or execute a command when you press them(click
-        with the left mouse button).
-        The third and fourth icons in the example Panel are
-        <guilabel>Launchers</guilabel> which start the
-        <application>Gnumeric</application> and the <application>GNOME
-        Calendar</application> applications. For more information on
-        <guilabel>Launchers</guilabel>, see <xref linkend="launchers">. 
-       </para>
-
+       <formalpara>
+        <title>Launchers</title>
+        <para> 
+         <guilabel>Launchers</guilabel> are buttons which either start
+         an application or execute a command when you press them(click
+         with the left mouse button).
+         The third icon in the example Panel is a
+         <guilabel>Launcher</guilabel> which starts the
+         <application>Gnumeric</application> spreadsheet.  For more
+         information on <guilabel>Launchers</guilabel>, see <xref
+        linkend="launchers">.  
+        </para>
+       </formalpara>
       </listitem>
       <listitem>  
-
-       <para> 
-        <guilabel>Applets</guilabel>  &mdash;
-        <guilabel>Applets</guilabel> are applications which run inside
-        a small part of the Panel. The fifth, sixth, and seventh icons
-        in the example Panel above are all
-        <guilabel>Applets</guilabel>. The first
-        <guilabel>Applet</guilabel> shown is <application>GNOME
-        Weather</application>, which periodically downloads the current
-        weather conditions off the Web and displays the
-        information. The second <guilabel>Applet</guilabel> is the
-        <application>Drive Mount Applet</application>, which shows
-        whether a disk (in this case, the floppy drive) is mounted and
-        allows you to mount and unmount the drive with a single click
-        of the mouse.  The third <guilabel>Applet</guilabel> shown is
-        the <application>Quick Launch Applet</application>, which acts
-        as a container for <guilabel>Launchers</guilabel>, but saves
-        more space than placing your <guilabel>Launchers</guilabel>
-        directly on the Panel.  For more information on
-        <guilabel>Applets</guilabel>, see <xref linkend="applets">.
-       </para>
-
+       <formalpara>
+        <title>Applets</title>
+        <para> 
+         <guilabel>Applets</guilabel> are applications which run inside
+         a small part of the Panel. The fourth through eighth icons
+         in the example Panel 
+         are <guilabel>Applets</guilabel>. The first
+         <guilabel>Applet</guilabel> shown is <application>GNOME
+         Weather</application>, which periodically downloads the current
+         weather conditions off the Web and displays the
+         information. The second <guilabel>Applet</guilabel> is the
+         <application>Drive Mount Applet</application>, which shows
+         whether a disk (in this case, the floppy drive) is mounted and
+         allows you to mount and unmount the drive with a single click
+         of the mouse.  The third <guilabel>Applet</guilabel> shown is
+         the <application>Quick Launch Applet</application>, which acts
+         as a container for <guilabel>Launchers</guilabel>, but saves
+         more space than placing your <guilabel>Launchers</guilabel>
+         directly on the Panel. In the example shown the
+         <application>Quick Launch Applet</application> contains six
+         application <guilabel>Launchers</guilabel>.  Next is the 
+         <guilabel>GNOME Desk Guide</guilabel>, which allows you to
+         control multiple virtual desktops, each of which can have
+         multiple screens.  You can move between desktops and screens
+         by clicking with your left mouse button.  The final 
+         <guilabel>Applet</guilabel> shown is the
+         <guilabel>Tasklist</guilabel>, which allows you to control
+         your windows in various ways, including changing the focus,
+         iconifying windows, closing windows, and killing applications.
+         The <guilabel>Tasklist</guilabel> shown is for a screen with
+         only two windows, both of which are for <application>Electric
+         Eyes</application>.  For more information on
+         <guilabel>Applets</guilabel>, see <xref linkend="applets">.
+        </para>
+       </formalpara>
       </listitem>
       <listitem>    
-
-       <para>  <guilabel>Drawers</guilabel> &mdash;
-        <guilabel>Drawers</guilabel> are essentially extensions of the
-        Panel which can be opened or closed.  They can hold anything
-        the panel can.  The brown icon of a drawer in the example
-        Panel above is the default icon for
-        <guilabel>Drawers</guilabel>, although any icon can be
-        used. Click on the <guilabel>Drawer</guilabel> with the left
-        mouse button to open or close it.  For more information on
-        <guilabel>Drawers</guilabel>, see <xref linkend="drawers">.
-       </para>
-
+       <formalpara>
+        <title>Drawers</title>
+        <para> 
+         <guilabel>Drawers</guilabel> are essentially extensions of the
+         Panel which can be opened or closed.  They can hold anything
+         the panel can.  The brown icon of a drawer in the example
+         Panel is the default icon for
+         <guilabel>Drawers</guilabel>, although any icon can be
+         used. Click on the <guilabel>Drawer</guilabel> with the left
+         mouse button to open or close it.  For more information on
+         <guilabel>Drawers</guilabel>, see <xref linkend="drawers">.
+        </para>
+       </formalpara>
       </listitem>
       <listitem>    
-
-       <para> 
-        <guilabel>Special Objects</guilabel> &mdash;
-        <guilabel>Special Objects</guilabel> are special items you can
-        add to the Panel which perform commands which are generally
-        not available through the other Panel objects. The last two
-        items in the example Panel above are <guilabel>Special
-        Objects</guilabel>. The first (the lock icon) is the <guibutton>Lock
-        Screen</guibutton> button, which is used to lock the
-        screen so other users cannot access it without knowing the
-        password. The second is the <guibutton>Logout
-        Button</guibutton> which begins the logout sequence to end
-        your GNOME session. For more
-        information on <guilabel>Special Objects</guilabel>, see <xref
-        linkend="specialobjects">.
-       </para>
-
+       <formalpara>
+        <title>Special Objects</title>
+        <para> 
+         <guilabel>Special Objects</guilabel> are items you can
+         add to the Panel which perform functions which are generally
+         not available through the other Panel objects. The last
+         item in the example Panel is a <guilabel>Special
+         Object</guilabel> called the <guibutton>Logout
+         Button</guibutton>. Pressing this with the left mouse button
+         begins the logout sequence to end 
+         your GNOME session. For more
+         information on <guilabel>Special Objects</guilabel>, see <xref
+         linkend="specialobjects">.
+        </para>
+       </formalpara>
       </listitem>
      </itemizedlist>
     </para>    
     <para>
      Each of these object types is described in detail in the following
      sections. You can easily add, move, or remove Panel objects
-     &mdash; see <xref linkend="appletadd">.
+     (see <xref linkend="appletadd">).
     </para>
    </sect2>
 
@@ -204,39 +221,47 @@
     <title>Right-click menu</title>
     <para>
      Clicking on any panel object with the right mouse button brings
-     up the <guimenu>pop-up</guimenu>  menu. This menu contains
+     up the Panel object <guimenu>Pop-up Menu</guimenu>. This
+     <guilabel>Menu</guilabel> contains 
      <guimenuitem>Remove from panel</guimenuitem> for removing the
      object from the panel, <guimenuitem>Move applet</guimenuitem> for
-     moving objects within the Panel, the <guimenu>Panel</guimenu>
-     menu described below, and object-specific items.  For Drawers,
-     Menus, and Launchers the only object-specific item is
-     a <guimenuitem>Properties...</guimenuitem> item which allows you
-     to customize the properties and settings of the object. For Applets, the
-     <guimenu>pop-up</guimenu> menu will often contain
+     moving objects within the Panel or between Panels, 
+     the <guimenu>Panel Submenu</guimenu> described below, and 
+     object-specific items.  For <guilabel>Drawers</guilabel>,
+     <guilabel>Menus</guilabel>, and <guilabel>Launchers</guilabel>
+      the only object-specific item is the
+     <guimenuitem>Properties...</guimenuitem> item which allows you
+     to customize the properties and settings of the object. For
+     <guilabel>Applets</guilabel>, the
+     <guimenu>Pop-up Menu</guimenu> will often contain
      <guimenuitem>About</guimenuitem> for viewing information about
-     the Applet such as the author's name and the Applet version,
+     the <guilabel>Applet</guilabel> such as the author's name and the
+     <guilabel>Applet</guilabel> version, 
      <guimenuitem>Help</guimenuitem> for viewing documentation about
-     the Applet, and <guimenuitem>Properties</guimenuitem> for
-     configuring preferences and settings for the Applet.  Applets
-     often have other Applet-specific controls in the
-     <guimenu>pop-up</guimenu> menu.
+     the <guilabel>Applet</guilabel>, and
+     <guimenuitem>Properties</guimenuitem> for 
+     configuring preferences and settings for the
+     <guilabel>Applet</guilabel>.  <guilabel>Applets</guilabel> 
+     often have other <guilabel>Applet</guilabel>-specific controls in the
+     <guimenu>Pop-up Menu</guimenu>.
     </para>
     <para>
-     The <guimenu>Panel</guimenu> menu allows you to <link
+     The <guimenu>Panel Submenu</guimenu> allows you to <link
      linkend="panelmove">create and remove Panels</link> and <link
      linkend="appletadd">add objects</link> to the
      Panel.  It also allows you to modify the properties of the
-     particular Panel of interest using
-     <guimenuitem>Properties</guimenuitem> (see <xref
+     particular Panel of interest using the
+     <guimenuitem>Properties</guimenuitem> menu item (see <xref
      linkend="panelproperties">) or the properties of all panels using
-     <guimenuitem>Global Preferences...</guimenuitem> (see <xref
+     <guimenuitem>Global Preferences...</guimenuitem> menu item (see <xref
      linkend="globalpanelprefs">).
     </para>
     <para>
-     You can also right-click on the panel itself. This will
+     You can also right-click on the Panel itself. This will
      bring up the <link linkend="mainmenu"><guimenu>Main
-     Menu</guimenu></link>. In particular, this menu also contains the
-     <guimenu>Panel</guimenu> menu described above.
+     Menu</guimenu></link>. In particular, this
+     <guilabel>Menu</guilabel> also contains the 
+     <guimenu>Panel Submenu</guimenu> described above.
     </para>
    </sect2>
 
@@ -2029,7 +2054,7 @@
       Mason (<email>dcm@redhat.com</email>), Dan Mueth
       (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
       (<email>kirillov@math.sunysb.edu</email>). Please send all comments
-      and suggestions regarding the manual to the GNOME Documentation
+      and suggestions regarding this manual to the GNOME Documentation
       Project at <email>docs@gnome.org</email> or enter your comments
       online using the <ulink type="http"
       url="http://www.gnome.org/gdp/doctable">  GNOME Documentation
