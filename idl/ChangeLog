@@ -1,3 +1,11 @@
+Mon Dec 07 01:52:52 1998  George Lebl  <jirka@5z.com>
+
+	* gnome-panel.idl: make a lot of the calls oneway which should
+	  improve performance especially on calls that are done to
+	  all applets at once (plus it should reduce panel hanging when
+	  the applet hangs I'd guess, except for saving which needs to
+	  be synchronious)
+
 Sun Dec 06 13:43:04 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl: remove request_globcfg
