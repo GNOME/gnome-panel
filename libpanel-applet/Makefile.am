@@ -72,7 +72,9 @@ $(libpanel_applet_2_la_OBJECTS) $(test_bonobo_applet_OBJECTS): $(BUILT_SOURCES)
 EXTRA_DIST =					\
 	GNOME_Panel_TestApplet.server.in	\
 	panel-applet-marshal.list		\
-	libpanelapplet-2.0.pc.in
+	libpanelapplet-2.0.pc.in		\
+	panel-test-applets.glade		\
+	panel-test-applets.glade2
 
 panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
