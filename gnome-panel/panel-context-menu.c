@@ -106,8 +106,6 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 		"Dave Mason (dcm@redhat.com)",
 		NULL
 	  };
-	/* Translator credits */
-	char *translator_credits = _("translator-credits");
 	int   i;
 
 	if (about) {
@@ -129,8 +127,8 @@ panel_context_menu_show_about_dialog (GtkWidget *menuitem)
 				    "applications and embedding small applets within itself."),
 		      "authors", authors,
 		      "documenters", documenters,
-		      "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-		      "logo_icon_name", "gnome-panel",
+		      "translator-credits", _("translator-credits"),
+		      "logo-icon-name", "gnome-panel",
 		      NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (about), "about_dialog", "Panel");
