@@ -1044,7 +1044,7 @@ make_mailcheck_applet(const gchar *goad_id)
 	
 	mc->pre_check_cmd = gnome_config_get_string("mail/exec_command");
 	mc->newmail_cmd = gnome_config_get_string("mail/newmail_command");
-        mc->clicked_cmd = gnome_config_get_string("mail/clicked_cmd");
+        mc->clicked_cmd = gnome_config_get_string("mail/clicked_command");
 
 	mc->remote_server = gnome_config_get_string("mail/remote_server=mail");
 	
