@@ -1,3 +1,11 @@
+Tue Dec 19 21:34:41 2000  George Lebl <jirka@5z.com>
+
+	* panel-util.[ch], gnome-panel-properties.c, menu.c, drawer.c,
+	  gnome-run.c, panel.c, logout.c:  Add DND to drawer, menu and run.
+	  unfortunately menu won't drag due to the fact that a button down
+	  grabs the mouse.  Also drawer is only "MOVE" able and not
+	  "COPY"able and that's not likely to change.
+
 Tue Dec 19 20:52:17 2000  George Lebl <jirka@5z.com>
 
 	* logout.c, panel.c:  Make logout and lock also draggable, and move

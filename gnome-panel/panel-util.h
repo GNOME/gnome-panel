@@ -83,6 +83,8 @@ int		strcasecmp_no_locale	(const char *s1,
 gboolean	panel_file_exists	(const char *filename);
 char *		panel_is_program_in_path (const char *program);
 
+int		find_applet		(GtkWidget *widget);
+
 END_GNOME_DECLS
 
 #endif /* PANEL_UTIL_H */

@@ -5159,12 +5159,34 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gdk_event_free((GdkEvent *)bevent);
 }
 
+static void  
+drag_data_get_cb (GtkWidget          *widget,
+		  GdkDragContext     *context,
+		  GtkSelectionData   *selection_data,
+		  guint               info,
+		  guint               time,
+		  gpointer            data)
+{
+	char *foo;
+
+	foo = g_strdup_printf ("MENU:%d", find_applet (widget));
+
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, (guchar *)foo,
+				strlen (foo));
+
+	g_free (foo);
+}
+
 static Menu *
 create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 		   PanelOrientType orient, int main_menu_flags,
 		   gboolean global_main,
 		   gboolean custom_icon, const char *custom_icon_file)
 {
+        static GtkTargetEntry dnd_targets[] = {
+		{ "application/x-panel-applet-internal", 0, 0 }
+	};
 	Menu *menu;
 	
 	char *pixmap_name;
@@ -5191,6 +5213,23 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	/*make the pixmap*/
 	menu->button = button_widget_new (pixmap_name, -1, MENU_TILE,
 					  TRUE, orient, _("Menu"));
+
+	/*A hack since this function only pretends to work on window
+	  widgets (which we actually kind of are) this will select
+	  some (already selected) events on the panel instead of
+	  the button window (where they are also selected) but
+	  we don't mind*/
+	GTK_WIDGET_UNSET_FLAGS (menu->button, GTK_NO_WINDOW);
+	gtk_drag_source_set (menu->button,
+			     GDK_BUTTON1_MASK,
+			     dnd_targets, 1,
+			     GDK_ACTION_MOVE);
+	GTK_WIDGET_SET_FLAGS (menu->button, GTK_NO_WINDOW);
+
+	gtk_signal_connect (GTK_OBJECT (menu->button), "drag_data_get",
+			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+			    NULL);
+
 	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
 				  GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",

@@ -247,33 +247,71 @@ leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 }
 
+static void  
+drag_data_get_cb (GtkWidget          *widget,
+		  GdkDragContext     *context,
+		  GtkSelectionData   *selection_data,
+		  guint               info,
+		  guint               time,
+		  gpointer            data)
+{
+	char *foo;
+
+	foo = g_strdup_printf ("DRAWER:%d", find_applet (widget));
+
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, (guchar *)foo,
+				strlen (foo));
+
+	g_free (foo);
+}
+
 static Drawer *
 create_drawer_applet(GtkWidget * drawer_panel,
 		     const char *tooltip, const char *pixmap,
 		     PanelOrientType orient)
 {
+        static GtkTargetEntry dnd_targets[] = {
+		{ "application/x-panel-applet-internal", 0, 0 }
+	};
 	Drawer *drawer;
 	
-	drawer = g_new0(Drawer,1);
+	drawer = g_new0 (Drawer, 1);
 	
 	drawer->properties = NULL;
 
-	if(!tooltip ||
-	   !*tooltip)
+	if (string_empty (tooltip))
 		drawer->tooltip = NULL;
 	else
-		drawer->tooltip = g_strdup(tooltip);
+		drawer->tooltip = g_strdup (tooltip);
 
-	if(!pixmap || !*pixmap) {
+	if (string_empty (pixmap)) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
 	} else {
-		drawer->pixmap = g_strdup(pixmap);
+		drawer->pixmap = g_strdup (pixmap);
 	}
 	drawer->button = button_widget_new (drawer->pixmap, -1,
 					    DRAWER_TILE,
-					    TRUE,orient,
+					    TRUE, orient,
 					    _("Drawer"));
-		gtk_widget_show(drawer->button);
+
+	/*A hack since this function only pretends to work on window
+	  widgets (which we actually kind of are) this will select
+	  some (already selected) events on the panel instead of
+	  the button window (where they are also selected) but
+	  we don't mind*/
+	GTK_WIDGET_UNSET_FLAGS (drawer->button, GTK_NO_WINDOW);
+	gtk_drag_source_set (drawer->button,
+			     GDK_BUTTON1_MASK,
+			     dnd_targets, 1,
+			     GDK_ACTION_MOVE);
+	GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
+
+	gtk_signal_connect (GTK_OBJECT (drawer->button), "drag_data_get",
+			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+			    NULL);
+
+	gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;
 
@@ -285,9 +323,10 @@ create_drawer_applet(GtkWidget * drawer_panel,
 			    GTK_SIGNAL_FUNC (enter_notify_drawer), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "leave_notify_event",
 			    GTK_SIGNAL_FUNC (leave_notify_drawer), drawer);
-	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
-	gtk_object_set_data(GTK_OBJECT(drawer_panel),DRAWER_PANEL_KEY,drawer);
-	gtk_widget_queue_resize(GTK_WIDGET(drawer_panel));
+
+	gtk_object_set_user_data (GTK_OBJECT (drawer->button), drawer);
+	gtk_object_set_data (GTK_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
+	gtk_widget_queue_resize (GTK_WIDGET (drawer_panel));
 
 	return drawer;
 }

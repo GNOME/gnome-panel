@@ -1034,6 +1034,29 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 }
 
 static void
+move_applet (PanelWidget *panel, int pos, int applet_num)
+{
+	AppletInfo *info = g_slist_nth_data (applets, applet_num);
+
+	if (pos < 0)
+		pos = 0;
+
+	if (info != NULL &&
+	    info->widget != NULL &&
+	    info->widget->parent != NULL &&
+	    IS_PANEL_WIDGET (info->widget->parent)) {
+		GSList *forb;
+		forb = gtk_object_get_data (GTK_OBJECT (info->widget),
+					    PANEL_APPLET_FORBIDDEN_PANELS);
+		if ( ! g_slist_find (forb, panel))
+			panel_widget_reparent (PANEL_WIDGET (info->widget->parent),
+					       panel,
+					       info->widget,
+					       pos);
+	}
+}
+
+static void
 drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		      int action)
 {
@@ -1043,7 +1066,14 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	if (applet_type == NULL)
 		return;
 
-	if (strncmp (applet_type, "MENU:", strlen("MENU:")) == 0) {
+	if (sscanf (applet_type, "MENU:%d", &applet_num) == 1 ||
+	    sscanf (applet_type, "DRAWER:%d", &applet_num) == 1 ||
+	    sscanf (applet_type, "SWALLOW:%d", &applet_num) == 1) {
+		if (action != GDK_ACTION_MOVE)
+			g_warning ("Only MOVE supported for menus/drawers/swallows");
+		move_applet (panel, pos, applet_num);
+
+	} else if (strncmp (applet_type, "MENU:", strlen("MENU:")) == 0) {
 		const char *menu = &applet_type[strlen ("MENU:")];
 		if (strcmp (menu, "MAIN") == 0)
 			drop_menu (panel, pos, NULL);
@@ -1078,6 +1108,10 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 
 	} else if(strcmp(applet_type,"RUN:NEW")==0) {
 		load_run_applet(panel, pos, TRUE);
+
+	} else if (sscanf (applet_type, "RUN:%d", &applet_num) == 1) {
+		load_run_applet(panel, pos, TRUE);
+		remove_applet = TRUE;
 	}
 
 	if (remove_applet &&
@@ -1171,7 +1205,7 @@ do_highlight (GtkWidget *widget, gboolean highlight)
 
 
 static gboolean
-drag_motion_cb (GtkWidget	  *widget,
+drag_motion_cb (GtkWidget	   *widget,
 		GdkDragContext     *context,
 		gint                x,
 		gint                y,
@@ -1181,6 +1215,31 @@ drag_motion_cb (GtkWidget	  *widget,
 
 	if ( ! is_this_drop_ok (widget, context, &info, NULL))
 		return FALSE;
+
+	/* check forbiddenness */
+	if (info == TARGET_APPLET_INTERNAL) {
+		GtkWidget *source_widget;
+
+		source_widget = gtk_drag_get_source_widget (context);
+		if (source_widget != NULL &&
+		    IS_BUTTON_WIDGET (source_widget)) {
+			GSList *forb;
+			PanelWidget *panel = NULL;
+
+			if (IS_BASEP_WIDGET (widget)) {
+				BasePWidget *basep =
+					BASEP_WIDGET (widget);
+				panel = PANEL_WIDGET (basep->panel);
+			} else if (IS_FOOBAR_WIDGET (widget)) {
+				panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
+			}
+			forb = gtk_object_get_data (GTK_OBJECT (source_widget),
+						    PANEL_APPLET_FORBIDDEN_PANELS);
+			if (panel != NULL &&
+			    g_slist_find (forb, panel) != NULL)
+				return FALSE;
+		}
+	}
 
 	/* always prefer copy, except for internal icons/applets,
 	 * where we prefer move */

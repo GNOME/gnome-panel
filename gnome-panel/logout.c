@@ -33,23 +33,6 @@ logout (GtkWidget *widget)
 	panel_quit();
 }
 
-static int
-find_applet (GtkWidget *widget)
-{
-	int i;
-	GSList *li;
-
-	for (i = 0, li = applets; li != NULL; i++, li = li->next) {
-		AppletInfo *info = li->data;
-
-		if (info->widget == widget)
-			return i;
-	}
-
-	return i;
-}
-
-
 static void  
 drag_data_get_cb (GtkWidget          *widget,
 		  GdkDragContext     *context,

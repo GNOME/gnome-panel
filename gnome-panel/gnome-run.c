@@ -300,9 +300,32 @@ show_run_dialog_with_text (const char *text)
 	gtk_entry_set_text(GTK_ENTRY(entry), text);
 }
 
+static void  
+drag_data_get_cb (GtkWidget          *widget,
+		  GdkDragContext     *context,
+		  GtkSelectionData   *selection_data,
+		  guint               info,
+		  guint               time,
+		  gpointer            data)
+{
+	char *foo;
+
+	foo = g_strdup_printf ("RUN:%d", find_applet (widget));
+
+	gtk_selection_data_set (selection_data,
+				selection_data->target, 8, (guchar *)foo,
+				strlen (foo));
+
+	g_free (foo);
+}
+
+
 static GtkWidget *
 create_run_widget(void)
 {
+        static GtkTargetEntry dnd_targets[] = {
+		{ "application/x-panel-applet-internal", 0, 0 }
+	};
 	GtkWidget *button;
 	char *pixmap_name;
 
@@ -313,6 +336,23 @@ create_run_widget(void)
 				   FALSE,
 				   ORIENT_UP,
 				   _("Run..."));
+
+	/*A hack since this function only pretends to work on window
+	  widgets (which we actually kind of are) this will select
+	  some (already selected) events on the panel instead of
+	  the button window (where they are also selected) but
+	  we don't mind*/
+	GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
+	gtk_drag_source_set (button,
+			     GDK_BUTTON1_MASK,
+			     dnd_targets, 1,
+			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
+
+	gtk_signal_connect (GTK_OBJECT (button), "drag_data_get",
+			    GTK_SIGNAL_FUNC (drag_data_get_cb),
+			    NULL);
+
 	g_free(pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Run..."), NULL);
 

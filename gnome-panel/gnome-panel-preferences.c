@@ -53,6 +53,11 @@
 GlobalConfig global_config = {0};
 static GlobalConfig loaded_config = {0};
 
+/* Heh, foo, we want to use utils, but they reference applets, and applets_last,
+ * so smoke some more crack and make these available */
+GSList *applets = NULL;
+GSList *applets_last = NULL;
+
 /* animation page */
 static GtkWidget *enable_animations_cb;
 static GtkWidget *simple_movement_cb;

@@ -2200,25 +2200,22 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 			if(panel != new_panel &&
 			   panel_widget_is_cursor(new_panel,10) &&
 			   (!g_slist_find(forb,new_panel))) {
-				pos = panel_widget_get_moveby(
-							      new_panel,0);
-				if(pos<0)
+				pos = panel_widget_get_moveby(new_panel,0);
+				if (pos < 0)
 					pos = 0;
-				panel_widget_applet_drag_end(panel);
+				panel_widget_applet_drag_end (panel);
 				/*disable reentrancy into this
 				  function*/
-				if(panel_widget_reparent(panel,
-							 new_panel,
-							 applet,
-							 pos)==-1) {
-					panel_widget_applet_drag_start(
-								       panel, applet);
+				if (panel_widget_reparent (panel,
+							   new_panel,
+							   applet,
+							   pos) == -1) {
+					panel_widget_applet_drag_start (panel, applet);
 					/*can't find a free pos
 					  so cancel the reparent*/
 					continue;
 				}
-				panel_widget_applet_drag_start(
-							       new_panel, applet);
+				panel_widget_applet_drag_start (new_panel, applet);
 				/* schedule a move, the thing might have
 				 * gone outside the cursor, thus we need to
 				 * schedule a move */

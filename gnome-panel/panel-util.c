@@ -19,6 +19,9 @@
 
 extern GlobalConfig global_config;
 
+extern GSList *applets;
+extern GSList *applets_last;
+
 void
 panel_show_help (const char *path)
 {
@@ -792,4 +795,19 @@ panel_is_program_in_path (const char *program)
 	return 0;
 }
 
+int
+find_applet (GtkWidget *widget)
+{
+	int i;
+	GSList *li;
+
+	for (i = 0, li = applets; li != NULL; i++, li = li->next) {
+		AppletInfo *info = li->data;
+
+		if (info->widget == widget)
+			return i;
+	}
+
+	return i;
+}
 
