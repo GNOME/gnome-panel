@@ -331,10 +331,10 @@ back_change (AppletInfo *info,
 								     panel->back_pixmap);
 			break;
 		case PANEL_BACK_COLOR:
-			panel_applet_frame_change_background_colour (frame,
-								     panel->back_color.red,
-								     panel->back_color.green,
-								     panel->back_color.blue);
+			panel_applet_frame_change_background_color (frame,
+								    panel->back_color.red,
+								    panel->back_color.green,
+								    panel->back_color.blue);
 			break;
 		case PANEL_BACK_NONE:
 			panel_applet_frame_clear_background (frame);

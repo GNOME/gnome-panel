@@ -37,7 +37,7 @@ typedef GNOME_PanelOrient PanelAppletOrient;
 
 typedef enum {
 	PANEL_NO_BACKGROUND,
-	PANEL_COLOUR_BACKGROUND,
+	PANEL_COLOR_BACKGROUND,
 	PANEL_PIXMAP_BACKGOUND
 } PanelAppletBackgroundType;
 
@@ -62,7 +62,7 @@ struct _PanelAppletClass {
 
 	void (*change_background) (PanelApplet               *applet,
 				   PanelAppletBackgroundType  type,
-				   GdkColor                  *colour,
+				   GdkColor                  *color,
 				   const gchar               *pixmap);
 };
 

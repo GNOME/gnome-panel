@@ -104,7 +104,7 @@ test_applet_handle_size_change (PanelApplet *applet,
 static void
 test_applet_handle_background_change (PanelApplet               *applet,
 				      PanelAppletBackgroundType  type,
-				      GdkColor                  *colour,
+				      GdkColor                  *color,
 				      const gchar               *pixmap,
 				      GtkLabel                  *label)
 {
@@ -112,9 +112,9 @@ test_applet_handle_background_change (PanelApplet               *applet,
 	case PANEL_NO_BACKGROUND:
 		g_message ("Setting background to default");
 		break;
-	case PANEL_COLOUR_BACKGROUND:
+	case PANEL_COLOR_BACKGROUND:
 		g_message ("Setting background to #%2x%2x%2x",
-			    colour->red, colour->green, colour->blue);
+			    color->red, color->green, color->blue);
 		break;
 	case PANEL_PIXMAP_BACKGOUND:
 		g_message ("Setting background to '%s'", pixmap);

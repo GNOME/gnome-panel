@@ -132,14 +132,14 @@ panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
 }
 
 void
-panel_applet_frame_change_background_colour (PanelAppletFrame *frame,
-					     guint16           red,
-					     guint16           green,
-					     guint16           blue)
+panel_applet_frame_change_background_color (PanelAppletFrame *frame,
+					    guint16           red,
+					    guint16           green,
+					    guint16           blue)
 {
 	gchar *bg_str;
 
-	bg_str = g_strdup_printf ("colour:#%.2x%.2x%.2x", red, green, blue);
+	bg_str = g_strdup_printf ("color:#%.2x%.2x%.2x", red, green, blue);
 
 	bonobo_pbclient_set_string (frame->priv->property_bag, 
 				    "panel-applet-background",

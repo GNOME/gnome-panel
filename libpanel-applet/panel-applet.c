@@ -51,6 +51,17 @@ enum {
 	PROPERTY_BACKGROUND_IDX
 };
 
+/**
+ * panel_applet_setup_menu:
+ * @applet: A #PanelApplet.
+ * @xml: The xml character string describing the popup menu.
+ * @verb_list: The list of #BonoboUIVerbs for the menu.
+ * @user_data: The user data pointer for the menu.
+ *
+ * Sets up a popup menu for @applet described by the xml 
+ * string, @xml. See <link linkend="applet-writing">Applet Writing
+ * </link> section for a description of the format of the xml.
+ */
 void
 panel_applet_setup_menu (PanelApplet        *applet,
 			 const gchar        *xml,
@@ -70,6 +81,19 @@ panel_applet_setup_menu (PanelApplet        *applet,
 	bonobo_ui_component_add_verb_list_with_data (popup_component, verb_list, user_data);
 }
 
+/**
+ * panel_applet_setup_menu_from_file:
+ * @applet: A #PanelApplet.
+ * @opt_datadir: The data directory - i.e. ${prefix}/share (optional).
+ * @file: The file's name.
+ * @opt_app_name: The application's name (optional).
+ * @verb_list: The list of #BonoboUIVerbs for the menu.
+ * @user_data: The user data pointer for the menu.
+ *
+ * Sets up a popup menu for @applet described by the xml 
+ * file, @file. See &applet-writing for a description of
+ * the format of the xml.
+ */
 void
 panel_applet_setup_menu_from_file (PanelApplet        *applet, 
 				   const gchar        *opt_datadir,
@@ -99,6 +123,14 @@ panel_applet_setup_menu_from_file (PanelApplet        *applet,
 		g_free (app_name);
 }
 
+/**
+ * panel_applet_get_control:
+ * @applet: A #PanelApplet.
+ *
+ * Retrieves the #BonoboControl associated with @applet.
+ *
+ * Return value: A #BonobControl on success, %NULL on failure.
+ */
 BonoboControl *
 panel_applet_get_control (PanelApplet *applet)
 {
@@ -107,6 +139,15 @@ panel_applet_get_control (PanelApplet *applet)
 	return applet->priv->control;
 }
 
+/**
+ * panel_applet_get_popup_component:
+ * @applet: A #PanelApplet.
+ *
+ * Retrieves the #BonoboUIComponent used for popup menus associated
+ * with @applet. 
+ *
+ * Return value: A #BonoboUIComponent on success, or %NULL on failure.
+ */
 BonoboUIComponent *
 panel_applet_get_popup_component (PanelApplet *applet)
 {
@@ -141,22 +182,22 @@ panel_applet_button_press (GtkWidget      *widget,
 }
 
 static gboolean
-panel_applet_parse_colour (const gchar *colour_str,
-			   GdkColor    *colour)
+panel_applet_parse_color (const gchar *color_str,
+			   GdkColor    *color)
 {
 	int r, g, b;
 
-	g_assert (colour_str && colour);
+	g_assert (color_str && color);
 
-	if (colour_str [0] != '#')
+	if (color_str [0] != '#')
 		return FALSE;
 
-	if (sscanf (colour_str + 1, "%2x%2x%2x", &r, &g, &b) != 3)
+	if (sscanf (color_str + 1, "%2x%2x%2x", &r, &g, &b) != 3)
 		return FALSE;
 
-	colour->red   = r;
-	colour->green = g;
-	colour->blue  = b;
+	color->red   = r;
+	color->green = g;
+	color->blue  = b;
 		
 	return TRUE;
 }
@@ -239,10 +280,10 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 				       panel_applet_signals [CHANGE_BACKGROUND],
 				       0, PANEL_NO_BACKGROUND, NULL, NULL);
 		
-		} else if (elements [0] && !strcmp (elements [0], "colour")) {
-			GdkColor colour;
+		} else if (elements [0] && !strcmp (elements [0], "color")) {
+			GdkColor color;
 
-			if (!elements [1] || !panel_applet_parse_colour (elements [1], &colour)) {
+			if (!elements [1] || !panel_applet_parse_color (elements [1], &color)) {
 
 				g_warning (_("panel_applet_set_prop: Incomplete '%s'"
 					     " background type received"), elements [0]);
@@ -255,7 +296,7 @@ panel_applet_set_prop (BonoboPropertyBag *sack,
 
 			g_signal_emit (G_OBJECT (applet),
 				       panel_applet_signals [CHANGE_BACKGROUND],
-				       0, PANEL_COLOUR_BACKGROUND, &colour, NULL);
+				       0, PANEL_COLOR_BACKGROUND, &color, NULL);
 
 		} else if (elements [0] && !strcmp (elements [0], "pixmap")) {
 			gchar *pixmap = elements [1];
@@ -318,7 +359,7 @@ panel_applet_property_bag (PanelApplet *applet)
 				 PROPERTY_BACKGROUND_IDX,
 				 BONOBO_ARG_STRING,
 				 NULL,
-				 _("The Applet's containing Panel's background colour or pixmap"),
+				 _("The Applet's containing Panel's background color or pixmap"),
 				 Bonobo_PROPERTY_READABLE | Bonobo_PROPERTY_WRITEABLE);
 
 	return sack;
@@ -439,6 +480,15 @@ panel_applet_construct (PanelApplet *applet,
 				     BONOBO_OBJECT (priv->shell));
 }
 
+/**
+ * panel_applet_new:
+ * @widget: The widget the contains all the widgetry the applet
+ *          wishes to expose.
+ *
+ * Creates a new #PanelApplet which exposes @widget.
+ *
+ * Return value: A #PanelApplet on success, %NULL on failure.
+ */
 PanelApplet *
 panel_applet_new (GtkWidget *widget)
 {
@@ -451,6 +501,21 @@ panel_applet_new (GtkWidget *widget)
 	return applet;
 }
 
+/**
+ * panel_applet_factory_main:
+ * @argc: The number of commmand line arguments contained in @argv.
+ * @argv: The array of command line argument strings.
+ * @iid: The bonobo-activation iid of the factory.
+ * @name: The applet ID string.
+ * @version: The applet version string.
+ * @callback: The factory callback.
+ * @data: The factory user data pointer.
+ *
+ * A generic 'main' routine for applets. This should not normally be
+ * used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
+ *
+ * Return value: 0 on success, 1 on failure.
+ */
 int
 panel_applet_factory_main (int                     argc,
 			   char                  **argv,

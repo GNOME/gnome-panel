@@ -61,7 +61,7 @@ void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 void       panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame,
 							gchar            *pixmap);
 
-void       panel_applet_frame_change_background_colour (PanelAppletFrame *frame,
+void       panel_applet_frame_change_background_color  (PanelAppletFrame *frame,
 							guint16           red,
 							guint16           green,
 							guint16           blue);
