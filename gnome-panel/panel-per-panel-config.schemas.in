@@ -2,18 +2,22 @@
 
 <!-- 
 Per Panel Config Schema File -  work in progress
-We need to change some of the ints into user visible strings
+FIXME: We need to change some of the ints into user visible strings
 -->
 
     <schemalist>    
 
+
+
 <!--
-************
-Small Screen
-************
+*********************************************************************************
+** Small Screen Setup: 1 edge panel of size 24                                 **
+*********************************************************************************
 -->
 
-<!-- ############### general ####################### -->
+<!-- ********************************* -->
+<!-- General panel properties :: START -->
+<!-- ********************************* -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/small/general/panel-id-list</key>
@@ -27,8 +31,40 @@ Small Screen
           <long></long>
         </locale>
       </schema>
-      
-<!-- ############### panel id: 00000001 ####################### -->
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/general/applet-id-list</key>
+        <applyto>/apps/panel/default-profiles/small/general/applet-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/small/general/launcher-id-list</key>
+        <applyto>/apps/panel/default-profiles/small/general/launcher-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+<!-- ******************************* -->
+<!-- General panel properties :: END -->
+<!-- ******************************* -->
+
+<!-- ****************************** -->      
+<!-- Edge panel properties :: START -->
+<!-- ****************************** -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/small/panels/00000001/panel-type</key>
@@ -197,12 +233,25 @@ Small Screen
           <long></long>
         </locale>
       </schema>
+
+<!-- **************************** -->      
+<!-- Edge panel properties :: END -->
+<!-- **************************** -->
      
+
+
+
+
+
 <!--
-*************
-Medium Screen
-*************
+******************************************************************************************
+** Medium Screen Setup: 1 edge panel of size 36, 1 menu panel of size 24                **
+******************************************************************************************
 -->
+
+<!-- ********************************* -->
+<!-- General panel properties :: START -->
+<!-- ********************************* -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/medium/general/panel-id-list</key>
@@ -216,8 +265,40 @@ Medium Screen
           <long></long>
         </locale>
       </schema>     
-      
-<!-- ############### panel id: 00000001 ####################### -->
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/general/applet-id-list</key>
+        <applyto>/apps/panel/default-profiles/medium/general/applet-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>     
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/general/launcher-id-list</key>
+        <applyto>/apps/panel/default-profiles/medium/general/launcher-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[00000001 00000002]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>     
+
+<!-- ******************************* -->
+<!-- General panel properties :: END -->
+<!-- ******************************* -->
+
+<!-- ****************************** -->      
+<!-- Edge panel properties :: START -->
+<!-- ****************************** -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/medium/panels/00000001/panel-type</key>
@@ -387,7 +468,117 @@ Medium Screen
         </locale>
       </schema>
 
-<!-- ############### panel id: 00000002 ####################### -->
+<!-- *********************************** -->
+<!-- Panel Items for Edge Panel :: START -->
+<!-- *********************************** -->
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/launcher-location</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/launcher-location</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>/applications/Netscape.desktop</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/panel-id</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/panel-id</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/launcher-position</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/launcher-position</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>13</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/panel-stick</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/panel-stick</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000002/launcher-location</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/launcher-location</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>/applications/gnome-terminal.desktop</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/panel-id</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/panel-id</applyto>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000001</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/launcher-position</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/launcher-position</applyto>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>15</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/medium/launchers/00000001/panel-stick</key>
+        <applyto>/apps/panel/default-profiles/medium/launchers/00000001/panel-stick</applyto>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>false</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+<!-- *********************************** -->
+<!-- Panel Items for Edge Panel :: END -->
+<!-- *********************************** -->
+
+<!-- **************************** -->      
+<!-- Edge panel properties :: END -->
+<!-- **************************** -->
+
+<!-- ****************************** -->
+<!-- Menu Panel Properties :: START -->
+<!-- ****************************** -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/medium/panels/00000002/panel-type</key>
@@ -508,12 +699,27 @@ Medium Screen
           <long></long>
         </locale>
       </schema>
+
+<!-- **************************** -->
+<!-- Menu Panel Properties :: END -->
+<!-- **************************** -->
+
+
+
+
+
+
+
 <!-- 
-************
-Large Screen
-************
+***********************************************************************************
+** Large Screen Setup: 1 edge panel of size 48, 1 menu panel of size 36          **
+***********************************************************************************
 -->
- 
+
+<!-- ********************************* -->
+<!-- General panel properties :: START -->
+<!-- ********************************* -->
+
       <schema>
         <key>/schemas/apps/panel/default-profiles/large/general/panel-id-list</key>
         <applyto>/apps/panel/default-profiles/large/general/panel-id-list</applyto>
@@ -527,7 +733,39 @@ Large Screen
         </locale>
       </schema>
 
-<!-- ############### panel id: 00000001 ####################### -->
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/large/general/applet-id-list</key>
+        <applyto>/apps/panel/default-profiles/large/general/applet-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default-profiles/large/general/launcher-id-list</key>
+        <applyto>/apps/panel/default-profiles/large/general/launcher-id-list</applyto>
+        <owner>panel</owner>
+        <type>list</type>
+	<list_type>string</list_type>
+        <default>[]</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+<!-- ******************************* -->
+<!-- General panel properties :: END -->
+<!-- ******************************* -->
+
+<!-- ****************************** -->      
+<!-- Edge panel properties :: START -->
+<!-- ****************************** -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/large/panels/00000001/panel-type</key>
@@ -697,7 +935,13 @@ Large Screen
         </locale>
       </schema>
 
-<!-- ############### panel id: 00000002 ####################### -->
+<!-- **************************** -->      
+<!-- Edge panel properties :: END -->
+<!-- **************************** -->
+
+<!-- ****************************** -->
+<!-- Menu Panel Properties :: START -->
+<!-- ****************************** -->
 
       <schema>
         <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-type</key>
@@ -770,7 +1014,7 @@ Large Screen
           <long></long>
         </locale>
       </schema>
-
+ 
       <schema>
         <key>/schemas/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap-stretch</key>
         <applyto>/apps/panel/default-profiles/large/panels/00000002/panel-background-pixmap-stretch</applyto>
@@ -818,6 +1062,13 @@ Large Screen
           <long></long>
         </locale>
       </schema>     
+
+<!-- ****************************** -->
+<!-- Menu Panel Properties :: START -->
+<!-- ****************************** -->
+
+
+
       
   </schemalist>
   

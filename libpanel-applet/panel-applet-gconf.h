@@ -26,7 +26,6 @@
 #define __PANEL_APPLET_GCONF_H__
 
 #include <glib/gmacros.h>
-#include <glib/ghash.h>
 #include <glib/gerror.h>
 #include <gconf/gconf-value.h>
 

@@ -48,7 +48,6 @@
 #include "global-keys.h"
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
-#include "conditional.h"
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
@@ -1531,6 +1530,6 @@ session_write_global_config (void)
 
 void session_load (void) {
 	session_init_panels ();
-
+/*	session_init_launchers (); */
 	panel_applet_frame_load_applets ();
 }

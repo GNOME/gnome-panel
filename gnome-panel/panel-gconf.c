@@ -31,6 +31,11 @@ panel_gconf_applets_profile_get_full_key (const gchar *profile, const gchar *app
 }
 
 gchar *
+panel_gconf_launchers_profile_get_full_key (const gchar *profile, const gchar *launcher_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/profiles/%s/launchers/%s/%s", profile, launcher_id, key);
+}
+
+gchar *
 panel_gconf_general_default_profile_get_full_key (const gchar *profile, const gchar *key) {
 	return g_strdup_printf ("/apps/panel/default-profiles/%s/general/%s", profile, key);
 }
@@ -43,6 +48,11 @@ panel_gconf_panel_default_profile_get_full_key (const gchar *profile, const gcha
 gchar *
 panel_gconf_applets_default_profile_get_full_key (const gchar *profile, const gchar *applet_id, const gchar *key) {
 	return g_strdup_printf ("/apps/panel/default-profiles/%s/applets/%s/%s", profile, applet_id, key);
+}
+
+gchar *
+panel_gconf_launchers_default_profile_get_full_key (const gchar *profile, const gchar *launcher_id, const gchar *key) {
+	return g_strdup_printf ("/apps/panel/default-profiles/%s/launchers/%s/%s", profile, launcher_id, key);
 }
 
 GConfClient * 
