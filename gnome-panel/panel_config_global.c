@@ -319,6 +319,7 @@ panel_config_global(void)
 {
 	GtkWidget *page;
 	GtkWidget *box;
+	GtkWidget *prop_nbook;
 	
 	/* return if the window is already up. */
 	if (config_window)
@@ -338,15 +339,17 @@ panel_config_global(void)
 			      _("Global Panel Configuration"));
 	gtk_container_border_width (GTK_CONTAINER(box), CONFIG_PADDING_SIZE);
 	
+	prop_nbook = GNOME_PROPERTY_BOX (box)->notebook;
+
 	/* Animation notebook page */
 	page = animation_notebook_page ();
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (box),
-					page, gtk_label_new (_("Animation settings")));
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				  page, gtk_label_new (_("Animation settings")));
 
 	/* Miscellaneous notebook page */
 	page = misc_notebook_page ();
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (box),
-					page, gtk_label_new (_("Miscellaneous")));
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				  page, gtk_label_new (_("Miscellaneous")));
 
 	gtk_signal_connect (GTK_OBJECT (box), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), NULL);

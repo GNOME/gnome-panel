@@ -5,6 +5,6 @@
 
 void panel_config(GtkWidget *panel);
 void update_config_orient(GtkWidget *panel);
-void update_config_back(GtkWidget *panel);
+void update_config_back(PanelWidget *panel);
 
 #endif /* PANEL_CONFIG_H */

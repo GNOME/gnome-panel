@@ -77,6 +77,7 @@ get_def_panel_widget(GtkWidget *panel)
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		return PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
 	}
+	puts("get_def_panel");
 	g_warning("unknown panel type");
 	return NULL;
 }
@@ -342,7 +343,7 @@ panel_back_change(GtkWidget *widget,
 	panel_widget_foreach(PANEL_WIDGET(widget),back_change_foreach,widget);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
-	update_config_back(widget);
+	update_config_back(PANEL_WIDGET(widget));
 }
 
 static void state_hide_foreach(gpointer data, gpointer user_data);
@@ -982,8 +983,10 @@ panel_setup(GtkWidget *panelw)
 		pd->type = SNAPPED_PANEL;
 	else if(IS_CORNER_WIDGET(panelw))
 		pd->type = CORNER_PANEL;
-	else
+	else {
+		puts("panel_setup");
 		g_warning("unknown panel type");
+	}
 	
 	panel_list = g_list_append(panel_list,pd);
 	
@@ -1038,8 +1041,10 @@ panel_setup(GtkWidget *panelw)
 		
 		/*this is a base panel*/
 		base_panels++;
-	} else
+	} else {
+		puts("panel_setup later");
 		g_warning("unknown panel type");
+	}
 	
 	gtk_widget_set_events(panelw,
 			      gtk_widget_get_events(panelw) |

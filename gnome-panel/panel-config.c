@@ -110,14 +110,11 @@ update_config_orient(GtkWidget *panel)
 }
 
 void
-update_config_back(GtkWidget *panel)
+update_config_back(PanelWidget *pw)
 {
 	GtkWidget *t;
-	PerPanelConfig *ppc = get_config_struct(panel);
-	/*if the panel has more panel_widgets they will all
-	  have the same background so we don't care which one
-	  we get*/
-	PanelWidget *pw = get_def_panel_widget(panel);
+	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(pw), PANEL_PARENT);
+	PerPanelConfig *ppc = get_config_struct(panelw);
 
 	if(!ppc)
 		return;
@@ -716,6 +713,7 @@ panel_config(GtkWidget *panel)
 {
 	GtkWidget *page;
 	PerPanelConfig *ppc;
+	GtkWidget *prop_nbook;
 	
 	ppc = get_config_struct(panel);
 	
@@ -770,25 +768,27 @@ panel_config(GtkWidget *panel)
 	gtk_container_border_width (GTK_CONTAINER(ppc->config_window),
 				    CONFIG_PADDING_SIZE);
 	
+	prop_nbook = GNOME_PROPERTY_BOX (ppc->config_window)->notebook;
+	
 	if(IS_SNAPPED_WIDGET(panel)) {
 		/* Snapped notebook page */
 		page = snapped_notebook_page (ppc);
-		gnome_property_box_append_page (
-				GNOME_PROPERTY_BOX (ppc->config_window),
-				page, gtk_label_new (_("Edge Panel")));
+		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+					  page,
+					  gtk_label_new (_("Edge Panel")));
 	} else if(IS_CORNER_WIDGET(panel)) {
 		/* Corner notebook page */
 		page = corner_notebook_page (ppc);
-		gnome_property_box_append_page (
-				GNOME_PROPERTY_BOX (ppc->config_window),
-				page, gtk_label_new (_("Corner Panel")));
+		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+					  page,
+					  gtk_label_new (_("Corner Panel")));
 	}
 						
 
 	/* Backing configuration */
 	page = background_page (ppc);
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (ppc->config_window),
-					page, gtk_label_new (_("Background")));
+	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
+				  page, gtk_label_new (_("Background")));
 	
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), ppc);

@@ -477,105 +477,6 @@ panel_widget_right_stick(PanelWidget *panel,int old_size)
 				((AppletData *)list->data)->applet);
 }
 
-static int
-panel_widget_push_left(PanelWidget *panel,AppletData *oad)
-{
-	int i;
-	GList *list,*prev;
-	AppletData *ad;
-
-	if(!panel->applet_list)
-		return FALSE;
-
-	g_return_val_if_fail(panel->packed == FALSE,FALSE);
-
-	list = g_list_find(panel->applet_list,oad);
-
-	g_return_val_if_fail(list!=NULL,FALSE);
-
-	ad = oad;
-
-	do { 
-		i = ad->pos;
-		prev = list;
-		list = g_list_previous(list);
-		if(!list)
-			break;
-		ad = list->data;
-	} while(ad->pos+ad->cells == i);
-
-	ad=prev->data;
-	if(ad->pos<=0)
-		return FALSE;
-	for(list = prev;list!=NULL;list=g_list_next(list)) {
-		ad=list->data;
-		ad->pos--;
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_MOVE_SIGNAL],
-				ad->applet);
-		if(ad == oad)
-			break;
-	}
-	
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
-
-	return TRUE;
-}
-
-static int
-panel_widget_push_right(PanelWidget *panel,AppletData *oad)
-{
-	int i;
-	GList *list,*prev;
-	AppletData *ad;
-
-	if(!panel->applet_list) {
-		if(panel->packed) {
-			panel->size++;
-			return TRUE;
-		}
-		return FALSE;
-	}
-
-	list = g_list_find(panel->applet_list,oad);
-
-	g_return_val_if_fail(list!=NULL,FALSE);
-
-	ad = oad;
-
-	do { 
-		i = ad->pos+ad->cells;
-		prev = list;
-		list = g_list_next(list);
-		if(!list)
-			break;
-		ad = list->data;
-	} while(ad->pos == i);
-
-	ad=prev->data;
-	if(ad->pos+ad->cells>=panel->size) {
-		if(panel->packed) {
-			panel->size++;
-		} else
-			return FALSE;
-	}
-	for(list=prev;list!=NULL;list=g_list_previous(list)) {
-		ad=list->data;
-		ad->pos++;
-
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_MOVE_SIGNAL],
-				ad->applet);
-
-		if(ad == oad)
-			break;
-	}
-
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
-
-	return TRUE;
-}
-
 static void
 panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 {
@@ -962,7 +863,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	return 1;
 }
 
-static int
+static void
 panel_widget_realize(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = PANEL_WIDGET(w);
@@ -978,9 +879,6 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 				 image_drop_types,
 				 sizeof(image_drop_types)/sizeof(char *),
 				 FALSE);
-	
-
-	return FALSE;
 }
 
 static int
@@ -1095,18 +993,10 @@ panel_widget_new (int packed,
 	else
 		panel->size = INT_MAX;
 	
-	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel))) {
-		if(panel->back_type == PANEL_BACK_PIXMAP) {
-			if (!panel_try_to_set_pixmap (panel, back_pixmap))
-				panel->back_type = PANEL_BACK_NONE;
-		} else if(panel->back_type == PANEL_BACK_COLOR) {
-			panel_try_to_set_back_color(panel, &panel->back_color);
-		}
-	} else
-		gtk_signal_connect_after(GTK_OBJECT(panel),
-					 "realize",
-					 GTK_SIGNAL_FUNC(panel_widget_realize),
-					 panel);
+	gtk_signal_connect_after(GTK_OBJECT(panel),
+				 "realize",
+				 GTK_SIGNAL_FUNC(panel_widget_realize),
+				 panel);
 	return GTK_WIDGET(panel);
 }
 
@@ -1660,59 +1550,6 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 	}
 }
 
-static int
-panel_widget_make_empty_pos(PanelWidget *panel, int pos)
-{
-	AppletData *ad;
-
-	g_return_val_if_fail(panel!=NULL,-1);
-	g_return_val_if_fail(pos>=0,-1);
-
-	if(panel->packed) {
-		if(pos >= panel->size) {
-			panel->size++;
-			return panel->size-1;
-		} else {
-			ad = get_applet_data_pos(panel,pos);
-			g_return_val_if_fail(ad!=NULL,pos);
-			if(panel_widget_push_right(panel,ad))
-				return ad->pos-1;
-			return -1;
-		}
-	} else {
-		GList *list;
-		AppletData *rad;
-
-		if(pos>=panel->size)
-			pos = panel->size - 1;
-
-		ad = get_applet_data_pos(panel,pos);
-		if(!ad)
-			return pos;
-
-		rad = ad;
-		list = g_list_find(panel->applet_list,ad);
-		g_return_val_if_fail(list!=NULL,-1);
-		list = g_list_next(list);
-		if(list)
-			rad = list->data;
-
-		if((!list || ad->pos+ad->cells < rad->pos) &&
-		   ad->pos+ad->cells < panel->size)
-			return ad->pos+ad->cells;
-
-		if(panel_widget_push_right(panel,rad))
-			return rad->pos-1;
-		if(panel_widget_push_left(panel,ad))
-			return ad->pos+ad->cells;
-
-		/*panel is full!*/
-		return -1;
-	}
-}
-
-
-
 void
 panel_widget_add_forbidden(PanelWidget *panel)
 {
@@ -1730,7 +1567,8 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 
 	if(pw_movement_type == PANEL_SWITCH_MOVE ||
 	   panel->packed)
-		pos = panel_widget_make_empty_pos(panel,pos);
+		pos++; /*this is a slight hack so that this applet is
+			 inserted AFTER an applet with this pos number*/
 	else
 		pos = panel_widget_find_empty_pos(panel,pos);
 
@@ -1802,7 +1640,8 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 	if(pw_movement_type == PANEL_SWITCH_MOVE ||
 	   new_panel->packed)
-		pos = panel_widget_make_empty_pos(new_panel,pos);
+		pos++; /*this is a slight hack so that this applet is
+			 inserted AFTER an applet with this pos number*/
 	else
 		pos = panel_widget_find_empty_pos(new_panel,pos);
 
@@ -1875,7 +1714,8 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	ad->pos = -1;
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
 
-	pos = panel_widget_make_empty_pos(panel,pos);
+	pos++; /*this is a slight hack so that this applet is
+		 inserted AFTER an applet with this pos number*/
 	if(pos==-1) return -1;
 
 	ad->pos = pos;
