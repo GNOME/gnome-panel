@@ -30,6 +30,7 @@
 
 struct Extern_struct {
 	POA_GNOME_PanelSpot  servant;
+
 	GNOME_PanelSpot      pspot;
 	GNOME_Applet         applet;
 
@@ -2277,9 +2278,15 @@ extern_shutdown (void)
 	panel = PortableServer_POA_servant_to_reference (poa,
 							 &panel_servant,
 							 &env);
+	if (BONOBO_EX (&env)) {
+		CORBA_exception_free (&env);
+		return;
+	}
 
 	bonobo_activation_active_server_unregister ("OAFIID:GNOME_Panel",
 						    panel);
+
+	CORBA_Object_release (panel, &env);
 
 	CORBA_ORB_shutdown (orb, CORBA_FALSE, &env);
 

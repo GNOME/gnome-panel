@@ -1,5 +1,12 @@
 2001-10-22  Mark McLoughlin  <mark@skynet.ie>
 
+	* extern.c: (extern_shutdown): release the panel object.
+
+	* menu.c: (make_panel_submenu): add the tearoff to the submenu,
+	not the menu itself.
+
+2001-10-22  Mark McLoughlin  <mark@skynet.ie>
+
 	* extern.c, extern.h: 
 	(extern_save_applet): renamed from save_applet.
 	(s_panelspot_done_session_save): upd.

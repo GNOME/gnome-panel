@@ -5108,7 +5108,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 					   submenu);
 
-		menu_add_tearoff (GTK_MENU (menu),
+		menu_add_tearoff (GTK_MENU (submenu),
 				  GTK_SIGNAL_FUNC(add_to_panel_menu_tearoff_new_menu),
 				  NULL);
 
