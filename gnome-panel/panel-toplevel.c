@@ -3119,6 +3119,9 @@ panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 	if (toplevel->priv->state != PANEL_STATE_NORMAL)
 		return;
 
+	if (panel_toplevel_contains_pointer (toplevel))
+		return;
+
 	if (toplevel->priv->block_auto_hide) {
 		/* Since this will continue to be called until
 		 * its unblocked again, we choose a sensible
@@ -3130,9 +3133,6 @@ panel_toplevel_queue_auto_hide (PanelToplevel *toplevel)
 				       toplevel);
 		return;
 	}
-
-	if (panel_toplevel_contains_pointer (toplevel))
-		return;
 
 	if (toplevel->priv->hide_delay > 0)
 		toplevel->priv->hide_timeout = 
@@ -3205,6 +3205,50 @@ panel_toplevel_leave_notify_event (GtkWidget        *widget,
 
 	if (GTK_WIDGET_CLASS (parent_class)->leave_notify_event)
 		return GTK_WIDGET_CLASS (parent_class)->leave_notify_event (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_focus_in_event (GtkWidget     *widget,
+			       GdkEventFocus *event)
+{
+	PanelToplevel *toplevel;
+
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
+
+	toplevel = PANEL_TOPLEVEL (widget);
+
+	/* It appears that sometimes we don't get a leave notify event,
+	   but just a focus in/out, so queue the autohide in that case.
+	   If the pointer is inside the panel then obviously we won't hide */
+	if (toplevel->priv->auto_hide)
+		panel_toplevel_queue_auto_hide (toplevel);
+
+	if (GTK_WIDGET_CLASS (parent_class)->focus_in_event)
+		return GTK_WIDGET_CLASS (parent_class)->focus_in_event (widget, event);
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_focus_out_event (GtkWidget     *widget,
+				GdkEventFocus *event)
+{
+	PanelToplevel *toplevel;
+
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (widget), FALSE);
+
+	toplevel = PANEL_TOPLEVEL (widget);
+
+	/* It appears that sometimes we don't get a leave notify event,
+	   but just a focus in/out, so queue the autohide in that case.
+	   If the pointer is inside the panel then obviously we won't hide */
+	if (toplevel->priv->auto_hide)
+		panel_toplevel_queue_auto_hide (toplevel);
+
+	if (GTK_WIDGET_CLASS (parent_class)->focus_out_event)
+		return GTK_WIDGET_CLASS (parent_class)->focus_out_event (widget, event);
 
 	return FALSE;
 }
@@ -3432,6 +3476,8 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	widget_class->enter_notify_event   = panel_toplevel_enter_notify_event;
 	widget_class->leave_notify_event   = panel_toplevel_leave_notify_event;
 	widget_class->screen_changed       = panel_toplevel_screen_changed;
+	widget_class->focus_in_event       = panel_toplevel_focus_in_event;
+	widget_class->focus_out_event      = panel_toplevel_focus_out_event;
 
 	container_class->check_resize = panel_toplevel_check_resize;
 

@@ -1,3 +1,9 @@
+Thu Aug 07 14:34:37 2003  George Lebl <jirka@5z.com>
+
+	* panel-toplevel.c: Fixing bug #115494.  Apparently if some applet
+	  opens a menu, we'll never get a leave event.  However we will
+	  get focus in/out events, so queue auto hide when those happen.
+
 Thu Aug 07 14:09:56 2003  George Lebl <jirka@5z.com>
 
 	* panel-toplevel.c: don't update struts until we have gotten initial
