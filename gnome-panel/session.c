@@ -52,7 +52,7 @@
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
-#define SESSION_DEBUG  12
+#undef SESSION_DEBUG
 
 extern GSList          *panels;
 extern GSList          *applets;
@@ -301,7 +301,9 @@ panel_session_save_panel (PanelData *pd)
 	buf = g_string_new (NULL);
 
 	panel_profile = session_get_current_profile ();
-
+#ifdef SESSION_DEBUG
+	printf ("Saving to %s profile\n", panel_profile);
+#endif
 	panel_id_key = panel_gconf_general_profile_get_full_key (panel_profile, "panel-id-list");
 
 	if (BASEP_IS_WIDGET (pd->panel)) {
@@ -313,6 +315,9 @@ panel_session_save_panel (PanelData *pd)
 	/* Get the widget unique_id */	
 	panel_id = g_strdup_printf ("%u", (guint)panel->unique_id);
 
+#ifdef SESSION_DEBUG
+	printf ("Saving unique panel id %s\n", panel_id);
+#endif
 	/* Get the current list from gconf */	
 	panel_id_list = gconf_client_get_list (panel_gconf_get_client (),
 					   panel_id_key,
@@ -321,14 +326,20 @@ panel_session_save_panel (PanelData *pd)
 
 	
 	/* We need to go through the panel-id-list and add stuff to the panel */
-
+	
 	for (temp = panel_id_list; temp; temp = temp->next) {
+#ifdef SESSION_DEBUG
+	printf ("Found ID: %s\n", temp->data);
+#endif
 		if (strcmp (panel_id, temp->data) == 0)
 			check = TRUE;
 	}	
 	
 	/* We need to add this key */
 	if (check == FALSE) {
+#ifdef SESSION_DEBUG
+	printf ("Adding a new panel to id-list: %s\n", panel_id);
+#endif
 		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel_id));	
 	}
 
@@ -340,6 +351,10 @@ panel_session_save_panel (PanelData *pd)
 
 	g_free (panel_id_key);
 	g_slist_free (panel_id_list);
+
+#ifdef SESSION_DEBUG
+	printf ("Saving to panel profile : %s\n", panel_profile);
+#endif
 
 	panel_gconf_panel_profile_set_int (panel_profile,
 					   panel_id,
@@ -911,15 +926,19 @@ session_init_panels(void)
 	gchar *timestring;
 
 	printf ("Current profile is %s\n", session_get_current_profile ());
-	panel_profile_key = panel_gconf_general_profile_get_full_key (session_get_current_profile (), "panel-id-list");
-
+	
+	panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
 		/* FIXME: We need to resort to another fallback default panel config 
 		          and do some sort of check for screen sizes */
+		printf ("We are loading from a default setup - no current profile detected\n");
 		use_default = TRUE;
 		panel_default_profile = "medium";
 		g_free (panel_profile_key);
 		panel_profile_key = panel_gconf_general_default_profile_get_full_key (panel_default_profile, "panel-id-list");
+	} else {
+		g_free (panel_profile_key);
+		panel_profile_key = panel_gconf_general_profile_get_full_key (session_get_current_profile (), "panel-id-list");
 	}
 
 	panel_ids = gconf_client_get_list (panel_gconf_get_client (),

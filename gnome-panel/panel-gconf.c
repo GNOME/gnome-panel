@@ -7,7 +7,7 @@
 
 #include "panel-gconf.h"
 
-#define PANEL_GCONF_DEBUG 1
+#undef PANEL_GCONF_DEBUG
 
 gchar * 
 panel_gconf_global_config_get_full_key (const gchar *key) {
@@ -218,6 +218,9 @@ panel_gconf_panel_profile_set_int (const gchar *profile, const gchar *panel_id, 
 
 	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 
+#ifdef PANEL_GCONF_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
 	panel_gconf_set_int (panel_profile_key, value);	
 	return;
 }
@@ -228,6 +231,10 @@ panel_gconf_panel_profile_set_bool (const gchar *profile, const gchar *panel_id,
 
 	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
 
+#ifdef PANEL_GCONF_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
+
 	panel_gconf_set_bool (panel_profile_key, value);	
 
 }
@@ -237,6 +244,10 @@ panel_gconf_panel_profile_set_string (const gchar *profile, const gchar *panel_i
 	gchar *panel_profile_key;
 
 	panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
+
+#ifdef PANEL_GCONF_DEBUG
+	printf ("Saving to %s\n", panel_profile_key);
+#endif
 
 	panel_gconf_set_string (panel_profile_key, value);	
 	return;
