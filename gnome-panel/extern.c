@@ -762,6 +762,8 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
 
   goad_server_register(CORBA_OBJECT_NIL, acc, "gnome_panel", "server", &ev);
 
+  /*
   //CORBA_Object_release(acc, &ev);
+  */
   g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
 }
