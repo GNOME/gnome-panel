@@ -1,3 +1,14 @@
+Mon Aug 04 16:52:07 2003  George Lebl <jirka@5z.com>
+
+	* panel-background.c: fix image rotation to be 64bit safe, do
+	  rotation for non-alpha images as well, fix for pixbufs with
+	  rowstride != width.  Don't do the whole transformation
+	  thing unless needed, don't do compositing onto the
+	  desktop unless needed.  Fixes really REALLY slow moving if
+	  using a background image on non-expanded panels.
+
+	* panel-profile.c: fix the notify for "rotate" key
+
 Fri Aug 01 18:00:51 2003  George Lebl <jirka@5z.com>
 
 	Changes to fix bugs: rh #101304, gnome #116586

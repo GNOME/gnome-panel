@@ -1209,7 +1209,7 @@ panel_profile_background_change_notify (GConfClient   *client,
 		if (value->type == GCONF_VALUE_BOOL)
 			panel_background_set_stretch (background,
 						      gconf_value_get_bool (value));
-	} else if (!strcmp (key, "fit")) {
+	} else if (!strcmp (key, "rotate")) {
 		if (value->type == GCONF_VALUE_BOOL)
 			panel_background_set_rotate (background,
 						     gconf_value_get_bool (value));

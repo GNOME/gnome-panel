@@ -370,45 +370,73 @@ get_scaled_and_rotated_pixbuf (PanelBackground *background)
 			width  = panel_width;
 			height = panel_height;
 		}
+	} else if (background->orientation == GTK_ORIENTATION_VERTICAL &&
+		   background->rotate_image) {
+		int tmp = width;
+		width = height;
+		height = tmp;
 	}
 
-	scaled = gdk_pixbuf_scale_simple (
-			background->loaded_image,
-			width, height,
-			GDK_INTERP_BILINEAR);
+	if (width == orig_width &&
+	    height == orig_height) {
+		scaled = background->loaded_image;
+		g_object_ref (scaled);
+	} else {
+		scaled = gdk_pixbuf_scale_simple (
+				background->loaded_image,
+				width, height,
+				GDK_INTERP_BILINEAR);
+	}
 
 	if (background->rotate_image &&
 	    background->orientation == GTK_ORIENTATION_VERTICAL) {
-		gulong *dest;
-		gulong *src;
-		int     x, y;
-
-		/* FIXME: horrible lazy hack.
-		 *        The rotation loop below was optimised
-		 *        for 32 bit pixel format pixbufs. Need
-		 *        a version that can handle pixbufs without
-		 *        and alpha channel.
-		 */
 		if (!background->has_alpha) {
-			GdkPixbuf *tmp;
+			guchar *dest;
+			guchar *src;
+			int     x, y;
+			int     destrowstride;
+			int     srcrowstride;
 
-			tmp = gdk_pixbuf_add_alpha (scaled, FALSE, 0, 0, 0);
+			retval = gdk_pixbuf_new (
+				GDK_COLORSPACE_RGB, FALSE, 8, height, width);
+
+			dest          = gdk_pixbuf_get_pixels (retval);
+			destrowstride = gdk_pixbuf_get_rowstride (retval);
+			src           = gdk_pixbuf_get_pixels (scaled);
+			srcrowstride  = gdk_pixbuf_get_rowstride (scaled);
+
+			for (y = 0; y < height; y++)
+				for (x = 0; x < width; x++) {
+					guchar *dstptr = & ( dest [3*y + destrowstride * (width - x - 1)] );
+					guchar *srcptr = & ( src [y * srcrowstride + 3*x] );
+					dstptr[0] = srcptr[0];
+					dstptr[1] = srcptr[1];
+					dstptr[2] = srcptr[2];
+				}
+
 			g_object_unref (scaled);
-			scaled = tmp;
-		}
+		} else {
+			guint32 *dest;
+			guint32 *src;
+			int     x, y;
+			int     destrowstride;
+			int     srcrowstride;
 
-		retval = gdk_pixbuf_new (
+			retval = gdk_pixbuf_new (
 				GDK_COLORSPACE_RGB, TRUE, 8, height, width);
 
-		dest = (gulong *) gdk_pixbuf_get_pixels (retval);
-		src  = (gulong *) gdk_pixbuf_get_pixels (scaled);
+			dest          = (guint32 *) gdk_pixbuf_get_pixels (retval);
+			destrowstride =             gdk_pixbuf_get_rowstride (retval) / 4;
+			src           = (guint32 *) gdk_pixbuf_get_pixels (scaled);
+			srcrowstride  =             gdk_pixbuf_get_rowstride (scaled) / 4;
 
-		for (y = 0; y < height; y++)
-			for (x = 0; x < width; x++)
-				dest [y + height * (width - x - 1)] =
-					src [y * width + x];
+			for (y = 0; y < height; y++)
+				for (x = 0; x < width; x++)
+					dest [y + destrowstride * (width - x - 1)] =
+						src [y * srcrowstride + x];
 
-		g_object_unref (scaled);
+			g_object_unref (scaled);
+		}
 	} else
 		retval = scaled;
 
@@ -705,12 +733,40 @@ panel_background_change_region (PanelBackground *background,
 				int              width,
 				int              height)
 {
+	gboolean need_to_retransform = FALSE;
+	gboolean need_to_reprepare = FALSE;
+
 	if (background->region.x == x &&
 	    background->region.y == y &&
 	    background->region.width == width &&
 	    background->region.height == height &&
 	    background->orientation == orientation)
 		return;
+
+	/* we only need to retransform anything
+	   on size/orientation changes if the
+	   background is an image and some
+	   conditions are met */
+	if (background->type == PANEL_BACK_IMAGE) {
+		if (background->orientation != orientation &&
+		    background->rotate_image) {
+			/* if orientation changes and we are rotating */
+			need_to_retransform = TRUE;
+		} else if ((background->region.width != width ||
+			    background->region.height != height) &&
+			   (background->fit_image ||
+			    background->stretch_image)) {
+			/* or if the size changes and we are 
+			   stretching or fitting the image */
+			need_to_retransform = TRUE;
+		}
+	}
+
+	/* if size changed, we at least need
+	   to "prepare" the background again */
+	if (background->region.width != width ||
+	    background->region.height != height)
+		need_to_reprepare = TRUE;
 
 	background->region.x      = x;
 	background->region.y      = y;
@@ -723,7 +779,18 @@ panel_background_change_region (PanelBackground *background,
 		g_object_unref (background->desktop);
 	background->desktop = NULL;
 
-	panel_background_transform (background);
+	if (need_to_retransform || ! background->transformed)
+		/* only retransform the background if we have in
+		   fact changed size/orientation */
+		panel_background_transform (background);
+	else if (background->has_alpha || ! background->composited)
+		/* only do compositing if we have some alpha
+		   value to worry about */
+		panel_background_composite (background);
+	else if (need_to_reprepare)
+		/* at least we must prepare the background
+		   if the size changed */
+		panel_background_prepare (background);
 }
 
 void
