@@ -10,11 +10,13 @@
 
 typedef void (* RemoteHandler) (int mails, gpointer data);
 
-gpointer helper_pop3_check (RemoteHandler handler, gpointer data,
+gpointer helper_pop3_check (RemoteHandler handler, RemoteHandler error_handler,
+			    gpointer data,
 			    GDestroyNotify destroy_notify,
 			    const char *command,
 			    const char *h, const char* n, const char* e);
-gpointer helper_imap_check (RemoteHandler handler, gpointer data,
+gpointer helper_imap_check (RemoteHandler handler, RemoteHandler error_handler,
+			    gpointer data,
 			    GDestroyNotify destroy_notify,
 			    const char *command,
 			    const char *h, const char* n, const char* e,

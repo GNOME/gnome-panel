@@ -20,5 +20,10 @@ int pop3_check(const char *h, const char* n, const char* e);
  */
 int imap_check(const char *h, const char* n, const char* e, const char* f);
 
+#define NO_SERVER_INFO		-1
+#define NETWORK_ERROR		-2
+#define INVALID_USER		-3
+#define INVALID_PASS		-4
+#define INVALID_SERVER		-5
 #endif
 
