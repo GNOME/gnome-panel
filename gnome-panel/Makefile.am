@@ -11,8 +11,6 @@ INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_srcdir)/gnome-desktop				\
-	-I$(top_srcdir)/intl					\
-	-I$(top_builddir)/intl					\
 	-I$(top_builddir)/panel					\
 	-DPANEL_DEBUG						\
 	-DGNOME_CORE_INTERNAL					\

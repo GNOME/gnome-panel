@@ -1,8 +1,6 @@
 #SUBDIRS = help
 
 INCLUDES = -I. -I$(srcdir) 				\
-	-I$(top_srcdir)/intl 				\
-	-I$(top_builddir)/intl				\
 	-I$(srcdir)/../../libpanel-applet		\
 	-I$(top_builddir)/libpanel-applet		\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
