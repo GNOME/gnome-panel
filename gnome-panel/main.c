@@ -796,9 +796,10 @@ panel_menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
-	if(event->button==3 || event->button==1) {
+	if((event->button==3 || event->button==1) &&
+	   !PANEL_WIDGET(widget)->currently_dragged_applet) {
 		gtk_menu_popup(GTK_MENU(data), NULL, NULL, panel_menu_position,
-			widget, event->button, time(NULL));
+			       widget, event->button, time(NULL));
 		return TRUE;
 	}
 	return FALSE;

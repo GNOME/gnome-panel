@@ -2406,10 +2406,9 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
 
-			/*if (panel->currently_dragged_applet) {
-				panel_widget_applet_drag_end(panel);
+			/* don't propagate this event */
+			if (panel->currently_dragged_applet)
 				return TRUE;
-			}*/
 
 			if(bevent->button == 2) {
 				/* Start drag */

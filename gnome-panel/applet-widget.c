@@ -367,6 +367,9 @@ make_param_string(gint argc, char *argv[])
 	for(i=1;i<argc;i++)
 		len = strlen(argv[i])+1;
 
+	if(len==0)
+		return g_strdup("");
+
 	s = g_malloc(len);
 	s[0]= '\0';
 

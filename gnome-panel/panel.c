@@ -634,7 +634,18 @@ static gint
 applet_button_press(GtkWidget *widget,GdkEventButton *event, gpointer data)
 {
 	if(event->button==3) {
-		show_applet_menu(PTOI(data));
+		AppletInfo *info = get_applet_info(PTOI(data));
+		PanelWidget *panel;
+
+		g_return_if_fail(info!=NULL);
+
+		g_return_val_if_fail(info != NULL,-1);
+
+		panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+					    PANEL_APPLET_PARENT_KEY);
+
+		if(!panel->currently_dragged_applet)
+			show_applet_menu(PTOI(data));
 		return TRUE;
 	}
 	return FALSE;

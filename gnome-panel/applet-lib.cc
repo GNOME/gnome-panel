@@ -220,7 +220,7 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			} else if(in_drag) {
 				panel_client->applet_drag_stop(cookie,ourid);
 				return TRUE;
-			} else if(bevent->button == 3) {
+			} else if(bevent->button == 3 && !in_drag) {
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				gtk_grab_remove(widget);
 				panel_client->applet_show_menu(cookie, ourid);
