@@ -9,17 +9,21 @@
 #
 #   dialog -> vindue
 #   hints -> tip
+#   launcher -> genvej
 #   properties -> indstillinger
 #   tasklist -> procesliste
 #   URL -> adresse
 #
 # Se i øvrigt po-filen til gnome-applets.
 #
+#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
+#: applets/gen_util/mailcheck.c:1435 applets/gen_util/mailcheck.c:1468
+#: applets/gen_util/mailcheck.c:1482
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core\n"
-"POT-Creation-Date: 2002-05-07 16:18+0100\n"
-"PO-Revision-Date: 2002-04-06 16:07+0200\n"
+"POT-Creation-Date: 2002-05-11 12:58+0200\n"
+"PO-Revision-Date: 2002-05-11 12:57+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -116,38 +120,33 @@ msgstr "Indstillinger for fisk"
 
 #: applets/fish/fish.c:718
 msgid "_Name of GNOME fish:"
-msgstr ""
+msgstr "_Navnet på Gnome-fisken:"
 
 #: applets/fish/fish.c:735
-#, fuzzy
 msgid "_Animation filename:"
-msgstr "Filnavn for animation:"
+msgstr "_Filnavn for animation:"
 
-#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1236
+#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1245
 #: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
 #: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "Gennemse"
 
 #: applets/fish/fish.c:753
-#, fuzzy
 msgid "Command to _execute when fish is clicked:"
-msgstr "Kommando som udføres når der klikkes på fisken:"
+msgstr "Kommando som _udføres når der klikkes på fisken:"
 
 #: applets/fish/fish.c:770
-#, fuzzy
 msgid "Frame_s in animation:"
-msgstr "Billeder i animationen:"
+msgstr "_Billeder i animationen:"
 
 #: applets/fish/fish.c:788
-#, fuzzy
 msgid "Pause _per frame (s):"
-msgstr "Pause mellem hvert billede (s):"
+msgstr "Pause _mellem hvert billede (sek.):"
 
 #: applets/fish/fish.c:803
-#, fuzzy
 msgid "_Rotate on vertical panels"
-msgstr "Vend om på lodrette paneler"
+msgstr "_Vend om på lodrette paneler"
 
 #: applets/fish/fish.c:976
 msgid ""
@@ -218,7 +217,7 @@ msgid "Get the current time and date"
 msgstr "Skaf det aktuelle tidspunkt og datoen"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:214
+#: applets/gen_util/mailcheck.c:218
 msgid "Inbox Monitor"
 msgstr "Indbakkeovervåger"
 
@@ -294,9 +293,8 @@ msgid "Clock Preferences"
 msgstr "Indstillinger for ur"
 
 #: applets/gen_util/clock.c:893
-#, fuzzy
 msgid "Clock type"
-msgstr "Ur-panelprogram"
+msgstr "Ur-type"
 
 #: applets/gen_util/clock.c:903
 msgid "_12 hour"
@@ -315,21 +313,19 @@ msgid "_Internet time"
 msgstr "_Internet-tid"
 
 #: applets/gen_util/clock.c:955
-#, fuzzy
 msgid "Show _seconds"
-msgstr "sekunder"
+msgstr "Vis _sekunder"
 
 #: applets/gen_util/clock.c:965
 msgid "Show _date"
 msgstr "Vis _dato"
 
 #: applets/gen_util/clock.c:975
-#, fuzzy
 msgid "Use _UTC"
-msgstr "Benyt _GMT"
+msgstr "Benyt _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1600
+#: applets/gen_util/clock.c:1065 applets/gen_util/mailcheck.c:1640
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:510
 #: gnome-panel/menu.c:239
 msgid "translator_credits"
@@ -347,7 +343,7 @@ msgstr "© 1997-2002 Free Software Fundation"
 msgid "The Clock Applet displays current time and date"
 msgstr "Urpanelprogrammet viser det aktuelle tidspunkt og datoen"
 
-#: applets/gen_util/mailcheck.c:220
+#: applets/gen_util/mailcheck.c:224
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -355,11 +351,11 @@ msgstr ""
 "Du angav ikke en adgangskode i indstillingerne for indbakkeovervågeren,\n"
 "så du er er nødt til at indtaste det ved hver opstart."
 
-#: applets/gen_util/mailcheck.c:228
+#: applets/gen_util/mailcheck.c:232
 msgid "Please enter your mailserver's _password:"
 msgstr "Indtast postserverens _adgangskode:"
 
-#: applets/gen_util/mailcheck.c:273
+#: applets/gen_util/mailcheck.c:278
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -369,144 +365,153 @@ msgstr ""
 "derfor i øjeblikket blevet deaktiveret.\n"
 "Du har måske brugt forkert vært, brugernavn eller adgangskode?"
 
-#: applets/gen_util/mailcheck.c:478
+#: applets/gen_util/mailcheck.c:483
 msgid "You have new mail."
 msgstr "Der er ny post."
 
-#: applets/gen_util/mailcheck.c:480
+#: applets/gen_util/mailcheck.c:485
 msgid "You have mail."
 msgstr "Der er post."
 
-#: applets/gen_util/mailcheck.c:484
+#: applets/gen_util/mailcheck.c:489
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d beskeder"
 
-#: applets/gen_util/mailcheck.c:486
+#: applets/gen_util/mailcheck.c:491
 #, c-format
 msgid "%d messages"
 msgstr "%d beskeder"
 
-#: applets/gen_util/mailcheck.c:490
+#: applets/gen_util/mailcheck.c:495
 msgid "No mail."
 msgstr "Ingen post."
 
-#: applets/gen_util/mailcheck.c:1010 applets/gen_util/mailcheck.c:1012
-#: applets/gen_util/mailcheck.c:1734 applets/gen_util/mailcheck.c:1736
+#: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
+#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
 msgid "Status not updated"
 msgstr "Status ikke opdateret"
 
-#: applets/gen_util/mailcheck.c:1181
-msgid "Mailbox resides on:"
-msgstr "Postkassen befinder sig på:"
+#: applets/gen_util/mailcheck.c:1189
+msgid "Mailbox _resides on:"
+msgstr "Postkassen _befinder sig på:"
 
-#: applets/gen_util/mailcheck.c:1188
+#: applets/gen_util/mailcheck.c:1197
 msgid "Local mailspool"
 msgstr "Lokal postkø"
 
-#: applets/gen_util/mailcheck.c:1196
+#: applets/gen_util/mailcheck.c:1205
 msgid "Local maildir"
 msgstr "Lokal postmappe"
 
-#: applets/gen_util/mailcheck.c:1204
+#: applets/gen_util/mailcheck.c:1213
 msgid "Remote POP3-server"
 msgstr "Fjern POP3-vært"
 
-#: applets/gen_util/mailcheck.c:1212
+#: applets/gen_util/mailcheck.c:1221
 msgid "Remote IMAP-server"
 msgstr "Fjern IMAP-vært"
 
-#: applets/gen_util/mailcheck.c:1232
-msgid "Mail spool file:"
-msgstr "Postkøfil:"
+#: applets/gen_util/mailcheck.c:1241
+msgid "Mail _spool file:"
+msgstr "Post_køfil:"
 
-#: applets/gen_util/mailcheck.c:1249
-msgid "Mail server:"
-msgstr "Postvært:"
+#: applets/gen_util/mailcheck.c:1260
+msgid "Mail s_erver:"
+msgstr "Post_vært:"
 
-#: applets/gen_util/mailcheck.c:1266
-msgid "Username:"
-msgstr "Brugernavn:"
+#: applets/gen_util/mailcheck.c:1278
+msgid "_Username:"
+msgstr "_Brugernavn:"
 
-#: applets/gen_util/mailcheck.c:1280
-msgid "Password:"
-msgstr "Adgangskode:"
+#: applets/gen_util/mailcheck.c:1294
+msgid "_Password:"
+msgstr "_Adgangskode:"
 
-#: applets/gen_util/mailcheck.c:1298
-msgid "Folder:"
-msgstr "Mappe:"
+#: applets/gen_util/mailcheck.c:1313
+msgid "_Folder:"
+msgstr "_Mappe:"
 
-#: applets/gen_util/mailcheck.c:1316
-msgid "Command to run before checking for mail:"
-msgstr "Kommando som køres før posttjek:"
+#: applets/gen_util/mailcheck.c:1332
+msgid "C_ommand to run before checking for mail:"
+msgstr "_Kommando som køres før posttjek:"
 
-#: applets/gen_util/mailcheck.c:1346
+#: applets/gen_util/mailcheck.c:1363
 msgid "Execute"
 msgstr "Udfør"
 
-#: applets/gen_util/mailcheck.c:1357
-msgid "Before each update:"
-msgstr "Før hver opdatering:"
+#: applets/gen_util/mailcheck.c:1374
+msgid "Before each _update:"
+msgstr "Før hver _opdatering:"
 
-#: applets/gen_util/mailcheck.c:1378
-msgid "When new mail arrives:"
-msgstr "Når ny post ankommer:"
+#: applets/gen_util/mailcheck.c:1389 applets/gen_util/mailcheck.c:1412
+#: applets/gen_util/mailcheck.c:1435
+msgid "Command to execute"
+msgstr "Kommando som udføres"
 
-#: applets/gen_util/mailcheck.c:1397
-msgid "When clicked:"
-msgstr "Når klikket på:"
+#: applets/gen_util/mailcheck.c:1399
+msgid "When new mail _arrives:"
+msgstr "Når ny post _ankommer:"
 
-#: applets/gen_util/mailcheck.c:1416
-msgid "Set the number of unread mails to zero"
-msgstr "Sæt antallet af ulæste breve til nul"
+#: applets/gen_util/mailcheck.c:1422
+msgid "When clicke_d:"
+msgstr "Når k_likket på:"
 
-#: applets/gen_util/mailcheck.c:1427
-msgid "Check for mail every"
-msgstr "Se efter post med intervaller på"
+#: applets/gen_util/mailcheck.c:1445
+msgid "Set the number of unread mails to _zero"
+msgstr "Sæt antallet af ulæste breve til _nul"
 
-#: applets/gen_util/mailcheck.c:1441
+#: applets/gen_util/mailcheck.c:1456
+msgid "Check for mail _every"
+msgstr "Se efter post med _intervaller på"
+
+#: applets/gen_util/mailcheck.c:1468 applets/gen_util/mailcheck.c:1472
 msgid "minutes"
 msgstr "minutter"
 
-#: applets/gen_util/mailcheck.c:1452
+#: applets/gen_util/mailcheck.c:1482 applets/gen_util/mailcheck.c:1486
 msgid "seconds"
 msgstr "sekunder"
 
-#: applets/gen_util/mailcheck.c:1456
-msgid "Play a sound when new mail arrives"
-msgstr "Afspil en lyd når der er ny post"
+#: applets/gen_util/mailcheck.c:1494
+msgid "Play a _sound when new mail arrives"
+msgstr "Afspil en _lyd når der er ny post"
 
-#: applets/gen_util/mailcheck.c:1467
-msgid "Select animation"
-msgstr "Vælg animation"
+#: applets/gen_util/mailcheck.c:1505
+msgid "Select a_nimation"
+msgstr "Vælg a_nimation"
 
-#: applets/gen_util/mailcheck.c:1516
+#: applets/gen_util/mailcheck.c:1555
 msgid "Inbox Monitor Preferences"
 msgstr "Indstillinger for indbakkeovervåger"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1572
 msgid "_Mail check"
 msgstr "_Posttjek"
 
-#: applets/gen_util/mailcheck.c:1536
+#: applets/gen_util/mailcheck.c:1576
 msgid "Mail_box"
 msgstr "Post_kasse"
 
-#: applets/gen_util/mailcheck.c:1613
+#: applets/gen_util/mailcheck.c:1653
 msgid "Mail check Applet"
 msgstr "Posttjekpanelprogram"
 
-#: applets/gen_util/mailcheck.c:1614
+#: applets/gen_util/mailcheck.c:1654
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "© 1998-2000 Free Software Fundation"
 
-#: applets/gen_util/mailcheck.c:1615
+#: applets/gen_util/mailcheck.c:1655 applets/gen_util/mailcheck.c:1820
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "Posttjek giver dig besked når der dukker ny post op i postkassen."
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1792
 msgid "Text only"
 msgstr "Kun tekst"
+
+#: applets/gen_util/mailcheck.c:1819
+msgid "Mail check"
+msgstr "Posttjek"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -630,10 +635,10 @@ msgstr "© 2001 Red Hat, Inc"
 
 #: applets/gen_util/tasklist.c:524
 msgid ""
-"The Window List shows a list of all visible windows and let you browse them."
+"The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
-"Vindueslisten viser en liste over alle synlige vinduer og lader dig håndtere "
-"dem."
+"Vindueslisten viser en liste over alle synlige vinduer og lader dig skifte "
+"mellem dem."
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
@@ -761,9 +766,8 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:36
-#, fuzzy
-msgid "CDE Applications"
-msgstr "Programmer"
+msgid "CDE Menus"
+msgstr "CDE-menuer"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
 #: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
@@ -803,9 +807,8 @@ msgid "Drawer"
 msgstr "Skuffe"
 
 #: gnome-panel/foobar-widget.c:193 gnome-panel/menu-util.c:293
-#, fuzzy
 msgid "Cannot execute gnome-panel-screenshot"
-msgstr "Kan ikke køre gnome-search-tool"
+msgstr "Kan ikke køre gnome-panel-screenshot"
 
 #: gnome-panel/foobar-widget.c:204 gnome-panel/menu-util.c:303
 msgid "Cannot execute gnome-search-tool"
@@ -829,12 +832,11 @@ msgstr "Find filer, mapper og dokumenter på systemet"
 
 #: gnome-panel/foobar-widget.c:240 gnome-panel/menu.c:3594
 msgid "Take a Screen Shot..."
-msgstr ""
+msgstr "Gem skærmbilledet..."
 
 #: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3597
-#, fuzzy
 msgid "Take a screen shot of your desktop"
-msgstr "Gem skærmbillede på _skrivebordet"
+msgstr "Gem et billede af skrivebordet"
 
 #: gnome-panel/foobar-widget.c:253
 msgid "Lock Display"
@@ -868,14 +870,12 @@ msgstr "Programmer"
 
 #: gnome-panel/foobar-widget.c:778 gnome-panel/menu.c:2598
 #: gnome-panel/menu.c:2643
-#, fuzzy
 msgid "Menu Panel"
 msgstr "Menupanel"
 
 #: gnome-panel/foobar-widget.c:778
-#, fuzzy
 msgid "GNOME Menu Panel"
-msgstr "Gnome-menu"
+msgstr "Gnome-menupanel"
 
 #: gnome-panel/global-keys.c:288 gnome-panel/global-keys.c:316
 msgid "Can't find the screenshot program"
@@ -927,14 +927,12 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.c:310
 #: gnome-panel/gnome-panel-preferences.glade.h:5
-#, fuzzy
 msgid "Panel Preferences"
-msgstr "Indstillinger for ur"
+msgstr "Indstillinger for panel"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-#, fuzzy
 msgid "Modify the global panel preferences"
-msgstr "Globale panelindstillinger"
+msgstr "Redigér globale panelindstillinger"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2 gnome-panel/menu.c:3611
 msgid "Panel"
@@ -965,18 +963,16 @@ msgid "Slow"
 msgstr "Langsom"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:8
-#, fuzzy
 msgid "_Animation Speed:"
-msgstr "Animationshastighed:"
+msgstr "Animations_fart:"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:9
 msgid "_Close drawer if a launcher inside it is pressed"
 msgstr "_Luk en skuffe hvis der trykkes på et ikon i den"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:10
-#, fuzzy
 msgid "_Enable panel animation"
-msgstr "Benyt _animation"
+msgstr "Benyt panel_animation"
 
 #: gnome-panel/gnome-panel-screenshot.c:126
 msgid ""
@@ -1070,16 +1066,15 @@ msgstr "Tag et billede af et vindue i stedet for hele skærmen"
 
 #: gnome-panel/gnome-panel-screenshot.c:1022
 msgid "Take screenshot after specified delay [in seconds]"
-msgstr ""
+msgstr "Gem skærmbillede efter angivet ventetid (i sek.)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1064
-#, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
-"Glade-filen til skærmbilledeprogrammet mangler.\n"
-"Tjek venligst din gnome-core-installation."
+"Glade-filen til skærmbilledprogrammet mangler.\n"
+"Tjek venligst din gnome-panel-installation."
 
 #: gnome-panel/gnome-panel-screenshot.c:1086
 msgid "Unable to take a screenshot of the current desktop."
@@ -1114,38 +1109,33 @@ msgid "_Save screenshot to file:"
 msgstr "_Gem skærmbillede i fil:"
 
 #: gnome-panel/gnome-run.c:223 gnome-panel/gnome-run.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to run this program: '%s'"
-msgstr ""
-"Det mislykkedes at indlæse dette program!\n"
-"%s"
+msgstr "Det mislykkedes at køre dette program: '%s'"
 
 #: gnome-panel/gnome-run.c:325
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to execute command: '%s'"
-msgstr ""
-"Kunne ikke udføre kommandoen:\n"
-"%s"
+msgstr "Kunne ikke udføre kommandoen: '%s'"
 
 #: gnome-panel/gnome-run.c:384
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to execute command: '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Kunne ikke udføre kommandoen:\n"
-"%s\n"
-"%s"
+"Kunne ikke udføre kommandoen: '%s'\n"
+"\n"
+"Detaljer: %s"
 
 #: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr "Vælg et program der skal køres"
 
 #: gnome-panel/gnome-run.c:664
-#, fuzzy
 msgid "Command to run"
-msgstr "Kommando (kan udelades)"
+msgstr "Kommando at udføre"
 
 #: gnome-panel/gnome-run.c:677
 msgid "_Browse..."
@@ -1156,47 +1146,41 @@ msgid "Run in _terminal"
 msgstr "Kør i _terminal"
 
 #: gnome-panel/gnome-run.c:922
-#, fuzzy, c-format
+#, c-format
 msgid "Will run command: '%s'"
-msgstr "Vil køre '%s'"
+msgstr "Vil køre kommando: '%s'"
 
 #: gnome-panel/gnome-run.c:931
-#, fuzzy
 msgid "No application selected"
 msgstr "Intet program valgt"
 
 #: gnome-panel/gnome-run.c:1051
-#, fuzzy
 msgid "Known A_pplications:"
-msgstr "_Programmer"
+msgstr "Kendte _programmer"
 
 #: gnome-panel/gnome-run.c:1061
-#, fuzzy
 msgid "List of known applications"
-msgstr "Programmer"
+msgstr "Liste over kendte programmer"
 
 #: gnome-panel/gnome-run.c:1062
 msgid "Choose an application to run from the list"
-msgstr ""
+msgstr "Vælg et program at køre fra listen"
 
 #: gnome-panel/gnome-run.c:1160
-#, fuzzy
 msgid "_Known Applications <<"
-msgstr "Programmer"
+msgstr "_Kendte programmer <"
 
 #: gnome-panel/gnome-run.c:1163
-#, fuzzy
 msgid "Hide the list of known applications"
-msgstr "Programmer"
+msgstr "Skjul listen over kendte programmer"
 
 #: gnome-panel/gnome-run.c:1177
-#, fuzzy
 msgid "_Known Applications >>"
-msgstr "Programmer"
+msgstr "_Kendte programmer >>"
 
 #: gnome-panel/gnome-run.c:1180
 msgid "Display a list of known applications from the applications menu"
-msgstr ""
+msgstr "Vis en liste over kendte programmer fra programmenuen"
 
 #: gnome-panel/gnome-run.c:1198
 msgid "_Run"
@@ -1249,14 +1233,12 @@ msgstr "Hjælp til programmet %s"
 #. watch the enum at the top of the file
 #: gnome-panel/launcher.c:572 gnome-panel/menu-ditem.c:178
 #: gnome-panel/menu-ditem.c:256
-#, fuzzy
 msgid "Launcher Properties"
-msgstr "Indstillinger for genvej"
+msgstr "Egenskaber for genvej"
 
 #: gnome-panel/launcher.c:761 gnome-panel/menu-ditem.c:508
-#, fuzzy
 msgid "Create Launcher"
-msgstr "Opret genvejspanelprogram"
+msgstr "Opret genvej"
 
 #. class
 #: gnome-panel/launcher.c:981
@@ -1314,13 +1296,13 @@ msgid "Specify a profile name to load"
 msgstr "Angiv et profilnavn som skal indlæses"
 
 #: gnome-panel/menu-ditem.c:119
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Cannot save changes to launcher</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Kan ikke gemme ændringer i menupunkt</b>\n"
+"<b>Kan ikke gemme ændringer i genvej</b>\n"
 "\n"
 "Detaljer: %s"
 
@@ -1331,21 +1313,21 @@ msgstr "Menu"
 
 #: gnome-panel/menu-ditem.c:439
 msgid "You have to specify a name for the launcher."
-msgstr ""
+msgstr "Du skal angive et navn til genvejen."
 
 #: gnome-panel/menu-ditem.c:456
 msgid "You have to specify a valid URL or command."
-msgstr ""
+msgstr "Du skal angive en gyldig URL elle kommando."
 
 #. class
 #: gnome-panel/menu-ditem.c:480
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Kan ikke gemme ændringer i menupunkt</b>\n"
+"<b>Kan ikke menupunkt</b>\n"
 "\n"
 "Detaljer: %s"
 
@@ -1354,6 +1336,8 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
+"Du kan ikke oprette en ny genvej her fordi det ikke er muligt at skrive til "
+"denne placering."
 
 #: gnome-panel/menu-properties.c:107
 msgid "Can't open directory, using main menu!"
@@ -1566,51 +1550,42 @@ msgid "query returned exception %s\n"
 msgstr "forespørgsel returnerede undtagelsen %s\n"
 
 #: gnome-panel/menu.c:2520 gnome-panel/menu.c:2524
-#, fuzzy
 msgid "Aligned Panel"
-msgstr "Glidende panel"
+msgstr "Justeret panel"
 
 #: gnome-panel/menu.c:2525
-#, fuzzy
 msgid "GNOME Aligned Panel"
-msgstr "Glidende panel"
+msgstr "Justeret Gnome-panel"
 
 #: gnome-panel/menu.c:2541 gnome-panel/menu.c:2544 gnome-panel/menu.c:2662
-#, fuzzy
 msgid "Edge Panel"
 msgstr "Kantpanel"
 
 #: gnome-panel/menu.c:2545
-#, fuzzy
 msgid "GNOME Edge Panel"
-msgstr "Gnome-panelet"
+msgstr "Gnome-kantpanel"
 
 #: gnome-panel/menu.c:2561 gnome-panel/menu.c:2565 gnome-panel/menu.c:2678
-#, fuzzy
 msgid "Sliding Panel"
 msgstr "Glidende panel"
 
 #: gnome-panel/menu.c:2566
-#, fuzzy
 msgid "GNOME Sliding Panel"
-msgstr "Glidende panel"
+msgstr "Glidende Gnome-panel"
 
 #: gnome-panel/menu.c:2582 gnome-panel/menu.c:2586 gnome-panel/menu.c:2686
-#, fuzzy
 msgid "Floating Panel"
 msgstr "Flydende panel"
 
 #: gnome-panel/menu.c:2587
-#, fuzzy
 msgid "GNOME Floating Panel"
-msgstr "Flydende panel"
+msgstr "Flydende Gnome-panel"
 
 #: gnome-panel/menu.c:2603
 msgid "You can only have one menu panel at a time."
 msgstr "Du kan kun have ét menupanel ad gangen."
 
 #: gnome-panel/menu.c:2670
-#, fuzzy
 msgid "Corner Panel"
 msgstr "Hjørnepanel"
 
@@ -1624,12 +1599,11 @@ msgid "You cannot remove your last panel."
 msgstr "Du kan ikke fjerne dit sidste panel."
 
 #: gnome-panel/menu.c:2872
-#, fuzzy
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Delete this panel?"
 msgstr ""
-"Når et panel bliver fjernet, mister du både det\n"
+"Når et panel fjernes, mister du både det\n"
 "og indstillingerne for dets panelprogrammer.\n"
 "Fjern dette panel?"
 
@@ -1658,17 +1632,14 @@ msgid "Status dock"
 msgstr "Statusdok"
 
 #: gnome-panel/menu.c:3182
-#, fuzzy
 msgid "Cannot execute panel global preferences"
-msgstr "Kan ikke starte panelets overordnede indstillinger"
+msgstr "Kan ikke starte panelets globale indstillinger"
 
 #: gnome-panel/menu.c:3220
-#, fuzzy
 msgid "Delete this panel..."
 msgstr "Fjern dette panel..."
 
 #: gnome-panel/menu.c:3222 gnome-panel/menu.c:3261
-#, fuzzy
 msgid "Delete this panel"
 msgstr "Fjern dette panel"
 
@@ -1743,7 +1714,7 @@ msgstr "Kan ikke registrere kontrollerende kontrol\n"
 #: gnome-panel/panel-applet-frame.c:599
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr ""
+msgstr "Undtagelse fra popup_menu '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:687
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -1816,9 +1787,8 @@ msgid "Panel size:"
 msgstr "Panelstørrelse:"
 
 #: gnome-panel/panel-config.c:1104
-#, fuzzy
 msgid "XX Small (12 pixels)"
-msgstr "Lillebitte (24 punkter)"
+msgstr "Mikro (12 punkter)"
 
 #: gnome-panel/panel-config.c:1112
 msgid "X Small (24 pixels)"
@@ -1983,50 +1953,48 @@ msgstr "Bonobo-testpanelprogram"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrik til Bonobo-testpanelprogram"
 
-#: libpanel-applet/panel-applet.c:654
+#: libpanel-applet/panel-applet.c:659
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ufuldstændig baggrundstype '%s' modtaget"
 
-#: libpanel-applet/panel-applet.c:668
+#: libpanel-applet/panel-applet.c:673
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ufuldstændig baggrundstype '%s' modtaget: %s"
 
-#: libpanel-applet/panel-applet.c:677
+#: libpanel-applet/panel-applet.c:682
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Det mislykkedes at skaffe billedet %s"
 
-#: libpanel-applet/panel-applet.c:684
+#: libpanel-applet/panel-applet.c:689
 msgid "Unknown background type received"
 msgstr "Ukendt baggrundstype modtaget"
 
 # lidt kryptisk, men dette skulle være betydningen
-#: libpanel-applet/panel-applet.c:853
+#: libpanel-applet/panel-applet.c:858
 msgid "The Applet's containing Panel's orientation"
 msgstr "Orienteringen af det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:866
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Størrelsen i skærmpunkter af det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:869
+#: libpanel-applet/panel-applet.c:874
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 "Baggrundsfarven eller -billedet for det panel som indeholder panelprogrammet"
 
-#: libpanel-applet/panel-applet.c:877
+#: libpanel-applet/panel-applet.c:882
 msgid "The Applet's flags"
 msgstr "Panelprogrammets tilvalg"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:890
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Screenshot Capture"
-#~ msgstr "Skærmbillede"
+"Intervaller der angiver hvilke størelser der er acceptable for "
+"panelprogrammet"
 
 #~ msgid "_Advanced <<"
 #~ msgstr "_Avanceret <<"
@@ -2062,27 +2030,11 @@ msgstr ""
 #~ "\n"
 #~ "%s"
 
-#, fuzzy
-#~ msgid "Base Panel"
-#~ msgstr "Panel"
-
 #~ msgid "Desktop entry properties"
 #~ msgstr "Egenskaber for skrivebordselement"
 
 #~ msgid "Create menu item"
 #~ msgstr "Opret menupunkt"
-
-#, fuzzy
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "Kantpanel"
-
-#, fuzzy
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Glidende panel"
-
-#, fuzzy
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Flydende panel"
 
 #~ msgid "Global Panel Properties"
 #~ msgstr "Globale panelindstillinger"
@@ -2122,9 +2074,6 @@ msgstr ""
 
 #~ msgid "Remove from panel"
 #~ msgstr "Fjern fra panel"
-
-#~ msgid "CDE Menus"
-#~ msgstr "CDE-menuer"
 
 #~ msgid "&lt;Alt&gt;F1"
 #~ msgstr "&lt;Alt&gt;F1"
