@@ -1,5 +1,14 @@
 2004-12-22  Vincent Untz  <vincent@vuntz.net>
 
+	* panel-struts.c: (get_toplevel_depth): new function to know the depth
+	of a toplevel (useful for drawers)
+	(panel_struts_compare): panel with biggest depth should be at the top
+	Fix bug #125336
+
+	* panel-toplevel.c: (panel_toplevel_destroy): nullify some fields
+
+2004-12-22  Vincent Untz  <vincent@vuntz.net>
+
 	* panel-multiscreen.c: (panel_multiscreen_reinit): disconnect the
 	size-changed signal handlers if they exist because they will be added
 	again in panel_multiscreen_init(). The panel should not take 100% CPU

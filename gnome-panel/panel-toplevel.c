@@ -2672,6 +2672,9 @@ panel_toplevel_destroy (GtkObject *widget)
 	if (toplevel->priv->attached) {
 		panel_toplevel_disconnect_attached (toplevel);
 		toplevel->priv->attached = FALSE;
+
+		toplevel->priv->attach_toplevel = NULL;
+		toplevel->priv->attach_widget   = NULL;
 	}
 
 	panel_toplevel_disconnect_timeouts (toplevel);
