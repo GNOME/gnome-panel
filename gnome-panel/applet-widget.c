@@ -953,6 +953,8 @@ applet_widget_get_panel_size(AppletWidget *applet)
 	switch(applet->size) {
 	case 24:
 		return GNOME_Panel_SIZE_TINY;
+	case 36:
+		return GNOME_Panel_SIZE_SMALL;
 	default:
 	case 48:
 		return GNOME_Panel_SIZE_STANDARD;
@@ -1167,6 +1169,11 @@ server_applet_change_size(CustomAppletServant *servant,
 					applet_widget_signals[CHANGE_SIZE_SIGNAL],
 					GNOME_Panel_SIZE_TINY);
 			break;
+		case 36:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_SMALL);
+			break;
 		default:
 		case 48:
 			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
@@ -1356,6 +1363,11 @@ server_applet_thaw_changes(CustomAppletServant *servant,
 			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 					applet_widget_signals[CHANGE_SIZE_SIGNAL],
 					GNOME_Panel_SIZE_TINY);
+			break;
+		case 36:
+			gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+					applet_widget_signals[CHANGE_SIZE_SIGNAL],
+					GNOME_Panel_SIZE_SMALL);
 			break;
 		default:
 		case 48:

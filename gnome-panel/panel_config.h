@@ -65,6 +65,7 @@ struct _PerPanelConfig {
 	GtkWidget		*b_edge;
 	/*size buttons*/
 	GtkWidget		*s_tiny;
+	GtkWidget               *s_small;
 	GtkWidget		*s_std;
 	GtkWidget		*s_large;
 	GtkWidget		*s_huge;

@@ -114,6 +114,9 @@ update_config_size(GtkWidget *panel)
 	case SIZE_TINY:
 		toggle = ppc->s_tiny;
 		break;
+	case SIZE_SMALL:
+		toggle = ppc->s_small;
+		break;
 	default:
 	case SIZE_STANDARD:
 		toggle = ppc->s_std;
@@ -876,6 +879,16 @@ size_notebook_page(PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (size_set_size), 
 			    GINT_TO_POINTER(SIZE_TINY));
 	gtk_box_pack_start (GTK_BOX (box), ppc->s_tiny, FALSE, FALSE,0);
+
+	/* Small Size */
+	ppc->s_small = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->s_tiny)),
+		_("Small (36 pixels)"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->s_small),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->s_small), "toggled", 
+			    GTK_SIGNAL_FUNC (size_set_size), 
+			    GINT_TO_POINTER(SIZE_SMALL));
+	gtk_box_pack_start (GTK_BOX (box), ppc->s_small, FALSE, FALSE,0);
 	
 	/* Standard Size */
 	ppc->s_std = gtk_radio_button_new_with_label (
@@ -910,6 +923,10 @@ size_notebook_page(PerPanelConfig *ppc)
 	switch(ppc->sz) {
 	case SIZE_TINY:
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_tiny),
+					     TRUE);
+		break;
+	case SIZE_SMALL:
+		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_small),
 					     TRUE);
 		break;
 	default:

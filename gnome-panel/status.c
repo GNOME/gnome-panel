@@ -65,6 +65,7 @@ status_applet_update(StatusApplet *s)
 	
 	switch(s->size) {
 	case SIZE_TINY: sz = 24; break;
+	case SIZE_SMALL: sz = 36; break;
 	case SIZE_STANDARD: sz = 48; break;
 	case SIZE_LARGE: sz = 64; break;
 	case SIZE_HUGE: sz = 80; break;

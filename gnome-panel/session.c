@@ -972,6 +972,7 @@ init_user_panels(void)
 		if(sz<0) sz = 0;
 
 		/*a hack to allow for old config files to be read correctly*/
+		/*don't update this if new sizes (SIZE_SMALL) are added*/
 		if(sz<4) {
 			switch(sz) {
 			case 0: sz = SIZE_TINY; break;

@@ -18,6 +18,7 @@ typedef GNOME_Panel_OrientType PanelOrientType;
 #define SIZE_HUGE GNOME_Panel_SIZE_HUGE*/
 enum {
 	SIZE_TINY = 24,
+	SIZE_SMALL = 36,
 	SIZE_STANDARD = 48,
 	SIZE_LARGE = 64,
 	SIZE_HUGE = 80

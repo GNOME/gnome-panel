@@ -2744,6 +2744,9 @@ update_size_menu (GtkWidget *menu, gpointer data)
 	case SIZE_TINY:
 		s = MENU_SIZE_TINY;
 		break;
+	case SIZE_SMALL:
+		s = MENU_SIZE_SMALL;
+		break;
 	case SIZE_STANDARD:
 		s = MENU_SIZE_STANDARD;
 		break;
@@ -2920,6 +2923,7 @@ make_properties_submenu (GtkWidget *menu)
 				     { NULL, -1 } };
 
 	StringEnumPair sizes[] = { { N_(MENU_SIZE_TINY), SIZE_TINY },
+				   { N_(MENU_SIZE_SMALL), SIZE_SMALL },
 				   { N_(MENU_SIZE_STANDARD), SIZE_STANDARD },
 				   { N_(MENU_SIZE_LARGE), SIZE_LARGE },
 				   { N_(MENU_SIZE_HUGE), SIZE_HUGE },

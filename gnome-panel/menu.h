@@ -89,6 +89,7 @@ enum {
 
 #define MENU_SIZES "sizes_menu"
 #define MENU_SIZE_TINY "Tiny (24 pixels)"
+#define MENU_SIZE_SMALL "Small (36 pixels)"
 #define MENU_SIZE_STANDARD "Standard (48 pixels)"
 #define MENU_SIZE_LARGE "Large (64 pixels)"
 #define MENU_SIZE_HUGE "Huge (80 pixels"
