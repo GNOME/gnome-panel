@@ -25,6 +25,8 @@ GSList *panels = NULL; /*other panels we might want to move the applet to*/
 /*define for some debug output*/
 /*#define PANEL_DEBUG 1*/
 
+#define TRANSLUCENT_OPACITY 128
+
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
 gboolean panel_applet_in_drag = FALSE;
@@ -983,18 +985,13 @@ panel_widget_setup_translucent_background (PanelWidget *panel)
 	GdkBitmap *bitmap = NULL;
 	GdkPixbuf *background = NULL;
 	GdkPixbuf *background_shaded = NULL;
-	GdkColormap *cmap;
 	GdkWindow *window = gtk_widget_get_parent_window (GTK_WIDGET (panel));
 
 	if (desktop_pixmap && window != NULL) {
-		cmap = gdk_window_get_colormap (window);
-		/* new pixbuf to hold panel background */
-		background = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
-				panel->width, panel->height);
-
-		/* copy desktop onto it */
-		background = gdk_pixbuf_get_from_drawable (background,
-				desktop_pixmap, cmap, panel->x, panel->y,
+		background = gdk_pixbuf_get_from_drawable (NULL,
+				desktop_pixmap, 
+				gdk_window_get_colormap (window), 
+				panel->x, panel->y,
 				0, 0, panel->width, panel->height);
 
 		background_shaded = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 
@@ -1003,23 +1000,15 @@ panel_widget_setup_translucent_background (PanelWidget *panel)
 		gdk_pixbuf_composite_color (background, background_shaded,
 				0, 0, panel->width, panel->height,
 				0.0, 0.0, 1.0, 1.0, 
-				GDK_INTERP_NEAREST, 128,
+				GDK_INTERP_NEAREST, TRANSLUCENT_OPACITY,
 				0, 0, 100, 
 				0, 0);
 
-		/* save that pixbuf */
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[BACK_CHANGE_SIGNAL],
-				panel->back_type,
-				panel->back_pixmap,
-				&panel->back_color);
-		
 		/* render it onto a pixmap to use to tile the background */
 		gdk_pixbuf_render_pixmap_and_mask (background_shaded, &pixmap, 
 				&bitmap, 0);
 
 		/* and we're finished with it */
-		gdk_pixbuf_ref (background_shaded);
 		if (panel->backpix != NULL) {
 			gdk_pixbuf_unref (panel->backpix);
 		}
@@ -1034,7 +1023,6 @@ panel_widget_setup_translucent_background (PanelWidget *panel)
 				gdk_pixmap_unref (panel->backpixmap);
 			}
 			panel->backpixmap = pixmap;
-			gdk_pixmap_ref (panel->backpixmap);
 		}
 	}
 }
@@ -1092,6 +1080,7 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 		}
 	} else if(panel->back_type == PANEL_BACK_TRANSLUCENT) {
 		/* YAK: *shrug* */
+		/* FIXME: make this returnt he right thing! */
 		*pb = panel->backpix;
 	} 
 }
