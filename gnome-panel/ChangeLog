@@ -1,5 +1,15 @@
 2004-09-16  Mark McLoughlin  <mark@skynet.ie>
 
+	Sync with libegg:
+
+	* libegg/recent-files/egg-recent-model.c:
+	(egg_recent_model_monitor): don't pass a local
+	path as a URI - otherwise we crash when people
+	use $HOME=/ and we pass "//.recently-used" to
+	gnome-vfs. Bug 152832
+
+2004-09-16  Mark McLoughlin  <mark@skynet.ie>
+
 	Fixes to make 2.2 -> 2.4/6/8 migration work again - it broken
 	when I installed the default setup into /apps/panel/profiles/default
 	as well as /apps/panel/default_setup
