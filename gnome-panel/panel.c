@@ -45,7 +45,6 @@
 #include "panel-gconf.h"
 #include "session.h"
 #include "status.h"
-#include "swallow.h"
 #include "panel-applet-frame.h"
 #include "global-keys.h"
 
@@ -216,17 +215,6 @@ orientation_change (AppletInfo  *info,
 		gtk_container_foreach (GTK_CONTAINER (basep->panel),
 				       orient_change_foreach,
 				       (gpointer)basep->panel);
-		}
-		break;
-	case APPLET_SWALLOW: {
-		Swallow *swallow = info->data;
-
-		if (panel->orient == GTK_ORIENTATION_VERTICAL)
-			set_swallow_applet_orient (swallow,
-						   SWALLOW_VERTICAL);
-		else
-			set_swallow_applet_orient (swallow,
-						   SWALLOW_HORIZONTAL);
 		}
 		break;
 	case APPLET_STATUS: {
@@ -571,22 +559,15 @@ panel_remove_applets (PanelWidget *panel)
 	GList *l;
 
 	for (l = panel->applet_list; l; l = l->next) {
-		AppletData *ad = l->data;
+		AppletData *applet_data = l->data;
 		AppletInfo *info;
 
-		info = g_object_get_data (G_OBJECT (ad->applet),
-					  "applet_info");
+		info = g_object_get_data (
+				G_OBJECT (applet_data->applet), "applet_info");
 
-		if (info->type == APPLET_BONOBO) {
-			PanelAppletFrame *frame = info->data;
-
-			panel_applet_frame_set_clean_remove
-				(PANEL_APPLET_FRAME (frame), TRUE);
-		} else if (info->type == APPLET_SWALLOW) {
-			Swallow *swallow = info->data;
-
-			swallow->clean_remove = TRUE;
-		}
+		if (info && info->type == APPLET_BONOBO)
+			panel_applet_frame_set_clean_remove (
+					PANEL_APPLET_FRAME (info->data), TRUE);
 	}
 }
 
@@ -1273,10 +1254,9 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		return;
 
 	if (sscanf (applet_type, "MENU:%d", &applet_num) == 1 ||
-	    sscanf (applet_type, "DRAWER:%d", &applet_num) == 1 ||
-	    sscanf (applet_type, "SWALLOW:%d", &applet_num) == 1) {
+	    sscanf (applet_type, "DRAWER:%d", &applet_num) == 1) {
 		if (action != GDK_ACTION_MOVE)
-			g_warning ("Only MOVE supported for menus/drawers/swallows");
+			g_warning ("Only MOVE supported for menus/drawers");
 		move_applet (panel, pos, applet_num);
 
 	} else if (strncmp (applet_type, "MENU:", strlen("MENU:")) == 0) {
@@ -1302,9 +1282,6 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 	} else if (sscanf (applet_type, "LOCK:%d", &applet_num) == 1) {
 		load_lock_applet (panel, pos, TRUE, NULL);
 		remove_applet = TRUE;
-
-	} else if (strcmp (applet_type, "SWALLOW:ASK") == 0) {
-		ask_about_swallowing(panel, pos, TRUE);
 
 	} else if(strcmp(applet_type,"LAUNCHER:ASK")==0) {
 		ask_about_launcher(NULL, panel, pos, TRUE);
@@ -2285,7 +2262,7 @@ panel_load_panels_from_gconf (void)
 			g_free (tmp_str);
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "panel-align", "panel-alignment-left");
+						    "panel_align", "panel-alignment-left");
 			gconf_string_to_enum (
 				panel_alignment_type_enum_map, tmp_str, (gint *) &align);
 			g_free (tmp_str);
@@ -2318,12 +2295,12 @@ panel_load_panels_from_gconf (void)
 			g_free (tmp_str);
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "panel-anchor", "panel-anchor-left");
+						    "panel_anchor", "panel-anchor-left");
 			gconf_string_to_enum (
 				panel_anchor_type_enum_map, tmp_str, (gint *) &anchor);
 			g_free (tmp_str);
 			
-			offset = panel_get_int (profile, panel_id, "panel-offset", 0);
+			offset = panel_get_int (profile, panel_id, "panel_offset", 0);
 	
 			panel = sliding_widget_new (panel_id,
 						    screen,
@@ -2346,7 +2323,7 @@ panel_load_panels_from_gconf (void)
 			int orient;
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "panel-orient", "panel-orient-up");
+						    "panel_orient", "panel-orient-up");
 			gconf_string_to_enum (
 				panel_orient_type_enum_map, tmp_str, (gint *) &orient);
 			g_free (tmp_str);
@@ -2370,13 +2347,13 @@ panel_load_panels_from_gconf (void)
 			int            x, y;
 
 			tmp_str = panel_get_string (profile, panel_id,
-						    "panel-orient ", "panel-orientation-horizontal");
+						    "panel_orient", "panel-orientation-horizontal");
 			gconf_string_to_enum (
 				panel_orientation_type_enum_map, tmp_str, (gint *) &orient);
 			g_free (tmp_str);
 
-			x = panel_get_int (profile, panel_id, "panel-x-position", 0);
-			y = panel_get_int (profile, panel_id, "panel-y-position", 0);
+			x = panel_get_int (profile, panel_id, "panel_x_position", 0);
+			y = panel_get_int (profile, panel_id, "panel_y_position", 0);
 			
 			panel = floating_widget_new (panel_id,
 						     screen,
@@ -2536,41 +2513,38 @@ panel_save_to_gconf (PanelData *pd)
 	switch (pd->type) {
 	case ALIGNED_PANEL:
 		panel_set_string (profile, panel->unique_id,
-				  "panel-align", 
+				  "panel_align", 
 				  gconf_enum_to_string (panel_alignment_type_enum_map,
 							ALIGNED_POS (basep->pos)->align));
 		break;
 	case SLIDING_PANEL:
 		panel_set_int (profile, panel->unique_id,
-			       "panel-offset", SLIDING_POS (basep->pos)->offset);
+			       "panel_offset", SLIDING_POS (basep->pos)->offset);
 
 		panel_set_string (profile, panel->unique_id,
-				  "panel-anchor", 
+				  "panel_anchor", 
 				  gconf_enum_to_string (panel_anchor_type_enum_map,
 							SLIDING_POS (basep->pos)->anchor));
 		break;
 	case FLOATING_PANEL:
 		panel_set_string (profile, panel->unique_id,
-				  "panel-orient", 
+				  "panel_orient", 
 				  gconf_enum_to_string (panel_orientation_type_enum_map,
-							PANEL_WIDGET (basep->pos)->orient));
+							PANEL_WIDGET (basep->panel)->orient));
 
 		panel_set_int (profile, panel->unique_id,
-			       "panel-x-position", FLOATING_POS (basep->pos)->x);
+			       "panel_x_position", FLOATING_POS (basep->pos)->x);
 
 		panel_set_int (profile, panel->unique_id,
-			       "panel-y-position", FLOATING_POS (basep->pos)->y);
+			       "panel_y_position", FLOATING_POS (basep->pos)->y);
 		break;
 	case DRAWER_PANEL:
 		panel_set_string (profile, panel->unique_id,
-				  "panel-orient", 
+				  "panel_orient", 
 				  gconf_enum_to_string (panel_orient_type_enum_map,
 							DRAWER_POS (basep->pos)->orient));
 		break;
 	case FOOBAR_PANEL:
-		panel_set_string (profile, panel->unique_id,
-				  "clock_format", FOOBAR_WIDGET (pd->panel)->clock_format);
-
 		panel_set_int (profile, panel->unique_id, 
 			       "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
 		break;

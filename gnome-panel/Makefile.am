@@ -104,7 +104,6 @@ panel_sources =			\
 	menu-util.c		\
 	menu-ditem.c		\
 	menu-fentry.c  		\
-	swallow.c  		\
 	menu-properties.c	\
 	launcher.c		\
 	panel-applet-frame.c	\
@@ -145,7 +144,6 @@ panel_headers =			\
 	menu-util.h		\
 	menu-ditem.h		\
 	menu-fentry.h  		\
-	swallow.h  		\
 	menu-properties.h	\
 	launcher.h		\
 	panel-applet-frame.h	\

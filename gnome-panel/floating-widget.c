@@ -233,9 +233,8 @@ xclamp (int screen, int x, int w)
 static int
 yclamp (int screen, int y, int h)
 {
-	return CLAMP (y, 0, 
-		      multiscreen_height (screen) - h -
-		      foobar_widget_get_height (screen));
+	return CLAMP (y, foobar_widget_get_height (screen), 
+		      multiscreen_height (screen) - h);
 }
 
 static void

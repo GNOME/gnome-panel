@@ -22,9 +22,6 @@
 #include "foobar-widget.h"
 #include "global-keys.h"
 #include "status.h"
-#include "swallow.h"
-
-extern GList *check_swallows;
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -102,27 +99,6 @@ try_adding_status(guint32 winid)
 	g_free(data);
 }
 
-static void
-try_checking_swallows (gulong xid, const char *name)
-{
-	GList *li;
-
-	if (name == NULL)
-		return;
-
-	for (li = check_swallows; li; li = li->next) {	     
-		Swallow *swallow = li->data;
-		if (strstr (name, swallow->title) != NULL) {
-			swallow->wid = xid;
-			gtk_socket_add_id (GTK_SOCKET (swallow->socket),
-					   (GdkNativeWindow)xid);
-			check_swallows = 
-				g_list_remove (check_swallows, swallow);
-			break;
-		}
-	}
-}
-
 typedef struct {
 	char *name;
 	gulong xid;
@@ -156,8 +132,7 @@ xstuff_go_through_client_list (void)
 		if (xw->name != NULL &&
 		    strcmp (xw->name, "panel") == 0)
 			continue;
-		if (check_swallows != NULL)
-			try_checking_swallows (xw->xid, xw->name);
+
 		try_adding_status (xw->xid);
 
 		li->data = NULL;

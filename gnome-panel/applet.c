@@ -26,7 +26,6 @@
 #include "panel-config-global.h"
 #include "session.h"
 #include "status.h"
-#include "swallow.h"
 #include "panel-applet-frame.h"
 
 #define SMALL_ICON_SIZE 20
@@ -47,7 +46,6 @@ static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_DRAWER,   "drawer-object" },
 	{ APPLET_MENU,     "menu-object" },
 	{ APPLET_LOGOUT,   "logout-object" },
-	{ APPLET_SWALLOW,  "swallow-object" },
 	{ APPLET_LAUNCHER, "launcher-object" }, 
 	{ APPLET_EMPTY,    "empty-object" },
 	{ APPLET_LOCK,     "lock-object" },
@@ -167,16 +165,9 @@ applet_idle_remove (gpointer data)
 
 	info->remove_idle = 0;
 
-	if (info->type == APPLET_BONOBO) {
-		PanelAppletFrame *frame = info->data;
-
-		panel_applet_frame_set_clean_remove
-			(PANEL_APPLET_FRAME (frame), TRUE);
-	} else if (info->type == APPLET_SWALLOW) {
-		Swallow *swallow = info->data;
-
-		swallow->clean_remove = TRUE;
-	}
+	if (info->type == APPLET_BONOBO)
+		panel_applet_frame_set_clean_remove (
+				PANEL_APPLET_FRAME (info->data), TRUE);
 
 	panel_applet_clean (info);
 
@@ -229,17 +220,6 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			panel_show_help ("drawers", NULL);
 		}
 		break;
-	case APPLET_SWALLOW:
- 		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects", "SWALLOWEDAPP");
-#if 0
-		if(strcmp(menu->name,"properties")==0) {
-			Swallow *swallow = info->data;
-			g_assert(swallow);
-			swallow_properties(swallow); /* doesn't exist yet*/
-		}
-#endif
-		break; 
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)
 			menu_properties(menu->info->data);
@@ -653,22 +633,8 @@ applet_do_popup_menu (GtkWidget      *widget,
 	if (panel_applet_in_drag)
 		return FALSE;
 
-	switch (info->type) {
-	case APPLET_BONOBO:
-			break;
-	case APPLET_SWALLOW: {
-		GtkHandleBox *handle_box;
-
-		handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
-
-		if (handle_box->child_detached)
-			applet_show_menu (info, event);
-		}
-		break;
-	default:
+	if (info->type != APPLET_BONOBO)
 		applet_show_menu (info, event);
-		break;
-	}
 
 	return TRUE;
 }
@@ -913,9 +879,6 @@ panel_applet_load_from_unique_id (AppletType   type,
 	case APPLET_DRAWER:
 		drawer_load_from_gconf (panel_widget, position, unique_id);
 		break;
-	case APPLET_SWALLOW:
-		swallow_load_from_gconf (panel_widget, position, unique_id);
-		break;
 	case APPLET_MENU:
 		menu_load_from_gconf (panel_widget, position, unique_id);
 		break;
@@ -1082,10 +1045,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 		drawer_save_to_gconf ((Drawer *) applet_info->data,
 				      applet_info->gconf_key);
 		break;
-	case APPLET_SWALLOW:
-		swallow_save_to_gconf ((Swallow *) applet_info->data,
-				       applet_info->gconf_key);
-		break;
 	case APPLET_MENU:
 		menu_save_to_gconf ((Menu *) applet_info->data,
 				    applet_info->gconf_key);
@@ -1176,9 +1135,6 @@ panel_applet_register (GtkWidget      *applet,
 	/* if exact pos is on then insert at that precise location */
 	if (exactpos)
 		insert_at_pos = TRUE;
-
-
-	
 
 	if (panel_widget_add (panel, applet, newpos,
 			      insert_at_pos, expand_major, expand_minor) == -1) {

@@ -59,7 +59,6 @@
 #include "session.h"
 #include "sliding-widget.h"
 #include "status.h"
-#include "swallow.h"
 #include "panel-applet-frame.h"
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
@@ -2814,12 +2813,9 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	GtkWidget *panelw;
 	PanelWidget *panel;
 
-	g_print ("-------\n");
 	panel = get_panel_from_menu_data(w, TRUE);
 	panelw = panel->panel_parent;
 
-	g_print ("woo, in the remove panel query: %p!\n", panel);
-	
 	if (!DRAWER_IS_WIDGET (panelw) && base_panels == 1) {
 		panel_error_dialog ("cannot_remove_last_panel",
 				    _("You cannot remove your last panel."));
@@ -2896,22 +2892,6 @@ ask_about_launcher_cb(GtkWidget *widget, gpointer data)
 		insertion_pos = pd->insertion_pos;
 
 	ask_about_launcher(NULL, panel, insertion_pos, FALSE);
-}
-
-static void
-ask_about_swallowing_cb(GtkWidget *widget, gpointer data)
-{
-	PanelWidget *panel;
-	PanelData *pd;
-	int insertion_pos = -1;
-
-	panel = get_panel_from_menu_data (widget, TRUE);
-
-	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
-	if (pd != NULL)
-		insertion_pos = pd->insertion_pos;
-
-	ask_about_swallowing (panel, insertion_pos, FALSE);
 }
 
 #ifdef FIXME
@@ -3144,15 +3124,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 			   G_CALLBACK(add_lock_to_panel),
 			   NULL);
 	setup_internal_applet_drag(menuitem, "LOCK:NEW");
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, 
-			gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU),
-			_("Swallowed app..."));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT(menuitem), "activate",
-			   G_CALLBACK(ask_about_swallowing_cb),NULL);
-	setup_internal_applet_drag(menuitem, "SWALLOW:ASK");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem(menuitem, NULL, _("Status dock"));
@@ -3481,25 +3452,35 @@ create_root_menu (GtkWidget *root_menu,
 		  gboolean is_basep,
 		  gboolean run_item)
 {
-	GtkWidget *menu;
-	GtkWidget *menuitem;
+	const DistributionInfo *distribution_info;
+	GtkWidget              *menu;
+	GtkWidget              *menuitem;
+	gboolean                has_inline;
+	gboolean                has_subs;
+	gboolean                has_inline2;
+	gboolean                has_subs2;
 
-	gboolean has_inline = (flags & (MAIN_MENU_SYSTEM |
-					MAIN_MENU_APPLETS |
-					MAIN_MENU_KDE));
+	if ((flags & MAIN_MENU_KDE_SUB) && !got_kde_menus ())
+		flags &= ~MAIN_MENU_KDE_SUB;
 
-	gboolean has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
-				      MAIN_MENU_APPLETS_SUB |
-				      MAIN_MENU_KDE_SUB));
+	if ((flags & MAIN_MENU_DISTRIBUTION_SUB) && !got_distro_menus ())
+		flags &= ~MAIN_MENU_DISTRIBUTION_SUB;
 
-	gboolean has_inline2 = (flags & (MAIN_MENU_DESKTOP |
-					 MAIN_MENU_PANEL));
-	gboolean has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
-				       MAIN_MENU_PANEL_SUB));
+	has_inline = (flags & (MAIN_MENU_SYSTEM |
+			       MAIN_MENU_APPLETS |
+			       MAIN_MENU_KDE));
 
-	const DistributionInfo *distribution_info = get_distribution_info ();
+	has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
+			     MAIN_MENU_APPLETS_SUB |
+			     MAIN_MENU_KDE_SUB));
 
-	if (distribution_info != NULL) {
+	has_inline2 = (flags & (MAIN_MENU_DESKTOP |
+				MAIN_MENU_PANEL));
+
+	has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
+			      MAIN_MENU_PANEL_SUB));
+
+	if ((distribution_info = get_distribution_info ())) {
 		has_inline |= (flags & (MAIN_MENU_DISTRIBUTION));
 		has_subs |= (flags & (MAIN_MENU_DISTRIBUTION_SUB));
 	}

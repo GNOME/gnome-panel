@@ -11,7 +11,6 @@ G_BEGIN_DECLS
 #define MENU_ID     "Menu"
 #define DRAWER_ID   "Drawer"
 #define LOGOUT_ID   "Logout"
-#define SWALLOW_ID  "Swallow"
 #define LAUNCHER_ID "Launcher"
 #define LOCK_ID     "Lock"
 #define STATUS_ID   "Status"
@@ -21,7 +20,6 @@ typedef enum {
 	APPLET_DRAWER,
 	APPLET_MENU,
 	APPLET_LOGOUT,
-	APPLET_SWALLOW,
 	APPLET_LAUNCHER,
 	APPLET_EMPTY,
 	APPLET_LOCK,

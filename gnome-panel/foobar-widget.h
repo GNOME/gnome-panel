@@ -45,7 +45,6 @@ struct _FoobarWidget
 			       * and never dereference this */
 
 	gboolean compliant_wm;
-	char *clock_format;
 
 	guint notify;
 };

@@ -1916,16 +1916,23 @@ panel_widget_applet_drag_start (PanelWidget *panel,
 	panel_widget_applet_drag_start_no_grab (panel, applet, drag_off);
 
 	gtk_grab_add (applet);
-	if (applet->window != NULL) {
-		GdkCursor *fleur_cursor = gdk_cursor_new (GDK_FLEUR);
-		gdk_pointer_grab (applet->window,
-				  FALSE,
-				  APPLET_EVENT_MASK,
-				  NULL,
-				  fleur_cursor,
-				  GDK_CURRENT_TIME);
+	if (applet->window) {
+		GdkGrabStatus  status;
+		GdkCursor     *fleur_cursor;
+
+		fleur_cursor = gdk_cursor_new (GDK_FLEUR);
+
+		status = gdk_pointer_grab (applet->window, FALSE,
+					   APPLET_EVENT_MASK, NULL,
+					   fleur_cursor, GDK_CURRENT_TIME);
+
 		gdk_cursor_unref (fleur_cursor);
 		gdk_flush ();
+
+		if (status != GDK_GRAB_SUCCESS) {
+			g_warning (G_STRLOC ": failed to grab pointer");
+			panel_widget_applet_drag_end (panel);
+		}
 	}
 }
 

@@ -1,3 +1,33 @@
+2002-03-29  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: kill swallow.[ch].
+
+	* applet.[ch]: (applet_idle_remove), (applet_callback_callback),
+	(applet_do_popup_menu), (panel_applet_load_from_unique_id),
+	(panel_applet_save_to_gconf), (panel_applet_register): kill all
+	traces of swallowed apps.
+
+	* floating-widget.c: (yclamp): fix clamp permutation (76393)
+
+	* gnome-panel-properties.glade2: kill auto-update-menus (75150)
+
+	* menu.c: (make_add_submenu): kill swallowed app menuitem.
+	
+	* panel-per-panel-config.schemas: add a mixer applet to the menu
+	panel by default.
+
+	* panel-widget.c: (panel_widget_applet_drag_start): if the grab didn't
+	succeed, drop the drag.
+
+	* panel.c: (orientation_change), (panel_remove_applets),
+	(drop_internal_applet): remove allw swalled app code.
+	(panel_load_panels_from_gconf), (panel_save_to_gconf): move a few more
+	keys to using underscores.
+
+	* session.c: (panel_session_die): kill more swallow code.
+
+	* xstuff.c: (xstuff_go_through_client_list): ditto.
+
 2002-03-28  Mark McLoughlin  <mark@skynet.ie>
 
 	* foobar-widget.[ch]: kill the foobar clock.

@@ -41,7 +41,6 @@
 #include "session.h"
 #include "sliding-widget.h"
 #include "status.h"
-#include "swallow.h"
 #include "gnome-run.h"
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
@@ -265,24 +264,9 @@ panel_session_die (GnomeClient *client,
 
 		panel_applet_save_position (info, info->gconf_key, TRUE);
 
-		if (info->type == APPLET_BONOBO) {
-			PanelAppletFrame *frame = info->data;
-
-			panel_applet_frame_set_clean_remove
-				(PANEL_APPLET_FRAME (frame), TRUE);
-		} else if (info->type == APPLET_SWALLOW) {
-			Swallow   *swallow = info->data;
-			GtkSocket *socket;
-
-			swallow->clean_remove = TRUE;
-
-			socket = GTK_SOCKET (swallow->socket);
-
-			if (socket->plug_window)
-                                XKillClient (GDK_DISPLAY (),
-					     GDK_WINDOW_XWINDOW(socket->plug_window));
-
-		}
+		if (info->type == APPLET_BONOBO)
+			panel_applet_frame_set_clean_remove (
+					PANEL_APPLET_FRAME (info->data), TRUE);
 	}
 
 	gnome_config_sync ();

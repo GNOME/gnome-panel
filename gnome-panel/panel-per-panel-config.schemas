@@ -276,7 +276,7 @@ FIXME: We need to change some of the ints into user visible strings
         <owner>panel</owner>
         <type>list</type>
 	<list_type>string</list_type>
-        <default>[00000001,00000002,00000003]</default>
+        <default>[00000001,00000002,00000003,00000004]</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -722,7 +722,7 @@ FIXME: We need to change some of the ints into user visible strings
         <key>/schemas/apps/panel/default_profiles/medium/applets/00000003/bonobo_iid</key>
         <owner>panel</owner>
         <type>string</type>
-        <default>OAFIID:GNOME_ClockApplet</default>
+        <default>OAFIID:GNOME_MixerApplet</default>
         <locale name="C">
           <short></short>
           <long></long>
@@ -739,6 +739,62 @@ FIXME: We need to change some of the ints into user visible strings
           <long></long>
         </locale>
       </schema>
+ 
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/object_type</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>bonobo-applet</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/panel_id</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>00000002</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+     
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/position</key>
+        <owner>panel</owner>
+        <type>int</type>
+        <default>-1</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/bonobo_iid</key>
+        <owner>panel</owner>
+        <type>string</type>
+        <default>OAFIID:GNOME_ClockApplet</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/panel/default_profiles/medium/applets/00000004/panel_right_stick</key>
+        <owner>panel</owner>
+        <type>bool</type>
+        <default>true</default>
+        <locale name="C">
+          <short></short>
+          <long></long>
+        </locale>
+      </schema>
+      
       
 <!-- *********************************** -->
 <!-- Panel Items for Edge Panel :: END -->

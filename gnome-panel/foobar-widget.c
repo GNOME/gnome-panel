@@ -37,6 +37,7 @@
 #include "panel-marshal.h"
 
 #define ICON_SIZE 20
+#define FOOBAR_MENU_FLAGS (MAIN_MENU_SYSTEM | MAIN_MENU_KDE_SUB | MAIN_MENU_DISTRIBUTION_SUB)
 
 extern GlobalConfig global_config;
 extern GSList *panel_list;
@@ -270,20 +271,16 @@ foobar_widget_realize (GtkWidget *w)
 				 0 /* bottom */);
 }
 
+
 static void
 programs_menu_to_display (GtkWidget *menu)
 {
 	if (menu_need_reread (menu)) {
-		int flags;
-
 		while (GTK_MENU_SHELL (menu)->children)
 			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
-		flags = MAIN_MENU_SYSTEM;
-		if (got_kde_menus ())
-			flags |= MAIN_MENU_KDE_SUB;
-		if (got_distro_menus ())
-			flags |= MAIN_MENU_DISTRIBUTION_SUB;
-		create_root_menu (menu, TRUE, flags, FALSE, FALSE /* run_item */);
+
+		create_root_menu (menu, TRUE, FOOBAR_MENU_FLAGS,
+				  FALSE, FALSE /* run_item */);
 	}
 }
 
@@ -649,13 +646,17 @@ setup_task_menu (FoobarWidget *foo)
 static void
 foobar_widget_instance_init (FoobarWidget *foo)
 {
-	char *path;
-	GtkWindow *window = GTK_WINDOW (foo);
+	GtkWindow *window;
 	GtkWidget *bufmap;
-	GtkWidget *menu_bar, *bar;
-	GtkWidget *menu, *menuitem;
+	GtkWidget *menu_bar;
+	GtkWidget *task_bar;
+	GtkWidget *menu;
+	GtkWidget *menuitem;
 	GtkWidget *align;
-	gint flags;
+	GList     *focus_chain = NULL;
+	char      *path;
+
+	window = GTK_WINDOW (foo);
 
 	foo->screen = 0;
 
@@ -705,13 +706,9 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	menuitem = pixmap_menu_item_new (_("Applications"),
 					 "gnome-logo-icon-transparent.png",
 					 TRUE /* force_image */);
-	flags = MAIN_MENU_SYSTEM;
-	if (got_kde_menus ())
-		flags |= MAIN_MENU_KDE_SUB;
-	if (got_distro_menus ())
-		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
-	menu = create_root_menu (NULL, TRUE, flags, FALSE, FALSE /* run_item */);
+	menu = create_root_menu (NULL, TRUE, FOOBAR_MENU_FLAGS,
+				 FALSE, FALSE /* run_item */);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
 	g_signal_connect (G_OBJECT (menu), "show",
@@ -748,15 +745,26 @@ foobar_widget_instance_init (FoobarWidget *foo)
 		gtk_box_pack_end (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
 	}
 
-	bar = menu_bar = gtk_menu_bar_new ();
-	gtk_widget_set_name (menu_bar,
-			     "panel-foobar-menubar");
+	task_bar = gtk_menu_bar_new ();
+	gtk_widget_set_name (task_bar, "panel-foobar-menubar");
 
-	append_task_menu (foo, GTK_MENU_SHELL (bar));
+	append_task_menu (foo, GTK_MENU_SHELL (task_bar));
 
-
-	gtk_box_pack_end (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
+	gtk_box_pack_end (GTK_BOX (foo->hbox), task_bar, FALSE, FALSE, 0);
 	gtk_container_add (GTK_CONTAINER (foo), foo->ebox);
+
+#if 0
+		{
+			GList *focus_chain = NULL;
+
+			focus_chain = g_list_prepend (focus_chain, task_bar);
+			focus_chain = g_list_prepend (focus_chain, foo->panel);
+			focus_chain = g_list_prepend (focus_chain, menu_bar);
+			gtk_container_set_focus_chain (GTK_CONTAINER (foo->hbox), focus_chain);
+			g_list_free (focus_chain);
+		}
+#endif
+
 	gtk_widget_show_all (foo->ebox);
 }
 
@@ -1002,5 +1010,3 @@ foobar_widget_move_focus_out (FoobarWidget *foobar)
 {
  	panel_widget_focus (PANEL_WIDGET (foobar->panel));
 }
-
-
