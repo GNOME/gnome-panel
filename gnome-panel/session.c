@@ -602,118 +602,12 @@ panel_session_die (GnomeClient *client,
 	return TRUE;
 }
 
-/*save ourselves*/
-static int
-panel_really_logout(GtkWidget *w, int button, gpointer data)
-{
-	GtkWidget **box=data;
-
-	if(button==0) {
-
-	        gnome_triggers_do("Session shutdown", NULL,
-				  "gnome", "logout", NULL);
-	  
-		if (! GNOME_CLIENT_CONNECTED (client)) {
-			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
-					    GNOME_INTERACT_NONE, 0, NULL);
-			panel_session_die (client, NULL);
-		} else {
-			/* We request a completely interactive, full,
-			   slow shutdown.  */
-			gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-						   GNOME_INTERACT_ANY, 0, 1);
-		}
-	} else if(button==2) {
-		GtkWidget *dlg =
-			gnome_message_box_new(_("Are you sure you want to "
-						"just terminate the panel?\n\n"
-						"If you need to restart the "
-						"panel after terminating it "
-						"here, you will need to type "
-						"panel in a terminal window\n\n"
-						"Press OK to terminate the "
-						"panel!"),
-					      GNOME_MESSAGE_BOX_WARNING,
-					      GNOME_STOCK_BUTTON_OK,
-					      GNOME_STOCK_BUTTON_CANCEL,
-					      NULL);
-		if(gnome_dialog_run_and_close(GNOME_DIALOG(dlg))==0) {
-			gnome_client_set_restart_style (client,
-							GNOME_RESTART_NEVER);
-			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
-					    GNOME_INTERACT_NONE, 0, NULL);
-			panel_session_die (client, NULL);
-		}
-	}
-	if(box)
-		*box = NULL;
-
-	return TRUE;
-}
-
-static void
-panel_really_logout_destroy(GtkWidget *w, gpointer data)
-{
-	GtkWidget **box=data;
-	if(box)
-		*box = NULL;
-}
-
-
-static void
-ask_next_time(GtkWidget *w,gpointer data)
-{
-	global_config.prompt_for_logout = GTK_TOGGLE_BUTTON(w)->active!=FALSE;
-	
-	globals_to_sync = TRUE;
-}
-
 /* the logout function */
 void
 panel_quit(void)
 {
-	static GtkWidget *box = NULL;
-	GtkWidget *but = NULL;
-
-	if(!global_config.prompt_for_logout) {
-		panel_really_logout(NULL,0,NULL);
-		return;
-	}
-
-	if(box) {
-		gdk_window_raise(box->window);
-		gtk_widget_show(box);
-		return;
-	}
-
-	box = gnome_message_box_new (_("Really log out?"),
-				     GNOME_MESSAGE_BOX_QUESTION,
-				     GNOME_STOCK_BUTTON_YES,
-				     GNOME_STOCK_BUTTON_NO,
-				     GNOME_CLIENT_CONNECTED (client)?
-				       _("Only terminate panel"):NULL,
-				     NULL);
-	gtk_window_set_wmclass(GTK_WINDOW(box),
-			       "logout_dialog","Panel");
-	gnome_dialog_set_default(GNOME_DIALOG(box), 0);
-	/*gtk_window_set_position(GTK_WINDOW(box), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy(GTK_WINDOW(box), FALSE, FALSE, TRUE);
-
-	gtk_signal_connect (GTK_OBJECT (box), "clicked",
-		            GTK_SIGNAL_FUNC (panel_really_logout), &box);
-	gtk_signal_connect (GTK_OBJECT (box), "destroy",
-		            GTK_SIGNAL_FUNC (panel_really_logout_destroy),
-			    &box);
-
-	but = gtk_check_button_new_with_label(_("Ask next time"));
-	gtk_widget_show(but);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(box)->vbox),but,
-		           FALSE, TRUE, GNOME_PAD_SMALL);
-	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(but),TRUE);
-	gtk_signal_connect(GTK_OBJECT(but),"toggled",
-			   GTK_SIGNAL_FUNC(ask_next_time),NULL);
-
-	gtk_widget_show (box);
+  gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+			     GNOME_INTERACT_ANY, 0, 1);
 }
 
 static void
