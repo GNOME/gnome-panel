@@ -116,6 +116,10 @@ typedef void (* CalendarDayIter) (CalendarClient *client,
 GType           calendar_client_get_type                (void) G_GNUC_CONST;
 CalendarClient *calendar_client_new                     (void);
 
+void            calendar_client_get_date                (CalendarClient      *client,
+							 guint               *year,
+                                                         guint               *month,
+							 guint               *day);
 void            calendar_client_select_month            (CalendarClient      *client,
 							 guint                month,
 							 guint                year);

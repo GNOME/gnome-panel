@@ -581,6 +581,9 @@ enum {
 static char *
 format_time (ClockFormat format,
              time_t      t,
+             guint       year,
+             guint       month,
+             guint       day,
              gboolean    use_utc)
 {
         struct tm *tm;
@@ -597,13 +600,22 @@ format_time (ClockFormat format,
         if (!tm)
                 return NULL;
 
-        if (format != CLOCK_FORMAT_12 && format != CLOCK_FORMAT_24)
-                format = clock_locale_format ();
+        if (year  == (tm->tm_year + 1900) &&
+            month == tm->tm_mon &&
+            day   == tm->tm_mday) {
+                if (format != CLOCK_FORMAT_12 && format != CLOCK_FORMAT_24)
+                        format = clock_locale_format ();
 
-        if (format == CLOCK_FORMAT_12)
-                time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
-        else
-                time_format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
+                if (format == CLOCK_FORMAT_12)
+                        time_format = g_locale_from_utf8 (_("%l:%M %p"), -1, NULL, NULL, NULL);
+                else
+                        time_format = g_locale_from_utf8 (_("%H:%M"), -1, NULL, NULL, NULL);
+        }
+        else {
+                /* Translators: If the event did not start on the current day
+                 we will display the start date in the most abbreviated way possible. */
+                time_format = g_locale_from_utf8 (_("%b %d"), -1, NULL, NULL, NULL);
+        }
 
         strftime (result, sizeof (result), time_format, tm);
 
@@ -868,7 +880,7 @@ create_task_list (ClockData  *cd,
 
         *tree_view = view = gtk_tree_view_new_with_model (GTK_TREE_MODEL (cd->tasks_filter));
         gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (view), FALSE);
-  
+
         /* Completed toggle */
         column = gtk_tree_view_column_new ();
         cell = gtk_cell_renderer_toggle_new ();
@@ -926,6 +938,7 @@ static void
 handle_appointments_changed (ClockData *cd)
 {
         GSList *events, *l;
+        guint   year, month, day;
 
         if (cd->calendar) {
                 gtk_calendar_freeze (GTK_CALENDAR (cd->calendar));
@@ -940,6 +953,7 @@ handle_appointments_changed (ClockData *cd)
         gtk_list_store_clear (cd->appointments_model);
 
         events = calendar_client_get_events (cd->client, CALENDAR_EVENT_APPOINTMENT);
+        calendar_client_get_date (cd->client, &year, &month, &day);
         for (l = events; l; l = l->next) {
                 CalendarAppointment *appointment = l->data;
                 GtkTreeIter          iter;
@@ -947,12 +961,14 @@ handle_appointments_changed (ClockData *cd)
 
                 g_assert (CALENDAR_EVENT (appointment)->type == CALENDAR_EVENT_APPOINTMENT);
 
-                if (!appointment->is_all_day)
+                if (appointment->is_all_day)
+                        start_text = g_strdup (_("All Day"));
+                else
                         start_text = format_time (cd->format,
                                                   appointment->start_time,
+                                                  year, month, day,
                                                   cd->gmt_time);
-                else
-                        start_text = g_strdup (_("All Day"));
+
 
                 gtk_list_store_append (cd->appointments_model, &iter);
                 gtk_list_store_set (cd->appointments_model, &iter,

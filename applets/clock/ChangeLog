@@ -1,5 +1,32 @@
 2004-05-26  William Jon McCann  <mccann@jhu.edu>
 
+	* clock.c (format_time, handle_appointments_changed): If the event
+	did not start on the current day then display the start date in
+	the most abbreviated form.
+	
+	* calendar-client.c (difftm, get_utc_offset):
+	Determine the offset from UTC.
+	(adjust_all_day): Apply UTC offset to local time if event is all day.
+	(get_ical_is_all_day): If the event starts on a day (as opposed to
+	a time) then it is an all day event.  Also return true for events
+	with duration of exact multiples of the length of a day.
+	(calendar_client_get_date): New function.
+	(calendar_client_foreach_appointment_day): 
+	(filter_appointment): Add support for multiple day events.  To do
+	this the appointment filter had to be changed to include another
+	case besides the one where a time window encompassed an event.  It
+	now includes events that start before or at the start of the
+	filter time window and end after the start of the filter time
+	window.
+	(calendar_client_set_task_completed): Fix typo.
+
+	For example: a repeated event that spans a month boundary or a
+	long event that spans more than one day.
+
+	Fixes bug #134931.
+
+2004-05-26  William Jon McCann  <mccann@jhu.edu>
+
 	* calendar-sources.c (backend_died_cb) 
 	(calendar_sources_load_esource_list): Reload clients when backend dies.
 	(backend_restart): Reload backends after a timeout to avoid restarting

@@ -286,7 +286,7 @@ calendar_client_set_property (GObject      *object,
 			      GParamSpec   *pspec)
 {
   CalendarClient *client = CALENDAR_CLIENT (object);
-                                                                                                             
+
   switch (prop_id)
     {
     case PROP_DAY:
@@ -375,6 +375,59 @@ make_isodate_for_day_begin (int day,
   return utctime != -1 ? isodate_from_time_t (utctime) : NULL;
 }
 
+/* copied from 
+   http://www.mit.edu:8001/afs/athena.mit.edu/project/gnu/src/p/patch-2.5/maketime.c 
+*/
+static time_t
+difftm (struct tm const *a,
+        struct tm const *b)
+{
+#define DIV(a, b) ((a) / (b) - ((a) % (b) < 0))
+#define TM_YEAR_ORIGIN 1900
+  int ay = a->tm_year + (TM_YEAR_ORIGIN - 1);
+  int by = b->tm_year + (TM_YEAR_ORIGIN - 1);
+  int ac = DIV (ay, 100);
+  int bc = DIV (by, 100);
+  int difference_in_day_of_year = a->tm_yday - b->tm_yday;
+  int intervening_leap_days = (((ay >> 2) - (by >> 2))
+			       - (ac - bc)
+			       + ((ac >> 2) - (bc >> 2)));
+  time_t difference_in_years = ay - by;
+  time_t difference_in_days
+    = (difference_in_years * 365
+       + (intervening_leap_days + difference_in_day_of_year));
+  return (((((difference_in_days * 24
+	      + (a->tm_hour - b->tm_hour))
+	     * 60)
+	    + (a->tm_min - b->tm_min))
+	   * 60)
+	  + (a->tm_sec - b->tm_sec));
+}
+
+static long
+get_utc_offset (const time_t t1)
+{
+  struct tm gm_tm, local_tm;
+  long      offset;
+
+  local_tm = *localtime (&t1);
+  gm_tm    = *gmtime (&t1);
+
+  offset = (long) difftm (&local_tm, &gm_tm);
+
+  dprintf ("calculated UTC offset = %ld, real UTC offset = %ld\n",
+           offset, local_tm.tm_gmtoff);
+
+  return offset;
+}
+
+static time_t
+adjust_all_day (const time_t t1,
+                gboolean     is_all_day)
+{
+  return is_all_day ? t1 - get_utc_offset (t1) : t1;
+}
+
 static GTime
 get_time_from_property (icalcomponent         *ical,
 			icalproperty_kind      prop_kind,
@@ -458,6 +511,11 @@ get_ical_is_all_day (icalcomponent *ical,
   struct tm               *start_tm;
   GTime                    end_time;
   struct icaldurationtype  duration;
+  struct icaltimetype      start_icaltime;
+
+  start_icaltime = icalcomponent_get_dtstart (ical);
+  if (start_icaltime.is_date)
+    return TRUE;
 
   start_tm = gmtime ((time_t *)&start_time);
   if (start_tm->tm_sec  != 0 ||
@@ -466,7 +524,7 @@ get_ical_is_all_day (icalcomponent *ical,
     return FALSE;
 
   if ((end_time = get_ical_end_time (ical)))
-    return (end_time - start_time) == 86400;
+    return (end_time - start_time) % 86400 == 0;
 
   prop = icalcomponent_get_first_property (ical, ICAL_DURATION_PROPERTY);
   if (!prop)
@@ -474,7 +532,7 @@ get_ical_is_all_day (icalcomponent *ical,
 
   duration = icalproperty_get_duration (prop);
 
-  return icaldurationtype_as_int (duration) == 86400;
+  return icaldurationtype_as_int (duration) % 86400 == 0;
 }
 
 static inline GTime
@@ -1419,6 +1477,24 @@ calendar_client_task_sources_changed (CalendarClient  *client)
 }
 
 void
+calendar_client_get_date (CalendarClient *client,
+                          guint          *year,
+                          guint          *month,
+                          guint          *day)
+{
+  g_return_if_fail (CALENDAR_IS_CLIENT (client));
+
+  if (year)
+    *year = client->priv->year;
+
+  if (month)
+    *month = client->priv->month;
+
+  if (day)
+    *day = client->priv->day;
+}
+
+void
 calendar_client_select_month (CalendarClient *client,
 			      guint           month,
 			      guint           year)
@@ -1491,9 +1567,15 @@ filter_appointment (const char    *uid,
   for (l = occurrences; l; l = l->next)
     {
       CalendarOccurrence *occurrence = l->data;
+      GTime start_time = adjust_all_day (occurrence->start_time,
+                                         CALENDAR_APPOINTMENT (event)->is_all_day);
+      GTime end_time   = adjust_all_day (occurrence->end_time,
+                                         CALENDAR_APPOINTMENT (event)->is_all_day);
 
-      if (occurrence->start_time >= filter_data->start_time &&
-	  occurrence->end_time   <= filter_data->end_time)
+      if ((start_time >= filter_data->start_time &&
+           start_time < filter_data->end_time) ||
+          (start_time <= filter_data->start_time &&
+           (end_time - 1) > filter_data->start_time))
 	{
 	  CalendarEvent *new_event;
 
@@ -1662,11 +1744,28 @@ calendar_client_foreach_appointment_day (CalendarClient  *client,
       CalendarAppointment *appointment = l->data;
 
       if (appointment->start_time)
-	marked_days [day_from_time_t (appointment->start_time)] = TRUE;
+        {
+          GTime day_time = adjust_all_day (appointment->start_time,
+                                           appointment->is_all_day);
+          if (day_time >= month_begin)
+            marked_days [day_from_time_t (day_time)] = TRUE;
       
-      if (appointment->end_time)
-	marked_days [day_from_time_t (appointment->end_time)] = TRUE;
-
+          if (appointment->end_time)
+            {
+              int day_offset;
+              int duration = appointment->end_time - appointment->start_time;
+              for (day_offset = 1; day_offset < duration / 86400; day_offset++)
+                {
+                  GTime day_time = adjust_all_day (appointment->start_time
+                                                   + day_offset * 86400,
+                                                   appointment->is_all_day);
+                  if (day_time > month_end)
+                    break;
+                  if (day_time >= month_begin)
+                    marked_days [day_from_time_t (day_time)] = TRUE;
+                }
+            }
+        }
       calendar_event_free (CALENDAR_EVENT (appointment));
     }
 
@@ -1709,7 +1808,7 @@ calendar_client_set_task_completed (CalendarClient *client,
 
   if (!ical)
     {
-      g_warning ("Connot locate task with uid = '%s'\n", task_uid);
+      g_warning ("Cannot locate task with uid = '%s'\n", task_uid);
       return;
     }
 
