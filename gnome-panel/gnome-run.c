@@ -1197,15 +1197,19 @@ show_run_dialog (void)
 			   &run_dialog);
 	gtk_window_position(GTK_WINDOW(run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (run_dialog),
-						_("Run"),
-						GTK_STOCK_EXECUTE);
-	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
-				    GNOME_STOCK_BUTTON_CANCEL);
+
 	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
 				    GNOME_STOCK_BUTTON_HELP);
 
-	gnome_dialog_set_default (GNOME_DIALOG (run_dialog), 0);
+	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
+				    GNOME_STOCK_BUTTON_CANCEL);
+
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (run_dialog),
+						_("Run"),
+						GTK_STOCK_EXECUTE);
+
+	gnome_dialog_set_default (GNOME_DIALOG (run_dialog), 2);
+
         gtk_signal_connect (GTK_OBJECT (run_dialog), "clicked", 
                             GTK_SIGNAL_FUNC (string_callback), NULL);
 
