@@ -8,35 +8,36 @@
 # Shingo Akagaki <dora@kondara.org>, 2000
 # Akira TAGOH <tagoh@gnome.gr.jp>, 2001
 # Takeshi AIHANA <aihana@gnome.gr.jp>, 2003.
+# KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>, 2003.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-05-04 18:25+0530\n"
-"PO-Revision-Date: 2003-03-30 00:29+0900\n"
-"Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
+"POT-Creation-Date: 2003-05-11 18:57+0900\n"
+"PO-Revision-Date: 2003-05-11 19:25+0900\n"
+"Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:183
+#: applets/clock/clock.c:205
 msgid "%l:%M:%S %p"
 msgstr "%p%l:%M:%S"
 
-#: applets/clock/clock.c:183
+#: applets/clock/clock.c:205
 msgid "%l:%M %p"
 msgstr "%p%l:%M"
 
-#: applets/clock/clock.c:185 applets/clock/clock.c:677
+#: applets/clock/clock.c:207 applets/clock/clock.c:699
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:185 applets/clock/clock.c:679
+#: applets/clock/clock.c:207 applets/clock/clock.c:701
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:191
+#: applets/clock/clock.c:213
 msgid "%a %b %d"
 msgstr "%m月%d日 (%a)"
 
@@ -44,7 +45,7 @@ msgstr "%m月%d日 (%a)"
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:198
+#: applets/clock/clock.c:220
 #, c-format
 msgid ""
 "%s\n"
@@ -57,42 +58,42 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:205
+#: applets/clock/clock.c:227
 #, c-format
 msgid "%s, %s"
 msgstr "%s %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:308
+#: applets/clock/clock.c:330
 msgid "%A %B %d"
 msgstr "%m月%d日 (%a)"
 
-#: applets/clock/clock.c:423
+#: applets/clock/clock.c:445
 msgid "Calendar"
 msgstr "カレンダ"
 
-#: applets/clock/clock.c:586
+#: applets/clock/clock.c:608
 msgid "Computer Clock"
 msgstr "コンピュータ時計"
 
-#: applets/clock/clock.c:672
+#: applets/clock/clock.c:694
 msgid "%I:%M:%S %p"
 msgstr "%p %I:%M:%S"
 
-#: applets/clock/clock.c:674
+#: applets/clock/clock.c:696
 msgid "%I:%M %p"
 msgstr "%p %I:%M"
 
-#: applets/clock/clock.c:713
+#: applets/clock/clock.c:735
 msgid "%A, %B %d %Y"
 msgstr "%Y/%m/%d (%a)"
 
-#: applets/clock/clock.c:754
+#: applets/clock/clock.c:776
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "時刻設定ツールの起動に失敗: %s"
 
-#: applets/clock/clock.c:791
+#: applets/clock/clock.c:813
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -100,7 +101,7 @@ msgstr ""
 "日付と時刻を設定するプログラムの特定に失敗しました。おそらく何もインストール"
 "されていないかも？"
 
-#: applets/clock/clock.c:1207 applets/clock/clock.c:1472
+#: applets/clock/clock.c:1229 applets/clock/clock.c:1492
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
 #: applets/wncklet/showdesktop.c:404 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:746 applets/wncklet/window-menu.c:82
@@ -110,49 +111,44 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "ヘルプを表示する際にエラーが発生しました:%s"
 
-#: applets/clock/clock.c:1253
+#: applets/clock/clock.c:1274
 msgid "Clock Preferences"
 msgstr "時計の設定"
 
-#: applets/clock/clock.c:1287
-#, fuzzy
+#: applets/clock/clock.c:1309
 msgid "Clock _type:"
-msgstr "時計の種類"
+msgstr "時計の種類(_T):"
 
-#: applets/clock/clock.c:1300
-#, fuzzy
+#: applets/clock/clock.c:1320
 msgid "12 hour"
-msgstr "12時間制(_1)"
+msgstr "12時間制"
 
-#: applets/clock/clock.c:1308
-#, fuzzy
+#: applets/clock/clock.c:1328
 msgid "24 hour"
-msgstr "24時間制(_2)"
-
-#: applets/clock/clock.c:1316
-#, fuzzy
-msgid "UNIX time"
-msgstr "UNIX 時間(_X)"
-
-#: applets/clock/clock.c:1323
-#, fuzzy
-msgid "Internet time"
-msgstr "インターネット時間(_I)"
+msgstr "24時間制"
 
 #: applets/clock/clock.c:1336
+msgid "UNIX time"
+msgstr "UNIX 時間"
+
+#: applets/clock/clock.c:1343
+msgid "Internet time"
+msgstr "インターネット時間"
+
+#: applets/clock/clock.c:1356
 msgid "Show _seconds"
 msgstr "秒を表示する(_S)"
 
-#: applets/clock/clock.c:1345
+#: applets/clock/clock.c:1365
 msgid "Show _date"
 msgstr "日付を表示する(_D)"
 
-#: applets/clock/clock.c:1354
+#: applets/clock/clock.c:1374
 msgid "Use _UTC"
 msgstr "UTC を使用する(_U)"
 
 #. Translator credits
-#: applets/clock/clock.c:1508 applets/notification_area/main.c:112
+#: applets/clock/clock.c:1528 applets/notification_area/main.c:112
 #: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:778
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:483
 #: gnome-panel/menu.c:286
@@ -165,14 +161,15 @@ msgstr ""
 "Takayuki KUSANO (AE5T-KSN@asahi-net.or.jp)\n"
 "Yasuyuki Furukawa (yasu@on.cs.keio.ac.jp)\n"
 "Yukihiro Nakai (nakai@gnome.gr.jp)\n"
-"Yuusuke Tahara (tahara@gnome.gr.jp)"
+"Yuusuke Tahara (tahara@gnome.gr.jp)\n"
+"KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>"
 
+#: applets/clock/clock.c:1547
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:1527
 msgid "Clock"
 msgstr "時計"
 
-#: applets/clock/clock.c:1529
+#: applets/clock/clock.c:1549
 msgid "The Clock displays the current time and date"
 msgstr "現在の時刻と日付を表示する時計"
 
@@ -338,8 +335,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(あと George にちょっと手伝ってもらった)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:417
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "おさかな君"
 
@@ -404,9 +401,8 @@ msgstr "占い師 GNOME おさかな君"
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
-#, fuzzy
 msgid "    "
-msgstr "      "
+msgstr "    "
 
 #: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:3
@@ -414,62 +410,52 @@ msgid "*"
 msgstr "*"
 
 #: applets/fish/fish.glade.h:3
-#, fuzzy
 msgid "<b>Animation</b>"
-msgstr "<b>オプション</b>"
+msgstr "<b>アニメーション</b>"
 
 #: applets/fish/fish.glade.h:4
-#, fuzzy
 msgid "<b>General</b>"
-msgstr "全般"
+msgstr "<b>全般</b>"
 
 #: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:271
 msgid "Browse"
 msgstr "参照"
 
 #: applets/fish/fish.glade.h:6
-#, fuzzy
 msgid "Co_mmand to run when clicked:"
-msgstr "おさかな君がクリックされた時に実行するコマンド(_E):"
+msgstr "おさかな君がクリックされた時に実行するコマンド(_M):"
 
 #: applets/fish/fish.glade.h:7
-#, fuzzy
 msgid "Fish Preferences"
-msgstr "GNOME おさかな君の設定"
+msgstr "おさかな君の設定"
 
 #: applets/fish/fish.glade.h:8
-#, fuzzy
 msgid "_File:"
-msgstr "タイル状(_T)"
+msgstr "ファイル(_F):"
 
 #: applets/fish/fish.glade.h:9
-#, fuzzy
 msgid "_Name of fish:"
-msgstr "GNOME おさかな君の名前(_N)"
+msgstr "おさかな君の名前(_N):"
 
 #: applets/fish/fish.glade.h:10
-#, fuzzy
 msgid "_Pause per frame:"
-msgstr "フレーム毎のポーズ"
+msgstr "フレーム毎のポーズ(_P):"
 
 #: applets/fish/fish.glade.h:11
 msgid "_Rotate on vertical panels"
 msgstr "パネルが縦向きの時は回転する(_R)"
 
 #: applets/fish/fish.glade.h:12
-#, fuzzy
 msgid "_Total frames in animation:"
-msgstr "アニメーションのフレーム(_S):"
+msgstr "アニメーションの総フレーム数(_T):"
 
 #: applets/fish/fish.glade.h:13
-#, fuzzy
 msgid "frames"
-msgstr "名前"
+msgstr "フレーム"
 
 #: applets/fish/fish.glade.h:14
-#, fuzzy
 msgid "seconds"
-msgstr "秒を表示する(_S)"
+msgstr "秒"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -629,28 +615,24 @@ msgstr ""
 "ます"
 
 #: applets/wncklet/window-list.glade.h:2
-#, fuzzy
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "最小化したウィンドウを復元する場合"
+msgstr "<b>最小化したウィンドウを復元する</b>"
 
 #: applets/wncklet/window-list.glade.h:3
-#, fuzzy
 msgid "<b>Window Grouping</b>"
-msgstr "ウィンドウのグループ化"
+msgstr "<b>ウィンドウのグループ化</b>"
 
 #: applets/wncklet/window-list.glade.h:4
-#, fuzzy
 msgid "<b>Window List Content</b>"
-msgstr "ウィンドウ一覧の内容"
+msgstr "<b>ウィンドウ一覧の内容</b>"
 
 #: applets/wncklet/window-list.glade.h:5
-#, fuzzy
 msgid "<b>Window List Size</b>"
-msgstr "ウィンドウ一覧の大きさ"
+msgstr "<b>ウィンドウ一覧の大きさ</b>"
 
 #: applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
-msgstr ""
+msgstr "挙動"
 
 #: applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
@@ -673,9 +655,8 @@ msgid "Restore to na_tive workspace"
 msgstr "元のワークスペースに復元する(_T)"
 
 #: applets/wncklet/window-list.glade.h:12
-#, fuzzy
 msgid "Sh_ow windows from current workspace"
-msgstr "現在のワークスペースにあるウィンドウを表示する(_C)"
+msgstr "現在のワークスペースにあるウィンドウを表示する(_O)"
 
 #: applets/wncklet/window-list.glade.h:13
 msgid "Show windows from a_ll workspaces"
@@ -697,6 +678,11 @@ msgstr "常にグループ化する(_A)"
 #: applets/wncklet/window-list.glade.h:17
 msgid "_Never group windows"
 msgstr "グループ化しない(_N)"
+
+#: applets/wncklet/window-list.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:31
+msgid "pixels"
+msgstr "ピクセル"
 
 #: applets/wncklet/window-list.schemas.in.h:1
 msgid ""
@@ -773,14 +759,12 @@ msgstr "ウインドウが開いてません"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:718
-#: applets/wncklet/workspace-switcher.glade.h:10
-#, fuzzy
+#: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
-msgstr "参照"
+msgstr "行"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:718
-#, fuzzy
 msgid "columns"
 msgstr "列"
 
@@ -811,31 +795,27 @@ msgstr ""
 "を表示します。"
 
 #: applets/wncklet/workspace-switcher.glade.h:2
-#, fuzzy
 msgid "<b>Switcher</b>"
-msgstr "<b>プレビュー</b>"
+msgstr "<b>切り替え器</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:3
-#, fuzzy
 msgid "<b>Workspaces</b>"
-msgstr "ワークスペース"
+msgstr "<b>ワークスペース</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:4
 msgid "Number of _workspaces:"
 msgstr "ワークスペースの数(_W):"
 
 #: applets/wncklet/workspace-switcher.glade.h:5
-#, fuzzy
-msgid "Show _all workspaces in"
-msgstr "全てのワークスペースを表示する(_A)"
+msgid "Show _all workspaces in:"
+msgstr "すべてのワークスペースを表示する(_A):"
 
 #: applets/wncklet/workspace-switcher.glade.h:6
-#, fuzzy
 msgid "Show _only the current workspace"
-msgstr "現在のワークスペースのみ表示する(_C)"
+msgstr "現在のワークスペースのみ表示する(_O)"
 
 #: applets/wncklet/workspace-switcher.glade.h:7
-msgid "Show workspace _names in the switcher"
+msgid "Show workspace _names in switcher"
 msgstr "切り替え器にワークスペース名を表示する(_N)"
 
 #: applets/wncklet/workspace-switcher.glade.h:8
@@ -845,6 +825,10 @@ msgstr "ワークスペース名"
 #: applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace Switcher Preferences"
 msgstr "ワークスペース切り換え器の設定"
+
+#: applets/wncklet/workspace-switcher.glade.h:10
+msgid "Workspace na_mes:"
+msgstr "ワークスペース名(_M):"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid ""
@@ -891,11 +875,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:411
+#: gnome-panel/applet.c:411 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "パネルから削除(_R)"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:423
+#: gnome-panel/applet.c:423 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "移動(_M)"
 
@@ -1305,7 +1289,7 @@ msgstr "端末内で起動する(_T)"
 
 #: gnome-panel/gnome-run.c:992
 msgid "Run with _File..."
-msgstr ""
+msgstr "ファイルと実行(_F)..."
 
 #: gnome-panel/gnome-run.c:1373
 #, c-format
@@ -1326,9 +1310,8 @@ msgstr "実行するアプリケーションを一覧から選んで下さい"
 
 #: gnome-panel/gnome-run.c:1664 gnome-panel/menu.c:3320
 #: gnome-panel/panel-action-button.c:200 gnome-panel/panel-menu-bar.c:110
-#, fuzzy
 msgid "Run Application"
-msgstr "アプリケーション"
+msgstr "アプリケーションの実行"
 
 #: gnome-panel/launcher.c:157
 #, c-format
@@ -1905,22 +1888,16 @@ msgstr "パネル・オブジェクト ID の一覧"
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
-"these applets is stored in /apps/panel/general/$(profiles)/objects/$(id)."
-msgstr ""
-"パネル・オブジェクト ID の一覧です。各 ID は個々のパネル・オブジェクト (例: "
-"ランチャ、アクション・ボタンやメニューボタン、メニューパネル) を示します。こ"
-"れらのオブジェクトの設定はそれぞれ /apps/panel/general/$(profiles)/objects/"
-"$(id) に格納されます。"
+"these objects is stored in /apps/panel/general/$(profiles)/objects/$(id)."
+msgstr "パネル・オブジェクト ID の一覧です。各 ID は個々のパネル・オブジェクト (例: ランチャ、アクション・ボタンやメニューボタン、メニューバー) を示します。これらのオブジェクトの設定はそれぞれ /apps/panel/general/$(profiles)/objects/$(id) に格納されます。"
 
 #: gnome-panel/panel-general.schemas.in.h:7
-#, fuzzy
 msgid "Enable the program list in the \"Run Application\" dialog."
-msgstr "\"プログラムの実行\" ダイアログの中にプログラム一覧を付与する"
+msgstr "\"プログラムの実行\" ダイアログ上のプログラム一覧を有効にする"
 
 #: gnome-panel/panel-general.schemas.in.h:8
-#, fuzzy
 msgid "Expand the program list in the \"Run Application\" dialog"
-msgstr "\"プログラムの実行\" ダイアログの中にプログラム一覧を開く"
+msgstr "\"プログラムの実行\" ダイアログ上のプログラム一覧を開く"
 
 #: gnome-panel/panel-general.schemas.in.h:9
 msgid ""
@@ -2195,7 +2172,7 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "GConf の bool 値 '%s' の読み込みでエラー: %s"
 
-#: gnome-panel/panel-profile.c:1810
+#: gnome-panel/panel-profile.c:1816
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "GConf の list 値 '%s' の読み込みでエラー: %s"
@@ -2205,27 +2182,24 @@ msgid "      "
 msgstr "      "
 
 #: gnome-panel/panel-properties-dialog.glade.h:4
-#, fuzzy
 msgid "<b>_Name:</b>"
-msgstr "名前(_N):"
+msgstr "<b>名前(_N):</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:5
-#, fuzzy
 msgid "<b>_Orientation:</b>"
-msgstr "向き(_O):"
+msgstr "<b>向き(_O):</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:6
-#, fuzzy
 msgid "<b>_Size:</b>"
-msgstr "<b>プレビュー</b>"
+msgstr "<b>サイズ(_S):</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:7
 msgid "<small>Opaque</small>"
-msgstr ""
+msgstr "<small>不透明</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:8
 msgid "<small>Transparent</small>"
-msgstr ""
+msgstr "<small>透過的</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Arro_ws on hide buttons"
@@ -2246,9 +2220,8 @@ msgid "Bottom"
 msgstr "下"
 
 #: gnome-panel/panel-properties-dialog.glade.h:13
-#, fuzzy
 msgid "Co_lor:"
-msgstr "単一色(_C):"
+msgstr "色(_L):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:14
 msgid "E_xpand"
@@ -2288,16 +2261,15 @@ msgstr "パネルが縦向きの場合は画像を回転させる(_V)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "S_tyle:"
-msgstr ""
+msgstr "スタイル(_T):"
 
 #: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "Show hide _buttons"
 msgstr "隠すボタンを表示する(_B)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:24
-#, fuzzy
 msgid "Solid c_olor"
-msgstr "単一色(_C):"
+msgstr "単一色(_O)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "St_retch"
@@ -2324,10 +2296,6 @@ msgstr "引き伸ばす(比率を維持)(_S)"
 #: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Tile"
 msgstr "タイル状(_T)"
-
-#: gnome-panel/panel-properties-dialog.glade.h:31
-msgid "pixels"
-msgstr ""
 
 #: gnome-panel/panel-recent.c:57
 msgid "Couldn't find a suitable application"
@@ -2597,11 +2565,9 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
-"If true, arrows will be place on the hide buttons. This preference only has "
+"If true, arrows will be placed on the hide buttons. This preference only has "
 "meaning if enable_buttons is true."
-msgstr ""
-"True にすると、隠すボタンに矢印が付与されます。この設定は enable_button が "
-"True の場合にのみ利用できます。"
+msgstr "True にすると、隠すボタンに矢印が付与されます。この設定は enable_buttons が True の場合にのみ利用できます。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
@@ -2637,14 +2603,10 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this more the panel can only be placed at a screen edge. "
+"vertical panel). In this mode the panel can only be placed at a screen edge. "
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
-msgstr ""
-"True にすると、パネルがスクリーンの幅 (パネルが縦向きの場合は高さ) 一杯に延び"
-"ます。この機能により、パネルはスクリーンの端に配置することができます。False "
-"にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせた大き"
-"さになります。"
+msgstr "True にすると、パネルがスクリーンの幅 (パネルが縦向きの場合は高さ) 一杯に延びます。このモードでは、パネルはスクリーンの端にしか配置することができません。False にすると、パネルはその上にあるアプレット、ランチャ、ボタンの数に合わせた大きさになります。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
@@ -2657,7 +2619,7 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
-"In a Xinerama setup, you may have panel's on each individual monitor. This "
+"In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
 msgstr ""
 "Xinerama 機能では、別々のモニタにパネルを配置することができます。このキーはパ"
@@ -2716,11 +2678,9 @@ msgstr ""
 #: gnome-panel/panel-toplevel.schemas.in.h:29
 msgid ""
 "Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535) and the color will be "
-"composited onto the desktop background image."
-msgstr ""
-"バックグラウンドの透明度のフォーマットを指定します。色が完全に透明にならない "
-"(65535 より小さい値) の場合、その色はバックグラウンドの画像と合成されます。"
+"completely opaque (a value of less than 65535), the color will be composited "
+"onto the desktop background image."
+msgstr "バックグラウンドの透明度のフォーマットを指定します。色が完全に不透明 (65535 より小さい値) の場合、その色はバックグラウンドの画像と合成されます。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
 msgid "Stretch the image to the panel."
@@ -2823,12 +2783,9 @@ msgstr "アニメーションの速度"
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "The speed which animations should occur. There are three possible values; "
-"\"slow\", \"medium\" and \"fast\". This preference only has relevance is "
+"\"slow\", \"medium\" and \"fast\". This preference only has relevance if "
 "enable_animations is true."
-msgstr ""
-"アニメーションの速度です。利用可能な値が三つあります - \"slow\", \"medium\" "
-"と \"fast\" です。この設定は enable_animations が True の場合にのみ利用できま"
-"す。"
+msgstr "アニメーションの速度です。利用可能な値が三つあります - \"slow\", \"medium\" と \"fast\" です。この設定は enable_animations が True の場合にのみ機能します。"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
 msgid ""
@@ -2854,11 +2811,9 @@ msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid ""
-"With a multi-screen setup, you may have panel's on each individual screen. "
+"With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
-msgstr ""
-"複数のスクリーン設定で、別々のスクリーンにパネルを配置することが可能です。こ"
-"のキーはパネルが表示されている現在のスクリーンを示します。"
+msgstr "マルチ・スクリーン設定で、別々のスクリーンにパネルを配置することが可能です。このキーはパネルが表示されている現在のスクリーンを示します。"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2893,42 +2848,42 @@ msgstr "Bonobo アプレット (テスト用)"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo アプレット・ファクトリ (テスト用)"
 
-#: libpanel-applet/panel-applet.c:865
+#: libpanel-applet/panel-applet.c:869
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "不完全なバックグラウンドの種類 '%s' を受けとりました"
 
-#: libpanel-applet/panel-applet.c:879
+#: libpanel-applet/panel-applet.c:883
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "不完全なバックグラウンドの種類 '%s' を受け取りました: %s"
 
-#: libpanel-applet/panel-applet.c:888
+#: libpanel-applet/panel-applet.c:892
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "画像 %s の取得に失敗しました"
 
-#: libpanel-applet/panel-applet.c:895
+#: libpanel-applet/panel-applet.c:899
 msgid "Unknown background type received"
 msgstr "不明なバックグラウンドの種類を受信しました"
 
-#: libpanel-applet/panel-applet.c:1076
+#: libpanel-applet/panel-applet.c:1080
 msgid "The Applet's containing Panel's orientation"
 msgstr "アプレットを含むパネルの向き"
 
-#: libpanel-applet/panel-applet.c:1084
+#: libpanel-applet/panel-applet.c:1088
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "アプレットを含むパネルの大きさ (ピクセル単位)"
 
-#: libpanel-applet/panel-applet.c:1092
+#: libpanel-applet/panel-applet.c:1096
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "アプレットを含むパネルのバックグラウンド色、あるいは画像"
 
-#: libpanel-applet/panel-applet.c:1100
+#: libpanel-applet/panel-applet.c:1104
 msgid "The Applet's flags"
 msgstr "アプレットのフラグ"
 
-#: libpanel-applet/panel-applet.c:1108
+#: libpanel-applet/panel-applet.c:1112
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "アプレットの大きさのヒントとして指定可能な範囲"
 
