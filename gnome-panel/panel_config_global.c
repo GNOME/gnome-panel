@@ -17,7 +17,7 @@ extern GSList *applets_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-static GtkWidget *aniframe[3];
+static GtkWidget *aniframe[4];
 
 static GtkWidget *tilefile[LAST_TILE];
 static GtkWidget *tileborder[LAST_TILE];
@@ -36,10 +36,7 @@ config_destroy(GtkWidget *widget, gpointer data)
 static void 
 set_toggle_button_value (GtkWidget *widget, gpointer data)
 {
-	if(GTK_TOGGLE_BUTTON(widget)->active)
-		*(int *)data=TRUE;
-	else
-		*(int *)data=FALSE;
+	*(int *)data=(GTK_TOGGLE_BUTTON(widget)->active==TRUE);
 	if(config_window)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (config_window));
 }
@@ -62,7 +59,6 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	for(i=0;i<LAST_TILE;i++) {
 		global_config.tile_up[i] =
 			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_up[i]));
-		printf("TILE_UP[%d]=%s\n",i,global_config.tile_up[i]);
 		global_config.tile_down[i] =
 			gnome_icon_entry_get_filename(GNOME_ICON_ENTRY(entry_down[i]));
 	}
@@ -168,7 +164,7 @@ set_anim_button_value(GtkWidget *w, gpointer data)
 	int i;
 	int disable = !(GTK_TOGGLE_BUTTON(w)->active);
 
-	for(i=0;i<3;i++)
+	for(i=0;i<4;i++)
 		gtk_widget_set_sensitive(aniframe[i],!disable);
 	temp_config.disable_animations = disable;
 
@@ -183,6 +179,7 @@ animation_notebook_page(void)
 	GtkWidget *frame;
 	GtkWidget *vbox;
 	GtkWidget *button;
+	GtkWidget *w;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -194,6 +191,18 @@ animation_notebook_page(void)
 			    GTK_SIGNAL_FUNC (set_anim_button_value),NULL); 
 	gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
+	w = gtk_check_button_new_with_label (_("Constant speed animations"));
+	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
+	/*we have to do this after everything we need aniframe varaibles set*/
+	if (temp_config.simple_movement)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), TRUE);
+	/*note it's not a frame, but it's disabled anyhow*/
+	aniframe[3] = w;
+	if (temp_config.disable_animations)
+		gtk_widget_set_sensitive(w,FALSE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(temp_config.simple_movement));
 
 	/* AutoHide Animation step_size scale frame */
 	frame = make_int_scale_frame(_("Auto-hide animation speed"),
