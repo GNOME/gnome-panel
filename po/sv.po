@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-11-28 17:24+1300\n"
-"PO-Revision-Date: 2002-07-23 13:28+0200\n"
+"POT-Creation-Date: 2002-12-01 17:22+0100\n"
+"PO-Revision-Date: 2002-12-01 17:25+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,7 +45,7 @@ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "<big><big>GNOME-fisken %s säger:</big></big>"
 
 #: applets/fish/fish.c:596
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -54,8 +54,8 @@ msgid ""
 msgstr ""
 "Varning: Kommandot verkar vara någonting användbart. Eftersom\n"
 "detta är ett oanvändbart panelprogram vill du nog inte göra\n"
-"detta. Vi rekommenderar inte att man använder Wanda till\n"
-"någonting som skulle göra panelprogrammet praktiskt eller\n"
+"detta. Vi rekommenderar inte att man använder %s till\n"
+"någonting som skulle göra panelprogrammet \"praktiskt\" eller\n"
 "användbart."
 
 #: applets/fish/fish.c:746
@@ -131,24 +131,24 @@ msgstr ""
 "(Titta på dagens datum)"
 
 #: applets/fish/fish.c:1249
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. If "
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"Detta panelprogram har inget som helst användningsområde. Det tar bara upp "
-"diskutrymme och kompileringstid, och om det körs tar det upp minne och "
-"dyrbart utrymme på panelen. Om någon hittas användande detta panelprogram "
-"bör han eller hon genast skickas på psykiatrisk undersökning."
+"%s har inget som helst användningsområde. Det tar bara upp diskutrymme och "
+"kompileringstid, och om det körs tar det upp minne och dyrbart utrymme på "
+"panelen. Om någon hittas användande detta panelprogram bör han eller hon "
+"genast skickas på psykiatrisk undersökning."
 
 #: applets/fish/fish.c:1273
 msgid "(with minor help from George)"
 msgstr "(med lite hjälp från George)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:1291
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Fisk"
 
@@ -217,8 +217,8 @@ msgstr "_Om..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
-#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:800 gnome-panel/menu.c:3542
+#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Hjälp"
 
@@ -274,8 +274,8 @@ msgstr "%A %d %B %Y"
 #: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
 #: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
 #: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
-#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
+#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:123
+#: applets/gen_util/tasklist.c:762 applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Ett fel uppstod vid visning av hjälp: %s"
@@ -297,9 +297,8 @@ msgid "_24 hour"
 msgstr "_24-timmars"
 
 #: applets/gen_util/clock.c:995
-#, fuzzy
 msgid "UNI_X time"
-msgstr "_Unixtid"
+msgstr "UNI_X-tid"
 
 #: applets/gen_util/clock.c:999
 msgid "_Internet time"
@@ -320,7 +319,7 @@ msgstr "Använd UT_C"
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -332,14 +331,15 @@ msgstr ""
 "Martin Wahlén\n"
 "Skicka synpunkter på översättningen till sv@li.org"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1192
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Klocka"
 
-#: applets/gen_util/clock.c:1193
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1998-2002 Free Software Foundation"
+#: applets/gen_util/clock.c:1193 applets/gen_util/mailcheck.c:1746
+#: applets/gen_util/printer.c:354
+msgid "(C) 1998 Free Software Foundation, Inc."
+msgstr "© 1998 Free Software Foundation, Inc."
 
 #: applets/gen_util/clock.c:1194
 msgid "The Clock displays the current time and date"
@@ -347,16 +347,15 @@ msgstr "Klockan visar aktuell tid och datum"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display Internet time, which is same all over the world"
 msgstr "Visa Internettid, som är samma i hela världen"
 
 #: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
 msgid "Display date in the Clock, in addition to time"
-msgstr "Visa datum i panelprogrammet utöver tiden"
+msgstr "Visa datum i klockan, utöver tiden"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
@@ -379,14 +378,12 @@ msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Ställer in formatet på timmar, kan vara antingen 12 eller 24"
 
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in Clock"
-msgstr "Visa datum i panelprogrammet"
+msgstr "Visa datum i klockan"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "Visa datum i ett verktygstips när muspekare är över panelprogrammet"
+msgstr "Visa datum i ett verktygstips när muspekare är över klockan"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
@@ -426,7 +423,7 @@ msgstr "Meddela när ny post ankommer"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 msgid "Button to hide application windows and show the desktop"
-msgstr ""
+msgstr "Knapp för att dölja programfönster och visa skrivbordet"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:5
 msgid "GenUtil Applet Factory"
@@ -447,9 +444,8 @@ msgstr "Internet"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 #: applets/gen_util/showdesktop.c:452
-#, fuzzy
 msgid "Show Desktop Button"
-msgstr "Visa dölj_knappar"
+msgstr "Visa skrivbordsknapp"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Switch between open windows"
@@ -465,7 +461,7 @@ msgid "Utility"
 msgstr "Verktyg"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Fönsterlista"
 
@@ -673,10 +669,6 @@ msgstr "_E-postkontroll"
 msgid "Mail_box"
 msgstr "_Brevlåda"
 
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "© 1998-2000 Free Software Foundation"
-
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "Inkorgsövervakaren meddelar dig när nya brev hamnar i din brevlåda"
@@ -698,9 +690,8 @@ msgid "Command to execute when checking mail"
 msgstr "Kommando som ska utföras vid kontroll av post"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "Kommando som ska utföras vid klick"
+msgstr "Kommando som ska utföras när du klickar på inkorgsövervakaren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -782,31 +773,28 @@ msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "Detta är hur vi behandlar post, behandlar post, behandlar post..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
-#, fuzzy
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
 msgstr ""
 "Detta är den animation som kommer att visas vid normal användning av "
-"panelprogrammet för postkontroll"
+"inkorgsövervakaren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
 msgstr "Användarnamn på fjärrservern"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "Vi kör detta kommando när användaren klickar på panelprogrammet"
+msgstr "Vi kör detta kommando när användaren klickar på inkorgsövervakaren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "Huruvida poststatusen ska återställas vid klick på panelprogrammet"
+msgstr "Huruvida poststatusen ska återställas vid klick på inkorgsövervakaren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
-msgstr "Du har post."
+msgstr "Du har post!"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -826,25 +814,25 @@ msgid "Columns"
 msgstr "Kolumner"
 
 #: applets/gen_util/pager.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "Fel vid inläsning av num_rows-värde för arbetsytebytaren: %s\n"
 
 #: applets/gen_util/pager.c:387
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
 "Fel vid inläsning av display_workspace_names-värde för arbetsytebytaren: %s\n"
 
 #: applets/gen_util/pager.c:402
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Fel vid inläsning av display_all_workspaces-värde för arbetsytebytaren: %s\n"
 
-#: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
+#: applets/gen_util/pager.c:546 applets/gen_util/tasklist.c:809
+msgid "(C) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
 #: applets/gen_util/pager.c:547
@@ -884,32 +872,27 @@ msgid "Workspaces"
 msgstr "Arbetsytor"
 
 #: applets/gen_util/pager.schemas.in.h:1
-#, fuzzy
 msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"Om detta är sant kommer arbetsytebytaren endast att visa alla arbetsytor, "
-"annars kommer endast aktuell arbetsyta att visas."
+"Om detta är sant kommer arbetsytebytaren att visa alla arbetsytor, annars "
+"kommer endast aktuell arbetsyta att visas."
 
 #: applets/gen_util/pager.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the workspaces in the Workspace Switcher will display the "
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"Om detta är sant kommer arbetsytorna i arbetsytebytaren att endast visa "
-"namnen på arbetsytorna. Annars kommer endast innehållet på arbetsytorna att "
-"visas."
+"Om detta är sant kommer arbetsytorna i arbetsytebytaren att visa namnen på "
+"arbetsytorna. Annars kommer innehållet på arbetsytorna att visas."
 
 #: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
 msgid "Number of rows in the Workspace Switcher."
-msgstr "Antal rader i arbetsytebytaren"
+msgstr "Antal rader i arbetsytebytaren."
 
 #: applets/gen_util/pager.schemas.in.h:4
-#, fuzzy
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
@@ -920,15 +903,13 @@ msgstr ""
 "arbetsytorna i."
 
 #: applets/gen_util/pager.schemas.in.h:5
-#, fuzzy
 msgid "Whether to display the all workspaces in the Workspace Switcher."
 msgstr "Huruvida alla arbetsytor ska visas i arbetsytebytaren."
 
 #: applets/gen_util/pager.schemas.in.h:6
-#, fuzzy
 msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr "Huruvida namn på arbetsytor ska visas i arbetsytebytaren."
+msgstr "Huruvida namnen på arbetsytorna ska visas i arbetsytebytaren."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -953,10 +934,6 @@ msgstr "Skrivare"
 #: applets/gen_util/printer.c:353
 msgid "Printer Applet"
 msgstr "Skrivarpanelprogram"
-
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998 Free Software Foundation"
 
 #: applets/gen_util/printer.c:356
 msgid ""
@@ -984,39 +961,30 @@ msgstr "Om..."
 
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
-msgstr ""
+msgstr "Klicka här för att återställa dolda fönster."
 
 #: applets/gen_util/showdesktop.c:220
 msgid "Click here to hide all windows and show the desktop."
-msgstr ""
+msgstr "Klicka här för att dölja alla fönster och visa skrivbordet."
 
 #: applets/gen_util/showdesktop.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to load %s: %s\n"
-msgstr ""
-"Misslyckades med att öppna bilden %s\n"
-"\n"
-"Detaljer: %s"
+msgstr "Misslyckades med att läsa in %s: %s\n"
 
 #: applets/gen_util/showdesktop.c:291
-#, fuzzy
 msgid "File not found"
-msgstr "filen hittades inte"
+msgstr "Filen hittades inte"
 
 #: applets/gen_util/showdesktop.c:453
-#, fuzzy
 msgid "(C) 2002 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
+msgstr "© 2002 Red Hat, Inc."
 
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
-msgstr ""
+msgstr "Denna knapp låter dig dölja alla fönster och visa skrivbordet"
 
-#: applets/gen_util/tasklist.c:768
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "© 2001 Red Hat, Inc"
-
-#: applets/gen_util/tasklist.c:769
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1080,16 +1048,14 @@ msgid "_Never group windows"
 msgstr "Gruppera al_drig fönster"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are never, auto, and always."
 msgstr ""
-"Huruvida fönster från samma program ska grupperas i fönsterlistan. Giltiga "
+"Avgör när fönster från samma program ska grupperas i fönsterlistan. Giltiga "
 "värden är \"never\", \"auto\" och \"always\"."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
@@ -1106,14 +1072,12 @@ msgstr ""
 "aktuella arbetsytan. Byt annars till fönstrets arbetsyta."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
 msgid "Maximum size that Window List requests"
-msgstr "Största storlek som fönsterlistepanelprogrammet kommer att begära"
+msgstr "Största storlek som fönsterlistan begär"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
 msgid "Minimum size that Window List requests"
-msgstr "Minsta storlek som fönsterlistepanelprogrammet kommer att begära"
+msgstr "Minsta storlek som fönsterlistan begär"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
@@ -1124,28 +1088,26 @@ msgid "Show windows from all workspaces"
 msgstr "Visa fönster från alla arbetsytor"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
 msgid ""
 "This value is the maximum width that Window List requests. The maximum width "
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"Detta värde är det största värde som panelprogrammet kommer att begära. "
-"Detta är användbart för att begränsa den storlek som används i stora paneler "
-"där detta panelprogram annars kan fylla allt tillgängligt utrymme, som i "
-"kantpaneler."
+"Detta värde är det största breddvärde som fönsterlistan begär. Inställningen "
+"för största bredd är användbar för att begränsa den storlek som används i "
+"stora paneler där fönsterlistan annars kan fylla allt tillgängligt utrymme, "
+"som exempelvis i kantpaneler."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
 msgid ""
 "To be usable, Window List requires a minimum width. Window List requests "
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"Fönsterlistepanelprogrammet behöver en minsta storlek för att överhuvudtaget "
-"vara användbar. Detta värde är den minsta bredd som panelprogrammet kommer "
-"att begära. Detta är användbart för glidande paneler och kantpaneler, som "
-"annars skulle begära en väldigt liten standardstorlek."
+"Fönsterlistan behöver en minsta bredd för att vara användbar. Fönsterlistan "
+"begär denna minsta bredd. Inställningen för minsta bredd är användbar för "
+"glidande paneler och kantpaneler, som normalt begär en väldigt liten "
+"standardstorlek."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1153,24 +1115,23 @@ msgstr "När fönster ska grupperas"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr ""
+msgstr "Yta där notifieringsikoner visas"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 msgid "Notification Area"
-msgstr ""
+msgstr "Notifieringsyta"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:3
 msgid "Notification Area Factory"
-msgstr ""
+msgstr "Fabrik för notifieringsyta"
 
 #: applets/notification_area/main.c:125
 msgid "Panel Notification Area"
-msgstr ""
+msgstr "Panelnotifieringsyta"
 
 #: applets/notification_area/main.c:126
-#, fuzzy
 msgid "Copyright 2002 Red Hat Inc."
-msgstr "© 2001 Red Hat, Inc."
+msgstr "Copyright 2002 Red Hat Inc."
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1179,11 +1140,11 @@ msgstr "© 2001 Red Hat, Inc."
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+#: gnome-panel/applet.c:487 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "_Ta bort från panelen"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+#: gnome-panel/applet.c:499 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Flytta"
 
@@ -1262,49 +1223,44 @@ msgid "file not found"
 msgstr "filen hittades inte"
 
 #: gnome-panel/button-widget.c:879
-#, fuzzy
 msgid "Size"
-msgstr "Storlek:"
+msgstr "Storlek"
 
 #: gnome-panel/button-widget.c:880
 msgid "The desired ButtonWidget size"
-msgstr ""
+msgstr "Den önskade ButtonWidget-storleken"
 
 #: gnome-panel/button-widget.c:888
 msgid "Has Arrow"
-msgstr ""
+msgstr "Har pil"
 
 #: gnome-panel/button-widget.c:889
 msgid "Whether or not to draw an arrow indicator"
-msgstr ""
+msgstr "Huruvida en pilindikator ska ritas eller inte"
 
 #: gnome-panel/button-widget.c:897
-#, fuzzy
 msgid "Orientation"
-msgstr "Orientering:"
+msgstr "Orientering"
 
 #: gnome-panel/button-widget.c:898
-#, fuzzy
 msgid "The ButtonWidget orientation"
-msgstr "Panelprogrammet innehåller panelens orientering"
+msgstr "Orienteringen på ButtonWidgeten"
 
 #: gnome-panel/button-widget.c:907
-#, fuzzy
 msgid "Icon Name"
-msgstr "Sessionsnamn"
+msgstr "Ikonnamn"
 
 #: gnome-panel/button-widget.c:908
 msgid "The desired icon for the ButtonWidget"
-msgstr ""
+msgstr "Den önskade ikonen för ButtonWidgeten"
 
 #: gnome-panel/button-widget.c:916
 msgid "Stock Icon ID"
-msgstr ""
+msgstr "Standardikon-ID"
 
 #: gnome-panel/button-widget.c:917
-#, fuzzy
 msgid "The desired stock icon for the ButtonWidget"
-msgstr "Använd anpassad ikon för panelknapp"
+msgstr "Den önskade standardikonen för ButtonWidgeten"
 
 #: gnome-panel/disclosure-widget.c:251
 msgid "Expander Size"
@@ -1368,20 +1324,20 @@ msgstr "Visa döljknapp"
 msgid "Enable hidebutton arrow"
 msgstr "Visa pil på döljknappen"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3359
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3423
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:798 gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3517 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Egenskaper"
 
 #: gnome-panel/egg-recent-vfs-utils.c:90
 msgid " (invalid Unicode)"
-msgstr ""
+msgstr " (ogiltig Unicode)"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Kör program..."
 
@@ -1389,23 +1345,23 @@ msgstr "Kör program..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kör program om du känner till rätt kommando att mata in"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3779
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr "Sök filer..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3782
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr "Sök efter filer, mappar och dokument i din dator"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3796
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
 msgid "Screenshot..."
 msgstr "Skärmdump..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3799
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
@@ -1413,7 +1369,8 @@ msgstr "Lås skärmen"
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3027
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Logga ut"
 
@@ -1438,8 +1395,8 @@ msgstr "Menypanel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME-menypanelen"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
-#: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2924
+#: gnome-panel/menu.c:2929 gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Program"
 
@@ -1453,7 +1410,7 @@ msgstr "Kan inte köra skärmdumpsprogrammet"
 
 #: gnome-panel/gnome-desktop-item-edit.c:27
 msgid "Create new file in the given directory"
-msgstr "Kan inte skapa ny fil i den angivna katalogen"
+msgstr "Skapa ny fil i den angivna katalogen"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
@@ -1670,7 +1627,7 @@ msgstr "Spara skärmdumpen till skriv_bordet"
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Spara skärmdumpen till _webbsida (spara i ~/public__html)"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
+#: gnome-panel/gnome-panel-screenshot.glade.h:6 gnome-panel/menu.c:3043
 #: gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Skärmdump"
@@ -1687,11 +1644,11 @@ msgstr "_Spara skärmdumpen till fil:"
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
+msgstr "Användarens mapp där skärmdumpar ska sparas så att de visas på webben."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory."
-msgstr ""
+msgstr "Webbkatalog."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -1812,7 +1769,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/launcher.c:184
+#: gnome-panel/launcher.c:193
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1821,35 +1778,35 @@ msgstr ""
 "Kan inte starta ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:381
+#: gnome-panel/launcher.c:390
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 
-#: gnome-panel/launcher.c:401
+#: gnome-panel/launcher.c:410
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
-#: gnome-panel/launcher.c:512
-#, fuzzy, c-format
+#: gnome-panel/launcher.c:521
+#, c-format
 msgid "Help on %s _Application"
-msgstr "Hjälp med programmet %s"
+msgstr "Hjälp med _programmet %s"
 
-#: gnome-panel/launcher.c:634 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:643 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:745
+#: gnome-panel/launcher.c:754
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:841 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:850 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: gnome-panel/launcher.c:1063
+#: gnome-panel/launcher.c:1072
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1860,7 +1817,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1159 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2106,11 +2063,23 @@ msgstr "_Menypanel"
 msgid "Create menu panel"
 msgstr "Skapa menypanel"
 
-#: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
+#: gnome-panel/menu.c:2972 gnome-panel/menu.c:2978 gnome-panel/menu.c:3672
 msgid "KDE Menu"
 msgstr "KDE-meny"
 
-#: gnome-panel/menu.c:3076
+#: gnome-panel/menu.c:3035
+msgid "Lock"
+msgstr "Lås"
+
+#: gnome-panel/menu.c:3051
+msgid "Search"
+msgstr "Sök"
+
+#: gnome-panel/menu.c:3059
+msgid "Run"
+msgstr "Kör"
+
+#: gnome-panel/menu.c:3131
 msgid "You cannot remove your last panel."
 msgstr "Du kan inte ta bort din sista panel."
 
@@ -2119,7 +2088,7 @@ msgstr "Du kan inte ta bort din sista panel."
 # Sun skrev "panalen"
 # Jag ändrade till "panelen"
 #
-#: gnome-panel/menu.c:3089
+#: gnome-panel/menu.c:3144
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2127,48 +2096,29 @@ msgstr ""
 "När en panel tas bort förloras panelen och dess\n"
 " inställningar. Vill du ta bort denna panel?"
 
-#: gnome-panel/menu.c:3336
+#: gnome-panel/menu.c:3391
 msgid "Launcher..."
 msgstr "Programstartare..."
 
-#: gnome-panel/menu.c:3343
+#: gnome-panel/menu.c:3398
 msgid "Launcher from menu"
 msgstr "Programstartare från meny"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
-#: gnome-panel/menu.c:4116
+#: gnome-panel/menu.c:3406
+msgid "Button"
+msgstr "Knapp"
+
+#: gnome-panel/menu.c:3415 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
 msgid "GNOME Menu"
 msgstr "GNOME-meny"
-
-#: gnome-panel/menu.c:3367
-msgid "Log Out Button"
-msgstr "Utloggningsknapp"
-
-#: gnome-panel/menu.c:3375
-#, fuzzy
-msgid "Lock Button"
-msgstr "Låsknapp"
-
-#: gnome-panel/menu.c:3383
-#, fuzzy
-msgid "Screenshot Button"
-msgstr "Skärmdump"
-
-#: gnome-panel/menu.c:3391
-msgid "Search Button"
-msgstr ""
-
-#: gnome-panel/menu.c:3399
-#, fuzzy
-msgid "Run Button"
-msgstr "Körknapp"
 
 # SUN CHANGED MESSAGE
 #
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3468
 msgid "_Delete This Panel..."
 msgstr "_Ta bort denna panel..."
 
@@ -2177,32 +2127,31 @@ msgstr "_Ta bort denna panel..."
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3446 gnome-panel/menu.c:3478
+#: gnome-panel/menu.c:3471 gnome-panel/menu.c:3503
 msgid "_Delete This Panel"
 msgstr "_Ta bort denna panel"
 
-#: gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:3490
 msgid "_Add to Panel"
 msgstr "_Lägg till i panelen"
 
-#: gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3530
 msgid "_New Panel"
 msgstr "_Ny panel"
 
-#: gnome-panel/menu.c:3539
+#: gnome-panel/menu.c:3564
 msgid "_About Panels"
 msgstr "_Om paneler"
 
-#: gnome-panel/menu.c:3552
+#: gnome-panel/menu.c:3577
 msgid "About _GNOME"
 msgstr "Om _GNOME"
 
-#: gnome-panel/menu.c:3581
-#, fuzzy
+#: gnome-panel/menu.c:3606
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:3592
+#: gnome-panel/menu.c:3617
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2210,31 +2159,31 @@ msgstr ""
 "Logga ut från denna session för att logga in som en annan användare eller "
 "stänga av din dator"
 
-#: gnome-panel/menu.c:3748
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Panelprogram"
 
-#: gnome-panel/menu.c:3772
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Kör ett kommando"
 
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Meny"
 
-#: gnome-panel/menu.c:3842
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Meny:"
 
-#: gnome-panel/menu.c:3914
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "Kan inte skapa meny, använder huvudmenyn!"
 
-#: gnome-panel/menu.c:4439
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Ingen sökväg angiven vid %s för panelmenyobjekt\n"
@@ -2311,18 +2260,16 @@ msgid "Log out of GNOME"
 msgstr "Logga ut ur GNOME"
 
 #: gnome-panel/panel-action-button.c:208
-#, fuzzy
 msgid "Search for Files"
-msgstr "Sök filer..."
+msgstr "Sök efter filer"
 
 #: gnome-panel/panel-action-button.c:364
-#, fuzzy
 msgid "Action Type"
-msgstr "Händelse"
+msgstr "Åtgärdstyp"
 
 #: gnome-panel/panel-action-button.c:365
 msgid "The type of action this button implements"
-msgstr ""
+msgstr "Typen av åtgärd som denna knapp implementerar"
 
 #: gnome-panel/panel-applet-frame.c:184
 msgid "Cannot register control widget\n"
@@ -2359,21 +2306,21 @@ msgstr ""
 "att högerklicka på panelen och klicka på undermenyn \"Lägg till i panelen\")"
 
 #: gnome-panel/panel-applet-frame.c:785
-#, fuzzy
 msgid "D_on't Delete"
-msgstr "Ta bort"
+msgstr "Ta i_nte bort"
 
 #: gnome-panel/panel-applet-frame.c:819
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
 "Details: %s\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"<b>Det uppstod ett problem vid inläsning av panelprogrammet \"%s\"</b>\n"
+"Det uppstod ett problem vid inläsning av \"%s\" i panelen\n"
+"Detaljer: %s\n"
 "\n"
-"Detaljer: %s"
+"Vill du ta bort panelprogrammet från din konfiguration?"
 
 #: gnome-panel/panel-applet-frame.c:916
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2416,9 +2363,8 @@ msgid "Current screen:"
 msgstr "Aktuell skärm:"
 
 #: gnome-panel/panel-config.c:649
-#, fuzzy
 msgid "Current monitor:"
-msgstr "Aktuell skärm:"
+msgstr "Aktuell bildskärm:"
 
 #: gnome-panel/panel-config.c:741
 msgid "Indicates the panel position and orientation on screen"
@@ -2583,21 +2529,21 @@ msgstr "Visa programlistningen i körrutan"
 
 #: gnome-panel/panel-recent.c:55
 msgid "Couldn't find a suitable application"
-msgstr ""
+msgstr "Kund einte hitta ett lämpligt program"
 
 #: gnome-panel/panel-recent.c:78
 msgid ""
 "The default application for this type of file cannot handle remote files"
-msgstr ""
+msgstr "Standardprogrammet för denna filtyp kan inte hantera fjärrfiler"
 
 #: gnome-panel/panel-recent.c:135
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
-msgstr ""
+msgstr "Ett okänt fel inträffade vid försök att öppna %s"
 
 #: gnome-panel/panel-recent.c:153
 msgid "Open Recent"
-msgstr ""
+msgstr "Öppna senaste"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
@@ -2623,7 +2569,7 @@ msgstr ""
 #: gnome-panel/panel-stock-icons.c:101
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
-msgstr ""
+msgstr "Kan inte läsa in standardpanelikonen \"%s\"\n"
 
 #: gnome-panel/panel-stock-icons.c:130
 msgid "_Run"
@@ -2764,6 +2710,54 @@ msgstr "Jättestor"
 msgid "XX Small"
 msgstr "Jätteliten"
 
+#~ msgid "Copyright 2002 Red Hat, Inc."
+#~ msgstr "Copyright 2002 Red Hat, Inc."
+
+#~ msgid "(invalid Unicode)"
+#~ msgstr "(ogiltig Unicode)"
+
+#~ msgid "Create new file in the given folder"
+#~ msgstr "Skapa ny fil i den angivna mappen"
+
+#~ msgid ""
+#~ "Unable to create the file:\n"
+#~ "\"%s\"\n"
+#~ "Please check your permissions of the parent folder"
+#~ msgstr ""
+#~ "Kan inte skapa filen:\n"
+#~ "\"%s\"\n"
+#~ "Kontrollera dina rättigheter till föräldermappen"
+
+#~ msgid "Web directory"
+#~ msgstr "Webbkatalog"
+
+#~ msgid "Web folder"
+#~ msgstr "Webbmapp"
+
+#~ msgid "Web folder."
+#~ msgstr "Webbmapp."
+
+#~ msgid "Help on %s Application"
+#~ msgstr "Hjälp med programmet %s"
+
+#~ msgid "(C) 1998-2002 the Free Software Foundation"
+#~ msgstr "© 1998-2002 Free Software Foundation"
+
+#~ msgid "(c) 1998-2000 the Free Software Foundation"
+#~ msgstr "© 1998-2000 Free Software Foundation"
+
+#~ msgid "(c) 2001 Red Hat, Inc"
+#~ msgstr "© 2001 Red Hat, Inc"
+
+#~ msgid "Log Out Button"
+#~ msgstr "Utloggningsknapp"
+
+#~ msgid "Lock Button"
+#~ msgstr "Låsknapp"
+
+#~ msgid "Screenshot Button"
+#~ msgstr "Skärmdumpsknapp"
+
 #~ msgid "Command to execute when the applet is clicked"
 #~ msgstr "Kommando som ska utföras vid klick på panelprogrammet"
 
@@ -2773,21 +2767,20 @@ msgstr "Jätteliten"
 #~ msgid "Wanda"
 #~ msgstr "Wanda"
 
-#, fuzzy
 #~ msgid "fortune"
+#~ msgstr "lyckokaka"
+
+#~ msgid "Fortune"
 #~ msgstr "Lyckokaka"
 
-#, fuzzy
 #~ msgid "false"
-#~ msgstr "Stäng"
+#~ msgstr "falskt"
 
-#, fuzzy
 #~ msgid "mail"
-#~ msgstr "Liten"
+#~ msgstr "post"
 
-#, fuzzy
 #~ msgid "auto"
-#~ msgstr "Layout"
+#~ msgstr "automatiskt"
 
 #~ msgid "&lt;Alt&gt;F1"
 #~ msgstr "&lt;Alt&gt;F1"
@@ -2795,53 +2788,41 @@ msgstr "Jätteliten"
 #~ msgid "&lt;Alt&gt;F2"
 #~ msgstr "&lt;Alt&gt;F2"
 
-#, fuzzy
 #~ msgid "&lt;Alt&gt;Print"
-#~ msgstr "&lt;Alt&gt;F2"
+#~ msgstr "&lt;Alt&gt;Print"
 
-#, fuzzy
 #~ msgid "Print"
-#~ msgstr "Skrivare"
+#~ msgstr "Skriv ut"
 
-#, fuzzy
 #~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "Klockapanelprogram"
+#~ msgstr "OAFIID:GNOME_Klockapanelprogram"
 
-#, fuzzy
 #~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "Skrivbordsväljare"
+#~ msgstr "OAFIID:GNOME_Skrivbordsväljarpanelprogram"
 
-#, fuzzy
 #~ msgid "OAFIID:GNOME_TasklistApplet"
-#~ msgstr "Fönsterlistepanelprogram"
+#~ msgstr "OAFIID:GNOME_Fönsterlistepanelprogram"
 
-#, fuzzy
 #~ msgid "[]"
-#~ msgstr "[M]"
+#~ msgstr "[]"
 
-#, fuzzy
 #~ msgid "applications:///nautilus.desktop"
-#~ msgstr "Normala program visas på alla skrivbord"
+#~ msgstr "applications:///nautilus.desktop"
 
-#, fuzzy
 #~ msgid "bonobo-applet"
-#~ msgstr "Bonobo-testpanelprogram"
+#~ msgstr "bonobo-panelprogram"
 
-#, fuzzy
 #~ msgid "edge-panel"
-#~ msgstr "Kantpanel"
+#~ msgstr "kantpanel"
 
-#, fuzzy
 #~ msgid "launcher-object"
-#~ msgstr "Programstartare"
+#~ msgstr "programstartarobjekt"
 
-#, fuzzy
 #~ msgid "menu-panel"
-#~ msgstr "Menypanel"
+#~ msgstr "menypanel"
 
-#, fuzzy
 #~ msgid "no-background"
-#~ msgstr "Bakgrund"
+#~ msgstr "ingen-bakgrund"
 
 #~ msgid "Log out"
 #~ msgstr "Logga ut"
