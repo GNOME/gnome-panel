@@ -297,7 +297,8 @@ applet_factory (PanelApplet *applet,
 {
   SystemTray *tray;
   
-  if (strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") != 0)
+  if (!(strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") == 0 ||
+        strcmp (iid, "OAFIID:GNOME_SystemTrayApplet") == 0))
     return FALSE;
 
   if (tray_manager == NULL)

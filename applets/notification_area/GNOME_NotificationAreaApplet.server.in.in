@@ -30,4 +30,19 @@
 
 </oaf_server>
 
+<oaf_server iid="OAFIID:GNOME_SystemTrayApplet"
+	    type="factory" 
+	    location="OAFIID:GNOME_NotificationAreaApplet_Factory">
+
+	<oaf_attribute name="repo_ids" type="stringv">
+		<item value="IDL:GNOME/Vertigo/PanelAppletShell:1.0"/>
+		<item value="IDL:Bonobo/Control:1.0"/>
+		<item value="IDL:Bonobo/Unknown:1.0"/>
+	</oaf_attribute>
+	<oaf_attribute name="name" type="string" _value="Notification Area"/>
+	<oaf_attribute name="description" type="string" _value="Area where notification icons appear"/>
+        <!-- has no panel: attributes as we don't want it in the menus -->
+</oaf_server>   
+
+
 </oaf_info>
