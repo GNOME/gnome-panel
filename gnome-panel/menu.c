@@ -1661,8 +1661,7 @@ check_and_reread_applet(Menu *menu,int main_menu)
 			}
 			add_menu_widget(menu,dirlist, main_menu,TRUE);
 
-			for (list = dirlist; list; list = g_slist_next(list))
-				g_free(list->data);
+			g_slist_foreach(dirlist,(GFunc)g_free,NULL);
 			g_slist_free(dirlist);
 		}
 	}
@@ -3259,6 +3258,11 @@ add_menu_widget (Menu *menu, GSList *menudirl, int main_menu, int fake_subs)
 			menu->menu = create_menu_at (menu->menu,li->data,
 						     FALSE, NULL, NULL,
 						     fake_subs, FALSE);
+		if(!menu->menu) {
+			g_warning("Can't create menu, using main menu!");
+			menu->menu = create_root_menu(fake_subs,
+						      menu->main_menu_flags);
+		}
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);

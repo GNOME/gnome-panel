@@ -489,6 +489,9 @@ save_next_applet(void)
 	
 	if(save_applet_configuration(cur->data))
 		save_next_applet();
+
+	gnome_config_sync();
+	gnome_config_drop_all();
 }
 
 static void
