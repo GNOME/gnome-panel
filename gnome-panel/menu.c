@@ -3327,7 +3327,7 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_RUN, _("Run Application"));
+			PANEL_STOCK_RUN, _("Run Application..."));
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_run_program),
 				  NULL);
