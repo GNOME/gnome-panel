@@ -1,3 +1,10 @@
+1999-10-01  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* extern.c (extern_clean): deactivate the object before
+	calling __fini on it
+
+	fixes bug #2501
+
 1999-09-30  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* session.c (apply_global_config): resize an auto-hidden panel
