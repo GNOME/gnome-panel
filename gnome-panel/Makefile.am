@@ -202,7 +202,7 @@ gnome_panel_screenshot_LDADD = 	\
 gladedir = $(datadir)/gnome/panel
 glade_DATA =					\
 	gnome-panel-preferences.glade		\
-	gnome-panel-screenshot.glade2
+	gnome-panel-screenshot.glade
 
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\

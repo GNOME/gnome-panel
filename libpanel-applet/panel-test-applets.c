@@ -141,7 +141,7 @@ main (int argc, char **argv)
 	gnome_program_init (argv [0], "0.0.0.0", LIBGNOMEUI_MODULE,
 			    argc, argv, GNOME_PARAM_NONE);
 
-	gladefile = PANEL_APPLET_GLADEDIR "/panel-test-applets.glade2";
+	gladefile = PANEL_APPLET_GLADEDIR "/panel-test-applets.glade";
 	gui = glade_xml_new (gladefile, "toplevel", NULL);
 	if (!gui) {
 		g_warning ("Error loading `%s'", gladefile);
