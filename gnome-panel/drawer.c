@@ -544,6 +544,8 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 	
 	drawer->properties = NULL;
 
+	drawer->focus_out_handler = 0;
+
 	if (string_empty (tooltip))
 		drawer->tooltip = NULL;
 	else
@@ -599,8 +601,13 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 			    G_CALLBACK (destroy_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "focus_in_event",
 			    G_CALLBACK (focus_in_drawer), drawer);
-	g_signal_connect (G_OBJECT (drawer->button), "focus_out_event",
-			    G_CALLBACK (focus_out_drawer), drawer);
+
+	drawer->focus_out_handler = g_signal_connect (
+						G_OBJECT (drawer->button), 
+						"focus_out_event",
+						G_CALLBACK (focus_out_drawer), 
+						drawer);
+
 	g_signal_connect (G_OBJECT (drawer->button), "key_press_event",
 			    G_CALLBACK (key_press_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->drawer), "key_press_event",

@@ -71,7 +71,7 @@ gboolean panel_check_drop_forbidden (PanelWidget    *panel,
 				     guint           info,
 				     guint           time_);
 
-void panel_delete_query (PanelWidget *panel_widget);
+void panel_delete (PanelWidget *panel_widget);
 
 G_END_DECLS
 
