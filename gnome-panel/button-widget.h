@@ -37,7 +37,7 @@ struct _ButtonWidgetClass
 	GtkWidgetClass parent_class;
 
 	void (* clicked) (ButtonWidget *button);
-	void (* pressed) (ButtonWidget *button);
+	int (* pressed) (ButtonWidget *button);
 	void (* unpressed) (ButtonWidget *button);
 };
 
@@ -68,14 +68,14 @@ void		button_widget_set_params	(ButtonWidget *button,
 						 PanelOrientType orient);
 
 void		button_widget_clicked		(ButtonWidget *button);
-void		button_widget_down		(ButtonWidget *button);
+int		button_widget_down		(ButtonWidget *button);
 void		button_widget_up		(ButtonWidget *button);
 
 void		button_widget_load_tile		(int tile,
 						 char *tile_up,
 						 char *tile_down);
 
-void		button_widget_tile_enamble	(int enabled);
+void		button_widget_tile_enable	(int enabled);
 
 #ifdef __cplusplus
 }

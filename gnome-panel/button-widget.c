@@ -17,9 +17,11 @@ static void button_widget_size_request  (GtkWidget         *widget,
 					 GtkRequisition    *requisition);
 static void button_widget_size_allocate (GtkWidget         *widget,
 					 GtkAllocation     *allocation);
-static void button_widget_pressed	(ButtonWidget *button);
+static int  button_widget_pressed	(ButtonWidget *button);
 static void button_widget_unpressed	(ButtonWidget *button);
 
+typedef int (*IntSignal) (GtkObject * object,
+			  gpointer data);
 typedef void (*VoidSignal) (GtkObject * object,
 			    gpointer data);
 
@@ -70,6 +72,22 @@ enum {
 static int button_widget_signals[LAST_SIGNAL] = {0};
 
 static void
+marshal_signal_int (GtkObject * object,
+		    GtkSignalFunc func,
+		    gpointer func_data,
+		    GtkArg * args)
+{
+	IntSignal rfunc;
+	int *retval;
+
+	rfunc = (IntSignal) func;
+
+	retval = GTK_RETLOC_BOOL(args[0]);
+
+	*retval = (*rfunc) (object, func_data);
+}
+
+static void
 marshal_signal_void (GtkObject * object,
 		     GtkSignalFunc func,
 		     gpointer func_data,
@@ -101,12 +119,12 @@ button_widget_class_init (ButtonWidgetClass *class)
 			       0);
 	button_widget_signals[PRESSED_SIGNAL] =
 		gtk_signal_new("pressed",
-			       GTK_RUN_FIRST,
+			       GTK_RUN_LAST,
 			       object_class->type,
 			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
 			       			 pressed),
-			       marshal_signal_void,
-			       GTK_TYPE_NONE,
+			       marshal_signal_int,
+			       GTK_TYPE_BOOL,
 			       0);
 	button_widget_signals[UNPRESSED_SIGNAL] =
 		gtk_signal_new("unpressed",
@@ -121,7 +139,7 @@ button_widget_class_init (ButtonWidgetClass *class)
 				     LAST_SIGNAL);
 	
 	class->clicked = NULL;
-	class->pressed = button_widget_pressed;
+	class->pressed = NULL; /*FIXME:button_widget_pressed;*/
 	class->unpressed = button_widget_unpressed;
 
 	widget_class->size_allocate = button_widget_size_allocate;
@@ -200,8 +218,14 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	
 	gc = gdk_gc_new(pixmap);
 
-	if(button->arrow)
+	if(button->arrow) {
+		int i;
 		draw_arrow(points,button->orient);
+		for(i=0;i<3;i++) {
+			points[i].x+=widget->allocation.x;
+			points[i].y+=widget->allocation.y;
+		}
+	}
 	
 	if(tiles_enabled) {
 		if(button->pressed) {
@@ -303,12 +327,13 @@ button_widget_clicked(ButtonWidget *button)
 			button_widget_signals[CLICKED_SIGNAL]);
 }
 
-static void
+static int
 button_widget_pressed(ButtonWidget *button)
 {
 	button->pressed = TRUE;
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
+	return FALSE;
 }
 static void
 button_widget_unpressed(ButtonWidget *button)
@@ -318,11 +343,19 @@ button_widget_unpressed(ButtonWidget *button)
 			       button);
 }
 
-void
+int
 button_widget_down(ButtonWidget *button)
 {
+	int retval=FALSE;
+
+	/*FIXME:*/
+	button_widget_pressed(button);
+
 	gtk_signal_emit(GTK_OBJECT(button),
-			button_widget_signals[PRESSED_SIGNAL]);
+			button_widget_signals[PRESSED_SIGNAL],
+			&retval);
+	printf ("retval: %d\n",retval);
+	return retval;
 }
 void
 button_widget_up(ButtonWidget *button)
@@ -355,9 +388,17 @@ button_widget_new(GdkPixmap *pixmap,
 static void
 loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
 {
-	GdkImlibImage *im;
+	GdkImlibImage *im = NULL;
 
-	im = gdk_imlib_load_image (file);
+	if(*file!='/') {
+		char *f;
+		f = gnome_unconditional_pixmap_file (file);
+		if(f) {
+			im = gdk_imlib_load_image (f);
+			g_free(f);
+		}
+	} else
+		im = gdk_imlib_load_image (file);
 	if(!im) {
 		*pixmap = NULL;
 		*mask = NULL;

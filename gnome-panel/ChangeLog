@@ -1,3 +1,15 @@
+Thu Aug 27 02:33:44 1998  George Lebl  <jirka@5z.com>
+
+	* button-widget.c: fixes, made pressed return bool
+
+	* panel-widget.c: don't consider it a beginning of a clicked
+	  if true is returned from pressed
+
+	* drawer.c,menu.c: converted to button-widget
+
+	* main.c: loads up the default tiles and enables them, this will
+	  be configurable in the future, but for now it's hardcoded
+
 Wed Aug 26 02:14:11 1998  George Lebl  <jirka@5z.com>
 
 	* button-widget.[ch],panel-widget.[ch]: redid the icon stuff, now

@@ -215,6 +215,12 @@ main(int argc, char **argv)
 	applet_count = 0;
 
 	panel_tooltips = gtk_tooltips_new();
+	
+	/*FIXME: make this configurable*/
+	button_widget_load_tile(MENU_TILE,"tile-green-up.png","tile-green-down.png");
+	button_widget_load_tile(DRAWER_TILE,"tile-purple-up.png","tile-purple-down.png");
+	button_widget_load_tile(LAUNCHER_TILE,"tile-normal-up.png","tile-normal-down.png");
+	button_widget_tile_enable(TRUE);
 
 	/*set the globals*/
 	load_up_globals();

@@ -30,10 +30,10 @@ extern GList *panel_list;
 static void
 properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
-	Drawer        *drawer = data;
-	GtkWidget     *pixentry = gtk_object_get_data(GTK_OBJECT(widget),
+	Drawer       *drawer = data;
+	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(widget),
 						      "pixmap");
-	GtkWidget     *tipentry = gtk_object_get_data(GTK_OBJECT(widget),
+	GtkWidget    *tipentry = gtk_object_get_data(GTK_OBJECT(widget),
 						      "tooltip");
 	char         *s;
 
@@ -45,11 +45,21 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	if(drawer->tooltip)
 		g_free(drawer->tooltip);
 	s = gtk_entry_get_text(GTK_ENTRY(pixentry));
-	if(!s || !*s)
+	if(!s || !*s) {
 		drawer->pixmap =
 			gnome_unconditional_pixmap_file ("panel-drawer.png");
-	else
-		drawer->pixmap = g_strdup(s);
+		button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
+						    drawer->pixmap);
+	} else {
+		if(button_widget_set_pixmap_from_file(BUTTON_WIDGET(drawer->button), s))
+			drawer->pixmap = g_strdup(s);
+		else {
+			drawer->pixmap =
+				gnome_unconditional_pixmap_file ("panel-drawer.png");
+			button_widget_set_pixmap_from_file (BUTTON_WIDGET(drawer->button),
+							    drawer->pixmap);
+		}
+	}
 	s = gtk_entry_get_text(GTK_ENTRY(tipentry));
 	if(!s || !*s)
 		drawer->tooltip = NULL;
@@ -58,11 +68,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 
 	gtk_tooltips_set_tip (panel_tooltips,drawer->button,
 			      drawer->tooltip,NULL);
-	
-	/*it also might be a button/label (in the future)*/
-	if(GNOME_IS_PIXMAP(drawer->button))
-		gnome_pixmap_load_file (GNOME_PIXMAP(drawer->button),
-					drawer->pixmap);
 }
 
 static int
@@ -124,7 +129,7 @@ add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
 }
 
 static void
-drawer_click(Drawer *drawer)
+drawer_click(GtkWidget *w, Drawer *drawer)
 {
 	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
 	PanelWidget *parent =
@@ -144,38 +149,6 @@ drawer_click(Drawer *drawer)
 		if(IS_SNAPPED_WIDGET(panelw))
 			SNAPPED_WIDGET(panelw)->drawers_open++;
 	}
-}
-
-static int
-drawer_event (GtkWidget *widget, GdkEvent *event, void *data)
-{
-	static int in_button = FALSE;
-	Drawer *drawer = data;
-	GdkEventButton *bevent = (GdkEventButton *)event;
-
-	/*this is a release after a press inside a button*/
-	if(event->type == GDK_BUTTON_RELEASE && in_button) {
-		in_button = FALSE;
-		gtk_grab_remove(widget);
-		/*if it's inside it's a click*/
-		if(bevent->x >= 0 &&
-		   bevent->x < widget->allocation.width &&
-		   bevent->y >= 0 &&
-		   bevent->y < widget->allocation.height)
-			drawer_click (drawer);
-		return TRUE;
-	/*if it's inside and press, set in_button*/
-	} else if(event->type == GDK_BUTTON_PRESS &&
-		  bevent->button == 1 &&
-		  bevent->x >= 0 &&
-		  bevent->x < widget->allocation.width &&
-		  bevent->y >= 0 &&
-		  bevent->y < widget->allocation.height) {
-		gtk_grab_add(widget);
-		in_button = TRUE;
-		return TRUE;
-	}
-	return FALSE;
 }
 
 static int
@@ -200,7 +173,8 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 }
 
 static Drawer *
-create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap)
+create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
+		     PanelOrientType orient)
 {
 	Drawer *drawer;
 	
@@ -211,43 +185,35 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap)
 		drawer->tooltip = NULL;
 	else
 		drawer->tooltip = g_strdup(tooltip);
-	if(!pixmap ||
-	   !*pixmap)
+
+	if(!pixmap || !*pixmap) {
 		drawer->pixmap =
 			gnome_unconditional_pixmap_file ("panel-drawer.png");
-	else
-		drawer->pixmap = g_strdup(pixmap);
+		drawer->button = button_widget_new_from_file (drawer->pixmap,
+							      DRAWER_TILE,
+							      TRUE,orient);
+	} else {
+		drawer->button = button_widget_new_from_file(pixmap,
+							     DRAWER_TILE,
+							     TRUE,orient);
+		if(drawer->button)
+			drawer->pixmap = g_strdup(pixmap);
+		else {
+			drawer->pixmap =
+				gnome_unconditional_pixmap_file ("panel-drawer.png");
+			drawer->button =
+				button_widget_new_from_file (drawer->pixmap,
+							     DRAWER_TILE,
+							     TRUE,orient);
+		}
+	}
 
-	/*we need to overlay the arrow*/
-	/*switch(orient) {
-		case ORIENT_DOWN:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
-			break;
-		case ORIENT_UP:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
-			break;
-		case ORIENT_RIGHT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
-			break;
-		case ORIENT_LEFT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
-			break;
-	}*/
-
-	/*make the pixmap*/
-	drawer->button = gnome_pixmap_new_from_file (drawer->pixmap);
-	gtk_widget_set_events(drawer->button,
-			      gtk_widget_get_events(drawer->button) |
-			      GDK_LEAVE_NOTIFY_MASK |
-			      GDK_ENTER_NOTIFY_MASK |
-			      GDK_BUTTON_PRESS_MASK |
-			      GDK_BUTTON_RELEASE_MASK);
 	gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;
 
-	gtk_signal_connect (GTK_OBJECT (drawer->button), "event",
-			    GTK_SIGNAL_FUNC (drawer_event), drawer);
+	gtk_signal_connect (GTK_OBJECT (drawer->button), "clicked",
+			    GTK_SIGNAL_FUNC (drawer_click), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "enter_notify_event",
@@ -268,13 +234,16 @@ create_empty_drawer_applet(char *tooltip, char *pixmap,
 						      DRAWER_SHOWN,
 						      PANEL_BACK_NONE, NULL,
 						      TRUE, NULL),
-				    tooltip,pixmap);
+				    tooltip,pixmap,orient);
 }
 
 void
 set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 {
 	g_return_if_fail(drawer!=NULL);
+
+	button_widget_set_params(BUTTON_WIDGET(drawer->button),
+				 DRAWER_TILE,TRUE,orient);
 	
 	/*ignore orient events until we are realized, this will only
 	  be the initial one and we have already set the orientation*/
@@ -282,20 +251,6 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 		return;
 	
 	drawer_widget_change_orient(DRAWER_WIDGET(drawer->drawer), orient);
-	
-	/*this was when we were chaning the pixmap on the fly*/
-
-		/*pixmap_name = gnome_unconditional_pixmap_file("gnome-menu-left.png");*/
-		
-	/*pixmap=GTK_BUTTON(drawer->button)->child;
-	gtk_container_remove(GTK_CONTAINER(drawer->button),pixmap);
-
-	pixmap = gnome_pixmap_new_from_file (pixmap_name);
-
-	gtk_container_add (GTK_CONTAINER(drawer->button), pixmap);
-	gtk_widget_show (pixmap);
-	
-	g_free(pixmap_name);*/
 }
 
 static void
@@ -341,10 +296,10 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 		   PanelWidget *panel, int pos)
 {
 	Drawer *drawer;
+	PanelOrientType orient = get_applet_orient(panel);
 
 	if(!params) {
-		drawer = create_empty_drawer_applet(tooltip,pixmap,
-						    get_applet_orient(panel));
+		drawer = create_empty_drawer_applet(tooltip,pixmap,orient);
 		if(drawer) panel_setup(drawer->drawer);
 	} else {
 		int i;
@@ -352,11 +307,13 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 
 		sscanf(params,"%d",&i);
 		dr_pd = g_list_nth(panel_list,i)->data;
+		
 
-		drawer=create_drawer_applet(dr_pd->panel, tooltip,pixmap);
+		drawer=create_drawer_applet(dr_pd->panel, tooltip,pixmap,
+					    orient);
 
 		drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
-					    get_applet_orient(panel));
+					    orient);
 	}
 
 	if(!drawer)

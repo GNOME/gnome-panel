@@ -155,7 +155,12 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 					     PANEL_APPLET_PARENT_KEY);
 		if (GTK_WIDGET_REALIZED (ppanel)) {
 			gdk_window_get_origin (panel->master_widget->window, &bx, &by);
-			gdk_window_get_size (panel->master_widget->window, &bw, &bh);
+			if(GTK_WIDGET_NO_WINDOW(panel->master_widget)) {
+				bx+=panel->master_widget->allocation.x;
+				by+=panel->master_widget->allocation.y;
+			}
+			bw = panel->master_widget->allocation.width;
+			bh = panel->master_widget->allocation.height;
 			gdk_window_get_origin (ppanel->window, &px, &py);
 			gdk_window_get_size (ppanel->window, &pw, &ph);
 

@@ -1082,6 +1082,7 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	/* allow the panel to hide again */
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
+	button_widget_up(BUTTON_WIDGET(menu->button));
 }
 
 static char *
@@ -1510,48 +1511,32 @@ add_menu_widget (Menu *menu, GList *menudirl, int main_menu, int fake_subs)
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);
 }
 
-static GtkWidget *
-listening_parent(GtkWidget *widget)
-{
-	if (GTK_WIDGET_NO_WINDOW(widget))
-		return listening_parent(widget->parent);
-
-	return widget;
-}
-
 static int
-menu_button_press(GtkWidget *widget, GdkEvent *event, gpointer data)
+menu_button_pressed(GtkWidget *widget, gpointer data)
 {
 	Menu *menu = data;
-	if(event->type == GDK_BUTTON_PRESS) {
-		GdkEventButton *bevent = (GdkEventButton *)event; 
-		if(bevent->button==1) {
-			GtkWidget *wpanel =
-				get_panel_parent(menu->button);
-			int main_menu = (strcmp (menu->path, ".") == 0);
+	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
+	GtkWidget *wpanel = get_panel_parent(menu->button);
+	int main_menu = (strcmp (menu->path, ".") == 0);
 
-			check_and_reread(menu->menu,menu,main_menu);
+	check_and_reread(menu->menu,menu,main_menu);
 
-			/*so that the panel doesn't pop down until we're
-			  done with the menu */
-			if(IS_SNAPPED_WIDGET(wpanel)) {
-				SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
-				snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
-			}
+	/*so that the panel doesn't pop down until we're
+	  done with the menu */
+	if(IS_SNAPPED_WIDGET(wpanel)) {
+		SNAPPED_WIDGET(wpanel)->autohide_inhibit = TRUE;
+		snapped_widget_queue_pop_down(SNAPPED_WIDGET(wpanel));
+	}
 
-			/*this HAS to be set everytime we popup the menu*/
-			current_panel =
-				gtk_object_get_data(GTK_OBJECT(menu->button),
-						    PANEL_APPLET_PARENT_KEY);
+	/*this HAS to be set everytime we popup the menu*/
+	current_panel =
+		gtk_object_get_data(GTK_OBJECT(menu->button),
+				    PANEL_APPLET_PARENT_KEY);
 
-			gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
-				       data, bevent->button, bevent->time);
-			return TRUE;
-		}
-		return gtk_widget_event(listening_parent(widget->parent), event);
-	} else if(event->type == GDK_BUTTON_RELEASE)
-		return gtk_widget_event(listening_parent(widget->parent), event);
-	return FALSE;
+	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
+		       data, bevent->button, bevent->time);
+
+	return TRUE;
 }
 
 static char *
@@ -1559,20 +1544,7 @@ get_pixmap(char *menudir, PanelOrientType orient, int main_menu)
 {
 	char *pixmap_name;
 	if (main_menu) {
-		switch(orient) {
-		case ORIENT_DOWN:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
-			break;
-		case ORIENT_UP:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
-			break;
-		case ORIENT_RIGHT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
-			break;
-		case ORIENT_LEFT:
-			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
-			break;
-		}
+		pixmap_name = gnome_unconditional_pixmap_file ("panel-menu-main.xpm");
 	} else {
 		char *dentry_name;
 		GnomeDesktopEntry *item_info;
@@ -1596,8 +1568,8 @@ create_panel_menu (char *menudir, int main_menu,
 		   PanelOrientType orient, MainMenuType main_menu_type)
 {
 	Menu *menu;
-
-	char *pixmap_name = NULL;
+	
+	char *pixmap_name;
 
 	menu = g_new(Menu,1);
 
@@ -1610,17 +1582,11 @@ create_panel_menu (char *menudir, int main_menu,
 
 
 	/*make the pixmap*/
-	menu->button = gnome_pixmap_new_from_file_at_size (pixmap_name,
-							   BIG_ICON_SIZE,
-							   BIG_ICON_SIZE);
-	gtk_widget_set_events(menu->button,
-			      gtk_widget_get_events(menu->button) |
-			      GDK_LEAVE_NOTIFY_MASK |
-			      GDK_ENTER_NOTIFY_MASK |
-			      GDK_BUTTON_PRESS_MASK |
-			      GDK_BUTTON_RELEASE_MASK);
-	gtk_signal_connect (GTK_OBJECT (menu->button), "event",
-			    GTK_SIGNAL_FUNC (menu_button_press), menu);
+	menu->button = button_widget_new_from_file (pixmap_name,
+						    MENU_TILE,
+						    TRUE,orient);
+	gtk_signal_connect (GTK_OBJECT (menu->button), "pressed",
+			    GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 	gtk_widget_show(menu->button);
@@ -1637,7 +1603,8 @@ create_panel_menu (char *menudir, int main_menu,
 }
 
 static Menu *
-create_menu_applet(char *arguments, PanelOrientType orient, MainMenuType main_menu_type)
+create_menu_applet(char *arguments, PanelOrientType orient,
+		   MainMenuType main_menu_type)
 {
 	Menu *menu;
 	int main_menu;
@@ -1692,29 +1659,12 @@ set_show_small_icons(void)
 void
 set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 {
-	char *pixmap_name = NULL;
-	char *this_menu;
-	char *menu_base;
-
 	g_return_if_fail(menu!=NULL);
-	g_return_if_fail(menu->path!=NULL);
 
 	menu->orient = orient;
-
-	menu_base = gnome_unconditional_datadir_file ("apps");
-	this_menu = get_real_menu_path(menu->path,menu_base);
-	pixmap_name = get_pixmap(this_menu,menu->orient,
-				 strcmp (menu->path, ".") == 0);
-	g_free(menu_base);
-	g_free(this_menu);
-
-	/*make the pixmap*/
-	gnome_pixmap_load_file_at_size (GNOME_PIXMAP(menu->button),
-					pixmap_name,
-					BIG_ICON_SIZE,
-					BIG_ICON_SIZE);
-
-	g_free(pixmap_name);
+	
+	button_widget_set_params(BUTTON_WIDGET(menu->button),
+				 MENU_TILE,TRUE,orient);
 }
 
 static void

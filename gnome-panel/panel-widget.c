@@ -1294,15 +1294,16 @@ panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 								 event,data);
 			} else if(event->type == GDK_BUTTON_PRESS) {
 				if(IS_BUTTON_WIDGET(ad->applet)) {
-					pressed_applet = ad->applet;
-					button_widget_down(BUTTON_WIDGET(pressed_applet));
-					gtk_grab_add(pressed_applet);
-					gdk_pointer_grab(widget->window,
-							 FALSE,
-							 APPLET_EVENT_MASK,
-							 NULL,
-							 NULL,
-							 GDK_CURRENT_TIME);
+					if(!button_widget_down(BUTTON_WIDGET(ad->applet))) {
+						pressed_applet = ad->applet;
+						gtk_grab_add(pressed_applet);
+						gdk_pointer_grab(widget->window,
+								 FALSE,
+								 APPLET_EVENT_MASK,
+								 NULL,
+								 NULL,
+								 GDK_CURRENT_TIME);
+					}
 				} else {
 					int return_val = FALSE;
 					gtk_signal_emit(GTK_OBJECT(panel),
@@ -1320,7 +1321,6 @@ panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	}
 	return FALSE;
 }
-
 
 static void
 panel_widget_init (PanelWidget *panel)
