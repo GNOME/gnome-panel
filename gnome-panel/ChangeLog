@@ -1,3 +1,16 @@
+Sat Oct 07 23:44:48 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.c, applet.c, panel-util.[ch], launcher.[ch],
+	  menu.[ch], menu-properties.[ch], panel_config.c:  General cleanup
+	  and some const-ization of things.  But mostly cosmetic things.
+
+	* panel_config.c, launcher.c, menu.c, menu-properties.c:  Make sure
+	  a widget is focused after a dialog is shown
+
+	* menu.c: Always make the properties item sensitive, but if the
+	  item is not writable make the entire dialog unsensitive, so this
+	  way the user can inspect the info in the dentry, but not change it
+
 Sat Oct 07 21:59:28 2000  George Lebl <jirka@5z.com>
 
 	* gnome-run.c: add ability to launch certain urls

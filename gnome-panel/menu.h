@@ -51,54 +51,72 @@ struct _Menu {
 	AppletInfo		*info;
 };
 
-void load_menu_applet(char *params, int main_menu_flags, gboolean global_main,
-		      gboolean custom_icon, char *custom_icon_file,
-		      PanelWidget *panel, int pos, gboolean exactpos);
-void add_menu_widget (Menu *menu, PanelWidget *panel, GSList *menudirl,
-		      gboolean main_menu, gboolean fake_subs);
+void		load_menu_applet	(const char *params,
+					 int main_menu_flags,
+					 gboolean global_main,
+					 gboolean custom_icon,
+					 const char *custom_icon_file,
+					 PanelWidget *panel,
+					 int pos,
+					 gboolean exactpos);
+void		add_menu_widget		(Menu *menu,
+					 PanelWidget *panel,
+					 GSList *menudirl,
+					 gboolean main_menu,
+					 gboolean fake_subs);
 
-void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
+void		set_menu_applet_orient	(Menu *menu,
+					 PanelOrientType orient);
 
-void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
-void make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep);
+void		setup_menuitem		(GtkWidget *menuitem,
+					 GtkWidget *pixmap,
+					 const char *title);
+void		make_panel_submenu	(GtkWidget *menu,
+					 gboolean fake_submenus,
+					 gboolean is_basep);
 
-GtkWidget * create_panel_root_menu(PanelWidget *panel, gboolean tearoff);
+GtkWidget *	create_panel_root_menu	(PanelWidget *panel,
+					 gboolean tearoff);
 
-void menu_properties(Menu *menu);
+void		menu_properties		(Menu *menu);
 
-void panel_lock (GtkWidget *widget, void *data);
+void		panel_lock		(GtkWidget *widget,
+					 gpointer data);
 
 /*to be called on startup to load in some of the directories*/
-void init_menus(void);
+void		init_menus		(void);
 
-void save_tornoff(void);
-void load_tornoff(void);
+void		save_tornoff		(void);
+void		load_tornoff		(void);
 
-GtkWidget * create_menu_at (GtkWidget *menu,
-			    const char *menudir,
-			    gboolean applets,
-			    const char *dir_name,
-			    const char *pixmap_name,
-			    gboolean fake_submenus,
-			    gboolean force,
-			    gboolean title);
-GtkWidget * create_fake_menu_at (const char *menudir,
-				 gboolean applets,
-				 const char *dir_name,
-				 const char *pixmap_name,
-				 gboolean title);
+GtkWidget *	create_menu_at		(GtkWidget *menu,
+					 const char *menudir,
+					 gboolean applets,
+					 const char *dir_name,
+					 const char *pixmap_name,
+					 gboolean fake_submenus,
+					 gboolean force,
+					 gboolean title);
+GtkWidget *	create_fake_menu_at	(const char *menudir,
+					 gboolean applets,
+					 const char *dir_name,
+					 const char *pixmap_name,
+					 gboolean title);
 
-void submenu_to_display(GtkWidget *menuw, gpointer data);
-gboolean menu_need_reread(GtkWidget *menuw);
+void		submenu_to_display	(GtkWidget *menuw, gpointer data);
+gboolean	menu_need_reread	(GtkWidget *menuw);
 
-void setup_internal_applet_drag (GtkWidget *menuitem, char *applet_type);
-GtkWidget * create_root_menu(GtkWidget *root_menu,
-			     gboolean fake_submenus, int flags,
-			     gboolean tearoff, gboolean is_basep,
-			     gboolean title);
+void		setup_internal_applet_drag (GtkWidget *menuitem,
+					    const char *applet_type);
+GtkWidget *	create_root_menu	(GtkWidget *root_menu,
+					 gboolean fake_submenus,
+					 int flags,
+					 gboolean tearoff,
+					 gboolean is_basep,
+					 gboolean title);
 
 /* some gtk code cut-n-paste action */
-void our_gtk_menu_position (GtkMenu *menu);
+void		our_gtk_menu_position	(GtkMenu *menu);
 
 
 

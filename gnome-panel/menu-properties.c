@@ -57,12 +57,12 @@ struct _MenuDialogInfo {
 };
 
 char *
-get_real_menu_path(char *arguments)
+get_real_menu_path(const char *arguments)
 {
 	char *this_menu;
 	
 	/*if null, let's put the main menu up*/
-	if (!arguments || !*arguments)
+	if (string_empty (arguments))
 		arguments = ".";
 
 	if(strcmp(arguments, ".") == 0)
@@ -86,7 +86,7 @@ get_real_menu_path(char *arguments)
 }
 
 char *
-get_pixmap(char *menudir, gboolean main_menu)
+get_pixmap(const char *menudir, gboolean main_menu)
 {
 	char *pixmap_name = NULL;
 	if (main_menu) {
@@ -106,7 +106,7 @@ get_pixmap(char *menudir, gboolean main_menu)
 			pixmap_name =
 				gnome_unconditional_pixmap_file ("gnome-folder.png");
 
-		if(item_info)
+		if (item_info)
 			gnome_desktop_entry_free(item_info);
 	}
 	return pixmap_name;
@@ -361,14 +361,10 @@ dialog_clicked (GtkWidget *widget, int button, gpointer data)
 	if (button == 0 /* close */) {
 		gnome_dialog_close (GNOME_DIALOG (widget));
 	} else if (button == 1 /* help */) {
-		GnomeHelpMenuEntry help_entry = { "panel" };
-
 		if (GTK_TOGGLE_BUTTON (menu->dialog_info->main_menu)->active)
-			help_entry.path = "mainmenu.html#MAINMENUCONFIG";
+			panel_show_help ("mainmenu.html#MAINMENUCONFIG");
 		else
-			help_entry.path = "menus.html";
-
-		gnome_help_display(NULL, &help_entry);
+			panel_show_help ("menus.html");
 	}
 }
 
@@ -579,6 +575,8 @@ create_properties_dialog(Menu *menu)
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC (textbox_changed),
 			    menu);
+
+	gtk_widget_grab_focus (global_main);
 
 	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Icon")));

@@ -264,7 +264,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 
 
 static Launcher *
-create_launcher (char *parameters, GnomeDesktopEntry *dentry)
+create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 {
 	char *icon;
 	Launcher *launcher;
@@ -446,9 +446,7 @@ static void
 window_clicked (GtkWidget *w, int button, gpointer data)
 {
 	if (button == 1) { /* help */
-		GnomeHelpMenuEntry help_entry = { "panel" };
-		help_entry.path = "launcher.html";
-		gnome_help_display(NULL, &help_entry);
+		panel_show_help ("launcher.html");
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
@@ -536,6 +534,10 @@ create_properties_dialog(Launcher *launcher)
 			    GTK_SIGNAL_FUNC (window_clicked),
 			    launcher);
 
+	gtk_widget_grab_focus
+		(gnome_dentry_get_name_entry
+		 (GNOME_DENTRY_EDIT (launcher->dedit)));
+
 	return dialog;
 }
 
@@ -543,17 +545,18 @@ void
 launcher_properties (Launcher *launcher)
 {
 	if (launcher->prop_dialog != NULL) {
-		gtk_widget_show_now(launcher->prop_dialog);
-		gdk_window_raise(launcher->prop_dialog->window);
+		gtk_widget_show_now (launcher->prop_dialog);
+		gdk_window_raise (launcher->prop_dialog->window);
 		return;
 	}
 
-	launcher->prop_dialog = create_properties_dialog(launcher);
+	launcher->prop_dialog = create_properties_dialog (launcher);
 	gtk_widget_show_all (launcher->prop_dialog);
+	panel_set_dialog_layer (launcher->prop_dialog);
 }
 
 Launcher *
-load_launcher_applet_full (char *params, GnomeDesktopEntry *dentry,
+load_launcher_applet_full (const char *params, GnomeDesktopEntry *dentry,
 			   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Launcher *launcher;
@@ -610,11 +613,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 
 		panel_config_sync_schedule ();
 	} else if(button == 2/*help*/) {
-		GnomeHelpMenuEntry help_entry = {
-			"panel",
-			"launchers.html#LAUNCHERS"
-		};
-		gnome_help_display(NULL, &help_entry);
+		panel_show_help ("launchers.html#LAUNCHERS");
 		/* just return as we don't want to close */
 		return;
 	}
@@ -623,7 +622,7 @@ really_add_launcher(GtkWidget *dialog, int button, gpointer data)
 }
 
 void
-ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
+ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exactpos)
 {
 	GtkWidget *dialog;
 	GtkWidget *notebook;
@@ -692,11 +691,13 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos, gboolean exactpos)
 
 	gtk_widget_show_all (dialog);
 	panel_set_dialog_layer (dialog);
+
+	gtk_widget_grab_focus (gnome_dentry_get_name_entry (dee));
 }
 
 Launcher *
-load_launcher_applet_from_info (char *name, char *comment,
-				char **exec, int execn, char *icon,
+load_launcher_applet_from_info (const char *name, const char *comment,
+				char **exec, int execn, const char *icon,
 				PanelWidget *panel, int pos,
 				gboolean exactpos)
 {
@@ -726,8 +727,8 @@ load_launcher_applet_from_info (char *name, char *comment,
 }
 
 Launcher *
-load_launcher_applet_from_info_url (char *name, char *comment,
-				    char *url, char *icon,
+load_launcher_applet_from_info_url (const char *name, const char *comment,
+				    const char *url, const char *icon,
 				    PanelWidget *panel, int pos,
 				    gboolean exactpos)
 {
@@ -738,7 +739,7 @@ load_launcher_applet_from_info_url (char *name, char *comment,
 	dentry->name = g_strdup (name);
 	dentry->comment = g_strdup (comment);
 	dentry->exec_length = 1;
-	exec[0] = url;
+	exec[0] = (char *)url;
 	dentry->exec = g_copy_vector (exec);
 
 	if (icon != NULL &&
@@ -758,7 +759,7 @@ load_launcher_applet_from_info_url (char *name, char *comment,
 }
 
 Launcher *
-load_launcher_applet (char *params, PanelWidget *panel, int pos,
+load_launcher_applet (const char *params, PanelWidget *panel, int pos,
 		      gboolean exactpos)
 {
 	return load_launcher_applet_full (params, NULL, panel, pos, exactpos);

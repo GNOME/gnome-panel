@@ -107,7 +107,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if(strcmp(menu->name,"properties")==0)
 			launcher_properties(menu->info->data);
 		else if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "launchers.html");
+			panel_show_help ("launchers.html");
 		break;
 	case APPLET_DRAWER: 
 		if(strcmp(menu->name,"properties")==0) {
@@ -115,11 +115,11 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			g_assert(drawer);
 			panel_config(drawer->drawer);
 		} else if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "drawers.html");
+			panel_show_help ("drawers.html");
 		break;
 	case APPLET_SWALLOW:
  		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#SWALLOWEDAPP");
+			panel_show_help ("specialobjects.html#SWALLOWEDAPP");
 #if 0
 		if(strcmp(menu->name,"properties")==0) {
 			Swallow *swallow = info->data;
@@ -142,7 +142,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			char *page;
 			page = (menu2->path && strcmp (menu2->path,"."))
 				? "menus.html" : "mainmenu.html";
-			panel_pbox_help_cb (NULL, 0, page);
+			panel_show_help (page);
 		}
 		break;
 	case APPLET_LOCK: {
@@ -160,7 +160,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		char *command = NULL;
 		gboolean freeit = FALSE;
 		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOCKBUTTON");
+			panel_show_help ("specialobjects.html#LOCKBUTTON");
 		else if (!strcmp (menu->name, "restart")) {
 			command = "xscreensaver-command -exit ; xscreensaver &";
 		} else if (!strcmp (menu->name, "prefs")) {
@@ -178,15 +178,15 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	}
 	case APPLET_LOGOUT:
 		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#LOGOUTBUTTON");
+			panel_show_help ("specialobjects.html#LOGOUTBUTTON");
 		break;
 	case APPLET_STATUS:
 		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#STATUSDOC");
+			panel_show_help ("specialobjects.html#STATUSDOC");
 		break;
 	case APPLET_RUN:
 		if (strcmp (menu->name, "help") == 0)
-			panel_pbox_help_cb (NULL, 0, "specialobjects.html#RUNBUTTON");
+			panel_show_help ("specialobjects.html#RUNBUTTON");
 		break;
 	default: break;
 	}

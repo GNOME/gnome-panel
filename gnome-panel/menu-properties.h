@@ -3,10 +3,11 @@
 
 BEGIN_GNOME_DECLS
 
-void menu_properties(Menu *menu);
+void		menu_properties		(Menu *menu);
 
-char * get_real_menu_path(char *arguments);
-char * get_pixmap(char *menudir, gboolean main_menu);
+char *		get_real_menu_path	(const char *arguments);
+char *		get_pixmap		(const char *menudir,
+					 gboolean main_menu);
 
 END_GNOME_DECLS
 

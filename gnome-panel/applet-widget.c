@@ -378,7 +378,7 @@ wapplet_widget_init (AppletWidget *applet)
 	applet->size = PIXEL_SIZE_STANDARD;
 	applet->_priv = g_new0(AppletWidgetPrivate, 1);
 	applet->_priv->corbadat = NULL;
-	applet->_priv->added_child = NULL;
+	applet->_priv->added_child = FALSE;
 }
 
 static void

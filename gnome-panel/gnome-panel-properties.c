@@ -1099,9 +1099,9 @@ misc_notebook_page(void)
 }
 
 static void
-help(GtkWidget *capplet)
+help (GtkWidget *capplet)
 {
-	panel_pbox_help_cb (NULL, 0, "globalpanelprefs.html");
+	panel_show_help ("globalpanelprefs.html");
 }
 
 static void

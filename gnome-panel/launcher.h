@@ -28,31 +28,45 @@ typedef struct {
  * otherwise things may be removed from disk when they shouldn't
  * etc.  Also always hoard if an applet which owns a desktop already
  * exists.*/
-Launcher * load_launcher_applet_full(char *params, GnomeDesktopEntry *dentry,
-				     PanelWidget *panel, int pos, gboolean exactpos);
-Launcher * load_launcher_applet(char *params, PanelWidget *panel, int pos,
-				gboolean exactpos);
-Launcher * load_launcher_applet_from_info(char *name, char *comment,
-					  char **exec, int execn, char *icon,
-					  PanelWidget *panel, int pos,
-					  gboolean exactpos);
-Launcher * load_launcher_applet_from_info_url(char *name, char *comment,
-					      char *url, char *icon,
-					      PanelWidget *panel, int pos,
-					      gboolean exactpos);
-void launcher_properties(Launcher *launcher);
+Launcher *	load_launcher_applet_full	(const char *params,
+						 GnomeDesktopEntry *dentry,
+						 PanelWidget *panel,
+						 int pos,
+						 gboolean exactpos);
+Launcher *	load_launcher_applet		(const char *params,
+						 PanelWidget *panel,
+						 int pos,
+						 gboolean exactpos);
+Launcher *	load_launcher_applet_from_info	(const char *name,
+						 const char *comment,
+						 char **exec,
+						 int execn,
+						 const char *icon,
+						 PanelWidget *panel,
+						 int pos,
+						 gboolean exactpos);
+Launcher *	load_launcher_applet_from_info_url(const char *name,
+						   const char *comment,
+						   const char *url,
+						   const char *icon,
+						   PanelWidget *panel,
+						   int pos,
+						   gboolean exactpos);
+void		launcher_properties		(Launcher *launcher);
 
-void ask_about_launcher(char *file, PanelWidget *panel, int pos,
-			gboolean exactpos);
+void		ask_about_launcher		(const char *file,
+						 PanelWidget *panel,
+						 int pos,
+						 gboolean exactpos);
 
 /* if location == NULL make a new filename, convert to gnome style and
  * save */
-void launcher_save (Launcher *launcher);
+void		launcher_save			(Launcher *launcher);
 /* always make a new unique filename, useful for converting OLD configs */
-void launcher_hoard (Launcher *launcher);
+void		launcher_hoard			(Launcher *launcher);
 
 /* make file name from base */
-char * launcher_file_name (const char *base);
+char *		launcher_file_name		(const char *base);
 
 END_GNOME_DECLS
 

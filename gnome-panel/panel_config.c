@@ -1361,16 +1361,14 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 	char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
 
 	if (button == 1) { /* help */
-		GnomeHelpMenuEntry help_entry = { "panel" };
 		int tab;
 
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
 		if (tab == 1)
-			help_entry.path = "panelproperties.html#PANELBACKTAB";
+			panel_show_help ("panelproperties.html#PANELBACKTAB");
 		else
-			help_entry.path = help_path;
-		gnome_help_display(NULL, &help_entry);
+			panel_show_help (help_path);
 	} else {
 		gnome_dialog_close (GNOME_DIALOG (w));
 	}
@@ -1379,7 +1377,6 @@ window_clicked (GtkWidget *w, int button, gpointer data)
 void 
 panel_config(GtkWidget *panel)
 {
-/*      static GnomeHelpMenuEntry help_entry = { NULL, "properties" }; */
 	GtkWidget *page;
 	PerPanelConfig *ppc;
 	GtkWidget *prop_nbook;
@@ -1389,7 +1386,7 @@ panel_config(GtkWidget *panel)
 	ppc = get_config_struct(panel);
 	
 	/* return if the window is already up. */
-	if (ppc) {
+	if (ppc != NULL) {
 		g_assert (ppc->config_window != NULL);
 
 		gtk_widget_show_now (ppc->config_window);
@@ -1426,11 +1423,11 @@ panel_config(GtkWidget *panel)
 					       NULL);
 	gnome_dialog_set_close (GNOME_DIALOG (ppc->config_window),
 				FALSE /* click_closes */);
-	gtk_window_set_wmclass(GTK_WINDOW(ppc->config_window),
-			       "panel_properties","Panel");
-	gtk_widget_set_events(ppc->config_window,
-			      gtk_widget_get_events(ppc->config_window) |
-			      GDK_BUTTON_PRESS_MASK);
+	gtk_window_set_wmclass (GTK_WINDOW(ppc->config_window),
+				"panel_properties", "Panel");
+	gtk_widget_set_events (ppc->config_window,
+			       gtk_widget_get_events (ppc->config_window) |
+			       GDK_BUTTON_PRESS_MASK);
 	/*gtk_window_set_position(GTK_WINDOW(ppc->config_window), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(ppc->config_window), FALSE, FALSE, TRUE);
 
@@ -1512,6 +1509,10 @@ panel_config(GtkWidget *panel)
 
 	/* show main window */
 	gtk_widget_show_all (ppc->config_window);
+
+	/* grab the focus on the size menu always, if it exists */
+	if (ppc->size_menu != NULL)
+		gtk_widget_grab_focus (ppc->size_menu);
 }
 
 

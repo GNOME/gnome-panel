@@ -44,11 +44,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	GSList *tofree = NULL;
 
 	if (button_num == 2/*help*/) {
-		GnomeHelpMenuEntry help_entry = {
-			"panel",
-			"specialobjects.html#RUNBUTTON"
-		};
-		gnome_help_display(NULL, &help_entry);
+		panel_show_help ("specialobjects.html#RUNBUTTON");
 		/* just return as we don't want to close */
 		return;
 	} else if (button_num == 1/*cancel*/) {

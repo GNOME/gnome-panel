@@ -20,11 +20,11 @@
 extern GlobalConfig global_config;
 
 void
-panel_pbox_help_cb (GtkWidget *w, gint tab, gpointer path)
+panel_show_help (const char *path)
 {
 	GnomeHelpMenuEntry help_entry = { "panel" };
-	help_entry.path = path;
-	gnome_help_display(NULL, &help_entry);
+	help_entry.path = (char *)path;
+	gnome_help_display (NULL, &help_entry);
 }
 
 gboolean
@@ -46,10 +46,10 @@ updated (GtkWidget *w, gpointer data)
 
 GtkWidget *
 create_text_entry(GtkWidget *table,
-		  char *history_id,
+		  const char *history_id,
 		  int row,
-		  char *label,
-		  char *text,
+		  const char *label,
+		  const char *text,
 		  UpdateFunction func,
 		  gpointer data)
 {
@@ -87,11 +87,11 @@ create_text_entry(GtkWidget *table,
 
 GtkWidget *
 create_icon_entry(GtkWidget *table,
-		  char *history_id,
+		  const char *history_id,
 		  int cols, int cole,
-		  char *label,
-		  char *subdir,
-		  char *text,
+		  const char *label,
+		  const char *subdir,
+		  const char *text,
 		  UpdateFunction func,
 		  gpointer data)
 {
@@ -131,7 +131,7 @@ create_icon_entry(GtkWidget *table,
 }
 
 GList *
-my_g_list_swap_next(GList *list, GList *dl)
+my_g_list_swap_next (GList *list, GList *dl)
 {
 	GList *t;
 
@@ -154,7 +154,7 @@ my_g_list_swap_next(GList *list, GList *dl)
 }
 
 GList *
-my_g_list_swap_prev(GList *list, GList *dl)
+my_g_list_swap_prev (GList *list, GList *dl)
 {
 	GList *t;
 
@@ -438,7 +438,7 @@ set_frame_colors(PanelWidget *panel, GtkWidget *frame,
 
 
 void
-remove_directory(char *dirname, gboolean just_clean)
+remove_directory(const char *dirname, gboolean just_clean)
 {
 	DIR *dir;
 	struct dirent *dent;
@@ -537,7 +537,7 @@ escape_string(const char *string, const char *special)
 }
 
 gboolean
-convert_string_to_keysym_state(char *string,
+convert_string_to_keysym_state(const char *string,
 			       guint *keysym,
 			       guint *state)
 {
@@ -554,12 +554,12 @@ convert_string_to_keysym_state(char *string,
 	   strcmp (string, _("Disabled")) == 0)
 		return FALSE;
 
-	s = g_strdup(string);
+	s = g_strdup (string);
 
-	gdk_error_trap_push();
+	gdk_error_trap_push ();
 
-	p = strtok(s, "-");
-	while(p) {
+	p = strtok (s, "-");
+	while (p != NULL) {
 		if(strcmp(p, "Control")==0) {
 			*state |= GDK_CONTROL_MASK;
 		} else if(strcmp(p, "Lock")==0) {
@@ -588,12 +588,12 @@ convert_string_to_keysym_state(char *string,
 		p = strtok(NULL, "-");
 	}
 
-	gdk_flush();
-	gdk_error_trap_pop();
+	gdk_flush ();
+	gdk_error_trap_pop ();
 
-	g_free(s);
+	g_free (s);
 
-	if(*keysym == 0)
+	if (*keysym == 0)
 		return FALSE;
 
 	return TRUE;
@@ -691,20 +691,20 @@ panel_set_dialog_layer(GtkWidget *dialog)
 }
 
 GtkWidget *
-panel_error_dialog(char *format, ...)
+panel_error_dialog(const char *format, ...)
 {
 	GtkWidget *w;
 	char *s;
 	va_list ap;
 
-	va_start(ap, format);
-	s = g_strdup_vprintf(format, ap);
-	va_end(ap);
+	va_start (ap, format);
+	s = g_strdup_vprintf (format, ap);
+	va_end (ap);
 
-	w = gnome_error_dialog(s);
-	g_free(s);
+	w = gnome_error_dialog (s);
+	g_free (s);
 
-	panel_set_dialog_layer(w);
+	panel_set_dialog_layer (w);
 
 	return w;
 }
@@ -718,3 +718,16 @@ string_empty (const char *string)
 	else
 		return FALSE;
 }
+
+gboolean
+is_ext (const char *file, const char *ext)
+{
+	const char *p = strrchr (file, '.');
+
+	if (p != NULL &&
+	    strcmp (p, ext) == 0)
+		return TRUE;
+	else
+		return FALSE;
+}
+

@@ -128,21 +128,21 @@ free_swallow (gpointer data)
 static void
 really_add_swallow(GtkWidget *d,int button, gpointer data)
 {
-	GtkWidget *title_e = gtk_object_get_data(GTK_OBJECT(d),"title_e");
-	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d),"exec_e");
-	GtkWidget *width_s = gtk_object_get_data(GTK_OBJECT(d),"width_s");
-	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d),"height_s");
-	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d),"panel");
-	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"pos"));
+	GtkWidget *title_e = gtk_object_get_data(GTK_OBJECT(d), "title_e");
+	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d), "exec_e");
+	GtkWidget *width_s = gtk_object_get_data(GTK_OBJECT(d), "width_s");
+	GtkWidget *height_s = gtk_object_get_data(GTK_OBJECT(d), "height_s");
+	PanelWidget *panel = gtk_object_get_data(GTK_OBJECT(d), "panel");
+	int pos = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "pos"));
 	gboolean exactpos =
-		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d),"exactpos"));
+		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "exactpos"));
 
 	switch (button) {
 	case 1: /* cancel */
 		gtk_widget_destroy(d);
 		return;
 	case 2: /* help */
-		panel_pbox_help_cb (NULL, 0, "specialobjects.html#SWALLOWEDAPPS");
+		panel_show_help ("specialobjects.html#SWALLOWEDAPPS");
 		return;
 	default:
 		break;
