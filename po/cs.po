@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.0.4\n"
-"POT-Creation-Date: 2002-12-10 13:27+1300\n"
-"PO-Revision-Date: 2002-11-28 12:06GMT\n"
+"POT-Creation-Date: 2002-12-14 10:06+0100\n"
+"PO-Revision-Date: 2002-12-14 10:05GMT\n"
 "Last-Translator: Michal Bukovjan <bukm@centrum.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -29,7 +29,7 @@ msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -38,7 +38,7 @@ msgid ""
 msgstr ""
 "Varování:  Tento příkaz vypadá že by mohl dávat smysl.\n"
 "Jelikož toto je neužitečný aplet, možná jste se spletli.\n"
-"Je doporučováno nepoužívat %s k ničemu, co by\n"
+"Doporučuje se nepoužívat %s k ničemu, co by\n"
 "mohlo tento aplet učinit \"praktický\" či užitečný."
 
 #: applets/fish/fish.c:378 applets/fish/fish.c:536
@@ -63,8 +63,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(s malou nápomocí Jirky [George])"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 #: applets/fish/fish.c:416
+#: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
 msgid "Fish"
 msgstr "Ryba"
 
@@ -87,12 +87,12 @@ msgid "Unable to locate the command to execute"
 msgstr "Nelze nalézt program, který se má spustit"
 
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "GNOME ryba %s"
+msgstr "GNOME ryba %s říká:"
 
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
@@ -100,7 +100,7 @@ msgid ""
 msgstr ""
 "Nelze spustit '%s'\n"
 "\n"
-"Detaily: %s"
+"Podrobnosti: %s"
 
 #: applets/fish/fish.c:687
 msgid ""
@@ -109,10 +109,10 @@ msgid ""
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"Nemáte nainstalovanou fortune a nebo nemáte nastaven program, který se má "
-"spustit.\n"
+"Nemáte nainstalovanou aplikaci fortune nebo nemáte nastaven program, který "
+"se má spustit.\n"
 "\n"
-"Prosíme, nastavte ve vlastnostech ryby."
+"Prosíme, nastavte jej ve vlastnostech ryby."
 
 #: applets/fish/fish.c:1289
 msgid ""
@@ -144,7 +144,6 @@ msgid "Frame_s in animation:"
 msgstr "_Počet políček v animaci:"
 
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME FIsh Preferences"
 msgstr "Vlastnosti GNOME Ryby"
 
@@ -185,7 +184,7 @@ msgstr "Na vertikálním panelu rotovat"
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
-msgstr "Pixmapa animace ryby"
+msgstr "Obrázek animace ryby"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
@@ -330,8 +329,8 @@ msgstr ""
 "Stanislav Brabec <utx@penguin.cz>\n"
 "Miloslav Trmač <mitr@volny.cz>"
 
-#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 #: applets/gen_util/clock.c:1192
+#: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
 msgid "Clock"
 msgstr "Hodiny"
 
@@ -478,9 +477,9 @@ msgid "_Check for mail"
 msgstr "_Zkontrolovat poštu"
 
 #: applets/gen_util/mailcheck.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s: %s"
-msgstr "Chyba při spouštění %s : %s"
+msgstr "Chyba při spouštění %s: %s"
 
 #: applets/gen_util/mailcheck.c:274
 msgid ""
@@ -790,7 +789,7 @@ msgstr "Tento příkaz spouštíme, když uživatel klikne na Sledování pošty
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "Jestli se má vynulovat stav pošty, když je na kliknuto Sledování pošty"
+msgstr "Jestli se má vynulovat stav pošty, když je kliknuto na Sledování pošty"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
@@ -1064,13 +1063,12 @@ msgid "_Never group windows"
 msgstr "_Nikdy neseskupovat okna"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Určuje, kdy v seznamu oken seskupovat okna jedné aplikace v Seznamu oken. "
-"Platné hodnoty jsou never, auto, a always."
+"Určuje, kdy seskupovat okna jedné aplikace v Seznamu oken. Platné hodnoty "
+"jsou \"never\", \"auto\", a \"always\"."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1156,11 +1154,11 @@ msgstr "Copyright ©2002 Red Hat Inc."
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/applet.c:493 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Remove From Panel"
 msgstr "Od_stranit z panelu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/applet.c:505 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "_Move"
 msgstr "_Přesunout"
 
@@ -1210,7 +1208,7 @@ msgstr "Pixmapy na ukrývacích tlačítkách povoleny"
 
 #: gnome-panel/basep-widget.c:186
 msgid "Hidebuttons have pixmaps"
-msgstr "Ukrývací tlačítka mají pixmapy"
+msgstr "Ukrývací tlačítka mají obrázky"
 
 #: gnome-panel/basep-widget.c:590
 msgid "Hide this panel"
@@ -1444,12 +1442,12 @@ msgstr "Pozice, kam přidat spouštěč"
 
 #: gnome-panel/gnome-panel-add-launcher.c:36
 msgid "The argument is a url to add, not a .desktop file"
-msgstr "Argument je url, ne soubor .desktop"
+msgstr "Parametr pro přidání je URL, ne soubor .desktop"
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
 msgid ""
 "You must supply a single argument with the .desktop file or url to use\n"
-msgstr "Musíte zadat jeden argument, který je soubor .desktop nebo url\n"
+msgstr "Musíte zadat jeden parametr, který je soubor .desktop nebo URL\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
 msgid "No panel found\n"
@@ -1495,9 +1493,8 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "_Zavřít zásuvku, pokud je stisknut spouštěč"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "_Počet políček v animaci:"
+msgstr "_Animace zásuvky a panelu"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
@@ -1624,19 +1621,16 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nelze zachytit aktuální plochu."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Nastavení"
+msgstr "<b>Volby</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "Náhled"
+msgstr "<b>Náhled</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "Snímek obrazovky"
+msgstr "Uložit snímek obrazovky"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
@@ -1757,7 +1751,7 @@ msgstr "Spustit program"
 
 #: gnome-panel/launcher.c:100
 msgid "This launch icon does not specify a url to show"
-msgstr "Tato ikona spouštěče nemá určen url, který se má zobrazit"
+msgstr "Tato ikona spouštěče nemá určen URL, který se má zobrazit"
 
 #: gnome-panel/launcher.c:109
 #, c-format
@@ -1844,13 +1838,11 @@ msgid "Specify a profile name to load"
 msgstr "Zadejte jméno profilu k načtení"
 
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
-msgstr "A mnoho dalších..."
+msgstr "Mnoho, mnoho dalších..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-#, fuzzy
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "a konečně rytíři, co říkají ... NI!"
 
@@ -2080,23 +2072,20 @@ msgid "KDE Menu"
 msgstr "Menu KDE"
 
 #: gnome-panel/menu.c:3036
-#, fuzzy
 msgid "Lock"
-msgstr "Vzhled"
+msgstr "Zamknout"
 
 #: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Snímek obrazovky"
 
 #: gnome-panel/menu.c:3052
-#, fuzzy
 msgid "Search"
-msgstr "Tlačítko hledání"
+msgstr "Hledat"
 
 #: gnome-panel/menu.c:3060
-#, fuzzy
 msgid "Run"
-msgstr "_Spustit"
+msgstr "Spustit"
 
 #: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
@@ -2111,9 +2100,8 @@ msgstr ""
 "panelu ztraceno. Odstranit tento panel?"
 
 #: gnome-panel/menu.c:3153
-#, fuzzy
 msgid "Delete Panel"
-msgstr "_Odstranit tento panel"
+msgstr "Odstranit panel"
 
 #: gnome-panel/menu.c:3392
 msgid "Launcher..."
@@ -2124,13 +2112,11 @@ msgid "Launcher from menu"
 msgstr "Spouštěč z menu"
 
 #: gnome-panel/menu.c:3407
-#, fuzzy
 msgid "Button"
-msgstr "Spouštěcí tlačítko"
+msgstr "Tlačítko"
 
 #: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
 #: gnome-panel/menu.c:4141
-#, fuzzy
 msgid "Main Menu"
 msgstr "Hlavní menu"
 
@@ -2182,7 +2168,7 @@ msgstr "Spustit příkaz"
 msgid "Desktop"
 msgstr "Plocha"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
+#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
 msgid "Menu"
 msgstr "Menu"
 
@@ -2284,7 +2270,7 @@ msgstr "Typ akce, který toto tlačítko implementuje"
 
 #: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
-msgstr "Nelze zaregistrovat řídící widget\n"
+msgstr "Nelze zaregistrovat řídící prvek\n"
 
 #: gnome-panel/panel-applet-frame.c:606
 #, c-format
@@ -2357,9 +2343,8 @@ msgid "Arro_ws on hide buttons"
 msgstr "Ši_pky na ukrývacích tlačítkách"
 
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "Různé"
+msgstr "Různé:"
 
 #: gnome-panel/panel-config.c:642
 msgid "Current screen:"
@@ -2383,34 +2368,29 @@ msgid "Orientation:"
 msgstr "Orientace:"
 
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "H_orizontální posunutí:"
+msgstr "Hori_zontální"
 
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "Vetikální"
+msgstr "_Vertikální"
 
 # msgstr "Zobrazovat tlačítko seznamu úloh"
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "_Pozice:"
+msgstr "Umístění:"
 
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "H_orizontální posunutí:"
+msgstr "H_orizontální:"
 
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "Vetikální"
+msgstr "Ver_tikální:"
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "Vz_dálenost od okraje:"
 
 #: gnome-panel/panel-config.c:1189
 msgid "_Size:"
@@ -2447,9 +2427,8 @@ msgid "XX Large"
 msgstr "Mrňavý"
 
 #: gnome-panel/panel-config.c:1420
-#, fuzzy
 msgid "_Type:"
-msgstr "Typ:"
+msgstr "_Typ:"
 
 #: gnome-panel/panel-config.c:1429
 msgid "Default"
@@ -2468,33 +2447,27 @@ msgid "Transparent"
 msgstr "Průhledné"
 
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "Barva"
+msgstr "_Barva:"
 
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "Obrázek"
+msgstr "Obrázek:"
 
 #: gnome-panel/panel-config.c:1512
-#, fuzzy
 msgid "T_ile"
-msgstr "Soubor"
+msgstr "Dlažd_ice"
 
 #: gnome-panel/panel-config.c:1517
-#, fuzzy
 msgid "_Scale"
-msgstr "Speciální"
+msgstr "Přizpů_sobený"
 
 #: gnome-panel/panel-config.c:1521
-#, fuzzy
 msgid "St_retch"
-msgstr "_Roztáhnout obrázek"
+msgstr "_Roztažený"
 
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
 msgstr "Na _vertikálním panelu obrázek rotovat"
 
@@ -2660,7 +2633,7 @@ msgstr "Přijat nedokončený typ pozadí '%s': %s"
 #: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
-msgstr "Nelze získat pixmapu %s"
+msgstr "Nelze získat obrázek %s"
 
 #: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
@@ -2676,7 +2649,7 @@ msgstr "Velikost panelu obsahujícího applet v pixelech"
 
 #: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
-msgstr "Barva nebo pixmapa na pozadí panelu obsahujícího applet"
+msgstr "Barva nebo obrázek na pozadí panelu obsahujícího applet"
 
 #: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
