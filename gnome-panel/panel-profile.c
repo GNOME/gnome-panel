@@ -1436,7 +1436,7 @@ panel_profile_prepare_object (PanelObjectType  object_type,
 				 gconf_enum_to_string (panel_object_type_map, object_type),
 				 NULL);
 
-	key = panel_gconf_full_key (key_type, current_profile, id, "panel_id");
+	key = panel_gconf_full_key (key_type, current_profile, id, "toplevel_id");
 	gconf_client_set_string (client, key, panel_profile_get_toplevel_id (toplevel), NULL);
 
 	key = panel_gconf_full_key (key_type, current_profile, id, "position");
@@ -1487,7 +1487,7 @@ panel_profile_load_object (GConfClient       *client,
 	key = panel_gconf_full_key (type, current_profile, id, "position");
 	position = gconf_client_get_int (client, key, NULL);
 	
-	key = panel_gconf_full_key (type, current_profile, id, "panel_id");
+	key = panel_gconf_full_key (type, current_profile, id, "toplevel_id");
 	toplevel_id = gconf_client_get_string (client, key, NULL);
 
 	toplevel = panel_profile_get_toplevel_by_id (toplevel_id);
@@ -1932,25 +1932,25 @@ panel_profile_copy_default_objects_for_screen (GConfClient       *client,
 	for (l = new_objects; l; l = next) {
 		char       *object_id = l->data;
 		const char *key;
-		char       *panel_id;
-		char       *new_panel_id;
+		char       *toplevel_id;
+		char       *new_toplevel_id;
 
 		next = l->next;
 
-		key = panel_gconf_full_key (type, current_profile, object_id, "panel_id");
-		panel_id = gconf_client_get_string (client, key, NULL);
-		if (!panel_id) {
+		key = panel_gconf_full_key (type, current_profile, object_id, "toplevel_id");
+		toplevel_id = gconf_client_get_string (client, key, NULL);
+		if (!toplevel_id) {
 			new_objects = g_slist_remove_link (new_objects, l);
 			g_free (l->data);
 			g_slist_free_1 (l);
 			continue;
 		}
 
-		new_panel_id = g_strdup_printf ("%s_screen%d", panel_id, screen_n);
-		gconf_client_set_string (client, key, new_panel_id, NULL);
+		new_toplevel_id = g_strdup_printf ("%s_screen%d", toplevel_id, screen_n);
+		gconf_client_set_string (client, key, new_toplevel_id, NULL);
 
-		g_free (panel_id);
-		g_free (new_panel_id);
+		g_free (toplevel_id);
+		g_free (new_toplevel_id);
 	}
 
 	panel_profile_append_new_ids (client, type, new_objects);
@@ -2048,7 +2048,7 @@ panel_profile_load (char *profile_name)
 	key = panel_gconf_sprintf ("%s/general", dir);
 	gconf_client_add_dir (client, key, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
 
-	panel_compatibility_load_panel_id_list (client);
+	panel_compatibility_migrate_panel_id_list (client);
 
 	panel_profile_load_list (client,
 				 dir,

@@ -1,5 +1,16 @@
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c, drawer.c, install-defaults.sh,
+	  panel-object.schemas.in, panel-profile.c:
+	s/panel_id/toplevel_id/ gconf setting for objects. Needed to
+	rename the key as we rename the panels when migrating
+	panel_id_list.
+
+	* panel-compatibility.[ch]:
+	(panel_compatibility_migrate_panel_id_list): rename.
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-compatibility.[ch]:
 	(panel_compatibility_map_orient_string),
 	(panel_compatibility_map_orientation_string),

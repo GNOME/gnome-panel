@@ -38,9 +38,12 @@
  *     + toplevel_id_list instead of panel_id_list.
  *     + the schemas for toplevels and panels are completely different.
  *
+ *   All applets
+ *     + s/panel_id/toplevel_id/
+ *
  *   Drawers:
  *     + we ignore the old "parameters" setting.
- *     + s/unique-drawer-panel-id/attached_panel_id/
+ *     + s/unique-drawer-panel-id/attached_toplevel_id/
  *     + s/pixmap/custom_icon/
  *     + we should use the "usr_custom_icon" setting.
  *
@@ -511,7 +514,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
  * panel_id_list to toplevels
  */
 void
-panel_compatibility_load_panel_id_list (GConfClient *client)
+panel_compatibility_migrate_panel_id_list (GConfClient *client)
 {
 	GConfValue *value;
 	GError     *error = NULL;

@@ -673,7 +673,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	client  = panel_gconf_get_client ();
 	profile = panel_profile_get_name ();
 
-	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_panel_id");
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "attached_toplevel_id");
 	toplevel_id = gconf_client_get_string (client, key, NULL);
 
 	/* FIXME_FOR_NEW_TOLEVEL: get the use_custom_icon setting */

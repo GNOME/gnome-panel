@@ -821,7 +821,7 @@ panel_applet_save_position (AppletInfo *applet_info,
 
 	key_type = applet_info->type == PANEL_OBJECT_BONOBO ? PANEL_GCONF_APPLETS : PANEL_GCONF_OBJECTS;
 
-	key = panel_gconf_full_key (key_type, profile, id, "panel_id");
+	key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
 	gconf_client_set_string (client, key, toplevel_id, NULL);
 
 	right_stick = panel_is_applet_right_stick (applet_info->widget);
