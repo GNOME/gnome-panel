@@ -52,6 +52,7 @@ static void clock_properties(AppletWidget *, gpointer);
 
 typedef struct {
 	GtkWidget *time; /*the time label*/
+	GtkWidget *align; /* Needed for changing the padding */
 } ComputerClock;
 
 static void
@@ -207,7 +208,6 @@ static void
 create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 {
 	GtkWidget *frame;
-	GtkWidget *align;
 	GtkWidget *vbox;
 	ComputerClock *cc;
 
@@ -215,16 +215,17 @@ create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
 	gtk_widget_show(frame);
 
-	align = gtk_alignment_new(0.5, 0.5, 0.0, 0.0);
-	gtk_container_set_border_width(GTK_CONTAINER(align), 4);
-	gtk_container_add(GTK_CONTAINER(frame), align);
-	gtk_widget_show(align);
+	cc = g_new(ComputerClock, 1);
+
+	cc->align = gtk_alignment_new(0.5, 0.5, 0.0, 0.0);
+	gtk_container_set_border_width(GTK_CONTAINER(cc->align), 3);
+	gtk_container_add(GTK_CONTAINER(frame), cc->align);
+	gtk_widget_show(cc->align);
 
 	vbox = gtk_vbox_new(FALSE, FALSE);
-	gtk_container_add(GTK_CONTAINER(align), vbox);
+	gtk_container_add(GTK_CONTAINER(cc->align), vbox);
 	gtk_widget_show(vbox);
 
-	cc = g_new(ComputerClock, 1);
 	cc->time = gtk_label_new("hmm?");
 
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), cc->time);
@@ -308,7 +309,12 @@ applet_change_pixel_size(GtkWidget * w, int size, gpointer data)
 {
 	ClockData *cd = data;
 	time_t current_time;
+	ComputerClock *cc;
 
+	/* Adjust the padding on the text for small sizes of the panel (so the widget doesn't become bigger than the panel */
+	cc = gtk_object_get_user_data(GTK_OBJECT(cd->clockw));
+	gtk_container_set_border_width(GTK_CONTAINER(cc->align), ((size < PIXEL_SIZE_SMALL)? 0 : 3 ) );
+	
 	time(&current_time);
 	cd->size = size;
 	(*cd->update_func) (cd, current_time);

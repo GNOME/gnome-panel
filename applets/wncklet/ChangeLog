@@ -1,3 +1,9 @@
+2000-02-23  Peter Hawkins  <peterhawkins@ozemail.com.au>
+
+	* gen_util/clock.c (applet_change_pixel_size): Reduced the padding on
+        the frame for sizes of the panel < PIXEL_SIZE_SMALL. (it was too big 
+        for a tiny panel)
+
 2000-02-23  Jacob Berkman  <jacob@helixcode.com>
 
 	* gen_util/mailcheck.c (make_mailcheck_applet): bind click to the
