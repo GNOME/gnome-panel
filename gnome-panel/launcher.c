@@ -209,7 +209,7 @@ check_dentry_save(GnomeDesktopEntry *dentry)
 #define free_and_nullify(x) { g_free(x); x = NULL; }
 
 static void
-properties_ok_callback(GtkWidget *widget, gpointer data)
+properties_apply_callback(GtkWidget *widget, gpointer data)
 {
 	Properties        *prop;
 	GnomeDesktopEntry *dentry;
@@ -238,6 +238,7 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 	gnome_desktop_entry_save(dentry);
 
 	dentry=gnome_desktop_entry_load(dentry->location);
+
 	gnome_desktop_entry_free(prop->dentry);
 	prop->dentry = dentry;
 
@@ -247,7 +248,6 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 	pixmap=GTK_BUTTON(prop->launcher->button)->child;
 
 	gtk_container_remove(GTK_CONTAINER(prop->launcher->button),pixmap);
-	gtk_widget_destroy(pixmap);
 
 	pixmap = gnome_pixmap_new_from_file (dentry->icon);
 	if (!pixmap) {
@@ -258,8 +258,11 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 	}
 	gtk_container_add (GTK_CONTAINER(prop->launcher->button), pixmap);
 	gtk_widget_show(pixmap);
-	gtk_widget_set_usize (prop->launcher->button, pixmap->requisition.width,
-			      pixmap->requisition.height);
+	/*FIXME: a bad hack to keep it all 48x48*/
+	gtk_widget_set_usize (prop->launcher->button, 48, 48);
+
+	/*gtk_widget_set_usize (prop->launcher->button, pixmap->requisition.width,
+			      pixmap->requisition.height);*/
 
 	gtk_signal_disconnect(GTK_OBJECT(prop->launcher->button),
 			      prop->launcher->signal_click_tag);
@@ -270,19 +273,17 @@ properties_ok_callback(GtkWidget *widget, gpointer data)
 
 	/*replace the dentry in launcher structure with the new one */
 	gnome_desktop_entry_free(prop->launcher->dentry);
+
 	prop->launcher->dentry=dentry;
 }
 
 #undef free_and_nullify
 
 static void
-properties_cancel_callback(GtkWidget *widget, gpointer data)
+properties_close_callback(GtkWidget *widget, gpointer data)
 {
-	Properties *prop;
+	Properties *prop = data;
 
-	prop = data;
-
-	gnome_desktop_entry_free(prop->dentry);
 	gtk_widget_destroy(prop->dialog);
 	g_free(prop);
 }
@@ -332,7 +333,7 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 
 	button = gtk_button_new_with_label(_("Close"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) properties_cancel_callback,
+			   (GtkSignalFunc) properties_close_callback,
 			   prop);
 	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
@@ -341,13 +342,13 @@ create_properties_dialog(GnomeDesktopEntry *dentry, Launcher *launcher)
 	
 	button = gtk_button_new_with_label(_("Apply"));
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) properties_ok_callback,
+			   (GtkSignalFunc) properties_apply_callback,
 			   prop);
 	gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
 	gtk_widget_show(button);
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
-			   (GtkSignalFunc) properties_cancel_callback,
+			   (GtkSignalFunc) properties_close_callback,
 			   prop);
 
 	return dialog;
@@ -367,9 +368,9 @@ properties(gint applet_id, gpointer data)
 
 	dentry = gnome_desktop_entry_load(path);
 	if (!dentry) {
-		fprintf(stderr,
-			"launcher properties: oops, gnome_desktop_entry_load() returned NULL\n"
-			"                     on \"%s\"\n", path);
+		g_warning("launcher properties: oops, "
+			  "gnome_desktop_entry_load() returned NULL\n"
+			  "                     on \"%s\"\n", path);
 		return;
 	}
 
@@ -395,13 +396,10 @@ session_save(int applet_id, const char *cfgpath, const char *globcfgpath)
 	g_return_if_fail(launcher != NULL);
 
 	query = g_copy_strings(cfgpath,"path",NULL);
-	puts(query);
 	gnome_config_set_string(query,launcher->dentry->location);
-	puts(launcher->dentry->location);
 	g_free(query);
 
 	query = g_copy_strings(globcfgpath,CONFIG_TAG,"/count",NULL);
-	puts(query);
 	gnome_config_set_int(query,launcher_count);
 	g_free(query);
 
