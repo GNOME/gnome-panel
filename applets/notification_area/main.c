@@ -26,7 +26,7 @@
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
-#include <libgnome/gnome-help.h>
+#include <libgnomeui/gnome-help.h>
 #include <gtk/gtkmessagedialog.h>
 #include <gtk/gtkhbox.h>
 #include <libgnomeui/gnome-about.h>
@@ -67,7 +67,10 @@ help_cb (PanelApplet *applet,
   GError *err;
 
   err = NULL;  
-  gnome_help_display_desktop (NULL, "user-guide", "wgospanel.xml", "gospanel-567", &err);
+  gnome_help_display_desktop_on_screen (NULL, "user-guide",
+                                        "wgospanel.xml", "gospanel-567",
+					gtk_widget_get_screen (GTK_WIDGET (applet)),
+					&err);
 
   if (err != NULL)
     {
@@ -85,6 +88,8 @@ help_cb (PanelApplet *applet,
                         NULL);
       
       gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+      gtk_window_set_screen (GTK_WINDOW (dialog),
+                             gtk_widget_get_screen (GTK_WIDGET (applet)));
       
       gtk_widget_show (dialog);
 
