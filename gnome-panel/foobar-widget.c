@@ -249,11 +249,7 @@ append_actions_menu (GtkWidget *menu_bar)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
-	panel_stretch_events_to_toplevel (item,
-					 TRUE /* top */,
-					 FALSE /* right */,
-					 FALSE /* bottom */,
-					 FALSE /* left */);
+	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
 }
 
 #if 0
@@ -291,14 +287,16 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 			  G_CALLBACK (submenu_to_display),
 			  NULL);
 
-	if (stretch_left || stretch_top || stretch_right)
-		panel_stretch_events_to_toplevel (item,
-						 stretch_top,
-						 stretch_right,
-						 FALSE,
-						 stretch_left);
-		
+	if (stretch_left || stretch_top || stretch_right) {
+		PanelStretchFlags flags = PANEL_STRETCH_NONE;
 
+		flags |= stretch_left  ? PANEL_STRETCH_LEFT  : 0;
+		flags |= stretch_top   ? PANEL_STRETCH_TOP   : 0;
+		flags |= stretch_right ? PANEL_STRETCH_RIGHT : 0;
+
+		panel_stretch_events_to_toplevel (item, flags);
+	}
+		
 	return menu;
 }
 #endif
@@ -528,11 +526,7 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), item);
 
-	panel_stretch_events_to_toplevel (item,
-					 TRUE /* top */,
-					 FALSE /* right */,
-					 FALSE /* bottom */,
-					 FALSE /* left */);
+	panel_stretch_events_to_toplevel (item, PANEL_STRETCH_TOP);
 
 	return item;
 }
@@ -894,11 +888,8 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 
 	gtk_menu_shell_append (menu_bar, foo->task_item);
 
-	panel_stretch_events_to_toplevel (foo->task_item,
-					 TRUE /* top */,
-					 TRUE /* right */,
-					 FALSE /* bottom */,
-					 FALSE /* left */);
+	panel_stretch_events_to_toplevel (
+		foo->task_item, PANEL_STRETCH_TOP | PANEL_STRETCH_RIGHT);
 }
 
 static void
@@ -1089,11 +1080,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	foo->programs = menu;
 
 	/* Strech the applications menu to the corner */
-	panel_stretch_events_to_toplevel (menuitem,
-					 TRUE /* top */,
-					 FALSE /* right */,
-					 FALSE /* bottom */,
-					 TRUE /* left */);
+	panel_stretch_events_to_toplevel (
+		menuitem, PANEL_STRETCH_TOP | PANEL_STRETCH_LEFT);
 
 	append_actions_menu (menu_bar);
 

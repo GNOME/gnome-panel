@@ -7,6 +7,13 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+	PANEL_STRETCH_NONE   = 0,
+	PANEL_STRETCH_TOP    = 1 << 0,
+	PANEL_STRETCH_RIGHT  = 1 << 1,
+	PANEL_STRETCH_BOTTOM = 1 << 2,
+	PANEL_STRETCH_LEFT   = 1 << 3,
+} PanelStretchFlags;
 
 typedef void (*UpdateFunction) (gpointer);
 
@@ -100,12 +107,8 @@ gboolean	panel_is_program_in_path (const char *program);
 char *		panel_pixmap_discovery	(const char *name,
 					 gboolean fallback);
 
-void		panel_stretch_events_to_toplevel (GtkWidget *widget,
-						 gboolean top,
-						 gboolean right,
-						 gboolean bottom,
-						 gboolean left);
-
+void		panel_stretch_events_to_toplevel (GtkWidget         *widget,
+						  PanelStretchFlags  flags);
 
 void		panel_signal_connect_while_alive (GObject     *object,
 						  const gchar *signal,

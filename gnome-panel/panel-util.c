@@ -967,13 +967,6 @@ panel_pixmap_discovery (const char *name, gboolean fallback)
 	return pixmap;
 }
 
-typedef struct {
-	gboolean top;
-	gboolean right;
-	gboolean bottom;
-	gboolean left;
-} StrechSides;
-
 static void
 stretch_widget_realize (GtkWidget *widget)
 {
@@ -981,12 +974,11 @@ stretch_widget_realize (GtkWidget *widget)
 	int attributes_mask;
 	GtkWidget *toplevel;
 	int x,y,w,h;
+	PanelStretchFlags flags;
 	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
 						 "StrechEventWindow");
-	StrechSides *sides = g_object_get_data (G_OBJECT (widget),
-						"StrechSides");
-	if (sides == NULL)
-		return;
+	flags = GPOINTER_TO_INT (
+			g_object_get_data (G_OBJECT (widget) , "stretch-flags"));
 
 	if (eventwin != NULL)
 		gdk_window_destroy (eventwin);
@@ -1005,17 +997,17 @@ stretch_widget_realize (GtkWidget *widget)
 	w = widget->allocation.width;
 	h = widget->allocation.height;
 
-	if (sides->top) {
+	if (flags & PANEL_STRETCH_TOP) {
 		h += y;
 		y = 0;
 	}
-	if (sides->left) {
+	if (flags & PANEL_STRETCH_LEFT) {
 		w += x;
 		x = 0;
 	}
-	if (sides->bottom)
+	if (flags & PANEL_STRETCH_BOTTOM)
 		h = toplevel->allocation.height - y;
-	if (sides->right)
+	if (flags & PANEL_STRETCH_RIGHT)
 		w = toplevel->allocation.width - x;
 
 	attributes.window_type = GDK_WINDOW_CHILD;
@@ -1128,14 +1120,9 @@ stretch_widget_hierarchy_changed (GtkWidget *widget,
 }
 
 void
-panel_stretch_events_to_toplevel (GtkWidget *widget,
-				 gboolean top,
-				 gboolean right,
-				 gboolean bottom,
-				 gboolean left)
+panel_stretch_events_to_toplevel (GtkWidget         *widget,
+				  PanelStretchFlags  flags)
 {
-	StrechSides *sides;
-
 	g_signal_connect_after (GTK_WIDGET (widget), "realize",
 				G_CALLBACK (stretch_widget_realize),
 				NULL);
@@ -1155,16 +1142,8 @@ panel_stretch_events_to_toplevel (GtkWidget *widget,
 				G_CALLBACK (stretch_widget_hierarchy_changed),
 				NULL);
 
-	sides = g_new0 (StrechSides, 1);
-	sides->top = top;
-	sides->right = right;
-	sides->bottom = bottom;
-	sides->left = left;
-
-	g_object_set_data_full (G_OBJECT (widget),
-				"StrechSides",
-				sides,
-				(GDestroyNotify) g_free);
+	g_object_set_data_full (
+		G_OBJECT (widget), "stretch-flags", GINT_TO_POINTER (flags), NULL);
 }
 
 /* stolen from gtk */
