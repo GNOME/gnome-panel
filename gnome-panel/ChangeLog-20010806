@@ -1,3 +1,9 @@
+1998-08-20  Martin Baulig  <martin@home-of-linux.org>
+
+	* orbit-applet-lib.c (gnome_panel_applet_register): Don't
+	CORBA_free () the ior since it is needed when a new instance
+	of a multiapplet is started.
+
 1998-08-19  Martin Baulig  <martin@home-of-linux.org>
 
 	* Makefile.am: Added some explicit dependencies to make it work

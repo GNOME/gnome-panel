@@ -523,9 +523,11 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 
 	GNOME_Panel_applet_register(panel_client, cookie, ior, applet_id, &ev);
 
+#if 0
 	CORBA_free(ior);
 
 	ior = NULL;
+#endif
 
 	bind_top_applet_events(widget, applet_id);
 
