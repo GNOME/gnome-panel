@@ -51,7 +51,6 @@ typedef void (*PanelWidgetAppletSignal) (GtkObject * object,
 				         gpointer data);
 
 
-#if 0
 static void
 debug_dump_panel(PanelWidget *panel)
 {
@@ -66,7 +65,6 @@ debug_dump_panel(PanelWidget *panel)
 		       panel->applets[i].cells);
 	puts("\nDUMP END\n");
 }
-#endif
 
 
 /*this is used to do an immediate move instead of set_uposition, which
@@ -668,6 +666,8 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 	gdk_window_get_geometry(applet->window,&x,&y,&width,&height,NULL);
 	pos = panel_widget_get_pos(panel,applet);
 
+	if(pos>=PANEL_MAX || pos < 0)
+		debug_dump_panel(panel);
 	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
 
 	/*don't adjust applets out of range, wait for
@@ -1886,26 +1886,39 @@ panel_widget_new (gint size,
 	return GTK_WIDGET(panel);
 }
 
-void
-panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
+static void
+_panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
-	panel_applet_in_drag = TRUE;
 	panel->currently_dragged_applet = applet;
 	panel->currently_dragged_applet_pos =
 		panel_widget_get_pos(panel,applet);
 }
 
+
 void
-panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
+panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
-	panel->currently_dragged_applet = NULL;
-	panel_applet_in_drag = FALSE;
+	panel_applet_in_drag = TRUE;
+	_panel_widget_applet_drag_start_no_grab(panel,applet);
 }
 
 void
-panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
+_panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 {
-	panel_widget_applet_drag_start_no_grab(panel,applet);
+	panel->currently_dragged_applet = NULL;
+}
+
+void
+panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
+{
+	_panel_widget_applet_drag_end_no_grab(panel);
+	panel_applet_in_drag = FALSE;
+}
+
+static void
+_panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
+{
+	_panel_widget_applet_drag_start_no_grab(panel,applet);
 
 	gtk_grab_add(applet);
 	gdk_pointer_grab(applet->window,
@@ -1917,11 +1930,25 @@ panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 }
 
 void
-panel_widget_applet_drag_end(PanelWidget *panel)
+panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
+{
+	panel_applet_in_drag = TRUE;
+	_panel_widget_applet_drag_start(panel, applet);
+}
+
+static void
+_panel_widget_applet_drag_end(PanelWidget *panel)
 {
 	gdk_pointer_ungrab(GDK_CURRENT_TIME);
 	gtk_grab_remove(panel->currently_dragged_applet);
-	panel_widget_applet_drag_end_no_grab(panel);
+	_panel_widget_applet_drag_end_no_grab(panel);
+}
+
+void
+panel_widget_applet_drag_end(PanelWidget *panel)
+{
+	_panel_widget_applet_drag_end(panel);
+	panel_applet_in_drag = FALSE;
 }
 
 /*DND ... commented out*/
@@ -2059,9 +2086,8 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 					/*can't find a free pos
 					  so cancel the reparent*/
 						continue;
-					panel_widget_applet_drag_end(
-						panel);
-					panel_widget_applet_drag_start(
+					_panel_widget_applet_drag_end(panel);
+					_panel_widget_applet_drag_start(
 						new_panel, applet);
 					panel_widget_applet_move_use_idle(
 						new_panel);
