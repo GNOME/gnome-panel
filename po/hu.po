@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2002-10-14 14:20+1300\n"
-"PO-Revision-Date: 2002-08-21 22:47+0200\n"
+"POT-Creation-Date: 2002-10-18 15:04+0200\n"
+"PO-Revision-Date: 2002-10-18 15:39+0200\n"
 "Last-Translator: Emese Kovacs <emese@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -259,7 +259,7 @@ msgstr "A nyitott ablakok között kapcsol"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
 msgid "Switch between workspaces"
-msgstr "Munkaasztalok között kapcsol"
+msgstr "Átváltás a munkaterületek között"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Utility"
@@ -274,7 +274,7 @@ msgstr "Ablaklista"
 #: applets/gen_util/pager.c:503 applets/gen_util/pager.c:814
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
-msgstr "Munkaasztal-váltó"
+msgstr "Munkaterület-váltó"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
 msgid "factory for creating some general applets"
@@ -352,11 +352,11 @@ msgstr "_Internet idő"
 
 #: applets/gen_util/clock.c:1022
 msgid "Show _seconds"
-msgstr "_Másodpercek mutatása"
+msgstr "_Másodpercek megjelenítése"
 
 #: applets/gen_util/clock.c:1032
 msgid "Show _date"
-msgstr "_Dátum mutatása"
+msgstr "_Dátum megjelenítése"
 
 #: applets/gen_util/clock.c:1042
 msgid "Use _UTC"
@@ -389,49 +389,50 @@ msgid "Display date in applet, in addition to time"
 msgstr "Az idő mellett a dátumot is megjeleníti"
 
 #: applets/gen_util/clock.schemas.in.h:3
+msgid "Display seconds in time"
+msgstr "Másodperceket jelenít meg az időben"
+
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Az UTC (Universal Coordinated Time) időt jeleníti meg"
 
-#: applets/gen_util/clock.schemas.in.h:4
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Az időt 1970 január 1 óta eltelt másodpercekben jeleníti meg"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:6
 msgid "Hour format"
 msgstr "Óraformátum"
 
-#: applets/gen_util/clock.schemas.in.h:6
-msgid ""
-"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
-"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
-"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
-"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
-"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
-"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
-"seconds in time"
-msgstr ""
-
 #: applets/gen_util/clock.schemas.in.h:7
+msgid "Sets the hour format, may be either 12 or 24"
+msgstr "Az óra formátumát határozza meg, lehet 12 vagy 24"
+
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "A dátum a felbukkanó segédszövegben jelenik meg"
 
-#: applets/gen_util/clock.schemas.in.h:8
-msgid "Show date in applet"
-msgstr "Dátum mutatása az appletben"
-
 #: applets/gen_util/clock.schemas.in.h:9
-msgid "Show date in tooltip"
-msgstr "Dátum mutatása a segédszövegben"
+msgid "Show date in applet"
+msgstr "Dátum megjelenítése az appletben"
 
 #: applets/gen_util/clock.schemas.in.h:10
+msgid "Show date in tooltip"
+msgstr "Dátum megjelenítése a segédszövegben"
+
+#: applets/gen_util/clock.schemas.in.h:11
+msgid "Show time with seconds"
+msgstr "Másodpercek megjelenítése"
+
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use Internet time"
 msgstr "Internet idő használata"
 
-#: applets/gen_util/clock.schemas.in.h:11
+#: applets/gen_util/clock.schemas.in.h:13
 msgid "Use UNIX time"
 msgstr "UNIX idő használata"
 
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:14
 msgid "Use UTC"
 msgstr "UTC használata"
 
@@ -463,7 +464,7 @@ msgid ""
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"A Levélfigyelő nem tudta elérni a levelelidet, így az automatikus frissítést "
+"A Levélfigyelő nem tudta elérni a leveleidet, így az automatikus frissítést "
 "egyelőre kikapcsolta.\n"
 "Lehet, hogy nem volt jó a megadott kiszolgáló, felhasználó vagy jelszó?"
 
@@ -548,7 +549,7 @@ msgstr "Mappabeviteli mező"
 
 #: applets/gen_util/mailcheck.c:1384
 msgid "C_ommand to run before checking for mail:"
-msgstr "A postláda ellenőrzése előtt lefuttatandó _parancs:"
+msgstr "A p_ostaláda ellenőrzése előtt lefuttatandó parancs:"
 
 #: applets/gen_util/mailcheck.c:1392
 msgid "Command Entry box"
@@ -656,7 +657,7 @@ msgstr "Az appletre kattintáskor végrehajtandó parancs"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
-msgstr "A postláda ellenőrzése előtt lefuttatandó parancs"
+msgstr "A postaláda ellenőrzése előtt lefuttatandó parancs"
 
 #: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
@@ -672,7 +673,7 @@ msgstr "Levélellenőrzés gyakorisága (ezredmásodpercben)"
 
 #: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
-msgstr "Automatikus ellenőrzés be van-e kapcsolav"
+msgstr "Automatikus ellenőrzés be van-e kapcsolva"
 
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
@@ -686,7 +687,7 @@ msgstr "Ha ez ben van állítva, futtatjuk az exec parancsot"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr "Ha ez be van kapcsolav. futtatjuk a newmail parancsot"
+msgstr "Ha ez be van kapcsolva, futtatjuk a newmail parancsot"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
 msgid "Interval for checking mail"
@@ -706,11 +707,11 @@ msgstr "Levelek fogadása távoli mappába"
 
 #: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
-msgstr "Távoli kiszolgáló, amihez a levelekért fordulunk"
+msgstr "Távoli kiszolgáló, amelyhez a levelekért fordulunk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
 msgid "Run this command before we check the mail"
-msgstr "A postláda ellenőrzése előtt lefuttatandó parancs"
+msgstr "A postaláda ellenőrzése előtt lefuttatandó parancs"
 
 #: applets/gen_util/mailcheck.schemas.in.h:18
 msgid "The mail server"
@@ -733,15 +734,15 @@ msgstr ""
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr ""
-"Így dolgozzuk fel a levelelket, dolgozzuk fel a levelelket, dolgozzuk fel a "
-"levelelket"
+"Így dolgozzuk fel a leveleket, dolgozzuk fel a leveleket, dolgozzuk fel a "
+"leveleket..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
 msgstr ""
-"Ez az animáció jelenik meg a levélellenőrző applet normálishasználata során"
+"Ez az animáció jelenik meg a levélellenőrző applet normális használata során"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
@@ -781,7 +782,7 @@ msgstr "Oszlop"
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr ""
-"A num_rows érték betöltése közben hiba történt a munkaasztal-váltóban: %s\n"
+"A num_rows érték betöltése közben hiba történt a munkaterület-váltóban: %s\n"
 
 #: applets/gen_util/pager.c:355
 #, c-format
@@ -789,7 +790,7 @@ msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
 msgstr ""
-"A display_workspace_names érték betöltése közben hiba történt a munkaasztal-"
+"A display_workspace_names érték betöltése közben hiba történt a munkaterület-"
 "váltóban: %s\n"
 
 #: applets/gen_util/pager.c:370
@@ -798,7 +799,7 @@ msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
 "s\n"
 msgstr ""
-"A display_all_workspaces érték betöltése közben hiba történt a munkaasztal-"
+"A display_all_workspaces érték betöltése közben hiba történt a munkaterület-"
 "váltóban: %s\n"
 
 #: applets/gen_util/pager.c:504
@@ -810,56 +811,56 @@ msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"A Munkaasztal-váltó applet megmutatja a munkaterületek kis verzióit, ez "
-"megkönnyíti ablakaid kezelését."
+"A Munkaterület-váltó applet megjeleníti a munkaterületek kicsinyített "
+"változatát, ez megkönnyíti ablakaid kezelését."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
-msgstr "_Munkaasztalok száma"
+msgstr "_Munkaterületek száma:"
 
 #: applets/gen_util/pager.glade.h:3
 msgid "Show _all workspaces"
-msgstr "Minde_n munkaasztal mutatása"
+msgstr "Minde_n munkaterület megjelenítése"
 
 #: applets/gen_util/pager.glade.h:4
 msgid "Show only the _current workspace"
-msgstr "Csak az _aktuális munkaasztal mutatása"
+msgstr "Csak az _aktuális munkaterület megjelenítése"
 
 #: applets/gen_util/pager.glade.h:5
 msgid "Show workspace _names in the switcher"
-msgstr "Munkaasztalok neveinek mutatása az appletben"
+msgstr "Munkaterületek neveinek megjelenítése az appletben"
 
 #: applets/gen_util/pager.glade.h:6
 msgid "Workspace Names"
-msgstr "Munkaasztalnevek"
+msgstr "Munkaterületnevek"
 
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "Munkaasztal-váltó beállításai"
+msgstr "Munkaterület-váltó beállításai"
 
 #: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
-msgstr "Munkaasztalok"
+msgstr "Munkaterületek"
 
 #: applets/gen_util/pager.schemas.in.h:1
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
 msgstr ""
-"Ha ez igaz, a munkaasztal-váltó minden munkaasztal megjelenít, különbencsak "
-"az aktuálisat."
+"Ha ez igaz, a munkaterület-váltó minden munkaterületet megjelenít, különben "
+"csak az aktuálisat."
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
 msgstr ""
-"Ha ez igaz, a munkaasztal-váltó megjeleníti a munkaasztalok nevét, különbena "
-"tartalmukat jeleníti meg."
+"Ha ez igaz, a munkaterület-váltó megjeleníti a munkaterületek nevét, "
+"különben a tartalmukat jeleníti meg."
 
 #: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the pager"
-msgstr "Sorok száma a munkaasztal-váltón"
+msgstr "Sorok száma a munkaterület-váltón"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
@@ -867,17 +868,17 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the pager shows the "
 "workspaces in."
 msgstr ""
-"Minden munkaasztal megjelenítésénél, ez határozza meg, hogy az applet hány "
+"Minden munkaterület megjelenítésénél ez határozza meg, hogy az applet hány "
 "sorban (vízszintes elrendezés) vagy oszlopban (függőleges elrendezés) "
-"jeleníti meg a munkaasztalokat."
+"jeleníti meg a munkaterületeket."
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
-msgstr "Megjelenítsük-e a minden munkaasztalt az appletben."
+msgstr "Megjelenítsük-e a minden munkaterületet az appletben."
 
 #: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
-msgstr "Megjelenítsük-e a munkaasztalok nevét az appletben."
+msgstr "Megjelenítsük-e a munkaterületek nevét az appletben."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
@@ -956,23 +957,23 @@ msgstr "Leg_nagyobb méret:"
 
 #: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
-msgstr "Visszaállítás a _jelenlegi munkaasztalra"
+msgstr "Visszaállítás a _jelenlegi munkaterületre"
 
 #: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
-msgstr "Visszaállítás az _eredeti munkaasztalra"
+msgstr "Visszaállítás az _eredeti munkaterületre"
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
-msgstr "A je_lenlegi munkaasztal ablakainak mutatása"
+msgstr "A je_lenlegi munkaterület ablakainak megjelenítése"
 
 #: applets/gen_util/tasklist.glade.h:7
 msgid "Show windows from a_ll workspaces"
-msgstr "Az ö_sszes munkaasztal ablakainak mutatása"
+msgstr "Az ö_sszes munkaterület ablakainak megjelenítése"
 
 #: applets/gen_util/tasklist.glade.h:8
 msgid "When restoring minimized windows"
-msgstr "Ikonizált ablakok visszaállításánál"
+msgstr "Minimalizált ablakok visszaállításánál"
 
 #: applets/gen_util/tasklist.glade.h:9
 msgid "Window List Preferences"
@@ -1004,14 +1005,14 @@ msgid ""
 "Valid values are never, auto, and always."
 msgstr ""
 "Azt határozza meg, mikor csoportosítsa az applet egyazon alkalmazás "
-"ablakait. Érvényes érteékek never (soha), auto, és always (mindig)."
+"ablakait. Érvényes értékek never (soha), auto, és always (mindig)."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
-"Ha ez igaz, ablaklista az össze munkaasztal ablakai tartalmazza, különben "
+"Ha ez igaz, ablaklista az össze munkaterület ablakai tartalmazza, különben "
 "csak az aktuálisét."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
@@ -1019,8 +1020,8 @@ msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
-"Ha ez igaz, az ablak visszaállításánál, az a jelenlegi munkaasztalon "
-"jelenjen meg, különben kapcsoljon át az ablak eredeti munkaasztalára."
+"Ha ez igaz, az ablak visszaállításánál, az a jelenlegi munkaterületen "
+"jelenjen meg, különben kapcsoljon át az ablak eredeti munkaterületére."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
@@ -1032,11 +1033,11 @@ msgstr "Az ablaklista applet által elfoglalható hely minimális értéke"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
-msgstr "A jelenlegi munkaasztalon bukkanjanak fel az ablakok"
+msgstr "A jelenlegi munkaterületen bukkanjanak fel az ablakok"
 
 #: applets/gen_util/tasklist.schemas.in.h:7
 msgid "Show windows from all workspaces"
-msgstr "Az összes munkaasztal ablakainak mutatása"
+msgstr "Az összes munkaterület ablakainak megjelenítése"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
@@ -1078,7 +1079,7 @@ msgstr "_Törlés a panelről"
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:394
+#: gnome-panel/applet.c:441 gnome-panel/foobar-widget.c:397
 msgid "???"
 msgstr "???"
 
@@ -1092,7 +1093,7 @@ msgstr "Nincs object_type beállítva a %s ID-jű panelobjektumnál\n"
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Nincs panel_id beállítva a %s ID-jű panelobjektumnál\n"
 
-#: gnome-panel/applet.c:1142
+#: gnome-panel/applet.c:1137
 msgid "Can't find an empty spot"
 msgstr "Nem található üres helyet"
 
@@ -1118,7 +1119,7 @@ msgstr "Elrejtőgombok bekapcsolva"
 
 #: gnome-panel/basep-widget.c:178
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr "Be vannak-e kapcsolava az elrejtőgombok?"
+msgstr "Be vannak-e kapcsolva az elrejtőgombok?"
 
 #: gnome-panel/basep-widget.c:185
 msgid "Hidebutton pixmaps enabled"
@@ -1134,7 +1135,7 @@ msgstr "Panel elrejtése"
 
 #: gnome-panel/basep-widget.c:572
 msgid "Show this panel"
-msgstr "Panel mutatása"
+msgstr "Panel megjelenítése"
 
 #: gnome-panel/button-widget.c:341
 msgid "none"
@@ -1226,72 +1227,72 @@ msgstr "Fiók"
 msgid "_Properties"
 msgstr "_Tulajdonságok"
 
-#: gnome-panel/foobar-widget.c:169 gnome-panel/menu.c:3602
+#: gnome-panel/foobar-widget.c:172 gnome-panel/menu.c:3602
 msgid "Cannot execute gnome-panel-screenshot"
 msgstr "A gnome-panel-screenshot végrehajtása sikertelen"
 
-#: gnome-panel/foobar-widget.c:180 gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:183 gnome-panel/menu.c:3612
 msgid "Cannot execute gnome-search-tool"
 msgstr "A gnome-search-tool végrehajtása sikertelen"
 
-#: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3731
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3731
 msgid "Run Program..."
 msgstr "Program futtatása..."
 
-#: gnome-panel/foobar-widget.c:194
+#: gnome-panel/foobar-widget.c:197
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Ha tudod a teljes parancsot, ide beírva futtathatod"
 
-#: gnome-panel/foobar-widget.c:203 gnome-panel/menu.c:3743
+#: gnome-panel/foobar-widget.c:206 gnome-panel/menu.c:3743
 msgid "Search for Files..."
 msgstr "Fájlok keresése..."
 
-#: gnome-panel/foobar-widget.c:208 gnome-panel/menu.c:3746
+#: gnome-panel/foobar-widget.c:211 gnome-panel/menu.c:3746
 msgid "Find files, folders, and documents on your computer"
 msgstr "Fájlok, mappák és dokumentumok felkutatása a számítógépeden"
 
-#: gnome-panel/foobar-widget.c:218 gnome-panel/menu.c:3756
+#: gnome-panel/foobar-widget.c:221 gnome-panel/menu.c:3756
 msgid "Screenshot..."
 msgstr "Képernyőkép..."
 
-#: gnome-panel/foobar-widget.c:222 gnome-panel/menu.c:3759
+#: gnome-panel/foobar-widget.c:225 gnome-panel/menu.c:3759
 msgid "Take a screenshot of your desktop"
-msgstr "A képernyőképet készít a munkaasztalodról"
+msgstr "A képernyőképet készít a munkaasztalról"
 
-#: gnome-panel/foobar-widget.c:233 gnome-panel/menu.c:3516
+#: gnome-panel/foobar-widget.c:236 gnome-panel/menu.c:3516
 msgid "Lock Screen"
 msgstr "Képernyőzár"
 
-#: gnome-panel/foobar-widget.c:237
+#: gnome-panel/foobar-widget.c:240
 msgid "Protect your computer from unauthorized use"
 msgstr "A jogosulatlan hozzáféréstől védi géped"
 
-#: gnome-panel/foobar-widget.c:246 gnome-panel/menu.c:3527
+#: gnome-panel/foobar-widget.c:249 gnome-panel/menu.c:3527
 msgid "Log Out"
 msgstr "Kilépés"
 
-#: gnome-panel/foobar-widget.c:250
+#: gnome-panel/foobar-widget.c:253
 msgid "Quit from the GNOME desktop"
-msgstr "Kilépés a GNOME felületről"
+msgstr "Kilépés a GNOME munkaasztalból"
 
 #. FIXME: shutdown or reboot
-#: gnome-panel/foobar-widget.c:259
+#: gnome-panel/foobar-widget.c:262
 msgid "Actions"
 msgstr "Műveletek"
 
-#: gnome-panel/foobar-widget.c:476
+#: gnome-panel/foobar-widget.c:479
 msgid "No windows open"
 msgstr "Nincs nyitott ablak"
 
-#: gnome-panel/foobar-widget.c:714 gnome-panel/menu.c:2744
+#: gnome-panel/foobar-widget.c:717 gnome-panel/menu.c:2744
 msgid "Menu Panel"
 msgstr "Menüpanel"
 
-#: gnome-panel/foobar-widget.c:714
+#: gnome-panel/foobar-widget.c:717
 msgid "GNOME Menu Panel"
 msgstr "GNOME Menüpanel"
 
-#: gnome-panel/foobar-widget.c:734 gnome-panel/menu.c:2880
+#: gnome-panel/foobar-widget.c:737 gnome-panel/menu.c:2880
 #: gnome-panel/menu.c:2885 gnome-panel/menu.c:3699
 msgid "Applications"
 msgstr "Alkalmazások"
@@ -1310,7 +1311,7 @@ msgstr "Új fájl létrehozása az adott könyvtárban"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 msgid "Panel to add the launcher to"
-msgstr "Panel, amihez az indítót adod"
+msgstr "Panel, amelyhez az indítóikont adod"
 
 #: gnome-panel/gnome-panel-add-launcher.c:34
 #: gnome-panel/gnome-panel-add-launcher.c:35
@@ -1319,7 +1320,7 @@ msgstr "NUMBER"
 
 #: gnome-panel/gnome-panel-add-launcher.c:35
 msgid "Position to add the launcher to"
-msgstr "Hely, ahova az indítót teszed"
+msgstr "Hely, ahova az indítóikont teszed"
 
 #: gnome-panel/gnome-panel-add-launcher.c:36
 msgid "The argument is a url to add, not a .desktop file"
@@ -1344,7 +1345,7 @@ msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
-"Hiba történt a súgó megjelnítése közben: \n"
+"Hiba történt a súgó megjelenítése közben: \n"
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
@@ -1366,7 +1367,7 @@ msgstr "Panel"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr "Beállítások kiválaszása minden panelhez"
+msgstr "Beállítások kiválasztása minden panelhez"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
 msgid "Animation _speed:"
@@ -1464,7 +1465,7 @@ msgstr "%s%cKepernyokep-%s.png"
 #: gnome-panel/gnome-panel-screenshot.c:576
 #, c-format
 msgid "%s%cScreenshot.png"
-msgstr "%s%cMunkaasztal.png"
+msgstr "%s%cKepernyokep.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:593
@@ -1476,7 +1477,7 @@ msgstr "%s%cKepernyokep-%s-%d.png"
 #: gnome-panel/gnome-panel-screenshot.c:600
 #, c-format
 msgid "%s%cScreenshot-%d.png"
-msgstr "%s%cMunkaasztal-%d.png"
+msgstr "%s%cKepernyokep-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:747
 #, c-format
@@ -1501,7 +1502,7 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.c:1144
 msgid "Unable to take a screenshot of the current desktop."
-msgstr "Nem lehet képernyőképet készíteni a jelenlegi felületről."
+msgstr "Nem lehet képernyőképet készíteni a jelenlegi munkaasztalról."
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 msgid "*"
@@ -1546,7 +1547,7 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: gnome-panel/gnome-run.c:347 gnome-panel/gnome-run.c:421
+#: gnome-panel/gnome-run.c:356 gnome-panel/gnome-run.c:431
 #, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
@@ -1557,7 +1558,7 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: gnome-panel/gnome-run.c:444
+#: gnome-panel/gnome-run.c:454
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1568,7 +1569,7 @@ msgstr ""
 "\n"
 "Részletek: nincs hozzárendelt alkalmazás amivel meg lehetne nyitni"
 
-#: gnome-panel/gnome-run.c:458
+#: gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
@@ -1579,44 +1580,44 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: gnome-panel/gnome-run.c:536
+#: gnome-panel/gnome-run.c:557
 msgid "Choose a file"
 msgstr "Válassz ki egy fájlt"
 
-#: gnome-panel/gnome-run.c:775 gnome-panel/gnome-run.c:776
+#: gnome-panel/gnome-run.c:796 gnome-panel/gnome-run.c:797
 msgid "Known Applications"
 msgstr "Ismert alkalmazások"
 
-#: gnome-panel/gnome-run.c:904
+#: gnome-panel/gnome-run.c:927
 msgid "Command to run"
 msgstr "Futtatandó parancs"
 
-#: gnome-panel/gnome-run.c:939
+#: gnome-panel/gnome-run.c:962
 msgid "Run in _terminal"
 msgstr "_Terminálban fusson"
 
-#: gnome-panel/gnome-run.c:944
+#: gnome-panel/gnome-run.c:967
 msgid "_Append File..."
 msgstr "_Fájl hozzáfűzése..."
 
-#: gnome-panel/gnome-run.c:1327
+#: gnome-panel/gnome-run.c:1350
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: '%s'"
 
-#: gnome-panel/gnome-run.c:1336
+#: gnome-panel/gnome-run.c:1359
 msgid "No application selected"
 msgstr "Nincs kiválasztott alkalmazás"
 
-#: gnome-panel/gnome-run.c:1456
+#: gnome-panel/gnome-run.c:1479
 msgid "List of known applications"
 msgstr "Ismert alkalmazások listája"
 
-#: gnome-panel/gnome-run.c:1457
+#: gnome-panel/gnome-run.c:1480
 msgid "Choose an application to run from the list"
 msgstr "Válaszd ki a futtatandó alkalmazást a listából"
 
-#: gnome-panel/gnome-run.c:1581
+#: gnome-panel/gnome-run.c:1604
 msgid "Run Program"
 msgstr "Program futtatása"
 
@@ -1630,7 +1631,7 @@ msgid ""
 "Cannot show %s\n"
 "%s"
 msgstr ""
-"Nem tudom %s-t megmutatni\n"
+"Nem lehet megjeleníteni: %s\n"
 "%s"
 
 #: gnome-panel/launcher.c:110
@@ -1640,7 +1641,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Az ikont elindítani sikertelen</b>\n"
+"<b>Nem lehet az ikont elindítani</b>\n"
 "\n"
 "Részletek: %s"
 
@@ -1650,7 +1651,7 @@ msgid ""
 "Cannot launch icon\n"
 "%s"
 msgstr ""
-"Az ikont elindítása sikertelen\n"
+"Az ikon elindítása sikertelen\n"
 "%s"
 
 #: gnome-panel/launcher.c:349
@@ -1660,7 +1661,7 @@ msgstr "Nincs URI a panelindító desktop fájlhoz\n"
 #: gnome-panel/launcher.c:369
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
-msgstr "%s desktop fájl megnyitása (%s%s panel indítóhoz) sikertelen\n"
+msgstr "%s desktop fájl megnyitása (%s%s panelindítóhoz) sikertelen\n"
 
 #: gnome-panel/launcher.c:484
 #, c-format
@@ -1670,12 +1671,12 @@ msgstr "%s alkalmazás súgója"
 #: gnome-panel/launcher.c:603 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
-msgstr "Indító beállításai"
+msgstr "Indítóikon tulajdonságai"
 
 #: gnome-panel/launcher.c:710
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
-msgstr "%s billentyű nincs beállítva, indító betöltése sikertelen\n"
+msgstr "%s billentyű nincs beállítva, indítóikon betöltése sikertelen\n"
 
 #: gnome-panel/launcher.c:804 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
@@ -1689,7 +1690,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Nem lehet az indítót lemezre menteni, a következő hiba lépett fel:\n"
+"Nem lehet az indítóikont lemezre menteni, a következő hiba lépett fel:\n"
 "\n"
 "%s"
 
@@ -1756,7 +1757,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Az indító változásainak elmentése sikertelen</b>\n"
+"<b>Az indítóikon változásainak elmentése sikertelen</b>\n"
 "\n"
 "Részletek: %s"
 
@@ -1767,7 +1768,7 @@ msgstr "Menü"
 
 #: gnome-panel/menu-ditem.c:439
 msgid "You have to specify a name for the launcher."
-msgstr "Meg kell adnond az indító nevét."
+msgstr "Meg kell adnod az indítóikon nevét."
 
 #: gnome-panel/menu-ditem.c:455
 msgid "You have to specify a valid URL or command."
@@ -1789,7 +1790,7 @@ msgstr ""
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr "Itt nem lehet új indítót létrehozni, mert a hely nem írható."
+msgstr "Itt nem lehet új indítóikont létrehozni, mert a hely nem írható."
 
 #: gnome-panel/menu.c:237
 msgid "Many many others ..."
@@ -1841,7 +1842,7 @@ msgid ""
 msgstr ""
 "<b>'About GNOME' futtatása sikertelen</b>\n"
 "\n"
-"Részletek: %s valószínüleg nem létezik"
+"Részletek: %s valószínűleg nem létezik"
 
 #: gnome-panel/menu.c:341
 #, c-format
@@ -1898,7 +1899,7 @@ msgstr ""
 
 #: gnome-panel/menu.c:1379
 msgid "Add this launcher to panel"
-msgstr "Indító hozzáadása a panelhoz"
+msgstr "Indítóikon hozzáadása a panelhoz"
 
 #: gnome-panel/menu.c:1387
 msgid "Remove this item"
@@ -2080,7 +2081,7 @@ msgid ""
 "\n"
 "Details: xscreensaver-command not found"
 msgstr ""
-"<b>xscreensaver végrahajtása sikertelen</b>\n"
+"<b>xscreensaver végrehajtása sikertelen</b>\n"
 "\n"
 "Részletek: xscreensaver-command nem található"
 
@@ -2136,7 +2137,7 @@ msgstr "A vezérlő widget regisztrálása sikertelen\n"
 #: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr "Kivétel a következő popup_menutől: '%s'\n"
+msgstr "Kivétel a következő popup_menu-től: '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:710
 #, c-format
@@ -2152,8 +2153,8 @@ msgstr ""
 "\n"
 "Szeretnéd, hogy a panel újratöltse az appletet?\n"
 "\n"
-"(Ha most nem tölti újra, később még mindig hozzáadhatod a panelen való "
-"jobbkattintással és a \"Panelra helyezés\" almenü használatával.)"
+"(Ha most nem tölti újra, később még mindig hozzáadhatod a panelen való jobb "
+"kattintással és a \"Panelra helyezés\" almenü használatával.)"
 
 #: gnome-panel/panel-applet-frame.c:805
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2178,12 +2179,12 @@ msgstr "_Automatikus elrejtés"
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:543
 msgid "Show hide _buttons"
-msgstr "Elrejtő_gombok mutatása"
+msgstr "Elrejtő_gombok megjelenítése"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:555
 msgid "Arro_ws on hide buttons"
-msgstr "_Nyilak mutatása az elrejtőgombokon"
+msgstr "_Nyilak megjelenítése az elrejtőgombokon"
 
 #: gnome-panel/panel-config.c:594
 msgid "Miscellaneous"
@@ -2195,7 +2196,7 @@ msgstr "Jelenlegi képernyő:"
 
 #: gnome-panel/panel-config.c:698
 msgid "Indicates the panel position and orientation on screen"
-msgstr "A panel elhelyezkedését és helyzetét mutatja a képernyőn"
+msgstr "A panel elhelyezkedését és helyzetét jelzi a képernyőn"
 
 #: gnome-panel/panel-config.c:716
 msgid "_Position:"
@@ -2347,12 +2348,13 @@ msgstr "Képernyőkép készítése egy adott ablakról"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
 msgid "Enable the program listing in the run box"
-msgstr "Progarmlista bekapcsolása a Futtatás párbeszédablakban"
+msgstr "Programlista bekapcsolása a Futtatás párbeszédablakban"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
 msgstr ""
-"Programlista mutatása alapértelemzéseben a Futtatás párbeszéd megnyitásakor"
+"Programlista megjelenítése alapértelmezésben a Futtatás párbeszéd "
+"megnyitásakor"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
@@ -2374,7 +2376,7 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"Probléma lépett fel a panel egisztrációjánál a bonobo-activation "
+"Probléma lépett fel a panel regisztrációjánál a bonobo-activation "
 "kiszolgálóval.\n"
 "A hibakód: %d\n"
 "A panel kilép."
@@ -2411,7 +2413,7 @@ msgstr "Nem találtam panelt a konfigurációdban. Egy menüpanelt generálok ne
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
-msgstr "Egy egyszerű applet a GNOME-2.0-ás panel teszteléséhez"
+msgstr "Egy egyszerű applet a GNOME-2.0-s panel teszteléséhez"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:2
 msgid "Test Bonobo Applet"
@@ -2459,7 +2461,7 @@ msgstr "Az applet kapcsolói"
 #: libpanel-applet/panel-applet.c:1061
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
-"Tartományok, amelyek azt mutatják, milyen méret elfogadhatoó az appletnek"
+"Tartományok, amelyek azt mutatják, milyen méret elfogadható az appletnek"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -2516,15 +2518,6 @@ msgstr "XXL-es"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XXS-es"
-
-#~ msgid "Display seconds in time"
-#~ msgstr "Másodperceket jelenít meg az időben"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Az óra formátumát határozza meg, lehet 12 vagy 24"
-
-#~ msgid "Show time with seconds"
-#~ msgstr "Másodpercek mutatása"
 
 #, fuzzy
 #~ msgid "mail"
