@@ -507,6 +507,7 @@ restart_all_launchers(void)
 {
 	char *globcfg;
 	char *query;
+	int i,count;
 
 	launcher_count=0;
 	while(launchers) {
