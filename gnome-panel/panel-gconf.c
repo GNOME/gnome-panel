@@ -36,6 +36,18 @@ gchar * panel_gconf_get_session_key (void) {
 	return session_key;
 }
 
+GSList *
+panel_gconf_all_global_entries (void)
+{
+	GSList *list;
+
+	list = gconf_client_all_entries (panel_gconf_get_client (),
+					 "/apps/panel/global",
+					 NULL);
+
+	return list;
+}
+
 gint panel_gconf_global_config_get_int (const gchar *key) {
 	gint value;
 	gchar *full_key;

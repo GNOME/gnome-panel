@@ -1413,85 +1413,137 @@ load_system_wide (void)
 	gnome_config_pop_prefix ();
 }
 
-
 void
 session_read_global_config (void)
 {
-	global_config.animation_speed = 
-		panel_gconf_global_config_get_int ("panel-animation-speed");
+	GSList *l;
 
-	global_config.minimized_size = 
-		panel_gconf_global_config_get_int ("panel-minimized-size");
+	l = panel_gconf_all_global_entries ();
 
-	global_config.hide_delay = 
-		panel_gconf_global_config_get_int ("panel-hide-delay");
+	for (; l ; l = l->next) {
+		GConfValue *value;
+		gchar      *key;
 
-	global_config.show_delay =
-		panel_gconf_global_config_get_int ("panel-show-delay");
+		value = gconf_entry_get_value (l->data);
 
-	global_config.tooltips_enabled =
-		panel_gconf_global_config_get_bool ("tooltips-enabled");
+		key = g_path_get_basename (gconf_entry_get_key (l->data));
 
-	global_config.keep_menus_in_memory =
-		panel_gconf_global_config_get_bool ("keep-menus-in-memory");
+		if (!strcmp (key, "panel-animation-speed"))
+			global_config.animation_speed =
+				gconf_value_get_int (value);
 
-	global_config.disable_animations =
-		panel_gconf_global_config_get_bool ("disable-animations");
+		else if (!strcmp (key, "panel-minimized-speed"))
+			global_config.minimized_size =
+				gconf_value_get_int (value);
 
-	global_config.autoraise = 
-		panel_gconf_global_config_get_bool ("autoraise-panel");
+		else if (!strcmp (key, "panel-minimized-size"))
+			global_config.minimized_size =
+				gconf_value_get_int (value);
 
-	global_config.layer = 
-		panel_gconf_global_config_get_int ("panel-window-layer");
-	
-	global_config.drawer_auto_close =
-		panel_gconf_global_config_get_bool ("drawer-auto-close");
+		else if (!strcmp (key, "panel-hide-delay"))
+			global_config.hide_delay =
+				gconf_value_get_int (value);
 
-	global_config.highlight_when_over =
-		panel_gconf_global_config_get_bool ("highlight-launchers-on-mouseover");
+		else if (!strcmp (key, "panel-show-delay"))
+			global_config.show_delay =
+				gconf_value_get_int (value);
 
-	printf ("loading HIGHLIGHT! %s\n", global_config.highlight_when_over? "TRUE" : "FALSE");
-	
-	global_config.confirm_panel_remove =
-		panel_gconf_global_config_get_bool ("confirm-panel-remove");
+		else if (!strcmp (key, "tooltips-enabled"))
+			global_config.tooltips_enabled =
+				gconf_value_get_bool (value);
 
-	global_config.keys_enabled = 
-		panel_gconf_global_config_get_bool ("enable-key-bindings");
+		else if (!strcmp (key, "keep-menus-in-memory"))
+			global_config.keep_menus_in_memory =
+				gconf_value_get_bool (value);
 
-	
-	global_config.menu_key = 
-		panel_gconf_global_config_get_string ("menu-key");
-	
-	convert_string_to_keysym_state(global_config.menu_key,
-				       &global_config.menu_keysym,
-				       &global_config.menu_state);
-	
-	global_config.run_key = 
-		panel_gconf_global_config_get_string ("run-key");
+		else if (!strcmp (key, "disable-animations"))
+			global_config.disable_animations =
+				gconf_value_get_bool (value);
 
-	convert_string_to_keysym_state(global_config.run_key,
-				       &global_config.run_keysym,
-				       &global_config.run_state);
+		else if (!strcmp (key, "autoraise-panel"))
+			global_config.autoraise =
+				gconf_value_get_bool (value);
 
-	global_config.screenshot_key =
-		panel_gconf_global_config_get_string ("screenshot-key");
+		else if (!strcmp (key, "panel-window-layer"))
+			global_config.layer =
+				gconf_value_get_int (value);
 
-	convert_string_to_keysym_state (global_config.screenshot_key,
-					&global_config.screenshot_keysym,
-					&global_config.screenshot_state);
+		else if (!strcmp (key, "drawer-autoclose"))
+			global_config.drawer_auto_close =
+				gconf_value_get_bool (value);
 
-	global_config.window_screenshot_key = 
-		panel_gconf_global_config_get_string ("window-screenshot-key");
+		else if (!strcmp (key, "auto-update-menus"))
+			g_warning ("Gman: what's this '%s' ?", key);
 
-	convert_string_to_keysym_state (global_config.window_screenshot_key,
-					&global_config.window_screenshot_keysym,
-					&global_config.window_screenshot_state);
-	
-	global_config.use_large_icons =
-		panel_gconf_global_config_get_bool ("use_large_icons");
+		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
+			global_config.highlight_when_over =
+				gconf_value_get_bool (value);
 
-	global_config.avoid_collisions =
-		panel_gconf_global_config_get_bool ("avoid-panel-overlap");
+		else if (!strcmp (key, "confirm-panel-remove"))
+			global_config.confirm_panel_remove =
+				gconf_value_get_bool (value);
+
+		else if (!strcmp (key, "enable-key-bindings"))
+			global_config.keys_enabled =
+				gconf_value_get_bool (value);
+
+		else if (!strcmp (key, "menu-key")) { 
+			if (global_config.menu_key )
+				g_free (global_config.menu_key );
+
+			global_config.menu_key =
+				g_strdup (gconf_value_get_string (value));
+
+			convert_string_to_keysym_state (global_config.menu_key,
+							&global_config.menu_keysym,
+							&global_config.menu_state);
+		} else if (!strcmp (key, "run-key")) {
+			if (global_config.run_key )
+				g_free (global_config.run_key );
+
+			global_config.run_key =
+				 g_strdup (gconf_value_get_string (value));
+
+			convert_string_to_keysym_state (global_config.run_key,
+							&global_config.run_keysym,
+							&global_config.run_state);
+		} else if (!strcmp (key, "screenshot-key")) {
+			if (global_config.screenshot_key )
+				g_free (global_config.screenshot_key );
+
+			global_config.screenshot_key =
+				g_strdup (gconf_value_get_string (value));
+
+			convert_string_to_keysym_state (global_config.screenshot_key,
+							&global_config.screenshot_keysym,
+							&global_config.screenshot_state);
+
+		} else if (!strcmp (key, "window-screenshot-key")) {
+			if (global_config.window_screenshot_key )
+				g_free (global_config.window_screenshot_key );
+
+			global_config.window_screenshot_key =
+				g_strdup (gconf_value_get_string (value));
+
+			convert_string_to_keysym_state (global_config.window_screenshot_key,
+							&global_config.window_screenshot_keysym,
+							&global_config.window_screenshot_state);
+
+		} else if (!strcmp (key, "use-large-icons"))
+			global_config.use_large_icons =
+				gconf_value_get_bool ("use-large-icons");
+
+		else if (!strcmp (key, "avoid-panel-overlap"))
+			global_config.avoid_collisions =
+				gconf_value_get_bool ("avoid-panel-overlap");
+
+		else
+			g_warning ("%s not handled", key);
+
+		g_free (key);
+	}
+
+	g_slist_free (l);
 
 	/* FIXME STUFF THAT IS BORKED */
 	global_config.merge_menus = TRUE;
@@ -1499,7 +1551,6 @@ session_read_global_config (void)
 	global_config.menu_flags = get_default_menu_flags();
 
 	apply_global_config ();
-	
 }
 
 void

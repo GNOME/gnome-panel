@@ -10,6 +10,8 @@ GConfClient*	panel_gconf_get_client (void);
 
 gchar *		panel_gconf_get_session_key (void);
 
+GSList         *panel_gconf_all_global_entries (void);
+
 gint		panel_gconf_global_config_get_int (const gchar *key);
 gboolean	panel_gconf_global_config_get_bool (const gchar *key);
 gchar*		panel_gconf_global_config_get_string (const gchar *key);

@@ -1,5 +1,14 @@
 2001-12-04  Mark McLoughlin  <mark@skynet.ie>
 
+	Load all global entries at once.
+
+	* panel-gconf.[ch]:
+	(panel_gconf_all_global_entries): impl.
+
+	* session.c: (session_read_global_config): use.
+
+2001-12-04  Mark McLoughlin  <mark@skynet.ie>
+
 	Cache "menus-have-icons" and "menus-have-tearoff"
 	keys with notification.
 
