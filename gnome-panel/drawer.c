@@ -314,7 +314,7 @@ key_press_drawer (GtkWidget *widget, GdkEventKey *event, gpointer data)
 	GtkWidget *drawer_panel;
 	GtkDirectionType dir;
 
-	if (event->state == 0) {
+	if (event->state != gtk_accelerator_get_default_mod_mask ()) {
 		drawer = data;
 		parent = PANEL_WIDGET (drawer->button->parent);
 		drawerw = DRAWER_WIDGET (drawer->drawer);
@@ -396,7 +396,7 @@ key_press_drawer_widget (GtkWidget *widget, GdkEventKey *event, gpointer data)
 		if (event->state == GDK_SHIFT_MASK) {
 			gtk_window_present (GTK_WINDOW (parent->panel_parent));
 			ret_val = TRUE;
-		} else if (event->state == 0) {
+		} else if (event->state != gtk_accelerator_get_default_mod_mask ()) {
 			gtk_window_present (GTK_WINDOW (parent->panel_parent));
 			switch (BASEP_WIDGET (drawerw)->state) {
 			case BASEP_SHOWN:
