@@ -794,6 +794,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	GList *send_move = NULL;
 	int i;
 	int old_size = panel->size;
+	int old_thick = panel->thick;
 	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
@@ -896,7 +897,9 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	else
 		panel->thick = allocation->width;
 
-	if(panel->fit_pixmap_bg && panel->back_type == PANEL_BACK_PIXMAP)
+	if(old_thick != panel->thick &&
+	   panel->fit_pixmap_bg &&
+	   panel->back_type == PANEL_BACK_PIXMAP)
 		panel_resize_pixmap(panel);
 
 	
