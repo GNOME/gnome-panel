@@ -724,15 +724,17 @@ static void
 move_horiz(PanelWidget *panel, int src_x, int dest_x)
 {
 	gint x, y;
+        gint mid = (src_x + dest_x) >> 1;
+        gint half = abs(src_x - dest_x) >> 1;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (panel->step_size != 0) {
 		if (src_x < dest_x) {
-			for (x = src_x; x < dest_x; x += panel->step_size)
+                       for (x = src_x; x < dest_x; x += ((half - abs(x - mid))>>2) + 1)
 				move_window(GTK_WIDGET(panel), x, y);
 		} else {
-			for (x = src_x; x > dest_x; x -= panel->step_size)
+                       for (x = src_x; x > dest_x; x -= ((half - abs(x - mid))>>2) + 1)
 				move_window(GTK_WIDGET(panel), x, y);
 		}
 	}
@@ -745,15 +747,17 @@ static void
 move_vert(PanelWidget *panel, int src_y, int dest_y)
 {
 	gint x, y;
+        gint mid = (src_y + dest_y) >> 1;
+        gint half = abs(src_y - dest_y) >> 1;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (panel->step_size != 0) {
 		if (src_y < dest_y) {
-			for (y = src_y; y < dest_y; y += panel->step_size)
+                        for (y = src_y; y < dest_y; y += ((half - abs(y - mid))>>2) + 1)
 				move_window(GTK_WIDGET(panel),x,y);
 		} else {
-			for (y = src_y; y > dest_y; y -= panel->step_size)
+                        for (y = src_y; y > dest_y; y -= ((half - abs(y - mid))>>2) + 1)
 				move_window(GTK_WIDGET(panel),x,y);
 		}
 	}
