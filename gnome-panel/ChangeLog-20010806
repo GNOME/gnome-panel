@@ -1,3 +1,13 @@
+Sun May 30 00:53:21 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: WRT remove item patch: check for the item_loc as the
+	  mf structure is only allocated for folders, also don't complain
+	  if there is no .order file, as that is a normal situation
+
+Sun May 30 00:13:47 1999  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: fix the initial setting of the size buttons
+
 1999-05-30  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c: updated version of my menu patch.  Adds "remove

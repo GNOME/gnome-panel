@@ -719,8 +719,7 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	order_in_file = fopen(order_in_name, "r");
 
 	if (!order_in_file) {
-		g_warning(_("Could not open .order file: %s"),
-			  order_in_name);
+		/*no .order file so we can just leave*/
 		g_free(order_in_name);
 		return;
 	}
@@ -1054,6 +1053,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				   item);
 
 		if(sim->type == 1) {
+			char *tmp;
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
 					_("Add this launcher to panel"));
@@ -1079,8 +1079,10 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_signal_connect (GTK_OBJECT(menuitem), "activate",
 					    GTK_SIGNAL_FUNC (remove_menuitem),
 					    sim->item_loc);
-			if(access(sim->mf->menudir,W_OK)!=0)
+			tmp = g_dirname(sim->item_loc);
+			if(access(tmp,W_OK)!=0)
 				gtk_widget_set_sensitive(menuitem,FALSE);
+			g_free(tmp);
 			gtk_signal_connect_object(GTK_OBJECT(menuitem),
 						  "activate",
 						  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),

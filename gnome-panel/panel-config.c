@@ -983,6 +983,7 @@ panel_config(GtkWidget *panel)
 	ppc->register_changes = FALSE; /*don't notify property box of changes
 					 until everything is all set up*/
 
+	ppc->sz = pw->sz;
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;
 	ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
