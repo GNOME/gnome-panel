@@ -82,6 +82,13 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
+/*these are in main.c*/
+void load_applet(char *id, char *params, int pos, int panel);
+
+void load_drawer(char *name, char *iconopen, char *iconclosed, int step_size,
+	int pos, int panel);
+
+
 
 END_GNOME_DECLS
 

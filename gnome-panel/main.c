@@ -33,7 +33,7 @@ GlobalConfig global_config = {
 	};
 
 
-static void
+void
 load_applet(char *id, char *params, int pos, int panel)
 {
 	/*FIXME: somehow load the applet and call register_toy ... this
@@ -52,7 +52,7 @@ load_applet(char *id, char *params, int pos, int panel)
 	}
 }
 
-static void
+void
 load_drawer(char *name, char *iconopen, char *iconclosed, int step_size,
 	int pos, int panel)
 {

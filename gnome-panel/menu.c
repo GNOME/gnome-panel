@@ -114,7 +114,7 @@ free_string (GtkWidget *widget, void *data)
 void
 add_to_panel (char *applet, char *arg)
 {
-	/*FIXME: launch an applet*/
+	load_applet(applet,arg,PANEL_UNKNOWN_APPLET_POSITION,0);
 }
 
 void
@@ -326,7 +326,6 @@ destroy_menu (GtkWidget *widget, gpointer data)
 	g_free(menu);
 }
 
-/*FIXME: this is starting to piss me off it doesn't work as it should*/
 static gint
 menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
@@ -575,7 +574,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	menu->orient = orient;
 
 	/* main button */
-	menu->button = gtk_button_new ();
+	menu->button = gtk_event_box_new ();
 	
 	/*make the pixmap*/
 	pixmap = gnome_create_pixmap_widget (window, menu->button, pixmap_name);
