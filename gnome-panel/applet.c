@@ -136,6 +136,10 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if(strcmp(menu->name,"properties")==0)
 			drawer_properties(info->data);
 		break;
+	case APPLET_MENU:
+		if(strcmp(menu->name,"properties")==0)
+			menu_properties(info->data);
+		break;
 	default: break;
 	}
 }

@@ -32,6 +32,9 @@ void make_panel_submenu (GtkWidget *menu, int fake_submenus);
 
 GtkWidget * create_panel_root_menu(GtkWidget *panel);
 
+void menu_properties(Menu *menu);
+
+
 END_GNOME_DECLS
 
 #endif

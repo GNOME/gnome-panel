@@ -22,6 +22,8 @@
 
 #define MENU_PATH "menu_path"
 
+#define MENU_PROPERTIES "menu_properties"
+
 static char *gnome_folder = NULL;
 
 GList *small_icons = NULL;
@@ -1211,7 +1213,7 @@ create_user_menu(GtkWidget *menu, int fake_submenus)
 {
 	char *menu_base = gnome_util_home_file ("apps");
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
-
+	
 	g_free (menu_base);
 	if (!g_file_exists (menudir))
 		mkdir (menudir, 0755);
@@ -1423,7 +1425,7 @@ create_root_menu(int fake_submenus, MainMenuType type)
 {
 	GtkWidget *root_menu;
 	GtkWidget *uroot_menu;
-	
+
 	root_menu = create_system_menu(NULL,fake_submenus);
 
 	if(type == MAIN_MENU_BOTH)
@@ -1684,6 +1686,262 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	g_free(pixmap_name);
 }
 
+static void
+properties_apply_callback(GtkWidget *widget, int page, gpointer data)
+{
+	Menu *menu = data;
+	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget), "main_menu");
+	GtkWidget *nomral_menu = gtk_object_get_data(GTK_OBJECT(widget), "nomral_menu");
+	GtkWidget *menu_both = gtk_object_get_data(GTK_OBJECT(widget), "menu_both");
+	GtkWidget *menu_system = gtk_object_get_data(GTK_OBJECT(widget), "menu_system");
+	GtkWidget *menu_user = gtk_object_get_data(GTK_OBJECT(widget), "menu_user");
+	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
+	char *s;
+
+	if (page != -1)
+		return;
+	
+	if(GTK_TOGGLE_BUTTON(main_menu)->active) {
+		g_free(menu->path);
+		menu->path = g_strdup(".");
+	} else {
+		g_free(menu->path);
+		s = gtk_entry_get_text(GTK_ENTRY(pathentry));
+		if(!s || !*s)
+			menu->path = g_strdup(".");
+		else
+			menu->path = g_strdup(s);
+	}
+	if(GTK_TOGGLE_BUTTON(menu_both)->active)
+		menu->main_menu_type = MAIN_MENU_BOTH;
+	else if(GTK_TOGGLE_BUTTON(menu_system)->active)
+		menu->main_menu_type = MAIN_MENU_SYSTEM;
+	else if(GTK_TOGGLE_BUTTON(menu_user)->active)
+		menu->main_menu_type = MAIN_MENU_USER;
+	
+	gtk_widget_unref(menu->menu);	
+	menu->menu = NULL;
+
+	{
+		char *menu_base = gnome_unconditional_datadir_file ("apps");
+		char *this_menu = get_real_menu_path(menu->path,menu_base);
+		GList *list = g_list_append(NULL,this_menu);
+		char *pixmap_name = get_pixmap(this_menu,menu->orient,
+					       strcmp(menu->path,".")==0);
+		/*make the pixmap*/
+		gnome_pixmap_load_file_at_size (GNOME_PIXMAP(menu->button),
+						pixmap_name,
+						BIG_ICON_SIZE,
+						BIG_ICON_SIZE);
+		g_free(pixmap_name);
+		
+		add_menu_widget(menu,list, strcmp(menu->path,".")==0, TRUE);
+		
+		g_free(menu_base);
+		g_free(this_menu);
+
+		g_list_free(list);
+	}
+}
+
+static int
+properties_close_callback(GtkWidget *widget, gpointer data)
+{
+	Menu *menu = data;
+	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget),"path");
+	gtk_object_set_data(GTK_OBJECT(menu->button),
+			    MENU_PROPERTIES,NULL);
+	gtk_signal_disconnect_by_data(GTK_OBJECT(pathentry),widget);
+	return FALSE;
+}
+
+static void
+notify_entry_change (GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+
+	gnome_property_box_changed (box);
+}
+static void
+toggle_prop(GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+
+	if(GTK_TOGGLE_BUTTON(widget)->active)
+		gnome_property_box_changed (box);
+}
+
+static void
+toggle_main_menu(GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
+						    "main_frame");
+	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
+						      "normal_frame");
+	if(GTK_TOGGLE_BUTTON(widget)->active) {
+		gtk_widget_set_sensitive(main_frame,TRUE);
+		gtk_widget_set_sensitive(normal_frame,FALSE);
+		gnome_property_box_changed (box);
+	}
+}
+static void
+toggle_normal_menu(GtkWidget *widget, void *data)
+{
+	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
+	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
+						    "main_frame");
+	GtkWidget *normal_frame = gtk_object_get_data(GTK_OBJECT(box),
+						      "normal_frame");
+	if(GTK_TOGGLE_BUTTON(widget)->active) {
+		gtk_widget_set_sensitive(main_frame,FALSE);
+		gtk_widget_set_sensitive(normal_frame,TRUE);
+		gnome_property_box_changed (box);
+	}
+}
+static GtkWidget *
+create_properties_dialog(Menu *menu)
+{
+	GtkWidget *dialog;
+	GtkWidget *vbox;
+	GtkWidget *box;
+	GtkWidget *w,*w2;
+	GtkWidget *f;
+	GtkWidget *t;
+
+	dialog = gnome_property_box_new();
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Menu properties"));
+	/*gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	
+	vbox = gtk_vbox_new(FALSE,5);
+	gtk_container_border_width(GTK_CONTAINER(vbox),5);
+
+	f = gtk_frame_new(_("Menu Type"));
+	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
+	
+	box = gtk_hbox_new(FALSE,5);
+	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_add(GTK_CONTAINER(f),box);
+	
+	w = gtk_radio_button_new_with_label (NULL, _("Main Menu"));
+	gtk_object_set_data(GTK_OBJECT(dialog),"main_menu",w);
+	if(!menu->path || strcmp(menu->path,".")==0)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_main_menu), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
+
+	w2 = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
+			  _("Normal Menu"));
+	gtk_object_set_data(GTK_OBJECT(dialog),"normal_menu",w2);
+	if(menu->path && strcmp(menu->path,".")!=0)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_normal_menu), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
+
+
+	f = gtk_frame_new(_("Main Menu"));
+	if(menu->path && strcmp(menu->path,".")!=0)
+		gtk_widget_set_sensitive(f,FALSE);
+	gtk_object_set_data(GTK_OBJECT(dialog),"main_frame",f);
+	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
+	
+	box = gtk_vbox_new(FALSE,5);
+	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_add(GTK_CONTAINER(f),box);
+
+	w = gtk_radio_button_new_with_label (NULL, _("Both System and User menus on the "
+						     "same menu"));
+	gtk_object_set_data(GTK_OBJECT(dialog),"menu_both",w);
+	if(menu->main_menu_type == MAIN_MENU_BOTH)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
+
+	w2 = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
+			  _("System on the main menu, User menu as a submenu"));
+	gtk_object_set_data(GTK_OBJECT(dialog),"menu_system",w2);
+	if(menu->main_menu_type == MAIN_MENU_SYSTEM)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
+	
+	w2 = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
+			  _("User on the main menu, System menu as a submenu"));
+	gtk_object_set_data(GTK_OBJECT(dialog),"menu_user",w2);
+	if(menu->main_menu_type == MAIN_MENU_USER)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
+	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
+	
+	f = gtk_frame_new(_("Normal Menu"));
+	if(!menu->path || strcmp(menu->path,".")==0)
+		gtk_widget_set_sensitive(f,FALSE);
+	gtk_object_set_data(GTK_OBJECT(dialog),"normal_frame",f);
+	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
+	
+	box = gtk_hbox_new(FALSE,5);
+	gtk_container_border_width(GTK_CONTAINER(box),5);
+	gtk_container_add(GTK_CONTAINER(f),box);
+	
+	w = gtk_label_new(_("Menu path"));
+	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
+
+	w = gnome_file_entry_new("menu_path",_("Browse"));
+	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (w));
+	gtk_object_set_data(GTK_OBJECT(dialog),"path",t);
+	if (menu->path)
+		gtk_entry_set_text(GTK_ENTRY(t), menu->path);
+	gtk_box_pack_start(GTK_BOX(box),w,TRUE,TRUE,0);
+	gtk_signal_connect (GTK_OBJECT (t), "changed",
+			    GTK_SIGNAL_FUNC(notify_entry_change),
+			    dialog);
+	
+	gtk_notebook_append_page (GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook),
+				  vbox, gtk_label_new (_("Menu")));
+	
+	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
+			   (GtkSignalFunc) properties_close_callback,
+			   menu);
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
+			   GTK_SIGNAL_FUNC(properties_apply_callback),
+			   menu);
+
+	return dialog;
+}
+
+void
+menu_properties(Menu *menu)
+{
+	GtkWidget *dialog;
+
+	dialog = gtk_object_get_data(GTK_OBJECT(menu->button),
+				     MENU_PROPERTIES);
+	if(dialog) {
+		gdk_window_raise(dialog->window);
+		return;
+	}
+
+	dialog = create_properties_dialog(menu);
+	gtk_object_set_data(GTK_OBJECT(menu->button),
+			    MENU_PROPERTIES,dialog);
+	gtk_widget_show_all (dialog);
+}
+
 void
 load_menu_applet(char *params, int main_menu_type,
 		 PanelWidget *panel, int pos)
@@ -1692,7 +1950,12 @@ load_menu_applet(char *params, int main_menu_type,
 
 	menu = create_menu_applet(params, ORIENT_UP,main_menu_type);
 
-	if(menu)
+	if(menu) {
 		register_toy(menu->button,menu,
 			     panel,pos,APPLET_MENU);
+
+		applet_add_callback(applet_count-1,"properties",
+				    GNOME_STOCK_MENU_PROP,
+				    _("Properties..."));
+	}
 }
