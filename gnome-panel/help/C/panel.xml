@@ -33,7 +33,6 @@
       <para> UNIX is a trademark of X/Open Group</para>
       <para> Linux is a trademark of Linus Torvalds </para>
       <para> X Window System is a trademark of X Consortium, Inc.</para>
-      <para> Red Hat and RPM are  trademarks of Red Hat, Inc. </para>
       <para> Windows is a trademark of Microsoft Corp.</para>
     </legalnotice>
 
@@ -133,20 +132,29 @@
 
  
     <sect2 id="rightclick">
-      <title>Right-click menu (FIXME)</title>
+      <title>Right-click menu</title>
       <para>
 	Clicking on any panel object with the right mouse button
-	brings up the <guimenu>pop-up menu</guimenu>. This menu allows
-	you to move or remove the object. It also contains some items
-	specific to this object; in most cases, it will contain
+	brings up the <guimenu>pop-up</guimenu>  menu. This menu
+	contains commands for removing or moving the object, and
+	<guimenu>Panel</guimenu> menu, which can be used to change
+	panel properties (both for <link
+	linkend="panelproperties">this panel</link> and <link
+	linkend="globalpanelprefs">global</link>, i.e. for all panels), <link
+	linkend="add">add an object</link>
+	to the panel, or remove the whole panel. In addition, the
+	pop-up menu  also contains some items specific to this
+	object; in most cases, it will contain
 	<guimenuitem>About</guimenuitem>, which would show brief
 	information about the applet, such as author's name and
 	version date, <guimenuitem>Help</guimenuitem>, and
 	<guimenuitem>Properties</guimenuitem>, which allows you to
-	configure preferences and settings for this object. 
+	configure preferences and settings for this object.
 	</para>
-        <para> You can also right-click on the panel itslef. This will
-        bring the menu FIXME.
+        <para> You can also right-click on the panel itself. This will
+        bring up the <link linkend="mainmenu"><guimenu>Main
+        Menu</guimenu></link>. In particular, this menu also contains
+        the <guimenu>Panel</guimenu> menu described above.  
 	</para>
 
     </sect2>
@@ -181,15 +189,10 @@
      GNOME Panel in the direction of the arrow pressed.  
     </para>
     <para>
- <!--    <indexterm id="idx-a6">
-      <primary>Panel</primary> 
-      <secondary>Auto-Hide</secondary>
-     </indexterm> -->
      You may decide that you want the Panel to hide on its own when you are not
      using it. This can be a helpful function if you are unable to run your
      system in a high resolution.  You can find out how to auto hide
-     the Panel in 
-     <xref linkend="panelproperties">.
+     the Panel in      <xref linkend="panelproperties">.
     </para>
    </sect2>
 
@@ -205,10 +208,9 @@
    <sect1 id="mainmenu">
     <title>The Main Menu</title>
     <para>
-<!-- <indexterm id="idx-a3"> 
+      <indexterm id="idx-a3"> 
      <primary>Main Menu</primary> 
      </indexterm>
-      -->
       The footprint icon seen towards the left end of the example
       panel is the <guibutton>Main Menu</guibutton> (yes, you guessed
       right, it is the footprint of the gnome). This menu provides you
@@ -266,40 +268,68 @@
 	<itemizedlist>
 	  <listitem>
 	    <para>
-	      <guimenuitem>Favorites</guimenuitem>
+	      <guisubmenu>Favorites.</guisubmenu> This menu, which
+	      is originally empty, is the place where you can put your
+	      favorite applications for quicker access. You can edit
+	      this menu using the <application>Menu
+	      Editor</application>, which can be accessed from the
+	      <guimenu>Main Menu</guimenu> by choosing
+	      <menuchoice><guisubmenu>Settings</guisubmenu>
+                          <guimenuitem>Menu Editor</guimenuitem>
+	    </menuchoice>. You can also add any item from any other
+	      menu (in particular, from the
+	      <guimenu>Programs</guimenu> menu) to
+	      <guisubmenu>Favorites</guisubmenu> by clicking on the
+	      item with the right mouse button and selecting
+	      <guimenuitem>Add this to personal menu</guimenuitem>.   
 	    </para>
 	  </listitem>
 
 	  <listitem>
 	    <para>
-	      <guimenuitem>Applets </guimenuitem>
+	      <guisubmenu>Applets.</guisubmenu> This menu contains all
+	      the applets installed on your system. 
 	    </para>
 	  </listitem>
 
 	  <listitem>
 	    <para>
-	      <guimenuitem>KDE menus </guimenuitem>
+	      <guimenuitem>KDE menus</guimenuitem> This  shows the
+	      menus of the K Desktop Environment (KDE) if you have it
+	      installed on your system
 	    </para>
 	  </listitem>
 
 
 	  <listitem>
 	    <para>
-	      <guimenuitem> Another Level menus, Debian menus </guimenuitem>
+	      <guimenuitem> Another Level menus, Debian menus
+	      </guimenuitem> These menus show the default application
+	      menus for Red Hat Linux (Another Level) and Debian
+	      GNU/Linux. They only make sense for the users of
+	      corresponding distributions. 
 	    </para>
 	  </listitem>
 
 	  <listitem>
 	    <para>
-	      <guimenuitem>Panel Menu </guimenuitem>
+	      <guimenuitem>Panel Menu.</guimenuitem> This menu can be
+	    used to change panel properties (both for <link
+	    linkend="panelproperties">this panel</link> and <link
+	    linkend="globalpanelprefs">global</link>, i.e. for all
+	    panels), <link linkend="add">add an object</link> to the
+	    panel, remove the whole panel or <link
+	    linkend="paneladd">create a new panel</link>.
 	    </para>
 	  </listitem>
 
 	  <listitem>
 	    <para>
 	      <guimenuitem> Desktop menu</guimenuitem>&mdash; includes
-	      <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
-	      Screen</guimenuitem>
+	      <guimenuitem>Logout</guimenuitem>, which ends your GNOME
+	      session (first asking for confirmation &mdash; see <xref
+	      linkend="loggingout">) and <guimenuitem>Lock
+	      Screen</guimenuitem>. 
 	    </para>
 	  </listitem>
 	</itemizedlist>
@@ -438,7 +468,7 @@
    such as the various applications in GNOME Office. The Drawers in
    the GNOME Panel take this one step further by making a Drawer an
    actual extension of the Panel itself.  Thus, a Drawer is a
-   collapsable branch of an existing Panel.  It can contain anything
+   collapsible branch of an existing Panel.  It can contain anything
    that a Panel can, including Launchers, Applets, and other Drawers.
   </para>
   <figure>
@@ -460,14 +490,15 @@
   </para>
   <para>
    You can configure a Drawer's properties by right clicking on the
-   Drawer's icon and selecting "Properties". This brings up the
-   Drawer Properties Dialog. Here you can select the icon used for
-   the drawer by clicking on the icon. A tooltip may be entered by
-   typing in the "Tooltip/Name" entry. This tooltip will be displayed
-   whenever the mouse is moved over the Drawer to remind you what is
-   inside.  One may also select whether the <guibutton>hide
+   Drawer's icon and selecting
+   <guimenuitem>Properties</guimenuitem>. This brings up the Drawer
+   Properties Dialog. Here you can select the icon used for the drawer
+   by clicking on the icon. A tooltip may be entered by typing in the
+   <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
+   displayed whenever the mouse is moved over the Drawer to remind you
+   what is inside.  One may also select whether the <guibutton>hide
    button</guibutton> and arrow are displayed at the end of the
-   drawer.  
+   drawer.
   </para>
   <figure>
    <title>Drawer Properties Dialog</title>
@@ -558,7 +589,7 @@
     application must be small enough to fit in your panel and you must know
     the title of the window you would like to swallow. 
    </para>
-    <figure>
+   <figure id="swallappfig">
      <title>Create Swallowed Application Dialog</title>
      <screenshot>
       <screeninfo>Create Swallowed Application Dialog</screeninfo>
@@ -571,8 +602,11 @@
     The "Title of application to swallow" is the window title,
     typically displayed on the top left edge of the window.  The
     width and height determine the size of the swallowed application
-    in the panel in pixels.
+    in the panel in pixels; they must be at least as large as the
+    application window, otherwise the application can't be swallowed. 
    </para>
+         
+	
 <!-- ## Add info on "command", possibly "xwininfo" or "xprop". ## -->
   </sect2>
   <sect2 id="statusdock">
@@ -590,10 +624,7 @@
       <sect2 id="moving">
 	<title>Moving objects</title>
 	<para>
-<!--     <indexterm id="idx-a13">
-      <primary>Panel</primary>
-      <secondary>adding applications to</secondary>
-     </indexterm>
+<!--    
      <indexterm id="idx-a14">
       <primary>Panel</primary>
       <secondary>launchers</secondary>
@@ -627,60 +658,146 @@
 	<sect2 id="add"> 
 	  <title>Adding objects to the panel</title> 
 
-	  <para> There are several ways to add an object to the
-	  panel. One of the possible ways is to right-click on the
-	  panel and choose <guimenuitem>Add to panel</guimenuitem>
-	  command from the <guimenu>Panel</guimenu> menu. This shows a
-	  menu of all possible objects you can add to the
-	  panel. Choosing <guimenuitem>Applet</guimenuitem> will give
-	  you further menu from which you can select any applet you
-	  like.  Similarly, choosing <guimenuitem>Menu</guimenuitem>
-	  gives you a choice of the Main menuju, program menu, and
-	  favorites menu. If you choose
-	  <guimenuitem>launcher</guimenuitem>, you will be presented
-	  the <interface>Create Launcher dialog</interface>, shown
-	  below.  In this dialog you should enter a name for your
-	  launcher, a comment, the command line to launch the
-	  application, and define the application type.  You may also
-	  press the icon button and choose an icon to represent the
-	  application from the icon picker. If no icon is chosen a
-	  default icon will be used.  This dialog has a built-in help
-	  which explains its usage in detail.
+      <para> 
+	<indexterm id="idx-a13">
+	  <primary>Panel</primary>
+	  <secondary>adding applications to</secondary>
+	</indexterm>
+	By default, the GNOME panel contains very few basic objects,
+	such as the <guimenu>Main Menu</guimenu>. However, there is a
+	number of things you can add to it. For example, every menu
+	item in the <guimenu>Main Menu</guimenu> or its submenus can be
+	added to the panel as an application launcher. GNOME also
+	contains a number of applets that can be added to the panel,
+	ranging from <application>Printer Applet</application>, which
+	prints a file which you drag and drop onto this applet, to
+	<application>Wanda the Fish</application>. If these are not
+	enough, there is also a number of GNOME applets
+	available on the Internet. 
+      </para>
+	<variablelist> 
+	  <varlistentry>
+	    <term> <emphasis>Applets</emphasis></term> 
+	    <listitem>
+	      <para>
+		To add an applet, right-click on the panel and select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		  <guisubmenu>Applet</guisubmenu></menuchoice> from the
+		<guimenu>Panel</guimenu> menu. This will show you the
+		menu of all the applets on your system, divided into
+		categories; choosing any applet from this menu will
+		add it to the panel. 
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+
+	  <varlistentry>
+	    <term> <emphasis>Application launchers</emphasis></term> 
+	    <listitem>
+	      <para>
+		To create a new application launcher, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guimenuitem>Launcher</guimenuitem> </menuchoice> from
+		the <guimenu>Panel</guimenu> menu.  You will be
+		presented the <interface>Create Launcher
+		dialog</interface>, shown below.  In this dialog you
+		should enter a name for your launcher, a comment, and
+		the command line to launch the application.  You may
+		also press the icon button and choose an icon to
+		represent the application from the icon picker. If no
+		icon is chosen a default icon will be used.  This
+		dialog has a built-in help which explains its usage in
+		detail.
+	      </para>
+	      <figure>
+		<title>The Create Launcher Dialog</title>
+		<screenshot>
+		  <screeninfo>Create launcher dialog</screeninfo>
+		  <graphic fileref="./figures/old/launcher-props" format="png"
+			   srccredit="dcm">
+		  </graphic>
+		</screenshot>
+	      </figure>
+	      <para>
+		You can also add to the panel any existing menu item
+		or any launcher on your desktop: just drag it to the
+		panel and drop there. Be careful to drop in the empty
+		space on the panel and not on any existing object: for
+		example, if you drop it on the printer applet, it will
+		be printed. For menu items, you can also right-click
+		on an item in the menu and select <guimenuitem>Add
+		this launcher to the panel</guimenuitem>. After this,
+		you can change any options for that launcher by
+		clicking on it with the right mouse button and
+		selecting <guimenuitem>Properties</guimenuitem> menu
+		item.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+
+	  <varlistentry>
+	    <term> <emphasis>Menus</emphasis></term> 
+	    <listitem>
+	      <para>To add a menu, select <menuchoice><guisubmenu>Add
+		to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
+	      </menuchoice> 
+		from the <guimenu>Panel</guimenu> menu. This gives you
+		a choice of the <guimenu>Main menu</guimenu>,
+		<guimenu>Programs</guimenu> menu, and
+		<guimenu>Favorites</guimenu> menu.
+	      </para>
+	      <para>
+		You can also add the <guimenu>Main
+		menu</guimenu> or any its submenu  as a new menu to
+		the panel by right-clicking  on the menu title (the
+		top line of the menu, separated from menu items by a
+		thin line) and selecting <guimenuitem>Add this as a
+		menu to the panel</guimenuitem>.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> <emphasis>Drawers</emphasis></term> 
+	    <listitem>
+	      <para>
+                 To add a new empty drawer, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Drawer</guisubmenu> </menuchoice> from the
+		<guimenu>Panel</guimenu> menu. After this, you can
+		right-click on this drawer and select
+		<guimenuitem>Properties</guimenuitem> to change its
+		properties (for example, the icon it uses). You can
+		add new items to this drawer in the same way as
+		you add items to the panel: all the methods for adding
+		new objects to the panel described in this section will
+		also work for adding new items to the drawer. 
 	    </para>
+	    <para>
+	      You can also add the <guimenu>Main menu</guimenu> or any
+		its submenu as a new drawer to the panel by
+		right-clicking on the menu title and selecting
+		<guimenuitem>Add this as a drawer to the
+		panel</guimenuitem>.
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	  <varlistentry>
+	    <term> <emphasis>Swallowed application</emphasis></term> 
+	    <listitem>
+	      <para>To add a new swallowed application, select
+		<menuchoice><guisubmenu>Add to panel</guisubmenu>
+		<guisubmenu>Swallowed app</guisubmenu> </menuchoice> from the
+		<guimenu>Panel</guimenu> menu. This will produce a
+		<interface>Create Swallowed Application</interface>
+		dialog, which is shown in <xref
+		linkend="swallappfig">. For details, see <xref
+		linkend="swallowedapps">. FIXME  
+	      </para>
+	    </listitem>
+	  </varlistentry>
+	</variablelist>
 
-    <figure>
-     <title>The Create Launcher Dialog</title>
-     <screenshot>
-      <screeninfo>Create launcher dialog</screeninfo>
-       <graphic fileref="./figures/old/launcher-props" format="png"
-       srccredit="dcm">
-       </graphic>
-     </screenshot>
-     </figure>
-	  <para>
-	  You can also utilize drag and drop to add  objects to the
-	  panel. For example, you can drag any application launcher
-	  you have on the desktop to the panel; similarly, you can
-	  drag a folder from the GNOME File Manager window to the
-	  panel. Moreover, you can also drag any item from  the Main
-	  menu or its submenu  to
-	  the panel (it will appear as an application launcher). Even
-	  a whole submenu can be dragged to a panel; to do so, you
-	  must drag the menu title (at the top of the menu). 
-	    </para>
-
-
-	  <para> Yet one more method of adding an application launcher
-	    to the Panel is right mouse click on an application menu
-	    item. You will be given another menu selection which
-	    contains <guimenuitem>Add this launcher to
-	    Panel</guimenuitem>.  If you select this menu item it will
-	    automatically add a launcher for that application to the
-	    Panel in which you invoked the Main Menu.  At this point
-	    you may right mouse click on the launcher and select the
-	    <guimenuitem>Properties</guimenuitem> menu item to change
-	    any options for that launcher.
-    </para>
    </sect2>
  </sect1>
 
@@ -690,26 +807,16 @@
 <!-- ########### Creating, Moving, and Removing Panels  ############## -->
   <sect1 id="panelmove">
    <title>Creating, Moving, and Removing Panels</title>
-<!--
-    <indexterm id="idx-a7">
-     <primary>Panel</primary>
-     <secondary>moving</secondary>
-    </indexterm>
-    <indexterm id="idx-a8">
-     <primary>Panel</primary>
-     <secondary>adding new</secondary>
-    </indexterm>
-    <indexterm id="idx-a9">
-     <primary>Panel</primary>
-     <secondary>Edge</secondary>
-    </indexterm>
-    <indexterm id="idx-a10">
-     <primary>Panel</primary>
-     <secondary>Corner</secondary>
-    </indexterm> -->
+
+ 
+ 
       <sect2 id="panelmoving">
 	<title> Moving panels </title>
-	<para>
+	<para>   
+	<indexterm id="idx-a7">
+	  <primary>Panel</primary>
+	  <secondary>moving</secondary>
+	</indexterm>
 	  Any Panel you have on your desktop can be moved by using the
 	  middle mouse button, or by simultaneously pressing the left
 	  and right mouse buttons, to drag the panel to the desired
@@ -725,65 +832,84 @@
       <sect2 id="paneladd"> 
 	<title>Creating new panels</title>
 	  <para>
-	    To add a new Panel to your desktop, selecting the
-	    <guimenuitem>Create panel</guimenuitem> command from
-	    <menuchoice> <guimenu>Main Menu</guimenu>
-	    <guisubmenu>Panel</guisubmenu></menuchoice> menu. You have
-	    a choice of four possible panel types:
+	<indexterm id="idx-a8">
+	  <primary>Panel</primary>
+	  <secondary>adding new</secondary>
+	</indexterm>
+	To add a new Panel to your desktop, selecting the
+	<guimenuitem>Create panel</guimenuitem> command from
+	<menuchoice> <guimenu>Main Menu</guimenu>
+	  <guisubmenu>Panel</guisubmenu></menuchoice> menu. You have
+	a choice of four possible panel types:
+      </para>
+      <itemizedlist mark="bullet">
+	<listitem>
+	  <para>
+	    <indexterm id="idx-a9">
+	      <primary>Panel</primary>
+	      <secondary>Edge</secondary>
+	    </indexterm>
+	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel
+	    is exactly like the main Panel that starts up with
+	    GNOME; it stretches along the whole length of one of
+	    screen edges. By selecting this type of panel you may
+	    add a new Panel to another edge of your screen to give
+	    yourself more functionality.
 	  </para>
-	  <itemizedlist mark="bullet">
-	    <listitem>
-	      <para>
-		<guilabel>Edge Panel</guilabel> &mdash; An Edge Panel
-		is exactly like the main Panel that starts up with
-		GNOME; it stretches along the whole length of one of
-		screen edges. By selecting this type of panel you may
-		add a new Panel to another edge of your screen to give
-		yourself more functionality.
+	</listitem>
+	<listitem>
+	  <para>
+	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
+	     is also positioned along one of the screen edges. But
+	    unlike the Edge Panel, the Aligned Panel will not stretch
+	    across the entire edge of the screen it is on: it will
+	    only stretch as much as necessary to  display the
+	    icons and applets it contains. It can be positioned either
+	    at one of the corners (in this case, it will stretch
+	    towards the opposite corner) or at the center of the edge
+	    (in this case, it will stretch in both directions,
+	    automatically recentering when you add new objects).
+            </para>
+	  <para> If the Aligned panel is aligned with one of the
+	    corners, the hide buttons will work slightly differently
+	    than for the Edge Panel.  The hide button closest to the
+	    edge of your screen will hide the Panel as usual but the
+	    other hide button will send the whole panel to the
+	    opposite edge. When the latter move is made it will not
+	    hide the Panel since it is changing the side of the screen
+	    it resides on.  If you want to hide it you will have to
+	    press the hide button once again.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<guilabel>Aligned Panel</guilabel> &mdash; 
-		FIXME
-<!--
-      The Corner Panel is a small Panel that will not stretch
-      across the entire edge of the screen it is on. The Corner Panel will,
-      however, stretch to the extent needed to display the icons and applets it
-      contains.  The hide buttons work just a bit differently with Corner
-      Panels. The hide button closest to the edge of your screen will hide the
-      Panel as usual but the other hide button will send the whole panel to the
-      opposite edge. When the latter move is made it will not hide the Panel
-      since it is changing the side of the screen it resides on.  If
-      you want to 
-      hide it you will have to press the hide button once again.-->
+	        <guilabel>Sliding Panel</guilabel> &mdash; This type
+ 	        of panel is very similar to the Aligned Panel, but can
+ 	        be placed anywhere along the screen edge, not
+ 	        necessarily in one of the corners or in the center. As
+ 	        you add objects, it will only grow in one directions
+ 	        &mdash; it won't automatically recenter. 
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<guilabel> Sliding  Panel</guilabel> &mdash; FIXME 
-	      </para>
-	    </listitem>
-	    <listitem>
-	      <para>
-		<guilabel> Floating  Panel</guilabel> &mdash;  FIXME
+		<guilabel> Floating  Panel</guilabel> &mdash;   This
+		type of panel can be placed anywhere on your screen,
+		not necessarily along one of the edges. 
 	      </para>
 	    </listitem>
 	  </itemizedlist>
 
 
 
-<!--	    <indexterm id="idx-a11">
-	      <primary>Panel</primary>
-	      <secondary>convert to Edge</secondary>
-	    </indexterm>
-	    <indexterm id="idx-a12">
-	      <primary>Panel</primary>
-	      <secondary>convert to Corner</secondary>
-	    </indexterm>-->
+
 	<tip>
 	  <title> Changing panel type</title>
 	  <para>
+	      <indexterm id="idx-a11">
+	      <primary>Panel</primary>
+	      <secondary>changing type of</secondary>
+	    </indexterm>
 	  You can also change type of existing panel &mdash; for example,
 	  convert edge panel to a floating panel, see <xref
 	  linkend="panelproperties">.
@@ -1151,31 +1277,30 @@
       <primary>Panel</primary> <secondary>properties</secondary>
       </indexterm> --> 
 
-      In addition to global Panel's properties,
-      described in <xref linkend="globalpanelprefs">, some properties
-      can be configured individually for each panel.  This includes
-      panel type (edge, aligned, floating), size, location, background
-      color, and hiding preferences. To change these properties for a
-      panel, right mouse click on the it and select
+      In addition to global Panel's properties, described in <xref
+      linkend="globalpanelprefs">, some properties can be configured
+      individually for each panel.  This includes panel type (Edge,
+      Aligned, Sliding, Floating), size, location, background color,
+      and hiding preferences. To change these properties for a panel,
+      click on it with the right mouse button and select
       <menuchoice><guimenu>Panel</guimenu>
       <guisubmenu>Properties</guisubmenu></menuchoice>. You may also
-      press the <guibutton>Main Menu</guibutton> button and select 
+      press the <guibutton>Main Menu</guibutton> button and select
       <menuchoice><guimenu>Panel</guimenu>
       <guisubmenu>Properties</guisubmenu></menuchoice>.
     </para>
     <para> From the <guisubmenu>Properties</guisubmenu>, you can
       choose <guimenuitem>All properties</guimenuitem>, which will
-      launch <interface>Panle properties</interface> dialog.  If you
-      are already famliliar with this dialog, you can also quickly
-      change some of the properties &mdash; say, panel size &mdash; by
-      selecting the approriate item (in this case,
-      <guimenuitem>Size</guimenuitem>) in the
+      launch <interface>Panel properties</interface> dialog.  If you
+      are already familiar with this dialog, you can also quickly
+      change some of the properties &mdash; say, panel size or type &mdash; by
+      selecting the appropriate item  in the
       <guisubmenu>Properties</guisubmenu> menu.
     </para>
     <para>
      The Panel properties dialog contains two tabs to help you set the
      active Panel properties: <guilabel>Edge Panel</guilabel>
-     (or <guilabel>Aligned</guilabel>, &hellip - depeding on your
+     (or <guilabel>Aligned</guilabel>, &hellip - depending on your
      panel type) and <guilabel>Background</guilabel>. Both of these
      tabs are explained below. 
     </para>
@@ -1194,11 +1319,21 @@
     <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-	    <guilabel>Panel Position</guilabel> &mdash; This changes the
-	    position of the Panel on the screen. You may select either Top,
-	    Right, Left or Bottom. The Panel will change position once you
-	    have pressed <guibutton>Apply</guibutton> or
-	    <guibutton>OK</guibutton> buttons.
+	    <guilabel>Panel Position</guilabel> &mdash; This changes
+	    the position of the Panel on the screen. For edge panel,
+	    you must specify an edge  (Top, Right, Left or
+	    Bottom). For Aligned panel, you have to specify an edge
+	    and one of the edge's ends or the center. For Sliding
+	    Panel, you must specify the edge and offset from one of
+	    the corners (in pixels). Finally, for Floating panel you
+	    must specify orientation (horizontal or vertical) and
+	    position of panel's left top corner (relative to the left
+	    top corner of the screen and measured in pixels). 
+	  </para>
+	  <para>
+	    The Panel will change position once you have pressed
+	    <guibutton>Apply</guibutton> or <guibutton>OK</guibutton>
+	    buttons.
 	  </para>
 	  <tip>
 	    <title>TIP</title>
