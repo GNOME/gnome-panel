@@ -1,3 +1,13 @@
+2001-10-18  jacob berkman  <jacob@ximian.com>
+
+	* session.h (PANEL_CONFIG_PATH): set to panel2.d so you don't
+	wreck your normal panel settings
+
+	* main.c (main): 
+	* launcher.c (launcher_file_name): 
+	* session.c (get_correct_prefix): use PANEL_CONFIG_PATH rather
+	than hard coding the path
+
 2001-10-18  Glynn Foster  <glynn.foster@sun.com>
 
 	* basep-widget.c, gnome-panel-properties.c,

@@ -699,7 +699,7 @@ do_session_save(GnomeClient *client,
 		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
 #endif /* PER_SESSION_CONFIGURATION */		
-		panel_cfg_path = g_strdup ("/panel.d/default/");
+		panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
 
 #ifdef PER_SESSION_CONFIGURATION
 	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
@@ -942,7 +942,7 @@ get_correct_prefix (char const **sep)
 	if (commie_mode) {
 		gnome_config_pop_prefix ();
 		*sep = "=";
-		return g_strdup_printf ("=%s/panel.d/default/", GLOBAL_CONFDIR);
+		return g_strdup_printf ("=" GLOBAL_CONFDIR PANEL_CONFIG_PATH);
 	}
 
 	count = conditional_get_int (PANEL_CONFIG_PATH
@@ -953,15 +953,13 @@ get_correct_prefix (char const **sep)
 		return g_strdup (PANEL_CONFIG_PATH);
 	}
 
-	path = g_strdup_printf ("=%s/panel.d/default/panel=/Config/panel_count",
-				GLOBAL_CONFDIR);
+	path = "=" GLOBAL_CONFDIR PANEL_CONFIG_PATH "panel=/Config/panel_count";
 	count = conditional_get_int (path, 0, NULL);
-	g_free (path);
 
 	if (count > 0) {
 		gnome_config_pop_prefix ();
 		*sep = "=";
-		return g_strdup_printf ("=%s/panel.d/default/", GLOBAL_CONFDIR);
+		return g_strdup_printf ("=" GLOBAL_CONFDIR PANEL_CONFIG_PATH);
 	}
 
 	gnome_config_pop_prefix ();

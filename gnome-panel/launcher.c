@@ -914,10 +914,15 @@ launcher_file_name (const char *base)
 #warning FIXME: per session config must be done for launchers
 #endif
 #else
+	char *tmp, *retval;
+
 	g_return_val_if_fail (base != NULL, NULL);
-	return g_strdup_printf ("%s/.gnome/panel.d/default/launchers/%s",
-				g_get_home_dir (),
-				base);
+
+	tmp = gnome_util_home_file (PANEL_CONFIG_PATH "launchers");
+	retval = g_build_filename (tmp, base, NULL);
+
+	g_free (tmp);
+	return retval;
 #endif
 }
 

@@ -538,13 +538,13 @@ main(int argc, char **argv)
 	if (gnome_client_get_flags (client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
-		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+		old_panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
 
 #ifndef PER_SESSION_CONFIGURATION
 	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
 	if ( ! g_file_test (real_global_path, G_FILE_TEST_EXISTS)) {
 		g_free (old_panel_cfg_path);
-		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+		old_panel_cfg_path = g_strdup (PANEL_CONFIG_PATH);
 	}
 	g_free (real_global_path);
 #endif /* !PER_SESSION_CONFIGURATION */
