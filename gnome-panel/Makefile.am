@@ -33,8 +33,7 @@ CLEANFILES += $(CORBA_SRCLIST) my_gnome_panel_idl
 $(CORBA_SRCLIST): my_gnome_panel_idl
 
 my_gnome_panel_idl: $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
-	$(ORBIT_IDL) $<
-	touch my_gnome_panel_idl
+	if $(ORBIT_IDL) `@GNOME_CONFIG@ --cflags idl` $< ; then touch my_gnome_panel_idl; else /bin/false; fi
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
