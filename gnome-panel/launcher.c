@@ -101,6 +101,7 @@ panel_launcher_save_ditem (GnomeDesktopItem *ditem,
 		panel_error_dialog (screen,
 				    "cannot_save_launcher",
 				    _("Cannot save launcher to disk"),
+				    "%s",
 				    error->message);
 
 		g_error_free (error);
@@ -137,8 +138,9 @@ launch_url (Launcher *launcher)
 		panel_error_dialog (screen,
 				    "cannot_show_url_dialog",
 				    _("Cannot show %s"),
-				    error->message,
-				    url);
+				    "%s",
+				    url,
+				    error->message);
 
 		g_clear_error (&error);
 	}
@@ -170,6 +172,7 @@ launch_cb (GtkWidget *widget,
 			panel_error_dialog (launcher_get_screen (launcher),
 					    "cannot_launch_icon",
 					    _("Cannot launch icon"),
+					    "%s",
 					    error->message);
 
 			g_clear_error (&error);
@@ -215,6 +218,7 @@ drag_data_received_cb (GtkWidget        *widget,
 		panel_error_dialog (launcher_get_screen (launcher),
 				    "cannot_launch_icon",
 				    _("Cannot launch icon"),
+				    "%s",
 				    error->message);
 		g_clear_error (&error);
 	}
@@ -1107,6 +1111,7 @@ launcher_show_help (Launcher  *launcher,
 		panel_error_dialog (screen,
 				    "cannot_show_gnome_kde_help",
 				    _("Cannot display help document"),
+				    "%s",
 				    error->message);
 
 		g_error_free (error);

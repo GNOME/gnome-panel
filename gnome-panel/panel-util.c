@@ -72,6 +72,7 @@ panel_show_help (GdkScreen  *screen,
 			screen,
 			"cannot_show_help",
 			_("Cannot display help document"),
+			"%s",
 			error != NULL ? error->message : "");
 
 		g_clear_error (&error);

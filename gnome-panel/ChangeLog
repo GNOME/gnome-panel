@@ -1,3 +1,12 @@
+Tue Jul 29 18:27:48 2003  George Lebl <jirka@5z.com>
+
+	* button-widget.c, launcher.c, menu.c, menu-ditem.c, panel-action-button.c,
+	  panel-recent.c, panel-run-dialog.c, panel-shell.c, panel-util.c:
+	  Fixed crashes on two panel_error_dialog invocations that weren't
+	  quite converted.  Also never NEVER use an error message we got
+	  from somewhere else as a format, that way lie crashes and security
+	  problems.
+
 2003-07-24  Alex Duggan  <aldug@astrolinux.com>
 
 	* panel-toplevel.schemas.in: s/indentify/identify/

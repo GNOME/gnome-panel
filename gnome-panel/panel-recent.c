@@ -141,6 +141,7 @@ recent_documents_activate_cb (EggRecentViewGtk *view, EggRecentItem *item,
 			panel_error_dialog (screen,
 					    "cannot_open_recent_doc",
 					    _("Cannot open recently used document"),
+					    "%s",
 					    error->message);
 			g_error_free (error);
 		} else

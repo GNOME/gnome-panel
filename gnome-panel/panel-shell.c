@@ -92,7 +92,7 @@ panel_shell_register (void)
 			GtkWidget *dlg = panel_error_dialog (
 						gdk_screen_get_default (),
 						"panel_shell_register_error",
-						"%s", message);
+						"%s", NULL, message);
 
 			/* FIXME: quick hack */
 			g_signal_handlers_disconnect_by_func

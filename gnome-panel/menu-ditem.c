@@ -115,6 +115,7 @@ ditem_properties_close (GtkWidget *dialog,
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (dialog)),
 				    "cannot_save_entry",
 				    _("Cannot save changes to launcher"),
+				    "%s",
 				    saving_error);
 }
 
@@ -496,6 +497,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 		panel_error_dialog (gtk_window_get_screen (GTK_WINDOW (d)),
 				    "cannot_save_menu_item" /* class */,
 				    _("Cannot save menu item to disk"),
+				    "%s",
 				    error->message);
 
 		g_clear_error (&error);

@@ -348,6 +348,7 @@ activate_app_def (GtkWidget  *menuitem,
 			panel_error_dialog (menuitem_to_screen (menuitem),
 					    "cannot_launch_entry",
 					    _("Cannot launch entry"),
+					    "%s",
 					    error->message);
 
 			g_clear_error (&error);
@@ -359,6 +360,7 @@ activate_app_def (GtkWidget  *menuitem,
 		panel_error_dialog (menuitem_to_screen (menuitem),
 				    "cannot_load_entry",
 				    _("Cannot load entry"),
+				    "%s",
 				    error->message);
 
 		g_clear_error (&error);
@@ -1058,8 +1060,9 @@ remove_menuitem (GtkWidget *widget, ShowItemMenu *sim)
 		panel_error_dialog (menuitem_to_screen (sim->menuitem),
 				    "cannot_remove_menu_item",
 				    _("Cannot remove menu item %s"),
-				    gnome_vfs_result_to_string (result),
-				    esc);
+				    "%s",
+				    esc,
+				    gnome_vfs_result_to_string (result));
 
 		g_free (esc);
 		return;
@@ -1153,6 +1156,7 @@ add_to_run_dialog (GtkWidget    *widget,
 		panel_error_dialog (menuitem_to_screen (sim->menuitem),
 				    "cannot_load_entry",
 				    _("Cannot load entry"),
+				    "%s",
 				    error->message);
 
 		g_clear_error (&error);
@@ -1179,6 +1183,7 @@ show_help_on (GtkWidget    *widget,
 			panel_error_dialog (screen,
 					    "cannot_show_gnome_kde_help",
 					    _("Cannot display help document"),
+					    "%s",
 					    error->message);
 
 			g_clear_error (&error);
@@ -1191,6 +1196,7 @@ show_help_on (GtkWidget    *widget,
 		panel_error_dialog (screen,
 				    "cannot_load_entry",
 				    _("Cannot load entry"),
+				    "%s",
 				    error->message);
 
 		g_clear_error (&error);

@@ -287,8 +287,9 @@ panel_run_dialog_launch_command (PanelRunDialog *dialog,
 	if (!result) {
 		panel_error_dialog (screen, "cannot_spawn_command",
 				    _("Cannot launch command '%s'"),
-				    error->message,
-				    escaped);
+				    "%s",
+				    escaped,
+				    error->message);
 
 		g_error_free (error);
 	}
@@ -318,8 +319,9 @@ panel_run_dialog_show_url (PanelRunDialog *dialog,
 	if (error) {
 		panel_error_dialog (screen, "cannot_show_url",
 				    _("Cannot display location '%s'"),
-				    error->message,
-				    escaped);
+				    "%s",
+				    escaped,
+				    error->message);
 
 		g_error_free (error);
 		return FALSE;

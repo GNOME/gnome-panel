@@ -267,8 +267,8 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button)
 			if (error) {
 				panel_error_dialog (gdk_screen_get_default (),
 						    "cannot_load_pixbuf",
-						    _("Failed to load image %s\n\n"
-						    "Details: %s"),
+						    _("Failed to load image %s"),
+						    "%s",
 						    button->filename,
 						    error);
 				g_free (error);
