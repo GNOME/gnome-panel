@@ -44,6 +44,7 @@ struct _DirRec {
 	time_t dentrymtime;
 	time_t dentrylast_stat;
 	time_t merge_mtime;
+	gboolean force_reread;
 	GSList *recs; /*records for directories*/
 	GSList *mfl;  /*records of menus using this record*/
 };
@@ -58,6 +59,7 @@ FileRec * fr_check_and_reread(FileRec *fr);
 FileRec * fr_get_dir(const char *mdir);
 gboolean fr_is_subdir (const char *dir, const char *superdir, int superdir_len);
 char * fr_get_mergedir (const char *dir);
+void fr_force_reread(void);
 
 void init_fr_chunks (void);
 END_GNOME_DECLS

@@ -41,6 +41,7 @@ struct _GlobalConfig {
 	  guint run_state;    /* from the above */
 	int menu_flags;
 	gboolean use_large_icons;
+	gboolean merge_menus;
 };
 
 #endif /* PANEL_CONFIG_GLOBAL_H */

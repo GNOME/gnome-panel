@@ -92,6 +92,7 @@ static GtkWidget *show_dot_buttons_cb;
 static GtkWidget *off_panel_popups_cb;
 static GtkWidget *hungry_menus_cb;
 static GtkWidget *use_large_icons_cb;
+static GtkWidget *merge_menus_cb;
 
 typedef struct {
 	int inline_flag;
@@ -684,6 +685,8 @@ sync_menu_page_with_config(GlobalConfig *conf)
 				    conf->hungry_menus);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(use_large_icons_cb),
 				    conf->use_large_icons);
+	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(merge_menus_cb),
+				    conf->merge_menus);
 
 	for (opt = menu_options; opt->inline_flag; ++opt) {
 		if (conf->menu_flags & opt->inline_flag)
@@ -708,6 +711,8 @@ sync_config_with_menu_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(hungry_menus_cb)->active;
 	conf->use_large_icons =
 		GTK_TOGGLE_BUTTON(use_large_icons_cb)->active;
+	conf->merge_menus =
+		GTK_TOGGLE_BUTTON(merge_menus_cb)->active;
 	conf->menu_flags = 0;
 	for (opt = menu_options; opt->inline_flag; ++opt) {
 		if (GTK_TOGGLE_BUTTON (opt->inline_rb)->active)
@@ -763,9 +768,15 @@ menu_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 	
 	/* table for frame */
-	table = gtk_table_new(2,2,FALSE);
+	table = gtk_table_new(3, 2, FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER (table), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), table);
+
+	/* large icons */
+	use_large_icons_cb = gtk_check_button_new_with_label (_("Use large icons"));
+	gtk_signal_connect (GTK_OBJECT (use_large_icons_cb), "toggled",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table),use_large_icons_cb, 0,1,0,1);
 	
 	/* Dot Buttons */
 	show_dot_buttons_cb = gtk_check_button_new_with_label (_("Show [...] buttons"));
@@ -785,11 +796,12 @@ menu_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_table_attach_defaults(GTK_TABLE(table),hungry_menus_cb, 1,2,1,2);
 
-	/* large icons */
-	use_large_icons_cb = gtk_check_button_new_with_label (_("Use large icons"));
-	gtk_signal_connect (GTK_OBJECT (use_large_icons_cb), "toggled",
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_table_attach_defaults(GTK_TABLE(table),use_large_icons_cb, 0,1,0,1);
+	/* Merge system menus */
+	merge_menus_cb = gtk_check_button_new_with_label (_("Merge in system menus"));
+	gtk_signal_connect (GTK_OBJECT (merge_menus_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb),  NULL);
+	gtk_table_attach_defaults(GTK_TABLE(table), merge_menus_cb,
+				  0, 1, 2, 3);
 
 	/* Menu frame */
 	frame = gtk_frame_new (_("Global menu"));
@@ -1078,6 +1090,9 @@ loadup_vals(void)
 	global_config.use_large_icons =
 		gnome_config_get_bool("use_large_icons=TRUE");
 
+	global_config.merge_menus =
+		gnome_config_get_bool("merge_menus=TRUE");
+
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");
 		
@@ -1206,6 +1221,8 @@ write_config(GlobalConfig *conf)
 			      conf->hungry_menus);
 	gnome_config_set_bool("use_large_icons",
 			      conf->use_large_icons);
+	gnome_config_set_bool("merge_menus",
+			      conf->merge_menus);
 	gnome_config_set_bool("off_panel_popups",
 			      conf->off_panel_popups);
 	gnome_config_set_bool("disable_animations",

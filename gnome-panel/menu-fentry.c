@@ -33,6 +33,8 @@ extern char *merge_main_dir;
 extern int merge_main_dir_len;
 extern char *merge_merge_dir;
 
+extern GlobalConfig global_config;
+
 void
 init_fr_chunks (void)
 {
@@ -80,6 +82,11 @@ char *
 fr_get_mergedir (const char *dir)
 {
 	char *mergedir;
+
+	/* If we never merge, just return NULL */
+	if ( ! global_config.merge_menus)
+		return NULL;
+
 	if(merge_merge_dir != NULL &&
 	   fr_is_subdir(dir, merge_main_dir, merge_main_dir_len)) {
 		if (dir[merge_main_dir_len-1] == '/')
@@ -320,6 +327,7 @@ fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge
 	/*this will zero all fields*/
 	if(dr == NULL) {
 		dr = g_chunk_new0 (DirRec, dir_chunk);
+		dr->force_reread = FALSE;
 		/* this must be set otherwise we may messup on
 		   fr_free */
 		dr->frec.type = FILE_REC_DIR;
@@ -429,11 +437,17 @@ fr_check_and_reread(FileRec *fr)
 	if(dr->recs == NULL) {
 		fr_fill_dir(fr,1);
 	} else {
-		int reread = FALSE;
-		int any_change = FALSE;
+		gboolean reread = FALSE;
+		gboolean any_change = FALSE;
 		struct stat ds;
 		GSList *li;
-		if (fr->last_stat < curtime-1) {
+
+		if (dr->force_reread)
+			reread = TRUE;
+		dr->force_reread = FALSE;
+
+		if ( ! reread &&
+		    fr->last_stat < curtime-1) {
 			if(stat(fr->name, &ds)==-1) {
 				fr_free(fr,TRUE);
 				return NULL;
@@ -566,12 +580,24 @@ fr_get_dir(const char *mdir)
 {
 	GSList *li;
 	g_return_val_if_fail(mdir!=NULL, NULL);
-	for(li=dir_list; li!=NULL; li=g_slist_next(li)) {
+	for(li = dir_list; li != NULL; li = li->next) {
 		FileRec *fr = li->data;
-		g_assert(fr!=NULL);
-		g_assert(fr->name!=NULL);
+		g_assert(fr != NULL);
+		g_assert(fr->name != NULL);
 		if(strcmp(fr->name, mdir)==0)
 			return fr_check_and_reread(fr);
 	}
 	return fr_read_dir(NULL, mdir, NULL, NULL, 1);
+}
+
+void
+fr_force_reread(void)
+{
+	GSList *li;
+	for(li = dir_list; li != NULL; li = li->next) {
+		DirRec *dr = li->data;
+		g_assert(dr != NULL);
+
+		dr->force_reread = TRUE;
+	}
 }

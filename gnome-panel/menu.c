@@ -4619,7 +4619,7 @@ save_tornoff(void)
 			MenuFinfo *mf = l->data;
 			char name[256];
 			g_snprintf(name, 256, "name_%d", j);
-			gnome_config_set_string(name, mf->fr->name);
+			gnome_config_set_string(name, mf->menudir);
 			g_snprintf(name, 256, "dir_name_%d", j);
 			gnome_config_set_string(name, mf->dir_name);
 			g_snprintf(name, 256, "pixmap_name_%d", j);
