@@ -14,6 +14,7 @@
  */
 #include <config.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
@@ -395,7 +396,8 @@ draw_zoom_animation (GdkScreen *gscreen,
 	depth = gdk_drawable_get_depth (gdk_screen_get_root_window (gscreen));
 
 	/* frame GC */
-	gdk_color_alloc (gdk_screen_get_system_colormap (gscreen), &color);
+	gdk_colormap_alloc_color (
+		gdk_screen_get_system_colormap (gscreen), &color, FALSE, TRUE);
 	gcv.function = GXxor;
 	/* this will raise the probability of the XORed color being different
 	 * of the original color in PseudoColor when not all color cells are

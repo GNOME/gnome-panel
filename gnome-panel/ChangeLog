@@ -1,5 +1,12 @@
 2002-09-24  Mark McLoughlin  <mark@skynet.ie>
 
+	* launcher.c: include xstuff.h.
+
+	* xstuff.c: (draw_zoom_animation): don't
+	use gdk_color_alloc() - its deprecated.
+
+2002-09-24  Mark McLoughlin  <mark@skynet.ie>
+
 	* button-widget.c:
 	(button_widget_load_pixbuf_and_scale): split out from
 	size_allocate(). Load the pixbuf here.

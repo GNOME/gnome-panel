@@ -37,6 +37,7 @@
 #include "panel-gconf.h"
 #include "panel-main.h"
 #include "session.h"
+#include "xstuff.h"
 
 #include "quick-desktop-reader.h"
 
