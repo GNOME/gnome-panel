@@ -627,7 +627,7 @@ wanda_activator(PortableServer_POA poa,
   bah_window = gtk_window_new(GTK_WINDOW_POPUP);
   gtk_widget_set_uposition(bah_window,gdk_screen_width()+1,
 			   gdk_screen_height()+1);
-  gtk_widget_show_now(GTK_WINDOW(bah_window));
+  gtk_widget_show_now(bah_window);
   
   load_properties(fish);
   
