@@ -810,6 +810,14 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 				panel_dragged = TRUE;
 				return TRUE;
 			}
+			if(IS_DRAWER_WIDGET(widget) &&
+			   !panel_applet_in_drag) {
+				DrawerWidget *dw = DRAWER_WIDGET(widget);
+				PanelWidget *pw = PANEL_WIDGET(dw->panel);
+				panel_widget_applet_drag_start(PANEL_WIDGET(pw->master_widget->parent),
+							       pw->master_widget);
+				return TRUE;
+			}
 			break;
 		default: break;
 		}

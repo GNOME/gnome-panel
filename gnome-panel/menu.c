@@ -1452,6 +1452,7 @@ create_menuitem(GtkWidget *menu,
 		int *first_item)
 {
 	GtkWidget *menuitem, *sub, *pixmap;
+	char *itemname;
 	char *pixname;
 	
 	g_return_if_fail(fr != NULL);
@@ -1467,25 +1468,33 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	sub = NULL;
+	if(fr->fullname) {
+		itemname = g_strdup(fr->fullname);
+	} else {
+		char *p;
+		itemname = g_strdup(g_basename(fr->name));
+		p = strrchr(itemname,'.');
+		if(p) *p = '\0';
+	}
 
 	if(fr->type == FILE_REC_DIR) {
 		if(fake_submenus)
 			sub = create_fake_menu_at (fr->name,
 						   applets,
-						   fr->fullname?
-						   	fr->fullname:fr->name,
+						   itemname,
 						   fr->icon);
 		else
 			sub = create_menu_at_fr (NULL, fr,
 						 applets,
-						 fr->fullname?
-						 	fr->fullname:fr->name,
+						 itemname,
 						 fr->icon,
 						 fake_submenus,
 						 FALSE);
 
-		if (!sub)
+		if (!sub) {
+			g_free(itemname);
 			return;
+		}
 	}
 
 	menuitem = gtk_menu_item_new ();
@@ -1512,8 +1521,7 @@ create_menuitem(GtkWidget *menu,
 	  we can be sure that the FileRec will live that long,
 	  (when it dies, the menu will not be used again, it will
 	   be recreated at the next available opportunity)*/
-	setup_full_menuitem (menuitem, pixmap,
-			     fr->fullname?fr->fullname:fr->name,
+	setup_full_menuitem (menuitem, pixmap,itemname,
 			     (applets||sub)?NULL:fr->name);
 
 	if(*add_separator) {
@@ -1530,6 +1538,7 @@ create_menuitem(GtkWidget *menu,
 				    GTK_SIGNAL_FUNC(activate_app_def),
 				    fr->name);
 	}
+	g_free(itemname);
 }
 
 static GtkWidget *
