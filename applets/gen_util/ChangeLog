@@ -1,3 +1,11 @@
+1999-03-23  Nat Friedman  <nat@nat.org>
+
+	* battery/properties.c (battery_properties_window): Set the state
+ 	of the graph-direction radio buttons correctly.
+	(prop_apply): Don't let the update function run while the values
+ 	are being changed.  Update the graph data if the direction
+ 	changes.
+
 Fri Mar 19 12:48:41 1999  George Lebl  <jirka@5z.com>
 
 	* asclock/gnome_config.c: the path passed from the panel already
