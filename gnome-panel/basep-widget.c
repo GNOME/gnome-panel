@@ -1096,8 +1096,15 @@ basep_widget_show_hidebutton_pixmaps(BasePWidget *basep)
 void
 basep_widget_update_winhints (BasePWidget *basep)
 {
-#if FIXME
-	GtkWidget *w = GTK_WIDGET (basep);
+  GtkWidget *w = GTK_WIDGET (basep);
+  gtk_window_set_decorated (GTK_WINDOW (w), FALSE);
+  gtk_window_stick (GTK_WINDOW (w));
+  /* FIXME: Should be GDK_WINDOW_TYPE_HINT_DOCK */
+  /*
+  gtk_window_set_type_hint (GTK_WINDOW (w),
+			    GDK_WINDOW_TYPE_HINT_TOOLBAR);
+  */
+#if FIXME /* Nearly all of this is old cruft and should just be removed. We need to use the new wm spec instead */
 	GnomeWinLayer layer;
 	guint coverhint;
 

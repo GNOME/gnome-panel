@@ -1,5 +1,13 @@
 2001-10-11  Alex Larsson  <alexl@redhat.com>
 
+        * foobar-widget.c (foobar_widget_update_winhints):
+	Use the gtk hint calls.
+
+	* basep-widget.c (basep_widget_update_winhints):
+	Use the gtk hint calls.
+	
+2001-10-11  Alex Larsson  <alexl@redhat.com>
+
 	* menu.c (menus_have_icons):
 	New function that always returns TRUE. Should use GConf
 	instead. Changed all gnome_preferences_get_menus_have_icons
