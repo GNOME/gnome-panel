@@ -1,5 +1,19 @@
 2004-02-16  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixup more modifier testing code to use
+	gtk_accelerator_get_default_mod_mask() as Federico points
+	out in bug #134134.
+
+	* drawer.c: (key_press_drawer), (key_press_drawer_widget):
+	* menu.c: (panel_menu_key_press_handler):
+	* panel-toplevel.c: (panel_toplevel_move_keyboard_floating),
+	(panel_toplevel_handle_grab_op_motion_event):
+	* panel.c: (panel_key_press_event):
+	Use gtk_accelerator_get_default_mod_mask() when testing
+	modifiers.
+
+2004-02-16  Mark McLoughlin  <mark@skynet.ie>
+
 	Resolve the mystery of the disappearing applets. Fix for
 	bug #128567 based on a patch from Leena gunda.
 

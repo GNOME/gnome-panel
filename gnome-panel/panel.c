@@ -378,7 +378,7 @@ panel_key_press_event (GtkWidget   *widget,
 	 */ 
 	if (GTK_IS_SOCKET (GTK_WINDOW (widget)->focus_widget) &&
 	    event->keyval == GDK_F10 &&
-	    (event->state & GDK_MODIFIER_MASK) == GDK_CONTROL_MASK)
+	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
 		return gtk_bindings_activate (GTK_OBJECT (widget),
 					      event->keyval,
 					      event->state);

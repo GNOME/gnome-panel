@@ -820,7 +820,7 @@ panel_toplevel_move_keyboard_floating (PanelToplevel *toplevel,
 
 	int increment = NORMAL_INCREMENT;
 
-	if (event->state & GDK_SHIFT_MASK)
+	if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK)
 		increment = SMALL_INCREMENT;
 
 	return panel_toplevel_warp_pointer_increment (
@@ -969,7 +969,7 @@ panel_toplevel_handle_grab_op_motion_event (PanelToplevel  *toplevel,
 			panel_toplevel_calc_new_orientation (
 					toplevel, event->x_root, event->y_root);
 
-		else if (event->state & GDK_CONTROL_MASK)
+		else if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_CONTROL_MASK)
 			panel_toplevel_rotate_to_pointer (
 					toplevel, event->x_root, event->y_root);
 

@@ -93,7 +93,7 @@ key_press_drawer (GtkWidget   *widget,
 	gboolean retval = TRUE;
 	GtkOrientation orient;
 
-	if (event->state == gtk_accelerator_get_default_mod_mask ())
+	if (event->state & gtk_accelerator_get_default_mod_mask ())
 		return FALSE;
 
 	orient = PANEL_WIDGET (drawer->button->parent)->orient;
@@ -169,7 +169,7 @@ key_press_drawer_widget (GtkWidget   *widget,
 
 	gtk_window_present (GTK_WINDOW (panel_widget->toplevel));
 
-	if (event->state == GDK_SHIFT_MASK ||
+	if ((event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK ||
 	    panel_toplevel_get_is_hidden (drawer->toplevel))
 		return TRUE;
 

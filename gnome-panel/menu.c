@@ -3538,7 +3538,8 @@ panel_menu_key_press_handler (GtkWidget   *widget,
 {
 	gboolean retval = FALSE;
 
-	if (event->keyval == GDK_F10 && event->state == GDK_SHIFT_MASK) {
+	if (event->keyval == GDK_F10 &&
+	    (event->state & gtk_accelerator_get_default_mod_mask ()) == GDK_SHIFT_MASK) {
 		GtkMenuShell *menu_shell = GTK_MENU_SHELL (widget);
 
 		retval = TRUE;
