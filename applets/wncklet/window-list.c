@@ -1,3 +1,4 @@
+/* -*- mode: C; c-file-style: "linux" -*- */
 /*
  * libwnck based tasklist applet.
  * (C) 2001 Red Hat, Inc
@@ -22,6 +23,7 @@
 #include <libbonobo.h>
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <glade/glade-xml.h>
 #include <libwnck/libwnck.h>
 #include <gconf/gconf-client.h>
@@ -44,6 +46,8 @@ typedef struct {
 	int size;
 	gint maximum_size;
 
+        GnomeIconTheme *icon_theme;
+  
 	/* Properties: */
 	GtkWidget *properties_dialog;
 	GtkWidget *show_current_radio;
@@ -244,6 +248,9 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
 	GConfClient *client = gconf_client_get_default ();
 
+        g_object_unref (tasklist->icon_theme);
+        tasklist->icon_theme = NULL;
+        
 	gconf_client_notify_remove (client, tasklist->listeners[0]);
 	gconf_client_notify_remove (client, tasklist->listeners[1]);
 	gconf_client_notify_remove (client, tasklist->listeners[2]);
@@ -255,6 +262,8 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 	tasklist->listeners[2] = 0;
 	tasklist->listeners[3] = 0;
 	tasklist->listeners[4] = 0;
+
+        g_free (tasklist);
 }
 
 static const BonoboUIVerb tasklist_menu_verbs [] = {
@@ -558,6 +567,31 @@ applet_size_request (GtkWidget      *widget,
 	g_free (new_size_hints);
 }
 
+static GdkPixbuf*
+icon_loader_func (const char  *icon,
+                  int          size,
+                  unsigned int flags,
+                  void        *data)
+{
+        TasklistData *tasklist;
+        char *file;
+        GdkPixbuf *pixbuf;
+        
+        tasklist = data;
+        
+        file = gnome_desktop_item_find_icon (tasklist->icon_theme,
+                                             icon, size, 0);
+
+        if (file == NULL)
+                return NULL;
+
+        pixbuf = gdk_pixbuf_new_from_file (file, NULL);
+
+        g_free (file);
+
+        return pixbuf;
+}
+
 gboolean
 fill_tasklist_applet(PanelApplet *applet)
 {
@@ -574,7 +608,9 @@ fill_tasklist_applet(PanelApplet *applet)
 	tasklist->applet = GTK_WIDGET (applet);
 
 	setup_gconf (tasklist);
-	
+
+        tasklist->icon_theme = gnome_icon_theme_new ();
+        
 	error = NULL;
 	tasklist->include_all_workspaces = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
 	if (error) {
@@ -621,6 +657,11 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	tasklist->tasklist = wnck_tasklist_new (tasklist->screen);
 
+        wnck_tasklist_set_icon_loader (WNCK_TASKLIST (tasklist->tasklist),
+                                       icon_loader_func,
+                                       tasklist,
+                                       NULL);
+        
 	/* get size preferences */
 	error = NULL;
 	sizepref = panel_applet_gconf_get_int (applet, "minimum_size", &error);

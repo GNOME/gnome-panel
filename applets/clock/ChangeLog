@@ -1,3 +1,12 @@
+2002-11-29  Havoc Pennington  <hp@pobox.com>
+
+	* tasklist.c (destroy_tasklist): free the tasklist struct
+	(was leaked before, at least I think so)
+	(fill_tasklist_applet): create an icon theme object for the
+	tasklist.
+	(fill_tasklist_applet): set an icon loader function for the
+	tasklist.
+
 2002-11-12  Arvind Samptur <arvind.samputur@wipro.com>
 	* remote-helper.c: (fork_new_handler) poll for the
 	pid to wrriten on to the pipe before allowing the 
