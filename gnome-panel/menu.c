@@ -2384,6 +2384,12 @@ find_empty_pos_array (int screen, int posscore[3][3])
 	int w, h;
 	gfloat sw, sw2, sh, sh2;
 
+	if (foobar_widget_exists (screen)) {
+		posscore[0][0] += 5;
+		posscore[1][0] += 5;
+		posscore[2][0] += 5;
+	}
+
 	sw2 = 2 * (sw = multiscreen_width (screen) / 3);
 	sh2 = 2 * (sh = multiscreen_height (screen) / 3);
 	
@@ -2407,15 +2413,15 @@ find_empty_pos_array (int screen, int posscore[3][3])
 		if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 			j = MIN (ty / sh, 2);
 			ty = tx + w;
-			if (tx < sw) posscore[0][j]++;
-			if (tx < sw2 && ty > sw) posscore[1][j]++;
-			if (ty > sw2) posscore[2][j]++;
+			if (tx < sw) posscore[0][j]+=10;
+			if (tx < sw2 && ty > sw) posscore[1][j]+=10;
+			if (ty > sw2) posscore[2][j]+=10;
 		} else {
 			i = MIN (tx / sw, 2);
 			tx = ty + h;
-			if (ty < sh) posscore[i][0]++;
-			if (ty < sh2 && tx > sh) posscore[i][1]++;
-			if (tx > sh2) posscore[i][2]++;
+			if (ty < sh) posscore[i][0]+=10;
+			if (ty < sh2 && tx > sh) posscore[i][1]+=10;
+			if (tx > sh2) posscore[i][2]+=10;
 		}
 	}
 }
@@ -2423,8 +2429,8 @@ find_empty_pos_array (int screen, int posscore[3][3])
 static void
 find_empty_pos (int screen, gint16 *x, gint16 *y)
 {
-	int posscore[3][3] = { {0,0,0}, {0,512,0}, {0,0,0}};
-	int i, j, lowi= 0, lowj = 0;
+	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
+	int i, j, lowi= 0, lowj = 2;
 
 	find_empty_pos_array (screen, posscore);
 
@@ -2447,10 +2453,10 @@ find_empty_pos (int screen, gint16 *x, gint16 *y)
 static BorderEdge
 find_empty_edge (int screen)
 {
-	int posscore[3][3] = { {0,0,0}, {0,512,0}, {0,0,0}};
+	int posscore[3][3] = { {1,2,0}, {1,4096,0}, {1,2,0}};
 	int escore [4] = { 0, 0, 0, 0};
 	BorderEdge edge = BORDER_BOTTOM;
-	int low=512, i;
+	int low=4096, i;
 
 	find_empty_pos_array (screen, posscore);
 
@@ -2595,38 +2601,49 @@ create_new_panel (GtkWidget *w, gpointer data)
 	panels_to_sync = TRUE;
 }
 
+static void
+foobar_item_showhide (GtkWidget *widget, gpointer data)
+{
+	GtkWidget  *menuitem = data;
+	int        screen = 0;
+	PanelWidget *panel;
+
+	panel = get_panel_from_menu_data (menuitem, TRUE);
+	if (panel)
+		screen = multiscreen_screen_from_panel (panel->panel_parent);
+
+	if ( ! foobar_widget_exists (screen)) {
+		gtk_widget_show (menuitem);
+	} else {
+		gtk_widget_hide (menuitem);
+	}
+}
+
 static GtkWidget *
 create_add_panel_submenu (void)
 {
 	GtkWidget *menu, *menuitem;
-	int        screen = 0;
 
 	menu = menu_new ();
 
-#ifdef FIXME
-	/* We need to be able to discover what screen we are on
-	 * The method below doesn't work because we aren't yet
-	 * attached to the panel.
-	 */
-	{
-		PanelWidget *panel;
+	menuitem = gtk_image_menu_item_new ();
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
+				   _("Menu panel"));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-		panel = get_panel_from_menu_data (item, TRUE);
-		if (panel)
-			screen = multiscreen_screen_from_panel (panel->panel_parent);
-	}
-#endif
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (create_new_panel),
+			  GINT_TO_POINTER (FOOBAR_PANEL));
 
-	if (!foobar_widget_exists (screen)) {
-		menuitem = gtk_image_menu_item_new ();
-		setup_menuitem_try_pixmap (
-			menuitem, "gnome-panel-type-menu.png", _("Menu panel"));
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	/* HACK, initial hide/show based on screen 0,
+	 * this works most of the time and we get it correctly in
+	 * the show/hide thingie below */
+	if (foobar_widget_exists (0))
+		gtk_widget_hide (menuitem);
 
-		g_signal_connect (menuitem, "activate",
-				  G_CALLBACK (create_new_panel),
-				  GINT_TO_POINTER (FOOBAR_PANEL));
-	}
+	g_signal_connect (G_OBJECT (menu), "show",
+			  G_CALLBACK (foobar_item_showhide),
+			  menuitem);
  	
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
