@@ -200,6 +200,18 @@ calculate_overlay_geometry(PanelWidget *panel, GtkWidget *parent,
 
 	translate_to(GTK_WIDGET(panel), parent, x, y);
 
+	/* when not shown, things are somewhat weird, and we try to put the
+	 * window completely off as it can't be clickable anyway */
+	/* XXX: These window thingies should really be unmapped in hidden
+	 * case, or something like that, this is ugly, but who gives a fuck,
+	 * this is all going to be rewritten soon (famous last words?) */
+	if(IS_BASEP_WIDGET(parent) &&
+	   BASEP_WIDGET(parent)->state != BASEP_SHOWN) {
+		*x = parent->requisition.width + 1;
+		*y = parent->requisition.height + 1;
+		return;
+	}
+
 	if(panel->orient == PANEL_HORIZONTAL) {
 		*y = 0;
 		/* we use the requisition, since allocation might have not
