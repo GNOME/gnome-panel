@@ -28,6 +28,8 @@ typedef struct {
 	GnomeDesktopItem *revert_ditem;
 
 	GtkWidget         *prop_dialog;
+
+	gulong             icon_changed_signal;
 } Launcher;
 
 /* If launchers are loaded from ANYWHERE but the normal panel
