@@ -253,7 +253,6 @@ move_horiz(CornerWidget *corner, int src_x, int dest_x, int step)
 	}
 	
 	move_window(w, dest_x, y);
-	printf("%d,%d\n",dest_x,y);
 }
 
 
@@ -279,7 +278,6 @@ move_vert(CornerWidget *corner, int src_y, int dest_y, int step)
 	}
 
 	move_window(w, x, dest_y);
-	printf("%d,%d\n",x,dest_y);
 }
 
 static void
@@ -396,6 +394,41 @@ is_right(CornerWidget *corner)
 	return FALSE;
 }
 
+static void
+jump_to_opposite(CornerWidget *corner)
+{
+	CornerPos newpos;
+	PanelWidget *panel = PANEL_WIDGET(corner->panel);
+	
+	switch(corner->pos) {
+	case CORNER_NE:
+		if(panel->orient == PANEL_HORIZONTAL)
+			newpos = CORNER_NW;
+		else /*vertical*/
+			newpos = CORNER_SE;
+		break;
+	case CORNER_SE:
+		if(panel->orient == PANEL_HORIZONTAL)
+			newpos = CORNER_SW;
+		else /*vertical*/
+			newpos = CORNER_NE;
+		break;
+	case CORNER_SW:
+		if(panel->orient == PANEL_HORIZONTAL)
+			newpos = CORNER_SE;
+		else /*vertical*/
+			newpos = CORNER_NW;
+		break;
+	case CORNER_NW:
+		if(panel->orient == PANEL_HORIZONTAL)
+			newpos = CORNER_NE;
+		else /*vertical*/
+			newpos = CORNER_SW;
+		break;
+	}
+	corner_widget_change_pos_orient(corner,newpos,panel->orient);
+}
+
 static int
 corner_show_hide_right(GtkWidget *widget, gpointer data)
 {
@@ -407,9 +440,13 @@ corner_show_hide_right(GtkWidget *widget, gpointer data)
 	else if(corner->state == CORNER_SHOWN) {
 		if(!is_right(corner))
 			corner_widget_pop_hide(corner,TRUE);
+		else
+			jump_to_opposite(corner);
 	} else {
 		if(is_right(corner))
 			corner_widget_pop_show(corner,FALSE);
+		else
+			jump_to_opposite(corner);
 	}
 	return FALSE;
 }
@@ -425,9 +462,13 @@ corner_show_hide_left(GtkWidget *widget, gpointer data)
 	else if(corner->state == CORNER_SHOWN) {
 		if(is_right(corner))
 			corner_widget_pop_hide(corner,FALSE);
+		else
+			jump_to_opposite(corner);
 	} else {
 		if(!is_right(corner))
 			corner_widget_pop_show(corner,TRUE);
+		else
+			jump_to_opposite(corner);
 	}
 	return FALSE;
 }
@@ -624,7 +665,7 @@ corner_widget_change_params(CornerWidget *corner,
 	corner->state = state;
 
 	oldorient = PANEL_WIDGET(corner->panel)->orient;
-
+	
 	if(oldorient != orient) {
 		int w,h,t;
 		GList *list;

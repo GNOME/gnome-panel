@@ -806,7 +806,7 @@ corner_pos_change(GtkWidget *widget,
 {
 	panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
 			     orient_change_foreach,
-			     SNAPPED_WIDGET(widget)->panel);
+			     CORNER_WIDGET(widget)->panel);
 	config_changed = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
@@ -1090,7 +1090,7 @@ menu_deactivate(GtkWidget *w, GtkWidget *panel)
 }
 
 static void
-panel_move(SnappedWidget *snapped, double x, double y)
+snapped_panel_move(SnappedWidget *snapped, double x, double y)
 {
 	SnappedPos newloc;
 	int minx, miny, maxx, maxy;
@@ -1123,13 +1123,76 @@ panel_move(SnappedWidget *snapped, double x, double y)
 		snapped_widget_change_pos(snapped, newloc);
 }
 
+static void
+corner_panel_move(CornerWidget *corner, double x, double y)
+{
+	CornerPos newloc;
+	PanelOrientation neworient;
+	int minx, miny, maxx, maxy;
+
+	gdk_window_get_geometry (GTK_WIDGET(corner)->window,
+				 &minx, &miny, &maxx, &maxy, NULL);
+	gdk_window_get_origin (GTK_WIDGET(corner)->window, &minx, &miny);
+	maxx += minx;
+	maxy += miny;
+	if (x >= minx &&
+	    x <= maxx &&
+	    y >= miny &&
+	    y <= maxy)
+ 	        return;
+
+	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
+		   y * gdk_screen_width() ) {
+			neworient = PANEL_HORIZONTAL;
+			if(x<gdk_screen_width()/2)
+				newloc = CORNER_NW;
+			else
+				newloc = CORNER_NE;
+		} else {
+			neworient = PANEL_VERTICAL;
+			if(y<gdk_screen_height()/2)
+				newloc = CORNER_NE;
+			else
+				newloc = CORNER_SE;
+		}
+	} else {
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
+		   y * gdk_screen_width() ) {
+			neworient = PANEL_VERTICAL;
+			if(y<gdk_screen_height()/2)
+				newloc = CORNER_NW;
+			else
+				newloc = CORNER_SW;
+		} else {
+			neworient = PANEL_HORIZONTAL;
+			if(x<gdk_screen_width()/2)
+				newloc = CORNER_SW;
+			else
+				newloc = CORNER_SE;
+		}
+	}
+	if(newloc != corner->pos ||
+	   neworient != PANEL_WIDGET(corner->panel)->orient)
+		corner_widget_change_pos_orient(corner, newloc, neworient);
+}
+
 static int
-panel_move_timeout(gpointer data)
+snapped_panel_move_timeout(gpointer data)
 {
 	int x,y;
 
 	gdk_window_get_pointer(NULL,&x,&y,NULL);
-	panel_move(data,x,y);
+	snapped_panel_move(data,x,y);
+	return TRUE;
+}
+static int
+corner_panel_move_timeout(gpointer data)
+{
+	int x,y;
+
+	gdk_window_get_pointer(NULL,&x,&y,NULL);
+	corner_panel_move(data,x,y);
 	return TRUE;
 }
 
@@ -1256,7 +1319,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case 2:
 			/*this should probably be in snapped widget*/
 			if(!panel_dragged &&
-			   IS_SNAPPED_WIDGET(widget)) {
+			   (IS_SNAPPED_WIDGET(widget) ||
+			    IS_CORNER_WIDGET(widget))) {
 				GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
 				gtk_grab_add(widget);
 				gdk_pointer_grab (widget->window,
@@ -1266,11 +1330,18 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 						  cursor,
 						  bevent->time);
 				gdk_cursor_destroy (cursor);
-				SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
-				panel_dragged =
-					gtk_timeout_add(30,
-							panel_move_timeout,
-							widget);
+				if(IS_SNAPPED_WIDGET(widget)) {
+					SNAPPED_WIDGET(widget)->autohide_inhibit = TRUE;
+					panel_dragged =
+						gtk_timeout_add(30,
+								snapped_panel_move_timeout,
+								widget);
+				} else { /*CORNER_WIDGET*/
+					panel_dragged =
+						gtk_timeout_add(30,
+								corner_panel_move_timeout,
+								widget);
+				}
 				return TRUE;
 			}
 			break;
@@ -1280,13 +1351,17 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	case GDK_BUTTON_RELEASE:
 		bevent = (GdkEventButton *) event;
 		if(panel_dragged) {
-			panel_move(SNAPPED_WIDGET(widget),
-				   bevent->x_root, bevent->y_root);
+			if(IS_SNAPPED_WIDGET(widget)) {
+				snapped_panel_move(SNAPPED_WIDGET(widget),
+					   bevent->x_root, bevent->y_root);
+				SNAPPED_WIDGET(widget)->autohide_inhibit = FALSE;
+				snapped_widget_queue_pop_down(SNAPPED_WIDGET(widget));
+			} else
+				corner_panel_move(CORNER_WIDGET(widget),
+					   bevent->x_root, bevent->y_root);
 			gdk_pointer_ungrab(bevent->time);
 			gtk_grab_remove(widget);
 			gtk_timeout_remove(panel_dragged);
-			SNAPPED_WIDGET(widget)->autohide_inhibit = FALSE;
-			snapped_widget_queue_pop_down(SNAPPED_WIDGET(widget));
 			panel_dragged = 0;
 			return TRUE;
 		}
@@ -1427,6 +1502,10 @@ panel_setup(GtkWidget *panelw)
 			PANEL_WIDGET(CORNER_WIDGET(panelw)->panel);
 		corner_widget_disable_buttons(CORNER_WIDGET(panelw));
 		panel_widget_setup(panel);
+		gtk_signal_connect(GTK_OBJECT(panel),
+				   "orient_change",
+				   GTK_SIGNAL_FUNC(panel_orient_change),
+				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panelw),
 				   "pos_change",
 				   GTK_SIGNAL_FUNC(corner_pos_change),

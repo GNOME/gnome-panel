@@ -7,6 +7,7 @@
 #include "panel-widget.h"
 #include "snapped-widget.h"
 #include "drawer-widget.h"
+#include "corner-widget.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
 
@@ -25,8 +26,13 @@ struct _PerPanelConfig {
 	/*nothing!*/
 	
 	/*snapped types*/
-	SnappedPos		pos;
-	SnappedMode		mode;
+	SnappedPos		snapped_pos;
+	SnappedMode		snapped_mode;
+	
+	/*corner types*/
+	CornerPos		corner_pos;
+	PanelOrientation	corner_orient;
+
 	int			fit_pixmap_bg;
 	PanelBackType		back_type;
 	char			*back_pixmap;
@@ -38,10 +44,10 @@ struct _PerPanelConfig {
 	int			pix_ch_signal;
 
 	/*snapped buttons*/
-	GtkWidget		*r_button;
-	GtkWidget		*l_button;
-	GtkWidget		*t_button;
-	GtkWidget		*b_button;
+	GtkWidget		*r_button; /*se*/
+	GtkWidget		*l_button; /*nw*/
+	GtkWidget		*t_button; /*ne*/
+	GtkWidget		*b_button; /*sw*/
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
@@ -83,6 +89,25 @@ update_config_orient(GtkWidget *panel)
 						    TRUE);
 			break;
 		case SNAPPED_RIGHT:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+						    TRUE);
+			break;
+		}
+	} else if(IS_CORNER_WIDGET(panel)) {
+		switch(CORNER_WIDGET(panel)->pos) {
+		case CORNER_NE:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+						    TRUE);
+			break;
+		case CORNER_SW:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+						    TRUE);
+			break;
+		case CORNER_NW:
+			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+						    TRUE);
+			break;
+		case CORNER_SE:
 			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
 						    TRUE);
 			break;
@@ -143,36 +168,6 @@ config_destroy(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
-static int
-snapped_set_pos (GtkWidget *widget, gpointer data)
-{
-	SnappedPos pos = (SnappedPos) data;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return FALSE;
-	
-	ppc->pos = pos;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-	return FALSE;
-}
-
-static int
-snapped_set_mode (GtkWidget *widget, gpointer data)
-{
-	SnappedMode mode = (SnappedMode) data;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return FALSE;
-	
-	ppc->mode = mode;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-	return FALSE;
-}
-
 static void
 config_apply (GtkWidget *widget, int page, gpointer data)
 {
@@ -180,13 +175,22 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	
 	if(IS_SNAPPED_WIDGET(ppc->panel))
 		snapped_widget_change_params(SNAPPED_WIDGET(ppc->panel),
-					     ppc->pos,
-					     ppc->mode,
+					     ppc->snapped_pos,
+					     ppc->snapped_mode,
 					     SNAPPED_WIDGET(ppc->panel)->state,
 					     ppc->back_type,
 					     ppc->back_pixmap,
 					     ppc->fit_pixmap_bg,
 					     &ppc->back_color);
+	else if(IS_CORNER_WIDGET(ppc->panel))
+		corner_widget_change_params(CORNER_WIDGET(ppc->panel),
+					    ppc->corner_pos,
+					    ppc->corner_orient,
+					    CORNER_WIDGET(ppc->panel)->state,
+					    ppc->back_type,
+					    ppc->back_pixmap,
+					    ppc->fit_pixmap_bg,
+					    &ppc->back_color);
 	else if(IS_DRAWER_WIDGET(ppc->panel)) {
 		PanelWidget *pw =
 			PANEL_WIDGET(DRAWER_WIDGET(ppc->panel)->panel);
@@ -200,7 +204,36 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	gtk_widget_queue_draw (ppc->panel);
 }
 
-GtkWidget *
+static void
+snapped_set_pos (GtkWidget *widget, gpointer data)
+{
+	SnappedPos pos = (SnappedPos) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return;
+	
+	ppc->snapped_pos = pos;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+snapped_set_mode (GtkWidget *widget, gpointer data)
+{
+	SnappedMode mode = (SnappedMode) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return;
+	
+	ppc->snapped_mode = mode;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+
+static GtkWidget *
 snapped_notebook_page(PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
@@ -216,7 +249,8 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	/* Position frame */
 	frame = gtk_frame_new (_("Position"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
 	
 	/* table for frame */
 	table = gtk_table_new(3, 3, TRUE);
@@ -267,7 +301,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
         gtk_table_attach(GTK_TABLE(table), ppc->r_button, 2, 3, 1, 2,
 			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
 
-	switch(ppc->pos) {
+	switch(ppc->snapped_pos) {
 	case SNAPPED_TOP:
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
 					    TRUE);
@@ -300,27 +334,183 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	/* Stay Put */
 	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->mode == SNAPPED_EXPLICIT_HIDE)
+	if (ppc->snapped_mode == SNAPPED_EXPLICIT_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_mode), 
 			    (gpointer)SNAPPED_EXPLICIT_HIDE);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
 	
 	/* Auto-hide */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Auto Hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->mode == SNAPPED_AUTO_HIDE)
+	if (ppc->snapped_mode == SNAPPED_AUTO_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (snapped_set_mode), 
 			    (gpointer)SNAPPED_AUTO_HIDE);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
 
 	return (hbox);
 }
+
+static void
+corner_set_pos (GtkWidget *widget, gpointer data)
+{
+	CornerPos pos = (CornerPos) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return;
+	
+	ppc->corner_pos = pos;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+corner_set_orient (GtkWidget *widget, gpointer data)
+{
+	PanelOrientation orient = (PanelOrientation) data;
+	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
+
+	if(!(GTK_TOGGLE_BUTTON(widget)->active))
+		return;
+	
+	ppc->corner_orient = orient;
+	if (ppc->register_changes)
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static GtkWidget *
+corner_notebook_page(PerPanelConfig *ppc)
+{
+	GtkWidget *frame;
+	GtkWidget *button;
+	GtkWidget *box;
+	GtkWidget *hbox;
+        GtkWidget *table;
+	
+	/* main hbox */
+	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (hbox), CONFIG_PADDING_SIZE);
+	
+	/* Position frame */
+	frame = gtk_frame_new (_("Position"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,
+			    CONFIG_PADDING_SIZE);
+	
+	/* table for frame */
+	table = gtk_table_new(3, 3, TRUE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
+	gtk_table_set_col_spacings(GTK_TABLE(table), CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER(table), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+	
+	/* North East Position */
+	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("North East"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->t_button),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->t_button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_pos), 
+			    (gpointer)CORNER_NE);
+        gtk_table_attach(GTK_TABLE(table), ppc->t_button, 2, 3, 0, 1,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+	
+	/* Bottom Position */
+	ppc->b_button = gtk_radio_button_new_with_label (
+		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
+		 _("South West"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->b_button),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->b_button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_pos), 
+			    (gpointer)CORNER_SW);
+        gtk_table_attach(GTK_TABLE(table), ppc->b_button, 0, 1, 2, 3,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+	
+	/* North West Position */
+	ppc->l_button = gtk_radio_button_new_with_label (
+		  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
+		  _("North West"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->l_button),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->l_button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_pos), 
+			    (gpointer)CORNER_NW);
+        gtk_table_attach(GTK_TABLE(table), ppc->l_button, 0, 1, 0, 1,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+
+	/* South East Position */
+	ppc->r_button = gtk_radio_button_new_with_label (
+		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
+		 _("South East"));
+	gtk_object_set_user_data(GTK_OBJECT(ppc->r_button),ppc);
+	gtk_signal_connect (GTK_OBJECT (ppc->r_button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_pos), 
+			    (gpointer)CORNER_SE);
+        gtk_table_attach(GTK_TABLE(table), ppc->r_button, 2, 3, 2, 3,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+
+	switch(ppc->corner_pos) {
+	case CORNER_NE:
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->t_button),
+					    TRUE);
+		break;
+	case CORNER_SW:
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->b_button),
+					    TRUE);
+		break;
+	case CORNER_NW:
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->l_button),
+					    TRUE);
+		break;
+	case CORNER_SE:
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(ppc->r_button),
+					    TRUE);
+		break;
+	}
+
+	/* Orientation frame */
+	frame = gtk_frame_new (_("Orientation"));
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	
+	/* Horizontal */
+	button = gtk_radio_button_new_with_label (NULL, _("Horizontal"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (ppc->corner_orient == PANEL_HORIZONTAL)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_orient), 
+			    (gpointer)PANEL_HORIZONTAL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+	
+	/* Vertical */
+	button = gtk_radio_button_new_with_label (
+			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
+			  _("Vertical"));
+	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	if (ppc->corner_orient == PANEL_VERTICAL)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (corner_set_orient), 
+			    (gpointer)PANEL_VERTICAL);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
+	return (hbox);
+}
+
 
 static int
 value_changed (GtkWidget *w, gpointer data)
@@ -549,8 +739,17 @@ panel_config(GtkWidget *panel)
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SnappedWidget *snapped = SNAPPED_WIDGET(panel);
 		PanelWidget *pw = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
-		ppc->pos = snapped->pos;
-		ppc->mode = snapped->mode;
+		ppc->snapped_pos = snapped->pos;
+		ppc->snapped_mode = snapped->mode;
+		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
+		ppc->back_pixmap = g_strdup(pw->back_pixmap);
+		ppc->back_color = pw->back_color;
+		ppc->back_type = pw->back_type;
+	} else if(IS_CORNER_WIDGET(panel)) {
+		CornerWidget *corner = CORNER_WIDGET(panel);
+		PanelWidget *pw = PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
+		ppc->corner_pos = corner->pos;
+		ppc->corner_orient = pw->orient;
 		ppc->fit_pixmap_bg = pw->fit_pixmap_bg;
 		ppc->back_pixmap = g_strdup(pw->back_pixmap);
 		ppc->back_color = pw->back_color;
@@ -577,8 +776,15 @@ panel_config(GtkWidget *panel)
 	if(IS_SNAPPED_WIDGET(panel)) {
 		/* Snapped notebook page */
 		page = snapped_notebook_page (ppc);
-		gnome_property_box_append_page (GNOME_PROPERTY_BOX (ppc->config_window),
-						page, gtk_label_new (_("Snapped Panel")));
+		gnome_property_box_append_page (
+				GNOME_PROPERTY_BOX (ppc->config_window),
+				page, gtk_label_new (_("Edge Panel")));
+	} else if(IS_CORNER_WIDGET(panel)) {
+		/* Corner notebook page */
+		page = corner_notebook_page (ppc);
+		gnome_property_box_append_page (
+				GNOME_PROPERTY_BOX (ppc->config_window),
+				page, gtk_label_new (_("Corner Panel")));
 	}
 						
 
