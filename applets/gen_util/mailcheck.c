@@ -1,8 +1,8 @@
-/*
- * GNOME panel mail check module.
+/* GNOME panel mail check module.
  * (C) 1997, 1998 The Free Software Foundation
  *
  * Author: Miguel de Icaza
+ *         Lennart Poettering
  *
  */
 
@@ -17,6 +17,7 @@
 #include <applet-widget.h>
 #include <gdk_imlib.h>
 
+#include "popcheck.h"
 #include "mailcheck.h"
 
 /* 
@@ -105,13 +106,20 @@ struct _MailCheck {
 	char *mailcheck_text_only;
 
 	char *animation_file;
+        
+        GtkWidget *remote_server_entry, *remote_username_entry, *remote_password_entry;
+        GtkWidget *remote_server_label, *remote_username_label, *remote_password_label;
+        GtkWidget *remote_option_menu;
+        
+        char *remote_server, *remote_username, *remote_password;
+        int mailbox_type; // local = 0; pop3 = 1; imap = 2
+        int mailbox_type_temp;
 };
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
 
 static void close_callback (GtkWidget *widget, void *data);
-
 
 static char *
 mail_animation_filename (MailCheck *mc)
@@ -146,24 +154,54 @@ check_mail_file_status (MailCheck *mc)
 	struct stat s;
 	off_t newsize;
 	int status;
+        if ((mc->mailbox_type == 1) || (mc->mailbox_type == 2)) {
+            int v;
 
-	status = stat (mc->mail_file, &s);
-	if (status < 0){
-		oldsize = 0;
+            if (mc->mailbox_type == 1)
+             v = pop3_check(mc->remote_server, mc->remote_username, mc->remote_password);
+            else
+             v = imap_check(mc->remote_server, mc->remote_username, mc->remote_password);
+             
+            if (v == -1) 
+             {
+#if 0
+               /* don't notify about an error: think of people with
+                * dial-up connections; keep the current mail status
+               */
+              GtkWidget *box = NULL;
+              box = gnome_message_box_new (_("Remote-client-error occured. Remote-polling deactivated. Maybe you used a wrong server/username/password?"),
+	       GNOME_MESSAGE_BOX_ERROR, GNOME_STOCK_BUTTON_CLOSE, NULL);
+              gtk_window_set_modal (GTK_WINDOW(box),TRUE);
+              gtk_widget_show (box);
+
+              mc->mailbox_type = 0;
+              mc->anymail = mc->newmail = 0;
+#endif
+             }
+            else
+             {
+              mc->newmail = (signed int) (((unsigned int) v) >> 16) ? 1 : 0;
+              mc->anymail = (signed int) (((unsigned int) v) & 0x0000FFFFL) ? 1 : 0;
+             } 
+        } else {
+            status = stat (mc->mail_file, &s);
+            if (status < 0){
+	  	oldsize = 0;
 		mc->anymail = mc->newmail = mc->unreadmail = 0;
 		return;
-	}
+	    }
 	
-	newsize = s.st_size;
-	mc->anymail = newsize > 0;
-	mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
+	    newsize = s.st_size;
+	    mc->anymail = newsize > 0;
+	    mc->unreadmail = (s.st_mtime >= s.st_atime && newsize > 0);
 
-	if (newsize >= oldsize && mc->unreadmail){
-		mc->newmail = 1;
+	    if (newsize >= oldsize && mc->unreadmail){
+	        mc->newmail = 1;
 		mc->mailcleared = 0;
-	} else
-		mc->newmail = 0;
-	oldsize = newsize;
+            } else
+	        mc->newmail = 0;
+	    oldsize = newsize;
+        }
 }
 
 static void
@@ -317,6 +355,15 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	if (mc->mail_prog_cmd)
 	        g_free(mc->mail_prog_cmd);
 #endif
+        if (mc->remote_server)
+                g_free(mc->remote_server);
+
+        if (mc->remote_username)
+                g_free(mc->remote_username);
+
+        if (mc->remote_password)
+                g_free(mc->remote_password);
+                
 	gtk_timeout_remove (mc->mail_timeout);
 }
 
@@ -538,12 +585,146 @@ apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
 		load_new_pixmap (mc);
 	
 	mc->anim_changed = FALSE;
+        
+        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_server_entry));
+        mc->remote_server = g_strdup(text);
+
+        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_username_entry));
+        mc->remote_username = g_strdup(text);
+
+        text = gtk_entry_get_text (GTK_ENTRY(mc->remote_password_entry));
+        mc->remote_password = g_strdup(text);
+        
+        mc->mailbox_type = mc->mailbox_type_temp;
 }
-      
+
+static void make_remote_widgets_sensitive(MailCheck *mc)
+ {
+  gboolean b = mc->mailbox_type_temp != 0;
+  
+  gtk_widget_set_sensitive (mc->remote_server_entry, b);
+  gtk_widget_set_sensitive (mc->remote_password_entry, b);
+  gtk_widget_set_sensitive (mc->remote_username_entry, b);
+  gtk_widget_set_sensitive (mc->remote_server_label, b);
+  gtk_widget_set_sensitive (mc->remote_password_label, b);
+  gtk_widget_set_sensitive (mc->remote_username_label, b);
+ }
+
+static void set_mailbox_selection (GtkWidget *widget, gpointer data)
+{
+	MailCheck *mc = gtk_object_get_user_data(GTK_OBJECT(widget));
+	mc->mailbox_type_temp = (int)data;
+        
+        make_remote_widgets_sensitive(mc);
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
+}
+
+static GtkWidget *
+mailbox_properties_page(MailCheck *mc)
+{
+  GtkWidget *vbox, *hbox, *l, *l2, *item;
+
+	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+	gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbox);        
+
+	l = gtk_label_new(_("Mailbox resides on:"));
+	gtk_widget_show(l);
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+
+	mc->remote_option_menu = l = gtk_option_menu_new();
+        
+  l2 = gtk_menu_new();
+  item = gtk_menu_item_new_with_label(_("Local mailspool")); 
+  gtk_widget_show(item);
+	gtk_object_set_user_data(GTK_OBJECT(item), mc);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)0);
+  gtk_menu_append(GTK_MENU(l2), item);
+
+  item = gtk_menu_item_new_with_label(_("Remote POP3-server")); 
+  gtk_widget_show(item);
+	gtk_object_set_user_data(GTK_OBJECT(item), mc);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)1);
+        
+  gtk_menu_append(GTK_MENU(l2), item);
+  item = gtk_menu_item_new_with_label(_("Remote IMAP-server")); 
+  gtk_widget_show(item);
+	gtk_object_set_user_data(GTK_OBJECT(item), mc);
+	gtk_signal_connect (GTK_OBJECT(item), "activate", GTK_SIGNAL_FUNC(set_mailbox_selection), (gpointer)2);
+  gtk_menu_append(GTK_MENU(l2), item);
+  
+  gtk_widget_show(l2);
+  
+  gtk_option_menu_set_menu(GTK_OPTION_MENU(l), l2);
+  gtk_option_menu_set_history(GTK_OPTION_MENU(l), mc->mailbox_type_temp = mc->mailbox_type);
+  gtk_widget_show(l);
+  
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+  
+  hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbox);  
+  
+	mc->remote_server_label = l = gtk_label_new(_("Mailbox-server:"));
+	gtk_widget_show(l);
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+  
+	mc->remote_server_entry = l = gtk_entry_new();
+  gtk_entry_set_text(GTK_ENTRY(l), mc->remote_server ? mc->remote_server : "mail");
+  
+  gtk_widget_show(l);
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
+  
+	gtk_signal_connect(GTK_OBJECT(l), "changed",
+                     GTK_SIGNAL_FUNC(property_box_changed), mc);
+  
+  hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbox);  
+  
+	mc->remote_username_label = l = gtk_label_new(_("Username:"));
+	gtk_widget_show(l);
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+	
+	mc->remote_username_entry = l = gtk_entry_new();
+  gtk_entry_set_text(GTK_ENTRY(l), mc->remote_username ? mc->remote_username : getenv("USER") ? getenv("USER") : "");
+  
+  gtk_widget_show(l);
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
+  
+	gtk_signal_connect(GTK_OBJECT(l), "changed",
+                     GTK_SIGNAL_FUNC(property_box_changed), mc);
+  
+  hbox = gtk_hbox_new (FALSE, 6);
+	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	gtk_widget_show (hbox);  
+  
+	mc->remote_password_label = l = gtk_label_new(_("Password:"));
+	gtk_widget_show(l);
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
+  
+	mc->remote_password_entry = l = gtk_entry_new();
+  gtk_entry_set_text(GTK_ENTRY(l), mc->remote_password ? mc->remote_password : "");
+  gtk_entry_set_visibility(GTK_ENTRY (l), FALSE);
+  gtk_widget_show(l);
+  gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);      
+  
+	gtk_signal_connect(GTK_OBJECT(l), "changed",
+                     GTK_SIGNAL_FUNC(property_box_changed), mc);
+  
+  make_remote_widgets_sensitive(mc);
+  
+  return vbox;
+}
+
 static GtkWidget *
 mailcheck_properties_page (MailCheck *mc)
 {
-	GtkWidget *freq, *vbox, *hbox, *l, *entry;
+	GtkWidget *freq, *vbox, *hbox, *l, *l2, *entry, *item;
 	GtkObject *freq_a;
 	
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -649,9 +830,11 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 			      _("Mail check properties"));
 
 	p = mailcheck_properties_page (mc);
-
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
 					p, gtk_label_new (_("Mail check")));
+	p = mailbox_properties_page (mc);
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
+					p, gtk_label_new (_("Mailbox")));
 
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "apply",
 			    GTK_SIGNAL_FUNC(apply_properties_callback), mc);
@@ -682,6 +865,11 @@ applet_save_session(GtkWidget *w,
 	gnome_config_set_string("mail/mail_prog_command",
 				mc->mail_prog_cmd?mc->mail_prog_cmd:"");
 #endif
+        gnome_config_set_string("mail/remote_server", mc->remote_server ? mc->remote_server : "");
+        gnome_config_set_string("mail/remote_username", mc->remote_username ? mc->remote_username : "");
+        gnome_config_set_string("mail/remote_password", mc->remote_password ? mc->remote_password : "");
+        gnome_config_set_int("mail/mailbox_type", (int) mc->mailbox_type);
+        
 	gnome_config_pop_prefix();
 
 	gnome_config_sync();
@@ -698,6 +886,7 @@ mailcheck_about(AppletWidget *a_widget, gpointer a_data)
 	{
 		"Miguel de Icaza <miguel@kernel.org>",
 		"Jaka Mocnik <jaka.mocnik@kiss.uni-lj.si>",
+    "Lennart Poettering <poettering@gmx.net>",
 		NULL
 	};
 	
@@ -769,6 +958,27 @@ make_mailcheck_applet(const gchar *goad_id)
 #endif	
 	if(emailfile) g_free(emailfile);
 	
+
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+                            "mail/remote_server", NULL);
+	mc->remote_server = gnome_config_get_string(query);
+	g_free(query);
+
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+                            "mail/remote_username", NULL);
+	mc->remote_username = gnome_config_get_string(query);
+	g_free(query);
+
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+                            "mail/remote_password", NULL);
+	mc->remote_password = gnome_config_get_string(query);
+	g_free(query);
+
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
+			    "mail/mailbox_type=0", NULL);
+	mc->mailbox_type = gnome_config_get_int(query);
+	g_free(query);
+
 	mc->mailcheck_text_only = _("Text only");
 	mailcheck = create_mail_widgets (mc);
 	gtk_widget_show(mailcheck);

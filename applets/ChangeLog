@@ -1,3 +1,16 @@
+1999-04-21  Jaka Mocnik  <jaka.mocnik@kiss.uni-lj.si>
+
+	* gen_util/popcheck.c, gen_util/popcheck.h: routines to check
+	for mail status on POP3 and IMAP mail servers. provided by
+	Lennart Poettering <poettering@gmx.net>. also added support
+	for POP3 "LAST" command.
+	* gen_util/Makefile.am: added the above files to applet
+	sources.
+	* gen_util/mailcheck.c: added a new property page for
+	mailbox configuration. added checking of POP3 and IMAP
+	mailboxes.
+
+
 1999-04-16  Jacob Berkman  <jberk+@cmu.edu>
 
         * multiload/main.c, multiload/global.h (start_gtop_cb): added 
