@@ -1970,23 +1970,22 @@ create_add_panel_submenu (void)
 }
 
 static void
-setup_menuitem_try_pixmap(GtkWidget *menuitem, char *try_file, char *title)
+setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file, char *title)
 {
-  char *file;
-  
-  file = gnome_pixmap_file(try_file);
-  if (!file)
-	{
-	  g_warning(_("Cannot find pixmap file %s"), try_file);
-	  setup_menuitem(menuitem, NULL, title);
-	}
-  else
-	setup_menuitem(menuitem,
-				   gnome_stock_pixmap_widget_at_size(
-				       NULL,
-					   file,
-					   SMALL_ICON_SIZE, SMALL_ICON_SIZE),
-				   title);
+	char *file;
+	
+	file = gnome_pixmap_file (try_file);
+	if (!file) {
+		g_warning (_("Cannot find pixmap file %s"), try_file);
+		setup_menuitem (menuitem, NULL, title);
+	} else
+		setup_menuitem (menuitem,
+				gnome_stock_pixmap_widget_at_size(
+					NULL,
+					file,
+					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
+				title);
+	g_free (file);
 }
 	  
 
@@ -1995,25 +1994,27 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("gnome/apps");
 	char *menudir;
-	
+	char *pixmap;
+
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
 	if (g_file_exists (menudir)) {
+		pixmap = gnome_pixmap_file ("gnome-logo-icon-transparent.png");
 		if(!fake || menu) {
-			menu = create_menu_at (menu,menudir,FALSE,_("Programs"),
-					       gnome_unconditional_pixmap_file ("gnome-logo-icon-transparent.png"),
+			menu = create_menu_at (menu, menudir, FALSE, _("Programs"),
+					       pixmap,
 					       fake_submenus, FALSE);
 		} else {
 			menu = create_fake_menu_at (menudir, FALSE,
 						    _("Programs"),
-						    gnome_pixmap_file ("gnome-logo-icon-transparent.png"));
+						    pixmap);
 		}
-		g_return_val_if_fail(menu,NULL);
-		g_free (menudir);
+		
+		g_free (pixmap);
 	} else {
 		g_warning("No system menus found!");
 	}
-	
+	g_free (menudir); 	
 	return menu;
 }
 
