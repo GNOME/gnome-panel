@@ -374,8 +374,10 @@ get_missing (int preffered_size)
 		default_pixmap = gnome_desktop_item_find_icon (panel_icon_theme, "gnome-unknown.png",
 							       preffered_size, 0);
 	if (default_pixmap != NULL)
-		retval = gdk_pixbuf_new_from_file (default_pixmap,
-						   NULL);
+		retval = gdk_pixbuf_new_from_file_at_size (default_pixmap,
+							   preffered_size,
+							   preffered_size,
+							   NULL);
 	if (retval == NULL)
 		retval = missing_pixbuf (preffered_size);
 
@@ -397,7 +399,10 @@ load_pixbuf (const char  *file,
 		full = gnome_desktop_item_find_icon (panel_icon_theme, file, preffered_size, 0);
 
 	if (full) {
-		retval = gdk_pixbuf_new_from_file (full, &error);
+		retval = gdk_pixbuf_new_from_file_at_size (full,
+							   preffered_size,
+							   preffered_size,
+							   &error);
 		if (!retval) {
 			if (str_error)
 				*str_error = g_strdup (error ? error->message : _("none"));

@@ -758,7 +758,7 @@ panel_make_menu_icon (const char *icon,
 	}
 
 	if (pb == NULL) {
-		pb = gdk_pixbuf_new_from_file (file, NULL);
+		pb = gdk_pixbuf_new_from_file_at_size (file, size, size, NULL);
 		
 		/* add icon to the hash table so we don't load it again */
 		loaded = TRUE;

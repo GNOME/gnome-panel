@@ -1,3 +1,14 @@
+2004-09-28  James Henstridge  <james@jamesh.id.au>
+
+	Fixes bug #153619 and Ubuntu bug #1587.
+
+	* menu.c (panel_make_menu_icon): same here.
+
+	* button-widget.c (get_missing): use
+	gdk_pixbuf_new_from_file_at_size() to load image, so that backends
+	such as the SVG one can render the image at an appropriate size.
+	(load_pixbuf): same here.
+
 2004-09-27  Mark McLoughlin  <mark@skynet.ie>
 
 	Contains fix for icon scaling code from jamesh.
