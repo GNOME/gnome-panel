@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "3.4.7.4ac19">
-  <!ENTITY manrevision "2.2">
-  <!ENTITY date "January 2003">
+  <!ENTITY manrevision "2.3">
+  <!ENTITY date "March 2003">
   <!ENTITY applet "Fish">
 ]>
 
@@ -52,7 +52,7 @@
 		  <surname>GNOME Documentation Team</surname> 
 		  <affiliation> 
 			 <orgname>Sun Microsystems</orgname> 
-			 <address> <email>gdocteam@sun.com</email> </address> 
+			 <address></address> 
 		  </affiliation> 
 		</author> 
 		<author> 
@@ -82,17 +82,23 @@
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
 		<revision> 
+		  <revnumber>Fish Applet Manual V2.2</revnumber> 
+		  <date>January 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
 		  <revnumber>Fish Applet Manual V2.1</revnumber> 
 		  <date>August 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
@@ -100,8 +106,7 @@
 		  <revnumber>Fish Applet Manual V2.0</revnumber> 
 		  <date>May 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
@@ -157,7 +162,7 @@
 
 <sect1 id="fish-usage">
 <title>Usage</title>
-<para>Click on the applet to display the <guilabel>Wanda the Fish</guilabel> dialog. The dialog typically displays a fortune cookie. You can configure the applet to specify the command to run when you click on the applet. See <xref linkend="fish-settings"/> for more information.</para>
+<para>Click on the applet to display the dialog that the applet is configured to display. You can configure the applet to specify the command to run when you click on the applet. See <xref linkend="fish-settings"/> for more information.</para>
 </sect1>
 
 <!-- ============= Preferences  ================================ -->
@@ -181,7 +186,7 @@
 <varlistentry>
 <term><guilabel>Command to execute when fish is clicked</guilabel> </term>
 <listitem>
-<para>By default, <application>&applet;</application> runs the fortune command when you click on the applet. Use this text box to specify an alternative command to run. </para>
+<para>Use this text box to specify the command that <application>&applet;</application> runs when you click on the applet.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
