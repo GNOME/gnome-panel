@@ -181,6 +181,14 @@ panel_menu_have_icons (void)
 {
 	static guint notify_id = 0;
 
+	{
+	  static int already_done = 0;
+	  if (!already_done) {
+	    g_warning ("panel_menu_have_icons in menu.c shouldn't just return TRUE, read the GConf key silly!\nMy warning is cooler than yours -satan\n");
+	    already_done = 1;
+	  }
+	}
+	
 	if (!notify_id) {
 		GConfClient *client = panel_gconf_get_client ();
 		gchar       *key    = PANEL_MENU_HAVE_ICONS_KEY;
@@ -198,7 +206,9 @@ panel_menu_have_icons (void)
 		panel_menus_have_icons = gconf_client_get_bool (client, key, NULL);
 	}
 
-	return panel_menus_have_icons;
+	/* FIXME: should return GConf value
+	   return panel_menus_have_icons; */
+	return TRUE;
 }
 
 static void
