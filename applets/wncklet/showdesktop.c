@@ -34,6 +34,7 @@
 #include <libwnck/screen.h>
 #include "egg-screen-help.h"
 #include "wncklet.h"
+#include <gdk/gdkx.h>
 
 #include <string.h>
 
@@ -475,6 +476,40 @@ static void
 button_toggled_callback (GtkWidget       *button,
                          ShowDesktopData *sdd)
 {
+        if (!gdk_x11_screen_supports_net_wm_hint (gtk_widget_get_screen (button),
+                                                  gdk_atom_intern ("_NET_SHOWING_DESKTOP", FALSE))) {
+                static GtkWidget *dialog = NULL;
+
+                if (dialog &&
+                    gtk_widget_get_screen (dialog) != gtk_widget_get_screen (button))
+                        gtk_widget_destroy (dialog);
+
+                if (dialog) {
+                        gtk_window_present (GTK_WINDOW (dialog));
+                        return;
+                }
+                
+                dialog = gtk_message_dialog_new (NULL,
+                                                 GTK_DIALOG_MODAL,
+                                                 GTK_MESSAGE_ERROR,
+                                                 GTK_BUTTONS_CLOSE,
+                                                 _("Your window manager does not support the show desktop button, or you are not running a window manager."));
+
+                g_object_add_weak_pointer (G_OBJECT (dialog),
+                                           (void**) &dialog);
+                
+                g_signal_connect (G_OBJECT (dialog), "response",
+                                  G_CALLBACK (gtk_widget_destroy),
+                                  NULL);
+                
+                gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+                gtk_window_set_screen (GTK_WINDOW (dialog),
+                                       gtk_widget_get_screen (button));
+                gtk_widget_show (dialog);
+
+                return;
+        }
+        
         if (sdd->wnck_screen != NULL)
                 wnck_screen_toggle_showing_desktop (sdd->wnck_screen,
                                                     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)));
