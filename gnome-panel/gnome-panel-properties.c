@@ -559,8 +559,9 @@ buttons_notebook_page (void)
 			      GTK_SIGNAL_FUNC (changed_cb), NULL);
 	  gtk_box_pack_start (GTK_BOX (vbox), tile_when_over_cb, FALSE, FALSE, 0);
 
-	  /* saturate on mouseovers hack */
-	  saturate_when_over_cb = gtk_check_button_new_with_label (_("Keep saturation low when cursor is not on the button"));
+	  /* prelight on mouseovers hack (used to be saturation, hence
+	   * the config option name) */
+	  saturate_when_over_cb = gtk_check_button_new_with_label (_("Prelight buttons on mouseover"));
 	  gtk_signal_connect (GTK_OBJECT (saturate_when_over_cb), "toggled",
 			      GTK_SIGNAL_FUNC (changed_cb), NULL);
 	  gtk_box_pack_start (GTK_BOX (vbox), saturate_when_over_cb, FALSE, FALSE, 0);

@@ -21,7 +21,7 @@ struct _ButtonWidget
 	GtkWidget		pixmap;
 	
 	GdkPixbuf		*pixbuf;
-	GdkPixbuf		*pixbuf_lc;
+	GdkPixbuf		*pixbuf_hc;
 
 	GdkPixmap		*cache;
 	
