@@ -1,3 +1,24 @@
+2002-01-28  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	Initial implementation of keyboard move functionality for ButtonWidget.
+	* button-widget.[ch]
+	Define action signals "push-move", "switch-move" and "free-move"
+	and associate keybindings with them
+	Implement default signal handlers button_widget_push_move,
+	button_widget_switch_move, button_widget_free_move
+
+	* panel-widget.[ch]
+	Define action signal end-move to allow termination of move using
+	keyboard. Use Escape as keybinding for this action. This is different
+	from Calum's original spec but I have discussed it with him.
+	Update panel_sub_event_handler() and panel_widget_applet_event() so 
+	that Escape causes panel_widget_end_move() is called.
+	Add panel_widget_push_applet, panel_widget_switch_applet,
+	panel_widget_free_move_applet to implement "push-move", "switch-move"
+	and "free-move"
+	Remove calls to g_return_if_fail (foo != NULL) if followed by calls
+	to g_return_if_fail (GTK_IS_BAR (foo));
+	
 2002-01-27  Seth Nickell  <snickell@stanford.edu>
 
 	* panel-per-panel-config.schemas:

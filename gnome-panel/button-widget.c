@@ -1,6 +1,7 @@
 #include <config.h>
 #include <math.h>
 #include <string.h>
+#include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
@@ -11,6 +12,7 @@
 #include "panel-types.h"
 #include "panel-util.h"
 #include "panel-config-global.h"
+#include "panel-marshal.h"
 
 #undef BUTTON_WIDGET_DEBUG
 
@@ -38,7 +40,23 @@ static void     button_widget_button_pressed (GtkButton         *button);
 static void     button_widget_button_released (GtkButton         *button);
 
 
+static void     button_widget_push_move      (ButtonWidget      *button,
+                                              GtkDirectionType   dir);
+static void     button_widget_switch_move    (ButtonWidget      *button,
+                                              GtkDirectionType   dir);
+static void     button_widget_free_move      (ButtonWidget      *button,
+                                              GtkDirectionType   dir);
+
 static GtkButtonClass *button_widget_parent_class;
+
+enum {
+	PUSH_MOVE_SIGNAL,
+	SWITCH_MOVE_SIGNAL,
+	FREE_MOVE_SIGNAL,
+	LAST_SIGNAL
+};
+
+static guint button_widget_signals[LAST_SIGNAL] = {0};
 
 GType
 button_widget_get_type (void)
@@ -73,6 +91,8 @@ button_widget_class_init (ButtonWidgetClass *class)
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
 	GtkButtonClass *button_class = GTK_BUTTON_CLASS (class);
 
+	GtkBindingSet *binding_set;
+
 	gtk_object_class->destroy = button_widget_destroy;
 	  
 	widget_class->realize = button_widget_realize;
@@ -85,6 +105,96 @@ button_widget_class_init (ButtonWidgetClass *class)
 
 	button_class->pressed = button_widget_button_pressed;
 	button_class->released = button_widget_button_released;
+
+	class->push_move = button_widget_push_move;
+	class->switch_move = button_widget_switch_move;
+	class->free_move = button_widget_free_move;
+
+	button_widget_signals[PUSH_MOVE_SIGNAL] =
+		g_signal_new ("push_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, push_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+
+	button_widget_signals[SWITCH_MOVE_SIGNAL] =
+		g_signal_new ("switch_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, switch_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+
+	button_widget_signals[FREE_MOVE_SIGNAL] =
+		g_signal_new ("free_move",
+                              G_TYPE_FROM_CLASS (class),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, free_move),
+                              NULL,
+                              NULL,
+                              panel_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+                              1,
+                              GTK_TYPE_DIRECTION_TYPE);
+
+	binding_set = gtk_binding_set_by_class (class);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Up, GDK_SHIFT_MASK,
+                                      "push_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Down, GDK_SHIFT_MASK,
+                                      "push_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Left, GDK_SHIFT_MASK,
+                                      "push_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Right, GDK_SHIFT_MASK,
+                                      "push_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Up, GDK_CONTROL_MASK,
+                                      "switch_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Down, GDK_CONTROL_MASK,
+                                      "switch_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Left, GDK_CONTROL_MASK,
+                                      "switch_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Right, GDK_CONTROL_MASK,
+                                      "switch_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Up, GDK_MOD1_MASK,
+                                      "free_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_UP);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Down, GDK_MOD1_MASK,
+                                      "free_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_DOWN);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Left, GDK_MOD1_MASK,
+                                      "free_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_LEFT);
+	gtk_binding_entry_add_signal (binding_set,
+                                      GDK_Right, GDK_MOD1_MASK,
+                                      "free_move", 1,
+                                      GTK_TYPE_DIRECTION_TYPE, GTK_DIR_RIGHT);
 }
  
 static void
@@ -746,3 +856,41 @@ button_widget_set_params(ButtonWidget *button,
 	gtk_widget_queue_draw (GTK_WIDGET (button));
 }
 
+static void
+button_widget_push_move (ButtonWidget      *button,
+                         GtkDirectionType   dir)
+{
+	PanelWidget *panel;
+	AppletData *ad;
+
+	panel = PANEL_WIDGET(GTK_WIDGET (button)->parent);
+	ad = g_object_get_data (G_OBJECT (button), PANEL_APPLET_DATA);
+
+	panel_widget_push_applet (panel, ad, dir);
+}
+
+static void
+button_widget_switch_move (ButtonWidget      *button,
+                           GtkDirectionType   dir)
+{
+	PanelWidget *panel;
+	AppletData *ad;
+
+	panel = PANEL_WIDGET(GTK_WIDGET (button)->parent);
+	ad = g_object_get_data (G_OBJECT (button), PANEL_APPLET_DATA);
+
+	panel_widget_switch_applet (panel, ad, dir);
+}
+
+static void
+button_widget_free_move (ButtonWidget      *button,
+                         GtkDirectionType   dir)
+{
+	PanelWidget *panel;
+	AppletData *ad;
+
+	panel = PANEL_WIDGET(GTK_WIDGET (button)->parent);
+	ad = g_object_get_data (G_OBJECT (button), PANEL_APPLET_DATA);
+
+	panel_widget_free_move_applet (panel, ad, dir);
+}
