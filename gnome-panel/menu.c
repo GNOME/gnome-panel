@@ -1202,23 +1202,33 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 }
 
 void
-setup_internal_applet_drag (GtkWidget *menuitem, const char *applet_type)
+setup_internal_applet_drag (GtkWidget             *menuitem,
+			    PanelActionButtonType  type)
 {
 	static GtkTargetEntry menu_item_targets[] = {
 		{ "application/x-panel-applet-internal", 0, 0 }
 	};
 
-	if (!applet_type || panel_lockdown_get_locked_down ())
+	if (panel_lockdown_get_locked_down ())
 		return;
 
 	gtk_drag_source_set (menuitem,
 			     GDK_BUTTON1_MASK|GDK_BUTTON2_MASK,
 			     menu_item_targets, 1,
 			     GDK_ACTION_COPY);
+
+	if (panel_action_get_stock_icon (type)  != NULL)
+		gtk_drag_source_set_icon_stock (menuitem,
+						panel_action_get_stock_icon (type));
+	/* FIXME: waiting for bug #116577
+	else
+		gtk_drag_source_set_icon_name (GTK_WIDGET (button),
+					panel_action_get_icon_name (type);
+					*/
 	
 	g_signal_connect_data (G_OBJECT (menuitem), "drag_data_get",
 			       G_CALLBACK (drag_data_get_string_cb),
-			       g_strdup (applet_type),
+			       g_strdup (panel_action_get_drag_id (type)),
 			       (GClosureNotify)g_free,
 			       0 /* connect_flags */);
 	g_signal_connect (G_OBJECT (menuitem), "drag_end",
@@ -1702,8 +1712,7 @@ append_lock_screen (GtkWidget *menu)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_lock_screen), NULL);
-	setup_internal_applet_drag (menuitem,
-				    panel_action_get_drag_id (PANEL_ACTION_LOCK));
+	setup_internal_applet_drag (menuitem, PANEL_ACTION_LOCK);
 	gtk_tooltips_set_tip (panel_tooltips, menuitem,
 			      panel_action_get_tooltip (PANEL_ACTION_LOCK),
 			      NULL);
@@ -1728,8 +1737,7 @@ append_log_out (GtkWidget *menu)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (panel_action_logout), NULL);
-	setup_internal_applet_drag (menuitem,
-				    panel_action_get_drag_id (PANEL_ACTION_LOGOUT));
+	setup_internal_applet_drag (menuitem, PANEL_ACTION_LOGOUT);
 
 	gtk_tooltips_set_tip (panel_tooltips, menuitem,
 			      panel_action_get_tooltip (PANEL_ACTION_LOGOUT),
@@ -1774,8 +1782,7 @@ create_main_menu (PanelWidget *panel)
 				      menuitem,
 				      panel_action_get_tooltip (PANEL_ACTION_RUN),
 				      NULL);
-		setup_internal_applet_drag (menuitem,
-					    panel_action_get_drag_id (PANEL_ACTION_RUN));
+		setup_internal_applet_drag (menuitem, PANEL_ACTION_RUN);
 		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 	}
 
@@ -1793,8 +1800,7 @@ create_main_menu (PanelWidget *panel)
 				      menuitem,
 				      panel_action_get_tooltip (PANEL_ACTION_SEARCH),
 				      NULL);
-		setup_internal_applet_drag (menuitem,
-					    panel_action_get_drag_id (PANEL_ACTION_SEARCH));
+		setup_internal_applet_drag (menuitem, PANEL_ACTION_SEARCH);
 		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 	}
 
@@ -1816,8 +1822,7 @@ create_main_menu (PanelWidget *panel)
 				      menuitem,
 				      panel_action_get_tooltip (PANEL_ACTION_SCREENSHOT),
 				      NULL);
-		setup_internal_applet_drag (menuitem,
-					    panel_action_get_drag_id (PANEL_ACTION_SCREENSHOT));
+		setup_internal_applet_drag (menuitem, PANEL_ACTION_SCREENSHOT);
 		gtk_menu_shell_append (GTK_MENU_SHELL (main_menu), menuitem);
 
 		add_menu_separator (main_menu);

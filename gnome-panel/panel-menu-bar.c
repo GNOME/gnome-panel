@@ -108,8 +108,7 @@ panel_menu_bar_append_action_item (PanelMenuBar          *menubar,
 	g_signal_connect (item, "activate", callback, NULL);
 	g_signal_connect (G_OBJECT (item), "button_press_event",
 			  G_CALLBACK (menu_dummy_button_press_event), NULL);
-	setup_internal_applet_drag (item,
-				    panel_action_get_drag_id (action_type));
+	setup_internal_applet_drag (item, action_type);
 }
 
 static void

@@ -50,8 +50,8 @@ GtkWidget      *create_panel_context_menu (PanelWidget *panel);
 
 void		panel_menuitem_lock_screen (GtkWidget *widget);
 
-void		setup_internal_applet_drag (GtkWidget *menuitem,
-					    const char *applet_type);
+void		setup_internal_applet_drag (GtkWidget             *menuitem,
+					    PanelActionButtonType  type);
 
 GtkWidget *	panel_create_menu              (void);
 
