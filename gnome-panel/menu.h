@@ -11,15 +11,13 @@ struct _Menu {
 	PanelOrientType orient;
 };
 
-void init_main_menu(void);
-
 Menu * create_menu_applet(char *arguments,
 			  PanelOrientType orient);
 
 void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 
-/*used in foreach to set unset visibility of small_icons*/
-void set_show_small_icons(gpointer data, gpointer user_data);
+/*used to set unset visibility of small_icons*/
+void set_show_small_icons(void);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
 

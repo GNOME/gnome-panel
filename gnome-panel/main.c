@@ -56,8 +56,6 @@ int need_complete_save = FALSE;
 GArray *applets;
 int applet_count;
 
-extern GtkWidget * root_menu;
-
 char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
 
@@ -1988,7 +1986,6 @@ main(int argc, char **argv)
 		
 	gnome_config_pop_prefix();
 
-	init_main_menu();
 	init_user_panels();
 	init_user_applets();
 

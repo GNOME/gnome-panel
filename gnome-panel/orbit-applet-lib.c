@@ -1,3 +1,4 @@
+#include <string.h>
 #include "applet-lib.h"
 
 #include <orb/orbit.h>

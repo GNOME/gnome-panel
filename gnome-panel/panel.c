@@ -48,9 +48,6 @@ extern int tooltips_enabled;
 
 extern GnomeClient *client;
 
-extern GtkWidget *root_menu;
-extern GList *small_icons;
-
 extern GlobalConfig global_config;
 
 extern char *panel_cfg_path;
@@ -90,7 +87,7 @@ apply_global_config(void)
 		gtk_tooltips_enable(panel_tooltips);
 	else
 		gtk_tooltips_disable(panel_tooltips);
-	g_list_foreach(small_icons,set_show_small_icons,NULL);
+	set_show_small_icons();
 	send_tooltips_state(global_config.tooltips_enabled);
 }
 
@@ -1257,13 +1254,6 @@ create_panel_root_menu(GtkWidget *panel)
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
-
-	/*FIXME: fix GTK so we can do this safely!
-	menuitem = gtk_menu_item_new_with_label(_("Main menu"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), root_menu);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-	*/
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);

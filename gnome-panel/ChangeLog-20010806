@@ -1,3 +1,13 @@
+Sun Jul 19 02:35:27 1998  George Lebl  <jirka@5z.com>
+
+	* orbit-applet-lib.c: add #include <string.h> to make gcc happy
+
+Sun Jul 19 02:34:00 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c,main.c,panel.c: got rid of the ugly root_menu
+	  thingie since it would make per menu options impossible
+	  plus some cleanup and more fixups to the menu stuff
+
 1998-07-19  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* Makefile.am (panel_LDADD): s/MICO_LIBS/ORB_LIBS/g.
