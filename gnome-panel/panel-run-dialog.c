@@ -157,6 +157,22 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 }
 
 static void
+set_window_icon_from_stock (GtkWindow *window,
+			    const char *stock_id)
+{
+	GdkPixbuf *icon;
+
+	icon = gtk_widget_render_icon (GTK_WIDGET (window),
+				       stock_id,
+				       GTK_ICON_SIZE_DIALOG,
+				       NULL);
+
+	gtk_window_set_icon (window, icon);
+
+	g_object_unref (icon);
+}
+
+static void
 panel_run_dialog_set_icon (PanelRunDialog *dialog,
 			   const char     *icon_path)
 {
@@ -183,6 +199,8 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		 * Scaled looks worse than a smaller image.
 		 */
 		gtk_image_set_from_pixbuf (GTK_IMAGE (dialog->pixmap), pixbuf);
+
+		gtk_window_set_icon (GTK_WINDOW (dialog->run_dialog), pixbuf);
 		
 		/* Don't unref pixbuf here, GTK will do it for us. */
 		gtk_drag_source_set_icon_pixbuf (dialog->run_dialog, pixbuf);		
@@ -190,11 +208,14 @@ panel_run_dialog_set_icon (PanelRunDialog *dialog,
 		g_free (icon);
 		
 		gtk_image_set_from_stock (GTK_IMAGE (dialog->pixmap), 
-					  GTK_STOCK_EXECUTE,
+					  PANEL_STOCK_RUN,
 					  GTK_ICON_SIZE_DIALOG);
 		
+		set_window_icon_from_stock (GTK_WINDOW (dialog->run_dialog),
+					    PANEL_STOCK_RUN);
+		
 		gtk_drag_source_set_icon_stock (dialog->run_dialog,
-						GTK_STOCK_EXECUTE);
+						PANEL_STOCK_RUN);
 	}
 }
 
@@ -1402,6 +1423,10 @@ panel_run_dialog_setup_pixmap (PanelRunDialog *dialog,
 	g_signal_connect (dialog->run_dialog, "drag_data_get",
 			  G_CALLBACK (pixmap_drag_data_get),
 			  dialog);
+
+	gtk_image_set_from_stock (GTK_IMAGE (dialog->pixmap), 
+				  PANEL_STOCK_RUN,
+				  GTK_ICON_SIZE_DIALOG);
 }
 				
 static PanelRunDialog *
@@ -1438,7 +1463,7 @@ panel_run_dialog_new (GdkScreen *screen,
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->run_dialog), screen);
 
-	/* FIXME: what about window icon? */
+	set_window_icon_from_stock (GTK_WINDOW (dialog->run_dialog), PANEL_STOCK_RUN);
 
 	gtk_widget_grab_focus (dialog->gtk_entry);
 	gtk_widget_show (dialog->run_dialog);

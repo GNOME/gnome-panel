@@ -1,3 +1,14 @@
+2003-07-14  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-run-dialog.c:
+	(set_window_icon_from_stock): impl.
+	(panel_run_dialog_set_icon),
+	(panel_run_dialog_setup_pixmap): use PANEL_STOCK_RUN
+	instead of GTK_STOCK_EXECUTE.
+	(panel_run_dialog_new): set the window icon appropriately.
+	
+	* panel-run-dialog.glade: don't set the stock icon here.
+
 2003-07-13  Christian Neumair  <chris@gnome-de.org>
 
 	* panel-toplevel.schemas.in: Third and hopefully last string adaption.
