@@ -113,44 +113,44 @@ position_notebook_page(GtkWidget *propertybox)
 	
 	/* Top Position */
 	button = gtk_radio_button_new_with_label (NULL, _("Top"));
-	if (panel_config_struct.snapped == PANEL_TOP)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_TOP);
+	if (panel_config_struct.snapped == PANEL_TOP)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	
 	/* Bottom Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Bottom"));
-	if (panel_config_struct.snapped == PANEL_BOTTOM)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_BOTTOM);
+	if (panel_config_struct.snapped == PANEL_BOTTOM)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	
 	/* Left Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Left"));
-	if (panel_config_struct.snapped == PANEL_LEFT)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_LEFT);
+	if (panel_config_struct.snapped == PANEL_LEFT)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 
 	/* Right Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Right"));
-	if (panel_config_struct.snapped == PANEL_RIGHT)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_RIGHT);
+	if (panel_config_struct.snapped == PANEL_RIGHT)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 
 	/* Auto-hide/stayput frame */
