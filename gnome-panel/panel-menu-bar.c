@@ -103,7 +103,10 @@ panel_menu_bar_append_action_item (PanelMenuBar *menubar,
 static void
 panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 {
-	GtkWidget *item;
+	GtkWidget  *item;
+	char       *logout_string;
+	char       *logout_tooltip;
+	const char *user_name;
 
 	menubar->priv->actions_menu = panel_create_menu ();
 
@@ -169,14 +172,22 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			"ACTION:lock:NEW",
 			G_CALLBACK (panel_action_lock_screen));
 
+	user_name = g_get_real_name ();
+	if (!user_name || !user_name [0])
+		user_name = g_get_user_name ();
+	logout_string  = g_strdup_printf (_("Log Out %s"), g_get_user_name ());
+	logout_tooltip = g_strdup_printf (_("Quit from %s's desktop"),
+					  user_name);
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Log Out"),
+			logout_string,
 			PANEL_STOCK_LOGOUT,
-			_("Quit from the GNOME desktop"),
+			logout_tooltip,
 			"ACTION:logout:NEW",
 			G_CALLBACK (panel_action_logout));
+	g_free (logout_string);
+	g_free (logout_tooltip);
 
 	item = gtk_menu_item_new_with_label (_("Actions"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menubar->priv->actions_menu);
