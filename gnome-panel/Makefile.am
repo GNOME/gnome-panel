@@ -58,13 +58,18 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
-EGGFILES =                      \
+EGG_SCREEN_EXEC_FILES =         \
 	egg-screen-exec.h       \
 	egg-screen-exec.c       \
 	egg-screen-help.h       \
 	egg-screen-help.c       \
 	egg-screen-url.h        \
 	egg-screen-url.c        \
+	$(NULL)
+
+EGG_ACCELERATORS_FILES =        \
+	eggaccelerators.c       \
+	eggaccelerators.h       \
 	$(NULL)
 
 BUILT_SOURCES = \
@@ -159,11 +164,12 @@ panel_headers =			\
 	panel-stock-icons.h	\
 	$(NULL)
 
-gnome_panel_SOURCES =		\
-	$(CORBA_SRCLIST)	\
-	$(EGGFILES)		\
-	$(panel_sources)	\
-	$(panel_headers)	\
+gnome_panel_SOURCES =			\
+	$(CORBA_SRCLIST)		\
+	$(EGG_SCREEN_EXEC_FILES)	\
+	$(EGG_ACCELERATORS_FILES)	\
+	$(panel_sources)		\
+	$(panel_headers)		\
 	$(NULL)
 
 gnome_panel_LDADD =		\
@@ -306,7 +312,9 @@ CLEANFILES = $(BUILT_SOURCES)
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)
 
-EGGDIR = $(srcdir)/../../libegg/libegg/screen-exec
+EGG_SCREEN_EXEC_DIR = $(srcdir)/../../libegg/libegg/screen-exec
+EGG_ACCELERATORS_DIR = $(srcdir)/../../libegg/libegg/treeviewutils
 
 regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
+	EGGFILES="$(EGG_SCREEN_EXEC_FILES)"  EGGDIR="$(EGG_SCREEN_EXEC_DIR)"  $(srcdir)/update-from-egg.sh
+	EGGFILES="$(EGG_ACCELERATORS_FILES)" EGGDIR="$(EGG_ACCELERATORS_DIR)" $(srcdir)/update-from-egg.sh

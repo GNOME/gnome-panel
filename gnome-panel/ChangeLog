@@ -1,3 +1,24 @@
+2002-08-23  Alex Graveley  <alex@ximian.com>
+
+	* menu.c: Re-enable menu editing by applying patch from Bug #77848.
+
+2002-08-21  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* menu.c: Fix a typo in a string. #90953.
+	
+2002-07-13  Havoc Pennington  <hp@pobox.com>
+
+        Try fixing panel to allow Mod2-Mod5 accels. This fix is a drop in
+	the bucket though, this code needs a lot of help.
+	
+	* eggaccelerators.h: copy in from libegg to use in fixing
+	global-keys.c. evil cut-and-paste code.
+
+	* global-keys.c (grab_key): dynamically get ignored mods
+
+	* global-keys.h: remove IGNORED_MODS and USED_MODS, any uses of
+	those were broken.
+
 2002-08-27  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-util.h, panel-access.c:
