@@ -1,3 +1,9 @@
+2003-11-23  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (applet_info_sort_func): use g_utf8_collate instead
+	of strcmp() for sorting so we respect the locale's collation
+	order.
+
 2003-11-20  Vincent Untz  <vincent@vuntz.net>
 
 	* gnome-panel-screenshot.c: (gimme_file) expand filenames with a tilde

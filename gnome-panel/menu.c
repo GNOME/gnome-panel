@@ -2649,10 +2649,10 @@ applet_info_sort_func (AppletMenuInfo *a,
 {
 	int c;
 
-	if ((c = strcmp (a->category, b->category)))
+	if ((c = g_utf8_collate (a->category, b->category)))
 		return c;
 
-	return strcmp (a->name, b->name);
+	return g_utf8_collate (a->name, b->name);
 }
 
 static GSList *
