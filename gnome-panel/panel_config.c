@@ -240,6 +240,7 @@ pixmap_page (PanelWidget *panel)
 	GtkWidget *box, *f, *t;
 	GtkWidget *vbox;
 	GtkWidget *w;
+	GtkWidget *fit;
 
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
@@ -253,6 +254,9 @@ pixmap_page (PanelWidget *panel)
 	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (f), box);
 
+	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
+	fit = gtk_check_button_new_with_label (_("Scale image to fit panel"));
+
 	w = gtk_check_button_new_with_label (_("Enable Background Image"));
 	/*always set to true, because in the beginning we don't have
 	  any pixmap so it's not gonna be set by default anyhow*/
@@ -260,10 +264,12 @@ pixmap_page (PanelWidget *panel)
 	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
 			    GTK_SIGNAL_FUNC (set_pixmap_enable), 
 			    file_entry);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_pixmap_enable), 
+			    fit);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
-	file_entry = gnome_file_entry_new ("pixmap", _("Browse"));
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC (value_changed), NULL);
@@ -273,12 +279,11 @@ pixmap_page (PanelWidget *panel)
 	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ?
 			    panel->back_pixmap : "");
 
-	w = gtk_check_button_new_with_label (_("Scale image to fit panel"));
-	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), panel->fit_pixmap_bg);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (fit), panel->fit_pixmap_bg);
 	gtk_signal_connect (GTK_OBJECT (w), "toggled",
 			    GTK_SIGNAL_FUNC (set_fit_pixmap_bg),
 			    NULL);
-	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
+	gtk_box_pack_start (GTK_BOX (box), fit, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 			   
 	return vbox;
