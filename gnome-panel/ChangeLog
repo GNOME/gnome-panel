@@ -1,5 +1,15 @@
 2005-01-14  Vincent Untz  <vincent@vuntz.net>
 
+	Add "Connect to Server" item to the Places menu.
+
+	* panel-action-button.c: add definition for the new action
+	(panel_action_connect_server): new
+	* panel-enums.h: add enum for the new action
+	* panel-menu-bar.c: (panel_menu_bar_create_places_menu): add the
+	"Connect to Server" item if it's available
+
+2005-01-14  Vincent Untz  <vincent@vuntz.net>
+
 	Add a help button when creating a new .desktop file on the desktop.
 	Fix bug #163895
 	Original patch from Takao Fujiwara <Takao.Fujiwara@Sun.COM>

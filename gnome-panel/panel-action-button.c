@@ -66,13 +66,14 @@ struct _PanelActionButtonPrivate {
 static GObjectClass *parent_class;
 
 static GConfEnumStringPair panel_action_type_map [] = {
-	{ PANEL_ACTION_NONE,         "none"         },
-	{ PANEL_ACTION_LOCK,         "lock"         },
-	{ PANEL_ACTION_LOGOUT,       "logout"       },
-	{ PANEL_ACTION_RUN,          "run"          },
-	{ PANEL_ACTION_SEARCH,       "search"       },
-	{ PANEL_ACTION_SCREENSHOT,   "screenshot"   },
-	{ PANEL_ACTION_FORCE_QUIT,   "force-quit"   },
+	{ PANEL_ACTION_NONE,           "none"           },
+	{ PANEL_ACTION_LOCK,           "lock"           },
+	{ PANEL_ACTION_LOGOUT,         "logout"         },
+	{ PANEL_ACTION_RUN,            "run"            },
+	{ PANEL_ACTION_SEARCH,         "search"         },
+	{ PANEL_ACTION_SCREENSHOT,     "screenshot"     },
+	{ PANEL_ACTION_FORCE_QUIT,     "force-quit"     },
+	{ PANEL_ACTION_CONNECT_SERVER, "connect-server" }
 };
 
 /* Lock Screen
@@ -259,6 +260,32 @@ panel_action_force_quit (GtkWidget *widget)
 	panel_force_quit (gtk_widget_get_screen (widget));
 }
 
+/* Connect Server
+ */
+static void
+panel_action_connect_server (GtkWidget *widget)
+{
+	GdkScreen *screen;
+	GError    *error;
+	
+	screen = gtk_widget_get_screen (GTK_WIDGET (widget));
+	error = NULL;
+
+	gdk_spawn_command_line_on_screen (screen, "nautilus-connect-server",
+					  &error);
+
+	if (error) {
+		GtkWidget *error_dialog;
+
+		error_dialog = panel_error_dialog (screen,
+						   "cannot_connect_server",
+						   TRUE,
+						   _("Cannot connect to server"),
+						   "%s", error->message);
+		g_clear_error (&error);
+	}
+}
+
 typedef struct {
 	PanelActionButtonType   type;
 	char                   *stock_icon;
@@ -347,6 +374,16 @@ static PanelAction actions [] = {
 		"ACTION:force-quit:NEW",
 		panel_action_force_quit, NULL, NULL,
 		panel_lockdown_get_disable_force_quit
+	},
+	{
+		PANEL_ACTION_CONNECT_SERVER,
+		NULL,
+		"gnome-globe", //FIXME icon
+		N_("Connect to Server..."),
+		N_("Connect to a remote server"), //FIXME
+		"gospanel-563", //FIXME
+		"ACTION:connect-server:NEW",
+		panel_action_connect_server, NULL, NULL, NULL
 	}
 };
 

@@ -577,6 +577,7 @@ static GtkWidget *
 panel_menu_bar_create_places_menu (PanelMenuBar *menubar)
 {
 	GtkWidget *places_menu;
+	GtkWidget *item;
 
 	places_menu = panel_create_menu ();
 
@@ -604,11 +605,13 @@ panel_menu_bar_create_places_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_from_desktop (places_menu,
 					    "network-scheme.desktop");
 	panel_menu_bar_append_volumes (menubar, places_menu, TRUE);
-#if 0
-	item = menu_create_action_item (PANEL_ACTION_CONNECT_SERVER);
-	if (item != NULL)
-		gtk_menu_shell_append (GTK_MENU_SHELL (places_menu), item);
-#endif
+
+	if (panel_is_program_in_path ("nautilus-connect-server")) {
+		item = menu_create_action_item (PANEL_ACTION_CONNECT_SERVER);
+		if (item != NULL)
+			gtk_menu_shell_append (GTK_MENU_SHELL (places_menu),
+					       item);
+	}
 
 	add_menu_separator (places_menu);
 
