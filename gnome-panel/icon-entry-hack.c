@@ -177,6 +177,7 @@ hack_dentry_edit (GnomeDEntryEdit *dedit)
 	g_return_if_fail (GNOME_IS_DENTRY_EDIT (dedit));
 
 	ientry = gnome_icon_entry_new ("icon", _("Choose an icon"));
+	gtk_widget_show (ientry);
 	gtk_object_set_data (GTK_OBJECT (ientry),
 			     "IconHackOrigIconEntry", dedit->icon_entry);
 
