@@ -5,18 +5,20 @@
 
 G_BEGIN_DECLS
 
+#define PANEL_DRAWER_N_LISTENERS 3
+
 typedef struct {
-	char          *pixmap;
 	char          *tooltip;
 
 	PanelToplevel *toplevel;
 	GtkWidget     *button;
-	GtkWidget     *properties;
 
 	gboolean       opened_for_drag;
 	guint          close_timeout_id;
 
 	AppletInfo    *info;
+
+	guint          listeners [PANEL_DRAWER_N_LISTENERS];
 } Drawer;
 
 void    panel_drawer_create (PanelToplevel *toplevel,
@@ -35,10 +37,6 @@ void    drawer_load_from_gconf (PanelWidget *panel_widget,
 
 void set_drawer_applet_orientation (Drawer           *drawer,
 				    PanelOrientation  orientation);
-
-#ifdef FIXME_FOR_NEW_TOPLEVEL
-void add_drawer_properties_page(PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer);
-#endif
 
 G_END_DECLS
 

@@ -634,6 +634,118 @@ TOPLEVEL_GET_SET_FUNCS ("background/fit",     background, bool, fit,            
 TOPLEVEL_GET_SET_FUNCS ("background/stretch", background, bool, stretch,        gboolean)
 TOPLEVEL_GET_SET_FUNCS ("background/rotate",  background, bool, rotate,         gboolean)
 
+static const char *
+panel_profile_get_attached_object_key (PanelToplevel *toplevel,
+				       const char    *key)
+{
+	GtkWidget  *attach_widget;
+	const char *id;
+
+	attach_widget = panel_toplevel_get_attach_widget (toplevel);
+
+	id = panel_applet_get_id_by_widget (attach_widget);
+
+	if (!id)
+		return NULL;
+
+	return panel_gconf_full_key (PANEL_GCONF_OBJECTS, current_profile, id, key);
+}
+
+void
+panel_profile_set_attached_custom_icon (PanelToplevel *toplevel,
+					const char    *custom_icon)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
+	if (key)
+		gconf_client_set_bool (client, key, custom_icon != NULL, NULL);
+
+	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
+	if (key)
+		gconf_client_set_string (client, key, custom_icon, NULL);
+}
+
+char *
+panel_profile_get_attached_custom_icon (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
+	if (!key || !gconf_client_get_bool (client, key, NULL))
+		return NULL;
+
+	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
+
+	return key ? gconf_client_get_string (client, key, NULL) : NULL;
+}
+
+gboolean
+panel_profile_is_writable_attached_custom_icon (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "use_custom_icon");
+	if (!key)
+		return TRUE;
+
+	if (!gconf_client_key_is_writable (client, key, NULL))
+		return FALSE;
+
+	key = panel_profile_get_attached_object_key (toplevel, "custom_icon");
+
+	return key ? gconf_client_key_is_writable (client, key, NULL) : TRUE;
+}
+
+void
+panel_profile_set_attached_tooltip (PanelToplevel *toplevel,
+				    const char    *tooltip)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
+	if (key)
+		gconf_client_set_string (client, key, tooltip, NULL);
+}
+
+char *
+panel_profile_get_attached_tooltip (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
+
+	return key ? gconf_client_get_string (client, key, NULL) : NULL;
+}
+
+gboolean
+panel_profile_is_writable_attached_tooltip (PanelToplevel *toplevel)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_profile_get_attached_object_key (toplevel, "tooltip");
+
+	return key ? gconf_client_key_is_writable (client, key, NULL) : TRUE;
+}
+
 static PanelBackgroundType
 get_background_type (GConfClient *client,
 		     const char  *toplevel_dir)

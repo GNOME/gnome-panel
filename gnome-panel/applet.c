@@ -31,6 +31,7 @@
 #include "panel-profile.h"
 #include "panel-menu-button.h"
 #include "panel-globals.h"
+#include "panel-properties-dialog.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -177,10 +178,8 @@ applet_callback_callback (GtkWidget      *widget,
 	case PANEL_OBJECT_DRAWER: 
 		if (strcmp (menu->name, "properties")==0) {
 			Drawer *drawer = menu->info->data;
-			g_assert(drawer);
-#ifdef FIXME_FOR_NEW_CONFIG
-			panel_config (drawer->toplevel);
-#endif
+
+			panel_properties_dialog_present (drawer->toplevel);
 		} else if (strcmp (menu->name, "help") == 0) {
 			panel_show_help (screen, "wgospanel.xml", "gospanel-18");
 		}
@@ -968,6 +967,24 @@ panel_applet_get_id (AppletInfo *info)
 		return NULL;
 
 	return info->id;
+}
+
+const char *
+panel_applet_get_id_by_widget (GtkWidget *applet_widget)
+{
+	GSList *l;
+
+	if (!applet_widget)
+		return NULL;
+
+	for (l = registered_applets; l; l = l->next) {
+		AppletInfo *info = l->data;
+
+		if (info->widget == applet_widget)
+			return info->id;
+	}
+
+	return NULL;
 }
 
 AppletInfo *

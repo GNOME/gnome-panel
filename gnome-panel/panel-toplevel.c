@@ -2343,6 +2343,22 @@ panel_toplevel_get_is_attached (PanelToplevel *toplevel)
 	return toplevel->priv->attached;
 }
 
+PanelToplevel *
+panel_toplevel_get_attach_toplevel (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->attach_toplevel;
+}
+
+GtkWidget *
+panel_toplevel_get_attach_widget (PanelToplevel *toplevel)
+{
+	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);
+
+	return toplevel->priv->attach_widget;
+}
+
 static gboolean
 panel_toplevel_popup_panel_menu (PanelToplevel *toplevel)
 {

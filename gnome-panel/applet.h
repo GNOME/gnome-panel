@@ -50,9 +50,10 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      PanelObjectType  type,
 				      const char      *id);
 
-const char *panel_applet_get_id       (AppletInfo      *info);
-AppletInfo *panel_applet_get_by_id    (const char      *id);
-AppletInfo *panel_applet_get_by_type  (PanelObjectType  object_type);
+const char *panel_applet_get_id           (AppletInfo      *info);
+const char *panel_applet_get_id_by_widget (GtkWidget       *widget);
+AppletInfo *panel_applet_get_by_id        (const char      *id);
+AppletInfo *panel_applet_get_by_type      (PanelObjectType  object_type);
 
 GSList     *panel_applet_list_applets (void);
 

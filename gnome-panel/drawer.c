@@ -30,163 +30,6 @@
 #include "panel-globals.h"
 #include "panel-stock-icons.h"
 
-#undef DRAWER_DEBUG
-
-#ifdef FIXME_FOR_NEW_CONFIG
-static void
-properties_apply_callback(gpointer data)
-{
-	Drawer       *drawer = data;
-
-	GtkWidget    *pixentry = g_object_get_data (G_OBJECT (drawer->properties),
-						    "pixmap");
-	GtkWidget    *tipentry = g_object_get_data (G_OBJECT (drawer->properties),
-						    "tooltip");
-	const char   *cs;
-
-	g_free (drawer->pixmap);
-	drawer->pixmap = NULL;
-	g_free (drawer->tooltip);
-	drawer->tooltip = NULL;
-
-	drawer->pixmap = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY (pixentry));
-	if (string_empty (drawer->pixmap) ||
-	    access (drawer->pixmap, R_OK) != 0) {
-		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-							    "panel-drawer.png", TRUE, NULL);
-	}
-
-	button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), drawer->pixmap);
-
-	cs = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
-	if (string_empty (cs))
-		drawer->tooltip = NULL;
-	else
-		drawer->tooltip = g_strdup (cs);
-
-	gtk_tooltips_set_tip (panel_tooltips, drawer->button,
-			      drawer->tooltip, NULL);
-
-	/* FIXME_FOR_NEW_CONFIG: save changes to GConf */
-}
-
-static void
-properties_close_callback(GtkWidget *widget, gpointer data)
-{
-	Drawer *drawer = data;
-	drawer->properties = NULL;
-}
-
-static void
-set_toggle (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = g_object_get_data (G_OBJECT (widget), "PerPanelConfig");
-	int *the_toggle = data;
-
-	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
-
-	panel_config_register_changes (ppc);
-}
-
-static void
-set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
-{
-	gtk_widget_set_sensitive(widget2,GTK_TOGGLE_BUTTON(widget)->active);
-}
-
-void
-add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer *drawer)
-{
-        GtkWidget *dialog;
-        GtkWidget *table;
-	GtkWidget *f;
-	GtkWidget *box, *box_in;
-	GtkWidget *w;
-	GtkWidget *button;
-
-	g_return_if_fail (ppc != NULL);
-
-        dialog = ppc->config_window;
-
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
-
-	box_in = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width (GTK_CONTAINER (box_in), GNOME_PAD_SMALL);
-
-	w = make_size_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (box_in), w, FALSE, FALSE, 0);
-
-	f = gtk_frame_new (_("Size and Position"));
-	gtk_container_add (GTK_CONTAINER (f), box_in);
-	gtk_box_pack_start (GTK_BOX (box), f, FALSE, FALSE, 0);
-
-	
-	table = gtk_table_new (3, 2, FALSE);
-	gtk_container_set_border_width (GTK_CONTAINER (table), GNOME_PAD_SMALL);
-
-	w = create_text_entry(table, "drawer_name", 0, _("Tooltip/Name"),
-			      drawer->tooltip,
-			      (UpdateFunction)panel_config_register_changes,
-			      ppc);
-	g_object_set_data (G_OBJECT (dialog), "tooltip", w);
-	
-	w = create_icon_entry(table, "icon", 0, 2, _("Icon"),
-			      NULL, drawer->pixmap,
-			      (UpdateFunction)panel_config_register_changes,
-			      ppc);
-	g_object_set_data (G_OBJECT (dialog), "pixmap", w);
-
-	f = gtk_frame_new(_("Applet appearance"));
-	gtk_container_add(GTK_CONTAINER(f),table);
-
-	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
-
-	f = gtk_frame_new(_("Drawer handle"));
-	box_in = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER(box_in), GNOME_PAD_SMALL);
-	/*we store this in w for later use!, so don't use w as temp from now
-	  on*/
-	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
-	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
-	if (ppc->hidebuttons)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	g_signal_connect (G_OBJECT (button), "toggled", 
-			    G_CALLBACK (set_toggle),
-			    &ppc->hidebuttons);
-	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE, 0);
-
-	button = gtk_check_button_new_with_label (_("Enable hidebutton arrow"));
-	g_signal_connect (G_OBJECT (w), "toggled", 
-			    G_CALLBACK (set_sensitive_toggle),
-			    button);
-	if (!ppc->hidebuttons)
-		gtk_widget_set_sensitive(button,FALSE);
-	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
-	if (ppc->hidebutton_pixmaps)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	g_signal_connect (G_OBJECT (button), "toggled", 
-			    G_CALLBACK (set_toggle),
-			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE, 0);
-	gtk_container_add(GTK_CONTAINER(f),box_in);
-	gtk_box_pack_start (GTK_BOX (box),f,FALSE,FALSE,0);
-
-	
-	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
-				  box, gtk_label_new (_("Drawer")));
-	
-	g_signal_connect (G_OBJECT(dialog), "destroy",
-			  G_CALLBACK (properties_close_callback),
-			   drawer);
-
-	ppc->update_function = properties_apply_callback;
-	ppc->update_data = drawer;
-
-	drawer->properties = dialog;
-}
-#endif /* FIXME_FOR_NEW_CONFIG */
-
 static void
 drawer_click (GtkWidget *w, Drawer *drawer)
 {
@@ -208,10 +51,16 @@ static void
 destroy_drawer (GtkWidget *widget,
 		Drawer    *drawer)
 {
-	GtkWidget *prop_dialog;
+	GConfClient *client;
+	int          i;
 
-	prop_dialog = drawer->properties;
-	drawer->properties = NULL;
+	client = panel_gconf_get_client ();
+
+	for (i = 0; i < PANEL_DRAWER_N_LISTENERS; i++) {
+		if (drawer->listeners [i])
+			gconf_client_notify_remove (client, drawer->listeners [i]);
+		drawer->listeners [i] = 0;
+	}
 
 	if (drawer->toplevel)
 		gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
@@ -220,9 +69,6 @@ destroy_drawer (GtkWidget *widget,
 	if (drawer->close_timeout_id)
 		g_source_remove (drawer->close_timeout_id);
 	drawer->close_timeout_id = 0;
-
-	if (prop_dialog)
-		gtk_widget_destroy (prop_dialog);
 }
 
 static void
@@ -462,51 +308,34 @@ drag_data_get_cb (GtkWidget          *widget,
 	g_free (foo);
 }
 
-static void
-free_drawer (Drawer *drawer)
-{
-	if (drawer->tooltip)
-		g_free (drawer->tooltip);
-
-	if (drawer->pixmap)
-		g_free (drawer->pixmap);
-
-	g_free (drawer);
-}
-
 static Drawer *
 create_drawer_applet (PanelToplevel    *toplevel,
 		      PanelToplevel    *parent_toplevel,
 		      const char       *tooltip,
-		      const char       *pixmap,
+		      const char       *custom_icon,
+		      gboolean          use_custom_icon,
 		      PanelOrientation  orientation)
 {
 	Drawer *drawer;
 	
 	drawer = g_new0 (Drawer, 1);
-	
-	drawer->properties = NULL;
 
-	if (string_empty (tooltip))
-		drawer->tooltip = NULL;
-	else
-		drawer->tooltip = g_strdup (tooltip);
-
-	if (!pixmap || !pixmap [0]) {
-		drawer->pixmap = NULL;
+	if (!use_custom_icon || !custom_icon || !custom_icon [0])
 		drawer->button = button_widget_new_from_stock (PANEL_STOCK_DRAWER,
 							       TRUE, orientation);
-	} else {
-		drawer->pixmap = g_strdup (pixmap);
-		drawer->button = button_widget_new (drawer->pixmap,
-						    TRUE, orientation);
-	}
+	else
+		drawer->button = button_widget_new (custom_icon, TRUE, orientation);
 
 	if (!drawer->button) {
-		free_drawer (drawer);
+		g_free (drawer);
 		return NULL;
 	}
 
+	if (tooltip && tooltip [0]) {
+		panel_toplevel_set_name (toplevel, tooltip);
+		gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
+	}
+	
 	gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0); 
 
 	g_signal_connect (drawer->button, "drag_data_get",
@@ -600,8 +429,122 @@ drawer_button_size_allocated (GtkWidget     *widget,
 }
 
 static void
+panel_drawer_use_custom_icon_changed (GConfClient *client,
+				      guint        cnxn_id,
+				      GConfEntry  *entry,
+				      Drawer      *drawer)
+{
+	gboolean  use_custom_icon;
+	char     *custom_icon = NULL;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	use_custom_icon = gconf_value_get_bool (entry->value);
+
+	if (use_custom_icon) {
+		const char *profile;
+		const char *key;
+
+		profile = panel_profile_get_name ();
+
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "custom_icon");
+		custom_icon = gconf_client_get_string (client, key, NULL);
+	}
+
+	if (custom_icon && custom_icon [0])
+		button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), custom_icon);
+	else
+		button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
+
+	g_free (custom_icon);
+}
+
+static void
+panel_drawer_custom_icon_changed (GConfClient *client,
+				  guint        cnxn_id,
+				  GConfEntry  *entry,
+				  Drawer      *drawer)
+{
+	const char *custom_icon;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+		return;
+
+	custom_icon = gconf_value_get_string (entry->value);
+
+	if (custom_icon && custom_icon [0]) {
+		const char *profile;
+		const char *key;
+		gboolean    use_custom_icon;
+
+		profile = panel_profile_get_name ();
+
+		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "use_custom_icon");
+		use_custom_icon = gconf_client_get_bool (client, key, NULL);
+		
+		if (use_custom_icon)
+			button_widget_set_pixmap (BUTTON_WIDGET (drawer->button), custom_icon);
+		else
+			button_widget_set_stock_id (BUTTON_WIDGET (drawer->button), PANEL_STOCK_DRAWER);
+	}
+}
+
+static void
+panel_drawer_tooltip_changed (GConfClient *client,
+			      guint        cnxn_id,
+			      GConfEntry  *entry,
+			      Drawer      *drawer)
+{
+	const char *tooltip;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
+		return;
+
+	tooltip = gconf_value_get_string (entry->value);
+
+	if (tooltip && tooltip [0]) {
+		panel_toplevel_set_name (drawer->toplevel, tooltip);
+		gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
+	}
+}
+
+static void
+panel_drawer_connect_to_gconf (Drawer *drawer)
+{
+	GConfClient *client;
+	const char  *key;
+	const char  *profile;
+	int          i = 0;
+
+	client  = panel_gconf_get_client ();
+	profile = panel_profile_get_name ();
+	
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "use_custom_icon");
+        drawer->listeners [i++] =
+		gconf_client_notify_add (client, key,
+					 (GConfClientNotifyFunc) panel_drawer_use_custom_icon_changed,
+					 drawer, NULL, NULL);
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "custom_icon");
+        drawer->listeners [i++] =
+		gconf_client_notify_add (client, key,
+					 (GConfClientNotifyFunc) panel_drawer_custom_icon_changed,
+					 drawer, NULL, NULL);
+
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer->info->id, "tooltip");
+        drawer->listeners [i++] =
+		gconf_client_notify_add (client, key,
+					 (GConfClientNotifyFunc) panel_drawer_tooltip_changed,
+					 drawer, NULL, NULL);
+
+	g_assert (i == PANEL_DRAWER_N_LISTENERS);
+}
+
+static void
 load_drawer_applet (char          *toplevel_id,
-		    const char    *pixmap,
+		    const char    *custom_icon,
+		    gboolean       use_custom_icon,
 		    const char    *tooltip,
 		    PanelToplevel *parent_toplevel,
 		    gboolean       locked,
@@ -623,7 +566,12 @@ load_drawer_applet (char          *toplevel_id,
 		toplevel = create_drawer_toplevel (id);
 
 	if (toplevel) 
-		drawer = create_drawer_applet (toplevel, parent_toplevel, tooltip, pixmap, orientation);
+		drawer = create_drawer_applet (toplevel,
+					       parent_toplevel,
+					       tooltip,
+					       custom_icon,
+					       use_custom_icon,
+					       orientation);
 
 	if (!drawer)
 		return;
@@ -631,7 +579,7 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget = panel_toplevel_get_panel_widget (parent_toplevel);
 
 	drawer->info = panel_applet_register (drawer->button, drawer,
-					      (GDestroyNotify) free_drawer,
+					      (GDestroyNotify) g_free,
 					      panel_widget,
 					      locked, pos, exactpos,
 					      PANEL_OBJECT_DRAWER, id);
@@ -648,7 +596,6 @@ load_drawer_applet (char          *toplevel_id,
 	panel_widget_set_applet_expandable (panel_widget, GTK_WIDGET (drawer->button), FALSE, TRUE);
 	panel_widget_set_applet_size_constrained (panel_widget, GTK_WIDGET (drawer->button), TRUE);
 
-	gtk_tooltips_set_tip (panel_tooltips, drawer->button, drawer->tooltip, NULL);
 	gtk_window_present (GTK_WINDOW (drawer->toplevel));
 
 	if (!commie_mode)
@@ -659,6 +606,8 @@ load_drawer_applet (char          *toplevel_id,
 
 	panel_applet_add_callback (
 		drawer->info, "help", GTK_STOCK_HELP, _("_Help"));
+
+	panel_drawer_connect_to_gconf (drawer);
 }
 
 void
@@ -704,9 +653,10 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	GConfClient *client;
 	const char  *profile;
 	const char  *key;
+	gboolean     use_custom_icon;
 	char        *profile_dir;
 	char        *toplevel_id;
-	char        *pixmap;
+	char        *custom_icon;
 	char        *tooltip;
 
 	g_return_if_fail (panel_widget != NULL);
@@ -722,15 +672,18 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 
 	panel_profile_load_toplevel (client, profile_dir, PANEL_GCONF_TOPLEVELS, toplevel_id);
 
-	/* FIXME_FOR_NEW_TOPLEVEL: get the use_custom_icon setting */
+	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "use_custom_icon");
+	use_custom_icon = gconf_client_get_bool (client, key, NULL);
+	
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
-	pixmap = gconf_client_get_string (client, key, NULL);
+	custom_icon = gconf_client_get_string (client, key, NULL);
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "tooltip");
 	tooltip = gconf_client_get_string (client, key, NULL);
 
 	load_drawer_applet (toplevel_id,
-			    pixmap,
+			    custom_icon,
+			    use_custom_icon,
 			    tooltip,
 			    panel_widget->toplevel,
 			    locked,
@@ -739,7 +692,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    id);
 
 	g_free (profile_dir);
-	g_free (pixmap);
+	g_free (custom_icon);
 	g_free (tooltip);
 }
 

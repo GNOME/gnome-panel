@@ -1,3 +1,60 @@
+2003-07-23  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement a properties dialog for drawers based on the
+	standard panel properties dialog. Fixes bug #107606.
+
+	* applet.[ch]:
+	(applet_callback_callback): present the panel properties
+	dialog.
+	(panel_applet_get_id_by_widget): impl.
+	* applet.h:
+	
+	* drawer.[ch]:
+	(add_drawer_properties_page): remove old #ifdefed out drawer
+	properties cruft.
+	(destroy_drawer): remove the GConf listeners.
+	(free_drawer): kill.
+	(create_drawer_applet): pass in the use_custom_icon flag. Also
+	set the toplevel name to be the same as the tooltip.
+	(panel_drawer_use_custom_icon_changed),
+	(panel_drawer_custom_icon_changed),
+	(panel_drawer_tooltip_changed),
+	(panel_drawer_connect_to_gconf): impl monitoring for changes
+	in config.
+	(load_drawer_applet): pass the parcel.
+	(drawer_load_from_gconf): read use_custom_icon.
+	
+	* panel-profile.[ch]:
+	(panel_profile_get_attached_object_key),
+	(panel_profile_set_attached_custom_icon),
+	(panel_profile_get_attached_custom_icon),
+	(panel_profile_is_writable_attached_custom_icon),
+	(panel_profile_set_attached_tooltip),
+	(panel_profile_get_attached_tooltip),
+	(panel_profile_is_writable_attached_tooltip): implement.
+
+	* panel-properties-dialog.c: (get_name),
+	(panel_properties_dialog_name_changed),
+	(panel_properties_dialog_setup_name_entry): handle
+	setting the tooltip and name on drawers.
+	(panel_properties_dialog_setup_size_spin),
+	(panel_properties_dialog_icon_changed),
+	(panel_properties_dialog_setup_icon_entry): impl. then
+	icon entry.
+	(panel_properties_dialog_remove_orientation_menu),
+	(panel_properties_dialog_remove_icon_entry),
+	(panel_properties_dialog_remove_toggles),
+	(panel_properties_dialog_update_for_attached): impl. removing
+	bits when they aren't relevant. Kinda sucky.
+	(panel_properties_dialog_new): upd.
+	
+	* panel-properties-dialog.glade: add an icon entry and name
+	a few widgets.
+	
+	* panel-toplevel.[ch]:
+	(panel_toplevel_get_attach_toplevel),
+	(panel_toplevel_get_attach_widget): impl.
+
 2003-07-22  Mark McLoughlin  <mark@skynet.ie>
 
 	Remove auto-hiding into the corner again. It seems the

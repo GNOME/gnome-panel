@@ -30,6 +30,7 @@
 #include <glade/glade-xml.h>
 #include <libgnomeui/gnome-color-picker.h>
 #include <libgnomeui/gnome-file-entry.h>
+#include <libgnomeui/gnome-icon-entry.h>
 
 #include "panel-profile.h"
 #include "panel-gconf.h"
@@ -40,14 +41,20 @@ typedef struct {
 
 	GtkWidget     *properties_dialog;
 
+	GtkWidget     *general_table;
+	GtkWidget     *general_vbox;
 	GtkWidget     *name_entry;
 	GtkWidget     *name_label;
 	GtkWidget     *orientation_menu;
 	GtkWidget     *orientation_label;
+	GtkWidget     *size_widgets;
 	GtkWidget     *size_spin;
 	GtkWidget     *size_label;
 	GtkWidget     *size_label_pixels;
-	GtkWidget     *expand_toggle;
+	GtkWidget     *icon_align;
+	GtkWidget     *icon_entry;
+	GtkWidget     *icon_label;
+  	GtkWidget     *expand_toggle;
 	GtkWidget     *autohide_toggle;
 	GtkWidget     *hidebuttons_toggle;
 	GtkWidget     *arrows_toggle;
@@ -95,13 +102,17 @@ panel_properties_dialog_free (PanelPropertiesDialog *dialog)
 }
 
 static char *
-get_name (PanelToplevel *toplevel)
+get_name (PanelToplevel *toplevel,
+	  gboolean       is_attached)
 {
 	char *name;
 
-	name = panel_profile_get_toplevel_name (toplevel);
-	if (!name)
-		name = g_strdup (panel_toplevel_get_description (toplevel));
+	if (!is_attached) {
+		name = panel_profile_get_toplevel_name (toplevel);
+		if (!name)
+			name = g_strdup (panel_toplevel_get_description (toplevel));
+	} else
+		name = panel_profile_get_attached_tooltip (toplevel);
 
 	return name;
 }
@@ -110,28 +121,43 @@ static void
 panel_properties_dialog_name_changed (PanelPropertiesDialog *dialog,
 				      GtkEntry              *entry)
 {
-	panel_profile_set_toplevel_name (dialog->toplevel, gtk_entry_get_text (entry));
+	const char *name;
+
+	name = gtk_entry_get_text (entry);
+
+	if (!panel_toplevel_get_is_attached (dialog->toplevel))
+		panel_profile_set_toplevel_name (dialog->toplevel, name);
+	else
+		panel_profile_set_attached_tooltip (dialog->toplevel, name);
 }
 
 static void
 panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 					  GladeXML              *gui)
 {
-	char *name;
+	char     *name;
+	gboolean  is_attached;
+	gboolean  is_writable;
 
 	dialog->name_entry = glade_xml_get_widget (gui, "name_entry");
 	g_return_if_fail (dialog->name_entry != NULL);
+
 	dialog->name_label = glade_xml_get_widget (gui, "name_label");
 	g_return_if_fail (dialog->name_label != NULL);
 
-	name = get_name (dialog->toplevel);
+	is_attached = panel_toplevel_get_is_attached (dialog->toplevel);
+
+	name = get_name (dialog->toplevel, is_attached);
 	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
 	g_free (name);
 
 	g_signal_connect_swapped (dialog->name_entry, "changed",
 				  G_CALLBACK (panel_properties_dialog_name_changed), dialog);
 
-	if ( ! panel_profile_is_writable_toplevel_name (dialog->toplevel)) {
+	is_writable = !is_attached ? panel_profile_is_writable_toplevel_name    (dialog->toplevel) :
+	                             panel_profile_is_writable_attached_tooltip (dialog->toplevel);
+
+	if (!is_writable) {
 		gtk_widget_set_sensitive (dialog->name_entry, FALSE);
 		gtk_widget_set_sensitive (dialog->name_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_general);
@@ -234,6 +260,8 @@ static void
 panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					 GladeXML              *gui)
 {
+	dialog->size_widgets = glade_xml_get_widget (gui, "size_widgets");
+	g_return_if_fail (dialog->size_widgets != NULL);
 	dialog->size_spin = glade_xml_get_widget (gui, "size_spin");
 	g_return_if_fail (dialog->size_spin != NULL);
 	dialog->size_label = glade_xml_get_widget (gui, "size_label");
@@ -252,6 +280,43 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 		gtk_widget_set_sensitive (dialog->size_spin, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label, FALSE);
 		gtk_widget_set_sensitive (dialog->size_label_pixels, FALSE);
+		gtk_widget_show (dialog->writability_warn_general);
+	}
+}
+
+static void
+panel_properties_dialog_icon_changed (PanelPropertiesDialog *dialog,
+				      GnomeIconEntry        *entry)
+{
+	panel_profile_set_attached_custom_icon (dialog->toplevel,
+						gnome_icon_entry_get_filename (entry));
+}
+
+static void
+panel_properties_dialog_setup_icon_entry (PanelPropertiesDialog *dialog,
+					  GladeXML              *gui)
+{
+	char *custom_icon;
+
+	dialog->icon_align = glade_xml_get_widget (gui, "icon_align");
+	g_return_if_fail (dialog->icon_align != NULL);
+
+	dialog->icon_entry = glade_xml_get_widget (gui, "icon_entry");
+	g_return_if_fail (dialog->icon_entry != NULL);
+
+	dialog->icon_label = glade_xml_get_widget (gui, "icon_label");
+	g_return_if_fail (dialog->icon_label != NULL);
+
+	custom_icon = panel_profile_get_attached_custom_icon (dialog->toplevel);
+	gnome_icon_entry_set_filename (GNOME_ICON_ENTRY (dialog->icon_entry), custom_icon);
+	g_free (custom_icon);
+
+	g_signal_connect_swapped (dialog->icon_entry, "changed",
+				  G_CALLBACK (panel_properties_dialog_icon_changed), dialog);
+
+	if (!panel_profile_is_writable_attached_custom_icon (dialog->toplevel)) {
+		gtk_widget_set_sensitive (dialog->icon_entry, FALSE);
+		gtk_widget_set_sensitive (dialog->icon_label, FALSE);
 		gtk_widget_show (dialog->writability_warn_general);
 	}
 }
@@ -715,6 +780,78 @@ panel_properties_dialog_background_notify (GConfClient           *client,
 		panel_properties_dialog_update_background_image (dialog, value);
 }
 
+static void
+panel_properties_dialog_remove_orientation_menu (PanelPropertiesDialog *dialog)
+{
+	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
+	GtkTable     *table     = GTK_TABLE (dialog->general_table);
+
+	g_object_ref (dialog->size_label);
+	g_object_ref (dialog->size_widgets);
+	g_object_ref (dialog->icon_label);
+	g_object_ref (dialog->icon_align);
+
+	gtk_container_remove (container, dialog->orientation_label);
+	gtk_container_remove (container, dialog->orientation_menu);
+	gtk_container_remove (container, dialog->size_label);
+	gtk_container_remove (container, dialog->size_widgets);
+	gtk_container_remove (container, dialog->icon_label);
+	gtk_container_remove (container, dialog->icon_align);
+
+	gtk_table_attach_defaults (table, dialog->size_label,   0, 1, 1, 2);
+	gtk_table_attach_defaults (table, dialog->size_widgets, 1, 2, 1, 2);
+	gtk_table_attach_defaults (table, dialog->icon_label,   0, 1, 2, 3);
+	gtk_table_attach_defaults (table, dialog->icon_align,   1, 2, 2, 3);
+
+	dialog->orientation_label = NULL;
+	dialog->orientation_menu = NULL;
+	g_object_unref (dialog->size_label);
+	g_object_unref (dialog->size_widgets);
+	g_object_unref (dialog->icon_label);
+	g_object_unref (dialog->icon_align);
+
+	gtk_table_resize (table, 3, 2);
+}
+
+static void
+panel_properties_dialog_remove_icon_entry (PanelPropertiesDialog *dialog)
+{
+	GtkContainer *container = GTK_CONTAINER (dialog->general_table);
+
+	gtk_container_remove (container, dialog->icon_label);
+	gtk_container_remove (container, dialog->icon_align);
+
+	dialog->icon_label = NULL;
+	dialog->icon_align = NULL;
+	dialog->icon_entry = NULL;
+
+	gtk_table_resize (GTK_TABLE (dialog->general_table), 3, 2);
+}
+
+static void
+panel_properties_dialog_remove_toggles (PanelPropertiesDialog *dialog)
+{
+	GtkContainer *container = GTK_CONTAINER (dialog->general_vbox);
+
+	gtk_container_remove (container, dialog->autohide_toggle);
+	gtk_container_remove (container, dialog->expand_toggle);
+
+	dialog->autohide_toggle = NULL;
+	dialog->expand_toggle   = NULL;
+}
+
+static void
+panel_properties_dialog_update_for_attached (PanelPropertiesDialog *dialog,
+					     gboolean               attached)
+{
+	if (!attached)
+		panel_properties_dialog_remove_icon_entry (dialog);
+	else {
+		panel_properties_dialog_remove_toggles (dialog);
+		panel_properties_dialog_remove_orientation_menu (dialog);
+	}
+}
+
 static PanelPropertiesDialog *
 panel_properties_dialog_new (PanelToplevel *toplevel,
 			     GladeXML      *gui)
@@ -740,9 +877,13 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	dialog->writability_warn_general = glade_xml_get_widget (gui, "writability_warn_general");
 	dialog->writability_warn_background = glade_xml_get_widget (gui, "writability_warn_background");
 
+	dialog->general_vbox  = glade_xml_get_widget (gui, "general_vbox");
+	dialog->general_table = glade_xml_get_widget (gui, "general_table");
+
 	panel_properties_dialog_setup_name_entry         (dialog, gui);
 	panel_properties_dialog_setup_orientation_menu   (dialog, gui);
 	panel_properties_dialog_setup_size_spin          (dialog, gui);
+	panel_properties_dialog_setup_icon_entry         (dialog, gui);
 	panel_properties_dialog_setup_expand_toggle      (dialog, gui);
 	panel_properties_dialog_setup_autohide_toggle    (dialog, gui);
 	panel_properties_dialog_setup_hidebuttons_toggle (dialog, gui);
@@ -772,6 +913,9 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 			"background",
 			(GConfClientNotifyFunc) panel_properties_dialog_background_notify,
 			dialog);
+
+	panel_properties_dialog_update_for_attached (dialog,
+						     panel_toplevel_get_is_attached (dialog->toplevel));
 
 	gtk_widget_show (dialog->properties_dialog);
 

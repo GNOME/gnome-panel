@@ -108,10 +108,12 @@ void                 panel_toplevel_rotate              (PanelToplevel       *to
 							 gboolean             clockwise);
 
 void                 panel_toplevel_attach_to_widget    (PanelToplevel       *toplevel,
-							 PanelToplevel       *atatch_toplevel,
+							 PanelToplevel       *attach_toplevel,
 							 GtkWidget           *attach_widget);
 void                 panel_toplevel_detach              (PanelToplevel       *toplevel);
 gboolean             panel_toplevel_get_is_attached     (PanelToplevel       *toplevel);
+PanelToplevel       *panel_toplevel_get_attach_toplevel (PanelToplevel       *toplevel);
+GtkWidget           *panel_toplevel_get_attach_widget   (PanelToplevel       *toplevel);
 
 gboolean             panel_toplevel_get_is_hidden       (PanelToplevel       *toplevel);
 PanelState           panel_toplevel_get_state           (PanelToplevel       *toplevel);
