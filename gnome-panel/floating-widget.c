@@ -545,8 +545,8 @@ floating_widget_new (gchar *panel_id,
 	FloatingWidget *floating;
 	FloatingPos *pos;
 
-	floating = gtk_type_new (FLOATING_TYPE_WIDGET);
-	floating->pos = gtk_type_new (FLOATING_TYPE_POS);
+	floating = g_object_new (FLOATING_TYPE_WIDGET, NULL);
+	floating->pos = g_object_new (FLOATING_TYPE_POS, NULL);
 	pos = FLOATING_POS (floating->pos);
 
 	pos->x = x;

@@ -42,10 +42,10 @@ properties_apply_callback(gpointer data)
 {
 	Drawer       *drawer = data;
 
-	GtkWidget    *pixentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
-						     "pixmap");
-	GtkWidget    *tipentry = gtk_object_get_data(GTK_OBJECT(drawer->properties),
-						     "tooltip");
+	GtkWidget    *pixentry = g_object_get_data (G_OBJECT (drawer->properties),
+						    "pixmap");
+	GtkWidget    *tipentry = g_object_get_data (G_OBJECT (drawer->properties),
+						    "tooltip");
 	char         *s;
 	const char   *cs;
 
@@ -141,7 +141,7 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 			      drawer->tooltip,
 			      (UpdateFunction)panel_config_register_changes,
 			      ppc);
-	gtk_object_set_data(GTK_OBJECT(dialog),"tooltip",w);
+	g_object_set_data (G_OBJECT (dialog), "tooltip", w);
 	
 	w = create_icon_entry(table, "icon", 0, 2, _("Icon"),
 			      NULL, drawer->pixmap,
@@ -407,8 +407,8 @@ drawer_setup(Drawer *drawer)
 	if(BASEP_WIDGET(drawer->drawer)->state != BASEP_SHOWN) {
 		GtkRequisition chreq;
 		gtk_widget_size_request(drawer->drawer, &chreq);
-		gtk_widget_set_uposition(drawer->drawer,
-					 -chreq.width - 1, -chreq.height - 1);
+		gtk_window_move (GTK_WINDOW (drawer->drawer),
+				 -chreq.width - 1, -chreq.height - 1);
 	}
 	gtk_widget_show(drawer->drawer);
 }

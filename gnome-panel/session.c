@@ -296,7 +296,6 @@ panel_session_save_panel (PanelData *pd)
 	gboolean check = FALSE;
 	gchar *panel_profile;
 	gchar *panel_id_key;
-	gchar *panel_id;
 	
 	buf = g_string_new (NULL);
 
@@ -312,11 +311,9 @@ panel_session_save_panel (PanelData *pd)
 	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
-	/* Get the widget unique_id */	
-	panel_id = g_strdup_printf ("%u", (guint)panel->unique_id);
 
 #ifdef SESSION_DEBUG
-	printf ("Saving unique panel id %s\n", panel_id);
+	printf ("Saving unique panel id %s\n", panel->unique_id);
 #endif
 	/* Get the current list from gconf */	
 	panel_id_list = gconf_client_get_list (panel_gconf_get_client (),
@@ -331,16 +328,16 @@ panel_session_save_panel (PanelData *pd)
 #ifdef SESSION_DEBUG
 	printf ("Found ID: %s\n", temp->data);
 #endif
-		if (strcmp (panel_id, temp->data) == 0)
+		if (strcmp (panel->unique_id, temp->data) == 0)
 			check = TRUE;
 	}	
 	
 	/* We need to add this key */
 	if (check == FALSE) {
 #ifdef SESSION_DEBUG
-	printf ("Adding a new panel to id-list: %s\n", panel_id);
+	printf ("Adding a new panel to id-list: %s\n", panel->unique_id);
 #endif
-		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel_id));	
+		panel_id_list = g_slist_append (panel_id_list, g_strdup (panel->unique_id));	
 	}
 
 	gconf_client_set_list (panel_gconf_get_client (),
@@ -357,41 +354,41 @@ panel_session_save_panel (PanelData *pd)
 #endif
 
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   panel_id,
+					   panel->unique_id,
 					   "panel-type", pd->type);
 
 	if (basep != NULL) {
 		panel_gconf_panel_profile_set_bool (panel_profile,
-						    panel_id,
+						    panel->unique_id,
 						    "hide-buttons-enabled", basep->hidebuttons_enabled);
 		panel_gconf_panel_profile_set_bool (panel_profile,
-						    panel_id,
+						    panel->unique_id,
 						    "hide-button-pixmaps-enabled", basep->hidebutton_pixmaps_enabled);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-hide-mode", basep->mode);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-hide-state", basep->state);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "screen-id", basep->screen);
 	}
 
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   panel_id,
+					   panel->unique_id,
 					   "panel-size", panel->sz);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel_id,
+					    panel->unique_id,
 					    "panel-backgroun-pixmap-fit", panel->fit_pixmap_bg);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel_id,
+					    panel->unique_id,
 					    "panel-background-pixmap-stretch", panel->stretch_pixmap_bg);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel_id,
+					    panel->unique_id,
 					    "panel-background-pixmap-rotate", panel->rotate_pixmap_bg);
 	panel_gconf_panel_profile_set_string (panel_profile,
-					      panel_id,
+					      panel->unique_id,
 					      "panel-background-pixmap", sure_string (panel->back_pixmap));
 
 
@@ -401,11 +398,11 @@ panel_session_save_panel (PanelData *pd)
 			 (guint)panel->back_color.blue/256);
 	
 	panel_gconf_panel_profile_set_string (panel_profile,
-					      panel_id,
+					      panel->unique_id,
 					      "panel-background-color", buf->str);
 
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   panel_id,
+					   panel->unique_id,
 					   "panel-background-type", panel->back_type);
 	
 	/* now do different types */
@@ -415,47 +412,45 @@ panel_session_save_panel (PanelData *pd)
 	switch (pd->type) {
 	case ALIGNED_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-align", ALIGNED_POS (basep->pos)->align);
 		break;
 	case SLIDING_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-offset", SLIDING_POS (basep->pos)->offset);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-anchor", SLIDING_POS (basep->pos)->anchor);
 		break;
 	case FLOATING_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-orient", PANEL_WIDGET (basep->pos)->orient);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-x-position", FLOATING_POS (basep->pos)->x);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-y-position", FLOATING_POS (basep->pos)->y);
 		break;
 	case DRAWER_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "panel-orient", DRAWER_POS (basep->pos)->orient);
 		break;
 	case FOOBAR_PANEL:
 		panel_gconf_panel_profile_set_string (panel_profile,
-						      panel_id,
+						      panel->unique_id,
 						      "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel_id,
+						   panel->unique_id,
 						   "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
 	}
 
-	g_free (panel_id);
-	
 	g_string_free (buf, TRUE);
 }
 

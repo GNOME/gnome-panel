@@ -154,7 +154,7 @@ int		panel_widget_add_full		(PanelWidget *panel,
 
 PanelWidget *	panel_widget_get_by_id		(gchar *id);
 void		panel_widget_set_id		(PanelWidget *panel,
-						 gchar *id);
+						 const char *id);
 void		panel_widget_set_new_id		(PanelWidget *panel);
 
 /*needs to be called for drawers after add*/

@@ -891,7 +891,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 	}
 	
 	gtk_widget_queue_resize(wid);
-	gtk_widget_draw(basep->table, NULL);
+	gtk_widget_queue_draw (basep->table);
 }
 
 void
@@ -1028,9 +1028,9 @@ make_hidebutton(BasePWidget *basep,
 	w = gtk_button_new();
 	GTK_WIDGET_UNSET_FLAGS(w, GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
 	if(horizontal)
-		gtk_widget_set_usize(w, 0, PANEL_MINIMUM_WIDTH);
+		gtk_widget_set_size_request (w, -1, PANEL_MINIMUM_WIDTH);
 	else
-		gtk_widget_set_usize(w, PANEL_MINIMUM_WIDTH, 0);
+		gtk_widget_set_size_request (w, PANEL_MINIMUM_WIDTH, -1);
 
 	pixmap_name = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 						 pixmaparrow, TRUE, NULL);
@@ -1523,7 +1523,7 @@ basep_widget_construct (gchar *panel_id,
 		klass->get_pos (basep, &x, &y, 
 				PANEL_MINIMUM_WIDTH,
 				PANEL_MINIMUM_WIDTH);
-	gtk_widget_set_uposition (GTK_WIDGET (basep), x, y);
+	gtk_window_move (GTK_WINDOW (basep), x, y);
 	
 	return GTK_WIDGET (basep);
 }

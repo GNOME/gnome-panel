@@ -27,6 +27,12 @@ INCLUDES =							\
 	$(WARN_CFLAGS)						\
 	$(NULL)
 
+
+	# we want this eventually
+	#-DGTK_DISABLE_DEPRECATED				\
+	#-DGNOME_DISABLE_DEPRECATED				\
+	#
+
 bin_PROGRAMS = \
 	gnome-panel-2 			\
 	gnome-panel-properties		\

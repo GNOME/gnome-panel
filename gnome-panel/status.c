@@ -123,7 +123,7 @@ status_applet_update(StatusApplet *s)
 		h = t;
 	}
 	
-	gtk_widget_set_usize(fixed,w,h);
+	gtk_widget_set_size_request (fixed, w, h);
 
 	DPRINTD(w);
 	DPRINTD(h);

@@ -1,4 +1,5 @@
 #include "nothing.h"
+#include <string.h>
 
 /*code snippet, not to be compiled separately*/
 static int goat_pages=0;

@@ -11,6 +11,8 @@
 
 #include <config.h>
 
+#include <string.h>
+
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
@@ -677,7 +679,7 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 					    1, 1, 1);
 		ppc->screen_spin = button =
 			gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-		gtk_widget_set_usize (GTK_WIDGET (button), 65, 0);
+		gtk_widget_set_size_request (GTK_WIDGET (button), 65, 0);
 		gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
 		g_signal_connect (G_OBJECT (button), "changed",
@@ -1328,8 +1330,8 @@ set_back (GtkWidget *widget, gpointer data)
 	if (ppc->back_type == back_type)
 		return;
 
-	pixf = gtk_object_get_data (GTK_OBJECT (widget), "pix");
-	colf = gtk_object_get_data (GTK_OBJECT (widget), "col");
+	pixf = g_object_get_data (G_OBJECT (widget), "pix");
+	colf = g_object_get_data (G_OBJECT (widget), "col");
 	
 	if (back_type == PANEL_BACK_NONE) {
 		gtk_widget_set_sensitive (pixf, FALSE);
@@ -1389,9 +1391,9 @@ background_page (PerPanelConfig *ppc)
 	/*color frame*/
 	f = gtk_frame_new (_("Color"));
 	gtk_widget_set_sensitive (f, ppc->back_type == PANEL_BACK_COLOR);
-	gtk_object_set_data(GTK_OBJECT(ppc->pix),"col",f);
-	gtk_object_set_data(GTK_OBJECT(ppc->col),"col",f);
-	gtk_object_set_data(GTK_OBJECT(ppc->non),"col",f);
+	g_object_set_data (G_OBJECT (ppc->pix), "col", f);
+	g_object_set_data (G_OBJECT (ppc->col), "col", f);
+	g_object_set_data (G_OBJECT (ppc->non), "col", f);
 	gtk_container_set_border_width(GTK_CONTAINER (f), GNOME_PAD_SMALL);
 	gtk_box_pack_start (GTK_BOX (vbox), f, FALSE, FALSE, 0);
 
@@ -1432,9 +1434,9 @@ background_page (PerPanelConfig *ppc)
 		gnome_pixmap_entry_set_preview_size (GNOME_PIXMAP_ENTRY (ppc->pix_entry),
 						     0,50);
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (ppc->pix_entry));
-	gtk_signal_connect_while_alive (GTK_OBJECT (t), "changed",
-					G_CALLBACK (value_changed), ppc,
-					GTK_OBJECT (ppc->pix_entry));
+	panel_signal_connect_while_alive (G_OBJECT (t), "changed",
+					  G_CALLBACK (value_changed), ppc,
+					  G_OBJECT (ppc->pix_entry));
 	gtk_box_pack_start (GTK_BOX (box), ppc->pix_entry, FALSE, FALSE, 0);
 	
 	gtk_entry_set_text (GTK_ENTRY (t),
@@ -1446,12 +1448,12 @@ background_page (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), noscale, FALSE, FALSE,0);
 
 	fit = gtk_radio_button_new_with_label (
-		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
+		gtk_radio_button_get_group(GTK_RADIO_BUTTON(noscale)),
 		_("Scale image (keep proportions)"));
 	gtk_box_pack_start (GTK_BOX (box), fit, FALSE, FALSE,0);
 
 	stretch = gtk_radio_button_new_with_label (
-		gtk_radio_button_group(GTK_RADIO_BUTTON(noscale)),
+		gtk_radio_button_get_group(GTK_RADIO_BUTTON(noscale)),
 		_("Stretch image (change proportions)"));
 	gtk_box_pack_start (GTK_BOX (box), stretch, FALSE, FALSE,0);
 
@@ -1545,27 +1547,27 @@ update_config_type (BasePWidget *w)
 	if(EDGE_IS_WIDGET(w)) {
 		/* edge notebook page */
 		page = edge_notebook_page(ppc);
-		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
-			      _("Edge panel"));
+		gtk_label_set_text (GTK_LABEL (ppc->type_tab_label),
+				    _("Edge panel"));
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
 	} else if(ALIGNED_IS_WIDGET(w)) {
 		/* aligned notebook page */
 		page = aligned_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
-			      _("Aligned panel"));
+		gtk_label_set_text (GTK_LABEL (ppc->type_tab_label),
+				    _("Aligned panel"));
 	} else if(SLIDING_IS_WIDGET(w)) {
 		/* sliding notebook page */
 		page = sliding_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
-			      _("Sliding panel"));
+		gtk_label_set_text (GTK_LABEL (ppc->type_tab_label),
+				    _("Sliding panel"));
 	} else if(FLOATING_IS_WIDGET(w)) {
 		/* floating notebook page */
 		page = floating_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		gtk_label_set(GTK_LABEL(ppc->type_tab_label),
-			      _("Floating panel"));
+		gtk_label_set_text (GTK_LABEL (ppc->type_tab_label),
+				    _("Floating panel"));
  	}
 	gtk_widget_show_all (ppc->type_tab);
 	ppc->register_changes = TRUE;
@@ -1575,8 +1577,8 @@ static void
 window_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkWidget *notebook = data;
-	const char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
-	const char *help_linkid = gtk_object_get_data (GTK_OBJECT (w), "help_linkid");
+	const char *help_path = g_object_get_data (G_OBJECT (w), "help_path");
+	const char *help_linkid = g_object_get_data (G_OBJECT (w), "help_linkid");
 
 	if (response == GTK_RESPONSE_HELP) {
 		int tab;
@@ -1709,7 +1711,7 @@ panel_config (GtkWidget *panel)
 		BasePWidget *basep = BASEP_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =
-			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
+			g_object_get_data (G_OBJECT (applet), "applet_info");
 		add_drawer_properties_page(ppc, GTK_NOTEBOOK (prop_nbook), info->data);
 		help_path = "drawers";
 		help_linkid = NULL;

@@ -178,7 +178,7 @@ orientation_change (AppletInfo  *info,
 static void
 orient_change_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	PanelWidget *panel = data;
 	
 	orientation_change(info,panel);
@@ -244,7 +244,7 @@ size_change (AppletInfo  *info,
 static void
 size_change_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	PanelWidget *panel = data;
 	
 	size_change(info,panel);
@@ -297,7 +297,7 @@ back_change_foreach (GtkWidget   *widget,
 {
 	AppletInfo *info;
 
-	info = gtk_object_get_data (GTK_OBJECT (widget), "applet_info");
+	info = g_object_get_data (G_OBJECT (widget), "applet_info");
 
 	back_change (info, panel);
 }
@@ -322,7 +322,7 @@ static void state_hide_foreach(GtkWidget *w, gpointer data);
 static void
 state_restore_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -342,7 +342,7 @@ state_restore_foreach(GtkWidget *w, gpointer data)
 static void
 state_hide_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT(w), "applet_info");
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
@@ -368,7 +368,7 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 static void
 queue_resize_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -407,7 +407,7 @@ basep_type_change(BasePWidget *basep,
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
+	AppletInfo *info = g_object_get_data (G_OBJECT (applet),
 					       "applet_info");
 	GtkWidget *panelw = PANEL_WIDGET(widget)->panel_parent;
 	
@@ -449,8 +449,8 @@ static void
 panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	GtkWidget *parentw = PANEL_WIDGET(widget)->panel_parent;
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
-					       "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (applet),
+					      "applet_info");
 
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;
@@ -508,8 +508,8 @@ panel_remove_applets (PanelWidget *panel)
 		AppletData *ad = l->data;
 		AppletInfo *info;
 
-		info = gtk_object_get_data (GTK_OBJECT (ad->applet),
-					    "applet_info");
+		info = g_object_get_data (G_OBJECT (ad->applet),
+					  "applet_info");
 
 		switch (info->type) {
 		case APPLET_BONOBO:
@@ -550,13 +550,13 @@ panel_destroy (GtkWidget *widget, gpointer data)
 
 		if (master_widget != NULL) {
 			AppletInfo *info =
-				gtk_object_get_data(GTK_OBJECT(master_widget),
-						    "applet_info");
+				g_object_get_data (G_OBJECT (master_widget),
+						   "applet_info");
 			Drawer *drawer = info->data;
 			drawer->drawer = NULL;
 			panel_applet_clean (info);
-			gtk_object_remove_data (GTK_OBJECT (master_widget),
-						"applet_info");
+			g_object_set_data (G_OBJECT (master_widget),
+					   "applet_info", NULL);
 		}
 	} else if ((BASEP_IS_WIDGET(widget)
 		    && !DRAWER_IS_WIDGET(widget))
@@ -588,8 +588,7 @@ panel_applet_about_to_die (GtkWidget *panel,
 {
 	AppletInfo *info;
 
-	info = gtk_object_get_data (GTK_OBJECT (widget),
-				    "applet_info");
+	info = g_object_get_data (G_OBJECT (widget), "applet_info");
 
 	g_return_if_fail (info);
 
@@ -628,7 +627,7 @@ make_popup_panel_menu (PanelWidget *panel)
 
 	pd = gtk_object_get_user_data (GTK_OBJECT (panelw));
 	menu = panel_menu_get (panel, pd);
-	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel", panel);
+	g_object_set_data (G_OBJECT (menu), "menu_panel", panel);
 
 	pd->menu_age = 0;
 	return menu;
@@ -1082,8 +1081,8 @@ move_applet (PanelWidget *panel, int pos, int applet_num)
 	    info->widget->parent != NULL &&
 	    PANEL_IS_WIDGET (info->widget->parent)) {
 		GSList *forb;
-		forb = gtk_object_get_data (GTK_OBJECT (info->widget),
-					    PANEL_APPLET_FORBIDDEN_PANELS);
+		forb = g_object_get_data (G_OBJECT (info->widget),
+					  PANEL_APPLET_FORBIDDEN_PANELS);
 		if ( ! g_slist_find (forb, panel))
 			panel_widget_reparent (PANEL_WIDGET (info->widget->parent),
 					       panel,
@@ -1245,12 +1244,12 @@ static void
 do_highlight (GtkWidget *widget, gboolean highlight)
 {
 	gboolean have_drag;
-	have_drag = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (widget),
-							 "have-drag"));
+	have_drag = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+							"have-drag"));
 	if(highlight) {
 		if(!have_drag) {
-			gtk_object_set_data (GTK_OBJECT (widget), "have-drag",
-					     GINT_TO_POINTER (TRUE));
+			g_object_set_data (G_OBJECT (widget), "have-drag",
+					   GINT_TO_POINTER (TRUE));
 			gtk_drag_highlight (widget);
 		}
 	} else {
@@ -1292,8 +1291,8 @@ drag_motion_cb (GtkWidget	   *widget,
 			} else if (FOOBAR_IS_WIDGET (widget)) {
 				panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 			}
-			forb = gtk_object_get_data (GTK_OBJECT (source_widget),
-						    PANEL_APPLET_FORBIDDEN_PANELS);
+			forb = g_object_get_data (G_OBJECT (source_widget),
+						  PANEL_APPLET_FORBIDDEN_PANELS);
 			if (panel != NULL &&
 			    g_slist_find (forb, panel) != NULL)
 				return FALSE;
@@ -1509,7 +1508,7 @@ basep_pos_connect_signals (BasePWidget *basep)
 static void
 drawer_orient_change_foreach(GtkWidget *w, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	AppletInfo *info = g_object_get_data (G_OBJECT (w), "applet_info");
 	PanelWidget *panel = data;
 	
 	if(info->type == APPLET_DRAWER)
@@ -1713,8 +1712,8 @@ status_unparent (GtkWidget *widget)
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 	for(li=panel->applet_list;li;li=li->next) {
 		AppletData *ad = li->data;
-		AppletInfo *info = gtk_object_get_data(GTK_OBJECT(ad->applet),
-						       "applet_info");
+		AppletInfo *info = g_object_get_data (G_OBJECT (ad->applet),
+						      "applet_info");
 		if(info->type == APPLET_STATUS) {
 			status_applet_put_offscreen(info->data);
 		} else if(info->type == APPLET_DRAWER) {

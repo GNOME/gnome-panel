@@ -25,6 +25,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <string.h>
 
 #include <libgnome/libgnome.h>
 #include <libgnomeui/libgnomeui.h>
@@ -210,9 +211,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 		goto return_and_close;
 	}
         
-        clist = gtk_object_get_data (GTK_OBJECT (run_dialog), "dentry_list");
-        terminal = GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT(w),
-							   "terminal"));
+        clist = g_object_get_data (G_OBJECT (run_dialog), "dentry_list");
+        terminal = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT(w),
+							 "terminal"));
         
         if (gtk_object_get_data (GTK_OBJECT (run_dialog), "use_list")) {
                 char *name;
@@ -256,7 +257,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			}
                 }
         } else {
-                entry = GTK_ENTRY (gtk_object_get_data(GTK_OBJECT(w), "entry"));
+                entry = GTK_ENTRY (g_object_get_data (G_OBJECT (w), "entry"));
 
                 s = gtk_entry_get_text(entry);
 
@@ -402,12 +403,12 @@ browse(GtkWidget *w, GtkWidget *entry)
 	g_signal_connect_swapped (G_OBJECT (fsel->cancel_button), "clicked",
 		 		  G_CALLBACK (gtk_widget_destroy), 
 		 		  G_OBJECT(fsel));
-	gtk_signal_connect_object_while_alive
-		(GTK_OBJECT (entry), "destroy",
+	panel_signal_connect_object_while_alive
+		(G_OBJECT (entry), "destroy",
 		 G_CALLBACK (gtk_widget_destroy),
-		 GTK_OBJECT (fsel));
+		 G_OBJECT (fsel));
 
-	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
+	gtk_window_set_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
 
 	gtk_window_present (GTK_WINDOW (fsel));
 }
@@ -465,8 +466,8 @@ sync_entry_to_list (GtkWidget *dialog)
         if (blocked)
                 return;
         
-        clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
-        entry = gtk_object_get_data(GTK_OBJECT(dialog), "entry");
+        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        entry = g_object_get_data (G_OBJECT (dialog), "entry");
 
         unset_selected (dialog);
 }
@@ -479,13 +480,13 @@ sync_list_to_entry (GtkWidget *dialog)
         GtkWidget *terminal_toggle;
         gchar *name;
 
-        gtk_object_set_data (GTK_OBJECT (dialog),
-                             "sync_entry_to_list_blocked",
-                             GINT_TO_POINTER (TRUE));
+        g_object_set_data (G_OBJECT (dialog),
+			   "sync_entry_to_list_blocked",
+			   GINT_TO_POINTER (TRUE));
         
-        clist = gtk_object_get_data (GTK_OBJECT (dialog), "dentry_list");
-        entry = gtk_object_get_data (GTK_OBJECT (dialog), "entry");
-        terminal_toggle = gtk_object_get_data (GTK_OBJECT (dialog), "terminal");
+        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        entry = g_object_get_data (G_OBJECT (dialog), "entry");
+        terminal_toggle = g_object_get_data (G_OBJECT (dialog), "terminal");
         
         if (GTK_CLIST (clist)->selection) {
                 name = gtk_clist_get_row_data (GTK_CLIST (clist),
@@ -602,17 +603,17 @@ create_advanced_contents (void)
         gentry = gnome_entry_new ("gnome-run");
         gtk_box_pack_start (GTK_BOX (hbox), gentry, TRUE, TRUE, 0);
         /* 1/4 the width of the first screen should be a good value */
-        gtk_widget_set_usize (GTK_WIDGET (gentry),
-                              multiscreen_width (0) / 4, -2);
+        gtk_widget_set_size_request (GTK_WIDGET (gentry),
+				     multiscreen_width (0) / 4, -2);
 
         entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 
         g_signal_connect (G_OBJECT (entry), "event",
-                            G_CALLBACK (entry_event),
-                            NULL);
-        g_signal_connect (G_OBJECT (entry), "destroy",
-                            G_CALLBACK (kill_completion),
-                            NULL);
+			  G_CALLBACK (entry_event),
+			  NULL);
+	g_signal_connect (G_OBJECT (entry), "destroy",
+			  G_CALLBACK (kill_completion),
+			  NULL);
  
         gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
@@ -640,12 +641,12 @@ create_advanced_contents (void)
         gtk_box_pack_start (GTK_BOX (vbox), w,
                             FALSE, FALSE, GNOME_PAD_SMALL);
         
-        gtk_object_ref (GTK_OBJECT (vbox));
+        g_object_ref (G_OBJECT (vbox));
         
-        gtk_object_set_data_full (GTK_OBJECT (run_dialog),
-                                  "advanced",
-                                  vbox,
-                                  (GtkDestroyNotify) gtk_object_unref);
+        g_object_set_data_full (G_OBJECT (run_dialog),
+				"advanced",
+				vbox,
+				(GDestroyNotify) gtk_object_unref);
         
         g_signal_connect (G_OBJECT (vbox),
                             "show",

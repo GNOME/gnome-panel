@@ -603,9 +603,9 @@ applet_menu_set_data_recursively (GtkMenu     *menu,
 	GList *children;
 	GList *l;
 
-	gtk_object_set_data (GTK_OBJECT (menu), key, data);
+	g_object_set_data (G_OBJECT (menu), key, data);
 
-	children = gtk_container_children (GTK_CONTAINER (menu));
+	children = gtk_container_get_children (GTK_CONTAINER (menu));
 
 	for (l = children; l; l = l->next) {
 		GtkWidget *submenu = GTK_MENU_ITEM (l->data)->submenu;
@@ -783,20 +783,20 @@ panel_applet_register (GtkWidget      *applet,
 	info->data_destroy = data_destroy;
 	info->user_menu = NULL;
 
-	gtk_object_set_data (GTK_OBJECT (applet), "applet_info", info);
+	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
 	if (type == APPLET_DRAWER) {
 		Drawer *drawer = data;
 		PanelWidget *assoc_panel =
 			PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel);
 
-		gtk_object_set_data (GTK_OBJECT (applet),
-				     PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
+		g_object_set_data (G_OBJECT (applet),
+				   PANEL_APPLET_ASSOC_PANEL_KEY, assoc_panel);
 		assoc_panel->master_widget = applet;
 	}
 
-	gtk_object_set_data (GTK_OBJECT (applet),
-			     PANEL_APPLET_FORBIDDEN_PANELS, NULL);
+	g_object_set_data (G_OBJECT (applet),
+			   PANEL_APPLET_FORBIDDEN_PANELS, NULL);
 
 	if (type == APPLET_BONOBO) {
 		panel_applet_frame_get_expand_flags (PANEL_APPLET_FRAME (applet),
@@ -877,7 +877,7 @@ panel_applet_get_position (AppletInfo *applet)
 {
 	AppletData *applet_data;
 
-	applet_data = gtk_object_get_data (GTK_OBJECT (applet->widget), PANEL_APPLET_DATA);
+	applet_data = g_object_get_data (G_OBJECT (applet->widget), PANEL_APPLET_DATA);
 
 	return applet_data->pos;
 }

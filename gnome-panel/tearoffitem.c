@@ -38,7 +38,7 @@ tearoff_item_new (void)
 {
 	g_return_val_if_fail (panel_menu_have_tearoff (), NULL);
 
-	return GTK_WIDGET (gtk_type_new (tearoff_item_get_type ()));
+	return GTK_WIDGET (g_object_new (tearoff_item_get_type (), NULL));
 }
 
 static void

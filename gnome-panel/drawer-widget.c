@@ -221,8 +221,8 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 static void
 drawer_pos_hidebutton_click (BasePWidget *basep)
 {
-	Drawer *drawer = gtk_object_get_data (GTK_OBJECT (basep),
-					      DRAWER_PANEL_KEY);
+	Drawer *drawer = g_object_get_data (G_OBJECT (basep),
+					    DRAWER_PANEL_KEY);
 	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
 	GtkWidget *parent = panel->panel_parent;
 
@@ -470,8 +470,8 @@ drawer_widget_new (gchar *panel_id,
 	DrawerPos *pos;
 	GtkOrientation porient;
 
-	drawer = gtk_type_new (DRAWER_TYPE_WIDGET);
-	drawer->pos = gtk_type_new (DRAWER_TYPE_POS);
+	drawer = g_object_new (DRAWER_TYPE_WIDGET, NULL);
+	drawer->pos = g_object_new (DRAWER_TYPE_POS, NULL);
 	pos = DRAWER_POS (drawer->pos);
 	pos->orient = orient;
 

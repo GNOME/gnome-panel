@@ -140,7 +140,7 @@ string_is_in_list(const GSList *list, const char *text)
 static void
 updated (GtkWidget *w, gpointer data)
 {
-	UpdateFunction func = gtk_object_get_data (GTK_OBJECT (w), "update_function");
+	UpdateFunction func = g_object_get_data (G_OBJECT (w), "update_function");
 
 	func (data);
 }
@@ -178,7 +178,7 @@ create_text_entry(GtkWidget *table,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
 
 	if(func) {
-		gtk_object_set_data (GTK_OBJECT (t), "update_function", func);
+		g_object_set_data (G_OBJECT (t), "update_function", func);
 		g_signal_connect (G_OBJECT (t), "changed",
 				  G_CALLBACK (updated), 
 				  data);
@@ -1016,11 +1016,11 @@ panel_pop_window_busy (GtkWidget *window)
 		gtk_widget_set_sensitive (window, TRUE);
 		if (window->window != NULL)
 			gdk_window_set_cursor (window->window, NULL);
-		gtk_object_remove_data (GTK_OBJECT (window),
-					"Panel:WindowBusy");
+		g_object_set_data (G_OBJECT (window),
+				   "Panel:WindowBusy", NULL);
 	} else {
-		gtk_object_set_data (GTK_OBJECT (window), "Panel:WindowBusy",
-				     GINT_TO_POINTER (busy));
+		g_object_set_data (G_OBJECT (window), "Panel:WindowBusy",
+				   GINT_TO_POINTER (busy));
 	}
 }
 

@@ -870,7 +870,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuShell *menu_bar)
 	gtk_widget_show (foo->task_item);
 
 	foo->task_bin = gtk_alignment_new (0.3, 0.5, 0.0, 0.0);
-	gtk_widget_set_usize (foo->task_bin, 25, 20);
+	gtk_widget_set_size_request (foo->task_bin, 25, 20);
 	gtk_widget_show (foo->task_bin);
 	gtk_container_add (GTK_CONTAINER (foo->task_item), foo->task_bin);
 
@@ -1030,9 +1030,9 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	g_signal_connect (G_OBJECT (foo), "delete_event",
 			  G_CALLBACK (gtk_true), NULL);
 
-	gtk_widget_set_uposition (GTK_WIDGET (foo),
-				  multiscreen_x (foo->screen),
-				  multiscreen_y (foo->screen));
+	gtk_window_move (GTK_WINDOW (foo),
+			 multiscreen_x (foo->screen),
+			 multiscreen_y (foo->screen));
 	gtk_widget_set_usize (GTK_WIDGET (foo),
 			      multiscreen_width (foo->screen), -2);
 
@@ -1091,7 +1091,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	gtk_container_add (GTK_CONTAINER (foo->hbox), foo->panel);
 
-	gtk_object_set_data (GTK_OBJECT (menu_bar), "menu_panel", foo->panel);
+	g_object_set_data (G_OBJECT (menu_bar), "menu_panel", foo->panel);
 
 #if 0
 	path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
@@ -1185,7 +1185,7 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 }
 
 GtkWidget *
-foobar_widget_new (gchar *panel_id, int screen)
+foobar_widget_new (const char *panel_id, int screen)
 {
 	FoobarWidget *foo;
 
@@ -1194,11 +1194,11 @@ foobar_widget_new (gchar *panel_id, int screen)
 	if (foobar_widget_exists (screen))
 		return NULL;
 
-	foo = gtk_type_new (FOOBAR_TYPE_WIDGET);
+	foo = g_object_new (FOOBAR_TYPE_WIDGET, NULL);
 
 	/* Ugly hack to reset the unique id back to the original one */	
 	if (panel_id != NULL) 
-		panel_widget_set_new_id (PANEL_WIDGET (foo->panel));
+		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
 
 	foo->screen = screen;
 	gtk_widget_set_uposition (GTK_WIDGET (foo),

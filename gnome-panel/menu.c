@@ -3056,17 +3056,15 @@ create_new_panel (GtkWidget *w, gpointer data)
 		GtkWidget *dialog;
 		gchar *s;
 		if (!foobar_widget_exists (screen)) {
-			char *panel_id;
+			const char *panel_id;
 			panel = foobar_widget_new (NULL, screen);
-			panel_id = g_strdup_printf ("%u",
-						    (guint) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id);
+			panel_id = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id;
 
 			/* Don't translate the first part of this string */
 			s = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
 									      panel_id,
 									      "clock-format",
 									      FALSE, _("%I:%M:%S %p"));
-			g_free (panel_id);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);

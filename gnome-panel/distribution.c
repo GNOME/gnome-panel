@@ -21,8 +21,6 @@
  *
  */
 
-static void cde_menu_init_func(void);
-
 static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
 	  N_("Debian GNU/Linux"), N_("Debian menus"),
@@ -100,10 +98,4 @@ get_distribution_info (void)
 	cached = TRUE;
 
 	return cache;
-}
-
-static void
-cde_menu_init_func(void)
-{
-	fr_read_dir(NULL,"cdemenu:/", 0, 2);
 }

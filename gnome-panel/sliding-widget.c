@@ -295,8 +295,8 @@ sliding_widget_new (gchar *panel_id,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
-	SlidingWidget *sliding = gtk_type_new (SLIDING_TYPE_WIDGET);
-	SlidingPos *pos = gtk_type_new (SLIDING_TYPE_POS);
+	SlidingWidget *sliding = g_object_new (SLIDING_TYPE_WIDGET, NULL);
+	SlidingPos *pos = g_object_new (SLIDING_TYPE_POS, NULL);
 
 	pos->anchor = anchor;
 	pos->offset = offset;

@@ -212,10 +212,10 @@ edge_widget_new (gchar *panel_id,
 		 gboolean rotate_pixmap_bg,
 		 GdkColor *back_color)
 {
-	EdgeWidget *edgew = gtk_type_new (EDGE_TYPE_WIDGET);
+	EdgeWidget *edgew = g_object_new (EDGE_TYPE_WIDGET, NULL);
 	BasePWidget *basep = BASEP_WIDGET (edgew);
 
-	basep->pos = gtk_type_new (EDGE_TYPE_POS);
+	basep->pos = g_object_new (EDGE_TYPE_POS, NULL);
 
 	border_widget_construct (panel_id,
 				 BORDER_WIDGET (basep), 

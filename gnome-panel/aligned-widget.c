@@ -394,8 +394,8 @@ aligned_widget_new (gchar *panel_id,
 		    gboolean rotate_pixmap_bg,
 		    GdkColor *back_color)
 {
-	AlignedWidget *aligned = gtk_type_new (ALIGNED_TYPE_WIDGET);
-	AlignedPos *pos = gtk_type_new (ALIGNED_TYPE_POS);
+	AlignedWidget *aligned = g_object_new (ALIGNED_TYPE_WIDGET, NULL);
+	AlignedPos *pos = g_object_new (ALIGNED_TYPE_POS, NULL);
 	pos->align = align;
 
 	BASEP_WIDGET (aligned)->pos = BASEP_POS (pos);

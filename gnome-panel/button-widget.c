@@ -924,7 +924,7 @@ button_widget_new(const char *filename,
 	g_return_val_if_fail(pobject >= 0, NULL);
 	g_return_val_if_fail(pobject < LAST_POBJECT, NULL);
 
-	button = BUTTON_WIDGET (gtk_type_new (button_widget_get_type ()));
+	button = BUTTON_WIDGET (g_object_new (button_widget_get_type (), NULL));
 	
 	button->pixbuf = loadup_file (filename);
 	button->pixbuf_hc = make_hc_pixbuf (button->pixbuf);

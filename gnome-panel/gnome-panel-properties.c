@@ -213,15 +213,6 @@ option_menu_changed (GtkWidget *widget, gpointer data)
 }
 
 static void
-spin_button_changed (GtkWidget *widget, gpointer data)
-{
-	gchar *key = (gchar *)data;
-
-	gconf_client_set_int(gconf_client,key,
-		gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget)),NULL);
-}
-
-static void
 entry_changed (GtkWidget *widget, gpointer data)
 {
         gchar *key = (gchar *)data;
