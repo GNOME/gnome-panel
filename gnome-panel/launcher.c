@@ -540,7 +540,7 @@ restart_all_launchers(void)
 int
 main(int argc, char **argv)
 {
-	char *mypath;
+	/*char *mypath;*/
 
 	panel_corba_register_arguments ();
 	gnome_init("launcher_applet", NULL, argc, argv, 0, NULL);
@@ -550,11 +550,16 @@ main(int argc, char **argv)
 	  but it will reserve a spot for us on the correct place, and
 	  this is the string that we identify as when we ask for the
 	  spot*/
+	/*
 	mypath = get_which_output(argv[0]);
 	if(!mypath)
-		return 1;
-	myinvoc = g_copy_strings("#",mypath,NULL);
-	g_free(mypath);
+		return 1;*/
+	/* we pass an id starting with # to the panel to identify us,
+	   but not by path, this is so mc can take the place of the
+	   launcher_applet or any other filemanager */
+	myinvoc = "#panel.application.launcher",NULL);
+	/*myinvoc = g_copy_strings("#",mypath,NULL);
+	g_free(mypath);*/
 
 	launcher_corba_gtk_main ("IDL:GNOME/Launcher:1.0");
 
