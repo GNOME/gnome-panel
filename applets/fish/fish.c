@@ -133,6 +133,7 @@ static void
 apply_properties(Fish *fish) 
 {
 	char * tmp;
+	/* xgettext:no-c-format */
 	const char * title_format = _("%s the Fish");
 	const char * label_format = _("%s the GNOME Fish Says:");
 	GdkImlibImage *pix;
