@@ -2083,7 +2083,12 @@ create_panel_root_menu(GtkWidget *panel)
 	menu = create_user_menu(_("Favorites"),"apps",NULL,TRUE,TRUE,TRUE);
 	if(menu) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("Favorites"));
+		setup_menuitem (menuitem, 
+				gnome_stock_pixmap_widget_at_size (
+					NULL,
+					gnome_pixmap_file ("gnome-squeak.png"), 
+					SMALL_ICON_SIZE, SMALL_ICON_SIZE),
+				_("Favorites"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
@@ -2978,10 +2983,15 @@ create_root_menu(int fake_submenus, int flags)
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
-		menu = create_user_menu(_("Favorites"), "apps", 
-					NULL, fake_submenus, TRUE, TRUE);
+		menu = create_user_menu(_("Favorites"), "apps", NULL,
+					fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("Favorites"));
+		setup_menuitem (menuitem, 					
+				gnome_stock_pixmap_widget_at_size (
+					NULL,
+					gnome_pixmap_file ("gnome-squeak.png"),
+					SMALL_ICON_SIZE, SMALL_ICON_SIZE), 
+				_("Favorites"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
