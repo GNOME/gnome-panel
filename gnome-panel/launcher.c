@@ -892,7 +892,7 @@ ask_about_launcher (const char  *file,
 
 	dialog = gtk_dialog_new_with_buttons (
 				_("Create Launcher"),
-				GTK_WINDOW (panel->toplevel),
+				NULL,
 				0 /* flags */,
 				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -934,6 +934,8 @@ ask_about_launcher (const char  *file,
 			    dee);
 
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+	gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (GTK_WIDGET (panel)));
 
 	gtk_widget_show_all (dialog);
 
