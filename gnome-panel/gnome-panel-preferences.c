@@ -138,14 +138,14 @@ load_animation_menu (GladeXML    *gui,
 {
 	GtkWidget  *option;
 	char       *tmpstr;
-	int         speed = 0;
+	int         speed = PANEL_SPEED_SLOW;
 
 	option = glade_xml_get_widget (gui, "panel_animation_speed");
 		
 	tmpstr = gconf_client_get_string (
 			client, panel_gconf_global_key ("panel_animation_speed"), NULL);
-	panel_gconf_string_to_enum (
-		global_properties_speed_type_enum_map, tmpstr, &speed, PANEL_SPEED_SLOW);
+	gconf_string_to_enum (
+		global_properties_speed_type_enum_map, tmpstr, (int *) &speed);
 	g_free (tmpstr);
 
 	gtk_option_menu_set_history (GTK_OPTION_MENU (option), speed);

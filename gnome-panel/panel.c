@@ -1970,8 +1970,8 @@ panel_load_panels_from_gconf (void)
 
 	for (l = panel_ids; l; l = l->next) {
 		GtkWidget     *panel = NULL;
-		PanelType      type;
-		PanelBackType  back_type;
+		PanelType      type = EDGE_PANEL;
+		PanelBackType  back_type = PANEL_BACK_NONE;
 		BasePState     state;
 		BasePMode      mode;
 		PanelColor     back_color = {0, 0, 0, 0xFFFF};
@@ -1983,7 +1983,7 @@ panel_load_panels_from_gconf (void)
 		gboolean       hidebutton_pixmaps_enabled;
 		int            screen;
 		int            monitor;
-		int            size;
+		int            size = PANEL_SIZE_SMALL;
 		char          *panel_id;
 		char          *back_pixmap;
 		char          *tmp_str;
@@ -2025,7 +2025,7 @@ panel_load_panels_from_gconf (void)
 					profile, panel_id, "panel_background_color_alpha", 0xFFFF);
 
 		tmp_str = panel_get_string (
-				profile, panel_id, "panel_background_type", "no_background");
+				profile, panel_id, "panel_background_type", "no-background");
 		gconf_string_to_enum (background_type_enum_map, tmp_str, (int *) &back_type);
 		g_free (tmp_str);
 		
@@ -2052,12 +2052,12 @@ panel_load_panels_from_gconf (void)
 		mode    = panel_get_int (profile, panel_id, "panel_hide_mode", 0);
 
 		tmp_str = panel_get_string (profile, panel_id, "panel_type", "edge-panel");
-		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (gint *) &type);
+		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (int *) &type);
 		g_free (tmp_str);
 
 		switch (type) {
 		case EDGE_PANEL: {
-			BorderEdge edge;
+			BorderEdge edge = BORDER_BOTTOM;
 
 			tmp_str = panel_get_string (profile, panel_id,
 						    "screen_edge", "panel-edge-bottom");
@@ -2081,8 +2081,8 @@ panel_load_panels_from_gconf (void)
 			}
 			break;
 		case ALIGNED_PANEL: {
-			AlignedAlignment align;
-			BorderEdge       edge;
+			AlignedAlignment align = ALIGNED_LEFT;
+			BorderEdge       edge = BORDER_BOTTOM;
 
 			tmp_str = panel_get_string (profile, panel_id,
 						    "screen_edge", "panel-edge-bottom");
@@ -2114,8 +2114,8 @@ panel_load_panels_from_gconf (void)
 			}
 			break;
 		case SLIDING_PANEL: {
-			SlidingAnchor anchor;
-			BorderEdge    edge;
+			SlidingAnchor anchor = SLIDING_ANCHOR_LEFT;
+			BorderEdge    edge = BORDER_BOTTOM;
 			gint16        offset;
 
 			tmp_str = panel_get_string (profile, panel_id,
@@ -2151,7 +2151,7 @@ panel_load_panels_from_gconf (void)
 			}
 			break;
 		case DRAWER_PANEL: {
-			int orient;
+			int orient = PANEL_ORIENT_UP;
 
 			tmp_str = panel_get_string (profile, panel_id,
 						    "panel_orient", "panel-orient-up");
@@ -2176,7 +2176,7 @@ panel_load_panels_from_gconf (void)
 			}
 			break;
 		case FLOATING_PANEL: {
-			GtkOrientation orient;
+			GtkOrientation orient = GTK_ORIENTATION_HORIZONTAL;
 			int            x, y;
 
 			tmp_str = panel_get_string (profile, panel_id,

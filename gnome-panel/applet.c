@@ -789,7 +789,7 @@ panel_applet_load_from_unique_id (AppletType   type,
 {
 	PanelAppletToLoad *applet;
 	PanelWidget       *panel_widget;
-	AppletType         applet_type;
+	AppletType         applet_type = 0;
 	const char        *temp_key;
 	char              *type_string;
 	char              *panel_id;
