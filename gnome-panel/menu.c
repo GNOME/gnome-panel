@@ -2968,6 +2968,7 @@ remove_panel_query (GtkWidget *menuitem,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
 				NULL);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 	gtk_window_set_title (GTK_WINDOW (dialog), "Delete Panel");
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
