@@ -303,6 +303,35 @@ gnome_panel_applet_unregister_callback_dir(int applet_id,
 	g_free(n);
 }
 
+#if 0
+static void
+gtk_plug_forward_button_press (GtkPlug *plug, GdkEventButton *event)
+{
+  XEvent xevent;
+  
+  xevent.xbutton.type = KeyPress;
+  xevent.xbutton.display = GDK_WINDOW_XDISPLAY (GTK_WIDGET(plug)->window);
+  xevent.xbutton.window = GDK_WINDOW_XWINDOW (plug->socket_window);
+  xevent.xbutton.root = GDK_ROOT_WINDOW (); /* FIXME */
+  xevent.xbutton.time = event->time;
+  /* FIXME, the following might cause big problems for
+   * non-GTK apps */
+  xevent.xbutton.x = 0;
+  xevent.xbutton.y = 0;
+  xevent.xbutton.x_root = 0;
+  xevent.xbutton.y_root = 0;
+  xevent.xbutton.state = event->state;
+  xevent.xbutton.keycode =  XKeysymToKeycode(GDK_DISPLAY(), 
+					  event->keyval);
+  xevent.xbutton.same_screen = TRUE; /* FIXME ? */
+  
+  XSendEvent (gdk_display,
+	      GDK_WINDOW_XWINDOW (plug->socket_window),
+	      False, NoEventMask, &xevent);
+}
+#endif
+
+
 /*catch events relevant to the panel and notify the panel*/
 static int
 applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
@@ -310,25 +339,47 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	int ourid = GPOINTER_TO_INT(data);
 	GdkEventButton *bevent;
 	int in_drag;
-
+	GtkWidget *w;
+		
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
 			in_drag = GNOME_Panel_applet_in_drag(panel_client, cookie, &ev);
 			/*check to see if there is an applet being dragged*/
-			if(bevent->button == 2 && !in_drag) {
-				gdk_pointer_ungrab(GDK_CURRENT_TIME);
-				gtk_grab_remove(widget);
-				GNOME_Panel_applet_drag_start(panel_client,
-							      cookie, ourid, &ev);
-				return TRUE;
-			} else if(in_drag) {
+			if(in_drag) {
 				GNOME_Panel_applet_drag_stop(panel_client,
 							     cookie,ourid, &ev);
-				return TRUE;
-			} else if(bevent->button == 3 && !in_drag) {
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 				gtk_grab_remove(widget);
+				return TRUE;
+			}else if(bevent->button == 2) {
+				GdkCursor *fleur_cursor =
+					gdk_cursor_new(GDK_FLEUR);
+
+				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				if((w = gtk_grab_get_current()))
+					gtk_grab_remove(w);
+				gtk_grab_add(widget);
+				if(widget->window) {
+					gdk_pointer_grab(widget->window,
+							 FALSE,
+							 GDK_BUTTON_PRESS_MASK |
+							  GDK_BUTTON_RELEASE_MASK,
+							 NULL,
+							 fleur_cursor,
+							 GDK_CURRENT_TIME);
+				}
+				GNOME_Panel_applet_drag_start(panel_client,
+							      cookie, ourid, &ev);
+				gdk_cursor_destroy(fleur_cursor);
+				return TRUE;
+			} else if(bevent->button == 3) {
+				if((w = gtk_grab_get_current()))
+					gtk_grab_remove(w);
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 				GNOME_Panel_applet_show_menu(panel_client,
 							     cookie, ourid, &ev);
 				return TRUE;
@@ -338,23 +389,22 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(GNOME_Panel_applet_in_drag(panel_client, cookie, &ev)) {
 				GNOME_Panel_applet_drag_stop(panel_client,
 							     cookie, ourid, &ev);
+				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gtk_grab_remove(widget);
 				return TRUE;
 			}
+			break;
+		case GDK_MOTION_NOTIFY:
+			puts("MOTION");
+			if(GNOME_Panel_applet_in_drag(panel_client, cookie, &ev))
+				return TRUE;
 			break;
 		default:
 			break;
 	}
 
 	return FALSE;
-}
-
-static GtkWidget *
-listening_parent(GtkWidget *widget)
-{
-	if (GTK_WIDGET_NO_WINDOW(widget))
-		return listening_parent(widget->parent);
-
-	return widget;
 }
 
 static int
@@ -364,8 +414,8 @@ applet_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
-			return gtk_widget_event(
-				listening_parent(widget->parent), event);
+		case GDK_MOTION_NOTIFY:
+			return gtk_widget_event(GTK_WIDGET(data), event);
 
 			break;
 
@@ -383,12 +433,12 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	if (!GTK_WIDGET_NO_WINDOW(widget)) {
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
 				   (GtkSignalFunc) applet_sub_event_handler,
-				   NULL);
+				   data);
 	}
 	
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_applet_events, NULL);
+				       bind_applet_events, data);
 }
 
 static void
@@ -401,7 +451,7 @@ bind_top_applet_events(GtkWidget *widget, int applet_id)
 
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_applet_events, NULL);
+				       bind_applet_events,widget);
 }
 
 /*id will return a unique id for this applet for the applet to identify

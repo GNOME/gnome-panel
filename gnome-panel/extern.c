@@ -43,7 +43,6 @@ extern_clean(Extern *ext)
 void
 applet_show_menu(int applet_id)
 {
-	static GdkCursor *arrow = NULL;
 	AppletInfo *info = get_applet_info(applet_id);
 	GtkWidget *panel;
 
@@ -52,9 +51,6 @@ applet_show_menu(int applet_id)
 	if (!info->menu)
 		create_applet_menu(info);
 
-	if(!arrow)
-		arrow = gdk_cursor_new(GDK_ARROW);
-
 	panel = get_panel_parent(info->widget);
 	if(IS_SNAPPED_WIDGET(panel)) {
 		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
@@ -62,14 +58,7 @@ applet_show_menu(int applet_id)
 	}
 
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL, applet_menu_position,
-		       GINT_TO_POINTER(applet_id), 0/*3*/, time(NULL));
-	gtk_grab_add(info->menu);
-	gdk_pointer_grab(info->menu->window,
-			 TRUE,
-			 APPLET_EVENT_MASK,
-			 NULL,
-			 arrow,
-			 GDK_CURRENT_TIME);
+		       GINT_TO_POINTER(applet_id), 3, GDK_CURRENT_TIME);
 }
 
 PanelOrientType
@@ -150,9 +139,9 @@ applet_drag_start(int applet_id)
 
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_start(panel,info->widget);
-	panel_widget_applet_drag_end(panel);
-	panel_widget_applet_drag_start(panel,info->widget);
+	/*panel_widget_applet_drag_start(panel,info->widget);
+	panel_widget_applet_drag_end(panel);*/
+	panel_widget_applet_drag_start_no_grab(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
 }
 
@@ -168,7 +157,7 @@ applet_drag_stop(int applet_id)
 
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_end(panel);
+	panel_widget_applet_drag_end_no_grab(panel);
 }
 
 static int

@@ -1,3 +1,14 @@
+Thu Nov 26 17:30:10 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.c,orbit-applet-lib.c: got rid of some ugliness
+
+	* orbit-applet-lib.c: now grabs pointer correctly (kind of) for
+	  moving however menus still work weird
+
+	* extern.c: moving is done without grabs, as if it's with, it
+	  doesn't work right for some reason, grabs are then kept on
+	  the applet side
+
 Thu Nov 26 02:57:56 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: only get an existing filename for menu path, and use

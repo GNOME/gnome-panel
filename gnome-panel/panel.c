@@ -221,7 +221,7 @@ change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 static void
 panel_realize(GtkWidget *widget, gpointer data)
 {
-	change_window_cursor(widget->window, GDK_ARROW);
+	change_window_cursor(widget->window, GDK_LEFT_PTR);
 	
 	if(IS_SNAPPED_WIDGET(widget))
 		snapped_widget_enable_buttons(SNAPPED_WIDGET(widget));

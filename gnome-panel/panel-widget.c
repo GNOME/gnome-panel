@@ -43,8 +43,6 @@ static void panel_widget_draw		(GtkWidget        *widget,
 					 GdkRectangle     *area);
 
 
-GdkCursor *fleur_cursor;
-
 /*global settings*/
 int pw_explicit_step = 50;
 int pw_drawer_step = 20;
@@ -1378,9 +1376,6 @@ panel_widget_init (PanelWidget *panel)
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
 
-	if(!fleur_cursor)
-		fleur_cursor = gdk_cursor_new(GDK_FLEUR);
-
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_widget_destroy),
@@ -1498,12 +1493,14 @@ _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 
 	gtk_grab_add(applet);
 	if(applet->window) {
+		GdkCursor *fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 		gdk_pointer_grab(applet->window,
 				 FALSE,
 				 APPLET_EVENT_MASK,
 				 NULL,
 				 fleur_cursor,
 				 GDK_CURRENT_TIME);
+		gdk_cursor_destroy(fleur_cursor);
 	}
 }
 
@@ -1853,19 +1850,6 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	return FALSE;
 }
 
-
-static GtkWidget *
-listening_parent(GtkWidget *widget)
-{
-	g_return_val_if_fail(widget!=NULL,NULL);
-	g_return_val_if_fail(GTK_IS_WIDGET(widget),NULL);
-
-	if (GTK_WIDGET_NO_WINDOW(widget))
-		return listening_parent(widget->parent);
-
-	return widget;
-}
-
 static int
 panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
@@ -1879,9 +1863,8 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
 			bevent = (GdkEventButton *)event;
-			if(bevent->button != 1)
-				return gtk_widget_event(
-				    listening_parent(widget->parent), event);
+			if(bevent->button != 1 || panel_applet_in_drag)
+				return gtk_widget_event(data, event);
 
 			break;
 
@@ -1910,11 +1893,11 @@ bind_applet_events(GtkWidget *widget, gpointer data)
 	if (!GTK_WIDGET_NO_WINDOW(widget))
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
 				   (GtkSignalFunc) panel_sub_event_handler,
-				   NULL);
+				   data);
 	
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_applet_events, 0);
+				       bind_applet_events, data);
 }
 static int
 panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
@@ -1968,7 +1951,7 @@ bind_top_applet_events(GtkWidget *widget, int bind_lower)
 
 	if (bind_lower && GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
-				       bind_applet_events, 0);
+				       bind_applet_events, widget);
 }
 
 static int
