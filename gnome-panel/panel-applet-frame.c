@@ -22,26 +22,37 @@ struct _PanelAppletFramePrivate {
 static GObjectClass *parent_class;
 
 static void
-popup_handle_verb (BonoboUIComponent *uic,
-		   gpointer           user_data,
-		   const gchar       *verbname)
-{
-#ifdef PANEL_APPLET_FRAME_DEBUG
-        g_message ("Verb %s invoked\n", verbname);
-#endif
-}
-
-static void
 popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
 		     const gchar       *verbname)
 {
+	g_return_if_fail (frame && PANEL_IS_APPLET_FRAME (frame));
+
 	panel_applet_clean (frame->priv->applet_info);
+}
+
+static void
+popup_handle_move (BonoboUIComponent *uic,
+		   PanelAppletFrame  *frame,
+		   const gchar       *verbname)
+{
+	PanelWidget *panel;
+	GtkWidget   *widget;
+
+	g_return_if_fail (frame && GTK_IS_WIDGET (frame));
+
+	widget = GTK_WIDGET (frame);
+
+	g_return_if_fail (IS_PANEL_WIDGET (widget->parent));
+
+	panel = PANEL_WIDGET (widget->parent);
+
+	panel_widget_applet_drag_start (panel, widget, PW_DRAG_OFF_CENTER);
 }
 
 static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_UNSAFE_VERB ("RemoveAppletFromPanel", popup_handle_remove),
-        BONOBO_UI_UNSAFE_VERB ("MoveApplet", popup_handle_verb),
+        BONOBO_UI_UNSAFE_VERB ("MoveApplet",            popup_handle_move),
 
         BONOBO_UI_VERB_END
 };
