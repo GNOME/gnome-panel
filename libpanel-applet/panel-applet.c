@@ -59,6 +59,7 @@ struct _PanelAppletPrivate {
 	BonoboControl              *control;
 	BonoboPropertyBag          *prop_sack;
 	BonoboItemHandler          *item_handler;
+	GConfClient                *client;
 
 	char                       *iid;
 	GClosure                   *closure;
@@ -186,9 +187,8 @@ panel_applet_add_preferences (PanelApplet  *applet,
 			      const gchar  *schema_dir,
 			      GError      **opt_error)
 {
-	GConfClient  *client;
-	GError      **error = NULL;
-	GError       *our_error = NULL;
+	GError **error = NULL;
+	GError  *our_error = NULL;
 
 	g_return_if_fail (PANEL_IS_APPLET (applet));
 	g_return_if_fail (schema_dir != NULL);
@@ -201,24 +201,17 @@ panel_applet_add_preferences (PanelApplet  *applet,
 	else
 		error = &our_error;
 
-	client = gconf_client_get_default ();
-
 	panel_applet_associate_schemas_in_dir (
-		client, applet->priv->prefs_key, schema_dir, error);
+		applet->priv->client, applet->priv->prefs_key, schema_dir, error);
 
 	if (!opt_error && our_error) {
 		g_warning (G_STRLOC ": failed to add preferences from '%s' : '%s'",
 			   schema_dir, our_error->message);
 		g_error_free (our_error);
 	}
-
-	gconf_client_add_dir (client,
-			      applet->priv->prefs_key,
-			      GCONF_CLIENT_PRELOAD_RECURSIVE,
-			      NULL);
 }
 
-gchar *
+char *
 panel_applet_get_preferences_key (PanelApplet *applet)
 {
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
@@ -227,6 +220,31 @@ panel_applet_get_preferences_key (PanelApplet *applet)
 		return NULL;
 
 	return g_strdup (applet->priv->prefs_key);
+}
+
+static void
+panel_applet_set_preferences_key (PanelApplet *applet,
+				  const char  *prefs_key)
+{
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+
+	if (applet->priv->prefs_key) {
+		gconf_client_remove_dir (applet->priv->client,
+					 applet->priv->prefs_key,
+					 NULL);
+
+		g_free (applet->priv->prefs_key);
+		applet->priv->prefs_key = NULL;
+	}
+
+	if (prefs_key) {
+		applet->priv->prefs_key = g_strdup (prefs_key);
+
+		gconf_client_add_dir (applet->priv->client,
+				      applet->priv->prefs_key,
+				      GCONF_CLIENT_PRELOAD_RECURSIVE,
+				      NULL);
+	}
 }
 
 PanelAppletFlags
@@ -374,9 +392,16 @@ panel_applet_finalize (GObject *object)
 {
 	PanelApplet *applet = PANEL_APPLET (object);
 
+	panel_applet_set_preferences_key (applet, NULL);
+
+	if (applet->priv->client)
+		g_object_unref (applet->priv->client);
+	applet->priv->client = NULL;
+
 	if (applet->priv->prop_sack)
 		bonobo_object_unref (
 			BONOBO_OBJECT (applet->priv->prop_sack));
+	applet->priv->prop_sack = NULL;
 
 	g_free (applet->priv->size_hints);
 	g_free (applet->priv->prefs_key);
@@ -1165,7 +1190,7 @@ panel_applet_item_handler_get_object (BonoboItemHandler *handler,
 			continue;
 
 		if (!strcmp (option->key, "prefs_key") && !applet->priv->prefs_key)
-			applet->priv->prefs_key = g_strdup (option->value);
+			panel_applet_set_preferences_key (applet, option->value);
 
 		else if (!strcmp (option->key, "background"))
 			bonobo_pbclient_set_string (BONOBO_OBJREF (applet->priv->prop_sack),
@@ -1357,6 +1382,8 @@ panel_applet_instance_init (PanelApplet      *applet,
 			    PanelAppletClass *klass)
 {
 	applet->priv = PANEL_APPLET_GET_PRIVATE (applet);
+
+	applet->priv->client = gconf_client_get_default ();
 
 	applet->priv->bound  = FALSE;
 	applet->priv->flags  = PANEL_APPLET_FLAGS_NONE;

@@ -1,3 +1,19 @@
+2003-12-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Make sure to stop monitoring the applet's GConf directory so
+	that if we remove an applet the directory goes away completely
+	before. Based a patch from Vijaykumar Patwari in #127285.
+
+	* panel-applet.c:
+	(panel_applet_add_preferences): don't start monitoring the
+	dir here.
+	(panel_applet_set_preferences_key): do it here and also remove
+	the dir when we're unsetting.
+	(panel_applet_finalize): unset the prefs key so the dir isn't
+	monitored anymore.
+	(panel_applet_item_handler_get_object): use set_prefs_key().
+	(panel_applet_instance_init): initialize the GConfClient here.
+
 2003-11-13  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c: (panel_applet_finalize),
