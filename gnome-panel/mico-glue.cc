@@ -17,8 +17,6 @@ class Panel_impl : virtual public GNOME::Panel_skel {
 public:
 	void reparent_window_id (CORBA::ULong wid,
 				 CORBA::Short id) {
-		printf ("REPARENT!\n");
-
 		::reparent_window_id (wid,id);
 	}
 	CORBA::Short applet_request_id (const char *ior,
@@ -26,9 +24,6 @@ public:
 					char *&cfgpath) {
 		char *s=NULL;
 		int id;
-
-		printf ("REQUEST_ID!\n");
-		printf ("applet registered with IOR: %s\n", ior);
 
 		id = ::applet_request_id (ior,path,&s);
 		if(s) {
@@ -38,32 +33,22 @@ public:
 		return id;
 	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
-		printf ("APPLET_GET_PANEL!\n");
-
 		return ::applet_get_panel (id);
 	}
 	CORBA::Short applet_get_pos (CORBA::Short id) {
-		printf ("APPLET_GET_POS!\n");
-
 		return ::applet_get_pos (id);
 	}
 	void applet_show_menu (CORBA::Short id) {
-		printf ("APPLET_SHOW_MENU!\n");
-
 		::applet_show_menu (id);
 	}
 	void applet_drag_start (CORBA::Short id) {
-		printf ("APPLET_DRAG_START!\n");
-
 		::applet_drag_start (id);
 	}
 	void applet_drag_stop (CORBA::Short id) {
-		printf ("APPLET_DRAG_STOP!\n");
-
 		::applet_drag_stop (id);
 	}
 	void applet_remove_from_panel (CORBA::Short id) {
-		printf ("APPLET_REMOVE_FROM_PANEL!\n");
+		printf ("APPLET_REMOVE_FROM_PANEL not implemented!\n");
 		/*FIXME:  */
 	}
         void applet_add_callback (CORBA::Short id,
@@ -124,12 +109,7 @@ send_applet_shutdown_applet (const char *ior, int id)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	try {
-		applet->shutdown_applet(id);
-	} catch ( ... ) {
-		/*FIXME: only incomplete exception handeled here*/
-		puts("EXCEPTION");
-	}
+	applet->shutdown_applet(id);
 }
 
 void

@@ -1,3 +1,17 @@
+Fri Mar 13 02:42:56 1998  George Lebl  <jirka@5z.com>
+
+        * panel.[ch]: fixed a race when starting applets, by
+          having two states for applets (PENDING and RESERVED),
+          this fixes the panel "loosing" applets in invocation
+
+        * all files: commented out most debugging output, since it
+          was getting difficult to use puts/printf since the new
+          debugging was lost in the old etc ...
+
+        * clock.c: once again I use an idle handler for killing
+          myself. this solves the mico exception which wasn't
+          all that nice really.
+
 1998-03-13  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* Makefile.am (INCLUDES): Include $(srcdir) too.

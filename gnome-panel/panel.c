@@ -102,7 +102,9 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	GList         *list;
 
 	/*obviously no need for saving*/
-	if(info->type==APPLET_EXTERN_PENDING && info->type==APPLET_EMPTY)
+	if(info->type==APPLET_EXTERN_PENDING ||
+	   info->type==APPLET_EXTERN_RESERVED ||
+	   info->type==APPLET_EMPTY)
 		return;
 
 	pos = -1;
@@ -294,9 +296,9 @@ panel_session_save (GnomeClient *client,
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
 			info = list->data;
 			if(info->type == APPLET_EXTERN) {
-				printf("SHUTTING DOWN EXTERN (%d)\n",i);
+				/*printf("SHUTTING DOWN EXTERN (%d)\n",i);*/
 				send_applet_shutdown_applet(info->id,i);
-				puts("DONE");
+				/*puts("DONE");*/
 			}
 			if(info->menu)
 				gtk_widget_unref(info->menu);
@@ -310,14 +312,14 @@ panel_session_save (GnomeClient *client,
 			/*prevent searches through the g_list to speed
 					up this thing*/
 
-		puts("unreffing root menu");
+		/*puts("unreffing root menu");*/
 		gtk_widget_unref(root_menu);
-		puts("done");
+		/*puts("done");*/
 
 		/*FIXME: unref all menus here */
 	}
 
-	puts("AFTER_SESSION_SAVE");
+	/*puts("AFTER_SESSION_SAVE");*/
 	
 
 	/* Always successful.  */
@@ -330,9 +332,9 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
-		puts("BEFORE_GTK_MAIN_QUIT");
+		/*puts("BEFORE_GTK_MAIN_QUIT");*/
 		gtk_main_quit ();
-		puts("AFTER_GTK_MAIN_QUIT");
+		/*puts("AFTER_GTK_MAIN_QUIT");*/
 		/* We don't want to return, because we've probably been
 		   called from an applet which has since been dlclose()'d,
 		   and we'd end up with a SEGV when we tried to return to
@@ -415,6 +417,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 					menu->info->applet_id,
 					menu->name);
 	} else if(menu->info->type != APPLET_EXTERN_PENDING &&
+	   menu->info->type==APPLET_EXTERN_RESERVED &&
 	   menu->info->type != APPLET_EMPTY) {
 		/*handle internal applet callbacks here*/
 	}
@@ -592,11 +595,12 @@ applet_request_id (const char * ior, const char *path, char **cfgpath)
 			info->id = g_strdup(ior);
 			/*we started this and already reserved a spot
 			  for it, including the eventbox widget*/
+			info->type = APPLET_EXTERN_RESERVED;
 			return i;
 		}
 	}
 
-	reserve_applet_spot (ior, path, 0, 0);
+	reserve_applet_spot (ior, path, 0, 0, APPLET_EXTERN_RESERVED);
 	*cfgpath = g_strdup("");
 	return i;
 }
@@ -608,8 +612,8 @@ reparent_window_id (unsigned long winid, int id)
 	GdkWindow *win;
 	int w,h;
 	AppletInfo *info;
-	
-	printf ("I got this window ID to reparent: %d\n", winid);
+
+	/*printf ("I got this window ID to reparent: %d\n", winid);*/
 	/*FIXME: check for NULLS!*/
 	info = (AppletInfo *)(g_list_nth(applets,id)->data);
 
@@ -619,22 +623,25 @@ reparent_window_id (unsigned long winid, int id)
 	
 	win = gdk_window_foreign_new(winid);
 	gdk_window_get_size(win,&w,&h);
-	printf ("setting window size to: %d %d\n", w, h);
+	/*printf ("setting window size to: %d %d\n", w, h);*/
 	gtk_widget_set_usize(eb,w,h);
 
 	gdk_window_reparent(win,eb->window,0,0);
 	
-	printf ("leaving reparent\n");
+	/*printf ("leaving reparent\n");*/
 }
 
+/*note taht type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
+  only*/
 void
-reserve_applet_spot (const char *id, const char *path, int panel, int pos)
+reserve_applet_spot (const char *id, const char *path, int panel, int pos,
+		     AppletType type)
 {
 	GtkWidget *eb;
 	GdkWindow *win;
 	GList *list;
 
-	printf ("entering reserve spot\n");
+	/*printf ("entering reserve spot\n");*/
 	
 	eb = gtk_event_box_new();
 	gtk_widget_show (eb);
@@ -642,9 +649,9 @@ reserve_applet_spot (const char *id, const char *path, int panel, int pos)
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
 	register_toy(eb,NULL,NULL,g_strdup(id),g_strdup(path),
-		     pos,panel,0,APPLET_EXTERN_PENDING);
+		     pos,panel,0,type);
 
-	printf ("leaving reserve spot\n");
+	/*printf ("leaving reserve spot\n");*/
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/
@@ -782,5 +789,5 @@ register_toy(GtkWidget *applet,
 
 	orientation_change(info,panelw);
 
-	printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));
+	/*printf ("The window id for %s is: %d\n",id, GDK_WINDOW_XWINDOW (eventbox->window));*/
 }

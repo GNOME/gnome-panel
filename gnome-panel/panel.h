@@ -42,6 +42,7 @@ typedef enum {
 
 typedef enum {
 	APPLET_EXTERN,
+	APPLET_EXTERN_RESERVED,
 	APPLET_EXTERN_PENDING,
 	APPLET_DRAWER,
 	APPLET_MENU,
@@ -106,11 +107,13 @@ void apply_global_config(void);
 
 void reparent_window_id (unsigned long winid, int id);
 int applet_request_id (const char * ior, const char *path, char **cfgpath);
-void reserve_applet_spot (const char *id, const char *path, int panel, int pos);
+void reserve_applet_spot (const char *id, const char *path, int panel,
+			  int pos, AppletType type);
 
 /*stuff for corba*/
 int applet_get_panel(int id);
 int applet_get_pos(int id);
+void applet_show_menu(int id);
 void applet_drag_start(int id);
 void applet_drag_stop(int id);
 void applet_add_callback(short id, char *callback_name, char *menuitem_text);

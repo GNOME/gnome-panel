@@ -285,14 +285,14 @@ gnome_panel_prepare_and_transfer (GtkWidget *widget, int id)
 	gtk_widget_realize(widget);
 	gtk_widget_show(widget);
 	
-	printf ("Transfiriendo: %d\n", GDK_WINDOW_XWINDOW (widget->window));
+	/*printf ("Transfiriendo: %d\n", GDK_WINDOW_XWINDOW (widget->window));*/
 
 	/*reparent the window*/
 	panel_client->reparent_window_id (GDK_WINDOW_XWINDOW (widget->window),
 					  id);
 	bind_top_applet_events(widget,id);
 
-	printf ("Transferido\n");
+	/*printf ("Transferido\n");*/
 	return 0;
 }
 

@@ -174,18 +174,16 @@ void
 change_orient(int id, int orient)
 {
 	PanelOrientType o = (PanelOrientType)orient;
-	puts("CHANGE_ORIENT");
 }
 
 void
 session_save(int id, const char *cfgpath)
 {
-	/*FIXME: save the position*/
-	puts("SESSION_SAVE");
+	/*save the session here*/
 }
 
 static gint
-applet_die(gpointer data)
+quit_clock(gpointer data)
 {
 	exit(0);
 }
@@ -193,11 +191,10 @@ applet_die(gpointer data)
 void
 shutdown_applet(int id)
 {
-	puts("SHUTDOWN_APPLET");
-	/*kill our window*/
-	gtk_widget_unref(aw);
-	exit(0);
-	//gtk_timeout_add(100,applet_die,NULL);
+	/*kill our window using destroy to avoid warnings we need to
+	  kill the aw but we also need to return from this call*/
+	gtk_widget_destroy(aw);
+	gtk_idle_add(quit_clock,NULL);
 }
 
 void
@@ -221,8 +218,9 @@ main(int argc, char **argv)
 	gnome_init("clock_applet", NULL, argc, argv, 0, NULL);
 
 	if (!gnome_panel_applet_init_corba ()){
-		fprintf (stderr, "Could not comunicate with the panel\n");
-		exit (1);
+		g_error ("Could not comunicate with the panel\n");
+		/*fprintf (stderr, "Could not comunicate with the panel\n");*/
+		/*exit (1);*/
 	}
 
 	aw = applet_widget_new ();
@@ -241,7 +239,7 @@ main(int argc, char **argv)
 
 	g_free(cfgpath);
 
-	gnome_panel_applet_register_callback (aw,
+	gnome_panel_applet_register_callback (APPLET_WIDGET(aw),
 					      applet_id,
 					      "test",
 					      "TEST CALLBACK",
@@ -256,10 +254,10 @@ main(int argc, char **argv)
 	/*FIXME: do session saving, find out panel and pos from the panel
 		 so we can restore them on the next startup*/
 	result = gnome_panel_prepare_and_transfer(aw,applet_id);
-	printf ("Done\n");
+	/*printf ("Done\n");*/
 	if (result){
-		printf ("Could not talk to the Panel: %s\n", result);
-		exit (1);
+		g_error ("Could not talk to the Panel: %s\n", result);
+		/*exit (1);*/
 	}
 
 	applet_corba_gtk_main ("IDL:GNOME/Applet:1.0");
