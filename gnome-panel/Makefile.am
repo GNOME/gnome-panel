@@ -36,7 +36,7 @@ libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SOURCES)
 
-gnome-panel.cc: gnome-panel.idl
+gnome-panel.cc gnome-panel.h: gnome-panel.idl
 ## `idl' version 2.0.3 lamely fails to strip the path part of the file
 ## name when computing the name of the output file, so we prod it a
 ## little.
