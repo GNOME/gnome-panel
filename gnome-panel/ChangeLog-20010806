@@ -1,3 +1,13 @@
+Fri Mar 24 10:16:55 2000  George Lebl <jirka@5z.com>
+
+	* panel-util.c: add utility functions for setting dialog layers and
+	  doing error dialogs with a printf like functionality
+
+	* launcher.c,main.c,swallow.c,menu.c: use the above functions
+
+	* menu.c: fix bug number 7815 and have it spew error dialogs if it
+	  encounters errors.
+
 2000-03-24  Alexander Kirillov  <kirillov@math.sunysb.edu>
 
 	* panel/help/C/panel.sgml: editing; removed reference to "Run

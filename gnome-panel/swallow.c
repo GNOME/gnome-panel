@@ -229,10 +229,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_widget_grab_focus(title_e);
 
 	gtk_widget_show_all (d);
-	gtk_widget_show_now (d);
-	if(!global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(d),
-					   WIN_LAYER_ABOVE_DOCK);
+	panel_set_dialog_layer (d);
 }
 
 static int

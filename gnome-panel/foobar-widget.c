@@ -133,7 +133,7 @@ gmc_client (GtkWidget *w, gpointer data)
 	char *v[3] = { "gmc-client" };
 	v[1] = data;
 	if(gnome_execute_async (NULL, 2, v) < 0)
-		gnome_error_dialog(_("Cannot execute the gmc-client program,\n"
+		panel_error_dialog(_("Cannot execute the gmc-client program,\n"
 				     "perhaps gmc is not installed"));
 }
 
@@ -143,7 +143,7 @@ gnomecal_client (GtkWidget *w, gpointer data)
 	char *v[4] = { "gnomecal", "--view" };
 	v[2] = data;
 	if(gnome_execute_async (NULL, 3, v) < 0)
-		gnome_error_dialog(_("Cannot execute the gnome calendar,\n"
+		panel_error_dialog(_("Cannot execute the gnome calendar,\n"
 				     "perhaps it's not installed.\n"
 				     "It is in the gnome-pim package."));
 }

@@ -45,7 +45,10 @@
 #include <libart_lgpl/art_affine.h>
 #include "nothing.cP"
 
-static GlobalConfig global_config;
+/* panel-util makes references to this, so yes this is UGLY UGLY UGLY to make
+ * it available, but we're not using those parts, so we just want the compiler
+ * to shut up */
+GlobalConfig global_config;
 static GlobalConfig loaded_config;
 
 /* animation page */

@@ -7,6 +7,8 @@
 
 #include "panel-include.h"
 
+extern GlobalConfig global_config;
+
 gboolean
 string_is_in_list(GSList *list,char *text)
 {
@@ -707,3 +709,44 @@ convert_keysym_state_to_string(guint keysym,
 		return ret;
 	}
 }
+
+static void
+panel_dialog_realized(GtkWidget *dialog)
+{
+	if(!global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+					   WIN_LAYER_ABOVE_DOCK);
+}
+
+void
+panel_set_dialog_layer(GtkWidget *dialog)
+{
+	if(GTK_WIDGET_REALIZED(dialog) &&
+	   !global_config.keep_bottom)
+		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
+					   WIN_LAYER_ABOVE_DOCK);
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "realize",
+			   GTK_SIGNAL_FUNC(panel_dialog_realized),
+			   NULL);
+}
+
+GtkWidget *
+panel_error_dialog(char *format, ...)
+{
+	GtkWidget *w;
+	char *s;
+	va_list ap;
+
+	va_start(ap, format);
+	s = g_strdup_vprintf(format, ap);
+	va_end(ap);
+
+	w = gnome_error_dialog(s);
+	g_free(s);
+
+	panel_set_dialog_layer(w);
+
+	return w;
+}
+

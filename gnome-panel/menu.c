@@ -138,7 +138,7 @@ static void
 about_gnome_cb(GtkObject *object, char *program_path)
 {
 	if(gnome_execute_async(NULL, 1, &program_path)<0)
-		gnome_error_dialog(_("Can't execute 'About GNOME'"));
+		panel_error_dialog(_("Can't execute 'About GNOME'"));
 }
 
 static void
@@ -149,7 +149,7 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 		gnome_desktop_entry_launch (item);
 		gnome_desktop_entry_free(item);
 	} else {
-		gnome_error_dialog(_("Can't load entry"));
+		panel_error_dialog(_("Can't load entry"));
 	}
 }
 
@@ -166,7 +166,7 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	argv[5] = NULL;
 
 	if(gnome_execute_async(NULL, 5, argv)<0)
-		gnome_error_dialog(_("Can't execute copy (cp)"));
+		panel_error_dialog(_("Can't execute copy (cp)"));
 	g_free(p);
 }
 
@@ -534,55 +534,75 @@ static void
 really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 {
 	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
-	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d),"dir");
+	char *file, *dir = gtk_object_get_data(GTK_OBJECT(d), "dir");
 	GnomeDesktopEntry *dentry;
 	FILE *fp;
 	
-	if(button == 0) {
-		dentry = gnome_dentry_get_dentry(dedit);
+	if(button != 0) {
+		gtk_widget_destroy(d);
+		return;
+	}
 
-		if(!dentry->name || !(*(dentry->name)))
-			dentry->name=g_strdup(_("untitled"));
-		
-		
-		/* assume we are making a new file */
-		if (!dentry->location) {
-			int i=2;
-			char *tmp=NULL;
+	dentry = gnome_dentry_get_dentry(dedit);
 
-			tmp = validate_filename(dentry->name);
+	if(!dentry->exec || dentry->exec_length <= 0) {
+		gnome_desktop_entry_free(dentry);
+		panel_error_dialog(_("Cannot create an item with an empty "
+				     "command"));
+		return;
+	}
 
-			file = g_strdup_printf("%s.desktop", tmp);
-			dentry->location = g_concat_dir_and_file(dir, file);
-				
-			while (g_file_exists(dentry->location)) {
-				g_free(dentry->location);
-				g_free(file);
-				file = g_strdup_printf("%s%d", tmp, i++);
-				dentry->location = g_concat_dir_and_file(dir, file);
-			}
-			g_free(tmp);
-			g_free(file);
-		}
+	if(!dentry->name || !(*(dentry->name)))
+		dentry->name=g_strdup(_("untitled"));
 
-		file = g_concat_dir_and_file(dir, ".order");
-		fp = fopen(file, "a");
-		if (fp) {
-			char *file2 = g_basename(dentry->location);
-			if (file2)
-				fprintf(fp, "%s\n", file2);
-			else
-				g_warning(_("Could not get file from path: %s"), 
-					  dentry->location);
-			fclose(fp);
-		} else
-			g_warning(_("Could not open .order file: %s"), file);
+
+	/* assume we are making a new file */
+	if (!dentry->location) {
+		int i=2;
+		char *tmp=NULL;
+
+		tmp = validate_filename(dentry->name);
+
+		file = g_strdup_printf("%s.desktop", tmp);
+		dentry->location = g_concat_dir_and_file(dir, file);
 		g_free(file);
 
-		gnome_desktop_entry_save(dentry);
-		gnome_desktop_entry_free(dentry);
-
+		while (g_file_exists(dentry->location)) {
+			g_free(dentry->location);
+			file = g_strdup_printf("%s%d.desktop", tmp, i++);
+			dentry->location = g_concat_dir_and_file(dir, file);
+			g_free(file);
+		}
+		g_free(tmp);
 	}
+
+	file = g_concat_dir_and_file(dir, ".order");
+	fp = fopen(file, "a");
+	if (fp) {
+		char *file2 = g_basename(dentry->location);
+		if (file2)
+			fprintf(fp, "%s\n", file2);
+		else
+			g_warning(_("Could not get file from path: %s"), 
+				  dentry->location);
+		fclose(fp);
+	} else
+		g_warning(_("Could not open .order file: %s"), file);
+	g_free(file);
+
+	/* open for append, which will not harm any file and we will see if
+	 * we have write privilages */
+	fp = fopen(dentry->location, "a");
+	if(!fp) {
+		panel_error_dialog(_("Could not open file '%s' for writing"),
+				   dentry->location);
+		return;
+	}
+	fclose(fp);
+
+	gnome_desktop_entry_save(dentry);
+	gnome_desktop_entry_free(dentry);
+
 	gtk_widget_destroy(d);
 }
 
@@ -615,21 +635,18 @@ add_new_app_to_menu (GtkWidget *widget, char *item_loc)
 	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
 			   "Application");
 
-	gtk_object_set_data(GTK_OBJECT(d),"dir", g_strdup(item_loc));
+	gtk_object_set_data(GTK_OBJECT(d), "dir", g_strdup(item_loc));
 	
-	gtk_signal_connect(GTK_OBJECT(d),"clicked",
+	gtk_signal_connect(GTK_OBJECT(d), "clicked",
 			   GTK_SIGNAL_FUNC(really_add_new_menu_item),
 			   dee);
 
-	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
+	gnome_dialog_close_hides(GNOME_DIALOG(d), FALSE);
 
-	gnome_dialog_set_default(GNOME_DIALOG(d),0);
+	gnome_dialog_set_default(GNOME_DIALOG(d), 0);
 
 	gtk_widget_show_all (d);
-	gtk_widget_show_now (d);
-	if(!global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(d),
-					   WIN_LAYER_ABOVE_DOCK);
+	panel_set_dialog_layer (d);
 }
 
 static void
@@ -640,11 +657,8 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 
 	g_return_if_fail (item_loc);
 	if (unlink(item_loc) < 0) {
-		char *s;
-		s = g_strdup_printf(_("Could not remove the menu item %s: %s\n"), 
+		panel_error_dialog(_("Could not remove the menu item %s: %s\n"), 
 				    item_loc, g_strerror(errno));
-		gnome_error_dialog(s);
-		g_free(s);
 		return;
 	}
 
@@ -671,11 +685,8 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	order_out_file = fopen(order_out_name, "w");
 
 	if (!order_out_file) {
-		char *s;
-		s = g_strdup_printf(_("Could not open .order file: %s"),
+		panel_error_dialog(_("Could not open .order file: %s"),
 				    order_in_name);
-		gnome_error_dialog(s);
-		g_free(s);
 
 		g_free(order_in_name);
 		g_free(order_out_name);
@@ -693,11 +704,8 @@ remove_menuitem (GtkWidget *widget, char *item_loc)
 	fclose(order_in_file);
 
 	if (rename(order_out_name, order_in_name) == -1) {
-		char *s;
-		s = g_strdup_printf(_("Could not rename tmp file %s"),
-				    order_out_name);
-		gnome_error_dialog(s);
-		g_free(s);
+		panel_error_dialog(_("Could not rename tmp file %s"),
+				   order_out_name);
 	}
 
 	g_free(order_out_name);
@@ -1114,8 +1122,8 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   GTK_SIGNAL_FUNC(add_app_to_personal),
 					   sim->mf->menudir);
 			/*ummmm slightly ugly but should work 99% of time*/
-			if(strstr(sim->mf->menudir,"/.gnome/apps"))
-				gtk_widget_set_sensitive(menuitem,FALSE);
+			if(strstr(sim->mf->menudir, "/.gnome/apps"))
+				gtk_widget_set_sensitive(menuitem, FALSE);
 
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);
@@ -1130,8 +1138,8 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_new_app_to_menu),
 					   sim->mf->menudir);
-			if(access(sim->mf->menudir,W_OK)!=0)
-				gtk_widget_set_sensitive(menuitem,FALSE);
+			if(access(sim->mf->menudir, W_OK)!=0)
+				gtk_widget_set_sensitive(menuitem, FALSE);
 		}
 
 		sim->prop_item = gtk_menu_item_new ();
@@ -1581,10 +1589,7 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 		gtk_window_set_wmclass(GTK_WINDOW(mbox),
 				       "no_more_status_dialog","Panel");
 		gtk_widget_show_all (mbox);
-		gtk_widget_show_now (mbox);
-		if(!global_config.keep_bottom)
-			gnome_win_hints_set_layer (GTK_WIDGET(mbox),
-						   WIN_LAYER_ABOVE_DOCK);
+		panel_set_dialog_layer (mbox);
 	}
 }
 
@@ -1596,7 +1601,7 @@ add_applet (GtkWidget *w, char *item_loc)
 
 	ii = gnome_desktop_entry_load(item_loc);
 	if(!ii) {
-		gnome_error_dialog(_("Can't load entry"));
+		panel_error_dialog(_("Can't load entry"));
 		return;
 	}
 
@@ -1604,7 +1609,7 @@ add_applet (GtkWidget *w, char *item_loc)
 	gnome_desktop_entry_free(ii);
 	
 	if(!goad_id) {
-		gnome_error_dialog(_("Can't get goad_id from desktop entry!"));
+		panel_error_dialog(_("Can't get goad_id from desktop entry!"));
 		return;
 	}
 	load_extern_applet(goad_id, NULL,
@@ -2523,10 +2528,7 @@ create_new_panel(GtkWidget *w, gpointer data)
 						GNOME_STOCK_BUTTON_OK,
 						NULL);
 		gtk_widget_show_all (dialog);
-		gtk_widget_show_now (dialog);
-		if(!global_config.keep_bottom)
-			gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-						   WIN_LAYER_ABOVE_DOCK);
+		panel_set_dialog_layer (dialog);
 		break;
 	}
 	default: break;
@@ -2673,10 +2675,10 @@ create_system_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake,
 	} else {
 		/* show an error dialog for this only once, then just
 		   use g_warning */
-		static int dialogs = 0;
-		if(dialogs==0) {
-			gnome_error_dialog(_("No system menus found!"));
-			dialogs++;
+		static gboolean done_dialog = FALSE;
+		if(!done_dialog) {
+			panel_error_dialog(_("No system menus found!"));
+			done_dialog = TRUE;
 		} else
 			g_warning(_("No system menus found!"));
 	}
@@ -2798,7 +2800,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 	panelw = panel->panel_parent;
 
 	if (!IS_DRAWER_WIDGET (panelw) && base_panels == 1) {
-		gnome_error_dialog (_("You cannot remove your last panel."));
+		panel_error_dialog (_("You cannot remove your last panel."));
 		return;
 	}
 
@@ -2823,10 +2825,7 @@ remove_panel_query (GtkWidget *w, gpointer data)
 					       GTK_SIGNAL_FUNC(gtk_widget_destroy),
 					       GTK_OBJECT(dialog));
 	gtk_widget_show_all (dialog);
-	gtk_widget_show_now (dialog);
-	if(!global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-					   WIN_LAYER_ABOVE_DOCK);
+	panel_set_dialog_layer (dialog);
 }
 
 static void
@@ -3663,7 +3662,7 @@ panel_config_global(void)
 {
 	char *argv[2] = {"gnome-panel-properties-capplet", NULL};
 	if(gnome_execute_async(NULL,1,argv)<0)
-		gnome_error_dialog(_("Cannot execute panel global properties"));
+		panel_error_dialog(_("Cannot execute panel global properties"));
 }
 
 static void
@@ -3838,7 +3837,7 @@ panel_lock (GtkWidget *widget, gpointer data)
 	else
 		argv[1] = "-lock";
 	if(gnome_execute_async(NULL,2,argv)<0)
-		gnome_error_dialog(_("Cannot execute xscreensaver"));
+		panel_error_dialog(_("Cannot execute xscreensaver"));
 }
 
 static GtkWidget *create_panel_submenu (GtkWidget *m, gboolean fake_sub,

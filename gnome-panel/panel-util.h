@@ -61,6 +61,9 @@ gboolean convert_string_to_keysym_state(char *string,
 char * convert_keysym_state_to_string(guint keysym,
 				      guint state);
 
+void panel_set_dialog_layer(GtkWidget *dialog);
+GtkWidget *panel_error_dialog(char *format, ...) G_GNUC_PRINTF (1, 2);
+
 
 END_GNOME_DECLS
 

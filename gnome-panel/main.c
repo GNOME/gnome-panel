@@ -167,13 +167,14 @@ main(int argc, char **argv)
 			(_("I've detected a panel already running.\n"
 			   "Start another panel as well?\n" 
 			   "(The new panel will not be restarted.)"), NULL, NULL);
+		panel_set_dialog_layer (box);
 		if (gnome_dialog_run_and_close (GNOME_DIALOG (box)))
 			return 0;
 		duplicate = 1;
 		break;
 	}
 	default: {
-		GtkWidget *box = gnome_error_dialog
+		GtkWidget *box = panel_error_dialog
 			(_("There was a problem registering the panel "
 			   "with the GOAD server.\n"
 			   "The panel will now exit."));

@@ -27,6 +27,7 @@
 #include "gnome-run.h"
 
 #include "panel_config_global.h"
+#include "panel-util.h"
 
 extern GlobalConfig global_config;
 
@@ -37,7 +38,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	GtkToggleButton *terminal;
 	char **argv, **temp_argv;
 	int argc, temp_argc;
-	char *s, *t;
+	char *s;
 	GSList *tofree = NULL;
 
 	if (button_num != 0)
@@ -55,11 +56,8 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	/* we use a popt function as it does exactly what we want to do and
 	   gnome already uses popt */
 	if(poptParseArgvString(s, &temp_argc, &temp_argv) != 0) {
-		t = g_strdup_printf(_("Failed to execute command:\n"
-				      "%s"), s);
-
-		gnome_error_dialog (t);
-		g_free (t);
+		panel_error_dialog(_("Failed to execute command:\n"
+				     "%s"), s);
 		return;
 	}
 
@@ -114,13 +112,10 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 	g_slist_foreach(tofree, (GFunc)g_free, NULL);
 	g_slist_free(tofree);
 	
-	t = g_strdup_printf(_("Failed to execute command:\n"
-			      "%s\n"
-			      "%s"),
-			    s, g_unix_error_string(errno));
-
-	gnome_error_dialog (t);
-	g_free (t);
+	panel_error_dialog(_("Failed to execute command:\n"
+			     "%s\n"
+			     "%s"),
+			   s, g_unix_error_string(errno));
 }
 
 static void
@@ -166,10 +161,10 @@ browse(GtkWidget *w, GtkWidget *entry)
 					      GTK_OBJECT(fsel));
 
 	gtk_window_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
+	/* we must do show_now so that we can raise the window in the next
+	 * call after set_dialog_layer */
 	gtk_widget_show_now (GTK_WIDGET (fsel));
-	if(!global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(fsel),
-					   WIN_LAYER_ABOVE_DOCK);
+	panel_set_dialog_layer (fsel);
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 
@@ -235,8 +230,5 @@ show_run_dialog ()
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
 	gtk_widget_show_all (dialog);
-	gtk_widget_show_now (dialog);
-	if(!global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-					   WIN_LAYER_ABOVE_DOCK);
+	panel_set_dialog_layer (dialog);
 }
