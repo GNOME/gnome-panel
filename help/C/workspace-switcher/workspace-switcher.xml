@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.2">
-  <!ENTITY date "August 2002">
+  <!ENTITY appletversion "2.3.4">
+  <!ENTITY manrevision "2.3">
+  <!ENTITY date "August 2003">
   <!ENTITY applet "Workspace Switcher">
 
 ]>
@@ -24,6 +24,7 @@
 	 <title>&applet; Applet Manual V&manrevision;</title> 
 	 <copyright> 
 		<year>2002</year> 
+		<year>2003</year>
 		<holder>Sun Microsystems</holder> 
 	 </copyright> 
 	 <copyright> 
@@ -53,7 +54,7 @@
 		  <surname>GNOME Documentation Team</surname> 
 		  <affiliation> 
 			 <orgname>Sun Microsystems</orgname> 
-			 <address> <email>gdocteam@sun.com</email> </address> 
+			 <address></address> 
 		  </affiliation> 
 		</author> 
 		<author> 
@@ -82,17 +83,23 @@
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
 		<revision> 
+		  <revnumber>Workspace Switcher Applet Manual V2.2</revnumber> 
+		  <date>August 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
 		  <revnumber>Workspace Switcher Applet Manual V2.1</revnumber> 
 		  <date>July 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
@@ -100,8 +107,7 @@
 		  <revnumber>Workspace Switcher Applet Manual V&manrevision;</revnumber> 
 		  <date>March 2002</date> 
 		  <revdescription> 
-			 <para role="author">Sun GNOME Documentation Team
-				<email>gdocteam@sun.com</email></para> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision>
@@ -199,36 +205,39 @@
 	 <para>To configure the <application>&applet;</application> applet, right-click 
 	 on the applet, then choose <guimenuitem>Preferences</guimenuitem>. </para>
 	 <variablelist>
-	 <varlistentry><term>Switcher</term>
+	 <varlistentry><term><guilabel>Switcher</guilabel></term>
 	 	<listitem>
-	 	<para>Select one of the following options to determine which workspaces the <application>&applet;</application> displays:</para>
+	 	<para>Select one of the following options to determine which workspaces the 
+		<application>&applet;</application> displays:</para>	
 	 		<itemizedlist>
 	 		<listitem><para><guilabel>Show only the current workspace</guilabel></para>
-	 		<para>Select this option to only display the current workspace in the <application>&applet;</application> applet.</para>
+	 		<para>Select this option to only display the current workspace in the 
+			<application>&applet;</application> applet.</para>
 	 		</listitem>
-	 		<listitem><para><guilabel>Show all workspaces</guilabel></para>
+	 		<listitem><para><guilabel>Show all workspaces in X rows</guilabel></para>
 	 		<para>Select this option to show all of the workspaces that are on your GNOME desktop in the 
-			<application>&applet;</application> applet. Use the <guilabel>rows</guilabel> spin box to specify 
+			<application>&applet;</application> applet. Use the spin box to specify 
 			the number of rows to use to display the workspaces in the applet. </para>
 	 		</listitem>
 	 		</itemizedlist>
-	 	<para>Default: <guilabel>Show all workspaces in</guilabel> 1 <guilabel>rows</guilabel>.</para>
-		</listitem>
+	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>Workspaces</guilabel> </term>
+	 <listitem><para>Use the following options to determine how the applet displays the workspaces:</para> 
+	 <itemizedlist>
 	 	<listitem><para><guilabel>Number of workspaces</guilabel></para>
 	 	<para>Use this spin box to increase or decrease the number of workspaces in the GNOME session.</para>
-	 	<para>Default: 4.</para>
 	 	</listitem>
 		<listitem><para><guilabel>Workspace names</guilabel></para> 
 		<para>Use this list box to edit the names of the workspaces on your desktop. To edit a workspace name, 
 		select the name, then type the new name. </para>
 	 	</listitem>
-	 	<listitem><para><guilabel>Show workspace names</guilabel></para>
+	 	<listitem><para><guilabel>Show workspace names in switcher</guilabel></para>
 	 	<para>Select this option to display the names of the workspaces in the applet instead of a visual representation
 		of the workspaces.</para>
-	 	<para>Default: unselected.</para>
 	 	</listitem>
+	 </itemizedlist>
+	 </listitem>
 	 </varlistentry>
 	 </variablelist>
   </sect1>
