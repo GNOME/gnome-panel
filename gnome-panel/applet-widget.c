@@ -1439,7 +1439,7 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 	CORBA_exception_free(&ev);
 
 	*w = image->width;
-	*h = image->width;
+	*h = image->height;
 	if(!image->color_only)
 		*rowstride = image->rowstride;
 	else
