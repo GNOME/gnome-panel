@@ -623,6 +623,9 @@ load_default_applets(void)
 	/*guess redhat menus*/
 	if(g_file_exists("/etc/X11/wmconfig"))
 		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+	/*guess KDE menus */
+	if(g_file_exists(KDE_MENUDIR))
+		flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 	/*guess debian menus*/
 	if (g_file_exists("/etc/menu-methods/gnome"))
 		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
@@ -736,6 +739,9 @@ init_user_applets(void)
 				/*guess redhat menus*/
 				if(g_file_exists("/etc/X11/wmconfig"))
 					flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+				/*guess KDE menus */
+				if(g_file_exists(KDE_MENUDIR))
+					flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 				/*guess debian menus*/
 				if (g_file_exists("/etc/menu-methods/gnome"))
 					flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;

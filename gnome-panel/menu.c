@@ -245,7 +245,8 @@ fr_fill_dir(FileRec *fr, int sublevels)
 		} else {
 			GnomeDesktopEntry *dentry;
 			char *p = strrchr(name,'.');
-			if(p && strcmp(p,".desktop")!=0) {
+			if (!p || (strcmp(p, ".desktop") != 0 &&
+				   strcmp(p, ".kdelnk") != 0)) {
 				g_free(name);
 				continue;
 			}
@@ -634,7 +635,9 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 						     newpanel);
 			} else {
 				char *p = strrchr(filename,'.');
-				if(p && strcmp(p,".desktop")==0)
+				if (p &&
+				    (strcmp(p,".desktop")==0 || 
+				     strcmp(p,".kdelnk")==0))
 					/*we load the applet at the right
 					  side, that is end of the drawer*/
 					load_launcher_applet(filename,
@@ -667,6 +670,10 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 	/*guess redhat menus*/
 	if(g_file_exists("/etc/X11/wmconfig"))
 		flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+
+	/*guess KDE menus*/
+	if(g_file_exists(KDE_MENUDIR))
+		flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 
 	/*guess debian menus*/
 	if (g_file_exists("/etc/menu-methods/gnome"))
@@ -750,6 +757,13 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	
 	g_return_if_fail(item_loc!=NULL);
 
+	dentry = gnome_desktop_entry_load(item_loc);
+	/* We'll screw up a KDE menu entry if we edit it */
+	if (dentry && dentry->is_kde) {
+		gnome_desktop_entry_free (dentry);
+		return;
+	}
+
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "desktop_entry_properties","Panel");
@@ -760,7 +774,6 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	/*item loc will be alive all this time*/
 	gtk_object_set_data(o,"location",item_loc);
 
-	dentry = gnome_desktop_entry_load(item_loc);
 	if(dentry) {
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
 		gnome_desktop_entry_free(dentry);
@@ -784,6 +797,13 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	char *dirfile = g_concat_dir_and_file(mf->menudir, ".directory");
 	GnomeDesktopEntry *dentry;
 
+	dentry = gnome_desktop_entry_load_unconditional(dirfile);
+	/* We'll screw up a KDE menu entry if we edit it */
+	if (dentry && dentry->is_kde) {
+		gnome_desktop_entry_free (dentry);
+		return;
+	}
+
 	dialog = gnome_property_box_new();
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "desktop_entry_properties","Panel");
@@ -792,7 +812,6 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
 
-	dentry = gnome_desktop_entry_load_unconditional(dirfile);
 	if (dentry) {
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
 		gtk_object_set_data_full(o,"location",
@@ -914,7 +933,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   sim->mf);
 		gtk_object_set_data(GTK_OBJECT(item),"prop_item",
 				    sim->prop_item);
-		setup_menuitem (sim->prop_item, 0, _("Properties ..."));
+		setup_menuitem (sim->prop_item, 0, _("Properties..."));
 		gtk_menu_append (GTK_MENU (sim->menu), sim->prop_item);
 	}
 	
@@ -2096,6 +2115,23 @@ create_debian_menu(GtkWidget *menu, int fake_submenus, int fake)
 	return menu;
 }
 
+static GtkWidget *
+create_kde_menu(GtkWidget *menu, int fake_submenus,
+		int force, int fake)
+{
+	if(!fake || menu) {
+		menu = create_menu_at (menu, 
+				       KDE_MENUDIR, FALSE,
+				       _("KDE menus"), 
+				       NULL,fake_submenus,
+				       force);
+	} else {
+		menu = create_fake_menu_at (KDE_MENUDIR, FALSE,
+					    _("KDE menus"),NULL);
+	}
+	return menu;
+}
+
 GtkWidget *
 create_panel_root_menu(GtkWidget *panel)
 {
@@ -2862,6 +2898,10 @@ create_root_menu(int fake_submenus, int flags)
 		root_menu = create_debian_menu(root_menu, fake_submenus, FALSE);
 		need_separ = TRUE;
 	}
+	if(flags&MAIN_MENU_KDE && !(flags&MAIN_MENU_KDE_SUB)) {
+		root_menu = create_kde_menu(root_menu,fake_submenus,FALSE, FALSE);
+		need_separ = TRUE;
+	}
 	/*others here*/
 	
 	if(!root_menu)
@@ -2930,6 +2970,30 @@ create_root_menu(int fake_submenus, int flags)
 					   GTK_SIGNAL_FUNC(submenu_to_display),
 					   menuitem);
 		}
+	}
+	if(flags&MAIN_MENU_KDE && flags&MAIN_MENU_KDE_SUB) {
+		GtkWidget *pixmap = NULL;
+		if(need_separ)
+			add_menu_separator(root_menu);
+		need_separ = FALSE;
+		menu = create_kde_menu(NULL, fake_submenus, TRUE, TRUE);
+		if (g_file_exists("/usr/share/icons/exec.xpm")) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/exec.xpm",
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
+			if (pixmap)
+				gtk_widget_show (pixmap);
+		}
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, pixmap, _("KDE menus"));
+		gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
+				   menuitem);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   menuitem);
 	}
 	add_special_entries (root_menu, fake_submenus);
 	
@@ -3128,6 +3192,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
 	GtkWidget *redhat_off = gtk_object_get_data(GTK_OBJECT(widget), "redhat_off");
 	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
+ 	GtkWidget *kde_off = gtk_object_get_data(GTK_OBJECT(widget), "kde_off");
+ 	GtkWidget *kde_sub = gtk_object_get_data(GTK_OBJECT(widget), "kde_sub");
 	GtkWidget *debian_off = gtk_object_get_data(GTK_OBJECT(widget), "debian_off");
 	GtkWidget *debian_sub = gtk_object_get_data(GTK_OBJECT(widget), "debian_sub");
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
@@ -3182,6 +3248,14 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else {
 		menu->main_menu_flags |= MAIN_MENU_DEBIAN;
 		menu->main_menu_flags &=~ MAIN_MENU_DEBIAN_SUB;
+	}
+	if(GTK_TOGGLE_BUTTON(kde_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_KDE|MAIN_MENU_KDE_SUB);
+	else if(GTK_TOGGLE_BUTTON(kde_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+	else {
+		menu->main_menu_flags |= MAIN_MENU_KDE;
+		menu->main_menu_flags &=~ MAIN_MENU_KDE_SUB;
 	}
 
 	if(menu->menu)
@@ -3358,7 +3432,7 @@ create_properties_dialog(Menu *menu)
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_frame",f);
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
-	table = gtk_table_new(3,4,FALSE);
+	table = gtk_table_new(5,4,FALSE);
 	gtk_container_set_border_width(GTK_CONTAINER(table),GNOME_PAD_SMALL);
 	gtk_container_add(GTK_CONTAINER(f),table);
 
@@ -3374,7 +3448,11 @@ create_properties_dialog(Menu *menu)
 			      _("AnotherLevel menu (if found): "),"redhat",
 			      menu->main_menu_flags&MAIN_MENU_REDHAT,
 			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
+ 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
+ 			      _("KDE menu (if found): "),"kde",
+ 			      menu->main_menu_flags&MAIN_MENU_KDE,
+ 			      menu->main_menu_flags&MAIN_MENU_KDE_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),4,
 			      _("Debian menu (if found): "),"debian",
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN,
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN_SUB);

@@ -952,7 +952,10 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			  /*guess redhat menus*/
 			  if(g_file_exists("/etc/X11/wmconfig"))
 				  flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
-		    load_menu_applet(ltmp->data, flags, panel, pos);
+			  /* Guess KDE menus */
+			  if(g_file_exists(KDE_MENUDIR))
+				  flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
+			  load_menu_applet(ltmp->data, flags, panel, pos);
 		  } else if(S_IEXEC & s.st_mode) /*executable?*/
 		    ask_about_launcher(ltmp->data,panel,pos);
 		}
@@ -997,6 +1000,9 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		/*guess redhat menus*/
 		if(g_file_exists("/etc/X11/wmconfig"))
 			flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+		/* Guess KDE menus */
+		if(g_file_exists(KDE_MENUDIR))
+				  flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 		load_menu_applet ((char *)selection_data->data,flags,
 				  panel, pos);
 		break;
@@ -1020,6 +1026,9 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			/*guess redhat menus*/
 			if(g_file_exists("/etc/X11/wmconfig"))
 				flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
+			/* Guess KDE menus */
+			if(g_file_exists(KDE_MENUDIR))
+				flags |= MAIN_MENU_KDE|MAIN_MENU_KDE_SUB;
 
 			load_menu_applet(NULL,flags, panel, pos);
 		} else if(strcmp(applet_type,"DRAWER:NEW")==0) {
