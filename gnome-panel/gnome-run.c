@@ -278,7 +278,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	GError *error = NULL;
 
 	if (response == GTK_RESPONSE_HELP) {
-		panel_show_help ("specialobjects", "RUNBUTTON");
+		panel_show_help ("wgoseditmainmenu.xml", "gospanel-23");
 		/* just return as we don't want to close */
 		return;
 	} else if (response != PANEL_RESPONSE_RUN) {
