@@ -1,3 +1,7 @@
+## Process this file with automake to produce Makefile.in.
+
+CXX = mico-c++
+
 test:
 	echo $(CXXCOMPILE)
 
