@@ -228,6 +228,14 @@ panel_session_save (GnomeClient *client,
 {
 	gint num;
 	char buf[256];
+	char *session_id;
+
+	session_id = gnome_client_get_id (client);
+	if(session_id) {
+		g_free(panel_cfg_path);
+		panel_cfg_path = g_copy_strings("/panel-Session-",session_id,
+						"/",NULL);
+	}
 
 	/*we can clean the whole file right????*/
 	gnome_config_clean_file(panel_cfg_path);
@@ -310,6 +318,7 @@ panel_session_save (GnomeClient *client,
 		puts("killing launcher");
 		kill(launcher_pid,SIGTERM);
 #endif
+		gtk_exit (0);
 	}
 
 	/* Always successful.  */
@@ -322,7 +331,6 @@ panel_quit(void)
 	if (! GNOME_CLIENT_CONNECTED (client)) {
 		panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 				    GNOME_INTERACT_NONE, 0, NULL);
-		gtk_exit (0);
 	} else {
 		/* We request a completely interactive, full, slow shutdown.  */
 		gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,

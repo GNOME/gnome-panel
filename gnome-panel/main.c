@@ -763,13 +763,8 @@ panel_connect_client (GnomeClient *client,
 		old_panel_cfg_path = g_copy_strings("/panel-Session-",
 						    session_id,"/",NULL);
 	}
-
-	session_id = gnome_client_get_id (client);
-	if(session_id) {
-		g_free(panel_cfg_path);
-		panel_cfg_path = g_copy_strings("/panel-Session-",session_id,
-						"/",NULL);
-	}
+	puts("connected");
+	puts(old_panel_cfg_path);
 }
 	
 
@@ -796,6 +791,8 @@ main(int argc, char **argv)
 	panel_corba_register_arguments ();
 
 	gnome_init("panel", &parser, argc, argv, 0, NULL);
+
+	puts("need old_cfg");
 
 	if (just_exit)
 		return 0;
