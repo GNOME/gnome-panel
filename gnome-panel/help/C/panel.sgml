@@ -131,7 +131,7 @@
         <title>Launchers</title>
         <para>
          Launchers are buttons which either start an application or
-         execute a command when you press them(click with the left
+         execute a command when you press them (click with the left
          mouse button). The third icon in the example
          <interface>Panel</interface> is a launcher which starts the
          <application>Gnumeric</application> spreadsheet.  For more
@@ -144,7 +144,8 @@
         <title>Applets</title> <para>  Applets are applications which
         run inside a small part of the
         <interface>Panel</interface>. The fourth through eighth icons
-        in the example Panel  are applets. The first applet shown is
+        in the example <interface>Panel</interface> are applets. The
+	first applet shown is
         the <application>GNOME Weather</application> applet, which
         periodically downloads the current weather conditions off the
         Web and displays the information. The second applet shown is
@@ -174,7 +175,9 @@
       </listitem>
       <listitem>
        <formalpara>
-        <title>Drawers</title> <para>  Drawers are essentially
+        <title>Drawers</title> 
+        <para>  
+        Drawers are essentially
         extensions of a <interface>Panel</interface> which can be
         opened or closed.  They can hold anything the
         <interface>Panel</interface> can.  The brown icon of a drawer
@@ -230,8 +233,8 @@
      the <guimenu>right-click</guimenu> menu will often contain
      <guimenuitem>About...</guimenuitem> for viewing information about
      the applet such as the author's name and the applet version,
-     <guimenuitem>Help</guimenuitem> for viewing documentation about
-     the applet, and <guimenuitem>Properties...</guimenuitem> for
+     <guimenuitem>Help</guimenuitem> for viewing the applet's documentation, 
+     and <guimenuitem>Properties...</guimenuitem> for
      configuring preferences and settings for the applet.  Applets
      often have other applet-specific controls in their
      <guimenu>right-click</guimenu> menus.
@@ -291,7 +294,8 @@
     <para>
      <interface>Panels</interface> can be configured to
      automatically hide when you are  not using it and reappear when
-     you move the mouse to the part of the screen where the Panel
+     you move the mouse to the part of the screen where the
+     <interface>Panel</interface>
      resides. This can be useful if you are unable to run your system
      in a high resolution.  To learn how to have a
      <interface>Panel</interface> auto-hide, see <xref
@@ -431,7 +435,7 @@
     </figure>
     <para> 
      You can also access the <guimenu>Main Menu</guimenu> by clicking
-     on a <interface>Panel</interface> with the right mouse button. If
+     on the <interface>Panel</interface> with the right mouse button. If
      you wish,  you can also have several <guibutton>Main
      Menus</guibutton> buttons on different
      <interface>Panels</interface>.
@@ -457,14 +461,14 @@
       <listitem>
        <para>
         <guimenuitem>File Manager</guimenuitem> &mdash;  launches the
-        GNOME file manager
+        GNOME file manager.
        </para>
       </listitem>
       <listitem>
        <para>
         <guimenuitem>Run program&hellip;</guimenuitem> &mdash;
         gives you the command line prompt where you can enter
-        any command
+        any command.
        </para>
       </listitem>
       <listitem>
@@ -475,7 +479,7 @@
         access to most of the documentation installed on your
         system &mdash; not only GNOME documentation (Users guide,
         application manuals, &hellip;), but also other types of
-        documentation (man pages, info pages)
+        documentation (man pages, info pages).
        </para>
       </listitem>
      </itemizedlist>
@@ -591,23 +595,29 @@
     <sect2 id="mainmenuconfig">
       <title>Configuring the Main Menu</title>
       <para>
-      To change configuration of the main menu which you access from
+      To change configuration of the <guimenu>Main Menu</guimenu>
+      which you access from 
       the foot icon, right-click on this icon  and select
       <guimenuitem>Properties</guimenuitem>  from the
       <guimenu>pop-up</guimenu> menu. This will show <interface>Menu
       Properties dialog</interface>. In this dialog, for each of the
-      submenus  of the Main menu listed above
+      submenus  of the <guimenu>Main Menu</guimenu> listed above
       (<guisubmenu>Programs</guisubmenu>,
       <guisubmenu>Favorites</guisubmenu>, &hellip;) you can choose
-      whether you want it  to be shown as part of the main menu, as a
-      submenu, or not shown at all.
+      whether you want it  to be shown as part of the <guimenu>Main
+      Menu</guimenu>,  as a submenu, or not shown at all.
       </para>
-      <warning>  <title>WARNING</title>
+      <warning>  
+        <title>WARNING</title>
 	<para>
-	  The main menu which you get by right-clicking on the panel
-	  is configured independently from the main menu you get by
-	  clicking on the foot icon. Configuration of  the main menu
-	  which you get by right-clicking on the panel (which is the
+	  The <guimenu>Main Menu</guimenu> which you get by
+	  right-clicking on the <interface>Panel</interface> 
+	  is configured independently from the <guimenu>Main
+	  Menu</guimenu> you get by 
+	  clicking on the foot icon. Configuration of  the
+	  <guimenu>Main Menu</guimenu> 
+	  which you get by right-clicking on the
+	  <interface>Panel</interface> (which is the 
 	  same as the one you get by using keyboard shortcut) is done
 	  using <guilabel>Menu</guilabel> tab in  <link
 	  linkend="globalpanelprefs"><interface> Global Panel
@@ -642,11 +652,12 @@
     </sect2>
 
   <sect2 id="kbdnav">
-   <title>Keyboard navigation in the main menu</title>
+   <title>Keyboard navigation in the Main Menu</title>
      
       <para>  If you prefer, you can use keyboard instead of the mouse
-        to navigate the main menu. To activate the main menu, press
-        <keycap>Menu</keycap> key on your keyboard (if you are using a
+        to navigate the <guimenu>Main
+	Menu</guimenu>. To activate the <guimenu>Main Menu</guimenu>,
+	press  <keycap>Menu</keycap> key on your keyboard (if you are using a
         standard PC keyboard, this key usually is located to the left
         of the space bar and labelled with a picture of a menu); you
         can change the default key in the <link
@@ -669,14 +680,17 @@
   <title>Menus</title>
   <para>
       In addition to the <guimenu>Main Menu</guimenu>, discussed in
-      <xref linkend="mainmenu">, you can also add to the Panel "normal
+      <xref linkend="mainmenu">, you can also add to the
+      <interface>Panel</interface>  "normal
       menus". Unlike the <guimenu>Main Menu</guimenu>, normal Menus
-      only contain whatever Launchers and submenus you choose put in
-      them - no default submenus, Run program, etc. as the
+      only contain whatever launchers and submenus you choose put in
+      them - no default submenus, <guimenuitem>Run
+      program</guimenuitem>, etc. as the 
       <guimenu>Main Menu</guimenu> has.  For example, you can add any
       submenu of your <guimenu>Favorites</guimenu> menu or the
       <guimenu>Programs</guimenu> menu as a separate menu to the
-      panel; to do so, bring up this submenu from the Main Menu, right
+      panel; to do so, bring up this submenu from the <guimenu>Main
+      Menu</guimenu>,  right
       click on the submenu title, and select <guimenuitem>Add this as
       menu to panel</guimenuitem>. <!-- FIXME - this is not right To
       create a new Menu, use the <application>Menu
@@ -715,17 +729,22 @@
     </sect2>
 
    <sect2 id="menusconf">
-    <title> Configuring the menus</title> <para>  To learn how you can
-     add new menus to the Panel, see <xref linkend="add">.
+    <title> Configuring the menus</title> 
+    <para>  
+     To learn how you can
+     add new menus to the <interface>Panel</interface>, see <xref
+     linkend="add">. 
      </para>
      <para> You can easily change the Menu title and the icon used by
       the Menu. To do so, click on the Menu button, right-click on the
       menu title (at the very top of the list, above all other items),
       and select <guimenuitem>Properties</guimenuitem> from the
-      <guimenu>pop-up</guimenu> menu. This will bring up the Menu
-      Properties Dialog, quite similar to the <link
-      linkend="launchers">Launcher Properties Dialog</link>.   </para>
-      <para> To add a new item to the Menu, click on the Menu button,
+      <guimenu>pop-up</guimenu> menu. This will bring up the <interface>Menu
+      Properties</interface> dialog, quite similar to the <link
+      linkend="launchers">Launcher Properties dialog</link>.   
+      </para>
+      <para> 
+      To add a new item to the Menu, click on the Menu button,
       right-click on the Menu title, and select <guimenuitem>Add new
       item to this menu</guimenuitem>. This will bring  up
       <interface>Create new launcher</interface>  dialog, in which you
@@ -818,7 +837,10 @@
       The <guilabel>Basic</guilabel> tab also shows the icon to be
       used for the launcher; if no icon is specified, a default icon
       will be used. To change the icon, just click on it to launch the
-      icon browser. </para> <para>Finally, if the application can only
+      icon browser. 
+    </para> 
+    <para>
+      Finally, if the application can only
       run inside a terminal &mdash; that is, if it doesn't create any
       windows on its own &mdash; you should also check <guibutton>Run
       in terminal</guibutton> button. If unsure, leave it unchecked.
@@ -848,7 +870,8 @@
 	  can be executed. If not, the launcher (or menu item) will
 	  not be shown even if you added it to the panel or menu. It
 	  is mostly used by people preparing GNOME distributions: for
-	  example, default GNOME Main Menu contains an item for
+	  example, default GNOME <guimenu>Main Menu</guimenu> 
+          contains an item for
 	  <application>TkRat</application> e-mail program, but you
 	  will not see it unless you have
 	  <application>TkRat</application> installed on your system.
@@ -912,8 +935,9 @@
  <sect1 id="applets">
   <title>Applets</title>
   <para>
-   Applets are GNOME applications which reside in the Panel. An
-   Applet's appearance typically reveals the state of the Applet or
+   Applets are GNOME applications which reside in the
+   <interface>Panel</interface>.  An
+   applet's appearance typically reveals the state of the applet or
    other information. Applets often have buttons, sliders, entries, or
    other methods to allow you to control their behavior.
   </para>
@@ -927,11 +951,11 @@
    </screenshot>
   </figure>
   <para>
-   Some example Applets are shown above.  At the very left is  the
+   Some example applets are shown above.  At the very left is  the
    <application>Sound Monitor Applet</application>, which displays the
-   current volume of sound being played and allows us to control
+   current volume of sound being played and allows you to control
    various sound features.  Second is the <application>Mixer
-   Applet</application>, which allows us to turn on/off sound and
+   Applet</application>, which allows you to turn on/off sound and
    control its volume by clicking on applet.  This is followed by the
    <application>Battery Power Applet</application>, useful for
    monitoring the battery on a laptop. The fourth applet is the
@@ -943,7 +967,8 @@
    clock, displaying the current time.
   </para>
   <para>
-   GNOME has many useful applets.  Just right click on your Panel and
+   GNOME has many useful applets.  Just right click on your
+   <interface>Panel</interface>  and
    add some applets to your panel to find out what is available and
    which ones are best for you.
   </para>
@@ -954,14 +979,19 @@
  <sect1 id="drawers">
   <title>Drawers</title>
   <para>
-   The simplest way of thinking about a Drawer is that it is a
+   The simplest way of thinking about a <interface>Drawer</interface>
+   is that it is a 
    container to store things.  Typically one may use a Drawer to hold
    multiple launchers which are related to each other in some way,
    such as the various applications in GNOME Office. The Drawers in
-   the GNOME Panel take this one step further by making a Drawer an
-   actual extension of the Panel itself.  Thus, a Drawer is a
-   collapsible branch of an existing Panel.  It can contain anything
-   that a Panel can, including Launchers, Applets, and other Drawers.
+   the GNOME <interface>Panel</interface> take this one step further
+   by making a Drawer an
+   actual extension of the <interface>Panel</interface> itself.  Thus,
+   a Drawer is a 
+   collapsible branch of an existing <interface>Panel</interface>.  It
+   can contain anything 
+   that a <interface>Panel</interface> can, including launchers,
+   applets, and other Drawers. 
   </para>
   <figure>
    <title>An open Drawer</title>
@@ -1030,7 +1060,8 @@
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Lock Button</guibutton> is a Panel button which
+    The <guibutton>Lock Button</guibutton> is a
+    <interface>Panel</interface> button which 
     begins a screensaver which locks the screen. In order to remove
     the screensaver and access the GNOME session again, you must
     supply your password.  This is typically used when you must leave
@@ -1071,15 +1102,19 @@
   <sect2 id="swallowedapps">
    <title>Swallowed Applications</title>
    <para>
-    The GNOME Panel allows you to run applications which are not
-    applets inside the Panel as if they were applets.  Applications
-    which you pull into the Panel, even though they are not GNOME
+    The GNOME <interface>Panel</interface> allows you to run
+    applications which are not 
+    applets inside the <interface>Panel</interface> as if they were
+    applets.  Applications 
+    which you pull into the <interface>Panel</interface>, even though
+    they are not GNOME 
     applets, are called "swallowed applications".  Applications do not
     have to be GNOME-compliant to be swallowed.  In general, the only
     constraints for swallowing an application are that the application
     must be small enough to fit in your panel and you must know the
     title of the window you would like to swallow.  In many cases, the
-    application can be automatically shrank to fit in the Panel, as
+    application can be automatically shrank to fit in the
+    <interface>Panel</interface>,  as
     specified in the <interface>Create Swallowed Application
     Dialog.</interface>.
    </para>
@@ -1109,26 +1144,33 @@
 	</para>
       <para> You can also enter any command in the
       <guilabel>Command</guilabel> field; this command will be
-      executed before adding the swallowing window to the panel (and
+      executed before adding the swallowing window to the
+      <interface>Panel</interface> (and 
       each time the panel is restarted afterwards). This is normally
-      used to start an application which you want the Panel to swallow.
+      used to start an application which you want the
+      <interface>Panel</interface> to swallow. 
    </para>
          
   </sect2>
   <sect2 id="statusdock">
    <title>Status Dock</title>
    <para>
-    The Status Dock is a Panel object which can hold Status Docklets -
-    small windows which applications place in the Status Dock to
+    The <interface>Status Dock</interface> is a
+    <interface>Panel</interface> object which can 
+    hold Status Docklets &mdash;
+    small windows which applications place in the <interface>Status
+    Dock</interface> to 
     provide status information.  Status Docklets can also be used to
     control the application. Essentially, Docklets are small (both in
     size and in complexity) applets.   GNOME currently does not have
-    many applications which place Status Docklets in the Status Dock.
-    However, GNOME's Status Dock is compatible with that on the K
+    many applications which place Status Docklets in the
+    <interface>Status Dock</interface>. 
+    However, GNOME's Status Dock is compatible with that of the K
     Desktop Environment (KDE), so KDE applications, such as
     <application>kscd</application>, may place Status Docklets in
-    GNOME's Status Dock.  Future versions of GNOME applications will
-    make use of this recently added Panel object.
+    GNOME's <interface>Status Dock</interface>.  Future versions of
+    GNOME applications will 
+    make use of this recently added <interface>Panel</interface> object.
    </para>
    <figure id="statusdockfig">
      <title>Example Status Dock With Docklet</title>
@@ -1140,7 +1182,8 @@
      </screenshot>
     </figure>
    <para>
-    The above example shows the Status Dock with a Status Docklet from
+    The above example shows the <interface>Status Dock</interface>
+    with a Status Docklet from 
     the <application>kscd</application> CD player program.  This
     particular Docklet is used to open and close the main
     <application>kscd</application> window without ending the program.
@@ -1164,16 +1207,18 @@
       <primary>Panel</primary> <secondary>adding applets
       to</secondary><see>"Applets"</see> </indexterm> -->
 
-	To move any object on the panel to a different location, just
+	To move any object on the <interface>Panel</interface> to a
+	different location, just 
       drag it with the middle mouse button to the desired place, or
       right-click on it and choose <guimenuitem>Move
       applet</guimenuitem>. You can move it to a dfferent location on
-      the same Panel, or to a different Panel. If in the course of
+      the same <interface>Panel</interface>, or to a different
+      <interface>Panel</interface>.  If in the course of
       this movement it hits other objects, the behavior depends on the
       global preferences you set (see <xref linkend="appletstab">):
       the object you are moving can switch places with other objects,
       "push" all objects it meets, or "jump" over all other objects
-      without disturbing them. You can also overrun the default
+      without disturbing them. You can also override the default
       behavior by holding <keycap>Shift</keycap> button (for "push"
       mode), <keycap>Ctrl</keycap> (for "switched" mode), or
       <keycap>Alt</keycap> (for "free" mode, i.e. jumping other other
@@ -1182,22 +1227,26 @@
     </sect2>
 
     <sect2 id="remove">
-      <title> Removing objects from the panel</title>  <para>  To
-      remove an object from the panel, right-click on it and choose
-      <guimenuitem>Remove from panel</guimenuitem> form the pop-up
+      <title> Removing objects from the panel</title>  
+      <para>  
+      To remove an object from the <interface>Panel</interface>,
+      right-click on it and choose 
+      <guimenuitem>Remove from panel</guimenuitem> from the pop-up
       menu.
       </para>
     </sect2>
 
 
-    <sect2 id="add">   <title>Adding objects to the panel</title>
+    <sect2 id="add">   
+    <title>Adding objects to the panel</title>
       
       <para>
 	<indexterm id="idx-a13">
 	  <primary>Panel</primary> <secondary>adding applications
 	  to</secondary>
 	</indexterm>
-	By default, the GNOME panel contains very few basic objects,
+	By default, the GNOME <interface>Panel</interface> contains
+	very few basic objects, 
 	such as the <guimenu>Main Menu</guimenu>. However, there is a
 	number of things you can add to it. For example, every menu
 	item in the <guimenu>Main Menu</guimenu> or its submenus can
@@ -1214,13 +1263,14 @@
 	    <term> <emphasis>Applets</emphasis></term>
 	    <listitem>
 	      <para>
-		To add an applet, right-click on the panel and select
+		To add an applet, right-click on the
+		<interface>Panel</interface> and select 
 		<menuchoice><guisubmenu>Add to panel</guisubmenu>
 		<guisubmenu>Applet</guisubmenu></menuchoice> from the
 		<guimenu>Panel</guimenu> menu. This will show you the
 		menu of all the applets on your system, divided into
 		categories; choosing any applet from this menu will
-		add it to the panel.
+		add it to the <interface>Panel</interface>.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1241,10 +1291,10 @@
 		dialog is virtually identical to <interface>Launcher
 		Properties</interface> dialog, so we refer the reader
 		to <xref linkend="launchers"> for detailed
-		description.  detail.
+		description.  
 	      </para>
 	      <figure>
-		<title>The Create Launcher Dialog</title>
+		<title>The Create launcher dialog</title>
 		<screenshot>
 		  <screeninfo>Create launcher dialog</screeninfo>
 		  <graphic fileref="./figures/create_launcher" format="png"
@@ -1253,7 +1303,8 @@
 		</screenshot>
 	      </figure>
 	      <para>
-		You can also add to the panel any existing menu item
+		You can also add to the <interface>Panel</interface>
+		any existing menu item 
 		or any launcher on your desktop: just drag it to the
 		panel and drop there. Be careful to drop in the empty
 		space on the panel and not on any existing object: for
@@ -1280,20 +1331,21 @@
 		<guimenu>Favorites</guimenu> menu.
 	      </para>
 	      <para>
-		You can also add the <guimenu>Main menu</guimenu> or
+		You can also add the <guimenu>Main Menu</guimenu> or
 		any its submenu  as a new menu to the panel by
 		right-clicking  on the menu title (the top line of the
 		menu, separated from menu items by a thin line) and
 		selecting <guimenuitem>Add this as a menu to the
 		panel</guimenuitem>.
 	      </para>
-	    <para> Advanced users can also create new menus
+	    <para> 
+              Advanced users can also create new menus
 	      manually. To do so, you need to know that internally,
 	      GNOME represents a menu by a directory, with menu items
 	      presented by files of special type
 	      (<filename>.desktop</filename> files &mdash; these files
 	      also represent the application launchers), and submenus
-	      presented by directories. For example, the
+	      presented by subdirectories. For example, the
 	      <guimenu>Favorites</guimenu> menu corresponds to the
 	      directory <filename>~/.gnome/apps</filename> (where
 	      <filename>~</filename> denotes your home directory), and
@@ -1306,11 +1358,13 @@
 	      directories you might have (for example, from
 	      <filename>/usr/share/gnome/apps</filename>) or from the
 	      desktop, and then drag and drop this directory from the
-	      File Manager window to the panel. This will add this
-	      directory as a menu to the panel.
+	      File Manager window to the
+	      <interface>Panel</interface>. This will add this 
+	      directory as a menu to the <interface>Panel</interface>.
 	    </para>
 	    <para>
-	      After you have added a menu to the panel using any of
+	      After you have added a menu to the
+	      <interface>Panel</interface> using any of 
 	      the methods described above, you can modify its
 	      properties (for example, add new items to this menu or
 	      change the icon used by the menu), as described in <xref
@@ -1336,7 +1390,7 @@
 		also work for adding new items to the drawer.
 	    </para>
 	    <para>
-	      You can also add the <guimenu>Main menu</guimenu> or any
+	      You can also add the <guimenu>Main Menu</guimenu> or any
 		its submenu as a new drawer to the panel by
 		right-clicking on the menu title and selecting
 		<guimenuitem>Add this as a drawer to the
@@ -1376,9 +1430,9 @@
 	<indexterm id="idx-a8">
 	  <primary>Panel</primary> <secondary>adding new</secondary>
 	</indexterm>
-	To add a new Panel to your desktop, select the
+	To add a new <interface>Panel</interface> to your desktop, select the
 	<guimenuitem>Create panel</guimenuitem> command from
-	<guisubmenu>Panel</guisubmenu> menu. You have a choice of four
+	<guisubmenu>Panel</guisubmenu> menu. You have a choice of five
 	possible panel types:
       </para>
       <itemizedlist mark="bullet">
@@ -1436,6 +1490,11 @@
 		not necessarily along one of the edges.
 	      </para>
 	    </listitem>
+	    <listitem>
+	      <para>
+		<guilabel> Menu Panel</guilabel> &mdash; FIXME
+	      </para>
+	    </listitem>
 	  </itemizedlist>
 
 	<tip>
@@ -1458,12 +1517,14 @@
 	<indexterm id="idx-a7">
 	  <primary>Panel</primary> <secondary>moving</secondary>
 	</indexterm>
-	  Any Panel you have on your desktop can be moved by using the
+	  Any <interface>Panel</interface> you have on your desktop
+	  can be moved by using the 
 	  middle mouse button, or by simultaneously pressing the left
 	  and right mouse buttons, to drag the panel to the desired
 	  edge of your screen. If you do not have a middle mouse
 	  button and did not configure your mouse to emulate a middle
-	  button you may also move a Panel by changing its location in
+	  button you may also move a <interface>Panel</interface> by
+	  changing its location in 
 	  the <interface>Panel properties</interface> dialog.  You can
 	  read more about this in <xref linkend="panelproperties"> of
 	  this documentation.
