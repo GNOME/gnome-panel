@@ -34,6 +34,8 @@ extern GSList *applets_last;
 extern GtkTooltips *panel_tooltips;
 extern GlobalConfig global_config;
 
+static GtkWidget *run_dialog = NULL;
+
 static void 
 string_callback (GtkWidget *w, int button_num, gpointer data)
 {
@@ -191,6 +193,8 @@ browse(GtkWidget *w, GtkWidget *entry)
 	GtkFileSelection *fsel;
 
 	fsel = GTK_FILE_SELECTION(gtk_file_selection_new(_("Browse...")));
+	gtk_window_set_transient_for (GTK_WINDOW (fsel),
+				      GTK_WINDOW (run_dialog));
 	gtk_object_set_user_data(GTK_OBJECT(fsel), entry);
 
 	gtk_signal_connect (GTK_OBJECT (fsel->ok_button), "clicked",
@@ -211,8 +215,6 @@ browse(GtkWidget *w, GtkWidget *entry)
 	gdk_window_raise (GTK_WIDGET (fsel)->window);
 }
 
-static GtkWidget *dialog = NULL;
-
 void
 show_run_dialog (void)
 {
@@ -221,29 +223,29 @@ show_run_dialog (void)
 	GtkWidget *hbox;
 	GtkWidget *w;
 
-	if(dialog) {
-		gtk_widget_show_now(dialog);
-		gdk_window_raise(dialog->window);
+	if(run_dialog != NULL) {
+		gtk_widget_show_now(run_dialog);
+		gdk_window_raise(run_dialog->window);
 		return;
 	}
 
-	dialog = gnome_dialog_new(_("Run Program"), NULL);
-	gnome_window_icon_set_from_file (GTK_WINDOW (dialog),
+	run_dialog = gnome_dialog_new(_("Run Program"), NULL);
+	gnome_window_icon_set_from_file (GTK_WINDOW (run_dialog),
 					 GNOME_ICONDIR"/gnome-run.png");
-	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
+	gtk_signal_connect(GTK_OBJECT(run_dialog), "destroy",
 			   GTK_SIGNAL_FUNC(gtk_widget_destroyed),
-			   &dialog);
-	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
-	gtk_window_set_wmclass (GTK_WINDOW (dialog), "run_dialog", "Panel");
-	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (dialog),
+			   &run_dialog);
+	gtk_window_position(GTK_WINDOW(run_dialog), GTK_WIN_POS_MOUSE);
+	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (run_dialog),
 						_("Run"),
 						GNOME_STOCK_PIXMAP_EXEC);
-	gnome_dialog_append_button (GNOME_DIALOG (dialog),
+	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
 				    GNOME_STOCK_BUTTON_CANCEL);
-	gnome_dialog_append_button (GNOME_DIALOG (dialog),
+	gnome_dialog_append_button (GNOME_DIALOG (run_dialog),
 				    GNOME_STOCK_BUTTON_HELP);
 
-	gnome_dialog_set_default (GNOME_DIALOG (dialog), 0);
+	gnome_dialog_set_default (GNOME_DIALOG (run_dialog), 0);
 
 	hbox = gtk_hbox_new(0, FALSE);
 	
@@ -254,13 +256,13 @@ show_run_dialog (void)
 
 	entry = gnome_entry_gtk_entry (GNOME_ENTRY (gentry));
 
-	gtk_window_set_focus (GTK_WINDOW (dialog), entry);
+	gtk_window_set_focus (GTK_WINDOW (run_dialog), entry);
 	gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
-	gtk_signal_connect (GTK_OBJECT (dialog), "clicked", 
+	gtk_signal_connect (GTK_OBJECT (run_dialog), "clicked", 
 			    GTK_SIGNAL_FUNC (string_callback), NULL);
-	gtk_object_set_data (GTK_OBJECT (dialog), "entry", entry);
+	gtk_object_set_data (GTK_OBJECT (run_dialog), "entry", entry);
 
-	gnome_dialog_editable_enters (GNOME_DIALOG (dialog),
+	gnome_dialog_editable_enters (GNOME_DIALOG (run_dialog),
 				      GTK_EDITABLE (entry));
 
 	w = gtk_button_new_with_label(_("Browse..."));
@@ -269,16 +271,16 @@ show_run_dialog (void)
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE,
 			    GNOME_PAD_SMALL);
 
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox), hbox,
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (run_dialog)->vbox), hbox,
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
 	w = gtk_check_button_new_with_label(_("Run in terminal"));
-	gtk_object_set_data (GTK_OBJECT (dialog), "terminal", w);
-	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (dialog)->vbox), w,
+	gtk_object_set_data (GTK_OBJECT (run_dialog), "terminal", w);
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (run_dialog)->vbox), w,
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
-	gtk_widget_show_all (dialog);
-	panel_set_dialog_layer (dialog);
+	gtk_widget_show_all (run_dialog);
+	panel_set_dialog_layer (run_dialog);
 }
 
 void
@@ -290,13 +292,13 @@ show_run_dialog_with_text (const char *text)
 
 	show_run_dialog();
 
-	if( ! dialog) {
+	if(run_dialog == NULL) {
 		/* this should NEVER happen, but I'm paranoid */
 		g_warning("Eeeeeeek!");
 		return;
 	}
 
-	entry = gtk_object_get_data(GTK_OBJECT(dialog), "entry");
+	entry = gtk_object_get_data(GTK_OBJECT(run_dialog), "entry");
 
 	gtk_entry_set_text(GTK_ENTRY(entry), text);
 }
