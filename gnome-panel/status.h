@@ -43,7 +43,7 @@ int load_status_applet(PanelWidget *panel, int pos);
 void status_applet_update(StatusApplet *s);
 void status_applet_put_offscreen(StatusApplet *s);
 
-gboolean got_spot_with_winid(guint32 winid);
+StatusSpot * status_applet_get_ss(guint32 winid);
 
 /*inhibit adding and updating for the purpose of quitting*/
 extern int status_inhibit;

@@ -66,7 +66,7 @@ try_adding_status(guint32 winid)
 	gulong *data;
 	int size;
 
-	if(got_spot_with_winid(winid))
+	if(status_applet_get_ss(winid))
 		return;
 
 	data = get_typed_property_data (GDK_DISPLAY(),
@@ -233,12 +233,18 @@ status_event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
 	if(xevent->type == ClientMessage) {
 		if(xevent->xclient.message_type == KWM_MODULE_DOCKWIN_ADD &&
-		   !got_spot_with_winid(xevent->xclient.data.l[0])) {
+		   !status_applet_get_ss(xevent->xclient.data.l[0])) {
 			Window w = xevent->xclient.data.l[0];
 			StatusSpot *ss;
 			ss = new_status_spot();
 			if(ss)
 				gtk_socket_steal(GTK_SOCKET(ss->socket), w);
+		} else if(xevent->xclient.message_type ==
+			  KWM_MODULE_DOCKWIN_REMOVE) {
+			StatusSpot *ss;
+			ss = status_applet_get_ss(xevent->xclient.data.l[0]);
+			if(ss)
+				status_spot_remove(ss,TRUE);
 		}
 	}
 

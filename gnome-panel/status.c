@@ -48,8 +48,8 @@ extern PortableServer_POA thepoa;
 #define DPRINTD(d)
 #endif
 
-gboolean
-got_spot_with_winid(guint32 winid)
+StatusSpot *
+status_applet_get_ss(guint32 winid)
 {
 	GSList *li;
 	for(li = spots; li; li = li->next) {
@@ -57,9 +57,9 @@ got_spot_with_winid(guint32 winid)
 		GtkSocket *s = GTK_SOCKET(ss->socket);
 		if(s->plug_window &&
 		   GDK_WINDOW_XWINDOW(s->plug_window) == winid)
-			return TRUE;
+			return ss;
 	}
-	return FALSE;
+	return NULL;
 }
 
 
