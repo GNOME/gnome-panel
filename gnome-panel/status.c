@@ -62,6 +62,23 @@ status_applet_get_ss(guint32 winid)
 	return NULL;
 }
 
+static void
+ensure_fixed_and_offscreen(void)
+{
+	if(!offscreen) {
+		/* this is not supposed to happen so give a warning */
+		g_warning("offscreen not created yet, we must be on crack");
+		status_applet_create_offscreen();
+	}
+	if(!fixed) {
+		/* this is even weirder */
+		g_warning("fixed not created yet, we must really be on crack");
+		status_applet_create_offscreen();
+		fixed = gtk_fixed_new();
+		gtk_container_add(GTK_CONTAINER(offscreen), fixed);
+		gtk_widget_show_now(fixed);
+	}
+}
 
 void
 status_applet_update(StatusApplet *s)
@@ -157,35 +174,16 @@ new_status_spot(void)
 
 	ss->socket = gtk_socket_new();
 	gtk_widget_set_usize(ss->socket,DOCKLET_SPOT,DOCKLET_SPOT);
-#if 0	
-	if(!the_status && !offscreen) {
-		offscreen = gtk_window_new(GTK_WINDOW_POPUP);
-#ifdef DEBUG_STATUS
-		gtk_widget_set_uposition(offscreen,10,10);
-#else
-		gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
-					 gdk_screen_height()+10);
-#endif
 
-		/*it should be null at this point*/
-		g_assert(!fixed);
-		
-		fixed = gtk_fixed_new();
-		gtk_widget_show(fixed);
+	/* ensures that fixed and offscreen exist, even though they
+	 * should have been created long ago, but I guess it's better
+	 * then failing an assert and disappearing */
+	ensure_fixed_and_offscreen();
 
-		gtk_container_add(GTK_CONTAINER(offscreen),fixed);
+	gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
+	if(the_status)
+		status_applet_update(the_status);
 
-		gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
-		gtk_widget_show_now(offscreen);
-	} else {
-#endif
-		g_assert(fixed);
-		gtk_fixed_put(GTK_FIXED(fixed),ss->socket,0,0);
-		if(the_status)
-			status_applet_update(the_status);
-#if 0
-	}
-#endif
 	gtk_widget_show_now(ss->socket);
 	gtk_signal_connect(GTK_OBJECT(ss->socket),"destroy",
 			   GTK_SIGNAL_FUNC(status_socket_destroyed),
@@ -247,24 +245,17 @@ void
 status_applet_put_offscreen(StatusApplet *s)
 {
 	DPUTS("PUT_OFFSCREEN");
-	g_assert(offscreen);
-#if 0
-	if(!offscreen) {
-		DPUTS("CREATE OFFSCREEN");
-		offscreen = gtk_window_new(GTK_WINDOW_POPUP);
-#ifdef DEBUG_STATUS
-		gtk_widget_set_uposition(offscreen,10,10);
-#else
-		gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
-					 gdk_screen_height()+10);
-#endif
-		gtk_widget_show_now(offscreen);
+
+	/* ensures that fixed and offscreen exist, even though they
+	 * should have been created long ago, but I guess it's better
+	 * then failing an assert and disappearing */
+	ensure_fixed_and_offscreen();
+
+	if(fixed->parent != offscreen) {
+		DPUTS("REPARENT");
+		gtk_widget_reparent(fixed, offscreen);
+		DPUTS("REPARENT DONE");
 	}
-#endif
-	g_assert(GTK_WIDGET_REALIZED(offscreen));
-	DPUTS("REPARENT");
-	gtk_widget_reparent(fixed,offscreen);
-	DPUTS("REPARENT DONE");
 }
 
 void
@@ -275,11 +266,19 @@ status_applet_create_offscreen(void)
 #ifdef DEBUG_STATUS
 	gtk_widget_set_uposition(offscreen,10,10);
 #else
-	gtk_widget_set_uposition(offscreen,gdk_screen_width()+10,
+	gtk_widget_set_uposition(offscreen, gdk_screen_width()+10,
 				 gdk_screen_height()+10);
 #endif
+	if(!fixed) {
+		fixed = gtk_fixed_new();
+		gtk_widget_show(fixed);
+
+		gtk_container_add(GTK_CONTAINER(offscreen), fixed);
+	}
+
 	gtk_widget_show_now(offscreen);
 
+	/* if this fails we are seriously in trouble */
 	g_assert(offscreen->window);
 
 	xstuff_setup_kde_dock_thingie(offscreen->window);
@@ -310,9 +309,11 @@ applet_destroy(GtkWidget *w, StatusApplet *s)
 static void
 reparent_fixed(GtkWidget *frame)
 {
-	DPUTS("REPARENT");
-	gtk_widget_reparent(fixed,frame);
-	DPUTS("REPARENT DONE");
+	if(fixed->parent != frame) {
+		DPUTS("REPARENT");
+		gtk_widget_reparent(fixed, frame);
+		DPUTS("REPARENT DONE");
+	}
 }
 
 gboolean
@@ -342,9 +343,9 @@ load_status_applet(PanelWidget *panel, int pos, gboolean exactpos)
 		fixed = gtk_fixed_new();
 		gtk_widget_show(fixed);
 
-		gtk_container_add(GTK_CONTAINER(frame),fixed);
+		gtk_container_add(GTK_CONTAINER(frame), fixed);
 	} else {
-		gtk_signal_connect_after(GTK_OBJECT(frame),"realize",
+		gtk_signal_connect_after(GTK_OBJECT(frame), "realize",
 					 GTK_SIGNAL_FUNC(reparent_fixed),
 					 NULL);
 	}
