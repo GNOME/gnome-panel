@@ -33,10 +33,8 @@ extern GnomeClient *client;
 
 GlobalConfig global_config;
 
-#if 0
 char *panel_cfg_path=NULL;
 char *old_panel_cfg_path=NULL;
-#endif
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -184,38 +182,38 @@ static int
 session_save_timeout(gpointer data)
 {
 	int cookie = GPOINTER_TO_INT(data);
-	if(cookie == ss_cookie) {
-#ifdef PANEL_DEBUG	
-		printf("SAVE TIMEOUT (%u)\n",ss_cookie);
-#endif
-		if(ss_interactive) {
-			ss_timeout_dlg =
-				gnome_message_box_new(_("An applet is not "
-							"responding to a "
-							"save request,\n"
-							"should I stop "
-							"waiting and cancel "
-							"the applet?"),
-						      GNOME_MESSAGE_BOX_WARNING,
-						      GNOME_STOCK_BUTTON_CANCEL,
-						      NULL);
-			gtk_signal_connect(GTK_OBJECT(ss_timeout_dlg),"destroy",
-					   GTK_SIGNAL_FUNC(ss_cancel_wait),
-					   GINT_TO_POINTER(cookie));
-			gnome_dialog_close_hides(GNOME_DIALOG(ss_timeout_dlg),
-						 FALSE);
-			gnome_dialog_set_close(GNOME_DIALOG(ss_timeout_dlg),
-					       TRUE);
-			gtk_widget_show(ss_timeout_dlg);
-			return FALSE;
-		}
+	int res;
+	if(cookie != ss_cookie)
+		return FALSE;
 
-		/*increment cookie so that the done_session_save will fail*/
+#ifdef PANEL_DEBUG	
+	printf("SAVE TIMEOUT (%u)\n",ss_cookie);
+#endif
+	if (!ss_interactive)
+		return FALSE;
+
+	ss_timeout_dlg =
+		gnome_message_box_new(_("An applet is not "
+					"responding to a "
+					"save request.\n"
+					"Remove the applet "
+					"or continue waiting?"),
+				      GNOME_MESSAGE_BOX_WARNING,
+				      NULL);
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
+						_("Remove applet"),
+						GNOME_STOCK_PIXMAP_TRASH);
+	gnome_dialog_append_button_with_pixmap (GNOME_DIALOG (ss_timeout_dlg),
+						_("Continue waiting"),
+						GNOME_STOCK_PIXMAP_TIMER);
+	
+	if (0 == gnome_dialog_run_and_close (GNOME_DIALOG (ss_timeout_dlg))) {
 		ss_cookie++;
 		g_warning(_("Timed out on sending session save to an applet"));
 		save_next_applet();
+		return FALSE;
 	}
-	return FALSE;
+	return TRUE;
 }
 
 static void
@@ -510,22 +508,25 @@ do_session_save(GnomeClient *client,
 {
 	int num;
 	char *s;
-#if 0
+#if PER_SESSION_CONFIGURATION
 	gchar *new_args[] = { "rm", "-r", NULL };
+#endif /* PER_SESSION_CONFIGURATION */
 
 	if (panel_cfg_path)
 		g_free(panel_cfg_path);
 
+#ifdef PER_SESSION_CONFIGURATION
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED &&
 	    GNOME_CLIENT (client)->restart_style != GNOME_RESTART_NEVER)
 		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
-		;
-	panel_cfg_path = g_strdup ("/panel.d/default/");
+#endif /* PER_SESSION_CONFIGURATION */		
+		panel_cfg_path = g_strdup ("/panel.d/default/");
 
+#ifdef PER_SESSION_CONFIGURATION
 	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
 	gnome_client_set_discard_command (client, 3, new_args);
-#endif
+#endif /* PER_SESSION_CONFIGURATION */
 
 #ifdef PANEL_DEBUG	
 	printf("Saving to [%s]\n",PANEL_CONFIG_PATH);
@@ -570,18 +571,22 @@ do_session_save(GnomeClient *client,
 void
 panel_config_sync(void)
 {
+	int ncs = need_complete_save;
+	int ats = applets_to_sync;
+	int pts = panels_to_sync;
+
 	if(need_complete_save ||
 	   applets_to_sync ||
 	   panels_to_sync) {
+#ifdef PER_SESSION_CONFIGURATION
 		if (!(gnome_client_get_flags(client) & 
 		      GNOME_CLIENT_IS_CONNECTED)) {
-			int ncs = need_complete_save;
-			int ats = applets_to_sync;
-			int pts = panels_to_sync;
+#endif
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			do_session_save(client,ncs,ats,pts);
+#ifdef PER_SESSION_CONFIGURATION
 		} else {
 			/*prevent possible races by doing this before requesting
 			  save*/
@@ -591,6 +596,7 @@ panel_config_sync(void)
 			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
 						   GNOME_INTERACT_NONE, FALSE, FALSE);
 		}
+#endif /* PER_SESSION_CONFIGURATION */
 	}
 }
 
