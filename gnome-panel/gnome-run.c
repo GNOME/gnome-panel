@@ -198,12 +198,59 @@ get_environment (int *argc, char ***argv, int *envc, char ***envv)
 	g_list_free (envar);
 }
 
+static void
+launch_selected (GtkTreeModel *model,
+		 GtkTreeIter  *iter,
+		 GtkWidget    *dialog)
+{
+	GnomeDesktopItem *ditem;
+	GError           *error = NULL;
+	GtkToggleButton  *terminal;
+	char             *name;
+
+	gtk_tree_model_get (model, iter, COLUMN_NAME, &name, -1);
+
+	if (!name)
+		return;
+                        
+	ditem = gnome_desktop_item_new_from_uri (name,
+						 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+						 &error);
+
+	g_free (name);
+
+	if (!ditem) {
+		panel_error_dialog ("failed_to_load_desktop",
+				    _("Failed to load this program!\n%s"),
+				    error->message);
+		g_clear_error (&error);
+		return;
+	}
+
+        terminal = GTK_TOGGLE_BUTTON (
+			g_object_get_data (G_OBJECT (dialog), "terminal"));
+
+	/* Honor "run in terminal" button */
+	gnome_desktop_item_set_boolean (ditem,
+					GNOME_DESKTOP_ITEM_TERMINAL,
+					terminal->active);
+
+	if (!gnome_desktop_item_launch (ditem, NULL, 0, &error)) {
+		panel_error_dialog ("failed_to_load_desktop",
+				    _("Failed to load this program!\n%s"),
+				    error->message);
+		g_clear_error (&error);
+		return;
+	}
+
+	gnome_desktop_item_unref (ditem);
+}
+
 static void 
 run_dialog_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkEntry *entry;
         GtkWidget *list;
-	GtkToggleButton *terminal;
 	char **argv = NULL;
 	char **temp_argv = NULL;
 	int argc, temp_argc;
@@ -227,15 +274,11 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 	}
         
         list = g_object_get_data (G_OBJECT (run_dialog), "dentry_list");
-        terminal = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT(w),
-							 "terminal"));
         
         if (g_object_get_data (G_OBJECT (run_dialog), "use_list")) {
-                char *name;
 		GtkTreeSelection *selection;
 		GtkTreeModel *model;
 		GtkTreeIter iter;
-		GValue value = {0, };
 
 		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 
@@ -244,48 +287,10 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 							&model, &iter))
 			return;
 
-		gtk_tree_model_get_value (model, &iter,
-					  COLUMN_NAME,
-					  &value);
-		name = g_strdup (g_value_get_string (&value));
-		g_value_unset (&value);
-
-                if (name != NULL) {
-			GError *error = NULL;
-                        GnomeDesktopItem *ditem;
-                        
-                        ditem = gnome_desktop_item_new_from_uri (name,
-								 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-								 &error);
-			if (ditem != NULL) {
-                                /* Honor "run in terminal" button */
-				gnome_desktop_item_set_boolean (ditem,
-								GNOME_DESKTOP_ITEM_TERMINAL,
-								terminal->active);
-			}
-
-                        if (ditem == NULL) {
-                                panel_error_dialog ("failed_to_load_desktop",
-						    _("Failed to load this program!\n%s"),
-						    error->message);
-				g_clear_error (&error);
-			} else if ( ! gnome_desktop_item_launch (ditem,
-								 NULL /* file_list */,
-								 0 /* flags */,
-								 &error)) {
-                                panel_error_dialog ("failed_to_load_desktop",
-						    _("Failed to load this program!\n%s"),
-						    error->message);
-				g_clear_error (&error);
-			}
-
-			if (ditem != NULL) {
-				gnome_desktop_item_unref (ditem);
-			}
-
-			g_free (name);
-                }
+		launch_selected (model, &iter, w);
         } else {
+		GtkToggleButton *terminal;
+
                 entry = GTK_ENTRY (g_object_get_data (G_OBJECT (w), "entry"));
 
                 s = gtk_entry_get_text(entry);
@@ -331,6 +336,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
                 }
 
                 get_environment (&temp_argc, &temp_argv, &envc, &envv);
+
+		terminal = GTK_TOGGLE_BUTTON (
+				g_object_get_data (G_OBJECT (w), "terminal"));
 
                 if (terminal->active) {
                         char **term_argv;
@@ -940,13 +948,29 @@ unset_selected (GtkWidget *dialog)
 }
 
 static void
+selection_activated (GtkTreeView       *tree_view,
+		     GtkTreePath       *path,
+		     GtkTreeViewColumn *column,
+		     GtkWidget         *dialog)
+{
+	GtkTreeModel *model;
+	GtkTreeIter   iter;
+
+	model = gtk_tree_view_get_model (tree_view);
+	gtk_tree_model_get_iter (model, &iter, path);
+
+	launch_selected (model, &iter, dialog);
+
+	gtk_widget_destroy (dialog);
+}
+
+static void
 selection_changed (GtkTreeSelection *selection,
-		   gpointer data)
+		   GtkWidget        *dialog)
 {
         GtkWidget *label;
         GtkWidget *gpixmap;
         GtkWidget *desc_label;
-        GtkWidget *dialog = data;
         gchar *name;
 	GtkTreeModel *model;
 	GtkTreeIter iter;
@@ -1044,10 +1068,11 @@ create_simple_contents (void)
 
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-        g_signal_connect (G_OBJECT (selection),
-			  "changed",
-			  G_CALLBACK (selection_changed),
-			  run_dialog);
+        g_signal_connect (selection, "changed",
+			  G_CALLBACK (selection_changed), run_dialog);
+
+        g_signal_connect (list, "row-activated",
+			  G_CALLBACK (selection_activated), run_dialog);
         
         w = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (w),

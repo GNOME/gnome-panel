@@ -310,7 +310,7 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 
 	set_ditem_sensitive (GTK_DIALOG (dialog),
 			     GNOME_DITEM_EDIT (dedit),
-			     NULL /* loc */, dir);
+			     dirfile, NULL);
 
 	g_signal_connect (G_OBJECT (dedit), "changed",
 			    G_CALLBACK (ditem_properties_changed),
@@ -319,14 +319,6 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 	g_signal_connect (G_OBJECT (dialog), "destroy",
 			    G_CALLBACK (ditem_properties_close),
 			    dedit);
-
-	/* YAIKES, the problem here is that the notebook will attempt
-	 * to destroy the dedit, so if we unref it in the close handler,
-	 * it will be finalized by the time the notebook will destroy it,
-	 * dedit is just a horrible thing */
-	g_signal_connect (G_OBJECT (dedit), "destroy",
-			  G_CALLBACK (g_object_unref),
-			  NULL);
 
 	g_object_set_data (G_OBJECT (dialog), "GnomeDItemEdit", dedit);
 

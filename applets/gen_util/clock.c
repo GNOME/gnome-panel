@@ -609,6 +609,7 @@ fill_clock_applet(PanelApplet *applet)
 
 	create_clock_widget (cd);
 
+	gtk_container_set_border_width (GTK_CONTAINER (cd->applet), GNOME_PAD);
 	gtk_container_add (GTK_CONTAINER (cd->applet), cd->clockw);
 
 	gtk_widget_show (cd->applet);

@@ -751,7 +751,7 @@ typedef struct {
 	PanelWidget *panel_widget;
 	int          position;
 	char        *unique_id;
-	guint        panel_destroy_id;
+	gulong       destroy_handler;
 } PanelAppletToLoad;
 
 static GSList *panel_applets_to_load = NULL;
@@ -759,14 +759,16 @@ static GSList *panel_applets_to_load = NULL;
 static void
 whack_applet_to_load (PanelAppletToLoad *applet)
 {
-	if (applet->panel_destroy_id > 0)
-		g_source_remove (applet->panel_destroy_id);
-	applet->panel_destroy_id = 0;
+	if (applet->destroy_handler > 0)
+		g_signal_handler_disconnect (applet->panel_widget,
+					     applet->destroy_handler);
+	applet->destroy_handler = 0;
+
 	g_free (applet->unique_id);
 	applet->unique_id = NULL;
+
 	g_free (applet);
 }
-
 
 static gboolean
 panel_applet_load_idle_handler (gpointer dummmy)
@@ -795,7 +797,7 @@ panel_destroyed_while_loading (GtkWidget *panel, gpointer data)
 {
 	PanelAppletToLoad *applet = data;
 
-	applet->panel_destroy_id = 0;
+	applet->destroy_handler = 0;
 
 	panel_applets_to_load =
 		g_slist_remove (panel_applets_to_load, applet);
@@ -862,13 +864,13 @@ panel_applet_load_from_unique_id (AppletType   type,
 
 		applet = g_new0 (PanelAppletToLoad, 1);
 
-		applet->panel_widget = panel_widget;
-		applet->position     = position;
-		applet->unique_id    = g_strdup (unique_id);
-		applet->panel_destroy_id = g_signal_connect
-			(G_OBJECT (panel_widget), "destroy",
-			 G_CALLBACK (panel_destroyed_while_loading),
-			 applet);
+		applet->panel_widget    = panel_widget;
+		applet->position        = position;
+		applet->unique_id       = g_strdup (unique_id);
+		applet->destroy_handler =
+				g_signal_connect (panel_widget, "destroy",
+						  G_CALLBACK (panel_destroyed_while_loading),
+						  applet);
 
 		if (!panel_applets_to_load)
 			g_idle_add (panel_applet_load_idle_handler, NULL);

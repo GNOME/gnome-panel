@@ -1,5 +1,21 @@
 2002-04-02  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (whack_applet_to_load),
+	(panel_destroyed_while_loading),
+	(panel_applet_load_from_unique_id): use g_signal_handler_disconnect
+	instead of g_source_remove (76981)
+
+	* gnome-run.c: (launch_selected), (run_dialog_response),
+	(selection_activated), (selection_changed),
+	(create_simple_contents): launch the selected item when you double click
+	on it (77088)
+
+	* menu-ditem.c: (panel_edit_direntry): pass the .directory uri to
+	set_ditem_sensitive instead of the directory. Also the destroy handler
+	crack (74871)
+
+2002-04-02  Mark McLoughlin  <mark@skynet.ie>
+
 	* foobar-widget.c: (foobar_search), (append_actions_menu):
 	add 'Search for File...' to actions menu. Based on patch by
 	Dennis Cranston, #73183.
