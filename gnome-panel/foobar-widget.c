@@ -29,7 +29,6 @@
 #include "basep-widget.h"
 #include "panel_config_global.h"
 #include "panel-util.h"
-#include "panel-gconf.h"
 #include "drawer-widget.h"
 #include "gnome-run.h"
 #include "gwmh.h"
@@ -109,10 +108,7 @@ pixmap_menu_item_new (const char *text, const char *try_file)
 	item = gtk_image_menu_item_new ();
 
 	/* FIXME: listen to this gconf client key */
-	if (try_file != NULL &&
-	    gconf_client_get_bool (panel_gconf_get_client (),
-				   "/desktop/gnome/interface/menus-have-icons",
-				   NULL)) {
+	if (try_file != NULL && panel_menu_have_icons ()) {
 		GtkWidget *image;
 		GdkPixbuf *pixbuf;
 		char *file;
@@ -163,9 +159,7 @@ add_tearoff (GtkMenuShell *menu)
 {
 	GtkWidget *item;
 
-	if (!gconf_client_get_bool (panel_gconf_get_client (),
-				    "/desktop/gnome/interface/menus-have-tearoff",
-				    NULL))
+	if (!panel_menu_have_tearoff ())
 		return;
 	
 	item = gtk_tearoff_menu_item_new ();

@@ -170,17 +170,78 @@ static void setup_menuitem_try_pixmap (GtkWidget *menuitem,
 				       const char *try_file,
 				       const char *title);
 
+static gboolean panel_menus_have_icons   = TRUE;
+static gboolean panel_menus_have_tearoff = TRUE;
 
-
-
-static gboolean
-menus_have_icons (void)
+static void
+panel_menu_have_icons_notify (GConfClient *client,
+			      guint        cnxn_id,
+			      GConfEntry  *entry,
+			      gpointer     user_data)
 {
-	return gconf_client_get_bool (panel_gconf_get_client (),
-				      "/desktop/gnome/interface/menus-have-icons",
-				      NULL);
+	panel_menus_have_icons =
+		gconf_value_get_bool (gconf_entry_get_value (entry));
 }
 
+gboolean
+panel_menu_have_icons (void)
+{
+	static guint notify_id = 0;
+
+	if (!notify_id) {
+		GConfClient *client = panel_gconf_get_client ();
+		gchar       *key    = "/desktop/gnome/interface/menus-have-icons";
+		GError      *error  = NULL;
+
+		notify_id = gconf_client_notify_add (client, key, 
+						     panel_menu_have_icons_notify,
+						     NULL, NULL, &error);
+		if (error) {
+			g_warning (G_STRLOC ": failed to add notification for '%s' : '%s'",
+				   key, error->message);
+			g_error_free (error);
+		}
+		
+		panel_menus_have_icons = gconf_client_get_bool (client, key, NULL);
+	}
+
+	return panel_menus_have_icons;
+}
+
+static void
+panel_menu_have_tearoff_notify (GConfClient *client,
+				guint        cnxn_id,
+				GConfEntry  *entry,
+				gpointer     user_data)
+{
+	panel_menus_have_tearoff =
+		gconf_value_get_bool (gconf_entry_get_value (entry));
+}
+
+gboolean
+panel_menu_have_tearoff (void)
+{
+	static guint notify_id = 0;
+
+	if (!notify_id) {
+		GConfClient *client = panel_gconf_get_client ();
+		gchar       *key    = "/desktop/gnome/interface/menus-have-tearoff";
+		GError      *error  = NULL;
+
+		notify_id = gconf_client_notify_add (client, key, 
+						     panel_menu_have_tearoff_notify,
+						     NULL, NULL, &error);
+		if (error) {
+			g_warning (G_STRLOC ": failed to add notification for '%s' : '%s'",
+				   key, error->message);
+			g_error_free (error);
+		}
+		
+		panel_menus_have_tearoff = gconf_client_get_bool (client, key, NULL);
+	}
+
+	return panel_menus_have_tearoff;
+}
 /*to be called on startup to load in some of the directories,
   this makes the startup a little bit slower, and take up slightly
   more ram, but it also speeds up later operation*/
@@ -1822,14 +1883,14 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
 	gtk_widget_show (label);
 
-	if (menus_have_icons ()) {
+	if (panel_menu_have_icons ()) {
 		hbox = gtk_hbox_new (FALSE, 0);
 		gtk_widget_show (hbox);
 		gtk_container_add (GTK_CONTAINER (menuitem), hbox);
 	} else
 		gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
-	if (menus_have_icons ()) {
+	if (panel_menu_have_icons ()) {
 		align = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 		gtk_widget_show (align);
 		gtk_container_set_border_width (GTK_CONTAINER (align), 1);
@@ -1844,7 +1905,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 	}
 
-	if (menus_have_icons ())
+	if (panel_menu_have_icons ())
 		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
@@ -1876,7 +1937,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	};
 
 	GtkWidget *label;
-	gboolean icons_in_menus = menus_have_icons ();
+	gboolean icons_in_menus = panel_menu_have_icons ();
 
 	label = gtk_label_new (title);
 	gtk_misc_set_alignment (GTK_MISC(label), 0.0, 0.5);
@@ -2458,9 +2519,7 @@ menu_add_tearoff (GtkMenu       *menu,
 {
 	GtkWidget *menuitem;
 
-        if (!gconf_client_get_bool (panel_gconf_get_client (),
-				    "/desktop/gnome/interface/menus-have-tearoff",
-				    NULL))
+        if (!panel_menu_have_tearoff ())
 		return FALSE;
 
 	menuitem = tearoff_item_new ();
@@ -2735,7 +2794,7 @@ create_menuitem (GtkWidget *menu,
 				  G_CALLBACK(submenu_to_display), NULL);
 	}
 
-	if (menus_have_icons () && icon != NULL) {
+	if (panel_menu_have_icons () && icon != NULL) {
 		load_menu_image_deferred (menuitem, icon, fallback);
 	}
 
@@ -3006,9 +3065,8 @@ applet_menu_append (GtkWidget   *menu,
 
 	menuitem = gtk_image_menu_item_new ();
 
-	if (icon && menus_have_icons ()) {
+	if (panel_menu_have_icons () && icon)
 		load_menu_image_deferred (menuitem, icon, NULL);
-	}
 
 	setup_full_menuitem (menuitem, NULL, name, NULL, FALSE, NULL);
 
@@ -3432,10 +3490,8 @@ static void
 setup_menuitem_try_pixmap (GtkWidget *menuitem, const char *try_file,
 			   const char *title)
 {
-	if ( ! menus_have_icons ()) {
-		setup_menuitem (menuitem,
-				NULL /* pixmap */,
-				title);
+	if (!panel_menu_have_icons ()) {
+		setup_menuitem (menuitem, NULL, title);
 		return;
 	}
 

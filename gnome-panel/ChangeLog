@@ -1,3 +1,21 @@
+2001-12-04  Mark McLoughlin  <mark@skynet.ie>
+
+	Cache "menus-have-icons" and "menus-have-tearoff"
+	keys with notification.
+
+	* menu.[ch]:
+	(panel_menu_have_icons_notify): impl.
+	(panel_menu_have_icons): impl.
+	(panel_menu_have_tearoff_notify): impl
+	(panel_menu_have_tearoff): impl.
+	(setup_title_menuitem), (setup_full_menuitem), (menu_add_tearoff),
+	(create_menuitem), (applet_menu_append),
+	(setup_menuitem_try_pixmap): upd.
+
+	* tearoffitem.c: (tearoff_item_new): upd.
+
+	* foobar-widget.c: (pixmap_menu_item_new), (add_tearoff): upd.
+
 2001-12-04  Glynn Foster  <glynn.foster@sun.com>
 
 	* main.c: (main), panel-gconf.c, panelglobalconfig.schemas:

@@ -4,7 +4,7 @@
 #include <gconf/gconf-client.h>
 
 #include "main.h"
-#include "panel-gconf.h"
+#include "menu.h"
 #include "tearoffitem.h"
 
 static void tearoff_item_class_init	(TearoffItemClass	*klass);
@@ -37,12 +37,9 @@ tearoff_item_get_type (void)
 GtkWidget*
 tearoff_item_new (void)
 {
-	g_return_val_if_fail (gconf_client_get_bool (panel_gconf_get_client (),
-						     "/desktop/gnome/interface/menus-have-tearoff",
-						     NULL),
-			      NULL);
+	g_return_val_if_fail (panel_menu_have_tearoff (), NULL);
 
-	return GTK_WIDGET (gtk_type_new(tearoff_item_get_type()));
+	return GTK_WIDGET (gtk_type_new (tearoff_item_get_type ()));
 }
 
 static void

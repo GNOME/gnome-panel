@@ -132,6 +132,10 @@ enum {
 	HIDEBUTTONS_NONE
 };
 
+gboolean panel_menu_have_icons   (void);
+gboolean panel_menu_have_tearoff (void);
+
+
 G_END_DECLS
 
 #endif
