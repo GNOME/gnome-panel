@@ -32,6 +32,33 @@ module GNOME {
 	const PanelSize PANEL_X_LARGE  = 80;
 	const PanelSize PANEL_XX_LARGE = 128;
 
+	/*
+	 * Panel background description.
+	 * May be expressed as an RGB number or
+	 * a pixmap file path.
+	 */
+	struct PanelBackgroundColour {
+		unsigned short red;
+		unsigned short blue;
+		unsigned short green;
+	};
+
+	typedef string PanelBackgroundPixmap;
+
+	enum PanelBackgroundType {
+		NONE,
+		COLOUR,
+		PIXMAP
+	};
+
+	union PanelBackground switch (PanelBackgroundType) {
+	case COLOUR: 
+		PanelBackgroundColour colour;
+	case PIXMAP: 
+		PanelBackgroundPixmap pixmap;
+	};
+
+
 	interface PanelShell : Bonobo::Unknown {
 
 		/*
@@ -43,6 +70,7 @@ module GNOME {
 		 */
 		void displayRunDialog (in string initialString);
 	};
+
 
 	interface PanelAppletShell : Bonobo::Unknown {
 
@@ -67,6 +95,14 @@ module GNOME {
 		 */
 		void changeSize (in PanelSize size);
 
+		/*
+		 * GNOME::PanelAppletShell::changeBackground
+		 * @backgorund: new Panel background.
+		 *
+		 * Instruct the Applet that the background of the
+		 * Panel it is contained in has changed.
+		 */
+		void changeBackground (in PanelBackground background);
 	};
 
 };
