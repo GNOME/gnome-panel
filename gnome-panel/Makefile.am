@@ -135,6 +135,7 @@ panel_sources =			\
 	panel-xutils.c		\
 	panel-multiscreen.c	\
 	panel-a11y.c		\
+	panel-bindings.c	\
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -177,6 +178,7 @@ panel_headers =			\
 	panel-xutils.h		\
 	panel-multiscreen.h	\
 	panel-a11y.h		\
+	panel-bindings.h	\
 	panel-enums.h		\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)

@@ -68,6 +68,7 @@
 #include "panel-typebuiltins.h"
 #include "panel-marshal.h"
 #include "panel-widget.h"
+#include "panel-bindings.h"
 
 #define DEFAULT_SIZE              48
 #define RESIZE_GRAB_AREA_SIZE     3
@@ -85,6 +86,12 @@ enum {
 	HIDE_SIGNAL,
 	UNHIDE_SIGNAL,
 	POPUP_PANEL_MENU_SIGNAL,
+	TOGGLE_EXPAND_SIGNAL,
+	EXPAND_SIGNAL,
+	UNEXPAND_SIGNAL,
+	TOGGLE_HIDDEN_SIGNAL,
+	BEGIN_MOVE_SIGNAL,
+	BEGIN_RESIZE_SIGNAL,
 	LAST_SIGNAL
 };
 
@@ -1391,6 +1398,54 @@ panel_toplevel_popup_panel_menu (PanelToplevel *toplevel)
 	g_signal_emit_by_name (toplevel, "popup_menu", &retval);
 
 	return retval;
+}
+
+static gboolean
+panel_toplevel_toggle_expand (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement toggle expand binding\n");
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_expand (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement expand binding\n");
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_unexpand (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement unexpand binding\n");
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_toggle_hidden (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement toggle hidden binding\n");
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_begin_move (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement begin move binding\n");
+
+	return FALSE;
+}
+
+static gboolean
+panel_toplevel_begin_resize (PanelToplevel *toplevel)
+{
+	g_print ("FIXME: implement begin resize binding\n");
+
+	return FALSE;
 }
 
 static void
@@ -2754,6 +2809,12 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 	klass->hiding           = NULL;
 	klass->unhiding         = NULL;
 	klass->popup_panel_menu = panel_toplevel_popup_panel_menu;
+	klass->toggle_expand    = panel_toplevel_toggle_expand;
+	klass->expand           = panel_toplevel_expand;
+	klass->unexpand         = panel_toplevel_unexpand;
+	klass->toggle_hidden    = panel_toplevel_toggle_hidden;
+	klass->begin_move       = panel_toplevel_begin_move;
+	klass->begin_resize     = panel_toplevel_begin_resize;
 
 	g_object_class_install_property (
 		gobject_class,
@@ -2975,6 +3036,72 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 			      G_TYPE_BOOLEAN,
 			      0);
 
+	toplevel_signals [TOGGLE_EXPAND_SIGNAL] =
+		g_signal_new ("toggle-expand",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_expand),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
+	toplevel_signals [EXPAND_SIGNAL] =
+		g_signal_new ("expand",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, expand),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
+	toplevel_signals [UNEXPAND_SIGNAL] =
+		g_signal_new ("unexpand",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, unexpand),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
+	toplevel_signals [TOGGLE_HIDDEN_SIGNAL] =
+		g_signal_new ("toggle-hidden",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, toggle_hidden),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
+	toplevel_signals [BEGIN_MOVE_SIGNAL] =
+		g_signal_new ("begin-move",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, begin_move),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
+	toplevel_signals [BEGIN_RESIZE_SIGNAL] =
+		g_signal_new ("begin-resize",
+			      G_TYPE_FROM_CLASS (gobject_class),
+			      G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+			      G_STRUCT_OFFSET (PanelToplevelClass, begin_resize),
+			      NULL,
+			      NULL,
+			      panel_marshal_BOOLEAN__VOID,
+			      G_TYPE_BOOLEAN,
+			      0);
+
 	gtk_binding_entry_add_signal (binding_set, GDK_F10, GDK_CONTROL_MASK,
                                      "popup_panel_menu", 0);
 
@@ -3126,6 +3253,8 @@ panel_toplevel_instance_init (PanelToplevel      *toplevel,
 
 	panel_toplevel_setup_widgets (toplevel);
 	panel_toplevel_update_description (toplevel);
+	
+	panel_bindings_register_toplevel (toplevel);
 }
 
 GType
@@ -3691,4 +3820,36 @@ panel_toplevel_get_is_hidden (PanelToplevel *toplevel)
 		return TRUE;
 
 	return FALSE;
+}
+
+void
+panel_toplevel_set_binding (PanelToplevel   *toplevel,
+			    guint            keyval,
+			    GdkModifierType  modifiers,
+			    const char      *signal)
+{
+	GtkBindingSet *binding_set;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+	g_return_if_fail (keyval != 0);
+	g_return_if_fail (signal != NULL);
+
+	g_print ("setting binding %d %d %s\n", keyval, modifiers, signal);
+
+        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
+	gtk_binding_entry_add_signal (binding_set, keyval, modifiers, signal, 0);
+}
+
+void
+panel_toplevel_unset_binding (PanelToplevel   *toplevel,
+			      guint            keyval,
+			      GdkModifierType  modifiers)
+{
+	GtkBindingSet *binding_set;
+
+	g_return_if_fail (PANEL_IS_TOPLEVEL (toplevel));
+	g_return_if_fail (keyval != 0);
+
+        binding_set = gtk_binding_set_by_class (PANEL_TOPLEVEL_GET_CLASS (toplevel));
+	gtk_binding_entry_clear (binding_set, keyval, modifiers);
 }

@@ -1,5 +1,25 @@
 2003-01-31  Mark McLoughlin  <mark@skynet.ie>
 
+	* Makefile.am: add panel-bindings.[ch].
+
+	* panel-bindings.[ch]: read and monitor metacity's
+	window binding preferences to use for keybindings
+	on the toplevel. But metacity grabs these keys even
+	on DOCK windows, so hmm ...
+
+	* panel-toplevel.[ch]:
+	(panel_toplevel_toggle_expand), (panel_toplevel_expand),
+	(panel_toplevel_unexpand), (panel_toplevel_toggle_hidden),
+	(panel_toplevel_begin_move), (panel_toplevel_begin_resize):
+	Add stubs for the keybindings. Don't implement until I figure
+	what to do about the metacity problem.
+	(panel_toplevel_class_init): add signals for all these bindings.
+	(panel_toplevel_instance_init): load the bindings.
+	(panel_toplevel_set_binding), (panel_toplevel_unset_binding):
+	methods to set/unset the binding - use by panel-bindings.c.
+
+2003-01-31  Mark McLoughlin  <mark@skynet.ie>
+
 	Make drawers work more or less and implement resizing the
 	panel using the pointer.
 

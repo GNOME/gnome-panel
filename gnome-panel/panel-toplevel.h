@@ -51,9 +51,18 @@ struct _PanelToplevel {
 struct _PanelToplevelClass {
 	GtkWindowClass         window_class;
 
+	/* key bindings */
+	gboolean  (*popup_panel_menu) (PanelToplevel *toplevel);
+	gboolean  (*toggle_expand)    (PanelToplevel *toplevel);
+	gboolean  (*expand)           (PanelToplevel *toplevel);
+	gboolean  (*unexpand)         (PanelToplevel *toplevel);
+	gboolean  (*toggle_hidden)    (PanelToplevel *toplevel);
+	gboolean  (*begin_move)       (PanelToplevel *toplevel);
+	gboolean  (*begin_resize)     (PanelToplevel *toplevel);
+
+	/* signals */
 	void      (*hiding)           (PanelToplevel *toplevel);
 	void      (*unhiding)         (PanelToplevel *toplevel);
-	gboolean  (*popup_panel_menu) (PanelToplevel *toplevel);
 };
 
 GType                panel_toplevel_get_type            (void) G_GNUC_CONST;
@@ -137,6 +146,14 @@ gboolean             panel_toplevel_get_enable_buttons  (PanelToplevel       *to
 void                 panel_toplevel_set_enable_arrows   (PanelToplevel       *toplevel,
 							 gboolean             enable_arrows);
 gboolean             panel_toplevel_get_enable_arrows   (PanelToplevel       *toplevel);
+
+void                 panel_toplevel_set_binding         (PanelToplevel       *toplevel,
+							 guint                keyval,
+							 GdkModifierType      modifiers,
+							 const char          *signal);
+void                 panel_toplevel_unset_binding       (PanelToplevel       *toplevel,
+							 guint                keyval,
+							 GdkModifierType      modifiers);
 
 G_END_DECLS
 
