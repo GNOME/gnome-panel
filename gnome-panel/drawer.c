@@ -431,8 +431,10 @@ load_drawer_applet (gchar       *mypanel_id,
 		    const char  *gconf_key)
 {
 	Drawer      *drawer;
-	PanelOrient  orient = get_applet_orient (panel);
+	PanelOrient  orient;
 	AppletInfo  *info;
+
+	orient = panel_widget_get_applet_orient (panel);
 
 	if (!mypanel_id) {
 		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);

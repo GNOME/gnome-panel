@@ -58,12 +58,14 @@ struct _PanelAppletFrameClass {
 
 GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
 
-GtkWidget *panel_applet_frame_new       (const char *iid,
-					 const char *gconf_key);
+GtkWidget *panel_applet_frame_new       (PanelWidget *panel,
+					 const char  *iid,
+					 const char  *gconf_key);
 
 GtkWidget *panel_applet_frame_construct (PanelAppletFrame *frame,
-					 const char      *iid,
-					 const char      *gconf_key);
+					 PanelWidget      *panel,
+					 const char       *iid,
+					 const char       *gconf_key);
 
 void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
 					 AppletInfo       *info);
@@ -75,33 +77,26 @@ void       panel_applet_frame_load      (const gchar *iid,
 
 void       panel_applet_frame_load_applets  (void);
 
-
 void       panel_applet_frame_change_orient (PanelAppletFrame *frame,
 					     PanelOrient       orient);
 
 void       panel_applet_frame_change_size   (PanelAppletFrame *frame,
 					     PanelSize         size);
 
-void       panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame);
+void       panel_applet_frame_change_background (PanelAppletFrame *frame,
+						 PanelBackType     type);
 
-void       panel_applet_frame_change_background_color  (PanelAppletFrame *frame,
-							guint16           red,
-							guint16           green,
-							guint16           blue);
+void       panel_applet_frame_get_expand_flags  (PanelAppletFrame *frame,
+						 gboolean         *expand_major,
+						 gboolean         *expand_minor);
 
-void       panel_applet_frame_clear_background         (PanelAppletFrame *frame);
+void       panel_applet_frame_save_to_gconf     (PanelAppletFrame *frame,
+						 const char       *gconf_key);
 
-void       panel_applet_frame_get_expand_flags         (PanelAppletFrame *frame,
-							gboolean         *expand_major,
-							gboolean         *expand_minor);
-
-void       panel_applet_frame_save_to_gconf   (PanelAppletFrame *frame,
-					       const char       *gconf_key);
-
-void       panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
-					       gint         position,
-					       const char  *gconf_key,
-					       gboolean     use_default);
+void       panel_applet_frame_load_from_gconf   (PanelWidget *panel_widget,
+						 gint         position,
+						 const char  *gconf_key,
+						 gboolean     use_default);
 
 G_END_DECLS
 

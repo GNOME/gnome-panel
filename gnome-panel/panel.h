@@ -20,8 +20,6 @@ void orientation_change(AppletInfo *info, PanelWidget *panel);
 void size_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);
 
-PanelOrient get_applet_orient(PanelWidget *panel);
-
 void panel_setup(GtkWidget *panel);
 void basep_pos_connect_signals (BasePWidget *basep);
 

@@ -33,7 +33,7 @@
 
 G_BEGIN_DECLS
 
-gchar *      panel_applet_gconf_get_full_key    (PanelApplet  *applet,
+gchar       *panel_applet_gconf_get_full_key    (PanelApplet  *applet,
 						 const gchar  *key);
 
 void         panel_applet_gconf_set_bool        (PanelApplet  *applet,
@@ -81,7 +81,6 @@ gdouble      panel_applet_gconf_get_float       (PanelApplet  *applet,
 GConfValue  *panel_applet_gconf_get_value       (PanelApplet  *applet,
 						 const gchar  *key,
 						 GError      **error);
-
 
 G_END_DECLS
 

@@ -35,24 +35,6 @@ struct _PanelAppletShellPrivate {
 static GObjectClass *parent_class = NULL;
 
 static void
-impl_PanelAppletShell_getExpandFlags (PortableServer_Servant  servant,
-				      CORBA_boolean          *expand_major,
-				      CORBA_boolean          *expand_minor,
-				      CORBA_Environment      *ev)
-{
-	PanelAppletShell *shell;
-	gboolean major, minor;
-
-	shell = PANEL_APPLET_SHELL (bonobo_object (servant));
-
-	panel_applet_get_expand_flags (shell->priv->applet,
-				       &major, &minor);
-
-	*expand_major = major;
-	*expand_minor = minor;
-}
-
-static void
 panel_applet_shell_finalize (GObject *object)
 {
 	PanelAppletShell *shell = PANEL_APPLET_SHELL (object);
@@ -69,8 +51,6 @@ static void
 panel_applet_shell_class_init (PanelAppletShellClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-	klass->epv.getExpandFlags = impl_PanelAppletShell_getExpandFlags;
 
 	object_class->finalize = panel_applet_shell_finalize;
 

@@ -22,10 +22,11 @@ typedef enum {
 	PANEL_SIZE_XX_LARGE = GNOME_Vertigo_PANEL_XX_LARGE 
 } PanelSize;
 
-typedef GNOME_Panel_BackType PanelBackType;
-#define PANEL_BACK_NONE   GNOME_Panel_BACK_NONE
-#define PANEL_BACK_COLOR  GNOME_Panel_BACK_COLOR
-#define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
+typedef enum {
+	PANEL_BACK_NONE,
+	PANEL_BACK_COLOR,
+	PANEL_BACK_PIXMAP,
+} PanelBackType;
 
 typedef enum {
 	LAYER_NORMAL=0,

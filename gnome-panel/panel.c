@@ -188,21 +188,6 @@ panel_realize (GtkWidget *widget, gpointer data)
 	gtk_widget_queue_resize (GTK_WIDGET (widget));
 }
 
-PanelOrient
-get_applet_orient (PanelWidget *panel)
-{
-	GtkWidget *panelw;
-	g_return_val_if_fail(panel,PANEL_ORIENT_UP);
-	g_return_val_if_fail(PANEL_IS_WIDGET(panel),PANEL_ORIENT_UP);
-	g_return_val_if_fail(panel->panel_parent,PANEL_ORIENT_UP);
-	panelw = panel->panel_parent;
-
-	if (BASEP_IS_WIDGET(panelw))
-		return basep_widget_get_applet_orient (BASEP_WIDGET(panelw));
-	else
-		return PANEL_ORIENT_DOWN;
-}
-
 /*we call this recursively*/
 static void orient_change_foreach(GtkWidget *w, gpointer data);
 
@@ -214,18 +199,18 @@ orientation_change (AppletInfo  *info,
 	switch (info->type) {
 	case APPLET_BONOBO:
 		panel_applet_frame_change_orient (PANEL_APPLET_FRAME (info->widget),
-						  get_applet_orient (panel));
+						  panel_widget_get_applet_orient (panel));
 		break;
 	case APPLET_MENU:
 		set_menu_applet_orient ((Menu *)info->data,
-					get_applet_orient (panel));
+					panel_widget_get_applet_orient (panel));
 		break;
 	case APPLET_DRAWER: {
 		Drawer      *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
 
 		set_drawer_applet_orient (drawer,
-					  get_applet_orient (panel));
+					  panel_widget_get_applet_orient (panel));
 		gtk_widget_queue_resize (drawer->drawer);
 		gtk_container_foreach (GTK_CONTAINER (basep->panel),
 				       orient_change_foreach,
@@ -349,27 +334,9 @@ void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	if (info->type == APPLET_BONOBO) {
-		PanelAppletFrame *frame = PANEL_APPLET_FRAME (info->widget);
-
-		switch (panel->back_type) {
-		case PANEL_BACK_PIXMAP:
-			panel_applet_frame_change_background_pixmap (frame);
-			break;
-		case PANEL_BACK_COLOR:
-			panel_applet_frame_change_background_color (frame,
-								    panel->back_color.red,
-								    panel->back_color.green,
-								    panel->back_color.blue);
-			break;
-		case PANEL_BACK_NONE:
-			panel_applet_frame_clear_background (frame);
-			break;
-		default:
-			g_assert_not_reached ();
-			break;
-		}
-	}
+	if (info->type == APPLET_BONOBO)
+		panel_applet_frame_change_background (
+			PANEL_APPLET_FRAME (info->widget), panel->back_type);
 }
 
 static void

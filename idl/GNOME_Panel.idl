@@ -4,10 +4,14 @@
 #include <Bonobo_Unknown.idl>
 
 /*
- * GNOME 2.0 Interfaces
+ * FIXME:
+ *   none of the StatusSpot related interfaces
+ *   are implemented at the moment. Figure out
+ *   what needs to be done.
  */
+
 module GNOME {
-module Vertigo {
+ module Vertigo {
 
 	/*
 	 * The panel's orientation.
@@ -15,9 +19,9 @@ module Vertigo {
 	typedef unsigned short PanelOrient;
 
 	const PanelOrient PANEL_ORIENT_UP    = 0;
-	const PanelOrient PANEL_ORIENT_DOWN  = 2;
-	const PanelOrient PANEL_ORIENT_LEFT  = 3;
-	const PanelOrient PANEL_ORIENT_RIGHT = 4;
+	const PanelOrient PANEL_ORIENT_DOWN  = 1;
+	const PanelOrient PANEL_ORIENT_LEFT  = 2;
+	const PanelOrient PANEL_ORIENT_RIGHT = 3;
 	
 	/*
 	 * The panel's width or height, depending
@@ -43,6 +47,8 @@ module Vertigo {
 	typedef string PanelBackground;
 
 
+	interface StatusSpot;
+
 	interface PanelShell : Bonobo::Unknown {
 
 		/*
@@ -53,288 +59,18 @@ module Vertigo {
 		 * dialog box.
 		 */
 		void displayRunDialog (in string initialString);
-	};
 
-
-	interface PanelAppletShell : Bonobo::Unknown {
-
-		/*
-		 * GNOME::PanelAppletShell::getExpandFlags
-		 * @expand_major: Whether to expand the applet in the major direction
-		 * @expand_minor: Whether to expand the applet in the minor direction
-		 */
-		void getExpandFlags (out boolean expand_major,
-				     out boolean expand_minor);
-	};
-
-};
-};
-
-/*
- * GNOME 1.4 Interfaces
- */
-module GNOME {
-
-	interface PanelSpot;
-	interface Applet;
-	interface StatusSpot;
-	interface Panel;
-	interface PanelAppletBooter; /* a simple panel like interface other
-					things can implement with
-					launch_an_applet to be able to host
-					applets */
-
-	interface Panel {
-		struct Color {
-			unsigned short red, green, blue;
-		};
-
-		typedef	sequence<octet> RgbData;
-
-		/* pass an rgb image or a color */
-		struct RgbImage {
-			RgbData data;
-			unsigned short width;
-			unsigned short height;
-			unsigned short rowstride;
-			boolean color_only; /* indicates if this is 
-					       a color only (3bytes
-					       in data, but width and
-					       height are full size) */
-		};
-
-		enum OrientType {
-		        ORIENT_UP,
-	        	ORIENT_DOWN,
-		        ORIENT_LEFT,
-		        ORIENT_RIGHT	
-		};
-
-		enum BackType {
-			BACK_NONE,
-			BACK_COLOR,
-			BACK_PIXMAP
-		};
-
-		union BackInfoType switch(BackType) {
-			case BACK_COLOR: Color c;
-			case BACK_PIXMAP: string pmap;
-		};
-
-		/*this inits a panelspot, it's called by the applet */
-		PanelSpot add_applet (in Applet panel_applet,
-				      in string goad_id,
-				      out string cfgpath,
-				      out string globcfgpath,
-				      out unsigned long winid);
-		/*same as above but this is usefull if we know onto
-		  which panel we want to add, this is only to be called
-		  from an applet which was NOT started by the panel as
-		  those get the position from the panel itself*/
-		PanelSpot add_applet_full (in Applet panel_applet,
-					   in string goad_id,
-					   in short panel,
-					   in short pos,
-					   out string cfgpath,
-					   out string globcfgpath,
-					   out unsigned long winid);
-		/* initiate a logout */
-		oneway void quit ();
-
-		/* is there an applet being dragged at this moment */
-		readonly attribute boolean in_drag;
-		
 		StatusSpot add_status (out unsigned long winid);
-		
-		/* this is a call so that we tell the panel that the
-		   global config has changed on disk and that it should
-		   reread it */
-		oneway void notice_config_changes ();
 	};
 
-	/* Adding some interfaces for 1.4 */
-	interface Panel2 : Panel {
-		/* Some config stuff */
-		oneway void suggest_sync ();
-
-		/* Adding launchers */
-		/* 'panel' and 'pos' should be 0 if you don't care */
-		oneway void add_launcher (in string launcher_desktop,
-					  in short panel,
-					  in short pos);
-		oneway void ask_about_launcher (in string exec_string,
-						in short panel,
-						in short pos);
-		oneway void add_launcher_from_info (in string name,
-						    in string comment,
-						    in string exec,
-						    in string icon,
-						    in short panel,
-						    in short pos);
-		oneway void add_launcher_from_info_url (in string name,
-							in string comment,
-							in string url,
-							in string icon,
-							in short panel,
-							in short pos);
-
-		/* Some other panel functionality */
-		oneway void run_box (in string initial_string);
-		oneway void main_menu ();
-
-		/* you can use this to launch panel applets into 
-		   other then panel things, you have to implent PanelSpot
-		   completely.  Note that you do not need to care about,
-		   the in-process weirdness.  shlib applets are loaded
-		   into the panel because of this.  This call will also
-		   activate the server, so it's all you need to do.
-		   See gnome-old-applet-adaptor for Bonobo::Control
-		   implementation of this stuff. */
-		oneway void launch_an_applet (in string goad_id,
-					      in PanelAppletBooter booter);
-	};
-
-	/* this is a one shot applet booting interface, you implement this
-	   and pass it to launch_an_applet, it will then give you a buzz
-	   when your applet is ready and then dump you like a bad case of
-	   fleas.  So you have to make one of these for every applet you
-	   wish to start. */
-	interface PanelAppletBooter {
-		/*this inits a panelspot, it's called by the applet */
-		PanelSpot add_applet (in Applet panel_applet,
-				      in string goad_id,
-				      out string cfgpath,
-				      out string globcfgpath,
-				      out unsigned long winid);
-	};
-
-	interface PanelSpot { /* panel half of applets */
-		/*accessors*/
-		attribute string tooltip;
-		
-		/*accessors for certain flags*/
-		/*the number of the panel which this is on,
-		  this is for those rare applets that want to save
-		  their prefs in a different way*/
-		readonly attribute short parent_panel;
-		/*similiar to the above, but it's the position*/
-		readonly attribute short spot_pos;
-
-		/*the orient of the panel on which this applet resides*/
-		readonly attribute Panel::OrientType parent_orient;
-
-		/*the size of the panel on which this applet resides*/
-		readonly attribute short parent_size;
-		
-		/*the maximum amount of free space the applet has without
-		  pushing around other applets, on packed panels this is
-		  always 0*/
-		readonly attribute short free_space;
-		
-		/*true or false, sets if the spot should send the applet
-		  position changes*/
-		attribute boolean send_position;
-		
-		/*true or false, sets if the spot should send the applet
-		  draw requests, usefull if you want to get an rgb of the
-		  background, you will only get a draw request when the
-		  background is changed*/
-		attribute boolean send_draw;
-
-		/* the current background of the applet as an rgb image */
-		readonly attribute Panel::RgbImage rgb_background;
-		
-		/* the applet is all done with building itself
-		   so it just tells us that it's all ready, this
-		   makes the panel start the next applet (otherwise,
-		   panel would stop launching applets, it's launching
-		   them synchroniously for speed) also it makes this
-		   applet "savable" otherwise the panel wouldn't save
-		   it's state*/
-		oneway void register_us();
-
-		oneway void unregister_us();
-
-		/* if the applet didn't call "register" yet, and wants
-		   to abort itself (the panel will free up it's spot
-		   and start he next applet), it should do this before
-		   it exits */
-		oneway void abort_load();
-		
-		oneway void show_menu ();
-		oneway void drag_start ();
-		oneway void drag_stop ();
-		oneway void add_callback (in string callback_name,
-					  in string stock_item,
-					  in string menuitem_text);
-		oneway void remove_callback (in string callback_name);
-		oneway void callback_set_sensitive (in string callback_name,
-						    in boolean sensitive);
-		oneway void sync_config ();
-		oneway void done_session_save(in boolean ret,
-					      in unsigned long cookie);
-	};
-
-	interface Applet {
-		oneway void change_orient (in Panel::OrientType orient);
-		oneway void do_callback (in string callback_name);
-
-		/* just kept for compatibility, don't use */
-		boolean session_save (in string cfgpath,
-				      in string global_cfgpath);
-
-		oneway void back_change (in Panel::BackInfoType backing);
-		oneway void set_tooltips_state (in boolean enabled);
-		readonly attribute string goad_id;
-
-		/* the draw signal, the applet doesn't get the rgb here
-		   becase it may not want it every time, it has to
-		   request the rgb of the background explicitly with
-		   rgb_background attribute of PanelSpot */
-		oneway void draw ();
-		oneway void save_session (in string cfgpath,
-					  in string global_cfgpath,
-					  in unsigned long cookie);
-		oneway void change_size (in short size);
-		oneway void change_position (in short x, in short y);
-		
-		/* freeze any changes notification, usefull for en masse
-		   changes only affects change_orient, change_size,
-		   back_change and change_position */
-		oneway void freeze_changes ();
-		oneway void thaw_changes ();
-	};
-	
 	interface StatusSpot {
-		oneway void remove ();
-	};
-
-	/*
-	 * GNOME-2.0 applet interface.
-	 * Everything here is negotiable at the moment.
-	 */
-	interface Applet2 : Bonobo::Unknown {
-                readonly attribute string iid;
-
-                oneway void change_orient      (in Panel::OrientType orient);
-                oneway void change_size        (in short size);
-                oneway void change_position    (in short x, in short y);
-
-                oneway void do_callback        (in string callback_name);
-                oneway void back_change        (in Panel::BackInfoType backing);
-
-                oneway void set_tooltips_state (in boolean enabled);
-
-                oneway void draw               ();
-                oneway void save_session       (in string config_path,
-						in string global_config_path,
-						in unsigned long cookie);
-
-                oneway void freeze_changes     ();
-                oneway void thaw_changes       ();
+                oneway void remove ();
         };
 
+	interface PanelAppletShell : Bonobo::Unknown {
+	};
+
+ };
 };
 
 #endif /* GNOME_PANEL_IDL */
-

@@ -1,3 +1,49 @@
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-test-applets.c, panel-test-applets.glade: little applet
+	testing utility.
+
+	* Makefile.am: add rules to build panel-test-applets and glade2 file.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* test-bonobo-applet.c: test inheriting from PanelApplet
+	actually works.
+
+	* panel-applet.c: (panel_applet_factory_main_closure),
+	(panel_applet_shlib_factory_closure): error out if applet_type
+	isn't derived from PanelApplet.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.c: (panel_applet_associate_schemas_in_dir),
+	(panel_applet_add_preferences): use GConfClient where possible.
+	Still stuck with using gconf_engine_associate_schema, though.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet.[ch]: (panel_applet_factory_main),
+	(panel_applet_factory_main_closure), (panel_applet_shlib_factory),
+	(panel_applet_shlib_factory_closure): add applet_type arg.
+	(panel_applet_callback_data_new), (panel_applet_callback_data_free):
+	wrap the closure and applet type up for callback.
+
+	* GNOME_Panel_TestApplet.server.in: move to Vertigo namespace.
+
+	* test-bonobo-applet.c: update for factory macro change.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-shell (impl_PanelAppletShell_getExpandFlags): kill.
+
+	* panel-applet.[ch]:
+	(panel_applet_get_expand_flags): rename to panel_applet_get_flags.
+	(panel_applet_set_expand_flags): rename to panel_applet_set_flags.
+	(panel_applet_get_prop), (panel_applet_property_bag): add flags
+	property.
+	(panel_applet_item_handle_get_object): add background, orient 
+	and size items.
+
 Fri Feb 08 15:16:50 2002  George Lebl <jirka@5z.com>
 
 	* panel-applet.[ch]: Implement panel_applet_get_background so

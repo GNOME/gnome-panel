@@ -1090,6 +1090,7 @@ fishy_factory (PanelApplet *applet,
 }
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_FishApplet_Factory",
+			     PANEL_TYPE_APPLET,
 			     "That-stupid-fish",
 			     "0",
 			     fishy_factory,

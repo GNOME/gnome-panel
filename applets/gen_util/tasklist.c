@@ -359,8 +359,8 @@ fill_tasklist_applet(PanelApplet *applet)
 
 	gtk_container_add (GTK_CONTAINER (tasklist->applet), tasklist->tasklist);
 	
-	panel_applet_set_expand_flags (PANEL_APPLET (tasklist->applet),
-				       TRUE, TRUE);
+	panel_applet_set_flags (PANEL_APPLET (tasklist->applet),
+				PANEL_APPLET_EXPAND_MAJOR | PANEL_APPLET_EXPAND_MINOR);
 
 	gtk_widget_show (tasklist->applet);
 

@@ -1,3 +1,48 @@
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c:
+	(panel_applet_load_idle_handler): load applets in an idle handler
+	at startup.
+	(panel_applet_load_from_unique_id): use it.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* GNOME_Panel.server.in: move to Vertigo namespace.
+
+	* menu.c: ditto.
+
+2002-02-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_load): update for panel_applet_frame_new change.
+	(panel_applet_frame_get_expand_flags): get the flags from the
+	property sack.
+	(panel_applet_frame_get_background_string): impl method to
+	prepare background strings.
+	(panel_applet_frame_change_background): merge background changing
+	methods in to one.
+	(panel_applet_focus): rename to panel_applet_frame_focus.
+	(panel_applet_frame_get_orient_string),
+	(panel_applet_frame_get_size_string): impl method to prepare size
+	and orient strings.
+	(panel_applet_frame_construct_moniker): add the bacgkround, size
+	and orient items.
+	(panel_applet_frame_construct): add PanelWidget arg.
+	(panel_applet_frame_new): ditto.
+
+	* panel-types.h: GNOME_Panel_BackType enum doesn't exist anymore.
+
+	* panel-widget.[ch] (panel_widget_class_init): upd for above.	
+	(panel_widget_get_applet_orient): re-named from get_applet_orient.
+
+	* panel.c: (get_applet_orient): move to panel-widget.c.
+	(back_change): use panel_applet_background_change.
+
+	* drawer.c: (load_drawer_applet): update for get_applet_orient
+	change.
+
+	* status.[ch] (status_spot_remove): use Vertigo_StatusSpot.
+
 2002-02-10  Havoc Pennington  <hp@pobox.com>
 
 	* basep-widget.c (basep_widget_size_allocate): Consider the x/y

@@ -49,11 +49,6 @@ struct _PanelAppletFramePrivate {
 	gboolean			moving_focus_out;
 };
 
-static void panel_applet_frame_move_focus_out_of_applet (PanelAppletFrame *frame,
-							 GtkDirectionType  dir);
-static gboolean panel_applet_focus (GtkWidget *widget,
-				    GtkDirectionType  dir);
-
 static GObjectClass *parent_class;
 
 enum {
@@ -172,7 +167,7 @@ panel_applet_frame_load (const gchar *iid,
 	else
 		real_key = gconf_unique_key ();
 
-	frame = panel_applet_frame_new (iid, real_key);
+	frame = panel_applet_frame_new (panel, iid, real_key);
 
 	if (!frame) {
 		GtkWidget *dialog;
@@ -213,24 +208,16 @@ panel_applet_frame_get_expand_flags (PanelAppletFrame *frame,
 				     gboolean         *expand_major,
 				     gboolean         *expand_minor)
 {
-	CORBA_Environment  env;
-	CORBA_boolean major = 0, minor = 0;
+	gint16 retval;
 
-	CORBA_exception_init (&env);
+	retval = bonobo_pbclient_get_short (
+			frame->priv->property_bag, "panel-applet-flags", NULL);
 
-	GNOME_Vertigo_PanelAppletShell_getExpandFlags (frame->priv->applet_shell,
-						       &major, &minor,
-						       &env);
-	
-	if (BONOBO_EX (&env))
-		g_warning (G_STRLOC " : exception return from getExpandFlags '%s'",
-			   BONOBO_EX_REPOID (&env));
-	else {
-		*expand_major = major;
-		*expand_minor = minor;
-	}
-	
-	CORBA_exception_free (&env);
+	/*
+	 * Keep in sync with panel-applet.h. Uggh.
+	 */	
+	*expand_major = retval & (1 << 0);
+	*expand_minor = retval & (1 << 1);
 }
 
 void
@@ -253,60 +240,61 @@ panel_applet_frame_change_size (PanelAppletFrame *frame,
 				   NULL);
 }
 
-void
-panel_applet_frame_change_background_pixmap (PanelAppletFrame *frame)
+static char *
+panel_applet_frame_get_background_string (PanelAppletFrame *frame,
+					  PanelWidget      *panel,
+					  PanelBackType     type)
 {
-	GdkNativeWindow  pixmap_xid;
-	PanelWidget     *panel_widget;
-	gchar           *bg_str;
+	char *retval = NULL;
+
+	switch (type) {
+	case PANEL_BACK_PIXMAP: {
+		GdkNativeWindow pixmap_xid;
+
+		pixmap_xid = gdk_x11_drawable_get_xid (
+				GDK_DRAWABLE (GTK_WIDGET (panel)->window));
+
+		retval = g_strdup_printf (
+				"pixmap:%d,%d,%d", pixmap_xid,
+				GTK_WIDGET (frame)->allocation.x,
+				GTK_WIDGET (frame)->allocation.y);
+		}
+		break;
+	case PANEL_BACK_COLOR:
+		retval = g_strdup_printf (
+				"color:#%.4x%.4x%.4x", 
+				panel->back_color.red, 
+				panel->back_color.green, 
+				panel->back_color.blue);
+		break;
+	case PANEL_BACK_NONE:
+		retval = g_strdup ("none:");
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return retval;
+}
+
+void
+panel_applet_frame_change_background (PanelAppletFrame *frame,
+				      PanelBackType     type)
+{
+	char *bg_str;
 
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 	g_return_if_fail (PANEL_IS_WIDGET (GTK_WIDGET (frame)->parent));
 
-	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+	bg_str = panel_applet_frame_get_background_string (
+			frame, PANEL_WIDGET (GTK_WIDGET (frame)->parent), type);
 
-	pixmap_xid = gdk_x11_drawable_get_xid (GDK_DRAWABLE (GTK_WIDGET (panel_widget)->window));
-
-	bg_str = g_strdup_printf ("pixmap:%d,%d,%d",
-				  pixmap_xid,
-				  GTK_WIDGET (frame)->allocation.x,
-				  GTK_WIDGET (frame)->allocation.y);
-
-	bonobo_pbclient_set_string (frame->priv->property_bag, 
+	bonobo_pbclient_set_string (frame->priv->property_bag,
 				    "panel-applet-background",
-				    bg_str,
-				    NULL);
+				    bg_str, NULL);
 
 	g_free (bg_str);
-}
-
-void
-panel_applet_frame_change_background_color (PanelAppletFrame *frame,
-					    guint16           red,
-					    guint16           green,
-					    guint16           blue)
-{
-	gchar *bg_str;
-
-	bg_str = g_strdup_printf ("color:#%.4x%.4x%.4x", red, green, blue);
-
-	bonobo_pbclient_set_string (frame->priv->property_bag, 
-				    "panel-applet-background",
-				    bg_str,
-				    NULL);
-
-	g_free (bg_str);
-}
-
-void
-panel_applet_frame_clear_background (PanelAppletFrame *frame)
-{
-	gchar *bg_str = "none:";
-
-	bonobo_pbclient_set_string (frame->priv->property_bag, 
-				    "panel-applet-background",
-				    bg_str,
-				    NULL);
 }
 
 void
@@ -330,20 +318,50 @@ panel_applet_frame_finalize (GObject *object)
         parent_class->finalize (object);
 }
 
+static void 
+panel_applet_frame_move_focus_out_of_applet (PanelAppletFrame *frame,
+					     GtkDirectionType  dir)
+{
+	GtkWidget *toplevel;
+
+	frame->priv->moving_focus_out = TRUE;
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (frame));
+	g_return_if_fail (toplevel != NULL);
+
+	gtk_widget_child_focus (toplevel, dir);
+	frame->priv->moving_focus_out = FALSE;
+}
+
+static gboolean
+panel_applet_frame_focus (GtkWidget         *widget,
+			  GtkDirectionType   dir)
+{
+	PanelAppletFrame *frame;
+
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (widget), FALSE);
+
+	frame = PANEL_APPLET_FRAME (widget);
+
+	if (frame->priv->moving_focus_out)
+		return FALSE;
+
+	return GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
+}
+
 static void
 add_tab_bindings (GtkBindingSet	   *binding_set,
 		  GdkModifierType   modifiers,
 		  GtkDirectionType  direction)
 {
-  gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
-				"move_focus_out_of_applet", 1,
-				GTK_TYPE_DIRECTION_TYPE, direction);
-  gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
-				"move_focus_out_of_applet", 1,
-				GTK_TYPE_DIRECTION_TYPE, direction);
-  gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
-				"move_focus_out_of_applet", 1,
-				GTK_TYPE_DIRECTION_TYPE, direction);
+	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);
+	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);
+	gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);
 }
 
 static void
@@ -359,7 +377,7 @@ panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 
 	gobject_class->finalize = panel_applet_frame_finalize;
 
-	widget_class->focus = panel_applet_focus;
+	widget_class->focus = panel_applet_frame_focus;
 
 	klass->move_focus_out_of_applet = panel_applet_frame_move_focus_out_of_applet;
 
@@ -441,8 +459,98 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 	return retval;
 }
 
+static G_CONST_RETURN char *
+panel_applet_frame_get_orient_string (PanelAppletFrame *frame,
+				      PanelWidget      *panel)
+{
+	PanelOrient  orient;
+	const char  *retval = NULL;
+
+	orient = panel_widget_get_applet_orient (panel);
+
+	switch (orient) {
+	case PANEL_ORIENT_UP:
+		retval = "up";
+		break;
+	case PANEL_ORIENT_DOWN:
+		retval = "down";
+		break;
+	case PANEL_ORIENT_LEFT:
+		retval = "left";
+		break;
+	case PANEL_ORIENT_RIGHT:
+		retval = "right";
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return retval;
+}
+
+static G_CONST_RETURN char *
+panel_applet_frame_get_size_string (PanelAppletFrame *frame,
+				    PanelWidget      *panel)
+{
+	const char *retval = NULL;
+
+	switch (panel->sz) {
+	case PANEL_SIZE_XX_SMALL:
+		retval = "xx-small";
+		break;
+	case PANEL_SIZE_X_SMALL:
+		retval = "x-small";
+		break;
+	case PANEL_SIZE_SMALL:
+		retval = "small";
+		break;
+	case PANEL_SIZE_MEDIUM:
+		retval = "xx-small";
+		break;
+	case PANEL_SIZE_LARGE:
+		retval = "large";
+		break;
+	case PANEL_SIZE_X_LARGE:
+		retval = "x-large";
+		break;
+	case PANEL_SIZE_XX_LARGE:
+		retval = "xx-large";
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	return retval;
+}
+
+static char *
+panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
+				      PanelWidget      *panel,
+				      const char       *iid,
+				      const char       *gconf_key)
+{
+	char *retval;
+	char *bg_str;
+
+	bg_str = panel_applet_frame_get_background_string (frame, panel, panel->back_type);
+
+	retval = g_strdup_printf (
+			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
+			"background=%s;orient=%s;size=%s",
+			iid, session_get_current_profile (), gconf_key, bg_str,
+			panel_applet_frame_get_orient_string (frame, panel),
+			panel_applet_frame_get_size_string (frame, panel));
+
+	g_free (bg_str);
+
+	return retval;
+}
+
 GtkWidget *
 panel_applet_frame_construct (PanelAppletFrame *frame,
+			      PanelWidget      *panel,
 			      const char       *iid,
 			      const char       *gconf_key)
 {
@@ -450,15 +558,10 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	Bonobo_Control      control;
 	BonoboUIComponent  *ui_component;
 	GtkWidget          *widget;
-	gchar              *moniker;
+	char               *moniker;
 
-	moniker = g_strdup_printf ("%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs", 
-				   iid,
-				   session_get_current_profile (),
-				   gconf_key);
-
-        widget = bonobo_widget_new_control (moniker, NULL);
-
+	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
+	widget = bonobo_widget_new_control (moniker, NULL);
 	g_free (moniker);
 
 	if (!widget) {
@@ -468,42 +571,45 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 	frame->priv->iid = g_strdup (iid);
 
-        control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
+	control_frame = bonobo_widget_get_control_frame (BONOBO_WIDGET (widget));
 
-        control = bonobo_control_frame_get_control (control_frame);
+	control = bonobo_control_frame_get_control (control_frame);
 
 	frame->priv->applet_shell = panel_applet_frame_get_applet_shell (control);
 
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
-        ui_component = bonobo_ui_component_new_default ();
+	ui_component = bonobo_ui_component_new_default ();
 
-        {
-                CORBA_Environment  env;
-                Bonobo_UIContainer popup_container;
+	{
+		CORBA_Environment  env;
+		Bonobo_UIContainer popup_container;
 
-                CORBA_exception_init (&env);
+		CORBA_exception_init (&env);
 
-                popup_container = Bonobo_Control_getPopupContainer (control, &env);
+		popup_container = Bonobo_Control_getPopupContainer (control, &env);
+
+		bonobo_ui_component_set_container (ui_component, popup_container, &env);
 
                 bonobo_ui_component_set_container (ui_component, popup_container, &env);
 		
                 CORBA_exception_free (&env);
         }
 
-        bonobo_ui_component_set_translate (ui_component, "/", popup_xml, NULL);
+	bonobo_ui_component_set_translate (ui_component, "/", popup_xml, NULL);
 
-        bonobo_ui_component_add_verb_list_with_data (ui_component, popup_verbs, frame);
+	bonobo_ui_component_add_verb_list_with_data (ui_component, popup_verbs, frame);
 
-        gtk_container_add (GTK_CONTAINER (frame), widget);
+	gtk_container_add (GTK_CONTAINER (frame), widget);
 
 	return widget;
 }
 
 GtkWidget *
-panel_applet_frame_new (const char *iid,
-			const char *gconf_key)
+panel_applet_frame_new (PanelWidget *panel,
+			const char  *iid,
+			const char  *gconf_key)
 {
 	PanelAppletFrame *frame;
 
@@ -511,40 +617,10 @@ panel_applet_frame_new (const char *iid,
 
 	frame = g_object_new (PANEL_TYPE_APPLET_FRAME, NULL);
 
-	if (!panel_applet_frame_construct (frame, iid, gconf_key)) {
+	if (!panel_applet_frame_construct (frame, panel ,iid, gconf_key)) {
 		g_object_unref (frame);
 		return NULL;
 	}
 
 	return GTK_WIDGET (frame);
 }
-
-static void 
-panel_applet_frame_move_focus_out_of_applet (PanelAppletFrame *frame,
-					     GtkDirectionType  dir)
-{
-	GtkWidget *toplevel;
-
-	frame->priv->moving_focus_out = TRUE;
-	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (frame));
-	g_return_if_fail (toplevel);
-
-	gtk_widget_child_focus (toplevel, dir);
-	frame->priv->moving_focus_out = FALSE;
-}
-
-static gboolean
-panel_applet_focus (GtkWidget         *widget,
-		    GtkDirectionType   dir)
-{
-	PanelAppletFrame *frame;
-
-	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (widget), FALSE);
-	frame = PANEL_APPLET_FRAME (widget);
-	if (frame->priv->moving_focus_out) {
-		return FALSE;
-	} else {
-		return GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
-	}
-}
-

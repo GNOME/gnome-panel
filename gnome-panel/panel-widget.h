@@ -235,6 +235,8 @@ gboolean	panel_widget_is_cursor		(PanelWidget *panel,
 /* set the focus on the panel */
 void            panel_widget_focus              (PanelWidget *panel);
 
+PanelOrient     panel_widget_get_applet_orient  (PanelWidget *panel);
+
 extern gboolean panel_applet_in_drag;
 
 G_END_DECLS

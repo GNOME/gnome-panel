@@ -22,12 +22,12 @@ struct _StatusApplet {
 
 typedef struct _StatusSpot StatusSpot;
 struct _StatusSpot {
-	POA_GNOME_StatusSpot servant;
-	GNOME_StatusSpot sspot;
+	POA_GNOME_Vertigo_StatusSpot  servant;
+	GNOME_Vertigo_StatusSpot      sspot;
 	
-	GtkWidget *socket;
+	GtkWidget                    *socket;
 
-	gulong wid;
+	gulong                        wid;
 };
 
 void status_applet_create_offscreen(void);

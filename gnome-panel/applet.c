@@ -838,6 +838,37 @@ panel_applet_get_full_gconf_key (AppletType   type,
 	return retval;
 }
 
+typedef struct {
+	PanelWidget *panel_widget;
+	int          position;
+	char        *unique_id;
+	gboolean     use_default;
+} PanelAppletToLoad;
+
+static GSList *panel_applets_to_load = NULL;
+
+static gboolean
+panel_applet_load_idle_handler (gpointer dummmy)
+{
+	PanelAppletToLoad *applet;
+
+	if (!panel_applets_to_load)
+		return FALSE;
+
+	applet = (PanelAppletToLoad *) panel_applets_to_load->data;
+	panel_applets_to_load =
+		g_slist_remove (panel_applets_to_load, applet);
+
+	panel_applet_frame_load_from_gconf (
+			applet->panel_widget, applet->position,
+			applet->unique_id, applet->use_default);
+
+	g_free (applet->unique_id);
+	g_free (applet);
+
+	return TRUE;
+}
+
 static void
 panel_applet_load_from_unique_id (AppletType   type,
 				  GConfClient *gconf_client,
@@ -886,8 +917,21 @@ panel_applet_load_from_unique_id (AppletType   type,
 	position += right_stick ? G_MAXINT/2 : 0;
 
 	switch (applet_type) {
-	case APPLET_BONOBO:
-		panel_applet_frame_load_from_gconf (panel_widget, position, unique_id, use_default);
+	case APPLET_BONOBO: {
+		PanelAppletToLoad *applet;
+
+		applet = g_new0 (PanelAppletToLoad, 1);
+
+		applet->panel_widget = panel_widget;
+		applet->position     = position;
+		applet->unique_id    = g_strdup (unique_id);
+		applet->use_default  = use_default;
+
+		if (!panel_applets_to_load)
+			g_idle_add (panel_applet_load_idle_handler, NULL);
+
+		panel_applets_to_load = g_slist_prepend (panel_applets_to_load, applet);
+		}
 		break;
 	case APPLET_DRAWER:
 		drawer_load_from_gconf (panel_widget, position, unique_id, use_default);

@@ -354,7 +354,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               panel_marshal_VOID__ENUM_POINTER_POINTER,
                               G_TYPE_NONE,
                               3,
-			      PANEL_TYPE_G_NOME__PANEL__BACK_TYPE,
+			      PANEL_TYPE_PANEL_BACK_TYPE,
 			      G_TYPE_POINTER,
 			      G_TYPE_POINTER);
 
@@ -2958,4 +2958,16 @@ void panel_widget_focus (PanelWidget *panel)
 	gtk_container_set_focus_child (GTK_CONTAINER (panel), NULL);
 	GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
       	gtk_widget_grab_focus (GTK_WIDGET (panel));
+}
+
+PanelOrient
+panel_widget_get_applet_orient (PanelWidget *panel)
+{
+	g_return_val_if_fail (PANEL_IS_WIDGET (panel), PANEL_ORIENT_UP);
+	g_return_val_if_fail (panel->panel_parent != NULL, PANEL_ORIENT_UP);
+
+	if (!BASEP_IS_WIDGET (panel->panel_parent))
+		return PANEL_ORIENT_DOWN;
+
+	return basep_widget_get_applet_orient (BASEP_WIDGET (panel->panel_parent));
 }

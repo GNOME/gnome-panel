@@ -226,7 +226,7 @@ status_spot_remove(StatusSpot *ss, gboolean destroy_socket)
 
 		CORBA_free (id);
 
-		POA_GNOME_StatusSpot__fini ((PortableServer_Servant)ss, &env);
+		POA_GNOME_Vertigo_StatusSpot__fini ((PortableServer_Servant)ss, &env);
 
 		CORBA_exception_free (&env);
 	}

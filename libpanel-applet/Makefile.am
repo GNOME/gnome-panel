@@ -10,8 +10,9 @@ LTVERSION = 0:0:0
 
 INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
-	-DGNOME_DATADIR=\""$(datadir)"\"			\
-	$(LIBPANEL_APPLET_CFLAGS)						\
+	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
+	-DPANEL_APPLET_GLADEDIR=\""$(gladedir)"\"		\
+	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(WARN_CFLAGS)
 
 lib_LTLIBRARIES = libpanel-applet-2.la
@@ -49,17 +50,15 @@ CORBA_SRCLIST =			\
 $(CORBA_SRCLIST): $(top_srcdir)/idl/GNOME_Panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) -I $(BONOBO_ACT_IDLDIR) $(top_srcdir)/idl/GNOME_Panel.idl
 
+bin_PROGRAMS = test-bonobo-applet panel-test-applets
 
-
-bin_PROGRAMS = test-bonobo-applet
-
-test_bonobo_applet_SOURCES = test-bonobo-applet.c
+panel_test_applets_LDADD =		\
+	$(LIBPANEL_APPLET_LIBS)		\
+	libpanel-applet-2.la
 
 test_bonobo_applet_LDADD =		\
 	$(LIBPANEL_APPLET_LIBS)		\
 	libpanel-applet-2.la
-
-
 
 BUILT_SOURCES = \
 	$(CORBA_SRCLIST)	\
@@ -109,6 +108,14 @@ panel-applet-enums.h: @REBUILD@ $(panel_applet_enum_headers)
 		     --eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
 		     --eprod "GType @enum_name@_get_type (void);\n" \
 		$(panel_applet_enum_headers) > $@
+
+gladedir   = $(datadir)/gnome-terminal/glade
+glade_DATA = panel-test-applets.glade2
+glade_src  = panel-test-applets.glade
+
+panel-test-applets.glade2: panel-test-applets.glade $(LIBGLADE_CONVERT)
+	$(LIBGLADE_CONVERT) $(srcdir)/panel-test-applets.glade > panel-test-applets.glade.tmp \
+	&& mv panel-test-applets.glade.tmp panel-test-applets.glade2
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc

@@ -56,5 +56,6 @@ genutil_factory (PanelApplet *applet,
 }
 
 PANEL_APPLET_BONOBO_SHLIB_FACTORY ("OAFIID:GNOME_GenUtilApplet_Factory",
+				   PANEL_TYPE_APPLET,
 				   "GenUtil Applet factory",
 				    genutil_factory, NULL);
