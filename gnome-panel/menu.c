@@ -3177,12 +3177,13 @@ panel_lock (GtkWidget *widget, gpointer data)
 		system ("(xscreensaver-command -lock&)");
 }
 
-static GtkWidget * make_panel_menu(int fake_submenus, int tearoff);
+static GtkWidget *create_panel_submenu (GtkWidget *m, int fake_sub, int tearoff);
+static GtkWidget *create_desktop_menu (GtkWidget *m, int fake_sub, int tear);
 
 static void
 panel_menu_tearoff_new_menu(GtkWidget *w, gpointer data)
 {
-	GtkWidget *menu = create_panel_menu (NULL, TRUE, FALSE);
+	GtkWidget *menu = create_panel_submenu (NULL, TRUE, FALSE);
 
 	/*set the panel to use as the data*/
 	gtk_object_set_data(GTK_OBJECT(menu),"menu_panel",current_panel);
@@ -3221,6 +3222,7 @@ create_panel_submenu(GtkWidget *menu, int fake_submenus, int tearoff)
 	make_panel_submenu (menu, fake_submenus);
 
 	add_menu_separator (menu);
+
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
 			gnome_stock_pixmap_widget(menu,
@@ -3280,7 +3282,10 @@ create_desktop_menu (GtkWidget *menu, int fake_submenus, int tearoff)
 
 
 	char_tmp = gnome_is_program_in_path("gnome-about");
-	if(char_tmp) {
+	if(!char_tmp)
+		char_tmp = gnome_is_program_in_path ("guname");
+
+	if (char_tmp) {
 		add_menu_separator (menu);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem,
