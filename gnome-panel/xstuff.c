@@ -570,22 +570,34 @@ xstuff_is_compliant_wm(void)
 }
 
 void
-xstuff_set_no_group(GdkWindow *win)
+xstuff_set_no_group (GdkWindow *win)
 {
-	XWMHints *wmhints;
+	XWMHints *old_wmhints;
+	XWMHints wmhints = {0};
 	static GdkAtom wm_client_leader_atom = GDK_NONE;
 
-	if (!wm_client_leader_atom)
+	if (wm_client_leader_atom == GDK_NONE)
 		wm_client_leader_atom = gdk_atom_intern ("WM_CLIENT_LEADER",
 							 FALSE);
 
-	gdk_property_delete(win, wm_client_leader_atom);
+	gdk_property_delete (win, wm_client_leader_atom);
 
-	wmhints = XGetWMHints(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(win));
-	wmhints->flags &= ~WindowGroupHint;
-	wmhints->window_group = 0;
-	XSetWMHints(GDK_DISPLAY(),
-		    GDK_WINDOW_XWINDOW(win),
-		    wmhints);
-	XFree(wmhints);
+	old_wmhints = XGetWMHints (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (win));
+	/* General paranoia */
+	if (old_wmhints != NULL) {
+		memcpy (&wmhints, old_wmhints, sizeof (XWMHints));
+		XFree (old_wmhints);
+
+		wmhints.flags &= ~WindowGroupHint;
+		wmhints.window_group = 0;
+	} else {
+		/* General paranoia */
+		wmhints.flags = InputHint | StateHint;
+		wmhints.window_group = 0;
+		wmhints.input = True;
+		wmhints.initial_state = NormalState;
+	}
+	XSetWMHints (GDK_DISPLAY (),
+		     GDK_WINDOW_XWINDOW (win),
+		     &wmhints);
 }
