@@ -160,7 +160,7 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		else if(strcmp(menu->name,"edit_menus")==0) {
 			char *tmp[3] = { NULL, NULL, NULL };
 			if((tmp[0] = g_find_program_in_path ("nautilus")) != NULL)  {
-				tmp[1] = "programs:/";
+				tmp[1] = "applications:/";
 				gnome_execute_async (g_get_home_dir (), 2, tmp);
 				g_free (tmp[0]);
 			}

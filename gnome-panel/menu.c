@@ -247,7 +247,7 @@ init_menus (void)
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
-	fr_read_dir (NULL, "programs:/", 0, 2);
+	fr_read_dir (NULL, "applications:/", 0, 2);
 
 	menu = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_DATADIR, 
 					  "applets", TRUE, NULL);
@@ -1013,7 +1013,7 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 
 	if (menudir == NULL) {
 		main_menu = TRUE;
-		menudir = "programs:/";
+		menudir = "applications:/";
 	} else {
 		main_menu = FALSE;
 	}
@@ -3217,17 +3217,17 @@ create_system_menu (GtkWidget *menu, gboolean fake_submenus,
 {
 	if ( ! fake ||
 	     menu != NULL) {
-		menu = create_menu_at (menu, "programs:/",
+		menu = create_menu_at (menu, "applications:/",
 				       FALSE /* applets */,
 				       launcher_add,
-				       _("Programs"),
+				       _("Applications"),
 				       "gnome-logo-icon-transparent.png",
 				       fake_submenus, FALSE);
 	} else {
-		menu = create_fake_menu_at ("programs:/",
+		menu = create_fake_menu_at ("applications:/",
 					    FALSE /* applets */,
 					    launcher_add,
-					    _("Programs"),
+					    _("Applications"),
 					    "gnome-logo-icon-transparent.png");
 	}
 
@@ -3690,8 +3690,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (submenu), submenuitem);
 	g_signal_connect (G_OBJECT(submenuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
-			   "programs:/");
-	setup_internal_applet_drag(submenuitem, "MENU:programs:/");
+			   "applications:/");
+	setup_internal_applet_drag(submenuitem, "MENU:applications:/");
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
@@ -3934,7 +3934,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 		g_signal_connect (G_OBJECT (menuitem), "activate",
 				  G_CALLBACK (panel_launch_nautilus), 
-				  "programs:/");
+				  "applications:/");
 
 		if ( ! global_config.menu_check) {
 			menuitem = gtk_image_menu_item_new ();

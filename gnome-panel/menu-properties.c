@@ -64,7 +64,7 @@ char *
 get_real_menu_path (const char *arguments, gboolean main_menu)
 {
 	if (main_menu)
-		return g_strdup ("programs:");
+		return g_strdup ("applications:");
 	
 	else if (*arguments == '~')
 		/* FIXME: this needs to be a URI */

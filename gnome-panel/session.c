@@ -913,7 +913,7 @@ session_init_user_applets (void)
 
 		} else if (strcmp (applet_name, MENU_ID) == 0) {
 			char *path = conditional_get_string ("path",
-							     "programs:/", NULL);
+							     "applications:/", NULL);
 			gboolean main_menu =
 				conditional_get_bool ("main_menu", TRUE, NULL);
 			gboolean global_main =
@@ -1009,7 +1009,7 @@ session_init_user_panels(void)
 		gtk_widget_show(panel);
 
 		/* load up the foot menu */
-		load_menu_applet ("programs:/",
+		load_menu_applet ("applications:/",
 				  TRUE /* main_menu */,
 				  get_default_menu_flags (),
 				  TRUE, FALSE, NULL,
