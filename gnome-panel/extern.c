@@ -574,16 +574,111 @@ ebox_size_allocate(GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
 		send_position_change(ext);
 }
 
+#if 0
 static void
 socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
 {
+	
+	GtkRequisition req;
+
+	gtk_widget_get_child_requisition (applet, &req);
+
 	/* perhaps an already unnecessary hack to avoid some missed
 	   reallocations */
-	if (applet->requisition.width > 0 && applet->requisition.height > 0 &&
-	    (applet->allocation.width > applet->requisition.width ||
-	     applet->allocation.height > applet->requisition.height))
-		gtk_widget_queue_resize(applet->parent);
+	if (req.width > 0 &&
+	    req.height > 0 &&
+	    (alloc->width > req.width ||
+	     alloc->height > req.height))
+		gtk_widget_queue_resize (applet->parent);
 
+}
+#endif
+
+static void
+ebox_size_request (GtkWidget *applet, GtkRequisition *req, Extern *ext)
+{
+	int size;
+
+	if (ext->info->type != APPLET_EXTERN) {
+		if (ext->ebox->parent != NULL) {
+			PanelWidget *panel = PANEL_WIDGET (ext->ebox->parent);
+			size = panel->sz < 24 ? panel->sz : 24;
+		} else {
+			size = 24;
+		}
+
+		req->width = size;
+		req->height = size;
+	}
+}
+
+
+static void
+socket_set_loading (GtkWidget *socket, PanelWidget *panel)
+{
+	static gboolean tried_loading = FALSE;
+	static GdkPixbuf *pb = NULL;
+	int size;
+
+	/* sanity */
+	if (socket == NULL ||
+	    socket->window == NULL)
+		return;
+
+	size = panel->sz < 24 ? panel->sz : 24;
+
+	if ( ! tried_loading) {
+		char *file;
+		file = gnome_pixmap_file ("gnome-unknown.png");
+
+		if (file != NULL) {
+			pb = gdk_pixbuf_new_from_file (file);
+
+			g_free (file);
+		}
+	}
+	tried_loading = TRUE;
+
+	if (pb != NULL) {
+		GdkPixmap *pm;
+		GdkPixbuf *scaled;
+
+		if (gdk_pixbuf_get_width (pb) != size ||
+		    gdk_pixbuf_get_height (pb) != size) {
+			scaled = gdk_pixbuf_scale_simple (pb, size, size,
+							  GDK_INTERP_BILINEAR);
+		} else {
+			scaled = gdk_pixbuf_ref (pb);
+		}
+
+
+		pm = NULL;
+		gdk_pixbuf_render_pixmap_and_mask (scaled, &pm, NULL, 127);
+
+		gdk_pixbuf_unref (scaled);
+
+		if (pm != NULL) {
+			gdk_window_set_back_pixmap (socket->window, pm, FALSE);
+
+			gdk_pixmap_unref (pm);
+		}
+	}
+}
+
+static void
+socket_unset_loading (GtkWidget *socket)
+{
+	/* sanity */
+	if (socket == NULL)
+		return;
+
+	/* sanity */
+	if (socket->parent != NULL)
+		gtk_widget_queue_resize (socket->parent);
+
+	/* sanity */
+	if (socket->window != NULL)
+		gdk_window_set_back_pixmap (socket->window, NULL, FALSE);
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
@@ -599,9 +694,12 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 					  APPLET_EVENT_MASK) &
 			      ~( GDK_POINTER_MOTION_MASK |
 				 GDK_POINTER_MOTION_HINT_MASK));
-	gtk_signal_connect_after(GTK_OBJECT(ext->ebox),"size_allocate",
-				 GTK_SIGNAL_FUNC(ebox_size_allocate),
-				 ext);
+	gtk_signal_connect_after (GTK_OBJECT (ext->ebox), "size_request",
+				  GTK_SIGNAL_FUNC (ebox_size_request),
+				  ext);
+	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),"size_allocate",
+				  GTK_SIGNAL_FUNC (ebox_size_allocate),
+				  ext);
 
 	socket = gtk_socket_new();
 
@@ -610,9 +708,13 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 		return 0;
 	}
 
+#if 0
+	/* XXX: This freezes the panel sometimes, and likely isn't needed
+	 * anymore */
 	gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
 				 GTK_SIGNAL_FUNC(socket_size_allocate),
 				 NULL);
+#endif
 
 	/* here for debugging purposes */
 	/*gtk_signal_connect_after(GTK_OBJECT(socket),"size_allocate",
@@ -641,6 +743,8 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 	
 	if(!GTK_WIDGET_REALIZED(socket))
 		gtk_widget_realize(socket);
+
+	socket_set_loading (socket, panel);
 
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
@@ -1282,6 +1386,9 @@ s_panelspot_register_us(PortableServer_Servant servant,
 	ext->info->type = APPLET_EXTERN;
 	/* from now on warn on unclean removal */
 	ext->clean_remove = FALSE;
+
+	if (ext->ebox != NULL)
+		socket_unset_loading (GTK_BIN (ext->ebox)->child);
 
 	freeze_changes (ext->info);
 	orientation_change (ext->info, panel);

@@ -1,3 +1,10 @@
+Mon Dec 18 15:08:07 2000  George Lebl <jirka@5z.com>
+
+	* extern.c: when an applet is being loaded, put in a small pic
+	  in it's place to indicate it's being loaded.  Right now using
+	  gnome-unknown.png, but it needs to be changed to something
+	  nicer.  Needs to have no transparent spots.
+
 Sun Dec 17 00:04:20 2000  George Lebl <jirka@5z.com>
 
 	* extern.c: always check if ext->applet isn't by any chance %NULL.
