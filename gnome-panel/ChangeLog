@@ -1,3 +1,14 @@
+Fri Jan 15 21:53:24 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: fixed edit bug where canceling the dialog would remove
+	  the .desktop entry completely
+
+	* menu.c: redid the reading code, I sperated data from widgets, which
+	  has several advantages, mostly less disk access and a little bit
+	  of saved memory if we look at the same menu from different
+	  places, this is a slightly bug prone and a tiny bit ugly code
+	  at times so test well
+
 Thu Jan 14 04:49:03 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: fixes for the strconcat stuff

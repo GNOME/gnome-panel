@@ -29,7 +29,8 @@
 static char *gnome_folder = NULL;
 
 /*for Red Hat menus to trigger rereading on directory writes*/
-GSList *redhat_check = NULL;
+static time_t rhsysdir_mtime = 0;
+static time_t rhuserdir_mtime = 0;
 
 extern GSList *applets;
 extern GSList *applets_last;
@@ -46,26 +47,430 @@ extern GSList *applets_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-typedef struct _FileInfo FileInfo;
-struct _FileInfo {
-	char *name;
-	time_t mtime;
-};
+/*???? this might be ugly, but I guess we can safely assume that we can only
+  have one menu open and that nothing weird will happen to the panel that
+  opened that menu whilethe user is looking over the choices*/
+PanelWidget *current_panel = NULL;
 
 typedef struct _MenuFinfo MenuFinfo;
+typedef struct _FileRec FileRec;
+typedef struct _DirRec DirRec;
+
 struct _MenuFinfo {
 	char *menudir;
 	int applets;
 	char *dir_name;
 	char *pixmap_name;	
 	int fake_menu;
-	GSList *finfo;
+	FileRec *fr;
 };
 
-/*???? this might be ugly, but I guess we can safely assume that we can only
-  have one menu open and that nothing weird will happen to the panel that
-  opened that menu whilethe user is looking over the choices*/
-PanelWidget *current_panel = NULL;
+enum {
+	FILE_REC_FILE, /*.desktop file record*/
+	FILE_REC_DIR,  /*directory*/
+	FILE_REC_EXTRA /*just check the mtime*/
+};
+
+struct _FileRec {
+	int type;
+	char *name;
+	char *fullname;
+	char *icon;
+	char *goad_id;
+	DirRec *parent;
+	time_t mtime;
+};
+
+
+struct _DirRec {
+	FileRec frec;
+	time_t dentrymtime;
+	GSList *recs; /*records for directories*/
+	GSList *mfl;  /*records of menus using this record*/
+};
+
+static GSList *dir_list = NULL;
+
+/*reads in the order file and makes a list*/
+static GSList *
+get_presorted_from(char *dir)
+{
+	char buf[PATH_MAX+1];
+	GSList *list = NULL;
+	char *fname = g_concat_dir_and_file(dir,".order");
+	FILE *fp = fopen(fname,"r");
+	
+	if(!fp) {
+		g_free(fname);
+		return NULL;
+	}
+	while(fgets(buf,PATH_MAX+1,fp)!=NULL) {
+		char *p = strchr(buf,'\n');
+		if(p) *p = '\0';
+		list = g_slist_prepend(list,g_strdup(buf));
+	}
+	fclose(fp);
+	g_free(fname);
+	return g_slist_reverse(list);
+}
+
+static GSList *
+get_files_from_menudir(char *menudir)
+{
+	struct dirent *dent;
+	DIR *dir;
+	GSList *out = NULL;
+	GSList *pres = NULL;
+	
+	dir = opendir (menudir);
+	if (dir == NULL)
+		return NULL;
+	
+	pres = get_presorted_from(menudir);
+	
+	while((dent = readdir (dir)) != NULL) {
+		/* Skip over dot files */
+		if (dent->d_name [0] == '.')
+			continue;
+		if(!string_is_in_list(pres,dent->d_name))
+			out = g_slist_prepend(out,g_strdup(dent->d_name));
+	}
+
+	closedir(dir);
+	return g_slist_concat(pres,g_slist_reverse(out));
+}
+
+static char *
+get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
+{
+	int i;
+	int constantlen = strlen("--activate-goad-server");
+	char *goad_id=NULL;
+	/*FIXME:
+	  this is a horrible horrible hack and should be taken out
+	  and shot, once we add proper way to do this*/
+	for(i=1;ii->exec[i];i++) {
+		if(strncmp("--activate-goad-server",
+			   ii->exec[i],constantlen)==0) {
+			if(strlen(ii->exec[i])>constantlen)
+				goad_id = g_strdup(&ii->exec[i][constantlen+1]);
+			else
+				goad_id = g_strdup(ii->exec[i+1]);
+		}
+	}
+	return goad_id;
+}
+
+static void
+fr_free(FileRec *fr, int free_fr)
+{
+	if(!fr) return;
+	g_free(fr->name);
+	g_free(fr->fullname);
+	g_free(fr->icon);
+	g_free(fr->goad_id);
+	if(fr->parent && free_fr)
+		fr->parent->recs = g_slist_remove(fr->parent->recs,fr);
+	if(fr->type == FILE_REC_DIR) {
+		DirRec *dr = (DirRec *)fr;
+		GSList *li;
+		for(li = dr->mfl; li!=NULL; li=g_slist_next(li))
+			((MenuFinfo *)li->data)->fr = NULL;
+		g_slist_free(dr->mfl);
+		for(li = dr->recs; li!=NULL; li=g_slist_next(li)) {
+			FileRec *ffr = li->data;
+			ffr->parent = NULL;
+			fr_free(ffr,TRUE);
+		}
+		g_slist_free(dr->recs);
+	}
+	if(free_fr) {
+		dir_list = g_slist_remove(dir_list,fr);
+		g_free(fr);
+	} else  {
+		if(fr->type == FILE_REC_DIR)
+			memset(fr,0,sizeof(DirRec));
+		else
+			memset(fr,0,sizeof(FileRec));
+	}
+}
+
+static FileRec * fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake);
+
+static void
+fr_fill_dir(FileRec *fr)
+{
+	GSList *flist;
+	struct stat s;
+	DirRec *dr = (DirRec *)fr;
+	FileRec *ffr;
+	
+	g_return_if_fail(dr->recs==NULL);
+
+	ffr = g_new0(FileRec,1);
+	ffr->type = FILE_REC_EXTRA;
+	ffr->name = g_concat_dir_and_file(fr->name,".order");
+	ffr->parent = dr;
+	if (stat (ffr->name, &s) != -1)
+		ffr->mtime = s.st_mtime;
+	dr->recs = g_slist_prepend(dr->recs,ffr);
+
+	flist = get_files_from_menudir(fr->name);
+	while(flist) {
+		char *name = g_concat_dir_and_file(fr->name,flist->data);
+		GSList *tmp = flist;
+		g_free(flist->data);
+		flist = flist->next;
+		g_slist_free_1(tmp);
+		
+		if (stat (name, &s) == -1) {
+			g_free(name);
+			continue;
+		}
+
+		if (S_ISDIR (s.st_mode)) {
+			ffr = fr_read_dir(NULL,name,&s,TRUE);
+			g_free(name);
+			if(ffr)
+				dr->recs = g_slist_prepend(dr->recs,ffr);
+		} else {
+			GnomeDesktopEntry *dentry;
+			char *p = strrchr(name,'.');
+			if(p && strcmp(p,".desktop")!=0) {
+				g_free(name);
+				continue;
+			}
+
+			ffr = g_new0(FileRec,1);
+			ffr->type = FILE_REC_FILE;
+			ffr->name = name;
+			ffr->mtime = s.st_mtime;
+			ffr->parent = dr;
+			dentry = gnome_desktop_entry_load(name);
+			if(dentry) {
+				ffr->icon = dentry->icon;
+				dentry->icon = NULL;
+				ffr->fullname = dentry->name;
+				dentry->name = NULL;
+				ffr->goad_id =
+					get_applet_goad_id_from_dentry(dentry);
+				gnome_desktop_entry_free(dentry);
+			}
+			dr->recs = g_slist_prepend(dr->recs,ffr);
+		}
+	}
+	dr->recs = g_slist_reverse(dr->recs);
+}
+
+static FileRec *
+fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int fake)
+{
+	char *fname;
+	struct stat s;
+	FileRec *fr;
+
+	/*this will zero all fields*/
+	if(!dr)
+		dr = g_new0(DirRec,1);
+	fr = (FileRec *)dr;
+
+	if(!dstat) {
+		if (stat (mdir, &s) == -1) {
+			fr_free(fr,TRUE);
+			return NULL;
+		}
+
+		fr->mtime = s.st_mtime;
+	} else
+		fr->mtime = dstat->st_mtime;
+
+	fr->type = FILE_REC_DIR;
+	g_free(fr->name);
+	fr->name = g_strdup(mdir);
+
+	fname = g_concat_dir_and_file(mdir,".directory");
+	if (stat (fname, &s) != -1) {
+		GnomeDesktopEntry *dentry;
+		dentry = gnome_desktop_entry_load(fname);
+		if(dentry) {
+			g_free(fr->icon);
+			fr->icon = dentry->icon;
+			dentry->icon = NULL;
+			g_free(fr->fullname);
+			fr->fullname = dentry->name;
+			dentry->name = NULL;
+			gnome_desktop_entry_free(dentry);
+		}
+		dr->dentrymtime = s.st_mtime;
+	}
+	g_free(fname);
+	
+	dir_list = g_slist_prepend(dir_list,fr);
+	
+	/*if this is a fake structure, so we don't actually look into
+	  the directory*/
+	if(!fake)
+		fr_fill_dir(fr);
+
+	return fr;
+}
+
+
+static FileRec *
+fr_replace(FileRec *fr)
+{
+	char *tmp = fr->name;
+	DirRec *par = fr->parent;
+	
+	g_assert(fr->type == FILE_REC_DIR);
+
+	fr->parent = NULL;
+	fr->name = NULL;
+	fr_free(fr,FALSE);
+	fr = fr_read_dir((DirRec *)fr,tmp,NULL,FALSE);
+	if(fr)
+		fr->parent = par;
+	return fr;
+}
+
+
+static FileRec *
+fr_check_and_reread(FileRec *fr)
+{
+	DirRec *dr = (DirRec *)fr;
+	FileRec *ret = fr;
+	g_return_val_if_fail(fr!=NULL,fr);
+	g_return_val_if_fail(fr->type == FILE_REC_DIR,fr);
+	if(!dr->recs) {
+		fr_fill_dir(fr);
+	} else {
+		int reread = FALSE;
+		int any_change = FALSE;
+		struct stat ds;
+		GSList *li;
+		if(stat(fr->name,&ds)==-1) {
+			fr_free(fr,TRUE);
+			return NULL;
+		}
+		if(ds.st_mtime != fr->mtime) {
+			puts("!!!!!!!!!!!!!!!!!!!!!!11");
+			reread = TRUE;
+		}
+		for(li = dr->recs; !reread && li!=NULL; li=g_slist_next(li)) {
+			FileRec *ffr = li->data;
+			DirRec *ddr;
+			int r;
+			char *p;
+			struct stat s;
+
+			switch(ffr->type) {
+			case FILE_REC_DIR:
+				ddr = (DirRec *)ffr;
+				p = g_concat_dir_and_file(ffr->name,
+							  ".directory");
+				if(stat(p,&s)==-1) {
+					if(dr->dentrymtime) {
+						g_free(ffr->icon);
+						ffr->icon = NULL;
+						g_free(ffr->fullname);
+						ffr->fullname = NULL;
+						ddr->dentrymtime = 0;
+						any_change = TRUE;
+					}
+					g_free(p);
+					break;
+				}
+				if(ddr->dentrymtime != s.st_mtime) {
+					GnomeDesktopEntry *dentry;
+					dentry = gnome_desktop_entry_load(p);
+					if(dentry) {
+						g_free(ffr->icon);
+						ffr->icon = dentry->icon;
+						dentry->icon = NULL;
+						g_free(ffr->fullname);
+						ffr->fullname = dentry->name;
+						dentry->name = NULL;
+						gnome_desktop_entry_free(dentry);
+					} else {
+						g_free(ffr->icon);
+						ffr->icon = NULL;
+						g_free(ffr->fullname);
+						ffr->fullname = NULL;
+					}
+					ddr->dentrymtime = s.st_mtime;
+					any_change = TRUE;
+				}
+				g_free(p);
+				break;
+			case FILE_REC_FILE:
+				if(stat(ffr->name,&s)==-1) {
+					puts("!!!!!!!!!!!!!!!!!!!!!!22");
+					reread = TRUE;
+					break;
+				}
+				if(ffr->mtime != s.st_mtime) {
+					GnomeDesktopEntry *dentry;
+					dentry = gnome_desktop_entry_load(ffr->name);
+					if(dentry) {
+						g_free(ffr->icon);
+						ffr->icon = dentry->icon;
+						dentry->icon = NULL;
+						g_free(ffr->fullname);
+						ffr->fullname = dentry->name;
+						dentry->name = NULL;
+						gnome_desktop_entry_free(dentry);
+					} else {
+						puts("!!!!!!!!!!!!!!!!!!!!!!33");
+						reread = TRUE;
+						break;
+					}
+					ffr->mtime = s.st_mtime;
+					any_change = TRUE;
+				}
+				break;
+			case FILE_REC_EXTRA:
+				r = stat(ffr->name,&s);
+				if((r==-1 && ffr->mtime) ||
+				   (r!=-1 && ffr->mtime != s.st_mtime)) {
+					puts("!!!!!!!!!!!!!!!!!!!!!!44");
+					reread = TRUE;
+				}
+				break;
+			}
+		}
+		if(reread) {
+			ret = fr_replace(fr);
+		} else if(any_change) {
+			GSList *li;
+			for(li = dr->mfl; li!=NULL; li=g_slist_next(li))
+				((MenuFinfo *)li->data)->fr = NULL;
+			g_slist_free(dr->mfl);
+			dr->mfl = NULL;
+		}
+	}
+	return ret;
+}
+
+static FileRec *
+fr_get_dir(char *mdir)
+{
+	GSList *li;
+	for(li=dir_list;li!=NULL;li=g_slist_next(li)) {
+		FileRec *fr = li->data;
+		if(strcmp(fr->name,mdir)==0)
+			return fr_check_and_reread(fr);
+	}
+	return fr_read_dir(NULL,mdir,NULL,FALSE);
+}
+
+
+
+
+
+
+
+
+
 
 /*the most important dialog in the whole application*/
 static void
@@ -127,54 +532,6 @@ add_app_to_panel (GtkWidget *widget, char *item_loc)
 	load_launcher_applet(item_loc, current_panel,0);
 }
 
-/*reads in the order file and makes a list*/
-static GSList *
-get_presorted_from(char *dir)
-{
-	char buf[PATH_MAX+1];
-	GSList *list = NULL;
-	char *fname = g_concat_dir_and_file(dir,".order");
-	FILE *fp = fopen(fname,"r");
-	
-	if(!fp) {
-		g_free(fname);
-		return NULL;
-	}
-	while(fgets(buf,PATH_MAX+1,fp)!=NULL) {
-		char *p = strchr(buf,'\n');
-		if(p) *p = '\0';
-		list = g_slist_prepend(list,g_strdup(buf));
-	}
-	fclose(fp);
-	g_free(fname);
-	return g_slist_reverse(list);
-}
-
-static GSList *
-get_files_from_menudir(char *menudir)
-{
-	struct dirent *dent;
-	DIR *dir;
-	GSList *out = NULL;
-	GSList *pres = NULL;
-	
-	dir = opendir (menudir);
-	if (dir == NULL)
-		return NULL;
-	
-	pres = get_presorted_from(menudir);
-	
-	while((dent = readdir (dir)) != NULL) {
-		/* Skip over dot files */
-		if (dent->d_name [0] == '.')
-			continue;
-		if(!string_is_in_list(pres,dent->d_name))
-			out = g_slist_prepend(out,g_strdup(dent->d_name));
-	}
-
-	closedir(dir);
-	return g_slist_concat(pres,g_slist_reverse(out));
-}
 
 static void
 add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
@@ -375,7 +732,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 		gtk_object_set_data_full(o,"location",
 					 g_strdup(dentry->location),
 					 (GtkDestroyNotify)g_free);
-		gnome_desktop_entry_destroy(dentry);
+		gnome_desktop_entry_free(dentry);
 		g_free(dirfile);
 	} else {
 		dentry = g_new0(GnomeDesktopEntry, 1);
@@ -387,7 +744,7 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 		gtk_object_set_data_full(o,"location",dirfile,
 					 (GtkDestroyNotify)g_free);
 		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
-		gnome_desktop_entry_destroy(dentry);
+		gnome_desktop_entry_free(dentry);
 	}
 
 	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->exec_entry, FALSE);
@@ -796,35 +1153,13 @@ setup_directory_drag (GtkWidget *menuitem, char *directory)
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 }
 
-static char *
-get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
-{
-	int i;
-	int constantlen = strlen("--activate-goad-server");
-	char *goad_id=NULL;
-	/*FIXME:
-	  this is a horrible horrible hack and should be taken out
-	  and shot, once we add proper way to do this*/
-	for(i=1;ii->exec[i];i++) {
-		if(strncmp("--activate-goad-server",
-			   ii->exec[i],constantlen)==0) {
-			if(strlen(ii->exec[i])>constantlen)
-				goad_id = g_strdup(&ii->exec[i][constantlen+1]);
-			else
-				goad_id = g_strdup(ii->exec[i+1]);
-		}
-	}
-	return goad_id;
-}
-
 
 static void
-setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
+setup_applet_drag (GtkWidget *menuitem, char *goad_id)
 {
         static GtkTargetEntry menu_item_targets[] = {
 		{ "application/x-panel-applet", 0, 0 }
 	};
-	char *goad_id = get_applet_goad_id_from_dentry(ii);
 	
 	if(!goad_id)
 		return;
@@ -834,9 +1169,10 @@ setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
 			    menu_item_targets, 1,
 			    GDK_ACTION_COPY);
 	
-	gtk_signal_connect_full(GTK_OBJECT(menuitem), "drag_data_get",
-			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb), NULL,
-			   goad_id, (GtkDestroyNotify)g_free, FALSE, FALSE);
+	/*note: goad_id should be alive long enough!!*/
+	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_data_get",
+			   GTK_SIGNAL_FUNC (drag_data_get_dir_cb),
+			   goad_id);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 			   GTK_SIGNAL_FUNC (drag_end_menu_cb), NULL);
 
@@ -852,18 +1188,16 @@ add_menu_separator (GtkWidget *menu)
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 }
 
-static int
+static void
 add_drawer_to_panel (GtkWidget *widget, void *data)
 {
 	load_drawer_applet(-1,NULL,NULL, current_panel, 0);
-	return TRUE;
 }
 
-static int
+static void
 add_logout_to_panel (GtkWidget *widget, void *data)
 {
 	load_logout_applet(current_panel, 0);
-	return TRUE;
 }
 
 static void
@@ -882,67 +1216,13 @@ add_applet (GtkWidget *w, char *item_loc)
 	g_free(goad_id);
 }
 
-static int
-check_finfo_list(GSList *finfo)
-{
-	struct stat s;
-	FileInfo *fi;
-
-	for(;finfo!=NULL;finfo=g_slist_next(finfo)) {
-		fi = finfo->data;
-		if (stat (fi->name, &s) == -1) {
-			if(fi->mtime != 0)
-				return FALSE;
-		} else if(fi->mtime != s.st_mtime)
-			return FALSE;
-	}
-	return TRUE;
-}
-
-static FileInfo *
-make_finfo(char *name, int force)
-{
-	struct stat s;
-	FileInfo *fi;
-
-	if (stat (name, &s) == -1) {
-		if(force) {
-			fi = g_new(FileInfo,1);
-			fi->name = g_strdup(name);
-			fi->mtime = 0;
-			return fi;
-		}
-		return NULL;
-	}
-
-	fi = g_new(FileInfo,1);
-	fi->name = g_strdup(name);
-	fi->mtime = s.st_mtime;
-	return fi;
-}
-
-static FileInfo *
-make_finfo_s(char *name, struct stat *s)
-{
-	FileInfo *fi;
-
-	fi = g_new(FileInfo,1);
-	fi->name = g_strdup(name);
-	fi->mtime = s->st_mtime;
-	return fi;
-}
-
 static void
 destroy_mf(MenuFinfo *mf)
 {
-	GSList *li;
-	for(li=mf->finfo;li!=NULL;li=g_slist_next(li)) {
-		FileInfo *fi = li->data;
-		g_free(fi->name);
-		g_free(fi);
+	if(mf->fr) {
+		DirRec *dr = (DirRec *)mf->fr;
+		dr->mfl = g_slist_remove(dr->mfl,mf);
 	}
-	g_slist_free(mf->finfo);
-	mf->finfo = NULL;
 	if(mf->menudir) g_free(mf->menudir);
 	if(mf->dir_name) g_free(mf->dir_name);
 	if(mf->pixmap_name) g_free(mf->pixmap_name);
@@ -965,11 +1245,14 @@ menu_destroy(GtkWidget *menu, gpointer data)
 
 static void add_menu_widget (Menu *menu, GSList *menudirl,
 			     int main_menu, int fake_subs);
-static GtkWidget * create_menu_at (GtkWidget *menu,
-				   char *menudir, 
+static GtkWidget * create_menu_at (GtkWidget *menu, char *menudir, 
 				   int applets, char *dir_name,
 				   char *pixmap_name, int fake_submenus,
 				   int force);
+static GtkWidget * create_menu_at_fr (GtkWidget *menu, FileRec *fr,
+				      int applets, char *dir_name,
+				      char *pixmap_name, int fake_submenus,
+				      int force);
 static void create_rh_menu(void);
 
 /*reread the applet menu, not a submenu*/
@@ -990,9 +1273,20 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
 		MenuFinfo *mf = list->data;
 		if(mf->fake_menu ||
-		   !check_finfo_list(mf->finfo)) {
+		   mf->fr == NULL) {
+			if(mf->fr)
+				mf->fr = fr_replace(mf->fr);
+			else
+				mf->fr = fr_get_dir(mf->menudir);
 			need_reread = TRUE;
-			break;
+		} else {
+			FileRec *fr;
+			fr = fr_check_and_reread(mf->fr);
+			if(fr!=mf->fr ||
+			   fr == NULL) {
+				need_reread = TRUE;
+				mf->fr = fr;
+			}
 		}
 	}
 
@@ -1014,13 +1308,6 @@ check_and_reread_applet(Menu *menu,int main_menu)
 	}
 }
 
-static int
-sel_idle(gpointer data)
-{
-	gtk_item_select(GTK_ITEM(data));
-	return FALSE;
-}
-
 static void
 submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 {
@@ -1035,12 +1322,24 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 	/*check if we need to reread this*/
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
 		MenuFinfo *mf = list->data;
-		if(!need_reread &&
-		   (mf->fake_menu || !check_finfo_list(mf->finfo))) {
+		if(mf->fake_menu ||
+		   mf->fr == NULL) {
+			if(mf->fr)
+				mf->fr = fr_replace(mf->fr);
+			else
+				mf->fr = fr_get_dir(mf->menudir);
 			need_reread = TRUE;
-
+		} else {
+			FileRec *fr;
+			fr = fr_check_and_reread(mf->fr);
+			if(fr!=mf->fr ||
+			   fr == NULL) {
+				need_reread = TRUE;
+				mf->fr = fr;
+			}
 		}
 	}
+
 	/*THIS IS A HACK, but a cool one at that*/
 	if(need_reread) {
 		int was_visible = GTK_WIDGET_VISIBLE(menuw);
@@ -1050,28 +1349,15 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 		menuw = NULL;
 		for(list = mfl; list != NULL;
 		    list = g_slist_next(list)) {
-			GSList *li;
 			MenuFinfo *mf = list->data;
 
-			/*mem efficency hack, free this since we'll
-			  be creating such a list again at create_menu_at
-			  so we'd use this memory instead of allocationg
-			  more*/
-			for(li=mf->finfo;li!=NULL;li=g_slist_next(li)) {
-				FileInfo *fi = li->data;
-				g_free(fi->name);
-				g_free(fi);
-			}
-			g_slist_free(mf->finfo);
-			mf->finfo = NULL;
-
-			menuw = create_menu_at(menuw,
-					       mf->menudir,
-					       mf->applets,
-					       mf->dir_name,
-					       mf->pixmap_name,
-					       TRUE,
-					       FALSE);
+			menuw = create_menu_at_fr(menuw,
+						  mf->fr,
+						  mf->applets,
+						  mf->dir_name,
+						  mf->pixmap_name,
+						  TRUE,
+						  FALSE);
 			destroy_mf(mf);
 		}
 		g_slist_free(mfl);
@@ -1094,16 +1380,38 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 static void
 rh_submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 {
-	char *rhdir;
+	struct stat s;
+	int r;
+	int do_read = FALSE;
+	char *userrh;
 	if(!g_file_exists("/etc/X11/wmconfig"))
 		return;
-	rhdir = gnome_util_home_file("apps-redhat/");
-	if(!g_file_exists(rhdir) ||
-	   !redhat_check ||
-	   !check_finfo_list(redhat_check)) {
+	userrh = gnome_util_prepend_user_home(".wmconfig/");
+
+	stat("/etc/X11/wmconfig",&s);
+
+	printf("%ld %ld\n",rhsysdir_mtime,rhuserdir_mtime);
+
+	if(rhsysdir_mtime != s.st_mtime) {
+		printf("%ld\n",s.st_mtime);
+		puts("sysmenu bad");
+		do_read = TRUE;
+	}
+
+	r = stat(userrh,&s);
+	if((r == -1 && rhuserdir_mtime) ||
+	   (r != -1 && rhuserdir_mtime != s.st_mtime)) {
+		printf("%d %ld\n",r,s.st_mtime);
+		puts("USERMENU bad");
+		do_read = TRUE;
+	}
+
+	g_free(userrh);
+
+	if(do_read) {
+		puts("REREAD REDHAT");
 		create_rh_menu();
 	}
-	g_free(rhdir);
 }
 
 
@@ -1120,13 +1428,13 @@ create_fake_menu_at (char *menudir,
 	
 	menu = gtk_menu_new ();
 	
-	mf = g_new(MenuFinfo,1);
+	mf = g_new0(MenuFinfo,1);
 	mf->menudir = g_strdup(menudir);
 	mf->applets = applets;
 	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
 	mf->pixmap_name = pixmap_name?g_strdup(pixmap_name):NULL;
 	mf->fake_menu = TRUE;
-	mf->finfo = NULL;
+	mf->fr = NULL;
 	
 	list = g_slist_prepend(NULL,mf);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",list);
@@ -1137,93 +1445,50 @@ create_fake_menu_at (char *menudir,
 	return menu;
 }
 
-static GSList *
+static void
 create_menuitem(GtkWidget *menu,
-		char *menudir,
-		char *thisfile,
+		FileRec *fr,
 		int applets,
 		int fake_submenus,
-		int *items,
 		int *add_separator,
-		int *first_item,
-		GSList *finfo)
+		int *first_item)
 {
-	GnomeDesktopEntry *item_info=NULL;
-	FileInfo *fi;
 	GtkWidget *menuitem, *sub, *pixmap;
-	char *pix_name;
-	char *menuitem_name;
-	char *filename;
-	struct stat s;
+	char *pixname;
+	
+	g_return_if_fail(fr != NULL);
 
-	filename = g_concat_dir_and_file(menudir,thisfile);
+	if(fr->type == FILE_REC_EXTRA)
+		return;
 
-	if (stat (filename, &s) == -1) {
-		g_warning("Something is wrong, "
-			  "file %s can't be stated",
-			  filename);
-		/* make sure that we free up the filename before returning. */
-		g_free(filename);
-		return finfo;
+
+	if(fr->type == FILE_REC_FILE && applets &&
+	   !fr->goad_id) {
+		g_warning(_("Can't get goad_id for applet, ignoring it"));
+		return;
 	}
 
 	sub = NULL;
-	item_info = NULL;
-	if (S_ISDIR (s.st_mode)) {
-		char *p;
-		p = g_concat_dir_and_file(filename,".directory");
-		item_info = gnome_desktop_entry_load (p);
 
-		/*add the .directory file to the checked files list*/
-		fi = make_finfo(p,TRUE);
-		finfo = g_slist_prepend(finfo,fi);
-
-		menuitem_name = item_info?item_info->name:thisfile;
-		pix_name = item_info?item_info->icon:NULL;
-
+	if(fr->type == FILE_REC_DIR) {
 		if(fake_submenus)
-			sub = create_fake_menu_at (filename,
+			sub = create_fake_menu_at (fr->name,
 						   applets,
-						   menuitem_name,
-						   pix_name);
+						   fr->fullname?
+						   	fr->fullname:fr->name,
+						   fr->icon);
 		else
-			sub = create_menu_at (NULL, filename, 
-					      applets,
-					      menuitem_name,
-					      pix_name,
-					      fake_submenus,
-					      FALSE);
+			sub = create_menu_at_fr (NULL, fr,
+						 applets,
+						 fr->fullname?
+						 	fr->fullname:fr->name,
+						 fr->icon,
+						 fake_submenus,
+						 FALSE);
 
-		if (!sub) {
-			if(item_info)
-				gnome_desktop_entry_free(item_info);
-			/* free up the string allocated at the top of this block */
-			g_free(filename);
-			g_free(p);
-			return finfo;
-		}
-		/* free up the pointer at the top of this block. */
-		g_free(p);
-	} else {
-		char *p = strrchr(filename,'.');
-		if (!p || strcmp(p, ".desktop") != 0) {
-			g_free(filename);
-			return finfo;
-		}
-		item_info = gnome_desktop_entry_load (filename);
-		if (!item_info) {
-			g_free(filename);
-			return finfo;
-		}
-		menuitem_name = item_info->name;
-		pix_name = item_info->icon;
-
-		/*add file to the checked files list*/
-		fi = make_finfo_s(filename,&s);
-		finfo = g_slist_prepend(finfo,fi);
+		if (!sub)
+			return;
 	}
-
-	(*items)++;
 
 	menuitem = gtk_menu_item_new ();
 	if (sub) {
@@ -1234,8 +1499,8 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	pixmap = NULL;
-	if (pix_name && g_file_exists (pix_name)) {
-		pixmap = gnome_stock_pixmap_widget_at_size (NULL, pix_name,
+	if (fr->icon && g_file_exists (fr->icon)) {
+		pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
 							    SMALL_ICON_SIZE,
 							    SMALL_ICON_SIZE);
 		if (pixmap)
@@ -1243,12 +1508,15 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	if(!sub && applets)
-		setup_applet_drag (menuitem, item_info);
+		setup_applet_drag (menuitem, fr->goad_id);
 	/*setup the menuitem, pass item_loc if this is not
 	  a submenu or an applet, so that the item can be added,
-	  we can be sure that the finfo will live that long*/
-	setup_full_menuitem (menuitem, pixmap, menuitem_name,
-			     (applets||sub)?NULL:fi->name);
+	  we can be sure that the FileRec will live that long,
+	  (when it dies, the menu will not be used again, it will
+	   be recreated at the next available opportunity)*/
+	setup_full_menuitem (menuitem, pixmap,
+			     fr->fullname?fr->fullname:fr->name,
+			     (applets||sub)?NULL:fr->name);
 
 	if(*add_separator) {
 		add_menu_separator(menu);
@@ -1257,17 +1525,13 @@ create_menuitem(GtkWidget *menu,
 	}
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 
-	if(item_info && item_info->exec) {
+	if(!sub) {
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    applets?
 				    GTK_SIGNAL_FUNC(add_applet):
 				    GTK_SIGNAL_FUNC(activate_app_def),
-				    fi->name);
+				    fr->name);
 	}
-	if(item_info)
-		gnome_desktop_entry_free(item_info);
-	g_free(filename);
-	return finfo;
 }
 
 static GtkWidget *
@@ -1278,58 +1542,40 @@ create_menu_at (GtkWidget *menu,
 		char *pixmap_name,
 		int fake_submenus,
 		int force)
+{
+	return create_menu_at_fr(menu,fr_get_dir(menudir),
+				 applets,dir_name,pixmap_name,
+				 fake_submenus,force);
+}
+
+static GtkWidget *
+create_menu_at_fr (GtkWidget *menu,
+		   FileRec *fr,
+		   int applets,
+		   char *dir_name,
+		   char *pixmap_name,
+		   int fake_submenus,
+		   int force)
 {	
-	GnomeDesktopEntry *dir_info=NULL;
-	char *filename;
-	int items = 0;
-	FileInfo *fi;
-	GSList *finfo = NULL;
-	GSList *flist = NULL;
+	GSList *li;
 	GSList *mfl = NULL;
 	int add_separator = FALSE;
 	int first_item = 0;
 	GtkWidget *menuitem;
-	
 	MenuFinfo *mf = NULL;
+	DirRec *dr = (DirRec *)fr;
+
+	g_return_val_if_fail(!(fr&&fr->type!=FILE_REC_DIR),menu);
 	
-	if(!force && !g_file_exists(menudir))
+	if(!force && !fr)
 		return menu;
 	
-	filename = g_concat_dir_and_file(menudir,".directory");
-	dir_info = gnome_desktop_entry_load (filename);
-
-	/*add the .directory file to the checked files list,
-	  but only if we can stat it (if we can't it probably
-	  doesn't exist)*/
-	fi = make_finfo(filename,FALSE);
-	if(fi)
-		finfo = g_slist_prepend(finfo,fi);
-	/* free up the filename */
-	g_free(filename);
-
 	/*get this info ONLY if we haven't gotten it already*/
 	if(!dir_name)
-		dir_name = dir_info?dir_info->name:_("Menu");
+		dir_name = (fr&&fr->fullname)?fr->fullname:_("Menu");
 	if(!pixmap_name)
-		pixmap_name = dir_info?dir_info->icon:gnome_folder;
+		pixmap_name = (fr&&fr->icon)?fr->icon:gnome_folder;
 	
-	/*add dir to the checked files list*/
-	fi = make_finfo(menudir,force);
-	if(!fi)
-		g_warning("Something is wrong, directory %s can't be stated",
-			  menudir);
-	else
-		finfo = g_slist_prepend(finfo,fi);
-
-	/*add the order file to the checked files list,
-	  but only if we can stat it (if we can't it probably doesn't
-	  exist)*/
-	filename = g_concat_dir_and_file(menudir,".order");
-	fi = make_finfo(filename,FALSE);
-	if(fi)
-		finfo = g_slist_prepend(finfo,fi);
-	g_free(filename);
-
 	if(!menu) {
 		menu = gtk_menu_new ();
 		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
@@ -1340,31 +1586,29 @@ create_menu_at (GtkWidget *menu,
 		if(GTK_MENU_SHELL(menu)->children)
 			add_separator = TRUE;
 	}
-
-	flist = get_files_from_menudir(menudir);
 	
-	while(flist) {
-		char *thisfile = flist->data;
-		GSList *tmp = flist;
-		flist = g_slist_next(flist);
-		g_slist_free_1(tmp);
-
-		finfo = create_menuitem(menu,menudir,thisfile,
-					applets,fake_submenus,&items,
-					&add_separator,&first_item,
-					finfo);
-		g_free(thisfile);
+	if(fr) {
+		for(li = dr->recs; li!=NULL; li=g_slist_next(li)) {
+			create_menuitem(menu,li->data,
+					applets,fake_submenus,
+					&add_separator,
+					&first_item);
+		}
 	}
-	
-	mf = g_new(MenuFinfo,1);
-	mf->menudir = g_strdup(menudir);
+
+	mf = g_new0(MenuFinfo,1);
+	mf->menudir = g_strdup(fr->name);
 	mf->applets = applets;
 	mf->dir_name = dir_name?g_strdup(dir_name):NULL;
 	mf->pixmap_name = pixmap_name?g_strdup(pixmap_name):NULL;
 	mf->fake_menu = FALSE;
-	mf->finfo = finfo;
+	mf->fr = fr;
+	if(fr) {
+		DirRec *dr = (DirRec *)fr;
+		dr->mfl = g_slist_prepend(dr->mfl,mf);
+	}
 	
-	if(!applets && items>0) {
+	if(!applets) {
 		GtkWidget *pixmap;
 		menuitem = gtk_menu_item_new();
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
@@ -1388,14 +1632,11 @@ create_menu_at (GtkWidget *menu,
 
 		menuitem = gtk_menu_item_new();
 		setup_title_menuitem(menuitem,pixmap,
-				     dir_name?dir_name:"Menu",mf);
+				     dir_name?dir_name:_("Menu"),mf);
 		gtk_menu_insert(GTK_MENU(menu),menuitem,first_item);
 
 		setup_directory_drag (menuitem, mf->menudir);
 	}
-
-	if(dir_info)
-		gnome_desktop_entry_free(dir_info);
 
 	mfl = g_slist_append(mfl,mf);
 
@@ -1638,7 +1879,8 @@ create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 }
 
 static GtkWidget *
-create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus, int force, int fake)
+create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
+		 int force, int fake)
 {
 	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
@@ -2288,25 +2530,21 @@ create_rh_menu(void)
 	char *userrh = gnome_util_prepend_user_home(".wmconfig/");
 	char *rhdir = gnome_util_home_file("apps-redhat/");
 	GSList *rhlist = NULL;
-	GSList *li = NULL;
 	GtkWidget *w;
 	int i;
 	char *dirs[3] = {"/etc/X11/wmconfig/",userrh,NULL};
+	struct stat s;
 	g_return_if_fail(userrh!=NULL);
 	g_return_if_fail(rhdir!=NULL);
 	
-	for(li = redhat_check; li!=NULL; li = g_slist_next(li)) {
-		FileInfo *finfo = li->data;
-		g_free(finfo->name);
-		g_free(finfo);
-	}
-	g_slist_free(redhat_check);
-	redhat_check = NULL;
-	
 	remove_directory(rhdir,FALSE);
 
-	redhat_check = g_slist_prepend(redhat_check,make_finfo("/etc/X11/wmconfig/",TRUE));
-	redhat_check = g_slist_prepend(redhat_check,make_finfo(userrh,TRUE));
+	rhsysdir_mtime = rhuserdir_mtime = 0;
+	if(stat("/etc/X11/wmconfig/",&s)!=-1)
+		rhsysdir_mtime = s.st_mtime;
+	else if(stat(userrh,&s)!=-1)
+		rhuserdir_mtime = s.st_mtime;
+	printf("%ld %ld\n",rhsysdir_mtime,rhuserdir_mtime);
 
 	/*read redhat wmconfig files*/
 	for(i=0;dirs[i];i++) {
@@ -2540,16 +2778,11 @@ create_panel_menu (char *menudir, int main_menu,
 	
 	char *pixmap_name;
 
-	menu = g_new(Menu,1);
-	menu->age = 0;
-	menu->menu = NULL;
-	menu->path = NULL;
+	menu = g_new0(Menu,1);
 
 	pixmap_name = get_pixmap(menudir,main_menu);
 
 	menu->main_menu_flags = main_menu_flags;
-
-
 
 	/*make the pixmap*/
 	menu->button = button_widget_new_from_file (pixmap_name,
@@ -2589,6 +2822,9 @@ create_menu_applet(char *arguments, PanelOrientType orient,
 		return NULL;
 	}
 
+	/*read the menu into memory, this just reads the .desktops
+	  of the top most directory, it doesn't create a widget yet*/
+	fr_read_dir(NULL,this_menu,NULL,FALSE);
 
 	if(!gnome_folder) {
 		gnome_folder =
