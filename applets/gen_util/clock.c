@@ -303,6 +303,8 @@ clock_properties(AppletWidget * applet, gpointer data)
 		return;
 	}
 	cd->props = gnome_property_box_new();
+	gtk_window_set_title (GTK_WINDOW (cd->props),
+			      _("Clock properties"));
 
 	table = gtk_table_new(2, 2, FALSE);
 	gtk_widget_show(table);
@@ -320,8 +322,8 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_widget_show(twelvehour);
 
 	twentyfourhour = gtk_radio_button_new_with_label(
-			gtk_radio_button_group(GTK_RADIO_BUTTON(twelvehour)),
-					       "24 hour");
+			 gtk_radio_button_group(GTK_RADIO_BUTTON(twelvehour)),
+					        "24 hour");
 
 	gtk_table_attach(GTK_TABLE(table), twentyfourhour, 0, 1, 1, 2,
 			 GTK_FILL, GTK_FILL | GTK_EXPAND,

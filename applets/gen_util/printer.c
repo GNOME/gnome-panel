@@ -217,6 +217,8 @@ printer_properties (AppletWidget *applet, gpointer data)
 	}
 
 	pr->printer_prop = gnome_property_box_new ();
+	gtk_window_set_title (GTK_WINDOW (pr->printer_prop),
+			      _("Printer properties"));
 	
 	table = gtk_table_new (2, 2, FALSE);
 	gtk_widget_show (table);
@@ -232,7 +234,8 @@ printer_properties (AppletWidget *applet, gpointer data)
 			       "printer_command", &pr->prop_command,
 			       pr->print_command, "lpr");
 
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (pr->printer_prop), table,
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX (pr->printer_prop),
+					table,
 					gtk_label_new (_("Printer")));
 	gtk_signal_connect (GTK_OBJECT (pr->printer_prop), "apply",
 			    GTK_SIGNAL_FUNC(apply_properties), pr);

@@ -318,6 +318,8 @@ set_selection (GtkWidget *widget, gpointer data)
 {
 	MailCheck *mc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	mc->selected_pixmap_name = data;
+
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (mc->property_window));
 }
 
 static void
@@ -333,9 +335,11 @@ mailcheck_new_entry (MailCheck *mc, GtkWidget *menu, GtkWidget *item, char *s)
 
 	gtk_object_set_user_data(GTK_OBJECT(item),mc);
 
-	gtk_signal_connect (GTK_OBJECT (item), "activate", (GtkSignalFunc) set_selection, s);
+	gtk_signal_connect (GTK_OBJECT (item), "activate",
+			    GTK_SIGNAL_FUNC(set_selection), s);
 	if (s != mc->mailcheck_text_only)
-		gtk_signal_connect (GTK_OBJECT (item), "destroy", (GtkSignalFunc) free_str, s);
+		gtk_signal_connect (GTK_OBJECT (item), "destroy",
+				    GTK_SIGNAL_FUNC(free_str), s);
 }
 
 static GtkWidget *
@@ -405,7 +409,7 @@ close_callback (GtkWidget *widget, gpointer data)
 }
 
 static void
-load_new_pixmap_callback (GtkWidget *widget, gpointer data)
+load_new_pixmap_callback (GtkWidget *widget, gint button_num, gpointer data)
 {
 	MailCheck *mc = data;
 
@@ -470,12 +474,6 @@ static void
 mailcheck_properties (AppletWidget *applet, gpointer data)
 {
 	GtkWidget *f;
-	GtkDialog *d;
-	GnomeActionAreaItem sel_actions [] = {
-		{ NULL, load_new_pixmap_callback },
-		{ NULL, close_callback },
-	};
-
 
 	MailCheck *mc = data;
 
@@ -484,20 +482,20 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 		return; /* Only one instance of the properties dialog! */
 	}
 	
-	mc->property_window = gtk_dialog_new ();
+	mc->property_window = gnome_property_box_new ();
 	gtk_window_set_title (GTK_WINDOW (mc->property_window),
 			      _("Mail check properties"));
-	d = GTK_DIALOG (mc->property_window);
-	f = mailcheck_notification_frame (mc);
-	
-	sel_actions [0].label = _("Apply");
-	sel_actions [0].user_data = mc;
-	sel_actions [1].label = _("Close");
-	sel_actions [1].user_data = mc;
-		
-	gnome_build_action_area (d, sel_actions, 2, 0);
 
-	gtk_box_pack_start_defaults (GTK_BOX (d->vbox), f);
+	f = mailcheck_notification_frame (mc);
+
+	gnome_property_box_append_page (GNOME_PROPERTY_BOX(mc->property_window),
+					f, gtk_label_new (_("Mail check")));
+
+	gtk_signal_connect (GTK_OBJECT (mc->property_window), "apply",
+			    GTK_SIGNAL_FUNC(load_new_pixmap_callback), mc);
+	gtk_signal_connect (GTK_OBJECT (mc->property_window), "destroy",
+			    GTK_SIGNAL_FUNC(close_callback), mc);
+
 	gtk_widget_show (mc->property_window);
 }
 
