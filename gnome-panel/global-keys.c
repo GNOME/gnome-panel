@@ -58,7 +58,7 @@ panel_global_keys_setup(void)
 				  GrabModeAsync, GrabModeAsync);
 	} else
 		lastkey_run = 0;
-
+	gdk_flush ();
 	gdk_error_trap_pop();
 }
 
