@@ -5,7 +5,12 @@
 #include "gdkextra.h"
 
 /*check for corruptions, this should be in here until this widget is
-"BugFree(tm)" after that parts can be optimized quite nicely*/
+"BugFree(tm)" after that parts can be optimized quite nicely
+
+actually this should all be removed as soon as the code is completely ported
+to use the list instead of the array ... the list isn't corrupted easily and
+is veryeasy to rebuild if it does get messed up
+*/
 #define CORRUPTION_CHECK
 
 GList *panels=NULL; /*other panels we might want to move the applet to*/
@@ -56,7 +61,9 @@ typedef void (*PanelWidgetAppletSignal) (GtkObject * object,
 				         GtkWidget * applet,
 				         gpointer data);
 
-
+/************************
+ debugging
+ ************************/
 static void
 debug_dump_panel(PanelWidget *panel)
 {
@@ -109,12 +116,17 @@ fill_panel_array(PanelWidget *panel)
 	}
 }
 
+/************************
+ convenience functions
+ ************************/
+
 static gint
 applet_data_compare(AppletData *ad1, AppletData *ad2)
 {
 	return ad1->pos - ad2->pos;
 }
 
+/*maybe this should be a glib function?*/
 static GList *
 my_g_list_resort(GList *list, gpointer data, GCompareFunc func)
 {
@@ -173,7 +185,9 @@ move_resize_window(GtkWidget *widget, int x, int y, int w, int h)
 	gtk_widget_draw(widget, NULL);
 }
 
-
+/************************
+ widget core
+ ************************/
 
 guint
 panel_widget_get_type ()
@@ -1813,17 +1827,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	return 1;
 }
 
-static gint
-panel_widget_destroy(GtkWidget *w, gpointer data)
-{
-	/*PanelWidget *panel = PANEL_WIDGET(w);
-
-	g_list_free(panel->applet_list);
-	panel->applet_list = NULL;*/
-
-	return FALSE;
-}
-
 GtkWidget*
 panel_widget_new (gint size,
 		  PanelOrientation orient,
@@ -2084,10 +2087,6 @@ panel_widget_new (gint size,
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel->fixed), TRUE,
 				 image_drop_types, 1, FALSE);
 	
-	gtk_signal_connect(GTK_OBJECT(panel), "destroy",
-			   GTK_SIGNAL_FUNC(panel_widget_destroy),
-			   NULL);
-
 	/*FIXME: ???? will we delete this or make it work*/
 	/*set up drag'n'drop (the drop)*/
 	/*gtk_signal_connect (GTK_OBJECT (panel->fixed), 
@@ -2993,6 +2992,10 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 
 	g_return_val_if_fail(ad,-1);
+
+	if(panel !=
+	   gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_PARENT_KEY))
+		return -1;
 
 #ifndef CORRUPTION_CHECK
 	return ad->pos;
