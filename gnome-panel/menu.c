@@ -1101,9 +1101,9 @@ create_menu_at (GtkWidget *menu,
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
-								     SMALL_ICON_SIZE,
-								     SMALL_ICON_SIZE);
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -1150,15 +1150,15 @@ create_menu_at (GtkWidget *menu,
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
-								     SMALL_ICON_SIZE,
-								     SMALL_ICON_SIZE);
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		} else if (gnome_folder && g_file_exists (gnome_folder)) {
-			pixmap = gnome_pixmap_new_from_file_at_size (gnome_folder,
-								     SMALL_ICON_SIZE,
-								     SMALL_ICON_SIZE);
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, gnome_folder,
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
