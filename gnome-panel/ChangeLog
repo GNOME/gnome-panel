@@ -1,3 +1,27 @@
+2004-10-12  Mark McLoughlin  <mark@skynet.ie>
+
+	When saving any of toplevel_id_list, applet_id_list or
+	object_id_list, always save the other two id lists two.
+	Prevents the situation where when you change the default
+	setup, people may see bits of the new configuration leaking
+	through even though they've changed some of their panel
+	configuratoin.
+
+	* panel-profile.[ch]:
+	(panel_profile_save_id_list),
+	(panel_profile_save_other_id_lists),
+	(panel_profile_add_to_list),
+	(panel_profile_remove_from_list): when saving a list,
+	save the other lists too.
+	(panel_profile_id_list_is_writable),
+	(panel_profile_id_lists_are_writable): no longer check
+	whether an individual list is writable but whether all
+	lists are writable.
+
+	* applet.c, menu.c, panel-addto.c, panel-applet-frame.c,
+	  panel.c: use id_lists_are_writable() rather than
+	list_is_writable().
+	
 2004-10-11  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-addto.c: add back vnoel's patch now that we've branched.

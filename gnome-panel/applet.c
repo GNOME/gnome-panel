@@ -438,7 +438,7 @@ panel_applet_create_menu (AppletInfo  *info,
 
 		lockable = panel_applet_lockable (info);
 		movable = panel_applet_can_freely_move (info);
-		removable = panel_profile_list_is_writable (PANEL_GCONF_OBJECTS);
+		removable = panel_profile_id_lists_are_writable ();
 
 		locked = panel_widget_get_applet_locked (panel_widget, info->widget);
 
