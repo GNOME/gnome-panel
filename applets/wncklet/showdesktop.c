@@ -45,6 +45,7 @@ typedef struct {
         GtkWidget *button;
         GtkWidget *image;
         GdkPixbuf *icon;
+        GtkWidget *about_dialog;
 
         PanelAppletOrient orient;
         int size;
@@ -259,6 +260,11 @@ applet_destroyed (GtkWidget       *applet,
         g_object_unref (G_OBJECT (sdd->icon));
 	g_object_unref (sdd->icon_theme);
 
+	if (sdd->about_dialog) {
+		gtk_widget_destroy (sdd->about_dialog);
+		sdd->about_dialog =  NULL;
+	}
+
         g_free (sdd);
 }
 
@@ -429,8 +435,6 @@ display_about_dialog (BonoboUIComponent *uic,
                       ShowDesktopData   *sdd,
                       const gchar       *verbname)
 {
-        static GtkWidget *about = NULL;
-
         static const gchar *authors[] = {
                 "Havoc Pennington <hp@redhat.com>",
                 NULL
@@ -442,14 +446,14 @@ display_about_dialog (BonoboUIComponent *uic,
         /* Translator credits */
         const char *translator_credits = _("translator_credits");
 
-        if (about) {
-                gtk_window_set_screen (GTK_WINDOW (about),
+        if (sdd->about_dialog) {
+                gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
                                        gtk_widget_get_screen (sdd->applet));
-                gtk_window_present (GTK_WINDOW (about));
+                gtk_window_present (GTK_WINDOW (sdd->about_dialog));
                 return;
         }
 
-        about = gnome_about_new (_("Show Desktop Button"), VERSION,
+        sdd->about_dialog = gnome_about_new (_("Show Desktop Button"), VERSION,
                                  "Copyright \xc2\xa9 2002 Red Hat, Inc.",
                                  _("This button lets you hide all windows and show the desktop"),
                                  authors,
@@ -457,17 +461,17 @@ display_about_dialog (BonoboUIComponent *uic,
                                  strcmp (translator_credits, "translator_credits") != 0 ? translator_credits : NULL,
                                  sdd->icon);
 
-        gtk_window_set_wmclass (GTK_WINDOW (about), "show-desktop", "show-desktop");
-        gtk_window_set_screen (GTK_WINDOW (about),
+        gtk_window_set_wmclass (GTK_WINDOW (sdd->about_dialog), "show-desktop", "show-desktop");
+        gtk_window_set_screen (GTK_WINDOW (sdd->about_dialog),
                                gtk_widget_get_screen (sdd->applet));
 
         if (sdd->icon)
-                gtk_window_set_icon (GTK_WINDOW (about), sdd->icon);
+                gtk_window_set_icon (GTK_WINDOW (sdd->about_dialog), sdd->icon);
 
-        g_signal_connect (G_OBJECT(about), "destroy",
-                          (GCallback)gtk_widget_destroyed, &about);
+        g_signal_connect (G_OBJECT(sdd->about_dialog), "destroy",
+                          (GCallback)gtk_widget_destroyed, &sdd->about_dialog);
 
-        gtk_widget_show (about);
+        gtk_widget_show (sdd->about_dialog);
 }
 
 static void
