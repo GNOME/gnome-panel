@@ -73,6 +73,10 @@ PanelApplet       *panel_applet_new       (GtkWidget *widget);
 void               panel_applet_construct (PanelApplet *applet,
 					   GtkWidget   *widget);
 
+PanelAppletOrient panel_applet_get_orient (PanelApplet *applet);
+
+guint             panel_applet_get_size  (PanelApplet *applet);
+
 
 BonoboControl     *panel_applet_get_control          (PanelApplet  *applet);
 BonoboUIComponent *panel_applet_get_popup_component  (PanelApplet  *applet);

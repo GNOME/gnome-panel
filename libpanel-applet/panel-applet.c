@@ -52,6 +52,36 @@ enum {
 };
 
 /**
+ * panel_applet_get_size:
+ * @applet: A #PanelApplet.
+ *
+ * Returns the current size of the panel which
+ * the applet is contained in.
+ *
+ * Return value: a #guint value.
+ */
+guint
+panel_applet_get_size (PanelApplet *applet)
+{
+	return applet->priv->size;
+}
+
+/**
+ * panel_applet_get_orient
+ * @applet: A #PanelApplet.
+ *
+ * Returns the current orientation of the panel which
+ * the applet is contained in.
+ *
+ * Return value: a #PanelAppletOrient value.
+ */
+PanelAppletOrient
+panel_applet_get_orient (PanelApplet *applet)
+{
+	return applet->priv->orient;
+}
+
+/**
  * panel_applet_setup_menu:
  * @applet: A #PanelApplet.
  * @xml: The xml character string describing the popup menu.
