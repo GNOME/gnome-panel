@@ -199,6 +199,7 @@ drawer_widget_size_request(GtkWidget *widget,
 			    GtkRequisition *requisition)
 {
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
+	int w,h;
 	if(ignore_allocate)
 		return;
 	if(drawer_widget_request_cube) {
@@ -210,8 +211,17 @@ drawer_widget_size_request(GtkWidget *widget,
 
 	gtk_widget_size_request (drawer->table, &drawer->table->requisition);
 
-	requisition->width = drawer->table->requisition.width;
-	requisition->height = drawer->table->requisition.height;
+	w = drawer->table->requisition.width;
+	h = drawer->table->requisition.height;
+
+	/* do a minimal 48 size*/
+	if(PANEL_WIDGET(drawer->panel)->orient == PANEL_HORIZONTAL) {
+		if(w<48) w=48;
+	} else {
+		if(h<48) h=48;
+	}
+	requisition->width = w;
+	requisition->height = h;
 }
 
 static void
@@ -272,6 +282,7 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 {
 	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	GtkAllocation challoc;
+	int w,h;
 
 	if(ignore_allocate)
 		return;
@@ -280,9 +291,18 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	  a cube for the flicker prevention*/
 	gtk_widget_size_request (drawer->table, &drawer->table->requisition);
 
-	allocation->width = drawer->table->requisition.width;
-	allocation->height = drawer->table->requisition.height;
-	
+	w = drawer->table->requisition.width;
+	h = drawer->table->requisition.height;
+
+	/* do a minimal 48 size*/
+	if(PANEL_WIDGET(drawer->panel)->orient == PANEL_HORIZONTAL) {
+		if(w<48) w=48;
+	} else {
+		if(h<48) h=48;
+	}
+	allocation->width = w;
+	allocation->height = h;
+
 	drawer_widget_get_pos(drawer,
 			      &allocation->x,
 			      &allocation->y,
