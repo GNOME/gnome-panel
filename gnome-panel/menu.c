@@ -3285,13 +3285,7 @@ remove_panel (GtkWidget *menuitem,
 		return;
 	}
 
-	if (!global_config.confirm_panel_remove) {
-		gtk_widget_destroy (panel);
-		return;
-	}
-
-	panel_delete_query (panel_widget);
-
+	panel_delete (panel_widget);
 }
 
 GtkWidget *

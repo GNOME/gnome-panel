@@ -2813,55 +2813,65 @@ panel_remove_from_gconf (PanelWidget *panel)
 }
 
 static void
+panel_delete_without_query (PanelWidget *panel_widget)
+{
+	GtkWidget * panel;
+
+	panel = GTK_WIDGET (panel_widget->panel_parent);
+
+	/* Destroy the drawers button before destroying the drawer */
+	if (DRAWER_IS_WIDGET (panel)) {         
+
+		if (panel_widget && panel_widget->master_widget) {
+			AppletInfo *info;
+			Drawer *drawer;
+
+			panel_widget_remove_drawers (panel_widget);
+
+			info = g_object_get_data (
+					G_OBJECT (panel_widget->master_widget),
+					"applet_info");
+
+			drawer = (Drawer *) info->data;
+
+			g_signal_handler_disconnect (drawer->button,
+						     drawer->focus_out_handler);
+
+			drawer->drawer = NULL;
+
+			panel_applet_clean (info, TRUE);
+
+			g_assert (panel_widget->master_widget == NULL);
+		}
+	} else 
+		panel_widget_remove_drawers (panel_widget);
+
+	panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
+
+	gtk_widget_destroy (panel);
+
+} 
+
+static void
 remove_panel_accept (GtkWidget *w,
 		     int        response,
 		     GtkWidget *panel)
 {
 	PanelWidget *panel_widget;
 
+	panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
+
 	if (response == GTK_RESPONSE_OK) {
-
-		/* Destroy the drawers button before destroying the drawer */
-		if (DRAWER_IS_WIDGET (panel)) {
-
-			panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-			if (panel_widget && panel_widget->master_widget) {
-				AppletInfo *info;
-
-				panel_widget_remove_drawers (panel_widget);
-
-				info = g_object_get_data (
-						G_OBJECT (panel_widget->master_widget),
-						"applet_info");
-				((Drawer *) info->data)->drawer = NULL;
-				panel_applet_clean (info, TRUE);
-
-				g_assert (panel_widget->master_widget == NULL);
-			}
-		} else {
-			panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
-			panel_widget_remove_drawers (panel_widget);
-		}
-
 		panel_push_window_busy (w);
-
-		panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
-
-		gtk_widget_destroy (panel);
+		panel_delete_without_query(panel_widget);
 		panel_pop_window_busy (w);
-	}
-	else {
-		panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
-
+	} else 
 		panel_widget->delete_dialog = NULL;
-	}
 
 	gtk_widget_destroy (w);
 }
 
-void
+static void
 panel_delete_query (PanelWidget *panel_widget)
 {
 	GtkWidget   *dialog;
@@ -2907,4 +2917,16 @@ panel_delete_query (PanelWidget *panel_widget)
 			G_CALLBACK (gtk_widget_destroy),
 			G_OBJECT (dialog));
 	gtk_widget_show_all (dialog);
+}
+
+void
+panel_delete (PanelWidget *panel_widget)
+{
+	if (!global_config.confirm_panel_remove ||
+	     g_list_length(panel_widget->applet_list) == 0) {
+		panel_delete_without_query (panel_widget);
+		return;
+	}
+
+	panel_delete_query (panel_widget);
 }

@@ -161,7 +161,7 @@ applet_idle_remove (gpointer data)
 	if (info->type == APPLET_DRAWER) {
 		Drawer *drawer = (Drawer *) info->data;
 
-		panel_delete_query (PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel));
+		panel_delete (PANEL_WIDGET (BASEP_WIDGET (drawer->drawer)->panel));
 	} else
 		panel_applet_clean (info, TRUE);
 

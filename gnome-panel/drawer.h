@@ -18,6 +18,8 @@ typedef struct {
 	gboolean      opened_for_drag;
 	guint         close_timeout_id;
 
+	guint         focus_out_handler;
+
 	AppletInfo   *info;
 } Drawer;
 

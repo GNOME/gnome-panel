@@ -1,3 +1,25 @@
+2003-03-01  Arvind Samptur <arvind.samptur@wipro.com>
+
+	Do not popup a 'Delete Panel" query if there are
+	no objects in the panel.
+
+	Based on patch from  Heeten (azari.geo@yahoo.com)
+	Fixes #105723
+
+	* panel.[ch] : (panel_delete) (panel_delete_query)
+	(panel_delete_without_query) :
+	Re-organize the panel deletion methods for deleting
+	the panel without user interaction when they have no
+	objects on them.
+
+	* drawer.[ch] : (create_drawer_applet) : Get hold
+	of the handler for focus_out event of the drawer button.
+	Disconnect while deleting the drawer.
+
+	* applet.c : (applet_idle_remove) Use panel_delete().
+
+	* menu.c : (remove_panel) Use panel_delete().
+
 2003-02-25  Mark McLoughlin  <mark@skynet.ie>
 
 	* xstuff.c: (xstuff_zoom_animate): fix typo pointed out
