@@ -1602,7 +1602,7 @@ main(int argc, char **argv)
 	GtkWidget *panel;
 	GtkWidget *button;
 
-	gnome_init(&argc, &argv);
+	gnome_init("panel-widget", &argc, &argv);
 	textdomain(PACKAGE);
 
 	panel = panel_widget_new(0,PANEL_HORIZONTAL,PANEL_BOTTOM,PANEL_EXPLICIT_HIDE,PANEL_SHOWN,5,5,100);

@@ -269,7 +269,7 @@ main(int argc, char **argv)
 	GtkWidget *base_panel;
 	char buf[256];
 	
-	gnome_init(&argc, &argv);
+	gnome_init("panel", &argc, &argv);
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 

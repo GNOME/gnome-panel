@@ -167,7 +167,7 @@ main(int argc, char **argv)
 	GtkWidget *clock;
 	GtkWidget *window;
 
-	gnome_init(&argc, &argv);
+	gnome_init("clock_applet", &argc, &argv);
 
 	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
