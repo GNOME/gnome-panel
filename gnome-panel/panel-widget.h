@@ -216,6 +216,8 @@ void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 gboolean     major,
 						 gboolean     minor);
 
+void         panel_widget_remove_drawers (PanelWidget *panel_widget);
+
 
 extern gboolean panel_applet_in_drag;
 
