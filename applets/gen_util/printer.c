@@ -31,6 +31,10 @@ struct _Printer {
 	char *print_title;
 };
 
+enum {
+  TARGET_URI_LIST,
+};
+
 void
 position_label (GtkWidget *label, gpointer data)
 {
@@ -64,40 +68,35 @@ execute (char *command)
 }
 
 static void
-drop_data_available (GtkWidget *widget,
-		     GdkEventDropDataAvailable *event,
-		     gpointer data)
+print_file (gchar *name, Printer *pr)
 {
-	Printer *pr = data;
-	char *p = event->data;
-	int count = event->data_numbytes;
-	int len, items;
-	char *str;
-
-	p = event->data;
-	count = event->data_numbytes;
-	do {
-		len = 1 + strlen (p);
-		count -= len;
-
-		str = g_copy_strings (pr->print_command, " ", p, NULL);
-		execute (str);
-		g_free (str);
-		
-		p += len;
-		items++;
-	} while (count > 0);
+	gchar *str = g_copy_strings (pr->print_command, " ", name, NULL);
+	execute (str);
+	g_free (str);
 }
 
 static void
-configure_dnd (GtkWidget *w, gpointer data)
+drag_data_received (GtkWidget        *widget,
+		    GdkDragContext   *context,
+		    gint              x,
+		    gint              y,
+		    GtkSelectionData *selection_data,
+		    guint             info,
+		    guint             time,
+		    gpointer          data)
 {
+	gchar *str;
 	Printer *pr = data;
-	char *drop_types [] = { "url:ALL" };
+	GList *names;
 
-	gtk_widget_dnd_drop_set (w, 1, drop_types, 1, FALSE);
-	gtk_signal_connect (GTK_OBJECT (w), "drop_data_available_event",
-			    GTK_SIGNAL_FUNC (drop_data_available), pr);
+	switch (info)
+	  {
+	  case TARGET_URI_LIST:
+		  names = gnome_uri_list_extract_filenames ((char *)selection_data->data);
+		  g_list_foreach (names, (GFunc)print_file, pr);
+		  gnome_uri_list_free_strings (names);
+		  break;
+	  }
 }
 
 GtkWidget *
@@ -106,11 +105,15 @@ printer_widget (Printer *pr)
 	GtkWidget *fixed;
 	GtkWidget *printer;
 	int height;
+	static GtkTargetEntry drop_types [] = { 
+		{ "text/uri-list", 0, TARGET_URI_LIST },
+	};
+	static gint n_drop_types = sizeof (drop_types) / sizeof(drop_types[0]);
 	
 	fixed   = gtk_fixed_new ();
 	printer = gnome_pixmap_new_from_xpm_d (print_xpm);
 	pr->label   = gtk_label_new (pr->print_title);
-	/*this will make a grey background so that we can allways read
+	/*this will make a grey background so that we can always read
 	  the printer label*/
 	pr->ev = gtk_event_box_new();
 	gtk_container_add(GTK_CONTAINER(pr->ev),pr->label);
@@ -119,10 +122,18 @@ printer_widget (Printer *pr)
 	gtk_fixed_put (GTK_FIXED (fixed), pr->ev, 0, 0);
 	gtk_signal_connect (GTK_OBJECT (pr->label), "realize",
 			    GTK_SIGNAL_FUNC (position_label), pr->ev);
-	gtk_signal_connect (GTK_OBJECT (printer), "realize",
-			    GTK_SIGNAL_FUNC (configure_dnd), pr);
-	gtk_signal_connect (GTK_OBJECT (fixed), "realize",
-			    GTK_SIGNAL_FUNC (configure_dnd), pr);
+
+	gtk_drag_dest_set (GTK_WIDGET (fixed),
+			   GTK_DEST_DEFAULT_MOTION |
+			   GTK_DEST_DEFAULT_HIGHLIGHT |
+			   GTK_DEST_DEFAULT_DROP,
+			   drop_types, n_drop_types,
+			   GDK_ACTION_COPY);
+
+	gtk_signal_connect (GTK_OBJECT (fixed), "drag_data_received",
+			    GTK_SIGNAL_FUNC (drag_data_received), pr);
+			    
+
 	gtk_widget_set_usize (fixed, 48, 48);
 	gtk_widget_show_all (fixed);
 	return fixed;
