@@ -1,4 +1,10 @@
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-menu-button.c: (panel_menu_button_parent_set):
+	Chain up to the parent so ButtonWidget's overlay window gets
+	re-parented.
+
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 	
 	* panel-action-protocol.c: (panel_action_protocol_main_menu):
 	Try to popup the applications menu or the main menu and only

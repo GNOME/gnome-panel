@@ -209,6 +209,9 @@ panel_menu_button_parent_set (GtkWidget *widget,
 		button->priv->toplevel = NULL;
 
 	panel_menu_button_associate_panel (button);
+
+	if (GTK_WIDGET_CLASS (parent_class)->parent_set)
+		GTK_WIDGET_CLASS (parent_class)->parent_set (widget, previous_parent);
 }
 
 static void
