@@ -299,9 +299,12 @@ panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
 
 	/*don't adjust applets out of range, wait for
 	  then to be pushed into range*/
+	printf("panel->size: %d\n",panel->size);
+	printf("applet position before check: %d\n",pos);
 	if(pos>=panel->size)
 		return;
 
+	printf("applet position after check: %d\n",pos);
 	g_return_if_fail(pos>=0 && pos<PANEL_MAX);
 	
 	if(panel->orient==PANEL_HORIZONTAL) {
@@ -771,13 +774,29 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 	g_return_if_fail(panel);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(panel)));
 
-	if(panel->orient == PANEL_HORIZONTAL)
-		length = panel->fixed->allocation.width;
-	else
-		length = panel->fixed->allocation.height;
+	switch(panel->snapped) {
+		case PANEL_FREE:
+			length = panel->size*PANEL_CELL_SIZE;
+			break;
+		case PANEL_TOP:
+		case PANEL_BOTTOM:
+			length = gdk_screen_width() -
+				 (panel->hidebutton_w->allocation.width +
+				 panel->hidebutton_e->allocation.width);
+			break;
+		case PANEL_LEFT:
+		case PANEL_RIGHT:
+			length = gdk_screen_height() -
+				 (panel->hidebutton_n->allocation.height +
+				 panel->hidebutton_s->allocation.height);
+			break;
+	}
+
+	printf("apply limit length: %d\n",length);
 
 	if(length%PANEL_CELL_SIZE) length--; /*just so that I get size*/
 	panel->size = length/PANEL_CELL_SIZE;
+	printf("apply limit panel->size: %d\n",panel->size);
 
 	for(i=panel->size;i<PANEL_MAX;i += panel->applets[i].cells)
 		if(panel->applets[i].applet)
@@ -794,7 +813,8 @@ panel_widget_apply_size_limit(PanelWidget *panel)
 }
 
 static gint
-panel_widget_size_allocate(GtkWidget *widget, gpointer data)
+panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
+			   gpointer data)
 {
 	panel_widget_apply_size_limit(PANEL_WIDGET(widget));
 	return FALSE;
@@ -923,7 +943,7 @@ panel_widget_new (gint length,
 	gtk_signal_connect_after(GTK_OBJECT(panel),
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
-				 NULL);
+				 panel);
 
 	return GTK_WIDGET(panel);
 }
@@ -1289,14 +1309,12 @@ panel_widget_foreach(PanelWidget *panel, GFunc func, gpointer user_data)
 			(*func)(panel->applets[i].applet,user_data);
 }
 
-static void
+/*static void
 panel_widget_switch_orient(PanelWidget *panel)
 {
-	gint i;
-
 	panel->thick = PANEL_CELL_SIZE;
 	panel_widget_set_size(panel,panel->size*PANEL_CELL_SIZE);
-}
+}*/
 
 void
 panel_widget_change_params(PanelWidget *panel,
@@ -1328,13 +1346,28 @@ panel_widget_change_params(PanelWidget *panel,
 	oldorient = panel->orient;
 
 	panel->snapped = snapped;
-	panel->orient = orient;
-	panel_widget_set_size(panel,0);
-
+	switch(panel->snapped) {
+		case PANEL_FREE:
+			panel->orient = orient;
+			break;
+		case PANEL_TOP:
+		case PANEL_BOTTOM:
+			panel->orient = PANEL_HORIZONTAL;
+			break;
+		case PANEL_LEFT:
+		case PANEL_RIGHT:
+			panel->orient = PANEL_VERTICAL;
+			break;
+	}
 	panel_widget_set_hidebuttons(panel);
+	panel->thick = PANEL_CELL_SIZE;
+	panel_widget_set_size(panel,panel->size*PANEL_CELL_SIZE);
 
-	if(oldorient != panel->orient)
-		panel_widget_switch_orient(panel);
+	printf("change params panel->size: %d\n",panel->size);
+
+
+	/*if(oldorient != panel->orient)
+		panel_widget_switch_orient(panel);*/
 
 	/*FIXME: notify each applet that we're changing orientation!*/
 	/*FIXME: this should look into drawers as well*/
@@ -1345,6 +1378,10 @@ panel_widget_change_params(PanelWidget *panel,
 	panel->step_size = step_size;
 	panel->minimize_delay = minimize_delay;
 	panel->minimized_size = minimized_size;
+
+	/*gtk_signal_connect_after(GTK_OBJECT(panel),"size_allocate",
+				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
+				 NULL);*/
 }
 
 #if 0
