@@ -1098,7 +1098,6 @@ calendar_month_selected (ClockData *cd)
         handle_tasks_changed (cd);
 }
 
-/* FIXME: all this is a terrible hack */
 typedef struct
 {
         GtkWidget *calendar;
