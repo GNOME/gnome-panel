@@ -327,7 +327,8 @@ edit_dentry(GtkWidget *widget, char *item_loc)
 	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	o = gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
-	gtk_object_set_data(o,"location",dentry->location);
+	/*item loc will be alive all this time*/
+	gtk_object_set_data(o,"location",item_loc);
 
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
 
@@ -471,14 +472,16 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 	if(sim->item_loc &&
 	   /*A HACK: but it works, don't have it edittable if it's redhat
 	     menus as they are auto generated!*/
-	   strstr(sim->item_loc,".gnome/apps-redhat/") &&
+	   !strstr(sim->item_loc,".gnome/apps-redhat/") &&
 	   access(sim->item_loc,W_OK)==0) {
+		puts(sim->item_loc);
 		/*file exists and is writable, we're in bussines*/
 		gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	} else if(!sim->item_loc || errno==ENOENT) {
 		/*the dentry isn't there, check if we can write the
 		  directory*/
-		if(access(sim->mf->menudir,W_OK)==0)
+		if(access(sim->mf->menudir,W_OK)==0 &&
+		   !strstr(sim->mf->menudir,".gnome/apps-redhat/"))
 			gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	}
 	
@@ -1205,7 +1208,7 @@ create_menu_at (GtkWidget *menu,
 
 	flist = get_files_from_menudir(menudir);
 	
-	for(li = flist; li != NULL; li = g_list_next(li)) {
+	for(li = flist; li != NULL; li = g_slist_next(li)) {
 		char *thisfile = li->data;
 		GtkWidget *sub, *pixmap;
 		char *pixmap_name;
@@ -2223,7 +2226,7 @@ make_rh_submenu(char *dir, GSList *rhlist)
 						 &dentry->exec_length,
 						 &dentry->exec);
 			dentry->location = g_concat_dir_and_file(dir,s);
-			if(fp) fprintf(fp,"%s\n",g_basename(dentry->location));
+			if(fp) fprintf(fp,"%s\n",s);
 			g_free(s);
 		}
 		gnome_desktop_entry_save(dentry);
