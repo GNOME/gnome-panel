@@ -818,13 +818,15 @@ unset_pixmap (GtkWidget *gpixmap)
         if (file == NULL)
                 file = gnome_pixmap_file (FALLBACK_DEFAULT_ICON);
         
-        if (file)
+        if (file != NULL) {
                 gnome_pixmap_load_file (GNOME_PIXMAP (gpixmap),
                                         file);
-        else
+		g_free (file);
+	} else {
                 /* Clear the pixmap, yay GnomePixmap rules */
                 gnome_pixmap_load_file (GNOME_PIXMAP (gpixmap),
                                         "I do not exist anywhere 3413hjrneljghlkjflkjf");
+	}
 }
 
 static void
