@@ -44,6 +44,15 @@ set_mode (GtkWidget *widget, gpointer data)
 	config_panel.mode = mode;
 }
 
+static void 
+set_toggle_button_value (GtkWidget *widget, gpointer data)
+{
+	if(GTK_TOGGLE_BUTTON(widget)->active)
+		*(int *)data=TRUE;
+	else
+		*(int *)data=FALSE;
+}
+
 static void
 config_apply (GtkWidget *widget, gpointer data)
 {
@@ -83,7 +92,7 @@ position_notebook_page(void)
 	button = gtk_radio_button_new_with_label (NULL, "Top");
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
-			    PANEL_POS_TOP);
+			    (gpointer)PANEL_POS_TOP);
 	if (config_panel.pos == PANEL_POS_TOP) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
@@ -209,7 +218,7 @@ animation_notebook_page(void)
 
 
 	/* Animation step_size scale frame */
-	frame = gtk_frame_new ("Animation Speed");
+	frame = gtk_frame_new ("Tooltips");
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, CONFIG_PADDING_SIZE);
 	gtk_widget_show (frame);
@@ -289,6 +298,45 @@ animation_notebook_page(void)
 	return (vbox);
 }
 
+GtkWidget *
+misc_notebook_page(void)
+{
+	GtkWidget *frame;
+	GtkWidget *button;
+	GtkWidget *box;
+	GtkWidget *vbox;
+	
+	/* main vbox */
+	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
+	gtk_widget_show (vbox);
+	
+	/* Tooltips frame */
+	frame = gtk_frame_new ("Tooltips");
+	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, CONFIG_PADDING_SIZE);
+	gtk_widget_show (frame);
+	
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_container_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+	gtk_widget_show (box);
+	
+	/* Tooltips enable */
+	button = gtk_check_button_new_with_label ("Tooltips enabled");
+	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
+			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
+			    &(config_panel.tooltips_enabled));
+	if (config_panel.tooltips_enabled) {
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
+	}
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
+	gtk_widget_show (button);
+	
+	return (vbox);
+}
+
 
 void 
 panel_config(void)
@@ -312,6 +360,8 @@ panel_config(void)
 	config_panel.delay = the_panel->delay;
 	config_panel.minimize_delay = the_panel->minimize_delay;
 	config_panel.minimized_size = the_panel->minimized_size;
+
+	config_panel.tooltips_enabled = the_panel->tooltips_enabled;
  
 	
 	/* main window */
@@ -347,6 +397,14 @@ panel_config(void)
 	
 	/* Animation notebook page */
 	page = animation_notebook_page ();
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
+
+	/* label for Miscellaneous notebook page */
+	label = gtk_label_new ("Miscellaneous");
+	gtk_widget_show (label);
+	
+	/* Miscellaneous notebook page */
+	page = misc_notebook_page ();
 	gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
 
 	/* hbox for close and apply buttons */

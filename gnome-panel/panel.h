@@ -41,6 +41,7 @@ typedef struct {
 	PanelMode   mode;
 	gint        step_size;
 	gint        delay;
+	gint        tooltips_enabled;
 	gint        enter_notify_id;
 	gint        leave_notify_id;
 	gint        leave_notify_timer_tag;

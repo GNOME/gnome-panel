@@ -578,6 +578,8 @@ panel_session_save (gpointer client_data,
 			     the_panel->minimize_delay);
 	gnome_config_set_int("/panel/Config/minimized_size",
 			     the_panel->minimized_size);
+	gnome_config_set_int("/panel/Config/tooltips_enabled",
+			     the_panel->tooltips_enabled);
 	gnome_config_sync();
 
 	gdk_cursor_destroy(fleur_cursor);
@@ -1274,7 +1276,7 @@ panel_init(void)
 
 	sprintf(buf,"/panel/Config/position=%d",PANEL_POS_BOTTOM);
 	the_panel->pos=gnome_config_get_int(buf);
-	sprintf(buf,"/panel/Config/mode=%d",PANEL_GETS_HIDDEN);
+	sprintf(buf,"/panel/Config/mode=%d",PANEL_STAYS_PUT);
 	the_panel->mode=gnome_config_get_int(buf);
 	sprintf(buf,"/panel/Config/step_size=%d",DEFAULT_STEP_SIZE);
 	the_panel->step_size=gnome_config_get_int(buf);
@@ -1284,6 +1286,8 @@ panel_init(void)
 	the_panel->minimize_delay=gnome_config_get_int(buf);
 	sprintf(buf,"/panel/Config/minimized_size=%d",DEFAULT_MINIMIZED_SIZE);
 	the_panel->minimized_size=gnome_config_get_int(buf);
+	sprintf(buf,"/panel/Config/tooltips_enabled=%d",TRUE);
+	the_panel->tooltips_enabled=gnome_config_get_int(buf);
 
 
 	the_panel->table = gtk_table_new(3,3,FALSE);
@@ -1374,6 +1378,10 @@ panel_init(void)
 
 	/*set up the tooltips*/
 	panel_tooltips=gtk_tooltips_new();
+	if(the_panel->tooltips_enabled)
+		gtk_tooltips_enable(panel_tooltips);
+	else
+		gtk_tooltips_disable(panel_tooltips);
 }
 
 
@@ -1789,6 +1797,11 @@ panel_reconfigure(Panel *newconfig)
 	the_panel->delay = newconfig->delay;
 	the_panel->minimize_delay = newconfig->minimize_delay;
 	the_panel->minimized_size = newconfig->minimized_size;
+	the_panel->tooltips_enabled = newconfig->tooltips_enabled;
+	if(the_panel->tooltips_enabled)
+		gtk_tooltips_enable(panel_tooltips);
+	else
+		gtk_tooltips_disable(panel_tooltips);
 }
 
 static void
