@@ -596,6 +596,10 @@ panel_quit(void)
     {
       panel_session_save (NULL, GNOME_SAVE_BOTH, 1, GNOME_INTERACT_NONE, 0);
       gtk_main_quit ();
+      /* We don't want to return, because we've probably been called from an
+       * applet which has since been dlclose()'d, and we'd end up with a SEGV
+       * when we tried to return to the now-nonexistent code page. */
+      exit(0);
     }
   else
     {
