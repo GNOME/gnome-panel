@@ -847,6 +847,8 @@ ask_about_launcher (const char  *file,
 				GTK_STOCK_OK, GTK_RESPONSE_OK,
 				NULL);
 
+	gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_CENTER);
+
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");
 	
