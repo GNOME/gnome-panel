@@ -1,5 +1,13 @@
 2003-10-13  Vincent Untz  <vincent@vuntz.net>
 
+	* window-menu.c: (window_menu_destroy), (window_menu_window_opened),
+	(window_menu_popup_menu): remove the "No Windows Open" item from the
+	menu when a new window is added while the menu is open and there
+	previously was no window open.
+	Fix bug #107048.
+
+2003-10-13  Vincent Untz  <vincent@vuntz.net>
+
 	* Makefile.am: forgot to update this after the removal of
 	gnome-show-desktop.png
 
