@@ -1,0 +1,365 @@
+ <sect1 id="applets-core-mailcheck">
+  <title>El Aplique de chequeo de Correo</title> 
+
+  <para>
+    El  <application>aplique chequeo de correo </application> es un aplique 
+    que se sitúa en su panel y le informa cuando tiene nuevo correo
+    electrónico. Para añadir este aplique al panel, pulse el botón 
+    derecho del ratón sobre el panel y elija 
+    <menuchoice>
+     <guimenu>Añadir aplique</guimenu>
+     <guisubmenu>Red</guisubmenu>
+     <guimenuitem>Mailcheck</guimenuitem>
+    </menuchoice>
+  </para>
+
+  <figure id="mailcheck-applets-core-fig">
+    <title>Aplique Chequeo de Correo</title>
+    <screenshot>
+      <screeninfo>Aplique Chequeo de Correo</screeninfo>
+      <graphic format="png" fileref="mailcheck-applet" 
+	     srccredit="Eric Baudais">
+      </graphic>
+    </screenshot>
+  </figure>
+
+   <sect2 id="mailcheck-usage">
+    <title> Utilización</title>
+    <para>
+      Vd.  no necesita hacer nada en particular para ejecutar este 
+      aplique. Al ejecutarlo, busca su correo en el lugar adecuado,
+      y se ejecutará bastante amigablemente. Sin embargo, están disponibles
+      las siguientes opciones:
+    
+    </para>
+ 
+    <itemizedlist>
+     <listitem>
+      <para>
+        Presionando el <mousebutton>botón número 1</mousebutton> no hace nada
+        a menos que le haya dicho que arranque un programa al pulsar ese
+        botón del ratón. Puede realizar esto el la caja de propiedades 
+        descrita  <link linkend="mailcheck-prefs">más abajo</link>.
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+        Manteniendo presionado el <mousebutton>botón número 2</mousebutton>
+        le permite desplazar el aplique en el panel (y entre paneles).
+      
+      </para>
+     </listitem>
+     <listitem>
+      <para>
+        Presionando <mousebutton>el botón número 3</mousebutton> hará
+        que aparezca el habitual <guimenu>menú del aplique</guimenu>
+        que incluye una caja "Sobre" y una <link linkend="mailcheck-prefs">
+        propiedades </link>
+       
+      </para>
+     </listitem>
+    </itemizedlist>
+   </sect2>
+ 
+   <sect2 id="mailcheck-prefs">
+    <title>Preferencias</title>
+    <para>
+
+     La <interface>caja de diálogo de las propiedades</interface> del 
+     comprobador de correo está dividida en dos secciones, una para
+     lo que hace el comprobador de correo, y otra para indicarle dónde 
+     ha de buscar el correo.
+   </para>
+    <figure id="mailcheck-settings-mailcheck-fig">
+      <title>Diálogo propiedades &mdash; Pestaña Chequeo de Correo</title>
+      <screenshot>
+	<screeninfo>Diálogo Propiedades - Pestaña Chequeo de Correo</screeninfo>
+	<graphic format="png" fileref="mailcheck-properties-mailcheck"
+	       srccredit="Eric Baudais">
+	</graphic>
+      </screenshot>
+    </figure>
+   
+    <variablelist>
+     <varlistentry>
+      <term>Opciones de comprobación de correo</term>
+      <listitem>
+       <para>
+         Las opciones de comprobación de chequeo tienen seis secciones: 
+       </para>
+ 
+       <variablelist>
+        <varlistentry>
+         <term>Ejecutar...antes de cada actualización</term>
+         <listitem>
+          <para>
+	    Algunas veces Vd. desea ejecutar algo tal como 
+            <application>fetchmail</application> antes de que el aplique 
+	    compruebe el nuevo correo. Para hacer esto, marque la caja de 
+	    chequeo y coloque el nombre del programa en el espacio en blanco.
+	    
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Ejecutar...cuando llega un nuevo correo</term>
+         <listitem>
+          <para>
+	    Algunas veces quiere que otro programa se ejecuta cuando llega
+	    un nuevo correo. Es habitual decirle al ordenador, por ejemplo, que haga algún
+	    ruido. Marcando esta caja de chequeo y rellenando el comando
+	    (tal como <command>mpg123 <replaceable>sillynoise.mpg</replaceable>
+	    </command> o <command>esdplay<replaceable>sillynoise.wav</replaceable></command>
+	    hará que esto ocurra.
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Ejecutar...cuando se pulse</term>
+         <listitem>
+          <para>
+	    Colocando el nombre de un programa (generalmente un lector de correo tal como
+	    <application>balsa</application> o <application>spruce</application> aquí
+	     y seleccionando la caja de comprobación, Vd. puede preparar las cosas de tal forma que
+	     al pulsar con el <mousebutton>botón 1</mousebutton> sobre el aplique, el 
+	     programa se ejecute automáticamente.
+
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Comprobar el correo cada...</term>
+         <listitem>
+          <para>
+	    Puede ajustar el rango de comprobación del tiempo de llegada del correo desde
+	    1440 minutos (una vez al día) hasta nunca. Fijándolo en nunca es algo tonto y confuso.
+	    El valor por omisión es cada dos minutos..
+          </para>
+         </listitem>
+        </varlistentry>
+ 
+        <varlistentry>
+         <term>Tocar un sonido cuando llega un nuevo correo</term>
+         <listitem>
+          <para>
+	    Si selecciona esta <guibutton>caja de chequeo</guibutton> el sonido tocado será una
+	    campana de alarma. Está en 
+            <filename>$prefix/sound/events/mailcheck.soundlist</filename>; 
+	    si desea cambiarlo a un sonido distinto, cámbielo y ponga el sonido en 
+	    <filename>$prefix/sounds/</filename>.
+          </para>
+         </listitem>
+        </varlistentry>
+  
+        <varlistentry>
+         <term>Seleccionar animación</term>
+         <listitem>
+          <para>
+	    Pulsando en <guilabel>caja con el nombre de la animación</guilabel>,
+	    aparecerá una lista de diferentes dibujos con distintas animaciones para
+	    cunando llegue un nuevo correo.
+          </para>
+         </listitem>
+        </varlistentry>
+       </variablelist>
+      </listitem>   
+     </varlistentry>
+    </variablelist>
+
+      <figure id="mailcheck-settings-mailbox-fig">
+	<title>Diálogo Propiedades &mdash; Pestaña Buzón de Correo (Mailbox)</title>
+	<screenshot>
+	  <screeninfo>Diálogo Propiedades - Pestaña Buzón de Correo (Mailbox)</screeninfo>
+	  <graphic format="png" fileref="mailcheck-properties-mailbox"
+		 srccredit="Eric Baudais">
+	  </graphic>
+	</screenshot>
+      </figure>
+
+    <variablelist>
+     <varlistentry>
+      <term>Opciones del Buzón de Correo</term>
+      <listitem>
+       <para>
+         Las opciones del buzón de correo tiene cuatro secciones, algunas de las cuales
+	 están en gris.
+       </para>
+           
+       <para>
+         Seleccionado la <guilabel>caja con la localización del buzón de correo</guilabel>,
+	 puede decirle al aplique de comprobación de correo donde buscar el correo entrante.
+
+       </para>
+       <itemizedlist>
+        <listitem>
+         <para>
+	   
+	   Al seleccionar la cola de correo o el directorio local de correo como 
+	   los lugares donde se colocará el buzón de correo, en ese momento Vd. puede rellenar 
+	   los detalles de cada fichero o directorio que el aplique debe comprobar
+	   para informarle sobre el nuevo correo. Sólo puede colocar aquí un único nombre de
+	   fichero. La sección sobre los servidores de correo está en gris.
+	   
+	   
+<!--	   
+Mal traducido. Original:
+           When local mailspool or local maildir are selected as the location
+           for the mailbox, then you can fill in the details on which file
+           or directory the applet should check for new email. You can only
+           put one filename here. The section about mail servers will be
+           greyed out.
+//-->	   
+          </para>
+         </listitem>
+         <listitem>
+          <para>
+	   Cuando se selecciona un POP3 o un IMAP remoto como la localización del 
+	   buzón de correo, entonces debe rellenar los detalles sobre el servidor
+	   de correo, nombre de usuario y clave. Si no proporciona una clave, el aplique
+	   se la pedirá la primera vez que intente comprobar el correo. La sección sobre los
+	   nombre de ficheros locales está en gris.
+         </para>
+        </listitem>
+       </itemizedlist>
+      </listitem>
+     </varlistentry>    
+   </variablelist>
+  </sect2>
+ 
+  <sect2 id="mailcheck-bugs">
+   <title> Errores y limitaciones conocidas</title>
+   <itemizedlist>
+    <listitem>
+     <para>
+       Al fijar algo que se ejecutará antes de cada actualización puede colgar el 
+       aplique y el panel.
+       
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+       Algunas veces la animación para después de una utilización prolongada.
+     </para>
+    </listitem>
+    <listitem>
+     <para>
+        Si utiliza un filtro de correo tal como <application>procmail</application>,
+	que ordena el correo en distintas carpetas, el aplique no los comprobará 
+	buscando correo nuevo. Sólo buscará en un único fichero.
+     </para>
+    </listitem>
+   </itemizedlist>
+  </sect2>
+
+  <!-- ============= Authors ================================ -->
+
+  <sect2 id="authors">
+   <title>Autores</title>
+   <para>
+    El Aplique <application>Chequeo de Correo</application> ha sido escrito por
+      Miguel de Icaza (<email>miguel@gnu.org</email>),
+      Jacob Berkman (<email>jberkman@andrew.cmu.edu</email>),
+      Jaka Mocnik (<email>jaka.mocnik@kiss.uni-lj.si</email>) y
+      Lennart Poettering (<email>poettering@gmx.net</email>).  
+      
+      Por favor envíe todos los comentarios, sugerencias, e informes de errores a la 
+	<ulink url="http://bugzilla.gnome.org" type="http"> base de datos de seguimiento de errores de Gnome
+	</ulink>. Encontrará información sobre la forma de enviar informes de errores en 
+	linea en <ulink      url="http://bugs.gnome.org/Reporting.html" type="http">
+	http://bugs.gnome.org/Reporting.html </ulink>.  
+	Si esta usando Gnome 1.1 o posterior, puede usar también el comando <command>bug-buddy</command>, 
+	disponible en el submenú <guisubmenu>Utilidades</guisubmenu> del <guimenu>Menú
+	Principal</guimenu>,	para enviar informes de errores.
+	</para>
+
+
+   <para>
+   	Manual escrito por Telsa Gwynne  (<email>telsa@linuxchix.org</email>) y Eric Baudais
+      (<email>baudais@okstate.edu</email>). 
+      Por favor envíe todos los comentarios y sugerencias acerca de este manual 
+	al proyecto de documentación de Gnome en  <email>docs@gnome.org</email>.
+	También puede incluir sus comentarios en directo usando
+	<ulink type="http" url="http://developer.gnome.org/projects/gdp/doctable/">la tabla de 
+	estado de la documentación GNOME</ulink>.  
+	
+	</para>
+      
+
+
+   <para>  
+    Traducción al Castellano por José Antonio Salgueiro (<email>joseantsa@retemail.es</email>). 
+    Por favor envíe todos los comentarios y sugerencias sobre esta traducción a
+    <email>traductores@es.gnome.org</email>.
+   </para>
+<para>Puede encontrar mas documentación de Gnome en Castellano en las páginas
+ del grupo de traducción al Castellano
+<ulink type="http" url="http://www.croftj.net/~barreiro/spanish/gnome-es">
+gnome-es</ulink>,
+o en las de
+<ulink type="http" url="http://www.es.gnome.org">Gnome España</ulink>.
+</para>
+
+   
+
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+   <title>Licencia</title>
+   <para>
+    Este programa es software libre; Vd puede redistribuirlo y/o 
+    modificarlo bajo las condiciones de la  <ulink type="help"
+    url="gnome-help:gpl"><citetitle>Licencia Pública General 
+    GNU</citetitle></ulink>  tal y como publicó la Fundación del Software Libre; 
+    en su versión 2 de la licencia, o (según su elección) cualquier otra
+    versión posterior.
+
+   </para>
+   <para>
+    Este programa se distribuye con el ánimo que sea útil pero,
+    SIN GARANTÍA DE NINGÚN TIPO; incluso sin la garantía implícita
+    de USO MERCANTIL o ADECUACIÓN PARA UN PROPÓSITO DETERMINADO. Véase
+    la   <ulink type="help" url="gnome-help:gpl"><citetitle>Licencia
+    Pública General GNU</citetitle></ulink> para más detalles.
+   </para>
+   <para>
+    Se incluye una copia de la <ulink type="help"
+    url="gnome-help:gpl"><citetitle>Licencia
+    Pública General GNU</citetitle></ulink> con la documentación de GNOME.  Puede también
+    obtener una copia de la 
+          <ulink type="help" url="gnome-help:gpl"><citetitle>Licencia
+    Pública General GNU</citetitle></ulink> de la Fundación del Software Libre
+    visitando  <ulink type="http"
+    url="http://www.fsf.org/">su sitio Web </ulink> o escribiendo a 
+    <address>
+     Free Software Foundation, Inc.
+     <street>59 Temple Place</street> - Suite 330
+     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+     <country>Estados Unidos de América</country>
+    </address>
+   </para>
+  </sect2>
+
+ </sect1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

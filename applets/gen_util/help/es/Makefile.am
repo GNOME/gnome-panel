@@ -1,1 +1,1 @@
-SUBDIRS = printer
+SUBDIRS = printer mailcheck
