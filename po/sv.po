@@ -1,10 +1,10 @@
 # Swedish messages for gnome-panel.
-# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003 Free Software Foundation, Inc.
+# Copyright (C) 1998, 1999, 2000, 2001, 2002, 2003, 2004 Free Software Foundation, Inc.
 # Martin Wahlen <mva@sbbs.se>, 1998.
 # Anders Carlsson <anders.carlsson@tordata.se>, 1999.
 # Andreas Hyden  <a.hyden@cyberpoint.se>, 2000.
 # Martin Norbäck <d95mback@dtek.chalmers.se>, 2000, 2001.
-# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
+# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003, 2004.
 # Johan Dahlin <jdahlin@telia.com>, 2002.
 #
 # $Id$
@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-01-15 12:14+0000\n"
-"PO-Revision-Date: 2003-12-12 00:41+0100\n"
+"POT-Creation-Date: 2004-01-19 01:38+0100\n"
+"PO-Revision-Date: 2004-01-19 01:38+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,7 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:600 gnome-panel/menu.c:3087
-#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:323
+#: gnome-panel/panel-action-button.c:557 gnome-panel/panel-menu-bar.c:319
 #: gnome-panel/panel-menu-button.c:608
 msgid "_Help"
 msgstr "_Hjälp"
@@ -85,30 +85,28 @@ msgstr "Visa aktuell tid och aktuellt datum"
 
 #: applets/clock/calendar-client.c:177
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #: applets/clock/calendar-client.c:178
 msgid "The currently monitored day between 1 and 31 (0 denotes unset)"
 msgstr ""
+"Den för tillfället bevakade dagen mellan 1 och 31 (0 betyder inte inställd)"
 
 #: applets/clock/calendar-client.c:185
-#, fuzzy
 msgid "Month"
-msgstr "Typsnitt"
+msgstr "Månad"
 
 #: applets/clock/calendar-client.c:186
 msgid "The currently monitored month between 0 and 11"
-msgstr ""
+msgstr "Den för tillfället bevakade månaden mellan 0 och 11"
 
 #: applets/clock/calendar-client.c:193
-#, fuzzy
 msgid "Year"
-msgstr "Sök"
+msgstr "År"
 
 #: applets/clock/calendar-client.c:194
-#, fuzzy
 msgid "The currently monitored year"
-msgstr "Aktuell bildskärm:"
+msgstr "Det för tillfället bevakade året"
 
 #: applets/clock/clock.c:263
 msgid "%l:%M:%S %p"
@@ -141,22 +139,22 @@ msgstr "%a %e %b"
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:283
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:407
@@ -169,12 +167,11 @@ msgstr "Fönster"
 
 #: applets/clock/clock.c:961
 msgid "All Day"
-msgstr ""
+msgstr "Hela dagen"
 
 #: applets/clock/clock.c:991
-#, fuzzy
 msgid "Appointments"
-msgstr "Lägg till möte..."
+msgstr "Möten"
 
 #: applets/clock/clock.c:1217
 msgid "Calendar"
@@ -244,14 +241,12 @@ msgid "Internet time"
 msgstr "Internettid"
 
 #: applets/clock/clock.c:2223
-#, fuzzy
 msgid "Custom format"
-msgstr "Anpassad ikon"
+msgstr "Anpassat format"
 
 #: applets/clock/clock.c:2239
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Timformat"
+msgstr "Anpassat _format:"
 
 #: applets/clock/clock.c:2256
 msgid "Show _seconds"
@@ -294,7 +289,7 @@ msgstr "24-timmars"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Anpassat format för klockan"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -344,9 +339,12 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Denna nyckel anger formatet som används av klockpanelprogrammet då "
+"formatnyckeln är satt till \"custom\". Du kan använda de "
+"konverteringsspecifierare som förstås av strftime() för att få ett specifikt "
+"format."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -358,12 +356,14 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Denna nyckel anger timformatet som används av klockpanelprogrammet. Möjliga "
-"värden är \"12-hour\" (12-timmars), \"24-hour\" (24-timmars), \"internet\" "
-"och \"unix\". Om detta är satt till \"internet\" kommer klockan att visa "
-"Internettid. Internettidssystemet delar in dagen i 1000 \".beats\" (slag). "
-"Det finns inga tidszoner i detta system, så tiden är densamma i hela "
-"världen. Om detta är satt till \"unix\" kommer klockan att visa tiden i "
-"sekunder sedan epoken, dvs. 1970-01-01."
+"värden är \"12-hour\" (12-timmars), \"24-hour\" (24-timmars), \"internet\", "
+"\"unix\" och \"custom\" (anpassat). Om detta är satt till \"internet\" "
+"kommer klockan att visa Internettid. Internettidssystemet delar in dagen i "
+"1000 \".beats\" (slag). Det finns inga tidszoner i detta system, så tiden är "
+"densamma i hela världen. Om detta är satt till \"unix\" kommer klockan att "
+"visa tiden i sekunder sedan epoken, dvs. 1970-01-01. Om detta är satt till "
+"\"custom\" kommer klockan att visa tiden enligt det format som är angivet i "
+"nyckeln custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -384,291 +384,6 @@ msgstr "Använd UTC"
 #: applets/clock/clock.schemas.in.h:19
 msgid "Use internet time"
 msgstr "Använd Internettid"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:186
-#, fuzzy
-msgid "Text"
-msgstr "Endast text"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:187
-#, fuzzy
-msgid "Text to render"
-msgstr "Endast text"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:194
-#, fuzzy
-msgid "Markup"
-msgstr "Bokmärken"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:195
-msgid "Marked up text to render"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:202
-msgid "Attributes"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:203
-msgid "A list of style attributes to apply to the text of the renderer"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:210
-msgid "Ellipsize"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:211
-msgid "Whether to crop the text and display \"...\" when space is limited"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:218
-#, fuzzy
-msgid "Background color name"
-msgstr "Bakgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:219
-#, fuzzy
-msgid "Background color as a string"
-msgstr "Genomskinlighet för bakgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:226
-#: gnome-panel/panel-toplevel.schemas.in.h:3
-msgid "Background color"
-msgstr "Bakgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:227
-#, fuzzy
-msgid "Background color as a GdkColor"
-msgstr "Bakgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:234
-#, fuzzy
-msgid "Foreground color name"
-msgstr "Förgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:235
-#, fuzzy
-msgid "Foreground color as a string"
-msgstr "Förgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:242
-msgid "Foreground color"
-msgstr "Förgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:243
-#, fuzzy
-msgid "Foreground color as a GdkColor"
-msgstr "Förgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:251
-#, fuzzy
-msgid "Editable"
-msgstr "Redigera"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:252
-msgid "Whether the text can be modified by the user"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:259
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:267
-msgid "Font"
-msgstr "Typsnitt"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:260
-msgid "Font description as a string"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:268
-msgid "Font description as a PangoFontDescription struct"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:276
-#, fuzzy
-msgid "Font family"
-msgstr "Familj:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:277
-msgid "Name of the font family, e.g. Sans, Helvetica, Times, Monospace"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:284
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:285
-#, fuzzy
-msgid "Font style"
-msgstr "Typsnittsstil:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:293
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:294
-msgid "Font variant"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:302
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:303
-msgid "Font weight"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:312
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:313
-#, fuzzy
-msgid "Font stretch"
-msgstr "Typsnittsegenskap"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:321
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:322
-#, fuzzy
-msgid "Font size"
-msgstr "Punktstorlek:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:331
-#, fuzzy
-msgid "Font points"
-msgstr "Typsnittstyper:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:332
-msgid "Font size in points"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:341
-#, fuzzy
-msgid "Font scale"
-msgstr "Typsnittsstil:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:342
-msgid "Font scaling factor"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:351
-msgid "Rise"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:352
-msgid ""
-"Offset of text above the baseline (below the baseline if rise is negative)"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:362
-msgid "Strikethrough"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:363
-msgid "Whether to strike through the text"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:370
-msgid "Underline"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:371
-msgid "Style of underline for this text"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:381
-#, fuzzy
-msgid "Background set"
-msgstr "Bakgrund"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:382
-msgid "Whether this tag affects the background color"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:385
-#, fuzzy
-msgid "Foreground set"
-msgstr "Förgrundsfärg"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:386
-msgid "Whether this tag affects the foreground color"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:389
-#, fuzzy
-msgid "Editability set"
-msgstr "Verktygspanelprogram"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:390
-msgid "Whether this tag affects text editability"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:393
-msgid "Font family set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:394
-msgid "Whether this tag affects the font family"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:397
-#, fuzzy
-msgid "Font style set"
-msgstr "Typsnittsstil:"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:398
-msgid "Whether this tag affects the font style"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:401
-msgid "Font variant set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:402
-msgid "Whether this tag affects the font variant"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:405
-msgid "Font weight set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:406
-msgid "Whether this tag affects the font weight"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:409
-msgid "Font stretch set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:410
-msgid "Whether this tag affects the font stretch"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:413
-msgid "Font size set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:414
-msgid "Whether this tag affects the font size"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:417
-#, fuzzy
-msgid "Font scale set"
-msgstr "_Skala inte bilden så den passar"
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:418
-msgid "Whether this tag scales the font size by a factor"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:421
-msgid "Rise set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:422
-msgid "Whether this tag affects the rise"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:425
-msgid "Strikethrough set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:426
-msgid "Whether this tag affects strikethrough"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:429
-msgid "Underline set"
-msgstr ""
-
-#: applets/clock/cut-n-paste/eggcellrenderertext.c:430
-msgid "Whether this tag affects underlining"
-msgstr ""
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -933,7 +648,7 @@ msgstr "Panelnotifieringsyta"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:111 gnome-panel/menu.c:121 gnome-panel/menu.c:131
 #: gnome-panel/menu.c:141 gnome-panel/menu.c:151 gnome-panel/menu.c:161
-#: gnome-panel/panel-menu-bar.c:192
+#: gnome-panel/panel-menu-bar.c:188
 msgid "Actions"
 msgstr "Åtgärder"
 
@@ -1545,7 +1260,7 @@ msgstr "Fånga ett fönster istället för hela skärmen"
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Ta skärmdump efter angiven fördröjning [i sekunder]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1151
+#: gnome-panel/gnome-panel-screenshot.c:1154
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1553,7 +1268,7 @@ msgstr ""
 "Glade-filen för skärmdumpsprogrammet saknas.\n"
 "Kontrollera din installation av gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1167
+#: gnome-panel/gnome-panel-screenshot.c:1170
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Kan inte ta en skärmdump av det aktuella skrivbordet."
 
@@ -1697,14 +1412,14 @@ msgstr "Tvinga avslutande"
 
 #: gnome-panel/menu.c:133
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Tvinga ett program som beter sig fel att avsluta"
 
 #: gnome-panel/menu.c:140 gnome-panel/panel-action-button.c:255
 msgid "Screenshot"
 msgstr "Skärmdump"
 
 #: gnome-panel/menu.c:143 gnome-panel/menu.c:3416
-#: gnome-panel/panel-menu-bar.c:157
+#: gnome-panel/panel-menu-bar.c:153
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
 
@@ -1713,7 +1428,7 @@ msgid "Search"
 msgstr "Sök"
 
 #: gnome-panel/menu.c:153 gnome-panel/menu.c:3397
-#: gnome-panel/panel-menu-bar.c:142
+#: gnome-panel/panel-menu-bar.c:138
 msgid "Find files, folders, and documents on your computer"
 msgstr "Sök efter filer, mappar och dokument i din dator"
 
@@ -1830,7 +1545,7 @@ msgid "query returned exception %s\n"
 msgstr "fråg returnerade undantag %s\n"
 
 #: gnome-panel/menu.c:2840 gnome-panel/menu.c:2845 gnome-panel/menu.c:3357
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:204
 msgid "Applications"
 msgstr "Program"
 
@@ -1884,7 +1599,7 @@ msgstr "Programstartare från meny"
 msgid "Menu Bar"
 msgstr "Menyrad"
 
-#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:169
+#: gnome-panel/menu.c:3225 gnome-panel/panel-menu-bar.c:165
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
@@ -1892,33 +1607,33 @@ msgstr "Lås skärmen"
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:178
-#, fuzzy, c-format
+#: gnome-panel/menu.c:3238 gnome-panel/panel-menu-bar.c:174
+#, c-format
 msgid "Log Out %s"
-msgstr "Logga ut"
+msgstr "Logga ut %s"
 
 #: gnome-panel/menu.c:3252
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to to shut down "
 "your computer"
 msgstr ""
-"Logga ut från denna session för att logga in som en annan användare eller "
+"Logga ut %s från denna session för att logga in som en annan användare eller "
 "stänga av din dator"
 
-#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:126
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:122
 msgid "Run Application..."
 msgstr "Kör program..."
 
-#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:128
+#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:124
 msgid "Run an Application by entering a command"
 msgstr "Kör ett program genom att ange ett kommando"
 
-#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:140
+#: gnome-panel/menu.c:3394 gnome-panel/panel-menu-bar.c:136
 msgid "Search for Files..."
 msgstr "Sök filer..."
 
-#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:155
+#: gnome-panel/menu.c:3413 gnome-panel/panel-menu-bar.c:151
 msgid "Take Screenshot..."
 msgstr "Ta skärmdump..."
 
@@ -2264,14 +1979,17 @@ msgstr "Ta skärmdump"
 msgid "Take window screenshot"
 msgstr "Ta fönsterskärmdump"
 
-#: gnome-panel/panel-menu-bar.c:171
+#: gnome-panel/panel-menu-bar.c:167
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
-#: gnome-panel/panel-menu-bar.c:179
-#, fuzzy, c-format
+# Detta genitiv blir dumt på svenska -- "Andreass skrivbord" eller "Matss
+# skrivbord" är inge bra...
+# Felrapporterat som http://bugzilla.gnome.org/show_bug.cgi?id=131875
+#: gnome-panel/panel-menu-bar.c:175
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Avsluta GNOME-skrivbordet"
+msgstr "Avsluta från %ss skrivbord"
 
 #: gnome-panel/panel-menu-button.c:416
 msgid "Menu Path"
@@ -2978,6 +2696,10 @@ msgstr "Aktivera pilar på dölj-/visningsknappar"
 msgid "Automatically hide panel into corner"
 msgstr "Dölj automatiskt panelen i hörnet"
 
+#: gnome-panel/panel-toplevel.schemas.in.h:3
+msgid "Background color"
+msgstr "Bakgrundsfärg"
+
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
 msgstr "Genomskinlighet för bakgrundsfärg"
@@ -3474,6 +3196,28 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Appointment"
+#~ msgstr "Möte"
+
+#~ msgid "Log out %s"
+#~ msgstr "Logga ut %s"
+
+#~ msgid ""
+#~ "Log out of this session to log in as a different user or to to shut down "
+#~ "your computer"
+#~ msgstr ""
+#~ "Logga ut från denna session för att logga in som en annan användare eller "
+#~ "stänga av din dator"
+
+#~ msgid "Quit from the desktop"
+#~ msgstr "Avsluta från skrivbordet"
+
+#~ msgid "Foreground color"
+#~ msgstr "Förgrundsfärg"
+
+#~ msgid "Font"
+#~ msgstr "Typsnitt"
 
 #~ msgid "%s - command not found"
 #~ msgstr "%s - kommandot hittades inte"
