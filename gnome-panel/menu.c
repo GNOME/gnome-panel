@@ -3119,7 +3119,7 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
   	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem,
 				   "gnome-logo-icon-transparent.png",
-				   _("GNOME menu"));
+				   _("GNOME Menu"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(add_menu_to_panel),
