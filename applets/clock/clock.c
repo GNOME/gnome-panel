@@ -5,7 +5,6 @@
  * Authors: Miguel de Icaza
  *          Federico Mena
  *          Stuart Parmenter
- *          Jes Sorensen (applet sizing)
  *
  * Feel free to implement new look and feels :-)
  */
@@ -24,97 +23,39 @@
 
 #include "clock.h"
 
-#define CLOCK_DEFAULT_HEIGHT	"48"
-#define CLOCK_DEFAULT_WIDTH	"84"
-
 typedef struct _ClockData ClockData;
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
 struct _ClockData {
 	GtkWidget *applet;
 	GtkWidget *clockw;
-	GtkObject *height_adj;
-	GtkObject *width_adj;
-	GtkWidget *about_box;
+	int timeout;
+	int timeouttime;
+	int hourformat;
+        int showdate;
+	int unixtime;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
-	GnomePropertyBox *prop_win;
 
-	gint timeout;
-	gint timeouttime;
-	gint hourformat;
-        gint showdate;
-	gint unixtime;
-
-	gint prop_hourformat;
-        gint prop_showdate;
-	gint prop_unixtime;
-	gint height;
-	gint width;
+	GtkWidget *props;
+	int prop_hourformat;
+        int prop_showdate;
+	int prop_unixtime;
 };
 
 
 static void clock_properties(AppletWidget *, gpointer);
-static void clock_set_size(ClockData *cd);
-static void about_cb (AppletWidget *widget, gpointer data);
-static void destroy_about(GtkWidget *w, gpointer data);
+
 
 typedef struct {
 	GtkWidget *date;
 	GtkWidget *time;
 } ComputerClock;
 
-
 static void
 free_data(GtkWidget * widget, gpointer data)
 {
 	g_free(data);
 }
-
-
-void
-clock_set_size(ClockData *cd)
-{
-	if (cd->height < 16)
-		cd->height = 16;
-	if (cd->width < 16)
-		cd->width = 16;
-
-	gtk_widget_set_usize (cd->clockw, cd->width, cd->height);
-}
-
-
-static void
-destroy_about (GtkWidget *w, gpointer data)
-{
-	ClockData *cd = data;
-}
-
-
-static void
-about_cb (AppletWidget *widget, gpointer data)
-{
-	ClockData *cd = data;
-	char *authors[5];
-  
-	authors[0] = "Miguel de Icaza";
-	authors[1] = "Federico Mena";
-	authors[2] = "Stuart Parmenter";
-	authors[3] = "Jes Sorensen";
-	authors[4] = NULL;
-
-	cd->about_box =
-		gnome_about_new (_("The Clock Applet"), VERSION,
-		     _(" (C) 1997-1999 The Free Software Foundation"),
-		     (const char **) authors,
-				 _("This applet will tell you the time."),
-				 NULL);
-
-	gtk_signal_connect (GTK_OBJECT (cd->about_box), "destroy",
-			    GTK_SIGNAL_FUNC (destroy_about), cd);
-
-	gtk_widget_show (cd->about_box);
-}
-
 
 static int
 clock_timeout_callback(gpointer data)
@@ -158,8 +99,6 @@ applet_save_session(GtkWidget * w,
 	gnome_config_set_int("clock/hourformat", cd->hourformat);
 	gnome_config_set_int("clock/showdate", cd->showdate);
 	gnome_config_set_int("clock/unixtime", cd->unixtime);
-	gnome_config_set_int("clock/width", cd->width);
-	gnome_config_set_int("clock/height", cd->height);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -227,16 +166,6 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	gtk_label_set_text(GTK_LABEL(cc->time), hour);
 }
 
-
-static void
-adj_value_changed_cb(GtkAdjustment *ignored, gpointer data)
-{
-	ClockData *cd = data;
-
-	gnome_property_box_changed(GNOME_PROPERTY_BOX(cd->prop_win)); 
-}
-
-
 static void
 create_computer_clock_widget(GtkWidget ** clock, ClockUpdateFunc * update_func)
 {
@@ -297,15 +226,13 @@ create_clock_widget(ClockData *cd, GtkWidget * applet)
 	cd->clockw = clock;
 	cd->applet = applet;
 
-	cd->prop_win = NULL;
+	cd->props = NULL;
 
 	cd->orient = ORIENT_UP;
 
 	gtk_signal_connect(GTK_OBJECT(clock), "destroy",
 			   (GtkSignalFunc) destroy_clock,
 			   cd);
-
-	clock_set_size(cd);
 	/* Call the clock's update function so that it paints its first state */
 	time(&current_time);
 	(*cd->update_func) (cd, current_time);
@@ -351,10 +278,6 @@ make_clock_applet(const gchar * goad_id)
 	cd->hourformat = gnome_config_get_int("clock/hourformat=0");
 	cd->showdate = gnome_config_get_int("clock/showdate=1");
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
-	cd->width = gnome_config_get_int_with_default
-		("clock/width=" CLOCK_DEFAULT_WIDTH, NULL);
-	cd->height = gnome_config_get_int_with_default
-		("clock/height=" CLOCK_DEFAULT_HEIGHT, NULL);
 	gnome_config_pop_prefix();
 
 	create_clock_widget(cd,applet);
@@ -374,13 +297,6 @@ make_clock_applet(const gchar * goad_id)
 			   GTK_SIGNAL_FUNC(applet_save_session),
 			   cd);
 
-	applet_widget_register_stock_callback (APPLET_WIDGET (cd->applet),
-					       "about",
-					       GNOME_STOCK_MENU_ABOUT,
-					       _("About..."),
-					       about_cb,
-					       cd);
-
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "properties",
 					      GNOME_STOCK_MENU_PROP,
@@ -397,7 +313,6 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	ClockData *cd = data;
 	time_t current_time;
 	struct tm *tm;
-	gint height, width, size_changed = FALSE;
 
 	cd->hourformat = cd->prop_hourformat;
 	cd->showdate = cd->prop_showdate;
@@ -418,20 +333,7 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	cd->timeout = gtk_timeout_add(cd->timeouttime,
 				      clock_timeout_callback,
 				      cd);
-
-	/*
-	 * Update the size
-	 */
-	height = GTK_ADJUSTMENT (cd->height_adj)->value;
-	width = GTK_ADJUSTMENT (cd->width_adj)->value;
-	if ((height != cd->height) || (width != cd->width)) {
-		size_changed = TRUE;
-		cd->width = width;
-		cd->height = height;
-	}
-
-	if (size_changed)
-		clock_set_size(cd);
+/* gtk_widget_queue_resize (cd->clockw);*/
 }
 
 static void
@@ -439,7 +341,7 @@ close_properties(GtkWidget * w, gpointer data)
 {
 	ClockData *cd = data;
 
-	cd->prop_win = NULL;
+	cd->props = NULL;
 }
 
 static void
@@ -449,7 +351,7 @@ set_hour_format_cb(GtkWidget * w, gpointer data)
 	if(GTK_TOGGLE_BUTTON(w)->active) {
 		ClockData *cd = gtk_object_get_user_data(GTK_OBJECT(w));
 		cd->prop_hourformat = (long)data;
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->prop_win));
+		gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 	}
 }
 
@@ -459,7 +361,7 @@ set_show_date_cb(GtkWidget * w, gpointer data)
 	ClockData *cd = data;
 
 	cd->prop_showdate = GTK_TOGGLE_BUTTON(w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->prop_win));
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 }
 
 static void
@@ -475,7 +377,7 @@ set_unixtime_cb(GtkWidget * w, gpointer data)
 	ClockData *cd = data;
 
 	cd->prop_unixtime = GTK_TOGGLE_BUTTON(w)->active;
-	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->prop_win));
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
 }
 
 static void
@@ -490,33 +392,23 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *twentyfourhour;
 	GtkWidget *showdate;
 	GtkWidget *unixtime;
-	GtkWidget *height_spin;
-	GtkWidget *width_spin;
-	GtkWidget *t, *l;
 	ClockData *cd = data;
 
 	help_entry.name = gnome_app_id;
 
-	if(cd->prop_win) {
-		gdk_window_raise(GTK_WIDGET (cd->prop_win)->window);
+	if(cd->props) {
+		gdk_window_raise(cd->props->window);
 		return;
 	}
-	cd->prop_win = GNOME_PROPERTY_BOX (gnome_property_box_new ());
+	cd->props = gnome_property_box_new();
+	gtk_window_set_title (GTK_WINDOW (cd->props),
+			      _("Clock properties"));
 
-	gtk_window_set_title (
-		GTK_WINDOW (&GNOME_PROPERTY_BOX (cd->prop_win)->dialog.window),
-		_("Clock properties"));
-
-	/*
-	 * Clock Format
-	 */
-	t = gtk_hbox_new(FALSE, GNOME_PAD);
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX(cd->prop_win), t,
-					gtk_label_new (_("Clock format")));
+	hbox = gtk_hbox_new(FALSE, GNOME_PAD);
 
 	hour_frame = gtk_frame_new(_("Time Format"));
 	gtk_container_set_border_width(GTK_CONTAINER(hour_frame), GNOME_PAD);
-	gtk_box_pack_start (GTK_BOX(t), hour_frame, FALSE, FALSE, 0);
+	gtk_box_pack_start (GTK_BOX(hbox), hour_frame, FALSE, FALSE, 0);
 
 	table = gtk_table_new(2, 2, FALSE);
 	gtk_container_add(GTK_CONTAINER(hour_frame), table);
@@ -567,7 +459,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   (gpointer) 1);
 	
 	vbox = gtk_vbox_new(FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start_defaults(GTK_BOX(t), vbox);
+	gtk_box_pack_start_defaults(GTK_BOX(hbox), vbox);
 	gtk_widget_show(vbox);
 
 	showdate = gtk_check_button_new_with_label(_("Show date"));
@@ -604,51 +496,17 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   data);
 
 	gtk_widget_show(hour_frame);
-	gtk_widget_show(t);
+	gtk_widget_show(hbox);
 
-	gtk_signal_connect(GTK_OBJECT(cd->prop_win), "apply",
+	gnome_property_box_append_page(GNOME_PROPERTY_BOX(cd->props), hbox,
+				       gtk_label_new(_("Clock")));
+	gtk_signal_connect(GTK_OBJECT(cd->props), "apply",
 			   GTK_SIGNAL_FUNC(apply_properties), data);
-	gtk_signal_connect(GTK_OBJECT(cd->prop_win), "destroy",
+	gtk_signal_connect(GTK_OBJECT(cd->props), "destroy",
 			   GTK_SIGNAL_FUNC(close_properties), data);
-	gtk_signal_connect(GTK_OBJECT(cd->prop_win), "help",
+	gtk_signal_connect(GTK_OBJECT(cd->props), "help",
 			   GTK_SIGNAL_FUNC(gnome_help_pbox_display),
 			   &help_entry);
 
-	/*
-	 * General Properties
-	 */
-	t = gtk_table_new(0, 0, FALSE);
-	gnome_property_box_append_page(GNOME_PROPERTY_BOX(cd->prop_win), t,
-				       gtk_label_new (_("General")));
-
-	/*
-	 * Applet height
-	 */
-	l = gtk_label_new (_("Applet Height:")); 
-	gtk_table_attach_defaults(GTK_TABLE(t), l, 0, 1, 0, 1);
-	cd->height_adj = gtk_adjustment_new(cd->height, 16, 666, 1, 8, 8);
-	height_spin = gtk_spin_button_new(GTK_ADJUSTMENT(cd->height_adj),
-					  1, 0);
-	gtk_table_attach_defaults(GTK_TABLE(t), height_spin, 1, 2, 0, 1);
-	gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(height_spin),
-					  GTK_UPDATE_ALWAYS);
-	gtk_signal_connect(GTK_OBJECT(cd->height_adj), "value_changed",
-			   GTK_SIGNAL_FUNC(adj_value_changed_cb), cd);
-
-	/*
-	 * Applet width
-	 */
-	l = gtk_label_new (_("Applet Width:")); 
-	gtk_table_attach_defaults ( GTK_TABLE (t), l, 0, 1, 1, 2 ); 
-
-	cd->width_adj = gtk_adjustment_new(cd->width, 16, 666, 1, 8, 8);
-	width_spin = gtk_spin_button_new(GTK_ADJUSTMENT(cd->width_adj),
-					  1, 0);
-	gtk_table_attach_defaults(GTK_TABLE(t), width_spin, 1, 2, 1, 2);
-	gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(width_spin),
-					  GTK_UPDATE_ALWAYS);
-	gtk_signal_connect(GTK_OBJECT(cd->width_adj), "value_changed",
-			   GTK_SIGNAL_FUNC(adj_value_changed_cb), cd);
-
-	gtk_widget_show_all(GTK_WIDGET(cd->prop_win));
+	gtk_widget_show(cd->props);
 }
