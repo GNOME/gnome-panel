@@ -28,6 +28,15 @@
 
 #include "main.h"
 
+#define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
+			   GDK_BUTTON_RELEASE_MASK |		\
+			   GDK_POINTER_MOTION_MASK |		\
+			   GDK_POINTER_MOTION_HINT_MASK)
+
+/*the timeout handeler for panel dragging id,
+  yes I am too lazy to get the events to work*/
+static gint panel_dragged = 0;
+
 GArray *applets;
 gint applet_count;
 
@@ -783,6 +792,74 @@ menu_deactivate(GtkWidget *w, gpointer data)
 	panel->autohide_inhibit = FALSE;
 }
 
+static void
+panel_move(PanelWidget *panel, double x, double y)
+{
+	gint panel_space;
+	gint width, height;
+	PanelSnapped newloc;
+
+	if(panel->snapped == PANEL_DRAWER || panel->snapped == PANEL_FREE)
+		return;
+
+	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
+			newloc = PANEL_TOP;
+		else
+			newloc = PANEL_RIGHT;
+	} else {
+		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
+			newloc = PANEL_LEFT;
+		else
+			newloc = PANEL_BOTTOM;
+	}
+	if( newloc != panel->snapped) {
+		panel_widget_change_params( panel,
+					    panel->orient,
+					    newloc,
+					    panel->mode,
+					    panel->fit_pixmap_bg,
+					    panel->state,
+					    panel->drawer_drop_zone_pos,
+					    panel->back_pixmap );
+		while(gtk_events_pending())
+			gtk_main_iteration();
+	}
+}
+
+static gint
+panel_move_timeout(gpointer data)
+{
+	gint x,y;
+
+	gdk_window_get_pointer(NULL,&x,&y,NULL);
+	panel_move(data,x,y);
+	return TRUE;
+}
+
+/* DOES NOT WORK!
+static gint
+panel_move_callback(GtkWidget *w, GdkEventMotion *event, gpointer data)
+{
+	puts("TEST");
+	if(panel_dragged)
+		panel_move(PANEL_WIDGET(w), event->x_root, event->y_root);
+	return FALSE;
+}*/
+
+
+static gint
+panel_button_release_callback(GtkWidget *panel,GdkEventButton *event, gpointer data)
+{
+	if(panel_dragged) {
+		panel_move(PANEL_WIDGET(panel), event->x_root, event->y_root);
+		gdk_pointer_ungrab(event->time);
+		gtk_grab_remove(GTK_WIDGET(panel));
+		gtk_timeout_remove(panel_dragged);
+		panel_dragged = 0;
+	}
+	return FALSE;
+}
 
 static int
 panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
@@ -803,17 +880,24 @@ panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 			}
 			break;
 		case 2:
-			cursor = gdk_cursor_new (GDK_FLEUR);
-			gdk_pointer_grab (GTK_WIDGET (panel)->window,
-					  FALSE,
-					  GDK_POINTER_MOTION_HINT_MASK |
-					  GDK_BUTTON1_MOTION_MASK |
-					  GDK_BUTTON_RELEASE_MASK,
-					  NULL,
-					  cursor,
-					  event->time);
-			gdk_cursor_destroy (cursor);
-			
+			/*this should most likely be in panel-widget itself*/
+			if(!panel_dragged &&
+			   panel->snapped != PANEL_DRAWER &&
+			   panel->snapped != PANEL_FREE) {
+				cursor = gdk_cursor_new (GDK_FLEUR);
+				gtk_grab_add(widget);
+				gdk_pointer_grab (widget->window,
+						  TRUE,
+						  PANEL_EVENT_MASK,
+						  NULL,
+						  cursor,
+						  event->time);
+				gdk_cursor_destroy (cursor);
+				panel_dragged = gtk_timeout_add(30,
+						panel_move_timeout,panel);
+				return TRUE;
+			}
+			break;
 	}
 	return FALSE;
 }
@@ -851,87 +935,6 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
-static gint panel_move( GtkWidget *widget, double x, double y, int time )
-{
-	gint panel_space;
-	gint width, height;
-	PanelSnapped newloc;
-	PanelWidget *panel = PANEL_WIDGET( widget );
-
-	if ((x) * gdk_screen_height() > y * gdk_screen_width() )
-	{
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
-			newloc = PANEL_TOP;
-		else
-			newloc = PANEL_RIGHT;
-	}
-	else
-	{
-		if(gdk_screen_height() * (gdk_screen_width()-(x)) > y * gdk_screen_width() )
-			newloc = PANEL_LEFT;
-		else
-			newloc = PANEL_BOTTOM;
-	}
-	if( newloc != panel->snapped)
-	{
-		panel_widget_change_params( panel,
-					    panel->orient,
-					    newloc,
-					    panel->mode,
-					    panel->fit_pixmap_bg,
-					    panel->state,
-					    panel->drawer_drop_zone_pos,
-					    panel->back_pixmap );
-		while( gtk_events_pending() )
-		{
-			gtk_main_iteration();
-		}
-	}
-	gdk_pointer_ungrab( time );
-	return TRUE;
-#if 0
-	gdk_window_get_geometry( panel->window->window, NULL, NULL, &width, &height, NULL );
-	switch(panel->snapped)
-	{	
-		case PANEL_TOP:  /* Fall through */
-		case PANEL_BOTTOM:
-			panel_space=height;
-			break;
-		case PANEL_LEFT:  /* Fall through */
-		case PANEL_RIGHT:
-			panel_space=width;
-			break;
-	}
-	switch(PANEL_WIDGET(panel)->location_snapped)
-	{	
-		case PANEL_TOP:  /* Fall through */
-		case PANEL_LEFT:
-			panel_space=height;
-			break;
-		case PANEL_RIGHT:  /* Fall through */
-		case PANEL_BOTTOM:
-			panel_space=width;
-			break;
-	}
-	x;
-	y;
-	gdk_screen_width();
-	gdk_screen_height();
-#endif
-}
-
-static gint
-panel_move_callback(GtkWidget *panel,GdkEventMotion *event, gpointer data)
-{
-	return panel_move( panel, event->x_root, event->y_root, event->time );
-}
-
-
-static gint
-panel_move_release_callback(GtkWidget *panel,GdkEventButton *event, gpointer data)
-{
-	return panel_move( panel, event->x_root, event->y_root, event->time );
-}
 
 static void
 panel_setup(PanelWidget *panel)
@@ -972,13 +975,17 @@ panel_setup(PanelWidget *panel)
 			   GTK_SIGNAL_FUNC(panel_destroy),
 			   panel_menu);
 	gtk_signal_connect(GTK_OBJECT(panel),
-				"motion_notify_event",
-				GTK_SIGNAL_FUNC(panel_move_callback),
-				panel);
+			   "button_release_event",
+			   GTK_SIGNAL_FUNC(panel_button_release_callback),
+			   panel);
+	/* DOES NOT WORK!
 	gtk_signal_connect(GTK_OBJECT(panel),
-				"button_release_event",
-				GTK_SIGNAL_FUNC(panel_move_release_callback),
-				panel);
+			   "motion_notify_event",
+			   GTK_SIGNAL_FUNC(panel_move_callback),
+			   panel);*/
+
+			      
+			      
 
 	gtk_signal_connect(GTK_OBJECT(panel_menu),
 			   "deactivate",

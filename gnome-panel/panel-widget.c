@@ -162,6 +162,20 @@ move_resize_window(GtkWidget *widget, int x, int y, int w, int h)
 	gtk_widget_draw(widget, NULL);
 }
 
+/*this is used to do an immediate resize instead of set_usize, which
+queues one*/
+void
+resize_window(GtkWidget *widget, int w, int h)
+{
+	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
+	gdk_window_set_hints(widget->window, 0, 0, w, h, w, h,
+			     GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
+	gdk_window_resize(widget->window, w, h);
+	/* FIXME: this should draw only the newly exposed area! */
+	gtk_widget_draw(widget, NULL);
+}
+
+
 /************************
  widget core
  ************************/
@@ -342,7 +356,7 @@ panel_widget_set_position(PanelWidget *panel)
 		gdk_window_get_geometry(GTK_WIDGET(panel)->window,&x,&y,
 					&width,&height,NULL);
 	else
-		x=y=-1;
+		x=y=-3000;
 	newx = x;
 	newy = y;
 
@@ -350,7 +364,6 @@ panel_widget_set_position(PanelWidget *panel)
 		thick = width;
 	else
 		thick = height;
-
 
 	if(panel->mode == PANEL_AUTO_HIDE && panel->state == PANEL_HIDDEN)
 		ycor = thick - pw_minimized_size;
@@ -390,7 +403,7 @@ panel_widget_set_position(PanelWidget *panel)
 		default: break; /*to get rid of a warning*/
 	}
 	if(newx != x || newy != y)
-		gtk_widget_set_uposition(GTK_WIDGET(panel),newx,newy);
+		move_window(GTK_WIDGET(panel),newx,newy);
 }
 
 static void
@@ -496,22 +509,28 @@ panel_widget_set_size(PanelWidget *panel, gint size)
 		case PANEL_TOP:
 		case PANEL_BOTTOM:
 			panel->orient = PANEL_HORIZONTAL;
-			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
-					     0,
+			resize_window(GTK_WIDGET(panel),
+					     gdk_screen_width(),
 					     panel->thick);
 			gtk_widget_set_usize(GTK_WIDGET(panel),
 					     gdk_screen_width(),
 					     0);
+			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
+					     0,
+					     panel->thick);
 			break;
 		case PANEL_LEFT:
 		case PANEL_RIGHT:
 			panel->orient = PANEL_VERTICAL;
-			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
+			resize_window(GTK_WIDGET(panel),
 					     panel->thick,
-					     0);
+					     gdk_screen_height());
 			gtk_widget_set_usize(GTK_WIDGET(panel),
 					     0,
 					     gdk_screen_height());
+			gtk_widget_set_usize(GTK_WIDGET(panel->fixed),
+					     panel->thick,
+					     0);
 			break;
 	}
 	for(list = panel->applet_list;list!=NULL;list=g_list_next(list)) {
@@ -581,6 +600,9 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 					     the right size*/
 	/*convert width from pixels to cells*/
 	width = (width/PANEL_CELL_SIZE) + 1;
+
+	if(panel->snapped == PANEL_DRAWER)
+		panel_widget_pack_applets(panel);
 
 	if(width >= ad->cells)
 		return;
@@ -1443,7 +1465,7 @@ panel_widget_open_drawer(PanelWidget *panel)
 	x = panel->x;
 	y = panel->y;
 
-	gdk_window_move(GTK_WIDGET(panel)->window, -1000,-1000);
+	gdk_window_move(GTK_WIDGET(panel)->window, -3000,-3000);
 	gtk_widget_show(GTK_WIDGET(panel));
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
@@ -3136,12 +3158,22 @@ panel_widget_change_params(PanelWidget *panel,
 	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
 		panel->state = PANEL_SHOWN;
 
+	/*reduce flicker here*/
+	{
+		gint w,h;
+		gdk_window_get_size(GTK_WIDGET(panel)->window,&w,&h);
+		if(w>h)
+			resize_window(GTK_WIDGET(panel),h,h);
+		else
+			resize_window(GTK_WIDGET(panel),w,w);
+	}
+
+	panel_widget_set_position(panel);
+	panel_widget_set_size(panel,panel->size);
+
 	panel->drawer_drop_zone_pos = drop_zone_pos;
 	if(panel->snapped == PANEL_DRAWER)
 	   	panel_widget_set_drop_zone(panel);
-
-	panel_widget_set_size(panel,panel->size);
-	panel_widget_set_position(panel);
 
 	if(oldorient != panel->orient ||
 	   oldsnapped != panel->snapped)
