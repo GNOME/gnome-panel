@@ -460,11 +460,14 @@ quick_desktop_item_load_uri (const char *uri,
 	if (retval != NULL &&
 	    name_lang != NULL) {
 		const char *enc = get_encoding (encoding, name_lang);
-		char *utf8_string = g_convert (retval->name, -1, "UTF-8", enc,
-					       NULL, NULL, NULL);
-		if (utf8_string != NULL) {
-			g_free (retval->name);
-			retval->name = utf8_string;
+		if (enc != NULL) {
+			char *utf8_string = g_convert (retval->name, -1,
+						       "UTF-8", enc,
+						       NULL, NULL, NULL);
+			if (utf8_string != NULL) {
+				g_free (retval->name);
+				retval->name = utf8_string;
+			}
 		}
 	}
 
@@ -472,12 +475,14 @@ quick_desktop_item_load_uri (const char *uri,
 	    retval->comment != NULL &&
 	    comment_lang != NULL) {
 		const char *enc = get_encoding (encoding, comment_lang);
-		char *utf8_string = g_convert (retval->comment, -1,
-					       "UTF-8", enc,
-					       NULL, NULL, NULL);
-		if (utf8_string != NULL) {
-			g_free (retval->comment);
-			retval->comment = utf8_string;
+		if (enc != NULL) {
+			char *utf8_string = g_convert (retval->comment, -1,
+						       "UTF-8", enc,
+						       NULL, NULL, NULL);
+			if (utf8_string != NULL) {
+				g_free (retval->comment);
+				retval->comment = utf8_string;
+			}
 		}
 	}
 
