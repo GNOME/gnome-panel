@@ -470,17 +470,25 @@ drop_nautilus_uri (PanelWidget *panel,
 		   const char  *uri,
 		   const char  *icon)
 {
-	char *quoted;
-	char *exec;
-	char *base;
+	char  *quoted;
+	char  *exec;
+	char  *base;
+	char **split;
 
 	if (!panel_profile_id_lists_are_writable ())
 		return FALSE;
 
+	quoted = g_shell_quote (uri);
+
+	/* Escape any "%" as "%%" */
+        split = g_strsplit (quoted, "%", -1);
+	g_free (quoted);
+	quoted = g_strjoinv ("%%", split);
+	g_strfreev (split);
+
 	/* Add -- to avoid the possibility of filenames which would
 	 * be interpreted as command line arguments
 	 */
-	quoted = g_shell_quote (uri);
 	exec = g_strdup_printf ("nautilus -- %s", quoted);
 	g_free (quoted);
 
