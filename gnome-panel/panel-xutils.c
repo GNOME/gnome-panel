@@ -67,9 +67,9 @@ panel_xutils_set_window_type (GdkWindow             *gdk_window,
 		break;
 	case PANEL_XUTILS_TYPE_NORMAL:
 		if (net_wm_window_type_normal == None)
-			net_wm_window_type_dock = XInternAtom (display,
-							       "_NET_WM_WINDOW_TYPE_NORMAL",
-							       False);
+			net_wm_window_type_normal = XInternAtom (display,
+								 "_NET_WM_WINDOW_TYPE_NORMAL",
+								 False);
 		atoms [i++] = net_wm_window_type_normal;
 		break;
 	default:
