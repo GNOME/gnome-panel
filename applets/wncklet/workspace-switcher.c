@@ -229,6 +229,8 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 	pager->listeners[1] = 0;
 	pager->listeners[2] = 0;
 
+	/* FIXME: does this not leak PagerData ? */
+
 }
 
 static const BonoboUIVerb pager_menu_verbs [] = {
