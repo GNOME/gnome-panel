@@ -1,3 +1,13 @@
+2003-12-02  Vincent Untz  <vincent@vuntz.net>
+
+	* gnome-panel-screenshot.c: (add_file_to_path) build some strings with
+	g_strdup_printf() to help translators.
+	(add_file_to_path), (gimme_file), (on_ok_button_clicked): move the
+	expand tilde stuff from gimme_file() to add_file_to_path() and
+	on_ok_button_clicked() to avoid a small bug where ~ was used in the
+	web_dir key, e.g.
+	(main): simplify a bit the web_dir stuff.
+
 2003-12-01  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-menu-button.c: (panel_menu_button_handle_event): kill
