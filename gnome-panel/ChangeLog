@@ -1,3 +1,11 @@
+Fri Aug 22 14:59:01 2003  George Lebl <jirka@5z.com>
+
+	* launcher.c:  after a launcher is created, ensure that the Name,
+	  GenericName and Comment fields have a C locale entry (using the
+	  current locale one if the user added something).  This should
+	  fix #120427, when people create a launcher then log in with
+	  different language.
+
 Fri Aug 22 14:28:42 2003  George Lebl <jirka@5z.com>
 
 	* panel-properties-dialog.c: Fix warning when a drawer doesn't

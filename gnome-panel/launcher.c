@@ -849,6 +849,16 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
 }
 
 static void
+ensure_item_localefiled (GnomeDesktopItem *ditem, const char *field)
+{
+	if (gnome_desktop_item_get_string (ditem, field) == NULL) {
+		const char *localized = gnome_desktop_item_get_localestring (ditem, field);
+		if (localized != NULL)
+			gnome_desktop_item_set_string (ditem, field, localized);
+	}
+}
+
+static void
 really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 {
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
@@ -860,6 +870,15 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 		const char *location;
 
 		ditem = gnome_ditem_edit_get_ditem (dedit);
+
+		/* Make sure we set the "C" locale strings to the terms we set
+		   here.  This is so that if the user logs into another locale
+		   they get their own description there rather then empty.  It
+		   is not the C locale however, but the user created this entry
+		   herself so it's OK */
+		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_NAME);
+		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_GENERIC_NAME);
+		ensure_item_localefiled (ditem, GNOME_DESKTOP_ITEM_COMMENT);
 
 		panel_launcher_save_ditem (ditem, gtk_window_get_screen (GTK_WINDOW (dialog)));
 		location = gnome_desktop_item_get_location (ditem);
