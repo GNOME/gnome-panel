@@ -107,7 +107,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Run Program..."),
+			_("Run Application"),
 			PANEL_STOCK_RUN,
 			_("Run an Application by entering a command"),
 			"ACTION:run:NEW",
@@ -137,7 +137,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 			menubar->priv->actions_menu,
 			_("Screenshot..."),
 			PANEL_STOCK_SCREENSHOT,
-			_("Take a screenshot"),
+			_("Take a screenshot of your desktop"),
 			"ACTION:screenshot:NEW",
 			G_CALLBACK (panel_action_screenshot));
 	}

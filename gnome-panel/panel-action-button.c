@@ -128,7 +128,7 @@ panel_action_logout (GtkWidget *widget)
 	recursion_guard--;
 }
 
-/* Run Program
+/* Run Application
  */
 void
 panel_action_run_program (GtkWidget *widget)
@@ -197,7 +197,7 @@ static PanelAction actions [] = {
 	},
 	{
 		PANEL_ACTION_RUN, PANEL_STOCK_RUN,
-		N_("Run Program"), NULL,
+		N_("Run Application"), NULL,
 		panel_action_run_program, NULL, NULL
 	},
 	{

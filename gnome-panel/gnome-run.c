@@ -67,6 +67,7 @@ typedef enum {
 
 #define ENABLE_LIST_DEFAULT TRUE
 #define SHOW_LIST_DEFAULT FALSE
+#define IMAGE_SIZE 48.0
 
 static GtkWidget *run_dialog = NULL;
 static GSList *add_icon_paths = NULL;
@@ -929,6 +930,7 @@ create_simple_contents (GdkScreen *screen)
         w = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
         pixmap = gtk_image_new ();
 	g_object_set_data (G_OBJECT (run_dialog), "pixmap", pixmap);
+	gtk_widget_set_size_request (pixmap, IMAGE_SIZE + 1, -1);
 	gtk_container_add (GTK_CONTAINER (w), pixmap);
         gtk_box_pack_start (GTK_BOX (hbox), w,
 			    FALSE, FALSE, 10);
@@ -987,7 +989,7 @@ create_simple_contents (GdkScreen *screen)
         gtk_box_pack_start (GTK_BOX (hbox2), w,
                             TRUE, TRUE, 0);
 
-        w = gtk_button_new_with_mnemonic (_("_Append File..."));
+        w = gtk_button_new_with_mnemonic (_("Run with _File..."));
         g_signal_connect(G_OBJECT(w), "clicked",
                          G_CALLBACK (browse), entry);
 	gtk_box_pack_start (GTK_BOX (hbox2), w,
@@ -1456,8 +1458,37 @@ selection_changed (GtkTreeSelection *selection,
 			}
                         
                         if (pixbuf != NULL) {
-				gtk_image_set_from_pixbuf (GTK_IMAGE (gpixmap), pixbuf);
-				g_object_unref (pixbuf);
+				GdkPixbuf *scaled;
+				double     factor;
+				gint       new_w;
+				gint       new_h;
+				gint       w;
+				gint       h;
+
+				w = gdk_pixbuf_get_width (pixbuf);
+				h = gdk_pixbuf_get_height (pixbuf);
+			
+				if (w <= IMAGE_SIZE && h <= IMAGE_SIZE) {
+					
+					gtk_image_set_from_pixbuf (GTK_IMAGE (gpixmap), pixbuf);
+					g_object_unref (pixbuf);
+					
+				} else {
+					
+					factor = MIN (IMAGE_SIZE / w, IMAGE_SIZE / h);
+					new_w  = MAX ((gint) (factor * w), 1);
+					new_h  = MAX ((gint) (factor * h), 1);
+			
+					scaled = gdk_pixbuf_scale_simple (pixbuf,
+						  new_w,
+						  new_h,
+						  GDK_INTERP_BILINEAR);   
+
+					gtk_image_set_from_pixbuf (GTK_IMAGE (gpixmap), scaled);
+					
+					g_object_unref (scaled);
+					g_object_unref (pixbuf);
+				}
                         } else {
                                 unset_pixmap (gpixmap);
                         }
@@ -1522,7 +1553,7 @@ create_program_list_contents (void)
                             TRUE, TRUE, 0);
 
         label = gtk_label_new ("");
-        gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+        gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
         gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
         gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 5);
         g_object_set_data (G_OBJECT (run_dialog), "desc_label", label);
@@ -1617,7 +1648,7 @@ show_run_dialog (GdkScreen *screen)
 	}
 
 	run_dialog = gtk_dialog_new_with_buttons (
-				_("Run Program"),
+				_("Run Application"),
 				NULL, 0 /* flags */,
 				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
 				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,

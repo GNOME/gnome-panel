@@ -3317,14 +3317,14 @@ create_root_menu (GtkWidget   *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_stock_menu_item (
 			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_RUN, _("Run Program..."));
+			PANEL_STOCK_RUN, _("Run Application"));
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_action_run_program),
 				  NULL);
 		setup_internal_applet_drag (menuitem, "ACTION:run:NEW");
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		gtk_tooltips_set_tip (panel_tooltips, menuitem,
-				      _("Run a command"), NULL);
+				      _("Run an Application by entering a command"), NULL);
 	}
 
 	if (extra_items &&
