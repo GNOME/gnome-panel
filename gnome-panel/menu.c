@@ -484,7 +484,7 @@ create_panel_submenu (GtkWidget *app_menu)
 		create_applets_menu());
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add Drawer"));
+	setup_menuitem (menuitem, 0, _("Add drawer"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
         gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) add_drawer, 0);
@@ -492,7 +492,7 @@ create_panel_submenu (GtkWidget *app_menu)
 	add_menu_separator(menu);
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Global Properties"));
+	setup_menuitem (menuitem, 0, _("Global properties..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
         gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    (GtkSignalFunc) panel_configure, 0);

@@ -529,7 +529,7 @@ create_panel_root_menu(PanelWidget *panel)
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Global panel properties..."));
+	menuitem = gtk_menu_item_new_with_label(_("Global properties..."));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_global_properties_callback,
 			   panel);
