@@ -25,8 +25,8 @@
    
     <schema>
       <key>/schemas/apps/new_panel/objects/panel_id</key>
-      <owner>string</owner>
-      <type>int</type>
+      <owner>panel</owner>
+      <type>string</type>
       <default></default>
       <locale name="C">
         <short>The panel which contains this object</short>
@@ -40,7 +40,7 @@
       <key>/schemas/apps/new_panel/objects/position</key>
       <owner>panel</owner>
       <type>int</type>
-      <default>menu-object</default>
+      <default>0</default>
       <locale name="C">
         <short>The object's position on the panel</short>
         <long>
@@ -54,7 +54,7 @@
     <schema>
       <key>/schemas/apps/new_panel/objects/panel_right_stick</key>
       <owner>panel</owner>
-      <type>int</type>
+      <type>bool</type>
       <default>false</default>
       <locale name="C">
         <short>Interpret the position relative to the bottom/right edge</short>
