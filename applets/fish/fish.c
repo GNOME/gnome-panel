@@ -47,6 +47,11 @@
 
 #define N_FISH_PREFS 6
 
+#define LOCKDOWN_COMMANDLINE_KEY "/desktop/gnome/lockdown/disable_command_line"
+#define N_FISH_LOCKDOWN 1
+
+#define N_FISH_LISTENERS (N_FISH_PREFS + N_FISH_LOCKDOWN)
+
 typedef struct {
 	PanelApplet        applet;
 
@@ -67,6 +72,7 @@ typedef struct {
 	GdkPixmap         *pixmap;
 	guint              timeout;
 	int                current_frame;
+	gboolean           in_applet;
 
 	GdkPixbuf         *pixbuf;
 
@@ -76,6 +82,7 @@ typedef struct {
 	GtkWidget         *name_entry;
 	GtkWidget         *pixmap_entry;
 	GtkWidget         *image_entry;
+	GtkWidget         *command_label;
 	GtkWidget         *command_entry;
 	GtkWidget         *frames_spin;
 	GtkWidget         *speed_spin;
@@ -92,7 +99,7 @@ typedef struct {
 
 	gboolean           april_fools;
 
-	guint              listeners [N_FISH_PREFS];
+	guint              listeners [N_FISH_LISTENERS];
 } FishApplet;
 
 typedef struct {
@@ -321,7 +328,6 @@ display_preferences_dialog (BonoboUIComponent *uic,
 {
 	GladeXML  *xml;
 	GtkWidget *button;
-	GConfClient *client;
 
 	if (fish->preferences_dialog) {
 		gtk_window_set_screen (GTK_WINDOW (fish->preferences_dialog),
@@ -369,6 +375,7 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			   NULL /* label_post */,
 			   "image" /* key */);
 
+	fish->command_label = glade_xml_get_widget (xml, "command_label");
 	fish->command_entry = glade_xml_get_widget (xml, "command_entry");
 	gtk_entry_set_text (GTK_ENTRY (fish->command_entry), fish->command);
 
@@ -381,17 +388,11 @@ display_preferences_dialog (BonoboUIComponent *uic,
 			   NULL /* label_post */,
 			   "command" /* key */);
 
-	client = gconf_client_get_default ();
-	if (gconf_client_get_bool (client, "/desktop/gnome/lockdown/inhibit_command_line", NULL)) {
-		GtkWidget *w;
-
-		w = glade_xml_get_widget (xml, "command_entry");
-		g_assert (w != NULL);
-		gtk_widget_set_sensitive (w, FALSE);
-
-		w = glade_xml_get_widget (xml, "command_label");
-		g_assert (w != NULL);
-		gtk_widget_set_sensitive (w, FALSE);
+	if (gconf_client_get_bool (fish->client,
+				   LOCKDOWN_COMMANDLINE_KEY,
+				   NULL)) {
+		gtk_widget_set_sensitive (fish->command_label, FALSE);
+		gtk_widget_set_sensitive (fish->command_entry, FALSE);
 	}
 
 	fish->frames_spin = glade_xml_get_widget (xml, "frames_spin");
@@ -1203,6 +1204,25 @@ rotate_changed_notify (GConfClient *client,
 }
 
 static void
+fish_disable_commande_line_notify (GConfClient *client,
+				   guint        cnxn_id,
+				   GConfEntry  *entry,
+				   FishApplet  *fish)
+{
+	gboolean locked_down;
+
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	locked_down = !gconf_value_get_bool (entry->value);
+
+	if (fish->command_label != NULL)
+		gtk_widget_set_sensitive (fish->command_label, locked_down);
+	if (fish->command_entry != NULL)
+		gtk_widget_set_sensitive (fish->command_entry, locked_down);
+}
+
+static void
 setup_gconf (FishApplet *fish)
 {
 	PanelApplet *applet = (PanelApplet *) fish;
@@ -1251,7 +1271,13 @@ setup_gconf (FishApplet *fish)
 					fish, NULL, NULL);
 	g_free (key);
 
-	g_assert (i == N_FISH_PREFS);
+	fish->listeners [i++] = gconf_client_notify_add (
+					fish->client,
+					LOCKDOWN_COMMANDLINE_KEY,
+					(GConfClientNotifyFunc) fish_disable_commande_line_notify,
+					fish, NULL, NULL);
+
+	g_assert (i == N_FISH_LISTENERS);
 }
 
 static gboolean
@@ -1575,11 +1601,45 @@ handle_keypress (GtkWidget   *widget,
 	return TRUE;
 }
 
-static gboolean 
-handle_button_press (FishApplet     *fish,
-		     GdkEventButton *event)
+static gboolean
+fish_enter_notify (GtkWidget        *widget,
+		   GdkEventCrossing *event)
 {
-	if (event->button != 1)
+  FishApplet *fish;
+  GtkWidget  *event_widget;
+
+  fish = FISH_APPLET (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent*) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+      fish->in_applet = TRUE;
+
+  return FALSE;
+}
+
+static gboolean
+fish_leave_notify (GtkWidget        *widget,
+		   GdkEventCrossing *event)
+{
+  FishApplet *fish;
+  GtkWidget  *event_widget;
+
+  fish = FISH_APPLET (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent*) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+      fish->in_applet = FALSE;
+
+  return FALSE;
+}
+
+static gboolean 
+handle_button_release (FishApplet     *fish,
+		       GdkEventButton *event)
+{
+	if (!fish->in_applet || event->button != 1)
 		return FALSE; 
 
 	if (fish->april_fools) {
@@ -1646,13 +1706,20 @@ setup_fish_widget (FishApplet *fish)
 	g_signal_connect (fish->drawing_area, "expose-event",
 			  G_CALLBACK (fish_applet_expose_event), fish);
 
-	gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
-	g_signal_connect_swapped (widget, "button_press_event",
-				  G_CALLBACK (handle_button_press), fish);
+	gtk_widget_add_events (widget, GDK_ENTER_NOTIFY_MASK | 
+				       GDK_LEAVE_NOTIFY_MASK |
+				       GDK_BUTTON_RELEASE_MASK);
 
-	gtk_widget_add_events (fish->drawing_area, GDK_BUTTON_PRESS_MASK);
-	g_signal_connect_swapped (fish->drawing_area, "button_press_event",
-				  G_CALLBACK (handle_button_press), fish);
+	g_signal_connect_swapped (widget, "enter_notify_event",
+				  G_CALLBACK (fish_enter_notify), fish);
+	g_signal_connect_swapped (widget, "leave_notify_event",
+				  G_CALLBACK (fish_leave_notify), fish);
+	g_signal_connect_swapped (widget, "button_release_event",
+				  G_CALLBACK (handle_button_release), fish);
+
+	gtk_widget_add_events (fish->drawing_area, GDK_BUTTON_RELEASE_MASK);
+	g_signal_connect_swapped (fish->drawing_area, "button_release_event",
+				  G_CALLBACK (handle_button_release), fish);
 
 	load_fish_image (fish);
 
@@ -1805,8 +1872,8 @@ fish_applet_destroy (GtkObject *object)
 		g_source_remove (fish->timeout);
 	fish->timeout = 0;
 
-	for (i = 0; i < N_FISH_PREFS; i++) {
-		if (fish->client)
+	for (i = 0; i < N_FISH_LISTENERS; i++) {
+		if (fish->client && fish->listeners [i] != 0)
 			gconf_client_notify_remove (
 				fish->client, fish->listeners [i]);
 		fish->listeners [i] = 0;
@@ -1881,6 +1948,7 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->pixmap        = NULL;
 	fish->timeout       = 0;
 	fish->current_frame = 0;
+	fish->in_applet     = FALSE;
 
 	fish->prev_allocation.x      = -1;
 	fish->prev_allocation.y      = -1;
@@ -1895,6 +1963,7 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->name_entry         = NULL;
 	fish->pixmap_entry       = NULL;
 	fish->image_entry        = NULL;
+	fish->command_label      = NULL;
 	fish->command_entry      = NULL;
 	fish->frames_spin        = NULL;
 	fish->speed_spin         = NULL;
@@ -1909,7 +1978,7 @@ fish_applet_instance_init (FishApplet      *fish,
 	fish->source_id  = 0;
 	fish->io_channel = NULL;
 
-	for (i = 0; i < N_FISH_PREFS; i++)
+	for (i = 0; i < N_FISH_LISTENERS; i++)
 		fish->listeners [i] = 0;
 
 	fish->april_fools = FALSE;

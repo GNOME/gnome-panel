@@ -1,3 +1,29 @@
+2005-01-02  Vincent Untz  <vincent@vuntz.net>
+
+	Rework code for the disable_command_line lockdown key. It's instant
+	apply now.
+
+	* fish.c: (display_preferences_dialog): we don't need a new gconf
+	client, use the correct gconf key for the command line lockdown and
+	rework a bit the code for the lockdown
+	(fish_disable_commande_line_notify): new, update sensitivity of some
+	items in the pref dialog
+	(setup_gconf): add a listener for the lockdown key
+	(fish_applet_destroy): only remove a gconf listener if it is valid
+	(fish_applet_instance_init): some initialization update
+
+	Open the fortune dialog only on button release.
+	Fix bug #87765.
+
+	* fish.c: (fish_enter_notify): new, keep information to know if the
+	pointer is in the applet
+	(fish_leave_notify): ditto
+	(handle_button_press): renamed to...
+	(handle_button_release): new, display the dialog if the pointer is in
+	the applet when the release occurs
+	(setup_fish_widget): connect to enter-notify, leave-notify and
+	button-release events instead of button-press event
+
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
 	* fish.c: (set_tooltip): we don't need to always create (and leak)
