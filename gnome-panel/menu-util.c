@@ -17,7 +17,7 @@ extern char *kde_menudir;
 extern char *kde_icondir;
 extern char *kde_mini_icondir;
 
-void
+GtkWidget *
 add_menu_separator (GtkWidget *menu)
 {
 	GtkWidget *menuitem;
@@ -26,6 +26,8 @@ add_menu_separator (GtkWidget *menu)
 	gtk_widget_set_sensitive (menuitem, FALSE);
 	gtk_widget_show (menuitem);
 	gtk_menu_append (GTK_MENU (menu), menuitem);
+
+	return menuitem;
 }
 
 void

@@ -931,10 +931,10 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 
 		if(panel_client == CORBA_OBJECT_NIL) {
 			g_warning(_("Cannot activate a panel object"));
+			g_free (applet_servant);
 			return NULL;
 		}
 	}
-
 
 	/*{  static volatile int stop_here = 0;
 		while(stop_here);}*/
