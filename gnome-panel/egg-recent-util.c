@@ -117,7 +117,7 @@ load_icon_file (char          *filename,
 		guint          nominal_size)
 {
 	GdkPixbuf *pixbuf, *scaled_pixbuf;
-	int width, height, size;
+	guint width, height, size;
 	double scale;
 
 	if (path_represents_svg_image (filename)) {
