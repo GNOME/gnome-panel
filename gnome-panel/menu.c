@@ -409,11 +409,11 @@ load_icons_handler(gpointer data)
 			return TRUE;
 		}
 
-		pb2 = gdk_pixbuf_new(ART_PIX_RGB, pb->art_pixbuf->has_alpha,
+		pb2 = gdk_pixbuf_new(ART_PIX_RGB, gdk_pixbuf_get_has_alpha(pb),
 				     8, fake->size, fake->size);
 
 		scale_down(parent, parent->state,
-			   pb2->art_pixbuf, pb->art_pixbuf);
+			   gdk_pixbuf_get_artpixbuf(pb2), gdk_pixbuf_get_artpixbuf(pb));
 		gdk_pixbuf_unref(pb);
 
 		gdk_pixbuf_render_pixmap_and_mask (pb2, &gp, &gm, 128);

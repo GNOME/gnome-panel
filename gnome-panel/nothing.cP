@@ -121,8 +121,8 @@ goat_realize(GtkWidget *widget)
 		}
 		g_free(file);
 
-		goat_width = pb->art_pixbuf->width+12;
-		goat_height = pb->art_pixbuf->height+12;
+		goat_width = gdk_pixbuf_get_width(pb)+12;
+		goat_height = gdk_pixbuf_get_height(pb)+12;
 		rgb = g_new(guchar,goat_width*goat_height*3);
 		for(i=0;i<goat_width*goat_height*3;i++)
 			rgb[i] = 0xFF;
