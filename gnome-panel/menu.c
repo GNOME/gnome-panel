@@ -665,6 +665,55 @@ create_applets_menu(GList **finfo)
 	return applet_menu;
 }
 
+static void
+create_new_panel(GtkWidget *w,gpointer data)
+{
+	PanelType type = PTOI(data);
+	GdkColor bcolor = {0,0,0,1};
+	GtkWidget *panel;
+	
+	switch(type) {
+	case DRAWER_PANEL:
+		break; /*we don't handle this one here*/
+	case SNAPPED_PANEL: 
+		panel = snapped_widget_new(SNAPPED_BOTTOM,
+					   SNAPPED_EXPLICIT_HIDE,
+					   SNAPPED_SHOWN,
+					   PANEL_BACK_NONE,
+					   NULL,
+					   TRUE,
+					   &bcolor);
+		panel_setup(panel);
+		gtk_widget_show(panel);
+		break;
+	}
+}
+
+
+static GtkWidget *
+create_add_panel_submenu (void)
+{
+	GtkWidget *menu, *menuitem;
+
+	menu = gtk_menu_new ();
+	
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Drawer"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) add_applet_to_panel_data,
+			   DRAWER_ID);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Edge Panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) create_new_panel,
+			   (gpointer)SNAPPED_PANEL);
+
+	return menu;
+}
+
 static GtkWidget *
 create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 {
@@ -673,7 +722,7 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	menu = gtk_menu_new ();
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add to panel"));
+	setup_menuitem (menuitem, 0, _("Add app to panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), app_menu);
 
@@ -681,6 +730,12 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applet_menu);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add new panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_add_panel_submenu());
 
 	add_menu_separator(menu);
 
@@ -698,14 +753,6 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 			   (GtkSignalFunc) add_applet_to_panel_data,
 			   LOGOUT_ID);
 
-#ifdef _DRAWER_
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add drawer"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_applet_to_panel_data,
-			   DRAWER_ID);
-#endif
 
 #ifdef _SWALLOW_
 	menuitem = gtk_menu_item_new ();

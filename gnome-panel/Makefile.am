@@ -7,7 +7,6 @@ AUTOMAKE_OPTIONS = 1.2f
 # (it's after 0.20 so I guess swallows can be enabled,
 # maybe someone will fix it up)
 CFLAGS += -D_SWALLOW_
-CFLAGS += -D_DRAWER_
 
 #CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,

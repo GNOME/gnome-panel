@@ -133,9 +133,6 @@ static struct argp parser =
 };
 
 
-/*needed for drawers*/
-static void panel_setup(GtkWidget *panel);
-
 static int really_exec_prog(int applet_id, char *path, char *param);
 static void exec_queue_start_next(void);
 
@@ -1149,7 +1146,7 @@ panel_widget_setup(PanelWidget *panel)
 			   NULL);
 }
 
-static void
+void
 panel_setup(GtkWidget *panelw)
 {
 	GtkWidget *panel_menu;

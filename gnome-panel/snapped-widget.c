@@ -198,21 +198,21 @@ snapped_widget_set_size(SnappedWidget *snapped)
 {
 	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
 	if(panel->orient == PANEL_HORIZONTAL) {
+		gtk_widget_set_usize(GTK_WIDGET(snapped),
+				     gdk_screen_width(),
+				     0);
 		if(GTK_WIDGET(snapped)->window)
 			resize_window(GTK_WIDGET(snapped),
 				      gdk_screen_width(),
 				      panel->thick);
-		gtk_widget_set_usize(GTK_WIDGET(snapped),
-				     gdk_screen_width(),
-				     0);
 	} else { /*vertical*/
+		gtk_widget_set_usize(GTK_WIDGET(snapped),
+				     0,
+				     gdk_screen_height());
 		if(GTK_WIDGET(snapped)->window)
 			resize_window(GTK_WIDGET(snapped),
 				      panel->thick,
 				      gdk_screen_height());
-		gtk_widget_set_usize(GTK_WIDGET(snapped),
-				     0,
-				     gdk_screen_height());
 	}
 }
 

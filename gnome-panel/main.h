@@ -33,6 +33,8 @@ void back_change(int applet_id, PanelWidget *panel);
 
 PanelOrientType get_applet_orient(PanelWidget *panel);
 
+void panel_setup(GtkWidget *panel);
+
 /* this applet has finished loading, if it was the one we were waiting
    on, start the next applet */
 void exec_queue_done(int applet_id);
