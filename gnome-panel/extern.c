@@ -303,10 +303,10 @@ ebox_size_allocate(GtkWidget *applet, GtkAllocation *alloc, Extern *ext)
 static void
 socket_size_allocate(GtkWidget *applet, GtkAllocation *alloc)
 {
-	if(applet->allocation.width > applet->requisition.width ||
-	   applet->allocation.height > applet->requisition.height) {
-		gtk_widget_queue_resize(applet->parent);
-	}
+  if (applet->requisition.width > 0 && applet->requisition.height > 0 &&
+      (applet->allocation.width > applet->requisition.width ||
+       applet->allocation.height > applet->requisition.height))
+    gtk_widget_queue_resize(applet->parent);
 }
 
 /*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
