@@ -85,7 +85,7 @@ update_config_edge (BasePWidget *panel)
 	ppc = get_config_struct (GTK_WIDGET (panel));
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	g_return_if_fail (IS_BORDER_WIDGET (panel));
@@ -108,7 +108,7 @@ update_config_floating_pos (BasePWidget *panel)
 	ppc = get_config_struct (GTK_WIDGET (panel));
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->x_spin),
@@ -134,7 +134,7 @@ update_config_floating_pos_limits (BasePWidget *panel)
 	ppc = get_config_struct (widget);
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	xlimit = gdk_screen_width() - widget->allocation.width;
@@ -170,7 +170,7 @@ update_config_floating_orient (BasePWidget *panel)
 	GtkWidget *toggle;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	toggle = (PANEL_WIDGET (panel->panel)->orient == PANEL_HORIZONTAL)
@@ -187,7 +187,7 @@ update_config_avoid_on_maximize (BasePWidget *panel)
 	GtkWidget *toggle;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	toggle = ppc->avoid_on_maximize_button;
@@ -209,7 +209,7 @@ update_config_mode (BasePWidget *panel)
 	GtkWidget *toggle;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	toggle = ppc->autohide_button;
@@ -231,7 +231,7 @@ update_config_hidebuttons (BasePWidget *panel)
 	GtkWidget *toggle;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	toggle = ppc->hidebuttons_button;
@@ -266,7 +266,7 @@ update_config_size (GtkWidget *panel)
 	GtkWidget *menuitem;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
@@ -308,7 +308,7 @@ update_config_level (BasePWidget *panel)
 	GtkWidget *menuitem;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	switch (panel->level) {
@@ -347,7 +347,7 @@ update_config_back (PanelWidget *pw)
 	ppc = get_config_struct (pw->panel_parent);
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	switch(pw->back_type) {
@@ -390,7 +390,7 @@ update_config_anchor (BasePWidget *w)
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 	
 	ppc->align = SLIDING_POS (w->pos)->anchor;
@@ -405,7 +405,7 @@ update_config_offset (BasePWidget *w)
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->offset_spin),
@@ -421,7 +421,7 @@ update_config_offset_limit (BasePWidget *panel)
 	GtkAdjustment *adj;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
@@ -448,7 +448,7 @@ update_config_align (BasePWidget *w)
 	g_return_if_fail (IS_ALIGNED_WIDGET (w));
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	if (ppc->align == ALIGNED_POS (w->pos)->align)
@@ -1651,7 +1651,7 @@ update_config_type (BasePWidget *w)
 	GtkWidget *page;
 
 	if (ppc == NULL ||
-	    ppc->ppc_origin_changes)
+	    ppc->ppc_origin_change)
 		return;
 
 	g_return_if_fail(ppc->type_tab);
