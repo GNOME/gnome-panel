@@ -2,6 +2,7 @@
 #define APPLET_H
 
 #include <glib.h>
+#include <gdk/gdktypes.h>
 #include "panel-widget.h"
 
 G_BEGIN_DECLS
@@ -31,6 +32,12 @@ typedef enum {
 	APPLET_STATUS,
 	APPLET_RUN
 } AppletType;
+
+#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
+			   GDK_BUTTON_RELEASE_MASK |		\
+			   GDK_POINTER_MOTION_MASK |		\
+			   GDK_POINTER_MOTION_HINT_MASK)
+
 
 typedef struct _AppletUserMenu AppletUserMenu;
 typedef struct _AppletInfo AppletInfo;

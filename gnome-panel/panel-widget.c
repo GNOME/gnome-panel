@@ -16,6 +16,7 @@
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
 
+#include "applet.h"
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"
@@ -63,11 +64,6 @@ int pw_minimize_delay = 300;
 int pw_maximize_delay = 0;
 gboolean pw_disable_animations = FALSE;
 PanelMovementType pw_movement_type = PANEL_SWITCH_MOVE;
-
-#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
-			   GDK_BUTTON_RELEASE_MASK |		\
-			   GDK_POINTER_MOTION_MASK |		\
-			   GDK_POINTER_MOTION_HINT_MASK)
 
 typedef void (*BackSignal) (GtkObject * object,
 			    PanelBackType type,

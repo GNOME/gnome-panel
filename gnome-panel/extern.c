@@ -85,11 +85,6 @@ struct Extern_struct {
 	AppletInfo          *info;
 };
 
-#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
-			   GDK_BUTTON_RELEASE_MASK |		\
-			   GDK_POINTER_MOTION_MASK |		\
-			   GDK_POINTER_MOTION_HINT_MASK)
-
 extern GSList *panels;
 
 extern GSList *applets;
@@ -1056,63 +1051,73 @@ socket_unset_loading (GtkWidget *socket)
 	}
 }
 
-/*note that type should be APPLET_EXTERN_RESERVED or APPLET_EXTERN_PENDING
-  only*/
+/*
+ * note that type should be APPLET_EXTERN_RESERVED or 
+ * APPLET_EXTERN_PENDING only
+ */
 static CORBA_unsigned_long
-reserve_applet_spot (Extern ext, PanelWidget *panel, int pos,
-		     AppletType type)
+reserve_applet_spot (Extern       ext,
+		     PanelWidget *panel,
+		     int          pos,
+		     AppletType   type)
 {
-	int size;
 	GtkWidget *socket;
+	gint       events;
+	gint       size;
 
-	ext->ebox = gtk_event_box_new();
-	gtk_widget_set_events(ext->ebox, (gtk_widget_get_events(ext->ebox) |
-					  APPLET_EVENT_MASK) &
-			      ~( GDK_POINTER_MOTION_MASK |
-				 GDK_POINTER_MOTION_HINT_MASK));
+	ext->ebox = gtk_event_box_new ();
 
-	size = panel->sz < 14 ? panel->sz : 14;
+	events  = gtk_widget_get_events (ext->ebox) | APPLET_EVENT_MASK;
+	events &= ~(GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK);
+
+	gtk_widget_set_events (ext->ebox, events);
+
+	size = CLAMP (panel->sz, 0, 14);
 
 	gtk_widget_set_usize (ext->ebox, size, size);
 
-	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),"size_allocate",
+	gtk_signal_connect_after (GTK_OBJECT (ext->ebox),
+				  "size_allocate",
 				  GTK_SIGNAL_FUNC (ebox_size_allocate),
 				  ext);
 
-	socket = gtk_socket_new();
+	socket = gtk_socket_new ();
 
-	if(!socket) {
-		g_warning("Can't create a socket");
-		return 0;
-	}
-
-	gtk_container_add(GTK_CONTAINER(ext->ebox), socket);
+	gtk_container_add (GTK_CONTAINER (ext->ebox), socket);
 
 	gtk_widget_show_all (ext->ebox);
 	
-	/*we save the obj in the id field of the appletinfo and the 
-	  path in the path field */
+	/*
+	 * we save the obj in the id field of the 
+	 * appletinfo and the path in the path field.
+	 */
 	ext->info = NULL;
-	if(!register_toy(ext->ebox,
-			 ext, (GDestroyNotify)extern_clean,
-			 panel, pos, ext->exactpos, type)) {
-		/* the ebox is destroyed in register_toy */
+
+	if (!register_toy (ext->ebox, ext, (GDestroyNotify)extern_clean,
+			   panel, pos, ext->exactpos, type)) {
+		/*
+		 * the ebox is destroyed in register_toy
+		 */
 		ext->ebox = NULL;
-		g_warning(_("Couldn't add applet"));
+
+		g_warning (_("Couldn't register applet."));
+
 		return 0;
 	}
+
 	ext->info = applets_last->data;
 
-	gtk_signal_connect(GTK_OBJECT (socket), "destroy",
-			   GTK_SIGNAL_FUNC (extern_socket_destroy),
-			   extern_ref (ext));
+	gtk_signal_connect (GTK_OBJECT (socket),
+			    "destroy",
+			    GTK_SIGNAL_FUNC (extern_socket_destroy),
+			    extern_ref (ext));
 	
-	if(!GTK_WIDGET_REALIZED(socket))
-		gtk_widget_realize(socket);
+	if (!GTK_WIDGET_REALIZED (socket))
+		gtk_widget_realize (socket);
 
 	socket_set_loading (socket, panel);
 
-	return GDK_WINDOW_XWINDOW(socket->window);
+	return GDK_WINDOW_XWINDOW (socket->window);
 }
 
 /* Note exactpos may NOT be changed */

@@ -28,11 +28,6 @@
 
 #define SMALL_ICON_SIZE 20
 
-#define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
-			   GDK_BUTTON_RELEASE_MASK |		\
-			   GDK_POINTER_MOTION_MASK |		\
-			   GDK_POINTER_MOTION_HINT_MASK)
-
 extern GSList *panels;
 
 GSList *applets = NULL;
