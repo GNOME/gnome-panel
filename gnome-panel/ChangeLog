@@ -1,3 +1,14 @@
+Mon Mar 08 16:12:47 1999  George Lebl  <jirka@5z.com>
+
+	* menu.[ch]: export show_x_on_panels and use it directly, avoid
+	  warning when destroying menus that were not used
+
+	* panel_config(_global|).c: account for dialog being destroyed
+
+	* *.c: put all debugging info behind PANEL_DEBUG ifdefs
+
+	* Makefile.am: don't link the panel with the applet library
+
 Sat Mar 06 17:50:35 1999  George Lebl  <jirka@5z.com>
 
 	* panel-util.c: use set_rc_style instead of restore_default_style

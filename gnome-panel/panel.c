@@ -773,6 +773,8 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 				} else
 					gtk_widget_set_sensitive(rem, TRUE);
 				pd->menu_age = 0;
+				
+				show_x_on_panels(panel_menu);
 				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
 					       global_config.off_panel_popups?
 					        panel_menu_position:NULL,

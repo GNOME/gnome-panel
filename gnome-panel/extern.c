@@ -401,7 +401,9 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 				*globcfgpath = CORBA_string_dup(old_panel_cfg_path);
 				info->type = APPLET_EXTERN_RESERVED;
 				*wid=GDK_WINDOW_XWINDOW(socket->window);
+#ifdef PANEL_DEBUG
 				printf("\nSOCKET XID: %lX\n\n", (long)*wid);
+#endif
 
 				panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 				acc = PortableServer_POA_servant_to_reference(thepoa, panelspot_servant, ev);
@@ -563,8 +565,10 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 	g_assert(ext);
 	g_assert(ext->info);
 	
+#ifdef PANEL_DEBUG
 	printf("register ext: %lX\n",(long)ext);
 	printf("register ext->info: %lX\n",(long)(ext->info));
+#endif
 
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 	g_return_if_fail(panel!=NULL);
@@ -615,8 +619,10 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 	GtkWidget *panel;
 	Extern *ext = (Extern *)servant;
 	
+#ifdef PANEL_DEBUG
 	printf("show menu ext: %lX\n",(long)ext);
 	printf("show menu ext->info: %lX\n",(long)(ext->info));
+#endif
 
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);
@@ -682,7 +688,9 @@ s_panelspot_add_callback(POA_GNOME_PanelSpot *servant,
 {
 	Extern *ext = (Extern *)servant;
 
+#ifdef PANEL_DEBUG
 	printf("add callback ext: %lX\n",(long)ext);
+#endif
 
 	g_return_if_fail(ext != NULL);
 	g_return_if_fail(ext->info != NULL);

@@ -69,6 +69,13 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	panel_config_sync();
 }
 
+static void
+destroy_egg(GtkWidget *widget, int **pages)
+{
+	if(pages)
+		*pages = 0;
+}
+
 /*thy evil easter egg*/
 static int
 config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
@@ -94,18 +101,21 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 	
 	if(pages==0) {
 		file = gnome_unconditional_pixmap_file("gnome-gegl.png");
-		if (file && g_file_exists (file)) {
+		if (file && g_file_exists (file))
 			w = gnome_pixmap_new_from_file (file);
-			gtk_widget_show(w);
-			/*the GEGL shall not be translated*/
-			gtk_notebook_append_page (nbook, w,
-						  gtk_label_new ("GEGL"));
-			gtk_notebook_set_page(nbook,-1);
-			pages = 1;
-		}
+		else
+			w = gtk_label_new("<insert picture of goat here>");
 		g_free(file);
+		gtk_widget_show(w);
+		/*the GEGL shall not be translated*/
+		gtk_notebook_append_page (nbook, w,
+					  gtk_label_new ("GEGL"));
+		gtk_notebook_set_page(nbook,-1);
+		pages = 1;
+		gtk_signal_connect(GTK_OBJECT(widget),"destroy",
+				   GTK_SIGNAL_FUNC(destroy_egg),&pages);
 	} else {
-			gtk_notebook_set_page(nbook,-1);
+		gtk_notebook_set_page(nbook,-1);
 	}
 	return FALSE;
 }

@@ -97,7 +97,7 @@ panel_SOURCES = 		\
 
 $(base_panel_SOURCES): $(CORBA_SRCLIST)
 
-panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 panel_LDFLAGS=-export-dynamic
 
 data_DATA = panelrc

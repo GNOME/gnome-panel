@@ -919,7 +919,9 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 	     menus as they are auto generated!*/
 	   !strstr(sim->item_loc,"/.gnome/apps-redhat/") &&
 	   access(sim->item_loc,W_OK)==0) {
+#ifdef PANEL_DEBUG
 		puts(sim->item_loc);
+#endif
 		/*file exists and is writable, we're in bussines*/
 		gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	} else if(!sim->item_loc || errno==ENOENT) {
@@ -1767,7 +1769,8 @@ destroy_menu (GtkWidget *widget, gpointer data)
 						     MENU_PROPERTIES);
 	if(prop_dialog)
 		gtk_widget_destroy(prop_dialog);
-	gtk_widget_destroy(menu->menu);
+	if(menu->menu)
+		gtk_widget_destroy(menu->menu);
 	g_free(menu->path);
 	g_free(menu);
 }
@@ -2184,13 +2187,15 @@ convert_to_panel(GtkWidget *w, gpointer data)
 	for(i=0;current_panel->applet_list!=NULL;i++) {
 		AppletData *ad = current_panel->applet_list->data;
 		panel_widget_reparent(current_panel,newpanel,ad->applet,i);
+#ifdef PANEL_DEBUG
 		printf("%lX, %d\n",(long)ad->applet,i);
+#endif
 	}
 	gtk_widget_destroy(pw);
 }
 
-static void
-show_x_on_panels(GtkWidget *menu, gpointer data)
+void
+show_x_on_panels(GtkWidget *menu)
 {
 	GtkWidget *pw;
 	GtkWidget *convcorn = gtk_object_get_data(GTK_OBJECT(menu),"convcorn");
@@ -2253,17 +2258,6 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			   (GtkSignalFunc) convert_to_panel,
 			   GINT_TO_POINTER(SNAPPED_PANEL));
 	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
-
-	/*actually show hide right now to get the first size
-	  request correctly, still has a display problem when
-	  main menu is dragged onto a different type of a panel,
-	  but the problem is minimal (it only happens if the person
-	  uses the same menu)*/
-	show_x_on_panels(menu,NULL);
-	
-	gtk_signal_connect(GTK_OBJECT(menu),"show",
-			   GTK_SIGNAL_FUNC(show_x_on_panels),NULL);
-
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add main menu"));
@@ -2358,6 +2352,10 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	setup_menuitem (menuitem, 0, _("Panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
+	
+	gtk_signal_connect_object(GTK_OBJECT(menu),"show",
+				  GTK_SIGNAL_FUNC(show_x_on_panels),
+				  GTK_OBJECT(panel_menu));
 
 	add_menu_separator (menu);
 

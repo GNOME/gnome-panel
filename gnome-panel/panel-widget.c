@@ -16,7 +16,7 @@
 GSList *panels=NULL; /*other panels we might want to move the applet to*/
 
 /*define for some debug output*/
-/*#define DEBUG 1*/
+/*#define PANEL_DEBUG 1*/
 
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
@@ -1420,7 +1420,7 @@ panel_widget_new (int packed,
 static void
 _panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 {
-#ifdef DEBUG
+#ifdef PANEL_DEBUG
   g_message("Starting drag on a %s at %p\n",
 	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
@@ -1444,7 +1444,7 @@ panel_widget_applet_drag_start_no_grab(PanelWidget *panel, GtkWidget *applet)
 static void
 _panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 {
-#ifdef DEBUG
+#ifdef PANEL_DEBUG
 	g_message("Ending drag\n");
 #endif
 	panel->currently_dragged_applet = NULL;
@@ -1463,7 +1463,7 @@ panel_widget_applet_drag_end_no_grab(PanelWidget *panel)
 static void
 _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 {
-#ifdef DEBUG
+#ifdef PANEL_DEBUG
   g_message("Starting drag [grabbed] on a %s at %p\n",
 	    gtk_type_name(GTK_OBJECT(applet)->klass->type), applet);
 #endif
@@ -1798,7 +1798,9 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
+#ifdef PANEL_DEBUG
 			printf("the appwidget %lX\n",(long)widget);
+#endif
 
 			/* don't propagate this event */
 			if (panel->currently_dragged_applet)
