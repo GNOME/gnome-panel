@@ -326,13 +326,17 @@ destroy_menu (GtkWidget *widget, gpointer data)
 	g_free(menu);
 }
 
-void
-activate_menu (GtkWidget *widget, gpointer data)
+/*FIXME: this is starting to piss me off it doesn't work as it should*/
+static gint
+menu_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
 	Menu *menu = data;
-
-	gtk_menu_popup (GTK_MENU (menu->menu), 0, 0, menu_position, data,
-			1, 0);
+	if(event->button==1) {
+		gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
+			data, event->button, time(NULL));
+		return TRUE;
+	}
+	return FALSE;
 }
 
 void
@@ -597,8 +601,8 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	} else {
 		menu->menu = create_menu_at (window, menudir, 0);
 	}
-	gtk_signal_connect (GTK_OBJECT (menu->button), "clicked",
-			    GTK_SIGNAL_FUNC (activate_menu), menu);
+	gtk_signal_connect (GTK_OBJECT (menu->button), "button_press_event",
+			    GTK_SIGNAL_FUNC (menu_button_press), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
 
@@ -610,10 +614,20 @@ GtkWidget *
 init_main_menu(GtkWidget *window)
 {
 	GtkWidget *app_menu;
+	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *menudir;
 
-	root_menu = create_menu_at(window,".",0);
-	app_menu = create_menu_at (window, ".", 1);
+	menudir = g_concat_dir_and_file (menu_base, ".");
+	g_free (menu_base);
+	if (!g_file_exists (menudir)) {
+		g_free (menudir);
+		return NULL;
+	}
+
+	root_menu = create_menu_at(window,menudir,0);
+	app_menu = create_menu_at (window,menudir, 1);
 	add_special_entries (root_menu, app_menu);
+	g_free (menudir);
 }
 
 Menu *
