@@ -1,3 +1,11 @@
+Sun Jan 30 15:11:25 2000  George Lebl <jirka@5z.com>
+
+	* basep-widget.c: move the drag_motion out of here
+
+	* panel.c,launcher.c: do our own DND drop handeling so that we can
+	  correctly ignore certain drops, such as dropping a launcher on
+	  it's own panel, or on itself.  also unhide the panel on drag_motion
+
 2000-01-30  Jacob Berkman  <jacob@helixcode.com>
 
 	* menu.c: same with pixmaps as tearoffs below

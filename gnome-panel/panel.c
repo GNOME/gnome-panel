@@ -78,6 +78,9 @@ static GtkTargetEntry panel_drop_types[] = {
 static gint n_panel_drop_types = 
    sizeof(panel_drop_types) / sizeof(panel_drop_types[0]);
 
+static GtkTargetList *panel_target_list = NULL;
+
+
 static void
 change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
@@ -942,20 +945,141 @@ drop_color(PanelWidget *panel, int pos, guint16 *dropped)
 	panel_widget_set_back_color(panel, &c);
 }
 
+static gboolean
+is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
+		GdkAtom *ret_atom)
+{
+	GtkWidget *source_widget;
+	GtkWidget *panel; /*PanelWidget*/
+	GList *li;
+
+	g_return_val_if_fail(widget!=NULL, FALSE);
+	g_return_val_if_fail(IS_BASEP_WIDGET(widget), FALSE);
+
+	if(!(context->actions & GDK_ACTION_COPY))
+		return FALSE;
+
+	panel = BASEP_WIDGET (widget)->panel;
+
+	source_widget = gtk_drag_get_source_widget (context);
+	/* if this is a drag from this panel to this panel of a launcher,
+	   then ignore it */
+	if(source_widget && IS_BUTTON_WIDGET(source_widget) &&
+	   source_widget->parent == panel) {
+		return FALSE;
+	}
+
+	if(!panel_target_list)
+		panel_target_list = gtk_target_list_new(panel_drop_types,
+							n_panel_drop_types);
+	for(li = context->targets; li; li = li->next) {
+		guint temp_info;
+		if(gtk_target_list_find(panel_target_list, 
+					GPOINTER_TO_INT(li->data),
+					&temp_info)) {
+			if(info) *info = temp_info;
+			if(ret_atom) *ret_atom = GPOINTER_TO_INT(li->data);
+			break;
+		}
+	}
+	/* if we haven't found it */
+	if(!li)
+		return FALSE;
+	return TRUE;
+}
+
 static void
-panel_widget_dnd_drop_internal (GtkWidget	 *widget,
-				GdkDragContext   *context,
-				gint              x,
-				gint              y,
-				GtkSelectionData *selection_data,
-				guint             info,
-				guint             time)
+do_highlight (GtkWidget *widget, gboolean highlight)
+{
+	gboolean have_drag;
+	have_drag = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (widget),
+							 "have-drag"));
+	if(highlight) {
+		if(!have_drag) {
+			gtk_object_set_data (GTK_OBJECT (widget), "have-drag",
+					     GINT_TO_POINTER (TRUE));
+			gtk_drag_highlight (widget);
+		}
+	} else {
+		if(have_drag) {
+			gtk_object_remove_data (GTK_OBJECT (widget),
+						"have-drag");
+			gtk_drag_unhighlight (widget);
+		}
+	}
+}
+
+
+static gboolean
+drag_motion_cb(GtkWidget	  *widget,
+	       GdkDragContext     *context,
+	       gint                x,
+	       gint                y,
+	       guint               time)
+{
+	gdk_drag_status (context, GDK_ACTION_COPY, time);
+
+	if(!is_this_drop_ok(widget, context, NULL, NULL))
+		return FALSE;
+
+	do_highlight(widget, TRUE);
+
+	basep_widget_autoshow(BASEP_WIDGET(widget));
+	basep_widget_queue_autohide(BASEP_WIDGET(widget));
+
+	return TRUE;
+}
+
+static gboolean
+drag_drop_cb(GtkWidget	       *widget,
+	     GdkDragContext    *context,
+	     gint               x,
+	     gint               y,
+	     guint              time,
+	     Launcher *launcher)
+{
+	GdkAtom ret_atom = 0;
+
+	if(!is_this_drop_ok(widget, context, NULL, &ret_atom))
+		return FALSE;
+
+	gtk_drag_get_data(widget, context,
+			  ret_atom, time);
+
+	return TRUE;
+}
+
+static void  
+drag_leave_cb(GtkWidget	       *widget,
+	      GdkDragContext   *context,
+	      guint             time,
+	      Launcher *launcher)
+{
+	do_highlight (widget, FALSE);
+}
+
+static void
+drag_data_recieved_cb (GtkWidget	 *widget,
+		       GdkDragContext   *context,
+		       gint              x,
+		       gint              y,
+		       GtkSelectionData *selection_data,
+		       guint             info,
+		       guint             time)
 {
 	PanelWidget *panel;
 	int pos;
 
 	g_return_if_fail(widget!=NULL);
 	g_return_if_fail(IS_BASEP_WIDGET(widget));
+
+	/* we use this only to really find out the info, we already
+	   know this is an ok drop site and the info that got passed
+	   to us is bogus (it's always 0 in fact) */
+	if(!is_this_drop_ok(widget, context, &info, NULL)) {
+		gtk_drag_finish(context,FALSE,FALSE,time);
+		return;
+	}
 
 	panel = PANEL_WIDGET (BASEP_WIDGET (widget)->panel);
 
@@ -983,8 +1107,10 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 		drop_menu(panel, pos, (char *)selection_data->data);
 		break;
 	case TARGET_APPLET:
-		if(!selection_data->data)
+		if(!selection_data->data) {
+			gtk_drag_finish(context,FALSE,FALSE,time);
 			return;
+		}
 		load_extern_applet((char *)selection_data->data, NULL,
 				   panel, pos, TRUE, FALSE);
 		break;
@@ -992,6 +1118,8 @@ panel_widget_dnd_drop_internal (GtkWidget	 *widget,
 		drop_internal_applet(panel, pos, (char *)selection_data->data);
 		break;
 	}
+
+	gtk_drag_finish(context,TRUE,FALSE,time);
 }
 
 static void
@@ -1125,15 +1253,29 @@ panel_setup(GtkWidget *panelw)
 
 	gtk_signal_connect(GTK_OBJECT(basep),
 			   "drag_data_received",
-			   GTK_SIGNAL_FUNC(panel_widget_dnd_drop_internal),
+			   GTK_SIGNAL_FUNC(drag_data_recieved_cb),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(basep),
+			   "drag_motion",
+			   GTK_SIGNAL_FUNC(drag_motion_cb),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(basep),
+			   "drag_leave",
+			   GTK_SIGNAL_FUNC(drag_leave_cb),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(basep),
+			   "drag_drop",
+			   GTK_SIGNAL_FUNC(drag_drop_cb),
 			   NULL);
 
-	gtk_drag_dest_set (GTK_WIDGET (basep),
+	/*gtk_drag_dest_set (GTK_WIDGET (basep),
 			   GTK_DEST_DEFAULT_MOTION |
 			   GTK_DEST_DEFAULT_HIGHLIGHT |
 			   GTK_DEST_DEFAULT_DROP,
 			   panel_drop_types, n_panel_drop_types,
-			   GDK_ACTION_COPY);
+			   GDK_ACTION_COPY);*/
+	gtk_drag_dest_set (GTK_WIDGET (basep),
+			   0, NULL, 0, 0);
 
 	gtk_signal_connect (GTK_OBJECT (basep),
 			    "state_change",

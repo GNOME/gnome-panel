@@ -25,14 +25,6 @@ static void basep_widget_init		(BasePWidget      *basep);
 static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_init (BasePPos *pos);
 
-static int
-basep_drag_motion (PanelWidget        *panel,
-		   GdkDragContext     *context,
-		   gint                x,
-		   gint                y,
-		   guint               time,
-		   BasePWidget        *basep);
-
 static GtkWindowClass *basep_widget_parent_class = NULL;
 static GtkObjectClass *basep_pos_parent_class = NULL;
 /*global settings*/
@@ -1188,10 +1180,6 @@ basep_widget_construct (BasePWidget *basep,
 			    GTK_SIGNAL_FUNC (basep_widget_south_clicked),
 			    basep);
 
-	gtk_signal_connect (GTK_OBJECT (basep->panel), "drag_motion",
-			    GTK_SIGNAL_FUNC (basep_drag_motion),
-			    basep);
-
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
@@ -1610,32 +1598,6 @@ basep_widget_queue_autohide(BasePWidget *basep)
         basep->leave_notify_timer_tag =
                 gtk_timeout_add (pw_minimize_delay,
                                  basep_widget_autohide, basep);
-}
-
-static int
-basep_drag_motion (PanelWidget        *panel,
-		   GdkDragContext     *context,
-		   gint                x,
-		   gint                y,
-		   guint               time,
-		   BasePWidget        *basep)
-{
-	gdk_drag_status (context, context->suggested_action, time);
-
-        if ((basep->mode == BASEP_EXPLICIT_HIDE) ||
-	    (basep->state == BASEP_HIDDEN_LEFT) ||
-	    (basep->state == BASEP_HIDDEN_RIGHT))
-	        return TRUE;
-
-	if (basep->leave_notify_timer_tag != 0) {
-	        gtk_timeout_remove (basep->leave_notify_timer_tag);
-		basep->leave_notify_timer_tag = 0;
-	}
-
-	basep_widget_autoshow(basep);
-	basep_widget_queue_autohide (basep);
-
-	return TRUE;
 }
 
 void

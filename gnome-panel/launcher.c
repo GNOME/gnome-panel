@@ -114,17 +114,8 @@ drag_data_received_cb (GtkWidget        *widget,
 	int argc;
 	char **argv;
 	int i;
-	GtkWidget *wid;
 
 	g_return_if_fail(launcher!=NULL);
-
-	wid = gtk_drag_get_source_widget(context);
-	if(wid == widget) {
-		gtk_drag_finish(context,FALSE,FALSE,time);
-
-		/*gdk_drag_abort(context,time);*/
-		return;
-	}
 
 	files = gnome_uri_list_extract_filenames((char *)selection_data->data);
 	argc = g_list_length(files);
@@ -137,6 +128,8 @@ drag_data_received_cb (GtkWidget        *widget,
 	launch(launcher,argc,argv);
 	gnome_uri_list_free_strings (files);
 	g_free(argv);
+
+	gtk_drag_finish(context,TRUE,FALSE,time);
 }
 
 static void
@@ -151,7 +144,66 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 	g_free(launcher);
 }
 
-#if 0
+static gboolean
+is_this_drop_ok(GtkWidget *widget, GdkDragContext *context)
+{
+	static GdkAtom text_uri_list = 0;
+	GList *li;
+	GtkWidget *wid;
+
+	wid = gtk_drag_get_source_widget(context);
+
+	if(wid == widget)
+		return FALSE;
+
+	if(!(context->actions & GDK_ACTION_COPY))
+		return FALSE;
+
+	if(!text_uri_list)
+		text_uri_list = gdk_atom_intern ("text/uri-list", FALSE);
+
+	for(li = context->targets; li; li = li->next) {
+		if(GPOINTER_TO_INT(li->data) == text_uri_list)
+			break;
+	}
+	/* if we haven't found it */
+	if(!li)
+		return FALSE;
+
+	return TRUE;
+}
+
+static void
+do_highlight (GtkWidget *widget, gboolean highlight)
+{
+	gboolean have_drag;
+	have_drag = GPOINTER_TO_INT(gtk_object_get_data (GTK_OBJECT (widget),
+							 "have-drag"));
+	if(highlight) {
+		if(!have_drag) {
+			gtk_object_set_data (GTK_OBJECT (widget), "have-drag",
+					     GINT_TO_POINTER (TRUE));
+			gtk_drag_highlight (widget);
+		}
+	} else {
+		if(have_drag) {
+			gtk_object_remove_data (GTK_OBJECT (widget),
+						"have-drag");
+			gtk_drag_unhighlight (widget);
+		}
+	}
+}
+
+static void  
+drag_leave_cb(GtkWidget	       *widget,
+	      GdkDragContext   *context,
+	      guint             time,
+	      Launcher *launcher)
+{
+	do_highlight(widget, FALSE);
+}
+
+
 static gboolean
 drag_motion_cb(GtkWidget *widget,
 	       GdkDragContext *context,
@@ -160,18 +212,39 @@ drag_motion_cb(GtkWidget *widget,
 	       guint time,
 	       Launcher *launcher)
 {
-	GtkWidget *wid;
+	gdk_drag_status (context, GDK_ACTION_COPY, time);
 
-	wid = gtk_drag_get_source_widget(context);
+	if(!is_this_drop_ok(widget, context))
+		return FALSE;
 
-	if(wid == widget) {
-		/* somehow make it not highlight or whatever the widget,
-		   I dunno how to do this though */
-	}
+	do_highlight (widget, TRUE);
 
 	return TRUE;
 }
-#endif
+
+static gboolean
+drag_drop_cb(GtkWidget	       *widget,
+	     GdkDragContext    *context,
+	     gint               x,
+	     gint               y,
+	     guint              time,
+	     Launcher *launcher)
+{
+	static GdkAtom text_uri_list = 0;
+
+	if(!is_this_drop_ok(widget, context))
+		return FALSE;
+
+	if(!text_uri_list)
+		text_uri_list = gdk_atom_intern ("text/uri-list", FALSE);
+
+	gtk_drag_get_data(widget, context,
+			  gdk_atom_intern ("text/uri-list", FALSE),
+			  time);
+
+	return TRUE;
+}
+
 
 static void  
 drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
@@ -272,10 +345,12 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 			    GDK_ACTION_COPY);
 	GTK_WIDGET_SET_FLAGS(launcher->button,GTK_NO_WINDOW);
 	
-	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
+	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   GTK_DEST_DEFAULT_ALL,
 			   dnd_targets, 1,
-			   GDK_ACTION_COPY);
+			   GDK_ACTION_COPY);*/
+	gtk_drag_dest_set (GTK_WIDGET (launcher->button),
+			   0, NULL, 0, 0);
 
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_get",
 			   GTK_SIGNAL_FUNC(drag_data_get_cb),
@@ -283,11 +358,16 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_data_received",
 			   GTK_SIGNAL_FUNC(drag_data_received_cb),
 			   launcher);
-#if 0
 	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_motion",
 			   GTK_SIGNAL_FUNC(drag_motion_cb),
 			   launcher);
-#endif
+	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_drop",
+			   GTK_SIGNAL_FUNC(drag_drop_cb),
+			   launcher);
+	gtk_signal_connect(GTK_OBJECT(launcher->button), "drag_leave",
+			   GTK_SIGNAL_FUNC(drag_leave_cb),
+			   launcher);
+
 
 	gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
 			    (GtkSignalFunc) launch_cb,
