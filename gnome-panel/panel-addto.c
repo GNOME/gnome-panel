@@ -1094,15 +1094,15 @@ panel_addto_dialog_new (PanelWidget *panel_widget)
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog->addto_dialog),
 					 PANEL_ADDTO_RESPONSE_ADD);
 
-	gtk_container_set_border_width (GTK_CONTAINER (dialog->addto_dialog), 6);
-	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog->addto_dialog)->vbox), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (dialog->addto_dialog), 5);
+	gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (dialog->addto_dialog)->vbox), 2);
 	g_signal_connect (G_OBJECT (dialog->addto_dialog), "response",
 			  G_CALLBACK (panel_addto_dialog_response), dialog);
 	g_signal_connect (dialog->addto_dialog, "destroy",
 			  G_CALLBACK (panel_addto_dialog_destroy), dialog);
 
 	vbox = gtk_vbox_new (FALSE, 12);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog->addto_dialog)->vbox),
 			   vbox);
 
