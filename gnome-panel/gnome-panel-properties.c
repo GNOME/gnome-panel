@@ -127,6 +127,7 @@ static GtkWidget *keys_enabled_cb;
 static GtkWidget *menu_key_entry;
 static GtkWidget *run_key_entry;
 static GtkWidget *confirm_panel_remove_cb;
+static GtkWidget *avoid_collisions_cb;
 
 static gboolean changing = TRUE;
 static GtkWidget *capplet;
@@ -861,44 +862,49 @@ menu_notebook_page(void)
 static void
 sync_misc_page_with_config(GlobalConfig *conf)
 {
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(tooltips_enabled_cb),
-				    conf->tooltips_enabled);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(drawer_auto_close_cb),
-				    conf->drawer_auto_close);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(autoraise_cb),
-				    conf->autoraise);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keep_bottom_cb),
-				    conf->keep_bottom);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(confirm_panel_remove_cb),
-				    conf->confirm_panel_remove);
-	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keys_enabled_cb),
-				    conf->keys_enabled);
-	gtk_entry_set_text (GTK_ENTRY(menu_key_entry),
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (tooltips_enabled_cb),
+				     conf->tooltips_enabled);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (drawer_auto_close_cb),
+				     conf->drawer_auto_close);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (autoraise_cb),
+				     conf->autoraise);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (keep_bottom_cb),
+				     conf->keep_bottom);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (confirm_panel_remove_cb),
+				     conf->confirm_panel_remove);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (avoid_collisions_cb),
+				     conf->avoid_collisions);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (keys_enabled_cb),
+				     conf->keys_enabled);
+	gtk_entry_set_text (GTK_ENTRY (menu_key_entry),
 			    conf->menu_key ? conf->menu_key : "");
-	gtk_entry_set_text (GTK_ENTRY(run_key_entry),
+	gtk_entry_set_text (GTK_ENTRY (run_key_entry),
 			    conf->run_key ? conf->run_key : "");
 }
+
 static void
 sync_config_with_misc_page(GlobalConfig *conf)
 {
 	conf->tooltips_enabled =
-		GTK_TOGGLE_BUTTON(tooltips_enabled_cb)->active;
+		GTK_TOGGLE_BUTTON (tooltips_enabled_cb)->active;
 	conf->drawer_auto_close =
-		GTK_TOGGLE_BUTTON(drawer_auto_close_cb)->active;
+		GTK_TOGGLE_BUTTON (drawer_auto_close_cb)->active;
 	conf->autoraise =
-		GTK_TOGGLE_BUTTON(autoraise_cb)->active;
+		GTK_TOGGLE_BUTTON (autoraise_cb)->active;
 	conf->keep_bottom =
-		GTK_TOGGLE_BUTTON(keep_bottom_cb)->active;
+		GTK_TOGGLE_BUTTON (keep_bottom_cb)->active;
 	conf->confirm_panel_remove =
-		GTK_TOGGLE_BUTTON(confirm_panel_remove_cb)->active;
+		GTK_TOGGLE_BUTTON (confirm_panel_remove_cb)->active;
+	conf->avoid_collisions =
+		GTK_TOGGLE_BUTTON (avoid_collisions_cb)->active;
 	conf->keys_enabled =
-		GTK_TOGGLE_BUTTON(keys_enabled_cb)->active;
-	g_free(conf->menu_key);
+		GTK_TOGGLE_BUTTON (keys_enabled_cb)->active;
+	g_free (conf->menu_key);
 	conf->menu_key =
-		g_strdup(gtk_entry_get_text (GTK_ENTRY(menu_key_entry)));
-	g_free(conf->run_key);
+		g_strdup (gtk_entry_get_text (GTK_ENTRY (menu_key_entry)));
+	g_free (conf->run_key);
 	conf->run_key =
-		g_strdup(gtk_entry_get_text (GTK_ENTRY(run_key_entry)));
+		g_strdup (gtk_entry_get_text (GTK_ENTRY (run_key_entry)));
 }
 
 static GtkWidget *grab_dialog;
@@ -1021,6 +1027,12 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (confirm_panel_remove_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), confirm_panel_remove_cb, FALSE, FALSE, 0);
+
+	/* Collision avoidance */
+	avoid_collisions_cb = gtk_check_button_new_with_label (_("Try to avoid overlapping panels"));
+	gtk_signal_connect (GTK_OBJECT (avoid_collisions_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_box_pack_start (GTK_BOX (box), avoid_collisions_cb, FALSE, FALSE, 0);
 
 	/* Key Bindings frame */
 	frame = gtk_frame_new (_("Key Bindings"));
@@ -1189,6 +1201,7 @@ loadup_vals(void)
 	global_config.tile_when_over = gnome_config_get_bool("tile_when_over=FALSE");
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
 	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
+	global_config.avoid_collisions = gnome_config_get_bool("avoid_collisions=TRUE");
 	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
 
 	for(i=0;i<LAST_TILE;i++) {
@@ -1285,6 +1298,8 @@ write_config(GlobalConfig *conf)
 			      conf->saturate_when_over);
 	gnome_config_set_bool("confirm_panel_remove",
 			      conf->confirm_panel_remove);
+	gnome_config_set_bool("avoid_collisions",
+			      conf->avoid_collisions);
 	gnome_config_set_int("menu_flags", conf->menu_flags);
 	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
 	gnome_config_set_string("menu_key", conf->menu_key);

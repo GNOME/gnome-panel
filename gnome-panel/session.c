@@ -36,8 +36,8 @@ extern GnomeClient *client;
 
 GlobalConfig global_config;
 
-char *panel_cfg_path=NULL;
-char *old_panel_cfg_path=NULL;
+char *panel_cfg_path = NULL;
+char *old_panel_cfg_path = NULL;
 
 /*list of all panel widgets created*/
 extern GSList *panel_list;
@@ -91,6 +91,7 @@ apply_global_config(void)
 	static int old_use_large_icons = -1;
 	static int old_merge_menus = -1;
 	static int old_fast_button_scaling = -1;
+	static int old_avoid_collisions = -1;
 	GSList *li;
 
 	panel_widget_change_global(global_config.explicit_hide_step_size,
@@ -216,6 +217,11 @@ apply_global_config(void)
 	}
 	autohide_size_old = global_config.minimized_size;
 	menu_flags_old = global_config.menu_flags;
+
+	if (old_avoid_collisions != global_config.avoid_collisions) {
+		basep_border_queue_recalc ();
+	}
+	old_avoid_collisions = global_config.avoid_collisions;
 
 	panel_global_keys_setup();
 }
@@ -1530,6 +1536,7 @@ load_up_globals(void)
 	global_config.saturate_when_over = gnome_config_get_bool("saturate_when_over=TRUE");
 	global_config.confirm_panel_remove = gnome_config_get_bool("confirm_panel_remove=TRUE");
 	global_config.fast_button_scaling = gnome_config_get_bool("fast_button_scaling=FALSE");
+	global_config.avoid_collisions = gnome_config_get_bool("avoid_collisions=TRUE");
 	
 	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
 	global_config.menu_flags = gnome_config_get_int (buf->str);
@@ -1621,6 +1628,7 @@ write_global_config(void)
 	gnome_config_set_string("menu_key", global_config.menu_key);
 	gnome_config_set_string("run_key", global_config.run_key);
 	gnome_config_set_bool("fast_button_scaling", global_config.fast_button_scaling);
+	gnome_config_set_bool("avoid_collisions", global_config.avoid_collisions);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

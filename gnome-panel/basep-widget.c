@@ -22,7 +22,7 @@
 #include "xstuff.h"
 
 extern gboolean panel_applet_in_drag;
-extern GList *panel_list;
+extern GSList *panel_list;
 
 /*global settings*/
 extern int pw_explicit_step;
@@ -1847,21 +1847,10 @@ typedef struct {
 
 static Border borders[4] = {{0}};
 
-/* -1 means don't set, caller will not get queue resized as optimization */
-void
-basep_border_recalc (void)
+static void
+basep_calculate_borders (void)
 {
-	int i;
-	GList *li;
-	Border old[4];
-
-	memcpy (old, borders, 4 * sizeof (Border));
-
-	for (i = 0; i < 4; i++) {
-		borders[i].left = 0;
-		borders[i].center = 0;
-		borders[i].right = 0;
-	}
+	GSList *li;
 
 	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
@@ -1935,8 +1924,27 @@ basep_border_recalc (void)
 					borders[edge].right = chreq.height;
 			}
 		}
+	}
+}
 
-		
+void
+basep_border_recalc (void)
+{
+	int i;
+	GSList *li;
+	Border old[4];
+
+	memcpy (old, borders, 4 * sizeof (Border));
+
+	for (i = 0; i < 4; i++) {
+		borders[i].left = 0;
+		borders[i].center = 0;
+		borders[i].right = 0;
+	}
+
+	/* if not avoiding collisions, keeping things at 0 is a safe bet */
+	if (global_config.avoid_collisions) {
+		basep_calculate_borders ();
 	}
 
 	if (memcmp (old, borders, 4 * sizeof (Border)) != 0) {

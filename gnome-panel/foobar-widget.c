@@ -31,7 +31,7 @@
 #define SMALL_ICON_SIZE 20
 
 extern GlobalConfig global_config;
-extern GList *panel_list;
+extern GSList *panel_list;
 
 extern GtkTooltips *panel_tooltips;
 
@@ -872,7 +872,7 @@ foobar_widget_destroy (GtkObject *o)
 	g_free (foo->clock_format);
 	foo->clock_format = NULL;
 
-	g_list_foreach (panel_list, queue_panel_resize, NULL);
+	g_slist_foreach (panel_list, queue_panel_resize, NULL);
 
 	if (foo->tasks)
 		g_hash_table_destroy (foo->tasks);
@@ -889,7 +889,7 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 		GTK_WIDGET_CLASS (parent_class)->size_allocate (w, alloc);
 
 	if (GTK_WIDGET_REALIZED (w))
-		g_list_foreach (panel_list, queue_panel_resize, NULL);
+		g_slist_foreach (panel_list, queue_panel_resize, NULL);
 }
 
 GtkWidget *
