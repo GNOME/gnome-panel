@@ -302,43 +302,44 @@ panel_session_save (GnomeClient *client,
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
 
-	if(is_shutdown) {
-		AppletInfo *info;
-
-		/*we don't need to do any gemotery stuff now, plus it might
-		  actually hurt us*/
-		panel_widget_inhibit_allocates = TRUE;
-
-		/*don't catch these any more*/
-		signal(SIGCHLD, SIG_DFL);
-
-		puts("1");
-
-		/*don't catch these either*/
-		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
-		    i++,info++) {
-		    	if(info->widget)
-				gtk_signal_disconnect(GTK_OBJECT(info->widget),
-						      info->destroy_callback);
-		}
-
-		puts("2");
-
-		g_list_foreach(panels,destroy_widget_list,NULL);
-
-		puts("3");
-
-		/*clean up corba stuff*/
-		panel_corba_clean_up();
-
-		/* Don't use gtk_exit() here -- if this function does
-		   not return, then the panel will not properly be
-		   recorded by the session manager.  */
-		gtk_main_quit ();
-	}
-
 	/* Always successful.  */
 	return TRUE;
+}
+
+gint
+panel_session_die (GnomeClient *client,
+		   gpointer client_data)
+{
+	gint i;
+	AppletInfo *info;
+  
+	/*we don't need to do any gemotery stuff now, plus it might
+	  actually hurt us*/
+	panel_widget_inhibit_allocates = TRUE;
+	
+	/*don't catch these any more*/
+	signal(SIGCHLD, SIG_DFL);
+	
+	puts("1");
+	
+	/*don't catch these either*/
+	for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
+	    i++,info++) {
+		if(info->widget)
+		  gtk_signal_disconnect(GTK_OBJECT(info->widget),
+					info->destroy_callback);
+	}
+	
+	puts("2");
+	
+	g_list_foreach(panels,destroy_widget_list,NULL);
+	
+	puts("3");
+	
+	/*clean up corba stuff*/
+	panel_corba_clean_up();
+	
+	gtk_exit (0);
 }
 
 static gint
@@ -352,7 +353,7 @@ panel_really_logout(GtkWidget *w, gint button, gpointer data)
 		if (! GNOME_CLIENT_CONNECTED (client)) {
 			panel_session_save (client, 1, GNOME_SAVE_BOTH, 1,
 					    GNOME_INTERACT_NONE, 0, NULL);
-			gtk_exit(0);
+			panel_session_die (client, NULL);
 		} else {
 			/* We request a completely interactive, full,
 			   slow shutdown.  */
