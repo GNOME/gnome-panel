@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.3.2\n"
-"POT-Creation-Date: 2002-07-11 15:27+0200\n"
-"PO-Revision-Date: 2002-07-11 15:28+0200\n"
+"POT-Creation-Date: 2002-07-13 17:26+0200\n"
+"PO-Revision-Date: 2002-07-13 17:28+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgid "Display a swimming fish or another animated creature"
 msgstr "Vis en svømmende fisk eller et annet animert vesen"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
-#: applets/fish/fish.c:1192
+#: applets/fish/fish.c:1237
 msgid "Fish"
 msgstr "Fisk"
 
@@ -72,7 +72,7 @@ msgstr "GNOME-fisken %s, et nåtidens orakel"
 msgid "GNOME Fish, the fortune teller"
 msgstr "GNOME-fisk, en historieforteller"
 
-#: applets/fish/fish.c:486 applets/fish/fish.c:1159
+#: applets/fish/fish.c:486 applets/fish/fish.c:1204
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
@@ -127,7 +127,26 @@ msgstr "_Pause for hvert bilde (s):"
 msgid "_Rotate on vertical panels"
 msgstr "_Roter på vertikale paneler"
 
-#: applets/fish/fish.c:981
+#: applets/fish/fish.c:864
+msgid "Unable to get the name of the command to execute"
+msgstr "Kan ikke finne navnet på kommandoen som skal kjøres"
+
+#: applets/fish/fish.c:880
+msgid "Unable to locate the command to execute"
+msgstr "Kan ikke finne kommandoen som skal kjøres"
+
+#: applets/fish/fish.c:1005
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details : %s"
+msgstr ""
+"Klarte ikke å kjøre «%s»\n"
+"\n"
+"Detaljer: %s"
+
+#: applets/fish/fish.c:1025
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -139,7 +158,7 @@ msgstr ""
 "\n"
 "Vennligst se dialogen \"Egenskaper\" for fisken."
 
-#: applets/fish/fish.c:995
+#: applets/fish/fish.c:1040
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -147,11 +166,11 @@ msgstr ""
 "Vannet må skiftes!\n"
 "(Se på dagens dato)"
 
-#: applets/fish/fish.c:1174
+#: applets/fish/fish.c:1219
 msgid "(with minor help from George)"
 msgstr "(med litt hjelp fra George)"
 
-#: applets/fish/fish.c:1195
+#: applets/fish/fish.c:1240
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -898,7 +917,8 @@ msgid "Properties..."
 msgstr "Egenskaper ..."
 
 #: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/logout.c:134 gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: gnome-panel/launcher.c:725 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
 msgid "Help"
 msgstr "Hjelp"
 
@@ -1058,7 +1078,17 @@ msgstr "Fjern fra panelet"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1125
+#: gnome-panel/applet.c:796
+#, c-format
+msgid "No object_type set for panel object with ID %s\n"
+msgstr "Ingen objekttype satt for panelobjekt med ID %s\n"
+
+#: gnome-panel/applet.c:818
+#, c-format
+msgid "No panel_id set for panel object with ID %s\n"
+msgstr "Ingen panel_id satt for panelobjekt med ID %s\n"
+
+#: gnome-panel/applet.c:1133
 msgid "Can't find an empty spot"
 msgstr "Kunne ikke finne en tom plass"
 
@@ -1188,7 +1218,7 @@ msgstr "Slå på pil for skjuling av knapper"
 msgid "Drawer"
 msgstr "Skuff"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:711
+#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:723
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
 msgid "Properties"
 msgstr "Egenskaper"
@@ -1624,22 +1654,36 @@ msgstr ""
 "Kan ikke starte ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:449
+#: gnome-panel/launcher.c:326
+msgid "No URI provided for panel launcher desktop file\n"
+msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
+
+#: gnome-panel/launcher.c:346
+#, c-format
+msgid "Unable to open desktop file %s for panel launcher%s%s\n"
+msgstr "Kan ikke åpne .desktop-fil %s for oppstarter %s%s\n"
+
+#: gnome-panel/launcher.c:457
 #, c-format
 msgid "Help on %s Application"
 msgstr "Hjelp om applikasjon %s"
 
-#: gnome-panel/launcher.c:568 gnome-panel/menu-ditem.c:176
+#: gnome-panel/launcher.c:576 gnome-panel/menu-ditem.c:176
 #: gnome-panel/menu-ditem.c:250
 msgid "Launcher Properties"
 msgstr "Egenskaper for oppstarter"
 
-#: gnome-panel/launcher.c:759 gnome-panel/menu-ditem.c:514
+#: gnome-panel/launcher.c:682
+#, c-format
+msgid "Key %s is not set, can't load launcher\n"
+msgstr "Nøkkel %s er ikke satt. Kan ikke laste oppstarter\n"
+
+#: gnome-panel/launcher.c:773 gnome-panel/menu-ditem.c:514
 msgid "Create Launcher"
 msgstr "Opprett oppstarter"
 
 #. class
-#: gnome-panel/launcher.c:977
+#: gnome-panel/launcher.c:991
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1650,7 +1694,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1063 gnome-panel/menu.c:1059
+#: gnome-panel/launcher.c:1077 gnome-panel/menu.c:1059
 #: gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
@@ -2078,6 +2122,11 @@ msgstr "Meny:"
 #: gnome-panel/menu.c:3825
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikke opprette meny, bruker hovedmenyen!"
+
+#: gnome-panel/menu.c:4332
+#, c-format
+msgid "No path set at %s for panel menu object\n"
+msgstr "Ingen sti satt ved %s for menyobjekt\n"
 
 #: gnome-panel/panel-applet-frame.c:180
 msgid "Cannot register control widget\n"
