@@ -2918,7 +2918,7 @@ panel_widget_toggle_applet_locked (PanelWidget *panel,
 }
 
 gboolean
-panel_applet_is_in_drag ()
+panel_applet_is_in_drag (void)
 {
 	return panel_applet_in_drag;
 }

@@ -947,7 +947,7 @@ drag_drop_cb (GtkWidget	        *widget,
 	      guint              time,
 	      Launcher          *launcher)
 {
-	GdkAtom ret_atom = 0;
+	GdkAtom ret_atom = NULL;
 
 	if (!panel_check_dnd_target_data (widget, context, NULL, &ret_atom))
 		return FALSE;

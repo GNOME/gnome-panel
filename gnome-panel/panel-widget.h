@@ -64,7 +64,7 @@ struct _AppletData
 	guint           size_constrained : 1;
 	guint           expand_major : 1;
 	guint           expand_minor : 1;
-	gboolean        locked : 1;
+	guint           locked : 1;
   
 };
 

@@ -2446,7 +2446,7 @@ append_log_out (GtkWidget *menu)
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (menuitem, "activate",
-			  G_CALLBACK (panel_action_logout), 0);
+			  G_CALLBACK (panel_action_logout), NULL);
 	setup_internal_applet_drag (menuitem,
 				    panel_action_get_drag_id (PANEL_ACTION_LOGOUT));
 

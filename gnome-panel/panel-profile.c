@@ -975,7 +975,7 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 	static void                                                               \
 	panel_profile_toplevel_##c##_changed (PanelToplevel *toplevel)            \
 	{                                                                         \
-		ToplevelLocationChange change = { 0, };                           \
+		ToplevelLocationChange change = { NULL };                           \
 		change.c##_changed = TRUE;                                        \
 		change.c = panel_toplevel_get_##c (toplevel);                     \
 		panel_profile_queue_toplevel_location_change (toplevel, &change); \
@@ -991,7 +991,7 @@ TOPLEVEL_LOCATION_CHANGED_HANDLER(y_centered)
 	static void                                                               \
 	panel_profile_toplevel_##c##_changed (PanelToplevel *toplevel)            \
 	{                                                                         \
-		ToplevelLocationChange change = { 0, };                           \
+		ToplevelLocationChange change = { NULL };                           \
 		int                    x, y;                                      \
 		change.c##_changed = TRUE;                                        \
 		panel_toplevel_get_position (toplevel, &x, &y);                   \
@@ -1005,7 +1005,7 @@ TOPLEVEL_POSITION_CHANGED_HANDLER(y)
 static void
 panel_profile_toplevel_screen_changed (PanelToplevel *toplevel)
 {
-	ToplevelLocationChange change = { 0, };
+	ToplevelLocationChange change = { NULL };
 
 	change.screen_changed = TRUE;
 	change.screen = gtk_window_get_screen (GTK_WINDOW (toplevel));

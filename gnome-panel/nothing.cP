@@ -297,7 +297,7 @@ struct _AppletContainer {
         GdkPixmap *phsh[4];
         GdkBitmap *phsh_mask[4];
 };
-AppletContainer phsh = {0};
+AppletContainer phsh = {NULL};
 
 static void
 phsh_kill (void)
