@@ -1,3 +1,18 @@
+2004-12-12  Vincent Untz  <vincent@vuntz.net>
+
+	First step in trying to make menu.c cleaner: move the panel context
+	menu in a new file
+
+	* Makefile.am: add new files
+	* menu.[ch]: (menu_get_panel), (menuitem_to_screen),
+	(add_menu_separator): these functions are no longer static
+	(check_for_screen), (show_about_dialog), (about_gnome_cb),
+	(create_new_panel), (remove_panel), (setup_remove_this_panel),
+	(make_panel_submenu), (show_panel_help), (create_panel_context_menu):
+	move these functions...
+	* panel-context-menu.[ch]: ... here (new files)
+	* panel.c: (panel_menu_get): updated
+
 2004-12-05  Mark McLoughlin  <mark@skynet.ie>
 
 	Don't actually reload the the menu tree until the menu
