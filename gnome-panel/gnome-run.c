@@ -61,8 +61,17 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 
 	s = gtk_entry_get_text(entry);
 
-	if (!s || !*s)
+	if (string_empty (s))
 		goto return_and_close;
+
+	/* Somewhat of a hack I suppose */
+	if (strncmp (s, "http://", strlen ("http://")) == 0 ||
+	    strncmp (s, "https://", strlen ("https://")) == 0 ||
+	    strncmp (s, "gopher://", strlen ("gopher://")) == 0 ||
+	    strncmp (s, "ftp://", strlen ("ftp://")) == 0) {
+		gnome_url_show (s);
+		goto return_and_close;
+	}
 
 	/* we use a popt function as it does exactly what we want to do and
 	   gnome already uses popt */
@@ -128,7 +137,7 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 			     "%s"),
 			   s, g_unix_error_string(errno));
 return_and_close:
-	gtk_widget_destroy(w);
+	gnome_dialog_close (GNOME_DIALOG (w));
 }
 
 static void
@@ -142,14 +151,14 @@ browse_ok(GtkWidget *widget, GtkFileSelection *fsel)
 	entry = gtk_object_get_user_data(GTK_OBJECT(fsel));
 
 	fname = gtk_file_selection_get_filename(fsel);
-	if(fname) {
-		char *s = gtk_entry_get_text(GTK_ENTRY(entry));
-		if(!s || !*s)
-			gtk_entry_set_text(GTK_ENTRY(entry), fname);
-		else {
-			s = g_strconcat(s, " ", fname, NULL);
-			gtk_entry_set_text(GTK_ENTRY(entry), s);
-			g_free(s);
+	if(fname != NULL) {
+		char *s = gtk_entry_get_text (GTK_ENTRY (entry));
+		if (string_empty (s)) {
+			gtk_entry_set_text (GTK_ENTRY (entry), fname);
+		} else {
+			s = g_strconcat (s, " ", fname, NULL);
+			gtk_entry_set_text (GTK_ENTRY (entry), s);
+			g_free (s);
 		}
 	}
 	gtk_widget_destroy(GTK_WIDGET(fsel));
