@@ -29,6 +29,7 @@
 #include "mailcheck.h"
 
 #include "egg-screen-help.h"
+#include "egg-screen-exec.h"
 
 typedef enum {
 	MAILBOX_LOCAL,
@@ -147,6 +148,8 @@ struct _MailCheck {
 	
 	int size;
 
+	gulong applet_realized_signal;
+
 	/* see remote-helper.h */
 	gpointer remote_handle;
 };
@@ -189,7 +192,8 @@ mailcheck_execute_shell (MailCheck  *mailcheck,
 {
 	GError *error = NULL;
 
-	g_spawn_command_line_async (command, &error);
+	egg_screen_execute_command_line_async (
+		gtk_widget_get_screen (GTK_WIDGET (mailcheck->applet)), command, &error);
 	if (error) {
 		GtkWidget *dialog;
 
@@ -381,6 +385,9 @@ got_remote_answer (int mails, gpointer data)
 						 GTK_BUTTONS_CLOSE,
 						 _("The Inbox Monitor failed to check your mails and thus automatic updating has been deactivated for now.\nMaybe you used a wrong server, username or password?")); 
 
+		gtk_window_set_screen (GTK_WINDOW (dialog),
+				       gtk_widget_get_screen (GTK_WIDGET (mc->applet)));
+
 		g_signal_connect_swapped (G_OBJECT (dialog), "response",
 					  G_CALLBACK (gtk_widget_destroy),
 					  dialog);
@@ -398,6 +405,14 @@ got_remote_answer (int mails, gpointer data)
 
 		after_mail_check (mc);
 	} 
+}
+
+static void
+applet_realized_cb (GtkWidget *widget, gpointer data)
+{
+	MailCheck *mc = data;
+	mail_check_timeout (mc);
+	g_signal_handler_disconnect (G_OBJECT(widget), mc->applet_realized_signal);
 }
 
 static void
@@ -1961,10 +1976,17 @@ fill_mailcheck_applet(PanelApplet *applet)
 	gtk_widget_show_all (GTK_WIDGET (applet));
 
 	/*
-	 * check the mail right now, so we don't have to wait
-	 * for the first timeout
+	 * check the mail if the applet is  realized. Checking the mail 
+	 * right now (in case the applet is not realized), will give us 
+	 * wrong screen value. 
 	 */
-	mail_check_timeout (mc);
+
+	if (GTK_WIDGET_REALIZED (GTK_WIDGET (applet)))
+		mail_check_timeout (mc);
+	else
+		mc->applet_realized_signal =
+			g_signal_connect (G_OBJECT(applet), "realize",
+					  G_CALLBACK(applet_realized_cb), mc);
 
 	return(TRUE);
 }
