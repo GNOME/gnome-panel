@@ -144,7 +144,10 @@ about_cb (BonoboUIComponent *uic,
 					pixbuf);
   
   if (pixbuf)
-    g_object_unref (pixbuf);
+    {
+      gtk_window_set_icon (GTK_WINDOW (tray->about_dialog), pixbuf);
+      g_object_unref (pixbuf);
+    }
 
   gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
 
