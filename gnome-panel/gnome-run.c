@@ -553,8 +553,6 @@ browse (GtkWidget *w, GtkWidget *entry)
 		 G_CALLBACK (gtk_widget_destroy),
 		 G_OBJECT (fsel));
 
-	gtk_window_set_position (GTK_WINDOW (fsel), GTK_WIN_POS_MOUSE);
-
 	gtk_window_present (GTK_WINDOW (fsel));
 }
 
@@ -1607,7 +1605,6 @@ show_run_dialog (void)
 			  G_CALLBACK (run_dialog_destroyed),
 			  NULL);
 
-	gtk_window_set_position (GTK_WINDOW (run_dialog), GTK_WIN_POS_MOUSE);
 	gtk_window_set_wmclass (GTK_WINDOW (run_dialog), "run_dialog", "Panel");
 
 	gtk_dialog_set_default_response (GTK_DIALOG (run_dialog), PANEL_RESPONSE_RUN);
