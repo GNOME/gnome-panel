@@ -65,7 +65,9 @@ typedef void (*BackSignal) (GtkObject * object,
 /************************
  debugging
  ************************/
-/*static void
+
+#ifdef PANEL_WIDGET_DEBUG
+static void
 debug_dump_panel_list(PanelWidget *panel)
 {
 	GList *list;
@@ -75,7 +77,18 @@ debug_dump_panel_list(PanelWidget *panel)
 		printf("pos: %d cells: %d\n",ad->pos,ad->cells);
 	}
 	puts("\nDUMP END\n");
-}*/
+}
+
+static void
+debug_panel_widget_dump_applet_data (AppletData *data) 
+{
+	printf ("===== Applet Dumped =====\n");
+	printf ("\tPosition : %d\n", data->pos);
+	printf ("\tCells : %d\n", data->cells);
+	printf ("\tDirty : %d\n", data->dirty);
+	printf ("\tDrag Off: %d\n", data->drag_off);
+}
+#endif
 
 /************************
  convenience functions
@@ -570,13 +583,17 @@ panel_widget_switch_applet_left(PanelWidget *panel, GList *list)
 	
 	ad = list->data;
 
+
 	if(list->prev)
 		pad = list->prev->data;
+
+
 	if(!pad || pad->pos+pad->cells < ad->pos) {
 		ad->pos--;
-		panel_widget_queue_applet_for_resize(ad);
+		panel_widget_queue_applet_for_resize(ad); 
 		return;
 	}
+
 	ad->pos = pad->pos;
 	pad->pos = ad->pos+ad->cells;
 	panel->applet_list = my_g_list_swap_prev(panel->applet_list,list);
@@ -597,10 +614,14 @@ panel_widget_get_right_switch_pos(PanelWidget *panel, GList *list)
 	
 	ad = list->data;
 
+
 	if(list->next)
 		nad = list->next->data;
-	if(!nad || nad->pos > ad->pos+ad->cells)
+
+	if(!nad || nad->pos > ad->pos+ad->cells) {
 		return ad->pos+1;
+	}
+
 	return nad->pos+nad->cells-ad->cells;
 }
 
@@ -654,7 +675,7 @@ panel_widget_switch_move (PanelWidget *panel, AppletData *ad, int moveby)
 	} else {
 		while (ad->pos > finalpos) {
 			pos = panel_widget_get_left_switch_pos (panel, list);
-			if (abs (pos - finalpos) > abs (ad->pos - finalpos))
+			if (pos < 0 || abs (pos - finalpos) > abs (ad->pos - finalpos))
 				return;
 			panel_widget_switch_applet_left (panel, list);
 		}
@@ -1933,10 +1954,11 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
 
-	if (panel->orient == PANEL_HORIZONTAL)
+	if (panel->orient == PANEL_HORIZONTAL) {
 		return x;
-	else
+	} else {
 		return y;
+	}
 }
 
 /*get amount of free space around the applet (including the applet size),

@@ -15,7 +15,7 @@
 #include "panel_config_global.h"
 #include "rgb-stuff.h"
 
-#undef BUTTON_WIDGET_DEBUG
+#undef BUTTON_WIDGET_DEBUG 
 
 #define BUTTON_WIDGET_DISPLACEMENT 5
 

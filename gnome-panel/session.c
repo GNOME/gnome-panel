@@ -1428,8 +1428,8 @@ load_system_wide (void)
 void
 load_up_globals (void)
 {
-	global_config.hide_speed = 
-		panel_gconf_global_config_get_int ("panel-hide-speed");
+	global_config.animation_speed = 
+		panel_gconf_global_config_get_int ("panel-animation-speed");
 
 	global_config.minimized_size = 
 		panel_gconf_global_config_get_int ("panel-minimized-size");
@@ -1531,8 +1531,8 @@ write_global_config (void)
 {
 	gnome_config_push_prefix ("/panel/Config/");
 /* FIXME
-	gnome_config_set_int ("hide_speed",
-			      global_config.hide_speed);
+	gnome_config_set_int ("animation_speed",
+			      global_config.animation_speed);
 	gnome_config_set_int ("minimized_size",
 			      global_config.minimized_size);
 	gnome_config_set_int ("hide_delay",

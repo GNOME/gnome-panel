@@ -3141,50 +3141,6 @@ create_menu_at_fr (GtkWidget *menu,
 		mf->menudir = g_strdup (fr->name);
 	}
 
-#ifdef FIXME /* disable menu titles for now - do we need these? */
-	if (title && global_config.show_menu_titles) {
-		char *menu_name;
-
-		//if we actually added anything
-		if (first_item < g_list_length(GTK_MENU_SHELL(menu)->children)) {
-			menuitem = gtk_menu_item_new();
-			gtk_menu_shell_insert(GTK_MENU_SHELL(menu),menuitem,first_item);
-			gtk_widget_show(menuitem);
-			gtk_widget_set_sensitive(menuitem,FALSE);
-			if (dir_name == NULL)
-				menu_name = g_strdup (_("Menu"));
-			else
-				menu_name = g_strdup (dir_name);
-		} else {
-			if (dir_name == NULL)
-				menu_name = g_strconcat (_("Menu"), _(" (empty)"), NULL);
-			else
-				menu_name = g_strconcat (dir_name, _(" (empty)"), NULL);
-		}
-
-		pixmap = NULL;
-		if (menus_have_icons ()) {
-			if (pixmap_name != NULL) {
-				pixmap = fake_pixmap_at_size (pixmap_name,
-							      gnome_folder,
-							      size);
-			}
-		}
-
-		if (pixmap != NULL)
-			gtk_widget_show (pixmap);
-
-		menuitem = title_item_new();
-		setup_title_menuitem (menuitem, pixmap, menu_name, mf);
-		gtk_menu_shell_insert (GTK_MENU_SHELL (menu), menuitem, first_item);
-
-		g_free (menu_name);
-
-		if ( ! commie_mode)
-			setup_directory_drag (menuitem, mf->menudir);
-	}
-#endif /* FIXME */
-
 	/*add separator*/
 	if (add_separator) {
 		menuitem = gtk_menu_item_new();	

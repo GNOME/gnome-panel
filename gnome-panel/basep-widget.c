@@ -538,19 +538,19 @@ basep_pos_get_hide_size (BasePWidget *basep,
 {
 
 #ifdef BASEP_WIDGET_DEBUG
-	printf ("basep_pos_get_hide_size %d\n", panel_gconf_global_config_get_int ("panel-minimized-size"));
+	printf ("basep_pos_get_hide_size %d\n", global_config.minimized_size);
 #endif
 	switch (hide_orient) {
 	case PANEL_ORIENT_UP:
 	case PANEL_ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
-			? panel_gconf_global_config_get_int ("panel-minimized-size")
+			? global_config.minimized_size
 			: get_requisition_height (basep->hidebutton_n);
 		break;
 	case PANEL_ORIENT_RIGHT:
 	case PANEL_ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
-			? panel_gconf_global_config_get_int ("panel-minimized-size")
+			? global_config.minimized_size
 			: get_requisition_width (basep->hidebutton_e);
 		break;
 	}
@@ -570,12 +570,12 @@ basep_pos_get_hide_pos (BasePWidget *basep,
 		break;
 	case PANEL_ORIENT_RIGHT:
 		*x += w - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
+			   ? global_config.minimized_size 
 			   : get_requisition_width (basep->hidebutton_w));
 		break;
 	case PANEL_ORIENT_DOWN:
 		*y += h - ((basep->state == BASEP_AUTO_HIDDEN)
-			   ? panel_gconf_global_config_get_int ("panel-minimized-size")
+			   ? global_config.minimized_size
 			   : get_requisition_height (basep->hidebutton_s));
 		break;
 	}
@@ -789,13 +789,16 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 
-	if(!panel_gconf_global_config_get_bool ("disable-animations") && step != 0) {
+	if(!global_config.disable_animations && step != 0) {
 		GTimeVal tval;
 		long start_secs;
 		long start_time;
 		long end_time;
 		long cur_time;
 
+#ifdef BASEP_WIDGET_DEBUG
+	printf ("We are sliding the panel since animations are turned ON\n");
+#endif
 		g_get_current_time(&tval);
 		
 		start_secs = tval.tv_sec;
@@ -893,7 +896,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 		break;
 	}
 	
-	if(!panel_gconf_global_config_get_bool ("disable-animations") && step != 0) {
+	if(!global_config.disable_animations && step != 0) {
 		int i;
 		GTimeVal tval;
 		long start_secs;
@@ -1730,7 +1733,7 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		basep_widget_update_winhints (basep);
 		basep_widget_do_hiding (basep, hide_orient,
 					size, 
-					panel_gconf_global_config_get_int ("panel-hide-speed"));
+					global_config.animation_speed);
 	}
 
 	basep->state = state;
@@ -1770,7 +1773,8 @@ basep_widget_explicit_show (BasePWidget *basep)
 		basep_widget_update_winhints (basep);
 		basep_widget_do_showing (basep, hide_orient,
 					 size, 
-					 panel_gconf_global_config_get_int ("panel-hide-speed"));
+					 global_config.animation_speed);
+					 
 	}
 	
 	basep->state = BASEP_SHOWN;
@@ -1820,7 +1824,7 @@ basep_widget_autoshow (gpointer data)
 		basep_widget_do_showing (basep,
 					 hide_orient,
 					 size,
-					 panel_gconf_global_config_get_int ("panel-hide-speed"));
+					 global_config.animation_speed);
 	}
 
 	basep->state = BASEP_SHOWN;
@@ -1870,12 +1874,12 @@ basep_widget_queue_autoshow (BasePWidget *basep)
 	}
 
 
-	if (panel_gconf_global_config_get_int ("panel-hide-delay") == 0) {
+	if (global_config.hide_delay == 0) {
 		basep_widget_autoshow (basep);
 	} else {
 		/* set up our delay for popup. */
 		basep->enter_notify_timer_tag =
-			gtk_timeout_add (panel_gconf_global_config_get_int ("panel-show-delay"),
+			gtk_timeout_add (global_config.show_delay,
 					 basep_widget_autoshow, basep);
 	} 
 }
@@ -1944,7 +1948,7 @@ basep_widget_autohide (gpointer data)
 		basep_widget_do_hiding (basep,
 					hide_orient,
 					size,
-					panel_gconf_global_config_get_int ("panel-hide-speed"));
+					global_config.animation_speed);
 	}
 
 
@@ -1989,7 +1993,7 @@ basep_widget_queue_autohide(BasePWidget *basep)
                 
        /* set up our delay for popup. */
         basep->leave_notify_timer_tag =
-                gtk_timeout_add (panel_gconf_global_config_get_int ("panel-hide-delay"),
+                gtk_timeout_add (global_config.hide_delay,
                                  basep_widget_autohide, basep);
 }
 
