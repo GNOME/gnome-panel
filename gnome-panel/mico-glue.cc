@@ -195,7 +195,8 @@ send_applet_change_orient (const char *ior, int applet_id, int orient)
 }
 
 void
-send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
+send_applet_do_callback (const char *ior, int applet_id,
+			 const char *callback_name)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
@@ -206,7 +207,7 @@ send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
 }
 
 void
-send_applet_start_new_applet (const char *ior, char *param)
+send_applet_start_new_applet (const char *ior, const char *param)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);

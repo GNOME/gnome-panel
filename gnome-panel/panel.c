@@ -51,9 +51,25 @@ struct _MultiLoadQueue {
 	gchar *path;
 	gchar *ior;
 	GList *params;
-	gint applet_id;
 };
 static GList *multiple_applet_load_queue=NULL;
+
+static gint
+is_applet_running(const gchar *path)
+{
+	gint i;
+	AppletInfo *info;
+
+	for(info=(AppletInfo *)applets->data,i=0;i<applet_count;i++,info++) {
+		if((info->type == APPLET_EXTERN ||
+		    info->type == APPLET_EXTERN_PENDING ||
+		    info->type == APPLET_EXTERN_RESERVED) &&
+		   strcmp(info->path,path)==0) {
+		   	return TRUE;
+		}
+	}
+	return FALSE;
+}
 
 static void
 mulapp_remove_emptyfrom_queue(void)
@@ -61,11 +77,19 @@ mulapp_remove_emptyfrom_queue(void)
 	GList *list;
 	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
-		AppletInfo *info = get_applet_info(mq->applet_id);
-		if(info->type == APPLET_EMPTY) {
+		if(is_applet_running(mq->path)) {
 			multiple_applet_load_queue =
 				g_list_remove_link(multiple_applet_load_queue,
 						   list);
+			if(mq->params) g_warning("Whoops! there were applets "
+						 "to be started while the "
+						 "main one disappeared, this "
+						 "should never happen and "
+						 "most likely indicates a bug");
+
+			g_free(mq->path);
+			if(mq->ior) g_free(mq->ior);
+			g_free(mq);
 			/*since we should restart the loop now*/
 			mulapp_remove_emptyfrom_queue();
 			return;
@@ -74,7 +98,7 @@ mulapp_remove_emptyfrom_queue(void)
 }
 
 gint
-mulapp_is_in_queue(gchar *path)
+mulapp_is_in_queue(const gchar *path)
 {
 	GList *list;
 	mulapp_remove_emptyfrom_queue();
@@ -89,7 +113,7 @@ mulapp_is_in_queue(gchar *path)
 /*if the parent is already in queue, load the applet or add the param,
   into a queue*/
 void
-mulapp_load_or_add_to_queue(gchar *path,gchar *param)
+mulapp_load_or_add_to_queue(const gchar *path,const gchar *param)
 {
 	GList *list;
 	mulapp_remove_emptyfrom_queue();
@@ -108,7 +132,7 @@ mulapp_load_or_add_to_queue(gchar *path,gchar *param)
 }
 
 void
-mulapp_add_to_queue(gchar *path, gint applet_id)
+mulapp_add_to_queue(const gchar *path)
 {
 	MultiLoadQueue *mq;
 
@@ -116,13 +140,12 @@ mulapp_add_to_queue(gchar *path, gint applet_id)
 	mq->path = g_strdup(path);
 	mq->ior = NULL;
 	mq->params = NULL;
-	mq->applet_id = applet_id;
 	multiple_applet_load_queue = g_list_prepend(multiple_applet_load_queue,
 				                    mq);
 }
 
 static void
-mulapp_add_ior_and_free_queue(gchar *path, gchar *ior)
+mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior)
 {
 	GList *list;
 	mulapp_remove_emptyfrom_queue();
@@ -934,6 +957,10 @@ applet_request_id (const char *path, const char *param,
 			*globcfgpath = g_strdup(old_panel_cfg_path);
 			info->type = APPLET_EXTERN_RESERVED;
 			*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
+			info->data = ITOP(dorestart);
+			if(!dorestart &&!mulapp_is_in_queue(path))
+					mulapp_add_to_queue(path);
+
 			return i;
 		}
 	}
@@ -947,6 +974,11 @@ applet_request_id (const char *path, const char *param,
 	}
 	*cfgpath = NULL;
 	*globcfgpath = g_strdup(old_panel_cfg_path);
+
+	info = get_applet_info(applet_count-1);
+	info->data = ITOP(dorestart);
+	if(!dorestart &&!mulapp_is_in_queue(path))
+			mulapp_add_to_queue(path);
 
 	return i;
 }

@@ -179,11 +179,7 @@ add_applet (GtkWidget *w, gpointer data)
 		param = gnome_string_joinv (" ", ii->exec + 1);
 	else
 		param = NULL;
-
-	/*slightly ugly but should work fine, if the applet executable ends
-	  with multi_applet, we start this as a dorestart==FALSE type applet,
-	  which handeles multiple applets or even applet types*/
-	if(strcmp(path+strlen(path)-12,"multi_applet")==0)
+	if(mulapp_is_in_queue(path))
 		dorestart = FALSE;
 	else
 		dorestart = TRUE;

@@ -136,13 +136,13 @@ void applet_remove_from_panel(gint applet_id);
 
 /*multi applet que functions*/
 
-gint mulapp_is_in_queue(gchar *path);
+gint mulapp_is_in_queue(const gchar *path);
 
 /*if the parent is already in queue, load the applet or add the param,
   into a queue*/
-void mulapp_load_or_add_to_queue(gchar *path,gchar *param);
+void mulapp_load_or_add_to_queue(const gchar *path,const gchar *param);
 
-void mulapp_add_to_queue(gchar *path, gint applet_id);
+void mulapp_add_to_queue(const gchar *path);
 
 /*exec queue done function from main.c*/
 void exec_queue_done(gint applet_id);
