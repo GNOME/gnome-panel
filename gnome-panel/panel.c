@@ -300,14 +300,16 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int("state", panel->state);
 	gnome_config_set_int("size", panel->size);
 
-	if (panel->back_pixmap)
+	if (panel->back_pixmap) {
 		gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
-	else {
+		gnome_config_clean_key("backcolor");
+	} else {
 		char buf[32];
-		g_snprintf(buf, sizeof(buf), "#%.2x%.2x%.2x",
-			panel->back_color.red >> 8,
-			panel->back_color.green >> 8,
-			panel->back_color.blue >> 8);
+		gnome_config_clean_key("backpixmap");
+		g_snprintf(buf, sizeof(buf), "#%02x%02x%02x",
+			(guint)panel->back_color.red/256,
+			(guint)panel->back_color.green/256,
+			(guint)panel->back_color.blue/256);
 		gnome_config_set_string("backcolor", buf);
 	}
 

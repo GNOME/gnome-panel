@@ -818,7 +818,6 @@ init_user_panels(void)
 		if (back_pixmap && *back_pixmap == 0)
 			back_pixmap = NULL;
 
-#if 0
 		tmp = gnome_config_get_string("backcolor");
 		if(tmp && *tmp) {
 			g_print("tmp for color = %s\n", tmp);
@@ -827,9 +826,6 @@ init_user_panels(void)
 		} else
 			back_color.pixel = 0;
 		g_free(tmp);
-#else
-		back_color.pixel = 0;
-#endif
 		
 		gnome_config_pop_prefix ();
 		panel = panel_widget_new(size,
@@ -841,11 +837,8 @@ init_user_panels(void)
 					 y,
 					 drop_pos,
 					 back_pixmap,
-#if 0
 					 back_color.pixel?&back_color:NULL);
-#else
-					 NULL);
-#endif
+
 		panel_widget_disable_buttons(PANEL_WIDGET(panel));
 
 		panel_setup(PANEL_WIDGET(panel));
