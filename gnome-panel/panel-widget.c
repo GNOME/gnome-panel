@@ -720,21 +720,34 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 	return TRUE;
 }
 
+static gint
+move_step(gint src, gint dest, gint pos, gint step)
+{
+	gint range = abs(src-dest);
+	gint diff = abs(range-abs(pos-src));
+	gint percentage = (diff*100)/range;
+
+	if(percentage>50)
+		percentage = 100-percentage;
+
+	return ((step>>1)*log((percentage/10.0)+1))+1;
+}
+
 static void
 move_horiz(PanelWidget *panel, int src_x, int dest_x)
 {
 	gint x, y;
-        gint mid = (src_x + dest_x) >> 1;
-        gint half = abs(src_x - dest_x) >> 1;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (panel->step_size != 0) {
 		if (src_x < dest_x) {
-                       for (x = src_x; x < dest_x; x += ((half - abs(x - mid))>>2) + 1)
+			for (x = src_x; x < dest_x;
+			     x+= move_step(src_x,dest_x,x,panel->step_size))
 				move_window(GTK_WIDGET(panel), x, y);
 		} else {
-                       for (x = src_x; x > dest_x; x -= ((half - abs(x - mid))>>2) + 1)
+			for (x = src_x; x > dest_x;
+			     x-= move_step(src_x,dest_x,x,panel->step_size))
 				move_window(GTK_WIDGET(panel), x, y);
 		}
 	}
@@ -747,17 +760,17 @@ static void
 move_vert(PanelWidget *panel, int src_y, int dest_y)
 {
 	gint x, y;
-        gint mid = (src_y + dest_y) >> 1;
-        gint half = abs(src_y - dest_y) >> 1;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
 	if (panel->step_size != 0) {
 		if (src_y < dest_y) {
-                        for (y = src_y; y < dest_y; y += ((half - abs(y - mid))>>2) + 1)
+                        for (y = src_y; y < dest_y;
+			     y+= move_step(src_y,dest_y,y,panel->step_size))
 				move_window(GTK_WIDGET(panel),x,y);
 		} else {
-                        for (y = src_y; y > dest_y; y -= ((half - abs(y - mid))>>2) + 1)
+                        for (y = src_y; y > dest_y;
+			     y-= move_step(src_y,dest_y,y,panel->step_size))
 				move_window(GTK_WIDGET(panel),x,y);
 		}
 	}
