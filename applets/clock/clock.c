@@ -78,6 +78,7 @@ static const char* KEY_CONFIG_TOOL   = "config_tool";
 static const char* KEY_CUSTOM_FORMAT = "custom_format";
 
 static const char *clock_config_tools [] = {
+	"system-config-date",
 	"redhat-config-date",
 	"time-admin",
 };
