@@ -1194,7 +1194,7 @@ create_calendar (ClockData *cd,
         gtk_window_set_screen (window, screen);
 
         frame = gtk_frame_new (NULL);
-        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+        gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
         gtk_container_add (GTK_CONTAINER (window), frame);
         gtk_widget_show (frame);
 
