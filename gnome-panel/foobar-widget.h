@@ -12,7 +12,7 @@
 #include "panel-types.h"
 #include "gwmh.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define TYPE_FOOBAR_WIDGET     (foobar_widget_get_type ())
 #define FOOBAR_WIDGET(o)       (GTK_CHECK_CAST ((o), TYPE_FOOBAR_WIDGET, FoobarWidget))

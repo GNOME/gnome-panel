@@ -3,7 +3,7 @@
 
 #include <gnome.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 typedef void (*UpdateFunction) (gpointer);
 

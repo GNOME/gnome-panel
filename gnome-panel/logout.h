@@ -10,7 +10,7 @@
 
 #include <panel-widget.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 void load_logout_applet(PanelWidget *panel, int pos, gboolean exactpos);
 void load_lock_applet(PanelWidget *panel, int pos, gboolean exactpos);

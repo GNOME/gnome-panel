@@ -9,7 +9,7 @@
 
 #include "panel-widget.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define TYPE_BASEP_WIDGET        (basep_widget_get_type ())
 #define BASEP_WIDGET(o)          (GTK_CHECK_CAST((o), TYPE_BASEP_WIDGET, BasePWidget))

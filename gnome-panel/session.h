@@ -4,7 +4,7 @@
 #include <glib.h>
 #include "panel-widget.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define DEFAULT_AUTO_HIDE_STEP_SIZE 10
 #define DEFAULT_EXPLICIT_HIDE_STEP_SIZE 80

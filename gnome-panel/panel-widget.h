@@ -17,7 +17,7 @@
 #include "button-widget.h"
 #include "panel-types.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define TYPE_PANEL_WIDGET          (panel_widget_get_type ())
 #define PANEL_WIDGET(obj)          GTK_CHECK_CAST (obj, panel_widget_get_type (), PanelWidget)

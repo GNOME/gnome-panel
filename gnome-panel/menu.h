@@ -4,7 +4,7 @@
 #include <panel-widget.h>
 #include "applet.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 /*compatibility only*/
 typedef enum {

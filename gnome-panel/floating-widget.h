@@ -9,7 +9,7 @@
 
 #include "basep-widget.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define TYPE_FLOATING_POS            (floating_pos_get_type ())
 #define FLOATING_POS(o)              (GTK_CHECK_CAST ((o), TYPE_FLOATING_POS, FloatingPos))

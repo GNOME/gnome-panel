@@ -9,7 +9,7 @@
 
 #include <libgnorba/gnorba.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 /*XXX we get some sore of conflict if we just use Status*/
 typedef struct _StatusApplet StatusApplet;

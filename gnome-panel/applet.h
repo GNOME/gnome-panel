@@ -4,7 +4,7 @@
 #include <glib.h>
 #include "panel-widget.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define EMPTY_ID "Empty" /*this applet should not be loaded*/
 #define MENU_ID "Menu"

@@ -1,7 +1,7 @@
 #ifndef CONDITIONAL_H
 #define CONDITIONAL_H
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 gboolean	conditional_parse	(const char *conditional, int len);
 

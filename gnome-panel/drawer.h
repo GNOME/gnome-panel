@@ -4,7 +4,7 @@
 #include "panel.h"
 #include "panel_config.h"
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define DRAWER_PANEL_KEY "drawer_panel"
 

@@ -14,7 +14,7 @@
 
 #include <gnome-panel.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 #define TYPE_STATUS_DOCKLET          (status_docklet_get_type ())
 #define STATUS_DOCKLET(obj)          GTK_CHECK_CAST (obj, status_docklet_get_type (), StatusDocklet)

@@ -13,7 +13,7 @@
 
 #include <panel-widget.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 typedef struct {
 	AppletInfo        *info;

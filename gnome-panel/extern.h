@@ -8,7 +8,7 @@
 
 #include <libgnorba/gnorba.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 typedef struct _Extern Extern;
 struct _Extern {

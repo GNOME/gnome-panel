@@ -1,7 +1,7 @@
 #ifndef MENU_PROPERTIES_H
 #define MENU_PROPERTIES_H
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 void		menu_properties		(Menu *menu);
 

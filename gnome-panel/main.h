@@ -3,7 +3,7 @@
 
 #include <gtk/gtk.h>
 
-BEGIN_GNOME_DECLS
+G_BEGIN_DECLS
 
 void start_screen_check (void);
 
