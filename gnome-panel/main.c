@@ -20,6 +20,7 @@ GtkTooltips *panel_tooltips = NULL;
 
 gint tooltips_enabled = TRUE;
 
+GnomeClient *client = NULL;
 
 static void
 load_applet(char *id, char *params, int pos, int panel)
@@ -239,16 +240,14 @@ init_user_panels(void)
 	
 
 /* FIXME: session management not complete.  In particular, we should:
-   1. Actually save state in a useful way.
-   2. Parse argv to get our session management key.  */
+   1. Actually save state in a useful way.  */
 static void
 init_session_management (int argc, char *argv[])
 {
-  char *previous_id = NULL;
-  char *session_id;
-
-  session_id = gnome_session_init (panel_session_save, NULL, NULL, NULL,
-				   previous_id);
+  client = gnome_client_new (argc, argv);
+  
+  gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
+		      GTK_SIGNAL_FUNC (panel_session_save), NULL);
 }
 
 int
