@@ -1,7 +1,7 @@
-figs = #printer-fig.png printer-properties.png
-applet = gen_util
+figs = 
+docname = gen_util_applet
 lang = de
-omffiles = gen_util_applet-de.omf
-sgml_ents = mailcheck.sgml clock.sgml #printer.sgml
-include $(top_srcdir)/applet-docs.make
-dist-hook: applet-dist-hook
+omffile = gen_util_applet-de.omf
+sgml_ents = mailcheck.sgml clock.sgml
+include $(top_srcdir)/sgmldocs.make
+dist-hook: app-dist-hook
