@@ -3,9 +3,6 @@
 # The name of the module, e.g. 'glib'.
 DOC_MODULE=panel-applet
 
-# Where the html is to be installed
-HTML_DIR=$(datadir)/gtk-doc/html
-
 # The top-level SGML file. Change it if you want.
 DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
 
