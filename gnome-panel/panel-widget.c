@@ -1037,7 +1037,7 @@ panel_widget_new (gint size,
 	panel->minimized_size = minimized_size;
 	panel->minimize_delay = minimize_delay;
 
-	panel->thick = PANEL_CELL_SIZE;
+	panel->thick = PANEL_MINIMUM_WIDTH;
 
 	/*sanity sets, ignore settings that would/might cause bad behaviour*/
 	if(snapped == PANEL_FREE) {
@@ -1072,14 +1072,24 @@ panel_widget_new (gint size,
 
 	if(panel->snapped == PANEL_DRAWER) {
 		GtkWidget *frame;
+		GtkWidget *innerframe;
 
 		panel->drawer_drop_zone_pos = drop_zone_pos;
 		panel->drawer_drop_zone = gtk_event_box_new();
 		gtk_widget_show(panel->drawer_drop_zone);
+
 		frame = gtk_frame_new(NULL);
+		gtk_container_border_width(
+			GTK_CONTAINER(panel->drawer_drop_zone),2);
 		gtk_container_add(GTK_CONTAINER(panel->drawer_drop_zone),
 				  frame);
 		gtk_widget_show(frame);
+
+		innerframe = gtk_frame_new(NULL);
+		gtk_container_border_width(GTK_CONTAINER(frame),2);
+		gtk_container_add(GTK_CONTAINER(frame), innerframe);
+		gtk_widget_show(innerframe);
+
 		for(i=0;i<PANEL_DRAWER_DROP_TARGET_SIZE;i++) {
 			panel->applets[i].applet = panel->drawer_drop_zone;
 			panel->applets[i].cells = PANEL_DRAWER_DROP_TARGET_SIZE;
@@ -1163,8 +1173,6 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 		gint pos = panel->currently_dragged_applet_pos;
 
 		gtk_widget_get_pointer(panel->fixed, &x, &y);
-
-		printf("%d %d\n",x,y);
 
 		if(panel->orient == PANEL_HORIZONTAL)
 			moveby = (x/PANEL_CELL_SIZE)- pos;
@@ -1462,7 +1470,7 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 
 	/*this will trigger size_Allocate of all applets and thus the
 	  panel will again be set to the largest thickness*/
-	panel->thick = PANEL_CELL_SIZE;
+	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size);
 
 	return i;
@@ -1520,7 +1528,7 @@ panel_widget_foreach(PanelWidget *panel, GFunc func, gpointer user_data)
 /*static void
 panel_widget_switch_orient(PanelWidget *panel)
 {
-	panel->thick = PANEL_CELL_SIZE;
+	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(panel,panel->size*PANEL_CELL_SIZE);
 }*/
 
@@ -1566,7 +1574,7 @@ panel_widget_change_params(PanelWidget *panel,
 			break;
 	}
 	panel_widget_set_hidebuttons(panel);
-	panel->thick = PANEL_CELL_SIZE;
+	panel->thick = PANEL_MINIMUM_WIDTH;
 	if(panel->mode == PANEL_EXPLICIT_HIDE && panel->state == PANEL_HIDDEN)
 		panel->state = PANEL_SHOWN;
 

@@ -14,6 +14,7 @@ extern "C" {
 #define IS_PANEL_WIDGET(obj)       GTK_CHECK_TYPE (obj, panel_widget_get_type ())
 
 #define PANEL_CELL_SIZE 10
+#define PANEL_MINIMUM_WIDTH 48
 
 #define PANEL_MAX 1000 /*10,000 long screen, FIXME! make dynamic*/
 
