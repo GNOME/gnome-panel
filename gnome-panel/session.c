@@ -793,8 +793,9 @@ load_default_applets1(PanelWidget *panel)
 	else
 		sz = SIZE_STANDARD;
 
+	/* load up the foot menu */
 	load_menu_applet(NULL, get_default_menu_flags (), 
-			 panels->data, 0, TRUE);
+			 panel, 0, TRUE);
 
 	/*load up some buttons, but only if screen larger then 639*/
 	if(gdk_screen_width()>=640) {
@@ -811,30 +812,27 @@ load_default_applets1(PanelWidget *panel)
 			}
 		}
 	}
+
 	load_extern_applet("tasklist_applet", NULL,
-			   panel, G_MAXINT/2/*flush right*/, TRUE, TRUE);
+			   panel, G_MAXINT/2 /*flush right*/,
+			   TRUE, TRUE);
+
 	load_status_applet(panel,
-			   G_MAXINT/2 + 1000/*flush right*/, TRUE);
-	/* for small panel stick the on the main panel */
-	if(gdk_screen_width()<1024)
-		load_extern_applet("gen_util_clock", NULL,
-				   panel, G_MAXINT/2 + 2000, TRUE, TRUE);
+			   G_MAXINT/2 + 4000/*flush right*/, TRUE);
 }
 
 static void
 load_default_applets2(PanelWidget *panel)
 {
 	load_extern_applet("deskguide_applet", NULL,
-			   panel, 0, TRUE, TRUE);
-	/* for small panel stick the on the main panel not this one */
-	if(gdk_screen_width()>=1024)
-		load_extern_applet("gen_util_clock", NULL,
-				   panel, 1000, TRUE, TRUE);
+			   panel, G_MAXINT/2 /*flush right*/, TRUE, TRUE);
 	load_extern_applet("gen_util_mailcheck",NULL,
-			   panel, 2000, TRUE, TRUE);
+			   panel, G_MAXINT/2 + 1000/*flush right*/,
+			   TRUE, TRUE);
 	if(g_file_exists("/proc/apm"))
 		load_extern_applet("battery_applet",NULL,
-				   panel, 4000, TRUE, TRUE);
+				   panel, G_MAXINT/2 + 2000 /*flush right*/,
+				   TRUE, TRUE);
 }
 
 /* try evil hacks to rewrite panel config from old applets (gnomepager for
@@ -1089,7 +1087,7 @@ init_user_panels(void)
 			hidebutton_pixmaps = TRUE;
 		}
 
-		panel = aligned_widget_new(ALIGNED_LEFT,
+		/*panel = aligned_widget_new(ALIGNED_LEFT,
 					   BORDER_RIGHT,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
@@ -1101,22 +1099,15 @@ init_user_panels(void)
 					   TRUE,
 					   FALSE,
 					   TRUE,
-					   NULL);
+					   NULL);*/
+		panel = foobar_widget_new();
+		FOOBAR_WIDGET (panel)->clock_format = 
+			gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
 		panel_setup(panel);
 		gtk_widget_show(panel);	       
 
 		/*load up default applets on the second default panel*/
-		load_default_applets2(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
-
-#if 0 /* don't show the foobar by default yet */
-		panel = foobar_widget_new ();
-		FOOBAR_WIDGET (panel)->format = 
-			gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
-		panel_setup (panel);
-		gtk_widget_show (panel);
-#endif
-                /* load up default applets on menu panel */
-		/*add_default_applets3(PANEL_WIDGET(FOOBAR_WIDGET(panel)->panel));*/
+		load_default_applets2(PANEL_WIDGET(FOOBAR_WIDGET(panel)->panel));
 
 		/*we laoded default applets, so we didn't find the config
 		  or something else was wrong, so do complete save when

@@ -393,9 +393,10 @@ do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
 	guchar *original_pixels;
 	guchar *pixsrc;
 	guchar *pixdest;
-	guchar intensity;
-	guchar alpha;
-	guchar negalpha;
+	int intensity;
+	int alpha;
+	int negalpha;
+	int val;
 	guchar r,g,b;
 
 	has_alpha = gdk_pixbuf_get_has_alpha (src);
@@ -416,9 +417,12 @@ do_saturate_darken (GdkPixbuf *dest, GdkPixbuf *src,
 			intensity = INTENSITY(r,g,b);
 			negalpha = ((255 - saturation)*darken)>>8;
 			alpha = (saturation*darken)>>8;
-			*(pixdest++) = (negalpha * intensity + alpha * r) >> 8;
-			*(pixdest++) = (negalpha * intensity + alpha * g) >> 8;
-			*(pixdest++) = (negalpha * intensity + alpha * b) >> 8;
+			val = (negalpha * intensity + alpha * r) >> 8;
+			*(pixdest++) = MIN(val, 255);
+			val = (negalpha * intensity + alpha * g) >> 8;
+			*(pixdest++) = MIN(val, 255);
+			val = (negalpha * intensity + alpha * b) >> 8;
+			*(pixdest++) = MIN(val, 255);
 			if (has_alpha)
 				*(pixdest++) = *(pixsrc++);
 		}
@@ -931,11 +935,27 @@ make_lc_pixbuf(GdkPixbuf *pb)
 			     gdk_pixbuf_get_bits_per_sample(pb),
 			     gdk_pixbuf_get_width(pb),
 			     gdk_pixbuf_get_height(pb));
-	do_saturate_darken (new, pb, (int)(0.85*255), (int)(0.85*255));
+	do_saturate_darken (new, pb, (int)(0.90*255), (int)(0.95*255));
 
 	return new;
 }
 
+static GdkPixbuf *
+make_hc_pixbuf(GdkPixbuf *pb)
+{
+	GdkPixbuf *new;
+	if(!pb)
+		return NULL;
+
+	new = gdk_pixbuf_new(gdk_pixbuf_get_colorspace(pb),
+			     gdk_pixbuf_get_has_alpha(pb),
+			     gdk_pixbuf_get_bits_per_sample(pb),
+			     gdk_pixbuf_get_width(pb),
+			     gdk_pixbuf_get_height(pb));
+	do_saturate_darken (new, pb, (int)(1.00*255), (int)(1.15*255));
+
+	return new;
+}
 
 
 GtkWidget*
@@ -947,14 +967,17 @@ button_widget_new(char *filename,
 		  char *text)
 {
 	ButtonWidget *button;
+	GdkPixbuf *pb;
 
 	g_return_val_if_fail(tile >= 0, NULL);
 	g_return_val_if_fail(tile < LAST_TILE, NULL);
 
 	button = BUTTON_WIDGET (gtk_type_new (button_widget_get_type ()));
 	
-	button->pixbuf = loadup_file(filename);
-	button->pixbuf_lc = make_lc_pixbuf(button->pixbuf);
+	pb = loadup_file(filename);
+	button->pixbuf = make_hc_pixbuf(pb);
+	button->pixbuf_lc = make_lc_pixbuf(pb);
+	gdk_pixbuf_unref(pb);
 	button->filename = g_strdup(filename);
 	button->size = size;
 	button->tile = tile;
@@ -970,6 +993,7 @@ button_widget_new(char *filename,
 gboolean
 button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 {
+	GdkPixbuf *pb;
 	g_return_val_if_fail(button != NULL, FALSE);
 	g_return_val_if_fail(IS_BUTTON_WIDGET(button), FALSE);
 
@@ -981,8 +1005,10 @@ button_widget_set_pixmap(ButtonWidget *button, char *pixmap, int size)
 	if(button->pixbuf_lc)
 		gdk_pixbuf_unref(button->pixbuf_lc);
 
-	button->pixbuf = loadup_file(pixmap);
-	button->pixbuf_lc = make_lc_pixbuf(button->pixbuf);
+	pb = loadup_file(pixmap);
+	button->pixbuf = make_hc_pixbuf(pb);
+	button->pixbuf_lc = make_lc_pixbuf(pb);
+	gdk_pixbuf_unref(pb);
 
 	g_free(button->filename);
 	button->filename = g_strdup(pixmap);
@@ -1045,6 +1071,7 @@ void
 button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 			int border, int depth)
 {
+	GdkPixbuf *pb;
 	GList *list;
 
 	g_return_if_fail(tile >= 0);
@@ -1056,15 +1083,21 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 		gdk_pixbuf_unref(tiles.tiles_up[tile]);
 	if(tiles.tiles_up_lc[tile])
 		gdk_pixbuf_unref(tiles.tiles_up_lc[tile]);
-	tiles.tiles_up[tile] = loadup_file(tile_up);
-	tiles.tiles_up_lc[tile] = make_lc_pixbuf(tiles.tiles_up[tile]);
+
+	pb = loadup_file(tile_up);
+	tiles.tiles_up[tile] = make_hc_pixbuf(pb);
+	tiles.tiles_up_lc[tile] = make_lc_pixbuf(pb);
+	gdk_pixbuf_unref(pb);
 
 	if(tiles.tiles_down[tile])
 		gdk_pixbuf_unref(tiles.tiles_down[tile]);
 	if(tiles.tiles_down_lc[tile])
 		gdk_pixbuf_unref(tiles.tiles_down_lc[tile]);
-	tiles.tiles_down[tile] = loadup_file(tile_down);
-	tiles.tiles_down_lc[tile] = make_lc_pixbuf(tiles.tiles_down[tile]);
+
+	pb = loadup_file(tile_down);
+	tiles.tiles_down[tile] = make_hc_pixbuf(pb);
+	tiles.tiles_down_lc[tile] = make_lc_pixbuf(pb);
+	gdk_pixbuf_unref(pb);
 
 	tile_border[tile] = border;
 	tile_depth[tile] = depth;
