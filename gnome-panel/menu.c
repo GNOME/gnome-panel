@@ -5376,7 +5376,7 @@ create_panel_menu (PanelWidget *panel, const char *menudir, gboolean main_menu,
 	menu = g_new0(Menu, 1);
 
 	menu->custom_icon = custom_icon;
-	if (string_empty (custom_icon_file))
+	if ( ! string_empty (custom_icon_file))
 		menu->custom_icon_file = g_strdup (custom_icon_file);
 	else
 		menu->custom_icon_file = NULL;
