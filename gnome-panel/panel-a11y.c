@@ -20,18 +20,18 @@
 
 #include "panel-a11y.h"
 
-static int
-is_gail_loaded (GtkWidget *widget)
+gboolean
+panel_a11y_get_is_a11y_enabled (GtkWidget *widget)
 {
-	static gboolean initialised = FALSE;
-	static gboolean gail_loaded = FALSE;
+	static gboolean initialised  = FALSE;
+	static gboolean a11y_enabled = FALSE;
 
 	if (!initialised) {
-		gail_loaded = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (widget));
+		a11y_enabled = GTK_IS_ACCESSIBLE (gtk_widget_get_accessible (widget));
 		initialised = TRUE;
 	}
 
-	return gail_loaded;
+	return a11y_enabled;
 }
 
 void
@@ -43,7 +43,7 @@ panel_a11y_set_atk_name_desc (GtkWidget  *widget,
 
 	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	if (!is_gail_loaded (widget))
+	if (!panel_a11y_get_is_a11y_enabled (widget))
 		return;
 
 	aobj = gtk_widget_get_accessible (widget);
@@ -75,7 +75,7 @@ panel_a11y_set_atk_relation (GtkWidget *widget,
 	g_return_if_fail (GTK_IS_WIDGET(widget));
 	g_return_if_fail (GTK_IS_LABEL(label));
 
-	if (!is_gail_loaded (widget))
+	if (!panel_a11y_get_is_a11y_enabled (widget))
 		return;
 
 	aobject = gtk_widget_get_accessible (widget);
@@ -89,4 +89,47 @@ panel_a11y_set_atk_relation (GtkWidget *widget,
 	relation = atk_relation_new (targets, 1, ATK_RELATION_LABELLED_BY);
 	atk_relation_set_add (relation_set, relation);
 	g_object_unref (relation);
+}
+
+/**
+ * panel_a11y_query_accessible_parent_type
+ * @type: widget type
+ * @type_info: accessible object type info to complete
+ *
+ * Standard hack which figures out the #GType of the accessible
+ * object for @type's parent type. Also, fills out the class_size
+ * and instance_size of @type_info to match the size of the parent
+ * type.
+ *
+ * Basically, this is the hack to use if you want to derive from
+ * an accessible object implementation in gail.
+ *
+ * Returns: the #GType of @type's parent's accessible peer
+ */
+GType
+panel_a11y_query_accessible_parent_type (GType      type,
+					 GTypeInfo *type_info)
+{
+	AtkObjectFactory *factory;
+	GType             parent_type;
+	GType             accessible_parent_type;
+
+	g_return_val_if_fail (G_TYPE_IS_OBJECT (type), G_TYPE_INVALID);
+
+	parent_type = g_type_parent (type);
+
+	factory = atk_registry_get_factory (atk_get_default_registry (), parent_type);
+
+	accessible_parent_type = atk_object_factory_get_accessible_type (factory);
+
+	if (type_info) {
+		GTypeQuery query;
+
+		g_type_query (accessible_parent_type, &query);
+
+		type_info->class_size    = query.class_size;
+		type_info->instance_size = query.instance_size;
+	}
+
+	return atk_object_factory_get_accessible_type (factory);
 }

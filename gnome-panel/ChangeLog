@@ -1,3 +1,21 @@
+2004-09-15  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on a patch from Padraig O'Briain <padraig.obriain@sun.com>
+	in bug #138535
+	
+	* panel-menu-button.c:
+	(panel_menu_button_menu_detacher): remove workaround for bug #113112
+	(panel_menu_button_create_menu): re-create the menu here if needs be.
+	(panel_menu_button_accessible_*): add an AtkObject implementation
+	so we can create the menu when get_n_children() is called.
+	
+	* panel-a11y.[ch]:
+	(panel_a11y_get_is_a11y_enabled): rename from is_gail_loaded()
+	and make public.
+	(panel_a11y_query_accessible_parent_type): implement standard
+	ugly hack to inherit from an object in gail without linking
+	against	gail.
+	
 2004-09-14  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix for https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=131868

@@ -25,11 +25,14 @@
 
 G_BEGIN_DECLS
 
-void panel_a11y_set_atk_name_desc (GtkWidget  *widget,
-				   const char *name, 
-				   const char *desc);
-void panel_a11y_set_atk_relation  (GtkWidget *widget,
-				   GtkLabel  *label);
+gboolean panel_a11y_get_is_a11y_enabled          (GtkWidget  *widget);
+void     panel_a11y_set_atk_name_desc            (GtkWidget  *widget,
+						  const char *name,
+						  const char *desc);
+void     panel_a11y_set_atk_relation             (GtkWidget  *widget,
+						  GtkLabel   *label);
+GType    panel_a11y_query_accessible_parent_type (GType       type,
+						  GTypeInfo  *type_info);
 
 G_END_DECLS
 

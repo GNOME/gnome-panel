@@ -39,6 +39,7 @@
 #include "menu.h"
 #include "quick-desktop-reader.h"
 #include "panel-lockdown.h"
+#include "panel-a11y.h"
 
 #define PANEL_MENU_BUTTON_GET_PRIVATE(o) (G_TYPE_INSTANCE_GET_PRIVATE ((o), PANEL_TYPE_MENU_BUTTON, PanelMenuButtonPrivate))
 
@@ -57,7 +58,7 @@ struct _PanelMenuButtonPrivate {
 	guint                  gconf_notify;
 	char                  *applet_id;
 
-	GtkMenu               *menu;
+	GtkWidget             *menu;
 
 	char                  *menu_path;
 	char                  *custom_icon;
@@ -70,6 +71,8 @@ struct _PanelMenuButtonPrivate {
 
 static void panel_menu_button_disconnect_from_gconf (PanelMenuButton *button);
 static void panel_menu_button_recreate_menu         (PanelMenuButton *button);
+
+static AtkObject *panel_menu_button_get_accessible  (GtkWidget       *widget);
 
 static GObjectClass *parent_class;
 
@@ -105,7 +108,7 @@ panel_menu_button_finalize (GObject *object)
 
 	if (button->priv->menu) {
 		/* detaching the menu will kill our reference */
-		gtk_menu_detach (button->priv->menu);
+		gtk_menu_detach (GTK_MENU (button->priv->menu));
 		button->priv->menu = NULL;
 	}
 
@@ -209,7 +212,7 @@ panel_menu_button_associate_panel (PanelMenuButton *button)
 	if (button->priv->toplevel)
 		panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
 
-	panel_applet_menu_set_recurse (button->priv->menu, "menu_panel", panel_widget);
+	panel_applet_menu_set_recurse (GTK_MENU (button->priv->menu), "menu_panel", panel_widget);
 }
 
 static void
@@ -264,55 +267,63 @@ panel_menu_button_menu_deactivated (PanelMenuButton *button)
 	gtk_button_released (GTK_BUTTON (button));
 }
 
-static GtkMenu *
-panel_menu_button_create_menu (PanelMenuButton *button)
-{
-	PanelWidget *panel_widget;
-	GtkWidget   *menu = NULL;
-
-	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
-
-	if (button->priv->use_menu_path && button->priv->menu_path)
-		menu = create_menu_at (NULL,
-				       button->priv->menu_path,
-				       NULL,
-				       TRUE,
-				       FALSE);
-
-	if (!menu)
-		menu = create_panel_root_menu (panel_widget);
-
-	return GTK_MENU (menu);
-}
-
 static void 
-panel_menu_button_menu_detacher	(GtkWidget *widget,
-				 GtkMenu   *menu)
+panel_menu_button_menu_detacher	(PanelMenuButton *button)
 {
- 	PanelMenuButton *button;
-
-	g_return_if_fail (PANEL_IS_MENU_BUTTON (widget));
-
-	button = PANEL_MENU_BUTTON (widget);
-
-	g_return_if_fail (button->priv->menu == menu);
-
-	/* just in case someone still owns a reference to the
-	   menu (the menu may be up or some such other nonsense) */
+	/*
+	 * just in case someone still owns a reference to the
+	 * menu (the menu may be up or some such other nonsense)
+	 */
 	g_signal_handlers_disconnect_by_func (button->priv->menu,
 					      G_CALLBACK (panel_menu_button_menu_deactivated),
 					      button);
 
-	/* This is a workaround pending fixing bug #113112 */
-	g_object_set_data (G_OBJECT (button), "gtk-attached-menu", NULL);
 	button->priv->menu = NULL;
+}
+
+static GtkWidget *
+panel_menu_button_create_menu (PanelMenuButton *button)
+{
+	PanelWidget *panel_widget;
+
+	if (button->priv->menu) {
+		if (!menu_need_reread (button->priv->menu))
+			return button->priv->menu;
+
+		gtk_menu_detach (GTK_MENU (button->priv->menu));
+		button->priv->menu = NULL;
+	}
+
+	panel_widget = panel_toplevel_get_panel_widget (button->priv->toplevel);
+
+	if (button->priv->use_menu_path && button->priv->menu_path)
+		button->priv->menu = create_menu_at (NULL,
+						     button->priv->menu_path,
+						     NULL,
+						     TRUE,
+						     FALSE);
+
+	if (!button->priv->menu)
+		button->priv->menu = create_panel_root_menu (panel_widget);
+
+	gtk_menu_attach_to_widget (GTK_MENU (button->priv->menu),
+				   GTK_WIDGET (button),
+				   (GtkMenuDetachFunc) panel_menu_button_menu_detacher);
+
+	panel_menu_button_associate_panel (button);
+
+	g_signal_connect_swapped (button->priv->menu, "deactivate",
+				  G_CALLBACK (panel_menu_button_menu_deactivated),
+				  button);
+
+	return button->priv->menu;
 }
 
 static void
 panel_menu_button_recreate_menu (PanelMenuButton *button)
 {
 	if (button->priv->menu)
-		gtk_menu_detach (button->priv->menu);
+		gtk_menu_detach (GTK_MENU (button->priv->menu));
 	button->priv->menu = NULL;
 }
 
@@ -325,35 +336,16 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
-	if (button->priv->menu && menu_need_reread (GTK_WIDGET (button->priv->menu))) {
-		gtk_menu_detach (button->priv->menu);
-		button->priv->menu = NULL;
-	}
-
-	if (!button->priv->menu) {
-		button->priv->menu = panel_menu_button_create_menu (button);
-
-		gtk_menu_attach_to_widget (button->priv->menu, 
-					   GTK_WIDGET (button),
-					   panel_menu_button_menu_detacher);
-		/* This is a workaround pending fixing bug #113112 */
-		g_object_set_data (G_OBJECT (button), "gtk-attached-menu", button->priv->menu);
-
-		panel_menu_button_associate_panel (button);
-
-		g_signal_connect_swapped (button->priv->menu, "deactivate",
-					  G_CALLBACK (panel_menu_button_menu_deactivated),
-					  button);
-	}
+	panel_menu_button_create_menu (button);
 
 	panel_toplevel_push_autohide_disabler (button->priv->toplevel);
 
 	BUTTON_WIDGET (button)->ignore_leave = TRUE;
 
 	screen = gtk_window_get_screen (GTK_WINDOW (button->priv->toplevel));
-	gtk_menu_set_screen (button->priv->menu, screen);
+	gtk_menu_set_screen (GTK_MENU (button->priv->menu), screen);
 
-	gtk_menu_popup (button->priv->menu,
+	gtk_menu_popup (GTK_MENU (button->priv->menu),
 			NULL,
 			NULL,
 			(GtkMenuPositionFunc) panel_position_applet_menu,
@@ -413,9 +405,10 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass)
 	gobject_class->get_property = panel_menu_button_get_property;
 	gobject_class->set_property = panel_menu_button_set_property;
 
-	widget_class->parent_set    = panel_menu_button_parent_set;
-        widget_class->drag_data_get = panel_menu_button_drag_data_get;
-                                                                                                             
+	widget_class->parent_set     = panel_menu_button_parent_set;
+        widget_class->drag_data_get  = panel_menu_button_drag_data_get;
+        widget_class->get_accessible = panel_menu_button_get_accessible;
+
 	button_class->clicked = panel_menu_button_clicked;
 	button_class->pressed = panel_menu_button_pressed;
 
@@ -691,7 +684,7 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 		button->priv->menu_path = g_strdup (menu_path);
 
 	if (button->priv->menu)
-		gtk_menu_detach (button->priv->menu);
+		gtk_menu_detach (GTK_MENU (button->priv->menu));
 	button->priv->menu = NULL;
 
 	panel_menu_button_set_icon (button);
@@ -742,7 +735,7 @@ panel_menu_button_set_use_menu_path (PanelMenuButton *button,
 	button->priv->use_menu_path = use_menu_path;
 
 	if (button->priv->menu)
-		gtk_menu_detach (button->priv->menu);
+		gtk_menu_detach (GTK_MENU (button->priv->menu));
 	button->priv->menu = NULL;
 
 	panel_menu_button_set_icon (button);
@@ -893,4 +886,142 @@ panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
 		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 	} else
 		gtk_drag_source_unset (GTK_WIDGET (button));
+}
+
+/*
+ * An AtkObject implementation for PanelMenuButton.
+ * We need all this just so we can create the menu in ref_child()
+ *
+ * See http://bugzilla.gnome.org/show_bug.cgi?id=138535 for details
+ *
+ * If we ever remove the on-demand creation of the menu, we should
+ * can just remove all this again
+ */
+
+#define PANEL_IS_MENU_BUTTON_ACCESSIBLE(o) (G_TYPE_CHECK_INSTANCE_TYPE ((o), panel_menu_button_accessible_get_type ()))
+
+static GType panel_menu_button_accessible_get_type (void);
+
+static int
+panel_menu_button_accessible_get_n_children (AtkObject *obj)
+{
+	g_return_val_if_fail (PANEL_IS_MENU_BUTTON_ACCESSIBLE (obj), 0);
+
+	return GTK_ACCESSIBLE (obj)->widget ? 1 : 0;
+}
+
+static AtkObject *
+panel_menu_button_accessible_ref_child (AtkObject *obj,
+					int        index)
+{
+	PanelMenuButton *button;
+	GtkWidget       *menu;
+
+	g_return_val_if_fail (PANEL_IS_MENU_BUTTON_ACCESSIBLE (obj), NULL);
+
+	if (index != 0)
+		return NULL;
+
+	if (!(button = PANEL_MENU_BUTTON (GTK_ACCESSIBLE (obj)->widget)))
+		return NULL;
+
+	if (!(menu = panel_menu_button_create_menu (button)))
+		return NULL;
+
+	return g_object_ref (gtk_widget_get_accessible (menu));
+}
+
+static void
+panel_menu_button_accessible_class_init (AtkObjectClass *klass)
+{
+	klass->get_n_children = panel_menu_button_accessible_get_n_children;
+	klass->ref_child      = panel_menu_button_accessible_ref_child; 
+}
+
+static GType
+panel_menu_button_accessible_get_type (void)
+{
+	static GType type = 0;
+
+	if (!type) {
+		GTypeInfo type_info = { 0 };
+		GType     accessible_parent_type;
+
+		type_info.class_init =
+			(GClassInitFunc) panel_menu_button_accessible_class_init;
+
+		accessible_parent_type =
+			panel_a11y_query_accessible_parent_type (PANEL_TYPE_MENU_BUTTON,
+								 &type_info);
+ 
+		type = g_type_register_static (accessible_parent_type, 
+					       "PanelMenuButtonAccessible", 
+					       &type_info, 0);
+	}
+
+	return type;
+}
+
+static AtkObject *
+panel_menu_button_accessible_new (GObject *obj)
+{
+	AtkObject *accessible;
+
+	g_return_val_if_fail (PANEL_IS_MENU_BUTTON (obj), NULL);
+
+	accessible = g_object_new (panel_menu_button_accessible_get_type (), NULL);
+	atk_object_initialize (accessible, obj);
+
+	return accessible;
+}
+
+static void
+panel_menu_button_accessible_factory_class_init (AtkObjectFactoryClass *klass)
+{
+	klass->create_accessible   = panel_menu_button_accessible_new;
+	klass->get_accessible_type = panel_menu_button_accessible_get_type;
+}
+
+static GType
+panel_menu_button_accessible_factory_get_type (void)
+{
+	static GType type = 0;
+
+	if (!type) {
+		static const GTypeInfo info = {
+			sizeof (AtkObjectFactoryClass),
+			NULL,
+			NULL,
+			(GClassInitFunc) panel_menu_button_accessible_factory_class_init,
+			NULL,
+			NULL,
+			sizeof (AtkObjectFactory),
+			0,
+			NULL,
+			NULL
+		};
+
+		type = g_type_register_static (ATK_TYPE_OBJECT_FACTORY, 
+					       "PanelMenuButtonAccessibleFactory",
+					       &info, 0);
+	}
+
+	return type;
+}
+
+static AtkObject *
+panel_menu_button_get_accessible (GtkWidget *widget)
+{
+	static gboolean first_time = TRUE;
+
+	g_return_val_if_fail (widget != NULL, NULL);
+
+	if (first_time && panel_a11y_get_is_a11y_enabled (widget))
+		atk_registry_set_factory_type (atk_get_default_registry (),
+					       PANEL_TYPE_MENU_BUTTON,
+					       panel_menu_button_accessible_factory_get_type ());
+
+	first_time = FALSE;
+	 
+	return GTK_WIDGET_CLASS (parent_class)->get_accessible (widget);
 }
