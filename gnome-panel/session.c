@@ -41,6 +41,11 @@ extern GSList *panel_list;
 /*add applets to this queue on startup to avoid races*/
 static GSList *applets_to_start = NULL;
 
+int session_save_return;
+int do_session_save_return = FALSE;
+Extern *session_save_ext = NULL;
+
+
 /*send the tooltips state to all external applets*/
 static void
 send_tooltips_state(int enabled)
@@ -165,24 +170,55 @@ apply_global_config(void)
 	}
 }
 
+static int ss_timed_out;
+
+static int
+session_save_timeout(gpointer data)
+{
+	g_warning(_("Timed out on sending session save to an applet"));
+	ss_timed_out = TRUE;
+	return FALSE;
+}
+
 static int
 send_applet_session_save (AppletInfo *info,
 			  CORBA_Object obj,
 			  const char *cfgpath,
 			  const char *globcfgpath)
 {
-  CORBA_short retval;
-  CORBA_Environment ev;
+	CORBA_short retval;
+	CORBA_Environment ev;
+	int to;
 
-  CORBA_exception_init(&ev);
-  retval = GNOME_Applet_session_save(obj,
-				     (CORBA_char *)cfgpath,
-				     (CORBA_char *)globcfgpath, &ev);
-  if(ev._major)
-    panel_clean_applet(info);
-  CORBA_exception_free(&ev);
+	session_save_return = TRUE;
+	
+	session_save_ext = info->data;
 
-  return retval;
+	CORBA_exception_init(&ev);
+	puts("SENT_SESSION_SAVE");
+	GNOME_Applet_session_save(obj,
+				  (CORBA_char *)cfgpath,
+				  (CORBA_char *)globcfgpath, &ev);
+	if(ev._major) {
+		panel_clean_applet(info);
+		CORBA_exception_free(&ev);
+		return TRUE;
+	}
+	to = gtk_timeout_add(3000,session_save_timeout,NULL);
+	ss_timed_out = FALSE;
+	do_session_save_return = TRUE;
+	do {
+		gtk_main_iteration_do(TRUE);
+		puts("SPUNT");
+	} while(do_session_save_return && !ss_timed_out);
+	if(!ss_timed_out)
+		gtk_timeout_remove(to);
+
+	CORBA_exception_free(&ev);
+	
+	puts("DONE_WITH SENDING");
+
+	return session_save_return;
 }
 
 
@@ -226,16 +262,6 @@ save_applet_configuration(AppletInfo *info)
 		{
 			char *globalcfg;
 			Extern *ext = info->data;
-/*this should no longer be needed on our side, we don't write anything
-  to the applet's file and it doesn't write anything to ours*/
-#if 0
-			/*sync before the applet does it's stuff*/
-			gnome_config_sync();
-			/*I think this should be done at sync and also that
-			  there should be some flocking ... but this works
-			  for now*/
-			gnome_config_drop_all();
-#endif
 
 			globalcfg = g_concat_dir_and_file(panel_cfg_path,
 							  "Applet_All_Extern/");
@@ -536,13 +562,15 @@ panel_config_sync(void)
 	   globals_to_sync) {
 		if (!(gnome_client_get_flags(client) & 
 		      GNOME_CLIENT_IS_CONNECTED)) {
-			do_session_save(client,need_complete_save,
-					applets_to_sync,panels_to_sync,
-					globals_to_sync);
+			int ncs = need_complete_save;
+			int ats = applets_to_sync;
+			int pts = panels_to_sync;
+			int gts = globals_to_sync;
 			need_complete_save = FALSE;
 			applets_to_sync = FALSE;
 			panels_to_sync = FALSE;
 			globals_to_sync = FALSE;
+			do_session_save(client,ncs,ats,pts,gts);
 		} else {
 			/*prevent possible races by doing this before requesting
 			  save*/
@@ -603,6 +631,7 @@ panel_session_die (GnomeClient *client,
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
+	puts("WE JUST DIED");
 	gtk_main_quit();
 	return TRUE;
 }

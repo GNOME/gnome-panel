@@ -1,3 +1,10 @@
+Sun May 30 23:17:01 1999  George Lebl  <jirka@5z.com>
+
+	* extern.c,applet-widget.c,session.c: deal with hanging applets,
+	  by implementing a callback like interface for getting the return
+	  from session_save. However the configuration can get seriously
+	  messed up due to reentrancy issues, needs to be revamped.
+
 Sun May 30 21:58:42 1999  George Lebl  <jirka@5z.com>
 
 	* panel.c: minor fix to send initial size_change's

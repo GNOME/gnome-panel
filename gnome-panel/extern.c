@@ -39,6 +39,10 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
+extern int session_save_return;
+extern int do_session_save_return;
+extern Extern *session_save_ext;
+
 /********************* CORBA Stuff *******************/
 
 CORBA_ORB orb = NULL;
@@ -141,6 +145,11 @@ static void
 s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 			CORBA_Environment *ev);
 
+static void
+s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
+			      CORBA_boolean ret,
+			      CORBA_Environment *ev);
+
 static PortableServer_ServantBase__epv panel_base_epv = {
   NULL, /* _private */
   NULL, /* finalize */
@@ -180,7 +189,8 @@ static POA_GNOME_PanelSpot__epv panelspot_epv = {
   (gpointer)&s_panelspot_drag_stop,
   (gpointer)&s_panelspot_add_callback,
   (gpointer)&s_panelspot_remove_callback,
-  (gpointer)&s_panelspot_sync_config
+  (gpointer)&s_panelspot_sync_config,
+  (gpointer)&s_panelspot_done_session_save
 };
 static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panelspot_epv };
 
@@ -750,6 +760,18 @@ s_panelspot_sync_config(POA_GNOME_PanelSpot *servant,
 	g_return_if_fail(ext->info != NULL);
 	applets_to_sync = TRUE;
 	panel_config_sync();
+}
+
+static void
+s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
+			      CORBA_boolean ret,
+			      CORBA_Environment *ev)
+{
+	if(session_save_ext == (Extern *)servant) {
+		puts("DONE_SESSION_SAVE");
+		session_save_return = ret;
+		do_session_save_return = FALSE;
+	}
 }
 
 void
