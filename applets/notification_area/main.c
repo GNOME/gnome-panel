@@ -300,6 +300,7 @@ applet_factory (PanelApplet *applet,
                 gpointer     data)
 {
   SystemTray *tray;
+  AtkObject  *atko;
   
   if (!(strcmp (iid, "OAFIID:GNOME_NotificationAreaApplet") == 0 ||
         strcmp (iid, "OAFIID:GNOME_SystemTrayApplet") == 0))
@@ -333,6 +334,9 @@ applet_factory (PanelApplet *applet,
                           "system-tray",
                           tray,
                           (GDestroyNotify) free_tray);
+
+  atko = gtk_widget_get_accessible (GTK_WIDGET (tray->applet));
+  atk_object_set_name (atko, _("Panel Notification Area"));
 
   tray->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   tray->box = gtk_obox_new ();
