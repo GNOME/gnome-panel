@@ -38,7 +38,6 @@
 
 #include "quick-desktop-reader.h"
 
-#include "multihead-hacks.h"
 #include "egg-screen-url.h"
 
 #undef LAUNCHER_DEBUG

@@ -15,7 +15,6 @@
 #include "panel-config-global.h"
 #include "panel.h"
 #include "session.h"
-#include "multihead-hacks.h"
 
 extern GtkTooltips *panel_tooltips;
 

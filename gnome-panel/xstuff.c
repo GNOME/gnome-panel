@@ -18,8 +18,6 @@
 
 #include "xstuff.h"
 
-#include "multihead-hacks.h"
-
 #include "global-keys.h"
 
 static Atom
@@ -313,7 +311,6 @@ xstuff_delete_property (GdkWindow *window, const char *name)
 void
 xstuff_init (void)
 {
-#ifdef HAVE_GTK_MULTIHEAD
 	GdkDisplay *display;
 	int         screens, i;
 
@@ -330,10 +327,6 @@ xstuff_init (void)
 		gdk_window_add_filter (
 			root_window, panel_global_keys_filter, NULL);
 	}
-#else
-	gdk_window_add_filter (gdk_get_default_root_window (),
-			       panel_global_keys_filter, NULL);
-#endif
 }
 
 void

@@ -29,14 +29,11 @@
 #include "panel-util.h"
 #include "panel.h"
 
-#include "multihead-hacks.h"
-
 static int            screens     = 0;
 static int           *monitors    = NULL;
 static GdkRectangle **geometries  = NULL;
 static gboolean	      initialized = FALSE;
 
-#ifdef HAVE_GTK_MULTIHEAD
 static void
 multiscreen_support_init (void)
 {
@@ -64,79 +61,6 @@ multiscreen_support_init (void)
 	}
 }
 
-#elif defined(HAVE_LIBXINERAMA)
-
-#include <gdk/gdkx.h>
-#include <X11/extensions/Xinerama.h>
-
-static void
-multiscreen_support_init (void)
-{
-	gboolean have_xinerama;
-
-        gdk_flush ();
-        gdk_error_trap_push ();
-        have_xinerama = XineramaIsActive (GDK_DISPLAY ());
-        gdk_flush ();
-        if (gdk_error_trap_pop ())
-                have_xinerama = FALSE;
-
-        if (g_getenv ("GNOME_PANEL_NO_XINERAMA"))
-                have_xinerama = FALSE;
-
-	screens    = 1;
-	monitors   = g_new0 (int, screens);
-	geometries = g_new0 (GdkRectangle *, screens);
-
-        if (have_xinerama) {
-                XineramaScreenInfo *xmonitors;
-                int                 n_monitors;
-		int                 i;
-
-                xmonitors = XineramaQueryScreens (GDK_DISPLAY (), &n_monitors);
-		g_assert (n_monitors > 0);
-
-                monitors [0]   = n_monitors;
-                geometries [0] = g_new0 (GdkRectangle, n_monitors);
-
-                for (i = 0; i < n_monitors; i++) {
-                        geometries [0][i].x      = xmonitors [i].x_org;
-                        geometries [0][i].y      = xmonitors [i].y_org;
-                        geometries [0][i].width  = xmonitors [i].width;
-                        geometries [0][i].height = xmonitors [i].height;
-                }
-
-                XFree (xmonitors);
-        } else {
-		monitors [0]   = 1;
-		geometries [0] = g_new0 (GdkRectangle, monitors [0]);
-
-		geometries [0][0].x      = 0;
-		geometries [0][0].y      = 0;
-		geometries [0][0].width  = gdk_screen_width ();
-		geometries [0][0].height = gdk_screen_height ();
-	}
-}
-
-#else /* !defined (HAVE_GTK_MULTIHEAD) && !defined(HAVE_LIBXINERAMA) */
-
-static void
-multiscreen_support_init (void)
-{
-	screens    = 1;
-	monitors   = g_new0 (int, screens);
-	geometries = g_new0 (GdkRectangle *, screens);
-
-	monitors [0]   = 1;
-	geometries [0] = g_new0 (GdkRectangle, monitors [0]);
-
-	geometries [0][0].x      = 0;
-	geometries [0][0].y      = 0;
-	geometries [0][0].width  = gdk_screen_width ();
-	geometries [0][0].height = gdk_screen_height ();
-}
-#endif
-
 void
 multiscreen_init (void)
 {
@@ -146,13 +70,8 @@ multiscreen_init (void)
 	if (g_getenv ("FAKE_XINERAMA_PANEL")) {
 		int width, height;
 
-#ifdef HAVE_GTK_MULTIHEAD
 		width  = gdk_screen_get_width  (gdk_screen_get_default ());
 		height = gdk_screen_get_height (gdk_screen_get_default ());
-#else
-		width  = gdk_screen_width  ();
-		height = gdk_screen_height ();
-#endif
 
 		/* fake xinerama setup for debugging */
 		screens = 1;

@@ -36,7 +36,6 @@
 #include "multiscreen-stuff.h"
 #include "panel-marshal.h"
 #include "egg-screen-exec.h"
-#include "multihead-hacks.h"
 #include "panel-stock-icons.h"
 
 #define ICON_SIZE 20

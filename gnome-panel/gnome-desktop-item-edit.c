@@ -14,8 +14,6 @@
 #include "menu-ditem.h"
 #include "panel-util.h"
 
-#include "multihead-hacks.h"
-
 #include "nothing.cP"
 
 /* Just so we can link with panel-util.c for the convert keys stuff*/

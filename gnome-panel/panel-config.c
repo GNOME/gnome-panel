@@ -33,8 +33,6 @@
 #include "panel.h"
 #include "multiscreen-stuff.h"
 
-#include "multihead-hacks.h"
-
 #include "nothing.cP"
 
 static void config_apply (PerPanelConfig *ppc);

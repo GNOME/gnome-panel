@@ -43,8 +43,6 @@
 #include "egg-screen-url.h"
 #include "egg-screen-help.h"
 
-#include "multihead-hacks.h"
-
 extern GlobalConfig global_config;
 
 extern GSList *applets;
@@ -64,7 +62,6 @@ panel_ditem_launch (GdkScreen                    *screen,
 		    GnomeDesktopItemLaunchFlags   flags,
 		    GError                      **error)
 {
-#ifdef HAVE_GTK_MULTIHEAD
 	char **envp = NULL;
 	int    retval;
 
@@ -77,10 +74,6 @@ panel_ditem_launch (GdkScreen                    *screen,
 	g_strfreev (envp);
 
 	return retval;
-#else
-	return gnome_desktop_item_launch (
-			item, file_list, flags, error);
-#endif
 }
 
 void

@@ -17,8 +17,6 @@
 #include "egg-screen-exec.h"
 #include "eggaccelerators.h"
 
-#include "multihead-hacks.h"
-
 extern GlobalConfig global_config;
 extern GSList *panels;
 

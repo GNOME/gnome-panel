@@ -15,8 +15,6 @@
 #include "menu-ditem.h"
 #include "panel-util.h"
 
-#include "multihead-hacks.h"
-
 enum {
 	REVERT_BUTTON
 };

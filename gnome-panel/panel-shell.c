@@ -6,8 +6,6 @@
 #include "panel-shell.h"
 #include "panel-util.h"
 
-#include "multihead-hacks.h"
-
 struct _PanelShellPrivate {
 	int dummy;
 };

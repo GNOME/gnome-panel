@@ -50,8 +50,6 @@
 #include "panel-applet-frame.h"
 #include "global-keys.h"
 
-#include "multihead-hacks.h"
-
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\

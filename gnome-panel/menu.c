@@ -63,7 +63,6 @@
 #include "quick-desktop-reader.h"
 #include "xstuff.h"
 #include "egg-screen-exec.h"
-#include "multihead-hacks.h"
 #include "panel-stock-icons.h"
 
 #undef MENU_DEBUG

@@ -17,7 +17,6 @@
 #include "panel-util.h"
 #include "panel-config-global.h"
 #include "panel-marshal.h"
-#include "multihead-hacks.h"
 
 #undef BUTTON_WIDGET_DEBUG
 

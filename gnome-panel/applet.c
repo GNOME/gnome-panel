@@ -27,8 +27,6 @@
 #include "panel-applet-frame.h"
 #include "egg-screen-exec.h"
 
-#include "multihead-hacks.h"
-
 #define SMALL_ICON_SIZE 20
 
 extern GSList *panels;

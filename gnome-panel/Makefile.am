@@ -130,7 +130,6 @@ panel_headers =			\
 	basep-widget.h		\
 	button-widget.h		\
 	multiscreen-stuff.h	\
-	multihead-hacks.h	\
 	xstuff.h		\
 	session.h		\
 	foobar-widget.h		\

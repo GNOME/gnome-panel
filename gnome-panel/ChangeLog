@@ -1,3 +1,14 @@
+2002-09-16  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am, multihead-hacks.h: kill multihead-hacks.h
+
+	* applet.c, basep-widget.c, button-widget.c, foobar-widget.c,
+	  global-keys.c, gnome-desktop-item-edit.c, gnome-run.c,
+	  launcher.c, logout.c, menu-ditem.c, menu-util.c, menu.c,
+	  multiscreen-stuff.c, panel-applet-frame.c, panel-config.c,
+	  panel-shell.c, panel-util.c, panel.c, xstuff.c: remove all
+	multihead conditionals as we require gtk+ 2.1.0 now.
+
 2002-09-03 Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* basep-widget.[ch]:

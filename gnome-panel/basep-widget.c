@@ -29,8 +29,6 @@
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
 
-#include "multihead-hacks.h"
-
 #undef BASEP_WIDGET_DEBUG
 
 extern GSList *panel_list;

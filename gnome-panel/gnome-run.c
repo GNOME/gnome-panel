@@ -48,7 +48,6 @@
 #include "nothing.h"
 #include "egg-screen-exec.h"
 #include "egg-screen-url.h"
-#include "multihead-hacks.h"
 #include "panel-stock-icons.h"
 
 enum {
@@ -182,11 +181,9 @@ get_environment (int         *argc,
 		moveby ++;
 	}
 
-#ifdef HAVE_GTK_MULTIHEAD
 	if (!display_found && gdk_screen_get_default () != screen)
 		envar = g_list_append (
 				envar, egg_screen_exec_display_string (screen));
-#endif
 
 	if (moveby == *argc) {
 		panel_g_list_deep_free (envar);

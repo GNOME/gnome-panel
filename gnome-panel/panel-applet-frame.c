@@ -39,8 +39,6 @@
 #include "applet.h"
 #include "panel-marshal.h"
 
-#include "multihead-hacks.h"
-
 #define HANDLE_SIZE 10
 
 #define PANEL_STOCK_DONT_DELETE "panel-dont-delete"

@@ -24,8 +24,6 @@
 #include "panel-util.h"
 #include "menu.h"
 
-#include "multihead-hacks.h"
-
 #undef MENU_UTIL_DEBUG
 
 extern char *kde_menudir;
