@@ -47,6 +47,11 @@ extern GnomeClient *client;
 
 extern GlobalConfig global_config;
 
+/*???? this might be ugly, but I guess we can safely assume that we can only
+  have one menu open and that nothing weird will happen to the panel that
+  opened that menu whilethe user is looking over the choices*/
+extern PanelWidget *current_panel;
+
 /*a list of started extern applet child processes*/
 extern GList * children;
 
@@ -66,49 +71,29 @@ create_panel_root_menu(GtkWidget *panel)
 
 	panel_menu = gtk_menu_new();
 
-	menuitem = gtk_menu_item_new_with_label(_("This panel properties..."));
-	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
-				  GTK_SIGNAL_FUNC(panel_config),
-				  GTK_OBJECT(panel));
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
+	make_panel_submenu(panel_menu,TRUE);
 
-	menuitem = gtk_menu_item_new_with_label(_("Global properties..."));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_config_global),
-			   NULL);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new_with_label(_("Remove this panel"));
-	gtk_signal_connect_object(GTK_OBJECT(menuitem), "activate",
-				  GTK_SIGNAL_FUNC(gtk_widget_destroy),
-				  GTK_OBJECT(panel));
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, NULL, _("Remove this panel"));
+	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+	gtk_signal_connect_object (GTK_OBJECT (menuitem), "activate",
+				   GTK_SIGNAL_FUNC(gtk_widget_destroy),
+				   GTK_OBJECT(panel));
 	gtk_object_set_data(GTK_OBJECT(panel),"remove_item",menuitem);
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_add_main_menu),
-			   panel);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-
-	menuitem = gtk_menu_item_new();
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
-	
-	menuitem = gtk_menu_item_new_with_label(_("Log out"));
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(panel_quit),
-			   NULL);
-	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
-	gtk_widget_show(menuitem);
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(panel_menu,
+						  GNOME_STOCK_PIXMAP_QUIT),
+			_("Log out"));
+	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(panel_quit),
+			    NULL);
 
 	return panel_menu;
 }
@@ -867,7 +852,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				if(IS_SNAPPED_WIDGET(widget)) {
 					SnappedWidget *snapped =
 						SNAPPED_WIDGET(widget);
-					PanelWidget *panel =
+					current_panel =
 						PANEL_WIDGET(snapped->panel);
 					if(base_panels <= 1)
 						gtk_widget_set_sensitive(rem,
@@ -880,16 +865,21 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				} else if(IS_CORNER_WIDGET(widget)) {
 					CornerWidget *corner =
 						CORNER_WIDGET(widget);
-					PanelWidget *panel = PANEL_WIDGET(corner->panel);
+					current_panel = PANEL_WIDGET(corner->panel);
 					if(base_panels <= 1)
 						gtk_widget_set_sensitive(rem,
 									 FALSE);
 					else
 						gtk_widget_set_sensitive(rem,
 									 TRUE);
+				} else if(IS_DRAWER_WIDGET(widget)) {
+					DrawerWidget *drawer =
+						DRAWER_WIDGET(widget);
+					current_panel = PANEL_WIDGET(drawer->panel);
+					gtk_widget_set_sensitive(rem, TRUE);
 				} else
-						gtk_widget_set_sensitive(rem,
-									 TRUE);
+					gtk_widget_set_sensitive(rem,
+								 TRUE);
 				gtk_menu_popup(GTK_MENU(data), NULL, NULL,
 					       panel_menu_position,
 					       widget, bevent->button,

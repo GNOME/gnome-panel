@@ -488,7 +488,7 @@ static GtkWidget * create_menu_at (GtkWidget *menu,
 static GtkWidget *
 check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 {
-	/*we arecreating a whole new menuf or an applet if menu isn't NULL*/
+	/*we are creating a whole new menuf or an applet if menu isn't NULL*/
 	if(menu) {
 		GList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
 		GList *list;
@@ -533,8 +533,8 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		int need_reread = FALSE;
 		int all_fake = TRUE;
 
-		if(!mfl)
-			g_warning("Weird menu doesn't have mf entry");
+		/*if(!mfl)
+			g_warning("Weird menu doesn't have mf entry");*/
 
 		/*check if we need to reread this*/
 		for(list = mfl; list != NULL; list = g_list_next(list)) {
@@ -1011,16 +1011,80 @@ create_add_panel_submenu (void)
 }
 
 static GtkWidget *
-create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
+create_system_app_menu(int fake_submenus)
 {
-	GtkWidget *menu, *menuitem;
+	GtkWidget *sapp_menu;
+	char *menu_base = gnome_unconditional_datadir_file ("apps");
+	char *menudir;
+	
+	menudir = g_concat_dir_and_file (menu_base, ".");
+	g_free (menu_base);
+	if (!g_file_exists (menudir)) {
+		g_free (menudir);
+		return NULL;
+	}
 
-	menu = gtk_menu_new ();
+	sapp_menu = create_menu_at (NULL,menudir,TRUE,FALSE,_("System Menus"),
+				    fake_submenus);
+	g_return_val_if_fail(sapp_menu,NULL);
+	make_app_menu(sapp_menu, NULL, menudir, _("System Menus"));
+	g_free (menudir);
+	
+	return sapp_menu;
+}
+
+static GtkWidget *
+create_user_app_menu(int fake_submenus)
+{
+	GtkWidget *uapp_menu=NULL;
+	char *menu_base = gnome_util_home_file ("apps");
+	char *menudir = g_concat_dir_and_file (menu_base, ".");
+
+	g_free (menu_base);
+	if (!g_file_exists (menudir))
+		mkdir (menudir, 0755);
+	if (g_file_exists (menudir)) {
+		uapp_menu = create_menu_at (NULL,menudir, TRUE,FALSE,
+					    _("User Menus"),fake_submenus);
+		if(uapp_menu)
+			make_app_menu(uapp_menu, NULL,
+				      menudir, _("User Menus"));
+		else
+			uapp_menu = create_fake_menu_at (menudir, TRUE,FALSE,
+							 _("User Menus"));
+	}
+	g_free (menudir);
+	
+	return uapp_menu;
+}
+
+static void
+current_panel_config(GtkWidget *w, gpointer data)
+{
+	GtkWidget *parent = gtk_object_get_data(GTK_OBJECT(current_panel),
+						PANEL_PARENT);
+	panel_config(parent);
+}
+
+void
+make_panel_submenu (GtkWidget *menu, int fake_submenus)
+{
+	GtkWidget *menuitem;
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Add app to panel"));
+	setup_menuitem (menuitem, 0, _("Add app to panel (system menus)"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), app_menu);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_system_app_menu(fake_submenus));
+	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+			   GTK_SIGNAL_FUNC(submenu_to_display),
+			   NULL);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add app to panel (user menus)"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_user_app_menu(fake_submenus));
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
 			   NULL);
@@ -1028,7 +1092,8 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applet_menu);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+				   create_applets_menu(fake_submenus));
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
 			   NULL);
@@ -1045,14 +1110,14 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	setup_menuitem (menuitem, 0, _("Add main menu"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_menu_to_panel,
+			   GTK_SIGNAL_FUNC(add_menu_to_panel),
 			   NULL);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add log out button"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_logout_to_panel,
+			   GTK_SIGNAL_FUNC(add_logout_to_panel),
 			   NULL);
 
 
@@ -1060,9 +1125,19 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	setup_menuitem (menuitem, 0, _("Add swallowed app"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) ask_about_swallowing,NULL);
+			   GTK_SIGNAL_FUNC(ask_about_swallowing),NULL);
 
 	add_menu_separator(menu);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_PREFERENCES),
+			_("This panel properties..."));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(current_panel_config), 
+			    NULL);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
@@ -1071,18 +1146,9 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 			_("Global properties..."));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) panel_configure, 0);
+			    GTK_SIGNAL_FUNC(panel_configure), 
+			    NULL);
 
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(menu,
-						  GNOME_STOCK_PIXMAP_ABOUT),
-			_("About..."));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    (GtkSignalFunc) about_cb, 0);
-
-	return menu;
 }
 
 static void
@@ -1092,25 +1158,21 @@ panel_lock (GtkWidget *widget, void *data)
 }
 
 static void
-panel_logout (GtkWidget *widget, void *data)
-{
-	panel_quit();
-}
-
-static void
-add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_menu)
+add_special_entries (GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *menuitem;
+	GtkWidget *panel_menu;
 
 	/* Panel entry */
 
 	add_menu_separator (menu);
 
+	panel_menu = gtk_menu_new();
+	make_panel_submenu(panel_menu,fake_submenus);
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   create_panel_submenu (app_menu,applet_menu));
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 
 	add_menu_separator (menu);
 
@@ -1123,11 +1185,21 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu, GtkWidget *applet_men
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
 			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_ABOUT),
+			_("About..."));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(about_cb),
+			    NULL);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
 						  GNOME_STOCK_PIXMAP_QUIT),
 			_("Log out"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(panel_logout), 0);
+			    GTK_SIGNAL_FUNC(panel_quit), 0);
 
 }
 
@@ -1136,10 +1208,6 @@ create_root_menu(int fake_submenus, MainMenuType type)
 {
 	GtkWidget *root_menu;
 	GtkWidget *uroot_menu;
-	GtkWidget *app_menu;
-	GtkWidget *uapp_menu=NULL;
-	GtkWidget *sapp_menu;
-	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *menudir;
 	char *user_menudir;
@@ -1149,15 +1217,11 @@ create_root_menu(int fake_submenus, MainMenuType type)
 	g_free (menu_base);
 	if (!g_file_exists (menudir)) {
 		g_free (menudir);
-		return;
+		return NULL;
 	}
 
 	root_menu = create_menu_at(NULL,menudir,FALSE,FALSE,NULL,fake_submenus);
 	g_return_val_if_fail(root_menu,NULL);
-	sapp_menu = create_menu_at (NULL,menudir,TRUE,FALSE,_("System Menus"),
-				    fake_submenus);
-	g_return_val_if_fail(sapp_menu,NULL);
-	make_app_menu(sapp_menu, NULL, menudir, _("System Menus"));
 	g_free (menudir);
 	
 	menu_base = gnome_util_home_file ("apps");
@@ -1172,11 +1236,6 @@ create_root_menu(int fake_submenus, MainMenuType type)
 		else
 			uroot_menu = create_menu_at(NULL,menudir,FALSE,FALSE,
 						    NULL,fake_submenus);
-		uapp_menu = create_menu_at (NULL,menudir, TRUE,FALSE,
-					    _("User Menus"),fake_submenus);
-		if(uapp_menu)
-			make_app_menu(uapp_menu, NULL,
-				      menudir, _("User Menus"));
 	} else if(type != MAIN_MENU_BOTH)
 		uroot_menu = gtk_menu_new();
 	g_free (menudir);
@@ -1204,30 +1263,7 @@ create_root_menu(int fake_submenus, MainMenuType type)
 				   NULL);
 	}
 
-	if(uapp_menu) {
-		GtkWidget *menuitem;
-		app_menu = gtk_menu_new();
-		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("System Menus"));
-		gtk_menu_append (GTK_MENU (app_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-					   sapp_menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
-		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("User Menus"));
-		gtk_menu_append (GTK_MENU (app_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-					   uapp_menu);
-		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
-				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);
-	} else
-		app_menu = sapp_menu;
-
-	applet_menu = create_applets_menu(FALSE);
-	add_special_entries (root_menu, app_menu, applet_menu);
+	add_special_entries (root_menu, fake_submenus);
 	
 	
 	return root_menu;
@@ -1423,10 +1459,7 @@ static void
 set_show_small_icons_foreach(gpointer data, gpointer user_data)
 {
 	GtkWidget *w = data;
-	if (!w) {
-		g_warning("Internal error in set_show_small_icons_foreach (!w)");
-		return;
-	}
+	g_return_if_fail(w);
 	if (global_config.show_small_icons)
 		gtk_widget_show(w);
 	else

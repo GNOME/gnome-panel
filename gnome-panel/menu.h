@@ -28,6 +28,7 @@ void set_menu_applet_orient(Menu *menu, PanelOrientType orient);
 void set_show_small_icons(void);
 
 void setup_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title);
+void make_panel_submenu (GtkWidget *menu, int fake_submenus);
 
 END_GNOME_DECLS
 
