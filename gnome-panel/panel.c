@@ -585,7 +585,7 @@ reserve_applet_spot (const char * ior, const char *path, int panel, int pos)
 
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
-	register_toy(eb,NULL,g_strdup(ior),g_strdup(path),pos,panel,0,APPLET_EXTERN);
+	register_toy(eb,NULL,NULL,g_strdup(ior),g_strdup(path),pos,panel,0,APPLET_EXTERN);
 
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
 		i++;
@@ -672,6 +672,7 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 void
 register_toy(GtkWidget *applet,
 	     GtkWidget * assoc,
+	     gpointer data,
 	     char *id,
 	     char *params,
 	     int pos,
@@ -694,12 +695,13 @@ register_toy(GtkWidget *applet,
 
 	info = g_new(AppletInfo,1);
 
-	info->flags = flags;
-	info->widget = eventbox;
 	info->type = type;
+	info->widget = eventbox;
 	info->assoc = assoc;
+	info->data = data;
 	info->id = g_strdup(id);
 	info->params = g_strdup(params);
+	info->flags = flags;
 
 	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
 

@@ -41,8 +41,7 @@ typedef enum {
 typedef enum {
 	APPLET_EXTERN,
 	APPLET_DRAWER,
-	APPLET_MENU,
-	APPLET_LAUNCHER
+	APPLET_MENU
 } AppletType;
 
 typedef enum {
@@ -78,6 +77,7 @@ void create_applet_menu(void);
 
 void register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,
+		  gpointer data,
 		  char *id,
 		  char *params,
 		  int pos,

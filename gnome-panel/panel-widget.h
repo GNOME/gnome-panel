@@ -178,6 +178,10 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 DrawerDropZonePos
 						 	drop_zone_pos);
 
+/*changing parameters (orient only)*/
+void		panel_widget_change_orient	(PanelWidget *panel,
+						 PanelOrientation orient);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

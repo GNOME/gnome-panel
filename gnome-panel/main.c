@@ -48,8 +48,9 @@ load_applet(char *id, char *params, int pos, int panel)
 					  params,MENU_UP);
 
 		
-		register_toy(menu->button,menu->menu,MENU_ID,params,pos,
+		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
+		printf("[load:menu:%ld]\n",(long)menu);
 	} else if(strcmp(id,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
@@ -92,8 +93,9 @@ load_applet(char *id, char *params, int pos, int panel)
 
 		g_return_if_fail(drawer != NULL);
 
-		register_toy(drawer->button,drawer->drawer,DRAWER_ID,params,
-			     pos, panel,APPLET_HAS_PROPERTIES,APPLET_MENU);
+		register_toy(drawer->button,drawer->drawer,drawer,DRAWER_ID,
+			     params, pos, panel,
+			     APPLET_HAS_PROPERTIES,APPLET_MENU);
 	}
 }
 
@@ -153,6 +155,82 @@ static void
 panel_realize(GtkWidget *widget, gpointer data)
 {
 	change_window_cursor(widget->window, GDK_ARROW);
+}
+
+static void
+orient_change_foreach(gpointer data, gpointer user_data)
+{
+	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	PanelWidget *panel = user_data;
+
+	if(info->type == APPLET_EXTERN) {
+		/*FIXME: call corba*/
+	} else if(info->type == APPLET_MENU) {
+		Menu *menu = info->data;
+		MenuOrient orient;
+
+		printf("[orient:menu:%ld]\n",(long)menu);
+
+		switch(panel->snapped) {
+			case PANEL_FREE:
+			case PANEL_DRAWER:
+				orient = (panel->orient==PANEL_VERTICAL)?
+					 MENU_RIGHT:MENU_UP;
+				break;
+			case PANEL_TOP:
+				orient = MENU_DOWN;
+				break;
+			case PANEL_BOTTOM:
+				orient = MENU_UP;
+				break;
+			case PANEL_LEFT:
+				orient = MENU_RIGHT;
+				break;
+			case PANEL_RIGHT:
+				orient = MENU_LEFT;
+				break;
+		}
+		set_menu_applet_orient(menu,orient);
+	} else if(info->type == APPLET_DRAWER) {
+		Drawer *drawer = info->data;
+		DrawerOrient orient;
+
+		switch(panel->snapped) {
+			case PANEL_FREE:
+			case PANEL_DRAWER:
+				orient = (panel->orient==PANEL_VERTICAL)?
+					 DRAWER_RIGHT:DRAWER_UP;
+				break;
+			case PANEL_TOP:
+				orient = DRAWER_DOWN;
+				break;
+			case PANEL_BOTTOM:
+				orient = DRAWER_UP;
+				break;
+			case PANEL_LEFT:
+				orient = DRAWER_RIGHT;
+				break;
+			case PANEL_RIGHT:
+				orient = DRAWER_LEFT;
+				break;
+		}
+		set_drawer_applet_orient(drawer,orient);
+		panel_widget_foreach(PANEL_WIDGET(info->assoc),
+				     orient_change_foreach,
+				     (gpointer)info->assoc);
+	}
+}
+
+static int
+panel_orient_change(GtkWidget *widget,
+		    PanelOrientation orient,
+		    PanelSnapped snapped,
+		    gpointer data)
+{
+	puts("PANEL_ORIENT_CHANGE");
+
+	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
+			     (gpointer)widget);
 }
 
 static int
@@ -232,6 +310,10 @@ init_user_panels(void)
 		if(!root_menu) init_main_menu(panel);
 
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
+		gtk_signal_connect(GTK_OBJECT(panel),
+				   "orient_change",
+				   GTK_SIGNAL_FUNC(panel_orient_change),
+				   NULL);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(panel_button_press),

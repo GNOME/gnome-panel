@@ -22,6 +22,8 @@ GtkWidget * init_main_menu(GtkWidget *window);
 Menu * create_menu_applet(GtkWidget *window ,char *arguments,
 			  MenuOrient orient);
 
+void set_menu_applet_orient(Menu *menu, MenuOrient orient);
+
 /*used in foreach to set unset visibility of small_icons*/
 void set_show_small_icons(gpointer data, gpointer user_data);
 

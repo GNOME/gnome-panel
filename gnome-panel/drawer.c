@@ -187,50 +187,44 @@ create_empty_drawer_applet(GtkWidget *window, DrawerOrient orient)
 
 }
 
-/*FIXME: change orientation!*/
-#if 0
-static void
-set_orientation(GtkWidget *window, Menu *menu)
+void
+set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	if(!menu || !menu->path)
-		return;
+	g_return_if_fail(drawer!=NULL);
 
-	if (strcmp (menu->path, ".") == 0)
-		switch (menu->orient) {
-			case MENU_DOWN:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-down.xpm");
-				break;
-			case MENU_UP:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-up.xpm");
-				break;
-			case MENU_RIGHT:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-right.xpm");
-				break;
-			case MENU_LEFT:
-				pixmap_name = gnome_unconditional_pixmap_file(
-					"gnome-menu-left.xpm");
-				break;
-		}
-	else
-		/*FIXME: these guys need arrows as well*/
-		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
+	drawer->orient = orient;
+
+	switch (drawer->orient) {
+		case DRAWER_DOWN:
+			pixmap_name = gnome_unconditional_pixmap_file(
+				"gnome-menu-down.xpm");
+			break;
+		case DRAWER_UP:
+			pixmap_name = gnome_unconditional_pixmap_file(
+				"gnome-menu-up.xpm");
+			break;
+		case DRAWER_RIGHT:
+			pixmap_name = gnome_unconditional_pixmap_file(
+				"gnome-menu-right.xpm");
+			break;
+		case DRAWER_LEFT:
+			pixmap_name = gnome_unconditional_pixmap_file(
+				"gnome-menu-left.xpm");
+			break;
+	}
 		
-	pixmap=GTK_BUTTON(menu->button)->child;
-	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
+	pixmap=GTK_BUTTON(drawer->button)->child;
+	gtk_container_remove(GTK_CONTAINER(drawer->button),pixmap);
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
 	pixmap = gnome_pixmap_new_from_file (pixmap_name);
 
-	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
+	gtk_container_add (GTK_CONTAINER(drawer->button), pixmap);
 	gtk_widget_show (pixmap);
 	
 	g_free(pixmap_name);
 }
-#endif

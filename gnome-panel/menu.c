@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <string.h>
-#include "gnome.h"
+#include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
 #include "panel_config_global.h"
@@ -579,7 +579,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	else
 		/*FIXME: these guys need arrows as well*/
 		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
-		
+
 	menu->orient = orient;
 
 	/* main button */
@@ -676,6 +676,7 @@ create_menu_applet(GtkWidget *window, char *arguments, MenuOrient orient)
 	main_menu = (strcmp (arguments, ".") == 0);
 
 	menu = create_panel_menu (window, this_menu, main_menu, orient);
+	menu->path=g_strdup(arguments);
 
 	gtk_object_set_user_data(GTK_OBJECT(menu->button),menu);
 
@@ -696,14 +697,16 @@ set_show_small_icons(gpointer data, gpointer user_data)
 		gtk_widget_hide(w);
 }
 
-static void
-set_orientation(GtkWidget *window, Menu *menu)
+void
+set_menu_applet_orient(Menu *menu, MenuOrient orient)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	if(!menu || !menu->path)
-		return;
+	g_return_if_fail(menu!=NULL);
+	//g_return_if_fail(menu->path!=NULL);
+
+	menu->orient = orient;
 
 	if (strcmp (menu->path, ".") == 0)
 		switch (menu->orient) {

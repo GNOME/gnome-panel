@@ -1702,6 +1702,22 @@ panel_widget_change_params(PanelWidget *panel,
 }
 
 void
+panel_widget_change_orient(PanelWidget *panel,
+			   PanelOrientation orient)
+{
+	panel_widget_change_params(panel,
+				   orient,
+				   panel->snapped,
+				   panel->mode,
+				   panel->state,
+				   panel->step_size,
+				   panel->minimized_size,
+				   panel->minimize_delay,
+				   panel->drawer_drop_zone_pos);
+}
+
+
+void
 panel_widget_restore_state(PanelWidget *panel)
 {
 	gtk_widget_show(GTK_WIDGET(panel));
