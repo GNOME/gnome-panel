@@ -146,12 +146,6 @@ find_kde_directory (void)
 }
 
 static void
-setup_visuals (void)
-{
-	gdk_rgb_init ();
-}
-
-static void
 kill_free_drawers (void)
 {
 	GSList *li;
@@ -236,8 +230,6 @@ main(int argc, char **argv)
 
 	if (!panel_shell_register ())
 		return -1;
-
-	setup_visuals ();
 
 	find_kde_directory();
 

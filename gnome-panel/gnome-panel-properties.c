@@ -144,7 +144,7 @@ grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 	gtk_widget_destroy (grab_dialog);
-	gdk_window_remove_filter (GDK_ROOT_PARENT (),
+	gdk_window_remove_filter (gdk_get_default_root_window (),
 				  grab_key_filter, data);
 
 	return GDK_FILTER_REMOVE;
@@ -158,8 +158,8 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	GtkWidget *label;
 	grab_dialog = gtk_window_new (GTK_WINDOW_POPUP);
 
-	gdk_keyboard_grab (GDK_ROOT_PARENT(), FALSE, GDK_CURRENT_TIME);
-	gdk_window_add_filter (GDK_ROOT_PARENT(), grab_key_filter, data);
+	gdk_keyboard_grab (gdk_get_default_root_window (), FALSE, GDK_CURRENT_TIME);
+	gdk_window_add_filter (gdk_get_default_root_window (), grab_key_filter, data);
 
 	g_object_set (G_OBJECT (grab_dialog),
 		      "allow_grow", FALSE,

@@ -608,7 +608,7 @@ remove_pixmap_from_loaded (GtkWidget *pixmap, gpointer data)
 static gboolean
 load_icons_handler (gpointer data)
 {
-	GtkPixmap *pixmap;
+	GtkImage *pixmap;
 	GdkPixbuf *pb;
 	IconToLoad *icon;
 	char *file;
@@ -656,7 +656,7 @@ load_icons_handler_again:
 	    (pixmap = g_hash_table_lookup (loaded_icons, file)) != NULL) {
 		pb = gtk_image_get_pixbuf (GTK_IMAGE (pixmap));
 		if (pb != NULL)
-			gdk_pixbuf_ref (pb);
+			g_object_ref (G_OBJECT (pb));
 	}
 
 	if (pb == NULL) {
@@ -676,12 +676,12 @@ load_icons_handler_again:
 		GdkPixbuf *pb2;
 		pb2 = gdk_pixbuf_scale_simple (pb, ICON_SIZE, ICON_SIZE,
 					       GDK_INTERP_BILINEAR);
-		gdk_pixbuf_unref (pb);
+		g_object_unref (G_OBJECT (pb));
 		pb = pb2;
 	}
 
 	gtk_image_set_from_pixbuf (GTK_IMAGE (icon->pixmap), pb);
-	gdk_pixbuf_unref (pb);
+	g_object_unref (G_OBJECT (pb));
 
 	if (loaded) {
 		if (loaded_icons == NULL)
@@ -1153,7 +1153,7 @@ restore_grabs(GtkWidget *w, gpointer data)
 					   GDK_ENTER_NOTIFY_MASK |
 					   GDK_LEAVE_NOTIFY_MASK,
 					   NULL, cursor, 0) == 0);
-		gdk_cursor_destroy (cursor);
+		g_object_unref (G_OBJECT (cursor));
 	}
 	
 	gtk_grab_add (GTK_WIDGET (menu));
@@ -1324,7 +1324,6 @@ edit_dentry (GtkWidget *widget, ShowItemMenu *sim)
 
 	gtk_window_set_wmclass(GTK_WINDOW(dialog),
 			       "desktop_entry_properties","Panel");
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	g_object_set_data_full (G_OBJECT (dedit), "location",
 				g_strdup (sim->item_loc),
@@ -1393,7 +1392,6 @@ edit_direntry (GtkWidget *widget, ShowItemMenu *sim)
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"desktop_entry_properties", "Panel");
-	gtk_window_set_policy (GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
 	
 	dedit = gnome_ditem_edit_new ();
 	gtk_widget_show (dedit);
@@ -1748,7 +1746,7 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 	    }
 	}
 
-      gdk_cursor_destroy (cursor);
+      g_object_unref (G_OBJECT (cursor));
     }
 }
 
@@ -2221,7 +2219,6 @@ show_tearoff_menu (GtkWidget *menu, const char *title, gboolean cursor_position,
 				    GDK_DECOR_RESIZEH |
 				    GDK_DECOR_MINIMIZE |
 				    GDK_DECOR_MAXIMIZE);
-	gtk_window_set_policy (GTK_WINDOW (win), FALSE, FALSE, TRUE);
 	my_gtk_menu_reparent (GTK_MENU (menu), win, FALSE);
 
 	/* set sticky so that we mask the fact that we have no clue
@@ -2233,7 +2230,7 @@ show_tearoff_menu (GtkWidget *menu, const char *title, gboolean cursor_position,
 	if (cursor_position)
 		our_gtk_menu_position (GTK_MENU (menu));
 	else
-		gtk_widget_set_uposition (win, x, y);
+		gtk_window_move (GTK_WINDOW (win), x, y);
 
 	gtk_widget_show (GTK_WIDGET (menu));
 	gtk_widget_show (win);

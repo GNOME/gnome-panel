@@ -196,7 +196,7 @@ scale_pixbuf_to_square (GdkPixbuf *pb, int size, int *outw, int *outh, GdkInterp
 		*outh = new_height;
 
 	if (new_width == width && new_height == height)
-		return gdk_pixbuf_ref (pb);
+		return (GdkPixbuf *)g_object_ref ((GObject *)pb);
 
 	new_pb = gdk_pixbuf_new(gdk_pixbuf_get_colorspace(pb),
 				gdk_pixbuf_get_has_alpha(pb),

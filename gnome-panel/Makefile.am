@@ -14,6 +14,9 @@ INCLUDES =							\
 	-I$(top_builddir)/panel					\
 	-DPANEL_DEBUG						\
 	-DG_DISABLE_DEPRECATED					\
+	-DGDK_DISABLE_DEPRECATED				\
+	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
+	-DGTK_DISABLE_DEPRECATED				\
 	-DGNOME_DISABLE_DEPRECATED				\
 	-DGNOME_CORE_INTERNAL					\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
@@ -28,11 +31,6 @@ INCLUDES =							\
 	$(PANELCONFIG_CFLAGS)					\
 	$(WARN_CFLAGS)						\
 	$(NULL)
-
-
-	# we want this eventually
-	#-DGTK_DISABLE_DEPRECATED				\
-	#
 
 bin_PROGRAMS = \
 	gnome-panel-2 			\

@@ -137,7 +137,7 @@ goat_realize(GtkWidget *widget)
 		transform_pixbuf(rgb,
 			         0,0,goat_width,goat_height,goat_width*3,
 			         pb,affine,ART_FILTER_NEAREST,NULL);
-		gdk_pixbuf_unref(pb);
+		g_object_unref (G_OBJECT (pb));
 
 		goat_pix[frame] = gdk_pixmap_new(widget->window,
 						 goat_width,goat_height,
@@ -147,7 +147,7 @@ goat_realize(GtkWidget *widget)
 				   goat_width,goat_height,
 				   GDK_RGB_DITHER_NORMAL,
 				   rgb, goat_width*3);
-		gdk_gc_destroy(gc);
+		g_object_unref (G_OBJECT (gc));
 
 #define GUCHARSWAP(x,y) { guchar tmp=(x); (x)=(y); (y)=tmp; }
 		for(i=0;i<goat_width/2;i++)
@@ -170,7 +170,7 @@ goat_realize(GtkWidget *widget)
 				   GDK_RGB_DITHER_NORMAL,
 				   rgb, goat_width*3);
 
-		gdk_gc_destroy(gc);
+		g_object_unref (G_OBJECT (gc));
 		g_free(rgb);
 	}
 }
@@ -245,8 +245,8 @@ phsh_kill (void)
 {
         int i;
         for (i = 0; i < 4; i++) {
-                gdk_pixmap_unref (phsh.phsh[i]);
-                gdk_bitmap_unref (phsh.phsh_mask[i]);
+                g_object_unref (G_OBJECT (phsh.phsh[i]));
+                g_object_unref (G_OBJECT (phsh.phsh_mask[i]));
         }
         gdk_window_destroy (phsh.win);
         gtk_timeout_remove (phsh.handler);
@@ -399,7 +399,7 @@ check_screen (void)
 
         if (gdk_pixbuf_get_width (tmp) != 180 ||
             gdk_pixbuf_get_height (tmp) != 40) {
-                gdk_pixbuf_unref (tmp);
+                g_object_unref (G_OBJECT (tmp));
                 return;
         }
 
@@ -419,9 +419,9 @@ check_screen (void)
         gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[3], &phsh.phsh_mask[3], 128);
         phsh_reverse (gp);
         gdk_pixbuf_render_pixmap_and_mask (gp, &phsh.phsh[1], &phsh.phsh_mask[1], 128);
-        gdk_pixbuf_unref (gp);
+        g_object_unref (G_OBJECT (gp));
 
-        gdk_pixbuf_unref (tmp);
+        g_object_unref (G_OBJECT (tmp));
 
         phsh.x = -60;
         phsh.y = (rand() % (gdk_screen_height () - 40 - 2)) + 1;
@@ -435,7 +435,7 @@ check_screen (void)
         attributes.height = 40;
         attributes.wclass = GDK_INPUT_OUTPUT;
         attributes.visual = gdk_rgb_get_visual();
-        attributes.colormap = gdk_rgb_get_cmap();
+        attributes.colormap = gdk_rgb_get_colormap();
         attributes.event_mask = GDK_BUTTON_PRESS_MASK;
 
         phsh.win = gdk_window_new (NULL, &attributes,
@@ -748,7 +748,7 @@ pb_scale (GdkPixbuf *pb, double scale)
 	int w, h;
 	
 	if (scale == 1.0)
-		return gdk_pixbuf_ref (pb);
+		return (GdkPixbuf *)g_object_ref ((GObject *)pb);
 
 	w = gdk_pixbuf_get_width (pb) * scale;
 	h = gdk_pixbuf_get_height (pb) * scale;
@@ -1155,55 +1155,55 @@ ensure_creatures (void)
 
 	pb1 = get_phsh_frame (pb, 1);
 	phsh1 = pb_scale (pb1, inv_factor);
-	gdk_pixbuf_unref (pb1);
+	g_object_unref (G_OBJECT (pb1));
 	phsh_dered (phsh1);
 
 	pb1 = get_phsh_frame (pb, 2);
 	phsh2 = pb_scale (pb1, inv_factor);
-	gdk_pixbuf_unref (pb1);
+	g_object_unref (G_OBJECT (pb1));
 	phsh_dered (phsh2);
 
-	gdk_pixbuf_unref (pb);
+	g_object_unref (G_OBJECT (pb));
 
 	goat_file = panel_pixmap_discovery ("gnome-gegl2.png",
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
-		gdk_pixbuf_unref (phsh1);
-		gdk_pixbuf_unref (phsh2);
+		g_object_unref (G_OBJECT (phsh1));
+		g_object_unref (G_OBJECT (phsh2));
 		return FALSE;
 	}
 
 	pb = gdk_pixbuf_new_from_file (goat_file, NULL);
 	g_free (goat_file);
 	if (pb == NULL) {
-		gdk_pixbuf_unref (phsh1);
-		gdk_pixbuf_unref (phsh2);
+		g_object_unref (G_OBJECT (phsh1));
+		g_object_unref (G_OBJECT (phsh2));
 		return FALSE;
 	}
 
 	goat1 = pb_scale (pb, inv_factor * 0.66);
-	gdk_pixbuf_unref (pb);
+	g_object_unref (pb);
 
 	goat_file = panel_pixmap_discovery ("gnome-gegl2-2.png",
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
-		gdk_pixbuf_unref (goat1);
-		gdk_pixbuf_unref (phsh1);
-		gdk_pixbuf_unref (phsh2);
+		g_object_unref (G_OBJECT (goat1));
+		g_object_unref (G_OBJECT (phsh1));
+		g_object_unref (G_OBJECT (phsh2));
 		return FALSE;
 	}
 
 	pb = gdk_pixbuf_new_from_file (goat_file, NULL);
 	g_free (goat_file);
 	if (pb == NULL) {
-		gdk_pixbuf_unref (goat1);
-		gdk_pixbuf_unref (phsh1);
-		gdk_pixbuf_unref (phsh2);
+		g_object_unref (G_OBJECT (goat1));
+		g_object_unref (G_OBJECT (phsh1));
+		g_object_unref (G_OBJECT (phsh2));
 		return FALSE;
 	}
 
 	goat2 = pb_scale (pb, inv_factor * 0.66);
-	gdk_pixbuf_unref (pb);
+	g_object_unref (pb);
 
 	inv_goat_width = gdk_pixbuf_get_width (goat1);
 	inv_goat_height = gdk_pixbuf_get_height (goat1);
@@ -1211,13 +1211,13 @@ ensure_creatures (void)
 	inv_phsh_height = gdk_pixbuf_get_height (phsh1);
 
 	gdk_pixbuf_render_pixmap_and_mask (goat1, &inv_goat1, NULL, 127);
-	gdk_pixbuf_unref (goat1);
+	g_object_unref (G_OBJECT (goat1));
 	gdk_pixbuf_render_pixmap_and_mask (goat2, &inv_goat2, NULL, 127);
-	gdk_pixbuf_unref (goat2);
+	g_object_unref (G_OBJECT (goat2));
 	gdk_pixbuf_render_pixmap_and_mask (phsh1, &inv_phsh1, &inv_phsh1_mask, 127);
-	gdk_pixbuf_unref (phsh1);
+	g_object_unref (G_OBJECT (phsh1));
 	gdk_pixbuf_render_pixmap_and_mask (phsh2, &inv_phsh2, &inv_phsh2_mask, 127);
-	gdk_pixbuf_unref (phsh2);
+	g_object_unref (G_OBJECT (phsh2));
 
 	return TRUE;
 }
@@ -1227,7 +1227,7 @@ geginv_destroyed (GtkWidget *w, gpointer data)
 {
 	geginv = NULL;
 	if (geginv_pixmap != NULL)
-		gdk_pixmap_unref (geginv_pixmap);
+		g_object_unref (G_OBJECT (geginv_pixmap));
 	geginv_pixmap = NULL;
 }
 
@@ -1290,6 +1290,7 @@ start_geginv (void)
 		return;
 
 	geginv = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+	gtk_window_set_title (GTK_WINDOW (geginv), _("Killer GEGLs from Outer Space"));
 	g_object_set (G_OBJECT (geginv), "resizable", FALSE, NULL);
 	g_signal_connect (G_OBJECT (geginv), "destroy",
 			  G_CALLBACK (geginv_destroyed),

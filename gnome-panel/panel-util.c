@@ -950,7 +950,7 @@ panel_push_window_busy (GtkWidget *window)
 		if (window->window != NULL) {
 			GdkCursor *cursor = gdk_cursor_new (GDK_WATCH);
 			gdk_window_set_cursor (window->window, cursor);
-			gdk_cursor_destroy (cursor);
+			g_object_unref (G_OBJECT (cursor));
 			gdk_flush ();
 		}
 	}

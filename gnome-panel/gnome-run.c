@@ -21,6 +21,9 @@
  * USA
  */
 
+/* FIXME: because of CList */
+#undef GTK_DISABLE_DEPRECATED
+
 #include <config.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -739,7 +742,7 @@ simple_contents_shown (GtkWidget *vbox,
                 gdk_draw_rectangle (spacer_mask,
                                     gc,
                                     TRUE, 0, 0, CLIST_ICON_SIZE, CLIST_ICON_SIZE);
-                gdk_gc_unref (gc);
+                g_object_unref (G_OBJECT (gc));
                 gc = NULL;
                 
                 entries = fr_get_all_dirs ();
@@ -799,8 +802,8 @@ simple_contents_shown (GtkWidget *vbox,
                                 scaled = gdk_pixbuf_scale_simple (pixbuf, CLIST_ICON_SIZE, CLIST_ICON_SIZE, GDK_INTERP_BILINEAR);
                                 gdk_pixbuf_render_pixmap_and_mask (scaled,
                                                                    &pixmap, &mask, 128);
-                                gdk_pixbuf_unref (pixbuf);
-                                gdk_pixbuf_unref (scaled);
+                                g_object_unref (G_OBJECT (pixbuf));
+                                g_object_unref (G_OBJECT (scaled));
                         } else {
                                 pixmap = spacer_pixmap;
                                 mask = spacer_mask;
@@ -819,9 +822,9 @@ simple_contents_shown (GtkWidget *vbox,
 
                         if (pixbuf) {
                                 if (pixmap)
-                                        gdk_pixmap_unref (pixmap);
+                                        g_object_unref (G_OBJECT (pixmap));
                                 if (mask)
-                                        gdk_bitmap_unref (mask);
+                                        g_object_unref (G_OBJECT (mask));
                         }
                                 
                         gtk_clist_set_row_data (GTK_CLIST (clist),
@@ -830,8 +833,8 @@ simple_contents_shown (GtkWidget *vbox,
                         tmp = tmp->next;
                 }
 
-                gdk_pixmap_unref (spacer_pixmap);
-                gdk_bitmap_unref (spacer_mask);
+                g_object_unref (G_OBJECT (spacer_pixmap));
+                g_object_unref (G_OBJECT (spacer_mask));
                 g_slist_free (files);
         }
 }

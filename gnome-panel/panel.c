@@ -91,7 +91,7 @@ change_window_cursor(GdkWindow *window, GdkCursorType cursor_type)
 {
 	GdkCursor *cursor = gdk_cursor_new(cursor_type);
 	gdk_window_set_cursor(window, cursor);
-	gdk_cursor_destroy(cursor);
+	g_object_unref (G_OBJECT (cursor));
 }
 
 static void
@@ -661,7 +661,7 @@ panel_initiate_move (GtkWidget *widget, guint32 event_time)
 				  NULL,
 				  cursor,
 				  event_time);
-		gdk_cursor_destroy (cursor);
+		g_object_unref (G_OBJECT (cursor));
 
 		if (basep) {
 			basep->autohide_inhibit = TRUE;

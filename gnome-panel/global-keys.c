@@ -199,7 +199,7 @@ panel_global_keys_setup (void)
 static gboolean
 check_for_grabs (void)
 {
-	if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
+	if (gdk_pointer_grab (gdk_get_default_root_window (), FALSE, 
 			      0, NULL, NULL, GDK_CURRENT_TIME)
 	    != GrabSuccess) {
 		return TRUE;

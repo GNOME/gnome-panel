@@ -339,15 +339,18 @@ update_clock (FoobarWidget *foo)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
+		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+
 		gtk_tooltips_set_tip (panel_tooltips, foo->clock_ebox,
-				      hour, NULL);
+				      sure_string (str_utf8), NULL);
+		g_free (str_utf8);
 
 		day = das_tm->tm_mday;
 	}
 
 	if(strftime(hour, sizeof(hour), foo->clock_format, das_tm) == 0) {
 		/* according to docs, if the string does not fit, the
-		 * contents of tmp2 are undefined, thus just use
+		 * contents of hour are undefined, thus just use
 		 * ??? */
 		strcpy(hour, "???");
 	}
@@ -365,6 +368,8 @@ update_clock (FoobarWidget *foo)
 			gtk_widget_set_size_request (foo->clock_label, width, -1);
 
 		gtk_label_set_text (GTK_LABEL (foo->clock_label), str_utf8);
+
+		g_free (str_utf8);
 	}
 }
 
@@ -403,6 +408,7 @@ append_format_items (GtkWidget *menu)
 	struct tm *das_tm;
 	time_t das_time = 0;
 	char *key;
+	char *str_utf8;
 	char *s;
 	int i;
 	const char *formats[] = {
@@ -427,7 +433,10 @@ append_format_items (GtkWidget *menu)
 		}
 		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-		item = gtk_radio_menu_item_new_with_label (group, hour);
+		str_utf8 = g_locale_to_utf8((const gchar *)hour, strlen(hour), NULL, NULL, NULL);
+		item = gtk_radio_menu_item_new_with_label (group, sure_string (str_utf8));
+		g_free (str_utf8);
+
 		group = gtk_radio_menu_item_get_group (GTK_RADIO_MENU_ITEM (item));
 	
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);	
@@ -558,6 +567,7 @@ foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 			gtk_widget_set_size_request (foo->clock_label, width, -1);
 			g_object_unref (G_OBJECT(layout));
 		}
+		g_free (str_utf8);
 	}
 	update_clock (foo);
 }
@@ -657,7 +667,7 @@ get_default_image (void)
 		if (pb != NULL) {
 			scaled = gdk_pixbuf_scale_simple (pb, 20, 20, 
 							  GDK_INTERP_BILINEAR);
-			gdk_pixbuf_unref (pb);
+			g_object_unref (G_OBJECT (pb));
 
 			pixbuf = scaled;
 		}
@@ -724,7 +734,7 @@ add_window (WnckWindow *window, FoobarWidget *foo)
 							  (ICON_SIZE / greatest) * pix_y,
 							  GDK_INTERP_BILINEAR);
 			image = gtk_image_new_from_pixbuf (scaled);
-			gdk_pixbuf_unref (scaled);
+			g_object_unref (G_OBJECT (scaled));
 		} else {
 			image = gtk_image_new_from_pixbuf (pb);
 		}
@@ -840,7 +850,7 @@ set_das_pixmap (FoobarWidget *foo, WnckWindow *window)
 							  (ICON_SIZE / greatest) * pix_y,
 							  GDK_INTERP_BILINEAR);
 			foo->task_image = gtk_image_new_from_pixbuf (scaled);
-			gdk_pixbuf_unref (scaled);
+			g_object_unref (G_OBJECT (scaled));
 		} else {
 			foo->task_image = gtk_image_new_from_pixbuf (pb);
 		}

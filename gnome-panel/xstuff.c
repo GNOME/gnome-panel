@@ -214,7 +214,7 @@ xstuff_init (void)
 #endif
 
 	/* setup the keys filter */
-	gdk_window_add_filter (GDK_ROOT_PARENT(),
+	gdk_window_add_filter (gdk_get_default_root_window (),
 			       panel_global_keys_filter,
 			       NULL);
 

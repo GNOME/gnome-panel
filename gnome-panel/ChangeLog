@@ -1,3 +1,15 @@
+Wed Dec 26 16:25:50 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, basep-widget.c, button-widget.c, foobar-widget.c,
+	  global-keys.c, gnome-panel-properties.c, gnome-panel-screenshot.c,
+	  gnome-run.c, launcher.c, main.c, menu.c, nothing.cP, panel-util.c,
+	  panel-widget.c, panel.c, rgb-stuff.c, xstuff.c:  Compile also
+	  with GDK_DISABLE_DEPRECATED and GDK_PIXBUF_DISABLE_DEPRECATED,
+	  and all except gnome-run.c with GTK_DISABLE_DEPRECATED
+
+	* foobar-widget.c: always convert to utf8 after getting something
+	  from strftime
+
 Wed Dec 26 14:01:24 2001  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: fix width of clock label.  Now if the time

@@ -682,7 +682,6 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");
-	gtk_window_set_policy (GTK_WINDOW (dialog), FALSE, FALSE, TRUE);
 	
 	dee = GNOME_DITEM_EDIT (gnome_ditem_edit_new ());
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),

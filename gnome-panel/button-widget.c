@@ -300,7 +300,7 @@ button_widget_realize(GtkWidget *widget)
 	attributes_mask = GDK_WA_X | GDK_WA_Y;
 
 	widget->window = gtk_widget_get_parent_window(widget);
-	gdk_window_ref(widget->window);
+	g_object_ref (G_OBJECT (widget->window));
       
 	button_widget->event_window = gdk_window_new (parent->window,
 						      &attributes,
@@ -361,13 +361,13 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 		gtk_timeout_remove(button->pressed_timeout);
 
 	if(button->pixbuf)
-		gdk_pixbuf_unref(button->pixbuf);
+		g_object_unref (G_OBJECT (button->pixbuf));
 	button->pixbuf = NULL;
 	if(button->pixbuf_hc)
-		gdk_pixbuf_unref(button->pixbuf_hc);
+		g_object_unref (G_OBJECT (button->pixbuf_hc));
 	button->pixbuf_hc = NULL;
 	if(button->cache)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 
 	g_free(button->filename);
@@ -544,7 +544,7 @@ button_widget_set_dnd_highlight(ButtonWidget *button, gboolean highlight)
 	if(button->dnd_highlight != highlight) {
 		button->dnd_highlight = highlight;
 		if(button->cache)
-			gdk_pixmap_unref(button->cache);
+			g_object_unref (G_OBJECT (button->cache));
 		button->cache = NULL;
 
 		panel_widget_draw_icon (PANEL_WIDGET(GTK_WIDGET(button)->parent), button);
@@ -656,7 +656,7 @@ button_widget_draw_xlib(ButtonWidget *button, GdkPixmap *pixmap)
 				   widget->allocation.height - 1);
 	}
 	
-	gdk_gc_destroy(gc);
+	g_object_unref (G_OBJECT (gc));
 }
 
 static void
@@ -791,7 +791,7 @@ button_widget_enter_notify (GtkWidget *widget, GdkEventCrossing *event)
 #endif
 		button->in_button = TRUE;
 		if (button->cache)
-			gdk_pixmap_unref (button->cache);
+			g_object_unref (G_OBJECT (button->cache));
 		button->cache = NULL;
 		panel_widget_draw_icon (PANEL_WIDGET(widget->parent),
 					button);
@@ -820,7 +820,7 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 		button->in_button = FALSE;
 		if (global_config.highlight_when_over) {
 			if (button->cache)
-				gdk_pixmap_unref (button->cache);
+				g_object_unref (G_OBJECT (button->cache));
 			button->cache = NULL;
 			panel_widget_draw_icon (PANEL_WIDGET(widget->parent),
 						button);
@@ -846,7 +846,7 @@ button_widget_pressed(ButtonWidget *button)
 
 	button->pressed = TRUE;
 	if(button->cache)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 	setup_no_alpha(button);
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
@@ -860,7 +860,7 @@ button_widget_unpressed(ButtonWidget *button)
 
 	button->pressed = FALSE;
 	if(button->cache)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 	setup_no_alpha(button);
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
@@ -950,9 +950,9 @@ button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
 		size = PANEL_WIDGET(GTK_WIDGET(button)->parent)->sz;
 	
 	if (button->pixbuf != NULL)
-		gdk_pixbuf_unref(button->pixbuf);
+		g_object_unref (G_OBJECT (button->pixbuf));
 	if (button->pixbuf_hc != NULL)
-		gdk_pixbuf_unref(button->pixbuf_hc);
+		g_object_unref (G_OBJECT (button->pixbuf_hc));
 
 	button->pixbuf = loadup_file(pixmap);
 	button->pixbuf_hc = make_hc_pixbuf(button->pixbuf);
@@ -961,7 +961,7 @@ button_widget_set_pixmap(ButtonWidget *button, const char *pixmap, int size)
 	button->filename = g_strdup(pixmap);
 	button->size = size;
 	if (button->cache != NULL)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
@@ -983,7 +983,7 @@ button_widget_set_text(ButtonWidget *button, const char *text)
 	button->text = text?g_strdup(text):NULL;
 
 	if (button->cache != NULL)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 	
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
@@ -1006,7 +1006,7 @@ button_widget_set_params(ButtonWidget *button,
 	button->orient = orient;
 
 	if(button->cache)
-		gdk_pixmap_unref(button->cache);
+		g_object_unref (G_OBJECT (button->cache));
 	button->cache = NULL;
 	setup_no_alpha(button);
 	
@@ -1022,7 +1022,7 @@ button_widget_redo_all (void)
 	for(list = buttons; list != NULL; list = list->next) {
 		ButtonWidget *button = list->data;
 		if(button->cache != NULL)
-			gdk_pixmap_unref(button->cache);
+			g_object_unref (G_OBJECT (button->cache));
 		button->cache = NULL;
 		setup_no_alpha(button);
 		gtk_widget_queue_draw (GTK_WIDGET (button));
