@@ -13,6 +13,7 @@
 BEGIN_GNOME_DECLS
 
 void load_logout_applet(PanelWidget *panel, int pos);
+void load_lock_applet(PanelWidget *panel, int pos);
 
 END_GNOME_DECLS
 

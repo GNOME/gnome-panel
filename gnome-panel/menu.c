@@ -580,6 +580,123 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	g_free(s);
 }
 
+/* stolen from gmenu */
+static int
+isfile(gchar *s)
+{
+	struct stat st;
+
+	if ((!s)||(!*s)) return 0;
+	if (stat(s,&st)<0) return 0;
+	if (S_ISREG(st.st_mode)) return 1;
+	return 0;
+}
+
+/* returns a g_strdup'd string with filesystem reserved chars replaced */
+/* again from gmenu */
+static char *
+validate_filename(char *file)
+{
+	char *ret;
+	char *ptr;
+
+	g_return_val_if_fail(file != NULL, NULL);
+	
+	ret = g_strdup(file);
+	ptr = ret;
+	while (*ptr != '\0') {
+		if (*ptr == '/') *ptr = '_';
+		ptr++;
+	}
+
+	return ret;
+}
+
+static void
+really_add_new_menu_item (GtkWidget *d,int button, gpointer data)
+{
+	GnomeDEntryEdit *dedit = GNOME_DENTRY_EDIT(data);
+	char *tmp, *dir = gtk_object_get_data(GTK_OBJECT(d),"dir");
+	
+	GnomeDesktopEntry *dentry;
+	FILE *fp;
+	
+	if(button == 0) {
+		dentry = gnome_dentry_get_dentry(dedit);
+
+		if(!dentry->name || !(*(dentry->name)))
+			dentry->name=g_strdup(_("untitled"));
+		
+		
+		/* assume we are making a new file */
+		if (!dentry->location) {
+			int i=2;
+			tmp = validate_filename(dentry->name);
+			dentry->location = g_strdup_printf("%s/%s.desktop", dir, tmp);
+			while (isfile(dentry->location)) {
+				g_free(dentry->location);
+				dentry->location = g_strdup_printf("%s/%s%d.desktop",
+								   dir, tmp, i++);
+			}
+			g_free(tmp);
+		}
+		tmp = g_strdup_printf("%s/.order", dir);
+		fp = fopen(tmp, "a");
+		if (fp) {
+			char *file = strrchr(dentry->location, '/');
+			if (file)
+				fprintf(fp, "%s\n", file+1);
+			else
+				g_warning(_("Could not get file from path: %s"), 
+					  dentry->location);
+		} else
+			g_warning(_("Could not open .order file: %s"), tmp);
+		g_free(tmp);
+
+		gnome_desktop_entry_save(dentry);
+		gnome_desktop_entry_free(dentry);
+
+		/* FIXME: put in the .order file */
+	}
+	gtk_widget_destroy(d);
+}
+
+static void
+add_new_app_to_menu (GtkWidget *widget, char *item_loc)
+{
+	GtkWidget *d;
+	GtkWidget *notebook;
+	GnomeDEntryEdit *dee;
+
+	d = gnome_dialog_new(_("Create menu item"),
+			     GNOME_STOCK_BUTTON_OK,
+			     GNOME_STOCK_BUTTON_CANCEL,
+			     NULL);
+	gtk_window_set_wmclass(GTK_WINDOW(d),
+			       "create_menu_item","Panel");
+	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
+	
+	notebook = gtk_notebook_new();
+	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),notebook,
+			   TRUE,TRUE,GNOME_PAD_SMALL);
+	dee = GNOME_DENTRY_EDIT(gnome_dentry_edit_new_notebook(GTK_NOTEBOOK(notebook)));
+	
+	gtk_entry_set_text(GTK_ENTRY(GTK_COMBO(dee->type_combo)->entry),
+			   "Application");
+
+	gtk_object_set_data(GTK_OBJECT(d),"dir", g_strdup(item_loc));
+	
+	gtk_signal_connect(GTK_OBJECT(d),"clicked",
+			   GTK_SIGNAL_FUNC(really_add_new_menu_item),
+			   dee);
+
+	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
+
+	gnome_dialog_set_default(GNOME_DIALOG(d),0);
+
+	gtk_widget_show_all(d);	
+}
+
 static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
@@ -662,7 +779,7 @@ add_menudrawer_to_panel(GtkWidget *w, gpointer data)
 }
 
 static void
-add_menu_to_panel (GtkWidget *widget, void *data)
+add_menu_to_panel (GtkWidget *widget, gpointer data)
 {
 	MenuFinfo *mf = data;
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
@@ -921,6 +1038,21 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					   sim->mf->menudir);
 			/*ummmm slightly ugly but should work 99% of time*/
 			if(strstr(sim->mf->menudir,"/.gnome/apps"))
+				gtk_widget_set_sensitive(menuitem,FALSE);
+
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add new item to this menu"));
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
+			/*when activated we must pop down the first menu*/
+			gtk_signal_connect_object(GTK_OBJECT(menuitem),
+						  "activate",
+						  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
+						  GTK_OBJECT(item->parent));
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_new_app_to_menu),
+					   sim->mf->menudir);
+			if(access(sim->mf->menudir,W_OK)!=0)
 				gtk_widget_set_sensitive(menuitem,FALSE);
 		}
 
@@ -1325,19 +1457,19 @@ add_menu_separator (GtkWidget *menu)
 }
 
 static void
-add_drawer_to_panel (GtkWidget *widget, void *data)
+add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_drawer_applet(-1,NULL,NULL, current_panel, 0);
 }
 
 static void
-add_logout_to_panel (GtkWidget *widget, void *data)
+add_logout_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_logout_applet(current_panel, 0);
 }
 
 static void
-add_lock_to_panel (GtkWidget *widget, void *data)
+add_lock_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_lock_applet(current_panel, 0);
 }
@@ -2482,7 +2614,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 }
 
 void
-panel_lock (GtkWidget *widget, void *data)
+panel_lock (GtkWidget *widget, gpointer data)
 {
 	gboolean lock = gnome_config_get_bool_with_default ("Screensaver/Default/password", FALSE);
 	/* we want to default to something safe.
@@ -3320,7 +3452,7 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-toggle_prop(GtkWidget *widget, void *data)
+toggle_prop(GtkWidget *widget, gpointer data)
 {
 	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
 
@@ -3329,7 +3461,7 @@ toggle_prop(GtkWidget *widget, void *data)
 }
 
 static void
-toggle_main_menu(GtkWidget *widget, void *data)
+toggle_main_menu(GtkWidget *widget, gpointer data)
 {
 	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
 	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
@@ -3343,7 +3475,7 @@ toggle_main_menu(GtkWidget *widget, void *data)
 	}
 }
 static void
-toggle_normal_menu(GtkWidget *widget, void *data)
+toggle_normal_menu(GtkWidget *widget, gpointer data)
 {
 	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
 	GtkWidget *main_frame = gtk_object_get_data(GTK_OBJECT(box),
