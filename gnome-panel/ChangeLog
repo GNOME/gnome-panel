@@ -1,3 +1,11 @@
+2003-03-19  Arvind Samptur <arvind.samptur@wipro.com>
+
+	Don't forget, FOOBAR_WIDGET still exists for 2.2. :/
+
+	* panel.c: (remove_panel_accept) (panel_delete_without_query) :
+	Get the casting right when deleting the menu panel.
+	Fixes #108603
+
 2003-03-11  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-background.c: (background_changed): don't unref

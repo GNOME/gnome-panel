@@ -2846,7 +2846,10 @@ panel_delete_without_query (PanelWidget *panel_widget)
 	} else 
 		panel_widget_remove_drawers (panel_widget);
 
-	panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
+	if (BASEP_IS_WIDGET (panel))
+		panel_remove_from_gconf (PANEL_WIDGET (BASEP_WIDGET (panel)->panel));
+	else if (FOOBAR_IS_WIDGET (panel))
+		panel_remove_from_gconf (PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel));
 
 	gtk_widget_destroy (panel);
 
@@ -2859,7 +2862,10 @@ remove_panel_accept (GtkWidget *w,
 {
 	PanelWidget *panel_widget;
 
-	panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
+	if (BASEP_IS_WIDGET (panel))
+		panel_widget = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
+	else if (FOOBAR_IS_WIDGET (panel))
+		panel_widget = PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel);
 
 	if (response == GTK_RESPONSE_OK) {
 		panel_push_window_busy (w);
