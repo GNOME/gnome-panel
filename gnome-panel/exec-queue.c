@@ -49,20 +49,18 @@ really_exec_prog(int applet_id, char *path, char *param)
 		mulapp_load_or_add_to_queue(path,param);
 		return TRUE;
 	}  else {
-		int pid;
+		char *s;
+		
+		if(strlen(param)>0)
+			s = g_copy_strings("(true; ",path," ",param," &)",
+					   NULL);
+		else
+			s = g_copy_strings("(true; ",path," &)", NULL);
+		system(s);
 
-		pid = fork();
-		if(pid < 0)
-			g_error("Can't fork!");
-		if(pid == 0) {
-			if(strlen(param)>0)
-				execl(path,path,param,NULL);
-			else
-				execl(path,path,NULL);
-			g_error("Can't execl!");
-		}
+		printf("started applet, exec: '%s'\n",s);
 
-		printf("started applet, pid: %d\n",pid);
+		g_free(s);
 		
 		current_exec = applet_id;
 
