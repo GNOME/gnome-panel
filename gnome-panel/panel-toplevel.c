@@ -3415,7 +3415,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		g_param_spec_int (
 			"unhide-delay",
 			_("Un-hide delay"),
-			_("The number of miliseconds to delay before automatically un-hiding"),
+			_("The number of milliseconds to delay before automatically un-hiding"),
 			0,
 			G_MAXINT,
 			DEFAULT_UNHIDE_DELAY,
