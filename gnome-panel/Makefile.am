@@ -6,29 +6,16 @@ CFLAGS += -Wall  \
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.2f
 
-if ORBIT_INSTALLED
-panel_LINK = $(LINK)
-else
-CXX = mico-c++
-## We set this to force the values in mico-c++ to be used.  Otherwise,
-## on Linux boxes, the compilation will fail with the default
-## CXXFLAGS.
-CXXFLAGS =
-panel_LINK = $(CXXLINK)
-endif
-
 INCLUDES = -I. -I$(srcdir) \
 	-I$(top_srcdir)/intl -I$(top_builddir)/intl \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
-bin_PROGRAMS = panel #launcher_applet
+bin_PROGRAMS = panel
 
 libpanel_appletincludedir = $(includedir)
 
 lib_LTLIBRARIES = libpanel_applet.la
-
-if ORBIT_INSTALLED
 
 CORBA_SRCLIST = gnome-panel-stubs.c gnome-panel-skels.c gnome-panel-common.c gnome-panel.h
 
@@ -38,9 +25,9 @@ CLEANFILES += $(CORBA_SRCLIST)
 $(CORBA_SRCLIST): gnome-panel.idl
 	orbit-idl $(srcdir)/gnome-panel.idl
 
-APPLET_LIB = orbit-applet-lib.c
+APPLET_LIB = orbit-applet-lib.c applet-lib.h
 
-PANEL_ORB_SRCLIST= orbit-glue.c
+PANEL_ORB_SRCLIST= orbit-glue.c orbit-glue.h
 
 # We need explicit dependencies here for people building out
 # of the tarballs.
@@ -49,37 +36,12 @@ orbit-applet-lib.c: gnome-panel.h
 
 orbit-glue.c: gnome-panel.h
 
-else
-
-CORBA_SRCLIST = gnome-panel.cc gnome-panel.h
-
-gnome-panel.cc gnome-panel.h: gnome-panel.idl
-## `idl' lamely fails to strip the path part of the file
-## name when computing the name of the output file, so we prod it a
-## little.
-	idl --name gnome-panel $(srcdir)/gnome-panel.idl
-
-APPLET_LIB=applet-lib.cc mico-parse.cc mico-parse.h
-
-PANEL_ORB_SRCLIST= mico-glue.cc mico-parse.cc mico-parse.h
-
-# We need explicit dependencies here for people building out
-# of the tarballs.
-
-applet-lib.cc mico-parse.cc mico-glue.cc: gnome-panel.h
-
-endif
-
 libpanel_applet_la_SOURCES = \
 	$(APPLET_LIB) \
 	panel-util.c  \
 	panel-util.h  \
 	applet-widget.c \
 	$(CORBA_SRCLIST)
-
-EXTRA_libpanel_applet_la_SOURCES = \
-	orbit-applet-lib.c \
-	applet-lib.cc mico-parse.cc mico-parse.h
 
 libpanel_appletinclude_HEADERS = \
 	applet-lib.h \
@@ -136,13 +98,8 @@ panel_SOURCES = 		\
 	gdkextra.h		\
 	cookie.h		\
 	cookie.c		\
-	mico-glue.h		\
 	$(PANEL_ORB_SRCLIST)	\
 	$(CORBA_SRCLIST)
-
-EXTRA_panel_SOURCES = \
-	orbit-glue.c \
-	mico-glue.cc mico-parse.cc mico-parse.h
 
 panel_LDADD = $(GNOME_LIBDIR) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 

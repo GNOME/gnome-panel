@@ -50,6 +50,9 @@ void gnome_panel_applet_cleanup (int applet_id);
 char * gnome_panel_applet_add_tooltip (int applet_id, char *tooltip);
 char * gnome_panel_applet_remove_tooltip (int applet_id);
 
+/*this is currently not used, it's an empty function for now, but it
+  should register the orbit arguments*/
+void panel_corba_register_arguments (void);
 
 END_GNOME_DECLS
 

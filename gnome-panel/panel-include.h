@@ -29,8 +29,7 @@
 #include "mulapp.h"
 #include "exec-queue.h"
 
-#include "mico-glue.h"
-#include "mico-parse.h"
+#include "orbit-glue.h"
 
 #include "panel-util.h"
 #include "gdkextra.h"

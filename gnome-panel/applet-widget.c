@@ -4,7 +4,6 @@
 #include <gnome.h>
 #include <applet-widget.h>
 #include <applet-lib.h>
-#include "mico-parse.h"
 
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);

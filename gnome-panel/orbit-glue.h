@@ -1,7 +1,7 @@
-/* mico-glue.h - Glue connecting MICO to C.  */
+/* corba-glue.h - Glue connecting CORBA to panel.  */
 
-#ifndef __MICO_GLUE_H__
-#define __MICO_GLUE_H__
+#ifndef __ORBIT_GLUE_H__
+#define __ORBIT_GLUE_H__
 
 #include "panel-widget.h"
 
@@ -25,6 +25,11 @@ void send_applet_change_back (const char *ior, int applet_id,
 			      const GdkColor* color);
 void send_applet_tooltips_state (const char *ior, int enabled);
 
+/*this is currently not used, it's an empty function for now, but it
+  should register the orbit arguments*/
+void panel_corba_register_arguments (void);
+
+
 END_GNOME_DECLS
 
-#endif /* __MICO_GLUE_H__ */
+#endif /* __ORBIT_GLUE_H__ */
