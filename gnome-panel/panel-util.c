@@ -465,11 +465,11 @@ set_frame_colors(PanelWidget *panel, GtkWidget *frame,
 		set_color_back(but3,panel);
 		set_color_back(but4,panel);
 	} else {
-		gtk_widget_restore_default_style(frame);
-		gtk_widget_restore_default_style(but1);
-		gtk_widget_restore_default_style(but2);
-		gtk_widget_restore_default_style(but3);
-		gtk_widget_restore_default_style(but4);
+		gtk_widget_set_rc_style(frame);
+		gtk_widget_set_rc_style(but1);
+		gtk_widget_set_rc_style(but2);
+		gtk_widget_set_rc_style(but3);
+		gtk_widget_set_rc_style(but4);
 	}
 }
 
