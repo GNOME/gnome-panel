@@ -1245,8 +1245,9 @@ is_item_writable (const ShowItemMenu *sim)
 #endif
 		/*file exists and is writable, we're in bussines*/
 		return TRUE;
-	} else if (sim->item_loc == NULL ||
-		   errno == ENOENT) {
+	} else if ((sim->item_loc == NULL ||
+		    errno == ENOENT) &&
+		   sim->mf != NULL) {
 		/*the dentry isn't there, check if we can write the
 		  directory*/
 		if (access (sim->mf->menudir, W_OK) == 0 &&

@@ -1,3 +1,8 @@
+Fri Feb 16 23:25:39 2001  George Lebl <jirka@5z.com>
+
+	* menu.c: when access fails check for null in sim->mf since this
+	  would normally be NULL, for menuitems.
+
 Fri Feb 16 21:35:14 2001  George Lebl <jirka@5z.com>
 
 	* menu-fentry.[ch], menu.c:  Fix menu merging in the respect that
