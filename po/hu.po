@@ -5,7 +5,7 @@
 # Emese Kovacs <emese@gnome.hu>, 2000, 2001, 2002.
 # Tamas Vamosi <tvamosi@suselinux.hu>, 2002.
 # Andras Timar <timar@gnome.hu>, 2001, 2002, 2003.
-# Gabor Sari <saga@externet.hu>, 2003.
+# Gabor Sari <saga@gnome.hu>, 2003.
 # Gabor Kelemen <kelemeng@gnome.hu>, 2004.
 # Laszlo Dvornik <dvornik@gnome.hu>, 2004.
 #
@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 16:01+0100\n"
-"PO-Revision-Date: 2004-08-03 17:12+0200\n"
+"POT-Creation-Date: 2004-08-26 11:47+0200\n"
+"PO-Revision-Date: 2004-08-26 12:56+0200\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -250,13 +250,13 @@ msgstr ""
 "Dvornik László <dvornik@gnome.hu>\n"
 "Kelemen Gábor <kelemeng@gnome.hu>\n"
 "Kovács Emese <emese@gnome.hu>\n"
-"Sári Gábor <saga@externet.hu>\n"
+"Sári Gábor <saga@gnome.hu>\n"
 "Tímár András <timar@gnome.hu>\n"
 "Vámosi Tamás <tvamosi@suselinux.hu>"
 
 #: applets/clock/clock.c:2546
 msgid "The Clock displays the current time and date"
-msgstr "Az óra a jelenlegi időt és a dátumot mutatja"
+msgstr "Az óra a jelenlegi időt és dátumot mutatja"
 
 #. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
@@ -954,7 +954,7 @@ msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
-msgstr "GNOME panel shell"
+msgstr "GNOME panel héj"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
 #: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
@@ -1378,9 +1378,8 @@ msgid "_New Panel"
 msgstr "Új _panel"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "A panel _névjegye"
+msgstr "A panelek _névjegye"
 
 #: gnome-panel/menu.c:2395
 msgid "About _GNOME"
@@ -2183,9 +2182,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Ismeretlen hiba történt a következő megnyitása közben: %s"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Legutóbbi dokumentumok törlése"
+msgstr "Törli a Legutóbbi dokumentumok listáját?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2194,6 +2192,10 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Ha törli a Legutóbbi dokumentumok listáját, akkor a következőket törli:\n"
+"\n"
+"• Minden elemet a Műveletek → Legutóbbi dokumentumok menüelemből.\n"
+"• Minden elemet az összes alkalmazás legutóbbi dokumentumok listájából."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
@@ -2326,67 +2328,67 @@ msgstr "Panel elrejtése"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1464
+#: gnome-panel/panel-toplevel.c:1472
 msgid "Top Expanded Edge Panel"
 msgstr "Fenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1465
+#: gnome-panel/panel-toplevel.c:1473
 msgid "Top Centered Panel"
 msgstr "Fenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1474
 msgid "Top Floating Panel"
 msgstr "Fenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Top Edge Panel"
 msgstr "Fenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1471
+#: gnome-panel/panel-toplevel.c:1479
 msgid "Bottom Expanded Edge Panel"
 msgstr "Lenti kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1472
+#: gnome-panel/panel-toplevel.c:1480
 msgid "Bottom Centered Panel"
 msgstr "Lenti középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1481
 msgid "Bottom Floating Panel"
 msgstr "Lenti úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Bottom Edge Panel"
 msgstr "Lenti élpanel"
 
-#: gnome-panel/panel-toplevel.c:1478
+#: gnome-panel/panel-toplevel.c:1486
 msgid "Left Expanded Edge Panel"
 msgstr "Bal oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1479
+#: gnome-panel/panel-toplevel.c:1487
 msgid "Left Centered Panel"
 msgstr "Bal oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1480
+#: gnome-panel/panel-toplevel.c:1488
 msgid "Left Floating Panel"
 msgstr "Bal oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1481
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Left Edge Panel"
 msgstr "Bal oldali élpanel"
 
-#: gnome-panel/panel-toplevel.c:1485
+#: gnome-panel/panel-toplevel.c:1493
 msgid "Right Expanded Edge Panel"
 msgstr "Jobb oldali kiterjesztett élpanel"
 
-#: gnome-panel/panel-toplevel.c:1486
+#: gnome-panel/panel-toplevel.c:1494
 msgid "Right Centered Panel"
 msgstr "Jobb oldali középre helyezett panel"
 
-#: gnome-panel/panel-toplevel.c:1487
+#: gnome-panel/panel-toplevel.c:1495
 msgid "Right Floating Panel"
 msgstr "Jobb oldali úszópanel"
 
-#: gnome-panel/panel-toplevel.c:1488
+#: gnome-panel/panel-toplevel.c:1496
 msgid "Right Edge Panel"
 msgstr "Jobb oldali élpanel"
 
@@ -2699,9 +2701,9 @@ msgid ""
 "specified by the image key will be used as background."
 msgstr ""
 "Milyen típusú legyen ezen panel háttere. Lehetséges értékek: \"gtk\" - az "
-"alapértelmezett GTK+ widget háttér használata, \"color\" - a color (szín) "
-"kulcs lesz használva háttérszínként vagy \"image\" - az image (kép) kulcs "
-"által megadott kép lesz használva."
+"alapértelmezett GTK+ elemháttér használata, \"color\" - a color (szín) kulcs "
+"lesz használva háttérszínként vagy \"image\" - az image (kép) kulcs által "
+"megadott kép lesz használva."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
@@ -2873,82 +2875,3 @@ msgstr "XXL"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XXS"
-
-#~ msgid ""
-#~ "The system administrator has disallowed\n"
-#~ "modification of the panel configuration"
-#~ msgstr ""
-#~ "A rendszergazda letiltotta a panel\n"
-#~ "beállításainak módosítását"
-
-#~ msgid "Error loading glade file %s"
-#~ msgstr "Hiba a(z) '%s' glade fájl beolvasása közben"
-
-#~ msgid "Panel"
-#~ msgstr "Panel"
-
-#~ msgid "Select preferences for all your panels"
-#~ msgstr "Beállítások kiválasztása minden panelhez"
-
-#~ msgid "Animation _speed:"
-#~ msgstr "Animáció _sebessége:"
-
-#~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "Fiók be_csukása, ha valami indítva lett belőle"
-
-#~ msgid "Drawer and panel _animation"
-#~ msgstr "Fiók- és panel_animáció"
-
-#~ msgid "Fast"
-#~ msgstr "Gyors"
-
-#~ msgid "Panel Preferences"
-#~ msgstr "Panel beállítások"
-
-#~ msgid "Slow"
-#~ msgstr "Lassú"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Képernyőzár"
-
-#~ msgid "Lock the screen so that you can temporarily leave your computer"
-#~ msgstr "A képernyő lezárása, így egy időre magára hagyhatja a számítógépet"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Kijelentkezés a GNOME-ból"
-
-#~ msgid "Search for Files"
-#~ msgstr "Fájlok keresése"
-
-#~ msgid "Screenshot"
-#~ msgstr "Képernyőkép"
-
-#~ msgid "Lock"
-#~ msgstr "Lezárás"
-
-#~ msgid "Lock the screen so you can temporarily leave your computer"
-#~ msgstr "A képernyő lezárása, így egy időre magára hagyhatja a számítógépet"
-
-#~ msgid "Search"
-#~ msgstr "Keresés"
-
-#~ msgid "Run"
-#~ msgstr "Futtatás"
-
-#~ msgid "Run a command"
-#~ msgstr "Parancs futtatása"
-
-#~ msgid "Accessories"
-#~ msgstr "Kellékek"
-
-#~ msgid "Amusements"
-#~ msgstr "Szórakoztatás"
-
-#~ msgid "Utility"
-#~ msgstr "Segédeszköz"
-
-#~ msgid "Clear recent document history?"
-#~ msgstr "Törli a legutóbbi dokumentumok előzményét?"
-
-#~ msgid "This will clear the contents of the Recent Documents menu."
-#~ msgstr "Ez törölni fogja a \"Legutóbbi dokumentumok\" menü tartalmát."
