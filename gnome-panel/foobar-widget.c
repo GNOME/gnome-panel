@@ -204,6 +204,16 @@ foobar_enter_notify (GtkWidget *widget,
 }
 
 static void
+foobar_screenshot (GtkWidget *widget, gpointer data) 
+{
+	char *argv[2] = {"gnome-panel-screenshot", NULL};
+
+	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+		panel_error_dialog ("cannot_exec_gnome-panel-screenshot",
+				    _("Cannot execute gnome-panel-screenshot"));
+}
+
+static void
 foobar_search (GtkWidget *widget,
 	       gpointer   data)
 {
@@ -220,6 +230,14 @@ append_actions_menu (GtkWidget *menu_bar)
 	GtkWidget *menu, *item;
 
 	menu = panel_menu_new ();
+
+	item = pixmap_menu_item_new (_("Take a Screen Shot"), "gnome-mdi.png", FALSE);
+	gtk_tooltips_set_tip (panel_tooltips, item,
+			      _("Take a screen shot of your desktop"),
+			      NULL);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+        g_signal_connect (G_OBJECT (item), "activate",
+			  G_CALLBACK (foobar_screenshot), 0);	 
 
 	item = pixmap_menu_item_new (_("Run Program..."), "gnome-run.png",
 				     FALSE /* force_image */);

@@ -1,3 +1,13 @@
+2002-04-29  Glynn Foster  <glynn.foster@sun.com>
+
+	* Makefile.am: Remove install of gnome-panel-screenshot .desktop
+	file.
+	* foobar-widget.c: (foobar_screenshot), (append_actions_menu):
+	Add 'Take a Screen Shot' to the Menu Panel's Actions menu.
+	* gnome-panel-screenshot.c: (main): Implement a delay option
+	for the command line.
+	* gnome-panel-screenshot.desktop.in: Kill.
+
 Mon Apr 29 12:47:15 2002  Jonathan Blandford  <jrb@gnome.org>
 
 	* panel-config-global.c (panel_global_config_set_entry): s/-/_/
