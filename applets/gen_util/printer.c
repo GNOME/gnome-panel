@@ -146,8 +146,9 @@ static void
 applet_set_default_back(Printer *pr)
 {
 	GtkStyle *ns;
+	g_return_if_fail (pr->label != NULL);
 
-	ns = gtk_style_new();
+	ns = gtk_rc_get_style(pr->label);
 
 	gtk_style_ref(ns);
 	gtk_widget_set_style(pr->printer, ns);
