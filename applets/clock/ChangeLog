@@ -1,5 +1,14 @@
 2004-02-03  William Jon McCann  <mccann@jhu.edu>
 
+	* clock.c (position_calendar_popup): New function.
+	(present_calendar_popup): Use new position_calendar_popup.
+	(handle_tasks_changed, handle_appointments_changed): Reposition
+	window when tasks or appointments are changed.
+	(create_calendar): Switch position of calendar and events when
+	clock is on the bottom.
+
+2004-02-03  William Jon McCann  <mccann@jhu.edu>
+
 	* calendar-client.c (get_ical_is_all_day): Fix subtraction order
 	of start and end times.
 

@@ -159,6 +159,9 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
+static void position_calendar_popup   (ClockData         *cd,
+                                       GtkWidget         *window,
+                                       GtkWidget         *button);
 
 static void
 unfix_size (ClockData *cd)
@@ -664,6 +667,8 @@ handle_tasks_changed (ClockData *cd)
         g_slist_free (events);
 
         update_frame_visibility (cd->task_list, GTK_TREE_MODEL (cd->tasks_filter));
+        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle))
+                position_calendar_popup (cd, cd->calendar_popup, cd->toggle);
 }
 
 static void
@@ -987,6 +992,8 @@ handle_appointments_changed (ClockData *cd)
         g_slist_free (events);
 
         update_frame_visibility (cd->appointment_list, GTK_TREE_MODEL (cd->appointments_model));
+        if (cd->calendar_popup && GTK_WIDGET_REALIZED (cd->toggle))
+                position_calendar_popup (cd, cd->calendar_popup, cd->toggle);
 }
 
 static GtkWidget *
@@ -1249,18 +1256,25 @@ create_calendar (ClockData *cd,
                                    tm->tm_year + 1900);
         gtk_calendar_select_day (GTK_CALENDAR (cd->calendar), tm->tm_mday);
 
-	gtk_box_pack_start (GTK_BOX (vbox), cd->calendar, TRUE, FALSE, 0);
-	gtk_widget_show (cd->calendar);
-
-        add_appointments_and_tasks (cd, vbox);
+	switch (cd->orient) {
+        case PANEL_APPLET_ORIENT_UP:
+                add_appointments_and_tasks (cd, vbox);
+                gtk_box_pack_start (GTK_BOX (vbox), cd->calendar, TRUE, FALSE, 0);
+                break;
+        default:
+                gtk_box_pack_start (GTK_BOX (vbox), cd->calendar, TRUE, FALSE, 0);
+                add_appointments_and_tasks (cd, vbox);
+                break;
+        }
+        gtk_widget_show (cd->calendar);
 
 	return GTK_WIDGET (window);
 }
 
 static void
-present_calendar_popup (ClockData *cd,
-			GtkWidget *window,
-			GtkWidget *button)
+position_calendar_popup (ClockData *cd,
+                         GtkWidget *window,
+                         GtkWidget *button)
 {
 	GtkRequisition  req;
 	GdkScreen      *screen;
@@ -1333,7 +1347,15 @@ present_calendar_popup (ClockData *cd,
 	}
 		
 	gtk_window_move (GTK_WINDOW (window), x, y);
-	gtk_window_present (GTK_WINDOW (window));
+}
+
+static void
+present_calendar_popup (ClockData *cd,
+			GtkWidget *window,
+			GtkWidget *button)
+{
+        position_calendar_popup (cd, window, button);
+        gtk_window_present (GTK_WINDOW (window));
 }
 
 static void
