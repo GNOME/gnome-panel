@@ -30,6 +30,8 @@
 
 #define INTERNETSECOND (864/4)
 
+extern GtkTooltips *panel_tooltips;
+
 typedef struct _ClockData ClockData;
 
 typedef void (*ClockUpdateFunc) (ClockData *, time_t);
@@ -75,12 +77,6 @@ static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
 static void phelp_cb	     (GtkWidget *w, gint tab, gpointer data);
-
-static void
-free_data (gpointer data)
-{
-	g_free(data);
-}
 
 static int
 clock_timeout_callback (gpointer data)
@@ -233,14 +229,15 @@ computer_clock_update_func (ClockData * cd,
 		g_string_append (gs, date);
 	}
 
-#ifdef FIXME
 	/* Set the applets tooltip */
 	if (cd->showtooltip && !cd->unixtime && !cd->internettime) {
-		if (strftime (tooltip, sizeof (tooltip), _("%A, %B %d"), tm) <= 0)
-			strcpy (tooltip, "???");
-		applet_widget_set_tooltip (APPLET_WIDGET (cd->applet), tooltip);
+		if (strftime (date, sizeof (date), _("%A, %B %d"), tm) <= 0)
+			strcpy (date, "???");
+		utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
+  		gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
+				      utf8, NULL);
+		g_free (utf8);
 	}
-#endif
 	
 	/*if we are vertical, just make it char per line */
 	if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
@@ -293,7 +290,7 @@ create_computer_clock_widget (GtkWidget ** clock, ClockUpdateFunc * update_func)
 	gtk_box_pack_start_defaults (GTK_BOX (vbox), cc->time);
 	gtk_widget_show (cc->time);
 
-	g_object_set_data_full (G_OBJECT (frame), "cc", cc, free_data);
+	g_object_set_data_full (G_OBJECT (frame), "cc", cc, g_free);
 
 	*clock = frame;
 	*update_func = computer_clock_update_func;
@@ -426,6 +423,7 @@ copy_time (BonoboUIComponent *uic,
 	time_t current_time = time (NULL);
 	struct tm *tm;
 	char string[256];
+	char *utf8;
 
 	if (cd->gmt_time)
 		tm = gmtime (&current_time);
@@ -450,8 +448,10 @@ copy_time (BonoboUIComponent *uic,
 			strcpy (string, "???");
 	}
 
+	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
-				string, -1);
+				utf8, -1);
+	g_free (utf8);
 }
 
 static void
@@ -462,6 +462,7 @@ copy_date (BonoboUIComponent *uic,
 	time_t current_time = time (NULL);
 	struct tm *tm;
 	char string[256];
+	char *utf8;
 
 	if (cd->gmt_time)
 		tm = gmtime (&current_time);
@@ -471,8 +472,10 @@ copy_date (BonoboUIComponent *uic,
 	if (strftime (string, sizeof (string), _("%A, %B %d %Y"), tm) <= 0)
 		strcpy (string, "???");
 	
+	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
-				string, -1);
+				utf8, -1);
+	g_free (utf8);
 }
 
 
@@ -485,6 +488,7 @@ copy_timestamp (BonoboUIComponent *uic,
 	time_t current_time = time (NULL);
 	struct tm *tm;
 	char string[256];
+	char *utf8;
 
 	tm = localtime (&current_time);
 
@@ -494,8 +498,10 @@ copy_timestamp (BonoboUIComponent *uic,
 		     _("%a, %d  %b  %Y %H:%M:%S %z"), tm) <= 0)
 		strcpy (string, "???");
 	
+	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
 	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
-				string, -1);
+				utf8, -1);
+	g_free (utf8);
 }
 
 static const BonoboUIVerb clock_menu_verbs [] = {
