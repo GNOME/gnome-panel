@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-20 12:16+0100\n"
-"PO-Revision-Date: 2005-01-20 19:59+0100\n"
+"POT-Creation-Date: 2005-01-28 12:27+0100\n"
+"PO-Revision-Date: 2005-01-28 15:01+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,7 @@ msgstr "O _aplikaci"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:764
-#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:954
+#: gnome-panel/panel-context-menu.c:327 gnome-panel/panel-menu-bar.c:963
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "Nápo_věda"
@@ -188,8 +188,8 @@ msgstr "Vlastní formát"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
+#: applets/wncklet/showdesktop.c:516 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -238,8 +238,8 @@ msgstr "Používat _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:546
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -662,8 +662,7 @@ msgid "Window Navigation Applet Factory"
 msgstr "Generátor appletu navigace mezi okny"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:901
-#: applets/wncklet/window-menu.c:903
+#: applets/wncklet/window-menu.c:106 applets/wncklet/window-menu.c:312
 msgid "Window Selector"
 msgstr "Výběr oken"
 
@@ -680,25 +679,25 @@ msgstr "Skrytá okna obnovíte kliknutím zde."
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Kliknutím zde skryjete všechna okna a zobrazíte pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:403
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Nemohu načíst %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
+#: applets/wncklet/showdesktop.c:405
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:438 applets/wncklet/showdesktop.c:557
 msgid "Show Desktop Button"
 msgstr "Tlačítko Zobrazit pracovní plochu"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:560
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Toto tlačítko vám umožňuje skrýt všechna okna a zobrazit pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:601
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -840,23 +839,11 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Kdy seskupovat okna"
 
-#: applets/wncklet/window-menu.c:135
+#: applets/wncklet/window-menu.c:111
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Výběr oken zobrazuje seznam všech oken a umožňuje vám mezi nimi přepínat."
-
-#: applets/wncklet/window-menu.c:340
-msgid "Unknown Window"
-msgstr "Neznámé okno"
-
-#: applets/wncklet/window-menu.c:721
-msgid "No Windows Open"
-msgstr "Žádná otevřená okna"
-
-#: applets/wncklet/window-menu.c:902
-msgid "Tool to switch between windows"
-msgstr "Nástroj pro přepínání mezi okny"
 
 #: applets/wncklet/workspace-switcher.c:144
 #: applets/wncklet/workspace-switcher.c:922
@@ -976,11 +963,11 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME Panel Shell"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:518
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:535
 msgid "_Lock To Panel"
 msgstr "_Zamknout do panelu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:527
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:518
 msgid "_Move"
 msgstr "_Přesunout"
 
@@ -992,7 +979,7 @@ msgstr "_Odstranit z panelu"
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1208
+#: gnome-panel/applet.c:1212
 msgid "Can't find an empty spot"
 msgstr "Nemohu najít volné místo"
 
@@ -1115,23 +1102,23 @@ msgstr "Nemohu spustit položku"
 msgid "Cannot load entry"
 msgstr "Nemohu načíst položku"
 
-#: gnome-panel/menu.c:802
+#: gnome-panel/menu.c:818
 msgid "Add this launcher to panel"
 msgstr "Přidat tento spouštěč na panel"
 
-#: gnome-panel/menu.c:819
+#: gnome-panel/menu.c:835
 msgid "Entire menu"
 msgstr "Celé menu"
 
-#: gnome-panel/menu.c:829
+#: gnome-panel/menu.c:845
 msgid "Add this as drawer to panel"
 msgstr "Přidat jako zásuvku na panel"
 
-#: gnome-panel/menu.c:841
+#: gnome-panel/menu.c:857
 msgid "Add this as menu to panel"
 msgstr "Přidat jako menu na panel"
 
-#: gnome-panel/menu.c:1487 gnome-panel/panel-menu-bar.c:760
+#: gnome-panel/menu.c:1503 gnome-panel/panel-menu-bar.c:766
 msgid "Applications"
 msgstr "Aplikace"
 
@@ -1333,17 +1320,17 @@ msgstr "Chcete odstranit tento aplet ze svého nastavení?"
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Z ovládacího prvku nelze získat rozhraní AppletShell\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "Chyba při sledování klíče gconf '%s': %s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Chyba při načítání adresáře gconf '%s': %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Chyba při získávání hodnoty pro '%s': %s"
@@ -1656,17 +1643,30 @@ msgstr "Místa v síti"
 msgid "Removable Media"
 msgstr "Výměnná média"
 
-#: gnome-panel/panel-menu-bar.c:591 gnome-panel/panel-menu-bar.c:777
-msgid "Desktop"
+#. Translators: Desktop is
+#. * used here as in "Desktop
+#. * Folder" (this is not the
+#. * Desktop environment). Do
+#. * not keep "Desktop Folder|"
+#. * in the translation
+#: gnome-panel/panel-menu-bar.c:597
+msgid "Desktop Folder|Desktop"
 msgstr "Pracovní plocha"
 
-#: gnome-panel/panel-menu-bar.c:592
-msgid "Desktop directory"
-msgstr "Adresář pracovní plochy"
+#: gnome-panel/panel-menu-bar.c:598
+msgid "Open the desktop as a folder"
+msgstr "Otevřít pracovní plochu jako adresář"
 
-#: gnome-panel/panel-menu-bar.c:771
+#: gnome-panel/panel-menu-bar.c:777
 msgid "Places"
 msgstr "Místa"
+
+#. Translators: Desktop is used here as in "Desktop Environment" (this
+#. * is not the Desktop folder). Do not keep "Desktop Environment|" in
+#. * the translation.
+#: gnome-panel/panel-menu-bar.c:786
+msgid "Desktop Environment|Desktop"
+msgstr "Prostředí pracovní plochy"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2016,12 +2016,12 @@ msgstr "Vymazat seznam nedávných dokumentů?"
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
-"• All items from the Actions → Recent Documents menu item.\n"
+"• All items from the Places → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
 "Pokud vymažete seznam nedávných dokumentů, vymažete následující:\n"
 "\n"
-"• Všechny položky z položky menu Akce → Nedávné dokumenty.\n"
+"• Všechny položky z položky menu Místa → Nedávné dokumenty.\n"
 "• Všechny položky seznamů nedávných dokumentů ve všech aplikacích."
 
 #: gnome-panel/panel-recent.c:222
@@ -2709,6 +2709,18 @@ msgstr "_Aplet:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Adresář nastavení:"
+
+#~ msgid "Unknown Window"
+#~ msgstr "Neznámé okno"
+
+#~ msgid "No Windows Open"
+#~ msgstr "Žádná otevřená okna"
+
+#~ msgid "Tool to switch between windows"
+#~ msgstr "Nástroj pro přepínání mezi okny"
+
+#~ msgid "Desktop"
+#~ msgstr "Pracovní plocha"
 
 #~ msgid "Shut Down"
 #~ msgstr "Vypnout"
