@@ -2,6 +2,9 @@
 #ifndef PANEL_INCLUDE_H
 #define PANEL_INCLUDE_H
 
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-util.h>
+
 #include "panel-types.h"
 
 #include "panel-widget.h"
