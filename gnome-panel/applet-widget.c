@@ -1803,8 +1803,8 @@ server_applet_set_tooltips_state(PortableServer_Servant _servant,
 
 static void
 server_applet_change_position(PortableServer_Servant _servant,
-			      CORBA_short x,
-			      CORBA_short y,
+			      const CORBA_short x,
+			      const CORBA_short y,
 			      CORBA_Environment *ev)
 {
 	CustomAppletServant *servant = (CustomAppletServant *)_servant;

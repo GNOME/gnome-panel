@@ -190,7 +190,6 @@ floating_pos_get_menu_pos (BasePWidget *basep,
 			   int wx, int wy,
 			   int ww, int wh)
 {	
-	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	PanelOrientType menu_orient = floating_pos_get_applet_orient (basep);
 	
 	switch (menu_orient) {
@@ -411,7 +410,7 @@ floating_widget_change_params (FloatingWidget *floating,
 
 void
 floating_widget_change_orient (FloatingWidget *floating,
-			     PanelOrientType orient)
+			     PanelOrientation orient)
 {
 	FloatingPos *pos = FLOATING_POS (floating->pos);
 	if (PANEL_WIDGET (BASEP_WIDGET (floating)->panel)->orient != orient) {
