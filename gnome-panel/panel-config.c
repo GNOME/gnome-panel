@@ -595,15 +595,14 @@ screen_set (GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget *
-make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
+make_misc_widget (PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
 	GtkWidget *box, *hbox;
 	GtkWidget *button, *label;
 	GtkObject *range;
 
-	if ( ! avoiding &&
-	    multiscreen_screens () <= 1)
+	if (multiscreen_screens () <= 1)
 		return NULL;
 
 	frame = gtk_frame_new (_("Miscellaneous"));
@@ -613,25 +612,23 @@ make_misc_widget (PerPanelConfig *ppc, gboolean avoiding)
 	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	if (multiscreen_screens () > 1) {
-		hbox = gtk_hbox_new (FALSE, 0);
-		gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
+	hbox = gtk_hbox_new (FALSE, 0);
+	gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
 
-		label = gtk_label_new (_("Current screen:"));
-		gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+	label = gtk_label_new (_("Current screen:"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 
-		range = gtk_adjustment_new (ppc->screen,
-					    0, multiscreen_screens () - 1,
-					    1, 1, 1);
-		ppc->screen_spin = button =
-			gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
-		gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
-		g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
-		gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
-		g_signal_connect (G_OBJECT (button), "changed",
-				  G_CALLBACK (screen_set), NULL);
-		gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-	}
+	range = gtk_adjustment_new (ppc->screen,
+				    0, multiscreen_screens () - 1,
+				    1, 1, 1);
+
+	ppc->screen_spin = button =
+		gtk_spin_button_new (GTK_ADJUSTMENT (range), 1, 0);
+	gtk_widget_set_size_request (GTK_WIDGET (button), 65, -1);
+	g_object_set_data (G_OBJECT (button), "PerPanelConfig", ppc);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->screen);
+	g_signal_connect (button, "changed", G_CALLBACK (screen_set), NULL);
+	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
 	return frame;
 }
@@ -815,7 +812,7 @@ edge_notebook_page (PerPanelConfig *ppc)
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	w = make_misc_widget (ppc, TRUE);
+	w = make_misc_widget (ppc);
 	if (w != NULL)
 		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -850,7 +847,7 @@ aligned_notebook_page (PerPanelConfig *ppc)
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	w = make_misc_widget (ppc, TRUE);
+	w = make_misc_widget (ppc);
 	if (w != NULL)
 		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -973,7 +970,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	w = make_misc_widget (ppc, FALSE);
+	w = make_misc_widget (ppc);
 	if (w != NULL)
 		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -1051,7 +1048,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
-	w = make_misc_widget (ppc, TRUE);
+	w = make_misc_widget (ppc);
 	if (w != NULL)
 		gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 	
@@ -1111,7 +1108,7 @@ make_size_widget (PerPanelConfig *ppc)
 			  G_CALLBACK (activate_proper_item), 
 			  NULL);
 
-	menuitem = gtk_menu_item_new_with_label (_("XX Small Tiny (12 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("XX Small (12 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_object_set_data (G_OBJECT (menuitem), "PerPanelConfig", ppc);

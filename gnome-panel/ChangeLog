@@ -1,5 +1,13 @@
 2002-04-10  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-config.c: (make_misc_widget): don't make misc frame
+	unless we want the multiscreen option. Also kill avoid param
+	Fixes (77125)
+	(edge_notebook_page), (aligned_notebook_page),
+	(floating_notebook_page), (sliding_notebook_page): upd.
+
+2002-04-10  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-util.c: (panel_show_help): check error != NULL,
 	fixes (77104)
 
