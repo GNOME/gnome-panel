@@ -99,9 +99,7 @@ corner_widget_realize(GtkWidget *w)
 
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
-		basep_widget_add_fake(BASEP_WIDGET(w), -1,
-				      FALSE, -1, -1,-1,-1,TRUE,FALSE);
-		/*gnome_win_hints_set_hints(w,
+		gnome_win_hints_set_hints(w,
 					  WIN_HINTS_SKIP_FOCUS |
 					  WIN_HINTS_SKIP_WINLIST |
 					  WIN_HINTS_SKIP_TASKBAR);
@@ -110,7 +108,7 @@ corner_widget_realize(GtkWidget *w)
 					  WIN_STATE_FIXED_POSITION);
 		gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);*/
+		gdk_window_set_decorations(w->window, 0);
 	}
 }
 
@@ -172,10 +170,10 @@ corner_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (basep->table, &basep->table->requisition);
+	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
 	
-	requisition->width = basep->table->requisition.width;
-	requisition->height = basep->table->requisition.height;
+	requisition->width = basep->ebox->requisition.width;
+	requisition->height = basep->ebox->requisition.height;
 }
 
 static void
@@ -277,10 +275,10 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	
 	/*we actually want to ignore the size_reqeusts since they are sometimes
 	  a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->table, &basep->table->requisition);
+	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
 	
-	allocation->width = basep->table->requisition.width;
-	allocation->height = basep->table->requisition.height;
+	allocation->width = basep->ebox->requisition.width;
+	allocation->height = basep->ebox->requisition.height;
 
 	corner_widget_get_pos(corner,
 			      &allocation->x,
@@ -289,67 +287,38 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			      allocation->height);
 
 
+	challoc.x = challoc.y = 0;
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
-		BasePWidget *basep = BASEP_WIDGET(widget);
-		if(!basep->fake &&
-		   corner->state != CORNER_SHOWN) {
+		int w = allocation->width;
+		int h = allocation->height;
+		gdk_window_set_hints (widget->window,
+				      allocation->x, allocation->y,
+				      0,0,0,0, GDK_HINT_POS);
+		if(corner->state != CORNER_SHOWN) {
 			PanelOrientType hide_orient;
-			int w,h;
-			gdk_window_show(widget->window);
-			gdk_window_resize (widget->window,
-					   allocation->width, 
-					   allocation->height);
-			corner_widget_get_hidepos(corner, &hide_orient, &w, &h);
-			basep_widget_add_fake(basep,hide_orient,FALSE,
-					      -1,-1,w,h,TRUE,TRUE);
-			basep_widget_set_fake_orient(basep, -1);
-		} else if(basep->fake) {
-			PanelOrientType hide_orient;
-			int w,h;
-			corner_widget_get_hidepos(corner, &hide_orient, &w, &h);
-			basep_widget_set_fake_orient(basep, -1);
-			gdk_window_move_resize (basep->fake,
-						allocation->x, 
-						allocation->y,
-						w,
-						h);
-			gdk_window_set_hints (basep->fake,
-					      allocation->x, allocation->y,
-					      w, h, w, h,
-					      GDK_HINT_POS | 
-					      GDK_HINT_MAX_SIZE |
-					      GDK_HINT_MIN_SIZE);
-			gdk_window_show(widget->window);
-			gdk_window_resize (widget->window,
-					   allocation->width, 
-					   allocation->height);
-			basep_widget_set_infake_position(basep,
-							 hide_orient, w,h);
-		} else { /*if(!basep->fake) {*/
-			gdk_window_move_resize (widget->window,
-						allocation->x, 
-						allocation->y,
+			int x,y;
+			corner_widget_get_hidepos(corner, &hide_orient,
+						   &w, &h);
+			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
+			challoc.x = x;
+			challoc.y = y;
+		} else if(basep->ebox->window) {
+			gdk_window_move_resize (basep->ebox->window,
+						0,0,
 						allocation->width, 
 						allocation->height);
-			gdk_window_set_hints (basep->fake,
-					      allocation->x, allocation->y,
-					      allocation->width, allocation->height,
-					      allocation->width, allocation->height,
-					      GDK_HINT_POS | 
-					      GDK_HINT_MAX_SIZE |
-					      GDK_HINT_MIN_SIZE);
-			gdk_window_set_hints (widget->window,
-					      allocation->x, allocation->y,
-					      0, 0, 0, 0, GDK_HINT_POS);
 		}
+		gdk_window_move_resize (widget->window,
+					allocation->x, 
+					allocation->y,
+					w,h);
 	} else
 		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
 
-	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
-	gtk_widget_size_allocate(basep->table,&challoc);
+	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
 
 static void

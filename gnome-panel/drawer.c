@@ -295,23 +295,11 @@ drawer_setup(Drawer *drawer)
 	if(DRAWER_WIDGET(drawer->drawer)->state != DRAWER_SHOWN) {
 		gtk_widget_size_request(drawer->drawer,
 					&drawer->drawer->requisition);
-		if(BASEP_WIDGET(drawer->drawer)->fake) {
-			gtk_widget_show(drawer->drawer);
-			gdk_window_show(BASEP_WIDGET(drawer->drawer)->fake);
-			gdk_window_move(BASEP_WIDGET(drawer->drawer)->fake,
-					-drawer->drawer->requisition.width - 1,
-					-drawer->drawer->requisition.height - 1);
-		} else {
-			gtk_widget_set_uposition(drawer->drawer,
-						 -drawer->drawer->requisition.width - 1,
-						 -drawer->drawer->requisition.height - 1);
-			gtk_widget_show(drawer->drawer);
-		}
-	} else {
-		gtk_widget_show(drawer->drawer);
-		if(BASEP_WIDGET(drawer->drawer)->fake)
-			gdk_window_show(BASEP_WIDGET(drawer->drawer)->fake);
+		gtk_widget_set_uposition(drawer->drawer,
+					 -drawer->drawer->requisition.width - 1,
+					 -drawer->drawer->requisition.height - 1);
 	}
+	gtk_widget_show(drawer->drawer);
 }
 
 static void

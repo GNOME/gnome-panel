@@ -99,13 +99,7 @@ snapped_widget_realize(GtkWidget *w)
 
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
-		if(snapped->mode == SNAPPED_AUTO_HIDE)
-			basep_widget_add_fake(BASEP_WIDGET(w), -1,
-					      FALSE, -1, -1,-1,-1,TRUE,TRUE);
-		else
-			basep_widget_add_fake(BASEP_WIDGET(w), -1,
-					      FALSE, -1, -1,-1,-1,TRUE,FALSE);
-		/*gnome_win_hints_set_hints(w, 
+		gnome_win_hints_set_hints(w, 
 					  WIN_HINTS_SKIP_FOCUS |
 					  WIN_HINTS_SKIP_WINLIST |
 					  WIN_HINTS_SKIP_TASKBAR);
@@ -118,7 +112,7 @@ snapped_widget_realize(GtkWidget *w)
 			gnome_win_hints_set_layer(w, WIN_LAYER_DOCK);
 		}
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);*/
+		gdk_window_set_decorations(w->window, 0);
 	}    
 }
 
@@ -181,18 +175,18 @@ snapped_widget_size_request(GtkWidget *widget,
 		return;
 	}
 
-	gtk_widget_size_request (basep->table, &basep->table->requisition);
+	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
 	
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			requisition->width = gdk_screen_width();
-			requisition->height = basep->table->requisition.height;
+			requisition->height = basep->ebox->requisition.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			requisition->height = gdk_screen_height();
-			requisition->width = basep->table->requisition.width;
+			requisition->width = basep->ebox->requisition.width;
 			break;
 	}
 }
@@ -290,19 +284,19 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	/*get us a size request (we ignored the one on allocation because
 	  we don't want to change our size, ever*/
-	gtk_widget_size_request (basep->table, &basep->table->requisition);
+	gtk_widget_size_request (basep->ebox, &basep->ebox->requisition);
 	
 	/*ignore the allocation we get, we want to be this large*/
 	switch(snapped->pos) {
 		case SNAPPED_BOTTOM:
 		case SNAPPED_TOP:
 			allocation->width = gdk_screen_width();
-			allocation->height = basep->table->requisition.height;
+			allocation->height = basep->ebox->requisition.height;
 			break;
 		case SNAPPED_LEFT:
 		case SNAPPED_RIGHT:
 			allocation->height = gdk_screen_height();
-			allocation->width = basep->table->requisition.width;
+			allocation->width = basep->ebox->requisition.width;
 			break;
 	}
 	
@@ -312,58 +306,38 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			       allocation->width,
 			       allocation->height);
 
-
+	challoc.x = challoc.y = 0;
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget)) {
-		BasePWidget *basep = BASEP_WIDGET(widget);
-		if(!basep->fake &&
-		   snapped->state != SNAPPED_SHOWN) {
+		int w = allocation->width;
+		int h = allocation->height;
+		gdk_window_set_hints (widget->window,
+				      allocation->x, allocation->y,
+				      0,0,0,0, GDK_HINT_POS);
+		if(snapped->state != SNAPPED_SHOWN) {
 			PanelOrientType hide_orient;
-			int w,h;
-			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
-			basep_widget_add_fake(basep,hide_orient,FALSE,
-					      -1,-1,w,h,TRUE,TRUE);
-			basep_widget_set_fake_orient(basep, -1);
-			gdk_window_show(widget->window);
-			gdk_window_resize (widget->window,
-					   allocation->width, 
-					   allocation->height);
-		} else if(basep->fake) {
-			PanelOrientType hide_orient;
-			int w,h;
-			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
-			basep_widget_set_fake_orient(basep, -1);
-			gdk_window_move_resize (basep->fake,
-						allocation->x, 
-						allocation->y,
-						w,
-						h);
-			gdk_window_set_hints (basep->fake,
-					      allocation->x, allocation->y,
-					      0, 0, 0, 0, GDK_HINT_POS);
-			gdk_window_show(widget->window);
-			gdk_window_resize (widget->window,
-					   allocation->width, 
-					   allocation->height);
-			basep_widget_set_infake_position(basep,
-							 hide_orient, w,h);
-		} else { /*if(!basep->fake) {*/
-			gdk_window_move_resize (widget->window,
-						allocation->x, 
-						allocation->y,
+			int x,y;
+			snapped_widget_get_hidepos(snapped, &hide_orient,
+						   &w, &h);
+			basep_widget_get_position(basep, hide_orient, &x, &y, w, h);
+			challoc.x = x;
+			challoc.y = y;
+		} else if(basep->ebox->window) {
+			gdk_window_move_resize (basep->ebox->window,
+						0,0,
 						allocation->width, 
 						allocation->height);
-			gdk_window_set_hints (widget->window,
-					      allocation->x, allocation->y,
-					      0, 0, 0, 0, GDK_HINT_POS);
 		}
-	}
+		gdk_window_move_resize (widget->window,
+					allocation->x, 
+					allocation->y,
+					w,h);
+	} else
+		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
 
-	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
 	challoc.height = allocation->height;
-	gtk_widget_size_allocate(basep->table,&challoc);
-	
+	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
 
 static void
@@ -844,11 +818,6 @@ snapped_widget_change_params(SnappedWidget *snapped,
 		snapped->mode = mode;
 		if (gnome_win_hints_wm_exists()) {
 			GtkWidget *wid = GTK_WIDGET(snapped);
-			BasePWidget *basep = BASEP_WIDGET(snapped);
-			GdkWindow *win = wid->window;
-			/*a hack to set the hints on the fake*/
-			if(basep->fake)
-				wid->window = basep->fake;
 			if(snapped->mode == SNAPPED_AUTO_HIDE) {
 				gnome_win_hints_set_layer(wid,
 							  WIN_LAYER_ABOVE_DOCK);
@@ -856,7 +825,6 @@ snapped_widget_change_params(SnappedWidget *snapped,
 				gnome_win_hints_set_layer(wid,
 							  WIN_LAYER_DOCK);
 			}
-			wid->window = win;
 		}
 	}
 

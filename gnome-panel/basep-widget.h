@@ -21,14 +21,10 @@ typedef struct _BasePWidgetClass	BasePWidgetClass;
 struct _BasePWidget
 {
 	GtkWindow		window;
+	GtkWidget		*ebox;
 	
 	GtkWidget		*panel;
 	
-	/*the fake is a gdk window in which we place the basepwidgets window
-	  if we want to hide a part of it*/
-	GdkWindow		*fake;
-	int			fake_override; /*is fake override redirect?*/
-
 	GtkWidget		*table;
 	GtkWidget		*hidebutton_n;
 	GtkWidget		*hidebutton_e;
@@ -84,22 +80,12 @@ void		basep_widget_do_showing		(BasePWidget *basep,
 						 PanelOrientType hide_orient,
 						 int leftover,
 						 int step);
-void		basep_widget_set_infake_position(BasePWidget *basep,
+void		basep_widget_get_position	(BasePWidget *basep,
 						 PanelOrientType hide_orient,
+						 int *x,
+						 int *y,
 						 int w,
 						 int h);
-void		basep_widget_set_fake_orient	(BasePWidget *basep,
-						 PanelOrientType hide_orient);
-void		basep_widget_add_fake		(BasePWidget *basep,
-						 PanelOrientType hide_orient,
-						 int override,
-						 int x,
-						 int y,
-						 int w,
-						 int h,
-						 int show,
-						 int above_dock);
-void		basep_widget_remove_fake	(BasePWidget *basep);
 
 END_GNOME_DECLS
 
