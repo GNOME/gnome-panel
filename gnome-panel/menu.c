@@ -2801,8 +2801,8 @@ remove_panel_query (GtkWidget *menuitem,
 		return;
 	}
 
-	if (panel_global_config_get_confirm_panel_remove ()) {
-		gtk_widget_destroy (GTK_WIDGET (toplevel));
+	if (!panel_global_config_get_confirm_panel_remove ()) {
+		panel_profile_delete_toplevel (toplevel);
 		return;
 	}
 

@@ -40,7 +40,7 @@ gconf_set_list()
   $GCONFTOOL -s $basedir/$key -t list --list-type $type "$value"
 }
 
-BASE=/apps/new_panel
+BASE=/apps/panel
 
 SCHEMADIR=/schemas$BASE
 BASEDIR=$BASE/default_setup

@@ -30,10 +30,9 @@
 
 #include "panel-enums.h"
 
-/* FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ */
-#define PANEL_CONFIG_DIR   "/apps/new_panel/profiles"
-#define PANEL_SCHEMAS_DIR  "/schemas/apps/new_panel"
-#define PANEL_DEFAULTS_DIR "/apps/new_panel/default_setup"
+#define PANEL_CONFIG_DIR   "/apps/panel/profiles"
+#define PANEL_SCHEMAS_DIR  "/schemas/apps/panel"
+#define PANEL_DEFAULTS_DIR "/apps/panel/default_setup"
 
 G_BEGIN_DECLS
 

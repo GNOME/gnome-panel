@@ -100,25 +100,6 @@ static GQuark toplevel_id_quark = 0;
 static GQuark queued_changes_quark = 0;
 static GQuark commit_timeout_quark = 0;
 
-#undef PANEL_PROFILE_DEBUG
-#ifdef PANEL_PROFILE_DEBUG
-#ifdef G_HAVE_ISO_VARARGS
-#define d_print(...) g_print (__VA_ARGS__)
-#elif defined(G_HAVE_GNUC_VARARGS)
-#define d_print(args...) g_print (args)
-#else
-#error "Your compiler's weird - its okay, though, this is only debugging code. It'll be gone soon"
-#endif
-#else
-#ifdef G_HAVE_ISO_VARARGS
-#define d_print(...)
-#elif defined(G_HAVE_GNUC_VARARGS)
-#define d_print(args...)
-#else
-#error "Your compiler's weird - its okay, though, this is only debugging code. It'll be gone soon"
-#endif
-#endif
-
 const char *
 panel_profile_get_name (void)
 {
@@ -131,8 +112,10 @@ panel_profile_map_orientation_string (const char       *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (orientation != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_orientation_map, str, &mapped))
 		return FALSE;
@@ -154,8 +137,10 @@ panel_profile_map_speed_string (const char          *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (speed != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_animation_speed_map, str, &mapped))
 		return FALSE;
@@ -171,8 +156,10 @@ panel_profile_map_background_type_string (const char          *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (background_type != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_background_type_map, str, &mapped))
 		return FALSE;
@@ -188,8 +175,10 @@ panel_profile_map_object_type_string (const char       *str,
 {
 	int mapped;
 
-	g_return_val_if_fail (str != NULL, FALSE);
 	g_return_val_if_fail (object_type != NULL, FALSE);
+
+	if (!str)
+		return FALSE;
 
 	if (!gconf_string_to_enum (panel_object_type_map, str, &mapped))
 		return FALSE;
@@ -590,7 +579,6 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		GConfClient *client;                                  \
 		const char  *key;                                     \
 		client = panel_gconf_get_client ();                   \
-		d_print ("Setting '%s'\n", k);                        \
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
 		gconf_client_set_##t (client, key, s, NULL);          \
 	}                                                             \
@@ -601,7 +589,6 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		const char  *key;                                     \
 		a retval;                                             \
 		client = panel_gconf_get_client ();                   \
-		d_print ("Getting '%s'\n", k);                        \
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
 		retval = gconf_client_get_##t (client, key, NULL);    \
 		return retval;                                        \
@@ -772,19 +759,6 @@ panel_profile_queue_toplevel_location_change (PanelToplevel          *toplevel,
 		queued_changes = gconf_change_set_new ();
 		panel_profile_set_queued_changes (toplevel, queued_changes);
 	}
-
-#define DEBUG_CHANGE(k,n) \
-	if (change->n##_changed) \
-		d_print ("queued change '%s'\n", k);
-
-	DEBUG_CHANGE ("screen", screen);
-	DEBUG_CHANGE ("monitor", monitor);
-	DEBUG_CHANGE ("size", size);
-	DEBUG_CHANGE ("x_centered", x_centered);
-	DEBUG_CHANGE ("x", x);
-	DEBUG_CHANGE ("y", y);
-	DEBUG_CHANGE ("y_centered", y_centered);
-	DEBUG_CHANGE ("orientation", orientation);
 
 	if (change->screen_changed)
 		gconf_change_set_set_int (
@@ -957,7 +931,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 
 #define UPDATE_STRING(k, n)                                                             \
 		if (!strcmp (key, k)) {                                                 \
-			d_print ("Notify on '%s'\n", k);                                \
 			if (value->type == GCONF_VALUE_STRING)                          \
 				set_##n##_from_string (toplevel,                        \
 						       gconf_value_get_string (value)); \
@@ -965,7 +938,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 
 #define UPDATE_INT(k, n)                                                                \
 		if (!strcmp (key, k)) {                                                 \
-			d_print ("Notify on '%s'\n", k);                                \
 			if (value->type == GCONF_VALUE_INT)                             \
 				panel_toplevel_set_##n (toplevel,                       \
 							gconf_value_get_int (value));   \
@@ -973,7 +945,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 
 #define UPDATE_BOOL(k, n)                                                               \
 		if (!strcmp (key, k)) {                                                 \
-			d_print ("Notify on '%s'\n", k);                                \
 			if (value->type == GCONF_VALUE_BOOL)                            \
 				panel_toplevel_set_##n (toplevel,                       \
 							gconf_value_get_bool (value));  \
@@ -981,7 +952,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 
 #define UPDATE_POS(k, n)                                                                \
 		if (!strcmp (key, k)) {                                                 \
-			d_print ("Notify on '%s'\n", k);                                \
 			if (value->type == GCONF_VALUE_INT)                             \
 				panel_toplevel_set_##n (                                \
 					toplevel,                                       \
@@ -991,7 +961,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 
 #define UPDATE_CENTERED(k, n)                                                           \
 		if (!strcmp (key, k)) {                                                 \
-			d_print ("Notify on '%s'\n", k);                                \
 			if (value->type == GCONF_VALUE_BOOL) {                          \
 				int x, y;                                               \
 				panel_toplevel_get_position (toplevel, &x, &y);         \
@@ -1001,7 +970,6 @@ panel_profile_toplevel_change_notify (GConfClient   *client,
 		}
 
 	if (!strcmp (key, "screen")) {
-		d_print ("Notify on 'screen'\n");
 		if (value->type == GCONF_VALUE_INT) {
 			GdkScreen *screen;
 
@@ -1208,11 +1176,57 @@ panel_profile_create_toplevel (void)
 	panel_profile_add_to_list (PANEL_GCONF_TOPLEVELS, NULL);
 }
 
+static void
+panel_profile_delete_toplevel_objects (const char        *toplevel_id,
+				       PanelGConfKeyType  key_type)
+{
+	GConfClient *client;
+	const char  *key;
+	GSList      *new_list = NULL,*list, *l;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_gconf_general_key (current_profile,
+				       panel_gconf_key_type_to_id_list (key_type));
+	list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	for (l = list; l; l = l->next) {
+		char *id = l->data;
+		char *parent_toplevel_id;
+
+		key = panel_gconf_full_key (key_type, current_profile, id, "toplevel_id");
+		parent_toplevel_id = gconf_client_get_string (client, key, NULL);
+
+		if (parent_toplevel_id && !strcmp (toplevel_id, parent_toplevel_id)) {
+			g_free (id);
+			continue;
+		}
+
+		new_list = g_slist_prepend (new_list, id);
+
+	}
+	g_slist_free (list);
+
+	key = panel_gconf_general_key (current_profile,
+				       panel_gconf_key_type_to_id_list (key_type));
+	gconf_client_set_list (client, key, GCONF_VALUE_STRING, new_list, NULL);
+
+	for (l = new_list; l; l = l->next)
+		g_free (l->data);
+	g_slist_free (new_list);
+}
+
 void
 panel_profile_delete_toplevel (PanelToplevel *toplevel)
 {
-	panel_profile_remove_from_list (PANEL_GCONF_TOPLEVELS,
-					panel_profile_get_toplevel_id (toplevel));
+	const char *toplevel_id;
+
+	toplevel_id = panel_profile_get_toplevel_id (toplevel);
+
+	panel_profile_delete_toplevel_objects (toplevel_id, PANEL_GCONF_OBJECTS);
+	panel_profile_delete_toplevel_objects (toplevel_id, PANEL_GCONF_APPLETS);
+
+	panel_profile_remove_from_list (PANEL_GCONF_TOPLEVELS, toplevel_id);
 }
 
 static GdkScreen *
@@ -1319,7 +1333,7 @@ panel_profile_load_toplevel (GConfClient       *client,
 		if (!error && val) {                                                \
 			set_##fn##_from_string (toplevel, val);                     \
 			g_free (val);                                               \
-		} else if (!error) {                                                \
+		} else if (error) {                                                 \
 			g_warning (_("Error reading GConf string value '%s': %s"),  \
 				   key, error->message);                            \
 			g_error_free (error);                                       \

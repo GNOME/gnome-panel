@@ -1,5 +1,38 @@
 2003-03-04  Mark McLoughlin  <mark@skynet.ie>
 
+	* install-defaults.sh: install the config into /apps/panel
+	instead of /apps/new_panel.
+
+	* menu.c: (remove_panel_query): prompt the user for confirmation
+	when deleting panels. Delete the panel through GConf rather than
+	just destroying the widget.
+
+	* new-toplevel-todo: upd.
+
+	* panel-applet-frame.c: (panel_applet_frame_construct_moniker):
+	s/new_panel/panel/.
+
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_panel_settings): auto_hide setting
+	is a bool not an int.
+
+	* panel-gconf.h, panel-general.schemas.in, panel-object.schemas.in,
+	  panel-toplevel.schemas.in: s/new_panel/panel/.
+
+	* panel-profile.c: (panel_profile_map_orientation_string),
+	(panel_profile_map_speed_string),
+	(panel_profile_map_background_type_string),
+	(panel_profile_map_object_type_string): don't assert that the
+	string argument is not NULL.
+	(panel_profile_queue_toplevel_location_change),
+	(panel_profile_toplevel_change_notify): kill debug.
+	(panel_profile_delete_toplevel_objects): remove all the objects
+	on the panel before deleteing it.
+	(panel_profile_delete_toplevel): delete object.
+	(panel_profile_load_toplevel): fix bogosity.
+
+2003-03-04  Mark McLoughlin  <mark@skynet.ie>
+
 	More or less finish of the compatibility code.
 
 	* panel-compatibility.[ch]:

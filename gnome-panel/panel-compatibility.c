@@ -32,34 +32,6 @@
 #include "panel-applet-frame.h"
 #include "panel-globals.h"
 
-/* Incompatibilities:
- *
- *   Toplevels:
- *     + toplevel_id_list instead of panel_id_list.
- *     + the schemas for toplevels and panels are completely different.
- *
- *   All applets
- *     + s/panel_id/toplevel_id/
- *
- *   Drawers:
- *     + we ignore the old "parameters" setting.
- *     + s/unique-drawer-panel-id/attached_toplevel_id/
- *     + s/pixmap/custom_icon/
- *     + we should use the "usr_custom_icon" setting.
- *
- *   Menu buttons:
- *     + we ignore "main-menu", "global-main" and "main-menu-flags".
- *     + s/custom-icon/use_custom_icon/
- *     + s/custom-icon-file/custom_icon/
- *     + s/path/menu_path/
- *     + we now have use_menu_path. Need to figure out how this
- *       relates to the old main_menu and global_main flags.
- *
- *   Global config
- *     + need to figure out what to do about the old global config
- *       settings that now apply to individual panels
- */
-
 typedef enum {
 	PANEL_ORIENT_UP    = GNOME_Vertigo_PANEL_ORIENT_UP,
 	PANEL_ORIENT_DOWN  = GNOME_Vertigo_PANEL_ORIENT_DOWN,
@@ -560,7 +532,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	auto_hide = gconf_client_get_int (client, key, NULL);
 
 	key = panel_gconf_sprintf ("%s/auto_hide", toplevel_dir);
-	gconf_client_set_int (client, key, auto_hide, NULL);
+	gconf_client_set_bool (client, key, auto_hide, NULL);
 
 	/* migrate different panel types to toplevels */
 	panel_compatibility_migrate_panel_types (client, toplevel_dir, panel_dir);

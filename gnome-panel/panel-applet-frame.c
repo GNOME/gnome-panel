@@ -978,9 +978,8 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 	bg_str = panel_applet_frame_get_background_string (
 				frame, panel, panel->background.type);
 
-	/* FIXME_FOR_NEW_TOPLEVEL: s/new_panel/panel/ */
 	retval = g_strdup_printf (
-			"%s!prefs_key=/apps/new_panel/profiles/%s/applets/%s/prefs;"
+			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
 			"background=%s;orient=%s;size=%s",
 			iid, panel_profile_get_name (), id, bg_str,
 			panel_applet_frame_get_orient_string (frame, panel),
