@@ -46,14 +46,15 @@ struct _ClockData {
 	int prop_showtooltip;
 };
 
-
-static void clock_properties(AppletWidget *, gpointer);
-
-
 typedef struct {
 	GtkWidget *time; /*the time label*/
 	GtkWidget *align; /* Needed for changing the padding */
 } ComputerClock;
+
+
+static void clock_properties (AppletWidget *applet, gpointer data);
+static void clock_about      (AppletWidget *applet, gpointer data);
+
 
 static void
 free_data(GtkWidget * widget, gpointer data)
@@ -371,12 +372,18 @@ make_clock_applet(const gchar * goad_id)
 			   cd);
 
 	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
+					      "about",
+					      GNOME_STOCK_MENU_ABOUT,
+					      _("About..."),
+					      clock_about,
+					      NULL);
+
+	applet_widget_register_stock_callback(APPLET_WIDGET(applet),
 					      "properties",
 					      GNOME_STOCK_MENU_PROP,
 					      _("Properties..."),
 					      clock_properties,
 					      cd);
-
 	return applet;
 }
 
@@ -644,4 +651,33 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   &help_entry);
 
 	gtk_widget_show(cd->props);
+}
+
+static void
+clock_about (AppletWidget *applet, gpointer data)
+{
+	static GtkWidget   *about     = NULL;
+	static const gchar *authors[] =
+	{
+		"Miguel de Icaza <miguel@kernel.org>",
+		"Federico Mena <quartic@gimp.org>",
+		"Stuart Parmenter <pavlov@innerx.net>",
+		NULL
+	};
+
+	if (about != NULL)
+	{
+		gdk_window_show (about->window);
+		gdk_window_raise (about->window);
+		return;
+	}
+	
+	about = gnome_about_new (_("Clock Applet"), "1.0",
+				 _("(c) 1998 the Free Software Foundation"),
+				 authors,
+				 _("The clock applet gives your panel a lightweight and simple display of the date and time"),
+				 NULL);
+	gtk_signal_connect (GTK_OBJECT(about), "destroy",
+			    GTK_SIGNAL_FUNC(gtk_widget_destroyed), &about);
+	gtk_widget_show (about);
 }
