@@ -12,8 +12,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-07-09 16:52+0200\n"
-"PO-Revision-Date: 2003-07-09 16:53+0200\n"
+"POT-Creation-Date: 2003-07-11 16:51+0200\n"
+"PO-Revision-Date: 2003-07-11 16:51+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -289,8 +289,8 @@ msgstr "_Om..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3125
-#: gnome-panel/panel-action-button.c:530 gnome-panel/panel-menu-bar.c:311
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3076
+#: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
 msgstr "_Hjälp"
@@ -422,7 +422,7 @@ msgstr "<b>Animation</b>"
 msgid "<b>General</b>"
 msgstr "<b>Allmänt</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:285
+#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:280
 msgid "Browse"
 msgstr "Bläddra"
 
@@ -1042,8 +1042,8 @@ msgstr "Visa pil på döljknappen"
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:749 gnome-panel/menu.c:1556
-#: gnome-panel/menu.c:3075 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:3026 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "_Egenskaper"
 
@@ -1260,82 +1260,54 @@ msgstr "Webbkatalog"
 msgid "GNOME Panel Shell"
 msgstr "GNOME-panelskalet"
 
-#: gnome-panel/launcher.c:104
-#, c-format
-msgid ""
-"Cannot save launcher to disk, the following error occured:\n"
-"\n"
-"%s"
-msgstr ""
-"Kan inte spara programstartaren på disk, följande fel inträffade:\n"
-"\n"
-"%s"
+#: gnome-panel/launcher.c:103
+msgid "Cannot save launcher to disk"
+msgstr "Kan inte spara programstartare till disk"
 
-#: gnome-panel/launcher.c:132
-msgid "This launch icon does not specify a url to show"
-msgstr "Denna programstartare anger ingen url att visa"
-
-#: gnome-panel/launcher.c:141
-#, c-format
-msgid ""
-"Cannot show %s\n"
-"%s"
-msgstr ""
-"Kan inte visa %s\n"
-"%s"
-
-#: gnome-panel/launcher.c:172
+#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:172
+#: gnome-panel/launcher.c:217
 msgid "Cannot launch icon"
 msgstr "Kan inte starta ikon"
 
-#: gnome-panel/launcher.c:173 gnome-panel/launcher.c:1116
-#: gnome-panel/menu.c:334 gnome-panel/menu.c:364 gnome-panel/menu.c:381
-#: gnome-panel/menu.c:1085 gnome-panel/menu.c:1194 gnome-panel/menu.c:1226
-#: gnome-panel/menu.c:1244 gnome-panel/menu-ditem.c:118
-#: gnome-panel/menu-ditem.c:504 gnome-panel/panel-run-dialog.c:278
-#: gnome-panel/panel-run-dialog.c:312 gnome-panel/panel-util.c:74
-msgid "Details"
-msgstr "Detaljer"
+#: gnome-panel/launcher.c:131
+msgid "This launch icon does not specify a url to show."
+msgstr "Denna programstartarikon anger ingen url att visa."
 
-#: gnome-panel/launcher.c:224
+#: gnome-panel/launcher.c:139
 #, c-format
-msgid ""
-"Cannot launch icon\n"
-"%s"
-msgstr ""
-"Kan inte starta ikon\n"
-"%s"
+msgid "Cannot show %s"
+msgstr "Kan inte visa %s"
 
-#: gnome-panel/launcher.c:415
+#: gnome-panel/launcher.c:408
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI tillhandahållen för desktop-fil för panelstartare\n"
 
-#: gnome-panel/launcher.c:429
+#: gnome-panel/launcher.c:422
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan inte öppna desktop-filen %s för panelstartaren%s%s\n"
 
-#: gnome-panel/launcher.c:531
+#: gnome-panel/launcher.c:524
 #, c-format
 msgid "Help on %s _Application"
 msgstr "Hjälp med _programmet %s"
 
-#: gnome-panel/launcher.c:651 gnome-panel/menu-ditem.c:182
-#: gnome-panel/menu-ditem.c:263
+#: gnome-panel/launcher.c:644 gnome-panel/menu-ditem.c:174
+#: gnome-panel/menu-ditem.c:255
 msgid "Launcher Properties"
 msgstr "Egenskaper för programstartaren"
 
-#: gnome-panel/launcher.c:823
+#: gnome-panel/launcher.c:816
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nyckeln %s är inte inställd, kan inte läsa in startare\n"
 
-#: gnome-panel/launcher.c:892 gnome-panel/menu-ditem.c:541
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:527
 msgid "Create Launcher"
 msgstr "Skapa programstartare"
 
-#: gnome-panel/launcher.c:1115 gnome-panel/menu.c:1225
-#: gnome-panel/panel-util.c:73
+#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1188
+#: gnome-panel/panel-util.c:74
 msgid "Cannot display help document"
 msgstr "Kan inte visa hjälpdokument"
 
@@ -1343,7 +1315,7 @@ msgstr "Kan inte visa hjälpdokument"
 msgid "Specify a profile name to load"
 msgstr "Ange ett profilnamn att läsa in"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3264
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3215
 msgid "Log Out"
 msgstr "Logga ut"
 
@@ -1363,15 +1335,15 @@ msgstr "Lås"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:236
 msgid "Force Quit"
 msgstr "Tvinga avslutande"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:231
 msgid "Screenshot"
 msgstr "Skärmdump"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3416
 #: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Ta en skärmdump av ditt skrivbord"
@@ -1380,7 +1352,7 @@ msgstr "Ta en skärmdump av ditt skrivbord"
 msgid "Search"
 msgstr "Sök"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3446
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3397
 #: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Sök efter filer, mappar och dokument i din dator"
@@ -1409,101 +1381,109 @@ msgstr ""
 "Detta program ansvarar för att starta andra program och att bädda in små "
 "panelprogram i sig själv."
 
-#: gnome-panel/menu.c:333
-msgid "Can't execute 'About GNOME'"
-msgstr "Kan inte köra \"Om GNOME\""
+#: gnome-panel/menu.c:333 gnome-panel/panel-action-button.c:157
+#: gnome-panel/panel-action-button.c:175
+#, c-format
+msgid "Cannot execute '%s'"
+msgstr "Kan inte köra \"%s\""
+
+#: gnome-panel/menu.c:334 gnome-panel/panel-util.c:958
+#, c-format
+msgid "%s - command not found"
+msgstr "%s - kommandot hittades inte"
 
 #: gnome-panel/menu.c:335
-msgid "probably does not exist"
-msgstr "finns troligtvis inte"
+msgid "About GNOME"
+msgstr "Om GNOME"
 
-#: gnome-panel/menu.c:363
-msgid "Can't launch entry"
+#: gnome-panel/menu.c:357
+msgid "Cannot launch entry"
 msgstr "Kan inte starta post"
 
-#: gnome-panel/menu.c:380 gnome-panel/menu.c:1193 gnome-panel/menu.c:1243
-msgid "Can't load entry"
+#: gnome-panel/menu.c:368 gnome-panel/menu.c:1162 gnome-panel/menu.c:1200
+msgid "Cannot load entry"
 msgstr "Kan inte läsa in post"
 
-#: gnome-panel/menu.c:1083
-msgid "Could not remove the menu item"
-msgstr "Kunde inte ta bort menyvalet"
+#: gnome-panel/menu.c:1067
+#, c-format
+msgid "Cannot remove menu item %s"
+msgstr "Kan inte ta bort menyvalet %s"
 
-#: gnome-panel/menu.c:1100
+#: gnome-panel/menu.c:1077
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Kunde inte urskilja filnamn från sökväg: %s"
 
-#: gnome-panel/menu.c:1107
+#: gnome-panel/menu.c:1084
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kunde inte urskilja katalognamn från sökväg: %s"
 
-#: gnome-panel/menu.c:1176
-msgid "Can't add to run box"
+#: gnome-panel/menu.c:1153
+msgid "Cannot add to run box"
 msgstr "Kan inte lägga till i kör-rutan"
 
-#: gnome-panel/menu.c:1177
-msgid "Details: No 'Exec' or 'URL' field in entry"
-msgstr "Detaljer: Inget \"Exec\"- eller \"URL\"-fält i posten"
+#: gnome-panel/menu.c:1154
+msgid "No 'Exec' or 'URL' field in entry"
+msgstr "Inget \"Exec\"- eller \"URL\"-fält i posten"
 
-#: gnome-panel/menu.c:1485
+#: gnome-panel/menu.c:1436
 msgid "Add this launcher to panel"
 msgstr "Lägg till den här programstartaren på panelen"
 
-#: gnome-panel/menu.c:1494
+#: gnome-panel/menu.c:1445
 msgid "Remove this item"
 msgstr "Ta bort detta menyval"
 
-#: gnome-panel/menu.c:1510
+#: gnome-panel/menu.c:1461
 msgid "Put into run dialog"
 msgstr "Lägg i kördialogen"
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1479
 #, c-format
 msgid "Help on %s"
 msgstr "Hjälp om %s"
 
-#: gnome-panel/menu.c:1529
+#: gnome-panel/menu.c:1480
 msgid "Application"
 msgstr "Program"
 
-#: gnome-panel/menu.c:1577
+#: gnome-panel/menu.c:1528
 msgid "Entire menu"
 msgstr "Hela menyn"
 
-#: gnome-panel/menu.c:1586
+#: gnome-panel/menu.c:1537
 msgid "Add this as drawer to panel"
 msgstr "Lägg till detta som en låda på panelen"
 
-#: gnome-panel/menu.c:1595
+#: gnome-panel/menu.c:1546
 msgid "Add this as menu to panel"
 msgstr "Lägg till detta som en meny på panelen"
 
-#: gnome-panel/menu.c:1604
+#: gnome-panel/menu.c:1555
 msgid "Add new item to this menu"
 msgstr "Lägg till ett nytt menyval"
 
-#: gnome-panel/menu.c:1630
+#: gnome-panel/menu.c:1581
 msgid "Properties"
 msgstr "Egenskaper"
 
-#: gnome-panel/menu.c:2602 gnome-panel/menu.c:2657
+#: gnome-panel/menu.c:2553 gnome-panel/menu.c:2608
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "fråg returnerade undantag %s\n"
 
-#: gnome-panel/menu.c:2852 gnome-panel/menu.c:2857 gnome-panel/menu.c:3402
+#: gnome-panel/menu.c:2803 gnome-panel/menu.c:2808 gnome-panel/menu.c:3353
 #: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Program"
 
-#: gnome-panel/menu.c:2900 gnome-panel/menu.c:2906 gnome-panel/menu.c:3327
+#: gnome-panel/menu.c:2851 gnome-panel/menu.c:2857 gnome-panel/menu.c:3278
 msgid "KDE Menu"
 msgstr "KDE-meny"
 
-#: gnome-panel/menu.c:2958
+#: gnome-panel/menu.c:2908
 msgid "You cannot remove your last panel."
 msgstr "Du kan inte ta bort din sista panel."
 
@@ -1512,7 +1492,7 @@ msgstr "Du kan inte ta bort din sista panel."
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3019
+#: gnome-panel/menu.c:2970
 msgid "_Delete This Panel..."
 msgstr "_Ta bort denna panel..."
 
@@ -1521,55 +1501,55 @@ msgstr "_Ta bort denna panel..."
 # Sun vill ha "Ta bort den här panelen..."
 # Jag vill ha "Ta bort denna panel..."
 #
-#: gnome-panel/menu.c:3022 gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:2973 gnome-panel/menu.c:3012
 msgid "_Delete This Panel"
 msgstr "_Ta bort denna panel"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:2988
 msgid "_Add to Panel"
 msgstr "_Lägg till i panelen"
 
-#: gnome-panel/menu.c:3088
+#: gnome-panel/menu.c:3039
 msgid "_New Panel"
 msgstr "_Ny panel"
 
-#: gnome-panel/menu.c:3135
+#: gnome-panel/menu.c:3086
 msgid "_About Panels"
 msgstr "_Om paneler"
 
-#: gnome-panel/menu.c:3148
+#: gnome-panel/menu.c:3099
 msgid "About _GNOME"
 msgstr "Om _GNOME"
 
-#: gnome-panel/menu.c:3191
+#: gnome-panel/menu.c:3142
 msgid "_Launcher..."
 msgstr "_Programstartare..."
 
-#: gnome-panel/menu.c:3200
+#: gnome-panel/menu.c:3151
 msgid "Launcher _from menu"
 msgstr "Programstartare _från meny"
 
-#: gnome-panel/menu.c:3210
+#: gnome-panel/menu.c:3161
 msgid "Main _Menu"
 msgstr "Huvud_meny"
 
-#: gnome-panel/menu.c:3220
+#: gnome-panel/menu.c:3171
 msgid "Menu _Bar"
 msgstr "Meny_rad"
 
-#: gnome-panel/menu.c:3229
+#: gnome-panel/menu.c:3180
 msgid "_Drawer"
 msgstr "_Låda"
 
-#: gnome-panel/menu.c:3252
+#: gnome-panel/menu.c:3203
 msgid "Lock Screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/menu.c:3258
+#: gnome-panel/menu.c:3209
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:3270
+#: gnome-panel/menu.c:3221
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1577,23 +1557,23 @@ msgstr ""
 "Logga ut från denna session för att logga in som en annan användare eller "
 "stänga av din dator"
 
-#: gnome-panel/menu.c:3427
+#: gnome-panel/menu.c:3378
 msgid "Run Application..."
 msgstr "Kör program..."
 
-#: gnome-panel/menu.c:3434 gnome-panel/panel-menu-bar.c:112
+#: gnome-panel/menu.c:3385 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
 msgstr "Kör ett program genom att ange ett kommando"
 
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3394
 msgid "Search for Files..."
 msgstr "Sök filer..."
 
-#: gnome-panel/menu.c:3462
+#: gnome-panel/menu.c:3413
 msgid "Take Screenshot..."
 msgstr "Ta skärmdump..."
 
-#: gnome-panel/menu.c:3480
+#: gnome-panel/menu.c:3431
 msgid "Desktop"
 msgstr "Skrivbord"
 
@@ -1601,29 +1581,31 @@ msgstr "Skrivbord"
 msgid "Cannot save changes to launcher"
 msgstr "Kan inte spara ändringar i programstartare"
 
-#: gnome-panel/menu-ditem.c:300
+#: gnome-panel/menu-ditem.c:292
 msgid "Menu"
 msgstr "Meny"
 
-#: gnome-panel/menu-ditem.c:457
-msgid "You have to specify a name for the launcher."
-msgstr "Du måste ange ett namn för programstartaren."
+#: gnome-panel/menu-ditem.c:448 gnome-panel/menu-ditem.c:465
+#: gnome-panel/menu-ditem.c:520
+msgid "Cannot create launcher"
+msgstr "Kan inte skapa programstartare"
 
-#: gnome-panel/menu-ditem.c:473
+#: gnome-panel/menu-ditem.c:449
+msgid "You have to specify a name."
+msgstr "Du måste ange ett namn."
+
+#: gnome-panel/menu-ditem.c:466
 msgid "You have to specify a valid URL or command."
 msgstr "Du måste ange en giltig URL eller ett giltigt kommando."
 
-#: gnome-panel/menu-ditem.c:503
+#. class
+#: gnome-panel/menu-ditem.c:496
 msgid "Cannot save menu item to disk"
 msgstr "Kan inte spara menypost till disk"
 
-#: gnome-panel/menu-ditem.c:534
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Du kan inte skapa en ny programstartare på denna plats eftersom platsen inte "
-"är skrivbar."
+#: gnome-panel/menu-ditem.c:521
+msgid "This location since the location is not writable."
+msgstr "Denna plats eftersom platsen inte är skrivbar."
 
 #: gnome-panel/panel-action-button.c:85
 msgid "_Activate Screensaver"
@@ -1641,44 +1623,36 @@ msgstr "_Döda skärmsläckardemon"
 msgid "Restart _Screensaver Daemon"
 msgstr "Starta om _skärmsläckardemon"
 
-#: gnome-panel/panel-action-button.c:157
-msgid "Cannot execute gnome-search-tool"
-msgstr "Kan inte köra gnome-search-tool"
-
-#: gnome-panel/panel-action-button.c:173
-msgid "Cannot execute gnome-panel-screenshot"
-msgstr "Kan inte köra gnome-panel-screenshot"
-
-#: gnome-panel/panel-action-button.c:205
+#: gnome-panel/panel-action-button.c:209
 msgid "Lock screen"
 msgstr "Lås skärmen"
 
-#: gnome-panel/panel-action-button.c:212
+#: gnome-panel/panel-action-button.c:216
 msgid "Log out of GNOME"
 msgstr "Logga ut ur GNOME"
 
-#: gnome-panel/panel-action-button.c:217
+#: gnome-panel/panel-action-button.c:221
 #: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Run Application"
 msgstr "Kör program"
 
-#: gnome-panel/panel-action-button.c:222
+#: gnome-panel/panel-action-button.c:226
 msgid "Search for Files"
 msgstr "Sök efter filer"
 
-#: gnome-panel/panel-action-button.c:379
+#: gnome-panel/panel-action-button.c:383
 msgid "Action Type"
 msgstr "Åtgärdstyp"
 
-#: gnome-panel/panel-action-button.c:380
+#: gnome-panel/panel-action-button.c:384
 msgid "The type of action this button implements"
 msgstr "Typen av åtgärd som denna knapp implementerar"
 
-#: gnome-panel/panel-action-button.c:389 gnome-panel/panel-menu-button.c:463
+#: gnome-panel/panel-action-button.c:393 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
 msgstr "Dar och släpp aktiverat"
 
-#: gnome-panel/panel-action-button.c:390 gnome-panel/panel-menu-button.c:464
+#: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:464
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Huruvida dra och släpp är aktiverat på widgeten eller inte"
 
@@ -2350,33 +2324,39 @@ msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "Standardprogrammet för denna filtyp kan inte hantera fjärrfiler"
 
-#: gnome-panel/panel-recent.c:147
+#: gnome-panel/panel-recent.c:143 gnome-panel/panel-recent.c:149
+msgid "Cannot open recently used document"
+msgstr "Kan inte öppna nyligen använt dokument"
+
+#: gnome-panel/panel-recent.c:150
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Ett okänt fel inträffade vid försök att öppna %s"
 
-#: gnome-panel/panel-recent.c:165
+#: gnome-panel/panel-recent.c:168
 msgid "_Open Recent"
 msgstr "_Öppna senaste"
 
-#: gnome-panel/panel-run-dialog.c:277
-msgid "Error launching command"
-msgstr "Fel vid start av kommando"
+#: gnome-panel/panel-run-dialog.c:276
+#, c-format
+msgid "Cannot launch command '%s'"
+msgstr "Kan inte starta kommandot \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:311
-msgid "Error displaying location"
-msgstr "Fel vid visning av plats"
+#: gnome-panel/panel-run-dialog.c:307
+#, c-format
+msgid "Cannot display location '%s'"
+msgstr "Kan inte visa platsen \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1048
+#: gnome-panel/panel-run-dialog.c:1042
 msgid "Choose a file to append to the command..."
 msgstr "Välj en fil att lägga till efter kommandot..."
 
-#: gnome-panel/panel-run-dialog.c:1227
+#: gnome-panel/panel-run-dialog.c:1221
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kommer att köra kommandot: \"%s\""
 
-#: gnome-panel/panel-run-dialog.c:1233 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1227 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
 msgstr "Markera ett program för att visa dess beskrivning."
 
@@ -3021,22 +3001,24 @@ msgstr "Y-koordinaten för panelen"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
-#: gnome-panel/panel-util.c:105 gnome-panel/panel-util.c:141
-#: gnome-panel/panel-util.c:166
+#: gnome-panel/panel-util.c:100 gnome-panel/panel-util.c:136
+#: gnome-panel/panel-util.c:161
 msgid "Help document not found"
 msgstr "Hjälpdokument hittades inte"
 
-#: gnome-panel/panel-util.c:180
+#: gnome-panel/panel-util.c:175
 msgid "No document to show"
 msgstr "Inget dokument att visa"
 
-#: gnome-panel/panel-util.c:947
-msgid "Cannot execute xscreensaver"
-msgstr "Kan inte köra xscreensaver"
+#: gnome-panel/panel-util.c:483
+#, c-format
+msgid "Details: %s"
+msgstr "Detaljer: %s"
 
-#: gnome-panel/panel-util.c:948
-msgid "Details: xscreensaver-command not found"
-msgstr "Detaljer: xscreensaver-kommandot hittades inte"
+#: gnome-panel/panel-util.c:957
+#, c-format
+msgid "Cannot execute %s"
+msgstr "Kan inte köra %s"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3154,6 +3136,45 @@ msgstr "Jättestor"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Jätteliten"
+
+#~ msgid "Details:"
+#~ msgstr "Detaljer:"
+
+#~ msgid "Details"
+#~ msgstr "Detaljer"
+
+#~ msgid ""
+#~ "Cannot save launcher to disk, the following error occured:\n"
+#~ "\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Kan inte spara programstartaren på disk, följande fel inträffade:\n"
+#~ "\n"
+#~ "%s"
+
+#~ msgid "Can't execute 'About GNOME'"
+#~ msgstr "Kan inte köra \"Om GNOME\""
+
+#~ msgid "probably does not exist"
+#~ msgstr "finns troligtvis inte"
+
+#~ msgid "Could not remove the menu item"
+#~ msgstr "Kunde inte ta bort menyvalet"
+
+#~ msgid "Details: No 'Exec' or 'URL' field in entry"
+#~ msgstr "Detaljer: Inget \"Exec\"- eller \"URL\"-fält i posten"
+
+#~ msgid "Cannot execute gnome-search-tool"
+#~ msgstr "Kan inte köra gnome-search-tool"
+
+#~ msgid "Cannot execute gnome-panel-screenshot"
+#~ msgstr "Kan inte köra gnome-panel-screenshot"
+
+#~ msgid "Error launching command"
+#~ msgstr "Fel vid start av kommando"
+
+#~ msgid "Details: xscreensaver-command not found"
+#~ msgstr "Detaljer: xscreensaver-kommandot hittades inte"
 
 #~ msgid "Use Internet time"
 #~ msgstr "Använd Internettid"
@@ -3383,15 +3404,6 @@ msgstr "Jätteliten"
 
 #~ msgid "      "
 #~ msgstr "      "
-
-#~ msgid "Could not remove the menu item %s"
-#~ msgstr "Kunde inte ta bort menyvalet %s"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "Inget \"Exec\"- eller \"URL\"-fält i posten"
-
-#~ msgid "xscreensaver-command not found"
-#~ msgstr "xscreensaver-kommandot hittades inte"
 
 #~ msgid ""
 #~ "<b>Cannot launch icon</b>\n"
