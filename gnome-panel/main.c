@@ -226,6 +226,8 @@ main(int argc, char **argv)
 
 	/*set the globals*/
 	load_up_globals();
+	/* this is so the capplet gets the right defaults */
+	write_global_config();
 
 	init_fr_chunks ();
 	
