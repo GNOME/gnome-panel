@@ -113,7 +113,7 @@ panel_global_config_set_entry (GConfEntry *entry)
 
 		panel_parse_accelerator (&global_config.window_screenshot_key);
 
-	} else if (!strcmp (key, "autoraise-panel"))
+	} else if (!strcmp (key, "auto-raise-panel"))
 		global_config.autoraise =
 			gconf_value_get_bool (value);
 
