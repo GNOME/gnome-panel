@@ -161,7 +161,7 @@ basep_widget_add_fake(BasePWidget *basep,
 		attributes.height = widget->allocation.height;
 	else
 		attributes.height = h;
-
+	
 	attributes.wclass = GDK_INPUT_OUTPUT;
 
 	attributes.visual = gtk_widget_get_visual(widget);
@@ -195,6 +195,9 @@ basep_widget_add_fake(BasePWidget *basep,
 		widget->window = orig;
 
 		gdk_window_set_decorations(window, 0);
+		
+		gdk_window_set_hints (window, attributes.x, attributes.y,
+				      0, 0, 0, 0, GDK_HINT_POS);
 	}
 
 	basep_widget_set_fake_orient(basep,hide_orient);
@@ -492,6 +495,9 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 	
 	if(basep->fake) {
 		if (gnome_win_hints_wm_exists()) {
+			/*add a NON-OVERRIDE REDIRECT fake window*/
+			/*basep_widget_add_fake(basep, hide_orient,
+					      FALSE, dx, dy,-1,-1,TRUE);*/
 			gdk_window_reparent(wid->window,NULL,dx,dy);
 			gdk_window_destroy(basep->fake);
 			basep->fake = NULL;
@@ -502,6 +508,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		}
 	} else {
 		gtk_widget_set_uposition(wid,dx,dy);
+		gtk_widget_queue_resize(wid);
 		gtk_widget_show_now(wid);
 	}
 }
