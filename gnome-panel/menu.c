@@ -1681,7 +1681,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 static void
 panel_lock (GtkWidget *widget, void *data)
 {
-	system ("(xscreensaver-command -lock&)");
+	system ("(xscreensaver-command -activate&)");
 }
 
 static void
