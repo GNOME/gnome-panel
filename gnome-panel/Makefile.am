@@ -85,6 +85,9 @@ launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(G
 
 logout_applet_SOURCES = \
 	logout.c
+## Must define linker for logout_applet -- it needs a C++ linker, but
+## automake doesn't discover that automatically.
+logout_applet_LINK = $(CXXLINK)
 
 logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
