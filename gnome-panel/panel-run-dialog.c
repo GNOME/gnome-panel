@@ -1185,9 +1185,13 @@ entry_event (GtkEditable    *entry,
 			temp = gtk_editable_get_chars (entry, 0, pos);
 			prefix = g_strconcat (temp, event->string, NULL);
 			g_free (temp);
-		} else
+		} else if (pos == tmp &&
+			   tmp == strlen (gtk_entry_get_text (GTK_ENTRY (entry)))) {
 			prefix = g_strconcat (gtk_entry_get_text (GTK_ENTRY (entry)),
 					      event->string, NULL);
+		} else {
+			return FALSE;
+		}
 		
 		pos = strlen (prefix);
 		nprefix = NULL;
@@ -1205,6 +1209,8 @@ entry_event (GtkEditable    *entry,
 			g_free (prefix);
 			return TRUE;
 		}
+
+		g_free (prefix);
 	}
 	
 	return FALSE;
