@@ -48,22 +48,23 @@ properties_apply_callback(gpointer data)
 						    "pixmap");
 	GtkWidget    *tipentry = g_object_get_data (G_OBJECT (drawer->properties),
 						    "tooltip");
-	char         *s;
 	const char   *cs;
 
 	g_free (drawer->pixmap);
 	drawer->pixmap = NULL;
 	g_free (drawer->tooltip);
 	drawer->tooltip = NULL;
+
 	drawer->pixmap = gnome_icon_entry_get_filename (GNOME_ICON_ENTRY (pixentry));
 	if (string_empty (drawer->pixmap) ||
 	    access (drawer->pixmap, R_OK) != 0) {
 		drawer->pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 							    "panel-drawer.png", TRUE, NULL);
 	}
+
 	button_widget_set_pixmap (BUTTON_WIDGET (drawer->button),
 				  drawer->pixmap, -1);
-	g_free(s);
+
 	cs = gtk_entry_get_text(GTK_ENTRY(gnome_entry_gtk_entry(GNOME_ENTRY(tipentry))));
 	if (string_empty (cs))
 		drawer->tooltip = NULL;
