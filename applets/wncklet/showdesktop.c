@@ -276,6 +276,8 @@ show_desktop_applet_fill (PanelApplet *applet)
         char *file;
         GError *error;
 
+	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
+
         sdd = g_new0 (ShowDesktopData, 1);
 
         sdd->applet = GTK_WIDGET (applet);
@@ -326,7 +328,7 @@ show_desktop_applet_fill (PanelApplet *applet)
         g_signal_connect (G_OBJECT (sdd->button), "toggled",
                           G_CALLBACK (button_toggled_callback), sdd);
 
-        gtk_container_set_border_width (GTK_CONTAINER (sdd->button), 1);
+        gtk_container_set_border_width (GTK_CONTAINER (sdd->button), 0);
         gtk_container_add (GTK_CONTAINER (sdd->button), sdd->image);
         gtk_container_add (GTK_CONTAINER (sdd->applet), sdd->button);
 
