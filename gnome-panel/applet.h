@@ -12,16 +12,13 @@ G_BEGIN_DECLS
 #define DRAWER_ID   "Drawer"
 #define LOGOUT_ID   "Logout"
 #define SWALLOW_ID  "Swallow"
-#define EXTERN_ID   "Extern"
 #define LAUNCHER_ID "Launcher"
 #define LOCK_ID     "Lock"
 #define STATUS_ID   "Status"
 #define RUN_ID      "Run"
+#define BONOBO_ID   "Bonobo"
 
 typedef enum {
-	APPLET_EXTERN,
-	APPLET_EXTERN_RESERVED,
-	APPLET_EXTERN_PENDING,
 	APPLET_DRAWER,
 	APPLET_MENU,
 	APPLET_LOGOUT,

@@ -22,7 +22,6 @@
 
 #include "conditional.h"
 #include "drawer-widget.h"
-#include "extern.h"
 #include "menu-fentry.h"
 #include "menu.h"
 #include "multiscreen-stuff.h"
@@ -56,8 +55,6 @@ GnomeClient *client = NULL;
 char *kde_menudir = NULL;
 char *kde_icondir = NULL;
 char *kde_mini_icondir = NULL;
-
-gboolean panel_in_startup = TRUE;
 
 static gboolean
 menu_age_timeout(gpointer data)
@@ -434,26 +431,10 @@ tell_user_Im_on_crack (void)
 	gtk_widget_destroy (dialog);
 }
 
-static PanelShell *
-panel_get_shell (void)
-{
-	static PanelShell *shell = NULL;
-
-	if (!shell) {
-		shell = g_object_new (PANEL_SHELL_TYPE, NULL);
-		bonobo_object_set_immortal (BONOBO_OBJECT (shell), TRUE);
-	}	
-
-	return shell;
-}
-
 int
 main(int argc, char **argv)
 {
 	gchar *real_global_path;
-	PanelShell *shell;
-	Bonobo_RegistrationResult reg_res;
-	char *message = NULL;
 	
 	bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -474,58 +455,8 @@ main(int argc, char **argv)
 	 */
 	putenv ("BONOBO_ACTIVATION_DEBUG_OUTPUT=1");
 
-	switch (extern_init ()) {
-	case EXTERN_SUCCESS: 
-		break;
-	case EXTERN_ALREADY_ACTIVE:
-		message = _("I've detected a panel already running,\n"
-			    "and will now exit.");
-		break;
-	case EXTERN_FAILURE: {
-		message = _("There was a problem registering the panel "
-			    "with the bonobo-activation server.\n"
-			    "The panel will now exit.");
-		break;
-		}
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-
-	shell = panel_get_shell ();
-
-	reg_res = bonobo_activation_active_server_register (
-		"OAFIID:GNOME_PanelShell",
-		BONOBO_OBJREF (shell));
-	
-	switch (reg_res) {
-	case Bonobo_ACTIVATION_REG_SUCCESS:
-		/* whee! success! */
-		break;
-	case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
-		message = _("I've detected a panel already running,\n"
-			    "and will now exit.");
-		break;
-	default:
-		message = _("There was a problem registering the panel "
-			    "with the bonobo-activation server.\n"
-			    "The panel will now exit.");
-		break;
-	}
-
-	if (message) {
-		GtkWidget *box;
-
-		box = gtk_message_dialog_new (NULL,
-					      GTK_DIALOG_MODAL,
-					      GTK_MESSAGE_ERROR,
-					      GTK_BUTTONS_OK,
-					      message);
-		gtk_dialog_run (GTK_DIALOG (box));
-		gtk_widget_destroy (box);
-
+	if (!panel_shell_register ())
 		return -1;
-	}
 
 	setup_visuals ();
 
@@ -603,12 +534,6 @@ main(int argc, char **argv)
 
 	/* add some timeouts */
 	gtk_timeout_add (10*1000, menu_age_timeout, NULL);
-
-	panel_in_startup = FALSE;
-	
-	/*load these as the last thing to prevent some races any races from
-	  starting multiple goad_id's at once are libgnorba's problem*/
-	extern_load_queued ();
 
 	status_applet_create_offscreen ();
 

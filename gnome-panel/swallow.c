@@ -24,7 +24,6 @@
 #include "swallow.h"
 
 #include "applet.h"
-#include "extern.h"
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-widget.h"

@@ -18,7 +18,6 @@
 #include "status.h"
 
 #include "applet.h"
-#include "extern.h"
 #include "xstuff.h"
 
 static StatusApplet *the_status = NULL; /*"there can only be one" status

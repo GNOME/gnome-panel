@@ -96,6 +96,14 @@ panel_applet_frame_load (const gchar *iid,
 }
 
 void
+panel_applet_frame_save_position (PanelAppletFrame *frame)
+{
+	/*
+	 * FIXME: implement.
+	 */
+}
+
+void
 panel_applet_frame_change_orient (PanelAppletFrame *frame,
 				  PanelOrient       orient)
 {

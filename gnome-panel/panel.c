@@ -25,7 +25,6 @@
 #include "distribution.h"
 #include "drawer-widget.h"
 #include "edge-widget.h"
-#include "extern.h"
 #include "floating-widget.h"
 #include "foobar-widget.h"
 #include "gnome-run.h"
@@ -108,48 +107,6 @@ panel_realize (GtkWidget *widget, gpointer data)
 	gtk_widget_queue_resize (GTK_WIDGET (widget));
 }
 
-void
-freeze_changes (AppletInfo *info)
-{
-	if (info->type == APPLET_EXTERN)
-		extern_handle_freeze_changes ((Extern)info->data);
-}
-
-void
-thaw_changes(AppletInfo *info)
-{
-	if (info->type == APPLET_EXTERN)
-		extern_handle_thaw_changes ((Extern)info->data);
-}
-
-static void
-freeze_changes_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-	freeze_changes(info);
-}
-
-void
-panel_freeze_changes(PanelWidget *panel)
-{
-	gtk_container_foreach(GTK_CONTAINER(panel),
-			      freeze_changes_foreach, NULL);
-}
-
-static void
-thaw_changes_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-	thaw_changes(info);
-}
-
-void
-panel_thaw_changes(PanelWidget *panel)
-{
-	gtk_container_foreach(GTK_CONTAINER(panel),
-			      thaw_changes_foreach, NULL);
-}
-
 PanelOrient
 get_applet_orient (PanelWidget *panel)
 {
@@ -174,10 +131,6 @@ orientation_change (AppletInfo  *info,
 {
 
 	switch (info->type) {
-	case APPLET_EXTERN:
-		extern_handle_change_orient ((Extern)info->data,
-					     get_applet_orient (panel));
-		break;
 	case APPLET_BONOBO:
 		panel_applet_frame_change_orient ((PanelAppletFrame *) info->data,
 						  get_applet_orient (panel));
@@ -276,9 +229,6 @@ size_change (AppletInfo  *info,
 		panel_applet_frame_change_size (
 			PANEL_APPLET_FRAME (info->data), size);
 		break;
-	case APPLET_EXTERN:
-		extern_handle_change_size ((Extern)info->data, size);
-		break;
 	case APPLET_STATUS: {
 		StatusApplet *status = info->data;
 
@@ -315,14 +265,10 @@ panel_size_change(GtkWidget *widget,
 }
 
 void
-back_change (AppletInfo *info,
+back_change (AppletInfo  *info,
 	     PanelWidget *panel)
 {
-	switch (info->type) {
-	case APPLET_EXTERN:
-		extern_handle_back_change ((Extern)info->data, panel);
-		break;
-	case APPLET_BONOBO: {
+	if (info->type == APPLET_BONOBO) {
 		PanelAppletFrame *frame = PANEL_APPLET_FRAME (info->data);
 
 		switch (panel->back_type) {
@@ -343,11 +289,6 @@ back_change (AppletInfo *info,
 			g_assert_not_reached ();
 			break;
 		}
-		}
-		
-		break;
-	default:
-		break;
 	}
 }
 
@@ -497,11 +438,9 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		basep_widget_queue_autohide(BASEP_WIDGET(panelw));
 	}
 
-	freeze_changes(info);
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
 	back_change(info,PANEL_WIDGET(widget));
-	thaw_changes(info);
 
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;
@@ -562,23 +501,30 @@ panel_move_timeout(gpointer data)
 }
 
 static void
-clean_kill_applets (PanelWidget *panel)
+panel_remove_applets (PanelWidget *panel)
 {
-	GList *li;
+	GList *l;
 
-	for (li = panel->applet_list; li != NULL; li = li->next) {
-		AppletData *ad = li->data;
-		AppletInfo *info =
-			gtk_object_get_data (GTK_OBJECT (ad->applet),
-					     "applet_info");
+	for (l = panel->applet_list; l; l = l->next) {
+		AppletData *ad = l->data;
+		AppletInfo *info;
 
-		if (info->type == APPLET_EXTERN)
-			extern_save_last_position ((Extern)info->data, FALSE);
+		info = gtk_object_get_data (GTK_OBJECT (ad->applet),
+					    "applet_info");
 
-		else if (info->type == APPLET_SWALLOW) {
+		switch (info->type) {
+		case APPLET_BONOBO:
+			panel_applet_frame_save_position (
+				PANEL_APPLET_FRAME (info->data));
+			break;
+		case APPLET_SWALLOW: {
 			Swallow *swallow = info->data;
 
 			swallow->clean_remove = TRUE;
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -596,7 +542,7 @@ panel_destroy (GtkWidget *widget, gpointer data)
 	else if (FOOBAR_IS_WIDGET (widget))
 		panel = PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel);
 
-	clean_kill_applets (panel);
+	panel_remove_applets (panel);
 		
 	kill_config_dialog(widget);
 
@@ -637,30 +583,23 @@ panel_applet_move(PanelWidget *panel, GtkWidget *widget, gpointer data)
 }
 
 static void
-panel_applet_draw(GtkWidget *panel, GtkWidget *widget, gpointer data)
+panel_applet_about_to_die (GtkWidget *panel,
+			   GtkWidget *widget,
+			   gpointer   data)
 {
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget),
-					       "applet_info");
+	AppletInfo *info;
 
-	g_return_if_fail(info!=NULL);
+	info = gtk_object_get_data (GTK_OBJECT (widget),
+				    "applet_info");
 
-	if(info->type == APPLET_EXTERN)
-		extern_send_draw(info->data);
-}
+	g_return_if_fail (info);
 
-static void
-panel_applet_about_to_die (GtkWidget *panel, GtkWidget *widget, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data (GTK_OBJECT (widget),
-						"applet_info");
-
-	g_return_if_fail (info != NULL);
-
-	/* this needs to be befor we null the widget field */
-	if (info->type == APPLET_EXTERN &&
-	    info->data != NULL) {
-		extern_before_remove (info->data);
-	}
+	/*
+	 * FIXME
+	 */
+	if (info->type == APPLET_BONOBO)
+		g_warning (G_STRLOC " FIXME: we need to implement an "
+				    "applet died dialog box\n");
 }
 
 static GtkWidget *
@@ -1489,10 +1428,9 @@ drag_data_recieved_cb (GtkWidget	*widget,
 			gtk_drag_finish (context, FALSE, FALSE, time);
 			return;
 		}
-#ifdef FIXME
-		extern_load_applet ((char *)selection_data->data,
-				    NULL, panel, pos, TRUE, FALSE);
-#endif
+		/*
+		 * FIXME: sort out applet's drag and drop
+		 */
 		break;
 	case TARGET_APPLET_INTERNAL:
 		drop_internal_applet (panel, pos, (char *)selection_data->data,
@@ -1524,10 +1462,6 @@ panel_widget_setup(PanelWidget *panel)
 	g_signal_connect (G_OBJECT(panel),
 			  "applet_move",
 			  G_CALLBACK(panel_applet_move),
-			  NULL);
-	g_signal_connect (G_OBJECT(panel),
-			  "applet_draw",
-			  G_CALLBACK(panel_applet_draw),
 			  NULL);
 	g_signal_connect (G_OBJECT(panel),
 			  "applet_about_to_die",

@@ -1,4 +1,7 @@
 #include <config.h>
+#include <libgnome/gnome-i18n.h>
+
+#include <gtk/gtk.h>
 
 #include "panel-shell.h"
 
@@ -7,6 +10,69 @@ struct _PanelShellPrivate {
 };
 
 static GObjectClass *panel_shell_parent_class = NULL;
+
+/*
+ * PanelShell is a singleton.
+ */
+static PanelShell *panel_shell = NULL;
+
+static void
+panel_shell_show_error_dialog (const gchar *message)
+{
+	GtkWidget *box;
+
+	box = gtk_message_dialog_new (NULL,
+				      GTK_DIALOG_MODAL,
+				      GTK_MESSAGE_ERROR,
+				      GTK_BUTTONS_OK,
+				      message);
+	gtk_dialog_run (GTK_DIALOG (box));
+	gtk_widget_destroy (box);
+}
+
+gboolean
+panel_shell_register (void)
+{
+        if (!panel_shell) {
+		Bonobo_RegistrationResult  reg_res;
+		gchar                     *message = NULL;
+
+		panel_shell = g_object_new (PANEL_SHELL_TYPE, NULL);
+		bonobo_object_set_immortal (BONOBO_OBJECT (panel_shell), TRUE);
+
+		reg_res = bonobo_activation_active_server_register (
+						"OAFIID:GNOME_PanelShell",
+						BONOBO_OBJREF (panel_shell));
+
+		switch (reg_res) {
+		case Bonobo_ACTIVATION_REG_SUCCESS:
+			break;
+		case Bonobo_ACTIVATION_REG_ALREADY_ACTIVE:
+			message = _("I've detected a panel already running,\n"
+				    "and will now exit.");
+			break;
+		default:
+			message = _("There was a problem registering the panel "
+				    "with the bonobo-activation server.\n"
+				    "The panel will now exit.");
+			break;
+		}
+
+		if (message) {
+			panel_shell_show_error_dialog (message);
+			return FALSE;
+		}
+	}
+
+	return TRUE;
+}
+
+void
+panel_shell_unregister (void)
+{
+	bonobo_activation_active_server_unregister ("OAFIID:GNOME_PanelShell",
+						    BONOBO_OBJREF (panel_shell));
+}
 
 static void
 impl_displayRunDialog (PortableServer_Servant  servant,

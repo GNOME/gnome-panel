@@ -14,7 +14,6 @@
 #include "menu.h"
 #include "panel_config_global.h"
 #include "panel.h"
-#include "extern.h"
 #include "session.h"
 
 extern GtkTooltips *panel_tooltips;

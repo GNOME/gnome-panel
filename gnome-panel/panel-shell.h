@@ -25,6 +25,9 @@ typedef struct {
 	POA_GNOME_PanelShell__epv epv;
 } PanelShellClass;
 
-GType panel_shell_get_type (void) G_GNUC_CONST;
+GType     panel_shell_get_type (void) G_GNUC_CONST;
+
+gboolean  panel_shell_register   (void);
+void      panel_shell_unregister (void);
 
 #endif /* PANEL_SHELL_H */

@@ -29,7 +29,6 @@
 #include "distribution.h"
 #include "drawer-widget.h"
 #include "edge-widget.h"
-#include "extern.h"
 #include "floating-widget.h"
 #include "foobar-widget.h"
 #include "launcher.h"
@@ -49,6 +48,8 @@
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
 #include "conditional.h"
+#include "panel-applet-frame.h"
+#include "panel-shell.h"
 
 #undef SESSION_DEBUG
 
@@ -85,21 +86,6 @@ GtkWidget *ss_timeout_dlg = NULL;
 static gboolean ss_interactive = FALSE;
 static int ss_timeout = 500;
 
-/*send the tooltips state to all external applets*/
-static void
-send_tooltips_state(gboolean enabled)
-{
-	GSList *li;
-
-	for(li = applets; li != NULL; li = li->next) {
-		AppletInfo *info = li->data;
-
-		if (info->type == APPLET_EXTERN)
-			extern_handle_set_tooltips_state ((Extern)info->data,
-							  enabled);
-	}
-}
-
 void
 apply_global_config (void)
 {
@@ -111,14 +97,14 @@ apply_global_config (void)
 	static int old_avoid_collisions = -1;
 	GSList *li;
 
-/* FIXME
+#ifdef FIXME
 	panel_widget_change_global (global_config.hiding_step_size,
 				    global_config.minimized_size,
 				    global_config.minimize_delay,
 				    global_config.maximize_delay,
 				    global_config.movement_type,
 				    global_config.disable_animations);
-*/
+#endif
 	if (global_config.tooltips_enabled)
 		gtk_tooltips_enable (panel_tooltips);
 	else
@@ -165,7 +151,6 @@ apply_global_config (void)
 	old_use_large_icons = global_config.use_large_icons;
 	old_merge_menus = global_config.merge_menus;
 	old_menu_check = global_config.menu_check;
-	send_tooltips_state(global_config.tooltips_enabled);
 
 	/* if we changed global menu flags, cmark all main menus that use
 	 * the global setting as dirty */
@@ -225,6 +210,7 @@ apply_global_config (void)
 	panel_global_keys_setup();
 }
 
+#ifdef FIXME /* Keep this code until a new one is done for applets */
 static void
 timeout_dlg_realized (GtkWidget *dialog)
 {
@@ -282,60 +268,7 @@ session_save_timeout (gpointer data)
 	gtk_widget_destroy (ss_timeout_dlg);
 	return TRUE;
 }
-
-static void
-send_applet_session_save (AppletInfo *info,
-			  CORBA_Object obj,
-			  const char *cfgpath,
-			  const char *globcfgpath)
-{
-	guint timeout;
-	CORBA_Environment ev;
-	
-	/*new unique cookie*/
-	ss_cookie++;
-	
-#ifdef SESSION_DEBUG	
-	printf("SENDING_SESSION_SAVE (%u)\n", ss_cookie);
 #endif
-
-	timeout = gtk_timeout_add(ss_timeout, session_save_timeout,
-				  GINT_TO_POINTER((int)ss_cookie));
-
-	CORBA_exception_init(&ev);
-	GNOME_Applet_save_session(obj,
-				  (CORBA_char *)cfgpath,
-				  (CORBA_char *)globcfgpath,
-				  ss_cookie, &ev);
-	if(ev._major == CORBA_SYSTEM_EXCEPTION) {
-		CORBA_SystemException *exc =
-			CORBA_exception_value(&ev);
-		if(exc &&
-		   (!strcmp (ev._id, ex_CORBA_BAD_OPERATION) ||
-		    !strcmp (ev._id, ex_CORBA_NO_IMPLEMENT))) {
-			gboolean ret;
-			gtk_timeout_remove(timeout);
-			CORBA_exception_free(&ev);
-			CORBA_exception_init(&ev);
-			ret = GNOME_Applet_session_save(obj,
-						(CORBA_char *)cfgpath,
-						(CORBA_char *)globcfgpath,
-						&ev);
-			extern_save_applet (info, ret);
-		}
-	} else if(ev._major) {
-		gtk_timeout_remove(timeout);
-		panel_applet_clean(info);
-		CORBA_exception_free(&ev);
-		save_next_applet();
-		return;
-	}
-
-	CORBA_exception_free(&ev);
-}
-
-
-
 
 /*returns TRUE if the save was completed, FALSE if we need to wait
   for the applet to respond*/
@@ -362,13 +295,10 @@ save_applet_configuration(AppletInfo *info)
 			 info->applet_id+1);
 	gnome_config_push_prefix(buf->str);
 
-	/*obviously no need for saving*/
-	if (info->type == APPLET_EXTERN_PENDING ||
-	    info->type == APPLET_EXTERN_RESERVED ||
-	    info->type == APPLET_EMPTY) {
-		gnome_config_set_string("id", EMPTY_ID);
-		gnome_config_pop_prefix();
-		g_string_free(buf,TRUE);
+	if (info->type == APPLET_EMPTY) {
+		gnome_config_set_string ("id", EMPTY_ID);
+		gnome_config_pop_prefix ();
+		g_string_free (buf,TRUE);
 		return TRUE;
 	}
 
@@ -385,53 +315,11 @@ save_applet_configuration(AppletInfo *info)
 	panel_id = panel->unique_id;
 
 	switch(info->type) {
-	case APPLET_EXTERN:
-		{
-			Extern       ext = info->data;
-			GNOME_Applet applet;
-			char *s;
-
-			g_assert (info->data);
-
-			ext    = info->data;
-			applet = extern_get_applet (ext);
-
-			/*just in case the applet times out*/
-			gnome_config_set_string("id", EMPTY_ID);
-			gnome_config_pop_prefix();
-
-			/*this is the file path we must kill first */
-			g_string_sprintf(buf, "%sApplet_%d_Extern",
-					 PANEL_CONFIG_PATH, info->applet_id+1);
-			
-			/* this should really be: */
-			/*gnome_config_push_prefix("");
-			gnome_config_clean_file(buf->str);
-			gnome_config_pop_prefix();
-			gnome_config_sync();*/
-			/* but gnome-config.[ch] is broken ! */
-			s = gnome_config_get_real_path (buf->str);
-			unlink(s);
-			g_free(s);
-
-			gnome_config_sync();
-
-			/*this is the file path we pass to the applet for it's
-			  own config, this is a separate file, so that we */
-			g_string_sprintf(buf, "%sApplet_%d_Extern/",
-					 PANEL_CONFIG_PATH, info->applet_id+1);
-			/*have the applet do it's own session saving*/
-			send_applet_session_save (info,
-						  applet,
-						  buf->str,
-						  PANEL_CONFIG_PATH
-						  "Applet_All_Extern/");
-
-			/* update the configuration string */
-			extern_set_config_string (ext, buf->str);
-
-			return FALSE; /*here we'll wait for done_session_save*/
-		}
+	case APPLET_BONOBO:
+		/*
+		 * FIXME: handle applet session saving
+		 */
+		break;
 	case APPLET_DRAWER: 
 		{
 			int i;
@@ -859,7 +747,7 @@ int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
-	GSList *li;
+	GSList *l;
 
 	gtk_timeout_remove (config_sync_timeout);
 	config_sync_timeout = 0;
@@ -867,22 +755,30 @@ panel_session_die (GnomeClient *client,
 	status_inhibit = TRUE;
 	status_spot_remove_all ();
 
-	for (li = applets; li != NULL; li = li->next) {
-		AppletInfo *info = li->data;
+	for (l = applets; l; l = l->next) {
+		AppletInfo *info = l->data;
 
-		if (info->type == APPLET_EXTERN) {
-			extern_save_last_position ((Extern)info->data, FALSE);
-
-			gtk_widget_destroy (info->widget);
-		}
-		else if (info->type == APPLET_SWALLOW) {
-			Swallow *swallow = info->data;
+		switch (info->type) {
+		case APPLET_BONOBO:
+			panel_applet_frame_save_position (
+				PANEL_APPLET_FRAME (info->data));
+			break;
+		case APPLET_SWALLOW: {
+			Swallow   *swallow = info->data;
+			GtkSocket *socket;
 
 			swallow->clean_remove = TRUE;
 
-			if(GTK_SOCKET(swallow->socket)->plug_window)
-				XKillClient(GDK_DISPLAY(),
-					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
+			socket = GTK_SOCKET (swallow->socket);
+
+			if (socket->plug_window)
+                                XKillClient (GDK_DISPLAY (),
+					     GDK_WINDOW_XWINDOW(socket->plug_window));
+
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -890,9 +786,10 @@ panel_session_die (GnomeClient *client,
 
 	xstuff_unsetup_desktop_area ();
 			
-	extern_shutdown ();
+	panel_shell_unregister ();
 	
 	gtk_main_quit();
+
 	return TRUE;
 }
 
@@ -903,39 +800,6 @@ panel_quit (void)
 	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
 				   GNOME_INTERACT_ANY, 0, 1);
 }
-
-#ifdef FIXME
-/* try evil hacks to rewrite panel config from old applets (gnomepager for
- * now.  This is very evil.  But that's the only way to do it, it seems */
-static gboolean
-try_evil_config_hacks (const char *goad_id, PanelWidget *panel, int pos)
-{
-	gboolean ret = FALSE;
-
-	if (strcmp (goad_id, "gnomepager_applet") == 0) {
-		static gboolean first_time = TRUE;
-		static gboolean in_path = FALSE;
-
-		if(first_time) {
-			char *tmp;
-			tmp = g_find_program_in_path ("gnomepager_applet");
-			in_path = tmp != NULL;
-			first_time = FALSE;
-			g_free(tmp);
-		}
-
-		if (!in_path) {
-			extern_load_applet ("deskguide_applet", NULL,
-					    panel, pos, TRUE, TRUE);
-
-			extern_load_applet ("tasklist_applet", NULL,
-					    panel, pos+1, TRUE, TRUE);
-			ret = TRUE;
-		}
-	}
-	return ret;
-}
-#endif /* FIXME */
 
 char *
 get_correct_prefix (char const **sep)
@@ -1070,29 +934,17 @@ init_user_applets (void)
 		pos += (conditional_get_bool ("right_stick", FALSE, NULL)
 			? G_MAXINT/2 : 0);
 
-#ifdef FIXME 
-		if (strcmp (applet_name, EXTERN_ID) == 0) {
-			char *goad_id = conditional_get_string ("goad_id",
-								NULL, NULL);
-			if ( ! string_empty (goad_id) &&
-			    /* if we try an evil hack such as loading tasklist
-			     * and deskguide instead of the desguide don't
-			     * try to load this applet in the first place */
-			    ! try_evil_config_hacks (goad_id, panel, pos)) {
-				/*this is the config path to be passed to the
-				  applet when it loads*/
-				g_string_sprintf (buf, "%sApplet_%d_Extern/",
-						  PANEL_CONFIG_PATH, num);
+		if (!strcmp (applet_name, BONOBO_ID)) {
+			char *iid;
 
-				extern_load_applet (goad_id, buf->str, 
-						    panel, pos, TRUE, TRUE);
-			}
-			g_free (goad_id);
+			iid = conditional_get_string ("iid", NULL, NULL);
 
-		} else 
-#endif /* FIXME */
+			if (iid && iid [0] )
+				panel_applet_frame_load (iid, panel, pos);
 
-		if (strcmp (applet_name, LAUNCHER_ID) == 0) { 
+			g_free (iid);
+
+		} else if (!strcmp (applet_name, LAUNCHER_ID)) { 
 			gboolean hoard = FALSE;
 			Launcher *launcher;
 			char *file;

@@ -41,7 +41,6 @@
 #include "distribution.h"
 #include "drawer-widget.h"
 #include "edge-widget.h"
-#include "extern.h"
 #include "floating-widget.h"
 #include "foobar-widget.h"
 #include "gnome-run.h"
@@ -2271,51 +2270,12 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 	}
 }
 
-/*
- * FIXME: only a temporary testing menuitem
- */
-static void
-add_test_applet (GtkWidget *widget,
-		 gpointer   dummy)
-{
-	PanelWidget *panel;
-
-	panel = get_panel_from_menu_data (widget, TRUE);
-
-	extern_load_applet ("OAFIID:GNOME_Panel_TestApplet",
-			    NULL, panel, -1, FALSE, FALSE);
-}
-
 static void
 add_applet (GtkWidget *w, const char *item_loc)
 {
-  g_warning ("FIXME: add_applet() not implemented\n");
-#ifdef FIXME
-	GnomeDesktopEntry *ii;
-	char *goad_id;
-
-	ii = gnome_desktop_entry_load(item_loc);
-	if (ii == NULL) {
-		panel_error_dialog ("cannot_load_entry",
-				    _("Can't load entry"));
-		return;
-	}
-
-	goad_id = get_applet_goad_id_from_dentry(ii);
-	gnome_desktop_entry_free(ii);
-	
-	if(!goad_id) {
-		panel_error_dialog("cannot_get_goad_id_from_entry",
-				   _("Can't get goad_id from desktop entry!"));
-		return;
-	}
-
-	extern_load_applet (goad_id, NULL,
-			    get_panel_from_menu_data (w, TRUE),
-			    -1, FALSE, FALSE);
-
-	g_free (goad_id);
-#endif
+	/*
+	 * FIXME: remove all old applet's menu code
+	 */
 }
 
 static void
@@ -4401,15 +4361,6 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(try_add_status_to_panel),NULL);
 	setup_internal_applet_drag(menuitem, "STATUS:TRY");
-
-	/*
-	 * FIXME: only a temporary testing menuitem
-	 */
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Test Applet"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK (add_test_applet), NULL);
 }
 
 static void

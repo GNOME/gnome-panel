@@ -16,7 +16,6 @@
 #include "basep-widget.h"
 #include "button-widget.h"
 #include "drawer.h"
-#include "extern.h"
 #include "launcher.h"
 #include "menu-properties.h"
 #include "menu-util.h"
@@ -25,6 +24,7 @@
 #include "session.h"
 #include "status.h"
 #include "swallow.h"
+#include "panel-applet-frame.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -75,17 +75,22 @@ panel_applet_clean (AppletInfo *info)
 }
 
 static gboolean
-kill_applet_in_idle(gpointer data)
+applet_idle_remove (gpointer data)
 {
 	AppletInfo *info = data;
 
-	if (info->type == APPLET_EXTERN)
-		extern_save_last_position ((Extern)info->data, TRUE);
-
-	else if (info->type == APPLET_SWALLOW) {
+	switch (info->type) {
+	case APPLET_BONOBO:
+		panel_applet_frame_save_position (PANEL_APPLET_FRAME (info->data));
+		break;
+	case APPLET_SWALLOW: {
 		Swallow *swallow = info->data;
 
 		swallow->clean_remove = TRUE;
+		}
+		break;
+	default:
+		break;
 	}
 
 	panel_applet_clean (info);
@@ -94,9 +99,10 @@ kill_applet_in_idle(gpointer data)
 }
 
 static void
-remove_applet_callback(GtkWidget *widget, AppletInfo *info)
+applet_remove_callback (GtkWidget  *widget,
+			AppletInfo *info)
 {
-	gtk_idle_add (kill_applet_in_idle, info);
+	g_idle_add (applet_idle_remove, info);
 }
 
 static void
@@ -107,10 +113,6 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	g_return_if_fail(menu->info != NULL);
 
 	switch(menu->info->type) {
-	case APPLET_EXTERN:
-		extern_handle_do_callback ((Extern)menu->info->data,
-					   menu->name);
-		break;
 	case APPLET_LAUNCHER:
 		if (strcmp (menu->name, "properties") == 0) {
 			launcher_properties (menu->info->data);
@@ -211,7 +213,14 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("specialobjects", "RUNBUTTON");
 		break;
-	default: break;
+	case APPLET_BONOBO:
+		/*
+		 * Applet's menu's are handled differently
+		 */
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
 	}
 }
 
@@ -513,9 +522,9 @@ panel_applet_create_menu (AppletInfo *info,
 		setup_menuitem (menuitem, image , _("Remove from panel"));
 
 		g_signal_connect (G_OBJECT (menuitem),
-				    "activate",
-				    G_CALLBACK (remove_applet_callback),
-				    info);
+				  "activate",
+				  G_CALLBACK (applet_remove_callback),
+				  info);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 
@@ -527,9 +536,9 @@ panel_applet_create_menu (AppletInfo *info,
 		setup_menuitem (menuitem, NULL, _("Move"));
 
 		g_signal_connect (G_OBJECT (menuitem),
-				    "activate",
-				    G_CALLBACK (move_applet_callback),
-				    info);
+				  "activate",
+				  G_CALLBACK (move_applet_callback),
+				  info);
 
 		gtk_menu_shell_append (GTK_MENU_SHELL (info->menu), menuitem);
 	}

@@ -1,3 +1,56 @@
+2001-11-28  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: don't build extern.[ch].
+
+	* applet.c:
+	(applet_idle_remove): handle bonobo applets, remove 
+	extern stuff.
+	(applet_remove_callback): use g_idle_add.
+	(applet_callback_callback): fixme for bonobo applets,
+	remove extern stuff.
+
+	* applet.h: kill extern stuff.
+
+	* main.c: don't include extern.h. kill panel_in_startup.
+	(main): move panel shell registration to panel-shell.h.
+
+	* menu.c:
+	(add_test_applet): kill.
+	(add_applet): kill.
+	(make_add_submenu): kill testing menuitem.
+
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_save_position): impl stub.
+
+	* panel-shell.[ch]:
+	(panel_shell_show_error_dialog): impl.
+	(panel_shell_register), (panel_shell_unregister): impl.
+
+	* panel.c: kill freeze/thaw changes stuff.
+	(orientation_change), (size_change),
+	(back_change): kill extern handling.
+	(panel_remove_applets): handle bonobo applets.
+	(panel_applet_draw): kill.
+	(panel_applet_about_to_die): fixme.
+	(drag_data_recieved_cb): fixme.
+	(panel_widget_setup): don't connect to draw signal.
+
+	* panel_config.c: (config_apply): don't freeze/thaw.
+
+	* session.c:
+	(send_tooltips_state): kill.
+	(send_applet_session_save): kill.
+	(save_applet_configuration): kill extern stuff.
+	(panel_session_die): add bonobo applets support.
+	(try_evil_config_hacks): kill.
+	(init_user_applets): handle bonobo applets.
+
+	* logout.c: don't include extern.h
+
+	* status.c: ditto.
+
+	* swallow.c: ditto.
+
 2001-11-27  Seth Nickell  <snickell@stanford.edu>
 
 	* Makefile.am:

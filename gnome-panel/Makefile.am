@@ -104,7 +104,6 @@ panel_sources =			\
 	swallow.c  		\
 	menu-properties.c	\
 	launcher.c		\
-	extern.c  		\
 	panel-applet-frame.c	\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
@@ -150,7 +149,6 @@ panel_headers =			\
 	swallow.h  		\
 	menu-properties.h	\
 	launcher.h		\
-	extern.h  		\
 	panel-applet-frame.h	\
 	quick-desktop-reader.h	\
 	panel-shell.h		\

@@ -16,9 +16,6 @@ struct _PanelData {
 	int menu_age;
 };
 
-void freeze_changes (AppletInfo *info);
-void thaw_changes (AppletInfo *info);
-
 void orientation_change(AppletInfo *info, PanelWidget *panel);
 void size_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);
@@ -30,10 +27,6 @@ void basep_pos_connect_signals (BasePWidget *basep);
 
 /*send state change to all the panels*/
 void send_state_change(void);
-
-void panel_freeze_changes(PanelWidget *panel);
-
-void panel_thaw_changes(PanelWidget *panel);
 
 GtkWidget * make_popup_panel_menu (PanelWidget *panel);
 

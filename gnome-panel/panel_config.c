@@ -521,8 +521,6 @@ config_apply (PerPanelConfig *ppc)
 	/* don't update selves, all changes coming from ME */
 	ppc->ppc_origin_change = TRUE;
 
-	panel_freeze_changes (PANEL_WIDGET (BASEP_WIDGET (ppc->panel)->panel));
-
 	if(EDGE_IS_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
 					    ppc->screen,
@@ -614,8 +612,6 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->rotate_pixmap_bg,
 					    &ppc->back_color);
 	}
-
-	panel_thaw_changes (PANEL_WIDGET (BASEP_WIDGET (ppc->panel)->panel));
 
 	/* start registering changes again */
 	ppc->ppc_origin_change = FALSE;
