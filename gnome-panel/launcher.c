@@ -255,6 +255,9 @@ drag_data_received_cb (GtkWidget        *widget,
 
 	envp = panel_make_environment_for_screen (screen, NULL);
 
+	if (panel_global_config_get_enable_animations ())
+		xstuff_zoom_animate (widget, NULL);
+	
 	gnome_desktop_item_drop_uri_list_with_env (launcher->ditem,
 						   (const char *)selection_data->data,
 						   0 /* flags */,
