@@ -35,7 +35,7 @@
 #include "gnome-desktop-item.h"
 #include "gnome-ditem-edit.h"
 
-#define LAUNCHER_DEBUG 1
+#undef LAUNCHER_DEBUG
 
 static void properties_apply (Launcher *launcher);
 
@@ -719,9 +719,9 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	GnomeDesktopItem *ditem;
 
 	dialog = gnome_dialog_new (_("Create launcher applet"),
-				   GNOME_STOCK_BUTTON_OK,
-				   GNOME_STOCK_BUTTON_CANCEL,
 				   GNOME_STOCK_BUTTON_HELP,
+				   GNOME_STOCK_BUTTON_CANCEL,
+				   GNOME_STOCK_BUTTON_OK,
 				   NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");

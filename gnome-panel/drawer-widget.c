@@ -17,7 +17,7 @@
 extern GlobalConfig global_config;
 extern int pw_minimized_size;
 
-#define DRAWER_WIDGET_DEBUG 1
+#undef DRAWER_WIDGET_DEBUG
 
 static void drawer_pos_class_init (DrawerPosClass *klass);
 static void drawer_pos_init (DrawerPos *pos);

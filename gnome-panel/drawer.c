@@ -35,7 +35,7 @@ extern int panels_to_sync;
 
 extern GtkTooltips *panel_tooltips;
 
-#define DRAWER_DEBUG 1
+#undef DRAWER_DEBUG
 
 static void
 properties_apply_callback(gpointer data)

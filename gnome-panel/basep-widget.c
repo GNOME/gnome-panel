@@ -27,7 +27,7 @@
 #include "panel-typebuiltins.h"
 #include "panel-gconf.h"
 
-#define BASEP_WIDGET_DEBUG 1
+#undef BASEP_WIDGET_DEBUG
 
 extern gboolean panel_applet_in_drag;
 extern GSList *panel_list;
