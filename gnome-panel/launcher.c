@@ -557,7 +557,7 @@ main(int argc, char **argv)
 	/* we pass an id starting with # to the panel to identify us,
 	   but not by path, this is so mc can take the place of the
 	   launcher_applet or any other filemanager */
-	myinvoc = "#panel.application.launcher",NULL);
+	myinvoc = "#panel.application.launcher";
 	/*myinvoc = g_copy_strings("#",mypath,NULL);
 	g_free(mypath);*/
 

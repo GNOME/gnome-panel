@@ -17,6 +17,8 @@ INCLUDES = -I. -I$(srcdir) 			\
 ## too trivial 
 bin_PROGRAMS = panel logout_applet launcher_applet
 
+bin_SCRIPTS = panel.sh
+
 CORBA_SOURCES = \
 	gnome-panel.cc \
 	gnome-panel.h
