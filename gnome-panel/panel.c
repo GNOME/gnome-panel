@@ -409,8 +409,10 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 static gint
 visibility_notify(GtkWidget *widget, GdkEventVisibility *event, gpointer data)
 {
-	if(event->state==GDK_VISIBILITY_FULLY_OBSCURED)
-		gdk_window_raise(the_panel->window->window);
+	/*if(event->state==GDK_VISIBILITY_FULLY_OBSCURED &&
+	   the_panel->mode==PANEL_STAYS_PUT &&
+	   the_panel->state==PANEL_HIDDEN)
+		gdk_window_raise(the_panel->window->window);*/
 	
 	return FALSE;
 }
