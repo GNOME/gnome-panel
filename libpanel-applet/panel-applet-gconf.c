@@ -31,8 +31,8 @@ gchar *
 panel_applet_gconf_get_full_key (PanelApplet *applet,
 				 const gchar *key)
 {
-	const gchar *prefs_key;
-	gchar       *full_key;
+	gchar *prefs_key;
+	gchar *full_key;
 
 	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
 
@@ -42,6 +42,8 @@ panel_applet_gconf_get_full_key (PanelApplet *applet,
 	prefs_key = panel_applet_get_preferences_key (applet);
 
 	full_key = g_strdup_printf ("%s/%s", prefs_key, key);
+
+	g_free (prefs_key);
 
 	return full_key;
 }
