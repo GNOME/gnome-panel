@@ -1,15 +1,15 @@
 # gnome-panel translation to Catalan.
-# Copyright © 2000, 2002, 2003 Free Software Foundation, Inc.
+# Copyright © 2000, 2002, 2003, 2004 Free Software Foundation, Inc.
 # Ivan Vilata i Balaguer <ivan@selidor.net>, 2000.
 # Softcatalà <info@softcatala.org>, 2000.
-# Jordi Mallach <jordi@sindominio.net>, 2002, 2003.
+# Jordi Mallach <jordi@sindominio.net>, 2002, 2003, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.5.1\n"
+"Project-Id-Version: gnome-panel 2.7.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 16:01+0100\n"
-"PO-Revision-Date: 2004-03-11 14:34+0100\n"
+"POT-Creation-Date: 2004-08-21 16:42+0200\n"
+"PO-Revision-Date: 2004-08-21 16:51+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,17 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "A_justa la data i hora..."
+msgstr "A_justa la data i hora"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
-msgstr "Còpia la _data"
+msgstr "Copia la _data"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:3
 msgid "Copy _Time"
-msgstr "Còpia l'_hora"
+msgstr "Copia l'_hora"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:4
 #: applets/fish/GNOME_FishApplet.xml.h:1
@@ -36,9 +35,8 @@ msgstr "Còpia l'_hora"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "Quant a..."
+msgstr "_Quant a..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -57,9 +55,8 @@ msgstr "A_juda"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "_Preferències..."
+msgstr "_Preferències"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: applets/clock/clock.c:2544
@@ -131,18 +128,11 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-# Format de l'hora
-# %a=dia de la setmana
-# %b=mes
-# %d=dia del mes
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr ""
-"%a, %d\n"
-"de %b"
+msgstr "%d %b"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -327,7 +317,6 @@ msgstr ""
 "conversió suportats per strftime() per a obtenir un format específic."
 
 #: applets/clock/clock.schemas.in.h:16
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -337,15 +326,7 @@ msgid ""
 "clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
-msgstr ""
-"Aquesta clau especifica el format de l'hora usat per l'applet del rellotge. "
-"Els valors possibles són «12-hour», «24-hour», «internet», «unix» i "
-"«custom». Si s'estableix a «internet», el rellotge mostrarà l'hora "
-"d'internet. L'hora d'internet divideix el dia en 1000 «.batecs». No hi ha "
-"cap fus horari en aquest sistema, així que l'hora és la mateixa a tot el "
-"món. Si s'estableix a «unix», el rellotge mostrarà l'hora en segons des de "
-"l'Època, és a dir, 01/01/1970. Si s'estableix a «custom», el rellotge "
-"mostrarà l'hora segons el format especificat en la clau «custom_format»."
+msgstr "Aquesta clau especifica el format de l'hora usat per l'applet del rellotge. Els valors possibles són «12-hour», «24-hour», «internet», «unix» i «custom». Si s'estableix a «internet», el rellotge mostrarà l'hora d'Internet. L'hora d'Onternet divideix el dia en 1000 «.batecs». No hi ha cap fus horari en aquest sistema, així que l'hora és la mateixa a tot el món. Si s'estableix a «unix», el rellotge mostrarà l'hora en segons des de l'Època, és a dir, 01/01/1970. Si s'estableix a «custom», el rellotge mostrarà l'hora segons el format especificat en la clau «custom_format»."
 
 #: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
@@ -357,7 +338,6 @@ msgid "Time configuration tool"
 msgstr "Eina de configuració de l'hora"
 
 #: applets/clock/clock.schemas.in.h:19
-#, fuzzy
 msgid "Use Internet time"
 msgstr "Utilitza l'hora d'Internet"
 
@@ -1160,9 +1140,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "No s'ha pogut fer la captura de pantalla de l'escriptori actual."
 
 #: gnome-panel/gnome-panel-screenshot.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "Desa la captura de pantalla a la pàgina _web (desa en ~/public__html)"
+msgstr "Desa la captura de pantalla a la pàgina _web (desa en %s)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
@@ -1394,18 +1374,16 @@ msgid "_Delete This Panel"
 msgstr "_Elimina aquest quadre"
 
 #: gnome-panel/menu.c:2289
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "_Afegeix al quadre"
+msgstr "_Afegeix al quadre..."
 
 #: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "_Nou quadre"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "Quant als quadres"
+msgstr "Q_uant als quadres"
 
 #: gnome-panel/menu.c:2395
 msgid "About _GNOME"
@@ -1484,46 +1462,40 @@ msgid "Force a misbehaving application to quit"
 msgstr "Força la sortida d'una aplicació que no es comporta correctament"
 
 #: gnome-panel/panel-addto.c:103
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Executa una aplicació"
+msgstr "Llançador d'aplicació personalitzat"
 
 #: gnome-panel/panel-addto.c:104
-#, fuzzy
 msgid "Create a new launcher"
-msgstr "Crea un llançador"
+msgstr "Crea un nou llançador"
 
 #: gnome-panel/panel-addto.c:114
-#, fuzzy
 msgid "Application Launcher..."
-msgstr "Executa una aplicació..."
+msgstr "Llançador d'aplicació..."
 
 #: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Llança un programa que ja està al menú del GNOME"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "Al menú principal"
+msgstr "El menú principal del GNOME"
 
 #: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Barra de menú"
 
 #: gnome-panel/panel-addto.c:137
-#, fuzzy
 msgid "A custom menu bar"
-msgstr "_Mostra la barra de menús"
+msgstr "Una barra de menú personalitzada"
 
 #: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Un calaix emergent on es poden introduir altres elements"
 
 #: gnome-panel/panel-addto.c:236
-#, fuzzy
 msgid "(empty)"
-msgstr " (buit)"
+msgstr "(buit)"
 
 #: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1531,23 +1503,22 @@ msgid "query returned exception %s\n"
 msgstr "la petició ha tornat l'excepció %s\n"
 
 #: gnome-panel/panel-addto.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "_Afegeix al quadre"
+msgstr "Afegeix a %s"
 
 #: gnome-panel/panel-addto.c:768
-#, fuzzy
 msgid "Add to the panel"
-msgstr "_Afegeix al quadre"
+msgstr "Afegeix al quadre"
 
 #: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "Seleccioneu un _element per a afegir a %s:"
 
 #: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "Seleccioneu un _element per a afegir al quadre:"
 
 #: gnome-panel/panel-applet-frame.c:757
 #, c-format
@@ -2214,9 +2185,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "S'ha produït un error desconegut en intentar obrir %s"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Documents recents"
+msgstr "Voleu netejar la llista de documents recents?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2225,15 +2195,18 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Si netejeu la llista de documents recents, netejeu el següent:\n"
+"\n"
+"• Tots els elements de l'element de menú Accions → Documents recents.\n"
+"• Tots els elements de la llista de documents recents de totes les aplicacions."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
 msgstr "Documents recents"
 
 #: gnome-panel/panel-recent.c:275
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Documents recents"
+msgstr "Neteja la llista de documents recents"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2351,9 +2324,8 @@ msgid "_Force quit"
 msgstr "_Força la sortida"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Calendari"
+msgstr "_Neteja"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2986,10 +2958,6 @@ msgstr "Extra petit"
 
 #~ msgid "Utility"
 #~ msgstr "Utilitat"
-
-#, fuzzy
-#~ msgid "Clear recent document history?"
-#~ msgstr "Documents recents"
 
 #~ msgid "_About..."
 #~ msgstr "_Quant a..."
