@@ -1262,7 +1262,6 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget *menu;
 	GtkWidget *label;
 	GSList    *list;
-	gchar     *title;
 	char      *file;
 
 	if (cd->props) {
@@ -1284,6 +1283,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_window_set_resizable (GTK_WINDOW (cd->props), FALSE);
 	gtk_window_set_screen (GTK_WINDOW (cd->props),
 			       gtk_widget_get_screen (cd->applet));
+	gtk_container_set_border_width (GTK_CONTAINER (cd->props), 5);
 		
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
 	                                  "gnome-clock.png", TRUE, NULL);
@@ -1298,7 +1298,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 		g_warning (G_STRLOC ": gnome-clock.png cannot be found");
 
 	vbox = gtk_vbox_new (FALSE, 6);
-	gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+	gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->props)->vbox), vbox, FALSE, FALSE, 0);
 	gtk_widget_show (vbox);
 
@@ -1306,14 +1306,12 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 	gtk_widget_show (hbox);
 
-	title = g_strconcat ("<span weight=\"bold\">", _("Clock _type:"), "</span>", NULL);
-	label = gtk_label_new_with_mnemonic (title);
+	label = gtk_label_new_with_mnemonic (_("Clock _type:"));
 	gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
 	gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
 	gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	gtk_widget_show (label);
-	g_free (title);
 
 	option_menu = gtk_option_menu_new ();
 	gtk_label_set_mnemonic_widget (GTK_LABEL(label), option_menu);
