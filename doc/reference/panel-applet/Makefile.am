@@ -12,7 +12,7 @@ DOC_MAIN_SGML_FILE=$(DOC_MODULE)-docs.sgml
 # The directory containing the source code. Relative to $(srcdir).
 # gtk-doc will search all .c & .h files beneath here for inline comments
 # documenting functions and macros.
-DOC_SOURCE_DIR=../../../panel
+DOC_SOURCE_DIR=../../../libpanel-applet
 
 # Extra options to supply to gtkdoc-scan.
 SCAN_OPTIONS=
@@ -98,14 +98,14 @@ extra_files =
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed if your app/lib
 # contains GtkObjects/GObjects and you want to document signals and properties.
-GTKDOC_CFLAGS =				\
-	$(PANEL_CFLAGS)			\
-	-I$(srcdir)/../../../panel      \
-	-I$(top_builddir)/panel
+GTKDOC_CFLAGS =					\
+	$(PANEL_CFLAGS)				\
+	-I$(srcdir)/../../../libpanel-applet    \
+	-I$(top_builddir)/libpanel-applet
 
-GTKDOC_LIBS =				\
-	$(PANEL_LIBS)			\
-	../../../panel/libpanel-applet-2.la
+GTKDOC_LIBS =						\
+	$(PANEL_LIBS)					\
+	../../../libpanel-applet/libpanel-applet-2.la
 
 GTKDOC_CC=$(LIBTOOL) --mode=compile $(CC)
 GTKDOC_LD=$(LIBTOOL) --mode=link $(CC)
