@@ -2174,29 +2174,15 @@ panel_widget_move (PanelWidget *panel, gint oldpos, gint pos)
 		panel->applets[i].cells = 1;
 	}
 	
-	if(pos>=panel->size)
-		pos = panel->size - 1;
-
-	for(i=pos;i<panel->size;i += panel->applets[i].cells)
-		if(!panel->applets[i].applet)
-			break;
-
-	/*panel is full to the right*/
-	if(i>=panel->size) {
-		for(i=pos-1;i>=0;i -= panel->applets[i].cells)
-			if(!panel->applets[i].applet)
-				break;
-		/*panel is full!*/
-		if(i<=0)
-			return -1;
-	}
+	pos = panel_widget_find_empty_pos(panel,pos);
+	if(pos==-1) return -1;
 
 	/*reset size to 1 and adjust the applet*/
-	panel->applets[i].applet = tmp.applet;
-	panel->applets[i].cells = 1;
+	panel->applets[pos].applet = tmp.applet;
+	panel->applets[pos].cells = 1;
 	panel_widget_adjust_applet(panel,tmp.applet);
 
-	return i;
+	return pos;
 }
 
 gint

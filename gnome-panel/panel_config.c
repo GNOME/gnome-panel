@@ -220,7 +220,7 @@ pixmap_page (PanelWidget *panel)
 	t = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (file_entry));
 	gtk_signal_connect (GTK_OBJECT (t), "changed",
 			    GTK_SIGNAL_FUNC (value_changed), NULL);
-	gtk_box_pack_start (GTK_CONTAINER (box), file_entry, 0, 0, 2);
+	gtk_box_pack_start (GTK_BOX (box), file_entry, 0, 0, 2);
 	
 	gtk_entry_set_text (GTK_ENTRY (t), panel->back_pixmap ? panel->back_pixmap : "");
 	return f;
