@@ -416,7 +416,8 @@ do_session_save(GnomeClient *client,
 	if (panel_cfg_path)
 		g_free(panel_cfg_path);
 
-	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED)
+	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED &&
+	    GNOME_CLIENT (client)->restart_style != GNOME_RESTART_NEVER)
 		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
 		panel_cfg_path = g_strdup ("/panel.d/default/");

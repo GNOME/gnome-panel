@@ -710,39 +710,42 @@ panel_corba_clean_up(void)
   CORBA_ORB_shutdown(orb, CORBA_FALSE, &ev);
 }
 
-void
+gint
 panel_corba_gtk_init(CORBA_ORB panel_orb)
 {
   GNOME_Panel acc;
   char hostname [4096];
   char *name;
   CORBA_Object ns;
+  gint status;
 
   CORBA_exception_init(&ev);
 
   orb = panel_orb;
 
   POA_GNOME_Panel__init(&panel_servant, &ev);
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
   thepoa = (PortableServer_POA)
     CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
   PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
   CORBA_free(PortableServer_POA_activate_object(thepoa,
 						&panel_servant, &ev));
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
   acc = PortableServer_POA_servant_to_reference(thepoa, &panel_servant, &ev);
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
 
-  goad_server_register(CORBA_OBJECT_NIL, acc, "gnome_panel", "server", &ev);
+  status = goad_server_register(CORBA_OBJECT_NIL, acc, "gnome_panel", "server", &ev);
 
   /*
   //CORBA_Object_release(acc, &ev);
   */
-  g_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+  g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+
+  return status;
 }

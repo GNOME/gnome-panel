@@ -95,6 +95,7 @@ main(int argc, char **argv)
 {
 	CORBA_ORB orb;
 	CORBA_Environment ev;
+	gint duplicate;
 	
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
@@ -105,12 +106,27 @@ main(int argc, char **argv)
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
 
-	panel_corba_gtk_init(orb);
+	duplicate = (panel_corba_gtk_init(orb) == -2);
 
 	client = gnome_master_client ();
+
+	if (! duplicate && 
+	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED))
+		duplicate = ! gnome_startup_acquire_token("GNOME_PANEL", gnome_client_get_id(client));
+
+	gnome_client_set_restart_style (client, duplicate ? GNOME_RESTART_NEVER : GNOME_RESTART_IMMEDIATELY);
+
+	if (duplicate) {
+		GtkWidget* box = gnome_question_dialog
+		  (_("I've detected a panel already running.\n"
+		     "Start another panel as well?\n" 
+		     "(The new panel will not be restarted.)"), NULL, NULL);
+		if (gnome_dialog_run_and_close (GNOME_DIALOG (box))) {
+			gnome_client_flush (client);
+			return 0;
+		}
+	}
 	gnome_client_set_priority(client,40);
-	gnome_client_set_restart_style(client,
-				       GNOME_RESTART_IMMEDIATELY);
 
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));

@@ -29,7 +29,7 @@ void load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int po
 void load_queued_externs(void);
 
 void panel_corba_clean_up(void);
-void panel_corba_gtk_init(CORBA_ORB panel_orb);
+gint panel_corba_gtk_init(CORBA_ORB panel_orb);
 
 END_GNOME_DECLS
 
