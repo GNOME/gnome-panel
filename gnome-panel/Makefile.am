@@ -91,6 +91,8 @@ panel_SOURCES = 		\
 	logout.h		\
 	$(CORBA_SOURCES)
 
+EXTRA_DIST = gnome-panel.idl
+
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 #launcher_applet_SOURCES = \
