@@ -2913,6 +2913,8 @@ create_rh_menu(int dofork)
 	if(dofork) {
 		int i = fork();
 		if(i>0) {
+			g_free (userrh);
+			g_free (rhdir);
 			wait(NULL);
 			return;
 		/*if fork failed, no need to worry we'll just do it
