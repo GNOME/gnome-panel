@@ -31,6 +31,14 @@
 #include "panel-util.h"
 #include "session.h"
 
+#include <gdk-pixbuf/gdk-pixbuf.h>
+#include <libart_lgpl/art_alphagamma.h>
+#include <libart_lgpl/art_filterlevel.h>
+#include <libart_lgpl/art_pixbuf.h>
+#include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_affine.h>
+#include "nothing.cP"
+
 static GlobalConfig global_config;
 static GlobalConfig loaded_config;
 
@@ -84,57 +92,6 @@ changed_cb(void)
 {
 	if(!changing)
 		capplet_widget_state_changed(CAPPLET_WIDGET(capplet), TRUE);
-}
-
-static void
-destroy_egg(GtkWidget *widget, int **pages)
-{
-	if(pages)
-		*pages = 0;
-}
-
-/*thy evil easter egg*/
-static int
-config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
-{
-	GtkWidget *w;
-	char *file;
-	static int clicks=0;
-	static int pages=0;
-	GdkEventButton *bevent;
-	
-	if(event->type != GDK_BUTTON_PRESS)
-		return FALSE;
-	
-	bevent = (GdkEventButton *)event;
-	if(bevent->button != 3)
-		clicks = 0;
-	else
-		clicks++;
-	
-	if(clicks<3)
-		return FALSE;
-	clicks = 0;
-	
-	if(pages==0) {
-		file = gnome_unconditional_pixmap_file("gnome-gegl.png");
-		if (file && g_file_exists (file))
-			w = gnome_pixmap_new_from_file (file);
-		else
-			w = gtk_label_new("<insert picture of goat here>");
-		g_free(file);
-		gtk_widget_show(w);
-		/*the GEGL shall not be translated*/
-		gtk_notebook_append_page (nbook, w,
-					  gtk_label_new ("GEGL"));
-		gtk_notebook_set_page(nbook,-1);
-		pages = 1;
-		gtk_signal_connect(GTK_OBJECT(widget),"destroy",
-				   GTK_SIGNAL_FUNC(destroy_egg),&pages);
-	} else {
-		gtk_notebook_set_page(nbook,-1);
-	}
-	return FALSE;
 }
 
 static GtkWidget *

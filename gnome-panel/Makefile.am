@@ -142,7 +142,8 @@ gnome_panel_properties_capplet_SOURCES = \
 
 gnome_panel_properties_capplet_LDADD = -lcapplet \
 		     $(GNOME_LIBDIR) $(ORB_LIBS) \
-		     $(GNOMEUI_LIBS) $(INTLLIBS) -lgnorba
+		     $(GNOMEUI_LIBS) $(INTLLIBS) -lgnorba	\
+		     @PIXBUF_LIBS@
 
 data_DATA = panelrc
 
@@ -173,7 +174,8 @@ EXTRA_DIST = \
 	panel.soundlist			\
 	APPLET_WRITING			\
 	panel.hints			\
-	gnome-panel-properties.desktop
+	gnome-panel-properties.desktop	\
+	nothing.cP
 
 ## Put `exec' in the name because this should be installed by
 ## `install-exec', not `install-data'.
