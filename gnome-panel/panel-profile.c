@@ -1332,16 +1332,22 @@ panel_profile_load_toplevel (GConfClient       *client,
 		panel_gconf_associate_schemas_in_dir (
 			client, toplevel_dir, PANEL_SCHEMAS_DIR "/toplevels");
 
+	gconf_client_add_dir (client,
+			      toplevel_dir,
+			      GCONF_CLIENT_PRELOAD_ONELEVEL,
+			      NULL);
+
+	key = panel_gconf_sprintf ("%s/background", toplevel_dir);
+	gconf_client_add_dir (client,
+			      key,
+			      GCONF_CLIENT_PRELOAD_ONELEVEL,
+			      NULL);
+
 	if (!(screen = get_toplevel_screen (client, toplevel_dir))) {
 		g_free (toplevel_id);
 		g_free (toplevel_dir);
 		return NULL;
 	}
-
-	gconf_client_add_dir (client,
-			      toplevel_dir,
-			      GCONF_CLIENT_PRELOAD_RECURSIVE,
-			      NULL);
 
 	toplevel = g_object_new (PANEL_TYPE_TOPLEVEL,
 				 "screen", screen,
@@ -1559,6 +1565,7 @@ panel_profile_load_object (GConfClient       *client,
 			   char              *id)
 {
 	PanelObjectType  object_type;
+	char            *object_dir;
 	const char      *key;
 	char            *type_string;
 	char            *toplevel_id;
@@ -1566,7 +1573,14 @@ panel_profile_load_object (GConfClient       *client,
 	gboolean         right_stick;
 	gboolean         locked;
 
-	key = panel_gconf_full_key (type, current_profile, id, "object_type");
+	object_dir = g_strdup_printf ("%s/%s/%s",
+				      profile_dir,
+				      type == PANEL_GCONF_OBJECTS ? "objects" : "applets",
+				      id);
+
+	gconf_client_add_dir (client, object_dir, GCONF_CLIENT_PRELOAD_ONELEVEL, NULL);
+
+	key = panel_gconf_sprintf ("%s/object_type", object_dir);
 	type_string = gconf_client_get_string (client, key, NULL);
         
 	if (!panel_profile_map_object_type_string (type_string, &object_type)) {
@@ -1576,17 +1590,19 @@ panel_profile_load_object (GConfClient       *client,
 	
 	g_free (type_string);
 
-	key = panel_gconf_full_key (type, current_profile, id, "position");
+	key = panel_gconf_sprintf ("%s/position", object_dir);
 	position = gconf_client_get_int (client, key, NULL);
 	
-	key = panel_gconf_full_key (type, current_profile, id, "toplevel_id");
+	key = panel_gconf_sprintf ("%s/toplevel_id", object_dir);
 	toplevel_id = gconf_client_get_string (client, key, NULL);
 
-	key = panel_gconf_full_key (type, current_profile, id, "panel_right_stick");
+	key = panel_gconf_sprintf ("%s/panel_right_stick", object_dir);
 	right_stick = gconf_client_get_bool (client, key, NULL);
 
-	key = panel_gconf_full_key (type, current_profile, id, "locked");
+	key = panel_gconf_sprintf ("%s/locked", object_dir);
 	locked = gconf_client_get_bool (client, key, NULL);
+
+	g_free (object_dir);
 
 	panel_applet_queue_applet_to_load (id,
 					   object_type,

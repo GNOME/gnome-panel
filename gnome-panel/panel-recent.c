@@ -162,7 +162,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	EggRecentViewGtk *view;
 	GdkScreen        *screen;
 
-	menu_item = stock_menu_item_new (_("Open Recent"),
+	menu_item = stock_menu_item_new (_("_Open Recent"),
 					 GTK_STOCK_OPEN,
 					 FALSE);
 	menu = panel_create_menu ();

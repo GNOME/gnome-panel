@@ -107,7 +107,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Run Application..."),
+			_("_Run Application..."),
 			PANEL_STOCK_RUN,
 			_("Run an Application by entering a command"),
 			"ACTION:run:NEW",
@@ -120,7 +120,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Search for Files..."),
+			_("_Search for Files..."),
 			PANEL_STOCK_SEARCHTOOL,
 			_("Find files, folders, and documents on your computer"),
 			"ACTION:search:NEW",
@@ -135,7 +135,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Take Screenshot..."),
+			_("_Take Screenshot..."),
 			PANEL_STOCK_SCREENSHOT,
 			_("Take a screenshot of your desktop"),
 			"ACTION:screenshot:NEW",
@@ -149,7 +149,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 		panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Lock Screen"), 
+			_("_Lock Screen"), 
 			PANEL_STOCK_LOCKSCREEN, 
 			_("Protect your computer from unauthorized use"),
 			"ACTION:lock:NEW",
@@ -158,7 +158,7 @@ panel_menu_bar_append_actions_menu (PanelMenuBar *menubar)
 	panel_menu_bar_append_action_item (
 			menubar,
 			menubar->priv->actions_menu,
-			_("Log Out"),
+			_("_Log Out"),
 			PANEL_STOCK_LOGOUT,
 			_("Quit from the GNOME desktop"),
 			"ACTION:logout:NEW",

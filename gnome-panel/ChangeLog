@@ -1,3 +1,35 @@
+2003-07-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Add mnemonics to the Applications, Actions and "Add to Panel"
+	menus, but make the ones in Applications invisible.
+	
+	* menu.c:
+	(setup_mnemonic), (setup_invisible_mnemonic): implement
+	setting a mnemonic for a menu item without actually
+	underlining the appropriate character.
+	(create_menuitem): set an invisible mnemonic.
+	(applet_menu_append), (applet_menu_append_category),
+	(make_add_submenu): use visible mnemonics here.
+	
+	* menu-util.c: (stock_menu_item_new): allow mnemonics.
+	
+	* panel-menu-bar.c: (panel_menu_bar_append_actions_menu):
+	add mnemonics to the Actions menu.
+	
+	* panel-recent.c: (panel_recent_append_documents_menu):
+	add mnemonic.
+	
+2003-07-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Pre-load some directories that weren't previously being
+	loaded. Should improve startup time significantly.
+	
+	* panel-profile.c:
+	(panel_profile_load_toplevel): preload the background
+	directory explicitly. Recursive preloading never worked.
+	(panel_profile_load_object): preload the applet's
+	directories too.
+
 2003-07-05  Dennis Cranston <dennis_cranston at yahoo com>
 
 	* menu-ditem.c: (panel_new_launcher)  Adjust padding of 
