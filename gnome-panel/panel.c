@@ -182,7 +182,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 
 	/*FIXME: this should be allocation.[xy] but those don't work!!!
 	  probably a gtk bug*/
-	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
+	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
 	
 	gnome_config_set_int("position_x",x);
 	gnome_config_set_int("position_y",y);
@@ -194,7 +194,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 static void
 destroy_widget_list(gpointer data, gpointer user_data)
 {
-	gtk_widget_unref(GTK_WIDGET(data));
+	gtk_widget_destroy(GTK_WIDGET(data));
 }
 
 /* This is called when the session manager requests a shutdown.  It
@@ -342,9 +342,10 @@ panel_clean_applet(gint applet_id)
 	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER && info->assoc) {
 		panels = g_list_remove(panels,info->assoc);
-		gtk_widget_unref(info->assoc);
+		gtk_widget_destroy(info->assoc);
 		info->assoc=NULL;
 	}
+	info->assoc=NULL;
 	if(info->menu)
 		gtk_widget_unref(info->menu);
 	info->menu = NULL;
@@ -401,6 +402,7 @@ create_applet_menu(gint applet_id, GList *user_menu)
 {
 	GtkWidget *menuitem;
 	GtkWidget *applet_menu;
+	AppletInfo *info = get_applet_info(applet_id);
 
 	applet_menu = gtk_menu_new();
 
@@ -410,7 +412,7 @@ create_applet_menu(gint applet_id, GList *user_menu)
 			   ITOP(applet_id));
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
-	
+
 	menuitem = gtk_menu_item_new_with_label(_("Move applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
@@ -783,6 +785,18 @@ applet_remove_from_panel(gint applet_id)
 	panel_clean_applet(applet_id);
 }
 
+static gint
+panel_add_main_menu(GtkWidget *w, gpointer data)
+{
+	PanelWidget *panel = data;
+	gint panel_num = find_panel(panel);
+
+	load_applet(MENU_ID,NULL,PANEL_UNKNOWN_APPLET_POSITION,
+		    panel_num!=-1?panel_num:0,NULL);
+
+	return TRUE;
+}	
+
 
 GtkWidget *
 create_panel_root_menu(PanelWidget *panel)
@@ -802,6 +816,13 @@ create_panel_root_menu(PanelWidget *panel)
 	menuitem = gtk_menu_item_new_with_label(_("Global properties..."));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_global_properties_callback,
+			   panel);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) panel_add_main_menu,
 			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
