@@ -119,13 +119,15 @@ update_config_floating_pos_limits (BasePWidget *panel)
 
 
 	val = FLOATING_POS (panel->pos)->x;
-	if(val > xlimit) val = xlimit;
+	if(val > xlimit)
+		val = xlimit;
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (val, 0, xlimit, 1, 10, 10));
 	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ppc->x_spin), adj);
 	gtk_adjustment_value_changed(adj);
 
 	val = FLOATING_POS (panel->pos)->y;
-	if(val > ylimit) val = ylimit;
+	if(val > ylimit)
+		val = ylimit;
 	adj = GTK_ADJUSTMENT(gtk_adjustment_new (val, 0, ylimit, 1, 10, 10));
 	gtk_spin_button_set_adjustment (GTK_SPIN_BUTTON (ppc->y_spin), adj);
 	gtk_adjustment_value_changed(adj);
@@ -304,10 +306,11 @@ config_destroy(GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = data;
 	
-	ppconfigs = g_list_remove(ppconfigs,ppc);
+	ppconfigs = g_list_remove (ppconfigs, ppc);
 	
-	g_free(ppc->back_pixmap);
-	g_free(ppc);
+	g_free (ppc->back_pixmap);
+	ppc->back_pixmap = NULL;
+	g_free (ppc);
 }
 
 static void
@@ -1375,13 +1378,15 @@ panel_config(GtkWidget *panel)
 	
 	/* return if the window is already up. */
 	if (ppc) {
-		gdk_window_raise(ppc->config_window->window);
-		gtk_widget_show(ppc->config_window);
+		g_assert (ppc->config_window != NULL);
+
+		gtk_widget_show_now (ppc->config_window);
+		gdk_window_raise (ppc->config_window->window);
 		return;
 	}
 	
-	ppc = g_new(PerPanelConfig,1);
-	ppconfigs = g_list_prepend(ppconfigs,ppc);
+	ppc = g_new0 (PerPanelConfig, 1);
+	ppconfigs = g_list_prepend(ppconfigs, ppc);
 	ppc->register_changes = FALSE; /*don't notify property box of changes
 					 until everything is all set up*/
 
@@ -1395,8 +1400,10 @@ panel_config(GtkWidget *panel)
 	ppc->back_color = pw->back_color;
 	ppc->back_type = pw->back_type;
 	ppc->mode = basep->mode;
+	ppc->update_function = NULL;
+	ppc->update_data = NULL;
 
-	setup_pertype_defs(basep, ppc);
+	setup_pertype_defs (basep, ppc);
 
 	ppc->panel = panel;
 	
