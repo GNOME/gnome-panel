@@ -516,8 +516,10 @@ fr_check_and_reread (FileRec *fr)
 		gboolean any_change = FALSE;
 		GSList *li;
 
-		if ( ! global_config.menu_check)
+		if ( ! global_config.menu_check) {
+			gnome_vfs_file_info_unref (info);
 			return ret;
+		}
 
 		if (dr->force_reread)
 			reread = TRUE;
@@ -696,6 +698,9 @@ fr_check_and_reread (FileRec *fr)
 			dr->mfl = NULL;
 		}
 	}
+
+	gnome_vfs_file_info_unref (info);
+
 	return ret;
 }
 

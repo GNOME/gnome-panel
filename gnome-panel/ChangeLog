@@ -1,5 +1,21 @@
 2002-02-08  Mark McLoughlin  <mark@skynet.ie>
 
+	* launcher.c: (setup_button): free icon string.
+
+	* menu-fentry.c: (fr_check_and_reread): unref the vfs file
+	info before returning.
+
+	* menu.c: (load_icons_handler): free the icon info before
+	returning.
+
+	* panel.c: (panel_gconf_profile_get_string),
+	(panel_gconf_profile_get_int), (panel_gconf_profile_get_bool):
+	rename from atrociously long names.
+	(panel_session_init_panels): fix loads of string leaks and try
+	to tidy up a bit.
+
+2002-02-08  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-util.[ch]: (panel_stretch_events_to_toplevel): use
 	 a flags arg instead of booleans. Simplifies things.
 

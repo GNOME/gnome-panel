@@ -450,6 +450,7 @@ setup_button (Launcher *launcher)
 					icon, -1))
 		button_widget_set_pixmap (BUTTON_WIDGET (launcher->button),
 					  default_app_pixmap, -1);
+	g_free (icon);
 
 	/* Setup help */
 	docpath = gnome_desktop_item_get_string (launcher->ditem,

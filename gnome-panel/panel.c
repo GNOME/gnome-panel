@@ -2164,57 +2164,75 @@ panel_session_apply_global_config (void)
 
 
 static gchar *
-panel_gconf_panel_profile_get_conditional_string (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, const gchar *default_val) {
-	gchar *panel_profile_key;
-	gchar *return_val;
+panel_gconf_profile_get_string (const gchar *profile,
+				const gchar *panel_id,
+				const gchar *key,
+				gboolean     use_default,
+				const gchar *default_val)
+{
+	gchar *full_key;
+	gchar *retval;
 
 	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
+	if (use_default)
+		full_key = panel_gconf_panel_default_profile_get_full_key (
+						"medium", panel_id, key);
+	else
+		full_key = panel_gconf_panel_profile_get_full_key (
+						profile, panel_id, key);
 
-	return_val = panel_gconf_get_string (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
+	retval = panel_gconf_get_string (full_key, default_val);
+	g_free (full_key);
+
+	return retval;
 }
 
 static gint
-panel_gconf_panel_profile_get_conditional_int (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gint default_val) {
-	gchar *panel_profile_key;
-	gint return_val;
+panel_gconf_profile_get_int (const gchar *profile,
+			     const gchar *panel_id,
+			     const gchar *key,
+			     gboolean     use_default,
+			     gint default_val)
+{
+	gchar *full_key;
+	gint   retval;
 
 	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else  {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
+	if (use_default)
+		full_key = panel_gconf_panel_default_profile_get_full_key (
+						"medium", panel_id, key);
+	else
+		full_key = panel_gconf_panel_profile_get_full_key (
+						profile, panel_id, key);
 	
-	return_val = panel_gconf_get_int (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
+	retval = panel_gconf_get_int (full_key, default_val);
+	g_free (full_key);
+
+	return retval;
 }
 
 static gboolean
-panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gchar *panel_id, const gchar *key, gboolean use_default, gboolean default_val) {
-	gchar *panel_profile_key;
-	gboolean return_val;
+panel_gconf_profile_get_bool (const gchar *profile,
+			      const gchar *panel_id,
+			      const gchar *key,
+			      gboolean     use_default,
+			      gboolean     default_val)
+{
+	gchar    *full_key;
+	gboolean  retval;
 
 	/* FIXME: Make this check screen sizes and stuff */
-                if (use_default) {
-                        panel_profile_key = panel_gconf_panel_default_profile_get_full_key ("medium", panel_id, key);
-		}
-                else {
-                        panel_profile_key = panel_gconf_panel_profile_get_full_key (profile, panel_id, key);
-		}
+	if (use_default)
+		full_key = panel_gconf_panel_default_profile_get_full_key (
+						"medium", panel_id, key);
+	else
+		full_key = panel_gconf_panel_profile_get_full_key (
+						profile, panel_id, key);
 
-	return_val = panel_gconf_get_bool (panel_profile_key, default_val);
-	g_free (panel_profile_key);
-	return return_val;
+	retval = panel_gconf_get_bool (full_key, default_val);
+	g_free (full_key);
+
+	return retval;
 }
 
 void
@@ -2272,101 +2290,88 @@ panel_session_init_panels(void)
 		int hidebuttons_enabled;
 		int hidebutton_pixmaps_enabled;
 		int screen;
+		char *tmp_str;
 
 		panel_id = temp->data;
 
 #ifdef PANEL_SESSION_DEBUG
-	printf ("Loading panel id %s\n", panel_id);
+		printf ("Loading panel id %s\n", panel_id);
 #endif
-		back_pixmap = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (), 
-										panel_id,
-										"panel-background-pixmap",
-										use_default, NULL);
+		back_pixmap = panel_gconf_profile_get_string (session_get_current_profile (), 
+							      panel_id, "panel-background-pixmap",
+							      use_default, NULL);
 		if (string_empty (back_pixmap)) {
 			g_free (back_pixmap);
 			back_pixmap = NULL;
 		}
 
-		color = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-								   	  panel_id,
-									  "panel-background-color",
-									  use_default, NULL);
+		color = panel_gconf_profile_get_string (session_get_current_profile (),
+							panel_id, "panel-background-color",
+							use_default, NULL);
 		if ( ! string_empty (color))
 			gdk_color_parse (color, &back_color);
 
-		gconf_string_to_enum (background_type_enum_map,
-				      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-											panel_id,
-											"panel-background-type",
-											use_default, "no-background"),
-				      (gint *) &back_type);
+		tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+							  panel_id, "panel-background-type",
+							  use_default, "no-background");
+		gconf_string_to_enum (background_type_enum_map, tmp_str, (gint *) &back_type);
+		g_free (tmp_str);
 		
-		fit_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
-										panel_id,
-										"panel-background-pixmap-fit",
-										use_default, FALSE);
+		fit_pixmap_bg = panel_gconf_profile_get_bool (session_get_current_profile (),
+							      panel_id, "panel-background-pixmap-fit",
+							      use_default, FALSE);
 
-		stretch_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
-										    panel_id,
-										    "panel-background-pixmap-stretch",
-										    use_default, FALSE);
+		stretch_pixmap_bg = panel_gconf_profile_get_bool (session_get_current_profile (),
+								  panel_id, "panel-background-pixmap-stretch",
+								  use_default, FALSE);
 
-		rotate_pixmap_bg = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
-										  panel_id,
-								       		  "panel-background-pixmap-rotate",
-								       		  use_default, FALSE);
+		rotate_pixmap_bg = panel_gconf_profile_get_bool (session_get_current_profile (),
+								 panel_id, "panel-background-pixmap-rotate",
+								 use_default, FALSE);
+	
+		tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+							  panel_id, "panel-size",
+							  use_default, "panel-size-small");
+		gconf_string_to_enum (panel_size_type_enum_map, tmp_str, &sz);
+		g_free (tmp_str);
 		
-		gconf_string_to_enum (panel_size_type_enum_map,
-				      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-										     	panel_id,
-										     	"panel-size",
-										     	use_default, "panel-size-small"),
-				      &sz);
-		
-
 		/* Now for type specific config */
 
-		gconf_string_to_enum (panel_type_type_enum_map, 
-	       			     panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-	       									       panel_id,
-	       									       "panel-type",
-	       									       use_default, "edge-panel"),
-	       			     (gint *) &type);
+
+		tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+							  panel_id, "panel-type",
+							  use_default, "edge-panel");
+		gconf_string_to_enum (panel_type_type_enum_map, tmp_str, (gint *) &type);
+		g_free (tmp_str);
 		
-		hidebuttons_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
-										      panel_id,
-										      "hide-buttons-enabled",
-										      use_default, TRUE);
+		hidebuttons_enabled = panel_gconf_profile_get_bool (session_get_current_profile (),
+								    panel_id, "hide-buttons-enabled",
+								    use_default, TRUE);
 		
-		hidebutton_pixmaps_enabled = panel_gconf_panel_profile_get_conditional_bool (session_get_current_profile (),
-										   	     panel_id,
-										   	     "hide-button-pixmaps-enabled",
-										   	     use_default, TRUE);
+		hidebutton_pixmaps_enabled = panel_gconf_profile_get_bool (session_get_current_profile (),
+									   panel_id, "hide-button-pixmaps-enabled",
+									   use_default, TRUE);
 
-		state = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
-								       panel_id,
-									"panel-hide-state",
-									use_default, 0);
+		state = panel_gconf_profile_get_int (session_get_current_profile (),
+						     panel_id, "panel-hide-state",
+						     use_default, 0);
 
-		mode = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
-								      panel_id,
-								      "panel-hide-mode",
-								      use_default, 0);
+		mode = panel_gconf_profile_get_int (session_get_current_profile (),
+						    panel_id, "panel-hide-mode",
+						    use_default, 0);
 
-		screen = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
-								        panel_id,
-									"screen-id",
-									use_default, 0);
+		screen = panel_gconf_profile_get_int (session_get_current_profile (),
+						      panel_id, "screen-id",
+						      use_default, 0);
 
 		switch (type) {
 			
 		case EDGE_PANEL:
-			gconf_string_to_enum (panel_edge_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-												panel_id,
-												"screen-edge",
-												use_default, "panel-edge-bottom"),
-					      (gint *) &edge);
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "screen-edge",
+								  use_default, "panel-edge-bottom");
+			gconf_string_to_enum (panel_edge_type_enum_map, tmp_str, (gint *) &edge);
+			g_free (tmp_str);
 			
 			panel = edge_widget_new (panel_id,
 						 screen,
@@ -2383,20 +2388,18 @@ panel_session_init_panels(void)
 			break;
 		case ALIGNED_PANEL: {
 			AlignedAlignment align;
-			
-			gconf_string_to_enum (panel_edge_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-											     	panel_id,
-											     	"screen-edge",
-											     	use_default, "panel-edge-bottom"),
-					      (gint *) &edge);
-			
-			gconf_string_to_enum (panel_alignment_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-											     	panel_id,
-											     	"panel-align",
-											     	use_default, "panel-alignment-left"),
-					      (gint *) &align);
+
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "screen-edge",
+								  use_default, "panel-edge-bottom");
+			gconf_string_to_enum (panel_edge_type_enum_map, tmp_str, (gint *) &edge);
+			g_free (tmp_str);
+
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "panel-align",
+								  use_default, "panel-alignment-left");
+			gconf_string_to_enum (panel_alignment_type_enum_map, tmp_str, (gint *) &align);
+			g_free (tmp_str);
 
 			panel = aligned_widget_new (panel_id,
 						    screen,
@@ -2418,25 +2421,22 @@ panel_session_init_panels(void)
 		case SLIDING_PANEL: {
 			gint16 offset;
 			SlidingAnchor anchor;
-			
-			gconf_string_to_enum (panel_edge_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-												panel_id,
-												"screen-edge",
-												use_default, "panel-edge_bottom"),
-					      (gint *) &edge);
 
-			gconf_string_to_enum (panel_anchor_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-											        panel_id,
-											        "panel-anchor",
-											        use_default, "panel-anchor-left"),
-					      (gint *) &anchor);
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "screen-edge",
+								  use_default, "panel-edge_bottom");
+			gconf_string_to_enum (panel_edge_type_enum_map, tmp_str, (gint *) &edge);
+			g_free (tmp_str);
+
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "panel-anchor",
+								  use_default, "panel-anchor-left");
+			gconf_string_to_enum (panel_anchor_type_enum_map, tmp_str, (gint *) &anchor);
+			g_free (tmp_str);
 			
-			offset = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
-										panel_id,
-										"panel-offset",
-										use_default, 0);
+			offset = panel_gconf_profile_get_int (session_get_current_profile (),
+							      panel_id, "panel-offset",
+							      use_default, 0);
 	
 			panel = sliding_widget_new (panel_id,
 						    screen,
@@ -2458,13 +2458,12 @@ panel_session_init_panels(void)
 		}
 		case DRAWER_PANEL: {
 			int orient;
-			
-			gconf_string_to_enum (panel_orient_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-												panel_id,
-												"panel-orient",
-												use_default, "panel-orient-up"),
-					      (gint *) &orient);
+
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "panel-orient",
+								  use_default, "panel-orient-up");
+			gconf_string_to_enum (panel_orient_type_enum_map, tmp_str, (gint *) &orient);
+			g_free (tmp_str);
 
 
 			panel = drawer_widget_new (panel_id,
@@ -2485,23 +2484,20 @@ panel_session_init_panels(void)
 		case FLOATING_PANEL: {
 			GtkOrientation orient;
 			int x, y;
-			
-			gconf_string_to_enum (panel_orientation_type_enum_map,
-					      panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-												panel_id,
-												"panel-orient ",
-												use_default, "panel-orientation-horizontal"),
-					      (gint *) &orient);
 
-			x = panel_gconf_panel_profile_get_conditional_int (session_get_current_profile (),
-									   panel_id,
-									   "panel-x-position",
-									   use_default, 0);
+			tmp_str = panel_gconf_profile_get_string (session_get_current_profile (),
+								  panel_id, "panel-orient ",
+								  use_default, "panel-orientation-horizontal"),
+			gconf_string_to_enum (panel_orientation_type_enum_map, tmp_str, (gint *) &orient);
+			g_free (tmp_str);
 
-			y = panel_gconf_panel_profile_get_conditional_int  (session_get_current_profile (),
-									    panel_id,
-									    "panel-y-position",
-									    use_default, 0);
+			x = panel_gconf_profile_get_int (session_get_current_profile (),
+							 panel_id, "panel-x-position",
+							 use_default, 0);
+
+			y = panel_gconf_profile_get_int  (session_get_current_profile (),
+							  panel_id, "panel-y-position",
+							  use_default, 0);
 			
 			panel = floating_widget_new (panel_id,
 						     screen,
@@ -2524,12 +2520,10 @@ panel_session_init_panels(void)
 		case FOOBAR_PANEL:
 			panel = foobar_widget_new (panel_id, screen);
 
-			timestring = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-										       panel_id,
-										       "clock-format",
-										       use_default, _("%I:%M:%S %p"));
-
-			if (timestring != NULL) {
+			timestring = panel_gconf_profile_get_string (session_get_current_profile (),
+								     panel_id, "clock-format",
+								     use_default, _("%I:%M:%S %p"));
+			if (timestring) {
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), timestring);
 				g_free (timestring);
 			}

@@ -850,12 +850,15 @@ load_icons_handler_again:
 				       0 /* connect_flags */);
 	} else {
 		g_free (file);
+		icon_to_load_free (icon);
+
 		/* we didn't load from disk, so just do this again,
 		 * this is fun, don't go back to main loop */
 		goto load_icons_handler_again;
 	}
 
 	g_free (file);
+	icon_to_load_free (icon);
 
 	/* if still more we'll come back */
 	return TRUE;
