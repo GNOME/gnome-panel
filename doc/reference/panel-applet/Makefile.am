@@ -26,63 +26,11 @@ CFILE_GLOB=
 
 # Header files to ignore when scanning.
 IGNORE_HFILES =					\
-	aligned-widget.h			\
-	applet.h				\
-	applet-init.h				\
-	applet-object.h				\
-	applet-private.h			\
-	applet-widget.h				\
-	basep-widget.h				\
-	border-widget.h				\
-	button-widget.h				\
-	conditional.h				\
-	distribution.h				\
-	drawer.h				\
-	drawer-widget.h				\
-	edge-widget.h				\
-	extern.h				\
-	floating-widget.h			\
-	foobar-widget.h				\
-	global-keys.h				\
 	GNOME_Panel.h				\
-	gnome-panel-screenshot.glade.h		\
-	gnome-run.h				\
-	gstc.h					\
-	gwmh.h					\
-	launcher.h				\
-	logout.h				\
-	main.h					\
-	menu-fentry.h				\
-	menu.h					\
-	menu-properties.h			\
-	menu-rh.h				\
-	menu-util.h				\
-	multiscreen-stuff.h			\
-	panel-applet-frame.h			\
+	panel-applet-enums.h			\
+	panel-applet-marshal.h			\
 	panel-applet-private.h			\
-	panel-applet-shell.h			\
-	panel_config_global.h			\
-	panel_config.h				\
-	panel-gconf.h				\
-	panel.h					\
-	panel-marshal.h				\
-	panel-shell.h				\
-	panel-typebuiltins.h			\
-	panel-types.h				\
-	panel-util.h				\
-	panel-widget.h				\
-	quick-desktop-reader.h			\
-	rgb-stuff.h				\
-	session.h				\
-	sliding-widget.h			\
-	status-docklet.h			\
-	status.h				\
-	swallow.h				\
-	tasklist_icon.h				\
-	tearoffitem.h				\
-	title-item.h				\
-	title-item-private.h			\
-	xstuff.h
+	panel-applet-shell.h
 
 # Images to copy into HTML directory.
 HTML_IMAGES =

@@ -1,9 +1,10 @@
 <!doctype book PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
 <!ENTITY PanelApplet SYSTEM "sgml/panel-applet.sgml">
+<!ENTITY PanelAppletGConf SYSTEM "sgml/panel-applet-gconf.sgml">
 ]>
 <book id="libpanel-applet">
   <bookinfo>
-    <title>Panel Applet Writer's Reference Manual</title>
+    <title>Panel Applet Library Reference Manual</title>
     <authorgroup>
       <author>
         <firstname>Mark</firstname>
@@ -18,13 +19,15 @@
 
     <copyright>
       <year>2001</year>
-      <holder>Mark McLoughlin</holder>
+      <year>2003</year>
+      <holder>Sun Microsystems, Inc.</holder>
     </copyright>
 
     <abstract>
-      <para>This manual documents the interfaces of the panel applet
-      writing library for GNOME 2.x and a short guide to porting
-      applets from the GNOME 1.x interfaces.
+      <para>
+This manual documents the interfaces of the panel applet
+library for GNOME 2.x and a short guide to porting applets from
+the GNOME 1.x interfaces.
       </para>
     </abstract>
 
@@ -377,5 +380,7 @@ to the callbacks.</para>
     <title>The Panel Applet Library</title>
 
     &PanelApplet;
+    &PanelAppletGConf;
   </chapter>
+
 </book>
