@@ -1,5 +1,8 @@
 1999-09-30  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
+	* session.c (apply_global_config): when the autohide size changes,
+	apply it to autohidden panels (this isn't so ugly in HEAD) 
+
 	* panel-widget.c (panel_widget_new): don't allow back_pixmap
 	to be NULL
 

@@ -75,6 +75,9 @@ apply_global_config(void)
 					  done there are no menu applets*/
 	static int small_icons_old = 0; /*same here*/
 	static int keep_bottom_old = -1;
+	static int autohide_size_old = -1;
+	GSList *li;
+
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
 				   global_config.drawer_step_size,
@@ -92,7 +95,6 @@ apply_global_config(void)
 	  so that he doesn't have to reread his menus all the time:)*/
 	if(dot_buttons_old != global_config.show_dot_buttons ||
 	   small_icons_old != global_config.show_small_icons) {
-		GSList *li;
 		for(li=applets;li!=NULL;li=g_slist_next(li)) {
 			AppletInfo *info = li->data;
 			if(info->menu) {
@@ -163,6 +165,17 @@ apply_global_config(void)
 					global_config.tile_border[i],
 					global_config.tile_depth[i]);
 	}
+
+	for(li = panel_list; li != NULL; li = g_slist_next (li)) {
+		PanelData *pd = li->data;
+		if ((autohide_size_old != global_config.minimize_delay) &&			
+		    (IS_CORNER_WIDGET (pd->panel) &&
+		     (CORNER_WIDGET (pd->panel)->state == CORNER_AUTO_HIDDEN)) ||
+		    (IS_SNAPPED_WIDGET (pd->panel) &&
+		     (SNAPPED_WIDGET (pd->panel)->state == SNAPPED_HIDDEN)))
+			gtk_widget_queue_resize (GTK_WIDGET (pd->panel));
+	}
+	autohide_size_old = global_config.minimized_size;
 }
 
 static int
