@@ -1,3 +1,22 @@
+1999-03-24  Nat Friedman  <nat@nat.org>
+
+	* battery/properties.c (battery_properties_window): Make the graph
+ 	tick color configurable.
+	(prop_apply): Update the tick color.
+
+	* battery/battery.h: Added graph_line_color_sel to the BatteryData structure.
+	(BATTERY_DEFAULT_GRAPH_LINE_COLOR): New macro.
+
+	* battery/battery.c (main): Call applet_factory_new.
+	(applet_start_new_applet): Correct signature.
+	(make_new_battery_applet): Return the newly created applet widget.
+	(battery_update): Draw graph ticks.
+	(battery_setup_colors): Allocate the graph tick color.
+
+	* battery/properties.c (battery_properties_window): Raise the
+ 	properties window if the user selects 'Properties' from the
+ 	context menu and the window is already mapped.
+
 1999-03-23  Nat Friedman  <nat@nat.org>
 
 	* battery/battery.c (make_new_battery_applet): Added the About box.
