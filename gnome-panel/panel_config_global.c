@@ -211,7 +211,7 @@ misc_notebook_page(void)
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
 	
 	/* Tooltips frame */
-	frame = gtk_frame_new (_("Icon Tooltips"));
+	frame = gtk_frame_new (_("Tooltips"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
