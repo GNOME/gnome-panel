@@ -145,36 +145,29 @@ applet_change_orient (PanelApplet       *applet,
 }
 
 static void 
-response_cb(GtkWidget * widget,int id, PagerData *pager)
+response_cb (GtkWidget *widget,
+	     int        id,
+	     PagerData *pager)
 {
-	if(id == GTK_RESPONSE_HELP) {
-		
+	if (id == GTK_RESPONSE_HELP) {
 		GError *error = NULL;
-		static GnomeProgram *applet_program = NULL;
-
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "workspace-switcher" };
-			applet_program = gnome_program_init ("workspace-switcher", VERSION,
-							     LIBGNOME_MODULE, argc, argv,
-							     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-		}
 
 		egg_help_display_desktop_on_screen (
-			applet_program, "workspace-switcher",
-			"workspace-switcher", "workspacelist-prefs",
+			NULL, "workspace-switcher", "workspace-switcher", "workspacelist-prefs",
 			gtk_widget_get_screen (pager->applet),
 			&error);
+
 		if (error) {
 			GtkWidget *dialog;
-			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
+
+			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
 							 GTK_DIALOG_DESTROY_WITH_PARENT,
 							 GTK_MESSAGE_ERROR,
 							 GTK_BUTTONS_CLOSE,
 							  _("There was an error displaying help: %s"),
 							 error->message);
 
-			g_signal_connect (G_OBJECT (dialog), "response",
+			g_signal_connect (dialog, "response",
 					  G_CALLBACK (gtk_widget_destroy),
 					  NULL);
 
@@ -183,11 +176,8 @@ response_cb(GtkWidget * widget,int id, PagerData *pager)
 					       gtk_widget_get_screen (pager->applet));
 			gtk_widget_show (dialog);
 			g_error_free (error);
-
 		}
-
-	}
-	else
+	} else
 		gtk_widget_hide (widget);
 }
 
@@ -445,21 +435,12 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "workspace-switcher" };
-		applet_program = gnome_program_init ("workspace-switcher", VERSION,
-						     LIBGNOME_MODULE, argc, argv,
-						     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-		applet_program, "workspace-switcher",
-		"workspace-switcher", NULL,
+		NULL, "workspace-switcher", "workspace-switcher", NULL,
 		gtk_widget_get_screen (pager->applet),
 		&error);
+
 	if (error) {
 		GtkWidget *dialog;
 		dialog = gtk_message_dialog_new (NULL,
@@ -469,7 +450,7 @@ display_help_dialog (BonoboUIComponent *uic,
 						  _("There was an error displaying help: %s"),
 						 error->message);
 
-		g_signal_connect (G_OBJECT (dialog), "response",
+		g_signal_connect (dialog, "response",
 				  G_CALLBACK (gtk_widget_destroy),
 				  NULL);
 

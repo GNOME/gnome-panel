@@ -1,3 +1,11 @@
+2003-04-16  Mark McLoughlin  <mark@skynet.ie>
+
+	* showdesktop.c: (display_help_dialog):
+	* window-list.c: (response_cb), (display_help_dialog):
+	* workspace-switcher.c: (response_cb), (display_help_dialog):
+	Remove calls to gnome_program_init. Because we're using the
+	global help files location I don't think its needed.
+
 2003-04-15  Mark McLoughlin  <mark@skynet.ie>
 
 	* showdesktop.c: (show_desktop_applet_fill): expand to

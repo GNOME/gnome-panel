@@ -93,37 +93,29 @@ tasklist_update (TasklistData *tasklist)
 	wnck_tasklist_set_switch_workspace_on_unminimize (WNCK_TASKLIST (tasklist->tasklist),
 							  tasklist->move_unminimized_windows);
 }
+
 static void
-response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
+response_cb (GtkWidget    *widget,
+	     int           id,
+	     TasklistData *tasklist)
 {
-	if(id == GTK_RESPONSE_HELP) {
-
+	if (id == GTK_RESPONSE_HELP) {
 		GError *error = NULL;
-		static GnomeProgram *applet_program = NULL;
-
-		if (!applet_program) {
-			int argc = 1;
-			char *argv[2] = { "window-list" };
-			applet_program = gnome_program_init ("window-list", VERSION,
-							     LIBGNOME_MODULE,argc, argv,
-							     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
-		}
 
 		egg_help_display_desktop_on_screen (
-			applet_program, "window-list",
-			"window-list", "windowlist-prefs",
+			NULL, "window-list", "window-list", "windowlist-prefs",
 			gtk_widget_get_screen (tasklist->applet),
 			&error);
 		if (error) {
 			GtkWidget *dialog;
-			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
+			dialog = gtk_message_dialog_new (GTK_WINDOW (widget),
 							 GTK_DIALOG_DESTROY_WITH_PARENT,
 							 GTK_MESSAGE_ERROR,
 							 GTK_BUTTONS_CLOSE,
 							  _("There was an error displaying help: %s"),
 							 error->message);
 
-			g_signal_connect (G_OBJECT (dialog), "response",
+			g_signal_connect (dialog, "response",
 					  G_CALLBACK (gtk_widget_destroy),
 					  NULL);
 	
@@ -133,8 +125,7 @@ response_cb(GtkWidget * widget,int id, TasklistData *tasklist)
 			gtk_widget_show (dialog);
 			g_error_free (error);
 		}
-	}
-	else
+	} else
 		gtk_widget_hide (widget);
 }
 
@@ -741,19 +732,9 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
-	static GnomeProgram *applet_program = NULL;
-
-	if (!applet_program) {
-		int argc = 1;
-		char *argv[2] = { "window-list" };
-		applet_program = gnome_program_init ("window-list", VERSION,
-						     LIBGNOME_MODULE,argc, argv,
-						     GNOME_PROGRAM_STANDARD_PROPERTIES,NULL);
-	}
 
 	egg_help_display_desktop_on_screen (
-			applet_program, "window-list",
-			"window-list", NULL,
+			NULL, "window-list", "window-list", NULL,
 			gtk_widget_get_screen (tasklist->applet),
 			&error);
 	if (error) {
@@ -765,7 +746,7 @@ display_help_dialog (BonoboUIComponent *uic,
 						  _("There was an error displaying help: %s"),
 						 error->message);
 
-		g_signal_connect (G_OBJECT (dialog), "response",
+		g_signal_connect (dialog, "response",
 				  G_CALLBACK (gtk_widget_destroy),
 				  NULL);
 
