@@ -60,7 +60,7 @@ enum {
 };
 
 typedef enum {
-	PANEL_RESPONSE_RUN,
+	PANEL_RESPONSE_RUN
 } PanelResponseType;
 
 #define PANEL_STOCK_RUN "panel-run"
@@ -209,9 +209,11 @@ launch_selected (GtkTreeModel *model,
 		 GtkWidget    *dialog)
 {
 	GnomeDesktopItem *ditem;
+	GnomeEntry	 *gnome_entry;
+	GtkWidget 	 *entry;
 	GError           *error = NULL;
 	GtkToggleButton  *terminal;
-	char             *name;
+	char             *name, *command;
 
 	gtk_tree_model_get (model, iter, COLUMN_NAME, &name, -1);
 
@@ -247,9 +249,15 @@ launch_selected (GtkTreeModel *model,
 				      "Details: %s"),
 				    error->message);
 		g_clear_error (&error);
-		return;
 	}
 
+	/* save command history */
+	gnome_entry = g_object_get_data (G_OBJECT (dialog), "gnome_entry");
+	entry = g_object_get_data (G_OBJECT (dialog), "entry");
+	command = gtk_editable_get_chars (GTK_EDITABLE (entry), 0, -1);	
+	gnome_entry_prepend_history (gnome_entry, TRUE, command);
+	g_free (command);
+	
 	gnome_desktop_item_unref (ditem);
 }
 
@@ -258,6 +266,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkWidget *entry;
         GtkWidget *list;
+	GnomeEntry *gnome_entry;
 	char **argv = NULL;
 	char **temp_argv = NULL;
 	int argc, temp_argc;
@@ -290,6 +299,7 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 
 		launch_selected (model, &iter, w);
         } else {
+	
 		GtkToggleButton *terminal;
 
                 entry = g_object_get_data (G_OBJECT (w), "entry");
@@ -299,6 +309,10 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 
                 if (string_empty (s))
                         goto return_and_close;
+
+		/* save command in history */
+		gnome_entry = g_object_get_data (G_OBJECT (w), "gnome_entry");
+		gnome_entry_prepend_history (gnome_entry, TRUE, s);
 
                 /* evil eggies, do not translate! */
                 if (strcmp (s, "you shall bring us a shrubbery") == 0) {
@@ -849,6 +863,7 @@ create_simple_contents (void)
 	gtk_tooltips_set_tip (panel_tooltips, entry, _("Command to run"), NULL);
         gtk_combo_set_use_arrows_always (GTK_COMBO (gentry), TRUE);
         g_object_set_data (G_OBJECT (run_dialog), "entry", entry);
+	g_object_set_data (G_OBJECT (run_dialog), "gnome_entry", gentry);
 
         g_signal_connect (G_OBJECT (entry), "event",
 			  G_CALLBACK (entry_event),
@@ -1185,11 +1200,11 @@ fill_list (GtkWidget *list)
 		gtk_list_store_append (store, &iter);
 		gtk_list_store_set (store, &iter,
 				    COLUMN_ICON, NULL,
-				    COLUMN_ICON_FILE, fr->icon,
-				    COLUMN_FULLNAME, fr->fullname,
-				    COLUMN_COMMENT, fr->comment,
-				    COLUMN_NAME, fr->name,
-				    COLUMN_EXEC, fr->exec,
+				    COLUMN_ICON_FILE, (fr->icon) ? fr->icon : "",
+				    COLUMN_FULLNAME, (fr->fullname) ? fr->fullname : "",
+				    COLUMN_COMMENT, (fr->comment) ? fr->comment : "",
+				    COLUMN_NAME, (fr->name) ? fr->name : "",
+				    COLUMN_EXEC, (fr->exec) ? fr->exec : "",
 				    -1);
 
 		path = gtk_tree_model_get_path (GTK_TREE_MODEL (store), &iter);
@@ -1450,12 +1465,14 @@ update_contents (GtkWidget *dialog)
                 if (program_list_box && program_list_box->parent == NULL) {
 			GtkWidget *list;
 			
+			gtk_window_resize (GTK_WINDOW (dialog), 100, 300);
 			gtk_window_set_resizable (GTK_WINDOW (dialog), TRUE);
-
+			
                         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                                             program_list_box,
                                             TRUE, TRUE, GNOME_PAD_SMALL);
                 
+
                         gtk_widget_show_all (GTK_WIDGET (GTK_DIALOG (dialog)->vbox));
 
 			list = g_object_get_data (G_OBJECT (dialog), "program_list");
