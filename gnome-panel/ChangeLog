@@ -1,3 +1,15 @@
+Sun May 24 00:20:56 1998  George Lebl  <jirka@5z.com>
+
+	* main.c,menu.[ch],drawer.[ch]: clean up the ORIENT_ mess and
+	  use only PanelOrientType instead of one for menu and one
+	  for drawer and one for everything else. Also now orientation
+	  of nested applets in drawers works much better when the Panel
+	  is on top or on the right
+
+	* applet-lib.(cc|h),applet-widget.[ch],gnome-panel.idl,mico-glue.cc,
+	  main.[ch],panel.[ch]: make it possible to get the orient through
+	  corba
+
 Sat May 23 22:57:50 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c, panel.c: fixed some segfaults, by inhibiting

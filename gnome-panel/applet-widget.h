@@ -102,7 +102,7 @@ AppletWidget*	applet_widget_get_by_id		(gint applet_id);
 gint		applet_widget_get_applet_count	(void);
 
 
-/*FIXME: implement*/
+/* Get the oprientation the applet should use */
 PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 
 /*use this instead of gnome init, if you want multi applet, you also

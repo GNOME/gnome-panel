@@ -242,11 +242,11 @@ applet_widget_set_tooltip(AppletWidget *applet, gchar *text)
 		gnome_panel_applet_remove_tooltip (applet->applet_id);
 }
 
+/* Get the oprientation the applet should use */
 PanelOrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
-	/*FIXME: implement*/
-	return (PanelOrientType)0;
+	return (PanelOrientType)gnome_panel_applet_get_panel_orient (applet->applet_id);
 }
 
 AppletWidget*

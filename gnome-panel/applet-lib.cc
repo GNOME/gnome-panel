@@ -394,6 +394,12 @@ gnome_panel_applet_abort_id (gint applet_id)
 	return 0;
 }
 
+gint
+gnome_panel_applet_get_panel_orient (gint applet_id)
+{
+	return panel_client->applet_get_panel_orient(cookie, applet_id);
+}
+
 char *
 gnome_panel_applet_remove_from_panel (gint applet_id)
 {

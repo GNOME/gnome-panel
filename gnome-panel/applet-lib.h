@@ -16,17 +16,18 @@ char *get_full_path(char *argv0);
   applet)*/
 
 char *gnome_panel_applet_request_id (const char *path, const char *param,
-				     int dorestart,
-				     int *applet_id, char **cfgpath,
+				     gint dorestart,
+				     gint *applet_id, char **cfgpath,
 				     char **globcfgpath, guint32 *winid);
-char *gnome_panel_applet_register (GtkWidget *widget, int applet_id);
-char *gnome_panel_applet_abort_id (int applet_id);
-char *gnome_panel_applet_remove_from_panel (int applet_id);
+char *gnome_panel_applet_register (GtkWidget *widget, gint applet_id);
+char *gnome_panel_applet_abort_id (gint applet_id);
+char *gnome_panel_applet_remove_from_panel (gint applet_id);
 char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);
+gint gnome_panel_applet_get_panel_orient (gint applet_id);
 char *gnome_panel_quit (void);
 int gnome_panel_applet_init_corba (void);
 int gnome_panel_applet_reinit_corba (void);
-void gnome_panel_applet_register_callback (int applet_id,
+void gnome_panel_applet_register_callback (gint applet_id,
 					   char *name,
 					   char *menutext,
 					   AppletCallbackFunc func,

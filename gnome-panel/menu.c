@@ -345,19 +345,19 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
 	switch(menup->orient) {
-		case MENU_DOWN:
+		case ORIENT_DOWN:
 			*x = wx;
 			*y = wy + widget->allocation.height;
 			break;
-		case MENU_UP:
+		case ORIENT_UP:
 			*x = wx;
 			*y = wy - GTK_WIDGET (menu)->allocation.height;
 			break;
-		case MENU_RIGHT:
+		case ORIENT_RIGHT:
 			*x = wx + widget->allocation.width;
 			*y = wy;
 			break;
-		case MENU_LEFT:
+		case ORIENT_LEFT:
 			*x = wx - GTK_WIDGET (menu)->allocation.width;
 			*y = wy;
 			break;
@@ -611,7 +611,7 @@ add_special_entries (GtkWidget *menu, GtkWidget *app_menu)
 
 static Menu *
 create_panel_menu (char *menudir, int main_menu,
-		   MenuOrient orient)
+		   PanelOrientType orient)
 {
 	GtkWidget *pixmap;
 	Menu *menu;
@@ -623,16 +623,16 @@ create_panel_menu (char *menudir, int main_menu,
 
 	if (main_menu)
 		switch(orient) {
-			case MENU_DOWN:
+			case ORIENT_DOWN:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
 				break;
-			case MENU_UP:
+			case ORIENT_UP:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
 				break;
-			case MENU_RIGHT:
+			case ORIENT_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
 				break;
-			case MENU_LEFT:
+			case ORIENT_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
 				break;
 		}
@@ -701,7 +701,7 @@ init_main_menu(void)
 }
 
 Menu *
-create_menu_applet(char *arguments, MenuOrient orient)
+create_menu_applet(char *arguments, PanelOrientType orient)
 {
 	Menu *menu;
 	int main_menu;
@@ -761,7 +761,7 @@ set_show_small_icons(gpointer data, gpointer user_data)
 }
 
 void
-set_menu_applet_orient(Menu *menu, MenuOrient orient)
+set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name = NULL;
@@ -773,19 +773,19 @@ set_menu_applet_orient(Menu *menu, MenuOrient orient)
 
 	if (strcmp (menu->path, ".") == 0)
 		switch (menu->orient) {
-			case MENU_DOWN:
+			case ORIENT_DOWN:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-down.png");
 				break;
-			case MENU_UP:
+			case ORIENT_UP:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-up.png");
 				break;
-			case MENU_RIGHT:
+			case ORIENT_RIGHT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-right.png");
 				break;
-			case MENU_LEFT:
+			case ORIENT_LEFT:
 				pixmap_name = gnome_unconditional_pixmap_file(
 					"gnome-menu-left.png");
 				break;

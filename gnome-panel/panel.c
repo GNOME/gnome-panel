@@ -700,6 +700,22 @@ applet_show_menu(gint applet_id)
 			 GDK_CURRENT_TIME);
 }
 
+PanelOrientType
+applet_get_panel_orient(gint applet_id)
+{
+	AppletInfo *info = get_applet_info(applet_id);
+	PanelWidget *panel;
+
+	g_return_val_if_fail(info != NULL,ORIENT_UP);
+
+	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
+				    PANEL_APPLET_PARENT_KEY);
+
+	g_return_val_if_fail(panel != NULL,ORIENT_UP);
+
+	return get_applet_orient(panel);
+}
+
 
 int
 applet_get_panel(gint applet_id)

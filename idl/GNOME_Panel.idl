@@ -25,6 +25,8 @@ module GNOME {
 					       in short applet_id);
 		short applet_get_panel (in string cookie, in short applet_id);
 		short applet_get_pos (in string cookie, in short applet_id);
+		short applet_get_panel_orient (in string cookie,
+					       in short applet_id);
 		void applet_show_menu (in string cookie, in short applet_id);
 		void applet_drag_start (in string cookie, in short applet_id);
 		void applet_drag_stop (in string cookie, in short applet_id);

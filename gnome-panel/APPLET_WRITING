@@ -327,8 +327,8 @@ can change ours as well. The different values represent the orientation
 a menu/drawer would take were it on the panel, not the actual position
 of the panel. If the Panel "sits" on the bottom edge of the screen you
 will get ORIENT_UP, if it sits on the left edge, you get ORIENT_RIGHT,
-and so on, if the panel is a vertical drawer you get ORIENT_RIGHT, if
-it's a horizontal drawer you get ORIENT_UP.
+and so on, if the panel is a vertical drawer you get ORIENT_RIGHT or
+ORIENT_LEFT, if it's a horizontal drawer you get ORIENT_UP or ORIENT_DOWN.
 
 Also note that you should bind the event before you do applet_widget_add,
 as the event will be triggered during the add, so that you can set your

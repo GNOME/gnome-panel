@@ -125,6 +125,7 @@ guint32 reserve_applet_spot (const char *id_str, const char *path,
 void applet_abort_id(gint applet_id);
 int applet_get_panel(gint applet_id);
 int applet_get_pos(gint applet_id);
+PanelOrientType applet_get_panel_orient(gint applet_id);
 void applet_show_menu(gint applet_id);
 void applet_drag_start(gint applet_id);
 void applet_drag_stop(gint applet_id);

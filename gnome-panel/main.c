@@ -172,8 +172,8 @@ really_exec_prog(gint applet_id, gchar *path, gchar *param)
 
 		current_exec = applet_id;
 
-		/*wait 60 seconds before timing out*/
-		cur_timeout = gtk_timeout_add(300*100,exec_queue_timeout,NULL);
+		/*wait 100 seconds before timing out*/
+		cur_timeout = gtk_timeout_add(100*1000,exec_queue_timeout,NULL);
 
 		return FALSE;
 	}
@@ -267,6 +267,66 @@ monitor_drawers(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+static PanelSnapped
+get_lowest_level_master_snapped(PanelWidget *panel)
+{
+	while(panel->master_widget)
+		panel = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+					    PANEL_APPLET_PARENT_KEY);
+	return panel->snapped;
+}
+
+PanelOrientType
+get_applet_orient(PanelWidget *panel)
+{
+	PanelOrientType orient=ORIENT_UP;
+	switch(panel->snapped) {
+		case PANEL_FREE:
+			orient = (panel->orient==PANEL_VERTICAL)?
+				 ORIENT_RIGHT:ORIENT_UP;
+			break;
+		case PANEL_DRAWER:
+			switch(get_lowest_level_master_snapped(panel)){
+				case PANEL_FREE:
+				case PANEL_DRAWER:
+					orient=(panel->orient==PANEL_VERTICAL)?
+						ORIENT_RIGHT:ORIENT_UP;
+					break;
+				case PANEL_TOP:
+					orient=(panel->orient==PANEL_VERTICAL)?
+						ORIENT_RIGHT:ORIENT_DOWN;
+					break;
+				case PANEL_BOTTOM:
+					orient=(panel->orient==PANEL_VERTICAL)?
+						ORIENT_RIGHT:ORIENT_UP;
+					break;
+				case PANEL_LEFT:
+					orient=(panel->orient==PANEL_VERTICAL)?
+						ORIENT_RIGHT:ORIENT_UP;
+					break;
+				case PANEL_RIGHT:
+					orient=(panel->orient==PANEL_VERTICAL)?
+						ORIENT_LEFT:ORIENT_UP;
+					break;
+			}
+			break;
+		case PANEL_TOP:
+			orient = ORIENT_DOWN;
+			break;
+		case PANEL_BOTTOM:
+			orient = ORIENT_UP;
+			break;
+		case PANEL_LEFT:
+			orient = ORIENT_RIGHT;
+			break;
+		case PANEL_RIGHT:
+			orient = ORIENT_LEFT;
+			break;
+	}
+	return orient;
+}
+
+
 
 void
 load_applet(gchar *id_str, gchar *path, gchar *params,
@@ -324,7 +384,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 	} else if(strcmp(id_str,MENU_ID) == 0) {
 		Menu *menu;
 
-		menu = create_menu_applet(params, MENU_UP);
+		menu = create_menu_applet(params, ORIENT_UP);
 
 		register_toy(menu->button,menu->menu,menu,MENU_ID,NULL,params,
 			     pos,panel,NULL,APPLET_MENU);
@@ -349,33 +409,13 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {
 		Drawer *drawer;
 		PanelWidget *parent;
-		DrawerOrient orient=DRAWER_UP;
 		PanelWidget **panelarr;
 
 		parent = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 
-		switch(parent->snapped) {
-			case PANEL_FREE:
-			case PANEL_DRAWER:
-				orient = (parent->orient==PANEL_VERTICAL)?
-					 DRAWER_RIGHT:DRAWER_UP;
-				break;
-			case PANEL_TOP:
-				orient = DRAWER_DOWN;
-				break;
-			case PANEL_BOTTOM:
-				orient = DRAWER_UP;
-				break;
-			case PANEL_LEFT:
-				orient = DRAWER_RIGHT;
-				break;
-			case PANEL_RIGHT:
-				orient = DRAWER_LEFT;
-				break;
-		}
-
 		if(!params) {
-			drawer = create_empty_drawer_applet(orient);
+			drawer = create_empty_drawer_applet(
+				get_applet_orient(parent));
 			panel_setup(PANEL_WIDGET(drawer->drawer));
 			panels = g_list_append(panels,drawer->drawer);
 		} else {
@@ -383,7 +423,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 
 			sscanf(params,"%d",&i);
 			drawer=create_drawer_applet(g_list_nth(panels,i)->data,
-						    orient);
+						    get_applet_orient(parent));
 		}
 
 		g_return_if_fail(drawer != NULL);
@@ -534,76 +574,15 @@ orientation_change(gint applet_id, PanelWidget *panel)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
-		PanelOrientType orient=ORIENT_UP;
-		switch(panel->snapped) {
-			case PANEL_FREE:
-			case PANEL_DRAWER:
-				orient = (panel->orient==PANEL_VERTICAL)?
-					 ORIENT_RIGHT:ORIENT_UP;
-				break;
-			case PANEL_TOP:
-				orient = ORIENT_DOWN;
-				break;
-			case PANEL_BOTTOM:
-				orient = ORIENT_UP;
-				break;
-			case PANEL_LEFT:
-				orient = ORIENT_RIGHT;
-				break;
-			case PANEL_RIGHT:
-				orient = ORIENT_LEFT;
-				break;
-		}
-		send_applet_change_orient(info->id_str,info->applet_id,orient);
+		send_applet_change_orient(info->id_str,info->applet_id,
+					  get_applet_orient(panel));
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
-		MenuOrient orient=MENU_UP;
-
-		switch(panel->snapped) {
-			case PANEL_FREE:
-			case PANEL_DRAWER:
-				orient = (panel->orient==PANEL_VERTICAL)?
-					 MENU_RIGHT:MENU_UP;
-				break;
-			case PANEL_TOP:
-				orient = MENU_DOWN;
-				break;
-			case PANEL_BOTTOM:
-				orient = MENU_UP;
-				break;
-			case PANEL_LEFT:
-				orient = MENU_RIGHT;
-				break;
-			case PANEL_RIGHT:
-				orient = MENU_LEFT;
-				break;
-		}
-		set_menu_applet_orient(menu,orient);
+		set_menu_applet_orient(menu,get_applet_orient(panel));
 	} else if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		DrawerOrient orient = DRAWER_UP;
-
-		switch(panel->snapped) {
-			case PANEL_FREE:
-			case PANEL_DRAWER:
-				orient = (panel->orient==PANEL_VERTICAL)?
-					 DRAWER_RIGHT:DRAWER_UP;
-				break;
-			case PANEL_TOP:
-				orient = DRAWER_DOWN;
-				break;
-			case PANEL_BOTTOM:
-				orient = DRAWER_UP;
-				break;
-			case PANEL_LEFT:
-				orient = DRAWER_RIGHT;
-				break;
-			case PANEL_RIGHT:
-				orient = DRAWER_LEFT;
-				break;
-		}
 		reposition_drawer(drawer);
-		set_drawer_applet_orient(drawer,orient);
+		set_drawer_applet_orient(drawer,get_applet_orient(panel));
 		panel_widget_foreach(PANEL_WIDGET(info->assoc),
 				     orient_change_foreach,
 				     (gpointer)info->assoc);
@@ -935,7 +914,7 @@ init_user_panels(void)
 		g_snprintf(buf,256,"state=%d", PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
-		g_snprintf(buf,256,"drawer_drop_zone_pos=%d", DRAWER_LEFT);
+		g_snprintf(buf,256,"drawer_drop_zone_pos=%d", DROP_ZONE_LEFT);
 		drop_pos=gnome_config_get_int(buf);
 
 		back_pixmap = gnome_config_get_string ("backpixmap=");

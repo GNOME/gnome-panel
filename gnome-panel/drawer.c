@@ -46,19 +46,19 @@ reposition_drawer(Drawer *drawer)
 				 NULL);
 
 	switch(drawer->orient) {
-		case DRAWER_UP:
+		case ORIENT_UP:
 			x = bx+(bw-dw)/2;
 			y = py - dh;
 			break;
-		case DRAWER_DOWN:
+		case ORIENT_DOWN:
 			x = bx+(bw-dw)/2;
 			y = py + ph;
 			break;
-		case DRAWER_LEFT:
+		case ORIENT_LEFT:
 			x = px - dw;
 			y = by+(bh-dh)/2;
 			break;
-		case DRAWER_RIGHT:
+		case ORIENT_RIGHT:
 			x = px + pw;
 			y = by+(bh-dh)/2;
 			break;
@@ -99,7 +99,7 @@ enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 }
 
 Drawer *
-create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
+create_drawer_applet(GtkWidget * drawer_panel, PanelOrientType orient)
 {
 	GtkWidget *pixmap;
 	Drawer *drawer;
@@ -110,16 +110,16 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 
 	/*FIXME: drawers should have their own pixmaps I guess*/
 	switch(orient) {
-		case DRAWER_DOWN:
+		case ORIENT_DOWN:
 			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-down.png");
 			break;
-		case DRAWER_UP:
+		case ORIENT_UP:
 			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-up.png");
 			break;
-		case DRAWER_RIGHT:
+		case ORIENT_RIGHT:
 			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-right.png");
 			break;
-		case DRAWER_LEFT:
+		case ORIENT_LEFT:
 			pixmap_name = gnome_unconditional_pixmap_file ("gnome-menu-left.png");
 			break;
 	}
@@ -165,10 +165,10 @@ create_drawer_applet(GtkWidget * drawer_panel, DrawerOrient orient)
 }
 
 Drawer *
-create_empty_drawer_applet(DrawerOrient orient)
+create_empty_drawer_applet(PanelOrientType orient)
 {
 	switch(orient) {
-	case DRAWER_UP:
+	case ORIENT_UP:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
@@ -177,7 +177,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 
 						DROP_ZONE_LEFT, NULL, NULL),
 					    orient);
-	case DRAWER_DOWN:
+	case ORIENT_DOWN:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
@@ -186,7 +186,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 
 						DROP_ZONE_RIGHT, NULL, NULL),
 					    orient);
-	case DRAWER_LEFT:
+	case ORIENT_LEFT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
@@ -195,7 +195,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						0, 0, 
 						DROP_ZONE_LEFT, NULL, NULL),
 					    orient);
-	case DRAWER_RIGHT:
+	case ORIENT_RIGHT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
@@ -209,7 +209,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 }
 
 void
-set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
+set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name=NULL;
@@ -219,7 +219,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 	drawer->orient = orient;
 
 	switch (drawer->orient) {
-		case DRAWER_DOWN:
+		case ORIENT_DOWN:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-down.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
@@ -229,7 +229,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 							  DROP_ZONE_RIGHT);
 
 			break;
-		case DRAWER_UP:
+		case ORIENT_UP:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-up.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
@@ -238,7 +238,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 								       drawer),
 							  DROP_ZONE_LEFT);
 			break;
-		case DRAWER_RIGHT:
+		case ORIENT_RIGHT:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-right.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
@@ -247,7 +247,7 @@ set_drawer_applet_orient(Drawer *drawer, DrawerOrient orient)
 								       drawer),
 							  DROP_ZONE_RIGHT);
 			break;
-		case DRAWER_LEFT:
+		case ORIENT_LEFT:
 			pixmap_name = gnome_unconditional_pixmap_file(
 				"gnome-menu-left.png");
 			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
