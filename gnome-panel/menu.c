@@ -2796,7 +2796,7 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	add_menu_separator (submenu);
 	make_properties_submenu (submenu);
 	
-
+	
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem,
 			gnome_stock_pixmap_widget(menu,
@@ -2807,6 +2807,17 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			    GTK_SIGNAL_FUNC(panel_config_global), 
 			    NULL);
 
+	add_menu_separator (menu);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem,
+			gnome_stock_pixmap_widget(menu,
+						  GNOME_STOCK_PIXMAP_ABOUT),
+			_("About..."));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			    GTK_SIGNAL_FUNC(about_cb),
+			    NULL);
 #if 0
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Convert to corner panel"));
@@ -2865,16 +2876,6 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 #endif
 	add_menu_separator (menu);
 
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem,
-			gnome_stock_pixmap_widget(menu,
-						  GNOME_STOCK_PIXMAP_ABOUT),
-			_("About..."));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			    GTK_SIGNAL_FUNC(about_cb),
-			    NULL);
-
 	char_tmp = gnome_is_program_in_path("guname");
 	if(char_tmp) {
 		menuitem = gtk_menu_item_new ();
@@ -2887,9 +2888,10 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 					GTK_SIGNAL_FUNC(about_gnome_cb),NULL,
 					char_tmp, (GtkDestroyNotify)g_free,
 					FALSE,TRUE);
-	}
+		
+		add_menu_separator (menu);
 
-	add_menu_separator (menu);
+	}
 
 	char_tmp = gnome_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	
