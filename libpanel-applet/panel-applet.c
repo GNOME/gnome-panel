@@ -371,6 +371,10 @@ panel_applet_finalize (GObject *object)
 	g_free (applet->priv->background);
 	g_free (applet->priv->iid);
 
+	if (applet->priv->closure)
+		g_closure_unref (applet->priv->closure);
+	applet->priv->closure = NULL;
+
 	g_free (applet->priv);
 	applet->priv = NULL;
 
