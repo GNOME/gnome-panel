@@ -2,13 +2,14 @@
 #include <string.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
+
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
 #include <libgnomeui/libgnomeui.h>
-
-#include <applet-widget.h>
 #include <bonobo-activation/bonobo-activation.h>
+#include <libbonobo.h>
 
+#include "applet-widget.h"
 #include "GNOME_Panel.h"
 
 struct _AppletWidgetPrivate
@@ -53,9 +54,6 @@ struct _CallbackInfo {
 };
 
 
-#define pg_return_if_fail(evp,x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return; }}
-#define pg_return_val_if_fail(evp,x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return y;}}
-
 typedef struct {
 	POA_GNOME_Applet                servant;
 
@@ -69,7 +67,9 @@ typedef struct {
 } CustomAppletServant;
 
 static PortableServer_ServantBase__epv base_epv = {
-	NULL, NULL, NULL
+	NULL,
+	NULL,
+	NULL
 };
 
 static void
@@ -156,31 +156,29 @@ static POA_GNOME_Applet__vepv applet_vepv = {
 /*****************************************************************************
   WIDGET STUFF
  *****************************************************************************/
-static void applet_widget_class_init	(AppletWidgetClass *klass);
-static void wapplet_widget_init		(AppletWidget      *applet_widget);
+static void applet_widget_class_init    (AppletWidgetClass *klass);
+static void applet_widget_instance_init	(AppletWidget      *widget);
 
+typedef int (*SaveSignal)      (GtkObject *object,
+				char      *cfgpath,
+				char      *globcfgpath,
+				gpointer   data);
 
-typedef int (*SaveSignal) (GtkObject * object,
-			   char *cfgpath,
-			   char *globcfgpath,
-			   gpointer data);
+typedef void (*BackSignal)     (GtkObject            *object,
+				GNOME_Panel_BackType  type,
+				char                 *pixmap,
+				GdkColor             *color,
+				gpointer              data);
 
-typedef void (*BackSignal) (GtkObject * object,
-			    GNOME_Panel_BackType type,
-			    char *pixmap,
-			    GdkColor *color,
-			    gpointer data);
-
-typedef void (*PositionSignal) (GtkObject * object,
-				int x,
-				int y,
-				gpointer data);
+typedef void (*PositionSignal) (GtkObject *object,
+				int        x,
+				int        y,
+				gpointer   data);
 
 static int applet_count = 0;
 
 static gboolean die_on_last = FALSE;
 static GtkPlugClass *parent_class;
-static GtkTooltips *applet_tooltips = NULL;
 
 #define CD(applet) ((CustomAppletServant *)APPLET_WIDGET(applet)->_priv->custom_servant)
 
@@ -195,7 +193,7 @@ applet_widget_get_type (void)
 			sizeof (AppletWidget),
 			sizeof (AppletWidgetClass),
 			(GtkClassInitFunc) applet_widget_class_init,
-			(GtkObjectInitFunc) wapplet_widget_init,
+			(GtkObjectInitFunc) applet_widget_instance_init,
 			NULL,
 			NULL,
 			NULL
@@ -421,7 +419,7 @@ applet_widget_class_init (AppletWidgetClass *class)
 }
 
 static void
-wapplet_widget_init (AppletWidget *applet)
+applet_widget_instance_init (AppletWidget *applet)
 {
 	g_return_if_fail (applet);
 	g_return_if_fail (IS_APPLET_WIDGET (applet));
@@ -429,7 +427,7 @@ wapplet_widget_init (AppletWidget *applet)
 	applet->orient = ORIENT_UP;
 	applet->size   = PIXEL_SIZE_STANDARD;
 
-	applet->_priv = g_new0(AppletWidgetPrivate, 1);
+	applet->_priv = g_new0 (AppletWidgetPrivate, 1);
 
 	applet->_priv->custom_servant      = NULL;
 	applet->_priv->added_child         = FALSE;
@@ -447,19 +445,19 @@ custom_servant_destroy (CustomAppletServant *servant)
 	PortableServer_ObjectId *objid;
 	CORBA_Environment        env;
 	GNOME_Applet             applet;
-	GSList                  *list;
+	GSList                  *l;
 
 	CORBA_exception_init (&env);
 
-	for (list = servant->callbacks; list; list = list->next) {
-		CallbackInfo *info = (CallbackInfo *)list->data;
+	for (l = servant->callbacks; l; l = l->next) {
+		CallbackInfo *info = (CallbackInfo *)l->data;
 
 		g_free (info->name);
 		info->name = NULL;
 
 		g_free (info);
 
-		list->data = NULL;
+		l->data = NULL;
 	}
 
 	g_slist_free (servant->callbacks);
@@ -496,7 +494,6 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 {
 	AppletWidget *applet;
 	GtkPlug *plug;
-	CORBA_Environment ev;
 
 	g_return_if_fail(w != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(w));
@@ -532,20 +529,26 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 	}
 
 
-	if(applet->privcfgpath) {
-		g_free(applet->privcfgpath);
-		g_free(applet->globcfgpath);
+	if (applet->privcfgpath) {
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		g_free (applet->privcfgpath);
+		g_free (applet->globcfgpath);
 
 		applet->privcfgpath = NULL;
 		applet->globcfgpath = NULL;
 
-		CORBA_exception_init(&ev);
-		/* if nothing has been added as our child, this means we have
-		   not yet fully completed load, so notify the panel that we
-		   are going to die */
-		if( ! applet->_priv->added_child)
-			GNOME_PanelSpot_abort_load(CD(applet)->pspot, &ev);
-		CORBA_exception_free(&ev);
+		/*
+		 * if nothing has been added as our child, this 
+		 * means we have not yet fully completed load, so 
+		 * notify the panel that we are going to die
+		 */
+		if (!applet->_priv->added_child)
+			GNOME_PanelSpot_abort_load (CD (applet)->pspot, &env);
+
+		CORBA_exception_free (&env);
 	}
 
 	custom_servant_destroy (applet->_priv->custom_servant);
@@ -571,12 +574,15 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
  * is called.
  **/
 void
-applet_widget_abort_load(AppletWidget *applet)
+applet_widget_abort_load (AppletWidget *applet)
 {
-	CORBA_Environment ev;
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot_abort_load(CD(applet)->pspot, &ev);
-	CORBA_exception_free(&ev);
+	CORBA_Environment env;
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelSpot_abort_load (CD (applet)->pspot, &env);
+
+	CORBA_exception_free (&env);
 }
 
 /**
@@ -587,10 +593,10 @@ applet_widget_abort_load(AppletWidget *applet)
  * You can only call this once for each applet.
  **/
 void
-applet_widget_remove(AppletWidget *applet)
+applet_widget_remove (AppletWidget *applet)
 {
-	CORBA_Environment    env;
 	CustomAppletServant *servant;
+	CORBA_Environment    env;
 
 	g_return_if_fail (applet);
 	g_return_if_fail (IS_APPLET_WIDGET (applet));
@@ -599,9 +605,7 @@ applet_widget_remove(AppletWidget *applet)
 
 	servant = applet->_priv->custom_servant;
 
-	goad_server_unregister (CORBA_OBJECT_NIL,
-				servant->iid,
-			       "server", &env);
+	bonobo_activation_active_server_unregister (servant->iid, servant->obj);
 
 	GNOME_PanelSpot_unregister_us (CD (applet)->pspot, &env);
 
@@ -625,15 +629,18 @@ applet_widget_remove(AppletWidget *applet)
  * it exists.
  **/
 void
-applet_widget_sync_config(AppletWidget *applet)
+applet_widget_sync_config (AppletWidget *applet)
 {
-	CORBA_Environment ev;
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	CORBA_Environment env;
 
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot_sync_config(CD(applet)->pspot, &ev);
-	CORBA_exception_free(&ev);
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelSpot_sync_config (CD (applet)->pspot, &env);
+
+	CORBA_exception_free (&env);
 }
 
 static const char*
@@ -666,17 +673,18 @@ get_callback_info(GtkWidget *applet, const char *name)
 }
 
 
-/*adds a callback to the callback hash*/
+/*
+ * adds a callback to the callback hash
+ */
 static void
-gnome_panel_applet_register_callback(GtkWidget *applet,
-				     const char *name,
-				     const char *stock_item,
-				     const char *menutext,
-				     AppletCallbackFunc func,
-				     gpointer data)
+gnome_panel_applet_register_callback (GtkWidget          *applet,
+				      const char         *name,
+				      const char         *stock_item,
+				      const char         *menutext,
+				      AppletCallbackFunc  func,
+				      gpointer            data)
 {
 	CallbackInfo *info;
-	CORBA_Environment ev;
 
 	/*skip over leading '/'s*/
 	name = make_sane_name(name);
@@ -695,12 +703,17 @@ gnome_panel_applet_register_callback(GtkWidget *applet,
 	info->func = func;
 	info->data = data;
 
-	CORBA_exception_init(&ev);
-	/*register the callback with the panel*/
-	GNOME_PanelSpot_add_callback(CD(applet)->pspot,
-				     name, stock_item,
-				     menutext, &ev);
-	CORBA_exception_free(&ev);
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		GNOME_PanelSpot_add_callback (CD (applet)->pspot,
+					      name, stock_item,
+					      menutext, &env);
+
+		CORBA_exception_free (&env);
+	}
 }
 
 /**
@@ -781,7 +794,6 @@ applet_widget_unregister_callback(AppletWidget *applet,
 {
 	GSList *li;
 	CallbackInfo *cbi = NULL;
-	CORBA_Environment ev;
 
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -801,9 +813,15 @@ applet_widget_unregister_callback(AppletWidget *applet,
 	if(!cbi) return;
 	CD(applet)->callbacks = g_slist_remove(CD(applet)->callbacks, cbi);
 
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot_remove_callback(CD(applet)->pspot, name, &ev);
-	CORBA_exception_free(&ev);
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		GNOME_PanelSpot_remove_callback (CD (applet)->pspot, name, &env);
+
+		CORBA_exception_free (&env);
+	}
 }
 
 static void
@@ -813,7 +831,6 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
 					 const char *menutext)
 {
 	char *n;
-	CORBA_Environment ev;
 
 	/*skip over leading '/'s*/
 	name = make_sane_name(name);
@@ -823,11 +840,19 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
 		n = g_strconcat(name,"/",NULL);
 	else
 		n = g_strdup(name);
-	CORBA_exception_init(&ev);
-	/*unregister the dir with the panel*/
-	GNOME_PanelSpot_add_callback(CD(applet)->pspot,
-				     n,stock_item,menutext, &ev);
-	CORBA_exception_free(&ev);
+
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		GNOME_PanelSpot_add_callback (CD (applet)->pspot,
+					      n, stock_item,
+					      menutext, &env);
+
+		CORBA_exception_free (&env);
+	}
+
 	g_free(n);
 }
 
@@ -899,7 +924,6 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 void
 applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 {
-	CORBA_Environment ev;
 	char *n;
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -913,10 +937,16 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 
 	g_return_if_fail(name!=NULL);
 
-	/*unregister the callback with the panel*/
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot_remove_callback(CD(applet)->pspot, n, &ev);
-	CORBA_exception_free(&ev);
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		GNOME_PanelSpot_remove_callback (CD (applet)->pspot,
+						 n, &env);
+		CORBA_exception_free (&env);
+	}
+
 	g_free(n);
 }
 
@@ -934,7 +964,6 @@ applet_widget_callback_set_sensitive(AppletWidget *applet,
 				     const char *name,
 				     gboolean sensitive)
 {
-	CORBA_Environment ev;
 
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -944,10 +973,17 @@ applet_widget_callback_set_sensitive(AppletWidget *applet,
 
 	g_return_if_fail(name!=NULL);
 
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot_callback_set_sensitive(CD(applet)->pspot, name,
-					       sensitive, &ev);
-	CORBA_exception_free(&ev);
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
+
+		GNOME_PanelSpot_callback_set_sensitive (CD (applet)->pspot,
+							name,
+							sensitive,
+							&env);
+		CORBA_exception_free (&env);
+	}
 }
 
 static GNOME_Panel
@@ -1273,10 +1309,10 @@ destroy_the_applet(GtkWidget *w, AppletWidget *applet)
  * use #applet_widget_add.
  **/
 void
-applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
-		       gboolean bind_events)
+applet_widget_add_full (AppletWidget *applet,
+			GtkWidget    *widget,
+			gboolean      bind_events)
 {
-	CORBA_Environment ev;
 
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -1292,18 +1328,21 @@ applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 		gtk_container_add(GTK_CONTAINER(applet), widget);
 
 
-	CORBA_exception_init(&ev);
+	{
+		CORBA_Environment env;
+
+		CORBA_exception_init (&env);
   
-	GNOME_PanelSpot_register_us(CD(applet)->pspot, &ev);
+		GNOME_PanelSpot_register_us (CD (applet)->pspot, &env);
+		if (BONOBO_EX (&env)) {
+			g_warning (_("CORBA Exception"));
+			CORBA_exception_free (&env);
+			gtk_widget_destroy (widget);
+			return;
+		}
 
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
-		gtk_widget_destroy(widget);
-		return;
+		CORBA_exception_free (&env);
 	}
-
-	CORBA_exception_free(&ev);
 
 	if(bind_events) {
 		if(applet->_priv->ebox)
@@ -1357,6 +1396,17 @@ applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
 		bind_applet_events(GTK_WIDGET(widget), applet);
 }
 
+static GtkTooltips *
+applet_widget_tooltips (void)
+{
+	static GtkTooltips *applet_tooltips = NULL;
+
+	if (!applet_tooltips)
+		applet_tooltips = gtk_tooltips_new();
+
+	return applet_tooltips;
+}
+
 /**
  * applet_widget_set_widget_tooltip:
  * @applet: the #AppletWidget to work with
@@ -1367,19 +1417,17 @@ applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
  * setting from the panel configuration.
  **/
 void
-applet_widget_set_widget_tooltip(AppletWidget *applet,
-				 GtkWidget *widget,
-				 const char *text)
+applet_widget_set_widget_tooltip (AppletWidget *applet,
+				  GtkWidget    *widget,
+				  const char   *text)
 {
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
-	g_return_if_fail(widget != NULL);
-	g_return_if_fail(GTK_IS_WIDGET(widget));
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
+	g_return_if_fail (widget);
+	g_return_if_fail (GTK_IS_WIDGET (widget));
 
-	if(!applet_tooltips)
-		applet_tooltips = gtk_tooltips_new();
-
-	gtk_tooltips_set_tip (applet_tooltips,  widget, text, NULL);
+	gtk_tooltips_set_tip (applet_widget_tooltips (),
+			      widget, text, NULL);
 }
 
 /**
@@ -1391,20 +1439,26 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
  * tooltip setting from the panel configuration.
  **/
 void
-applet_widget_set_tooltip(AppletWidget *applet, const char *text)
+applet_widget_set_tooltip (AppletWidget *applet,
+			   const char   *text)
 {
-	CORBA_Environment ev;
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	CORBA_Environment env;
 
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot__set_tooltip(CD(applet)->pspot, text?text:"", &ev);
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelSpot__set_tooltip (CD (applet)->pspot,
+				      text ? text : "",
+				      &env);
+	if(BONOBO_EX (&env)) {
+		g_warning (_("CORBA Exception"));
+		CORBA_exception_free (&env);
 		return;
 	}
-	CORBA_exception_free(&ev);
+
+	CORBA_exception_free (&env);
 }
 
 /**
@@ -1460,22 +1514,26 @@ applet_widget_get_panel_pixel_size(AppletWidget *applet)
  * Returns:  Free space left for your applet.
  **/
 int
-applet_widget_get_free_space(AppletWidget *applet)
+applet_widget_get_free_space (AppletWidget *applet)
 {
-	CORBA_Environment ev;
-	int r;
-	g_return_val_if_fail(applet != NULL, 0);
-	g_return_val_if_fail(IS_APPLET_WIDGET(applet), 0);
+	CORBA_Environment env;
+	int               retval;
+
+	g_return_val_if_fail (applet, 0);
+	g_return_val_if_fail (IS_APPLET_WIDGET (applet), 0);
 	
-	CORBA_exception_init(&ev);
-	r = GNOME_PanelSpot__get_free_space(CD(applet)->pspot, &ev);
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
+	CORBA_exception_init (&env);
+
+	retval = GNOME_PanelSpot__get_free_space (CD (applet)->pspot, &env);
+	if (BONOBO_EX (&env)) {
+		g_warning (_("CORBA Exception"));
+		CORBA_exception_free (&env);
 		return 0;
 	}
-	CORBA_exception_free(&ev);
-	return r;
+
+	CORBA_exception_free (&env);
+
+	return retval;
 }
 
 /**
@@ -1490,20 +1548,26 @@ applet_widget_get_free_space(AppletWidget *applet)
  * use it.  By default change_position is not sent.
  **/
 void
-applet_widget_send_position(AppletWidget *applet, gboolean enable)
+applet_widget_send_position (AppletWidget *applet,
+			     gboolean      enable)
 {
-	CORBA_Environment ev;
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	CORBA_Environment env;
+
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
 	
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot__set_send_position(CD(applet)->pspot, enable, &ev);
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
+	CORBA_exception_init (&env);
+
+	GNOME_PanelSpot__set_send_position (CD (applet)->pspot,
+					    enable,
+					    &env);
+	if (BONOBO_EX (&env)) {
+		g_warning (_("CORBA Exception"));
+		CORBA_exception_free (&env);
 		return;
 	}
-	CORBA_exception_free(&ev);
+
+	CORBA_exception_free (&env);
 }
 
 /**
@@ -1517,20 +1581,25 @@ applet_widget_send_position(AppletWidget *applet, gboolean enable)
  * The do_draw signal will only be sent when the RGB truly changed.
  **/
 void
-applet_widget_send_draw(AppletWidget *applet, gboolean enable)
+applet_widget_send_draw (AppletWidget *applet,
+			 gboolean      enable)
 {
-	CORBA_Environment ev;
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	CORBA_Environment env;
+
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
 	
-	CORBA_exception_init(&ev);
-	GNOME_PanelSpot__set_send_draw(CD(applet)->pspot, enable, &ev);
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
+	CORBA_exception_init (&env);
+	GNOME_PanelSpot__set_send_draw (CD (applet)->pspot,
+					enable,
+					&env);
+	if (BONOBO_EX (&env)) {
+		g_warning (_("CORBA Exception"));
+		CORBA_exception_free (&env);
 		return;
 	}
-	CORBA_exception_free(&ev);
+
+	CORBA_exception_free (&env);
 }
 
 /**
@@ -1546,27 +1615,33 @@ applet_widget_send_draw(AppletWidget *applet, gboolean enable)
  * method.  The rgb should be freed after use with g_free.
  **/
 void
-applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
-			 int *w, int *h, int *rowstride)
+applet_widget_get_rgb_bg (AppletWidget  *applet,
+			  guchar       **rgb,
+			  int           *w,
+			  int           *h,
+			  int           *rowstride)
 {
-	CORBA_Environment ev;
 	GNOME_Panel_RgbImage *image;
 
-	g_return_if_fail(applet!=NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
-	g_return_if_fail(rgb!=NULL);
-	g_return_if_fail(w!=NULL);
-	g_return_if_fail(h!=NULL);
-	g_return_if_fail(rowstride!=NULL);
+	g_return_if_fail (applet);
+	g_return_if_fail (IS_APPLET_WIDGET (applet));
+	g_return_if_fail (rgb && w && h && rowstride);
+
+	{
+		CORBA_Environment env;
 	
-	CORBA_exception_init(&ev);
-	image = GNOME_PanelSpot__get_rgb_background(CD(applet)->pspot, &ev);
-	if(ev._major) {
-		g_warning(_("CORBA Exception"));
-		CORBA_exception_free(&ev);
-		return;
+		CORBA_exception_init (&env);
+
+		image = GNOME_PanelSpot__get_rgb_background (CD (applet)->pspot,
+							     &env);
+		if (BONOBO_EX (&env)) {
+			g_warning (_("CORBA Exception"));
+			CORBA_exception_free (&env);
+			return;
+		}
+
+		CORBA_exception_free (&env);
 	}
-	CORBA_exception_free(&ev);
 
 	*w = image->width;
 	*h = image->height;
@@ -1606,7 +1681,7 @@ applet_widget_get_rgb_bg(AppletWidget *applet, guchar **rgb,
 		*rgb = g_new0(guchar, (*h)*(*rowstride));
 	}
 	
-	CORBA_free(image);
+	CORBA_free (image);
 }
 
 /**
@@ -1782,74 +1857,93 @@ server_applet_do_callback(PortableServer_Servant _servant,
 	}
 }
 
-/* this is the new session saving call and the one which should be used */
+/*
+ * this is the new session saving call
+ * and the one which should be used.
+ */
 static void
-server_applet_save_session(PortableServer_Servant _servant,
-			   const CORBA_char * cfgpath,
-			   const CORBA_char * globcfgpath,
-			   const CORBA_unsigned_long cookie,
-			   CORBA_Environment *ev)
+server_applet_save_session (PortableServer_Servant     servant,
+			    const CORBA_char          *cfgpath,
+			    const CORBA_char          *globcfgpath,
+			    const CORBA_unsigned_long  cookie,
+			    CORBA_Environment         *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	AppletWidget *applet;
-	char *cfg = g_strdup(cfgpath);
-	char *globcfg = g_strdup(globcfgpath);
+	CustomAppletServant *custom_servant = (CustomAppletServant *)servant;
+	AppletWidget        *applet;
+	char                *cfg;
+	char                *globcfg;
+	gboolean             retval = FALSE;
 
-	int return_val = FALSE;
+	cfg     = g_strdup (cfgpath);
+	globcfg = g_strdup (globcfgpath);
 
-	applet = servant->appwidget;
-	gtk_signal_emit(GTK_OBJECT(applet),
-			applet_widget_signals[SAVE_SESSION_SIGNAL],
-			cfg, globcfg, &return_val);
-	g_free(cfg);
-	g_free(globcfg);
-	
-	/*return_val of true would mean that the applet handeled the
-	  session saving itself, therefore we pass the reverse to the
-	  corba function */
-	GNOME_PanelSpot_done_session_save(CD(applet)->pspot,
-					  !return_val, cookie, ev);
+	applet = custom_servant->appwidget;
+
+	gtk_signal_emit (GTK_OBJECT (applet),
+			 applet_widget_signals [SAVE_SESSION_SIGNAL],
+			 cfg, globcfg, &retval);
+
+	g_free (cfg);
+	g_free (globcfg);
+
+	/*
+	 * retval of true would mean that the applet handled
+	 * the session saving itself, therefore we pass the 
+	 * reverse to the corba function
+	 */
+	GNOME_PanelSpot_done_session_save (CD (applet)->pspot,
+					   !retval,
+					   cookie,
+					   ev);
 }
 
-/* this is here just that if an applet uses the new lib with the old
-   panel it will still work */
+/* 
+ * this is here just that if an applet uses the 
+ * new lib with the old panel it will still work.
+ */
 static CORBA_boolean
-server_applet_session_save(PortableServer_Servant _servant,
-			   const CORBA_char * cfgpath,
-			   const CORBA_char * globcfgpath,
-			   CORBA_Environment *ev)
+server_applet_session_save (PortableServer_Servant  servant,
+			    const CORBA_char       *cfgpath,
+			    const CORBA_char       *globcfgpath,
+			    CORBA_Environment      *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	AppletWidget *applet;
-	char *cfg = g_strdup(cfgpath);
-	char *globcfg = g_strdup(globcfgpath);
+	CustomAppletServant *custom_servant = (CustomAppletServant *)servant;
+	AppletWidget        *applet;
+	char                *cfg;
+	char                *globcfg;
+	gboolean             retval = FALSE;
 
-	int return_val = FALSE;
+	cfg     = g_strdup (cfgpath);
+	globcfg = g_strdup (globcfgpath);
 
-	applet = servant->appwidget;
-	gtk_signal_emit(GTK_OBJECT(applet),
-			applet_widget_signals[SAVE_SESSION_SIGNAL],
-			cfg, globcfg, &return_val);
-	g_free(cfg);
-	g_free(globcfg);
+	applet = custom_servant->appwidget;
 
-	return !return_val;
+	gtk_signal_emit (GTK_OBJECT (applet),
+			 applet_widget_signals [SAVE_SESSION_SIGNAL],
+			 cfg, globcfg, &retval);
+
+	g_free (cfg);
+	g_free (globcfg);
+
+	return !retval;
 }
 
 static void
-server_applet_back_change(PortableServer_Servant _servant,
+server_applet_back_change (PortableServer_Servant         servant,
 			  const GNOME_Panel_BackInfoType *backing,
-			  CORBA_Environment *ev)
+			  CORBA_Environment              *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	GdkColor color={0,0,0,0}, *cptr = NULL;
-	char *pptr = NULL;
+	CustomAppletServant *custom_servant = (CustomAppletServant *)servant;
+	AppletWidget        *applet;
+	GdkColor             color = {0, 0, 0, 0};
+	GdkColor            *cptr = NULL;
+	char                *pptr = NULL;
 
-	switch(backing->_d) {
+	switch (backing->_d) {
 	case GNOME_Panel_BACK_COLOR:
-		color.red = backing->_u.c.red;
+		color.red   = backing->_u.c.red;
 		color.green = backing->_u.c.green;
-		color.blue = backing->_u.c.blue;
+		color.blue  = backing->_u.c.blue;
 		cptr = &color;
 		break;
 	case GNOME_Panel_BACK_PIXMAP:
@@ -1859,68 +1953,71 @@ server_applet_back_change(PortableServer_Servant _servant,
 		break;
 	}
 
-	if(servant->appwidget->_priv->frozen_level>0) {
-		servant->appwidget->_priv->frozen_got_back = TRUE;
-		servant->appwidget->_priv->frozen_back_type = (GNOME_Panel_BackType)backing->_d;
-		g_free(servant->appwidget->_priv->frozen_back_pixmap);
-		if(servant->appwidget->_priv->frozen_back_pixmap)
-			servant->appwidget->_priv->frozen_back_pixmap = g_strdup(pptr);
-		else
-			servant->appwidget->_priv->frozen_back_pixmap = NULL;
-		servant->appwidget->_priv->frozen_back_color = color;
-	} else {
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[BACK_CHANGE_SIGNAL],
-				(GNOME_Panel_BackType)backing->_d,
-				pptr,
-				cptr);
+	applet = custom_servant->appwidget;
+
+	if (applet->_priv->frozen_level > 0) {
+		applet->_priv->frozen_got_back   = TRUE;
+		applet->_priv->frozen_back_type  = (GNOME_Panel_BackType)backing->_d;
+		applet->_priv->frozen_back_color = color;
+
+		if (applet->_priv->frozen_back_pixmap) {
+			g_free (applet->_priv->frozen_back_pixmap);
+			applet->_priv->frozen_back_pixmap = g_strdup (pptr);
+		}
+	} 
+	else {
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals [BACK_CHANGE_SIGNAL],
+				 (GNOME_Panel_BackType)backing->_d,
+				 pptr, cptr);
 	}
 }
 
 static void
-server_applet_draw(PortableServer_Servant _servant,
-		   CORBA_Environment *ev)
+server_applet_draw (PortableServer_Servant   servant,
+		    CORBA_Environment       *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-			applet_widget_signals[DO_DRAW_SIGNAL]);
+	CustomAppletServant *custom_servant = (CustomAppletServant *)servant;
+
+	gtk_signal_emit (GTK_OBJECT (custom_servant->appwidget),
+			 applet_widget_signals [DO_DRAW_SIGNAL]);
 }
 
 static void
-server_applet_set_tooltips_state(PortableServer_Servant _servant,
-				 const CORBA_boolean enabled,
-				 CORBA_Environment *ev)
+server_applet_set_tooltips_state (PortableServer_Servant  servant,
+				  const CORBA_boolean     enabled,
+				  CORBA_Environment      *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	if(!applet_tooltips)
-		applet_tooltips = gtk_tooltips_new();
+	CustomAppletServant *custom_servant = (CustomAppletServant *)servant;
 
-	if(enabled)
-		gtk_tooltips_enable(applet_tooltips);
+	if (enabled)
+		gtk_tooltips_enable (applet_widget_tooltips ());
 	else
-		gtk_tooltips_disable(applet_tooltips);
+		gtk_tooltips_disable (applet_widget_tooltips ());
 
-	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-			applet_widget_signals[TOOLTIP_STATE_SIGNAL],
-			enabled);
+	gtk_signal_emit (GTK_OBJECT (custom_servant->appwidget),
+			 applet_widget_signals [TOOLTIP_STATE_SIGNAL],
+			 enabled);
 }
 
 static void
-server_applet_change_position(PortableServer_Servant _servant,
-			      const CORBA_short x,
-			      const CORBA_short y,
-			      CORBA_Environment *ev)
+server_applet_change_position (PortableServer_Servant  servant,
+			       const CORBA_short       x,
+			       const CORBA_short       y,
+			       CORBA_Environment      *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	if(servant->appwidget->_priv->frozen_level>0) {
-		servant->appwidget->_priv->frozen_got_position = TRUE;
-		servant->appwidget->_priv->frozen_position_x = x;
-		servant->appwidget->_priv->frozen_position_y = y;
-	} else {
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_POSITION_SIGNAL],
-				(int)x,
-				(int)y);
+	AppletWidget *applet = ((CustomAppletServant *)servant)->appwidget;
+
+	if (applet->_priv->frozen_level > 0) {
+		applet->_priv->frozen_got_position = TRUE;
+		applet->_priv->frozen_position_x   = x;
+		applet->_priv->frozen_position_y   = y;
+	}
+	else {
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals [CHANGE_POSITION_SIGNAL],
+				 (int)x,
+				 (int)y);
 	}
 }
 
@@ -1934,92 +2031,64 @@ server_applet__get_goad_id (PortableServer_Servant  servant,
 }
 
 static void
-server_applet_freeze_changes(PortableServer_Servant _servant,
-			     CORBA_Environment *ev)
+server_applet_freeze_changes (PortableServer_Servant  servant,
+			      CORBA_Environment      *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	servant->appwidget->_priv->frozen_level++;
+	AppletWidget *applet = ((CustomAppletServant *)servant)->appwidget;
+
+	applet->_priv->frozen_level++;
 }
 
 static void
-server_applet_thaw_changes(PortableServer_Servant _servant,
-			   CORBA_Environment *ev)
+server_applet_thaw_changes (PortableServer_Servant  servant,
+			    CORBA_Environment      *ev)
 {
-	CustomAppletServant *servant = (CustomAppletServant *)_servant;
-	if(servant->appwidget->_priv->frozen_level>0)
-		servant->appwidget->_priv->frozen_level--;
+	AppletWidget *applet = ((CustomAppletServant *)servant)->appwidget;
+
+	if (applet->_priv->frozen_level > 0)
+		applet->_priv->frozen_level--;
 	
-	if(servant->appwidget->_priv->frozen_level>0)
+	if (applet->_priv->frozen_level > 0)
 		return;
 
-	if(servant->appwidget->_priv->frozen_got_orient) {
-		servant->appwidget->_priv->frozen_got_orient = FALSE;
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
-				servant->appwidget->_priv->frozen_orient);
+	if (applet->_priv->frozen_got_orient) {
+		applet->_priv->frozen_got_orient = FALSE;
+
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals [CHANGE_ORIENT_SIGNAL],
+				 applet->_priv->frozen_orient);
 	}
-	if(servant->appwidget->_priv->frozen_got_size) {
-		servant->appwidget->_priv->frozen_got_size = FALSE;
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_PIXEL_SIZE_SIGNAL],
-				servant->appwidget->_priv->frozen_size);
+
+	if (applet->_priv->frozen_got_size) {
+		applet->_priv->frozen_got_size = FALSE;
+
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals [CHANGE_PIXEL_SIZE_SIGNAL],
+				 applet->_priv->frozen_size);
 	}
-	if(servant->appwidget->_priv->frozen_got_back) {
-		servant->appwidget->_priv->frozen_got_back = FALSE;
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[BACK_CHANGE_SIGNAL],
-				servant->appwidget->_priv->frozen_back_type,
-				servant->appwidget->_priv->frozen_back_pixmap,
-				&servant->appwidget->_priv->frozen_back_color);
-		g_free(servant->appwidget->_priv->frozen_back_pixmap);
+
+	if (applet->_priv->frozen_got_back) {
+		applet->_priv->frozen_got_back = FALSE;
+
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals[BACK_CHANGE_SIGNAL],
+				 applet->_priv->frozen_back_type,
+				 applet->_priv->frozen_back_pixmap,
+				 &applet->_priv->frozen_back_color);
+
+		g_free (applet->_priv->frozen_back_pixmap);
 	}
-	if(servant->appwidget->_priv->frozen_got_position) {
-		servant->appwidget->_priv->frozen_got_position = FALSE;
-		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-				applet_widget_signals[CHANGE_POSITION_SIGNAL],
-				servant->appwidget->_priv->frozen_position_x,
-				servant->appwidget->_priv->frozen_position_y);
+
+	if (applet->_priv->frozen_got_position) {
+		applet->_priv->frozen_got_position = FALSE;
+
+		gtk_signal_emit (GTK_OBJECT (applet),
+				 applet_widget_signals [CHANGE_POSITION_SIGNAL],
+				 applet->_priv->frozen_position_x,
+				 applet->_priv->frozen_position_y);
 	}
 }
 
-/*XXX: this is not used!
-static void
-applet_handle_connection(GIOPConnection *cnx, gint source,
-			 GdkInputCondition cond)
-{
-	switch(cond) {
-	case GDK_INPUT_EXCEPTION:
-		giop_main_handle_connection_exception(cnx);
-		break;
-	default:
-		giop_main_handle_connection(cnx);
-	}
-}
-*/
-
-/*XXX: this is not used!
-static void
-orb_add_connection(GIOPConnection *cnx)
-{
-	cnx->user_data =
-		GINT_TO_POINTER(gtk_input_add_full(GIOP_CONNECTION_GET_FD(cnx),
-						   GDK_INPUT_READ|
-						     GDK_INPUT_EXCEPTION,
-						   (GdkInputFunction)
-						     applet_handle_connection,
-						   NULL, cnx, NULL));
-}
-*/
-
-/*XXX: this is not used!
-static void
-orb_remove_connection(GIOPConnection *cnx)
-{
-	gtk_input_remove(GPOINTER_TO_INT(cnx->user_data));
-}
-*/
-
-/* Used by shlib applets */
 /**
  * applet_widget_corba_activate:
  * @applet: widget to embed.
@@ -2066,11 +2135,13 @@ applet_widget_corba_deactivate (PortableServer_POA  poa,
 }
 
 typedef struct {
-	POA_GNOME_GenericFactory	servant;
-	AppletFactoryActivator		afunc;
-	AppletFactoryQuerier		qfunc;
-	CORBA_Object			fobj;
-	PortableServer_ObjectId		*objid;
+	POA_GNOME_GenericFactory        servant;
+
+	AppletFactoryActivator          afunc;
+	AppletFactoryQuerier            qfunc;
+
+	CORBA_Object                    fobj;
+	PortableServer_ObjectId        *objid;
 } AppletFactory;
 
 static CORBA_boolean

@@ -296,14 +296,14 @@ void         applet_widget_corba_deactivate (PortableServer_POA   poa,
 	obj = func (bonobo_poa (), iid, NULL, apldat, &env);      \
 	CORBA_Object_release (obj, &env);                         \
 	CORBA_exception_free (&env);                              \
-	} G_STMT_END
+} G_STMT_END
 
 #define APPLET_DEACTIVATE(func, iid, apldat) G_STMT_START {       \
 	CORBA_Environment env;                                    \
 	CORBA_exception_init (&env);                              \
 	func (bonobo_poa (), iid, apldat, &env);                  \
 	CORBA_exception_free (&env);                              \
-	} G_STMT_END
+} G_STMT_END
 
 G_END_DECLS
 
