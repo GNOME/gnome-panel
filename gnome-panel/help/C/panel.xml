@@ -27,7 +27,7 @@
         Permission is granted to copy and distribute translations of this
         manual into another language, under the above conditions for modified
         versions, except that this permission notice may be stated in a
-        translation approved by the Foundation.
+        translation approved by the Free Software Foundation.
       </para>
 
       <para> UNIX is a trademark of X/Open Group</para>
@@ -48,15 +48,19 @@
      <primary>Panel</primary>
     </indexterm>
     The GNOME Panel is the heart of the GNOME user interface and acts
-    as a repository for applications launchers, applets(applications
+    as a repository for applications launchers, applets (applications
     which run entirely within the panel), and menus.  The Panel was
-    designed to be highly configurable.  You can easily customize its
+    designed to be highly configurable.  You can easily <link
+    linkend="panelproperties">customize</link> its
     contents, behavior, and  appearance to suite your personal needs
-    and preferences.  You can even have multiple panels, each with its
+    and preferences.  You can even have <link
+    linkend="panelmove">multiple panels</link>, each with its
     own appearance, properties, and contents.  This flexibility allows
     you to easily create a comfortable and efficient personalized
     desktop environment.
    </para>
+    <para> This manual describes version 1.1.3 of GNOME panel.
+      </para>
   </sect1>
 
 
@@ -74,25 +78,30 @@
    <sect2 id="expanel">
     <title>An Example Panel</title>
 
-    <para>
-     The panel can hold several types of objects. Most important are:
-1) <guilabel>application launchers</guilabel> &mdash; buttons which
-start an application when clicked with the mouse, 2)
-<guilabel>applets</guilabel> &mdash; applications which run inside of
-the panel, displaying information for the user, 3)
-<guilabel>menus</guilabel> &mdash; heirarchical lists of applications.  Each
-of these will be described in detail in the following sections.
-</para>
+      <para>
+	The panel can hold several types of objects. Most important of
+	them are <guilabel>application launchers</guilabel> &mdash;
+	buttons which start an application when clicked with the
+	mouse, <guilabel>applets</guilabel> &mdash; applications which
+	run inside of the panel, displaying information for the user,
+	and <guilabel>menus</guilabel> &mdash;.  Each of these types
+	is described in detail in <xref linkend="objects">. You can easily
+	add, move, or remove panel objects &mdash; see <xref
+	linkend="appletadd">. 
+      </para>
+      <para> To use any of these objects, all you have to do is to
+      click on it with the left mouse button. This will produce the
+      default action for this object: for menus, bring up the
+      menu; for application launchers, launch the corresponding
+      application, for applets, it depends on the applet: some of them
+      do nothing (for example, the clock applet); others will execute
+      some commands when clicked. 
+      </para> 
 
     <para>For now, a simple example of each panel object will be
      sufficient to get started. The example panel shown below shows
      each type of panel object. (YES, I KNOW - WE NEED A DIFFERENT
-     SCREENSHOT) ... The tiger head icon is a launcher, which starts
-     the ... program when clicked.  The square gray box
-     with red and green charts in it is the
-     <application>rp3</application> applet, which activates or ends
-     modem connections, and also plots the data transfer rate when the
-     modem connection is active.  The ... menu...  The ... folder ...
+     SCREENSHOT).
     </para>
      <figure>
       <title>An Example Panel</title>
@@ -103,19 +112,43 @@ of these will be described in detail in the following sections.
        </graphic>
      </screenshot>
     </figure>
+      <para> Most important of all items shown here is the <guimenu>Main
+     Menu</guimenu>, shown by the stylized footprint icon in the left
+     side of the panel. This menu provides you access to almost all
+     you can do with GNOME &mdash; all the applications, configuration
+     tools,  command line prompt, <guimenuitem>Logout</guimenuitem>
+     and <guimenuitem>Lock Screen</guimenuitem> commands, and much more.
+     The main menu is described in detail in <xref
+     linkend="mainmenu">. 
+      </para>
+      <para>
+ ... The tiger head icon is a launcher, which starts
+     the ... program when clicked.  The square gray box
+     with red and green charts in it is the
+     <application>rp3</application> applet, which activates or ends
+     modem connections, and also plots the data transfer rate when the
+     modem connection is active.  PAGER 
+      </para>
    </sect2>
 
-    <sect2 id="click">
-      <title> FIXME</title>
-      <para>
-	TO USE AN OBJECT, JUST CLICK ON IT
-	</para>
-    </sect2>
+ 
     <sect2 id="rightclick">
-      <title> FIXME</title>
+      <title>Right-click menu (FIXME)</title>
       <para>
-	Right-clicking on the panel ... applets .... menus...
+	Clicking on any panel object with the right mouse button
+	brings up the <guimenu>pop-up menu</guimenu>. This menu allows
+	you to move or remove the object. It also contains some items
+	specific to this object; in most cases, it will contain
+	<guimenuitem>About</guimenuitem>, which would show brief
+	information about the applet, such as author's name and
+	version date, <guimenuitem>Help</guimenuitem>, and
+	<guimenuitem>Properties</guimenuitem>, which allows you to
+	configure preferences and settings for this object. 
 	</para>
+        <para> You can also right-click on the panel itslef. This will
+        bring the menu FIXME.
+	</para>
+
     </sect2>
 
 
@@ -172,15 +205,19 @@ of these will be described in detail in the following sections.
    <sect1 id="mainmenu">
     <title>The Main Menu</title>
     <para>
-     <indexterm id="idx-a3">
-      <primary>Main Menu</primary>
+<!-- <indexterm id="idx-a3"> 
+     <primary>Main Menu</primary> 
      </indexterm>
-      The (foot) seen towards the left end of the example panel is the
-      <guibutton>Main Menu</guibutton>...
-      To start using any pre-loaded application click on the
-      <guibutton>Main Menu Button</guibutton>. The Main Menu has the
-      picture of the stylized foot and on first use is on the bottom
-      left of the screen. You should release the mouse after pressing
+      -->
+      The footprint icon seen towards the left end of the example
+      panel is the <guibutton>Main Menu</guibutton> (yes, you guessed
+      right, it is the footprint of the gnome). This menu provides you
+      access to almost all you can do with GNOME &mdash; all the
+      applications, configuration tools, command line prompt,
+      <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
+      Screen</guimenuitem> commands, and much more.  To access any of
+      its items, click on the <guibutton>Main Menu
+      Button</guibutton>. You should release the mouse after pressing
       the <guibutton>Main Menu</guibutton> button so that you can take
       advantage of other mouse-activated features in the Main Menu
       such as right mouse clicks and drag and drop from the menu.
@@ -194,37 +231,106 @@ of these will be described in detail in the following sections.
      </screenshot>
     </figure>
     </para>
-    <para>
-     The Main Menu is the starting point for all of the applications
-     on your system. Later in this manual you will learn how to
-     customize the Main Menu to suit your work environment, but for
-     now you can use the menu that is established when you install
-     GNOME. The Main Menu works like any other menu you might have
-     used in other graphical desktop environments. Simply press the
-     <guibutton>Main Menu</guibutton> Button and select from the menu
-     that pops up from the button.
-    </para>
+   <sect2 id="submenus">
+      <title> Components of the main menu</title>
 
-    <para>
-    ADD HERE STUFF ABOUT RUN COMMAND, KDE MENUS, ETC
-    </para>
+      <para>
+	The main component of the Main Menu is the
+	<guimenu>Programs</guimenu> menu, which contains a list of
+	preconfigured menu items. Here you will find all the GNOME
+	applications, from <application>Gnumeric</application>
+	spreadsheet to <application>Kanji terminal</application>, as
+	well as quite a few non-Gnome ones, such as
+	<application>Netscape</application> browser and
+	<application>emacs</application> text editor.
+	<guimenu>Programs</guimenu> menu also contains commands
+	<guimenuitem>File manager</guimenuitem>, which launches the
+	GNOME file manager, <guimenuitem>Run program</guimenuitem>,
+	which gives you the command line prompt where you can enter
+	any command, and <guimenuitem>Help</guimenuitem>, which
+	launches the GNOME help browser. GNOME help browser gives you
+	an easy access to all the documentation installed on your
+	system &mdash; not only GNOME documentation (Users guide,
+	application manuals, &hellip;), but also all other types of
+	documentation (man pages, info pages).  
+      </para>
 
-   
+
+      <para> In addition to the <guimenu>Programs</guimenu>,  the
+	main menu can also contains a number of other submenus and useful
+	commands, listed below. Depending on your configuration, you
+	may not see all of them. Also, some of them may be shown as
+	submenus, and others included as part of the main menu,
+	separated by horizontal lines from other parts. 
+      </para>
+	<itemizedlist>
+	  <listitem>
+	    <para>
+	      <guimenuitem>Favorites</guimenuitem>
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>Applets </guimenuitem>
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>KDE menus </guimenuitem>
+	    </para>
+	  </listitem>
+
+
+	  <listitem>
+	    <para>
+	      <guimenuitem> Another Level menus, Debian menus </guimenuitem>
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem>Panel Menu </guimenuitem>
+	    </para>
+	  </listitem>
+
+	  <listitem>
+	    <para>
+	      <guimenuitem> Desktop menu</guimenuitem>&mdash; includes
+	      <guimenuitem>Logout</guimenuitem> and <guimenuitem>Lock
+	      Screen</guimenuitem>
+	    </para>
+	  </listitem>
+	</itemizedlist>
+    </sect2>
+
+    <sect2 id="mainmenuconfig">
+      <title>Configuring the main menu</title>
+      <para> FIXME
+      </para>
+    </sect2>
+
+    <sect2 id="kbdnav">
+      <title>Keyboard navigation in the main menu</title>
+      <para> FIXME
+      </para>
+    </sect2>
 
    <sect2 id="loggingout">
     <title>Logging Out</title>
     <para>
      This button is used to log out of GNOME; it provides the same
      functionality as the <guimenuitem>Logout</guimenuitem> command of
-     the mian menu.  Pressing this button will show the
+     the main menu.  Pressing this button will show the
      <interface>Logout dialog</interface>, which will ask you whether
      or not you really want to log out. It also provides you with
      different methods of quitting GNOME.
     </para>
     <para>
      You have three choices on how to quit GNOME. You may
-     <guilabel>Logout</guilabel> which will simply take you to a
-     terminal; <guilabel>Halt</guilabel>, which will shut down the
+     <guilabel>Logout</guilabel> which will simply end you GNOME
+     session; <guilabel>Halt</guilabel>, which will shut down the
      whole system; or <guilabel>Reboot</guilabel>, which will reboot
      the whole system.
     </para>
@@ -233,6 +339,14 @@ of these will be described in detail in the following sections.
      <guibutton>No</guibutton> button and you will be returned to your
      GNOME session.
     </para>
+      <note> <title>Note for advanced users</title>
+	
+	<para> The choices <guilabel>Halt</guilabel> and
+	<guilabel>Reboot</guilabel>will only be shown if you have the
+	permission to execute the command
+	<command>/usr/bin/shutdown</command>. 
+	</para>
+      </note>
     <figure>
      <title>The Logout Dialog</title>
      <screenshot>
@@ -261,114 +375,25 @@ of these will be described in detail in the following sections.
       end that window manager yourself.
      </para>
     </note>
+      <para>
+      Finally, you can disable the logout dialog so that pressing the
+      logout button will end your GNOME session without asking any
+      questions. To do so, start GNOME control center (<menuchoice>
+	  <guimenu>Main Menu</guimenu><guisubmenu>Settings</guisubmenu>
+          <guisubmenu>Startup programs</guisubmenu>
+	</menuchoice>) and uncheck the
+      button <guilabel>Prompt on logout</guilabel>.
+      </para>
+
    </sect2>
 
 </sect1>
 
 
-<!-- ########### Adding, Moving, and Removing Panel Objects  ############## -->
-    <sect1 id="appletadd">
-      <title>Adding, Moving, and Removing Panel Objects</title>
-      <sect2 id="moving">
-	<title>Moving objects</title>
-	<para>
-<!--     <indexterm id="idx-a13">
-      <primary>Panel</primary>
-      <secondary>adding applications to</secondary>
-     </indexterm>
-     <indexterm id="idx-a14">
-      <primary>Panel</primary>
-      <secondary>launchers</secondary>
-     </indexterm>
-     <indexterm id="idx-a15">
-      <primary>Panel</primary>
-      <secondary>adding applets to</secondary><see>"Applets"</see>
-     </indexterm> -->
-	  To move any object on the panel to a different location,
-	  just drag it with the middle mouse button to the desired
-	  place, or right-click on it and choose <guimenuitem>Move
-	  applet</guimenuitem>. If in the course of this movement it
-	  hits other objects, the behaviour depends on the global
-	  preferences you set (see <xref linkend="??">): the object you are
-	  moving can switch places with other objects, "push" all
-	  objects it meets, or "jump" over all other objects without
-	  disturbing them. You can also overrun the default behaviour
-	  by holding <keycap>Shift</keycap> button (which causes
-	  "pushing") or <keycap>Ctrl</keycap> (causes "switching
-	  places") button while dragging.
-	</para>
-      </sect2>
-	<sect2 id="remove">
-	  <title> Removing objects form the panel</title>
-	  <para> 
-	    To remove an object from the panel, right-click on it and
-	  choose <guimenuitem>Remove from panel</guimenuitem> form the
-	  pop-up menu. 
-	    </para>
-	</sect2>
-	<sect2 id="add"> 
-	  <title>Adding objects to the panel</title> 
-
-	  <para> There are several ways to add an object to the
-	  panel. One of the possible ways is to right-click on the
-	  panel and choose <guimenuitem>Add to panel</guimenuitem>
-	  command from the <guimenu>Panel</guimenu> menu. This shows a
-	  menu of all possible objects you can add to the
-	  panel. Choosing <guimenuitem>Applet</guimenuitem> will give
-	  you further menu from which you can select any applet you
-	  like.  Similarly, choosing <guimenuitem>Menu</guimenuitem>
-	  gives you a choice of the Main menuju, program menu, and
-	  favorites menu. If you choose
-	  <guimenuitem>launcher</guimenuitem>, you will be presented
-	  the <interface>Create Launcher dialog</interface>, shown
-	  below.  In this dialog you should enter a name for your
-	  launcher, a comment, the command line to launch the
-	  application, and define the application type.  You may also
-	  press the icon button and choose an icon to represent the
-	  application from the icon picker. If no icon is chosen a
-	  default icon will be used.  This dialog has a built-in help
-	  which explains its usage in detail.
-	    </para>
-
-    <figure>
-     <title>The Create Launcher Dialog</title>
-     <screenshot>
-      <screeninfo>Create launcher dialog</screeninfo>
-       <graphic fileref="./figures/old/launcher-props" format="png"
-       srccredit="dcm">
-       </graphic>
-     </screenshot>
-     </figure>
-	  <para>
-	  You can also utilize drag and drop to add  objects to the
-	  panel. For example, you can drag any application launcher
-	  you have on the desktop to the panel; similarly, you can
-	  drag a folder from the GNOME File Manager window to the
-	  panel. Moreover, you can also drag any item from  the Main
-	  menu or its submenu  to
-	  the panel (it will appear as an application launcher). Even
-	  a whole submenu can be dragged to a panel; to do so, you
-	  must drag the menu title (at the top of the menu). 
-	    </para>
-
-
-	  <para> Yet one more method of adding an application launcher
-	    to the Panel is right mouse click on an application menu
-	    item. You will be given another menu selection which
-	    contains <guimenuitem>Add this launcher to
-	    Panel</guimenuitem>.  If you select this menu item it will
-	    automatically add a launcher for that application to the
-	    Panel in which you invoked the Main Menu.  At this point
-	    you may right mouse click on the launcher and select the
-	    <guimenuitem>Properties</guimenuitem> menu item to change
-	    any options for that launcher.
-    </para>
-   </sect2>
- </sect1>
 
 <!-- Panel Objects -->
   <sect1 id="objects">
-    <title>Panel Objects</title>
+    <title>Types of Panel Objects</title>
 
 <!-- ########### Menus  ############## -->
   <sect2 id="menus">
@@ -466,6 +491,109 @@ of these will be described in detail in the following sections.
    </para>
     </sect2>
   </sect1>
+
+
+<!-- ########### Adding, Moving, and Removing Panel Objects  ############## -->
+    <sect1 id="appletadd">
+      <title>Adding, Moving, and Removing Panel Objects</title>
+      <sect2 id="moving">
+	<title>Moving objects</title>
+	<para>
+<!--     <indexterm id="idx-a13">
+      <primary>Panel</primary>
+      <secondary>adding applications to</secondary>
+     </indexterm>
+     <indexterm id="idx-a14">
+      <primary>Panel</primary>
+      <secondary>launchers</secondary>
+     </indexterm>
+     <indexterm id="idx-a15">
+      <primary>Panel</primary>
+      <secondary>adding applets to</secondary><see>"Applets"</see>
+     </indexterm> -->
+	  To move any object on the panel to a different location,
+	  just drag it with the middle mouse button to the desired
+	  place, or right-click on it and choose <guimenuitem>Move
+	  applet</guimenuitem>. If in the course of this movement it
+	  hits other objects, the behaviour depends on the global
+	  preferences you set (see <xref linkend="globalpanelprefs">):
+	  the object you are moving can switch places with other
+	  objects, "push" all objects it meets, or "jump" over all
+	  other objects without disturbing them. You can also overrun
+	  the default behaviour by holding <keycap>Shift</keycap>
+	  button (which causes "pushing") or <keycap>Ctrl</keycap>
+	  (causes "switching places") button while dragging.
+	</para>
+      </sect2>
+	<sect2 id="remove">
+	  <title> Removing objects from the panel</title>
+	  <para> 
+	    To remove an object from the panel, right-click on it and
+	  choose <guimenuitem>Remove from panel</guimenuitem> form the
+	  pop-up menu. 
+	    </para>
+	</sect2>
+	<sect2 id="add"> 
+	  <title>Adding objects to the panel</title> 
+
+	  <para> There are several ways to add an object to the
+	  panel. One of the possible ways is to right-click on the
+	  panel and choose <guimenuitem>Add to panel</guimenuitem>
+	  command from the <guimenu>Panel</guimenu> menu. This shows a
+	  menu of all possible objects you can add to the
+	  panel. Choosing <guimenuitem>Applet</guimenuitem> will give
+	  you further menu from which you can select any applet you
+	  like.  Similarly, choosing <guimenuitem>Menu</guimenuitem>
+	  gives you a choice of the Main menuju, program menu, and
+	  favorites menu. If you choose
+	  <guimenuitem>launcher</guimenuitem>, you will be presented
+	  the <interface>Create Launcher dialog</interface>, shown
+	  below.  In this dialog you should enter a name for your
+	  launcher, a comment, the command line to launch the
+	  application, and define the application type.  You may also
+	  press the icon button and choose an icon to represent the
+	  application from the icon picker. If no icon is chosen a
+	  default icon will be used.  This dialog has a built-in help
+	  which explains its usage in detail.
+	    </para>
+
+    <figure>
+     <title>The Create Launcher Dialog</title>
+     <screenshot>
+      <screeninfo>Create launcher dialog</screeninfo>
+       <graphic fileref="./figures/old/launcher-props" format="png"
+       srccredit="dcm">
+       </graphic>
+     </screenshot>
+     </figure>
+	  <para>
+	  You can also utilize drag and drop to add  objects to the
+	  panel. For example, you can drag any application launcher
+	  you have on the desktop to the panel; similarly, you can
+	  drag a folder from the GNOME File Manager window to the
+	  panel. Moreover, you can also drag any item from  the Main
+	  menu or its submenu  to
+	  the panel (it will appear as an application launcher). Even
+	  a whole submenu can be dragged to a panel; to do so, you
+	  must drag the menu title (at the top of the menu). 
+	    </para>
+
+
+	  <para> Yet one more method of adding an application launcher
+	    to the Panel is right mouse click on an application menu
+	    item. You will be given another menu selection which
+	    contains <guimenuitem>Add this launcher to
+	    Panel</guimenuitem>.  If you select this menu item it will
+	    automatically add a launcher for that application to the
+	    Panel in which you invoked the Main Menu.  At this point
+	    you may right mouse click on the launcher and select the
+	    <guimenuitem>Properties</guimenuitem> menu item to change
+	    any options for that launcher.
+    </para>
+   </sect2>
+ </sect1>
+
+
 
 
 <!-- ########### Creating, Moving, and Removing Panels  ############## -->
@@ -567,7 +695,7 @@ of these will be described in detail in the following sections.
 	  <para>
 	  You can also change type of existing panel &mdash; for example,
 	  convert edge panel to a floating panel, see <xref
-	  linkend="??">
+	  linkend="panelproperties">.
 	  </para>
 	</tip>
       </sect2>
@@ -1138,7 +1266,7 @@ of these will be described in detail in the following sections.
       </para>
     <para>
       This manual was written by Dave
-      Mason(<email>dcm@redhat.com</email>), Dan Mueth
+      Mason (<email>dcm@redhat.com</email>), Dan Mueth
       (<email>d-mueth@uchicago.edu</email>), and Alexander Kirillov
       (<email>kirillov@math.sunysb.edu</email>). Please send all comments
       and suggestions regarding the manual to the GNOME Documentation
