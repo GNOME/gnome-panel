@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-05-27 14:58+0100\n"
-"PO-Revision-Date: 2003-05-20 12:02+0400\n"
-"Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
+"POT-Creation-Date: 2003-06-03 13:51+0300\n"
+"PO-Revision-Date: 2003-06-03 15:28+0300\n"
+"Last-Translator: \"Andrew W. Nosenko\" <awn@bcs.zp.ua>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -863,15 +863,13 @@ msgstr "Отображать ли названия рабочих мест в \"
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "Un_lock"
-msgstr "Часы"
+msgstr "_Разблокировать"
 
 #: gnome-panel/applet.c:97 gnome-panel/applet.c:483
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:88
-#, fuzzy
 msgid "_Lock"
-msgstr "Заблокировать"
+msgstr "_Заблокировать"
 
 #: gnome-panel/applet.c:410
 msgid "???"
@@ -1340,7 +1338,7 @@ msgstr "Заблокировать экран, чтобы можно было о
 
 #: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:232
 msgid "Force Quit"
-msgstr ""
+msgstr "Кнопка насильственного завершения"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:227
 msgid "Screenshot"
@@ -1755,14 +1753,14 @@ msgid "Error watching gconf key '%s': %s"
 msgstr "Ошибка наблюдения за gconf ключём '%s': %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Ошибка загрузки gconf каталога '%s': %s"
 
 #: gnome-panel/panel-bindings.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Error getting value for '%s': %s"
-msgstr "ошибка получения значения для '%s': %s"
+msgstr "Ошибка получения значения для '%s': %s"
 
 #: gnome-panel/panel.c:455
 #, c-format
@@ -1785,12 +1783,16 @@ msgstr "Удалить панель"
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
+"Щелкните на окне приложения, которые хотите насильственно завершить.  Для "
+"отмены нажмите <ESC>."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"Убить указанное приложение?\n"
+"(Все открытые файлы и/или документы будут потеряны.)"
 
 #: gnome-panel/panel-frame.c:261
 msgid "Edges"
@@ -1815,7 +1817,6 @@ msgstr ""
 "из этих панелей храняться в /apps/panel/general/$(profiles)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid "A list of panel applet IDs"
 msgstr "Список идентификаторов апплетов панели"
 
@@ -1971,15 +1972,16 @@ msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Если имеет значение \"Истина\", то пользователь НЕ может перемещать апплет "
+"не отдав перед этим команду \"Разблокировать\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid "Interpret the position relative to the bottom/right edge"
 msgstr "Интерпретировать позицию относительно нижнего/правого края панели."
 
 #: gnome-panel/panel-object.schemas.in.h:6
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "Позиция объекта на панели"
+msgstr "Блокировать положение объекта на панели"
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid "The Bonobo IID of the applet"
@@ -2202,7 +2204,7 @@ msgstr "Общие"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
 msgid "Image Background Details"
-msgstr ""
+msgstr "Подробности фонового изображения"
 
 #: gnome-panel/panel-properties-dialog.glade.h:17
 #: gnome-panel/panel-toplevel.c:1348
@@ -2216,7 +2218,7 @@ msgstr "Свойства панели"
 
 #: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Pick a color"
-msgstr ""
+msgstr "Укажите цвет"
 
 #: gnome-panel/panel-properties-dialog.glade.h:20
 #: gnome-panel/panel-toplevel.c:1351
@@ -2383,7 +2385,7 @@ msgstr "Отметить для запуска команды в окне тер
 
 #: gnome-panel/panel-run-dialog.glade.h:16
 msgid "Show list of known _applications"
-msgstr "Показывать писок известных прило_жений"
+msgstr "Показывать cписок известных прило_жений"
 
 #: gnome-panel/panel-run-dialog.glade.h:17
 msgid "The icon of the command to be run."
@@ -2425,7 +2427,7 @@ msgstr "Невозможно загрузить встроенный значр�
 
 #: gnome-panel/panel-stock-icons.c:148
 msgid "_Force quit"
-msgstr "Выйти _немедленно"
+msgstr "_Убить"
 
 #: gnome-panel/panel-toplevel.c:1359
 msgid "Floating"
@@ -2531,11 +2533,10 @@ msgid "Hide delay"
 msgstr "Задержка сокрытия"
 
 #: gnome-panel/panel-toplevel.c:3406
-#, fuzzy
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
-"Количество миллисекунд, которое выжидается прежде, чем принять решение об "
-"автоматическом сокрытии панели."
+"Количество миллисекунд, которое выжидается прежде, чем панель будет "
+"автоматически скрыта."
 
 #: gnome-panel/panel-toplevel.c:3417
 msgid "Un-hide delay"
@@ -2809,7 +2810,6 @@ msgid "The Y co-ordinate of the panel."
 msgstr "Y-координата панели."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-#, fuzzy
 msgid "The background color opacity."
 msgstr "Стапень непрозрачности фонового цвета."
 
@@ -2832,6 +2832,10 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
+"Высота панели (или ширина, если панель вертикальная).  Панель определяет "
+"минимально допустимый размер \"на ходу\" исходя из размера шрифта и "
+"помещенных на неё индикаторов.  Максимальный размер ограничен четвертью "
+"высоты экрана (или ширины, для вертикальных панелей)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2899,6 +2903,10 @@ msgid ""
 "the color preference will be used as the background color or \"image\", the "
 "image specified in the image preference will be used as the background."
 msgstr ""
+"Какой тип фона использовать для панели.  Допустимые значения: \"gtk\" (будет "
+"использован общесистемный фон GTK+ виджетов), \"color\" (фон будет залит "
+"цветом, указанным в соотв. настройке) и \"image\" (в качестве фона будет "
+"использовано указанное в соотв. настройке изображение)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid ""
