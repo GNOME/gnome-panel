@@ -294,6 +294,7 @@ show_desktop_applet_fill (PanelApplet *applet)
         sdd->applet = GTK_WIDGET (applet);
 
 	sdd->icon_theme = gnome_icon_theme_new ();
+	gnome_icon_theme_set_allow_svg (sdd->icon_theme, TRUE);
 	file = gnome_icon_theme_lookup_icon (sdd->icon_theme,
 					     "gnome-fs-desktop", 48,
 					     NULL, NULL);
