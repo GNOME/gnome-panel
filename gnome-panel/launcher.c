@@ -27,18 +27,43 @@ static char *default_app_pixmap=NULL;
 
 extern PanelWidget *current_panel;
 
-static void
-launch (GtkWidget *widget, void *data)
-{
-	GnomeDesktopEntry *item = data;
 
-	gnome_desktop_entry_launch (item);
+
+static int
+launch (GtkWidget *widget, GdkEvent *event, void *data)
+{
+	static int in_button = FALSE;
+	GnomeDesktopEntry *item = data;
+	GdkEventButton *bevent = (GdkEventButton *)event;
+
+	/*this is a release after a press inside a button*/
+	if(event->type == GDK_BUTTON_RELEASE && in_button) {
+		in_button = FALSE;
+		gtk_grab_remove(widget);
+		/*if it's inside it's a click*/
+		if(bevent->x >= 0 &&
+		   bevent->x < widget->allocation.width &&
+		   bevent->y >= 0 &&
+		   bevent->y < widget->allocation.height)
+			gnome_desktop_entry_launch (item);
+		return TRUE;
+	/*if it's inside and press, set in_button*/
+	} else if(event->type == GDK_BUTTON_PRESS &&
+		  bevent->button == 1 &&
+		  bevent->x >= 0 &&
+		  bevent->x < widget->allocation.width &&
+		  bevent->y >= 0 &&
+		  bevent->y < widget->allocation.height) {
+		gtk_grab_add(widget);
+		in_button = TRUE;
+		return TRUE;
+	}
+	return FALSE;
 }
 
 Launcher *
 create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 {
-	GtkWidget *pixmap;
 	char *icon;
 	Launcher *launcher;
 
@@ -74,9 +99,8 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 
 	launcher = g_new(Launcher,1);
 
-	launcher->button = gtk_button_new ();
+	launcher->button = NULL;
 	launcher->dedit = NULL;
-	pixmap = NULL;
 	icon = dentry->icon;
 	if (icon && *icon) {
 		/* Sigh, now we need to make them local to the gnome install */
@@ -84,27 +108,25 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 			dentry->icon = gnome_pixmap_file (icon);
 			g_free (icon);
 		}
-		pixmap = gnome_pixmap_new_from_file (dentry->icon);
+		launcher->button = gnome_pixmap_new_from_file (dentry->icon);
 	}
-	if (!pixmap) {
+	if (!launcher->button) {
 		if (default_app_pixmap)
-			pixmap = gnome_pixmap_new_from_file(default_app_pixmap);
+			launcher->button = gnome_pixmap_new_from_file(default_app_pixmap);
 		else
-			pixmap = gtk_label_new (_("App"));
+			launcher->button = gtk_button_new_with_label (_("App"));
 	}
-	gtk_container_add (GTK_CONTAINER(launcher->button), pixmap);
-	gtk_widget_show (pixmap);
-	/*gtk_widget_set_usize (launcher->button, pixmap->requisition.width,
-			      pixmap->requisition.height);*/
-	/*FIXME: we'll do this better alter, but this makes it look fine with
-	  normal icons*/
-	gtk_widget_set_usize (launcher->button, 48, 48);
-	
+	gtk_widget_set_events(launcher->button,
+			      gtk_widget_get_events(launcher->button) |
+			      GDK_LEAVE_NOTIFY_MASK |
+			      GDK_ENTER_NOTIFY_MASK |
+			      GDK_BUTTON_PRESS_MASK |
+			      GDK_BUTTON_RELEASE_MASK);
 	gtk_widget_show (launcher->button);
 
 	launcher->signal_click_tag =
 		gtk_signal_connect (GTK_OBJECT(launcher->button),
-				    "clicked",
+				    "event",
 				    (GtkSignalFunc) launch,
 				    dentry);
 
@@ -124,7 +146,6 @@ static void
 properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 {
 	Launcher *launcher = data;
-	GtkWidget *pixmap;
 	char *icon;
 	
 	if (page != -1)
@@ -134,42 +155,34 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	launcher->dentry =
 		gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(launcher->dedit));
 
-	gtk_tooltips_set_tip (panel_tooltips,launcher->button->parent,
+	gtk_tooltips_set_tip (panel_tooltips,launcher->button,
 			      launcher->dentry->comment,NULL);
 	
-	pixmap=GTK_BUTTON(launcher->button)->child;
-
-	gtk_container_remove(GTK_CONTAINER(launcher->button),pixmap);
-
-	icon = launcher->dentry->icon;
-	if (icon && *icon) {
-		/* Sigh, now we need to make them local to the gnome install */
-		if (*icon != '/') {
-			launcher->dentry->icon = gnome_pixmap_file (icon);
-			g_free (icon);
+	/*it also might be a button*/
+	if(GNOME_IS_PIXMAP(launcher->button)) {
+		icon = launcher->dentry->icon;
+		if (icon && *icon) {
+			/* Sigh, now we need to make them local to the gnome
+			   install */
+			if (*icon != '/') {
+				launcher->dentry->icon = gnome_pixmap_file (icon);
+				g_free (icon);
+			}
+			gnome_pixmap_load_file (GNOME_PIXMAP(launcher->button),
+						     launcher->dentry->icon);
+		} else {
+			/*we know default_app_pixmap is ok since otherwise we
+			  wouldn't get here*/
+			gnome_pixmap_load_file (GNOME_PIXMAP(launcher->button),
+						default_app_pixmap);
 		}
-		pixmap = gnome_pixmap_new_from_file (launcher->dentry->icon);
 	}
-	if (!pixmap) {
-		if (default_app_pixmap)
-			pixmap = gnome_pixmap_new_from_file (default_app_pixmap);
-		else
-			pixmap = gtk_label_new (_("App"));
-	}
-	gtk_container_add (GTK_CONTAINER(launcher->button), pixmap);
-	gtk_widget_show(pixmap);
-
-	/*FIXME: a bad hack to keep it all 48x48*/
-	gtk_widget_set_usize (launcher->button, 48, 48);
-
-	/*gtk_widget_set_usize (launcher->button, pixmap->requisition.width,
-			      pixmap->requisition.height);*/
 
 	gtk_signal_disconnect(GTK_OBJECT(launcher->button),
 			      launcher->signal_click_tag);
 
 	launcher->signal_click_tag =
-		gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
+		gtk_signal_connect (GTK_OBJECT(launcher->button), "event",
 				    GTK_SIGNAL_FUNC(launch),
 				    launcher->dentry);
 }
@@ -256,7 +269,7 @@ _load_launcher_applet(char *params, GnomeDesktopEntry *dentry,
 			     APPLET_LAUNCHER);
 
 		gtk_tooltips_set_tip (panel_tooltips,
-				      launcher->button->parent,
+				      launcher->button,
 				      launcher->dentry->comment,NULL);
 
 		applet_add_callback(applet_count-1,"properties",

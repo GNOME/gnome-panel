@@ -1,3 +1,22 @@
+Sat Aug 01 01:20:56 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: added support for no_window widgets, not fully
+	  but it's something, I don't currently use it however
+
+	* drawer.c,launcher.c,menu.c,panel.c,applet.c: got rid of a lot
+	  of redundant eventboxing and the internal applets (except for
+	  logout which shall follow) are now just gnome pixmaps, and the
+	  click event is simulated. this adds good basis for the backing tile
+	  support, plus it greatly increases performance especially when
+	  dealing with very large drawer structures (there is 1/3rd the
+	  windows to worry about)
+
+	* session.c: tweaked the session saving/loading to maximize performance
+	  ... however there now isn't backward compatibility so everyone needs
+	  to delete his panel.d dir
+
+	* panel-widget.c: minor fix for adding applets
+
 Fri Jul 31 18:58:12 1998  George Lebl  <jirka@5z.com>
 
 	* *.c: minor cleanups after -Wall compilation

@@ -954,7 +954,7 @@ static void
 menu_deactivate(GtkWidget *w, gpointer data)
 {
 	Menu *menu = data;
-	GtkWidget *panel = get_panel_parent(menu->button->parent);
+	GtkWidget *panel = get_panel_parent(menu->button);
 	/* allow the panel to hide again */
 	if(IS_SNAPPED_WIDGET(panel))
 		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
@@ -1388,7 +1388,7 @@ menu_button_press(GtkWidget *widget, GdkEvent *event, gpointer data)
 		GdkEventButton *bevent = (GdkEventButton *)event; 
 		if(bevent->button==1) {
 			GtkWidget *wpanel =
-				get_panel_parent(menu->button->parent);
+				get_panel_parent(menu->button);
 			int main_menu = (strcmp (menu->path, ".") == 0);
 
 			check_and_reread(menu->menu,menu,main_menu);
@@ -1402,7 +1402,7 @@ menu_button_press(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 			/*this HAS to be set everytime we popup the menu*/
 			current_panel =
-				gtk_object_get_data(GTK_OBJECT(menu->button->parent),
+				gtk_object_get_data(GTK_OBJECT(menu->button),
 						    PANEL_APPLET_PARENT_KEY);
 
 			gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
@@ -1456,7 +1456,6 @@ static Menu *
 create_panel_menu (char *menudir, int main_menu,
 		   PanelOrientType orient, MainMenuType main_menu_type)
 {
-	GtkWidget *pixmap;
 	Menu *menu;
 
 	char *pixmap_name = NULL;
@@ -1469,28 +1468,23 @@ create_panel_menu (char *menudir, int main_menu,
 	
 	menu->main_menu_type = main_menu_type;
 
-	/* main button */
-	menu->button = gtk_button_new ();
+
+
+	/*make the pixmap*/
+	menu->button = gnome_pixmap_new_from_file_at_size (pixmap_name,
+							   BIG_ICON_SIZE,
+							   BIG_ICON_SIZE);
+	gtk_widget_set_events(menu->button,
+			      gtk_widget_get_events(menu->button) |
+			      GDK_LEAVE_NOTIFY_MASK |
+			      GDK_ENTER_NOTIFY_MASK |
+			      GDK_BUTTON_PRESS_MASK |
+			      GDK_BUTTON_RELEASE_MASK);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "event",
 			    GTK_SIGNAL_FUNC (menu_button_press), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
 			    GTK_SIGNAL_FUNC (destroy_menu), menu);
-
-
-	/*make the pixmap*/
-	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
-						     BIG_ICON_SIZE,
-						     BIG_ICON_SIZE);
-	gtk_widget_show(pixmap);
-	/*FIXME:this is not right, but it's how we can get the buttons to
-	  be 48x48 (given the icons are 48x48)*/
-	/*gtk_widget_set_usize (menu->button, pixmap->requisition.width,
-			      pixmap->requisition.height);*/
-	gtk_widget_set_usize (menu->button, 48,48);
-
-	/* put pixmap in button */
-	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
-	gtk_widget_show (menu->button);
+	gtk_widget_show(menu->button);
 
 	{
 		GList *list = g_list_append(NULL,menudir);
@@ -1559,7 +1553,6 @@ set_show_small_icons(void)
 void
 set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 {
-	GtkWidget *pixmap;
 	char *pixmap_name = NULL;
 	char *this_menu;
 	char *menu_base;
@@ -1576,18 +1569,11 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 	g_free(menu_base);
 	g_free(this_menu);
 
-	pixmap=GTK_BUTTON(menu->button)->child;
-	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);
-	/*this is done by remove right?*/
-	/*gtk_widget_unref(pixmap);*/
-
 	/*make the pixmap*/
-	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
-						     BIG_ICON_SIZE,
-						     BIG_ICON_SIZE);
-
-	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
-	gtk_widget_show (pixmap);
+	gnome_pixmap_load_file_at_size (GNOME_PIXMAP(menu->button),
+					pixmap_name,
+					BIG_ICON_SIZE,
+					BIG_ICON_SIZE);
 
 	g_free(pixmap_name);
 }

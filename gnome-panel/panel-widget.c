@@ -63,8 +63,9 @@ typedef void (*AppletSignal) (GtkObject * object,
 			      GtkWidget * applet,
 			      gpointer data);
 
-typedef void (*VoidSignal) (GtkObject * object,
-			    gpointer data);
+typedef int (*Button1Signal) (GtkObject * object,
+			      GtkWidget * applet,
+			      gpointer data);
 
 /************************
  debugging
@@ -124,6 +125,8 @@ enum {
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
+	APPLET_CLICKED_SIGNAL, /*these two are only for NO WINDOW applets, other*/
+	APPLET_BUTTON1_SIGNAL, /*applets won't get these two*/
 	LAST_SIGNAL
 };
 
@@ -173,7 +176,24 @@ marshal_signal_back (GtkObject * object,
 		  func_data);
 }
 
+static void
+marshal_signal_button1 (GtkObject * object,
+			GtkSignalFunc func,
+			gpointer func_data,
+			GtkArg * args)
+{
+	Button1Signal rfunc;
+	int *retval;
 
+	rfunc = (Button1Signal) func;
+
+	retval = GTK_RETLOC_BOOL(args[1]);
+
+	*retval = (*rfunc) (object, GTK_VALUE_POINTER (args[0]),
+		  	    func_data);
+}
+
+ 
 static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
@@ -231,6 +251,26 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       3,
 			       GTK_TYPE_ENUM,
 			       GTK_TYPE_POINTER,
+			       GTK_TYPE_POINTER);
+	panel_widget_signals[APPLET_CLICKED_SIGNAL] =
+		gtk_signal_new("applet_clicked",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 applet_clicked),
+			       marshal_signal_applet,
+			       GTK_TYPE_NONE,
+			       1,
+			       GTK_TYPE_POINTER);
+	panel_widget_signals[APPLET_BUTTON1_SIGNAL] =
+		gtk_signal_new("applet_button1",
+			       GTK_RUN_LAST,
+			       object_class->type,
+			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
+			       			 applet_button1),
+			       marshal_signal_button1,
+			       GTK_TYPE_BOOL,
+			       1,
 			       GTK_TYPE_POINTER);
 	gtk_object_class_add_signals(object_class,panel_widget_signals,
 				     LAST_SIGNAL);
@@ -326,7 +366,6 @@ panel_widget_switch_applet_right(PanelWidget *panel, GList *list)
 	if(nlist)
 		nad = nlist->data;
 	if(!nlist || nad->pos > ad->pos+ad->cells) {
-	gtk_widget_queue_resize(GTK_WIDGET(panel));
 		ad->pos++;
 		gtk_widget_queue_resize(GTK_WIDGET(panel));
 		return;
@@ -896,6 +935,67 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
+static int panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data);
+
+static int is_in_widget(GdkEventButton *bevent, GtkWidget *widget)
+{
+	if(bevent->x >= widget->allocation.x &&
+	   bevent->x < (widget->allocation.x + widget->allocation.width) &&
+	   bevent->y >= widget->allocation.y &&
+	   bevent->y < (widget->allocation.y + widget->allocation.height))
+		return TRUE;
+	return FALSE;
+}
+
+static GtkWidget *pressed_applet = NULL;
+static int
+panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	PanelWidget *panel = PANEL_WIDGET(widget);
+	GList *list;
+	GdkEventButton *bevent = (GdkEventButton *) event;
+	
+	if(event->type != GDK_BUTTON_PRESS &&
+	   event->type != GDK_BUTTON_RELEASE)
+		return FALSE;
+
+	/*this would be a button release event and it would be right after
+	  a button press*/
+	if(pressed_applet) {
+		gtk_grab_remove(pressed_applet);
+		if(is_in_widget(bevent,pressed_applet)) {
+			gtk_signal_emit(GTK_OBJECT(panel),
+					panel_widget_signals[APPLET_CLICKED_SIGNAL],
+					pressed_applet);
+		}
+		pressed_applet = NULL;
+		return TRUE;
+	}
+
+	for(list = panel->no_window_applet_list; list!=NULL;
+	    list = g_list_next(list)) {
+		AppletData *ad = list->data;
+		if(is_in_widget(bevent,ad->applet)) {
+			if(bevent->button != 1) {
+				return panel_widget_applet_event(ad->applet,
+								 event,data);
+			} else if(event->type == GDK_BUTTON_PRESS) {
+				int return_val = FALSE;
+				gtk_signal_emit(GTK_OBJECT(panel),
+						panel_widget_signals[APPLET_BUTTON1_SIGNAL],
+						ad->applet,&return_val);
+				
+				if(!return_val) {
+					pressed_applet = ad->applet;
+					gtk_grab_add(pressed_applet);
+				}
+			}
+		}
+	}
+	return FALSE;
+}
+
+
 static void
 panel_widget_init (PanelWidget *panel)
 {
@@ -904,20 +1004,6 @@ panel_widget_init (PanelWidget *panel)
 			      gtk_widget_get_events(GTK_WIDGET(panel)) |
 			      GDK_BUTTON_RELEASE_MASK);
 
-	/*panel->frame = gtk_frame_new(NULL);
-	gtk_widget_show(panel->frame);
-	gtk_frame_set_shadow_type(GTK_FRAME(panel->frame),GTK_SHADOW_OUT);
-	gtk_container_add(GTK_CONTAINER(panel),panel->frame);
-
-	gtk_widget_push_visual (gdk_imlib_get_visual ());
-	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
-	panel->fixed = gtk_fixed_new();
-	gtk_widget_pop_colormap ();
-	gtk_widget_pop_visual ();
-	gtk_container_add(GTK_CONTAINER(panel->frame),panel->fixed);
-	gtk_widget_show(panel->fixed);*/
-	/*gtk_widget_realize (panel->fixed);*/
-	
 	panel->back_type =PANEL_BACK_NONE;
 	panel->fit_pixmap_bg = FALSE;
 	panel->back_pixmap = NULL;
@@ -930,6 +1016,7 @@ panel_widget_init (PanelWidget *panel)
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel->size = INT_MAX;
 	panel->applet_list = NULL;
+	panel->no_window_applet_list = NULL;
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
 
@@ -939,6 +1026,10 @@ panel_widget_init (PanelWidget *panel)
 	gtk_signal_connect(GTK_OBJECT(panel),
 			   "destroy",
 			   GTK_SIGNAL_FUNC(panel_widget_destroy),
+			   NULL);
+	gtk_signal_connect(GTK_OBJECT(panel),
+			   "event",
+			   GTK_SIGNAL_FUNC(panel_widget_event),
 			   NULL);
 
 	/* Ok, cool hack begins: drop image files on the panel */
@@ -997,6 +1088,7 @@ panel_widget_new (int packed,
 				 "realize",
 				 GTK_SIGNAL_FUNC(panel_widget_realize),
 				 panel);
+	
 	return GTK_WIDGET(panel);
 }
 
@@ -1045,12 +1137,14 @@ _panel_widget_applet_drag_start(PanelWidget *panel, GtkWidget *applet)
 	_panel_widget_applet_drag_start_no_grab(panel,applet);
 
 	gtk_grab_add(applet);
-	gdk_pointer_grab(applet->window,
-			 FALSE,
-			 APPLET_EVENT_MASK,
-			 NULL,
-			 fleur_cursor,
-			 GDK_CURRENT_TIME);
+	if(applet->window) {
+		gdk_pointer_grab(applet->window,
+				 FALSE,
+				 APPLET_EVENT_MASK,
+				 NULL,
+				 fleur_cursor,
+				 GDK_CURRENT_TIME);
+	}
 }
 
 void
@@ -1465,6 +1559,8 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 		return FALSE;
 
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	panel->no_window_applet_list =
+		g_list_remove(panel->no_window_applet_list,ad);
 	g_free(ad);
 
 	if(p)
@@ -1565,10 +1661,11 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	g_return_val_if_fail(pos>=0,-1);
 
 	if(pw_movement_type == PANEL_SWITCH_MOVE ||
-	   panel->packed)
-		pos++; /*this is a slight hack so that this applet is
-			 inserted AFTER an applet with this pos number*/
-	else
+	   panel->packed) {
+		if(get_applet_list_pos(panel,pos)) 
+			pos++; /*this is a slight hack so that this applet is
+				 inserted AFTER an applet with this pos number*/
+	} else
 		pos = panel_widget_find_empty_pos(panel,pos);
 
 	if(pos==-1) return -1;
@@ -1587,8 +1684,13 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	ad->cells = 1;
 	ad->pos = pos;
 
-	panel->applet_list = g_list_insert_sorted(panel->applet_list,ad,
-					  (GCompareFunc)applet_data_compare);
+	panel->applet_list =
+		g_list_insert_sorted(panel->applet_list,ad,
+				     (GCompareFunc)applet_data_compare);
+	if(GTK_WIDGET_NO_WINDOW(applet))
+		panel->no_window_applet_list =
+			g_list_prepend(panel->no_window_applet_list,ad);
+
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_DATA,ad);
 
 	bind_top_applet_events(applet,bind_lower_events);
@@ -1596,7 +1698,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos, int bind_
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
 			applet);
-	
+
 	/*NOTE: forbidden list is not updated on addition, use the
 	function above for the panel*/
 
@@ -1637,10 +1739,11 @@ panel_widget_reparent (PanelWidget *old_panel,
 	g_return_val_if_fail(ad!=NULL,-1);
 
 	if(pw_movement_type == PANEL_SWITCH_MOVE ||
-	   new_panel->packed)
-		pos++; /*this is a slight hack so that this applet is
-			 inserted AFTER an applet with this pos number*/
-	else
+	   new_panel->packed) {
+		if(get_applet_list_pos(new_panel,pos)) 
+			pos++; /*this is a slight hack so that this applet is
+				 inserted AFTER an applet with this pos number*/
+	} else
 		pos = panel_widget_find_empty_pos(new_panel,pos);
 
 	if(pos==-1) return -1;
@@ -1668,6 +1771,13 @@ panel_widget_reparent (PanelWidget *old_panel,
 	new_panel->applet_list =
 		g_list_insert_sorted(new_panel->applet_list,ad,
 				     (GCompareFunc)applet_data_compare);
+	if(GTK_WIDGET_NO_WINDOW(ad->applet)) {
+		old_panel->no_window_applet_list =
+			g_list_remove(old_panel->no_window_applet_list,ad);
+		new_panel->no_window_applet_list =
+			g_list_prepend(new_panel->no_window_applet_list,ad);
+	}
+
 
 	gtk_widget_hide(applet);
 
@@ -1711,9 +1821,12 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
 	ad->pos = -1;
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	panel->no_window_applet_list =
+		g_list_remove(panel->no_window_applet_list,ad);
 
-	pos++; /*this is a slight hack so that this applet is
-		 inserted AFTER an applet with this pos number*/
+	if(get_applet_list_pos(panel,pos)) 
+		pos++; /*this is a slight hack so that this applet is
+			 inserted AFTER an applet with this pos number*/
 	if(pos==-1) return -1;
 
 	ad->pos = pos;
@@ -1722,6 +1835,9 @@ panel_widget_move (PanelWidget *panel, GtkWidget *applet, int pos)
 	panel->applet_list =
 		g_list_insert_sorted(panel->applet_list,ad,
 				     (GCompareFunc)applet_data_compare);
+	if(GTK_WIDGET_NO_WINDOW(ad->applet))
+		panel->no_window_applet_list =
+			g_list_remove(panel->no_window_applet_list,ad);
 
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_MOVE_SIGNAL],
@@ -1749,6 +1865,8 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	i = ad->pos;
 
 	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	panel->no_window_applet_list =
+		g_list_remove(panel->no_window_applet_list,ad);
 	g_free(ad);
 
 	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);

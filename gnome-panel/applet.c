@@ -506,14 +506,22 @@ register_toy(GtkWidget *applet,
 	g_return_val_if_fail(applet != NULL, FALSE);
 	g_return_val_if_fail(panel != NULL, FALSE);
 
-	/* We wrap the applet in a GtkEventBox so that we can capture
-	   events over it */
-	eventbox = gtk_event_box_new();
-	gtk_widget_set_events(eventbox, (gtk_widget_get_events(eventbox) |
-					 APPLET_EVENT_MASK) &
-			      ~( GDK_POINTER_MOTION_MASK |
-				 GDK_POINTER_MOTION_HINT_MASK));
-	gtk_container_add(GTK_CONTAINER(eventbox), applet);
+	if(GTK_WIDGET_NO_WINDOW(applet) || GTK_IS_SOCKET(applet)) {
+		/* We wrap the applet in a GtkEventBox so that we can capture
+		   events over it */
+		eventbox = gtk_event_box_new();
+		gtk_widget_set_events(eventbox, (gtk_widget_get_events(eventbox) |
+						 APPLET_EVENT_MASK) &
+				      ~( GDK_POINTER_MOTION_MASK |
+					 GDK_POINTER_MOTION_HINT_MASK));
+		gtk_container_add(GTK_CONTAINER(eventbox), applet);
+	} else {
+		gtk_widget_set_events(applet, (gtk_widget_get_events(applet) |
+					       APPLET_EVENT_MASK) &
+				      ~( GDK_POINTER_MOTION_MASK |
+					 GDK_POINTER_MOTION_HINT_MASK));
+		eventbox = applet;
+	}
 
 	info.applet_id = applet_count;
 	info.type = type;
@@ -523,8 +531,8 @@ register_toy(GtkWidget *applet,
 	info.data = data;
 	info.user_menu = NULL;
 
-	gtk_object_set_user_data(GTK_OBJECT(eventbox),
-				 GINT_TO_POINTER(applet_count));
+	gtk_object_set_data(GTK_OBJECT(eventbox),"applet_id",
+			    GINT_TO_POINTER(applet_count));
 
 	if(type == APPLET_DRAWER) {
 		Drawer *drawer = data;

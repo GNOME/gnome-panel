@@ -82,6 +82,53 @@ apply_global_config(void)
 	send_tooltips_state(global_config.tooltips_enabled);
 }
 
+/*shouldn't this be in gnome-dentry?? :)*/
+static void
+gnome_desktop_entry_save_no_sync (GnomeDesktopEntry *dentry)
+{
+	char *prefix;
+	
+	g_assert (dentry != NULL);
+	g_assert (dentry->location != NULL);
+
+	prefix = g_copy_strings ("=", dentry->location, "=/Desktop Entry", NULL);
+
+	gnome_config_clean_section (prefix);
+
+	prefix = g_copy_strings (prefix, "/", NULL);
+	gnome_config_push_prefix (prefix);
+	g_free (prefix);
+
+	if (dentry->name)
+		gnome_config_set_translated_string ("Name", dentry->name);
+
+	if (dentry->comment)
+		gnome_config_set_translated_string ("Comment", dentry->comment);
+
+	if (dentry->exec)
+		gnome_config_set_vector ("Exec", dentry->exec_length,
+					 (const char * const *) dentry->exec);
+
+	if (dentry->tryexec)
+		gnome_config_set_string ("TryExec", dentry->tryexec);
+
+	if (dentry->icon)
+		gnome_config_set_string ("Icon", dentry->icon);
+
+	if (dentry->geometry)
+		gnome_config_set_string ("Geometry", dentry->geometry);
+	
+	if (dentry->docpath)
+		gnome_config_set_string ("DocPath", dentry->docpath);
+
+	gnome_config_set_bool ("Terminal", dentry->terminal);
+	gnome_config_set_bool ("MultipleArgs", dentry->multiple_args);
+	
+	if (dentry->type)
+		gnome_config_set_string ("Type", dentry->type);
+
+	gnome_config_pop_prefix ();
+}
 
 
 static void
@@ -95,14 +142,14 @@ save_applet_configuration(int num)
 	
 	g_return_if_fail(info!=NULL);
 
-	g_snprintf(path,256, "%sApplet_%d/", panel_cfg_path, num+1);
+	g_snprintf(path,256, "%sApplet_Config/Applet_%d/", panel_cfg_path, num+1);
 	gnome_config_push_prefix(path);
 
 	/*obviously no need for saving*/
 	if(info->type==APPLET_EXTERN_PENDING ||
 	   info->type==APPLET_EXTERN_RESERVED ||
 	   info->type==APPLET_EMPTY) {
-		gnome_config_set_string("config/id", EMPTY_ID);
+		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		return;
 	}
@@ -112,7 +159,7 @@ save_applet_configuration(int num)
 	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
 
 	if((panel_num = g_list_index(panels,panel)) == -1) {
-		gnome_config_set_string("config/id", EMPTY_ID);
+		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
 		return;
 	}
@@ -122,28 +169,36 @@ save_applet_configuration(int num)
 		{
 			char *globalcfg;
 			Extern *ext = info->data;
+/*this should no longer be needed on our side, we don't write anything
+  to the applet's file and it doesn't write anything to ours*/
+#if 0
 			/*sync before the applet does it's stuff*/
 			gnome_config_sync();
 			/*I think this should be done at sync and also that
 			  there should be some flocking ... but this works
 			  for now*/
 			gnome_config_drop_all();
+#endif
 
 			globalcfg = g_copy_strings(panel_cfg_path,
-						   "Applet_All/",NULL);
+						   "Applet_All_Extern/",NULL);
 
+			/*this is the file path we pass to the applet for it's
+			  own config, this is a separate file, so that we */
+			g_snprintf(path,256, "%sApplet_%d_Extern/",
+				   panel_cfg_path, num+1);
 			/*have the applet do it's own session saving*/
 			if(send_applet_session_save(ext->ior,info->applet_id,
 						    path, globalcfg)) {
 
-				gnome_config_set_string("config/id", EXTERN_ID);
-				gnome_config_set_string("config/execpath",
+				gnome_config_set_string("id", EXTERN_ID);
+				gnome_config_set_string("execpath",
 							ext->path);
-				gnome_config_set_string("config/parameters",
+				gnome_config_set_string("parameters",
 							ext->params);
 			} else {
 				g_free(globalcfg);
-				gnome_config_set_string("config/id", EMPTY_ID);
+				gnome_config_set_string("id", EMPTY_ID);
 				gnome_config_pop_prefix();
 				return;
 			}
@@ -155,66 +210,66 @@ save_applet_configuration(int num)
 			int i;
 			Drawer *drawer = info->data;
 
-			gnome_config_set_string("config/id", DRAWER_ID);
+			gnome_config_set_string("id", DRAWER_ID);
 
 			i = g_list_index(panels,
 					 DRAWER_WIDGET(drawer->drawer)->panel);
 			if(i>=0)
-				gnome_config_set_int("config/parameters",i);
+				gnome_config_set_int("parameters",i);
 			else
 				g_warning("Drawer not associated with applet!");
-			gnome_config_set_string("config/pixmap",
+			gnome_config_set_string("pixmap",
 						drawer->pixmap);
-			gnome_config_set_string("config/tooltip",
+			gnome_config_set_string("tooltip",
 						drawer->tooltip);
 			break;
 		}
 	case APPLET_SWALLOW:
 		{
 			Swallow *swallow = info->data;
-			gnome_config_set_string("config/id", SWALLOW_ID);
-			gnome_config_set_string("config/parameters",
+			gnome_config_set_string("id", SWALLOW_ID);
+			gnome_config_set_string("parameters",
 						swallow->title);
-			gnome_config_set_string("config/execpath",
+			gnome_config_set_string("execpath",
 						swallow->path);
-			gnome_config_set_int("config/width",swallow->width);
-			gnome_config_set_int("config/height",swallow->height);
+			gnome_config_set_int("width",swallow->width);
+			gnome_config_set_int("height",swallow->height);
 			break;
 		}
 	case APPLET_MENU:
 		{
 			Menu *menu = info->data;
-			gnome_config_set_string("config/id", MENU_ID);
-			gnome_config_set_string("config/parameters",
+			gnome_config_set_string("id", MENU_ID);
+			gnome_config_set_string("parameters",
 						menu->path);
-			gnome_config_set_int("config/main_menu_type",
+			gnome_config_set_int("main_menu_type",
 					     menu->main_menu_type);
 			break;
 		}
 	case APPLET_LAUNCHER:
 		{
 			Launcher *launcher = info->data;
-			char *s;
-			gnome_config_set_string("config/id", LAUNCHER_ID);
-			/*get rid of the trailing slash*/
-			path[strlen(path)-1]='\0';
-			s = g_concat_dir_and_file(gnome_user_dir,path);
-			gnome_config_set_string("config/parameters", s);
+			/*we set the .desktop to be in the panel config
+			  dir*/
+			g_snprintf(path,256, "%s/%sApplet_%d.desktop",
+				   gnome_user_dir,panel_cfg_path, num+1);
 			g_free(launcher->dentry->location);
-			launcher->dentry->location = s;
-			gnome_config_sync();
-			gnome_desktop_entry_save(launcher->dentry);
+			launcher->dentry->location = g_strdup(path);
+			gnome_desktop_entry_save_no_sync(launcher->dentry);
+
+			gnome_config_set_string("id", LAUNCHER_ID);
+			gnome_config_set_string("parameters", path);
 			break;
 		}
 	case APPLET_LOGOUT:
-		gnome_config_set_string("config/id", LOGOUT_ID);
+		gnome_config_set_string("id", LOGOUT_ID);
 		break;
 	default:
 		g_assert_not_reached();
 	}
-	gnome_config_set_int("config/position", ad->pos);
-	gnome_config_set_int("config/panel", panel_num);
-	gnome_config_set_bool("config/right_stick",
+	gnome_config_set_int("position", ad->pos);
+	gnome_config_set_int("panel", panel_num);
+	gnome_config_set_bool("right_stick",
 			      panel_widget_is_applet_stuck(panel,
 							   info->widget));
 	gnome_config_pop_prefix();
@@ -428,10 +483,10 @@ panel_session_die (GnomeClient *client,
 	for(i=0,info=(AppletInfo *)applets->data;
 	    i<applet_count;
 	    i++,info++) {
-		if(info->type == APPLET_EXTERN)
-			gtk_container_remove(GTK_CONTAINER(info->widget),
+		if(info->type == APPLET_EXTERN) {
+			gtk_container_remove(GTK_CONTAINER(info->applet_widget->parent),
 					     info->applet_widget);
-		else if(info->type == APPLET_SWALLOW) {
+		} else if(info->type == APPLET_SWALLOW) {
 			Swallow *swallow = info->data;
 			XKillClient(GDK_DISPLAY(),
 				    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
@@ -554,7 +609,7 @@ init_user_applets(void)
 		int   pos=0,panel_num;
 		PanelWidget *panel;
 
-		g_snprintf(buf,256,"%sApplet_%d/config/",
+		g_snprintf(buf,256, "%sApplet_Config/Applet_%d/",
 			   old_panel_cfg_path, num);
 		gnome_config_push_prefix(buf);
 		applet_name = gnome_config_get_string("id=Unknown");
@@ -592,7 +647,7 @@ init_user_applets(void)
 			char *params = gnome_config_get_string("parameters=");
 			/*this is the config path to be passed to the applet
 			  when it loads*/
-			g_snprintf(buf,256,"%sApplet_%d/",
+			g_snprintf(buf,256,"%sApplet_%d_Extern/",
 				   old_panel_cfg_path,num);
 			load_extern_applet(path,params,pos,panel,buf);
 			g_free(path);
