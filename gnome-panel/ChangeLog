@@ -1,3 +1,27 @@
+Wed Dec 23 22:53:40 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: completely change how redhat menus are read, now they
+	  are converted to normal gnome menus. also they are not fully
+	  checked for additions, only the directories are checked so it
+	  won't catch modified files, just added/removed files
+
+	* menu.c: converted all GList's to GSList's, plus I don't anymore
+	  store the desktop entry structures to save memory, plus I do a
+	  fake menu read on startup so that submenus aren't read until a
+	  user actually goes to them. Plus I fixed a race with gtk, my hack
+	  for replacing menus during the select signal didn't all work so
+	  that caused some menus to "hang", I solved it with a bigger hack
+	  that removes and re-selects the entry if the menu has already been
+	  shown.
+
+	* menu.c: changed logic for getting top directory icons
+
+	* launcher.[ch]: got rid of the load_launcher_applet_dentry func
+
+	* panel-util.[ch]: added a remove_directory call for recursively
+	  cleaning a directory, and made string_in_list func be a GSList
+	  function
+
 1998-12-23  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
 
 	* main.c (main): Fixed the error, that preventend the panel from

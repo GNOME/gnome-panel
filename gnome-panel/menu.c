@@ -29,8 +29,11 @@
 static char *gnome_folder = NULL;
 
 /*thingies on menus*/
-GList *small_icons = NULL;
-GList *dot_buttons = NULL;
+GSList *small_icons = NULL;
+GSList *dot_buttons = NULL;
+
+/*for redhat menus to trigger rereading on directory writes*/
+GSList *redhat_check = NULL;
 
 extern GList *applets;
 extern GList *applets_last;
@@ -60,7 +63,7 @@ struct _MenuFinfo {
 	char *dir_name;
 	char *pixmap_name;	
 	int fake_menu;
-	GList *finfo;
+	GSList *finfo;
 };
 
 /*???? this might be ugly, but I guess we can safely assume that we can only
@@ -103,34 +106,32 @@ about_gnome_cb(GtkObject *object, char *program_path)
 }
 
 static void
-activate_app_def (GtkWidget *widget, void *data)
+activate_app_def (GtkWidget *widget, char *item_loc)
 {
-	GnomeDesktopEntry *item = data;
-
+	GnomeDesktopEntry *item = gnome_desktop_entry_load(item_loc);
 	gnome_desktop_entry_launch (item);
+	gnome_desktop_entry_free(item);
 }
 
 static void
-kill_widget_from_list(GtkWidget *widget, GList ** list)
+kill_widget_from_list(GtkWidget *widget, GSList ** list)
 {
 	if(list && *list)
-		*list = g_list_remove(*list,widget);
+		*list = g_slist_remove(*list,widget);
 }
 
 static void
-add_app_to_panel (GtkWidget *widget, void *data)
+add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
-	GnomeDesktopEntry *ii = data;
-	
-	load_launcher_applet_dentry(gnome_desktop_entry_copy(ii),current_panel,0);
+	load_launcher_applet(item_loc, current_panel,0);
 }
 
 /*reads in the order file and makes a list*/
-static GList *
+static GSList *
 get_presorted_from(char *dir)
 {
 	char buf[PATH_MAX+1];
-	GList *list = NULL;
+	GSList *list = NULL;
 	char *fname = g_concat_dir_and_file(dir,".order");
 	FILE *fp = fopen(fname,"r");
 	
@@ -141,37 +142,37 @@ get_presorted_from(char *dir)
 	while(fgets(buf,PATH_MAX+1,fp)!=NULL) {
 		char *p = strchr(buf,'\n');
 		if(p) *p = '\0';
-		list = g_list_append(list,g_strdup(buf));
+		list = g_slist_prepend(list,g_strdup(buf));
 	}
 	fclose(fp);
 	g_free(fname);
-	return list;
+	return g_slist_reverse(list);
 }
 
-static GList *
+static GSList *
 get_files_from_menudir(char *menudir)
 {
 	struct dirent *dent;
 	DIR *dir;
-	GList *out = NULL;
+	GSList *out = NULL;
+	GSList *pres = NULL;
 	
 	dir = opendir (menudir);
 	if (dir == NULL)
 		return NULL;
 	
-	out = get_presorted_from(menudir);
+	pres = get_presorted_from(menudir);
 	
 	while((dent = readdir (dir)) != NULL) {
 		/* Skip over dot files */
 		if (dent->d_name [0] == '.')
 			continue;
-		if(!string_is_in_list(out,dent->d_name))
-			out = g_list_append(out,g_strdup(dent->d_name));
+		if(!string_is_in_list(pres,dent->d_name))
+			out = g_slist_prepend(out,g_strdup(dent->d_name));
 	}
 
 	closedir(dir);
-
-	return out;
+	return g_slist_concat(pres,g_slist_reverse(out));
 }
 
 static void
@@ -184,7 +185,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	char *dentry_name;
 	char *subdir_name;
 	char *pixmap_name;
-	GList *list;
+	GSList *list;
 
 	if(!g_file_exists(dirname))
 		return;
@@ -232,7 +233,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		}
 		g_free(filename);
 		g_free(list->data);
-		list = my_g_list_pop_first(list);
+		list = my_g_slist_pop_first(list);
 	}
 }
 
@@ -327,10 +328,11 @@ dentry_apply_callback(GtkWidget *widget, int page, gpointer data)
 }
 
 static void
-edit_dentry(GtkWidget *widget, GnomeDesktopEntry *dentry)
+edit_dentry(GtkWidget *widget, char *item_loc)
 {
 	GtkWidget *dialog;
 	GtkObject *o;
+	GnomeDesktopEntry *dentry = gnome_desktop_entry_load(item_loc);
 
 	dialog = gnome_property_box_new();
 	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
@@ -349,6 +351,7 @@ edit_dentry(GtkWidget *widget, GnomeDesktopEntry *dentry)
 			   GTK_SIGNAL_FUNC(dentry_apply_callback),
 			   o);
 	gtk_widget_show(dialog);
+	gnome_desktop_entry_free(dentry);
 }
 
 static int
@@ -408,83 +411,91 @@ edit_direntry(GtkWidget *widget, MenuFinfo *mf)
 	gtk_widget_show(dialog);
 }
 
-static void
-show_item_menu(GtkWidget *item, GdkEventButton *bevent, int type)
-{
-	GtkWidget *menu, *menuitem, *prop_item;
-	GnomeDesktopEntry *dentry;
+typedef struct _ShowItemMenu ShowItemMenu;
+struct _ShowItemMenu {
+	int type;
+	char *item_loc;
 	MenuFinfo *mf;
+	GtkWidget *menu;
+	GtkWidget *prop_item;
+};
+
+static void
+show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
+{
+	GtkWidget *menuitem;
 	
-	dentry = gtk_object_get_data(GTK_OBJECT(item),"dentry");
-	mf = gtk_object_get_data(GTK_OBJECT(item),"mf");
-	menu = gtk_object_get_data(GTK_OBJECT(item),"item_menu");
-	prop_item = gtk_object_get_data(GTK_OBJECT(item),"prop_item");
-	
-	if(!menu) {
-		menu = gtk_menu_new ();
+	if(!sim->menu) {
+		sim->menu = gtk_menu_new ();
 		
-		gtk_object_set_data(GTK_OBJECT(item),"item_menu",menu);
-		gtk_signal_connect(GTK_OBJECT(menu),"deactivate",
+		gtk_signal_connect(GTK_OBJECT(sim->menu),"deactivate",
 				   GTK_SIGNAL_FUNC(restore_grabs),
 				   item);
 
-
-		if(type == 1) {
+		if(sim->type == 1) {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
 					_("Add this launcher to panel"));
-			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_app_to_panel),
-					   dentry);
+					   sim->item_loc);
 		} else {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
 					_("Add this as drawer to panel"));
-			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 				   GTK_SIGNAL_FUNC(add_menudrawer_to_panel),
-				   mf);
+				   sim->mf);
 
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
 					_("Add this as menu to panel"));
-			gtk_menu_append (GTK_MENU (menu), menuitem);
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_menu_to_panel),
-					   mf);
+					   sim->mf);
 		}
 
-		prop_item = gtk_menu_item_new ();
+		sim->prop_item = gtk_menu_item_new ();
 		/*when activated we must pop down the first menu*/
-		gtk_signal_connect_object(GTK_OBJECT(prop_item), "activate",
+		gtk_signal_connect_object(GTK_OBJECT(sim->prop_item),
+					  "activate",
 					  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
 					  GTK_OBJECT(item->parent));
-		if(type == 1)
-			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
+		if(sim->type == 1)
+			gtk_signal_connect(GTK_OBJECT(sim->prop_item),
+					   "activate",
 					   GTK_SIGNAL_FUNC(edit_dentry),
-					   dentry);
+					   sim->item_loc);
 		else
-			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
+			gtk_signal_connect(GTK_OBJECT(sim->prop_item),
+					   "activate",
 					   GTK_SIGNAL_FUNC(edit_direntry),
-					   mf);
-		gtk_object_set_data(GTK_OBJECT(item),"prop_item",prop_item);
-		setup_menuitem (prop_item, 0, _("Properties ..."));
-		gtk_menu_append (GTK_MENU (menu), prop_item);
+					   sim->mf);
+		gtk_object_set_data(GTK_OBJECT(item),"prop_item",
+				    sim->prop_item);
+		setup_menuitem (sim->prop_item, 0, _("Properties ..."));
+		gtk_menu_append (GTK_MENU (sim->menu), sim->prop_item);
 	}
 	
-	gtk_widget_set_sensitive(prop_item,FALSE);
-	if(dentry && access(dentry->location,W_OK)==0) {
+	gtk_widget_set_sensitive(sim->prop_item,FALSE);
+	if(sim->item_loc &&
+	   /*A HACK: but it works, don't have it edittable if it's redhat
+	     menus as they are auto generated!*/
+	   strstr(sim->item_loc,".gnome/apps-redhat/") &&
+	   access(sim->item_loc,W_OK)==0) {
 		/*file exists and is writable, we're in bussines*/
-		gtk_widget_set_sensitive(prop_item,TRUE);
-	} else if(!dentry || errno==ENOENT) {
+		gtk_widget_set_sensitive(sim->prop_item,TRUE);
+	} else if(!sim->item_loc || errno==ENOENT) {
 		/*the dentry isn't there, check if we can write the
 		  directory*/
-		if(access(mf->menudir,W_OK)==0)
-			gtk_widget_set_sensitive(prop_item,TRUE);
+		if(access(sim->mf->menudir,W_OK)==0)
+			gtk_widget_set_sensitive(sim->prop_item,TRUE);
 	}
 	
-	gtk_menu_popup (GTK_MENU (menu),
+	gtk_menu_popup (GTK_MENU (sim->menu),
 			NULL,
 			NULL,
 			NULL,
@@ -494,43 +505,37 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, int type)
 }
 
 static int
-show_item_menu_b_cb(GtkWidget *w, GdkEvent *event, gpointer data)
+show_item_menu_b_cb(GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
 	GtkWidget *item;
-	int type = GPOINTER_TO_INT(data);
 	
 	if(event->type!=GDK_BUTTON_PRESS)
 		return FALSE;
 	
 	item = w->parent->parent;
-	show_item_menu(item,bevent,type);
+	show_item_menu(item,bevent,sim);
 	
 	return TRUE;
 }
 
 static int
-show_item_menu_mi_cb(GtkWidget *w, GdkEvent *event, gpointer data)
+show_item_menu_mi_cb(GtkWidget *w, GdkEvent *event, ShowItemMenu *sim)
 {
 	GdkEventButton *bevent = (GdkEventButton *)event;
-	int type = GPOINTER_TO_INT(data);
 	
 	if(event->type==GDK_BUTTON_PRESS && bevent->button==3)
-		show_item_menu(w,bevent,type);
+		show_item_menu(w,bevent,sim);
 	
 	return FALSE;
 }
 
-static int
-destroy_item_menu(GtkWidget *w, gpointer data)
+static void
+destroy_item_menu(GtkWidget *w, ShowItemMenu *sim)
 {
-	GtkWidget *menu;
-
-	menu = gtk_object_get_data(GTK_OBJECT(w),"menu");
-	
-	if(menu)
-		gtk_widget_unref(menu);
-	return FALSE;
+	if(sim->menu)
+		gtk_widget_destroy(sim->menu);
+	g_free(sim);
 }
 
 /* This is a _horrible_ hack to have this here. This needs to be added to the
@@ -595,9 +600,9 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 static void  
 drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
 		       GtkSelectionData   *selection_data, guint info,
-		       guint time, GnomeDesktopEntry *dentry)
+		       guint time, char *item_loc)
 {
-	gchar *uri_list = g_copy_strings ("file:", dentry->location, NULL);
+	gchar *uri_list = g_copy_strings ("file:", item_loc, NULL);
 	gtk_selection_data_set (selection_data,
 				selection_data->target, 8, uri_list,
 				strlen(uri_list));
@@ -638,7 +643,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	small_icons = g_list_prepend (small_icons, align);
+	small_icons = g_slist_prepend (small_icons, align);
 	gtk_signal_connect(GTK_OBJECT(align),"destroy",
 			   GTK_SIGNAL_FUNC(kill_widget_from_list),
 			   &small_icons);
@@ -648,20 +653,22 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
 	if(mf) {
 		GtkWidget *w = gtk_button_new_with_label(_("..."));
-		dot_buttons = g_list_prepend (dot_buttons, w);
+		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
+		sim->mf = mf;
+		sim->type = 0;
+		dot_buttons = g_slist_prepend (dot_buttons, w);
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(kill_widget_from_list),
 				   &dot_buttons);
-		gtk_object_set_data(GTK_OBJECT(menuitem),"mf",mf);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
-				   GINT_TO_POINTER(0));
+				   sim);
 		gtk_signal_connect(GTK_OBJECT(w),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-				   GINT_TO_POINTER(0));
+				   sim);
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
-				   NULL);
+				   sim);
 		if(global_config.show_dot_buttons)
 			gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
@@ -682,7 +689,7 @@ setup_title_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 
 static void
 setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
-		     GnomeDesktopEntry *dentry)
+		     char *item_loc)
 {
         static GtkTargetEntry menu_item_targets[] = {
 		{ "text/uri-list", 0, 0 }
@@ -708,7 +715,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	} else
 		gtk_widget_set_usize (align, 22, 16);
 
-	small_icons = g_list_prepend (small_icons, align);
+	small_icons = g_slist_prepend (small_icons, align);
 	gtk_signal_connect(GTK_OBJECT(align),"destroy",
 			   GTK_SIGNAL_FUNC(kill_widget_from_list),
 			   &small_icons);
@@ -717,22 +724,24 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 	gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
 
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
-	if(dentry) {
+	if(item_loc) {
 		GtkWidget *w = gtk_button_new_with_label(_("..."));
-		dot_buttons = g_list_prepend (dot_buttons, w);
+		ShowItemMenu *sim = g_new0(ShowItemMenu,1);
+		sim->item_loc = item_loc;
+		sim->type = 1;
+		dot_buttons = g_slist_prepend (dot_buttons, w);
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(kill_widget_from_list),
 				   &dot_buttons);
-		gtk_object_set_data(GTK_OBJECT(menuitem),"dentry",dentry);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
-				   GINT_TO_POINTER(1));
+				   sim);
 		gtk_signal_connect(GTK_OBJECT(w),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_b_cb),
-				   GINT_TO_POINTER(1));
+				   sim);
 		gtk_signal_connect(GTK_OBJECT(w),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_item_menu),
-				   NULL);
+				   sim);
 		if(global_config.show_dot_buttons)
 			gtk_widget_show(w);
 		gtk_box_pack_end (GTK_BOX (hbox), w, FALSE, FALSE, 0);
@@ -746,7 +755,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 				    GDK_ACTION_COPY);
 
 		gtk_signal_connect(GTK_OBJECT(menuitem), "drag_data_get",
-				   drag_data_get_menu_cb, dentry);
+				   drag_data_get_menu_cb, item_loc);
 		gtk_signal_connect(GTK_OBJECT(menuitem), "drag_end",
 				   drag_end_menu_cb, NULL);
 	}
@@ -828,15 +837,6 @@ setup_applet_drag (GtkWidget *menuitem, GnomeDesktopEntry *ii)
 }
 
 static void
-free_app_def (GtkWidget *widget, void *data)
-{
-	GnomeDesktopEntry *item = data;
-
-	if(item)
-		gnome_desktop_entry_free (item);
-}
-
-static void
 add_menu_separator (GtkWidget *menu)
 {
 	GtkWidget *menuitem;
@@ -862,11 +862,11 @@ add_logout_to_panel (GtkWidget *widget, void *data)
 }
 
 static int
-add_applet (GtkWidget *w, gpointer data)
+add_applet (GtkWidget *w, char *item_loc)
 {
-	GnomeDesktopEntry *ii = data;
-
+	GnomeDesktopEntry *ii = gnome_desktop_entry_load(item_loc);
 	char *goad_id = get_applet_goad_id_from_dentry(ii);
+	gnome_desktop_entry_free(ii);
 	
 	if(!goad_id) {
 		g_warning(_("Can't get goad_id from desktop entry!"));
@@ -880,15 +880,17 @@ add_applet (GtkWidget *w, gpointer data)
 }
 
 static int
-check_finfo_list(GList *finfo)
+check_finfo_list(GSList *finfo)
 {
 	struct stat s;
 	FileInfo *fi;
 
-	for(;finfo!=NULL;finfo=g_list_next(finfo)) {
+	for(;finfo!=NULL;finfo=g_slist_next(finfo)) {
 		fi = finfo->data;
-		if (stat (fi->name, &s) == -1 ||
-		    fi->mtime != s.st_mtime)
+		if (stat (fi->name, &s) == -1) {
+			if(fi->mtime != 0)
+				return FALSE;
+		} else if(fi->mtime != s.st_mtime)
 			return FALSE;
 	}
 	return TRUE;
@@ -930,12 +932,14 @@ make_finfo_s(char *name, struct stat *s)
 static void
 destroy_mf(MenuFinfo *mf)
 {
-	while(mf->finfo) {
-		FileInfo *fi = mf->finfo->data;
-		if(fi->name) g_free(fi->name);
+	GSList *li;
+	for(li=mf->finfo;li!=NULL;li=g_slist_next(li)) {
+		FileInfo *fi = li->data;
+		g_free(fi->name);
 		g_free(fi);
-		mf->finfo = my_g_list_pop_first(mf->finfo);
 	}
+	g_slist_free(mf->finfo);
+	mf->finfo = NULL;
 	if(mf->menudir) g_free(mf->menudir);
 	if(mf->dir_name) g_free(mf->dir_name);
 	if(mf->pixmap_name) g_free(mf->pixmap_name);
@@ -946,24 +950,25 @@ destroy_mf(MenuFinfo *mf)
 static int
 menu_destroy(GtkWidget *menu, gpointer data)
 {
-	GList *mfl = gtk_object_get_data(GTK_OBJECT(menu),"mf");
-	while(mfl) {
-		MenuFinfo *mf = mfl->data;
+	GSList *mfl = gtk_object_get_data(GTK_OBJECT(menu),"mf");
+	GSList *li;
+	for(li=mfl;li!=NULL;li=g_slist_next(li)) {
+		MenuFinfo *mf = li->data;
 		destroy_mf(mf);
-		mfl = my_g_list_pop_first(mfl);
 	}
+	g_slist_free(mfl);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
 	return FALSE;
 }
 
-static void add_menu_widget (Menu *menu, GList *menudirl,
+static void add_menu_widget (Menu *menu, GSList *menudirl,
 			     int main_menu, int fake_subs);
 static GtkWidget * create_menu_at (GtkWidget *menu,
 				   char *menudir, 
 				   int applets, char *dir_name,
 				   char *pixmap_name, int fake_submenus,
 				   int force);
-static GtkWidget * create_rh_menu(void);
+static void create_rh_menu(void);
 
 /*if menu is NULL that means just reread the menu don't do anything with the
   applet*/
@@ -972,8 +977,8 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 {
 	/*we are creating a whole new menuf or an applet if menu isn't NULL*/
 	if(menu) {
-		GList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
-		GList *list;
+		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+		GSList *list;
 		int need_reread = FALSE;
 		
 		/*we shouldn't warn, this is more for debugging anyway,
@@ -983,7 +988,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			g_warning("Weird menu doesn't have mf entry");*/
 
 		/*check if we need to reread this*/
-		for(list = mfl; list != NULL; list = g_list_next(list)) {
+		for(list = mfl; list != NULL; list = g_slist_next(list)) {
 			MenuFinfo *mf = list->data;
 			if(mf->fake_menu || !check_finfo_list(mf->finfo)) {
 				need_reread = TRUE;
@@ -995,22 +1000,22 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			if(main_menu)
 				add_menu_widget(menu,NULL,main_menu,TRUE);
 			else {
-				GList *dirlist = NULL;
+				GSList *dirlist = NULL;
 				for(list = mfl; list != NULL;
-				    list = g_list_next(list)) {
+				    list = g_slist_next(list)) {
 					MenuFinfo *mf = list->data;
-					dirlist = g_list_append(dirlist,
-								mf->menudir);
+					dirlist = g_slist_append(dirlist,
+								 mf->menudir);
 				}
 				add_menu_widget(menu,dirlist, main_menu,TRUE);
-				g_list_free(dirlist);
+				g_slist_free(dirlist);
 			}
 
 			gtk_widget_unref(menuw);
 		}
 	} else {
-		GList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
-		GList *list;
+		GSList *mfl = gtk_object_get_data(GTK_OBJECT(menuw), "mf");
+		GSList *list;
 		int need_reread = FALSE;
 		int all_fake = TRUE;
 		
@@ -1018,7 +1023,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			g_warning("Weird menu doesn't have mf entry");*/
 
 		/*check if we need to reread this*/
-		for(list = mfl; list != NULL; list = g_list_next(list)) {
+		for(list = mfl; list != NULL; list = g_slist_next(list)) {
 			MenuFinfo *mf = list->data;
 			if(!mf->fake_menu)
 				all_fake = FALSE;
@@ -1030,7 +1035,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 		}
 		if(need_reread) {
 			GtkWidget *old_menu = NULL;
-			GList *free_list = NULL;
+			GSList *free_list = NULL;
 			/*we are all fake so we want to use the previous
 			  menu widget*/
 			if(all_fake) {
@@ -1044,7 +1049,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 				free_list = mfl;
 			}
 			for(list = mfl; list != NULL;
-			    list = g_list_next(list)) {
+			    list = g_slist_next(list)) {
 				MenuFinfo *mf = list->data;
 				menuw = create_menu_at(old_menu,
 						       mf->menudir,
@@ -1056,11 +1061,12 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 				old_menu = menuw;
 			}
 			/*free up stuff that won't be freed somewhere else*/
-			while(free_list) {
-				MenuFinfo *mf = free_list->data;
+			for(list = free_list; list != NULL;
+			    list = g_slist_next(list)) {
+				MenuFinfo *mf = list->data;
 				destroy_mf(mf);
-				free_list = my_g_list_pop_first(free_list);
 			}
+			g_slist_free(free_list);
 		}
 	}
 	return menuw;
@@ -1072,9 +1078,36 @@ submenu_to_display(GtkMenuItem *menuitem, gpointer data)
 	GtkWidget *menu = check_and_reread(menuitem->submenu,
 					   NULL,FALSE);
 	g_return_if_fail(menu!=NULL);
-	if(menu!=menuitem->submenu)
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+	/*THIS IS A HACK, but a cool one at that*/
+	if(menu!=menuitem->submenu) {
+		/*it's not yet displayed we're ok here*/
+		if(!GTK_WIDGET_VISIBLE(menuitem->submenu))
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+		/*now is when the fun begins, we kill the menu and do select
+		  again ... nowdays, we'll be ok though*/
+		else {
+			gtk_widget_destroy(menuitem->submenu);
+			gtk_menu_item_set_submenu (GTK_MENU_ITEM(menuitem), menu);
+			gtk_item_select(GTK_ITEM(menuitem));
+		}
+	}
 }
+
+static void
+rh_submenu_to_display(GtkMenuItem *menuitem, gpointer data)
+{
+	char *rhdir;
+	if(!g_file_exists("/etc/X11/wmconfig"))
+		return;
+	rhdir = gnome_util_home_file("apps-redhat/");
+	if(!g_file_exists(rhdir) ||
+	   !redhat_check ||
+	   !check_finfo_list(redhat_check)) {
+		create_rh_menu();
+	}
+	g_free(rhdir);
+}
+
 
 
 static GtkWidget *
@@ -1085,7 +1118,7 @@ create_fake_menu_at (char *menudir,
 {	
 	MenuFinfo *mf;
 	GtkWidget *menu;
-	GList *list;
+	GSList *list;
 	
 	menu = gtk_menu_new ();
 	
@@ -1097,7 +1130,7 @@ create_fake_menu_at (char *menudir,
 	mf->fake_menu = TRUE;
 	mf->finfo = NULL;
 	
-	list = g_list_prepend(NULL,mf);
+	list = g_slist_prepend(NULL,mf);
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",list);
 	
 	gtk_signal_connect(GTK_OBJECT(menu),"destroy",
@@ -1121,47 +1154,37 @@ create_menu_at (GtkWidget *menu,
 	char *filename;
 	int items = 0;
 	FileInfo *fi;
-	GList *finfo = NULL;
-	GList *flist = NULL;
-	GList *mfl = NULL;
+	GSList *finfo = NULL;
+	GSList *flist = NULL;
+	GSList *mfl = NULL;
 	char *thisfile;
 	int add_separator = FALSE;
 	int first_item = 0;
 	GtkWidget *menuitem;
+	char *dentry_name;
 	
 	MenuFinfo *mf = NULL;
-	
-	/*this is slightly hackish I guess*/
-	if(strcmp(menudir,"=REDHAT=")==0) {
-		g_return_val_if_fail(menu==NULL,menu);
-		return create_rh_menu();
-	}
 	
 	if(!force && !g_file_exists(menudir))
 		return menu;
 	
-	/*try getting the dir_name and pixmap if we haven't gotten them*/
-	if(!dir_name || !pixmap_name) {
-		char *dentry_name;
+	dentry_name = g_concat_dir_and_file (menudir,
+					     ".directory");
+	dir_info = gnome_desktop_entry_load (dentry_name);
 
-		dentry_name = g_concat_dir_and_file (menudir,
-						     ".directory");
-		dir_info = gnome_desktop_entry_load (dentry_name);
+	/*add the .directory file to the checked files list,
+	  but only if we can stat it (if we can't it probably
+	  doesn't exist)*/
+	fi = make_finfo(dentry_name,FALSE);
+	if(fi)
+		finfo = g_slist_prepend(finfo,fi);
+	g_free (dentry_name);
 
-		/*add the .directory file to the checked files list,
-		  but only if we can stat it (if we can't it probably
-		  doesn't exist)*/
-		fi = make_finfo(dentry_name,FALSE);
-		if(fi)
-			finfo = g_list_prepend(finfo,fi);
-		g_free (dentry_name);
-
-		if(!dir_name)
-			dir_name = dir_info?dir_info->name:"Menu";
-		if(!pixmap_name)
-			pixmap_name = dir_info?dir_info->icon:NULL;
-	}
-
+	/*get this info ONLY if we haven't gotten it already*/
+	if(!dir_name)
+		dir_name = dir_info?dir_info->name:_("Menu");
+	if(!pixmap_name)
+		pixmap_name = dir_info?dir_info->icon:gnome_folder;
 	
 	/*add dir to the checked files list*/
 	fi = make_finfo(menudir,force);
@@ -1169,7 +1192,7 @@ create_menu_at (GtkWidget *menu,
 		g_warning("Something is wrong, directory %s can't be stated",
 			  menudir);
 	else
-		finfo = g_list_prepend(finfo,fi);
+		finfo = g_slist_prepend(finfo,fi);
 
 	/*add the order file to the checked files list,
 	  but only if we can stat it (if we can't it probably doesn't
@@ -1177,7 +1200,7 @@ create_menu_at (GtkWidget *menu,
 	filename = g_concat_dir_and_file(menudir,".order");
 	fi = make_finfo(filename,FALSE);
 	if(fi)
-		finfo = g_list_prepend(finfo,fi);
+		finfo = g_slist_prepend(finfo,fi);
 	g_free(filename);
 
 	if(!menu) {
@@ -1197,10 +1220,11 @@ create_menu_at (GtkWidget *menu,
 		GtkWidget     *sub, *pixmap;
 		char          *pixmap_name;
 		char          *menuitem_name;
+		char          *item_loc = NULL;;
 		
 		thisfile = flist->data;
 		filename = g_concat_dir_and_file(menudir,thisfile);
-		flist = my_g_list_pop_first(flist);
+		flist = my_g_slist_pop_first(flist);
 		
 		if (stat (filename, &s) == -1) {
 			g_free (filename);
@@ -1211,8 +1235,6 @@ create_menu_at (GtkWidget *menu,
 		sub = NULL;
 		item_info = NULL;
 		if (S_ISDIR (s.st_mode)) {
-			char *dentry_name;
-			
 			dentry_name = g_concat_dir_and_file (filename,
 							     ".directory");
 			item_info = gnome_desktop_entry_load (dentry_name);
@@ -1222,7 +1244,7 @@ create_menu_at (GtkWidget *menu,
 			  doesn't exist)*/
 			fi = make_finfo(dentry_name,FALSE);
 			if(fi)
-				finfo = g_list_prepend(finfo,fi);
+				finfo = g_slist_prepend(finfo,fi);
 			g_free (dentry_name);
 
 			menuitem_name = item_info?item_info->name:thisfile;
@@ -1271,7 +1293,7 @@ create_menu_at (GtkWidget *menu,
 					  "file %s can't be stated",
 					  filename);
 			else
-				finfo = g_list_prepend(finfo,fi);
+				finfo = g_slist_prepend(finfo,fi);
 		}
 		
 		items++;
@@ -1292,13 +1314,20 @@ create_menu_at (GtkWidget *menu,
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
-
-		/*setup the menuitem, pass item_info if this is not
+		
+		/*setup the menuitem, pass item_loc if this is not
 		  a submenu or an applet, so that the item can be added*/
+		if(!sub) {
+			item_loc = g_strdup(item_info->location);
+			gtk_signal_connect_object(GTK_OBJECT(menuitem),
+						  "destroy",
+						  GTK_SIGNAL_FUNC(g_free),
+						  (GtkObject *)item_loc);
+			if (applets)
+				setup_applet_drag (menuitem, item_info);
+		}
  		setup_full_menuitem (menuitem, pixmap, menuitem_name,
-				     (sub||applets)?NULL:item_info);
-		if (applets && !sub)
-			setup_applet_drag (menuitem, item_info);
+				     applets?NULL:item_loc);
 
 		if(add_separator) {
 			add_menu_separator(menu);
@@ -1307,16 +1336,15 @@ create_menu_at (GtkWidget *menu,
 		}
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 
-		gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
-				    (GtkSignalFunc) free_app_def, item_info);
-
 		if(item_info && item_info->exec) {
 			gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 					    applets?
 					     GTK_SIGNAL_FUNC(add_applet):
 					     GTK_SIGNAL_FUNC(activate_app_def),
-					    item_info);
+					    item_loc);
 		}
+		if(item_info)
+			gnome_desktop_entry_free(item_info);
 
 		g_free(filename);
 		g_free(thisfile);
@@ -1363,7 +1391,7 @@ create_menu_at (GtkWidget *menu,
 	if(dir_info)
 		gnome_desktop_entry_free(dir_info);
 
-	mfl = g_list_append(mfl,mf);
+	mfl = g_slist_append(mfl,mf);
 
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",mfl);
 	
@@ -1587,7 +1615,7 @@ create_system_menu(GtkWidget *menu, int fake_submenus)
 	g_free (menu_base);
 	if (g_file_exists (menudir)) {
 		menu = create_menu_at (menu,menudir,FALSE,_("System menus"),
-				       gnome_folder, fake_submenus, FALSE);
+				       NULL, fake_submenus, FALSE);
 		g_return_val_if_fail(menu,NULL);
 		g_free (menudir);
 	} else
@@ -1597,17 +1625,17 @@ create_system_menu(GtkWidget *menu, int fake_submenus)
 }
 
 static GtkWidget *
-create_user_menu(GtkWidget *menu, int fake_submenus, int force)
+create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus, int force)
 {
-	char *menu_base = gnome_util_home_file ("apps");
+	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
 	
 	if (!g_file_exists (menudir))
 		mkdir (menu_base, 0755);
 	g_free (menu_base);
 	menu = create_menu_at (menu,menudir, FALSE,
-			       _("User menus"),
-			       gnome_folder,fake_submenus,
+			       title,
+			       NULL,fake_submenus,
 			       force);
 	g_free (menudir); 
 	return menu;
@@ -1634,7 +1662,7 @@ create_panel_root_menu(GtkWidget *panel)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("User menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	menu = create_user_menu(NULL,TRUE,TRUE);
+	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
@@ -1644,11 +1672,14 @@ create_panel_root_menu(GtkWidget *panel)
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("RedHat menus"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-		menu = create_rh_menu();
+		menu = create_user_menu(_("RedHat menus"),"apps-redhat",NULL,TRUE,TRUE);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		/*gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
+				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
+				   NULL);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);*/
+				   NULL);
 	}
 
 	menuitem = gtk_menu_item_new();
@@ -1971,9 +2002,8 @@ struct _RHMenuItem {
 			char *icon;
 			char *mini_icon;
 			char *exec;
-			FileInfo *finfo;
 		} item;
-		GList *items;
+		GSList *items;
 	} u;
 };
 
@@ -1987,13 +2017,9 @@ free_rh_item(RHMenuItem *rh)
 		g_free(rh->u.item.icon);
 		g_free(rh->u.item.mini_icon);
 		g_free(rh->u.item.exec);
-		if(rh->u.item.finfo) {
-			g_free(rh->u.item.finfo->name);
-			g_free(rh->u.item.finfo);
-		}
 	} else {
-		g_list_foreach(rh->u.items,(GFunc)free_rh_item,NULL);
-		g_list_free(rh->u.items);
+		g_slist_foreach(rh->u.items,(GFunc)free_rh_item,NULL);
+		g_slist_free(rh->u.items);
 	}
 	g_free(rh);
 }
@@ -2032,14 +2058,14 @@ sort_rh(RHMenuItem *a, RHMenuItem *b)
 	return strcmp(a->name,b->name);
 }
 
-static GList *
-insert_rh_into_tree(GList *list,RHMenuItem *rh,GList *group)
+static GSList *
+insert_rh_into_tree(GSList *list,RHMenuItem *rh,GSList *group)
 {
-	GList *li;
+	GSList *li;
 	RHMenuItem *ri;
 	if(!group) 
-		return g_list_insert_sorted(list,rh,(GCompareFunc)sort_rh);
-	for(li=list;li!=NULL;li=g_list_next(li)) {
+		return g_slist_insert_sorted(list,rh,(GCompareFunc)sort_rh);
+	for(li=list;li!=NULL;li=g_slist_next(li)) {
 		ri = li->data;
 		if(ri->type == RH_MENU_GROUP &&
 		   strcmp(ri->name,group->data)==0) {
@@ -2056,16 +2082,16 @@ insert_rh_into_tree(GList *list,RHMenuItem *rh,GList *group)
 	ri->name = g_strdup(group->data);
 	ri->u.items = insert_rh_into_tree(ri->u.items, rh,
 					  group->next);
-	return g_list_insert_sorted(list,ri,(GCompareFunc)sort_rh);
+	return g_slist_insert_sorted(list,ri,(GCompareFunc)sort_rh);
 }
 
-static GList *
-add_redhat_entry(GList *list, char *file)
+static GSList *
+add_redhat_entry(GSList *list, char *file)
 {
 	FILE *fp;
 	char *p,*w;
 	char buf[256];
-	GList *group = NULL;
+	GSList *group = NULL;
 	
 	RHMenuItem *rh = NULL;
 	
@@ -2073,7 +2099,6 @@ add_redhat_entry(GList *list, char *file)
 	if(!fp) return list;
 	
 	rh = g_new0(RHMenuItem,1);
-	rh->u.item.finfo = make_finfo(file,FALSE);
 	while(fgets(buf,256,fp)) {
 		char **param = NULL;
 		p = strchr(buf,'\n');
@@ -2125,34 +2150,31 @@ add_redhat_entry(GList *list, char *file)
 			w = read_word(&p);
 
 			if(group) {
-				g_list_foreach(group,(GFunc)g_free,NULL);
-				g_list_free(group);
+				g_slist_foreach(group,(GFunc)g_free,NULL);
+				g_slist_free(group);
 				group = NULL;
 			}
 			sc = strtok(w,"/");
 			while(sc) {
-				group = g_list_append(group, g_strdup(sc));
+				group = g_slist_append(group, g_strdup(sc));
 				sc = strtok(NULL,"/");
 			}
 		}
 	}
 	if(!rh->name || !rh->u.item.exec) {
+		if(group) {
+			g_slist_foreach(group,(GFunc)g_free,NULL);
+			g_slist_free(group);
+		}
 		free_rh_item(rh);
 		return list;
 	}
 	list = insert_rh_into_tree(list,rh,group);
-	g_list_foreach(group,(GFunc)g_free,NULL);
-	g_list_free(group);
+	g_slist_foreach(group,(GFunc)g_free,NULL);
+	g_slist_free(group);
 	return list;
 }
 
-static void
-exec_rh_item(GtkWidget *w, RHMenuItem *ri)
-{
-	char *s = g_copy_strings("( ",ri->u.item.exec," ) &",NULL);
-	system(s);
-	g_free(s);
-}
 
 /* This is a simple-minded string splitter.  It splits on whitespace.
    Something better would be to define a quoting syntax so that the
@@ -2200,103 +2222,83 @@ gnome_dentry_edit_split (char *text, int *argcp, char ***argvp)
 }
 
 
-static GtkWidget *
-make_submenu(MenuFinfo *mf, GList *rhlist)
+static void
+make_rh_submenu(char *dir, GSList *rhlist)
 {
-	GList *li;
-	GtkWidget *menu = gtk_menu_new();
-	for(li = rhlist;li!=NULL;li = g_list_next(li)) {
+	GSList *li;
+	FILE *fp;
+	char *order_file = g_concat_dir_and_file(dir,".order");
+	fp = fopen(order_file,"w");
+	for(li = rhlist;li!=NULL;li = g_slist_next(li)) {
 		RHMenuItem *ri = li->data;
-		GtkWidget *menuitem;
-		GtkWidget *pixmap = NULL;
-		char *pixmap_name = ri->u.item.mini_icon;
-		if(!pixmap_name) pixmap_name = ri->u.item.icon;
-		if (pixmap_name) {
-			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
-								    SMALL_ICON_SIZE,
-								    SMALL_ICON_SIZE);
-			if (pixmap)
-				gtk_widget_show (pixmap);
-		}
+		GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
 
-		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, pixmap, ri->name);
-		gtk_menu_append (GTK_MENU (menu), menuitem);
+		dentry->name = g_strdup(ri->name);
 		if(ri->type == RH_MENU_GROUP) {
-			GtkWidget *w;
-			w = make_submenu(mf,ri->u.items);
-			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem),w);
-		} else {
-			/*GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+			char *s = g_strdup(ri->name);
+			char *p;
+			dentry->type = g_strdup("Directory");
+			while((p=strchr(s,' '))) *p='_';
+			p = g_concat_dir_and_file(dir,s);
+			if(fp) fprintf(fp,"%s\n",p);
+			mkdir(p,0755);
+			dentry->location = g_concat_dir_and_file(p,".directory");
+			g_free(s);
+			
+			make_rh_submenu(p,ri->u.items);
 
-			dentry->name = g_strdup(ri->name);
+			g_free(p);
+		} else {
+			char *s = g_strconcat(ri->name,".desktop",NULL);
+			char *p;
+			while((p=strchr(s,' '))) *p='_';
+
+			dentry->type = g_strdup("Application");
 			dentry->comment = g_strdup(ri->u.item.description);
-			dentry->icon = g_strdup(ri->u.item.icon);
+			dentry->icon = g_strdup(ri->u.item.icon?
+						ri->u.item.icon:
+						ri->u.item.mini_icon);
 			gnome_dentry_edit_split(ri->u.item.exec,
 						&dentry->exec_length,
 						&dentry->exec);
-
-			setup_full_menuitem (menuitem, pixmap, ri->name,
-					     dentry);
-			gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
-					    (GtkSignalFunc) free_app_def,
-					    dentry);
-			gtk_menu_append (GTK_MENU (menu), menuitem);*/
-			gtk_signal_connect_full(GTK_OBJECT(menuitem),
-						"activate",
-						GTK_SIGNAL_FUNC (exec_rh_item),
-						NULL,ri,
-						(GtkDestroyNotify)free_rh_item,
-						FALSE, FALSE);
-			/*so that we don't clear this later*/
-			li->data = NULL;
-			mf->finfo = g_list_prepend(mf->finfo,ri->u.item.finfo);
-			ri->u.item.finfo = NULL;
+			dentry->location = g_concat_dir_and_file(dir,s);
+			if(fp) fprintf(fp,"%s\n",dentry->location);
+			g_free(s);
 		}
+		gnome_desktop_entry_save(dentry);
+		gnome_desktop_entry_free(dentry);
 	}
-	return menu;
-}
-
-static GtkWidget *
-make_rh_menu_from_list(GList *list)
-{
-	MenuFinfo *mf;
-	GtkWidget *menu;
-	GList *li;
-	char *p;
-	
-	mf = g_new(MenuFinfo,1);
-	mf->menudir = g_strdup("=REDHAT=");
-	mf->applets = FALSE;
-	mf->dir_name = g_strdup(_("RedHat menu"));
-	if(g_file_exists("/usr/share/icons/mini/mini-redhat.xpm"))
-		mf->pixmap_name =
-			g_strdup("/usr/share/icons/mini/mini-redhat.xpm");
-	else
-		mf->pixmap_name = NULL;
-	mf->fake_menu = FALSE;
-	mf->finfo = g_list_prepend(NULL,make_finfo("/etc/X11/wmconfig/",TRUE));
-	p = gnome_util_prepend_user_home(".wmconfig/");
-	mf->finfo = g_list_prepend(mf->finfo, make_finfo(p,TRUE));
-	g_free(p);
-	
-	menu = make_submenu(mf,list);
-	li = g_list_append(NULL,mf);
-	gtk_object_set_data(GTK_OBJECT(menu),"mf",li);
-	return menu;
+	if(fp) fclose(fp);
+	g_free(order_file);
 }
 
 
-static GtkWidget *
+static void
 create_rh_menu(void)
 {
 	char *userrh = gnome_util_prepend_user_home(".wmconfig/");
-	GList *rhlist = NULL;
+	char *rhdir = gnome_util_home_file("apps-redhat/");
+	GSList *rhlist = NULL;
+	GSList *li = NULL;
 	GtkWidget *w;
 	int i;
 	char *dirs[3] = {"/etc/X11/wmconfig/",userrh,NULL};
-	g_return_val_if_fail(userrh!=NULL,NULL);
+	g_return_if_fail(userrh!=NULL);
+	g_return_if_fail(rhdir!=NULL);
 	
+	for(li = redhat_check; li!=NULL; li = g_slist_next(li)) {
+		FileInfo *finfo = li->data;
+		g_free(finfo->name);
+		g_free(finfo);
+	}
+	g_slist_free(redhat_check);
+	redhat_check = NULL;
+	
+	remove_directory(rhdir,FALSE);
+
+	redhat_check = g_slist_prepend(redhat_check,make_finfo("/etc/X11/wmconfig/",TRUE));
+	redhat_check = g_slist_prepend(redhat_check,make_finfo(userrh,TRUE));
+
 	/*read redhat wmconfig files*/
 	for(i=0;dirs[i];i++) {
 		DIR *dir;
@@ -2316,12 +2318,23 @@ create_rh_menu(void)
 		closedir(dir);
 	}
 	g_free(userrh);
-	w = make_rh_menu_from_list(rhlist);
+	mkdir(rhdir,0755);
 	if(rhlist) {
-		g_list_foreach(rhlist,(GFunc)free_rh_item,NULL);
-		g_list_free(rhlist);
+		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
+			GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+			dentry->name = g_strdup(_("RedHat menus"));
+			dentry->type = g_strdup("Directory");
+			dentry->icon = g_strdup("/usr/share/icons/mini/mini-redhat.xpm");
+			dentry->location = g_concat_dir_and_file(rhdir,".directory");
+			gnome_desktop_entry_save(dentry);
+			gnome_desktop_entry_free(dentry);
+		}
+		make_rh_submenu(rhdir,rhlist);
+
+		g_slist_foreach(rhlist,(GFunc)free_rh_item,NULL);
+		g_slist_free(rhlist);
 	}
-	return w;
+
 }
 
 static GtkWidget *
@@ -2339,7 +2352,13 @@ create_root_menu(int fake_submenus, int flags)
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
-		root_menu = create_user_menu(root_menu, fake_submenus, FALSE);
+		root_menu = create_user_menu(_("User menus"), "apps",
+					     root_menu, fake_submenus, FALSE);
+		need_separ = TRUE;
+	}
+	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
+		root_menu = create_user_menu(_("RedHat menus"), "apps-redhat",
+					     root_menu, fake_submenus, FALSE);
 		need_separ = TRUE;
 	}
 	/*others here*/
@@ -2364,7 +2383,8 @@ create_root_menu(int fake_submenus, int flags)
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
-		menu = create_user_menu(NULL, fake_submenus, TRUE);
+		menu = create_user_menu(_("User menus"), "apps", 
+					NULL, fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
@@ -2373,12 +2393,13 @@ create_root_menu(int fake_submenus, int flags)
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-	if(flags&MAIN_MENU_REDHAT) {
+	if(flags&MAIN_MENU_REDHAT && flags&MAIN_MENU_REDHAT_SUB) {
 		GtkWidget *pixmap = NULL;
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
-		menu = create_rh_menu();
+		menu = create_user_menu(_("RedHat menus"), "apps-redhat", 
+					NULL, fake_submenus, TRUE);
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/mini/mini-redhat.xpm",
 								    SMALL_ICON_SIZE,
@@ -2389,27 +2410,29 @@ create_root_menu(int fake_submenus, int flags)
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, pixmap, _("RedHat menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
-		/*gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
+				   NULL);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 				   GTK_SIGNAL_FUNC(submenu_to_display),
-				   NULL);*/
+				   NULL);
 	}
-
 	add_special_entries (root_menu, fake_submenus);
 	
 	return root_menu;
 }
 
 static void
-add_menu_widget (Menu *menu, GList *menudirl, int main_menu, int fake_subs)
+add_menu_widget (Menu *menu, GSList *menudirl, int main_menu, int fake_subs)
 {
-	GList *li;
+	GSList *li;
 
 	if (main_menu)
 		menu->menu = create_root_menu(fake_subs, menu->main_menu_flags);
 	else {
 		menu->menu = NULL;
-		for(li=menudirl;li!=NULL;li=g_list_next(li))
+		for(li=menudirl;li!=NULL;li=g_slist_next(li))
 			menu->menu = create_menu_at (menu->menu,li->data,
 						     FALSE, NULL, NULL,
 						     fake_subs, FALSE);
@@ -2498,9 +2521,9 @@ create_panel_menu (char *menudir, int main_menu,
 	gtk_widget_show(menu->button);
 
 	{
-		GList *list = g_list_append(NULL,menudir);
-		add_menu_widget(menu,list,main_menu,FALSE);
-		g_list_free(list);
+		GSList *list = g_slist_append(NULL,menudir);
+		add_menu_widget(menu,list,main_menu,TRUE);
+		g_slist_free(list);
 	}
 
 	g_free (pixmap_name);
@@ -2561,14 +2584,14 @@ set_show_stuff_foreach(gpointer data, gpointer user_data)
 void
 set_show_small_icons(void)
 {
-	g_list_foreach(small_icons,set_show_stuff_foreach,
-		       GINT_TO_POINTER(global_config.show_small_icons));
+	g_slist_foreach(small_icons,set_show_stuff_foreach,
+			GINT_TO_POINTER(global_config.show_small_icons));
 }
 void
 set_show_dot_buttons(void)
 {
-	g_list_foreach(dot_buttons,set_show_stuff_foreach,
-		       GINT_TO_POINTER(global_config.show_dot_buttons));
+	g_slist_foreach(dot_buttons,set_show_stuff_foreach,
+			GINT_TO_POINTER(global_config.show_dot_buttons));
 }
 
 void
@@ -2632,8 +2655,10 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		menu->main_menu_flags &=~ (MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB);
 	else if(GTK_TOGGLE_BUTTON(redhat_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB;
-	else
-		g_assert_not_reached();
+	else {
+		menu->main_menu_flags |= MAIN_MENU_REDHAT;
+		menu->main_menu_flags &=~ MAIN_MENU_REDHAT_SUB;
+	}
 
 	gtk_widget_unref(menu->menu);	
 	menu->menu = NULL;
@@ -2641,7 +2666,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	{
 		char *menu_base = gnome_unconditional_datadir_file ("apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
-		GList *list = g_list_append(NULL,this_menu);
+		GSList *list = g_slist_append(NULL,this_menu);
 		char *pixmap_name = get_pixmap(this_menu,
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
@@ -2654,7 +2679,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		g_free(menu_base);
 		g_free(this_menu);
 
-		g_list_free(list);
+		g_slist_free(list);
 	}
 }
 
@@ -2717,8 +2742,6 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	/*sanity checks*/
 	if(!on)
 		sub = FALSE;
-	else if(!sub && strcmp(ident,"redhat")==0)
-		sub = TRUE;
 	
 	w = gtk_label_new(title);
 	gtk_table_attach_defaults(table,w,0,1,row,row+1);
@@ -2746,16 +2769,14 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 			    GTK_SIGNAL_FUNC (toggle_prop), 
 			    dialog);
 	
-	if(strcmp(ident,"redhat")!=0) {
-		w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
-						     _("On the main menu"));
-		gtk_table_attach_defaults(table,w,1,2,row,row+1);
-		if(on && !sub)
-			gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
-		gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-				    GTK_SIGNAL_FUNC (toggle_prop), 
-				    dialog);
-	}
+	w = gtk_radio_button_new_with_label (gtk_radio_button_group(GTK_RADIO_BUTTON(rb)),
+					     _("On the main menu"));
+	gtk_table_attach_defaults(table,w,1,2,row,row+1);
+	if(on && !sub)
+		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w),TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (toggle_prop), 
+			    dialog);
 }
 	
 

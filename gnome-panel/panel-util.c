@@ -2,6 +2,7 @@
 #include <string.h>
 #include <glib.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 #include "panel-include.h"
 
@@ -110,9 +111,9 @@ move_window(GtkWidget *widget, int x, int y)
 
 
 int
-string_is_in_list(GList *list,char *text)
+string_is_in_list(GSList *list,char *text)
 {
-	for(;list!=NULL;list=g_list_next(list))
+	for(;list!=NULL;list=g_slist_next(list))
 		if(strcmp(text,list->data)==0)
 			return TRUE;
 	return FALSE;
@@ -380,6 +381,20 @@ my_g_list_pop_first(GList *list)
 	return r;
 }
 
+GSList *
+my_g_slist_pop_first(GSList *list)
+{
+	GSList *r;
+	
+	if(!list)
+		return NULL;
+       
+	r = list->next;
+	list->next = NULL;
+	g_slist_free_1(list);
+	return r;
+}
+
 /*following code shamelessly stolen from gtk*/
 static void
 rgb_to_hls (gdouble *r,
@@ -619,4 +634,32 @@ set_frame_colors(PanelWidget *panel, GtkWidget *frame,
 }
 
 
+void
+remove_directory(char *dirname, int just_clean)
+{
+	DIR *dir;
+	struct dirent *dent;
+	char *oldcwd;
+
+	dir = opendir (dirname);
+	if(!dir) return;
+	oldcwd = g_get_current_dir();
+
+	chdir(dirname);
+	while((dent = readdir (dir)) != NULL) {
+		if(strcmp(dent->d_name,".")==0 ||
+		   strcmp(dent->d_name,"..")==0)
+			continue;
+		if(g_file_test(dent->d_name,G_FILE_TEST_ISDIR))
+			remove_directory(dent->d_name, FALSE);
+		else
+			unlink(dent->d_name);
+	}
+	closedir(dir);
+	chdir(oldcwd);
+
+	if(!just_clean)
+		rmdir(dirname);
+	g_free(oldcwd);
+}
 
