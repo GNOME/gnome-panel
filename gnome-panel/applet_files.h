@@ -2,15 +2,16 @@
 #define APPLET_FILE_H
 
 #include "gnome.h"
+#include "libgnome/gnome-dl.h"
 #include "applet_cmds.h"
 
 BEGIN_GNOME_DECLS
 
 
 typedef struct {
-	void          *dl_handle;
-	char          *filename;
-	AppletCmdFunc  cmd_func;
+	GnomeLibHandle *dl_handle;
+	char           *filename;
+	AppletCmdFunc   cmd_func;
 } AppletFile;
 
 

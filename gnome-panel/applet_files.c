@@ -11,7 +11,6 @@
 #include <string.h>
 #include <unistd.h>
 #include "gnome.h"
-#include "libgnome/gnome-dl.h"
 #include "applet_files.h"
 
 
@@ -84,7 +83,7 @@ init_applet_file(char *filename)
 		return;
 	}
 
-	cmd_func = (AppletCmdFunc)get_dl_func(handle, APPLET_CMD_FUNC_NAME);
+	cmd_func = (AppletCmdFunc) get_dl_func(handle, APPLET_CMD_FUNC_NAME);
 
 	cmd.cmd = APPLET_CMD_QUERY;
 	id = (*cmd_func) (&cmd);
