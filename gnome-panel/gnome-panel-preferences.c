@@ -278,6 +278,7 @@ main (int argc, char **argv)
 	gtk_dialog_add_button (GTK_DIALOG(main_window),
 		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
+	gtk_dialog_set_default_response (GTK_DIALOG (main_window), GTK_RESPONSE_CLOSE);
 	g_signal_connect (G_OBJECT(main_window), "response",
 			  G_CALLBACK (main_dialog_response),
 			  main_window);
