@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "March 2002">
+  <!ENTITY appletversion "1.5.23">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "June 2002">
   <!ENTITY applet "Clock">
 ]>
 <!-- 
@@ -54,7 +54,7 @@
 		  <surname>Microsystems</surname> 
 		  <affiliation> 
 			 <orgname>GNOME Documentation Project</orgname> 
-			 <address> <email>docs@gnome.org</email> </address> 
+			 <address> <email>gdocteam@sun.com</email> </address> 
 		  </affiliation> 
 		</author> 
 		<author> 
@@ -96,7 +96,16 @@
 		  <date>&date;</date> 
 		  <revdescription> 
 			 <para role="author">Sun Microsystems
-				<email>docs@gnome.org</email></para> 
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Clock Applet Manual V2.0</revnumber> 
+		  <date>March 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>gdocteam@sun.com</email></para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
 		  </revdescription> 
 		</revision> 
@@ -121,7 +130,7 @@
 	 </legalnotice> 
   </articleinfo> 
   <indexterm> 
-	 <primary>Clock applet</primary> 
+	 <primary>Clock</primary> 
   </indexterm> 
 <!-- ============= Document Body ============================= -->
 
@@ -139,7 +148,7 @@
 				format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
-				<phrase>Screenshot of the &applet; applet.</phrase> 
+				<phrase>Shows &applet; applet.</phrase> 
 			 </textobject> 
 		  </mediaobject> 
 		</screenshot> 
@@ -187,8 +196,8 @@ contains the standard applet menu items plus the following additional menu items
 system clock.
 </para>
 <para>
-	To insert the time or date from the <application>&applet;
-	</application> applet into an application perform the following steps:</para>
+	To insert the time or date from the <application>&applet;</application> 
+	applet into an application perform the following steps:</para>
 	<orderedlist>
 		<listitem>
 			<para>Right-click on the <application>&applet;</application> applet
@@ -221,7 +230,8 @@ system clock.
 		</listitem>
 		<listitem>
 			<para>
-			Middle-click to insert the item.
+			Choose <menuchoice><guimenu>Edit</guimenu><guimenuitem>Paste</guimenuitem>
+			</menuchoice> or middle-click to insert the item.
 			</para>
 		</listitem>
 		</orderedlist>
@@ -232,62 +242,63 @@ system clock.
 <sect1 id="clock-settings"> 
 <title>Settings</title> 
 	<para>
-	To modify the preferences of the <application>&applet;</application>, right-click
+	To configure the <application>&applet;</application>, right-click
 	on the <application>&applet;</application> applet, then choose <guimenuitem>
-	Preferences</guimenuitem> from the applet popup menu. 
-	</para>
-	<para>
-	<guilabel>Clock type</guilabel>
-	</para>
-	<para>
-	Select <guilabel>12 hour</guilabel> to display time in the a.m./p.m. format, 
-	or select <guilabel>24 hour</guilabel> to display time in the 00.00
-	to 24.00 format.
-	</para>
-        <para>
-	<guilabel>UNIX time</guilabel>
-	</para>
-	<para>
-	Select this option to display the time in seconds elapsed since January
-	1, 1970. Developers are the primary users of UNIX time. 
-	</para>
-	<para>
-	<guilabel>Internet time</guilabel>
-	</para>
-	<para>
-	Select this option to display Internet time in the applet. Internet
-	time is based on Biel Mean Time (BMT) as a universal reference, and is the
-	same all over the world. Internet time enables Internet users to synchronize
-	to a common time.
-        </para>
-	 <para>
-	Default: 12 hour format
-	</para>
-        <para>
-        <guilabel>Show seconds</guilabel>
-        </para>
-        <para>
-        Select this option to display seconds in the applet.
-        </para>
-	<para>
-	<guilabel>Show date</guilabel>
-	</para>
-	<para>
-	Select this option to display the date in the applet.
-	</para>
-	<para>
-	Default: selected.
-	</para>
-	<para>
-	<guilabel>Use UTC</guilabel>
-	</para>
-	<para>
-	Select this option to display Universal Time, also known as Greenwich
-	Mean Time, in the applet.
-	</para>
-	<para>
-	Default: unselected.
-	</para>
+	Preferences</guimenuitem> from the applet popup menu. </para>
+	
+	
+	<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Clock type</guilabel></term> 
+			 <listitem> 
+			 <para>Select one of the following options:</para> 
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>12 hour</guilabel></para>
+			 <para>Display time in the a.m./p.m. format.</para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>24 hour</guilabel></para>
+			 <para>Display time in the 00.00 to 24.00 format.</para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>UNIX time</guilabel></para>
+			 <para>Display the time in seconds elapsed since January 1, 1970. 
+			 Developers are the primary users of UNIX time. </para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>Internet time</guilabel></para>
+			 <para>Display Internet time in the applet. Internet time is based on 
+			 Biel Mean Time (BMT) as a universal reference, and is the same all over the world. 
+			 Internet time enables Internet users to synchronize to a common time.</para>
+			 </listitem>
+			 </itemizedlist>
+			 <para>Default: <guilabel>24 hour</guilabel>.</para> 
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Show seconds</guilabel></term>
+			 <listitem> 
+			 <para>Select this option to display seconds in the applet.</para> 
+			 <para>Default: selected.</para> 
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Show date</guilabel></term>
+			 <listitem> 
+			 <para>Select this option to display the date in the applet.</para> 
+			 <para>Default: selected.</para> 
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Use UTC</guilabel></term>
+			 <listitem> 
+			 <para>Select this option to display Universal Time, also known as Greenwich 
+			 Mean Time, in the applet.</para> 
+			 <para>Default: unselected.</para> 
+			 </listitem> 
+		  </varlistentry>
+	</variablelist>		  
 	
 </sect1> 
 </article> 
