@@ -1,3 +1,12 @@
+Tue Mar 06 16:07:41 2001  George Lebl <jirka@5z.com>
+
+	* gen_util/popcheck.[ch], gen_util/mailcheck.[ch],
+	  gen_util/remote-helper.[ch]:  Instead of doing network stuff
+	  in the main proccess which could (and would) frequently hang
+	  the panel (which is mucho bad), fork off a process and do things
+	  there, Fixes a couple of bugs on bugzilla which I'm too lazy to
+	  look for now.
+
 Wed Feb 28 09:04:02 2001  Manuel de Vega Barreiro <barreiro@arrakis.es>
 	
 	* applets/gen_util/help/Makefile.am: Included es for printer

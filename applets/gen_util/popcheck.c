@@ -5,6 +5,8 @@
  *
  */
 
+#include "config.h"
+
 #include <netdb.h>
 #include <string.h>
 #include <stdlib.h>
@@ -19,17 +21,17 @@
 #include "popcheck.h"
 
 #define TIMEOUT 5
-static int get_server_port(char *);
-static char* get_server_hostname(char *);
-static int connect_socket(char *, int);
+static int get_server_port(const char *);
+static char* get_server_hostname(const char *);
+static int connect_socket(const char *, int);
 static char *read_line(int);
 static int write_line(int, char *);
-static int is_pop3_answer_ok(char *);
-static int is_imap_answer_untagged(char *);
-static int is_imap_answer_ok(char *);
+static int is_pop3_answer_ok(const char *);
+static int is_imap_answer_untagged(const char *);
+static int is_imap_answer_ok(const char *);
 static char *wait_for_imap_answer(int, char *);
 
-static int get_server_port(char *h)
+static int get_server_port(const char *h)
  {
   char *x;
   x = strchr(h, ':');
@@ -41,7 +43,7 @@ static int get_server_port(char *h)
    return 0;
  }
  
-static char* get_server_hostname(char *h)
+static char* get_server_hostname(const char *h)
  {
   char *e;
   if (!h) return 0;
@@ -60,7 +62,7 @@ static char* get_server_hostname(char *h)
    return strcpy((char*) g_malloc(strlen(h)+1), h); 
  }
 
-static int connect_socket(char *h, int def)
+static int connect_socket(const char *h, int def)
  {
   struct hostent *he;
   struct sockaddr_in peer;
@@ -151,7 +153,7 @@ static int write_line(int s, char *p)
  }
 
 
-static int is_pop3_answer_ok(char *p)
+static int is_pop3_answer_ok(const char *p)
  {
   if (p) 
    if (p[0] == '+') return 1;
@@ -159,7 +161,7 @@ static int is_pop3_answer_ok(char *p)
   return 0;
  }
  
-int pop3_check(char *h, char* n, char* e)
+int pop3_check(const char *h, const char* n, const char* e)
 {
   int s;
   char *c;
@@ -215,16 +217,16 @@ int pop3_check(char *h, char* n, char* e)
   return r;
 }
 
-static int is_imap_answer_untagged(char *tag)
+static int is_imap_answer_untagged(const char *tag)
  {
   return tag ? *tag == '*' : 0;
  }
 
-static int is_imap_answer_ok(char *p)
+static int is_imap_answer_ok(const char *p)
  {
   if (p) 
    {
-    char *b = strchr(p, ' ');
+    const char *b = strchr(p, ' ');
     if (b)
      {
       if (*(++b) == 'O' && *(++b) == 'K') 
@@ -250,7 +252,7 @@ static char *wait_for_imap_answer(int s, char *tag)
   return 0; 
  }
 
-int imap_check(char *h, char* n, char* e)
+int imap_check(const char *h, const char* n, const char* e)
  {
   int s;
   char *c;
