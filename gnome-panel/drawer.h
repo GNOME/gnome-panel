@@ -25,7 +25,8 @@ void    panel_drawer_create (PanelToplevel *toplevel,
 			     int            position,
 			     const char    *custom_icon,
 			     gboolean       use_custom_icon,
-			     const char    *tooltip);
+			     const char    *tooltip,
+			     char         **idreturn /*optional*/);
 
 void    panel_drawer_set_dnd_enabled (Drawer   *drawer,
 				      gboolean  dnd_enabled);

@@ -31,7 +31,11 @@ G_BEGIN_DECLS
 #define PANEL_APPLET_FORBIDDEN_PANELS "panel_applet_forbidden_panels"
 #define PANEL_APPLET_DATA "panel_applet_data"
 
+#ifndef TYPEDEF_PANEL_WIDGET
 typedef struct _PanelWidget		PanelWidget;
+#define TYPEDEF_PANEL_WIDGET
+#endif /* TYPEDEF_PANEL_WIDGET */
+
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
 typedef struct _AppletRecord		AppletRecord;

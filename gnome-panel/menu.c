@@ -201,6 +201,10 @@ static void         make_add_submenu   (GtkWidget             *menu,
 				        Bonobo_ServerInfoList *applet_list);
 static PanelWidget *menu_get_panel     (GtkWidget *menu);
 static GdkScreen   *menuitem_to_screen (GtkWidget *menuitem);
+static void add_drawers_from_dir	(const char *dirname,
+					 const char *name,
+					 int pos,
+					 PanelWidget *panel);
 
 static inline gboolean
 panel_menu_have_icons (void)
@@ -1223,6 +1227,69 @@ add_app_to_panel (GtkWidget    *item,
 
 
 static void
+applet_added_add_launchers (PanelWidget *panel, GtkWidget *applet, gpointer data)
+{
+	const char *data_string = data;
+	const char *dirname;
+	char *id;
+	AppletInfo    *info;
+
+	info = g_object_get_data (G_OBJECT (applet), "applet_info");
+	if (info->type == PANEL_OBJECT_DRAWER ) {
+		Drawer *drawer = info->data;
+		PanelWidget *newpanel;
+		char *filename = NULL;
+		GSList *list, *li;
+
+		if (drawer->toplevel == NULL)
+			return;
+
+		dirname = strchr (data_string, '%');
+		g_return_if_fail (dirname != NULL);
+		id = g_strndup (data_string, (dirname - data_string));
+		dirname++;
+
+		if (strcmp (info->id, id) != 0) {
+			g_free (id);
+			return;
+		}
+		g_free (id);
+
+		newpanel = panel_toplevel_get_panel_widget (drawer->toplevel);
+
+		list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
+		for(li = list; li!= NULL; li = li->next) {
+			MFile *mfile = li->data;
+
+			g_free (filename);
+			filename = g_build_filename (dirname, mfile->name, NULL);
+
+			if ( ! mfile->verified) {
+				continue;
+			}
+
+			if (mfile->is_dir) {
+				add_drawers_from_dir (filename, NULL, G_MAXINT/2,
+						      newpanel);
+				continue;
+			}
+
+			if (g_str_has_suffix (mfile->name, ".desktop") ||
+			    g_str_has_suffix (mfile->name, ".kdelnk"))
+				panel_launcher_create (newpanel->toplevel, G_MAXINT/2, filename);
+		}
+		g_free (filename);
+
+		free_mfile_list (list);
+
+		/* No longer need to add these items */
+		g_signal_handlers_disconnect_by_func (panel,
+						      G_CALLBACK (applet_added_add_launchers),
+						      data);
+	}
+}
+
+static void
 add_drawers_from_dir (const char *dirname, const char *name,
 		      int pos, PanelWidget *panel)
 {
@@ -1230,6 +1297,8 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	char *dentry_name;
 	const char *subdir_name;
 	char *pixmap_name;
+	char *id;
+	char *data;
 
 	dentry_name = g_build_path ("/",
 				    dirname,
@@ -1250,42 +1319,17 @@ add_drawers_from_dir (const char *dirname, const char *name,
 			     pos,
 			     pixmap_name,
 			     pixmap_name != NULL,
-			     subdir_name);
+			     subdir_name,
+			     &id);
 
-#ifdef FIXME_FOR_NEW_CONFIG
-	Drawer *drawer;
-	PanelWidget *newpanel;
-	char *filename = NULL;
-	GSList *list, *li;
+	data = g_strconcat (id, "%", dirname, NULL);
+	g_free (id);
 
-	newpanel = panel_toplevel_get_panel_widget (drawer->toplevel);
-
-	list = get_mfiles_from_menudir (dirname, NULL /* sorted */);
-	for(li = list; li!= NULL; li = li->next) {
-		MFile *mfile = li->data;
-
-		g_free (filename);
-		filename = g_build_filename (dirname, mfile->name, NULL);
-
-		if ( ! mfile->verified) {
-			continue;
-		}
-
-		if (mfile->is_dir) {
-			add_drawers_from_dir (filename, NULL, G_MAXINT/2,
-					      newpanel);
-			continue;
-		}
-			
-		if ((g_str_has_suffix (mfile->name, ".desktop") ||
-		     g_str_has_suffix (mfile->name, ".kdelnk")) &&
-		    g_file_test (filename, G_FILE_TEST_EXISTS))
-			panel_launcher_create (newpanel->toplevel, G_MAXINT/2, filename);
-	}
-	g_free (filename);
-
-	free_mfile_list (list);
-#endif
+	g_signal_connect_data (panel, "applet_added",
+			       G_CALLBACK (applet_added_add_launchers),
+			       data,
+			       (GClosureNotify)g_free,
+			       0 /* connect_flags */);
 }
 
 /*add a drawer with the contents of a menu to the panel*/
@@ -1933,7 +1977,7 @@ add_drawer_to_panel (GtkWidget *item)
 	pd = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 	position = pd ? pd->insertion_pos : -1;
 
-	panel_drawer_create (toplevel, position, NULL, FALSE, NULL);
+	panel_drawer_create (toplevel, position, NULL, FALSE, NULL, NULL);
 }
 
 static void

@@ -606,7 +606,8 @@ panel_drawer_create (PanelToplevel *toplevel,
 		     int            position,
 		     const char    *custom_icon,
 		     gboolean       use_custom_icon,
-		     const char    *tooltip)
+		     const char    *tooltip,
+		     char         **idreturn)
 {
 	GConfClient *client;
 	const char  *profile;
@@ -630,6 +631,9 @@ panel_drawer_create (PanelToplevel *toplevel,
 		key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, id, "custom_icon");
 		gconf_client_set_string (client, key, custom_icon, NULL);
 	}
+
+	if (idreturn != NULL)
+		*idreturn = g_strdup (id);
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);

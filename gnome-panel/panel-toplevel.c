@@ -3923,7 +3923,7 @@ panel_toplevel_get_type (void)
 	return type;
 }
 
-gpointer
+PanelWidget *
 panel_toplevel_get_panel_widget (PanelToplevel *toplevel)
 {
 	g_return_val_if_fail (PANEL_IS_TOPLEVEL (toplevel), NULL);

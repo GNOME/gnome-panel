@@ -31,6 +31,13 @@
 
 G_BEGIN_DECLS
 
+/* We need PanelWidget type but don't want to include
+   the panel-widget.h */
+#ifndef TYPEDEF_PANEL_WIDGET
+typedef struct _PanelWidget		PanelWidget;
+#define TYPEDEF_PANEL_WIDGET
+#endif /* TYPEDEF_PANEL_WIDGET */
+
 #define PANEL_TYPE_TOPLEVEL         (panel_toplevel_get_type ())
 #define PANEL_TOPLEVEL(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_TOPLEVEL, PanelToplevel))
 #define PANEL_TOPLEVEL_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_TOPLEVEL, PanelToplevelClass))
@@ -68,7 +75,7 @@ struct _PanelToplevelClass {
 GType                panel_toplevel_get_type            (void) G_GNUC_CONST;
 GtkWidget           *panel_toplevel_new                 (void);
 
-gpointer             panel_toplevel_get_panel_widget    (PanelToplevel       *toplevel);
+PanelWidget         *panel_toplevel_get_panel_widget    (PanelToplevel       *toplevel);
 
 void                 panel_toplevel_set_name            (PanelToplevel       *toplevel,	
 							 const char          *name);

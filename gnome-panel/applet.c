@@ -1053,6 +1053,7 @@ panel_applet_register (GtkWidget       *applet,
 	info->data_destroy = data_destroy;
 	info->user_menu = NULL;
 	info->move_item = NULL;
+	if (id) info->id = g_strdup (id);
 
 	g_object_set_data (G_OBJECT (applet), "applet_info", info);
 
@@ -1118,8 +1119,6 @@ panel_applet_register (GtkWidget       *applet,
 #ifdef FIXME_FOR_NEW_CONFIG
 	back_change (info, panel);
 #endif
-
-	if (id) info->id = g_strdup (id);
 
 	if (type != PANEL_OBJECT_BONOBO)
 		gtk_widget_grab_focus (applet);

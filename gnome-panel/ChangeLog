@@ -1,3 +1,13 @@
+Wed Jul 30 15:14:20 2003  George Lebl <jirka@5z.com>
+
+	* panel-widget.h, panel-toplevel.[ch]: make the get_panel_widget
+	  method typesafe by including the PanelWidget typedef in the
+	  header unless it has been typedeffed before.
+
+	* menu.c, drawer.c, applet.c, panel.c: fix the add drawers from
+	  menu thingie which should fix #117710 (all the other things
+	  seem fixed already).
+
 Wed Jul 30 12:50:28 2003  George Lebl <jirka@5z.com>
 
 	* panel-util.c: in bug #117877 we saw 'foo' displayed since that
