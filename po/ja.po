@@ -7,13 +7,14 @@
 # Yuusuke Tahara <tahara@gnome.gr.jp>, 2000
 # Shingo Akagaki <dora@kondara.org>, 2000
 # Akira TAGOH <tagoh@gnome.gr.jp>, 2001
+# Ryoichi INAGAKI <ryo1@bc.wakwak.com>, 2002
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.0.0\n"
-"POT-Creation-Date: 2002-09-06 11:48+1200\n"
-"PO-Revision-Date: 2002-06-13 13:10+0900\n"
-"Last-Translator: Takayuki KUSANO <AE5T-KSN@asahi-net.or.jp>\n"
+"Project-Id-Version: gnome-panel 2.0.7\n"
+"POT-Creation-Date: 2002-09-09 20:44+0900\n"
+"PO-Revision-Date: 2002-09-09 21:02+0900\n"
+"Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -137,20 +138,20 @@ msgstr "パネルが縦向きの時は回転する(_R)"
 
 #: applets/fish/fish.c:863
 msgid "Unable to get the name of the command to execute"
-msgstr ""
+msgstr "実行するコマンドの名前を取得できません"
 
 #: applets/fish/fish.c:879
 msgid "Unable to locate the command to execute"
-msgstr ""
+msgstr "実行するコマンドを見つけられません"
 
 #: applets/fish/fish.c:1004
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
 "Details : %s"
 msgstr ""
-"<b>コマンドの実行に失敗しました:</b> '%s'\n"
+"'%s' を実行できませんでした\n"
 "\n"
 "詳細: %s"
 
@@ -377,6 +378,7 @@ msgid "translator_credits"
 msgstr ""
 "Akira TAGOH (tagoh@gnome.gr.jp)\n"
 "Eiichiro ITANI (emu@ceres.dti.ne.jp)\n"
+"Ryoichi INAGAKI (ryo1@bc.wakwak.com)\n"
 "Shingo Akagaki (dora@kondara.org)\n"
 "Takayuki KUSANO (AE5T-KSN@asahi-net.or.jp)\n"
 "Yasuyuki Furukawa (yasu@on.cs.keio.ac.jp)\n"
@@ -393,7 +395,7 @@ msgstr "現在の時間と日付を表示する時計"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "Display Internet time, which is same all over the world"
-msgstr ""
+msgstr "インターネット時刻を表示します。全世界共通の時刻です"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
@@ -404,9 +406,8 @@ msgid "Display seconds in time"
 msgstr "時刻で秒を表示"
 
 #: applets/gen_util/clock.schemas.in.h:4
-#, fuzzy
 msgid "Display time in Universal Coordinated Time zone"
-msgstr "グリニッジ標準時で時刻を表示"
+msgstr "協定世界時で時刻を表示"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
@@ -445,15 +446,14 @@ msgid "Use UNIX time"
 msgstr "UNIX 時間を使用"
 
 #: applets/gen_util/clock.schemas.in.h:14
-#, fuzzy
 msgid "Use UTC"
-msgstr "UTC を使用(_U)"
+msgstr "UTC を使用(U)"
 
 #: applets/gen_util/mailcheck.c:176
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s : %s"
 msgstr ""
-"ヘルプを表示しようとしてエラーが起きました:\n"
+"%s の実行時にエラーが起きました:\n"
 "\n"
 "%s"
 
@@ -471,7 +471,7 @@ msgstr "メールサーバのパスワードを入力してください(_P):"
 
 #: applets/gen_util/mailcheck.c:265 applets/gen_util/mailcheck.c:1336
 msgid "Password Entry box"
-msgstr ""
+msgstr "パスワード入力用ボックス"
 
 #: applets/gen_util/mailcheck.c:308
 msgid ""
@@ -540,7 +540,7 @@ msgstr "メールサーバー(_E):"
 
 #: applets/gen_util/mailcheck.c:1297
 msgid "Mail Server Entry box"
-msgstr ""
+msgstr "メールサーバー入力用ボックス"
 
 #: applets/gen_util/mailcheck.c:1311
 msgid "_Username:"
@@ -548,7 +548,7 @@ msgstr "ユーザ名(_U):"
 
 #: applets/gen_util/mailcheck.c:1319
 msgid "Username Entry box"
-msgstr ""
+msgstr "ユーザ名入力用ボックス"
 
 #: applets/gen_util/mailcheck.c:1328
 msgid "_Password:"
@@ -560,16 +560,15 @@ msgstr " フォルダ(_F):"
 
 #: applets/gen_util/mailcheck.c:1357
 msgid "Folder Entry box"
-msgstr ""
+msgstr "フォルダ入力用ボックス"
 
 #: applets/gen_util/mailcheck.c:1369
 msgid "C_ommand to run before checking for mail:"
 msgstr "メールのチェックの前に実行するコマンド(_O):"
 
 #: applets/gen_util/mailcheck.c:1377
-#, fuzzy
 msgid "Command Entry box"
-msgstr "実行するコマンド"
+msgstr "コマンド入力用ボックス"
 
 #: applets/gen_util/mailcheck.c:1402
 msgid "Execute"
@@ -580,9 +579,8 @@ msgid "Before each _update:"
 msgstr "更新の直前(_U):"
 
 #: applets/gen_util/mailcheck.c:1428
-#, fuzzy
 msgid "Command to execute before each update"
-msgstr "メールのチェックの時に実行するコマンド"
+msgstr "更新の前に実行するコマンド"
 
 #: applets/gen_util/mailcheck.c:1438
 msgid "When new mail _arrives:"
@@ -597,9 +595,8 @@ msgid "When clicke_d:"
 msgstr "クリック時(_D):"
 
 #: applets/gen_util/mailcheck.c:1474
-#, fuzzy
 msgid "Command to execute when clicked"
-msgstr "さかな君がクリックされた時に実行するコマンド(_E):"
+msgstr "このアイコンがクリックされた時に実行するコマンド"
 
 #: applets/gen_util/mailcheck.c:1484
 msgid "Set the number of unread mails to _zero"
@@ -615,16 +612,15 @@ msgstr "分"
 
 #: applets/gen_util/mailcheck.c:1507
 msgid "Choose time interval in minutes to check mail"
-msgstr ""
+msgstr "メールのチェックの間隔を選択してください (分単位)"
 
 #: applets/gen_util/mailcheck.c:1521 applets/gen_util/mailcheck.c:1525
 msgid "seconds"
 msgstr "秒"
 
 #: applets/gen_util/mailcheck.c:1521
-#, fuzzy
 msgid "Choose time interval in seconds to check mail"
-msgstr "メールのチェックの間隔 (ミリ秒単位)"
+msgstr "メールのチェックの間隔を選択してください (秒単位)"
 
 #: applets/gen_util/mailcheck.c:1533
 msgid "Play a _sound when new mail arrives"
@@ -994,9 +990,8 @@ msgid "Window List content"
 msgstr "ウインドウリスト内容"
 
 #: applets/gen_util/tasklist.glade.h:11
-#, fuzzy
 msgid "Window List size"
-msgstr "ウインドウリスト"
+msgstr "ウインドウリストの大きさ"
 
 #: applets/gen_util/tasklist.glade.h:12
 msgid "Window grouping"
@@ -1067,14 +1062,12 @@ msgid "GNOME Panel Shell"
 msgstr "GNOME パネル シェル"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:525
-#, fuzzy
 msgid "_Move"
-msgstr "移動"
+msgstr "移動(_M)"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#, fuzzy
 msgid "_Remove From Panel"
-msgstr "パネルから取り除く"
+msgstr "パネルから取り除く(_R)"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1138,25 +1131,23 @@ msgid "Show this panel"
 msgstr "このパネルを表示"
 
 #: gnome-panel/button-widget.c:341
-#, fuzzy
 msgid "none"
 msgstr "なし"
 
 #: gnome-panel/button-widget.c:346
-#, fuzzy
 msgid "file not found"
-msgstr "ヘルプ文書が見つかりません"
+msgstr "ファイルが見つかりません"
 
 #: gnome-panel/button-widget.c:747 gnome-panel/button-widget.c:785
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"<b>ファイルを開くのに失敗しました:</b> '%s'\n"
+"画像 %s の読みこみに失敗しました\n"
 "\n"
-"%s"
+"詳細: %s"
 
 #: gnome-panel/disclosure-widget.c:260
 msgid "Expander Size"
@@ -1171,7 +1162,6 @@ msgid "Debian GNU/Linux"
 msgstr "Debian GNU/Linux"
 
 #: gnome-panel/distribution.c:27
-#, fuzzy
 msgid "Debian Menu"
 msgstr "Debian メニュー"
 
@@ -1180,7 +1170,6 @@ msgid "SuSE Linux"
 msgstr "SuSE Linux"
 
 #: gnome-panel/distribution.c:32
-#, fuzzy
 msgid "SuSE Menu"
 msgstr "SuSE メニュー"
 
@@ -1189,7 +1178,6 @@ msgid "Solaris"
 msgstr "Solaris"
 
 #: gnome-panel/distribution.c:37
-#, fuzzy
 msgid "CDE Menu"
 msgstr "CDE メニュー"
 
@@ -1229,9 +1217,8 @@ msgstr "引き出し"
 
 #: gnome-panel/drawer.c:668 gnome-panel/launcher.c:734
 #: gnome-panel/logout.c:219 gnome-panel/menu.c:1403 gnome-panel/menu.c:3324
-#, fuzzy
 msgid "_Properties"
-msgstr "プロパティ"
+msgstr "設定(_P)"
 
 #: gnome-panel/foobar-widget.c:141 gnome-panel/menu.c:3504
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1258,12 +1245,10 @@ msgid "Find files, folders, and documents on your computer"
 msgstr "コンピュータのファイル、フォルダ、文書を検索"
 
 #: gnome-panel/foobar-widget.c:190 gnome-panel/menu.c:3658
-#, fuzzy
 msgid "Screenshot..."
 msgstr "スクリーンショット"
 
 #: gnome-panel/foobar-widget.c:194 gnome-panel/menu.c:3661
-#, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "デスクトップのスクリーンショットを撮る"
 
@@ -1355,7 +1340,6 @@ msgstr ""
 "%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
-#, fuzzy
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
@@ -1364,9 +1348,9 @@ msgstr ""
 "変更を許可していません"
 
 #: gnome-panel/gnome-panel-preferences.c:270
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading glade file %s"
-msgstr "ファイル '%s' 読み出し時にエラー: %s"
+msgstr "Glade ファイル %s 読み出し時にエラー"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:1
 msgid "Panel"
@@ -1377,14 +1361,12 @@ msgid "Select preferences for all your panels"
 msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
-#, fuzzy
 msgid "Animation _speed:"
 msgstr "アニメーションの描画速度(_A):"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:2
-#, fuzzy
 msgid "Close _drawer when launcher is clicked"
-msgstr "中のランチャが押されたら引き出しを閉じる(_C)"
+msgstr "ランチャが押されたら引き出しを閉じる(_C)"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
 msgid "Fast"
@@ -1404,9 +1386,8 @@ msgid "Slow"
 msgstr "低速"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
 msgid "_Animation"
-msgstr "アニメーション"
+msgstr "アニメーション(_A)"
 
 #: gnome-panel/gnome-panel-screenshot.c:127
 msgid ""
@@ -1575,6 +1556,9 @@ msgid ""
 "\n"
 "Details: no application available to open file"
 msgstr ""
+"<b>ファイルを開くのに失敗しました:</b> '%s'\n"
+"\n"
+"詳細: ファイルを開くことのできるアプリケーションがありません"
 
 #: gnome-panel/gnome-run.c:458
 #, c-format
@@ -1605,7 +1589,7 @@ msgstr "端末内で実行(_T)"
 
 #: gnome-panel/gnome-run.c:946
 msgid "_Append File..."
-msgstr ""
+msgstr "リストに追加(_A)..."
 
 #: gnome-panel/gnome-run.c:1329
 #, c-format
@@ -1737,24 +1721,20 @@ msgstr "スクリーンのロック"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-#, fuzzy
 msgid "_Activate Screensaver"
-msgstr "スクリーンセーバを有効に"
+msgstr "スクリーンセーバを有効に(_A)"
 
 #: gnome-panel/logout.c:214
-#, fuzzy
 msgid "_Lock Screen"
-msgstr "スクリーンのロック"
+msgstr "スクリーンのロック(_L)"
 
 #: gnome-panel/logout.c:215
-#, fuzzy
 msgid "_Kill Screensaver Daemon"
-msgstr "スクリーンセーバ デーモンを強制終了"
+msgstr "スクリーンセーバ デーモンを強制終了(_K)"
 
 #: gnome-panel/logout.c:216
-#, fuzzy
 msgid "Restart _Screensaver Daemon"
-msgstr "スクリーンセーバ デーモンを再起動"
+msgstr "スクリーンセーバ デーモンを再起動(_S)"
 
 #: gnome-panel/main.c:149
 msgid "Specify a profile name to load"
@@ -1995,57 +1975,46 @@ msgid "You can only have one menu panel at a time."
 msgstr "メニューパネルは同時に一つしか持てません。"
 
 #: gnome-panel/menu.c:2728
-#, fuzzy
 msgid "C_orner Panel"
-msgstr "コーナー・パネル"
+msgstr "コーナー・パネル(_O)"
 
 #: gnome-panel/menu.c:2730
-#, fuzzy
 msgid "Create corner panel"
-msgstr "コーナー・パネル"
+msgstr "コーナー・パネルを作成"
 
 #: gnome-panel/menu.c:2738
-#, fuzzy
 msgid "_Edge Panel"
-msgstr "エッジ・パネル"
+msgstr "エッジ・パネル(_E)"
 
 #: gnome-panel/menu.c:2740
-#, fuzzy
 msgid "Create edge panel"
-msgstr "新規パネルを作成"
+msgstr "エッジ・パネルを作成"
 
 #: gnome-panel/menu.c:2747
-#, fuzzy
 msgid "_Floating Panel"
-msgstr "フロート・パネル"
+msgstr "フロート・パネル(_F)"
 
 #: gnome-panel/menu.c:2749
-#, fuzzy
 msgid "Create floating panel"
-msgstr "フロート・パネル"
+msgstr "フロート・パネルを作成"
 
 #: gnome-panel/menu.c:2756
-#, fuzzy
 msgid "_Sliding Panel"
-msgstr "スライド・パネル"
+msgstr "スライド・パネル(_S)"
 
 #: gnome-panel/menu.c:2758
-#, fuzzy
 msgid "Create sliding panel"
-msgstr "新規パネルを作成"
+msgstr "スライド・パネルを作成"
 
 #: gnome-panel/menu.c:2777
-#, fuzzy
 msgid "_Menu Panel"
-msgstr "メニューパネル"
+msgstr "メニューパネル(_M)"
 
 #: gnome-panel/menu.c:2779
-#, fuzzy
 msgid "Create menu panel"
-msgstr "新規パネルを作成"
+msgstr "メニューパネルを作成"
 
 #: gnome-panel/menu.c:2866 gnome-panel/menu.c:2872 gnome-panel/menu.c:3490
-#, fuzzy
 msgid "KDE Menu"
 msgstr "KDEメニュー"
 
@@ -2054,13 +2023,12 @@ msgid "You cannot remove your last panel."
 msgstr "最後のパネルは削除できません。"
 
 #: gnome-panel/menu.c:2948
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
-"パネルを削除すると、パネルとそのアプレットの\n"
-"設定は失われてしまいます。このパネルを削除しますか?"
+"パネルを削除すると、パネルと、その設定は失われ\n"
+"てしまいます。このパネルを削除しますか?"
 
 #: gnome-panel/menu.c:3193
 msgid "Launcher..."
@@ -2076,7 +2044,6 @@ msgid "GNOME Menu"
 msgstr "GNOME メニュー"
 
 #: gnome-panel/menu.c:3224
-#, fuzzy
 msgid "Log Out Button"
 msgstr "ログアウトボタン"
 
@@ -2085,24 +2052,20 @@ msgid "Lock button"
 msgstr "ロックボタン"
 
 #: gnome-panel/menu.c:3276
-#, fuzzy
 msgid "_Delete This Panel..."
-msgstr "このパネルを削除..."
+msgstr "このパネルを削除(_D)..."
 
 #: gnome-panel/menu.c:3279 gnome-panel/menu.c:3310
-#, fuzzy
 msgid "_Delete This Panel"
-msgstr "このパネルを削除"
+msgstr "このパネルを削除(_D)"
 
 #: gnome-panel/menu.c:3297
-#, fuzzy
 msgid "_Add to Panel"
-msgstr "パネルに追加"
+msgstr "パネルに追加(_A)"
 
 #: gnome-panel/menu.c:3337
-#, fuzzy
 msgid "_New Panel"
-msgstr "ベースパネル"
+msgstr "新規パネル(_N)"
 
 #: gnome-panel/menu.c:3362
 msgid ""
@@ -2115,17 +2078,14 @@ msgstr ""
 "詳細: xscreensaver-command が見つかりません"
 
 #: gnome-panel/menu.c:3382
-#, fuzzy
 msgid "_About Panels"
-msgstr "パネルについて..."
+msgstr "パネルについて(_A)..."
 
 #: gnome-panel/menu.c:3395
-#, fuzzy
 msgid "About _GNOME"
-msgstr "GNOME について"
+msgstr "GNOME について(_G)"
 
 #: gnome-panel/menu.c:3424
-#, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "画面をロックし、一時的にコンピュータを離れることができます。"
 
@@ -2172,7 +2132,7 @@ msgid "Exception from popup_menu '%s'\n"
 msgstr "popup_menu '%s' から例外\n"
 
 #: gnome-panel/panel-applet-frame.c:714
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
 "\n"
@@ -2205,21 +2165,18 @@ msgstr ""
 
 #. Auto-hide
 #: gnome-panel/panel-config.c:541
-#, fuzzy
 msgid "_Autohide"
-msgstr "自動的に隠す"
+msgstr "自動的に隠す(_A)"
 
 #. Hidebuttons enable
 #: gnome-panel/panel-config.c:552
-#, fuzzy
 msgid "Show hide _buttons"
-msgstr "隠すボタンを表示"
+msgstr "隠すボタンを表示(_B)"
 
 #. Arrow enable
 #: gnome-panel/panel-config.c:564
-#, fuzzy
 msgid "Arro_ws on hide buttons"
-msgstr "隠すボタンに矢印を表示"
+msgstr "隠すボタンに矢印を表示(_W)"
 
 #: gnome-panel/panel-config.c:603
 msgid "Miscellaneous"
@@ -2234,38 +2191,32 @@ msgid "Indicates the panel position and orientation on screen"
 msgstr "スクリーン上でのパネルの位置と向きを示す"
 
 #: gnome-panel/panel-config.c:725
-#, fuzzy
 msgid "_Position:"
-msgstr "パネルの位置"
+msgstr "パネルの位置(_P):"
 
 #: gnome-panel/panel-config.c:952
-#, fuzzy
 msgid "Orient hori_zontally"
-msgstr "水平パネル"
+msgstr "水平パネル(_Z)"
 
 #: gnome-panel/panel-config.c:964
-#, fuzzy
 msgid "Orient _vertically"
-msgstr "垂直パネル"
+msgstr "垂直パネル(_V)"
 
 #: gnome-panel/panel-config.c:978
-#, fuzzy
 msgid "H_orizontal offset:"
-msgstr "水平方向レイアウト"
+msgstr "水平オフセット(_O):"
 
 #: gnome-panel/panel-config.c:998
-#, fuzzy
 msgid "Ver_tical offset:"
-msgstr "垂直方向レイアウト"
+msgstr "垂直オフセット(_T):"
 
 #: gnome-panel/panel-config.c:1063
 msgid "Screen edge _offset:"
-msgstr ""
+msgstr "画面端オフセット(_O):"
 
 #: gnome-panel/panel-config.c:1122
-#, fuzzy
 msgid "_Size:"
-msgstr "大きさ:"
+msgstr "大きさ(_S):"
 
 #: gnome-panel/panel-config.c:1130
 msgid "XX Small (12 pixels)"
@@ -2296,9 +2247,8 @@ msgid "XX Large (128 pixels)"
 msgstr "とても大きい (128 ピクセル)"
 
 #: gnome-panel/panel-config.c:1326
-#, fuzzy
 msgid "Background _type:"
-msgstr "背景の種類"
+msgstr "背景の種類(_T):"
 
 #: gnome-panel/panel-config.c:1334
 msgid "Default"
@@ -2314,27 +2264,24 @@ msgid "Image"
 msgstr "画像"
 
 #: gnome-panel/panel-config.c:1357
-#, fuzzy
 msgid "Background co_lor:"
-msgstr "背景色"
+msgstr "背景色(_L)"
 
 #: gnome-panel/panel-config.c:1416
-#, fuzzy
 msgid "_Do not scale image to fit"
-msgstr "画像の大きさを変更しない"
+msgstr "画像の大きさを変更しない(_D)"
 
 #: gnome-panel/panel-config.c:1421
 msgid "Sc_ale image"
-msgstr ""
+msgstr "画像を並べる(_A)"
 
 #: gnome-panel/panel-config.c:1425
 msgid "St_retch image"
-msgstr ""
+msgstr "画像を拡大する(_R)"
 
 #: gnome-panel/panel-config.c:1439
-#, fuzzy
 msgid "Rotate image for _vertical panels"
-msgstr "パネルが縦向きの時は画像を回転する"
+msgstr "パネルが縦向きの時は画像を回転する(_V)"
 
 #: gnome-panel/panel-config.c:1518
 msgid "Edge panel"
@@ -2353,7 +2300,6 @@ msgid "Floating panel"
 msgstr "フロート・パネル"
 
 #: gnome-panel/panel-config.c:1610
-#, fuzzy
 msgid "Panel Properties"
 msgstr "パネルのプロパティ"
 
