@@ -1024,43 +1024,6 @@ create_menu_at (GtkWidget *menu,
 	return menu;
 }
 
-void
-menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
-{
-	Menu * menup = data;
-	GtkWidget *widget = menup->button;
-	int wx, wy;
-	
-	gdk_window_get_origin (widget->window, &wx, &wy);
-
-	switch(BUTTON_WIDGET(widget)->orient) {
-		case ORIENT_DOWN:
-			*x = wx;
-			*y = wy + widget->allocation.height;
-			break;
-		case ORIENT_UP:
-			*x = wx;
-			*y = wy - GTK_WIDGET (menu)->requisition.height;
-			break;
-		case ORIENT_RIGHT:
-			*x = wx + widget->allocation.width;
-			*y = wy;
-			break;
-		case ORIENT_LEFT:
-			*x = wx - GTK_WIDGET (menu)->requisition.width;
-			*y = wy;
-			break;
-	}
-
-	if(*x + GTK_WIDGET (menu)->requisition.width > gdk_screen_width())
-		*x=gdk_screen_width() - GTK_WIDGET (menu)->requisition.width;
-	if(*x < 0) *x =0;
-
-	if(*y + GTK_WIDGET (menu)->requisition.height > gdk_screen_height())
-		*y=gdk_screen_height() - GTK_WIDGET (menu)->requisition.height;
-	if(*y < 0) *y =0;
-}
-
 static void
 destroy_menu (GtkWidget *widget, gpointer data)
 {
@@ -1519,6 +1482,8 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	Menu *menu = data;
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
+	int applet_id = gtk_object_get_data(GTK_OBJECT(menu->button),
+					    "applet_id");
 	int main_menu = (strcmp (menu->path, ".") == 0);
 	
 	check_and_reread(menu->menu,menu,main_menu);
@@ -1538,8 +1503,9 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	BUTTON_WIDGET(menu->button)->ignore_leave = TRUE;
 	gtk_grab_remove(menu->button);
 
-	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, menu_position,
-		       data, bevent->button, bevent->time);
+	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, applet_menu_position,
+		       GINT_TO_POINTER(applet_id),
+		       bevent->button, bevent->time);
 }
 
 static char *
