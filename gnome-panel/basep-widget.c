@@ -324,7 +324,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		end_time = start_time +
 			(diff/1000.0)*200*(10001-(step*step));
 
-		if (gnome_win_hints_wm_exists()) {
+		if (0 && gnome_win_hints_wm_exists()) {
 			if(dw == 0 || dh == 0) {
 				gdk_window_move(wid->window,
 						-wid->allocation.width-1,
@@ -386,7 +386,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		}
 		
 
-		if (gnome_win_hints_wm_exists()) {
+		if (0 && gnome_win_hints_wm_exists()) {
 			if(dw == 0 || dh == 0) {
 				gdk_window_reparent(basep->ebox->window,
 						    wid->window,0,0);
@@ -489,7 +489,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		end_time = start_time +
 			(diff/1000.0)*200*(10001-(step*step));
 		
-		if (gnome_win_hints_wm_exists()) {
+		if (0 && gnome_win_hints_wm_exists()) {
 			win = basep_widget_add_fake(basep, hide_orient,
 						    ox,oy,ow,oh,FALSE);
 			gdk_window_set_hints (wid->window,
@@ -552,7 +552,7 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 			g_slist_foreach(list,(GFunc)gdk_event_put,NULL);
 			g_slist_free(list);
 		}
-		if (gnome_win_hints_wm_exists()) {
+		if (0 && gnome_win_hints_wm_exists()) {
 			gdk_window_resize(wid->window,dw,dh);
 			gdk_window_set_hints (wid->window,
 					      dx,dy,0,0,0,0,
