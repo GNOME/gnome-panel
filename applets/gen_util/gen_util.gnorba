@@ -10,14 +10,20 @@ repo_id=IDL:GNOME/Applet:1.0
 description=Mailcheck applet
 location_info=libgen_util_applet.so
 
-[gen_util_printer]
-type=shlib
-repo_id=IDL:GNOME/Applet:1.0
-description=Printer applet
-location_info=libgen_util_applet.so
-
 [gen_util_clock]
 type=shlib
 repo_id=IDL:GNOME/Applet:1.0
 description=Clock applet
 location_info=libgen_util_applet.so
+
+[gen_util_printer_factory]
+type=exe
+repo_id=IDL:GNOME/GenericFactory:1.0
+description=internal
+location_info=printer_applet
+
+[gen_util_printer]
+type=factory
+repo_id=IDL:GNOME/Applet:1.0
+description=Printer applet
+location_info=gen_util_printer_factory

@@ -439,3 +439,49 @@ make_printer_applet(const gchar *goad_id)
 					      pr);
 	return pr->applet;
 }
+
+/* as long as the dnd in shlib applets is broke, this must be a separate 
+   extern applet */
+#if 1
+
+/*when we get a command to start a new widget*/
+static GtkWidget *
+applet_start_new_applet(const gchar *goad_id, const char **params, int nparams)
+{
+	/* return make_new_applet(goad_id);*/
+	return make_printer_applet(goad_id);
+}
+
+int
+main(int argc, char **argv)
+{
+	const gchar *goad_id;
+
+	/*this is needed for printer applet*/
+	struct sigaction sa;
+
+	sa.sa_handler = SIG_IGN;
+	sa.sa_flags   = SA_NOCLDSTOP;
+	sigemptyset (&sa.sa_mask);
+	sigaction (SIGCHLD, &sa, NULL);
+
+	/* Initialize the i18n stuff */
+        bindtextdomain (PACKAGE, GNOMELOCALEDIR);
+	textdomain (PACKAGE);
+	
+	applet_widget_init("gen_util_printer", VERSION, argc, argv,
+			   NULL, 0, NULL);
+	applet_factory_new("gen_util_printer_factory", NULL, applet_start_new_applet);
+
+	goad_id = goad_server_activation_id();
+	if(!goad_id)
+	  goad_id = "gen_util_printer"; /* badhack */
+	if(strcmp(goad_id, "gen_util_printer_factory")!=0) /* Only do if factory wasn't requested (odd) */
+	  make_printer_applet(goad_id);
+
+	applet_widget_gtk_main();
+
+	return 0;
+}
+
+#endif

@@ -1,3 +1,9 @@
+Fri Feb 11 17:56:10 2000  George Lebl <jirka@5z.com>
+
+	* gen_util/Makefile.am,gen_util.gnorba,printer.c: make the printer a
+	  separate extern applet.  Due to gtkplug/socket braindamage we can't
+	  do dnd on shlib applets
+
 Mon Feb 07 16:49:45 2000  George Lebl <jirka@5z.com>
 
 	* gen_util/clock.c: use applet_widget_queue_resize when we update so

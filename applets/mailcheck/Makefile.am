@@ -6,6 +6,7 @@ INCLUDES = -I. -I$(srcdir) 				\
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
 lib_LTLIBRARIES = libgen_util_applet.la
+bin_PROGRAMS = printer_applet
 
 libgen_util_applet_la_SOURCES = \
 	main.c		\
@@ -13,10 +14,17 @@ libgen_util_applet_la_SOURCES = \
 	mailcheck.h	\
 	popcheck.c	\
 	popcheck.h	\
-	printer.c	\
-	printer.h	\
 	clock.c		\
 	clock.h
+
+printer_applet_SOURCES = \
+	printer.c		\
+	printer.h
+
+printer_applet_LDADD = ../../panel/libpanel_applet.la \
+		     $(GNOME_LIBDIR) $(ORB_LIBS)         \
+		     $(GNOMEUI_LIBS) $(GNORBA_LIBS)      \
+		     $(INTLLIBS)
 
 PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png
