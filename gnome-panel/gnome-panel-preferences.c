@@ -265,7 +265,7 @@ main_dialog_response(GtkWindow *window, int button, gpointer data)
 								 GTK_DIALOG_DESTROY_WITH_PARENT,
 								 GTK_MESSAGE_ERROR,
 								 GTK_BUTTONS_CLOSE,
-								 ("There was an error displaying help: \n%s"),
+								 _("There was an error displaying help: \n%s"),
 								 error->message);
 
 				g_signal_connect (G_OBJECT (dialog), "response",
