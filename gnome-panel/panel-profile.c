@@ -1795,6 +1795,7 @@ panel_profile_load_object (GConfClient       *client,
         
 	if (!panel_profile_map_object_type_string (type_string, &object_type)) {
 		g_free (type_string);
+		g_free (object_dir);
 		return;
 	}
 	
