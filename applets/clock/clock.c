@@ -1513,6 +1513,27 @@ clock_size_request (GtkWidget *clock, GtkRequisition *req, gpointer data)
 	req->height = cd->fixed_height;
 }
 
+static inline void
+force_no_focus_padding (GtkWidget *widget)
+{
+        gboolean first_time = TRUE;
+
+        if (first_time) {
+                gtk_rc_parse_string ("\n"
+                                     "   style \"clock-applet-button-style\"\n"
+                                     "   {\n"
+                                     "      GtkWidget::focus-line-width=0\n"
+                                     "      GtkWidget::focus-padding=0\n"
+                                     "   }\n"
+                                     "\n"
+                                     "    widget \"*.clock-applet-button\" style \"clock-applet-button-style\"\n"
+                                     "\n");
+                first_time = FALSE;
+        }
+
+        gtk_widget_set_name (widget, "clock-applet-button");
+}
+
 static void
 create_clock_widget (ClockData *cd)
 {
@@ -1534,6 +1555,8 @@ create_clock_widget (ClockData *cd)
 	toggle = gtk_toggle_button_new ();
 	gtk_container_set_resize_mode (GTK_CONTAINER (toggle), GTK_RESIZE_IMMEDIATE);
 	gtk_button_set_relief (GTK_BUTTON (toggle), GTK_RELIEF_NONE);
+
+        force_no_focus_padding (toggle);
 
 	alignment = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
 	gtk_container_add (GTK_CONTAINER (alignment), clock);
