@@ -384,9 +384,8 @@ check_lockdown (void)
 
 	client = gconf_client_get_default ();
 
-	/* FIXME: rename lock-down, it's not even listed anywhere in schemas */
 	locked_down = gconf_client_get_bool (
-				client, panel_gconf_global_key ("lock-down"), NULL);
+				client, panel_gconf_global_key ("locked_down"), NULL);
 	if (locked_down)
 		error_dialog (_("The system administrator has disallowed\n"
 			        "modification of the panel configuration"));
@@ -433,9 +432,8 @@ main (int argc, char **argv)
 		dialog = glade_xml_get_widget (
 				gui, "gnome_panel_preferences_dialog");
 
-		/* FIXME: rename lock-down, it's not even listed anywhere */
 		client = gconf_client_get_default ();
-		key = panel_gconf_global_key ("lock-down");
+		key = panel_gconf_global_key ("locked_down");
 
 		/* watch for the lock down key going to true */
 		gconf_client_notify_add (client, key,
