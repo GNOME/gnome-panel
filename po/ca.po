@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.2\n"
-"POT-Creation-Date: 2002-07-22 13:02+0200\n"
-"PO-Revision-Date: 2002-07-22 13:03+0200\n"
+"POT-Creation-Date: 2002-07-23 13:30+0200\n"
+"PO-Revision-Date: 2002-07-23 13:32+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <gnome@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,9 @@ msgstr "_Quant a..."
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
-#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/menu.c:3389
+#: applets/gen_util/GNOME_TasklistApplet.xml.h:2 gnome-panel/drawer.c:671
+#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
+#: gnome-panel/logout.c:221 gnome-panel/menu.c:3389 gnome-panel/menu.c:4102
 msgid "_Help"
 msgstr "A_juda"
 
@@ -924,9 +926,7 @@ msgstr "No puc crear l'applet!\n"
 msgid "Properties..."
 msgstr "Propietats..."
 
-#: applets/gen_util/printer.c:473 gnome-panel/drawer.c:626
-#: gnome-panel/launcher.c:732 gnome-panel/logout.c:134
-#: gnome-panel/logout.c:221 gnome-panel/menu.c:4102
+#: applets/gen_util/printer.c:473
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1075,12 +1075,12 @@ msgstr "Shell del quadre del GNOME"
 #. FIXME: should have a "Move" pixmap.
 #.
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-msgid "Move"
-msgstr "Moure"
+msgid "_Move"
+msgstr "_Moure"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-msgid "Remove From Panel"
-msgstr "Elimina del quadre"
+msgid "_Remove From Panel"
+msgstr "_Elimina del quadre"
 
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
@@ -1200,44 +1200,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menú del CDE"
 
-#: gnome-panel/drawer.c:126
+#: gnome-panel/drawer.c:127
 msgid "Size and Position"
 msgstr "Mida i posició"
 
-#: gnome-panel/drawer.c:134
+#: gnome-panel/drawer.c:135
 msgid "Tooltip/Name"
 msgstr "Indicador de funció/Nom"
 
-#: gnome-panel/drawer.c:140
+#: gnome-panel/drawer.c:141
 msgid "Icon"
 msgstr "Icona"
 
-#: gnome-panel/drawer.c:146
+#: gnome-panel/drawer.c:147
 msgid "Applet appearance"
 msgstr "Aparença de l'applet"
 
-#: gnome-panel/drawer.c:151
+#: gnome-panel/drawer.c:152
 msgid "Drawer handle"
 msgstr "Nansa del calaix"
 
 #. we store this in w for later use!, so don't use w as temp from now
 #. on
-#: gnome-panel/drawer.c:156
+#: gnome-panel/drawer.c:157
 msgid "Enable hidebutton"
 msgstr "Habilita el botó d'amagar"
 
-#: gnome-panel/drawer.c:165
+#: gnome-panel/drawer.c:166
 msgid "Enable hidebutton arrow"
 msgstr "Habilita la fletxa del botó d'amagar"
 
-#: gnome-panel/drawer.c:183 gnome-panel/drawer.c:436 gnome-panel/menu.c:3252
+#: gnome-panel/drawer.c:184 gnome-panel/drawer.c:479 gnome-panel/menu.c:3252
 msgid "Drawer"
 msgstr "Calaix"
 
-#: gnome-panel/drawer.c:623 gnome-panel/launcher.c:730
-#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-msgid "Properties"
-msgstr "Propietats"
+#: gnome-panel/drawer.c:668 gnome-panel/launcher.c:730
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:1422 gnome-panel/menu.c:3364
+msgid "_Properties"
+msgstr "_Propietats"
 
 #: gnome-panel/foobar-widget.c:140 gnome-panel/menu.c:3547
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1271,8 +1271,7 @@ msgstr "Captura de pantalla..."
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
 
-#: gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:214
-#: gnome-panel/menu.c:3460
+#: gnome-panel/foobar-widget.c:199 gnome-panel/menu.c:3460
 msgid "Lock Screen"
 msgstr "Bloqueja la pantalla"
 
@@ -1748,16 +1747,20 @@ msgstr "Bloqueja la pantalla"
 #. <jwz> and "xscreensaver-demo"
 #.
 #: gnome-panel/logout.c:213
-msgid "Activate Screensaver"
-msgstr "Activa el protector de pantalla"
+msgid "_Activate Screensaver"
+msgstr "_Activa el protector de pantalla"
+
+#: gnome-panel/logout.c:214
+msgid "_Lock Screen"
+msgstr "B_loqueja la pantalla"
 
 #: gnome-panel/logout.c:215
-msgid "Kill Screensaver Daemon"
-msgstr "Mata el dimoni del protector de pantalla"
+msgid "_Kill Screensaver Daemon"
+msgstr "Ma_ta el dimoni del protector de pantalla"
 
 #: gnome-panel/logout.c:216
-msgid "Restart Screensaver Daemon"
-msgstr "Reinicia el dimoni del protector de pantalla"
+msgid "Restart _Screensaver Daemon"
+msgstr "Reinicia el dimoni del _protector de pantalla"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1951,6 +1954,10 @@ msgstr "Afegeix això com a menú al quadre"
 msgid "Add new item to this menu"
 msgstr "Afegeix un nou ítem a aquest menú"
 
+#: gnome-panel/menu.c:1497
+msgid "Properties"
+msgstr "Propietats"
+
 #: gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
@@ -2084,10 +2091,6 @@ msgstr "_Elimina aquest quadre"
 #: gnome-panel/menu.c:3337
 msgid "_Add to Panel"
 msgstr "_Afegeix al quadre"
-
-#: gnome-panel/menu.c:3364
-msgid "_Properties"
-msgstr "_Propietats"
 
 #: gnome-panel/menu.c:3377
 msgid "_New Panel"
