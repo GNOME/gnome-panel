@@ -1,3 +1,11 @@
+1999-05-17  Jacob Berkman  <jberk+@cmu.edu>
+
+	* gen_util/mailcheck.c (mailcheck_properties_page): make
+	seconds minimum 0 (so people can do n minutes, 0 seconds)
+	
+	* gen_util/mailcheck.c (apply_properties_callback): check
+	for time frequency of 0 here
+
 1999-05-16  Jacob Berkman  <jberk+@cmu.edu>
 
 	* gen_util/mailcheck.c (make_mailcheck_applet): save

@@ -550,6 +550,11 @@ apply_properties_callback (GtkWidget *widget, gint button_num, gpointer data)
 	
 	mc->update_freq = 1000 * (guint)(gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->sec_spin)) + 
 					 60 * gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (mc->min_spin)));
+	/* do this here since we can no longer make the seconds
+	 * minimum 1
+	 */
+	if (mc->update_freq == 0)
+		mc->update_freq = 1000;
 
 	gtk_timeout_remove (mc->mail_timeout);
 	mc->mail_timeout = gtk_timeout_add (mc->update_freq, mail_check_timeout, mc);
@@ -872,7 +877,7 @@ mailcheck_properties_page (MailCheck *mc)
 	gtk_widget_show(l);
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	
-	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 1, 60, 1, 5, 5);
+	freq_a = gtk_adjustment_new((float)((mc->update_freq/1000)%60), 0, 60, 1, 5, 5);
 	mc->sec_spin  = gtk_spin_button_new (GTK_ADJUSTMENT (freq_a), 1, 0);
 	gtk_signal_connect(GTK_OBJECT(freq_a), "value_changed",
 			   GTK_SIGNAL_FUNC(property_box_changed), mc);
