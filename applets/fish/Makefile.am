@@ -1,11 +1,11 @@
-INCLUDES =						\
-	-I$(srcdir)					\
-	-I$(srcdir)/../../libpanel-applet		\
-	-I$(top_builddir)/libpanel-applet		\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"	\
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""	\
-	$(GNOME_INCLUDEDIR)				\
-	$(WARN_CFLAGS)					\
+INCLUDES =							\
+	-I$(srcdir)						\
+	-I$(srcdir)/../../libpanel-applet			\
+	-I$(top_builddir)/libpanel-applet			\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
+	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
+	$(GNOME_INCLUDEDIR)					\
+	$(WARN_CFLAGS)						\
 	$(PANEL_CFLAGS)
 
 SUBDIRS = help

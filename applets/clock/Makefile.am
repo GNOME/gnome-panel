@@ -1,20 +1,20 @@
 SUBDIRS = help
 
-INCLUDES = 					\
-	-I$(srcdir)/../../libpanel-applet 	\
-	-I$(top_builddir)/libpanel-applet 	\
-	$(DISABLE_DEPRECATED_CFLAGS)		\
-	$(GNOME_INCLUDEDIR) 			\
-	$(WARN_CFLAGS) 				\
-	$(WNCKLET_CFLAGS) 			\
-	-DPAGER_GLADEDIR=\""$(gladedir)"\"	\
-	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"	\
-	-DDATADIR=\""$(datadir)"\"		\
-	-DLIBDIR=\""$(libdir)"\"		\
-	-DSYSCONFDIR=\""$(sysconfdir)"\"	\
-	-DPREFIX=\""$(prefix)"\"		\
-	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 
+INCLUDES = 						\
+	-I$(srcdir)/../../libpanel-applet 		\
+	-I$(top_builddir)/libpanel-applet 		\
+	$(DISABLE_DEPRECATED_CFLAGS)			\
+	$(GNOME_INCLUDEDIR) 				\
+	$(WARN_CFLAGS) 					\
+	$(WNCKLET_CFLAGS) 				\
+	-DPAGER_GLADEDIR=\""$(gladedir)"\"		\
+	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"		\
+	-DDATADIR=\""$(datadir)"\"			\
+	-DLIBDIR=\""$(libdir)"\"			\
+	-DSYSCONFDIR=\""$(sysconfdir)"\"		\
+	-DPREFIX=\""$(prefix)"\"				\
+	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
 
 DISABLE_DEPRECATED_CFLAGS =			\
 	-DG_DISABLE_DEPRECATED			\

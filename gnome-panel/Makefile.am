@@ -9,7 +9,7 @@ INCLUDES =							\
 	-I$(top_srcdir)/gnome-desktop				\
 	-I$(top_builddir)/gnome-panel				\
 	-DPANEL_DEBUG						\
-	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
+	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
 	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(STANDARD_PROPERTIES_CFLAGS)				\
