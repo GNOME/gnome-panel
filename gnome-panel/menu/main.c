@@ -222,7 +222,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 
 		pixmap = 0;
 		if (pixmap_name && g_file_exists (pixmap_name)){
-			pixmap = gnome_create_pixmap_widget (window, menuitem, item_info->small_icon);
+			pixmap = gnome_create_pixmap_widget (window, menuitem, pixmap_name);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
