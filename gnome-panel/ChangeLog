@@ -1,3 +1,15 @@
+2001-08-26  Seth Nickell  <snickell@stanford.edu>
+
+	* foobar-widget.c:
+
+	Include time.h since we use time_t structures.
+	
+	* gnome-panel-properties.c: (show_page):
+	* nothing.cP:
+
+	Call gtk_notebook_set_current_page as gtk_notebook_set_page
+	is deprecated.
+
 2001-08-18  Martin Baulig  <baulig@suse.de>
 
 	* Makefile.am: Added rules to create panel-typebuiltins.[ch].

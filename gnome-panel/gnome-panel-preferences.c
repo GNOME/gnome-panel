@@ -482,7 +482,7 @@ static void
 show_page (GtkWidget *w, gpointer data)
 {
 	GtkWidget *notebook = gtk_object_get_user_data (GTK_OBJECT (w));
-	gtk_notebook_set_page (GTK_NOTEBOOK (notebook), GPOINTER_TO_INT (data));
+	gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), GPOINTER_TO_INT (data));
 }
 
 static GtkWidget *

@@ -214,14 +214,14 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 		/*the GEGL shall not be translated*/
 		gtk_notebook_append_page (nbook, goat_darea,
 					  gtk_label_new ("GEGL"));
-		gtk_notebook_set_page(nbook,-1);
+		gtk_notebook_set_current_page(nbook,-1);
 		goat_pages = 1;
 		gtk_signal_connect(GTK_OBJECT(goat_darea),"destroy",
 				   GTK_SIGNAL_FUNC(destroy_egg),NULL);
 		gtk_signal_connect(GTK_OBJECT(goat_darea),"expose_event",
 				   GTK_SIGNAL_FUNC(goat_expose),NULL);
 	} else {
-		gtk_notebook_set_page(nbook,-1);
+		gtk_notebook_set_current_page(nbook,-1);
 	}
 	return FALSE;
 }
