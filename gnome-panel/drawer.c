@@ -227,48 +227,6 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 		gtk_widget_destroy(prop_dialog);
 }
 
-static int
-enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
-{
-	Drawer *drawer = data;
-	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
-
-	if (!xstuff_is_compliant_wm ())
-		gdk_window_raise (drawer->drawer->window);
-
-	if (basep->moving)
-		return FALSE;
-	
-	if ((basep->state != BASEP_AUTO_HIDDEN) ||
-	    (event->detail == GDK_NOTIFY_INFERIOR) ||
-	    (basep->mode != BASEP_AUTO_HIDE))
-		return FALSE;
-
-	if (basep->leave_notify_timer_tag != 0) {
-		gtk_timeout_remove (basep->leave_notify_timer_tag);
-		basep->leave_notify_timer_tag = 0;
-	}
-
-	basep_widget_autoshow (basep);
-
-	return FALSE;
-}
-
-static int
-leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
-{
-	Drawer *drawer = data;
-	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
-
-	if (event->detail == GDK_NOTIFY_INFERIOR)
-		return FALSE;
-
-	basep_widget_queue_autohide (basep);
-
-	return FALSE;
-	
-}
-
 static gboolean
 focus_in_drawer (GtkWidget *widget, GdkEventFocus *event, gpointer data)
 {
@@ -639,10 +597,6 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 			    G_CALLBACK (drawer_click), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "destroy",
 			    G_CALLBACK (destroy_drawer), drawer);
-	g_signal_connect (G_OBJECT (drawer->button), "enter_notify_event",
-			    G_CALLBACK (enter_notify_drawer), drawer);
-	g_signal_connect (G_OBJECT (drawer->button), "leave_notify_event",
-			    G_CALLBACK (leave_notify_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "focus_in_event",
 			    G_CALLBACK (focus_in_drawer), drawer);
 	g_signal_connect (G_OBJECT (drawer->button), "focus_out_event",
@@ -652,7 +606,7 @@ create_drawer_applet (GtkWidget   *drawer_panel,
 	g_signal_connect (G_OBJECT (drawer->drawer), "key_press_event",
 			    G_CALLBACK (key_press_drawer_widget), drawer);
 
-	g_object_set_data (G_OBJECT (drawer_panel), DRAWER_PANEL_KEY, drawer);
+	drawer_widget_set_drawer (DRAWER_WIDGET (drawer_panel), drawer);
 	gtk_widget_queue_resize (GTK_WIDGET (drawer_panel));
 
 	return drawer;

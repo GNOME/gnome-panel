@@ -6,8 +6,6 @@
 
 G_BEGIN_DECLS
 
-#define DRAWER_PANEL_KEY "drawer_panel"
-
 typedef struct {
 	char         *pixmap;
 	char         *tooltip;

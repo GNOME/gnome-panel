@@ -92,6 +92,10 @@ void		drawer_widget_open_drawer	(DrawerWidget *panel,
 void		drawer_widget_close_drawer	(DrawerWidget *panel,
 						 GtkWidget *parentp);
 
+void    drawer_widget_set_drawer (DrawerWidget *widget,
+				  Drawer       *drawer);
+Drawer *drawer_widget_get_drawer (DrawerWidget *widget);
+
 G_END_DECLS
 
 #endif

@@ -1,3 +1,32 @@
+2002-12-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #93541, panel hogging the CPU when hide_delay
+	and show_delay are zero.
+
+	* basep-widget.c:
+	(find_non_drawer_parent_panel): recurse up through the
+	drawers to find the topmost panel.
+	(basep_leave_notify): don't queue an autohide on a drawer,
+	queue it on the topmost non-drawer parent panel instead.
+	(basep_widget_queue_autoshow): use show_delay not hide_delay.
+	Also, queue an idle instead of a timeout if the delay is
+	<= 0.
+	(basep_widget_autohide): don't return TRUE at silly times
+	where the autohide will be re-queued anyway.
+	(basep_widget_queue_autohide): Queue an idle instead of
+	a timeout if the delay is <= 0.
+
+	* drawer-widget.[ch]:
+	(drawer_pos_hidebutton_click): use drawer_widget_get_drawer().
+	(drawer_widget_set_drawer), (drawer_widget_get_drawer): impl.
+	small wrapper for the g_object_get/set_data so its in the
+	one location.
+
+	* drawer.c: (create_drawer_applet):
+	use drawer_widget_set_drawer().
+
+	* drawer.h: kill DRAWER_PANEL_KEY.
+
 2002-12-20  Dennis Cranston <dennis_cranston@yahoo.com>
 
 	* menu.c: (about_cb): Fix previous commit so build

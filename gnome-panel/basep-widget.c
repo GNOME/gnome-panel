@@ -30,8 +30,6 @@
 #include "panel-gconf.h"
 #include "panel-stock-icons.h"
 
-#undef BASEP_WIDGET_DEBUG
-
 extern GSList *panel_list;
 
 extern int panels_to_sync;
@@ -416,11 +414,6 @@ basep_widget_size_allocate (GtkWidget *widget,
 	/*we actually want to ignore the size_reqeusts since they
 	  are sometimes a cube for the flicker prevention*/
 
-#ifdef BASEP_WIDGET_DEBUG
-	if (basep->moving)
-		g_warning ("size_allocate whilst moving");
-#endif
-
 	gtk_widget_size_request (basep->ebox, &chreq);
 
 	if (klass->get_size) {
@@ -771,10 +764,6 @@ basep_pos_get_hide_size (BasePWidget *basep,
 			 PanelOrient hide_orient,
 			 int *w, int *h)
 {
-
-#ifdef BASEP_WIDGET_DEBUG
-	printf ("basep_pos_get_hide_size %d\n", global_config.minimized_size);
-#endif
 	switch (hide_orient) {
 	case PANEL_ORIENT_UP:
 	case PANEL_ORIENT_DOWN:
@@ -857,21 +846,35 @@ basep_widget_focus_in_event (GtkWidget     *widget,
 	return GTK_WIDGET_CLASS (basep_widget_parent_class)->focus_in_event (widget, event);
 }
 
+static BasePWidget *
+find_non_drawer_parent_panel (BasePWidget *basep)
+{
+	BasePWidget *retval;
+	Drawer      *drawer;
+
+	g_assert (DRAWER_IS_WIDGET (basep));
+
+	drawer = drawer_widget_get_drawer (DRAWER_WIDGET (basep));
+
+	retval = BASEP_WIDGET (PANEL_WIDGET (drawer->button->parent)->panel_parent);
+
+	if (DRAWER_IS_WIDGET (retval))
+		retval = find_non_drawer_parent_panel (retval);
+
+	return retval;
+}
+
 static gboolean
 basep_leave_notify (GtkWidget *widget,
 		    GdkEventCrossing *event)
 {
 	BasePWidget *basep = BASEP_WIDGET (widget);
 
-#ifdef BASEP_WIDGET_DEBUG
-	if (basep->moving)
-		g_warning ("moving in leave_notify");
-
-	if (basep->leave_notify_timer_tag != 0)
-		g_warning ("timeout already queued");
-#endif
 	if (event->detail == GDK_NOTIFY_INFERIOR)
 		return FALSE;
+
+	if (DRAWER_IS_WIDGET (basep))
+		basep = find_non_drawer_parent_panel (basep);
 	
 	basep_widget_queue_autohide (basep);
 
@@ -1115,10 +1118,6 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 		default:
 				step = PANEL_MEDIUM_STEP_SIZE;
 	}
-
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("do_showing with step %d", step);
-#endif
 
 	wid = GTK_WIDGET(basep);
 	
@@ -1935,15 +1934,11 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 	g_assert ( (state == BASEP_HIDDEN_RIGHT) ||
 		   (state == BASEP_HIDDEN_LEFT) );
 
-	if((basep->state != BASEP_SHOWN))
+	if ((basep->state != BASEP_SHOWN))
 		return;
 
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("explicit_hide whilst moving");
-#endif
+	if (basep->moving)
 		return;
-	}
 
 	basep->moving = TRUE;
 
@@ -2009,12 +2004,8 @@ basep_widget_explicit_show (BasePWidget *basep)
 	      basep->state != BASEP_HIDDEN_RIGHT))
 		return;
  
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("explicit_show whilst moving");
-#endif
+	if (basep->moving)
 		return;
-	}
 
 	basep->moving = TRUE;
 
@@ -2059,12 +2050,8 @@ basep_widget_autoshow (gpointer data)
 
 	g_return_val_if_fail (BASEP_IS_WIDGET(basep), FALSE);
 
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("autoshow whilst moving");
-#endif
+	if (basep->moving)
 		return TRUE;
-	}
 	
 	if ( (basep->mode != BASEP_AUTO_HIDE) ||
 	     (basep->state != BASEP_AUTO_HIDDEN))
@@ -2132,16 +2119,13 @@ basep_widget_queue_autoshow (BasePWidget *basep)
             (basep->state == BASEP_SHOWN))
                 return;
 
-	if (global_config.hide_delay == 0) {
-		/* set up our idle for popup. */
+	if (global_config.show_delay <= 0)
 		basep->enter_notify_timer_tag =
 			g_idle_add (basep_widget_autoshow, basep);
-	} else {
-		/* set up our delay for popup. */
+	else
 		basep->enter_notify_timer_tag =
 			g_timeout_add (global_config.show_delay,
 				       basep_widget_autoshow, basep);
-	} 
 }
 
 gboolean
@@ -2152,23 +2136,21 @@ basep_widget_autohide (gpointer data)
 
 	g_return_val_if_fail (BASEP_IS_WIDGET(basep), TRUE);
 
+	if (basep->drawers_open > 0)
+		return FALSE;
+
+	if (basep->state != BASEP_SHOWN ||
+	    basep->mode != BASEP_AUTO_HIDE ||
+	    panel_widget_is_cursor (PANEL_WIDGET (basep->panel), 0))
+		return FALSE;
+
 	if (basep->autohide_inhibit)
 		return TRUE;
-	
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_warning ("autohide whilst moving");
-#endif
-		return TRUE;
-	}
 
-	if ( (basep->state != BASEP_SHOWN) ||
-	     (basep->mode != BASEP_AUTO_HIDE) ||
-	     (panel_widget_is_cursor(PANEL_WIDGET(basep->panel), 0)) ) {
+	if (basep->moving)
 		return TRUE;
-	}
-	
-	if (panel_applet_in_drag || basep->drawers_open>0)
+
+	if (panel_applet_in_drag)
 		return TRUE;
 
 	if (!gdk_pointer_is_grabbed ()) {
@@ -2241,7 +2223,7 @@ basep_widget_queue_autohide (BasePWidget *basep)
             basep->state != BASEP_SHOWN)
                 return;
                 
-	if (!global_config.hide_delay)
+	if (global_config.hide_delay <= 0)
 		basep->leave_notify_timer_tag =
 			g_idle_add (basep_widget_autohide, basep);
 	else

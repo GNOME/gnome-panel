@@ -213,8 +213,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 static void
 drawer_pos_hidebutton_click (BasePWidget *basep)
 {
-	Drawer *drawer = g_object_get_data (G_OBJECT (basep),
-					    DRAWER_PANEL_KEY);
+	Drawer *drawer = drawer_widget_get_drawer (DRAWER_WIDGET (drawer));
 	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
 	GtkWidget *parent = panel->panel_parent;
 
@@ -483,4 +482,17 @@ drawer_widget_new (const char          *panel_id,
 				rotate_pixmap_bg,
 				back_color);
 	return GTK_WIDGET (drawer);
+}
+
+void
+drawer_widget_set_drawer (DrawerWidget *widget,
+			  Drawer       *drawer)
+{
+	g_object_set_data (G_OBJECT (widget), "drawer-panel", drawer);
+}
+
+Drawer *
+drawer_widget_get_drawer (DrawerWidget *widget)
+{
+	return g_object_get_data (G_OBJECT (widget), "drawer-panel");
 }
