@@ -2,11 +2,11 @@
   <title>Ur-applet</title>
 
    <para>
-   <application>Ur</application>-appleten, vist i <xref
+   <application>Ur</application>-appletten, vist i <xref
    linkend="clockapplet-fig">, er en simpel applet som viser
    klokken (og hvis valgt også datoen) i forskellige formater.  For
    at tilføje denne applet til et <interface>Panel</interface>, 
-   højre-klik da på <interface>panelet</interface> og vælg
+   højre-klik på <interface>panelet</interface> og vælg
    <menuchoice>
     <guimenu>Panel</guimenu>
     <guisubmenu>Tilføj til panel</guisubmenu>
@@ -30,36 +30,36 @@
   <sect2 id="clock-usage">
    <title>Brug</title>
    <para>
-    <application>Ur</application>-appletten kræver ingen bruger
-    indvinding. You may optionally configure it, as described below. 
+    <application>Ur</application>-appletten kræver ingen
+    brugerindblanding. Du kan eventuelt konfigurere den som
+    beskrevet nedenfor.
    </para>
 
    <para>
-    Right-clicking on the applet brings up a menu containing the
-    following items:
+    Et højre-klik på appletten frembringer følgende menu:
     <itemizedlist>
 
      <listitem>
       <para>
-       <guimenuitem>Properties&hellip;</guimenuitem> &mdash;
-       opens the <link linkend="clock-prefs">
-       <guilabel>Properties</guilabel></link> dialog.
+       <guimenuitem>Egenskaber&hellip;</guimenuitem> &mdash;
+       åbner <link linkend="clock-prefs">
+       <guilabel>Egenskaber</guilabel></link>-dialogen.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       <guimenuitem>Help</guimenuitem> &mdash;
-       displays this document.
+       <guimenuitem>Hjælp</guimenuitem> &mdash;
+       viser dette dokument.
       </para>
      </listitem>
 
      <listitem>
-      <para>
-       <guimenuitem>About&hellip;</guimenuitem> &mdash;
-       shows basic information about <application>Clock
-       Applet</application>, including the applet's version and the
-       author's name.
+     <para>
+       <guimenuitem>Om&hellip;</guimenuitem> &mdash;
+       viser basal information om 
+       <application>Ur-appletten</application>, deriblandt
+       applettens udgave og forfatterens navn.
       </para>
      </listitem>
 
@@ -72,90 +72,96 @@
   <sect2 id="clock-prefs">
     <title>Customization</title>
     <para>
-      You can customize <application>Clock</application>
-      applet by right-clicking on it and choosing
-      <guimenuitem>Properties&hellip;</guimenuitem>. This will open the
-      <interface>Properties</interface> dialog(shown in <xref
-      linkend="clock-settings-fig">), which allows you to
-      change various settings.
+      Du kan tilrette
+      <application>Ur</application>-appletten ved at
+      højre-klikke på den og vælge
+      <guimenuitem>Egenskaber&hellip;</guimenuitem>. Det vil
+      åbne <interface>Egenskaber</interface>-dialogen (vist
+      i <xref linkend="clock-settings-fig">), der giver dig
+      mulighed for at ændre visse indstillinger.
     </para>
 
     <figure id="clock-settings-fig">
-     <title>Properties dialog</title>
+     <title>Egenskaber-dialog</title>
      <screenshot>
-      <screeninfo>Properties dialog</screeninfo>
+      <screeninfo>Egenskaber-dialog</screeninfo>
       <graphic format="png" fileref="clock_settings"
       srccredit="muet">
       </graphic>
      </screenshot>
     </figure>
 
-    <para>
-     The properties are:
+     Egenskaberne er:
      <itemizedlist>
 
       <listitem>
        <para>
-        Time Format &mdash; Select either <guilabel>12 hour</guilabel>
-        format for <quote>AM/PM</quote> formatted time, or
-        <guilabel>24 hour</guilabel> for a 24 hour clock.
+        Tidsformat &mdash; Vælg enten <guilabel>12
+        timer</guilabel> for engelsk stil med 
+        <quote>AM/PM</quote>, eller <guilabel>24
+        timer</guilabel> for et 24 timers ur.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        Show date in applet &mdash; Select this to show the date
-        inside the applet.
+        Vis dato i applet &mdash; Vælg dette for at vise
+        datoen i appletten.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        Show date in tooltip &mdash; Select this to show the date in
-        the tooltip that pops up when the mouse is briefly left over
-        the applet.
+        Vis dato i værktøjstip &mdash;
+        Vælg dette for at vise datoen i værktøjstippet, der
+        dukker op, når musen et kort øjeblik placeres over
+        appletten.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        Use GMT &mdash; Select this to show the Greenwich Mean Time
-        instead of the local time.
+        Brug GMT &mdash; Vælg dette for at vise 
+        <quote>Greenwich Mean Time</quote> i stedet for
+        lokal tid.
        </para>
       </listitem>
 
       <listitem>
        <para>
-        Unix time &mdash; Select this to show the time, in seconds,
-        that has elapsed since Jan 1, 1970.
+        Unix-tid &mdash; Vælg dette for at vise tiden som
+        antal sekunder siden 1. januar 1970.
        </para>
       </listitem>
 
      </itemizedlist>
     </para>
 
-    <para> 
-      After you have made all the changes you want, click on
-      <guibutton>Ok</guibutton> to apply the changes and close the
-      <interface>Properties</interface> dialog. To cancel the changes
-      and return to previous values, click the
-      <guibutton>Close</guibutton> button.
+   <para> 
+      Efter du har foretaget alle de ændringer du vil, klik
+      <guibutton>Ok</guibutton> fir at tage ændringerne i
+      brug og lukke
+      <interface>Egenskaber</interface>-dialogen. Klik
+      <guibutton>Luk</guibutton> for at annullere
+      ændringerne og gå tilbage til de tidligere
+      indstillinger.
     </para>
 
    <note>
-    <title>Indstil tiden</title>
+    <title>Stil uret</title>
     <para>
-     <application>Clock</application> applet only displays the time;
-     it does not allow you to set the time.  In order to set the time
-     on a Unix or Linux system, you should use the
-     <command>date</command> command. For example, to set the time to
-     11:43:01PM and the date to April 4, use <command>date --set="Apr
-     4 23:43:01"</command>. Note that you must be logged in as root to
-     set the time. To learn more about the <command>date</command> command,
-     type <command>man date</command> at a terminal prompt. You may
-     set your timezone using the <command>timeconfig</command> or
-     <command>tzselect</command> commands on some Linux
-     distributions.
+     <application>Ur</application>-appletten viser kun
+     klokken. Den giver dig ikke adgang til at stille uret.
+     For at stille uret i et Unix- eller Linux-system skal
+     du være systemoperatør (<quote>root</quote>) og bruge
+     <command>date</command>-kommandoen. For, for eksempel,
+     at sætte uret til 23:43:01 den 4. april, brug 
+     <command>date --set="Apr 4 23:43:01"</command>. For
+     lære mere om <command>date</command>-kommandoen, tast 
+     <command>man date</command> på en kommandolinie. Du kan
+     sætte tidszonen med <command>timeconfig</command>-
+     eller <command>tzselect</command>-kommandoerne i nogle
+     Linux-distributioner.
     </para>
    </note>
 
