@@ -179,7 +179,9 @@ panel_struts_allocation_overlapped (PanelStrut   *strut,
 }
 
 static gboolean
-panel_struts_allocate_struts (PanelToplevel *toplevel)
+panel_struts_allocate_struts (PanelToplevel *toplevel,
+			      GdkScreen     *screen,
+			      int            monitor)
 {
 	GSList   *allocated = NULL;
 	GSList   *l;
@@ -193,6 +195,9 @@ panel_struts_allocate_struts (PanelToplevel *toplevel)
 		int           monitor_width, monitor_height;
 		gboolean      moved_down;
 		int           skip;
+
+		if (strut->screen != screen || strut->monitor != monitor)
+			continue;
 
 		panel_struts_get_monitor_geometry (strut->screen, strut->monitor,
 						   &monitor_x, &monitor_y,
@@ -428,21 +433,26 @@ panel_struts_register_strut (PanelToplevel    *toplevel,
 	panel_struts_list = g_slist_sort (panel_struts_list,
 					  (GCompareFunc) panel_struts_compare);
 
-	return panel_struts_allocate_struts (toplevel);
+	return panel_struts_allocate_struts (toplevel, screen, monitor);
 }
 
 void
 panel_struts_unregister_strut (PanelToplevel *toplevel)
 {
 	PanelStrut *strut;
+	GdkScreen  *screen;
+	int         monitor;
 
 	if (!(strut = panel_struts_find_strut (toplevel)))
 		return;
 
+	screen  = strut->screen;
+	monitor = strut->monitor;
+
 	panel_struts_list = g_slist_remove (panel_struts_list, strut);
 	g_free (strut);
 
-	panel_struts_allocate_struts (toplevel);
+	panel_struts_allocate_struts (toplevel, screen, monitor);
 }
 
 gboolean

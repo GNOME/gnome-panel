@@ -1,5 +1,16 @@
 2003-08-08  Mark McLoughlin  <mark@skynet.ie>
 
+	Fixes multihead breakage in bug #119379.
+
+	* panel-struts.c:
+	(panel_struts_allocate_struts): add screen and monitor
+	args and only do an allocation run for toplevels on that
+	screen/monitor.
+	(panel_struts_register_strut),
+	(panel_struts_unregister_strut): upd.
+
+2003-08-08  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-struts.[ch]:
 	(panel_struts_intersect),
 	(panel_struts_allocation_overlapped),
