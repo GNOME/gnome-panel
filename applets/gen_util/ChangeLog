@@ -1,3 +1,16 @@
+2002-03-09  Johan Dahlin  <jdahlin@telia.com>
+
+	reviewed by Mark McLoughlin <mark@skynet.ie>
+
+	* tasklist.c: Get rid of inline xml ui
+	(fill_tasklist_applet): Call panel_applet_setup_menu_from_file
+	instead of using inline xml so the menu items is translated
+	correctly.
+
+	* Makefile.am (ui_DATA): Add GNOME_TasklistApplet.xml
+
+	* GNOME_TasklistApplet.xml: New file
+
 2002-03-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* tasklist.c: (display_help_dialog): update for new docs names

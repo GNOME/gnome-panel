@@ -168,18 +168,6 @@ static const BonoboUIVerb tasklist_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
-static const char tasklist_menu_xml [] =
-	"<popup name=\"button3\">\n"
-	"   <menuitem name=\"Tasklist Properties Item\" verb=\"TasklistProperties\" _label=\"Properties ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-properties\"/>\n"
-	"   <menuitem name=\"Tasklist Help Item\" verb=\"TasklistHelp\" _label=\"Help\"\n"
-	"             pixtype=\"stock\" pixname=\"gtk-help\"/>\n"
-	"   <menuitem name=\"Tasklist About Item\" verb=\"TasklistAbout\" _label=\"About ...\"\n"
-	"             pixtype=\"stock\" pixname=\"gnome-stock-about\"/>\n"
-	"</popup>\n";
-
-
-
 static void
 tasklist_properties_update_content_radio (TasklistData *tasklist)
 {
@@ -453,7 +441,12 @@ fill_tasklist_applet(PanelApplet *applet)
 			  G_CALLBACK (applet_change_background),
 			  tasklist);
 	
-	panel_applet_setup_menu (PANEL_APPLET (tasklist->applet), tasklist_menu_xml, tasklist_menu_verbs, tasklist);
+	panel_applet_setup_menu_from_file (PANEL_APPLET (tasklist->applet),
+					   NULL,
+					   "GNOME_TasklistApplet.xml",
+					   NULL,
+					   tasklist_menu_verbs, 
+					   tasklist);
 	
 	return TRUE;
 }

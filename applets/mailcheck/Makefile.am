@@ -62,7 +62,8 @@ uidir 		= $(datadir)/gnome-2.0/ui
 ui_DATA		= \
 	GNOME_ClockApplet.xml		\
 	GNOME_MailCheckApplet.xml	\
-	GNOME_PagerApplet.xml
+	GNOME_PagerApplet.xml		\
+	GNOME_TasklistApplet.xml	
 	
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
