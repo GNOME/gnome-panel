@@ -248,7 +248,9 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 						    _("Failed to load this program!\n%s"),
 						    error->message);
 				g_clear_error (&error);
-			} else if ( ! gnome_desktop_item_launch (ditem, 0, NULL,
+			} else if ( ! gnome_desktop_item_launch (ditem,
+								 NULL /* file_list */,
+								 0 /* flags */,
 								 &error)) {
                                 panel_error_dialog ("failed_to_load_desktop",
 						    _("Failed to load this program!\n%s"),

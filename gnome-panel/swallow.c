@@ -78,7 +78,10 @@ swallow_launch (Swallow *swallow)
 			char *curdir = g_get_current_dir ();
 			chdir (g_get_home_dir ());
 
-			gnome_desktop_item_launch (item, 0, NULL, NULL);
+			gnome_desktop_item_launch (item,
+						   NULL /* file_list */,
+						   0 /* flags */,
+						   NULL /* error */);
 			/* FIXME: handle_errors */
 			gnome_desktop_item_unref (item);
 

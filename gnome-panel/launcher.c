@@ -89,7 +89,7 @@ launch_url (Launcher *launcher)
 
 
 static void
-launch (Launcher *launcher, int argc, char *argv[])
+launch (Launcher *launcher)
 {
 	GnomeDesktopItem *item;
 	GnomeDesktopItemType type;
@@ -104,7 +104,10 @@ launch (Launcher *launcher, int argc, char *argv[])
 		launch_url (launcher);
 	} else {
 		GError *error = NULL;
-		gnome_desktop_item_launch (item, argc, argv, &error);
+		gnome_desktop_item_launch (item,
+					   NULL /* file_list */,
+					   0 /* flags */,
+					   &error);
 		if (error != NULL) {
 			panel_error_dialog ("cannot_launch_icon",
 					    _("Cannot launch icon\n%s"),
@@ -131,7 +134,7 @@ launch (Launcher *launcher, int argc, char *argv[])
 static void
 launch_cb (GtkWidget *widget, gpointer data)
 {
-	launch (data, 0, NULL);
+	launch (data);
 }
 
 static void
@@ -144,20 +147,18 @@ drag_data_received_cb (GtkWidget        *widget,
 		       guint             time,
 		       Launcher         *launcher)
 {
-	GList *list;
 	GError *error = NULL;
 
-	list = gnome_vfs_uri_list_parse ((char *)selection_data->data);
-
-	gnome_desktop_item_drop_uri_list (launcher->ditem, list, &error);
+	gnome_desktop_item_drop_uri_list (launcher->ditem,
+					  (const char *)selection_data->data,
+					  0 /* flags */,
+					  &error);
 	if (error != NULL) {
 		panel_error_dialog ("cannot_launch_icon",
 				    _("Cannot launch icon\n%s"),
 				    error->message);
 		g_clear_error (&error);
 	}
-
-	gnome_vfs_uri_list_free (list);
 
 	gtk_drag_finish (context, TRUE, FALSE, time);
 }
