@@ -40,8 +40,8 @@ status_docklet_get_type (void)
 			sizeof (StatusDockletClass),
 			(GtkClassInitFunc) status_docklet_class_init,
 			(GtkObjectInitFunc) status_docklet_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
 			NULL
 		};
 

@@ -791,44 +791,45 @@ static gchar *
 extract_filename (const gchar* uri)
 {
 	/* file uri with a hostname */
-	if (strncmp(uri, "file://", strlen("file://"))==0) {
-		char *hostname = g_strdup(&uri[strlen("file://")]);
-		char *p = strchr(hostname,'/');
+	if (strncmp (uri, "file://", strlen ("file://")) == 0) {
+		char *hostname = g_strdup (&uri[strlen("file://")]);
+		char *p = strchr (hostname, '/');
 		char *path;
 		char localhostname[1024];
 		/* if we can't find the '/' this uri is bad */
-		if(!p) {
-			g_free(hostname);
+		if(p == NULL) {
+			g_free (hostname);
 			return NULL;
 		}
 		/* if no hostname */
-		if(p==hostname)
+		if(p == hostname)
 			return hostname;
 
-		path = g_strdup(p);
+		path = g_strdup (p);
 		*p = '\0';
 
 		/* if really local */
-		if(g_strcasecmp(hostname,"localhost")==0) {
-			g_free(hostname);
+		if (strcasecmp_no_locale (hostname, "localhost") == 0 ||
+		    strcasecmp_no_locale (hostname, "localhost.localdomain") == 0) {
+			g_free (hostname);
 			return path;
 		}
 
 		/* ok get the hostname */
-		if(gethostname(localhostname,
-			       sizeof(localhostname)) < 0) {
-			strcpy(localhostname,"");
+		if (gethostname (localhostname,
+				 sizeof (localhostname)) < 0) {
+			strcpy (localhostname, "");
 		}
 
 		/* if really local */
-		if(localhostname[0] &&
-		   g_strcasecmp(hostname,localhostname)==0) {
-			g_free(hostname);
+		if (localhostname[0] &&
+		    strcasecmp_no_locale (hostname, localhostname) == 0) {
+			g_free (hostname);
 			return path;
 		}
 		
-		g_free(hostname);
-		g_free(path);
+		g_free (hostname);
+		g_free (path);
 		return NULL;
 
 	/* if the file doesn't have the //, we take it containing 

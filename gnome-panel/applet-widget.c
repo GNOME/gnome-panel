@@ -197,8 +197,9 @@ applet_widget_get_type (void)
 			sizeof (AppletWidgetClass),
 			(GtkClassInitFunc) applet_widget_class_init,
 			(GtkObjectInitFunc) wapplet_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
+			NULL
 		};
 
 		applet_widget_type = gtk_type_unique (gtk_plug_get_type (), &applet_widget_info);

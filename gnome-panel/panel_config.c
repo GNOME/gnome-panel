@@ -12,8 +12,6 @@
 #include <config.h>
 #include <gnome.h>
 
-
-
 #include "panel-include.h"
 
 #include <gdk-pixbuf/gdk-pixbuf.h>

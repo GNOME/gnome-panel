@@ -516,7 +516,7 @@ gwm_thumb_nail_update_drawable (GwmThumbNail *nail,
 #include <X11/extensions/XShm.h>
 #include <sys/types.h>
 #include <sys/shm.h>
-#endif	USE_SHM
+#endif	/* USE_SHM */
 
 GdkImage*
 gdk_image_new_shared_with_pixmap (GdkWindow  *window,
