@@ -13,9 +13,11 @@ CORBA_SOURCES = 		\
 	gnome-panel.cc		\
 	gnome-panel.h
 
+BUILT_SOURCES = $(CORBA_SOURCES)
+
 gnome-panel.cc: gnome-panel.idl
-	idl gnome-panel.idl
-	
+	idl $(srcdir)/gnome-panel.idl
+
 panel_SOURCES = 		\
 	drawer.c  		\
 	drawer.h  		\
