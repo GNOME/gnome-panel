@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: system-tray-applet HEAD\n"
-"POT-Creation-Date: 2002-12-06 11:39+0100\n"
+"POT-Creation-Date: 2002-12-10 13:27+1300\n"
 "PO-Revision-Date: 2002-12-06 11:38+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -14,36 +14,22 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:79
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
+#: applets/notification_area/main.c:80
 #, c-format
-msgid "%s the GNOME Fish"
-msgstr "%s, der GNOME Fisch"
+msgid "There was an error displaying help: %s"
+msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
 
-#: applets/fish/fish.c:80
-#, c-format
-msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "%s, der GNOME Fisch, ein zeitgenössisches Orakel"
-
-#: applets/fish/fish.c:119
-msgid "GNOME Fish, the fortune teller"
-msgstr "GNOME-Fisch, der Wahrsager"
-
-#: applets/fish/fish.c:512 applets/fish/fish.c:1251
-#, no-c-format
-msgid "%s the Fish"
-msgstr "%s, der Fisch"
-
-#: applets/fish/fish.c:517
-#, no-c-format
-msgid "%s the GNOME Fish Says:"
-msgstr "%s, der GNOME Fisch, sagt:"
-
-#: applets/fish/fish.c:599
-#, c-format
+#: applets/fish/fish.c:194
+#, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of %s for anything\n"
+"We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Warnung:  Dieser Befehl scheint in der Tat irgendwie nützlich zu sein.\n"
@@ -52,80 +38,12 @@ msgstr ""
 "Wir bitten Sie nachdrücklich, %s nicht für etwas zu verwenden,\n"
 "das dieses Applet irgendwie »praktisch« oder »nützlich« machen könnte."
 
-#: applets/fish/fish.c:749
-msgid "GNOME Fish Preferences"
-msgstr "Einstellungen des GNOME-Fisches"
+#: applets/fish/fish.c:378 applets/fish/fish.c:536
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s, der Fisch"
 
-#: applets/fish/fish.c:759
-msgid "_Name of GNOME fish:"
-msgstr "_Name des GNOME-Fisches:"
-
-#: applets/fish/fish.c:776
-msgid "_Animation filename:"
-msgstr "Name der Animations_datei:"
-
-#: applets/fish/fish.c:778 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
-msgid "Browse"
-msgstr "Auswählen"
-
-#: applets/fish/fish.c:794
-msgid "Command to _execute when fish is clicked:"
-msgstr "Beim Klick auf den Fisch _auszuführender Befehl:"
-
-#: applets/fish/fish.c:811
-msgid "Frame_s in animation:"
-msgstr "_Einzelbildanzahl der Animation:"
-
-#: applets/fish/fish.c:829
-msgid "Pause _per frame (s):"
-msgstr "_Pause pro Einzelbild (in Sekunden):"
-
-#: applets/fish/fish.c:844
-msgid "_Rotate on vertical panels"
-msgstr "Auf vertikalen Panels _gedreht darstellen"
-
-#: applets/fish/fish.c:903
-msgid "Unable to get the name of the command to execute"
-msgstr "Name des auszuführenden Befehls konnte nicht erhalten werden"
-
-#: applets/fish/fish.c:919
-msgid "Unable to locate the command to execute"
-msgstr "Auszuführender Befehl nicht gefunden."
-
-#: applets/fish/fish.c:1048
-#, c-format
-msgid ""
-"Unable to execute '%s'\n"
-"\n"
-"Details: %s"
-msgstr ""
-"»%s« konnte nicht ausgeführt werden\n"
-"\n"
-"Details: %s"
-
-#: applets/fish/fish.c:1068
-msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
-"\n"
-"Please refer to fish properties dialog."
-msgstr ""
-"Sie haben »fortune« oder das angegebene Programm, das aufgerufen werden "
-"soll, nicht installiert.\n"
-"\n"
-"Bitte orientieren Sie sich an dem Dialog zum Einstellen der Eigenschaften "
-"des Fischs."
-
-#: applets/fish/fish.c:1083
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"Das Wasser muss gewechselt werden!\n"
-"(Schauen Sie auf das heutige Datum)"
-
-#: applets/fish/fish.c:1252
+#: applets/fish/fish.c:379
 #, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -139,14 +57,111 @@ msgstr ""
 "erwischt werden, hat sich er sofort einer psychiatrischen Untersuchung zu "
 "unterziehen."
 
-#: applets/fish/fish.c:1276
+#: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(mit etwas Hilfe von George)"
 
-#: applets/fish/fish.c:1294
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Fisch"
+
+#: applets/fish/fish.c:448
+#, c-format
+msgid "%s the GNOME Fish"
+msgstr "%s, der GNOME Fisch"
+
+#: applets/fish/fish.c:449
+#, c-format
+msgid "%s the GNOME Fish, a contemporary oracle"
+msgstr "%s, der GNOME Fisch, ein zeitgenössisches Orakel"
+
+#: applets/fish/fish.c:496
+msgid "Unable to get the name of the command to execute"
+msgstr "Name des auszuführenden Befehls konnte nicht erhalten werden"
+
+#: applets/fish/fish.c:513
+msgid "Unable to locate the command to execute"
+msgstr "Auszuführender Befehl nicht gefunden."
+
+#: applets/fish/fish.c:541
+#, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "%s, der GNOME Fisch, sagt:"
+
+#: applets/fish/fish.c:666
+#, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"»%s« konnte nicht ausgeführt werden\n"
+"\n"
+"Details: %s"
+
+#: applets/fish/fish.c:687
+msgid ""
+"You do not have fortune installed or you have not specified a program to "
+"run.\n"
+"\n"
+"Please refer to fish properties dialog."
+msgstr ""
+"Sie haben »fortune« oder das angegebene Programm, das aufgerufen werden "
+"soll, nicht installiert.\n"
+"\n"
+"Bitte orientieren Sie sich an dem Dialog zum Einstellen der Eigenschaften "
+"des Fischs."
+
+#: applets/fish/fish.c:1289
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Das Wasser muss gewechselt werden!\n"
+"(Schauen Sie auf das heutige Datum)"
+
+#: applets/fish/fish.c:1358
+msgid "GNOME Fish, the fortune teller"
+msgstr "GNOME-Fisch, der Wahrsager"
+
+#: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+msgid "Browse"
+msgstr "Auswählen"
+
+#: applets/fish/fish.glade.h:3
+msgid "Command to _execute when fish is clicked:"
+msgstr "Beim Klick auf den Fisch _auszuführender Befehl:"
+
+#: applets/fish/fish.glade.h:4
+msgid "Frame_s in animation:"
+msgstr "_Einzelbildanzahl der Animation:"
+
+#: applets/fish/fish.glade.h:5
+#, fuzzy
+msgid "GNOME FIsh Preferences"
+msgstr "Einstellungen des GNOME-Fisches"
+
+#: applets/fish/fish.glade.h:6
+msgid "Pause _per frame (s):"
+msgstr "_Pause pro Einzelbild (in Sekunden):"
+
+#: applets/fish/fish.glade.h:7
+msgid "_Animation filename:"
+msgstr "Name der Animations_datei:"
+
+#: applets/fish/fish.glade.h:8
+msgid "_Name of GNOME fish:"
+msgstr "_Name des GNOME-Fisches:"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Rotate on vertical panels"
+msgstr "Auf vertikalen Panels _gedreht darstellen"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -267,15 +282,6 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
-#: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:123
-#: applets/gen_util/tasklist.c:762 applets/notification_area/main.c:80
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Beim Anzeigen der Hilfe ist ein Fehler aufgetreten: %s"
-
 #: applets/gen_util/clock.c:945
 msgid "Clock Preferences"
 msgstr "Einstellungen der Uhr"
@@ -326,14 +332,14 @@ msgstr ""
 "Matthias Warkus <mawarkus@gnome.org>\n"
 "Christian Neumair <chris@gnome-de.org>"
 
-#: applets/gen_util/clock.c:1192
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1192
 msgid "Clock"
 msgstr "Uhr"
 
-#: applets/gen_util/clock.c:1193 applets/gen_util/mailcheck.c:1746
-#: applets/gen_util/printer.c:354
-msgid "(C) 1998 Free Software Foundation, Inc."
+#: applets/gen_util/clock.c:1193
+#, fuzzy
+msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "© 1998 Free Software Foundation, Inc."
 
 # CHECK
@@ -668,6 +674,11 @@ msgstr "E-_Mail-Anzeige"
 msgid "Mail_box"
 msgstr "_Postfach"
 
+#: applets/gen_util/mailcheck.c:1746
+#, fuzzy
+msgid "(c) 1998-2000 the Free Software Foundation"
+msgstr "© 1998 Free Software Foundation, Inc."
+
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
@@ -844,8 +855,9 @@ msgstr ""
 "Fehler beim Laden des »display_all_workspaces«-Wertes des Arbeitsflächen-"
 "Umschalters: %s\n"
 
-#: applets/gen_util/pager.c:546 applets/gen_util/tasklist.c:809
-msgid "(C) 2001 Red Hat, Inc."
+#: applets/gen_util/pager.c:546
+#, fuzzy
+msgid "(c) 2001 Red Hat, Inc."
 msgstr "© 2001 Red Hat, Inc."
 
 #: applets/gen_util/pager.c:547
@@ -952,6 +964,11 @@ msgstr "Drucker"
 msgid "Printer Applet"
 msgstr "Drucker-Applet"
 
+#: applets/gen_util/printer.c:354
+#, fuzzy
+msgid "(c) 1998 the Free Software Foundation"
+msgstr "© 1998 Free Software Foundation, Inc."
+
 #: applets/gen_util/printer.c:356
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
@@ -992,7 +1009,7 @@ msgstr "»%s« konnte nicht geladen werden: %s\n"
 msgid "File not found"
 msgstr "Datei nicht gefunden"
 
-#: applets/gen_util/showdesktop.c:453 applets/notification_area/main.c:126
+#: applets/gen_util/showdesktop.c:453
 msgid "(C) 2002 Red Hat, Inc."
 msgstr "© 2002 Red Hat, Inc."
 
@@ -1001,6 +1018,11 @@ msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 "Beim Anklicken dieses Knopfes werden alle Fenster verborgen und der Desktop "
 "angezeigt"
+
+#: applets/gen_util/tasklist.c:809
+#, fuzzy
+msgid "(c) 2001 Red Hat, Inc"
+msgstr "© 2001 Red Hat, Inc."
 
 #: applets/gen_util/tasklist.c:810
 msgid ""
@@ -1153,32 +1175,37 @@ msgstr "Benachrichtigungsfeld-Fabrik"
 msgid "Panel Notification Area"
 msgstr "Panel-Benachrichtigungsfeld"
 
+#: applets/notification_area/main.c:126
+#, fuzzy
+msgid "Copyright 2002 Red Hat Inc."
+msgstr "© 2002 Red Hat, Inc."
+
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:487 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
 msgid "_Remove From Panel"
 msgstr "Aus dem Panel entfe_rnen"
 
-#: gnome-panel/applet.c:499 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
 msgid "_Move"
 msgstr "_Verschieben"
 
-#: gnome-panel/applet.c:803
+#: gnome-panel/applet.c:809
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Für das Panelobjekt mit der Kennung %s ist kein Objekt festgelegt\n"
 
-#: gnome-panel/applet.c:825
+#: gnome-panel/applet.c:831
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Für das Panelobjekt mit der Kennung %s ist panel_id nicht festgelegt\n"
 
-#: gnome-panel/applet.c:1132
+#: gnome-panel/applet.c:1138
 msgid "Can't find an empty spot"
 msgstr "Kein freier Fleck mehr im Panel"
 
@@ -1629,10 +1656,6 @@ msgstr ""
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Vom aktuellen Desktop kann kein Screenshot gezogen werden."
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:1
-msgid "*"
-msgstr "*"
-
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
 msgid "<b>Options</b>"
 msgstr "<b>Optionen</b>"
@@ -1886,7 +1909,8 @@ msgid "The GNOME Panel"
 msgstr "Das GNOME-Panel"
 
 #: gnome-panel/menu.c:290
-msgid "(C) 1997 Free Software Foundation, Inc."
+#, fuzzy
+msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "© 1997 Free Software Foundation, Inc."
 
 #: gnome-panel/menu.c:311
@@ -2187,7 +2211,7 @@ msgstr "Einen Befehl ausführen"
 msgid "Desktop"
 msgstr "Desktop"
 
-#: gnome-panel/menu.c:3865 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
 msgid "Menu"
 msgstr "Menü"
 
@@ -2645,42 +2669,42 @@ msgstr "Bonobo-Test-Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Test-Bonobo-Applet-Fabrik"
 
-#: libpanel-applet/panel-applet.c:861
+#: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Unvollständiger Hintergrundtyp »%s« empfangen"
 
-#: libpanel-applet/panel-applet.c:875
+#: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Unvollständiger Hintergrundtyp »%s« empfangen: %s"
 
-#: libpanel-applet/panel-applet.c:884
+#: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Pixmap %s konnte geholt werden"
 
-#: libpanel-applet/panel-applet.c:891
+#: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
 msgstr "Unbekannter Hintergrundtyp empfangen"
 
-#: libpanel-applet/panel-applet.c:1072
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Das Applet enthält die Ausrichtung des Panels"
 
-#: libpanel-applet/panel-applet.c:1080
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Das Applet enthält die Größe des Panels in Pixeln"
 
-#: libpanel-applet/panel-applet.c:1088
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Das Applet enthält die Hintergrundfarbe oder -Pixmap des Panels"
 
-#: libpanel-applet/panel-applet.c:1096
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Die Einstellungen des Applets"
 
-#: libpanel-applet/panel-applet.c:1104
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Bereiche, die die akzeptierbaren Größen für das Applet verbergen"
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.1.0\n"
-"POT-Creation-Date: 2002-11-28 17:24+1300\n"
+"POT-Creation-Date: 2002-12-10 13:27+1300\n"
 "PO-Revision-Date: 2002-08-28 02:59+0200\n"
 "Last-Translator: Jordi Mallach <jordi@sindominio.net>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -15,36 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:79
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
+#: applets/notification_area/main.c:80
 #, c-format
-msgid "%s the GNOME Fish"
-msgstr "%s, el Peix del GNOME"
+msgid "There was an error displaying help: %s"
+msgstr "S'ha produït un error al mostrar l'ajuda: %s"
 
-#: applets/fish/fish.c:80
-#, c-format
-msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "%s, el Peix del GNOME, un oràcul contemporani"
-
-#: applets/fish/fish.c:119
-msgid "GNOME Fish, the fortune teller"
-msgstr "El Peix del GNOME, el contacontes"
-
-#: applets/fish/fish.c:502 applets/fish/fish.c:1248
-#, no-c-format
-msgid "%s the Fish"
-msgstr "%s el Peix"
-
-#: applets/fish/fish.c:503
-#, c-format
-msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "<big><big>%s, el Peix del GNOME, diu:</big></big>"
-
-#: applets/fish/fish.c:596
+#: applets/fish/fish.c:194
 #, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of %s for anything\n"
+"We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Avís: L'ordre pareix que és algo útil.\n"
@@ -52,79 +38,12 @@ msgstr ""
 "Vos recomanem que no feu servir wanda per a res que puga\n"
 "fer l'applet \"pràctica\" o útil."
 
-#: applets/fish/fish.c:746
-msgid "GNOME Fish Preferences"
-msgstr "Preferències del Peix del GNOME"
+#: applets/fish/fish.c:378 applets/fish/fish.c:536
+#, no-c-format
+msgid "%s the Fish"
+msgstr "%s el Peix"
 
-#: applets/fish/fish.c:756
-msgid "_Name of GNOME fish:"
-msgstr "_Nom del peix del GNOME"
-
-#: applets/fish/fish.c:773
-msgid "_Animation filename:"
-msgstr "Nom del fitxer de l'_animació:"
-
-#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
-msgid "Browse"
-msgstr "Navega"
-
-#: applets/fish/fish.c:791
-msgid "Command to _execute when fish is clicked:"
-msgstr "Ordre a _executar quan es polsa en el peix:"
-
-#: applets/fish/fish.c:808
-msgid "Frame_s in animation:"
-msgstr "Trame_s en l'animació:"
-
-#: applets/fish/fish.c:826
-msgid "Pause _per frame (s):"
-msgstr "Pausa _per trama (s):"
-
-#: applets/fish/fish.c:841
-msgid "_Rotate on vertical panels"
-msgstr "_Rota en els quadres verticals"
-
-#: applets/fish/fish.c:900
-msgid "Unable to get the name of the command to execute"
-msgstr "No s'ha pogut obtindre el nom de l'ordre a executar"
-
-#: applets/fish/fish.c:916
-msgid "Unable to locate the command to execute"
-msgstr "No s'ha pogut trobar l'ordre a executar"
-
-#: applets/fish/fish.c:1045
-#, c-format
-msgid ""
-"Unable to execute '%s'\n"
-"\n"
-"Details : %s"
-msgstr ""
-"No s'ha pogut executar «%s»\n"
-"\n"
-"Detalls: %s"
-
-#: applets/fish/fish.c:1065
-msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
-"\n"
-"Please refer to fish properties dialog."
-msgstr ""
-"No teniu fortune instal·lat o no heu especificat un programa per a "
-"executar.\n"
-"\n"
-"Aneu al diàleg de les propietats del peix."
-
-#: applets/fish/fish.c:1080
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"Cal canviar l'aigua!\n"
-"(Mireu la data d'avui)"
-
-#: applets/fish/fish.c:1249
+#: applets/fish/fish.c:379
 #, fuzzy, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -137,14 +56,110 @@ msgstr ""
 "memòria.  Si algú és trobat utilitzant aquest applet, hauria de ser sotmés a "
 "avaluació psiquiàtrica el més aviat possible."
 
-#: applets/fish/fish.c:1273
+#: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(amb una petita ajuda de George)"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1291
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Peix"
+
+#: applets/fish/fish.c:448
+#, c-format
+msgid "%s the GNOME Fish"
+msgstr "%s, el Peix del GNOME"
+
+#: applets/fish/fish.c:449
+#, c-format
+msgid "%s the GNOME Fish, a contemporary oracle"
+msgstr "%s, el Peix del GNOME, un oràcul contemporani"
+
+#: applets/fish/fish.c:496
+msgid "Unable to get the name of the command to execute"
+msgstr "No s'ha pogut obtindre el nom de l'ordre a executar"
+
+#: applets/fish/fish.c:513
+msgid "Unable to locate the command to execute"
+msgstr "No s'ha pogut trobar l'ordre a executar"
+
+#: applets/fish/fish.c:541
+#, fuzzy, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "%s, el Peix del GNOME"
+
+#: applets/fish/fish.c:666
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"No s'ha pogut executar «%s»\n"
+"\n"
+"Detalls: %s"
+
+#: applets/fish/fish.c:687
+msgid ""
+"You do not have fortune installed or you have not specified a program to "
+"run.\n"
+"\n"
+"Please refer to fish properties dialog."
+msgstr ""
+"No teniu fortune instal·lat o no heu especificat un programa per a "
+"executar.\n"
+"\n"
+"Aneu al diàleg de les propietats del peix."
+
+#: applets/fish/fish.c:1289
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Cal canviar l'aigua!\n"
+"(Mireu la data d'avui)"
+
+#: applets/fish/fish.c:1358
+msgid "GNOME Fish, the fortune teller"
+msgstr "El Peix del GNOME, el contacontes"
+
+#: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+msgid "Browse"
+msgstr "Navega"
+
+#: applets/fish/fish.glade.h:3
+msgid "Command to _execute when fish is clicked:"
+msgstr "Ordre a _executar quan es polsa en el peix:"
+
+#: applets/fish/fish.glade.h:4
+msgid "Frame_s in animation:"
+msgstr "Trame_s en l'animació:"
+
+#: applets/fish/fish.glade.h:5
+#, fuzzy
+msgid "GNOME FIsh Preferences"
+msgstr "Preferències del Peix del GNOME"
+
+#: applets/fish/fish.glade.h:6
+msgid "Pause _per frame (s):"
+msgstr "Pausa _per trama (s):"
+
+#: applets/fish/fish.glade.h:7
+msgid "_Animation filename:"
+msgstr "Nom del fitxer de l'_animació:"
+
+#: applets/fish/fish.glade.h:8
+msgid "_Name of GNOME fish:"
+msgstr "_Nom del peix del GNOME"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Rotate on vertical panels"
+msgstr "_Rota en els quadres verticals"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -211,8 +226,8 @@ msgstr "_Quant a..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
-#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
+#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "A_juda"
 
@@ -265,15 +280,6 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d de %B"
 
-#: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
-#: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
-#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "S'ha produït un error al mostrar l'ajuda: %s"
-
 #: applets/gen_util/clock.c:945
 msgid "Clock Preferences"
 msgstr "Preferències del rellotge"
@@ -314,7 +320,7 @@ msgstr "Utilitza _UTC"
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr ""
@@ -458,7 +464,7 @@ msgstr "Utilitat"
 
 # Si deixem la F toparia amb la de Fitxer, s'haurà de quedar amb la _i
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Llista de finestres"
 
@@ -477,8 +483,8 @@ msgid "_Check for mail"
 msgstr "_Comprova si hi ha correu"
 
 #: applets/gen_util/mailcheck.c:196
-#, c-format
-msgid "There was an error executing %s : %s"
+#, fuzzy, c-format
+msgid "There was an error executing %s: %s"
 msgstr "S'ha produït un error a l'executar %s: %s"
 
 #: applets/gen_util/mailcheck.c:274
@@ -1007,11 +1013,11 @@ msgstr "© 2001 Red Hat, Inc."
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Amaga totes les finestres i focalitza l'escriptori"
 
-#: applets/gen_util/tasklist.c:768
+#: applets/gen_util/tasklist.c:809
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:769
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1076,9 +1082,10 @@ msgid "_Never group windows"
 msgstr "_Mai agrupar les finestres"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
+#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
-"Valid values are never, auto, and always."
+"Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Decideix quan agrupar finestres de la mateixa aplicació en la llista de "
 "finestres. Els valors vàlids són mai, auto i sempre."
@@ -1169,29 +1176,29 @@ msgstr "© 2001 Red Hat, Inc."
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
 msgid "_Remove From Panel"
 msgstr "_Elimina del quadre"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
 msgid "_Move"
 msgstr "_Moure"
 
-#: gnome-panel/applet.c:803
+#: gnome-panel/applet.c:809
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "No hi ha un object_type per al objecte quadre amb ID %s\n"
 
-#: gnome-panel/applet.c:825
+#: gnome-panel/applet.c:831
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "No hi ha un panel_id establit per al objecte quadre amb ID %s\n"
 
-#: gnome-panel/applet.c:1132
+#: gnome-panel/applet.c:1138
 msgid "Can't find an empty spot"
 msgstr "No puc trobar cap forat lliure"
 
@@ -1367,12 +1374,12 @@ msgstr "Habilita el botó d'amagar"
 msgid "Enable hidebutton arrow"
 msgstr "Habilita la fletxa del botó d'amagar"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3359
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
 msgid "Drawer"
 msgstr "Calaix"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Propietats"
 
@@ -1380,7 +1387,7 @@ msgstr "_Propietats"
 msgid " (invalid Unicode)"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Executa un programa..."
 
@@ -1388,23 +1395,23 @@ msgstr "Executa un programa..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Executa aplicacions, si sabeu l'ordre correcta a introduir"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3779
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr "Cercar fitxers..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3782
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cerca fitxers, carpetes i documents en el vostre ordinador"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3796
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
 msgid "Screenshot..."
 msgstr "Captura de pantalla..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3799
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
 msgid "Take a screenshot of your desktop"
 msgstr "Fa una captura del vostre escriptori"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Bloqueja la pantalla"
 
@@ -1412,7 +1419,8 @@ msgstr "Bloqueja la pantalla"
 msgid "Protect your computer from unauthorized use"
 msgstr "Protegeix el vostre ordinador d'usos no autoritzats"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Surt"
 
@@ -1429,7 +1437,7 @@ msgstr "Accions"
 msgid "No windows open"
 msgstr "No hi ha finestres obertes"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
 msgid "Menu Panel"
 msgstr "Quadre de menú"
 
@@ -1437,8 +1445,8 @@ msgstr "Quadre de menú"
 msgid "GNOME Menu Panel"
 msgstr "Quadre de menú del GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
-#: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
+#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Aplicacions"
 
@@ -1482,7 +1490,7 @@ msgid "No panel found\n"
 msgstr "No s'ha trobat cap quadre\n"
 
 #: gnome-panel/gnome-panel-preferences.c:192
-#: gnome-panel/gnome-panel-screenshot.c:857
+#: gnome-panel/gnome-panel-screenshot.c:862
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1521,27 +1529,29 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "Tan_ca el calaix quan un llançador és premut"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
+#, fuzzy
+msgid "Drawer and Panel _Animation"
+msgstr "_Habilita les animacions del panel"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
 msgstr "Ràpid"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:4
+#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "Mitjà"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Panel Preferences"
 msgstr "Preferències del quadre"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:6
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
 msgstr "Lent"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "_Animation"
-msgstr "_Animació"
-
-#: gnome-panel/gnome-panel-screenshot.c:134
+#: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1549,7 +1559,7 @@ msgstr ""
 "No s'ha pogut inicialitzar la estructura del png.\n"
 "Possiblement teniu una versió incorrecta de libpng en el vostre sistema"
 
-#: gnome-panel/gnome-panel-screenshot.c:142
+#: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1557,7 +1567,7 @@ msgstr ""
 "No s'ha pogut crear la informació del png.\n"
 "Possiblement teniu una versió incorrecta de libpng en el vostre sistema"
 
-#: gnome-panel/gnome-panel-screenshot.c:149
+#: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1565,7 +1575,7 @@ msgstr ""
 "No s'ha pogut fixar la informació del png.\n"
 "Possiblement teniu una versió incorrecta de libpng en el vostre sistema"
 
-#: gnome-panel/gnome-panel-screenshot.c:167
+#: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1573,13 +1583,13 @@ msgstr ""
 "Memòria insuficient per a desar la captura de pantalla.\n"
 "Allibereu uns quants recursos i proveu de nou."
 
-#: gnome-panel/gnome-panel-screenshot.c:219
+#: gnome-panel/gnome-panel-screenshot.c:220
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "El fitxer %s ja existeix. Sobreescriure?"
 
-#: gnome-panel/gnome-panel-screenshot.c:236
-#: gnome-panel/gnome-panel-screenshot.c:742
+#: gnome-panel/gnome-panel-screenshot.c:237
+#: gnome-panel/gnome-panel-screenshot.c:743
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1590,52 +1600,52 @@ msgstr ""
 "«%s»\n"
 "Si us plau, comproveu els vostres permissos del directori pare"
 
-#: gnome-panel/gnome-panel-screenshot.c:508
+#: gnome-panel/gnome-panel-screenshot.c:509
 msgid "Print Screenshot"
 msgstr "Imprimir la captura de pantalla"
 
-#: gnome-panel/gnome-panel-screenshot.c:556
+#: gnome-panel/gnome-panel-screenshot.c:557
 msgid "Screenshot Print Preview"
 msgstr "Previsualització d'impressió de la captura de pantalla"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:583
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cCaptura-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:590
+#: gnome-panel/gnome-panel-screenshot.c:591
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cCaptura.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:607
+#: gnome-panel/gnome-panel-screenshot.c:608
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cCaptura-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:614
+#: gnome-panel/gnome-panel-screenshot.c:615
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cCaptura-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:763
+#: gnome-panel/gnome-panel-screenshot.c:764
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "No hi ha suficient espai lliure per a escriure el fitxer %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1213
 msgid "Grab a window instead of the entire screen"
 msgstr "Captura una finestra en comptes de la pantalla sencera"
 
-#: gnome-panel/gnome-panel-screenshot.c:1199
+#: gnome-panel/gnome-panel-screenshot.c:1214
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Fa la captura de pantalla després del retard especificat (en segons)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1251
+#: gnome-panel/gnome-panel-screenshot.c:1266
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1643,35 +1653,33 @@ msgstr ""
 "El fitxer glade per al programa de captures de pantalla no existeix.\n"
 "Comproveu la vostra instal·lació de gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1275
+#: gnome-panel/gnome-panel-screenshot.c:1290
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "No s'ha pogut fer la captura de pantalla de l'escriptori actual."
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:1
-msgid "*"
-msgstr "*"
-
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-msgid "Options"
+#, fuzzy
+msgid "<b>Options</b>"
 msgstr "Opcions"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-msgid "Preview"
+#, fuzzy
+msgid "<b>Preview</b>"
 msgstr "Previsualitzar"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
+#, fuzzy
+msgid "Save Screenshot"
+msgstr "Captura de pantalla"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
 msgstr "Desa la captura al escri_tori"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr ""
 "Desar la captura de pantalla en una pàgina _web (desar en ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/panel-action-button.c:213
-msgid "Screenshot"
-msgstr "Captura de pantalla"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
@@ -1780,11 +1788,11 @@ msgstr "Selecciona una aplicació a executar de la llista"
 msgid "Run Program"
 msgstr "Executa el programa"
 
-#: gnome-panel/launcher.c:99
+#: gnome-panel/launcher.c:100
 msgid "This launch icon does not specify a url to show"
 msgstr "Aquesta icona de llançament no especifica una url a mostrar"
 
-#: gnome-panel/launcher.c:108
+#: gnome-panel/launcher.c:109
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -1793,7 +1801,7 @@ msgstr ""
 "No es pot mostrar %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:140
+#: gnome-panel/launcher.c:141
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -1804,7 +1812,7 @@ msgstr ""
 "\n"
 "Detalls: %s"
 
-#: gnome-panel/launcher.c:184
+#: gnome-panel/launcher.c:194
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1813,37 +1821,37 @@ msgstr ""
 "No es pot llançar l'icona\n"
 "%s"
 
-#: gnome-panel/launcher.c:381
+#: gnome-panel/launcher.c:391
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 "No s'ha proveït una URI per al fitxer desktop del llançador del quadre\n"
 
-#: gnome-panel/launcher.c:401
+#: gnome-panel/launcher.c:411
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 "No s'ha pogut obrir el fitxer desktop %s per al llançador del quadre%s%s\n"
 
-#: gnome-panel/launcher.c:512
+#: gnome-panel/launcher.c:525
 #, fuzzy, c-format
 msgid "Help on %s _Application"
 msgstr "Ajuda sobre l'aplicació %s"
 
-#: gnome-panel/launcher.c:634 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Propietats del llançador"
 
-#: gnome-panel/launcher.c:745
+#: gnome-panel/launcher.c:758
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "La clau %s no està fixada, no es pot carregar el llançador\n"
 
-#: gnome-panel/launcher.c:841 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:854 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Crea un llançador"
 
-#: gnome-panel/launcher.c:1063
+#: gnome-panel/launcher.c:1076
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1854,7 +1862,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1871,12 +1879,14 @@ msgid "Specify a profile name to load"
 msgstr "Especifica el nom del perfil a carregar"
 
 #: gnome-panel/menu.c:240
-msgid "Many many others ..."
+#, fuzzy
+msgid "Many, many others..."
 msgstr "Molts, molts altres..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-msgid "and finally, The Knights Who Say ... NI!"
+#, fuzzy
+msgid "and finally, The Knights Who Say... NI!"
 msgstr "i finalment, els cavallers que diuen ... NI!"
 
 #: gnome-panel/menu.c:277
@@ -2018,99 +2028,117 @@ msgstr "Afegeix un nou ítem a aquest menú"
 msgid "Properties"
 msgstr "Propietats"
 
-#: gnome-panel/menu.c:2445 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "la petició ha tornat l'excepció %s\n"
 
-#: gnome-panel/menu.c:2701 gnome-panel/menu.c:2706
+#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
 msgid "Aligned Panel"
 msgstr "Quadre alineat"
 
-#: gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2708
 msgid "GNOME Aligned Panel"
 msgstr "Quadre del GNOME alineat"
 
-#: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
-#: gnome-panel/panel-config.c:1663
+#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
+#: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Quadre a un costat"
 
-#: gnome-panel/menu.c:2729
+#: gnome-panel/menu.c:2730
 msgid "GNOME Edge Panel"
 msgstr "Quadre del GNOME a un costat"
 
-#: gnome-panel/menu.c:2750 gnome-panel/menu.c:2754
-#: gnome-panel/panel-config.c:1685
+#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
+#: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Quadre lliscant"
 
-#: gnome-panel/menu.c:2755
+#: gnome-panel/menu.c:2756
 msgid "GNOME Sliding Panel"
 msgstr "Quadre del GNOME lliscant"
 
-#: gnome-panel/menu.c:2773 gnome-panel/menu.c:2778
-#: gnome-panel/panel-config.c:1696
+#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
+#: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Quadre flotant"
 
-#: gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2780
 msgid "GNOME Floating Panel"
 msgstr "Quadre del GNOME flotant"
 
-#: gnome-panel/menu.c:2799
+#: gnome-panel/menu.c:2800
 msgid "You can only have one menu panel at a time."
 msgstr "Només podeu tenir un quadre de menú a la vegada."
 
-#: gnome-panel/menu.c:2843
+#: gnome-panel/menu.c:2844
 msgid "C_orner Panel"
 msgstr "Quadre de can_tó"
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2846
 msgid "Create corner panel"
 msgstr "Crea un quadre de cantó"
 
-#: gnome-panel/menu.c:2852
+#: gnome-panel/menu.c:2853
 msgid "_Edge Panel"
 msgstr "Quadre a un _costat"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:2855
 msgid "Create edge panel"
 msgstr "Crea un quadre a un costat"
 
-#: gnome-panel/menu.c:2861
+#: gnome-panel/menu.c:2862
 msgid "_Floating Panel"
 msgstr "Quadre _flotant"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:2864
 msgid "Create floating panel"
 msgstr "Crea un quadre flotant"
 
-#: gnome-panel/menu.c:2870
+#: gnome-panel/menu.c:2871
 msgid "_Sliding Panel"
 msgstr "Quadre lli_scant"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2873
 msgid "Create sliding panel"
 msgstr "Crea un quadre lliscant"
 
-#: gnome-panel/menu.c:2881
+#: gnome-panel/menu.c:2882
 msgid "_Menu Panel"
 msgstr "Quadre de _menú"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:2884
 msgid "Create menu panel"
 msgstr "Crea un quadre de menú"
 
-#: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
+#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
 msgid "KDE Menu"
 msgstr "Menú de KDE"
 
-#: gnome-panel/menu.c:3076
+#: gnome-panel/menu.c:3036
+#, fuzzy
+msgid "Lock"
+msgstr "Aspecte"
+
+#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
+msgid "Screenshot"
+msgstr "Captura de pantalla"
+
+#: gnome-panel/menu.c:3052
+msgid "Search"
+msgstr ""
+
+#: gnome-panel/menu.c:3060
+#, fuzzy
+msgid "Run"
+msgstr "_Executa"
+
+#: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
 msgstr "No podeu suprimir el vostre últim quadre."
 
-#: gnome-panel/menu.c:3089
+#: gnome-panel/menu.c:3145
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2118,72 +2146,59 @@ msgstr ""
 "Quan es suprimeix un quadre, el quadre i la seva configuració\n"
 "es perd. Voleu suprimir aquest quadre?"
 
-#: gnome-panel/menu.c:3336
+#: gnome-panel/menu.c:3153
+#, fuzzy
+msgid "Delete Panel"
+msgstr "_Elimina aquest quadre"
+
+#: gnome-panel/menu.c:3392
 msgid "Launcher..."
 msgstr "Llançador..."
 
-#: gnome-panel/menu.c:3343
+#: gnome-panel/menu.c:3399
 msgid "Launcher from menu"
 msgstr "Llançador des del menú"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
-#: gnome-panel/menu.c:4116
-msgid "GNOME Menu"
-msgstr "Menú del GNOME"
-
-#: gnome-panel/menu.c:3367
-msgid "Log Out Button"
-msgstr "Botó de sortida"
-
-#: gnome-panel/menu.c:3375
+#: gnome-panel/menu.c:3407
 #, fuzzy
-msgid "Lock Button"
-msgstr "Botó de bloqueig"
-
-#: gnome-panel/menu.c:3383
-#, fuzzy
-msgid "Screenshot Button"
-msgstr "Captura de pantalla"
-
-#: gnome-panel/menu.c:3391
-msgid "Search Button"
-msgstr ""
-
-#: gnome-panel/menu.c:3399
-#, fuzzy
-msgid "Run Button"
+msgid "Button"
 msgstr "Botó de executar"
 
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
+msgid "Main Menu"
+msgstr "Menú principal"
+
+#: gnome-panel/menu.c:3469
 msgid "_Delete This Panel..."
 msgstr "_Elimina aquest quadre..."
 
-#: gnome-panel/menu.c:3446 gnome-panel/menu.c:3478
+#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
 msgid "_Delete This Panel"
 msgstr "_Elimina aquest quadre"
 
-#: gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:3491
 msgid "_Add to Panel"
 msgstr "_Afegeix al quadre"
 
-#: gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3531
 msgid "_New Panel"
 msgstr "_Nou quadre"
 
-#: gnome-panel/menu.c:3539
+#: gnome-panel/menu.c:3565
 msgid "_About Panels"
 msgstr "Quant als quadres"
 
-#: gnome-panel/menu.c:3552
+#: gnome-panel/menu.c:3578
 msgid "About _GNOME"
 msgstr "Quant a _GNOME"
 
-#: gnome-panel/menu.c:3581
+#: gnome-panel/menu.c:3606
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 "Bloqueja la pantalla per a que pugueu anar-vos de l'ordinador temporalment"
 
-#: gnome-panel/menu.c:3592
+#: gnome-panel/menu.c:3617
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2191,32 +2206,32 @@ msgstr ""
 "Surt d'aquesta sessió per a entrar com un usuari diferent o per a tancar "
 "l'ordinador"
 
-#: gnome-panel/menu.c:3748
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Applets"
 
-#: gnome-panel/menu.c:3772
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Executa una ordre"
 
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Escriptori"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
 msgid "Menu"
 msgstr "Menú"
 
-#: gnome-panel/menu.c:3842
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Menú:"
 
 # De veres aquesta gent parla així? iv
-#: gnome-panel/menu.c:3914
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "No es pot crear el menú, empreant el menú principal!"
 
-#: gnome-panel/menu.c:4439
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "No hi ha un camí fixat en %s per al objecte de menú de quadre\n"
@@ -2306,16 +2321,16 @@ msgstr "Acció"
 msgid "The type of action this button implements"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:184
+#: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
 msgstr "No es pot registrar el widget de control\n"
 
-#: gnome-panel/panel-applet-frame.c:640
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Excepció de popup_menu «%s»\n"
 
-#: gnome-panel/panel-applet-frame.c:750
+#: gnome-panel/panel-applet-frame.c:716
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2332,11 +2347,11 @@ msgstr ""
 "(Si trieu no recarregarla ara, sempre podeu afegir-la fent clic amb el botó "
 "secundari en el quadre i seleccionant el submenú «Afegeix al quadre»)"
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:751
 msgid "D_on't Delete"
 msgstr "N_o suprimeix"
 
-#: gnome-panel/panel-applet-frame.c:819
+#: gnome-panel/panel-applet-frame.c:785
 #, fuzzy, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2349,7 +2364,7 @@ msgstr ""
 "\n"
 "Eliminar aquesta applet de la vostra configuració?"
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:882
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "No s'ha pogut obtindre la interfície AppletShell des del control\n"
 
@@ -2358,7 +2373,7 @@ msgstr "No s'ha pogut obtindre la interfície AppletShell des del control\n"
 msgid "Open URL: %s"
 msgstr "Obrir URL: %s"
 
-#: gnome-panel/panel.c:2232
+#: gnome-panel/panel.c:2245
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2367,154 +2382,185 @@ msgstr ""
 "menú."
 
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
+#: gnome-panel/panel-config.c:546
 msgid "_Autohide"
 msgstr "Ocultació _automàtica"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
+#: gnome-panel/panel-config.c:557
 msgid "Show hide _buttons"
 msgstr "Mostra els _botons d'ocultació"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:568
+#: gnome-panel/panel-config.c:569
 msgid "Arro_ws on hide buttons"
 msgstr "Flet_xes al botó d'ocultació"
 
-#: gnome-panel/panel-config.c:622
-msgid "Miscellaneous"
+#: gnome-panel/panel-config.c:624
+#, fuzzy
+msgid "Miscellaneous:"
 msgstr "Miscel·lània"
 
-#: gnome-panel/panel-config.c:633
+#: gnome-panel/panel-config.c:642
 msgid "Current screen:"
 msgstr "Pantalla actual:"
 
-#: gnome-panel/panel-config.c:649
+#: gnome-panel/panel-config.c:658
 msgid "Current monitor:"
 msgstr "Monitor actual:"
 
-#: gnome-panel/panel-config.c:741
+#: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Indica la posició i orientació del quadre en la pantalla"
 
-#: gnome-panel/panel-config.c:759
+#: gnome-panel/panel-config.c:768
 msgid "_Position:"
 msgstr "_Posició:"
 
-#: gnome-panel/panel-config.c:986
-msgid "Orient hori_zontally"
-msgstr "Orienta horit_zontalment"
+#: gnome-panel/panel-config.c:993 libpanel-applet/panel-test-applets.glade.h:6
+msgid "Orientation:"
+msgstr "Orientació:"
 
-#: gnome-panel/panel-config.c:998
-msgid "Orient _vertically"
-msgstr "Orienta _verticalment"
-
-#: gnome-panel/panel-config.c:1012
-msgid "H_orizontal offset:"
+#: gnome-panel/panel-config.c:1008
+#, fuzzy
+msgid "Hori_zontal"
 msgstr "Separació h_oritzontal:"
 
-#: gnome-panel/panel-config.c:1032
-msgid "Ver_tical offset:"
-msgstr "Separació ver_tical:"
+#: gnome-panel/panel-config.c:1020
+#, fuzzy
+msgid "_Vertical"
+msgstr "Vertical"
 
-#: gnome-panel/panel-config.c:1097
-msgid "Screen edge _offset:"
-msgstr "Separació del cantó de la pantalla:"
+#: gnome-panel/panel-config.c:1030
+#, fuzzy
+msgid "Position:"
+msgstr "_Posició:"
 
-#: gnome-panel/panel-config.c:1156
+#: gnome-panel/panel-config.c:1045
+#, fuzzy
+msgid "H_orizontal:"
+msgstr "Separació h_oritzontal:"
+
+#: gnome-panel/panel-config.c:1065
+#, fuzzy
+msgid "Ver_tical:"
+msgstr "Vertical"
+
+#: gnome-panel/panel-config.c:1130
+msgid "_Distance from edge:"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1189
 msgid "_Size:"
 msgstr "_Mida:"
 
-#: gnome-panel/panel-config.c:1164
-msgid "XX Small (12 pixels)"
-msgstr "Extra petit (12 píxels)"
+#: gnome-panel/panel-config.c:1197
+#: libpanel-applet/panel-test-applets.glade.h:15
+msgid "XX Small"
+msgstr "Extra petit"
 
-#: gnome-panel/panel-config.c:1172
-msgid "X Small (24 pixels)"
-msgstr "Molt petit (24 píxels)"
+#: gnome-panel/panel-config.c:1205
+#: libpanel-applet/panel-test-applets.glade.h:13
+msgid "X Small"
+msgstr "Molt petit"
 
-#: gnome-panel/panel-config.c:1180
-msgid "Small (36 pixels)"
-msgstr "Petit (36 píxels)"
+#: gnome-panel/panel-config.c:1213
+#: libpanel-applet/panel-test-applets.glade.h:10
+msgid "Small"
+msgstr "Petit"
 
-#: gnome-panel/panel-config.c:1188
-msgid "Medium (48 pixels)"
-msgstr "Mitjà (48 píxels)"
+#: gnome-panel/panel-config.c:1229
+#: libpanel-applet/panel-test-applets.glade.h:3
+msgid "Large"
+msgstr "Gran"
 
-#: gnome-panel/panel-config.c:1196
-msgid "Large (64 pixels)"
-msgstr "Gran (64 píxels)"
+#: gnome-panel/panel-config.c:1237
+#: libpanel-applet/panel-test-applets.glade.h:12
+msgid "X Large"
+msgstr "Molt gran"
 
-#: gnome-panel/panel-config.c:1204
-msgid "X Large (80 pixels)"
-msgstr "Molt gran (80 píxels)"
+#: gnome-panel/panel-config.c:1245
+#: libpanel-applet/panel-test-applets.glade.h:14
+msgid "XX Large"
+msgstr "Extra gran"
 
-#: gnome-panel/panel-config.c:1212
-msgid "XX Large (128 pixels)"
-msgstr "Extra gran (128 píxels)"
+#: gnome-panel/panel-config.c:1420
+#, fuzzy
+msgid "_Type:"
+msgstr "Tipus:"
 
-#: gnome-panel/panel-config.c:1367
-msgid "Background _type:"
-msgstr "_Tipus de fons:"
-
-#: gnome-panel/panel-config.c:1376
+#: gnome-panel/panel-config.c:1429
 msgid "Default"
 msgstr "Per defecte"
 
-#: gnome-panel/panel-config.c:1378
+#: gnome-panel/panel-config.c:1431
 msgid "Color"
 msgstr "Color"
 
-#. image frame
-#: gnome-panel/panel-config.c:1380 gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1433
 msgid "Image"
 msgstr "Imatge"
 
-#: gnome-panel/panel-config.c:1395
-msgid "Background co_lor:"
-msgstr "Co_lor del fons:"
+#: gnome-panel/panel-config.c:1435
+msgid "Transparent"
+msgstr "Transparent"
 
-#: gnome-panel/panel-config.c:1448
-msgid "_Do not scale image to fit"
-msgstr "No es_cala la imatge per ajustar-la"
+#: gnome-panel/panel-config.c:1450
+#, fuzzy
+msgid "_Color:"
+msgstr "Color"
 
-#: gnome-panel/panel-config.c:1453
-msgid "Sc_ale image"
-msgstr "Esc_ala la imatge"
+#. image frame
+#: gnome-panel/panel-config.c:1480
+#, fuzzy
+msgid "Image:"
+msgstr "Imatge"
 
-#: gnome-panel/panel-config.c:1457
-msgid "St_retch image"
+#: gnome-panel/panel-config.c:1512
+#, fuzzy
+msgid "T_ile"
+msgstr "Fitxer"
+
+#: gnome-panel/panel-config.c:1517
+#, fuzzy
+msgid "_Scale"
+msgstr "Especial"
+
+#: gnome-panel/panel-config.c:1521
+#, fuzzy
+msgid "St_retch"
 msgstr "Est_reta la imatge"
 
-#: gnome-panel/panel-config.c:1471
-msgid "Rotate image for _vertical panels"
+#: gnome-panel/panel-config.c:1535
+#, fuzzy
+msgid "Rotate image when panel is _vertical"
 msgstr "Gira la imatge en els quadres _verticals"
 
-#: gnome-panel/panel-config.c:1532
+#: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
 msgstr "Quadre a un costat"
 
-#: gnome-panel/panel-config.c:1539
+#: gnome-panel/panel-config.c:1603
 msgid "Corner panel"
 msgstr "Quadre de cantó"
 
-#: gnome-panel/panel-config.c:1545
+#: gnome-panel/panel-config.c:1609
 msgid "Sliding panel"
 msgstr "Quadre lliscant"
 
-#: gnome-panel/panel-config.c:1551
+#: gnome-panel/panel-config.c:1615
 msgid "Floating panel"
 msgstr "Quadre flotant"
 
-#: gnome-panel/panel-config.c:1629
+#: gnome-panel/panel-config.c:1693
 msgid "Panel Properties"
 msgstr "Propietats del quadre"
 
-#: gnome-panel/panel-config.c:1674
+#: gnome-panel/panel-config.c:1738
 msgid "Corner Panel"
 msgstr "Quadre de cantó"
 
-#: gnome-panel/panel-config.c:1715
+#: gnome-panel/panel-config.c:1779
 msgid "Background"
 msgstr "Fons"
 
@@ -2594,12 +2640,12 @@ msgstr ""
 "El codi d'error és: %d\n"
 "El quadre sortirà ara mateix."
 
-#: gnome-panel/panel-stock-icons.c:101
+#: gnome-panel/panel-stock-icons.c:102
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:130
+#: gnome-panel/panel-stock-icons.c:131
 msgid "_Run"
 msgstr "_Executa"
 
@@ -2614,11 +2660,11 @@ msgstr "No s'ha trobat el document d'ajuda"
 msgid "No document to show"
 msgstr "No hi ha cap document per a mostrar"
 
-#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
+#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
 msgid "Disabled"
 msgstr "Deshabilitat"
 
-#: gnome-panel/panel-util.c:1478
+#: gnome-panel/panel-util.c:1476
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2640,42 +2686,42 @@ msgstr "Prova l'applet de Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Prova la factoría d'applets de Bonobo"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet"
 
-#: libpanel-applet/panel-applet.c:872
+#: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "S'ha rebut un tipus de fons «%s» incomplet: %s"
 
-#: libpanel-applet/panel-applet.c:881
+#: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "No s'ha trobat el pixmap %s"
 
-#: libpanel-applet/panel-applet.c:888
+#: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
 msgstr "S'ha rebut un tipus de fons desconegut"
 
-#: libpanel-applet/panel-applet.c:1065
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "L'applet que conté l'orientació del Quadre"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "L'applet que conté la mida del Quadre en píxels"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "L'applet que conté el color o pixmap de fons o del Quadre"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Les opcions de l'applet"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Rangs que donen una idea de les mides que són acceptables per a l'applet"
@@ -2688,17 +2734,9 @@ msgstr "Applet:"
 msgid "Bottom"
 msgstr "Inferior"
 
-#: libpanel-applet/panel-test-applets.glade.h:3
-msgid "Large"
-msgstr "Gran"
-
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Esquerra"
-
-#: libpanel-applet/panel-test-applets.glade.h:6
-msgid "Orientation:"
-msgstr "Orientació:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
@@ -2712,29 +2750,74 @@ msgstr "Dreta"
 msgid "Size:"
 msgstr "Mida:"
 
-#: libpanel-applet/panel-test-applets.glade.h:10
-msgid "Small"
-msgstr "Petit"
-
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Superior"
 
-#: libpanel-applet/panel-test-applets.glade.h:12
-msgid "X Large"
-msgstr "Molt gran"
+#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
+#~ msgstr "<big><big>%s, el Peix del GNOME, diu:</big></big>"
 
-#: libpanel-applet/panel-test-applets.glade.h:13
-msgid "X Small"
-msgstr "Molt petit"
+#~ msgid "_Animation"
+#~ msgstr "_Animació"
 
-#: libpanel-applet/panel-test-applets.glade.h:14
-msgid "XX Large"
-msgstr "Extra gran"
+#~ msgid "GNOME Menu"
+#~ msgstr "Menú del GNOME"
 
-#: libpanel-applet/panel-test-applets.glade.h:15
-msgid "XX Small"
-msgstr "Extra petit"
+#~ msgid "Log Out Button"
+#~ msgstr "Botó de sortida"
+
+#, fuzzy
+#~ msgid "Lock Button"
+#~ msgstr "Botó de bloqueig"
+
+#, fuzzy
+#~ msgid "Screenshot Button"
+#~ msgstr "Captura de pantalla"
+
+#~ msgid "Orient hori_zontally"
+#~ msgstr "Orienta horit_zontalment"
+
+#~ msgid "Orient _vertically"
+#~ msgstr "Orienta _verticalment"
+
+#~ msgid "Ver_tical offset:"
+#~ msgstr "Separació ver_tical:"
+
+#~ msgid "Screen edge _offset:"
+#~ msgstr "Separació del cantó de la pantalla:"
+
+#~ msgid "XX Small (12 pixels)"
+#~ msgstr "Extra petit (12 píxels)"
+
+#~ msgid "X Small (24 pixels)"
+#~ msgstr "Molt petit (24 píxels)"
+
+#~ msgid "Small (36 pixels)"
+#~ msgstr "Petit (36 píxels)"
+
+#~ msgid "Medium (48 pixels)"
+#~ msgstr "Mitjà (48 píxels)"
+
+#~ msgid "Large (64 pixels)"
+#~ msgstr "Gran (64 píxels)"
+
+#~ msgid "X Large (80 pixels)"
+#~ msgstr "Molt gran (80 píxels)"
+
+#~ msgid "XX Large (128 pixels)"
+#~ msgstr "Extra gran (128 píxels)"
+
+#~ msgid "Background _type:"
+#~ msgstr "_Tipus de fons:"
+
+#~ msgid "Background co_lor:"
+#~ msgstr "Co_lor del fons:"
+
+#~ msgid "_Do not scale image to fit"
+#~ msgstr "No es_cala la imatge per ajustar-la"
+
+#~ msgid "Sc_ale image"
+#~ msgstr "Esc_ala la imatge"
 
 #~ msgid "Command to execute when the applet is clicked"
 #~ msgstr "Ordre a executar quan es polsa en l'applet"
@@ -2835,9 +2918,6 @@ msgstr "Extra petit"
 #~ msgid "General"
 #~ msgstr "General"
 
-#~ msgid "_Enable panel animation"
-#~ msgstr "_Habilita les animacions del panel"
-
 #~ msgid "Cannot execute panel global preferences"
 #~ msgstr "No es poden executar les preferències globals del quadre"
 
@@ -2850,9 +2930,6 @@ msgstr "Extra petit"
 
 #~ msgid "About GNOME..."
 #~ msgstr "Quant a GNOME..."
-
-#~ msgid "Main Menu"
-#~ msgstr "Menú principal"
 
 # De veres aquesta gent parla així? iv
 #~ msgid "Can't open directory, using main menu!"
@@ -3175,9 +3252,6 @@ msgstr "Extra petit"
 #~ msgid "Comment:"
 #~ msgstr "Comentari:"
 
-#~ msgid "Type:"
-#~ msgstr "Tipus:"
-
 #~ msgid "Icon:"
 #~ msgstr "Icona:"
 
@@ -3451,9 +3525,6 @@ msgstr "Extra petit"
 #~ msgid "Terminal Class:"
 #~ msgstr "Tipus de terminal"
 
-#~ msgid "Transparent"
-#~ msgstr "Transparent"
-
 #~ msgid "Use --login by default"
 #~ msgstr "Utilitza --login per defecte"
 
@@ -3466,10 +3537,6 @@ msgstr "Extra petit"
 
 #~ msgid "Edit"
 #~ msgstr "Edició"
-
-#, fuzzy
-#~ msgid "File"
-#~ msgstr "Fitxer"
 
 #, fuzzy
 #~ msgid "GNOME terminal users guide"
@@ -4389,9 +4456,6 @@ msgstr "Extra petit"
 #~ msgid "Tasklist width is dynamic"
 #~ msgstr "L'amplada de la llista de tasques és dinàmica"
 
-#~ msgid "Vertical"
-#~ msgstr "Vertical"
-
 #~ msgid "Tasklist height:"
 #~ msgstr "Alçada de la llista de tasques:"
 
@@ -5146,9 +5210,6 @@ msgstr "Extra petit"
 #~ msgid "Depth (displacement when pressed)"
 #~ msgstr "Profunditat (desplaçament quan és premut)"
 
-#~ msgid "Special"
-#~ msgstr "Especial"
-
 #~ msgid "Button type: "
 #~ msgstr "Tipus de botó: "
 
@@ -5336,9 +5397,6 @@ msgstr "Extra petit"
 
 #~ msgid "Add applet"
 #~ msgstr "Afegeix un applet"
-
-#~ msgid "Look"
-#~ msgstr "Aspecte"
 
 #~ msgid "Display \"launch new window\" option"
 #~ msgstr "Mostra l'opció \"nova finestra\""

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core 1.4.0.5\n"
-"POT-Creation-Date: 2002-11-28 17:24+1300\n"
+"POT-Creation-Date: 2002-12-10 13:27+1300\n"
 "PO-Revision-Date: 2002-01-27 02:54+0100\n"
 "Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
 "Language-Team: nynorsk <nn@li.org>\n"
@@ -15,41 +15,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-# applets/fish/fish.c:400
-#: applets/fish/fish.c:79
+# gnome-terminal/gnome-terminal.c:2060
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
+#: applets/notification_area/main.c:80
 #, fuzzy, c-format
-msgid "%s the GNOME Fish"
-msgstr "Gnome-fisken %s sa:"
-
-# applets/fish/fish.c:400
-#: applets/fish/fish.c:80
-#, fuzzy, c-format
-msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "Gnome-fisken %s sa:"
-
-#: applets/fish/fish.c:119
-msgid "GNOME Fish, the fortune teller"
+msgid "There was an error displaying help: %s"
 msgstr ""
-
-# applets/fish/fish.c:399 applets/fish/fish.c:774
-#: applets/fish/fish.c:502 applets/fish/fish.c:1248
-#, no-c-format
-msgid "%s the Fish"
-msgstr "Fisken %s"
-
-# applets/fish/fish.c:400
-#: applets/fish/fish.c:503
-#, fuzzy, c-format
-msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "Gnome-fisken %s sa:"
+"Det har skjedd ein feil under forsøk på å logge inn:\n"
+"\n"
+"%s"
 
 # applets/fish/fish.c:470
-#: applets/fish/fish.c:596
+#: applets/fish/fish.c:194
 #, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of %s for anything\n"
+"We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Åtvaring: Kommandoen ser faktisk ut til å gjera noko nyttig.\n"
@@ -57,101 +43,14 @@ msgstr ""
 "Me vil på det sterkaste åtvare mot ein kvar bruk av wanda som\n"
 "fører med seg at applet gjer nytte for seg."
 
-# applets/fish/fish.c:509
-#: applets/fish/fish.c:746
-#, fuzzy
-msgid "GNOME Fish Preferences"
-msgstr "Eigenskapar for fisk"
-
-# gnome-about/contributors.h:279
-#: applets/fish/fish.c:756
-#, fuzzy
-msgid "_Name of GNOME fish:"
-msgstr "GNOMEfisken Wanda"
-
-# applets/fish/fish.c:533
-#: applets/fish/fish.c:773
-#, fuzzy
-msgid "_Animation filename:"
-msgstr "Filnamn for animasjonen:"
-
-# applets/fish/fish.c:535 applets/gen_util/mailcheck.c:1020
-# gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:596
-# panel/menu-properties.c:634 panel/panel-util.c:193
-# panel/panel_config.c:1631 panel/swallow.c:261
-#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
-msgid "Browse"
-msgstr "Bla gjennom"
-
-# applets/fish/fish.c:548
-#: applets/fish/fish.c:791
-#, fuzzy
-msgid "Command to _execute when fish is clicked:"
-msgstr "Kommando som skal utførast ved klikk på fisken:"
-
-# applets/fish/fish.c:562
-#: applets/fish/fish.c:808
-#, fuzzy
-msgid "Frame_s in animation:"
-msgstr "Bilete i animasjonen:"
-
-# applets/fish/fish.c:578
-#: applets/fish/fish.c:826
-#, fuzzy
-msgid "Pause _per frame (s):"
-msgstr "Pause for kvart bilete (s):"
-
-# applets/fish/fish.c:591
-#: applets/fish/fish.c:841
-#, fuzzy
-msgid "_Rotate on vertical panels"
-msgstr "Rotér på loddrette panel"
-
-#: applets/fish/fish.c:900
-msgid "Unable to get the name of the command to execute"
-msgstr ""
-
-#: applets/fish/fish.c:916
-msgid "Unable to locate the command to execute"
-msgstr ""
-
-# panel/gnome-run.c:328
-#: applets/fish/fish.c:1045
-#, fuzzy, c-format
-msgid ""
-"Unable to execute '%s'\n"
-"\n"
-"Details : %s"
-msgstr ""
-"Klarte ikkje å  køyre kommando:\n"
-"%s\n"
-"%s"
-
-# applets/fish/fish.c:670
-#: applets/fish/fish.c:1065
-msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
-"\n"
-"Please refer to fish properties dialog."
-msgstr ""
-"Du har ikkje fortune installert, eller du har ikkje spesifisert eit program "
-"som skal køyrast.\n"
-"\n"
-"Sjå dialogen «Eigenskapar» for fisken."
-
-# applets/fish/fish.c:687
-#: applets/fish/fish.c:1080
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"Vatnet må bytast ut!\n"
-"(Sjå på datoen i dag)"
+# applets/fish/fish.c:399 applets/fish/fish.c:774
+#: applets/fish/fish.c:378 applets/fish/fish.c:536
+#, no-c-format
+msgid "%s the Fish"
+msgstr "Fisken %s"
 
 # applets/fish/fish.c:790
-#: applets/fish/fish.c:1249
+#: applets/fish/fish.c:379
 #, fuzzy, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -165,15 +64,134 @@ msgstr ""
 "sendast til psykisk evaluering snarast råd."
 
 # applets/fish/fish.c:783
-#: applets/fish/fish.c:1273
+#: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(med noko hjelp fra George)"
 
 # applets/fish/fish.c:600
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1291
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Fisk"
+
+# applets/fish/fish.c:400
+#: applets/fish/fish.c:448
+#, fuzzy, c-format
+msgid "%s the GNOME Fish"
+msgstr "Gnome-fisken %s sa:"
+
+# applets/fish/fish.c:400
+#: applets/fish/fish.c:449
+#, fuzzy, c-format
+msgid "%s the GNOME Fish, a contemporary oracle"
+msgstr "Gnome-fisken %s sa:"
+
+#: applets/fish/fish.c:496
+msgid "Unable to get the name of the command to execute"
+msgstr ""
+
+#: applets/fish/fish.c:513
+msgid "Unable to locate the command to execute"
+msgstr ""
+
+# applets/fish/fish.c:400
+#: applets/fish/fish.c:541
+#, fuzzy, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "Gnome-fisken %s sa:"
+
+# panel/gnome-run.c:328
+#: applets/fish/fish.c:666
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Klarte ikkje å  køyre kommando:\n"
+"%s\n"
+"%s"
+
+# applets/fish/fish.c:670
+#: applets/fish/fish.c:687
+msgid ""
+"You do not have fortune installed or you have not specified a program to "
+"run.\n"
+"\n"
+"Please refer to fish properties dialog."
+msgstr ""
+"Du har ikkje fortune installert, eller du har ikkje spesifisert eit program "
+"som skal køyrast.\n"
+"\n"
+"Sjå dialogen «Eigenskapar» for fisken."
+
+# applets/fish/fish.c:687
+#: applets/fish/fish.c:1289
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Vatnet må bytast ut!\n"
+"(Sjå på datoen i dag)"
+
+#: applets/fish/fish.c:1358
+msgid "GNOME Fish, the fortune teller"
+msgstr ""
+
+#: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr "*"
+
+# applets/fish/fish.c:535 applets/gen_util/mailcheck.c:1020
+# gnome-hint/gnome-hint-properties.c:146 panel/menu-properties.c:596
+# panel/menu-properties.c:634 panel/panel-util.c:193
+# panel/panel_config.c:1631 panel/swallow.c:261
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+msgid "Browse"
+msgstr "Bla gjennom"
+
+# applets/fish/fish.c:548
+#: applets/fish/fish.glade.h:3
+#, fuzzy
+msgid "Command to _execute when fish is clicked:"
+msgstr "Kommando som skal utførast ved klikk på fisken:"
+
+# applets/fish/fish.c:562
+#: applets/fish/fish.glade.h:4
+#, fuzzy
+msgid "Frame_s in animation:"
+msgstr "Bilete i animasjonen:"
+
+# applets/fish/fish.c:509
+#: applets/fish/fish.glade.h:5
+#, fuzzy
+msgid "GNOME FIsh Preferences"
+msgstr "Eigenskapar for fisk"
+
+# applets/fish/fish.c:578
+#: applets/fish/fish.glade.h:6
+#, fuzzy
+msgid "Pause _per frame (s):"
+msgstr "Pause for kvart bilete (s):"
+
+# applets/fish/fish.c:533
+#: applets/fish/fish.glade.h:7
+#, fuzzy
+msgid "_Animation filename:"
+msgstr "Filnamn for animasjonen:"
+
+# gnome-about/contributors.h:279
+#: applets/fish/fish.glade.h:8
+#, fuzzy
+msgid "_Name of GNOME fish:"
+msgstr "GNOMEfisken Wanda"
+
+# applets/fish/fish.c:591
+#: applets/fish/fish.glade.h:9
+#, fuzzy
+msgid "_Rotate on vertical panels"
+msgstr "Rotér på loddrette panel"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -255,8 +273,8 @@ msgstr "Om ..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
-#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
+#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 #, fuzzy
 msgid "_Help"
 msgstr "Hjelp"
@@ -322,19 +340,6 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. %B %Y"
 
-# gnome-terminal/gnome-terminal.c:2060
-#: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
-#: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
-#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
-#, fuzzy, c-format
-msgid "There was an error displaying help: %s"
-msgstr ""
-"Det har skjedd ein feil under forsøk på å logge inn:\n"
-"\n"
-"%s"
-
 # panel/logout.c:195
 #: applets/gen_util/clock.c:945
 #, fuzzy
@@ -392,7 +397,7 @@ msgstr "Bruk GMT"
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Roy-Magne Mo <rmo@sunnmore.net>"
@@ -555,7 +560,7 @@ msgstr "Verkty"
 
 # help-browser/window.c:227
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Vindaugsliste"
 
@@ -578,7 +583,7 @@ msgstr "Sjå etter post"
 # gnome-terminal/gnome-terminal.c:2060
 #: applets/gen_util/mailcheck.c:196
 #, fuzzy, c-format
-msgid "There was an error executing %s : %s"
+msgid "There was an error executing %s: %s"
 msgstr ""
 "Det har skjedd ein feil under forsøk på å logge inn:\n"
 "\n"
@@ -1201,11 +1206,11 @@ msgstr "© 2001 Red Hat, Inc."
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:768
+#: applets/gen_util/tasklist.c:809
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:769
+#: applets/gen_util/tasklist.c:810
 #, fuzzy
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
@@ -1280,7 +1285,7 @@ msgstr "Gruppér aldri _vindauge"
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
-"Valid values are never, auto, and always."
+"Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 
 #: applets/gen_util/tasklist.schemas.in.h:2
@@ -1362,34 +1367,34 @@ msgstr "© 2001 Red Hat, Inc."
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
 # panel/applet.c:474
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
 #, fuzzy
 msgid "_Remove From Panel"
 msgstr "Fjern frå panelet"
 
 # panel/applet.c:481
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
 #, fuzzy
 msgid "_Move"
 msgstr "Flytt"
 
-#: gnome-panel/applet.c:803
+#: gnome-panel/applet.c:809
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr ""
 
-#: gnome-panel/applet.c:825
+#: gnome-panel/applet.c:831
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr ""
 
 # panel/applet.c:766
-#: gnome-panel/applet.c:1132
+#: gnome-panel/applet.c:1138
 msgid "Can't find an empty spot"
 msgstr "Kunne ikkje finne ein tom plass"
 
@@ -1596,13 +1601,13 @@ msgstr "Slå på pil for skjuling av knappar"
 
 # panel/drawer.c:185 panel/drawer.c:319 panel/gnome-panel-properties.c:583
 # panel/menu.c:4883
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3359
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
 msgid "Drawer"
 msgstr "Skuff"
 
 # panel/menu.c:5102
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
 #, fuzzy
 msgid "_Properties"
 msgstr "Eigenskapar"
@@ -1612,7 +1617,7 @@ msgid " (invalid Unicode)"
 msgstr ""
 
 # panel/gnome-run.c:1135
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 #, fuzzy
 msgid "Run Program..."
 msgstr "Køyr program"
@@ -1621,28 +1626,28 @@ msgstr "Køyr program"
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Køyr program, om du kjenner den korrekte kommandoen"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3779
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3782
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
 # panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3796
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
 #, fuzzy
 msgid "Screenshot..."
 msgstr "Skjermdump"
 
 # panel/gnome-panel-screenshot.glade.h:11
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3799
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
 #, fuzzy
 msgid "Take a screenshot of your desktop"
 msgstr "Lagre skjermdump til _skrivebord"
 
 # panel/foobar-widget.c:362
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Lås skjerm"
 
@@ -1651,7 +1656,8 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Vern om datamaskina di mot uatorisert bruk"
 
 # panel/foobar-widget.c:372
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Logg ut"
 
@@ -1670,7 +1676,7 @@ msgid "No windows open"
 msgstr "Ingen vindauge opne"
 
 # panel/menu.c:3602
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
 #, fuzzy
 msgid "Menu Panel"
 msgstr "Menypanel"
@@ -1681,8 +1687,8 @@ msgstr "Menypanel"
 msgid "GNOME Menu Panel"
 msgstr "GNOME Panel"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
-#: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
+#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Program"
 
@@ -1737,7 +1743,7 @@ msgstr "Ikkje noko panel funne\n"
 
 # gnome-terminal/gnome-terminal.c:2060
 #: gnome-panel/gnome-panel-preferences.c:192
-#: gnome-panel/gnome-panel-screenshot.c:857
+#: gnome-panel/gnome-panel-screenshot.c:862
 #, fuzzy, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1784,8 +1790,14 @@ msgstr "Animasjonshastigheit:"
 msgid "Close _drawer when launcher is clicked"
 msgstr "_Lukk skuff viss en launcher inni ho blir trykt på"
 
-# help-browser/history.c:260
+# panel/gnome-panel-properties.c:325
 #: gnome-panel/gnome-panel-preferences.glade.h:3
+#, fuzzy
+msgid "Drawer and Panel _Animation"
+msgstr "_Slå på animasjonar"
+
+# help-browser/history.c:260
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
 msgstr "Rask"
 
@@ -1793,30 +1805,25 @@ msgstr "Rask"
 # panel/menu-properties.c:612 panel/menu.c:1541 panel/menu.c:3128
 # panel/menu.c:3203 panel/menu.c:3208 panel/menu.c:4821 panel/menu.c:5668
 # panel/menu.c:5800 panel/menu.c:5820
-#: gnome-panel/gnome-panel-preferences.glade.h:4
+#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "Middels"
 
 # panel/logout.c:195
-#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:6
 #, fuzzy
 msgid "Panel Preferences"
 msgstr "Brukarval"
 
 # panel/menu.c:4759
-#: gnome-panel/gnome-panel-preferences.glade.h:6
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
 msgstr "Sein"
 
-# panel/gnome-panel-properties.c:1687
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-#, fuzzy
-msgid "_Animation"
-msgstr "Animasjon"
-
 # panel/gnome-panel-screenshot.c:126
-#: gnome-panel/gnome-panel-screenshot.c:134
+#: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1825,7 +1832,7 @@ msgstr ""
 "Du har sannsynlegvis feil versjon av libpng-biblioteket på systemet ditt."
 
 # panel/gnome-panel-screenshot.c:134
-#: gnome-panel/gnome-panel-screenshot.c:142
+#: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1834,7 +1841,7 @@ msgstr ""
 "Du har sannsynlegvis feil versjon av libpng-biblioteket på systemet ditt"
 
 # panel/gnome-panel-screenshot.c:141
-#: gnome-panel/gnome-panel-screenshot.c:149
+#: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1843,7 +1850,7 @@ msgstr ""
 "Du har sannsynlegvis feil versjon av libpng biblioteket på systemet ditt"
 
 # panel/gnome-panel-screenshot.c:155
-#: gnome-panel/gnome-panel-screenshot.c:167
+#: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1852,14 +1859,14 @@ msgstr ""
 "Vennligst frigjer ressursar og prøv igjen."
 
 # panel/gnome-panel-screenshot.c:199
-#: gnome-panel/gnome-panel-screenshot.c:219
+#: gnome-panel/gnome-panel-screenshot.c:220
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Fila %s eksisterer allereie. Overskriv?"
 
 # panel/gnome-panel-screenshot.c:213 panel/gnome-panel-screenshot.c:693
-#: gnome-panel/gnome-panel-screenshot.c:236
-#: gnome-panel/gnome-panel-screenshot.c:742
+#: gnome-panel/gnome-panel-screenshot.c:237
+#: gnome-panel/gnome-panel-screenshot.c:743
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1871,60 +1878,60 @@ msgstr ""
 "Sjekk om du har rettar til å skrive til katalogen"
 
 # panel/gnome-panel-screenshot.c:472
-#: gnome-panel/gnome-panel-screenshot.c:508
+#: gnome-panel/gnome-panel-screenshot.c:509
 msgid "Print Screenshot"
 msgstr "Skriv ut skjermdump"
 
 # panel/gnome-panel-screenshot.c:520
-#: gnome-panel/gnome-panel-screenshot.c:556
+#: gnome-panel/gnome-panel-screenshot.c:557
 msgid "Screenshot Print Preview"
 msgstr "Skjermdump Førehandsvisning"
 
 # panel/gnome-panel-screenshot.c:545
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:583
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cSkjermdump-%s.png"
 
 # panel/gnome-panel-screenshot.c:550
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:590
+#: gnome-panel/gnome-panel-screenshot.c:591
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cSkjermdump.png"
 
 # panel/gnome-panel-screenshot.c:565
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:607
+#: gnome-panel/gnome-panel-screenshot.c:608
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cSkjermdump-%s-%d.png"
 
 # panel/gnome-panel-screenshot.c:570
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:614
+#: gnome-panel/gnome-panel-screenshot.c:615
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cSkjermdump-%d.png"
 
 # panel/gnome-panel-screenshot.c:712
-#: gnome-panel/gnome-panel-screenshot.c:763
+#: gnome-panel/gnome-panel-screenshot.c:764
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Ikkje nok plass til å skrive fila %s"
 
 # panel/gnome-panel-screenshot.c:1012
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1213
 msgid "Grab a window instead of the entire screen"
 msgstr "Ta tak i eit vindauge i staden for heile skjermen"
 
-#: gnome-panel/gnome-panel-screenshot.c:1199
+#: gnome-panel/gnome-panel-screenshot.c:1214
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
 # panel/gnome-panel-screenshot.c:1040
-#: gnome-panel/gnome-panel-screenshot.c:1251
+#: gnome-panel/gnome-panel-screenshot.c:1266
 #, fuzzy
 msgid ""
 "Glade file for the screenshot program is missing.\n"
@@ -1934,39 +1941,37 @@ msgstr ""
 "Vennlegast sjekk gnome-core innstallasjonen din"
 
 # panel/gnome-panel-screenshot.c:1057
-#: gnome-panel/gnome-panel-screenshot.c:1275
+#: gnome-panel/gnome-panel-screenshot.c:1290
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Ikkje i stand til å ta skjermdump av det gjeldande skrivebordet"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:1
-msgid "*"
-msgstr "*"
-
 # gsm/session-properties-capplet.c:181 panel/gnome-panel-screenshot.glade.h:9
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-msgid "Options"
+#, fuzzy
+msgid "<b>Options</b>"
 msgstr "Val"
 
 # panel/gnome-panel-screenshot.glade.h:8
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-msgid "Preview"
+#, fuzzy
+msgid "<b>Preview</b>"
 msgstr "Førehandsvisning"
 
-# panel/gnome-panel-screenshot.glade.h:11
+# panel/gnome-panel-screenshot.glade.h:7
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
+#, fuzzy
+msgid "Save Screenshot"
+msgstr "Skjermdump"
+
+# panel/gnome-panel-screenshot.glade.h:11
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
 msgstr "Lagre skjermdump til _skrivebord"
 
 # panel/gnome-panel-screenshot.glade.h:12
-#: gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Lagre skjermdump til _nettside (lagre i ~/public_html)"
-
-# panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/panel-action-button.c:213
-msgid "Screenshot"
-msgstr "Skjermdump"
 
 # panel/gnome-panel-screenshot.glade.h:13
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
@@ -2089,11 +2094,11 @@ msgid "Run Program"
 msgstr "Køyr program"
 
 # panel/launcher.c:61
-#: gnome-panel/launcher.c:99
+#: gnome-panel/launcher.c:100
 msgid "This launch icon does not specify a url to show"
 msgstr "Dette startikonet spesifiserer ikkje ein url som skal visast"
 
-#: gnome-panel/launcher.c:108
+#: gnome-panel/launcher.c:109
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -2102,7 +2107,7 @@ msgstr ""
 "Klarar ikkje å vise %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:140
+#: gnome-panel/launcher.c:141
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -2114,7 +2119,7 @@ msgstr ""
 "Detaljar: %s"
 
 # panel/menu.c:5036
-#: gnome-panel/launcher.c:184
+#: gnome-panel/launcher.c:194
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -2123,40 +2128,40 @@ msgstr ""
 "Kan ikkje starte ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:381
+#: gnome-panel/launcher.c:391
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr ""
 
-#: gnome-panel/launcher.c:401
+#: gnome-panel/launcher.c:411
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr ""
 
 # panel/launcher.c:499 panel/launcher.c:693 panel/menu.c:1715
-#: gnome-panel/launcher.c:512
+#: gnome-panel/launcher.c:525
 #, fuzzy, c-format
 msgid "Help on %s _Application"
 msgstr "Hjelp om programmet %s "
 
 # panel/launcher.c:554
-#: gnome-panel/launcher.c:634 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 #, fuzzy
 msgid "Launcher Properties"
 msgstr "Eigenskapar for oppstartar"
 
-#: gnome-panel/launcher.c:745
+#: gnome-panel/launcher.c:758
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 
 # panel/launcher.c:744
-#: gnome-panel/launcher.c:841 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:854 gnome-panel/menu-ditem.c:526
 #, fuzzy
 msgid "Create Launcher"
 msgstr "Opprett oppstarts-applet"
 
-#: gnome-panel/launcher.c:1063
+#: gnome-panel/launcher.c:1076
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -2167,7 +2172,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2186,13 +2191,15 @@ msgstr "Spesifiserer ein profil som skal lastast"
 
 # panel/menu.c:213
 #: gnome-panel/menu.c:240
-msgid "Many many others ..."
+#, fuzzy
+msgid "Many, many others..."
 msgstr "Mange, mange andre ..."
 
 # panel/menu.c:215
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-msgid "and finally, The Knights Who Say ... NI!"
+#, fuzzy
+msgid "and finally, The Knights Who Say... NI!"
 msgstr "og til slutt, Riddarane som seier ... NI!"
 
 # panel/menu.c:238
@@ -2347,151 +2354,172 @@ msgstr "Legg til ny oppføring i denne menyen"
 msgid "Properties"
 msgstr "Eigenskapar"
 
-#: gnome-panel/menu.c:2445 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "spørjinga returnerte unntak %s\n"
 
 # panel/menu.c:3618 panel/menu.c:4714 panel/panel_config.c:1757
 # panel/panel_config.c:1880
-#: gnome-panel/menu.c:2701 gnome-panel/menu.c:2706
+#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
 #, fuzzy
 msgid "Aligned Panel"
 msgstr "Justert panel"
 
 # panel/menu.c:3618 panel/menu.c:4714 panel/panel_config.c:1757
 # panel/panel_config.c:1880
-#: gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2708
 #, fuzzy
 msgid "GNOME Aligned Panel"
 msgstr "Justert panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
-#: gnome-panel/panel-config.c:1663
+#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
+#: gnome-panel/panel-config.c:1727
 #, fuzzy
 msgid "Edge Panel"
 msgstr "Kantpanel"
 
 # panel/menu.c:235
-#: gnome-panel/menu.c:2729
+#: gnome-panel/menu.c:2730
 #, fuzzy
 msgid "GNOME Edge Panel"
 msgstr "GNOME Panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2750 gnome-panel/menu.c:2754
-#: gnome-panel/panel-config.c:1685
+#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
+#: gnome-panel/panel-config.c:1749
 #, fuzzy
 msgid "Sliding Panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2755
+#: gnome-panel/menu.c:2756
 #, fuzzy
 msgid "GNOME Sliding Panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2773 gnome-panel/menu.c:2778
-#: gnome-panel/panel-config.c:1696
+#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
+#: gnome-panel/panel-config.c:1760
 #, fuzzy
 msgid "Floating Panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2780
 #, fuzzy
 msgid "GNOME Floating Panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3531
-#: gnome-panel/menu.c:2799
+#: gnome-panel/menu.c:2800
 msgid "You can only have one menu panel at a time."
 msgstr "Du kan kun ha eitt menypanel om gongen."
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2843
+#: gnome-panel/menu.c:2844
 #, fuzzy
 msgid "C_orner Panel"
 msgstr "Hjørnepanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2846
 #, fuzzy
 msgid "Create corner panel"
 msgstr "Hjørnepanel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: gnome-panel/menu.c:2852
+#: gnome-panel/menu.c:2853
 #, fuzzy
 msgid "_Edge Panel"
 msgstr "Kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:2855
 #, fuzzy
 msgid "Create edge panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2861
+#: gnome-panel/menu.c:2862
 #, fuzzy
 msgid "_Floating Panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:2864
 #, fuzzy
 msgid "Create floating panel"
 msgstr "Flytande panel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/menu.c:2870
+#: gnome-panel/menu.c:2871
 #, fuzzy
 msgid "_Sliding Panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2873
 #, fuzzy
 msgid "Create sliding panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3602
-#: gnome-panel/menu.c:2881
+#: gnome-panel/menu.c:2882
 #, fuzzy
 msgid "_Menu Panel"
 msgstr "Menypanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:2884
 #, fuzzy
 msgid "Create menu panel"
 msgstr "Opprett panel"
 
 # panel/menu.c:3815 panel/menu.c:3824 panel/menu.c:5412
-#: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
+#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
 #, fuzzy
 msgid "KDE Menu"
 msgstr "KDE-menyar"
 
+# applets/gen_util/clock.c:927
+#: gnome-panel/menu.c:3036
+#, fuzzy
+msgid "Lock"
+msgstr "Klokke"
+
+# panel/gnome-panel-screenshot.glade.h:7
+#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
+msgid "Screenshot"
+msgstr "Skjermdump"
+
+#: gnome-panel/menu.c:3052
+msgid "Search"
+msgstr ""
+
+# panel/gnome-run.c:1156
+#: gnome-panel/menu.c:3060
+#, fuzzy
+msgid "Run"
+msgstr "Køy_r"
+
 # panel/menu.c:3920
-#: gnome-panel/menu.c:3076
+#: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
 msgstr "Du kan ikkje fjerne det siste panelet:"
 
 # panel/menu.c:3930
-#: gnome-panel/menu.c:3089
+#: gnome-panel/menu.c:3145
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2500,111 +2528,96 @@ msgstr ""
 "Når eit panel vert fjerna, vert panelet og dets\n"
 "instillingar tapte. Fjern dette panelet?"
 
+# panel/menu.c:5022 panel/menu.c:5085
+#: gnome-panel/menu.c:3153
+#, fuzzy
+msgid "Delete Panel"
+msgstr "Fjern dette panelet"
+
 # panel/menu.c:4863
-#: gnome-panel/menu.c:3336
+#: gnome-panel/menu.c:3392
 msgid "Launcher..."
 msgstr "Oppstartar ..."
 
 # panel/menu.c:4872
-#: gnome-panel/menu.c:3343
+#: gnome-panel/menu.c:3399
 msgid "Launcher from menu"
 msgstr "Oppstartar fra meny"
 
-# help-browser/toc.c:160
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
-#: gnome-panel/menu.c:4116
-msgid "GNOME Menu"
-msgstr "GNOME-meny"
-
-# panel/menu.c:4894
-#: gnome-panel/menu.c:3367
-#, fuzzy
-msgid "Log Out Button"
-msgstr "Avloggingsknapp"
-
-# panel/menu.c:4905
-#: gnome-panel/menu.c:3375
-#, fuzzy
-msgid "Lock Button"
-msgstr "Låseknapp"
-
-# panel/gnome-panel-screenshot.glade.h:7
-#: gnome-panel/menu.c:3383
-#, fuzzy
-msgid "Screenshot Button"
-msgstr "Skjermdump"
-
-#: gnome-panel/menu.c:3391
-msgid "Search Button"
-msgstr ""
-
 # panel/menu.c:4916
-#: gnome-panel/menu.c:3399
+#: gnome-panel/menu.c:3407
 #, fuzzy
-msgid "Run Button"
+msgid "Button"
 msgstr "Køyr-knapp"
 
+# panel/menu.c:3969 panel/menu.c:3974 panel/menu.c:5655 panel/menu.c:5682
+# panel/menu.c:5816
+#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
+msgid "Main Menu"
+msgstr "Hovudmeny"
+
 # panel/menu.c:5020
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3469
 #, fuzzy
 msgid "_Delete This Panel..."
 msgstr "Fjern dette panelet ..."
 
 # panel/menu.c:5022 panel/menu.c:5085
-#: gnome-panel/menu.c:3446 gnome-panel/menu.c:3478
+#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
 #, fuzzy
 msgid "_Delete This Panel"
 msgstr "Fjern dette panelet"
 
 # panel/menu.c:4960 panel/menu.c:4965 panel/menu.c:5050
-#: gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:3491
 #, fuzzy
 msgid "_Add to Panel"
 msgstr "Legg til på panelet"
 
 # gsm/splash.c:65
-#: gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3531
 #, fuzzy
 msgid "_New Panel"
 msgstr "Panelet"
 
 # panel/menu.c:5266
-#: gnome-panel/menu.c:3539
+#: gnome-panel/menu.c:3565
 #, fuzzy
 msgid "_About Panels"
 msgstr "Om panelet ..."
 
 # gnome-about/gnome-about.c:465 panel/foobar-widget.c:242
-#: gnome-panel/menu.c:3552
+#: gnome-panel/menu.c:3578
 #, fuzzy
 msgid "About _GNOME"
 msgstr "Om GNOME"
 
 # panel/menu.c:5331
-#: gnome-panel/menu.c:3581
+#: gnome-panel/menu.c:3606
 #, fuzzy
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lås skjermen så du kan forlata maskina midlertidig"
 
 # panel/menu.c:5346
-#: gnome-panel/menu.c:3592
+#: gnome-panel/menu.c:3617
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr "Logg ut for å logge inn som ny brukar eller avslutte"
 
 # panel/menu.c:3317 panel/menu.c:5551
-#: gnome-panel/menu.c:3748
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Appletar"
 
 # applets/gen_util/printer.c:321
-#: gnome-panel/menu.c:3772
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Køyr ein kommando"
 
 # gsm/splash.c:68 panel/menu.c:5224 panel/menu.c:5229 panel/menu.c:5599
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Skrivebord"
 
@@ -2612,7 +2625,7 @@ msgstr "Skrivebord"
 # panel/menu-properties.c:612 panel/menu.c:1541 panel/menu.c:3128
 # panel/menu.c:3203 panel/menu.c:3208 panel/menu.c:4821 panel/menu.c:5668
 # panel/menu.c:5800 panel/menu.c:5820
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
 msgid "Menu"
 msgstr "Meny"
 
@@ -2620,16 +2633,16 @@ msgstr "Meny"
 # panel/menu-properties.c:612 panel/menu.c:1541 panel/menu.c:3128
 # panel/menu.c:3203 panel/menu.c:3208 panel/menu.c:4821 panel/menu.c:5668
 # panel/menu.c:5800 panel/menu.c:5820
-#: gnome-panel/menu.c:3842
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Meny:"
 
 # panel/menu.c:5676
-#: gnome-panel/menu.c:3914
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "Kan ikkje opprette meny, nyttar hovudmenyen!"
 
-#: gnome-panel/menu.c:4439
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr ""
@@ -2733,17 +2746,17 @@ msgstr "Handling"
 msgid "The type of action this button implements"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:184
+#: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
 msgstr "Klarar ikkje å registrere kontroll-widget\n"
 
-#: gnome-panel/panel-applet-frame.c:640
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
 
 # panel/extern.c:462
-#: gnome-panel/panel-applet-frame.c:750
+#: gnome-panel/panel-applet-frame.c:716
 #, fuzzy, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2762,12 +2775,12 @@ msgstr ""
 
 # gmenu/main.c:106 gsm/session-properties-capplet.c:257
 # gsm/session-properties-capplet.c:311
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:751
 #, fuzzy
 msgid "D_on't Delete"
 msgstr "Slett"
 
-#: gnome-panel/panel-applet-frame.c:819
+#: gnome-panel/panel-applet-frame.c:785
 #, fuzzy, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2776,7 +2789,7 @@ msgid ""
 "Do you want to delete the applet from your configuration?"
 msgstr "Det var problem ved lasting av appleten «%s»: %s"
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:882
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Ikkje i stand til å få tak i AppletShell-grensesnitt frå kontrollen\n"
 
@@ -2786,7 +2799,7 @@ msgstr "Ikkje i stand til å få tak i AppletShell-grensesnitt frå kontrollen\n
 msgid "Open URL: %s"
 msgstr "Opne URL: %s"
 
-#: gnome-panel/panel.c:2232
+#: gnome-panel/panel.c:2245
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2797,21 +2810,21 @@ msgstr ""
 # panel/gnome-panel-properties.c:346 panel/gnome-panel-properties.c:364
 # panel/menu.c:4722
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
+#: gnome-panel/panel-config.c:546
 #, fuzzy
 msgid "_Autohide"
 msgstr "Skjul automatisk"
 
 # panel/panel_config.c:670
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
+#: gnome-panel/panel-config.c:557
 #, fuzzy
 msgid "Show hide _buttons"
 msgstr "Vis knappar for skjuling"
 
 # panel/panel_config.c:681
 #. Arrow enable
-#: gnome-panel/panel-config.c:568
+#: gnome-panel/panel-config.c:569
 #, fuzzy
 msgid "Arro_ws on hide buttons"
 msgstr "Vis piler på «skjul»-knappen"
@@ -2819,189 +2832,210 @@ msgstr "Vis piler på «skjul»-knappen"
 # applets/tasklist/tasklist_properties.c:323 help-browser/toc-man.c:25
 # help-browser/toc2-man.c:27 panel/gnome-panel-properties.c:1100
 # panel/gnome-panel-properties.c:1707 panel/panel_config.c:720
-#: gnome-panel/panel-config.c:622
-msgid "Miscellaneous"
+#: gnome-panel/panel-config.c:624
+#, fuzzy
+msgid "Miscellaneous:"
 msgstr "Ymse"
 
 # panel/panel_config.c:743
-#: gnome-panel/panel-config.c:633
+#: gnome-panel/panel-config.c:642
 msgid "Current screen:"
 msgstr "Gjeldande skjerm:"
 
 # panel/panel_config.c:743
-#: gnome-panel/panel-config.c:649
+#: gnome-panel/panel-config.c:658
 #, fuzzy
 msgid "Current monitor:"
 msgstr "Gjeldande skjerm:"
 
-#: gnome-panel/panel-config.c:741
+#: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
 msgstr ""
 
 # panel/panel_config.c:802
-#: gnome-panel/panel-config.c:759
+#: gnome-panel/panel-config.c:768
 #, fuzzy
 msgid "_Position:"
 msgstr "Panelplassering"
 
-# panel/panel_config.c:1052
-#: gnome-panel/panel-config.c:986
+# panel/menu.c:4783
+#: gnome-panel/panel-config.c:993 libpanel-applet/panel-test-applets.glade.h:6
 #, fuzzy
-msgid "Orient hori_zontally"
-msgstr "Plassér panelet vassrett"
-
-# panel/panel_config.c:1064
-#: gnome-panel/panel-config.c:998
-#, fuzzy
-msgid "Orient _vertically"
-msgstr "Plassér panelet loddrett"
+msgid "Orientation:"
+msgstr "Retning"
 
 # applets/desk-guide/deskguide_applet.c:114
-#: gnome-panel/panel-config.c:1012
+#: gnome-panel/panel-config.c:1008
 #, fuzzy
-msgid "H_orizontal offset:"
+msgid "Hori_zontal"
 msgstr "Vassrett plassering"
 
-# applets/desk-guide/deskguide_applet.c:125
-#: gnome-panel/panel-config.c:1032
+# applets/tasklist/tasklist_properties.c:222 panel/menu.c:4735
+#: gnome-panel/panel-config.c:1020
 #, fuzzy
-msgid "Ver_tical offset:"
-msgstr "Loddrett plassering"
+msgid "_Vertical"
+msgstr "Loddrett"
 
-#: gnome-panel/panel-config.c:1097
-msgid "Screen edge _offset:"
+# panel/panel_config.c:802
+#: gnome-panel/panel-config.c:1030
+#, fuzzy
+msgid "Position:"
+msgstr "Panelplassering"
+
+# applets/desk-guide/deskguide_applet.c:114
+#: gnome-panel/panel-config.c:1045
+#, fuzzy
+msgid "H_orizontal:"
+msgstr "Vassrett plassering"
+
+# applets/tasklist/tasklist_properties.c:222 panel/menu.c:4735
+#: gnome-panel/panel-config.c:1065
+#, fuzzy
+msgid "Ver_tical:"
+msgstr "Loddrett"
+
+#: gnome-panel/panel-config.c:1130
+msgid "_Distance from edge:"
 msgstr ""
 
 # applets/tasklist/tasklist_properties.c:276 panel/menu.c:4780
-#: gnome-panel/panel-config.c:1156
+#: gnome-panel/panel-config.c:1189
 #, fuzzy
 msgid "_Size:"
 msgstr "Storleik:"
 
-# panel/menu.c:4742 panel/panel_config.c:1265
-#: gnome-panel/panel-config.c:1164
+#: gnome-panel/panel-config.c:1197
+#: libpanel-applet/panel-test-applets.glade.h:15
+msgid "XX Small"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1205
+#: libpanel-applet/panel-test-applets.glade.h:13
+msgid "X Small"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1213
+#: libpanel-applet/panel-test-applets.glade.h:10
 #, fuzzy
-msgid "XX Small (12 pixels)"
-msgstr "Ekstra liten (24 pikslar)"
+msgid "Small"
+msgstr "Skalérbar"
 
-# panel/menu.c:4742 panel/panel_config.c:1265
-#: gnome-panel/panel-config.c:1172
-msgid "X Small (24 pixels)"
-msgstr "Ekstra liten (24 pikslar)"
-
-# panel/menu.c:4742 panel/panel_config.c:1265
-#: gnome-panel/panel-config.c:1180
-msgid "Small (36 pixels)"
-msgstr "Liten (36 pikslar)"
-
-# panel/menu.c:4741 panel/panel_config.c:1257
-#: gnome-panel/panel-config.c:1188
-msgid "Medium (48 pixels)"
-msgstr "Middles (48 pikslar)"
-
-# panel/menu.c:4744 panel/panel_config.c:1281
-#: gnome-panel/panel-config.c:1196
-msgid "Large (64 pixels)"
-msgstr "Stor (64 pikslar)"
-
-# panel/menu.c:4744 panel/panel_config.c:1281
-#: gnome-panel/panel-config.c:1204
-msgid "X Large (80 pixels)"
-msgstr "Eksta stor (80 pikslar)"
-
-# panel/menu.c:4744 panel/panel_config.c:1281
-#: gnome-panel/panel-config.c:1212
-msgid "XX Large (128 pixels)"
-msgstr "Kjempestor (128 pikslar)"
-
-# gnome-terminal/gnome-terminal.glade.h:21 panel/menu.c:4786
-#: gnome-panel/panel-config.c:1367
+#: gnome-panel/panel-config.c:1229
+#: libpanel-applet/panel-test-applets.glade.h:3
 #, fuzzy
-msgid "Background _type:"
-msgstr "Bakgrunnstype"
+msgid "Large"
+msgstr "Språk"
+
+#: gnome-panel/panel-config.c:1237
+#: libpanel-applet/panel-test-applets.glade.h:12
+msgid "X Large"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1245
+#: libpanel-applet/panel-test-applets.glade.h:14
+msgid "XX Large"
+msgstr ""
+
+# panel/menu.c:4771
+#: gnome-panel/panel-config.c:1420
+#, fuzzy
+msgid "_Type:"
+msgstr "Type:"
 
 # gnome-terminal/gnome-terminal.c:622 gnome-terminal/gnome-terminal.c:1166
 # gnome-terminal/gnome-terminal.c:1176 gnome-terminal/gnome-terminal.c:2401
 # gnome-terminal/gnome-terminal.glade.h:8 panel/menu.c:4758
-#: gnome-panel/panel-config.c:1376
+#: gnome-panel/panel-config.c:1429
 msgid "Default"
 msgstr "Forvald"
 
 # panel/menu.c:4752 panel/panel_config.c:1570 panel/panel_config.c:1585
-#: gnome-panel/panel-config.c:1378
+#: gnome-panel/panel-config.c:1431
 msgid "Color"
 msgstr "Farge"
 
 # gnome-terminal/gnome-terminal.glade.h:28 panel/panel_config.c:1619
-#. image frame
-#: gnome-panel/panel-config.c:1380 gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1433
 msgid "Image"
 msgstr "Bilete"
 
-# gnome-terminal/gnome-terminal.glade.h:48
-#: gnome-panel/panel-config.c:1395
-#, fuzzy
-msgid "Background co_lor:"
-msgstr "Bakgrunnsfarge:"
+# gnome-terminal/gnome-terminal.glade.h:25
+#: gnome-panel/panel-config.c:1435
+msgid "Transparent"
+msgstr "Gjennomsiktig"
 
-# panel/panel_config.c:1645
-#: gnome-panel/panel-config.c:1448
+# panel/menu.c:4752 panel/panel_config.c:1570 panel/panel_config.c:1585
+#: gnome-panel/panel-config.c:1450
 #, fuzzy
-msgid "_Do not scale image to fit"
-msgstr "Ikkje skalér bilete til å passa"
+msgid "_Color:"
+msgstr "Farge"
 
-#: gnome-panel/panel-config.c:1453
+# gnome-terminal/gnome-terminal.glade.h:28 panel/panel_config.c:1619
+#. image frame
+#: gnome-panel/panel-config.c:1480
 #, fuzzy
-msgid "Sc_ale image"
-msgstr "Skalerte bilete"
+msgid "Image:"
+msgstr "Bilete"
 
-#: gnome-panel/panel-config.c:1457
-msgid "St_retch image"
+# gnome-terminal/gnome-terminal.c:1586
+#: gnome-panel/panel-config.c:1512
+#, fuzzy
+msgid "T_ile"
+msgstr "Fil"
+
+# panel/gnome-panel-properties.c:585
+#: gnome-panel/panel-config.c:1517
+#, fuzzy
+msgid "_Scale"
+msgstr "Spesiell"
+
+#: gnome-panel/panel-config.c:1521
+msgid "St_retch"
 msgstr ""
 
 # panel/panel_config.c:1671
-#: gnome-panel/panel-config.c:1471
+#: gnome-panel/panel-config.c:1535
 #, fuzzy
-msgid "Rotate image for _vertical panels"
+msgid "Rotate image when panel is _vertical"
 msgstr "Rotér bilete på loddrette panel"
 
 # panel/menu.c:3610 panel/menu.c:4713 panel/panel_config.c:1750
 # panel/panel_config.c:1870
-#: gnome-panel/panel-config.c:1532
+#: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
 msgstr "Kantpanel"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/panel-config.c:1539
+#: gnome-panel/panel-config.c:1603
 msgid "Corner panel"
 msgstr "Hjørnepanel"
 
 # panel/menu.c:3626 panel/menu.c:4715 panel/panel_config.c:1763
 # panel/panel_config.c:1890
-#: gnome-panel/panel-config.c:1545
+#: gnome-panel/panel-config.c:1609
 msgid "Sliding panel"
 msgstr "Glidande panel"
 
 # panel/menu.c:3634 panel/menu.c:4716 panel/panel_config.c:1769
 # panel/panel_config.c:1900
-#: gnome-panel/panel-config.c:1551
+#: gnome-panel/panel-config.c:1615
 msgid "Floating panel"
 msgstr "Flytande panel"
 
 # panel/panel_config.c:1842
-#: gnome-panel/panel-config.c:1629
+#: gnome-panel/panel-config.c:1693
 #, fuzzy
 msgid "Panel Properties"
 msgstr "Eigenskapar for panelet"
 
 # panel/menu.c:3569 panel/menu.c:3574 panel/menu.c:5074
-#: gnome-panel/panel-config.c:1674
+#: gnome-panel/panel-config.c:1738
 #, fuzzy
 msgid "Corner Panel"
 msgstr "Hjørnepanel"
 
 # panel/panel_config.c:1918
-#: gnome-panel/panel-config.c:1715
+#: gnome-panel/panel-config.c:1779
 msgid "Background"
 msgstr "Bakgrunn"
 
@@ -3090,13 +3124,13 @@ msgstr ""
 "Feilkoda var: %d\n"
 "Panelet vil no avslutte."
 
-#: gnome-panel/panel-stock-icons.c:101
+#: gnome-panel/panel-stock-icons.c:102
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr ""
 
 # panel/gnome-run.c:1156
-#: gnome-panel/panel-stock-icons.c:130
+#: gnome-panel/panel-stock-icons.c:131
 msgid "_Run"
 msgstr "Køy_r"
 
@@ -3114,11 +3148,11 @@ msgstr "Ikkje noko dokument å vise"
 # panel/gnome-panel-properties.c:1201 panel/gnome-panel-properties.c:1229
 # panel/gnome-panel-properties.c:1256 panel/gnome-panel-properties.c:1283
 # panel/panel-util.c:639 panel/panel-util.c:696
-#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
+#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
 msgid "Disabled"
 msgstr "Av"
 
-#: gnome-panel/panel-util.c:1478
+#: gnome-panel/panel-util.c:1476
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -3138,42 +3172,42 @@ msgstr "Bonobo testapplet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrikk for bonobotestapplet"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ufullstendig «%s» bakgrunnstype motteke"
 
-#: libpanel-applet/panel-applet.c:872
+#: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ufullstendig «%s» bakgrunnstype motteke: %s"
 
-#: libpanel-applet/panel-applet.c:881
+#: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Klarte ikkje å få tak i pixmap %s"
 
-#: libpanel-applet/panel-applet.c:888
+#: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
 msgstr "Ukjend bakgrunnstype motteke"
 
-#: libpanel-applet/panel-applet.c:1065
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Appleten som inneheld retninga på panelet"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Appleten som inneheld storleiken på panelet i pikslar"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Applet som inneheld bakgrunnsfarge eller pixmap for panelet "
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Flagga til appleten"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
@@ -3189,21 +3223,10 @@ msgstr "Applet"
 msgid "Bottom"
 msgstr "Knappar"
 
-#: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
-msgid "Large"
-msgstr "Språk"
-
 # gnome-terminal/gnome-terminal.c:995
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Venstre"
-
-# panel/menu.c:4783
-#: libpanel-applet/panel-test-applets.glade.h:6
-#, fuzzy
-msgid "Orientation:"
-msgstr "Retning"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
@@ -3219,30 +3242,101 @@ msgstr "Høgre"
 msgid "Size:"
 msgstr "Storleik:"
 
-#: libpanel-applet/panel-test-applets.glade.h:10
-#, fuzzy
-msgid "Small"
-msgstr "Skalérbar"
-
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr ""
 
-#: libpanel-applet/panel-test-applets.glade.h:12
-msgid "X Large"
-msgstr ""
+# applets/fish/fish.c:400
+#, fuzzy
+#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
+#~ msgstr "Gnome-fisken %s sa:"
 
-#: libpanel-applet/panel-test-applets.glade.h:13
-msgid "X Small"
-msgstr ""
+# panel/gnome-panel-properties.c:1687
+#, fuzzy
+#~ msgid "_Animation"
+#~ msgstr "Animasjon"
 
-#: libpanel-applet/panel-test-applets.glade.h:14
-msgid "XX Large"
-msgstr ""
+# help-browser/toc.c:160
+#~ msgid "GNOME Menu"
+#~ msgstr "GNOME-meny"
 
-#: libpanel-applet/panel-test-applets.glade.h:15
-msgid "XX Small"
-msgstr ""
+# panel/menu.c:4894
+#, fuzzy
+#~ msgid "Log Out Button"
+#~ msgstr "Avloggingsknapp"
+
+# panel/menu.c:4905
+#, fuzzy
+#~ msgid "Lock Button"
+#~ msgstr "Låseknapp"
+
+# panel/gnome-panel-screenshot.glade.h:7
+#, fuzzy
+#~ msgid "Screenshot Button"
+#~ msgstr "Skjermdump"
+
+# panel/panel_config.c:1052
+#, fuzzy
+#~ msgid "Orient hori_zontally"
+#~ msgstr "Plassér panelet vassrett"
+
+# panel/panel_config.c:1064
+#, fuzzy
+#~ msgid "Orient _vertically"
+#~ msgstr "Plassér panelet loddrett"
+
+# applets/desk-guide/deskguide_applet.c:125
+#, fuzzy
+#~ msgid "Ver_tical offset:"
+#~ msgstr "Loddrett plassering"
+
+# panel/menu.c:4742 panel/panel_config.c:1265
+#, fuzzy
+#~ msgid "XX Small (12 pixels)"
+#~ msgstr "Ekstra liten (24 pikslar)"
+
+# panel/menu.c:4742 panel/panel_config.c:1265
+#~ msgid "X Small (24 pixels)"
+#~ msgstr "Ekstra liten (24 pikslar)"
+
+# panel/menu.c:4742 panel/panel_config.c:1265
+#~ msgid "Small (36 pixels)"
+#~ msgstr "Liten (36 pikslar)"
+
+# panel/menu.c:4741 panel/panel_config.c:1257
+#~ msgid "Medium (48 pixels)"
+#~ msgstr "Middles (48 pikslar)"
+
+# panel/menu.c:4744 panel/panel_config.c:1281
+#~ msgid "Large (64 pixels)"
+#~ msgstr "Stor (64 pikslar)"
+
+# panel/menu.c:4744 panel/panel_config.c:1281
+#~ msgid "X Large (80 pixels)"
+#~ msgstr "Eksta stor (80 pikslar)"
+
+# panel/menu.c:4744 panel/panel_config.c:1281
+#~ msgid "XX Large (128 pixels)"
+#~ msgstr "Kjempestor (128 pikslar)"
+
+# gnome-terminal/gnome-terminal.glade.h:21 panel/menu.c:4786
+#, fuzzy
+#~ msgid "Background _type:"
+#~ msgstr "Bakgrunnstype"
+
+# gnome-terminal/gnome-terminal.glade.h:48
+#, fuzzy
+#~ msgid "Background co_lor:"
+#~ msgstr "Bakgrunnsfarge:"
+
+# panel/panel_config.c:1645
+#, fuzzy
+#~ msgid "_Do not scale image to fit"
+#~ msgstr "Ikkje skalér bilete til å passa"
+
+#, fuzzy
+#~ msgid "Sc_ale image"
+#~ msgstr "Skalerte bilete"
 
 # applets/fish/fish.c:548
 #, fuzzy
@@ -3372,11 +3466,6 @@ msgstr ""
 #~ msgid "General"
 #~ msgstr "Allment"
 
-# panel/gnome-panel-properties.c:325
-#, fuzzy
-#~ msgid "_Enable panel animation"
-#~ msgstr "_Slå på animasjonar"
-
 # panel/menu.c:4980
 #, fuzzy
 #~ msgid "Cannot execute panel global preferences"
@@ -3393,11 +3482,6 @@ msgstr ""
 # panel/menu.c:5282
 #~ msgid "About GNOME..."
 #~ msgstr "Om GNOME ..."
-
-# panel/menu.c:3969 panel/menu.c:3974 panel/menu.c:5655 panel/menu.c:5682
-# panel/menu.c:5816
-#~ msgid "Main Menu"
-#~ msgstr "Hovudmeny"
 
 # panel/menu-properties.c:192
 #~ msgid "Can't open directory, using main menu!"
@@ -4010,10 +4094,6 @@ msgstr ""
 #~ msgid "Comment:"
 #~ msgstr "Merknad:"
 
-# panel/menu.c:4771
-#~ msgid "Type:"
-#~ msgstr "Type:"
-
 # panel/drawer.c:142 panel/menu-properties.c:617 panel/menu-properties.c:653
 #~ msgid "Icon:"
 #~ msgstr "Ikon:"
@@ -4429,10 +4509,6 @@ msgstr ""
 #~ msgid "Terminal Class:"
 #~ msgstr "Terminalklasse:"
 
-# gnome-terminal/gnome-terminal.glade.h:25
-#~ msgid "Transparent"
-#~ msgstr "Gjennomsiktig"
-
 # gnome-terminal/gnome-terminal.glade.h:17
 #~ msgid "Use --login by default"
 #~ msgstr "Bruk --login som standard"
@@ -4448,10 +4524,6 @@ msgstr ""
 # gnome-terminal/gnome-terminal.c:1591
 #~ msgid "Edit"
 #~ msgstr "Rediger"
-
-# gnome-terminal/gnome-terminal.c:1586
-#~ msgid "File"
-#~ msgstr "Fil"
 
 #~ msgid "GNOME terminal users guide"
 #~ msgstr "GNOME-terminal brukarhandbok"
@@ -5498,10 +5570,6 @@ msgstr ""
 # applets/tasklist/tasklist_properties.c:262
 #~ msgid "Only use empty space"
 #~ msgstr "Bruk berre tomt rom"
-
-# applets/tasklist/tasklist_properties.c:222 panel/menu.c:4735
-#~ msgid "Vertical"
-#~ msgstr "Loddrett"
 
 # applets/tasklist/tasklist_properties.c:230
 #~ msgid "Tasklist height:"
@@ -6589,10 +6657,6 @@ msgstr ""
 # panel/gnome-panel-properties.c:563
 #~ msgid "Depth (displacement when pressed)"
 #~ msgstr "Djupn (forskyvning når nedtrykt)"
-
-# panel/gnome-panel-properties.c:585
-#~ msgid "Special"
-#~ msgstr "Spesiell"
 
 # panel/gnome-panel-properties.c:595
 #~ msgid "Button type: "

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-11-28 17:24+1300\n"
+"POT-Creation-Date: 2002-12-10 13:27+1300\n"
 "PO-Revision-Date: 2002-11-15 19:51+0200\n"
 "Last-Translator: Ales Nyakhaychyk <i18n@infonet.by>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
@@ -13,36 +13,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 0.9.6\n"
 
-#: applets/fish/fish.c:79
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:897
+#: applets/gen_util/clock.c:1137 applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1810 applets/gen_util/pager.c:187
+#: applets/gen_util/pager.c:499 applets/gen_util/showdesktop.c:412
+#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:762
+#: applets/notification_area/main.c:80
 #, c-format
-msgid "%s the GNOME Fish"
-msgstr "%s - рыбка GNOME"
+msgid "There was an error displaying help: %s"
+msgstr "Памылка адлюстравала дапамогу: %s"
 
-#: applets/fish/fish.c:80
-#, c-format
-msgid "%s the GNOME Fish, a contemporary oracle"
-msgstr "%s - рыбка GNOME, гэта сучасны прадказальнік"
-
-#: applets/fish/fish.c:119
-msgid "GNOME Fish, the fortune teller"
-msgstr "Рыбка GNOME, распавядае пра фартуну"
-
-#: applets/fish/fish.c:502 applets/fish/fish.c:1248
-#, no-c-format
-msgid "%s the Fish"
-msgstr "Рыбка %s"
-
-#: applets/fish/fish.c:503
-#, c-format
-msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-msgstr "<big><big>%s - рыбка GNOME сказала:</big></big>"
-
-#: applets/fish/fish.c:596
+#: applets/fish/fish.c:194
 #, fuzzy, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
-"We strongly advise you against usage of %s for anything\n"
+"We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
 "Увага: здаецца каманда зьбіраецца рабіць нешта сапраўды карыснае.\n"
@@ -50,79 +36,12 @@ msgstr ""
 "Мы раім вам пазьбягаць якога б то небыла выкарыстаньня Ванды для\n"
 "ўсяго, што багло б зрабіць аплет \"практычным\" ці карысным."
 
-#: applets/fish/fish.c:746
-msgid "GNOME Fish Preferences"
-msgstr "Перавагі рыбкі"
+#: applets/fish/fish.c:378 applets/fish/fish.c:536
+#, no-c-format
+msgid "%s the Fish"
+msgstr "Рыбка %s"
 
-#: applets/fish/fish.c:756
-msgid "_Name of GNOME fish:"
-msgstr "Імя рыбкі GNOME:"
-
-#: applets/fish/fish.c:773
-msgid "_Animation filename:"
-msgstr "Імя файлу анімацыі:"
-
-#: applets/fish/fish.c:775 applets/gen_util/mailcheck.c:1298
-#: gnome-panel/panel-config.c:1434 gnome-panel/panel-util.c:287
-msgid "Browse"
-msgstr "Прагляд"
-
-#: applets/fish/fish.c:791
-msgid "Command to _execute when fish is clicked:"
-msgstr "Каманда, якую выкарыстоўваць па кліку на рыбку:"
-
-#: applets/fish/fish.c:808
-msgid "Frame_s in animation:"
-msgstr "Кадраў у анімацыі:"
-
-#: applets/fish/fish.c:826
-msgid "Pause _per frame (s):"
-msgstr "Затрымка кадру (s):"
-
-#: applets/fish/fish.c:841
-msgid "_Rotate on vertical panels"
-msgstr "Паварочваць на вэртыкальных панэлях"
-
-#: applets/fish/fish.c:900
-msgid "Unable to get the name of the command to execute"
-msgstr "Немагчыма атрымаць імя каманды для запуску"
-
-#: applets/fish/fish.c:916
-msgid "Unable to locate the command to execute"
-msgstr "Немагчыма адшукаць каманду для запуску"
-
-#: applets/fish/fish.c:1045
-#, c-format
-msgid ""
-"Unable to execute '%s'\n"
-"\n"
-"Details : %s"
-msgstr ""
-"Немагчыма запусьціць '%s'\n"
-"\n"
-"Падрабязна : %s"
-
-#: applets/fish/fish.c:1065
-msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
-"\n"
-"Please refer to fish properties dialog."
-msgstr ""
-"Вы ня маеце усталяванае fortune ці вы памыліліся пад час заданьня праграмы "
-"для запуску.\n"
-"\n"
-"Калі ласка, прагледзьце уласьцівасьці."
-
-#: applets/fish/fish.c:1080
-msgid ""
-"The water needs changing!\n"
-"(Look at today's date)"
-msgstr ""
-"Ваду трэба зьмяняць!\n"
-"(Паглядзі якая сёньня дата)"
-
-#: applets/fish/fish.c:1249
+#: applets/fish/fish.c:379
 #, fuzzy, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
@@ -135,14 +54,110 @@ msgstr ""
 "панэлі й у памяці. Калі хто-небудзь знайшоў выкарыстаньне гэтаму аплету, яго "
 "трэба адправіць на псыхіатрычнае дасьледваньне"
 
-#: applets/fish/fish.c:1273
+#: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(зь мінімальнай дапамогаю Рыгора)"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
-#: applets/fish/fish.c:1291
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "Рыбка"
+
+#: applets/fish/fish.c:448
+#, c-format
+msgid "%s the GNOME Fish"
+msgstr "%s - рыбка GNOME"
+
+#: applets/fish/fish.c:449
+#, c-format
+msgid "%s the GNOME Fish, a contemporary oracle"
+msgstr "%s - рыбка GNOME, гэта сучасны прадказальнік"
+
+#: applets/fish/fish.c:496
+msgid "Unable to get the name of the command to execute"
+msgstr "Немагчыма атрымаць імя каманды для запуску"
+
+#: applets/fish/fish.c:513
+msgid "Unable to locate the command to execute"
+msgstr "Немагчыма адшукаць каманду для запуску"
+
+#: applets/fish/fish.c:541
+#, fuzzy, no-c-format
+msgid "%s the GNOME Fish Says:"
+msgstr "%s - рыбка GNOME"
+
+#: applets/fish/fish.c:666
+#, fuzzy, c-format
+msgid ""
+"Unable to execute '%s'\n"
+"\n"
+"Details: %s"
+msgstr ""
+"Немагчыма запусьціць '%s'\n"
+"\n"
+"Падрабязна : %s"
+
+#: applets/fish/fish.c:687
+msgid ""
+"You do not have fortune installed or you have not specified a program to "
+"run.\n"
+"\n"
+"Please refer to fish properties dialog."
+msgstr ""
+"Вы ня маеце усталяванае fortune ці вы памыліліся пад час заданьня праграмы "
+"для запуску.\n"
+"\n"
+"Калі ласка, прагледзьце уласьцівасьці."
+
+#: applets/fish/fish.c:1289
+msgid ""
+"The water needs changing!\n"
+"(Look at today's date)"
+msgstr ""
+"Ваду трэба зьмяняць!\n"
+"(Паглядзі якая сёньня дата)"
+
+#: applets/fish/fish.c:1358
+msgid "GNOME Fish, the fortune teller"
+msgstr "Рыбка GNOME, распавядае пра фартуну"
+
+#: applets/fish/fish.glade.h:1 gnome-panel/gnome-panel-screenshot.glade.h:1
+msgid "*"
+msgstr "*"
+
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1298
+#: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
+msgid "Browse"
+msgstr "Прагляд"
+
+#: applets/fish/fish.glade.h:3
+msgid "Command to _execute when fish is clicked:"
+msgstr "Каманда, якую выкарыстоўваць па кліку на рыбку:"
+
+#: applets/fish/fish.glade.h:4
+msgid "Frame_s in animation:"
+msgstr "Кадраў у анімацыі:"
+
+#: applets/fish/fish.glade.h:5
+#, fuzzy
+msgid "GNOME FIsh Preferences"
+msgstr "Перавагі рыбкі"
+
+#: applets/fish/fish.glade.h:6
+msgid "Pause _per frame (s):"
+msgstr "Затрымка кадру (s):"
+
+#: applets/fish/fish.glade.h:7
+msgid "_Animation filename:"
+msgstr "Імя файлу анімацыі:"
+
+#: applets/fish/fish.glade.h:8
+msgid "_Name of GNOME fish:"
+msgstr "Імя рыбкі GNOME:"
+
+#: applets/fish/fish.glade.h:9
+msgid "_Rotate on vertical panels"
+msgstr "Паварочваць на вэртыкальных панэлях"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
@@ -208,8 +223,8 @@ msgstr "Пра праграму..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:791 gnome-panel/menu.c:3517
-#: gnome-panel/menu.c:4194 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:681 gnome-panel/launcher.c:804 gnome-panel/menu.c:3543
+#: gnome-panel/menu.c:4219 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "Дапамога"
 
@@ -264,15 +279,6 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:897 applets/gen_util/clock.c:1137
-#: applets/gen_util/mailcheck.c:1602 applets/gen_util/mailcheck.c:1810
-#: applets/gen_util/pager.c:187 applets/gen_util/pager.c:499
-#: applets/gen_util/showdesktop.c:412 applets/gen_util/tasklist.c:119
-#: applets/gen_util/tasklist.c:721 applets/notification_area/main.c:80
-#, c-format
-msgid "There was an error displaying help: %s"
-msgstr "Памылка адлюстравала дапамогу: %s"
-
 #: applets/gen_util/clock.c:945
 msgid "Clock Preferences"
 msgstr "Перавагі гадзіньніку"
@@ -313,7 +319,7 @@ msgstr "Выкарыстоўваць UTC"
 #. Translator credits
 #: applets/gen_util/clock.c:1173 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:753 applets/notification_area/main.c:112
+#: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:252
 msgid "translator_credits"
 msgstr "Belarusian Language Linux Team <i18n@mova.org>"
@@ -451,7 +457,7 @@ msgid "Utility"
 msgstr "Уціліты"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:767
+#: applets/gen_util/tasklist.c:808
 msgid "Window List"
 msgstr "Сьпіс вокнаў"
 
@@ -470,8 +476,8 @@ msgid "_Check for mail"
 msgstr "Праверыць пошту"
 
 #: applets/gen_util/mailcheck.c:196
-#, c-format
-msgid "There was an error executing %s : %s"
+#, fuzzy, c-format
+msgid "There was an error executing %s: %s"
 msgstr "Была выканана памылка %s : %s"
 
 #: applets/gen_util/mailcheck.c:274
@@ -1003,11 +1009,11 @@ msgstr "(c) 2001 Red Hat, Inc."
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:768
+#: applets/gen_util/tasklist.c:809
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:769
+#: applets/gen_util/tasklist.c:810
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1074,7 +1080,7 @@ msgstr "Ніколі ня групаваць вокны"
 #, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
-"Valid values are never, auto, and always."
+"Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Вырашаецца калі групаваць вокны аднаго й таго ж дастасаваньня ў сьпіс "
 "задачаў. Правільныя пераменыя - ніколі, аўта й заўсёды."
@@ -1165,29 +1171,29 @@ msgstr "(c) 2001 Red Hat, Inc."
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:423 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
 msgid "_Remove From Panel"
 msgstr "Вы_даліць з панэлі"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:499
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
 msgid "_Move"
 msgstr "Пера_мясьціць"
 
-#: gnome-panel/applet.c:803
+#: gnome-panel/applet.c:809
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Неўсталяваны object_type для абьекту панэлі з ID %s\n"
 
-#: gnome-panel/applet.c:825
+#: gnome-panel/applet.c:831
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Неўсталяваны panel_id для абьекту панэлі з ID %s\n"
 
-#: gnome-panel/applet.c:1132
+#: gnome-panel/applet.c:1138
 msgid "Can't find an empty spot"
 msgstr "Немагчыма адшукаць пустую кропку"
 
@@ -1357,12 +1363,12 @@ msgstr "Дазволіць кнопкі хаваньня"
 msgid "Enable hidebutton arrow"
 msgstr "Дазволіць стрэлкі на кнопках хаваньня"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3359
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3424
 msgid "Drawer"
 msgstr "Шуфляда"
 
-#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:789 gnome-panel/menu.c:1487
-#: gnome-panel/menu.c:3492 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:678 gnome-panel/launcher.c:802 gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:3518 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "Уласьцівасьці"
 
@@ -1370,7 +1376,7 @@ msgstr "Уласьцівасьці"
 msgid " (invalid Unicode)"
 msgstr ""
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3765
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3790
 msgid "Run Program..."
 msgstr "Запуск праграмы..."
 
@@ -1378,23 +1384,23 @@ msgstr "Запуск праграмы..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Запусьціць дастасаваньне, калі вы ведаеце як набраць карэктную каманду"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3779
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3804
 msgid "Search for Files..."
 msgstr "Пошук файлаў..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3782
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3807
 msgid "Find files, folders, and documents on your computer"
 msgstr "Пошук файлаў, тэчак, і дакумэнтаў на вашым кампутары"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3796
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3821
 msgid "Screenshot..."
 msgstr "Здымак экрану..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3799
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3824
 msgid "Take a screenshot of your desktop"
 msgstr "Стварае здымак вашага працоўнага стала"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3575
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3600
 msgid "Lock Screen"
 msgstr "Зачыніць экран"
 
@@ -1402,7 +1408,8 @@ msgstr "Зачыніць экран"
 msgid "Protect your computer from unauthorized use"
 msgstr "Абараняе ваш кампутар для аўтарызаванага выкарыстаньня"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3028
+#: gnome-panel/menu.c:3611
 msgid "Log Out"
 msgstr "Выйсьці"
 
@@ -1419,7 +1426,7 @@ msgstr "Дзеяньні"
 msgid "No windows open"
 msgstr "Няма адчыненых вокнаў"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2791
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2792
 msgid "Menu Panel"
 msgstr "Панэль мэню"
 
@@ -1427,8 +1434,8 @@ msgstr "Панэль мэню"
 msgid "GNOME Menu Panel"
 msgstr "Панэль мэню GNOME"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2922
-#: gnome-panel/menu.c:2927 gnome-panel/menu.c:3732
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2925
+#: gnome-panel/menu.c:2930 gnome-panel/menu.c:3757
 msgid "Applications"
 msgstr "Дастасаваньні"
 
@@ -1471,7 +1478,7 @@ msgid "No panel found\n"
 msgstr "Ніякіх панэляў\n"
 
 #: gnome-panel/gnome-panel-preferences.c:192
-#: gnome-panel/gnome-panel-screenshot.c:857
+#: gnome-panel/gnome-panel-screenshot.c:862
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1510,27 +1517,29 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "Зачыняць шуфляду пасьля кліку па запускальніку"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
+#, fuzzy
+msgid "Drawer and Panel _Animation"
+msgstr "Кадраў у анімацыі:"
+
+#: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
 msgstr "Хутка"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:4
+#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/panel-config.c:1221
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "Medium"
 msgstr "Сярэдне"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:5
+#: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Panel Preferences"
 msgstr "Перавагі панэлі"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:6
+#: gnome-panel/gnome-panel-preferences.glade.h:7
 msgid "Slow"
 msgstr "Павольна"
 
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "_Animation"
-msgstr "Анімацыя"
-
-#: gnome-panel/gnome-panel-screenshot.c:134
+#: gnome-panel/gnome-panel-screenshot.c:135
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1538,7 +1547,7 @@ msgstr ""
 "Немагчыма ініцыялізаваць структуру png.\n"
 "Магчыма кепская версыя libpng на вашае сыстэме"
 
-#: gnome-panel/gnome-panel-screenshot.c:142
+#: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1546,7 +1555,7 @@ msgstr ""
 "Немагчыма стварыць інфармацыю png.\n"
 "Магчыма кепская версыя libpng на вашае сыстэме"
 
-#: gnome-panel/gnome-panel-screenshot.c:149
+#: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1554,7 +1563,7 @@ msgstr ""
 "Немагчыма усталяваць інфармацыю png.\n"
 "Магчыма кепская версыя libpng на вашае сыстэме"
 
-#: gnome-panel/gnome-panel-screenshot.c:167
+#: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1562,13 +1571,13 @@ msgstr ""
 "Недастаткова памяці для запісу здымку.\n"
 "Калі ласка, вызваліце рэсурсы й паспрабуйце нанова."
 
-#: gnome-panel/gnome-panel-screenshot.c:219
+#: gnome-panel/gnome-panel-screenshot.c:220
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Файл %s ужо йснуе. Перазапісаць?"
 
-#: gnome-panel/gnome-panel-screenshot.c:236
-#: gnome-panel/gnome-panel-screenshot.c:742
+#: gnome-panel/gnome-panel-screenshot.c:237
+#: gnome-panel/gnome-panel-screenshot.c:743
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1579,52 +1588,52 @@ msgstr ""
 "\"%s\"\n"
 "Калі ласка, праверце правы на доступ да бацькоўскага каталёгу"
 
-#: gnome-panel/gnome-panel-screenshot.c:508
+#: gnome-panel/gnome-panel-screenshot.c:509
 msgid "Print Screenshot"
 msgstr "Надрукаваць здымак экрану"
 
-#: gnome-panel/gnome-panel-screenshot.c:556
+#: gnome-panel/gnome-panel-screenshot.c:557
 msgid "Screenshot Print Preview"
 msgstr "Перадпрагляд друку"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:583
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cЗдымак_з_экрану-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:590
+#: gnome-panel/gnome-panel-screenshot.c:591
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cЗдымак_з_экрану.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:607
+#: gnome-panel/gnome-panel-screenshot.c:608
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cЗдымак_з_экрану-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:614
+#: gnome-panel/gnome-panel-screenshot.c:615
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cЗдымак_з_экрану-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:763
+#: gnome-panel/gnome-panel-screenshot.c:764
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Ня дастаткова мейсца для запісу %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1198
+#: gnome-panel/gnome-panel-screenshot.c:1213
 msgid "Grab a window instead of the entire screen"
 msgstr "Захапіць відарыс вылучанага акна"
 
-#: gnome-panel/gnome-panel-screenshot.c:1199
+#: gnome-panel/gnome-panel-screenshot.c:1214
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Зняць здымак пасьля пазначанай затрымкі [у сэкундах]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1251
+#: gnome-panel/gnome-panel-screenshot.c:1266
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1633,34 +1642,32 @@ msgstr ""
 "адсутнічае. Калі ласка, праверце ўсталёўку\n"
 "gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1275
+#: gnome-panel/gnome-panel-screenshot.c:1290
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Немагчыма зрабіць здымак з бягучага стальца."
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:1
-msgid "*"
-msgstr "*"
-
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-msgid "Options"
+#, fuzzy
+msgid "<b>Options</b>"
 msgstr "Опцыі"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-msgid "Preview"
+#, fuzzy
+msgid "<b>Preview</b>"
 msgstr "Прагляд"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
+#, fuzzy
+msgid "Save Screenshot"
+msgstr "Здымак з экрану"
+
+#: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
 msgstr "Захаваць здымак на _сталец"
 
-#: gnome-panel/gnome-panel-screenshot.glade.h:5
+#: gnome-panel/gnome-panel-screenshot.glade.h:6
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Захаваць здымак на  web (захаваць у ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/panel-action-button.c:213
-msgid "Screenshot"
-msgstr "Здымак з экрану"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
 msgid "_Print screenshot..."
@@ -1769,11 +1776,11 @@ msgstr "Каб запусьціць дастасаваньне, выбярыце
 msgid "Run Program"
 msgstr "Запусьціць праграму"
 
-#: gnome-panel/launcher.c:99
+#: gnome-panel/launcher.c:100
 msgid "This launch icon does not specify a url to show"
 msgstr "Значка запускальніку ня мае url, каб яе адлюстраваць"
 
-#: gnome-panel/launcher.c:108
+#: gnome-panel/launcher.c:109
 #, c-format
 msgid ""
 "Cannot show %s\n"
@@ -1782,7 +1789,7 @@ msgstr ""
 "Немагчыма адлюстраваць %s\n"
 "%s"
 
-#: gnome-panel/launcher.c:140
+#: gnome-panel/launcher.c:141
 #, c-format
 msgid ""
 "<b>Cannot launch icon</b>\n"
@@ -1793,7 +1800,7 @@ msgstr ""
 "\n"
 "Падрабязнасьці: %s"
 
-#: gnome-panel/launcher.c:184
+#: gnome-panel/launcher.c:194
 #, c-format
 msgid ""
 "Cannot launch icon\n"
@@ -1802,35 +1809,35 @@ msgstr ""
 "Немагчыма запусьціць значку\n"
 "%s"
 
-#: gnome-panel/launcher.c:381
+#: gnome-panel/launcher.c:391
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ня пазначаны URІ для файлу запускальніку\n"
 
-#: gnome-panel/launcher.c:401
+#: gnome-panel/launcher.c:411
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Немагчыма адчыніць файл стальца %s для запускальніку на панэлі %s%s\n"
 
-#: gnome-panel/launcher.c:512
+#: gnome-panel/launcher.c:525
 #, fuzzy, c-format
 msgid "Help on %s _Application"
 msgstr "Дапамога да %s дастасаваньня"
 
-#: gnome-panel/launcher.c:634 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "Уласьцівасьці запускальніку..."
 
-#: gnome-panel/launcher.c:745
+#: gnome-panel/launcher.c:758
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Ключ %s ня ўсталяваны, немагчыма загрузіць запускальнік\n"
 
-#: gnome-panel/launcher.c:841 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:854 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "Стварыць запускальнік"
 
-#: gnome-panel/launcher.c:1063
+#: gnome-panel/launcher.c:1076
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1841,7 +1848,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1150 gnome-panel/menu.c:1144
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1144
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1858,12 +1865,14 @@ msgid "Specify a profile name to load"
 msgstr "Увядзіце імя профілю для загрузкі"
 
 #: gnome-panel/menu.c:240
-msgid "Many many others ..."
+#, fuzzy
+msgid "Many, many others..."
 msgstr "Шмат шмат іншых..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
-msgid "and finally, The Knights Who Say ... NI!"
+#, fuzzy
+msgid "and finally, The Knights Who Say... NI!"
 msgstr "і нарэшце, Рыцар, які скажа ... НЕ!"
 
 #: gnome-panel/menu.c:277
@@ -2003,99 +2012,117 @@ msgstr "Дадаць новы элемэнт да гэтага мэню"
 msgid "Properties"
 msgstr "Уласьцівасьці"
 
-#: gnome-panel/menu.c:2445 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2446 libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "запыт вярнуў выключэньне %s\n"
 
-#: gnome-panel/menu.c:2701 gnome-panel/menu.c:2706
+#: gnome-panel/menu.c:2702 gnome-panel/menu.c:2707
 msgid "Aligned Panel"
 msgstr "Параўнаная панэль"
 
-#: gnome-panel/menu.c:2707
+#: gnome-panel/menu.c:2708
 msgid "GNOME Aligned Panel"
 msgstr "Параўнаная панэль GNOME"
 
-#: gnome-panel/menu.c:2724 gnome-panel/menu.c:2728
-#: gnome-panel/panel-config.c:1663
+#: gnome-panel/menu.c:2725 gnome-panel/menu.c:2729
+#: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Краёвая панэль"
 
-#: gnome-panel/menu.c:2729
+#: gnome-panel/menu.c:2730
 msgid "GNOME Edge Panel"
 msgstr "Краёвая панэль GNOME"
 
-#: gnome-panel/menu.c:2750 gnome-panel/menu.c:2754
-#: gnome-panel/panel-config.c:1685
+#: gnome-panel/menu.c:2751 gnome-panel/menu.c:2755
+#: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Сьлізготная панэль"
 
-#: gnome-panel/menu.c:2755
+#: gnome-panel/menu.c:2756
 msgid "GNOME Sliding Panel"
 msgstr "Сьлізготная панэль GNOME"
 
-#: gnome-panel/menu.c:2773 gnome-panel/menu.c:2778
-#: gnome-panel/panel-config.c:1696
+#: gnome-panel/menu.c:2774 gnome-panel/menu.c:2779
+#: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Панэль плавае"
 
-#: gnome-panel/menu.c:2779
+#: gnome-panel/menu.c:2780
 msgid "GNOME Floating Panel"
 msgstr "Панэль GNOME, што плавае"
 
-#: gnome-panel/menu.c:2799
+#: gnome-panel/menu.c:2800
 msgid "You can only have one menu panel at a time."
 msgstr "Адначасова можа быць толькі адно мэню панэлі."
 
-#: gnome-panel/menu.c:2843
+#: gnome-panel/menu.c:2844
 msgid "C_orner Panel"
 msgstr "Вуглавая панэль"
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2846
 msgid "Create corner panel"
 msgstr "Стварыць вуглавую панэль"
 
-#: gnome-panel/menu.c:2852
+#: gnome-panel/menu.c:2853
 msgid "_Edge Panel"
 msgstr "Краёвая панэль"
 
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:2855
 msgid "Create edge panel"
 msgstr "Стварыць краёвую панэль"
 
-#: gnome-panel/menu.c:2861
+#: gnome-panel/menu.c:2862
 msgid "_Floating Panel"
 msgstr "Панэль плавае"
 
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:2864
 msgid "Create floating panel"
 msgstr "Стварыць панэль што плавае"
 
-#: gnome-panel/menu.c:2870
+#: gnome-panel/menu.c:2871
 msgid "_Sliding Panel"
 msgstr "Сьлізготная панэль"
 
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:2873
 msgid "Create sliding panel"
 msgstr "Стварыць сьлізготную панэль"
 
-#: gnome-panel/menu.c:2881
+#: gnome-panel/menu.c:2882
 msgid "_Menu Panel"
 msgstr "Панэль мэню"
 
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:2884
 msgid "Create menu panel"
 msgstr "Стварыць панэль мэню"
 
-#: gnome-panel/menu.c:2970 gnome-panel/menu.c:2976 gnome-panel/menu.c:3647
+#: gnome-panel/menu.c:2973 gnome-panel/menu.c:2979 gnome-panel/menu.c:3672
 msgid "KDE Menu"
 msgstr "Мэню KDE"
 
-#: gnome-panel/menu.c:3076
+#: gnome-panel/menu.c:3036
+#, fuzzy
+msgid "Lock"
+msgstr "Гадзіньнік"
+
+#: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
+msgid "Screenshot"
+msgstr "Здымак з экрану"
+
+#: gnome-panel/menu.c:3052
+msgid "Search"
+msgstr ""
+
+#: gnome-panel/menu.c:3060
+#, fuzzy
+msgid "Run"
+msgstr "Запусьціць"
+
+#: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
 msgstr "Вы ня можаце выдаліць вашую апошнюю панэль."
 
-#: gnome-panel/menu.c:3089
+#: gnome-panel/menu.c:3145
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2104,71 +2131,59 @@ msgstr ""
 "яе ўсталёўкі будуць згублены. \n"
 "Выдаліць панэль?"
 
-#: gnome-panel/menu.c:3336
+#: gnome-panel/menu.c:3153
+#, fuzzy
+msgid "Delete Panel"
+msgstr "Выдаліць гэтую панэль"
+
+#: gnome-panel/menu.c:3392
 msgid "Launcher..."
 msgstr "Запускальнік..."
 
-#: gnome-panel/menu.c:3343
+#: gnome-panel/menu.c:3399
 msgid "Launcher from menu"
 msgstr "Запусьціць з мэню"
 
-#: gnome-panel/menu.c:3351 gnome-panel/menu.c:3892 gnome-panel/menu.c:3920
-#: gnome-panel/menu.c:4116
-msgid "GNOME Menu"
-msgstr "Мэню GNOME"
-
-#: gnome-panel/menu.c:3367
-msgid "Log Out Button"
+#: gnome-panel/menu.c:3407
+#, fuzzy
+msgid "Button"
 msgstr "Кнопка 'Заканчэньне працы'"
 
-#: gnome-panel/menu.c:3375
+#: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
+#: gnome-panel/menu.c:4141
 #, fuzzy
-msgid "Lock Button"
-msgstr "Кнопка 'Зачыніць'"
+msgid "Main Menu"
+msgstr "Мэню Debian"
 
-#: gnome-panel/menu.c:3383
-#, fuzzy
-msgid "Screenshot Button"
-msgstr "Здымак з экрану"
-
-#: gnome-panel/menu.c:3391
-msgid "Search Button"
-msgstr ""
-
-#: gnome-panel/menu.c:3399
-#, fuzzy
-msgid "Run Button"
-msgstr "Кнопка 'Заканчэньне працы'"
-
-#: gnome-panel/menu.c:3443
+#: gnome-panel/menu.c:3469
 msgid "_Delete This Panel..."
 msgstr "Выдаліць гэтую панэль..."
 
-#: gnome-panel/menu.c:3446 gnome-panel/menu.c:3478
+#: gnome-panel/menu.c:3472 gnome-panel/menu.c:3504
 msgid "_Delete This Panel"
 msgstr "Выдаліць гэтую панэль"
 
-#: gnome-panel/menu.c:3465
+#: gnome-panel/menu.c:3491
 msgid "_Add to Panel"
 msgstr "Дадаць на панель"
 
-#: gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3531
 msgid "_New Panel"
 msgstr "Новая панэль"
 
-#: gnome-panel/menu.c:3539
+#: gnome-panel/menu.c:3565
 msgid "_About Panels"
 msgstr "Пра панэлі"
 
-#: gnome-panel/menu.c:3552
+#: gnome-panel/menu.c:3578
 msgid "About _GNOME"
 msgstr "Пра праграму GNOME..."
 
-#: gnome-panel/menu.c:3581
+#: gnome-panel/menu.c:3606
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Зачыніць экран, калі Вы толькі часова пакідаеце кампутар"
 
-#: gnome-panel/menu.c:3592
+#: gnome-panel/menu.c:3617
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2176,31 +2191,31 @@ msgstr ""
 "Выйсьці з бягучага сэансу каб увайсьці як іншы карыстальнік ці выключыць "
 "кампутар"
 
-#: gnome-panel/menu.c:3748
+#: gnome-panel/menu.c:3773
 msgid "Applets"
 msgstr "Аплеты"
 
-#: gnome-panel/menu.c:3772
+#: gnome-panel/menu.c:3797
 msgid "Run a command"
 msgstr "Выканаць каманду"
 
-#: gnome-panel/menu.c:3812
+#: gnome-panel/menu.c:3837
 msgid "Desktop"
 msgstr "Сталец"
 
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3840
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3865
 msgid "Menu"
 msgstr "Мэню"
 
-#: gnome-panel/menu.c:3842
+#: gnome-panel/menu.c:3867
 msgid "Menu:"
 msgstr "Мэню:"
 
-#: gnome-panel/menu.c:3914
+#: gnome-panel/menu.c:3939
 msgid "Can't create menu, using main menu!"
 msgstr "Немагчыма стварыць мэню, выкарыстоўваецца галоўнае мэню!"
 
-#: gnome-panel/menu.c:4439
+#: gnome-panel/menu.c:4464
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Ня ўсталяваны шлях %s для об'екту мэню панэлі\n"
@@ -2290,16 +2305,16 @@ msgstr "Дзеяньні"
 msgid "The type of action this button implements"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:184
+#: gnome-panel/panel-applet-frame.c:185
 msgid "Cannot register control widget\n"
 msgstr "Немагчыма зарэгістраваць віджэт кантролю\n"
 
-#: gnome-panel/panel-applet-frame.c:640
+#: gnome-panel/panel-applet-frame.c:606
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Выключэньне з popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:750
+#: gnome-panel/panel-applet-frame.c:716
 #, c-format
 msgid ""
 "The %s applet appears to have died unexpectedly\n"
@@ -2316,11 +2331,11 @@ msgstr ""
 "(Калі вы не перазагрузіе яго зараз, вы заўсёды зможаце дадаць яго націснуўшы "
 "правую кнопку мышы на панэлі й абраўшы \"Дадаць на панэльl\" у падмэню)."
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:751
 msgid "D_on't Delete"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:819
+#: gnome-panel/panel-applet-frame.c:785
 #, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
@@ -2329,7 +2344,7 @@ msgid ""
 "Do you want to delete the applet from your configuration?"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:916
+#: gnome-panel/panel-applet-frame.c:882
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Немагчыма атрымаць спалучэньне AppletShell ад кіраўніцтва\n"
 
@@ -2338,7 +2353,7 @@ msgstr "Немагчыма атрымаць спалучэньне AppletShell �
 msgid "Open URL: %s"
 msgstr "Адчыніць URL: %s"
 
-#: gnome-panel/panel.c:2232
+#: gnome-panel/panel.c:2245
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2347,155 +2362,183 @@ msgstr ""
 "мэню."
 
 #. Auto-hide
-#: gnome-panel/panel-config.c:545
+#: gnome-panel/panel-config.c:546
 msgid "_Autohide"
 msgstr "Аўтахаваньне"
 
 #. Hidebuttons enable
-#: gnome-panel/panel-config.c:556
+#: gnome-panel/panel-config.c:557
 msgid "Show hide _buttons"
 msgstr "Адлюстроўваць кнопку хаваньня"
 
 #. Arrow enable
-#: gnome-panel/panel-config.c:568
+#: gnome-panel/panel-config.c:569
 msgid "Arro_ws on hide buttons"
 msgstr "Стрэлкі на кнопках хаваньня"
 
-#: gnome-panel/panel-config.c:622
-msgid "Miscellaneous"
+#: gnome-panel/panel-config.c:624
+#, fuzzy
+msgid "Miscellaneous:"
 msgstr "Рознае"
 
-#: gnome-panel/panel-config.c:633
+#: gnome-panel/panel-config.c:642
 msgid "Current screen:"
 msgstr "Бягучы экран:"
 
-#: gnome-panel/panel-config.c:649
+#: gnome-panel/panel-config.c:658
 #, fuzzy
 msgid "Current monitor:"
 msgstr "Бягучы экран:"
 
-#: gnome-panel/panel-config.c:741
+#: gnome-panel/panel-config.c:750
 msgid "Indicates the panel position and orientation on screen"
 msgstr "Індыцыраваць пазыцыю й арыентацыю панэлі на экране"
 
-#: gnome-panel/panel-config.c:759
+#: gnome-panel/panel-config.c:768
 msgid "_Position:"
 msgstr "Пазыцыя:"
 
-#: gnome-panel/panel-config.c:986
-msgid "Orient hori_zontally"
-msgstr "Гарызантальная арыентацыя"
+#: gnome-panel/panel-config.c:993 libpanel-applet/panel-test-applets.glade.h:6
+msgid "Orientation:"
+msgstr "Арыентацыя:"
 
-#: gnome-panel/panel-config.c:998
-msgid "Orient _vertically"
-msgstr "Вертыкальная арыентацыя"
-
-#: gnome-panel/panel-config.c:1012
-msgid "H_orizontal offset:"
+#: gnome-panel/panel-config.c:1008
+#, fuzzy
+msgid "Hori_zontal"
 msgstr "_Гарызантальны зрух:"
 
-#: gnome-panel/panel-config.c:1032
-msgid "Ver_tical offset:"
+#: gnome-panel/panel-config.c:1020
+#, fuzzy
+msgid "_Vertical"
 msgstr "_Вэртыкальны зрух:"
 
-#: gnome-panel/panel-config.c:1097
-msgid "Screen edge _offset:"
-msgstr "_Зрух бакоў экрану:"
+#: gnome-panel/panel-config.c:1030
+#, fuzzy
+msgid "Position:"
+msgstr "Пазыцыя:"
 
-#: gnome-panel/panel-config.c:1156
+#: gnome-panel/panel-config.c:1045
+#, fuzzy
+msgid "H_orizontal:"
+msgstr "_Гарызантальны зрух:"
+
+#: gnome-panel/panel-config.c:1065
+#, fuzzy
+msgid "Ver_tical:"
+msgstr "_Вэртыкальны зрух:"
+
+#: gnome-panel/panel-config.c:1130
+msgid "_Distance from edge:"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1189
 msgid "_Size:"
 msgstr "Памер:"
 
-#: gnome-panel/panel-config.c:1164
-msgid "XX Small (12 pixels)"
-msgstr "XX маленькая (12 pixels)"
+#: gnome-panel/panel-config.c:1197
+#: libpanel-applet/panel-test-applets.glade.h:15
+msgid "XX Small"
+msgstr "XX маленькая"
 
-#: gnome-panel/panel-config.c:1172
-msgid "X Small (24 pixels)"
-msgstr "X маленькая (24 pixels)"
+#: gnome-panel/panel-config.c:1205
+#: libpanel-applet/panel-test-applets.glade.h:13
+msgid "X Small"
+msgstr "X маленькая"
 
-#: gnome-panel/panel-config.c:1180
-msgid "Small (36 pixels)"
-msgstr "Маленькая (36 pixels)"
+#: gnome-panel/panel-config.c:1213
+#: libpanel-applet/panel-test-applets.glade.h:10
+msgid "Small"
+msgstr "Малая"
 
-#: gnome-panel/panel-config.c:1188
-msgid "Medium (48 pixels)"
-msgstr "Сярэдняя (48 pixels)"
+#: gnome-panel/panel-config.c:1229
+#: libpanel-applet/panel-test-applets.glade.h:3
+msgid "Large"
+msgstr "Вялікая"
 
-#: gnome-panel/panel-config.c:1196
-msgid "Large (64 pixels)"
-msgstr "Вялікая (64 pixels)"
+#: gnome-panel/panel-config.c:1237
+#: libpanel-applet/panel-test-applets.glade.h:12
+msgid "X Large"
+msgstr "X вялікая"
 
-#: gnome-panel/panel-config.c:1204
-msgid "X Large (80 pixels)"
-msgstr "X вялікая (80 pixels)"
+#: gnome-panel/panel-config.c:1245
+#: libpanel-applet/panel-test-applets.glade.h:14
+msgid "XX Large"
+msgstr "XX вялікая"
 
-#: gnome-panel/panel-config.c:1212
-msgid "XX Large (128 pixels)"
-msgstr "XX вялікая (128 pixels)"
+#: gnome-panel/panel-config.c:1420
+msgid "_Type:"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1367
-msgid "Background _type:"
-msgstr "Тып тла:"
-
-#: gnome-panel/panel-config.c:1376
+#: gnome-panel/panel-config.c:1429
 msgid "Default"
 msgstr "Тыпова"
 
-#: gnome-panel/panel-config.c:1378
+#: gnome-panel/panel-config.c:1431
 msgid "Color"
 msgstr "Колер"
 
-#. image frame
-#: gnome-panel/panel-config.c:1380 gnome-panel/panel-config.c:1425
+#: gnome-panel/panel-config.c:1433
 msgid "Image"
 msgstr "Відарыс"
 
-#: gnome-panel/panel-config.c:1395
-msgid "Background co_lor:"
-msgstr "Колер тла:"
+#: gnome-panel/panel-config.c:1435
+msgid "Transparent"
+msgstr ""
 
-#: gnome-panel/panel-config.c:1448
-msgid "_Do not scale image to fit"
-msgstr "_Ня маштабаваць відарыс"
+#: gnome-panel/panel-config.c:1450
+#, fuzzy
+msgid "_Color:"
+msgstr "Колер"
 
-#: gnome-panel/panel-config.c:1453
-msgid "Sc_ale image"
-msgstr "Маштабаваць відарыс"
+#. image frame
+#: gnome-panel/panel-config.c:1480
+#, fuzzy
+msgid "Image:"
+msgstr "Відарыс"
 
-#: gnome-panel/panel-config.c:1457
-msgid "St_retch image"
+#: gnome-panel/panel-config.c:1512
+msgid "T_ile"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1517
+msgid "_Scale"
+msgstr ""
+
+#: gnome-panel/panel-config.c:1521
+#, fuzzy
+msgid "St_retch"
 msgstr "Рась_цягнуць відарыс"
 
-#: gnome-panel/panel-config.c:1471
-msgid "Rotate image for _vertical panels"
+#: gnome-panel/panel-config.c:1535
+#, fuzzy
+msgid "Rotate image when panel is _vertical"
 msgstr "Паварочваць на вэртыкальных панэлях"
 
-#: gnome-panel/panel-config.c:1532
+#: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
 msgstr "Краёвая панэль"
 
-#: gnome-panel/panel-config.c:1539
+#: gnome-panel/panel-config.c:1603
 msgid "Corner panel"
 msgstr "Вуглавая панэль"
 
-#: gnome-panel/panel-config.c:1545
+#: gnome-panel/panel-config.c:1609
 msgid "Sliding panel"
 msgstr "Сьлізготная панэль"
 
-#: gnome-panel/panel-config.c:1551
+#: gnome-panel/panel-config.c:1615
 msgid "Floating panel"
 msgstr "Панэль плавае"
 
-#: gnome-panel/panel-config.c:1629
+#: gnome-panel/panel-config.c:1693
 msgid "Panel Properties"
 msgstr "Уласьцівасьці панэлі"
 
-#: gnome-panel/panel-config.c:1674
+#: gnome-panel/panel-config.c:1738
 msgid "Corner Panel"
 msgstr "Вуглавая панэль"
 
-#: gnome-panel/panel-config.c:1715
+#: gnome-panel/panel-config.c:1779
 msgid "Background"
 msgstr "Тло"
 
@@ -2573,12 +2616,12 @@ msgstr ""
 "Код памылкі: %d\n"
 "Панэль будзе выгружана."
 
-#: gnome-panel/panel-stock-icons.c:101
+#: gnome-panel/panel-stock-icons.c:102
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr ""
 
-#: gnome-panel/panel-stock-icons.c:130
+#: gnome-panel/panel-stock-icons.c:131
 msgid "_Run"
 msgstr "Запусьціць"
 
@@ -2593,11 +2636,11 @@ msgstr "Дакумэнт дапамогі адсутнічае"
 msgid "No document to show"
 msgstr "Няма дакумэнтаў каб адлюстраваць"
 
-#: gnome-panel/panel-util.c:632 gnome-panel/panel-util.c:648
+#: gnome-panel/panel-util.c:630 gnome-panel/panel-util.c:646
 msgid "Disabled"
 msgstr "Выключана"
 
-#: gnome-panel/panel-util.c:1478
+#: gnome-panel/panel-util.c:1476
 msgid ""
 "<b>Cannot execute xscreensaver</b>\n"
 "\n"
@@ -2619,42 +2662,42 @@ msgstr "Тэставы аплет Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Мейсца тэставага аплету Bonobo"
 
-#: libpanel-applet/panel-applet.c:858
+#: libpanel-applet/panel-applet.c:862
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Тып тла '%s' , які ня завершаны, атрымаў"
 
-#: libpanel-applet/panel-applet.c:872
+#: libpanel-applet/panel-applet.c:876
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Тып тла '%s' , які ня завершаны, атрымаў: %s"
 
-#: libpanel-applet/panel-applet.c:881
+#: libpanel-applet/panel-applet.c:885
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Памылка атрыманьня відарысу %s"
 
-#: libpanel-applet/panel-applet.c:888
+#: libpanel-applet/panel-applet.c:892
 msgid "Unknown background type received"
 msgstr "Атрыманы невядомы тып тла"
 
-#: libpanel-applet/panel-applet.c:1065
+#: libpanel-applet/panel-applet.c:1073
 msgid "The Applet's containing Panel's orientation"
 msgstr "Аплеты маюць арыентацыю панэлі"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1081
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Аплеты маюць памер панэлі у піксэлях "
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1089
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Аплеты утрымліваюць колер тла ці карцінку панэлі"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1097
 msgid "The Applet's flags"
 msgstr "Сьцягі аплетаў"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1105
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Межы, якія парада жадае зьмяніць, узгоднены з аплетам"
 
@@ -2666,17 +2709,9 @@ msgstr "Аплет:"
 msgid "Bottom"
 msgstr "Унізе"
 
-#: libpanel-applet/panel-test-applets.glade.h:3
-msgid "Large"
-msgstr "Вялікая"
-
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "З левага боку"
-
-#: libpanel-applet/panel-test-applets.glade.h:6
-msgid "Orientation:"
-msgstr "Арыентацыя:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
@@ -2690,29 +2725,71 @@ msgstr "З правага боку"
 msgid "Size:"
 msgstr "Памер:"
 
-#: libpanel-applet/panel-test-applets.glade.h:10
-msgid "Small"
-msgstr "Малая"
-
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Наверсе"
 
-#: libpanel-applet/panel-test-applets.glade.h:12
-msgid "X Large"
-msgstr "X вялікая"
+#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
+#~ msgstr "<big><big>%s - рыбка GNOME сказала:</big></big>"
 
-#: libpanel-applet/panel-test-applets.glade.h:13
-msgid "X Small"
-msgstr "X маленькая"
+#~ msgid "_Animation"
+#~ msgstr "Анімацыя"
 
-#: libpanel-applet/panel-test-applets.glade.h:14
-msgid "XX Large"
-msgstr "XX вялікая"
+#~ msgid "GNOME Menu"
+#~ msgstr "Мэню GNOME"
 
-#: libpanel-applet/panel-test-applets.glade.h:15
-msgid "XX Small"
-msgstr "XX маленькая"
+#~ msgid "Log Out Button"
+#~ msgstr "Кнопка 'Заканчэньне працы'"
+
+#, fuzzy
+#~ msgid "Lock Button"
+#~ msgstr "Кнопка 'Зачыніць'"
+
+#, fuzzy
+#~ msgid "Screenshot Button"
+#~ msgstr "Здымак з экрану"
+
+#~ msgid "Orient hori_zontally"
+#~ msgstr "Гарызантальная арыентацыя"
+
+#~ msgid "Orient _vertically"
+#~ msgstr "Вертыкальная арыентацыя"
+
+#~ msgid "Screen edge _offset:"
+#~ msgstr "_Зрух бакоў экрану:"
+
+#~ msgid "XX Small (12 pixels)"
+#~ msgstr "XX маленькая (12 pixels)"
+
+#~ msgid "X Small (24 pixels)"
+#~ msgstr "X маленькая (24 pixels)"
+
+#~ msgid "Small (36 pixels)"
+#~ msgstr "Маленькая (36 pixels)"
+
+#~ msgid "Medium (48 pixels)"
+#~ msgstr "Сярэдняя (48 pixels)"
+
+#~ msgid "Large (64 pixels)"
+#~ msgstr "Вялікая (64 pixels)"
+
+#~ msgid "X Large (80 pixels)"
+#~ msgstr "X вялікая (80 pixels)"
+
+#~ msgid "XX Large (128 pixels)"
+#~ msgstr "XX вялікая (128 pixels)"
+
+#~ msgid "Background _type:"
+#~ msgstr "Тып тла:"
+
+#~ msgid "Background co_lor:"
+#~ msgstr "Колер тла:"
+
+#~ msgid "_Do not scale image to fit"
+#~ msgstr "_Ня маштабаваць відарыс"
+
+#~ msgid "Sc_ale image"
+#~ msgstr "Маштабаваць відарыс"
 
 #~ msgid "Command to execute when the applet is clicked"
 #~ msgstr "Каманда, што выконваецца па кліку на аплет"
