@@ -43,28 +43,36 @@ goat_timeout_func(gpointer data)
 	
 	goat_x += goat_accx;
 	goat_y += goat_accy;
-	
+
 	if(goat_x>goat_darea->allocation.width-6-goat_width) {
 		goat_accx = -(rand()%4 +3);
 		goat_x = goat_darea->allocation.width-6-goat_width;
+#ifdef FIXME	
 		if(goat_filename)
 			gnome_sound_play (goat_filename);
+#endif
 	} else if(goat_x<6) {
 		goat_accx = rand()%4 +3;
 		goat_x = 6;
+#ifdef FIXME	
 		if(goat_filename)
 			gnome_sound_play (goat_filename);
+#endif
 	}
 	if(goat_y>goat_darea->allocation.height-6-goat_height) {
 		goat_accy = -(rand()%4 +3);
 		goat_y = goat_darea->allocation.height-6-goat_height;
+#ifdef FIXME	
 		if(goat_filename)
 			gnome_sound_play (goat_filename);
+#endif
 	} else if(goat_y<6) {
 		goat_accy = rand()%4 +3;
 		goat_y = 6;
+#ifdef FIXME	
 		if(goat_filename)
 			gnome_sound_play (goat_filename);
+#endif
 	}
 
 	real_goat_frame = goat_frame/2;
@@ -113,9 +121,9 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = gnome_pixmap_file(files[frame]);
+		file = gnome_pixmap_file (files[frame]);
 		if(!file || 
-		   !(pb=gdk_pixbuf_new_from_file (file))) {
+		   !(pb=gdk_pixbuf_new_from_file (file, NULL))) {
 			g_warning("Goat is not available!");
 			return;
 		}
@@ -190,17 +198,13 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 	clicks = 0;
 	
 	if(goat_pages==0) {
+#ifdef FIXME
 		if(!goat_filename)
 			goat_filename =
 				gnome_sound_file ("ricochet.wav");
-
-		gtk_widget_push_visual (gdk_rgb_get_visual ());
-		gtk_widget_push_colormap (gdk_rgb_get_cmap ());
+#endif
 
 		goat_darea = gtk_drawing_area_new();
-
-		gtk_widget_pop_colormap ();
-		gtk_widget_pop_visual ();
 
 		gtk_signal_connect_after(GTK_OBJECT(goat_darea),"realize",
 					 GTK_SIGNAL_FUNC(goat_realize),NULL);
