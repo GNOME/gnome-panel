@@ -96,7 +96,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  };
 
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			"(C) 1998 the Free Software Foundation",
+			"(C) 1998, 1999 the Free Software Foundation",
 			(const gchar **)authors,
 			_("This program is responsible for launching "
 			"other applications, embedding small applets "
@@ -1010,7 +1010,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap, char *title,
 		sim->item_loc = item_loc; /*make sure you don't free this,
 					    it's not ours!*/
 		sim->type = 1;
-		sim->applet = TRUE;
+		sim->applet = applet;
 		gtk_signal_connect(GTK_OBJECT(menuitem),"event",
 				   GTK_SIGNAL_FUNC(show_item_menu_mi_cb),
 				   sim);
