@@ -480,8 +480,6 @@ do_session_save(GnomeClient *client,
 				      global_config.hungry_menus);
 		gnome_config_set_bool("off_panel_popups",
 				      global_config.off_panel_popups);
-		gnome_config_set_bool("prompt_for_logout",
-				      global_config.prompt_for_logout);
 		gnome_config_set_bool("disable_animations",
 				      global_config.disable_animations);
 		gnome_config_set_int("applet_padding",
@@ -957,9 +955,6 @@ load_up_globals(void)
 	global_config.off_panel_popups =
 		gnome_config_get_bool("off_panel_popups=TRUE");
 		
-	global_config.prompt_for_logout =
-		gnome_config_get_bool("prompt_for_logout=TRUE");
-
 	global_config.disable_animations =
 		gnome_config_get_bool("disable_animations=FALSE");
 		

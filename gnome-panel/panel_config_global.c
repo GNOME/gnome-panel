@@ -509,15 +509,6 @@ misc_notebook_page(void)
 	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	/* Prompt before log out */
-	button = gtk_check_button_new_with_label (_("Prompt before logout"));
-	if (temp_config.prompt_for_logout)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_button_value), 
-			    &(temp_config.prompt_for_logout));
-	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
-
 	/* Autoraise */
 	button = gtk_check_button_new_with_label (_("Raise panels on mouse-over (non GNOME compliant window managers only)"));
 	if (temp_config.autoraise)
