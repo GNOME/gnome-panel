@@ -29,6 +29,8 @@ CORBA_SOURCES = \
 MICO_VERS = 2.0.5
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
+libpanel_appletincludedir = $(includedir)
+
 lib_LTLIBRARIES = libpanel_applet.la
 
 libpanel_applet_la_SOURCES = \
@@ -37,6 +39,10 @@ libpanel_applet_la_SOURCES = \
 	panel-util.c  \
 	applet-widget.c \
 	$(CORBA_SOURCES)
+
+libpanel_appletinclude_HEADERS = \
+	applet-lib.h \
+	applet-widget.h
 
 #libpanel_appletinclude_HEADERS = applet-lib.h \
 #	applet-widget.h

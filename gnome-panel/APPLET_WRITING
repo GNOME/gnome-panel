@@ -25,7 +25,7 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
-	/* intialize, this will basicallys et up the applet, corba and
+	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
 				    NULL, argv[0]);
@@ -85,7 +85,7 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
-	/* intialize, this will basicallys et up the applet, corba and
+	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
 				    NULL, argv[0]);
@@ -184,7 +184,7 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
-	/* intialize, this will basicallys et up the applet, corba and
+	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
 				    NULL, argv[0]);
@@ -272,7 +272,7 @@ main(int argc, char **argv)
 	GtkWidget *applet;
 	GtkWidget *label;
 
-	/* intialize, this will basicallys et up the applet, corba and
+	/* intialize, this will basically set up the applet, corba and
 	   call gnome_init */
 	applet_widget_init_defaults("hello_applet", NULL, argc, argv, 0,
 				    NULL, argv[0]);
@@ -321,4 +321,84 @@ initial orientation.
 Multiple Applet Support:
 ========================
 
-FIXME: do this
+Having one process per applet might be ok, but when you have many applets
+it can be quite a hit on the memory. so why not manage multiple applets
+from one process, even different types of applets. Ok here's how it's
+done. For a simple example let's modify our original hello applet to
+make it possible to have multiple instances of it from just one
+executable.
+
+#include <config.h>
+#include <gnome.h>
+#include <applet-widget.h>
+
+/*when we get a command to start a new widget*/
+static void
+applet_start_new_applet(const gchar *param, gpointer data)
+{
+	GtkWidget *applet;
+
+	applet = applet_widget_new_with_param(param);
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+}
+
+int
+main(int argc, char **argv)
+{
+	GtkWidget *applet;
+	GtkWidget *label;
+
+	/* intialize, this will basically set up the applet, corba and
+	   call gnome_init */
+	applet_widget_init("hello_applet", NULL, argc, argv, 0, NULL, argv[0],
+			   TRUE,TRUE,applet_start_new_applet,NULL);
+
+	/* create a new applet_widget */
+	applet = applet_widget_new();
+	/* in the rare case that the communication with the panel
+	   failed, error out */
+	if (!applet)
+		g_error("Can't create applet!\n");
+
+	/* create the widget we are going to put on the applet */
+	label = gtk_label_new(_("Hello There!"));
+	gtk_widget_show(label);
+
+	/* add the widget to the applet-widget, and thereby actually
+	   putting it "onto" the panel */
+	applet_widget_add (APPLET_WIDGET (applet), label);
+	gtk_widget_show (applet);
+
+	/* special corba main loop */
+	applet_widget_gtk_main ();
+
+	return 0;
+}
+
+You will note in the above that all that is changed is that we use the
+full syntax for the applet_widget_init function, and added a callback
+function for starting a new applet. That's all that's needed really.
+Of course the applet can't do things globally, but most likely you will
+want to store the widget data in a structure which you store in the
+user_data of the applet widget. See the clock applet for an example of
+this.
+
+If you want to put more applet types into one executable, you will need
+to use a command line argument. There is only one parameter allowed,
+otherwise things will not work. It's also not fully tested as I write
+this. Anyway the way to do this is to parse the argument yourself. 
+Then start_new_applet function also gets the parameter as an argument.
+
+I do not recommend doing this as of yet, I plan to implement command
+line argument parsing in applet-widget, so you will not need to do it
+yourself. I do plan doing this soon, so do hold your breath.
