@@ -1188,6 +1188,8 @@ main(int argc, char **argv)
 			    GTK_SIGNAL_FUNC (panel_session_save), argv[0]);
 	gtk_signal_connect (GTK_OBJECT (client), "connect",
 			    GTK_SIGNAL_FUNC (panel_connect_client), NULL);
+	gtk_signal_connect (GTK_OBJECT (client), "die",
+			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
 	panel_corba_register_arguments ();
 
