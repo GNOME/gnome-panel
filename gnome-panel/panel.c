@@ -734,6 +734,7 @@ put_applet_in_free_slot_starting_at(Panel *panel, GtkWidget *applet, int start)
 	panel->applet_count++;
 
 	put_applet_in_slot(panel,panel->applets[i],i);
+
 	return TRUE;
 }
 
@@ -763,21 +764,22 @@ move_applet_n_by_pos(Panel *panel, int n, int pos)
 
 	if(panel->applets[pos]->type==APPLET_DRAWER &&
 	   panel->applets[pos]->drawer->applet_being_dragged != NULL) {
+		GtkWidget *applet;
 		/*we are dragging an applet that is sitting on top of a
 		  drawer icon
 		  we will put the applet close to pos+n if possible and
 		  return the difference in it's position*/
-		if(!put_applet_in_free_slot_starting_at(
-			panel,
-			panel->applets[pos]->drawer->applet_being_dragged,	
-			pos+n))
+		applet = panel->applets[pos]->drawer->applet_being_dragged;
+		if(!put_applet_in_free_slot_starting_at(panel,applet,pos+n))
 			return 0; /*can't place it so can't move*/
-		return find_applet(panel,
-			panel->applets[pos]->drawer->applet_being_dragged)-pos;
+		panel->applets[pos]->drawer->applet_being_dragged=NULL;
+		gtk_widget_show(applet);
+		return find_applet(panel,applet)-pos;
 			
 	}
 
 
+	tmp.drawer = panel->applets[pos]->drawer;
 	tmp.applet = panel->applets[pos]->applet;
 	tmp.type = panel->applets[pos]->type;
 
@@ -793,9 +795,10 @@ move_applet_n_by_pos(Panel *panel, int n, int pos)
 			p=i-1;
 			a=i;
 		}
-		if(abs(i)==n && tmp.type==APPLET_NORMAL &&
+		if(a==n && tmp.type==APPLET_NORMAL &&
 		   panel->applets[pos+n]->type==APPLET_DRAWER) {
 			/*put applet as being on the drawer*/
+			gtk_widget_hide(tmp.applet);
 			panel->applets[pos+n]->drawer->applet_being_dragged =
 				tmp.applet;
 			panel->applets[pos+n]->drawer->applet_id_being_dragged =
@@ -814,10 +817,13 @@ move_applet_n_by_pos(Panel *panel, int n, int pos)
 			panel->applets[pos+a]->type;
 		panel->applets[pos+p]->applet =
 			panel->applets[pos+a]->applet;
+		panel->applets[pos+p]->drawer =
+			panel->applets[pos+a]->drawer;
 	}
 	put_applet_in_slot(panel,&tmp,pos+n);
 	panel->applets[pos+n]->type = tmp.type;
 	panel->applets[pos+n]->applet = tmp.applet;
+	panel->applets[pos+n]->drawer = tmp.drawer;
 
 	return n;
 }
