@@ -10,7 +10,7 @@ INCLUDES =							\
 
 SUBDIRS = help
 
-bin_PROGRAMS = fish-applet-2
+libexec_PROGRAMS = fish-applet-2
 
 fish_applet_2_SOURCES = fish.c
 
@@ -26,7 +26,7 @@ FISH_BITMAPS =		\
 
 EXTRA_DIST =					\
 	$(FISH_BITMAPS)				\
-	GNOME_FishApplet_Factory.server.in	\
+	GNOME_FishApplet_Factory.server.in.in	\
 	gnome-fish.png				\
 	fish.schemas.in				\
 	$(ui_DATA)
@@ -43,6 +43,9 @@ ui_DATA		= GNOME_FishApplet.xml
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_FishApplet_Factory.server.in
 server_DATA     = $(server_in_files:.server.in=.server)
+
+$(server_in_files): $(server_in_files).in
+	sed -e "s|\@LIBEXECDIR\@|$(libexecdir)|" $< > $@
 
 @INTLTOOL_SERVER_RULE@
 

@@ -5,6 +5,7 @@
 
 #include "panel.h"
 #include "panel-util.h"
+#include "panel-gconf.h"
 
 #undef PANEL_GLOBAL_CONFIG_DEBUG
 
