@@ -245,14 +245,14 @@ update_timeformat (ClockData *cd)
 			 *              if the time should come before the
 			 *              date on a clock in your locale.
 			 */
-			clock_format = g_strdup_printf (_("%s\n%s"),
+			clock_format = g_strdup_printf (_("%1$s\n%2$s"),
 							date_format, time_format);
 		else
 			/* translators: reverse the order of these arguments
 			 *              if the time should come before the
 			 *              date on a clock in your locale.
 			 */
-			clock_format = g_strdup_printf (_("%s, %s"),
+			clock_format = g_strdup_printf (_("%1$s, %2$s"),
 							date_format, time_format);
 	}
 
