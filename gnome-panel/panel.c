@@ -107,36 +107,72 @@ applet_orientation_notify(GtkWidget *widget, gpointer data)
 	call_applet(widget, &cmd);
 }
 
+static char *
+get_applet_id(AppletInfo *info)
+{
+	AppletCommand  cmd;
+
+	switch(info->type) {
+		case APPLET_EXTERN: 
+			cmd.cmd = APPLET_CMD_QUERY;
+			return call_applet(info->widget, &cmd);
+		case APPLET_DRAWER:
+			/*FIXME: is this the way I want to do drawers?????*/
+			return DRAWER_ID;
+		case APPLET_MENU:
+			return MENU_ID;
+		case APPLET_LAUNCHER:
+			return LAUNCHER_ID;
+	}
+}
+
+static char *
+get_applet_params(AppletInfo *info)
+{
+	AppletCommand  cmd;
+
+	switch(info->type) {
+		case APPLET_EXTERN: 
+			cmd.cmd = APPLET_CMD_GET_INSTANCE_PARAMS;
+			return call_applet(info->widget, &cmd);
+		case APPLET_DRAWER:
+			/*FIXME: is this the way I want to do drawers?????*/
+			return NULL /*FIXME:?????*/;
+		case APPLET_MENU:
+			/*FIXME: integrate menu.[ch]*/
+			/*return g_strdup(((Menu *)info->data)->path);*/
+			return NULL;
+		case APPLET_LAUNCHER:
+			return NULL /*FIXME:?????*/;
+	}
+}
+
 static void
 save_applet_configuration(gpointer data, gpointer user_data)
 {
 	char          *id;
-	char          *params;
+	char          *params = NULL;
 	char          *path;
 	char          *fullpath;
 	char           buf[256];
-	GtkWidget     *widget = data;
+	AppletInfo    *info = data;
 	int           *num = user_data;
 	int            pos;
 	int            panel;
 	GList         *list;
-	AppletCommand  cmd;
 
 	pos = -1;
 	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
 	    	if((pos=panel_widget_get_pos(PANEL_WIDGET(list->data),
-	    				     widget))!=-1)
+	    				     info->widget))!=-1)
 			break; 
 
 	/*not found*/
 	if(pos == -1)
 		return;
 
-	cmd.cmd = APPLET_CMD_QUERY;
-	id      = call_applet(widget, &cmd);
-
-	cmd.cmd = APPLET_CMD_GET_INSTANCE_PARAMS;
-	params  = call_applet(widget, &cmd);
+	id = get_applet_id(info);
+	params = get_applet_params(info);
 
 	sprintf(buf, "_%d/", (*num)++);
 	path = g_copy_strings("/panel/Applet", buf, NULL);
@@ -158,7 +194,7 @@ save_applet_configuration(gpointer data, gpointer user_data)
 	g_free(fullpath);
 
 
-	g_free(params);
+	if(params) g_free(params);
 	g_free(path);
 }
 
@@ -425,15 +461,15 @@ static void
 remove_applet_callback(GtkWidget *widget, gpointer data)
 {
 	GtkWidget *applet;
-	AppletCommand  cmd;
+	AppletInfo *info;
 	gchar *id;
 	gint pos;
 	PanelWidget *panel;
 
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
+	info = gtk_object_get_user_data(GTK_OBJECT(applet));
 
-	cmd.cmd = APPLET_CMD_QUERY;
-	id      = call_applet(applet, &cmd);
+	id      = get_applet_id(info);
 
 	if(strcmp(id,"Menu")==0) {
 		if(menu_count<=1)
@@ -442,13 +478,15 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 		  wrong ... a message box maybe ... or a beep*/
 		menu_count--;
 	}
-	applets=g_list_remove(applets,applet);
+	applets=g_list_remove(applets,info);
 
 	if(!(panel = find_applet_panel(applet)))
 		return;
 
 	panel_widget_remove(panel,applet);
 	gtk_widget_unref(applet);
+	if(info->assoc)
+		gtk_widget_unref(info->assoc);
 }
 
 
@@ -658,6 +696,7 @@ static void
 register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 {
 	GtkWidget     *eventbox;
+	AppletInfo    *info;
 	
 	g_assert(applet != NULL);
 	g_assert(id != NULL);
@@ -669,12 +708,18 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 			      APPLET_EVENT_MASK);
 	gtk_container_add(GTK_CONTAINER(eventbox), applet);
 
-	/* FIXME:get rid of this*/
+	info = g_new(AppletInfo,1);
+
 	/* Attach our private data to the applet */
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_CMD_FUNC,
 			    get_applet_cmd_func(id));
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS,
 			    (gpointer) flags);
+	info->widget = eventbox;
+	info->type = APPLET_EXTERN;
+	info->assoc = NULL;
+
+	gtk_object_set_user_data(GTK_OBJECT(eventbox),info);
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
@@ -684,7 +729,7 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);
 
-	applets = g_list_append(applets,eventbox);
+	applets = g_list_append(applets,info);
 
 	gtk_signal_connect(GTK_OBJECT(eventbox),
 			   "button_press_event",

@@ -2,10 +2,15 @@
 #define PANEL_H
 
 #include "panel_cmds.h"
+#include "applet_cmds.h"
 #include "panel-widget.h"
 #include "libgnomeui/gnome-session.h"
 
 BEGIN_GNOME_DECLS
+
+#define MENU_ID "Menu"
+#define LAUNCHER_ID "Launcher"
+#define DRAWER_ID "Drawer"
 
 typedef struct _PanelConfig PanelConfig;
 struct _PanelConfig {
@@ -16,6 +21,21 @@ struct _PanelConfig {
 	gint step_size;
 	gint minimized_size;
 	gint minimize_delay;
+};
+
+typedef enum {
+	APPLET_EXTERN,
+	APPLET_DRAWER,
+	APPLET_MENU,
+	APPLET_LAUNCHER
+} AppletType;
+
+typedef struct _AppletInfo AppletInfo;
+struct _AppletInfo {
+	GtkWidget *widget;
+	GtkWidget *assoc; /*associated widget, e.g. a drawer or a menu*/
+	gpointer data;
+	AppletType type;
 };
 
 
