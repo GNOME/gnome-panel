@@ -101,13 +101,13 @@ AC_ARG_ENABLE(eds,
 	),,enable_eds=auto)
 LIBECAL_REQUIREMENT=
 if test "x$enable_eds" = "xyes"; then
-  LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.4"
+  LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.97"
 else
   if test "x$enable_eds" != "xno"; then
     AC_MSG_CHECKING(for evolution-data-server)
     if $PKG_CONFIG --exists libecal-1.0; then
        AC_MSG_RESULT(yes)
-       LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.4"
+       LIBECAL_REQUIREMENT="libecal-1.0 >= 0.0.97"
     else
        AC_MSG_RESULT(no)
     fi
