@@ -378,15 +378,17 @@ get_unique_name (const char *dir, const char *name)
 	int i;
 	char *schema;
 	char *full, *test;
+	char *nameext = g_strdup_printf ("%s.desktop", name);
 
 	schema = get_schema (dir);
 
-	full = g_strdup_printf ("%s/%s.desktop", dir, name);
+	full = g_build_path ("/", dir, nameext, NULL);
 	if ( ! panel_uri_exists (full)) {
-		test = g_strdup_printf ("%s:%s.desktop", schema, name);
+		test = g_strdup_printf ("all-%s:%s", schema, nameext);
 		if ( ! panel_uri_exists (test)) {
 			g_free (schema);
 			g_free (test);
+			g_free (nameext);
 			return full;
 		}
 		g_free (test);
@@ -395,13 +397,20 @@ get_unique_name (const char *dir, const char *name)
 
 	i = 2;
 	for (;;) {
-		full = g_strdup_printf ("%s/%s%d.desktop", dir, name, i++);
+		g_free (nameext);
+		nameext = g_strdup_printf ("%s%d.desktop", name, i++);
 
+		/* randomize further same name desktops */
+		if (i > 5)
+			i = rand ();
+
+		full = g_build_path ("/", dir, nameext, NULL);
 		if ( ! panel_uri_exists (full)) {
-			test = g_strdup_printf ("%s:%s.desktop", schema, name);
+			test = g_strdup_printf ("all-%s:%s", schema, nameext);
 			if ( ! panel_uri_exists (test)) {
 				g_free (schema);
 				g_free (test);
+				g_free (nameext);
 				return full;
 			}
 			g_free (test);
@@ -449,7 +458,6 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
 	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
-		gnome_desktop_item_unref (ditem);
 		dialog = panel_error_dialog_with_parent
 			(GTK_WINDOW (d),
 			 "cannot_create_launcher",
@@ -462,9 +470,14 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	}
 
 	/* assume we are making a new file */
-	name = g_strdup (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME));
+	name = g_filename_from_utf8 (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME),
+				     -1, NULL, NULL, NULL);
+	if (name == NULL)
+		name = g_strdup ("foo");
 
 	validate_for_filename (name);
+
+	ditem = gnome_desktop_item_copy (ditem);
 
 	loc = get_unique_name (dir, name);
 	gnome_desktop_item_set_location (ditem, loc);
