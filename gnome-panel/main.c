@@ -96,6 +96,7 @@ main(int argc, char **argv)
 	CORBA_ORB orb;
 	CORBA_Environment ev;
 	gint duplicate;
+	gchar *real_global_path;
 	
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
@@ -144,12 +145,20 @@ main(int argc, char **argv)
 	 * it is most natural if we make the saved state global,
 	 * not per-session
 	 */
-#ifdef PER_SESSION_CONFIGURATION
+
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
-#endif /* PER_SESSION_CONFIGURATION */
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+
+#ifndef PER_SESSION_CONFIGURATION
+	real_global_path = gnome_config_get_real_path (old_panel_cfg_path);
+	if (!g_file_exists (real_global_path)) {
+		g_free (old_panel_cfg_path);
+		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+	}
+	g_free (real_global_path);
+#endif /* !PER_SESSION_CONFIGURATION */
 
 	gnome_client_set_global_config_prefix (client, "/panel.d/Session/");
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",

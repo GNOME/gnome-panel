@@ -1,3 +1,11 @@
+1999-10-03  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* main.c (main): if the path specified by --sm-config-prefix
+	exists, load the config from there.  This fixes the problem
+	with upgrading to 1.0.40+ from 1.0.x.
+
+	Fixes bug #2523
+
 1999-10-01  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* menu.c (create_panel_root_menu): use the logout button
