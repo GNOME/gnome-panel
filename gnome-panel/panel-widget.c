@@ -2025,11 +2025,11 @@ panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
 		return 0;
 	
 	if(panel->no_padding_on_ends) {
-		right = 0;
-		left = panel->size;
+		right = panel->size;
+		left = 0;
 	} else {
-		right = pw_applet_padding;
-		left = panel->size - pw_applet_padding;
+		right = panel->size - pw_applet_padding;
+		left = pw_applet_padding;
 	}
 	
 	for(li = panel->applet_list; li; li = g_list_next(li)) {
