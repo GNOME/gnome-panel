@@ -1599,7 +1599,7 @@ create_add_panel_submenu (void)
 }
 
 static GtkWidget *
-create_system_menu(GtkWidget *menu, int fake_submenus)
+create_system_menu(GtkWidget *menu, int fake_submenus, int fake)
 {
 	char *menu_base = gnome_unconditional_datadir_file ("apps");
 	char *menudir;
@@ -1607,8 +1607,14 @@ create_system_menu(GtkWidget *menu, int fake_submenus)
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
 	if (g_file_exists (menudir)) {
-		menu = create_menu_at (menu,menudir,FALSE,_("System menus"),
-				       NULL, fake_submenus, FALSE);
+		if(!fake || menu) {
+			menu = create_menu_at (menu,menudir,FALSE,_("System menus"),
+					       NULL, fake_submenus, FALSE);
+		} else {
+			menu = create_fake_menu_at (menudir, FALSE,
+						    _("System menus"),
+						    NULL);
+		}
 		g_return_val_if_fail(menu,NULL);
 		g_free (menudir);
 	} else
@@ -1618,7 +1624,7 @@ create_system_menu(GtkWidget *menu, int fake_submenus)
 }
 
 static GtkWidget *
-create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus, int force)
+create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus, int force, int fake)
 {
 	char *menu_base = gnome_util_home_file (dir);
 	char *menudir = g_concat_dir_and_file (menu_base, ".");
@@ -1626,10 +1632,15 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus, int
 	if (!g_file_exists (menudir))
 		mkdir (menu_base, 0755);
 	g_free (menu_base);
-	menu = create_menu_at (menu,menudir, FALSE,
-			       title,
-			       NULL,fake_submenus,
-			       force);
+	if(!fake || menu) {
+		menu = create_menu_at (menu,menudir, FALSE,
+				       title,
+				       NULL,fake_submenus,
+				       force);
+	} else {
+		menu = create_fake_menu_at (menudir, FALSE,
+					    title,NULL);
+	}
 	g_free (menudir); 
 	return menu;
 }
@@ -1646,7 +1657,7 @@ create_panel_root_menu(GtkWidget *panel)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("System menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	menu = create_system_menu(NULL,TRUE);
+	menu = create_system_menu(NULL,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
@@ -1655,7 +1666,7 @@ create_panel_root_menu(GtkWidget *panel)
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("User menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE);
+	menu = create_user_menu(_("User menus"),"apps",NULL,TRUE,TRUE,TRUE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
 			   GTK_SIGNAL_FUNC(submenu_to_display),
@@ -1665,7 +1676,8 @@ create_panel_root_menu(GtkWidget *panel)
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("RedHat menus"));
 		gtk_menu_append (GTK_MENU (panel_menu), menuitem);
-		menu = create_user_menu(_("RedHat menus"),"apps-redhat",NULL,TRUE,TRUE);
+		menu = create_user_menu(_("RedHat menus"),"apps-redhat",
+					NULL,TRUE,TRUE,TRUE);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),menu);
 		gtk_signal_connect(GTK_OBJECT(menuitem),"enter_notify_event",
 				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
@@ -2341,17 +2353,19 @@ create_root_menu(int fake_submenus, int flags)
 	root_menu = NULL;
 	
 	if(flags&MAIN_MENU_SYSTEM && !(flags&MAIN_MENU_SYSTEM_SUB)) {
-		root_menu = create_system_menu(root_menu,fake_submenus);
+		root_menu = create_system_menu(root_menu,fake_submenus,FALSE);
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_USER && !(flags&MAIN_MENU_USER_SUB)) {
 		root_menu = create_user_menu(_("User menus"), "apps",
-					     root_menu, fake_submenus, FALSE);
+					     root_menu, fake_submenus, FALSE,
+					     FALSE);
 		need_separ = TRUE;
 	}
 	if(flags&MAIN_MENU_REDHAT && !(flags&MAIN_MENU_REDHAT_SUB)) {
 		root_menu = create_user_menu(_("RedHat menus"), "apps-redhat",
-					     root_menu, fake_submenus, FALSE);
+					     root_menu, fake_submenus, FALSE,
+					     FALSE);
 		need_separ = TRUE;
 	}
 	/*others here*/
@@ -2363,7 +2377,7 @@ create_root_menu(int fake_submenus, int flags)
 		if(need_separ)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
-		menu = create_system_menu(NULL,fake_submenus);
+		menu = create_system_menu(NULL,fake_submenus, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("System menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
@@ -2377,7 +2391,7 @@ create_root_menu(int fake_submenus, int flags)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
 		menu = create_user_menu(_("User menus"), "apps", 
-					NULL, fake_submenus, TRUE);
+					NULL, fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
@@ -2392,7 +2406,7 @@ create_root_menu(int fake_submenus, int flags)
 			add_menu_separator(root_menu);
 		need_separ = FALSE;
 		menu = create_user_menu(_("RedHat menus"), "apps-redhat", 
-					NULL, fake_submenus, TRUE);
+					NULL, fake_submenus, TRUE, TRUE);
 		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
 			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/mini/mini-redhat.xpm",
 								    SMALL_ICON_SIZE,
