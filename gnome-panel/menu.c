@@ -435,8 +435,6 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 					gtk_object_get_data(GTK_OBJECT(menuw),
 							    "pixmap");
 				puts("debug: rereading menu");
-				if(list != mfl)
-					add_menu_separator(menuw);
 				menuw = create_menu_at(old_menu,
 						       mf->menudir,
 						       mf->create_app_menu,
@@ -520,6 +518,7 @@ create_menu_at (GtkWidget *menu,
 	GList *done = NULL;
 	GList *mfl = NULL;
 	char *thisfile;
+	int add_separator = FALSE;
 	
 	MenuFinfo *mf = NULL;
 	
@@ -551,8 +550,11 @@ create_menu_at (GtkWidget *menu,
 		menu = gtk_menu_new ();
 		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
 				   GTK_SIGNAL_FUNC(menu_destroy),NULL);
-	} else
+	} else {
 		mfl = gtk_object_get_data(GTK_OBJECT(menu), "mf");
+		if(GTK_MENU_SHELL(menu)->children)
+			add_separator = TRUE;
+	}
 	
 	while (presorted ||
 	       (dent = readdir (dir)) != NULL) {
@@ -624,9 +626,14 @@ create_menu_at (GtkWidget *menu,
 			gtk_object_set_data(GTK_OBJECT(sub),"pixmap",
 					    pixmap_name);
 			
-			if (!fake_submenus && create_app_menu)
+			if (!fake_submenus && create_app_menu) {
+				if(add_separator) {
+					add_menu_separator(menu);
+					add_separator = FALSE;
+				}
 				make_app_menu(sub,pixmap_name,filename,
 					      menuitem_name);
+			}
 		} else {
 			if (strstr (filename, ".desktop") == 0) {
 				g_free (filename);
@@ -672,6 +679,10 @@ create_menu_at (GtkWidget *menu,
 		}
 
  		setup_menuitem (menuitem, pixmap, menuitem_name);
+		if(add_separator) {
+			add_menu_separator(menu);
+			add_separator = FALSE;
+		}
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 
 		gtk_signal_connect (GTK_OBJECT (menuitem), "destroy",
@@ -910,11 +921,17 @@ create_panel_submenu (GtkWidget *app_menu, GtkWidget *applet_menu)
 	setup_menuitem (menuitem, 0, _("Add app to panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), app_menu);
+	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+			   GTK_SIGNAL_FUNC(submenu_to_display),
+			   NULL);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add applet"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), applet_menu);
+	gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+			   GTK_SIGNAL_FUNC(submenu_to_display),
+			   NULL);
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add new panel"));
@@ -1040,8 +1057,9 @@ create_root_menu(int fake_submenus)
 	g_free (menu_base);
 	mkdir (menudir, 0755);
 	if (g_file_exists (menudir)) {
-		add_menu_separator(root_menu);
 		root_menu = create_menu_at(root_menu,menudir,FALSE,FALSE,
+					   NULL,fake_submenus);
+		app_menu = create_menu_at (app_menu,menudir, TRUE,FALSE,
 					   NULL,fake_submenus);
 	}
 	g_free (menudir);
@@ -1061,13 +1079,10 @@ add_menu_widget (Menu *menu, GList *menudirl, int main_menu, int fake_subs)
 		menu->menu = create_root_menu(fake_subs);
 	else {
 		menu->menu = NULL;
-		for(li=menudirl;li!=NULL;li=g_list_next(li)) {
-			char *dir = li->data;
-			if(li != menudirl)
-				add_menu_separator (menu->menu);
-			menu->menu = create_menu_at (menu->menu,dir, FALSE,
-						     FALSE, NULL,fake_subs);
-		}
+		for(li=menudirl;li!=NULL;li=g_list_next(li))
+			menu->menu = create_menu_at (menu->menu,li->data,
+						     FALSE, FALSE, NULL,
+						     fake_subs);
 	}
 	gtk_signal_connect (GTK_OBJECT (menu->menu), "deactivate",
 			    GTK_SIGNAL_FUNC (menu_deactivate), menu);

@@ -241,25 +241,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 }
 
 void
-panel_widget_set_size(PanelWidget *panel)
-{
-	if(panel->packed) {
-		int w,h;
-		if(panel->orient == PANEL_HORIZONTAL) {
-			w = panel->size?panel->size*PANEL_CELL_SIZE:1;
-			h = panel->thick;
-		} else {
-			w = panel->thick;
-			h = panel->size?panel->size*PANEL_CELL_SIZE:1;
-		}
-		panel->fixed->allocation.width = w;
-		panel->fixed->allocation.height = h;
-		gtk_widget_queue_resize(GTK_WIDGET(panel));
-	}
-}
-
-
-void
 panel_widget_applet_put(PanelWidget *panel,AppletData *ad, int force)
 {
 	int width, height;
@@ -539,7 +520,6 @@ panel_widget_shrink_wrap(PanelWidget *panel,
 
 	if(panel->packed) {
 		panel_widget_pack_applets(panel);
-		panel_widget_set_size(panel);
 	}
 }
 
@@ -632,7 +612,6 @@ panel_widget_push_right(PanelWidget *panel,AppletData *oad)
 	if(!panel->applet_list) {
 		if(panel->packed) {
 			panel->size++;
-			panel_widget_set_size(panel);
 			return TRUE;
 		}
 		return FALSE;
@@ -657,7 +636,6 @@ panel_widget_push_right(PanelWidget *panel,AppletData *oad)
 	if(ad->pos+ad->cells>=panel->size) {
 		if(panel->packed) {
 			panel->size++;
-			panel_widget_set_size(panel);
 		} else
 			return FALSE;
 	}
@@ -710,7 +688,6 @@ panel_widget_seize_space(PanelWidget *panel,
 			ad->cells = width;
 			if(ad->pos+width>panel->size) {
 				panel->size = ad->pos+width;
-				panel_widget_set_size(panel);
 			}
 			return;
 		}
@@ -846,7 +823,6 @@ send_applet_move(PanelWidget *panel, AppletData *ad)
 		thick = panel_widget_get_thick(panel);
 		if(panel->thick != thick) {
 			panel->thick = thick;
-			panel_widget_set_size(panel);
 		}
 		panel_widget_adjust_applet(panel,ad);
 	}
@@ -1358,8 +1334,6 @@ panel_widget_new (int packed,
 	else
 		panel->size = INT_MAX;
 	
-	panel_widget_set_size(panel);
-
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel))) {
 		if(panel->back_type == PANEL_BACK_PIXMAP) {
 			if (!panel_try_to_set_pixmap (panel, back_pixmap))
@@ -1829,7 +1803,6 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 	thick = panel_widget_get_thick(panel);
 	if(panel->thick != thick || panel->packed) {
 		panel->thick = thick;
-		panel_widget_set_size(panel);
 	}
 	gtk_signal_emit(GTK_OBJECT(panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL],
@@ -1927,7 +1900,6 @@ panel_widget_make_empty_pos(PanelWidget *panel, int pos)
 	if(panel->packed) {
 		if(pos >= panel->size) {
 			panel->size++;
-			panel_widget_set_size(panel);
 			return panel->size-1;
 		} else {
 			ad = get_applet_data_pos(panel,pos);
@@ -2135,7 +2107,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 	thick = panel_widget_get_thick(old_panel);
 	if(old_panel->thick != thick)
 		old_panel->thick = thick;
-	panel_widget_set_size(old_panel);
 
 	gtk_signal_emit(GTK_OBJECT(new_panel),
 			panel_widget_signals[APPLET_ADDED_SIGNAL],
@@ -2213,7 +2184,6 @@ panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 	thick = panel_widget_get_thick(panel);
 	if(panel->thick != thick || panel->packed) {
 		panel->thick = thick;
-		panel_widget_set_size(panel);
 	}
 
 	gtk_signal_emit(GTK_OBJECT(panel),
@@ -2294,7 +2264,6 @@ panel_widget_change_params(PanelWidget *panel,
 
 	panel->thick = panel_widget_get_thick(panel);
 
-	panel_widget_set_size(panel);
 
 	if(oldorient != panel->orient) {
 		/*postpone all adjustments until fixed is size_allocated*/

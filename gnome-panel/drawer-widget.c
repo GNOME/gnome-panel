@@ -505,7 +505,7 @@ drawer_widget_new (PanelOrientation orient,
 
 	drawer->x = 0;
 	drawer->y = 0;
-	drawer_widget_set_pos(drawer,100,100);
+	drawer_widget_set_pos(drawer,-100,-100);
 	drawer_widget_set_drop_zone(drawer);
 
 	return GTK_WIDGET(drawer);

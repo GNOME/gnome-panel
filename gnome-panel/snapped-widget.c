@@ -196,20 +196,28 @@ snapped_widget_set_size(SnappedWidget *snapped)
 {
 	PanelWidget *panel = PANEL_WIDGET(snapped->panel);
 	if(panel->orient == PANEL_HORIZONTAL) {
+		int h = GTK_WIDGET(snapped)->allocation.height;
+		if(h > panel->thick + 20) /*something is wrong the height
+					    is too large*/
+			h = panel->thick;
 		gtk_widget_set_usize(GTK_WIDGET(snapped),
 				     gdk_screen_width(),
 				     0);
 		if(GTK_WIDGET(snapped)->window)
 			resize_window(GTK_WIDGET(snapped),
 				      gdk_screen_width(),
-				      panel->thick);
+				      h);
 	} else { /*vertical*/
+		int w = GTK_WIDGET(snapped)->allocation.width;
+		if(w > panel->thick + 20) /*something is wrong the width
+					    is too large*/
+			w = panel->thick;
 		gtk_widget_set_usize(GTK_WIDGET(snapped),
 				     0,
 				     gdk_screen_height());
 		if(GTK_WIDGET(snapped)->window)
 			resize_window(GTK_WIDGET(snapped),
-				      panel->thick,
+				      w,
 				      gdk_screen_height());
 	}
 }

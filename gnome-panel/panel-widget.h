@@ -209,7 +209,6 @@ AppletData	*get_applet_data_pos		(PanelWidget *panel,
 						 int pos);
 int		panel_widget_is_cursor		(PanelWidget *panel,
 						 int overlap);
-void		panel_widget_set_size		(PanelWidget *panel);
 
 /*slightly hackish, the widget that owns the widget will call this
   function when it's window changes position or size ...*/
