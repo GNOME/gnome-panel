@@ -992,6 +992,9 @@ panel_run_dialog_setup_list_checkbox (PanelRunDialog *dialog,
 	if (panel_profile_get_enable_program_list ()) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->list_checkbox),
 					      panel_profile_get_show_program_list ());
+
+		if ( ! panel_profile_is_writable_show_program_list ())
+			gtk_widget_set_sensitive (dialog->list_checkbox, FALSE);
 		
 	        g_signal_connect (dialog->list_checkbox, "toggled",
 				  G_CALLBACK (list_checkbox_toggled),

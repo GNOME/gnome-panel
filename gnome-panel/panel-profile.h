@@ -46,6 +46,7 @@ char          *panel_profile_find_new_id        (PanelGConfKeyType  type);
 
 gboolean    panel_profile_get_show_program_list   (void);
 void        panel_profile_set_show_program_list   (gboolean show_program_list);
+gboolean    panel_profile_is_writable_show_program_list (void);
 gboolean    panel_profile_get_enable_program_list (void);
 
 

@@ -2211,6 +2211,18 @@ panel_profile_set_show_program_list (gboolean show_program_list)
 	gconf_client_set_bool (client, key, show_program_list, NULL);
 }
 
+gboolean
+panel_profile_is_writable_show_program_list (void)
+{
+	GConfClient *client;
+	const char  *key;
+
+	client = panel_gconf_get_client ();
+
+	key = panel_gconf_general_key (current_profile, "show_program_list");
+	return gconf_client_key_is_writable (client, key, NULL);
+}
+
 /* True if all the move keys are writable.  This is kind of
    a blanket statement.  For example we may only lock one of them
    down and that would prevent the user from moving the panel at
