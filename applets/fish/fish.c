@@ -105,7 +105,6 @@ apply_properties(void)
 	char * tmp;
 	const char * title_format = _("%s the Fish");
 	const char * label_format = _("%s the GNOME Fish Says:");
-	GtkAllocation a;
 
 	if (fortune_dialog != NULL) { 
 		tmp = splice_name(title_format, properties.name);
@@ -171,7 +170,6 @@ apply_cb(GnomePropertyBox * pb, int page, gpointer data)
 static void
 close_cb(GnomePropertyBox * pb, gpointer data)
 {
-	char *s;
 	GtkWidget *name = gtk_object_get_data(GTK_OBJECT(pb),
 					      "name");
 	GtkWidget *image = gtk_object_get_data(GTK_OBJECT(pb),
