@@ -48,10 +48,10 @@
 #include <libart_lgpl/art_alphagamma.h>
 
 /* panel-util makes references to this, so yes this is UGLY UGLY UGLY to make
- * it available, but we're not using those parts, so we just want the compiler
- * to shut up */
-GlobalConfig global_config;
-static GlobalConfig loaded_config;
+ * it available (and not static), but we're not using those parts, so we just
+ * want the compiler to shut up */
+GlobalConfig global_config = {0};
+static GlobalConfig loaded_config = {0};
 
 /* animation page */
 static GtkWidget *enable_animations_cb;
@@ -165,6 +165,32 @@ void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 }
 
 #include "nothing.cP"
+
+static void
+set_config (GlobalConfig *dest, GlobalConfig *src)
+{
+	int i;
+
+	g_return_if_fail (dest != NULL);
+	g_return_if_fail (src != NULL);
+
+	for (i = 0; i < LAST_TILE; i++) {
+		g_free (dest->tile_up[i]);
+		g_free (dest->tile_down[i]);
+	}
+	g_free (dest->menu_key);
+	g_free (dest->run_key);
+
+	*dest = *src;
+
+	for (i = 0; i < LAST_TILE; i++) {
+		dest->tile_up[i] = g_strdup (dest->tile_up[i]);
+		dest->tile_down[i] = g_strdup (dest->tile_down[i]);
+	}
+	dest->menu_key = g_strdup (dest->menu_key);
+	dest->run_key = g_strdup (dest->run_key);
+}
+
 
 static void 
 changed_cb(void)
@@ -337,9 +363,11 @@ animation_notebook_page(void)
 }
 
 static char *
-get_full_tile(char *file)
+get_full_tile(const char *file)
 {
-	if(g_path_is_absolute(file))
+	if (file == NULL)
+		return NULL;
+	else if (g_path_is_absolute(file))
 		return g_strdup(file);
 	else
 		return gnome_unconditional_pixmap_file(file);
@@ -1295,8 +1323,11 @@ revert(GtkWidget *capplet, gpointer data)
 	sync_applets_page_with_config(&loaded_config);
 	sync_menu_page_with_config(&loaded_config);
 	sync_misc_page_with_config(&loaded_config);
-	global_config = loaded_config;
-	write_config(&global_config);
+
+	set_config (&global_config, &loaded_config);
+
+	write_config(&loaded_config);
+
 	changing = FALSE;
 }
 
@@ -1376,7 +1407,7 @@ main (int argc, char **argv)
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
 	loadup_vals();
 	
-	loaded_config = global_config;
+	set_config (&loaded_config, &global_config);
 
 	capplet = capplet_widget_new();
 
