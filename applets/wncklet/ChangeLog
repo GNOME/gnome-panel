@@ -1,3 +1,12 @@
+2002-11-12  Arvind Samptur <arvind.samputur@wipro.com>
+	* remote-helper.c: (fork_new_handler) poll for the
+	pid to wrriten on to the pipe before allowing the
+	number of mails to be written on to the pipe.
+	Fixes the problem of a SIGPIPE occuring causing the
+	panel to crash and sometimes the number of mails
+	having a junk value(which would be pid).
+	Fixes #98001
+
 2002-10-15  Padraig O'Briain <padraig.obriain@sun.com>
 
 	* Makefile.am:
