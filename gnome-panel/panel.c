@@ -82,6 +82,8 @@ save_applet_configuration(AppletInfo *info, gint *num)
 	int            pos;
 	int            panel;
 	GList         *list;
+	PanelWidget   *p;
+	AppletData    *ad;
 
 	/*obviously no need for saving*/
 	if(info->type==APPLET_EXTERN_PENDING ||
@@ -89,11 +91,16 @@ save_applet_configuration(AppletInfo *info, gint *num)
 	   info->type==APPLET_EMPTY)
 		return;
 
+	p = gtk_object_get_data(GTK_OBJECT(info->widget),
+				PANEL_APPLET_PARENT_KEY);
+	ad = gtk_object_get_data(GTK_OBJECT(info->widget),PANEL_APPLET_DATA);
+
 	pos = -1;
 	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
-	    	if((pos=panel_widget_get_pos(PANEL_WIDGET(list->data),
-	    				     info->widget))!=-1)
-			break; 
+	    	if(list->data == p) {
+	    		pos = ad->pos;
+	    		break;
+	    	}
 
 	/*not found*/
 	if(pos == -1)
@@ -235,9 +242,11 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_clean_file(panel_cfg_path);
 
+	puts("S 1");
 	for(num=1,i=0;i<applet_count;i++)
 		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
 					  &num);
+	puts("S 2");
 
 	buf = g_copy_strings(panel_cfg_path,"Config/",NULL);
 	gnome_config_push_prefix (buf);
@@ -245,7 +254,9 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_set_int ("applet_count", num-1);
 	num = 1;
+	puts("S 3");
 	g_list_foreach(panels, save_panel_configuration,&num);
+	puts("S 4");
 	gnome_config_set_int("panel_count",num-1);
 
 	/*global options*/
@@ -270,6 +281,8 @@ panel_session_save (GnomeClient *client,
 		/*don't catch these any more*/
 		signal(SIGCHLD, SIG_DFL);
 
+		puts("1");
+
 		/*don't catch these either*/
 		for(i=0,info=(AppletInfo *)applets->data;i<applet_count;
 		    i++,info++)
@@ -277,7 +290,11 @@ panel_session_save (GnomeClient *client,
 				gtk_signal_disconnect(GTK_OBJECT(info->widget),
 						      info->destroy_callback);
 
+		puts("2");
+
 		g_list_foreach(panels,destroy_widget_list,NULL);
+
+		puts("3");
 
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
@@ -618,20 +635,16 @@ applet_abort_id(gint applet_id)
 int
 applet_get_pos(gint applet_id)
 {
-	int pos = -1;
-	int panel;
-	GList *list;
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *p;
+	AppletData *ad;
 
 	g_return_if_fail(info != NULL);
 
-	p = gtk_object_get_data(GTK_OBJECT(info->widget),
-				PANEL_APPLET_PARENT_KEY);
-
-	if((pos=panel_widget_get_pos(p, info->widget))!=-1)
-		return pos;
-	return -1;
+	ad = gtk_object_get_data(GTK_OBJECT(info->widget),
+				 PANEL_APPLET_DATA);
+	if(!ad)
+		return -1;
+	return ad->pos;
 }
 
 void

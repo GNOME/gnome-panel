@@ -72,6 +72,93 @@ debug_dump_panel(PanelWidget *panel)
 	puts("\nDUMP END\n");
 }
 
+static void
+debug_dump_panel_list(PanelWidget *panel)
+{
+	GList *list;
+	puts("\nDUMP START\n");
+	for(list = panel->applet_list;list!=NULL;list=g_list_next(list)) {
+		AppletData *ad = list->data;
+		printf("pos: %d cells: %d\n",ad->pos,ad->cells);
+	}
+	puts("\nDUMP END\n");
+}
+
+
+/*a dumb function to re-populate the entire array,
+  so that we can slowly move all the code to the list
+  implementation and phase out the position array which
+  is just a mess*/
+static void
+fill_panel_array(PanelWidget *panel)
+{
+	gint i;
+	GList *list;
+
+	for(i=0;i<panel->size;i++) {
+		panel->applets[i].applet=NULL;
+		panel->applets[i].cells=1;
+	}
+
+	for(list=panel->applet_list;list!=NULL;list=g_list_next(list)) {
+		AppletData *ad = list->data;
+		for(i=ad->pos;i<ad->pos+ad->cells;i++) {
+			panel->applets[ad->pos].applet = ad->applet;
+			ad->cells = ad->cells;
+		}
+	}
+}
+
+static gint
+applet_data_compare(AppletData *ad1, AppletData *ad2)
+{
+	return ad1->pos - ad2->pos;
+}
+
+static GList *
+my_g_list_resort(GList *list, gpointer data, GCompareFunc func)
+{
+	GList *dl;
+	GList *t;
+
+	if(!list)
+		return NULL;
+
+	dl = g_list_find(list,data);
+
+	g_return_val_if_fail(dl!=NULL,list);
+
+	while(dl->next &&
+	      (*func)(dl->data,dl->next->data)>0) {
+	      	if(dl->prev)
+	      		dl->prev->next = dl->next;
+	      	t = dl->prev;
+	      	dl->prev = dl->next;
+	      	dl->next->prev = t;
+	      	if(dl->next->next)
+	      		dl->next->next->prev = dl;
+	      	t = dl->next->next;
+	      	dl->next->next = dl;
+	      	dl->next = t;
+	}
+	while(dl->prev &&
+	      (*func)(dl->data,dl->prev->data)<0) {
+	      	if(dl->next)
+	      		dl->next->prev = dl->prev;
+	      	t = dl->next;
+	      	dl->next = dl->prev;
+	      	dl->prev->next = t;
+	      	if(dl->prev->prev)
+	      		dl->prev->prev->next = dl;
+	      	t = dl->prev->prev;
+	      	dl->prev->prev = dl;
+	      	dl->prev = t;
+	}
+	if(dl->prev)
+		return list;
+	else
+		return dl;
+}
 
 /*this is used to do an immediate move instead of set_uposition, which
 queues one*/
@@ -466,6 +553,10 @@ panel_widget_pack_applets(PanelWidget *panel)
 						   panel->applets[i].applet),
 						 PANEL_APPLET_DATA);
 			ad->pos = i;
+		 	panel->applet_list =
+				my_g_list_resort(panel->applet_list,ad,
+						 (GCompareFunc)
+						   applet_data_compare);
 			panel_widget_applet_put(panel,i);
 		}
 	}
@@ -559,6 +650,10 @@ readjust_all(PanelWidget *panel)
 						    panel->applets[i].applet),
 						 PANEL_APPLET_DATA);
 			ad->pos = i;
+		 	panel->applet_list =
+				my_g_list_resort(panel->applet_list,ad,
+						 (GCompareFunc)
+						   applet_data_compare);
 		}
 }
 
@@ -596,6 +691,9 @@ panel_widget_push_left(PanelWidget *panel,gint pos)
 		ad = gtk_object_get_data(GTK_OBJECT(panel->applets[i].applet),
 					 PANEL_APPLET_DATA);
 		ad->pos = i;
+		panel->applet_list =
+			my_g_list_resort(panel->applet_list,ad,
+					 (GCompareFunc)applet_data_compare);
 	}
 
 	return TRUE;
@@ -642,6 +740,10 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 				GTK_OBJECT(panel->applets[i].applet),
 						 PANEL_APPLET_DATA);
 			ad->pos = i;
+			panel->applet_list =
+				my_g_list_resort(panel->applet_list,ad,
+						 (GCompareFunc)
+						   applet_data_compare);
 		}
 
 		panel_widget_set_size(panel,panel->size);
@@ -674,6 +776,9 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 		ad = gtk_object_get_data(GTK_OBJECT(panel->applets[i].applet),
 					 PANEL_APPLET_DATA);
 		ad->pos = i;
+		panel->applet_list =
+			my_g_list_resort(panel->applet_list,ad,
+					 (GCompareFunc)applet_data_compare);
 	}
 
 	return TRUE;
@@ -730,6 +835,9 @@ panel_widget_seize_space(PanelWidget *panel,
 		 panel->applets[ad->pos-i].applet == NULL);i++)
 		allocated++;
 	ad->pos = ad->pos-i+1;
+	panel->applet_list =
+		my_g_list_resort(panel->applet_list,ad,
+				 (GCompareFunc)applet_data_compare);
 
 	if(allocated < width) {
 		while(allocated < width &&
@@ -741,6 +849,10 @@ panel_widget_seize_space(PanelWidget *panel,
 			      panel_widget_push_left(panel,ad->pos-1)) {
 				ad->pos--;
 				allocated++;
+				panel->applet_list =
+					my_g_list_resort(panel->applet_list,ad,
+							 (GCompareFunc)
+							   applet_data_compare);
 			}
 		}
 	}
@@ -1701,6 +1813,17 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	return 1;
 }
 
+static gint
+panel_widget_destroy(GtkWidget *w, gpointer data)
+{
+	/*PanelWidget *panel = PANEL_WIDGET(w);
+
+	g_list_free(panel->applet_list);
+	panel->applet_list = NULL;*/
+
+	return FALSE;
+}
+
 GtkWidget*
 panel_widget_new (gint size,
 		  PanelOrientation orient,
@@ -1961,6 +2084,10 @@ panel_widget_new (gint size,
 	gtk_widget_dnd_drop_set (GTK_WIDGET(panel->fixed), TRUE,
 				 image_drop_types, 1, FALSE);
 	
+	gtk_signal_connect(GTK_OBJECT(panel), "destroy",
+			   GTK_SIGNAL_FUNC(panel_widget_destroy),
+			   NULL);
+
 	/*FIXME: ???? will we delete this or make it work*/
 	/*set up drag'n'drop (the drop)*/
 	/*gtk_signal_connect (GTK_OBJECT (panel->fixed), 
@@ -2220,6 +2347,10 @@ panel_widget_nice_move(PanelWidget *panel, AppletData *ad, gint pos)
 
 	ad->pos = pos;
 
+	panel->applet_list =
+		my_g_list_resort(panel->applet_list,ad,
+				 (GCompareFunc)applet_data_compare);
+
 	for(i=ad->pos;i<ad->pos+ad->cells;i++) {
 		panel->applets[i].applet=ad->applet;
 		panel->applets[i].cells=ad->cells;
@@ -2428,44 +2559,38 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 {
 	PanelWidget *panel;
 	AppletData *ad;
-	int i,w,n,thick;
+	int i,thick;
 
 	panel = gtk_object_get_data(GTK_OBJECT(applet),PANEL_APPLET_PARENT_KEY);
 
 	g_return_val_if_fail(panel!=NULL,FALSE);
 
-	for(i=0;i<panel->size;i++)
-		if(panel->applets[i].applet == applet)
-			break;
-
-	/*applet found*/
-	if(i!=panel->size) {
-		w = panel->applets[i].cells;
-		for(n=0;n<w;n++) {
-			panel->applets[i+n].applet = NULL;
-			panel->applets[i+n].cells = 1;
-		}
-
-		if(panel->snapped==PANEL_DRAWER)
-			panel_widget_pack_applets(panel);
-
-		gtk_signal_emit(GTK_OBJECT(panel),
-				panel_widget_signals[APPLET_REMOVED_SIGNAL]);
-
-	}
-
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
-	if(ad) {
-		panel->applet_list = g_list_remove(panel->applet_list,ad);
-		g_free(ad);
+	/*we already "took care" of this applet*/
+	if(!ad)
+		return FALSE;
+
+	for(i=ad->pos;i<ad->pos+ad->cells;i++) {
+		panel->applets[i].applet = NULL;
+		panel->applets[i].cells = 1;
 	}
+
+	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	g_free(ad);
+
 	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
+
+	if(panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(panel);
 
 	thick = panel_widget_get_thick(panel);
 	if(panel->thick != thick) {
 		panel->thick = thick;
 		panel_widget_set_size(panel, panel->size);
 	}
+
+	gtk_signal_emit(GTK_OBJECT(panel),
+			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
 
 	return FALSE;
 }
@@ -2638,7 +2763,8 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	ad->prevx = -1;
 	ad->prevx = -1;
 
-	panel->applet_list = g_list_prepend(panel->applet_list,ad);
+	panel->applet_list = g_list_insert_sorted(panel->applet_list,ad,
+					  (GCompareFunc)applet_data_compare);
 	gtk_object_set_data(GTK_OBJECT(applet),PANEL_APPLET_DATA,ad);
 
 	bind_top_applet_events(applet);
@@ -2692,14 +2818,6 @@ panel_widget_reparent (PanelWidget *old_panel,
 	/*reparent applet*/
 	gtk_widget_reparent(applet,new_panel->fixed);
 
-	if(old_panel->snapped==PANEL_DRAWER)
-		panel_widget_pack_applets(old_panel);
-
-	thick = panel_widget_get_thick(old_panel);
-	if(old_panel->thick != thick)
-		old_panel->thick = thick;
-	panel_widget_set_size(old_panel, old_panel->size);
-
 	/*it will get moved to the right position on size_allocate*/
 	if(new_panel->orient == PANEL_HORIZONTAL)
 		gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,
@@ -2729,11 +2847,20 @@ panel_widget_reparent (PanelWidget *old_panel,
 
 		old_panel->applet_list = g_list_remove(old_panel->applet_list,
 						       ad);
-		new_panel->applet_list = g_list_prepend(new_panel->applet_list,
-						        ad);
+		new_panel->applet_list =
+			g_list_insert_sorted(new_panel->applet_list,ad,
+					     (GCompareFunc)applet_data_compare);
 	} else {
 		g_warning("No applet structure on repearented applet!");
 	}
+
+	if(old_panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(old_panel);
+
+	thick = panel_widget_get_thick(old_panel);
+	if(old_panel->thick != thick)
+		old_panel->thick = thick;
+	panel_widget_set_size(old_panel, old_panel->size);
 
 	gtk_signal_emit(GTK_OBJECT(old_panel),
 			panel_widget_signals[APPLET_REMOVED_SIGNAL]);
@@ -2761,8 +2888,6 @@ panel_widget_move (PanelWidget *panel, gint oldpos, gint pos)
 
 	ad = gtk_object_get_data(GTK_OBJECT(tmp.applet), PANEL_APPLET_DATA);
 
-	ad->pos = -1;
-
 	for(i=oldpos;i<oldpos+tmp.cells;i++) {
 		panel->applets[i].applet = NULL;
 		panel->applets[i].cells = 1;
@@ -2780,6 +2905,10 @@ panel_widget_move (PanelWidget *panel, gint oldpos, gint pos)
 	ad->prevheight = -1;
 	ad->pos = pos;
 	ad->cells = 1;
+	panel->applet_list =
+		my_g_list_resort(panel->applet_list,ad,
+				 (GCompareFunc)applet_data_compare);
+
 	panel_widget_applet_put(panel,pos);
 
 	return pos;
@@ -2788,31 +2917,27 @@ panel_widget_move (PanelWidget *panel, gint oldpos, gint pos)
 gint
 panel_widget_remove (PanelWidget *panel, GtkWidget *applet)
 {
-	gint i,n,w,thick;
 	AppletData *ad;
+	int i,thick;
 
-	g_return_val_if_fail(panel,-1);
-	g_return_val_if_fail(applet,-1);
-
-	for(i=0;i<panel->size;i++)
-		if(panel->applets[i].applet == applet)
-			break;
-
-	/*applet not found*/
-	if(i==panel->size)
-		return -1;
-
-	w = panel->applets[i].cells;
-	for(n=0;n<w;n++) {
-		panel->applets[i+n].applet = NULL;
-		panel->applets[i+n].cells = 1;
-	}
+	g_return_val_if_fail(panel!=NULL,FALSE);
+	g_return_val_if_fail(applet!=NULL,FALSE);
 
 	ad = gtk_object_get_data(GTK_OBJECT(applet), PANEL_APPLET_DATA);
-	if(ad) {
-		panel->applet_list = g_list_remove(panel->applet_list,ad);
-		g_free(ad);
+	/*this applet must be dead already*/
+	if(!ad)
+		return -1;
+
+	for(i=ad->pos;i<ad->pos+ad->cells;i++) {
+		panel->applets[i].applet = NULL;
+		panel->applets[i].cells = 1;
 	}
+
+	i = ad->pos;
+
+	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	g_free(ad);
+
 	gtk_object_set_data(GTK_OBJECT(applet), PANEL_APPLET_DATA, NULL);
 
 	/*remove applet*/
@@ -2885,6 +3010,11 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 			   applet) {
 				g_warning("Found it!");
 				ad->pos = i;
+				panel->applet_list =
+					my_g_list_resort(panel->applet_list,ad,
+							 (GCompareFunc)
+							   applet_data_compare);
+
 				printf("found at %d\n",i);
 				printf("ad->cells %d\n",ad->cells);
 				printf("app array cells %d\n",
@@ -2909,6 +3039,9 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 
 		ad->cells = 1;
 		ad->pos = i;
+		panel->applet_list =
+			my_g_list_resort(panel->applet_list,ad,
+					 (GCompareFunc)applet_data_compare);
 
 		panel_widget_applet_put(panel,i);
 
