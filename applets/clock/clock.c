@@ -118,7 +118,7 @@ unfix_size (ClockData *cd)
 {
 	cd->fixed_width = -1;
 	cd->fixed_height = -1;
-	gtk_widget_queue_resize (cd->clockw);
+	gtk_widget_queue_resize (cd->toggle);
 }
 
 static void

@@ -1,3 +1,11 @@
+Thu Aug 28 22:04:31 2003  George Lebl <jirka@5z.com>
+
+	* clock.c: Fix mandrake #4948.  When we "unfixed" the
+	  size, we forgot to queue resize high enough in the
+	  tree now that there is an alignment.  queing resize
+	  on the toggle rather then the clock label actually
+	  does a resize of the applet.
+
 ==================== 2.3.7 ====================
 
 Tue Aug 19 16:39:45 2003  George Lebl <jirka@5z.com>
