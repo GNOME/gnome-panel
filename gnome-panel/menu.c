@@ -906,6 +906,7 @@ do_icons_to_add (void)
 			g_object_unref (icon_to_add->pixbuf);
 		}
 
+		g_object_unref (icon_to_add->image);
 		g_free (icon_to_add);
 	}
 }
@@ -942,7 +943,7 @@ load_icons_handler_again:
 		IconToAdd *icon_to_add;
 
 		icon_to_add           = g_new (IconToAdd, 1);
-		icon_to_add->image    = icon->pixmap;
+		icon_to_add->image    = g_object_ref (icon->pixmap);
 		icon_to_add->stock_id = icon->stock_id;
 		icon_to_add->pixbuf   = NULL;
 
@@ -968,7 +969,7 @@ load_icons_handler_again:
 		}
 
 		icon_to_add           = g_new (IconToAdd, 1);
-		icon_to_add->image    = icon->pixmap;
+		icon_to_add->image    = g_object_ref (icon->pixmap);
 		icon_to_add->stock_id = NULL;
 		icon_to_add->pixbuf   = pb;
 
@@ -4258,7 +4259,7 @@ image_menu_shown (GtkWidget *image, gpointer data)
 static void
 image_menu_destroy (GtkWidget *image, gpointer data)
 {
-  image_menu_items = g_slist_remove (image_menu_items, image);
+	image_menu_items = g_slist_remove (image_menu_items, image);
 }
 
 static void
@@ -4269,50 +4270,48 @@ panel_load_menu_image_deferred_with_size (GtkWidget  *image_menu_item,
 					  gboolean    force_image,
 					  guint       icon_size)
 {
-  IconToLoad *icon;
-  GtkWidget *image;
+	IconToLoad *icon;
+	GtkWidget *image;
 
-  icon = g_new (IconToLoad, 1);
+	icon = g_new (IconToLoad, 1);
 
-  image = gtk_image_new ();
-  image->requisition.width = icon_size;
-  image->requisition.height = icon_size;
+	image = gtk_image_new ();
+	image->requisition.width = icon_size;
+	image->requisition.height = icon_size;
 
-  /* this takes over the floating ref */
-  icon->pixmap = g_object_ref (G_OBJECT (image));
-  gtk_object_sink (GTK_OBJECT (image));
+	/* this takes over the floating ref */
+	icon->pixmap = g_object_ref (G_OBJECT (image));
+	gtk_object_sink (GTK_OBJECT (image));
 
-  icon->stock_id = stock_id;
-  icon->image = g_strdup (image_filename);
-  icon->fallback_image = g_strdup (fallback_image_filename);
-  icon->force_image = force_image;
-  icon->size = icon_size;
+	icon->stock_id = stock_id;
+	icon->image = g_strdup (image_filename);
+	icon->fallback_image = g_strdup (fallback_image_filename);
+	icon->force_image = force_image;
+	icon->size = icon_size;
 
-  gtk_widget_show (image);
+	gtk_widget_show (image);
 
-  g_object_set_data_full (G_OBJECT (image_menu_item),
-			  "Panel:Image",
-			  g_object_ref (image),
-			  (GDestroyNotify) g_object_unref);
-  if (force_image)
-	  g_object_set_data (G_OBJECT (image_menu_item),
-			     "Panel:ForceImage",
-			     GINT_TO_POINTER (TRUE));
+	g_object_set_data_full (G_OBJECT (image_menu_item),
+				"Panel:Image",
+				g_object_ref (image),
+				(GDestroyNotify) g_object_unref);
+	if (force_image)
+		g_object_set_data (G_OBJECT (image_menu_item),
+				   "Panel:ForceImage",
+				   GINT_TO_POINTER (TRUE));
  
-  if (force_image || panel_menu_have_icons ())
-	  gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (image_menu_item), image);
+	if (force_image || panel_menu_have_icons ())
+		gtk_image_menu_item_set_image (
+			GTK_IMAGE_MENU_ITEM (image_menu_item), image);
 
-  g_signal_connect_data (G_OBJECT (image), "map",
-			 G_CALLBACK (image_menu_shown),
-			 icon,
-			 (GClosureNotify) icon_to_load_free,
-			 0 /* connect_flags */);
+	g_signal_connect_data (image, "map",
+			       G_CALLBACK (image_menu_shown), icon,
+			       (GClosureNotify) icon_to_load_free, 0);
 
-  g_signal_connect (G_OBJECT (image), "destroy",
-		    G_CALLBACK (image_menu_destroy),
-		    NULL);
+	g_signal_connect (image, "destroy",
+			  G_CALLBACK (image_menu_destroy), NULL);
 
-  image_menu_items = g_slist_prepend (image_menu_items, image);
+	image_menu_items = g_slist_prepend (image_menu_items, image);
 }
 
 void
