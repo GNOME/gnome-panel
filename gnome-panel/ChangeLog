@@ -1,5 +1,11 @@
 2003-11-20  Vincent Untz  <vincent@vuntz.net>
 
+	* gnome-panel-screenshot.c: (gimme_file) expand filenames with a tilde
+	when saving the screenshot.
+	Fix bug #110404.
+
+2003-11-20  Vincent Untz  <vincent@vuntz.net>
+
 	* gnome-panel-screenshot.c: (take_window_shot) don't call
 	gdk_pixbuf_get_has_alpha() in the loop but before the loop.
 
