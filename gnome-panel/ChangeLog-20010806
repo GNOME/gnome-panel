@@ -1,3 +1,10 @@
+Wed Oct 20 21:40:57 1999  George Lebl  <jirka@5z.com>
+
+	* panel-widget.c,button-widget.[ch]: when we are using opaque
+	  tiles, it makes no sense to redraw ourselves on background and
+	  geometry changes and on moving, it also isn't done when the
+	  background is a solid color
+
 Wed Oct 20 19:45:49 1999  George Lebl  <jirka@5z.com>
 
 	* session.c: remove some unused code and set ss_timeout_dlg to

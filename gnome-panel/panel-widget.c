@@ -242,9 +242,13 @@ panel_widget_class_init (PanelWidgetClass *class)
 static void
 applet_move(PanelWidget *panel, GtkWidget *applet)
 {
+	if(panel->back_type == PANEL_BACK_COLOR ||
+	   (panel->back_type == PANEL_BACK_NONE &&
+	    !GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)]))
+		return;
 	if(IS_BUTTON_WIDGET(applet)) {
 		ButtonWidget *button = BUTTON_WIDGET(applet);
-		if(button->cache) {
+		if(!button->no_alpha && button->cache) {
 			gdk_pixmap_unref(button->cache);
 			button->cache = NULL;
 		}
@@ -865,7 +869,7 @@ make_background(PanelWidget *panel, guchar *rgb_buf,
 }
 
 static void
-kill_cache_on_all_buttons(PanelWidget *panel)
+kill_cache_on_all_buttons(PanelWidget *panel, int even_no_alpha)
 {
 	GList *li;
 	for(li = panel->applet_list; li != NULL;
@@ -873,7 +877,8 @@ kill_cache_on_all_buttons(PanelWidget *panel)
 		AppletData *ad = li->data;
 		if(IS_BUTTON_WIDGET(ad->applet)) {
 			ButtonWidget *button = BUTTON_WIDGET(ad->applet);
-			if(button->cache) {
+			if((even_no_alpha || !button->no_alpha)
+			   && button->cache) {
 				gdk_pixmap_unref(button->cache);
 				button->cache = NULL;
 			}
@@ -923,12 +928,12 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = my_gdk_pixbuf_rgb_from_drawable(bg_pixmap);
 			panel->back_source = bg_pixmap;
-			kill_cache_on_all_buttons(panel);
+			kill_cache_on_all_buttons(panel, FALSE);
 		} else if(!bg_pixmap && panel->backpix) {
 			if(panel->backpix)
 				gdk_pixbuf_unref(panel->backpix);
 			panel->backpix = NULL;
-			kill_cache_on_all_buttons(panel);
+			kill_cache_on_all_buttons(panel, FALSE);
 		}
 		pb = panel->backpix;
 	} else if(panel->back_type == PANEL_BACK_PIXMAP) {
@@ -978,14 +983,23 @@ panel_widget_draw_all(PanelWidget *panel, GdkRectangle *area)
 			ButtonWidget *button = BUTTON_WIDGET(ad->applet);
 			if(!button->cache) {
 				guchar *rgb_buf;
+				
+				{
+					static int drawn = 0;
+					printf("drawn: %d\n",++drawn);
+				}
+
 				button->cache =
 					gdk_pixmap_new(widget->window, size,size,
 						       gtk_widget_get_visual(widget)->depth);
 				rgb_buf = g_new(guchar, size*size*3);
-				make_background(panel, rgb_buf,
-						ad->applet->allocation.x,
-						ad->applet->allocation.y,
-						size,size, pb, scale_w, scale_h);
+				/*if the icon doesn't have an opaque tile,
+				  draw us a background*/
+				if(!button->no_alpha)
+					make_background(panel, rgb_buf,
+							ad->applet->allocation.x,
+							ad->applet->allocation.y,
+							size,size, pb, scale_w, scale_h);
 				button_widget_draw(button, rgb_buf, size*3);
 				gdk_draw_rgb_image(button->cache,gc,
 						   0,0, size, size,
@@ -1142,9 +1156,12 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 	old_size = panel->size;
 	old_thick = panel->thick;
 
-	if(widget->allocation.width != allocation->width ||
-	   widget->allocation.height != allocation->height)
-		kill_cache_on_all_buttons(panel);
+	if((widget->allocation.width != allocation->width ||
+	    widget->allocation.height != allocation->height) &&
+	   panel->back_type != PANEL_BACK_COLOR &&
+	   (panel->back_type != PANEL_BACK_NONE ||
+	    GTK_WIDGET(panel)->style->bg_pixmap[GTK_WIDGET_STATE(panel)]))
+		kill_cache_on_all_buttons(panel, FALSE);
 	
 	widget->allocation = *allocation;
 	if (GTK_WIDGET_REALIZED (widget))
@@ -1334,7 +1351,7 @@ panel_try_to_set_default_back(PanelWidget *panel)
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
-	kill_cache_on_all_buttons(panel);
+	kill_cache_on_all_buttons(panel, FALSE);
 
 	panel_widget_draw_all(panel,NULL);
 }
@@ -1348,7 +1365,7 @@ panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 	g_return_if_fail(color!=NULL);
 	
-	kill_cache_on_all_buttons(panel);
+	kill_cache_on_all_buttons(panel, FALSE);
 
 	cmap = gtk_widget_get_colormap(GTK_WIDGET(panel));
 
@@ -1466,7 +1483,7 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	g_return_val_if_fail(panel!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(panel),FALSE);
 
-	kill_cache_on_all_buttons(panel);
+	kill_cache_on_all_buttons(panel, FALSE);
 
 	if(panel->backpix)
 		gdk_pixbuf_unref(panel->backpix);
@@ -2549,7 +2566,7 @@ panel_widget_change_params(PanelWidget *panel,
 	oldsz = panel->sz;
 	panel->sz = sz;
 
-	kill_cache_on_all_buttons(panel);
+	kill_cache_on_all_buttons(panel, TRUE);
 
 	if(oldorient != panel->orient) {
 	   	gtk_signal_emit(GTK_OBJECT(panel),

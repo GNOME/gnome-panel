@@ -21,7 +21,11 @@ struct _ButtonWidget
 	GtkWidget		pixmap;
 	
 	GdkPixbuf		*pixbuf;
+
 	GdkPixmap		*cache;
+	gboolean		no_alpha; /*we don't have any alpha to speak of,
+					    so we don't have to dump the cache all
+					    the time*/
 	
 	char			*filename;
 	int			size;

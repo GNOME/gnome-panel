@@ -162,12 +162,21 @@ button_widget_class_init (ButtonWidgetClass *class)
 	
 }
 
-/*static int
-get_size(ButtonWidget *button)
+static void
+setup_no_alpha(ButtonWidget *button)
 {
-	int sizes[SIZE_HUGE+1]={24,48,64,80};
-	return sizes[size];
-}*/
+	button->no_alpha = FALSE;
+	if(!tiles_enabled[button->tile] ||
+	   global_config.tile_when_over)
+		return;
+	if(button->pressed) {
+		if(!tiles.tiles_down[button->tile]->art_pixbuf->has_alpha)
+			button->no_alpha = TRUE;
+	} else {
+		if(!tiles.tiles_up[button->tile]->art_pixbuf->has_alpha)
+			button->no_alpha = TRUE;
+	}
+}
 
 static void
 button_widget_realize(GtkWidget *widget)
@@ -657,6 +666,7 @@ button_widget_pressed(ButtonWidget *button)
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
 	button->cache = NULL;
+	setup_no_alpha(button);
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
 }
@@ -667,6 +677,7 @@ button_widget_unpressed(ButtonWidget *button)
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
 	button->cache = NULL;
+	setup_no_alpha(button);
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
 	if(button->in_button)
@@ -708,6 +719,8 @@ button_widget_new(char *filename,
 	button->arrow = arrow;
 	button->orient = orient;
 	button->text = text?g_strdup(text):NULL;
+
+	setup_no_alpha(button);
 	
 	return GTK_WIDGET(button);
 }
@@ -762,6 +775,7 @@ button_widget_set_params(ButtonWidget *button,
 	if(button->cache)
 		gdk_pixmap_unref(button->cache);
 	button->cache = NULL;
+	setup_no_alpha(button);
 	
 	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 			       button);
@@ -783,13 +797,14 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 
 	tile_border[tile] = border;
 	tile_depth[tile] = depth;
-	
+
 	for(list = buttons;list!=NULL;list=g_list_next(list)) {
 		ButtonWidget *button = list->data;
 		if(button->tile == tile) {
 			if(button->cache)
 				gdk_pixmap_unref(button->cache);
 			button->cache = NULL;
+			setup_no_alpha(button);
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
 					       button);
 		}
@@ -813,6 +828,7 @@ button_widget_set_flags(int type, int _tiles_enabled, int _pixmaps_enabled, int 
 			if(button->cache)
 				gdk_pixmap_unref(button->cache);
 			button->cache = NULL;
+			setup_no_alpha(button);
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(list->data)->parent),
 					       button);
 		}
