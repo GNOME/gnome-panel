@@ -281,17 +281,19 @@ setup_size (Fish *fish)
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 
 	if (fish_applet_rotate (fish)) {
-		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
-				       fish->w,
-				       fish->h / frames);
+		GTK_WIDGET (fish->darea)->requisition.width = fish->w;
+		GTK_WIDGET (fish->darea)->requisition.height =
+							fish->h / frames;
+		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
 
 		gtk_widget_set_usize (fish->darea,
 				      fish->w,
 				      fish->h / frames);
 	} else {
-		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea), 
-				       fish->w / frames,
-				       fish->h);
+		GTK_WIDGET (fish->darea)->requisition.width =
+							fish->w / frames;
+		GTK_WIDGET (fish->darea)->requisition.height = fish->h;
+		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
 
 		gtk_widget_set_usize (fish->darea,
 				      fish->w / frames,
@@ -435,9 +437,7 @@ apply_properties (Fish *fish)
 }
 
 static void
-fish_properties_apply_callback (GnomePropertyBox *pb,
-				int               page,
-				Fish             *fish)
+fish_properties_apply (GtkDialog *pb, Fish *fish)
 {
 	GtkWidget     *name;
 	GtkWidget     *image;
@@ -454,9 +454,6 @@ fish_properties_apply_callback (GnomePropertyBox *pb,
 	speed   = gtk_object_get_data (GTK_OBJECT (pb), "speed");
 	rotate  = gtk_object_get_data (GTK_OBJECT (pb), "rotate");
 	command = gtk_object_get_data (GTK_OBJECT (pb), "command");
-
-	if (page != -1) 
-		return;
 
 	text = gtk_entry_get_text (GTK_ENTRY (name));
 	if (text)
@@ -526,7 +523,7 @@ fish_properties_apply_callback (GnomePropertyBox *pb,
 }
 
 static void
-phelp_cb (GtkWidget *w, gint tab, gpointer data)
+phelp ()
 {
 	GError *error = NULL;
 
@@ -536,6 +533,38 @@ phelp_cb (GtkWidget *w, gint tab, gpointer data)
 		g_error_free (error);
 	}
 }
+
+static void
+changed_cb (GtkWidget *button, gpointer data)
+{
+	gtk_widget_set_sensitive (GTK_WIDGET(button), TRUE);
+}
+
+static void
+response_cb (GtkDialog *dialog, gint id, gpointer data) 
+{
+	Fish *fish = data;
+
+	switch (id) 
+	{
+		case GTK_RESPONSE_OK:
+			fish_properties_apply (dialog, fish);
+			gtk_widget_destroy (GTK_WIDGET(dialog));
+			fish->pb = NULL;
+			break;
+		case GTK_RESPONSE_APPLY:
+			fish_properties_apply (dialog, fish);
+			break;
+		case GTK_RESPONSE_HELP:
+			phelp ();
+			break;
+		case GTK_RESPONSE_CLOSE:
+			gtk_widget_destroy (GTK_WIDGET(dialog));
+			fish->pb = NULL;
+			break;
+	}
+}
+
 
 static void 
 display_properties_dialog (BonoboUIComponent *uic,
@@ -554,6 +583,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gint           frames;
 	gdouble        speed;
 	gboolean       rotate;
+	GtkWidget     *notebook;
+	GtkWidget     *apply_button;
 
 	if (fish->pb != NULL) {
 		gtk_window_present (GTK_WINDOW (fish->pb));
@@ -569,13 +600,24 @@ display_properties_dialog (BonoboUIComponent *uic,
 	speed   = panel_applet_gconf_get_float  (applet, FISH_PREFS_SPEED, NULL);
 	rotate  = panel_applet_gconf_get_bool   (applet, FISH_PREFS_ROTATE, NULL);
 
-	fish->pb = gnome_property_box_new ();
+	fish->pb = gtk_dialog_new ();
+	gtk_dialog_add_button (GTK_DIALOG (fish->pb), 
+				GTK_STOCK_HELP, GTK_RESPONSE_HELP);
+	apply_button = gtk_dialog_add_button (GTK_DIALOG (fish->pb), 
+				GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
+	gtk_widget_set_sensitive (GTK_WIDGET(apply_button), FALSE);
+	gtk_dialog_add_buttons (GTK_DIALOG (fish->pb), 
+				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE, 
+				GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
 	gtk_window_set_title (GTK_WINDOW (fish->pb),
 			      _("GNOME Fish Properties"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
 					 GNOME_ICONDIR "/gnome-fish.png");
 
+	notebook = gtk_notebook_new ();
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (fish->pb)->vbox), 
+				notebook, TRUE, TRUE, 0);
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD);
 	gtk_container_set_border_width (GTK_CONTAINER (vbox), GNOME_PAD);
 
@@ -591,8 +633,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
-					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
-					       GTK_OBJECT (fish->pb));
+					       GTK_SIGNAL_FUNC (changed_cb),
+					       GTK_OBJECT (apply_button));
 
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -607,8 +649,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
-					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
-					       GTK_OBJECT (fish->pb));
+					       GTK_SIGNAL_FUNC (changed_cb),
+					       GTK_OBJECT (apply_button));
 
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -622,8 +664,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
-					       GTK_SIGNAL_FUNC (gnome_property_box_changed),
-					       GTK_OBJECT (fish->pb));
+					       GTK_SIGNAL_FUNC (changed_cb),
+					       GTK_OBJECT (apply_button));
 
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -638,8 +680,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_signal_connect_object (GTK_OBJECT (adj),
 				   "value_changed",
-				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
-				   GTK_OBJECT (fish->pb));
+				   GTK_SIGNAL_FUNC (changed_cb),
+				   GTK_OBJECT (apply_button));
 
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -654,27 +696,22 @@ display_properties_dialog (BonoboUIComponent *uic,
 
 	gtk_signal_connect_object (GTK_OBJECT (adj),
 				   "value_changed",
-				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
-				   GTK_OBJECT (fish->pb));
+				   GTK_SIGNAL_FUNC (changed_cb),
+				   GTK_OBJECT (apply_button));
 
 	w = gtk_check_button_new_with_label (_("Rotate on vertical panels"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), rotate);
 	gtk_signal_connect_object (GTK_OBJECT (w),
 				   "toggled",
-				   GTK_SIGNAL_FUNC (gnome_property_box_changed),
-				   GTK_OBJECT (fish->pb));
+				   GTK_SIGNAL_FUNC (changed_cb),
+				   GTK_OBJECT (apply_button));
 
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "rotate", w);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (fish->pb),
+	gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
 					vbox,
 					gtk_label_new (_("Fish")));
-
-	gtk_signal_connect (GTK_OBJECT(fish->pb),
-			    "apply",
-			    GTK_SIGNAL_FUNC (fish_properties_apply_callback),
-			    fish);
 
 	gtk_signal_connect (GTK_OBJECT(fish->pb),
 			    "destroy",
@@ -682,9 +719,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 			    &fish->pb);
 
 	gtk_signal_connect (GTK_OBJECT (fish->pb),
-			    "help",
-			    GTK_SIGNAL_FUNC (phelp_cb),
-			    NULL);
+			    "response",
+			    GTK_SIGNAL_FUNC (response_cb),
+			    fish);
 
 	gtk_widget_show_all (fish->pb);
 
@@ -921,14 +958,17 @@ create_fish_widget(Fish *fish)
 
 	fish->darea = gtk_drawing_area_new();
 
-	if (fish_applet_rotate (fish))
-		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
-				       fish->w,
-				       fish->h / frames);
-	else
-		gtk_drawing_area_size (GTK_DRAWING_AREA (fish->darea),
-				       fish->w / frames,
-				       fish->h);
+	if (fish_applet_rotate (fish)) {
+		GTK_WIDGET (fish->darea)->requisition.width = fish->w;
+		GTK_WIDGET (fish->darea)->requisition.height =
+							fish->h / frames;
+		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
+	} else {
+		GTK_WIDGET (fish->darea)->requisition.width =
+							fish->h / frames;
+		GTK_WIDGET (fish->darea)->requisition.width = fish->w;
+		gtk_widget_queue_resize (GTK_WIDGET (fish->darea));
+	}
 
 	gtk_widget_set_events(fish->darea, gtk_widget_get_events(fish->darea) |
 			      GDK_BUTTON_PRESS_MASK);
