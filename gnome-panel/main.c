@@ -282,7 +282,7 @@ queue_load_applet(char *id_str, char *path, char *params,
 	load_queue = g_list_append(load_queue,l);
 }
 
-static int
+static void
 monitor_drawers(GtkWidget *w, gpointer data)
 {
 	PanelWidget **panel=data;
@@ -293,10 +293,6 @@ monitor_drawers(GtkWidget *w, gpointer data)
 		panel[1]->drawers_open++;
 	else
 		panel[1]->drawers_open--;
-	
-	printf("drawers open: %d\n",panel[1]->drawers_open);
-
-	return FALSE;
 }
 
 static PanelData *
@@ -536,7 +532,11 @@ load_applet(char *id_str, char *path, char *params,
 			if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
 				gtk_widget_show(drawer->drawer);
 			else {
-				gtk_widget_realize(drawer->drawer);
+				/*hmm ... weird but it works*/
+				gtk_widget_set_uposition(drawer->drawer,
+							 -100,-100);
+				gtk_widget_show(drawer->drawer);
+				/*gtk_widget_realize(drawer->drawer);*/
 				gtk_widget_hide(drawer->drawer);
 			}
 		} else
