@@ -1,4 +1,5 @@
 #include <string.h>
+#include <math.h>
 #include <libgnomecanvas/libgnomecanvas.h>
 #include "panel-util.h"
 #include "rgb-stuff.h"
@@ -1356,4 +1357,119 @@ start_geginv (void)
 	inv_show_status ();
 
 	gtk_widget_show_all (geginv);
+}
+
+static gboolean
+move_window_handler (gpointer data)
+{
+	int x, y, sx, sy, wx, wy, foox, fooy;
+	GtkWidget *win = data;
+
+	data = g_object_get_data (G_OBJECT (win), "move_speed_x");
+	sx = GPOINTER_TO_INT (data);
+	data = g_object_get_data (G_OBJECT (win), "move_speed_y");
+	sy = GPOINTER_TO_INT (data);
+
+	gdk_window_get_pointer (NULL, &x, &y, NULL);
+	wx = win->allocation.x;
+	wy = win->allocation.y;
+
+	foox = wx + (win->allocation.width / 2);
+	fooy = wy + (win->allocation.height / 2);
+
+	if (sqrt ((foox - x)*(foox - x) + (fooy - y)*(fooy - y)) <
+	    MAX (win->allocation.width, win->allocation.height)) {
+		if (foox < x) sx -= 5;
+		else sx += 5;
+		if (fooy < y) sy -= 5;
+		else sy += 5;
+	} else {
+		sx /= 2;
+		sy /= 2;
+	}
+	
+	if (sx > 50) sx = 50;
+	else if (sx < -50) sx = -50;
+	if (sy > 50) sy = 50;
+	else if (sy < -50) sy = -50;
+
+	wx += sx;
+	wy += sy;
+
+	if (wx < 0) wx = 0;
+	if (wy < 0) wy = 0;
+	if (wx + win->allocation.width > gdk_screen_width ())
+		wx = gdk_screen_width () - win->allocation.width;
+	if (wy + win->allocation.height > gdk_screen_height ())
+		wy = gdk_screen_height () - win->allocation.height;
+
+	gtk_window_move (GTK_WINDOW (win), wx, wy);
+	win->allocation.x = wx;
+	win->allocation.y = wy;
+
+	data = GINT_TO_POINTER (sx);
+	g_object_set_data (G_OBJECT (win), "move_speed_x", data);
+	data = GINT_TO_POINTER (sy);
+	g_object_set_data (G_OBJECT (win), "move_speed_y", data);
+
+	return TRUE;
+}
+
+static void
+move_window_destroyed (GtkWidget *win)
+{
+	gpointer data = g_object_get_data (G_OBJECT (win), "move_window_handler");
+	int handler = GPOINTER_TO_INT (data);
+
+	if (handler != 0)
+		gtk_timeout_remove (handler);
+	g_object_set_data (G_OBJECT (win), "move_window_handler", NULL);
+}
+
+static void
+doblah (GtkWidget *window)
+{
+	gpointer data = g_object_get_data (G_OBJECT (window), "move_window_handler");
+	int handler = GPOINTER_TO_INT (data);
+
+	if (handler == 0) {
+		handler = gtk_timeout_add (30, move_window_handler, window);
+		data = GINT_TO_POINTER (handler);
+		g_object_set_data (G_OBJECT (window), "move_window_handler", data);
+		g_signal_connect (G_OBJECT (window), "destroy",
+				    G_CALLBACK (move_window_destroyed),
+				    NULL);
+	}
+}
+
+gboolean
+panel_dialog_window_event (GtkWidget *window,
+			   GdkEvent  *event)
+{
+	switch (event->type) {
+		static int foo = 0;
+	case GDK_KEY_PRESS:
+		if((event->key.state & GDK_CONTROL_MASK) && foo < 4) {
+			switch (event->key.keyval) {
+			case GDK_r:
+			case GDK_R:
+				if(foo == 3) { doblah (window); } foo = 0; break;
+			case GDK_a:
+			case GDK_A:
+				if(foo == 2) { foo++; } else { foo = 0; } break;
+			case GDK_e:
+			case GDK_E:
+				if(foo == 1) { foo++; } else { foo = 0; } break;
+			case GDK_f:
+			case GDK_F:
+				if(foo == 0) { foo++; } else { foo = 0; } break;
+			default:
+				foo = 0;
+			}
+		}
+	default:
+		break;
+	}
+
+	return FALSE;
 }

@@ -73,8 +73,7 @@ void		make_panel_submenu	(GtkWidget *menu,
 					 gboolean fake_submenus,
 					 gboolean is_basep);
 
-GtkWidget *	create_panel_root_menu	(PanelWidget *panel,
-					 gboolean tearoff);
+GtkWidget *	create_panel_root_menu	(PanelWidget *panel);
 
 void		menu_properties		(Menu *menu);
 
@@ -83,9 +82,6 @@ void		panel_lock		(GtkWidget *widget,
 
 /*to be called on startup to load in some of the directories*/
 void		init_menus		(void);
-
-void		panel_menu_session_save_tornoffs (void);
-void		panel_menu_session_load_tornoffs (void);
 
 GtkWidget *	create_menu_at		(GtkWidget *menu,
 					 const char *menudir,
@@ -109,7 +105,6 @@ void		setup_internal_applet_drag (GtkWidget *menuitem,
 GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 					 gboolean fake_submenus,
 					 int flags,
-					 gboolean tearoff,
 					 gboolean is_basep,
 					 gboolean run_item);
 
@@ -133,8 +128,6 @@ enum {
 
 #define PANEL_MENU_HAVE_ICONS_KEY "/desktop/gnome/menus/show-icons"
 gboolean panel_menu_have_icons   (void);
-#define PANEL_MENU_HAVE_TEAROFF_KEY "/desktop/gnome/interface/menus-have-tearoff"
-gboolean panel_menu_have_tearoff (void);
 
 GtkWidget *	panel_menu_new		(void);
 void		panel_load_menu_image_deferred (GtkWidget *image_menu_item,

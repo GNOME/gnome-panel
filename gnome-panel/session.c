@@ -152,11 +152,7 @@ panel_session_do_save (GnomeClient *client,
 	if (save_panels)
 		for (l = panel_list; l; l = l->next)
 			panel_session_save_panel ((PanelData *) l->data);
-#ifdef FIXME
-	/* We need to do tornoff's still */
-	if (complete_save)
-		panel_menu_session_save_tornoffs ();
-#endif
+
 	if (save_applets) {
 		session_unlink_dead_launchers ();
 
@@ -391,10 +387,6 @@ void session_load (void) {
 	panel_session_init_global_config ();
 	init_menus ();
 	panel_session_init_panels ();
-
-	/* FIXME: We still need to load up possible tearoffs
-	panel_menu_session_load_tornoffs
-	*/
 
 	panel_applet_load_applets_from_gconf ();
 }

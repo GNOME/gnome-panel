@@ -1,3 +1,14 @@
+Thu Jan 10 23:27:54 2002  George Lebl <jirka@5z.com>
+
+	* Makefile.am, foobar-widget.c, menu.[ch], panel-config.c,
+	  panel-util.c, panel.c, session.c, tearoffitem.[ch]:
+	  Remove tearoff menus, they sucked.  We can readd them when
+	  we implement them properly.
+
+	* gnome-run.c:  Port to TreeView, so we are now completely
+	  de-deprecated.  Also read from all-applications:/  To
+	  actually allways get all entries.
+
 2002-01-11  Glynn Foster  <glynn.foster@sun.com>
 
 	* applet.c, drawer.c, drawer.h, gnome-panel-properties.c,

@@ -73,7 +73,6 @@ panel_sources =			\
 	sliding-widget.c	\
 	floating-widget.c	\
 	rgb-stuff.c		\
-	tearoffitem.c		\
 	panel.c			\
 	applet.c		\
 	logout.c		\
@@ -113,7 +112,6 @@ panel_headers =			\
 	sliding-widget.h	\
 	floating-widget.h	\
 	rgb-stuff.h		\
-	tearoffitem.h		\
 	panel.h         	\
 	applet.h         	\
 	logout.h		\

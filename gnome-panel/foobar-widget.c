@@ -128,17 +128,6 @@ pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_ima
 	return item;
 }
 
-static void
-add_tearoff (GtkMenuShell *menu)
-{
-	GtkWidget *item;
-
-	item = gtk_tearoff_menu_item_new ();
-	if (panel_menu_have_tearoff ())
-		gtk_widget_show (item);
-	gtk_menu_shell_prepend (menu, item);
-}
-
 static gboolean
 foobar_leave_notify (GtkWidget *widget,
 		     GdkEventCrossing *event)
@@ -183,8 +172,6 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	menu = panel_menu_new ();
 
-	add_tearoff (GTK_MENU_SHELL (menu));
-
 	menu = panel_menu_new ();
 
 	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png",
@@ -224,8 +211,6 @@ append_actions_menu (GtkWidget *menu_bar)
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
-
-	add_tearoff (GTK_MENU_SHELL (menu));
 
 	item = gtk_menu_item_new_with_label (_("Actions"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
@@ -496,13 +481,9 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 	menu2 = panel_menu_new ();
 	append_format_items (menu2); 
 
-	add_tearoff (GTK_MENU_SHELL (menu2));
-
 	item = gtk_image_menu_item_new_with_label (_("Format"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu2);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-	add_tearoff (GTK_MENU_SHELL (menu));
 
 	item = gtk_menu_item_new ();
 
@@ -617,7 +598,7 @@ programs_menu_to_display (GtkWidget *menu)
 			flags |= MAIN_MENU_KDE_SUB;
 		if (got_distro_menus ())
 			flags |= MAIN_MENU_DISTRIBUTION_SUB;
-		create_root_menu (menu, TRUE, flags, TRUE, FALSE, FALSE /* run_item */);
+		create_root_menu (menu, TRUE, flags, FALSE, FALSE /* run_item */);
 	}
 }
 
@@ -1061,7 +1042,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	if (got_distro_menus ())
 		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
-	menu = create_root_menu (NULL, TRUE, flags, TRUE, FALSE, FALSE /* run_item */);
+	menu = create_root_menu (NULL, TRUE, flags, FALSE, FALSE /* run_item */);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
 	g_signal_connect (G_OBJECT (menu), "show",

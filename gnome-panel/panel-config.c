@@ -1589,6 +1589,9 @@ panel_config (GtkWidget *panel)
 							  GTK_STOCK_CLOSE,
 							  GTK_RESPONSE_CLOSE,
 							  NULL);
+	gtk_widget_add_events (ppc->config_window, GDK_KEY_PRESS_MASK);
+	g_signal_connect (G_OBJECT (ppc->config_window), "event",
+			  G_CALLBACK (panel_dialog_window_event), NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (ppc->config_window),
 				"panel_properties", "Panel");
 	gtk_widget_set_events (ppc->config_window,

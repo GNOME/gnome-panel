@@ -33,6 +33,7 @@
 #include "panel-util.h"
 
 #include "applet.h"
+#include "nothing.h"
 #include "panel-config-global.h"
 
 extern GlobalConfig global_config;
@@ -717,6 +718,9 @@ panel_error_dialog (const char *class,
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
 				    GTK_BUTTONS_OK, s);
+	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
+	g_signal_connect (G_OBJECT (w), "event",
+			  G_CALLBACK (panel_dialog_window_event), NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (w),
 				class, "Panel");
 	g_free (s);
@@ -750,6 +754,8 @@ panel_info_dialog (const char *class,
 
 	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
 				    GTK_BUTTONS_OK, s);
+	g_signal_connect (G_OBJECT (w), "event",
+			  G_CALLBACK (panel_dialog_window_event), NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (w),
 				class, "Panel");
 	g_free (s);
@@ -1294,6 +1300,9 @@ panel_signal_connect_object_while_alive (GObject      *object,
 				  FALSE);
 }
 
+#if 0
+/* hmmm, we need to use this I think to add a battery applet
+ *  -George */
 /* Linux Battery Stuff */
 
 static gboolean
@@ -1368,3 +1377,4 @@ battery_exists (void)
 #endif
 }
 
+#endif

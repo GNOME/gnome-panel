@@ -21,9 +21,6 @@
  * USA
  */
 
-/* FIXME: because of CList */
-#undef GTK_DISABLE_DEPRECATED
-
 #include <config.h>
 #include <errno.h>
 #include <sys/types.h>
@@ -51,6 +48,16 @@
 #include "panel-util.h"
 
 #define ADVANCED_DIALOG_KEY "advanced_run_dialog"
+
+#define ICON_SIZE 20
+
+enum {
+	COLUMN_ICON,
+	COLUMN_FULLNAME,
+	COLUMN_COMMENT,
+	COLUMN_NAME,
+	NUM_COLUMNS
+};
 
 extern GtkTooltips *panel_tooltips;
 extern gboolean no_run_box;
@@ -193,7 +200,7 @@ static void
 run_dialog_response (GtkWidget *w, int response, gpointer data)
 {
 	GtkEntry *entry;
-        GtkWidget *clist;
+        GtkWidget *list;
 	GtkToggleButton *terminal;
 	char **argv = NULL;
 	char **temp_argv = NULL;
@@ -213,25 +220,37 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 		goto return_and_close;
 	}
         
-        clist = g_object_get_data (G_OBJECT (run_dialog), "dentry_list");
+        list = g_object_get_data (G_OBJECT (run_dialog), "dentry_list");
         terminal = GTK_TOGGLE_BUTTON (g_object_get_data (G_OBJECT(w),
 							 "terminal"));
         
         if (g_object_get_data (G_OBJECT (run_dialog), "use_list")) {
                 char *name;
-                
-                if (GTK_CLIST (clist)->selection == NULL)
-                        return;
-        
-                name = gtk_clist_get_row_data (GTK_CLIST (clist),
-                                               GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
+		GtkTreeSelection *selection;
+		GtkTreeModel *model;
+		GtkTreeIter iter;
+		GValue value = {0, };
+
+		selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
+
+		/* just return if nothing selected */
+		if ( ! gtk_tree_selection_get_selected (selection, 
+							&model, &iter))
+			return;
+
+		gtk_tree_model_get_value (model, &iter,
+					  COLUMN_NAME,
+					  &value);
+		name = g_strdup (g_value_get_string (&value));
+		g_value_unset (&value);
+
                 if (name != NULL) {
 			GError *error = NULL;
                         GnomeDesktopItem *ditem;
                         
-                        ditem = gnome_desktop_item_new_from_file (name,
-								  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-								  &error);
+                        ditem = gnome_desktop_item_new_from_uri (name,
+								 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+								 &error);
 			if (ditem != NULL) {
                                 /* Honor "run in terminal" button */
 				gnome_desktop_item_set_boolean (ditem,
@@ -257,6 +276,8 @@ run_dialog_response (GtkWidget *w, int response, gpointer data)
 			if (ditem != NULL) {
 				gnome_desktop_item_unref (ditem);
 			}
+
+			g_free (name);
                 }
         } else {
                 entry = GTK_ENTRY (g_object_get_data (G_OBJECT (w), "entry"));
@@ -477,28 +498,39 @@ sync_entry_to_list (GtkWidget *dialog)
 static void
 sync_list_to_entry (GtkWidget *dialog)
 {
-        GtkWidget *clist;
+        GtkWidget *list;
         GtkWidget *entry;
         GtkWidget *terminal_toggle;
         gchar *name;
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
 
         g_object_set_data (G_OBJECT (dialog),
 			   "sync_entry_to_list_blocked",
 			   GINT_TO_POINTER (TRUE));
         
-        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        list = g_object_get_data (G_OBJECT (dialog), "dentry_list");
         entry = g_object_get_data (G_OBJECT (dialog), "entry");
         terminal_toggle = g_object_get_data (G_OBJECT (dialog), "terminal");
-        
-        if (GTK_CLIST (clist)->selection) {
-                name = gtk_clist_get_row_data (GTK_CLIST (clist),
-                                               GPOINTER_TO_INT (GTK_CLIST (clist)->selection->data));
-                if (name) {
+
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
+
+	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
+		GValue value = {0, };
+
+		gtk_tree_model_get_value (model, &iter,
+					  COLUMN_NAME,
+					  &value);
+		name = g_strdup (g_value_get_string (&value));
+		g_value_unset (&value);
+
+                if (name != NULL) {
                         GnomeDesktopItem *ditem;
 
-                        ditem = gnome_desktop_item_new_from_file (name,
-								  GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
-								  NULL /* error */);
+                        ditem = gnome_desktop_item_new_from_uri (name,
+								 GNOME_DESKTOP_ITEM_LOAD_NO_TRANSLATIONS,
+								 NULL /* error */);
                         if (ditem != NULL) {
 				gboolean terminal;
                                 const char *exec;
@@ -517,9 +549,11 @@ sync_list_to_entry (GtkWidget *dialog)
                                 gtk_toggle_button_set_active
 					(GTK_TOGGLE_BUTTON (terminal_toggle),
 					 terminal);
-                                
+				
                                 gnome_desktop_item_unref (ditem);
                         }
+
+			g_free (name);
                 }
         }
 
@@ -659,186 +693,144 @@ create_advanced_contents (void)
         return vbox;
 }
 
-static void
-scan_dir_recurse (DirRec  *dr,
-                  GSList **entry_list)
-{
-        GSList *li;
-        
-        for (li = dr->recs; li != NULL; li = li->next) {
-		FileRec *fr = li->data;
-		
-		if (fr->type == FILE_REC_FILE) {
-                        if (fr->goad_id != NULL)
-                                continue; /* applet */
-
-                        *entry_list = g_slist_prepend (*entry_list, fr);
-                        
-		} else if (fr->type == FILE_REC_DIR) {
-                        scan_dir_recurse ((DirRec*)fr, entry_list);
-		} else {
-			continue;
-		}
-        }
-}
-
 static int
 sort_by_name (FileRec *fra,
               FileRec *frb)
 {
-        return strcoll (fra->fullname, frb->fullname);
+	/* FIXME: there is no utf8 strcoll afaik, so
+	 * we just strcmp for now, this is evil, but
+	 * it works mostly somewhat */
+        return strcmp (fra->fullname, frb->fullname);
 }
 
-#define CLIST_ICON_SIZE 20
+static void
+add_columns (GtkTreeView *treeview)
+{
+	GtkCellRenderer *renderer;
+	GtkTreeViewColumn *column;
+
+	renderer = gtk_cell_renderer_pixbuf_new ();
+	column = gtk_tree_view_column_new_with_attributes (NULL,
+							   renderer,
+							   "pixbuf", COLUMN_ICON,
+							   NULL);
+	gtk_tree_view_column_set_clickable (column, FALSE);
+	gtk_tree_view_column_set_sizing (GTK_TREE_VIEW_COLUMN (column),
+					 GTK_TREE_VIEW_COLUMN_FIXED);
+	gtk_tree_view_column_set_fixed_width (GTK_TREE_VIEW_COLUMN (column),
+					      ICON_SIZE);
+	gtk_tree_view_append_column (treeview, column);
+
+	renderer = gtk_cell_renderer_text_new ();
+	column = gtk_tree_view_column_new_with_attributes (_("Applications"),
+							   renderer,
+							   "text",
+							   COLUMN_FULLNAME,
+							   NULL);
+	gtk_tree_view_column_set_clickable (column, FALSE);
+	gtk_tree_view_append_column (treeview, column);
+}
 
 /* Called when simple contents are switched to or first shown */
 static void
-simple_contents_shown (GtkWidget *vbox,
-                       GtkWidget *dialog)
+fill_list (GtkWidget *list)
 {
-        GtkWidget *advanced;
-        GSList *entries;
         GSList *tmp;
         GSList *files;
         GSList *prev;
-        GtkWidget *clist;
         char *prev_name;
+	GtkListStore *store;
+	FileRec *all_dir;
         
-        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
-        advanced = g_object_get_data (G_OBJECT (dialog), "advanced");
-        
-        if (advanced) {
-                /* If we have advanced contents containing a command,
-                 * try to match that command to some desktop entry
-                 * in order to fill in our default.
-                 */
-                
-                /*  FIXME */
-        }
+	/* create list store */
+	store = gtk_list_store_new (NUM_COLUMNS,
+				    GDK_TYPE_PIXBUF,
+				    G_TYPE_STRING,
+				    G_TYPE_STRING,
+				    G_TYPE_STRING);
 
-        if (GTK_CLIST (clist)->rows == 0) {
-                GdkPixmap *spacer_pixmap;
-                GdkBitmap *spacer_mask;
-                GdkGC *gc;
-                GdkColor color;
+	all_dir = fr_get_dir ("all-applications:/");
+	if (all_dir != NULL) {
+		files = g_slist_copy (((DirRec *)all_dir)->recs);
+	} else {
+		files = NULL;
+	}
 
-                /* Create invisible pixmap/mask to put space
-                 * before entries with no icon
-                 */
-                spacer_pixmap = gdk_pixmap_new (NULL,
-                                                CLIST_ICON_SIZE,
-                                                CLIST_ICON_SIZE,
-                                                gtk_widget_get_visual (clist)->depth);
+	/* Collate */
+	files = g_slist_sort (files, (GCompareFunc) sort_by_name);
 
-                spacer_mask = gdk_pixmap_new (NULL,
-                                              CLIST_ICON_SIZE,
-                                              CLIST_ICON_SIZE,
-                                              1);
+	/* Strip duplicates */
+	tmp = files;
+	prev = NULL;
+	prev_name = NULL;
+	while (tmp) {
+		FileRec *fr;
 
-                gc = gdk_gc_new (spacer_mask);
-                color.pixel = 0;
-                gdk_gc_set_foreground (gc, &color);
-                gdk_draw_rectangle (spacer_mask,
-                                    gc,
-                                    TRUE, 0, 0, CLIST_ICON_SIZE, CLIST_ICON_SIZE);
-                g_object_unref (G_OBJECT (gc));
-                gc = NULL;
-                
-		/* FIXME: this is not actually the list of all directories,
-		 * as it only includes the cache, this just seems like all,
-		 * this is wrong! */
-                entries = fr_get_all_dirs ();
-                files = NULL;
-                tmp = entries;
-                while (tmp != NULL) {
-                        DirRec *dr = tmp->data;
+		fr = tmp->data;
+		if (prev_name && strcmp (fr->fullname, prev_name) == 0) {
+			GSList *del = tmp;
 
-                        scan_dir_recurse (dr, &files);
-                
-                        tmp = tmp->next;
-                }
+			prev->next = del->next;
+			g_slist_free_1 (del);
+			tmp = prev->next;
+		} else {
+			prev = tmp;
+			prev_name = fr->fullname;
+			tmp = tmp->next;
+		}
+	}
 
-                /* Collate */
-                files = g_slist_sort (files, (GCompareFunc) sort_by_name);
+	tmp = files;
+	while (tmp != NULL) {
+		GtkTreeIter iter;
+		FileRec *fr;
+		GdkPixbuf *pixbuf;
+		char *icon;
 
-                /* Strip duplicates */
-                tmp = files;
-                prev = NULL;
-                prev_name = NULL;
-                while (tmp) {
-                        FileRec *fr;
-                        
-                        fr = tmp->data;
-                        if (prev_name && strcmp (fr->fullname, prev_name) == 0) {
-                                GSList *del = tmp;
-                        
-                                prev->next = del->next;
-                                g_slist_free_1 (del);
-                                tmp = prev->next;
-                        } else {
-                                prev = tmp;
-                                prev_name = fr->fullname;
-                                tmp = tmp->next;
-                        }
-                }
-        
-                tmp = files;
-                while (tmp != NULL) {
-                        FileRec *fr;
-                        GdkPixbuf *pixbuf;
-                        GdkPixmap *pixmap;
-                        GdkBitmap *mask;
-                        int row;
-                        char *text[2];
-                
-                        fr = tmp->data;
+		fr = tmp->data;
 
-			if (fr->icon != NULL) {
-				pixbuf = gdk_pixbuf_new_from_file (fr->icon, NULL);
-			} else {
-				pixbuf = NULL;
-			}
-                
-                        if (pixbuf != NULL) {
-                                GdkPixbuf *scaled;
-                                scaled = gdk_pixbuf_scale_simple (pixbuf, CLIST_ICON_SIZE, CLIST_ICON_SIZE, GDK_INTERP_BILINEAR);
-                                gdk_pixbuf_render_pixmap_and_mask (scaled,
-                                                                   &pixmap, &mask, 128);
-                                g_object_unref (G_OBJECT (pixbuf));
-                                g_object_unref (G_OBJECT (scaled));
-                        } else {
-                                pixmap = spacer_pixmap;
-                                mask = spacer_mask;
-                        }
+		icon = gnome_desktop_item_find_icon (fr->icon,
+						     ICON_SIZE /* desired size */,
+						     0 /* flags */);
+		if (icon != NULL) {
+			pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
+			g_free (icon);
+		} else {
+			pixbuf = NULL;
+		}
 
-                        text[0] = fr->fullname;
-                        text[1] = fr->comment;
-                        row = gtk_clist_append (GTK_CLIST (clist),
-                                                text);
+		if (pixbuf != NULL &&
+		    (gdk_pixbuf_get_width (pixbuf) != ICON_SIZE ||
+		     gdk_pixbuf_get_height (pixbuf) != ICON_SIZE)) {
+			GdkPixbuf *scaled;
+			scaled = gdk_pixbuf_scale_simple (pixbuf,
+							  ICON_SIZE,
+							  ICON_SIZE,
+							  GDK_INTERP_BILINEAR);
+			g_object_unref (G_OBJECT (pixbuf));
+			pixbuf = scaled;
+		}
 
-                        gtk_clist_set_pixtext (GTK_CLIST (clist),
-                                               row, 0,
-                                               fr->fullname,
-                                               3,
-                                               pixmap, mask);
+		gtk_list_store_append (store, &iter);
+		gtk_list_store_set (store, &iter,
+				    COLUMN_ICON, pixbuf,
+				    COLUMN_FULLNAME, fr->fullname,
+				    COLUMN_COMMENT, fr->comment,
+				    COLUMN_NAME, fr->name,
+				    -1);
 
-                        if (pixbuf) {
-                                if (pixmap)
-                                        g_object_unref (G_OBJECT (pixmap));
-                                if (mask)
-                                        g_object_unref (G_OBJECT (mask));
-                        }
-                                
-                        gtk_clist_set_row_data (GTK_CLIST (clist),
-                                                row, fr->name);
-                
-                        tmp = tmp->next;
-                }
+		if (pixbuf != NULL)
+			g_object_unref (G_OBJECT (pixbuf));
 
-                g_object_unref (G_OBJECT (spacer_pixmap));
-                g_object_unref (G_OBJECT (spacer_mask));
-                g_slist_free (files);
-        }
+		tmp = tmp->next;
+	}
+
+	g_slist_free (files);
+
+	gtk_tree_view_set_model (GTK_TREE_VIEW (list), 
+				 GTK_TREE_MODEL (store));
+
+	add_columns (GTK_TREE_VIEW (list));
 }
 
 #define DEFAULT_ICON "nautilus/i-executable.png"
@@ -874,14 +866,14 @@ unset_selected (GtkWidget *dialog)
         GtkWidget *gpixmap;
         GtkWidget *desc_label;
         GtkWidget *entry;
-        GtkWidget *clist;
+        GtkWidget *list;
         char *text;
         
         label = g_object_get_data (G_OBJECT (dialog), "label");
         gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
         desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
         entry = g_object_get_data (G_OBJECT (dialog), "entry");
-        clist = g_object_get_data (G_OBJECT (dialog), "dentry_list");
+        list = g_object_get_data (G_OBJECT (dialog), "dentry_list");
         
 	if (entry != NULL) {
 		text = gtk_editable_get_chars (GTK_EDITABLE (entry),
@@ -915,45 +907,42 @@ unset_selected (GtkWidget *dialog)
 
         g_object_set_data (G_OBJECT (dialog), "use_list",
 			   GPOINTER_TO_INT (FALSE));
-
-        gtk_clist_set_selection_mode (GTK_CLIST (clist),
-                                      GTK_SELECTION_SINGLE);
-        gtk_clist_unselect_all (GTK_CLIST (clist));
+	gtk_tree_selection_unselect_all
+		(gtk_tree_view_get_selection (GTK_TREE_VIEW (list)));
 }
 
 static void
-select_row_handler (GtkCList *clist,
-                    gint      row,
-                    gint      column,
-                    GdkEvent *event,
-                    gpointer  data)
+selection_changed (GtkTreeSelection *selection,
+		   gpointer data)
 {
         GtkWidget *label;
         GtkWidget *gpixmap;
         GtkWidget *desc_label;
         GtkWidget *dialog = data;
         gchar *name;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	GValue value = {0, };
 
-        if (clist->selection == NULL)
-                return;
+	if ( ! gtk_tree_selection_get_selected (selection, &model, &iter))
+		return;
 
-        /* Change selection mode once we have a selection */
-        gtk_clist_set_selection_mode (GTK_CLIST (clist),
-                                      GTK_SELECTION_BROWSE);
-        
+	gtk_tree_model_get_value (model, &iter,
+				  COLUMN_NAME,
+				  &value);
+	name = g_strdup (g_value_get_string (&value));
+	g_value_unset (&value);
+
         label = g_object_get_data (G_OBJECT (dialog), "label");
         gpixmap = g_object_get_data (G_OBJECT (dialog), "pixmap");
         desc_label = g_object_get_data (G_OBJECT (dialog), "desc_label");
 
-        name = gtk_clist_get_row_data (GTK_CLIST (clist),
-                                       row);
-
-        if (name) {
+        if (name != NULL) {
                 QuickDesktopItem *qitem;
 
-		qitem = quick_desktop_item_load_file (name /*file */,
-						      "Application" /* expected type */,
-						      TRUE /* run tryexec */);
+		qitem = quick_desktop_item_load_uri (name /*file */,
+						     "Application" /* expected type */,
+						     TRUE /* run tryexec */);
 		if (qitem != NULL) {
                         GdkPixbuf *pixbuf;
 			char *icon;
@@ -967,10 +956,11 @@ select_row_handler (GtkCList *clist,
 						    sure_string (qitem->comment));
 
 			icon = gnome_desktop_item_find_icon (qitem->icon,
-							     20 /* desired size */,
+							     48 /* desired size */,
 							     0 /* flags */);
 			if (icon != NULL) {
 				pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
+				g_free (icon);
 			} else {
 				pixbuf = NULL;
 			}
@@ -983,6 +973,8 @@ select_row_handler (GtkCList *clist,
                         
 			quick_desktop_item_destroy (qitem);
                 }
+
+		g_free (name);
         }
 
         sync_list_to_entry (dialog);
@@ -995,40 +987,29 @@ create_simple_contents (void)
         GtkWidget *w;
         GtkWidget *label;
         GtkWidget *pixmap;
-        GtkWidget *clist;
+        GtkWidget *list;
         GtkWidget *hbox;
-        char *titles[2];
+	GtkTreeSelection *selection;
         
         vbox = gtk_vbox_new (FALSE, 1);
         
-        titles[0] = _("Available Programs");
-        titles[1] = _("Description");
-        clist = gtk_clist_new_with_titles (1 /* 2 */, titles);
-        g_object_set_data (G_OBJECT (run_dialog), "dentry_list", clist);
+        list = gtk_tree_view_new ();
+        g_object_set_data (G_OBJECT (run_dialog), "dentry_list", list);
 
-        gtk_clist_set_selection_mode (GTK_CLIST (clist),
-                                      GTK_SELECTION_SINGLE);
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 
-        gtk_clist_column_titles_passive (GTK_CLIST (clist));
-        
-        gtk_widget_ensure_style (clist);
-#ifdef FIXME
-        gtk_clist_set_row_height (GTK_CLIST (clist),
-                                  MAX (clist->style->font->ascent +
-                                       clist->style->font->descent,
-                                       CLIST_ICON_SIZE));
-#endif
+	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);
 
-        g_signal_connect (G_OBJECT (clist),
-                            "select_row",
-                            G_CALLBACK (select_row_handler),
-                            run_dialog);
+        g_signal_connect (G_OBJECT (selection),
+			  "changed",
+			  G_CALLBACK (selection_changed),
+			  run_dialog);
         
         w = gtk_scrolled_window_new (NULL, NULL);
         gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (w),
                                         GTK_POLICY_AUTOMATIC,
                                         GTK_POLICY_AUTOMATIC);
-        gtk_container_add (GTK_CONTAINER (w), clist);
+        gtk_container_add (GTK_CONTAINER (w), list);
         
         gtk_box_pack_start (GTK_BOX (vbox), w,
                             TRUE, TRUE, GNOME_PAD_SMALL);
@@ -1068,10 +1049,7 @@ create_simple_contents (void)
 				vbox,
 				(GtkDestroyNotify) g_object_unref);
 
-        g_signal_connect (G_OBJECT (vbox),
-                            "show",
-                            G_CALLBACK (simple_contents_shown),
-                            run_dialog);
+	fill_list (list);
 
         gtk_box_pack_start (GTK_BOX (GTK_DIALOG (run_dialog)->vbox),
                             vbox,
