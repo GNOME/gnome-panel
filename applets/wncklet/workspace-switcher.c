@@ -179,6 +179,58 @@ applet_change_background (PanelApplet               *applet,
 	}
 }
 
+static gboolean
+applet_scroll (PanelApplet    *applet,
+               GdkEventScroll *event,
+               PagerData      *pager)
+{
+	WnckScreen *screen;
+	int         index;
+	int         n_workspaces;
+	int         n_columns;
+	
+	if (event->type != GDK_SCROLL)
+		return FALSE;
+
+	screen       = applet_get_screen (GTK_WIDGET (applet));
+	index        = wnck_workspace_get_number (wnck_screen_get_active_workspace (screen));
+	n_workspaces = wnck_screen_get_workspace_count (screen);
+	n_columns    = n_workspaces / pager->n_rows;
+	
+	switch (event->direction) {
+	case GDK_SCROLL_DOWN:
+		if (index + n_columns < n_workspaces)
+			index += n_columns;
+		else if (index < n_workspaces - 1)
+			index = (index % n_columns) + 1;
+		break;
+		
+	case GDK_SCROLL_RIGHT:
+		if (index < n_workspaces)
+			index++;
+		break;
+		
+	case GDK_SCROLL_UP:
+		if (index - n_columns >= 0)
+			index -= n_columns;
+		else if (index > 0)
+			index = ((pager->n_rows - 1) * n_columns) + (index % n_columns) - 1;
+		break;
+
+	case GDK_SCROLL_LEFT:
+		if (index > 0)
+			index--;
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+
+	wnck_workspace_activate (wnck_screen_get_workspace (screen, index));
+	
+	return TRUE;
+}
+
 static void 
 response_cb (GtkWidget *widget,
 	     int        id,
@@ -459,6 +511,10 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
+			  pager);
+	g_signal_connect (G_OBJECT (pager->applet),
+			  "scroll-event",
+			  G_CALLBACK (applet_scroll),
 			  pager);
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_background",
