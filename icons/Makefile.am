@@ -14,4 +14,4 @@ icon_DATA =				\
 	gnome-main-menu.png		\
 	$(NULL)
 
-EXTRA_DIST = $(icon_DATA)
+EXTRA_DIST = $(icon_DATA) $(gegl_DATA)
