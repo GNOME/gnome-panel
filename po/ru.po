@@ -2,21 +2,23 @@
 # Max Valianskiy <maxcom@vinchi.ru>, 1998-1999
 # Sergey Panov <sipan@mit.edu>, 1999
 # Valek Filippov <frob@df.ru>, 2000-2002
-# Dmitry G. Mastrukov <dmitry@taurussoft.org>, 2002-2003
+# Dmitry G. Mastrukov <dmitry@taurussoft.org>, 2002-2004
 # Andrew W. Nosenko <awn@bcs.zp.ua>, 2003
 # Leonid Kanter <leon@asplinux.ru>, 2003
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-02-23 17:42+0000\n"
-"PO-Revision-Date: 2003-12-16 12:05+0300\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-26 16:32+0300\n"
+"PO-Revision-Date: 2003-02-26 16:35+0300\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -65,7 +67,7 @@ msgid "Accessories"
 msgstr "Стандартные"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2570
+#: applets/clock/clock.c:2554
 msgid "Clock"
 msgstr "Часы"
 
@@ -89,12 +91,12 @@ msgstr "%l:%M:%S %p"
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:1563
+#: applets/clock/clock.c:273 applets/clock/clock.c:1547
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #: applets/clock/clock.c:273 applets/clock/clock.c:624
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:1549
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -104,75 +106,74 @@ msgstr "%H:%M"
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:284
-#, fuzzy
 msgid "%a %b %e"
-msgstr "%a, %d %b"
+msgstr "%a, %e %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:291
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%2$s\n"
-"%1$s"
+"%1$s\n"
+"%2$s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%2$s, %1$s"
+msgstr "%1$s, %2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:415
 msgid "%A %B %d"
 msgstr "%A, %d %B"
 
-#: applets/clock/clock.c:839
+#: applets/clock/clock.c:841
 msgid "Tasks"
-msgstr ""
+msgstr "Задачи"
 
-#: applets/clock/clock.c:978
+#: applets/clock/clock.c:973
 msgid "All Day"
-msgstr ""
+msgstr "Весь день"
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:1007
 msgid "Appointments"
-msgstr ""
+msgstr "Встречи"
 
-#: applets/clock/clock.c:1245
+#: applets/clock/clock.c:1229
 msgid "Calendar"
 msgstr "Календарь"
 
-#: applets/clock/clock.c:1476
+#: applets/clock/clock.c:1460
 msgid "Computer Clock"
 msgstr "Компьютерные часы"
 
-#: applets/clock/clock.c:1558
+#: applets/clock/clock.c:1542
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1560
+#: applets/clock/clock.c:1544
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1600
+#: applets/clock/clock.c:1584
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1626
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Произошёл сбой при запуске программы установки часов: %s"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1665
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -180,7 +181,7 @@ msgstr ""
 "Произошёл сбой при попытке найти программу, устанавливающую дату и время.  "
 "Возможно, ни одна подобная программа не установлена?"
 
-#: applets/clock/clock.c:2159 applets/clock/clock.c:2516
+#: applets/clock/clock.c:2143 applets/clock/clock.c:2500
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -190,54 +191,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Произошла ошибка при отображении справки: %s"
 
-#: applets/clock/clock.c:2208
+#: applets/clock/clock.c:2192
 msgid "Clock Preferences"
 msgstr "Настройки апплета часов"
 
-#: applets/clock/clock.c:2244
+#: applets/clock/clock.c:2228
 msgid "Clock _type:"
 msgstr "_Тип часов:"
 
-#: applets/clock/clock.c:2255
+#: applets/clock/clock.c:2239
 msgid "12 hour"
 msgstr "12-часовые"
 
-#: applets/clock/clock.c:2263
+#: applets/clock/clock.c:2247
 msgid "24 hour"
 msgstr "24-часовые"
 
-#: applets/clock/clock.c:2271
+#: applets/clock/clock.c:2255
 msgid "UNIX time"
 msgstr "со временем Юникса (UNIX)"
 
-#: applets/clock/clock.c:2279
+#: applets/clock/clock.c:2263
 msgid "Internet time"
 msgstr "со временем Интернета"
 
-#: applets/clock/clock.c:2287
-#, fuzzy
+#: applets/clock/clock.c:2271
 msgid "Custom format"
-msgstr "Пользовательский значок"
+msgstr "Иной формат"
 
-#: applets/clock/clock.c:2303
-#, fuzzy
+#: applets/clock/clock.c:2287
 msgid "Custom _format:"
-msgstr "Формат часов"
+msgstr "Иной _формат:"
 
-#: applets/clock/clock.c:2320
+#: applets/clock/clock.c:2304
 msgid "Show _seconds"
 msgstr "Показывать се_кунды"
 
-#: applets/clock/clock.c:2329
+#: applets/clock/clock.c:2313
 msgid "Show _date"
 msgstr "Показывать _дату"
 
-#: applets/clock/clock.c:2338
+#: applets/clock/clock.c:2322
 msgid "Use _UTC"
 msgstr "Показывать время по _Гринвичу (UTC)"
 
 #. Translator credits
-#: applets/clock/clock.c:2551 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2535 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -250,7 +249,7 @@ msgstr ""
 "Андрей Носенко <awn@bcs.zp.ua>\n"
 "Леонид Кантер <leon@asplinux.ru>"
 
-#: applets/clock/clock.c:2572
+#: applets/clock/clock.c:2556
 msgid "The Clock displays the current time and date"
 msgstr "Апплет отображает текущие время и дату"
 
@@ -259,13 +258,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
 msgstr "24-часовые"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Иной формат часов"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -307,6 +305,9 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Использовать этот ключ в среде Гном версии 2.6  не рекомендуется. "
+"Предпочтительнее использовать ключ \"формат\". Данный ключ отсаётся только "
+"для совместимости с предыдущими версиями."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -314,6 +315,10 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Этот ключ определяет формат, используемый апплетом часов, когда ключ формата "
+"установлен в значение \"иной (custom)\". Можно использовать "
+"последовательности, понимаемые функцией strftime(), для достижения желаемого "
+"формата."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -326,6 +331,16 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Этот ключ определяет формат часов, используемый апплетом часов. Возможными "
+"значениями являются \"12-часовой (12-hour)\", \"24-часовой (24-hour)\", "
+"\"интернет (internet)\", \"(юникс) unix\" и \"иной (custom)\". Если этот "
+"ключ установлен в значение \"internet\", часы будут отображать время "
+"Интернета. В этой системе день делится на 1000 \"битов (.beats)\". Часовые "
+"пояса отсутствуют в этой системе, так что время одинаково во всём мире. Если "
+"ключ установлен в значение \"unix\", часы будут отображать время в секундах "
+"с начала \"Эпохи (Epoch)\", т.е 1.01.1970. Если ключ установлен в значение "
+"\"custom\", часы будут отображать время в соответствии с форматом, "
+"определённым ключом \"custom_format\"."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -399,16 +414,16 @@ msgstr ""
 "\"Рыбка по имени %s\" - совершенно бесполезный апплет. Он только занимает "
 "место на диске и увеличивает время компиляции. Также, будучи загруженным, он "
 "занимает место на панели и в памяти. Того, кто нашёл применение этому "
-"апплету, нужно отправить на психиатрическое обследование"
+"апплету, нужно отправить на психиатрическое обследование."
 
 #: applets/fish/fish.c:485
 msgid "(with minor help from George)"
 msgstr "(с минимальной помощью Джоржда)"
 
 #: applets/fish/fish.c:534
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "\"Рыбка по имени %s\" среды Гном, современный оракул"
+msgstr "\"Рыбка по имени %s\", современный оракул"
 
 #: applets/fish/fish.c:581
 msgid "Unable to get the name of the command to execute"
@@ -419,7 +434,7 @@ msgid "Unable to locate the command to execute"
 msgstr "Невозможно найти команду для выполнения"
 
 #: applets/fish/fish.c:626
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Рыбка по имени %s говорит:"
 
@@ -454,9 +469,9 @@ msgstr ""
 "(Посмотри, какое сегодня число)"
 
 #: applets/fish/fish.c:1437
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "Рыбка среды Гном, гадалка"
+msgstr "Рыбка по имени %s, гадалка"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -642,7 +657,6 @@ msgstr "Фабрика апплетов навигации между окнам
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
-#, fuzzy
 msgid "Window Selector"
 msgstr "Список окон"
 
@@ -686,11 +700,9 @@ msgstr ""
 "кнопки расчистки рабочего стола, либо оконный менеджер не запущен вовсе."
 
 #: applets/wncklet/window-list.c:822
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
-"Апплет показывает список всех видимых окон и позволяет переключаться между "
-"ними."
+"Апплет показывает список всех окон и позволяет переключаться между ними."
 
 #: applets/wncklet/window-list.glade.h:2
 msgid "<b>Restoring Minimized Windows</b>"
@@ -821,12 +833,10 @@ msgid "When to group windows"
 msgstr "Группировать ли окна"
 
 #: applets/wncklet/window-menu.c:138
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
-"Апплет показывает список всех видимых окон и позволяет переключаться между "
-"ними."
+"Апплет показывает список всех окон и позволяет переключаться между ними."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -837,9 +847,8 @@ msgid "No Windows Open"
 msgstr "Ни одно окно не открыто"
 
 #: applets/wncklet/window-menu.c:709
-#, fuzzy
 msgid "Tool to switch between windows"
-msgstr "Апплет переключения между открытыми окнами"
+msgstr "Апплет переключения между окнами"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:832
@@ -1150,32 +1159,31 @@ msgstr ""
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cснимок_экрана-%s.png"
+msgstr "снимок_экрана-%s.png"
 
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cснимок_экрана.png"
+msgstr "снимок_экрана.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cснимок_экрана-%s-%d.png"
+msgstr "снимок_экрана-%s-%d.png"
 
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cснимок_экрана-%d.png"
+msgstr "снимок_экрана-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1343,7 +1351,7 @@ msgstr "Принудительно завершить"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Принудительно завершить сбоящее приложение"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
@@ -1391,12 +1399,12 @@ msgstr ""
 #: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
-msgstr "Невозможно выполнить \"%s\""
+msgstr "Невозможно выполнить программу \"%s\""
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%2$s, %1$s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1529,18 +1537,18 @@ msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Заблокировать экран, чтобы можно было отойти от компьютера"
 
 #: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "Завершить сеанс"
+msgstr "Завершить сеанс для %s"
 
 #: gnome-panel/menu.c:3246
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to shut down "
 "your computer"
 msgstr ""
-"Завершить этот сеанс, чтобы войти как другой пользователь, или выключить "
-"компьютер"
+"Завершить этот сеанс для %s, чтобы войти как другой пользователь или "
+"выключить компьютер"
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
@@ -1607,18 +1615,18 @@ msgid ""
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
+"Похоже, апплет \"%s\" внезапно завершился.\n"
+"\n"
+"Перезагрузить этот апплет?"
 
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"Похоже, апплет \"%s\" внезапно рухнул\n"
 "\n"
-"Перезагрузить этот апплет?\n"
 "\n"
 "(Если вы решите не перезагружать его сейчас, апплет всегда можно добавить "
 "путём щелчка правой клавишей мыши на панели и выбором в появившемся меню "
@@ -1629,12 +1637,9 @@ msgid "D_on't Delete"
 msgstr "_Не удалять"
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"Обнаружилась проблема при загрузке апплета \"%s\"\n"
-"\n"
-"Удалить апплет из текущей конфигурации?"
+msgstr "Обнаружилась проблема при загрузке апплета \"%s\"."
 
 #: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
@@ -1642,13 +1647,12 @@ msgid "Details: %s"
 msgstr "Подробности: %s"
 
 #: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Обнаружилась проблема при загрузке апплета \"%s\"\n"
+"\n"
 "\n"
 "Удалить апплет из текущей конфигурации?"
 
@@ -1764,6 +1768,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Список идентификаторов апплетов (IID), которые панель будет игнорировать. "
+"Таким образом можно запретить загрузку некоторых апплетов или их отображение "
+"в меню. Например, чтобы запретить апплет командной строки необходимо "
+"добавить строку \"OAFIID:GNOME_MiniCommanderApplet\" к этому списку. Для "
+"получения эффекта панель необходимо перезапустить."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1772,7 +1781,7 @@ msgstr "Скорость анимации"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "Идентификаторы (IID) запрещённых апплетов"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -1780,25 +1789,23 @@ msgstr "Автоматически закрывать ящик"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "Полная блокировка панели"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
-msgstr "Подтвердите удаление панели"
+msgstr "Подтверждать удаление панели"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Принудительно завершить"
+msgstr "Отключить принудительное завершение"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Заблокировать экран"
+msgstr "Отключить блокирование экрана"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Отключить завершение сеанса"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1861,18 +1868,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Если этот ключ установлен, панель не будет позволять принудительно завершать "
+"приложение. Соответствующая кнопка будет недоступна."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Если этот ключ установлен, панель не будет позволять блокировать экран. "
+"Соответствующий пункт меню будет недоступен."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Если этот ключ установлен, панель не будет позволять завершать сеанс. "
+"Соответствующий пункт меню будет недоступен."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1880,6 +1893,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Если этот ключ установлен, панель не будет позволять производить изменения в "
+"конфигурации панели. Однако отдельные апплеты могут потребовать отдельной "
+"блокировки. Для достижения эффекта панель необходимо перезапустить."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1904,9 +1920,9 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Защитить компьютер от несанкционированного использования"
 
 #: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Покинуть рабочий стол среды Гном"
+msgstr "Покинуть рабочий стол пользователя %s"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -1926,10 +1942,10 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Если этот ключ установлен, то значение из custom_icon используется, как "
-"пользовательский значок для кнопки.  Если не установлен, то значение "
-"custom_icon будет проигнорировано.  Этот параметр имеет смысл только если "
-"object_type содержит значение \"menu-object\" или \"drawer-object\"."
+"Если этот ключ установлен, то значение из ключа custom_icon используется как "
+"пользовательский значок для кнопки. Если не установлен, то значение ключа "
+"custom_icon будет проигнорировано. Этот параметр имеет смысл, только если "
+"ключ object_type содержит значение \"menu-object\" или \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid ""
@@ -1937,10 +1953,10 @@ msgid ""
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
 msgstr ""
-"Если этот ключ установлен, то значение из menu_path используется, как путь, "
-"из которого будет сконструировано меню. Если не установлен, то значение "
-"menu_path будет проигнорировано.  Этот параметр имеет смысл только если "
-"object_type содержит значение \"menu-object\"."
+"Если этот ключ установлен, то значение из ключа menu_path используется как "
+"путь, из которого будет сконструировано меню. Если не установлен, то "
+"значение ключа menu_path будет проигнорировано.  Этот параметр имеет смысл "
+"только если ключ object_type содержит значение \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:6
 msgid ""
@@ -2055,14 +2071,13 @@ msgstr ""
 "левого (или верхнего для вертикальных панелей) края панели."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Текст, используемый в качестве всплывающей подсказки для данного ящика.  "
-"Этот параметр имеет смысл, только если object_type содержит \"drawer-object"
-"\"."
+"Текст, используемый в качестве подсказки для данного ящика. Этот параметр "
+"имеет смысл, только если ключ object_type имеет значение  \"drawer-object\" "
+"или \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2074,9 +2089,8 @@ msgstr ""
 "\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" и \"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Всплывающая подсказка для ящика"
+msgstr "Всплывающая подсказка для ящика или меню"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2214,32 +2228,28 @@ msgid "_Autohide"
 msgstr "Автосокр_ытие"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "Значок"
+msgstr "З_начок:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Имя"
+msgstr "_Имя:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
 msgstr "_Нет (используется общесистемная тема)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Ориентация:"
+msgstr "_Ориентация:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "Мас_штабировать"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Size:"
-msgstr "Размер:"
+msgstr "_Размер:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "_Tile"
@@ -2267,7 +2277,7 @@ msgstr "Произошла неизвестная ошибка при попыт
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Недавно использововашиеся документы"
 
 #: gnome-panel/panel-run-dialog.c:285
 #, c-format
@@ -2282,7 +2292,7 @@ msgstr "Не удаётся отобразить адрес '%s'"
 #: gnome-panel/panel-run-dialog.c:363
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "Невозможно сконвертировать \"%s\" из UTF-8"
 
 #: gnome-panel/panel-run-dialog.c:1041
 msgid "Choose a file to append to the command..."
@@ -2380,9 +2390,8 @@ msgid "_Force quit"
 msgstr "_Принудительно завершить"
 
 #: gnome-panel/panel-toplevel.c:1107
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Задержка сокрытия"
+msgstr "Скрыть панель"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2784,14 +2793,12 @@ msgid "X co-ordinate of panel"
 msgstr "X-координата панели"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "Панель экрана Х включена"
+msgstr "Экран в системе Икс (Х), где панель будет отображена"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "Панель монитора Xinerama включена"
+msgstr "Монитора в расширении Xinerama, где панель будет отображена"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
@@ -2870,9 +2877,8 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Изменяет размеры подсказки так, чтобы они были приемлемы для апплета"
 
 #: libpanel-applet/panel-applet.c:1132
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "Указание на ориентацию панели"
+msgstr "Панель, содержащая апплет, заблокирована"
 
 #: libpanel-applet/panel-test-applets.c:33
 msgid "Specify an applet IID to load"
@@ -3434,7 +3440,3 @@ msgstr "Сверхмаленькая"
 
 #~ msgid "The desired ButtonWidget size"
 #~ msgstr "Желаемый размер кнопки"
-
-# FIXME: awn@bcs.zp.ua: что это???
-#~ msgid "      "
-#~ msgstr "      "
