@@ -203,7 +203,14 @@ gnome_desktop_item_edit_LDADD = 	\
 	-lpopt
 
 gnome_panel_screenshot_SOURCES = \
-	gnome-panel-screenshot.c
+	gnome-panel-screenshot.c	\
+	screenshot-shadow.c		\
+	screenshot-shadow.h		\
+	screenshot-utils.c		\
+	screenshot-utils.h		\
+	screenshot-save.c		\
+	screenshot-save.h		\
+	$(NULL)
 
 gnome_panel_screenshot_LDFLAGS = -export-dynamic
 

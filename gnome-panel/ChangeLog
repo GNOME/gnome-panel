@@ -1,3 +1,14 @@
+Fri Oct 22 15:32:15 2004  Jonathan Blandford  <jrb@redhat.com>
+
+	* gnome-panel-screenshot.c: Big refactor of the code.  Split out
+	various functions into other files to get gnome-panel-screenshot.c
+	down from 1700 lines.  Additionally:
+	- Removed cut-n-paste of gdk_pixbuf_save(), #148369
+	- Added tentative drop-shadow support.  It's slow so it's off by
+	default, #148367
+	- Better async support.  We shouldn't leak temporary files
+	anymore.
+
 2004-10-21  Anders Carlsson  <andersca@gnome.org>
 
 	* gnome-panel-screenshot.c: (add_file_to_path),
