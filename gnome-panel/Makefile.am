@@ -1,8 +1,3 @@
-## Process this file with automake to produce Makefile.in.
-# CFLAGS += -Wall  \
-# 	            -Wpointer-arith  	\
-# 	-Wmissing-prototypes -Wmissing-declarations 
-
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
 
@@ -42,9 +37,6 @@ CORBA_SRCLIST = \
 	gnome-panel-skels.c	\
 	gnome-panel-common.c	\
 	gnome-panel.h
-
-# try to make these get cleaned properly
-CLEANFILES += $(CORBA_SRCLIST)
 
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) -I $(BONOBO_IDLDIR) $(top_srcdir)/idl/gnome-panel.idl
@@ -206,8 +198,6 @@ panel_2_LDADD=\
 
 panel_2_LDFLAGS=-export-dynamic
 
-MAINTAINERCLEANFILES = $(CORBA_SRCLIST)
-
 EXTRA_DIST = \
 	APPLET_WRITING			\
 	panel.server.in			\
@@ -280,3 +270,8 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_headers)
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc
+
+CLEANFILES    = $(BUILT_SOURCES)
+
+dist-hook:
+	cd $(distdir) ; rm -f $(CLEANFILES)
