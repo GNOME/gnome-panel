@@ -67,11 +67,27 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 			  GdkEvent *event,
 			  gpointer data)
 {
-	if(((XEvent *)gdk_xevent)->type != KeyRelease)
+	XEvent *xevent = (XEvent *)gdk_xevent;
+	guint keycode, state;
+	guint menu_keycode, menu_state;
+	guint run_keycode, run_state;
+
+	if(xevent->type != KeyRelease)
 		return GDK_FILTER_CONTINUE;
 
-	if(event->key.keyval == global_config.menu_keysym &&
-	   event->key.state == global_config.menu_state) {
+	keycode = xevent->xkey.keycode;
+	state = xevent->xkey.state;
+
+	menu_keycode = XKeysymToKeycode (GDK_DISPLAY (),
+					 global_config.menu_keysym);
+	menu_state = global_config.menu_state;
+
+	run_keycode = XKeysymToKeycode (GDK_DISPLAY (),
+					global_config.run_keysym);
+	run_state = global_config.run_state;
+
+	if (keycode == menu_keycode &&
+	    state == menu_state) {
 		PanelWidget *panel;
 		GtkWidget *menu, *basep;
 		/* check if anybody else has a grab */
@@ -93,8 +109,8 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		gtk_menu_popup (GTK_MENU (menu), NULL, NULL,
 				NULL, NULL, 0, GDK_CURRENT_TIME);
 		return GDK_FILTER_REMOVE;
-	} else if(event->key.keyval == global_config.run_keysym &&
-		  event->key.state == global_config.run_state) {
+	} else if (keycode == run_keycode &&
+		   state == run_state) {
 		/* check if anybody else has a grab */
 		if (gdk_pointer_grab (GDK_ROOT_PARENT(), FALSE, 
 				      0, NULL, NULL, GDK_CURRENT_TIME)
