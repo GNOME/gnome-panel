@@ -253,6 +253,7 @@ show_about_dialog (GtkWidget *menuitem)
 	char             *authors [] = {
 		"Alex Larsson (alexl@redhat.com)",
 		"Anders Carlsson (andersca@gnu.org)",
+		"Arvind Samptur (arvind.samptur@wipro.com)",
 		"Darin Adler (darin@bentspoon.com)",
 		"Elliot Lee (sopwith@redhat.com)",
 		"Federico Mena (quartic@gimp.org)",
@@ -269,6 +270,7 @@ show_about_dialog (GtkWidget *menuitem)
 		"Seth Nickell (snickell@stanford.edu)",
 		"Stephen Browne (stephen.browne@sun.com)",
 		"Tom Tromey (tromey@cygnus.com)",
+		"Vincent Untz (vincent@vuntz.net)",
 		N_("And many, many others..."),
 		NULL
 	};
