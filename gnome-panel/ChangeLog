@@ -1,3 +1,8 @@
+2001-02-11  Julian Missig  <julian@jabber.org>
+
+	* status.c: (load_status_applet): I had set the wrong object for the
+	gtk_signal_connect_after if the fixed container existed.
+
 Fri Feb 09 21:44:41 2001  George Lebl <jirka@5z.com>
 
 	* session.c, extern.c: int->gboolean cleanup, and increase cookie
