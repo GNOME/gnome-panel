@@ -858,7 +858,7 @@ add_applet (GtkWidget *w, char *item_loc)
 		g_warning(_("Can't get goad_id from desktop entry!"));
 		return;
 	}
-	load_extern_applet(goad_id,NULL,current_panel,0);
+	load_extern_applet(goad_id,NULL,current_panel,0,FALSE);
 
 	g_free(goad_id);
 }

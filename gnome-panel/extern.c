@@ -39,8 +39,6 @@ extern GlobalConfig global_config;
 extern char *panel_cfg_path;
 extern char *old_panel_cfg_path;
 
-static GList *extern_applets = NULL;
-
 /********************* CORBA Stuff *******************/
 
 CORBA_ORB orb = NULL;
@@ -198,8 +196,6 @@ extern_clean(Extern *ext)
 	CORBA_Environment ev;
 	CORBA_exception_init(&ev);
 
-	extern_applets = g_list_remove(extern_applets,ext);
-
 	g_free(ext->goad_id);
 	g_free(ext->cfg);
 
@@ -265,7 +261,7 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 }
 
 void
-load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
+load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, int queue)
 {
 	Extern *ext;
 	POA_GNOME_PanelSpot *panelspot_servant;
@@ -278,6 +274,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 		cfgpath = g_strdup(cfgpath);
 	
 	ext = g_new(Extern,1);
+	ext->started = FALSE;
 
 	panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 	panelspot_servant->_private = NULL;
@@ -292,7 +289,6 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 	ext->applet = CORBA_OBJECT_NIL;
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = cfgpath;
-	extern_applets = g_list_prepend(extern_applets,ext);
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
 		g_warning("Whoops! for some reason we can't add "
@@ -301,7 +297,27 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 		return;
 	}
 
-	extern_start_new_goad_id(ext);
+	if(!queue) {
+		extern_start_new_goad_id(ext);
+		ext->started = TRUE;
+	}
+}
+
+void
+load_queued_externs(void)
+{
+	GSList *li;
+	for(li=applets;li!=NULL;li=g_slist_next(li)) {
+		AppletInfo *info = li->data;
+		if(info->type == APPLET_EXTERN_PENDING ||
+		   info->type == APPLET_EXTERN_RESERVED) {
+			Extern *ext = info->data;
+			if(!ext->started) {
+				extern_start_new_goad_id(ext);
+				ext->started = TRUE;
+			}
+		}
+	}
 }
 
 /********************* CORBA Stuff *******************/
@@ -395,7 +411,6 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	ext->applet = CORBA_Object_duplicate(panel_applet, ev);
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = NULL;
-	extern_applets = g_list_prepend(extern_applets,ext);
 
 	/*select the nth panel*/
 	if(panel)

@@ -971,7 +971,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		int pos = panel_widget_get_cursorloc(panel);
 		char *goad_id = (char *)selection_data->data;
 
-		load_extern_applet(goad_id,NULL,panel,pos);
+		load_extern_applet(goad_id,NULL,panel,pos,FALSE);
 		break;
 	}
 	}

@@ -37,6 +37,9 @@ char *old_panel_cfg_path=NULL;
 /*list of all panel widgets created*/
 extern GSList *panel_list;
 
+/*add applets to this queue on startup to avoid races*/
+static GSList *applets_to_start = NULL;
+
 /*send the tooltips state to all external applets*/
 static void
 send_tooltips_state(int enabled)
@@ -710,7 +713,7 @@ load_default_applets(void)
 	}
 
 	load_extern_applet("gen_util_clock",NULL,
-			   panels->data,INT_MAX/2/*right flush*/);
+			   panels->data,INT_MAX/2/*right flush*/,TRUE);
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/
 	need_complete_save = TRUE;
@@ -771,7 +774,7 @@ init_user_applets(void)
 				  applet when it loads*/
 				g_string_sprintf(buf,"%sApplet_%d_Extern/",
 						 old_panel_cfg_path,num);
-				load_extern_applet(goad_id,buf->str,panel,pos);
+				load_extern_applet(goad_id,buf->str,panel,pos,TRUE);
 			}
 			g_free(goad_id);
 		} else if(strcmp(applet_name,LAUNCHER_ID) == 0) { 

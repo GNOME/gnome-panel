@@ -192,6 +192,10 @@ main(int argc, char **argv)
 
 	gtk_timeout_add(10*1000,menu_age_timeout,NULL);
 	
+	/*load these as the last thing to prevent some races any races from
+	  starting multiple goad_id's at once are libgnorba's problem*/
+	load_queued_externs();
+	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();
 
