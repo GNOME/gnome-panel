@@ -1,3 +1,9 @@
+Mon May 31 20:34:49 1999  George Lebl  <jirka@5z.com>
+
+	* session.c: took out debugging printf's and make extern applet
+	  be empty at first so that we don't get unknowns if an applet
+	  timed out in a previous session
+
 Mon May 31 20:29:30 1999  George Lebl  <jirka@5z.com>
 
 	* session.c,extern.c: on exit, we timeout after 1.5 sec, and then

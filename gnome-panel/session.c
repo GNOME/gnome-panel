@@ -190,6 +190,9 @@ session_save_timeout(gpointer data)
 {
 	int cookie = GPOINTER_TO_INT(data);
 	if(cookie == ss_cookie) {
+#ifdef PANEL_DEBUG	
+		printf("SAVE TIMEOUT (%u)\n",ss_cookie);
+#endif
 		if(ss_interactive) {
 			ss_timeout_dlg =
 				gnome_message_box_new(_("An applet is not "
@@ -232,7 +235,9 @@ send_applet_session_save (AppletInfo *info,
 	/*new unique cookie*/
 	ss_cookie++;
 	
+#ifdef PANEL_DEBUG	
 	printf("SENDING_SESSION_SAVE (%u)\n",ss_cookie);
+#endif
 
 	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER(ss_cookie));
 
@@ -304,12 +309,14 @@ save_applet_configuration(AppletInfo *info)
 			g_string_sprintf(buf, "%sApplet_%d_Extern/",
 					 panel_cfg_path, info->applet_id+1);
 			gnome_config_clean_file(buf->str);
+			/*just in case the applet times out*/
+			gnome_config_set_string("id", EMPTY_ID);
+			gnome_config_pop_prefix();
 			gnome_config_sync();
 			/*have the applet do it's own session saving*/
 			send_applet_session_save(info,ext->applet,
 						 buf->str, globalcfg);
 			g_free(globalcfg);
-			gnome_config_pop_prefix();
 			return FALSE; /*here we'll wait for done_session_save*/
 		}
 	case APPLET_DRAWER: 
@@ -697,7 +704,6 @@ panel_session_die (GnomeClient *client,
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
-	puts("WE JUST DIED");
 	gtk_main_quit();
 	return TRUE;
 }
