@@ -84,7 +84,8 @@ update_config_edge (BasePWidget *panel)
 
 	ppc = get_config_struct (GTK_WIDGET (panel));
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	g_return_if_fail (IS_BORDER_WIDGET (panel));
@@ -106,7 +107,8 @@ update_config_floating_pos (BasePWidget *panel)
 
 	ppc = get_config_struct (GTK_WIDGET (panel));
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->x_spin),
@@ -131,7 +133,8 @@ update_config_floating_pos_limits (BasePWidget *panel)
 	widget = GTK_WIDGET (panel);
 	ppc = get_config_struct (widget);
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	xlimit = gdk_screen_width() - widget->allocation.width;
@@ -166,7 +169,8 @@ update_config_floating_orient (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	toggle = (PANEL_WIDGET (panel->panel)->orient == PANEL_HORIZONTAL)
@@ -182,7 +186,8 @@ update_config_avoid_on_maximize (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	toggle = ppc->avoid_on_maximize_button;
@@ -203,7 +208,8 @@ update_config_mode (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	toggle = ppc->autohide_button;
@@ -224,7 +230,8 @@ update_config_hidebuttons (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
 	GtkWidget *toggle;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	toggle = ppc->hidebuttons_button;
@@ -258,8 +265,10 @@ update_config_size (GtkWidget *panel)
 	PanelWidget *p;
 	GtkWidget *menuitem;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
+
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 	switch(p->sz) {
 	case SIZE_ULTRA_TINY:
@@ -298,7 +307,8 @@ update_config_level (BasePWidget *panel)
 	int i;
 	GtkWidget *menuitem;
 
-	if (ppc == NULL)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	switch (panel->level) {
@@ -336,7 +346,8 @@ update_config_back (PanelWidget *pw)
 
 	ppc = get_config_struct (pw->panel_parent);
 
-	if(!ppc)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	switch(pw->back_type) {
@@ -378,7 +389,8 @@ update_config_anchor (BasePWidget *w)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
-	if(!ppc)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 	
 	ppc->align = SLIDING_POS (w->pos)->anchor;
@@ -392,7 +404,8 @@ update_config_offset (BasePWidget *w)
 
 	g_return_if_fail (IS_SLIDING_WIDGET (w));
 
-	if(!ppc)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->offset_spin),
@@ -406,7 +419,9 @@ update_config_offset_limit (BasePWidget *panel)
 	PerPanelConfig *ppc = get_config_struct (widget);
 	int range, val;
 	GtkAdjustment *adj;
-	if(!ppc)
+
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	if(ppc->edge == BORDER_LEFT || ppc->edge == BORDER_RIGHT)
@@ -432,7 +447,8 @@ update_config_align (BasePWidget *w)
 	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
 	g_return_if_fail (IS_ALIGNED_WIDGET (w));
 
-	if(!ppc)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	if (ppc->align == ALIGNED_POS (w->pos)->align)
@@ -458,7 +474,11 @@ config_destroy(GtkWidget *widget, gpointer data)
 static void
 config_apply (PerPanelConfig *ppc)
 {
-	panel_freeze_changes(PANEL_WIDGET(BASEP_WIDGET(ppc->panel)->panel));
+	/* don't update selves, all changes coming from ME */
+	ppc->ppc_origin_change = TRUE;
+
+	panel_freeze_changes (PANEL_WIDGET (BASEP_WIDGET (ppc->panel)->panel));
+
 	if(IS_EDGE_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
 					    ppc->edge,
@@ -546,7 +566,11 @@ config_apply (PerPanelConfig *ppc)
 					    &ppc->back_color);
 	}
 
-	panel_thaw_changes(PANEL_WIDGET(BASEP_WIDGET(ppc->panel)->panel));
+	panel_thaw_changes (PANEL_WIDGET (BASEP_WIDGET (ppc->panel)->panel));
+
+	/* start registering changes again */
+	ppc->ppc_origin_change = FALSE;
+
 	gtk_widget_queue_draw (ppc->panel);
 }
 
@@ -1626,7 +1650,8 @@ update_config_type (BasePWidget *w)
 	int i,j;
 	GtkWidget *page;
 
-	if(!ppc)
+	if (ppc == NULL ||
+	    ppc->ppc_origin_changes)
 		return;
 
 	g_return_if_fail(ppc->type_tab);
@@ -1713,6 +1738,7 @@ panel_config(GtkWidget *panel)
 	ppconfigs = g_list_prepend(ppconfigs, ppc);
 	ppc->register_changes = FALSE; /*don't notify property box of changes
 					 until everything is all set up*/
+	ppc->ppc_origin_change = FALSE; /* default state */
 
 	ppc->sz = pw->sz;
 	ppc->level = basep->level;

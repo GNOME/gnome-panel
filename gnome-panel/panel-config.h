@@ -48,6 +48,11 @@ struct _PerPanelConfig {
 	GdkColor		back_color;
 	
 	gboolean		register_changes; /*used for startup*/
+	gboolean		ppc_origin_change; /* if true then the dialog
+						      will NOT be updated on changes,
+						      so that we don't get into infinite
+						      loops, set before we ourselves
+						      apply changes. */
 	GtkWidget		*config_window;
 	GtkWidget		*type_tab; /* the type specific tab of
 					      the notebook, this is just
