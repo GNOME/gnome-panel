@@ -94,105 +94,6 @@ transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 
 #include "nothing.cP"
 
-static GtkWidget *grab_dialog;
-
-static gboolean 
-is_modifier (guint keycode)
-{
-	gint i;
-	gint map_size;
-	XModifierKeymap *mod_keymap;
-	gboolean retval = FALSE;
-
-	mod_keymap = XGetModifierMapping (gdk_display);
-
-	map_size = 8 * mod_keymap->max_keypermod;
-	i = 0;
-	while (i < map_size) {
-		
-		if (keycode == mod_keymap->modifiermap[i]) {
-			retval = TRUE;
-			break;
-		}
-		++i;
-	}
-
-	XFreeModifiermap (mod_keymap);
-
-	return retval;
-}
-
-static GdkFilterReturn
-grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
-{
-	XEvent *xevent = (XEvent *)gdk_xevent;
-	GtkEntry *entry;
-	char *key;
-	guint keycode, state;
-	char buf[10];
-	KeySym keysym;
-
-	if (xevent->type != KeyPress && xevent->type != KeyRelease)
-		return GDK_FILTER_CONTINUE;
-	
-	entry = GTK_ENTRY (data);
-
-	keycode = xevent->xkey.keycode;
-
-	if (is_modifier (keycode))
-		return GDK_FILTER_CONTINUE;
-
-	state = xevent->xkey.state & USED_MODS;
-
-	XLookupString (&xevent->xkey, buf, 0, &keysym, NULL);
-  
-	key = convert_keysym_state_to_string (keysym,
-					      state);
-
-	gtk_entry_set_text (entry, key != NULL ? key : "");
-	g_free (key);
-
-	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
-	gtk_widget_destroy (grab_dialog);
-	gdk_window_remove_filter (gdk_get_default_root_window (),
-				  grab_key_filter, data);
-
-	return GDK_FILTER_REMOVE;
-}
-
-static void
-grab_button_pressed (GtkButton *button, gpointer data)
-{
-	GtkWidget *frame;
-	GtkWidget *box;
-	GtkWidget *label;
-	grab_dialog = gtk_window_new (GTK_WINDOW_POPUP);
-
-	gdk_keyboard_grab (gdk_get_default_root_window (), FALSE, GDK_CURRENT_TIME);
-	gdk_window_add_filter (gdk_get_default_root_window (), grab_key_filter, data);
-
-	g_object_set (G_OBJECT (grab_dialog),
-		      "allow_grow", FALSE,
-		      "allow_shrink", FALSE,
-		      "resizable", FALSE,
-		      NULL);
-	gtk_window_set_position (GTK_WINDOW (grab_dialog), GTK_WIN_POS_CENTER);
-	gtk_window_set_modal (GTK_WINDOW (grab_dialog), TRUE);
-
-	frame = gtk_frame_new (NULL);
-	gtk_container_add (GTK_CONTAINER (grab_dialog), frame);
-
-	box = gtk_hbox_new (0, 0);
-	gtk_container_set_border_width (GTK_CONTAINER (box), 20);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-
-	label = gtk_label_new (_("Press a key..."));
-	gtk_container_add (GTK_CONTAINER (box), label);
-	
-	gtk_widget_show_all (grab_dialog);
-	return;
-}
-
 static void
 update_sensitive_for_checkbox (char *key,
 			       int   checked)
@@ -247,25 +148,12 @@ option_menu_changed (GtkWidget *widget,
 }
 
 static void
-entry_changed (GtkWidget *widget,
-	       char      *key)
-{
-	const char *full_key;
-
-	full_key = panel_gconf_global_key (key);
-
-        gconf_client_set_string (gconf_client, full_key,
-				 gtk_entry_get_text (GTK_ENTRY (widget)), NULL);
-}
-
-static void
 load_checkboxes (void)
 {
 	static char *checkboxes [] = {
 		"drawer_autoclose",
 		"auto_raise_panel",
         	"enable_animations",
-		"enable_key_bindings",
 		NULL
 	};
 	int i;
@@ -324,53 +212,18 @@ load_option_menus (void)
 }
 
 static void
-load_key_bindings (void)
-{
-        char *entries [] = {
-		"menu_key",
-		"run_key",
-		NULL
-	};
-        int i;
-
-	for (i = 0; entries [i]; i++) {
-                GtkWidget  *entry;
-                GtkWidget  *button;
-		const char *key;
-		char       *button_name;
-
-                entry = glade_xml_get_widget (glade_gui, entries[i]);
-
-        	key = panel_gconf_global_key (entries [i]);
-
-		gtk_entry_set_text (GTK_ENTRY (entry),
-				    gconf_client_get_string (gconf_client, key, NULL));
-
-		button_name = g_strdup_printf ("grab-%s", entries [i]);
-		button = glade_xml_get_widget (glade_gui, button_name);
-                g_free (button_name);
-
-                g_signal_connect (button, "clicked",
-				  G_CALLBACK (grab_button_pressed), entry);
-
-        	g_signal_connect (entry, "changed",
-				  G_CALLBACK (entry_changed), entries [i]);
-        }
-}
-
-static void
 load_config_into_gui (void)
 {
 	load_checkboxes ();
 	load_option_menus ();
-	load_key_bindings ();
 }
 
 static void
 setup_the_ui(GtkWidget *main_window)
 {
 	gchar *glade_file;
-	GtkWidget *notebook;
+	GtkWidget *widget;
+	gchar *icon_name;
 
 	glade_file = GLADEDIR "/gnome-panel-properties.glade2";
 
@@ -381,15 +234,34 @@ setup_the_ui(GtkWidget *main_window)
 	}
 	glade_xml_signal_autoconnect(glade_gui);
 
-	notebook=glade_xml_get_widget(glade_gui,"main_notebook");
+	widget = glade_xml_get_widget(glade_gui,"main_notebook");
 
-	g_signal_connect (G_OBJECT (notebook), "event",
+	g_signal_connect (G_OBJECT (widget), "event",
                           G_CALLBACK (config_event),
-                          notebook);
+                          widget);
 
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(main_window)->vbox),notebook,
-		TRUE,TRUE,0);
-
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(main_window)->vbox),widget,
+			   TRUE,TRUE,0);
+#if 0
+	icon_name = gnome_program_locate_file (NULL,
+					       GNOME_FILE_DOMAIN_PIXMAP,
+					       "gnome-panel.png",
+					       TRUE,
+					       NULL);
+	/* FIXME: I really don't like the icon.  If we can get another one, we
+	 * can put this back. */
+	g_free (icon_name);
+#endif
+	icon_name = NULL;
+		
+	if (icon_name == NULL) {
+		widget = glade_xml_get_widget(glade_gui, "icon_vbox");
+		gtk_widget_hide (widget);
+	} else {
+		widget = glade_xml_get_widget(glade_gui, "panel_icon");
+		gtk_image_set_from_file (GTK_IMAGE (widget), icon_name);
+		g_free (icon_name);
+	}
 	load_config_into_gui();
 }
 
@@ -421,7 +293,7 @@ main (int argc, char **argv)
 		GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
 
   	main_window = gtk_dialog_new();
-
+	g_object_set (G_OBJECT (main_window), "has-separator", FALSE, NULL);
 	gtk_dialog_add_button (GTK_DIALOG(main_window),
 		GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
@@ -467,7 +339,7 @@ main (int argc, char **argv)
 		g_free (panel_icon);
 	}
 
-	gtk_widget_show_all(main_window);
+	gtk_widget_show(main_window);
 
 	gtk_main();
 

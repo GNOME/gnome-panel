@@ -218,6 +218,10 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 		gtk_widget_show(goat_darea);
 		goat_timeout = g_timeout_add(60,goat_timeout_func,NULL);
 		/*the GEGL shall not be translated*/
+		g_object_set (G_OBJECT (nbook),
+			      "show_tabs", TRUE,
+			      "show_border", TRUE,
+			      NULL);
 		gtk_notebook_append_page (nbook, goat_darea,
 					  gtk_label_new ("GEGL"));
 		gtk_notebook_set_current_page(nbook,-1);
