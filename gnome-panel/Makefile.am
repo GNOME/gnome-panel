@@ -8,11 +8,11 @@ AUTOMAKE_OPTIONS = 1.2f
 # maybe someone will fix it up)
 CFLAGS += -D_SWALLOW_
 
-#CXX = mico-c++
+CXX = mico-c++
 ## We set this to force the values in mico-c++ to be used.  Otherwise,
 ## on Linux boxes, the compilation will fail with the default
 ## CXXFLAGS.
-#CXXFLAGS =
+CXXFLAGS =
 
 test:
 	echo $(CXXCOMPILE)
