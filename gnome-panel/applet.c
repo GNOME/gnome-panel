@@ -749,8 +749,6 @@ static GSList *panel_applets_to_load = NULL;
 static void
 whack_applet_to_load (PanelAppletToLoad *applet)
 {
-	applet->panel_widget = NULL;
-
 	if (applet->destroy_handler > 0)
 		g_signal_handler_disconnect (applet->panel_widget,
 					     applet->destroy_handler);

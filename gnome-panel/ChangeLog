@@ -1,5 +1,11 @@
 2002-05-22  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (whack_applet_to_load): kill setting
+	panel_widget to NULL, just before we try and
+	use it ...
+
+2002-05-22  Mark McLoughlin  <mark@skynet.ie>
+
 	Kill broken status dock. Will be replaced by a
 	system tray (see freedesktop.org) impl beyond 2.0
 
