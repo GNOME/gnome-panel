@@ -1,3 +1,19 @@
+2004-07-27  Federico Mena Quintero  <federico@ximian.com>
+
+	Fixes #148808:
+
+	* gnome-panel/egg-recent-item.c
+	(egg_recent_item_get_short_name): New public function; computes a
+	valid UTF-8 string to display in a menu or list for the item's name.
+	(make_valid_utf8): New helper function.
+
+	* gnome-panel/egg-recent-item.h: Add prototype for
+	egg_recent_item_get_short_name().
+
+	* gnome-panel/egg-recent-view-gtk.c
+	(egg_recent_view_gtk_new_menu_item): Use
+	egg_recent_item_get_short_name().
+
 2004-07-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* configure.in: post-release bump to 2.7.5.
