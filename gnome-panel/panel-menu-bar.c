@@ -305,6 +305,8 @@ panel_menu_bar_load (PanelWidget *panel,
 
 	panel_applet_add_callback (
 		menubar->priv->info, "help", GTK_STOCK_HELP, _("_Help"));
+
+	panel_widget_set_applet_expandable (panel, GTK_WIDGET (menubar), FALSE, TRUE);
 }
 
 void
