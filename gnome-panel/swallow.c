@@ -16,6 +16,8 @@
 #include <gdk/gdkx.h>
 #include <X11/Xlib.h>
 
+#include <gnome-desktop/gnome-ditem.h>
+
 #include "panel-include.h"
 #include "panel-widget.h"
 
@@ -52,9 +54,10 @@ socket_realized (GtkWidget *w, gpointer data)
 static void
 swallow_launch (Swallow *swallow)
 {
+#ifdef FIXME
 	if ( ! string_empty (swallow->path)) {
 		char *p = strrchr (swallow->path, '.');
-		GnomeDestkopItem *item;
+		GnomeDesktopItem *item;
 
 		/*only if such a file exists and ends in a .desktop, should
 		  we try to launch it as such*/
@@ -75,11 +78,13 @@ swallow_launch (Swallow *swallow)
 			gnome_execute_shell (g_get_home_dir (), swallow->path);
 		}
 	}
+#endif
 }
 
 static gboolean
 before_remove (Swallow *swallow)
 {
+#ifdef FIXME
 	GtkWidget *dlg;
 
 	if (swallow->clean_remove)
@@ -128,6 +133,7 @@ before_remove (Swallow *swallow)
 		
 		return FALSE;
 	}
+#endif
 
 	return TRUE;
 }
@@ -220,6 +226,7 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 void
 ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 {
+#ifdef FIXME
 	GtkWidget *d;
 	
 	GtkWidget *title_e;
@@ -305,6 +312,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 
 	gtk_widget_show_all (d);
 	panel_set_dialog_layer (d);
+#endif
 }
 
 static int
@@ -323,7 +331,7 @@ ignore_1st_click(GtkWidget *widget, GdkEvent *event)
 }
 
 static Swallow *
-create_swallow_applet(char *title, char *path, int width, int height, SwallowOrient orient)
+create_swallow_applet(const char *title, const char *path, int width, int height, SwallowOrient orient)
 {
 	Swallow *swallow;
 	
@@ -402,7 +410,7 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 }
 
 void
-load_swallow_applet (char *path, char *params, int width, int height,
+load_swallow_applet (const char *path, const char *params, int width, int height,
 		     PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Swallow *swallow;
@@ -422,7 +430,7 @@ load_swallow_applet (char *path, char *params, int width, int height,
 	swallow->clean_remove = FALSE;
 
 	applet_add_callback (applets_last->data, "help",
-			     GNOME_STOCK_PIXMAP_HELP,
+			     GTK_STOCK_HELP,
 			     _("Help"));
 
 	swallow_launch (swallow);

@@ -169,6 +169,12 @@ panel_temp_SOURCES=\
 	menu-rh.h  		\
 	menu-fentry.c  		\
 	menu-fentry.h  		\
+	swallow.c  		\
+	swallow.h  		\
+	scroll-menu.h		\
+	scroll-menu.c		\
+	menu-properties.c	\
+	menu-properties.h	\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -177,18 +183,12 @@ panel_temp_LDADD=\
 
 panel_SOURCES=\
 	things-will-not-compile-below-this-line		\
-	menu-properties.c	\
-	menu-properties.h	\
 	launcher.c		\
 	launcher.h		\
 	extern.c  		\
 	extern.h  		\
-	swallow.c  		\
-	swallow.h  		\
 	gnome-run.c		\
 	gnome-run.h		\
-	scroll-menu.h		\
-	scroll-menu.c		\
 	icon-entry-hack.c	\
 	icon-entry-hack.h
 

@@ -91,9 +91,10 @@ get_pixmap(const char *menudir, gboolean main_menu)
 	char *pixmap_name = NULL;
 	if (main_menu) {
 		pixmap_name = gnome_unconditional_pixmap_file("gnome-logo-icon-transparent.png");
+#ifdef FIXME
 	} else {
 		char *dentry_name;
-		GnomeDesktopEntry *item_info;
+		GnomeDesktopItem *item_info;
 
 		dentry_name = g_concat_dir_and_file (menudir,
 						     ".directory");
@@ -108,6 +109,7 @@ get_pixmap(const char *menudir, gboolean main_menu)
 
 		if (item_info)
 			gnome_desktop_entry_free(item_info);
+#endif
 	}
 	return pixmap_name;
 }
@@ -139,6 +141,7 @@ got_gmenu (void)
 static void
 properties_apply_callback (Menu *menu)
 {
+#ifdef FIXME
 	char *s;
 	gboolean bool;
 	gboolean change_icon = FALSE;
@@ -295,6 +298,7 @@ properties_apply_callback (Menu *menu)
 		button_widget_set_pixmap(BUTTON_WIDGET(menu->button),
 					 pixmap_name, -1);
 	}
+#endif
 }
 
 static void
@@ -424,6 +428,7 @@ add_menu_type_options(Menu *menu, GtkObject *dialog, GtkTable *table, int row,
 static void
 dialog_clicked (GtkWidget *widget, int button, gpointer data)
 {
+#ifdef FIXME
 	Menu *menu = data;
 
 	if (button == 0 /* close */) {
@@ -434,11 +439,13 @@ dialog_clicked (GtkWidget *widget, int button, gpointer data)
 		else
 			panel_show_help ("menus.html");
 	}
+#endif
 }
 
 static GtkWidget *
 create_properties_dialog(Menu *menu)
 {
+#ifdef FIXME
 	GtkWidget *dialog, *notebook;
 	GtkWidget *vbox;
 	GtkWidget *box;
@@ -659,6 +666,9 @@ create_properties_dialog(Menu *menu)
 			    menu);
 
 	return dialog;
+#else
+	return NULL;
+#endif
 }
 
 void
