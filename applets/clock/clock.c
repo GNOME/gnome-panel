@@ -162,21 +162,20 @@ update_timeformat(ClockData *cd)
 			time = _("%H:%M");
 	}
 
-	g_free (cd->timeformat);
 	if (cd->showdate) {
 		/* Show date in another line if panel is vertical, or
 		 * horizontal but large enough to hold two lines of text */
 		if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		    cd->orient == PANEL_APPLET_ORIENT_RIGHT ||
 		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM)
-			loc = g_strconcat (time, "\n",
-					   _("%a %b %d"), NULL);
+			loc = g_strconcat (_("%a %b %d"), "\n", time, NULL);
 		else
-			loc = g_strconcat (time, " ",
-					   _("%a %b %d"), NULL);
+			loc = g_strconcat (_("%a %b %d"), ", ", time, NULL);
 	} else {
 		loc = g_strdup (time);
 	}
+
+	g_free (cd->timeformat);
 	cd->timeformat = g_locale_from_utf8 (loc, -1, NULL, NULL, NULL);
 	g_free (loc);
 }
