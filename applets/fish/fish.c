@@ -593,14 +593,25 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 		    !strcmp  (text, "uptime")  ||
 		    !strncmp (text, "tail ", 5)) {
 			GtkWidget *w;
+			const gchar *warning_format = _("Warning:  The command "
+					"appears to be something actually useful.\n"
+					"Since this is a useless applet, you "
+					"may not want to do this.\n"
+					"We strongly advise you against "
+					"usage of %s for anything\n"
+					"which would make the applet "
+					"\"practical\" or useful.");
+			gchar *name, *message;
+
+			name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet),
+							      FISH_PREFS_NAME,
+							      NULL);
+			message = g_strdup_printf (warning_format, name);
 			w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_WARNING,
-						    GTK_BUTTONS_OK,
-						    _("Warning:  The command appears to be "
-						      "something actually useful.\n"
-						      "We strongly advise you against "
-						      "usage of wanda for anything\n"
-						      "which would make it "
-						      "\"practical\" or useful."));
+						    GTK_BUTTONS_OK, message);
+			g_free (message);
+			g_free (name);
+
 			gtk_window_set_wmclass (GTK_WINDOW (w), "fish_useful_warning", "Fish");
 			gtk_window_set_screen (GTK_WINDOW (w),
 					       gtk_widget_get_screen (fish->applet));
@@ -1235,11 +1246,19 @@ display_about_dialog (BonoboUIComponent *uic,
 		      const gchar       *verbname)
 {
 	const gchar *author_format = _("%s the Fish");
+	const gchar *about_format = _("%s has no use what-so-ever. "
+				   "It only takes up disk space and "
+				   "compilation time, and if loaded it also "
+				   "takes up precious panel space and memory. "
+				   "If anyone is found using it, he "
+				   "should be promptly sent for a psychiatric "
+				   "evaluation.");
 	gchar       *authors [3];
 	GdkPixbuf   *pixbuf;
 	GError      *error = NULL;
 	gchar       *file;
 	gchar       *name;
+	gchar       *descr;
 
 	if (fish->aboutbox) {
 		gtk_window_set_screen (GTK_WINDOW (fish->aboutbox),
@@ -1254,8 +1273,6 @@ display_about_dialog (BonoboUIComponent *uic,
 	authors[1] = _("(with minor help from George)");
 	authors[2] = NULL;
 
-	g_free (name);
-
 	file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, "gnome-fish.png", FALSE, NULL);
 
 	pixbuf = gdk_pixbuf_new_from_file (file, &error);
@@ -1267,22 +1284,21 @@ display_about_dialog (BonoboUIComponent *uic,
 
 		g_error_free (error);
 	}
+
+	descr = g_strdup_printf (about_format, name);
 		
 	fish->aboutbox =
 		gnome_about_new (_("Fish"),
 				 "3.4.7.4ac19",
 				 "(C) 1998 the Free Software Foundation",
-				 _("Wanda has no use what-so-ever. "
-				   "It only takes up disk space and "
-				   "compilation time, and if loaded it also "
-				   "takes up precious panel space and memory. "
-				   "If anyone is found using it, he "
-				   "should be promptly sent for a psychiatric "
-				   "evaluation."),
+				 descr,
 				 (const char **)authors,
 				 NULL,
 				 NULL,
 				 pixbuf);
+
+	g_free (descr);
+	g_free (name);
 
 	if (pixbuf)
 		gdk_pixbuf_unref (pixbuf);
