@@ -20,6 +20,10 @@
 #include "menu.h"
 
 
+#define SMALL_ICON_SIZE 20
+#define BIG_ICON_SIZE   48
+
+
 #define MENU_PATH "menu_path"
 
 static char *gnome_folder = NULL;
@@ -150,7 +154,6 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 		GtkWidget     *menuitem, *sub, *pixmap;
 		GtkSignalFunc  activate_func;
 		char          *thisfile, *pixmap_name;
-		char          *p;
 		char          *menuitem_name;
 
 		thisfile = dent->d_name;
@@ -204,7 +207,9 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 
 				menuitem = gtk_menu_item_new ();
 				if (gnome_folder) {
-					pixmap = gnome_pixmap_new_from_file (gnome_folder);
+					pixmap = gnome_pixmap_new_from_file_at_size (gnome_folder,
+										     BIG_ICON_SIZE,
+										     BIG_ICON_SIZE);
 					gtk_widget_show (pixmap);
 				}
 
@@ -232,7 +237,7 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 				continue;
 			}
 			menuitem_name = item_info->name;
-			pixmap_name = item_info->small_icon;
+			pixmap_name = item_info->icon;
 		}
 		
 		items++;
@@ -243,7 +248,9 @@ create_menu_at (GtkWidget *window, char *menudir, int create_app_menu)
 
 		pixmap = NULL;
 		if (pixmap_name && g_file_exists (pixmap_name)) {
-			pixmap = gnome_pixmap_new_from_file (pixmap_name);
+			pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
+								     SMALL_ICON_SIZE,
+								     SMALL_ICON_SIZE);
 			if (pixmap)
 				gtk_widget_show (pixmap);
 		}
@@ -579,7 +586,9 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 	menu->button = gtk_event_box_new ();
 	
 	/*make the pixmap*/
-	pixmap = gnome_pixmap_new_from_file (pixmap_name);
+	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
+						     BIG_ICON_SIZE,
+						     BIG_ICON_SIZE);
 	gtk_widget_show(pixmap);
 	/*FIXME:this is not right, but it's how we can get the buttons to
 	  be 48x48 (given the icons are 48x48)*/
@@ -724,7 +733,9 @@ set_orientation(GtkWidget *window, Menu *menu)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_pixmap_new_from_file (pixmap_name);
+	pixmap = gnome_pixmap_new_from_file_at_size (pixmap_name,
+						     BIG_ICON_SIZE,
+						     BIG_ICON_SIZE);
 
 	gtk_container_add (GTK_CONTAINER(menu->button), pixmap);
 	gtk_widget_show (pixmap);
