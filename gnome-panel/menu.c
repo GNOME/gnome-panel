@@ -578,7 +578,7 @@ create_panel_menu (GtkWidget *window, char *menudir, int main_menu,
 		}
 	else
 		/*FIXME: these guys need arrows as well*/
-		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
+		pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
 
 	menu->orient = orient;
 
@@ -730,7 +730,7 @@ set_menu_applet_orient(Menu *menu, MenuOrient orient)
 		}
 	else
 		/*FIXME: these guys need arrows as well*/
-		pixmap_name = gnome_unconditional_pixmap_file ("panel-folder.xpm");
+		pixmap_name = gnome_unconditional_pixmap_file ("gnome-folder.png");
 		
 	pixmap=GTK_BUTTON(menu->button)->child;
 	gtk_container_remove(GTK_CONTAINER(menu->button),pixmap);

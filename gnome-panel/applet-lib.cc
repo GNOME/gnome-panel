@@ -21,7 +21,7 @@ static GtkWidget *applet_menu_prop_item;
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
 
-static CORBA::ORB_ptr orb_ptr;
+CORBA::ORB_ptr orb_ptr;
 static CORBA::BOA_ptr boa_ptr;
 
 /*every applet must implement these*/
@@ -74,7 +74,7 @@ gnome_panel_applet_init_corba (int *argc, char ***argv)
 	if (!iior)
 		return 0;
 
-	panel_initialize_corba (&orb_ptr, &boa_ptr)
+	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
 	orb_ptr->dispatcher (new GtkDispatcher ());
 
