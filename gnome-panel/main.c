@@ -20,7 +20,6 @@
 
 #include "panel-main.h"
 
-#include "conditional.h"
 #include "drawer-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
