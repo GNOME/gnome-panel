@@ -816,7 +816,6 @@ create_fish_widget(Fish *fish)
 	frames = panel_applet_gconf_get_int   (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 	speed  = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
 
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
 	fish->darea = gtk_drawing_area_new();
@@ -847,7 +846,6 @@ create_fish_widget(Fish *fish)
         gtk_container_add(GTK_CONTAINER(fish->frame),fish->darea);
 
 	gtk_widget_pop_colormap ();
-	gtk_widget_pop_visual ();
 }
 
 static void
@@ -1015,12 +1013,10 @@ fish_applet_fill (PanelApplet *applet)
 
 	panel_applet_add_preferences (applet, "/schemas/apps/fish-applet/prefs", NULL);
 
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
 	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
 	bah_window = gtk_window_new (GTK_WINDOW_POPUP);
 
-	gtk_widget_pop_visual ();
 	gtk_widget_pop_colormap ();
 
 	gtk_widget_set_uposition (bah_window,
