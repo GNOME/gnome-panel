@@ -29,8 +29,6 @@ static void border_pos_get_menu_pos (BasePWidget *basep,
 static int border_pos_show_hide_left (BasePWidget *basep);
 static int border_pos_show_hide_right (BasePWidget *basep);
 
-static void border_pos_realize(GtkWidget *w);
-
 static void border_pos_pre_convert_hook (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
@@ -92,7 +90,7 @@ border_pos_class_init (BorderPosClass *klass)
 	pos_class->get_applet_orient = border_pos_get_applet_orient;
 	pos_class->get_hide_orient = border_pos_get_hide_orient;
 	pos_class->get_menu_pos = border_pos_get_menu_pos;
-	pos_class->realize = border_pos_realize;
+
 	pos_class->north_clicked = pos_class->west_clicked = 
 		border_pos_show_hide_left;
 	pos_class->south_clicked = pos_class->east_clicked =
@@ -191,24 +189,6 @@ border_pos_get_menu_pos (BasePWidget *basep,
 		*x = wx + ww;
 		*y += wy;
 		break;
-	}
-}
-
-static void
-border_pos_realize (GtkWidget *w)
-{
-	gnome_win_hints_init();
-	if (gnome_win_hints_wm_exists()) {
-		gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS |
-					  WIN_HINTS_DO_NOT_COVER);
-		gnome_win_hints_set_state(w,
-					  WIN_STATE_STICKY |
-					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(w, global_config.keep_bottom?
-					  WIN_LAYER_BELOW:
-					  WIN_LAYER_DOCK);
-		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);
 	}
 }
 

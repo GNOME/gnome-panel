@@ -439,6 +439,11 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int ("offset", SLIDING_POS (basep->pos)->offset);
 		gnome_config_set_int ("anchor", SLIDING_POS (basep->pos)->anchor);
 		break;
+	case FLOATING_PANEL:
+		gnome_config_set_int ("orient", PANEL_WIDGET (basep->panel)->orient);
+		gnome_config_set_int ("x", FLOATING_POS (basep->pos)->x);
+		gnome_config_set_int ("y", FLOATING_POS (basep->pos)->y);
+		break;
 	case DRAWER_PANEL:
 		gnome_config_set_int ("orient", DRAWER_POS (basep->pos)->orient);
 		/*gnome_config_set_int ("temp_hidden", DRAWER_POS (basep->pos)->temp_state);*/
@@ -1065,10 +1070,24 @@ init_user_panels(void)
 #endif
 			break;
 		}
-#if 0
-		case FREE_PANEL:
+		case FLOATING_PANEL: {
+			PanelOrientation orient;
+			int x, y;
+			
+			g_string_sprintf (buf, "orient=%d", PANEL_HORIZONTAL);
+			orient = gnome_config_get_int (buf->str);
+
+			x = gnome_config_get_int ("x=0");
+			y = gnome_config_get_int ("y=0");
+
+			panel = floating_widget_new (x, y, orient,
+						     mode, state, sz,
+						     hidebuttons_enabled,
+						     hidebutton_pixmaps_enabled,
+						     back_type, back_pixmap,
+						     fit_pixmap_bg, &back_color);
 			break;
-#endif
+		}
 		default:
 			g_assert_not_reached ();
 			break;

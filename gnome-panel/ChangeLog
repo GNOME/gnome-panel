@@ -1,3 +1,30 @@
+1999-08-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* Makefile.am (base_panel_SOURCES): added
+	floating-widget.[ch]
+
+	* floating-widget.[ch]: new files which implement a 
+	floating panel.  Not complete, but works except for
+	moving right-hidden panels.  Will fix after sleep/class.
+
+	* menu.c (create_new_panel): create floating panels
+	here
+
+	* panel.c (panel_setup): support the floating panel
+	(panel_event): ditto
+	
+	* session.c (init_user_panels): load a floating panel...
+	(save_panel_configuration): save a floating panel
+
+	* border-widget.c (border_pos_class_init): removed stale 
+	code
+	(border_pos_realize): removed snice the hints are setup
+	in basep-widget.c
+
+	* drawer-widget.c (drawer_pos_realize): removed since the
+	hints are set up elsewhere now
+	(drawer_pos_class_init): removed some stale code
+
 1999-08-26  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* applet.c (submenu_destroy_cb): cleanup when the menu is

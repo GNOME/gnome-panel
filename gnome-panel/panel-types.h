@@ -31,8 +31,7 @@ typedef enum {
 	DRAWER_PANEL,
 	ALIGNED_PANEL,
 	SLIDING_PANEL,
-	FREE_PANEL,
-	PANEL_LAST_TYPE
+	FLOATING_PANEL
 } PanelType;
 
 #endif

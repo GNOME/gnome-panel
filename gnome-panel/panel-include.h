@@ -9,6 +9,7 @@
 #include "edge-widget.h"
 #include "aligned-widget.h"
 #include "sliding-widget.h"
+#include "floating-widget.h"
 #include "drawer-widget.h"
 
 #include "button-widget.h"

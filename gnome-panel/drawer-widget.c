@@ -38,8 +38,6 @@ static void drawer_pos_get_menu_pos (BasePWidget *basep,
 
 static int drawer_pos_hidebutton_click (BasePWidget *basep);
 
-static void drawer_pos_realize (GtkWidget *w);
-
 static void drawer_pos_pre_convert_hook (BasePWidget *basep);
 
 static BasePPosClass *parent_class;
@@ -66,14 +64,6 @@ drawer_pos_get_type ()
 	return drawer_pos_type;
 }
 
-#if 0
-enum {
-	ORIENT_CHANGE_SIGNAL,
-	LAST_SIGNAL
-};
-static int drawer_pos_signals[LAST_SIGNAL] = { 0 };
-#endif
-
 static void
 drawer_pos_class_init (DrawerPosClass *klass)
 {
@@ -82,21 +72,6 @@ drawer_pos_class_init (DrawerPosClass *klass)
 
 	parent_class = gtk_type_class(BASEP_POS_TYPE);
 
-#if 0
-	drawer_pos_signals[ORIENT_CHANGE_SIGNAL] =
-		gtk_signal_new ("drawer_orient_change",
-				GTK_RUN_LAST,
-				object_class->type,
-				GTK_SIGNAL_OFFSET (DrawerPosClass,
-						   orient_change),
-				gtk_marshal_NONE__ENUM,
-				GTK_TYPE_NONE,
-				1, GTK_TYPE_ENUM);
-
-	gtk_object_class_add_signals (object_class,
-				      drawer_pos_signals,
-				      LAST_SIGNAL);
-#endif
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = drawer_pos_set_hidebuttons;
 	pos_class->get_applet_orient = drawer_pos_get_applet_orient;
@@ -105,7 +80,7 @@ drawer_pos_class_init (DrawerPosClass *klass)
 	pos_class->get_hide_pos = drawer_pos_get_hide_pos;
 	pos_class->get_pos = drawer_pos_get_pos;
 	pos_class->get_menu_pos = drawer_pos_get_menu_pos;
-	pos_class->realize = drawer_pos_realize;
+
 	pos_class->north_clicked = 
 		pos_class->west_clicked = 
 		pos_class->south_clicked = 
@@ -287,24 +262,6 @@ drawer_pos_get_menu_pos (BasePWidget *basep,
 	} else {
 		*x += wx;
 		*y = wy - mreq->height;
-	}
-}
-
-
-static void
-drawer_pos_realize (GtkWidget *w)
-{
-	gnome_win_hints_init();
-	if (gnome_win_hints_wm_exists()) {
-		gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS);
-		gnome_win_hints_set_state(w,
-					  WIN_STATE_STICKY |
-					  WIN_STATE_FIXED_POSITION);
-		gnome_win_hints_set_layer(w, global_config.keep_bottom?
-					  WIN_LAYER_BELOW:
-					  WIN_LAYER_ABOVE_DOCK);
-		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
-		gdk_window_set_decorations(w->window, 0);
 	}
 }
 

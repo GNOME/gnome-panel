@@ -86,6 +86,8 @@ base_panel_SOURCES=\
 	aligned-widget.h	\
 	sliding-widget.c	\
 	sliding-widget.h	\
+	floating-widget.c	\
+	floating-widget.h	\
 	drawer-widget.c		\
 	drawer-widget.h		\
 	button-widget.c  	\

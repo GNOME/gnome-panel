@@ -2310,6 +2310,21 @@ create_new_panel(GtkWidget *w,gpointer data)
 		gtk_widget_show (panel);	
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
+	case FLOATING_PANEL:
+		find_empty_pos (&x, &y);
+		panel = floating_widget_new (x, y,
+					     PANEL_VERTICAL,
+					     BASEP_EXPLICIT_HIDE,
+					     BASEP_SHOWN,
+					     SIZE_STANDARD,
+					     TRUE, TRUE,
+					     PANEL_BACK_NONE,
+					     NULL, TRUE,
+					     &bcolor);
+		panel_setup (panel);
+		gtk_widget_show (panel);
+		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
+		break;
 	default: break;
 	}
 
@@ -2348,11 +2363,11 @@ create_add_panel_submenu (void)
 			   GINT_TO_POINTER(SLIDING_PANEL));
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Free panel"));
+	setup_menuitem (menuitem, 0, _("Floating panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(create_new_panel),
-			   GINT_TO_POINTER(FREE_PANEL));
+			   GINT_TO_POINTER(FLOATING_PANEL));
 
 	return menu;
 }

@@ -472,7 +472,6 @@ move_panel_to_cursor(GtkWidget *w)
 {
 	int x,y;
 	gdk_window_get_pointer(NULL,&x,&y,NULL);
-
 	if(IS_BASEP_WIDGET(w))
 		basep_widget_set_pos(BASEP_WIDGET(w),x,y);
 }
@@ -574,7 +573,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		case 2:
 			/*this should probably be in snapped widget*/
 			if(!panel_dragged &&
-			   IS_BORDER_WIDGET (widget)) {
+			   !IS_DRAWER_WIDGET (widget)) {
 				GdkCursor *cursor = gdk_cursor_new (GDK_FLEUR);
 				gtk_grab_add(widget);
 				gdk_pointer_grab (widget->window,
@@ -912,13 +911,10 @@ panel_setup(GtkWidget *panelw)
 		pd->type = ALIGNED_PANEL;
 	else if(IS_SLIDING_WIDGET(panelw))
 		pd->type = SLIDING_PANEL;
-#if 0
-	else if(IS_FREE_WIDGET(panelw))
-		pd->type = FREE_PANEL;
-#endif
-	else {
+	else if(IS_FLOATING_WIDGET(panelw))
+		pd->type = FLOATING_PANEL;
+	else
 		g_warning("unknown panel type");
-	}
 	
 	panel_list = g_slist_append(panel_list,pd);
 	
