@@ -6,18 +6,21 @@
 
 G_BEGIN_DECLS
 
+/* FIXME and WARNING:
+ *   !!! DO NOT CHANGE THESE VALUES !!!!
+ *
+ * These values are stupidly stored in gconf. See "main_menu_flags",
+ * So changing these will screw old configurations.
+ *
+ * We have to fix this shite.
+ */
 enum {
-	/* FIXME: should we move this array or keep the bitvalues
-	 * the same??? */
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
 	MAIN_MENU_DISTRIBUTION = 1<<4,
 	MAIN_MENU_DISTRIBUTION_SUB = 1<<5,
 	MAIN_MENU_KDE = 1<<6,
 	MAIN_MENU_KDE_SUB = 1<<7,
-	MAIN_MENU_APPLETS = 1<<10,
-	MAIN_MENU_APPLETS_SUB = 1<<11,
-	MAIN_MENU_PANEL = 1<<12,
 	MAIN_MENU_PANEL_SUB = 1<<13,
 	MAIN_MENU_DESKTOP = 1<<14,
 	MAIN_MENU_DESKTOP_SUB = 1<<15

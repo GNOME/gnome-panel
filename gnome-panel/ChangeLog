@@ -1,3 +1,27 @@
+2003-01-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Impl periodically re-running the applet menu bonobo
+	query and re-generating the menu if it has changed.
+
+	* menu.c:
+	(Bonobo_ServerInfoList_equals): impl comparing server
+	lists.
+	(recheck_applet_list), (menu_item_destroyed),
+	(instrument_add_submenu_for_reload): impl periodically
+	re-running the bonobo-activation query to see if there
+	has been any change in the available applets.
+	(create_applets_menu): take a server list as an argument.
+	(create_button_menu), (current_panel_config),
+	(make_panel_submenu), (show_panel_help),
+	(create_panel_context_menu), (ask_about_launcher_cb):
+	(make_add_submenu), (create_root_menu):
+	lots of cleanups to make it clear there is only one place
+	the "Add to Panel" submenu appears these days.
+
+	* menu.h: remove some menu flags. Add big flashing sign
+	in neon lights to warn against assuming that the panel
+	is not on crack.
+
 2002-12-23  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* menu.c
