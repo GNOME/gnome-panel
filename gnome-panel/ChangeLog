@@ -1,3 +1,11 @@
+2003-05-26  Ray Strode  <halfline@hawaii.rr.com>
+
+        * panel-properties-dialog.c: 
+	(panel_properties_dialog_setup_image_entry): Don't send NULL
+	to gtk_entry_set_text. 
+	(panel_properties_dialog_update_name): Don't send NULL to
+	gtk_entry_set_text and plug a leak.
+
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* drawer.c: (create_drawer_applet): use the drawer stock

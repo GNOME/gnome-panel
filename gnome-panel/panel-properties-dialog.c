@@ -298,10 +298,12 @@ panel_properties_dialog_setup_image_entry (PanelPropertiesDialog *dialog,
 
 	image = panel_profile_get_background_image (dialog->toplevel);
 
-	entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
-	gtk_entry_set_text (GTK_ENTRY (entry), image);
+	if (image) {
+		entry = gnome_file_entry_gtk_entry (GNOME_FILE_ENTRY (dialog->image_entry));
+		gtk_entry_set_text (GTK_ENTRY (entry), image);
 
-	g_free (image);
+		g_free (image);
+	}
 
 	g_signal_connect_swapped (dialog->image_entry, "changed",
 				  G_CALLBACK (panel_properties_dialog_image_changed),
@@ -453,7 +455,10 @@ panel_properties_dialog_update_name (PanelPropertiesDialog *dialog,
 	if (value && value->type == GCONF_VALUE_STRING)
 		text = gconf_value_get_string (value);
 
-	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), text);
+	if (text) {
+		gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), text);
+		g_free (text);
+	}
 }
 
 static void
