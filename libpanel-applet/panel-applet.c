@@ -1022,10 +1022,7 @@ add_tab_bindings (GtkBindingSet   *binding_set,
 				      GTK_TYPE_DIRECTION_TYPE, direction);	
 	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
 				      "move_focus_out_of_applet", 1,
-				      GTK_TYPE_DIRECTION_TYPE, direction);	
-	gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
-				      "move_focus_out_of_applet", 1,
-				      GTK_TYPE_DIRECTION_TYPE, direction);	
+				      GTK_TYPE_DIRECTION_TYPE, direction);
 }
 
 static void
