@@ -89,14 +89,14 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 				       const gchar  *schema_dir,
 				       GError      **error)
 {
-	GSList *list;
+	GSList *list, *l;
 
 	list = gconf_engine_all_entries (engine, schema_dir, error);
 
 	g_return_if_fail (list && !*error);
 
-	for (; list; list = list->next) {
-		GConfEntry *entry = list->data;
+	for (l = list; l; l = l->next) {
+		GConfEntry *entry = l->data;
 		gchar      *key;
 		gchar      *tmp;
 
@@ -110,14 +110,20 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 
 		g_free (key);
 
-		if (*error)
+		gconf_entry_free (entry);
+
+		if (*error) {
+			g_slist_free (list);
 			return;
+		}
 	}
+
+	g_slist_free (list);
 
 	list = gconf_engine_all_dirs (engine, schema_dir, error);
 
-	for (; list; list = list->next) {
-		gchar *subdir = list->data;
+	for (l = list; l; l = l->next) {
+		gchar *subdir = l->data;
 		gchar *prefs_subdir;
 		gchar *schema_subdir;
 
@@ -130,9 +136,13 @@ panel_applet_associate_schemas_in_dir (GConfEngine  *engine,
 		g_free (schema_subdir);
 		g_free (subdir);
 
-		if (*error)
+		if (*error) {
+			g_slist_free (list);
 			return;
+		}
 	}
+
+	g_slist_free (list);
 }
 
 void
