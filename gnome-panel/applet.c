@@ -644,16 +644,21 @@ applet_button_press (GtkWidget      *widget,
 		if (panel_applet_in_drag)
 			return FALSE;
 
-		if (info->type != APPLET_SWALLOW) 
-			applet_show_menu (info, event);
-
-		else {
+		switch (info->type) {
+		case APPLET_BONOBO:
+			break;
+		case APPLET_SWALLOW: {
 			GtkHandleBox *handle_box;
 
 			handle_box = GTK_HANDLE_BOX (((Swallow *)info->data)->handle_box);
-				
+
 			if (handle_box->child_detached)
 				applet_show_menu (info, event);
+			}
+			break;
+		default:
+			applet_show_menu (info, event);
+			break;
 		}
 
 		return TRUE;
