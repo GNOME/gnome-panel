@@ -73,6 +73,7 @@ static const char *home_dir;
 static char *class_name = NULL;
 static pid_t temporary_pid = 0;
 static char *temporary_file = NULL;
+static int  status;
 
 static GtkTargetEntry drag_types[] =
 	{ { "x-special/gnome-icon-list", 0, 0 },
@@ -318,7 +319,7 @@ start_temporary (void)
 	}
 
 	/* can't fork? don't dispair, do synchroniously */
-	if (temporary_pid < 0) {
+	else if (temporary_pid < 0) {
 		FILE *fp = fopen (file, "w");
 		if (fp == NULL ||
 		    ! save_to_file (fp, file, TRUE)) {
@@ -329,7 +330,9 @@ start_temporary (void)
 			return;
 		}
 		temporary_pid = 0;
-	}
+
+	} else if ( temporary_pid > 0)
+		waitpid (temporary_pid, &status, 0);
 
 	umask(old_mask);
 	temporary_file = file;
@@ -338,7 +341,6 @@ start_temporary (void)
 static gboolean
 ensure_temporary (void)
 {
-	int status;
 
 	start_temporary ();
 
@@ -347,9 +349,6 @@ ensure_temporary (void)
 
 	if (temporary_pid == 0)
 		return TRUE;
-
-	/* ok, gotta wait */
-	waitpid (temporary_pid, &status, 0);
 
 	temporary_pid = 0;
 
