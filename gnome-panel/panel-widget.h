@@ -24,7 +24,7 @@ typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
 
 typedef struct _AppletRecord		AppletRecord;
-typedef struct _WorkspaceDesc		WorkspaceDesc;
+typedef struct _DNDRecord		DNDRecord;
 typedef enum {
 	PANEL_HORIZONTAL,
 	PANEL_VERTICAL
@@ -38,7 +38,7 @@ typedef enum {
 } PanelSnapped;
 typedef enum {
 	PANEL_EXPLICIT_HIDE,
-	PANEL_AUTOH_IDE
+	PANEL_AUTO_HIDE
 } PanelMode;
 typedef enum {
 	PANEL_SHOWN,
@@ -53,12 +53,10 @@ struct _AppletRecord
 	gint			cells;
 };
 
-struct _WorkspaceDesc
+struct _DNDRecord
 {
-	GList			*panels;
-	GList			*deskareas;
-	GtkWidget		*current_dragged_applet;
-	GtkWidget		*current_dragged_parent;
+	AppletRecord		*applet;
+	GtkWidget		*parent;
 };
 
 struct _PanelWidget
@@ -87,6 +85,8 @@ struct _PanelWidget
 	gint			tooltips_enabled;
 
 	gint			leave_notify_timer_tag;
+
+	GtkWidget		*currently_dragged_applet;
 };
 
 struct _PanelWidgetClass

@@ -44,6 +44,8 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->mode = PANEL_EXPLICIT_HIDE;
 	panel_widget->state = PANEL_SHOWN;
 	panel_widget->size = 0;
+	panel_widget->leave_notify_timer_tag = 0;
+	panel_widget->currently_dragged_applet = NULL;
 }
 
 static gint
@@ -86,6 +88,75 @@ panel_widget_seize_space(PanelWidget *panel,
 	}
 	return pos;
 }
+
+static gint
+panel_widget_switch_applet_right(PanelWidget *panel, gint pos)
+{
+	gint i;
+	gint rightn;
+	AppletRecord tmp;
+
+	tmp.applet = panel->applets[pos].applet;
+	tmp.drawer = panel->applets[pos].drawer;
+	tmp.cells = panel->applets[pos].cells;
+
+	rightn = pos + panel->applets[pos].cells;
+
+	for(i=0;i<panel->applets[rightn].cells;i++) {
+		panel->applets[pos+i].applet = panel->applets[rightn+i].applet;
+		panel->applets[pos+i].drawer = panel->applets[rightn+i].drawer;
+		panel->applets[pos+i].cells = panel->applets[rightn+i].cells;
+	}
+
+	pos = pos + i;
+
+	for(i=0;i<tmp.cells;i++) {
+		panel->applets[pos+i].applet = tmp.applet;
+		panel->applets[pos+i].drawer = tmp.drawer;
+		panel->applets[pos+i].cells = tmp.cells;
+	}
+
+	return pos;
+}
+
+static gint
+panel_widget_switch_applet_left(PanelWidget *panel, gint pos)
+{
+	pos -= panel->applets[pos-1].cells;
+	panel_widget_switch_applet_right(panel,pos);
+	return pos;
+}
+
+static gint
+panel_widget_switch_move(Panelwidget *panel, gint pos, gint moveby)
+{
+	gint i;
+	gint width;
+	gint finalpos;
+
+	g_return_val_if_fail(pos>=0,-1);
+	g_return_val_if_fail(panel,-1);
+
+	width = panel->applets[pos].cells;
+	finalpos = pos+moveby;
+
+	if(finalpos > panel->size)
+		finalpos = panel->size-1;
+	else if(finalpos < 0)
+		finalpos = 0;
+
+	for(;;) {
+		if((pos+width-1)<finalpos)
+			pos = panel_widget_switch_applet_right(panel,pos)
+		else if(pos>finalpos)
+			pos = panel_widget_switch_applet_left(panel,pos)
+		else
+			break;
+	}
+
+	return pos;
+}
+
 
 static void
 panel_widget_adjust_applet(PanelWidget *panel, GtkWidget *applet)
