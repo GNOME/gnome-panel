@@ -1280,11 +1280,6 @@ panel_widget_new (gint size,
 	}
 
 
-	panel_widget_set_size(panel,panel->size);
-	panel_widget_set_position(panel);
-
-	panel_widget_set_hidebuttons(panel);
-
 	for(i=0;i<PANEL_MAX;i++) {
 		panel->applets[i].applet = NULL;
 		panel->applets[i].cells = 1;
@@ -1332,6 +1327,11 @@ panel_widget_new (gint size,
 				 "size_allocate",
 				 GTK_SIGNAL_FUNC(panel_widget_size_allocate),
 				 panel);
+
+	panel_widget_set_size(panel,panel->size);
+	panel_widget_set_position(panel);
+
+	panel_widget_set_hidebuttons(panel);
 
 	if(snapped == PANEL_FREE)
 		move_window(GTK_WIDGET(panel),pos_x,pos_y);
@@ -1862,6 +1862,9 @@ panel_widget_reparent (PanelWidget *old_panel,
 	old_panel->thick = PANEL_MINIMUM_WIDTH;
 	panel_widget_set_size(old_panel,old_panel->size);
 	//gtk_widget_queue_resize(GTK_WIDGET(old_panel));
+
+	if(old_panel->snapped==PANEL_DRAWER)
+		panel_widget_pack_applets(old_panel);
 
 	/*it will get moved to the right position on size_allocate*/
 	gtk_fixed_move(GTK_FIXED(new_panel->fixed),applet,0,0);
