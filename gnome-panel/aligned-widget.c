@@ -64,7 +64,7 @@ static void
 aligned_pos_class_init (AlignedPosClass *klass)
 {
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
-	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
+	BasePPosClass *pos_class = BASEP_POS_CLASS (klass);
 
 	
 	aligned_pos_signals[ALIGN_CHANGE_SIGNAL] =

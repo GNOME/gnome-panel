@@ -86,37 +86,42 @@ static guint button_widget_signals[LAST_SIGNAL] = {0};
 static void
 button_widget_class_init (ButtonWidgetClass *class)
 {
-	GtkObjectClass *object_class = (GtkObjectClass*) class;
-	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
+	GObjectClass *object_class = G_OBJECT_CLASS (class);
+	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
 
 
 	button_widget_signals[CLICKED_SIGNAL] =
-		gtk_signal_new("clicked",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
-			       			 clicked),
-			       gtk_signal_default_marshaller,
-			       GTK_TYPE_NONE,
-			       0);
+		g_signal_new ("clicked",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, clicked),
+                              NULL,
+                              NULL,
+			      g_cclosure_marshal_VOID__VOID,
+			      G_TYPE_NONE,
+			      0);
+
 	button_widget_signals[PRESSED_SIGNAL] =
-		gtk_signal_new("pressed",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
-			       			 pressed),
-			       gtk_signal_default_marshaller,
-			       GTK_TYPE_NONE,
-			       0);
+		g_signal_new ("pressed",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, pressed),
+                              NULL,
+                              NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
+
 	button_widget_signals[UNPRESSED_SIGNAL] =
-		gtk_signal_new("unpressed",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (object_class),
-			       GTK_SIGNAL_OFFSET(ButtonWidgetClass,
-			       			 unpressed),
-			       gtk_signal_default_marshaller,
-			       GTK_TYPE_NONE,
-			       0);
+		g_signal_new ("unpressed",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (ButtonWidgetClass, unpressed),
+                              NULL,
+                              NULL,
+                              g_cclosure_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
 	
 	class->clicked = NULL;
 	class->pressed = button_widget_pressed;
@@ -706,9 +711,9 @@ button_widget_instance_init (ButtonWidget *button)
 	
 	button->pressed_timeout = 0;
 	
-	gtk_signal_connect(GTK_OBJECT(button),"destroy",
-			   GTK_SIGNAL_FUNC(button_widget_destroy),
-			   NULL);
+	g_signal_connect (G_OBJECT(button),"destroy",
+			  G_CALLBACK (button_widget_destroy),
+			  NULL);
 }
 
 static gboolean
@@ -824,8 +829,8 @@ button_widget_leave_notify (GtkWidget *widget, GdkEventCrossing *event)
 void
 button_widget_clicked(ButtonWidget *button)
 {
-	gtk_signal_emit(GTK_OBJECT(button),
-			button_widget_signals[CLICKED_SIGNAL]);
+	g_signal_emit (G_OBJECT(button),
+		       button_widget_signals[CLICKED_SIGNAL], 0);
 }
 
 static void
@@ -866,8 +871,8 @@ button_widget_down(ButtonWidget *button)
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
 
 	if(!button->pressed)
-		gtk_signal_emit(GTK_OBJECT(button),
-				button_widget_signals[PRESSED_SIGNAL]);
+		g_signal_emit(G_OBJECT(button),
+			      button_widget_signals[PRESSED_SIGNAL], 0);
 }
 void
 button_widget_up(ButtonWidget *button)
@@ -876,8 +881,8 @@ button_widget_up(ButtonWidget *button)
 	g_return_if_fail(BUTTON_IS_WIDGET(button));
 
 	if(button->pressed)
-		gtk_signal_emit(GTK_OBJECT(button),
-				button_widget_signals[UNPRESSED_SIGNAL]);
+		g_signal_emit(G_OBJECT(button),
+			      button_widget_signals[UNPRESSED_SIGNAL], 0);
 }
 
 static GdkPixbuf *

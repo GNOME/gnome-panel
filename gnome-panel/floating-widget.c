@@ -10,6 +10,7 @@
 
 #include "floating-widget.h"
 #include "border-widget.h"
+#include "panel-marshal.h"
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "panel-util.h"
@@ -89,18 +90,21 @@ static guint floating_pos_signals[LAST_SIGNAL] = { 0 };
 static void
 floating_pos_class_init (FloatingPosClass *klass)
 {
-	GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);
-	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
+	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	BasePPosClass *pos_class = BASEP_POS_CLASS (klass);
 
 	floating_pos_signals[COORDS_CHANGE_SIGNAL] =
-		gtk_signal_new ("floating_coords_change",
-				GTK_RUN_LAST,
-				GTK_CLASS_TYPE (object_class),
-				GTK_SIGNAL_OFFSET (FloatingPosClass,
-						   coords_change),
-				gtk_marshal_NONE__INT_INT,
-				GTK_TYPE_NONE,
-				2, GTK_TYPE_INT, GTK_TYPE_INT);
+		g_signal_new ("floating_coords_change",
+			      G_TYPE_FROM_CLASS (object_class),
+			      G_SIGNAL_RUN_LAST,
+			      G_STRUCT_OFFSET (FloatingPosClass, coords_change),
+			      NULL,
+			      NULL,
+			      panel_marshal_INT__INT,
+			      G_TYPE_NONE,
+			      2,
+			      G_TYPE_INT,
+			      G_TYPE_INT);
 	
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = floating_pos_set_hidebuttons;
@@ -283,9 +287,9 @@ floating_pos_set_pos (BasePWidget *basep,
 	if (newy != pos->y || newx != pos->x) {
 		pos->x = newx;
 		pos->y = newy;
-		gtk_signal_emit (GTK_OBJECT (pos),
-				 floating_pos_signals[COORDS_CHANGE_SIGNAL],
-				 pos->x, pos->y);
+		g_signal_emit (G_OBJECT (pos),
+			       floating_pos_signals[COORDS_CHANGE_SIGNAL],
+			       0, pos->x, pos->y);
 		gtk_widget_queue_resize (GTK_WIDGET (basep));
 	}
 }
@@ -434,9 +438,9 @@ floating_widget_change_params (FloatingWidget *floating,
 	if (y != pos->y || x != pos->x) {
 		pos->x = x;
 		pos->y = y;
-		gtk_signal_emit (GTK_OBJECT (pos),
-				 floating_pos_signals[COORDS_CHANGE_SIGNAL],
-				 x, y);
+		g_signal_emit (G_OBJECT (pos),
+			       floating_pos_signals[COORDS_CHANGE_SIGNAL],
+			       0, x, y);
 	}
 
 	basep_widget_change_params (basep,

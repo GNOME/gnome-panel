@@ -8,6 +8,7 @@
 #include "config.h"
 
 #include "border-widget.h"
+#include "panel-marshal.h"
 #include "panel_config_global.h"
 #include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
@@ -73,20 +74,22 @@ static guint border_pos_signals[LAST_SIGNAL] = { 0 };
 static void
 border_pos_class_init (BorderPosClass *klass)
 {
-	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS(klass);
+	GObjectClass *object_class = G_OBJECT_CLASS(klass);
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
 
 	/* set up signals */
 	border_pos_signals[EDGE_CHANGE_SIGNAL] =
-		gtk_signal_new("edge_change",
-			       GTK_RUN_LAST,
-			       GTK_CLASS_TYPE (gtk_object_class),
-			       GTK_SIGNAL_OFFSET(BorderPosClass,
-						 edge_change),
-			       gtk_marshal_VOID__ENUM, /* FIXME:2 should we be using NONE__ENUM? */
-			       GTK_TYPE_NONE, 1,
-			       PANEL_TYPE_BORDER_EDGE);
+		g_signal_new ("edge_change",
+			     G_TYPE_FROM_CLASS (object_class), 
+			     G_SIGNAL_RUN_LAST,
+			     G_STRUCT_OFFSET (BorderPosClass, edge_change),
+			     NULL,
+			     NULL,
+			     panel_marshal_VOID__ENUM,
+			     G_TYPE_NONE,
+			     1,
+			     PANEL_TYPE_BORDER_EDGE);
 
 	/* fill out the virtual funcs */
 	pos_class->set_hidebuttons = border_pos_set_hidebuttons;
@@ -258,9 +261,9 @@ border_widget_change_params (BorderWidget *border,
 
 	if (edge != BORDER_POS (border->pos)->edge) {	
 		BORDER_POS(border->pos)->edge = edge;
-		gtk_signal_emit (GTK_OBJECT (border->pos),
-				 border_pos_signals[EDGE_CHANGE_SIGNAL],
-				 edge);
+		g_signal_emit (G_OBJECT (border->pos),
+			       border_pos_signals[EDGE_CHANGE_SIGNAL],
+			       0, edge);
 	}
 
 	basep_widget_change_params (BASEP_WIDGET (border),

@@ -62,7 +62,6 @@ edge_pos_class_init (EdgePosClass *klass)
 {
 	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-
 	pos_class->set_pos = edge_pos_set_pos;
 	pos_class->get_pos = edge_pos_get_pos;
 	pos_class->get_size = edge_pos_get_size;

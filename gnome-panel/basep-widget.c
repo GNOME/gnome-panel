@@ -1135,7 +1135,7 @@ basep_widget_instance_init (BasePWidget *basep)
 	/*don't let us close the window*/                                       
 	
 	g_signal_connect(G_OBJECT(basep),"delete_event",                    
-			 (GCallback) gtk_true,NULL);                     
+			 G_CALLBACK (gtk_true), NULL);                     
 
 	basep->shown_alloc.x = basep->shown_alloc.y =
 		basep->shown_alloc.width = basep->shown_alloc.height = 0;
@@ -1438,7 +1438,7 @@ basep_widget_construct (BasePWidget *basep,
 					back_color);
 
 	g_signal_connect_after (G_OBJECT (basep->panel), "back_change",
-				(GCallback) basep_back_change,
+				G_CALLBACK (basep_back_change),
 				 basep);
 
 	PANEL_WIDGET(basep->panel)->panel_parent = GTK_WIDGET(basep);
@@ -1464,7 +1464,7 @@ basep_widget_construct (BasePWidget *basep,
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_w,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
 	g_signal_connect (G_OBJECT (basep->hidebutton_w), "clicked",
-			  (GCallback) basep_widget_west_clicked,
+			  G_CALLBACK (basep_widget_west_clicked),
 			  basep);
 	/*NORTH*/
 	basep->hidebutton_n = make_hidebutton(basep,
@@ -1475,7 +1475,7 @@ basep_widget_construct (BasePWidget *basep,
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	g_signal_connect (G_OBJECT (basep->hidebutton_n), "clicked",
-			  (GCallback) basep_widget_north_clicked,
+			  G_CALLBACK (basep_widget_north_clicked),
 			    basep);
 	/*EAST*/
 	basep->hidebutton_e = make_hidebutton(basep,
@@ -1486,7 +1486,7 @@ basep_widget_construct (BasePWidget *basep,
 	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_e,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
 	g_signal_connect (G_OBJECT (basep->hidebutton_e), "clicked",
-			  (GCallback) basep_widget_east_clicked,
+			  G_CALLBACK (basep_widget_east_clicked),
 			    basep);
 	/*SOUTH*/
 	basep->hidebutton_s = make_hidebutton (basep,
@@ -1497,7 +1497,7 @@ basep_widget_construct (BasePWidget *basep,
 	gtk_table_attach(GTK_TABLE(basep->table), basep->hidebutton_s,
 			 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 	g_signal_connect (G_OBJECT (basep->hidebutton_s), "clicked",
-			  (GCallback) basep_widget_south_clicked,
+			  G_CALLBACK (basep_widget_south_clicked),
 			    basep);
 
 	basep->screen = screen;

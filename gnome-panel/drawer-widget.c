@@ -406,9 +406,9 @@ drawer_widget_change_params (DrawerWidget *drawer,
 	if (pos->orient != orient) {
 		pos->orient = orient;
 #if 0
-		gtk_signal_emit (GTK_OBJECT (drawer),
-				 drawer_pos_signals[ORIENT_CHANGE_SIGNAL],
-				 orient);
+		g_signal_emit (G_OBJECT (drawer),
+			       drawer_pos_signals[ORIENT_CHANGE_SIGNAL],
+			       0, orient);
 #endif
 	}
 
