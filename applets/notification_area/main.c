@@ -113,7 +113,6 @@ about_cb (BonoboUIComponent *uic,
     "Sun GNOME Documentation Team <gdocteam@sun.com>",
     NULL
   };
-  const char *translator_credits = _("translator-credits");
 
   screen = gtk_widget_get_screen (GTK_WIDGET (tray->applet));
 
@@ -131,8 +130,8 @@ about_cb (BonoboUIComponent *uic,
                 "copyright", "Copyright \xc2\xa9 2002 Red Hat, Inc.",
                 "authors", (const char **) authors,
                 "documenters", (const char **) documenters,
-                "translator_credits", strcmp (translator_credits, "translator-credits") != 0 ? translator_credits : NULL,
-                "logo_icon_name", "panel-notification-area",
+                "translator-credits", _("translator-credits"),
+                "logo-icon-name", "panel-notification-area",
                 NULL);
   
   gtk_window_set_screen (GTK_WINDOW (tray->about_dialog), screen);
