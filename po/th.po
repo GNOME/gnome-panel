@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-08-31 09:29+0100\n"
-"PO-Revision-Date: 2004-09-04 09:32+0700\n"
+"PO-Revision-Date: 2004-09-06 00:06+0700\n"
 "Last-Translator: Chanchai Junlouchai <taz@opentle.org>\n"
 "Language-Team: Thai <L10n@opentle.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
 msgstr "ป_รับวันที่และเวลา"
 
@@ -136,9 +135,8 @@ msgstr "%Aที่ %-d %B"
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr "%a %-d %b"
+msgstr "%a %e %b"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -310,6 +308,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"ค่านี้เลิกใช้แล้วใน GNOME 2.6 และจะใช้ค่า 'format' แทน"
+"schema นี้คงไว้เพื่อความเข้ากันได้กับโปรแกรมรุ่นเก่าเท่านั้น"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid ""
@@ -317,6 +317,8 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"ค่านี้กำหนดรูปแบบของเวลาในแอพเพล็ตนาฬิกาเมื่อกำหนดรูปแบบเป็น \"custom\""
+"คุณสามารถใช้รหัสการแปลงของ strftime() เพื่อระบุรูปแบบที่ต้องการได้"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid ""
@@ -329,6 +331,12 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"ค่านี้กำหนดรูปแบบชั่วโมงที่จะใช้ในแอพเพล็ตนาฬิกา ค่าที่เป็นไปได้คือ"
+"\"12-hour\", \"24-hour\", \"internet\", \"unix\" และ \"custom\""
+"ถ้ากำหนดเป็น \"internet\" นาฬิกาจะแสดงเวลาอินเทอร์เน็ต"
+"ซึ่งจะแบ่งวันออกเป็น 1000 \".beat\" ระบบนี้จะไม่มีเขตเวลา เวลาจึงเหมือนกันทุกแห่งในโลก"
+"ถ้ากำหนดเป็น \"unix\" นาฬิกาจะแสดงเวลาเป็นวินาทีนับจาก 1970-01-01"
+"ถ้ากำหนดเป็น \"custom\" นาฬิกาจะแสดงตามรูปแบบที่กำหนดใน custom_format"
 
 #: applets/clock/clock.schemas.in.h:17
 msgid "This key specifies the program to run in order to configure the time."
@@ -339,7 +347,6 @@ msgid "Time configuration tool"
 msgstr "เครื่องมือการกำหนดค่าเวลา"
 
 #: applets/clock/clock.schemas.in.h:19
-#, fuzzy
 msgid "Use Internet time"
 msgstr "ใช้เวลาแบบอินเทอร์เน็ต"
 
@@ -554,7 +561,8 @@ msgstr "ชื่อของปลา"
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "ค่านี้กำหนดคำสั่งที่จะลองเรียกใช้งานเมื่อปลาถูกคลิก"
+msgstr ""
+"ค่านี้กำหนดคำสั่งที่จะลองเรียกใช้งานเมื่อปลาถูกคลิก"
 
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
@@ -568,7 +576,8 @@ msgstr ""
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "ค่านี้กำหนดจำนวนเฟรมที่แสดงการเคลื่อนไหวของปลา"
+msgstr ""
+"ค่านี้กำหนดจำนวนเฟรมที่แสดงการเคลื่อนไหวของปลา"
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -919,7 +928,7 @@ msgstr ""
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
-msgstr ""
+msgstr "เชลล์ของพาเนล GNOME"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
 #: gnome-panel/applet.c:462 gnome-panel/panel-applet-frame.c:113
@@ -1103,9 +1112,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "ไม่สามารถจับภาพหน้าจอของพื้นโต๊ะปัจจุบันได้"
 
 #: gnome-panel/gnome-panel-screenshot.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "บันทึกภาพหน้าจอลงในเ_ว็บเพจ (บันทึกใน ~/public__html)"
+msgstr "บันทึกภาพหน้าจอลงในเ_ว็บเพจ (บันทึกใน %s)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
@@ -1431,9 +1440,8 @@ msgid "Launch a program that is already in the GNOME menu"
 msgstr "เรียกใช้โปรแกรมที่มีอยู่แล้วในเมนู GNOME"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "พาเนลของ GNOME"
+msgstr "เมนูหลักของ GNOME"
 
 #: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
@@ -1441,15 +1449,15 @@ msgstr "แถบเมนู"
 
 #: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
-msgstr ""
+msgstr "แถบเมนูกำหนดเอง"
 
 #: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "ลิ้นชักที่ผุดออกได้ สำหรับใส่แอพเพล็ตต่างๆ"
 
 #: gnome-panel/panel-addto.c:236
 msgid "(empty)"
-msgstr ""
+msgstr "(ว่างเปล่า)"
 
 #: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1634,6 +1642,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"รายการ IID ของแอพเพล็ตที่พาเนลจะไม่โหลด"
+"ด้วยการตั้งค่านี้ คุณสามารถปิดการทำงานแอพเพล็ตบางตัวไม่ให้โหลดหรือแสดงบนเมนูได้"
+"ตัวอย่างเช่น ถ้าจะปิดแอพเพล็ตบรรทัดคำสั่ง ก็เพิ่ม"
+"'OAFIID:GNOME_MiniCommanderApplet' ในรายการนี้"
+"คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1642,7 +1655,7 @@ msgstr "ความเร็วในการเคลื่อนไหว"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "IID ของแอพเพล็ตที่จะห้ามโหลด"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -1650,7 +1663,7 @@ msgstr "ปิดลิ้นชักอัตโนมัติ"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "ล็อคพาเนลตายตัว"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
@@ -1666,7 +1679,7 @@ msgstr "ปิดการใช้งานล็อคหน้าจอ"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "ปิดการใช้งานการออกจากระบบ"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1687,7 +1700,7 @@ msgstr "เปิดใช้งานคำแนะนำเครื่อง
 
 #: gnome-panel/panel-global.schemas.in.h:14
 msgid "FIXME - is this resolved with the new menu stuff"
-msgstr "FIXME - คือสิ่งนี้ที่แก้ไขโดยใช้สิ่งที่บรรจุในเมนูใหม่"
+msgstr "FIXME - เรื่องนี้ตกลงสอดคล้องกับเมนูรุ่นใหม่หรือเปล่า?"
 
 #: gnome-panel/panel-global.schemas.in.h:15
 msgid "FIXME - need to define limits"
@@ -1723,18 +1736,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"ถ้าเลือก, พาเนลจะไม่อนุญาตให้ผู้ใช้บังคับปิดโปรแกรม"
+"โดยจะไม่ยอมให้กดปุ่มบังคับออก"
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"ถ้าเลือก, พาเนลจะไม่อนุญาตให้ผู้ใช้ล็อคหน้าจอ"
+"โดยจะลบรายการเมนูล็อคหน้าจอออก"
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"ถ้าเลือก, พาเนลจะไม่อนุญาตให้ผู้ใช้ออกจากระบบ"
+"โดยจะลบรายการเมนูออกจากระบบออก"
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1742,6 +1761,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"ถ้าเลือก, พาเนลจะไม่อนุญาตให้เปลี่ยนการตั้งค่าใดๆ ของพาเนลอีกเลย"
+"แต่สำหรับแอพเพล็ตต่างๆ อาจต้องล็อคเป็นรายๆ ไปอีกที"
+"คุณต้องเริ่มพาเนลใหม่เพื่อให้รายการนี้มีผล"
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -1769,7 +1791,7 @@ msgstr "ชนิดปุ่มทำงาน"
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
-msgstr ""
+msgstr "Bonobo IID ของแอพเพล็ต"
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
@@ -1826,7 +1848,7 @@ msgstr "เส้นทางของเนื้อหาเมนู"
 
 #: gnome-panel/panel-object.schemas.in.h:12
 msgid "Object's position on the panel"
-msgstr ""
+msgstr "ตำแหน่งของวัตถุบนพาเนล"
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
