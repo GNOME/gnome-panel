@@ -556,6 +556,7 @@ void
 panel_corba_gtk_init(void)
 {
   PortableServer_ObjectId objid = {0, sizeof("Panel"), "Panel" };
+  PortableServer_POA thepoa;
   GNOME_Panel acc;
   char hostname [4096];
   char *name, *ior;
@@ -572,6 +573,10 @@ panel_corba_gtk_init(void)
   orb = CORBA_ORB_init(&n, &name /* dummy */, "mico-local-orb", &ev);
 
   POA_GNOME_Panel__init(&servant, &ev);
+
+  thepoa = orb->root_poa; /* non-portable temporary hack */
+
+  PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);
 
   PortableServer_POA_activate_object_with_id((PortableServer_POA)orb->root_poa, &objid, &servant, &ev);
 

@@ -490,15 +490,21 @@ gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 	static GNOME_Applet applet = NULL;
 
 	if(!ior) {
+	  PortableServer_POA poa;
+
 	  static PortableServer_ObjectId objid = {0, sizeof("GNOME/Applet"),
 						  "GNOME/Applet"};
 	  POA_GNOME_Applet__init(&applet_servant, &ev);
 
-	  PortableServer_POA_activate_object_with_id((PortableServer_POA)orb->root_poa,
+	  poa = orb->root_poa; /* non-portable temp hack */
+
+	  PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
+
+	  PortableServer_POA_activate_object_with_id(poa,
 						     &objid, &applet_servant,
 						     &ev);
 
-	  applet = PortableServer_POA_servant_to_reference((PortableServer_POA)orb->root_poa,
+	  applet = PortableServer_POA_servant_to_reference(poa,
 							   &applet_servant,
 							   &ev);
 
