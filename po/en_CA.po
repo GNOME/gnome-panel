@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-03 18:41-0500\n"
-"PO-Revision-Date: 2005-01-03 18:58-0400\n"
+"POT-Creation-Date: 2005-01-06 17:45-0500\n"
+"PO-Revision-Date: 2005-01-06 18:58-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -45,8 +45,8 @@ msgstr "_About"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:727
-#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/drawer.c:611 gnome-panel/panel-action-button.c:770
+#: gnome-panel/panel-context-menu.c:346 gnome-panel/panel-menu-bar.c:350
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Help"
@@ -186,7 +186,7 @@ msgstr "Custom format"
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
 #: applets/fish/fish.c:144 applets/notification_area/main.c:81
 #: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:88
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:89
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -236,7 +236,7 @@ msgstr "Use _UTC"
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:481
 #: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:467
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:118
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:119
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:128
 msgid "translator-credits"
@@ -662,8 +662,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Window Navigation Applet Factory"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:886
-#: applets/wncklet/window-menu.c:888
+#: applets/wncklet/window-menu.c:130 applets/wncklet/window-menu.c:871
+#: applets/wncklet/window-menu.c:873
 msgid "Window Selector"
 msgstr "Window Selector"
 
@@ -836,21 +836,21 @@ msgstr "This key specifies the minimum width that the window list requests."
 msgid "When to group windows"
 msgstr "When to group windows"
 
-#: applets/wncklet/window-menu.c:134
+#: applets/wncklet/window-menu.c:135
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "The Window Selector shows a list of all windows and lets you browse them."
 
-#: applets/wncklet/window-menu.c:309
+#: applets/wncklet/window-menu.c:310
 msgid "Unknown Window"
 msgstr "Unknown Window"
 
-#: applets/wncklet/window-menu.c:724
+#: applets/wncklet/window-menu.c:691
 msgid "No Windows Open"
 msgstr "No Windows Open"
 
-#: applets/wncklet/window-menu.c:887
+#: applets/wncklet/window-menu.c:872
 msgid "Tool to switch between windows"
 msgstr "Tool to switch between windows"
 
@@ -1012,7 +1012,7 @@ msgid "_Add to drawer..."
 msgstr "_Add to drawer..."
 
 #: gnome-panel/drawer.c:605 gnome-panel/launcher.c:837
-#: gnome-panel/panel-action-button.c:132 gnome-panel/panel-context-menu.c:283
+#: gnome-panel/panel-action-button.c:135 gnome-panel/panel-context-menu.c:283
 msgid "_Properties"
 msgstr "_Properties"
 
@@ -1124,46 +1124,46 @@ msgstr "Add this as drawer to panel"
 msgid "Add this as menu to panel"
 msgstr "Add this as menu to panel"
 
-#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:182
+#: gnome-panel/menu.c:1444 gnome-panel/panel-menu-bar.c:201
 msgid "Applications"
 msgstr "Applications"
 
-#: gnome-panel/panel-action-button.c:108
+#: gnome-panel/panel-action-button.c:111
 msgid "_Activate Screensaver"
 msgstr "_Activate Screensaver"
 
-#: gnome-panel/panel-action-button.c:114
+#: gnome-panel/panel-action-button.c:117
 msgid "_Lock Screen"
 msgstr "_Lock Screen"
 
-#: gnome-panel/panel-action-button.c:120
+#: gnome-panel/panel-action-button.c:123
 msgid "_Kill Screensaver Daemon"
 msgstr "_Kill Screensaver Daemon"
 
-#: gnome-panel/panel-action-button.c:126
+#: gnome-panel/panel-action-button.c:129
 msgid "Restart _Screensaver Daemon"
 msgstr "Restart _Screensaver Daemon"
 
-#: gnome-panel/panel-action-button.c:209 gnome-panel/panel-action-button.c:222
-#: gnome-panel/panel-action-button.c:246 gnome-panel/panel-context-menu.c:58
+#: gnome-panel/panel-action-button.c:230 gnome-panel/panel-action-button.c:243
+#: gnome-panel/panel-action-button.c:267 gnome-panel/panel-context-menu.c:58
 #: gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Cannot execute '%s'"
 
-#: gnome-panel/panel-action-button.c:289
-msgid "Lock screen"
-msgstr "Lock screen"
+#: gnome-panel/panel-action-button.c:310
+msgid "Lock Screen"
+msgstr "Lock Screen"
 
-#: gnome-panel/panel-action-button.c:290
+#: gnome-panel/panel-action-button.c:311
 msgid "Protect your computer from unauthorized use"
 msgstr "Protect your computer from unauthorized use"
 
-#: gnome-panel/panel-action-button.c:302
+#: gnome-panel/panel-action-button.c:323
 msgid "Log Out"
 msgstr "Log Out"
 
-#: gnome-panel/panel-action-button.c:303
+#: gnome-panel/panel-action-button.c:324
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1171,35 +1171,51 @@ msgstr ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
 
-#: gnome-panel/panel-action-button.c:313
+#: gnome-panel/panel-action-button.c:334
+msgid "Shut Down"
+msgstr "Shut Down"
+
+#: gnome-panel/panel-action-button.c:335
+msgid "Log out of GNOME and shut down the computer"
+msgstr "Log out of GNOME and shut down the computer"
+
+#: gnome-panel/panel-action-button.c:345
+msgid "Restart"
+msgstr "Restart"
+
+#: gnome-panel/panel-action-button.c:346
+msgid "Log out of GNOME and reboot the computer"
+msgstr "Log out of GNOME and reboot the computer"
+
+#: gnome-panel/panel-action-button.c:356
 msgid "Run Application..."
 msgstr "Run Application..."
 
-#: gnome-panel/panel-action-button.c:314
+#: gnome-panel/panel-action-button.c:357
 msgid "Run an Application by entering a command"
 msgstr "Run an Application by entering a command"
 
-#: gnome-panel/panel-action-button.c:324
+#: gnome-panel/panel-action-button.c:367
 msgid "Search for Files..."
 msgstr "Search for Files..."
 
-#: gnome-panel/panel-action-button.c:325
+#: gnome-panel/panel-action-button.c:368
 msgid "Find files, folders, and documents on your computer"
 msgstr "Find files, folders, and documents on your computer"
 
-#: gnome-panel/panel-action-button.c:334
+#: gnome-panel/panel-action-button.c:377
 msgid "Take Screenshot..."
 msgstr "Take Screenshot..."
 
-#: gnome-panel/panel-action-button.c:335
+#: gnome-panel/panel-action-button.c:378
 msgid "Take a screenshot of your desktop"
 msgstr "Take a screenshot of your desktop"
 
-#: gnome-panel/panel-action-button.c:344
+#: gnome-panel/panel-action-button.c:387
 msgid "Force Quit"
 msgstr "Force Quit"
 
-#: gnome-panel/panel-action-button.c:345
+#: gnome-panel/panel-action-button.c:388
 msgid "Force a misbehaving application to quit"
 msgstr "Force a misbehaving application to quit"
 
@@ -1627,7 +1643,7 @@ msgstr "Take screenshot"
 msgid "Take window screenshot"
 msgstr "Take window screenshot"
 
-#: gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/panel-menu-bar.c:210
 msgid "Actions"
 msgstr "Actions"
 
