@@ -1,3 +1,9 @@
+2005-02-26  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-recent.c: (panel_recent_model_changed_cb): use the right list
+	so we don't have a leak.
+	Should help for bug #168389
+
 2005-02-25  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-background.c: (panel_background_free): unref the monitor

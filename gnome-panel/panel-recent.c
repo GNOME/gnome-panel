@@ -113,10 +113,7 @@ panel_recent_model_changed_cb (EggRecentModel *model,
                                GList          *list,
                                GtkWidget      *menu_item)
 {
-	GList *recent_list = NULL;
-
-	recent_list = egg_recent_model_get_list (model);
-	if (recent_list)
+	if (list)
 		gtk_widget_set_sensitive (menu_item, TRUE);
 	else
 		gtk_widget_set_sensitive (menu_item, FALSE);
