@@ -462,7 +462,7 @@ register_toy(GtkWidget *applet,
 			    PANEL_APPLET_FORBIDDEN_PANELS,NULL);
 		
 	/*add to the array of applets*/
-	applets = g_array_append_val(applets,AppletInfo,info);
+	applets = g_array_append_val(applets,info);
 	applet_count++;
 
 	/*we will need to save this applet's config now*/
