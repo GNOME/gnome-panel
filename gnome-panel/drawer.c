@@ -248,7 +248,8 @@ leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 }
 
 static Drawer *
-create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
+create_drawer_applet(GtkWidget * drawer_panel,
+		     const char *tooltip, const char *pixmap,
 		     PanelOrientType orient)
 {
 	Drawer *drawer;
@@ -292,17 +293,17 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 }
 
 static Drawer *
-create_empty_drawer_applet(char *tooltip, char *pixmap,
+create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 			   PanelOrientType orient)
 {
-	GtkWidget *dw = drawer_widget_new(orient,
-					  BASEP_EXPLICIT_HIDE,
-					  BASEP_SHOWN,
-					  SIZE_STANDARD,
-					  TRUE, TRUE,
-					  PANEL_BACK_NONE, NULL,
-					  TRUE, FALSE, TRUE, NULL);
-	return create_drawer_applet(dw, tooltip,pixmap,orient);
+	GtkWidget *dw = drawer_widget_new (orient,
+					   BASEP_EXPLICIT_HIDE,
+					   BASEP_SHOWN,
+					   SIZE_STANDARD,
+					   TRUE, TRUE,
+					   PANEL_BACK_NONE, NULL,
+					   TRUE, FALSE, TRUE, NULL);
+	return create_drawer_applet (dw, tooltip, pixmap, orient);
 }
 
 void
@@ -346,30 +347,31 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 }
 
 gboolean
-load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
-		   PanelWidget *panel, int pos, gboolean exactpos)
+load_drawer_applet (int mypanel, const char *pixmap, const char *tooltip,
+		    PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Drawer *drawer;
-	PanelOrientType orient = get_applet_orient(panel);
+	PanelOrientType orient = get_applet_orient (panel);
 
-	if(mypanel < 0) {
-		drawer = create_empty_drawer_applet(tooltip,pixmap,orient);
-		if(drawer) panel_setup(drawer->drawer);
+	if (mypanel < 0) {
+		drawer = create_empty_drawer_applet (tooltip, pixmap, orient);
+		if (drawer != NULL)
+			panel_setup (drawer->drawer);
 	} else {
 		PanelData *dr_pd;
 
-		dr_pd = g_slist_nth_data(panel_list,mypanel);
+		dr_pd = g_slist_nth_data (panel_list, mypanel);
 
-		if(!dr_pd) {
+		if(dr_pd == NULL) {
 			g_warning ("Can't find the panel for drawer, making a new panel");
 			drawer = create_empty_drawer_applet(tooltip, pixmap, orient);
 			if(drawer) panel_setup(drawer->drawer);
 		} else {
-			drawer = create_drawer_applet(dr_pd->panel, tooltip,
-						      pixmap, orient);
+			drawer = create_drawer_applet (dr_pd->panel, tooltip,
+						       pixmap, orient);
 
-			drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
-						    orient);
+			drawer_widget_change_orient
+				(DRAWER_WIDGET(dr_pd->panel), orient);
 		}
 	}
 

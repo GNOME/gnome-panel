@@ -150,15 +150,16 @@ char *
 get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii)
 {
 	int i;
-	int constantlen = strlen("--activate-goad-server");
+	int constantlen = strlen ("--activate-goad-server");
 
-	g_return_val_if_fail(ii!=NULL,NULL);
+	g_return_val_if_fail (ii != NULL, NULL);
 
-	if (!ii->exec || !ii->type)
+	if (ii->exec == NULL ||
+	    ii->type == NULL)
 		return NULL;
 	
-	if(strcmp(ii->type, "PanelApplet")==0) {
-		return g_strjoinv(" ", ii->exec);
+	if (strcmp (ii->type, "PanelApplet") == 0) {
+		return g_strjoinv (" ", ii->exec);
 	} else {
 		/*this is here as a horrible hack since that's the way it
 		  used to work, but now one should make the .desktop type
@@ -218,7 +219,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 			ffr->parent = NULL;
 			fr_free (ffr, TRUE);
 		}
-		g_slist_free(dr->recs);
+		g_slist_free (dr->recs);
 		dr->recs = NULL;
 
 		if (dr->tryexecs != NULL) {
@@ -227,17 +228,22 @@ fr_free (FileRec *fr, gboolean free_fr)
 			dr->tryexecs = NULL;
 		}
 	}
-	if(free_fr) {
-		dir_list = g_slist_remove(dir_list,fr);
+
+	if (free_fr) {
+		dir_list = g_slist_remove (dir_list, fr);
 		if (fr->type == FILE_REC_DIR)
 			g_chunk_free (fr, dir_chunk);
 		else
 			g_chunk_free (fr, file_chunk);
 	} else  {
-		if(fr->type == FILE_REC_DIR)
-			memset(fr,0,sizeof(DirRec));
+		int type = fr->type;
+		if (fr->type == FILE_REC_DIR)
+			memset (fr, 0, sizeof(DirRec));
 		else
-			memset(fr,0,sizeof(FileRec));
+			memset (fr, 0, sizeof(FileRec));
+		/* we must reset the type so that we don't crash
+		 * if we call fr_free on this again */
+		fr->type = type;
 	}
 }
 
@@ -257,7 +263,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 	ffr = g_chunk_new0 (FileRec, file_chunk);
 	ffr->type = FILE_REC_EXTRA;
-	ffr->name = g_concat_dir_and_file(fr->name, ".order");
+	ffr->name = g_concat_dir_and_file (fr->name, ".order");
 	ffr->parent = dr;
 	if (stat (ffr->name, &s) != -1)
 		ffr->mtime = s.st_mtime;
@@ -267,7 +273,7 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	mergedir = fr_get_mergedir (fr->name);
 
 	flist = get_files_from_menudir(fr->name);
-	while(flist) {
+	while (flist != NULL) {
 		gboolean merged;
 		char *short_name = flist->data;
 		char *name = g_concat_dir_and_file(fr->name, short_name);
@@ -295,9 +301,9 @@ fr_fill_dir(FileRec *fr, int sublevels)
 
 		if (S_ISDIR (s.st_mode)) {
 			if (merged)
-				ffr = fr_read_dir(NULL, name, NULL, &s, sublevels-1);
+				ffr = fr_read_dir (NULL, name, NULL, &s, sublevels-1);
 			else 
-				ffr = fr_read_dir(NULL, name, &s, NULL, sublevels-1);
+				ffr = fr_read_dir (NULL, name, &s, NULL, sublevels-1);
 			g_free(name);
 			if(ffr) {
 				ffr->merged = merged;
@@ -353,24 +359,25 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	}
 	dr->recs = g_slist_reverse (dr->recs);
 
-	g_free(mergedir);
+	g_free (mergedir);
 }
 
 FileRec *
-fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge_dstat, int sublevels)
+fr_read_dir (DirRec *dr, const char *mdir, struct stat *dstat,
+	     struct stat *merge_dstat, int sublevels)
 {
 	char *fname;
 	struct stat s;
 	FileRec *fr;
-	time_t curtime = time(NULL);
+	time_t curtime = time (NULL);
 	char *mergedir;
 	
-	g_return_val_if_fail(mdir!=NULL, NULL);
+	g_return_val_if_fail (mdir != NULL, NULL);
 
 	mergedir = fr_get_mergedir (mdir);
 
 	/*this will zero all fields*/
-	if(dr == NULL) {
+	if (dr == NULL) {
 		dr = g_chunk_new0 (DirRec, dir_chunk);
 		dr->force_reread = FALSE;
 		/* this must be set otherwise we may messup on
@@ -379,20 +386,21 @@ fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge
 	}
 	fr = (FileRec *)dr;
 
-	if(fr->last_stat < curtime-1) {
-		if(dstat == NULL) {
+	if (fr->last_stat < curtime-1) {
+		if (dstat == NULL) {
 			if (stat (mdir, &s) == -1) {
-				fr_free(fr, TRUE);
-				g_free(mergedir);
+				fr_free (fr, TRUE);
+				g_free (mergedir);
 				return NULL;
 			}
 
 			fr->mtime = s.st_mtime;
-		} else
+		} else {
 			fr->mtime = dstat->st_mtime;
+		}
 
-		if(mergedir) {
-			if(merge_dstat == NULL) {
+		if (mergedir != NULL) {
+			if (merge_dstat == NULL) {
 				if (stat (mergedir, &s) == -1) {
 					dr->merge_mtime = 0;
 				} else {
@@ -405,66 +413,77 @@ fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge
 		fr->last_stat = curtime;
 	}
 
+	g_free (mergedir);
+
 	fr->type = FILE_REC_DIR;
-	g_free(fr->name);
-	fr->name = g_strdup(mdir);
+	g_free (fr->name);
+	fr->name = g_strdup (mdir);
 
 	s.st_mtime = 0;
-	fname = g_concat_dir_and_file(mdir,".directory");
+	fname = g_concat_dir_and_file (mdir, ".directory");
 	if (dr->dentrylast_stat >= curtime-1 ||
 	    stat (fname, &s) != -1) {
 		GnomeDesktopEntry *dentry;
 		dentry = gnome_desktop_entry_load(fname);
-		if(dentry) {
-			g_free(fr->icon);
+		if (dentry != NULL) {
+			g_free (fr->icon);
 			fr->icon = dentry->icon;
 			dentry->icon = NULL;
-			g_free(fr->fullname);
+			g_free (fr->fullname);
 			fr->fullname = dentry->name;
-			g_free(fr->comment);
+			g_free (fr->comment);
 			fr->comment = g_strdup (dentry->comment);
 			dentry->name = NULL;
-			gnome_desktop_entry_free(dentry);
+			gnome_desktop_entry_free (dentry);
 		} else {
-			g_free(fr->icon);
+			g_free (fr->icon);
 			fr->icon = NULL;
-			g_free(fr->fullname);
+			g_free (fr->fullname);
 			fr->fullname = NULL;
-			g_free(fr->comment);
+			g_free (fr->comment);
 			fr->comment = NULL;
 		}
 		/*if we statted*/
-		if(s.st_mtime)
+		if (s.st_mtime != 0)
 			dr->dentrylast_stat = curtime;
 		dr->dentrymtime = s.st_mtime;
 	}
-	g_free(fname);
+	g_free (fname);
 	
-	dir_list = g_slist_prepend(dir_list, fr);
+	dir_list = g_slist_prepend (dir_list, fr);
 	
 	/*if this is a fake structure, so we don't actually look into
 	  the directory*/
-	if(sublevels > 0)
-		fr_fill_dir(fr, sublevels);
+	if (sublevels > 0)
+		fr_fill_dir (fr, sublevels);
 
 	return fr;
 }
 
 
 FileRec *
-fr_replace(FileRec *fr)
+fr_replace (FileRec *fr)
 {
-	char *tmp = fr->name;
+	char *name = fr->name;
 	DirRec *par = fr->parent;
 	
-	g_assert(fr->type == FILE_REC_DIR);
+	g_assert (fr->type == FILE_REC_DIR);
 
+	/* null these so they don't get freed */
 	fr->parent = NULL;
 	fr->name = NULL;
-	fr_free(fr,FALSE);
-	fr = fr_read_dir((DirRec *)fr, tmp, NULL, NULL, 1);
-	if(fr)
+
+	/* don't free the actual structure */
+	fr_free (fr, FALSE);
+
+	/* sanity */
+	fr->type = FILE_REC_DIR;
+
+	fr = fr_read_dir ((DirRec *)fr, name, NULL, NULL, 1);
+	if (fr != NULL)
 		fr->parent = par;
+	g_free (name);
+
 	return fr;
 }
 
@@ -479,8 +498,8 @@ fr_check_and_reread (FileRec *fr)
 	g_return_val_if_fail (fr != NULL, fr);
 	g_return_val_if_fail (fr->type == FILE_REC_DIR, fr);
 
-	if(dr->recs == NULL) {
-		fr_fill_dir(fr,1);
+	if (dr->recs == NULL) {
+		fr_fill_dir (fr, 1);
 	} else {
 		gboolean reread = FALSE;
 		gboolean any_change = FALSE;
@@ -510,7 +529,7 @@ fr_check_and_reread (FileRec *fr)
 		if ( ! reread &&
 		    fr->last_stat < curtime-1) {
 			if(stat(fr->name, &ds)==-1) {
-				fr_free(fr,TRUE);
+				fr_free (fr, TRUE);
 				return NULL;
 			}
 			if(ds.st_mtime != fr->mtime)
@@ -594,16 +613,23 @@ fr_check_and_reread (FileRec *fr)
 				if(ffr->mtime != s.st_mtime) {
 					GnomeDesktopEntry *dentry;
 					dentry = gnome_desktop_entry_load(ffr->name);
-					if(dentry) {
-						g_free(ffr->icon);
+					if (dentry != NULL) {
+						/* take over memory */
+						g_free (ffr->icon);
 						ffr->icon = dentry->icon;
 						dentry->icon = NULL;
-						g_free(ffr->fullname);
+
+						/* take over memory */
+						g_free (ffr->fullname);
 						ffr->fullname = dentry->name;
-						g_free(ffr->comment);
-						ffr->comment = g_strdup (dentry->comment);
 						dentry->name = NULL;
-						gnome_desktop_entry_free(dentry);
+
+						/* take over memory */
+						g_free (ffr->comment);
+						ffr->comment = dentry->comment;
+						dentry->comment = NULL;
+
+						gnome_desktop_entry_free (dentry);
 					} else {
 						reread = TRUE;
 						break;
@@ -631,9 +657,12 @@ fr_check_and_reread (FileRec *fr)
 			ret = fr_replace(fr);
 		} else if(any_change) {
 			GSList *li;
-			for(li = dr->mfl; li!=NULL; li=g_slist_next(li))
-				((MenuFinfo *)li->data)->fr = NULL;
-			g_slist_free(dr->mfl);
+			for(li = dr->mfl; li!=NULL; li = g_slist_next(li)) {
+				MenuFinfo *mf = li->data;
+				li->data = NULL;
+				mf->fr = NULL;
+			}
+			g_slist_free (dr->mfl);
 			dr->mfl = NULL;
 		}
 	}
@@ -641,27 +670,28 @@ fr_check_and_reread (FileRec *fr)
 }
 
 FileRec *
-fr_get_dir(const char *mdir)
+fr_get_dir (const char *mdir)
 {
 	GSList *li;
-	g_return_val_if_fail(mdir!=NULL, NULL);
+	g_return_val_if_fail (mdir!=NULL, NULL);
+
 	for(li = dir_list; li != NULL; li = li->next) {
 		FileRec *fr = li->data;
 		g_assert(fr != NULL);
 		g_assert(fr->name != NULL);
-		if(strcmp(fr->name, mdir)==0)
-			return fr_check_and_reread(fr);
+		if (strcmp (fr->name, mdir) == 0)
+			return fr_check_and_reread (fr);
 	}
-	return fr_read_dir(NULL, mdir, NULL, NULL, 1);
+	return fr_read_dir (NULL, mdir, NULL, NULL, 1);
 }
 
 void
-fr_force_reread(void)
+fr_force_reread (void)
 {
 	GSList *li;
 	for(li = dir_list; li != NULL; li = li->next) {
 		DirRec *dr = li->data;
-		g_assert(dr != NULL);
+		g_assert (dr != NULL);
 
 		dr->force_reread = TRUE;
 	}

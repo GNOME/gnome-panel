@@ -534,10 +534,12 @@ fake_destroyed(GtkWidget *w, FakeIcon *fake)
 	/* XXX: we need to work right, so even though this should not be
 	 * necessary it's here for correctness sake.  It seems we might not
 	 * handle everything correctly and this may be needed */
-	icons_to_load = g_slist_remove(icons_to_load, fake);
+	icons_to_load = g_slist_remove (icons_to_load, fake);
 
-	g_free(fake->file);
-	g_free(fake);
+	g_free (fake->file);
+	fake->file = NULL;
+
+	g_free (fake);
 }
 
 static gboolean
@@ -558,7 +560,7 @@ load_icons_handler (gpointer data)
 	}
 
 	fake = icons_to_load->data;
-	icons_to_load = g_slist_remove(icons_to_load, fake);
+	icons_to_load = g_slist_remove (icons_to_load, fake);
 
 	parent = fake->fake->parent;
 	
@@ -567,11 +569,13 @@ load_icons_handler (gpointer data)
 
 	/* destroy and not unref, as it's already inside a parent */
 	gtk_widget_destroy(fake->fake);
+	fake->fake = NULL;
 
-	pb = gdk_pixbuf_new_from_file(fake->file);
-	if(!pb) {
-		g_free(fake->file);
-		g_free(fake);
+	pb = gdk_pixbuf_new_from_file (fake->file);
+	if (pb == NULL) {
+		g_free (fake->file);
+		fake->file = NULL;
+		g_free (fake);
 		return TRUE;
 	}
 	
@@ -608,9 +612,9 @@ load_icons_handler (gpointer data)
 }
 
 static void
-fake_unmapped(GtkWidget *w, FakeIcon *fake)
+fake_unmapped (GtkWidget *w, FakeIcon *fake)
 {
-	icons_to_load = g_slist_remove(icons_to_load, fake);
+	icons_to_load = g_slist_remove (icons_to_load, fake);
 }
 
 static void
@@ -842,7 +846,8 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 static void
 remove_menuitem (GtkWidget *widget, const char *item_loc)
 {
-	char *file, *dir, buf[256], *order_in_name, *order_out_name;
+	const char *file;
+	char *dir, buf[256], *order_in_name, *order_out_name;
 	FILE *order_in_file, *order_out_file;
 
 	g_return_if_fail (item_loc != NULL);
@@ -873,26 +878,29 @@ remove_menuitem (GtkWidget *widget, const char *item_loc)
 	if (order_in_file != NULL) {
 		/*no .order file so we can just leave*/
 		g_free (order_in_name);
+		g_free (dir);
 		return;
 	}
 
 	order_out_name = g_concat_dir_and_file(dir, ".order.tmp");
 	order_out_file = fopen(order_out_name, "w");
 
+	g_free (dir);
+
 	if (order_out_file != NULL) {
 		panel_error_dialog(_("Could not open .order file: %s\n%s"),
 				   order_out_name,
 				   g_unix_error_string(errno));
 
-		g_free(order_in_name);
-		g_free(order_out_name);
-		fclose(order_in_file);
+		g_free (order_in_name);
+		g_free (order_out_name);
+		fclose (order_in_file);
 		return;
 	}
 
-	while (fgets(buf, sizeof(buf)-1, order_in_file)) {
+	while (fgets (buf, sizeof(buf)-1, order_in_file) != NULL) {
 		g_strchomp (buf);  /* remove trailing '\n' */
-		if (strcmp(buf, file) != 0)
+		if (strcmp (buf, file) != 0)
 			fprintf (order_out_file, "%s\n", buf);
 	}
 
@@ -942,7 +950,7 @@ add_app_to_panel (GtkWidget *widget, const char *item_loc)
 	PanelWidget *panel = get_panel_from_menu_data (widget);
 	Launcher *launcher;
 
-	launcher = load_launcher_applet(item_loc, panel, 0, FALSE);
+	launcher = load_launcher_applet (item_loc, panel, 0, FALSE);
 
 	if (launcher != NULL)
 		launcher_hoard (launcher);
@@ -950,14 +958,15 @@ add_app_to_panel (GtkWidget *widget, const char *item_loc)
 
 
 static void
-add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
+add_drawers_from_dir (const char *dirname, const char *name,
+		      int pos, PanelWidget *panel)
 {
 	AppletInfo *info;
 	Drawer *drawer;
 	PanelWidget *newpanel;
 	GnomeDesktopEntry *item_info;
 	char *dentry_name;
-	char *subdir_name;
+	const char *subdir_name;
 	char *pixmap_name;
 	char *p;
 	char *filename = NULL;
@@ -972,13 +981,14 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	g_free (dentry_name);
 
 	if(!name)
-		subdir_name = item_info?item_info->name:NULL;
+		subdir_name = item_info ? item_info->name : NULL;
 	else
 		subdir_name = name;
 	pixmap_name = item_info?item_info->icon:NULL;
 
-	if(!load_drawer_applet(-1, pixmap_name, subdir_name, panel, pos, FALSE) ||
-	   !applets_last) {
+	if( ! load_drawer_applet (-1, pixmap_name, subdir_name,
+				  panel, pos, FALSE) ||
+	    applets_last == NULL) {
 		g_warning("Can't load a drawer");
 		return;
 	}
@@ -1016,8 +1026,8 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		}
 
 		if (S_ISDIR (s.st_mode)) {
-			add_drawers_from_dir(filename, NULL, G_MAXINT/2,
-					     newpanel);
+			add_drawers_from_dir (filename, NULL, G_MAXINT/2,
+					      newpanel);
 			continue;
 		}
 			
@@ -1056,7 +1066,7 @@ add_menudrawer_to_panel(GtkWidget *w, gpointer data)
 	PanelWidget *panel = get_panel_from_menu_data (w);
 	g_return_if_fail(mf);
 	
-	add_drawers_from_dir(mf->menudir, mf->dir_name, 0, panel);
+	add_drawers_from_dir (mf->menudir, mf->dir_name, 0, panel);
 }
 
 static void

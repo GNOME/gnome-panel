@@ -1,3 +1,10 @@
+Sun Dec 03 15:41:33 2000  George Lebl <jirka@5z.com>
+
+	* menu-fentry.c, menu.c, drawer.[ch]:  Fix leak pointed out by
+	  Juan Pablo Mendoza <pablo_juan@yahoo.com>, plus several other minor
+	  memleaks.  Also a bunch of cleanup and some sanity fixes.  Also
+	  some constization.
+
 Sat Dec 02 23:34:09 2000  George Lebl <jirka@5z.com>
 
 	* panel.c, menu.c: fix the unref ugliness by removing the signal
