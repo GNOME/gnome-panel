@@ -465,26 +465,6 @@ queue_resize_foreach(GtkWidget *w, gpointer data)
 	}
 }
 
-/*the following is slightly ugly .... but it works, I need to send the
-  orient change in an idle handeler*/
-static int
-panel_applet_added_idle(gpointer data)
-{
-	AppletInfo *info = data;
-	PanelWidget *panel;
-	
-	g_return_val_if_fail(info,FALSE);
-	g_return_val_if_fail(info->widget,TRUE);
-	g_return_val_if_fail(info->widget->parent,TRUE);
-
-	panel = PANEL_WIDGET(info->widget->parent);
-
-	orientation_change(info,panel);
-	back_change(info,panel);
-
-	return FALSE;
-}
-
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
@@ -524,7 +504,8 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		corner_widget_queue_pop_down(CORNER_WIDGET(panelw));
 	}
 
-	gtk_idle_add(panel_applet_added_idle,info);
+	orientation_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
+	back_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
 
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;

@@ -1,3 +1,8 @@
+Sat Aug 21 18:51:05 1999  George Lebl  <jirka@5z.com>
+
+	* panel.c: don't send the orientation and back changes from an
+	  idle on addition to avoid races when the applet dies too quick
+
 Fri Aug 20 14:54:36 1999  George Lebl  <jirka@5z.com>
 
         * panel-widget.c: use imlib_copy instead of imlib_move to get
