@@ -438,6 +438,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	GtkWidget *button;
 	GtkWidget *box;
 	GtkWidget *hbox;
+	GtkWidget *vbox;
         GtkWidget *table;
 	
 	/* main hbox */
@@ -518,10 +519,14 @@ corner_notebook_page(PerPanelConfig *ppc)
 		break;
 	}
 
+	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
+	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
 	/* Orientation frame */
 	frame = gtk_frame_new (_("Orientation"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
 	/* vbox for frame */
@@ -556,7 +561,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	/* Hidebuttons frame */
 	frame = gtk_frame_new (_("Hidebutton Options"));
 	gtk_container_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
 	/* vbox for frame */
