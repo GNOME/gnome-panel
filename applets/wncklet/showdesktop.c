@@ -498,7 +498,7 @@ button_toggled_callback (GtkWidget       *button,
                                                  _("Your window manager does not support the show desktop button, or you are not running a window manager."));
 
                 g_object_add_weak_pointer (G_OBJECT (dialog),
-                                           (void**) &dialog);
+                                           (gpointer) &dialog);
                 
                 g_signal_connect (G_OBJECT (dialog), "response",
                                   G_CALLBACK (gtk_widget_destroy),
