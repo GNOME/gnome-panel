@@ -351,8 +351,8 @@ panel_session_die (GnomeClient *client,
 	    i<applet_count;
 	    i++,info++) {
 		if(info->widget)
-		  gtk_signal_disconnect(GTK_OBJECT(info->widget),
-					info->destroy_callback);
+			gtk_signal_disconnect(GTK_OBJECT(info->widget),
+					      info->destroy_callback);
 	}
 	
 	puts("2");
@@ -360,6 +360,8 @@ panel_session_die (GnomeClient *client,
 	while(panel_list) {
 		PanelData *pd = panel_list->data;
 		panel_list = g_list_remove_link(panel_list,panel_list);
+		gtk_signal_disconnect(GTK_OBJECT(pd->panel),
+				      pd->destroy_callback);
 		gtk_widget_destroy(pd->panel);
 	}
 	

@@ -1308,10 +1308,11 @@ panel_setup(GtkWidget *panelw)
 			   "size_allocate",
 			   GTK_SIGNAL_FUNC(panel_size_allocate),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panelw),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(panel_destroy),
-			   panel_menu);
+	pd->destroy_callback =
+		gtk_signal_connect(GTK_OBJECT(panelw),
+				   "destroy",
+				   GTK_SIGNAL_FUNC(panel_destroy),
+				   panel_menu);
 
 	/*with this we capture button presses throughout all the widgets of the
 	  panel*/

@@ -19,6 +19,7 @@ typedef struct _PanelData PanelData;
 struct _PanelData {
 	PanelType type;
 	GtkWidget *panel;
+	int destroy_callback;
 };
 
 /*get the default panel widget if the panel has more then one or

@@ -353,6 +353,11 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 	DrawerDropZonePos drop_pos;
 
 	g_return_if_fail(drawer!=NULL);
+	
+	/*ignore orient events until we are realized, this will only
+	  be the initial one and we have already set the orientation*/
+	if(!GTK_WIDGET_REALIZED(drawer->drawer))
+		return;
 
 	drawer->orient = orient;
 
