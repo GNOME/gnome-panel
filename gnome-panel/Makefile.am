@@ -280,7 +280,7 @@ $(srcdir)/panel-marshal.c: panel-marshal.list
 $(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_enum_headers)
 	cd $(srcdir) \
 	&& glib-mkenums \
-			--fhead "#include <gobject/genums.h>\n" \
+			--fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
