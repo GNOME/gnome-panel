@@ -661,7 +661,7 @@ panel_applet_frame_get_name (char *iid)
 	query = g_strdup_printf ("iid == '%s'", iid);
 
 	list = bonobo_activation_query (query, NULL, NULL);
-	if (list) {
+	if (list && list->_length > 0 && list->_buffer) {
 		Bonobo_ServerInfo *info = &list->_buffer [0];
 		const GList       *langs_glist;
 		GSList            *langs_gslist;
