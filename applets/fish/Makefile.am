@@ -9,8 +9,6 @@ INCLUDES =						\
 	$(WARN_CFLAGS)					\
 	$(PANEL_CFLAGS)
 
-SUBDIRS =
-
 EXTRA_SUBDIRS = help
 
 bin_PROGRAMS = fish-applet-2

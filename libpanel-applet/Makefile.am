@@ -74,9 +74,10 @@ panel-applet-marshal.h: panel-applet-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --header --prefix=panel_applet_marshal > $@
 
 panel-applet-marshal.c: panel-applet-marshal.list $(GLIB_GENMARSHAL)
+	echo "#include \"panel-applet-marshal.h\"" > $@ && \
 	$(GLIB_GENMARSHAL) $< --body --prefix=panel_applet_marshal > $@
 
-panel_applet_enum_headers = panel-applet.h
+panel_applet_enum_headers = $(top_srcdir)/libpanel-applet/panel-applet.h
 
 panel-applet-enums.c: @REBUILD@ $(panel_applet_enum_headers)
 	glib-mkenums --fhead "#include <glib-object.h>\n" \

@@ -66,7 +66,8 @@ BUILT_SOURCES = \
 panel_sources =			\
 	panel-typebuiltins.c	\
 	panel-typebuiltins.h	\
-	panel-marshal-main.c	\
+	panel-marshal.c		\
+	panel-marshal.h		\
 	main.c			\
 	panel-widget.c  	\
 	basep-widget.c  	\
@@ -193,32 +194,23 @@ sys_DATA = gnome-panel-properties.desktop
 deskdir = $(datadir)/gnome/apps/Settings/Desktop/
 desk_DATA = gnome-panel-properties.desktop
 
-$(srcdir)/panel-util.c: $(CORBA_SRCLIST)
+panel_enum_headers =				\
+	$(top_srcdir)/panel/panel-types.h	\
+	$(top_srcdir)/panel/panel-widget.h	\
+	$(top_srcdir)/panel/basep-widget.h	\
+	$(top_srcdir)/panel/aligned-widget.h	\
+	$(top_srcdir)/panel/sliding-widget.h	\
+	$(top_builddir)/panel/GNOME_Panel.h
 
-panel_enum_headers =      \
-	panel-types.h     \
-	panel-widget.h    \
-	basep-widget.h    \
-	aligned-widget.h  \
-	sliding-widget.h  \
-	GNOME_Panel.h
+panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
+	$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@
 
-$(srcdir)/panel-marshal.h: panel-marshal.list
-	cd $(srcdir) \
-	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --header >> xgen-gmh \
-	&& (cmp -s xgen-gmh panel-marshal.h || cp xgen-gmh panel-marshal.h) \
-	&& rm -f xgen-gmh xgen-gmh~
+panel-marshal.c: panel-marshal.list $(GLIB_GENMARSHAL)
+	echo "#include \"panel-marshal.h\"" > $@ && \
+	$(GLIB_GENMARSHAL) $< --body --prefix=panel_marshal >> $@
 
-$(srcdir)/panel-marshal.c: panel-marshal.list
-	cd $(srcdir) \
-	&& glib-genmarshal --prefix=panel_marshal panel-marshal.list --body >> xgen-gmc \
-	&& (cp xgen-gmc panel-marshal.c || cp xgen-gmc panel-marshal.c) \
-	&& rm -f xgen-gmc xgen-gmc~
-
-$(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_enum_headers)
-	cd $(srcdir) \
-	&& glib-mkenums \
-			--fhead "#include <glib-object.h>\n" \
+panel-typebuiltins.c: @REBUILD@ $(panel_enum_headers)
+	glib-mkenums    --fhead "#include <glib-object.h>\n" \
 			--fhead "#include \"panel-typebuiltins.h\"\n\n" \
 			--fprod "\n/* enumerations from \"@filename@\" */" \
 			--fprod "\n#include \"@filename@\"\n" \
@@ -230,14 +222,10 @@ $(srcdir)/panel-typebuiltins.c: @REBUILD@ Makefile.am $(panel_enum_headers)
 			--vtail "  if (!type)\n" \
 			--vtail "    type = g_@type@_register_static (\"@EnumName@\", _@enum_name@_values);\n\n" \
 			--vtail "  return type;\n}\n\n" \
-		$(panel_enum_headers) > xgen-gtbec \
-	&& cp xgen-gtbec $(@F) \
-	&& rm -f xgen-gtbec
+		$(panel_enum_headers) > $@
 
-$(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
-	cd $(srcdir) \
-	&& glib-mkenums \
-			--fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
+panel-typebuiltins.h: @REBUILD@ $(panel_enum_headers)
+	glib-mkenums    --fhead "#ifndef __PANEL_TYPEBUILTINS_H__\n" \
 			--fhead "#define __PANEL_TYPEBUILTINS_H__ 1\n\n" \
 			--fhead "G_BEGIN_DECLS\n\n" \
 			--ftail "G_END_DECLS\n\n" \
@@ -245,9 +233,7 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_enum_headers)
 			--fprod "\n/* --- @filename@ --- */" \
 			--eprod "#define PANEL_TYPE_@ENUMNAME@ @enum_name@_get_type()\n" \
 			--eprod "GType @enum_name@_get_type (void);\n" \
-		$(panel_enum_headers) > xgen-gth \
-	&& cp xgen-gth $(@F) \
-	&& rm -f xgen-gth
+		$(panel_enum_headers) >  $@
 
 schemadir   = $(sysconfdir)/gconf/schemas
 schema_DATA = panelglobalconfig.schema
