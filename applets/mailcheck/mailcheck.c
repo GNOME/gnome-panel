@@ -1101,7 +1101,7 @@ phelp_cb (GtkWidget *w, gint tab, gpointer data)
 {
 	GnomeHelpMenuEntry help_entry = { "mailcheck_applet", NULL };
 
-	char *das_names[] =  { "index.html#MAILCHECK_PREFS",
+	char *das_names[] =  { "index.html#MAILCHECK-PREFS",
 			       "index.html#MAILCHECK-SETTINGS-MAILBOX-FIG" };
 
 	help_entry.path = das_names[((MailCheck *)data)->type];
