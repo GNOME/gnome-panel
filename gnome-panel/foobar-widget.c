@@ -476,10 +476,11 @@ foobar_widget_init (FoobarWidget *foo)
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_bar_append (GTK_MENU_BAR (menu_bar), menuitem);
 
+	append_folder_menu  (menu_bar, _("Favorites"), NULL, FALSE, "apps/.");
 	append_folder_menu  (menu_bar, _("Settings"),  NULL, TRUE,
 			     "gnome/apps/Settings/.");
 	append_desktop_menu (menu_bar);
-	append_folder_menu  (menu_bar, _("Favorites"), NULL, FALSE, "apps/.");
+
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
 	
 	
