@@ -72,8 +72,9 @@ panel_clean_applet(int applet_id)
 					    PANEL_APPLET_PARENT_KEY);
 
 		if(panel) {
-			gtk_container_remove(GTK_CONTAINER(panel),w);
-			gtk_widget_unref(w);
+			/*gtk_container_remove(GTK_CONTAINER(panel),w);
+			gtk_widget_unref(w);*/
+			gtk_widget_destroy(w);
 		}
 	}
 	if(type == APPLET_DRAWER) {

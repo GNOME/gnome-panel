@@ -96,21 +96,8 @@ socket_realized(GtkWidget *w, gpointer data)
 	return FALSE;
 }
 
-#if 0
-/*FIXME: I dunno how I should handle the destruction of the applet itself,
-  the problem is that the socket doesn't get destroyed nor does it get a
-  delete_event when it's child dies ...*/
 static int
-socket_delete_event(GtkWidget *w, gpointer data)
-{
-	Swallow *swallow = data;
-	gtk_widget_destroy(swallow->ebox);
-	return TRUE;
-}
-#endif
-
-static int
-do_the_destroy(gpointer data)
+socket_destroyed(GtkWidget *w, gpointer data)
 {
 	Swallow *swallow = data;
 	
@@ -119,14 +106,8 @@ do_the_destroy(gpointer data)
 	g_free(swallow->title);
 	g_free(swallow->path);
 	g_free(swallow);
-	return FALSE;
-}
 
-static int
-socket_destroyed(GtkWidget *w, gpointer data)
-{
-	gtk_idle_add(do_the_destroy,data);
-	return TRUE;
+	return FALSE;
 }
 
 
@@ -306,10 +287,8 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 		gtk_widget_set_usize(swallow->socket,width,height);
 	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"realize",
 			         GTK_SIGNAL_FUNC(socket_realized), NULL);
-	gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"destroy",
-			         GTK_SIGNAL_FUNC(socket_destroyed), swallow);
-	/*gtk_signal_connect_after(GTK_OBJECT(swallow->socket),"delete_event",
-			         GTK_SIGNAL_FUNC(socket_delete_event), swallow);*/
+	gtk_signal_connect(GTK_OBJECT(swallow->socket),"destroy",
+			   GTK_SIGNAL_FUNC(socket_destroyed), swallow);
 
 	gtk_table_attach(GTK_TABLE(table),swallow->socket,
 			 1,2,1,2,
