@@ -38,95 +38,37 @@
 #include "panel-globals.h"
 #include "panel-recent.h"
 #include "panel-stock-icons.h"
+#include "panel-multiscreen.h"
 
-/* FIXME: This code really should not be in the panel */
 static gboolean
 show_uri (const char *uri, const char *mime_type, GdkScreen *screen,
 	  GError **error)
 {
+	char **env;
+	GnomeVFSResult result;
 	GnomeVFSMimeApplication *app;
-	GString                 *str;
-	char                    *cmd   = NULL;
-	char                    *path;
-	char			*quoted;
-	gboolean                 ret   = TRUE;
+	GList *uris = NULL;
 
-	/* Don't allow suspicious looking URIs */
-	if (uri [0] == '-')
-		return FALSE;
-	
-	app = gnome_vfs_mime_get_default_application (mime_type);
-
-	if (!app) {
-		g_set_error (error, 0, 0,
-			     _("Couldn't find a suitable application"));
+	app = gnome_vfs_mime_get_default_application_for_uri (uri, mime_type);
+	if (app == NULL) {
+		g_set_error (error, 0, 0, _("Couldn't find a suitable application"));
 		return FALSE;
 	}
 
-	str = g_string_new ("");
+	env = panel_make_environment_for_screen (screen, NULL);
 
-	if (app->requires_terminal) {
-		/* FIXME: we should use their preferred terminal
-		 * maybe a multiscreen variant of gnome_execcute_terminal_shell?
-		 */
-		g_string_append_printf (str, "gnome-terminal -x %s", app->command);
-	} else
-		str = g_string_append (str, app->command);
+	uris = g_list_append (uris, (gpointer)uri);
+	result = gnome_vfs_mime_application_launch_with_env (app, uris, env);
+	g_list_free (uris);
 
-	switch (app->expects_uris) {
-	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_PATHS:
-		path = gnome_vfs_get_local_path_from_uri (uri);
-		if (path != NULL) {
-			quoted = g_shell_quote (path);
-			g_free (path);
-
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
-		} else {
-			gnome_vfs_mime_application_free (app);
-			g_string_free (str, TRUE);
-			g_set_error (error, 0, 0, _("The default application for"
-				     " this type of file cannot handle remote "
-				     "files"));
-			return FALSE;
-		}
-		break;
-
-	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_URIS:
-		quoted = g_shell_quote (uri);
-		g_string_append_printf (str, " %s", quoted);
-		g_free (quoted);
-		break;
-
-	case GNOME_VFS_MIME_APPLICATION_ARGUMENT_TYPE_URIS_FOR_NON_FILES:
-		path = gnome_vfs_get_local_path_from_uri (uri);
-
-		if (path != NULL) {
-			quoted = g_shell_quote (path);
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
-			g_free (path);
-		} else {
-			quoted = g_shell_quote (uri);
-			g_string_append_printf (str, " %s", quoted);
-			g_free (quoted);
-		}
-
-		break;
-	}
-
+	g_strfreev (env);
 	gnome_vfs_mime_application_free (app);
 
-	cmd = g_string_free (str, FALSE);
-
-	if (cmd != NULL &&
-	    !gdk_spawn_command_line_on_screen (screen, cmd, error)) {
-		ret = FALSE;
+	if (result != GNOME_VFS_OK) {
+		return FALSE;
 	}
 
-	g_free (cmd);
-
-	return ret;
+	return TRUE;
 }
 
 
