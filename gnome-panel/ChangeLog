@@ -1,5 +1,20 @@
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
+	When adding with the keyboard, try and find a free
+	spot rather than sticking it at the start of the
+	panel.
+
+	* applet.c: (panel_applet_register): don't set pos to 0.
+	
+	* panel-widget.c:
+	(panel_widget_find_empty_pos),
+	(panel_widget_add): allow -1.
+	
+	* panel.c: (panel_popup_menu): set insertion_pos to
+	-1 if the current event isn't a button press.
+
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: (load_launcher_applet): get the args to
 	panel_applet_register() the right way around so adding
 	launchers works properly again.

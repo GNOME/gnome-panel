@@ -981,8 +981,7 @@ panel_applet_register (GtkWidget       *applet,
 		       const char      *id)
 {
 	AppletInfo *info;
-	int newpos;
-	gboolean insert_at_pos;
+	gboolean    insert_at_pos = FALSE;
 	
 	g_return_val_if_fail (applet != NULL && panel != NULL, NULL);
 
@@ -1021,19 +1020,11 @@ panel_applet_register (GtkWidget       *applet,
 
 	registered_applets = g_slist_append (registered_applets, info);
 
-	/*add at the beginning if pos == -1*/
-	if (pos >= 0) {
-		newpos = pos;
-		insert_at_pos = FALSE;
-	} else {
-		newpos = 0;
-		insert_at_pos = FALSE;
-	}
 	/* if exact pos is on then insert at that precise location */
 	if (exactpos)
 		insert_at_pos = TRUE;
 
-	if (panel_widget_add (panel, applet, locked, newpos, insert_at_pos) == -1) {
+	if (panel_widget_add (panel, applet, locked, pos, insert_at_pos) == -1) {
 		GSList *l;
 
 		for (l = panels; l; l = l->next)

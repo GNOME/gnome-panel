@@ -347,17 +347,20 @@ panel_popup_menu (PanelToplevel *toplevel,
 	PanelWidget *panel_widget;
 	GtkWidget   *menu;
 	PanelData   *panel_data;
-	int          x = -1, y = 1;
+	GdkEvent    *current_event;
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 	panel_data   = g_object_get_data (G_OBJECT (toplevel), "PanelData");
 
-	gtk_widget_get_pointer (GTK_WIDGET (panel_widget), &x, &y);
+	current_event = gtk_get_current_event ();
+	if (current_event->type == GDK_BUTTON_PRESS) {
+		int x = -1, y = 1;
+	
+		gtk_widget_get_pointer (GTK_WIDGET (panel_widget), &x, &y);
 
-	if (panel_widget->orient == GTK_ORIENTATION_HORIZONTAL)
-		panel_data->insertion_pos = x;
-	else
-		panel_data->insertion_pos = y;
+		panel_data->insertion_pos = panel_widget->orient == GTK_ORIENTATION_HORIZONTAL ? x : y;
+	} else
+		panel_data->insertion_pos = -1;
 	
 	menu = make_popup_panel_menu (panel_widget);
 

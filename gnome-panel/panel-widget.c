@@ -2363,10 +2363,12 @@ panel_widget_find_empty_pos(PanelWidget *panel, int pos)
 	GList *list;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(panel),-1);
-	g_return_val_if_fail(pos>=0,-1);
 
 	if(pos>=panel->size)
 		pos = panel->size-1;
+
+	if (pos <= 0)
+		pos = 0;
 
 	if(!panel->applet_list)
 		return pos;
@@ -2423,17 +2425,13 @@ panel_widget_add (PanelWidget *panel,
 
 	g_return_val_if_fail (PANEL_IS_WIDGET (panel), -1);
 	g_return_val_if_fail (GTK_IS_WIDGET (applet), -1);
-	g_return_val_if_fail (pos >= 0, -1);
 
 	ad = g_object_get_data (G_OBJECT (applet), PANEL_APPLET_DATA);
 
 	if (ad != NULL)
 		pos = ad->pos;
 
-	if (pos < 0)
-		pos = 0;
-	
-	if ( ! insert_at_pos) {
+	if (!insert_at_pos || pos < 0) {
 		if (panel->packed) {
 			if (get_applet_list_pos (panel, pos)) 
 				/*this is a slight hack so that this applet
