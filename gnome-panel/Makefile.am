@@ -9,18 +9,13 @@ CXXFLAGS =
 test:
 	echo $(CXXCOMPILE)
 
-## FIXME: convert all applets to CORBA
-#SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
-#	@PROGRAMS_PANEL_CDPLAYER@
-
-#FIXME: without libapplet in a separate dir, cdplayer won't compile
-#SUBDIRS  = @PROGRAMS_PANEL_CDPLAYER@ batmon mailcheck netwatch
-
 INCLUDES = -I. -I$(srcdir) 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR)
 
-bin_PROGRAMS = panel clock_applet logout_applet launcher_applet
+## FIXME: logout should really be an internal applets since it is just
+## too trivial 
+bin_PROGRAMS = panel logout_applet launcher_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -33,7 +28,6 @@ lib_LTLIBRARIES = libpanel_applet.la
 
 libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
-	gtkplug.c \
 	mico-parse.cc \
 	$(CORBA_SOURCES)
 
@@ -71,16 +65,9 @@ panel_SOURCES = 		\
 	panel_config_global.h  	\
 	panel-widget.c  	\
 	panel-widget.h		\
-	gtksocket.c		\
 	$(CORBA_SOURCES)
 
 panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
-
-## FIXME: move clock applet into extra_applets
-clock_applet_SOURCES = \
-	clock.c
-
-clock_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 launcher_applet_SOURCES = \
 	launcher-lib.cc   \

@@ -7,7 +7,7 @@
 
 #include <config.h>
 #include <string.h>
-#include "gnome.h"
+#include <gnome.h>
 
 #include "panel-widget.h"
 #include "gdkextra.h"
@@ -15,7 +15,6 @@
 #include "menu.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
-#include "gtksocket.h"
 #include <gdk/gdkx.h>
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\

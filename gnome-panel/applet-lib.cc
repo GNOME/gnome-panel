@@ -5,7 +5,6 @@
 #include "panel.h"
 #include "gnome-panel.h"
 #include "applet-lib.h"
-#include "gtkplug.h"
 #include "panel-widget.h"
 #include "mico-parse.h"
 

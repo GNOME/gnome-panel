@@ -3,7 +3,6 @@
 
 #include "gnome.h"
 #include "applet-lib.h"
-#include "gtkplug.h"
 #include "panel.h"
 #include "mico-parse.h"
 
