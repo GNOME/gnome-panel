@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.8\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-09 18:06+0100\n"
-"PO-Revision-Date: 2004-08-03 00:40+0000\n"
+"POT-Creation-Date: 2004-08-14 13:24+0100\n"
+"PO-Revision-Date: 2004-08-14 13:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Português <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,7 @@ msgstr "_Sobre"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:620 gnome-panel/menu.c:2370
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/panel-action-button.c:678 gnome-panel/panel-menu-bar.c:325
 #: gnome-panel/panel-menu-button.c:620
 msgid "_Help"
 msgstr "_Ajuda"
@@ -246,11 +246,14 @@ msgid "The Clock displays the current time and date"
 msgstr "O Relógio apresenta a data e hora actuais"
 
 #: applets/clock/clock.schemas.in.h:1
-msgid "24"
+msgid ""
+"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-msgid "24-hour"
+msgid ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
 msgstr "24-hour"
 
 #: applets/clock/clock.schemas.in.h:3
@@ -631,8 +634,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Fábrica de Applet de Navegação de Janela"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:746
-#: applets/wncklet/window-menu.c:748
+#: applets/wncklet/window-menu.c:148 applets/wncklet/window-menu.c:749
+#: applets/wncklet/window-menu.c:751
 msgid "Window Selector"
 msgstr "Selector de Janela"
 
@@ -823,11 +826,11 @@ msgstr ""
 msgid "Unknown Window"
 msgstr "Janela Desconhecida"
 
-#: applets/wncklet/window-menu.c:640
+#: applets/wncklet/window-menu.c:643
 msgid "No Windows Open"
 msgstr "Nenhuma Janela Aberta"
 
-#: applets/wncklet/window-menu.c:747
+#: applets/wncklet/window-menu.c:750
 msgid "Tool to switch between windows"
 msgstr "Ferramenta para alternar entre janelas"
 
@@ -1010,78 +1013,18 @@ msgid "CDE Menu"
 msgstr "Menu CDE"
 
 #: gnome-panel/drawer.c:322 gnome-panel/drawer.c:356
-#: gnome-panel/panel-addto.c:212
+#: gnome-panel/panel-addto.c:147
 msgid "Drawer"
 msgstr "Gaveta"
 
 #: gnome-panel/drawer.c:614 gnome-panel/launcher.c:824 gnome-panel/menu.c:1376
-#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:131
+#: gnome-panel/menu.c:2320 gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Propriedades"
 
 #: gnome-panel/gnome-desktop-item-edit.c:26
 msgid "Create new file in the given directory"
 msgstr "Criar um novo ficheiro no directório indicado"
-
-#: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:708
-#, c-format
-msgid ""
-"There was an error displaying help: \n"
-"%s"
-msgstr ""
-"Ocorreu um erro ao apresentar a ajuda: \n"
-"%s"
-
-#: gnome-panel/gnome-panel-preferences.c:390
-msgid ""
-"The system administrator has disallowed\n"
-"modification of the panel configuration"
-msgstr ""
-"O administrador do sistema não autoriza\n"
-"alterações à configuração do painel"
-
-#: gnome-panel/gnome-panel-preferences.c:421
-#, c-format
-msgid "Error loading glade file %s"
-msgstr "Erro ao ler o ficheiro glade %s"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:1
-msgid "Panel"
-msgstr "Painel"
-
-#: gnome-panel/gnome-panel-preferences.desktop.in.h:2
-msgid "Select preferences for all your panels"
-msgstr "Seleccione preferências para todos os seus paineis"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:1
-msgid "Animation _speed:"
-msgstr "Velocidade da _animação:"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:2
-msgid "Close _drawer when launcher is clicked"
-msgstr "Fechar _gaveta ao clicar no iniciador"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:3
-msgid "Drawer and panel _animation"
-msgstr "_Animação de painel e gaveta"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:4
-msgid "Fast"
-msgstr "Rápida"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:5
-#: libpanel-applet/panel-test-applets.glade.h:5
-msgid "Medium"
-msgstr "Média"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:6
-msgid "Panel Preferences"
-msgstr "Preferências de Painel"
-
-#: gnome-panel/gnome-panel-preferences.glade.h:7
-msgid "Slow"
-msgstr "Lenta"
 
 #: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
@@ -1165,6 +1108,15 @@ msgstr "CapturaEcra-%d.png"
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Espaço insuficiente para gravar ficheiro %s"
+
+#: gnome-panel/gnome-panel-screenshot.c:708
+#, c-format
+msgid ""
+"There was an error displaying help: \n"
+"%s"
+msgstr ""
+"Ocorreu um erro ao apresentar a ajuda: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-screenshot.c:1189
 msgid ""
@@ -1323,8 +1275,8 @@ msgstr ""
 "Esta aplicação é responsável por iniciar outras aplicações e incluir dentro "
 "de si pequenas applets."
 
-#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:702
+#: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:702
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Incapaz de executar '%s'"
@@ -1361,7 +1313,7 @@ msgstr "Incapaz de obter nome de ficheiro do caminho: %s"
 msgid "Could not get directory name from path: %s"
 msgstr "Incapaz de obter nome de directório do caminho: %s"
 
-#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:190
+#: gnome-panel/menu.c:1193 gnome-panel/panel-addto.c:125
 msgid "Main Menu"
 msgstr "Menu Principal"
 
@@ -1393,8 +1345,8 @@ msgstr "Adicionar novo item a este menu"
 msgid "Properties"
 msgstr "Propriedades"
 
-#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2554
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2169 gnome-panel/menu.c:2173 gnome-panel/menu.c:2561
+#: gnome-panel/panel-menu-bar.c:202
 msgid "Applications"
 msgstr "Aplicações"
 
@@ -1419,29 +1371,46 @@ msgid "_New Panel"
 msgstr "_Novo Painel"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "_Sobre os Paineis"
+msgstr "So_bre os Paineis"
 
 #: gnome-panel/menu.c:2395
 msgid "About _GNOME"
 msgstr "Sobre o _GNOME"
 
-#: gnome-panel/menu.c:2419 gnome-panel/panel-menu-bar.c:191
-msgid "Lock Screen"
-msgstr "Trancar Ecrã"
+#: gnome-panel/menu.c:2642
+msgid "Desktop"
+msgstr "Área de Trabalho"
 
-#: gnome-panel/menu.c:2425
-msgid "Lock the screen so that you can temporarily leave your computer"
-msgstr ""
-"Tranque o ecrã para que possa abandonar temporariamente o seu computador"
+#: gnome-panel/panel-action-button.c:108
+msgid "_Activate Screensaver"
+msgstr "_Activar Protector de Ecrã"
 
-#: gnome-panel/menu.c:2441 gnome-panel/panel-addto.c:102
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/panel-action-button.c:114
+msgid "_Lock Screen"
+msgstr "_Trancar Ecrã"
+
+#: gnome-panel/panel-action-button.c:120
+msgid "_Kill Screensaver Daemon"
+msgstr "Matar Daemon do Protector de _Ecrã"
+
+#: gnome-panel/panel-action-button.c:126
+msgid "Restart _Screensaver Daemon"
+msgstr "Reiniciar Daemon do _Protector de Ecrã"
+
+#: gnome-panel/panel-action-button.c:266
+msgid "Lock screen"
+msgstr "Trancar ecrã"
+
+#: gnome-panel/panel-action-button.c:267
+msgid "Protect your computer from unauthorized use"
+msgstr "Proteja o seu computador de utilizações não autorizadas"
+
+#: gnome-panel/panel-action-button.c:278
 msgid "Log Out"
 msgstr "Terminar Sessão"
 
-#: gnome-panel/menu.c:2448 gnome-panel/panel-addto.c:103
+#: gnome-panel/panel-action-button.c:279
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1449,158 +1418,94 @@ msgstr ""
 "Terminar esta sessão para iniciar outra com um utilizador diferente ou para "
 "desligar o computador"
 
-#: gnome-panel/menu.c:2574 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/panel-action-button.c:288
 msgid "Run Application..."
 msgstr "Executar Aplicação..."
 
-#: gnome-panel/menu.c:2581 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/panel-action-button.c:289
 msgid "Run an Application by entering a command"
 msgstr "Executar uma Aplicação introduzindo um comando"
 
-#: gnome-panel/menu.c:2589 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/panel-action-button.c:298
 msgid "Search for Files..."
 msgstr "Procurar Ficheiros..."
 
-#: gnome-panel/menu.c:2592 gnome-panel/panel-addto.c:147
-#: gnome-panel/panel-menu-bar.c:154
+#: gnome-panel/panel-action-button.c:299
 msgid "Find files, folders, and documents on your computer"
 msgstr "Procurar ficheiros, pastas e documentos no seu computador"
 
-#: gnome-panel/menu.c:2608 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-action-button.c:307
 msgid "Take Screenshot..."
 msgstr "Capturar Imagem de Ecrã..."
 
-#: gnome-panel/menu.c:2611 gnome-panel/panel-addto.c:136
-#: gnome-panel/panel-menu-bar.c:170
+#: gnome-panel/panel-action-button.c:308
 msgid "Take a screenshot of your desktop"
 msgstr "Capture uma imagem da sua área de trabalho"
 
-#: gnome-panel/menu.c:2626
-msgid "Desktop"
-msgstr "Área de Trabalho"
-
-#: gnome-panel/panel-action-button.c:107
-msgid "_Activate Screensaver"
-msgstr "_Activar Protector de Ecrã"
-
-#: gnome-panel/panel-action-button.c:113
-msgid "_Lock Screen"
-msgstr "_Trancar Ecrã"
-
-#: gnome-panel/panel-action-button.c:119
-msgid "_Kill Screensaver Daemon"
-msgstr "Matar Daemon do Protector de _Ecrã"
-
-#: gnome-panel/panel-action-button.c:125
-msgid "Restart _Screensaver Daemon"
-msgstr "Reiniciar Daemon do _Protector de Ecrã"
-
-#: gnome-panel/panel-action-button.c:258
-msgid "Lock screen"
-msgstr "Trancar ecrã"
-
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
-msgid "Log out of GNOME"
-msgstr "Terminar sessão no GNOME"
-
-#: gnome-panel/panel-action-button.c:272
-#: gnome-panel/panel-run-dialog.glade.h:7
-msgid "Run Application"
-msgstr "Executar Aplicação"
-
-#: gnome-panel/panel-action-button.c:278
-msgid "Search for Files"
-msgstr "Procurar Ficheiros"
-
-#: gnome-panel/panel-action-button.c:283 gnome-panel/panel-addto.c:135
-msgid "Screenshot"
-msgstr "Captura de Ecrã"
-
-#: gnome-panel/panel-action-button.c:288 gnome-panel/panel-addto.c:124
+#: gnome-panel/panel-action-button.c:316
 msgid "Force Quit"
 msgstr "Forçar Saida"
 
-#: gnome-panel/panel-addto.c:113
-msgid "Lock"
-msgstr "Trancar"
-
-#: gnome-panel/panel-addto.c:114
-msgid "Lock the screen so you can temporarily leave your computer"
-msgstr ""
-"Trancar o ecrã para que possa abandonar temporariamente o seu computador"
-
-#: gnome-panel/panel-addto.c:125
+#: gnome-panel/panel-action-button.c:317
 msgid "Force a misbehaving application to quit"
 msgstr "Forçar uma aplicação problemática a terminar"
 
-#: gnome-panel/panel-addto.c:146
-msgid "Search"
-msgstr "Procurar"
-
-#: gnome-panel/panel-addto.c:157
-msgid "Run"
-msgstr "Executar"
-
-#: gnome-panel/panel-addto.c:158
-msgid "Run a command"
-msgstr "Executar um comando"
-
-#: gnome-panel/panel-addto.c:168
+#: gnome-panel/panel-addto.c:103
 msgid "Custom Application Launcher"
 msgstr "Iniciador de Aplicação Personalizada"
 
-#: gnome-panel/panel-addto.c:169
+#: gnome-panel/panel-addto.c:104
 msgid "Create a new launcher"
 msgstr "Criar um novo iniciador"
 
-#: gnome-panel/panel-addto.c:179
+#: gnome-panel/panel-addto.c:114
 msgid "Application Launcher..."
 msgstr "Iniciador de Aplicação..."
 
-#: gnome-panel/panel-addto.c:180
+#: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
 msgstr "Inicia uma aplicação que se encontra já no menu GNOME"
 
-#: gnome-panel/panel-addto.c:191
+#: gnome-panel/panel-addto.c:126
 msgid "The main GNOME menu"
 msgstr "O menu principal GNOME"
 
-#: gnome-panel/panel-addto.c:201
+#: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
 msgstr "Barra de Menu"
 
-#: gnome-panel/panel-addto.c:202
+#: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
 msgstr "Uma barra de menu personalizada"
 
-#: gnome-panel/panel-addto.c:213
+#: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
 msgstr "Uma gaveta onde armazenar outros itens"
 
-#: gnome-panel/panel-addto.c:301
+#: gnome-panel/panel-addto.c:236
 msgid "(empty)"
 msgstr "(vazio)"
 
-#: gnome-panel/panel-addto.c:417 libpanel-applet/panel-test-applets.c:156
+#: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "consulta devolveu excepção %s\n"
 
-#: gnome-panel/panel-addto.c:831
+#: gnome-panel/panel-addto.c:766
 #, c-format
 msgid "Add to %s"
 msgstr "Adicionar a %s"
 
-#: gnome-panel/panel-addto.c:833
+#: gnome-panel/panel-addto.c:768
 msgid "Add to the panel"
 msgstr "Adicionar ao painel"
 
-#: gnome-panel/panel-addto.c:839
+#: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Seleccione um _item a adicionar a %s:"
 
-#: gnome-panel/panel-addto.c:842
+#: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
 msgstr "Seleccione um _item a adicionar ao painel:"
 
@@ -1915,11 +1820,7 @@ msgstr "Capturar imagem de ecrã"
 msgid "Take window screenshot"
 msgstr "Capturar imagem de janela"
 
-#: gnome-panel/panel-menu-bar.c:193
-msgid "Protect your computer from unauthorized use"
-msgstr "Proteja o seu computador de utilizações não autorizadas"
-
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/panel-menu-bar.c:184
 msgid "Actions"
 msgstr "Acções"
 
@@ -2267,9 +2168,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Ocorreu um erro desconhecido ao tentar abrir %s"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Limpar os Documentos Recentes"
+msgstr "Limpar a lista de Documentos Recentes?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2278,6 +2178,10 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"Se limpar a lista de Documentos Recentes, limpará o seguinte:\n"
+"\n"
+"• Todos os itens do menu Acções → Documentos Recentes.\n"
+"• Todos os itens da lista de documentos recentes em todas as aplicações."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
@@ -2342,6 +2246,10 @@ msgstr "Ícone de comando"
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
 msgstr "Introduza aqui um comando para o executar."
+
+#: gnome-panel/panel-run-dialog.glade.h:7
+msgid "Run Application"
+msgstr "Executar Aplicação"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
@@ -2917,6 +2825,10 @@ msgstr "Applet:"
 msgid "Large"
 msgstr "Grande"
 
+#: libpanel-applet/panel-test-applets.glade.h:5
+msgid "Medium"
+msgstr "Média"
+
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
 msgstr "Orientação:"
@@ -2948,6 +2860,78 @@ msgstr "Extra-extra Grande"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Extra-extra Pequeno"
+
+#~ msgid "24"
+#~ msgstr "24"
+
+#~ msgid "24-hour"
+#~ msgstr "24-hour"
+
+#~ msgid ""
+#~ "The system administrator has disallowed\n"
+#~ "modification of the panel configuration"
+#~ msgstr ""
+#~ "O administrador do sistema não autoriza\n"
+#~ "alterações à configuração do painel"
+
+#~ msgid "Error loading glade file %s"
+#~ msgstr "Erro ao ler o ficheiro glade %s"
+
+#~ msgid "Panel"
+#~ msgstr "Painel"
+
+#~ msgid "Select preferences for all your panels"
+#~ msgstr "Seleccione preferências para todos os seus paineis"
+
+#~ msgid "Animation _speed:"
+#~ msgstr "Velocidade da _animação:"
+
+#~ msgid "Close _drawer when launcher is clicked"
+#~ msgstr "Fechar _gaveta ao clicar no iniciador"
+
+#~ msgid "Drawer and panel _animation"
+#~ msgstr "_Animação de painel e gaveta"
+
+#~ msgid "Fast"
+#~ msgstr "Rápida"
+
+#~ msgid "Panel Preferences"
+#~ msgstr "Preferências de Painel"
+
+#~ msgid "Slow"
+#~ msgstr "Lenta"
+
+#~ msgid "Lock Screen"
+#~ msgstr "Trancar Ecrã"
+
+#~ msgid "Lock the screen so that you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Tranque o ecrã para que possa abandonar temporariamente o seu computador"
+
+#~ msgid "Log out of GNOME"
+#~ msgstr "Terminar sessão no GNOME"
+
+#~ msgid "Search for Files"
+#~ msgstr "Procurar Ficheiros"
+
+#~ msgid "Screenshot"
+#~ msgstr "Captura de Ecrã"
+
+#~ msgid "Lock"
+#~ msgstr "Trancar"
+
+#~ msgid "Lock the screen so you can temporarily leave your computer"
+#~ msgstr ""
+#~ "Trancar o ecrã para que possa abandonar temporariamente o seu computador"
+
+#~ msgid "Search"
+#~ msgstr "Procurar"
+
+#~ msgid "Run"
+#~ msgstr "Executar"
+
+#~ msgid "Run a command"
+#~ msgstr "Executar um comando"
 
 #~ msgid "Accessories"
 #~ msgstr "Acessórios"
