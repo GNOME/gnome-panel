@@ -860,7 +860,11 @@ convert_dentry_to_gnome (GnomeDesktopEntry *dentry)
 
 	dentry->is_kde = FALSE;
 	for (i = 0; i < dentry->exec_length; i++) {
-		if (dentry->exec[i][0] == '%' &&
+		if (strcmp (dentry->exec[i], "\"%c\"") == 0 ||
+		    strcmp (dentry->exec[i], "%c") == 0) {
+			g_free (dentry->exec[i]);
+			dentry->exec[i] = g_strdup_printf ("'%s'", dentry->name);
+		} else if (dentry->exec[i][0] == '%' &&
 		    strlen(dentry->exec[i]) == 2) {
 			g_free (dentry->exec[i]);
 			dentry->exec[i] = g_strdup ("");
