@@ -2419,6 +2419,28 @@ create_menuitem (GtkWidget *menu,
 	return TRUE;
 }
 
+static gint
+compare_filerecs (FileRec *fr1, FileRec *fr2)
+{
+  if (((fr1->type != FILE_REC_FILE) && (fr1->type != FILE_REC_DIR)) ||
+      ((fr2->type != FILE_REC_FILE) && (fr2->type != FILE_REC_DIR))) {
+    /* one of the two is not a file or a directory */
+    return 0;
+  } else if ((fr1->type == FILE_REC_FILE) 
+      && (fr2->type == FILE_REC_DIR)) {
+    /* sort files last */
+    return 1;
+  } else if ((fr2->type == FILE_REC_FILE) 
+	     && (fr1->type == FILE_REC_DIR)) {
+    /* sort files last */
+    return -1;
+  } else {
+    /* sort by locale ordering */
+    return g_utf8_collate (fr1->fullname, fr2->fullname);
+  }
+}
+
+
 GtkWidget *
 create_menu_at (GtkWidget *menu,
 		const char *menudir,
@@ -2492,6 +2514,9 @@ create_menu_at_fr (GtkWidget *menu,
 		/* Last added points to the last fr list item that was successfuly
 		 * added as a menu item */
 		GSList *last_added = NULL;
+
+		dr->recs = g_slist_sort (dr->recs, (GCompareFunc)&compare_filerecs);
+
 		for(li = dr->recs; li != NULL; li = li->next) {
 			FileRec *tfr = li->data;
 
@@ -2598,13 +2623,9 @@ applet_menu_get_category_icon (const gchar *untranslated_category)
 		g_hash_table_insert (hash,
 				     "Amusements", "gnome-amusements.png");
 		g_hash_table_insert (hash,
-				     "Clocks", "gnome-clock.png");
-		g_hash_table_insert (hash,
-				     "Monitors", "gnome-monitor.png");
-		g_hash_table_insert (hash,
 				     "Multimedia", "gnome-multimedia.png");
 		g_hash_table_insert (hash,
-				     "Network", "gnome-networktool.png");
+				     "Internet", "gnome-globe.png");
 		g_hash_table_insert (hash,
 				     "Utility", "gnome-util.png");
 	}
