@@ -410,6 +410,8 @@ icon_notebook_page(int i)
 					_("Normal Tile"),
 					global_config.tile_up[i],
 					NULL);
+	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_up[i]),
+					   "tiles");
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_up[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
 				       GTK_SIGNAL_FUNC(changed_cb), 
@@ -420,6 +422,8 @@ icon_notebook_page(int i)
 					  _("Clicked Tile"),
 					  global_config.tile_down[i],
 					  NULL);
+	gnome_icon_entry_set_pixmap_subdir(GNOME_ICON_ENTRY(entry_down[i]),
+					   "tiles");
 	w = gnome_icon_entry_gtk_entry (GNOME_ICON_ENTRY (entry_down[i]));
 	gtk_signal_connect_while_alive(GTK_OBJECT(w), "changed",
 				       GTK_SIGNAL_FUNC(changed_cb), 
