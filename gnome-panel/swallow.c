@@ -33,6 +33,13 @@
 /* from gtkhandlebox.c */
 #define DRAG_HANDLE_SIZE 10
 
+enum {
+	OK_BUTTON,
+	HELP_BUTTON,
+	RELOAD_BUTTON,
+	CANCEL_BUTTON
+};
+
 GList *check_swallows = NULL;
 
 static void socket_destroyed (GtkWidget *w, gpointer data);
@@ -92,19 +99,26 @@ before_remove (Swallow *swallow)
 	if (swallow->clean_remove)
 		return TRUE;
 
-	dlg = gnome_message_box_new (_("A swallowed application appears to "
+	dlg = gtk_message_dialog_new (NULL /* parent */,
+				      0 /* flags */,
+				      GTK_MESSAGE_QUESTION,
+				      GTK_BUTTONS_NONE,
+				      _("A swallowed application appears to "
 				       "have died unexpectedly.\n"
-				       "Attempt to reload it?"),
-				     GNOME_MESSAGE_BOX_QUESTION,
-				     _("Reload"),
-				     GNOME_STOCK_BUTTON_CANCEL,
-				     NULL);
-	gnome_dialog_set_close (GNOME_DIALOG (dlg),
-				TRUE /* click_closes */);
+				       "Attempt to reload it?"));
+
+	gtk_dialog_add_button (GTK_DIALOG (dlg),
+			       GTK_STOCK_CANCEL,
+			       CANCEL_BUTTON);
+	gtk_dialog_add_button (GTK_DIALOG (dlg),
+			       _("Reload"),
+			       RELOAD_BUTTON);
+	gtk_dialog_set_default_response (GTK_DIALOG (dlg),
+					 RELOAD_BUTTON);
 	gtk_window_set_wmclass (GTK_WINDOW (dlg),
 				"swallow_crashed", "Panel");
 
-	if (gnome_dialog_run (GNOME_DIALOG (dlg)) == 0) {
+	if (gtk_dialog_run (GTK_DIALOG (dlg)) == 0) {
 
 		/* make the socket again */
 		swallow->socket = gtk_socket_new ();
@@ -182,7 +196,7 @@ socket_destroyed (GtkWidget *w, gpointer data)
 }
 
 static void
-really_add_swallow(GtkWidget *d,int button, gpointer data)
+really_add_swallow (GtkWidget *d, int response, gpointer data)
 {
 	GtkWidget *title_e = gtk_object_get_data(GTK_OBJECT(d), "title_e");
 	GtkWidget *exec_e = gtk_object_get_data(GTK_OBJECT(d), "exec_e");
@@ -193,11 +207,11 @@ really_add_swallow(GtkWidget *d,int button, gpointer data)
 	gboolean exactpos =
 		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(d), "exactpos"));
 
-	switch (button) {
-	case 1: /* cancel */
-		gtk_widget_destroy(d);
+	switch (response) {
+	case CANCEL_BUTTON:
+		gtk_widget_destroy (d);
 		return;
-	case 2: /* help */
+	case HELP_BUTTON:
 		panel_show_help ("specialobjects", "SWALLOWEDAPPS");
 		return;
 	default:
@@ -237,13 +251,18 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	GtkWidget *box, *i_box;
 	GtkAdjustment *adj;
 	
-	d = gnome_dialog_new(_("Create swallow applet"),
-			     GNOME_STOCK_BUTTON_OK,
-			     GNOME_STOCK_BUTTON_CANCEL,
-			     GNOME_STOCK_BUTTON_HELP,
-			     NULL);
-	gtk_window_set_wmclass(GTK_WINDOW(d),
-			       "create_swallow","Panel");
+	d = gtk_dialog_new_with_buttons (_("Create swallow applet"),
+					 NULL /* parent */,
+					 0 /* flags */,
+					 GTK_STOCK_CANCEL,
+					 CANCEL_BUTTON,
+					 GTK_STOCK_OK,
+					 OK_BUTTON,
+					 GTK_STOCK_HELP,
+					 HELP_BUTTON,
+					 NULL);
+	gtk_window_set_wmclass (GTK_WINDOW (d),
+				"create_swallow", "Panel");
 	/*gtk_window_set_position(GTK_WINDOW(d), GTK_WIN_POS_CENTER);*/
 	gtk_window_set_policy(GTK_WINDOW(d), FALSE, FALSE, TRUE);
 
@@ -252,7 +271,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_object_set_data(GTK_OBJECT(d),"exactpos",GINT_TO_POINTER(exactpos));
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 	w = gtk_label_new(_("Title of application to swallow"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	w = gnome_entry_new("swallow_title");
@@ -262,7 +281,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 	w = gtk_label_new(_("Command (optional)"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
 	w = gnome_file_entry_new("execute",_("Browse"));
@@ -272,7 +291,7 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 			   GTK_SIGNAL_FUNC(act_really_add_swallow),d);
 
 	box = gtk_hbox_new(FALSE,GNOME_PAD_SMALL);
-	gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(d)->vbox),box, TRUE,TRUE,0);
+	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(d)->vbox),box, TRUE,TRUE,0);
 
 	w = gtk_label_new(_("Width"));
 	gtk_box_pack_start(GTK_BOX(box),w,FALSE,FALSE,0);
@@ -296,17 +315,15 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	height_s = gtk_spin_button_new(adj,0,0);
 	gtk_box_pack_start(GTK_BOX(box),height_s,FALSE,FALSE,0);
 	
-	gtk_signal_connect(GTK_OBJECT(d),"clicked",
-			   GTK_SIGNAL_FUNC(really_add_swallow),NULL);
+	gtk_signal_connect (GTK_OBJECT (d), "response",
+			    GTK_SIGNAL_FUNC (really_add_swallow), NULL);
 	gtk_object_set_data(GTK_OBJECT(d),"title_e",title_e);
 	gtk_object_set_data(GTK_OBJECT(d),"exec_e",exec_e);
 	gtk_object_set_data(GTK_OBJECT(d),"width_s",width_s);
 	gtk_object_set_data(GTK_OBJECT(d),"height_s",height_s);
 
 
-	gnome_dialog_close_hides(GNOME_DIALOG(d),FALSE);
-
-	gnome_dialog_set_default(GNOME_DIALOG(d),0);
+	gtk_dialog_set_default_response (GTK_DIALOG (d), OK_BUTTON);
 
 	gtk_widget_grab_focus(title_e);
 

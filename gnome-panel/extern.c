@@ -28,6 +28,11 @@
 #include "session.h"
 #include "status.h"
 
+enum {
+	RELOAD_BUTTON,
+	CANCEL_BUTTON
+};
+
 #undef EXTERN_DEBUG
 
 #ifndef EXTERN_DEBUG
@@ -734,7 +739,7 @@ destroy_reload_callback_data (gpointer data)
 #ifdef FIXME
 static void
 reload_applet_callback (GtkWidget *w,
-			int        button,
+			int        response,
 			gpointer   data)
 {
 	ReloadCallbackData *d = data;
@@ -743,7 +748,7 @@ reload_applet_callback (GtkWidget *w,
 	/* 
 	 * unless the button was YES, just do nothing
 	 */
-	if (button) {
+	if (response != RELOAD_BUTTON) {
 		return;
 	}
 
@@ -765,7 +770,6 @@ void
 extern_before_remove (Extern ext)
 {
 #ifdef FIXME
-	char *s;
 	const char *id ="";
 	GtkWidget *dlg;
 	ReloadCallbackData *d;
@@ -785,24 +789,29 @@ extern_before_remove (Extern ext)
 		id = _("The Battery");
 	}
 
-	s = g_strdup_printf (_("%s applet appears to have "
-			       "died unexpectedly.\n\n"
-			       "Reload this applet?\n\n"
-			       "(If you choose not to reload it at "
-			       "this time you can always add it from\n"
-			       "the \"Applets\" submenu in the main "
-			       "menu.)"), id);
 
-	dlg = gnome_message_box_new (s, GNOME_MESSAGE_BOX_QUESTION,
-				     _("Reload"),
-				     GNOME_STOCK_BUTTON_CANCEL,
-				     NULL);
-	gnome_dialog_set_close (GNOME_DIALOG (dlg),
-				TRUE /* click_closes */);
+	dlg = gtk_message_dialog_new (NULL /* parent */,
+				      0 /* flags */,
+				      GTK_MESSAGE_QUESTION,
+				      GTK_BUTTONS_NONE,
+				      _("%s applet appears to have "
+					"died unexpectedly.\n\n"
+					"Reload this applet?\n\n"
+					"(If you choose not to reload it at "
+					"this time you can always add it from\n"
+					"the \"Applets\" submenu in the main "
+					"menu.)"),
+				      id);
+	gtk_dialog_add_button (GTK_DIALOG (dlg),
+			       GTK_STOCK_CANCEL,
+			       CANCEL_BUTTON);
+	gtk_dialog_add_button (GTK_DIALOG (dlg),
+			       _("Reload"),
+			       RELOAD_BUTTON);
+	gtk_dialog_set_default_response (GTK_DIALOG (dlg),
+					 RELOAD_BUTTON);
 	gtk_window_set_wmclass (GTK_WINDOW (dlg),
 				"applet_crashed", "Panel");
-
-	g_free (s);
 
 	d = g_new0 (ReloadCallbackData, 1);
 	d->iid = g_strdup (ext->iid);
@@ -823,7 +832,7 @@ extern_before_remove (Extern ext)
 	}
 
 	gtk_signal_connect_full
-		(GTK_OBJECT (dlg), "clicked",
+		(GTK_OBJECT (dlg), "response",
 		 GTK_SIGNAL_FUNC (reload_applet_callback),
 		 NULL,
 		 d,
