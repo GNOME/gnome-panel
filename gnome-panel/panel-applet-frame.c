@@ -143,12 +143,16 @@ static BonoboUIVerb popup_verbs [] = {
 static gchar popup_xml [] =
         "<popups>\n"
         "  <popup name=\"button3\">\n"
-        "    <separator/>\n"
-        "    <menuitem name=\"remove\" verb=\"RemoveAppletFromPanel\" _label=\"Remove From Panel\""
-        "              pixtype=\"stock\" pixname=\"gtk-remove\"/>\n"
-        "    <menuitem name=\"move\" verb=\"MoveApplet\" _label=\"Move\"/>\n"
+        "    <placeholder delimit=\"top\">\n"
+        "      <menuitem name=\"remove\" verb=\"RemoveAppletFromPanel\" _label=\"Remove From Panel\""
+        "                pixtype=\"stock\" pixname=\"gtk-remove\"/>\n"
+        "      <menuitem name=\"move\" verb=\"MoveApplet\" _label=\"Move\"/>\n"
+        "    </placeholder>\n"
         "  </popup>\n"
         "</popups>\n";
+
+
+
 
 void
 panel_applet_frame_load (const gchar *iid,
@@ -484,7 +488,7 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
                 popup_container = Bonobo_Control_getPopupContainer (control, &env);
 
                 bonobo_ui_component_set_container (ui_component, popup_container, &env);
-
+		
                 CORBA_exception_free (&env);
         }
 
