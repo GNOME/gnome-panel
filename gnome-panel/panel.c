@@ -2511,9 +2511,10 @@ panel_session_init_panels(void)
 										       "clock-format",
 										       use_default, _("%I:%M:%S %p"));
 
-			if (timestring != NULL)
+			if (timestring != NULL) {
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), timestring);
-			g_free (timestring);
+				g_free (timestring);
+			}
 
 			break;
 		default:

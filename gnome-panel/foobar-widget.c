@@ -1,4 +1,4 @@
-/* GNOME panel: foobar widget
+/* GNOME panel: foobar widGET
  * Copyright 1999,2000 Helix Code, Inc.
  * Copyright 2000 Eazel, Inc.
  *
@@ -517,7 +517,9 @@ foobar_widget_global_set_clock_format (const char *format)
 void
 foobar_widget_set_clock_format (FoobarWidget *foo, const char *clock_format)
 {
-	g_free (foo->clock_format);
+	g_return_if_fail (FOOBAR_IS_WIDGET (foo));
+	if (foo->clock_format != NULL)
+		g_free (foo->clock_format);
 	foo->clock_format = g_strdup (clock_format);
 
 	if(foo->clock_label) {
