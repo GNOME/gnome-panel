@@ -1,3 +1,16 @@
+Tue Sep 16 14:22:28 2003  George Lebl <jirka@5z.com>
+
+	* applet.c, launcher.c, panel-applet-frame.c, menu.c: In per-panel
+	  lockdown mode, do the same thing as the full lockdown, that is,
+	  hide the widgets rather then deselect them.  This is both easier
+	  and likely more correct.  Insensitive really kind of means that
+	  the actions may be possible.  But we want to convey the message
+	  that there are no such actions possible.
+
+	* menu.c: catch further instances of possibility of running programs
+	  when inhibit command line was on by editing properties of random
+	  menu entries.
+
 Tue Sep 16 09:49:01 2003  George Lebl <jirka@5z.com>
 
 	* button-widget.c: Fix #121072.  The overlay window was needlessly on

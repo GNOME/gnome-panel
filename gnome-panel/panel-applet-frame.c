@@ -88,7 +88,6 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	PanelWidget *panel_widget;
 	gboolean     locked_down;
 	gboolean     locked;
-	gboolean     panel_locked;
 	gboolean     lockable;
 	gboolean     movable;
 	gboolean     removable;
@@ -99,15 +98,10 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	movable = panel_applet_can_freely_move (frame->priv->applet_info);
 	removable = panel_profile_list_is_writable (PANEL_GCONF_APPLETS);
 
-	locked_down = panel_profile_get_locked_down ();
+	locked_down = panel_profile_get_locked_down () ||
+		panel_toplevel_get_locked_down (panel_widget->toplevel);
 
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
-
-	panel_locked = panel_toplevel_get_locked_down (panel_widget->toplevel);
-
-	/* always lock applets on a locked panel */
-	if (panel_locked)
-		locked = TRUE;
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/popups/button3/placeholder/lock",
@@ -119,7 +113,7 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
 				      "/commands/LockAppletToPanel",
 				      "sensitive",
-				      lockable && ! panel_locked ? "1" : "0",
+				      lockable ? "1" : "0",
 				      NULL);
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,

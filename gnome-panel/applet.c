@@ -82,7 +82,8 @@ panel_applet_toggle_locked (AppletInfo *info)
 	
 	locked = panel_widget_toggle_applet_locked (panel_widget, info->widget);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel))
+	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
+	    panel_profile_get_locked_down ())
 		return TRUE;
 
 	panel_applet_save_position (info, info->id, TRUE);
@@ -456,15 +457,13 @@ panel_applet_create_menu (AppletInfo  *info,
 		added_anything = TRUE;
 	}
 
-	if ( ! panel_profile_get_locked_down ()) {
+	if ( ! panel_profile_get_locked_down () &&
+	     ! panel_toplevel_get_locked_down (panel_widget->toplevel)) {
 		GtkWidget *image;
 		gboolean   locked;
-		gboolean   panel_locked;
 		gboolean   lockable;
 		gboolean   movable;
 		gboolean   removable;
-
-		added_anything = TRUE;
 
 		lockable = panel_applet_lockable (info);
 		movable = panel_applet_can_freely_move (info);
@@ -472,15 +471,11 @@ panel_applet_create_menu (AppletInfo  *info,
 
 		locked = panel_widget_get_applet_locked (panel_widget, info->widget);
 
-		panel_locked = panel_toplevel_get_locked_down (panel_widget->toplevel);
-
-		/* always lock applets on a locked panel */
-		if (panel_locked)
-			locked = TRUE;
-
-		menuitem = gtk_separator_menu_item_new ();
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_show (menuitem);
+		if (added_anything) {
+			menuitem = gtk_separator_menu_item_new ();
+			gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+			gtk_widget_show (menuitem);
+		}
 
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new_from_stock (GTK_STOCK_REMOVE,
@@ -503,7 +498,7 @@ panel_applet_create_menu (AppletInfo  *info,
 		g_signal_connect (menuitem, "activate",
 				  G_CALLBACK (panel_applet_lock), info);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-		gtk_widget_set_sensitive (menuitem, lockable && ! panel_locked);
+		gtk_widget_set_sensitive (menuitem, lockable);
 		
 		menuitem = gtk_image_menu_item_new ();
 		image = gtk_image_new ();
@@ -518,6 +513,8 @@ panel_applet_create_menu (AppletInfo  *info,
 		info->move_item = menuitem;
 		g_object_add_weak_pointer (G_OBJECT (menuitem),
 					   (gpointer *) &info->move_item);
+
+		added_anything = TRUE;
 	}
 
 	if ( ! added_anything) {
@@ -1182,10 +1179,8 @@ panel_applet_can_freely_move (AppletInfo *applet)
 
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel))
-		return FALSE;
-
-	if (panel_profile_get_locked_down ())
+	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
+	    panel_profile_get_locked_down ())
 		return FALSE;
 
 	client = panel_gconf_get_client ();
@@ -1216,7 +1211,8 @@ panel_applet_lockable (AppletInfo *applet)
 
 	panel_widget = PANEL_WIDGET (applet->widget->parent);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel))
+	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
+	    panel_profile_get_locked_down ())
 		return FALSE;
 
 	client = panel_gconf_get_client ();

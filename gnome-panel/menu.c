@@ -1455,14 +1455,16 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				return;
 			}
 
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Add this launcher to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
-			g_signal_connect (menuitem, "activate",
-					  G_CALLBACK (add_app_to_panel),
-					  sim);
-			gtk_widget_set_sensitive (menuitem, objects_writable);
+			if ( ! panel_toplevel_get_locked_down (panel_widget->toplevel)) {
+				menuitem = gtk_image_menu_item_new ();
+				setup_menuitem (menuitem, panel_menu_icon_get_size (),
+						NULL, _("Add this launcher to panel"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
+				g_signal_connect (menuitem, "activate",
+						  G_CALLBACK (add_app_to_panel),
+						  sim);
+				gtk_widget_set_sensitive (menuitem, objects_writable);
+			}
 
 			menuitem = gtk_image_menu_item_new ();
 			setup_menuitem (menuitem, panel_menu_icon_get_size (),
@@ -1480,19 +1482,21 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 						   G_CALLBACK (gtk_menu_shell_deactivate),
 						   G_OBJECT (item->parent));
 
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Put into run dialog"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
-					       menuitem);
-			g_signal_connect (menuitem, "activate",
-					  G_CALLBACK (add_to_run_dialog),
-					  sim);
-			g_signal_connect_swapped
-				(G_OBJECT(menuitem),
-				 "activate",
-				 G_CALLBACK(gtk_menu_shell_deactivate),
-				 G_OBJECT(item->parent));
+			if ( ! panel_profile_get_inhibit_command_line ()) {
+				menuitem = gtk_image_menu_item_new ();
+				setup_menuitem (menuitem, panel_menu_icon_get_size (),
+						NULL, _("Put into run dialog"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu),
+						       menuitem);
+				g_signal_connect (menuitem, "activate",
+						  G_CALLBACK (add_to_run_dialog),
+						  sim);
+				g_signal_connect_swapped
+					(G_OBJECT(menuitem),
+					 "activate",
+					 G_CALLBACK(gtk_menu_shell_deactivate),
+					 G_OBJECT(item->parent));
+			}
 
 			if (gnome_desktop_item_get_string (ii, "X-GNOME-DocPath") != NULL) {
 				char *title;
@@ -1516,20 +1520,22 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 		   G_OBJECT(item->parent));
 			}
 
-			menuitem = gtk_image_menu_item_new ();
-			/*when activated we must pop down the first menu*/
-			g_signal_connect_swapped (G_OBJECT (menuitem),
-						   "activate",
-						   G_CALLBACK (gtk_menu_shell_deactivate),
-						   G_OBJECT (item->parent));
+			if ( ! panel_profile_get_inhibit_command_line ()) {
+				menuitem = gtk_image_menu_item_new ();
+				/*when activated we must pop down the first menu*/
+				g_signal_connect_swapped (G_OBJECT (menuitem),
+							  "activate",
+							  G_CALLBACK (gtk_menu_shell_deactivate),
+							  G_OBJECT (item->parent));
 
-			g_signal_connect (G_OBJECT(menuitem),
-					   "activate",
-					   G_CALLBACK(edit_dentry),
-					   sim);
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("_Properties"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
+				g_signal_connect (G_OBJECT(menuitem),
+						  "activate",
+						  G_CALLBACK(edit_dentry),
+						  sim);
+				setup_menuitem (menuitem, panel_menu_icon_get_size (),
+						NULL, _("_Properties"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (sim->menu), menuitem);
+			}
 
 			gnome_desktop_item_unref (ii);
 		}
@@ -1555,46 +1561,47 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 							   submenu);
 			}
 
+			if ( ! panel_toplevel_get_locked_down (panel_widget->toplevel)) {
+				menuitem = gtk_image_menu_item_new ();
+				setup_menuitem (menuitem, panel_menu_icon_get_size (), NULL,
+						_("Add this as drawer to panel"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+				g_signal_connect (G_OBJECT(menuitem), "activate",
+						  G_CALLBACK(add_menudrawer_to_panel),
+						  sim->mf);
+				gtk_widget_set_sensitive (menuitem,
+							  objects_writable &&
+							  toplevels_writable);
 
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (), NULL,
-					_("Add this as drawer to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-				   G_CALLBACK(add_menudrawer_to_panel),
-				   sim->mf);
-			gtk_widget_set_sensitive (menuitem,
-						  objects_writable &&
-						  toplevels_writable &&
-						  ! panel_toplevel_get_locked_down (panel_widget->toplevel));
+				menuitem = gtk_image_menu_item_new ();
+				setup_menuitem (menuitem, panel_menu_icon_get_size (),
+						NULL, _("Add this as menu to panel"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+				g_signal_connect (G_OBJECT(menuitem), "activate",
+						  G_CALLBACK(add_menu_to_panel),
+						  sim->mf->menudir);
+				gtk_widget_set_sensitive (menuitem,
+							  objects_writable &&
+							  toplevels_writable);
+			}
 
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Add this as menu to panel"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			g_signal_connect (G_OBJECT(menuitem), "activate",
-					   G_CALLBACK(add_menu_to_panel),
-					   sim->mf->menudir);
-			gtk_widget_set_sensitive (menuitem,
-						  objects_writable &&
-						  toplevels_writable &&
-						  ! panel_toplevel_get_locked_down (panel_widget->toplevel));
+			if ( ! panel_profile_get_inhibit_command_line ()) {
+				menuitem = gtk_image_menu_item_new ();
+				setup_menuitem (menuitem, panel_menu_icon_get_size (),
+						NULL, _("Add new item to this menu"), FALSE);
+				gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
+				/*when activated we must pop down the first menu*/
+				g_signal_connect_swapped (G_OBJECT (menuitem),
+							  "activate",
+							  G_CALLBACK (gtk_menu_shell_deactivate),
+							  G_OBJECT (item->parent));
 
-			menuitem = gtk_image_menu_item_new ();
-			setup_menuitem (menuitem, panel_menu_icon_get_size (),
-					NULL, _("Add new item to this menu"), FALSE);
-			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
-			/*when activated we must pop down the first menu*/
-			g_signal_connect_swapped (G_OBJECT (menuitem),
-						 "activate",
-						 G_CALLBACK (gtk_menu_shell_deactivate),
-						 G_OBJECT (item->parent));
-
-			g_signal_connect (menuitem, "activate",
-					  G_CALLBACK (add_new_app_to_menu),
-					  sim);
-			if ( ! panel_is_uri_writable (sim->mf->menudir))
-				gtk_widget_set_sensitive (menuitem, FALSE);
+				g_signal_connect (menuitem, "activate",
+						  G_CALLBACK (add_new_app_to_menu),
+						  sim);
+				if ( ! panel_is_uri_writable (sim->mf->menudir))
+					gtk_widget_set_sensitive (menuitem, FALSE);
+			}
 
 			menuitem = gtk_image_menu_item_new ();
 			/*when activated we must pop down the first menu*/
@@ -2994,63 +3001,61 @@ make_panel_submenu (PanelWidget *panel_widget,
 	Bonobo_ServerInfoList *applet_list;
 	GtkWidget             *menuitem, *submenu;
 
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			GTK_ICON_SIZE_MENU,
-			gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU),
-			_("_Add to Panel"),
-			FALSE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+	if ( ! panel_toplevel_get_locked_down (panel_widget->toplevel)) {
+		menuitem = gtk_image_menu_item_new ();
+		setup_menuitem (menuitem,
+				GTK_ICON_SIZE_MENU,
+				gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_MENU),
+				_("_Add to Panel"),
+				FALSE);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	submenu = menu_new ();
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-				   submenu);
+		submenu = menu_new ();
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+					   submenu);
 
-	applet_list = instrument_add_submenu_for_reload (GTK_MENU_ITEM (menuitem), submenu);
+		applet_list = instrument_add_submenu_for_reload (GTK_MENU_ITEM (menuitem), submenu);
 
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel) ||
-	    ( ! panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
-	      ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS))) {
-		/* if we can't write neither applets nor objects, just
-		   completely ignore this and make the whole submenu
-		   insensitive */
-		gtk_widget_set_sensitive (menuitem, FALSE);
-	} else {
-		make_add_submenu (submenu, applet_list);
+		if ( ! panel_profile_list_is_writable (PANEL_GCONF_APPLETS) &&
+		     ! panel_profile_list_is_writable (PANEL_GCONF_OBJECTS)) {
+			/* if we can't write neither applets nor objects, just
+			   completely ignore this and make the whole submenu
+			   insensitive */
+			gtk_widget_set_sensitive (menuitem, FALSE);
+		} else {
+			make_add_submenu (submenu, applet_list);
+		}
+
+		menuitem = gtk_image_menu_item_new ();
+
+		setup_menuitem (menuitem, 
+				GTK_ICON_SIZE_MENU,
+				gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU),
+				_("_Delete This Panel"),
+				FALSE);
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		g_signal_connect (G_OBJECT (menuitem), "activate",
+				  G_CALLBACK (remove_panel),
+				  NULL);
+		g_signal_connect (G_OBJECT (menu), "show",
+				  G_CALLBACK(setup_remove_this_panel),
+				  menuitem);
+
+		menuitem = gtk_image_menu_item_new ();
+		setup_menuitem (menuitem,
+				GTK_ICON_SIZE_MENU,
+				gtk_image_new_from_stock (
+							  GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU),
+				_("_Properties"),
+				FALSE);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		g_signal_connect_swapped (menuitem, "activate",
+					  G_CALLBACK (panel_properties_dialog_present), 
+					  panel_widget->toplevel);
+
+		add_menu_separator (menu);
 	}
-
-	menuitem = gtk_image_menu_item_new ();
-
-	setup_menuitem (menuitem, 
-			GTK_ICON_SIZE_MENU,
-			gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_MENU),
-			_("_Delete This Panel"),
-			FALSE);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			    G_CALLBACK (remove_panel),
-			    NULL);
-	g_signal_connect (G_OBJECT (menu), "show",
-			    G_CALLBACK(setup_remove_this_panel),
-			    menuitem);
-
-	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem,
-			GTK_ICON_SIZE_MENU,
-			gtk_image_new_from_stock (
-				GTK_STOCK_PROPERTIES, GTK_ICON_SIZE_MENU),
-			_("_Properties"),
-			FALSE);
-
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	g_signal_connect_swapped (menuitem, "activate",
-				  G_CALLBACK (panel_properties_dialog_present), 
-				  panel_widget->toplevel);
-
-	if (panel_toplevel_get_locked_down (panel_widget->toplevel))
-		gtk_widget_set_sensitive (menuitem, FALSE);
-
-	add_menu_separator (menu);
 
 	menuitem = gtk_image_menu_item_new ();
 	setup_menuitem (menuitem, 
