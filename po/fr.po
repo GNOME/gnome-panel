@@ -10,15 +10,15 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 2.5.2\n"
-"POT-Creation-Date: 2004-02-23 17:42+0000\n"
-"PO-Revision-Date: 2004-01-03 19:01+0100\n"
-"Last-Translator: Baptiste Mille-Mathias <bmm80@ifrance.com>\n"
+"Project-Id-Version: gnome-panel 2.5.90\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-02-27 11:11+0100\n"
+"PO-Revision-Date: 2004-02-27 10:58+0100\n"
+"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -67,7 +67,7 @@ msgid "Accessories"
 msgstr "Accessoires"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2570
+#: applets/clock/clock.c:2554
 msgid "Clock"
 msgstr "Horloge"
 
@@ -91,12 +91,12 @@ msgstr "%l:%M:%S %p"
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:273 applets/clock/clock.c:1563
+#: applets/clock/clock.c:273 applets/clock/clock.c:1547
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
 #: applets/clock/clock.c:273 applets/clock/clock.c:624
-#: applets/clock/clock.c:1565
+#: applets/clock/clock.c:1549
 msgid "%H:%M"
 msgstr "%H:%M"
 
@@ -136,45 +136,44 @@ msgstr "%1$s, %2$s"
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: applets/clock/clock.c:839
+#: applets/clock/clock.c:841
 msgid "Tasks"
-msgstr ""
+msgstr "Tâches"
 
-#: applets/clock/clock.c:978
+#: applets/clock/clock.c:973
 msgid "All Day"
-msgstr ""
+msgstr "Toute la journée"
 
-#: applets/clock/clock.c:1010
-#, fuzzy
+#: applets/clock/clock.c:1007
 msgid "Appointments"
-msgstr "Ajouter un rendez-vous..."
+msgstr "Rendez-vous"
 
-#: applets/clock/clock.c:1245
+#: applets/clock/clock.c:1229
 msgid "Calendar"
 msgstr "Calendrier"
 
-#: applets/clock/clock.c:1476
+#: applets/clock/clock.c:1460
 msgid "Computer Clock"
 msgstr "Horloge"
 
-#: applets/clock/clock.c:1558
+#: applets/clock/clock.c:1542
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1560
+#: applets/clock/clock.c:1544
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1600
+#: applets/clock/clock.c:1584
 msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
-#: applets/clock/clock.c:1642
+#: applets/clock/clock.c:1626
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Le lancement de l'outil de configuration de l'heure a échoué : %s"
 
-#: applets/clock/clock.c:1681
+#: applets/clock/clock.c:1665
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -182,7 +181,7 @@ msgstr ""
 "La localisation d'un programme pour configurer la date et l'heure a échoué. "
 "Peut-être que vous n'en avez aucun d'installé."
 
-#: applets/clock/clock.c:2159 applets/clock/clock.c:2516
+#: applets/clock/clock.c:2143 applets/clock/clock.c:2500
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
 #: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
 #: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
@@ -192,54 +191,52 @@ msgstr ""
 msgid "There was an error displaying help: %s"
 msgstr "Il y a eu une erreur lors de l'affichage de l'aide : %s"
 
-#: applets/clock/clock.c:2208
+#: applets/clock/clock.c:2192
 msgid "Clock Preferences"
 msgstr "Préférences de l'horloge"
 
-#: applets/clock/clock.c:2244
+#: applets/clock/clock.c:2228
 msgid "Clock _type:"
 msgstr "_Type d'horloge :"
 
-#: applets/clock/clock.c:2255
+#: applets/clock/clock.c:2239
 msgid "12 hour"
 msgstr "12 heures"
 
-#: applets/clock/clock.c:2263
+#: applets/clock/clock.c:2247
 msgid "24 hour"
 msgstr "24 heures"
 
-#: applets/clock/clock.c:2271
+#: applets/clock/clock.c:2255
 msgid "UNIX time"
 msgstr "Heure UNIX"
 
-#: applets/clock/clock.c:2279
+#: applets/clock/clock.c:2263
 msgid "Internet time"
 msgstr "Heure Internet"
 
-#: applets/clock/clock.c:2287
-#, fuzzy
+#: applets/clock/clock.c:2271
 msgid "Custom format"
-msgstr "Icône personnalisée"
+msgstr "Format personnalisé"
 
-#: applets/clock/clock.c:2303
-#, fuzzy
+#: applets/clock/clock.c:2287
 msgid "Custom _format:"
-msgstr "Format de l'heure"
+msgstr "_Format personnalisé :"
 
-#: applets/clock/clock.c:2320
+#: applets/clock/clock.c:2304
 msgid "Show _seconds"
 msgstr "Afficher les _secondes"
 
-#: applets/clock/clock.c:2329
+#: applets/clock/clock.c:2313
 msgid "Show _date"
 msgstr "Afficher la _date"
 
-#: applets/clock/clock.c:2338
+#: applets/clock/clock.c:2322
 msgid "Use _UTC"
 msgstr "Utiliser _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:2551 applets/notification_area/main.c:120
+#: applets/clock/clock.c:2535 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
@@ -252,7 +249,7 @@ msgstr ""
 "Christophe Fergeau <teuf@users.sourceforge.net>\n"
 "Baptiste Mille-Mathias <bmm80@ifrance.com>"
 
-#: applets/clock/clock.c:2572
+#: applets/clock/clock.c:2556
 msgid "The Clock displays the current time and date"
 msgstr "L'Horloge affiche l'heure et la date courante."
 
@@ -266,7 +263,7 @@ msgstr "24-heures"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Format personnalisé de l'horloge"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -317,9 +314,11 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Cette clé spécifie le format utilisé par l'applet horloge lorsque la clé "
+"format est défini à « custom ». Vous pouvez utiliser des spécificateur de "
+"conversion compris par strftime() pour obtenir un format spécifique."
 
 #: applets/clock/clock.schemas.in.h:14
-#, fuzzy
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -331,12 +330,14 @@ msgid ""
 "the custom_format key."
 msgstr ""
 "Cette clé spécifié le format d'heure utilisé par l'applet horloge. Les "
-"valeurs possibles sont « 12-hour », « 24-hour », « internet » et « unix ». "
-"Si définie à « internet », l'horloge affichera le temps internet. Le système "
-"de temps internet divise le jour en 1000 segments. Il n'y a pas de fuseaux "
-"horaires dans ce système, donc le temps est le même partout dans le monde. "
-"Si définie à « unix », l'horloge affichera le temps en secondes depuis "
-"Epoch, c'est à dire le 1er janvier 1970."
+"valeurs possibles sont « 12-hour », « 24-hour », « internet », « unix » et "
+"« custom ». Si elle est défini à « internet », l'horloge affichera le temps "
+"internet. Le système de temps internet divise le jour en 1000 segments. Il "
+"n'y a pas de fuseaux horaires dans ce système, donc le temps est le même "
+"partout dans le monde. Si elle est défini à « unix », l'horloge affichera le "
+"temps en secondes depuis Epoch, c'est à dire le 1er janvier 1970. Si elle "
+"est défini à « custom », l'horloge affichera l'heure en fonction du format "
+"spécifié dans la clé custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -1555,17 +1556,17 @@ msgstr ""
 "ordinateur"
 
 #: gnome-panel/menu.c:3232 gnome-panel/panel-menu-bar.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "Log Out %s"
-msgstr "Clore la session"
+msgstr "Déconnecter %s"
 
 #: gnome-panel/menu.c:3246
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Log out %s of this session to log in as a different user or to shut down "
 "your computer"
 msgstr ""
-"Se déconnecte de cette session afin de se reconnecter sous un autre "
+"Déconnecte %s de cette session afin de se reconnecter sous un autre "
 "identifiant ou pour éteindre votre ordinateur"
 
 #: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:137
@@ -1821,18 +1822,16 @@ msgid "Confirm panel removal"
 msgstr "Confirmer la suppression du tableau de bord"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Forcer quitter"
+msgstr "Désactiver Forcer à quitter"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Verrouiller l'écran"
+msgstr "Désactiver Verrouiller l'écran"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Désactiver Déconnecter"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1896,18 +1895,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Si vrai, le tableau de bord n'autorisera pas un utilisateur à forcer une "
+"application à quitter en supprimant l'accès au bouton forcer à quitter."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Si vrai, le tableau de bord n'autorisera pas un utilisateur à verrouiller "
+"son écran en supprimant l'accès au bouton verrouiller l'écran."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Si vrai, le tableau de bord n'autorisera pas un utilisateur à se déconnecter "
+"en supprimant l'accès au bouton de déconnexion."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1945,9 +1950,9 @@ msgstr ""
 "absence"
 
 #: gnome-panel/panel-menu-bar.c:207
-#, fuzzy, c-format
+#, c-format
 msgid "Quit from %s's desktop"
-msgstr "Quitte l'environnement GNOME"
+msgstr "Quitte le bureau de %s"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 msgid "Action button type"
@@ -2417,9 +2422,8 @@ msgid "_Force quit"
 msgstr "_Forcer à quitter"
 
 #: gnome-panel/panel-toplevel.c:1107
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Tableau de bord _latéral"
+msgstr "Cache le tableau de bord"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2973,1659 +2977,3 @@ msgstr "Très très grand"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Très très petit"
-
-#, fuzzy
-#~ msgid "Month"
-#~ msgstr "Ce mois"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Rechercher"
-
-#, fuzzy
-#~ msgid "The currently monitored year"
-#~ msgstr "Moniteur courant :"
-
-#, fuzzy
-#~ msgid "Activatable"
-#~ msgstr "Désactivée"
-
-#~ msgid "Has Arrow"
-#~ msgstr "A une flèche"
-
-#~ msgid "Whether or not to draw an arrow indicator"
-#~ msgstr "Indique si il faut ou non dessiner un indicateur fléché"
-
-#~ msgid "Drag and drop Highlight"
-#~ msgstr "Surbrillance Glisser/Déposer"
-
-#~ msgid "Whether or not to highlight the icon during drag and drop"
-#~ msgstr ""
-#~ "Indique si il faut mettre en surbrillance l'icône lors d'un glisser/"
-#~ "déposer"
-
-#~ msgid "Orientation"
-#~ msgstr "Orientation"
-
-#~ msgid "The ButtonWidget orientation"
-#~ msgstr "L'orientation du ButtonWidget"
-
-#~ msgid "Icon Name"
-#~ msgstr "Nom de l'icône"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "L'icône désirée pour le ButtonWidget"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "ID de l'icône prédéfinie"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "L'icône prédéfinie désirée pour le ButtonWidget"
-
-#~ msgid "Action Type"
-#~ msgstr "Type d'action"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "Le type d'action que ce bouton implémente"
-
-#~ msgid "Drag and drop enabled"
-#~ msgstr "Glisser/Déposer activé"
-
-#~ msgid "Whether or not drag and drop is enabled on the widget"
-#~ msgstr "Indique si le glisser/déposer est activé sur le widget"
-
-#~ msgid "Edges"
-#~ msgstr "Cotés"
-
-#~ msgid "Which edges to draw"
-#~ msgstr "Quels cotés à dessiner"
-
-#~ msgid "Menu Path"
-#~ msgstr "Chemin vers le menu"
-
-#~ msgid "The path from which to construct the menu"
-#~ msgstr "Le chemin à partir duquel construire le menu"
-
-#~ msgid "Custom Icon"
-#~ msgstr "Icône personnalisée"
-
-#~ msgid "The custom icon for the menu"
-#~ msgstr "L'icône personnalisée pour le menu"
-
-#~ msgid "Tooltip"
-#~ msgstr "Bulle d'aide"
-
-#~ msgid "Tooltip displayed for the menu"
-#~ msgstr "Bulle d'aide affichée pour ce menu"
-
-#~ msgid "Use Menu Path"
-#~ msgstr "Utiliser le chemin du menu"
-
-#~ msgid "Use the path specified by the menu-path property"
-#~ msgstr "Utiliser le chemin spécifié par la propriété menu-path"
-
-#~ msgid "Use Custom Icon"
-#~ msgstr "Utiliser une icône personnalisée"
-
-#~ msgid "Use the icon specified by the custom-icon property"
-#~ msgstr "Utiliser l'icône spécifiée par la propriété custom-icon"
-
-#~ msgid "Name"
-#~ msgstr "Nom"
-
-#~ msgid "The name of this panel"
-#~ msgstr "Le nom de ce tableau de bord"
-
-#~ msgid "Expand"
-#~ msgstr "Étendre"
-
-#~ msgid "Expand to take up the full monitor width/height"
-#~ msgstr "Étendre pour prendre toute la largeur/hauteur du moniteur"
-
-#~ msgid "The orientation of the panel"
-#~ msgstr "L'orientation de ce tableau de bord"
-
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "La hauteur (ou largeur si vertical) du tableau de bord"
-
-#~ msgid "X position"
-#~ msgstr "Position en X"
-
-#~ msgid "The X position of the panel"
-#~ msgstr "La position en X de ce tableau de bord"
-
-#~ msgid "X centered"
-#~ msgstr "Centré en X"
-
-#~ msgid "The x co-ordinate is relative to center screen"
-#~ msgstr "La coordonnée en X relativement au centre de l'écran"
-
-#~ msgid "Y position"
-#~ msgstr "Position en Y"
-
-#~ msgid "The Y position of the panel"
-#~ msgstr "La position en Y du tableau de bord"
-
-#~ msgid "Y centered"
-#~ msgstr "Centré en Y"
-
-#~ msgid "The y co-ordinate is relative to center screen"
-#~ msgstr "La coordonnée en Y relativement au centre de l'écran"
-
-#~ msgid "Xinerama monitor"
-#~ msgstr "Moniteur Xinerama"
-
-#~ msgid "The monitor (in terms of Xinerama) which the panel is on"
-#~ msgstr "Le moniteur (au sens de Xinerama) sur lequel est le tableau de bord"
-
-#~ msgid "Auto hide"
-#~ msgstr "Masquage automatique"
-
-#~ msgid "Automatically hide the panel when the mouse leaves the panel"
-#~ msgstr ""
-#~ "Cacher automatiquement le tableau de bord lorsque la souris quitte le "
-#~ "tableau de bord"
-
-#~ msgid "Hide delay"
-#~ msgstr "Délai de masquage"
-
-#~ msgid "The number of milliseconds to delay before automatically hiding"
-#~ msgstr "Le nombre de millisecondes à attendre avant le masquage automatique"
-
-#~ msgid "Un-hide delay"
-#~ msgstr "Délai d'affichage"
-
-#~ msgid "The number of milliseconds to delay before automatically un-hiding"
-#~ msgstr ""
-#~ "Le nombre de millisecondes à attendre avant le démasquage automatique"
-
-#~ msgid "Auto-hide size"
-#~ msgstr "Taille du masquage automatique"
-
-#~ msgid ""
-#~ "The number of pixels visible when the panel has been automatically hidden"
-#~ msgstr ""
-#~ "Le nombre de pixels visible lorsque le tableau de bord a été "
-#~ "automatiquent caché"
-
-#~ msgid "Animate"
-#~ msgstr "Animer"
-
-#~ msgid "Enable hiding/showing animations"
-#~ msgstr "Activer les animations de masquage/affichage"
-
-#~ msgid "Animation Speed"
-#~ msgstr "Vitesse de l'animation"
-
-#~ msgid "The speed at which to animate panel hiding/showing"
-#~ msgstr ""
-#~ "La vitesse a laquelle animer le masquage/affichage du tableau de bord"
-
-#~ msgid "Buttons Enabled"
-#~ msgstr "Boutons activés"
-
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Activer les boutons de masquage/affichage"
-
-#~ msgid "Arrows Enabled"
-#~ msgstr "Flèches activées"
-
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Activer les flèches sur les boutons de masquage/affichage"
-
-#, fuzzy
-#~ msgid "Text"
-#~ msgstr "Texte seulement"
-
-#, fuzzy
-#~ msgid "Text to render"
-#~ msgstr "Texte seulement"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Couleur de l'arrière-plan"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Opacité de la couleur de l'arrière-plan"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Couleur de l'arrière-plan"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Couleur de l'arrière-plan"
-
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "Couleur de l'arrière-plan"
-
-#, fuzzy
-#~ msgid "Font"
-#~ msgstr "Format"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "É_tiré"
-
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Taille du tableau de bord"
-
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Arrière-plan"
-
-#, fuzzy
-#~ msgid "Font scale set"
-#~ msgstr "_Ne pas étirer l'image pour l'ajuster"
-
-#~ msgid ""
-#~ "If true, the panel will be locked in place, properties won't be "
-#~ "changable. The user won't be able to add, remove or even move applets. "
-#~ "Also properties of all objects on this panel will be locked down as well. "
-#~ "Properties of external applets may however have to be locked down "
-#~ "separately. The panel must be restarted for this to take effect."
-#~ msgstr ""
-#~ "Si vrai, le tableau de bord sera verrouillé sur place, les propriétés ne "
-#~ "pourront être changées. L'utilisateur ne pourra ajouter, enlever ou même "
-#~ "déplacer les applets, De plus les propriétés de tous les objets de ce "
-#~ "tableau seront également verrouillés. Les propriétés des applets externes "
-#~ "pourraient nécessiter d'être verrouillées séparément. Le tableau de bord "
-#~ "doit être redémarré pour que ça prenne effet."
-
-#~ msgid "Lock down the panel"
-#~ msgstr "Verrouille le tableau de bord"
-
-#~ msgid "%s - command not found"
-#~ msgstr "%s - commande non trouvée"
-
-#~ msgid "Cannot execute %s"
-#~ msgstr "Impossible d'exécuter %s"
-
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr ""
-#~ "Si vrai, affiche l'heure en secondes depuis Epoch, c.à.d. 01-01-1970."
-
-#~ msgid ""
-#~ "This key specifies the hour format used by the clock applet. Possible "
-#~ "values are 12 and 24."
-#~ msgstr ""
-#~ "Cette clé spécifie le format d'heure utilisé par l'applet horloge. Les "
-#~ "valeurs possibles sont 12 et 24."
-
-#~ msgid "Window Menu"
-#~ msgstr "Menu des fenêtres"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Imprimer la capture d'écran"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Aperçu de l'impression de la capture d'écran"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Imprimer la capture d'écran..."
-
-#, fuzzy
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "Le tableau de bord a rencontré un problème lors du chargement de  « %s »\n"
-#~ "Détails : %s\n"
-#~ "\n"
-#~ "Voulez-vous supprimer l'applet de votre configuration ?"
-
-#~ msgid "Open Recent"
-#~ msgstr "Récemment ouverts"
-
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr ""
-#~ "Si vrai, affiche l'heure Internet, qui est la même à travers le monde."
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "%s le poisson GNOME"
-
-#~ msgid "Expander Size"
-#~ msgstr "Taille de l'expandeur"
-
-#~ msgid "Size of the expander arrow"
-#~ msgstr "Taille de la flèche de l'expandeur"
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "_Aide sur l'application %s"
-
-#~ msgid "Help on %s"
-#~ msgstr "Aide sur %s"
-
-#~ msgid "Application"
-#~ msgstr "Application"
-
-#~ msgid "<b>_Icon:</b>"
-#~ msgstr "<b>_Icône :</b>"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Nom :</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Orientation :</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>_Taille :</b>"
-
-#~ msgid ""
-#~ "A description of the currently selected application or information on the "
-#~ "command that will be run."
-#~ msgstr ""
-#~ "Une description de l'application actuellement sélectionnée ou information "
-#~ "sur la commande qui sera exécutée."
-
-#~ msgid "Application description"
-#~ msgstr "Description de l'application"
-
-#~ msgid "List of known applications"
-#~ msgstr "Liste des applications connues"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Sélectionnez une application dans la liste pour l'exécuter"
-
-#~ msgid "When this is selected the list of known applications is displayed."
-#~ msgstr ""
-#~ "Quand c'est sélectionné, la liste des applications connues est affichée."
-
-#~ msgid "Help document not found"
-#~ msgstr "Document d'aide non trouvé"
-
-#~ msgid "No document to show"
-#~ msgstr "Aucun document à afficher"
-
-#~ msgid ""
-#~ "Failed to load image %s\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "Le chargement de l'image %s a échoué\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid "Size and Position"
-#~ msgstr "Taille et position"
-
-#~ msgid "Applet appearance"
-#~ msgstr "Apparence de l'applet"
-
-#~ msgid "Drawer handle"
-#~ msgstr "Poignée du tiroir"
-
-#~ msgid "Enable hidebutton"
-#~ msgstr "Activer le bouton de masquage"
-
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "Activer la flèche du bouton de masquage"
-
-#~ msgid "KDE Menu"
-#~ msgstr "Menu KDE"
-
-#~ msgid "_Drawer"
-#~ msgstr "_Tiroir"
-
-#~ msgid "_Run Application..."
-#~ msgstr "_Lancer une application..."
-
-#, fuzzy
-#~ msgid "_Search for Files..."
-#~ msgstr "Rechercher des fichiers..."
-
-#, fuzzy
-#~ msgid "_Take Screenshot..."
-#~ msgstr "Prendre une capture d'écran..."
-
-#, fuzzy
-#~ msgid "_Log Out"
-#~ msgstr "Clore la session"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Définit le format de l'heure, soit 12 ou 24 heures"
-
-#~ msgid "Maximum size that Window List requests"
-#~ msgstr "Taille maximale que la liste des fenêtres utilisera"
-
-#~ msgid ""
-#~ "To be usable, Window List requires a minimum width. Window List requests "
-#~ "this minimum width. The minimum width setting is useful for sliding and "
-#~ "edge panels, which usually request a small default width."
-#~ msgstr ""
-#~ "Pour être utilisable, la liste des fenêtres a besoin d'une largeur "
-#~ "minimale. Cette valeur est la largeur minimum que l'applet demandera. "
-#~ "Ceci est utile pour faire glisser les tableaux de bord, qui vous "
-#~ "demanderont sinon pour une petite valeur par défaut."
-
-#~ msgid "Number of rows in the Workspace Switcher."
-#~ msgstr "Nombre de rangées dans le sélecteur d'espaces de travail."
-
-#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
-#~ msgstr ""
-#~ "Si tous les espaces de travail doivent être affichés dans le sélecteur "
-#~ "d'espaces de travail."
-
-#~ msgid ""
-#~ "Whether to display the names of the workspaces in the Workspace Switcher."
-#~ msgstr ""
-#~ "Si le nom des espaces de travail doit être affiché dans le sélecteur "
-#~ "d'espaces de travail."
-
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible d'enregistrer le lanceur, l'erreur suivante est survenue :\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Ne peut exécuter « À propos de GNOME »"
-
-#~ msgid "probably does not exist"
-#~ msgstr "il n'existe probablement pas"
-
-#~ msgid "Could not remove the menu item"
-#~ msgstr "Ne peut supprimer l'élement de menu"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Ne peut exécuter gnome-search-tool"
-
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Ne peut exécuter gnome-panel-screenshot"
-
-#~ msgid "A list of panel IDs"
-#~ msgstr "Une liste d'ID de tableaus de bord"
-
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "Faire une capture d'écran d'une fenêtre"
-
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "Le IID Bonobo de l'applet"
-
-#~ msgid "The location of the launcher"
-#~ msgstr "L'emplacement du lanceur"
-
-#~ msgid "The path for the menu contents"
-#~ msgstr "Le chemin pour le contenu du menu"
-
-#~ msgid "The type of action button"
-#~ msgstr "Le type de bouton d'action"
-
-#~ msgid "The type of panel object"
-#~ msgstr "Le type d'objet du taleau de bord"
-
-#~ msgid "Error launching command"
-#~ msgstr "Erreur au lancement de la commande"
-
-#~ msgid "Delay before automatically hiding the panel."
-#~ msgstr "Délai avant de masquer automatiquement le tableau de bord."
-
-#~ msgid "Delay before automatically un-hiding the panel."
-#~ msgstr "Délai avant de démasquer automatiquement le tableau de bord."
-
-#~ msgid "The background image."
-#~ msgstr "L'image d'arrière-plan."
-
-#~ msgid "The background type."
-#~ msgstr "Le type d'arrière-plan"
-
-#~ msgid "The orientation of the panel."
-#~ msgstr "L'orientation du tableau de bord."
-
-#~ msgid "The size of the panel."
-#~ msgstr "La taille du tableau de bord."
-
-#~ msgid "The speed of animations."
-#~ msgstr "La vitesse des animations."
-
-#~ msgid "and finally, The Knights Who Say... NI!"
-#~ msgstr "et enfin, Les Chevaliers Qui Disent ... NI!"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
-#~ "prohibited any changes to the panel's configuration to take place."
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Fonctionne en mode « Lockdown ».  Ceci signifie que votre administrateur "
-#~ "système a interdit toutes modifications de la configuration du tableau de "
-#~ "bord."
-
-#~ msgid "End world hunger"
-#~ msgstr "Stopper la faim dans le monde"
-
-#~ msgid "The desired ButtonWidget size"
-#~ msgstr "La taille désirée de ButtonWidget"
-
-#~ msgid "Screenshot..."
-#~ msgstr "Capture d'écran..."
-
-#~ msgid "      "
-#~ msgstr "      "
-
-#~ msgid ""
-#~ "<b>Cannot launch icon</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Ne peut lancer d'icône</b>\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid ""
-#~ "<b>Can't execute 'About GNOME'</b>\n"
-#~ "\n"
-#~ "Details: %s probably does not exist"
-#~ msgstr ""
-#~ "<b>Impossible de lancer « À propos de GNOME »</b>\n"
-#~ "\n"
-#~ "Détails : %s n'existe probablement pas"
-
-#~ msgid ""
-#~ "<b>Can't launch entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Ne peut lancer l'entrée</b>\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid ""
-#~ "<b>Can't load entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Impossible de charger l'entrée</b>\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid "Floating"
-#~ msgstr "Flottant"
-
-#~ msgid "Centered"
-#~ msgstr "Centré"
-
-#~ msgid "Edge"
-#~ msgstr "Coté"
-
-#~ msgid "%s %s Panel"
-#~ msgstr "Tableau de bord %s %s"
-
-#~ msgid ""
-#~ "<b>Failed to run this program</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Le lancement de ce programme a échoué</b>\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid ""
-#~ "<b>Failed to execute command:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>L'exécution de cette commande a échoué :</b> « %s »\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: no application available to open file"
-#~ msgstr ""
-#~ "<b>L'ouverture de ce fichier a échoué :</b> « %s »\n"
-#~ "\n"
-#~ "Détails : aucune application disponible pour ouvrir le fichier"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>L'ouverture de ce fichier a échoué :</b> « %s »\n"
-#~ "\n"
-#~ "Détails : %s"
-
-#~ msgid "Choose a file"
-#~ msgstr "Choisissez un fichier"
-
-#~ msgid "Known Applications"
-#~ msgstr "Applications connues"
-
-#~ msgid "No application selected"
-#~ msgstr "Aucune application n'est sélectionnée"
-
-#~ msgid "Command to _execute when fish is clicked:"
-#~ msgstr "Commande à e_xécuter lorsque le poisson est cliqué :"
-
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "Pause _par image (s) :"
-
-#~ msgid "_Animation filename:"
-#~ msgstr "Nom du fichier d'_animation :"
-
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Avertir lorsqu'un nouveau message arrive"
-
-#~ msgid "Inbox Monitor"
-#~ msgstr "Moniteur de boîte à lettres"
-
-#~ msgid "_Check for mail"
-#~ msgstr "_Vérifier le courrier"
-
-#~ msgid "There was an error executing %s: %s"
-#~ msgstr "Il y a eu une erreur lors de l'exécution de %s : %s"
-
-#~ msgid ""
-#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
-#~ "so you have to enter it each time it starts up."
-#~ msgstr ""
-#~ "Vous n'avez pas indiqué de mot de passe dans les préférences du moniteur "
-#~ "de boîtes à lettres,\n"
-#~ "il faudra donc que vous le saisissiez à chaque démarrage."
-
-#~ msgid "Please enter your mailserver's _password:"
-#~ msgstr "Veuillez saisir le mot de _passe de votre serveur de messagerie :"
-
-#~ msgid "Password Entry box"
-#~ msgstr "Boîte d'entrée de mot de passe"
-
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Le moniteur de boîte à lettres a échoué lors de la vérification de vos "
-#~ "nouveaux messages. La vérification automatique est désormais désactivée.\n"
-#~ "Peut-être avez-vous utilisé un mauvais serveur/nom d'utilisateur/mot de "
-#~ "passe ?"
-
-#~ msgid "You have new mail."
-#~ msgstr "Vous avez un nouveau courrier."
-
-#~ msgid "You have mail."
-#~ msgstr "Vous avez du courrier."
-
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d messages"
-
-#~ msgid "%d messages"
-#~ msgstr "%d messages"
-
-#~ msgid "No mail."
-#~ msgstr "Pas de courrier."
-
-#~ msgid "Status not updated"
-#~ msgstr "État non mis à jour"
-
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "_Emplacement de la boîte à lettres :"
-
-#~ msgid "Local mailspool"
-#~ msgstr "Spool de courrier local"
-
-#~ msgid "Local maildir"
-#~ msgstr "Maildir local"
-
-#~ msgid "Remote POP3-server"
-#~ msgstr "Serveur POP3 distant"
-
-#~ msgid "Remote IMAP-server"
-#~ msgstr "Serveur IMAP distant"
-
-#~ msgid "Mail _spool file:"
-#~ msgstr "_Fichier d'arrivée du courrier :"
-
-#~ msgid "Mail s_erver:"
-#~ msgstr "_Serveur de messagerie :"
-
-#~ msgid "Mail Server Entry box"
-#~ msgstr "Boîte d'entrée du serveur de mail"
-
-#~ msgid "_Username:"
-#~ msgstr "_Identifiant :"
-
-#~ msgid "Username Entry box"
-#~ msgstr "Boîte d'entrée du nom d'utilisateur"
-
-#~ msgid "_Password:"
-#~ msgstr "_Mot de passe :"
-
-#~ msgid "_Folder:"
-#~ msgstr "_Dossier :"
-
-#~ msgid "Folder Entry box"
-#~ msgstr "Zone de saisie du dossier"
-
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "_Commande à exécuter avant de vérifier les messages :"
-
-#~ msgid "Execute"
-#~ msgstr "Exécuter"
-
-#~ msgid "Before each _update:"
-#~ msgstr "Avant chaque _mise à jour :"
-
-#~ msgid "Command to execute before each update"
-#~ msgstr "Commande à lancer avant chaque mise à jour"
-
-#~ msgid "When new mail _arrives:"
-#~ msgstr "Lorsqu'un _nouveau message arrive :"
-
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Commande à exécuter lorsqu'un nouveau message arrive"
-
-#~ msgid "When clicke_d:"
-#~ msgstr "Lorsque l'applet est _cliqué :"
-
-#~ msgid "Set the number of unread mails to _zero"
-#~ msgstr "Mettre à _zéro le nombre de courriers non lus"
-
-#~ msgid "Check for mail _every"
-#~ msgstr "Vérifier le courrier _toutes les"
-
-#~ msgid "minutes"
-#~ msgstr "minutes"
-
-#~ msgid "Choose time interval in minutes to check mail"
-#~ msgstr "Intervalle de vérification des messages (en minutes)"
-
-#~ msgid "Choose time interval in seconds to check mail"
-#~ msgstr "Intervalle de vérification des messages (en secondes)"
-
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "_Jouer un son lorsqu'un nouveau message arrive"
-
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Préférences du moniteur de boîte à lettres"
-
-#~ msgid "_Mail check"
-#~ msgstr "_Vérification du courrier"
-
-#~ msgid "Mail_box"
-#~ msgstr "_Boîte à lettres"
-
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "Le moniteur de boîte à lettres vous prévient lorsqu'un nouveau message "
-#~ "arrive dans votre boîte à lettres."
-
-#~ msgid "Mail check"
-#~ msgstr "Vérification du courrier"
-
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "Mail check vous prévient lorsqu'un nouveau message arrive dans votre "
-#~ "boîte à lettres."
-
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Commande à exécuter lorsque le courrier est vérifié"
-
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr ""
-#~ "Commande à lancer lorsque vous cliquez sur le moniteur de boîte à lettres"
-
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Commande à lancer avant de vérifier les courriers"
-
-#~ msgid "Do we run the exec-command"
-#~ msgstr "Si on lance exec-command"
-
-#~ msgid "Do we run the newmail-command"
-#~ msgstr "Si on exécute newmail-command"
-
-#~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Tous les combien (en millisecondes) doit-on vérifier le courrier"
-
-#~ msgid "If mail should be checked automatically"
-#~ msgstr "Si le courrier doit être vérifier automatiquement"
-
-#~ msgid "If this is set mail will be checked every update-freq milliseconds"
-#~ msgstr ""
-#~ "Si c'est définit, le courrier sera vérifier toutes les update-freq "
-#~ "millisecondes"
-
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "Si c'est définit, nous devrons exécuter exec-command"
-
-#~ msgid "If this is set, we should run the newmail-command"
-#~ msgstr "Si c'est définit, nous devrons exécuter newmail-command"
-
-#~ msgid "Interval for checking mail"
-#~ msgstr "Intervalle de vérification du courrier"
-
-#~ msgid "Path to the animation file"
-#~ msgstr "Chemin vers le fichier d'animation"
-
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr "Jouer un son lorsqu'un message est reçu"
-
-#~ msgid "Remote folder for mail retrieval"
-#~ msgstr "Dossier distant pour la récupération du courrier"
-
-#~ msgid "Remote server to connect to for our mail"
-#~ msgstr "Serveur distant auquel se connecter pour vos courriers"
-
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Commande à exécuter avant de vérifier le courrier"
-
-#~ msgid "The mail server"
-#~ msgstr "Le serveur de messagerie"
-
-#~ msgid "The user's password"
-#~ msgstr "Le mot de passe de l'utilisateur"
-
-#~ msgid "The user's password for the remote server"
-#~ msgstr "Le mot de passe utilisateur pour le serveur distant"
-
-#~ msgid "This is how we check the mail, check the mail, check the mail..."
-#~ msgstr ""
-#~ "C'est ainsi que l'on vérifie le courrier, vérifie le courrier, vérifie le "
-#~ "courrier..."
-
-#~ msgid ""
-#~ "This is how we process the mail, process the mail, process the mail..."
-#~ msgstr ""
-#~ "C'est ainsi que l'on traite le courrier, traite le courrier, traite le "
-#~ "courrier..."
-
-#~ msgid ""
-#~ "This is the animation that will be displayed during normal Inbox Monitor "
-#~ "usage"
-#~ msgstr ""
-#~ "C'est l'animation qui sera affiché lors de l'utilisation normale du "
-#~ "moniteur de boîte à lettres"
-
-#~ msgid "Username on the remote server"
-#~ msgstr "Identifiant sur le serveur distant"
-
-#~ msgid "We run this command when the user clicks on Inbox Monitor"
-#~ msgstr ""
-#~ "Nous exécutons cette commande lorsque l'utilisateur clique sur le "
-#~ "moniteur de boîte à lettres"
-
-#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
-#~ msgstr ""
-#~ "Si nous initialisons l'état du courrier lorsque vous cliquez sur le "
-#~ "moniteur de boîte à lettres"
-
-#~ msgid "You've got mail!"
-#~ msgstr "Vous avez du courrier !"
-
-#~ msgid "Mailcheck"
-#~ msgstr "Boite à lettres"
-
-#~ msgid "New Mail"
-#~ msgstr "Nouveau courrier"
-
-#~ msgid "Rows"
-#~ msgstr "lignes"
-
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr ""
-#~ "Aucun object_type défini pour l'objet tableau de bord avec l'ID %s\n"
-
-#~ msgid "Mode"
-#~ msgstr "Mode"
-
-#~ msgid "State"
-#~ msgstr "État"
-
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr ""
-#~ "Les boutons de masquage (boutons qui cache ou affiche le tableau de bord) "
-#~ "sont ils activés ?"
-
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Image des boutons de masquage activé"
-
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "Les boutons de masquage ont des images"
-
-#~ msgid "Hide this panel"
-#~ msgstr "Masquer ce tableau de bord"
-
-#~ msgid "Show this panel"
-#~ msgstr "Afficher ce tableau de bord"
-
-#~ msgid "Run Program..."
-#~ msgstr "Lancer un programme..."
-
-#~ msgid "Run applications, if you know the correct command to type in"
-#~ msgstr "Lance une application, si vous connaissez son nom exact"
-
-#~ msgid "Menu Panel"
-#~ msgstr "Tableau de bord « menu »"
-
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Tableau de bord GNOME « Menu »"
-
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Ne peut trouver le programme de capture d'écran"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Ne peut exécuter le programme de capture d'écran"
-
-#~ msgid "Panel to add the launcher to"
-#~ msgstr "Tableau de bord dans lequel ajouter le lanceur"
-
-#~ msgid "NUMBER"
-#~ msgstr "NOMBRE"
-
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "L'argument est une URL, pas un fichier .desktop"
-
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr ""
-#~ "Vous ne devez fournir qu'un argument avec le fichier .desktop ou l'URL à "
-#~ "utiliser\n"
-
-#~ msgid "No panel found\n"
-#~ msgstr "Aucun tableau de bord trouvé\n"
-
-#~ msgid "_Append File..."
-#~ msgstr "A_jouter un nom de fichier..."
-
-#~ msgid "Run Program"
-#~ msgstr "Lancer un programme"
-
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Tableau de bord GNOME aligné"
-
-#~ msgid "GNOME Edge Panel"
-#~ msgstr "Tableau de bord GNOME latéral"
-
-#~ msgid "Sliding Panel"
-#~ msgstr "Tableau de bord coulissant"
-
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Tableau de bord GNOME coulissant"
-
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Tableau de bord GNOME flottant"
-
-#~ msgid "You can only have one menu panel at a time."
-#~ msgstr "Vous ne pouvez avoir qu'un seul tableau de bord « menu » à la fois."
-
-#~ msgid "C_orner Panel"
-#~ msgstr "Tableau de bord de _coin"
-
-#~ msgid "Create corner panel"
-#~ msgstr "Créer un tableau de bord de coin"
-
-#~ msgid "Create edge panel"
-#~ msgstr "Créer un tableau de bord latéral"
-
-#~ msgid "Create floating panel"
-#~ msgstr "Créer un tableau de bord flottant"
-
-#~ msgid "_Sliding Panel"
-#~ msgstr "Tableau de bord c_oulissant"
-
-#~ msgid "Create sliding panel"
-#~ msgstr "Créer un tableau de bord coulissant"
-
-#~ msgid "_Menu Panel"
-#~ msgstr "Tableau de bord « _menu »"
-
-#~ msgid "Create menu panel"
-#~ msgstr "Créer un tableau de bord menu"
-
-#~ msgid "Button"
-#~ msgstr "Bouton"
-
-#~ msgid "Menu:"
-#~ msgstr "Menu :"
-
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Ne peut créer de menu, utilisation du menu principal !"
-
-#~ msgid "No path set at %s for panel menu object\n"
-#~ msgstr "Aucun chemin défini à %s pour l'objet de menu du tableau de bord\n"
-
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "Impossible d'enregistrer le widget de contrôle\n"
-
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr ""
-#~ "Votre configuration ne contenait aucun tableau de bord. Je vais créer un "
-#~ "menu pour vous"
-
-#~ msgid "Miscellaneous:"
-#~ msgstr "Divers :"
-
-#~ msgid "Current screen:"
-#~ msgstr "Écran en cours :"
-
-#~ msgid "Indicates the panel position and orientation on screen"
-#~ msgstr "Indique la position et l'orientation du tableau de bord à l'écran"
-
-#~ msgid "_Position:"
-#~ msgstr "_Position :"
-
-#~ msgid "Hori_zontal"
-#~ msgstr "Hori_zontal"
-
-#~ msgid "_Vertical"
-#~ msgstr "_Vertical"
-
-#~ msgid "H_orizontal:"
-#~ msgstr "H_orizontal :"
-
-#~ msgid "Ver_tical:"
-#~ msgstr "Ver_tical :"
-
-#~ msgid "_Distance from edge:"
-#~ msgstr "_Distance depuis les cotés :"
-
-#~ msgid "Default"
-#~ msgstr "Défaut"
-
-#~ msgid "Color"
-#~ msgstr "Couleur"
-
-#~ msgid "Image"
-#~ msgstr "Image"
-
-#~ msgid "Transparent"
-#~ msgstr "Transparent"
-
-#~ msgid "Image:"
-#~ msgstr "Image :"
-
-#~ msgid "Edge panel"
-#~ msgstr "Tableau de bord latéral"
-
-#~ msgid "Sliding panel"
-#~ msgstr "Tableau de bord coulissant"
-
-#~ msgid "Floating panel"
-#~ msgstr "Tableau de bord flottant"
-
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr ""
-#~ "Affiche la liste des programmes dés l'ouverture de la boîte de dialogue "
-#~ "« Lancer un programme »"
-
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr ""
-#~ "Affiche la liste des programmes dans la boîte de dialogue « Lancer un "
-#~ "programme »"
-
-#~ msgid "Copyright  1998-2002 Free Software Foundation. Inc."
-#~ msgstr "Copyright © 1998-2002 Free Software Foundation, Inc."
-
-#~ msgid "Copyright  1998-2002 Free Software Foundation, Inc."
-#~ msgstr "Copyright © 1998-2002 Free Software Foundation, Inc."
-
-#~ msgid " (invalid Unicode)"
-#~ msgstr " (Unicode non valide)"
-
-#~ msgid "Copyright  1997-2002 Free Software Foundation, Inc."
-#~ msgstr "Copyright © 1997-2002 la Free Software Foundation, Inc."
-
-#~ msgid "Applets"
-#~ msgstr "Applets"
-
-#~ msgid "(c) 1998-2000 the Free Software Foundation"
-#~ msgstr "© 1998-2000 la Free Software Foundation"
-
-#~ msgid "(c) 2001 Red Hat, Inc."
-#~ msgstr "© 2001 Red Hat, Inc."
-
-#~ msgid "Can't execute printer command"
-#~ msgstr "Ne peut exécuter la commande d'impression"
-
-#~ msgid "Printer properties"
-#~ msgstr "Propriétés de l'imprimante"
-
-#~ msgid "Printer name:"
-#~ msgstr "Nom de l'imprimante :"
-
-#~ msgid "Print command:"
-#~ msgstr "Commande d'impression :"
-
-#~ msgid "Printer"
-#~ msgstr "Imprimante"
-
-#~ msgid "Printer Applet"
-#~ msgstr "Applet d'impression"
-
-#~ msgid "(c) 1998 the Free Software Foundation"
-#~ msgstr "© 1998 la Free Software Foundation"
-
-#~ msgid ""
-#~ "The printer applet lets you easily drag files to be printed via a print "
-#~ "command"
-#~ msgstr ""
-#~ "L'applet d'impression vous permet de déposer des fichiers à imprimer"
-
-#~ msgid "Can't create applet!\n"
-#~ msgstr "Ne peut créer l'applet !\n"
-
-#~ msgid "Properties..."
-#~ msgstr "Propriétés..."
-
-#~ msgid "Help"
-#~ msgstr "Aide"
-
-#~ msgid "About..."
-#~ msgstr "À propos..."
-
-#~ msgid "(C) 2002 Red Hat, Inc."
-#~ msgstr "Copyright © 2002 Red Hat, Inc."
-
-#~ msgid "(c) 2001 Red Hat, Inc"
-#~ msgstr "Copyright © 2001 Red Hat, Inc"
-
-#~ msgid "Copyright 2002 Red Hat Inc."
-#~ msgstr "Copyright © 2002 Red Hat, Inc."
-
-#~ msgid "<big><big>%s the GNOME Fish Says:</big></big>"
-#~ msgstr "<big><big>%s le poisson GNOME dit : </big></big>"
-
-#~ msgid "GNOME Menu"
-#~ msgstr "Menu GNOME"
-
-#~ msgid "Log Out Button"
-#~ msgstr "Bouton de fermeture de session"
-
-#, fuzzy
-#~ msgid "Lock Button"
-#~ msgstr "Bouton de verrouillage de session"
-
-#, fuzzy
-#~ msgid "Screenshot Button"
-#~ msgstr "Capture d'écran"
-
-#~ msgid "Orient hori_zontally"
-#~ msgstr "Orienter hori_zontalement"
-
-#~ msgid "Orient _vertically"
-#~ msgstr "Orienter _verticalement"
-
-#~ msgid "Screen edge _offset:"
-#~ msgstr "Décalage du _coté de l'écran :"
-
-#~ msgid "XX Small (12 pixels)"
-#~ msgstr "Microscopique (12 pixels)"
-
-#~ msgid "X Small (24 pixels)"
-#~ msgstr "Minuscule (24 pixels)"
-
-#~ msgid "Small (36 pixels)"
-#~ msgstr "Petit (36 pixels)"
-
-#~ msgid "Medium (48 pixels)"
-#~ msgstr "Standard (48 pixels)"
-
-#~ msgid "Large (64 pixels)"
-#~ msgstr "Grand (64 pixels)"
-
-#~ msgid "X Large (80 pixels)"
-#~ msgstr "Énorme (80 pixels)"
-
-#~ msgid "XX Large (128 pixels)"
-#~ msgstr "Gigantesque (128 pixels)"
-
-#~ msgid "Sc_ale image"
-#~ msgstr "_Redimensionner l'image"
-
-#~ msgid "Command to execute when the applet is clicked"
-#~ msgstr "Commande à exécuter lorsque l'applet est cliqué"
-
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
-
-#, fuzzy
-#~ msgid "mail"
-#~ msgstr "Petit"
-
-#~ msgid "&lt;Alt&gt;F1"
-#~ msgstr "&lt;Alt&gt;F1"
-
-#~ msgid "&lt;Alt&gt;F2"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "&lt;Alt&gt;Print"
-#~ msgstr "&lt;Alt&gt;F2"
-
-#, fuzzy
-#~ msgid "Print"
-#~ msgstr "Imprimante"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_ClockApplet"
-#~ msgstr "Applet horloge"
-
-#, fuzzy
-#~ msgid "OAFIID:GNOME_PagerApplet"
-#~ msgstr "Applet d'impression"
-
-#, fuzzy
-#~ msgid "bonobo-applet"
-#~ msgstr "Applet de test Bonobo"
-
-#, fuzzy
-#~ msgid "edge-panel"
-#~ msgstr "Tableau de bord latéral"
-
-#, fuzzy
-#~ msgid "menu-panel"
-#~ msgstr "Tableau de bord « menu »"
-
-#, fuzzy
-#~ msgid "no-background"
-#~ msgstr "Arrière-plan"
-
-#~ msgid "Log out"
-#~ msgstr "Clore la session"
-
-#~ msgid "Modify the global panel preferences"
-#~ msgstr "Modifie les préférences globales du tableau de bord"
-
-#~ msgid "Hiding"
-#~ msgstr "Masquage"
-
-#~ msgid "Top left corner's position: X"
-#~ msgstr "Position du coin haut gauche : X"
-
-#~ msgid "Y"
-#~ msgstr "Y"
-
-#~ msgid "Offset from screen edge:"
-#~ msgstr "Décalage à partir du coin de l'écran :"
-
-#~ msgid "Color to use:"
-#~ msgstr "Couleur à utiliser :"
-
-#~ msgid "Use GMT"
-#~ msgstr "Utiliser GMT"
-
-#~ msgid "Tasklist size"
-#~ msgstr "Taille de la liste des tâches"
-
-#~ msgid "Lock Display"
-#~ msgstr "Verrouiller l'écran"
-
-#~ msgid "Cannot execute panel global preferences"
-#~ msgstr "Ne peut exécuter les préférences globales du tableau de bord"
-
-#~ msgid "Global Preferences..."
-#~ msgstr "Préférences globales..."
-
-#~ msgid "Panel Manual..."
-#~ msgstr "Manuel du tableau de bord..."
-
-#~ msgid "Can't open directory, using main menu!"
-#~ msgstr "Ne peut ouvrir le répertoire, utilisation du menu principal !"
-
-#~ msgid "Edit menus..."
-#~ msgstr "Éditer les menus..."
-
-#~ msgid "Off"
-#~ msgstr "Non enclenché"
-
-#~ msgid "In a submenu"
-#~ msgstr "Dans un sous-menu"
-
-#~ msgid "On the main menu"
-#~ msgstr "Dans le menu principal"
-
-#~ msgid "Menu properties"
-#~ msgstr "Propriétés du menu"
-
-#~ msgid "Menu type"
-#~ msgstr "Type de menu"
-
-#~ msgid "Global main menu"
-#~ msgstr "Menu principal global"
-
-#~ msgid "Main menu"
-#~ msgstr "Menu principal"
-
-#~ msgid "Normal menu"
-#~ msgstr "Menu normal"
-
-#~ msgid "Programs: "
-#~ msgstr "Programmes : "
-
-#~ msgid "Applets: "
-#~ msgstr "Applets : "
-
-#~ msgid "Distribution menu (if found): "
-#~ msgstr "Menu de la distribution (si trouvé) : "
-
-#~ msgid "KDE menu (if found): "
-#~ msgstr "Menu KDE (si trouvé) : "
-
-#~ msgid "Panel menu: "
-#~ msgstr "Menu du tableau de bord : "
-
-#~ msgid "Desktop menu: "
-#~ msgstr "Menu du bureau : "
-
-#~ msgid ""
-#~ "Note: The panel will size itself to the\n"
-#~ "largest applet in the panel, and that\n"
-#~ "not all applets obey these sizes."
-#~ msgstr ""
-#~ "Note : Le tableau de bord adaptera sa taille à la\n"
-#~ "plus grande applet. Les applets sont prévenues de\n"
-#~ "la taille, mais peuvent choisir de ne pas la suivre."
-
-#~ msgid "Pixmap"
-#~ msgstr "Pixmap"
-
-#~ msgid "Scale image (keep proportions)"
-#~ msgstr "Étirer l'image (garde les proportions)"
-
-#~ msgid "Stretch image (change proportions)"
-#~ msgstr "Étirer l'image (modifie les proportions)"
-
-#~ msgid "mode"
-#~ msgstr "mode"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr ""
-#~ "Vous avez déjà un status dock sur le tableau de bord. Vous ne pouvez\n"
-#~ "en avoir qu'un"
-
-#~ msgid "Status dock"
-#~ msgstr "Status dock"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "L'applet GNOME Poisson"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "Applet Mail Check"
-
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr "Échec lors du lancement de la commande : « %s »"
-
-#~ msgid "Choose a program to run"
-#~ msgstr "Sélectionnez un programme à exécuter"
-
-#~ msgid "_Browse..."
-#~ msgstr "_Parcourir..."
-
-#~ msgid "_Known Applications <<"
-#~ msgstr "Applications _connues <<"
-
-#~ msgid "_Known Applications >>"
-#~ msgstr "Applications _connues >>"
-
-#~ msgid "Display a list of known applications from the applications menu"
-#~ msgstr ""
-#~ "Affiche la liste des programmes contenus dans le menu « Applications »"
-
-#~ msgid "Password:"
-#~ msgstr "Mot de passe :"
-
-#~ msgid "CDE Applications"
-#~ msgstr "Applications CDE"
-
-#~ msgid "Screenshot Capture"
-#~ msgstr "Capture d'écran"
-
-#~ msgid "Executable name for selected application"
-#~ msgstr "Nom de l'exécutable pour l'application sélectionnée"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "_Avancée <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Cache les contrôles avancées sous ce bouton."
-
-#~ msgid "_Advanced >>"
-#~ msgstr "_Avancée >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr ""
-#~ "Permets de saisir une ligne de commande au lieu de choisir une "
-#~ "application à partir de la liste"
-
-#~ msgid ""
-#~ "Cannot create the launcher.\n"
-#~ "\n"
-#~ "No command or url specified."
-#~ msgstr ""
-#~ "Impossible de créer le lanceur.\n"
-#~ "\n"
-#~ "Pas de commande ou d'URL spécifiée."
-
-#~ msgid ""
-#~ "Cannot save menu item to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossible d'enregistrer l'entrée de menu, l'erreur suivante est "
-#~ "survenue : \n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Gnome Base Panel"
-#~ msgstr "Tableau de bord GNOME de base"
-
-#~ msgid "Desktop entry properties"
-#~ msgstr "Propriétés de l'entrée de bureau"
-
-#~ msgid "Create menu item"
-#~ msgstr "Créer un élement de menu"
-
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "Tableau de bord GNOME aligné"
-
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "Tableau de bord GNOME latéral"
-
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Tableau de bord GNOME coulissant"
-
-#~ msgid "Global Panel Properties"
-#~ msgstr "Propriétés globales du tableau de bord"
-
-#~ msgid "Panel Settings"
-#~ msgstr "Propriétés du tablea de bord"
-
-#~ msgid "Reread all menus"
-#~ msgstr "Relire tous les menus"
-
-#, fuzzy
-#~ msgid "Your GNOME Fish's _Name:"
-#~ msgstr "Nom de votre poisson GNOME :"
-
-#~ msgid "Remove from panel"
-#~ msgstr "Enlever du tableau de bord"
-
-#~ msgid "Keep panels above other windows"
-#~ msgstr "Garder les tableaux de bord au-dessus des fenêtres"
-
-#~ msgid "Keep panels below other windows"
-#~ msgstr "Garder les tableau de bord sous les autres fenêtres"
-
-#, fuzzy
-#~ msgid "Keep panels on the same level as other windows"
-#~ msgstr "Garder les tableaux de bord au même niveau que les autres fenêtres"
-
-#~ msgid "&lt;Alt&gt;F1F1"
-#~ msgstr "&lt;Alt&gt;F1F1"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;m"
-#~ msgstr "&lt;Ctrl&gt;&lt;Alt&gt;m"
-
-#~ msgid "&lt;Control&gt;&lt;Alt&gt;r"
-#~ msgstr "&lt;Ctrl&gt;&lt;Alt&gt;r"
-
-#~ msgid "GNOME Menu:"
-#~ msgstr "GNOME Menu :"
-
-#~ msgid "Grab key..."
-#~ msgstr "Capturer la touche..."
-
-#~ msgid "Run Program dialog:"
-#~ msgstr "Dialogue de lancement de programme : "
-
-#~ msgid "Shortcut keys"
-#~ msgstr "Raccourcis clavier"
-
-#~ msgid "_Enable shortcut keys"
-#~ msgstr "_Activer les raccourcis clavier"
-
-#, fuzzy
-#~ msgid "Gnome Screenshot"
-#~ msgstr "Capture d'écran"
-
-#, fuzzy
-#~ msgid "XX Small Tiny (12 pixels)"
-#~ msgstr "Microscopique (12 pixels)"
-
-#~ msgid ""
-#~ "%I:%M\n"
-#~ "%p"
-#~ msgstr ""
-#~ "%I:%M\n"
-#~ "%p"
-
-#~ msgid ""
-#~ "%a\n"
-#~ "%b %d"
-#~ msgstr ""
-#~ "%a\n"
-#~ "%d %b"
-
-#~ msgid "Time Format"
-#~ msgstr "Format de l'heure"
-
-#, fuzzy
-#~ msgid "Clock Properties"
-#~ msgstr "Propriétés de l'horloge"
-
-#~ msgid ""
-#~ "Cannot execute the gnome calendar,\n"
-#~ "perhaps it's not installed.\n"
-#~ "It is in the gnome-pim package."
-#~ msgstr ""
-#~ "Ne peut exécuter le calendrier Gnome,\n"
-#~ "peut être qu'il n'est pas installé.\n"
-#~ "Il est dans le paquet gnome-pim."
-
-#~ msgid "menu wasn't created"
-#~ msgstr "le menu n'a pas été créé"
-
-#~ msgid "Today"
-#~ msgstr "Aujourd'hui"
-
-#~ msgid "This Week"
-#~ msgstr "Cette semaine"
-
-#~ msgid ""
-#~ "Could not call time-admin\n"
-#~ "Perhaps time-admin is not installed"
-#~ msgstr ""
-#~ "Ne peut appeler time-admin\n"
-#~ "Peut-être que time-admin n'est pas installé"
-
-#, fuzzy
-#~ msgid "Set Time..."
-#~ msgstr "Définir l'heure"
-
-#~ msgid "Press a key..."
-#~ msgstr "Appuyez sur une touche..."
-
-#~ msgid "Blank Screen Now"
-#~ msgstr "Effacer l'écran maintenant"
-
-#~ msgid "Lock Screen Now"
-#~ msgstr "Verrouiller l'écran maintenant"
-
-#, fuzzy
-#~ msgid "%I: %M: %S: %p"
-#~ msgstr "%I:%M:%S %p"
-
-#~ msgid "Swallowed app..."
-#~ msgstr "Application insérée..."
-
-#~ msgid "Reload"
-#~ msgstr "Recharger"
-
-#~ msgid "Create swallow applet"
-#~ msgstr "Créer une applet englobante"
-
-#~ msgid "Title of application to swallow"
-#~ msgstr "Titre de l'application a englober"
-
-#~ msgid "Width"
-#~ msgstr "Largeur"
-
-#~ msgid "%A, %B %d"
-#~ msgstr "%A %d %B"
-
-#~ msgid "(c) 1998-2001 the Free Software Foundation"
-#~ msgstr "© 1998-2001 la Free Software Foundation"
-
-#~ msgid ""
-#~ "The clock applet gives your panel a lightweight and simple display of the "
-#~ "date and time"
-#~ msgstr ""
-#~ "L'applet clock est une méthode simple et light pour ajouter l'affichage "
-#~ "de la date et de l'heure sur le tableau de bord"
-
-#~ msgid "Cannot find pixmap file %s"
-#~ msgstr "Ne peut pas trouver l'image %s"
-
-#~ msgid "Run..."
-#~ msgstr "Lancer..."
-
-#~ msgid "Programs"
-#~ msgstr "Programmes"
-
-#, fuzzy
-#~ msgid "Panel Global Properties"
-#~ msgstr "Propriétés du tableau de bord"
-
-#, fuzzy
-#~ msgid "Key bindings"
-#~ msgstr "Racourcis clavier"
-
-#, fuzzy
-#~ msgid "Popup menu key:"
-#~ msgstr "Touche d'affichage du menu"
-
-#, fuzzy
-#~ msgid "Run dialog key:"
-#~ msgstr "Touche de lancement de fenêtre"
-
-#~ msgid "Add this applet as a launcher to panel"
-#~ msgstr "Ajouter cette applet comme un lanceur au tableau de bord"
-
-#~ msgid "Programs menu"
-#~ msgstr "Menu des programmes"
-
-#~ msgid "%a, %d  %b  %Y %H:%M:%S %z"
-#~ msgstr "%a, %d  %b  %Y %H:%M:%S %z"
-
-#~ msgid "Mail check properties"
-#~ msgstr "Propriétés de Mail check"
-
-#, fuzzy
-#~ msgid "Mailcheck Applet"
-#~ msgstr "Applet Mail Check"
-
-#~ msgid "Hide advanced options"
-#~ msgstr "Cacher les options avancées"
