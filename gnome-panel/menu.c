@@ -21,10 +21,11 @@
 #include "panel-include.h"
 #include "panel-widget.h"
 
+/*#define TEAROFF_MENUS 1*/
+/*#define PANEL_DEBUG 1*/
+
 #define SMALL_ICON_SIZE 20
 #define BIG_ICON_SIZE   48
-
-#define PANEL_DEBUG 1;
 
 #define MENU_PATH "menu_path"
 
@@ -1755,6 +1756,23 @@ gtk_menu_position (GtkMenu *menu)
 			    x, y);
 }
 
+#ifdef TEAROFF_MENUS
+static int
+any_child_torn_off(GtkMenuShell *menu)
+{
+	GList *li;
+	if (GTK_MENU(menu)->torn_off)
+		return TRUE;
+	for(li=menu->children;li;li=li->next) {
+		GtkMenuItem *item = li->data;
+		if(item->submenu &&
+		   any_child_torn_off(GTK_MENU_SHELL(item->submenu)))
+			return TRUE;
+	}
+	return FALSE;
+}
+#endif
+
 
 static void
 submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
@@ -1765,6 +1783,11 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 	/*if(!mfl)
 	  g_warning("Weird menu doesn't have mf entry");*/
+	
+#ifdef TEAROFF_MENUS
+	if (any_child_torn_off(GTK_MENU_SHELL(menuw)))
+		return;
+#endif
 
 	/*check if we need to reread this*/
 	for(list = mfl; list != NULL; list = g_slist_next(list)) {
@@ -1789,8 +1812,17 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 	/*this no longer constitutes a bad hack, now it's purely cool :)*/
 	if(need_reread) {
+#ifdef TEAROFF_MENUS_BLAH
+		GtkWidget *w;
+#endif
 		while(GTK_MENU_SHELL(menuw)->children)
 			gtk_widget_destroy(GTK_MENU_SHELL(menuw)->children->data);
+#ifdef TEAROFF_MENUS_BLAH
+		w = gtk_tearoff_menu_item_new ();
+		gtk_widget_show(w);
+		gtk_menu_append(GTK_MENU(menuw),w);
+#endif
+
 		gtk_object_set_data(GTK_OBJECT(menuw), "mf",NULL);
 		for(list = mfl; list != NULL;
 		    list = g_slist_next(list)) {
@@ -1809,6 +1841,15 @@ submenu_to_display(GtkWidget *menuw, GtkMenuItem *menuitem)
 
 		gtk_menu_position(GTK_MENU(menuw));
 	}
+#ifdef TEAROFF_MENUS
+	if(GTK_MENU_SHELL(menuw)->children &&
+	   !GTK_IS_TEAROFF_MENU_ITEM(GTK_MENU_SHELL(menuw)->children->data)) {
+		GtkWidget *w = gtk_tearoff_menu_item_new ();
+		gtk_widget_show(w);
+		gtk_menu_prepend(GTK_MENU(menuw),w);
+		gtk_menu_position(GTK_MENU(menuw));
+	}
+#endif
 }
 
 static void
@@ -2010,6 +2051,11 @@ create_menu_at_fr (GtkWidget *menu,
 	
 	if(!menu) {
 		menu = gtk_menu_new ();
+#ifdef TEAROFF_MENUS_BLAH
+		menuitem = gtk_tearoff_menu_item_new ();
+		gtk_widget_show(menuitem);
+		gtk_menu_append(GTK_MENU(menu),menuitem);
+#endif
 		gtk_signal_connect(GTK_OBJECT(menu),"destroy",
 				   GTK_SIGNAL_FUNC(menu_destroy),NULL);
 	} else {
