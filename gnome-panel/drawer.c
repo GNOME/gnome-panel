@@ -22,7 +22,8 @@
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3
 
-extern GArray *applets;
+extern GList *applets;
+extern GList *applets_last;
 extern int applet_count;
 extern GlobalConfig global_config;
 
@@ -312,9 +313,7 @@ drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 static void
 drawer_move_foreach(GtkWidget *w, gpointer user_data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
 	
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -404,7 +403,9 @@ load_drawer_applet(char *params, char *pixmap, char *tooltip,
 				 GTK_SIGNAL_FUNC(drawer_realize_cb),
 				 drawer);
 
-	applet_add_callback(applet_count-1,"properties",
+	g_return_if_fail(applets_last!=NULL);
+
+	applet_add_callback(applets_last->data,"properties",
 			    GNOME_STOCK_MENU_PROP,
 			    _("Properties..."));
 }

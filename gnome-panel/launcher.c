@@ -21,6 +21,9 @@
 #define LAUNCHER_PROPERTIES "launcher_properties"
 
 extern GtkTooltips *panel_tooltips;
+
+extern GList *applets;
+extern GList *applets_last;
 extern int applet_count;
 
 static char *default_app_pixmap=NULL;
@@ -124,8 +127,6 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	gtk_object_set_user_data(GTK_OBJECT(launcher->button), launcher);
 
 	launcher->dentry = dentry;
-
-	launcher->applet_id = -1;
 
 	gtk_object_set_data(GTK_OBJECT(launcher->button),
 			    LAUNCHER_PROPERTIES,NULL);
@@ -260,7 +261,7 @@ _load_launcher_applet(char *params, GnomeDesktopEntry *dentry,
 				      launcher->button,
 				      launcher->dentry->comment,NULL);
 
-		applet_add_callback(applet_count-1,"properties",
+		applet_add_callback(applets_last->data,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
 	}

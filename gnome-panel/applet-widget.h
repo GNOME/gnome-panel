@@ -11,28 +11,23 @@
 #include <gnome.h>
 #include <libgnorba/gnorba.h>
 
+#include <gnome-panel.h>
+
 #define HAVE_SAVE_SESSION_SIGNAL 1
 
 BEGIN_GNOME_DECLS
 
-#ifndef PANEL_TYPES_H
-/*from panel-types.h*/
-typedef enum {
-	ORIENT_UP,
-	ORIENT_DOWN,
-	ORIENT_LEFT,
-	ORIENT_RIGHT
-} PanelOrientType;
-#endif
+typedef GNOME_Panel_OrientType PanelOrientType;
+#define ORIENT_UP GNOME_Panel_ORIENT_UP
+#define ORIENT_DOWN GNOME_Panel_ORIENT_DOWN
+#define ORIENT_LEFT GNOME_Panel_ORIENT_LEFT
+#define ORIENT_RIGHT GNOME_Panel_ORIENT_RIGHT
 
-#ifndef __PANEL_WIDGET_H__
-/*from panel-widget.h*/
-typedef enum {
-	PANEL_BACK_NONE,
-	PANEL_BACK_COLOR,
-	PANEL_BACK_PIXMAP
-} PanelBackType;
-#endif
+typedef GNOME_Panel_BackType PanelBackType;
+#define PANEL_BACK_NONE GNOME_Panel_BACK_NONE
+#define PANEL_BACK_COLOR GNOME_Panel_BACK_COLOR
+#define PANEL_BACK_PIXMAP GNOME_Panel_BACK_PIXMAP
+
 
 #define APPLET_WIDGET(obj)          GTK_CHECK_CAST (obj, applet_widget_get_type (), AppletWidget)
 #define APPLET_WIDGET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, applet_widget_get_type (), AppletWidgetClass)
@@ -42,20 +37,15 @@ typedef struct _AppletWidget		AppletWidget;
 typedef struct _AppletWidgetClass	AppletWidgetClass;
 
 typedef void (*AppletCallbackFunc)(AppletWidget *applet, gpointer data);
-typedef void (*AppletStartNewFunc)(const char *goad_id, gpointer data);
 
 struct _AppletWidget
 {
 	GtkPlug			window;
+	
+	char			*privcfgpath;
+	char			*globcfgpath;
 
-	int			applet_id;
-
-        char                    *goad_id;
-
-	/* use these as prefixes when loading saving data */
-	char			*globcfgpath; /*a file which applets can use for
-						global settings*/
-	char			*privcfgpath; /*applets own cfg path*/
+        gpointer                corbadat; /* CORBA stuff */
 };
 
 struct _AppletWidgetClass
@@ -67,11 +57,11 @@ struct _AppletWidgetClass
 	   you get an initial change_orient signal during the add, so
 	   that you can update your orientation properly */
 	void (* change_orient) (AppletWidget *applet,
-				PanelOrientType orient);
+				GNOME_Panel_OrientType orient);
 	/* the panel background changes, the pixmap handeling is likely
 	   to change */
 	void (* back_change) (AppletWidget *applet,
-			      PanelBackType type,
+			      GNOME_Panel_BackType type,
 			      char *pixmap,
 			      GdkColor *color);
 	/*will send the current state of the tooltips, if they are enabled
@@ -89,9 +79,16 @@ struct _AppletWidgetClass
 			      char *globcfgpath);
 };
 
+typedef GtkWidget *(*AppletFactoryActivator)(const char *goad_id, const char **params, int nparams);
+/* Returns TRUE if the factory can activate this applet */
+typedef gboolean (*AppletFactoryQuerier)(const char *goad_id);
+
 guint		applet_widget_get_type		(void);
 
-GtkWidget*	applet_widget_new		(const char *goad_id);
+void            applet_factory_new(const char *goad_id,
+				   AppletFactoryQuerier qfunc,
+				   AppletFactoryActivator afunc);
+GtkWidget*	applet_widget_new(const char *goad_id);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
@@ -110,7 +107,7 @@ void		applet_widget_add		(AppletWidget *applet,
 						 GtkWidget *widget);
 
 /* remove the plug from the panel, this will destroy the applet */
-void		applet_widget_remove_from_panel (AppletWidget *applet);
+void		applet_widget_remove		(AppletWidget *applet);
 
 /* The callback functions control the applet's right click menu, the name
    is just a string, which has to be unique and which controls the nesting,
@@ -131,9 +128,11 @@ void		applet_widget_register_stock_callback	(AppletWidget *applet,
 							 char *menutext,
 							 AppletCallbackFunc func,
 							 gpointer data);
+
 /*remove a menuitem*/
 void		applet_widget_unregister_callback (AppletWidget *applet,
 						   char *name);
+
 /*add a submenu*/
 void		applet_widget_register_callback_dir (AppletWidget *applet,
 						     char *name,
@@ -146,10 +145,6 @@ void		applet_widget_register_stock_callback_dir (AppletWidget *applet,
 void		applet_widget_unregister_callback_dir (AppletWidget *applet,
 						       char *name);
 
-
-/* get the applet widget with the id of applet_id */
-AppletWidget*	applet_widget_get_by_id		(int applet_id);
-
 /*get thenumber of applets*/
 int		applet_widget_get_applet_count	(void);
 
@@ -160,8 +155,7 @@ int		applet_widget_get_applet_count	(void);
 void		applet_widget_sync_config	(AppletWidget *applet);
 
 /* Get the oprientation the applet should use */
-PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
-
+GNOME_Panel_OrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
 
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new
@@ -172,17 +166,7 @@ int		applet_widget_init		(const char *app_id,
 						 char **argv,
 						 struct poptOption *options,
 						 unsigned int flags,
-						 poptContext *return_ctx,
-						 int last_die,
-						 GList *goad_ids,
-						 AppletStartNewFunc new_func,
-						 gpointer new_func_data);
-
-/*defaults init for use with "normal" non-multi applets*/
-#define \
-applet_widget_init_defaults(app_id,app_version,argc,argv,options,flags,return_ctx) \
-applet_widget_init(app_id,app_version,argc,argv,options,flags,return_ctx, \
-		   TRUE,NULL,NULL,NULL)
+						 poptContext *return_ctx);
 
 /*abort the applet loading, once applet has been created, this is a way to
   tell the panel to forget about us if we decide we want to quit before
@@ -195,13 +179,29 @@ void		applet_widget_gtk_main		(void);
 /*quit the applet*/
 void		applet_widget_gtk_main_quit	(void);
 
-/*logs you off the panel and most likely gnome, use qith caution!:)*/
+/*quit the panel (this will log out the gnome session)*/
 void		applet_widget_panel_quit	(void);
 
-/*FIXME: should this stay*/
-/*this is currently not used, it's an empty function for now, but it
-  should register the orbit arguments*/
-void panel_corba_register_arguments (void);
+/* Used by shlib applets */
+CORBA_Object applet_widget_corba_activate(GtkWidget *applet,
+					  PortableServer_POA poa,
+					  const char *goad_id,
+					  const char **params,
+					  gpointer *impl_ptr,
+					  CORBA_Environment *ev);
+
+void applet_widget_corba_deactivate(PortableServer_POA poa,
+				    const char *goad_id,
+				    gpointer impl_ptr,
+				    CORBA_Environment *ev);
+
+
+#define APPLET_ACTIVATE(func, goad_id, apldat) ({ CORBA_Environment ev; CORBA_exception_init(&ev); \
+CORBA_Object_release(func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB(), \
+"RootPOA", &ev), goad_id, NULL, apldat, &ev), &ev); CORBA_exception_free(&ev); })
+
+#define APPLET_DEACTIVATE(func, goad_id, apldat) ({ CORBA_Environment ev; CORBA_exception_init(&ev); \
+func(CORBA_ORB_resolve_initial_references(gnome_CORBA_ORB(), "RootPOA", &ev), goad_id, apldat, &ev); CORBA_exception_free(&ev); })
 
 END_GNOME_DECLS
 

@@ -20,7 +20,8 @@ int panels_to_sync = FALSE;
 int globals_to_sync = FALSE;
 int need_complete_save = FALSE;
 
-extern GArray *applets;
+extern GList *applets;
+extern GList *applets_list;
 extern int applet_count;
 
 extern GtkTooltips *panel_tooltips;
@@ -39,20 +40,24 @@ extern GList *panel_list;
 static void
 send_tooltips_state(int enabled)
 {
-	AppletInfo *info;
-	int i;
+	GList *li;
 
-	for(i=0,info=(AppletInfo *)applets->data;
-	    i<applet_count;
-	    i++,info++) {
+	for(li = applets; li!=NULL; li = g_list_next(li)) {
+		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			Extern *ext = info->data;
 			g_assert(ext);
 			/*if it's not set yet, don't send it, it will be sent
 			  when the ior is discovered anyhow, so this would be
 			  redundant anyway*/
-			if(ext->obj)
-			  send_applet_tooltips_state(ext->obj,i,enabled);
+			if(ext->applet) {
+				CORBA_Environment ev;
+				CORBA_exception_init(&ev);
+				GNOME_Applet_set_tooltips_state(ext->applet, enabled, &ev);
+				if(ev._major)
+					panel_clean_applet(ext->info);
+				CORBA_exception_free(&ev);
+			}
 		}
 	}
 }
@@ -134,19 +139,39 @@ gnome_desktop_entry_save_no_sync (GnomeDesktopEntry *dentry)
 	gnome_config_pop_prefix ();
 }
 
+static int
+send_applet_session_save (AppletInfo *info,
+			  CORBA_Object obj,
+			  const char *cfgpath,
+			  const char *globcfgpath)
+{
+  CORBA_short retval;
+  CORBA_Environment ev;
+
+  CORBA_exception_init(&ev);
+  retval = GNOME_Applet_session_save(obj,
+				     (CORBA_char *)cfgpath,
+				     (CORBA_char *)globcfgpath, &ev);
+  if(ev._major)
+    panel_clean_applet(info);
+  CORBA_exception_free(&ev);
+
+  return retval;
+}
+
+
 
 static void
-save_applet_configuration(int num)
+save_applet_configuration(AppletInfo *info)
 {
 	char           path[256];
 	int            panel_num;
 	PanelWidget   *panel;
 	AppletData    *ad;
-	AppletInfo    *info = get_applet_info(num);
 	
 	g_return_if_fail(info!=NULL);
 
-	g_snprintf(path,256, "%sApplet_Config/Applet_%d/", panel_cfg_path, num+1);
+	g_snprintf(path,256, "%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
 	gnome_config_push_prefix(path);
 
 	/*obviously no need for saving*/
@@ -189,9 +214,9 @@ save_applet_configuration(int num)
 			/*this is the file path we pass to the applet for it's
 			  own config, this is a separate file, so that we */
 			g_snprintf(path,256, "%sApplet_%d_Extern/",
-				   panel_cfg_path, num+1);
+				   panel_cfg_path, info->applet_id+1);
 			/*have the applet do it's own session saving*/
-			if(send_applet_session_save(ext->obj,info->applet_id,
+			if(send_applet_session_save(info,ext->applet,
 						    path, globalcfg)) {
 
 				gnome_config_set_string("id", EXTERN_ID);
@@ -253,7 +278,8 @@ save_applet_configuration(int num)
 			/*we set the .desktop to be in the panel config
 			  dir*/
 			g_snprintf(path,256, "%s/%sApplet_%d.desktop",
-				   gnome_user_dir,panel_cfg_path, num+1);
+				   gnome_user_dir,panel_cfg_path,
+				   info->applet_id+1);
 			g_free(launcher->dentry->location);
 			launcher->dentry->location = g_strdup(path);
 			gnome_desktop_entry_save_no_sync(launcher->dentry);
@@ -386,12 +412,13 @@ do_session_save(GnomeClient *client,
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	if(complete_sync) {
-		for(i=0;i<applet_count;i++)
-			save_applet_configuration(i);
+		GList *li;
+		for(li=applets;li!=NULL;li=g_list_next(li))
+			save_applet_configuration(li->data);
 	} else {
 		GList *li;
 		for(li = sync_applets; li!=NULL; li=g_list_next(li))
-			save_applet_configuration(GPOINTER_TO_INT(li->data));
+			save_applet_configuration(li->data);
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
@@ -498,17 +525,15 @@ int
 panel_session_die (GnomeClient *client,
 		   gpointer client_data)
 {
-	AppletInfo *info;
-	int i;
+	GList *li;
 
 	gtk_timeout_remove(config_sync_timeout);
   
 	/*don't catch these any more*/
 	signal(SIGCHLD, SIG_DFL);
 	
-	for(i=0,info=(AppletInfo *)applets->data;
-	    i<applet_count;
-	    i++,info++) {
+	for(li=applets; li!=NULL; li=g_list_next(li)) {
+		AppletInfo *info = li->data;
 		if(info->type == APPLET_EXTERN) {
 			gtk_widget_destroy(info->widget);
 		} else if(info->type == APPLET_SWALLOW) {
@@ -522,7 +547,7 @@ panel_session_die (GnomeClient *client,
 	/*clean up corba stuff*/
 	panel_corba_clean_up();
 	
-	panel_corba_gtk_main_quit();
+	gtk_main_quit();
 	return TRUE;
 }
 
@@ -614,8 +639,10 @@ static void
 load_default_applets(void)
 {
 	load_menu_applet(NULL,0, panels->data, 0);
+#if 0
 	load_extern_applet("gen_util_clock",NULL,
 			   panels->data,INT_MAX/2/*right flush*/);
+#endif
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/
 	need_complete_save = TRUE;

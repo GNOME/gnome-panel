@@ -25,8 +25,8 @@ struct _PanelData {
   just get the that one*/
 PanelWidget * get_def_panel_widget(GtkWidget *panel);
 
-void orientation_change(int applet_id, PanelWidget *panel);
-void back_change(int applet_id, PanelWidget *panel);
+void orientation_change(AppletInfo *info, PanelWidget *panel);
+void back_change(AppletInfo *info, PanelWidget *panel);
 
 PanelOrientType get_applet_orient(PanelWidget *panel);
 

@@ -26,8 +26,6 @@
 #include "logout.h"
 #include "extern.h"
 
-#include "orbit-glue.h"
-
 #include "panel-util.h"
 #include "gdkextra.h"
 

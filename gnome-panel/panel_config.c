@@ -8,11 +8,6 @@
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3
 
-extern GArray *applets;
-extern int applet_count;
-
-extern GlobalConfig global_config;
-
 static GList *ppconfigs=NULL;
 
 static PerPanelConfig *
@@ -880,10 +875,8 @@ panel_config(GtkWidget *panel)
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		DrawerWidget *dw = DRAWER_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(dw->panel)->master_widget;
-		int applet_id =
-			GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(applet),
-							    "applet_id"));
-		AppletInfo *info = get_applet_info(applet_id);
+		AppletInfo *info =
+			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, info->data);
 	}
 						

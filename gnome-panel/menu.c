@@ -31,7 +31,8 @@ static char *gnome_folder = NULL;
 GList *small_icons = NULL;
 GList *dot_buttons = NULL;
 
-extern GArray *applets;
+extern GList *applets;
+extern GList *applets_last;
 extern int applet_count;
 
 extern GlobalConfig global_config;
@@ -74,6 +75,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Federico Mena (quartic@gimp.org)",
 	  "Tom Tromey (tromey@cygnus.com)",
 	  "Ian Main (slow@intergate.bc.ca)",
+	  "Elliot Lee (sopwith@redhat.com)",
 	  "and finally, The Knights Who Say ... NI!",
 	  NULL
 	  };
@@ -203,8 +205,9 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 	load_drawer_applet(NULL,pixmap_name,subdir_name,
 			   panel,pos);
 	
-	info = get_applet_info(applet_count -1);
-	g_return_if_fail(info);
+	g_return_if_fail(applets_last!=NULL);
+	info = applets_last->data;
+	g_return_if_fail(info!=NULL);
 	
 	drawer = info->data;
 	g_return_if_fail(drawer);
@@ -1814,9 +1817,8 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	Menu *menu = data;
 	GdkEventButton *bevent = (GdkEventButton*)gtk_get_current_event();
 	GtkWidget *wpanel = get_panel_parent(menu->button);
-	int applet_id =
-		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(menu->button),
-						    "applet_id"));
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(menu->button),
+					       "applet_info");
 	int main_menu = (strcmp (menu->path, ".") == 0);
 	
 	check_and_reread(menu->menu,menu,main_menu);
@@ -1835,8 +1837,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 	gtk_grab_remove(menu->button);
 
 	gtk_menu_popup(GTK_MENU(menu->menu), 0,0, applet_menu_position,
-		       GINT_TO_POINTER(applet_id),
-		       bevent->button, bevent->time);
+		       info, bevent->button, bevent->time);
 }
 
 static char *
@@ -2231,7 +2232,7 @@ load_menu_applet(char *params, int main_menu_type,
 		register_toy(menu->button,menu,
 			     panel,pos,APPLET_MENU);
 
-		applet_add_callback(applet_count-1,"properties",
+		applet_add_callback(applets_last->data,"properties",
 				    GNOME_STOCK_MENU_PROP,
 				    _("Properties..."));
 	}
@@ -2331,8 +2332,8 @@ panel_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 void
 applet_menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 {
+	AppletInfo *info = data;
 	int wx, wy;
-	AppletInfo *info = get_applet_info(GPOINTER_TO_INT(data));
 	PanelWidget *panel;
 	GtkWidget *w; /*the panel window widget*/
 

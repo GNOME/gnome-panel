@@ -1821,6 +1821,7 @@ panel_widget_applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	switch (event->type) {
 		case GDK_BUTTON_PRESS:
 			bevent = (GdkEventButton *) event;
+			printf("the appwidget %lX\n",(long)widget);
 
 			/* don't propagate this event */
 			if (panel->currently_dragged_applet)

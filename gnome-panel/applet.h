@@ -33,7 +33,7 @@ struct _AppletUserMenu {
 	char *name;
 	char *stock_item;
 	char *text;
-	int applet_id;
+	AppletInfo *info;
 	GtkWidget *menuitem;
 	GtkWidget *submenu;
 };
@@ -53,21 +53,17 @@ int register_toy(GtkWidget *applet,
 		 int pos,
 		 AppletType type);
 
-void panel_clean_applet(int applet_id);
+void panel_clean_applet(AppletInfo *info);
 
 /*applet menu stuff*/
 void create_applet_menu(AppletInfo *info);
-void applet_add_callback(int applet_id,
+void applet_add_callback(AppletInfo *info,
 			 char *callback_name,
 			 char *stock_item,
 			 char *menuitem_text);
-void applet_remove_callback(int applet_id,
+void applet_remove_callback(AppletInfo *info,
 			    char *callback_name);
-void show_applet_menu(int applet_id, GdkEventButton *event);
-
-#define get_applet_info(applet_id) \
-	((applet_id>=0 && applet_id<applet_count) ? \
-	 (&g_array_index(applets,AppletInfo,applet_id)):NULL)
+void show_applet_menu(AppletInfo *info, GdkEventButton *event);
 
 END_GNOME_DECLS
 

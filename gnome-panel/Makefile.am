@@ -7,7 +7,9 @@
 AUTOMAKE_OPTIONS = 1.3
 
 INCLUDES = -I. -I$(srcdir) \
-	-I$(top_srcdir)/intl -I$(top_builddir)/intl \
+	-I$(top_srcdir)/intl \
+	-I$(top_builddir)/intl \
+	-I$(top_builddir)/panel \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
@@ -25,12 +27,10 @@ CLEANFILES += $(CORBA_SRCLIST)
 $(CORBA_SRCLIST): $(top_srcdir)/idl/gnome-panel.idl $(ORBIT_IDL)
 	$(ORBIT_IDL) $<
 
-PANEL_ORB_SRCLIST= orbit-glue.c orbit-glue.h
-
 # We need explicit dependencies here for people building out
 # of the tarballs.
 
-orbit-glue.c: gnome-panel.h
+extern.c: gnome-panel.h
 
 libpanel_applet_la_SOURCES = \
 	panel-util.c  \
@@ -87,10 +87,10 @@ panel_SOURCES = 		\
 	panel-util.h		\
 	gdkextra.c		\
 	gdkextra.h		\
-	$(PANEL_ORB_SRCLIST)	\
 	$(CORBA_SRCLIST)
 
-panel_LDADD = $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
+panel_LDFLAGS=-export-dynamic
 
 data_DATA = panelrc
 

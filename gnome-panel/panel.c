@@ -15,6 +15,7 @@
 #include <gnome.h>
 
 #include "panel-include.h"
+#include "gnome-panel.h"
 
 #define PANEL_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -37,17 +38,7 @@ extern int panels_to_sync;
 extern int globals_to_sync;
 extern int need_complete_save;
 
-extern GArray *applets;
-extern int applet_count;
-
-extern char *panel_cfg_path;
-extern char *old_panel_cfg_path;
-
 extern GtkTooltips *panel_tooltips;
-
-extern GnomeClient *client;
-
-extern GlobalConfig global_config;
 
 /*???? this might be ugly, but I guess we can safely assume that we can only
   have one menu open and that nothing weird will happen to the panel that
@@ -227,22 +218,31 @@ panel_realize(GtkWidget *widget, gpointer data)
 		snapped_widget_enable_buttons(SNAPPED_WIDGET(widget));
 	else if(IS_CORNER_WIDGET(widget))
 		corner_widget_enable_buttons(CORNER_WIDGET(widget));
+	/*FIXME: this seems to fix the panel size problems on startup
+	  (from a report) but I don't think it's right*/
+	gtk_widget_queue_resize(GTK_WIDGET(widget));
 }
 
 /*we call this recursively*/
 static void orient_change_foreach(GtkWidget *w, gpointer data);
 
 void
-orientation_change(int applet_id, PanelWidget *panel)
+orientation_change(AppletInfo *info, PanelWidget *panel)
 {
-	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
 		g_assert(ext);
 		/*ingore this until we get an ior*/
-		if(ext->obj)
-		  send_applet_change_orient(ext->obj, info->applet_id,
-					    get_applet_orient(panel));
+		if(ext->applet) {
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			GNOME_Applet_change_orient(ext->applet,
+						   get_applet_orient(panel),
+						   &ev);
+			if(ev._major)
+				panel_clean_applet(ext->info);
+			CORBA_exception_free(&ev);
+		}
 	} else if(info->type == APPLET_MENU) {
 		Menu *menu = info->data;
 		set_menu_applet_orient(menu,get_applet_orient(panel));
@@ -267,11 +267,10 @@ orientation_change(int applet_id, PanelWidget *panel)
 static void
 orient_change_foreach(GtkWidget *w, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
 	PanelWidget *panel = data;
 	
-	orientation_change(applet_id,panel);
+	orientation_change(info,panel);
 }
 
 
@@ -317,19 +316,30 @@ corner_pos_change(GtkWidget *widget,
 }
 
 void
-back_change(int applet_id,
-	    PanelWidget *panel)
+back_change(AppletInfo *info, PanelWidget *panel)
 {
   
-	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
 		g_assert(ext);
 		/*ignore until we have a valid IOR*/
-		if(ext->obj)
-			send_applet_change_back(ext->obj, info->applet_id,
-						panel->back_type,panel->back_pixmap,
-						&panel->back_color);
+		if(ext->applet) {
+			GNOME_Panel_BackInfoType backing;
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			backing._d = panel->back_type;
+			if(panel->back_type == PANEL_BACK_PIXMAP)
+				backing._u.pmap = panel->back_pixmap;
+			else if(panel->back_type == PANEL_BACK_COLOR) {
+				backing._u.c.red = panel->back_color.red;
+				backing._u.c.green = panel->back_color.green;
+				backing._u.c.blue = panel->back_color.blue;
+			}
+			GNOME_Applet_back_change(ext->applet, &backing, &ev);
+			if(ev._major)
+				panel_clean_applet(ext->info);
+			CORBA_exception_free(&ev);
+		}
 	} 
 }
 
@@ -337,11 +347,10 @@ back_change(int applet_id,
 static void
 back_change_foreach(GtkWidget *w, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
 	PanelWidget *panel = data;
 
-	back_change(applet_id,panel);
+	back_change(info,panel);
 }
 
 static void
@@ -362,9 +371,7 @@ static void state_hide_foreach(GtkWidget *w, gpointer data);
 static void
 state_restore_foreach(GtkWidget *w, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
 	
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -386,9 +393,7 @@ state_restore_foreach(GtkWidget *w, gpointer data)
 static void
 state_hide_foreach(GtkWidget *w, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
 
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -474,11 +479,10 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 static int
 panel_applet_added_idle(gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(data);
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = data;
 	PanelWidget *panel = PANEL_WIDGET(info->widget->parent);
 
-	orientation_change(applet_id,panel);
+	orientation_change(info,panel);
 
 	return FALSE;
 }
@@ -486,9 +490,8 @@ panel_applet_added_idle(gpointer data)
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(applet),
-							    "applet_id"));
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
+					       "applet_info");
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(widget),
 						PANEL_PARENT);
 	
@@ -513,20 +516,18 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panelw));
 	}
 
-	gtk_idle_add(panel_applet_added_idle,GINT_TO_POINTER(applet_id));
+	gtk_idle_add(panel_applet_added_idle,info);
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,
-						 GINT_TO_POINTER(applet_id));
+	if(g_list_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,info);
 }
 
 static void
 count_open_drawers(GtkWidget *w, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(w),
-							    "applet_id"));
-	AppletInfo *info = get_applet_info(applet_id);
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w),
+					       "applet_info");
 	int *count = data;
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
@@ -540,8 +541,8 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
 	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(widget),
 						 PANEL_PARENT);
-	int applet_id =
-		GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(applet),"applet_id"));
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(applet),
+					       "applet_info");
 
 	if(IS_SNAPPED_WIDGET(parentw)) {
 		int drawers_open = 0;
@@ -554,9 +555,8 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	}
 
 	/*we will need to save this applet's config now*/
-	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,
-						 GINT_TO_POINTER(applet_id));
+	if(g_list_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,info);
 }
 
 static void
@@ -684,13 +684,11 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	if(IS_DRAWER_WIDGET(widget)) {
 		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
 		if(panel->master_widget) {
-			int applet_id =
-				GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(panel->master_widget),
-								    "applet_id"));
-			AppletInfo *info = get_applet_info(applet_id);
+			AppletInfo *info = gtk_object_get_data(GTK_OBJECT(panel->master_widget),
+							       "applet_info");
 			Drawer *drawer = info->data;
 			drawer->drawer = NULL;
-			panel_clean_applet(applet_id);
+			panel_clean_applet(info);
 		}
 	} else if(IS_SNAPPED_WIDGET(widget) ||
 		  IS_CORNER_WIDGET(widget)) {
@@ -710,11 +708,11 @@ panel_destroy(GtkWidget *widget, gpointer data)
 static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
-	int applet_id = GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(widget),"applet_id"));
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(widget),
+					       "applet_info");
 	
-	if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
-		applets_to_sync = g_list_prepend(applets_to_sync,
-						 GINT_TO_POINTER(applet_id));
+	if(g_list_find(applets_to_sync, info)==NULL)
+		applets_to_sync = g_list_prepend(applets_to_sync,info);
 }
 
 static int
