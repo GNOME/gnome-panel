@@ -364,19 +364,19 @@ create_properties_dialog(Menu *menu)
 			      _("Favorites: "),"user",
 			      menu->main_menu_flags&MAIN_MENU_USER,
 			      menu->main_menu_flags&MAIN_MENU_USER_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),1,
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
 			      _("Applets: "),"applets",
 			      menu->main_menu_flags&MAIN_MENU_APPLETS,
 			      menu->main_menu_flags&MAIN_MENU_APPLETS_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
 			      _("AnotherLevel menu (if found): "),"redhat",
 			      menu->main_menu_flags&MAIN_MENU_REDHAT,
 			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
- 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
+ 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),4,
  			      _("KDE menu (if found): "),"kde",
  			      menu->main_menu_flags&MAIN_MENU_KDE,
  			      menu->main_menu_flags&MAIN_MENU_KDE_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),4,
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),5,
 			      _("Debian menu (if found): "),"debian",
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN,
 			      menu->main_menu_flags&MAIN_MENU_DEBIAN_SUB);

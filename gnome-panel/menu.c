@@ -1768,7 +1768,7 @@ menu_deactivate(GtkWidget *w, gpointer data)
 }
 
 static GtkWidget *
-create_applets_menu(GtkMenu *menu, int fake_submenus)
+create_applets_menu(GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *applet_menu;
 	char *menu_base = gnome_unconditional_datadir_file ("applets");
@@ -1781,9 +1781,9 @@ create_applets_menu(GtkMenu *menu, int fake_submenus)
 		return NULL;
 	}
 
-	applet_menu = create_menu_at(GTK_WIDGET(menu),menudir,TRUE,
-				     _("Applets"),NULL,
-				     fake_submenus,FALSE);
+	applet_menu = create_menu_at (menu, menudir,TRUE,
+				      _("Applets"),NULL,
+				      fake_submenus,FALSE);
 	g_free (menudir);
 	return applet_menu;
 }
@@ -2055,11 +2055,13 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, int fake_submenus,
 	if(!fake || menu) {
 		menu = create_menu_at (menu,menudir, FALSE,
 				       title,
-				       NULL,fake_submenus,
+				       "gnome-squeak.png",
+				       fake_submenus,
 				       force);
 	} else {
 		menu = create_fake_menu_at (menudir, FALSE,
-					    title,NULL);
+					    title,
+					    "gnome-squeak.png");
 	}
 	g_free (menudir); 
 	return menu;
@@ -2888,8 +2890,8 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem_try_pixmap (menuitem, 
-					"gnome-panel.png",
-				    _("Panel"));
+				   "gnome-panel.png",
+				   _("Panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
 	
@@ -2916,8 +2918,8 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 	if (char_tmp) {	
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
-						"gnome-lockscreen.png",
-						_("Lock screen"));
+					   "gnome-lockscreen.png",
+					   _("Lock screen"));
 		gtk_menu_append (GTK_MENU (menu), menuitem);
 		gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 				    GTK_SIGNAL_FUNC(panel_lock), 0);
@@ -3011,8 +3013,8 @@ create_root_menu(int fake_submenus, int flags)
 					fake_submenus, TRUE, TRUE);
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem, 					
-					"gnome-squeak.png",
-						_("Favorites"));
+					   "gnome-squeak.png",
+					   _("Favorites"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 		gtk_signal_connect(GTK_OBJECT(menu),"show",
