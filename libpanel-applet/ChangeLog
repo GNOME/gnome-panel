@@ -1,3 +1,15 @@
+2002-02-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add GNOMELOCALEDIR.
+
+	* panel-applet.c: (panel_applet_factory_main_closure),
+	(panel_applet_shlib_factory_closure): bind textdomain.
+
+	* panel-applet.h: bind applets texdomain, and set the
+	textdomain to the applets.
+
+	* test-bonobo-applet.c: include config.h.
+
 2002-02-15  Michael Meeks  <michael@ximian.com>
 
 	* panel-applet.c (panel_applet_add_preferences): add

@@ -12,6 +12,7 @@ INCLUDES =							\
 	-I$(top_builddir)/libpanel-applet			\
 	-DPANEL_APPLET_DATADIR=\""$(datadir)"\"			\
 	-DPANEL_APPLET_GLADEDIR=\""$(gladedir)"\"		\
+	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	$(LIBPANEL_APPLET_CFLAGS)				\
 	$(WARN_CFLAGS)
 

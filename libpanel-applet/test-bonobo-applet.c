@@ -7,6 +7,7 @@
  * Copyright 2001 Sun Microsystems, Inc.
  */
 
+#include <config.h>
 #include <string.h>
 
 #include <libbonoboui.h>
