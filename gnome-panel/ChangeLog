@@ -1,3 +1,16 @@
+Wed Dec 12 12:47:38 2001  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c: reposition menu after hiding an item
+
+	* menu.[ch]: the keys for icons and tearoffs are now defined in the
+	  menu.h as a define.  Also setup keys on the menu to display
+	  the current state of the icons/tearoffs key at the time the menu
+	  was created so that we can recreate it if it changes.  Doesn't yet
+	  work everywhere, only for menus that use check_reread
+
+	* panel-gconf.[ch]: notify_add returns an id, and add a _while_alive
+	  version as well
+
 2001-12-12  Mark McLoughlin  <mark@skynet.ie>
 
 	Bit of renaming for Glynn.

@@ -183,7 +183,7 @@ panel_menu_have_icons (void)
 
 	if (!notify_id) {
 		GConfClient *client = panel_gconf_get_client ();
-		gchar       *key    = "/desktop/gnome/interface/menus-have-icons";
+		gchar       *key    = PANEL_MENU_HAVE_ICONS_KEY;
 		GError      *error  = NULL;
 
 		notify_id = gconf_client_notify_add (client, key, 
@@ -218,7 +218,7 @@ panel_menu_have_tearoff (void)
 
 	if (!notify_id) {
 		GConfClient *client = panel_gconf_get_client ();
-		gchar       *key    = "/desktop/gnome/interface/menus-have-tearoff";
+		gchar       *key    = PANEL_MENU_HAVE_TEAROFF_KEY;
 		GError      *error  = NULL;
 
 		notify_id = gconf_client_notify_add (client, key, 
@@ -1912,6 +1912,34 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	gtk_object_set_data (GTK_OBJECT (menu), "mf", NULL);
 }
 
+static void
+setup_menu_with_current_setting_state (GtkWidget *menu)
+{
+	g_object_set_data (G_OBJECT (menu),
+			   "MenusHaveIcons",
+			   GINT_TO_POINTER (panel_menu_have_icons ()));
+	g_object_set_data (G_OBJECT (menu),
+			   "MenusHaveTearoffs",
+			   GINT_TO_POINTER (panel_menu_have_tearoff ()));
+}
+
+static gboolean
+check_menu_against_current_setting_state (GtkWidget *menu)
+{
+	gboolean icons = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu),
+							     "MenusHaveIcons"));
+	gboolean tearoffs = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (menu),
+								"MenusHaveTearoffs"));
+	if ((icons && panel_menu_have_icons ()) ||
+	    ( ! icons && ! panel_menu_have_icons ()) ||
+	    (tearoffs && panel_menu_have_tearoff ()) ||
+	    ( ! tearoffs && ! panel_menu_have_tearoff ()))
+		/* state is OK */
+		return TRUE;
+	else
+		return FALSE; /* reread! perhaps too drastic, well whatever */
+}
+
 /*reread the applet menu, not a submenu*/
 static void
 check_and_reread_applet (Menu *menu)
@@ -2201,6 +2229,7 @@ tearoff_new_menu(GtkWidget *item, GtkWidget *menuw)
 		return;
 
 	menu = menu_new();
+	setup_menu_with_current_setting_state (menu);
 
 	menu_panel = get_panel_from_menu_data(menuw, TRUE);
 
@@ -2292,8 +2321,12 @@ menu_need_reread(GtkWidget *menuw)
 	/*if(!mfl)
 	  g_warning("Weird menu doesn't have mf entry");*/
 
+	/* FIXME: figure out how to update tornoff menus */
 	if (GTK_MENU(menuw)->torn_off)
 		return FALSE;
+
+	if ( ! check_menu_against_current_setting_state (menuw))
+		return TRUE;
 
 	if (gtk_object_get_data(GTK_OBJECT(menuw), "need_reread")) {
 		need_reread = TRUE;
@@ -2390,6 +2423,7 @@ create_fake_menu_at (const char *menudir,
 	GSList *list;
 	
 	menu = menu_new ();
+	setup_menu_with_current_setting_state (menu);
 
 	mf = g_new0 (MenuFinfo, 1);
 	mf->menudir = g_strdup (menudir);
@@ -2607,6 +2641,8 @@ create_menu_at_fr (GtkWidget *menu,
 		     TEAROFF_IS_ITEM(GTK_MENU_SHELL(menu)->children->data)))
 			add_separator = TRUE;
 	}
+
+	setup_menu_with_current_setting_state (menu);
 	
 	if (fr != NULL) {
 		/* Last added points to the last fr list item that was successfuly
@@ -2800,6 +2836,7 @@ create_applets_menu ()
 	}
 
 	menu = menu_new ();
+	setup_menu_with_current_setting_state (menu);
 
 	menu_add_tearoff (GTK_MENU (menu), G_CALLBACK (tearoff_new_menu), menu);
 
@@ -2834,6 +2871,7 @@ create_applets_menu ()
 
 			prev_category = category;
 			prev_menu = menu_new ();
+			setup_menu_with_current_setting_state (prev_menu);
 
 			cat_icon = applet_menu_get_category_icon (category);
 
@@ -3112,6 +3150,8 @@ create_add_panel_submenu (gboolean tearoff)
 	GtkWidget *menu, *menuitem;
 
 	menu = menu_new ();
+	/* FIXME: this probably doesn't do us any good */
+	setup_menu_with_current_setting_state (menu);
 	
 	if (tearoff)
 		menu_add_tearoff (GTK_MENU (menu), 
@@ -3276,6 +3316,7 @@ create_add_launcher_menu (GtkWidget *menu, gboolean fake_submenus)
 {
 	if (menu == NULL)
 		menu = menu_new ();
+	setup_menu_with_current_setting_state (menu);
 
 	/* Eeeek, a hack, if this is set then the reloading
 	 * function will use create_add_launcher_menu, rather then
@@ -3602,6 +3643,9 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 
 	/* Add Menu */
 
+	/* FIXME: probably does us no good */
+	setup_menu_with_current_setting_state (menu);
+
 	m = create_applets_menu(NULL, fake_submenus, TRUE);
 	if (m) {
 		menuitem = gtk_image_menu_item_new ();
@@ -3614,6 +3658,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 		g_signal_connect (G_OBJECT (m), "show",
 				    G_CALLBACK (submenu_to_display),
 				    NULL);
+
+		setup_menu_with_current_setting_state (m);
 	}
 
 	menuitem = gtk_image_menu_item_new ();
@@ -3623,6 +3669,8 @@ make_add_submenu (GtkWidget *menu, gboolean fake_submenus)
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 	submenu = menu_new ();
+	/* FIXME: probably does us no good */
+	setup_menu_with_current_setting_state (submenu);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
 
 	submenuitem = gtk_image_menu_item_new ();
@@ -3822,6 +3870,8 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus, gboolean is_basep)
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
 		submenu = menu_new ();
+		/* FIXME: probably does us no good */
+		setup_menu_with_current_setting_state (submenu);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 					   submenu);
 
@@ -3988,6 +4038,9 @@ create_panel_submenu(GtkWidget *menu, gboolean fake_submenus, gboolean tearoff,
 		menu = menu_new();
 	}
 
+	/* FIXME: probably does us no good */
+	setup_menu_with_current_setting_state (menu);
+
 	menu_add_tearoff (GTK_MENU (menu),
 			  G_CALLBACK (panel_menu_tearoff_new_menu),
 			  NULL);
@@ -4037,6 +4090,9 @@ create_desktop_menu (GtkWidget *menu, gboolean fake_submenus, gboolean tearoff)
 	if (menu == NULL) {
 		menu = menu_new ();
 	}
+
+	/* FIXME: probably does us no good */
+	setup_menu_with_current_setting_state (menu);
 
 	if (tearoff)
 		menu_add_tearoff (GTK_MENU (menu),
@@ -4162,9 +4218,10 @@ create_root_menu (GtkWidget *root_menu,
 		has_subs |= (flags & (MAIN_MENU_DISTRIBUTION_SUB));
 	}
 
-
 	if(!root_menu)
 		root_menu = menu_new ();
+
+	setup_menu_with_current_setting_state (root_menu);
 
 	if (tearoff)
 		menu_add_tearoff (GTK_MENU (root_menu),

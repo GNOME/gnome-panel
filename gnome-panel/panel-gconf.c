@@ -149,15 +149,49 @@ panel_gconf_global_config_set_string (const gchar *key, const gchar *value) {
 	return;
 }
 
-void 
+guint 
 panel_gconf_notify_add (const gchar *key, GConfClientNotifyFunc notify_func, gpointer user_data) {
-	gconf_client_notify_add (panel_gconf_get_client (),
-				 key,
-				 notify_func,
-				 user_data,
-				 NULL,
-				 NULL);
-	return;
+	guint notify_id;
+	notify_id = gconf_client_notify_add (panel_gconf_get_client (),
+					     key,
+					     notify_func,
+					     user_data,
+					     NULL,
+					     NULL);
+	return notify_id;
+}
+
+static void
+panel_notify_object_dead (gpointer data)
+{
+	guint notify_id = GPOINTER_TO_UINT (data);
+	gconf_client_notify_remove (panel_gconf_get_client (),
+				    notify_id);
+}
+
+guint
+panel_gconf_notify_add_while_alive (const gchar *key, 
+				    GConfClientNotifyFunc notify_func, 
+				    GObject *alive_object)
+{
+	guint notify_id;
+
+	g_return_val_if_fail (G_IS_OBJECT (alive_object), 0);
+
+	notify_id = panel_gconf_notify_add (key, notify_func, alive_object);
+	if (notify_id > 0) {
+		static int cookie = 0;
+		char *str;
+		/* eek a hack, we want a unique key each time,
+		 * how else do we hook into the destruction of an object?? */
+		str = g_strdup_printf ("PanelGConfNotify-%d", cookie++);
+		g_object_set_data_full (alive_object,
+					str,
+					GUINT_TO_POINTER (notify_id),
+					panel_notify_object_dead);
+		g_free (str);
+	}
+	return notify_id;
 }
 
 void

@@ -121,7 +121,9 @@ enum {
 	HIDEBUTTONS_NONE
 };
 
+#define PANEL_MENU_HAVE_ICONS_KEY "/desktop/gnome/interface/menus-have-icons"
 gboolean panel_menu_have_icons   (void);
+#define PANEL_MENU_HAVE_TEAROFF_KEY "/desktop/gnome/interface/menus-have-tearoff"
 gboolean panel_menu_have_tearoff (void);
 
 

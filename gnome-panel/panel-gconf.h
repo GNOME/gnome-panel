@@ -23,9 +23,12 @@ void 		panel_gconf_global_config_set_bool (const gchar *key,
 void 		panel_gconf_global_config_set_string (const gchar *key, 
 						      const gchar *value);
 
-void		panel_gconf_notify_add (const gchar *key, 
+guint		panel_gconf_notify_add (const gchar *key, 
 					GConfClientNotifyFunc notify_func, 
 					gpointer user_data);
+guint		panel_gconf_notify_add_while_alive (const gchar *key, 
+						    GConfClientNotifyFunc notify_func, 
+						    GObject *alive_object);
 
 void 		panel_gconf_add_dir (const gchar *key);
 G_END_DECLS

@@ -896,6 +896,7 @@ window_closed (WnckScreen *screen,
 		if (item != NULL) {
 			g_hash_table_remove (foo->windows, window);
 			gtk_widget_hide (item);
+			gtk_menu_reposition (GTK_MENU (item->parent));
 		} else {
 			g_warning ("Could not find item for task '%s'",
 				   sure_string (wnck_window_get_name (window)));
