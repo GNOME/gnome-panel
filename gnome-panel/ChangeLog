@@ -1,3 +1,13 @@
+2004-12-20  Vincent Untz  <vincent@vuntz.net>
+
+	Fix 100% CPU usage when closing drawers. I'm not sure this is an
+	optimal fix, and maybe that's just a workaround, so I'm adding a
+	FIXME.
+	Fix bug #160748.
+
+	* panel-toplevel.c: (panel_toplevel_update_position): don't forget to
+	count the frame bevels when updating the position.
+
 2004-12-19  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-widget.c: (panel_widget_applet_destroy): do not forget to

@@ -1996,12 +1996,13 @@ panel_toplevel_update_expanded_position (PanelToplevel *toplevel)
 static void
 panel_toplevel_update_position (PanelToplevel *toplevel)
 {
-	GtkWidget *widget;
-	GdkScreen *screen;
-	int        x, y;
-	int        w, h;
-	int        screen_width, screen_height;
-	int        monitor_width, monitor_height;
+	PanelBackground *background;
+	GtkWidget       *widget;
+	GdkScreen       *screen;
+	int              x, y;
+	int              w, h;
+	int              screen_width, screen_height;
+	int              monitor_width, monitor_height;
 
 	widget = GTK_WIDGET (toplevel);
 
@@ -2069,6 +2070,37 @@ panel_toplevel_update_position (PanelToplevel *toplevel)
 		toplevel->priv->geometry.width = w;
 	if (h != -1)
 		toplevel->priv->geometry.height = h;
+
+	/* This is some kind of snap: there's a possibility of an infinite loop
+	 * because of the bevels of the frame that are set in
+	 * panel_toplevel_update_edges(). The bevels change the width/height of
+	 * the toplevel. The typical loop is:
+	 * x = 1 => outer bevel => x = 0 => no outer bevel = > x = 1 => ...
+	 * FIXME: maybe the real bug is that we enter into this loop (see bug
+	 * #160748 to learn how to reproduce.) */
+	background = &toplevel->priv->panel_widget->background;
+	/* There's no bevels with a color/image background */
+	if (panel_background_effective_type (background) == PANEL_BACK_NONE) {
+		GtkStyle     *style;
+		GdkRectangle *geometry;
+
+		style = GTK_WIDGET (toplevel->priv->inner_frame)->style;
+		geometry = toplevel->priv->geometry;
+
+		if (geometry.x <= style->xthickness && geometry.x > 0)
+			geometry.x = 0;
+
+		if (geometry.y <= style->ythickness && geometry.y > 0)
+			geometry.y = 0;
+
+		if (geometry.x + geometry.width + (2 * style->xthickness) >= monitor_width &&
+		    geometry.x < monitor_width)
+			geometry.x = monitor_width - geometry.width - style->xthickness;
+
+		if (geometry.y + geometry.height + (2 * style->ythickness) >= monitor_height &&
+		    geometry.y < monitor_height)
+			geometry.y = monitor_height - geometry.height - style->ythickness;
+	}
 
 	panel_toplevel_update_struts (toplevel, FALSE);
 	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
