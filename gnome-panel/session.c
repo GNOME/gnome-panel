@@ -38,9 +38,6 @@ char *old_panel_cfg_path=NULL;
 /*list of all panel widgets created*/
 extern GSList *panel_list;
 
-/*add applets to this queue on startup to avoid races*/
-static GSList *applets_to_start = NULL;
-
 int ss_cur_applet = 0;
 int ss_done_save = FALSE;
 gushort ss_cookie = 0;
@@ -229,7 +226,6 @@ send_applet_session_save (AppletInfo *info,
 			  const char *cfgpath,
 			  const char *globcfgpath)
 {
-	CORBA_short retval;
 	CORBA_Environment ev;
 	
 	/*new unique cookie*/
@@ -239,7 +235,7 @@ send_applet_session_save (AppletInfo *info,
 	printf("SENDING_SESSION_SAVE (%u)\n",ss_cookie);
 #endif
 
-	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER(ss_cookie));
+	gtk_timeout_add(ss_timeout,session_save_timeout,GINT_TO_POINTER((int)ss_cookie));
 
 	CORBA_exception_init(&ev);
 	GNOME_Applet_session_save(obj,
@@ -503,7 +499,6 @@ do_session_save(GnomeClient *client,
 {
 	int num;
 	char *s;
-	char *session_id;
 	int i;
 	gchar *new_args[] = { "rm", "-r", NULL };
 

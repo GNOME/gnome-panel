@@ -108,44 +108,6 @@ socket_destroyed(GtkWidget *w, gpointer data)
 	g_free(swallow);
 }
 
-static int
-swallow_detached (GtkWidget *handle_box, gpointer data)
-{
-	Swallow *swallow  = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
-	
-	if(GPOINTER_TO_INT(gtk_object_get_user_data
-			   (GTK_OBJECT(handle_box)))==SWALLOW_VERTICAL) {
-		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
-		gtk_widget_set_usize( swallow->handle_box, swallow->width,
-				      DRAG_HANDLE_SIZE);
-	} else {
-		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT; 
-		gtk_widget_set_usize( handle_box, DRAG_HANDLE_SIZE,
-				      swallow->height );
-	} 
-	gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
-	return FALSE;
-}
-
-static int
-swallow_attached (GtkWidget *handle_box, gpointer data)
-{
-	Swallow *swallow = gtk_object_get_data(GTK_OBJECT(handle_box), "swallow_obj");
-	
-	if(GPOINTER_TO_INT(gtk_object_get_user_data
-			   (GTK_OBJECT(handle_box)))== SWALLOW_VERTICAL) {
-		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_TOP;
-		gtk_widget_set_usize( handle_box, swallow->width,
-				      swallow->height + DRAG_HANDLE_SIZE);
-	} else {
-		GTK_HANDLE_BOX(handle_box)->handle_position = GTK_POS_LEFT;
-		gtk_widget_set_usize( handle_box,
-				      swallow->width + DRAG_HANDLE_SIZE,
-				      swallow->height);
-	} 
-	gtk_widget_queue_resize ( GTK_WIDGET(swallow->ebox) );
-	return FALSE;
-}
 
 static void
 really_add_swallow(GtkWidget *d,int button, gpointer data)
@@ -287,8 +249,6 @@ create_swallow_applet(char *title, char *path, int width, int height, SwallowOri
 {
 	Swallow *swallow;
 	GtkWidget *w;
-	GtkWidget *table;
-	GtkWidget *handle_box;
 	
 	swallow = g_new(Swallow,1);
 

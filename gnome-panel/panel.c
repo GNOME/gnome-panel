@@ -491,26 +491,6 @@ drawer_state_change(GtkWidget *widget,
 	return TRUE;
 }
 
-static void
-queue_resize_foreach(GtkWidget *w, gpointer data)
-{
-	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
-
-	if(info->type == APPLET_DRAWER) {
-		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
-		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
-		
-		if(dw->state == DRAWER_SHOWN &&
-		   !dw->temp_hidden) {
-			gtk_widget_queue_resize(drawer->drawer);
-			/*gtk_container_foreach(GTK_CONTAINER(basep->panel),
-					      queue_resize_foreach,
-					      NULL);*/
-		}
-	}
-}
-
 /*the following is slightly ugly .... but it works, I need to send the
   orient change in an idle handeler*/
 static int
@@ -960,7 +940,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		  gnome_uri_list_extract_filenames(selection_data->data);
 
 		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
-		  const char *mimetype, *p;
+		  const char *mimetype;
 
 		  mimetype = gnome_mime_type(ltmp->data);
 
@@ -1179,7 +1159,6 @@ panel_setup(GtkWidget *panelw)
 			   NULL);
 
 	if(IS_DRAWER_WIDGET(panelw)) {
-		DrawerWidget *drawer = DRAWER_WIDGET(panelw);
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
@@ -1189,7 +1168,6 @@ panel_setup(GtkWidget *panelw)
 				   GTK_SIGNAL_FUNC(drawer_state_change),
 				   NULL);
 	} else if(IS_SNAPPED_WIDGET(panelw)) {
-		SnappedWidget *snapped = SNAPPED_WIDGET(panelw);
 		gtk_signal_connect(GTK_OBJECT(panelw), "pos_change",
 				   GTK_SIGNAL_FUNC(basep_pos_change),
 				   NULL);
@@ -1200,7 +1178,6 @@ panel_setup(GtkWidget *panelw)
 		/*this is a base panel*/
 		base_panels++;
 	} else if(IS_CORNER_WIDGET(panelw)) {
-		CornerWidget *corner = CORNER_WIDGET(panelw);
 		gtk_signal_connect(GTK_OBJECT(panel), "orient_change",
 				   GTK_SIGNAL_FUNC(panel_orient_change),
 				   NULL);

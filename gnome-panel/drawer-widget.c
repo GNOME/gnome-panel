@@ -93,7 +93,6 @@ marshal_signal_state (GtkObject * object,
 static void
 drawer_widget_realize(GtkWidget *w)
 {
-	DrawerWidget *drawer = DRAWER_WIDGET(w);
 	GTK_WIDGET_CLASS(parent_class)->realize(w);
 
 	gnome_win_hints_init();
@@ -462,7 +461,6 @@ drawer_handle_click(GtkWidget *widget, gpointer data)
 {
 	Drawer *drawer = gtk_object_get_data(GTK_OBJECT(data),
 					     DRAWER_PANEL_KEY);
-	DrawerWidget *drawerw = DRAWER_WIDGET(drawer->drawer);
 	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
 						PANEL_PARENT);
@@ -492,7 +490,6 @@ drawer_widget_new (PanelOrientType orient,
 		   int hidebutton_enabled)
 {
 	DrawerWidget *drawer;
-	GtkWidget *frame;
 	PanelOrientation porient;
 	BasePWidget *basep;
 	

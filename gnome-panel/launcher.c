@@ -96,7 +96,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 	g_return_if_fail(launcher!=NULL);
 	g_return_if_fail(launcher->dentry!=NULL);
 	g_return_if_fail(launcher->dentry->location!=NULL);
-       
+
 	uri_list = g_strconcat ("file:", launcher->dentry->location, "\r\n", NULL);
 
 	gtk_selection_data_set (selection_data,

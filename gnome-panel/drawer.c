@@ -307,7 +307,6 @@ drawer_move_foreach(GtkWidget *w, gpointer user_data)
 	
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
 		gtk_widget_queue_resize(drawer->drawer);
 	}
 }

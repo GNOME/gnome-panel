@@ -144,7 +144,6 @@ event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 
 	xevent = (XEvent *)gdk_xevent;
 	if (xevent->type == MapNotify && check_swallows) {
-		int oldw = gdk_error_warnings;
 		int (*oldErrorHandler)(Display*, XErrorEvent*);
 		GList *li;
 		int remove;

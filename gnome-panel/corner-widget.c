@@ -93,7 +93,6 @@ marshal_signal_int (GtkObject * object,
 static void
 corner_widget_realize(GtkWidget *w)
 {
-	CornerWidget *corner = CORNER_WIDGET(w);
 	GTK_WIDGET_CLASS(parent_class)->realize(w);
 
 	gnome_win_hints_init();
@@ -569,7 +568,6 @@ static void
 corner_widget_pop_hide(CornerWidget *corner, int fromright)
 {
 	static const char *supinfo[] = {"panel", "collapse", NULL};
-	int width, height;
 
 	if((corner->state != CORNER_SHOWN))
 		return;

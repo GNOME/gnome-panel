@@ -39,7 +39,6 @@ static GtkWidget *
 create_logout_widget(void)
 {
 	GtkWidget *button;
-	GtkWidget *pixmap;
 	char *pixmap_name;
 
 	pixmap_name = gnome_pixmap_file("gnome-term-night.png");
@@ -73,7 +72,6 @@ static GtkWidget *
 create_lock_widget(void)
 {
 	GtkWidget *button;
-	GtkWidget *pixmap;
 	char *pixmap_name;
 
 	pixmap_name = gnome_pixmap_file("gnome-lockscreen.png");

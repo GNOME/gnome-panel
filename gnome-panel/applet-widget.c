@@ -133,7 +133,6 @@ typedef void (*PositionSignal) (GtkObject * object,
 
 static int applet_count = 0;
 
-static int do_multi = FALSE;
 static int die_on_last = FALSE;
 
 static GtkPlugClass *parent_class;
@@ -417,7 +416,6 @@ applet_widget_abort_load(AppletWidget *applet)
 void
 applet_widget_remove(AppletWidget *applet)
 {
-	CORBA_Object ns;
 	CORBA_Environment ev;
 	CustomAppletServant *servant;
 	g_return_if_fail(applet != NULL);
@@ -728,9 +726,7 @@ GtkWidget *
 applet_widget_new(const char *goad_id)
 {
 	AppletWidget *applet;
-	int applet_id=-1;
 	CustomAppletServant *corbadat;
-	CORBA_unsigned_long wid;
 	
 	g_return_val_if_fail(goad_id != NULL,NULL);
 
@@ -815,7 +811,6 @@ void
 applet_widget_add_full(AppletWidget *applet, GtkWidget *widget,
 		       int bind_events)
 {
-	GString *str;
 	CORBA_Environment ev;
 
 	g_return_if_fail(applet != NULL);
@@ -1107,6 +1102,7 @@ server_applet__get_goad_id(CustomAppletServant *servant,
 }
 
 
+/*XXX: this is not used!
 static void
 applet_handle_connection(GIOPConnection *cnx, gint source,
 			 GdkInputCondition cond)
@@ -1119,7 +1115,9 @@ applet_handle_connection(GIOPConnection *cnx, gint source,
 		giop_main_handle_connection(cnx);
 	}
 }
+*/
 
+/*XXX: this is not used!
 static void
 orb_add_connection(GIOPConnection *cnx)
 {
@@ -1131,12 +1129,15 @@ orb_add_connection(GIOPConnection *cnx)
 						     applet_handle_connection,
 						   NULL, cnx, NULL));
 }
+*/
 
+/*XXX: this is not used!
 static void
 orb_remove_connection(GIOPConnection *cnx)
 {
 	gtk_input_remove(GPOINTER_TO_INT(cnx->user_data));
 }
+*/
 
 /* Used by shlib applets */
 CORBA_Object

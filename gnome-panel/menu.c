@@ -621,7 +621,7 @@ really_add_new_menu_item (GtkWidget *d, int button, gpointer data)
 		/* assume we are making a new file */
 		if (!dentry->location) {
 			int i=2;
-			char *tmp, *tmp2=NULL;
+			char *tmp=NULL;
 			tmp = validate_filename(dentry->name);
 
 			file = g_strdup_printf("%s.desktop", tmp);
@@ -1230,8 +1230,6 @@ drag_end_menu_cb (GtkWidget *widget, GdkDragContext     *context)
 {
   GtkWidget *xgrab_shell;
   GtkWidget *parent;
-  GdkEvent *current_event;
-  GtkMenuShell *menu_shell;
 
   /* Find the last viewable ancestor, and make an X grab on it
    */
@@ -1843,7 +1841,6 @@ create_menuitem(GtkWidget *menu,
 {
 	GtkWidget *menuitem, *sub, *pixmap;
 	char *itemname;
-	char *pixname;
 	
 	g_return_if_fail(fr != NULL);
 
@@ -2482,7 +2479,6 @@ static void
 convert_to_panel(GtkWidget *w, gpointer data)
 {
 	PanelType type = GPOINTER_TO_INT(data);
-	GdkColor bcolor = {0,0,0,1};
 	GtkWidget *panel;
 	PanelWidget *newpanel = NULL;
 	GtkWidget *pw;
@@ -2586,7 +2582,6 @@ void
 make_panel_submenu (GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *menuitem;
-	GtkWidget *a,*b;
 	GtkWidget *m;
 
 	menuitem = gtk_menu_item_new ();
@@ -2889,7 +2884,6 @@ add_redhat_entry(GSList *list, char *file)
 	
 	rh = g_new0(RHMenuItem,1);
 	while(fgets(buf,256,fp)) {
-		char **param = NULL;
 		p = strchr(buf,'\n');
 		if(p) *p='\0';
 		p = buf;
@@ -3037,7 +3031,6 @@ create_rh_menu(int dofork)
 	char *userrh = gnome_util_prepend_user_home(".wmconfig");
 	char *rhdir = gnome_util_home_file("apps-redhat");
 	GSList *rhlist = NULL;
-	GtkWidget *w;
 	int i;
 	char *dirs[3] = {"/etc/X11/wmconfig",NULL,NULL};
 	struct stat s;
@@ -3583,7 +3576,6 @@ add_menu_type_options(GtkObject *dialog, GtkTable *table, int row,
 	char *p;
 	GtkWidget *w;
 	GtkWidget *rb;
-	GtkWidget *off;
 
 	/*sanity checks*/
 	if(!on)

@@ -76,7 +76,6 @@ basep_widget_realize(GtkWidget *w)
 static void
 basep_widget_class_init (BasePWidgetClass *class)
 {
-	GtkObjectClass *object_class = (GtkObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 
         parent_class = gtk_type_class (gtk_window_get_type ());
@@ -102,8 +101,6 @@ void
 basep_widget_get_position(BasePWidget *basep, PanelOrientType hide_orient,
 			  gint16 *x, gint16 *y, gint16 w, gint16 h)
 {
-	GtkWidget *widget = GTK_WIDGET(basep);
-
 	*x = *y = 0;
 	switch(hide_orient) {
 	case ORIENT_UP:

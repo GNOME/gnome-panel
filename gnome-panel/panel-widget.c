@@ -685,7 +685,6 @@ static void
 panel_widget_push_move(PanelWidget *panel, AppletData *ad, int moveby)
 {
 	int finalpos;
-	int pos;
 	GList *list;
 
 	g_return_if_fail(ad!=NULL);
@@ -1180,8 +1179,6 @@ panel_widget_set_back_pixmap (PanelWidget *panel, char *file)
 static void
 panel_try_to_set_default_back(PanelWidget *panel)
 {
-	GtkStyle *ns;
-
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
@@ -1660,10 +1657,6 @@ panel_widget_get_cursorloc(PanelWidget *panel)
 int
 panel_widget_get_free_space(PanelWidget *panel, GtkWidget *applet)
 {
-	int i,e;
-	int x,y;
-	int place;
-	int start;
 	int right,left;
 	GList *li;
 	AppletData *ad;

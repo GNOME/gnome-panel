@@ -450,7 +450,6 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 			CORBA_Environment *ev)
 {
 	GSList *li;
-	int i;
 	Extern *ext;
 	char *p;
 	POA_GNOME_PanelSpot *panelspot_servant;
@@ -607,7 +606,6 @@ s_panelspot_get_spot_pos(POA_GNOME_PanelSpot *servant,
 			 CORBA_Environment *ev)
 {
 	Extern *ext = (Extern *)servant;
-	PanelWidget *panel;
 	AppletData *ad;
 
 	g_assert(ext);
@@ -981,9 +979,7 @@ gint
 panel_corba_gtk_init(CORBA_ORB panel_orb)
 {
   GNOME_Panel acc;
-  char hostname [4096];
-  char *name;
-  CORBA_Object ns, old_server;
+  CORBA_Object old_server;
   gint status;
 
   CORBA_exception_init(&ev);

@@ -809,7 +809,6 @@ snapped_widget_new (SnappedPos pos,
 {
 	SnappedWidget *snapped;
 	PanelOrientation orient;
-	GtkWidget *frame;
 	BasePWidget *basep;
 
 	snapped = gtk_type_new(snapped_widget_get_type());

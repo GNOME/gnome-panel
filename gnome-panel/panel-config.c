@@ -451,11 +451,9 @@ static GtkWidget *
 size_notebook_page(PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
-	GtkWidget *button;
 	GtkWidget *box;
 	GtkWidget *hbox;
 	GtkWidget *vbox;
-        GtkWidget *w;
 
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, 0);

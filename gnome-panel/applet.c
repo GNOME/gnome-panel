@@ -394,7 +394,6 @@ applet_button_press (GtkWidget *widget,GdkEventButton *event, AppletInfo *info)
 static void
 applet_destroy(GtkWidget *w, AppletInfo *info)
 {
-	AppletType type;
 	GList *li;
 	
 	g_return_if_fail(info != NULL);
