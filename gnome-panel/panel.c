@@ -862,7 +862,7 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 			 for horizontal but we use only one .. i.e. move
 			 down the panel (down or right)!)
 			 into acceptable position*/
-	gint noturn=FALSE; /*set once a turn around has been made on one end,
+	gint noturn;    /*set once a turn around has been made on one end,
 			     it will prevent a hang when tehpanel is full*/
 	gint *adjvar;	/*this points to the variable that we are adjusting*/
 	gint adjdef;	/*default for the above*/
@@ -889,7 +889,7 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 				TRUE:FALSE;
 			adjvar=x;
 			adjdef=*x;
-			adjlim=the_panel->fixed->allocation.width;
+			adjlim=the_panel->fixed->allocation.width-width;
 			break;
 		case PANEL_POS_LEFT:
 		case PANEL_POS_RIGHT:
@@ -899,12 +899,13 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 				TRUE:FALSE;
 			adjvar=y;
 			adjdef=*y;
-			adjlim=the_panel->fixed->allocation.height;
+			adjlim=the_panel->fixed->allocation.height-height;
 			break;
 	}
 
 	/*move the applet as close as we can to the
 	  one blocking it*/
+	noturn=FALSE;
 	while(!panel_find_clean_spot(widget,x,y,width,height)) {
 		if(movedown) {
 			if(--(*adjvar)<0) {
