@@ -1096,12 +1096,7 @@ panel_try_to_set_default_back(PanelWidget *panel)
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
 
-	ns = gtk_rc_get_style(GTK_WIDGET(panel));
-	if(!ns) ns = gtk_style_new();
-
-	gtk_style_ref(ns);
-	gtk_widget_set_style(GTK_WIDGET(panel), ns);
-	gtk_style_unref(ns);
+	gtk_widget_set_rc_style(GTK_WIDGET(panel));
 
 	panel_widget_draw_all(panel);
 }
