@@ -24,7 +24,7 @@
 #include "panel-profile.h"
 #include "panel-lockdown.h"
 
-#define MOVE_INCREMENT 2
+#define MOVE_INCREMENT 1
 
 typedef enum {
 	PANEL_SWITCH_MOVE = 0,
