@@ -1,5 +1,19 @@
 2005-03-27  Vincent Untz  <vincent@vuntz.net>
 
+	Remove "Run application" from the menus.
+	Fix bug #167090
+
+	* menu.c: (main_menu_append): don't append the run application item
+	* panel-menu-bar.c: (panel_menu_bar_recreate_menus): kill
+	(panel_menu_bar_append_applications_menu): kill
+	(panel_menu_bar_create_applications_menu): kill
+	(panel_menu_bar_instance_init): just call create_applications_menu()
+	to create the applications menu, we don't need lockdown notifications
+	(panel_menu_bar_finalize): kill
+	(panel_menu_bar_class_init): we don't have a specific finalize anymore
+
+2005-03-27  Vincent Untz  <vincent@vuntz.net>
+
 	Make the panel more robust when the object/applet/toplevel list
 	contains incorrect data.
 	Most probably fixes bug #137308.

@@ -55,68 +55,6 @@ struct _PanelMenuBarPrivate {
 };
 
 static GObjectClass *parent_class;
-static GtkWidget *panel_menu_bar_create_applications_menu (PanelMenuBar *menubar);
-
-static void
-panel_menu_bar_recreate_menus (PanelMenuBar *menubar)
-{
-	if (menubar->priv->applications_menu) {
-		gtk_widget_destroy (menubar->priv->applications_menu);
-		menubar->priv->applications_menu = panel_menu_bar_create_applications_menu (menubar);
-		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->applications_menu),
-					       "menu_panel",
-					       menubar->priv->panel);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
-					   menubar->priv->applications_menu);
-	}
-}
-
-static void
-panel_menu_bar_append_applications_menu (GtkWidget    *menu,
-					 PanelMenuBar *menubar)
-{
-	GtkWidget *item;
-
-	if (!g_object_get_data (G_OBJECT (menu), "panel-menu-needs-appending"))
-		return;
-
-	g_object_set_data (G_OBJECT (menu), "panel-menu-needs-appending", NULL);
-
-	item = panel_menu_items_create_action_item (PANEL_ACTION_RUN);
-
-	if (item != NULL) {
-		gboolean  add_separator;
-		GList    *children;
-
-		children = gtk_container_get_children (GTK_CONTAINER (menu));
-
-		add_separator = FALSE;
-		if (children != NULL) {
-			while (children->next != NULL)
-				children = children->next;
-			add_separator = !GTK_IS_SEPARATOR (GTK_WIDGET (children->data));
-		}
-
-		if (add_separator)
-			add_menu_separator (menu);
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	}
-}
-
-static GtkWidget *
-panel_menu_bar_create_applications_menu (PanelMenuBar *menubar)
-{
-	GtkWidget *applications_menu;
-
-	applications_menu = create_applications_menu ("applications.menu", NULL);
-
-	g_signal_connect (applications_menu, "show",
-			  G_CALLBACK (panel_menu_bar_append_applications_menu),
-			  menubar);
-
-	return applications_menu;
-}
 
 static void
 panel_menu_bar_instance_init (PanelMenuBar      *menubar,
@@ -128,7 +66,7 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 
 	menubar->priv->info = NULL;
 
-	menubar->priv->applications_menu = panel_menu_bar_create_applications_menu (menubar);
+	menubar->priv->applications_menu = create_applications_menu ("applications.menu", NULL);
 
 	menubar->priv->applications_item = gtk_image_menu_item_new_with_label (_("Applications"));
 	image = gtk_image_new_from_icon_name (PANEL_GNOME_LOGO_ICON,
@@ -148,9 +86,6 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	menubar->priv->desktop_item = panel_desktop_menu_item_new (FALSE, TRUE);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
-
-	panel_lockdown_notify_add (G_CALLBACK (panel_menu_bar_recreate_menus),
-				   menubar);
 }
 
 static void
@@ -198,17 +133,6 @@ panel_menu_bar_size_allocate (GtkWidget     *widget,
 }
 
 static void
-panel_menu_bar_finalize (GObject *object)
-{
-	PanelMenuBar *menubar = (PanelMenuBar *) object;
-
-	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_bar_recreate_menus),
-				      menubar);
-
-	parent_class->finalize (object);
-}
-
-static void
 panel_menu_bar_class_init (PanelMenuBarClass *klass)
 {
 	GObjectClass   *gobject_class = (GObjectClass   *) klass;
@@ -216,7 +140,6 @@ panel_menu_bar_class_init (PanelMenuBarClass *klass)
 
 	parent_class = g_type_class_peek_parent (klass);
 
-	gobject_class->finalize  = panel_menu_bar_finalize;
 	widget_class->parent_set = panel_menu_bar_parent_set;
 	widget_class->size_allocate = panel_menu_bar_size_allocate;
 
