@@ -1,1 +1,1 @@
-SUBDIRS = clock fish window-list workspace-switcher
+SUBDIRS = clock fish mailcheck window-list workspace-switcher
