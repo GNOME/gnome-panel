@@ -1,3 +1,15 @@
+2002-12-10  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #100650, based on a patch from Arvind.
+
+	* applet.[ch]:
+	(panel_applet_remove_in_idle): new function.
+	(applet_remove_callback): use it.
+
+	* panel.c: (drop_internal_icon): remove the
+	applet permanently rather than just destroying
+	the widget.
+
 2002-12-06  Frederic Crozat  <fcrozat@mandrakesoft.com>
 
 	* panel-background-monitor.c:

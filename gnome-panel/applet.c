@@ -164,12 +164,18 @@ applet_idle_remove (gpointer data)
 	return FALSE;
 }
 
+void
+panel_applet_remove_in_idle (AppletInfo *info)
+{
+	if (info->remove_idle == 0)
+		info->remove_idle = g_idle_add (applet_idle_remove, info);
+}
+
 static void
 applet_remove_callback (GtkWidget  *widget,
 			AppletInfo *info)
 {
-	if (info->remove_idle == 0)
-		info->remove_idle = g_idle_add (applet_idle_remove, info);
+	panel_applet_remove_in_idle (info);
 }
 
 static inline GdkScreen *

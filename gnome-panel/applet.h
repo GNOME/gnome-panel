@@ -86,6 +86,8 @@ void            panel_applet_add_callback    (AppletInfo  *info,
 void            panel_applet_remove_callback (AppletInfo *info,
 					      const char *callback_name);
 
+void            panel_applet_remove_in_idle  (AppletInfo *info);
+
 AppletUserMenu *panel_applet_get_callback    (GList       *user_menu,
 					      const gchar *name);
 

@@ -1138,7 +1138,7 @@ drop_internal_icon (PanelWidget *panel, int pos, const char *icon_name,
 						old_launcher->destroy_handler);
 				launcher_properties_destroy(old_launcher);
 			}
-			gtk_widget_destroy (old_launcher->button);
+			panel_applet_remove_in_idle (old_launcher->info);
 		}
 	}
 }
