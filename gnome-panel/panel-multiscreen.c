@@ -169,26 +169,6 @@ panel_multiscreen_height (GdkScreen *screen,
 }
 
 int
-panel_multiscreen_locate_coords (GdkScreen *screen,
-				 int        x,
-				 int        y)
-{
-	int n_screen;
-	int i;
-
-	n_screen = gdk_screen_get_number (screen);
-
-	for (i = 0; i < monitors [n_screen]; i++)
-		if (x >= geometries [n_screen][i].x &&
-		    x <  geometries [n_screen][i].x + geometries [n_screen][i].width &&
-		    y >= geometries [n_screen][i].y &&
-		    y <  geometries [n_screen][i].y + geometries [n_screen][i].height)
-			return i;
-
-	return -1;
-}
-
-int
 panel_multiscreen_locate_widget_monitor (GtkWidget *widget)
 {
 	GtkWidget *toplevel;

@@ -602,7 +602,7 @@ menu_on_screen (GtkMenu  *menu,
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
 
 	screen  = gtk_widget_get_screen (GTK_WIDGET (menu));
-	monitor = panel_multiscreen_locate_coords (screen, *x, *y);
+	monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
 
 	monitor_width  = panel_multiscreen_width (screen, monitor);
 	monitor_height = panel_multiscreen_height (screen, monitor);

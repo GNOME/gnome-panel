@@ -1,3 +1,17 @@
+2003-11-28  Vincent Untz  <vincent@vuntz.net>
+
+	Use gdk_screen_get_monitor_at_point() instead of
+	panel_multiscreen_locate_coords()
+	Thanks to Chuan-kai Lin <linchuan@cse.ogi.edu> for the idea.
+	Fix bug #127328.
+	
+	* panel-multiscreen.[ch]: (panel_multiscreen_locate_coords) kill
+	* menu-util.c: (panel_standard_menu_pos)
+	* menu.c: (menu_on_screen)
+	* panel-toplevel.c: (panel_toplevel_calc_new_orientation),
+	(panel_toplevel_move_to), (panel_toplevel_update_expanded_position):
+	s/panel_multiscreen_locate_coords/gdk_screen_get_monitor_at_point/
+
 2003-11-27  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-applet-frame.c: (panel_applet_frame_cnx_broken),

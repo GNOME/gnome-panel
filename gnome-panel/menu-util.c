@@ -53,7 +53,7 @@ panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 					  &requisition);
 
 	screen  = gtk_widget_get_screen (GTK_WIDGET (menu));
-	monitor = panel_multiscreen_locate_coords (screen, *x, *y);
+	monitor = gdk_screen_get_monitor_at_point (screen, *x, *y);
 
 	monitor_basex  = panel_multiscreen_x (screen, monitor);
 	monitor_basey  = panel_multiscreen_y (screen, monitor);
