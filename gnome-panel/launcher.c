@@ -222,11 +222,20 @@ launcher_launch (Launcher  *launcher,
 	
 	if (panel_global_config_get_drawer_auto_close ()) {
 		PanelToplevel *toplevel;
+		PanelToplevel *parent;
 
 		toplevel = PANEL_WIDGET (launcher->button->parent)->toplevel;
 
-		if (panel_toplevel_get_is_attached (toplevel)) 
+		if (panel_toplevel_get_is_attached (toplevel)) {
+			parent = panel_toplevel_get_attach_toplevel (toplevel);
+
+			while (panel_toplevel_get_is_attached (parent)) {
+				toplevel = parent;
+				parent = panel_toplevel_get_attach_toplevel (toplevel);
+			}
+
 			panel_toplevel_hide (toplevel, FALSE, -1);
+		}
 	}
 }
 
