@@ -12,6 +12,7 @@ gint panel_applet_in_drag = FALSE;
 
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
+static int  panel_try_to_set_pixmap     (PanelWidget *panel, char *pixmap);
 
 static GdkCursor *fleur_cursor;
 
@@ -25,6 +26,7 @@ static gint pw_minimize_delay = 300;
    the panel will do interpanel drags differently
 static char *applet_drop_types[]={"internal/applet-widget-pointer"};
 */
+static char *image_drop_types[] = {"url:ALL"};
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
@@ -1523,7 +1525,7 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 
 
 /*static gint
-panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
+panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
 	GtkWidget *applet;
 	PanelWidget *panel = data;
@@ -1556,6 +1558,27 @@ panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 	return TRUE;
 }*/
+
+static void
+panel_widget_dnd_droped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
+{
+	if (panel_try_to_set_pixmap (panel, event->data)){
+		if (panel->back_pixmap)
+			g_free (panel->back_pixmap);
+		panel->back_pixmap = g_strdup (event->data);
+		gtk_widget_queue_draw (widget);
+	}
+}
+
+static void
+panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer data)
+{
+	/* Test for the type that was dropped */
+	if (strcmp (event->data_type, "url:ALL") == 0)
+		panel_widget_dnd_droped_filename (widget, event, PANEL_WIDGET (data));
+	
+	return;
+}
 
 static int
 panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
@@ -1812,6 +1835,15 @@ panel_widget_new (gint size,
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 
+	/* Ok, cool hack begins: drop image files on the panel */
+	gtk_signal_connect (GTK_OBJECT (panel->fixed),
+			    "drop_data_available_event",
+			    GTK_SIGNAL_FUNC (panel_widget_dnd_drop_internal),
+			    panel);
+	
+	gtk_widget_dnd_drop_set (GTK_WIDGET(panel->fixed), TRUE,
+				 image_drop_types, 1, FALSE);
+	
 	/*FIXME: ???? will we delete this or make it work*/
 	/*set up drag'n'drop (the drop)*/
 	/*gtk_signal_connect (GTK_OBJECT (panel->fixed), 
