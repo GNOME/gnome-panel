@@ -138,6 +138,7 @@ appletsConf.sh: appletsConf.sh.in Makefile
 	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
 	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
 	    -e 's?\@GNOMEGNORBA_LIBS\@?$(GNOMEGNORBA_LIBS)?g' \
+	    -e 's?\@VERSION\@?$(VERSION)?g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
 
