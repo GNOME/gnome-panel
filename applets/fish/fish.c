@@ -23,7 +23,7 @@ static fish_properties defaults = {
 	"Wanda",
 	NULL,
 	3,
-	0.3
+	1.0
 };
 
 static fish_properties properties = { NULL };
