@@ -45,6 +45,8 @@ extern char *old_panel_cfg_path;
 
 extern gint main_menu_count;
 
+extern gint panel_widget_inhibit_allocates;
+
 void
 apply_global_config(void)
 {
@@ -301,6 +303,10 @@ panel_session_save (GnomeClient *client,
 
 	if(is_shutdown) {
 		AppletInfo *info;
+
+		/*we don't need to do any gemotery stuff now, plus it might
+		  actually hurt us*/
+		panel_widget_inhibit_allocates = TRUE;
 
 		/*don't catch these any more*/
 		signal(SIGCHLD, SIG_DFL);

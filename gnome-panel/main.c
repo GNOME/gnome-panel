@@ -173,7 +173,7 @@ really_exec_prog(gint applet_id, gchar *path, gchar *param)
 		current_exec = applet_id;
 
 		/*wait 60 seconds before timing out*/
-		cur_timeout = gtk_timeout_add(60*100,exec_queue_timeout,NULL);
+		cur_timeout = gtk_timeout_add(300*100,exec_queue_timeout,NULL);
 
 		return FALSE;
 	}
