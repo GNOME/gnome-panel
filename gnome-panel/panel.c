@@ -642,9 +642,10 @@ make_popup_panel_menu (void)
 	} else
 		basep = BASEP_WIDGET (current_panel->panel_parent);
 	
-
 	pd = gtk_object_get_user_data (GTK_OBJECT (basep));
 	menu = panel_menu_get (pd);
+	gtk_object_set_data (GTK_OBJECT (menu), "menu_panel",
+			     basep->panel);
 	pd->menu_age = 0;
 	return menu;
 }
