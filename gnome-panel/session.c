@@ -638,11 +638,25 @@ panel_quit(void)
 static void
 load_default_applets(void)
 {
+	char *def_launchers[] =
+	      { "apps/gnome-help.desktop",
+		"apps/System/gnomecc.desktop",
+		"apps/Applications/Netscape.desktop",
+		NULL };
+	int i;
 	load_menu_applet(NULL,0, panels->data, 0);
-#if 0
+
+	for(i=0;def_launchers[i]!=NULL;i++) {
+		char *p = gnome_datadir_file (def_launchers[i]);
+		int center = gdk_screen_width()/2;
+		if(p) {
+			load_launcher_applet(p,panels->data,center+i);
+			g_free(p);
+		}
+	}
+
 	load_extern_applet("gen_util_clock",NULL,
 			   panels->data,INT_MAX/2/*right flush*/);
-#endif
 	/*we laoded default applets, so we didn't find the config or
 	  something else was wrong, so do complete save when next syncing*/
 	need_complete_save = TRUE;
