@@ -158,12 +158,12 @@ void		applet_widget_construct(AppletWidget* applet, const char *goad_id);
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
-						 char *text);
+						 const char *text);
 
 /*set tooltip on a specific widget inside the applet*/
 void		applet_widget_set_widget_tooltip(AppletWidget *applet,
 						 GtkWidget *widget,
-						 char *text);
+						 const char *text);
 
 /* add a widget to the plug and register the applet, this has to
    be done after all the children had been added so that the applet-lib
@@ -196,36 +196,36 @@ void		applet_widget_remove		(AppletWidget *applet);
 */
 /*add a callback onto the applet's right click menu*/
 void		applet_widget_register_callback	(AppletWidget *applet,
-						 char *name,
-						 char *menutext,
+						 const char *name,
+						 const char *menutext,
 						 AppletCallbackFunc func,
 						 gpointer data);
 void		applet_widget_register_stock_callback	(AppletWidget *applet,
-							 char *name,
-							 char *stock_type,
-							 char *menutext,
+							 const char *name,
+							 const char *stock_type,
+							 const char *menutext,
 							 AppletCallbackFunc func,
 							 gpointer data);
 
 /*remove a menuitem*/
 void		applet_widget_unregister_callback (AppletWidget *applet,
-						   char *name);
+						   const char *name);
 
 /*add a submenu*/
 void		applet_widget_register_callback_dir (AppletWidget *applet,
-						     char *name,
-						     char *menutext);
+						     const char *name,
+						     const char *menutext);
 void		applet_widget_register_stock_callback_dir (AppletWidget *applet,
-							   char *name,
-							   char *stock_type,
-							   char *menutext);
+							   const char *name,
+							   const char *stock_type,
+							   const char *menutext);
 /*remove a submenu*/
 void		applet_widget_unregister_callback_dir (AppletWidget *applet,
-						       char *name);
+						       const char *name);
 
 /*enable/disable a menu entry*/
 void		applet_widget_callback_set_sensitive	(AppletWidget *applet,
-							 char *name,
+							 const char *name,
 							 int sensitive);
 
 /*get thenumber of applets*/

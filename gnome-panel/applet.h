@@ -64,13 +64,13 @@ void panel_clean_applet(AppletInfo *info);
 /*applet menu stuff*/
 void create_applet_menu(AppletInfo *info);
 void applet_add_callback(AppletInfo *info,
-			 char *callback_name,
-			 char *stock_item,
-			 char *menuitem_text);
+			 const char *callback_name,
+			 const char *stock_item,
+			 const char *menuitem_text);
 void applet_remove_callback(AppletInfo *info,
-			    char *callback_name);
+			    const char *callback_name);
 void applet_callback_set_sensitive(AppletInfo *info,
-				   char *callback_name,
+				   const char *callback_name,
 				   int sensitive);
 void show_applet_menu(AppletInfo *info, GdkEventButton *event);
 

@@ -138,7 +138,7 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 }
 
 static AppletUserMenu *
-applet_get_callback(GList *user_menu, char *name)
+applet_get_callback(GList *user_menu, const char *name)
 {
 	GList *list;
 	for(list=user_menu;list!=NULL;list=g_list_next(list)) {
@@ -151,9 +151,9 @@ applet_get_callback(GList *user_menu, char *name)
 
 void
 applet_add_callback(AppletInfo *info,
-		    char *callback_name,
-		    char *stock_item,
-		    char *menuitem_text)
+		    const char *callback_name,
+		    const char *stock_item,
+		    const char *menuitem_text)
 {
 	AppletUserMenu *menu;
 
@@ -193,7 +193,7 @@ applet_add_callback(AppletInfo *info,
 }
 
 void
-applet_remove_callback(AppletInfo *info, char *callback_name)
+applet_remove_callback(AppletInfo *info, const char *callback_name)
 {
 	AppletUserMenu *menu;
 
@@ -226,7 +226,7 @@ applet_remove_callback(AppletInfo *info, char *callback_name)
 }
 
 void
-applet_callback_set_sensitive(AppletInfo *info, char *callback_name, int sensitive)
+applet_callback_set_sensitive(AppletInfo *info, const char *callback_name, int sensitive)
 {
 	AppletUserMenu *menu;
 

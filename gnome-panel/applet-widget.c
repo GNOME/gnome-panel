@@ -527,8 +527,8 @@ gnome_panel_applet_register_callback(GtkWidget *applet,
 
 void
 applet_widget_register_callback(AppletWidget *applet,
-				char *name,
-				char *menutext,
+				const char *name,
+				const char *menutext,
 				AppletCallbackFunc func,
 				gpointer data)
 {
@@ -544,9 +544,9 @@ applet_widget_register_callback(AppletWidget *applet,
 
 void
 applet_widget_register_stock_callback(AppletWidget *applet,
-				      char *name,
-				      char *stock_type,
-				      char *menutext,
+				      const char *name,
+				      const char *stock_type,
+				      const char *menutext,
 				      AppletCallbackFunc func,
 				      gpointer data)
 {
@@ -563,7 +563,7 @@ applet_widget_register_stock_callback(AppletWidget *applet,
 
 void
 applet_widget_unregister_callback(AppletWidget *applet,
-				  char *name)
+				  const char *name)
 {
 	GSList *ltmp;
 	CallbackInfo *cbi = NULL;
@@ -594,9 +594,9 @@ applet_widget_unregister_callback(AppletWidget *applet,
 
 static void
 gnome_panel_applet_register_callback_dir(GtkWidget *applet,
-					 char *name,
-					 char *stock_item,
-					 char *menutext)
+					 const char *name,
+					 const char *stock_item,
+					 const char *menutext)
 {
 	char *n;
 	CORBA_Environment ev;
@@ -620,8 +620,8 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
 
 void
 applet_widget_register_callback_dir(AppletWidget *applet,
-				    char *name,
-				    char *menutext)
+				    const char *name,
+				    const char *menutext)
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -633,9 +633,9 @@ applet_widget_register_callback_dir(AppletWidget *applet,
 }
 void
 applet_widget_register_stock_callback_dir(AppletWidget *applet,
-					  char *name,
-					  char *stock_type,
-					  char *menutext)
+					  const char *name,
+					  const char *stock_type,
+					  const char *menutext)
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -648,7 +648,7 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 }
 
 void
-applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
+applet_widget_unregister_callback_dir(AppletWidget *applet, const char *name)
 {
 	CORBA_Environment ev;
 	char *n;
@@ -673,7 +673,7 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 
 void
 applet_widget_callback_set_sensitive(AppletWidget *applet,
-				     char *name,
+				     const char *name,
 				     int sensitive)
 {
 	CORBA_Environment ev;
@@ -906,7 +906,7 @@ applet_widget_bind_events(AppletWidget *applet, GtkWidget *widget)
 void
 applet_widget_set_widget_tooltip(AppletWidget *applet,
 				 GtkWidget *widget,
-				 char *text)
+				 const char *text)
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
@@ -920,7 +920,7 @@ applet_widget_set_widget_tooltip(AppletWidget *applet,
 }
 
 void
-applet_widget_set_tooltip(AppletWidget *applet, char *text)
+applet_widget_set_tooltip(AppletWidget *applet, const char *text)
 {
 	CORBA_Environment ev;
 	g_return_if_fail(applet != NULL);
