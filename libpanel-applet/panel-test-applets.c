@@ -18,11 +18,10 @@
 
 void on_ok_button_clicked (GtkButton *button, gpointer dummy);
 
-static GtkWidget *applet_options = NULL;
+static GtkWidget *applet_combo = NULL;
 static GtkWidget *prefs_dir_entry = NULL;
-static GtkWidget *orient_options = NULL;
-static GtkWidget *size_options = NULL;
-static GPtrArray *applet_iids = NULL;
+static GtkWidget *orient_combo = NULL;
+static GtkWidget *size_combo = NULL;
 
 static char *cli_iid = NULL;
 static char *cli_prefs_dir = NULL;
@@ -38,43 +37,81 @@ static const struct poptOption options [] = {
 	{NULL, '\0', 0, NULL, 0}
 };
 
-static char *sizes [] = {
-	"xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large"
+enum {
+	COLUMN_TEXT,
+	COLUMN_ITEM,
+	NUMBER_COLUMNS
 };
 
-static char *orients [] = {
-	"top", "bottom", "left", "right" 
+typedef struct {
+	const char *name;
+	const char *value;
+} ComboItem;
+
+static ComboItem size_items [] = {
+	{ N_("Top"),    "top"    },
+	{ N_("Bottom"), "bottom" },
+	{ N_("Left"),   "left"   },
+	{ N_("Right"),  "right"  }
 };
+
+
+static ComboItem orient_items [] = {
+	{ N_("XX Small"), "xx-small" },
+	{ N_("X Small"),  "x-small"  },
+	{ N_("Small"),    "small"    },
+	{ N_("Medium"),   "medium"   },
+	{ N_("Large"),    "large"    },
+	{ N_("X Large"),  "x-large"  },
+	{ N_("XX Large"), "xx-large" }
+};
+
+static char *
+get_combo_value (GtkWidget *combo_box)
+{
+	GtkTreeIter  iter;
+	GtkTreeModel *model;
+	char         *value;
+
+	if (!gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
+		return NULL;
+
+	model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+	gtk_tree_model_get (model, &iter, COLUMN_ITEM, &value, -1);
+
+	return value;
+}
 
 static char *
 construct_moniker (void)
 {
-	const char *iid;
 	const char *prefs_key;
+	char       *iid;
 	char       *size;
 	char       *orient;
-	int         idx;
+	char       *ret_value;
 
-	idx = gtk_option_menu_get_history (GTK_OPTION_MENU (applet_options));
-	iid = g_ptr_array_index (applet_iids, idx);
+	iid = get_combo_value (applet_combo);
 	g_assert (iid != NULL);
+	size = get_combo_value (size_combo);
+	g_assert (size != NULL);
+	orient = get_combo_value (orient_combo);
+	g_assert (orient != NULL);
 
 	prefs_key = gtk_entry_get_text (GTK_ENTRY (prefs_dir_entry));
 
-	idx = gtk_option_menu_get_history (GTK_OPTION_MENU (size_options));
-	g_assert (idx > -1 && idx < G_N_ELEMENTS (sizes));
-	size = sizes [idx];
+	ret_value= g_strdup_printf ("%s!prefs_key=%s;size=%s;orient=%s",
+				    iid, prefs_key, size, orient);
+	g_free (iid);
+	g_free (size);
+	g_free (orient);
 
-	idx = gtk_option_menu_get_history (GTK_OPTION_MENU (orient_options));
-	g_assert (idx > -1 && idx < G_N_ELEMENTS (orients));
-	orient = orients [idx];
-
-	return g_strdup_printf ("%s!prefs_key=%s;size=%s;orient=%s",
-				iid, prefs_key, size, orient);
+	return ret_value;
 }
 
 static void
-load_applet_into_window (const char *moniker)
+load_applet_into_window (const char *moniker,
+			 const char *title)
 {
 	GtkWidget *applet_window;
 	GtkWidget *applet;
@@ -89,6 +126,7 @@ load_applet_into_window (const char *moniker)
 
 	gtk_container_add (GTK_CONTAINER (applet_window), applet);
 
+	gtk_window_set_title (GTK_WINDOW (applet_window), title);
 	gtk_widget_show (applet_window);
 }
 
@@ -120,7 +158,7 @@ load_applet_from_command_line (void)
 	
 	g_print ("Loading %s\n", str->str);
 
-	load_applet_into_window (str->str);
+	load_applet_into_window (str->str, cli_iid);
 
 	g_string_free (str, TRUE);
 }
@@ -130,21 +168,61 @@ on_ok_button_clicked (GtkButton *button,
 		      gpointer   dummy)
 {
 	char *moniker;
+	char *title;
 
 	moniker = construct_moniker ();
-	load_applet_into_window (moniker);
+	title = get_combo_value (applet_combo);
+	load_applet_into_window (moniker, title);
 	g_free (moniker);
+	g_free (title);
+}
+
+static void
+setup_combo (GtkWidget *combo_box,
+	     ComboItem *items,
+	     int        nb_items,
+	     gboolean   dynamic)
+{
+	GtkListStore          *model;
+	GtkTreeIter            iter;
+	GtkCellRenderer       *renderer;
+	int                    i;
+
+	model = gtk_list_store_new (NUMBER_COLUMNS,
+				    G_TYPE_STRING,
+				    G_TYPE_STRING);
+
+	gtk_combo_box_set_model (GTK_COMBO_BOX (combo_box),
+				 GTK_TREE_MODEL (model));
+
+
+	for (i = 0; i < nb_items; i++) {
+		gtk_list_store_append (model, &iter);
+		gtk_list_store_set (model, &iter,
+				    COLUMN_TEXT, dynamic ? g_strdup (items [i].name) : _(items [i].name),
+				    COLUMN_ITEM, dynamic ? g_strdup (items [i].value) : items [i].value,
+				    -1);
+	}
+
+	renderer = gtk_cell_renderer_text_new ();
+	gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo_box),
+				    renderer, TRUE);
+	gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo_box),
+					renderer, "text", COLUMN_TEXT, NULL);
+
+	gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), 0);
 }
 
 static void
 setup_options (void)
 {
 	Bonobo_ServerInfoList *applets;
-	GtkWidget             *menu;
 	CORBA_Environment      env;
 	int                    i;
 	char                  *prefs_dir;
 	char                  *unique_key;
+	ComboItem             *applet_items;
+	int                    applet_nb;
 
 	CORBA_exception_init (&env);
 
@@ -157,26 +235,25 @@ setup_options (void)
 
 	CORBA_exception_free (&env);
 
-	menu = gtk_menu_new ();
-	applet_iids = g_ptr_array_sized_new (applets->_length);
+	applet_nb = applets->_length;
+	applet_items = g_new0 (ComboItem, applet_nb);
 
-	for (i = 0; i < applets->_length; i++) {
+	for (i = 0; i < applet_nb; i++) {
 		Bonobo_ServerInfo *info;
-		GtkWidget         *menuitem;
 
 		info = &applets->_buffer [i];
 
-		g_ptr_array_add (applet_iids, g_strdup (info->iid));
-
-		menuitem = gtk_menu_item_new_with_label (info->iid);
-		gtk_widget_show (menuitem);
-
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
+		applet_items[i].name = info->iid;
+		applet_items[i].value = info->iid;
 	}
 
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (applet_options), menu);
-
+	setup_combo (applet_combo, applet_items, applet_nb, TRUE);
+	g_free (applet_items);
 	CORBA_free (applets);
+
+	setup_combo (size_combo, size_items, G_N_ELEMENTS (size_items), FALSE);
+	setup_combo (orient_combo, orient_items,
+		     G_N_ELEMENTS (orient_items), FALSE);
 
 	unique_key = gconf_unique_key ();
 	prefs_dir = g_strdup_printf ("/tmp/%s", unique_key);
@@ -213,10 +290,10 @@ main (int argc, char **argv)
 	glade_xml_signal_autoconnect (gui);
 
 	win             = glade_xml_get_widget (gui, "toplevel");
-	applet_options  = glade_xml_get_widget (gui, "applet-options");
+	applet_combo    = glade_xml_get_widget (gui, "applet-combo");
 	prefs_dir_entry = glade_xml_get_widget (gui, "prefs-dir-entry");
-	orient_options  = glade_xml_get_widget (gui, "orient-options");
-	size_options    = glade_xml_get_widget (gui, "size-options");
+	orient_combo    = glade_xml_get_widget (gui, "orient-combo");
+	size_combo      = glade_xml_get_widget (gui, "size-combo");
 
 	setup_options ();
 

@@ -1,3 +1,19 @@
+2004-11-01  Vincent Untz  <vincent@vuntz.net>
+
+	Port panel-test-applets to GtkComboBox.
+
+	* panel-test-applets.c: (get_combo_value): new
+	(construct_moniker): use get_combo_value to get the values of the
+	combo boxes
+	(load_applet_into_window): specify a title for the window
+	(load_applet_from_command_line): add title argument
+	(on_ok_button_clicked): ditto
+	(setup_combo): new
+	(setup_options): use setup_combo to setup the combo boxes
+	(main): updated
+	* panel-test-applets.glade: use GtkComboBox instead of GtkOptionMenu,
+	add a title to the window, add mnemonics
+
 2004-10-30  Vincent Untz  <vincent@vuntz.net>
 
 	* Makefile.am: install glade file in $(datadir)/gnome/panel/glade
