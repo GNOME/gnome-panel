@@ -145,10 +145,10 @@ static PortableServer_ServantBase__epv panel_base_epv = {
 
 static POA_GNOME_Panel__epv panel_epv = {
   NULL, /* private data */
-  (gpointer)&s_panel_add_applet,
-  (gpointer)&s_panel_add_applet_full,
-  (gpointer)&s_panel_quit,
-  (gpointer)&s_panel_get_in_drag
+  &s_panel_add_applet,
+  &s_panel_add_applet_full,
+  &s_panel_quit,
+  &s_panel_get_in_drag
 };
 static POA_GNOME_Panel__vepv panel_vepv = { &panel_base_epv, &panel_epv };
 static POA_GNOME_Panel panel_servant = { NULL, &panel_vepv };
@@ -162,20 +162,20 @@ static PortableServer_ServantBase__epv panelspot_base_epv = {
 
 static POA_GNOME_PanelSpot__epv panelspot_epv = {
   NULL, /* private data */
-  (gpointer)&s_panelspot_get_tooltip,
-  (gpointer)&s_panelspot_set_tooltip,
-  (gpointer)&s_panelspot_get_parent_panel,
-  (gpointer)&s_panelspot_get_spot_pos,
-  (gpointer)&s_panelspot_get_parent_orient,
-  (gpointer)&s_panelspot_register_us,
-  (gpointer)&s_panelspot_unregister_us,
-  (gpointer)&s_panelspot_abort_load,
-  (gpointer)&s_panelspot_show_menu,
-  (gpointer)&s_panelspot_drag_start,
-  (gpointer)&s_panelspot_drag_stop,
-  (gpointer)&s_panelspot_add_callback,
-  (gpointer)&s_panelspot_remove_callback,
-  (gpointer)&s_panelspot_sync_config
+  &s_panelspot_get_tooltip,
+  &s_panelspot_set_tooltip,
+  &s_panelspot_get_parent_panel,
+  &s_panelspot_get_spot_pos,
+  &s_panelspot_get_parent_orient,
+  &s_panelspot_register_us,
+  &s_panelspot_unregister_us,
+  &s_panelspot_abort_load,
+  &s_panelspot_show_menu,
+  &s_panelspot_drag_start,
+  &s_panelspot_drag_stop,
+  &s_panelspot_add_callback,
+  &s_panelspot_remove_callback,
+  &s_panelspot_sync_config
 };
 static POA_GNOME_PanelSpot__vepv panelspot_vepv = { &panelspot_base_epv, &panelspot_epv };
 

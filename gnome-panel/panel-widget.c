@@ -111,8 +111,8 @@ panel_widget_get_type ()
 			sizeof (PanelWidgetClass),
 			(GtkClassInitFunc) panel_widget_class_init,
 			(GtkObjectInitFunc) panel_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL, NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		panel_widget_type =
@@ -132,7 +132,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int panel_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
+static guint panel_widget_signals[LAST_SIGNAL] = {0,0,0,0,0};
 static GtkFixedClass *parent_class = NULL;
 
 

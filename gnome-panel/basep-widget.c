@@ -37,7 +37,7 @@ extern GlobalConfig global_config;
  ************************/
 
 guint
-basep_widget_get_type ()
+basep_widget_get_type (void)
 {
 	static guint basep_widget_type = 0;
 
@@ -48,8 +48,9 @@ basep_widget_get_type ()
 			sizeof (BasePWidgetClass),
 			(GtkClassInitFunc) basep_widget_class_init,
 			(GtkObjectInitFunc) basep_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
+			(GtkClassInitFunc)NULL
 		};
 
 		basep_widget_type = gtk_type_unique (gtk_window_get_type (),

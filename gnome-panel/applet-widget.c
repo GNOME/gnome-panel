@@ -81,12 +81,12 @@ server_applet__get_goad_id(CustomAppletServant *servant,
 
 static POA_GNOME_Applet__epv applet_epv = {
   NULL,
-  (gpointer)&server_applet_change_orient,
-  (gpointer)&server_applet_do_callback,
-  (gpointer)&server_applet_session_save,
-  (gpointer)&server_applet_back_change,
-  (gpointer)&server_applet_set_tooltips_state,
-  (gpointer)&server_applet__get_goad_id
+  &server_applet_change_orient,
+  &server_applet_do_callback,
+  &server_applet_session_save,
+  &server_applet_back_change,
+  &server_applet_set_tooltips_state,
+  &server_applet__get_goad_id
 };
 
 static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
@@ -139,8 +139,9 @@ applet_widget_get_type ()
 			sizeof (AppletWidgetClass),
 			(GtkClassInitFunc) applet_widget_class_init,
 			(GtkObjectInitFunc) wapplet_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		applet_widget_type = gtk_type_unique (gtk_plug_get_type (), &applet_widget_info);
@@ -157,7 +158,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int applet_widget_signals[LAST_SIGNAL] = {0,0,0,0};
+static guint applet_widget_signals[LAST_SIGNAL] = {0,0,0,0};
 
 static void
 applet_widget_marshal_signal_orient (GtkObject * object,
@@ -975,6 +976,7 @@ server_applet_back_change(CustomAppletServant *servant,
     pptr = backing->_u.pmap;
     break;
   default:
+    break;
   }
 
   gtk_signal_emit(GTK_OBJECT(servant->appwidget),
@@ -1096,8 +1098,8 @@ server_applet_factory_create_object(AppletFactory *servant,
 
 static POA_GNOME_GenericFactory__epv applet_factory_epv = {
   NULL,
-  (gpointer)&server_applet_factory_supports,
-  (gpointer)&server_applet_factory_create_object,  
+  &server_applet_factory_supports,
+  &server_applet_factory_create_object,  
 };
 
 static POA_GNOME_GenericFactory__vepv applet_factory_vepv = {

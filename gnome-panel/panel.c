@@ -891,7 +891,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		int pos = panel_widget_get_cursorloc(panel);
 
 		files =
-		  gnome_uri_list_extract_filenames(selection_data->data);
+		  gnome_uri_list_extract_filenames((gchar *)selection_data->data);
 
 		for(ltmp = files; ltmp; ltmp = g_list_next(ltmp)) {
 		  const char *mimetype, *p;
@@ -954,9 +954,9 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		};
 		char *p;
 		
-         	exec[1] = selection_data->data;
+         	exec[1] = (gchar *)selection_data->data;
 		p = g_strdup_printf("Open URL: %s",selection_data->data);
-		load_launcher_applet_from_info(selection_data->data,p,exec,2,
+		load_launcher_applet_from_info((gchar *)selection_data->data,p,exec,2,
 					       "netscape.png",panel,pos);
 		g_free(p);
 		break;

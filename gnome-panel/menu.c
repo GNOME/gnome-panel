@@ -1080,7 +1080,7 @@ drag_data_get_menu_cb (GtkWidget *widget, GdkDragContext     *context,
 {
 	gchar *uri_list = g_strconcat ("file:", item_loc, "\r\n", NULL);
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, uri_list,
+				selection_data->target, 8, (guchar *)uri_list,
 				strlen(uri_list));
 	g_free(uri_list);
 }
@@ -1091,7 +1091,7 @@ drag_data_get_string_cb (GtkWidget *widget, GdkDragContext     *context,
 		      guint time, char *string)
 {
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, string,
+				selection_data->target, 8, (guchar *)string,
 				strlen(string));
 }
 

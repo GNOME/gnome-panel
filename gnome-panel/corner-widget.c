@@ -51,8 +51,8 @@ corner_widget_get_type ()
 			sizeof (CornerWidgetClass),
 			(GtkClassInitFunc) corner_widget_class_init,
 			(GtkObjectInitFunc) corner_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL, NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		corner_widget_type = gtk_type_unique (basep_widget_get_type (),
@@ -68,7 +68,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int corner_widget_signals[LAST_SIGNAL] = {0,0};
+static guint corner_widget_signals[LAST_SIGNAL] = {0,0};
 
 /*int is used for enums anyhow*/
 typedef void (*IntSignal) (GtkObject * object,
@@ -359,9 +359,11 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(corner->state != CORNER_SHOWN) {
 		PanelOrientType hide_orient;
+		gint16 w, h;
 		corner_widget_get_hidepos(corner, &hide_orient,
-					  &allocation->width,
-					  &allocation->height);
+					  &w, &h);
+		allocation->width = w;
+		allocation->height = h;
 		basep_widget_get_position(basep, hide_orient,
 					  &challoc.x, &challoc.y,
 					  allocation->width,

@@ -58,8 +58,8 @@ drawer_widget_get_type ()
 			sizeof (DrawerWidgetClass),
 			(GtkClassInitFunc) drawer_widget_class_init,
 			(GtkObjectInitFunc) drawer_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL, NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		drawer_widget_type = gtk_type_unique (basep_widget_get_type (),
@@ -74,7 +74,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int drawer_widget_signals[LAST_SIGNAL] = {0};
+static guint drawer_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 marshal_signal_state (GtkObject * object,

@@ -67,8 +67,9 @@ button_widget_get_type ()
 			sizeof (ButtonWidgetClass),
 			(GtkClassInitFunc) button_widget_class_init,
 			(GtkObjectInitFunc) button_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL,
+			NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		button_widget_type = gtk_type_unique (GTK_TYPE_WIDGET,
@@ -85,7 +86,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int button_widget_signals[LAST_SIGNAL] = {0};
+static guint button_widget_signals[LAST_SIGNAL] = {0};
 
 static void
 marshal_signal_void (GtkObject * object,

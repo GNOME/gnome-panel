@@ -51,8 +51,8 @@ snapped_widget_get_type ()
 			sizeof (SnappedWidgetClass),
 			(GtkClassInitFunc) snapped_widget_class_init,
 			(GtkObjectInitFunc) snapped_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+			NULL, NULL,
+			(GtkClassInitFunc) NULL
 		};
 
 		snapped_widget_type = gtk_type_unique (basep_widget_get_type (),
@@ -68,7 +68,7 @@ enum {
 	LAST_SIGNAL
 };
 
-static int snapped_widget_signals[LAST_SIGNAL] = {0,0};
+static guint snapped_widget_signals[LAST_SIGNAL] = {0,0};
 
 /*int is used for anums anyhow*/
 typedef void (*IntSignal) (GtkObject * object,
@@ -152,7 +152,7 @@ snapped_widget_class_init (SnappedWidgetClass *class)
 			       1,
 			       GTK_TYPE_ENUM);
 
-	gtk_object_class_add_signals(object_class,snapped_widget_signals,
+	gtk_object_class_add_signals(object_class, snapped_widget_signals,
 				     LAST_SIGNAL);
 
 	class->pos_change = NULL;
@@ -330,9 +330,12 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 	if(snapped->state != SNAPPED_SHOWN) {
 		PanelOrientType hide_orient;
+		gint16 w, h;
+
 		snapped_widget_get_hidepos(snapped, &hide_orient,
-					   &allocation->width,
-					   &allocation->height);
+					   &w, &h);
+		allocation->width = w;
+		allocation->height = h;
 		basep_widget_get_position(basep, hide_orient,
 					  &challoc.x, &challoc.y,
 					  allocation->width,

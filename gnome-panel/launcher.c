@@ -100,7 +100,7 @@ drag_data_get_cb (GtkWidget *widget, GdkDragContext     *context,
 	uri_list = g_strconcat ("file:", launcher->dentry->location, "\r\n", NULL);
 
 	gtk_selection_data_set (selection_data,
-				selection_data->target, 8, uri_list,
+				selection_data->target, 8, (guchar *)uri_list,
 				strlen(uri_list));
 	g_free(uri_list);
 }
