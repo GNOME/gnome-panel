@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.0.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-19 16:01+0100\n"
-"PO-Revision-Date: 2004-03-13 10:36+0200\n"
+"POT-Creation-Date: 2004-08-21 10:44+0300\n"
+"PO-Revision-Date: 2004-08-21 10:45+0300\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "На_строїти дату й час..."
+msgstr "_Корегувати дату й час..."
+
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -35,9 +35,8 @@ msgstr "Копіювати _час"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:1
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
-#, fuzzy
 msgid "_About"
-msgstr "_Про програму..."
+msgstr "_Про програму"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -56,9 +55,8 @@ msgstr "_Довідка"
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences"
-msgstr "Н_астройка..."
+msgstr "П_араметри"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: applets/clock/clock.c:2544
@@ -133,9 +131,8 @@ msgstr "%A %e %B"
 #. Translators: If the event did not start on the current day
 #. we will display the start date in the most abbreviated way possible.
 #: applets/clock/clock.c:615
-#, fuzzy
 msgid "%b %d"
-msgstr "%a %e %b"
+msgstr "%d %b"
 
 #: applets/clock/clock.c:911
 msgid "Tasks"
@@ -250,55 +247,59 @@ msgstr ""
 msgid "The Clock displays the current time and date"
 msgstr "Годинник показує поточну дату і час"
 
-#. Translators: the only valid values for this are "12" and "24"
+#: applets/clock/clock.schemas.in.h:1
+msgid ""
+"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
+msgstr ""
+"<!-- Translators: the only valid values for this are \"12\" and \"24\" --> 24"
+
 #: applets/clock/clock.schemas.in.h:2
-msgid "24"
-msgstr "24"
+msgid ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
+msgstr ""
+"<!-- Translators: the only valid values for this are \"12-hour\" and \"24-"
+"hour\" --> 24-hour"
 
-#. Translators: the only valid values for this are "12-hour" and "24-hour"
-#: applets/clock/clock.schemas.in.h:4
-msgid "24-hour"
-msgstr "24-hour"
-
-#: applets/clock/clock.schemas.in.h:5
+#: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
 msgstr "Власний формат годинника"
 
-#: applets/clock/clock.schemas.in.h:6
+#: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Формат відображення часу"
 
-#: applets/clock/clock.schemas.in.h:7
+#: applets/clock/clock.schemas.in.h:5
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Чи показувати дату в годиннику, разом з часом."
 
-#: applets/clock/clock.schemas.in.h:8
+#: applets/clock/clock.schemas.in.h:6
 msgid "If true, display seconds in time."
 msgstr "Чи показувати секунди в часі."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:7
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Чи показувати універсальний (UCT) час."
+msgstr "Чи показувати всесвітній (UCT) час."
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 "Чи показувати дату в підказці, коли вказівник миші знаходиться над "
 "годинником."
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in clock"
 msgstr "Показувати дату в годиннику"
 
-#: applets/clock/clock.schemas.in.h:12
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show date in tooltip"
 msgstr "Показувати дату в підказці"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Показувати секунди"
 
-#: applets/clock/clock.schemas.in.h:14
+#: applets/clock/clock.schemas.in.h:12
 msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
@@ -306,7 +307,7 @@ msgstr ""
 "Використання цього ключа небажане у GNOME 2.6, використовуйте ключ 'format'. "
 "Ця схема зберігається для сумісності з попередніми версіями."
 
-#: applets/clock/clock.schemas.in.h:15
+#: applets/clock/clock.schemas.in.h:13
 msgid ""
 "This key specifies the format used by the clock applet when the format key "
 "is set to \"custom\". You can use conversion specifiers understood by "
@@ -317,8 +318,7 @@ msgstr ""
 "використовувати специфікатори перетворення, що підтримуються функцією "
 "strftime()."
 
-#: applets/clock/clock.schemas.in.h:16
-#, fuzzy
+#: applets/clock/clock.schemas.in.h:14
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
@@ -335,27 +335,26 @@ msgstr ""
 "відображатиме час у стилі Інтернет. Час у стилі Інтернет поділяє день на "
 "1000 \".beats\". У цій системі немає часових поясів, час однаковий в усьому "
 "світі. Якщо встановлено \"unix\", годинник відображає час у секундах з "
-"початку епохи, тобто 01.01.1970. Якщо встановлено \"custom\", годинник "
+"початку епохи, тобто з 01.01.1970. Якщо встановлено \"custom\", годинник "
 "відображає час відповідно до формату вказаному у ключі custom_format."
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "Цей ключ визначає програму, що запускатиметься для настройки часу."
+msgstr "Цей ключ визначає програму, що запускатиметься для корегування часу."
 
-#: applets/clock/clock.schemas.in.h:18
+#: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
-msgstr "Засіб настройки часу"
+msgstr "Засіб корегування часу"
 
-#: applets/clock/clock.schemas.in.h:19
-#, fuzzy
+#: applets/clock/clock.schemas.in.h:17
 msgid "Use Internet time"
 msgstr "Показувати час у стилі Інтернет"
 
-#: applets/clock/clock.schemas.in.h:20
+#: applets/clock/clock.schemas.in.h:18
 msgid "Use UNIX time"
 msgstr "Показувати час у стилі UNIX"
 
-#: applets/clock/clock.schemas.in.h:21
+#: applets/clock/clock.schemas.in.h:19
 msgid "Use UTC"
 msgstr "Використовувати UTC"
 
@@ -496,7 +495,7 @@ msgstr "_Команда, що запускатиметься на клацанн
 
 #: applets/fish/fish.glade.h:7
 msgid "Fish Preferences"
-msgstr "Настройки \"рибки\""
+msgstr "Параметри \"рибки\""
 
 #: applets/fish/fish.glade.h:8
 msgid "_File:"
@@ -589,7 +588,7 @@ msgstr "Цей ключ визначає кількість секунд пок�
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:1
 msgid "Area where notification icons appear"
-msgstr "Зона, де з'являтиметься піктограма сповіщення"
+msgstr "Зона, де з'являтиметься значок сповіщення"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
 msgid "Notification Area"
@@ -841,7 +840,7 @@ msgstr "стовпчик(ів)"
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
-"Помилка завантаження значення кількості рядків у аплеті перемикання робочих "
+"Помилка завантаження значення num_rows у аплеті перемикання робочих "
 "областей: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:369
@@ -901,7 +900,7 @@ msgstr "Властивості перемикача робочих област�
 
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "Workspace na_mes:"
-msgstr "Назви робочих областей:"
+msgstr "_Назви робочих областей:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
@@ -1052,7 +1051,7 @@ msgid ""
 "Please free up some resources and try again."
 msgstr ""
 "Недостатньо пам'яті для збереження знімку.\n"
-"Будь ласка, звільніть місце та спробуйте ще."
+"Будь ласка, звільніть місце та спробуйте ще раз."
 
 #: gnome-panel/gnome-panel-screenshot.c:212
 #, c-format
@@ -1127,9 +1126,9 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Не вдається зробити знімок поточної стільниці."
 
 #: gnome-panel/gnome-panel-screenshot.c:1265
-#, fuzzy, c-format
+#, c-format
 msgid "Save screenshot to _web page (save in %s)"
-msgstr "Зберегти знімок у _web сторінку (зберегти у ~/public__html)"
+msgstr "Зберегти знімок на _веб-сторінці (зберегти у %s)"
 
 #: gnome-panel/gnome-panel-screenshot.c:1321
 msgid "Grab a window instead of the entire screen"
@@ -1161,7 +1160,7 @@ msgstr "З_берегти знімок у файлі:"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr "Зберегти знімок у _web сторінку (зберегти у ~/public__html)"
+msgstr "Зберегти знімок на _веб-сторінці (зберегти у ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1182,7 +1181,7 @@ msgstr "Не вдається зберегти кнопку запуску на 
 #: gnome-panel/launcher.c:169 gnome-panel/launcher.c:217
 #: gnome-panel/launcher.c:262
 msgid "Cannot launch icon"
-msgstr "Не вдається запустити піктограму"
+msgstr "Не вдається запустити значок"
 
 #: gnome-panel/launcher.c:170
 msgid "This launch icon does not specify a url to show."
@@ -1252,7 +1251,7 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
-"Ви не можете створити тут кнопку запуску тому, що сюди записувати неможливо"
+"Не можна створювати тут кнопку запуску тому, що запис сюди неможливий"
 
 #: gnome-panel/menu.c:191
 msgid "And many, many others..."
@@ -1267,7 +1266,7 @@ msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
-"Ця програма відповідальна за запуск інших програм та вбудовування маленьких "
+"Ця програма відповідальна за запуск інших програм та вставлення маленьких "
 "аплетів у собі."
 
 #: gnome-panel/menu.c:246 gnome-panel/panel-action-button.c:201
@@ -1358,18 +1357,16 @@ msgid "_Delete This Panel"
 msgstr "В_идалити цю панель"
 
 #: gnome-panel/menu.c:2289
-#, fuzzy
 msgid "_Add to Panel..."
-msgstr "Додати д_о панелі"
+msgstr "Додати д_о панелі..."
 
 #: gnome-panel/menu.c:2334
 msgid "_New Panel"
 msgstr "_Створити панель"
 
 #: gnome-panel/menu.c:2381
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "_Про панель..."
+msgstr "_Про панелі"
 
 #: gnome-panel/menu.c:2395
 msgid "About _GNOME"
@@ -1446,44 +1443,40 @@ msgid "Force a misbehaving application to quit"
 msgstr "Примусово завершити програму, яка поводиться неправильно"
 
 #: gnome-panel/panel-addto.c:103
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Виконати програму"
+msgstr "Користувацька кнопка запуску"
 
 #: gnome-panel/panel-addto.c:104
-#, fuzzy
 msgid "Create a new launcher"
 msgstr "Створити кнопку запуску"
 
 #: gnome-panel/panel-addto.c:114
-#, fuzzy
 msgid "Application Launcher..."
 msgstr "Виконати програму..."
 
 #: gnome-panel/panel-addto.c:115
 msgid "Launch a program that is already in the GNOME menu"
-msgstr ""
+msgstr "Запустити програму, яка вже знаходиться у меню середовища GNOME"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "Панель GNOME"
+msgstr "Головне меню GNOME"
 
 #: gnome-panel/panel-addto.c:136
 msgid "Menu Bar"
-msgstr "Панель меню"
+msgstr "Рядок меню"
 
 #: gnome-panel/panel-addto.c:137
 msgid "A custom menu bar"
-msgstr ""
+msgstr "Користувацький рядок меню"
 
 #: gnome-panel/panel-addto.c:148
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Висувна шухляда для зберігання інших елементів"
 
 #: gnome-panel/panel-addto.c:236
 msgid "(empty)"
-msgstr ""
+msgstr "(порожньо)"
 
 #: gnome-panel/panel-addto.c:352 libpanel-applet/panel-test-applets.c:156
 #, c-format
@@ -1491,23 +1484,22 @@ msgid "query returned exception %s\n"
 msgstr "запит викликав виняткову ситуацію %s\n"
 
 #: gnome-panel/panel-addto.c:766
-#, fuzzy, c-format
+#, c-format
 msgid "Add to %s"
-msgstr "Додати д_о панелі"
+msgstr "Додати до %s"
 
 #: gnome-panel/panel-addto.c:768
-#, fuzzy
 msgid "Add to the panel"
-msgstr "Додати д_о панелі"
+msgstr "Додати до панелі"
 
 #: gnome-panel/panel-addto.c:774
 #, c-format
 msgid "Select an _item to add to %s:"
-msgstr ""
+msgstr "Виберіть _елемент для додавання до %s:"
 
 #: gnome-panel/panel-addto.c:777
 msgid "Select an _item to add to the panel:"
-msgstr ""
+msgstr "Виберіть _елемент для додавання до панелі:"
 
 #: gnome-panel/panel-applet-frame.c:757
 #, c-format
@@ -1795,7 +1787,7 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
-"Якщо встановлено, панель не буде дозволяти вносити зміни у її настройки. "
+"Якщо встановлено, панель не буде дозволяти вносити зміни у її параметри. "
 "Проте індивідуальні аплети можуть потребувати окремого блокування. Щоб зміни "
 "ввійшли у силу необхідно перезапустити панель."
 
@@ -1809,7 +1801,7 @@ msgstr "Комбінація клавіш виклику меню панелі"
 
 #: gnome-panel/panel-global.schemas.in.h:27
 msgid "Take screenshot"
-msgstr "Зробити знімок екрана"
+msgstr "Зробити знімок екрану"
 
 #: gnome-panel/panel-global.schemas.in.h:28
 msgid "Take window screenshot"
@@ -1829,7 +1821,7 @@ msgstr "IID аплету Bonobo"
 
 #: gnome-panel/panel-object.schemas.in.h:3
 msgid "Icon used for object's button"
-msgstr "Піктограма для кнопки об'єкта"
+msgstr "Значок для кнопки об'єкта"
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
@@ -1837,8 +1829,8 @@ msgid ""
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
-"Якщо встановлено, то значення з custom_icon використовується, як визначена "
-"користувачем піктограма для кнопки. Якщо ж цей параметр не встановлено, то "
+"Якщо встановлено, то значення з custom_icon використовується, як визначений "
+"користувачем значок для кнопки. Якщо ж цей параметр не встановлено, то "
 "значення custom_icon ігнорується. Цей параметр має сенс лише тоді, коли тип "
 "об'єкта містить значення \"menu-object\" або \"drawer-object\"."
 
@@ -1902,7 +1894,7 @@ msgid ""
 msgstr ""
 "Ідентифікатор реалізації аплету Bonobo (Bonobo implementation ID) — "
 "наприклад, \"OAFIID:GNOME_ClockApplet\".  Цей параметр має сенс лише тоді, "
-"коли тип об'єкта містить \"bonobo-applet\"."
+"коли типу об'єкта містить \"bonobo-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -1912,7 +1904,7 @@ msgid ""
 msgstr ""
 "Тип дії, що реалізує кнопка. Можливими значеннями є \"lock\", \"logout\", "
 "\"run\", \"search\" і \"screenshot\". Цей параметр має значення лише тоді, "
-"коли тип об'єкта містить \"action-applet\"."
+"коли ключ типу об'єкта (object_type) містить \"action-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid ""
@@ -1920,7 +1912,7 @@ msgid ""
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
 "Ідентифікатор панелі приєднаної до цієї шухляди. Цей параметр має зміст лише "
-"тоді, коли тип об'єкта містить \"drawer-object\"."
+"тоді, коли ключ тип об'єкта (object_type) містить \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
@@ -1932,7 +1924,7 @@ msgid ""
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 "Місцезнаходження файла .desktop, що описує кнопку запуску. Цей параметр має "
-"сенс лише тоді, коли тип об'єкта (object_type) містить \"launcher-object"
+"сенс лише тоді, коли ключ типу об'єкта (object_type) містить \"launcher-object"
 "\"\"\"."
 
 #: gnome-panel/panel-object.schemas.in.h:20
@@ -1941,7 +1933,7 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
-"Місцезнаходження файла зображення, що використовується в якості піктограми "
+"Місцезнаходження файла зображення, що використовується в якості значка "
 "кнопки. Цей параметр має сенс лише тоді, коли тип об'єкта (object_type) "
 "містить \"drawer-object\" або \"menu-object\" і встановлено параметр "
 "use_custom_icon."
@@ -1992,7 +1984,7 @@ msgstr "Панель верхнього рівня, що містить об'є�
 
 #: gnome-panel/panel-object.schemas.in.h:27
 msgid "Use custom icon for object's button"
-msgstr "Використовувати вказану користувачем піктограму до кнопки об'єкта"
+msgstr "Використовувати вказаний користувачем значок до кнопки об'єкта"
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
@@ -2165,9 +2157,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Невідома помилка під час відкривання %s"
 
 #: gnome-panel/panel-recent.c:212
-#, fuzzy
 msgid "Clear the Recent Documents list?"
-msgstr "Останні документи"
+msgstr "Очистити список недавно використаних документів?"
 
 #: gnome-panel/panel-recent.c:213
 msgid ""
@@ -2176,15 +2167,18 @@ msgid ""
 "• All items from the Actions → Recent Documents menu item.\n"
 "• All items from the recent documents list in all applications."
 msgstr ""
+"При очищенні список недавно використаних документів, будуть очищені:\n"
+"\n"
+"• Усі елементи з пункту меню Дії → Недавні документи.\n"
+"• Усі елементи зі списку недавно використаних документів усіх програм."
 
 #: gnome-panel/panel-recent.c:249
 msgid "Recent Documents"
-msgstr "Останні документи"
+msgstr "Недавні документи"
 
 #: gnome-panel/panel-recent.c:275
-#, fuzzy
 msgid "Clear Recent Documents"
-msgstr "Останні документи"
+msgstr "Очистка недавніх документів"
 
 #: gnome-panel/panel-run-dialog.c:289
 #, c-format
@@ -2236,7 +2230,7 @@ msgstr "Поле вводу команди"
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid "Command icon"
-msgstr "Піктограма команди"
+msgstr "Значок команди"
 
 #: gnome-panel/panel-run-dialog.glade.h:6
 msgid "Enter a command string here to run it."
@@ -2264,7 +2258,7 @@ msgstr "Показувати список відомих _програм"
 
 #: gnome-panel/panel-run-dialog.glade.h:13
 msgid "The icon of the command to be run."
-msgstr "Піктограма команди для виконання."
+msgstr "Значок команди для виконання."
 
 #: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:145
 msgid "_Run"
@@ -2293,16 +2287,15 @@ msgstr ""
 #: gnome-panel/panel-stock-icons.c:116
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
-msgstr "Не вдається завантажити внутрішню піктограму панелі \"%s\"\n"
+msgstr "Не вдається завантажити внутрішній значок панелі \"%s\"\n"
 
 #: gnome-panel/panel-stock-icons.c:146
 msgid "_Force quit"
 msgstr "Примусово за_вершити"
 
 #: gnome-panel/panel-stock-icons.c:147
-#, fuzzy
 msgid "C_lear"
-msgstr "Календар"
+msgstr "О_чистити"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
@@ -2412,7 +2405,7 @@ msgstr "Увімкнути кнопки прибирання"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr "Розширювати до займання всієї ширини екрана"
+msgstr "Розширювати до захоплення всієї ширини екрана"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
 msgid "Fit image to panel"
@@ -2423,7 +2416,7 @@ msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
-"Якщо встановлено, то на боках панелі буде розміщено кнопки ховання панелі. "
+"Якщо встановлено, то на боках панелі буде розміщено кнопки приховування панелі. "
 "Цей параметр має сенс лише тоді, коли встановлено параметр enable_buttons."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
@@ -2694,7 +2687,7 @@ msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
-"В багато-екранному режимі, ви можете розміщувати панель на індивідуальний "
+"В багатоекранному режимі, ви можете розміщувати панель на індивідуальний "
 "екран. Даний параметр визначає поточний екран, на якому розміщено панель."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
@@ -2727,7 +2720,7 @@ msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
-"З видаленням панелі буде втрачено усі настройки\n"
+"З видаленням панелі буде втрачено усі параметри\n"
 "цієї панелі. Видалити цю панель?"
 
 #: gnome-panel/panel.c:1254
@@ -2850,98 +2843,3 @@ msgstr "Дуже-дуже великий"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Дуже-дуже малий"
-
-#~ msgid ""
-#~ "The system administrator has disallowed\n"
-#~ "modification of the panel configuration"
-#~ msgstr ""
-#~ "Системний адміністратор заборонив\n"
-#~ "зміну параметрів панелі"
-
-#~ msgid "Error loading glade file %s"
-#~ msgstr "Помилка завантаження файла інтерфейсу glade %s"
-
-#~ msgid "Panel"
-#~ msgstr "Панель"
-
-#~ msgid "Select preferences for all your panels"
-#~ msgstr "Вибрати вподобання для всіх ваших панелей"
-
-#~ msgid "Animation _speed:"
-#~ msgstr "_Швидкість анімації:"
-
-#~ msgid "Close _drawer when launcher is clicked"
-#~ msgstr "Засовувати шу_хляду при натисканні кнопки запуску в ній"
-
-#~ msgid "Drawer and panel _animation"
-#~ msgstr "_Анімація шухляд і панелей"
-
-#~ msgid "Fast"
-#~ msgstr "Швидка"
-
-#~ msgid "Panel Preferences"
-#~ msgstr "Властивості панелі"
-
-#~ msgid "Slow"
-#~ msgstr "Повільна"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Замкнути екран"
-
-#~ msgid "Lock the screen so that you can temporarily leave your computer"
-#~ msgstr "Замкнути екран, щоб ви змогли тимчасово відійти від комп'ютера"
-
-#~ msgid "Log out of GNOME"
-#~ msgstr "Вийти з GNOME"
-
-#~ msgid "Search for Files"
-#~ msgstr "Пошук файлів"
-
-#~ msgid "Screenshot"
-#~ msgstr "Знімок"
-
-#~ msgid "Lock"
-#~ msgstr "Замкнути"
-
-#~ msgid "Lock the screen so you can temporarily leave your computer"
-#~ msgstr "Замкнути екран, щоб ви змогли тимчасово відійти від комп'ютера"
-
-#~ msgid "Search"
-#~ msgstr "Пошук"
-
-#~ msgid "Run"
-#~ msgstr "Виконати"
-
-#~ msgid "Run a command"
-#~ msgstr "Виконати команду"
-
-#~ msgid "Accessories"
-#~ msgstr "Стандартні"
-
-#~ msgid "Amusements"
-#~ msgstr "Розваги"
-
-#~ msgid "Utility"
-#~ msgstr "Утиліти"
-
-#, fuzzy
-#~ msgid "Clear recent document history?"
-#~ msgstr "Останні документи"
-
-#~ msgid "Launcher..."
-#~ msgstr "Кнопка запуску..."
-
-#~ msgid "Launcher from menu"
-#~ msgstr "Кнопка запуску з меню"
-
-#~ msgid "Cannot add to run box"
-#~ msgstr "Не вдається додати до діалогу запуску"
-
-#~ msgid "No 'Exec' or 'URL' field in entry"
-#~ msgstr "В пункті немає поля \"Exec\" чи \"URL\""
-
-#~ msgid "Put into run dialog"
-#~ msgstr "Помістити в діалог запуску"
-
-#~ msgid "Error reading GConf list value '%s': %s"
-#~ msgstr "Помилка зчитування значення списку GConf \"%s\": %s"
