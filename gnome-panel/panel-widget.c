@@ -1763,11 +1763,14 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 					pos = panel_widget_get_moveby(
 						new_panel,0);
 					if(pos<0)
-						pos=0;
-					panel_widget_reparent(panel,
-							      new_panel,
-							      applet,
-							      pos);
+						pos = 0;
+					if(panel_widget_reparent(panel,
+							         new_panel,
+							         applet,
+							         pos)==-1)
+					/*can't find a free pos
+					  so cancel the reparent*/
+						continue;
 					panel_widget_applet_drag_end(
 						panel);
 					panel_widget_applet_drag_start(
@@ -2011,25 +2014,24 @@ panel_widget_find_empty_pos(PanelWidget *panel, gint pos)
 			i++;
 			panel_widget_push_right(panel,i);
 		}
+		return i;
 	} else {
 		if(pos>=panel->size)
 			pos = panel->size - 1;
 
-		for(i=pos;i<panel->size;i += panel->applets[i].cells)
+		for(i=pos;i<panel->size;i++)
 			if(!panel->applets[i].applet)
-				break;
+				return i;
 
 		/*panel is full to the right*/
 		if(i==panel->size) {
-			for(i=pos-1;i>=0;i -= panel->applets[i].cells)
+			for(i=pos-1;i>=0;i--)
 				if(!panel->applets[i].applet)
-					break;
-			/*panel is full!*/
-			if(i<=0)
-				return -1;
+					return i;
 		}
+		/*panel is full!*/
+		return -1;
 	}
-	return i;
 }
 
 gint
