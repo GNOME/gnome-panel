@@ -80,7 +80,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_UTILITY,             "advanced-directory"},
 	{ PANEL_STOCK_LAUNCHER,            "launcher-program" },
 	{ PANEL_STOCK_ACTION,		   "gnome-other" },
-	{ PANEL_STOCK_DRAWER,              "panel-drawer" },
+	{ PANEL_STOCK_DRAWER,              "drawer" },
 	{ PANEL_STOCK_APPLETS,             "gnome-applets" },
 	{ PANEL_STOCK_DESKTOP,             "gnome-ccdesktop" },
 };
