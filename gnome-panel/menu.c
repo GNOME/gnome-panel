@@ -3629,12 +3629,12 @@ panel_tearoff_new_menu(GtkWidget *w, gpointer data)
 		      "destroy", GTK_SIGNAL_FUNC(gtk_widget_unref),
 		      GTK_OBJECT(menu));
 
-	show_tearoff_menu(menu, _("Panel"),TRUE,0,0,wmclass);
+	show_tearoff_menu(menu, _("Main Menu"),TRUE,0,0,wmclass);
 
 	tm = g_new0(TearoffMenu,1);
 	tm->menu = menu;
 	tm->mfl = NULL;
-	tm->title = g_strdup(_("Panel"));
+	tm->title = g_strdup(_("Main Menu"));
 	tm->special = g_strdup_printf("PANEL:%d", flags);
 	tm->wmclass = g_strdup(wmclass);
 	gtk_signal_connect(GTK_OBJECT(menu), "destroy",
