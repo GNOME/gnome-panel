@@ -106,7 +106,7 @@ exec_queue_start_next(void)
 		if(eq->param) g_free(eq->param);
 		g_free(eq);
 
-		exec_queue = g_list_remove_link(exec_queue,exec_queue);
+		exec_queue = my_g_list_pop_first(exec_queue);
 	/*repeat while we are doing applets that do not require a wait
 	  (second invocations of multi applets)*/
 	} while(ret);

@@ -99,8 +99,7 @@ panel_clean_applet(int applet_id)
 		if(umenu->text)
 			g_free(umenu->text);
 		g_free(umenu);
-		info->user_menu = g_list_remove_link(info->user_menu,
-						     info->user_menu);
+		info->user_menu = my_g_list_pop_first(info->user_menu);
 	}
 	mulapp_remove_empty_from_list();
 }

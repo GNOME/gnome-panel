@@ -797,7 +797,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 		gtk_signal_emit(GTK_OBJECT(panel),
 				panel_widget_signals[APPLET_MOVE_SIGNAL],
 				ad->applet);
-		send_move = g_list_remove_link(send_move,send_move);
+		send_move = my_g_list_pop_first(send_move);
 	}
 }
 

@@ -293,3 +293,11 @@ resize_window(GtkWidget *widget, int w, int h)
 	/* FIXME: this should draw only the newly exposed area! */
 	gtk_widget_draw(widget, NULL);
 }
+
+GList *
+my_g_list_pop_first(GList *list)
+{
+	GList *r = g_list_remove_link(list,list);
+	g_list_free(list);
+	return r;
+}

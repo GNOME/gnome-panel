@@ -56,6 +56,7 @@ mulapp_remove_empty_from_list(void)
 			multiple_applet_load_list =
 				g_list_remove_link(multiple_applet_load_list,
 						   list);
+			g_list_free(list);
 			if(mq->params) g_warning("Whoops! there were applets "
 						 "to be started while the "
 						 "main one disappeared, this "
@@ -144,7 +145,7 @@ mulapp_add_ior_and_free_queue(const char *path, const char *ior)
 			while(li) {
 				send_applet_start_new_applet(mq->ior,li->data);
 				g_free(li->data);
-				li = g_list_remove_link(li,li);
+				li = my_g_list_pop_first(li);
 			}
 			return;
 		}

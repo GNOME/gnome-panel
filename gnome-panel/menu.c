@@ -212,7 +212,7 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		}
 		g_free(filename);
 		g_free(list->data);
-		list = g_list_remove_link(list,list);
+		list = my_g_list_pop_first(list);
 	}
 }
 
@@ -237,6 +237,54 @@ add_menu_to_panel (GtkWidget *widget, void *data)
 		load_menu_applet(NULL,0, 0, current_panel);
 }
 
+
+/*most of this function stolen from the real gtk_menu_popup*/
+static void
+restore_grabs(GtkWidget *w, gpointer data)
+{
+	GtkWidget *menu_item = data;
+	GtkMenu *menu = GTK_MENU(menu_item->parent); 
+	GtkWidget *xgrab_shell;
+	GtkWidget *parent;
+	/* Find the last viewable ancestor, and make an X grab on it
+	 */
+	parent = GTK_WIDGET (menu);
+	xgrab_shell = NULL;
+	while (parent) {
+		gboolean viewable = TRUE;
+		GtkWidget *tmp = parent;
+
+		while (tmp) {
+			if (!GTK_WIDGET_MAPPED (tmp)) {
+				viewable = FALSE;
+				break;
+			}
+			tmp = tmp->parent;
+		}
+
+		if (viewable)
+			xgrab_shell = parent;
+
+		parent = GTK_MENU_SHELL (parent)->parent_menu_shell;
+	}
+
+	/*only grab if this HAD a grab before*/
+	if (xgrab_shell && (GTK_MENU_SHELL (xgrab_shell)->have_xgrab)) {
+		GdkCursor *cursor = gdk_cursor_new (GDK_ARROW);
+
+		GTK_MENU_SHELL (xgrab_shell)->have_xgrab = 
+			(gdk_pointer_grab (xgrab_shell->window, TRUE,
+					   GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK |
+					   GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK,
+					   NULL, cursor, 0) == 0);
+		gdk_cursor_destroy (cursor);
+	}
+
+	gtk_grab_add (GTK_WIDGET (menu));
+}
+	
+
+
 static int
 show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 {
@@ -257,6 +305,10 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 	if(!menu) {
 		menu = gtk_menu_new ();
 		gtk_object_set_data(GTK_OBJECT(w),"menu",menu);
+		gtk_signal_connect(GTK_OBJECT(menu),"deactivate",
+				   GTK_SIGNAL_FUNC(restore_grabs),
+				   w->parent->parent);
+
 
 		if(type == 1) {
 			menuitem = gtk_menu_item_new ();
@@ -543,7 +595,7 @@ destroy_mf(MenuFinfo *mf)
 		FileInfo *fi = mf->finfo->data;
 		if(fi->name) g_free(fi->name);
 		g_free(fi);
-		mf->finfo = g_list_remove_link(mf->finfo, mf->finfo);
+		mf->finfo = my_g_list_pop_first(mf->finfo);
 	}
 	if(mf->menudir) g_free(mf->menudir);
 	if(mf->dir_name) g_free(mf->dir_name);
@@ -559,7 +611,7 @@ menu_destroy(GtkWidget *menu, gpointer data)
 	while(mfl) {
 		MenuFinfo *mf = mfl->data;
 		destroy_mf(mf);
-		mfl = g_list_remove_link(mfl,mfl);
+		mfl = my_g_list_pop_first(mfl);
 	}
 	gtk_object_set_data(GTK_OBJECT(menu),"mf",NULL);
 	return FALSE;
@@ -665,8 +717,7 @@ check_and_reread(GtkWidget *menuw,Menu *menu,int main_menu)
 			while(free_list) {
 				MenuFinfo *mf = free_list->data;
 				destroy_mf(mf);
-				free_list = g_list_remove_link(free_list,
-							       free_list);
+				free_list = my_g_list_pop_first(free_list);
 			}
 		}
 	}
@@ -797,7 +848,7 @@ create_menu_at (GtkWidget *menu,
 		
 		thisfile = flist->data;
 		filename = g_concat_dir_and_file(menudir,thisfile);
-		flist = g_list_remove_link(flist,flist);
+		flist = my_g_list_pop_first(flist);
 		
 		if (stat (filename, &s) == -1) {
 			g_free (filename);
