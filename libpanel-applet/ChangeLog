@@ -1,3 +1,10 @@
+2002-05-29  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel_applet.c 
+	(panel_applet_expose): Calculate the focus box correctly, 
+	i.e. include line width for start and end lines.
+	(panel_applet_size_request): Correct typo in calculating required size.
+
 2002-05-29  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: don't define PANELRC.

@@ -504,8 +504,8 @@ panel_applet_size_request (GtkWidget *widget, GtkRequisition *requisition)
 		requisition->width += child_requisition.width;
 		requisition->height += child_requisition.height;
 	}
-	requisition->width += 2 * (focus_pad + 2 * focus_width);
-	requisition->height += 2 * (focus_pad + 2 * focus_width);
+	requisition->width += 2 * (2 * focus_pad + focus_width);
+	requisition->height += 2 * (2 * focus_pad + focus_width);
 }
 
 static void
@@ -567,9 +567,8 @@ panel_applet_expose (GtkWidget      *widget,
 		border_width = GTK_CONTAINER (widget)->border_width;
 		x = widget->allocation.x + focus_pad;
 		y = widget->allocation.y + focus_pad;
-		width = widget->allocation.width - 2 * border_width - (focus_width + 2 * focus_pad);
-		height = widget->allocation.height - 2 * border_width - (focus_width +  2 * focus_pad);
-
+		width = widget->allocation.width - 2 * border_width - 2 * focus_pad;
+		height = widget->allocation.height - 2 * border_width - 2 * focus_pad;
 		gtk_paint_focus (widget->style, widget->window,
                                  GTK_WIDGET_STATE (widget),
                                  &event->area, widget, "panel_applet",
