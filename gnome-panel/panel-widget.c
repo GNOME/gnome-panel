@@ -8,6 +8,8 @@ static void panel_widget_init		(PanelWidget      *panel_widget);
 
 static GdkCursor *fleur_cursor;
 
+static char *applet_drop_types[]={"internal/pointer"};
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -1064,6 +1066,35 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 	return FALSE;
 }
 
+static gint
+panel_widget_dnd_drop(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+	GtkWidget *applet;
+	PanelWidget *panel = PANEL_WIDGET(widget);
+	gint pos;
+	gint x,y;
+	
+	gtk_widget_get_pointer(panel->fixed, &x, &y);
+
+	if(panel->orient == PANEL_HORIZONTAL)
+		pos = (x/PANEL_CELL_SIZE);
+	else
+		pos = (y/PANEL_CELL_SIZE);
+
+	if(!(event->dropdataavailable.data))
+		return FALSE;
+
+	applet = *((GtkWidget **)event->dropdataavailable.data);
+
+	if(!applet)
+		return FALSE;
+
+	panel_widget_add(PANEL_WIDGET(panel),applet,pos);
+
+	return TRUE;
+}
+
+
 GtkWidget*
 panel_widget_new (gint size,
 		  PanelOrientation orient,
@@ -1242,6 +1273,15 @@ panel_widget_new (gint size,
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
+
+	/*set up drag'n'drop (the drop)*/
+	gtk_signal_connect (GTK_OBJECT (panel), 
+			    "drop_data_available_event",
+			    GTK_SIGNAL_FUNC(panel_widget_dnd_drop),
+			    NULL);
+	gtk_widget_dnd_drop_set (GTK_WIDGET(panel), TRUE,
+				 applet_drop_types, 1, FALSE);
+	
 
 	return GTK_WIDGET(panel);
 }
