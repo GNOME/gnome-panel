@@ -707,12 +707,12 @@ panel_session_die (GnomeClient *client,
 void
 panel_quit(void)
 {
-  gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
-			     GNOME_INTERACT_ANY, 0, 1);
+	gnome_client_request_save (client, GNOME_SAVE_BOTH, 1,
+				   GNOME_INTERACT_ANY, 0, 1);
 }
 
 static void
-load_default_applets(void)
+load_default_applets1(PanelWidget *panel)
 {
 	char *def_launchers[] =
 	      { "gnome/apps/gnome-help.desktop",
@@ -735,26 +735,39 @@ load_default_applets(void)
 	if (g_file_exists("/etc/menu-methods/gnome"))
 		flags |= MAIN_MENU_DEBIAN|MAIN_MENU_DEBIAN_SUB;
 	load_menu_applet(NULL,flags, panels->data, 0);
+
+	/*load a Programs menu*/
 	p = gnome_datadir_file ("gnome/apps");
 	/*it really should exist*/
 	if(g_file_exists(p))
-		load_menu_applet(p,flags, panels->data, 1);
+		load_menu_applet(p,flags, panel, 1);
 	g_free(p);
 	
-	for(i=0;def_launchers[i]!=NULL;i++) {
-		char *p = gnome_datadir_file (def_launchers[i]);
-		int center = gdk_screen_width()/2;
-		if(p) {
-			load_launcher_applet(p,panels->data,center+i);
-			g_free(p);
+	if(gdk_screen_width()>800) {
+		/*load up some launchers, but only if screen larger then 800*/
+		for(i=0;def_launchers[i]!=NULL;i++) {
+			p = gnome_datadir_file (def_launchers[i]);
+			/*int center = gdk_screen_width()/2;*/
+			if(p) {
+				load_launcher_applet(p,panel,48*3+i*48);
+				g_free(p);
+			}
 		}
 	}
 
+	load_extern_applet("tasklist_applet",NULL,
+			   panel,INT_MAX/2/*flush right*/,TRUE);
 	load_extern_applet("gen_util_clock",NULL,
-			   panels->data,INT_MAX/2/*right flush*/,TRUE);
-	/*we laoded default applets, so we didn't find the config or
-	  something else was wrong, so do complete save when next syncing*/
-	need_complete_save = TRUE;
+			   panel,INT_MAX/2 + 1000/*flush right*/,TRUE);
+	load_extern_applet("gen_util_mailcheck",NULL,
+			   panel,INT_MAX/2 + 2000/*flush right*/,TRUE);
+}
+
+static void
+load_default_applets2(PanelWidget *panel)
+{
+	load_extern_applet("deskguide_applet",NULL,
+			   panel,0,TRUE);
 }
 
 void
@@ -906,7 +919,29 @@ init_user_panels(void)
 		gtk_widget_show(panel);
 
 		/*load up default applets on the default panel*/
-		load_default_applets();
+		load_default_applets1(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
+
+		panel = aligned_widget_new(ALIGNED_LEFT,
+					   BORDER_RIGHT,
+					   BASEP_EXPLICIT_HIDE,
+					   BASEP_SHOWN,
+					   SIZE_STANDARD,
+					   TRUE,
+					   TRUE,
+					   PANEL_BACK_NONE,
+					   NULL,
+					   TRUE,
+					   NULL);
+		panel_setup(panel);
+		gtk_widget_show(panel);
+
+		/*load up default applets on the second default panel*/
+		load_default_applets2(PANEL_WIDGET(BASEP_WIDGET(panel)->panel));
+
+		/*we laoded default applets, so we didn't find the config
+		  or something else was wrong, so do complete save when
+		  next syncing*/
+		need_complete_save = TRUE;
 
 		g_string_free(buf,TRUE);
 		return;
