@@ -165,7 +165,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 			if (strftime(date, 20, _("%a %b %d"), tm) == 20)
 				date[19] = '\0';
 		}
-		if(cd->size <= PIXEL_SIZE_STANDARD)
+		if(cd->size < PIXEL_SIZE_STANDARD)
 			g_string_append_c(gs,' ');
 		else
 			g_string_append_c(gs,'\n');
@@ -181,7 +181,7 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	
 	/*if we are vertical, just make it char per line*/
 	if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
-	    cd->size <= PIXEL_SIZE_STANDARD) {
+	    cd->size < PIXEL_SIZE_STANDARD) {
 		char *p;
 		GString *gst = g_string_new("");
 		for(p=gs->str;*p;p++) {
