@@ -32,6 +32,7 @@ struct _ClockData {
 	int hourformat;
         int showdate;
 	int unixtime;
+	int gmt_time;
 	int showtooltip;
 	ClockUpdateFunc update_func;
 	PanelOrientType orient;
@@ -41,6 +42,7 @@ struct _ClockData {
 	int prop_hourformat;
         int prop_showdate;
 	int prop_unixtime;
+	int prop_gmt_time;
 	int prop_showtooltip;
 };
 
@@ -101,6 +103,7 @@ applet_save_session(GtkWidget * w,
 	gnome_config_set_int("clock/showdate", cd->showdate);
 	gnome_config_set_int("clock/unixtime", cd->unixtime);
 	gnome_config_set_int("clock/showtooltip", cd->showtooltip);
+	gnome_config_set_int("clock/gmt_time", cd->gmt_time);
 	gnome_config_pop_prefix();
 	gnome_config_sync();
 	gnome_config_drop_all();
@@ -119,7 +122,10 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 
 	cc = gtk_object_get_user_data(GTK_OBJECT(cd->clockw));
 
-	tm = localtime(&current_time);
+	if (cd->gmt_time)
+		tm = gmtime(&current_time);
+	else
+		tm = localtime(&current_time);
 
 	if (cd->unixtime) {
 		if ((cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) &&
@@ -267,7 +273,11 @@ create_clock_widget(ClockData *cd, GtkWidget * applet)
 	(*cd->update_func) (cd, current_time);
 
 	/* Install timeout handler */
-        tm = localtime(&current_time);
+	if (cd->gmt_time)
+		tm = gmtime(&current_time);
+	else
+		tm = localtime(&current_time);
+    
 	if(cd->unixtime)
 		cd->timeouttime = 1000;
 	else
@@ -319,6 +329,7 @@ make_clock_applet(const gchar * goad_id)
 	cd->showdate = gnome_config_get_int("clock/showdate=1");
 	cd->unixtime = gnome_config_get_int("clock/unixtime=0");
 	cd->showtooltip = gnome_config_get_int("clock/showtooltip=0");
+	cd->gmt_time = gnome_config_get_int("clock/gmt_time=0");
 	gnome_config_pop_prefix();
 
 	create_clock_widget(cd,applet);
@@ -362,6 +373,7 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	cd->hourformat = cd->prop_hourformat;
 	cd->showdate = cd->prop_showdate;
 	cd->unixtime = cd->prop_unixtime;
+	cd->gmt_time = cd->prop_gmt_time;
 	cd->showtooltip = cd->prop_showtooltip;
 
 	/* Call the clock's update function so that it paints its first state */
@@ -371,7 +383,11 @@ apply_properties(GtkWidget * widget, gint button_num, gpointer data)
 	gtk_timeout_remove(cd->timeout);
 
 	/* Install timeout handler */
-        tm = localtime(&current_time);
+	if (cd->gmt_time)
+		tm = gmtime(&current_time);
+	else
+		tm = localtime(&current_time);
+
 	if(cd->unixtime)
 		cd->timeouttime = 1000;
 	else
@@ -429,6 +445,15 @@ set_unixtime_cb(GtkWidget * w, gpointer data)
 }
 
 static void
+set_gmt_time_cb(GtkWidget * w, gpointer data)
+{
+	ClockData *cd = data;
+
+	cd->prop_gmt_time = GTK_TOGGLE_BUTTON(w)->active;
+	gnome_property_box_changed (GNOME_PROPERTY_BOX (cd->props));
+}
+
+static void
 set_show_tooltip_cb(GtkWidget * w, gpointer data)
 {
 	ClockData *cd = data;
@@ -450,6 +475,7 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *showdate;
 	GtkWidget *showtooltip;
 	GtkWidget *unixtime;
+	GtkWidget *use_gmt_time;
 	ClockData *cd = data;
 
 	help_entry.name = gnome_app_id;
@@ -548,6 +574,20 @@ clock_properties(AppletWidget * applet, gpointer data)
 			   (GtkSignalFunc) set_show_tooltip_cb,
 			   data);	
 
+	use_gmt_time = gtk_check_button_new_with_label(_("Use GMT"));
+	gtk_box_pack_start_defaults(GTK_BOX(vbox), use_gmt_time);
+	gtk_widget_show(use_gmt_time);
+	
+	if (cd->gmt_time)
+	  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(use_gmt_time),
+				      TRUE);
+	cd->prop_gmt_time = cd->gmt_time;
+	
+	gtk_signal_connect(GTK_OBJECT(use_gmt_time),
+			   "toggled",
+			   (GtkSignalFunc) set_gmt_time_cb,
+			   data);	
+
 	unixtime = gtk_check_button_new_with_label(_("Unix time"));
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), unixtime);
 	gtk_widget_show(unixtime);
@@ -561,6 +601,9 @@ clock_properties(AppletWidget * applet, gpointer data)
 	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
 			   (GtkSignalFunc) set_datasensitive_cb,
 			   showtooltip);
+	gtk_signal_connect(GTK_OBJECT(unixtime), "toggled",
+			   (GtkSignalFunc) set_datasensitive_cb,
+			   use_gmt_time);
 			   
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(unixtime),
 				     cd->unixtime);
