@@ -1,3 +1,20 @@
+2005-01-02  Vincent Untz  <vincent@vuntz.net>
+
+	Make Lock menu item HIG compliant.
+	Based on patch from Madhan Raj M <raj_madan@rediffmail.com>
+	Fix bug #114055
+
+	* GNOME_Panel_Popup.xml: use a check menu item for the lock item and
+	rename the item
+	* applet.c: (panel_applet_lock): updated to toggle the check menu item
+	(panel_applet_create_menu): updated to create a check menu item. Don't
+	create useless GtkImages.
+	* panel-applet-frame.c: (panel_applet_frame_sync_menu_state): set the
+	state of the check menu item
+	(popup_handle_lock): killed
+	(listener_popup_handle_lock): new function to toggle the locked state
+	(panel_applet_frame_activated): listen for check menu item changes
+
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
 	Port the GnomeFileEntry in the property dialog to

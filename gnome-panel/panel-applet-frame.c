@@ -125,9 +125,9 @@ panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
 	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
 
 	bonobo_ui_component_set_prop (frame->priv->ui_component,
-				      "/popups/button3/placeholder/lock",
-				      "label",
-				      locked ? _("Un_lock") : _("_Lock"),
+				      "/commands/LockAppletToPanel",
+				      "state",
+				      locked ? "1" : "0",
 				      NULL);
 
 	/* First sensitivity */
@@ -254,10 +254,32 @@ popup_handle_remove (BonoboUIComponent *uic,
 }
 
 static void
-popup_handle_lock (BonoboUIComponent *uic,
-		   PanelAppletFrame  *frame,
-		   const char        *verb)
+listener_popup_handle_lock (BonoboUIComponent            *uic,
+			    const char                   *path,
+			    Bonobo_UIComponent_EventType  type,
+			    const char                   *state,
+			    gpointer                      data)
 {
+	PanelAppletFrame *frame;
+	AppletInfo       *info;
+	gboolean          s;
+
+	g_assert (!strcmp (path, "LockAppletToPanel"));
+
+	if (type != Bonobo_UIComponent_STATE_CHANGED)
+		return;
+
+	if (!state)
+		return;
+
+	frame = (PanelAppletFrame *) data;
+	info = frame->priv->applet_info;
+	s = (strcmp (state, "1") == 0);
+
+	if (panel_widget_get_applet_locked (PANEL_WIDGET (info->widget->parent),
+					    info->widget) == s)
+		return;
+
 	panel_applet_toggle_locked (frame->priv->applet_info);
 
 	panel_applet_frame_sync_menu_state (frame);
@@ -282,7 +304,6 @@ popup_handle_move (BonoboUIComponent *uic,
 
 static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_UNSAFE_VERB ("RemoveAppletFromPanel", popup_handle_remove),
-	BONOBO_UI_UNSAFE_VERB ("LockAppletToPanel",     popup_handle_lock),
         BONOBO_UI_UNSAFE_VERB ("MoveApplet",            popup_handle_move),
 
         BONOBO_UI_VERB_END
@@ -1316,6 +1337,11 @@ panel_applet_frame_activated (Bonobo_Unknown     object,
 
 	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
 			       "GNOME_Panel_Popup.xml", "panel", NULL);
+
+	bonobo_ui_component_add_listener (frame->priv->ui_component,
+					  "LockAppletToPanel",
+					  listener_popup_handle_lock,
+					  frame);
 
 	bonobo_ui_component_add_verb_list_with_data (
 		frame->priv->ui_component, popup_verbs, frame);
