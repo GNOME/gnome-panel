@@ -10,10 +10,44 @@
 #ifndef __PANEL_APPLET_CONTROL_H__
 #define __PANEL_APPLET_CONTROL_H__
 
+#include <gtk/gtkeventbox.h>
+
 #include "panel-widget.h"
+#include "applet.h"
 
 G_BEGIN_DECLS
 
+#define PANEL_TYPE_APPLET_FRAME         (panel_applet_frame_get_type ())
+#define PANEL_APPLET_FRAME(o)           (G_TYPE_CHECK_INSTANCE_CAST ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFrame))
+#define PANEL_APPLET_FRAME_CLASS(k)     (G_TYPE_CHECK_CLASS_CAST((k), PANEL_TYPE_APPLET_FRAME, PanelAppletFrameClass))
+#define PANEL_IS_APPLET_FRAME(o)        (G_TYPE_CHECK_INSTANCE_TYPE ((o), PANEL_TYPE_APPLET_FRAME))
+#define PANEL_IS_APPLET_FRAME_CLASS(k)  (G_TYPE_CHECK_CLASS_TYPE ((k), PANEL_TYPE_APPLET_FRAME))
+#define PANEL_APPLET_FRAME_GET_CLASS(o) (G_TYPE_INSTANCE_GET_CLASS ((o), PANEL_TYPE_APPLET_FRAME, PanelAppletFrameClass))
+
+typedef struct _PanelAppletFrame        PanelAppletFrame;
+typedef struct _PanelAppletFrameClass   PanelAppletFrameClass;
+typedef struct _PanelAppletFramePrivate PanelAppletFramePrivate;
+
+struct _PanelAppletFrame{
+        GtkEventBox               event_box;
+
+        PanelAppletFramePrivate  *priv;
+};
+
+struct _PanelAppletFrameClass {
+        GtkEventBoxClass          event_box_class;
+};
+
+GType      panel_applet_frame_get_type  (void) G_GNUC_CONST;
+
+GtkWidget *panel_applet_frame_new       (const gchar *iid);
+
+void       panel_applet_frame_construct (PanelAppletFrame *frame,
+					 const gchar      *iid);
+
+void       panel_applet_frame_set_info  (PanelAppletFrame *frame,
+					 AppletInfo       *info);
+					
 void panel_bonobo_applet_load (const gchar *iid,
 			       PanelWidget *panel,
 			       gint         pos);

@@ -1,5 +1,14 @@
 2001-11-15  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.[ch]: inherit from GtkEventBox
+	(popup_handle_remove), (panel_applet_frame_set_info),
+	(panel_applet_frame_finalize), (panel_applet_frame_class_init),
+	(panel_applet_frame_instance_init), (panel_applet_frame_get_type),
+	(panel_applet_frame_construct), (panel_applet_frame_new): impl.
+	(panel_bonobo_applet_load): upd.
+
+2001-11-15  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-applet.[ch]: update to use GType stuff 
 	instead of GtkType.
 
