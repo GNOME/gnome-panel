@@ -340,41 +340,6 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 }
 
 static void
-panel_menu_button_handle_event (PanelMenuButton *button)
-{
-	GdkEvent *event;
-	guint     n_button;
-	guint32   activate_time;
-
-	event = gtk_get_current_event ();
-
-	switch (event->type) {
-	case GDK_BUTTON_PRESS:
-	case GDK_2BUTTON_PRESS:
-	case GDK_3BUTTON_PRESS:
-	case GDK_BUTTON_RELEASE:
-		activate_time = event->button.time;
-		n_button = event->button.button;
-		break;
-	case GDK_KEY_PRESS:
-	case GDK_KEY_RELEASE:
-		activate_time = event->key.time;
-		n_button = 1;
-		break;
-	default:
-		activate_time = n_button = 0;
-		g_assert_not_reached ();
-		break;
-	}
-	
-	gtk_grab_remove (GTK_WIDGET (button));
-
-	panel_menu_button_popup_menu (button, n_button, activate_time);
-
-	gdk_event_free (event);
-}
-
-static void
 panel_menu_button_pressed (GtkButton *gtk_button)
 {
 	PanelMenuButton *button;
@@ -386,13 +351,14 @@ panel_menu_button_pressed (GtkButton *gtk_button)
 	if (GTK_BUTTON_CLASS (parent_class)->pressed)
 		GTK_BUTTON_CLASS (parent_class)->pressed (gtk_button);
 
-	panel_menu_button_handle_event (button);
+	panel_menu_button_popup_menu (button, 0, gtk_get_current_event_time());
 }
 
 static void
 panel_menu_button_clicked (GtkButton *gtk_button)
 {
 	PanelMenuButton *button;
+	GdkEvent        *event;
 
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (gtk_button));
 
@@ -401,7 +367,14 @@ panel_menu_button_clicked (GtkButton *gtk_button)
 	if (GTK_BUTTON_CLASS (parent_class)->clicked)
 		GTK_BUTTON_CLASS (parent_class)->clicked (gtk_button);
 
-	panel_menu_button_handle_event (button);
+	if ((event = gtk_get_current_event ())) {
+		panel_menu_button_popup_menu (button,
+					      event->button.button,
+					      event->button.time);
+		gdk_event_free (event);
+	} else {
+		panel_menu_button_popup_menu (button, 1, GDK_CURRENT_TIME);
+	}
 }
 
 static void

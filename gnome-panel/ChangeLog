@@ -1,3 +1,13 @@
+2003-12-01  Vincent Untz  <vincent@vuntz.net>
+
+	* panel-menu-button.c: (panel_menu_button_handle_event): kill
+	(panel_menu_button_clicked): don't call
+	panel_menu_button_handle_event() and call directly
+	panel_menu_button_popup_menu() instead.
+	(panel_menu_button_pressed): ditto, and don't pretend this is a mouse
+	click that created the menu popup.
+	Fix bug #108645.
+
 2003-11-20  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler): do
