@@ -733,6 +733,7 @@ panel_applet_get_full_gconf_key (AppletType   type,
 }
 
 typedef struct {
+	AppletType   type;
 	PanelWidget *panel_widget;
 	int          position;
 	char        *unique_id;
@@ -756,7 +757,7 @@ whack_applet_to_load (PanelAppletToLoad *applet)
 }
 
 static gboolean
-panel_applet_load_idle_handler (gpointer dummmy)
+panel_applet_load_idle_handler (gpointer dummy)
 {
 	PanelAppletToLoad *applet;
 
@@ -769,10 +770,43 @@ panel_applet_load_idle_handler (gpointer dummmy)
 		g_slist_delete_link (panel_applets_to_load,
 				     panel_applets_to_load);
 
-	panel_applet_frame_load_from_gconf (
-			applet->panel_widget,
-			applet->position,
-			applet->unique_id);
+	switch (applet->type) {
+	case APPLET_BONOBO:
+		panel_applet_frame_load_from_gconf (
+					applet->panel_widget,
+					applet->position,
+					applet->unique_id);
+		break;
+	case APPLET_DRAWER:
+		drawer_load_from_gconf (applet->panel_widget,
+					applet->position,
+					applet->unique_id);
+		break;
+	case APPLET_MENU:
+		menu_load_from_gconf (applet->panel_widget,
+				      applet->position,
+				      applet->unique_id);
+		break;
+	case APPLET_LAUNCHER:
+		launcher_load_from_gconf (applet->panel_widget,
+					  applet->position,
+					  applet->unique_id);
+		break;
+	case APPLET_LOGOUT:
+		load_logout_applet (applet->panel_widget,
+				    applet->position,
+				    TRUE,
+				    applet->unique_id);
+		break;
+	case APPLET_LOCK:
+		load_lock_applet (applet->panel_widget,
+				  applet->position,
+				  TRUE,
+				  applet->unique_id);
+		break;
+	default:
+		break;
+	}
 
 	whack_applet_to_load (applet);
 
@@ -798,13 +832,14 @@ panel_applet_load_from_unique_id (AppletType   type,
 				  const char  *profile,
 				  const char  *unique_id)
 {
-	PanelWidget *panel_widget;
-	AppletType   applet_type;
-	const char  *temp_key;
-	char        *type_string;
-	char        *panel_id;
-	int          position;
-	gboolean     right_stick;
+	PanelAppletToLoad *applet;
+	PanelWidget       *panel_widget;
+	AppletType         applet_type;
+	const char        *temp_key;
+	char              *type_string;
+	char              *panel_id;
+	int                position;
+	gboolean           right_stick;
 
 	temp_key = panel_applet_get_full_gconf_key (
 			type, profile, unique_id, "object_type");
@@ -849,44 +884,18 @@ panel_applet_load_from_unique_id (AppletType   type,
 	if (right_stick)
 		position = panel_widget->size - position;
 
-	switch (applet_type) {
-	case APPLET_BONOBO: {
-		PanelAppletToLoad *applet;
+	applet = g_new0 (PanelAppletToLoad, 1);
 
-		applet = g_new0 (PanelAppletToLoad, 1);
+	applet->type            = applet_type;
+	applet->panel_widget    = panel_widget;
+	applet->position        = position;
+	applet->unique_id       = g_strdup (unique_id);
+	applet->destroy_handler =
+			g_signal_connect (panel_widget, "destroy",
+					  G_CALLBACK (panel_destroyed_while_loading),
+					  applet);
 
-		applet->panel_widget    = panel_widget;
-		applet->position        = position;
-		applet->unique_id       = g_strdup (unique_id);
-		applet->destroy_handler =
-				g_signal_connect (panel_widget, "destroy",
-						  G_CALLBACK (panel_destroyed_while_loading),
-						  applet);
-
-		if (!panel_applets_to_load)
-			g_idle_add (panel_applet_load_idle_handler, NULL);
-
-		panel_applets_to_load = g_slist_prepend (panel_applets_to_load, applet);
-		}
-		break;
-	case APPLET_DRAWER:
-		drawer_load_from_gconf (panel_widget, position, unique_id);
-		break;
-	case APPLET_MENU:
-		menu_load_from_gconf (panel_widget, position, unique_id);
-		break;
-	case APPLET_LAUNCHER:
-		launcher_load_from_gconf (panel_widget, position, unique_id);
-		break;
-	case APPLET_LOGOUT:
-		load_logout_applet (panel_widget, position, TRUE, unique_id);
-		break;
-	case APPLET_LOCK:
-		load_lock_applet (panel_widget, position, TRUE, unique_id);
-		break;
-	default:
-		break;
-	}
+	panel_applets_to_load = g_slist_prepend (panel_applets_to_load, applet);
 }
 
 static void
@@ -915,11 +924,29 @@ panel_applet_load_list (AppletType type)
 	panel_g_slist_deep_free (id_list);
 }
 
+static int
+panel_applet_compare (const PanelAppletToLoad *a,
+		      const PanelAppletToLoad *b)
+{
+	if (a->panel_widget != b->panel_widget)
+		return a->panel_widget - b->panel_widget;
+	else
+		return a->position - b->position;
+}
+
 void
 panel_applet_load_applets_from_gconf (void)
 {
 	panel_applet_load_list (APPLET_BONOBO);
 	panel_applet_load_list (APPLET_EMPTY);
+
+	if (!panel_applets_to_load)
+		return;
+
+	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
+					      (GCompareFunc) panel_applet_compare);
+
+	g_idle_add (panel_applet_load_idle_handler, NULL);
 }
 
 static gboolean

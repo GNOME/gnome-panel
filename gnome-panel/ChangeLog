@@ -1,3 +1,18 @@
+2002-08-06  Mark McLoughlin  <mark@skynet.ie>
+
+	Fixes #84744, applets not loading in the correct order,
+	by loading all types of applets in the idle handler, in
+	the same order as they should appear on the panels.
+
+	* applet.c:
+	(panel_applet_load_idle_handler): handle loading all types
+	of applets.
+	(panel_applet_load_from_unique_id): queue all applets for
+	the idle handler.
+	(panel_applet_compare): impl.
+	(panel_applet_load_applets_from_gconf): sort the queued
+	applets and run the idle handler over them.
+
 2002-08-05  Anders Carlsson  <andersca@gnu.org>
 
 	* gnome-panel-screenshot.c: (save_to_file_internal),
