@@ -76,7 +76,7 @@ wncklet_factory (PanelApplet *applet,
 
 PANEL_APPLET_BONOBO_FACTORY ("OAFIID:GNOME_Wncklet_Factory",
                              PANEL_TYPE_APPLET,
-                             "Window Navigation Applets",
+                             "WindowNavigationApplets",
                              "0",
                              wncklet_factory,
                              NULL);
