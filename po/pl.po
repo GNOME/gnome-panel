@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-03-07 00:21+0100\n"
-"PO-Revision-Date: 2002-03-07 00:22+0100\n"
+"POT-Creation-Date: 2002-03-09 23:35+0100\n"
+"PO-Revision-Date: 2002-03-09 23:36+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -510,10 +510,6 @@ msgstr "Ustawienia przełącznika obszarów roboczych"
 msgid "Workspaces"
 msgstr "Obszary robocze"
 
-#: applets/gen_util/pager.glade.h:1 applets/gen_util/tasklist.glade.h:1
-msgid "_Done"
-msgstr "_Gotowe"
-
 #: applets/gen_util/pager.c:1
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
@@ -1002,7 +998,7 @@ msgstr "Skróty klawiszowe"
 msgid "Medium"
 msgstr "Średnio"
 
-#: gnome-panel/gnome-panel-properties.glade.h:1
+#: gnome-panel/gnome-panel-properties.glade.h:1 gnome-panel/menu-ditem.c:1
 #: gnome-panel/menu-properties.c:1 gnome-panel/menu.c:1
 #: gnome-panel/menu.c:1 gnome-panel/menu.c:1
 msgid "Menu"
@@ -1355,6 +1351,24 @@ msgstr "Preferencje"
 #: gnome-panel/main.c:1
 msgid "Specify a profile name to load"
 msgstr "Określa nazwę wczytywanego profilu"
+
+#: gnome-panel/menu-ditem.c:1
+#, c-format
+msgid ""
+"<b>Cannot save changes to menu entry</b>\n"
+"\n"
+"Details: %s"
+msgstr ""
+"<b>Nie można zapisać zmian elementu menu</b>\n"
+"\n"
+"Szczegóły: %s"
+
+#. flags
+#. error
+#. watch the enum at the top of the file
+#: gnome-panel/menu-ditem.c:1 gnome-panel/menu-ditem.c:1
+msgid "Desktop entry properties"
+msgstr "Właściwości elementu biurka"
 
 #: gnome-panel/menu-properties.c:1
 msgid "Can't open directory, using main menu!"
