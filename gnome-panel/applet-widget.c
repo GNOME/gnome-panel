@@ -174,8 +174,8 @@ applet_widget_register_callback(AppletWidget *applet,
 					      menutext,func,data);
 }
 
-static GtkWidget *
-_applet_widget_new_with_param(gchar *argv0, gchar *param, gint multi)
+GtkWidget *
+applet_widget_new_param_multi(gchar *argv0, gchar *param, gint multi)
 {
 	AppletWidget *applet;
 	char *result;
@@ -224,22 +224,6 @@ _applet_widget_new_with_param(gchar *argv0, gchar *param, gint multi)
 	applet_count++;
 
 	return GTK_WIDGET(applet);
-}
-
-GtkWidget *
-applet_widget_new(gchar *argv0)
-{
-	return _applet_widget_new_with_param(argv0,"",FALSE);
-}
-GtkWidget *
-applet_widget_new_with_param(gchar *argv0, gchar *param)
-{
-	return _applet_widget_new_with_param(argv0,param,FALSE);
-}
-GtkWidget *
-applet_widget_new_multi_with_param(gchar *argv0, gchar *param)
-{
-	return _applet_widget_new_with_param(argv0,param,TRUE);
 }
 
 gint
@@ -345,3 +329,12 @@ _gnome_applet_start_new_applet(const char *param)
 				param);
 	}
 }
+
+/*for slight binary compatiility only*/
+#undef applet_widget_new
+GtkWidget *
+applet_widget_new(gchar *argv0)
+{
+	return applet_widget_new_param_multi(argv0,"",FALSE);
+}
+

@@ -73,17 +73,25 @@ struct _AppletWidgetClass
 
 guint		applet_widget_get_type		(void);
 
-/*start a normal applet*/
-GtkWidget*	applet_widget_new		(gchar *argv0);
-
 /*start one but add a parameter that the panel should use next time
   to start us*/
-GtkWidget*	applet_widget_new_with_param	(gchar *argv0,
-						 gchar *param);
+GtkWidget*	applet_widget_new_param_multi	(gchar *argv0,
+						 gchar *param,
+						 gint multi);
+
+
+/*start a normal applet*/
+#define applet_widget_new(argv)	\
+	applet_widget_new_param_multi(argv,"",FALSE)
+#define applet_widget_new_with_param(argv,param)	\
+	applet_widget_new_param_multi(argv,param,FALSE)
 
 /*start an applet which handeles multiple "applet widgets"*/
-GtkWidget*	applet_widget_new_multi_with_param	(gchar *argv0,
-							 gchar *param);
+#define applet_widget_new_multi_with_param(argv,param)	\
+	applet_widget_new_param_multi(argv,param,TRUE)
+#define applet_widget_new_multi(argv)	\
+	applet_widget_new_param_multi(argv,"",TRUE)
+
 
 /*set tooltip over the applet, NULL to remove a tooltip*/
 void		applet_widget_set_tooltip	(AppletWidget *applet,
