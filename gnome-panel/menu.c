@@ -2471,17 +2471,6 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem_try_pixmap (menuitem, 
-				   "gnome-lockscreen.png",
-				   _("Lock button"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   GTK_SIGNAL_FUNC(add_lock_to_panel),
-			   NULL);
-	setup_internal_applet_drag(menuitem, "LOCK:NEW");
-
-
-	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 
 			gnome_stock_pixmap_widget (menu,
 						   GNOME_STOCK_PIXMAP_ADD),
