@@ -6,7 +6,7 @@
 
 typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
-	int animation_speed;
+	PanelSpeed animation_speed;
 	int minimized_size;
 	int hide_delay;
 	int show_delay;

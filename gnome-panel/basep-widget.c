@@ -783,16 +783,31 @@ move_step(int src, int dest, long start_time, long end_time, long cur_time)
 
 void
 basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
-		       int leftover, int step)
+		       int leftover, PanelSpeed animation_step)
 {
 	GtkWidget *wid;
 	int ox,oy,ow,oh;
 	int x,y,w,h;
 	int dx,dy,dw,dh;
 	int diff;
+	int step;
 	
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
+
+	switch (animation_step) {
+		case PANEL_SPEED_MEDIUM:
+				step = 60;
+				break;
+		case PANEL_SPEED_SLOW:
+				step = 10;
+				break;
+		case PANEL_SPEED_FAST:
+				step = 80;
+				break;
+		default:
+				step = 60;
+	}
 
 #ifdef BASEP_WIDGET_DEBUG
 	g_warning ("do_hiding with step %d", step);
@@ -896,15 +911,30 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 
 void
 basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
-			int leftover, int step)
+			int leftover, PanelSpeed animation_step)
 {
 	GtkWidget *wid;
 	int x,y, dx,dy, ox,oy;
 	int w,h, dw,dh, ow,oh;
 	int diff;
+	int step;
 
 	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
+	
+	switch (animation_step) {
+		case PANEL_SPEED_MEDIUM:
+				step = 60;
+				break;
+		case PANEL_SPEED_SLOW:
+				step = 10;
+				break;
+		case PANEL_SPEED_FAST:
+				step = 80;
+				break;
+		default:
+				step = 60;
+	}
 
 #ifdef BASEP_WIDGET_DEBUG
 		g_warning ("do_showing with step %d", step);

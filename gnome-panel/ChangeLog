@@ -1,3 +1,13 @@
+2002-01-07  Glynn Foster  <glynn.foster@sun.com>
+	
+	* basep-widget.c, basep-widget.h, main.c panel-config-global.h, 
+	  panel-global-config.schemas, panel-per-panel-config.schemas,
+	  panel-types.h, session.c: 
+
+	Remove mostly all traces of non-usable gconf schema keys in preference
+	to using gconf_string_to_enum and vice versa. This will hang your panel
+	unless you remove ~/.gconf/apps/panel and 'make install'.
+
 2002-01-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* applet.c:

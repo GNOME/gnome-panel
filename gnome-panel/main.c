@@ -217,7 +217,7 @@ main(int argc, char **argv)
 
 	if (profile_name == NULL) {
 		/* FIXME: Do this properly. just a temporary hack */
-		g_warning ("Couldn't find profile!");
+		printf ("Couldn't find profile! - Loading up default . . .\n");
 		session_set_current_profile ("default");
 	} else {
 		session_set_current_profile (profile_name);
@@ -230,7 +230,6 @@ main(int argc, char **argv)
 
 	if (!panel_shell_register ())
 		return -1;
-
 	find_kde_directory();
 
 	client = gnome_master_client ();
@@ -249,6 +248,7 @@ main(int argc, char **argv)
 
 	/* FIXME - need to start using gconf to this 
 	load_system_wide (); */
+
 
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/menus");

@@ -243,12 +243,12 @@ void            basep_widget_explicit_show      (BasePWidget *basep);
 void		basep_widget_do_hiding		(BasePWidget *basep,
 						 PanelOrient hide_orient,
 						 int leftover,
-						 int step);
+						 PanelSpeed animation_step);
 
 void		basep_widget_do_showing		(BasePWidget *basep,
 						 PanelOrient hide_orient,
 						 int leftover,
-						 int step);
+						 PanelSpeed animation_step);
 
 void		basep_widget_get_position	(BasePWidget *basep,
 						 PanelOrient hide_orient,
