@@ -216,9 +216,9 @@ panel_compatibility_migrate_background_settings (GConfClient *client,
 }
 
 static void
-panel_compatibility_migrate_edge_panel_settings (GConfClient *client,
-						 const char  *toplevel_dir,
-						 const char  *panel_dir)
+panel_compatibility_migrate_edge_setting (GConfClient *client,
+					  const char  *toplevel_dir,
+					  const char  *panel_dir)
 {
 	BorderEdge  edge;
 	const char *key;
@@ -260,6 +260,19 @@ panel_compatibility_migrate_edge_panel_settings (GConfClient *client,
 }
 
 static void
+panel_compatibility_migrate_edge_panel_settings (GConfClient *client,
+						 const char  *toplevel_dir,
+						 const char  *panel_dir)
+{
+	const char *key;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, TRUE, NULL);
+
+	panel_compatibility_migrate_edge_setting (client, toplevel_dir, panel_dir);
+}
+
+static void
 panel_compatibility_migrate_drawer_panel_settings (GConfClient *client,
 						   const char  *toplevel_dir,
 						   const char  *panel_dir)
@@ -267,6 +280,9 @@ panel_compatibility_migrate_drawer_panel_settings (GConfClient *client,
 	PanelOrient  orient;
 	const char  *key;
 	char        *orient_str;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, FALSE, NULL);
 
 	key = panel_gconf_sprintf ("%s/panel_orient", panel_dir);
 	orient_str = gconf_client_get_string (client, key, NULL);
@@ -309,8 +325,13 @@ panel_compatibility_migrate_corner_panel_settings (GConfClient *client,
 						   const char  *panel_dir)
 
 {
+	const char *key;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, FALSE, NULL);
+
 	/* screen edge */
-	panel_compatibility_migrate_edge_panel_settings (client, toplevel_dir, panel_dir);
+	panel_compatibility_migrate_edge_setting (client, toplevel_dir, panel_dir);
 
 	g_warning ("FIXME: implement migrating the 'panel_align' setting");
 }
@@ -320,8 +341,13 @@ panel_compatibility_migrate_sliding_panel_settings (GConfClient *client,
 						    const char  *toplevel_dir,
 						    const char  *panel_dir)
 {
+	const char *key;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, FALSE, NULL);
+
 	/* screen edge */
-	panel_compatibility_migrate_edge_panel_settings (client, toplevel_dir, panel_dir);
+	panel_compatibility_migrate_edge_setting (client, toplevel_dir, panel_dir);
 
 	g_warning ("FIXME: implement migrating the 'panel_anchor' and 'panel_offset' settings");
 }
@@ -335,6 +361,9 @@ panel_compatibility_migrate_floating_panel_settings (GConfClient *client,
 	const char     *key;
 	char           *orientation_str;
 	int             x, y;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, FALSE, NULL);
 
 	key = panel_gconf_sprintf ("%s/panel_orient", panel_dir);
 	orientation_str = gconf_client_get_string (client, key, NULL);
@@ -381,9 +410,21 @@ panel_compatibility_migrate_floating_panel_settings (GConfClient *client,
 
 static void
 panel_compatibility_migrate_menu_panel_settings (GConfClient *client,
-						      const char  *toplevel_dir,
-						      const char  *panel_dir)
+						 const char  *toplevel_dir,
+						 const char  *panel_dir)
 {
+	const char *key;
+
+	key = panel_gconf_sprintf ("%s/expand", toplevel_dir);
+	gconf_client_set_bool (client, key, FALSE, NULL);
+
+	key = panel_gconf_sprintf ("%s/orientation", toplevel_dir);
+	gconf_client_set_string (client, key,
+				 panel_profile_map_orientation (PANEL_ORIENTATION_TOP),
+				 NULL);
+
+	/* FIXME: Need to add the two applets to GConf here */
+
 	g_warning ("FIXME: implement migrating menu panel settings");
 }
 
@@ -447,6 +488,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	int         size;
 	gboolean    enable_buttons;
 	gboolean    enable_arrows;
+	gboolean    auto_hide;
 
 	profile = panel_profile_get_name ();
 
@@ -497,6 +539,13 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	key = panel_gconf_sprintf ("%s/enable_arrows", toplevel_dir);
 	gconf_client_set_bool (client, key, enable_arrows, NULL);
 
+	/* auto hide */
+	key = panel_gconf_sprintf ("%s/panel_hide_mode", panel_dir);
+	auto_hide = gconf_client_get_int (client, key, NULL);
+
+	key = panel_gconf_sprintf ("%s/auto_hide", toplevel_dir);
+	gconf_client_set_int (client, key, auto_hide, NULL);
+
 	/* migrate different panel types to toplevels */
 	panel_compatibility_migrate_panel_types (client, toplevel_dir, panel_dir);
 
@@ -509,6 +558,46 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 	return toplevel_id;
 }
 
+static void
+panel_compatibility_migrate_panel_ids (GConfClient       *client,
+				       PanelGConfKeyType  key_type,
+				       GHashTable        *panel_id_hash)
+{
+	const char *key;
+	const char *profile;
+	GSList     *l, *objects;
+
+	profile = panel_profile_get_name ();
+
+	key = panel_gconf_general_key (profile, panel_gconf_key_type_to_id_list (key_type));
+	objects = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
+
+	for (l = objects; l; l = l->next) {
+		char *id = l->data;
+		char *panel_id;
+		char *toplevel_id;
+
+		key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
+		toplevel_id = gconf_client_get_string (client, key, NULL);
+
+		key = panel_gconf_full_key (key_type, profile, id, "panel_id");
+		panel_id = gconf_client_get_string (client, key, NULL);
+
+		if (!toplevel_id && panel_id) {
+			toplevel_id = g_hash_table_lookup (panel_id_hash, panel_id);
+
+			key = panel_gconf_full_key (key_type, profile, id, "toplevel_id");
+			gconf_client_set_string (client, key, toplevel_id, NULL);
+
+			toplevel_id = NULL;
+		}
+
+		g_free (toplevel_id);
+		g_free (panel_id);
+		g_free (l->data);
+	}
+	g_slist_free (objects);
+}
 
 /* If toplevel_id_list is unset, migrate all the panels in
  * panel_id_list to toplevels
@@ -516,6 +605,7 @@ panel_compatibility_migrate_panel_settings (GConfClient *client,
 void
 panel_compatibility_migrate_panel_id_list (GConfClient *client)
 {
+	GHashTable *panel_id_hash;
 	GConfValue *value;
 	GError     *error = NULL;
 	const char *profile;
@@ -539,6 +629,8 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 		return;
 	}
 
+	panel_id_hash = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, g_free);
+
 	key = panel_gconf_general_key (profile, "panel_id_list");
 	panel_id_list = gconf_client_get_list (client, key, GCONF_VALUE_STRING, NULL);
 
@@ -549,16 +641,20 @@ panel_compatibility_migrate_panel_id_list (GConfClient *client)
 								     toplevel_id_list,
 								     l->data);
 		toplevel_id_list = g_slist_prepend (toplevel_id_list, new_id);
-		g_free (l->data);
+
+		g_hash_table_insert (panel_id_hash, l->data, new_id);
 	}
-	g_slist_free (panel_id_list);
 
 	key = panel_gconf_general_key (profile, "toplevel_id_list");
 	gconf_client_set_list (client, key, GCONF_VALUE_STRING, toplevel_id_list, NULL);
 
-	for (l = toplevel_id_list; l; l = l->next)
-		g_free (l->data);
+	g_slist_free (panel_id_list);
 	g_slist_free (toplevel_id_list);
+
+	panel_compatibility_migrate_panel_ids (client, PANEL_GCONF_OBJECTS, panel_id_hash);
+	panel_compatibility_migrate_panel_ids (client, PANEL_GCONF_APPLETS, panel_id_hash);
+
+	g_hash_table_destroy (panel_id_hash);
 }
 
 

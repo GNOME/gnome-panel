@@ -1,5 +1,24 @@
 2003-03-03  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-compatibility.c:
+	(panel_compatibility_migrate_edge_panel_settings),
+	(panel_compatibility_migrate_drawer_panel_settings),
+	(panel_compatibility_migrate_corner_panel_settings),
+	(panel_compatibility_migrate_sliding_panel_settings),
+	(panel_compatibility_migrate_floating_panel_settings),
+	(panel_compatibility_migrate_menu_panel_settings): set whether
+	or not the toplevel is expanded.
+	(panel_compatibility_migrate_panel_settings): copy across the
+	auto hide setting. I never even knew that the old setting was
+	an enum stored as an int. Bork.
+	(panel_compatibility_migrate_panel_ids): iterate across the
+	objects list changing the panel_ids to new toplevel_ids.
+	(panel_compatibility_migrate_panel_id_list): retain a map
+	of our panel_id -> toplevel_id renaming and pass it into
+	migrate_panel_ids().
+
+2003-03-03  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c, drawer.c, install-defaults.sh,
 	  panel-object.schemas.in, panel-profile.c:
 	s/panel_id/toplevel_id/ gconf setting for objects. Needed to
