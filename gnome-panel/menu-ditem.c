@@ -531,8 +531,8 @@ panel_new_launcher (const char *item_loc,
 
 	if (!is_item_writable (item_loc, NULL)) {
 		dialog = panel_error_dialog (screen,
-					     "cannot_create_launcher",
-					     _("Cannot create launcher"), TRUE,
+					     "cannot_create_launcher", TRUE,
+					     _("Cannot create launcher"),
 					     _("You can not create a new launcher at this "
 					       "location since the location is not writable."));
 
