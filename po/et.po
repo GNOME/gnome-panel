@@ -7,14 +7,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-02 09:46+0000\n"
-"PO-Revision-Date: 2003-08-16 01:30+0300\n"
-"Last-Translator: Tõivo Leedjärv <toivo@linux.ee>\n"
+"POT-Creation-Date: 2004-02-27 03:56+0100\n"
+"PO-Revision-Date: 2004-03-07 10:09+0300\n"
+"Last-Translator: Priit Laes <amd@tt.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -45,8 +44,10 @@ msgstr "_Info..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:611 gnome-panel/menu.c:3079
-#: gnome-panel/panel-action-button.c:604 gnome-panel/panel-menu-bar.c:349
+#: gnome-panel/drawer.c:611
+#: gnome-panel/menu.c:3079
+#: gnome-panel/panel-action-button.c:604
+#: gnome-panel/panel-menu-bar.c:364
 #: gnome-panel/panel-menu-button.c:621
 msgid "_Help"
 msgstr "_Abi"
@@ -63,7 +64,7 @@ msgid "Accessories"
 msgstr "Tarvikud"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
-#: applets/clock/clock.c:2556
+#: applets/clock/clock.c:2554
 msgid "Clock"
 msgstr "Kell"
 
@@ -79,38 +80,39 @@ msgstr "Factory for creating clock applets."
 msgid "Get the current time and date"
 msgstr "Võta praegune kuupäev ja kellaaeg"
 
-#: applets/clock/clock.c:272
+#: applets/clock/clock.c:271
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:272 applets/clock/clock.c:625
+#: applets/clock/clock.c:271
+#: applets/clock/clock.c:622
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:1549
+#: applets/clock/clock.c:273
+#: applets/clock/clock.c:1547
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:274 applets/clock/clock.c:627
-#: applets/clock/clock.c:1551
+#: applets/clock/clock.c:273
+#: applets/clock/clock.c:624
+#: applets/clock/clock.c:1549
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#. translators: replace %e with %d if, when the day of the
-#. *              month as a decimal number is a single digit, it
-#. *              should begin with a 0 in your locale (e.g. "May
-#. *              01" instead of "May  1").
-#.
-#: applets/clock/clock.c:285
+#  translators: replace %e with %d if, when the day of the
+#  *              month as a decimal number is a single digit, it
+#  *              should begin with a 0 in your locale (e.g. "May
+#  *              01" instead of "May  1").
+#: applets/clock/clock.c:284
 #, fuzzy
 msgid "%a %b %e"
 msgstr "%a %d. %b"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/clock/clock.c:292
+#  translators: reverse the order of these arguments
+#  *              if the time should come before the
+#  *              date on a clock in your locale.
+#: applets/clock/clock.c:291
 #, fuzzy, c-format
 msgid ""
 "%1$s\n"
@@ -119,123 +121,125 @@ msgstr ""
 "%s\n"
 "%s"
 
-#. translators: reverse the order of these arguments
-#. *              if the time should come before the
-#. *              date on a clock in your locale.
-#.
-#: applets/clock/clock.c:299
+#  translators: reverse the order of these arguments
+#  *              if the time should come before the
+#  *              date on a clock in your locale.
+#: applets/clock/clock.c:298
 #, fuzzy, c-format
 msgid "%1$s, %2$s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:418
+#: applets/clock/clock.c:415
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#: applets/clock/clock.c:844
+#: applets/clock/clock.c:841
 msgid "Tasks"
-msgstr ""
+msgstr "Ülesanded"
 
-#: applets/clock/clock.c:976
+#: applets/clock/clock.c:973
 msgid "All Day"
-msgstr ""
+msgstr "Kogu päev"
 
-#: applets/clock/clock.c:1010
+#: applets/clock/clock.c:1007
 msgid "Appointments"
-msgstr ""
+msgstr "Kokkusaamised"
 
-#: applets/clock/clock.c:1231
+#: applets/clock/clock.c:1229
 msgid "Calendar"
 msgstr "Kalender"
 
-#: applets/clock/clock.c:1462
+#: applets/clock/clock.c:1460
 msgid "Computer Clock"
 msgstr "Arvuti kell"
 
-#: applets/clock/clock.c:1544
+#: applets/clock/clock.c:1542
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:1546
+#: applets/clock/clock.c:1544
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:1586
+#: applets/clock/clock.c:1584
 msgid "%A, %B %d %Y"
 msgstr "%A, %d. B% %Y"
 
-#: applets/clock/clock.c:1628
+#: applets/clock/clock.c:1626
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr ""
+msgstr "Aja seadistusprogrammi käivitamine ebaõnnestus: %s"
 
-#: applets/clock/clock.c:1667
-msgid ""
-"Failed to locate a program for configuring the date and time. Perhaps none "
-"is installed?"
-msgstr ""
+#: applets/clock/clock.c:1665
+msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
+msgstr "Kuupäeva ja kellaaja seadistusprogrammi ei leitud.Võibolla ei ole ühtegi paigaldatud?"
 
-#: applets/clock/clock.c:2145 applets/clock/clock.c:2502
-#: applets/fish/fish.c:127 applets/notification_area/main.c:84
-#: applets/wncklet/showdesktop.c:417 applets/wncklet/window-list.c:115
-#: applets/wncklet/window-list.c:772 applets/wncklet/window-menu.c:86
+#: applets/clock/clock.c:2143
+#: applets/clock/clock.c:2500
+#: applets/fish/fish.c:127
+#: applets/notification_area/main.c:84
+#: applets/wncklet/showdesktop.c:417
+#: applets/wncklet/window-list.c:115
+#: applets/wncklet/window-list.c:772
+#: applets/wncklet/window-menu.c:86
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Abiinfo kuvamisel tekkis viga: %s"
 
-#: applets/clock/clock.c:2194
+#: applets/clock/clock.c:2192
 msgid "Clock Preferences"
 msgstr "Kella häälestus"
 
-#: applets/clock/clock.c:2230
+#: applets/clock/clock.c:2228
 msgid "Clock _type:"
 msgstr "Kella _tüüp:"
 
-#: applets/clock/clock.c:2241
+#: applets/clock/clock.c:2239
 msgid "12 hour"
 msgstr "12 tunnine"
 
-#: applets/clock/clock.c:2249
+#: applets/clock/clock.c:2247
 msgid "24 hour"
 msgstr "24 tunnine"
 
-#: applets/clock/clock.c:2257
+#: applets/clock/clock.c:2255
 msgid "UNIX time"
 msgstr "UNIXi aeg"
 
-#: applets/clock/clock.c:2265
+#: applets/clock/clock.c:2263
 msgid "Internet time"
 msgstr "Interneti aeg"
 
-#: applets/clock/clock.c:2273
-#, fuzzy
+#: applets/clock/clock.c:2271
 msgid "Custom format"
-msgstr "Tunnivorming"
+msgstr "Kohandatud formaat"
 
-#: applets/clock/clock.c:2289
-#, fuzzy
+#: applets/clock/clock.c:2287
 msgid "Custom _format:"
-msgstr "Tunnivorming"
+msgstr "Kohandatud _formaat:"
 
-#: applets/clock/clock.c:2306
+#: applets/clock/clock.c:2304
 msgid "Show _seconds"
 msgstr "Näita _sekundeid"
 
-#: applets/clock/clock.c:2315
+#: applets/clock/clock.c:2313
 msgid "Show _date"
 msgstr "Näita _kuupäeva"
 
-#: applets/clock/clock.c:2324
+#: applets/clock/clock.c:2322
 msgid "Use _UTC"
 msgstr "_UTC aeg"
 
 #. Translator credits
-#: applets/clock/clock.c:2537 applets/notification_area/main.c:120
-#: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
-#: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
+#: applets/clock/clock.c:2535
+#: applets/notification_area/main.c:120
+#: applets/wncklet/showdesktop.c:447
+#: applets/wncklet/window-list.c:804
+#: applets/wncklet/window-menu.c:116
+#: applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
 msgstr ""
@@ -244,7 +248,7 @@ msgstr ""
 "       Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
 "       Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003."
 
-#: applets/clock/clock.c:2558
+#: applets/clock/clock.c:2556
 msgid "The Clock displays the current time and date"
 msgstr "Kellarakend näitab hetkekuupäeva ja kella"
 
@@ -253,40 +257,36 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24 tunnine"
+msgstr "24-tunnine"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Kohandatud kellaformaat"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
 msgstr "Tunnivorming"
 
 #: applets/clock/clock.schemas.in.h:5
-#, fuzzy
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Näita lisaks kellaajale ka kuupäeva"
+msgstr "Kui see väärtus on tõene, siis lisaks kellaajale ka näidatakse ka kuupäeva."
 
 #: applets/clock/clock.schemas.in.h:6
-#, fuzzy
 msgid "If true, display seconds in time."
-msgstr "Näitab kellaajas sekundeid"
+msgstr "Kui see väärtus on tõene, siis näitatakse kellaaja juures sekundeid."
 
 #: applets/clock/clock.schemas.in.h:7
 #, fuzzy
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Näitab kellaaega Greenwichi ajavööndis (UTC)"
+msgstr "Kui see väärtus on tõene, siis näitatakse kellaaega Greenwichi ajavööndis (UTC)"
 
 #: applets/clock/clock.schemas.in.h:8
 #, fuzzy
 msgid "If true, show date in a tooltip when the pointer is over the clock."
-msgstr "Näita kuupäeva vihjel, kui hiir on kellarakendi kohal"
+msgstr "Kui see väärtus on tõene, siis näitatakse kuupäeva vihjel, kui hiir on kellarakendi kohal"
 
 #: applets/clock/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in clock"
 msgstr "Näita kellarakendis kuupäeva"
 
@@ -299,28 +299,16 @@ msgid "Show time with seconds"
 msgstr "Näita sekundeid"
 
 #: applets/clock/clock.schemas.in.h:12
-msgid ""
-"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
-"key. The schema is retained for compatibility with older versions."
-msgstr ""
+#, fuzzy
+msgid "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' key. The schema is retained for compatibility with older versions."
+msgstr "See võti on GNOME 2.6's vananenud ja selle asemel kasutatake 'format' võtit. "
 
 #: applets/clock/clock.schemas.in.h:13
-msgid ""
-"This key specifies the format used by the clock applet when the format key "
-"is set to \"custom\". You can use conversion specifiers understood by "
-"strftime() to obtain a specific format."
+msgid "This key specifies the format used by the clock applet when the format key is set to \"custom\". You can use conversion specifiers understood by strftime() to obtain a specific format."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:14
-msgid ""
-"This key specifies the hour format used by the clock applet. Possible values "
-"are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set "
-"to \"internet\", the clock will display internet time. The internet time "
-"system divides the day into 1000 \".beats\". There are no time zones in this "
-"system, so time is the same all over the world. If set to \"unix\", the "
-"clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to "
-"\"custom\", the clock will display time according to the format specified in "
-"the custom_format key."
+msgid "This key specifies the hour format used by the clock applet. Possible values are \"12-hour\", \"24-hour\", \"internet\", \"unix\" and \"custom\". If set to \"internet\", the clock will display internet time. The internet time system divides the day into 1000 \".beats\". There are no time zones in this system, so time is the same all over the world. If set to \"unix\", the clock will display time in seconds since Epoch, i.e. 1970-01-01. If set to \"custom\", the clock will display time according to the format specified in the custom_format key."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:15
@@ -329,7 +317,7 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:16
 msgid "Time configuration tool"
-msgstr ""
+msgstr "Aja seadistusprogramm"
 
 #: applets/clock/clock.schemas.in.h:17
 msgid "Use UNIX time"
@@ -377,24 +365,17 @@ msgstr ""
 "Me soovitame sul hoiduda tegevusest %s, mis võiks teha\n"
 "selle rakendi kuidagimoodi \"praktiliseks\" või kasulikuks."
 
-#: applets/fish/fish.c:458 applets/fish/fish.c:533 applets/fish/fish.c:621
+#: applets/fish/fish.c:458
+#: applets/fish/fish.c:533
+#: applets/fish/fish.c:621
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Kala nimega %s"
 
 #: applets/fish/fish.c:459
 #, c-format
-msgid ""
-"%s has no use what-so-ever. It only takes up disk space and compilation "
-"time, and if loaded it also takes up precious panel space and memory. If "
-"anyone is found using it, he should be promptly sent for a psychiatric "
-"evaluation."
-msgstr ""
-"Rakendil %s pole üleüldse mitte mingit mõtet. Ta võtab ainult kettaruumi "
-"ning tema kompileerimiseks kulub väärtuslikku aega ja kui ta töötab, siis "
-"raiskab ta väärtuslikku paneelipinda ning mälu. Kui iganes keegi leitakse "
-"antud rakendit kasutamas, tuleks ta õigeaegselt suunata psühhiaatrilisse "
-"ekspertiisi."
+msgid "%s has no use what-so-ever. It only takes up disk space and compilation time, and if loaded it also takes up precious panel space and memory. If anyone is found using it, he should be promptly sent for a psychiatric evaluation."
+msgstr "Rakendil %s pole üleüldse mitte mingit mõtet. Ta võtab ainult kettaruumi ning tema kompileerimiseks kulub väärtuslikku aega ja kui ta töötab, siis raiskab ta väärtuslikku paneelipinda ning mälu. Kui iganes keegi leitakse antud rakendit kasutamas, tuleks ta õigeaegselt suunata psühhiaatrilisse ekspertiisi."
 
 #: applets/fish/fish.c:485
 msgid "(with minor help from George)"
@@ -431,13 +412,11 @@ msgstr ""
 
 #: applets/fish/fish.c:773
 msgid ""
-"You do not have fortune installed or you have not specified a program to "
-"run.\n"
+"You do not have fortune installed or you have not specified a program to run.\n"
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"Sul ei ole fortune't installitud või sa ei ole määranud käivitatavat "
-"programmi.\n"
+"Sul ei ole fortune't installitud või sa ei ole määranud käivitatavat programmi.\n"
 "\n"
 "Palun vaata kala omaduste lehele."
 
@@ -454,14 +433,16 @@ msgstr ""
 msgid "%s the Fish, the fortune teller"
 msgstr "GNOME kala, ennustaja"
 
-#: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
+#: applets/fish/fish.glade.h:1
+#: applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
 #: gnome-panel/gnome-panel-screenshot.glade.h:1
 #: gnome-panel/panel-properties-dialog.glade.h:1
 msgid "    "
 msgstr "    "
 
-#: applets/fish/fish.glade.h:2 gnome-panel/gnome-panel-screenshot.glade.h:2
+#: applets/fish/fish.glade.h:2
+#: gnome-panel/gnome-panel-screenshot.glade.h:2
 #: gnome-panel/panel-properties-dialog.glade.h:2
 #: gnome-panel/panel-run-dialog.glade.h:1
 msgid "*"
@@ -516,12 +497,8 @@ msgid "seconds"
 msgstr "sekundi järel"
 
 #: applets/fish/fish.schemas.in.h:1
-msgid ""
-"A fish without a name is a pretty dull fish. Bring your fish to life by "
-"naming him."
-msgstr ""
-"Ilma nimeta kala on üsna igav kala. Puhu oma kalale eluvaim sisse ja pane "
-"talle nimi!"
+msgid "A fish without a name is a pretty dull fish. Bring your fish to life by naming him."
+msgstr "Ilma nimeta kala on üsna igav kala. Puhu oma kalale eluvaim sisse ja pane talle nimi!"
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute on click"
@@ -532,8 +509,7 @@ msgid "Frames in fish's animation"
 msgstr "Kala animatsiooni kaadrite arv"
 
 #: applets/fish/fish.schemas.in.h:4
-msgid ""
-"If true, the fish's animation will be displayed rotated on vertical panels."
+msgid "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
 
 #: applets/fish/fish.schemas.in.h:5
@@ -554,22 +530,16 @@ msgstr "Kala nimi"
 
 #: applets/fish/fish.schemas.in.h:9
 #, fuzzy
-msgid ""
-"This key specifies the command that will be tried to execute when the fish "
-"is clicked."
+msgid "This key specifies the command that will be tried to execute when the fish is clicked."
 msgstr "Kala klõpsamisel käivitatav käsk"
 
 #: applets/fish/fish.schemas.in.h:10
-msgid ""
-"This key specifies the filename of the pixmap which will be used for the "
-"animation displayed in the fish applet relative to the pixmap directory."
+msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 
 #: applets/fish/fish.schemas.in.h:11
 #, fuzzy
-msgid ""
-"This key specifies the number of frames that will be displayed in the fish's "
-"animation."
+msgid "This key specifies the number of frames that will be displayed in the fish's animation."
 msgstr "Kala animatsiooni kaadrite arv"
 
 #: applets/fish/fish.schemas.in.h:12
@@ -593,14 +563,19 @@ msgstr "Notification Area Factory"
 msgid "Utility"
 msgstr "Utiliit"
 
-#: applets/notification_area/main.c:138 applets/notification_area/main.c:364
+#: applets/notification_area/main.c:138
+#: applets/notification_area/main.c:361
 msgid "Panel Notification Area"
 msgstr "Paneeli teateala"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
-#: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
-#: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:208
+#: gnome-panel/menu.c:112
+#: gnome-panel/menu.c:122
+#: gnome-panel/menu.c:132
+#: gnome-panel/menu.c:142
+#: gnome-panel/menu.c:152
+#: gnome-panel/menu.c:162
+#: gnome-panel/panel-menu-bar.c:223
 msgid "Actions"
 msgstr "Tegevused"
 
@@ -634,7 +609,8 @@ msgid "Window Navigation Applet Factory"
 msgstr "Window Navigation Applet Factory"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
-#: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
+#: applets/wncklet/window-menu.c:134
+#: applets/wncklet/window-menu.c:708
 #, fuzzy
 msgid "Window Selector"
 msgstr "Akende nimekiri"
@@ -662,7 +638,8 @@ msgstr "%s laadimine ebaõnnestus: %s\n"
 msgid "File not found"
 msgstr "Ei leia faili"
 
-#: applets/wncklet/showdesktop.c:337 applets/wncklet/showdesktop.c:456
+#: applets/wncklet/showdesktop.c:337
+#: applets/wncklet/showdesktop.c:456
 msgid "Show Desktop Button"
 msgstr "Näita töölaua nuppu"
 
@@ -671,17 +648,13 @@ msgid "This button lets you hide all windows and show the desktop"
 msgstr "See nupp võimaldab sul kõik aknad peita ning töölauda näha"
 
 #: applets/wncklet/showdesktop.c:498
-msgid ""
-"Your window manager does not support the show desktop button, or you are not "
-"running a window manager."
+msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
 msgstr ""
 
 #: applets/wncklet/window-list.c:822
 #, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr ""
-"Akende nimistu näitab kõikide nähtavate akende nimekirja ja laseb sul nende "
-"vahel valida."
+msgstr "Akende nimistu näitab kõikide nähtavate akende nimekirja ja laseb sul nende vahel valida."
 
 #: applets/wncklet/window-list.glade.h:2
 #, fuzzy
@@ -755,40 +728,26 @@ msgstr "pikslit"
 
 #: applets/wncklet/window-list.schemas.in.h:1
 #, fuzzy
-msgid ""
-"Decides when to group windows from the same application on the window list. "
-"Possible values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Määrab, millal grupeerida sama rakenduse aknad akende nimistus. Võimalikud "
-"väärtused on mitte kunagi (never), automaatselt (auto) ja alati (always)."
+msgid "Decides when to group windows from the same application on the window list. Possible values are \"never\", \"auto\" and \"always\"."
+msgstr "Määrab, millal grupeerida sama rakenduse aknad akende nimistus. Võimalikud väärtused on mitte kunagi (never), automaatselt (auto) ja alati (always)."
 
 #: applets/wncklet/window-list.schemas.in.h:2
 #, fuzzy
-msgid ""
-"If true, the window list will show windows from all workspaces. Otherwise it "
-"will only display windows from the current workspace."
-msgstr ""
-"Kui see väärtus on tõene, siis näitab akende nimistu kõikide töötsoonide "
-"aknaid, vastasel juhul näidatakse ainult aktiivse töötsooni aknaid."
+msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
+msgstr "Kui see väärtus on tõene, siis näitab akende nimistu kõikide töötsoonide aknaid, vastasel juhul näidatakse ainult aktiivse töötsooni aknaid."
 
 #: applets/wncklet/window-list.schemas.in.h:3
 #, fuzzy
-msgid ""
-"If true, then when unminimizing a window, move it to the current workspace. "
-"Otherwise, switch to the workspace of the window."
-msgstr ""
-"Kui see väärtus on tõene, siis tõstetakse aken taastamisel aktiivsesse "
-"töötsooni. Vastasel korral vahetatakse aktiivset töötsooni."
+msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
+msgstr "Kui see väärtus on tõene, siis tõstetakse aken taastamisel aktiivsesse töötsooni. Vastasel korral vahetatakse aktiivset töötsooni."
 
 #: applets/wncklet/window-list.schemas.in.h:4
-#, fuzzy
 msgid "Maximum window list size"
-msgstr "Mak_simaalne suurus:"
+msgstr "Maksimaalne aknanimekirja suurus"
 
 #: applets/wncklet/window-list.schemas.in.h:5
-#, fuzzy
 msgid "Minimum window list size"
-msgstr "_Minimaalne suurus:"
+msgstr "Minimaalne aknanimekirja suurus."
 
 #: applets/wncklet/window-list.schemas.in.h:6
 #, fuzzy
@@ -801,14 +760,8 @@ msgstr "Näita kõikide töötsoonide aknaid"
 
 #: applets/wncklet/window-list.schemas.in.h:8
 #, fuzzy
-msgid ""
-"This key specifies the maximum width that the window list requests. The "
-"maximum width setting is useful to limit the size of the window list in "
-"large panels, where the window list could fill the entire space available."
-msgstr ""
-"See väärtus on akende nimistu maksimaalne laius, mida rakend tellib. See on "
-"kasulik eelkõige suurtel paneelidel laiuse piiramiseks, vaikimisi hõivab "
-"nimistu kogu vaba ruumi, nagu näiteks servapaneelidel."
+msgid "This key specifies the maximum width that the window list requests. The maximum width setting is useful to limit the size of the window list in large panels, where the window list could fill the entire space available."
+msgstr "See väärtus on akende nimistu maksimaalne laius, mida rakend tellib. See on kasulik eelkõige suurtel paneelidel laiuse piiramiseks, vaikimisi hõivab nimistu kogu vaba ruumi, nagu näiteks servapaneelidel."
 
 #: applets/wncklet/window-list.schemas.in.h:9
 #, fuzzy
@@ -821,11 +774,8 @@ msgstr "Millal aknaid grupeerida"
 
 #: applets/wncklet/window-menu.c:138
 #, fuzzy
-msgid ""
-"The Window Selector shows a list of all windows and lets you browse them."
-msgstr ""
-"Akende nimistu näitab kõikide nähtavate akende nimekirja ja laseb sul nende "
-"vahel valida."
+msgid "The Window Selector shows a list of all windows and lets you browse them."
+msgstr "Akende nimistu näitab kõikide nähtavate akende nimekirja ja laseb sul nende vahel valida."
 
 #: applets/wncklet/window-menu.c:418
 msgid "Unknown Window"
@@ -858,24 +808,17 @@ msgstr "Viga num_rows väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:369
 #, c-format
-msgid ""
-"Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr ""
-"Viga display_workspace_names väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
+msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
+msgstr "Viga display_workspace_names väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:384
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr ""
-"Viga display_all_workspaces väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
+msgstr "Viga display_all_workspaces väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:521
-msgid ""
-"The Workspace Switcher shows you a small version of your workspaces that "
-"lets you manage your windows."
-msgstr ""
-"Tööstoonide haldur näitab sinu töötsoonide väikest versiooni ning laseb sul "
-"aknaid hallata."
+msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
+msgstr "Tööstoonide haldur näitab sinu töötsoonide väikest versiooni ning laseb sul aknaid hallata."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Switcher</b>"
@@ -922,61 +865,48 @@ msgid "Display workspace names"
 msgstr "Näita töötsoonide nimesid"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
-#, fuzzy
-msgid ""
-"If true, the workspace switcher will show all workspaces. Otherwise it will "
-"only show the current workspace."
-msgstr ""
-"Kui see väärtus on tõene, siis näitab töötsoonihaldur kõiki töötsoone, "
-"vastasel juhul ainult aktiivset töötsooni."
+msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
+msgstr "Kui see väärtus on tõene, siis näitab töötsoonihaldur kõiki töötsoone. Vastasel juhul näidatakse ainult aktiivset töötsooni."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
-msgid ""
-"If true, the workspaces in the workspace switcher will display the names of "
-"the workspaces. Otherwise they will display the windows on the workspace."
-msgstr ""
-"Kui see väärtus on tõene, siis näitab töötsoonihaldur töötsoonide nimesid, "
-"vastasel juhul töötsoonide sisu."
+msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace."
+msgstr "Kui see väärtus on tõene, siis näitab töötsoonihaldur töötsoonide nimesid. Vastasel juhul näitab see töötsoonides asuvaid aknaid."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
-#, fuzzy
 msgid "Rows in workspace switcher"
-msgstr "Töölauahaldur"
+msgstr "Töölauahalduri ridade arv"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
 #, fuzzy
-msgid ""
-"This key specifies how many rows (for horizontal layout) or columns (for "
-"vertical layout) the workspace switcher shows the workspaces in. This key is "
-"only relevant if the display_all_workspaces key is true."
-msgstr ""
-"Kui näidatakse kõiki töötsoone, siis määrab see väärtus, mitmes reas "
-"(horisontaalse asendi puhul) või veerus (vertikaalse asendi puhul) "
-"näidatakse miniatuurseid töötsoone."
+msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
+msgstr "Kui näidatakse kõiki töötsoone, siis määrab see väärtus, mitmes reas (horisontaalse asendi puhul) või veerus (vertikaalse asendi puhul) näidatakse miniatuurseid töötsoone."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "GNOME Paneeli kest"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:103
-#: gnome-panel/applet.c:470 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/applet.c:103
+#: gnome-panel/applet.c:470
+#: gnome-panel/panel-applet-frame.c:109
 msgid "_Lock"
 msgstr "_Lukusta"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:478
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:478
 msgid "_Move"
 msgstr "_Liiguta"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:456
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:456
 msgid "_Remove From Panel"
 msgstr "_Eemalda paneelilt"
 
-#: gnome-panel/applet.c:103 gnome-panel/applet.c:470
+#: gnome-panel/applet.c:103
+#: gnome-panel/applet.c:470
 #: gnome-panel/panel-applet-frame.c:109
-#, fuzzy
 msgid "Un_lock"
-msgstr "Kell"
+msgstr "Va_basta"
 
 #: gnome-panel/applet.c:377
 msgid "???"
@@ -1023,12 +953,17 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "CDE menüü"
 
-#: gnome-panel/drawer.c:340 gnome-panel/drawer.c:346 gnome-panel/menu.c:3188
+#: gnome-panel/drawer.c:340
+#: gnome-panel/drawer.c:346
+#: gnome-panel/menu.c:3188
 msgid "Drawer"
 msgstr "Sahtel"
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:742 gnome-panel/menu.c:1517
-#: gnome-panel/menu.c:3029 gnome-panel/panel-action-button.c:131
+#: gnome-panel/drawer.c:605
+#: gnome-panel/launcher.c:742
+#: gnome-panel/menu.c:1517
+#: gnome-panel/menu.c:3029
+#: gnome-panel/panel-action-button.c:131
 msgid "_Properties"
 msgstr "_Omadused"
 
@@ -1145,35 +1080,34 @@ msgstr ""
 "\"%s\"\n"
 "Palun kontrolli vanem-kataloogi õigusi"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if a specific window is taken
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cKuvatõmmis-%s.png"
+msgstr "Kuvatõmmis-%s.png"
 
-#. translators: this is the name of the file that gets made up
-#. * with the screenshot if the entire screen is taken
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cKuvatõmmis.png"
+msgstr "Kuvatõmmis.png"
 
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if a specific window is
-#. * taken
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if a specific window is
+#  * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cKuvatõmmis-%s-%d.png"
+msgstr "Kuvatõmmis-%s-%d.png"
 
-#. translators: this is the name of the file that gets
-#. * made up with the screenshot if the entire screen is
-#. * taken
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if the entire screen is
+#  * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cKuvatõmmis-%d.png"
+msgstr "Kuvatõmmis-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1225,11 +1159,8 @@ msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Salvesta kuvatõmmis _veebilehele (salvesta kataloogi ~/public__html)"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
-msgid ""
-"The user's directory in which screenshots should be saved so as to appear on "
-"the web."
-msgstr ""
-"Kasutaja kataloog, kuhu kuvatõmmised peab salvestama, et need ilmuksid veebi."
+msgid "The user's directory in which screenshots should be saved so as to appear on the web."
+msgstr "Kasutaja kataloog, kuhu kuvatõmmised peab salvestama, et need ilmuksid veebi."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
 msgid "Web directory"
@@ -1239,7 +1170,8 @@ msgstr "Veebikataloog"
 msgid "Cannot save launcher to disk"
 msgstr "Ei saa käivitajat kettale salvestada"
 
-#: gnome-panel/launcher.c:130 gnome-panel/launcher.c:173
+#: gnome-panel/launcher.c:130
+#: gnome-panel/launcher.c:173
 #: gnome-panel/launcher.c:217
 msgid "Cannot launch icon"
 msgstr "Ei saa ikooni käivitada ikooni"
@@ -1263,7 +1195,8 @@ msgstr "Paneeli käivitaja töölaua (desktop) failile pole URIt määratud\n"
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Ei saa avada töölaua (desktop) faili %s paneeli käivitajale %s%s\n"
 
-#: gnome-panel/launcher.c:630 gnome-panel/menu-ditem.c:182
+#: gnome-panel/launcher.c:630
+#: gnome-panel/menu-ditem.c:182
 #: gnome-panel/menu-ditem.c:265
 msgid "Launcher Properties"
 msgstr "Käivitaja häälestus"
@@ -1273,21 +1206,26 @@ msgstr "Käivitaja häälestus"
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Võti %s on määramata, ei saa käivitajat laadida\n"
 
-#: gnome-panel/launcher.c:871 gnome-panel/launcher.c:888
-#: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:871
+#: gnome-panel/launcher.c:888
+#: gnome-panel/menu-ditem.c:463
+#: gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
 msgid "Cannot create launcher"
 msgstr "Ei saa käivitajat luua"
 
-#: gnome-panel/launcher.c:872 gnome-panel/menu-ditem.c:464
+#: gnome-panel/launcher.c:872
+#: gnome-panel/menu-ditem.c:464
 msgid "You have to specify a name."
 msgstr "Sa pead nime määrama."
 
-#: gnome-panel/launcher.c:889 gnome-panel/menu-ditem.c:481
+#: gnome-panel/launcher.c:889
+#: gnome-panel/menu-ditem.c:481
 msgid "You have to specify a valid URL or command."
 msgstr "Sa pead korrektse URLi või käsu määrama."
 
-#: gnome-panel/launcher.c:932 gnome-panel/menu-ditem.c:544
+#: gnome-panel/launcher.c:932
+#: gnome-panel/menu-ditem.c:544
 msgid "Create Launcher"
 msgstr "Loo käivitaja"
 
@@ -1299,7 +1237,8 @@ msgstr "Määra laetava profiili nimi"
 msgid "Cannot save changes to launcher"
 msgstr "Ei saa kävitaja muudatusi salvestada"
 
-#: gnome-panel/menu-ditem.c:309 gnome-panel/menu.c:1323
+#: gnome-panel/menu-ditem.c:309
+#: gnome-panel/menu.c:1323
 msgid "Menu"
 msgstr "Menüü"
 
@@ -1309,24 +1248,16 @@ msgid "Cannot save menu item to disk"
 msgstr "Ei saa menüüelementi kettale salvestada"
 
 #: gnome-panel/menu-ditem.c:537
-msgid ""
-"You can not create a new launcher at this location since the location is not "
-"writable."
-msgstr ""
-"Sa ei saa siia uut käivitajat lisada, sest see asukoht pole kirjutatav."
+msgid "You can not create a new launcher at this location since the location is not writable."
+msgstr "Sa ei saa siia uut käivitajat lisada, sest see asukoht pole kirjutatav."
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3230
-#: gnome-panel/panel-menu-bar.c:200
+#: gnome-panel/menu.c:111
 msgid "Log Out"
 msgstr "Logi välja"
 
-#: gnome-panel/menu.c:114 gnome-panel/menu.c:3237
-msgid ""
-"Log out of this session to log in as a different user or to shut down the "
-"computer"
-msgstr ""
-"Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti sisse "
-"logida või arvuti välja lülitada"
+#: gnome-panel/menu.c:114
+msgid "Log out of this session to log in as a different user or to shut down the computer"
+msgstr "Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti sisse logida või arvuti välja lülitada"
 
 #: gnome-panel/menu.c:121
 msgid "Lock"
@@ -1336,7 +1267,8 @@ msgstr "Lukusta"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Lukusta ekraan, et võiksid ajutiselt arvuti juurest lahkuda"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:288
+#: gnome-panel/menu.c:131
+#: gnome-panel/panel-action-button.c:288
 msgid "Force Quit"
 msgstr ""
 
@@ -1344,11 +1276,13 @@ msgstr ""
 msgid "Force a misbehaving application to quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
+#: gnome-panel/menu.c:141
+#: gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
 msgstr "Kuvatõmmis"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3405
+#: gnome-panel/menu.c:144
+#: gnome-panel/menu.c:3419
 #: gnome-panel/panel-menu-bar.c:170
 msgid "Take a screenshot of your desktop"
 msgstr "Tee oma töölauast kuvatõmmis"
@@ -1357,7 +1291,8 @@ msgstr "Tee oma töölauast kuvatõmmis"
 msgid "Search"
 msgstr "Otsi"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3386
+#: gnome-panel/menu.c:154
+#: gnome-panel/menu.c:3400
 #: gnome-panel/panel-menu-bar.c:154
 msgid "Find files, folders, and documents on your computer"
 msgstr "Otsi oma arvutis asuvaid faile, katalooge ning dokumente"
@@ -1379,23 +1314,21 @@ msgid "The GNOME Panel"
 msgstr "GNOME paneel"
 
 #: gnome-panel/menu.c:299
-msgid ""
-"This program is responsible for launching other applications and embedding "
-"small applets within itself."
-msgstr ""
-"See programm vastutab teiste käivitamise eest ja neelab pisikesi rakendusi "
-"endasse."
+msgid "This program is responsible for launching other applications and embedding small applets within itself."
+msgstr "See programm vastutab teiste käivitamise eest ja neelab pisikesi rakendusi endasse."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:200
-#: gnome-panel/panel-action-button.c:224 gnome-panel/panel-util.c:701
+#: gnome-panel/menu.c:328
+#: gnome-panel/panel-action-button.c:200
+#: gnome-panel/panel-action-button.c:224
+#: gnome-panel/panel-util.c:701
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Ei suuda kävitada programmi '%s'"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1406,7 +1339,8 @@ msgstr "GNOME info"
 msgid "Cannot launch entry"
 msgstr "Loo käivitaja"
 
-#: gnome-panel/menu.c:366 gnome-panel/menu.c:1169
+#: gnome-panel/menu.c:366
+#: gnome-panel/menu.c:1169
 #, fuzzy
 msgid "Cannot load entry"
 msgstr "Käsu sisestusväli"
@@ -1440,7 +1374,8 @@ msgstr ""
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Sisendis puudub 'Exec' või 'URL' väli"
 
-#: gnome-panel/menu.c:1318 gnome-panel/menu.c:3169
+#: gnome-panel/menu.c:1318
+#: gnome-panel/menu.c:3169
 msgid "Main Menu"
 msgstr "Peamenüü"
 
@@ -1476,14 +1411,17 @@ msgstr "Lisa sellesse menüüsse uus rida"
 msgid "Properties"
 msgstr "Omadused"
 
-#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
+#: gnome-panel/menu.c:2569
+#: gnome-panel/menu.c:2624
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "päring tagastas erandi %s\n"
 
-#: gnome-panel/menu.c:2841 gnome-panel/menu.c:2846 gnome-panel/menu.c:3347
-#: gnome-panel/panel-menu-bar.c:226
+#: gnome-panel/menu.c:2841
+#: gnome-panel/menu.c:2846
+#: gnome-panel/menu.c:3361
+#: gnome-panel/panel-menu-bar.c:241
 msgid "Applications"
 msgstr "Rakendused"
 
@@ -1495,7 +1433,8 @@ msgstr "Sa ei saa oma viimast paneeli eemaldada."
 msgid "_Delete This Panel..."
 msgstr "_Kustuta see paneel..."
 
-#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3014
+#: gnome-panel/menu.c:2979
+#: gnome-panel/menu.c:3014
 msgid "_Delete This Panel"
 msgstr "_Kustuta see paneel"
 
@@ -1527,7 +1466,8 @@ msgstr "Käivitaja menüüst"
 msgid "Menu Bar"
 msgstr "Menüüriba"
 
-#: gnome-panel/menu.c:3208 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:3208
+#: gnome-panel/panel-menu-bar.c:191
 msgid "Lock Screen"
 msgstr "Lukusta ekraan"
 
@@ -1535,23 +1475,38 @@ msgstr "Lukusta ekraan"
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lukusta ekraan, et võiksid ajutiselt arvuti juurest lahkuda"
 
-#: gnome-panel/menu.c:3368 gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:3232
+#: gnome-panel/panel-menu-bar.c:206
+#, fuzzy, c-format
+msgid "Log Out %s"
+msgstr "Logi välja"
+
+#: gnome-panel/menu.c:3246
+#, fuzzy, c-format
+msgid "Log out %s of this session to log in as a different user or to shut down your computer"
+msgstr "Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti sisse logida või arvuti välja lülitada"
+
+#: gnome-panel/menu.c:3382
+#: gnome-panel/panel-menu-bar.c:137
 msgid "Run Application..."
 msgstr "Käivita rakendus..."
 
-#: gnome-panel/menu.c:3375 gnome-panel/panel-menu-bar.c:139
+#: gnome-panel/menu.c:3389
+#: gnome-panel/panel-menu-bar.c:139
 msgid "Run an Application by entering a command"
 msgstr "Käivita rakendus, sisestades käsk"
 
-#: gnome-panel/menu.c:3383 gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:3397
+#: gnome-panel/panel-menu-bar.c:152
 msgid "Search for Files..."
 msgstr "Otsi faile..."
 
-#: gnome-panel/menu.c:3402 gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/menu.c:3416
+#: gnome-panel/panel-menu-bar.c:168
 msgid "Take Screenshot..."
 msgstr "Tee kuvatõmmis..."
 
-#: gnome-panel/menu.c:3420
+#: gnome-panel/menu.c:3434
 msgid "Desktop"
 msgstr "Töölaud"
 
@@ -1575,7 +1530,7 @@ msgstr "T_aaskäivita ekraanisäästja deemon"
 msgid "Lock screen"
 msgstr "Lukusta ekraan"
 
-#: gnome-panel/panel-action-button.c:266 gnome-panel/panel-menu-bar.c:202
+#: gnome-panel/panel-action-button.c:266
 msgid "Log out of GNOME"
 msgstr "Logi GNOME-st välja"
 
@@ -1606,16 +1561,13 @@ msgstr ""
 msgid ""
 "\n"
 "\n"
-"(If you choose not to reload it at this time you can always add it by right "
-"clicking on the panel and clicking on the \"Add to Panel\" submenu)"
+"(If you choose not to reload it at this time you can always add it by right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
 "Rakend %s on ootamatult surnud\n"
 "\n"
 "Kas tahad rakendit taaskäivitada?\n"
 "\n"
-"(Kui sa hetkel ei vali rakendi taaskäivitamist, siis saad sa ta iga hetk "
-"uuesti lisada, klõpsates parema nupuga paneelile ja valides menüüst \"Lisa "
-"paneelile\")"
+"(Kui sa hetkel ei vali rakendi taaskäivitamist, siis saad sa ta iga hetk uuesti lisada, klõpsates parema nupuga paneelile ja valides menüüst \"Lisa paneelile\")"
 
 #: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
@@ -1629,12 +1581,14 @@ msgstr ""
 "\n"
 "Kas sa tahad rakendi oma sätetest kustutada?"
 
-#: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
+#: gnome-panel/panel-applet-frame.c:953
+#: gnome-panel/panel-util.c:259
 #, c-format
 msgid "Details: %s"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
+#: gnome-panel/panel-applet-frame.c:963
+#: gnome-panel/panel-applet-frame.c:976
 #, fuzzy
 msgid ""
 "\n"
@@ -1665,8 +1619,7 @@ msgid "Error getting value for '%s': %s"
 msgstr "Viga glade faili %s laadimisel"
 
 #: gnome-panel/panel-force-quit.c:73
-msgid ""
-"Click on a window to force the application to quit. To cancel press <ESC>."
+msgid "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
 
 #: gnome-panel/panel-force-quit.c:185
@@ -1676,24 +1629,15 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:1
-msgid ""
-"A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"settings for each of these panels are stored in /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+msgid "A list of panel IDs. Each ID identifies an individual toplevel panel. The settings for each of these panels are stored in /apps/panel/general/$(profile)/toplevels/$(id)."
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:2
-msgid ""
-"A list of panel applet IDs. Each ID identifies an individual panel applet. "
-"The settings for each of these applets are stored in /apps/panel/general/"
-"$(profiles)/applets/$(id)."
+msgid "A list of panel applet IDs. Each ID identifies an individual panel applet. The settings for each of these applets are stored in /apps/panel/general/$(profiles)/applets/$(id)."
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:3
-msgid ""
-"A list of panel object IDs. Each ID identifies an individual panel object (e."
-"g. a launcher, action button or menu button/bar). The settings for each of "
-"these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
+msgid "A list of panel object IDs. Each ID identifies an individual panel object (e.g. a launcher, action button or menu button/bar). The settings for each of these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:4
@@ -1707,17 +1651,11 @@ msgid "Expand program list in \"Run Application\" dialog"
 msgstr "Näita \"Käivita\" dialoogiaknas programmide nimekirja"
 
 #: gnome-panel/panel-general.schemas.in.h:6
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is expanded when the dialog is opened. This key is only relevant if "
-"the enable_program_list key is true."
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is expanded when the dialog is opened. This key is only relevant if the enable_program_list key is true."
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:7
-msgid ""
-"If true, the \"Known Applications\" listing in the \"Run Application\" "
-"dialog is made available. Whether or not the listing is expanded when the "
-"dialog is shown is controlled by the show_program_list key."
+msgid "If true, the \"Known Applications\" listing in the \"Run Application\" dialog is made available. Whether or not the listing is expanded when the dialog is shown is controlled by the show_program_list key."
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:8
@@ -1735,11 +1673,7 @@ msgid "Panel object ID list"
 msgstr "panel_id ei ole määratud paneeli objektile, mille ID on %s\n"
 
 #: gnome-panel/panel-global.schemas.in.h:1
-msgid ""
-"A list of applet IIDs that the panel will ignore. This way you can disable "
-"certain applets from loading or showing up in the menu. For example to "
-"disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
-"this list. The panel must be restarted for this to take effect."
+msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:2
@@ -1770,9 +1704,8 @@ msgid "Disable Force Quit"
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Lukusta ekraan"
+msgstr "Keela ekraani lukustamine"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
@@ -1785,9 +1718,8 @@ msgstr "Ava \"Käivita\" dialoogiaken"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
-#, fuzzy
 msgid "Enable animations"
-msgstr "Vali _animatsioon"
+msgstr "Luba animatsioonid"
 
 #: gnome-panel/panel-global.schemas.in.h:12
 #, fuzzy
@@ -1812,20 +1744,15 @@ msgid "Highlight launchers on mouseover"
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:17
-msgid ""
-"If true, a dialog is shown asking for confirmation if the user wants to "
-"remove a panel."
+msgid "If true, a dialog is shown asking for confirmation if the user wants to remove a panel."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:18
-msgid ""
-"If true, a drawer will automatically be closed when the user clicks a "
-"launcher in it."
+msgid "If true, a drawer will automatically be closed when the user clicks a launcher in it."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:19
-msgid ""
-"If true, a launcher is highlighted when the user moves the pointer over it."
+msgid "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:20
@@ -1833,28 +1760,19 @@ msgid "If true, panel-specific keybindings are enabled."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:21
-msgid ""
-"If true, the panel will not allow a user to force an application to quit by "
-"removing access to the force quit button."
+msgid "If true, the panel will not allow a user to force an application to quit by removing access to the force quit button."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:22
-msgid ""
-"If true, the panel will not allow a user to lock their screen, by removing "
-"access to the lock screen menu entries."
+msgid "If true, the panel will not allow a user to lock their screen, by removing access to the lock screen menu entries."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:23
-msgid ""
-"If true, the panel will not allow a user to log out, by removing access to "
-"the log out menu entries."
+msgid "If true, the panel will not allow a user to log out, by removing access to the log out menu entries."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:24
-msgid ""
-"If true, the panel will not allow any changes to the configuration of the "
-"panel. Individual applets may need to be locked down separately however. The "
-"panel must be restarted for this to take effect."
+msgid "If true, the panel will not allow any changes to the configuration of the panel. Individual applets may need to be locked down separately however. The panel must be restarted for this to take effect."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:25
@@ -1867,18 +1785,21 @@ msgid "Popup panel menu keybinding"
 msgstr "Ava paneelimenüü"
 
 #: gnome-panel/panel-global.schemas.in.h:27
-#, fuzzy
 msgid "Take screenshot"
 msgstr "Tee kuvatõmmis"
 
 #: gnome-panel/panel-global.schemas.in.h:28
-#, fuzzy
 msgid "Take window screenshot"
-msgstr "Tee kuvatõmmis"
+msgstr "Tee aknast kuvatõmmis"
 
 #: gnome-panel/panel-menu-bar.c:193
 msgid "Protect your computer from unauthorized use"
 msgstr "Kaitse oma arvuti autoriseerimata kasutamise eest"
+
+#: gnome-panel/panel-menu-bar.c:207
+#, fuzzy, c-format
+msgid "Quit from %s's desktop"
+msgstr "Välju GNOME keskkonnast"
 
 #: gnome-panel/panel-object.schemas.in.h:1
 #, fuzzy
@@ -1894,29 +1815,19 @@ msgid "Icon used for object's button"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:4
-msgid ""
-"If true, the custom_icon key is used as a custom icon for the button. If "
-"false, the custom_icon key is ignored. This key is only relevant if the "
-"object_type key is \"menu-object\" or \"drawer-object\"."
+msgid "If true, the custom_icon key is used as a custom icon for the button. If false, the custom_icon key is ignored. This key is only relevant if the object_type key is \"menu-object\" or \"drawer-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:5
-msgid ""
-"If true, the menu_path key is used as the path from which the menu contents "
-"should be constructed. If false, the menu_path key is ignored. This key is "
-"only relevant if the object_type key is \"menu-object\"."
+msgid "If true, the menu_path key is used as the path from which the menu contents should be constructed. If false, the menu_path key is ignored. This key is only relevant if the object_type key is \"menu-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:6
-msgid ""
-"If true, the position of the object is interpreted relative to the right (or "
-"bottom if vertical) edge of the panel."
+msgid "If true, the position of the object is interpreted relative to the right (or bottom if vertical) edge of the panel."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:7
-msgid ""
-"If true, the user may not move the applet without first unlocking the object "
-"using the \"Unlock\" menuitem."
+msgid "If true, the user may not move the applet without first unlocking the object using the \"Unlock\" menuitem."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:8
@@ -1924,9 +1835,8 @@ msgid "Interpret position relative to bottom/right edge"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:9
-#, fuzzy
 msgid "Launcher location"
-msgstr "Käivitaja häälestus"
+msgstr "Käivitaja asukoht"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 #, fuzzy
@@ -1953,22 +1863,15 @@ msgid "Panel object type"
 msgstr "Paneeli häälestus"
 
 #: gnome-panel/panel-object.schemas.in.h:15
-msgid ""
-"The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
-"\". This key is only relevant if the object_type key is \"bonobo-applet\"."
+msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:16
-msgid ""
-"The action type this button represents. Possible values are \"lock\", "
-"\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
-"relevant if the object_type key is \"action-applet\"."
+msgid "The action type this button represents. Possible values are \"lock\", \"logout\", \"run\", \"search\" and \"screenshot\". This key is only relevant if the object_type key is \"action-applet\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:17
-msgid ""
-"The identifier of the panel attached to this drawer. This key is only "
-"relevant if the object_type key is \"drawer-object\"."
+msgid "The identifier of the panel attached to this drawer. This key is only relevant if the object_type key is \"drawer-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:18
@@ -1976,42 +1879,27 @@ msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:19
-msgid ""
-"The location of the .desktop file describing the launcher. This key is only "
-"relevant if the object_type key is \"launcher-object\"."
+msgid "The location of the .desktop file describing the launcher. This key is only relevant if the object_type key is \"launcher-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:20
-msgid ""
-"The location of the image file used as the icon for the object's button. "
-"This key is only relevant if the object_type key is \"drawer-object\" or "
-"\"menu-object\" and the use_custom_icon key is true."
+msgid "The location of the image file used as the icon for the object's button. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\" and the use_custom_icon key is true."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:21
-msgid ""
-"The path from which the menu contents is contructed. This key is only "
-"relevant if the use_menu_path key is true and the object_type key is \"menu-"
-"object\"."
+msgid "The path from which the menu contents is contructed. This key is only relevant if the use_menu_path key is true and the object_type key is \"menu-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:22
-msgid ""
-"The position of this panel object. The position is specified by the number "
-"of pixels from the left (or top if vertical) panel edge."
+msgid "The position of this panel object. The position is specified by the number of pixels from the left (or top if vertical) panel edge."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:23
-msgid ""
-"The text to display in a tooltip for this drawer or this menu. This key is "
-"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
+msgid "The text to display in a tooltip for this drawer or this menu. This key is only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:24
-msgid ""
-"The type of this panel object. Possible values are \"drawer-object\", \"menu-"
-"object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
-"\"menu-bar\"."
+msgid "The type of this panel object. Possible values are \"drawer-object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and \"menu-bar\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:25
@@ -2031,34 +1919,36 @@ msgstr "Soovitud ButtonWidgeti laoikoon"
 msgid "Use custom path for menu contents"
 msgstr ""
 
-#: gnome-panel/panel-profile.c:765 gnome-panel/panel-profile.c:796
-#: gnome-panel/panel-profile.c:832 gnome-panel/panel-profile.c:1603
+#: gnome-panel/panel-profile.c:765
+#: gnome-panel/panel-profile.c:796
+#: gnome-panel/panel-profile.c:832
+#: gnome-panel/panel-profile.c:1603
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-profile.c:811 gnome-panel/panel-profile.c:1498
-#: gnome-panel/panel-profile.c:1572 gnome-panel/panel-profile.c:1635
+#: gnome-panel/panel-profile.c:811
+#: gnome-panel/panel-profile.c:1498
+#: gnome-panel/panel-profile.c:1572
+#: gnome-panel/panel-profile.c:1635
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
 msgstr ""
 
 #: gnome-panel/panel-profile.c:1508
 #, c-format
-msgid ""
-"Panel '%s' is set to be displayed on screen %d which is not currently "
-"available. Not loading this panel."
+msgid "Panel '%s' is set to be displayed on screen %d which is not currently available. Not loading this panel."
 msgstr ""
 
 #: gnome-panel/panel-profile.c:1587
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
-msgstr ""
+msgstr "Viga Gconf tõeväärtuse '%s' lugemisel: %s"
 
 #: gnome-panel/panel-profile.c:2131
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
-msgstr ""
+msgstr "Viga GConf nimekirja väärtuse '%s' lugemisel: %s"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
@@ -2091,7 +1981,7 @@ msgstr "_Värv:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "E_xpand"
-msgstr ""
+msgstr "L_aienda"
 
 #: gnome-panel/panel-properties-dialog.glade.h:11
 msgid "General"
@@ -2153,48 +2043,43 @@ msgid "_Autohide"
 msgstr "_Automaatne peitmine"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "<b>_Ikoon:</b>"
+msgstr "_Ikoon:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Ikooni nimi"
+msgstr "_Nimi:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
-msgstr ""
+msgstr "_Ei ükski (kasuta süsteemi teemat)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Suund:"
+msgstr "_Suund:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
 msgstr "_Suurenda"
 
 #: gnome-panel/panel-properties-dialog.glade.h:30
-#, fuzzy
 msgid "_Size:"
-msgstr "Suurus:"
+msgstr "S_uurus:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:31
-#, fuzzy
 msgid "_Tile"
-msgstr "_Paan"
+msgstr ""
 
 #: gnome-panel/panel-recent.c:56
 msgid "Couldn't find a suitable application"
 msgstr "Ei leia sobivat rakendust"
 
 #: gnome-panel/panel-recent.c:82
-msgid ""
-"The default application for this type of file cannot handle remote files"
+msgid "The default application for this type of file cannot handle remote files"
 msgstr "Selle failitüübi vaikimisi rakendus ei oska kaugfaile kasutada"
 
-#: gnome-panel/panel-recent.c:145 gnome-panel/panel-recent.c:152
+#: gnome-panel/panel-recent.c:145
+#: gnome-panel/panel-recent.c:152
 msgid "Cannot open recently used document"
 msgstr "Ei saa hiljuti kasutatud dokumenti avada"
 
@@ -2205,7 +2090,7 @@ msgstr "%s avamisel tekkis tundmatu viga"
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Hiljutised dokumendid"
 
 # c-format
 #: gnome-panel/panel-run-dialog.c:285
@@ -2216,10 +2101,7 @@ msgstr "Ei saa käivitada käsku '%s'"
 #: gnome-panel/panel-run-dialog.c:311
 #, fuzzy, c-format
 msgid "Cannot display location '%s'"
-msgstr ""
-"<b>Ei saa abidokumenti näidata</b>\n"
-"\n"
-"Info: %s"
+msgstr "Asukoha kuvamine ebaõnnestus '%s'"
 
 #: gnome-panel/panel-run-dialog.c:363
 #, c-format
@@ -2235,20 +2117,17 @@ msgstr ""
 msgid "Will run command: '%s'"
 msgstr "Käivitatav käsk: '%s'"
 
-#: gnome-panel/panel-run-dialog.c:1235 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1235
+#: gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:2
-msgid ""
-"Click this button to browse for a file whose name to append to the command "
-"string."
+msgid "Click this button to browse for a file whose name to append to the command string."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-msgid ""
-"Click this button to run the selected application or the command in the "
-"command entry field."
+msgid "Click this button to run the selected application or the command in the command entry field."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:4
@@ -2276,16 +2155,16 @@ msgid "Select this box to run the command in a terminal window."
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:12
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "Süsteemile teadaolevate rakenduste nimekiri"
+msgstr "Teadaolevate _rakenduste nimekirja kuvamine"
 
 #: gnome-panel/panel-run-dialog.glade.h:13
 #, fuzzy
 msgid "The icon of the command to be run."
 msgstr "Ei leia käivitatavat käsku"
 
-#: gnome-panel/panel-run-dialog.glade.h:14 gnome-panel/panel-stock-icons.c:145
+#: gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-stock-icons.c:145
 msgid "_Run"
 msgstr "_Käivita"
 
@@ -2300,8 +2179,7 @@ msgstr ""
 #: gnome-panel/panel-shell.c:78
 #, c-format
 msgid ""
-"There was a problem registering the panel with the bonobo-activation "
-"server.\n"
+"There was a problem registering the panel with the bonobo-activation server.\n"
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
@@ -2318,90 +2196,75 @@ msgstr "Ei saa laadida paneeli laoikooni '%s'\n"
 msgid "_Force quit"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1107
 msgid "Hide Panel"
-msgstr "_Uus paneel"
+msgstr "Peida paneel"
 
-#. translators: these string will be shown in MetaCity's switch window
-#. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1464
-#, fuzzy
+#  translators: these string will be shown in MetaCity's switch window
+#  * popup when you pass the focus to a panel
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Top Expanded Edge Panel"
-msgstr "GNOME servapaneel"
+msgstr "Ülemine laiendatud äärepaneel"
 
-#: gnome-panel/panel-toplevel.c:1465
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Top Centered Panel"
-msgstr "Nurgapaneel"
+msgstr "Üleval keskel asuv paneel"
 
-#: gnome-panel/panel-toplevel.c:1466
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Top Floating Panel"
-msgstr "_Ujuv paneel"
-
-#: gnome-panel/panel-toplevel.c:1467
-#, fuzzy
-msgid "Top Edge Panel"
-msgstr "Servapaneel"
+msgstr "Ülemine hõljukpaneel"
 
 #: gnome-panel/panel-toplevel.c:1471
+msgid "Top Edge Panel"
+msgstr "Ülemine äärepaneel"
+
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1472
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Bottom Centered Panel"
-msgstr "Nurgapaneel"
+msgstr "All keskel asuv paneel"
 
-#: gnome-panel/panel-toplevel.c:1473
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Bottom Floating Panel"
-msgstr "_Ujuv paneel"
-
-#: gnome-panel/panel-toplevel.c:1474
-#, fuzzy
-msgid "Bottom Edge Panel"
-msgstr "Servapaneel"
+msgstr "Allääres asuv hõljukpaneel"
 
 #: gnome-panel/panel-toplevel.c:1478
-#, fuzzy
+msgid "Bottom Edge Panel"
+msgstr "Alumine äärepaneel"
+
+#: gnome-panel/panel-toplevel.c:1482
 msgid "Left Expanded Edge Panel"
-msgstr "GNOME servapaneel"
+msgstr "Vasak laiendatud äärepaneel"
 
-#: gnome-panel/panel-toplevel.c:1479
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1483
 msgid "Left Centered Panel"
-msgstr "Nurgapaneel"
+msgstr "Vasakul keskel asuv paneel"
 
-#: gnome-panel/panel-toplevel.c:1480
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1484
 msgid "Left Floating Panel"
-msgstr "_Ujuv paneel"
-
-#: gnome-panel/panel-toplevel.c:1481
-#, fuzzy
-msgid "Left Edge Panel"
-msgstr "Servapaneel"
+msgstr "Vasakul asuv hõljukpaneel"
 
 #: gnome-panel/panel-toplevel.c:1485
+msgid "Left Edge Panel"
+msgstr "Paremal asuv äärepaneel"
+
+#: gnome-panel/panel-toplevel.c:1489
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1486
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1490
 msgid "Right Centered Panel"
-msgstr "Joondatud paneel"
+msgstr "Paremal keskel asuv paneel"
 
-#: gnome-panel/panel-toplevel.c:1487
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1491
 msgid "Right Floating Panel"
-msgstr "_Ujuv paneel"
+msgstr "Paremal asuv hõljukpaneel"
 
-#: gnome-panel/panel-toplevel.c:1488
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1492
 msgid "Right Edge Panel"
-msgstr "Servapaneel"
+msgstr "Paremal asuv äärepaneel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
@@ -2414,17 +2277,15 @@ msgstr "Taustavärv"
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 #, fuzzy
 msgid "Background color opacity"
-msgstr "Tausta_värv:"
+msgstr "Taustavärvi ???"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-#, fuzzy
 msgid "Background image"
-msgstr "Tausta _tüüp:"
+msgstr "Taustapilt"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
-#, fuzzy
 msgid "Background type"
-msgstr "Taust"
+msgstr "Tausta tüüp"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
@@ -2447,87 +2308,56 @@ msgid "Expand to occupy entire screen width"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
-#, fuzzy
 msgid "Fit image to panel"
-msgstr "Paneeli hetkeolek"
+msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
-msgid ""
-"If true, arrows will be placed on the hide buttons. This key is only "
-"relevant if the enable_buttons key is true."
+msgid "If true, arrows will be placed on the hide buttons. This key is only relevant if the enable_buttons key is true."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
-msgid ""
-"If true, buttons will be placed on each side of the panel which may be used "
-"to move the panel to edge of the screen, leaving only a button showing."
+msgid "If true, buttons will be placed on each side of the panel which may be used to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
-msgid ""
-"If true, hiding and un-hiding of this panel will be animated rather than "
-"happening instantly."
+msgid "If true, hiding and un-hiding of this panel will be animated rather than happening instantly."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
-msgid ""
-"If true, the background image will be rotated when the panel is oriented "
-"vertically."
+msgid "If true, the background image will be rotated when the panel is oriented vertically."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
-msgid ""
-"If true, the image will be scaled (retaining the aspect ratio of the image) "
-"to the panel height (if horizontal)."
+msgid "If true, the image will be scaled (retaining the aspect ratio of the image) to the panel height (if horizontal)."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
-msgid ""
-"If true, the image will be scaled to the panel dimensions. The aspect ratio "
-"of the image will not be maintained."
+msgid "If true, the image will be scaled to the panel dimensions. The aspect ratio of the image will not be maintained."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
-msgid ""
-"If true, the panel is automatically hidden into a corner of the screen when "
-"the pointer leaves the panel area. Moving the pointer to that corner again "
-"will cause the panel to re-appear."
+msgid "If true, the panel is automatically hidden into a corner of the screen when the pointer leaves the panel area. Moving the pointer to that corner again will cause the panel to re-appear."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
-msgid ""
-"If true, the panel will occupy the entire screen width (height if this is a "
-"vertical panel). In this mode the panel can only be placed at a screen edge. "
-"If false, the panel will only be large enough to accommodate the applets, "
-"launchers and buttons on the panel."
+msgid "If true, the panel will occupy the entire screen width (height if this is a vertical panel). In this mode the panel can only be placed at a screen edge. If false, the panel will only be large enough to accommodate the applets, launchers and buttons on the panel."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
-"If true, the x key is ignored and the panel is placed at the center of the x-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the x key specifies the "
-"location of the panel."
+msgid "If true, the x key is ignored and the panel is placed at the center of the x-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the x key specifies the location of the panel."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
-msgid ""
-"If true, the y key is ignored and the panel is placed at the center of the y-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the y key specifies the "
-"location of the panel."
+msgid "If true, the y key is ignored and the panel is placed at the center of the y-axis of the screen. If the panel is resized it will remain at that position - i.e. the panel will grow on both sides. If false, the y key specifies the location of the panel."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
-msgid ""
-"In a Xinerama setup, you may have panels on each individual monitor. This "
-"key identifies the current monitor the panel is displayed on."
+msgid "In a Xinerama setup, you may have panels on each individual monitor. This key identifies the current monitor the panel is displayed on."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:25
-#, fuzzy
 msgid "Name to identify panel"
-msgstr "Paneeli resiim"
+msgstr "Paneeli nimi"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
@@ -2546,46 +2376,31 @@ msgid "Panel size"
 msgstr "Paneeli suurus"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
-#, fuzzy
 msgid "Rotate image on vertical panels"
-msgstr "Pööra vertikaalsel paneelil"
+msgstr "Pööra pilti vertikaalpaneelidel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:32
-msgid ""
-"Specifies the file to be used for the background image. If the image "
-"contains an alpha channel it will be composited onto the desktop background "
-"image."
+msgid "Specifies the file to be used for the background image. If the image contains an alpha channel it will be composited onto the desktop background image."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
-msgid ""
-"Specifies the number of milliseconds delay after the pointer enters the "
-"panel area before the panel is automatically re-shown. This key is only "
-"relevant if the auto_hide key is true."
+msgid "Specifies the number of milliseconds delay after the pointer enters the panel area before the panel is automatically re-shown. This key is only relevant if the auto_hide key is true."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:34
-msgid ""
-"Specifies the number of milliseconds delay after the pointer leaves the "
-"panel area before the panel is automatically hidden. This key is only "
-"relevant if the auto_hide key is true."
+msgid "Specifies the number of milliseconds delay after the pointer leaves the panel area before the panel is automatically hidden. This key is only relevant if the auto_hide key is true."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
-msgid ""
-"Specifies the number of pixels visible when the panel is automatically "
-"hidden into a corner. This key is only relevant if the auto_hide key is true."
+msgid "Specifies the number of pixels visible when the panel is automatically hidden into a corner. This key is only relevant if the auto_hide key is true."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:36
-msgid ""
-"Specifies the opacity of the background color format. If the color is not "
-"completely opaque (a value of less than 65535), the color will be composited "
-"onto the desktop background image."
+msgid "Specifies the opacity of the background color format. If the color is not completely opaque (a value of less than 65535), the color will be composited onto the desktop background image."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
@@ -2593,51 +2408,27 @@ msgid "Stretch image to panel"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
-msgid ""
-"The height (width for a vertical panel) of the panel. The panel will "
-"determine at runtime a minimum size based on the font size and other "
-"indicators. The maximum size is fixed at one quarter of the screen height "
-"(or width)."
+msgid "The height (width for a vertical panel) of the panel. The panel will determine at runtime a minimum size based on the font size and other indicators. The maximum size is fixed at one quarter of the screen height (or width)."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:39
-msgid ""
-"The location of the panel along the x-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
+msgid "The location of the panel along the x-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
-msgid ""
-"The location of the panel along the y-axis. This key is only relevant in un-"
-"expanded mode. In expanded mode this key is ignored and the panel is placed "
-"at the screen edge specified by the orientation key."
+msgid "The location of the panel along the y-axis. This key is only relevant in un-expanded mode. In expanded mode this key is ignored and the panel is placed at the screen edge specified by the orientation key."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:41
-msgid ""
-"The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
-"\", \"right\". In expanded mode the key specifies which screen edge the "
-"panel is on. In un-expanded mode the difference between \"top\" and \"bottom"
-"\" is less important - both indicate that this is a horizontal panel - but "
-"still give a useful hint as to how some panel objects should behave. For "
-"example, on a \"top\" panel a menu button will pop up its menu below the "
-"panel, whereas on a \"bottom\" panel the menu will be popped up above the "
-"panel."
+msgid "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left\", \"right\". In expanded mode the key specifies which screen edge the panel is on. In un-expanded mode the difference between \"top\" and \"bottom\" is less important - both indicate that this is a horizontal panel - but still give a useful hint as to how some panel objects should behave. For example, on a \"top\" panel a menu button will pop up its menu below the panel, whereas on a \"bottom\" panel the menu will be popped up above the panel."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
-msgid ""
-"The speed in which panel animations should occur. Possible values are \"slow"
-"\", \"medium\" and \"fast\". This key is only relevant if the "
-"enable_animations key is true."
+msgid "The speed in which panel animations should occur. Possible values are \"slow\", \"medium\" and \"fast\". This key is only relevant if the enable_animations key is true."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
-msgid ""
-"This is a human readable name which you can use to identify a panel. Its "
-"main purpose is to serve as the panel's window title which is useful when "
-"navigating between panels."
+msgid "This is a human readable name which you can use to identify a panel. Its main purpose is to serve as the panel's window title which is useful when navigating between panels."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
@@ -2645,17 +2436,11 @@ msgid "Visible pixels when hidden"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:45
-msgid ""
-"Which type of background should be used for this panel. Possible values are "
-"\"gtk\" - the default GTK+ widget background will be used, \"color\" - the "
-"color key will be used as background color or \"image\" - the image "
-"specified by the image key will be used as background."
+msgid "Which type of background should be used for this panel. Possible values are \"gtk\" - the default GTK+ widget background will be used, \"color\" - the color key will be used as background color or \"image\" - the image specified by the image key will be used as background."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
-msgid ""
-"With a multi-screen setup, you may have panels on each individual screen. "
-"This key identifies the current screen the panel is displayed on."
+msgid "With a multi-screen setup, you may have panels on each individual screen. This key identifies the current screen the panel is displayed on."
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
@@ -2756,8 +2541,7 @@ msgid "Specify an applet IID to load"
 msgstr "Määra laetava rakendi IID"
 
 #: libpanel-applet/panel-test-applets.c:34
-msgid ""
-"Specify a gconf location in which the applet preferences should be stored"
+msgid "Specify a gconf location in which the applet preferences should be stored"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:35
@@ -2765,8 +2549,7 @@ msgid "Specify the initial size of the applet (xx-small, medium, large etc.)"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:37
-msgid ""
-"Specify the initial orientation of the applet (top, bottom, left or right)"
+msgid "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr ""
 
 #: libpanel-applet/panel-test-applets.glade.h:1
@@ -2809,221 +2592,3 @@ msgstr "Ülisuur"
 msgid "XX Small"
 msgstr "Tilluke"
 
-#, fuzzy
-#~ msgid "Log Out %s"
-#~ msgstr "Logi välja"
-
-#, fuzzy
-#~ msgid ""
-#~ "Log out %s of this session to log in as a different user or to shut down "
-#~ "your computer"
-#~ msgstr ""
-#~ "Logi sellest sessioonist välja, et saaksid teise kasutaja all uuesti "
-#~ "sisse logida või arvuti välja lülitada"
-
-#, fuzzy
-#~ msgid "Quit from %s's desktop"
-#~ msgstr "Välju GNOME keskkonnast"
-
-#, fuzzy
-#~ msgid "Year"
-#~ msgstr "Otsi"
-
-#~ msgid "Orientation"
-#~ msgstr "Suund"
-
-#~ msgid "Icon Name"
-#~ msgstr "Ikooni nimi"
-
-#~ msgid "The desired icon for the ButtonWidget"
-#~ msgstr "Soovitud ButtonWidgeti ikoon"
-
-#~ msgid "Stock Icon ID"
-#~ msgstr "Laoikooni ID"
-
-#~ msgid "The desired stock icon for the ButtonWidget"
-#~ msgstr "Soovitud ButtonWidgeti laoikoon"
-
-#~ msgid "Action Type"
-#~ msgstr "Tegevuse tüüp"
-
-#~ msgid "The type of action this button implements"
-#~ msgstr "Nupu realiseeritava tegevuse tüüp"
-
-#, fuzzy
-#~ msgid "Menu Path"
-#~ msgstr "Menüüpaneel"
-
-#, fuzzy
-#~ msgid "The custom icon for the menu"
-#~ msgstr "Soovitud ButtonWidgeti laoikoon"
-
-#, fuzzy
-#~ msgid "Tooltip"
-#~ msgstr "Üleval"
-
-#, fuzzy
-#~ msgid "Use Menu Path"
-#~ msgstr "Menüüpaneel"
-
-#, fuzzy
-#~ msgid "Name"
-#~ msgstr "Ikooni nimi"
-
-#, fuzzy
-#~ msgid "The name of this panel"
-#~ msgstr "Paneeli resiim"
-
-#, fuzzy
-#~ msgid "The orientation of the panel"
-#~ msgstr "Paneeli hetkeolek"
-
-#, fuzzy
-#~ msgid "The height (or width when vertical) of the panel"
-#~ msgstr "Paneeli hetkeolek"
-
-#, fuzzy
-#~ msgid "X position"
-#~ msgstr "Asukoht:"
-
-#, fuzzy
-#~ msgid "Y position"
-#~ msgstr "Asukoht:"
-
-#~ msgid "Auto hide"
-#~ msgstr "Automaatne peitmine"
-
-#, fuzzy
-#~ msgid "Auto-hide size"
-#~ msgstr "_Automaatne peitmine"
-
-#, fuzzy
-#~ msgid "Animate"
-#~ msgstr "_Animatsioon"
-
-#~ msgid "Animation Speed"
-#~ msgstr "Animatsiooni kiirus"
-
-#, fuzzy
-#~ msgid "Buttons Enabled"
-#~ msgstr "Peitenupud lubatud"
-
-#, fuzzy
-#~ msgid "Enable hide/show buttons"
-#~ msgstr "Näita peitenuppu"
-
-#, fuzzy
-#~ msgid "Enable arrows on hide/show buttons"
-#~ msgstr "Näita peitmisnuppudel _noolekesi"
-
-#, fuzzy
-#~ msgid "Background color name"
-#~ msgstr "Taustavärv"
-
-#, fuzzy
-#~ msgid "Background color as a string"
-#~ msgstr "Tausta_värv:"
-
-#, fuzzy
-#~ msgid "Background color as a GdkColor"
-#~ msgstr "Taustavärv"
-
-#, fuzzy
-#~ msgid "Foreground color name"
-#~ msgstr "Taustavärv"
-
-#, fuzzy
-#~ msgid "Foreground color"
-#~ msgstr "Taustavärv"
-
-#, fuzzy
-#~ msgid "Font stretch"
-#~ msgstr "_Venita"
-
-#, fuzzy
-#~ msgid "Font size"
-#~ msgstr "Paneeli suurus"
-
-#, fuzzy
-#~ msgid "Background set"
-#~ msgstr "Taust"
-
-#, fuzzy
-#~ msgid "Lock down the panel"
-#~ msgstr "Paneeli hetkeolek"
-
-#~ msgid "%s - command not found"
-#~ msgstr "%s - ei leia käsku"
-
-#, fuzzy
-#~ msgid "Cannot execute %s"
-#~ msgstr "Ei suuda kävitada programmi xscreensaver"
-
-#, fuzzy
-#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-#~ msgstr "Näitab aega sekundites alates epohhist, st 01.01.1970"
-
-#~ msgid "Window Menu"
-#~ msgstr "Aknamenüü"
-
-#~ msgid "Print Screenshot"
-#~ msgstr "Prindi kuvatõmmis"
-
-#~ msgid "Screenshot Print Preview"
-#~ msgstr "Kuvatõmmise prindivaade"
-
-#~ msgid "_Print screenshot..."
-#~ msgstr "_Prindi kuvatõmmis..."
-
-#, fuzzy
-#~ msgid ""
-#~ "The panel encountered a problem while loading \"%s\"\n"
-#~ "Details: %s%s"
-#~ msgstr ""
-#~ "Paneel leidis vea \"%s\" laadimisel\n"
-#~ "Info: %s\n"
-#~ "\n"
-#~ "Kas sa tahad rakendi oma konfiguratsioonist kustutada?"
-
-#~ msgid "Open Recent"
-#~ msgstr "Ava hiljutine"
-
-#, fuzzy
-#~ msgid "If true, display internet time, which is same all over the world."
-#~ msgstr "Näitab Internetiaega, mis on sama kogu maailmas"
-
-#~ msgid "%s the GNOME Fish"
-#~ msgstr "GNOME kala %s"
-
-#~ msgid "Help on %s _Application"
-#~ msgstr "_Rakenduse %s abiinfo"
-
-#~ msgid "Help on %s"
-#~ msgstr "%s abi"
-
-#~ msgid "Application"
-#~ msgstr "Rakendus"
-
-#~ msgid "<b>_Name:</b>"
-#~ msgstr "<b>_Nimi:</b>"
-
-#~ msgid "<b>_Orientation:</b>"
-#~ msgstr "<b>_Suund:</b>"
-
-#~ msgid "<b>_Size:</b>"
-#~ msgstr "<b>S_uurus:</b>"
-
-#~ msgid "Application description"
-#~ msgstr "Rakenduse kirjeldus"
-
-#~ msgid "List of known applications"
-#~ msgstr "Süsteemile teadaolevate rakenduste nimekiri"
-
-#~ msgid "Select an application from the list to run it"
-#~ msgstr "Vali nimekirjast rakendus, et seda käivitada"
-
-#~ msgid "Help document not found"
-#~ msgstr "Ei leia abidokumenti"
-
-#~ msgid "No document to show"
-#~ msgstr "Pole dokumenti, mida näidata"
