@@ -3339,7 +3339,7 @@ make_panel_submenu (GtkWidget *menu, gboolean fake_submenus)
 			    GTK_SIGNAL_FUNC(current_panel_config), 
 			    NULL);
 
-	add_menu_separator (submenu);
+	/*add_menu_separator (submenu);*/
 	make_properties_submenu (submenu);
 	
 	
