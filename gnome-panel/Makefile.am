@@ -13,7 +13,8 @@ INCLUDES = -I. -I$(srcdir) \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
-bin_PROGRAMS = panel bad-applet
+bin_PROGRAMS = panel 
+noinst_PROGRAMS = bad-applet
 
 libpanel_appletincludedir = $(includedir)
 
@@ -54,8 +55,8 @@ bad_applet_SOURCES=bad-applet.c
 
 bad_applet_LDADD=libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
 
-sysdir=$(datadir)/applets/Utility
-sys_DATA=bad-applet.desktop
+#sysdir=$(datadir)/applets/Utility
+#sys_DATA=bad-applet.desktop
 
 gnorbadir=$(sysconfdir)/CORBA/servers
 gnorba_DATA=bad-applet.goad

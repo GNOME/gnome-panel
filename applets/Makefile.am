@@ -4,18 +4,14 @@ always_built_SUBDIRS = applet-dirs gen_util asclock \
 	gnome-pager mini-commander gkb jbc another_clock \
 	desk-guide tasklist
 
-if FALSE
-if HAVE_LIBESD
+if FALSE #HAVE_LIBESD
 esdmanager = esd-manager
 else
 esdmanager = 
 endif
-endif
 
-if FALSE
-if HAVE_FVWM
+if FALSE #HAVE_FVWM
 fvwm = fvwm-pager
-endif
 endif
 
 if HAVE_LIBGTOP
@@ -28,7 +24,7 @@ else
 libgtop_SUBDIRS =
 endif
 
-if HAVE_LIBGHTTP
+if FALSE #HAVE_LIBGHTTP
 slashapp = slashapp
 endif
 
