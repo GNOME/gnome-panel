@@ -1,26 +1,26 @@
-/*
- * The cookie is an extremely *BAD* hack that we have implemented
- * for security reasons for *NOW*
- */
 module GNOME {
 	interface Panel {
 		/* requests an ID on the panel */
 		short applet_request_id(in string goad_id,
-					in string param,
-					in short dorestart,
 					out string cfgpath,
 					out string globcfgpath,
 					out unsigned long wid);
-
+		
 		/* Sends the object identifier for the Applet server that
-		   contacts the Panel */
+		   contacts the Panel, goad_ids is a comma separated list
+		   of the goad_id's this applet can handle, this call also
+		   serves as basically a signal for the panel to start
+		   a new applet, since it tries to start extern applets
+		   synchroniously to make it faster on X and make
+		   multiapplets possible */
 		void applet_register(in object obj,
 				     in short applet_id,
-				     in string goad_id);
+				     in string goad_id,
+				     in string goad_ids);
 
 		/*abort the applet load (before we register)*/
 		void applet_abort_id(in short applet_id);
-		
+
 		void applet_request_glob_cfg(out string globcfgpath);
 		void applet_remove_from_panel(in short applet_id);
 		short applet_get_panel (in short applet_id);
@@ -51,9 +51,8 @@ module GNOME {
 		short session_save (in short applet_id,
 				    in string cfgpath,
 				    in string globcfgpath);
-		/* params is only used if the applet process handeles more
-		   applet types */
-		void start_new_applet (in string param);
+		/* start new applet of goad_id type */
+		void start_new_applet (in string goad_id);
 		void back_change (in short applet_id,
 				  in short back_type,
 				  in string pixmap,
