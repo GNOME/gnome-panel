@@ -627,8 +627,6 @@ panel_menu_button_get_icon (PanelMenuButton *button)
 		return NULL;
 
 	retval = g_strdup (menu_tree_directory_get_icon (directory));
-                                                                                                             
-	menu_tree_directory_unref (directory);
 
 	return retval;
 }

@@ -1,3 +1,17 @@
+2005-01-07  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix crasher when moving a menu button between panels.
+	Bug #163097
+
+	* panel-menu-button.c: (panel_menu_button_get_icon):
+	Don't unref the MenuTreeDirectory.
+
+2005-01-07  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (add_menu_to_panel): unref the return value
+	from menu_tree_entry_unref(). add_menudrawer_to_panel()
+	already does it.
+
 2005-01-07  Vincent Untz  <vincent@vuntz.net>
 
 	* launcher.c: (drag_data_received_cb): draw animation when dropping

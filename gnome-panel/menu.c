@@ -710,6 +710,8 @@ add_menu_to_panel (GtkWidget     *menuitem,
 				  menu_tree_directory_get_name (directory));
 
 	g_free (menu_path);
+
+	menu_tree_directory_unref (directory);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
