@@ -2135,7 +2135,8 @@ save_next_idle(gpointer data)
 }
 
 void
-save_applet (AppletInfo *info, gboolean ret)
+extern_save_applet (AppletInfo *info,
+		    gboolean    ret)
 {
 	char *buf;
 	PanelWidget *panel;
@@ -2242,7 +2243,7 @@ s_panelspot_done_session_save(PortableServer_Servant servant,
 		return;
 	}
 
-	save_applet(info, ret);
+	extern_save_applet (info, ret);
 }
 
 /*** StatusSpot stuff ***/
@@ -2255,24 +2256,32 @@ s_statusspot_remove(POA_GNOME_StatusSpot *servant,
 	status_spot_remove(ss, TRUE);
 }
 
-
+/*
+ * extern_shutdown:
+ *
+ * Unregisters the #GNOME::Panel object and shuts down the ORB.
+ */
 void
-panel_corba_clean_up (void)
+extern_shutdown (void)
 {
-	CORBA_Environment env;
-	CORBA_ORB         orb;
+	CORBA_Environment  env;
+	CORBA_ORB          orb;
+	PortableServer_POA poa;
+	GNOME_Panel        panel;
 
 	CORBA_exception_init (&env);
 
 	orb = bonobo_orb ();
+	poa = bonobo_poa ();
 
-#ifdef FIXME
-	goad_server_unregister (CORBA_OBJECT_NIL,
-				"gnome_panel",
-				"server", &ev);
+	panel = PortableServer_POA_servant_to_reference (poa,
+							 &panel_servant,
+							 &env);
 
-	CORBA_ORB_shutdown (orb, CORBA_FALSE, &ev);
-#endif
+	bonobo_activation_active_server_unregister ("OAFIID:GNOME_Panel",
+						    panel);
+
+	CORBA_ORB_shutdown (orb, CORBA_FALSE, &env);
 
 	CORBA_exception_free (&env);
 }

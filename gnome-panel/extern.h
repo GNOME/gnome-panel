@@ -54,12 +54,12 @@ void         extern_load_applet           (const char  *goad_id,
 
 void	     extern_load_queued           (void);
 
-void         panel_corba_clean_up         (void);
+void         extern_shutdown              (void);
 
 /* to be called when we want to send a draw signal to an applet */
 void	     extern_send_draw             (Extern ext);
 
-void         save_applet                  (AppletInfo *info,
+void         extern_save_applet           (AppletInfo *info,
 					   gboolean    ret);
 
 void         extern_save_last_position    (Extern   ext,

@@ -1,5 +1,16 @@
 2001-10-22  Mark McLoughlin  <mark@skynet.ie>
 
+	* extern.c, extern.h: 
+	(extern_save_applet): renamed from save_applet.
+	(s_panelspot_done_session_save): upd.
+	(extern_shutdown): renamed from panel_corba_clean_up.
+	Unregister the GNOME::Panel object.
+
+	* session.c: (send_applet_session_save),
+	(panel_session_die): upd.
+
+2001-10-22  Mark McLoughlin  <mark@skynet.ie>
+
 	* main.c: (main): activate old panel object as well for the
 	moment.
 

@@ -342,7 +342,7 @@ send_applet_session_save (AppletInfo *info,
 						(CORBA_char *)cfgpath,
 						(CORBA_char *)globcfgpath,
 						&ev);
-			save_applet (info, ret);
+			extern_save_applet (info, ret);
 		}
 	} else if(ev._major) {
 		gtk_timeout_remove(timeout);
@@ -884,8 +884,7 @@ panel_session_die (GnomeClient *client,
 
 	xstuff_unsetup_desktop_area ();
 			
-	/*clean up corba stuff*/
-	panel_corba_clean_up();
+	extern_shutdown ();
 	
 	gtk_main_quit();
 	return TRUE;
