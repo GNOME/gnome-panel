@@ -73,7 +73,7 @@ main(int argc, char **argv)
 
 	goad_id = goad_server_activation_id();
 	if(!goad_id)
-		return 0;
+	  goad_id = "gen_util_clock"; /* badhack */
 	make_new_applet(goad_id);
 
 	applet_widget_gtk_main();

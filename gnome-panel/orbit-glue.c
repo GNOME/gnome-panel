@@ -152,6 +152,8 @@ server_applet_request_id(POA_GNOME_Panel *servant,
   int applet_id;
   CORBA_unsigned_long winid;
 
+  g_message("Got ID request for %s", goad_id);
+
   applet_id = applet_request_id (goad_id, &cfg, &globcfg, &winid);
   *wid = winid;
 

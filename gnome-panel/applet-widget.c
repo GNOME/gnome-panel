@@ -545,20 +545,7 @@ gnome_panel_applet_corba_init(const char *goad_id)
     g_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, FALSE);
   }
 
-  {
-    CORBA_Object ns;
-    CORBA_char *ior;
-	  
-    ns = gnome_name_service_get();
-    goad_server_register(ns, applet_obj, goad_id, "server", &ev);
-    CORBA_Object_release(ns, &ev);
-
-    ior = CORBA_ORB_object_to_string(orb, applet_obj, &ev);
-
-    printf("%s\n", ior); fflush(stdout);
-
-    CORBA_free(ior);
-  }
+  goad_server_register(CORBA_OBJECT_NIL, applet_obj, goad_id, "server", &ev);
   return TRUE;
 }
 
