@@ -1,5 +1,17 @@
 2005-02-04  Vincent Untz  <vincent@vuntz.net>
 
+	Recreate the applications menu when the disable_command_line gconf key
+	is changed so that "Run application" is shown/hidden.
+	Fix bug #166302
+
+	* panel-menu-bar.c: (panel_menu_bar_recreate_menus): new, recreate
+	both applications & desktop menus
+	(panel_menu_bar_recreate_desktop_menu): removed
+	(panel_menu_bar_instance_init): updated
+	(panel_menu_bar_finalize): updated
+
+2005-02-04  Vincent Untz  <vincent@vuntz.net>
+
 	Patch by Dennis Cranston <dennis_cranston@yahoo.com>
 	Fix bug #166239
 

@@ -308,6 +308,34 @@ panel_menu_bar_append_place_item (PanelMenuBar *menubar,
 }
 
 static void
+panel_menu_bar_recreate_menus (PanelMenuBar *menubar)
+{
+	if (menubar->priv->applications_menu) {
+		gtk_widget_destroy (menubar->priv->applications_menu);
+		menubar->priv->applications_menu = panel_menu_bar_create_applications_menu (menubar);
+		panel_menu_bar_connect_menu_signals (menubar,
+						     &menubar->priv->applications_menu);
+		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->applications_menu),
+					       "menu_panel",
+					       menubar->priv->panel);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->applications_item),
+					   menubar->priv->applications_menu);
+	}
+
+	if (menubar->priv->desktop_menu) {
+		gtk_widget_destroy (menubar->priv->desktop_menu);
+		menubar->priv->desktop_menu = panel_menu_bar_create_desktop_menu (menubar);
+		panel_menu_bar_connect_menu_signals (menubar,
+						     &menubar->priv->desktop_menu);
+		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->desktop_menu),
+					       "menu_panel",
+					       menubar->priv->panel);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->desktop_item),
+					   menubar->priv->desktop_menu);
+	}
+}
+
+static void
 panel_menu_bar_recreate_places_menu (PanelMenuBar *menubar)
 {
 	if (menubar->priv->places_menu) {
@@ -320,22 +348,6 @@ panel_menu_bar_recreate_places_menu (PanelMenuBar *menubar)
 					       menubar->priv->panel);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->places_item),
 					   menubar->priv->places_menu);
-	}
-}
-
-static void
-panel_menu_bar_recreate_desktop_menu (PanelMenuBar *menubar)
-{
-	if (menubar->priv->desktop_menu) {
-		gtk_widget_destroy (menubar->priv->desktop_menu);
-		menubar->priv->desktop_menu = panel_menu_bar_create_desktop_menu (menubar);
-		panel_menu_bar_connect_menu_signals (menubar,
-						     &menubar->priv->desktop_menu);
-		panel_applet_menu_set_recurse (GTK_MENU (menubar->priv->desktop_menu),
-					       "menu_panel",
-					       menubar->priv->panel);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menubar->priv->desktop_item),
-					   menubar->priv->desktop_menu);
 	}
 }
 
@@ -800,7 +812,7 @@ panel_menu_bar_instance_init (PanelMenuBar      *menubar,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menubar),
 			       menubar->priv->desktop_item);
 
-	panel_lockdown_notify_add (G_CALLBACK (panel_menu_bar_recreate_desktop_menu),
+	panel_lockdown_notify_add (G_CALLBACK (panel_menu_bar_recreate_menus),
 				   menubar);
 }
 
@@ -855,7 +867,7 @@ panel_menu_bar_finalize (GObject *object)
 {
 	PanelMenuBar *menubar = (PanelMenuBar *) object;
 
-	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_bar_recreate_desktop_menu),
+	panel_lockdown_notify_remove (G_CALLBACK (panel_menu_bar_recreate_menus),
 				      menubar);
 
 	gconf_client_remove_dir (panel_gconf_get_client (),
