@@ -18,6 +18,7 @@
 #include "panel.h"
 #include "panel_config_global.h"
 #include "menu.h"
+#include "mico-glue.h"
 
 
 #define SMALL_ICON_SIZE 20
@@ -125,7 +126,7 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 
-	add_to_panel ("Launcher", ii->location);
+	panel_corba_call_launcher(ii->location);
 }
 
 void

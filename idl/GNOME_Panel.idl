@@ -7,6 +7,8 @@ module GNOME {
 					in string path,
 					out string cfgpath,
 					out string globcfgpath);
+		void applet_abort_id(in short id);
+		void applet_request_glob_cfg(out string globcfgpath);
 		void applet_remove_from_panel (in short id);
 		short applet_get_panel (in short id);
 		short applet_get_pos (in short id);

@@ -1,3 +1,19 @@
+Sun Mar 15 23:53:47 1998  George Lebl  <jirka@5z.com>
+
+	* launcher.c: port to corba, acts like mc should,
+	  needs to be started after panel starts manually
+	  and killed after panel stops manually.
+
+	* gnome-panel.idl: added unimplemented applet_abort_id
+	  call and implemented applet_request_glob_cfg
+
+	* mico-glue.cc: synced with gnome-panel.idl
+
+	* applet-lib.cc: fixes, new methods above
+
+	* launcher-lib.(cc|h): implemented what needs to be
+	  done corba-wise with the launcher
+
 Sun Mar 15 17:49:33 1998  George Lebl  <jirka@5z.com>
 
 	* mico-glue.(cc|h): added a way to call new Launchers

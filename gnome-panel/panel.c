@@ -705,6 +705,12 @@ applet_request_id (const char * ior, const char *path, char **cfgpath,
 }
 
 void
+applet_request_glob_cfg (char **globcfgpath)
+{
+	*globcfgpath = g_strdup(panel_cfg_path);
+}
+
+void
 reparent_window_id (unsigned long winid, int id)
 {
 	GtkWidget *eb;

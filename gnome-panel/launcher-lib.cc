@@ -10,12 +10,10 @@
 #include "panel-widget.h"
 #include "mico-parse.h"
 
-GNOME::Panel_var panel_client;
+extern CORBA::ORB_ptr orb_ptr;
+extern CORBA::BOA_ptr boa_ptr;
 
-CORBA::ORB_ptr orb_ptr;
-static CORBA::BOA_ptr boa_ptr;
-
-/*every applet must implement these*/
+/*every launcher must implement these*/
 BEGIN_GNOME_DECLS
 void start_new_launcher(const char *path);
 END_GNOME_DECLS
@@ -23,6 +21,7 @@ END_GNOME_DECLS
 class Launcher_impl : virtual public GNOME::Launcher_skel {
 public:
 	void start_new_launcher (const char *path) {
+		puts("START_NEW_LAUNCHER");
 		::start_new_launcher(path);
 	}
 };
@@ -30,11 +29,9 @@ public:
 void
 launcher_corba_gtk_main (char *str)
 {
-	GNOME::Panel_ptr acc = new Launcher_impl ();
+	GNOME::Launcher_ptr acc = new Launcher_impl ();
 	char hostname [4096];
 	char *name;
-
-	panel_initialize_corba (&orb_ptr, &boa_ptr);
 
 	gethostname (hostname, sizeof (hostname));
 	if (hostname [0] == 0)
@@ -47,7 +44,7 @@ launcher_corba_gtk_main (char *str)
 	gnome_config_sync ();
 	g_free (name);
 	
-	orb_ptr->dispatcher (new GtkDispatcher ());
+	//orb_ptr->dispatcher (new GtkDispatcher ());
 
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
 }

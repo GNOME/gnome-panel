@@ -40,23 +40,28 @@ GlobalConfig global_config = {
 void
 load_applet(char *id, char *params, int pos, int panel, char *cfgpath)
 {
-	/*FIXME: somehow load the applet and call register_toy ... this
-	  thing has to exec the applet or if it is a local applet then it
-	  just calls a function to create the appropriate widget and use
-	  register_toy*/
 	if(strcmp(id,EXTERN_ID) == 0) {
 		gchar *command;
 		AppletInfo * info;
 
-		g_return_if_fail (params != NULL);
+		/*start nothing, applet is taking care of everything*/
+		if(params == NULL ||
+		   params[0] == '\0')
+		   	return;
 
 		reserve_applet_spot (id, params, panel, pos, cfgpath,
 				     APPLET_EXTERN_PENDING);
 		
-		command = g_copy_strings ("(true;", params, ") &", NULL);
+		/*'#' marks an applet that will take care of starting
+		  itself but wants us to reserve a spot for it*/
+		if(params[0]!='#') {
+			/*this applet is dumb and wants us to start it :)*/
+			command = g_copy_strings ("(true;", params, ") &",
+						  NULL);
 
-		system (command);
-		g_free (command);
+			system (command);
+			g_free (command);
+		}
 
 	} else if(strcmp(id,MENU_ID) == 0) {
 		Menu *menu;
@@ -260,8 +265,6 @@ panel_orient_change(GtkWidget *widget,
 		    PanelSnapped snapped,
 		    gpointer data)
 {
-	puts("PANEL_ORIENT_CHANGE");
-
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
 			     (gpointer)widget);
 }
@@ -307,17 +310,12 @@ panel_state_change(GtkWidget *widget,
 		    PanelState state,
 		    gpointer data)
 {
-	puts("PANEL_STATE_CHANGE");
-
-	if(state==PANEL_SHOWN) {
-		puts("PANEL_SHOW");
+	if(state==PANEL_SHOWN)
 		panel_widget_foreach(PANEL_WIDGET(widget),state_restore_foreach,
 				     (gpointer)widget);
-	} else {
-		puts("PANEL_HIDE");
+	else
 		panel_widget_foreach(PANEL_WIDGET(widget),state_hide_foreach,
 				     (gpointer)widget);
-	}
 }
 
 static void

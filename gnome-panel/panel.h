@@ -104,6 +104,7 @@ void apply_global_config(void);
 void reparent_window_id (unsigned long winid, int id);
 int applet_request_id (const char * ior, const char *path, char **cfgpath,
 		       char **globcfgpath);
+void applet_request_glob_cfg (char **globcfgpath);
 void reserve_applet_spot (const char *id, const char *path, int panel,
 			  int pos, char *cfgpath, AppletType type);
 

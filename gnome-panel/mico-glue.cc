@@ -40,6 +40,19 @@ public:
 			globcfgpath = CORBA::string_dup("");
 		return id;
 	}
+	void applet_abort_id (CORBA::Short id) {
+		/*FIXME: implement, kill of that EXTERN_PENDING*/
+	}
+	void applet_request_glob_cfg (char *&globcfgpath) {
+		char *globcfg=NULL;
+
+		::applet_request_glob_cfg (&globcfg);
+		if(globcfg) {
+			globcfgpath = CORBA::string_dup(globcfg);
+			g_free(globcfg);
+		} else
+			globcfgpath = CORBA::string_dup("");
+	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
 		return ::applet_get_panel (id);
 	}
@@ -115,8 +128,12 @@ panel_corba_call_launcher(const char *path)
 	iior = gnome_config_get_string (name);
 	g_free (name);
 	
+	puts("LAUNCHER_CALL");
 	if (!iior)
 		return 0;
+
+	puts("LAUNCHER_iior");
+	puts(iior);
 
 	CORBA::Object_var obj = orb_ptr->string_to_object (iior);
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);

@@ -28,7 +28,7 @@ GHashTable *applet_callbacks=NULL;
 #define APPLET_WIDGET_KEY "applet_widget_key"
 
 CORBA::ORB_ptr orb_ptr;
-static CORBA::BOA_ptr boa_ptr;
+CORBA::BOA_ptr boa_ptr;
 
 /*every applet must implement these*/
 BEGIN_GNOME_DECLS
@@ -247,8 +247,8 @@ gnome_panel_applet_request_id (GtkWidget *widget,
 {
 	char *result;
 	char *ior;
-	char *cfgpathback = NULL;
-	char *globcfgpathback = NULL;
+	char *cfg = NULL;
+	char *globcfg = NULL;
 
 	/* Create an applet object, I do pass the widget parameter to the
 	 * constructor object to have a way of sort out to which object
@@ -264,28 +264,57 @@ gnome_panel_applet_request_id (GtkWidget *widget,
 	ior = orb_ptr->object_to_string (applet);
 
 	/*reserve a spot and get an id for this applet*/
-	*id = panel_client->applet_request_id(ior,path,cfgpathback,
-					      globcfgpathback);
+	*id = panel_client->applet_request_id(ior,path,cfg,globcfg);
 
 	if(cfgpath==NULL) {
-		CORBA::string_free(cfgpathback);
-	} else if(cfgpathback != NULL) {
-		*cfgpath = g_strdup(cfgpathback);
-		CORBA::string_free(cfgpathback);
+		CORBA::string_free(cfg);
+	} else if(cfg != NULL) {
+		*cfgpath = g_strdup(cfg);
+		CORBA::string_free(cfg);
 	} else {
 		*cfgpath = NULL;
 	}
 	if(globcfgpath==NULL) {
-		CORBA::string_free(globcfgpathback);
-	} else if(cfgpathback != NULL) {
-		*globcfgpath = g_strdup(globcfgpathback);
-		CORBA::string_free(globcfgpathback);
+		CORBA::string_free(globcfg);
+	} else if(globcfg != NULL) {
+		*globcfgpath = g_strdup(globcfg);
+		CORBA::string_free(globcfg);
 	} else {
 		*globcfgpath = NULL;
 	}
 
 	return 0;
 }
+
+char *
+gnome_panel_applet_abort_id (int id)
+{
+	panel_client->applet_abort_id(id);
+
+	return 0;
+}
+
+/*id will return a unique id for this applet for the applet to identify
+  itself as*/
+char *
+gnome_panel_applet_request_glob_cfg (char **globcfgpath)
+{
+	char *globcfg = NULL;
+
+	g_return_val_if_fail(globcfgpath!=NULL,0);
+
+	panel_client->applet_request_glob_cfg(globcfg);
+
+	if(globcfg!= NULL) {
+		*globcfgpath = g_strdup(globcfg);
+		CORBA::string_free(globcfg);
+	} else {
+		*globcfgpath = NULL;
+	}
+
+	return 0;
+}
+
 
 /*id will return a unique id for this applet for the applet to identify
   itself as*/

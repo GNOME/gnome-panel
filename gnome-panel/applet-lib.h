@@ -8,6 +8,8 @@ typedef void (*AppletCallbackFunc)(int id, gpointer data);
 
 char *gnome_panel_applet_request_id (GtkWidget *widget, char *path, int *id,
 				     char **cfgpath, char **globcfgpath);
+char *gnome_panel_applet_abort_id (int id);
+char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);
 char *gnome_panel_prepare_and_transfer (GtkWidget *widget, int id);
 char *gnome_panel_quit (void);
 int gnome_panel_applet_init_corba (void);
