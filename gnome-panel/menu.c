@@ -26,6 +26,7 @@
 #include "tearoffitem.h"
 #include "gnome-run.h"
 #include "title-item.h"
+#include "scroll-menu.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -245,7 +246,7 @@ static GtkWidget *
 menu_new(void)
 {
 	GtkWidget *ret;
-	ret = gtk_menu_new();
+	ret = scroll_menu_new();
 	gtk_signal_connect(GTK_OBJECT(ret), "show",
 			   GTK_SIGNAL_FUNC(setup_menu_panel), NULL);
 

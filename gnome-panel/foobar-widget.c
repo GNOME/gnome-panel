@@ -24,6 +24,7 @@
 #include "panel-util.h"
 #include "drawer-widget.h"
 #include "gnome-run.h"
+#include "scroll-menu.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -181,7 +182,7 @@ append_gnome_menu (GtkWidget *menu_bar)
 	};
 	
 	
-	menu = gtk_menu_new ();
+	menu = scroll_menu_new ();
 	
 	for (i=0; url[i][1]; i++)
 		gtk_menu_append (GTK_MENU (menu),
@@ -229,7 +230,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 		NULL
 	};
 
-	menu = gtk_menu_new ();
+	menu = scroll_menu_new ();
 
 	for (i=0; arrange[i]; i+=2)
 		append_gmc_item (menu, _(arrange[i]), arrange[i+1]);
@@ -239,7 +240,7 @@ append_desktop_menu (GtkWidget *menu_bar)
 
 	add_tearoff (GTK_MENU (menu));
 
-	menu = gtk_menu_new ();
+	menu = scroll_menu_new ();
 
 	gtk_menu_append (GTK_MENU (menu), item);
 	add_menu_separator (menu);
@@ -419,7 +420,7 @@ append_clock_menu (GtkWidget *menu_bar)
 		NULL
 	};
 
-	menu = gtk_menu_new ();
+	menu = scroll_menu_new ();
 	
 #if 0 /* put back when evolution can do this */
 	item = gtk_menu_item_new_with_label (_("Add appointement..."));
@@ -433,7 +434,7 @@ append_clock_menu (GtkWidget *menu_bar)
 
 	add_menu_separator (menu);
 
-	menu2 = gtk_menu_new ();
+	menu2 = scroll_menu_new ();
 	for (i=0; formats[i]; i++)
 		append_format_item (menu2, formats[i]);
 

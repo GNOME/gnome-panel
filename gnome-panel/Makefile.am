@@ -141,7 +141,9 @@ panel_SOURCES=\
 	foobar-widget.h		\
 	foobar-widget.c		\
 	title-item.h		\
-	title-item.c
+	title-item.c		\
+	scroll-menu.h		\
+	scroll-menu.c
 
 panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) \
 	$(GNOMEUI_LIBS) $(INTLLIBS) @PIXBUF_LIBS@

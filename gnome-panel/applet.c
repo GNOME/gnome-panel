@@ -14,6 +14,7 @@
 
 #include "panel-include.h"
 #include "gnome-panel.h"
+#include "scroll-menu.h"
 
 #define SMALL_ICON_SIZE 20
 
@@ -348,7 +349,7 @@ setup_an_item(AppletUserMenu *menu,
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
-		menu->submenu = gtk_menu_new();
+		menu->submenu = scroll_menu_new();
 	}
 
 	if(menu->submenu) {
@@ -411,7 +412,7 @@ add_to_submenus(AppletInfo *info,
 	}
 	
 	if(!s_menu->submenu) {
-		s_menu->submenu = gtk_menu_new();
+		s_menu->submenu = scroll_menu_new();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
 		if (s_menu->menuitem) {
@@ -435,7 +436,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 	GList *user_menu = info->user_menu;
 	gchar *pixmap;
 
-	info->menu = gtk_menu_new();
+	info->menu = scroll_menu_new();
 
 	menuitem = gtk_menu_item_new();
 	setup_menuitem(menuitem,
@@ -453,7 +454,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 			   info);
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 
-	panel_menu = gtk_menu_new();
+	panel_menu = scroll_menu_new();
 	make_panel_submenu (panel_menu, TRUE, is_basep);
 	menuitem = gtk_menu_item_new ();
 

@@ -2,9 +2,10 @@ Things to do on the panel, in no particular order:
 
 1.2/1.4 items
 
-* When a menu gets too large, add some sort of "scroll buttons or whatnot, something like
-  in windows I guess.  It will need to have some sort of similar but slightly different
-  version for torn off menus.
+* The scrollmenu still has issues with submenus.  When the scroll buttons are drawn
+  and the user hints a submenu, that menu grabs the pointer.  Then the scroll buttons
+  don't get enter/leave events.  This needs to be somehow remedied, several ugly hacks
+  spring to mind.
 
 [ Hmmmm ... needs some thought ]
 * RootApplication dentry type support.  These would be items to run other apps

@@ -1,3 +1,12 @@
+Mon Sep 04 02:56:57 2000  George Lebl <jirka@5z.com>
+
+	* menu.c, panel.c, applet.c, scroll-menu.[ch], Makefile.am:
+	  Make a GtkMenu subclass that handles very long menus.  When a
+	  menu is larger then the screen, it makes "scroll buttons" on
+	  bottom and top of menu sort of like windows does it (not quite
+	  though).  It's usable, but still needs a bit of work.  Even though
+	  it's much better then nothing at all.
+
 Sun Sep 03 05:50:02 2000  George Lebl <jirka@5z.com>
 
 	* panel.c: add text/x-moz-url as another url type for dropping.  It
