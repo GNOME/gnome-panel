@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-26 01:03-0500\n"
-"PO-Revision-Date: 2005-01-26 01:10-0500\n"
+"POT-Creation-Date: 2005-01-29 00:08-0500\n"
+"PO-Revision-Date: 2005-01-29 01:10-0500\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,8 +185,8 @@ msgstr "Custom format"
 
 #: applets/clock/clock.c:2374 applets/clock/clock.c:2551
 #: applets/fish/fish.c:144 applets/notification_area/main.c:82
-#: applets/wncklet/showdesktop.c:499 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:65
+#: applets/wncklet/showdesktop.c:538 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:765 applets/wncklet/window-menu.c:65
 #: applets/wncklet/workspace-switcher.c:261
 #: applets/wncklet/workspace-switcher.c:569
 #, c-format
@@ -235,8 +235,8 @@ msgstr "Use _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2583 applets/fish/fish.c:481
-#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:529
-#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:95
+#: applets/notification_area/main.c:116 applets/wncklet/showdesktop.c:568
+#: applets/wncklet/window-list.c:794 applets/wncklet/window-menu.c:95
 #: applets/wncklet/workspace-switcher.c:600
 #: gnome-panel/panel-context-menu.c:110
 msgid "translator-credits"
@@ -651,7 +651,7 @@ msgid "Switch between workspaces"
 msgstr "Switch between workspaces"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:819
+#: applets/wncklet/window-list.c:805
 msgid "Window List"
 msgstr "Window List"
 
@@ -669,32 +669,32 @@ msgstr "Window Selector"
 msgid "Workspace Switcher"
 msgstr "Workspace Switcher"
 
-#: applets/wncklet/showdesktop.c:245
-msgid "Click here to restore hidden windows."
-msgstr "Click here to restore hidden windows."
-
-#: applets/wncklet/showdesktop.c:248
-msgid "Click here to hide all windows and show the desktop."
-msgstr "Click here to hide all windows and show the desktop."
-
-#: applets/wncklet/showdesktop.c:379
+#: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Failed to load %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:381
-msgid "File not found"
-msgstr "File not found"
+#: applets/wncklet/showdesktop.c:206
+msgid "Icon not found"
+msgstr "Icon not found"
 
-#: applets/wncklet/showdesktop.c:411 applets/wncklet/showdesktop.c:540
+#: applets/wncklet/showdesktop.c:264
+msgid "Click here to restore hidden windows."
+msgstr "Click here to restore hidden windows."
+
+#: applets/wncklet/showdesktop.c:267
+msgid "Click here to hide all windows and show the desktop."
+msgstr "Click here to hide all windows and show the desktop."
+
+#: applets/wncklet/showdesktop.c:463 applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
 msgstr "Show Desktop Button"
 
-#: applets/wncklet/showdesktop.c:543
+#: applets/wncklet/showdesktop.c:582
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "This button lets you hide all windows and show the desktop."
 
-#: applets/wncklet/showdesktop.c:584
+#: applets/wncklet/showdesktop.c:623
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -702,7 +702,7 @@ msgstr ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 
-#: applets/wncklet/window-list.c:822
+#: applets/wncklet/window-list.c:808
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr "The Window List shows a list of all windows and lets you browse them."
 
@@ -996,7 +996,7 @@ msgstr "Drawer"
 msgid "_Add to Drawer..."
 msgstr "_Add to Drawer..."
 
-#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:854
+#: gnome-panel/drawer.c:605 gnome-panel/launcher.c:855
 #: gnome-panel/panel-action-button.c:133 gnome-panel/panel-context-menu.c:265
 msgid "_Properties"
 msgstr "_Properties"
@@ -1005,62 +1005,62 @@ msgstr "_Properties"
 msgid "Create new file in the given directory"
 msgstr "Create new file in the given directory"
 
-#: gnome-panel/launcher.c:135
+#: gnome-panel/launcher.c:136
 msgid "Cannot save launcher to disk"
 msgstr "Cannot save launcher to disk"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
-#: gnome-panel/launcher.c:272
+#: gnome-panel/launcher.c:166 gnome-panel/launcher.c:216
+#: gnome-panel/launcher.c:273
 msgid "Cannot launch icon"
 msgstr "Cannot launch icon"
 
-#: gnome-panel/launcher.c:166
+#: gnome-panel/launcher.c:167
 msgid "This launch icon does not specify a url to show."
 msgstr "This launch icon does not specify a url to show."
 
-#: gnome-panel/launcher.c:178
+#: gnome-panel/launcher.c:179
 #, c-format
 msgid "Cannot show %s"
 msgstr "Cannot show %s"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:467
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "No URI provided for panel launcher desktop file\n"
 
-#: gnome-panel/launcher.c:480
+#: gnome-panel/launcher.c:481
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Unable to open desktop file %s for panel launcher%s%s\n"
 
-#: gnome-panel/launcher.c:736 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:737 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Launcher Properties"
 
-#: gnome-panel/launcher.c:848
+#: gnome-panel/launcher.c:849
 msgid "_Launch"
 msgstr "_Launch"
 
-#: gnome-panel/launcher.c:925
+#: gnome-panel/launcher.c:927
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Key %s is not set, can't load launcher\n"
 
-#: gnome-panel/launcher.c:980 gnome-panel/launcher.c:998
+#: gnome-panel/launcher.c:982 gnome-panel/launcher.c:1000
 #: gnome-panel/menu-ditem.c:469 gnome-panel/menu-ditem.c:486
 #: gnome-panel/menu-ditem.c:542
 msgid "Cannot create launcher"
 msgstr "Cannot create launcher"
 
-#: gnome-panel/launcher.c:981 gnome-panel/menu-ditem.c:470
+#: gnome-panel/launcher.c:983 gnome-panel/menu-ditem.c:470
 msgid "You have to specify a name."
 msgstr "You have to specify a name."
 
-#: gnome-panel/launcher.c:999 gnome-panel/menu-ditem.c:487
+#: gnome-panel/launcher.c:1001 gnome-panel/menu-ditem.c:487
 msgid "You have to specify a valid URL or command."
 msgstr "You have to specify a valid URL or command."
 
-#: gnome-panel/launcher.c:1042 gnome-panel/menu-ditem.c:550
+#: gnome-panel/launcher.c:1044 gnome-panel/menu-ditem.c:550
 msgid "Create Launcher"
 msgstr "Create Launcher"
 
@@ -1313,17 +1313,17 @@ msgstr "Do you want to delete the applet from your configuration?"
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Unable to obtain AppletShell interface from control\n"
 
-#: gnome-panel/panel-bindings.c:167
+#: gnome-panel/panel-bindings.c:168
 #, c-format
 msgid "Error watching gconf key '%s': %s"
 msgstr "Error watching gconf key '%s': %s"
 
-#: gnome-panel/panel-bindings.c:185
+#: gnome-panel/panel-bindings.c:186
 #, c-format
 msgid "Error loading gconf directory '%s': %s"
 msgstr "Error loading gconf directory '%s': %s"
 
-#: gnome-panel/panel-bindings.c:199
+#: gnome-panel/panel-bindings.c:200
 #, c-format
 msgid "Error getting value for '%s': %s"
 msgstr "Error getting value for '%s': %s"
