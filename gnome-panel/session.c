@@ -293,7 +293,7 @@ panel_session_save_panel (PanelData *pd)
 	GString	*buf;
 	GSList *panel_id_list;
 	GSList *temp;
-	gboolean check = FALSE;
+	gboolean exists= FALSE;
 	gchar *panel_profile;
 	gchar *panel_id_key;
 	
@@ -326,14 +326,14 @@ panel_session_save_panel (PanelData *pd)
 	
 	for (temp = panel_id_list; temp; temp = temp->next) {
 #ifdef SESSION_DEBUG
-	printf ("Found ID: %s\n", temp->data);
+	printf ("Found ID: %s\n", (gchar *)temp->data);
 #endif
-		if (strcmp (panel->unique_id, temp->data) == 0)
-			check = TRUE;
+		if (strcmp (panel->unique_id, (gchar *)temp->data) == 0)
+			exists = TRUE;
 	}	
 	
 	/* We need to add this key */
-	if (check == FALSE) {
+	if (exists == FALSE) {
 #ifdef SESSION_DEBUG
 	printf ("Adding a new panel to id-list: %s\n", panel->unique_id);
 #endif
@@ -359,37 +359,27 @@ panel_session_save_panel (PanelData *pd)
 					   "panel-type", pd->type);
 
 	if (basep != NULL) {
-		panel_gconf_panel_profile_set_bool (panel_profile,
-						    panel->unique_id,
+		panel_gconf_panel_profile_set_bool (panel_profile, panel->unique_id,
 						    "hide-buttons-enabled", basep->hidebuttons_enabled);
-		panel_gconf_panel_profile_set_bool (panel_profile,
-						    panel->unique_id,
+		panel_gconf_panel_profile_set_bool (panel_profile, panel->unique_id,
 						    "hide-button-pixmaps-enabled", basep->hidebutton_pixmaps_enabled);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-hide-mode", basep->mode);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-hide-state", basep->state);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "screen-id", basep->screen);
 	}
 
-	panel_gconf_panel_profile_set_int (panel_profile,
-					   panel->unique_id,
+	panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 					   "panel-size", panel->sz);
-	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel->unique_id,
+	panel_gconf_panel_profile_set_bool (panel_profile, panel->unique_id,
 					    "panel-backgroun-pixmap-fit", panel->fit_pixmap_bg);
-	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel->unique_id,
+	panel_gconf_panel_profile_set_bool (panel_profile, panel->unique_id,
 					    "panel-background-pixmap-stretch", panel->stretch_pixmap_bg);
-	panel_gconf_panel_profile_set_bool (panel_profile,
-					    panel->unique_id,
+	panel_gconf_panel_profile_set_bool (panel_profile, panel->unique_id,
 					    "panel-background-pixmap-rotate", panel->rotate_pixmap_bg);
-	panel_gconf_panel_profile_set_string (panel_profile,
-					      panel->unique_id,
+	panel_gconf_panel_profile_set_string (panel_profile, panel->unique_id,
 					      "panel-background-pixmap", sure_string (panel->back_pixmap));
 
 
@@ -398,60 +388,51 @@ panel_session_save_panel (PanelData *pd)
 			 (guint)panel->back_color.green/256,
 			 (guint)panel->back_color.blue/256);
 	
-	panel_gconf_panel_profile_set_string (panel_profile,
-					      panel->unique_id,
+	panel_gconf_panel_profile_set_string (panel_profile, panel->unique_id,
 					      "panel-background-color", buf->str);
 
-	panel_gconf_panel_profile_set_int (panel_profile,
-					   panel->unique_id,
+	panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 					   "panel-background-type", panel->back_type);
 	
 	/* now do different types */
 	if (BORDER_IS_WIDGET(pd->panel))
-		gnome_config_set_int("edge", BORDER_POS(basep->pos)->edge);
-
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
+						   "screen-edge", BORDER_POS (basep->pos)->edge);
 	switch (pd->type) {
 	case ALIGNED_PANEL:
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-align", ALIGNED_POS (basep->pos)->align);
 		break;
 	case SLIDING_PANEL:
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-offset", SLIDING_POS (basep->pos)->offset);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-anchor", SLIDING_POS (basep->pos)->anchor);
 		break;
 	case FLOATING_PANEL:
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-orient", PANEL_WIDGET (basep->pos)->orient);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-x-position", FLOATING_POS (basep->pos)->x);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-y-position", FLOATING_POS (basep->pos)->y);
 		break;
 	case DRAWER_PANEL:
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id,
 						   "panel-orient", DRAWER_POS (basep->pos)->orient);
 		break;
 	case FOOBAR_PANEL:
-		panel_gconf_panel_profile_set_string (panel_profile,
-						      panel->unique_id,
+		panel_gconf_panel_profile_set_string (panel_profile, panel->unique_id,
 						      "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
-		panel_gconf_panel_profile_set_int (panel_profile,
-						   panel->unique_id,
+		panel_gconf_panel_profile_set_int (panel_profile, panel->unique_id, 
 						   "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
 	}
-
+#ifdef SESSION_DEBUG
+	printf ("Done saving\n");
+#endif
 	g_string_free (buf, TRUE);
 }
 
@@ -518,6 +499,8 @@ panel_session_do_save (GnomeClient *client,
 
 		panel_session_save_applets (applets);
 	}
+	/* FIXME : add hack to see if we can flush changes */
+	gconf_client_suggest_sync (panel_gconf_get_client (), NULL);
 }
 
 static guint sync_handler = 0;
@@ -601,6 +584,20 @@ panel_session_save (GnomeClient        *client,
 		    int                 is_fast,
 		    gpointer            client_data)
 {
+	gchar **argv;
+	gint argc;
+
+	g_malloc0(sizeof(gchar*)*4);
+
+	argc = 3;
+	argv[0] = client_data;
+	argv[1] = "--profile";
+      	argv[2] =  session_get_current_profile ();;
+
+	gnome_client_set_restart_command (client, argc, argv);
+        gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
+        gnome_client_set_priority (client, 40);
+
 	panel_session_do_save (client, TRUE, FALSE, FALSE);
 
 	return TRUE;
@@ -921,9 +918,14 @@ session_init_panels(void)
 	GSList *temp;
 	gchar *timestring;
 
-	printf ("Current profile is %s\n", session_get_current_profile ());
 	
 	panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
+
+#ifdef SESSION_DEBUG
+	printf ("Current profile is %s\n", session_get_current_profile ());
+	printf ("We are checking for dir %s\n", panel_profile_key);
+#endif
+
 	if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
 		/* FIXME: We need to resort to another fallback default panel config 
 		          and do some sort of check for screen sizes */

@@ -237,9 +237,6 @@ main(int argc, char **argv)
 
 	/* FIXME - get the session stuff working properly */
 
-	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
-	gnome_client_set_priority (client, 40);
-
 	g_signal_connect (G_OBJECT (client), "save_yourself",
 			  G_CALLBACK (panel_session_save), NULL);
 	g_signal_connect (G_OBJECT (client), "die",
