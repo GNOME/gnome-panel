@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-12-17 09:50+1300\n"
-"PO-Revision-Date: 2002-12-11 23:44+0200\n"
+"POT-Creation-Date: 2003-01-04 06:02+0100\n"
+"PO-Revision-Date: 2002-12-28 16:58+0200\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
 "sourceforge.net>\n"
@@ -166,7 +166,6 @@ msgstr "_Ruutuja animaatiossa:"
 
 # applets/fish/fish.c:703
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME Fish Preferences"
 msgstr "Gnome-kalan asetukset"
 
@@ -274,8 +273,8 @@ msgstr "_Tietoja..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:814 gnome-panel/launcher.c:804 gnome-panel/menu.c:3544
-#: gnome-panel/menu.c:4220 gnome-panel/panel-action-button.c:500
+#: gnome-panel/drawer.c:768 gnome-panel/launcher.c:804 gnome-panel/menu.c:3466
+#: gnome-panel/menu.c:4166 gnome-panel/panel-action-button.c:500
 msgid "_Help"
 msgstr "_Ohje"
 
@@ -327,6 +326,8 @@ msgid ""
 "%s\n"
 "%s"
 msgstr ""
+"%s\n"
+"%s"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -335,7 +336,7 @@ msgstr ""
 #: applets/gen_util/clock.c:200
 #, c-format
 msgid "%s, %s"
-msgstr ""
+msgstr "%s, %s"
 
 # applets/gen_util/clock.c:273
 #. Show date in tooltip
@@ -415,7 +416,7 @@ msgstr "Näytä _UTC-aikaa"
 #: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1732
 #: applets/gen_util/pager.c:532 applets/gen_util/showdesktop.c:443
 #: applets/gen_util/tasklist.c:794 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: gnome-panel/menu.c:250
 msgid "translator_credits"
 msgstr "Suomennos: http://gnome-fi.sourceforge.net/"
 
@@ -425,11 +426,6 @@ msgstr "Suomennos: http://gnome-fi.sourceforge.net/"
 #: applets/gen_util/clock.c:1204
 msgid "Clock"
 msgstr "Kello"
-
-# applets/gen_util/clock.c:1157
-#: applets/gen_util/clock.c:1205
-msgid "(C) 1998-2002 the Free Software Foundation"
-msgstr "© 1998-2002 Free Software Foundation"
 
 # applets/gen_util/clock.c:1158
 #: applets/gen_util/clock.c:1206
@@ -837,11 +833,6 @@ msgstr "_Postintarkistus"
 msgid "Mail_box"
 msgstr "Posti_laatikko"
 
-# applets/gen_util/mailcheck.c:1681
-#: applets/gen_util/mailcheck.c:1746
-msgid "(c) 1998-2000 the Free Software Foundation"
-msgstr "Copyright © 1998-2000 Free Software Foundation"
-
 # applets/gen_util/mailcheck.c:1682
 #: applets/gen_util/mailcheck.c:1747
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
@@ -1038,11 +1029,6 @@ msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Virhe display_all_workspaces-arvon latautuessa työtilanvaihtajaa varten: %s\n"
 
-# applets/gen_util/tasklist.c:714
-#: applets/gen_util/pager.c:546
-msgid "(c) 2001 Red Hat, Inc."
-msgstr "© 2001 Red Hat, Inc."
-
 # applets/gen_util/pager.c:505
 #: applets/gen_util/pager.c:547
 msgid ""
@@ -1132,72 +1118,6 @@ msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
 msgstr "Näkyvätkö työtilojen nimet työtilanvaihtajassa."
 
-# applets/gen_util/printer.c:120
-#: applets/gen_util/printer.c:120
-msgid "Can't execute printer command"
-msgstr "Tulostinkomennon suorittaminen epäonnistui"
-
-# applets/gen_util/printer.c:306
-#: applets/gen_util/printer.c:306
-msgid "Printer properties"
-msgstr "Tulostimen ominaisuudet"
-
-# applets/gen_util/printer.c:315
-#: applets/gen_util/printer.c:315
-msgid "Printer name:"
-msgstr "Tulostimen nimi:"
-
-# applets/gen_util/printer.c:319
-#: applets/gen_util/printer.c:319
-msgid "Print command:"
-msgstr "Tulostuskomento:"
-
-# applets/gen_util/printer.c:325
-#: applets/gen_util/printer.c:325
-msgid "Printer"
-msgstr "Tulostin"
-
-# applets/gen_util/printer.c:353
-#: applets/gen_util/printer.c:353
-msgid "Printer Applet"
-msgstr "Tulostinsovelma"
-
-# applets/gen_util/mailcheck.c:1681
-#: applets/gen_util/printer.c:354
-msgid "(c) 1998 the Free Software Foundation"
-msgstr "© 1998-2000 Free Software Foundation"
-
-# applets/gen_util/printer.c:356
-#: applets/gen_util/printer.c:356
-msgid ""
-"The printer applet lets you easily drag files to be printed via a print "
-"command"
-msgstr ""
-"Tulostinsovelma syöttää sovelmalle pudotetut tiedostot annetun komennon "
-"avulla tulostimelle"
-
-# applets/gen_util/printer.c:423
-#: applets/gen_util/printer.c:423
-msgid "Can't create applet!\n"
-msgstr "Sovelmaa ei voi luoda!\n"
-
-# applets/gen_util/printer.c:466
-#: applets/gen_util/printer.c:466
-msgid "Properties..."
-msgstr "Asetukset..."
-
-# applets/gen_util/printer.c:473 gnome-panel/drawer.c:628
-# gnome-panel/launcher.c:718 gnome-panel/logout.c:132
-# gnome-panel/logout.c:219 gnome-panel/menu.c:4087
-#: applets/gen_util/printer.c:473
-msgid "Help"
-msgstr "Ohje"
-
-# applets/gen_util/printer.c:479
-#: applets/gen_util/printer.c:479
-msgid "About..."
-msgstr "Tietoja..."
-
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
 msgstr "Palauta piilotetut ikkunat napsauttamalla tätä"
@@ -1218,19 +1138,9 @@ msgstr "Tiedoston \"%s\" lataaminen epäonnistui: %s\n"
 msgid "File not found"
 msgstr "Tiedostoa ei löydy"
 
-# applets/gen_util/pager.c:504
-#: applets/gen_util/showdesktop.c:453
-msgid "(C) 2002 Red Hat, Inc."
-msgstr "© 2002 Red Hat, Inc."
-
 #: applets/gen_util/showdesktop.c:454
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Painike, joka piilottaa kaikki ikkunat ja näyttää työpöydän"
-
-# applets/gen_util/tasklist.c:714
-#: applets/gen_util/tasklist.c:809
-msgid "(c) 2001 Red Hat, Inc"
-msgstr "© 2001 Red Hat, Inc."
 
 # applets/gen_util/tasklist.c:715
 #: applets/gen_util/tasklist.c:810
@@ -1401,91 +1311,86 @@ msgstr "Ilmoitusaluetehdas"
 msgid "Panel Notification Area"
 msgstr "Paneelin ilmoitusalue"
 
-# applets/gen_util/pager.c:504
-#: applets/notification_area/main.c:126
-msgid "Copyright 2002 Red Hat Inc."
-msgstr "© 2002 Red Hat, Inc."
-
 # gnome-panel/applet.c:449 gnome-panel/foobar-widget.c:359
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:429 gnome-panel/foobar-widget.c:393
+#: gnome-panel/applet.c:428 gnome-panel/foobar-widget.c:393
 msgid "???"
 msgstr "???"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:513
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:493
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:492
 msgid "_Remove From Panel"
 msgstr "_Poista paneelista"
 
 # gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:524
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:505
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:504
 msgid "_Move"
 msgstr "_Siirrä"
 
-#: gnome-panel/applet.c:809
+#: gnome-panel/applet.c:791
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
 msgstr "Paneelioliolla (ID %s) ei ole object_type:ä\n"
 
-#: gnome-panel/applet.c:831
+#: gnome-panel/applet.c:811 gnome-panel/applet.c:919
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
 msgstr "Paneelioliolla (ID %s) ei ole panel_id:tä\n"
 
 # gnome-panel/applet.c:1123
-#: gnome-panel/applet.c:1157
+#: gnome-panel/applet.c:1258
 msgid "Can't find an empty spot"
 msgstr "Tyhjää paikkaa ei löydy"
 
 # gnome-panel/basep-widget.c:154
-#: gnome-panel/basep-widget.c:161
+#: gnome-panel/basep-widget.c:159
 msgid "Mode"
 msgstr "Toimintatapa"
 
 # gnome-panel/basep-widget.c:155
-#: gnome-panel/basep-widget.c:162
+#: gnome-panel/basep-widget.c:160
 msgid "Mode of this panel"
 msgstr "Tämän paneelin toimintatapa"
 
 # gnome-panel/basep-widget.c:162
-#: gnome-panel/basep-widget.c:169
+#: gnome-panel/basep-widget.c:167
 msgid "State"
 msgstr "Tila"
 
 # gnome-panel/basep-widget.c:163
-#: gnome-panel/basep-widget.c:170
+#: gnome-panel/basep-widget.c:168
 msgid "Current state of this panel"
 msgstr "Tämän paneelin nykyinen tila"
 
 # gnome-panel/basep-widget.c:171
-#: gnome-panel/basep-widget.c:178
+#: gnome-panel/basep-widget.c:176
 msgid "Hidebuttons enabled"
 msgstr "Piilotuspainikkeet käytössä"
 
 # gnome-panel/basep-widget.c:172
-#: gnome-panel/basep-widget.c:179
+#: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
 msgstr "Ovatko paneelin näkyvyyttä säätävät piilotuspainikkeet käytössä?"
 
 # gnome-panel/basep-widget.c:179
-#: gnome-panel/basep-widget.c:186
+#: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
 msgstr "Piilotuspainikkeiden kuvat näkyvät"
 
 # gnome-panel/basep-widget.c:180
-#: gnome-panel/basep-widget.c:187
+#: gnome-panel/basep-widget.c:185
 msgid "Hidebuttons have pixmaps"
 msgstr "Piilotuspainikkeissa on kuvat"
 
 # gnome-panel/basep-widget.c:549
-#: gnome-panel/basep-widget.c:591
+#: gnome-panel/basep-widget.c:584
 msgid "Hide this panel"
 msgstr "Piilota tämä paneeli"
 
 # gnome-panel/basep-widget.c:552
-#: gnome-panel/basep-widget.c:594
+#: gnome-panel/basep-widget.c:587
 msgid "Show this panel"
 msgstr "Näytä tämä paneeli"
 
@@ -1512,46 +1417,46 @@ msgid "file not found"
 msgstr "tiedostoa ei löydy"
 
 # libpanel-applet/panel-test-applets.glade.h:9
-#: gnome-panel/button-widget.c:879
+#: gnome-panel/button-widget.c:868
 msgid "Size"
 msgstr "Koko"
 
-#: gnome-panel/button-widget.c:880
+#: gnome-panel/button-widget.c:869
 msgid "The desired ButtonWidget size"
 msgstr "Haluttu ButtonWidgetin koko"
 
-#: gnome-panel/button-widget.c:888
+#: gnome-panel/button-widget.c:877
 msgid "Has Arrow"
 msgstr "Nuoli on"
 
-#: gnome-panel/button-widget.c:889
+#: gnome-panel/button-widget.c:878
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Näkyykö nuoli-ilmaisin"
 
 # libpanel-applet/panel-test-applets.glade.h:6
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:886
 msgid "Orientation"
 msgstr "Suunta"
 
 # libpanel-applet/panel-applet.c:956
-#: gnome-panel/button-widget.c:898
+#: gnome-panel/button-widget.c:887
 msgid "The ButtonWidget orientation"
 msgstr "ButtonWidgetin suunta"
 
 # gnome-panel/drawer.c:150
-#: gnome-panel/button-widget.c:907
+#: gnome-panel/button-widget.c:896
 msgid "Icon Name"
 msgstr "Kuvakenimi"
 
-#: gnome-panel/button-widget.c:908
+#: gnome-panel/button-widget.c:897
 msgid "The desired icon for the ButtonWidget"
 msgstr "Haluttu ButtonWidgetin kuvake"
 
-#: gnome-panel/button-widget.c:916
+#: gnome-panel/button-widget.c:905
 msgid "Stock Icon ID"
 msgstr "Oletuskuvake-ID"
 
-#: gnome-panel/button-widget.c:917
+#: gnome-panel/button-widget.c:906
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "Haluttu ButtonWidgetin oletuskuvake"
 
@@ -1635,13 +1540,13 @@ msgid "Enable hidebutton arrow"
 msgstr "Näytä piilotusnuolipainike"
 
 # gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3239
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3425
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3558
 msgid "Drawer"
 msgstr "Vetolaatikko"
 
 # gnome-panel/menu.c:3351
-#: gnome-panel/drawer.c:811 gnome-panel/launcher.c:802 gnome-panel/menu.c:1488
-#: gnome-panel/menu.c:3519 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:765 gnome-panel/launcher.c:802 gnome-panel/menu.c:1527
+#: gnome-panel/menu.c:3422 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Ominaisuudet"
 
@@ -1650,7 +1555,7 @@ msgid " (invalid Unicode)"
 msgstr " (virheellistä Unicodea)"
 
 # gnome-panel/foobar-widget.c:161 gnome-panel/menu.c:3667
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3791
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3747
 msgid "Run Program..."
 msgstr "Suorita komento..."
 
@@ -1660,28 +1565,28 @@ msgid "Run applications, if you know the correct command to type in"
 msgstr "Suorita ohjelmia, jos tiedät oikean komennon"
 
 # gnome-panel/foobar-widget.c:173 gnome-panel/menu.c:3680
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3805
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3761
 msgid "Search for Files..."
 msgstr "Etsi tiedostoja..."
 
 # gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3683
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3808
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3764
 msgid "Find files, folders, and documents on your computer"
 msgstr "Etsi tiedostoja, hakemistoja ja asiakirjoja tietokoneestasi"
 
 # gnome-panel/foobar-widget.c:186 gnome-panel/menu.c:3694
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3822
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3778
 msgid "Screenshot..."
 msgstr "Kuvakaappaus..."
 
 # gnome-panel/foobar-widget.c:188 gnome-panel/menu.c:3697
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3825
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3781
 msgid "Take a screenshot of your desktop"
 msgstr "Tallenna kuva työpöydästä"
 
 # gnome-panel/foobar-widget.c:199 gnome-panel/logout.c:212
 # gnome-panel/menu.c:3447
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3601
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3578
 msgid "Lock Screen"
 msgstr "Lukitse näyttö"
 
@@ -1691,8 +1596,8 @@ msgid "Protect your computer from unauthorized use"
 msgstr "Estä tietokoneesi luvatonta käyttöä"
 
 # gnome-panel/foobar-widget.c:212 gnome-panel/menu.c:3460
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3029
-#: gnome-panel/menu.c:3612
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3178
+#: gnome-panel/menu.c:3589
 msgid "Log Out"
 msgstr "Kirjaudu ulos"
 
@@ -1713,7 +1618,7 @@ msgid "No windows open"
 msgstr "Ei ikkunoita avoinna"
 
 # gnome-panel/foobar-widget.c:678 gnome-panel/menu.c:2682
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2793
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2944
 msgid "Menu Panel"
 msgstr "Valikkopaneeli"
 
@@ -1724,8 +1629,8 @@ msgstr "Gnomen valikkopaneeli"
 
 # gnome-panel/foobar-widget.c:697 gnome-panel/menu.c:2809
 # gnome-panel/menu.c:2815 gnome-panel/menu.c:3633
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:2926
-#: gnome-panel/menu.c:2931 gnome-panel/menu.c:3758
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3077
+#: gnome-panel/menu.c:3082 gnome-panel/menu.c:3724
 msgid "Applications"
 msgstr "Sovellukset"
 
@@ -2207,7 +2112,7 @@ msgstr ""
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1145
+#: gnome-panel/launcher.c:1163 gnome-panel/menu.c:1184
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2225,18 +2130,18 @@ msgid "Specify a profile name to load"
 msgstr "Anna ladattavan profiilin nimi"
 
 # gnome-panel/menu.c:230
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:238
 msgid "Many, many others..."
 msgstr "Monet muut ..."
 
 # gnome-panel/menu.c:232
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:242
+#: gnome-panel/menu.c:240
 msgid "and finally, The Knights Who Say... NI!"
 msgstr "ja lisäksi ritarit, jotka sanovat... NI!"
 
 # gnome-panel/menu.c:265
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:275
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -2246,7 +2151,7 @@ msgstr ""
 "kaatumisista."
 
 # gnome-panel/menu.c:271
-#: gnome-panel/menu.c:283
+#: gnome-panel/menu.c:281
 msgid ""
 "\n"
 "\n"
@@ -2259,22 +2164,17 @@ msgstr ""
 "paneelin asetusten muokkaamisen."
 
 # gnome-panel/menu.c:277
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:287
 msgid "The GNOME Panel"
 msgstr "Gnomen paneeli"
 
-# gnome-panel/menu.c:278
-#: gnome-panel/menu.c:290
-msgid "(C) 1997-2002 the Free Software Foundation"
-msgstr "© 1997-2002 Free Software Foundation"
-
 # gnome-panel/menu.c:297
-#: gnome-panel/menu.c:311
+#: gnome-panel/menu.c:309
 msgid "End world hunger"
 msgstr "Lopeta nälänhädät"
 
 # gnome-panel/menu.c:312
-#: gnome-panel/menu.c:329
+#: gnome-panel/menu.c:327
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -2286,7 +2186,7 @@ msgstr ""
 "Lisätiedot: %s ei luultavasti ole olemassa"
 
 # gnome-panel/menu.c:334
-#: gnome-panel/menu.c:353
+#: gnome-panel/menu.c:351
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -2298,7 +2198,7 @@ msgstr ""
 "Tiedot: %s"
 
 # gnome-panel/menu.c:343 gnome-panel/menu.c:1037 gnome-panel/menu.c:1069
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1119 gnome-panel/menu.c:1156
+#: gnome-panel/menu.c:361 gnome-panel/menu.c:1158 gnome-panel/menu.c:1195
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -2310,7 +2210,7 @@ msgstr ""
 "Tiedot: %s"
 
 # gnome-panel/menu.c:942
-#: gnome-panel/menu.c:1023
+#: gnome-panel/menu.c:1062
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -2323,20 +2223,20 @@ msgstr ""
 
 # , c-format
 # gnome-panel/menu.c:952
-#: gnome-panel/menu.c:1033
+#: gnome-panel/menu.c:1072
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Tiedostonimen erottaminen ei onnistu polusta: %s"
 
 # , c-format
 # gnome-panel/menu.c:959
-#: gnome-panel/menu.c:1040
+#: gnome-panel/menu.c:1079
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Hakemistonimen erottaminen ei onnistu polusta: %s"
 
 # gnome-panel/menu.c:1029
-#: gnome-panel/menu.c:1110
+#: gnome-panel/menu.c:1149
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -2347,196 +2247,197 @@ msgstr ""
 "Lisätiedot: Kohdalla ei ole \"Exec\" tai \"URL\"-kenttää"
 
 # gnome-panel/menu.c:1342
-#: gnome-panel/menu.c:1420
+#: gnome-panel/menu.c:1459
 msgid "Add this launcher to panel"
 msgstr "Lisää tämä käynnistin paneeliin"
 
 # gnome-panel/menu.c:1356
-#: gnome-panel/menu.c:1428
+#: gnome-panel/menu.c:1467
 msgid "Remove this item"
 msgstr "Poista tämä kohta"
 
 # gnome-panel/menu.c:1373
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1483
 msgid "Put into run dialog"
 msgstr "Lisää suorita-ikkunaan"
 
 # gnome-panel/menu.c:1391
-#: gnome-panel/menu.c:1462
+#: gnome-panel/menu.c:1501
 #, c-format
 msgid "Help on %s"
 msgstr "Ohje aiheesta %s"
 
 # gnome-panel/menu.c:1392
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1502
 msgid "Application"
 msgstr "Sovellus"
 
 # gnome-panel/menu.c:1442
-#: gnome-panel/menu.c:1507
+#: gnome-panel/menu.c:1546
 msgid "Entire menu"
 msgstr "Koko valikko"
 
 # gnome-panel/menu.c:1451
-#: gnome-panel/menu.c:1516
+#: gnome-panel/menu.c:1555
 msgid "Add this as drawer to panel"
 msgstr "Lisää tämä vetolaatikkona paneeliin"
 
 # gnome-panel/menu.c:1459
-#: gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:1563
 msgid "Add this as menu to panel"
 msgstr "Lisää tämä valikkona paneeliin"
 
 # gnome-panel/menu.c:1472
-#: gnome-panel/menu.c:1532
+#: gnome-panel/menu.c:1571
 msgid "Add new item to this menu"
 msgstr "Lisää uusi kohta tähän valikkoon"
 
 # gnome-panel/drawer.c:625 gnome-panel/launcher.c:716
 # gnome-panel/logout.c:217 gnome-panel/menu.c:1422 gnome-panel/menu.c:1497
-#: gnome-panel/menu.c:1557
+#: gnome-panel/menu.c:1596
 msgid "Properties"
 msgstr "Ominaisuudet"
 
 # gnome-panel/menu.c:2391 libpanel-applet/panel-test-applets.c:102
-#: gnome-panel/menu.c:2447 libpanel-applet/panel-test-applets.c:102
+#: gnome-panel/menu.c:2519 gnome-panel/menu.c:2574
+#: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "kysely palautti poikkeuksen %s\n"
 
 # gnome-panel/menu.c:2603 gnome-panel/menu.c:2607
-#: gnome-panel/menu.c:2703 gnome-panel/menu.c:2708
+#: gnome-panel/menu.c:2854 gnome-panel/menu.c:2859
 msgid "Aligned Panel"
 msgstr "Keskitetty paneeli"
 
 # gnome-panel/menu.c:2608
-#: gnome-panel/menu.c:2709
+#: gnome-panel/menu.c:2860
 msgid "GNOME Aligned Panel"
 msgstr "Gnomen keskitetty paneeli"
 
 # gnome-panel/menu.c:2624 gnome-panel/menu.c:2627
 # gnome-panel/panel-config.c:1669
-#: gnome-panel/menu.c:2726 gnome-panel/menu.c:2730
+#: gnome-panel/menu.c:2877 gnome-panel/menu.c:2881
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "Reunapaneeli"
 
 # gnome-panel/menu.c:2628
-#: gnome-panel/menu.c:2731
+#: gnome-panel/menu.c:2882
 msgid "GNOME Edge Panel"
 msgstr "Gnomen reunapaneeli"
 
 # gnome-panel/menu.c:2644 gnome-panel/menu.c:2648
 # gnome-panel/panel-config.c:1691
-#: gnome-panel/menu.c:2752 gnome-panel/menu.c:2756
+#: gnome-panel/menu.c:2903 gnome-panel/menu.c:2907
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "Liukupaneeli"
 
 # gnome-panel/menu.c:2649
-#: gnome-panel/menu.c:2757
+#: gnome-panel/menu.c:2908
 msgid "GNOME Sliding Panel"
 msgstr "Gnomen liukupaneeli"
 
 # gnome-panel/menu.c:2665 gnome-panel/menu.c:2669
 # gnome-panel/panel-config.c:1702
-#: gnome-panel/menu.c:2775 gnome-panel/menu.c:2780
+#: gnome-panel/menu.c:2926 gnome-panel/menu.c:2931
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "Irrallinen paneeli"
 
 # gnome-panel/menu.c:2670
-#: gnome-panel/menu.c:2781
+#: gnome-panel/menu.c:2932
 msgid "GNOME Floating Panel"
 msgstr "Gnomen irrallinen paneeli"
 
 # gnome-panel/menu.c:2689
-#: gnome-panel/menu.c:2801
+#: gnome-panel/menu.c:2952
 msgid "You can only have one menu panel at a time."
 msgstr "Vain yksi valikkopaneeli voi olla olemassa."
 
 # gnome-panel/menu.c:2759
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2996
 msgid "C_orner Panel"
 msgstr "_Nurkkapaneeli"
 
 # gnome-panel/menu.c:2761
-#: gnome-panel/menu.c:2847
+#: gnome-panel/menu.c:2998
 msgid "Create corner panel"
 msgstr "Luo nurkkapaneeli"
 
 # gnome-panel/menu.c:2749
-#: gnome-panel/menu.c:2854
+#: gnome-panel/menu.c:3005
 msgid "_Edge Panel"
 msgstr "_Reunapaneeli"
 
 # gnome-panel/menu.c:2751
-#: gnome-panel/menu.c:2856
+#: gnome-panel/menu.c:3007
 msgid "Create edge panel"
 msgstr "Luo reunapaneeli"
 
 # gnome-panel/menu.c:2779
-#: gnome-panel/menu.c:2863
+#: gnome-panel/menu.c:3014
 msgid "_Floating Panel"
 msgstr "_Irrallinen paneeli"
 
 # gnome-panel/menu.c:2781
-#: gnome-panel/menu.c:2865
+#: gnome-panel/menu.c:3016
 msgid "Create floating panel"
 msgstr "Luo irrallinen paneeli"
 
 # gnome-panel/menu.c:2769
-#: gnome-panel/menu.c:2872
+#: gnome-panel/menu.c:3023
 msgid "_Sliding Panel"
 msgstr "_Liukupaneeli"
 
 # gnome-panel/menu.c:2771
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:3025
 msgid "Create sliding panel"
 msgstr "Luo liukupaneeli"
 
 # gnome-panel/menu.c:2728
-#: gnome-panel/menu.c:2883
+#: gnome-panel/menu.c:3034
 msgid "_Menu Panel"
 msgstr "_Valikkopaneeli"
 
 # gnome-panel/menu.c:2730
-#: gnome-panel/menu.c:2885
+#: gnome-panel/menu.c:3036
 msgid "Create menu panel"
 msgstr "Luo valikkopaneeli"
 
 # gnome-panel/menu.c:2879 gnome-panel/menu.c:2886 gnome-panel/menu.c:3520
-#: gnome-panel/menu.c:2974 gnome-panel/menu.c:2980 gnome-panel/menu.c:3673
+#: gnome-panel/menu.c:3125 gnome-panel/menu.c:3131 gnome-panel/menu.c:3650
 msgid "KDE Menu"
 msgstr "KDE:n valikko"
 
 # applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 # applets/gen_util/clock.c:1156
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3186
 msgid "Lock"
 msgstr "Lukitse"
 
 # gnome-panel/gnome-panel-screenshot.glade.h:6
-#: gnome-panel/menu.c:3045 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3194 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Kuvakaappaus"
 
-#: gnome-panel/menu.c:3053
+#: gnome-panel/menu.c:3202
 msgid "Search"
 msgstr "Etsi"
 
 # gnome-panel/gnome-run.c:1489
-#: gnome-panel/menu.c:3061
+#: gnome-panel/menu.c:3210
 msgid "Run"
 msgstr "Suorita"
 
 # gnome-panel/menu.c:2951
-#: gnome-panel/menu.c:3133
+#: gnome-panel/menu.c:3282
 msgid "You cannot remove your last panel."
 msgstr "Viimeistä paneelia ei voi poistaa."
 
 # gnome-panel/menu.c:2964
-#: gnome-panel/menu.c:3146
+#: gnome-panel/menu.c:3295
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2546,68 +2447,68 @@ msgstr ""
 "Haluatko poistaa tämän paneelin?"
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: gnome-panel/menu.c:3154
+#: gnome-panel/menu.c:3303
 msgid "Delete Panel"
 msgstr "Poista paneeli"
 
-# gnome-panel/menu.c:3211
-#: gnome-panel/menu.c:3393
-msgid "Launcher..."
-msgstr "Käynnistin..."
-
-# gnome-panel/menu.c:3219
-#: gnome-panel/menu.c:3400
-msgid "Launcher from menu"
-msgstr "Käynnistin valikosta"
-
-# gnome-panel/menu.c:3249
-#: gnome-panel/menu.c:3408
-msgid "Button"
-msgstr "Painike"
-
-# gnome-panel/distribution.c:26
-#: gnome-panel/menu.c:3417 gnome-panel/menu.c:3918 gnome-panel/menu.c:3946
-#: gnome-panel/menu.c:4142
-msgid "Main Menu"
-msgstr "Päävalikko"
-
 # gnome-panel/menu.c:3303
-#: gnome-panel/menu.c:3470
+#: gnome-panel/menu.c:3369
 msgid "_Delete This Panel..."
 msgstr "_Poista tämä paneeli..."
 
 # gnome-panel/menu.c:3306 gnome-panel/menu.c:3337
-#: gnome-panel/menu.c:3473 gnome-panel/menu.c:3505
+#: gnome-panel/menu.c:3372 gnome-panel/menu.c:3408
 msgid "_Delete This Panel"
 msgstr "_Poista tämä paneeli"
 
 # gnome-panel/menu.c:3324
-#: gnome-panel/menu.c:3492
+#: gnome-panel/menu.c:3393
 msgid "_Add to Panel"
 msgstr "_Lisää paneeliin"
 
 # gnome-panel/menu.c:3364
-#: gnome-panel/menu.c:3532
+#: gnome-panel/menu.c:3435
 msgid "_New Panel"
 msgstr "_Uusi paneeli"
 
 # gnome-panel/menu.c:3409
-#: gnome-panel/menu.c:3566
+#: gnome-panel/menu.c:3475
 msgid "_About Panels"
 msgstr "_Tietoja paneeleista..."
 
 # gnome-panel/menu.c:3422
-#: gnome-panel/menu.c:3579
+#: gnome-panel/menu.c:3487
 msgid "About _GNOME"
 msgstr "Tietoja _Gnomesta..."
 
+# gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3526
+msgid "Launcher..."
+msgstr "Käynnistin..."
+
+# gnome-panel/menu.c:3219
+#: gnome-panel/menu.c:3533
+msgid "Launcher from menu"
+msgstr "Käynnistin valikosta"
+
+# gnome-panel/menu.c:3249
+#: gnome-panel/menu.c:3541
+msgid "Button"
+msgstr "Painike"
+
+# gnome-panel/distribution.c:26
+#: gnome-panel/menu.c:3550 gnome-panel/menu.c:3864 gnome-panel/menu.c:3892
+#: gnome-panel/menu.c:4088
+msgid "Main Menu"
+msgstr "Päävalikko"
+
 # gnome-panel/menu.c:3453
-#: gnome-panel/menu.c:3607
+#: gnome-panel/menu.c:3584
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Lukitse näyttö, jotta voit poistua tietokoneesi äärestä hetkeksi"
 
 # gnome-panel/menu.c:3466
-#: gnome-panel/menu.c:3618
+#: gnome-panel/menu.c:3595
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -2615,38 +2516,33 @@ msgstr ""
 "Kirjaudu ulos tästä istunnosta, jotta voit kirjautua uudestaan toisena "
 "käyttäjänä tai sammuttaa tietokoneen"
 
-# gnome-panel/menu.c:3650
-#: gnome-panel/menu.c:3774
-msgid "Applets"
-msgstr "Sovelmat"
-
 # gnome-panel/menu.c:3673
-#: gnome-panel/menu.c:3798
+#: gnome-panel/menu.c:3754
 msgid "Run a command"
 msgstr "Suorita komento"
 
 # gnome-panel/menu.c:3710
-#: gnome-panel/menu.c:3838
+#: gnome-panel/menu.c:3794
 msgid "Desktop"
 msgstr "Työpöytä"
 
 # gnome-panel/menu-ditem.c:282 gnome-panel/menu.c:3738
 # gnome-panel/menu.c:3967
-#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3866
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3812
 msgid "Menu"
 msgstr "Valikko"
 
 # gnome-panel/menu.c:3740
-#: gnome-panel/menu.c:3868
+#: gnome-panel/menu.c:3814
 msgid "Menu:"
 msgstr "Valikko:"
 
 # gnome-panel/menu.c:3812
-#: gnome-panel/menu.c:3940
+#: gnome-panel/menu.c:3886
 msgid "Can't create menu, using main menu!"
 msgstr "Valikkoa ei voi luoda: käytetään päävalikkoa!"
 
-#: gnome-panel/menu.c:4463
+#: gnome-panel/menu.c:4403
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "Paneelin valikko-oliota varten ei ole asetettu polkua kohdassa %s\n"
@@ -2809,7 +2705,7 @@ msgid "Open URL: %s"
 msgstr "Avaa URL: %s"
 
 # gnome-panel/panel.c:2193
-#: gnome-panel/panel.c:2266
+#: gnome-panel/panel.c:2594
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
