@@ -434,7 +434,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	gtk_window_set_screen (GTK_WINDOW (fish->about_dialog),
 			       gtk_widget_get_screen (GTK_WIDGET (fish)));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->about_dialog),
-					 GNOME_ICONDIR " /gnome-fish.png");
+					 GNOME_ICONDIR "/gnome-fish.png");
 
 	g_signal_connect (fish->about_dialog, "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
