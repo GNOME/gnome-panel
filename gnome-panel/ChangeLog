@@ -1,8 +1,14 @@
 2003-03-06  Mark McLoughlin  <mark@skynet.ie>
-                                                                                                             
+
+	* gnome-panel-screenshot.c: (nibble_on_file): destroy the dialog
+	even if we are overwriting the file. Based on patch from Bala
+	to fix #107112.
+
+2003-03-06  Mark McLoughlin  <mark@skynet.ie>
+
 	* launcher.c: (setup_button): unescape the tooltip. Patch
 	from Bala to fix #107669.
-                                                                                                             
+
 2003-03-06  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-background.c: (free_composited_resources): another leak
