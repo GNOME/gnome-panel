@@ -259,11 +259,12 @@ rc_DATA = gnome-panelrc
 
 @INTLTOOL_SERVER_RULE@
 
-entriesdir = $(GCONF_SCHEMA_FILE_DIR)
-entries_DATA = panel-default-setup.entries
+entriesdir       = $(GCONF_SCHEMA_FILE_DIR)
+entries_in_files = panel-default-setup.entries.in
+entries_DATA     = $(entries_in_files:.entries.in=.entries)
 
-panel-default-setup.entries: panel-default-setup.entries.in
-	sed "s,@DATADIR@,${datadir},g" $< > $@
+%.entries: %.entries.in
+	sed "s,@DATADIR@,$(datadir),g" $< > $@
 
 schemasdir       = $(GCONF_SCHEMA_FILE_DIR)
 schemas_in_files =				\
@@ -277,13 +278,13 @@ schemas_DATA     = panel-compatibility.schemas $(schemas_in_files:.schemas.in=.s
 @INTLTOOL_SCHEMAS_RULE@
 
 if GCONF_SCHEMAS_INSTALL
-install-data-local:
+install-data-local: $(entries_in_files:.entries.in=.entries)
 	if test -z "$(DESTDIR)" ; then \
 		for p in $(schemas_DATA) ; do \
 			GCONF_CONFIG_SOURCE=$(GCONF_SCHEMA_CONFIG_SOURCE) $(GCONFTOOL) --makefile-install-rule $(top_builddir)/gnome-panel/$$p ; \
 		done ; \
-		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries ; \
-		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(srcdir)/panel-default-setup.entries /apps/panel ; \
+		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(top_builddir)/gnome-panel/panel-default-setup.entries ; \
+		$(GCONFTOOL) --direct --config-source=$(GCONF_SCHEMA_CONFIG_SOURCE) --load $(top_builddir)/gnome-panel/panel-default-setup.entries /apps/panel ; \
 	fi
 else
 install-data-local:
@@ -293,6 +294,7 @@ CLEANFILES = \
 	$(BUILT_SOURCES) \
 	$(schemas_in_files:.schemas.in=.schemas) \
 	$(server_DATA) \
+	$(entries_DATA) \
 	$(sys_DATA)
 
 dist-hook:
