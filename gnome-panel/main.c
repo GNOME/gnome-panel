@@ -62,6 +62,9 @@ GtkTooltips *panel_tooltips = NULL;
 
 GnomeClient *client = NULL;
 
+/*we'll use this as an indivation that we're shutting down*/
+extern int panel_widget_inhibit_allocates;
+
 GlobalConfig global_config = {
 		DEFAULT_AUTO_HIDE_STEP_SIZE,
 		DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
@@ -294,11 +297,15 @@ monitor_drawers(GtkWidget *w, gpointer data)
 	PanelWidget *parent =
 		gtk_object_get_data(GTK_OBJECT(panel->master_widget),
 				    PANEL_APPLET_PARENT_KEY);
-
-	if(drawer->state==DRAWER_SHOWN)
-		parent->drawers_open++;
-	else
-		parent->drawers_open--;
+	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
+						PANEL_PARENT);
+	
+	if(IS_SNAPPED_WIDGET(panelw)) {
+		if(drawer->state==DRAWER_SHOWN)
+			SNAPPED_WIDGET(panelw)->drawers_open++;
+		else
+			SNAPPED_WIDGET(panelw)->drawers_open--;
+	}
 }
 
 static PanelData *
@@ -555,13 +562,14 @@ load_applet(char *id_str, char *path, char *params,
 
 		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
 			GtkWidget *wparent;
-			/*drawer is open so we track it*/
-			parent->drawers_open++;
 			/*pop up, if popped down*/
 			wparent = gtk_object_get_data(GTK_OBJECT(parent),
 						      PANEL_PARENT);
-			if(IS_SNAPPED_WIDGET(wparent))
+			if(IS_SNAPPED_WIDGET(wparent)) {
+				/*drawer is open so we track it*/
+				SNAPPED_WIDGET(wparent)->drawers_open++;
 				snapped_widget_pop_up(SNAPPED_WIDGET(wparent));
+			}
 		} 
 
 		panel_widget_add_forbidden(
@@ -845,6 +853,8 @@ panel_back_change(GtkWidget *widget,
 	update_config_back(widget);
 }
 
+static void state_hide_foreach(gpointer data, gpointer user_data);
+
 static void
 state_restore_foreach(gpointer data, gpointer user_data)
 {
@@ -858,6 +868,11 @@ state_restore_foreach(gpointer data, gpointer user_data)
 			panel_widget_foreach(PANEL_WIDGET(drawer->panel),
 					     state_restore_foreach,
 					     NULL);
+		} else { /*it's hidden*/
+			gtk_widget_hide(info->assoc);
+			panel_widget_foreach(PANEL_WIDGET(drawer->panel),
+					     state_hide_foreach,
+					     NULL);
 		}
 	}
 }
@@ -870,12 +885,12 @@ state_hide_foreach(gpointer data, gpointer user_data)
 
 	if(info->type == APPLET_DRAWER) {
 		DrawerWidget *drawer = DRAWER_WIDGET(info->assoc);
-		if(drawer->state == DRAWER_SHOWN) {
-			gtk_widget_hide(info->assoc);
-			panel_widget_foreach(PANEL_WIDGET(drawer->panel),
-					     state_hide_foreach,
-					     NULL);
-		}
+		/*if(drawer->state == DRAWER_SHOWN) {*/
+		gtk_widget_hide(info->assoc);
+		panel_widget_foreach(PANEL_WIDGET(drawer->panel),
+				     state_hide_foreach,
+				     NULL);
+		/*}*/
 	}
 }
 
@@ -980,37 +995,58 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	  is done in register_toy and that doesn't add the info to the
 	  array until after the add, so we can be sure this was
 	  generated on a reparent*/
-	if(info && info->type == APPLET_DRAWER) {
+	if(IS_SNAPPED_WIDGET(panelw) &&
+	   info && info->type == APPLET_DRAWER) {
 		PanelWidget *p = gtk_object_get_data(GTK_OBJECT(info->widget),
 						     PANEL_APPLET_ASSOC_PANEL_KEY);
 		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(p),
 						       PANEL_PARENT);
 		if(dw->state == DRAWER_SHOWN)
-			panel->drawers_open++;
+			SNAPPED_WIDGET(panelw)->drawers_open++;
 	}
 
 	/*pop the panel up on addition*/
-	if(IS_SNAPPED_WIDGET(panelw))
+	if(IS_SNAPPED_WIDGET(panelw)) {
 		snapped_widget_pop_up(SNAPPED_WIDGET(panelw));
+		/*try to pop down though if the mouse is out*/
+		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panelw));
+	}
 
 	gtk_idle_add(panel_applet_added_idle,ITOP(applet_id));
 }
 
 static void
-panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
+count_open_drawers(gpointer data, gpointer user_data)
 {
-	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(applet)));
+	int applet_id = PTOI(gtk_object_get_user_data(GTK_OBJECT(data)));
 	AppletInfo *info = get_applet_info(applet_id);
-
+	int *count = user_data;
 	if(info->type == APPLET_DRAWER) {
-		PanelWidget *panel = PANEL_WIDGET(widget);
-		PanelWidget *p = gtk_object_get_data(GTK_OBJECT(info->widget),
-						     PANEL_APPLET_ASSOC_PANEL_KEY);
-		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(p),
+		DrawerWidget *dw = gtk_object_get_data(GTK_OBJECT(info->assoc),
 						       PANEL_PARENT);
 		if(dw->state == DRAWER_SHOWN)
-			panel->drawers_open--;
+			*count ++;
 	}
+}
+
+static void
+panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
+{
+	PanelWidget *panel = PANEL_WIDGET(widget);
+	GtkWidget *parentw = gtk_object_get_data(GTK_OBJECT(panel),
+						 PANEL_PARENT);
+	if(panel_widget_inhibit_allocates)
+		return;
+	if(IS_SNAPPED_WIDGET(parentw)) {
+		int drawers_open = 0;
+
+		panel_widget_foreach(panel,
+				     count_open_drawers,
+				     &drawers_open);
+		SNAPPED_WIDGET(parentw)->drawers_open = drawers_open;
+		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
+	}
+
 	config_changed = TRUE;
 }
 
@@ -1275,6 +1311,8 @@ applet_move_foreach(gpointer data, gpointer user_data)
 static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
+	if(panel_widget_inhibit_allocates)
+		return;
 	applet_move_foreach(widget,NULL);
 	config_changed = TRUE;
 }
@@ -1727,6 +1765,32 @@ init_user_panels(void)
 	}
 }
 
+/*send state change to all the panels*/
+static void
+send_state_change(void)
+{
+	GList *list;
+	/*process drawers first*/
+	/*for(list = panel_list; list != NULL; list = g_list_next(list)) {
+		PanelData *pd = list->data;
+		if(IS_DRAWER_WIDGET(pd->panel))
+			drawer_state_change(pd->panel,
+					    DRAWER_WIDGET(pd->panel)->state,
+					    NULL);
+	}*/
+	for(list = panel_list; list != NULL; list = g_list_next(list)) {
+		PanelData *pd = list->data;
+		if(IS_SNAPPED_WIDGET(pd->panel))
+			snapped_state_change(pd->panel,
+					     SNAPPED_WIDGET(pd->panel)->state,
+					     NULL);
+		else if(IS_CORNER_WIDGET(pd->panel))
+			corner_state_change(pd->panel,
+					    CORNER_WIDGET(pd->panel)->state,
+					    NULL);
+	}
+}
+
 /*I guess this should be called after we load up, but the problem is
   we never know when all the applets are going to finish loading and
   we don't want to clean the file before they load up, so now we
@@ -1934,6 +1998,9 @@ main(int argc, char **argv)
 	load_queued_applets();
 
 	add_forbidden_to_panels();
+
+	/*this will make the drawers be hidden for closed panels etc ...*/
+	send_state_change();
 	
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/

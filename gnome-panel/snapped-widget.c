@@ -343,7 +343,7 @@ snapped_widget_pop_down(gpointer data)
 	/*we are moving, or have drawers open, so wait with the
 	  pop_down*/
 	if(panel_applet_in_drag ||
-	   PANEL_WIDGET(snapped->panel)->drawers_open>0)
+	   snapped->drawers_open>0)
 		return TRUE;
 
 	gtk_signal_emit(GTK_OBJECT(snapped),
@@ -589,7 +589,8 @@ snapped_widget_set_hidebuttons(SnappedWidget *snapped)
 static GtkWidget *
 make_hidebutton(SnappedWidget *snapped,
 		char *pixmaparrow,
-		GtkSignalFunc hidefunc)
+		GtkSignalFunc hidefunc,
+		int horizontal)
 {
 	GtkWidget *w;
 	GtkWidget *pixmap;
@@ -597,6 +598,10 @@ make_hidebutton(SnappedWidget *snapped,
 
 	w=gtk_button_new();
 	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+	if(horizontal)
+		gtk_widget_set_usize(w,0,PANEL_MINIMUM_WIDTH);
+	else
+		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
 
 	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
 	pixmap = gnome_pixmap_new_from_file(pixmap_name);
@@ -649,28 +654,32 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->hidebutton_e =
 		make_hidebutton(snapped,
 				"panel-arrow-left.xpm",
-				GTK_SIGNAL_FUNC(snapped_show_hide_right));
+				GTK_SIGNAL_FUNC(snapped_show_hide_right),
+				TRUE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_e,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*NORTH*/
 	snapped->hidebutton_n =
 		make_hidebutton(snapped,
 				"panel-arrow-up.xpm",
-				GTK_SIGNAL_FUNC(snapped_show_hide_right));
+				GTK_SIGNAL_FUNC(snapped_show_hide_right),
+				FALSE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	/*WEST*/
 	snapped->hidebutton_w =
 		make_hidebutton(snapped,
 				"panel-arrow-right.xpm",
-				GTK_SIGNAL_FUNC(snapped_show_hide_left));
+				GTK_SIGNAL_FUNC(snapped_show_hide_left),
+				TRUE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_w,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*SOUTH*/
 	snapped->hidebutton_s =
 		make_hidebutton(snapped,
 				"panel-arrow-down.xpm",
-				GTK_SIGNAL_FUNC(snapped_show_hide_left));
+				GTK_SIGNAL_FUNC(snapped_show_hide_left),
+				FALSE);
 	gtk_table_attach(GTK_TABLE(snapped->table),snapped->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 
@@ -690,6 +699,10 @@ snapped_widget_init (SnappedWidget *snapped)
 	snapped->pos = SNAPPED_BOTTOM;
 	snapped->mode = SNAPPED_EXPLICIT_HIDE;
 	snapped->state = SNAPPED_SHOWN;
+
+	snapped->leave_notify_timer_tag = 0;
+	snapped->autohide_inhibit = FALSE;
+	snapped->drawers_open = 0;
 }
 
 

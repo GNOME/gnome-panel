@@ -501,7 +501,8 @@ corner_widget_set_hidebuttons(CornerWidget *corner)
 static GtkWidget *
 make_hidebutton(CornerWidget *corner,
 		char *pixmaparrow,
-		GtkSignalFunc hidefunc)
+		GtkSignalFunc hidefunc,
+		int horizontal)
 {
 	GtkWidget *w;
 	GtkWidget *pixmap;
@@ -509,6 +510,10 @@ make_hidebutton(CornerWidget *corner,
 
 	w=gtk_button_new();
 	GTK_WIDGET_UNSET_FLAGS(w,GTK_CAN_DEFAULT|GTK_CAN_FOCUS);
+	if(horizontal)
+		gtk_widget_set_usize(w,0,PANEL_MINIMUM_WIDTH);
+	else
+		gtk_widget_set_usize(w,PANEL_MINIMUM_WIDTH,0);
 
 	pixmap_name=gnome_unconditional_pixmap_file(pixmaparrow);
 	pixmap = gnome_pixmap_new_from_file(pixmap_name);
@@ -561,28 +566,32 @@ corner_widget_init (CornerWidget *corner)
 	corner->hidebutton_e =
 		make_hidebutton(corner,
 				"panel-arrow-left.xpm",
-				GTK_SIGNAL_FUNC(corner_show_hide_right));
+				GTK_SIGNAL_FUNC(corner_show_hide_right),
+				TRUE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_e,
 			 0,1,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*NORTH*/
 	corner->hidebutton_n =
 		make_hidebutton(corner,
 				"panel-arrow-up.xpm",
-				GTK_SIGNAL_FUNC(corner_show_hide_right));
+				GTK_SIGNAL_FUNC(corner_show_hide_right),
+				FALSE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_n,
 			 1,2,0,1,GTK_FILL,GTK_FILL,0,0);
 	/*WEST*/
 	corner->hidebutton_w =
 		make_hidebutton(corner,
 				"panel-arrow-right.xpm",
-				GTK_SIGNAL_FUNC(corner_show_hide_left));
+				GTK_SIGNAL_FUNC(corner_show_hide_left),
+				TRUE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_w,
 			 2,3,1,2,GTK_FILL,GTK_FILL,0,0);
 	/*SOUTH*/
 	corner->hidebutton_s =
 		make_hidebutton(corner,
 				"panel-arrow-down.xpm",
-				GTK_SIGNAL_FUNC(corner_show_hide_left));
+				GTK_SIGNAL_FUNC(corner_show_hide_left),
+				FALSE);
 	gtk_table_attach(GTK_TABLE(corner->table),corner->hidebutton_s,
 			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
 

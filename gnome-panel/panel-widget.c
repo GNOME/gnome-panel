@@ -1322,7 +1322,6 @@ panel_widget_init (PanelWidget *panel)
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel->size = INT_MAX;
 	panel->applet_list = NULL;
-	panel->drawers_open = 0;
 	panel->master_widget = NULL;
 	panel->drop_widget = GTK_WIDGET(panel);
 	panel->last_x = panel->last_y = panel->last_w = panel->last_h = -1;

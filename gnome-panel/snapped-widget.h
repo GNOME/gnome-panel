@@ -55,6 +55,10 @@ struct _SnappedWidget
 	int			leave_notify_timer_tag;
 
 	int			autohide_inhibit;
+	int			drawers_open; /* a count which can be used
+						 to block the autohide, until
+						 it is 0 .. it's set by the
+						 app not the widget*/
 };
 
 struct _SnappedWidgetClass

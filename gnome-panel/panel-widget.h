@@ -3,6 +3,10 @@
  *
  * Authors:  George Lebl
  */
+/* This widget, although slightly written as a general purpose widget, it
+   has MANY interdependencies, which makes it almost impossible to use in
+   anything else but the panel, what it would need is some serious
+   cleaning up*/
 #ifndef __PANEL_WIDGET_H__
 #define __PANEL_WIDGET_H__
 
@@ -82,10 +86,6 @@ struct _PanelWidget
 	int			postpone_adjust;
 	int			adjust_applet_idle;
 	
-	int			drawers_open; /* a count which can be used
-						 to block the autohide, until
-						 it is 0 .. it's set by the
-						 app not the widget*/
 	GtkWidget		*master_widget;
 	
 	GtkWidget		*drop_widget; /*this is the widget that the
