@@ -140,9 +140,9 @@ free_string (GtkWidget *widget, void *data)
 }
 
 static gint
-add_to_panel (char *applet, char *path, char *arg, gint dorestart)
+add_to_panel (char *applet, char *path, char *arg)
 {
-	load_applet(applet,path,arg,dorestart,
+	load_applet(applet,path,arg,
 		    PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 	return TRUE;
 }
@@ -152,13 +152,13 @@ add_app_to_panel (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *ii = data;
 
-	return add_to_panel (LAUNCHER_ID, NULL, ii->location,TRUE);
+	return add_to_panel (LAUNCHER_ID, NULL, ii->location);
 }
 
 static gint
 add_dir_to_panel (GtkWidget *widget, void *data)
 {
-	return add_to_panel (MENU_ID, NULL, data,TRUE);
+	return add_to_panel (MENU_ID, NULL, data);
 }
 
 
@@ -169,7 +169,6 @@ add_applet (GtkWidget *w, gpointer data)
 	char *path;
 	char *param;
 	gint r;
-	gint dorestart;
 
 	path = ii->exec[0];
 
@@ -179,12 +178,8 @@ add_applet (GtkWidget *w, gpointer data)
 		param = gnome_string_joinv (" ", ii->exec + 1);
 	else
 		param = NULL;
-	if(mulapp_is_in_queue(path))
-		dorestart = FALSE;
-	else
-		dorestart = TRUE;
 
-	r = add_to_panel(EXTERN_ID,path,param,dorestart);
+	r = add_to_panel(EXTERN_ID,path,param);
 
 	if(param) g_free(param);
 	return r;
@@ -408,7 +403,7 @@ panel_configure (GtkWidget *widget, void *data)
 static void
 add_applet_to_panel_data(GtkWidget *widget, gpointer data)
 {
-	add_to_panel((char *)data, NULL, NULL,TRUE);
+	add_to_panel((char *)data, NULL, NULL);
 }
 
 static gint
@@ -418,8 +413,7 @@ act_really_add_swallow(GtkWidget *w, gpointer data)
 	GtkWidget *d = gtk_object_get_user_data(GTK_OBJECT(entry));
 
 	gtk_widget_hide(d);
-	add_to_panel(SWALLOW_ID, NULL, gtk_entry_get_text(GTK_ENTRY(entry)),
-		     TRUE);
+	add_to_panel(SWALLOW_ID, NULL, gtk_entry_get_text(GTK_ENTRY(entry)));
 
 	return TRUE;
 }
@@ -432,7 +426,7 @@ really_add_swallow(GtkWidget *d,gint button, gpointer data)
 	gtk_widget_hide(d);
 	if(button == 0)
 		add_to_panel(SWALLOW_ID, NULL,
-			     gtk_entry_get_text(GTK_ENTRY(entry)),TRUE);
+			     gtk_entry_get_text(GTK_ENTRY(entry)));
 	return TRUE;
 }
 

@@ -77,7 +77,7 @@ mulapp_remove_emptyfrom_queue(void)
 	GList *list;
 	for(list=multiple_applet_load_queue;list!=NULL;list=g_list_next(list)){
 		MultiLoadQueue *mq = list->data;
-		if(is_applet_running(mq->path)) {
+		if(!is_applet_running(mq->path)) {
 			multiple_applet_load_queue =
 				g_list_remove_link(multiple_applet_load_queue,
 						   list);
@@ -153,10 +153,11 @@ mulapp_add_ior_and_free_queue(const gchar *path, const gchar *ior)
 		MultiLoadQueue *mq = list->data;
 		if(strcmp(mq->path,path)==0) {
 			GList *li;
-			if(mq->ior)
-				g_warning("What? An IOR existed before, this "
-					  "is most likely a bug!");
-			mq->ior = g_strdup(ior);
+			if(mq->ior && strcmp(mq->ior,ior)!=0)
+				g_warning("What? there already was an applet "
+					  "before with different IOR?");
+			else
+				mq->ior = g_strdup(ior);
 			if(!mq->params)
 				return;
 			for(li=mq->params;li!=NULL;li=g_list_next(li)) {
@@ -266,12 +267,6 @@ save_applet_configuration(AppletInfo *info, gint *num)
 
 			fullpath = g_copy_strings(path,"parameters2",NULL);
 			gnome_config_set_string(fullpath, info->params);
-			g_free(fullpath);
-
-			/*we use the data field to store if we should or
-			  should not restart the applet*/
-			fullpath = g_copy_strings(path,"dorestart",NULL);
-			gnome_config_set_bool(fullpath, info->data!=0);
 			g_free(fullpath);
 		} else
 			(*num)--;
@@ -957,15 +952,14 @@ applet_request_id (const char *path, const char *param,
 			*globcfgpath = g_strdup(old_panel_cfg_path);
 			info->type = APPLET_EXTERN_RESERVED;
 			*winid=GDK_WINDOW_XWINDOW(info->applet_widget->window);
-			info->data = ITOP(dorestart);
-			if(!dorestart &&!mulapp_is_in_queue(path))
-					mulapp_add_to_queue(path);
+			if(!dorestart && !mulapp_is_in_queue(path))
+				mulapp_add_to_queue(path);
 
 			return i;
 		}
 	}
 
-	*winid = reserve_applet_spot (EXTERN_ID, path, param, dorestart, 0, 0,
+	*winid = reserve_applet_spot (EXTERN_ID, path, param, 0, 0,
 				      NULL, APPLET_EXTERN_RESERVED);
 	if(*winid == 0) {
 		*globcfgpath = NULL;
@@ -976,9 +970,8 @@ applet_request_id (const char *path, const char *param,
 	*globcfgpath = g_strdup(old_panel_cfg_path);
 
 	info = get_applet_info(applet_count-1);
-	info->data = ITOP(dorestart);
-	if(!dorestart &&!mulapp_is_in_queue(path))
-			mulapp_add_to_queue(path);
+	if(!dorestart && !mulapp_is_in_queue(path))
+		mulapp_add_to_queue(path);
 
 	return i;
 }
@@ -1020,7 +1013,7 @@ applet_register (const char * ior, int applet_id)
   only*/
 guint32
 reserve_applet_spot (const char *id_str, const char *path, const char *param,
-		     gint dorestart, int panel, int pos, char *cfgpath,
+		     int panel, int pos, char *cfgpath,
 		     AppletType type)
 {
 	GtkWidget *socket;
@@ -1033,7 +1026,7 @@ reserve_applet_spot (const char *id_str, const char *path, const char *param,
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the path field*/
-	if(!register_toy(socket,NULL,(gpointer)(dorestart?1L:0L),
+	if(!register_toy(socket,NULL,NULL,
 			 g_strdup(id_str),g_strdup(path),
 			 g_strdup(param), pos,panel,cfgpath, type)) {
 		g_warning("Couldn't add applet");
@@ -1055,7 +1048,7 @@ panel_add_main_menu(GtkWidget *w, gpointer data)
 	PanelWidget *panel = data;
 	gint panel_num = find_panel(panel);
 
-	load_applet(MENU_ID,NULL,NULL,TRUE,PANEL_UNKNOWN_APPLET_POSITION,
+	load_applet(MENU_ID,NULL,NULL,PANEL_UNKNOWN_APPLET_POSITION,
 		    panel_num!=-1?panel_num:0,NULL);
 
 	return TRUE;

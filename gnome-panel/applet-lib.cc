@@ -22,7 +22,6 @@
 
 
 
-
 #include "cookie.h"
 
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
@@ -58,9 +57,7 @@ int _gnome_applet_start_new_applet(const char *params);
 END_GNOME_DECLS
 
 class Applet_impl : virtual public GNOME::Applet_skel {
-	GtkWidget *the_widget;
 public:
-	Applet_impl (GtkWidget *widget) { the_widget = widget; };
 	void change_orient (const char *ccookie, CORBA::Short applet_id,
 			    CORBA::Short orient) {
 		CHECK_COOKIE ();
@@ -370,15 +367,10 @@ char *
 gnome_panel_applet_register (GtkWidget *widget, int applet_id)
 {
 	char *result;
-	char *ior;
+	static char *ior=NULL;
 
-	/* Create an applet object, I do pass the widget parameter to the
-	 * constructor object to have a way of sort out to which object
-	 * implementation the panel is talking to us about (ie, if an applet
-	 * can implement various instances of some object, like say a bunch
-	 * of "Swallow" applets 
-	 */
-	GNOME::Applet_ptr applet = new Applet_impl (widget);
+	/*the applet implementation, it's only created once*/
+	static GNOME::Applet_ptr applet = new Applet_impl ();
 
 	/* Now a way to find out the CORBA impl from the widget */
 	gtk_object_set_data (GTK_OBJECT (widget), "CORBA_object", applet);

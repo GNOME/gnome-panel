@@ -15,10 +15,11 @@ typedef gint (*AppletWidgetSaveSignal) (GtkObject * object,
 				        char *globcfgpath,
 				        gpointer data);
 
-static GList *applet_widgets=NULL;
-static gint applet_count=0;
+static GList *applet_widgets = NULL;
+static gint applet_count = 0;
 
 static GtkPlugClass *parent_class;
+
 
 guint
 applet_widget_get_type ()
@@ -185,6 +186,10 @@ applet_widget_new_param_multi(gchar *argv0, gchar *param, gint multi)
 	char *myinvoc;
 	gint applet_id;
 
+	/*keep track if we already initted corba or not, so that we can
+	  safely start new applets*/
+	static gint do_corba_init = TRUE;
+
 	myinvoc = get_full_path(argv0);
 	if(!myinvoc)
 		return 0;
@@ -192,8 +197,10 @@ applet_widget_new_param_multi(gchar *argv0, gchar *param, gint multi)
 	if(!param)
 		param="";
 
-	if (!gnome_panel_applet_init_corba())
+	if (do_corba_init && !gnome_panel_applet_init_corba())
 		g_error("Could not communicate with the panel\n");
+
+	do_corba_init = FALSE;
 
 	result = gnome_panel_applet_request_id(myinvoc, param,multi?FALSE:TRUE,
 					       &applet_id,
@@ -281,8 +288,7 @@ _gnome_applet_change_orient(int applet_id, int orient)
 	applet = applet_widget_get_by_id(applet_id);
 	if(applet) {
 		gtk_signal_emit(GTK_OBJECT(applet),
-				applet_widget_signals[
-					CHANGE_ORIENT_SIGNAL],
+				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
 				o);
 	}
 }
@@ -325,7 +331,7 @@ _gnome_applet_start_new_applet(const char *param)
 
 	if(applet) {
 		gtk_signal_emit(GTK_OBJECT(applet),
-				applet_widget_signals[SESSION_SAVE_SIGNAL],
+				applet_widget_signals[START_NEW_APPLET_SIGNAL],
 				param);
 	}
 }

@@ -54,7 +54,6 @@ struct _LoadApplet {
 	gchar *id_str;
 	gchar *path;
 	gchar *params;
-	gint dorestart;
 	gint pos;
 	gint panel;
 	gchar *cfgpath;
@@ -125,7 +124,7 @@ static struct argp parser =
 /*needed for drawers*/
 static void panel_setup(PanelWidget *panel);
 
-static void really_exec_prog(gint applet_id, gchar *path, gchar *param);
+static gint really_exec_prog(gint applet_id, gchar *path, gchar *param);
 static void exec_queue_start_next(void);
 
 static gint
@@ -137,56 +136,73 @@ exec_queue_timeout(gpointer data)
 	return FALSE;
 }
 
-static void
+static gint
 really_exec_prog(gint applet_id, gchar *path, gchar *param)
 {
-	/*this applet is dumb and wants us to start it :)*/
-	AppletChild *child;
+	/*check if this is an applet which is a multi applet and
+	  has something already loaded*/
+	if(mulapp_is_in_queue(path)) {
+		puts("multi applet, just contacting existing applet");
+		mulapp_load_or_add_to_queue(path,param);
+		return TRUE;
+	}  else {
+		AppletChild *child;
 
-	child = g_new(AppletChild,1);
+		child = g_new(AppletChild,1);
 
-	child->pid = fork();
-	if(child->pid < 0)
-		g_error("Can't fork!");
-	if(child->pid == 0) {
-		if(strlen(param)>0)
-			execl(path,path,param,NULL);
-		else
-			execl(path,path,NULL);
-		g_error("Can't execl!");
-	}
+		child->pid = fork();
+		if(child->pid < 0)
+			g_error("Can't fork!");
+		if(child->pid == 0) {
+			if(strlen(param)>0)
+				execl(path,path,param,NULL);
+			else
+				execl(path,path,NULL);
+			g_error("Can't execl!");
+		}
 
-	printf("started applet, pid: %d\n",child->pid);
-	
-	child->applet_id = applet_id;
+		printf("started applet, pid: %d\n",child->pid);
 		
-	children = g_list_prepend(children,child);
+		child->applet_id = applet_id;
+			
+		children = g_list_prepend(children,child);
 
-	current_exec = applet_id;
+		current_exec = applet_id;
 
-	cur_timeout = gtk_timeout_add(30*100,exec_queue_timeout,NULL);
+		/*wait 60 seconds before timing out*/
+		cur_timeout = gtk_timeout_add(60*100,exec_queue_timeout,NULL);
+
+		return FALSE;
+	}
 }
 
+/*start the next item in the exec queue*/
 static void
 exec_queue_start_next(void)
 {
 	ExecQueue *eq;
+	gint ret;
+
 	current_exec = -1;
 	if(cur_timeout>0)
 		gtk_timeout_remove(cur_timeout);
 	cur_timeout=0;
 
-	if(!exec_queue)
-		return;
+	do {
+		if(!exec_queue)
+			return;
 
-	eq = exec_queue->data;
+		eq = exec_queue->data;
 
-	really_exec_prog(eq->applet_id, eq->path, eq->param);
-	g_free(eq->path);
-	if(eq->param) g_free(eq->param);
-	g_free(eq);
+		ret = really_exec_prog(eq->applet_id, eq->path, eq->param);
+		g_free(eq->path);
+		if(eq->param) g_free(eq->param);
+		g_free(eq);
 
-	exec_queue = g_list_remove_link(exec_queue,exec_queue);
+		exec_queue = g_list_remove_link(exec_queue,exec_queue);
+	/*repeat while we are doing applets that do not require a wait
+	  (second invocations of multi applets)*/
+	} while(ret);
 }
 
 void
@@ -216,7 +232,7 @@ exec_prog(gint applet_id, gchar *path, gchar *param)
 
 
 static void
-queue_load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
+queue_load_applet(gchar *id_str, gchar *path, gchar *params,
 		  gint pos, gint panel, gchar *cfgpath)
 {
 	LoadApplet *l;
@@ -226,7 +242,6 @@ queue_load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 	if(path) l->path=g_strdup(path);
 	else l->path = NULL;
 	l->params=g_strdup(params);
-	l->dorestart=dorestart;
 	l->pos=pos;
 	l->panel=panel;
 	l->cfgpath=g_strdup(cfgpath);
@@ -249,7 +264,7 @@ monitor_drawers(GtkWidget *w, gpointer data)
 
 
 void
-load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
+load_applet(gchar *id_str, gchar *path, gchar *params,
 	    gint pos, gint panel, gchar *cfgpath)
 {
 	if(strcmp(id_str,EXTERN_ID) == 0) {
@@ -272,7 +287,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 			p = g_copy_strings(cfgpath,"path=",NULL);
 			fullpath = gnome_config_get_string(p);
 			g_free(p);
-			load_applet(LAUNCHER_ID,NULL,fullpath,TRUE,pos,panel,
+			load_applet(LAUNCHER_ID,NULL,fullpath,pos,panel,
 				    cfgpath);
 			g_free(fullpath);
 			return;
@@ -287,25 +302,17 @@ load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 			fullpath = g_strdup(path);
 	
 
-		if(reserve_applet_spot (id_str, fullpath,params, dorestart,
+		if(reserve_applet_spot (id_str, fullpath,params,
 					panel, pos, cfgpath,
 					APPLET_EXTERN_PENDING)==0) {
+			g_warning("Whoops! for some reason we can't add "
+				  "to the panel");
 			g_free(fullpath);
 			return;
 		}
 		
 		/*'#' marks an applet that will take care of starting
 		  itself but wants us to reserve a spot for it*/
-		if(!dorestart) {
-			if(mulapp_is_in_queue(fullpath)) {
-				mulapp_load_or_add_to_queue(fullpath,param);
-				g_free(fullpath);
-				return;
-			} else {
-				mulapp_add_to_queue(fullpath);
-			}
-		}
-
 		if(path[0]!='#')
 			exec_prog(applet_count-1,fullpath,param);
 
@@ -317,6 +324,9 @@ load_applet(gchar *id_str, gchar *path, gchar *params, gint dorestart,
 
 		register_toy(menu->button,menu->menu,menu,MENU_ID,NULL,params,
 			     pos,panel,NULL,APPLET_MENU);
+
+		/*we count the main menus so that we can dis-allow
+		  deleting of the last one*/
 		if(!params || strcmp(params,".")==0)
 			main_menu_count++;
 	} else if(strcmp(id_str,LAUNCHER_ID) == 0) {
@@ -415,7 +425,7 @@ load_queued_applets(void)
 
 	for(list = load_queue;list!=NULL;list=g_list_next(list)) {
 		LoadApplet *l=list->data;
-		load_applet(l->id_str,l->path,l->params,l->dorestart,
+		load_applet(l->id_str,l->path,l->params,
 			    l->pos,l->panel,l->cfgpath);
 		g_free(l->id_str);
 		if(l->path) g_free(l->path);
@@ -441,9 +451,9 @@ add_forbidden_to_panels(void)
 static void
 load_default_applets(void)
 {
-	queue_load_applet(MENU_ID, NULL, ".", TRUE,
+	queue_load_applet(MENU_ID, NULL, ".",
 			  PANEL_UNKNOWN_APPLET_POSITION, 0,NULL);
-	queue_load_applet(EXTERN_ID, "clock_applet", "", TRUE,
+	queue_load_applet(EXTERN_ID, "clock_applet", "",
 			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
 }
 
@@ -456,7 +466,6 @@ init_user_applets(void)
 	int   pos=0,panel;
 	char  buf[256];
 	int   count,num;	
-	gint  dorestart;
 
 	g_snprintf(buf,256,"%sConfig/applet_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
@@ -471,11 +480,9 @@ init_user_applets(void)
 		if(strcmp(applet_name,"Extern")==0) {
 			applet_path = gnome_config_get_string("parameters=");
 			applet_params = gnome_config_get_string("parameters2=");
-			dorestart = gnome_config_get_bool("dorestart=true");
 		} else {
 			applet_path = NULL;
 			applet_params = gnome_config_get_string("parameters=");
-			dorestart = TRUE;
 		}
 
 		g_snprintf(buf,256,"position=%d",
@@ -487,7 +494,7 @@ init_user_applets(void)
 		  loads*/
 		g_snprintf(buf,256,"%sApplet_%d/",old_panel_cfg_path,num);
 		queue_load_applet(applet_name, applet_path, applet_params,
-				  dorestart, pos, panel, buf);
+				  pos, panel, buf);
 
 		gnome_config_pop_prefix();
 

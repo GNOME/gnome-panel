@@ -119,7 +119,7 @@ int applet_request_id (const char *path, const char *param,
 void applet_register (const char * ior, int applet_id);
 void applet_request_glob_cfg (char **globcfgpath);
 guint32 reserve_applet_spot (const char *id_str, const char *path,
-			     const char *param, gint dorestart,
+			     const char *param,
 			     int panel, int pos, char *cfgpath,
 			     AppletType type);
 void applet_abort_id(gint applet_id);
@@ -151,7 +151,7 @@ void exec_queue_done(gint applet_id);
 extern char *cookie;
 
 /*this is in main.c*/
-void load_applet(char *id, char *path, char *params, int dorestart,
+void load_applet(char *id, char *path, char *params,
 		 int pos, int panel, char *cfgpath);
 void orientation_change(gint applet_id, PanelWidget *panel);
 
