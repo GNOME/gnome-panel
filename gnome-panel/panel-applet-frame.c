@@ -42,6 +42,7 @@
 struct _PanelAppletFramePrivate {
 	GNOME_Vertigo_PanelAppletShell  applet_shell; /* unused */
 	Bonobo_PropertyBag              property_bag;
+	BonoboUIComponent              *ui_component;
 
 	AppletInfo                     *applet_info;
 
@@ -106,6 +107,7 @@ popup_handle_remove (BonoboUIComponent *uic,
 {
 	AppletInfo *info = frame->priv->applet_info;
 	frame->priv->applet_info = NULL;
+
 	panel_applet_clean (info);
 }
 
@@ -292,6 +294,14 @@ panel_applet_frame_finalize (GObject *object)
 {
 	PanelAppletFrame *frame = PANEL_APPLET_FRAME (object);
 
+	if (frame->priv->property_bag)
+		bonobo_object_release_unref (
+			frame->priv->property_bag, NULL);
+
+	if (frame->priv->ui_component)
+		bonobo_object_unref (
+			BONOBO_OBJECT (frame->priv->ui_component));
+
 	g_free (frame->priv->iid);
 	frame->priv->iid = NULL;
 
@@ -389,6 +399,7 @@ panel_applet_frame_instance_init (PanelAppletFrame      *frame,
 
 	frame->priv->applet_shell = CORBA_OBJECT_NIL;
 	frame->priv->property_bag = CORBA_OBJECT_NIL;
+	frame->priv->ui_component = NULL;
 	frame->priv->applet_info  = NULL;
 	frame->priv->moving_focus_out = FALSE;
 	frame->priv->clean_remove = FALSE;
@@ -542,7 +553,6 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 {
 	BonoboControlFrame *control_frame;
 	Bonobo_Control      control;
-	BonoboUIComponent  *ui_component;
 	CORBA_Environment   ev;
 	GtkWidget          *widget;
 	char               *moniker;
@@ -603,11 +613,14 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	frame->priv->property_bag = 
 		bonobo_control_frame_get_control_property_bag (control_frame, NULL);
 
-	ui_component = bonobo_control_frame_get_popup_component (control_frame, NULL);
+	frame->priv->ui_component =
+		bonobo_control_frame_get_popup_component (control_frame, NULL);
 
-	bonobo_ui_util_set_ui (ui_component, DATADIR, "GNOME_Panel_Popup.xml", "panel", NULL);
+	bonobo_ui_util_set_ui (frame->priv->ui_component, DATADIR,
+			       "GNOME_Panel_Popup.xml", "panel", NULL);
 
-	bonobo_ui_component_add_verb_list_with_data (ui_component, popup_verbs, frame);
+	bonobo_ui_component_add_verb_list_with_data (
+		frame->priv->ui_component, popup_verbs, frame);
 
 	gtk_container_add (GTK_CONTAINER (frame), widget);
 

@@ -1,3 +1,10 @@
+2002-03-18  Shivram U  <shivaram.upadhyayula@wipro.com>
+
+	reviewed by Mark McLoughlin <mark@skynet.ie>
+
+	* panel-applet-frame.c: (panel_applet_frame_finalize) unref the
+	property_bag and the ui_component. Fixes #67468
+
 2002-03-19  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-config-global.c: (panel_global_config_set_entry): check value
