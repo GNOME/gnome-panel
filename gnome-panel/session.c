@@ -389,6 +389,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	PanelData *pd = data;
 	GString	*buf;
 	gchar *panel_profile;
+	char *panel_id;
 	
 	/* FIXME: Do we need user_data anymore?? */
 
@@ -402,43 +403,45 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	} else if (FOOBAR_IS_WIDGET (pd->panel)) {
 		panel = PANEL_WIDGET (FOOBAR_WIDGET(pd->panel)->panel);
 	}
-	
+
+	panel_id = g_strdup_printf ("%u", (guint)panel->unique_id);
+
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   (gchar *) panel->unique_id,	
+					   panel_id,
 					   "panel-type", pd->type);
 
 	if (basep != NULL) {
 		panel_gconf_panel_profile_set_bool (panel_profile,
-						    (gchar *) panel->unique_id,
+						    panel_id,
 						    "hide-buttons-enabled", basep->hidebuttons_enabled);
 		panel_gconf_panel_profile_set_bool (panel_profile,
-						    (gchar *) panel->unique_id,
+						    panel_id,
 						    "hide-button-pixmaps-enabled", basep->hidebutton_pixmaps_enabled);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,
+						   panel_id,
 						   "panel-hide-mode", basep->mode);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,
+						   panel_id,
 						   "panel-hide-state", basep->state);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,
+						   panel_id,
 						   "screen-id", basep->screen);
 	}
 
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   (gchar *) panel->unique_id,	
+					   panel_id,
 					   "panel-size", panel->sz);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    (gchar *) panel->unique_id,	
+					    panel_id,
 					    "panel-backgroun-pixmap-fit", panel->fit_pixmap_bg);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    (gchar *) panel->unique_id,	
+					    panel_id,
 					    "panel-background-pixmap-stretch", panel->stretch_pixmap_bg);
 	panel_gconf_panel_profile_set_bool (panel_profile,
-					    (gchar *) panel->unique_id,	
+					    panel_id,
 					    "panel-background-pixmap-rotate", panel->rotate_pixmap_bg);
 	panel_gconf_panel_profile_set_string (panel_profile,
-					      (gchar *) panel->unique_id,	
+					      panel_id,
 					      "panel-background-pixmap", sure_string (panel->back_pixmap));
 
 
@@ -448,11 +451,11 @@ save_panel_configuration(gpointer data, gpointer user_data)
 			 (guint)panel->back_color.blue/256);
 	
 	panel_gconf_panel_profile_set_string (panel_profile,
-					      (gchar *) panel->unique_id,	
+					      panel_id,
 					      "panel-background-color", buf->str);
 
 	panel_gconf_panel_profile_set_int (panel_profile,
-					   (gchar *) panel->unique_id,	
+					   panel_id,
 					   "panel-background-type", panel->back_type);
 	
 	/* now do different types */
@@ -462,47 +465,48 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	switch (pd->type) {
 	case ALIGNED_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-align", ALIGNED_POS (basep->pos)->align);
 		break;
 	case SLIDING_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-offset", SLIDING_POS (basep->pos)->offset);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-anchor", SLIDING_POS (basep->pos)->anchor);
 		break;
 	case FLOATING_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-orient", PANEL_WIDGET (basep->pos)->orient);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-x-position", FLOATING_POS (basep->pos)->x);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-y-position", FLOATING_POS (basep->pos)->y);
 		break;
 	case DRAWER_PANEL:
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "panel-orient", DRAWER_POS (basep->pos)->orient);
 		break;
 	case FOOBAR_PANEL:
 		panel_gconf_panel_profile_set_string (panel_profile,
-						      (gchar *) panel->unique_id,	
+						      panel_id,
 						      "clock-format", FOOBAR_WIDGET (pd->panel)->clock_format);
 		panel_gconf_panel_profile_set_int (panel_profile,
-						   (gchar *) panel->unique_id,	
+						   panel_id,
 						   "screen_id", FOOBAR_WIDGET (pd->panel)->screen);
 		break;
 	default:
 		break;
 	}
-	
-	g_string_free (buf,TRUE);
 
+	g_free (panel_id);
+	
+	g_string_free (buf, TRUE);
 }
 
 void

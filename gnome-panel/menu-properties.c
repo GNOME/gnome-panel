@@ -90,7 +90,9 @@ get_pixmap (const char *menudir, gboolean main_menu)
 		g_free (dentry_name);
 
 		if (qitem != NULL)
-			pixmap_name = quick_desktop_item_find_icon (qitem->icon);
+			pixmap_name = gnome_desktop_item_find_icon (qitem->icon,
+								    20 /* desired size */,
+								    0 /* flags */);
 
 		if (pixmap_name == NULL)
 			pixmap_name = panel_pixmap_discovery ("gnome-folder.png",

@@ -58,9 +58,6 @@
 
 #undef QUICK_DESKTOP_READER_DEBUG
 
-extern char *kde_icondir;
-extern char *kde_mini_icondir;
-
 /* This shares a lot of code with gnome-desktop-item, hmmm .... */
 
 QuickDesktopItem *
@@ -464,112 +461,6 @@ quick_desktop_item_load_uri (const char *uri,
 	g_free (comment_lang);
 
 	return retval;
-}
-
-static GSList *
-add_dirs (GSList *list, const char *dirname)
-{
-	DIR *dir;
-	struct dirent *dent;
-
-	dir = opendir (dirname);
-	if (dir == NULL)
-		return list;
-
-	while ((dent = readdir (dir)) != NULL) {
-		char *full = g_build_filename (dirname, dent->d_name, NULL);
-		if (g_file_test (full, G_FILE_TEST_IS_DIR))
-			list = g_slist_prepend (list, full);
-		else
-			g_free (full);
-	}
-	closedir (dir);
-
-	return list;
-}
-
-static GSList *
-get_kde_dirs (void)
-{
-	GSList *list = NULL;
-	char *dirname;
-
-	if (kde_icondir == NULL)
-		return NULL;
-
-	list = g_slist_prepend (list, kde_icondir);
-
-	dirname = g_build_filename (kde_icondir, "hicolor", "48x48", NULL);
-	list = add_dirs (list, dirname);
-	g_free (dirname);
-
-	dirname = g_build_filename (kde_icondir, "hicolor", "32x32", NULL);
-	list = add_dirs (list, dirname);
-	g_free (dirname);
-
-	dirname = g_build_filename (kde_icondir, "locolor", "48x48", NULL);
-	list = add_dirs (list, dirname);
-	g_free (dirname);
-
-	dirname = g_build_filename (kde_icondir, "locolor", "32x32", NULL);
-	list = add_dirs (list, dirname);
-	g_free (dirname);
-
-	return g_slist_reverse (list);
-}
-
-/* Similar function is in gnome-desktop-item */
-char *
-quick_desktop_item_find_icon (const char *icon)
-{
-	if (icon == NULL) {
-		return NULL;
-	} else if (g_path_is_absolute (icon)) {
-		if (g_file_test (icon, G_FILE_TEST_EXISTS)) {
-			return g_strdup (icon);
-		} else {
-			return NULL;
-		}
-	} else {
-		char *full;
-		char *name = NULL;
-		static GSList *kde_dirs = NULL;
-		GSList *li;
-
-		/* FIXME: no extention, use .png, this is wrong,
-		 * we need to be smarter here */
-		if (strchr (icon, '.') == NULL) {
-			name = g_strconcat (icon, ".png", NULL);
-			icon = name;
-		}
-	       
-		full = gnome_program_locate_file (NULL,
-						  GNOME_FILE_DOMAIN_PIXMAP,
-						  icon,
-						  TRUE /* only_if_exists */,
-						  NULL /* ret_locations */);
-		if (full == NULL)
-			full = gnome_program_locate_file (NULL,
-							  GNOME_FILE_DOMAIN_APP_PIXMAP,
-							  icon,
-							  TRUE /* only_if_exists */,
-							  NULL /* ret_locations */);
-
-		if (kde_dirs == NULL)
-			kde_dirs = get_kde_dirs ();
-
-		for (li = kde_dirs; full == NULL && li != NULL; li = li->next) {
-			full = g_build_filename (li->data, icon, NULL);
-			if ( ! g_file_test (full, G_FILE_TEST_EXISTS)) {
-				g_free (full);
-				full = NULL;
-			}
-		}
-
-		g_free (name);
-
-		return full;
-	}
 }
 
 void

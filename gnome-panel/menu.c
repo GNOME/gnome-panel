@@ -539,9 +539,13 @@ load_icons_handler_again:
 		goto load_icons_handler_again;
 	}
 
-	file = quick_desktop_item_find_icon (icon->image);
+	file = gnome_desktop_item_find_icon (icon->image,
+					     20 /* desired size */,
+					     0 /* flags */);
 	if (file == NULL)
-		file = quick_desktop_item_find_icon (icon->fallback_image);
+		file = gnome_desktop_item_find_icon (icon->fallback_image,
+						     20 /* desired size */,
+						     0 /* flags */);
 
 	if (file == NULL) {
 		icon_to_load_free (icon);
@@ -3048,13 +3052,17 @@ create_new_panel (GtkWidget *w, gpointer data)
 		GtkWidget *dialog;
 		gchar *s;
 		if (!foobar_widget_exists (screen)) {
+			char *panel_id;
 			panel = foobar_widget_new (screen);
+			panel_id = g_strdup_printf ("%u",
+						    (guint) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id);
 
 			/* Don't translate the first part of this string */
 			s = panel_gconf_panel_profile_get_conditional_string (session_get_current_profile (),
-										       (gchar *) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id,
-										       "clock-format",
-										       TRUE);
+									      panel_id,
+									      "clock-format",
+									      TRUE);
+			g_free (panel_id);
 			if (s != NULL)
 				foobar_widget_set_clock_format (FOOBAR_WIDGET (panel), s);
 			g_free (s);
@@ -3249,7 +3257,12 @@ create_kde_menu (GtkWidget *menu, gboolean fake_submenus,
 	char *pixmap_name;
 	char *uri;
 
-	pixmap_name = g_build_filename (kde_icondir, "exec.xpm", NULL);
+	pixmap_name = gnome_desktop_item_find_icon ("go.png",
+						    20 /* desired_size */,
+						    0 /* flags */);
+	if (pixmap_name == NULL) {
+		pixmap_name = g_build_filename (kde_icondir, "exec.xpm", NULL);
+	}
 
 	uri = gnome_vfs_get_uri_from_local_path (kde_menudir);
 
@@ -4136,7 +4149,12 @@ add_kde_submenu (GtkWidget *root_menu, gboolean fake_submenus,
 
 	menu = create_kde_menu (NULL, fake_submenus, TRUE,
 				TRUE, launcher_add);
-	pixmap_path = g_build_filename (kde_icondir, "exec.xpm", NULL);
+	pixmap_path = gnome_desktop_item_find_icon ("go.png",
+						    20 /* desired_size */,
+						    0 /* flags */);
+	if (pixmap_path == NULL) {
+		pixmap_path = g_build_filename (kde_icondir, "exec.xpm", NULL);
+	}
 
 	menuitem = gtk_image_menu_item_new ();
 

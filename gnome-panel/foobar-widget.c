@@ -97,6 +97,14 @@ foobar_widget_class_init (FoobarWidgetClass *klass)
 	widget_class->size_allocate = foobar_widget_size_allocate;
 	widget_class->enter_notify_event = foobar_enter_notify;
 	widget_class->leave_notify_event = foobar_leave_notify;
+
+	gtk_rc_parse_string ("style \"panel-foobar-menubar-style\"\n"
+			     "{\n"
+			     "GtkMenuBar::shadow-type = none\n"
+			     "GtkMenuBar::internal-padding = 0\n"
+			     "}\n"
+			     "widget \"*.panel-foobar-menubar\" style \"panel-foobar-menubar-style\"");
+
 }
 
 static GtkWidget *
@@ -1018,6 +1026,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 #endif
 
 	menu_bar = gtk_menu_bar_new ();	
+	gtk_widget_set_name (menu_bar,
+			     "panel-foobar-menubar");
 	
 	menuitem = pixmap_menu_item_new (_("Applications"),
 					 "gnome-logo-icon-transparent.png");
@@ -1069,6 +1079,8 @@ foobar_widget_instance_init (FoobarWidget *foo)
 #endif
 
 	bar = menu_bar = gtk_menu_bar_new ();
+	gtk_widget_set_name (menu_bar,
+			     "panel-foobar-menubar");
 
 	append_clock_menu (foo, menu_bar);
 

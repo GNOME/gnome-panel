@@ -953,7 +953,9 @@ select_row_handler (GtkCList *clist,
 				gtk_label_set_text (GTK_LABEL (desc_label),
 						    sure_string (qitem->comment));
 
-			icon = quick_desktop_item_find_icon (qitem->icon);
+			icon = gnome_desktop_item_find_icon (qitem->icon,
+							     20 /* desired size */,
+							     0 /* flags */);
 			if (icon != NULL) {
 				pixbuf = gdk_pixbuf_new_from_file (icon, NULL);
 			} else {

@@ -1,3 +1,15 @@
+Wed Dec 19 20:15:09 2001  George Lebl <jirka@5z.com>
+
+	* foobar-widget.c: an evil hack stolen from tasklist to set some
+	  style properties such as the bevel type and internal padding
+
+	* gnome-run.c, launcher.c, menu-properties.c, menu.c,
+	  quick-desktop-reader.[ch]: use the new icon finding routines from
+	  the desktop item thingie.
+
+	* menu.c, session.c: dereferencing a guint32 as a pointer is
+	  dangerous to one's health.
+
 Wed Dec 19 16:48:41 2001  George Lebl <jirka@5z.com>
 
 	* xstuff.[ch], gnome-run.c, launcher.c, menu-properties.c,
