@@ -231,7 +231,10 @@ static void
 add_menu_to_panel (GtkWidget *widget, void *data)
 {
 	MenuFinfo *mf = data;
-	load_menu_applet(mf->menudir,0, 0, current_panel);
+	if(mf)
+		load_menu_applet(mf->menudir,0, 0, current_panel);
+	else
+		load_menu_applet(NULL,0, 0, current_panel);
 }
 
 static int
