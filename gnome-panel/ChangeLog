@@ -1,3 +1,11 @@
+2002-01-16  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep_widget.[ch]
+	Add "focus_return" signal to return focus from a child widget to the
+	panel. Define key binding (Ctrl+Tab) to activate focus_return.
+	Remove calls to g_return_if_fail (foo != NULL) if followed by calls
+	to g_return_if_fail (GTK_IS_BAR (foo));
+
 Wed Jan 16 01:01:38 2002  George Lebl <jirka@5z.com>
 
 	* applet.[ch], panel-applet-frame.c: Make sure the AppletInfo is

@@ -10,6 +10,7 @@
 #include <X11/Xlib.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkx.h>
+#include <gdk/gdkkeysyms.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
 #include <libgnome/gnome-macros.h>
@@ -50,6 +51,7 @@ static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_instance_init (BasePPos *pos);
 
 /* Forward declare some static functions for use in the class init */
+static void basep_widget_focus_return (BasePWidget *basep);
 static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
@@ -69,6 +71,7 @@ static BasePPosClass * basep_widget_get_pos_class (BasePWidget *basep);
 
 enum {
 	/*TYPE_CHANGE_SIGNAL,*/
+	FOCUS_RETURN_SIGNAL,
 	MODE_CHANGE_SIGNAL,
 	STATE_CHANGE_SIGNAL,
 	SCREEN_CHANGE_SIGNAL,
@@ -124,9 +127,11 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 	GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 	GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+	GtkBindingSet *binding_set;
 	
 	basep_widget_parent_class = g_type_class_ref (gtk_window_get_type ());
 
+	klass->focus_return = basep_widget_focus_return;
 	klass->mode_change = basep_widget_mode_change;
 	klass->state_change = basep_widget_state_change;
 	klass->screen_change = basep_widget_real_screen_change;
@@ -189,6 +194,17 @@ basep_widget_class_init (BasePWidgetClass *klass)
 			      1,
 			      PANEL_TYPE_OBJECT_TYPE); */
 
+	basep_widget_signals[FOCUS_RETURN_SIGNAL] = 
+		g_signal_new	("focus_return",
+			       	G_TYPE_FROM_CLASS (object_class),
+				G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+				G_STRUCT_OFFSET (BasePWidgetClass, focus_return),
+				NULL,
+				NULL,
+				panel_marshal_VOID__VOID,
+				G_TYPE_NONE,
+				0);
+
 	basep_widget_signals[MODE_CHANGE_SIGNAL] = 
 		g_signal_new	("mode_change",
 			       	G_TYPE_FROM_CLASS (object_class),
@@ -224,6 +240,17 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_TYPE_NONE,
 				1,
 				G_TYPE_INT);
+
+	binding_set = gtk_binding_set_by_class (gtk_object_class);
+	gtk_binding_entry_add_signal (binding_set,
+				      GDK_Tab, GDK_CONTROL_MASK,
+				      "focus_return", 0);
+	gtk_binding_entry_add_signal (binding_set,
+				      GDK_KP_Tab, GDK_CONTROL_MASK,
+				      "focus_return", 0);
+	gtk_binding_entry_add_signal (binding_set,
+				      GDK_ISO_Left_Tab, GDK_CONTROL_MASK,
+				      "focus_return", 0);
 
 }
 
@@ -526,6 +553,12 @@ basep_widget_size_allocate (GtkWidget *widget,
 }
 
 static void
+basep_widget_focus_return (BasePWidget *basep)
+{
+	gtk_window_set_focus (GTK_WINDOW (basep), NULL);
+}
+
+static void
 basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
 {
 	if (BORDER_IS_WIDGET (basep))
@@ -823,7 +856,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrient hide_orient,
 	int diff;
 	int step;
 	
-	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 
 	switch (animation_step) {
@@ -950,7 +982,6 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrient hide_orient,
 	int diff;
 	int step;
 
-	g_return_if_fail(basep != NULL);
 	g_return_if_fail(BASEP_IS_WIDGET(basep));
 	
 	switch (animation_step) {
@@ -1396,7 +1427,6 @@ basep_style_set (GtkWidget *widget, GtkStyle *previous_style)
 	BasePWidget *basep;
 	PanelWidget *panel;
 
-	g_return_if_fail (widget != NULL);
 	g_return_if_fail (BASEP_IS_WIDGET (widget));
 
 	basep = BASEP_WIDGET (widget);
@@ -1610,7 +1640,6 @@ basep_widget_change_params (BasePWidget *basep,
 			    gboolean rotate_pixmap_bg,
 			    GdkColor *back_color)
 {
-	g_return_if_fail(basep);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(basep)));
 
 	if (PANEL_WIDGET (basep->panel)->orient != orient)
@@ -2154,7 +2183,6 @@ basep_widget_get_pos (BasePWidget *basep,
 void
 basep_widget_init_offsets (BasePWidget *basep)
 {
-	g_return_if_fail (basep != NULL);
 	g_return_if_fail (BASEP_IS_WIDGET (basep));
 
 	if (GTK_WIDGET (basep)->window != NULL) {
@@ -2205,7 +2233,6 @@ basep_widget_pre_convert_hook (BasePWidget *basep)
 void
 basep_widget_screen_change (BasePWidget *basep, int screen)
 {
-	g_return_if_fail (basep != NULL);
 	g_return_if_fail (BASEP_IS_WIDGET (basep));
 	g_return_if_fail (screen >= 0);
 

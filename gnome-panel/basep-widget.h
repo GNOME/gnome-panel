@@ -106,6 +106,8 @@ struct _BasePWidgetClass
 	/*void (*type_change)  (BasePWidget *basep,
 			      PanelType type);*/
 
+	void (* focus_return)  (BasePWidget *basep);
+
 	void (* mode_change)  (BasePWidget *basep,
 			       BasePMode mode);
 
