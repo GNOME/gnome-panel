@@ -1,5 +1,14 @@
 2005-01-01  Vincent Untz  <vincent@vuntz.net>
 
+	* showdesktop.c: (show_desktop_applet_fill): remove useless FIXME
+	* window-list.c: (window_list_applet_fill): ditto
+
+	* workspace-switcher.c: (workspace_switcher_applet_fill): add the
+	pager to the applet before showing it. Fix visible resizing of the
+	applet at startup. Fix bug #160765.
+
+2005-01-01  Vincent Untz  <vincent@vuntz.net>
+
 	* workspace-switcher.c: (applet_scroll): fix the algorithm for some
 	weird layouts (where n_workspaces % n_rows or n_workspaces % n_columns
 	are not 0).

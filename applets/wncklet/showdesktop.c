@@ -394,7 +394,6 @@ show_desktop_applet_fill (PanelApplet *applet)
                           G_CALLBACK (applet_size_allocated),
                           sdd);
 
-        /* FIXME: initial background, this needs some panel-applet voodoo */
         g_signal_connect (G_OBJECT (sdd->applet),
                           "change_background",
                           G_CALLBACK (applet_change_background),

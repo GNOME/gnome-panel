@@ -732,7 +732,6 @@ window_list_applet_fill (PanelApplet *applet)
 			  "change_size",
 			  G_CALLBACK (applet_change_pixel_size),
 			  tasklist);
-	/* FIXME: initial background, this needs some panel-applet voodoo */
 	g_signal_connect (G_OBJECT (tasklist->applet),
 			  "change_background",
 			  G_CALLBACK (applet_change_background),

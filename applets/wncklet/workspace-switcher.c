@@ -506,8 +506,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	pager_update (pager);
 	
-	gtk_widget_show (pager->pager);
 	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
+	gtk_widget_show (pager->pager);
 
 	set_tooltip (GTK_WIDGET (pager->pager));
 
