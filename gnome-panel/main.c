@@ -931,6 +931,8 @@ init_user_panels(void)
 		g_snprintf(buf,256,"mode=%d", PANEL_EXPLICIT_HIDE);
 		config.mode=gnome_config_get_int(buf);
 
+		config.fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
+
 		g_snprintf(buf,256,"state=%d", PANEL_SHOWN);
 		state=gnome_config_get_int(buf);
 
@@ -955,6 +957,7 @@ init_user_panels(void)
 					 config.orient,
 					 config.snapped,
 					 config.mode,
+					 config.fit_pixmap_bg,
 					 state,
 					 x,
 					 y,

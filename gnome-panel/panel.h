@@ -35,6 +35,7 @@ typedef struct {
 	PanelSnapped     snapped;
 	PanelMode        mode;
 	gint		 pixmap_enable;
+	gboolean         fit_pixmap_bg;
 	GtkWidget        *config_box;
 } PanelConfig;
 

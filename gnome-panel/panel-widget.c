@@ -1685,7 +1685,6 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 			         gpointer data)
 {
 	PanelWidget *panel = data;
-	GList *list;
 
 	if(panel_widget_inhibit_allocates)
 		return FALSE;
@@ -1849,7 +1848,27 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!im)
 		return 0;
 	
-	gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+	if (panel->fit_pixmap_bg) {
+		int w, h;
+
+		w = im->rgb_width;
+		h = im->rgb_height;
+
+		switch (panel->orient) {
+		case PANEL_HORIZONTAL:
+			gdk_imlib_render (im, w * 48 / h, 48);
+			break;
+
+		case PANEL_VERTICAL:
+			gdk_imlib_render (im, 48, h * 48 / w);
+			break;
+
+		default:
+			g_assert_not_reached ();
+		}
+	} else
+		gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+
 	p = gdk_imlib_move_image (im);
 
 	ns = gtk_style_copy(panel->fixed->style);
@@ -1908,6 +1927,7 @@ panel_widget_new (gint size,
 		  PanelOrientation orient,
 		  PanelSnapped snapped,
 		  PanelMode mode,
+		  gboolean fit_pixmap_bg,
 		  PanelState state,
 		  gint pos_x,
 		  gint pos_y,
@@ -2000,6 +2020,7 @@ panel_widget_new (gint size,
 	panel->snapped = snapped;
 	panel->orient = orient;
 	panel->mode = mode;
+	panel->fit_pixmap_bg = fit_pixmap_bg;
 	panel->state = state;
 
 	panel->master_widget = NULL;
@@ -3068,6 +3089,7 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelOrientation orient,
 			   PanelSnapped snapped,
 			   PanelMode mode,
+			   gboolean fit_pixmap_bg,
 			   PanelState state,
 			   DrawerDropZonePos drop_zone_pos,
 			   char *pixmap)
@@ -3134,6 +3156,8 @@ panel_widget_change_params(PanelWidget *panel,
 
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
+
+	panel->fit_pixmap_bg = fit_pixmap_bg;
 	if (panel_try_to_set_pixmap (panel, pixmap)){
 		if (panel->back_pixmap)
 			g_free (panel->back_pixmap);
@@ -3149,6 +3173,7 @@ panel_widget_change_orient(PanelWidget *panel,
 				   orient,
 				   panel->snapped,
 				   panel->mode,
+				   panel->fit_pixmap_bg,
 				   panel->state,
 				   panel->drawer_drop_zone_pos,
 				   panel->back_pixmap);
@@ -3162,6 +3187,7 @@ panel_widget_change_drop_zone_pos(PanelWidget *panel,
 				   panel->orient,
 				   panel->snapped,
 				   panel->mode,
+				   panel->fit_pixmap_bg,
 				   panel->state,
 				   drop_zone_pos,
 				   panel->back_pixmap);

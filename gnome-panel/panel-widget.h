@@ -96,6 +96,7 @@ struct _PanelWidget
 	PanelSnapped		snapped;
 	PanelMode		mode;
 	PanelState		state;
+	gboolean		fit_pixmap_bg;
 
 	gint			leave_notify_timer_tag;
 
@@ -142,11 +143,11 @@ GtkWidget*	panel_widget_new		(gint size,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
+						 gboolean fit_pixmap_bg,
 						 PanelState state,
 						 gint pos_x,
 						 gint pos_y,
-						 DrawerDropZonePos
-						 	drop_zone_pos,
+						 DrawerDropZonePos drop_zone_pos,
 						 char *back_pixmap,
 						 GdkColor *back_color);
 
@@ -209,6 +210,7 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
+						 gboolean fit_pixmap_bg,
 						 PanelState state,
 						 DrawerDropZonePos
 						 	drop_zone_pos,

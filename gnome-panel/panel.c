@@ -190,6 +190,7 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int("orient",panel->orient);
 	gnome_config_set_int("snapped", panel->snapped);
 	gnome_config_set_int("mode", panel->mode);
+	gnome_config_set_bool("fit_pixmap_bg", panel->fit_pixmap_bg);
 	gnome_config_set_int("state", panel->state);
 	gnome_config_set_int("size", panel->size);
 
