@@ -18,23 +18,6 @@ typedef void (*UpdateFunction) (gpointer);
 
 #define		sure_string(s)		((const char *)((s)!=NULL?(s):""))
 
-GtkWidget *	create_text_entry	(GtkWidget *table,
-					 const char *history_id,
-					 int row,
-					 const char *label,
-					 const char *text,
-					 UpdateFunction func,
-					 gpointer data);
-GtkWidget *	create_icon_entry	(GtkWidget *table,
-					 const char *history_id,
-					 int cols,
-					 int cole,
-					 const char *label,
-					 const char *subdir,
-					 const char *text,
-					 UpdateFunction func,
-					 gpointer data);
-
 int             panel_ditem_launch         (const GnomeDesktopItem       *item,
 					    GList                        *file_list,
 					    GnomeDesktopItemLaunchFlags   flags,
