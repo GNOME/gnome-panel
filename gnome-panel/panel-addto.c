@@ -59,6 +59,7 @@ typedef struct {
 
 	GSList       *applet_list;
 	GSList       *application_list;
+	GSList       *settings_list;
 
 	guint         name_notify;
 
@@ -192,7 +193,7 @@ panel_addto_applet_info_sort_func (PanelAddtoItemInfo *a,
 }
 
 static GSList *
-panel_addto_append_internal_applets (GSList *list)
+panel_addto_prepend_internal_applets (GSList *list)
 {
 	static gboolean translated = FALSE;
 	int             i;
@@ -203,7 +204,7 @@ panel_addto_append_internal_applets (GSList *list)
 			internal_addto_items [i].description = _(internal_addto_items [i].description);
 		}
 
-                list = g_slist_append (list, &internal_addto_items [i]);
+                list = g_slist_prepend (list, &internal_addto_items [i]);
         }
 
 	translated = TRUE;
@@ -224,7 +225,7 @@ panel_addto_append_internal_applets (GSList *list)
 		info->iid         = (char *) panel_action_get_drag_id (i);
 		info->static_data = TRUE;
 
-                list = g_slist_append (list, info);
+                list = g_slist_prepend (list, info);
 	}
 
         return list;
@@ -424,7 +425,7 @@ panel_addto_query_applets (GSList *list)
 		applet->iid = g_strdup (info->iid);
 		applet->static_data = FALSE;
 
-		list = g_slist_append (list, applet);
+		list = g_slist_prepend (list, applet);
 	}
 
 	g_slist_free (langs_gslist);
@@ -503,7 +504,7 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 
 	if (panel_profile_id_lists_are_writable ()) {
 		dialog->applet_list = panel_addto_query_applets (dialog->applet_list);
-		dialog->applet_list = panel_addto_append_internal_applets (dialog->applet_list);
+		dialog->applet_list = panel_addto_prepend_internal_applets (dialog->applet_list);
 	}
 
 	dialog->applet_list = g_slist_sort (dialog->applet_list,
@@ -557,7 +558,7 @@ panel_addto_make_application_list (GSList            **parent_list,
 		 * So the iid is built when we select the row.
 		 */
 
-		*parent_list = g_slist_append (*parent_list, data);
+		*parent_list = g_slist_prepend (*parent_list, data);
 
 		panel_addto_make_application_list (&data->children, subdir);
 
@@ -579,11 +580,13 @@ panel_addto_make_application_list (GSList            **parent_list,
 		data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
 		data->item_info.static_data = FALSE;
 
-		*parent_list = g_slist_append (*parent_list, data);
+		*parent_list = g_slist_prepend (*parent_list, data);
 
 		menu_tree_entry_unref (entry);
 	}
 	g_slist_free (entries);
+
+	*parent_list = g_slist_reverse (*parent_list);
 }
 
 static void
@@ -642,6 +645,29 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 	if ((root = menu_tree_get_root_directory (tree))) {
 		panel_addto_make_application_list (&dialog->application_list, root);
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
+
+		menu_tree_directory_unref (root);
+	}
+
+	menu_tree_unref (tree);
+
+	tree = menu_tree_lookup ("settings.menu");
+
+	if ((root = menu_tree_get_root_directory (tree))) {
+		GtkTreeIter iter;
+
+		gtk_tree_store_append (store, &iter, NULL);
+		gtk_tree_store_set (store, &iter,
+				    COLUMN_ICON, NULL,
+				    COLUMN_TEXT, NULL,
+				    COLUMN_DATA, NULL,
+				    COLUMN_SEARCH, NULL,
+				    -1);
+
+		panel_addto_make_application_list (&dialog->settings_list,
+						   root);
+		panel_addto_populate_application_model (store, NULL,
+							dialog->settings_list);
 
 		menu_tree_directory_unref (root);
 	}
@@ -866,6 +892,7 @@ panel_addto_dialog_free (PanelAddtoDialog *dialog)
 	g_slist_free (dialog->applet_list);
 
 	panel_addto_dialog_free_application_list (dialog->application_list);
+	panel_addto_dialog_free_application_list (dialog->settings_list);
 
 	if (dialog->menu_tree)
 		menu_tree_unref (dialog->menu_tree);
