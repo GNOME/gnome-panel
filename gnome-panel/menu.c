@@ -108,7 +108,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	  "Miguel de Icaza (miguel@kernel.org)",
 	  "Federico Mena (quartic@gimp.org)",
 	  "Tom Tromey (tromey@cygnus.com)",
-	  "Ian Main (slow@intergate.bc.ca)",
+	  "Ian Main (imain@gtk.org)",
 	  "Elliot Lee (sopwith@redhat.com)",
 	  "Owen Taylor (otaylor@redhat.com)",
 	  "Many many others ...",
