@@ -172,8 +172,6 @@ append_actions_menu (GtkWidget *menu_bar)
 
 	menu = panel_menu_new ();
 
-	menu = panel_menu_new ();
-
 	item = pixmap_menu_item_new (_("Run..."), "gnome-run.png",
 				     FALSE /* force_image */);
 	gtk_tooltips_set_tip (panel_tooltips, item,
@@ -608,6 +606,11 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 	foo->task_menu = gtk_menu_new ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), foo->task_menu);
 	/*g_message ("setting...");*/
+	g_object_set_data (G_OBJECT (foo->task_menu),
+			   "menu_panel", foo->panel);
+	g_signal_connect (G_OBJECT (foo->task_menu), "show",
+			  G_CALLBACK (panel_make_sure_menu_within_screen),
+			  NULL);
 	g_signal_connect (G_OBJECT (foo->task_menu), "show",
 			  G_CALLBACK (our_gtk_menu_position),
 			  NULL);
@@ -975,12 +978,12 @@ setup_task_menu (FoobarWidget *foo)
 static void
 foobar_widget_instance_init (FoobarWidget *foo)
 {
-	/*gchar *path;*/
+	char *path;
 	GtkWindow *window = GTK_WINDOW (foo);
-	/*GtkWidget *bufmap;*/
+	GtkWidget *bufmap;
 	GtkWidget *menu_bar, *bar;
 	GtkWidget *menu, *menuitem;
-	/*GtkWidget *align;*/
+	GtkWidget *align;
 	gint flags;
 
 	foo->screen = 0;
@@ -1019,15 +1022,14 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	foo->hbox = gtk_hbox_new (FALSE, 0);
 	gtk_container_add(GTK_CONTAINER(foo->ebox), foo->hbox);
 
-#if 0	
-	path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-					  "panel/corner1.png", TRUE, NULL);
-	bufmap = gnome_pixmap_new_from_file (path);
-	g_free (path);
-	align = gtk_alignment_new (0.0, 0.0, 1.0, 0.0);
-	gtk_container_add (GTK_CONTAINER (align), bufmap);
-	gtk_box_pack_start (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
-#endif
+	path = panel_pixmap_discovery ("panel-corner-left.png", FALSE /* fallback */);
+	if (path != NULL) {
+		bufmap = gtk_image_new_from_file (path);
+		g_free (path);
+		align = gtk_alignment_new (0.0, 0.0, 1.0, 0.0);
+		gtk_container_add (GTK_CONTAINER (align), bufmap);
+		gtk_box_pack_start (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
+	}
 
 	menu_bar = gtk_menu_bar_new ();	
 	gtk_widget_set_name (menu_bar,
@@ -1073,15 +1075,14 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	g_object_set_data (G_OBJECT (menu_bar), "menu_panel", foo->panel);
 
-#if 0
-	path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
-					  "panel/corner2.png", TRUE, NULL);
-	bufmap = gnome_pixmap_new_from_file (path);
-	g_free (path);
-	align = gtk_alignment_new (1.0, 0.0, 1.0, 0.0);
-	gtk_container_add (GTK_CONTAINER (align), bufmap);
-	gtk_box_pack_end (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
-#endif
+	path = panel_pixmap_discovery ("panel-corner-right.png", FALSE /* fallback */);
+	if (path != NULL) {
+		bufmap = gtk_image_new_from_file (path);
+		g_free (path);
+		align = gtk_alignment_new (1.0, 0.0, 1.0, 0.0);
+		gtk_container_add (GTK_CONTAINER (align), bufmap);
+		gtk_box_pack_end (GTK_BOX (foo->hbox), align, FALSE, FALSE, 0);
+	}
 
 	bar = menu_bar = gtk_menu_bar_new ();
 	gtk_widget_set_name (menu_bar,

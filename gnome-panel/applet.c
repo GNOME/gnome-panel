@@ -433,7 +433,7 @@ setup_an_item(AppletUserMenu *menu,
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
-		menu->submenu = gtk_menu_new ();
+		menu->submenu = panel_menu_new ();
 	}
 
 	if(menu->submenu) {
@@ -495,7 +495,7 @@ add_to_submenus (AppletInfo *info,
 	}
 	
 	if (s_menu->submenu == NULL) {
-		s_menu->submenu = gtk_menu_new ();
+		s_menu->submenu = panel_menu_new ();
 		/*a more elegant way to do this should be done
 		  when I don't want to go to sleep */
 		if (s_menu->menuitem != NULL) {
@@ -553,7 +553,7 @@ applet_setup_panel_menu (gboolean is_basep)
 		setup_menuitem (menuitem, NULL, _("Panel"));
 	}
 
-	panel_menu = gtk_menu_new ();
+	panel_menu = panel_menu_new ();
 
 	make_panel_submenu (panel_menu, TRUE, is_basep);
 
@@ -569,7 +569,7 @@ panel_applet_create_menu (AppletInfo *info,
 	GtkWidget *menuitem;
 	GList     *l;
 
-	info->menu = g_object_ref (gtk_menu_new ());
+	info->menu = g_object_ref (panel_menu_new ());
 	gtk_object_sink (GTK_OBJECT (info->menu));
 
 	if (!commie_mode) {
@@ -686,7 +686,6 @@ applet_show_menu (AppletInfo     *info,
 	if (!GTK_WIDGET_REALIZED (info->menu))
 		gtk_widget_show (info->menu);
 
-	/* FIXME - off panel popups, should be automatic with new gtk-menu? */
 	gtk_menu_popup (GTK_MENU (info->menu),
 			NULL,
 			NULL,

@@ -246,7 +246,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_STRUCT_OFFSET (BasePWidgetClass, screen_change),
 				NULL,
 				NULL,
-				panel_marshal_VOID__ENUM,
+				panel_marshal_VOID__INT,
 				G_TYPE_NONE,
 				1,
 				G_TYPE_INT);

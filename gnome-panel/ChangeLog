@@ -1,3 +1,19 @@
+Wed Jan 23 18:20:13 2002  George Lebl <jirka@5z.com>
+
+	* menu.[ch], menu-util.c, applet.c, foobar-widget.c:  Make sure
+	  menus appear within xinerama boundaries.  Those that don't like
+	  menu.c style of coding should NOT look at this code.  But it
+	  works.
+
+	* multiscreen-stuff.c: reorder the screens in the fake debugging
+	  setup.
+
+	* basep-widget.c: fix screen_change signal signature
+
+	* foobar-widget.c: add some corners.  Yay we half look like a mac
+	  now.  Now if we could only get bottom corners as well.  Maybe
+	  in time.
+
 2002-01-23  Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* applet.c: Add applet_do_popup_menu() and applet_popup_menu() to

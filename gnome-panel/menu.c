@@ -377,6 +377,9 @@ get_panel_from_menu_data(GtkWidget *menu, gboolean must_have)
 				g_warning("Menu is on crack");
 		}
 		menu = gtk_menu_get_attach_widget (GTK_MENU (menu))->parent;
+		/* only GtkMenu's qualify */
+		if ( ! GTK_IS_MENU (menu))
+			menu = NULL;
 	}
 	if (must_have) {
 		g_warning("Something went quite terribly wrong and we can't "
@@ -453,6 +456,218 @@ pixmaps_changed (GConfClient* client,
 	g_list_free (list);
 }
 
+typedef struct
+{
+	GtkMenuPositionFunc orig_func;
+	gpointer orig_data;
+} MenuReposition;
+
+/* XXX:
+ * Stolen mostly from GTK+ and modified for our purposes of multiscreen
+ * things.  Kind of evil, but oh well */
+static void
+our_menu_item_position_menu (GtkMenu  *menu,
+			     int       screen_width,
+			     int       screen_height,
+			     int       screen_basex,
+			     int       screen_basey,
+			     int      *x,
+			     int      *y)
+{
+	GtkMenuItem *menu_item;
+	GtkWidget *widget;
+	GtkWidget *parent_menu_item;
+	int twidth, theight;
+	int tx, ty;
+
+	g_return_if_fail (menu != NULL);
+	g_return_if_fail (x != NULL);
+	g_return_if_fail (y != NULL);
+
+	menu_item = GTK_MENU_ITEM (menu->parent_menu_item);
+	widget = GTK_WIDGET (menu_item);
+
+	twidth = GTK_WIDGET (menu)->requisition.width;
+	theight = GTK_WIDGET (menu)->requisition.height;
+
+	if ( ! gdk_window_get_origin (widget->window, &tx, &ty)) {
+		g_warning ("Menu not on screen");
+		return;
+	}
+
+	tx -= screen_basex;
+	ty -= screen_basey;
+
+	tx += widget->allocation.x;
+	ty += widget->allocation.y;
+
+	switch (menu_item->submenu_placement)
+	{
+	case GTK_TOP_BOTTOM:
+		if ((ty + widget->allocation.height + theight) <= screen_height)
+			ty += widget->allocation.height;
+		else if ((ty - theight) >= 0)
+			ty -= theight;
+		else if (screen_height - (ty + widget->allocation.height) > ty)
+			ty += widget->allocation.height;
+		else
+			ty -= theight;
+		break;
+
+	case GTK_LEFT_RIGHT:
+		menu_item->submenu_direction = GTK_DIRECTION_RIGHT;
+		parent_menu_item = GTK_MENU (widget->parent)->parent_menu_item;
+		if (parent_menu_item)
+			menu_item->submenu_direction = GTK_MENU_ITEM (parent_menu_item)->submenu_direction;
+
+		switch (menu_item->submenu_direction)
+		{
+		case GTK_DIRECTION_LEFT:
+			if ((tx - twidth) >= 0)
+				tx -= twidth;
+			else
+			{
+				menu_item->submenu_direction = GTK_DIRECTION_RIGHT;
+				tx += widget->allocation.width - 5;
+			}
+			break;
+
+		case GTK_DIRECTION_RIGHT:
+			if ((tx + widget->allocation.width + twidth - 5) <= screen_width)
+				tx += widget->allocation.width - 5;
+			else
+			{
+				menu_item->submenu_direction = GTK_DIRECTION_LEFT;
+				tx -= twidth;
+			}
+			break;
+		}
+
+		ty += widget->allocation.height / 4;
+
+		/* If the height of the menu doesn't fit we move it upward. */
+		ty = CLAMP (ty, 0, MAX (0, screen_height - theight));
+		break;
+	}
+
+	/* If we have negative, tx, here it is because we can't get
+	 * the menu all the way on screen. Favor the left portion.
+	 */
+	tx = CLAMP (tx, 0, MAX (0, screen_width - twidth));
+
+	*x = tx + screen_basex;
+	*y = ty + screen_basey;
+}
+
+
+static void
+menu_on_screen (GtkMenu  *menu,
+		gint     *x,
+		gint     *y,
+		gboolean *push_in,
+		gpointer  data)
+{
+	MenuReposition *repo = data;
+	int screen;
+	int screen_width, screen_height, screen_basex, screen_basey;
+	GtkRequisition req;
+
+	PanelWidget *menu_panel = get_panel_from_menu_data
+		(GTK_WIDGET (menu), FALSE /* must_have */);
+
+	gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
+
+	if (menu_panel != NULL) {
+		screen = multiscreen_screen_from_panel
+			(menu_panel->panel_parent);
+	} else {
+		screen = multiscreen_screen_from_pos (*x, *y);
+	}
+
+	if (screen < 0) {
+		screen_width = gdk_screen_width ();
+		screen_height = gdk_screen_height ();
+		screen_basex = 0;
+		screen_basey = 0;
+	} else {
+		screen_width = multiscreen_width (screen);
+		screen_height = multiscreen_height (screen);
+		screen_basex = multiscreen_x (screen);
+		screen_basey = multiscreen_y (screen);
+	}
+
+	if (repo->orig_func != NULL) {
+		repo->orig_func (menu, x, y, push_in, repo->orig_data);
+
+		if (menu->parent_menu_item != NULL) {
+			/* This is a submenu so behave submenuish */
+			if (*x < screen_basex ||
+			    *x + req.width > screen_basex + screen_width ||
+			    *y < screen_basey ||
+			    *y + req.height > screen_basey + screen_height) {
+				/* Offscreen! EVIL, ignore the position
+				 * and recalculate using our hack */
+				our_menu_item_position_menu (menu,
+							     screen_width,
+							     screen_height,
+							     screen_basex,
+							     screen_basey,
+							     x,
+							     y);
+			}
+		} else {
+			/* just make sure the menu is within screen */
+			*x -= screen_basex;
+			*y -= screen_basey;
+
+			if ((*x + req.width) > screen_width)
+				*x -= ((*x + req.width) - screen_width);
+			if (*x < 0)
+				*x = 0;
+			if ((*y + req.height) > screen_height)
+				*y -= ((*y + req.height) - screen_height);
+			if (*y < 0)
+				*y = 0;
+
+			*x += screen_basex;
+			*y += screen_basey;
+		}
+	} else {
+		*x -= screen_basex;
+		*y -= screen_basey;
+		*x = CLAMP (*x - 2, 0, MAX (0, screen_width - req.width));
+		*y = CLAMP (*y - 2, 0, MAX (0, screen_height - req.height));
+		*x += screen_basex;
+		*y += screen_basey;
+		*push_in = TRUE;
+	}
+}
+
+void
+panel_make_sure_menu_within_screen (GtkMenu *menu)
+{
+	MenuReposition *repo;
+
+	/* if already set to a standard pos func, just ignore */
+	if (menu->position_func == menu_on_screen ||
+	    menu->position_func == panel_menu_position ||
+	    menu->position_func == applet_menu_position)
+		return;
+
+	repo = g_new0 (MenuReposition, 1);
+	g_object_weak_ref (G_OBJECT (menu),
+			   (GWeakNotify) g_free,
+			   repo);
+
+	repo->orig_func = menu->position_func;
+	repo->orig_data = menu->position_func_data;
+
+	menu->position_func = menu_on_screen;
+	menu->position_func_data = repo;
+
+	our_gtk_menu_position (menu);
+}
+
 GtkWidget *
 panel_menu_new (void)
 {
@@ -461,6 +676,8 @@ panel_menu_new (void)
 	panel_gconf_notify_add_while_alive (PANEL_MENU_HAVE_ICONS_KEY,
 					    pixmaps_changed,
 					    G_OBJECT (menu));
+	g_signal_connect_after (G_OBJECT (menu), "show",
+				G_CALLBACK (panel_make_sure_menu_within_screen), NULL);
 	return menu;
 }
 

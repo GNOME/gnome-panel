@@ -108,35 +108,9 @@ panel_menu_position (GtkMenu  *menu,
 	else if (*y > wy + w->allocation.height)
 		*y = wy + w->allocation.height;
 
-/* FIXME - new gtk menus ?? 
-	if ( ! global_config.off_panel_popups) {
-		panel_standard_menu_pos (menu, x, y, data);
-		return;
-	}  */
-	
-	if (TRUE) {
-		panel_standard_menu_pos (menu, x, y, data);
-		return;
-	}
-
-	gtk_widget_get_pointer(w, x, y);
-	if (BASEP_IS_WIDGET (w)) {
-		basep_widget_get_menu_pos(BASEP_WIDGET(w), 
-					  GTK_WIDGET(menu),
-					  x,y,wx,wy,
-					  w->allocation.width,
-					  w->allocation.height);
-	} else if (FOOBAR_IS_WIDGET (w)) {
-		GtkRequisition req;
-		FoobarWidget *foo = FOOBAR_WIDGET (w);
-		gtk_widget_get_child_requisition (GTK_WIDGET (menu), &req);
-		*x = MIN (*x,
-			  multiscreen_width (foo->screen) +
-			  multiscreen_x (foo->screen) -  req.width);
-		*y = w->allocation.height + multiscreen_y (foo->screen);
-	}
-
 	*push_in = TRUE;
+	
+	panel_standard_menu_pos (menu, x, y, data);
 }
 
 void

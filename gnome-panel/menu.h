@@ -135,6 +135,8 @@ void		panel_load_menu_image_deferred (GtkWidget *image_menu_item,
 						const char *image_filename,
 						const char *fallback_image_filename,
 						gboolean force_image);
+/* Note, bind the following on 'show' or some such */
+void		panel_make_sure_menu_within_screen (GtkMenu *menu);
 
 
 G_END_DECLS
