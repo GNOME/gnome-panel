@@ -16,9 +16,24 @@
 #include "panel_config_global.h"
 #include "foobar-widget.h"
 #include "drawer-widget.h"
+#include "border-widget.h"
+#include "edge-widget.h"
+#include "aligned-widget.h"
 #include "xstuff.h"
 
-extern int panel_applet_in_drag;
+extern gboolean panel_applet_in_drag;
+extern GList *panel_list;
+
+/*global settings*/
+extern int pw_explicit_step;
+extern int pw_drawer_step;
+extern int pw_auto_step;
+extern int pw_minimized_size;
+extern int pw_minimize_delay;
+extern gboolean pw_disable_animations;
+extern PanelMovementType pw_movement_type;
+
+extern GlobalConfig global_config;
 
 static void basep_widget_class_init	(BasePWidgetClass *klass);
 static void basep_widget_init		(BasePWidget      *basep);
@@ -30,16 +45,6 @@ static void basep_widget_destroy (GtkObject *o);
 
 static GtkWindowClass *basep_widget_parent_class = NULL;
 static GtkObjectClass *basep_pos_parent_class = NULL;
-/*global settings*/
-extern int pw_explicit_step;
-extern int pw_drawer_step;
-extern int pw_auto_step;
-extern int pw_minimized_size;
-extern int pw_minimize_delay;
-extern int pw_disable_animations;
-extern PanelMovementType pw_movement_type;
-
-extern GlobalConfig global_config;
 
 /************************
  widget core
@@ -259,6 +264,18 @@ basep_widget_size_allocate (GtkWidget *widget,
 }
 
 static void
+basep_widget_mode_change (BasePWidget *basep, BasePMode mode)
+{
+	basep_border_queue_recalc ();
+}
+
+static void
+basep_widget_state_change (BasePWidget *basep, BasePState state)
+{
+	basep_border_queue_recalc ();
+}
+
+static void
 basep_widget_class_init (BasePWidgetClass *klass)
 {
 	GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
@@ -299,6 +316,9 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	gtk_object_class_add_signals(object_class, 
 				     basep_widget_signals,
 				     WIDGET_LAST_SIGNAL);
+
+	klass->mode_change = basep_widget_mode_change;
+	klass->state_change = basep_widget_state_change;
 
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
@@ -1208,13 +1228,13 @@ basep_widget_construct (BasePWidget *basep,
 			    GTK_SIGNAL_FUNC (basep_widget_east_clicked),
 			    basep);
 	/*SOUTH*/
-	basep->hidebutton_s = make_hidebutton(basep,
-					      reverse_arrows?
-					      "panel-arrow-up.png":
+	basep->hidebutton_s = make_hidebutton (basep,
+					      reverse_arrows ?
+					      "panel-arrow-up.png" :
 					      "panel-arrow-down.png",
 					      FALSE);
-	gtk_table_attach(GTK_TABLE(basep->table),basep->hidebutton_s,
-			 1,2,2,3,GTK_FILL,GTK_FILL,0,0);
+	gtk_table_attach(GTK_TABLE(basep->table), basep->hidebutton_s,
+			 1, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
 	gtk_signal_connect (GTK_OBJECT(basep->hidebutton_s), "clicked",
 			    GTK_SIGNAL_FUNC (basep_widget_south_clicked),
 			    basep);
@@ -1222,8 +1242,8 @@ basep_widget_construct (BasePWidget *basep,
 	basep->hidebuttons_enabled = hidebuttons_enabled;
 	basep->hidebutton_pixmaps_enabled = hidebutton_pixmaps_enabled;
 
-	basep_widget_set_hidebuttons(basep);
-	basep_widget_show_hidebutton_pixmaps(basep);
+	basep_widget_set_hidebuttons (basep);
+	basep_widget_show_hidebutton_pixmaps (basep);
 
 	basep->mode = mode;
 	basep->state = state;
@@ -1240,23 +1260,23 @@ basep_widget_construct (BasePWidget *basep,
 				PANEL_MINIMUM_WIDTH);
 	gtk_widget_set_uposition (GTK_WIDGET (basep), x, y);
 	
-	return GTK_WIDGET(basep);
+	return GTK_WIDGET (basep);
 }
 
 void
-basep_widget_change_params(BasePWidget *basep,
-			   PanelOrientation orient,
-			   int sz,
-			   BasePMode mode,
-			   BasePState state,
-			   gboolean hidebuttons_enabled,
-			   gboolean hidebutton_pixmaps_enabled,
-			   PanelBackType back_type,
-			   char *pixmap_name,
-			   gboolean fit_pixmap_bg,
-			   gboolean strech_pixmap_bg,
-			   gboolean rotate_pixmap_bg,
-			   GdkColor *back_color)
+basep_widget_change_params (BasePWidget *basep,
+			    PanelOrientation orient,
+			    int sz,
+			    BasePMode mode,
+			    BasePState state,
+			    gboolean hidebuttons_enabled,
+			    gboolean hidebutton_pixmaps_enabled,
+			    PanelBackType back_type,
+			    char *pixmap_name,
+			    gboolean fit_pixmap_bg,
+			    gboolean strech_pixmap_bg,
+			    gboolean rotate_pixmap_bg,
+			    GdkColor *back_color)
 {
 	g_return_if_fail(basep);
 	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(basep)));
@@ -1814,4 +1834,157 @@ basep_widget_set_state (BasePWidget *basep, BasePState state,
 		gtk_signal_emit(GTK_OBJECT(basep),
 				basep_widget_signals[STATE_CHANGE_SIGNAL],
 				state);
+}
+
+/*****
+ * Collision avoidance stuff
+ *****/
+typedef struct {
+	int left;
+	int center;
+	int right;
+} Border;
+
+static Border borders[4] = {{0}};
+
+/* -1 means don't set, caller will not get queue resized as optimization */
+void
+basep_border_recalc (void)
+{
+	int i;
+	GList *li;
+	Border old[4];
+
+	memcpy (old, borders, 4 * sizeof (Border));
+
+	for (i = 0; i < 4; i++) {
+		borders[i].left = 0;
+		borders[i].center = 0;
+		borders[i].right = 0;
+	}
+
+	for (li = panel_list; li != NULL; li = li->next) {
+		PanelData *pd = li->data;
+		BasePWidget *basep;
+		GtkRequisition chreq;
+		BorderEdge edge;
+
+		g_assert (pd != NULL);
+
+		if ( ! IS_EDGE_WIDGET (pd->panel) &&
+		     ! IS_ALIGNED_WIDGET (pd->panel))
+			continue;
+
+		basep = BASEP_WIDGET (pd->panel);
+
+		if (basep->mode == BASEP_AUTO_HIDE)
+			continue;
+
+		gtk_widget_get_child_requisition (basep->ebox, &chreq);
+
+		edge = BORDER_POS (basep->pos)->edge;
+
+		if (IS_EDGE_WIDGET (basep)) {
+			BasePState state = basep->state;
+			if (PANEL_WIDGET (basep->panel)->orient ==
+			    PANEL_VERTICAL) {
+				if (borders[edge].left < chreq.width &&
+				    state != BASEP_HIDDEN_RIGHT)
+					borders[edge].left = chreq.width;
+				if (borders[edge].center < chreq.width &&
+				    state != BASEP_HIDDEN_RIGHT &&
+				    state != BASEP_HIDDEN_LEFT)
+					borders[edge].center = chreq.width;
+				if (borders[edge].right < chreq.width &&
+				    state != BASEP_HIDDEN_LEFT)
+					borders[edge].right = chreq.width;
+			} else {
+				if (borders[edge].left < chreq.height &&
+				    state != BASEP_HIDDEN_RIGHT)
+					borders[edge].left = chreq.height;
+				if (borders[edge].center < chreq.height &&
+				    state != BASEP_HIDDEN_RIGHT &&
+				    state != BASEP_HIDDEN_LEFT)
+					borders[edge].center = chreq.height;
+				if (borders[edge].right < chreq.height &&
+				    state != BASEP_HIDDEN_LEFT)
+					borders[edge].right = chreq.height;
+			}
+		} else /* ALIGNED */ {
+			AlignedAlignment align = ALIGNED_POS(basep->pos)->align;
+			if (PANEL_WIDGET (basep->panel)->orient ==
+			    PANEL_VERTICAL) {
+				if (align == ALIGNED_LEFT &&
+				    borders[edge].left < chreq.width)
+					borders[edge].left = chreq.width;
+				else if (align == ALIGNED_CENTER &&
+					 borders[edge].center < chreq.width)
+					borders[edge].center = chreq.width;
+				else if (align == ALIGNED_RIGHT &&
+					 borders[edge].right < chreq.width)
+					borders[edge].right = chreq.width;
+			} else {
+				if (align == ALIGNED_LEFT &&
+				    borders[edge].left < chreq.height)
+					borders[edge].left = chreq.height;
+				else if (align == ALIGNED_CENTER &&
+					 borders[edge].center < chreq.height)
+					borders[edge].center = chreq.height;
+				else if (align == ALIGNED_RIGHT &&
+					 borders[edge].right < chreq.height)
+					borders[edge].right = chreq.height;
+			}
+		}
+
+		
+	}
+
+	if (memcmp (old, borders, 4 * sizeof (Border)) != 0) {
+		for (li = panel_list; li != NULL; li = li->next) {
+			PanelData *pd = li->data;
+			GtkWidget *panel;
+
+			g_assert (pd != NULL);
+
+			panel = pd->panel;
+
+			if (IS_EDGE_WIDGET (panel) ||
+			    IS_ALIGNED_WIDGET (panel))
+				gtk_widget_queue_resize (panel);
+		}
+	}
+
+}
+
+static guint queue_recalc_id = 0;
+
+static gboolean
+queue_recalc_handler (gpointer data)
+{
+	queue_recalc_id = 0;
+
+	basep_border_recalc ();
+
+	return FALSE;
+}
+
+void
+basep_border_queue_recalc (void)
+{
+	if (queue_recalc_id == 0) {
+		queue_recalc_id = gtk_idle_add (queue_recalc_handler, NULL);
+	}
+}
+
+void
+basep_border_get (BorderEdge edge, int *left, int *center, int *right)
+{
+	g_assert (edge >=0 && edge <= 3);
+
+	if (left != NULL)
+		*left = borders[edge].left;
+	if (center != NULL)
+		*center = borders[edge].center;
+	if (right != NULL)
+		*right = borders[edge].right;
 }

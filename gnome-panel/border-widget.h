@@ -31,13 +31,6 @@ typedef BasePWidgetClass     BorderWidgetClass;
 typedef struct _BorderPos    BorderPos;
 typedef struct _BorderPosClass BorderPosClass;
 
-typedef enum {
-	BORDER_TOP,
-	BORDER_RIGHT,
-	BORDER_BOTTOM,
-	BORDER_LEFT
-} BorderEdge;
-
 struct _BorderPos {
 	BasePPos pos;
 	BorderEdge edge;

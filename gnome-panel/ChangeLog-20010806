@@ -1,3 +1,11 @@
+Fri Oct 13 17:26:25 2000  George Lebl <jirka@5z.com>
+
+	* aligned-widget.c, basep-widget.[ch], border-widget.h,
+	  panel-types.h, edge-widget.c:  Add simple panel collision
+	  avoidance.  Bottom/Top panels take preference over left/right
+	  panels.  We also assume only 1 panel per position, so we don't
+	  overlap only panels at right angles to each other.
+
 Wed Oct 11 18:09:40 2000  George Lebl <jirka@5z.com>
 
 	* xstuff.c: don't assume return from XGetWMHints is allways non-null,

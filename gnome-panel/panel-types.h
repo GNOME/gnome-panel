@@ -47,4 +47,11 @@ typedef enum {
 	FOOBAR_PANEL
 } PanelType;
 
+typedef enum {
+	BORDER_TOP,
+	BORDER_RIGHT,
+	BORDER_BOTTOM,
+	BORDER_LEFT
+} BorderEdge;
+
 #endif

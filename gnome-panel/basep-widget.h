@@ -271,6 +271,15 @@ void            basep_update_frame             (BasePWidget *basep);
 /* redo the widget->window based on new compliancy setting */
 void		basep_widget_redo_window	(BasePWidget *basep);
 
+/* -1 means don't set, caller will not get queue resized as optimization */
+
+void		basep_border_recalc		(void);
+void		basep_border_queue_recalc	(void);
+void		basep_border_get		(BorderEdge edge,
+						 int *left,
+						 int *center,
+						 int *right);
+
 #define GNOME_PANEL_HINTS (WIN_HINTS_SKIP_FOCUS|WIN_HINTS_SKIP_WINLIST|WIN_HINTS_SKIP_TASKBAR)
 
 END_GNOME_DECLS

@@ -170,15 +170,15 @@ static void
 aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		     int w, int h)
 {
+	int a, b;
+	BorderEdge edge = BORDER_POS(basep->pos)->edge;
+
 	*x = *y = 0;
-	switch (BORDER_POS(basep->pos)->edge) {
+	switch (edge) {
 	case BORDER_BOTTOM:
 		*y = gdk_screen_height() - h - foobar_widget_get_height ();
-                /* fall through */
+		/* fall thru */
 	case BORDER_TOP:
-		/* if we wanted to be more hackish we could just do: 
-		 *x = (ALIGNED_POS(basep->pos)->align)/2.0) * (gdk_screen_width() - w) 
-		 */
 		(*y) += foobar_widget_get_height ();
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
@@ -193,22 +193,38 @@ aligned_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		break;
 	case BORDER_RIGHT:
 		*x = gdk_screen_width() - w;
-		/* fall through */
-	case BORDER_LEFT:
-		/* could do same as above, with height */
+		basep_border_get (BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
 		switch (ALIGNED_POS(basep->pos)->align) {
 		case ALIGNED_LEFT:
-			*y = foobar_widget_get_height ();
+			*y = foobar_widget_get_height () + a;
 			break;
 		case ALIGNED_CENTER:
 			*y = (gdk_screen_height() - h) / 2;
 			break;
 		case ALIGNED_RIGHT:
-			*y = gdk_screen_height() - h;
+			*y = gdk_screen_height() - h - b;
+			break;
+		}
+		break;
+	case BORDER_LEFT:
+		basep_border_get (BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
+		switch (ALIGNED_POS(basep->pos)->align) {
+		case ALIGNED_LEFT:
+			*y = foobar_widget_get_height () + a;
+			break;
+		case ALIGNED_CENTER:
+			*y = (gdk_screen_height() - h) / 2;
+			break;
+		case ALIGNED_RIGHT:
+			*y = gdk_screen_height() - h - b;
 			break;
 		}
 		break;
 	}
+
+	basep_border_queue_recalc ();
 }
 
 static void

@@ -90,7 +90,7 @@ edge_pos_set_pos (BasePWidget *basep,
 	if (x >= minx && 
 	    x <= maxx &&
 	    y >= miny &&
-	    y <=maxy)
+	    y <= maxy)
 		return;
 
 	if ( x>(gdk_screen_width()/3) &&
@@ -121,12 +121,22 @@ static void
 edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		  int w, int h)
 {
+	BorderEdge edge;
+
 	*x = *y = 0;
-	switch (BORDER_POS(basep->pos)->edge) {
+
+	edge = BORDER_POS(basep->pos)->edge;
+
+	switch (edge) {
 	case BORDER_RIGHT:
+		basep_border_get (BORDER_TOP, NULL, NULL, y);
+		*y += foobar_widget_get_height ();
 		*x = gdk_screen_width() - w;
-		/* fall through */
+		break;
 	case BORDER_LEFT:
+		basep_border_get (BORDER_TOP, y, NULL, NULL);
+		*y += foobar_widget_get_height ();
+		break;
 	case BORDER_TOP:
 		*y = foobar_widget_get_height ();
 		break;
@@ -134,16 +144,33 @@ edge_pos_get_pos (BasePWidget *basep, int *x, int *y,
 		*y = gdk_screen_height() - h;
 		break;
 	}
+
+	basep_border_queue_recalc ();
 }
 
 static void
 edge_pos_get_size (BasePWidget *basep, int *w, int *h)
 {
-	if (PANEL_WIDGET(basep->panel)->orient == 
-	    PANEL_HORIZONTAL)
+	int a, b;
+
+	BorderEdge edge = BORDER_POS(basep->pos)->edge;
+
+	switch (edge) {
+	case BORDER_RIGHT:
+		basep_border_get (BORDER_TOP, NULL, NULL, &a);
+		basep_border_get (BORDER_BOTTOM, NULL, NULL, &b);
+		*h = gdk_screen_height() - foobar_widget_get_height () - a - b;
+		break;
+	case BORDER_LEFT:
+		basep_border_get (BORDER_TOP, &a, NULL, NULL);
+		basep_border_get (BORDER_BOTTOM, &b, NULL, NULL);
+		*h = gdk_screen_height() - foobar_widget_get_height () - a - b;
+		break;
+	case BORDER_TOP:
+	case BORDER_BOTTOM:
 		*w = gdk_screen_width();
-	else
-		*h = gdk_screen_height() - foobar_widget_get_height ();
+		break;
+	}
 }
 
 static void
