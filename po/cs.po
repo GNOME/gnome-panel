@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-07-09 12:48+0200\n"
-"PO-Revision-Date: 2003-07-09 19:21+0200\n"
+"POT-Creation-Date: 2003-07-10 12:54+0200\n"
+"PO-Revision-Date: 2003-07-10 19:33+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -170,68 +170,70 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-msgid "Display Internet time, which is same all over the world"
-msgstr "Zobrazovat Internetový čas, který je všude po světě stejný"
-
-#: applets/clock/clock.schemas.in.h:3
-msgid "Display date in the Clock, in addition to time"
-msgstr "Zobrazovat v Hodinách kromě času i datum"
-
-#: applets/clock/clock.schemas.in.h:4
-msgid "Display seconds in time"
-msgstr "Zobrazovat v času sekundy"
-
-#: applets/clock/clock.schemas.in.h:5
-msgid "Display time in Universal Coordinated Time zone"
-msgstr "Zobrazovat čas v zóně Universal Coordinated Time"
-
-#: applets/clock/clock.schemas.in.h:6
-msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr "Zobrazovat čas v sekundách od Epoch, tj. 1. 1. 1970"
-
-#: applets/clock/clock.schemas.in.h:7
 msgid "Hour format"
 msgstr "Formát hodin"
 
+#: applets/clock/clock.schemas.in.h:3
+msgid "If true, display date in the clock, in addition to time."
+msgstr "Je-li true, zobrazovat v hodinách kromě času i datum."
+
+#: applets/clock/clock.schemas.in.h:4
+msgid "If true, display internet time, which is same all over the world."
+msgstr "Je-li true, zobrazovat Internetový čas, který je všude po světě stejný."
+
+#: applets/clock/clock.schemas.in.h:5
+msgid "If true, display seconds in time."
+msgstr "Je-li true, zobrazovat v času sekundy."
+
+#: applets/clock/clock.schemas.in.h:6
+msgid "If true, display time in Universal Coordinated Time zone."
+msgstr "Je-li true, zobrazovat čas v zóně Universal Coordinated Time."
+
+#: applets/clock/clock.schemas.in.h:7
+msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+msgstr "Je-li true, zobrazovat čas v sekundách od Epoch, tj. 1. 1. 1970."
+
 #: applets/clock/clock.schemas.in.h:8
-msgid "Program to run in order to configure the time."
-msgstr "Program, který spustit pro nastavení času."
+msgid "If true, show date in a tooltip when the pointer is over the clock."
+msgstr "Je-li true, zobrazit datum v tipu, když je myš nad hodinami."
 
 #: applets/clock/clock.schemas.in.h:9
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Nastaví formát hodin, může být buď 12 nebo 24"
+msgid "Show date in clock"
+msgstr "Zobrazovat v hodinách datum"
 
 #: applets/clock/clock.schemas.in.h:10
-msgid "Show date in Clock"
-msgstr "Zobrazovat v Hodinách datum"
-
-#: applets/clock/clock.schemas.in.h:11
-msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "Zobrazit datum v tipu, když je myš nad Hodinami"
-
-#: applets/clock/clock.schemas.in.h:12
 msgid "Show date in tooltip"
 msgstr "Zobrazovat datum v tipu"
 
-#: applets/clock/clock.schemas.in.h:13
+#: applets/clock/clock.schemas.in.h:11
 msgid "Show time with seconds"
 msgstr "Zobrazovat v čase sekundy"
+
+#: applets/clock/clock.schemas.in.h:12
+msgid ""
+"This key specifies the hour format used by the clock applet. Possible values "
+"are 12 and 24."
+msgstr "Tento klíč určuje formát hodin používaný v apletu hodin. Možné hodnoty jsou 12 a 24."
+
+#: applets/clock/clock.schemas.in.h:13
+msgid "This key specifies the program to run in order to configure the time."
+msgstr "Tento klíč určuje program, který spustit pro nastavení času."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
 msgstr "Nástroj pro nastavení času"
 
 #: applets/clock/clock.schemas.in.h:15
-msgid "Use Internet time"
-msgstr "Použít Internetový čas"
-
-#: applets/clock/clock.schemas.in.h:16
 msgid "Use UNIX time"
 msgstr "Použít Unixový čas"
 
-#: applets/clock/clock.schemas.in.h:17
+#: applets/clock/clock.schemas.in.h:16
 msgid "Use UTC"
 msgstr "Použít UTC"
+
+#: applets/clock/clock.schemas.in.h:17
+msgid "Use internet time"
+msgstr "Používat Internetový čas"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -458,28 +460,55 @@ msgstr ""
 "Ryba bez jména je pěkně hloupá ryba. Oživte svou rybu tím, že ji pojmenujete."
 
 #: applets/fish/fish.schemas.in.h:2
-msgid "Command to execute when the fish is clicked"
-msgstr "Příkaz spouštěný po kliknutí na rybu"
+msgid "Command to execute on click"
+msgstr "Příkaz spouštěný po kliknutí"
 
 #: applets/fish/fish.schemas.in.h:3
+msgid "Frames in fish's animation"
+msgstr "Políčka v animaci ryby"
+
+#: applets/fish/fish.schemas.in.h:4
+msgid ""
+"If true, the fish's animation will be displayed rotated on vertical panels."
+msgstr "Je-li true, bude animace ryby na vertikálních panelech zobrazena zrotovaná."
+
+#: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
 msgstr "Prodleva mezi políčky"
 
-#: applets/fish/fish.schemas.in.h:4
+#: applets/fish/fish.schemas.in.h:6
 msgid "Rotate on vertical panels"
 msgstr "Na vertikálním panelu rotovat"
 
-#: applets/fish/fish.schemas.in.h:5
+#: applets/fish/fish.schemas.in.h:7
 msgid "The fish's animation pixmap"
 msgstr "Obrázek animace ryby"
 
-#: applets/fish/fish.schemas.in.h:6
+#: applets/fish/fish.schemas.in.h:8
 msgid "The fish's name"
 msgstr "Jméno ryby"
 
-#: applets/fish/fish.schemas.in.h:7
-msgid "The number of frames in the fish's animation"
-msgstr "Počet políček v animaci ryby"
+#: applets/fish/fish.schemas.in.h:9
+msgid ""
+"This key specifies the command that will be tried to execute when the fish "
+"is clicked."
+msgstr "Tento klíč určuje příkaz spouštěný po kliknutí na rybu."
+
+#: applets/fish/fish.schemas.in.h:10
+msgid ""
+"This key specifies the filename of the pixmap which will be used for the "
+"animation displayed in the fish applet relative to the pixmap directory."
+msgstr "Tento klíč určuje název souboru pixmapy, který bude použit pro animaci zobrazovanou v apletu ryby, relativně k adresáři pixmap."
+
+#: applets/fish/fish.schemas.in.h:11
+msgid ""
+"This key specifies the number of frames that will be displayed in the fish's "
+"animation."
+msgstr "Tento klíč určuje počet políček zobrazovaných v animaci ryby."
+
+#: applets/fish/fish.schemas.in.h:12
+msgid "This key specifies the number of seconds each frame will be displayed."
+msgstr "Tento klíč určuje počet sekund, které bude každé políčko zobrazeno."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -654,7 +683,7 @@ msgstr "Zobrazovat okna z _aktuální pracovní plochy"
 msgid "Show windows from a_ll workspaces"
 msgstr "Zobrazovat okna ze _všech pracovních ploch"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3472
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3524
 msgid "Size"
 msgstr "Velikost"
 
@@ -677,40 +706,33 @@ msgstr "pixelů"
 
 #: applets/wncklet/window-list.schemas.in.h:1
 msgid ""
-"Decides when to group windows from the same application on the Window List. "
-"Valid values are \"never\", \"auto\" and \"always\"."
-msgstr ""
-"Určuje, kdy seskupovat okna jedné aplikace v Seznamu oken. Platné hodnoty "
-"jsou \"never\", \"auto\", a \"always\"."
+"Decides when to group windows from the same application on the window list. "
+"Possible values are \"never\", \"auto\" and \"always\"."
+msgstr "Určuje, kdy seskupovat okna jedné aplikace v seznamu oken. Možné hodnoty jsou \"never\", \"auto\", a \"always\"."
 
 #: applets/wncklet/window-list.schemas.in.h:2
 msgid ""
-"If this is true, the Window List will show windows from all workspaces, "
-"otherwise it will display windows from the current workspace only."
-msgstr ""
-"Je-li toto true, zobrazuje Seznam oken okna ze všech pracovních ploch, jinak "
-"zobrazuje jen okna z aktuální pracovní plochy."
+"If true, the window list will show windows from all workspaces. Otherwise it "
+"will only display windows from the current workspace."
+msgstr "Je-li true, zobrazuje seznam oken okna ze všech pracovních ploch. V opačném případě zobrazuje jen okna z aktuální pracovní plochy."
 
 #: applets/wncklet/window-list.schemas.in.h:3
 msgid ""
-"If true, then when unminimizing a window, bring it to the current workspace. "
-"Otherwise, change to the workspace of the window."
-msgstr ""
-"Je-li toto true, okno se při minimalizaci přesune na aktuální pracovní "
-"plochy. Jinak se přepne na pracovní plochu okna."
+"If true, then when unminimizing a window, move it to the current workspace. "
+"Otherwise, switch to the workspace of the window."
+msgstr "Je-li true, okno se při deminimalizaci přesunout na aktuální pracovní plochu. V opačném případě se přepnout na pracovní plochu okna."
 
 #: applets/wncklet/window-list.schemas.in.h:4
-msgid "Maximum size that Window List requests"
-msgstr "Maximální velikost, kterou bude Seznam oken požadovat"
+msgid "Maximum window list size"
+msgstr "Maximální velikost seznamu oken"
 
 #: applets/wncklet/window-list.schemas.in.h:5
-msgid "Minimum size that Window List requests"
-msgstr "Minimální velikost, kterou bude Seznam oken požadovat"
+msgid "Minimum window list size"
+msgstr "Minimální velikost seznamu oken"
 
 #: applets/wncklet/window-list.schemas.in.h:6
-msgid "Move windows to the current workspace when unminimized"
-msgstr ""
-"Při obnovení minimalizovaných oken je přesunout na aktuální pracovní plochu"
+msgid "Move windows to current workspace when unminimized"
+msgstr "Při obnovení minimalizovaných oken je přesunout na aktuální pracovní plochu"
 
 #: applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
@@ -718,23 +740,14 @@ msgstr "Zobrazovat okna ze všech pracovních ploch"
 
 #: applets/wncklet/window-list.schemas.in.h:8
 msgid ""
-"This value is the maximum width that Window List requests. The maximum width "
-"setting is useful to limit the size of Window List in large panels such as "
-"edge panels, where Window List could fill the entire space available."
-msgstr ""
-"Tato hodnota je maximální šířka, kterou bude Seznam oken požadovat. To je "
-"užitečné pro omezení velikosti velkých panelů, kde by tento aplet jinak mohl "
-"vyplnit všechno dostupné místo, jako u hranových panelů."
+"This key specifies the maximum width that the window list requests. The "
+"maximum width setting is useful to limit the size of the window list in "
+"large panels, where the window list could fill the entire space available."
+msgstr "Tento klíč určuje je maximální šířku, kterou bude seznam oken požadovat. Nastavení maximální šířky je užitečné pro omezení velikosti seznamu oken ve velkých panelech, kde by tento aplet mohl vyplnit všechno dostupné místo."
 
 #: applets/wncklet/window-list.schemas.in.h:9
-msgid ""
-"To be usable, Window List requires a minimum width. Window List requests "
-"this minimum width. The minimum width setting is useful for sliding and edge "
-"panels, which usually request a small default width."
-msgstr ""
-"Aby byl Seznam oken vůbec užitečný, potřebuje minimální šířku. Tato hodnota "
-"je minimální šířka, kterou bude aplet požadovat. To je užitečné pro posuvné "
-"a hranové panely, které by jinak požádaly o velice malou implicitní šířku."
+msgid "This key specifies the minimum width that the window list requests."
+msgstr "Tento klíč určuje minimální velikost, kterou bude seznam oken požadovat."
 
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -822,51 +835,38 @@ msgstr "Vlastnosti přepínače pracovních ploch"
 
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "Workspace na_mes:"
-msgstr "Jména pracovních ploch:"
+msgstr "Názvy pracovních ploch:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
-msgid ""
-"If this is true, the Workspace Switcher will show all workspaces, otherwise "
-"it will only show the current workspace."
-msgstr ""
-"Je-li toto true, zobrazuje Přepínač všechny pracovní plochy, jinak zobrazuje "
-"pouze aktuální plochu."
+msgid "Display all workspaces"
+msgstr "Zobrazovat všechny pracovní plochy"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:2
-msgid ""
-"If this is true, the workspaces in the Workspace Switcher will display the "
-"names of the workspaces, otherwise they will display the contents of the "
-"workspace."
-msgstr ""
-"Je-li toto true, zobrazují se v Přepínači názvy pracovních ploch, jinak se "
-"tam zobrazuje jejich obsah."
+msgid "Display workspace names"
+msgstr "Zobrazovat názvy pracovních ploch"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
-msgid "Number of rows in the Workspace Switcher."
-msgstr "Počet řádků v Přepínači pracovních ploch"
+msgid ""
+"If true, the workspace switcher will show all workspaces. Otherwise it will "
+"only show the current workspace."
+msgstr "Je-li true, zobrazuje přepínač pracovních ploch všechny pracovní plochy, jinak zobrazuje pouze aktuální plochu."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid ""
-"When showing all the workspaces this determines how many rows (for "
-"horizontal layout) or columns (for vertical layout) the Workspace Switcher "
-"shows the workspaces in."
-msgstr ""
-"Když se zobrazují všechny pracovní plochy, toto určuje, v kolika řádcích "
-"(pro horizontální rozložení) nebo sloupcích (pro vertikální rozložení) "
-"zobrazuje Přepínač pracovní plochy."
+"If true, the workspaces in the workspace switcher will display the names of "
+"the workspaces. Otherwise they will display the windows on the workspace."
+msgstr "Je-li true, zobrazují se v přepínači pracovních ploch názvy pracovních ploch. V opačném případě se tam zobrazují okna dané pracovní plochy."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
-msgid "Whether to display the all workspaces in the Workspace Switcher."
-msgstr ""
-"Jestli se mají v Přepínači pracovních ploch zobrazovat všechny pracovní "
-"plochy."
+msgid "Rows in workspace switcher"
+msgstr "Řádky v přepínači pracovních ploch"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
 msgid ""
-"Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"Jestli se mají v Přepínači pracovních ploch zobrazovat názvy pracovních "
-"ploch."
+"This key specifies how many how many rows (for horizontal layout) or columns "
+"(for vertical layout) the workspace switcher shows the workspaces in. This "
+"key is only relevant if the display_all_workspaces key is true."
+msgstr "Tento klíč určuje, v kolika řádcích (pro horizontální rozložení) nebo sloupcích (pro vertikální rozložení) zobrazuje přepínač pracovní plochy. Tento klíč má vliv, jen pokud je klíč display_all_workspaces true."
 
 #: gnome-panel/applet.c:99 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:104
@@ -921,7 +921,7 @@ msgstr "Má šipku"
 msgid "Whether or not to draw an arrow indicator"
 msgstr "Jestli se má kreslit indikátor šipky"
 
-#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3461
+#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3513
 msgid "Orientation"
 msgstr "Orientace"
 
@@ -1755,12 +1755,9 @@ msgstr "Které hrany kreslit"
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
-"setttings for each of these panels are stored in /apps/panel/general/"
+"settings for each of these panels are stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
-msgstr ""
-"Seznam ID panelů. Každé ID identifikuje jeden panel nejvyšší úrovně. "
-"Nastavení každého takového panelu je uloženo v /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+msgstr "Seznam ID panelů. Každé ID identifikuje jeden panel nejvyšší úrovně. Nastavení každého takového panelu je uloženo v /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -2020,7 +2017,7 @@ msgid "Launcher location"
 msgstr "Umístění spouštěče"
 
 #: gnome-panel/panel-object.schemas.in.h:10
-msgid "Lock the object to the pane"
+msgid "Lock the object to the panel"
 msgstr "Zamknout objekt na panelu"
 
 #: gnome-panel/panel-object.schemas.in.h:11
@@ -2028,7 +2025,7 @@ msgid "Menu content path"
 msgstr "Cesta k obsahu menu"
 
 #: gnome-panel/panel-object.schemas.in.h:12
-msgid "Object's position on panel"
+msgid "Object's position on the panel"
 msgstr "Pozice objektu na panelu"
 
 #: gnome-panel/panel-object.schemas.in.h:13
@@ -2425,196 +2422,196 @@ msgstr "Nelze načíst standardní ikonu panelu '%s'\n"
 msgid "_Force quit"
 msgstr "_Vynutit ukončení"
 
-#: gnome-panel/panel-toplevel.c:1365
+#: gnome-panel/panel-toplevel.c:1417
 msgid "Top Expanded Edge Panel"
 msgstr "Rozpínací hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1366
+#: gnome-panel/panel-toplevel.c:1418
 msgid "Top Centered Panel"
 msgstr "Panel nahoře uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1367
+#: gnome-panel/panel-toplevel.c:1419
 msgid "Top Floating Panel"
 msgstr "Plovoucí panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1368
+#: gnome-panel/panel-toplevel.c:1420
 msgid "Top Edge Panel"
 msgstr "Hranový panel nahoře"
 
-#: gnome-panel/panel-toplevel.c:1372
+#: gnome-panel/panel-toplevel.c:1424
 msgid "Bottom Expanded Edge Panel"
 msgstr "Rozpínací hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1373
+#: gnome-panel/panel-toplevel.c:1425
 msgid "Bottom Centered Panel"
 msgstr "Panel dole uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1374
+#: gnome-panel/panel-toplevel.c:1426
 msgid "Bottom Floating Panel"
 msgstr "Plovoucí panel dole"
 
-#: gnome-panel/panel-toplevel.c:1375
+#: gnome-panel/panel-toplevel.c:1427
 msgid "Bottom Edge Panel"
 msgstr "Hranový panel dole"
 
-#: gnome-panel/panel-toplevel.c:1379
+#: gnome-panel/panel-toplevel.c:1431
 msgid "Left Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1380
+#: gnome-panel/panel-toplevel.c:1432
 msgid "Left Centered Panel"
 msgstr "Panel vlevo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1381
+#: gnome-panel/panel-toplevel.c:1433
 msgid "Left Floating Panel"
 msgstr "Plovoucí panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1382
+#: gnome-panel/panel-toplevel.c:1434
 msgid "Left Edge Panel"
 msgstr "Hranový panel vlevo"
 
-#: gnome-panel/panel-toplevel.c:1386
+#: gnome-panel/panel-toplevel.c:1438
 msgid "Right Expanded Edge Panel"
 msgstr "Rozpínací hranový panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1387
+#: gnome-panel/panel-toplevel.c:1439
 msgid "Right Centered Panel"
 msgstr "Panel vpravo uprostřed"
 
-#: gnome-panel/panel-toplevel.c:1388
+#: gnome-panel/panel-toplevel.c:1440
 msgid "Right Floating Panel"
 msgstr "Plovoucí panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:1389
+#: gnome-panel/panel-toplevel.c:1441
 msgid "Right Edge Panel"
 msgstr "Hranový panel vpravo"
 
-#: gnome-panel/panel-toplevel.c:3441
+#: gnome-panel/panel-toplevel.c:3493
 msgid "Name"
 msgstr "Název"
 
-#: gnome-panel/panel-toplevel.c:3442
+#: gnome-panel/panel-toplevel.c:3494
 msgid "The name of this panel"
 msgstr "Název panelu"
 
-#: gnome-panel/panel-toplevel.c:3451
+#: gnome-panel/panel-toplevel.c:3503
 msgid "Expand"
 msgstr "Rozpínat se"
 
-#: gnome-panel/panel-toplevel.c:3452
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Expand to take up the full monitor width/height"
 msgstr "Rozpínat se pro zabrání plné šířky/výšky monitoru"
 
-#: gnome-panel/panel-toplevel.c:3462
+#: gnome-panel/panel-toplevel.c:3514
 msgid "The orientation of the panel"
 msgstr "Orientace panelu"
 
-#: gnome-panel/panel-toplevel.c:3473
+#: gnome-panel/panel-toplevel.c:3525
 msgid "The height (or width when vertical) of the panel"
 msgstr "Výška panelu (nebo šířka, je-li vertikální)"
 
-#: gnome-panel/panel-toplevel.c:3485
+#: gnome-panel/panel-toplevel.c:3537
 msgid "X position"
 msgstr "Pozice X"
 
-#: gnome-panel/panel-toplevel.c:3486
+#: gnome-panel/panel-toplevel.c:3538
 msgid "The X position of the panel"
 msgstr "X-ová pozice panelu"
 
-#: gnome-panel/panel-toplevel.c:3497
+#: gnome-panel/panel-toplevel.c:3549
 msgid "X centered"
 msgstr "X centrovaně"
 
-#: gnome-panel/panel-toplevel.c:3498
+#: gnome-panel/panel-toplevel.c:3550
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Souřadnice x je relativní ke středu obrazovky"
 
-#: gnome-panel/panel-toplevel.c:3507
+#: gnome-panel/panel-toplevel.c:3559
 msgid "Y position"
 msgstr "Pozice y"
 
-#: gnome-panel/panel-toplevel.c:3508
+#: gnome-panel/panel-toplevel.c:3560
 msgid "The Y position of the panel"
 msgstr "Y-ová pozice panelu"
 
-#: gnome-panel/panel-toplevel.c:3519
+#: gnome-panel/panel-toplevel.c:3571
 msgid "Y centered"
 msgstr "Y centrovaně"
 
-#: gnome-panel/panel-toplevel.c:3520
+#: gnome-panel/panel-toplevel.c:3572
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Souřadnice y je relativní ke středu obrazovky"
 
-#: gnome-panel/panel-toplevel.c:3529
+#: gnome-panel/panel-toplevel.c:3581
 msgid "Xinerama monitor"
 msgstr "Monitor Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3530
+#: gnome-panel/panel-toplevel.c:3582
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Monitor (v pojmech Xinerama), na kterém je panel"
 
-#: gnome-panel/panel-toplevel.c:3541
+#: gnome-panel/panel-toplevel.c:3593
 msgid "Auto hide"
 msgstr "Automaticky ukrývat"
 
-#: gnome-panel/panel-toplevel.c:3542
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Automaticky ukrývat panel, když jej myš opustí"
 
-#: gnome-panel/panel-toplevel.c:3551
+#: gnome-panel/panel-toplevel.c:3603
 msgid "Hide delay"
 msgstr "Zpoždění skrývání"
 
-#: gnome-panel/panel-toplevel.c:3552
+#: gnome-panel/panel-toplevel.c:3604
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Počet milisekund, které počkat před automatickým ukrytím"
 
-#: gnome-panel/panel-toplevel.c:3563
+#: gnome-panel/panel-toplevel.c:3615
 msgid "Un-hide delay"
 msgstr "Zpoždění odkrývání"
 
-#: gnome-panel/panel-toplevel.c:3564
+#: gnome-panel/panel-toplevel.c:3616
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Počet milisekund, které počkat před automatickým odkrytím"
 
-#: gnome-panel/panel-toplevel.c:3575
+#: gnome-panel/panel-toplevel.c:3627
 msgid "Auto-hide size"
 msgstr "Velikost po automatickém skrytí"
 
-#: gnome-panel/panel-toplevel.c:3576
+#: gnome-panel/panel-toplevel.c:3628
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "Počet viditelných pixelů, když byl panel automaticky skryt"
 
-#: gnome-panel/panel-toplevel.c:3587
+#: gnome-panel/panel-toplevel.c:3639
 msgid "Animate"
 msgstr "Animovat"
 
-#: gnome-panel/panel-toplevel.c:3588
+#: gnome-panel/panel-toplevel.c:3640
 msgid "Enable hiding/showing animations"
 msgstr "Povolit animace skrývání/zobrazování"
 
-#: gnome-panel/panel-toplevel.c:3597
+#: gnome-panel/panel-toplevel.c:3649
 msgid "Animation Speed"
 msgstr "Rychlost animace"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3650
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Rychlost, kterou animovat skrývání/zobrazování panelu"
 
-#: gnome-panel/panel-toplevel.c:3608
+#: gnome-panel/panel-toplevel.c:3660
 msgid "Buttons Enabled"
 msgstr "Tlačítka povolena"
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3661
 msgid "Enable hide/show buttons"
 msgstr "Povolit tlačítka skrýt/zobrazit"
 
-#: gnome-panel/panel-toplevel.c:3618
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Arrows Enabled"
 msgstr "Šipky povoleny"
 
-#: gnome-panel/panel-toplevel.c:3619
+#: gnome-panel/panel-toplevel.c:3671
 msgid "Enable arrows on hide/show buttons"
 msgstr "Povolit šipky na tlačítkách skrýt/zobrazit"
 
@@ -2710,7 +2707,15 @@ msgstr ""
 "Je-li true, bude velikost obrázku změněna na rozměry panelu. Poměr stran "
 "obrázku nebude zachován."
 
+# FIXME: the pointer is hidden... when "it" leaves the panel area
 #: gnome-panel/panel-toplevel.schemas.in.h:20
+msgid ""
+"If true, the panel is automatically hidden into a corner of the screen when "
+"it leaves the panel area. Moving the pointer to that corner will cause the "
+"panel to re-appear."
+msgstr "Je-li true, je panel automaticky skryt do rohu obrazovky, když kurzor opustí oblast panelu. Přesun kurzoru do tohoto rozhu způsobí, že se panel znovu objeví."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
 "If true, the panel will occupy the entire screen width (height if this is a "
 "vertical panel). In this mode the panel can only be placed at a screen edge. "
@@ -2722,29 +2727,7 @@ msgstr ""
 "obrazovky. Je-li false, bude panel jen tak velký, aby se do něj vešly jeho "
 "aplety, spouštěče a tlačítka."
 
-# FIXME: the pointer is hidden... when "it" leaves the panel area
-#: gnome-panel/panel-toplevel.schemas.in.h:21
-msgid ""
-"If true, the pointer is automatically hidden into a corner of the screen "
-"when it leaves the panel area. Moving the pointer to that corner will cause "
-"the panel to re-appear."
-msgstr ""
-"je-li true, je panel automaticky skryt do rohu obrazovky, když kurzor opustí "
-"oblast panelu. Přesun kurzoru do tohoto rozhu způsobí, že se panel znovu "
-"objeví."
-
 #: gnome-panel/panel-toplevel.schemas.in.h:22
-msgid ""
-"If true, the x key is ignored and the panel is placed at the center of the x-"
-"axis of the screen. If the panel is resized it will remain at that position "
-"- i.e. the panel will grow on both sides. If false, the x key determines the "
-"location of the panel."
-msgstr ""
-"Je-li true, je klíč x ignorován a panel je umístěn do středu osy x "
-"obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. "
-"zvětší se na obou stranách. Je-li false, určuje umístění panelu klíč x."
-
-#: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
 "If true, the x key is ignored and the panel is placed at the center of the x-"
 "axis of the screen. If the panel is resized it will remain at that position "
@@ -2754,6 +2737,14 @@ msgstr ""
 "Je-li true, je klíč x ignorován a panel je umístěn do středu osy x "
 "obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. "
 "zvětší se na obou stranách. Je-li false, určuje umístění panelu klíč x."
+
+#: gnome-panel/panel-toplevel.schemas.in.h:23
+msgid ""
+"If true, the y key is ignored and the panel is placed at the center of the y-"
+"axis of the screen. If the panel is resized it will remain at that position "
+"- i.e. the panel will grow on both sides. If false, the y key specifies the "
+"location of the panel."
+msgstr "Je-li true, je klíč y ignorován a panel je umístěn do středu osy y obrazovky. Je-li změněna velikost panelu, zůstane na stejné pozici - tj. zvětší se na obou stranách. Je-li false, určuje umístění panelu klíč y."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
@@ -2775,9 +2766,8 @@ msgstr "Zpoždění automatického skrytí panelu"
 msgid "Panel autounhide delay"
 msgstr "Zpoždění automatického odkrytí panelu"
 
-# FIXME: ..n
 #: gnome-panel/panel-toplevel.schemas.in.h:28
-msgid "Panel orientatio"
+msgid "Panel orientation"
 msgstr "Orientace panelu"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
@@ -3078,6 +3068,16 @@ msgstr "Mrňavý"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "Obrovský"
+
+#~ msgid ""
+#~ "To be usable, Window List requires a minimum width. Window List requests "
+#~ "this minimum width. The minimum width setting is useful for sliding and "
+#~ "edge panels, which usually request a small default width."
+#~ msgstr ""
+#~ "Aby byl Seznam oken vůbec užitečný, potřebuje minimální šířku. Tato "
+#~ "hodnota je minimální šířka, kterou bude aplet požadovat. To je užitečné "
+#~ "pro posuvné a hranové panely, které by jinak požádaly o velice malou "
+#~ "implicitní šířku."
 
 #~ msgid "and finally, The Knights Who Say... NI!"
 #~ msgstr "a konečně rytíři, co říkají ... NI!"
