@@ -2268,7 +2268,7 @@ panel_load_panel_from_gconf (const char *profile,
 	}
 
 	tmp_str = panel_get_string (profile, panel_id, "panel_background_color", NULL);
-	if (!tmp_str || !tmp_str [0]) {
+	if (tmp_str && tmp_str [0]) {
 		gdk_color_parse (tmp_str, &gdkcolor);
 		back_color.gdk = gdkcolor;
 	}
