@@ -262,6 +262,25 @@ append_gmc_item (GtkWidget *menu, const char *label, char *flag)
 			    GTK_SIGNAL_FUNC (gmc_client), flag);
 }
 
+static gboolean
+display_gmc_menu (void)
+{
+	char *gmc_client;
+
+	gmc_client = panel_is_program_in_path ("gmc-client");
+
+	if (gmc_client == NULL) {
+		return FALSE;
+	}
+	g_free (gmc_client);
+
+
+	if (xstuff_nautilus_desktop_present ())
+		return FALSE;
+
+	return TRUE;
+}
+
 static void
 append_desktop_menu (GtkWidget *menu_bar)
 {
@@ -277,26 +296,30 @@ append_desktop_menu (GtkWidget *menu_bar)
 		N_("By Time Last Changed"),  "--arrange-desktop-icons=ctime",
 		NULL
 	};
+	gboolean gmc_menu = display_gmc_menu ();
 
 	menu = scroll_menu_new ();
 
-	for (i=0; arrange[i]; i+=2)
-		append_gmc_item (menu, _(arrange[i]), arrange[i+1]);
+	if (gmc_menu) {
 
-	item = gtk_menu_item_new_with_label (_("Arrange Icons"));
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
+		for (i=0; arrange[i]; i+=2)
+			append_gmc_item (menu, _(arrange[i]), arrange[i+1]);
 
-	add_tearoff (GTK_MENU (menu));
+		item = gtk_menu_item_new_with_label (_("Arrange Icons"));
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
 
-	menu = scroll_menu_new ();
+		add_tearoff (GTK_MENU (menu));
 
-	gtk_menu_append (GTK_MENU (menu), item);
-	add_menu_separator (menu);
+		menu = scroll_menu_new ();
 
-	append_gmc_item (menu, _("Rescan Desktop Directory"), "--rescan-desktop");
-	append_gmc_item (menu, _("Rescan Desktop Devices"), "--rescan-desktop-devices");
+		gtk_menu_append (GTK_MENU (menu), item);
+		add_menu_separator (menu);
 
-	add_menu_separator (menu);
+		append_gmc_item (menu, _("Rescan Desktop Directory"), "--rescan-desktop");
+		append_gmc_item (menu, _("Rescan Desktop Devices"), "--rescan-desktop-devices");
+
+		add_menu_separator (menu);
+	}
 	
 	char_tmp = panel_is_program_in_path ("xscreensaver");
 	if (char_tmp) {	

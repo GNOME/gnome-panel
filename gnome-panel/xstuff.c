@@ -19,10 +19,12 @@
 
 #include "xstuff.h"
 
-GdkAtom KWM_MODULE = 0;
-GdkAtom KWM_MODULE_DOCKWIN_ADD = 0;
-GdkAtom KWM_MODULE_DOCKWIN_REMOVE = 0;
-GdkAtom KWM_DOCKWINDOW = 0;
+static GdkAtom KWM_MODULE = 0;
+static GdkAtom KWM_MODULE_DOCKWIN_ADD = 0;
+static GdkAtom KWM_MODULE_DOCKWIN_REMOVE = 0;
+static GdkAtom KWM_DOCKWINDOW = 0;
+static GdkAtom NAUTILUS_DESKTOP_WINDOW_ID = 0;
+static GdkAtom _NET_WM_DESKTOP = 0;
 
 extern GList *check_swallows;
 
@@ -161,6 +163,10 @@ xstuff_init (void)
 	KWM_MODULE_DOCKWIN_REMOVE =
 		gdk_atom_intern ("KWM_MODULE_DOCKWIN_REMOVE", FALSE);
 	KWM_DOCKWINDOW = gdk_atom_intern ("KWM_DOCKWINDOW", FALSE);
+	NAUTILUS_DESKTOP_WINDOW_ID =
+		gdk_atom_intern ("NAUTILUS_DESKTOP_WINDOW_ID", FALSE);
+	_NET_WM_DESKTOP =
+		gdk_atom_intern ("_NET_WM_DESKTOP", FALSE);
 
 	gwmh_init ();
 
@@ -173,6 +179,39 @@ xstuff_init (void)
 			       NULL);
 
 	xstuff_go_through_client_list ();
+}
+
+gboolean
+xstuff_nautilus_desktop_present (void)
+{
+	gboolean ret = FALSE;
+	guint32 *data;
+	int size;
+
+	gdk_error_trap_push ();
+	data = get_typed_property_data (GDK_DISPLAY (),
+					GDK_ROOT_WINDOW (),
+					NAUTILUS_DESKTOP_WINDOW_ID,
+					XA_WINDOW,
+					&size, 32);
+	if (data != NULL &&
+	    *data != 0) {
+		guint32 *desktop;
+		desktop = get_typed_property_data (GDK_DISPLAY (),
+						   *data,
+						   _NET_WM_DESKTOP,
+						   XA_CARDINAL,
+						   &size, 32);
+		if (size > 0)
+			ret = TRUE;
+		g_free (desktop);
+	}
+	g_free (data);
+
+	gdk_flush ();
+	gdk_error_trap_pop ();
+
+	return ret;
 }
 
 void
