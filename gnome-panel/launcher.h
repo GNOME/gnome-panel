@@ -16,6 +16,7 @@
 BEGIN_GNOME_DECLS
 
 typedef struct {
+	AppletInfo        *info;
 	GtkWidget         *button;
 	GtkObject	  *dedit;
 	GnomeDesktopEntry *dentry;

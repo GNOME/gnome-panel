@@ -32,6 +32,58 @@ panel_show_help (const char *path)
 	gnome_help_display (NULL, &help_entry);
 }
 
+static char *
+panel_gnome_help_path (const char *docpath)
+{
+	char *fullpath, *app, *p, *path;
+
+	app = g_strdup (docpath);
+
+	p = strchr (app, '/');
+
+	if (p == NULL) {
+		g_free (app);
+		return NULL;
+	}
+
+	path = p+1;
+	*p = '\0';
+
+	fullpath = gnome_help_file_path (app, path);
+
+	g_free (app);
+
+	if ( ! panel_file_exists (fullpath)) {
+		g_free (fullpath);
+		fullpath = NULL;
+	}
+
+	return fullpath;
+}
+
+static char *
+panel_kde_help_path (const char *docpath)
+{
+	/* FIXME: */
+	return NULL;
+}
+
+char *
+panel_gnome_kde_help_path (const char *docpath)
+{
+	char *path;
+
+	if (string_empty (docpath))
+		return NULL;
+
+	path = panel_gnome_help_path (docpath);
+
+	if (path == NULL)
+		path = panel_kde_help_path (docpath);
+
+	return path;
+}
+
 gboolean
 string_is_in_list(const GSList *list, const char *text)
 {

@@ -90,6 +90,8 @@ int		find_applet		(GtkWidget *widget);
 int		get_requisition_width	(GtkWidget *widget);
 int		get_requisition_height	(GtkWidget *widget);
 
+char *		panel_gnome_kde_help_path (const char *docpath);
+
 END_GNOME_DECLS
 
 #endif /* PANEL_UTIL_H */

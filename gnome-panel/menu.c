@@ -970,6 +970,25 @@ add_to_run_dialog (GtkWidget *widget, const char *item_loc)
 }
 
 static void
+show_help_on (GtkWidget *widget, const char *item_loc)
+{
+	GnomeDesktopEntry *item =
+		gnome_desktop_entry_load_unconditional (item_loc);
+	if (item != NULL) {
+		char *path = panel_gnome_kde_help_path (item->docpath);
+		if (path != NULL) {
+			char *fullpath = g_strconcat ("ghelp:", path, NULL);
+			gnome_url_show (fullpath);
+			g_free (fullpath);
+			g_free (path);
+		}
+		gnome_desktop_entry_free (item);
+	} else {
+		panel_error_dialog (_("Can't load entry"));
+	}
+}
+
+static void
 add_app_to_panel (GtkWidget *widget, const char *item_loc)
 {
 	PanelWidget *panel = get_panel_from_menu_data (widget);
@@ -1548,6 +1567,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 		if(sim->type == 1) {
 			char *tmp;
+			GnomeDesktopEntry *ii;
+
+			ii = gnome_desktop_entry_load_unconditional (sim->item_loc);
+
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);
 			if ( ! sim->applet)
@@ -1609,6 +1632,37 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					 GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
 					 GTK_OBJECT(item->parent));
 			}
+
+			if (ii != NULL)
+				tmp = panel_gnome_kde_help_path (ii->docpath);
+			else
+				tmp = NULL;
+			   
+			if (tmp != NULL) {
+				char *title;
+
+				g_free (tmp);
+
+				menuitem = gtk_menu_item_new ();
+				gtk_widget_lock_accelerators (menuitem);
+				title = g_strdup_printf (_("Help on %s"),
+							 ii->name);
+				setup_menuitem (menuitem, 0, title);
+				g_free (title);
+				gtk_menu_append (GTK_MENU (sim->menu),
+						 menuitem);
+				gtk_signal_connect
+					(GTK_OBJECT(menuitem), "activate",
+					 GTK_SIGNAL_FUNC(show_help_on),
+					 (gpointer)sim->item_loc);
+				gtk_signal_connect_object
+					(GTK_OBJECT(menuitem),
+					 "activate",
+					 GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
+					 GTK_OBJECT(item->parent));
+			}
+
+			gnome_desktop_entry_free (ii);
 		} else {
 			menuitem = gtk_menu_item_new ();
 			gtk_widget_lock_accelerators (menuitem);

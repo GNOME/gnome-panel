@@ -337,6 +337,7 @@ create_launcher (const char *parameters, GnomeDesktopEntry *dentry)
 
 	launcher = g_new0 (Launcher, 1);
 
+	launcher->info = NULL;
 	launcher->button = NULL;
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
@@ -420,6 +421,7 @@ properties_apply (Launcher *launcher)
 {
 	char *icon;
 	char *location;
+	char *docpath;
 
 	/* save (steal) location */
 	location = launcher->dentry->location;
@@ -460,6 +462,22 @@ properties_apply (Launcher *launcher)
 	} else {
 		button_widget_set_pixmap(BUTTON_WIDGET(launcher->button),
 					 default_app_pixmap, -1);
+	}
+
+	applet_remove_callback (launcher->info, "help_on_app");
+	docpath = panel_gnome_kde_help_path (launcher->dentry->docpath);
+	if (docpath != NULL) {
+		char *title;
+
+		g_free (docpath);
+
+		title = g_strdup_printf (_("Help on %s"),
+					 launcher->dentry->name);
+
+		applet_add_callback (launcher->info, "help_on_app",
+				     GNOME_STOCK_PIXMAP_HELP,
+				     title);
+		g_free (title);
 	}
 }
 
@@ -608,6 +626,7 @@ load_launcher_applet_full (const char *params, GnomeDesktopEntry *dentry,
 			   PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Launcher *launcher;
+	char *docpath;
 
 	launcher = create_launcher (params, dentry);
 
@@ -623,16 +642,34 @@ load_launcher_applet_full (const char *params, GnomeDesktopEntry *dentry,
 		return NULL;
 	}
 
+	launcher->info = applets_last->data;
+
 	gtk_tooltips_set_tip (panel_tooltips,
 			      launcher->button,
-			      launcher->dentry->comment,NULL);
+			      launcher->dentry->comment,
+			      NULL);
 
-	applet_add_callback(applets_last->data,"properties",
-			    GNOME_STOCK_MENU_PROP,
-			    _("Properties..."));
-	applet_add_callback(applets_last->data, "help",
-			    GNOME_STOCK_PIXMAP_HELP,
-			    _("Help"));
+	applet_add_callback (applets_last->data,"properties",
+			     GNOME_STOCK_MENU_PROP,
+			     _("Properties..."));
+	applet_add_callback (applets_last->data, "help",
+			     GNOME_STOCK_PIXMAP_HELP,
+			     _("Help"));
+
+	docpath = panel_gnome_kde_help_path (launcher->dentry->docpath);
+	if (docpath != NULL) {
+		char *title;
+
+		g_free (docpath);
+
+		title = g_strdup_printf (_("Help on %s"),
+					 launcher->dentry->name);
+
+		applet_add_callback (applets_last->data, "help_on_app",
+				     GNOME_STOCK_PIXMAP_HELP,
+				     title);
+		g_free (title);
+	}
 
 	return launcher;
 }

@@ -120,6 +120,21 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 			launcher_properties(menu->info->data);
 		else if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("launchers.html");
+		else if (strcmp (menu->name, "help_on_app") == 0) {
+			Launcher * launcher = menu->info->data;
+			if (launcher->dentry != NULL) {
+				char *path = panel_gnome_kde_help_path
+					(launcher->dentry->docpath);
+				if (path != NULL) {
+					char *fullpath = g_strconcat ("ghelp:",
+								      path,
+								      NULL);
+					gnome_url_show (fullpath);
+					g_free (fullpath);
+					g_free (path);
+				}
+			}
+		}
 		break;
 	case APPLET_DRAWER: 
 		if(strcmp(menu->name,"properties")==0) {
