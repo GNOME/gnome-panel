@@ -1,3 +1,14 @@
+2002-04-16  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel-applet-marshal.list:
+	Add entry for move-focus-out-of-applet action signal
+
+	* panel-applet.[ch]:
+	Add action signal move-focus-out-of-applet and bind to Tab and
+	Shift+Tab to move focus to next and previous objects on the panel.
+	This was moved from PanelAppletFrame so it will work for applets
+	in a different process to the panel.
+
 2002-04-13  Alexander Larsson  <alla@lysator.liu.se>
 
 	* panel-applet.[ch]:

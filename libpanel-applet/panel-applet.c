@@ -29,7 +29,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <gdk/gdk.h>
 #include <gdk/gdkx.h>
+#include <gdk/gdkkeysyms.h>
+#include <gtk/gtkbindings.h>
 #include <bonobo/bonobo-ui-util.h>
 #include <bonobo/bonobo-main.h>
 #include <bonobo/bonobo-types.h>
@@ -68,6 +71,8 @@ struct _PanelAppletPrivate {
 
         int                        *size_hints;
         int                         size_hints_len;
+
+	gboolean		    moving_focus_out;
 };
 
 static GObjectClass *parent_class;
@@ -76,6 +81,7 @@ enum {
         CHANGE_ORIENT,
         CHANGE_SIZE,
         CHANGE_BACKGROUND,
+	MOVE_FOCUS_OUT_OF_APPLET,
         SAVE_YOURSELF,
         LAST_SIGNAL
 };
@@ -485,6 +491,13 @@ panel_applet_focus (GtkWidget        *widget,
 {
 	gboolean ret;
 	GtkWidget *previous_focus_child;
+	PanelApplet *applet;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (widget), FALSE);
+
+	applet = PANEL_APPLET (widget);
+	if (applet->priv->moving_focus_out)
+		return FALSE;
 
 	previous_focus_child = GTK_CONTAINER (widget)->focus_child;
 	ret = GTK_WIDGET_CLASS (parent_class)->focus (widget, dir);
@@ -986,13 +999,47 @@ panel_applet_item_handler_get_object (BonoboItemHandler *handler,
 }
 
 static void
+panel_applet_move_focus_out_of_applet (PanelApplet      *applet,
+				       GtkDirectionType  dir)
+{
+	GtkWidget *toplevel;
+
+	applet->priv->moving_focus_out = TRUE;
+	toplevel = gtk_widget_get_toplevel (GTK_WIDGET (applet));
+	g_return_if_fail (toplevel);
+
+	gtk_widget_child_focus (toplevel, dir);
+	applet->priv->moving_focus_out = FALSE;
+}
+
+static void
+add_tab_bindings (GtkBindingSet   *binding_set,
+		  GdkModifierType  modifiers,
+		  GtkDirectionType direction)
+{
+	gtk_binding_entry_add_signal (binding_set, GDK_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);	
+	gtk_binding_entry_add_signal (binding_set, GDK_KP_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);	
+	gtk_binding_entry_add_signal (binding_set, GDK_ISO_Left_Tab, modifiers,
+				      "move_focus_out_of_applet", 1,
+				      GTK_TYPE_DIRECTION_TYPE, direction);	
+}
+
+static void
 panel_applet_class_init (PanelAppletClass *klass,
 			 gpointer          dummy)
 {
 	GObjectClass   *gobject_class = (GObjectClass *) klass;
+	GtkObjectClass *object_class = (GtkObjectClass *) klass;
 	GtkWidgetClass *widget_class = (GtkWidgetClass *) klass;
+	GtkBindingSet *binding_set;
 
 	parent_class = g_type_class_peek_parent (klass);
+
+	klass->move_focus_out_of_applet = panel_applet_move_focus_out_of_applet;
 
 	widget_class->button_press_event = panel_applet_button_press;
 	widget_class->expose_event = panel_applet_expose;
@@ -1037,6 +1084,22 @@ panel_applet_class_init (PanelAppletClass *klass,
 			      PANEL_TYPE_PANEL_APPLET_BACKGROUND_TYPE,
 			      G_TYPE_POINTER,
 			      GDK_TYPE_PIXMAP);
+
+	panel_applet_signals [MOVE_FOCUS_OUT_OF_APPLET] =
+                g_signal_new ("move_focus_out_of_applet",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST | G_SIGNAL_ACTION,
+                              G_STRUCT_OFFSET (PanelAppletClass, move_focus_out_of_applet),
+                              NULL,
+			      NULL,
+                              panel_applet_marshal_VOID__ENUM,
+                              G_TYPE_NONE,
+			      1,
+			      GTK_TYPE_DIRECTION_TYPE);
+
+	binding_set = gtk_binding_set_by_class (object_class);
+	add_tab_bindings (binding_set, 0, GTK_DIR_TAB_FORWARD);
+	add_tab_bindings (binding_set, GDK_SHIFT_MASK, GTK_DIR_TAB_BACKWARD);
 }
 
 static void
@@ -1050,6 +1113,8 @@ panel_applet_instance_init (PanelApplet      *applet,
 	applet->priv->flags        = PANEL_APPLET_FLAGS_NONE;
 	applet->priv->orient       = PANEL_APPLET_ORIENT_UP;
 	applet->priv->size         = GNOME_Vertigo_PANEL_MEDIUM;
+
+	applet->priv->moving_focus_out = FALSE;
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);

@@ -26,6 +26,7 @@
 #define __PANEL_APPLET_H__
 
 #include <glib/gmacros.h>
+#include <gtk/gtkenums.h>
 #include <gtk/gtkeventbox.h>
 #include <libgnomeui/gnome-ui-init.h>
 #include <bonobo/bonobo-control.h>
@@ -90,6 +91,8 @@ struct _PanelAppletClass {
 				   PanelAppletBackgroundType  type,
 				   GdkColor                  *color,
 				   GdkPixmap                 *pixmap);
+	void (*move_focus_out_of_applet) (PanelApplet        *frame,
+					  GtkDirectionType    direction);
 };
 
 GType              panel_applet_get_type             (void) G_GNUC_CONST;
