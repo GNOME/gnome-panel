@@ -732,9 +732,9 @@ load_default_applets1(PanelWidget *panel)
 {
 	char *def_launchers[] =
 	      { "gnome/apps/gnome-help.desktop",
-		"gnome/apps/Utilities/gnome-terminal.desktop",
+		"gnome/apps/System/gnome-terminal.desktop",
 		"gnome/apps/Settings/gnomecc.desktop",
-		"gnome/apps/Applications/Netscape.desktop",
+		"gnome/apps/Internet/Netscape.desktop",
 		NULL };
 	int i;
 	char *p;
