@@ -42,7 +42,8 @@ module GNOME {
 		void applet_remove_tooltip (in string cookie,
 					    in short applet_id);
 		short applet_in_drag (in string cookie);
-		void quit(in string cookie);
+		void sync_config (in string cookie);
+		void quit (in string cookie);
 	};
 
 	interface Applet {

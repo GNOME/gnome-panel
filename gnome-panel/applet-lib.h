@@ -25,6 +25,7 @@ char *gnome_panel_applet_remove_from_panel (gint applet_id);
 char *gnome_panel_applet_request_glob_cfg (char **globcfgpath);
 gint gnome_panel_applet_get_panel_orient (gint applet_id);
 char *gnome_panel_quit (void);
+char *gnome_panel_sync_config (void);
 int gnome_panel_applet_init_corba (void);
 int gnome_panel_applet_reinit_corba (void);
 void gnome_panel_applet_register_callback (gint applet_id,

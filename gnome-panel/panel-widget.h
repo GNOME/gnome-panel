@@ -58,6 +58,11 @@ typedef enum {
 	PANEL_SWITCH_MOVE,
 	PANEL_FREE_MOVE
 } PanelMovementType;
+typedef enum {
+	PANEL_BACK_NONE,
+	PANEL_BACK_COLOR,
+	PANEL_BACK_PIXMAP
+} PanelBackType;
 
 struct _AppletData
 {
@@ -115,6 +120,7 @@ struct _PanelWidget
 	GtkWidget		*master_widget; /*the drawer button that is
 						  holding this panel*/
 
+	PanelBackType		back_type;
 	char                    *back_pixmap;
 	GdkColor		back_color;
 
@@ -142,12 +148,13 @@ GtkWidget*	panel_widget_new		(gint size,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
-						 gboolean fit_pixmap_bg,
 						 PanelState state,
 						 gint pos_x,
 						 gint pos_y,
 						 DrawerDropZonePos drop_zone_pos,
+						 PanelBackType back_type,
 						 char *back_pixmap,
+						 gboolean fit_pixmap_bg,
 						 GdkColor *back_color);
 
 /*add an applet to the panel, preferably at position pos*/
@@ -209,11 +216,13 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelOrientation orient,
 						 PanelSnapped snapped,
 						 PanelMode mode,
-						 gboolean fit_pixmap_bg,
 						 PanelState state,
 						 DrawerDropZonePos
 						 	drop_zone_pos,
-						 char *pixmap_name);
+						 PanelBackType back_type,
+						 char *pixmap_name,
+						 gboolean fit_pixmap_bg,
+						 GdkColor *back_color);
 
 /* changing parameters (orient only) */
 void		panel_widget_change_orient	(PanelWidget *panel,

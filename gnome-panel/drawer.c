@@ -173,40 +173,40 @@ create_empty_drawer_applet(PanelOrientType orient)
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-					        TRUE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_LEFT, NULL, NULL),
+						DROP_ZONE_LEFT,
+						PANEL_BACK_NONE, NULL, TRUE, NULL),
 					    orient);
 	case ORIENT_DOWN:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_VERTICAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						TRUE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_RIGHT, NULL, NULL),
+						DROP_ZONE_RIGHT,
+						PANEL_BACK_NONE, NULL, TRUE, NULL),
 					    orient);
 	case ORIENT_LEFT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-						TRUE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_LEFT, NULL, NULL),
+						DROP_ZONE_LEFT,
+						PANEL_BACK_NONE, NULL, TRUE, NULL),
 					    orient);
 	case ORIENT_RIGHT:
 		return create_drawer_applet(panel_widget_new(0,
 						PANEL_HORIZONTAL,
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
-					        TRUE,
 						PANEL_SHOWN,
 						0, 0, 
-						DROP_ZONE_RIGHT, NULL, NULL),
+						DROP_ZONE_RIGHT,
+						PANEL_BACK_NONE, NULL, TRUE, NULL),
 					    orient);
 	}
 	return NULL;
@@ -223,43 +223,39 @@ set_drawer_applet_orient(Drawer *drawer, PanelOrientType orient)
 	drawer->orient = orient;
 
 	switch (drawer->orient) {
-		case ORIENT_DOWN:
-			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-down.png");
-			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
-						   PANEL_VERTICAL);
-			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
-								       drawer),
-							  DROP_ZONE_RIGHT);
+	case ORIENT_DOWN:
+		pixmap_name = gnome_unconditional_pixmap_file("gnome-menu-down.png");
+		panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
+					   PANEL_VERTICAL);
+		panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+							       drawer),
+						  DROP_ZONE_RIGHT);
 
-			break;
-		case ORIENT_UP:
-			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-up.png");
-			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
-						   PANEL_VERTICAL);
-			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
-								       drawer),
-							  DROP_ZONE_LEFT);
-			break;
-		case ORIENT_RIGHT:
-			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-right.png");
-			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
-						   PANEL_HORIZONTAL);
-			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
-								       drawer),
-							  DROP_ZONE_RIGHT);
-			break;
-		case ORIENT_LEFT:
-			pixmap_name = gnome_unconditional_pixmap_file(
-				"gnome-menu-left.png");
-			panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
-						   PANEL_HORIZONTAL);
-			panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
-								       drawer),
-							  DROP_ZONE_LEFT);
-			break;
+		break;
+	case ORIENT_UP:
+		pixmap_name = gnome_unconditional_pixmap_file("gnome-menu-up.png");
+		panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
+					   PANEL_VERTICAL);
+		panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+							       drawer),
+						  DROP_ZONE_LEFT);
+		break;
+	case ORIENT_RIGHT:
+		pixmap_name = gnome_unconditional_pixmap_file("gnome-menu-right.png");
+		panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
+					   PANEL_HORIZONTAL);
+		panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+							       drawer),
+						  DROP_ZONE_RIGHT);
+		break;
+	case ORIENT_LEFT:
+		pixmap_name = gnome_unconditional_pixmap_file("gnome-menu-left.png");
+		panel_widget_change_orient(PANEL_WIDGET(drawer->drawer),
+					   PANEL_HORIZONTAL);
+		panel_widget_change_drop_zone_pos(PANEL_WIDGET(drawer->
+							       drawer),
+						  DROP_ZONE_LEFT);
+		break;
 	}
 		
 	pixmap=GTK_BUTTON(drawer->button)->child;

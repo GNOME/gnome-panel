@@ -34,9 +34,11 @@ typedef struct {
 	PanelOrientation orient;
 	PanelSnapped     snapped;
 	PanelMode        mode;
-	gint		 pixmap_enable;
 	gboolean         fit_pixmap_bg;
-	GtkWidget        *config_box;
+	PanelBackType	 back_type;
+	gchar 		*back_pixmap;
+	GdkColor	 back_color;
+	GtkWidget       *config_box;
 } PanelConfig;
 
 typedef enum {
@@ -113,6 +115,8 @@ gint register_toy(GtkWidget *applet,
 		  AppletType type);
 
 void panel_quit(void);
+
+void panel_sync_config(void);
 
 void apply_global_config(void);
 

@@ -13,6 +13,7 @@ gint panel_applet_in_drag = FALSE;
 static void panel_widget_class_init	(PanelWidgetClass *klass);
 static void panel_widget_init		(PanelWidget      *panel_widget);
 static int  panel_try_to_set_pixmap     (PanelWidget *panel, char *pixmap);
+static void panel_try_to_set_back_color (PanelWidget *panel, GdkColor *color);
 
 static GdkCursor *fleur_cursor;
 
@@ -1719,6 +1720,9 @@ panel_widget_fixed_size_allocate(GtkWidget *widget, GtkAllocation *allocation,
 	panel_widget_set_position(panel);
 	panel_widget_apply_size_limit(panel);
 
+	if(panel->fit_pixmap_bg && panel->back_type == PANEL_BACK_PIXMAP)
+		panel_try_to_set_pixmap (panel, panel->back_pixmap);
+	
 	return FALSE;
 }
 
@@ -1784,59 +1788,81 @@ panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEvent *event, gpointer data
 static void
 panel_widget_dnd_dropped_filename (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
 {
-	if (panel_try_to_set_pixmap (panel, event->data)){
+	if (panel_try_to_set_pixmap (panel, event->data)) {
 		if (panel->back_pixmap)
 			g_free (panel->back_pixmap);
 		panel->back_pixmap = g_strdup (event->data);
 		gtk_widget_queue_draw (widget);
+		panel->back_type = PANEL_BACK_PIXMAP;
 	}
+}
+
+static void
+panel_try_to_set_default_back(PanelWidget *panel)
+{
+	GtkStyle *ns;
+
+	ns = gtk_style_new();
+
+	gtk_style_ref(ns);
+	gtk_widget_set_style(panel->fixed, ns);
+	gtk_style_unref(ns);
+
+	gtk_widget_queue_draw(GTK_WIDGET(panel));
 }
 
 static void
 panel_try_to_set_back_color(PanelWidget *panel, GdkColor *color)
 {
-  GtkStyle *ns;
+	GtkStyle *ns;
 
-  ns = gtk_style_copy(panel->fixed->style);
-  gtk_style_ref(ns);
+	ns = gtk_style_copy(panel->fixed->style);
+	gtk_style_ref(ns);
 
-  ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
-  ns->bg[GTK_STATE_NORMAL].pixel = panel->back_color.pixel = 1; /* bogus */
+	ns->bg[GTK_STATE_NORMAL] = panel->back_color = *color;
+	ns->bg[GTK_STATE_NORMAL].pixel = panel->back_color.pixel = 1; /* bogus */
 
-  if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
-	  gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
-	  ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
-  }
+	if(ns->bg_pixmap[GTK_STATE_NORMAL]) {
+		gdk_imlib_free_pixmap(ns->bg_pixmap[GTK_STATE_NORMAL]);
+		ns->bg_pixmap[GTK_STATE_NORMAL] = NULL;
+	}
 
-  gtk_widget_set_style(panel->fixed, ns);
+	gtk_widget_set_style(panel->fixed, ns);
 
-  g_free(panel->back_pixmap); panel->back_pixmap = NULL;
-  gtk_style_unref(ns);
-  gtk_widget_queue_draw(GTK_WIDGET(panel));
+	gtk_style_unref(ns);
+
+	gtk_widget_queue_draw(GTK_WIDGET(panel));
 }
 
 static void
-panel_widget_dnd_dropped_color (GtkWidget *widget, GdkEventDropDataAvailable *event, PanelWidget *panel)
+panel_widget_dnd_dropped_color (GtkWidget *widget,
+				GdkEventDropDataAvailable *event,
+				PanelWidget *panel)
 {
-  gdouble *dropped = (gdouble *)event->data;
-  GdkColor c;
+	gdouble *dropped = (gdouble *)event->data;
+	GdkColor c;
 
-  c.red = (dropped[1]*65535);
-  c.green = (dropped[2]*65535);
-  c.blue = (dropped[3]*65535);
-  c.pixel = 0;
+	c.red = (dropped[1]*65535);
+	c.green = (dropped[2]*65535);
+	c.blue = (dropped[3]*65535);
+	c.pixel = 0;
 
-  panel_try_to_set_back_color(panel, &c);
+	panel_try_to_set_back_color(panel, &c);
 }
 
 static void
-panel_widget_dnd_drop_internal(GtkWidget *widget, GdkEventDropDataAvailable *event, gpointer data)
+panel_widget_dnd_drop_internal(GtkWidget *widget,
+			       GdkEventDropDataAvailable *event,
+			       gpointer data)
 {
+	PanelWidget *panel = data;
 	/* Test for the type that was dropped */
-	if (strcmp (event->data_type, "url:ALL") == 0)
-		panel_widget_dnd_dropped_filename (widget, event, PANEL_WIDGET (data));
-	else if(!strcmp(event->data_type, "application/x-color"))
-	  panel_widget_dnd_dropped_color(widget, event, PANEL_WIDGET(data));
+	if (strcmp (event->data_type, "url:ALL") == 0) {
+		panel_widget_dnd_dropped_filename (widget, event, panel);
+	} else if(!strcmp(event->data_type, "application/x-color")) {
+		panel_widget_dnd_dropped_color(widget, event, panel);
+		panel->back_type = PANEL_BACK_COLOR;
+	}
 	return;
 }
 
@@ -1864,8 +1890,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!g_file_exists (pixmap))
 		return 0;
 	
-	panel->back_color.pixel = 0;
-
 	im = gdk_imlib_load_image (pixmap);
 	if (!im)
 		return 0;
@@ -1949,12 +1973,13 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 {
 	PanelWidget *panel = PANEL_WIDGET(w);
 
-	if (!panel_try_to_set_pixmap (panel, panel->back_pixmap)) {
-		if(panel->back_pixmap) {
-			g_free(panel->back_pixmap);
-			panel->back_pixmap = 0;
-		}
+	if(panel->back_type == PANEL_BACK_PIXMAP) {
+		if (!panel_try_to_set_pixmap (panel, panel->back_pixmap))
+			panel->back_type = PANEL_BACK_NONE;
+	} else if(panel->back_type == PANEL_BACK_COLOR) {
+		panel_try_to_set_back_color(panel, &panel->back_color);
 	}
+
 	return FALSE;
 }
 
@@ -1963,12 +1988,13 @@ panel_widget_new (gint size,
 		  PanelOrientation orient,
 		  PanelSnapped snapped,
 		  PanelMode mode,
-		  gboolean fit_pixmap_bg,
 		  PanelState state,
 		  gint pos_x,
 		  gint pos_y,
 		  DrawerDropZonePos drop_zone_pos,
+		  PanelBackType back_type,
 		  char *back_pixmap,
+		  gboolean fit_pixmap_bg,
 		  GdkColor *back_color)
 {
 	PanelWidget *panel;
@@ -2012,16 +2038,24 @@ panel_widget_new (gint size,
 	gtk_container_add(GTK_CONTAINER(panel->frame),panel->fixed);
 	gtk_widget_show(panel->fixed);
 	gtk_widget_realize (panel->fixed);
+	
+	panel->back_type = back_type;
 
 	panel->fit_pixmap_bg = fit_pixmap_bg;
 	if(back_pixmap)
 		panel->back_pixmap = g_strdup(back_pixmap);
 	else
 		panel->back_pixmap = NULL;
-
-	if(back_color && back_color->pixel)
-		panel_try_to_set_back_color(panel, back_color);
 	
+	if(back_color)
+		panel->back_color = *back_color;
+	else {
+		panel->back_color.red = 0;
+		panel->back_color.green = 0;
+		panel->back_color.blue = 0;
+		panel->back_color.pixel = 1;
+	}
+
 	
 	/*we add all the hide buttons to the table here*/
 	/*EAST*/
@@ -2111,11 +2145,11 @@ panel_widget_new (gint size,
 				 panel);
 
 	if(GTK_WIDGET_REALIZED(GTK_WIDGET(panel))) {
-		if (!panel_try_to_set_pixmap (panel, back_pixmap)) {
-			if(panel->back_pixmap) {
-				g_free(panel->back_pixmap);
-				panel->back_pixmap = 0;
-			}
+		if(panel->back_type == PANEL_BACK_PIXMAP) {
+			if (!panel_try_to_set_pixmap (panel, back_pixmap))
+				panel->back_type = PANEL_BACK_NONE;
+		} else if(panel->back_type == PANEL_BACK_COLOR) {
+			panel_try_to_set_back_color(panel, &panel->back_color);
 		}
 	} else
 		gtk_signal_connect_after(GTK_OBJECT(panel),
@@ -3139,10 +3173,12 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelOrientation orient,
 			   PanelSnapped snapped,
 			   PanelMode mode,
-			   gboolean fit_pixmap_bg,
 			   PanelState state,
 			   DrawerDropZonePos drop_zone_pos,
-			   char *pixmap)
+			   PanelBackType back_type,
+			   char *pixmap,
+			   gboolean fit_pixmap_bg,
+			   GdkColor *back_color)
 {
 	PanelOrientation oldorient;
 	PanelSnapped oldsnapped;
@@ -3217,21 +3253,33 @@ panel_widget_change_params(PanelWidget *panel,
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 
-	if(!pixmap ||
-	   !panel->back_pixmap ||
-	   panel->fit_pixmap_bg != fit_pixmap_bg ||
-	   strcmp(pixmap,panel->back_pixmap)!=0) {
-		panel->fit_pixmap_bg = fit_pixmap_bg;
-		if (panel_try_to_set_pixmap (panel, pixmap)){
-			if (panel->back_pixmap)
-				g_free (panel->back_pixmap);
+	if(back_color)
+		panel->back_color = *back_color;
+	else {
+		panel->back_color.red = 0;
+		panel->back_color.green = 0;
+		panel->back_color.blue = 0;
+		panel->back_color.pixel = 1;
+	}
+
+	if(pixmap != panel->back_pixmap) {
+		if (panel->back_pixmap)
+			g_free (panel->back_pixmap);
+
+		if(pixmap)
 			panel->back_pixmap = g_strdup (pixmap);
-		} else {
-			if (panel->back_pixmap) {
-				g_free (panel->back_pixmap);
-				panel->back_pixmap=NULL;
-			}
-		}
+		else 
+			panel->back_pixmap = NULL;
+	}
+
+	panel->back_type = back_type;
+	panel->fit_pixmap_bg = fit_pixmap_bg;
+	if(back_type == PANEL_BACK_PIXMAP) {
+		panel_try_to_set_pixmap (panel, panel->back_pixmap);
+	} else if(back_type == PANEL_BACK_COLOR) {
+		panel_try_to_set_back_color(panel, &panel->back_color);
+	} else {
+		panel_try_to_set_default_back(panel);
 	}
 }
 
@@ -3243,10 +3291,12 @@ panel_widget_change_orient(PanelWidget *panel,
 				   orient,
 				   panel->snapped,
 				   panel->mode,
-				   panel->fit_pixmap_bg,
 				   panel->state,
 				   panel->drawer_drop_zone_pos,
-				   panel->back_pixmap);
+				   panel->back_type,
+				   panel->back_pixmap,
+				   panel->fit_pixmap_bg,
+				   &panel->back_color);
 }
 
 void
@@ -3257,10 +3307,12 @@ panel_widget_change_drop_zone_pos(PanelWidget *panel,
 				   panel->orient,
 				   panel->snapped,
 				   panel->mode,
-				   panel->fit_pixmap_bg,
 				   panel->state,
 				   drop_zone_pos,
-				   panel->back_pixmap);
+				   panel->back_type,
+				   panel->back_pixmap,
+				   panel->fit_pixmap_bg,
+				   &panel->back_color);
 }
 
 

@@ -50,6 +50,8 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	memcpy(&global_config,&temp_config,sizeof(GlobalConfig));
 
 	apply_global_config();
+	
+	panel_sync_config();
 }
 
 static void

@@ -131,6 +131,10 @@ public:
 		CHECK_COOKIE_V (FALSE);
 		return panel_applet_in_drag;
 	}
+	void sync_config(const char *ccookie) {
+		CHECK_COOKIE ();
+		::panel_sync_config();
+	}
 	void quit(const char *ccookie) {
 		CHECK_COOKIE ();
 		::panel_quit();

@@ -1,3 +1,22 @@
+Thu Jun 04 00:32:50 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: fixed some braindamages, switch between,
+	  color, pixmap and standard backgrounds, added a color selector
+
+	* panel-widget.[ch]: added a background type variable and support
+	  teh above changes, fix some some braindamages
+
+	* main.c,panel.[ch]: support for the above
+
+	* gnome-panel.idl (and all corba files): added a sync corba call
+	  so that applets can force a save of the session
+
+	* panel_config.c, panel_config_global.c: sync the configuration after
+	  apply
+
+	* panel.c, main.c: add a timeout to sync every 10 seconds if something
+	  has changed
+
 1998-06-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* panel-widget.c (panel_try_to_set_back_color): Destroy the pixmap

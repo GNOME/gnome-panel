@@ -114,9 +114,12 @@ AppletWidget*	applet_widget_get_by_id		(gint applet_id);
 /*get thenumber of applets*/
 gint		applet_widget_get_applet_count	(void);
 
+/*tell the panel to save the session here (just saves no shutdown)*/
+void		applet_widget_sync_config	(void);
 
 /* Get the oprientation the applet should use */
 PanelOrientType	applet_widget_get_panel_orient	(AppletWidget *applet);
+
 
 /*use this instead of gnome init, if you want multi applet, you also
   have to specify a "start new applet" function which will launch a new

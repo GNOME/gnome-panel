@@ -37,6 +37,9 @@
   yes I am too lazy to get the events to work*/
 static gint panel_dragged = 0;
 
+gint config_sync_timeout = 0;
+gint config_changed = FALSE;
+
 GArray *applets;
 gint applet_count;
 
@@ -120,15 +123,15 @@ static error_t parse_an_arg (int key, char *arg, struct argp_state *state);
    options for how our parsing function should be called.  */
 static struct argp parser =
 {
-  arguments,			/* Options.  */
-  parse_an_arg,			/* The parser function.  */
-  NULL,				/* Some docs.  */
-  NULL,				/* Some more docs.  */
-  NULL,				/* Child arguments -- gnome_init fills
-				   this in for us.  */
-  NULL,				/* Help filter.  */
-  NULL				/* Translation domain; for the app it
-				   can always be NULL.  */
+	arguments,			/* Options.  */
+	parse_an_arg,			/* The parser function.  */
+	NULL,				/* Some docs.  */
+	NULL,				/* Some more docs.  */
+	NULL,				/* Child arguments -- gnome_init fills
+					   this in for us.  */
+	NULL,				/* Help filter.  */
+	NULL				/* Translation domain; for the app it
+					   can always be NULL.  */
 };
 
 
@@ -356,9 +359,11 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 			param = params;
 
 		if(!cfgpath || !*cfgpath)
-			/*FIXME: fix this minor leak*/
 			cfgpath = g_copy_strings(old_panel_cfg_path,
 						 "Applet_Dummy/",NULL);
+		else
+			/*we will free this lateer*/
+			cfgpath = g_strdup(cfgpath);
 
 		/*VERY UGLY compatibility hack for the old launcher applet*/
 		if(strcmp(path,"#panel.application.launcher")==0) {
@@ -368,6 +373,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 			g_free(p);
 			load_applet(LAUNCHER_ID,NULL,fullpath,pos,panel,
 				    cfgpath);
+			g_free(cfgpath);
 			g_free(fullpath);
 			return;
 		}
@@ -386,6 +392,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 			g_warning("Whoops! for some reason we can't add "
 				  "to the panel");
 			g_free(fullpath);
+			g_free(cfgpath);
 			return;
 		}
 		
@@ -394,6 +401,7 @@ load_applet(gchar *id_str, gchar *path, gchar *params,
 		if(path[0]!='#')
 			exec_prog(applet_count-1,fullpath,param);
 
+		g_free(cfgpath);
 		g_free(fullpath);
 	} else if(strcmp(id_str,MENU_ID) == 0) {
 		Menu *menu;
@@ -628,6 +636,7 @@ panel_orient_change(GtkWidget *widget,
 {
 	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
 			     (gpointer)widget);
+	config_changed = TRUE;
 	return TRUE;
 }
 
@@ -675,6 +684,8 @@ panel_state_change(GtkWidget *widget,
 		panel_widget_foreach(PANEL_WIDGET(widget),state_hide_foreach,
 				     (gpointer)widget);
 
+	config_changed = TRUE;
+
 	return TRUE;
 }
 
@@ -687,6 +698,7 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 	if(drawer)
 		if(panel->state == PANEL_SHOWN)
 			reposition_drawer(drawer);
+	config_changed = TRUE;
 	return FALSE;
 }
 
@@ -702,6 +714,8 @@ panel_applet_added_idle(gpointer data)
 
 	orientation_change(ai->applet_id,ai->panel);
 	g_free(ai);
+
+	config_changed = TRUE;
 
 	return FALSE;
 }
@@ -726,6 +740,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 static gint
 panel_applet_removed(GtkWidget *widget, gpointer data)
 {
+	config_changed = TRUE;
 	return TRUE;
 }
 
@@ -818,10 +833,12 @@ panel_move(PanelWidget *panel, double x, double y)
 					    panel->orient,
 					    newloc,
 					    panel->mode,
-					    panel->fit_pixmap_bg,
 					    panel->state,
 					    panel->drawer_drop_zone_pos,
-					    panel->back_pixmap );
+					    panel->back_type,
+					    panel->back_pixmap,
+					    panel->fit_pixmap_bg,
+					    &panel->back_color);
 		while(gtk_events_pending())
 			gtk_main_iteration();
 	}
@@ -932,6 +949,7 @@ static void
 panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 {
 	applet_move_foreach(widget,NULL);
+	config_changed = TRUE;
 }
 
 
@@ -1010,8 +1028,9 @@ init_user_panels(void)
 	GtkWidget *panel;
 	PanelState state;
 	DrawerDropZonePos drop_pos;
-	char *back_pixmap, *tmp;
-	GdkColor back_color;
+	PanelBackType back_type;
+	char *back_pixmap, *color;
+	GdkColor back_color = {0,0,0,1};
 
 	g_snprintf(buf,256,"%sConfig/panel_count=0",old_panel_cfg_path);
 	count=gnome_config_get_int(buf);
@@ -1054,30 +1073,42 @@ init_user_panels(void)
 		drop_pos=gnome_config_get_int(buf);
 
 		back_pixmap = gnome_config_get_string ("backpixmap=");
-		if (back_pixmap && *back_pixmap == 0)
+		if (back_pixmap && *back_pixmap == '\0') {
+			g_free(back_pixmap);
 			back_pixmap = NULL;
+		}
 
-		tmp = gnome_config_get_string("backcolor");
-		if(tmp && *tmp) {
-			g_print("tmp for color = %s\n", tmp);
-			gdk_color_parse(tmp, &back_color);
-			back_color.pixel = 1;
-		} else
-			back_color.pixel = 0;
-		g_free(tmp);
-		
+		color = gnome_config_get_string("backcolor=#ffffff");
+		if(color && *color)
+			gdk_color_parse(color, &back_color);
+
+		/*minor hack to keep older config file compatibility, if we get 999, we
+		  try to guess this*/
+		back_type=gnome_config_get_int("back_type=999");
+		if(back_type == 999) {
+			if(back_pixmap && *back_pixmap)
+				back_type = PANEL_BACK_PIXMAP;
+			else if(strcmp(color,"#ffffff")!=0)
+				back_type = PANEL_BACK_COLOR;
+			else
+				back_type = PANEL_BACK_NONE;
+		}
 		gnome_config_pop_prefix ();
 		panel = panel_widget_new(size,
 					 config.orient,
 					 config.snapped,
 					 config.mode,
-					 config.fit_pixmap_bg,
 					 state,
 					 x,
 					 y,
 					 drop_pos,
+					 back_type,
 					 back_pixmap,
-					 back_color.pixel?&back_color:NULL);
+					 config.fit_pixmap_bg,
+					 &back_color);
+		
+		g_free(color);
+		g_free(back_pixmap);
 
 		panel_widget_disable_buttons(PANEL_WIDGET(panel));
 
@@ -1096,30 +1127,29 @@ init_user_panels(void)
 void
 discard_session (gchar *id)
 {
-  gchar *sess;
+	gchar *sess;
 
-  sess = g_copy_strings ("/panel-Session-", id, NULL);
+	sess = g_copy_strings ("/panel-Session-", id, NULL);
 
-  gnome_config_clean_file (sess);
-  gnome_config_sync ();
+	gnome_config_clean_file (sess);
+	gnome_config_sync ();
 
-  g_free (sess);
-  return;
+	g_free (sess);
+	return;
 }
 
 	
 static error_t
 parse_an_arg (int key, char *arg, struct argp_state *state)
 {
-  if (key == DISCARD_KEY)
-    {
-      discard_session (arg);
-      just_exit = 1;
-      return 0;
-    }
+	if (key == DISCARD_KEY) {
+		discard_session (arg);
+		just_exit = 1;
+		return 0;
+	}
 
-  /* We didn't recognize it.  */
-  return ARGP_ERR_UNKNOWN;
+	/* We didn't recognize it.  */
+	return ARGP_ERR_UNKNOWN;
 }
 
 static void
@@ -1168,6 +1198,15 @@ sigchld_handler(int type)
 			return;
 		}
 	}
+}
+
+static gint
+try_config_sync(gpointer data)
+{
+	if(config_changed)
+		panel_sync_config();
+	config_changed = FALSE;
+	return TRUE;
 }
 
 
@@ -1269,6 +1308,10 @@ main(int argc, char **argv)
 	load_queued_applets();
 
 	add_forbidden_to_panels();
+	
+	/*attempt to sync the config every 10 seconds, only if a change was
+	  indicated though*/
+	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);
 
 	/* I use the glue code to avoid making this a C++ file */
 	panel_corba_gtk_main ("IDL:GNOME/Panel:1.0");

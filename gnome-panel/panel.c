@@ -27,6 +27,9 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
+extern gint config_sync_timeout;
+extern gint config_changed;
+
 extern GArray *applets;
 extern gint applet_count;
 
@@ -179,6 +182,7 @@ static void
 save_panel_configuration(gpointer data, gpointer user_data)
 {
 	char           path[256];
+	char           buf[32];
 	int            x,y;
 	int           *num = user_data;
 	PanelWidget   *panel = data;
@@ -194,22 +198,16 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int("state", panel->state);
 	gnome_config_set_int("size", panel->size);
 
-	if (panel->back_pixmap) {
-		gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
-	gnome_config_clean_key("backcolor");
-	} else if(panel->back_color.pixel>0) {
-		char buf[32];
-		g_snprintf(buf, sizeof(buf), "#%02x%02x%02x",
-			(guint)panel->back_color.red/256,
-			(guint)panel->back_color.green/256,
-			(guint)panel->back_color.blue/256);
-		gnome_config_set_string("backcolor", buf);
-		gnome_config_clean_key("backpixmap");
-	}
+	gnome_config_set_string("backpixmap", panel->back_pixmap ? panel->back_pixmap : "");
 
+	g_snprintf(buf, sizeof(buf), "#%02x%02x%02x",
+		   (guint)panel->back_color.red/256,
+		   (guint)panel->back_color.green/256,
+		   (guint)panel->back_color.blue/256);
+	gnome_config_set_string("backcolor", buf);
 
-	/*FIXME: this should be allocation.[xy] but those don't work!!!
-	  probably a gtk bug*/
+	gnome_config_set_int("back_type", panel->back_type);
+
 	gdk_window_get_position(GTK_WIDGET(panel)->window,&x,&y);
 	
 	gnome_config_set_int("position_x",x);
@@ -262,11 +260,11 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_clean_file(panel_cfg_path);
 
-	puts("S 1");
+	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	for(num=1,i=0;i<applet_count;i++)
 		save_applet_configuration(&g_array_index(applets,AppletInfo,i),
 					  &num);
-	puts("S 2");
+	/*DEBUG*/printf(" 2"); fflush(stdout);
 
 	buf = g_copy_strings(panel_cfg_path,"Config/",NULL);
 	gnome_config_push_prefix (buf);
@@ -274,9 +272,9 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_set_int ("applet_count", num-1);
 	num = 1;
-	puts("S 3");
+	/*DEBUG*/printf(" 3"); fflush(stdout);
 	g_list_foreach(panels, save_panel_configuration,&num);
-	puts("S 4");
+	/*DEBUG*/printf(" 4"); fflush(stdout);
 	gnome_config_set_int("panel_count",num-1);
 
 	/*global options*/
@@ -301,6 +299,8 @@ panel_session_save (GnomeClient *client,
 
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
+	
+	/*DEBUG*/puts("");
 
 	/* Always successful.  */
 	return TRUE;
@@ -312,6 +312,8 @@ panel_session_die (GnomeClient *client,
 {
 	gint i;
 	AppletInfo *info;
+	
+	gtk_timeout_remove(config_sync_timeout);
   
 	/*we don't need to do any gemotery stuff now, plus it might
 	  actually hurt us*/
@@ -340,6 +342,20 @@ panel_session_die (GnomeClient *client,
 	panel_corba_clean_up();
 	
 	gtk_exit (0);
+}
+
+/*save ourselves*/
+void
+panel_sync_config(void)
+{
+	if (! GNOME_CLIENT_CONNECTED (client)) {
+		panel_session_save (client, 1, GNOME_SAVE_BOTH, 0,
+				    GNOME_INTERACT_NONE, 0, NULL);
+	} else {
+		gnome_client_request_save (client, GNOME_SAVE_BOTH, 0,
+					   GNOME_INTERACT_NONE, 0, 0);
+	}
+	config_changed = FALSE;
 }
 
 static gint
@@ -390,10 +406,10 @@ panel_quit(void)
 	}
 
 	box = gnome_message_box_new (_("Really log out?"),
-			       GNOME_MESSAGE_BOX_QUESTION,
-			       GNOME_STOCK_BUTTON_YES,
-			       GNOME_STOCK_BUTTON_NO,
-			       NULL);
+				     GNOME_MESSAGE_BOX_QUESTION,
+				     GNOME_STOCK_BUTTON_YES,
+				     GNOME_STOCK_BUTTON_NO,
+				     NULL);
 	gtk_signal_connect (GTK_OBJECT (box), "clicked",
 		            GTK_SIGNAL_FUNC (panel_really_logout), &box);
 

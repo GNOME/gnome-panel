@@ -164,6 +164,12 @@ applet_widget_remove_from_panel(AppletWidget *applet)
 }
 
 void
+applet_widget_sync_config(void)
+{
+	gnome_panel_sync_config();
+}
+
+void
 applet_widget_register_callback(AppletWidget *applet,
 				char *name,
 				char *menutext,

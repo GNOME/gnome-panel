@@ -551,6 +551,16 @@ gnome_panel_applet_cleanup(gint applet_id)
 
 
 char *
+gnome_panel_sync_config (void)
+{
+	char *result;
+
+	panel_client->sync_config (cookie);
+
+	return 0;
+}
+
+char *
 gnome_panel_quit (void)
 {
 	char *result;
