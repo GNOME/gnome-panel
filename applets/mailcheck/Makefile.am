@@ -21,7 +21,8 @@ libgen_util_applet_la_SOURCES = \
 	clock.h
 
 PRINTER_BITMAPS = print.xpm
-MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png
+MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
+                    email-tiny.png
 
 EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
