@@ -329,10 +329,12 @@ build_label_and_entry (Printer *pr, GtkTable *table, int row, char *label,
 static void
 printer_properties (AppletWidget *applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { "genutil_applet",
+        static GnomeHelpMenuEntry help_entry = { NULL,
 						 "properties-printer" };
 	GtkWidget *table;
 	Printer *pr = data;
+
+	help_entry.name = gnome_app_id;
 
 	if (pr->printer_prop) {
 		gdk_window_raise(pr->printer_prop->window);

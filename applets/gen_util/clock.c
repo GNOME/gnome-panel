@@ -334,8 +334,7 @@ set_show_date_cb(GtkWidget * w, gpointer data)
 static void
 clock_properties(AppletWidget * applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { "genutil_applet",
-						 "properties-clock" };
+        static GnomeHelpMenuEntry help_entry = { NULL, "properties-clock" };
         GtkWidget *hbox;
         GtkWidget *frame;
 	GtkWidget *table;
@@ -343,6 +342,8 @@ clock_properties(AppletWidget * applet, gpointer data)
 	GtkWidget *twentyfourhour;
 	GtkWidget *showdate;
 	ClockData *cd = data;
+
+	help_entry.name = gnome_app_id;
 
 	if(cd->props) {
 		gdk_window_raise(cd->props->window);

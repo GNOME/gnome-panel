@@ -552,11 +552,13 @@ mailcheck_properties_page (MailCheck *mc)
 static void
 mailcheck_properties (AppletWidget *applet, gpointer data)
 {
-        static GnomeHelpMenuEntry help_entry = { "genutil_applet",
+        static GnomeHelpMenuEntry help_entry = { NULL,
 						 "properties-mailcheck" };
 	GtkWidget *p;
 
 	MailCheck *mc = data;
+
+	help_entry.name = gnome_app_id;
 
 	if (mc->property_window != NULL) {
 		gdk_window_raise(mc->property_window->window);
@@ -576,7 +578,7 @@ mailcheck_properties (AppletWidget *applet, gpointer data)
 			    GTK_SIGNAL_FUNC(apply_properties_callback), mc);
 	gtk_signal_connect (GTK_OBJECT (mc->property_window), "destroy",
 			    GTK_SIGNAL_FUNC(close_callback), mc);
-	gtk_signal_connect (GTK_OBJECT (mc->property_window), "apply",
+	gtk_signal_connect (GTK_OBJECT (mc->property_window), "help",
 			    GTK_SIGNAL_FUNC(gnome_help_pbox_display),
 			    &help_entry);
 
