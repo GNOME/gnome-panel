@@ -1,5 +1,14 @@
 2003-01-20  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-compatibility.c:
+	(panel_compatibility_warn),
+	(panel_compatibility_load_menu_panel): display a lovely
+	big warning dialog that I'm lame because I didn't maintain
+	backwards compatibility when loading menu panels. Will
+	need to be properly fixed soon.
+
+2003-01-20  Mark McLoughlin  <mark@skynet.ie>
+
 	Do not migrate old logout/lock buttons to the action
 	button configuration - this broke backwards compatibility
 	with gnome-panel 2.0.x. Fixes #103927.

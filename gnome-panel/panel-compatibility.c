@@ -26,11 +26,33 @@
 
 #include "panel-compatibility.h"
 
+#include <libgnome/gnome-i18n.h>
+
 #include "edge-widget.h"
 #include "panel-menu-bar.h"
 #include "panel-applet-frame.h"
 
 extern GSList *panels;
+
+static void
+panel_compatibility_warn (const char *message)
+{
+	GtkWidget *dialog;
+
+	dialog = gtk_message_dialog_new (
+			NULL,
+			GTK_DIALOG_DESTROY_WITH_PARENT,
+			GTK_MESSAGE_ERROR,
+			GTK_BUTTONS_CLOSE,
+			message);
+
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (gtk_widget_destroy),
+			  NULL);
+
+	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+	gtk_widget_show (dialog);
+}
 
 GtkWidget *
 panel_compatibility_load_menu_panel (const char *panel_id,
@@ -39,6 +61,8 @@ panel_compatibility_load_menu_panel (const char *panel_id,
 {
 	PanelColor  color = { { 0, 0, 0, 0 }, 0xffff };
 	GtkWidget  *retval;
+
+	panel_compatibility_warn (_("This is your lucky day. I've just broken compatibility with GNOME 2.0 and 2.2 by converting your menu panel into an edge panel with two applets. If you log back into GNOME 2.0/2.2 you will find that instead of having a menu panel you will have an edge panel on the top of your screen without an Applications/Actions menu or a Window Menu. This will will be fixed before GNOME 2.4 gets anywhere near release."));
 
 	/* A menu panel was like a x-small edge panel at the
 	 * top of the screen.
