@@ -38,8 +38,6 @@ static const char* KEY_GMT_TIME		= "gmt_time";
 static const char* KEY_UNIX_TIME	= "unix_time";
 static const char* KEY_INTERNET_TIME	= "internet_time";
 
-extern GtkTooltips *panel_tooltips;
-
 typedef struct _ClockData ClockData;
 
 struct _ClockData {
@@ -80,6 +78,25 @@ static void display_help_dialog       (BonoboUIComponent *uic,
 static void display_about_dialog      (BonoboUIComponent *uic,
 				       ClockData         *cd,
 				       const gchar       *verbname);
+
+static void
+set_tooltip (GtkWidget  *applet,
+	     const char *tip)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = g_object_get_data (G_OBJECT (applet), "tooltips");
+	if (!tooltips) {
+		tooltips = gtk_tooltips_new ();
+		g_object_ref (tooltips);
+		gtk_object_sink (GTK_OBJECT (tooltips));
+		g_object_set_data_full (
+			G_OBJECT (applet), "tooltips", tooltips,
+			(GDestroyNotify) g_object_unref);
+	}
+
+	gtk_tooltips_set_tip (tooltips, applet, tip, NULL);
+}
 
 static int
 clock_timeout_callback (gpointer data)
@@ -276,8 +293,7 @@ update_clock (ClockData * cd, time_t current_time)
 	g_free (loc);
 
 	utf8 = g_locale_to_utf8 (date, -1, NULL, NULL, NULL);
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (cd->applet),
-			      utf8, NULL);
+	set_tooltip (GTK_WIDGET (cd->applet), utf8);
 	g_free (utf8);
 }
 
@@ -1174,4 +1190,3 @@ display_about_dialog (BonoboUIComponent *uic,
 	
 	gtk_widget_show (about);
 }
-

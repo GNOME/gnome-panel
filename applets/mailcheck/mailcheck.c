@@ -35,8 +35,6 @@ typedef enum {
 	MAILBOX_IMAP
 } MailboxType;
 
-extern GtkTooltips *panel_tooltips;
-
 typedef struct _MailCheck MailCheck;
 struct _MailCheck {
 	char *mail_file;
@@ -159,6 +157,25 @@ static void set_atk_name_description (GtkWidget *widget, const gchar *name,
 static void set_atk_relation (GtkWidget *label, GtkWidget *entry, AtkRelationType);
 
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
+
+static void
+set_tooltip (GtkWidget  *applet,
+             const char *tip)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = g_object_get_data (G_OBJECT (applet), "tooltips");
+	if (!tooltips) {
+		tooltips = gtk_tooltips_new ();
+		g_object_ref (tooltips);
+		gtk_object_sink (GTK_OBJECT (tooltips));
+		g_object_set_data_full (
+			G_OBJECT (applet), "tooltips", tooltips,
+			(GDestroyNotify) g_object_unref);
+	}
+
+	gtk_tooltips_set_tip (tooltips, applet, tip, NULL);
+}
 
 static void
 mailcheck_execute_shell (const char *command)
@@ -577,9 +594,8 @@ after_mail_check (MailCheck *mc)
 		break;
 	}
 
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
-			      text, NULL);
-	g_free(text);
+	set_tooltip (GTK_WIDGET (mc->applet), text);
+	g_free (text);
 }
 
 static gboolean
@@ -1044,8 +1060,7 @@ set_mailbox_selection (GtkWidget *widget, gpointer data)
 		mc->remote_handle = NULL;
 	}
 	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
-			      _("Status not updated"), NULL);
+	set_tooltip (GTK_WIDGET (mc->applet), _("Status not updated"));
 }
 
 static void
@@ -1904,8 +1919,7 @@ fill_mailcheck_applet(PanelApplet *applet)
 					   mc);
 	
 	gtk_label_set_text (GTK_LABEL (mc->label), _("Status not updated"));
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (mc->applet),
-			      _("Status not updated"), NULL);
+	set_tooltip (GTK_WIDGET (mc->applet), _("Status not updated"));
 	set_atk_name_description (GTK_WIDGET (mc->applet), _("Mail check"), 
 			_("Mail check notifies you when new mail arrives in your mailbox"));
 	gtk_widget_show_all (GTK_WIDGET (applet));
