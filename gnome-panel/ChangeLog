@@ -1,3 +1,26 @@
+2003-07-22  Mark McLoughlin  <mark@skynet.ie>
+
+	Remove auto-hiding into the corner again. It seems the
+	only people who like it are people who don't use
+	autohide panels :-) The main fault with it seems to
+	be that you have to do a lot of tricky manoevouring
+	to put you mouse into the corner and then bring it
+	back to whatever you wanted on the panel. See #81843.
+
+	* panel-toplevel.c:
+	(panel_toplevel_update_struts): fix struts weirdness
+	with autohide panels.
+	(panel_toplevel_update_auto_hide_position): don't
+	hide into corners any more.
+	(panel_toplevel_start_animation): hmm,
+	MAX (func (x), func (y)) isn't very efficient is it
+	now ? Also, don't take into account the end width and
+	height when they are -1 - fixes slowness in hiding.
+	(panel_toplevel_enter_notify_event),
+	(panel_toplevel_leave_notify_event),
+	(panel_toplevel_instance_init): kill code to figure out
+	which corner to hide to based on the last leave notify.
+
 2003-07-22  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-run-dialog.c : Get rid of panel_run_dialog_free() 
