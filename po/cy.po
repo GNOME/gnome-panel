@@ -1,20 +1,20 @@
 # gnome-panel yn Gymraeg.
-# Copyright (C) 2003 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-panel package.
 # www.gyfieithu.co.uk <kyfieithu@kyfieithu.co.uk>, 2003.
-# Dafydd Harries <daf@parnassus.ath.cx>, 2003.
+# Dafydd Harries <daf@muse.19inch.net>, 2003.
+# Dafydd Tomos <i10n@da.fydd.org>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2004-03-15 12:04+0000\n"
-"PO-Revision-Date: 2003-10-05 01:01+0100\n"
-"Last-Translator: Dafydd Harries <daf@parnassus.ath.cx>\n"
-"Language-Team: Cymraeg <gnome-cy@pengwyn.linux.org.uk>\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-03-17 16:56+0000\n"
+"PO-Revision-Date: 2004-03-17 00:14-0000\n"
+"Last-Translator: Dafydd Tomos <i10n@da.fydd.org>\n"
+"Language-Team: Welsh <gnome-cy@www.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
-"Report-Msgid-Bugs-To: \n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
@@ -96,37 +96,48 @@ msgstr "%H:%M:%S"
 msgid "%H:%M"
 msgstr "%H:%M"
 
+#  translators: replace %e with %d if, when the day of the
+#  *              month as a decimal number is a single digit, it
+#  *              should begin with a 0 in your locale (e.g. "May
+#  *              01" instead of "May  1").
 #. translators: replace %e with %d if, when the day of the
 #. *              month as a decimal number is a single digit, it
 #. *              should begin with a 0 in your locale (e.g. "May
 #. *              01" instead of "May  1").
 #.
 #: applets/clock/clock.c:295
-#, fuzzy
 msgid "%a %b %e"
-msgstr "%a %b %d"
+msgstr "%a %b %e"
 
+#  translators: reverse the order of these arguments
+#  *              if the time should come before the
+#  *              date on a clock in your locale.
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:302
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%1$s\n"
 "%2$s"
 msgstr ""
-"%s\n"
-"%s"
+"%1$s\n"
+"%2$s"
 
+#  translators: reverse the order of these arguments
+#  *              if the time should come before the
+#  *              date on a clock in your locale.
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
 #: applets/clock/clock.c:309
-#, fuzzy, c-format
+#, c-format
 msgid "%1$s, %2$s"
-msgstr "%s, %s"
+msgstr ""
+"%1$s\n"
+"%2$s"
 
 #. Show date in tooltip
 #: applets/clock/clock.c:393
@@ -135,15 +146,15 @@ msgstr "%A %B %d"
 
 #: applets/clock/clock.c:819
 msgid "Tasks"
-msgstr ""
+msgstr "Tasgiau"
 
 #: applets/clock/clock.c:951
 msgid "All Day"
-msgstr ""
+msgstr "Drwy'r Dydd"
 
 #: applets/clock/clock.c:985
 msgid "Appointments"
-msgstr ""
+msgstr "Apwyntiadau"
 
 #: applets/clock/clock.c:1206
 msgid "Calendar"
@@ -179,9 +190,8 @@ msgstr ""
 "wedi ei osod?"
 
 #: applets/clock/clock.c:2044
-#, fuzzy
 msgid "Custom format"
-msgstr "Eicon Addasiedig"
+msgstr "Fformat addasiedig"
 
 #: applets/clock/clock.c:2165 applets/clock/clock.c:2355
 #: applets/fish/fish.c:127 applets/notification_area/main.c:84
@@ -218,9 +228,8 @@ msgid "Internet time"
 msgstr "Amser rhyngrwyd"
 
 #: applets/clock/clock.c:2258
-#, fuzzy
 msgid "Custom _format:"
-msgstr "Fformat oriau"
+msgstr "_Fformat addasiedig:"
 
 #: applets/clock/clock.c:2277
 msgid "Show _seconds"
@@ -234,13 +243,16 @@ msgstr "Dangos y _dyddiad"
 msgid "Use _UTC"
 msgstr "Defnyddio _UTC"
 
+#  Translator credits
 #. Translator credits
 #: applets/clock/clock.c:2390 applets/notification_area/main.c:120
 #: applets/wncklet/showdesktop.c:447 applets/wncklet/window-list.c:804
 #: applets/wncklet/window-menu.c:116 applets/wncklet/workspace-switcher.c:506
 #: gnome-panel/menu.c:283
 msgid "translator_credits"
-msgstr "Dafydd Harries <daf@parnassus.ath.cx>"
+msgstr ""
+"Dafydd Harries <daf@muse.19inch.net>\n"
+"Dafydd Tomos <i10n@da.fydd.org>"
 
 #: applets/clock/clock.c:2411
 msgid "The Clock displays the current time and date"
@@ -251,13 +263,12 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
-#, fuzzy
 msgid "24-hour"
-msgstr "24 awr"
+msgstr "24-awr"
 
 #: applets/clock/clock.schemas.in.h:3
 msgid "Custom format of the clock"
-msgstr ""
+msgstr "Fformat addasiedig y cloc"
 
 #: applets/clock/clock.schemas.in.h:4
 msgid "Hour format"
@@ -297,6 +308,8 @@ msgid ""
 "The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
 "key. The schema is retained for compatibility with older versions."
 msgstr ""
+"Mae'r allwedd yma wedi ei ddibrisio yn GNOME 2.6 er ffafriaeth yr allwedd "
+"'fformat'. Mae'r sgema yma wedi ei cadw er mwyn cydweithio a hen fersiynau."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid ""
@@ -304,6 +317,9 @@ msgid ""
 "is set to \"custom\". You can use conversion specifiers understood by "
 "strftime() to obtain a specific format."
 msgstr ""
+"Mae'r allwedd yma yn nodi'r fformat a ddefnyddir gan y rhaglennig cloc pan "
+"mae'r fformat allwedd yn cael ei osod i \"addasiedig\". Fe allwch ddefnyddio "
+"nodiant trosi a ddeallir gan strftime() er mwyn cael fformat penodol."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid ""
@@ -316,6 +332,15 @@ msgid ""
 "\"custom\", the clock will display time according to the format specified in "
 "the custom_format key."
 msgstr ""
+"Mae'r allwedd yma'n nodi y fformat awr a ddefnyddir gan y rhaglennig cloc. Y "
+"gwerthoedd posib yw \"12-awr\", \"24-awr\", \"rhyngrwyd\", \"unix\" a "
+"\"addasiedig\". Wrth ei osod i \"rhyngrwyd\" fe fydd y cloc yn dangos amser "
+"rhyngrwyd. Mae system amser rhyngrwyd yn rhannu'r dydd i fewn i 1000 o "
+"\"guriadau\". Does dim parthau amser yn y system, felly mae'r amser yr un "
+"fath o gwmpas y byd i gyd. Wrth ei osod i \"unix\", fe fydd y cloc yn dangos "
+"eiliadau ers yr Epoch, h.y. 1970-01-01. Wrth ei osod i \"addasiedig\", fe "
+"fydd y clock yn dangos yr amser yn ôl y fformat a ddewiswyd yn yr allwedd "
+"custom_format."
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "This key specifies the program to run in order to configure the time."
@@ -397,7 +422,7 @@ msgid "(with minor help from George)"
 msgstr "(gydag ychydig o gymorth gan George)"
 
 #: applets/fish/fish.c:534
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
 msgstr "%s y Pysgodyn GNOME, oracl cyfoes"
 
@@ -410,7 +435,7 @@ msgid "Unable to locate the command to execute"
 msgstr "Methu lleoli'r gorchymyn i'w weithredu"
 
 #: applets/fish/fish.c:626
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
 msgstr "Meddai %s y Pysgodyn GNOME:"
 
@@ -441,13 +466,13 @@ msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
 msgstr ""
-"Mae angen newid y dŵr!\n"
+"Mae angen newid y d?r!\n"
 "(Gweler dyddiad heddiw)"
 
 #: applets/fish/fish.c:1437
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "Pysgodyn GNOME, gweledydd ffawd"
+msgstr "%s y pysgodyn GNOME, gweledydd ffawd"
 
 #: applets/fish/fish.glade.h:1 applets/wncklet/window-list.glade.h:1
 #: applets/wncklet/workspace-switcher.glade.h:1
@@ -634,13 +659,12 @@ msgstr "Rhestr Ffenestri"
 # EFALLAI
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 msgid "Window Navigation Applet Factory"
-msgstr "Ffatri Rhaglennigion Llywio Ffenstri"
+msgstr "Ffatri Rhaglennigion Llywio Ffenestri"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 #: applets/wncklet/window-menu.c:134 applets/wncklet/window-menu.c:708
-#, fuzzy
 msgid "Window Selector"
-msgstr "Rhestr Ffenestri"
+msgstr "Dewiswr Ffenesttri"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:519
@@ -682,10 +706,9 @@ msgstr ""
 "ydych yn rhedeg rheolwr ffenestri."
 
 #: applets/wncklet/window-list.c:822
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
-"Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri gweledig ac yn eich "
+"Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich "
 "galluogi i'w pori."
 
 #: applets/wncklet/window-list.glade.h:2
@@ -819,11 +842,10 @@ msgid "When to group windows"
 msgstr "Pryd i grwpio ffenestri"
 
 #: applets/wncklet/window-menu.c:138
-#, fuzzy
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
-"Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri gweledig ac yn eich "
+"Mae'r Rhestr Ffenestri yn dangos rhestr o'r ffenestri i gyd ac yn eich "
 "galluogi i'w pori."
 
 #: applets/wncklet/window-menu.c:418
@@ -835,9 +857,8 @@ msgid "No Windows Open"
 msgstr "Dim ffenestri ar Agor"
 
 #: applets/wncklet/window-menu.c:709
-#, fuzzy
 msgid "Tool to switch between windows"
-msgstr "Newid rhwng ffenestri agored"
+msgstr "Teclyn i newid rhwng ffenestri"
 
 #: applets/wncklet/workspace-switcher.c:147
 #: applets/wncklet/workspace-switcher.c:832
@@ -1142,35 +1163,44 @@ msgstr ""
 "\"%s\"\n"
 "Gwiriwch eich caniatâdau ar y cyfeiriadur rhiant os gwelwch yn dda"
 
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if a specific window is taken
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if a specific window is taken
 #: gnome-panel/gnome-panel-screenshot.c:420
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s.png"
-msgstr "%s%cSgrînlun-%s.png"
+msgstr "Sgrînlun-%s.png"
 
+#  translators: this is the name of the file that gets made up
+#  * with the screenshot if the entire screen is taken
 #. translators: this is the name of the file that gets made up
 #. * with the screenshot if the entire screen is taken
 #: gnome-panel/gnome-panel-screenshot.c:424
-#, fuzzy
 msgid "Screenshot.png"
-msgstr "%s%cSgrînlun.png"
+msgstr "Sgrînlun.png"
 
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if a specific window is
+#  * taken
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if a specific window is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:445
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%s-%d.png"
-msgstr "%s%cSgrînlun-%s-%d.png"
+msgstr "Sgrînlun-%s-%d.png"
 
+#  translators: this is the name of the file that gets
+#  * made up with the screenshot if the entire screen is
+#  * taken
 #. translators: this is the name of the file that gets
 #. * made up with the screenshot if the entire screen is
 #. * taken
 #: gnome-panel/gnome-panel-screenshot.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Screenshot-%d.png"
-msgstr "%s%cSgrînlun-%d.png"
+msgstr "Sgrînlun-%d.png"
 
 #: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
@@ -1199,7 +1229,7 @@ msgstr "Methu creu sgrînlun o'r penbwrdd cyfredol"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
 msgid "<b>Options</b>"
-msgstr "<b>Opsiynnau</b>"
+msgstr "<b>Dewisiadau</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
 msgid "<b>Preview</b>"
@@ -1339,7 +1369,7 @@ msgstr "Gorfodi Gadael"
 
 #: gnome-panel/menu.c:134
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Gorfodi rhaglen sy'n cambihafio i gau lawr"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:283
 msgid "Screenshot"
@@ -1390,9 +1420,9 @@ msgid "Cannot execute '%s'"
 msgstr "Ni ellir gweithredu '%s'"
 
 #: gnome-panel/menu.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%s: %s"
-msgstr "%s, %s"
+msgstr "%s: %s"
 
 #: gnome-panel/menu.c:330
 msgid "About GNOME"
@@ -1589,34 +1619,31 @@ msgid ""
 "\n"
 "Do you want to reload this applet?"
 msgstr ""
+"Mae'r rhaglennig \"%s\" wedi marw'n annisgwyl\n"
+"\n"
+"Ydych chi eisiau ail-lwytho'r rhaglennig yma?"
 
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
-"Ymddengys bod y rhaglennig %s wedi marw'n annisgwyl\n"
 "\n"
-"Ail-lwytho'r rhaglennig hwn?\n"
 "\n"
 "(Os ydych yn dewis peidio'i ail-lwytho ar hyn o bryd fe allwch wastad ei "
-"ychwannegu gan de-glicio ar y panel a chlicio ar yr is-ddewislen "
-"\"Ychwannegu at y Panel\")"
+"ychwanegu drwy dde-glicio ar y panel a chlicio ar yr is-ddewislen "
+"\"Ychwanegu at y Panel\")"
 
 #: gnome-panel/panel-applet-frame.c:912
 msgid "D_on't Delete"
 msgstr "_Peidio Dileu"
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"Fe gafodd y panel broblem tra'n llwytho \"%s\"\n"
-"\n"
-"Ydych chi eisiau dileu'r rhaglennig o'ch cyfluniad?"
+msgstr "Fe gafodd y panel broblem tra'n llwytho \"%s\"."
 
 #: gnome-panel/panel-applet-frame.c:953 gnome-panel/panel-util.c:259
 #, c-format
@@ -1624,13 +1651,12 @@ msgid "Details: %s"
 msgstr "Manylion: %s"
 
 #: gnome-panel/panel-applet-frame.c:963 gnome-panel/panel-applet-frame.c:976
-#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Fe gafodd y panel broblem tra'n llwytho \"%s\"\n"
+"\n"
 "\n"
 "Ydych chi eisiau dileu'r rhaglennig o'ch cyfluniad?"
 
@@ -1668,7 +1694,7 @@ msgid ""
 "(Any open documents will be lost.)"
 msgstr ""
 "Gorfodi'r rhaglen yma i derfynnu?\n"
-"(Caiff unrhyw ddogfenni ar agor eu colli.)"
+"(Caiff unrhyw ddogfennau sydd ar agor eu colli.)"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1748,6 +1774,11 @@ msgid ""
 "disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to "
 "this list. The panel must be restarted for this to take effect."
 msgstr ""
+"Rhestr o IIDau rhaglennig y bydd y panel yn anwybyddu. Fe allwch chi "
+"analluogi rhaglennig penodol rhag llwytho neu cael ei ddangos yn y fwydlen. "
+"Er enghraifft i analluogi y rhaglennig mini-commander ychwanegwch 'OAFIID:"
+"GNOME_MiniCommanderApplet' i'r rhestr. Rhaid ail-ddechrau'r panel er mwyn i "
+"hyn gael effaith."
 
 #: gnome-panel/panel-global.schemas.in.h:2
 #: gnome-panel/panel-toplevel.schemas.in.h:1
@@ -1756,7 +1787,7 @@ msgstr "Cyflymder animeiddiad"
 
 #: gnome-panel/panel-global.schemas.in.h:3
 msgid "Applet IIDs to disable from loading"
-msgstr ""
+msgstr "IIDau y rhaglenni i beidio llwytho"
 
 #: gnome-panel/panel-global.schemas.in.h:4
 msgid "Autoclose drawer"
@@ -1764,25 +1795,23 @@ msgstr "Cau'r drõr yn awtomatig"
 
 #: gnome-panel/panel-global.schemas.in.h:5
 msgid "Complete panel lockdown"
-msgstr ""
+msgstr "Cloi lawr y panel cyfan"
 
 #: gnome-panel/panel-global.schemas.in.h:6
 msgid "Confirm panel removal"
 msgstr "Cadarnhau tynniad panel"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Disable Force Quit"
-msgstr "Gorfodi Gadael"
+msgstr "Analluogi Gorfodi Gadael"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "Disable Lock Screen"
-msgstr "Cloi'r Sgrîn"
+msgstr "Analluogi Cloi'r Sgrîn"
 
 #: gnome-panel/panel-global.schemas.in.h:9
 msgid "Disable Logging Out"
-msgstr ""
+msgstr "Analluogi Allgofnodi"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Display \"Run Application\" dialog keybinding"
@@ -1844,18 +1873,24 @@ msgid ""
 "If true, the panel will not allow a user to force an application to quit by "
 "removing access to the force quit button."
 msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i orfodi rhaglen i gau lawr "
+"drwy beidio rhoi mynediad i'r botwm cau'n orfodol."
 
 #: gnome-panel/panel-global.schemas.in.h:22
 msgid ""
 "If true, the panel will not allow a user to lock their screen, by removing "
 "access to the lock screen menu entries."
 msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i gloi ei sgrîn, drwy beidio "
+"rhoi mynediad i'r fwydlen cloi sgrîn."
 
 #: gnome-panel/panel-global.schemas.in.h:23
 msgid ""
 "If true, the panel will not allow a user to log out, by removing access to "
 "the log out menu entries."
 msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i allgofnodi drwy beidio "
+"rhoi mynediad i'r fwydlen allgofnodi."
 
 #: gnome-panel/panel-global.schemas.in.h:24
 msgid ""
@@ -1863,6 +1898,9 @@ msgid ""
 "panel. Individual applets may need to be locked down separately however. The "
 "panel must be restarted for this to take effect."
 msgstr ""
+"Os yn wir, ni fydd y panel yn gadael defnyddiwr i wneud unrhyw newidiadau i "
+"osodiadau'r panel. Fodd bynnag mae'n bosib fydd angen cloi lawr rhaglennig "
+"unigol, ar wahan. Rhaid ail-ddechrau'r panel er mwyn i hyn gael effaith."
 
 #: gnome-panel/panel-global.schemas.in.h:25
 msgid "If true, tooltips are shown for objects in panels."
@@ -2029,13 +2067,13 @@ msgstr ""
 "nhermau nifer y picseli o ymyl chwith (neu frig os yn fertigol) y panel."
 
 #: gnome-panel/panel-object.schemas.in.h:23
-#, fuzzy
 msgid ""
 "The text to display in a tooltip for this drawer or this menu. This key is "
 "only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
-"Testun y brysgymorth i'w ddangos ar gyfer y drôr hwn. Mae'r gosodiad yma ond "
-"yn berthansol os mae'r allwedd object_type yn \"drawer-object\"."
+"Testun y brysgymorth i'w ddangos ar gyfer y drôr neu'r fwydlen hon. Mae'r "
+"gosodiad yma ond yn berthnasol os yw'r allwedd object_type yn \"drawer-object"
+"\" neu \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2048,9 +2086,8 @@ msgstr ""
 "bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-#, fuzzy
 msgid "Tooltip displayed for drawer or menu"
-msgstr "Y brysgymorth a ddangosir ar gyfer y drôr hwn"
+msgstr "Y brysgymorth a ddangosir ar gyfer y drôr neu'r fwydlen"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
@@ -2189,23 +2226,20 @@ msgid "_Autohide"
 msgstr "_Cuddio'n Awtomatig"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-#, fuzzy
 msgid "_Icon:"
-msgstr "Eicon"
+msgstr "_Eicon:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:26
-#, fuzzy
 msgid "_Name:"
-msgstr "Enw"
+msgstr "_Enw:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_None (use system theme)"
 msgstr "_Dim (defnyddio thema'r system)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:28
-#, fuzzy
 msgid "_Orientation:"
-msgstr "Gogwydd:"
+msgstr "_Gogwydd:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
 msgid "_Scale"
@@ -2241,7 +2275,7 @@ msgstr "Digwyddodd gwall anhysbys wrth geisio agor %s"
 
 #: gnome-panel/panel-recent.c:174
 msgid "Recent Documents"
-msgstr ""
+msgstr "Dogfennau Diweddar"
 
 #: gnome-panel/panel-run-dialog.c:288
 #, c-format
@@ -2256,7 +2290,7 @@ msgstr "Ni ellir dangos y lleoliad '%s'"
 #: gnome-panel/panel-run-dialog.c:366
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
-msgstr ""
+msgstr "Ni ellir trosi i '%s' o UTF-8"
 
 #: gnome-panel/panel-run-dialog.c:1044
 msgid "Choose a file to append to the command..."
@@ -2354,9 +2388,8 @@ msgid "_Force quit"
 msgstr "_Gorfodi gadael"
 
 #: gnome-panel/panel-toplevel.c:1111
-#, fuzzy
 msgid "Hide Panel"
-msgstr "Panel _Ymylon"
+msgstr "Cuddio'r Panel"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
@@ -2752,14 +2785,12 @@ msgid "X co-ordinate of panel"
 msgstr "Cyfesurun X y panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
-#, fuzzy
 msgid "X screen where the panel is displayed"
-msgstr "Y sgrîn X mae'r panel arni"
+msgstr "Y sgrîn X lle dangosir y panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
-#, fuzzy
 msgid "Xinerama monitor where the panel is displayed"
-msgstr "Y monitr Xinerama mae'r panel arni"
+msgstr "Y monitor Xinerama lle dangosir y panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
 msgid "Y co-ordinate of panel"
@@ -2839,9 +2870,8 @@ msgstr ""
 "Terfynau sy'n awgrymu pa feintiau sy'n dderbyniol ar gyfer y rhaglennig"
 
 #: libpanel-applet/panel-applet.c:1132
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "Gogwydd y Panel sy'n cynnwys y Rhaglennig"
+msgstr "Mae'r rhaglennig sy'n cynnwys y panel wedi ei gloi lawr"
 
 #: libpanel-applet/panel-test-applets.c:33
 msgid "Specify an applet IID to load"
@@ -3581,7 +3611,7 @@ msgstr "Bach iawn iawn"
 #~ msgstr "Mae'r blwch e-bost yn _preswylio ar:"
 
 #~ msgid "Local mailspool"
-#~ msgstr "Sbŵl e-bost leol"
+#~ msgstr "Sb?l e-bost leol"
 
 #~ msgid "Local maildir"
 #~ msgstr "Cyrchfan e-bost leol"
@@ -3593,7 +3623,7 @@ msgstr "Bach iawn iawn"
 #~ msgstr "Gweinydd IMAP pell"
 
 #~ msgid "Mail _spool file:"
-#~ msgstr "Ffeil _sbŵl e-bost:"
+#~ msgstr "Ffeil _sb?l e-bost:"
 
 #~ msgid "Mail s_erver:"
 #~ msgstr "_Gweinydd e-bost:"
