@@ -1,0 +1,255 @@
+<sect1 id="clock">
+  <title>Applet Orologio</title>
+
+  <para>
+    L'applet <application>Orologio</application>, mostrata in <xref
+    linkend="clockapplet-fig">, è una semplice applet che mostra l'ora (ed anche
+    la data a richiesta) usando diversi formati.  Per aggiungere questa applet
+    al <interface>Pannello</interface> cliccate sul
+    <interface>Pannello</interface> e scegliete
+      <menuchoice>
+	<guimenu>Pannello</guimenu>
+	<guisubmenu>Aggiungi al pannello</guisubmenu>
+	<guisubmenu>Applet</guisubmenu>
+	<guisubmenu>Orologi</guisubmenu>
+	<guimenuitem>Orologio</guimenuitem>
+      </menuchoice>.
+  </para>
+
+  <figure id="clockapplet-fig">
+    <title>Applet Orologio</title>
+    <screenshot>
+      <screeninfo>Applet Orologio</screeninfo>
+      <graphic format="png" fileref="figures/clock_applet" 
+	       srccredit="muet">
+      </graphic>
+    </screenshot>
+  </figure>
+
+  <!-- ============= Usage  ================================ -->
+  <sect2 id="clock-usage">
+    <title>Uso</title>
+    <para>
+      L'applet <application>Orologio</application> non richiede nessun input da
+      parte dell'utente. Può essere configurata come descritto più avanti.
+    </para>
+
+    <para>
+      Cliccando con il tasto destro sull'applet appare un menù contenente le
+      seguenti voci:
+      <itemizedlist>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Proprietà&hellip;</guimenuitem> &mdash; apre la
+	    finestra di dialogo <guilabel>Proprietà</guilabel>.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Aiuto</guimenuitem> &mdash; mostra questo documento.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    <guimenuitem>Informazioni su&hellip;</guimenuitem> &mdash; mostra
+	    informazioni a proposito dell'<application>Applet
+	      Orologio</application>, come la versione e il nome dell'autore.
+	  </para>
+	</listitem>
+	
+      </itemizedlist>
+    </para>
+  </sect2>
+
+
+  <!-- ============= Customization ============================= -->
+  <sect2 id="clock-prefs">
+    <title>Personalizzazione</title>
+    <para>
+      È possibile personalizzare l'applet <application>Orologio</application>
+      cliccando con il tasto destro e scegliendo
+      <guimenuitem>Proprietà&hellip;</guimenuitem>. Si aprirà così la finestra
+      di dialogo <interface>Proprietà</interface> (mostrata in <xref
+      linkend="clock-settings-fig">), da dove è possibile cambiare molte
+      impostazioni.
+    </para>
+
+    <figure id="clock-settings-fig">
+      <title>Finestra di dialogo Proprietà</title>
+      <screenshot>
+	<screeninfo>Finestra di dialogo Proprietà</screeninfo>
+	<graphic format="png" fileref="figures/clock_settings"
+		 srccredit="muet">
+	</graphic>
+      </screenshot>
+    </figure>
+
+    <para>
+      Le proprietà sono:
+      <itemizedlist>
+
+	<listitem>
+	  <para>
+	    Formato dell'ora &mdash; Potete selezionare il formato <guilabel>12
+	      ore</guilabel> per una data in formato <quote>AM/PM</quote> oppure
+	    <guilabel>24 ore</guilabel> per un orologio a 24 ore.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Mostra la data nell'applet &mdash; Selezionate questa casella per
+	    mostrare la data dentro l'applet.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Mostra la data come suggerimento &mdash; Selezionate questa casella
+	    per mostrare la data come un suggerimento che appare brevemente
+	    quando muovete il puntatore del mouse sopra l'applet.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Utilizza il GMT &mdash; Selezionate questa casella per mostrare
+	    l'ora secondo il Tempo Medio di Greenwich, invece del fuso orario
+	    locale.
+	  </para>
+	</listitem>
+
+	<listitem>
+	  <para>
+	    Ora Unix &mdash; Selezionate questa casella per mostrare il tempo,
+	    in secondi, passato dal 1° Gennaio del 1970.
+	  </para>
+	</listitem>
+
+      </itemizedlist>
+    </para>
+
+    <para>
+      Dopo aver fatto i cambiamenti voluti, cliccate sul bottone
+      <guibutton>OK</guibutton> per applicare i cambiamenti e chiudere la
+      finestra di dialogo <interfaces>Proprietà</interfaces>. Per non salvare i
+      cambiamenti e per tornare ai precedenti valori cliccate sul bottone
+      <guibutton>Applica</guibutton>. 
+    </para>
+
+    <note>
+      <title>Impostare l'ora</title>
+      <para>
+	L'applet <application>Orologio</application> vi mostra soltanto l'ora:
+	per poter modificare l'ora di un sistema Linux o Unix dovete usare il
+	comando <command>date</command>. Ad esempio per impostare l'ora alle
+	11:43:01PM e la data del 4 Aprile dovete digitare <command>date
+	--set="Apr 4 23:43:01"</command>, con l'avvertenza che per fare ciò
+	dovete esservi loggati come root. Maggiori informazioni sul comando
+	<command>date</command> sono disponibili dalla <ulink type="man"
+	url="man:date">pagine del manuale di date</ulink>. Per impostare il
+	vostro fuso orario dovete usare il comando <command>timeconfig</command>
+	oppure <command>tzselect</command> a seconda della distribuzione Linux
+	che state usando.
+      </para>
+    </note>
+    
+  </sect2>
+
+
+  <!-- ============= Bugs ================================== -->
+  <!-- This section should describe known bugs and limitations of
+  the program if there are any - please be frank and list all
+  problems you know of -->
+  <sect2 id="bugs">
+    <title>Bug conosciuti e limitazioni</title>
+    <para>
+      Questa applet non ha bug conosciuti.
+    </para>
+  </sect2>
+
+
+  <!-- ============= Authors ================================ -->
+  
+  <sect2 id="authors">
+    <title>Autori</title>
+    <para>
+      L'applet <application>Orologio</application> è stata scritta da Miguel de
+      Icaza (<email>miguel@kernel.org</email>), Federico Mena
+      (<email>quartic@gimp.org</email>), e Stuart Parmenter
+      (<email>pavlov@innerx.net</email>). Inviate i commenti, suggerimenti e
+      segnalazioni di bug al <ulink url="http://bugs.gnome.org/" type="http">GNOME
+	bug tracking database</ulink>. (Le istruzioni per inviare le segnalazioni di
+      bug possono essere trovate <ulink
+      url="http://bugs.gnome.org/Reporting.html"t type="http">on-line</ulink>. Se
+      state usando GNOME 1.1 o più recente potete usare anche il
+      <application>Bug Report Tool</application> (<command>bug-buddy</command>),
+      disponibile nel sottomenù <guisubmenu>Utilità</guisubmenu> del menù
+      <guimenu>Programmi</guimenu>,per inviare segnalazioni di bug.
+    </para>
+
+    <para>
+      Questo manuale è stato scritto da Dan Mueth
+    (<email>d-mueth@uchicago.edu</email>). Inviate i commenti e i
+      suggerimenti riguardanti questo manuale al <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/">GNOME Documentation
+      Project</ulink> inviando un messaggio a
+      <email>docs@gnome.org</email>. Potete inviare i commenti anche via rete
+      usando il <ulink type="http"
+      url="http://developer.gnome.org/projects/gdp/doctable/">GNOME Documentation
+      Status Table</ulink>.
+    </para>
+
+    <para>
+      Traduzione italiana a cura di Leandro Noferini
+      (<email>lnoferin@cybervalley.org</email>). Inviate tutti i commenti sulla
+      traduzione a <email>webmaster@it.gnome.org</email>.
+    </para>
+    
+  </sect2>
+
+
+  <!-- ============= Application License ============================= -->
+
+  <sect2 id="license">
+    <title>Licenza</title>
+    <para>
+      This program is free software; you can redistribute it and/or
+      modify it under the terms of the <ulink type="help"
+      url="gnome-help:gpl"><citetitle>GNU General Public
+	  License</citetitle></ulink> as published by the Free Software
+      Foundation; either version 2 of the License, or (at your option)
+      any later version.
+    </para>
+    <para>
+      This program is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
+	  Public License</citetitle></ulink> for more details.
+    </para>
+    <para>
+      A copy of the <ulink type="help" url="gnome-help:gpl"><citetitle>GNU
+      General Public License</citetitle></ulink> is included with the GNOME
+      documentation.  You may also obtain a copy of the <ulink type="help"
+      url="gnome-help:gpl"><citetitle>GNU General Public
+      License</citetitle></ulink> from the Free Software Foundation by visiting
+      <ulink type="http" url="http://www.fsf.org/">their Web site</ulink> or by
+      writing to
+      <address>
+	Free Software Foundation, Inc.
+	<street>59 Temple Place</street> - Suite 330
+	<city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
+	<country>USA</country>
+      </address>
+    </para>
+  </sect2>
+
+</sect1>
+
+
+
+
