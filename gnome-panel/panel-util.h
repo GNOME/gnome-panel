@@ -5,7 +5,6 @@
 
 BEGIN_GNOME_DECLS
 
-char *get_full_path(char *argv0);
 void move_window(GtkWidget *widget, int x, int y);
 int string_is_in_list(GSList *list,char *text);
 GtkWidget * create_text_entry(GtkWidget *table,
@@ -54,7 +53,8 @@ queues one*/
 void resize_window(GtkWidget *widget, int w, int h);
 
 void set_frame_colors(PanelWidget *panel, GtkWidget *frame,
-		      GtkWidget *but1, GtkWidget *but2, GtkWidget *but3, GtkWidget *but4);
+		      GtkWidget *but1, GtkWidget *but2, GtkWidget *but3,
+		      GtkWidget *but4);
 
 void remove_directory(char *dirname, int just_clean);
 

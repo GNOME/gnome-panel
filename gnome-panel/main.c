@@ -122,7 +122,6 @@ try_config_sync(gpointer data)
 int
 main(int argc, char **argv)
 {
-	char buf[256];
 	CORBA_ORB orb;
 	CORBA_Environment ev;
 	

@@ -199,15 +199,16 @@ send_applet_session_save (AppletInfo *info,
 static void
 save_applet_configuration(AppletInfo *info)
 {
-	char           path[256];
+	GString       *buf;
 	int            panel_num;
 	PanelWidget   *panel;
 	AppletData    *ad;
 	
 	g_return_if_fail(info!=NULL);
 
-	g_snprintf(path,256, "%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
-	gnome_config_push_prefix(path);
+	buf = g_string_new(NULL);
+	g_string_sprintf(buf, "%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
+	gnome_config_push_prefix(buf->str);
 
 	/*obviously no need for saving*/
 	if(info->type==APPLET_EXTERN_PENDING ||
@@ -215,6 +216,7 @@ save_applet_configuration(AppletInfo *info)
 	   info->type==APPLET_EMPTY) {
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
+		g_string_free(buf,TRUE);
 		return;
 	}
 
@@ -224,6 +226,7 @@ save_applet_configuration(AppletInfo *info)
 	if((panel_num = g_slist_index(panels,panel)) == -1) {
 		gnome_config_set_string("id", EMPTY_ID);
 		gnome_config_pop_prefix();
+		g_string_free(buf,TRUE);
 		return;
 	}
 
@@ -243,16 +246,16 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_drop_all();
 #endif
 
-			globalcfg = g_strconcat(panel_cfg_path,
-						   "Applet_All_Extern/",NULL);
+			globalcfg = g_concat_dir_and_file(panel_cfg_path,
+							  "Applet_All_Extern/");
 
 			/*this is the file path we pass to the applet for it's
 			  own config, this is a separate file, so that we */
-			g_snprintf(path,256, "%sApplet_%d_Extern/",
-				   panel_cfg_path, info->applet_id+1);
+			g_string_sprintf(buf, "%sApplet_%d_Extern/",
+					 panel_cfg_path, info->applet_id+1);
 			/*have the applet do it's own session saving*/
 			if(send_applet_session_save(info,ext->applet,
-						    path, globalcfg)) {
+						    buf->str, globalcfg)) {
 
 				gnome_config_set_string("id", EXTERN_ID);
 				gnome_config_set_string("goad_id",
@@ -261,6 +264,7 @@ save_applet_configuration(AppletInfo *info)
 				g_free(globalcfg);
 				gnome_config_set_string("id", EMPTY_ID);
 				gnome_config_pop_prefix();
+				g_string_free(buf,TRUE);
 				return;
 			}
 			g_free(globalcfg);
@@ -312,15 +316,15 @@ save_applet_configuration(AppletInfo *info)
 			Launcher *launcher = info->data;
 			/*we set the .desktop to be in the panel config
 			  dir*/
-			g_snprintf(path,256, "%s/%sApplet_%d.desktop",
-				   gnome_user_dir,panel_cfg_path,
-				   info->applet_id+1);
+			g_string_sprintf(buf, "%s/%sApplet_%d.desktop",
+					 gnome_user_dir,panel_cfg_path,
+					 info->applet_id+1);
 			g_free(launcher->dentry->location);
-			launcher->dentry->location = g_strdup(path);
+			launcher->dentry->location = g_strdup(buf->str);
 			gnome_desktop_entry_save_no_sync(launcher->dentry);
 
 			gnome_config_set_string("id", LAUNCHER_ID);
-			gnome_config_set_string("parameters", path);
+			gnome_config_set_string("parameters", buf->str);
 			break;
 		}
 	case APPLET_LOGOUT:
@@ -334,22 +338,24 @@ save_applet_configuration(AppletInfo *info)
 	gnome_config_set_bool("right_stick",
 			      panel_widget_is_applet_stuck(panel,
 							   info->widget));
+	g_string_free(buf,TRUE);
 	gnome_config_pop_prefix();
 }
 
 static void
 save_panel_configuration(gpointer data, gpointer user_data)
 {
-	char           path[256];
-	char           buf[32];
+	GString       *buf;
 	int           *num = user_data;
 	PanelData     *pd = data;
 	PanelWidget   *panel = get_def_panel_widget(pd->panel);
+	
+	buf = g_string_new(NULL);
 
-	g_snprintf(path,256, "%spanel/Panel_%d/", panel_cfg_path, (*num)++);
-	gnome_config_clean_section(path);
+	g_string_sprintf(buf, "%spanel/Panel_%d/", panel_cfg_path, (*num)++);
+	gnome_config_clean_section(buf->str);
 
-	gnome_config_push_prefix (path);
+	gnome_config_push_prefix (buf->str);
 
 	gnome_config_set_int("type",pd->type);
 	
@@ -397,13 +403,15 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_string("backpixmap",
 				panel->back_pixmap ? panel->back_pixmap : "");
 
-	g_snprintf(buf, sizeof(buf), "#%02x%02x%02x",
-		   (guint)panel->back_color.red/256,
-		   (guint)panel->back_color.green/256,
-		   (guint)panel->back_color.blue/256);
-	gnome_config_set_string("backcolor", buf);
+	g_string_sprintf(buf, "#%02x%02x%02x",
+			 (guint)panel->back_color.red/256,
+			 (guint)panel->back_color.green/256,
+			 (guint)panel->back_color.blue/256);
+	gnome_config_set_string("backcolor", buf->str);
 
 	gnome_config_set_int("back_type", panel->back_type);
+	
+	g_string_free(buf,TRUE);
 
 	gnome_config_pop_prefix ();
 }
@@ -416,7 +424,7 @@ do_session_save(GnomeClient *client,
 		int sync_globals)
 {
 	int num;
-	char *buf;
+	char *s;
 	char *session_id;
 	int i;
 
@@ -426,7 +434,7 @@ do_session_save(GnomeClient *client,
 
 		g_free(panel_cfg_path);
 		panel_cfg_path = g_strconcat("/panel.d/Session-",session_id,
-						"/",NULL);
+					     "/",NULL);
 
 		new_args[0] = (char *) gtk_object_get_data(GTK_OBJECT(client),
 							   "argv0");
@@ -437,13 +445,7 @@ do_session_save(GnomeClient *client,
 	
 	/*DEBUG*/printf("Saving to [%s]\n",panel_cfg_path);
 
-	/*take out the trailing / then call the clean_file function,
-	  otherwise it will make runaway directories*/
-	buf = g_strdup(panel_cfg_path);
-	if(buf && *buf)
-		buf[strlen(buf)-1]='\0';
-	gnome_config_clean_file(buf);
-	g_free(buf);
+	gnome_config_clean_file(panel_cfg_path);
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	if(complete_sync) {
@@ -457,9 +459,9 @@ do_session_save(GnomeClient *client,
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
-	buf = g_strconcat(panel_cfg_path,"panel/Config/",NULL);
-	gnome_config_push_prefix (buf);
-	g_free(buf);
+	s = g_concat_dir_and_file(panel_cfg_path,"panel/Config/");
+	gnome_config_push_prefix (s);
+	g_free(s);
 
 	if(complete_sync || sync_applets)
 		gnome_config_set_int ("applet_count", applet_count);
@@ -472,6 +474,7 @@ do_session_save(GnomeClient *client,
 	/*DEBUG*/printf(" 4"); fflush(stdout);
 
 	if(complete_sync || sync_globals) {
+		GString *buf;
 		/*global options*/
 		gnome_config_set_int("auto_hide_step_size",
 				     global_config.auto_hide_step_size);
@@ -497,19 +500,25 @@ do_session_save(GnomeClient *client,
 				      global_config.disable_animations);
 		gnome_config_set_int("applet_padding",
 				     global_config.applet_padding);
+		buf = g_string_new(NULL);
 		for(i=0;i<LAST_TILE;i++) {
-			char buf[256];
-			g_snprintf(buf,256,"tiles_enabled_%d",i);
-			gnome_config_set_bool(buf,global_config.tiles_enabled[i]);
-			g_snprintf(buf,256,"tile_up_%d",i);
-			gnome_config_set_string(buf,global_config.tile_up[i]);
-			g_snprintf(buf,256,"tile_down_%d",i);
-			gnome_config_set_string(buf,global_config.tile_down[i]);
-			g_snprintf(buf,256,"tile_border_%d",i);
-			gnome_config_set_int(buf,global_config.tile_border[i]);
-			g_snprintf(buf,256,"tile_depth_%d",i);
-			gnome_config_set_int(buf,global_config.tile_depth[i]);
+			g_string_sprintf(buf,"tiles_enabled_%d",i);
+			gnome_config_set_bool(buf->str,
+					      global_config.tiles_enabled[i]);
+			g_string_sprintf(buf,"tile_up_%d",i);
+			gnome_config_set_string(buf->str,
+						global_config.tile_up[i]);
+			g_string_sprintf(buf,"tile_down_%d",i);
+			gnome_config_set_string(buf->str,
+						global_config.tile_down[i]);
+			g_string_sprintf(buf,"tile_border_%d",i);
+			gnome_config_set_int(buf->str,
+					     global_config.tile_border[i]);
+			g_string_sprintf(buf,"tile_depth_%d",i);
+			gnome_config_set_int(buf->str,
+					     global_config.tile_depth[i]);
 		}
+		g_string_free(buf,TRUE);
 	}
 
 	gnome_config_pop_prefix ();
@@ -708,19 +717,21 @@ load_default_applets(void)
 void
 init_user_applets(void)
 {
-	char  buf[256];
+	GString *buf;
 	int   count,num;	
 
-	g_snprintf(buf,256,"%spanel/Config/applet_count=0",old_panel_cfg_path);
-	count=gnome_config_get_int(buf);
+	buf = g_string_new(NULL);
+	g_string_sprintf(buf,"%spanel/Config/applet_count=0",
+			 old_panel_cfg_path);
+	count=gnome_config_get_int(buf->str);
 	for(num=1;num<=count;num++) {
 		char *applet_name;
 		int   pos=0,panel_num;
 		PanelWidget *panel;
 
-		g_snprintf(buf,256, "%sApplet_Config/Applet_%d/",
-			   old_panel_cfg_path, num);
-		gnome_config_push_prefix(buf);
+		g_string_sprintf(buf,"%sApplet_Config/Applet_%d/",
+				 old_panel_cfg_path, num);
+		gnome_config_push_prefix(buf->str);
 		applet_name = gnome_config_get_string("id=Unknown");
 		
 		if(strcmp(applet_name,EMPTY_ID)==0) {
@@ -734,8 +745,8 @@ init_user_applets(void)
 			continue;
 		}
 
-		g_snprintf(buf,256,"position=%d", 0);
-		pos = gnome_config_get_int(buf);
+		g_string_sprintf(buf,"position=%d", 0);
+		pos = gnome_config_get_int(buf->str);
 		panel_num = gnome_config_get_int("panel=0");
 		{
 			GSList *list = g_slist_nth(panels,panel_num);
@@ -752,15 +763,15 @@ init_user_applets(void)
 		pos += gnome_config_get_bool("right_stick=false")?INT_MAX/2:0;
 		
 		if(strcmp(applet_name,EXTERN_ID) == 0) {
-			char *goad_id = gnome_config_get_string("goad_id=");
-			if(goad_id) {
+			char *goad_id = gnome_config_get_string("goad_id");
+			if(goad_id && *goad_id) {
 				/*this is the config path to be passed to the
 				  applet when it loads*/
-				g_snprintf(buf,256,"%sApplet_%d_Extern/",
-					   old_panel_cfg_path,num);
-				load_extern_applet(goad_id,buf,panel,pos);
-				g_free(goad_id);
+				g_string_sprintf(buf,"%sApplet_%d_Extern/",
+						 old_panel_cfg_path,num);
+				load_extern_applet(goad_id,buf->str,panel,pos);
 			}
+			g_free(goad_id);
 		} else if(strcmp(applet_name,LAUNCHER_ID) == 0) { 
 			char *params = gnome_config_get_string("parameters=");
 			load_launcher_applet(params,panel,pos);
@@ -810,17 +821,20 @@ init_user_applets(void)
 		gnome_config_pop_prefix();
 		g_free(applet_name);
 	}
+	g_string_free(buf,TRUE);
 }
 
 void
 init_user_panels(void)
 {
-	char  buf[256];
+	GString *buf;
 	int   count,num;	
 	GtkWidget *panel;
 
-	g_snprintf(buf,256,"%spanel/Config/panel_count=0",old_panel_cfg_path);
-	count=gnome_config_get_int(buf);
+	buf = g_string_new(NULL);
+	g_string_sprintf(buf,"%spanel/Config/panel_count=0",
+			 old_panel_cfg_path);
+	count=gnome_config_get_int(buf->str);
 
 	/*load a default snapped panel on the bottom of the screen,
 	  it is required to have at least one panel for this all
@@ -842,6 +856,7 @@ init_user_panels(void)
 		/*load up default applets on the default panel*/
 		load_default_applets();
 
+		g_string_free(buf,TRUE);
 		return;
 	}
 
@@ -852,9 +867,9 @@ init_user_panels(void)
 		GdkColor back_color = {0,0,0,1};
 		int fit_pixmap_bg;
 
-		g_snprintf(buf,256,"%spanel/Panel_%d/",
-			   old_panel_cfg_path, num);
-		gnome_config_push_prefix (buf);
+		g_string_sprintf(buf,"%spanel/Panel_%d/",
+				 old_panel_cfg_path, num);
+		gnome_config_push_prefix (buf->str);
 		
 		back_pixmap = gnome_config_get_string ("backpixmap=");
 		if (back_pixmap && *back_pixmap == '\0') {
@@ -866,14 +881,14 @@ init_user_panels(void)
 		if(color && *color)
 			gdk_color_parse(color, &back_color);
 
-		g_snprintf(buf,256,"back_type=%d",PANEL_BACK_NONE);
-		back_type=gnome_config_get_int(buf);
+		g_string_sprintf(buf,"back_type=%d",PANEL_BACK_NONE);
+		back_type=gnome_config_get_int(buf->str);
 		fit_pixmap_bg = gnome_config_get_bool ("fit_pixmap_bg=TRUE");
 
 		/*now for type specific config*/
 
-		g_snprintf(buf,256,"type=%d", SNAPPED_PANEL);
-		type = gnome_config_get_int(buf);
+		g_string_sprintf(buf,"type=%d", SNAPPED_PANEL);
+		type = gnome_config_get_int(buf->str);
 
 		switch(type) {
 		case SNAPPED_PANEL:
@@ -884,14 +899,15 @@ init_user_panels(void)
 				int hidebuttons_enabled;
 				int hidebutton_pixmaps_enabled;
 
-				g_snprintf(buf,256,"pos=%d", SNAPPED_BOTTOM);
-				pos=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"pos=%d", SNAPPED_BOTTOM);
+				pos=gnome_config_get_int(buf->str);
 
-				g_snprintf(buf,256,"mode=%d", SNAPPED_EXPLICIT_HIDE);
-				mode=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"mode=%d",
+						 SNAPPED_EXPLICIT_HIDE);
+				mode=gnome_config_get_int(buf->str);
 
-				g_snprintf(buf,256,"state=%d", SNAPPED_SHOWN);
-				state=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"state=%d", SNAPPED_SHOWN);
+				state=gnome_config_get_int(buf->str);
 
 				hidebuttons_enabled =
 					gnome_config_get_bool("hidebuttons_enabled=TRUE");
@@ -916,11 +932,11 @@ init_user_panels(void)
 				int hidebutton_enabled;
 				int hidebutton_pixmap_enabled;
 
-				g_snprintf(buf,256,"state=%d", DRAWER_SHOWN);
-				state=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"state=%d", DRAWER_SHOWN);
+				state=gnome_config_get_int(buf->str);
 
-				g_snprintf(buf,256,"orient=%d", ORIENT_UP);
-				orient=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"orient=%d", ORIENT_UP);
+				orient=gnome_config_get_int(buf->str);
 
 				hidebutton_enabled =
 					gnome_config_get_bool("hidebutton_enabled=TRUE");
@@ -945,15 +961,15 @@ init_user_panels(void)
 				int hidebuttons_enabled;
 				int hidebutton_pixmaps_enabled;
 				
-				g_snprintf(buf,256,"pos=%d", CORNER_NE);
-				pos=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"pos=%d", CORNER_NE);
+				pos=gnome_config_get_int(buf->str);
 
-				g_snprintf(buf,256,"orient=%d",
-					   PANEL_HORIZONTAL);
-				orient=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"orient=%d",
+						 PANEL_HORIZONTAL);
+				orient=gnome_config_get_int(buf->str);
 
-				g_snprintf(buf,256,"state=%d", CORNER_SHOWN);
-				state=gnome_config_get_int(buf);
+				g_string_sprintf(buf,"state=%d", CORNER_SHOWN);
+				state=gnome_config_get_int(buf->str);
 
 				hidebuttons_enabled =
 					gnome_config_get_bool("hidebuttons_enabled=TRUE");
@@ -983,19 +999,22 @@ init_user_panels(void)
 
 		gtk_widget_show(panel);
 	}
+	g_string_free(buf,TRUE);
 }
 
 void
 load_up_globals(void)
 {
-	char buf[256];
+	GString *buf;
 	char *tile_def[]={"normal","purple","green"};
 	int i;
+	
+	buf = g_string_new(NULL);
 
 	/*set up global options*/
 	
-	g_snprintf(buf,256,"%spanel/Config/",old_panel_cfg_path);
-	gnome_config_push_prefix(buf);
+	g_string_sprintf(buf,"%spanel/Config/",old_panel_cfg_path);
+	gnome_config_push_prefix(buf->str);
 
 	global_config.tooltips_enabled =
 		gnome_config_get_bool("tooltips_enabled=TRUE");
@@ -1012,48 +1031,50 @@ load_up_globals(void)
 	global_config.disable_animations =
 		gnome_config_get_bool("disable_animations=FALSE");
 		
-	g_snprintf(buf,256,"auto_hide_step_size=%d",
-		   DEFAULT_AUTO_HIDE_STEP_SIZE);
-	global_config.auto_hide_step_size=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"auto_hide_step_size=%d",
+			 DEFAULT_AUTO_HIDE_STEP_SIZE);
+	global_config.auto_hide_step_size=gnome_config_get_int(buf->str);
 		
-	g_snprintf(buf,256,"explicit_hide_step_size=%d",
-		   DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
-	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"explicit_hide_step_size=%d",
+			 DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
+	global_config.explicit_hide_step_size=gnome_config_get_int(buf->str);
 		
-	g_snprintf(buf,256,"drawer_step_size=%d",
-		   DEFAULT_DRAWER_STEP_SIZE);
-	global_config.drawer_step_size=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"drawer_step_size=%d",
+			 DEFAULT_DRAWER_STEP_SIZE);
+	global_config.drawer_step_size=gnome_config_get_int(buf->str);
 		
-	g_snprintf(buf,256,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
-	global_config.minimize_delay=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
+	global_config.minimize_delay=gnome_config_get_int(buf->str);
 		
-	g_snprintf(buf,256,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
-	global_config.minimized_size=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"minimized_size=%d", DEFAULT_MINIMIZED_SIZE);
+	global_config.minimized_size=gnome_config_get_int(buf->str);
 		
-	g_snprintf(buf,256,"movement_type=%d", PANEL_SWITCH_MOVE);
-	global_config.movement_type=gnome_config_get_int(buf);
+	g_string_sprintf(buf,"movement_type=%d", PANEL_SWITCH_MOVE);
+	global_config.movement_type=gnome_config_get_int(buf->str);
 
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
 	for(i=0;i<LAST_TILE;i++) {
-		g_snprintf(buf,256,"tiles_enabled_%d=TRUE",i);
-		global_config.tiles_enabled[i] = gnome_config_get_bool(buf);
+		g_string_sprintf(buf,"tiles_enabled_%d=TRUE",i);
+		global_config.tiles_enabled[i] =
+			gnome_config_get_bool(buf->str);
 
 		g_free(global_config.tile_up[i]);
-		g_snprintf(buf,256,"tile_up_%d=tiles/tile-%s-up.png",
+		g_string_sprintf(buf,"tile_up_%d=tiles/tile-%s-up.png",
 			   i, tile_def[i]);
-		global_config.tile_up[i] = gnome_config_get_string(buf);
+		global_config.tile_up[i] = gnome_config_get_string(buf->str);
 
 		g_free(global_config.tile_down[i]);
-		g_snprintf(buf,256,"tile_down_%d=tiles/tile-%s-down.png",
+		g_string_sprintf(buf,"tile_down_%d=tiles/tile-%s-down.png",
 			   i,tile_def[i]);
-		global_config.tile_down[i] = gnome_config_get_string(buf);
+		global_config.tile_down[i] = gnome_config_get_string(buf->str);
 
-		g_snprintf(buf,256,"tile_border_%d=2",i);
-		global_config.tile_border[i] = gnome_config_get_int(buf);
-		g_snprintf(buf,256,"tile_depth_%d=2",i);
-		global_config.tile_depth[i] = gnome_config_get_int(buf);
+		g_string_sprintf(buf,"tile_border_%d=2",i);
+		global_config.tile_border[i] = gnome_config_get_int(buf->str);
+		g_string_sprintf(buf,"tile_depth_%d=2",i);
+		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
 	}
+	g_string_free(buf,TRUE);
 		
 	gnome_config_pop_prefix();
 

@@ -2015,22 +2015,30 @@ free_rh_item(RHMenuItem *rh)
 static char *
 read_word(char **p)
 {
-	static char buf[256] = "";
+	char *buf;
 	char *w;
-	int quoted = FALSE;
+	int quoted;
+	int len;
 	if(!p) return NULL;
 	if(!*p) return NULL;
 	while(*(*p) == ' ' || *(*p) == '\t') (*p)++;
 	if(!(*(*p))) return NULL;
+	quoted = FALSE;
+	for(w=*p,len=0;
+	    *w && (quoted || (*w!=' ' && *w!='\t'));
+	    w++) {
+		if(*w=='"')
+			quoted = !quoted;
+		else
+			len++;
+	}
+	buf = g_malloc(len+1);
+	quoted = FALSE;
 	for(w=buf;*(*p) && (quoted || (*(*p)!=' ' && *(*p)!='\t'));(*p)++) {
 		if(*(*p)=='"')
 			quoted = !quoted;
 		else {
-			*w = *(*p);
-			if((w++)-buf >= 255) {
-				*w='\0';
-				return buf;
-			}
+			*w++ = *(*p);
 		}
 	}
 	*w='\0';
@@ -2091,62 +2099,70 @@ add_redhat_entry(GSList *list, char *file)
 		p = strchr(buf,'\n');
 		if(p) *p='\0';
 		p = buf;
-		read_word(&p); /*XXX:ignore??*/
+		g_free(read_word(&p)); /*XXX:ignore??*/
 		w = read_word(&p);
 		if(strcmp(w,"name")==0) {
 			g_free(rh->name);
-			rh->name = g_strdup(read_word(&p));
+			rh->name = read_word(&p);
 		} else if(strcmp(w,"description")==0) {
 			g_free(rh->u.item.description);
-			rh->u.item.description = g_strdup(read_word(&p));
+			rh->u.item.description = read_word(&p);
 		} else if(strcmp(w,"icon")==0) {
-			w = read_word(&p);
+			char *s = read_word(&p);
 			g_free(rh->u.item.icon);
-			if(*w == '/') {
-				if(g_file_exists(w))
-					rh->u.item.icon = g_strdup(w);
-				else
+			if(*s == '/') {
+				if(g_file_exists(s))
+					rh->u.item.icon = s;
+				else {
+					g_free(s);
 					rh->u.item.icon = NULL;
+				}
 			} else {
-				rh->u.item.icon = g_concat_dir_and_file("/usr/share/icons", w);
+				rh->u.item.icon = g_concat_dir_and_file("/usr/share/icons", s);
 				if(!g_file_exists(rh->u.item.icon)) {
 					g_free(rh->u.item.icon);
-					rh->u.item.icon = gnome_pixmap_file(w);
+					rh->u.item.icon = gnome_pixmap_file(s);
 				}
+				g_free(s);
 			}
 		} else if(strcmp(w,"mini-icon")==0) {
-			w = read_word(&p);
+			char *s = read_word(&p);
 			g_free(rh->u.item.mini_icon);
-			if(*w == '/') {
-				if(g_file_exists(w))
-					rh->u.item.mini_icon = g_strdup(w);
-				else
+			if(*s == '/') {
+				if(g_file_exists(s))
+					rh->u.item.mini_icon = s;
+				else {
+					g_free(s);
 					rh->u.item.mini_icon = NULL;
+				}
 			} else {
-				rh->u.item.mini_icon = g_concat_dir_and_file("/usr/share/icons/mini", w);
+				rh->u.item.mini_icon = g_concat_dir_and_file("/usr/share/icons/mini", s);
 				if(!g_file_exists(rh->u.item.mini_icon)) {
 					g_free(rh->u.item.mini_icon);
-					rh->u.item.mini_icon = gnome_pixmap_file(w);
+					rh->u.item.mini_icon = gnome_pixmap_file(s);
 				}
+				g_free(s);
 			}
 		} else if(strcmp(w,"exec")==0) {
 			g_free(rh->u.item.exec);
-			rh->u.item.exec = g_strdup(read_word(&p));
+			rh->u.item.exec = read_word(&p);
 		} else if(strcmp(w,"group")==0) {
 			char *sc;
-			w = read_word(&p);
+			char *s = read_word(&p);
 
 			if(group) {
 				g_slist_foreach(group,(GFunc)g_free,NULL);
 				g_slist_free(group);
 				group = NULL;
 			}
-			sc = strtok(w,"/");
+			sc = strtok(s,"/");
 			while(sc) {
 				group = g_slist_append(group, g_strdup(sc));
 				sc = strtok(NULL,"/");
 			}
+			g_free(s);
 		}
+		g_free(w);
 	}
 	fclose(fp);
 	if(!rh->name || !rh->u.item.exec) {
