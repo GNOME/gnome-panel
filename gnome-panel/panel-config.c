@@ -1498,7 +1498,7 @@ update_config_type (BasePWidget *w)
 		page = aligned_notebook_page(ppc);
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
 		gtk_label_set_text (GTK_LABEL (ppc->type_tab_label),
-				    _("Aligned panel"));
+				    _("Corner panel"));
 	} else if(SLIDING_IS_WIDGET(w)) {
 		/* sliding notebook page */
 		page = sliding_notebook_page(ppc);
@@ -1624,7 +1624,7 @@ panel_config (GtkWidget *panel)
 		page = aligned_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
-		ppc->type_tab_label = gtk_label_new (_("Aligned panel"));
+		ppc->type_tab_label = gtk_label_new (_("Corner panel"));
 		gtk_notebook_append_page(GTK_NOTEBOOK(prop_nbook),
 					 ppc->type_tab,
 					 ppc->type_tab_label);

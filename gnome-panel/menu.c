@@ -2723,35 +2723,40 @@ create_add_panel_submenu (void)
 	menu = menu_new ();
 	
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Menu panel"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-menu.png",
+				   _("Menu panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(FOOBAR_PANEL));
  	
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Edge panel"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-edge.png",
+				   _("Edge panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(EDGE_PANEL));
 
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Aligned panel"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-corner.png", 
+				   _("Corner panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(ALIGNED_PANEL));
 
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Sliding panel"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-sliding.png", 
+				   _("Sliding panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
 			   GINT_TO_POINTER(SLIDING_PANEL));
 	
 	menuitem = gtk_image_menu_item_new ();
-	setup_menuitem (menuitem, NULL, _("Floating panel"));
+	setup_menuitem_try_pixmap (menuitem, "gnome-panel-type-floating.png", 
+				   _("Floating panel"));
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	g_signal_connect (G_OBJECT(menuitem), "activate",
 			   G_CALLBACK(create_new_panel),
