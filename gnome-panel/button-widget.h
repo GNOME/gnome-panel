@@ -19,8 +19,7 @@ struct _ButtonWidget {
 	GtkButton         parent;
 	
 	GdkPixbuf        *pixbuf;
-	GdkPixbuf        *scaled;
-	GdkPixbuf        *scaled_hc;
+	GdkPixbuf        *pixbuf_hc;
 
 	/* if filename doesn't lead to a findable icon,
 	   try stock_id */

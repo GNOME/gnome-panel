@@ -1,3 +1,21 @@
+2004-12-18  Vincent Untz  <vincent@vuntz.net>
+
+	Don't use only the 48x48 icons for button widgets.
+
+	* button-widget.[ch]: (button_widget_unset_pixbufs): the scaled pixbuf
+	was removed
+	(button_widget_load_and_scale_stock_icon): new function, to load and
+	scale a stock icon
+	(button_widget_load_pixbuf_and_scale): killed
+	(button_widget_reload_pixbuf): move the code of
+	button_widget_load_pixbuf_and_scale () here. It was simplified a lot
+	since we don't need to scale the pixbuf any more.
+	(button_load_pixbuf): add a preferred_size parameter
+	(button_widget_expose): the scaled pixbuf was removed
+	(button_widget_size_allocate): reload the pixbuf if the size has
+	changed
+	(button_widget_instance_init): the scaled pixbuf was removed
+
 2004-12-16  Dennis Cranston <dennis_cranston@yahoo.com>
 
 	* panel-action-button.c: (panel_action_search):  Use 

@@ -19,6 +19,7 @@
 
 
 static GdkPixbuf *button_load_pixbuf (const char  *file,
+				      int          size,
 				      char       **error);
 static GdkPixbuf * get_missing (int preffered_size);
 
@@ -164,64 +165,27 @@ button_widget_unset_pixbufs (ButtonWidget *button)
 		g_object_unref (button->pixbuf);
 	button->pixbuf = NULL;
 
-	if (button->scaled)
-		g_object_unref (button->scaled);
-	button->scaled = NULL;
-
-	if (button->scaled_hc)
-		g_object_unref (button->scaled_hc);
-	button->scaled_hc = NULL;
+	if (button->pixbuf_hc)
+		g_object_unref (button->pixbuf_hc);
+	button->pixbuf_hc = NULL;
 }
 
-static void
-button_widget_load_pixbuf_and_scale (ButtonWidget *button)
+static GdkPixbuf *
+button_widget_load_and_scale_stock_icon (ButtonWidget *button)
 {
-	double scale;
-	int    width;
-	int    height;
+	GdkPixbuf *new;
+	GdkPixbuf *retval;
+	double     scale;
+	int        width;
+	int        height;
 
-	if (button->size <= 1)
-		return;
+	new = gtk_widget_render_icon (GTK_WIDGET (button),
+				      button->stock_id,
+				      (GtkIconSize) -1,
+				      NULL);
 
-	if (button->pixbuf == NULL) {
-		if (!button->filename && !button->stock_id)
-			return;
-
-		if (button->filename != NULL) {
-			char *error = NULL;
-
-			button->pixbuf = button_load_pixbuf (button->filename, &error);
-			if (error) {
-				panel_error_dialog (gdk_screen_get_default (),
-						    "cannot_load_pixbuf", TRUE,
-						    _("Failed to load image %s"),
-						    "%s",
-						    button->filename,
-						    error);
-				g_free (error);
-			}
-		}
-
-		if (button->pixbuf == NULL &&
-		    button->stock_id != NULL)
-			button->pixbuf = gtk_widget_render_icon (
-						GTK_WIDGET (button),
-						button->stock_id,
-						(GtkIconSize) -1,
-						NULL);
-
-/* FIXME: this should be based on the panel size */
-#define PREFERRED_SIZE 48
-		if (button->pixbuf == NULL)
-			button->pixbuf = get_missing (PREFERRED_SIZE);
-#undef PREFERRED_SIZE
-
-		if (!button->pixbuf)
-			return;
-	}
-
-	width  = gdk_pixbuf_get_width  (button->pixbuf);
-	height = gdk_pixbuf_get_height (button->pixbuf);
+	width  = gdk_pixbuf_get_width  (new);
+	height = gdk_pixbuf_get_height (new);
 
 	if (button->orientation & PANEL_HORIZONTAL_MASK)
 		scale = (double) button->size / height;
@@ -231,30 +195,54 @@ button_widget_load_pixbuf_and_scale (ButtonWidget *button)
 	width  *= scale;
 	height *= scale;
 
-	if (button->scaled) {
-		if (gdk_pixbuf_get_width  (button->scaled) == width &&
-		    gdk_pixbuf_get_height (button->scaled) == height)
-			return; /* no need to re-scale */
+	retval = gdk_pixbuf_scale_simple (new, width, height,
+					  GDK_INTERP_BILINEAR);
 
-		g_object_unref (button->scaled);
-	}
+	g_object_unref (new);
 
-	button->scaled = gdk_pixbuf_scale_simple (
-				button->pixbuf, width, height, GDK_INTERP_BILINEAR);
-
-	if (button->scaled_hc)
-		g_object_unref (button->scaled_hc);
-	
-	button->scaled_hc = make_hc_pixbuf (button->scaled);
-
-	gtk_widget_queue_resize (GTK_WIDGET (button));
+	return retval;
 }
 
 static void
 button_widget_reload_pixbuf (ButtonWidget *button)
 {
 	button_widget_unset_pixbufs (button);
-	button_widget_load_pixbuf_and_scale (button);
+
+	if (button->size <= 1)
+		return;
+
+	if (!button->filename && !button->stock_id)
+		return;
+
+	if (button->filename != NULL) {
+		char *error = NULL;
+
+		button->pixbuf = button_load_pixbuf (button->filename,
+						     button->size,
+						     &error);
+		if (error) {
+			panel_error_dialog (gdk_screen_get_default (),
+					    "cannot_load_pixbuf", TRUE,
+					    _("Failed to load image %s"),
+					    "%s",
+					    button->filename,
+					    error);
+			g_free (error);
+		}
+	}
+
+	if (button->pixbuf == NULL && button->stock_id != NULL)
+		button->pixbuf = button_widget_load_and_scale_stock_icon (button);
+
+	if (button->pixbuf == NULL)
+		button->pixbuf = get_missing (button->size);
+
+	if (button->pixbuf == NULL)
+		return;
+
+	button->pixbuf_hc = make_hc_pixbuf (button->pixbuf);
+
+	gtk_widget_queue_resize (GTK_WIDGET (button));
 }
 
 static void
@@ -417,17 +405,15 @@ load_pixbuf (const char  *file,
 
 static GdkPixbuf *
 button_load_pixbuf (const char  *file,
+		    int          preffered_size,
 		    char       **error)
 {
-/* FIXME: this should be based on the panel size */
-#define PREFERRED_SIZE 48
-
 	GdkPixbuf *retval = NULL;
 
 	if (string_empty (file))
 		return NULL;
 
-	retval = load_pixbuf (file, PREFERRED_SIZE, NULL);
+	retval = load_pixbuf (file, preffered_size, NULL);
 	if (!retval) {
 		char *tmp;
 
@@ -437,13 +423,11 @@ button_load_pixbuf (const char  *file,
 		}
 
 		tmp = g_path_get_basename (file);
-		retval = load_pixbuf (tmp, PREFERRED_SIZE, error);
+		retval = load_pixbuf (tmp, preffered_size, error);
 		g_free (tmp);
 	}
 
 	return retval;
-
-#undef PREFERRED_SIZE
 }
 
 static GtkArrowType
@@ -509,7 +493,7 @@ button_widget_expose (GtkWidget         *widget,
 	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget))
 		return FALSE;
 
-	if (!button_widget->scaled_hc && !button_widget->scaled)
+	if (!button_widget->pixbuf_hc && !button_widget->pixbuf)
 		return FALSE;
 
 	/* offset for pressed buttons */
@@ -517,16 +501,16 @@ button_widget_expose (GtkWidget         *widget,
 		BUTTON_WIDGET_DISPLACEMENT * widget->allocation.height / 48.0 : 0;
 
 	if (!button_widget->activatable) {
-		pb = gdk_pixbuf_copy (button_widget->scaled);
-		gdk_pixbuf_saturate_and_pixelate (button_widget->scaled,
+		pb = gdk_pixbuf_copy (button_widget->pixbuf);
+		gdk_pixbuf_saturate_and_pixelate (button_widget->pixbuf,
 						  pb,
 						  0.8,
 						  TRUE);
 	} else if (panel_global_config_get_highlight_when_over () && 
 	    (button->in_button || GTK_WIDGET_HAS_FOCUS (widget)))
-		pb = g_object_ref (button_widget->scaled_hc);
+		pb = g_object_ref (button_widget->pixbuf_hc);
 	else
-		pb = g_object_ref (button_widget->scaled);
+		pb = g_object_ref (button_widget->pixbuf);
 
 	g_assert (pb != NULL);
 
@@ -616,9 +600,9 @@ button_widget_size_request (GtkWidget      *widget,
 {
 	ButtonWidget *button_widget = BUTTON_WIDGET (widget);
 
-	if (button_widget->scaled) {
-		requisition->width  = gdk_pixbuf_get_width  (button_widget->scaled);
-		requisition->height = gdk_pixbuf_get_height (button_widget->scaled);
+	if (button_widget->pixbuf) {
+		requisition->width  = gdk_pixbuf_get_width  (button_widget->pixbuf);
+		requisition->height = gdk_pixbuf_get_height (button_widget->pixbuf);
 	}
 }
 
@@ -638,7 +622,7 @@ button_widget_size_allocate (GtkWidget     *widget,
 	if (button_widget->size != size) {
 		button_widget->size = size;
 
-		button_widget_load_pixbuf_and_scale (button_widget);
+		button_widget_reload_pixbuf (button_widget);
 	}
 
 	widget->allocation = *allocation;
@@ -716,8 +700,7 @@ static void
 button_widget_instance_init (ButtonWidget *button)
 {
 	button->pixbuf    = NULL;
-	button->scaled    = NULL;
-	button->scaled_hc = NULL;
+	button->pixbuf_hc = NULL;
 	
 	button->arrow       = 0;
 	button->orientation = PANEL_ORIENTATION_TOP;
