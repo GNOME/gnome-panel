@@ -306,3 +306,39 @@ panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gcha
 	g_free (panel_profile_key);
 	return return_val;
 }
+
+void
+panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
+  GSList *subdirs;
+  GSList *entries;
+  GSList *tmp;
+
+  subdirs = gconf_engine_all_dirs (client->engine, dir, NULL);
+
+  if (subdirs != NULL) {
+    tmp = subdirs;
+
+    while (tmp != NULL) {
+      gchar *s = tmp->data;
+      panel_gconf_directory_recursive_clean (client, s);
+      g_free (s);
+      tmp = g_slist_next (tmp);
+    }
+    g_slist_free (subdirs);
+  }
+
+  entries = gconf_engine_all_entries (client->engine, dir, NULL);
+
+  if (entries != NULL) {
+    tmp = entries;
+    while (tmp != NULL) {
+      GConfEntry *entry = tmp->data;
+
+      gconf_engine_unset (client->engine, gconf_entry_get_key (entry), NULL);
+      gconf_entry_free (entry);
+      tmp = g_slist_next (tmp);
+    }
+    g_slist_free (entries);
+  }
+  gconf_engine_unset (client->engine, dir, NULL);
+}

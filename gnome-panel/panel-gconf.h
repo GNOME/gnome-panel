@@ -6,6 +6,8 @@
 
 G_BEGIN_DECLS
 
+/* FIXME : I guess we really need to do some sort of error checking with all of this */
+
 GConfClient*	panel_gconf_get_client (void);
 
 /* Global Configuration */
@@ -49,6 +51,7 @@ void 		panel_gconf_add_dir (const gchar *key);
 
 gboolean	panel_gconf_dir_exists (const gchar *key);
 
+void		panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir);
 G_END_DECLS
 
 #endif /* PANEL_GCONF_H */

@@ -587,7 +587,7 @@ panel_session_save (GnomeClient        *client,
 	gchar **argv;
 	gint argc;
 
-	g_malloc0(sizeof(gchar*)*4);
+	argv = g_malloc0(sizeof(gchar*)*4);
 
 	argc = 3;
 	argv[0] = client_data;
@@ -723,14 +723,12 @@ push_correct_global_prefix (void)
 
 #ifdef FIXME /* see session_load */
 static void
-session_init_user_applets (void)
+session_init_applets (void)
 {
 	GString *buf;
 	int count, num;	
 	char *prefix;
 	const char *sep;
-
-	prefix = get_correct_prefix (&sep);
 
 	buf = g_string_new (NULL);
 
@@ -1315,7 +1313,7 @@ session_read_global_config (void)
 		value = gconf_entry_get_value (entry);
 
 		key = g_path_get_basename (gconf_entry_get_key (entry));
-
+		/* FIXME: We need to do something more user friendly here */
 		if (!strcmp (key, "panel-animation-speed")) {
 			switch (gconf_value_get_int (value)) {
 				case 0:
@@ -1373,7 +1371,7 @@ session_read_global_config (void)
 				gconf_value_get_bool (value);
 
 		else if (!strcmp (key, "auto-update-menus"))
-			g_warning ("\nGman: what's this '%s' ?\nmarkmc: something that's probably not needed\nGman: then why is in the schema? :P\n_vicious_: It's needed so that say NFS setups don't recheck menus all the time, cuz it can slow things down quite a bit.\nandersca: you guys are very lucky to have _v_.", key);
+			g_warning ("\nGman: So guys, are we actually gonne do something with this in some sort of GNOME 2.0 timeframe?\n");
 
 		else if (!strcmp (key, "highlight-launchers-on-mouseover"))
 			global_config.highlight_when_over =
@@ -1535,6 +1533,6 @@ void session_load (void) {
   session_init_panels ();
 
 #ifdef FIXME /* load the applets */
-  session_init_user_applets ();
+  session_init_applets ();
 #endif
 }
