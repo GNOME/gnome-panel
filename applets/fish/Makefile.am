@@ -11,15 +11,7 @@ INCLUDES =							\
 
 libexec_PROGRAMS = fish-applet-2
 
-EGGFILES =                      \
-	egg-screen-exec.h       \
-	egg-screen-exec.c       \
-	egg-screen-help.h       \
-	egg-screen-help.c       \
-	egg-screen-url.h        \
-	egg-screen-url.c
-
-fish_applet_2_SOURCES = fish.c $(EGGFILES)
+fish_applet_2_SOURCES = fish.c
 
 fish_applet_2_LDADD =					\
 	../../libpanel-applet/libpanel-applet-2.la	\
@@ -79,8 +71,3 @@ install-data-local:
 else
 install-data-local:
 endif
-
-EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
-
-regenerate-built-sources:
-	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh

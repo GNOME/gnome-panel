@@ -31,10 +31,9 @@
 #include <panel-applet-gconf.h>
 #include <gconf/gconf-client.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-help.h>
 #include <libart_lgpl/libart.h>
 #include <glade/glade-xml.h>
-
-#include "egg-screen-help.h"
 
 #define FISH_APPLET(o) (G_TYPE_CHECK_INSTANCE_CAST ((o), \
 			fish_applet_get_type(),          \
@@ -113,7 +112,7 @@ show_help (FishApplet *fish, const char *link_id)
 {
 	GError *error = NULL;
 
-	egg_help_display_desktop_on_screen (
+	gnome_help_display_desktop_on_screen (
 		NULL, "fish-applet-2", "fish-applet-2", link_id,
 		gtk_widget_get_screen (GTK_WIDGET (fish)),
 		&error);
