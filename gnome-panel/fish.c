@@ -23,6 +23,52 @@ destroy_applet(GtkWidget *widget, gpointer data)
 	return FALSE;
 }
 
+static void 
+update_fortune_dialog()
+{
+  static GtkWidget * dialog = NULL;
+  static GtkWidget * less = NULL; 
+  GtkWidget * label;
+
+  if ( dialog == NULL ) {
+    dialog = 
+      gnome_dialog_new(_("Wanda the Fish"), GNOME_STOCK_BUTTON_CLOSE, NULL);
+    gnome_dialog_set_close(GNOME_DIALOG(dialog), TRUE);
+    gnome_dialog_close_hides(GNOME_DIALOG(dialog), TRUE);
+
+    less = gnome_less_new();
+    label = gtk_label_new(_("Wanda the GNOME Fish Says:"));
+    
+    gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(dialog)->vbox), label,
+		       FALSE, FALSE, GNOME_PAD);
+
+    gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(dialog)->vbox), less,
+		       TRUE, TRUE, GNOME_PAD);
+
+    gnome_less_fixed_font(GNOME_LESS(less));
+
+    gtk_widget_show(less);
+    gtk_widget_show(label);
+  }
+  if (!GTK_WIDGET_VISIBLE(dialog)) gtk_widget_show(dialog);  
+  gnome_less_show_command(GNOME_LESS(less), "fortune");
+}
+
+static gint 
+fish_clicked_cb(GtkWidget * widget, GdkEventButton * e, 
+		gpointer data)
+{
+  if (e->button != 1) {
+    /* Ignore buttons 2 and 3 */
+    return FALSE; 
+  }
+
+  update_fortune_dialog();
+
+  return TRUE; 
+}
+
+
 static gint
 fish_timeout(gpointer data)
 {
@@ -40,6 +86,7 @@ create_fish_widget(GtkWidget *window)
 {
 	GtkWidget *frame;
 	GtkWidget *pixmap;
+	GtkWidget *event_box;
 	GtkStyle *style;
 
 	style = gtk_widget_get_style(window);
@@ -57,13 +104,20 @@ create_fish_widget(GtkWidget *window)
         pixmap = gtk_pixmap_new(pix[0],mask[0]);
         gtk_widget_show(pixmap);
 
+	event_box = gtk_event_box_new();
+	gtk_widget_show(event_box);
+	gtk_widget_set_events(event_box, GDK_BUTTON_PRESS_MASK);
+	gtk_signal_connect(GTK_OBJECT(event_box), "button_press_event",
+			   GTK_SIGNAL_FUNC(fish_clicked_cb), NULL);
+
         curpix = 0;
 
         gtk_timeout_add(300,fish_timeout,pixmap);
 
         frame = gtk_frame_new(NULL);
         gtk_frame_set_shadow_type(GTK_FRAME(frame),GTK_SHADOW_IN);
-        gtk_container_add(GTK_CONTAINER(frame),pixmap);
+        gtk_container_add(GTK_CONTAINER(event_box),pixmap);
+        gtk_container_add(GTK_CONTAINER(frame),event_box);
 
         return frame;
 }
