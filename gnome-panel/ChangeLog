@@ -1,3 +1,9 @@
+2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+
+	* quick-desktop-reader.c: (get_encoding): Patch from
+	Hidetoshi Tajima to use g_get_charset get the canonical
+	name of the locale's charset. Fixes #84074.
+
 2002-07-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* global-keys.c: (panel_global_keys_filter): patch
