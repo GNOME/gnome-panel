@@ -349,6 +349,30 @@ button_drag_motion (GtkWidget          *widget,
 	return TRUE;
 }
 
+static void 
+show_desktop_applet_realized (PanelApplet *applet, 
+			      gpointer     data)
+{
+	ShowDesktopData *sdd = data;
+
+	if (sdd->wnck_screen != NULL)
+		g_signal_handlers_disconnect_by_func (sdd->wnck_screen,
+						      show_desktop_changed_callback,
+						      sdd);
+
+	sdd->wnck_screen =
+		wnck_screen_get (gdk_screen_get_number (gtk_widget_get_screen (sdd->applet)));
+
+	if (sdd->wnck_screen != NULL)
+		wncklet_connect_while_alive (sdd->wnck_screen,
+					     "showing_desktop_changed",
+					     G_CALLBACK (show_desktop_changed_callback),
+					     sdd,
+					     sdd->applet);
+	else
+		g_warning ("Could not get WnckScreen!");
+}
+
 gboolean
 show_desktop_applet_fill (PanelApplet *applet)
 {
@@ -406,6 +430,9 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         update_icon (sdd);
 
+	g_signal_connect (G_OBJECT (sdd->applet), "realize",
+			  G_CALLBACK (show_desktop_applet_realized), sdd);
+
         sdd->button = gtk_toggle_button_new ();
 	atk_obj = gtk_widget_get_accessible (sdd->button);
 	atk_object_set_name (atk_obj, _("Show Desktop Button"));
@@ -421,16 +448,6 @@ show_desktop_applet_fill (PanelApplet *applet)
 
         update_button_state (sdd);
 
-        sdd->wnck_screen =
-                wnck_screen_get (gdk_screen_get_number (gtk_widget_get_screen (sdd->applet)));
-
-        if (sdd->wnck_screen != NULL)
-		wncklet_connect_while_alive (sdd->wnck_screen, "showing_desktop_changed",
-					     G_CALLBACK (show_desktop_changed_callback),
-					     sdd,
-					     sdd->applet);
-        else
-                g_warning ("Could not get WnckScreen!");
 
         /* FIXME: Update this comment. */
         /* we have to bind change_orient before we do applet_widget_add

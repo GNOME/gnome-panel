@@ -1,3 +1,12 @@
+2005-01-28  Vincent Untz  <vincent@vuntz.net>
+
+	Original patch from Arvind Samptur <arvind.samptur@wipro.com>
+
+	* showdesktop.c (show_desktop_applet_fill): connect to a realize
+	signal.
+	(show_desktop_applet_realized): set the right screen 
+	Fixes #105650
+
 2005-01-25  Vincent Noel  <vnoel@cox.net>
 
 	Remove all the widget creation code, which is now in libwnck. Use
