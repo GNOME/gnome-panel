@@ -18,7 +18,9 @@
 #include <string.h>
 
 #include <libgnome/libgnome.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <libgnomeui/libgnomeui.h>
+#include <libgnomeui/gnome-ditem-edit.h>
 #include <libgnomevfs/gnome-vfs.h>
 
 #include "launcher.h"
@@ -33,8 +35,6 @@
 #include "panel-gconf.h"
 #include "session.h"
 
-#include "gnome-desktop-item.h"
-#include "gnome-ditem-edit.h"
 #include "quick-desktop-reader.h"
 
 #undef LAUNCHER_DEBUG

@@ -24,9 +24,9 @@
 
 #include <gdk/gdkkeysyms.h>
 #include <libgnome/libgnome.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <libgnomeui/libgnomeui.h>
-#include <gnome-desktop-item.h>
-#include <gnome-ditem-edit.h>
+#include <libgnomeui/gnome-ditem-edit.h>
 #include <gconf/gconf-client.h>
 #include <libbonobo.h>
 

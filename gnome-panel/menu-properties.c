@@ -20,8 +20,7 @@
 
 #include <libgnomeui/libgnomeui.h>
 #include <libgnome/libgnome.h>
-
-#include "gnome-desktop-item.h"
+#include <libgnome/gnome-desktop-item.h>
 
 #include "quick-desktop-reader.h"
 #include "panel-util.h"

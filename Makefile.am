@@ -1,16 +1,9 @@
 SUBDIRS =			\
 	po 			\
 	idl 			\
-	gnome-desktop 		\
-	gnome-about 		\
-	desktop-links		\
-	gsm 			\
-	panel 			\
+	gnome-panel		\
 	libpanel-applet		\
-	smproxy 		\
-	pixmaps			\
 	applets			\
-	core-docs		\
 	omf-install		\
 	doc			\
 	man

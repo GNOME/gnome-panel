@@ -1,3 +1,12 @@
+2002-02-12  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: don't set GNOME_CORE_BUILD_INTERNAL and use
+	(top_srcdir)/gnome-panel.
+
+	* launcher.c, launcher.h, menu-fentry.h, menu-properties.c,
+	  menu.c, session.c, swallow.c: upd for the fact that
+	libgnome-desktop is in a seperatre module now.
+
 2002-02-11  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* drawer-widget.c: #include <config.h>

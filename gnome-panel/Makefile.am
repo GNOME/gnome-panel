@@ -11,7 +11,7 @@ INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
 	-I$(top_srcdir)/gnome-desktop				\
-	-I$(top_builddir)/panel					\
+	-I$(top_builddir)/gnome-panel				\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\"		\
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\"			\
@@ -35,7 +35,6 @@ DISABLE_DEPRECATED_CFLAGS = 					\
 	-DGTK_DISABLE_DEPRECATED				\
 	-DGDK_PIXBUF_DISABLE_DEPRECATED				\
 	-DGNOME_DISABLE_DEPRECATED				\
-	-DGNOME_CORE_INTERNAL					\
 	$(NULL)
 
 # Used by the GNOME_PROGRAM_STANDARD_PROPERTIES macros
@@ -160,8 +159,7 @@ gnome_panel_2_SOURCES =		\
 
 gnome_panel_2_LDADD =		\
 	$(PANEL_LIBS)		\
-	$(XINERAMA_LIBS)	\
-	$(top_builddir)/gnome-desktop/libgnome-desktop-2.la
+	$(XINERAMA_LIBS)
 
 gnome_panel_2_LDFLAGS = -export-dynamic
 
@@ -218,13 +216,13 @@ sys_in_files = gnome-panel-properties.desktop.in
 sys_DATA = $(sys_in_files:.desktop.in=.desktop)
 @INTLTOOL_DESKTOP_RULE@
 
-panel_enum_headers =				\
-	$(top_srcdir)/panel/panel-types.h	\
-	$(top_srcdir)/panel/panel-widget.h	\
-	$(top_srcdir)/panel/basep-widget.h	\
-	$(top_srcdir)/panel/aligned-widget.h	\
-	$(top_srcdir)/panel/sliding-widget.h	\
-	$(top_builddir)/panel/GNOME_Panel.h
+panel_enum_headers =					\
+	$(top_srcdir)/gnome-panel/panel-types.h		\
+	$(top_srcdir)/gnome-panel/panel-widget.h	\
+	$(top_srcdir)/gnome-panel/basep-widget.h	\
+	$(top_srcdir)/gnome-panel/aligned-widget.h	\
+	$(top_srcdir)/gnome-panel/sliding-widget.h	\
+	$(top_builddir)/gnome-panel/GNOME_Panel.h
 
 panel-marshal.h: panel-marshal.list $(GLIB_GENMARSHAL)
 	$(GLIB_GENMARSHAL) $< --header --prefix=panel_marshal > $@

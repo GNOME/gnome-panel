@@ -18,9 +18,8 @@
 #include <X11/keysym.h>
 
 #include <libgnome/libgnome.h>
+#include <libgnome/gnome-desktop-item.h>
 #include <libbonobo.h>
-
-#include "gnome-desktop-item.h"
 
 #include "session.h"
 
