@@ -150,8 +150,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
-						global_config.explicit_hide_step_size,
-						0, 0, 0, 0, 
+						0, 0, 
 						DROP_ZONE_LEFT),
 					    orient);
 	case DRAWER_DOWN:
@@ -160,8 +159,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
-						global_config.explicit_hide_step_size,
-						0, 0, 0, 0, 
+						0, 0, 
 						DROP_ZONE_RIGHT),
 					    orient);
 	case DRAWER_LEFT:
@@ -170,8 +168,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
-						global_config.explicit_hide_step_size,
-						0, 0, 0, 0, 
+						0, 0, 
 						DROP_ZONE_LEFT),
 					    orient);
 	case DRAWER_RIGHT:
@@ -180,8 +177,7 @@ create_empty_drawer_applet(DrawerOrient orient)
 						PANEL_DRAWER,
 						PANEL_EXPLICIT_HIDE,
 						PANEL_SHOWN,
-						global_config.explicit_hide_step_size,
-						0, 0, 0, 0, 
+						0, 0, 
 						DROP_ZONE_RIGHT),
 					    orient);
 	}

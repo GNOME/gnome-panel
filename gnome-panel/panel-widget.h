@@ -88,10 +88,6 @@ struct _PanelWidget
 	PanelMode		mode;
 	PanelState		state;
 
-	gint			step_size;
-	gint			minimized_size;
-	gint			minimize_delay;
-
 	gint			leave_notify_timer_tag;
 
 	GtkWidget		*currently_dragged_applet;
@@ -125,9 +121,6 @@ GtkWidget*	panel_widget_new		(gint size,
 						 PanelSnapped snapped,
 						 PanelMode mode,
 						 PanelState state,
-						 gint step_size,
-						 gint minimized_size,
-						 gint minimize_delay,
 						 gint pos_x,
 						 gint pos_y,
 						 DrawerDropZonePos
@@ -182,15 +175,18 @@ void		panel_widget_change_params	(PanelWidget *panel,
 						 PanelSnapped snapped,
 						 PanelMode mode,
 						 PanelState state,
-						 gint step_size,
-						 gint minimized_size,
-						 gint minimize_delay,
 						 DrawerDropZonePos
 						 	drop_zone_pos);
 
 /*changing parameters (orient only)*/
 void		panel_widget_change_orient	(PanelWidget *panel,
 						 PanelOrientation orient);
+
+/*change global params*/
+void		panel_widget_change_global	(gint explicit_step,
+						 gint auto_step,
+						 gint minimized_size,
+						 gint minimize_delay);
 
 extern GList *panels;
 

@@ -24,7 +24,7 @@ static gint
 config_delete (GtkWidget *widget, gpointer data)
 {
 	/* allow window destroy */
-	return(TRUE);
+	return TRUE;
 }
 
 static void 
@@ -68,9 +68,6 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel_config_struct.snapped,
 					   panel_config_struct.mode,
 					   panel->state,
-					   global_config.auto_hide_step_size,
-					   global_config.minimized_size,
-					   global_config.minimize_delay,
 					   panel->drawer_drop_zone_pos);
 	 } else {
 		panel_widget_change_params(panel,
@@ -78,9 +75,6 @@ config_apply (GtkWidget *widget, gpointer data)
 					   panel_config_struct.snapped,
 					   panel_config_struct.mode,
 					   panel->state,
-					   global_config.explicit_hide_step_size,
-					   global_config.minimized_size,
-					   global_config.minimize_delay,
 					   panel->drawer_drop_zone_pos);
 	}
 }

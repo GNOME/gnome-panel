@@ -574,6 +574,12 @@ init_user_panels(void)
 	count=gnome_config_get_int("/panel/Config/panel_count=0");
 	if(count<=0) count++; /*this will load up a single panel with
 				default settings*/
+
+	panel_widget_change_global(DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
+				   DEFAULT_AUTO_HIDE_STEP_SIZE,
+				   DEFAULT_MINIMIZED_SIZE,
+				   DEFAULT_MINIMIZE_DELAY);
+
 	for(num=1;num<=count;num++) {
 		/*these are only for free floating non-drawer like panels */
 		sprintf(buf,"/panel/Panel_%d/size=%d",num, 50);
@@ -609,11 +615,6 @@ init_user_panels(void)
 					 config.snapped,
 					 config.mode,
 					 state,
-					 DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
-					 DEFAULT_MINIMIZED_SIZE,
-					 DEFAULT_MINIMIZE_DELAY,
-					/*the previous three will get changed
-					  anyway, they are globals*/
 					 x,
 					 y,
 					 drop_pos);

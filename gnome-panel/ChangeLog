@@ -1,3 +1,13 @@
+Sat Apr 11 12:00:57 1998  George Lebl  <jirka@5z.com>
+
+	* panel-widget.[ch]: made some parameters global since
+	  they were used this way already. this cleans up
+	  some ugliness and makes hide buttons behave nice
+	  in autohide mode
+
+	* main.c, panel.c, drawer.c, panel_config.c panel_config_global.c:
+	  adapted to using the globals as globals
+
 Sat Apr 11 02:26:38 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: make stepsizes work again, use log curve

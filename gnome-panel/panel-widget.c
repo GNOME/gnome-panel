@@ -10,6 +10,11 @@ static void panel_widget_init		(PanelWidget      *panel_widget);
 
 static GdkCursor *fleur_cursor;
 
+static gint pw_explicit_step = 50;
+static gint pw_auto_step = 10;
+static gint pw_minimized_size = 6;
+static gint pw_minimize_delay = 300;
+
 /* FIXME: real DND is disabled, needs fixing(??), or might be left for dead
    really ... if an applet wants to do dnd it will do it on it's own and
    the panel will do interpanel drags differently
@@ -229,7 +234,7 @@ panel_widget_set_position(PanelWidget *panel)
 	newy = y;
 
 	if(panel->mode == PANEL_AUTO_HIDE && panel->state == PANEL_HIDDEN)
-		ycor = panel->thick - panel->minimized_size;
+		ycor = panel->thick - pw_minimized_size;
 	if(panel->orient == PANEL_VERTICAL) {
 		if(panel->state == PANEL_HIDDEN_LEFT)
 			xcor = - gdk_screen_height() +
@@ -734,20 +739,20 @@ move_step(gint src, gint dest, gint pos, gint step)
 }
 
 static void
-move_horiz(PanelWidget *panel, int src_x, int dest_x)
+move_horiz(PanelWidget *panel, gint src_x, gint dest_x, gint step)
 {
 	gint x, y;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
-	if (panel->step_size != 0) {
+	if (step != 0) {
 		if (src_x < dest_x) {
 			for (x = src_x; x < dest_x;
-			     x+= move_step(src_x,dest_x,x,panel->step_size))
+			     x+= move_step(src_x,dest_x,x,step))
 				move_window(GTK_WIDGET(panel), x, y);
 		} else {
 			for (x = src_x; x > dest_x;
-			     x-= move_step(src_x,dest_x,x,panel->step_size))
+			     x-= move_step(src_x,dest_x,x,step))
 				move_window(GTK_WIDGET(panel), x, y);
 		}
 	}
@@ -757,20 +762,20 @@ move_horiz(PanelWidget *panel, int src_x, int dest_x)
 
 
 static void
-move_vert(PanelWidget *panel, int src_y, int dest_y)
+move_vert(PanelWidget *panel, gint src_y, gint dest_y, gint step)
 {
 	gint x, y;
 
 	gdk_window_get_origin(GTK_WIDGET(panel)->window,&x,&y);
 
-	if (panel->step_size != 0) {
+	if (step != 0) {
 		if (src_y < dest_y) {
                         for (y = src_y; y < dest_y;
-			     y+= move_step(src_y,dest_y,y,panel->step_size))
+			     y+= move_step(src_y,dest_y,y,step))
 				move_window(GTK_WIDGET(panel),x,y);
 		} else {
                         for (y = src_y; y > dest_y;
-			     y-= move_step(src_y,dest_y,y,panel->step_size))
+			     y-= move_step(src_y,dest_y,y,step))
 				move_window(GTK_WIDGET(panel),x,y);
 		}
 	}
@@ -801,21 +806,23 @@ panel_widget_pop_up(PanelWidget *panel)
 
 	switch (panel->snapped) {
 		case PANEL_TOP:
-		        move_vert(panel, -height + panel->minimized_size, 0);
+		        move_vert(panel, -height + pw_minimized_size, 0,
+				  pw_auto_step);
 			break;
 
 		case PANEL_BOTTOM:
-			move_vert(panel, sheight - panel->minimized_size, 
-				  sheight - height);
+			move_vert(panel, sheight - pw_minimized_size, 
+				  sheight - height,pw_auto_step);
 			break;
 
 		case PANEL_LEFT:
-			move_horiz(panel, -width + panel->minimized_size, 0);
+			move_horiz(panel, -width + pw_minimized_size, 0,
+				   pw_auto_step);
 			break;
 
 		case PANEL_RIGHT:
-			move_horiz(panel, swidth - panel->minimized_size, 
-				   swidth - width);
+			move_horiz(panel, swidth - pw_minimized_size, 
+				   swidth - width,pw_auto_step);
 			break;
 		default: break; /*to get rid of a warning*/
 	}
@@ -841,7 +848,7 @@ panel_widget_pop_down(gpointer data)
 	/*we are moving, so wait with the pop_down*/
 	if(panel->currently_dragged_applet) {
 		panel->leave_notify_timer_tag =
-			gtk_timeout_add (panel->minimize_delay,
+			gtk_timeout_add (pw_minimize_delay,
 					 panel_widget_pop_down, panel);
 		return FALSE;
 	}
@@ -859,21 +866,25 @@ panel_widget_pop_down(gpointer data)
 
 	switch (panel->snapped) {
 		case PANEL_TOP:
-			move_vert(panel, 0, -height + panel->minimized_size);
+			move_vert(panel, 0, -height + pw_minimized_size,
+				  pw_auto_step);
 			break;
 
 		case PANEL_BOTTOM:
 			move_vert(panel, sheight - height, 
-				  sheight - panel->minimized_size);
+				  sheight - pw_minimized_size,
+				  pw_auto_step);
 			break;
 
 		case PANEL_LEFT:
-			move_horiz(panel, 0, -width + panel->minimized_size);
+			move_horiz(panel, 0, -width + pw_minimized_size,
+				   pw_auto_step);
 			break;
 
 		case PANEL_RIGHT:
 			move_horiz(panel, swidth - width, 
-				   swidth - panel->minimized_size);
+				   swidth - pw_minimized_size,
+				   pw_auto_step);
 			break;
 		default: break; /*to get rid of a warning*/
 	}
@@ -905,17 +916,21 @@ panel_widget_pop_show(PanelWidget *panel, int fromright)
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(panel, -width +
-				   panel->hidebutton_w->allocation.width, 0);
+				   panel->hidebutton_w->allocation.width, 0,
+				   pw_explicit_step);
 		else
 			move_horiz(panel, width -
-				   panel->hidebutton_e->allocation.width, 0);
+				   panel->hidebutton_e->allocation.width, 0,
+				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(panel, -height +
-				  panel->hidebutton_s->allocation.height, 0);
+				  panel->hidebutton_s->allocation.height, 0,
+				  pw_explicit_step);
 		else
 			move_vert(panel, height -
-				  panel->hidebutton_n->allocation.height, 0);
+				  panel->hidebutton_n->allocation.height, 0,
+				  pw_explicit_step);
 	}
 
 	panel->state = PANEL_SHOWN;
@@ -957,17 +972,21 @@ panel_widget_pop_hide(PanelWidget *panel, int fromright)
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(fromright)
 			move_horiz(panel, 0, -width +
-				   panel->hidebutton_w->allocation.width);
+				   panel->hidebutton_w->allocation.width,
+				   pw_explicit_step);
 		else
 			move_horiz(panel, 0, width -
-				   panel->hidebutton_e->allocation.width);
+				   panel->hidebutton_e->allocation.width,
+				   pw_explicit_step);
 	} else {
 		if(fromright)
 			move_vert(panel, 0, -height +
-				  panel->hidebutton_s->allocation.height);
+				  panel->hidebutton_s->allocation.height,
+				  pw_explicit_step);
 		else
 			move_vert(panel, 0, height -
-				  panel->hidebutton_n->allocation.height);
+				  panel->hidebutton_n->allocation.height,
+				  pw_explicit_step);
 	}
 
 	if(fromright)
@@ -1045,7 +1064,7 @@ panel_leave_notify(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 	
 	/* set up our delay for popup. */
 	panel->leave_notify_timer_tag =
-		gtk_timeout_add (panel->minimize_delay,
+		gtk_timeout_add (pw_minimize_delay,
 				 panel_widget_pop_down, panel);
 	
 	return FALSE;
@@ -1182,9 +1201,6 @@ panel_widget_new (gint size,
 		  PanelSnapped snapped,
 		  PanelMode mode,
 		  PanelState state,
-		  gint step_size,
-		  gint minimized_size,
-		  gint minimize_delay,
 		  gint pos_x,
 		  gint pos_y,
 		  DrawerDropZonePos drop_zone_pos)
@@ -1272,9 +1288,6 @@ panel_widget_new (gint size,
 	panel->orient = orient;
 	panel->mode = mode;
 	panel->state = state;
-	panel->step_size = step_size;
-	panel->minimized_size = minimized_size;
-	panel->minimize_delay = minimize_delay;
 
 	panel->thick = PANEL_MINIMUM_WIDTH;
 
@@ -2049,9 +2062,6 @@ panel_widget_change_params(PanelWidget *panel,
 			   PanelSnapped snapped,
 			   PanelMode mode,
 			   PanelState state,
-			   gint step_size,
-			   gint minimized_size,
-			   gint minimize_delay,
 			   DrawerDropZonePos drop_zone_pos)
 {
 	PanelOrientation oldorient;
@@ -2146,10 +2156,6 @@ panel_widget_change_params(PanelWidget *panel,
 	   			panel_widget_signals[STATE_CHANGE_SIGNAL],
 	   			panel->state);
 
-	panel->step_size = step_size;
-	panel->minimize_delay = minimize_delay;
-	panel->minimized_size = minimized_size;
-
 	if(panel->mode == PANEL_AUTO_HIDE)
 		panel_widget_pop_down(panel);
 }
@@ -2163,9 +2169,6 @@ panel_widget_change_orient(PanelWidget *panel,
 				   panel->snapped,
 				   panel->mode,
 				   panel->state,
-				   panel->step_size,
-				   panel->minimized_size,
-				   panel->minimize_delay,
 				   panel->drawer_drop_zone_pos);
 }
 
@@ -2178,6 +2181,26 @@ panel_widget_restore_state(PanelWidget *panel)
 	  function should do a complete restore*/
 	panel_widget_set_size(panel,panel->size);
 }
+
+
+/*change global params*/
+void
+panel_widget_change_global(gint explicit_step,
+			   gint auto_step,
+			   gint minimized_size,
+			   gint minimize_delay)
+{
+	if(explicit_step>0)
+		pw_explicit_step=explicit_step;
+	if(auto_step>0)
+		pw_auto_step=auto_step;
+	if(minimized_size>0)
+		pw_minimized_size=minimized_size;
+	if(minimize_delay>=0)
+		pw_minimize_delay=minimize_delay;
+}
+
+
 
 #if 0
 /*this does not really work, it's old test code, in the unlikely event

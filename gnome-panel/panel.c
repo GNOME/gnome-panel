@@ -55,23 +55,13 @@ get_applet_geometry(GtkWidget *applet, int *x, int *y, int *width, int *height)
 		*height = applet->allocation.height;
 }*/
 
-static void
-apply_global_config_to_panel(gpointer data, gpointer user_data)
-{
-	PanelWidget *panel = data;
-
-	if(panel->mode == PANEL_AUTO_HIDE)
-		panel->step_size = global_config.auto_hide_step_size;
-	else
-		panel->step_size = global_config.explicit_hide_step_size;
-	panel->minimize_delay = global_config.minimize_delay;
-	panel->minimized_size = global_config.minimized_size;
-}
-
 void
 apply_global_config(void)
 {
-	g_list_foreach(panels,apply_global_config_to_panel,NULL);
+	panel_widget_change_global(global_config.explicit_hide_step_size,
+				   global_config.auto_hide_step_size,
+				   global_config.minimized_size,
+				   global_config.minimize_delay);
 	if(global_config.tooltips_enabled)
 		gtk_tooltips_enable(panel_tooltips);
 	else
@@ -210,14 +200,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 	gnome_config_set_int(fullpath,panel->state);
 	g_free(fullpath);
 
-	fullpath = g_copy_strings(path,"minimized_size",NULL);
-	gnome_config_set_int(fullpath,panel->minimized_size);
-	g_free(fullpath);
-
-	fullpath = g_copy_strings(path,"minimize_delay",NULL);
-	gnome_config_set_int(fullpath,panel->minimize_delay);
-	g_free(fullpath);
-
 	fullpath = g_copy_strings(path,"size",NULL);
 	gnome_config_set_int(fullpath,panel->size);
 	g_free(fullpath);
@@ -293,6 +275,10 @@ panel_session_save (GnomeClient *client,
 			     global_config.auto_hide_step_size);
 	gnome_config_set_int("/panel/Config/explicit_hide_step_size",
 			     global_config.explicit_hide_step_size);
+	gnome_config_set_int("/panel/Config/minimized_size",
+			     global_config.minimized_size);
+	gnome_config_set_int("/panel/Config/minimize_delay",
+			     global_config.minimize_delay);
 	gnome_config_set_bool("/panel/Config/tooltips_enabled",
 			      global_config.tooltips_enabled);
 	gnome_config_set_bool("/panel/Config/show_small_icons",
