@@ -58,7 +58,7 @@ typedef struct _AppletInfo AppletInfo;
 struct _AppletUserMenu {
 	gchar *name;
 	gchar *text;
-	AppletInfo *info;
+	gint applet_id;
 };
 
 struct _AppletInfo {
@@ -101,7 +101,7 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
-void panel_clean_applet(AppletInfo *info);
+void panel_clean_applet(gint applet_id);
 
 /*stuff for corba*/
 int applet_request_id (const char *path, char **cfgpath,
@@ -126,7 +126,10 @@ void applet_remove_from_panel(gint applet_id);
 
 /*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel, char *cfgpath);
-void orientation_change(AppletInfo *info, PanelWidget *panel);
+void orientation_change(gint applet_id, PanelWidget *panel);
+
+#define get_applet_info(applet_id) \
+	(&g_array_index(applets,AppletInfo,applet_id))
 
 END_GNOME_DECLS
 

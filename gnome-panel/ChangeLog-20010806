@@ -1,3 +1,12 @@
+Sat Apr 18 23:16:22 1998  George Lebl  <jirka@5z.com>
+
+	* panel.[ch],main.c: made applets an array and make the
+	  whole thing pass applet_id around instead of a pointer
+	  this solves a bunch of braindamages, but also makes
+	  the whole thing give a bunch of warnings since I'm
+	  passing integers though pointers. This all should
+	  make memory weirdness less likely.
+
 Sat Apr 18 00:05:53 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: launch appets with load_applet so that we can

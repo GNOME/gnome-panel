@@ -26,7 +26,8 @@ int launcher_pid=0;
 #endif
 
 /*GList *panels = NULL;*/
-GList *applets = NULL;
+GArray *applets;
+gint applet_count;
 
 extern GtkWidget * root_menu;
 
@@ -59,11 +60,9 @@ static GList * children = NULL;
 
 typedef struct _AppletChild AppletChild;
 struct _AppletChild {
-	AppletInfo *info;
+	gint applet_id;
 	pid_t pid;
 };
-
-
 
 GList *load_queue=NULL;
 	
@@ -149,7 +148,7 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 
 			child = g_new(AppletChild,1);
 			
-			child->pid=fork();
+			child->pid = fork();
 
 			if(child->pid==-1)
 				g_error("Can't fork!");
@@ -162,11 +161,7 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 			/*command = g_copy_strings ("(true;", fullparams, ") &",
 						  NULL);*/
 
-			for(list=applets;g_list_next(list)!=NULL;
-			    list=g_list_next(list))
-				;
-
-			child->info = list->data;
+			child->applet_id = applet_count-1;
 				
 			children = g_list_prepend(children,child);
 
@@ -312,8 +307,9 @@ panel_realize(GtkWidget *widget, gpointer data)
 static void orient_change_foreach(gpointer data, gpointer user_data);
 
 void
-orientation_change(AppletInfo *info, PanelWidget *panel)
+orientation_change(gint applet_id, PanelWidget *panel)
 {
+	AppletInfo *info = get_applet_info(applet_id);
 	if(info->type == APPLET_EXTERN) {
 		PanelOrientType orient=ORIENT_UP;
 		switch(panel->snapped) {
@@ -401,12 +397,10 @@ orientation_change(AppletInfo *info, PanelWidget *panel)
 static void
 orient_change_foreach(gpointer data, gpointer user_data)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
+	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
 	PanelWidget *panel = user_data;
 
-	if(!info) return;
-
-	orientation_change(info,panel);
+	orientation_change(applet_id,panel);
 }
 
 
@@ -424,9 +418,8 @@ panel_orient_change(GtkWidget *widget,
 static void
 state_restore_foreach(gpointer data, gpointer user_data)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-
-	if(!info) return;
+	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
 		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
@@ -441,9 +434,8 @@ state_restore_foreach(gpointer data, gpointer user_data)
 static void
 state_hide_foreach(gpointer data, gpointer user_data)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-
-	if(!info) return;
+	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
 		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
@@ -473,9 +465,8 @@ panel_state_change(GtkWidget *widget,
 static gint
 applet_move_foreach(gpointer data, gpointer user_data)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(data));
-
-	if(!info) return FALSE;
+	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(data));
+	AppletInfo *info = get_applet_info(applet_id);
 
 	if(info->type == APPLET_DRAWER) {
 		if(PANEL_WIDGET(info->assoc)->state == PANEL_SHOWN) {
@@ -509,7 +500,7 @@ panel_size_allocate(GtkWidget *widget, GtkAllocation *alloc, gpointer data)
 }
 
 struct _added_info {
-	AppletInfo *info;
+	gint applet_id;
 	PanelWidget *panel;
 };
 
@@ -518,7 +509,7 @@ panel_applet_added_idle(gpointer data)
 {
 	struct _added_info *ai = data;
 
-	orientation_change(ai->info,ai->panel);
+	orientation_change(ai->applet_id,ai->panel);
 	g_free(ai);
 
 	return FALSE;
@@ -527,14 +518,13 @@ panel_applet_added_idle(gpointer data)
 static gint
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 {
-	AppletInfo *info = gtk_object_get_user_data(GTK_OBJECT(applet));
+	gint applet_id = (gint)gtk_object_get_user_data(GTK_OBJECT(applet));
 	PanelWidget *panel = PANEL_WIDGET(widget);
 	struct _added_info *ai = g_new(struct _added_info,1);
 
-	g_return_val_if_fail(info != NULL, FALSE);
 	g_return_val_if_fail(ai != NULL, FALSE);
 
-	ai->info = info;
+	ai->applet_id = applet_id;
 	ai->panel = panel;
 
 	gtk_idle_add(panel_applet_added_idle,ai);
@@ -814,7 +804,7 @@ sigchld_handler(int type)
 	for(list=children;list!=NULL;list=g_list_next(list)) {
 		AppletChild *child=list->data;
 		if(child->pid == pid) {
-			panel_clean_applet(child->info);
+			panel_clean_applet(child->applet_id);
 			break;
 		}
 	}
@@ -861,6 +851,9 @@ main(int argc, char **argv)
 		_exit(1);
 	}
 #endif
+
+	applets = g_array_new(FALSE);
+	applet_count=0;
 
 	/*set up global options*/
 	
