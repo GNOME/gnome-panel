@@ -193,7 +193,7 @@ glade_src = \
 EXTRA_DIST =					\
 	GNOME_Panel.server.in			\
 	panel.hints				\
-	gnome-panel-properties.desktop		\
+	gnome-panel-properties.desktop.in		\
 	gnome-panel-properties			\
 	$(glade_src)				\
 	$(glade_DATA)				\
@@ -214,7 +214,9 @@ hintsdir = $(datadir)/gnome/hints
 hints_DATA = panel.hints
 
 sysdir = $(datadir)/gnome/capplets
-sys_DATA = gnome-panel-properties.desktop
+sys_in_files = gnome-panel-properties.desktop.in
+sys_DATA = $(sys_in_files:.desktop.in=.desktop)
+@INTLTOOL_DESKTOP_RULE@
 
 panel_enum_headers =				\
 	$(top_srcdir)/panel/panel-types.h	\
