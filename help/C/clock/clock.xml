@@ -1,9 +1,124 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+<!ENTITY legal SYSTEM "legal.xml"> <!-- this is file with legalinfo; -->
+                                   <!-- no need to edit it. --> 
+<!ENTITY version "1.0">      <!-- replace with application version -->
+<!ENTITY date "April 2000"> <!-- date the manual was last updated -->
+<!ENTITY app "<application>GNOME Clock applet</application>">
+]>
+
+<article id="index" lang="en"> 
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+
+
+ 
+
+<articleinfo>
+  <title>GNOME Clock Applet</title>
+ <!-- According to GFDL, the Title Page "should use  a title distinct from that of 
+      the Document, and from those of previous versions (which should, if there were 
+      any, be listed in the History section of the Document). You may use the same 
+      title as a previous version if the original publisher of that version gives 
+      permission." An easy way to satisfy this requirement (if you do
+      not have orginal publisher's permission)  is to include version
+      number as part of the title, e.g. MY-GNOME-APP V2.0
+   -->
+  <copyright>
+	<year>2000</year>
+	<holder>Dan Mueth</holder>
+  </copyright>
+  
+
+  
+  <!-- translators: uncomment this:
+
+  <copyright>
+   <year>2000</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+
+
+
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+
+  <publisher>
+	<publishername>
+	  GNOME Documentation Project
+	</publishername>
+  </publisher>
+
+
+ &legal; <!-- This file  contains link to license for the documentation (GNU
+               FDL), and other
+               legal stuff such as "NO WARRANTY" statement. Please do
+               not change any of this. -->
+
+
+  <legalnotice id="feedback">
+      <title>Feedback Information</title>
+	<para>
+	  To report a bug or make a suggestion regarding this
+	  application or this documentation, please see  the
+	  <ulink type="help"
+	  url="ghelp:gnome-feedback">GNOME Feedback Page</ulink>.
+	</para>
+  </legalnotice>
+
+  <authorgroup>
+	<author>
+	  <firstname>Dan </firstname>
+	  <surname> Mueth</surname>
+	  <affiliation>
+		<orgname>GNOME Documentation Project</orgname>
+	  </affiliation>
+	</author>
+  </authorgroup>
+
+
+
+<!-- According to GNU FDL, revision history is mandatory if you are -->
+<!-- modifiyng/reusing someone else's document.  If not, you can omit it. -->  
+
+
+  <revhistory>
+
+	<revision>
+	  <revnumber>1.0</revnumber>
+	  <date> April 2000</date> <!-- or use &date; -->
+	  <revdescription>
+	    <para role="author">Dan Mueth</para>
+                   <para role="publisher">GNOME Documentation Project</para>
+          </revdescription>
+
+	</revision>
+
+
+  </revhistory>
+
+    <releaseinfo>
+       This manual describes version &version; of &app;. It was
+       last updated on &date;.
+    </releaseinfo>
+ </articleinfo>
+
+<indexterm zone="index"><primary>Clock applet</primary></indexterm>
+
+
+ <!-- ============= Document Body ============================= -->
+
+
  <sect1 id="clock">
   <title>Clock Applet</title>
 
    <para>
    <application>Clock</application> applet, shown in <xref
-   linkend="clockapplet-fig">, is a simple applet which shows the
+   linkend="clockapplet-fig" />, is a simple applet which shows the
    time (and optionally the date too) in any of several formats.  To
    add this applet to a <interface>Panel</interface>, 
    right-click on the <interface>Panel</interface> and choose
@@ -20,9 +135,8 @@
    <title>Clock Applet</title>
    <screenshot>
     <screeninfo>Clock Applet</screeninfo>
-    <graphic format="png" fileref="figures/clock_applet" 
-    srccredit="muet">
-    </graphic>
+    <graphic format="PNG" fileref="figures/clock_applet.png" 
+    srccredit="muet" />
    </screenshot>
   </figure>
 
@@ -76,7 +190,7 @@
       applet by right-clicking on it and choosing
       <guimenuitem>Properties&hellip;</guimenuitem>. This will open the
       <interface>Properties</interface> dialog(shown in <xref
-      linkend="clock-settings-fig">), which allows you to
+      linkend="clock-settings-fig" />), which allows you to
       change various settings.
     </para>
 
@@ -84,9 +198,8 @@
      <title>Properties dialog</title>
      <screenshot>
       <screeninfo>Properties dialog</screeninfo>
-      <graphic format="png" fileref="figures/clock_settings"
-      srccredit="muet">
-      </graphic>
+      <graphic format="PNG" fileref="figures/clock_settings.png"
+      srccredit="muet" />
      </screenshot>
     </figure>
 
@@ -258,6 +371,4 @@
 
  </sect1>
 
-
-
-
+  </article>

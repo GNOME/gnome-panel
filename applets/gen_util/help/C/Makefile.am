@@ -1,2 +1,2 @@
-SUBDIRS = pager tasklist
+SUBDIRS = pager tasklist clock
 
