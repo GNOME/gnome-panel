@@ -1,3 +1,30 @@
+2003-12-04  Vincent Untz  <vincent@vuntz.net>
+
+	We now use a string to identify the clock format that will be used.
+	This simplifies a bit the code and the schemas. It's much nicer.
+	Fix bug #85693.
+
+	* clock.c: (clock_timeout_callback), (update_timeformat),
+	(update_clock), (refresh_clock_timeout), (copy_time): updated to use
+	the new ClockFormat enum.
+	(hour_format_changed), (internet_time_changed), (unix_time_changed):
+	kill those functions which are replaced by...
+	(format_changed): new function to handle a format change in gconf.
+	(setup_gconf): remove listeners for the old keys, add a new one for the
+	new key.
+	(clock_migrate_to_26): function to migrate the user configuration to
+	the new schema.
+	(clock_locale_format): new function to isolate the nl_langinfo call.
+	(fill_clock_applet): use the new key for the format.
+	(set_hour_format_cb), (set_internettime_cb), (set_unixtime_cb): kill
+	those functions which are replaced by...
+	(set_format_cb): callback when setting the clock format in the pref.
+	(display_properties_dialog): updated to use set_format_cb and the new
+	format stuff.
+	
+	* clock.schemas.in: add a format key and describe the hour_format,
+	unix_time, internet_time key as deprecated.
+
 2003-11-13  Vincent Untz  <vincent@vuntz.net>
 
 	* clock.c: (update_timeformat) remove leading zero from dates < 10 by

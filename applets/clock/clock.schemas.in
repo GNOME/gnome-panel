@@ -2,15 +2,21 @@
     <schemalist>
 
       <schema>
-        <key>/schemas/apps/clock_applet/prefs/hour_format</key>
+        <key>/schemas/apps/clock_applet/prefs/format</key>
         <owner>clock-applet</owner>
-        <type>int</type>
+        <type>string</type>
         <locale name="C">
-          <default>24</default>
+          <default>24-hour</default>
           <short>Hour format</short>
           <long>
             This key specifies the hour format used by the clock applet.
-            Possible values are 12 and 24.
+            Possible values are "12-hour", "24-hour", "internet" and "unix".
+            If set to "internet", the clock will display internet time.
+            The internet time system divides the day into 1000 ".beats". There
+            is no time zones in this system, so time is the same all over the
+            world.
+            If set to "unix", the clock will display time in seconds since
+            Epoch, i.e. 1970-01-01.
           </long>
         </locale>
 	<locale name="en_US">
@@ -67,6 +73,38 @@
       </schema>
 
       <schema>
+        <key>/schemas/apps/clock_applet/prefs/config_tool</key>
+        <owner>clock-applet</owner>
+        <type>string</type>
+        <default> </default>
+        <locale name="C">
+          <short>Time configuration tool</short>
+          <long>
+            This key specifies the program to run in order to configure the
+            time.
+          </long>
+        </locale>
+      </schema>
+
+      <schema>
+        <key>/schemas/apps/clock_applet/prefs/hour_format</key>
+        <owner>clock-applet</owner>
+        <type>int</type>
+        <locale name="C">
+          <default>24</default>
+          <short>Hour format</short>
+          <long>
+	    The use of this key was deprecated in GNOME 2.6 in favour of the
+	    'format' key. The schema is retained for compatibility with older
+	    versions.
+          </long>
+        </locale>
+	<locale name="en_US">
+	  <default>12</default>
+	</locale>
+      </schema>
+
+      <schema>
         <key>/schemas/apps/clock_applet/prefs/unix_time</key>
         <owner>clock-applet</owner>
         <type>bool</type>
@@ -74,7 +112,9 @@
         <locale name="C">
           <short>Use UNIX time</short>
           <long>
-            If true, display time in seconds since Epoch, i.e. 1970-01-01.
+	    The use of this key was deprecated in GNOME 2.6 in favour of the
+	    'format' key. The schema is retained for compatibility with older
+	    versions.
           </long>
         </locale>
       </schema>
@@ -87,23 +127,9 @@
         <locale name="C">
           <short>Use internet time</short>
           <long>
-            If true, display internet time. The internet time system divides
-            the day into 1000 ".beats". There is no time zones in this system,
-            so time is the same all over the world.
-          </long>
-        </locale>
-      </schema>
-
-      <schema>
-        <key>/schemas/apps/clock_applet/prefs/config_tool</key>
-        <owner>clock-applet</owner>
-        <type>string</type>
-        <default> </default>
-        <locale name="C">
-          <short>Time configuration tool</short>
-          <long>
-            This key specifies the program to run in order to configure the
-            time.
+	    The use of this key was deprecated in GNOME 2.6 in favour of the
+	    'format' key. The schema is retained for compatibility with older
+	    versions.
           </long>
         </locale>
       </schema>

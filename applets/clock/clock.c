@@ -53,17 +53,30 @@
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 7
+#define N_GCONF_PREFS 5
 
 #define NEVER_SENSITIVE "never_sensitive"
 
-static const char* KEY_HOUR_FORMAT   = "hour_format";
+static const char* KEY_FORMAT        = "format";
 static const char* KEY_SHOW_SECONDS  = "show_seconds";
 static const char* KEY_SHOW_DATE     = "show_date";
 static const char* KEY_GMT_TIME      = "gmt_time";
-static const char* KEY_UNIX_TIME     = "unix_time";
-static const char* KEY_INTERNET_TIME = "internet_time";
 static const char* KEY_CONFIG_TOOL   = "config_tool";
+
+typedef enum {
+	CLOCK_FORMAT_12,
+	CLOCK_FORMAT_24,
+	CLOCK_FORMAT_UNIX,
+	CLOCK_FORMAT_INTERNET
+} ClockFormat;
+
+static GConfEnumStringPair format_type_enum_map [] = {
+	{ CLOCK_FORMAT_12,       "12-hour" },
+	{ CLOCK_FORMAT_24,       "24-hour" },
+	{ CLOCK_FORMAT_UNIX,     "unix" },
+	{ CLOCK_FORMAT_INTERNET, "internet" },
+	{ 0, NULL}
+};
 
 typedef struct _ClockData ClockData;
 
@@ -76,12 +89,10 @@ struct _ClockData {
 	GtkWidget *about;
   
 	/* preferences */
-	int hourformat;
-	gboolean showseconds;
-	gboolean showdate;
-	gboolean unixtime;
-	gboolean internettime;
-	gboolean gmt_time;
+	ClockFormat format;
+	gboolean    showseconds;
+	gboolean    showdate;
+	gboolean    gmt_time;
 
         char *config_tool;
         
@@ -151,8 +162,8 @@ clock_timeout_callback (gpointer data)
 
 	update_clock (cd, current_time);
 
-	if (!cd->showseconds && !cd->unixtime) {
-		if (!cd->internettime) {
+	if (!cd->showseconds && cd->format != CLOCK_FORMAT_UNIX) {
+		if (cd->format != CLOCK_FORMAT_INTERNET) {
 			int sec = current_time % 60;
 			if (sec != 0 || cd->timeouttime != 60000) {
 				/* ensure next update is exactly on 0 seconds */
@@ -215,7 +226,7 @@ update_timeformat (ClockData *cd)
 	const char *date_format;
 	char       *clock_format;
 
-	if (cd->hourformat == 12)
+	if (cd->format == CLOCK_FORMAT_12)
 		time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
 	else
 		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
@@ -320,7 +331,7 @@ update_clock (ClockData * cd, time_t current_time)
 	else
 		tm = localtime (&current_time);
 
-	if (cd->unixtime) {
+	if (cd->format == CLOCK_FORMAT_UNIX) {
 		if ((cd->orient == PANEL_APPLET_ORIENT_LEFT ||
 		     cd->orient == PANEL_APPLET_ORIENT_RIGHT) &&
 		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM) {
@@ -330,7 +341,7 @@ update_clock (ClockData * cd, time_t current_time)
 		} else {
 			g_snprintf (hour, sizeof(hour), "%lu", (unsigned long)current_time);
 		} 
-	} else if (cd->internettime) {
+	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
 		float itime = get_itime (current_time);
 		if (cd->showseconds)
 			g_snprintf (hour, sizeof (hour), "@%3.2f", itime);
@@ -382,7 +393,7 @@ refresh_clock_timeout(ClockData *cd)
 	time (&current_time);
 	update_clock (cd, current_time);
 	
-	if (cd->internettime) {
+	if (cd->format == CLOCK_FORMAT_INTERNET) {
 		if (cd->showseconds)
 			cd->timeouttime = INTERNETSECOND;
 		else {
@@ -397,7 +408,7 @@ refresh_clock_timeout(ClockData *cd)
 			cd->timeouttime = (864 - isec)*100;
 		}
 	}
-	else if(cd->unixtime || cd->showseconds)
+	else if(cd->format == CLOCK_FORMAT_UNIX || cd->showseconds)
 		cd->timeouttime = 1000;
 	else
 		cd->timeouttime = (60 - current_time % 60)*1000;
@@ -760,10 +771,10 @@ copy_time (BonoboUIComponent *uic,
 	char string[256];
 	char *utf8;
 
-	if (cd->unixtime) {
+	if (cd->format == CLOCK_FORMAT_UNIX) {
 		g_snprintf (string, sizeof(string), "%lu",
 			    (unsigned long)current_time);
-	} else if (cd->internettime) {
+	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
 		float itime = get_itime (current_time);
 		if (cd->showseconds)
 			g_snprintf (string, sizeof (string), "@%3.2f", itime);
@@ -773,7 +784,7 @@ copy_time (BonoboUIComponent *uic,
 		struct tm *tm;
 		char      *format;
 
-		if (cd->hourformat == 12) {
+		if (cd->format == CLOCK_FORMAT_12) {
 			if (cd->showseconds)
 				format = g_locale_from_utf8 (_("%I:%M:%S %p"), -1, NULL, NULL, NULL);
 			else
@@ -922,23 +933,23 @@ static const BonoboUIVerb clock_menu_verbs [] = {
 };
 
 static void
-hour_format_changed (GConfClient  *client,
-                     guint         cnxn_id,
-                     GConfEntry   *entry,
-                     ClockData    *clock)
+format_changed (GConfClient  *client,
+                guint         cnxn_id,
+                GConfEntry   *entry,
+                ClockData    *clock)
 {
-	int value;
+	const char  *value;
+	int          new_format;
 	
-	if (!entry->value || entry->value->type != GCONF_VALUE_INT)
+	if (!entry->value || entry->value->type != GCONF_VALUE_STRING)
 		return;
 
-	value = gconf_value_get_int (entry->value);
-	
-	if (value == 12 || value == 24)
-		clock->hourformat = value;
-	else
-		clock->hourformat = 12;
+	value = gconf_value_get_string (entry->value);
+	if (!gconf_string_to_enum (format_type_enum_map, value, &new_format) ||
+	    new_format == clock->format)
+		return;
 
+	clock->format = new_format;
 	update_timeformat (clock);
 	refresh_clock (clock);
 }
@@ -976,40 +987,6 @@ show_date_changed (GConfClient  *client,
 	clock->showdate = (value != 0);
 	update_timeformat (clock);
 	refresh_clock (clock);
-}
-
-static void
-internet_time_changed (GConfClient *client,
-                       guint        cnxn_id,
-                       GConfEntry  *entry,
-                       ClockData   *clock)
-{
-	gboolean value;
-	
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-
-	value = gconf_value_get_bool (entry->value);
-	
-	clock->internettime = (value != 0);
-	refresh_clock_timeout (clock);
-}
-
-static void
-unix_time_changed (GConfClient *client,
-                   guint        cnxn_id,
-                   GConfEntry  *entry,
-                   ClockData   *clock)
-{
-	gboolean value;
-	
-	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
-		return;
-
-	value = gconf_value_get_bool (entry->value);
-	
-	clock->unixtime = (value != 0);
-	refresh_clock_timeout (clock);
 }
 
 static void
@@ -1055,11 +1032,11 @@ setup_gconf (ClockData *clock)
 	client = gconf_client_get_default ();
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_HOUR_FORMAT);
+					       KEY_FORMAT);
 	clock->listeners [0] =
 		gconf_client_notify_add (
 				client, key,
-				(GConfClientNotifyFunc) hour_format_changed,
+				(GConfClientNotifyFunc) format_changed,
 				clock, NULL, NULL);
 	g_free (key);
 
@@ -1090,27 +1067,9 @@ setup_gconf (ClockData *clock)
 				clock, NULL, NULL);
 	g_free (key);
 
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_UNIX_TIME);
-	clock->listeners [4] =
-		gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc)unix_time_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
-	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
-					       KEY_INTERNET_TIME);
-	clock->listeners [5] =
-		gconf_client_notify_add (
-				client, key,
-				(GConfClientNotifyFunc)internet_time_changed,
-				clock, NULL, NULL);
-	g_free (key);
-
         key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_CONFIG_TOOL);
-	clock->listeners [6] =
+	clock->listeners [4] =
 		gconf_client_notify_add (
 				client, key,
 				(GConfClientNotifyFunc) config_tool_changed,
@@ -1120,11 +1079,55 @@ setup_gconf (ClockData *clock)
 	g_object_unref (G_OBJECT (client));
 }
 
+static void
+clock_migrate_to_26 (ClockData *clock)
+{
+	gboolean  unixtime;
+	gboolean  internettime;
+	int       hourformat;
+
+	internettime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
+						    "internet_time",
+						    NULL);
+	unixtime = panel_applet_gconf_get_bool (PANEL_APPLET (clock->applet),
+						"unix_time",
+						NULL);
+	hourformat = panel_applet_gconf_get_int (PANEL_APPLET (clock->applet),
+						 "hour_format",
+						 NULL);
+
+	if (unixtime)
+		clock->format = CLOCK_FORMAT_UNIX;
+	else if (internettime)
+		clock->format = CLOCK_FORMAT_INTERNET;
+	else if (hourformat == 12)
+		clock->format = CLOCK_FORMAT_12;
+	else if (hourformat == 24)
+		clock->format = CLOCK_FORMAT_24;
+
+	panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
+				       KEY_FORMAT,
+				       gconf_enum_to_string (format_type_enum_map,
+							     clock->format),
+				       NULL);
+}
+
+static inline ClockFormat
+clock_locale_format (void)
+{
+	const char *am;
+
+	am = nl_langinfo (AM_STR);
+	return (am[0] == '\0') ? CLOCK_FORMAT_24 : CLOCK_FORMAT_12;
+}
+
 static gboolean
 fill_clock_applet (PanelApplet *applet)
 {
 	ClockData *cd;
-	GError *error;
+	GError    *error;
+	char      *format_str;
+	int        format_int;
 	
 	panel_applet_add_preferences (applet, "/schemas/apps/clock_applet/prefs", NULL);
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
@@ -1137,15 +1140,22 @@ fill_clock_applet (PanelApplet *applet)
 
 	setup_gconf (cd);
 
-	error = NULL;
-	cd->hourformat = panel_applet_gconf_get_int (applet, KEY_HOUR_FORMAT, &error);
-	if (error || (cd->hourformat != 12 && cd->hourformat != 24)) {
-		/* if value is not valid, set it according to locale */
-		const char *am = nl_langinfo (AM_STR);
-		cd->hourformat = (am[0] == '\0') ? 24 : 12;
+	format_str = panel_applet_gconf_get_string (applet, KEY_FORMAT, NULL);
+	if (format_str) {
+		format_int = -1;
+		gconf_string_to_enum (format_type_enum_map,
+				      format_str,
+				      &format_int);
+		cd->format = format_int;
+		g_free (format_str);
+	} else {
+		cd->format = -1;
+		clock_migrate_to_26 (cd);
+	}
 
-		if (error)
-			g_error_free (error);
+	if (cd->format < 0) {
+		/* if value is not set, set it according to locale */
+		cd->format = clock_locale_format ();
 	}
 
 	cd->showseconds = panel_applet_gconf_get_bool (applet, KEY_SHOW_SECONDS, NULL);
@@ -1162,8 +1172,6 @@ fill_clock_applet (PanelApplet *applet)
 	}
 
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
-	cd->unixtime = panel_applet_gconf_get_bool (applet, KEY_UNIX_TIME, NULL);
-	cd->internettime = panel_applet_gconf_get_bool (applet, KEY_INTERNET_TIME, NULL);
 	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
 
 	cd->timeformat = NULL;
@@ -1265,22 +1273,16 @@ set_data_insensitive_cb (GtkWidget *w,
 }
 
 static void
-set_hour_format_cb (GtkWidget *w,
-		    gpointer data)
+set_format_cb (GtkWidget *w,
+	       gpointer data)
 {
 	ClockData *clock = g_object_get_data (G_OBJECT (w), "user_data");
-	panel_applet_gconf_set_int (PANEL_APPLET (clock->applet),
-				    KEY_HOUR_FORMAT,
-				    GPOINTER_TO_INT (data),
-				    NULL);
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_INTERNET_TIME,
-				     FALSE,
-				     NULL);
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_UNIX_TIME,
-				     FALSE,
-				     NULL);
+
+	panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
+				       KEY_FORMAT,
+				       gconf_enum_to_string (format_type_enum_map,
+							     GPOINTER_TO_INT (data)),
+				       NULL);
 }
 
 static void
@@ -1300,34 +1302,6 @@ set_show_date_cb (GtkWidget *w,
 	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
 				     KEY_SHOW_DATE,
 				     GTK_TOGGLE_BUTTON (w)->active,
-				     NULL);
-}
-
-static void
-set_internettime_cb (GtkWidget *w,
-		     ClockData *clock)
-{
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_INTERNET_TIME,
-				     TRUE,
-				     NULL);
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_UNIX_TIME,
-				     FALSE,
-				     NULL);
-}
-
-static void
-set_unixtime_cb (GtkWidget *w,
-		 ClockData *clock)
-{
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_UNIX_TIME,
-				     TRUE,
-				     NULL);
-	panel_applet_gconf_set_bool (PANEL_APPLET (clock->applet),
-				     KEY_INTERNET_TIME,
-				     FALSE,
 				     NULL);
 }
 
@@ -1457,30 +1431,32 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twelvehour); 
 	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
    	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_hour_format_cb),
-			  GINT_TO_POINTER (12));			   
+			  G_CALLBACK (set_format_cb),
+			  GINT_TO_POINTER (CLOCK_FORMAT_12));
 	gtk_widget_show (twelvehour);
 
 	twentyfourhour = gtk_menu_item_new_with_label (_("24 hour")); 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twentyfourhour);	
 	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
    	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_hour_format_cb),
-			  GINT_TO_POINTER (24));
+			  G_CALLBACK (set_format_cb),
+			  GINT_TO_POINTER (CLOCK_FORMAT_24));
 	gtk_widget_show (twentyfourhour);
 
 	unixtime = gtk_menu_item_new_with_label (_("UNIX time")); 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), unixtime);
+	g_object_set_data (G_OBJECT (unixtime), "user_data", cd);
 	g_signal_connect (G_OBJECT (unixtime), "activate", 
-			  G_CALLBACK (set_unixtime_cb), 
-			  cd);
+			  G_CALLBACK (set_format_cb),
+			  GINT_TO_POINTER (CLOCK_FORMAT_UNIX));
 	gtk_widget_show (unixtime);
 
 	internettime = gtk_menu_item_new_with_label (_("Internet time")); 
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), internettime);		   
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), internettime);
+	g_object_set_data (G_OBJECT (internettime), "user_data", cd);
 	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_internettime_cb),
-			  cd);
+			  G_CALLBACK (set_format_cb),
+			  GINT_TO_POINTER (CLOCK_FORMAT_INTERNET));
 	gtk_widget_show (internettime);		   
 
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
@@ -1516,22 +1492,15 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  cd);	
 	gtk_widget_show (use_gmt_time);
 
-	if (cd->internettime)
-		gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 3);
-	else if (cd->unixtime)
-		gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 2);
-	else if (cd->hourformat == 24)
-		gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 1);
-	else if (cd->hourformat == 12)
-		gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), 0);
+	gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), cd->format);
 
 	/* Some combinations of options do not make sense */
-	if (cd->unixtime) {
+	if (cd->format == CLOCK_FORMAT_UNIX) {
 		gtk_widget_set_sensitive (showseconds, FALSE);
 		gtk_widget_set_sensitive (showdate, FALSE);
 		gtk_widget_set_sensitive (use_gmt_time, FALSE);
 	}
-	if (cd->internettime) {
+	if (cd->format == CLOCK_FORMAT_INTERNET) {
 		gtk_widget_set_sensitive (showdate, FALSE);
 		gtk_widget_set_sensitive (use_gmt_time, FALSE);
 	}
@@ -1586,9 +1555,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 			  G_CALLBACK (properties_response_cb), cd);
 
 	/* Now set up the sensitivity based on gconf key writability */
-	setup_writability_sensitivity (cd, option_menu, label, KEY_HOUR_FORMAT);
-	setup_writability_sensitivity (cd, option_menu, label, KEY_UNIX_TIME);
-	setup_writability_sensitivity (cd, option_menu, label, KEY_INTERNET_TIME);
+	setup_writability_sensitivity (cd, option_menu, label, KEY_FORMAT);
 	setup_writability_sensitivity (cd, showseconds, NULL, KEY_SHOW_SECONDS);
 	setup_writability_sensitivity (cd, showdate, NULL, KEY_SHOW_DATE);
 	setup_writability_sensitivity (cd, use_gmt_time, NULL, KEY_GMT_TIME);
