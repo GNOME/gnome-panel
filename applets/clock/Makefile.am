@@ -9,6 +9,10 @@ INCLUDES = 					\
 	$(WNCKLET_CFLAGS) 			\
 	-DPAGER_GLADEDIR=\""$(gladedir)"\"	\
 	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"	\
+	-DDATADIR=\""$(datadir)"\"		\
+	-DLIBDIR=\""$(libdir)"\"		\
+	-DSYSCONFDIR=\""$(sysconfdir)"\"	\
+	-DPREFIX=\""$(prefix)"\"		\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 
 
