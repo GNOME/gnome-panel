@@ -47,10 +47,6 @@ void session_set_current_profile (const gchar *profile_name);
 
 void session_load (void);
 
-void session_remove_panel_from_config (PanelWidget *panel);
-
-void apply_global_config(void);
-
 void session_add_dead_launcher (const gchar *location);
 
 void panel_session_setup_config_sync (void);

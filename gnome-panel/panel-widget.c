@@ -20,11 +20,11 @@
 #include "applet.h"
 #include "panel-widget.h"
 #include "button-widget.h"
+#include "panel.h"
 #include "panel-util.h"
 #include "panel-marshal.h"
 #include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
-#include "session.h"
 
 typedef enum {
 	PANEL_SWITCH_MOVE = 0,
@@ -1574,7 +1574,7 @@ panel_widget_destroy (GtkObject *obj)
 
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
-	session_remove_panel_from_config (panel);
+	panel_session_remove_panel_from_config (panel);
 
 	if (GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy)
 		GTK_OBJECT_CLASS (panel_widget_parent_class)->destroy (obj);
