@@ -1,5 +1,14 @@
 2004-12-05  Vincent Untz  <vincent@vuntz.net>
 
+	Patch from Matthias Clasen <mclasen@redhat.com> in
+	bug #156162
+
+	* xstuff.c: (draw_zoom_animation): round the integer
+	co-ords only once since we seem to sometimes get
+	different results.
+
+2004-12-05  Vincent Untz  <vincent@vuntz.net>
+
 	Backport patch from HEAD
 
 	* panel.c: (drop_nautilus_uri): fix quoting issue that
