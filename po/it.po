@@ -3,37 +3,37 @@
 # Christopher R. Gabriel <cgabriel@pluto.linux.it>
 # Luca Ferretti <elle.uca@infinito.it>, 2003
 # Alessio Frusciante <algol@firenze.linux.it>, 2003
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-07-24 12:00+0100\n"
-"PO-Revision-Date: 2003-06-11 14:35+0200\n"
-"Last-Translator: Alessio Frusciante <algol@firenze.linux.it>\n"
+"POT-Creation-Date: 2003-07-15 23:23+0200\n"
+"PO-Revision-Date: 2003-08-05 19:54+0200\n"
+"Last-Translator: Luca Ferretti <elle.uca@infinito.it>\n"
 "Language-Team: Italiano <tp@list.linux.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M:%S %p"
-msgstr "%l:%M:%S %p"
+msgstr "%-I.%M.%S %p"
 
 #: applets/clock/clock.c:208
 msgid "%l:%M %p"
-msgstr "%I:%M %p"
+msgstr "%-I.%M %p"
 
 #: applets/clock/clock.c:210 applets/clock/clock.c:714
 msgid "%H:%M:%S"
-msgstr "%H:%M:%S"
+msgstr "%-H.%M.%S"
 
 #: applets/clock/clock.c:210 applets/clock/clock.c:716
 msgid "%H:%M"
-msgstr "%H:%M"
+msgstr "%-H.%M"
 
 #: applets/clock/clock.c:216
 msgid "%a %b %d"
-msgstr "%a %d %b"
+msgstr "%a %-d %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
@@ -60,7 +60,7 @@ msgstr "%s, %s"
 #. Show date in tooltip
 #: applets/clock/clock.c:333
 msgid "%A %B %d"
-msgstr "%A %d %B"
+msgstr "%A %-d %B"
 
 #: applets/clock/clock.c:457
 msgid "Calendar"
@@ -72,32 +72,29 @@ msgstr "Orologio del computer"
 
 #: applets/clock/clock.c:709
 msgid "%I:%M:%S %p"
-msgstr "%I:%M:%S %p"
+msgstr "%-I.%M.%S %p"
 
 #: applets/clock/clock.c:711
 msgid "%I:%M %p"
-msgstr "%I:%M %p"
+msgstr "%-I.%M %p"
 
 #: applets/clock/clock.c:750
 msgid "%A, %B %d %Y"
-msgstr "%A, %d %B %Y"
+msgstr "%A, %-d %B %Y"
 
 #: applets/clock/clock.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr ""
-"<b>Impossibile avviare questo programma</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Avvio dello strumento di configurazione dell'orario fallito: %s"
 
 #: applets/clock/clock.c:831
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
-msgstr ""
+msgstr "Impossibile trovare un programma per configurare data e ora. Forse non è installato."
 
 # dopo i ':' c'è sempre una lettera maiuscola... empiricamente
-#: applets/clock/clock.c:1277 applets/clock/clock.c:1549
+#: applets/clock/clock.c:1277 applets/clock/clock.c:1548
 #: applets/fish/fish.c:128 applets/notification_area/main.c:80
 #: applets/wncklet/showdesktop.c:404 applets/wncklet/window-list.c:116
 #: applets/wncklet/window-list.c:755 applets/wncklet/window-menu.c:82
@@ -111,57 +108,57 @@ msgstr "Errore nel mostrare la documentazione. %s"
 msgid "Clock Preferences"
 msgstr "Preferenze dell'orologio"
 
-#: applets/clock/clock.c:1358
+#: applets/clock/clock.c:1357
 msgid "Clock _type:"
 msgstr "_Tipo di orologio:"
 
-#: applets/clock/clock.c:1369
+#: applets/clock/clock.c:1368
 msgid "12 hour"
 msgstr "12 ore"
 
-#: applets/clock/clock.c:1377
+#: applets/clock/clock.c:1376
 msgid "24 hour"
 msgstr "24 ore"
 
-#: applets/clock/clock.c:1385
+#: applets/clock/clock.c:1384
 msgid "UNIX time"
 msgstr "Ora UNIX"
 
-#: applets/clock/clock.c:1392
+#: applets/clock/clock.c:1391
 msgid "Internet time"
-msgstr "Ora di Internet"
+msgstr "Ora Internet"
 
-#: applets/clock/clock.c:1405
+#: applets/clock/clock.c:1404
 msgid "Show _seconds"
 msgstr "Mostrare i _secondi"
 
-#: applets/clock/clock.c:1414
+#: applets/clock/clock.c:1413
 msgid "Show _date"
 msgstr "Mostrare la _data"
 
-#: applets/clock/clock.c:1423
+#: applets/clock/clock.c:1422
 msgid "Use _UTC"
 msgstr "Utilizzare l'ora _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1584 applets/notification_area/main.c:112
+#: applets/clock/clock.c:1583 applets/notification_area/main.c:112
 #: applets/wncklet/showdesktop.c:435 applets/wncklet/window-list.c:786
 #: applets/wncklet/window-menu.c:109 applets/wncklet/workspace-switcher.c:493
-#: gnome-panel/menu.c:282
+#: gnome-panel/menu.c:290
 msgid "translator_credits"
 msgstr ""
 "Christopher Gabriel <cgabriel@cgabriel.org>\n"
-"Luca Ferretti <elle.uca@infinito.it>\n"
 "Alessio Frusciante <algol@firenze.linux.it>\n"
+"Luca Ferretti <elle.uca@infinito.it>\n"
 "\n"
 "...e tutti i revisori del translator project :-)"
 
-#: applets/clock/clock.c:1603
+#: applets/clock/clock.c:1602
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Orologio"
 
-#: applets/clock/clock.c:1605
+#: applets/clock/clock.c:1604
 msgid "The Clock displays the current time and date"
 msgstr "Mostra l'ora e la data corrente"
 
@@ -174,39 +171,38 @@ msgid "Hour format"
 msgstr "Formato dell'ora"
 
 #: applets/clock/clock.schemas.in.h:3
-#, fuzzy
 msgid "If true, display date in the clock, in addition to time."
-msgstr "Mostra anche la data, accanto all'ora"
+msgstr "Se impostata a vero, l'orologio mostra anche la data oltre all'ora."
 
 #: applets/clock/clock.schemas.in.h:4
-#, fuzzy
 msgid "If true, display internet time, which is same all over the world."
-msgstr "Mostra il tempo di Internet, uguale in tutto il mondo"
+msgstr ""
+"Se impostata a vero, verrà mostrato il tempo di Internet, uguale in tutto il "
+"mondo."
 
 #: applets/clock/clock.schemas.in.h:5
-#, fuzzy
 msgid "If true, display seconds in time."
-msgstr "Mostra anche i secondi nell'ora"
+msgstr "Se impostata a vero, verranno mostrati anche i secondi nell'ora."
 
 #: applets/clock/clock.schemas.in.h:6
-#, fuzzy
 msgid "If true, display time in Universal Coordinated Time zone."
-msgstr "Mostra l'ora secondo il formato Universal Coordinated Time"
+msgstr ""
+"Se impostata a vero, verrà mostrata l'ora secondo il formato Universal "
+"Coordinated Time."
 
 #: applets/clock/clock.schemas.in.h:7
-#, fuzzy
 msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "Mostra l'ora in secondi trascorsi da Epoch, il 01/01/1970"
+msgstr ""
+"Se impostata a vero, verrà mostrata l'ora come secondi trascorsi da Epoch, "
+"il 01/01/1970."
 
 #: applets/clock/clock.schemas.in.h:8
-#, fuzzy
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
-"Mostra la data nel suggerimento mostrato al passaggio del puntatore "
-"sull'orologio"
+"Se impostata a vero, verrà mostrata la data in un suggerimento al passaggio "
+"del puntatore sull'orologio."
 
 #: applets/clock/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in clock"
 msgstr "Mostra la data nell'orologio"
 
@@ -223,42 +219,41 @@ msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
 "are 12 and 24."
 msgstr ""
+"Questa chiave indica il formato orario usato dall'applet orologio. Valori "
+"ammessi sono \"12\" e \"24\"."
 
 #: applets/clock/clock.schemas.in.h:13
-#, fuzzy
 msgid "This key specifies the program to run in order to configure the time."
-msgstr "Programma da eseguire per configurare l'ora."
+msgstr ""
+"Questa chiave indica il programma da eseguire per configurare data e ora."
 
 #: applets/clock/clock.schemas.in.h:14
 msgid "Time configuration tool"
-msgstr "Strumento di configurazione dell'ora"
+msgstr "Strumento di configurazione data e ora"
 
 #: applets/clock/clock.schemas.in.h:15
 msgid "Use UNIX time"
-msgstr "Usa l'ora di UNIX"
+msgstr "Usa ora di UNIX"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid "Use UTC"
-msgstr "Usa l'ora UTC"
+msgstr "Usa UTC"
 
 #: applets/clock/clock.schemas.in.h:17
-#, fuzzy
 msgid "Use internet time"
-msgstr "Usa l'ora di Internet"
+msgstr "Usa ora di Internet"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 msgid "Accessories"
 msgstr "Accessori"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
-#, fuzzy
 msgid "Clock Applet Factory"
-msgstr "Fabbrica applet GenUtil"
+msgstr "Fabbrica applet Orologio"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
-#, fuzzy
 msgid "Factory for creating clock applets."
-msgstr "Fabbrica per creare applet generiche"
+msgstr "Fabbrica per creare le applet orologio."
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:5
 msgid "Get the current time and date"
@@ -266,15 +261,13 @@ msgstr "Mostra data/ora corrente"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
 msgid "Ad_just Date & Time..."
-msgstr ""
+msgstr "A_ggiusta data e ora..."
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
-#, fuzzy
 msgid "Copy _Date"
-msgstr "Copia la _data"
+msgstr "Copia da _data"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:3
-#, fuzzy
 msgid "Copy _Time"
 msgstr "Copia l'_ora"
 
@@ -286,7 +279,7 @@ msgstr "Copia l'_ora"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About..."
-msgstr "_Informazioni"
+msgstr "I_nformazioni"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -295,11 +288,11 @@ msgstr "_Informazioni"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:599 gnome-panel/menu.c:3046
-#: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/drawer.c:661 gnome-panel/menu.c:3090
+#: gnome-panel/panel-action-button.c:534 gnome-panel/panel-menu-bar.c:311
 #: gnome-panel/panel-menu-button.c:579
 msgid "_Help"
-msgstr "_Aiuto"
+msgstr "A_iuto"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:6
 #: applets/fish/GNOME_FishApplet.xml.h:3
@@ -435,9 +428,8 @@ msgid "Browse"
 msgstr "Sfoglia"
 
 #: applets/fish/fish.glade.h:6
-#, fuzzy
 msgid "Co_mmand to run when clicked:"
-msgstr "Comando da eseguire quando si fa clic:"
+msgstr "Co_mando da eseguire quando si fa clic:"
 
 #: applets/fish/fish.glade.h:7
 msgid "Fish Preferences"
@@ -452,22 +444,20 @@ msgid "_Name of fish:"
 msgstr "_Nome del pesce:"
 
 #: applets/fish/fish.glade.h:10
-#, fuzzy
 msgid "_Pause per frame:"
-msgstr "Durata fotogramma"
+msgstr "_Durata fotogramma:"
 
 #: applets/fish/fish.glade.h:11
 msgid "_Rotate on vertical panels"
 msgstr "_Ruotare nei pannelli verticali"
 
 #: applets/fish/fish.glade.h:12
-#, fuzzy
 msgid "_Total frames in animation:"
-msgstr "Numero di _fotogrammi nell'animazione:"
+msgstr "_Fotogrammi totali nell'animazione:"
 
 #: applets/fish/fish.glade.h:13
 msgid "frames"
-msgstr ""
+msgstr "fotogrammi"
 
 #: applets/fish/fish.glade.h:14
 msgid "seconds"
@@ -480,19 +470,19 @@ msgid ""
 msgstr "Un pesce senza nome è triste. Rendilo felice dandogli un bel nome."
 
 #: applets/fish/fish.schemas.in.h:2
-#, fuzzy
 msgid "Command to execute on click"
-msgstr "Comando da _eseguire quando si fa clic sul pesce"
+msgstr "Comando da eseguire quando si fa clic"
 
 #: applets/fish/fish.schemas.in.h:3
-#, fuzzy
 msgid "Frames in fish's animation"
-msgstr "Il numero di fotogrammi nella animazione del pesce"
+msgstr "Fotogrammi nell'animazione del pesce"
 
 #: applets/fish/fish.schemas.in.h:4
 msgid ""
 "If true, the fish's animation will be displayed rotated on vertical panels."
 msgstr ""
+"Se impostata a vero, l'animazione del pesce sarà ruotata nei pannelli "
+"verticali."
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "Pause per frame"
@@ -511,28 +501,35 @@ msgid "The fish's name"
 msgstr "Il nome del pesce"
 
 #: applets/fish/fish.schemas.in.h:9
-#, fuzzy
 msgid ""
 "This key specifies the command that will be tried to execute when the fish "
 "is clicked."
-msgstr "Comando da eseguire quando si fa clic sul pesce"
+msgstr ""
+"Questa chiave indica il comando che si tenterà di eseguire quando si fa clic "
+"sul pesce."
 
+# ???
 #: applets/fish/fish.schemas.in.h:10
 msgid ""
 "This key specifies the filename of the pixmap which will be used for the "
 "animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
+"Questa chiave indica il nome del file (relativo alla directory delle "
+"immagini) della pixmap usata per visualizzare l'animazione del pesce"
 
 #: applets/fish/fish.schemas.in.h:11
-#, fuzzy
 msgid ""
 "This key specifies the number of frames that will be displayed in the fish's "
 "animation."
-msgstr "Il numero di fotogrammi nella animazione del pesce"
+msgstr ""
+"Questa chiave indica il numero di fotogrammi mostrati nell'animazione del "
+"pesce."
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
 msgstr ""
+"Questa chiave indica la durata di visualizzazione in secondi di ogni "
+"fotogramma."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -574,7 +571,7 @@ msgstr "Area di notifica del pannello"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:172
+#: gnome-panel/panel-menu-bar.c:167
 msgid "Actions"
 msgstr "Azioni"
 
@@ -583,15 +580,12 @@ msgid "Factory for the window navigation related applets"
 msgstr "Fabbrica delle applet relative alla navigazione tra finestre"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
-#, fuzzy
 msgid "Hide application windows and show the desktop"
-msgstr ""
-"Pulsante per mimimizzare le finestre delle applicazioni e mostrare il desktop"
+msgstr "Nasconde le finestre delle applicazioni e mostra il desktop"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:4
-#, fuzzy
 msgid "Show Desktop"
-msgstr "Pulsante mostra desktop"
+msgstr "Mostra desktop"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between open windows"
@@ -653,6 +647,8 @@ msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
 msgstr ""
+"Il window manager in uso non supporta il pulsante mostra desktop, oppure non "
+"c'è alcun window manager in esecuzione."
 
 #: applets/wncklet/window-list.c:802 applets/wncklet/window-menu.c:132
 msgid ""
@@ -669,15 +665,16 @@ msgstr "<b>Ripristino delle finestre minimizzate</b>"
 msgid "<b>Window Grouping</b>"
 msgstr "<b>Raggruppamento delle finestre</b>"
 
+# che sia lista delle finestre è noto, 
+# si tratta delle finestra delle preferenze,
+# quindi non lo ripeto
 #: applets/wncklet/window-list.glade.h:4
-#, fuzzy
 msgid "<b>Window List Content</b>"
-msgstr "Contenuto della lista"
+msgstr "<b>Contenuto della lista</b>"
 
 #: applets/wncklet/window-list.glade.h:5
-#, fuzzy
 msgid "<b>Window List Size</b>"
-msgstr "Dimensioni della lista"
+msgstr "<b>Dimensioni della lista</b>"
 
 #: applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
@@ -695,6 +692,7 @@ msgstr "_Dimensione minima:"
 msgid "Ma_ximum size:"
 msgstr "Dimensione _massima:"
 
+# in questo caso corrente o attuale non ha senso.
 #: applets/wncklet/window-list.glade.h:10
 msgid "Restore to current _workspace"
 msgstr "Ripristinare nell'a_rea di lavoro in uso"
@@ -704,15 +702,14 @@ msgid "Restore to na_tive workspace"
 msgstr "Ripristinare nell'area di lavoro na_tiva"
 
 #: applets/wncklet/window-list.glade.h:12
-#, fuzzy
 msgid "Sh_ow windows from current workspace"
-msgstr "Mostrare le finestre soltanto dell'area di lav_oro in uso"
+msgstr "Mostrare le finestre dell'area di lav_oro in uso"
 
 #: applets/wncklet/window-list.glade.h:13
 msgid "Show windows from a_ll workspaces"
 msgstr "Mostrare le finestre di t_utte le aree di lavoro"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3488
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3524
 msgid "Size"
 msgstr "Dimensione"
 
@@ -729,74 +726,62 @@ msgid "_Never group windows"
 msgstr "_Non raggruppare le finestre"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:32
+#: gnome-panel/panel-properties-dialog.glade.h:31
 msgid "pixels"
 msgstr "pixel"
 
 #: applets/wncklet/window-list.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the window list. "
 "Possible values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"Imposta come raggruppare le finestre di una stessa applicazione nella lista "
-"delle finestre. Valori ammessi sono «never», «auto» e «always»."
+"Indica quando raggruppare le finestre di una stessa applicazione nella lista "
+"delle finestre. Valori ammessi sono \"never\", \"auto\" e \"always\"."
 
 #: applets/wncklet/window-list.schemas.in.h:2
-#, fuzzy
 msgid ""
 "If true, the window list will show windows from all workspaces. Otherwise it "
 "will only display windows from the current workspace."
 msgstr ""
-"Se attivata, nella lista delle finestre saranno presenti le finestre di "
-"tutte le aree di lavoro, in caso contrario solo quelle dell'area di lavoro "
-"su cui si sta lavorando"
+"Se impostata a vero, nella lista delle finestre saranno presenti le finestre "
+"di tutte le aree di lavoro. In caso contrario solo quelle dell'area di "
+"lavoro in uso."
 
 #: applets/wncklet/window-list.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If true, then when unminimizing a window, move it to the current workspace. "
 "Otherwise, switch to the workspace of the window."
 msgstr ""
-"Se attivata, con la deminimizzazione la finestra viene portata nell'area di "
-"lavoro su cui si sta lavorando. In caso contrario si passa automaticamente "
+"Se impostata a vero, con la deminimizzazione la finestra viene portata "
+"nell'area di lavoro in uso. In caso contrario si passa automaticamente "
 "all'area di lavoro nativa della finestra."
 
 #: applets/wncklet/window-list.schemas.in.h:4
-#, fuzzy
 msgid "Maximum window list size"
-msgstr "Dimensione _massima:"
+msgstr "Dimensione massima lista delle finestre"
 
 #: applets/wncklet/window-list.schemas.in.h:5
-#, fuzzy
 msgid "Minimum window list size"
-msgstr "_Dimensione minima:"
+msgstr "Dimensione minima lista delle finestre"
 
 #: applets/wncklet/window-list.schemas.in.h:6
-#, fuzzy
 msgid "Move windows to current workspace when unminimized"
-msgstr "Sposta le finestre all'area di lavoro in uso alla demassimizzazione"
+msgstr "Sposta le finestre all'area di lavoro in uso alla deminimizzazione"
 
 #: applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
 msgstr "Mostra le finestre di tutte le aree di lavoro"
 
 #: applets/wncklet/window-list.schemas.in.h:8
-#, fuzzy
 msgid ""
 "This key specifies the maximum width that the window list requests. The "
 "maximum width setting is useful to limit the size of the window list in "
 "large panels, where the window list could fill the entire space available."
-msgstr ""
-"Questo valore imposta la larghezza massima richiesta dalla lista delle "
-"finestre. Questa impostazione è utile per limitare la dimensione della lista "
-"in pannelli «larghi» come quelli laterali, nei quali la lista potrebbe "
-"riempire tutto lo spazio disponibile."
+msgstr "Questa chiave indica la larghezza massima richiesta dalla lista delle finestre. Questa impostazione è utile per limitare la dimensione della lista in pannelli larghi, nei quali la lista potrebbe riempire tutto lo spazio disponibile."
 
 #: applets/wncklet/window-list.schemas.in.h:9
-#, fuzzy
 msgid "This key specifies the minimum width that the window list requests."
-msgstr "Dimensione minima richiesta dalla lista delle finestre"
+msgstr "Questa chiave indica la larghezza minima richiesta dalla lista delle finestre."
 
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -807,7 +792,6 @@ msgid "Unknown Window"
 msgstr "Finestra sconosciuta"
 
 #: applets/wncklet/window-menu.c:538
-#, fuzzy
 msgid "No Windows Open"
 msgstr "Nessuna finestra aperta"
 
@@ -852,31 +836,26 @@ msgstr ""
 "varie finestre."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
-#, fuzzy
 msgid "<b>Switcher</b>"
-msgstr "<b>Anteprima</b>"
+msgstr "<b>Selettore</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:3
-#, fuzzy
 msgid "<b>Workspaces</b>"
-msgstr "Aree di lavoro"
+msgstr "<b>Aree di lavoro</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:4
 msgid "Number of _workspaces:"
 msgstr "N_umero delle aree di lavoro:"
 
 #: applets/wncklet/workspace-switcher.glade.h:5
-#, fuzzy
 msgid "Show _all workspaces in:"
-msgstr "Mostrare _tutte le aree di lavoro"
+msgstr "Mostrare _tutte le aree di lavoro su:"
 
 #: applets/wncklet/workspace-switcher.glade.h:6
-#, fuzzy
 msgid "Show _only the current workspace"
 msgstr "Mostrare s_olo l'area di lavoro in uso"
 
 #: applets/wncklet/workspace-switcher.glade.h:7
-#, fuzzy
 msgid "Show workspace _names in switcher"
 msgstr "Mostrare i _nomi delle aree di lavoro nel selettore"
 
@@ -889,138 +868,118 @@ msgid "Workspace Switcher Preferences"
 msgstr "Preferenze del selettore area di lavoro"
 
 #: applets/wncklet/workspace-switcher.glade.h:10
-#, fuzzy
 msgid "Workspace na_mes:"
-msgstr "Nomi delle aree di lavoro"
+msgstr "_Nomi delle aree di lavoro:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
-#, fuzzy
 msgid "Display all workspaces"
-msgstr "Mostrare _tutte le aree di lavoro"
+msgstr "Mostra tutte le aree di lavoro"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:2
-#, fuzzy
 msgid "Display workspace names"
-msgstr "Nomi delle aree di lavoro"
+msgstr "Mostra i nomi delle aree di lavoro"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
-#, fuzzy
 msgid ""
 "If true, the workspace switcher will show all workspaces. Otherwise it will "
 "only show the current workspace."
 msgstr ""
-"Se attivata, nel selettore area di lavoro saranno mostrate tutte le aree di "
-"lavoro. In caso contrario verrà mostrata solo quella in uso"
+"Se impostata a vero, nel selettore area di lavoro saranno mostrate tutte le "
+"aree di lavoro. In caso contrario verrà mostrata solo quella in uso."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:4
-#, fuzzy
 msgid ""
 "If true, the workspaces in the workspace switcher will display the names of "
 "the workspaces. Otherwise they will display the windows on the workspace."
 msgstr ""
-"Se attivata, i nomi delle area di lavoro compariranno nel selettore, "
-"altrimenti ne verrà mostrato il contenuto"
+"Se impostata a vero, i nomi delle area di lavoro compariranno nel selettore. "
+"In caso contrario ne verranno mostrate le finestre."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
-#, fuzzy
 msgid "Rows in workspace switcher"
-msgstr "Selettore area di lavoro"
+msgstr "Righe nel selettore area di lavoro"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
-#, fuzzy
 msgid ""
 "This key specifies how many how many rows (for horizontal layout) or columns "
 "(for vertical layout) the workspace switcher shows the workspaces in. This "
 "key is only relevant if the display_all_workspaces key is true."
-msgstr ""
-"Se si è scelto di mostrare tutte le aree di lavoro nel selettore, questa "
-"impostazione determina su quante righe (per pannelli orizzontali) o quante "
-"colonne (per pannelli verticali) sarà visualizzato il selettore."
+msgstr "Questa chiave indica su quante righe (per pannelli orizzontali) o colonne (per pannelli verticali) saranno visualizzate le aree di lavoro nel selettore. Questa chiave ha senso solo se la chiave display_all_workspaces è impostata a vero."
 
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:483
 #: gnome-panel/panel-applet-frame.c:104
-#, fuzzy
 msgid "Un_lock"
-msgstr "Orologio"
+msgstr "S_blocca"
 
-#: gnome-panel/applet.c:100 gnome-panel/applet.c:482
+#: gnome-panel/applet.c:99 gnome-panel/applet.c:483
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:104
-#, fuzzy
 msgid "_Lock"
-msgstr "Blocca"
+msgstr "_Blocca"
 
-#: gnome-panel/applet.c:400
+#: gnome-panel/applet.c:401
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:474 gnome-panel/GNOME_Panel_Popup.xml.h:3
+#: gnome-panel/applet.c:475 gnome-panel/GNOME_Panel_Popup.xml.h:3
 msgid "_Remove From Panel"
 msgstr "_Rimuovi dal pannello"
 
-#: gnome-panel/applet.c:490 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/applet.c:491 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "_Move"
 msgstr "_Sposta"
 
-#: gnome-panel/applet.c:1089
+#: gnome-panel/applet.c:1072
 msgid "Can't find an empty spot"
 msgstr "Impossibile trovare dello spazio libero"
 
-#: gnome-panel/button-widget.c:270
+#: gnome-panel/button-widget.c:269
 #, c-format
 msgid ""
 "Failed to load image %s\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Impossibile caricare l'immagine «%s»\n"
+"Caricamento dell'immagine «%s» fallito\n"
 "\n"
 "Dettagli: %s"
 
-#: gnome-panel/button-widget.c:458
+#: gnome-panel/button-widget.c:483
 msgid "none"
 msgstr "nessuno"
 
-#: gnome-panel/button-widget.c:463
+#: gnome-panel/button-widget.c:488
 msgid "file not found"
 msgstr "file non trovato"
 
-#: gnome-panel/button-widget.c:827
+#: gnome-panel/button-widget.c:864
 msgid "Has Arrow"
 msgstr "Ha la freccia"
 
-#: gnome-panel/button-widget.c:828
+#: gnome-panel/button-widget.c:865
 msgid "Whether or not to draw an arrow indicator"
-msgstr "Stabilisce se è presente o meno una freccia indicatrice"
+msgstr "Indica se è presente o meno una freccia indicatrice"
 
-#: gnome-panel/button-widget.c:836
-msgid "DnD Highlight"
-msgstr ""
-
-#: gnome-panel/button-widget.c:837
-msgid "Whether or not to highlight the icon during drag and drop"
-msgstr ""
-
-#: gnome-panel/button-widget.c:845 gnome-panel/panel-toplevel.c:3477
+#: gnome-panel/button-widget.c:873 gnome-panel/panel-toplevel.c:3513
 msgid "Orientation"
-msgstr "Orientamento"
+msgstr "Orientazione"
 
-#: gnome-panel/button-widget.c:846
+#: gnome-panel/button-widget.c:874
 msgid "The ButtonWidget orientation"
-msgstr "L'orientamento del ButtonWidget"
+msgstr "L'orientazione del ButtonWidget"
 
-#: gnome-panel/button-widget.c:855
+#: gnome-panel/button-widget.c:883
 msgid "Icon Name"
 msgstr "Nome dell'icona"
 
-#: gnome-panel/button-widget.c:856
+#: gnome-panel/button-widget.c:884
 msgid "The desired icon for the ButtonWidget"
 msgstr "L'icona desiderata per il ButtonWidget"
 
-#: gnome-panel/button-widget.c:864
+#: gnome-panel/button-widget.c:892
 msgid "Stock Icon ID"
 msgstr "ID dell'icona dello stock"
 
-#: gnome-panel/button-widget.c:865
+#: gnome-panel/button-widget.c:893
 msgid "The desired stock icon for the ButtonWidget"
 msgstr "L'icona dello stock desiderata per il ButtonWidget"
 
@@ -1056,8 +1015,44 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menù CDE"
 
-#: gnome-panel/drawer.c:596 gnome-panel/launcher.c:743 gnome-panel/menu.c:1500
-#: gnome-panel/menu.c:2994 gnome-panel/panel-action-button.c:91
+#: gnome-panel/drawer.c:120
+msgid "Size and Position"
+msgstr "Dimensione e posizione"
+
+#: gnome-panel/drawer.c:128
+msgid "Tooltip/Name"
+msgstr "Suggerimento/Nome"
+
+#: gnome-panel/drawer.c:134
+msgid "Icon"
+msgstr "Icona"
+
+#: gnome-panel/drawer.c:140
+msgid "Applet appearance"
+msgstr "Aspetto della applet"
+
+#: gnome-panel/drawer.c:145
+msgid "Drawer handle"
+msgstr "Maniglia del cassetto"
+
+# compare nelle propr del drawer
+#. we store this in w for later use!, so don't use w as temp from now
+#. on
+#: gnome-panel/drawer.c:150
+msgid "Enable hidebutton"
+msgstr "Abilitare il pulsante di riduzione"
+
+# vedi sopra
+#: gnome-panel/drawer.c:159
+msgid "Enable hidebutton arrow"
+msgstr "Abilitare la frecca sul pulsante di riduzione"
+
+#: gnome-panel/drawer.c:177
+msgid "Drawer"
+msgstr "Cassetto"
+
+#: gnome-panel/drawer.c:658 gnome-panel/launcher.c:742 gnome-panel/menu.c:1508
+#: gnome-panel/menu.c:3038 gnome-panel/panel-action-button.c:91
 msgid "_Properties"
 msgstr "Pr_oprietà"
 
@@ -1080,8 +1075,8 @@ msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr ""
-"L'amministratore di sistema ha disabilitato la modifica della configurazione "
-"del pannello."
+"L'amministratore di sistema ha disabilitato\n"
+"la modifica della configurazione del pannello."
 
 #: gnome-panel/gnome-panel-preferences.c:422
 #, c-format
@@ -1105,8 +1100,7 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "C_hiudere il cassetto all'attivazione di una icona di avvio"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
-msgid "Drawer and panel _animation"
+msgid "Drawer and Panel _Animation"
 msgstr "A_nimazioni per pannelli e cassetti"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
@@ -1132,7 +1126,7 @@ msgid ""
 "You probably have a bad version of libpng on your system"
 msgstr ""
 "Impossibile inizializzare la struttura png.\n"
-"È probabile che sia installata una versione sbagliata di libpng."
+"È probabile che sia installata una versione errata di libpng."
 
 #: gnome-panel/gnome-panel-screenshot.c:143
 msgid ""
@@ -1140,7 +1134,7 @@ msgid ""
 "You probably have a bad version of libpng on your system"
 msgstr ""
 "Impossibile creare le informazioni png.\n"
-"È probabile che sia installata una versione sbagliata di libpng."
+"È probabile che sia installata una versione errata di libpng."
 
 #: gnome-panel/gnome-panel-screenshot.c:150
 msgid ""
@@ -1148,7 +1142,7 @@ msgid ""
 "You probably have a bad version of libpng on your system"
 msgstr ""
 "Impossibile impostare le informazioni png.\n"
-"È probabile che sia installata una versione sbagliata di libpng."
+"È probabile che sia installata una versione errata di libpng."
 
 #: gnome-panel/gnome-panel-screenshot.c:168
 msgid ""
@@ -1225,7 +1219,7 @@ msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
-"Il file .glade del programma per fotografare lo schermo\n"
+"Il file glade del programma per fotografare lo schermo\n"
 "risulta mancate. Controllare l'installazione di «gnome-panel»"
 
 #: gnome-panel/gnome-panel-screenshot.c:1305
@@ -1249,7 +1243,6 @@ msgid "Save screenshot to _desktop"
 msgstr "Salva schermata sul _desktop"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:7
-#, fuzzy
 msgid "Save screenshot to _file:"
 msgstr "Salva schermata nel _file:"
 
@@ -1261,30 +1254,24 @@ msgstr "Salva schermata in pagina _web (salva in ~/public__html)"
 msgid "_Print screenshot..."
 msgstr "S_tampa schermata..."
 
+# o qui va web perché non è IL Web?
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
 "The user's directory in which screenshots should be saved so as to appear on "
 "the web."
-msgstr ""
-"Indica la directory dell'utente in cui salvare schermate per pubblicarle sul "
-"web"
+msgstr "Indica la directory dell'utente in cui salvare schermate affinché appaiano sul Web."
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:2
-#, fuzzy
 msgid "Web directory"
-msgstr "Directory web."
+msgstr "Directory Web"
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
 msgstr "Shell del pannello di GNOME"
 
 #: gnome-panel/launcher.c:103
-#, fuzzy
 msgid "Cannot save launcher to disk"
-msgstr ""
-"<b>Impossibile salvare la voce di menù sul disco</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile salvare l'icona d'avvio sul disco"
 
 #: gnome-panel/launcher.c:130 gnome-panel/launcher.c:172
 #: gnome-panel/launcher.c:217
@@ -1292,16 +1279,13 @@ msgid "Cannot launch icon"
 msgstr "Impossibile avviare l'icona"
 
 #: gnome-panel/launcher.c:131
-#, fuzzy
 msgid "This launch icon does not specify a url to show."
-msgstr "Questo pulsante di avvio non specifica alcun URL da visualizzare"
+msgstr "Quest'icona d'avvio non indica alcun URL da visualizzare."
 
 #: gnome-panel/launcher.c:139
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot show %s"
-msgstr ""
-"Impossibile visualizzare «%s»\n"
-"%s"
+msgstr "Impossibile mostrare «%s»"
 
 #: gnome-panel/launcher.c:408
 msgid "No URI provided for panel launcher desktop file\n"
@@ -1320,40 +1304,34 @@ msgid "Help on %s _Application"
 msgstr "Aiuto s_ull'applicazione «%s»"
 
 #: gnome-panel/launcher.c:644 gnome-panel/menu-ditem.c:174
-#: gnome-panel/menu-ditem.c:256
+#: gnome-panel/menu-ditem.c:255
 msgid "Launcher Properties"
 msgstr "Proprietà dell'icona di avvio"
 
-#: gnome-panel/launcher.c:817
+#: gnome-panel/launcher.c:816
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr ""
 "La chiave «%s» non è impostata, impossibile caricare l'icona di avvio\n"
 
-#: gnome-panel/launcher.c:886 gnome-panel/menu-ditem.c:530
+#: gnome-panel/launcher.c:885 gnome-panel/menu-ditem.c:528
 msgid "Create Launcher"
 msgstr "Creazione icona di avvio"
 
-#: gnome-panel/launcher.c:1109 gnome-panel/menu.c:1181
+#: gnome-panel/launcher.c:1108 gnome-panel/menu.c:1189
 #: gnome-panel/panel-util.c:74
-#, fuzzy
 msgid "Cannot display help document"
-msgstr ""
-"<b>Impossibile visualizzare la documentazione</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile visualizzare la documentazione"
 
-#: gnome-panel/main.c:52
+#: gnome-panel/main.c:104
 msgid "Specify a profile name to load"
 msgstr "Specifica il nome del profilo da utilizzare"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3188
-#: gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
 msgid "Log Out"
 msgstr "Esci"
 
 #: gnome-panel/menu.c:114
-#, fuzzy
 msgid ""
 "Log out of this session to log in as a different user or to shut down the "
 "computer"
@@ -1366,20 +1344,25 @@ msgid "Lock"
 msgstr "Blocca"
 
 #: gnome-panel/menu.c:124
-#, fuzzy
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Blocca lo schermo prima di allontanarsi temporaneamente dal computer"
 
+# Non ha nulla a che vedere con logout. È un pulsante inseribile
+# nel pannello che funza come xkill. Ho preferito non usare 
+# "Forza uscita" sia per motivi politici, sia perché il verbo esci
+# è usato per il pulsante per fare il logout.
+#
+# Giocate un po' col nuovo pannello per capire di che parlo
 #: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:236
 msgid "Force Quit"
-msgstr ""
+msgstr "Forza la terminazione"
 
 #: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:231
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3356
-#: gnome-panel/panel-menu-bar.c:145
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3434
+#: gnome-panel/panel-menu-bar.c:140
 msgid "Take a screenshot of your desktop"
 msgstr "Scatta una fotografia al desktop"
 
@@ -1387,8 +1370,8 @@ msgstr "Scatta una fotografia al desktop"
 msgid "Search"
 msgstr "Cerca"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3337
-#: gnome-panel/panel-menu-bar.c:130
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3415
+#: gnome-panel/panel-menu-bar.c:125
 msgid "Find files, folders, and documents on your computer"
 msgstr "Trova file, cartelle e documenti nel computer"
 
@@ -1400,201 +1383,183 @@ msgstr "Avvia"
 msgid "Run a command"
 msgstr "Lancia un comando"
 
-#: gnome-panel/menu.c:272
-#, fuzzy
+#: gnome-panel/menu.c:280
 msgid "And many, many others..."
-msgstr "e molti, molti altri..."
+msgstr "E molti, molti altri..."
 
-#: gnome-panel/menu.c:295
+#: gnome-panel/menu.c:303
 msgid "The GNOME Panel"
 msgstr "Il Pannello di GNOME"
 
-#: gnome-panel/menu.c:298
-#, fuzzy
+# Prima diceva anche "della pace nel mondo e di saltuari blocchi di sistema" :-(((
+#: gnome-panel/menu.c:306
 msgid ""
 "This program is responsible for launching other applications and embedding "
 "small applets within itself."
 msgstr ""
 "Questo programma si occupa di avviare altri programmi, di incorporare mini "
-"applicazioni (applets) al suo interno, della pace nel mondo e di saltuari "
-"blocchi di sistema."
+"applicazioni (applets) al suo interno."
 
-#: gnome-panel/menu.c:326 gnome-panel/panel-action-button.c:157
+#: gnome-panel/menu.c:334 gnome-panel/panel-action-button.c:157
 #: gnome-panel/panel-action-button.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot execute '%s'"
-msgstr "Impossibile eseguire xscreensaver"
+msgstr "Impossibile eseguire «%s»"
 
-#: gnome-panel/menu.c:327 gnome-panel/panel-util.c:958
-#, fuzzy, c-format
+#: gnome-panel/menu.c:335 gnome-panel/panel-util.c:958
+#, c-format
 msgid "%s - command not found"
-msgstr ""
-"<b>Impossibile eseguire xscreensaver</b>\n"
-"\n"
-"Dettagli: impossibile trovare «xscreensaver-command»"
+msgstr "«%s» - comando non trovato"
 
-#: gnome-panel/menu.c:328
-#, fuzzy
+#: gnome-panel/menu.c:336
 msgid "About GNOME"
-msgstr "Informazioni su _GNOME"
+msgstr "Informazioni su GNOME"
 
-#: gnome-panel/menu.c:350
-#, fuzzy
+# credo stia per "menu entry", quindi...
+#: gnome-panel/menu.c:358
 msgid "Cannot launch entry"
-msgstr "Creazione icona di avvio"
+msgstr "Impossibile avviare la voce"
 
-#: gnome-panel/menu.c:361 gnome-panel/menu.c:1155 gnome-panel/menu.c:1193
-#, fuzzy
+#: gnome-panel/menu.c:369 gnome-panel/menu.c:1163 gnome-panel/menu.c:1201
 msgid "Cannot load entry"
-msgstr ""
-"<b>Impossibile caricare elemento</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile caricare la voce"
 
-#: gnome-panel/menu.c:1060
-#, fuzzy, c-format
+#: gnome-panel/menu.c:1068
+#, c-format
 msgid "Cannot remove menu item %s"
-msgstr ""
-"<b>Impossibile salvare la voce di menù sul disco</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile rimuovere la voce di menù «%s»"
 
-#: gnome-panel/menu.c:1070
+#: gnome-panel/menu.c:1078
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Impossibile estrarre il nome del file dal percorso: %s"
 
-#: gnome-panel/menu.c:1077
+#: gnome-panel/menu.c:1085
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Impossibile estrarre il nome della directory dal percorso: %s"
 
-#: gnome-panel/menu.c:1146
-#, fuzzy
+#: gnome-panel/menu.c:1154
 msgid "Cannot add to run box"
-msgstr "Comando da avviare"
+msgstr "Impossibile aggiungere alla finestra avvio"
 
-#: gnome-panel/menu.c:1147
-#, fuzzy
+#: gnome-panel/menu.c:1155
 msgid "No 'Exec' or 'URL' field in entry"
-msgstr ""
-"<b>Impossibile aggiungere al dialogo «Avvio»</b>\n"
-"\n"
-"Dettagli: nessun campo «Exec» o «URL» per questo elemento"
+msgstr "Nessun campo «Exec» o «URL» per questo elemento"
 
-#: gnome-panel/menu.c:1429
+#: gnome-panel/menu.c:1437
 msgid "Add this launcher to panel"
-msgstr "Aggiungi questo pulsante di avvio al pannello"
+msgstr "Aggiungi al pannello questo pulsante di avvio"
 
-#: gnome-panel/menu.c:1438
+#: gnome-panel/menu.c:1446
 msgid "Remove this item"
 msgstr "Rimuovi questo oggetto"
 
-#: gnome-panel/menu.c:1454
+#: gnome-panel/menu.c:1462
 msgid "Put into run dialog"
 msgstr "Inserisci nella finestra di avvio"
 
-#: gnome-panel/menu.c:1472
+#: gnome-panel/menu.c:1480
 #, c-format
 msgid "Help on %s"
 msgstr "Aiuto su %s"
 
-#: gnome-panel/menu.c:1473
+#: gnome-panel/menu.c:1481
 msgid "Application"
 msgstr "Applicazione"
 
-#: gnome-panel/menu.c:1521
+#: gnome-panel/menu.c:1529
 msgid "Entire menu"
 msgstr "Tutto il menù"
 
-#: gnome-panel/menu.c:1530
+#: gnome-panel/menu.c:1538
 msgid "Add this as drawer to panel"
-msgstr "Aggiunge come cassetto al pannello"
+msgstr "Aggiungi questo al pannello come cassetto"
 
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1547
 msgid "Add this as menu to panel"
-msgstr "Aggiungi come menù al pannello"
+msgstr "Aggiungi questo al pannello come menù"
 
-#: gnome-panel/menu.c:1548
+#: gnome-panel/menu.c:1556
 msgid "Add new item to this menu"
-msgstr "Aggiungi nuovi oggetti a questo pannello"
+msgstr "Aggiungi una nuova voce in questo menù"
 
-#: gnome-panel/menu.c:1574
+#: gnome-panel/menu.c:1582
 msgid "Properties"
 msgstr "Proprietà"
 
-#: gnome-panel/menu.c:2548 gnome-panel/menu.c:2603
+#: gnome-panel/menu.c:2562 gnome-panel/menu.c:2617
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "l'interrogazione ha restituito l'eccezione %s\n"
 
-#: gnome-panel/menu.c:2799 gnome-panel/menu.c:2804 gnome-panel/menu.c:3297
-#: gnome-panel/panel-menu-bar.c:188
+#: gnome-panel/menu.c:2813 gnome-panel/menu.c:2818 gnome-panel/menu.c:3371
+#: gnome-panel/panel-menu-bar.c:183
 msgid "Applications"
 msgstr "Applicazioni"
 
-#: gnome-panel/menu.c:2874
+#: gnome-panel/menu.c:2861 gnome-panel/menu.c:2867 gnome-panel/menu.c:3296
+msgid "KDE Menu"
+msgstr "Menù KDE"
+
+#: gnome-panel/menu.c:2918
 msgid "You cannot remove your last panel."
 msgstr "Impossibile rimuovere l'ultimo pannello."
 
-#: gnome-panel/menu.c:2936
+#: gnome-panel/menu.c:2980
 msgid "_Delete This Panel..."
-msgstr "_Rimuovi questo pannello..."
+msgstr "Eli_mina questo pannello..."
 
-#: gnome-panel/menu.c:2939 gnome-panel/menu.c:2979
+#: gnome-panel/menu.c:2983 gnome-panel/menu.c:3023
 msgid "_Delete This Panel"
-msgstr "_Rimuovi questo pannello"
+msgstr "Eli_mina questo pannello"
 
-#: gnome-panel/menu.c:2954
+#: gnome-panel/menu.c:2998
 msgid "_Add to Panel"
 msgstr "A_ggiungi al pannello"
 
-#: gnome-panel/menu.c:3008
+#: gnome-panel/menu.c:3052
 msgid "_New Panel"
 msgstr "_Nuovo pannello"
 
-#: gnome-panel/menu.c:3057
+#: gnome-panel/menu.c:3101
 msgid "_About Panels"
-msgstr "_Informazioni sul pannello"
+msgstr "I_nformazioni sui pannelli"
 
-#: gnome-panel/menu.c:3071
+#: gnome-panel/menu.c:3115
 msgid "About _GNOME"
 msgstr "Informazioni su _GNOME"
 
-#: gnome-panel/menu.c:3115
-#, fuzzy
-msgid "Launcher..."
-msgstr "Icona di avvio..."
+#: gnome-panel/menu.c:3159
+msgid "_Launcher..."
+msgstr "_Icona di avvio..."
 
-#: gnome-panel/menu.c:3124
-#, fuzzy
-msgid "Launcher from menu"
-msgstr "Icona di avvio dal menù"
+#: gnome-panel/menu.c:3168
+msgid "Launcher _from menu"
+msgstr "Icona di avvio dal _menù"
 
-#: gnome-panel/menu.c:3134
-#, fuzzy
-msgid "Main Menu"
-msgstr "Menù principale"
+#: gnome-panel/menu.c:3178
+msgid "Main _Menu"
+msgstr "Menù _principale"
 
-#: gnome-panel/menu.c:3144
-#, fuzzy
-msgid "Menu Bar"
-msgstr "Barra dei menù"
+#: gnome-panel/menu.c:3188
+msgid "Menu _Bar"
+msgstr "_Barra dei menù"
 
-#: gnome-panel/menu.c:3153
-msgid "Drawer"
-msgstr "Cassetto"
+#: gnome-panel/menu.c:3197
+msgid "_Drawer"
+msgstr "Ca_ssetto"
 
-#: gnome-panel/menu.c:3176 gnome-panel/panel-menu-bar.c:157
+#: gnome-panel/menu.c:3220
 msgid "Lock Screen"
 msgstr "Blocca lo schermo"
 
-#: gnome-panel/menu.c:3182
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Blocca lo schermo prima di allontanarsi temporaneamente dal computer"
 
-#: gnome-panel/menu.c:3194
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1602,78 +1567,64 @@ msgstr ""
 "Termina questa sessione per riconnettersi come utente diverso oppure per "
 "spegnere il computer"
 
-#: gnome-panel/menu.c:3318 gnome-panel/panel-menu-bar.c:115
-#, fuzzy
+#: gnome-panel/menu.c:3396
 msgid "Run Application..."
-msgstr "Applicazione"
+msgstr "Avvia applicazione..."
 
-#: gnome-panel/menu.c:3325 gnome-panel/panel-menu-bar.c:117
-#, fuzzy
+#: gnome-panel/menu.c:3403 gnome-panel/panel-menu-bar.c:112
 msgid "Run an Application by entering a command"
-msgstr "Avvia applicazioni, se si conosce il comando corretto da impartire"
+msgstr "Avvia un'applicazione fornendo un comando"
 
-#: gnome-panel/menu.c:3334 gnome-panel/panel-menu-bar.c:128
+#: gnome-panel/menu.c:3412
 msgid "Search for Files..."
-msgstr "Ricerca file..."
+msgstr "Cerca file..."
 
-#: gnome-panel/menu.c:3353 gnome-panel/panel-menu-bar.c:143
-#, fuzzy
+#: gnome-panel/menu.c:3431
 msgid "Take Screenshot..."
-msgstr "Schermata..."
+msgstr "Cattura schermata..."
 
-#: gnome-panel/menu.c:3371
+#: gnome-panel/menu.c:3449
 msgid "Desktop"
 msgstr "Desktop"
 
 #: gnome-panel/menu-ditem.c:117
-#, fuzzy
 msgid "Cannot save changes to launcher"
-msgstr ""
-"<b>Impossibile salvare le modifiche all'icona di avvio</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile salvare le modifiche all'icona di avvio"
 
-#: gnome-panel/menu-ditem.c:294
+#: gnome-panel/menu-ditem.c:292
 msgid "Menu"
 msgstr "Menù"
 
-#: gnome-panel/menu-ditem.c:450 gnome-panel/menu-ditem.c:467
-#: gnome-panel/menu-ditem.c:522
-#, fuzzy
+#: gnome-panel/menu-ditem.c:448 gnome-panel/menu-ditem.c:465
+#: gnome-panel/menu-ditem.c:520
 msgid "Cannot create launcher"
-msgstr "Creazione icona di avvio"
+msgstr "Imopssibile creare icona di avvio"
 
-#: gnome-panel/menu-ditem.c:451
-#, fuzzy
+#: gnome-panel/menu-ditem.c:449
 msgid "You have to specify a name."
-msgstr "È necessario indicare un nome per l'icona di avvio."
+msgstr "È necessario indicare un nome."
 
-#: gnome-panel/menu-ditem.c:468
+#: gnome-panel/menu-ditem.c:466
 msgid "You have to specify a valid URL or command."
 msgstr "È necessario indicare un URL o un comando valido."
 
 #. class
-#: gnome-panel/menu-ditem.c:498
-#, fuzzy
+#: gnome-panel/menu-ditem.c:496
 msgid "Cannot save menu item to disk"
-msgstr ""
-"<b>Impossibile salvare la voce di menù sul disco</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile salvare la voce di menù sul disco"
 
-#: gnome-panel/menu-ditem.c:523
+# non mi piace molto quello scrivibile
+#: gnome-panel/menu-ditem.c:521
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
-msgstr ""
-"Impossibile creare una icona di avvio in questa posizione, poichè "
-"quest'ultima non è scrivibile"
+msgstr "Impossibile creare una nuova icona di avvio in questa posizione, poiché la posizione non è scrivibile."
 
 #: gnome-panel/panel-action-button.c:85
 msgid "_Activate Screensaver"
 msgstr "_Attiva salvaschermo"
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:86 gnome-panel/panel-menu-bar.c:152
 msgid "_Lock Screen"
 msgstr "_Blocca lo schermo"
 
@@ -1695,13 +1646,12 @@ msgstr "Esci da GNOME"
 
 #: gnome-panel/panel-action-button.c:221
 #: gnome-panel/panel-run-dialog.glade.h:10
-#, fuzzy
 msgid "Run Application"
-msgstr "Applicazione"
+msgstr "Avvia applicazione"
 
 #: gnome-panel/panel-action-button.c:226
 msgid "Search for Files"
-msgstr "Ricerca file"
+msgstr "Cerca file"
 
 #: gnome-panel/panel-action-button.c:383
 msgid "Action Type"
@@ -1713,12 +1663,11 @@ msgstr "Il tipo di azione che il pulsante implementa"
 
 #: gnome-panel/panel-action-button.c:393 gnome-panel/panel-menu-button.c:463
 msgid "Drag N' Drop enabled"
-msgstr ""
+msgstr "Drag'n'Drop abilitato"
 
 #: gnome-panel/panel-action-button.c:394 gnome-panel/panel-menu-button.c:464
-#, fuzzy
 msgid "Whether or not drag and drop is enabled on the widget"
-msgstr "Stabilisce se è presente o meno una freccia indicatrice"
+msgstr "Indica se il drag and drop sul widget è abilitato"
 
 #: gnome-panel/panel-applet-frame.c:677
 #, c-format
@@ -1755,20 +1704,19 @@ msgid ""
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Si è verificato un errore durante il caricamento di «%s»\n"
+"Il pannello ha riscontrato un errore nel caricare «%s»\n"
 "Dettagli: %s\n"
 "\n"
 "Rimuovere l'applet dalla configurazione?"
 
 #: gnome-panel/panel-applet-frame.c:872
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "The panel encountered a problem while loading \"%s\"\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Si è verificato un errore durante il caricamento di «%s»\n"
-"Dettagli: %s\n"
+"Il pannello ha riscontrato un problema nel caricare «%s»\n"
 "\n"
 "Rimuovere l'applet dalla configurazione?"
 
@@ -1779,32 +1727,32 @@ msgstr "Prelievo dell'interfaccia di AppletShell dal control fallito\n"
 #: gnome-panel/panel-bindings.c:167
 #, c-format
 msgid "Error watching gconf key '%s': %s"
-msgstr ""
+msgstr "Errore nell'osservare la chiave gconf «%s»: %s"
 
 #: gnome-panel/panel-bindings.c:185
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading gconf directory '%s': %s"
-msgstr "Errore nel caricare il file glade «%s»"
+msgstr "Errore nel caricare la directory gconf «%s»: %s"
 
 #: gnome-panel/panel-bindings.c:199
 #, c-format
 msgid "Error getting value for '%s': %s"
-msgstr ""
+msgstr "Errore nell'ottenere il valore per «%s»: %s"
 
-#: gnome-panel/panel.c:472
+#: gnome-panel/panel.c:470
 #, c-format
 msgid "Open URL: %s"
 msgstr "Apri URL: %s"
 
-#: gnome-panel/panel.c:1257
+#: gnome-panel/panel.c:1255
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
-"Quando un pannello viene rimosso anche le sue \n"
+"Quando un pannello viene eliminato anche le sue\n"
 "impostazioni vengono perse. Rimuovere questo pannello?"
 
-#: gnome-panel/panel.c:1266
+#: gnome-panel/panel.c:1264
 msgid "Delete Panel"
 msgstr "Rimozione pannello"
 
@@ -1812,12 +1760,16 @@ msgstr "Rimozione pannello"
 msgid ""
 "Click on a window to force the application to quit. To cancel press <ESC>."
 msgstr ""
+"Fare clic su una finestra per forzare la terminazione dell'applicazione. Per "
+"annullare premere <ESC>."
 
 #: gnome-panel/panel-force-quit.c:185
 msgid ""
 "Force this application to exit?\n"
 "(Any open documents will be lost.)"
 msgstr ""
+"Forzare la terminazione di questa applicazione?\n"
+"(Ogni documento aperto sarà perduto.)"
 
 #: gnome-panel/panel-frame.c:268
 msgid "Edges"
@@ -1825,7 +1777,7 @@ msgstr "Bordi"
 
 #: gnome-panel/panel-frame.c:269
 msgid "Which edges to draw"
-msgstr "Quali bordi disegnare"
+msgstr "I bordi da disegnare"
 
 #: gnome-panel/panel-general.schemas.in.h:1
 msgid ""
@@ -1833,6 +1785,9 @@ msgid ""
 "settings for each of these panels are stored in /apps/panel/general/"
 "$(profile)/toplevels/$(id)."
 msgstr ""
+"Un lista di ID di pannello. Ogni ID identifica un singolo pannello di "
+"livello superiore. Le impostazioni per ciascuno di questi pannelli sono "
+"memorizzate in /apps/panel/general/$(profile)/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:2
 msgid ""
@@ -1840,90 +1795,82 @@ msgid ""
 "The settings for each of these applets are stored in /apps/panel/general/"
 "$(profiles)/applets/$(id)."
 msgstr ""
+"Un lista di ID di applet di pannello. Ogni ID identifica una singola applet "
+"di pannello. Le impostazioni per ciascuna di queste applet sono memorizzate "
+"in /apps/panel/general/$(profile)/applets/$(id).<"
 
 #: gnome-panel/panel-general.schemas.in.h:3
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/general/$(profiles)/objects/$(id)."
-msgstr ""
+msgstr "Una lista di ID di oggetti del pannello. Ciascun ID identifica un singolo oggetto del pannello (per esempio una una icona di avvio, un pulsante di azione o un pulsante/barrà di menù). Le ipostazioni per ciacuno di questi oggetti sono memorizzate in /apps/panel/$(profiles)/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid "Enable program list in \"Run Application\" dialog"
-msgstr "Attiva la lista dei programmi nel dialogo «Avvio»"
+msgstr "Attiva la lista dei programmi nel dialogo \"Avvia applicazione\""
 
 #: gnome-panel/panel-general.schemas.in.h:5
-#, fuzzy
 msgid "Expand program list in \"Run Application\" dialog"
-msgstr "Attiva la lista dei programmi nel dialogo «Avvio»"
+msgstr "Espandi la lista dei programmi nel dialogo \"Avvio applicazione\""
 
 #: gnome-panel/panel-general.schemas.in.h:6
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is expanded when the dialog is opened. This key is only relevant if "
 "the enable_program_list key is true."
-msgstr ""
+msgstr "Se impostata a vero, la lista \"Applicazioni conosciute\" nella finestra di dialogo \"Avvia programma\" sarà espansa all'apertura della finestra. Questa chiave ha senso solo se la chiave enable_program_listing è impostata a vero."
 
 #: gnome-panel/panel-general.schemas.in.h:7
 msgid ""
 "If true, the \"Known Applications\" listing in the \"Run Application\" "
 "dialog is made available. Whether or not the listing is expanded when the "
 "dialog is shown is controlled by the show_program_list key."
-msgstr ""
+msgstr "Se impostata a vero, la lista \"Applicazioni conosciute\" nella finestra di dialogo \"Avvia programma\" verrà resa disponibile. Tale lista sarà o non sarà espansa nella finestra di dialogo in base a quanto definito nella chiave show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:8
 msgid "Panel ID list"
-msgstr ""
+msgstr "Lista ID pannello"
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Panel applet ID list"
-msgstr "Proprietà del pannello"
+msgstr "Lista ID applet di pannello"
 
 #: gnome-panel/panel-general.schemas.in.h:10
-#, fuzzy
 msgid "Panel object ID list"
-msgstr "Non è impostato il panel_id per l'oggetto pannello con ID %s\n"
+msgstr "Lista ID oggetti di pannello"
 
 #: gnome-panel/panel-global.schemas.in.h:1
 #: gnome-panel/panel-toplevel.schemas.in.h:1
-#, fuzzy
 msgid "Animation speed"
-msgstr "_Velocità dell'animazione:"
+msgstr "Velocità dell'animazione"
 
 #: gnome-panel/panel-global.schemas.in.h:2
 msgid "Autoclose drawer"
-msgstr ""
+msgstr "Chiusura automatica cassetto"
 
 #: gnome-panel/panel-global.schemas.in.h:3
-#, fuzzy
 msgid "Confirm panel removal"
-msgstr "Pannello d'angolo"
+msgstr "Conferma rimozione pannello"
 
 #: gnome-panel/panel-global.schemas.in.h:4
-#, fuzzy
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Mostrare la finestra di dialogo «Avvia»"
+msgstr "Mostrare le associazioni di tasti del dialogo \"Avvia applicazione\""
 
 #: gnome-panel/panel-global.schemas.in.h:5
 #: gnome-panel/panel-toplevel.schemas.in.h:9
-#, fuzzy
 msgid "Enable animations"
-msgstr "A_nimazione scelta:"
+msgstr "Abilita animazioni"
 
 #: gnome-panel/panel-global.schemas.in.h:6
-#, fuzzy
 msgid "Enable keybindings"
-msgstr "A_nimazione scelta:"
+msgstr "Abilita associazioni di tasti"
 
 #: gnome-panel/panel-global.schemas.in.h:7
-#, fuzzy
 msgid "Enable tooltips"
-msgstr "A_nimazione scelta:"
+msgstr "Abilita suggerimenti"
 
 #: gnome-panel/panel-global.schemas.in.h:8
-#, fuzzy
 msgid "FIXME - is this resolved with the new menu stuff"
 msgstr "FIXME - è stato risolto nel nuovo menù?"
 
@@ -1933,168 +1880,184 @@ msgstr "FIXME - necessario definire i limiti"
 
 #: gnome-panel/panel-global.schemas.in.h:10
 msgid "Highlight launchers on mouseover"
-msgstr ""
+msgstr "Evidenzia icone di avvio al passaggio del mouse"
 
 #: gnome-panel/panel-global.schemas.in.h:11
 msgid ""
 "If true, a dialog is shown asking for confirmation if the user wants to "
 "remove a panel."
-msgstr ""
+msgstr "Se impostata a vero, verrà mostrata una finestra di dialogo per confermare per la rimozione di un pannello."
 
+# In italiano mi pare meglio in plurale, no?
+# Anche altrove
 #: gnome-panel/panel-global.schemas.in.h:12
 msgid ""
 "If true, a drawer will automatically be closed when the user clicks a "
 "launcher in it."
-msgstr ""
+msgstr "Se impostata a vero, i cassetti verranno automaticamente chiusi quando si fa clic su un'icona di avvio in essi contenuta."
 
 #: gnome-panel/panel-global.schemas.in.h:13
 msgid ""
 "If true, a launcher is highlighted when the user moves the pointer over it."
 msgstr ""
+"Se impostata a vero, le icone di avvio sono evidenziate quando l'utente "
+"muove il puntatore sopra di esse."
 
 #: gnome-panel/panel-global.schemas.in.h:14
 msgid "If true, panel-specific keybindings are enabled."
-msgstr ""
+msgstr "Se impostata a vero, le associazioni di tasti specifiche del pannello sono attivate."
 
 #: gnome-panel/panel-global.schemas.in.h:15
 msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
+"Se impostata a vero, per gli oggetti nei pannelli saranno mostrati i "
+"suggerimenti."
 
 #: gnome-panel/panel-global.schemas.in.h:16
-#, fuzzy
 msgid "Popup panel menu keybinding"
-msgstr "Mostra il menù del pannello"
+msgstr "Associazioni di tasti menù popup del pannello"
 
 #: gnome-panel/panel-global.schemas.in.h:17
-#, fuzzy
 msgid "Take screenshot"
-msgstr "Fotografa lo schermo"
+msgstr "Cattura schermata"
 
 #: gnome-panel/panel-global.schemas.in.h:18
-#, fuzzy
 msgid "Take window screenshot"
-msgstr "Fotografa lo schermo"
+msgstr "Cattura schermata di una finestra"
 
-#: gnome-panel/panel-menu-bar.c:159
+#: gnome-panel/panel-menu-bar.c:110
+msgid "_Run Application..."
+msgstr "A_vvia applicazione..."
+
+# per tradurre quel for avrei dovuto usare "Ricerca di file...",
+# ma search è bene tradurlo "cerca" per mantenere omogeneità
+#: gnome-panel/panel-menu-bar.c:123
+msgid "_Search for Files..."
+msgstr "Cerca _file..."
+
+#: gnome-panel/panel-menu-bar.c:138
+msgid "_Take Screenshot..."
+msgstr "Ca_ttura schermata..."
+
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Protect your computer from unauthorized use"
 msgstr "Previene l'uso non autorizzato del computer"
 
-#: gnome-panel/panel-menu-bar.c:168
+#: gnome-panel/panel-menu-bar.c:161
+msgid "_Log Out"
+msgstr "_Esci"
+
+#: gnome-panel/panel-menu-bar.c:163
 msgid "Quit from the GNOME desktop"
 msgstr "Esce dall'ambiente desktop GNOME"
 
 #: gnome-panel/panel-menu-button.c:427
-#, fuzzy
 msgid "Menu Path"
-msgstr "_Nuovo pannello"
+msgstr "Percorso menù"
 
 #: gnome-panel/panel-menu-button.c:428
 msgid "The path from which to construct the menu"
-msgstr ""
+msgstr "Il percorso dal quale costruire il menù"
 
 #: gnome-panel/panel-menu-button.c:436
 msgid "Custom Icon"
-msgstr ""
+msgstr "Icona personalizzata"
 
 #: gnome-panel/panel-menu-button.c:437
-#, fuzzy
 msgid "The custom icon for the menu"
-msgstr "L'icona dello stock desiderata per il ButtonWidget"
+msgstr "L'icona personalizzata per il menù"
 
 #: gnome-panel/panel-menu-button.c:445
-#, fuzzy
 msgid "Use Menu Path"
-msgstr "_Nuovo pannello"
+msgstr "Usa percorso menù"
 
 #: gnome-panel/panel-menu-button.c:446
 msgid "Use the path specified by the menu-path property"
-msgstr ""
+msgstr "Usa il percorso specificato nella proprietà menu-path"
 
 #: gnome-panel/panel-menu-button.c:454
 msgid "Use Custom Icon"
-msgstr ""
+msgstr "Usa icona personalizzata"
 
 #: gnome-panel/panel-menu-button.c:455
 msgid "Use the icon specified by the custom-icon property"
-msgstr ""
+msgstr "Usa l'icona specificata nella proprietà custom-icon"
 
 #: gnome-panel/panel-object.schemas.in.h:1
-#, fuzzy
 msgid "Action button type"
-msgstr "Tipo di azione"
+msgstr "Tipo di pulsante azione"
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
-msgstr ""
+msgstr "IID applet Bonobo"
 
 #: gnome-panel/panel-object.schemas.in.h:3
-#, fuzzy
 msgid "Icon used for object's button"
-msgstr "L'icona usata per il pulsante dell'oggetto"
+msgstr "Icona usata per il pulsante dell'oggetto"
 
 #: gnome-panel/panel-object.schemas.in.h:4
 msgid ""
 "If true, the custom_icon key is used as a custom icon for the button. If "
 "false, the custom_icon key is ignored. This key is only relevant if the "
 "object_type key is \"menu-object\" or \"drawer-object\"."
-msgstr ""
+msgstr "Se impostata a vero, la chiave custom_icon è usata come icona personalizzata del pulsante. Se falso la chiave custom_icon è ignorata. Questa impostazione he senso solo se la chiave \"object_type\" è \"menu-object\" o \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:5
 msgid ""
 "If true, the menu_path key is used as the path from which the menu contents "
 "should be constructed. If false, the menu_path key is ignored. This key is "
 "only relevant if the object_type key is \"menu-object\"."
-msgstr ""
+msgstr "Se impostata a vero, la chiave menu_path è usata come percorso dal quale costruire il contenuto del menù. Se falso, la chiave menu_path è ignorata. Questa impostazione ha senso solo se la chiave \"object_type\" è \"menu-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:6
 msgid ""
 "If true, the position of the object is interpreted relative to the right (or "
 "bottom if vertical) edge of the panel."
 msgstr ""
+"Se impostata a vero, la posizione dell'oggetto è considerata relativa al "
+"bordo destro (o inferiore per pannelli verticali) del pannello."
 
 #: gnome-panel/panel-object.schemas.in.h:7
 msgid ""
 "If true, the user may not move the applet without first unlocking the object "
 "using the \"Unlock\" menuitem."
 msgstr ""
+"Se impostata a vero, l'utente non può muovere l'applet senza prima aver "
+"sbloccato l'oggetto usando la voce di menù \"Sblocca\"."
 
 #: gnome-panel/panel-object.schemas.in.h:8
 msgid "Interpret position relative to bottom/right edge"
-msgstr ""
+msgstr "Considera la posizione relativa al bordo inferiore/destro"
 
 #: gnome-panel/panel-object.schemas.in.h:9
-#, fuzzy
 msgid "Launcher location"
-msgstr "Proprietà dell'icona di avvio"
+msgstr "Posizione icona di avvio"
 
 #: gnome-panel/panel-object.schemas.in.h:10
 msgid "Lock the object to the panel"
-msgstr ""
+msgstr "Blocca l'oggetto sul pannello"
 
 #: gnome-panel/panel-object.schemas.in.h:11
-#, fuzzy
 msgid "Menu content path"
-msgstr "_Nuovo pannello"
+msgstr "Percorso contenuto menù"
 
 #: gnome-panel/panel-object.schemas.in.h:12
-#, fuzzy
 msgid "Object's position on the panel"
-msgstr "Stato corrente di questo pannello"
+msgstr "Posizione dell'oggetto sul pannello"
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
-msgstr ""
+msgstr "Pannello attaccato al cassetto"
 
 #: gnome-panel/panel-object.schemas.in.h:14
-#, fuzzy
 msgid "Panel object type"
-msgstr "Proprietà del pannello"
+msgstr "Tipo oggetto pannello"
 
 #: gnome-panel/panel-object.schemas.in.h:15
 msgid ""
 "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet"
 "\". This key is only relevant if the object_type key is \"bonobo-applet\"."
-msgstr ""
+msgstr "L'ID Bonobo implementation dell'applet - per esempio \"OAFIID:GNOME_ClockApplet\". Questa chiave è considerata solo se la chiave object_type è \"bonobo-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:16
 msgid ""
@@ -2102,22 +2065,32 @@ msgid ""
 "\"logout\", \"run\", \"search\" and \"screenshot\". This key is only "
 "relevant if the object_type key is \"action-applet\"."
 msgstr ""
+"Il tipo di azione che questo pulsante rappresenta. Valori ammessi sono \"lock"
+"\", \"logout\", \"run\", \"search\" e \"screenshot\". Questa chiave ha senso "
+"solo se la chiave object_type è \"action-applet\"."
 
 #: gnome-panel/panel-object.schemas.in.h:17
 msgid ""
 "The identifier of the panel attached to this drawer. This key is only "
 "relevant if the object_type key is \"drawer-object\"."
 msgstr ""
+"L'identificatore del pannello attaccato a questo cassetto. Questa chiave ha "
+"senso solo se la chiave object-type è \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:18
 msgid "The identifier of the toplevel panel which contains this object."
 msgstr ""
+"L'identificatore del pannello di livello superiore che contiene questo "
+"oggetto."
 
 #: gnome-panel/panel-object.schemas.in.h:19
 msgid ""
 "The location of the .desktop file describing the launcher. This key is only "
 "relevant if the object_type key is \"launcher-object\"."
 msgstr ""
+"La posizione del file .desktop che descrive l'icona di avvio. Questa "
+"impostazione ha importanza solo se la chiave object_type è \"launcher-object"
+"\"."
 
 #: gnome-panel/panel-object.schemas.in.h:20
 msgid ""
@@ -2125,6 +2098,10 @@ msgid ""
 "This key is only relevant if the object_type key is \"drawer-object\" or "
 "\"menu-object\" and the use_custom_icon key is true."
 msgstr ""
+"La posizione del file di immagine usato come icona per il pulsante "
+"dell'oggetto. Questa impostazione ha senso solo se la chiave object_type è "
+"\"drawer-object\" o \"menu-object\" e la chiave use_custom_icon è impostata "
+"a vero."
 
 #: gnome-panel/panel-object.schemas.in.h:21
 msgid ""
@@ -2132,18 +2109,24 @@ msgid ""
 "relevant if the use_menu_path key is true and the object_type key is \"menu-"
 "object\"."
 msgstr ""
+"Il percorso dal quale costruire il contenuto del menù. Questa chiave ha "
+"senso solo se la chiave use_menu_path è vera e la chiave object_type è "
+"\"menu-object\"."
 
+# Posizionamento: OK non sarà bellissimo, ma è per non confondere con la traduzione di "location", posizione.
 #: gnome-panel/panel-object.schemas.in.h:22
 msgid ""
 "The position of this panel object. The position is specified by the number "
 "of pixels from the left (or top if vertical) panel edge."
-msgstr ""
+msgstr "Il posizionamento di questo oggetto di pannello. Tale posizionamento è indicato come numero di pixel dal bordo sinistro (o superiore se verticale) del pannello."
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid ""
 "The text to display in a tooltip for this drawer. This key is only relevant "
 "if the object_type key is \"drawer-object\"."
 msgstr ""
+"Il testo da mostrare come suggerimento per questo cassetto. Questa "
+"impostazione ha senso solo se la chiave object_type è \"drawer-object\"."
 
 #: gnome-panel/panel-object.schemas.in.h:24
 msgid ""
@@ -2151,184 +2134,177 @@ msgid ""
 "object\", \"launcher-object\", \"bonobo-applet\", \"action-applet\" and "
 "\"menu-bar\"."
 msgstr ""
+"Il tipo di questo oggetto del pannello. Valori possibili sono: \"drawer-"
+"object\", \"menu-object\", \"launcher-object\", \"bonobo-applet\", \"action-"
+"applet\" e \"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
 msgid "Tooltip displayed for drawer"
-msgstr ""
+msgstr "Suggerimento mostrato per il cassetto"
 
 #: gnome-panel/panel-object.schemas.in.h:26
 msgid "Toplevel panel containing object"
-msgstr ""
+msgstr "Pannello di livello superiore contenente l'oggetto"
 
 #: gnome-panel/panel-object.schemas.in.h:27
-#, fuzzy
 msgid "Use custom icon for object's button"
-msgstr "L'icona usata per il pulsante dell'oggetto"
+msgstr "Usa icona personalizzataa per il pulsante dell'oggetto"
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
-msgstr ""
+msgstr "Usa percorso personalizzato per il contenuto del menu"
 
-#: gnome-panel/panel-profile.c:761 gnome-panel/panel-profile.c:789
-#: gnome-panel/panel-profile.c:825 gnome-panel/panel-profile.c:1508
+#: gnome-panel/panel-profile.c:649 gnome-panel/panel-profile.c:677
+#: gnome-panel/panel-profile.c:713 gnome-panel/panel-profile.c:1396
 #, c-format
 msgid "Error reading GConf string value '%s': %s"
-msgstr ""
+msgstr "Errore nella lettura nel valore della stringa di GConf «%s»: %s"
 
-#: gnome-panel/panel-profile.c:804 gnome-panel/panel-profile.c:1403
-#: gnome-panel/panel-profile.c:1477 gnome-panel/panel-profile.c:1540
+#: gnome-panel/panel-profile.c:692 gnome-panel/panel-profile.c:1291
+#: gnome-panel/panel-profile.c:1365 gnome-panel/panel-profile.c:1428
 #, c-format
 msgid "Error reading GConf integer value '%s': %s"
-msgstr ""
+msgstr "Errore nella letture del valore intero GConf \"%s\": %s"
 
-#: gnome-panel/panel-profile.c:1413
+#: gnome-panel/panel-profile.c:1301
 #, c-format
 msgid ""
 "Panel '%s' is set to be displayed on screen %d which is not currently "
 "available. Not loading this panel."
 msgstr ""
+"Il pannello «%s» è impostato per essere visualizzato sullo schermo %d, "
+"schermo non disponibile al momento. Tale pannello non verrà caricato."
 
-#: gnome-panel/panel-profile.c:1492
+#: gnome-panel/panel-profile.c:1380
 #, c-format
 msgid "Error reading GConf boolean value '%s': %s"
-msgstr ""
+msgstr "Errore nella lettura del valore booleano GConf «%s»: %s"
 
-#: gnome-panel/panel-profile.c:2028
+#: gnome-panel/panel-profile.c:1905
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
-msgstr ""
+msgstr "Errore nella lettura del valore lista GConf «%s»: %s"
 
 #: gnome-panel/panel-properties-dialog.glade.h:3
-#, fuzzy
-msgid "<b>_Icon:</b>"
-msgstr "<b>Anteprima</b>"
+msgid "<b>_Name:</b>"
+msgstr "<b>_Nome:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:4
-msgid "<b>_Name:</b>"
-msgstr ""
+msgid "<b>_Orientation:</b>"
+msgstr "<b>_Orientazione:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:5
-#, fuzzy
-msgid "<b>_Orientation:</b>"
-msgstr "Orientamento:"
+msgid "<b>_Size:</b>"
+msgstr "<b>_Dimensione:</b>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:6
-#, fuzzy
-msgid "<b>_Size:</b>"
-msgstr "<b>Anteprima</b>"
+msgid "<small>Opaque</small>"
+msgstr "<small>Opaco</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:7
-msgid "<small>Opaque</small>"
-msgstr ""
+msgid "<small>Transparent</small>"
+msgstr "<small>Trasparente</small>"
 
 #: gnome-panel/panel-properties-dialog.glade.h:8
-msgid "<small>Transparent</small>"
-msgstr ""
-
-#: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Arro_ws on hide buttons"
 msgstr "_Frecce sui pulsanti di riduzione"
 
-#: gnome-panel/panel-properties-dialog.glade.h:10
+#: gnome-panel/panel-properties-dialog.glade.h:9
 msgid "Background"
 msgstr "Sfondo"
 
-#: gnome-panel/panel-properties-dialog.glade.h:11
-#, fuzzy
+#: gnome-panel/panel-properties-dialog.glade.h:10
 msgid "Background _image:"
-msgstr "Sfondo"
+msgstr "_Immagine di sfondo:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:12
+#: gnome-panel/panel-properties-dialog.glade.h:11
 #: libpanel-applet/panel-test-applets.glade.h:2
 msgid "Bottom"
 msgstr "Basso"
 
-#: gnome-panel/panel-properties-dialog.glade.h:13
-#, fuzzy
+#: gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Co_lor:"
 msgstr "C_olore:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:14
-#, fuzzy
+#: gnome-panel/panel-properties-dialog.glade.h:13
 msgid "E_xpand"
-msgstr "Dimensione espansore"
+msgstr "_Espandere"
+
+#: gnome-panel/panel-properties-dialog.glade.h:14
+msgid "General"
+msgstr "Generale"
 
 #: gnome-panel/panel-properties-dialog.glade.h:15
-msgid "General"
-msgstr ""
+msgid "Image Background Details"
+msgstr "Dettagli immagine di sfondo"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
-msgid "Image Background Details"
-msgstr ""
-
-#: gnome-panel/panel-properties-dialog.glade.h:17
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "Left"
 msgstr "Sinistra"
 
-#: gnome-panel/panel-properties-dialog.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Panel Properties"
 msgstr "Proprietà del pannello"
 
-#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Pick a color"
-msgstr ""
+msgstr "Scelta di un colore"
 
-#: gnome-panel/panel-properties-dialog.glade.h:20
+#: gnome-panel/panel-properties-dialog.glade.h:19
 #: libpanel-applet/panel-test-applets.glade.h:8
 msgid "Right"
 msgstr "Destra"
 
-#: gnome-panel/panel-properties-dialog.glade.h:21
+#: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "Rotate image when panel is _vertical"
 msgstr "Ruotare l'immagine per i pannelli _verticali"
 
-#: gnome-panel/panel-properties-dialog.glade.h:22
-#, fuzzy
+#: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "S_tyle:"
-msgstr "_Tipo:"
+msgstr "S_tile:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:23
+#: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "Show hide _buttons"
 msgstr "Mostrare i _pulsanti di riduzione"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "Solid c_olor"
-msgstr ""
+msgstr "C_olore pieno"
+
+# o "La modifica di alcune proprietà è bloccata"?
+#: gnome-panel/panel-properties-dialog.glade.h:24
+msgid "Some of these properties are locked down"
+msgstr "Alcune di queste proprietà sono bloccate"
 
 #: gnome-panel/panel-properties-dialog.glade.h:25
-msgid "Some of these properties are locked down"
-msgstr ""
-
-#: gnome-panel/panel-properties-dialog.glade.h:26
 msgid "St_retch"
 msgstr "Sti_rare"
 
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:11
 msgid "Top"
 msgstr "Alto"
 
-#: gnome-panel/panel-properties-dialog.glade.h:28
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Autohide"
-msgstr "Abi_lita la scomparsa automatica"
+msgstr "Abi_litare la scomparsa automatica"
+
+#: gnome-panel/panel-properties-dialog.glade.h:28
+msgid "_None (use system theme)"
+msgstr "_Nessuno (usare tema di sistema)"
 
 #: gnome-panel/panel-properties-dialog.glade.h:29
-msgid "_None (use system theme)"
-msgstr ""
-
-#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Scale"
 msgstr "_Scalare"
 
-#: gnome-panel/panel-properties-dialog.glade.h:31
-#, fuzzy
+#: gnome-panel/panel-properties-dialog.glade.h:30
 msgid "_Tile"
 msgstr "R_ipetere"
 
 #: gnome-panel/panel-recent.c:57
 msgid "Couldn't find a suitable application"
-msgstr "Impossibile trovare una applicazione idonea"
+msgstr "Impossibile trovare un'applicazione idonea"
 
 #: gnome-panel/panel-recent.c:83
 msgid ""
@@ -2338,88 +2314,81 @@ msgstr ""
 "remoti"
 
 #: gnome-panel/panel-recent.c:143 gnome-panel/panel-recent.c:149
-#, fuzzy
 msgid "Cannot open recently used document"
-msgstr ""
-"<b>Impossibile visualizzare la documentazione</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile aprire i documenti usati di recente"
 
 #: gnome-panel/panel-recent.c:150
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Errore sconosciuto durante il tentativo di aprire «%s»"
 
-#: gnome-panel/panel-recent.c:172
-#, fuzzy
-msgid "Open Recent"
-msgstr "Apri recenti"
+#: gnome-panel/panel-recent.c:168
+msgid "_Open Recent"
+msgstr "_Apri recenti"
 
-#: gnome-panel/panel-run-dialog.c:289
-#, fuzzy, c-format
+#: gnome-panel/panel-run-dialog.c:297
+#, c-format
 msgid "Cannot launch command '%s'"
-msgstr ""
-"Impossibile avviare l'icona\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile avviare il comando «%s»"
 
-#: gnome-panel/panel-run-dialog.c:320
-#, fuzzy, c-format
+#: gnome-panel/panel-run-dialog.c:328
+#, c-format
 msgid "Cannot display location '%s'"
-msgstr ""
-"<b>Impossibile visualizzare la documentazione</b>\n"
-"\n"
-"Dettagli: %s"
+msgstr "Impossibile mostrare la posizione «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1055
+# è il titolo di un file.dialog
+#: gnome-panel/panel-run-dialog.c:1063
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Scelta di un file da aggiungere al comando..."
 
-#: gnome-panel/panel-run-dialog.c:1234
+#: gnome-panel/panel-run-dialog.c:1242
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Avvierà il comando «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1240 gnome-panel/panel-run-dialog.glade.h:14
+#: gnome-panel/panel-run-dialog.c:1248 gnome-panel/panel-run-dialog.glade.h:14
 msgid "Select an application to view its description."
-msgstr ""
+msgstr "Selezionare un'applicazione per visualizzarne la descrizione."
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
 "A description of the currently selected application or information on the "
 "command that will be run."
 msgstr ""
+"Una descrizione dell'applicazione attualmente selezionata o informazioni sul "
+"comando che sarà eseguito."
 
 #: gnome-panel/panel-run-dialog.glade.h:3
-#, fuzzy
 msgid "Application description"
-msgstr "Applicazioni"
+msgstr "Descrizione dell'applicazione"
 
 #: gnome-panel/panel-run-dialog.glade.h:4
 msgid ""
 "Click this button to browse for a file whose name to append to the command "
 "string."
 msgstr ""
+"Fare clik su questo pulsante per aggiungere il nome di un file alla stringa "
+"di comando."
 
 #: gnome-panel/panel-run-dialog.glade.h:5
 msgid ""
 "Click this button to run the selected application or the command in the "
 "command entry field."
 msgstr ""
+"Fare clic su questo pulsante per avviare l'applicazione selezionata o il "
+"comando presente nel campo inserimento comando."
 
 #: gnome-panel/panel-run-dialog.glade.h:6
-#, fuzzy
 msgid "Command entry"
-msgstr "Inserimento comando"
+msgstr "Campo comando"
 
 #: gnome-panel/panel-run-dialog.glade.h:7
-#, fuzzy
 msgid "Command icon"
-msgstr "Comando da avviare"
+msgstr "Icona comando"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Enter a command string here to run it."
-msgstr ""
+msgstr "Digitare qui una stringa di comando per eseguirla."
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "List of known applications"
@@ -2431,32 +2400,31 @@ msgstr "Esegui nel _terminale"
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Run with _file..."
-msgstr ""
+msgstr "Avvia col _file..."
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "Select an application from the list to run it"
 msgstr "Scegliere dalla lista una applicazione da avviare"
 
 #: gnome-panel/panel-run-dialog.glade.h:15
 msgid "Select this box to run the command in a terminal window."
-msgstr ""
+msgstr "Selezionare questa opzione per avviare il comando in un terminale."
 
 #: gnome-panel/panel-run-dialog.glade.h:16
-#, fuzzy
 msgid "Show list of known _applications"
-msgstr "Lista delle applicazioni conosciute"
+msgstr "_Mostra la lista delle applicazioni conosciute"
 
 #: gnome-panel/panel-run-dialog.glade.h:17
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "Impossibile trovare il comando da eseguire"
+msgstr "L'icona del comando da avviare"
 
 #: gnome-panel/panel-run-dialog.glade.h:18
 msgid "When this is selected the list of known applications is displayed."
 msgstr ""
+"Quando questo elemento è selezionato viene mostrata la lista delle "
+"applicazioni conosciute."
 
-#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:143
+#: gnome-panel/panel-run-dialog.glade.h:19 gnome-panel/panel-stock-icons.c:148
 msgid "_Run"
 msgstr "_Avvia"
 
@@ -2481,328 +2449,311 @@ msgstr ""
 "Codice errore: %d\n"
 "Il pannello ora terminerà."
 
-#: gnome-panel/panel-stock-icons.c:114
+#: gnome-panel/panel-stock-icons.c:119
 #, c-format
 msgid "Unable to load panel stock icon '%s'\n"
 msgstr "Impossibile caricare per il pannello l'icona dello stock «%s»\n"
 
-#: gnome-panel/panel-stock-icons.c:144
+#: gnome-panel/panel-stock-icons.c:149
 msgid "_Force quit"
-msgstr ""
+msgstr "_Forza uscita"
 
-#: gnome-panel/panel-toplevel.c:1412
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1417
 msgid "Top Expanded Edge Panel"
-msgstr "Pannello laterale di GNOME"
+msgstr "Pannello di bordo superiore espanso"
 
-#: gnome-panel/panel-toplevel.c:1413
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1418
 msgid "Top Centered Panel"
-msgstr "Pannello d'angolo"
-
-#: gnome-panel/panel-toplevel.c:1414
-#, fuzzy
-msgid "Top Floating Panel"
-msgstr "Pannello fluttuante"
-
-#: gnome-panel/panel-toplevel.c:1415
-#, fuzzy
-msgid "Top Edge Panel"
-msgstr "Pannello laterale"
+msgstr "Pannello centrato superiore"
 
 #: gnome-panel/panel-toplevel.c:1419
-msgid "Bottom Expanded Edge Panel"
-msgstr ""
+msgid "Top Floating Panel"
+msgstr "Pannello fluttuante superiore"
 
 #: gnome-panel/panel-toplevel.c:1420
-#, fuzzy
+msgid "Top Edge Panel"
+msgstr "Pannello di bordo superiore"
+
+#: gnome-panel/panel-toplevel.c:1424
+msgid "Bottom Expanded Edge Panel"
+msgstr "Pannello di bordo espanso inferiore"
+
+#: gnome-panel/panel-toplevel.c:1425
 msgid "Bottom Centered Panel"
-msgstr "Pannello d'angolo"
-
-#: gnome-panel/panel-toplevel.c:1421
-#, fuzzy
-msgid "Bottom Floating Panel"
-msgstr "Pannello fluttuante"
-
-#: gnome-panel/panel-toplevel.c:1422
-#, fuzzy
-msgid "Bottom Edge Panel"
-msgstr "Pannello laterale"
+msgstr "Pannello centrato inferiore"
 
 #: gnome-panel/panel-toplevel.c:1426
-#, fuzzy
-msgid "Left Expanded Edge Panel"
-msgstr "Pannello laterale di GNOME"
+msgid "Bottom Floating Panel"
+msgstr "Pannello fluttuante inferiore"
 
 #: gnome-panel/panel-toplevel.c:1427
-#, fuzzy
+msgid "Bottom Edge Panel"
+msgstr "Pannello di bordo inferiore"
+
+#: gnome-panel/panel-toplevel.c:1431
+msgid "Left Expanded Edge Panel"
+msgstr "Pannello di bordo espanso sinistro"
+
+#: gnome-panel/panel-toplevel.c:1432
 msgid "Left Centered Panel"
-msgstr "Pannello d'angolo"
-
-#: gnome-panel/panel-toplevel.c:1428
-#, fuzzy
-msgid "Left Floating Panel"
-msgstr "Pannello fluttuante"
-
-#: gnome-panel/panel-toplevel.c:1429
-#, fuzzy
-msgid "Left Edge Panel"
-msgstr "Pannello laterale"
+msgstr "Pannello centrato sinistro"
 
 #: gnome-panel/panel-toplevel.c:1433
-msgid "Right Expanded Edge Panel"
-msgstr ""
+msgid "Left Floating Panel"
+msgstr "Pannello fluttuante sinistro"
 
 #: gnome-panel/panel-toplevel.c:1434
-#, fuzzy
+msgid "Left Edge Panel"
+msgstr "Pannello di bordo sinistro"
+
+#: gnome-panel/panel-toplevel.c:1438
+msgid "Right Expanded Edge Panel"
+msgstr "Pannello di bordo espanso destro"
+
+#: gnome-panel/panel-toplevel.c:1439
 msgid "Right Centered Panel"
-msgstr "Pannello allineato"
+msgstr "Pannello centrato destro"
 
-#: gnome-panel/panel-toplevel.c:1435
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1440
 msgid "Right Floating Panel"
-msgstr "Pannello fluttuante"
+msgstr "Pannello fluttuante destro"
 
-#: gnome-panel/panel-toplevel.c:1436
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:1441
 msgid "Right Edge Panel"
-msgstr "Pannello laterale"
+msgstr "Pannello di bordo destro"
 
-#: gnome-panel/panel-toplevel.c:3457
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3493
 msgid "Name"
-msgstr "Nome dell'icona"
+msgstr "Nome"
 
-#: gnome-panel/panel-toplevel.c:3458
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3494
 msgid "The name of this panel"
-msgstr "Modo di questo pannello"
+msgstr "Il nome di questo pannello"
 
-#: gnome-panel/panel-toplevel.c:3467
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3503
 msgid "Expand"
-msgstr "Dimensione espansore"
+msgstr "Espandi"
 
-#: gnome-panel/panel-toplevel.c:3468
+#: gnome-panel/panel-toplevel.c:3504
 msgid "Expand to take up the full monitor width/height"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3478
-#, fuzzy
-msgid "The orientation of the panel"
-msgstr "Stato corrente di questo pannello"
-
-#: gnome-panel/panel-toplevel.c:3489
-msgid "The height (or width when vertical) of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3501
-#, fuzzy
-msgid "X position"
-msgstr "Posizione:"
-
-#: gnome-panel/panel-toplevel.c:3502
-msgid "The X position of the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3513
-msgid "X centered"
-msgstr ""
+msgstr "Espandi fino a rimpire la larghezza/altezza del monitor"
 
 #: gnome-panel/panel-toplevel.c:3514
+msgid "The orientation of the panel"
+msgstr "L'orientazione del pannello"
+
+#: gnome-panel/panel-toplevel.c:3525
+msgid "The height (or width when vertical) of the panel"
+msgstr "L'altezza (o larghezza se verticale) del pannello"
+
+#: gnome-panel/panel-toplevel.c:3537
+msgid "X position"
+msgstr "Coordinata X"
+
+#: gnome-panel/panel-toplevel.c:3538
+msgid "The X position of the panel"
+msgstr "La posizione orizzontale del pannello"
+
+#: gnome-panel/panel-toplevel.c:3549
+msgid "X centered"
+msgstr "Centrato su X"
+
+#: gnome-panel/panel-toplevel.c:3550
 msgid "The x co-ordinate is relative to center screen"
-msgstr ""
+msgstr "La coordinata x è relativa al centro dello schermo"
 
-#: gnome-panel/panel-toplevel.c:3523
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3559
 msgid "Y position"
-msgstr "Posizione:"
+msgstr "Coordinata Y"
 
-#: gnome-panel/panel-toplevel.c:3524
+#: gnome-panel/panel-toplevel.c:3560
 msgid "The Y position of the panel"
-msgstr ""
+msgstr "La posizione orizzontale del pannello"
 
-#: gnome-panel/panel-toplevel.c:3535
+#: gnome-panel/panel-toplevel.c:3571
 msgid "Y centered"
-msgstr ""
+msgstr "Centrato su Y"
 
-#: gnome-panel/panel-toplevel.c:3536
+#: gnome-panel/panel-toplevel.c:3572
 msgid "The y co-ordinate is relative to center screen"
-msgstr ""
+msgstr "La coordinata y è relativa al centro dello schermo"
 
-#: gnome-panel/panel-toplevel.c:3545
+#: gnome-panel/panel-toplevel.c:3581
 msgid "Xinerama monitor"
-msgstr ""
+msgstr "Monitor Xinerana"
 
-#: gnome-panel/panel-toplevel.c:3546
+#: gnome-panel/panel-toplevel.c:3582
 msgid "The monitor (in terms of Xinerama) which the panel is on"
-msgstr ""
+msgstr "Il monitor (nell'accezione di Xinerama) su cu si trova il pannello"
 
-#: gnome-panel/panel-toplevel.c:3557
-#, fuzzy
+# Nascondimento sarebbe stato bruttissimo,
+# però forse usando un po' di parafrasi...
+#
+# Visto che non è gravissimo lo faccio alla
+# prossima release.
+#: gnome-panel/panel-toplevel.c:3593
 msgid "Auto hide"
-msgstr "Abi_lita la scomparsa automatica"
+msgstr "Scomparsa automatica"
 
-#: gnome-panel/panel-toplevel.c:3558
+#: gnome-panel/panel-toplevel.c:3594
 msgid "Automatically hide the panel when the mouse leaves the panel"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3567
-msgid "Hide delay"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3568
-msgid "The number of milliseconds to delay before automatically hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3579
-msgid "Un-hide delay"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3580
-msgid "The number of milliseconds to delay before automatically un-hiding"
-msgstr ""
-
-#: gnome-panel/panel-toplevel.c:3591
-#, fuzzy
-msgid "Auto-hide size"
-msgstr "Abi_lita la scomparsa automatica"
-
-#: gnome-panel/panel-toplevel.c:3592
-msgid ""
-"The number of pixels visible when the panel has been automatically hidden"
-msgstr ""
+msgstr "Nasconde automaticamente il pannello quando il mouse abbandona la sua area"
 
 #: gnome-panel/panel-toplevel.c:3603
-msgid "Animate"
-msgstr ""
+msgid "Hide delay"
+msgstr "Ritardo di scomparsa"
 
 #: gnome-panel/panel-toplevel.c:3604
+msgid "The number of milliseconds to delay before automatically hiding"
+msgstr "I millisecondi da attendere prima di nascodere automaticamente"
+
+# fa molto mistico....
+#: gnome-panel/panel-toplevel.c:3615
+msgid "Un-hide delay"
+msgstr "Ritardo di apparizione"
+
+#: gnome-panel/panel-toplevel.c:3616
+msgid "The number of milliseconds to delay before automatically un-hiding"
+msgstr "I millisecondi di ritardo prima di riapparire automaticamente"
+
+#: gnome-panel/panel-toplevel.c:3627
+msgid "Auto-hide size"
+msgstr "Dimensioni da nascosto"
+
+#: gnome-panel/panel-toplevel.c:3628
+msgid ""
+"The number of pixels visible when the panel has been automatically hidden"
+msgstr "I pixel visibili quando il pannello è automaticamente nascosto"
+
+#: gnome-panel/panel-toplevel.c:3639
+msgid "Animate"
+msgstr "Animazione"
+
+#: gnome-panel/panel-toplevel.c:3640
 msgid "Enable hiding/showing animations"
-msgstr ""
+msgstr "Attiva le animazioni di scomparsa e apparizione"
 
-#: gnome-panel/panel-toplevel.c:3613
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3649
 msgid "Animation Speed"
-msgstr "_Velocità dell'animazione:"
+msgstr "Velocità dell'animazione"
 
-#: gnome-panel/panel-toplevel.c:3614
+#: gnome-panel/panel-toplevel.c:3650
 msgid "The speed at which to animate panel hiding/showing"
-msgstr ""
+msgstr "Velocità delle animazioni di scomparsa e apparizione"
 
-#: gnome-panel/panel-toplevel.c:3624
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3660
 msgid "Buttons Enabled"
-msgstr "Pulsanti di riduzione abilitati"
+msgstr "Pulsanti abilitati"
 
 # compare nelle propr del drawer
-#: gnome-panel/panel-toplevel.c:3625
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3661
 msgid "Enable hide/show buttons"
-msgstr "Abilita il pulsante di riduzione"
+msgstr "Abilita i pulsanti di scomparsa/apparizione"
 
-#: gnome-panel/panel-toplevel.c:3634
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Arrows Enabled"
-msgstr ""
+msgstr "Frecce abilitate"
 
-#: gnome-panel/panel-toplevel.c:3635
-#, fuzzy
+#: gnome-panel/panel-toplevel.c:3671
 msgid "Enable arrows on hide/show buttons"
-msgstr "_Frecce sui pulsanti di riduzione"
+msgstr "Abilita le frecce sui pulsanti di scomparsa/apparizione"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:2
 msgid "Automatically hide panel into corner"
-msgstr ""
+msgstr "Nasconde automaticamente il pannello in un angolo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:3
-#, fuzzy
 msgid "Background color"
-msgstr "Sfondo"
+msgstr "Colore dello sfondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:4
 msgid "Background color opacity"
-msgstr ""
+msgstr "Opacità del colore dello sfondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:5
-#, fuzzy
 msgid "Background image"
-msgstr "Sfondo"
+msgstr "Immagine di sfondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:6
-#, fuzzy
 msgid "Background type"
-msgstr "Sfondo"
+msgstr "Tipo di sfondo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:7
 msgid "Center panel on x-axis"
-msgstr ""
+msgstr "Centra il pannello sull'asse x"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:8
 msgid "Center panel on y-axis"
-msgstr ""
+msgstr "Centra il pannello sull'asse y"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:10
-#, fuzzy
 msgid "Enable arrows on hide buttons"
-msgstr "_Frecce sui pulsanti di riduzione"
+msgstr "Abilita le frecce sui pulsanti di scomparsa"
 
-# compare nelle propr del drawer
 #: gnome-panel/panel-toplevel.schemas.in.h:11
-#, fuzzy
 msgid "Enable hide buttons"
-msgstr "Abilita il pulsante di riduzione"
+msgstr "Abilita i pulsanti di scomparsa"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:12
 msgid "Expand to occupy entire screen width"
-msgstr ""
+msgstr "Espande per occupare l'intera larghezza dello schermo"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:13
-#, fuzzy
 msgid "Fit image to panel"
-msgstr "Stato corrente di questo pannello"
+msgstr "Adatta l'immagine al pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:14
 msgid ""
 "If true, arrows will be placed on the hide buttons. This key is only "
 "relevant if the enable_buttons key is true."
 msgstr ""
+"Se impostata a vero, verranno disegnate delle frecce sui pulsanti di "
+"scomparsa. Questa chiave ha senso solo se la chiave enable_buttons è "
+"impostata a vero."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:15
 msgid ""
 "If true, buttons will be placed on each side of the panel which may be used "
 "to move the panel to edge of the screen, leaving only a button showing."
 msgstr ""
+"Se impostata a vero, dei pulsanti saranno posto da ambo i lati del pannello. "
+"Tali pulsanti potranno essere usati per muovere il pannello sul bordo dello "
+"schermo, lasciando visibile solo un pulsante."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:16
 msgid ""
 "If true, hiding and un-hiding of this panel will be animated rather than "
 "happening instantly."
-msgstr ""
+msgstr "Se impostata a vero, l'apparizione e la scomparsa di questo pannello verranno animate invece che avvenire istantaneamente."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:17
 msgid ""
 "If true, the background image will be rotated when the panel is oriented "
 "vertically."
 msgstr ""
+"Se impostata a vero, l'immagine di sfondo sarà ruotata quando il pannello è "
+"orientato verticalmente."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:18
 msgid ""
 "If true, the image will be scaled (retaining the aspect ratio of the image) "
 "to the panel height (if horizontal)."
 msgstr ""
+"Se impostata a vero, l'immagine sarà scalata all'altezza del pannello, se "
+"orizzontale, così mantenere le sue proporzioni,"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:19
 msgid ""
 "If true, the image will be scaled to the panel dimensions. The aspect ratio "
 "of the image will not be maintained."
-msgstr ""
+msgstr "Se impostata a vero l'immagine sarà scalata alle dimensioni del pannello. Le proporzioni dell'immagine non saranno mantenute."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:20
 msgid ""
 "If true, the panel is automatically hidden into a corner of the screen when "
 "the pointer leaves the panel area. Moving the pointer to that corner again "
 "will cause the panel to re-appear."
-msgstr ""
+msgstr "Se impostata a vero, il pannello verrà nascosto automaticamente in un angolo dello schermo quando il puntatore abbandona l'area del pannello stesso. Spostando poi il puntatore su quest'angolo, il pannello riapparirà."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:21
 msgid ""
@@ -2811,6 +2762,11 @@ msgid ""
 "If false, the panel will only be large enough to accommodate the applets, "
 "launchers and buttons on the panel."
 msgstr ""
+"Se impostata a vero, il pannello occuperà l'intera larghezza dello schermo "
+"(altezza se è un pannello verticale). In questa modalità il pannello può "
+"essere posto solo lungo i bordi dello schermo. Se falso, il pannello sarà "
+"grande abbastanza da accogliere le applet, le icone di avvio e i pulsanti in "
+"esso contenuti."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:22
 msgid ""
@@ -2818,7 +2774,7 @@ msgid ""
 "axis of the screen. If the panel is resized it will remain at that position "
 "- i.e. the panel will grow on both sides. If false, the x key specifies the "
 "location of the panel."
-msgstr ""
+msgstr "Se impostata a vero, la chiave x sarà ignorata ed il pannello verrà posizionato al centro dell'asse orizzontale dello schermo. Ridimensionandolo, il pannello rimarrà nella stessa posizione, ma crescerà da ambo i lati. Se impostata a falso, la chiave x determina la posizione del pannello."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:23
 msgid ""
@@ -2826,72 +2782,68 @@ msgid ""
 "axis of the screen. If the panel is resized it will remain at that position "
 "- i.e. the panel will grow on both sides. If false, the y key specifies the "
 "location of the panel."
-msgstr ""
+msgstr "Se impostata a vero, la chiave y sarà ignorata ed il pannello verrà posizionato al centro dell'asse verticale dello schermo. Ridimensionandolo, il pannello rimarrà nella stessa posizione, ma crescerà da ambo i lati. Se impostata a falso, la chiave y determina la posizione del pannello."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:24
 msgid ""
 "In a Xinerama setup, you may have panels on each individual monitor. This "
 "key identifies the current monitor the panel is displayed on."
-msgstr ""
+msgstr "In un'impostazione Xinerama è possibile avere pannelli su ogni singolo monitor. Questa chiave identifica il monitor corrente su cui è visualizzato il pannello."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:25
-#, fuzzy
 msgid "Name to identify panel"
-msgstr "Modo di questo pannello"
+msgstr "Nome per identificare il pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:26
 msgid "Panel autohide delay"
-msgstr ""
+msgstr "Ritardo di scomparsa automatica"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:27
 msgid "Panel autounhide delay"
-msgstr ""
+msgstr "Ritardo di apparizione automatica"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:28
-#, fuzzy
 msgid "Panel orientation"
-msgstr "Orientamento"
+msgstr "Orientazione pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:29
-#, fuzzy
 msgid "Panel size"
-msgstr "Pannello"
+msgstr "Dimensione pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:30
-#, fuzzy
 msgid "Rotate image on vertical panels"
-msgstr "Ruota nei pannelli verticali"
+msgstr "Ruota l'immagine sui pannelli verticali"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:31
 msgid "Specifies the background color for the panel in #RGB format."
-msgstr ""
+msgstr "Indica il colore di sfondo per il pannello nel formato #RGB."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:32
 msgid ""
 "Specifies the file to be used for the background image. If the image "
 "contains an alpha channel it will be composited onto the desktop background "
 "image."
-msgstr ""
+msgstr "Indica il file da usare come immagine di sfondo. Se questa immagine contiene un canale alpha, tale canale sarà composto con l'immagine di sfondo del desktop."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:33
 msgid ""
 "Specifies the number of milliseconds delay after the pointer enters the "
 "panel area before the panel is automatically re-shown. This key is only "
 "relevant if the auto_hide key is true."
-msgstr ""
+msgstr "Indica il ritardo, in millisecondi, tra l'ingresso del puntatore nell'area del pannello e la riapparizione automatica dei quest'ultimo. Questa chiave ha senso solo se la chiave auto_hide è impostata a vero."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:34
 msgid ""
 "Specifies the number of milliseconds delay after the pointer leaves the "
 "panel area before the panel is automatically hidden. This key is only "
 "relevant if the auto_hide key is true."
-msgstr ""
+msgstr "Indica il ritardo, in millisecondi, tra l'uscita del puntatore dall'area del pannello e la sparizione automatica di quest'ultimo. Questa chiave ha senso solo se la chiave auto_hide è impostata a vero."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:35
 msgid ""
 "Specifies the number of pixels visible when the panel is automatically "
 "hidden into a corner. This key is only relevant if the auto_hide key is true."
-msgstr ""
+msgstr "Indica il numero di pixel visibili quando il pannello è nascosto automaticamente in un angolo. Questa chiave ha senso solo se la chiave auto_hide è impostata a vero."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:36
 msgid ""
@@ -2899,11 +2851,13 @@ msgid ""
 "completely opaque (a value of less than 65535), the color will be composited "
 "onto the desktop background image."
 msgstr ""
+"Indica l'opacità del formato del colore di sfondo. Se il colore non è "
+"completamente opaco (quindi un valore inferiore a 65535), tale colore sarà "
+"composto con l'immagine di sfondo del desktop."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:37
-#, fuzzy
 msgid "Stretch image to panel"
-msgstr "Stato corrente di questo pannello"
+msgstr "Stira l'immagine sul pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:38
 msgid ""
@@ -2912,6 +2866,10 @@ msgid ""
 "indicators. The maximum size is fixed at one quarter of the screen height "
 "(or width)."
 msgstr ""
+"L'altezza (larghezza per i pannelli verticali) del pannello. La dimensione "
+"minina del pannello sarà determinata durante l'esecuzione, basandosi sulle "
+"dimensione del tipo di carattere ed altri fattori. La dimensione massima è "
+"comunque fissata ad un quarto dell'altezza (o larghezza) dello schermo."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:39
 msgid ""
@@ -2919,6 +2877,10 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
+"La posizione del pannello lungo l'asse x. Questa chiave ha senso solo nella "
+"modalità non espansa. In modalità espansa, invece, questa chiave viene "
+"ignorata ed il pannello è posizionato sul bordo dello schermo indicato dalla "
+"chiave orientation."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:40
 msgid ""
@@ -2926,7 +2888,12 @@ msgid ""
 "expanded mode. In expanded mode this key is ignored and the panel is placed "
 "at the screen edge specified by the orientation key."
 msgstr ""
+"La posizione del pannello lungo l'asse y. Questa chiave ha senso solo nella "
+"modalità non espansa. In modalità espansa, invece, questa chiave viene "
+"ignorata ed il pannello è posizionato sul bordo dello schermo indicato dalla "
+"chiave orientation."
 
+# uff!
 #: gnome-panel/panel-toplevel.schemas.in.h:41
 msgid ""
 "The orientation of the panel. Possible values are \"top\", \"bottom\", \"left"
@@ -2938,6 +2905,14 @@ msgid ""
 "panel, whereas on a \"bottom\" panel the menu will be popped up above the "
 "panel."
 msgstr ""
+"L'orientazione del pannello. Valori ammessi sono \"top\", \"bottom\", \"left"
+"\" e \"right\". Nella modalità espansa questa chiave indica su quale bordo "
+"dello schermo si trovi il pannello. Nella modalità non espasa la differenza "
+"tra \"top\" e \"bottom\" è più sfumata. Sebbene entrambi indichino che si "
+"tratta di un pannello orizzontale, è possibile avere comportamento diverso "
+"da parte degli oggetti nel pannello: ad esempio un pulsante menù posto su un "
+"pannello \"top\" tenderà ad aprire il menù verso il basso, verso l'alto "
+"invece per un pannello \"bottom\"."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:42
 msgid ""
@@ -2945,6 +2920,9 @@ msgid ""
 "\", \"medium\" and \"fast\". This key is only relevant if the "
 "enable_animations key is true."
 msgstr ""
+"La velocità delle animazioni del pannello. Valori ammessi sono \"slow\", "
+"\"medium\" e \"fast\". Questa chiave ha senso solo se la chiave "
+"enable_animation è impostata a vero."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:43
 msgid ""
@@ -2952,10 +2930,12 @@ msgid ""
 "main purpose is to serve as the panel's window title which is useful when "
 "navigating between panels."
 msgstr ""
+"Nome intellegibile con cui indicare un pannello. Usato come titolo di "
+"finestra del pannello, risulta utile nella navigazione tra pannelli."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:44
 msgid "Visible pixels when hidden"
-msgstr ""
+msgstr "Pixel visibili quando nascosto"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:45
 msgid ""
@@ -2964,30 +2944,35 @@ msgid ""
 "color key will be used as background color or \"image\" - the image "
 "specified by the image key will be used as background."
 msgstr ""
+"Indica il tipo di sfondo usato da questo pannello. Valori ammessi sono \"gtk"
+"\" (per usare lo stesso sfondo dei widget GTK+), \"color\" (la chiave color "
+"indicherà il colore di sfondo) e \"image\" (la chiave image indicherà "
+"l'immagine da usare come sfondo)."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:46
 msgid ""
 "With a multi-screen setup, you may have panels on each individual screen. "
 "This key identifies the current screen the panel is displayed on."
 msgstr ""
+"Con una impostazione multi-screen, è possibile avere pannelli su ciascuno "
+"schermo. Questa chiave identifica lo schermo corrente su cui il pannello è "
+"visulizzato."
 
 #: gnome-panel/panel-toplevel.schemas.in.h:47
-#, fuzzy
 msgid "X co-ordinate of panel"
-msgstr "Modo di questo pannello"
+msgstr "Coordinata orizzontale del pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:48
 msgid "X screen panel is on"
-msgstr ""
+msgstr "Schermo di X dove è posto il pannello"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:49
 msgid "Xinerama monitor panel is on"
-msgstr ""
+msgstr "Monitor Xinerama dove il pannello è posto"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-#, fuzzy
 msgid "Y co-ordinate of panel"
-msgstr "Modo di questo pannello"
+msgstr "Coordinata verticale del pannello"
 
 #. XXX: Not really a correct error,
 #. * but just somewhat correct
@@ -2998,17 +2983,17 @@ msgstr "Documentazione non trovata"
 
 #: gnome-panel/panel-util.c:175
 msgid "No document to show"
-msgstr "Nessun documento da visualizzare"
+msgstr "Nessun documento da mostrare"
 
 #: gnome-panel/panel-util.c:483
-#, fuzzy, c-format
+#, c-format
 msgid "Details: %s"
-msgstr "Dettagli"
+msgstr "Dettagli: %s"
 
 #: gnome-panel/panel-util.c:957
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot execute %s"
-msgstr "Impossibile eseguire xscreensaver"
+msgstr "Impossibile eseguire «%s»"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -3043,7 +3028,7 @@ msgstr "Tipo di sfondo ricevuto sconosciuto"
 
 #: libpanel-applet/panel-applet.c:1039
 msgid "The Applet's containing Panel's orientation"
-msgstr "L'applet contenente l'orientamento del pannello"
+msgstr "L'applet contenente l'orientazione del pannello"
 
 #: libpanel-applet/panel-applet.c:1047
 msgid "The Applet's containing Panel's size in pixels"
@@ -3093,7 +3078,7 @@ msgstr "Large"
 
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "Orientation:"
-msgstr "Orientamento:"
+msgstr "Orientazione:"
 
 #: libpanel-applet/panel-test-applets.glade.h:7
 msgid "Prefs Dir:"
@@ -3122,672 +3107,3 @@ msgstr "XX Large"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Small"
-
-#~ msgid "Size and Position"
-#~ msgstr "Dimensione e posizione"
-
-#~ msgid "Tooltip/Name"
-#~ msgstr "Suggerimento/Nome"
-
-#~ msgid "Icon"
-#~ msgstr "Icona"
-
-#~ msgid "Applet appearance"
-#~ msgstr "Aspetto della applet"
-
-#~ msgid "Drawer handle"
-#~ msgstr "Maniglia del cassetto"
-
-# compare nelle propr del drawer
-#~ msgid "Enable hidebutton"
-#~ msgstr "Abilita il pulsante di riduzione"
-
-# vedi sopra
-#~ msgid "Enable hidebutton arrow"
-#~ msgstr "Abilita la frecca sul pulsante di riduzione"
-
-#~ msgid "KDE Menu"
-#~ msgstr "Menù KDE"
-
-#, fuzzy
-#~ msgid "_Drawer"
-#~ msgstr "Cassetto"
-
-#, fuzzy
-#~ msgid "_Run Application..."
-#~ msgstr "Applicazione"
-
-#, fuzzy
-#~ msgid "_Search for Files..."
-#~ msgstr "Ricerca file..."
-
-#, fuzzy
-#~ msgid "_Take Screenshot..."
-#~ msgstr "Schermata..."
-
-#, fuzzy
-#~ msgid "_Log Out"
-#~ msgstr "Esci"
-
-#~ msgid "Sets the hour format, may be either 12 or 24"
-#~ msgstr "Imposta il formato orario, a scelta tra 12 e 24"
-
-#~ msgid "Maximum size that Window List requests"
-#~ msgstr "Dimensione massima richiesta dalla lista delle finestre"
-
-#~ msgid ""
-#~ "To be usable, Window List requires a minimum width. Window List requests "
-#~ "this minimum width. The minimum width setting is useful for sliding and "
-#~ "edge panels, which usually request a small default width."
-#~ msgstr ""
-#~ "Per poter essere usata la lista delle finestre richiede una larghezza "
-#~ "minima. Questa impostazione è utile per pannelli scorrevoli e laterali, "
-#~ "nei quali è necessaria una larghezza predefinita piccola."
-
-#~ msgid "Number of rows in the Workspace Switcher."
-#~ msgstr "Numero di righe nel selettore area di lavoro."
-
-#~ msgid "Whether to display the all workspaces in the Workspace Switcher."
-#~ msgstr "Imposta se mostrare tutte le aree di lavore nel selettore."
-
-#~ msgid ""
-#~ "Whether to display the names of the workspaces in the Workspace Switcher."
-#~ msgstr "Imposta se mostrare i nomi della aree di lavoro nel selettore."
-
-#~ msgid ""
-#~ "Cannot save launcher to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Impossibile salvare l'icona di avvio sul disco, si è verificato il "
-#~ "seguente errore:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "probably does not exist"
-#~ msgstr "probabilmente non esiste"
-
-#, fuzzy
-#~ msgid "Could not remove the menu item"
-#~ msgstr ""
-#~ "<b>Impossibile rimuovere la voce di menù «%s»</b>\n"
-#~ "\n"
-#~ "Dettagli: %s\n"
-
-#~ msgid "Cannot execute gnome-search-tool"
-#~ msgstr "Impossibile eseguire «gnome-search-tool»"
-
-#~ msgid "Cannot execute gnome-panel-screenshot"
-#~ msgstr "Impossibile eseguire «gnome-panel-screenshot»"
-
-#~ msgid "Take a screen shot"
-#~ msgstr "Fotografa lo schermo"
-
-#~ msgid "Take a screen shot of a window"
-#~ msgstr "Fotografa solo una finestra"
-
-#, fuzzy
-#~ msgid "The Bonobo IID of the applet"
-#~ msgstr "Applet Test per Bonobo"
-
-#, fuzzy
-#~ msgid "The location of the launcher"
-#~ msgstr "Posizione alla quale aggiungere l'icona di avvio"
-
-#, fuzzy
-#~ msgid "The type of action button"
-#~ msgstr "Il tipo di azione che il pulsante implementa"
-
-#, fuzzy
-#~ msgid "The background type."
-#~ msgstr "Tipo di sfondo ricevuto sconosciuto"
-
-#, fuzzy
-#~ msgid "The orientation of the panel."
-#~ msgstr "Stato corrente di questo pannello"
-
-#, fuzzy
-#~ msgid "The size of the panel."
-#~ msgstr "Stato corrente di questo pannello"
-
-#~ msgid "and finally, The Knights Who Say... NI!"
-#~ msgstr "...e, infine, i Cavalieri che dicono... NI!"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "Running in \"Lockdown\" mode.  This means your system administrator has "
-#~ "prohibited any changes to the panel's configuration to take place."
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Avviato in modalità «Lockdown». L'amministratore di sistema ha proibito "
-#~ "qualunque cambiamento alla configurazione del pannello."
-
-#~ msgid "End world hunger"
-#~ msgstr "Fine alla fame nel mondo"
-
-#~ msgid "The desired ButtonWidget size"
-#~ msgstr "Dimensione desiderata del ButtonWidget"
-
-#~ msgid "Pause _per frame (s):"
-#~ msgstr "_Durata fotogramma (s):"
-
-#~ msgid "_Animation filename:"
-#~ msgstr "Fi_le dell'animazione:"
-
-#~ msgid "Alert you when new mail arrives"
-#~ msgstr "Avvisa quando arriva nuova posta"
-
-#~ msgid "Inbox Monitor"
-#~ msgstr "Posta in arrivo"
-
-#~ msgid "Internet"
-#~ msgstr "Internet"
-
-#~ msgid "_Check for mail"
-#~ msgstr "Con_trolla la posta"
-
-#~ msgid "There was an error executing %s: %s"
-#~ msgstr "Errore nell'eseguire «%s»: %s"
-
-#~ msgid ""
-#~ "You didn't set a password in the preferences for the Inbox Monitor,\n"
-#~ "so you have to enter it each time it starts up."
-#~ msgstr ""
-#~ "Non è stata impostata alcuna password nelle preferenze della "
-#~ "applicazione \n"
-#~ "da pannello «Posta in arrivo». È necessario fornirla ad ogni avvio di "
-#~ "sessione."
-
-#~ msgid "Please enter your mailserver's _password:"
-#~ msgstr "_Password del server di posta:"
-
-#~ msgid "Password Entry box"
-#~ msgstr "Inserimento password"
-
-#~ msgid ""
-#~ "The Inbox Monitor failed to check your mails and thus automatic updating "
-#~ "has been deactivated for now.\n"
-#~ "Maybe you used a wrong server, username or password?"
-#~ msgstr ""
-#~ "Impossibile controllare la posta; l'aggiornamento automatico sarà "
-#~ "disabilitato a partire da ora. È possibile che il nome del server, il "
-#~ "nome dell'utente o la password siano sbagliati."
-
-#~ msgid "You have new mail."
-#~ msgstr "Ci sono nuovi messaggi."
-
-#~ msgid "You have mail."
-#~ msgstr "Solo vecchi messaggi."
-
-#~ msgid "%d/%d messages"
-#~ msgstr "%d/%d messaggi"
-
-#~ msgid "%d messages"
-#~ msgstr "%d messaggi"
-
-#~ msgid "No mail."
-#~ msgstr "Nessun messaggio."
-
-#~ msgid "Status not updated"
-#~ msgstr "Stato non aggiornato"
-
-#~ msgid "Mailbox _resides on:"
-#~ msgstr "La casella di posta si _trova su:"
-
-#~ msgid "Local mailspool"
-#~ msgstr "Mailspool locale"
-
-#~ msgid "Local maildir"
-#~ msgstr "Maildir locale"
-
-#~ msgid "Remote POP3-server"
-#~ msgstr "Server POP3 remoto"
-
-#~ msgid "Remote IMAP-server"
-#~ msgstr "Server IMAP remoto"
-
-#~ msgid "Mail _spool file:"
-#~ msgstr "File dello _spooler di posta:"
-
-#~ msgid "Mail s_erver:"
-#~ msgstr "S_erver di posta:"
-
-#~ msgid "Mail Server Entry box"
-#~ msgstr "Inserimento server di posta"
-
-#~ msgid "_Username:"
-#~ msgstr "Nome _utente:"
-
-#~ msgid "Username Entry box"
-#~ msgstr "Inserimento nome utente"
-
-#~ msgid "_Password:"
-#~ msgstr "_Password:"
-
-#~ msgid "_Folder:"
-#~ msgstr "_Cartella:"
-
-#~ msgid "Folder Entry box"
-#~ msgstr "Inserimento cartella"
-
-#~ msgid "C_ommand to run before checking for mail:"
-#~ msgstr "C_omando da eseguire prima del controllo della posta:"
-
-#~ msgid "Execute"
-#~ msgstr "Eseguire"
-
-#~ msgid "Before each _update:"
-#~ msgstr "Prima di ogni a_ggiornamento:"
-
-#~ msgid "Command to execute before each update"
-#~ msgstr "Comando da eseguire prima di ogni aggiornamento"
-
-#~ msgid "When new mail _arrives:"
-#~ msgstr "_Quando arriva nuova posta:"
-
-#~ msgid "Command to execute when new mail arrives"
-#~ msgstr "Comando da eseguire quando arrivano nuovi messaggi"
-
-#~ msgid "When clicke_d:"
-#~ msgstr "Quando _si fa clic:"
-
-#~ msgid "Set the number of unread mails to _zero"
-#~ msgstr "Impostare il numero di messaggi non letti a _zero"
-
-#~ msgid "Check for mail _every"
-#~ msgstr "Contro_llare la posta ogni"
-
-#~ msgid "minutes"
-#~ msgstr "minuti"
-
-#~ msgid "Choose time interval in minutes to check mail"
-#~ msgstr ""
-#~ "Definisce l'intervallo di tempo (in minuti) prima di effettuare un "
-#~ "controllo"
-
-#~ msgid "Choose time interval in seconds to check mail"
-#~ msgstr ""
-#~ "Definisce l'intervallo di tempo (in secondi) prima di effettuare un "
-#~ "controllo"
-
-#~ msgid "Play a _sound when new mail arrives"
-#~ msgstr "Emettere un _suono all'arrivo di nuovi messaggi"
-
-#~ msgid "Inbox Monitor Preferences"
-#~ msgstr "Preferenze di Posta in arrivo"
-
-#~ msgid "_Mail check"
-#~ msgstr "Con_trolla la posta"
-
-#~ msgid "Mail_box"
-#~ msgstr "Case_lla di posta"
-
-#~ msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "Avverte l'utente dell'arrivo di nuovi messaggi nella casella di posta"
-
-#~ msgid "Text only"
-#~ msgstr "Solo testo"
-
-#~ msgid "Mail check"
-#~ msgstr "Controlla la posta"
-
-#~ msgid "Mail check notifies you when new mail arrives in your mailbox"
-#~ msgstr ""
-#~ "Avverte l'utente dell'arrivo di nuovi messaggi nella casella di posta"
-
-#~ msgid "Command to execute when checking mail"
-#~ msgstr "Comando da eseguire quando viene controllata la posta"
-
-#~ msgid "Command to execute when you click on the Inbox Monitor"
-#~ msgstr "Comando da eseguire al clic sull'applet"
-
-#~ msgid "Command to run before checking mail"
-#~ msgstr "Comando da eseguire prima del controllo della posta"
-
-#~ msgid "Do we run the exec-command"
-#~ msgstr "Attiva l'esecuzione di exec-command"
-
-#~ msgid "Do we run the newmail-command"
-#~ msgstr "Attiva l'esecuzione di newmail-command"
-
-#~ msgid "How often (in milliseconds) we check the mail"
-#~ msgstr "Intervallo (in millisecondi) prima di controllare la posta"
-
-#~ msgid "If mail should be checked automatically"
-#~ msgstr "Controllo automatico dei messaggi"
-
-#~ msgid "If this is set mail will be checked every update-freq milliseconds"
-#~ msgstr ""
-#~ "Attivando questa opzione la posta verrà controllata automaticamente. "
-#~ "L'intervallo è stabilito nella opzione «update_frequency»"
-
-#~ msgid "If this is set, we should run the exec-command"
-#~ msgstr "Attivando questa opzione verrà eseguito il comando exec_command"
-
-#~ msgid "If this is set, we should run the newmail-command"
-#~ msgstr "Attivando questa opzione verrà eseguito il comando newmail-command"
-
-#~ msgid "Interval for checking mail"
-#~ msgstr "Intervallo prima del controllo"
-
-#~ msgid "Path to the animation file"
-#~ msgstr "Percorso del file dell'animazione"
-
-#~ msgid "Play a sound when mail is recieved"
-#~ msgstr ""
-#~ "Attivando questa opzione verrà emesso un suono quando arriva nuova posta"
-
-#~ msgid "Remote folder for mail retrieval"
-#~ msgstr "Cartella remota per il recupero della posta"
-
-#~ msgid "Remote server to connect to for our mail"
-#~ msgstr "Server remoto cui connettersi per la posta"
-
-#~ msgid "Run this command before we check the mail"
-#~ msgstr "Comando da eseguire prima del controllo della posta"
-
-#~ msgid "The mail server"
-#~ msgstr "Server di posta"
-
-#~ msgid "The user's password"
-#~ msgstr "Password dell'utente"
-
-#~ msgid "The user's password for the remote server"
-#~ msgstr "La password dell'utente per il server remoto"
-
-#~ msgid "This is how we check the mail, check the mail, check the mail..."
-#~ msgstr ""
-#~ "Questo imposta come controllare la posta, controllare la posta, "
-#~ "controllare la posta..."
-
-#~ msgid ""
-#~ "This is how we process the mail, process the mail, process the mail..."
-#~ msgstr ""
-#~ "Questo imposta come processare la posta, processare la posta, processare "
-#~ "la posta..."
-
-#~ msgid ""
-#~ "This is the animation that will be displayed during normal Inbox Monitor "
-#~ "usage"
-#~ msgstr ""
-#~ "Questo imposta l'animazione mostrata durante l'uso normale della applet"
-
-#~ msgid "Username on the remote server"
-#~ msgstr "Nome utente sul server remoto"
-
-#~ msgid "We run this command when the user clicks on Inbox Monitor"
-#~ msgstr ""
-#~ "Il comando qui indicato sarà eseguito quando si fa clic sulla applet"
-
-#~ msgid "Whether to reset mail status when you click on Inbox Monitor"
-#~ msgstr "Azzera lo stato della posta quando si fa clic sulla applet"
-
-#~ msgid "You've got mail!"
-#~ msgstr "Arrivati nuovi messaggi!"
-
-#~ msgid "Mailcheck"
-#~ msgstr "Controllo posta"
-
-#~ msgid "New Mail"
-#~ msgstr "Nuovi messaggi"
-
-#~ msgid "Rows"
-#~ msgstr "Righe"
-
-#~ msgid "No object_type set for panel object with ID %s\n"
-#~ msgstr "Non è impostato l'object_type per l'oggetto pannello con ID %s\n"
-
-#~ msgid "Mode"
-#~ msgstr "Modo"
-
-#~ msgid "State"
-#~ msgstr "Stato"
-
-#~ msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-#~ msgstr ""
-#~ "I pulsanti di riduzione (pulsanti che nascondono o mostrano il pannello) "
-#~ "sono abilitati?"
-
-#~ msgid "Hidebutton pixmaps enabled"
-#~ msgstr "Immagini sui pulsanti di riduzione abilitate"
-
-#~ msgid "Hidebuttons have pixmaps"
-#~ msgstr "Pulsanti di riduzione hanno una immagine"
-
-#~ msgid "Hide this panel"
-#~ msgstr "Nasconde questo pannello"
-
-#~ msgid "Show this panel"
-#~ msgstr "Mostra questo pannello"
-
-#~ msgid "Run Program..."
-#~ msgstr "Avvia programma..."
-
-#, fuzzy
-#~ msgid "GNOME Menu Panel"
-#~ msgstr "Pannello laterale di GNOME"
-
-#~ msgid "Can't find the screenshot program"
-#~ msgstr "Impossibile trovare il programma per fotografare lo schermo"
-
-#~ msgid "Can't execute the screenshot program"
-#~ msgstr "Impossibile eseguire la fotografia dello schermo"
-
-#~ msgid "Panel to add the launcher to"
-#~ msgstr "Pannello al quale aggiungere l'icona di avvio"
-
-#~ msgid "NUMBER"
-#~ msgstr "NUMERO"
-
-#~ msgid "The argument is a url to add, not a .desktop file"
-#~ msgstr "L'argomento da aggiungere é un URL, non un file .desktop"
-
-#~ msgid ""
-#~ "You must supply a single argument with the .desktop file or url to use\n"
-#~ msgstr ""
-#~ "É necessario fornire un singolo argomento contenente un file .desktop "
-#~ "oppure un URL da utilizzare\n"
-
-#~ msgid "No panel found\n"
-#~ msgstr "Nessun pannello trovato\n"
-
-#~ msgid ""
-#~ "<b>Failed to execute command:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Impossibile eseguire il comando:</b> «%s»\n"
-#~ "\n"
-#~ "Dettagli: %s"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: no application available to open file"
-#~ msgstr ""
-#~ "<b>Impossibile aprire il file:</b> «%s»\n"
-#~ "\n"
-#~ "Dettagli: nessuna applicazione disponibile per aprire il file"
-
-#~ msgid ""
-#~ "<b>Failed to open file:</b> '%s'\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Impossibile aprire il file:<b> «%s»\n"
-#~ "\n"
-#~ "Dettagli: %s"
-
-#~ msgid "Choose a file"
-#~ msgstr "Scelta di un file"
-
-#~ msgid "Known Applications"
-#~ msgstr "Applicazioni note"
-
-#~ msgid "_Append File..."
-#~ msgstr "Accoda _file..."
-
-#~ msgid "No application selected"
-#~ msgstr "Nessuna applicazione selezionata"
-
-#~ msgid "Run Program"
-#~ msgstr "Avvia programma"
-
-#~ msgid ""
-#~ "<b>Cannot launch icon</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Impossibile avviare l'icona</b>\n"
-#~ "\n"
-#~ "Dettagli: %s"
-
-#~ msgid ""
-#~ "<b>Can't execute 'About GNOME'</b>\n"
-#~ "\n"
-#~ "Details: %s probably does not exist"
-#~ msgstr ""
-#~ "<b>Impossibile eseguire «Informazioni su GNOME»</b>\n"
-#~ "\n"
-#~ "Dettagli: probabilmente «%s» non esiste"
-
-#~ msgid ""
-#~ "<b>Can't launch entry</b>\n"
-#~ "\n"
-#~ "Details: %s"
-#~ msgstr ""
-#~ "<b>Impossibile avviare elemento</b>\n"
-#~ "\n"
-#~ "Dettagli: %s"
-
-#~ msgid "GNOME Aligned Panel"
-#~ msgstr "Pannello allineato di GNOME"
-
-#~ msgid "Sliding Panel"
-#~ msgstr "Pannello scorrevole"
-
-#~ msgid "GNOME Sliding Panel"
-#~ msgstr "Pannello scorrevole di GNOME"
-
-#~ msgid "GNOME Floating Panel"
-#~ msgstr "Pannello fluttuante di GNOME"
-
-#~ msgid "C_orner Panel"
-#~ msgstr "Pannello _d'angolo"
-
-#~ msgid "Create corner panel"
-#~ msgstr "Crea un nuovo pannello d'angolo"
-
-#~ msgid "_Edge Panel"
-#~ msgstr "Pannello _laterale"
-
-#~ msgid "Create edge panel"
-#~ msgstr "Crea nuovo pannello laterale"
-
-#~ msgid "_Floating Panel"
-#~ msgstr "Pannello _fluttuante"
-
-#~ msgid "Create floating panel"
-#~ msgstr "Crea un nuovo pannello fluttuante"
-
-#~ msgid "_Sliding Panel"
-#~ msgstr "Pannello _scorrevole"
-
-#~ msgid "Create sliding panel"
-#~ msgstr "Crea un nuovo pannello scorrevole"
-
-#, fuzzy
-#~ msgid "_Menu Panel"
-#~ msgstr "_Nuovo pannello"
-
-#, fuzzy
-#~ msgid "Create menu panel"
-#~ msgstr "Crea nuovo pannello laterale"
-
-#~ msgid "Button"
-#~ msgstr "Pulsante"
-
-#~ msgid "Menu:"
-#~ msgstr "Menù:"
-
-#~ msgid "Can't create menu, using main menu!"
-#~ msgstr "Impossibile creare il menù. Sarà usato il menù principale!"
-
-#~ msgid "Cannot register control widget\n"
-#~ msgstr "Impossibile registrare widget di controllo\n"
-
-#~ msgid ""
-#~ "No panels were found in your configuration.  I will create a menu panel "
-#~ "for you"
-#~ msgstr ""
-#~ "Nessun pannelo è stato rilevato nella configurazione. Verrà creato un "
-#~ "nuovo pannello menù"
-
-#~ msgid "Miscellaneous:"
-#~ msgstr "Varie:"
-
-#~ msgid "Current screen:"
-#~ msgstr "Schermo corrente:"
-
-#~ msgid "Current monitor:"
-#~ msgstr "Monitor corrente:"
-
-#~ msgid "Indicates the panel position and orientation on screen"
-#~ msgstr "Indica la posizione e l'orientamento del pannello sullo schermo"
-
-#~ msgid "_Position:"
-#~ msgstr "Posi_zione:"
-
-#~ msgid "Hori_zontal"
-#~ msgstr "Ori_zzontale"
-
-#~ msgid "_Vertical"
-#~ msgstr "_Verticale"
-
-#~ msgid "H_orizontal:"
-#~ msgstr "_Orizzontale:"
-
-#~ msgid "Ver_tical:"
-#~ msgstr "Ve_rticale:"
-
-#~ msgid "_Distance from edge:"
-#~ msgstr "Distan_za dal bordo:"
-
-#~ msgid "_Size:"
-#~ msgstr "_Dimensione:"
-
-#~ msgid "Default"
-#~ msgstr "Predefinito"
-
-#~ msgid "Color"
-#~ msgstr "Colore"
-
-#~ msgid "Image"
-#~ msgstr "Immagine"
-
-#~ msgid "Transparent"
-#~ msgstr "Trasparente"
-
-#~ msgid "Image:"
-#~ msgstr "Immagine:"
-
-#~ msgid "Edge panel"
-#~ msgstr "Pannello laterale"
-
-#~ msgid "Sliding panel"
-#~ msgstr "Pannello scorrevole"
-
-#~ msgid "Floating panel"
-#~ msgstr "Pannello fluttuante"
-
-#~ msgid "Show the program listing by default when opening the Run box"
-#~ msgstr "Mostra la lista dei programmi all'apertura del dialogo «Avvia»"
-
-#~ msgid "Show the program listing in the Run box"
-#~ msgstr "Mostra la lista dei programmi"
-
-#~ msgid "Disabled"
-#~ msgstr "Disabilitato"
