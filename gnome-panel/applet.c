@@ -218,6 +218,9 @@ setup_an_item(AppletUserMenu *menu,
 	      int is_submenu)
 {
 	menu->menuitem = gtk_menu_item_new ();
+	gtk_signal_connect (GTK_OBJECT (menu->menuitem), "destroy",
+			    GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			    &menu->menuitem);
 	if(menu->stock_item && *(menu->stock_item))
 		setup_menuitem (menu->menuitem,
 				gnome_stock_pixmap_widget(submenu,
@@ -236,15 +239,22 @@ setup_an_item(AppletUserMenu *menu,
 		gtk_signal_connect(GTK_OBJECT(menu->menuitem), "activate",
 				   (GtkSignalFunc) applet_callback_callback,
 				   menu);
+		gtk_signal_connect(GTK_OBJECT (submenu), "destroy",
+				   GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+				   &menu->submenu);
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
 	} else if(!menu->submenu) {
 		menu->submenu = gtk_menu_new();
 	}
 
-	if(menu->submenu)
+	if(menu->submenu) {
 		gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu->menuitem),
 					  menu->submenu);
+		gtk_signal_connect (GTK_OBJECT (menu->submenu), "destroy",
+				    GTK_SIGNAL_FUNC (gtk_widget_destroyed),      
+				    &menu->submenu);
+	}
 }
 
 static void
@@ -294,6 +304,15 @@ add_to_submenus(AppletInfo *info,
 
 	}
 	
+	if(!s_menu->submenu) {
+		s_menu->submenu = gtk_menu_new();
+		/*a more elegant way to do this should be done
+		  when I don't want to go to sleep */
+		if (s_menu->menuitem) {
+			gtk_widget_destroy (s_menu->menuitem);
+			s_menu->menuitem = NULL;
+		}
+	}
 	if(!s_menu->menuitem)
 		setup_an_item(s_menu,submenu,TRUE);
 	
