@@ -1,5 +1,13 @@
 2002-07-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* gnome-panel-preferences.c:
+	(animation_menu_changed): rename from option_menu_changed.
+	(load_animation_menu): rename from load_option_menu, removing
+	generic handling of option menus and checking string value
+	before mapping to an enum. Fixes #86667.
+
+2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (create_add_panel_submenu): make ordering
 	of the 'New Panel' menu sane. Fixes #61599.
 

@@ -86,24 +86,6 @@ checkbox_clicked (GtkWidget *widget,
 }
 
 static void
-option_menu_changed (GtkWidget *widget,
-		     char      *key)
-{
-	GConfClient *client;
-
-	client = gconf_client_get_default ();
-
-	if (!strcmp (key, "panel_animation_speed"))
-		gconf_client_set_string (client,
-					 panel_gconf_global_key (key),
-				         gconf_enum_to_string (global_properties_speed_type_enum_map,
-			       		 		       gtk_option_menu_get_history (GTK_OPTION_MENU (widget)) ),
-				 	 NULL);	
-
-	g_object_unref (client);
-}
-
-static void
 load_checkboxes (GladeXML    *gui,
 		 GConfClient *client)
 {
@@ -135,32 +117,43 @@ load_checkboxes (GladeXML    *gui,
 }
 
 static void
-load_option_menus (GladeXML    *gui,
-		   GConfClient *client)
+animation_menu_changed (GtkWidget *widget)
 {
-	char *optionmenus[] = {
-		"panel_animation_speed",
-		NULL
-	};
-	int i;
+	GConfClient *client;
 
-	for (i = 0; optionmenus [i]; i++) {
-		GtkWidget  *option;
-		const char *key;
-		int         retval = 0;
+	client = gconf_client_get_default ();
 
-        	option = glade_xml_get_widget (gui, optionmenus [i]);
-        	key = panel_gconf_global_key (optionmenus [i]);
+	gconf_client_set_string (client,
+				 panel_gconf_global_key ("panel_animation_speed"),
+				 gconf_enum_to_string (global_properties_speed_type_enum_map,
+						       gtk_option_menu_get_history (GTK_OPTION_MENU (widget))),
+				 NULL);	
+
+	g_object_unref (client);
+}
+
+static void
+load_animation_menu (GladeXML    *gui,
+		     GConfClient *client)
+{
+	GtkWidget  *option;
+	char       *tmpstr;
+	int         speed = PANEL_SPEED_SLOW;
+
+	option = glade_xml_get_widget (gui, "panel_animation_speed");
 		
-		if (strcmp (optionmenus[i], "panel_animation_speed") == 0)
-			gconf_string_to_enum (global_properties_speed_type_enum_map,
-			      		      gconf_client_get_string (client, key, NULL),
-			                      &retval);
-
-        	gtk_option_menu_set_history (GTK_OPTION_MENU (option), retval);
-
-        	g_signal_connect (option, "changed", G_CALLBACK (option_menu_changed), optionmenus [i]);
+	tmpstr = gconf_client_get_string (
+			client, panel_gconf_global_key ("panel_animation_speed"), NULL);
+	if (tmpstr) {
+		gconf_string_to_enum (
+			global_properties_speed_type_enum_map, tmpstr, &speed);
+		g_free (tmpstr);
 	}
+
+	gtk_option_menu_set_history (GTK_OPTION_MENU (option), speed);
+
+	g_signal_connect (option, "changed",
+			  G_CALLBACK (animation_menu_changed), NULL);
 }
 
 static void
@@ -171,7 +164,7 @@ load_config_into_gui (GladeXML *gui)
 	client = gconf_client_get_default ();
 
 	load_checkboxes (gui, client);
-	load_option_menus (gui, client);
+	load_animation_menu (gui, client);
 
 	g_object_unref (client);
 }
