@@ -383,7 +383,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
 	
 	menuitem = gtk_menu_item_new();
-	setup_menuitem(menuitem,NULL,_("Move applet"));
+	setup_menuitem(menuitem,NULL,_("Move"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) move_applet_callback,
 			   info);
