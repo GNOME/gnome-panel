@@ -29,6 +29,7 @@
 #include <gtk/gtkenums.h>
 #include <gtk/gtkeventbox.h>
 #include <libgnomeui/gnome-ui-init.h>
+#include <libgnomeui/gnome-client.h>
 #include <bonobo/bonobo-control.h>
 #include <bonobo/bonobo-ui-component.h>
 #include <bonobo/bonobo-generic-factory.h>
@@ -182,6 +183,7 @@ int main (int argc, char *argv [])						\
 	gnome_program_init (name, version,					\
 			    LIBGNOMEUI_MODULE,					\
 			    argc, argv,						\
+			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
 			    NULL);						\
         return panel_applet_factory_main (iid, type, callback, data);		\
@@ -193,6 +195,7 @@ int main (int argc, char *argv [])						\
 	gnome_program_init (name, version,					\
 			    LIBGNOMEUI_MODULE,					\
 			    argc, argv,						\
+			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
 			    GNOME_PARAM_NONE);					\
         return panel_applet_factory_main (iid, type, callback, data);		\
 }
@@ -209,6 +212,7 @@ int main (int argc, char *argv [])						\
 	gnome_program_init (name, version,					\
 			    LIBGNOMEUI_MODULE,					\
 			    argc, argv,						\
+			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
 			    GNOME_PROGRAM_STANDARD_PROPERTIES,			\
 			    NULL);						\
         return panel_applet_factory_main (iid, type, callback, data);		\
@@ -223,6 +227,7 @@ int main (int argc, char *argv [])						\
 	gnome_program_init (name, version,					\
 			    LIBGNOMEUI_MODULE,					\
 			    argc, argv,						\
+			    GNOME_CLIENT_PARAM_SM_CONNECT, FALSE,               \
 			    GNOME_PARAM_NONE);					\
         return panel_applet_factory_main (iid, type, callback, data);		\
 }
