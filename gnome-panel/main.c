@@ -390,7 +390,11 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 
 	if(!info) return FALSE;
 
+	puts("BEFORE ORIENT CHANGE");
+
 	orientation_change(info,panel);
+
+	puts("AFTER ORIENT CHANGE");
 
 	return TRUE;
 }

@@ -1531,10 +1531,6 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 						new_panel, applet);
 					panel_widget_applet_move_use_idle(
 						new_panel);
-
-					/*force orient change on the applet,
-					  maybe there should be a applet
-					  based orient signal*/
 			    	   	return FALSE;
 			    	}
 			}
