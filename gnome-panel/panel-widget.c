@@ -547,9 +547,9 @@ allocate_dirty_child(gpointer data)
 		if (l) {
 			if (l->next) {
 				nad = l->next->data;
-				ad->cells = nad->pos - ad->pos;
+				ad->cells = nad->pos - ad->pos - 1;
 			} else {
-				ad->cells = panel->size - ad->pos;
+				ad->cells = panel->size - ad->pos - 1;
 			}
 			
 			if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
@@ -1347,11 +1347,11 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			ad->min_cells = ad->cells;
 			
 			if (ad->expand_major) {
-				ad->cells = (i - ad->pos);
+				ad->cells = (i - ad->pos) - 1;
 			}
-			
-			if(ad->pos+ad->cells > i) {
-				ad->pos = i - ad->cells;
+
+			if(ad->pos+ad->min_cells > i) {
+				ad->pos = i - ad->min_cells;
 				send_move = g_slist_prepend(send_move,ad);
 			}
 			i = ad->pos;
@@ -1398,6 +1398,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				challoc.y = ad->pos;
 			}
 			ad->dirty = FALSE;
+			
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
