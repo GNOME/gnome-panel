@@ -243,6 +243,24 @@ applet_change_pixel_size (PanelApplet  *applet,
 }
 
 static void
+tasklist_set_tooltip (GtkWidget  *applet,
+		      const char *tip)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = g_object_get_data (G_OBJECT (applet), "tooltips");
+	if (!tooltips) {
+		tooltips = gtk_tooltips_new ();
+		g_object_ref (tooltips);
+		gtk_object_sink (GTK_OBJECT (tooltips));
+		g_object_set_data_full (G_OBJECT (applet), "tooltips", tooltips,
+					(GDestroyNotify) g_object_unref);
+	}
+
+	gtk_tooltips_set_tip (tooltips, applet, tip, NULL);
+}
+
+static void
 destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 {
 	GConfClient *client = gconf_client_get_default ();
@@ -626,6 +644,8 @@ window_list_applet_fill (PanelApplet *applet)
 				PANEL_APPLET_EXPAND_MAJOR |
 				PANEL_APPLET_EXPAND_MINOR |
 				PANEL_APPLET_HAS_HANDLE);
+
+	tasklist_set_tooltip (tasklist->applet, _("Window List"));
 
 	panel_applet_add_preferences (applet, "/schemas/apps/window_list_applet/prefs", NULL);
 

@@ -126,7 +126,7 @@ window_menu_about (BonoboUIComponent *uic,
 
 	window_menu->about_dialog = gtk_about_dialog_new ();
 	g_object_set (window_menu->about_dialog,
-		      "name",  _("Workspace Selector"),
+		      "name",  _("Window Selector"),
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 2003 Sun Microsystems, Inc.\n"
 				   "Copyright \xc2\xa9 2001 Free Software Foundation, Inc.\n"
