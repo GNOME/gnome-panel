@@ -1074,3 +1074,20 @@ panel_applet_frame_new (PanelWidget *panel,
 
 	return GTK_WIDGET (frame);
 }
+
+PanelWidget *
+panel_applet_frame_get_panel (PanelAppletFrame *frame)
+{
+	g_return_val_if_fail (PANEL_IS_APPLET_FRAME (frame), NULL);
+
+	return frame->priv->panel;
+}
+
+void panel_applet_frame_set_panel (PanelAppletFrame *frame,
+				   PanelWidget *panel)
+{
+	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+
+	frame->priv->panel = panel;
+}

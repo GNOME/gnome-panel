@@ -2437,6 +2437,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 {
 	AppletData *ad;
 	GtkWidget *focus_widget = NULL;
+	AppletInfo* info;
 
 	g_return_val_if_fail(PANEL_IS_WIDGET(old_panel),-1);
 	g_return_val_if_fail(PANEL_IS_WIDGET(new_panel),-1);
@@ -2453,7 +2454,9 @@ panel_widget_reparent (PanelWidget *old_panel,
 	    (BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_LEFT ||
 	     BASEP_WIDGET (new_panel->panel_parent)->state == BASEP_HIDDEN_RIGHT))
 		return FALSE;
-	
+
+	info = g_object_get_data (G_OBJECT (ad->applet), "applet_info");
+
 	/*we'll resize both panels anyway*/
 	ad->dirty = FALSE;
 	
@@ -2466,6 +2469,9 @@ panel_widget_reparent (PanelWidget *old_panel,
 		focus_widget = gtk_window_get_focus (GTK_WINDOW (old_panel->panel_parent));
 	}
 	gtk_widget_reparent (applet, GTK_WIDGET (new_panel));
+
+	if (info && info->type == APPLET_BONOBO)
+		panel_applet_frame_set_panel (PANEL_APPLET_FRAME (ad->applet), new_panel);
 
 	if (GTK_WIDGET_CAN_FOCUS (new_panel))
 		GTK_WIDGET_UNSET_FLAGS (new_panel, GTK_CAN_FOCUS);
