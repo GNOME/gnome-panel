@@ -1,3 +1,28 @@
+1999-03-26  Nat Friedman  <nat@nat.org>
+
+	* battery/bolt.xpm: New file.  Thanks to Will LaShell
+ 	<wlashell@cland.net> for this excellent drawing!
+
+	* battery/session.c (battery_session_load): Handle full_notify_enable.
+	(battery_session_save): Likewise.
+	(battery_session_defaults): Likewise.
+
+	* battery/properties.c (battery_properties_window): Added the
+ 	check box for full-battery-notification enabling/disabling.
+
+	* battery/battery.c (battery_update): Display an error dialog if
+ 	we can't read the battery data.
+	(battery_update): Notify the user if the battery has fully charged
+ 	and he has the full-charge-notification bit on.
+	(battery_update): Draw a little lightning bolt on the battery
+ 	picture if the AC is plugged in.
+	(battery_update): Handle miniature applets.  This will be
+ 	important for PDAs.
+	(battery_set_mode): Handle miniature applets.
+	(make_new_battery_applet): Create the percentage_small label for
+ 	miniature applets.
+	(make_new_battery_applet): Load the pixmap of the lightning bolt.
+
 1999-03-25  Nat Friedman  <nat@nat.org>
 
 	* battery/properties.c (prop_apply): Set the size before allowing
@@ -14,7 +39,6 @@
 	* battery/properties.c (battery_properties_window): Don't let the
  	user set the applet size to 0.
 	(battery_properties_window): Fix memory leak with bat->mode_string.
-
 
 1999-03-25  Nat Friedman  <nat@nat.org>
 
