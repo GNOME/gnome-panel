@@ -52,6 +52,9 @@ void move_resize_window(GtkWidget *widget, int x, int y, int w, int h);
 queues one*/
 void resize_window(GtkWidget *widget, int w, int h);
 
+void set_frame_colors(PanelWidget *panel, GtkWidget *frame,
+		      GtkWidget *but1, GtkWidget *but2, GtkWidget *but3, GtkWidget *but4);
+
 
 END_GNOME_DECLS
 

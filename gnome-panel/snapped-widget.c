@@ -90,54 +90,6 @@ marshal_signal_int (GtkObject * object,
 }
 
 static void
-set_frame_colors(SnappedWidget *snapped)
-{
-	if(PANEL_WIDGET(snapped->panel)->back_type == PANEL_BACK_COLOR) {
-		GdkColor n;
-		GtkStyle *ns;
-
-		ns = gtk_style_copy(snapped->panel->style);
-		gtk_style_ref(ns);
-
-		ns->bg[GTK_STATE_NORMAL] =
-			PANEL_WIDGET(snapped->panel)->back_color;
-		ns->base[GTK_STATE_NORMAL] =
-			PANEL_WIDGET(snapped->panel)->back_color;
-
-		n = PANEL_WIDGET(snapped->panel)->back_color;
-		n.red/=3;
-		n.green/=3;
-		n.blue/=3;
-		ns->dark[GTK_STATE_NORMAL] = n;
-
-		n = PANEL_WIDGET(snapped->panel)->back_color;
-		n.red/=2;
-		n.green/=2;
-		n.blue/=2;
-		ns->mid[GTK_STATE_NORMAL] = n;
-
-		n = PANEL_WIDGET(snapped->panel)->back_color;
-		n.red=MIN(65535,n.red*2);
-		n.green=MIN(65535,n.green*2);
-		n.blue=MIN(65535,n.blue*2);
-		ns->light[GTK_STATE_NORMAL] = n;
-
-		gtk_widget_set_style(snapped->frame, ns);
-
-		gtk_style_unref(ns);
-	} else {
-		GtkStyle *ns;
-
-		ns = gtk_rc_get_style(snapped->frame);
-		if(!ns) ns = gtk_style_new();
-
-		gtk_style_ref(ns);
-		gtk_widget_set_style(snapped->frame, ns);
-		gtk_style_unref(ns);
-	}
-}
-
-static void
 snapped_widget_realize(GtkWidget *w)
 {
 	SnappedWidget *snapped = SNAPPED_WIDGET(w);
@@ -156,7 +108,12 @@ snapped_widget_realize(GtkWidget *w)
 		gnome_win_hints_set_expanded_size(w, 0, 0, 0, 0);
 		gdk_window_set_decorations(w->window, 0);
 	}    
-	set_frame_colors(snapped);
+	set_frame_colors(PANEL_WIDGET(snapped->panel),
+			 snapped->frame,
+			 snapped->hidebutton_n,
+			 snapped->hidebutton_e,
+			 snapped->hidebutton_w,
+			 snapped->hidebutton_s);
 }
 
 static void
@@ -892,7 +849,12 @@ s_back_change(PanelWidget *panel,
 	    GdkColor *color,
 	    SnappedWidget *snapped)
 {
-	set_frame_colors(snapped);
+	set_frame_colors(PANEL_WIDGET(snapped->panel),
+			 snapped->frame,
+			 snapped->hidebutton_n,
+			 snapped->hidebutton_e,
+			 snapped->hidebutton_w,
+			 snapped->hidebutton_s);
 }
 
 GtkWidget*
