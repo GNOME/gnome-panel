@@ -778,10 +778,11 @@ load_default_applets1(PanelWidget *panel)
 
 	load_extern_applet("tasklist_applet",NULL,
 			   panel,INT_MAX/2/*flush right*/,TRUE);
+	load_status_applet(panel,INT_MAX/2 + 1000/*flush right*/);
 	load_extern_applet("gen_util_clock",NULL,
-			   panel,INT_MAX/2 + 1000/*flush right*/,TRUE);
-	load_extern_applet("gen_util_mailcheck",NULL,
 			   panel,INT_MAX/2 + 2000/*flush right*/,TRUE);
+	load_extern_applet("gen_util_mailcheck",NULL,
+			   panel,INT_MAX/2 + 3000/*flush right*/,TRUE);
 }
 
 static void
