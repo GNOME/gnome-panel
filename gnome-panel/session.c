@@ -290,6 +290,21 @@ send_applet_session_save (AppletInfo *info,
 }
 
 
+static void
+convert_dentry_to_gnome(GnomeDesktopEntry *dentry)
+{
+	int i;
+	dentry->is_kde = FALSE;
+	for(i=0; i<dentry->exec_length; i++) {
+		if(dentry->exec[i][0] == '%' &&
+		   strlen(dentry->exec[i]) == 2) {
+			g_free(dentry->exec[i]);
+			dentry->exec[i] = g_strdup("");
+		}
+	}
+}
+
+
 
 /*returns TRUE if the save was completed, FALSE if we need to wait
   for the applet to respond*/
@@ -424,6 +439,8 @@ save_applet_configuration(AppletInfo *info)
 					 info->applet_id+1);
 			g_free(launcher->dentry->location);
 			launcher->dentry->location = g_strdup(buf->str);
+			if(launcher->dentry->is_kde)
+				convert_dentry_to_gnome(launcher->dentry);
 			gnome_desktop_entry_save(launcher->dentry);
 
 			gnome_config_set_string("id", LAUNCHER_ID);
