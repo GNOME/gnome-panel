@@ -12,6 +12,7 @@
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"
+#include "panel-marshal.h"
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
@@ -144,40 +145,6 @@ static guint panel_widget_signals[LAST_SIGNAL] = {0};
 static GtkFixedClass *parent_class = NULL;
 
 static void
-marshal_signal_back  (GClosure *closure,
-		     GValue *return_value,
-		     guint n_param_values,
-		     const GValue *param_values,
-		     gpointer invocation_hint,
-		     gpointer marshal_data)
-{
-  register BackSignal callback;
-  register GCClosure *cc = (GCClosure*) closure;
-  register gpointer data1, data2;
-  
-  g_return_if_fail (n_param_values == 4);
-  
-  if (G_CLOSURE_SWAP_DATA (closure))
-    {
-      data1 = closure->data;
-      data2 = g_value_peek_pointer (param_values + 0);
-    }
-  else
-    {
-      data1 = g_value_peek_pointer (param_values + 0);
-      data2 = closure->data;
-    }
-
-  callback = (BackSignal) (marshal_data ? marshal_data : cc->callback);
-
-  callback (data1, 
-	    g_value_get_enum (param_values + 1),
-	    (char *) g_value_get_string (param_values + 2),
-	    g_value_get_pointer (param_values + 3),
-	    data2);
-}
-
-static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
@@ -242,7 +209,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 			       GTK_CLASS_TYPE (object_class),
 			       GTK_SIGNAL_OFFSET(PanelWidgetClass,
 			       			 back_change),
-			       marshal_signal_back,
+			       panel_marshal_VOID__ENUM_POINTER_POINTER,
 			       GTK_TYPE_NONE,
 			       3,
 			       GTK_TYPE_ENUM,

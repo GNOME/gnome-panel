@@ -11,9 +11,10 @@
 #include <string.h>
 #include <signal.h>
 #include <sys/wait.h>
-#include <libgnomeui.h>
+#include <libgnome/gnome-i18n.h>
+#include <libgnome/gnome-util.h>
 #include <bonobo-activation/bonobo-activation.h>
-#include <libgnomeui/gnome-window-icon.h>
+#include <bonobo/bonobo-ui-main.h>
 
 #include "panel-include.h"
 
@@ -232,12 +233,13 @@ check_screen (void)
 
 	name = g_strdup_printf ("%cish/%cishanim.png",
 				'f', 'f');
-	phsh_file = gnome_pixmap_file (name);
+	phsh_file = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP,
+					       name, TRUE, NULL);
 	g_free (name);
 	if (phsh_file == NULL)
 		return;
 
-	tmp = gdk_pixbuf_new_from_file (fish_file, NULL);
+	tmp = gdk_pixbuf_new_from_file (phsh_file, NULL);
 	/* FIXME:2 check error, for, well, errors */
 	if (tmp == NULL)
 		return;
@@ -433,18 +435,14 @@ int
 main(int argc, char **argv)
 {
 	CORBA_ORB orb;
-	CORBA_Environment ev;
 	gboolean duplicate;
 	gchar *real_global_path;
 	
 	bindtextdomain (PACKAGE, GNOMELOCALEDIR);
 	textdomain (PACKAGE);
 
-	CORBA_exception_init(&ev);
-	orb = gnome_CORBA_init("panel", VERSION,
-			       &argc, argv,
-			       GNORBA_INIT_SERVER_FUNC, &ev);
-	CORBA_exception_free(&ev);
+	bonobo_ui_init ("panel", VERSION, &argc, argv);
+	orb = bonobo_orb ();
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
 	setup_visuals ();
 
