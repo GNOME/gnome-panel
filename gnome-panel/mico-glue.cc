@@ -54,8 +54,8 @@ public:
 		/*FIXME:  */
 	}
         void applet_add_callback (CORBA::Short id,
-				  CORBA::String callback_name,
-				  CORBA::String menuitem_text) {
+				  const char *callback_name,
+				  const char *menuitem_text) {
 	  ::applet_add_callback(id, (char *)callback_name, (char *)menuitem_text);
 	}
         void quit(void) {

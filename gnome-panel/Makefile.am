@@ -5,14 +5,13 @@ test:
 #SUBDIRS  = menu mailcheck clock launcher batmon netwatch logout \
 #	@PROGRAMS_PANEL_CDPLAYER@
 
-SUBDIRS  = clock @PROGRAMS_PANEL_CDPLAYER@
+SUBDIRS  = @PROGRAMS_PANEL_CDPLAYER@ batmon mailcheck netwatch
 
 INCLUDES =	 			\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir)
 
-bin_PROGRAMS = panel clock_applet
-lib_LTLIBRARIES = libpanel_applet.la
+bin_PROGRAMS = panel clock_applet launcher_applet logout_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -21,14 +20,15 @@ CORBA_SOURCES = \
 MICO_VERS = 2.0.3
 MICO_LIBS = -lmicocoss$(MICO_VERS) -lmicoaux$(MICO_VERS) -lmico$(MICO_VERS)
 
+lib_LTLIBRARIES = libpanel_applet.la
+
 libpanel_applet_la_SOURCES = \
 	applet-lib.cc \
 	applet-widget.c \
 	$(CORBA_SOURCES)
 
-libpanel_appletinclude_HEADERS = \
-	applet-lib.h \
-	applet-widget.h
+#libpanel_appletinclude_HEADERS = applet-lib.h \
+#	applet-widget.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
 libpanel_applet_la_LIBADD = $(MICO_LIBS) -lm $(DL_LIB)
@@ -67,7 +67,17 @@ panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 clock_applet_SOURCES = \
 	clock.c
 
-clock_applet_LDADD = -lpanel_applet $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+clock_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+
+launcher_applet_SOURCES = \
+	launcher.c
+
+launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+
+logout_applet_SOURCES = \
+	logout.c
+
+logout_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 data_DATA = panelrc
 
