@@ -6,6 +6,7 @@ INCLUDES =							\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
 	$(GNOME_INCLUDEDIR)					\
 	$(WARN_CFLAGS)						\
+	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(PANEL_CFLAGS)						\
 	$(APPLET_CFLAGS)					\
 	-DG_LOG_DOMAIN=\""notification-area-applet"\"		\

@@ -2,22 +2,12 @@ SUBDIRS = eel
 
 libexec_PROGRAMS = wnck-applet
 
-# Flags to make sure we're not using any deprecated function
-#DISABLE_DEPRECATED = \
-#	-DG_DISABLE_DEPRECATED \
-#	-DGDK_DISABLE_DEPRECATED \
-#	-DGDK_PIXBUF_DISABLE_DEPRECATED \
-#	-DGTK_DISABLE_DEPRECATED \
-#	-DGNOME_VFS_DISABLE_DEPRECATED \
-#	-DGNOME_DISABLE_DEPRECATED \
-#	-DBONOBO_DISABLE_DEPRECATED
-
 INCLUDES = \
 	-I$(top_builddir) \
 	-I$(top_srcdir)/libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
 	$(WNCKLET_CFLAGS) \
-	$(DISABLE_DEPRECATED) \
+	$(DISABLE_DEPRECATED_CFLAGS) \
 	$(WARN_CFLAGS) \
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\"" \

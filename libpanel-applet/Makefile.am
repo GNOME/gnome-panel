@@ -4,6 +4,7 @@ INCLUDES =							\
 	-DPANEL_APPLET_GLADEDIR=\""$(gladedir)"\"		\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
 	$(LIBPANEL_APPLET_CFLAGS)				\
+	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(WARN_CFLAGS)
 
 lib_LTLIBRARIES = libpanel-applet-2.la

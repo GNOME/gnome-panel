@@ -6,6 +6,7 @@ INCLUDES =							\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""		\
 	-DFISH_GLADEDIR=\""$(gladedir)"\"			\
 	$(WARN_CFLAGS)						\
+	$(DISABLE_DEPRECATED_CFLAGS)				\
 	$(FISH_CFLAGS)
 
 libexec_PROGRAMS = fish-applet-2

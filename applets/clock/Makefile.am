@@ -11,14 +11,6 @@ INCLUDES = 						\
 	-DPREFIX=\""$(prefix)"\"				\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\" 
 
-# Flags to make sure we're not using any deprecated function
-#DISABLE_DEPRECATED_CFLAGS =			\
-#	-DG_DISABLE_DEPRECATED			\
-#	-DGDK_DISABLE_DEPRECATED		\
-#	-DGTK_DISABLE_DEPRECATED		\
-#	-DGDK_PIXBUF_DISABLE_DEPRECATED		\
-#	-DGNOME_DISABLE_DEPRECATED
-
 EGGFILES =                      \
 	egg-screen-exec.h       \
 	egg-screen-exec.c       \
