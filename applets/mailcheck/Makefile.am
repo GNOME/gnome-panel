@@ -30,7 +30,7 @@ gen_util_applet_LDADD = ../../panel/libpanel_applet.la \
 gen_util_applet_LINK = $(CXXLINK)
 
 PRINTER_BITMAPS = print.xpm
-MAILCHECK_BITMAPS = email.xpm email-e.xpm
+MAILCHECK_BITMAPS = email.xpm email-e.xpm tux-anim.xpm
 
 EXTRA_DIST = clock_applet.desktop	\
              mailcheck_applet.desktop	\
