@@ -141,11 +141,12 @@ set_relation (GtkWidget *widget, GtkLabel *label)
 
 	aobject = gtk_widget_get_accessible (widget);
 
-	/* return if gail is not loaded */
-	g_return_if_fail (GTK_IS_ACCESSIBLE (aobject));
-
 	/* Set the ATK_RELATION_LABEL_FOR relation */
 	gtk_label_set_mnemonic_widget (label, widget);
+
+	/* return if gail is not loaded */
+	if ( ! GTK_IS_ACCESSIBLE (aobject))
+		return;
 
 	targets [0] = gtk_widget_get_accessible (GTK_WIDGET (label));
 
@@ -701,6 +702,9 @@ display_properties_dialog (BonoboUIComponent *uic,
 				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE, 
 				GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
 	gtk_window_set_wmclass (GTK_WINDOW (fish->pb), "fish", "Fish");
+
+	gtk_dialog_set_default_response (GTK_DIALOG (fish->pb), GTK_RESPONSE_OK);
+
 	gtk_window_set_title (GTK_WINDOW (fish->pb),
 			      _("GNOME Fish Preferences"));
 	gnome_window_icon_set_from_file (GTK_WINDOW (fish->pb),
@@ -715,7 +719,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new (_("Your GNOME Fish's Name:"));
+	w = gtk_label_new_with_mnemonic (_("Your GNOME Fish's _Name:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	e = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY(e), name);
@@ -732,7 +736,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	l = gtk_label_new (_("The Animation Filename:"));
+	l = gtk_label_new_with_mnemonic (_("The Animation _Filename:"));
 	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	w = gnome_pixmap_entry_new ("fish_animation", _("Browse"), TRUE);
 	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
@@ -750,7 +754,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new (_("Command to execute when fish is clicked:"));
+	w = gtk_label_new_with_mnemonic (_("Command to _execute when fish is clicked:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	e = gtk_entry_new ();
 	gtk_entry_set_text (GTK_ENTRY (e), command);
@@ -767,7 +771,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new (_("Frames In Animation:"));
+	w = gtk_label_new_with_mnemonic (_("Frame_s In Animation:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (frames, 1.0, 255.0, 1.0, 5.0, 0.0);
 	e = gtk_spin_button_new (adj, 0, 0);
@@ -785,7 +789,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new (_("Pause per frame (s):"));
+	w = gtk_label_new_with_mnemonic (_("Pause _per frame (s):"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (speed, 0.1, 10.0, 0.1, 1.0, 0.0);
 	e = gtk_spin_button_new (adj, 0, 2);
@@ -800,7 +804,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 				   GTK_SIGNAL_FUNC (changed_cb),
 				   GTK_OBJECT (apply_button));
 
-	w = gtk_check_button_new_with_label (_("Rotate on vertical panels"));
+	w = gtk_check_button_new_with_mnemonic (_("_Rotate on vertical panels"));
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (w), rotate);
 	gtk_signal_connect_object (GTK_OBJECT (w),
 				   "toggled",
@@ -911,6 +915,9 @@ update_fortune_dialog (Fish *fish)
 						     GTK_STOCK_CLOSE,
 						     GTK_RESPONSE_CLOSE,
 						     NULL);
+
+		gtk_dialog_set_default_response (GTK_DIALOG (fish->fortune_dialog), GTK_RESPONSE_CLOSE);
+
 		g_signal_connect (G_OBJECT (fish->fortune_dialog), "delete_event",
 				  G_CALLBACK (delete_event), NULL);
 		g_signal_connect (G_OBJECT (fish->fortune_dialog), "response",
