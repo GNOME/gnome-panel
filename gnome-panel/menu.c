@@ -3558,7 +3558,7 @@ create_root_menu (GtkWidget *root_menu,
 		menuitem = gtk_image_menu_item_new ();
 		setup_menuitem_try_pixmap (menuitem,
 					   "gnome-logo-icon-transparent.png",
-					   _("Programs"));
+					   _("Applications"));
 		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
 		if(menu) {
 			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
