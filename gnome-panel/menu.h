@@ -151,14 +151,14 @@ enum {
 };
 
 
-#define MENU_SIZES "sizes_menu"
-#define MENU_SIZE_ULTRA_TINY "size-ultra-tiny"
-#define MENU_SIZE_TINY "size-tiny"
-#define MENU_SIZE_SMALL "size-small"
-#define MENU_SIZE_STANDARD "size-standard"
-#define MENU_SIZE_LARGE "size-large"
-#define MENU_SIZE_HUGE "size-huge"
-#define MENU_SIZE_RIDICULOUS "size-ridiculous"
+#define MENU_SIZES         "sizes_menu"
+#define MENU_SIZE_XX_SMALL "size-xx-small"
+#define MENU_SIZE_X_SMALL  "size-x-small"
+#define MENU_SIZE_SMALL    "size-small"
+#define MENU_SIZE_MEDIUM   "size-medium"
+#define MENU_SIZE_LARGE    "size-large"
+#define MENU_SIZE_X_LARGE  "size-x-large"
+#define MENU_SIZE_XX_LARGE "size-xx-large"
 
 #define MENU_BACKS "background_menu"
 #define MENU_BACK_NONE "back-none"

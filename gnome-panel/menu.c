@@ -4640,25 +4640,25 @@ update_size_menu (GtkWidget *menu,
 
 	switch (cur_panel->sz) {
 	case PANEL_SIZE_XX_SMALL:
-		s = MENU_SIZE_ULTRA_TINY;
+		s = MENU_SIZE_XX_SMALL;
 		break;
 	case PANEL_SIZE_X_SMALL:
-		s = MENU_SIZE_TINY;
+		s = MENU_SIZE_X_SMALL;
 		break;
 	case PANEL_SIZE_SMALL:
 		s = MENU_SIZE_SMALL;
 		break;
 	case PANEL_SIZE_MEDIUM:
-		s = MENU_SIZE_STANDARD;
+		s = MENU_SIZE_MEDIUM;
 		break;
 	case PANEL_SIZE_LARGE:
 		s = MENU_SIZE_LARGE;
 		break;
 	case PANEL_SIZE_X_LARGE:
-		s = MENU_SIZE_HUGE;
+		s = MENU_SIZE_X_LARGE;
 		break;
 	case PANEL_SIZE_XX_LARGE:
-		s = MENU_SIZE_RIDICULOUS;
+		s = MENU_SIZE_XX_LARGE;
 		break;
 	default:
 		s = NULL;
@@ -4843,13 +4843,13 @@ make_properties_submenu (GtkWidget *menu)
 	};
 
 	NameIdEnum sizes[] = {
-		{ N_("XX Small (12 pixels)"), MENU_SIZE_ULTRA_TINY, PANEL_SIZE_XX_SMALL },
-		{ N_("X Small (24 pixels)"), MENU_SIZE_TINY, PANEL_SIZE_X_SMALL },
-		{ N_("Small (36 pixels)"), MENU_SIZE_SMALL, PANEL_SIZE_SMALL },
-		{ N_("Medium (48 pixels)"), MENU_SIZE_STANDARD, PANEL_SIZE_MEDIUM },
-		{ N_("Large (64 pixels)"), MENU_SIZE_LARGE, PANEL_SIZE_LARGE },
-		{ N_("X Large (80 pixels)"), MENU_SIZE_HUGE, PANEL_SIZE_X_LARGE },
-		{ N_("XX Large (128 pixels)"), MENU_SIZE_RIDICULOUS, PANEL_SIZE_XX_LARGE },
+		{ N_("XX Small (12 pixels)"),  MENU_SIZE_XX_SMALL, PANEL_SIZE_XX_SMALL },
+		{ N_("X Small (24 pixels)"),   MENU_SIZE_X_SMALL,  PANEL_SIZE_X_SMALL },
+		{ N_("Small (36 pixels)"),     MENU_SIZE_SMALL,    PANEL_SIZE_SMALL },
+		{ N_("Medium (48 pixels)"),    MENU_SIZE_MEDIUM,   PANEL_SIZE_MEDIUM },
+		{ N_("Large (64 pixels)"),     MENU_SIZE_LARGE,    PANEL_SIZE_LARGE },
+		{ N_("X Large (80 pixels)"),   MENU_SIZE_X_LARGE,  PANEL_SIZE_X_LARGE },
+		{ N_("XX Large (128 pixels)"), MENU_SIZE_XX_LARGE, PANEL_SIZE_XX_LARGE },
 		{ NULL, NULL, -1 }
 	};
 
