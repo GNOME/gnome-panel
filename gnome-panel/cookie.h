@@ -1,24 +1,20 @@
 #ifndef COOKIE_H
 #define COOKIE_H
 
-#ifdef HAVE_CRYPT_H
-#include <crypt.h>
-#endif
-
 BEGIN_GNOME_DECLS
 
 extern char* cookie;
 char * create_cookie (void);
 
 #define CHECK_COOKIE() { \
-	if (strcmp (crypt(cookie,cookie), ccookie)) { \
+	if (strcmp (cookie, ccookie)) { \
 		g_warning("BAD COOKIE file: %s line: %d", \
 		__FILE__,__LINE__); \
 		return; \
 	} \
 }
 #define CHECK_COOKIE_V(x) { \
-	if (strcmp (crypt(cookie,cookie), ccookie)) { \
+	if (strcmp (cookie, ccookie)) { \
 		g_warning("BAD COOKIE file: %s line: %d", \
 		__FILE__,__LINE__); \
 		return x; \

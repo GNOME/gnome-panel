@@ -181,7 +181,7 @@ panel_corba_call_launcher(const char *path)
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
 
 	try {
-		launcher_client->start_new_launcher(crypt(cookie,cookie), path);
+		launcher_client->start_new_launcher(cookie, path);
 	} catch( ... ) {
 		return FALSE;
 	}
@@ -213,7 +213,7 @@ panel_corba_restart_launchers(void)
 	GNOME::Launcher_var launcher_client = GNOME::Launcher::_narrow (obj);
 
 	try {
-		launcher_client->restart_all_launchers(crypt(cookie,cookie));
+		launcher_client->restart_all_launchers(cookie);
 	} catch( ... ) {
 		return FALSE;
 	}
@@ -230,7 +230,7 @@ send_applet_session_save (const char *ior, int applet_id, const char *cfgpath,
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	return applet->session_save(crypt(cookie,cookie), applet_id,cfgpath,globcfgpath);
+	return applet->session_save(cookie, applet_id,cfgpath,globcfgpath);
 }
 
 void
@@ -241,7 +241,7 @@ send_applet_change_orient (const char *ior, int applet_id, int orient)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->change_orient(crypt(cookie,cookie),applet_id,orient);
+	applet->change_orient(cookie,applet_id,orient);
 }
 
 void
@@ -252,5 +252,5 @@ send_applet_do_callback (const char *ior, int applet_id, char *callback_name)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->do_callback(crypt(cookie,cookie),applet_id, callback_name);
+	applet->do_callback(cookie,applet_id, callback_name);
 }
