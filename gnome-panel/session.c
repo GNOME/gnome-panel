@@ -259,6 +259,8 @@ panel_session_save (GnomeClient        *client,
         gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
         gnome_client_set_priority (client, 40);
 
+	g_free (argv);
+
 	panel_session_do_save (client, TRUE, FALSE, FALSE);
 
 	return TRUE;
