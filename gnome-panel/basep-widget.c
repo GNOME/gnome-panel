@@ -413,9 +413,6 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
-	wid->allocation.x = dx;
-	wid->allocation.y = dy;
-
 	gtk_widget_draw(basep->table, NULL);
 }
 
@@ -573,10 +570,8 @@ basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
 		basep_widget_set_ebox_orient(basep, -1);
 	}
 	
-	wid->allocation.x = dx;
-	wid->allocation.y = dy;
-
 	gtk_widget_draw(basep->table, NULL);
+	gtk_widget_queue_resize(wid);
 }
 
 

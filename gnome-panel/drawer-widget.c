@@ -616,6 +616,6 @@ drawer_widget_restore_state(DrawerWidget *drawer)
 {
 	drawer->temp_hidden = FALSE;
 	gtk_widget_queue_resize(GTK_WIDGET(drawer));
-	gtk_widget_show_now(GTK_WIDGET(drawer));
+	gtk_widget_show(GTK_WIDGET(drawer));
 }
 
