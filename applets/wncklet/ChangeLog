@@ -1,5 +1,12 @@
 2003-10-14  Vincent Untz  <vincent@vuntz.net>
 
+	* workspace-switcher.c: (workspaces_tree_focused_out) function to
+	unselect the row that was selected in the prefs' treeview when the
+	treeview is focused out.
+	(setup_dialog): connect the above function to the signal.
+
+2003-10-14  Vincent Untz  <vincent@vuntz.net>
+
 	* showdesktop.c: (display_help_dialog): use the help from the user
 	guide, which does exist.
 

@@ -630,6 +630,18 @@ num_workspaces_value_changed (GtkSpinButton *button,
                                             gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (pager->num_workspaces_spin)));
 }
 
+static gboolean
+workspaces_tree_focused_out (GtkTreeView   *treeview,
+			     GdkEventFocus *event,
+			     PagerData     *pager)
+{
+	GtkTreeSelection *selection;
+
+	selection = gtk_tree_view_get_selection (treeview);
+	gtk_tree_selection_unselect_all (selection);
+	return TRUE;
+}
+
 static void 
 workspace_name_edited (GtkCellRendererText *cell_renderer_text,
 		       const gchar         *path,
@@ -827,6 +839,9 @@ setup_dialog (GladeXML  *xml,
 				     G_CALLBACK(workspace_destroyed),
 				     pager,
 				     pager->applet);
+
+	g_signal_connect (G_OBJECT (pager->workspaces_tree), "focus_out_event",
+			  (GCallback) workspaces_tree_focused_out, pager);
 
 	pager->workspaces_store = gtk_list_store_new (1, G_TYPE_STRING, NULL);
 	update_workspaces_model (pager);
