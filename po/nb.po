@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.91\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-29 15:26+0100\n"
-"PO-Revision-Date: 2004-11-25 02:57+0100\n"
+"POT-Creation-Date: 2004-12-04 14:33+0100\n"
+"PO-Revision-Date: 2004-12-04 14:37+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "_Om"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
 #: gnome-panel/drawer.c:605 gnome-panel/menu.c:1647
-#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:313
+#: gnome-panel/panel-action-button.c:675 gnome-panel/panel-menu-bar.c:331
 #: gnome-panel/panel-menu-button.c:601
 msgid "_Help"
 msgstr "_Hjelp"
@@ -182,7 +182,7 @@ msgid "Custom format"
 msgstr "Tilpasset format"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
-#: applets/fish/fish.c:137 applets/notification_area/main.c:83
+#: applets/fish/fish.c:137 applets/notification_area/main.c:81
 #: applets/wncklet/showdesktop.c:436 applets/wncklet/window-list.c:114
 #: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
 #: applets/wncklet/workspace-switcher.c:202
@@ -233,7 +233,7 @@ msgstr "Bruk _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:117 applets/wncklet/showdesktop.c:466
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:466
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:164
 msgid "translator-credits"
@@ -281,7 +281,7 @@ msgstr ""
 
 #: applets/clock/clock.schemas.in.h:11
 msgid "If true, show week numbers in the calendar."
-msgstr ""
+msgstr "Vis ukenummer i kalenderen hvis sann."
 
 #: applets/clock/clock.schemas.in.h:12
 msgid "Show date in clock"
@@ -296,9 +296,8 @@ msgid "Show time with seconds"
 msgstr "Vis tid med csekunder"
 
 #: applets/clock/clock.schemas.in.h:15
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Vis arbeidsområde_navn i bytteren"
+msgstr "Vis ukenummer i kalenderen"
 
 #: applets/clock/clock.schemas.in.h:16
 msgid ""
@@ -623,7 +622,7 @@ msgstr "Orientering"
 msgid "The orientation of the tray."
 msgstr "Orientering for trauet."
 
-#: applets/notification_area/main.c:130 applets/notification_area/main.c:358
+#: applets/notification_area/main.c:128 applets/notification_area/main.c:341
 msgid "Panel Notification Area"
 msgstr "Varslingsområde for panelet"
 
@@ -973,7 +972,7 @@ msgid "GNOME Panel Shell"
 msgstr "GNOME panel skall"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:101
-#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:113
+#: gnome-panel/applet.c:460 gnome-panel/panel-applet-frame.c:130
 msgid "_Lock"
 msgstr "_Lås"
 
@@ -986,7 +985,7 @@ msgid "_Remove From Panel"
 msgstr "Fje_rn fra panelet"
 
 #: gnome-panel/applet.c:101 gnome-panel/applet.c:460
-#: gnome-panel/panel-applet-frame.c:113
+#: gnome-panel/panel-applet-frame.c:130
 msgid "Un_lock"
 msgstr "_Lås opp"
 
@@ -1016,7 +1015,7 @@ msgstr "fil ikke funnet"
 msgid "Drawer"
 msgstr "Skuff"
 
-#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:820 gnome-panel/menu.c:1597
+#: gnome-panel/drawer.c:599 gnome-panel/launcher.c:822 gnome-panel/menu.c:1597
 #: gnome-panel/panel-action-button.c:132
 msgid "_Properties"
 msgstr "_Egenskaper"
@@ -1029,8 +1028,8 @@ msgstr "Opprett ny fil i oppgit katalog"
 msgid "Cannot save launcher to disk"
 msgstr "Kan ikke lagre oppstarter til disk"
 
-#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:213
-#: gnome-panel/launcher.c:258
+#: gnome-panel/launcher.c:165 gnome-panel/launcher.c:215
+#: gnome-panel/launcher.c:260
 msgid "Cannot launch icon"
 msgstr "Kan ikke starte ikon"
 
@@ -1038,45 +1037,45 @@ msgstr "Kan ikke starte ikon"
 msgid "This launch icon does not specify a url to show."
 msgstr "Dette oppstartsikonet spesifiserer ikke en url som skal vises."
 
-#: gnome-panel/launcher.c:177
+#: gnome-panel/launcher.c:178
 #, c-format
 msgid "Cannot show %s"
 msgstr "Kan ikke vise %s"
 
-#: gnome-panel/launcher.c:452
+#: gnome-panel/launcher.c:454
 msgid "No URI provided for panel launcher desktop file\n"
 msgstr "Ingen URI oppgitt for oppstarters .desktop-fil\n"
 
-#: gnome-panel/launcher.c:466
+#: gnome-panel/launcher.c:468
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "Kan ikke åpne .desktop-fil %s for oppstarter %s%s\n"
 
-#: gnome-panel/launcher.c:708 gnome-panel/menu-ditem.c:181
+#: gnome-panel/launcher.c:710 gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
 msgstr "Egenskaper for oppstarter"
 
-#: gnome-panel/launcher.c:891
+#: gnome-panel/launcher.c:893
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "Nøkkel %s er ikke satt. Kan ikke laste oppstarter\n"
 
-#: gnome-panel/launcher.c:945 gnome-panel/launcher.c:962
+#: gnome-panel/launcher.c:948 gnome-panel/launcher.c:966
 #: gnome-panel/menu-ditem.c:462 gnome-panel/menu-ditem.c:479
 #: gnome-panel/menu-ditem.c:535
 msgid "Cannot create launcher"
 msgstr "Kan ikke opprette oppstarter"
 
-#: gnome-panel/launcher.c:946 gnome-panel/menu-ditem.c:463
+#: gnome-panel/launcher.c:949 gnome-panel/menu-ditem.c:463
 msgid "You have to specify a name."
 msgstr "Du må spesifisere et navn."
 
-#: gnome-panel/launcher.c:963 gnome-panel/menu-ditem.c:480
+#: gnome-panel/launcher.c:967 gnome-panel/menu-ditem.c:480
 msgid "You have to specify a valid URL or command."
 msgstr "Du må spesifisere en gyldig URL eller kommando."
 
-#: gnome-panel/launcher.c:1006 gnome-panel/menu-ditem.c:543
+#: gnome-panel/launcher.c:1010 gnome-panel/menu-ditem.c:543
 msgid "Create Launcher"
 msgstr "Opprett oppstarter"
 
@@ -1118,7 +1117,7 @@ msgstr ""
 "små programmer i seg selv."
 
 #: gnome-panel/menu.c:212 gnome-panel/panel-action-button.c:201
-#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:539
+#: gnome-panel/panel-action-button.c:225 gnome-panel/panel-util.c:542
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Kan ikke kjøre «%s»"
@@ -1184,7 +1183,7 @@ msgstr "O_m paneler"
 msgid "About _GNOME"
 msgstr "Om _GNOME"
 
-#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:191
+#: gnome-panel/menu.c:1749 gnome-panel/panel-menu-bar.c:223
 msgid "Applications"
 msgstr "Applikasjoner"
 
@@ -1301,78 +1300,66 @@ msgstr "(tom)"
 msgid "query returned exception %s\n"
 msgstr "spørring returnerte unntak %s\n"
 
-#: gnome-panel/panel-addto.c:847
+#: gnome-panel/panel-addto.c:849
 #, c-format
 msgid "Add to %s"
 msgstr "Legg til på %s"
 
-#: gnome-panel/panel-addto.c:849
+#: gnome-panel/panel-addto.c:851
 msgid "Add to the panel"
 msgstr "Legg til på panelet"
 
-#: gnome-panel/panel-addto.c:855
+#: gnome-panel/panel-addto.c:857
 #, c-format
 msgid "Select an _item to add to %s:"
 msgstr "Velg en _oppføring som skal legges til på %s:"
 
-#: gnome-panel/panel-addto.c:858
+#: gnome-panel/panel-addto.c:860
 msgid "Select an _item to add to the panel:"
 msgstr "Velg en _oppføring som skal legges til på panelet:"
 
-#: gnome-panel/panel-applet-frame.c:752
+#: gnome-panel/panel-applet-frame.c:766
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Unntak fra popup_menu «%s»\n"
 
-#: gnome-panel/panel-applet-frame.c:871
-#, fuzzy, c-format
+#: gnome-panel/panel-applet-frame.c:885
+#, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr "«%s» avsluttet uventet"
+msgstr "«%s» har avsluttet uventet"
 
-#: gnome-panel/panel-applet-frame.c:873
-#, fuzzy
+#: gnome-panel/panel-applet-frame.c:887
 msgid "Panel object has quit unexpectedly"
 msgstr "Panelobjektet har avsluttet utventet"
 
-#: gnome-panel/panel-applet-frame.c:880
+#: gnome-panel/panel-applet-frame.c:894
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
-msgstr ""
+msgstr "Hvis du laster et panelobjekt på nytt vil det automatisk legges til på panelet."
 
-#: gnome-panel/panel-applet-frame.c:886
+#: gnome-panel/panel-applet-frame.c:900
 msgid "_Don't Reload"
 msgstr "I_kke start på nytt"
 
-#: gnome-panel/panel-applet-frame.c:887
+#: gnome-panel/panel-applet-frame.c:901
 msgid "_Reload"
 msgstr "Sta_rt på nytt"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:927
 msgid "D_on't Delete"
 msgstr "I_kke slett"
 
-#: gnome-panel/panel-applet-frame.c:949
+#: gnome-panel/panel-applet-frame.c:975
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "Det oppsto et problem i panelet ved lasting av «%s»."
 
-#: gnome-panel/panel-applet-frame.c:954 gnome-panel/panel-util.c:251
-#, c-format
-msgid "Details: %s"
-msgstr "Detaljer: %s"
+#: gnome-panel/panel-applet-frame.c:992
+msgid "Do you want to delete the applet from your configuration?"
+msgstr "Vil du slette dette panelprogrammet fra din konfigurasjon?"
 
-#: gnome-panel/panel-applet-frame.c:964 gnome-panel/panel-applet-frame.c:977
-msgid ""
-"\n"
-"\n"
-"Do you want to delete the applet from your configuration?"
-msgstr ""
-"\n"
-"\n"
-"Vil du slette denne appleten fra din konfigurasjon?"
-
-#: gnome-panel/panel-applet-frame.c:1085
+#: gnome-panel/panel-applet-frame.c:1089
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan ikke finne AppletShell-grensesnitt i kontrollen\n"
 
@@ -1411,40 +1398,27 @@ msgid ""
 "A boolean flag to indicate whether the user's previous configuration in /"
 "apps/panel/profiles/default has been copied to the new location in /apps/"
 "panel."
-msgstr ""
+msgstr "Et boolsk flagg som indikerer om brukerens tidligere konfigurasjon i /apps/panel/profiles/default har blitt kopiert til den nye lokasjonen i /apps/panel."
 
 #: gnome-panel/panel-general.schemas.in.h:2
-#, fuzzy
 msgid ""
 "A list of panel IDs. Each ID identifies an individual toplevel panel. The "
 "settings for each of these panels are stored in /apps/panel/toplevels/$(id)."
-msgstr ""
-"En liste med panel-IDer. Hver ID identifiserer et individuelt panel. "
-"Innstillingene for hvert av disse panelene lagres i /apps/panel/general/"
-"$(profile)/toplevels/$(id)."
+msgstr "En liste med panel-IDer. Hver ID identifiserer et individuelt panel. Innstillingene for hvert av disse panelene lagres i /apps/panel/toplevels/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:3
-#, fuzzy
 msgid ""
 "A list of panel applet IDs. Each ID identifies an individual panel applet. "
 "The settings for each of these applets are stored in /apps/panel/applets/"
 "$(id)."
-msgstr ""
-"En liste med IDer for panelprogrammer. Hver ID identifiserer et individuelt "
-"panelprogram. Innstillingene for hvert av disse programmene lagres i /apps/"
-"panel/general/$(profiles)/applets/$(id)."
+msgstr "En liste med IDer for panelprogrammer. Hver ID identifiserer et individuelt panelprogram. Innstillingene for hvert av disse programmene lagres i /apps/panel/applets/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:4
-#, fuzzy
 msgid ""
 "A list of panel object IDs. Each ID identifies an individual panel object (e."
 "g. a launcher, action button or menu button/bar). The settings for each of "
 "these objects are stored in /apps/panel/objects/$(id)."
-msgstr ""
-"En liste med IDer for panelobjekter. Hver ID identifiserer et individuelt "
-"panelobjekt, f.eks en oppstarter, handlingsknapp eller meny-knapp/linje. "
-"Innstillingene for hvert av disse objektene lagres i /apps/panel/general/"
-"$(profiles)/objects/$(id)."
+msgstr "En liste med IDer for panelobjekter. Hver ID identifiserer et individuelt panelobjekt, f.eks en oppstarter, handlingsknapp eller meny-knapp/linje. Innstillingene for hvert av disse objektene lagres i /apps/panel/objects/$(id)."
 
 #: gnome-panel/panel-general.schemas.in.h:5
 msgid "Enable program list in \"Run Application\" dialog"
@@ -1475,9 +1449,8 @@ msgstr ""
 "av nøkkelen show_program_list."
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Verktøy for konfigurering av tid"
+msgstr "Gammel konfigurasjon for profiler migrert"
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
@@ -1642,7 +1615,7 @@ msgstr "Ta skjermdump"
 msgid "Take window screenshot"
 msgstr "Ta skjermdump av et vindu"
 
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/panel-menu-bar.c:232
 msgid "Actions"
 msgstr "Handlinger"
 
@@ -1950,20 +1923,20 @@ msgstr "Fl_islegg"
 msgid "Couldn't find a suitable application"
 msgstr "Kunne ikke finne en passende applikasjon"
 
-#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:100
+#: gnome-panel/panel-recent.c:93 gnome-panel/panel-recent.c:101
 msgid "Cannot open recently used document"
 msgstr "Kan ikke åpne tidligere vist dokument"
 
-#: gnome-panel/panel-recent.c:101
+#: gnome-panel/panel-recent.c:102
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "En ukjent feil oppsto under forsøk på å åpne %s"
 
-#: gnome-panel/panel-recent.c:154
+#: gnome-panel/panel-recent.c:155
 msgid "Clear the Recent Documents list?"
 msgstr "Tøm liste over siste dokumenter?"
 
-#: gnome-panel/panel-recent.c:156
+#: gnome-panel/panel-recent.c:157
 msgid ""
 "If you clear the Recent Documents list, you clear the following:\n"
 "\n"
@@ -1976,50 +1949,55 @@ msgstr ""
 "* Alle oppføringer fra listen over siste dokumenter i alle applikasjoner."
 
 #. Translators: %s is a URI
-#: gnome-panel/panel-recent.c:199
+#: gnome-panel/panel-recent.c:200
 #, c-format
 msgid "Open '%s'"
 msgstr "Åpne «%s»"
 
-#: gnome-panel/panel-recent.c:220
+#: gnome-panel/panel-recent.c:221
 msgid "Recent Documents"
 msgstr "Siste dokumenter"
 
-#: gnome-panel/panel-recent.c:249
+#: gnome-panel/panel-recent.c:250
 msgid "Clear Recent Documents"
 msgstr "Tøm siste dokumenter"
 
-#: gnome-panel/panel-recent.c:253
+#: gnome-panel/panel-recent.c:254
 msgid "Clear all items from the recent documents list"
 msgstr "Tøm alle oppføringer fra listen med siste dokumenter"
 
-#: gnome-panel/panel-run-dialog.c:293
+#: gnome-panel/panel-run-dialog.c:299
 #, c-format
 msgid "Cannot launch command '%s'"
 msgstr "Kan ikke starte kommando «%s»"
 
-#: gnome-panel/panel-run-dialog.c:319
+#: gnome-panel/panel-run-dialog.c:325
 #, c-format
 msgid "Cannot display location '%s'"
 msgstr "Kan ikke vise lokasjon «%s»"
 
-#: gnome-panel/panel-run-dialog.c:371
+#: gnome-panel/panel-run-dialog.c:377
 #, c-format
 msgid "Cannot convert '%s' from UTF-8"
 msgstr "Kan ikke konvertere «%s» fra UTF-8"
 
-#: gnome-panel/panel-run-dialog.c:1088
+#: gnome-panel/panel-run-dialog.c:1094
 msgid "Choose a file to append to the command..."
 msgstr "Velg en fil som skal legges til kommandoen..."
 
-#: gnome-panel/panel-run-dialog.c:1366
+#: gnome-panel/panel-run-dialog.c:1409
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Kjører kommando «%s»"
 
-#: gnome-panel/panel-run-dialog.c:1372 gnome-panel/panel-run-dialog.glade.h:10
+#: gnome-panel/panel-run-dialog.c:1415 gnome-panel/panel-run-dialog.glade.h:10
 msgid "Select an application to view its description."
 msgstr "Velg en applikasjon for å vise dens beskrivelse."
+
+#: gnome-panel/panel-run-dialog.c:1450
+#, c-format
+msgid "URI list dropped on run dialog had wrong format (%d) or length (%d)\n"
+msgstr "URI-listen som ble sluppet på kjøringsdialogen hadde feil format (%d) eller lengde (%d)\n"
 
 #: gnome-panel/panel-run-dialog.glade.h:2
 msgid ""
@@ -2509,16 +2487,21 @@ msgstr "Xinerama-skjerm hvor panelet vises"
 msgid "Y co-ordinate of panel"
 msgstr "Panelets y-koordinat"
 
-#: gnome-panel/panel-util.c:62
+#: gnome-panel/panel-util.c:63
 msgid "Cannot display help document"
 msgstr "Kan ikke vise hjelpdokument"
 
-#: gnome-panel/panel.c:451
+#: gnome-panel/panel-util.c:253
+#, c-format
+msgid "Details: %s"
+msgstr "Detaljer: %s"
+
+#: gnome-panel/panel.c:452
 #, c-format
 msgid "Open URL: %s"
 msgstr "Åpne URL: %s"
 
-#: gnome-panel/panel.c:1205
+#: gnome-panel/panel.c:1211
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost. Delete this drawer?"
@@ -2526,11 +2509,11 @@ msgstr ""
 "Når en skuff fjernes går skuffen og dets\n"
 "instillinger tapt. Slett denne skuffen?"
 
-#: gnome-panel/panel.c:1207
+#: gnome-panel/panel.c:1213
 msgid "Delete Drawer"
 msgstr "Slett skuff"
 
-#: gnome-panel/panel.c:1209
+#: gnome-panel/panel.c:1215
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost. Delete this panel?"
@@ -2538,7 +2521,7 @@ msgstr ""
 "Når et panel fjernes går panelet og dets\n"
 "instillinger tapt. Slett dette panelet?"
 
-#: gnome-panel/panel.c:1211
+#: gnome-panel/panel.c:1217
 msgid "Delete Panel"
 msgstr "Slett panel"
 
