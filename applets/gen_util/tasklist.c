@@ -808,7 +808,7 @@ display_about_dialog (BonoboUIComponent *uic,
 	pixbuf = gdk_pixbuf_new_from_file (file, NULL);
 	g_free(file);
 
-	about = gnome_about_new (_("Window List"), "1.0",
+	about = gnome_about_new (_("Window List"), VERSION,
 				 "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
 				 _("The Window List shows a list of all visible windows and lets you browse them."),
 				 authors,
