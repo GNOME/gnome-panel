@@ -106,14 +106,6 @@ enum {
 static PanelRunDialog *static_dialog = NULL;
 
 static void
-panel_run_dialog_free (PanelRunDialog *dialog)
-{
-	if (dialog->run_dialog)
-		gtk_widget_destroy (dialog->run_dialog);
-	dialog->run_dialog = NULL;
-}
-
-static void
 panel_run_dialog_destroy (PanelRunDialog *dialog)
 {
 	GList *l;
@@ -360,13 +352,13 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		start_screen_check ();
 
 		g_free (command);
-		panel_run_dialog_free (dialog);
+		gtk_widget_destroy (dialog->run_dialog);
 		return;
 	} else if (!strcmp (command, "gegls from outer space")) {
 		start_geginv ();
 
 		g_free (command);
-		panel_run_dialog_free (dialog);
+		gtk_widget_destroy (dialog->run_dialog);
 		return;
 	}
 		
@@ -397,7 +389,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 					     command);
 		
 		/* only close the dialog if we successfully showed or launched something */
-		panel_run_dialog_free (dialog);
+		gtk_widget_destroy (dialog->run_dialog);
 	}
 
 	g_free (command);
@@ -417,7 +409,7 @@ panel_run_dialog_response (PanelRunDialog *dialog,
 		panel_run_dialog_execute (dialog);
 		break;
 	case GTK_RESPONSE_CANCEL:
-		panel_run_dialog_free (dialog);
+		gtk_widget_destroy (dialog->run_dialog);
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (run_dialog)),
