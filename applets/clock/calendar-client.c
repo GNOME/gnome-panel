@@ -1470,7 +1470,7 @@ calendar_client_update_tasks (CalendarClient *client)
   for (l = client->priv->task_sources; l; l = l->next)
     calendar_client_start_query (client, l->data, query);
 
-#if FIX_BROKEN_TASKS_QUERY
+#ifdef FIX_BROKEN_TASKS_QUERY
   g_free (day_begin);
   g_free (day_end);
 #endif
@@ -1648,7 +1648,7 @@ calendar_client_select_day (CalendarClient *client,
       /* don't need to update appointments unless
        * the selected month changes
        */
-#if FIX_BROKEN_TASKS_QUERY
+#ifdef FIX_BROKEN_TASKS_QUERY
       calendar_client_update_tasks (client);
 #endif
 
