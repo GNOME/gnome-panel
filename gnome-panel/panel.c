@@ -1119,8 +1119,6 @@ panel_delete_without_query (PanelToplevel *toplevel)
 
 	panel_widget = panel_toplevel_get_panel_widget (toplevel);
 
-	/* FIXME_FOR_NEW_TOPLEVEL: make sure we are deleting all applets on the panel */
-
 	if (panel_toplevel_get_is_attached (toplevel) &&
 	    panel_widget->master_widget) {
 		AppletInfo *info;

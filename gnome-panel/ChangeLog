@@ -1,5 +1,23 @@
 2003-05-13  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel.c: (panel_delete_without_query): remove FIXME.
+
+2003-01-24  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: add panel-force-quit.[ch] to the build.
+
+	* panel-force-quit.[ch]: impl a safer more GNOMEish version
+	of xkill.
+
+	* menu.c: (create_button_menu): add the force quit button.
+
+	* panel-action-button.[ch]: (panel_action_force_quit): ditto.
+
+	* panel-stock-icons.[ch]: (panel_init_stock_icons_and_items):
+	add the panel-force-quit stock icon.
+
+2003-05-13  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-toplevel.c: (panel_toplevel_update_attached_position),
 	(panel_toplevel_update_normal_position),
 	(panel_toplevel_update_auto_hide_position),

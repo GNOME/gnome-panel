@@ -127,6 +127,16 @@ static AppletMenuInfo action_buttons_info [] = {
 	  PANEL_ACTION_LOCK,
 	  "ACTION:lock:NEW",
 	  TRUE },
+
+	{ N_("Force Quit"),
+	  N_("Actions"),
+	  "Actions",
+	  "Force a misbehaving application to quit",
+	  NULL,
+	  PANEL_STOCK_FORCE_QUIT,
+	  PANEL_ACTION_FORCE_QUIT,
+	  "ACTION:force-quit:NEW",
+	  TRUE },
 	  
 	{ N_("Screenshot"),
 	  N_("Actions"),

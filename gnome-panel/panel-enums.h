@@ -93,7 +93,7 @@ typedef enum {
         PANEL_ACTION_RUN,
         PANEL_ACTION_SEARCH,
         PANEL_ACTION_SCREENSHOT,
-        PANEL_ACTION_SHOW_DESKTOP,
+	PANEL_ACTION_FORCE_QUIT,
         PANEL_ACTION_LAST
 } PanelActionButtonType;
 

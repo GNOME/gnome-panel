@@ -39,6 +39,7 @@
 #include "panel-profile.h"
 #include "panel-stock-icons.h"
 #include "panel-typebuiltins.h"
+#include "panel-force-quit.h"
 #include "panel-util.h"
 #include "panel-session.h"
 #include "panel-globals.h"
@@ -64,6 +65,7 @@ static GConfEnumStringPair panel_action_type_map [] = {
 	{ PANEL_ACTION_RUN,          "run"          },
 	{ PANEL_ACTION_SEARCH,       "search"       },
 	{ PANEL_ACTION_SCREENSHOT,   "screenshot"   },
+	{ PANEL_ACTION_FORCE_QUIT,   "force-quit"   },
 };
 
 /* Lock Screen
@@ -168,6 +170,18 @@ panel_action_screenshot (GtkWidget *widget)
 				    _("Cannot execute gnome-panel-screenshot"));
 }
 
+/* Force Quit
+ */
+static void
+panel_action_force_quit (GtkWidget *widget)
+{
+	GdkScreen *screen;
+
+	screen = gtk_widget_get_screen (widget);
+
+	panel_force_quit (screen);
+}
+
 typedef struct {
 	PanelActionButtonType   type;
 	char                   *stock_icon;
@@ -209,6 +223,11 @@ static PanelAction actions [] = {
 		PANEL_ACTION_SCREENSHOT, PANEL_STOCK_SCREENSHOT,
 		N_("Screenshot"), NULL,
 		panel_action_screenshot, NULL, NULL
+	},
+	{
+		PANEL_ACTION_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,
+		N_("Force Quit"), NULL,
+		panel_action_force_quit, NULL, NULL
 	}
 };
 

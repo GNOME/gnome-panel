@@ -66,6 +66,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_SCREENSHOT,          "gnome-screenshot" },
 	{ PANEL_STOCK_LOCKSCREEN,          "gnome-lockscreen" },
 	{ PANEL_STOCK_LOGOUT,              "gnome-term-night" },
+	{ PANEL_STOCK_FORCE_QUIT,          "panel-force-quit" },
 	{ PANEL_STOCK_GNOME_LOGO,          "gnome-logo-icon-transparent"},
 	{ PANEL_STOCK_DEBIAN,              "gnome-debian"},
 	{ PANEL_STOCK_SUSE,                "gnome-suse"},
@@ -143,7 +144,8 @@ typedef struct {
 } PanelStockItem;
 
 static PanelStockItem stock_items [] = {
-	{ PANEL_STOCK_EXECUTE, GTK_STOCK_EXECUTE, N_("_Run") },
+	{ PANEL_STOCK_EXECUTE,    GTK_STOCK_EXECUTE,       N_("_Run") },
+	{ PANEL_STOCK_FORCE_QUIT, PANEL_STOCK_FORCE_QUIT,  N_("_Force quit") },
 };
 
 static void
@@ -189,8 +191,8 @@ panel_init_stock_icons_and_items (void)
 	factory = gtk_icon_factory_new ();
 	gtk_icon_factory_add_default (factory);
 
-	panel_init_stock_items (factory);
 	panel_init_stock_icons (factory);
+	panel_init_stock_items (factory);
 
 	g_object_unref (factory);
 }
