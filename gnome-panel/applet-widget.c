@@ -384,28 +384,46 @@ static void
 applet_widget_destroy(GtkWidget *w, gpointer data)
 {
 	AppletWidget *applet;
+	GtkPlug *plug;
 	CORBA_Environment ev;
 
 	g_return_if_fail(w != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(w));
 
 	applet = APPLET_WIDGET(w);
-	if(!applet->privcfgpath)
-		return;
+	plug = GTK_PLUG(w);
 
-	g_free(applet->privcfgpath);
-	g_free(applet->globcfgpath);
+	/* XXX: hackaround to broken gtkplug/gtksocket, we kill the references
+	   to ourselves on the socket and our references to the socket and
+	   destroy the socket */
+	if(plug->same_app && plug->socket_window) {
+		GtkSocket *socket;
+		gdk_window_get_user_data (plug->socket_window,
+					  (gpointer *)&socket);
+		if(socket) {
+			socket->plug_window = NULL;
+			socket->same_app = FALSE;
+			plug->socket_window = NULL;
+			plug->same_app = FALSE;
+			gtk_widget_destroy(GTK_WIDGET(socket));
+		}
+	}
 
-	applet->privcfgpath = NULL;
-	applet->globcfgpath = NULL;
+	if(applet->privcfgpath) {
+		g_free(applet->privcfgpath);
+		g_free(applet->globcfgpath);
 
-	CORBA_exception_init(&ev);
-	/* if nothing has been added as our child, this means we have
-	   not yet fully completed load, so notify the panel that we are
-	   going to die */
-	if(GTK_BIN(w)->child == NULL)
-		GNOME_PanelSpot_abort_load(CD(applet)->pspot, &ev);
-	CORBA_exception_free(&ev);
+		applet->privcfgpath = NULL;
+		applet->globcfgpath = NULL;
+
+		CORBA_exception_init(&ev);
+		/* if nothing has been added as our child, this means we have
+		   not yet fully completed load, so notify the panel that we
+		   are going to die */
+		if(GTK_BIN(w)->child == NULL)
+			GNOME_PanelSpot_abort_load(CD(applet)->pspot, &ev);
+		CORBA_exception_free(&ev);
+	}
 
 	applet_servant_destroy(applet->corbadat);
 

@@ -306,7 +306,31 @@ extern_clean(Extern *ext)
 static void
 extern_socket_destroy(GtkWidget *w, gpointer data)
 {
+	GtkSocket *socket = GTK_SOCKET(w);
 	Extern *ext = data;
+
+	if (socket->same_app && socket->plug_window) {
+		GtkWidget *plug_widget;
+		gdk_window_get_user_data (socket->plug_window,
+					  (gpointer *)&plug_widget);
+		if(plug_widget) {
+			/* XXX: hackaround to broken gtkplug/gtksocket!!!
+			   KILL all references to ourselves on the plug
+			   and all our references to the plug and then
+			   destroy it.*/
+			GtkWidget *toplevel = gtk_widget_get_toplevel (w);
+			if (toplevel && GTK_IS_WINDOW (toplevel))
+				gtk_window_remove_embedded_xid (GTK_WINDOW (toplevel), 
+								GDK_WINDOW_XWINDOW (socket->plug_window));
+
+			socket->plug_window = NULL;
+			socket->same_app = FALSE;
+			GTK_PLUG(plug_widget)->socket_window = NULL;
+			GTK_PLUG(plug_widget)->same_app = FALSE;
+			gtk_widget_destroy(plug_widget);
+		}
+	}
+
 	gtk_widget_destroy(ext->ebox);
 	extern_clean(ext);
 }

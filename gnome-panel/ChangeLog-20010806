@@ -1,3 +1,10 @@
+Mon Feb 07 16:18:12 2000  George Lebl <jirka@5z.com>
+
+	* extern.c,applet-widget.c: hackarounds around broken
+	  gtkplug/gtkwidget.  If in the same app, on destroy we kill
+	  references to each other, and the first widget to get killed kills
+	  the other.  Fixes bug #6000
+
 Mon Feb 07 14:47:18 2000  George Lebl <jirka@5z.com>
 
 	* applet-widget.[ch]: remove old size stuff
