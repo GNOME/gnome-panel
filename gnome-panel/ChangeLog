@@ -1,5 +1,12 @@
 2002-03-20  Mark McLoughlin  <mark@skynet.ie>
 
+	* floating-widget.c: (floating_pos_class_init): the co-ordinate
+	chage signal has a VOID__INT_INT signature, not INT__INT.
+
+	* panel-marshal.list: kill INT_INT and add VOID_INT_INT.
+
+2002-03-20  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-screenshot.glade: hook up the OK button.
 
 2002-03-20  Mark McLoughlin  <mark@skynet.ie>

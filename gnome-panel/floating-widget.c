@@ -102,7 +102,7 @@ floating_pos_class_init (FloatingPosClass *klass)
 			      G_STRUCT_OFFSET (FloatingPosClass, coords_change),
 			      NULL,
 			      NULL,
-			      panel_marshal_INT__INT,
+			      panel_marshal_VOID__INT_INT,
 			      G_TYPE_NONE,
 			      2,
 			      G_TYPE_INT,
