@@ -111,6 +111,11 @@ gint		panel_widget_add		(PanelWidget *panel,
 gint		panel_widget_add_with_drawer	(PanelWidget *panel,
 						 GtkWidget *button,
 						 gint pos);
+/*move oldpos to newpos*/
+gint		panel_widget_move		(PanelWidget *panel,
+						 gint oldpos,
+						 gint pos);
+
 /*remove an applet from the panel*/
 gint		panel_widget_remove		(PanelWidget *panel,
 						 GtkWidget *applet);
