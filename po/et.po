@@ -1,26 +1,26 @@
 # gnome-panel eesti tõlge.
-# Copyright (C) 1999-2002 Free Software Foundation, Inc.
+# Copyright (C) 1999-2005 Free Software Foundation, Inc.
 # Lauris Kaplinski <lauris@ariman.ee>, 1999.
 # Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.
 # Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.
 # Priit Laes <amd@store20.com>, 2004, 2005.
+# Ivar Smolin <okul@linux.ee>, 2005.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel\n"
+"Project-Id-Version: gnome-panel 2.8.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-01-30 13:42+0100\n"
-"PO-Revision-Date: 2005-01-30 21:24+0300\n"
-"Last-Translator: Priit Laes <amd@tt.ee>\n"
+"PO-Revision-Date: 2005-02-01 16:00+0200\n"
+"Last-Translator: Ivar Smolin <okul@linux.ee>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Ad_just Date & Time"
-msgstr "_Säti kuupäeva ja kella..."
+msgstr "_Säti kuupäeva ja aega"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:2
 msgid "Copy _Date"
@@ -38,7 +38,7 @@ msgstr "Kopeeri k_ellaaeg"
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:1
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:1
 msgid "_About"
-msgstr "_Info"
+msgstr "_Programmist lähemalt"
 
 #: applets/clock/GNOME_ClockApplet.xml.h:5
 #: applets/fish/GNOME_FishApplet.xml.h:2
@@ -60,7 +60,7 @@ msgstr "_Abi"
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:3
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:3
 msgid "_Preferences"
-msgstr "_Häälestus"
+msgstr "_Eelistused"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:1
 #: applets/clock/clock.c:2594
@@ -73,7 +73,7 @@ msgstr "Clock Applet Factory"
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:3
 msgid "Factory for creating clock applets."
-msgstr "Factory for creating clock applets."
+msgstr ""
 
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:4
 msgid "Get the current time and date"
@@ -99,19 +99,12 @@ msgstr "%H:%M:%S"
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#  translators: replace %e with %d if, when the day of the
-#  *              month as a decimal number is a single digit, it
-#  *              should begin with a 0 in your locale (e.g. "May
-#  *              01" instead of "May  1").
 #. translators: replace %e with %d if, when the day of the
 #. *              should begin with a 0 in your locale (e.g. "May
 #: applets/clock/clock.c:281
 msgid "%a %b %e"
 msgstr "%A, %e. %b"
 
-#  translators: reverse the order of these arguments
-#  *              if the time should come before the
-#  *              date on a clock in your locale.
 #. translators: reverse the order of these arguments
 #. *              date on a clock in your locale.
 #: applets/clock/clock.c:288
@@ -123,9 +116,6 @@ msgstr ""
 "%2$s\n"
 "%1$s"
 
-#  translators: reverse the order of these arguments
-#  *              if the time should come before the
-#  *              date on a clock in your locale.
 #. translators: reverse the order of these arguments
 #. *              date on a clock in your locale.
 #: applets/clock/clock.c:295
@@ -138,10 +128,6 @@ msgstr "%2$s, %1$s"
 msgid "%A %B %d"
 msgstr "%A, %d. %B"
 
-#  translators: replace %e with %d if, when the day of the
-#  *              month as a decimal number is a single digit, it
-#  *              should begin with a 0 in your locale (e.g. "May
-#  *              01" instead of "May  1").
 #. Translators: If the event did not start on the current day
 #: applets/clock/clock.c:591
 msgid "%b %d"
@@ -182,7 +168,7 @@ msgstr "%A, %d. B% %Y"
 #: applets/clock/clock.c:1767
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
-msgstr "Aja seadistusprogrammi käivitamine ebaõnnestus: %s"
+msgstr "Tõrge aja seadistamisvahendi käivitamisel: %s"
 
 #: applets/clock/clock.c:1806
 msgid "Failed to locate a program for configuring the date and time. Perhaps none is installed?"
@@ -190,7 +176,7 @@ msgstr "Kuupäeva ja kellaaja seadistusprogrammi ei leitud.Võibolla ei ole üht
 
 #: applets/clock/clock.c:2253
 msgid "Custom format"
-msgstr "Kohandatud formaat"
+msgstr "Kohandatud vorming"
 
 #: applets/clock/clock.c:2374
 #: applets/clock/clock.c:2551
@@ -204,11 +190,11 @@ msgstr "Kohandatud formaat"
 #: applets/wncklet/workspace-switcher.c:575
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr "Abiinfo kuvamisel tekkis viga: %s"
+msgstr "Abiteabe kuvamisel tekkis viga: %s"
 
 #: applets/clock/clock.c:2409
 msgid "Clock Preferences"
-msgstr "Kella häälestus"
+msgstr "Kella eelistused"
 
 #: applets/clock/clock.c:2433
 msgid "Clock _type:"
@@ -232,15 +218,15 @@ msgstr "Interneti aeg"
 
 #: applets/clock/clock.c:2454
 msgid "Custom _format:"
-msgstr "Kohandatud _formaat:"
+msgstr "Kohandatud _vorming:"
 
 #: applets/clock/clock.c:2473
 msgid "Show _seconds"
-msgstr "Näita _sekundeid"
+msgstr "_Sekundite näitamine"
 
 #: applets/clock/clock.c:2482
 msgid "Show _date"
-msgstr "Näita _kuupäeva"
+msgstr "_Kuupäeva näitamine"
 
 #: applets/clock/clock.c:2491
 msgid "Use _UTC"
@@ -258,10 +244,11 @@ msgstr "_UTC aeg"
 msgid "translator-credits"
 msgstr ""
 "Tõlge eesti keelde:\n"
-"       Lauris Kaplinski <lauris@ariman.ee>, 1999.\n"
-"       Ilmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
-"       Tõivo Leedjärv <toivo@linux.ee>, 2002, 2003.\n"
-"       Priit Laes <amd@store20.com>, 2004, 2005.\n"
+"\tLauris Kaplinski <lauris@ariman.ee>, 1999.\n"
+"\tIlmar Kerm <ikerm@hot.ee>, 2001, 2002.\n"
+"\tTõivo Leedjärv <toivo@linux.ee>, 2002, 2003.\n"
+"\tPriit Laes <amd@store20.com>, 2004, 2005.\n"
+"\tIvar Smolin <okul@linux.ee>, 2005.\n"
 "\n"
 "GNOME Translation Project Eesti meeskond.\n"
 "http://et-gnome.sourceforge.net\n"
@@ -269,7 +256,7 @@ msgstr ""
 
 #: applets/clock/clock.c:2597
 msgid "The Clock displays the current time and date"
-msgstr "Kellarakend näitab hetkekuupäeva ja kella"
+msgstr "Kellarakend näitab praegust kellaaega ja kuupäeva"
 
 #. Translators: the only valid values for this are "12" and "24"
 #: applets/clock/clock.schemas.in.h:2
@@ -283,7 +270,7 @@ msgstr "24-hour"
 
 #: applets/clock/clock.schemas.in.h:5
 msgid "Custom format of the clock"
-msgstr "Kohandatud kellaformaat"
+msgstr "Kohandatud kellavorming"
 
 #: applets/clock/clock.schemas.in.h:6
 msgid "Hour format"
@@ -324,9 +311,8 @@ msgid "Show time with seconds"
 msgstr "Näita sekundeid"
 
 #: applets/clock/clock.schemas.in.h:15
-#, fuzzy
 msgid "Show week numbers in calendar"
-msgstr "Näita halduris töötsoonide _nimesid"
+msgstr "Nädalanumbrite näitamine kalendris"
 
 #: applets/clock/clock.schemas.in.h:16
 #, fuzzy
@@ -408,29 +394,29 @@ msgid "(with minor help from George)"
 msgstr "(pisukese abiga Georgelt)"
 
 #: applets/fish/fish.c:530
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, a contemporary oracle"
-msgstr "GNOME kala %s, kaasaegne oraakel"
+msgstr "Kala nimega %s, kaasaegne oraakel"
 
 #: applets/fish/fish.c:600
 msgid "Unable to locate the command to execute"
 msgstr "Ei leia käivitatavat käsku"
 
 #: applets/fish/fish.c:649
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the Fish Says:"
-msgstr "GNOME kala %s ütleb:"
+msgstr "Kala nimega %s ütleb:"
 
 #: applets/fish/fish.c:718
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Ei saa käivitada käsku '%s'\n"
+"Käsu väljundit ei saa lugeda\n"
 "\n"
-"Info: %s"
+"Detailid: %s"
 
 #: applets/fish/fish.c:783
 msgid "_Speak again"
@@ -453,15 +439,15 @@ msgstr ""
 "Info: %s"
 
 #: applets/fish/fish.c:903
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Ei saa käivitada käsku '%s'\n"
+"Vormi '%s' ei saa lugeda\n"
 "\n"
-"Info: %s"
+"Detailid: %s"
 
 #: applets/fish/fish.c:1565
 msgid ""
@@ -472,9 +458,9 @@ msgstr ""
 "(vaadake tänast kuupäeva)"
 
 #: applets/fish/fish.c:1659
-#, fuzzy, c-format
+#, c-format
 msgid "%s the Fish, the fortune teller"
-msgstr "GNOME kala, ennustaja"
+msgstr "Kala %s, ennustaja"
 
 #: applets/fish/fish.glade.h:1
 #: applets/wncklet/window-list.glade.h:1
@@ -508,7 +494,7 @@ msgstr "Klõpsamisel käivitatav käsk:"
 
 #: applets/fish/fish.glade.h:7
 msgid "Fish Preferences"
-msgstr "Kala omadused"
+msgstr "Kala eelistused"
 
 #: applets/fish/fish.glade.h:8
 msgid "_File:"
@@ -571,18 +557,16 @@ msgid "The fish's name"
 msgstr "Kala nimi"
 
 #: applets/fish/fish.schemas.in.h:9
-#, fuzzy
 msgid "This key specifies the command that will be tried to execute when the fish is clicked."
-msgstr "Kala klõpsamisel käivitatav käsk"
+msgstr ""
 
 #: applets/fish/fish.schemas.in.h:10
 msgid "This key specifies the filename of the pixmap which will be used for the animation displayed in the fish applet relative to the pixmap directory."
 msgstr ""
 
 #: applets/fish/fish.schemas.in.h:11
-#, fuzzy
 msgid "This key specifies the number of frames that will be displayed in the fish's animation."
-msgstr "Kala animatsiooni kaadrite arv"
+msgstr ""
 
 #: applets/fish/fish.schemas.in.h:12
 msgid "This key specifies the number of seconds each frame will be displayed."
@@ -619,7 +603,7 @@ msgstr "Factory for the window navigation related applets"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:2
 msgid "Hide application windows and show the desktop"
-msgstr "Peida rakenduste aknad ja näita töölauda"
+msgstr "Peidab rakenduste aknad ja näitab töölauda"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:3
 msgid "Show Desktop"
@@ -631,7 +615,7 @@ msgstr "Lülita avatud akende vahel"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:5
 msgid "Switch between workspaces"
-msgstr "Lülita töötsoonide vahel"
+msgstr "Lülita tööalade vahel"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
 #: applets/wncklet/window-list.c:805
@@ -645,9 +629,8 @@ msgstr "Window Navigation Applet Factory"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
 #: applets/wncklet/window-menu.c:106
 #: applets/wncklet/window-menu.c:312
-#, fuzzy
 msgid "Window Selector"
-msgstr "Akende nimekiri"
+msgstr "Aknavalija"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
 #: applets/wncklet/workspace-switcher.c:617
@@ -657,13 +640,12 @@ msgstr "Töölauahaldur"
 #: applets/wncklet/showdesktop.c:205
 #, c-format
 msgid "Failed to load %s: %s\n"
-msgstr "%s laadimine ebaõnnestus: %s\n"
+msgstr "Tõrge %s laadimisel: %s\n"
 
 #: applets/wncklet/showdesktop.c:206
 #: gnome-panel/panel-util.c:567
-#, fuzzy
 msgid "Icon not found"
-msgstr "Ei leia faili"
+msgstr "Ikooni ei leitud"
 
 #: applets/wncklet/showdesktop.c:264
 msgid "Click here to restore hidden windows."
@@ -676,26 +658,25 @@ msgstr "Klõpsa siia, et peita kõik aknad ja näidata töölauda."
 #: applets/wncklet/showdesktop.c:463
 #: applets/wncklet/showdesktop.c:579
 msgid "Show Desktop Button"
-msgstr "Näita töölaua nuppu"
+msgstr "Töölaua näitamise nupp"
 
 #: applets/wncklet/showdesktop.c:582
-#, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
-msgstr "See nupp võimaldab sul kõik aknad peita ning töölauda näha"
+msgstr "See nupp võimaldab sul peita kõik aknad ning näha töölauda."
 
 #: applets/wncklet/showdesktop.c:623
 msgid "Your window manager does not support the show desktop button, or you are not running a window manager."
 msgstr ""
 
 #: applets/wncklet/window-list.c:808
-#, fuzzy
 msgid "The Window List shows a list of all windows and lets you browse them."
-msgstr "Akende nimistu näitab kõikide nähtavate akende nimekirja ja laseb sul nende vahel valida."
+msgstr ""
+"Akende loend näitab kõikide nähtavate akende nimekirja ja laseb sul neid "
+"sirvida."
 
 #: applets/wncklet/window-list.glade.h:2
-#, fuzzy
 msgid "<b>Restoring Minimized Windows</b>"
-msgstr "Minimeeritud aknaid taastades"
+msgstr "<b>Minimeeritud aknaid taastamine</b>"
 
 #: applets/wncklet/window-list.glade.h:3
 msgid "<b>Window Grouping</b>"
@@ -703,11 +684,11 @@ msgstr "<b>Akende grupeerimine</b>"
 
 #: applets/wncklet/window-list.glade.h:4
 msgid "<b>Window List Content</b>"
-msgstr "<b>Akende nimistu sisu</b>"
+msgstr "<b>Akende loendi sisu</b>"
 
 #: applets/wncklet/window-list.glade.h:5
 msgid "<b>Window List Size</b>"
-msgstr "<b>Akende nimistu suurus</b>"
+msgstr "<b>Akende loendi suurus</b>"
 
 #: applets/wncklet/window-list.glade.h:6
 msgid "Behavior"
@@ -715,31 +696,31 @@ msgstr "Käitumine"
 
 #: applets/wncklet/window-list.glade.h:7
 msgid "Group windows when _space is limited"
-msgstr "Grupeeri aknad, kui _ruumi on vähe"
+msgstr "Akende grupeerimine kui _ruumi on vähe"
 
 #: applets/wncklet/window-list.glade.h:8
 msgid "M_inimum size:"
-msgstr "_Minimaalne suurus:"
+msgstr "_Väikseim suurus:"
 
 #: applets/wncklet/window-list.glade.h:9
 msgid "Ma_ximum size:"
-msgstr "Mak_simaalne suurus:"
+msgstr "_Suurim suurus:"
 
 #: applets/wncklet/window-list.glade.h:10
 msgid "Restore to current _workspace"
-msgstr "Taasta aktiivsesse _töötsooni"
+msgstr "Taastamine aktiivsesse _tööalasse"
 
 #: applets/wncklet/window-list.glade.h:11
 msgid "Restore to na_tive workspace"
-msgstr "Taasta a_lgsesse töötsooni"
+msgstr "Taastamine a_lgsesse tööalasse"
 
 #: applets/wncklet/window-list.glade.h:12
 msgid "Sh_ow windows from current workspace"
-msgstr "Näita _aktiivse töötsooni aknaid"
+msgstr "Näita _aktiivse tööala aknaid"
 
 #: applets/wncklet/window-list.glade.h:13
 msgid "Show windows from a_ll workspaces"
-msgstr "Näita _kõikide töötsoonide aknaid"
+msgstr "Näita _kõikide tööalade aknaid"
 
 #: applets/wncklet/window-list.glade.h:14
 msgid "Size"
@@ -747,15 +728,15 @@ msgstr "Suurus"
 
 #: applets/wncklet/window-list.glade.h:15
 msgid "Window List Preferences"
-msgstr "Akende nimistu omadused"
+msgstr "Akende loendi eelistused"
 
 #: applets/wncklet/window-list.glade.h:16
 msgid "_Always group windows"
-msgstr "Grupeeri aknad _alati"
+msgstr "Aknad grupeeritakse _alati"
 
 #: applets/wncklet/window-list.glade.h:17
 msgid "_Never group windows"
-msgstr "_Ära grupeeri aknaid"
+msgstr "Aknaid ei _grupeerita kunagi"
 
 #: applets/wncklet/window-list.glade.h:18
 #: gnome-panel/panel-properties-dialog.glade.h:28
@@ -770,29 +751,29 @@ msgstr "Määrab, millal grupeerida sama rakenduse aknad akende nimistus. Võima
 #: applets/wncklet/window-list.schemas.in.h:2
 #, fuzzy
 msgid "If true, the window list will show windows from all workspaces. Otherwise it will only display windows from the current workspace."
-msgstr "Kui see väärtus on tõene, siis näitab akende nimistu kõikide töötsoonide aknaid, vastasel juhul näidatakse ainult aktiivse töötsooni aknaid."
+msgstr "Kui see väärtus on tõene, siis näitab akende nimistu kõikide tööalade aknaid, vastasel juhul näidatakse ainult aktiivse tööala aknaid."
 
 #: applets/wncklet/window-list.schemas.in.h:3
 #, fuzzy
 msgid "If true, then when unminimizing a window, move it to the current workspace. Otherwise, switch to the workspace of the window."
-msgstr "Kui see väärtus on tõene, siis tõstetakse aken taastamisel aktiivsesse töötsooni. Vastasel korral vahetatakse aktiivset töötsooni."
+msgstr "Kui see väärtus on tõene, siis tõstetakse aken taastamisel aktiivsesse tööalasse. Vastasel korral vahetatakse aktiivset tööala."
 
 #: applets/wncklet/window-list.schemas.in.h:4
 msgid "Maximum window list size"
-msgstr "Maksimaalne aknanimekirja suurus"
+msgstr "Suurim aknanimekirja suurus"
 
 #: applets/wncklet/window-list.schemas.in.h:5
 msgid "Minimum window list size"
-msgstr "Minimaalne aknanimekirja suurus."
+msgstr "Väikseim aknanimekirja suurus."
 
 #: applets/wncklet/window-list.schemas.in.h:6
 #, fuzzy
 msgid "Move windows to current workspace when unminimized"
-msgstr "Tõsta aknad taastamisel aktiivsesse töötsooni"
+msgstr "Tõsta aknad taastamisel aktiivsesse tööalasse"
 
 #: applets/wncklet/window-list.schemas.in.h:7
 msgid "Show windows from all workspaces"
-msgstr "Näita kõikide töötsoonide aknaid"
+msgstr "Näita kõikide tööalade aknaid"
 
 #: applets/wncklet/window-list.schemas.in.h:8
 #, fuzzy
@@ -802,7 +783,7 @@ msgstr "See väärtus on akende nimistu maksimaalne laius, mida rakend tellib. S
 #: applets/wncklet/window-list.schemas.in.h:9
 #, fuzzy
 msgid "This key specifies the minimum width that the window list requests."
-msgstr "Akende nimistu minimaalne suurus"
+msgstr "Akende loendi minimaalne suurus"
 
 #: applets/wncklet/window-list.schemas.in.h:10
 msgid "When to group windows"
@@ -827,21 +808,21 @@ msgstr "veergu"
 #: applets/wncklet/workspace-switcher.c:455
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Viga num_rows väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
+msgstr "Viga num_rows väärtuse lugemisel tööalahalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:466
 #, c-format
 msgid "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "Viga display_workspace_names väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
+msgstr "Viga display_workspace_names väärtuse lugemisel tööalahalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:481
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "Viga display_all_workspaces väärtuse lugemisel töötsoonihalduri jaoks: %s\n"
+msgstr "Viga display_all_workspaces väärtuse lugemisel tööalahalduri jaoks: %s\n"
 
 #: applets/wncklet/workspace-switcher.c:620
 msgid "The Workspace Switcher shows you a small version of your workspaces that lets you manage your windows."
-msgstr "Tööstoonide haldur näitab sinu töötsoonide väikest versiooni ning laseb sul aknaid hallata."
+msgstr "Tööstoonide haldur näitab sinu tööalade väikest versiooni ning laseb sul aknaid hallata."
 
 #: applets/wncklet/workspace-switcher.glade.h:2
 msgid "<b>Switcher</b>"
@@ -849,51 +830,51 @@ msgstr "<b>Haldur</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:3
 msgid "<b>Workspaces</b>"
-msgstr "<b>Töötsoonid</b>"
+msgstr "<b>Tööalad</b>"
 
 #: applets/wncklet/workspace-switcher.glade.h:4
 msgid "Number of _workspaces:"
-msgstr "_Töötsoonide arv:"
+msgstr "_Tööalade arv:"
 
 #: applets/wncklet/workspace-switcher.glade.h:5
 msgid "Show _all workspaces in:"
-msgstr "Näita _kõiki töötsoone:"
+msgstr "Näita _kõiki tööalasid:"
 
 #: applets/wncklet/workspace-switcher.glade.h:6
 msgid "Show _only the current workspace"
-msgstr "Näita ainult _aktiivset töötsooni"
+msgstr "Näita ainult _aktiivset tööala"
 
 #: applets/wncklet/workspace-switcher.glade.h:7
 msgid "Show workspace _names in switcher"
-msgstr "Näita halduris töötsoonide _nimesid"
+msgstr "Näita halduris tööalade _nimesid"
 
 #: applets/wncklet/workspace-switcher.glade.h:8
 msgid "Workspace Names"
-msgstr "Töötsoonide nimed"
+msgstr "Tööalade nimed"
 
 #: applets/wncklet/workspace-switcher.glade.h:9
 msgid "Workspace Switcher Preferences"
-msgstr "Töötsoonihalduri omadused"
+msgstr "Tööalahalduri eelistused"
 
 #: applets/wncklet/workspace-switcher.glade.h:10
 msgid "Workspace na_mes:"
-msgstr "Töötsoonide nimed:"
+msgstr "Tööalade nimed:"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:1
 msgid "Display all workspaces"
-msgstr "Näita _kõiki töötsoone"
+msgstr "Näita _kõiki tööalasid"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:2
 msgid "Display workspace names"
-msgstr "Näita töötsoonide nimesid"
+msgstr "Näita tööalade nimesid"
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:3
 msgid "If true, the workspace switcher will show all workspaces. Otherwise it will only show the current workspace."
-msgstr "Kui see väärtus on tõene, siis näitab töötsoonihaldur kõiki töötsoone. Vastasel juhul näidatakse ainult aktiivset töötsooni."
+msgstr "Kui see väärtus on tõene, siis näitab tööalahaldur kõiki tööalasid. Vastasel juhul näidatakse ainult aktiivset tööala."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:4
 msgid "If true, the workspaces in the workspace switcher will display the names of the workspaces. Otherwise they will display the windows on the workspace."
-msgstr "Kui see väärtus on tõene, siis näitab töötsoonihaldur töötsoonide nimesid. Vastasel juhul näitab see töötsoonides asuvaid aknaid."
+msgstr "Kui see väärtus on tõene, siis näitab tööalahaldur tööalade nimesid. Vastasel juhul näitab see tööalades asuvaid aknaid."
 
 #: applets/wncklet/workspace-switcher.schemas.in.h:5
 msgid "Rows in workspace switcher"
@@ -902,7 +883,7 @@ msgstr "Töölauahalduri ridade arv"
 #: applets/wncklet/workspace-switcher.schemas.in.h:6
 #, fuzzy
 msgid "This key specifies how many rows (for horizontal layout) or columns (for vertical layout) the workspace switcher shows the workspaces in. This key is only relevant if the display_all_workspaces key is true."
-msgstr "Kui näidatakse kõiki töötsoone, siis määrab see väärtus, mitmes reas (horisontaalse asendi puhul) või veerus (vertikaalse asendi puhul) näidatakse miniatuurseid töötsoone."
+msgstr "Kui näidatakse kõiki tööalasid, siis määrab see väärtus, mitmes reas (horisontaalse asendi puhul) või veerus (vertikaalse asendi puhul) näidatakse miniatuurseid tööalasid."
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
 msgid "GNOME Panel Shell"
@@ -934,7 +915,7 @@ msgstr "Ei leia tühja kohta"
 #: gnome-panel/button-widget.c:196
 #, c-format
 msgid "Failed to load image %s"
-msgstr "Pildi %s laadimine ebaõnnestus"
+msgstr "Tõrge pildi %s laadimisel"
 
 #: gnome-panel/drawer.c:353
 #: gnome-panel/panel-addto.c:145
@@ -990,7 +971,7 @@ msgstr "Ei saa avada töölaua (desktop) faili %s paneeli käivitajale %s%s\n"
 #: gnome-panel/menu-ditem.c:181
 #: gnome-panel/menu-ditem.c:264
 msgid "Launcher Properties"
-msgstr "Käivitaja häälestus"
+msgstr "Käivitaja eelistused"
 
 #: gnome-panel/launcher.c:840
 msgid "_Launch"
@@ -1043,15 +1024,13 @@ msgstr "Sa ei saa siia uut käivitajat lisada, sest see asukoht pole kirjutatav.
 
 #: gnome-panel/menu.c:125
 #: gnome-panel/panel-menu-bar.c:136
-#, fuzzy
 msgid "Cannot launch entry"
-msgstr "Loo käivitaja"
+msgstr ""
 
 #: gnome-panel/menu.c:137
 #: gnome-panel/panel-menu-bar.c:148
-#, fuzzy
 msgid "Cannot load entry"
-msgstr "Käsu sisestusväli"
+msgstr ""
 
 #: gnome-panel/menu.c:815
 msgid "Add this launcher to panel"
@@ -1124,7 +1103,7 @@ msgstr "Käivita rakendus..."
 
 #: gnome-panel/panel-action-button.c:336
 msgid "Run an Application by entering a command"
-msgstr "Käivita rakendus, sisestades käsk"
+msgstr "Käsu sisestamise peale käivitab rakenduse"
 
 #: gnome-panel/panel-action-button.c:345
 msgid "Search for Files..."
@@ -1132,7 +1111,7 @@ msgstr "Otsi faile..."
 
 #: gnome-panel/panel-action-button.c:346
 msgid "Find files, folders, and documents on your computer"
-msgstr "Otsi oma arvutis asuvaid faile, katalooge ning dokumente"
+msgstr "Otsib sinu arvutis asuvaid faile, katalooge ning dokumente"
 
 #: gnome-panel/panel-action-button.c:354
 msgid "Take Screenshot..."
@@ -1140,15 +1119,15 @@ msgstr "Tee kuvatõmmis..."
 
 #: gnome-panel/panel-action-button.c:355
 msgid "Take a screenshot of your desktop"
-msgstr "Tee oma töölauast kuvatõmmis"
+msgstr "Teeb sinu töölauast kuvatõmmise"
 
 #: gnome-panel/panel-action-button.c:363
 msgid "Force Quit"
-msgstr ""
+msgstr "Jõuga sulgemine"
 
 #: gnome-panel/panel-action-button.c:364
 msgid "Force a misbehaving application to quit"
-msgstr ""
+msgstr "Rakendab valesti käituva rakenduse sulgemiseks jõudu"
 
 #. FIXME icon
 #: gnome-panel/panel-action-button.c:373
@@ -1160,9 +1139,8 @@ msgid "Connect to a remote server"
 msgstr ""
 
 #: gnome-panel/panel-addto.c:101
-#, fuzzy
 msgid "Custom Application Launcher"
-msgstr "Käivita rakendus"
+msgstr "Kohandatud rakenduse käivitaja"
 
 #: gnome-panel/panel-addto.c:102
 msgid "Create a new launcher"
@@ -1181,9 +1159,8 @@ msgid "Main Menu"
 msgstr "Peamenüü"
 
 #: gnome-panel/panel-addto.c:126
-#, fuzzy
 msgid "The main GNOME menu"
-msgstr "GNOME paneel"
+msgstr "GNOME peamenüü"
 
 #: gnome-panel/panel-addto.c:135
 msgid "Menu Bar"
@@ -1191,11 +1168,11 @@ msgstr "Menüüriba"
 
 #: gnome-panel/panel-addto.c:136
 msgid "A custom menu bar"
-msgstr ""
+msgstr "Kohandatud menüüriba"
 
 #: gnome-panel/panel-addto.c:146
 msgid "A pop out drawer to store other items in"
-msgstr ""
+msgstr "Lahtihüppav sahtel teiste asjade hoidmiseks"
 
 #: gnome-panel/panel-addto.c:233
 msgid "(empty)"
@@ -1210,7 +1187,7 @@ msgstr "päring tagastas erandi %s\n"
 #: gnome-panel/panel-addto.c:898
 #, c-format
 msgid "Select an _item to add to \"%s\":"
-msgstr ""
+msgstr "Vali _kirje, mida lisada paneelile \"%s\":"
 
 #: gnome-panel/panel-addto.c:902
 msgid "Add to Drawer"
@@ -1236,41 +1213,32 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:933
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
-msgstr ""
+msgstr "\"%s\" lõpetas ootamatult"
 
 #: gnome-panel/panel-applet-frame.c:935
-#, fuzzy
 msgid "Panel object has quit unexpectedly"
-msgstr "Paneeli häälestus"
+msgstr "Paneeli objekt lõpetas ootamatult"
 
 #: gnome-panel/panel-applet-frame.c:942
 msgid "If you reload a panel object, it will automatically be added back to the panel."
 msgstr ""
 
 #: gnome-panel/panel-applet-frame.c:948
-#, fuzzy
 msgid "_Don't Reload"
-msgstr "_Ära kustuta"
+msgstr "Ä_ra lae uuesti"
 
 #: gnome-panel/panel-applet-frame.c:949
 msgid "_Reload"
-msgstr ""
+msgstr "_Lae uuesti"
 
 #: gnome-panel/panel-applet-frame.c:995
-#, fuzzy, c-format
+#, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
-msgstr ""
-"Paneel leidis vea \"%s\" laadimisel\n"
-"\n"
-"Kas sa tahad rakendi oma sätetest kustutada?"
+msgstr "Paneel tuvastas \"%s\" laadimisel probleemi."
 
 #: gnome-panel/panel-applet-frame.c:1012
-#, fuzzy
 msgid "Do you want to delete the applet from your configuration?"
-msgstr ""
-"Paneel leidis vea \"%s\" laadimisel\n"
-"\n"
-"Kas sa tahad rakendi oma sätetest kustutada?"
+msgstr "Kas sa soovid rakendi oma sätetest kustutada?"
 
 #: gnome-panel/panel-applet-frame.c:1109
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -1301,7 +1269,9 @@ msgstr "GNOME paneel"
 
 #: gnome-panel/panel-context-menu.c:128
 msgid "This program is responsible for launching other applications and embedding small applets within itself."
-msgstr "See programm vastutab teiste käivitamise eest ja neelab pisikesi rakendusi endasse."
+msgstr ""
+"See programm vastutab teiste rakenduste käivitamise eest ja seob pisikesi "
+"rakendusi endaga."
 
 #: gnome-panel/panel-context-menu.c:168
 msgid "You cannot remove your last panel."
@@ -1325,9 +1295,8 @@ msgid "_New Panel"
 msgstr "_Uus paneel"
 
 #: gnome-panel/panel-context-menu.c:338
-#, fuzzy
 msgid "A_bout Panels"
-msgstr "Paneeli _info"
+msgstr "Paneelist _lähemalt"
 
 #: gnome-panel/panel-force-quit.c:75
 msgid "Click on a window to force the application to quit. To cancel press <ESC>."
@@ -1374,23 +1343,20 @@ msgid "If true, the \"Known Applications\" listing in the \"Run Application\" di
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:9
-#, fuzzy
 msgid "Old profiles configuration migrated"
-msgstr "Aja seadistusprogramm"
+msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:10
 msgid "Panel ID list"
 msgstr ""
 
 #: gnome-panel/panel-general.schemas.in.h:11
-#, fuzzy
 msgid "Panel applet ID list"
-msgstr "panel_id ei ole määratud paneeli objektile, mille ID on %s\n"
+msgstr "Paneeli rakendite ID loend"
 
 #: gnome-panel/panel-general.schemas.in.h:12
-#, fuzzy
 msgid "Panel object ID list"
-msgstr "panel_id ei ole määratud paneeli objektile, mille ID on %s\n"
+msgstr "Paneeli objektide ID loend"
 
 #: gnome-panel/panel-global.schemas.in.h:1
 msgid "A list of applet IIDs that the panel will ignore. This way you can disable certain applets from loading or showing up in the menu. For example to disable the mini-commander applet add 'OAFIID:GNOME_MiniCommanderApplet' to this list. The panel must be restarted for this to take effect."
@@ -1414,9 +1380,8 @@ msgid "Complete panel lockdown"
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:6
-#, fuzzy
 msgid "Confirm panel removal"
-msgstr "Nurgapaneel"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:7
 msgid "Disable Force Quit"
@@ -1431,9 +1396,8 @@ msgid "Disable Logging Out"
 msgstr "Väljalogimise keelamine"
 
 #: gnome-panel/panel-global.schemas.in.h:10
-#, fuzzy
 msgid "Display \"Run Application\" dialog keybinding"
-msgstr "Ava \"Käivita\" dialoogiaken"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:11
 #: gnome-panel/panel-toplevel.schemas.in.h:9
@@ -1441,9 +1405,8 @@ msgid "Enable animations"
 msgstr "Luba animatsioonid"
 
 #: gnome-panel/panel-global.schemas.in.h:12
-#, fuzzy
 msgid "Enable keybindings"
-msgstr "Vali _animatsioon"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:13
 msgid "Enable tooltips"
@@ -1498,9 +1461,8 @@ msgid "If true, tooltips are shown for objects in panels."
 msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:26
-#, fuzzy
 msgid "Popup panel menu keybinding"
-msgstr "Ava paneelimenüü"
+msgstr ""
 
 #: gnome-panel/panel-global.schemas.in.h:27
 msgid "Take screenshot"
@@ -1508,13 +1470,13 @@ msgstr "Tee kuvatõmmis"
 
 #: gnome-panel/panel-global.schemas.in.h:28
 msgid "Take window screenshot"
-msgstr "Tee aknast kuvatõmmis"
+msgstr "Teeb aknast kuvatõmmis"
 
 #: gnome-panel/panel-menu-bar.c:108
 #: gnome-panel/panel-run-dialog.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot display location '%s'"
-msgstr "Asukoha kuvamine ebaõnnestus '%s'"
+msgstr "Asukohta '%s' ei saa kuvada"
 
 #: gnome-panel/panel-menu-bar.c:461
 msgid "Bookmarks"
@@ -1557,9 +1519,8 @@ msgid "Desktop Environment|Desktop"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:1
-#, fuzzy
 msgid "Action button type"
-msgstr "Tegevuse tüüp"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:2
 msgid "Applet Bonobo IID"
@@ -1594,28 +1555,24 @@ msgid "Launcher location"
 msgstr "Käivitaja asukoht"
 
 #: gnome-panel/panel-object.schemas.in.h:10
-#, fuzzy
 msgid "Lock the object to the panel"
-msgstr "Paneeli hetkeolek"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:11
-#, fuzzy
 msgid "Menu content path"
-msgstr "Menüüpaneel"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:12
-#, fuzzy
 msgid "Object's position on the panel"
-msgstr "Paneeli hetkeolek"
+msgstr "Objekti asukoht paneelil"
 
 #: gnome-panel/panel-object.schemas.in.h:13
 msgid "Panel attached to drawer"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:14
-#, fuzzy
 msgid "Panel object type"
-msgstr "Paneeli häälestus"
+msgstr "Paneeliobjekti tüüp"
 
 #: gnome-panel/panel-object.schemas.in.h:15
 msgid "The Bonobo implementation ID of the applet - e.g. \"OAFIID:GNOME_ClockApplet\". This key is only relevant if the object_type key is \"bonobo-applet\"."
@@ -1666,9 +1623,8 @@ msgid "Toplevel panel containing object"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:27
-#, fuzzy
 msgid "Use custom icon for object's button"
-msgstr "Soovitud ButtonWidgeti laoikoon"
+msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:28
 msgid "Use custom path for menu contents"
@@ -1762,7 +1718,7 @@ msgstr ""
 
 #: gnome-panel/panel-properties-dialog.glade.h:12
 msgid "Panel Properties"
-msgstr "Paneeli häälestus"
+msgstr "Paneeli sätted"
 
 #: gnome-panel/panel-properties-dialog.glade.h:13
 msgid "Pick a color"
@@ -1861,11 +1817,9 @@ msgid "Clear Recent Documents"
 msgstr "Puhasta hiljutiste dokumendite nimekiri"
 
 #: gnome-panel/panel-recent.c:255
-#, fuzzy
 msgid "Clear all items from the recent documents list"
-msgstr "Hiljutised dokumendid"
+msgstr "Eemaldab kõik kirjed hiljutiste dokumendite nimekirjast"
 
-# c-format
 #: gnome-panel/panel-run-dialog.c:278
 #, c-format
 msgid "Cannot launch command '%s'"
@@ -1878,7 +1832,7 @@ msgstr ""
 
 #: gnome-panel/panel-run-dialog.c:1061
 msgid "Choose a file to append to the command..."
-msgstr ""
+msgstr "Käsule lisatava faili valimine..."
 
 #: gnome-panel/panel-run-dialog.c:1338
 #, c-format
@@ -1921,7 +1875,7 @@ msgstr "Käivita rakendus"
 
 #: gnome-panel/panel-run-dialog.glade.h:8
 msgid "Run in _terminal"
-msgstr "Käivita _terminalis"
+msgstr "Käivitada _terminalis"
 
 #: gnome-panel/panel-run-dialog.glade.h:9
 msgid "Run with _file..."
@@ -1933,12 +1887,11 @@ msgstr ""
 
 #: gnome-panel/panel-run-dialog.glade.h:12
 msgid "Show list of known _applications"
-msgstr "Teadaolevate _rakenduste nimekirja kuvamine"
+msgstr "Kuva teadaolevate _rakenduste nimekiri"
 
 #: gnome-panel/panel-run-dialog.glade.h:13
-#, fuzzy
 msgid "The icon of the command to be run."
-msgstr "Ei leia käivitatavat käsku"
+msgstr "Käivitatava käsu ikoon"
 
 #: gnome-panel/panel-run-dialog.glade.h:14
 #: gnome-panel/panel-stock-icons.c:89
@@ -1980,8 +1933,6 @@ msgstr "_Ära kustuta"
 msgid "Hide Panel"
 msgstr "Peida paneel"
 
-#  translators: these string will be shown in MetaCity's switch window
-#  * popup when you pass the focus to a panel
 #. translators: these string will be shown in MetaCity's switch window
 #: gnome-panel/panel-toplevel.c:1482
 msgid "Top Expanded Edge Panel"
@@ -2263,7 +2214,7 @@ msgid ""
 "settings are lost."
 msgstr ""
 "Kui sahtel eemaldada, siis läheb ta kaduma koos oma\n"
-"häälestusega."
+"sätetega."
 
 #: gnome-panel/panel.c:1241
 msgid "Delete Drawer"
@@ -2279,7 +2230,7 @@ msgid ""
 "settings are lost."
 msgstr ""
 "Kui paneel eemaldada, läheb see kaduma koos\n"
-"häälestusega."
+"sätetega."
 
 #: gnome-panel/panel.c:1246
 msgid "Delete Panel"
@@ -2310,7 +2261,7 @@ msgstr "Vastu võeti poolik '%s' tausta tüüp: %s"
 #: libpanel-applet/panel-applet.c:1016
 #, c-format
 msgid "Failed to get pixmap %s"
-msgstr "Ebaõnnestus pikselrastri %s saamine"
+msgstr "Tõrge pikselrastri %s hankimisel"
 
 #: libpanel-applet/panel-applet.c:1023
 msgid "Unknown background type received"
@@ -2337,9 +2288,8 @@ msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Vahemikud, mis näitavad, millised suurused on rakendile vastuvõetavad"
 
 #: libpanel-applet/panel-applet.c:1248
-#, fuzzy
 msgid "The Applet's containing Panel is locked down"
-msgstr "Rakendit omava paneeli suund"
+msgstr ""
 
 #: libpanel-applet/panel-test-applets.c:32
 msgid "Specify an applet IID to load"
@@ -2386,16 +2336,14 @@ msgid "XX Large"
 msgstr "Ülisuur"
 
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Test applet utility"
-msgstr "panel_id ei ole määratud paneeli objektile, mille ID on %s\n"
+msgstr "Testimisrakend"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
 msgid "_Applet:"
 msgstr "_Rakend:"
 
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "_Prefs Dir:"
-msgstr "Konfi kataloog:"
+msgstr "_Eelistuste kataloog:"
 
