@@ -187,7 +187,11 @@ panel_background_monitor_xevent_filter (GdkXEvent *xevent,
 	if (xev->type == PropertyNotify &&
 	    xev->xproperty.atom == monitor->xatom &&
 	    xev->xproperty.window == monitor->xwindow) {
+	    	if (monitor->gdkpixmap)
+			g_object_unref (monitor->gdkpixmap);
 		monitor->gdkpixmap = NULL;
+		if (monitor->gdkpixbuf)
+			g_object_unref (monitor->gdkpixbuf);
 		monitor->gdkpixbuf = NULL;
 		g_signal_emit (monitor, signals [CHANGED], 0);
 	}
@@ -206,6 +210,7 @@ panel_background_monitor_setup_pixmap (PanelBackgroundMonitor *monitor)
 		FALSE, &prop_type, NULL, NULL, (guchar **) &prop_data);
 
 	if ((prop_type == GDK_TARGET_PIXMAP) && prop_data && prop_data [0]) {
+		g_assert (monitor->gdkpixmap == NULL);
 		monitor->gdkpixmap = gdk_pixmap_foreign_new (prop_data [0]);
 
 		if (!monitor->gdkpixmap)
@@ -239,6 +244,7 @@ panel_background_monitor_setup_pixbuf (PanelBackgroundMonitor *monitor)
 
 	colormap = gdk_drawable_get_colormap (monitor->gdkwindow);
 
+	g_assert (monitor->gdkpixbuf == NULL);
 	monitor->gdkpixbuf = gdk_pixbuf_get_from_drawable (
 					NULL, monitor->gdkpixmap, colormap,
 					0, 0, 0, 0, 
