@@ -1,3 +1,10 @@
+2002-01-22  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* basep_widget.c: Add new function basep_widget_move_focus to
+	implement GtkWidgetClass's move_focus; it causes a icon in the panel
+	to receive focus initially instead of hide/show button when Tab is
+	pressed when the panel has focus
+
 Mon Jan 21 19:20:06 2002  George Lebl <jirka@5z.com>
 
 	* logout.c: block the logout signal while we're in the signal handler

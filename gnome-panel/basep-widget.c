@@ -56,6 +56,7 @@ static void basep_widget_mode_change (BasePWidget *basep, BasePMode mode);
 static void basep_widget_state_change (BasePWidget *basep, BasePState state);
 static void basep_widget_real_screen_change (BasePWidget *basep, int screen);
 static void basep_widget_set_focus (GtkWindow *window, GtkWidget *widget);
+static void basep_widget_move_focus (GtkWindow *window, GtkDirectionType dir);
 static gboolean basep_widget_focus_in_event (GtkWidget *widget, GdkEventFocus *event);
 static gboolean basep_widget_focus_out_event (GtkWidget *widget, GdkEventFocus *event);
 static void basep_widget_size_request (GtkWidget *widget, GtkRequisition *requisition);
@@ -141,6 +142,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	klass->screen_change = basep_widget_real_screen_change;
 
 	window_class->set_focus = basep_widget_set_focus;
+	window_class->move_focus = basep_widget_move_focus;
 
 	widget_class->focus_in_event = basep_widget_focus_in_event;
 	widget_class->focus_out_event = basep_widget_focus_out_event;
@@ -393,6 +395,15 @@ basep_widget_set_focus (GtkWindow *window, GtkWidget *widget)
 		}
 	}
 	basep_widget_parent_class->set_focus (window, widget);
+}
+
+static void 
+basep_widget_move_focus (GtkWindow *window, GtkDirectionType dir)
+{
+	if (!window->focus_widget) 
+		gtk_widget_child_focus (BASEP_WIDGET (window)->panel, dir);
+	else
+		basep_widget_parent_class->move_focus (window, dir);
 }
 
 static void
