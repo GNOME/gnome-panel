@@ -2376,6 +2376,9 @@ panel_toplevel_attach_to_widget (PanelToplevel *toplevel,
 	panel_toplevel_update_attach_orientation (toplevel);
 	panel_toplevel_update_hide_buttons (toplevel);
 
+	if (toplevel->priv->state == PANEL_STATE_NORMAL)
+		panel_toplevel_push_autohide_disabler (toplevel->priv->attach_toplevel);
+
 	gtk_widget_queue_resize (GTK_WIDGET (toplevel));
 }
 
@@ -2387,7 +2390,8 @@ panel_toplevel_detach (PanelToplevel *toplevel)
 	if (!toplevel->priv->attached)
 		return;
 
-	panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
+	if (toplevel->priv->state == PANEL_STATE_NORMAL)
+		panel_toplevel_pop_autohide_disabler (toplevel->priv->attach_toplevel);
 
 	panel_toplevel_disconnect_attached (toplevel);
 	

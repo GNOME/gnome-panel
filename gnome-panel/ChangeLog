@@ -1,3 +1,13 @@
+2004-01-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* button-widget.c: (button_widget_expose): don't ref
+	non-existant pixbufs.
+	
+	* panel-toplevel.c:
+	(panel_toplevel_attach_to_widget),
+	(panel_toplevel_detach): only push/pop an autohide
+	disabler when the drawer isn't hidden.
+
 2004-01-19  Mark McLoughlin  <mark@skynet.ie>
 
 	Based on a patch from Matt Keenan <matt.keenan@sun.com>

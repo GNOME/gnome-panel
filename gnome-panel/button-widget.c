@@ -506,9 +506,11 @@ button_widget_expose (GtkWidget         *widget,
 	button_widget = BUTTON_WIDGET (widget);
 	button = GTK_BUTTON (widget);
 	
-	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget)) {
+	if (!GTK_WIDGET_VISIBLE (widget) || !GTK_WIDGET_MAPPED (widget))
 		return FALSE;
-	}
+
+	if (!button_widget->scaled_hc && !button_widget->scaled)
+		return FALSE;
 
 	/* offset for pressed buttons */
 	off = (button_widget->activatable && button->in_button && button->button_down) ?
@@ -526,9 +528,8 @@ button_widget_expose (GtkWidget         *widget,
 	else
 		pb = g_object_ref (button_widget->scaled);
 
-	if (!pb)
-		return FALSE;
-	
+	g_assert (pb != NULL);
+
 	w = gdk_pixbuf_get_width (pb);
 	h = gdk_pixbuf_get_height (pb);
 	x = widget->allocation.x + off + (widget->allocation.width - w)/2;
