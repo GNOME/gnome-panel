@@ -1177,7 +1177,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 			drop_menu (panel, pos, menu);
 
 	} else if (strcmp(applet_type,"DRAWER:NEW")==0) {
-		load_drawer_applet(NULL, NULL, NULL, panel, pos, TRUE);
+		load_drawer_applet(NULL, NULL, NULL, panel, pos, TRUE, NULL);
 
 	} else if (strcmp (applet_type, "LOGOUT:NEW") == 0) {
 		load_logout_applet (panel, pos, TRUE);

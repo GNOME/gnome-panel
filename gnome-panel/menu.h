@@ -116,7 +116,7 @@ GtkWidget *	create_root_menu	(GtkWidget *root_menu,
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);
 
-void            menu_save_to_gconf   (Menu       *launcher,
+void            menu_save_to_gconf   (Menu       *menu,
 				      const char *gconf_key);
 
 void            menu_load_from_gconf (PanelWidget *panel_widget,

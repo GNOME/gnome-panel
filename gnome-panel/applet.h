@@ -15,7 +15,6 @@ G_BEGIN_DECLS
 #define LAUNCHER_ID "Launcher"
 #define LOCK_ID     "Lock"
 #define STATUS_ID   "Status"
-#define RUN_ID      "Run"
 #define BONOBO_ID   "Bonobo"
 
 typedef enum {
@@ -27,7 +26,6 @@ typedef enum {
 	APPLET_EMPTY,
 	APPLET_LOCK,
 	APPLET_STATUS,
-	APPLET_RUN,
 	APPLET_BONOBO
 } AppletType;
 

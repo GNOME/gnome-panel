@@ -21,7 +21,15 @@ Drawer *load_drawer_applet (gchar       *mypanel,
 			    const char  *tooltip,
 			    PanelWidget *panel,
 			    int          pos,
-			    gboolean     exactpos);
+			    gboolean     exactpos,
+			    const char  *gconf_key);
+
+void    drawer_save_to_gconf   (Drawer     *drawer,
+				const char *gconf_key);
+
+void    drawer_load_from_gconf (PanelWidget *panel_widget,
+				gint         position,
+				const char  *gconf_key);
 
 void set_drawer_applet_orient(Drawer *drawer, PanelOrient orient);
 

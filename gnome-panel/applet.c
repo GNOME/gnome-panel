@@ -17,6 +17,7 @@
 #include "button-widget.h"
 #include "drawer.h"
 #include "launcher.h"
+#include "logout.h"
 #include "menu-properties.h"
 #include "menu-util.h"
 #include "panel-config.h"
@@ -50,7 +51,6 @@ static GConfEnumStringPair object_type_enum_map [] = {
 	{ APPLET_EMPTY,    "empty-object" },
 	{ APPLET_LOCK,     "lock-object" },
 	{ APPLET_STATUS,   "status-object" },
-	{ APPLET_RUN,      "run-object" },
 	{ APPLET_BONOBO,   "bonobo-applet" },
 };
 
@@ -276,10 +276,6 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 	case APPLET_STATUS:
 		if (strcmp (menu->name, "help") == 0)
 			panel_show_help ("specialobjects", "STATUSDOC");
-		break;
-	case APPLET_RUN:
-		if (strcmp (menu->name, "help") == 0)
-			panel_show_help ("specialobjects", "RUNBUTTON");
 		break;
 	case APPLET_BONOBO:
 		/*
@@ -887,8 +883,10 @@ panel_applet_load_from_unique_id (AppletType   type,
 		panel_applet_frame_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_DRAWER:
+		drawer_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_SWALLOW:
+		/*swallow_load_from_gconf (panel_widget, position, unique_id);*/
 		break;
 	case APPLET_MENU:
 		menu_load_from_gconf (panel_widget, position, unique_id);
@@ -897,12 +895,13 @@ panel_applet_load_from_unique_id (AppletType   type,
 		launcher_load_from_gconf (panel_widget, position, unique_id);
 		break;
 	case APPLET_LOGOUT:
+		load_logout_applet (panel_widget, position, TRUE);
 		break;
 	case APPLET_LOCK:
+		load_lock_applet (panel_widget, position, TRUE);
 		break;
 	case APPLET_STATUS:
-		break;
-	case APPLET_RUN:
+		load_status_applet (panel_widget, position, TRUE);
 		break;
 	default:
 		break;
@@ -1021,8 +1020,12 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 						  applet_info->gconf_key);
 		break;
 	case APPLET_DRAWER:
+		drawer_save_to_gconf ((Drawer *) applet_info->data,
+				      applet_info->gconf_key);
 		break;
 	case APPLET_SWALLOW:
+		/*swallow_save_to_gconf ((Drawer *) applet_info->data,
+				       applet_info->gconf_key);*/
 		break;
 	case APPLET_MENU:
 		menu_save_to_gconf ((Menu *) applet_info->data,
@@ -1035,8 +1038,6 @@ panel_applet_save_to_gconf (AppletInfo *applet_info)
 	case APPLET_LOGOUT: /* no object specific stuff to save */
 	case APPLET_LOCK:
 	case APPLET_STATUS:
-	case APPLET_RUN:
-		break;
 	default:
 		break;
 	}

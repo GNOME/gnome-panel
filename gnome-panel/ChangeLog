@@ -1,5 +1,31 @@
 2002-01-07  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c:
+	(applet_callback_callback): kill APPLET_RUN stuff.
+	(panel_applet_load_from_unique_id),
+	(panel_applet_save_to_gconf): load/save drawers, swallowed
+	apps, status docks, logout and lock buttons.
+
+	* drawer.[ch]:
+	(load_drawer_applet): add gconf_key arg.
+	(drawer_save_to_gconf), (drawer_load_from_gconf): impl.
+
+	* swallow.[ch]: (really_add_swallow): upd.
+	(load_swallow_applet): add gconf_key param.
+	(swallow_save_to_gconf), (swallow_load_from_gconf): impl.
+
+	* menu.[ch]: (add_drawers_from_dir), (add_drawer_to_panel):
+	upd for drawers changes.
+
+	* panel.c: (drop_internal_applet): ditto.
+
+	* panel-main.h: kill panel_main_get_current_profile.
+
+	* session.c: (panel_session_save_applets), (panel_quit):
+	kill old applets loading/saving stuff.
+
+2002-01-07  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: (panel_applet_load_from_unique_id),
 	(panel_applet_save_to_gconf): load menus.
 

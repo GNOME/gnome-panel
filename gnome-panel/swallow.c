@@ -27,6 +27,8 @@
 #include "panel.h"
 #include "panel-util.h"
 #include "panel-widget.h"
+#include "panel-gconf.h"
+#include "session.h"
 #include "xstuff.h"
 
 /* from gtkhandlebox.c */
@@ -221,7 +223,7 @@ really_add_swallow (GtkWidget *d, int response, gpointer data)
 						GTK_SPIN_BUTTON(width_s)),
 			    gtk_spin_button_get_value_as_int(
 						GTK_SPIN_BUTTON(height_s)),
-			    panel, pos, exactpos);
+			    panel, pos, exactpos, NULL);
 	gtk_widget_destroy(d);
 }
 
@@ -423,8 +425,14 @@ set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient)
 }
 
 void
-load_swallow_applet (const char *path, const char *params, int width, int height,
-		     PanelWidget *panel, int pos, gboolean exactpos)
+load_swallow_applet (const char  *path,
+		     const char  *params,
+		     int          width,
+		     int          height,
+		     PanelWidget *panel,
+		     int          pos,
+		     gboolean     exactpos,
+		     const char  *gconf_key)
 {
 	Swallow    *swallow;
 	AppletInfo *info;
@@ -437,7 +445,7 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 	info = panel_applet_register (swallow->ebox, ref_swallow (swallow),
 				      (GDestroyNotify) unref_swallow,
 				      panel, pos, exactpos, APPLET_SWALLOW,
-				      NULL);
+				      gconf_key);
 	if (!info)
 		return;
 
@@ -446,4 +454,75 @@ load_swallow_applet (const char *path, const char *params, int width, int height
 	panel_applet_add_callback (info, "help", GTK_STOCK_HELP, _("Help"));
 
 	swallow_launch (swallow);
+}
+
+void
+swallow_save_to_gconf (Swallow    *swallow,
+		       const char *gconf_key)
+{
+	GConfClient *client;
+	char        *profile;
+	char        *temp_key;
+
+	g_return_if_fail (swallow);
+
+	client  = panel_gconf_get_client ();
+	profile = session_get_current_profile ();
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "exec-path");
+	gconf_client_set_string (client, temp_key, swallow->path, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "parameters");
+	gconf_client_set_string (client, temp_key, swallow->title, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "width");
+	gconf_client_set_int (client, temp_key, swallow->width, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "height");
+	gconf_client_set_int (client, temp_key, swallow->height, NULL);
+	g_free (temp_key);
+}
+
+void
+swallow_load_from_gconf (PanelWidget *panel_widget,
+			 gint         position,
+			 const char  *gconf_key)
+{
+	GConfClient *client;
+	char        *profile;
+	char        *temp_key;
+	char        *path;
+	char        *params;
+	int          width;
+	int          height;
+
+	g_return_if_fail (panel_widget);
+	g_return_if_fail (gconf_key);
+
+	client  = panel_gconf_get_client ();
+	profile = session_get_current_profile ();
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "exec-path");
+	path = gconf_client_get_string (client, temp_key, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "parameters");
+	params = gconf_client_get_string (client, temp_key, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "width");
+	width = gconf_client_get_int (client, temp_key, NULL);
+	g_free (temp_key);
+
+	temp_key = panel_gconf_objects_default_profile_get_full_key (profile, gconf_key, "height");
+	height = gconf_client_get_int (client, temp_key, NULL);
+	g_free (temp_key);
+
+	load_swallow_applet (path, params, width, height, panel_widget, position, TRUE, gconf_key);
+
+	g_free (path);
+	g_free (params);
 }

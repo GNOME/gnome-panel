@@ -1014,7 +1014,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		subdir_name = name;
 	pixmap_name = item_info != NULL ? item_info->icon : NULL;
 
-	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name, panel, pos, FALSE);
+	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name, panel, pos, FALSE, NULL);
 	if (!drawer) {
 		g_warning("Can't load a drawer");
 		return;
@@ -1896,7 +1896,7 @@ static void
 add_drawer_to_panel (GtkWidget *widget, gpointer data)
 {
 	load_drawer_applet (NULL, NULL, NULL,
-			    get_panel_from_menu_data(widget, TRUE), 0, FALSE);
+			    get_panel_from_menu_data(widget, TRUE), 0, FALSE, NULL);
 }
 
 static void

@@ -25,8 +25,22 @@ typedef struct {
 	gboolean clean_remove;
 } Swallow;
 
-void load_swallow_applet(const char *path, const char *params, int width, int height,
-			 PanelWidget *panela, int pos, gboolean exactpos);
+void load_swallow_applet (const char  *path,
+			  const char  *params,
+			  int          width,
+			  int          height,
+			  PanelWidget *panela,
+			  int          pos,
+			  gboolean     exactpos,
+			  const char  *gconf_key);
+
+void swallow_save_to_gconf   (Swallow    *swallow,
+			      const char *gconf_key);
+
+void swallow_load_from_gconf (PanelWidget *panel_widget,
+			      gint         position,
+			      const char  *gconf_key);
+
 void set_swallow_applet_orient(Swallow *swallow, SwallowOrient orient);
 
 /*I couldn't resist the naming of this function*/
