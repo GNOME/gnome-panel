@@ -10,6 +10,8 @@
 #include <libgnome/libgnome.h>
 
 #include "distribution.h"
+#include "menu.h"
+#include "menu-fentry.h"
 
 /* Note for distribution vendors:
  *
@@ -18,6 +20,8 @@
  * the `Distribution' menu in the panel working.
  *
  */
+
+static void cde_menu_init_func(void);
 
 static DistributionInfo distribution_info [] = {
 	{ DISTRIBUTION_DEBIAN, "/etc/debian_version",
@@ -29,6 +33,10 @@ static DistributionInfo distribution_info [] = {
 	  N_("SuSE Linux"), N_("SuSE menus"), "gnome-suse.png",
 	  GNOME_DATADIR "/gnome/distribution-menus/SuSE/.",
 	  NULL, NULL
+	},
+	{ DISTRIBUTION_SOLARIS, "/usr/dt/config/sys.dtwmrc",
+	 N_("Solaris"), N_("CDE Menus"), "gnome-gmenu.png", "cdemenu:/",
+	 NULL, NULL
 	},
 	{ DISTRIBUTION_UNKNOWN, NULL, NULL, NULL, NULL }
 };
@@ -92,4 +100,10 @@ get_distribution_info (void)
 	cached = TRUE;
 
 	return cache;
+}
+
+static void
+cde_menu_init_func(void)
+{
+	fr_read_dir(NULL,"cdemenu:/", 0, 2);
 }
