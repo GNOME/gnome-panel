@@ -57,6 +57,7 @@ typedef struct {
 } ToplevelLocationChange;
 
 typedef const char *(*PanelProfileGetIdFunc)   (gpointer           object);
+typedef gboolean    (*PanelProfileOnLoadQueue) (const char        *id);
 typedef void        (*PanelProfileLoadFunc)    (GConfClient       *client,
 						const char        *profile_dir, 
 						PanelGConfKeyType  type,
@@ -1679,12 +1680,13 @@ panel_profile_id_exists (GSList     *id_list,
 }
 
 static void
-panel_profile_load_added_ids (GConfClient           *client,
-			      PanelGConfKeyType      type,
-			      GSList                *list,
-			      GSList                *id_list,
-			      PanelProfileGetIdFunc  get_id_func,
-			      PanelProfileLoadFunc   load_handler)
+panel_profile_load_added_ids (GConfClient            *client,
+			      PanelGConfKeyType       type,
+			      GSList                 *list,
+			      GSList                 *id_list,
+			      PanelProfileGetIdFunc   get_id_func,
+			      PanelProfileLoadFunc    load_handler,
+			      PanelProfileOnLoadQueue on_load_queue)
 {
 	GSList *added_ids = NULL;
 	GSList *l;
@@ -1693,7 +1695,8 @@ panel_profile_load_added_ids (GConfClient           *client,
 	for (l = id_list; l; l = l->next) {
 		const char *id = gconf_value_get_string (l->data);
 
-		if (!panel_profile_object_exists (list, id, get_id_func))
+		if (!panel_profile_object_exists (list, id, get_id_func) &&
+		    (on_load_queue == NULL || !on_load_queue (id)))
 			added_ids = g_slist_prepend (added_ids, g_strdup (id));
 	}
 
@@ -1771,7 +1774,8 @@ panel_profile_toplevel_id_list_notify (GConfClient *client,
 				      existing_toplevels,
 				      toplevel_ids,
 				      (PanelProfileGetIdFunc) panel_profile_get_toplevel_id,
-				      (PanelProfileLoadFunc) panel_profile_load_and_show_toplevel);
+				      (PanelProfileLoadFunc) panel_profile_load_and_show_toplevel,
+				      (PanelProfileOnLoadQueue) NULL);
 
 	panel_profile_delete_removed_ids (client,
 					  PANEL_GCONF_TOPLEVELS,
@@ -1819,7 +1823,8 @@ panel_profile_object_id_list_notify (GConfClient *client,
 				      sublist,
 				      object_ids,
 				      (PanelProfileGetIdFunc) panel_applet_get_id,
-				      (PanelProfileLoadFunc) panel_profile_load_object);
+				      (PanelProfileLoadFunc) panel_profile_load_object,
+				      (PanelProfileOnLoadQueue) panel_applet_on_load_queue);
 
 	panel_profile_delete_removed_ids (client,
 					  type,

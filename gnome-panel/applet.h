@@ -65,6 +65,7 @@ void panel_applet_queue_applet_to_load (char            *id,
 					gboolean         right_stick,
 					gboolean         locked);
 void panel_applet_load_queued_applets  (void);
+gboolean panel_applet_on_load_queue    (const char *id);
 
 
 void            panel_applet_add_callback    (AppletInfo  *info,

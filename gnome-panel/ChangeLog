@@ -1,3 +1,11 @@
+Tue Jul 01 16:00:06 2003  George Lebl <jirka@5z.com>
+
+	* applet.[ch], panel-profile.c: kill reentrancy issues on the
+	  applet loading idle.  When we get a notify for new applets to load,
+	  don't add the ones already on the load queue.  This should fix
+	  issues when dealing with applets that don't want to load for
+	  some reason.
+
 2003-07-01  Mark McLoughlin  <mark@skynet.ie>
 
 	Fix location of arrow on non-rectangular menu buttons and

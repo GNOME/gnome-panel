@@ -677,6 +677,7 @@ typedef struct {
 } PanelAppletToLoad;
 
 static GSList *panel_applets_to_load = NULL;
+gboolean panel_applet_have_load_idle = FALSE;
 
 static void
 free_applet_to_load (PanelAppletToLoad *applet)
@@ -690,6 +691,18 @@ free_applet_to_load (PanelAppletToLoad *applet)
 	g_free (applet);
 }
 
+gboolean
+panel_applet_on_load_queue (const char *id)
+{
+	GSList *li;
+	for (li = panel_applets_to_load; li != NULL; li = li->next) {
+		PanelAppletToLoad *applet = li->data;
+		if (strcmp (applet->id, id) == 0)
+			return TRUE;
+	}
+	return FALSE;
+}
+
 static gboolean
 panel_applet_load_idle_handler (gpointer dummy)
 {
@@ -698,8 +711,10 @@ panel_applet_load_idle_handler (gpointer dummy)
 	PanelWidget       *panel_widget;
 	GSList            *l;
 
-	if (!panel_applets_to_load)
+	if (!panel_applets_to_load) {
+		panel_applet_have_load_idle = FALSE;
 		return FALSE;
+	}
 
 	for (l = panel_applets_to_load; l; l = l->next) {
 		applet = l->data;
@@ -715,6 +730,7 @@ panel_applet_load_idle_handler (gpointer dummy)
 			free_applet_to_load (l->data);
 		g_slist_free (panel_applets_to_load);
 		panel_applets_to_load = NULL;
+		panel_applet_have_load_idle = FALSE;
 		return FALSE;
 	}
 
@@ -835,7 +851,10 @@ panel_applet_load_queued_applets (void)
 	panel_applets_to_load = g_slist_sort (panel_applets_to_load,
 					      (GCompareFunc) panel_applet_compare);
 
-	g_idle_add (panel_applet_load_idle_handler, NULL);
+	if ( ! panel_applet_have_load_idle) {
+		g_idle_add (panel_applet_load_idle_handler, NULL);
+		panel_applet_have_load_idle = TRUE;
+	}
 }
 
 static G_CONST_RETURN char *
