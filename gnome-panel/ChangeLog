@@ -1,3 +1,10 @@
+2002-01-02  Glynn Foster  <glynn.foster@sun.com>
+
+	* panel-gconf.c, panel-widget.c, session.c, session.h: 
+	Implemented new session_remove_panel_config () function to clean
+	up the gconf database after we start removing panels. Doesn't work
+	at all yet, but it doesn't make things crash which is a bonus.
+
 2002-01-01  Glynn Foster  <glynn.foster@sun.com>
 	 
 	* config/Makefile.am, config/panel.config,

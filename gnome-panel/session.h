@@ -50,6 +50,7 @@ void session_read_global_config (void);
 /* only to be used on beginning, we don't really want to write globals much */
 void session_write_global_config (void);
 
+void session_remove_panel_from_config (PanelWidget *panel);
 
 void apply_global_config(void);
 

@@ -1725,6 +1725,7 @@ panel_widget_destroy(GtkWidget *w, gpointer data)
 
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
+	session_remove_panel_from_config (panel);
 }
 
 static void

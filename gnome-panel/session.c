@@ -52,7 +52,7 @@
 #include "panel-applet-frame.h"
 #include "panel-shell.h"
 
-#undef SESSION_DEBUG
+#define SESSION_DEBUG 1
 
 extern GSList          *panels;
 extern GSList          *applets;
@@ -1172,6 +1172,62 @@ session_init_panels(void)
 
 	g_slist_foreach (panel_ids, (GFunc)g_free, NULL);
 	g_slist_free (panel_ids);
+}
+
+void
+session_remove_panel_from_config (PanelWidget *panel) {
+/* We need to take in a panel widget, get it's ID, then remove it from the current profile */
+        gchar *panel_profile_key, *panel_profile_directory;
+	GSList *panel_ids, *temp, *new_panel_ids = NULL;
+
+#ifdef SESSION_DEBUG
+	printf ("We are removing the configuration for panel id : %s\n", panel->unique_id);
+#endif
+        panel_profile_key = g_strdup_printf ("/apps/panel/profiles/%s", session_get_current_profile ());
+
+        if (panel_gconf_dir_exists (panel_profile_key) == FALSE) {
+                /* We haven't saved any profile, so don't remove anything */
+                g_free (panel_profile_key);
+                return;
+        } else {
+                g_free (panel_profile_key);
+                panel_profile_key = panel_gconf_general_profile_get_full_key (session_get_current_profile (), "panel-id-list");
+        }
+
+        panel_ids = gconf_client_get_list (panel_gconf_get_client (),
+                                           panel_profile_key,
+                                           GCONF_VALUE_STRING,
+                                           NULL);
+
+        /* We now have to go through the GSList and remove panel->unique_id */
+
+        for (temp = panel_ids; temp; temp = temp->next) {
+                if (strcmp (panel->unique_id, (gchar *)temp->data) == 0) {
+                        /* We now start removing configuration */
+                        panel_profile_directory = g_strdup_printf ("/apps/panel/profiles/%s/panels/%s",
+                                                                   session_get_current_profile (),
+                                                                   PANEL_WIDGET (panel)->unique_id);
+#ifdef SESSION_DEBUG
+	printf ("We are removing the configuration for gconf key : %s\n", panel_profile_directory);
+#endif
+                        panel_gconf_directory_recursive_clean (panel_gconf_get_client (),
+                                                               (const gchar *) panel_profile_directory);
+                        g_free (panel_profile_directory);
+                } else {
+                        new_panel_ids = g_slist_prepend (new_panel_ids, (gchar *)temp->data);
+                }
+        }
+
+        gconf_client_set_list (panel_gconf_get_client (),
+                               panel_profile_key,
+                               GCONF_VALUE_STRING,
+                               new_panel_ids,
+                               NULL);
+	if (new_panel_ids != NULL) {	
+		g_slist_foreach (new_panel_ids, (GFunc) g_free, NULL);
+		g_slist_free (new_panel_ids);
+	}
+	gconf_client_suggest_sync (panel_gconf_get_client (), NULL);
 }
 
 static gboolean

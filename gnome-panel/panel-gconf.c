@@ -7,6 +7,9 @@
 
 #include "panel-gconf.h"
 
+#define PUSH_USE_ENGINE(client) do { if ((client)->engine) gconf_engine_push_owner_usage ((client)->engine, client); } while (0)
+#define POP_USE_ENGINE(client) do { if ((client)->engine) gconf_engine_pop_owner_usage ((client)->engine, client); } while (0)
+
 #undef PANEL_GCONF_DEBUG
 
 gchar * 
@@ -309,36 +312,46 @@ panel_gconf_panel_profile_get_conditional_bool (const gchar *profile, const gcha
 
 void
 panel_gconf_directory_recursive_clean (GConfClient *client, const gchar *dir) {
-  GSList *subdirs;
-  GSList *entries;
-  GSList *tmp;
+	GSList *subdirs;
+	GSList *entries;
+	GSList *tmp;
 
-  subdirs = gconf_engine_all_dirs (client->engine, dir, NULL);
+	PUSH_USE_ENGINE (client);
+	subdirs = gconf_engine_all_dirs (client->engine, dir, NULL);
+	POP_USE_ENGINE (client);
 
-  if (subdirs != NULL) {
-    tmp = subdirs;
+	if (subdirs != NULL) {
+    		tmp = subdirs;
 
-    while (tmp != NULL) {
-      gchar *s = tmp->data;
-      panel_gconf_directory_recursive_clean (client, s);
-      g_free (s);
-      tmp = g_slist_next (tmp);
-    }
-    g_slist_free (subdirs);
-  }
+    		while (tmp != NULL) {
+      			gchar *s = tmp->data;
+      			panel_gconf_directory_recursive_clean (client, s);
+      			g_free (s);
+      			tmp = g_slist_next (tmp);
+    		}
+    	g_slist_free (subdirs);
+  	}
 
-  entries = gconf_engine_all_entries (client->engine, dir, NULL);
+  	PUSH_USE_ENGINE (client);
+  	entries = gconf_engine_all_entries (client->engine, dir, NULL);
+  	POP_USE_ENGINE (client);
 
-  if (entries != NULL) {
-    tmp = entries;
-    while (tmp != NULL) {
-      GConfEntry *entry = tmp->data;
+  	if (entries != NULL) {
+    		tmp = entries;
 
-      gconf_engine_unset (client->engine, gconf_entry_get_key (entry), NULL);
-      gconf_entry_free (entry);
-      tmp = g_slist_next (tmp);
-    }
-    g_slist_free (entries);
-  }
-  gconf_engine_unset (client->engine, dir, NULL);
+    		while (tmp != NULL) {
+ 			GConfEntry *entry = tmp->data;
+
+      			PUSH_USE_ENGINE (client);
+      			gconf_engine_unset (client->engine, gconf_entry_get_key (entry), NULL);
+      			POP_USE_ENGINE (client);
+      			gconf_entry_free (entry);
+      			tmp = g_slist_next (tmp);
+    		}
+    		
+		g_slist_free (entries);
+  	}
+	PUSH_USE_ENGINE (client);
+	gconf_engine_unset (client->engine, dir, NULL);
+	POP_USE_ENGINE (client);
 }
