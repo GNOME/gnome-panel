@@ -330,7 +330,10 @@ panel_session_save (GnomeClient *client,
 		/*clean up corba stuff*/
 		panel_corba_clean_up();
 
-		gtk_exit (0);
+		/* Don't use gtk_exit() here -- if this function does
+		   not return, then the panel will not properly be
+		   recorded by the session manager.  */
+		gtk_main_quit ();
 	}
 
 	/* Always successful.  */
