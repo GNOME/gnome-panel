@@ -1,5 +1,13 @@
 2002-08-05  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c: (register_stock_item),
+	(panel_applet_frame_loading_failed): determine
+	whether or not the user wants to remove the 
+	failed applet from the configuration. Fixes #89173.
+	(panel_applet_frame_construct): use it.
+
+2002-08-05  Mark McLoughlin  <mark@skynet.ie>
+
 	* basep-widget.c:
 	(basep_calculate_borders): kill really silly silly.
 	Fixes #89736.

@@ -43,6 +43,8 @@
 
 #define HANDLE_SIZE 10
 
+#define PANEL_STOCK_DONT_DELETE "panel-dont-delete"
+
 #undef PANEL_APPLET_FRAME_DEBUG
 
 struct _PanelAppletFramePrivate {
@@ -742,6 +744,76 @@ panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
 	g_free (txt);
 }
 
+static inline void
+register_stock_item (void)
+{
+        static gboolean registered = FALSE;
+
+        if (!registered) {
+                GtkIconFactory      *factory;
+                GtkIconSet          *cancel_icons;
+
+                static GtkStockItem  dont_delete_item [] = {
+                        { PANEL_STOCK_DONT_DELETE, N_("D_on't Delete"), 0, 0, GETTEXT_PACKAGE },
+                };
+
+                cancel_icons = gtk_icon_factory_lookup_default (GTK_STOCK_CANCEL);
+
+                factory = gtk_icon_factory_new ();
+
+                gtk_icon_factory_add (factory, PANEL_STOCK_DONT_DELETE, cancel_icons);
+
+                gtk_icon_factory_add_default (factory);
+
+                gtk_stock_add_static (dont_delete_item, 1);
+
+                registered = TRUE;
+        }
+}
+
+static void
+panel_applet_frame_loading_failed (PanelAppletFrame  *frame,
+				   CORBA_Environment *ev,
+				   const char        *iid,
+				   const char        *gconf_key,
+				   GtkWindow         *panel)
+{
+	GtkWidget *dialog;
+	char      *error;
+	int        response;
+
+	error = bonobo_exception_get_text (ev);
+
+	dialog = gtk_message_dialog_new (
+				NULL, 0,
+				GTK_MESSAGE_QUESTION,
+				GTK_BUTTONS_NONE,
+				_("There was a problem loading applet '%s'\n"
+				  "Details: %s\n\n"
+				  "Delete this applet from your configuration?"),
+				iid, error);
+
+	g_free (error);
+
+	register_stock_item ();
+
+	gtk_dialog_add_buttons (GTK_DIALOG (dialog),
+				PANEL_STOCK_DONT_DELETE, GTK_RESPONSE_CANCEL,
+				GTK_STOCK_DELETE, GTK_RESPONSE_OK,
+				NULL);
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+	gtk_window_set_screen (GTK_WINDOW (dialog),
+			       gtk_window_get_screen (panel));
+
+        response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+	gtk_widget_destroy (dialog);
+
+	if (response == GTK_RESPONSE_OK)
+		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
+}
+
 static void
 panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			       gpointer               dummy)
@@ -937,31 +1009,9 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	g_free (moniker);
 
 	if (BONOBO_EX (&ev)) {
-		char *err = bonobo_exception_get_text (&ev);
-		panel_error_dialog (
-			gtk_window_get_screen (GTK_WINDOW (panel->panel_parent)),
-			"problem_loading_applet",
-			_("<b>There was a problem loading applet '%s'</b>\n\n"
-			  "Details: %s"),
-			iid, err);
-
-		/* FIXME: 2.2.x addition: #89173
-		 * 
-		 * Instead of automatically removing the applet from the
-		 * configuration the above dialog should read:
-		 *
-		 * There was a problem loading applet 'blah'.
-		 * 
-		 * Remove this applet from you configuration ?
-		 *
-		 *                              [Don't Remove] [[Remove]]
-		 */
-		panel_applet_clean_gconf (APPLET_BONOBO, gconf_key, TRUE);
-
+		panel_applet_frame_loading_failed (
+			frame, &ev, iid, gconf_key, GTK_WINDOW (panel->panel_parent));
 		CORBA_exception_free (&ev);
-
-		g_free (err);
-
 		return NULL;
 	}
 
