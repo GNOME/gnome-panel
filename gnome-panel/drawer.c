@@ -342,6 +342,8 @@ create_drawer_applet (PanelToplevel    *toplevel,
 	if (tooltip && tooltip [0]) {
 		panel_toplevel_set_name (toplevel, tooltip);
 		gtk_tooltips_set_tip (panel_tooltips, drawer->button, tooltip, NULL);
+	} else {
+		panel_toplevel_set_name (toplevel, _("Drawer"));
 	}
 	
 	gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0); 

@@ -1098,9 +1098,12 @@ panel_toplevel_add_hide_button (PanelToplevel *toplevel,
 				int            bottom_attach)
 {
 	GtkWidget *button;
+	AtkObject *obj;
 	GtkWidget *arrow;
 	
 	button = gtk_button_new ();
+	obj = gtk_widget_get_accessible (button);
+	atk_object_set_name (obj, _("Hide Panel"));
 	GTK_WIDGET_UNSET_FLAGS (button, GTK_CAN_DEFAULT);
 
 	switch (arrow_type) {
