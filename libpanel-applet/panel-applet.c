@@ -58,24 +58,24 @@ struct _PanelAppletPrivate {
 	BonoboPropertyBag          *prop_sack;
 	BonoboItemHandler          *item_handler;
 
-	gchar                      *iid;
+	char                       *iid;
 	GClosure                   *closure;
 	gboolean                    bound;
-	gchar                      *prefs_key;
+	char                       *prefs_key;
 
 	PanelAppletFlags            flags;
 	PanelAppletOrient           orient;
 	guint                       size;
-	gchar                      *background;
+	char                       *background;
 
 	GdkPixmap                  *bg_pixmap;
 
         int                        *size_hints;
         int                         size_hints_len;
 
-	gboolean		    moving_focus_out;
-	gint		   	    focusable_child;
-	guint			    hierarchy_changed_id;
+	gboolean                    moving_focus_out;
+	int                         focusable_child;
+	guint                       hierarchy_changed_id;
 };
 
 static GObjectClass *parent_class;
@@ -398,6 +398,7 @@ panel_applet_finalize (GObject *object)
 		bonobo_object_unref (
 			BONOBO_OBJECT (applet->priv->prop_sack));
 
+	g_free (applet->priv->size_hints);
 	g_free (applet->priv->prefs_key);
 	g_free (applet->priv->background);
 	g_free (applet->priv->iid);
