@@ -587,7 +587,7 @@ panel_destroy (GtkWidget *widget, gpointer data)
 			info = g_object_get_data (
 					G_OBJECT (panel->master_widget), "applet_info");
 			((Drawer *) info->data)->drawer = NULL;
-			panel_applet_clean (info);
+			panel_applet_clean (info, TRUE);
 
 			g_assert (panel->master_widget == NULL);
 		}
@@ -1287,7 +1287,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 		AppletInfo *info = g_slist_nth_data (applets, applet_num);
 
 		if (info != NULL)
-			panel_applet_clean (info);
+			panel_applet_clean (info, TRUE);
 	}
 }
 

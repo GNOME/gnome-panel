@@ -32,7 +32,6 @@ typedef struct {
  * run_key
  * window_screenshot_key
  *
- * auto_raise_panel (+)
  * drawer_autoclose (+)
  * confirm_panel_remove
  * highlight_launchers_on_mouseover

@@ -1,5 +1,26 @@
 2002-05-20  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-applet-frame.c:
+	(panel_applet_frame_reload_response),
+	(panel_applet_frame_get_name), (panel_applet_frame_cnx_broken),
+	(panel_applet_frame_construct): impl an 'applet died' dialog box
+	using the CORBA connection "broken" signal. (#72362)
+
+	* panel-config-global.h: kill auto_raise cruft.
+
+	* panel-global-config.schemas.in: ditto.
+
+	* applet.[ch]: (panel_applet_clean_gconf),
+	(panel_applet_clean): add clean_gconf arg so we don't kill prefs
+	when we are re-loading.
+	(applet_idle_remove), (applet_destroy), (panel_applet_register):
+	update for above change.
+
+	* panel.c: (panel_destroy), (drop_internal_applet): update for
+	panel_applet_clean change.
+
+2002-05-20  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am: generate the .schemas file from the
 	.schemas.in files.
 

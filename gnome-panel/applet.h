@@ -69,7 +69,8 @@ AppletInfo *panel_applet_register    (GtkWidget      *applet,
 				      AppletType      type,
 				      const char     *gconf_key);
 
-void        panel_applet_clean       (AppletInfo *info);
+void        panel_applet_clean       (AppletInfo *info,
+				      gboolean    clean_gconf);
 
 void            panel_applet_add_callback    (AppletInfo  *info,
 					      const gchar *callback_name,

@@ -73,7 +73,8 @@ move_applet_callback (GtkWidget *widget, AppletInfo *info)
 }
 
 static void
-panel_applet_clean_gconf (AppletInfo *info)
+panel_applet_clean_gconf (AppletInfo *info,
+			  gboolean    clean_gconf)
 {
 	GConfClient *client;
 	GSList      *id_list, *l;
@@ -116,7 +117,8 @@ panel_applet_clean_gconf (AppletInfo *info)
 					"/apps/panel/profiles/%s/objects/%s",
 					profile, info->gconf_key);
 
-		panel_gconf_clean_dir (client, temp_key);
+		if (clean_gconf)
+			panel_gconf_clean_dir (client, temp_key);
         }
 
 	panel_g_slist_deep_free (id_list);
@@ -127,7 +129,8 @@ panel_applet_clean_gconf (AppletInfo *info)
 
 /*destroy widgets and call the above cleanup function*/
 void
-panel_applet_clean (AppletInfo *info)
+panel_applet_clean (AppletInfo *info,
+		    gboolean    clean_gconf)
 {
 	g_return_if_fail (info != NULL);
 
@@ -150,7 +153,7 @@ panel_applet_clean (AppletInfo *info)
 
 	info->data = NULL;
 
-	panel_applet_clean_gconf (info);
+	panel_applet_clean_gconf (info, clean_gconf);
 
 	queued_position_saves =
 		g_slist_remove (queued_position_saves, info);
@@ -169,7 +172,7 @@ applet_idle_remove (gpointer data)
 		panel_applet_frame_set_clean_remove (
 				PANEL_APPLET_FRAME (info->data), TRUE);
 
-	panel_applet_clean (info);
+	panel_applet_clean (info, TRUE);
 
 	return FALSE;
 }
@@ -725,7 +728,7 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 	/* If this was not called from the panel_applet_clean
 	 * itself.  That is if the widget entry was still set */
 	if (old_widget != NULL)
-		panel_applet_clean (info);
+		panel_applet_clean (info, TRUE);
 }
 
 static G_CONST_RETURN char *
@@ -1148,7 +1151,7 @@ panel_applet_register (GtkWidget      *applet,
 			/*can't put it anywhere, clean up*/
 			info->widget = NULL;
 			gtk_widget_destroy (applet);
-			panel_applet_clean (info);
+			panel_applet_clean (info, TRUE);
 			g_warning(_("Can't find an empty spot"));
 			return NULL;
 		}

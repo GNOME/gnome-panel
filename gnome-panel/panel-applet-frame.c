@@ -27,6 +27,7 @@
 
 #include <libbonoboui.h>
 #include <gconf/gconf.h>
+#include <libgnome/libgnome.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
@@ -115,7 +116,7 @@ popup_handle_remove (BonoboUIComponent *uic,
 	AppletInfo *info = frame->priv->applet_info;
 	frame->priv->applet_info = NULL;
 
-	panel_applet_clean (info);
+	panel_applet_clean (info, TRUE);
 }
 
 static void
@@ -619,6 +620,107 @@ panel_applet_frame_button_changed (GtkWidget      *widget,
 }
 
 static void
+panel_applet_frame_reload_response (GtkWidget        *dialog,
+				    int               response,
+				    PanelAppletFrame *frame)
+{
+	AppletInfo *info = frame->priv->applet_info;
+
+	if (response == GTK_RESPONSE_NO)
+		panel_applet_clean (info, TRUE);
+	else {
+		PanelWidget *panel;
+		char        *iid;
+		char        *gconf_key;
+		int          position;
+
+		panel     = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+		iid       = g_strdup (frame->priv->iid);
+		gconf_key = g_strdup (info->gconf_key);
+		position  = panel_applet_get_position (info);
+
+		panel_applet_clean (info, FALSE);
+
+		panel_applet_frame_load (iid, panel, position, gconf_key);
+
+		g_free (iid);
+		g_free (gconf_key);
+	}
+
+	gtk_widget_destroy (dialog);
+}
+
+static char *
+panel_applet_frame_get_name (char *iid)
+{
+	Bonobo_ServerInfoList *list;
+	char                  *query;
+	char                  *retval = NULL;
+	
+	query = g_strdup_printf ("iid == '%s'", iid);
+
+	list = bonobo_activation_query (query, NULL, NULL);
+	if (list) {
+		Bonobo_ServerInfo *info = &list->_buffer [0];
+		const GList       *langs_glist;
+		GSList            *langs_gslist;
+
+		/* Evil evil evil evil, we need to convert to
+		 * a GSList from a GList */
+		langs_glist = gnome_i18n_get_language_list ("LC_MESSAGES");
+		langs_gslist = NULL;
+		while (langs_glist) {
+			langs_gslist = g_slist_append (langs_gslist, langs_glist->data);
+			langs_glist = langs_glist->next;
+		}
+
+		retval = g_strdup (bonobo_server_info_prop_lookup (
+						info, "name", langs_gslist));
+
+		g_slist_free (langs_gslist);
+	}
+
+	g_free (query);
+	CORBA_free (list);
+
+	return retval;
+}
+
+static void
+panel_applet_frame_cnx_broken (PanelAppletFrame *frame)
+{
+	GtkWidget *dialog;
+	char      *applet_name;
+	char      *txt;
+
+	applet_name = panel_applet_frame_get_name (frame->priv->iid);
+
+	txt = g_strdup_printf (
+			_("The %s applet appears to have died "
+			  "unexpectedly\n\n"
+			  "Reload this applet?\n\n"
+			  "(If you choose not to reload it at this time"
+			  " you can always add it by right clicking on "
+			  "the panel and clicking on the \"Add to panel\""
+			  " submenu)"), applet_name ? applet_name : "");
+
+	dialog = gtk_message_dialog_new (
+				NULL,
+				GTK_DIALOG_DESTROY_WITH_PARENT,
+				GTK_MESSAGE_QUESTION,
+				GTK_BUTTONS_YES_NO,
+				txt);
+
+	g_signal_connect (dialog, "response",
+			  G_CALLBACK (panel_applet_frame_reload_response),
+			  frame);
+
+	gtk_widget_show (dialog);
+	g_free (applet_name);
+	g_free (txt);
+}
+
+static void
 panel_applet_frame_class_init (PanelAppletFrameClass *klass,
 			       gpointer               dummy)
 {
@@ -795,11 +897,12 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 			      const char       *iid,
 			      const char       *gconf_key)
 {
-	BonoboControlFrame *control_frame;
-	Bonobo_Control      control;
-	CORBA_Environment   ev;
-	GtkWidget          *widget;
-	char               *moniker;
+	BonoboControlFrame    *control_frame;
+	Bonobo_Control         control;
+	CORBA_Environment      ev;
+	ORBitConnectionStatus  cnx_status;
+	GtkWidget             *widget;
+	char                  *moniker;
 
 	moniker = panel_applet_frame_construct_moniker (frame, panel, iid, gconf_key);
 
@@ -825,6 +928,16 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 
 		return NULL;
 	}
+
+	cnx_status = ORBit_small_get_connection_status (control);
+	if (cnx_status != ORBIT_CONNECTION_IN_PROC)
+		g_signal_connect_closure (
+			ORBit_small_get_connection (control),
+			"broken",
+			g_cclosure_new_object_swap (
+				G_CALLBACK (panel_applet_frame_cnx_broken),
+				G_OBJECT (frame)),
+			FALSE);
 	
 	CORBA_exception_free (&ev);
 
