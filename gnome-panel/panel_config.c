@@ -8,6 +8,9 @@
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3
 
+extern GArray *applets;
+extern int applet_count;
+
 extern GlobalConfig global_config;
 
 /* used to temporarily store config values until the 'Apply'
@@ -60,6 +63,14 @@ get_config_struct(GtkWidget *panel)
 			return ppc;
 	}
 	return NULL;
+}
+
+void
+kill_config_dialog(GtkWidget *panel)
+{
+	PerPanelConfig *ppc = get_config_struct(panel);
+	if(ppc && ppc->config_window)
+		gtk_widget_destroy(ppc->config_window);
 }
 
 void
@@ -782,6 +793,15 @@ panel_config(GtkWidget *panel)
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 					  page,
 					  gtk_label_new (_("Corner Panel")));
+	} else if(IS_DRAWER_WIDGET(panel)) {
+		DrawerWidget *dw = DRAWER_WIDGET(panel);
+		GtkWidget *applet = PANEL_WIDGET(dw->panel)->master_widget;
+		int applet_id =
+			GPOINTER_TO_INT(gtk_object_get_data(GTK_OBJECT(applet),
+							    "applet_id"));
+		AppletInfo *info = get_applet_info(applet_id);
+		add_drawer_properties_page(ppc->config_window,
+					   info->data);
 	}
 						
 

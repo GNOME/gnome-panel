@@ -404,12 +404,6 @@ make_handle(char *pixmaphandle, int wi, int he)
 	return w;
 }
 
-static int
-drawer_widget_destroy(GtkWidget *w, gpointer data)
-{
-	return FALSE;
-}
-
 static void
 drawer_widget_init (DrawerWidget *drawer)
 {
@@ -448,11 +442,6 @@ drawer_widget_init (DrawerWidget *drawer)
 	gtk_signal_connect(GTK_OBJECT(drawer), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(drawer_enter_notify),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(drawer),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(drawer_widget_destroy),
-			   NULL);
-
 
 	drawer->state = DRAWER_SHOWN;
 	drawer->drop_zone_pos = DROP_ZONE_LEFT;

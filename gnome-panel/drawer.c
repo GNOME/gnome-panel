@@ -77,20 +77,18 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 	gtk_signal_disconnect_by_data(GTK_OBJECT(tipentry),widget);
 	return FALSE;
 }
-static GtkWidget *
-create_properties_dialog(Drawer *drawer)
-{
-	GtkWidget  *dialog;
-	GtkWidget  *table;
-	GtkWidget  *w;
 
-	dialog = gnome_property_box_new();
-	gtk_window_set_title(GTK_WINDOW(dialog), _("Drawer properties"));
-	/*gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);*/
-	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+void
+add_drawer_properties_page(GtkWidget *dialog, Drawer *drawer)
+{
+	GtkWidget *table;
+	GtkWidget *f;
+	GtkWidget *box;
+	GtkWidget *nbook;
+	GtkWidget *w;
 
 	table = gtk_table_new(2, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 4);
+	gtk_container_border_width(GTK_CONTAINER(table), 5);
 	gtk_table_set_col_spacings(GTK_TABLE(table), 6);
 	gtk_table_set_row_spacings(GTK_TABLE(table), 2);
 
@@ -102,8 +100,16 @@ create_properties_dialog(Drawer *drawer)
 			      dialog);
 	gtk_object_set_data(GTK_OBJECT(dialog),"pixmap",w);
 
-	gnome_property_box_append_page (GNOME_PROPERTY_BOX (dialog),
-					table, gtk_label_new (_("Drawer")));
+	f = gtk_frame_new(_("Applet appearance"));
+	gtk_container_add(GTK_CONTAINER(f),table);
+
+	box = gtk_vbox_new(FALSE,5);
+	gtk_container_border_width(GTK_CONTAINER(box), 5);
+	gtk_box_pack_start(GTK_BOX(box),f,FALSE,FALSE,0);
+
+	nbook = GTK_NOTEBOOK(GNOME_PROPERTY_BOX (dialog)->notebook);
+	gtk_notebook_append_page (GTK_NOTEBOOK(nbook),
+				  box, gtk_label_new (_("Drawer")));
 	
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   (GtkSignalFunc) properties_close_callback,
@@ -113,27 +119,9 @@ create_properties_dialog(Drawer *drawer)
 			   GTK_SIGNAL_FUNC(properties_apply_callback),
 			   drawer);
 
-	return dialog;
-}
-
-void
-drawer_properties(Drawer *drawer)
-{
-	GtkWidget         *dialog;
-
-	dialog = gtk_object_get_data(GTK_OBJECT(drawer->button),
-				     DRAWER_PROPERTIES);
-	if(dialog) {
-		gdk_window_raise(dialog->window);
-		return;
-	}
-
-	dialog = create_properties_dialog(drawer);
 	gtk_object_set_data(GTK_OBJECT(drawer->button),
 			    DRAWER_PROPERTIES,dialog);
-	gtk_widget_show_all (dialog);
 }
-
 
 void
 reposition_drawer(Drawer *drawer)
@@ -242,7 +230,7 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(drawer->button),
 						     DRAWER_PROPERTIES);
 	if(prop_dialog)
-		gtk_widget_unref(prop_dialog);
+		gtk_widget_destroy(prop_dialog);
 	g_free(drawer);
 	return FALSE;
 }

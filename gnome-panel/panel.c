@@ -68,7 +68,6 @@ get_def_panel_widget(GtkWidget *panel)
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		return PANEL_WIDGET(DRAWER_WIDGET(panel)->panel);
 	}
-	puts("get_def_panel");
 	g_warning("unknown panel type");
 	return NULL;
 }
@@ -750,6 +749,8 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	PanelData *pd = gtk_object_get_user_data(GTK_OBJECT(widget));
 	GtkWidget *panel_menu = data;
 
+	kill_config_dialog(widget);
+
 	if(IS_DRAWER_WIDGET(widget)) {
 		PanelWidget *panel = PANEL_WIDGET(DRAWER_WIDGET(widget)->panel);
 		if(panel->master_widget) {
@@ -772,7 +773,7 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	
 	panel_list = g_list_remove(panel_list,pd);
 	g_free(pd);
-
+	
 	return FALSE;
 }
 
@@ -938,20 +939,6 @@ bind_panel_events(GtkWidget *widget, gpointer data)
 }
 
 
-/*warning warning ... HACK ahead*/
-static int
-panel_widget_destroy(GtkWidget *w, gpointer data)
-{
-	GtkFixed *fixed = GTK_FIXED(w);
-	GList *list;
-	for(list = fixed->children; list != NULL; list = g_list_next(list))
-		/*this makes the refcount right, why a widget that has
-		  a tooltip shouldn't destroy right is beyond me, but
-		  I guess there is a reason .. it just makes things a
-		  lot harder*/
-		gtk_tooltips_set_tip (panel_tooltips,list->data,NULL,NULL);
-}
-
 static void
 panel_widget_setup(PanelWidget *panel)
 {
@@ -971,10 +958,6 @@ panel_widget_setup(PanelWidget *panel)
 			   "back_change",
 			   GTK_SIGNAL_FUNC(panel_back_change),
 			   NULL);
-	gtk_signal_connect(GTK_OBJECT(panel),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(panel_widget_destroy),
-			   NULL);
 }
 
 void
@@ -992,7 +975,6 @@ panel_setup(GtkWidget *panelw)
 	else if(IS_CORNER_WIDGET(panelw))
 		pd->type = CORNER_PANEL;
 	else {
-		puts("panel_setup");
 		g_warning("unknown panel type");
 	}
 	
@@ -1088,10 +1070,8 @@ panel_setup(GtkWidget *panelw)
 		
 		/*this is a base panel*/
 		base_panels++;
-	} else {
-		puts("panel_setup later");
+	} else
 		g_warning("unknown panel type");
-	}
 	gtk_signal_connect(GTK_OBJECT(panelw),
 			   "event",
 			   GTK_SIGNAL_FUNC(panel_event),

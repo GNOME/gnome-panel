@@ -574,12 +574,6 @@ make_hidebutton(CornerWidget *corner,
 	return w;
 }
 
-static int
-corner_widget_destroy(GtkWidget *w, gpointer data)
-{
-	return FALSE;
-}
-
 static void
 corner_widget_init (CornerWidget *corner)
 {
@@ -634,10 +628,6 @@ corner_widget_init (CornerWidget *corner)
 
 	gtk_signal_connect(GTK_OBJECT(corner), "enter_notify_event",
 			   GTK_SIGNAL_FUNC(corner_enter_notify),
-			   NULL);
-	gtk_signal_connect(GTK_OBJECT(corner),
-			   "destroy",
-			   GTK_SIGNAL_FUNC(corner_widget_destroy),
 			   NULL);
 	corner->pos = CORNER_NE;
 	corner->state = CORNER_SHOWN;

@@ -71,15 +71,11 @@ panel_clean_applet(int applet_id)
 		panel = gtk_object_get_data(GTK_OBJECT(w),
 					    PANEL_APPLET_PARENT_KEY);
 
-		/*warning warning ... HACK ahead*/
-		/*this makes the refcount right, why a widget that has
-		  a tooltip shouldn't destroy right is beyond me, but
-		  I guess there is a reason .. it just makes things a
-		  lot harder*/
-		gtk_tooltips_set_tip (panel_tooltips,w,NULL,NULL);
-
-		if(panel)
+		if(panel) {
+			gtk_widget_ref(w);
 			gtk_container_remove(GTK_CONTAINER(panel),w);
+			gtk_widget_destroy(w);
+		}
 	}
 	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER) {
@@ -141,9 +137,12 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 		if(strcmp(menu->name,"properties")==0)
 			launcher_properties(info->data);
 		break;
-	case APPLET_DRAWER:
-		if(strcmp(menu->name,"properties")==0)
-			drawer_properties(info->data);
+	case APPLET_DRAWER: 
+		if(strcmp(menu->name,"properties")==0) {
+			Drawer *drawer = info->data;
+			g_assert(drawer);
+			panel_config(drawer->drawer);
+		}
 		break;
 	case APPLET_MENU:
 		if(strcmp(menu->name,"properties")==0)

@@ -68,7 +68,7 @@ destroy_launcher(GtkWidget *widget, gpointer data)
 	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(launcher->button),
 						     LAUNCHER_PROPERTIES);
 	if(prop_dialog)
-		gtk_widget_unref(prop_dialog);
+		gtk_widget_destroy(prop_dialog);
 	gnome_desktop_entry_free(launcher->dentry);
 	g_free(launcher);
 	return FALSE;

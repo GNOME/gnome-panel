@@ -1639,6 +1639,10 @@ panel_widget_applet_destroy(GtkWidget *applet, gpointer data)
 
 	if(panel->currently_dragged_applet == ad)
 		panel->currently_dragged_applet = NULL;
+	
+	panel->applet_list = g_list_remove(panel->applet_list,ad);
+	panel->no_window_applet_list =
+		g_list_remove (panel->no_window_applet_list, ad);
 
 	g_free(ad);
 	return FALSE;

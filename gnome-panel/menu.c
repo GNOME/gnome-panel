@@ -1056,7 +1056,7 @@ destroy_menu (GtkWidget *widget, gpointer data)
 	GtkWidget *prop_dialog = gtk_object_get_data(GTK_OBJECT(menu->button),
 						     MENU_PROPERTIES);
 	if(prop_dialog)
-		gtk_widget_unref(prop_dialog);
+		gtk_widget_destroy(prop_dialog);
 	gtk_widget_unref(menu->menu);
 	g_free(menu->path);
 	g_free(menu);
