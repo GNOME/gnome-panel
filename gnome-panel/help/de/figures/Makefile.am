@@ -1,6 +1,6 @@
 panel_helpdir = $(datadir)/gnome/help/panel/de
 
-figsdir = $(panel_helpdir)/figures/old
+figsdir = $(panel_helpdir)/figures
 figs_DATA = \
 	create_launcher.png	\
 	drawer_open.png		\
