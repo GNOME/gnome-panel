@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
-"POT-Creation-Date: 2003-11-11 15:09+0000\n"
+"POT-Creation-Date: 2003-12-09 14:50+0000\n"
 "PO-Revision-Date: 2003-01-07 10:33+EDT\n"
 "Last-Translator: Ge'ez Frontier Foundation <locales@geez.org>\n"
 "Language-Team: Amharic <locales@geez.org>\n"
@@ -15,31 +15,37 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/clock/clock.c:219
+#: applets/clock/clock.c:230
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:219
+#: applets/clock/clock.c:230
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:778
+#: applets/clock/clock.c:232 applets/clock/clock.c:794
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:780
+#: applets/clock/clock.c:232 applets/clock/clock.c:796
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:227
-msgid "%a %b %d"
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:243
+#, fuzzy
+msgid "%a %b %e"
 msgstr "%a %b %d"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:234
+#: applets/clock/clock.c:250
 #, c-format
 msgid ""
 "%s\n"
@@ -52,112 +58,112 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:241
+#: applets/clock/clock.c:257
 #, c-format
 msgid "%s, %s"
 msgstr "%s፣ %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:344
+#: applets/clock/clock.c:360
 msgid "%A %B %d"
 msgstr "%A %B %d"
 
-#: applets/clock/clock.c:473
+#: applets/clock/clock.c:489
 msgid "Calendar"
 msgstr ""
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:703
 msgid "Computer Clock"
 msgstr "የኮምፕ ዩተር ሰዓት"
 
-#: applets/clock/clock.c:773
+#: applets/clock/clock.c:789
 msgid "%I:%M:%S %p"
 msgstr "%I:%M:%S %p"
 
-#: applets/clock/clock.c:775
+#: applets/clock/clock.c:791
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:814
+#: applets/clock/clock.c:830
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/clock/clock.c:855
+#: applets/clock/clock.c:871
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr ""
 
-#: applets/clock/clock.c:896
+#: applets/clock/clock.c:912
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
 msgstr ""
 
-#: applets/clock/clock.c:1359 applets/clock/clock.c:1631
+#: applets/clock/clock.c:1338 applets/clock/clock.c:1603
 #: applets/fish/fish.c:129 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:117
-#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:419 applets/wncklet/window-list.c:117
+#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:87
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr ""
 
-#: applets/clock/clock.c:1404
+#: applets/clock/clock.c:1383
 msgid "Clock Preferences"
 msgstr "የሰዓት ምርጫዎች"
 
-#: applets/clock/clock.c:1440
+#: applets/clock/clock.c:1419
 #, fuzzy
 msgid "Clock _type:"
 msgstr "የሰዓት ዓይነት"
 
-#: applets/clock/clock.c:1451
+#: applets/clock/clock.c:1430
 #, fuzzy
 msgid "12 hour"
 msgstr "_12 ሰዓት"
 
-#: applets/clock/clock.c:1459
+#: applets/clock/clock.c:1438
 #, fuzzy
 msgid "24 hour"
 msgstr "_24 ሰዓት"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:1446
 #, fuzzy
 msgid "UNIX time"
 msgstr "የUNI_X ሰዓት"
 
-#: applets/clock/clock.c:1474
+#: applets/clock/clock.c:1454
 #, fuzzy
 msgid "Internet time"
 msgstr "የ_ኢንተርኔት ሰዓት"
 
-#: applets/clock/clock.c:1487
+#: applets/clock/clock.c:1468
 msgid "Show _seconds"
 msgstr "ሴኮንዶች አሳይ (_S)"
 
-#: applets/clock/clock.c:1496
+#: applets/clock/clock.c:1477
 msgid "Show _date"
 msgstr "_ቀን አሳይ"
 
-#: applets/clock/clock.c:1505
+#: applets/clock/clock.c:1486
 msgid "Use _UTC"
 msgstr "_UTCን ተጠቀም"
 
 #. Translator credits
-#: applets/clock/clock.c:1666 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:443 applets/wncklet/window-list.c:805
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:1638 applets/notification_area/main.c:112
+#: applets/wncklet/showdesktop.c:448 applets/wncklet/window-list.c:805
+#: applets/wncklet/window-menu.c:114 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:284
 msgid "translator_credits"
 msgstr "ዘግዕዝ Frontier Foundation"
 
-#: applets/clock/clock.c:1685
+#: applets/clock/clock.c:1657
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "ሰዓት"
 
-#: applets/clock/clock.c:1687
+#: applets/clock/clock.c:1659
 msgid "The Clock displays the current time and date"
 msgstr ""
 
@@ -166,18 +172,16 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
+#, fuzzy
+msgid "24-hour"
+msgstr "_24 ሰዓት"
+
+#: applets/clock/clock.schemas.in.h:3
 msgid "Hour format"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:3
-msgid "If true, display date in the clock, in addition to time."
-msgstr ""
-
 #: applets/clock/clock.schemas.in.h:4
-msgid ""
-"If true, display internet time. The internet time system divides the day "
-"into 1000 \".beats\". There is no time zones in this system, so time is the "
-"same all over the world."
+msgid "If true, display date in the clock, in addition to time."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:5
@@ -189,30 +193,36 @@ msgid "If true, display time in Universal Coordinated Time zone."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:7
-msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr ""
-
-#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:8
 #, fuzzy
 msgid "Show date in clock"
 msgstr "_ቀን አሳይ"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr ""
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show time with seconds"
+msgstr ""
+
+#: applets/clock/clock.schemas.in.h:11
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:12
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
-"are 12 and 24."
+"are \"12-hour\", \"24-hour\", \"internet\" and \"unix\". If set to \"internet"
+"\", the clock will display internet time. The internet time system divides "
+"the day into 1000 \".beats\". There is no time zones in this system, so time "
+"is the same all over the world. If set to \"unix\", the clock will display "
+"time in seconds since Epoch, i.e. 1970-01-01."
 msgstr ""
 
 #: applets/clock/clock.schemas.in.h:13
@@ -283,9 +293,9 @@ msgstr "_ስለ..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3070
-#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:325
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3085
+#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:312
+#: gnome-panel/panel-menu-button.c:608
 msgid "_Help"
 msgstr "_መረጃ"
 
@@ -346,7 +356,7 @@ msgstr ""
 msgid "%s the Fish Says:"
 msgstr "%s ዓሳው"
 
-#: applets/fish/fish.c:745
+#: applets/fish/fish.c:746
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -354,7 +364,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: applets/fish/fish.c:766
+#: applets/fish/fish.c:767
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -362,13 +372,13 @@ msgid ""
 "Please refer to fish properties dialog."
 msgstr ""
 
-#: applets/fish/fish.c:1369
+#: applets/fish/fish.c:1371
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
 msgstr ""
 
-#: applets/fish/fish.c:1429
+#: applets/fish/fish.c:1431
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr ""
@@ -396,7 +406,7 @@ msgstr "<b>ምርጫዎች</b>"
 msgid "<b>General</b>"
 msgstr "<b>ቅድመ ዕይታ</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:152
+#: applets/fish/fish.glade.h:5
 msgid "Browse"
 msgstr "ቃኝ"
 
@@ -537,7 +547,7 @@ msgstr ""
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:179
+#: gnome-panel/panel-menu-bar.c:181
 msgid "Actions"
 msgstr "ትግባሮች"
 
@@ -568,14 +578,14 @@ msgid "Window List"
 msgstr "የመስኮት ዝርዝር"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:701
-#, fuzzy
-msgid "Window Menu"
-msgstr "የዋና ሜኑ"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 msgid "Window Navigation Applet Factory"
 msgstr ""
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:706
+#, fuzzy
+msgid "Window Selector"
+msgstr "የመስኮት ዝርዝር"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -583,32 +593,32 @@ msgstr ""
 msgid "Workspace Switcher"
 msgstr "የመሥሪያ ቦታ መቀያየሪያ"
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to restore hidden windows."
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:225
+#: applets/wncklet/showdesktop.c:226
 msgid "Click here to hide all windows and show the desktop."
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:301
+#: applets/wncklet/showdesktop.c:308
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:302
+#: applets/wncklet/showdesktop.c:309
 msgid "File not found"
 msgstr "የፋይሉን አልተገኘም"
 
-#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:452
+#: applets/wncklet/showdesktop.c:339 applets/wncklet/showdesktop.c:457
 msgid "Show Desktop Button"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:454
+#: applets/wncklet/showdesktop.c:459
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/wncklet/showdesktop.c:494
+#: applets/wncklet/showdesktop.c:499
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -668,7 +678,7 @@ msgstr ""
 msgid "Show windows from a_ll workspaces"
 msgstr ""
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3619
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3623
 msgid "Size"
 msgstr "መጠን"
 
@@ -741,18 +751,19 @@ msgid "When to group windows"
 msgstr ""
 
 #: applets/wncklet/window-menu.c:136
-msgid "The Window Menu shows a list of all windows and lets you browse them."
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 
-#: applets/wncklet/window-menu.c:411
+#: applets/wncklet/window-menu.c:416
 msgid "Unknown Window"
 msgstr ""
 
-#: applets/wncklet/window-menu.c:614
+#: applets/wncklet/window-menu.c:619
 msgid "No Windows Open"
 msgstr ""
 
-#: applets/wncklet/window-menu.c:702
+#: applets/wncklet/window-menu.c:707
 msgid "Tool to switch between windows"
 msgstr ""
 
@@ -868,13 +879,13 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:111
 #, fuzzy
 msgid "Un_lock"
 msgstr "ሰዓት"
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:111
 #, fuzzy
 msgid "_Lock"
 msgstr "ቆለፈ"
@@ -924,7 +935,7 @@ msgstr ""
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr ""
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3608
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3612
 msgid "Orientation"
 msgstr "አቀማመጥ"
 
@@ -972,8 +983,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "የCDE ሜኑ"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:743 gnome-panel/menu.c:1497
-#: gnome-panel/menu.c:3019 gnome-panel/panel-action-button.c:97
+#: gnome-panel/drawer.c:339 gnome-panel/menu.c:3197
+msgid "Drawer"
+msgstr "መሳቢያ"
+
+#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:743 gnome-panel/menu.c:1512
+#: gnome-panel/menu.c:3034 gnome-panel/panel-action-button.c:99
 msgid "_Properties"
 msgstr "_ምርጫዎች"
 
@@ -982,20 +997,20 @@ msgid "Create new file in the given directory"
 msgstr ""
 
 #: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:883
+#: gnome-panel/gnome-panel-screenshot.c:708
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
 
-#: gnome-panel/gnome-panel-preferences.c:391
+#: gnome-panel/gnome-panel-preferences.c:390
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
 msgstr ""
 
-#: gnome-panel/gnome-panel-preferences.c:422
+#: gnome-panel/gnome-panel-preferences.c:421
 #, c-format
 msgid "Error loading glade file %s"
 msgstr ""
@@ -1037,37 +1052,37 @@ msgstr "የፓነሉ ምርጫዎች"
 msgid "Slow"
 msgstr "ዝግታ"
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:129
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:150
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:168
+#: gnome-panel/gnome-panel-screenshot.c:154
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:226
+#: gnome-panel/gnome-panel-screenshot.c:212
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:247
-#: gnome-panel/gnome-panel-screenshot.c:755
+#: gnome-panel/gnome-panel-screenshot.c:233
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1075,58 +1090,57 @@ msgid ""
 "Please check your permissions of the parent directory"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:520
-msgid "Print Screenshot"
-msgstr ""
-
-#: gnome-panel/gnome-panel-screenshot.c:568
-msgid "Screenshot Print Preview"
-msgstr ""
-
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:595
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if a specific window is taken
+#: gnome-panel/gnome-panel-screenshot.c:420
 #, c-format
-msgid "%s%cScreenshot-%s.png"
+msgid "Screenshot-%s.png"
 msgstr ""
 
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:602
+# verify this
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: gnome-panel/gnome-panel-screenshot.c:424
+#, fuzzy
+msgid "Screenshot.png"
+msgstr "እስክሪን ቆልፍ"
+
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if a specific window is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:445
 #, c-format
-msgid "%s%cScreenshot.png"
+msgid "Screenshot-%s-%d.png"
 msgstr ""
 
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:619
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:452
 #, c-format
-msgid "%s%cScreenshot-%s-%d.png"
+msgid "Screenshot-%d.png"
 msgstr ""
 
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:626
-#, c-format
-msgid "%s%cScreenshot-%d.png"
-msgstr ""
-
-#: gnome-panel/gnome-panel-screenshot.c:778
+#: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1098
 msgid "Grab a window instead of the entire screen"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1099
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1151
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
 msgstr ""
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1167
 msgid "Unable to take a screenshot of the current desktop."
 msgstr ""
 
@@ -1152,10 +1166,6 @@ msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
-msgstr ""
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:9
-msgid "_Print screenshot..."
 msgstr ""
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
@@ -1217,8 +1227,8 @@ msgstr "ማስጀመሪያ ፍጠር"
 msgid "Specify a profile name to load"
 msgstr ""
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3217
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
+#: gnome-panel/panel-menu-bar.c:175
 msgid "Log Out"
 msgstr "ዘግተው ይውጡ"
 
@@ -1236,16 +1246,16 @@ msgstr "ቆለፈ"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:248
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:250
 msgid "Force Quit"
 msgstr ""
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:243
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:245
 msgid "Screenshot"
 msgstr ""
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3385
-#: gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3400
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Take a screenshot of your desktop"
 msgstr ""
 
@@ -1253,8 +1263,8 @@ msgstr ""
 msgid "Search"
 msgstr "ፈልግ"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3366
-#: gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3381
+#: gnome-panel/panel-menu-bar.c:139
 msgid "Find files, folders, and documents on your computer"
 msgstr ""
 
@@ -1280,13 +1290,13 @@ msgid ""
 "small applets within itself."
 msgstr ""
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:166
-#: gnome-panel/panel-action-button.c:184
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:168
+#: gnome-panel/panel-action-button.c:186
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr ""
 
-#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:815
+#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:720
 #, c-format
 msgid "%s - command not found"
 msgstr ""
@@ -1329,143 +1339,139 @@ msgstr ""
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr ""
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1316 gnome-panel/menu.c:3178
+#, fuzzy
+msgid "Main Menu"
+msgstr "የዋና ሜኑ"
+
+#: gnome-panel/menu.c:1321 gnome-panel/menu-ditem.c:309
+msgid "Menu"
+msgstr "ሜኑ"
+
+#: gnome-panel/menu.c:1459
 msgid "Add this launcher to panel"
 msgstr "ይህንን ማስጀመሪያ ወደ ፓነሉ ጨምር"
 
-#: gnome-panel/menu.c:1454
+#: gnome-panel/menu.c:1469
 msgid "Remove this item"
 msgstr ""
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1486
 msgid "Put into run dialog"
 msgstr ""
 
-#: gnome-panel/menu.c:1519
+#: gnome-panel/menu.c:1534
 msgid "Entire menu"
 msgstr ""
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1543
 msgid "Add this as drawer to panel"
 msgstr "ይህንን መሳቢያ ወደ ፓነሉ ጨምር"
 
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1554
 msgid "Add this as menu to panel"
 msgstr ""
 
-#: gnome-panel/menu.c:1552
+#: gnome-panel/menu.c:1567
 msgid "Add new item to this menu"
 msgstr ""
 
-#: gnome-panel/menu.c:1579
+#: gnome-panel/menu.c:1594
 msgid "Properties"
 msgstr "ምርጫዎች"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2609
+#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2823 gnome-panel/menu.c:2828 gnome-panel/menu.c:3326
-#: gnome-panel/panel-menu-bar.c:195
+#: gnome-panel/menu.c:2838 gnome-panel/menu.c:2843 gnome-panel/menu.c:3341
+#: gnome-panel/panel-menu-bar.c:197
 msgid "Applications"
 msgstr "መጠቀሚያ ፕሮግራሞች"
 
-#: gnome-panel/menu.c:2898
+#: gnome-panel/menu.c:2913
 msgid "You cannot remove your last panel."
 msgstr ""
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:2976
 msgid "_Delete This Panel..."
 msgstr "ይህ ፓነልን አጥፉ... (_D)"
 
-#: gnome-panel/menu.c:2964 gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3019
 msgid "_Delete This Panel"
 msgstr "ይህ ፓነልን አጥፉ  (_D)"
 
-#: gnome-panel/menu.c:2979
+#: gnome-panel/menu.c:2994
 msgid "_Add to Panel"
 msgstr "ወደ ፓነልን ጨምር (_A)"
 
-#: gnome-panel/menu.c:3034
+#: gnome-panel/menu.c:3049
 msgid "_New Panel"
 msgstr "_አዲስ ፓነል"
 
-#: gnome-panel/menu.c:3081
+#: gnome-panel/menu.c:3096
 msgid "_About Panels"
 msgstr "_ስለ ፓነሎች"
 
-#: gnome-panel/menu.c:3095
+#: gnome-panel/menu.c:3110
 msgid "About _GNOME"
 msgstr "ስለ _ኖም"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3158
 #, fuzzy
 msgid "Launcher..."
 msgstr "ማስጀመሪያ..."
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3168
 #, fuzzy
 msgid "Launcher from menu"
 msgstr "ማስጀመሪያ ከሜኑ"
 
-#: gnome-panel/menu.c:3163 gnome-panel/panel-menu-button.c:86
-#, fuzzy
-msgid "Main Menu"
-msgstr "የዋና ሜኑ"
-
-#: gnome-panel/menu.c:3173
+#: gnome-panel/menu.c:3188
 #, fuzzy
 msgid "Menu Bar"
 msgstr "ሜኑ"
 
-#: gnome-panel/menu.c:3182
-msgid "Drawer"
-msgstr "መሳቢያ"
-
-#: gnome-panel/menu.c:3205 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3220 gnome-panel/panel-menu-bar.c:166
 msgid "Lock Screen"
 msgstr "እስክሪን ቆልፍ"
 
-#: gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3362 gnome-panel/panel-menu-bar.c:123
 #, fuzzy
 msgid "Run Application..."
 msgstr "መጠቀሚያ ፕሮግራም"
 
-#: gnome-panel/menu.c:3354 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3369 gnome-panel/panel-menu-bar.c:125
 msgid "Run an Application by entering a command"
 msgstr ""
 
-#: gnome-panel/menu.c:3363 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:137
 msgid "Search for Files..."
 msgstr "ፋይሎችን አስስ..."
 
-#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
 msgid "Take Screenshot..."
 msgstr ""
 
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3415
 msgid "Desktop"
 msgstr "ሠሌዳ"
 
 #: gnome-panel/menu-ditem.c:127
 msgid "Cannot save changes to launcher"
 msgstr ""
-
-#: gnome-panel/menu-ditem.c:309
-msgid "Menu"
-msgstr "ሜኑ"
 
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
@@ -1492,38 +1498,38 @@ msgid ""
 "writable."
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:88
 msgid "_Activate Screensaver"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:87
+#: gnome-panel/panel-action-button.c:89
 msgid "_Lock Screen"
 msgstr "እስክሪን _ቆልፍ"
 
-#: gnome-panel/panel-action-button.c:91
+#: gnome-panel/panel-action-button.c:93
 msgid "_Kill Screensaver Daemon"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:93
+#: gnome-panel/panel-action-button.c:95
 msgid "Restart _Screensaver Daemon"
 msgstr ""
 
 # verify this
-#: gnome-panel/panel-action-button.c:221
+#: gnome-panel/panel-action-button.c:223
 msgid "Lock screen"
 msgstr "እስክሪን ቆልፍ"
 
-#: gnome-panel/panel-action-button.c:228
+#: gnome-panel/panel-action-button.c:230
 msgid "Log out of GNOME"
 msgstr "ከኖም ዘግተው ይውጡ"
 
-#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-action-button.c:235
 #: gnome-panel/panel-run-dialog.glade.h:7
 #, fuzzy
 msgid "Run Application"
 msgstr "መጠቀሚያ ፕሮግራም"
 
-#: gnome-panel/panel-action-button.c:238
+#: gnome-panel/panel-action-button.c:240
 msgid "Search for Files"
 msgstr "ፋይሎችን አስስ"
 
@@ -1535,15 +1541,15 @@ msgstr "የትግባር ዓይነት"
 msgid "The type of action this button implements"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:461
 msgid "Drag and drop enabled"
 msgstr ""
 
-#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:462
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:740
+#: gnome-panel/panel-applet-frame.c:739
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr ""
@@ -1551,12 +1557,12 @@ msgstr ""
 #: gnome-panel/panel-applet-frame.c:861
 #, c-format
 msgid ""
-"The %s applet appears to have died unexpectedly\n"
+"The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
-"Reload this applet?%s"
+"Do you want to reload this applet?"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:866
+#: gnome-panel/panel-applet-frame.c:867
 msgid ""
 "\n"
 "\n"
@@ -1564,30 +1570,28 @@ msgid ""
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:901
+#: gnome-panel/panel-applet-frame.c:907
 msgid "D_on't Delete"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:943
+#: gnome-panel/panel-applet-frame.c:944
 #, c-format
-msgid ""
-"The panel encountered a problem while loading \"%s\"\n"
-"Details: %s%s"
+msgid "The panel encountered a problem while loading \"%s\"."
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:947 gnome-panel/panel-applet-frame.c:958
+#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:262
+#, c-format
+msgid "Details: %s"
+msgstr ""
+
+#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
 msgid ""
 "\n"
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
 
-#: gnome-panel/panel-applet-frame.c:955
-#, c-format
-msgid "The panel encountered a problem while loading \"%s\"%s"
-msgstr ""
-
-#: gnome-panel/panel-applet-frame.c:1067
+#: gnome-panel/panel-applet-frame.c:1084
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
@@ -1611,13 +1615,13 @@ msgstr ""
 msgid "Open URL: %s"
 msgstr "URL ክፈት፦ %s"
 
-#: gnome-panel/panel.c:1227
+#: gnome-panel/panel.c:1228
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
 msgstr ""
 
-#: gnome-panel/panel.c:1236
+#: gnome-panel/panel.c:1237
 msgid "Delete Panel"
 msgstr "ፓነልን አጥፉ"
 
@@ -1803,45 +1807,54 @@ msgstr "እስክሪን ቆልፍ"
 msgid "Take window screenshot"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/panel-menu-bar.c:168
 msgid "Protect your computer from unauthorized use"
 msgstr ""
 
-#: gnome-panel/panel-menu-bar.c:175
+#: gnome-panel/panel-menu-bar.c:177
 msgid "Quit from the GNOME desktop"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:416
 #, fuzzy
 msgid "Menu Path"
 msgstr "የሜኑ ፓነል"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:417
 msgid "The path from which to construct the menu"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:425
 msgid "Custom Icon"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:426
 msgid "The custom icon for the menu"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:434
+#, fuzzy
+msgid "Tooltip"
+msgstr "ወደ ላይ"
+
+#: gnome-panel/panel-menu-button.c:435
+msgid "Tooltip displayed for the menu"
+msgstr ""
+
+#: gnome-panel/panel-menu-button.c:443
 #, fuzzy
 msgid "Use Menu Path"
 msgstr "የሜኑ ፓነል"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:444
 msgid "Use the path specified by the menu-path property"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:452
 msgid "Use Custom Icon"
 msgstr ""
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:453
 msgid "Use the icon specified by the custom-icon property"
 msgstr ""
 
@@ -1968,8 +1981,8 @@ msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:23
 msgid ""
-"The text to display in a tooltip for this drawer. This key is only relevant "
-"if the object_type key is \"drawer-object\"."
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:24
@@ -1980,7 +1993,7 @@ msgid ""
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:25
-msgid "Tooltip displayed for drawer"
+msgid "Tooltip displayed for drawer or menu"
 msgstr ""
 
 #: gnome-panel/panel-object.schemas.in.h:26
@@ -2019,7 +2032,7 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr ""
 
-#: gnome-panel/panel-profile.c:2137
+#: gnome-panel/panel-profile.c:2144
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr ""
@@ -2171,7 +2184,7 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr ""
 
 #: gnome-panel/panel-recent.c:175
-msgid "Open Recent"
+msgid "Recent Documents"
 msgstr ""
 
 #: gnome-panel/panel-run-dialog.c:293
@@ -2245,13 +2258,13 @@ msgstr ""
 msgid "_Run"
 msgstr "_አስኪድ"
 
-#: gnome-panel/panel-shell.c:80
+#: gnome-panel/panel-shell.c:74
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
 msgstr ""
 
-#: gnome-panel/panel-shell.c:84
+#: gnome-panel/panel-shell.c:78
 #, c-format
 msgid ""
 "There was a problem registering the panel with the bonobo-activation "
@@ -2271,215 +2284,215 @@ msgstr ""
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1452
+#: gnome-panel/panel-toplevel.c:1454
 #, fuzzy
 msgid "Top Expanded Edge Panel"
 msgstr "የኖም የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 #, fuzzy
 msgid "Top Centered Panel"
 msgstr "የጥግ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 #, fuzzy
 msgid "Top Floating Panel"
 msgstr "ተንሳፋፊ ፓነል (_F)"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 #, fuzzy
 msgid "Top Edge Panel"
 msgstr "የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1459
+#: gnome-panel/panel-toplevel.c:1461
 msgid "Bottom Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 #, fuzzy
 msgid "Bottom Centered Panel"
 msgstr "የጥግ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 #, fuzzy
 msgid "Bottom Floating Panel"
 msgstr "ተንሳፋፊ ፓነል (_F)"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 #, fuzzy
 msgid "Bottom Edge Panel"
 msgstr "የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1468
 #, fuzzy
 msgid "Left Expanded Edge Panel"
 msgstr "የኖም የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 #, fuzzy
 msgid "Left Centered Panel"
 msgstr "የጥግ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 #, fuzzy
 msgid "Left Floating Panel"
 msgstr "ተንሳፋፊ ፓነል (_F)"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 #, fuzzy
 msgid "Left Edge Panel"
 msgstr "የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Right Expanded Edge Panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1476
 #, fuzzy
 msgid "Right Centered Panel"
 msgstr "ድርድር ፓነል"
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1477
 #, fuzzy
 msgid "Right Floating Panel"
 msgstr "ተንሳፋፊ ፓነል (_F)"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1478
 #, fuzzy
 msgid "Right Edge Panel"
 msgstr "የጠርዝ ፓነል"
 
-#: gnome-panel/panel-toplevel.c:3588
+#: gnome-panel/panel-toplevel.c:3592
 #, fuzzy
 msgid "Name"
 msgstr "የምልክት ስም"
 
-#: gnome-panel/panel-toplevel.c:3589
+#: gnome-panel/panel-toplevel.c:3593
 #, fuzzy
 msgid "The name of this panel"
 msgstr "ተንሳፋፊ ፓነልን ፍጠር"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3602
 msgid "Expand"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3599
+#: gnome-panel/panel-toplevel.c:3603
 msgid "Expand to take up the full monitor width/height"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3613
 msgid "The orientation of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3624
 msgid "The height (or width when vertical) of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3636
 #, fuzzy
 msgid "X position"
 msgstr "ቦታ፦"
 
-#: gnome-panel/panel-toplevel.c:3633
+#: gnome-panel/panel-toplevel.c:3637
 msgid "The X position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3644
+#: gnome-panel/panel-toplevel.c:3648
 msgid "X centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3645
+#: gnome-panel/panel-toplevel.c:3649
 msgid "The x co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3658
 #, fuzzy
 msgid "Y position"
 msgstr "ቦታ፦"
 
-#: gnome-panel/panel-toplevel.c:3655
+#: gnome-panel/panel-toplevel.c:3659
 msgid "The Y position of the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3666
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Y centered"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3667
+#: gnome-panel/panel-toplevel.c:3671
 msgid "The y co-ordinate is relative to center screen"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3680
 msgid "Xinerama monitor"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3677
+#: gnome-panel/panel-toplevel.c:3681
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3688
+#: gnome-panel/panel-toplevel.c:3692
 msgid "Auto hide"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3689
+#: gnome-panel/panel-toplevel.c:3693
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3702
 msgid "Hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3699
+#: gnome-panel/panel-toplevel.c:3703
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3714
 msgid "Un-hide delay"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3711
+#: gnome-panel/panel-toplevel.c:3715
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3726
 msgid "Auto-hide size"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3723
+#: gnome-panel/panel-toplevel.c:3727
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3734
+#: gnome-panel/panel-toplevel.c:3738
 msgid "Animate"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3735
+#: gnome-panel/panel-toplevel.c:3739
 msgid "Enable hiding/showing animations"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3744
+#: gnome-panel/panel-toplevel.c:3748
 #, fuzzy
 msgid "Animation Speed"
 msgstr "የትግባር ዓይነት"
 
-#: gnome-panel/panel-toplevel.c:3745
+#: gnome-panel/panel-toplevel.c:3749
 msgid "The speed at which to animate panel hiding/showing"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3755
+#: gnome-panel/panel-toplevel.c:3759
 msgid "Buttons Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3756
+#: gnome-panel/panel-toplevel.c:3760
 msgid "Enable hide/show buttons"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3765
+#: gnome-panel/panel-toplevel.c:3769
 msgid "Arrows Enabled"
 msgstr ""
 
-#: gnome-panel/panel-toplevel.c:3766
+#: gnome-panel/panel-toplevel.c:3770
 msgid "Enable arrows on hide/show buttons"
 msgstr ""
 
@@ -2760,11 +2773,11 @@ msgid "X co-ordinate of panel"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-msgid "X screen panel is on"
+msgid "X screen where the panel is displayed"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:51
-msgid "Xinerama monitor panel is on"
+msgid "Xinerama monitor where the panel is displayed"
 msgstr ""
 
 #: gnome-panel/panel-toplevel.schemas.in.h:52
@@ -2775,12 +2788,7 @@ msgstr ""
 msgid "Cannot display help document"
 msgstr ""
 
-#: gnome-panel/panel-util.c:357
-#, c-format
-msgid "Details: %s"
-msgstr ""
-
-#: gnome-panel/panel-util.c:814
+#: gnome-panel/panel-util.c:719
 #, c-format
 msgid "Cannot execute %s"
 msgstr ""
@@ -2797,46 +2805,46 @@ msgstr ""
 msgid "Test Bonobo Applet Factory"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:848
+#: libpanel-applet/panel-applet.c:872
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:886
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:871
+#: libpanel-applet/panel-applet.c:895
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:878
+#: libpanel-applet/panel-applet.c:902
 msgid "Unknown background type received"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1087
 msgid "The Applet's containing Panel's orientation"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1095
 msgid "The Applet's containing Panel's size in pixels"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1079
+#: libpanel-applet/panel-applet.c:1103
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1087
+#: libpanel-applet/panel-applet.c:1111
 msgid "The Applet's flags"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1095
+#: libpanel-applet/panel-applet.c:1119
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 
-#: libpanel-applet/panel-applet.c:1103
+#: libpanel-applet/panel-applet.c:1127
 msgid "The Applet's containing Panel is locked down"
 msgstr ""
 
@@ -2897,6 +2905,10 @@ msgstr "XX ትልቅ"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX ትንሽ"
+
+#, fuzzy
+#~ msgid "Window Menu"
+#~ msgstr "የዋና ሜኑ"
 
 #~ msgid "%s the GNOME Fish"
 #~ msgstr "%s የኖሙ ዓሳ"

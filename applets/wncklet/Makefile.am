@@ -4,6 +4,7 @@ libexec_PROGRAMS = wnck-applet
 
 INCLUDES = \
 	-I$(top_builddir) \
+	-I$(top_builddir)/applets/wncklet \
 	-I$(top_srcdir)/libpanel-applet \
 	-I$(top_builddir)/libpanel-applet \
 	$(WNCKLET_CFLAGS) \
@@ -63,7 +64,7 @@ $(server_in_files): $(server_in_files).in
 
 @INTLTOOL_SERVER_RULE@
 
-CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES)
+CLEANFILES = $(server_in_files) $(server_DATA) $(BUILT_SOURCES) $(schemas_DATA)
 
 uidir    = $(datadir)/gnome-2.0/ui
 ui_DATA  = \
@@ -78,7 +79,7 @@ VARIABLES = default_icon_data $(srcdir)/default_icon.png
 noinst_DATA = inlinepixbufs.h
 
 inlinepixbufs.h: $(IMAGES)
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(VARIABLES) >$(srcdir)/inlinepixbufs.h
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(VARIABLES) > inlinepixbufs.h
 
 EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
 

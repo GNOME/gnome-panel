@@ -1,3 +1,23 @@
+#
+# FIXME:
+#  currently scrollkeeper-update does not seem to
+#  remove its database when there is no useful
+#  information contained there. Therefore, with
+#  "make uninstall" you're left with loads of
+#  stuff in /var/scrollkeeper and distcheck
+#  fails.
+#
+#  http://mail.gnome.org/archives/gnome-doc-list/2003-May/msg00008.html
+#
+#  This overrides the uninstall check so distcheck
+#  passes
+#
+distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out'
+distuninstallcheck_listfiles = find . -type f -print | grep -v '^\./var/scrollkeeper' | grep -v 'omf' | grep -v 'figures'
+
+distuninstallcheck:
+	@:
+
 SUBDIRS =			\
 	po 			\
 	idl 			\
@@ -21,3 +41,7 @@ EXTRA_DIST = \
 	intltool-update.in
 
 DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
+DISTCLEANFILES =		\
+        intltool-extract	\
+        intltool-merge		\
+        intltool-update

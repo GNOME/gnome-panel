@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core HEAD\n"
-"POT-Creation-Date: 2003-11-11 15:09+0000\n"
+"POT-Creation-Date: 2003-12-09 14:50+0000\n"
 "PO-Revision-Date: 2003-11-11 02:40+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: ms <sebol@ikhlas.com>\n"
@@ -17,31 +17,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Report-Msgid-Bugs-To: \n"
 
-#: applets/clock/clock.c:219
+#: applets/clock/clock.c:230
 msgid "%l:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:219
+#: applets/clock/clock.c:230
 msgid "%l:%M %p"
 msgstr "%l:%M %p"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:778
+#: applets/clock/clock.c:232 applets/clock/clock.c:794
 msgid "%H:%M:%S"
 msgstr "%H:%M:%S"
 
-#: applets/clock/clock.c:221 applets/clock/clock.c:780
+#: applets/clock/clock.c:232 applets/clock/clock.c:796
 msgid "%H:%M"
 msgstr "%H:%M"
 
-#: applets/clock/clock.c:227
-msgid "%a %b %d"
+#. translators: replace %e with %d if, when the day of the
+#. *              month as a decimal number is a single digit, it
+#. *              should begin with a 0 in your locale (e.g. "May
+#. *              01" instead of "May  1").
+#.
+#: applets/clock/clock.c:243
+#, fuzzy
+msgid "%a %b %e"
 msgstr "%a %d %b"
 
 #. translators: reverse the order of these arguments
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:234
+#: applets/clock/clock.c:250
 #, c-format
 msgid ""
 "%s\n"
@@ -54,42 +60,42 @@ msgstr ""
 #. *              if the time should come before the
 #. *              date on a clock in your locale.
 #.
-#: applets/clock/clock.c:241
+#: applets/clock/clock.c:257
 #, c-format
 msgid "%s, %s"
 msgstr "%s, %s"
 
 #. Show date in tooltip
-#: applets/clock/clock.c:344
+#: applets/clock/clock.c:360
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
-#: applets/clock/clock.c:473
+#: applets/clock/clock.c:489
 msgid "Calendar"
 msgstr "Kalendar"
 
-#: applets/clock/clock.c:687
+#: applets/clock/clock.c:703
 msgid "Computer Clock"
 msgstr "Jam Komputer"
 
-#: applets/clock/clock.c:773
+#: applets/clock/clock.c:789
 msgid "%I:%M:%S %p"
 msgstr "%l:%M:%S %p"
 
-#: applets/clock/clock.c:775
+#: applets/clock/clock.c:791
 msgid "%I:%M %p"
 msgstr "%I:%M %p"
 
-#: applets/clock/clock.c:814
+#: applets/clock/clock.c:830
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/clock/clock.c:855
+#: applets/clock/clock.c:871
 #, c-format
 msgid "Failed to launch time configuration tool: %s"
 msgstr "Gagal mmelancarkan radas konfigurasi:%s"
 
-#: applets/clock/clock.c:896
+#: applets/clock/clock.c:912
 msgid ""
 "Failed to locate a program for configuring the date and time. Perhaps none "
 "is installed?"
@@ -97,66 +103,66 @@ msgstr ""
 "Gagal menjumpai program untuk mengkonfigurasi tarikh dan masa. Mungkin tak "
 "dipasang?"
 
-#: applets/clock/clock.c:1359 applets/clock/clock.c:1631
+#: applets/clock/clock.c:1338 applets/clock/clock.c:1603
 #: applets/fish/fish.c:129 applets/notification_area/main.c:80
-#: applets/wncklet/showdesktop.c:412 applets/wncklet/window-list.c:117
-#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:86
+#: applets/wncklet/showdesktop.c:419 applets/wncklet/window-list.c:117
+#: applets/wncklet/window-list.c:774 applets/wncklet/window-menu.c:87
 #: applets/wncklet/workspace-switcher.c:170
 #: applets/wncklet/workspace-switcher.c:472
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Terdapat ralat memapar bantuan: %s"
 
-#: applets/clock/clock.c:1404
+#: applets/clock/clock.c:1383
 msgid "Clock Preferences"
 msgstr "Keutamaan Jam"
 
-#: applets/clock/clock.c:1440
+#: applets/clock/clock.c:1419
 msgid "Clock _type:"
 msgstr "_Jenis jam:"
 
-#: applets/clock/clock.c:1451
+#: applets/clock/clock.c:1430
 msgid "12 hour"
 msgstr "12 jam"
 
-#: applets/clock/clock.c:1459
+#: applets/clock/clock.c:1438
 msgid "24 hour"
 msgstr "24 jam"
 
-#: applets/clock/clock.c:1467
+#: applets/clock/clock.c:1446
 msgid "UNIX time"
 msgstr "Masa UNIX"
 
-#: applets/clock/clock.c:1474
+#: applets/clock/clock.c:1454
 msgid "Internet time"
 msgstr "Masa Internet"
 
-#: applets/clock/clock.c:1487
+#: applets/clock/clock.c:1468
 msgid "Show _seconds"
 msgstr "Papar _saat"
 
-#: applets/clock/clock.c:1496
+#: applets/clock/clock.c:1477
 msgid "Show _date"
 msgstr "Papar _tarikh"
 
-#: applets/clock/clock.c:1505
+#: applets/clock/clock.c:1486
 msgid "Use _UTC"
 msgstr "Guna _UTC"
 
 #. Translator credits
-#: applets/clock/clock.c:1666 applets/notification_area/main.c:112
-#: applets/wncklet/showdesktop.c:443 applets/wncklet/window-list.c:805
-#: applets/wncklet/window-menu.c:113 applets/wncklet/workspace-switcher.c:504
+#: applets/clock/clock.c:1638 applets/notification_area/main.c:112
+#: applets/wncklet/showdesktop.c:448 applets/wncklet/window-list.c:805
+#: applets/wncklet/window-menu.c:114 applets/wncklet/workspace-switcher.c:504
 #: gnome-panel/menu.c:284
 msgid "translator_credits"
 msgstr "Hasbullah Bin Pit <sebol@ikhlas.com>, Merlimau. 2002,2003"
 
-#: applets/clock/clock.c:1685
+#: applets/clock/clock.c:1657
 #: applets/clock/GNOME_ClockApplet_Factory.server.in.in.h:2
 msgid "Clock"
 msgstr "Jam"
 
-#: applets/clock/clock.c:1687
+#: applets/clock/clock.c:1659
 msgid "The Clock displays the current time and date"
 msgstr "Jam memapar masa dan tarikh semasa"
 
@@ -165,22 +171,17 @@ msgid "24"
 msgstr "24"
 
 #: applets/clock/clock.schemas.in.h:2
+#, fuzzy
+msgid "24-hour"
+msgstr "24 jam"
+
+#: applets/clock/clock.schemas.in.h:3
 msgid "Hour format"
 msgstr "Format Jam"
 
-#: applets/clock/clock.schemas.in.h:3
+#: applets/clock/clock.schemas.in.h:4
 msgid "If true, display date in the clock, in addition to time."
 msgstr "Jika benar, papar tarikh pada Jam, sebagai tambahan kepada masa."
-
-#: applets/clock/clock.schemas.in.h:4
-msgid ""
-"If true, display internet time. The internet time system divides the day "
-"into 1000 \".beats\". There is no time zones in this system, so time is the "
-"same all over the world."
-msgstr ""
-"Jika benar, papar masa internet. Masa internet membahagi hari kepada 1000 \"."
-"beats\". Tiada zonwaktu bagi sistem ini, Oleh itu masa adalah sama satu "
-"dunia."
 
 #: applets/clock/clock.schemas.in.h:5
 msgid "If true, display seconds in time."
@@ -191,32 +192,36 @@ msgid "If true, display time in Universal Coordinated Time zone."
 msgstr "Jika benar, papar masa dalam Zon Masa Koordinat Universal (UTC)"
 
 #: applets/clock/clock.schemas.in.h:7
-msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
-msgstr "Jika benar, papar masa dalam saat sejak Epok, cth. 1970-01-01"
-
-#: applets/clock/clock.schemas.in.h:8
 msgid "If true, show date in a tooltip when the pointer is over the clock."
 msgstr "Jika benar, papar tarikh pada tooltip bila tetikus di atas Jam."
 
-#: applets/clock/clock.schemas.in.h:9
+#: applets/clock/clock.schemas.in.h:8
 msgid "Show date in clock"
 msgstr "Papar tarikh pada jam"
 
-#: applets/clock/clock.schemas.in.h:10
+#: applets/clock/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "Papar tarikh di tooltip"
 
-#: applets/clock/clock.schemas.in.h:11
+#: applets/clock/clock.schemas.in.h:10
 msgid "Show time with seconds"
 msgstr "Papar masa bersama saat"
+
+#: applets/clock/clock.schemas.in.h:11
+msgid ""
+"The use of this key was deprecated in GNOME 2.6 in favour of the 'format' "
+"key. The schema is retained for compatibility with older versions."
+msgstr ""
 
 #: applets/clock/clock.schemas.in.h:12
 msgid ""
 "This key specifies the hour format used by the clock applet. Possible values "
-"are 12 and 24."
+"are \"12-hour\", \"24-hour\", \"internet\" and \"unix\". If set to \"internet"
+"\", the clock will display internet time. The internet time system divides "
+"the day into 1000 \".beats\". There is no time zones in this system, so time "
+"is the same all over the world. If set to \"unix\", the clock will display "
+"time in seconds since Epoch, i.e. 1970-01-01."
 msgstr ""
-"Kekunci ini menyatakan format jam digunakan bagi aplet jam. Nilai yang "
-"bolehh adalah 12 dan 24."
 
 #: applets/clock/clock.schemas.in.h:13
 msgid "This key specifies the program to run in order to configure the time."
@@ -283,9 +288,9 @@ msgstr "_Perihal..."
 #: applets/wncklet/GNOME_WindowListApplet.xml.h:2
 #: applets/wncklet/GNOME_WindowMenuApplet.xml.h:2
 #: applets/wncklet/GNOME_WorkspaceSwitcherApplet.xml.h:2
-#: gnome-panel/drawer.c:597 gnome-panel/menu.c:3070
-#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:325
-#: gnome-panel/panel-menu-button.c:584
+#: gnome-panel/drawer.c:600 gnome-panel/menu.c:3085
+#: gnome-panel/panel-action-button.c:547 gnome-panel/panel-menu-bar.c:312
+#: gnome-panel/panel-menu-button.c:608
 msgid "_Help"
 msgstr "_Bantuan"
 
@@ -354,7 +359,7 @@ msgstr "Tak menjumpai arahan untuk dilaksanakan"
 msgid "%s the Fish Says:"
 msgstr "%s Ikan GNOME Berkata:"
 
-#: applets/fish/fish.c:745
+#: applets/fish/fish.c:746
 #, c-format
 msgid ""
 "Unable to execute '%s'\n"
@@ -365,7 +370,7 @@ msgstr ""
 "\n"
 "Perincian: %s"
 
-#: applets/fish/fish.c:766
+#: applets/fish/fish.c:767
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -377,7 +382,7 @@ msgstr ""
 "\n"
 "Sila rujuk dialog ciri-ciri ikan. "
 
-#: applets/fish/fish.c:1369
+#: applets/fish/fish.c:1371
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -385,7 +390,7 @@ msgstr ""
 "Perairan memerlukan reformasi!\n"
 "(lihat tarikh hari ini)"
 
-#: applets/fish/fish.c:1429
+#: applets/fish/fish.c:1431
 #, c-format
 msgid "%s the Fish, the fortune teller"
 msgstr "Ikan  %s, penilik nasib"
@@ -411,7 +416,7 @@ msgstr "<b>Animasi</b>"
 msgid "<b>General</b>"
 msgstr "<b>Umum</b>"
 
-#: applets/fish/fish.glade.h:5 gnome-panel/panel-util.c:152
+#: applets/fish/fish.glade.h:5
 msgid "Browse"
 msgstr "Lungsur"
 
@@ -555,7 +560,7 @@ msgstr "Kawasan Pemakluman Panel"
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:1
 #: gnome-panel/menu.c:112 gnome-panel/menu.c:122 gnome-panel/menu.c:132
 #: gnome-panel/menu.c:142 gnome-panel/menu.c:152 gnome-panel/menu.c:162
-#: gnome-panel/panel-menu-bar.c:179
+#: gnome-panel/panel-menu-bar.c:181
 msgid "Actions"
 msgstr "Aksi"
 
@@ -585,13 +590,14 @@ msgid "Window List"
 msgstr "Senarai Tetingkap"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:701
-msgid "Window Menu"
-msgstr "Menu Tetingkap"
-
-#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
 msgid "Window Navigation Applet Factory"
 msgstr "Kilang Aplet Navigasi Tetingkap"
+
+#: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:10
+#: applets/wncklet/window-menu.c:132 applets/wncklet/window-menu.c:706
+#, fuzzy
+msgid "Window Selector"
+msgstr "Senarai Tetingkap"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:11
 #: applets/wncklet/workspace-switcher.c:517
@@ -599,32 +605,32 @@ msgstr "Kilang Aplet Navigasi Tetingkap"
 msgid "Workspace Switcher"
 msgstr "Penukar RuangKerja"
 
-#: applets/wncklet/showdesktop.c:222
+#: applets/wncklet/showdesktop.c:223
 msgid "Click here to restore hidden windows."
 msgstr "Klik sini untuk mengembalikan tetingkap tersembunyi."
 
-#: applets/wncklet/showdesktop.c:225
+#: applets/wncklet/showdesktop.c:226
 msgid "Click here to hide all windows and show the desktop."
 msgstr "Klik sini untuk sembunyi semua tetingkap dan papar desktop."
 
-#: applets/wncklet/showdesktop.c:301
+#: applets/wncklet/showdesktop.c:308
 #, c-format
 msgid "Failed to load %s: %s\n"
 msgstr "Gagal memuatkan %s: %s\n"
 
-#: applets/wncklet/showdesktop.c:302
+#: applets/wncklet/showdesktop.c:309
 msgid "File not found"
 msgstr "Fail tidak dijumpai"
 
-#: applets/wncklet/showdesktop.c:332 applets/wncklet/showdesktop.c:452
+#: applets/wncklet/showdesktop.c:339 applets/wncklet/showdesktop.c:457
 msgid "Show Desktop Button"
 msgstr "Papar Butang Desktop"
 
-#: applets/wncklet/showdesktop.c:454
+#: applets/wncklet/showdesktop.c:459
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Butang ini membolehkan anda sembunyi semua tetingkap dan papar desktop"
 
-#: applets/wncklet/showdesktop.c:494
+#: applets/wncklet/showdesktop.c:499
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -686,7 +692,7 @@ msgstr "_Papar tetingkap dari ruangkerja semasa"
 msgid "Show windows from a_ll workspaces"
 msgstr "Papar tetingkap dari semua ruangkerja"
 
-#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3619
+#: applets/wncklet/window-list.glade.h:14 gnome-panel/panel-toplevel.c:3623
 msgid "Size"
 msgstr "Saiz"
 
@@ -768,20 +774,22 @@ msgid "When to group windows"
 msgstr "Bila mengumpul tetingkap"
 
 #: applets/wncklet/window-menu.c:136
-msgid "The Window Menu shows a list of all windows and lets you browse them."
+#, fuzzy
+msgid ""
+"The Window Selector shows a list of all windows and lets you browse them."
 msgstr ""
 "Menu Tetingkap memaparkan senarai semua tetingkap dan membolehkan anda "
 "melihatnya."
 
-#: applets/wncklet/window-menu.c:411
+#: applets/wncklet/window-menu.c:416
 msgid "Unknown Window"
 msgstr "Tetingkap tak dikenali"
 
-#: applets/wncklet/window-menu.c:614
+#: applets/wncklet/window-menu.c:619
 msgid "No Windows Open"
 msgstr "Tiada Tetingkap Dibuka"
 
-#: applets/wncklet/window-menu.c:702
+#: applets/wncklet/window-menu.c:707
 msgid "Tool to switch between windows"
 msgstr "Alat unruk beralih dinatara tetingkap"
 
@@ -898,12 +906,12 @@ msgstr ""
 "adalah benar."
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/panel-applet-frame.c:111
 msgid "Un_lock"
 msgstr "_NyahKunci"
 
 #: gnome-panel/applet.c:104 gnome-panel/applet.c:498
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:109
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/panel-applet-frame.c:111
 msgid "_Lock"
 msgstr "_Kunci"
 
@@ -952,7 +960,7 @@ msgstr "Serlahan Heret dan jatuh"
 msgid "Whether or not to highlight the icon during drag and drop"
 msgstr "Samada untuk menyerlahkan ikon semasa heret dan jatuh"
 
-#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3608
+#: gnome-panel/button-widget.c:787 gnome-panel/panel-toplevel.c:3612
 msgid "Orientation"
 msgstr "Orientasi"
 
@@ -1000,8 +1008,12 @@ msgstr "Solaris"
 msgid "CDE Menu"
 msgstr "Menu CDE"
 
-#: gnome-panel/drawer.c:594 gnome-panel/launcher.c:743 gnome-panel/menu.c:1497
-#: gnome-panel/menu.c:3019 gnome-panel/panel-action-button.c:97
+#: gnome-panel/drawer.c:339 gnome-panel/menu.c:3197
+msgid "Drawer"
+msgstr "Laci"
+
+#: gnome-panel/drawer.c:597 gnome-panel/launcher.c:743 gnome-panel/menu.c:1512
+#: gnome-panel/menu.c:3034 gnome-panel/panel-action-button.c:99
 msgid "_Properties"
 msgstr "_Ciri-ciri"
 
@@ -1010,7 +1022,7 @@ msgid "Create new file in the given directory"
 msgstr "Cipta fail baru pada direktori diberi"
 
 #: gnome-panel/gnome-panel-preferences.c:319
-#: gnome-panel/gnome-panel-screenshot.c:883
+#: gnome-panel/gnome-panel-screenshot.c:708
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1019,7 +1031,7 @@ msgstr ""
 "Terdapat ralat memapar bantuan: \n"
 "%s"
 
-#: gnome-panel/gnome-panel-preferences.c:391
+#: gnome-panel/gnome-panel-preferences.c:390
 msgid ""
 "The system administrator has disallowed\n"
 "modification of the panel configuration"
@@ -1027,7 +1039,7 @@ msgstr ""
 "Pentadbir sistem telah tidak mengizinkan\n"
 "mengubahsuaian konfigurasi panel"
 
-#: gnome-panel/gnome-panel-preferences.c:422
+#: gnome-panel/gnome-panel-preferences.c:421
 #, c-format
 msgid "Error loading glade file %s"
 msgstr "Ralat memuatkan fail glade %s"
@@ -1069,7 +1081,7 @@ msgstr "Keutamaan Panel"
 msgid "Slow"
 msgstr "Perlahan"
 
-#: gnome-panel/gnome-panel-screenshot.c:135
+#: gnome-panel/gnome-panel-screenshot.c:121
 msgid ""
 "Unable to initialize png structure.\n"
 "You probably have a bad version of libpng on your system"
@@ -1077,7 +1089,7 @@ msgstr ""
 "Tak dapat memulakan structur png.\n"
 "Anda mungkin mempuniyai versi libpng tak elok pada sistem anda"
 
-#: gnome-panel/gnome-panel-screenshot.c:143
+#: gnome-panel/gnome-panel-screenshot.c:129
 msgid ""
 "Unable to create png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1085,7 +1097,7 @@ msgstr ""
 "Tak dapat mencipta maklumat png.\n"
 "Anda mungkin mempuniyai versi libpng tak elok pada sistem anda"
 
-#: gnome-panel/gnome-panel-screenshot.c:150
+#: gnome-panel/gnome-panel-screenshot.c:136
 msgid ""
 "Unable to set png info.\n"
 "You probably have a bad version of libpng on your system"
@@ -1093,7 +1105,7 @@ msgstr ""
 "Tak dapat menetapkan maklumat png.\n"
 "Anda mungkin mempuniyai versi libpng tak elok pada sistem anda"
 
-#: gnome-panel/gnome-panel-screenshot.c:168
+#: gnome-panel/gnome-panel-screenshot.c:154
 msgid ""
 "Insufficient memory to save the screenshot.\n"
 "Please free up some resources and try again."
@@ -1101,13 +1113,13 @@ msgstr ""
 "Tak cukup memori untuk menyimpan cekupanskrin.\n"
 "Sila bebaskan sedikit sumber dna cuba lagi."
 
-#: gnome-panel/gnome-panel-screenshot.c:226
+#: gnome-panel/gnome-panel-screenshot.c:212
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "Fail %s sudah wujud. Tindih?"
 
-#: gnome-panel/gnome-panel-screenshot.c:247
-#: gnome-panel/gnome-panel-screenshot.c:755
+#: gnome-panel/gnome-panel-screenshot.c:233
+#: gnome-panel/gnome-panel-screenshot.c:584
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1118,52 +1130,50 @@ msgstr ""
 "\"%s\"\n"
 "Sila periksa keizinan pada direktori pangkal"
 
-#: gnome-panel/gnome-panel-screenshot.c:520
-msgid "Print Screenshot"
-msgstr "Cetak Cekupanskrin"
-
-#: gnome-panel/gnome-panel-screenshot.c:568
-msgid "Screenshot Print Preview"
-msgstr "Pralihat Cetakan Cekupanskrin"
-
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:595
-#, c-format
-msgid "%s%cScreenshot-%s.png"
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if a specific window is taken
+#: gnome-panel/gnome-panel-screenshot.c:420
+#, fuzzy, c-format
+msgid "Screenshot-%s.png"
 msgstr "%s%cCekupanku-%s.png"
 
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:602
-#, c-format
-msgid "%s%cScreenshot.png"
+#. translators: this is the name of the file that gets made up
+#. * with the screenshot if the entire screen is taken
+#: gnome-panel/gnome-panel-screenshot.c:424
+#, fuzzy
+msgid "Screenshot.png"
 msgstr "%s%cCekupanku.png"
 
-#. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:619
-#, c-format
-msgid "%s%cScreenshot-%s-%d.png"
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if a specific window is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:445
+#, fuzzy, c-format
+msgid "Screenshot-%s-%d.png"
 msgstr "%s%cCekupanku-%s-%d.png"
 
-#. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:626
-#, c-format
-msgid "%s%cScreenshot-%d.png"
+#. translators: this is the name of the file that gets
+#. * made up with the screenshot if the entire screen is
+#. * taken
+#: gnome-panel/gnome-panel-screenshot.c:452
+#, fuzzy, c-format
+msgid "Screenshot-%d.png"
 msgstr "%s%cCekupanku-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:778
+#: gnome-panel/gnome-panel-screenshot.c:607
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "Tak cukup ruang untuk menulis fail %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1239
+#: gnome-panel/gnome-panel-screenshot.c:1098
 msgid "Grab a window instead of the entire screen"
 msgstr "Genggam tetingkap selain daripada seluruh skrin"
 
-#: gnome-panel/gnome-panel-screenshot.c:1240
+#: gnome-panel/gnome-panel-screenshot.c:1099
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Ambil cekupan skrin selepas selangmasa dinyatakan [dalam saat]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1292
+#: gnome-panel/gnome-panel-screenshot.c:1151
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1171,7 +1181,7 @@ msgstr ""
 "Fail Glade bagi program cekupanskrin hilang.\n"
 "Sila Periksa pemasangan gnome-core anda"
 
-#: gnome-panel/gnome-panel-screenshot.c:1316
+#: gnome-panel/gnome-panel-screenshot.c:1167
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Tak dapat mencekup skrin desktop semasa. :("
 
@@ -1198,10 +1208,6 @@ msgstr "Simpan cekupanskrin ke _fail:"
 #: gnome-panel/gnome-panel-screenshot.glade.h:8
 msgid "Save screenshot to _web page (save in ~/public__html)"
 msgstr "Simpan cekupanskrin ke laman _web (simpan di ~/public__html)"
-
-#: gnome-panel/gnome-panel-screenshot.glade.h:9
-msgid "_Print screenshot..."
-msgstr "_Cetak cekupanskrin"
 
 #: gnome-panel/gnome-panel-screenshot.schemas.in.h:1
 msgid ""
@@ -1264,8 +1270,8 @@ msgstr "Cipta Pelancar"
 msgid "Specify a profile name to load"
 msgstr "Nyatakan nama profil untuk dimuatkan"
 
-#: gnome-panel/menu.c:111 gnome-panel/menu.c:3217
-#: gnome-panel/panel-menu-bar.c:173
+#: gnome-panel/menu.c:111 gnome-panel/menu.c:3232
+#: gnome-panel/panel-menu-bar.c:175
 msgid "Log Out"
 msgstr "Log Keluar"
 
@@ -1285,16 +1291,16 @@ msgstr "Kunci"
 msgid "Lock the screen so you can temporarily leave your computer"
 msgstr "Kunci skrin supaya anda boleh meninggalkan komputer sekejap"
 
-#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:248
+#: gnome-panel/menu.c:131 gnome-panel/panel-action-button.c:250
 msgid "Force Quit"
 msgstr "Keluar Paksa"
 
-#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:243
+#: gnome-panel/menu.c:141 gnome-panel/panel-action-button.c:245
 msgid "Screenshot"
 msgstr "Cekupanskrin"
 
-#: gnome-panel/menu.c:144 gnome-panel/menu.c:3385
-#: gnome-panel/panel-menu-bar.c:152
+#: gnome-panel/menu.c:144 gnome-panel/menu.c:3400
+#: gnome-panel/panel-menu-bar.c:154
 msgid "Take a screenshot of your desktop"
 msgstr "Ambil cekupan skrin desktop anda"
 
@@ -1302,8 +1308,8 @@ msgstr "Ambil cekupan skrin desktop anda"
 msgid "Search"
 msgstr "Carian"
 
-#: gnome-panel/menu.c:154 gnome-panel/menu.c:3366
-#: gnome-panel/panel-menu-bar.c:137
+#: gnome-panel/menu.c:154 gnome-panel/menu.c:3381
+#: gnome-panel/panel-menu-bar.c:139
 msgid "Find files, folders, and documents on your computer"
 msgstr "Cari fail, folder dan dokumen pada komputer anda"
 
@@ -1331,13 +1337,13 @@ msgstr ""
 "Program ini bertanggungjawap untuk melancarkan aplikasi lain, aplet kecil "
 "embeded didalam dirinya."
 
-#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:166
-#: gnome-panel/panel-action-button.c:184
+#: gnome-panel/menu.c:328 gnome-panel/panel-action-button.c:168
+#: gnome-panel/panel-action-button.c:186
 #, c-format
 msgid "Cannot execute '%s'"
 msgstr "Tidak dapat melaksanakan '%s'"
 
-#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:815
+#: gnome-panel/menu.c:329 gnome-panel/panel-util.c:720
 #, c-format
 msgid "%s - command not found"
 msgstr "%s - arahan tidak dijumpai"
@@ -1377,106 +1383,106 @@ msgstr "Tak boleh tambah ke kekotak laksana"
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Tiada medan 'Exec' atau 'URL' pada kemasukan"
 
-#: gnome-panel/menu.c:1444
+#: gnome-panel/menu.c:1316 gnome-panel/menu.c:3178
+msgid "Main Menu"
+msgstr "Menu Utama"
+
+#: gnome-panel/menu.c:1321 gnome-panel/menu-ditem.c:309
+msgid "Menu"
+msgstr "Menu"
+
+#: gnome-panel/menu.c:1459
 msgid "Add this launcher to panel"
 msgstr "Tambah pelancar ini pada panel"
 
-#: gnome-panel/menu.c:1454
+#: gnome-panel/menu.c:1469
 msgid "Remove this item"
 msgstr "Buang item ini"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1486
 msgid "Put into run dialog"
 msgstr "Letakkannya di dialog perlaksanaan"
 
-#: gnome-panel/menu.c:1519
+#: gnome-panel/menu.c:1534
 msgid "Entire menu"
 msgstr "Seluruh menu"
 
-#: gnome-panel/menu.c:1528
+#: gnome-panel/menu.c:1543
 msgid "Add this as drawer to panel"
 msgstr "Tambah laci ini pada panel"
 
-#: gnome-panel/menu.c:1539
+#: gnome-panel/menu.c:1554
 msgid "Add this as menu to panel"
 msgstr "Tambah menu ini pada panel"
 
-#: gnome-panel/menu.c:1552
+#: gnome-panel/menu.c:1567
 msgid "Add new item to this menu"
 msgstr "Tambah item baru pada menu ini"
 
-#: gnome-panel/menu.c:1579
+#: gnome-panel/menu.c:1594
 msgid "Properties"
 msgstr "Ciri-ciri"
 
-#: gnome-panel/menu.c:2554 gnome-panel/menu.c:2609
+#: gnome-panel/menu.c:2569 gnome-panel/menu.c:2624
 #: libpanel-applet/panel-test-applets.c:156
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "kueri mengembalikan pengecualian %s\n"
 
-#: gnome-panel/menu.c:2823 gnome-panel/menu.c:2828 gnome-panel/menu.c:3326
-#: gnome-panel/panel-menu-bar.c:195
+#: gnome-panel/menu.c:2838 gnome-panel/menu.c:2843 gnome-panel/menu.c:3341
+#: gnome-panel/panel-menu-bar.c:197
 msgid "Applications"
 msgstr "Aplikasi"
 
-#: gnome-panel/menu.c:2898
+#: gnome-panel/menu.c:2913
 msgid "You cannot remove your last panel."
 msgstr "Anda tak boleh buang panel terakhir"
 
-#: gnome-panel/menu.c:2961
+#: gnome-panel/menu.c:2976
 msgid "_Delete This Panel..."
 msgstr "Pa_dam Panel Ini..."
 
-#: gnome-panel/menu.c:2964 gnome-panel/menu.c:3004
+#: gnome-panel/menu.c:2979 gnome-panel/menu.c:3019
 msgid "_Delete This Panel"
 msgstr "Pa_dam Panel Ini"
 
-#: gnome-panel/menu.c:2979
+#: gnome-panel/menu.c:2994
 msgid "_Add to Panel"
 msgstr "_Tambah ke Panel"
 
-#: gnome-panel/menu.c:3034
+#: gnome-panel/menu.c:3049
 msgid "_New Panel"
 msgstr "Panel _Baru"
 
-#: gnome-panel/menu.c:3081
+#: gnome-panel/menu.c:3096
 msgid "_About Panels"
 msgstr "_Perihal Panel"
 
-#: gnome-panel/menu.c:3095
+#: gnome-panel/menu.c:3110
 msgid "About _GNOME"
 msgstr "Perihal _GNOME"
 
-#: gnome-panel/menu.c:3143
+#: gnome-panel/menu.c:3158
 msgid "Launcher..."
 msgstr "Pelancar..."
 
-#: gnome-panel/menu.c:3153
+#: gnome-panel/menu.c:3168
 msgid "Launcher from menu"
 msgstr "Pelancar daripada menu"
 
-#: gnome-panel/menu.c:3163 gnome-panel/panel-menu-button.c:86
-msgid "Main Menu"
-msgstr "Menu Utama"
-
-#: gnome-panel/menu.c:3173
+#: gnome-panel/menu.c:3188
 msgid "Menu Bar"
 msgstr "Bar Menu"
 
-#: gnome-panel/menu.c:3182
-msgid "Drawer"
-msgstr "Laci"
-
-#: gnome-panel/menu.c:3205 gnome-panel/panel-menu-bar.c:164
+#: gnome-panel/menu.c:3220 gnome-panel/panel-menu-bar.c:166
 msgid "Lock Screen"
 msgstr "Kunci Skrin"
 
-#: gnome-panel/menu.c:3211
+#: gnome-panel/menu.c:3226
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "Kunci skrin supaya anda boleh meninggalkan komputer sekejap"
 
-#: gnome-panel/menu.c:3223
+#: gnome-panel/menu.c:3238
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1484,33 +1490,29 @@ msgstr ""
 "Logkeluar sesi ini untuk logmasuk sebagai pengguna lain atau untuk tutup "
 "komputer"
 
-#: gnome-panel/menu.c:3347 gnome-panel/panel-menu-bar.c:121
+#: gnome-panel/menu.c:3362 gnome-panel/panel-menu-bar.c:123
 msgid "Run Application..."
 msgstr "Laksana Aplikasi..."
 
-#: gnome-panel/menu.c:3354 gnome-panel/panel-menu-bar.c:123
+#: gnome-panel/menu.c:3369 gnome-panel/panel-menu-bar.c:125
 msgid "Run an Application by entering a command"
 msgstr "Laksanakan aplikasi dengan memasukkan arahan"
 
-#: gnome-panel/menu.c:3363 gnome-panel/panel-menu-bar.c:135
+#: gnome-panel/menu.c:3378 gnome-panel/panel-menu-bar.c:137
 msgid "Search for Files..."
 msgstr "Cari Fail..."
 
-#: gnome-panel/menu.c:3382 gnome-panel/panel-menu-bar.c:150
+#: gnome-panel/menu.c:3397 gnome-panel/panel-menu-bar.c:152
 msgid "Take Screenshot..."
 msgstr "Cekup Skrin..."
 
-#: gnome-panel/menu.c:3400
+#: gnome-panel/menu.c:3415
 msgid "Desktop"
 msgstr "Desktop"
 
 #: gnome-panel/menu-ditem.c:127
 msgid "Cannot save changes to launcher"
 msgstr "Tak dapat menyimpan perubahan pada pelancar"
-
-#: gnome-panel/menu-ditem.c:309
-msgid "Menu"
-msgstr "Menu"
 
 #: gnome-panel/menu-ditem.c:463 gnome-panel/menu-ditem.c:480
 #: gnome-panel/menu-ditem.c:536
@@ -1538,36 +1540,36 @@ msgstr ""
 "Anda tak boleh mencipta pelancar baru pada lokasi ini kerana lokasi tidak "
 "boleh ditulis."
 
-#: gnome-panel/panel-action-button.c:86
+#: gnome-panel/panel-action-button.c:88
 msgid "_Activate Screensaver"
 msgstr "_Aktifkan Screensaver"
 
-#: gnome-panel/panel-action-button.c:87
+#: gnome-panel/panel-action-button.c:89
 msgid "_Lock Screen"
 msgstr "_Kunci Skrin"
 
-#: gnome-panel/panel-action-button.c:91
+#: gnome-panel/panel-action-button.c:93
 msgid "_Kill Screensaver Daemon"
 msgstr "_Bunuh Daemon Screensaver"
 
-#: gnome-panel/panel-action-button.c:93
+#: gnome-panel/panel-action-button.c:95
 msgid "Restart _Screensaver Daemon"
 msgstr "Ulanghidupkan Daemon _Screensaver"
 
-#: gnome-panel/panel-action-button.c:221
+#: gnome-panel/panel-action-button.c:223
 msgid "Lock screen"
 msgstr "Kunci skrin"
 
-#: gnome-panel/panel-action-button.c:228
+#: gnome-panel/panel-action-button.c:230
 msgid "Log out of GNOME"
 msgstr "Log keluar GNOME"
 
-#: gnome-panel/panel-action-button.c:233
+#: gnome-panel/panel-action-button.c:235
 #: gnome-panel/panel-run-dialog.glade.h:7
 msgid "Run Application"
 msgstr "Laksana Aplikasi"
 
-#: gnome-panel/panel-action-button.c:238
+#: gnome-panel/panel-action-button.c:240
 msgid "Search for Files"
 msgstr "Cari fail"
 
@@ -1579,32 +1581,32 @@ msgstr "Jenis Aksi"
 msgid "The type of action this button implements"
 msgstr "Jenis aksi implmentasi butang ini"
 
-#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:467
+#: gnome-panel/panel-action-button.c:405 gnome-panel/panel-menu-button.c:461
 msgid "Drag and drop enabled"
 msgstr "Heret dan jatuh dihidupkan"
 
-#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:468
+#: gnome-panel/panel-action-button.c:406 gnome-panel/panel-menu-button.c:462
 msgid "Whether or not drag and drop is enabled on the widget"
 msgstr "Samada heret dan jatuh dihidupkan pada wiget ini"
 
-#: gnome-panel/panel-applet-frame.c:740
+#: gnome-panel/panel-applet-frame.c:739
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Pengecualian dari popup_menu '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:861
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"The %s applet appears to have died unexpectedly\n"
+"The \"%s\" applet appears to have died unexpectedly.\n"
 "\n"
-"Reload this applet?%s"
+"Do you want to reload this applet?"
 msgstr ""
 "Aplet %s nampaknya mati tanpa diduga\n"
 "\n"
 "\n"
 "Ulangmuat aplet ini?%s"
 
-#: gnome-panel/panel-applet-frame.c:866
+#: gnome-panel/panel-applet-frame.c:867
 msgid ""
 "\n"
 "\n"
@@ -1617,20 +1619,21 @@ msgstr ""
 "(Jika anda pilih untuk tidak ulangmuatnya kali ini, anda boleh menambahnya "
 "dengan klik-kanan pada panel dan klik pada submenu \"Tambah ke panel\")"
 
-#: gnome-panel/panel-applet-frame.c:901
+#: gnome-panel/panel-applet-frame.c:907
 msgid "D_on't Delete"
 msgstr "_Jangan Padam"
 
-#: gnome-panel/panel-applet-frame.c:943
-#, c-format
-msgid ""
-"The panel encountered a problem while loading \"%s\"\n"
-"Details: %s%s"
-msgstr ""
-"Panel dirundung masalah ketika memuatkan  \"%s\"\n"
-"Perincian: %s%s"
+#: gnome-panel/panel-applet-frame.c:944
+#, fuzzy, c-format
+msgid "The panel encountered a problem while loading \"%s\"."
+msgstr "Panel dirundung masalah ketika memuatkan  \"%s\"%s"
 
-#: gnome-panel/panel-applet-frame.c:947 gnome-panel/panel-applet-frame.c:958
+#: gnome-panel/panel-applet-frame.c:949 gnome-panel/panel-util.c:262
+#, c-format
+msgid "Details: %s"
+msgstr "Perincian: %s"
+
+#: gnome-panel/panel-applet-frame.c:959 gnome-panel/panel-applet-frame.c:972
 msgid ""
 "\n"
 "\n"
@@ -1640,12 +1643,7 @@ msgstr ""
 "\n"
 "Adakah anda ingin memadam aplet drpd konfigurasi anda?"
 
-#: gnome-panel/panel-applet-frame.c:955
-#, c-format
-msgid "The panel encountered a problem while loading \"%s\"%s"
-msgstr "Panel dirundung masalah ketika memuatkan  \"%s\"%s"
-
-#: gnome-panel/panel-applet-frame.c:1067
+#: gnome-panel/panel-applet-frame.c:1084
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Tak boleh mendapatkan antaramuka AppletShell daripada kawalan\n"
 
@@ -1669,7 +1667,7 @@ msgstr "Ralat mendapatkan nilai bagi '%s': %s"
 msgid "Open URL: %s"
 msgstr "Buka URL: %s"
 
-#: gnome-panel/panel.c:1227
+#: gnome-panel/panel.c:1228
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -1677,7 +1675,7 @@ msgstr ""
 "Bila panel dibuang, panel dan\n"
 "tetapannya akan hilang. Buang panel ini?"
 
-#: gnome-panel/panel.c:1236
+#: gnome-panel/panel.c:1237
 msgid "Delete Panel"
 msgstr "Padam Panel"
 
@@ -1881,43 +1879,53 @@ msgstr "Ambil cekupan skrin"
 msgid "Take window screenshot"
 msgstr "Ambil cekupan skrin tetingkap"
 
-#: gnome-panel/panel-menu-bar.c:166
+#: gnome-panel/panel-menu-bar.c:168
 msgid "Protect your computer from unauthorized use"
 msgstr "Lindung komputer anda daripada penggunaan yang tidak diingini"
 
-#: gnome-panel/panel-menu-bar.c:175
+#: gnome-panel/panel-menu-bar.c:177
 msgid "Quit from the GNOME desktop"
 msgstr "Keluar daripada Desktop GNOME"
 
-#: gnome-panel/panel-menu-button.c:431
+#: gnome-panel/panel-menu-button.c:416
 msgid "Menu Path"
 msgstr "Path menu"
 
-#: gnome-panel/panel-menu-button.c:432
+#: gnome-panel/panel-menu-button.c:417
 msgid "The path from which to construct the menu"
 msgstr "Path drpd mana untuk membina menu"
 
-#: gnome-panel/panel-menu-button.c:440
+#: gnome-panel/panel-menu-button.c:425
 msgid "Custom Icon"
 msgstr "Ikon Tersendiri"
 
-#: gnome-panel/panel-menu-button.c:441
+#: gnome-panel/panel-menu-button.c:426
 msgid "The custom icon for the menu"
 msgstr "Ikon sendiri bagi menu"
 
-#: gnome-panel/panel-menu-button.c:449
+#: gnome-panel/panel-menu-button.c:434
+#, fuzzy
+msgid "Tooltip"
+msgstr "Atas"
+
+#: gnome-panel/panel-menu-button.c:435
+#, fuzzy
+msgid "Tooltip displayed for the menu"
+msgstr "Tooltip dipaparkan bagi laci"
+
+#: gnome-panel/panel-menu-button.c:443
 msgid "Use Menu Path"
 msgstr "Guna Path  Menu"
 
-#: gnome-panel/panel-menu-button.c:450
+#: gnome-panel/panel-menu-button.c:444
 msgid "Use the path specified by the menu-path property"
 msgstr "Guna path yang dinyatakan oleh ciri-ciri menu-path"
 
-#: gnome-panel/panel-menu-button.c:458
+#: gnome-panel/panel-menu-button.c:452
 msgid "Use Custom Icon"
 msgstr "Guna Ikon Sendiri"
 
-#: gnome-panel/panel-menu-button.c:459
+#: gnome-panel/panel-menu-button.c:453
 msgid "Use the icon specified by the custom-icon property"
 msgstr "Guna ikon dinyatakan oleh ciri-ciri custom-icon"
 
@@ -2064,9 +2072,10 @@ msgstr ""
 "kiri (atau atas jika mengufuk) pinggir panel."
 
 #: gnome-panel/panel-object.schemas.in.h:23
+#, fuzzy
 msgid ""
-"The text to display in a tooltip for this drawer. This key is only relevant "
-"if the object_type key is \"drawer-object\"."
+"The text to display in a tooltip for this drawer or this menu. This key is "
+"only relevant if the object_type key is \"drawer-object\" or \"menu-object\"."
 msgstr ""
 "Teks untuk dipaparkan pada tooltip bagi laci ini. Tetapan ini hanya relevan "
 "jika object_type adalah \"drawer-object\"."
@@ -2082,7 +2091,8 @@ msgstr ""
 "\"menu-bar\"."
 
 #: gnome-panel/panel-object.schemas.in.h:25
-msgid "Tooltip displayed for drawer"
+#, fuzzy
+msgid "Tooltip displayed for drawer or menu"
 msgstr "Tooltip dipaparkan bagi laci"
 
 #: gnome-panel/panel-object.schemas.in.h:26
@@ -2123,7 +2133,7 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Ralat membaca nilai boolean GConf  '%s': %s"
 
-#: gnome-panel/panel-profile.c:2137
+#: gnome-panel/panel-profile.c:2144
 #, c-format
 msgid "Error reading GConf list value '%s': %s"
 msgstr "Ralat membaca nilai senarai GConf  '%s': %s"
@@ -2267,8 +2277,8 @@ msgid "An unknown error occurred while trying to open %s"
 msgstr "Ralat tidak diketahui berlaku bila cuba membuka %s"
 
 #: gnome-panel/panel-recent.c:175
-msgid "Open Recent"
-msgstr "Buka Kebelakangan"
+msgid "Recent Documents"
+msgstr ""
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2345,7 +2355,7 @@ msgstr "Ikon arahan untuk dilaksanakan."
 msgid "_Run"
 msgstr "_Laksana"
 
-#: gnome-panel/panel-shell.c:80
+#: gnome-panel/panel-shell.c:74
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
@@ -2353,7 +2363,7 @@ msgstr ""
 "Kami dapati panel sedia terlaksana.\n"
 "dan ianya akan keluar."
 
-#: gnome-panel/panel-shell.c:84
+#: gnome-panel/panel-shell.c:78
 #, c-format
 msgid ""
 "There was a problem registering the panel with the bonobo-activation "
@@ -2376,196 +2386,196 @@ msgstr "_Paksa keluar"
 
 #. translators: these string will be shown in MetaCity's switch window
 #. * popup when you pass the focus to a panel
-#: gnome-panel/panel-toplevel.c:1452
+#: gnome-panel/panel-toplevel.c:1454
 msgid "Top Expanded Edge Panel"
 msgstr "Panel Pinggiran Atas Terkembang"
 
-#: gnome-panel/panel-toplevel.c:1453
+#: gnome-panel/panel-toplevel.c:1455
 msgid "Top Centered Panel"
 msgstr "Panel Ketengah Atas"
 
-#: gnome-panel/panel-toplevel.c:1454
+#: gnome-panel/panel-toplevel.c:1456
 msgid "Top Floating Panel"
 msgstr "Panel Terapung Atas"
 
-#: gnome-panel/panel-toplevel.c:1455
+#: gnome-panel/panel-toplevel.c:1457
 msgid "Top Edge Panel"
 msgstr "Panel Pinggiran Atas"
 
-#: gnome-panel/panel-toplevel.c:1459
+#: gnome-panel/panel-toplevel.c:1461
 msgid "Bottom Expanded Edge Panel"
 msgstr "Panel Pinggiran Terkembang Bawah"
 
-#: gnome-panel/panel-toplevel.c:1460
+#: gnome-panel/panel-toplevel.c:1462
 msgid "Bottom Centered Panel"
 msgstr "Panel KeTengah Bawah"
 
-#: gnome-panel/panel-toplevel.c:1461
+#: gnome-panel/panel-toplevel.c:1463
 msgid "Bottom Floating Panel"
 msgstr "Panel Terapung Bawah"
 
-#: gnome-panel/panel-toplevel.c:1462
+#: gnome-panel/panel-toplevel.c:1464
 msgid "Bottom Edge Panel"
 msgstr "Panel Pinggiran Bawah"
 
-#: gnome-panel/panel-toplevel.c:1466
+#: gnome-panel/panel-toplevel.c:1468
 msgid "Left Expanded Edge Panel"
 msgstr "Panel Pinggiran Terkembang Kiri"
 
-#: gnome-panel/panel-toplevel.c:1467
+#: gnome-panel/panel-toplevel.c:1469
 msgid "Left Centered Panel"
 msgstr "Panel Ketengah Kiri"
 
-#: gnome-panel/panel-toplevel.c:1468
+#: gnome-panel/panel-toplevel.c:1470
 msgid "Left Floating Panel"
 msgstr "Panel Terapung Kiri"
 
-#: gnome-panel/panel-toplevel.c:1469
+#: gnome-panel/panel-toplevel.c:1471
 msgid "Left Edge Panel"
 msgstr "Panel Pinggiran Kiri"
 
-#: gnome-panel/panel-toplevel.c:1473
+#: gnome-panel/panel-toplevel.c:1475
 msgid "Right Expanded Edge Panel"
 msgstr "Panel Pinggiran Terkembang Kanan"
 
-#: gnome-panel/panel-toplevel.c:1474
+#: gnome-panel/panel-toplevel.c:1476
 msgid "Right Centered Panel"
 msgstr "Panel KeTengah Kanan"
 
-#: gnome-panel/panel-toplevel.c:1475
+#: gnome-panel/panel-toplevel.c:1477
 msgid "Right Floating Panel"
 msgstr "Panel Terapung Kanan"
 
-#: gnome-panel/panel-toplevel.c:1476
+#: gnome-panel/panel-toplevel.c:1478
 msgid "Right Edge Panel"
 msgstr "Panel Pinggiran Kanan"
 
-#: gnome-panel/panel-toplevel.c:3588
+#: gnome-panel/panel-toplevel.c:3592
 msgid "Name"
 msgstr "Nama"
 
-#: gnome-panel/panel-toplevel.c:3589
+#: gnome-panel/panel-toplevel.c:3593
 msgid "The name of this panel"
 msgstr "Nama bagi panel ini"
 
-#: gnome-panel/panel-toplevel.c:3598
+#: gnome-panel/panel-toplevel.c:3602
 msgid "Expand"
 msgstr "Kembang"
 
-#: gnome-panel/panel-toplevel.c:3599
+#: gnome-panel/panel-toplevel.c:3603
 msgid "Expand to take up the full monitor width/height"
 msgstr "Kembang supaya mengambil selurus lebar/tinggi monitor"
 
-#: gnome-panel/panel-toplevel.c:3609
+#: gnome-panel/panel-toplevel.c:3613
 msgid "The orientation of the panel"
 msgstr "Orientasi bagi panel ini"
 
-#: gnome-panel/panel-toplevel.c:3620
+#: gnome-panel/panel-toplevel.c:3624
 msgid "The height (or width when vertical) of the panel"
 msgstr "Tinggi (atau lebar bila menegak) bagi panel"
 
-#: gnome-panel/panel-toplevel.c:3632
+#: gnome-panel/panel-toplevel.c:3636
 msgid "X position"
 msgstr "Posisi X"
 
-#: gnome-panel/panel-toplevel.c:3633
+#: gnome-panel/panel-toplevel.c:3637
 msgid "The X position of the panel"
 msgstr "Posisi X bagi panel"
 
-#: gnome-panel/panel-toplevel.c:3644
+#: gnome-panel/panel-toplevel.c:3648
 msgid "X centered"
 msgstr "X diketengah"
 
-#: gnome-panel/panel-toplevel.c:3645
+#: gnome-panel/panel-toplevel.c:3649
 msgid "The x co-ordinate is relative to center screen"
 msgstr "Koordinat x relatif kepada tengah skrin"
 
-#: gnome-panel/panel-toplevel.c:3654
+#: gnome-panel/panel-toplevel.c:3658
 msgid "Y position"
 msgstr "Posisi Y"
 
-#: gnome-panel/panel-toplevel.c:3655
+#: gnome-panel/panel-toplevel.c:3659
 msgid "The Y position of the panel"
 msgstr "Posisi Y bagi panel"
 
-#: gnome-panel/panel-toplevel.c:3666
+#: gnome-panel/panel-toplevel.c:3670
 msgid "Y centered"
 msgstr "Y diketengah"
 
-#: gnome-panel/panel-toplevel.c:3667
+#: gnome-panel/panel-toplevel.c:3671
 msgid "The y co-ordinate is relative to center screen"
 msgstr "Koordinat y relatif kepada tengah skrin"
 
-#: gnome-panel/panel-toplevel.c:3676
+#: gnome-panel/panel-toplevel.c:3680
 msgid "Xinerama monitor"
 msgstr "Monitor Xinerama"
 
-#: gnome-panel/panel-toplevel.c:3677
+#: gnome-panel/panel-toplevel.c:3681
 msgid "The monitor (in terms of Xinerama) which the panel is on"
 msgstr "Monitor (dalam istilah Xinerama) dimana panel diletak"
 
-#: gnome-panel/panel-toplevel.c:3688
+#: gnome-panel/panel-toplevel.c:3692
 msgid "Auto hide"
 msgstr "Auto sembunyi"
 
-#: gnome-panel/panel-toplevel.c:3689
+#: gnome-panel/panel-toplevel.c:3693
 msgid "Automatically hide the panel when the mouse leaves the panel"
 msgstr "Automaik sorok panel bila tetinkus meninggalkan panel"
 
-#: gnome-panel/panel-toplevel.c:3698
+#: gnome-panel/panel-toplevel.c:3702
 msgid "Hide delay"
 msgstr "Lengahan Penyembunyian"
 
-#: gnome-panel/panel-toplevel.c:3699
+#: gnome-panel/panel-toplevel.c:3703
 msgid "The number of milliseconds to delay before automatically hiding"
 msgstr "Bilangan milisaat untuk dilengahkan sebelum automatik sembunyi"
 
-#: gnome-panel/panel-toplevel.c:3710
+#: gnome-panel/panel-toplevel.c:3714
 msgid "Un-hide delay"
 msgstr "Lengahan Nyah-sorok"
 
-#: gnome-panel/panel-toplevel.c:3711
+#: gnome-panel/panel-toplevel.c:3715
 msgid "The number of milliseconds to delay before automatically un-hiding"
 msgstr "Bilangan milisaat untuk dilengahkan sebelum automatik nyah-sorok"
 
-#: gnome-panel/panel-toplevel.c:3722
+#: gnome-panel/panel-toplevel.c:3726
 msgid "Auto-hide size"
 msgstr "Saiz auto-sembunyi"
 
-#: gnome-panel/panel-toplevel.c:3723
+#: gnome-panel/panel-toplevel.c:3727
 msgid ""
 "The number of pixels visible when the panel has been automatically hidden"
 msgstr "bilangan piksel yang kelihatan bila panel automatik disorok"
 
-#: gnome-panel/panel-toplevel.c:3734
+#: gnome-panel/panel-toplevel.c:3738
 msgid "Animate"
 msgstr "Animasi"
 
-#: gnome-panel/panel-toplevel.c:3735
+#: gnome-panel/panel-toplevel.c:3739
 msgid "Enable hiding/showing animations"
 msgstr "Hidupkan animasi penyorokan/pemaparan"
 
-#: gnome-panel/panel-toplevel.c:3744
+#: gnome-panel/panel-toplevel.c:3748
 msgid "Animation Speed"
 msgstr "Kelajuan Animas:"
 
-#: gnome-panel/panel-toplevel.c:3745
+#: gnome-panel/panel-toplevel.c:3749
 msgid "The speed at which to animate panel hiding/showing"
 msgstr "Kelajuam untuk menganimasikan penyorokan/pemaparan panel"
 
-#: gnome-panel/panel-toplevel.c:3755
+#: gnome-panel/panel-toplevel.c:3759
 msgid "Buttons Enabled"
 msgstr "Butang Dihidupkan"
 
-#: gnome-panel/panel-toplevel.c:3756
+#: gnome-panel/panel-toplevel.c:3760
 msgid "Enable hide/show buttons"
 msgstr "Hidupkan butang sembunyi/papar"
 
-#: gnome-panel/panel-toplevel.c:3765
+#: gnome-panel/panel-toplevel.c:3769
 msgid "Arrows Enabled"
 msgstr "Panah Dihidupkan"
 
-#: gnome-panel/panel-toplevel.c:3766
+#: gnome-panel/panel-toplevel.c:3770
 msgid "Enable arrows on hide/show buttons"
 msgstr "Hidupkan panah pada butang sembunyi/papar"
 
@@ -2880,11 +2890,13 @@ msgid "X co-ordinate of panel"
 msgstr "Koordinat X bagi panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:50
-msgid "X screen panel is on"
+#, fuzzy
+msgid "X screen where the panel is displayed"
 msgstr "Skrin X dimana letaknya panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:51
-msgid "Xinerama monitor panel is on"
+#, fuzzy
+msgid "Xinerama monitor where the panel is displayed"
 msgstr "Monitor Xinerama dimana letaknya panel"
 
 #: gnome-panel/panel-toplevel.schemas.in.h:52
@@ -2895,12 +2907,7 @@ msgstr "Koordinat Y bagi panel"
 msgid "Cannot display help document"
 msgstr "Tak dapat memaparkan dokumen bantuan"
 
-#: gnome-panel/panel-util.c:357
-#, c-format
-msgid "Details: %s"
-msgstr "Perincian: %s"
-
-#: gnome-panel/panel-util.c:814
+#: gnome-panel/panel-util.c:719
 #, c-format
 msgid "Cannot execute %s"
 msgstr "Tidak boleh melaksanakan %s"
@@ -2917,46 +2924,46 @@ msgstr "Aplet Bonobo Ujian"
 msgid "Test Bonobo Applet Factory"
 msgstr "Kilang Aplet Bonobo Ujian"
 
-#: libpanel-applet/panel-applet.c:848
+#: libpanel-applet/panel-applet.c:872
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Jenis latarbelakang tidak sempurna '%s' diterima"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:886
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Jenis latarbelakang tidak sempurna '%s' diterima: %s"
 
-#: libpanel-applet/panel-applet.c:871
+#: libpanel-applet/panel-applet.c:895
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Gagal untuk mendapatkan pixmap %s"
 
-#: libpanel-applet/panel-applet.c:878
+#: libpanel-applet/panel-applet.c:902
 msgid "Unknown background type received"
 msgstr "Jenis latarbelakang tidak dikenali diterima"
 
-#: libpanel-applet/panel-applet.c:1063
+#: libpanel-applet/panel-applet.c:1087
 msgid "The Applet's containing Panel's orientation"
 msgstr "Aplet mengandungi orientasi Panel"
 
-#: libpanel-applet/panel-applet.c:1071
+#: libpanel-applet/panel-applet.c:1095
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Aplet mengandungi saiz Panel dalam piksel"
 
-#: libpanel-applet/panel-applet.c:1079
+#: libpanel-applet/panel-applet.c:1103
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Aplet mengandungi warna latar Panel atau pixmap"
 
-#: libpanel-applet/panel-applet.c:1087
+#: libpanel-applet/panel-applet.c:1111
 msgid "The Applet's flags"
 msgstr "Flag Aplet"
 
-#: libpanel-applet/panel-applet.c:1095
+#: libpanel-applet/panel-applet.c:1119
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Julat yg membayangkan saiz berapa diterima oleh aplet ini"
 
-#: libpanel-applet/panel-applet.c:1103
+#: libpanel-applet/panel-applet.c:1127
 msgid "The Applet's containing Panel is locked down"
 msgstr "Aplet mengandungi Panel dikunci"
 
@@ -3017,3 +3024,44 @@ msgstr "XX Besar"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX Kecil"
+
+#~ msgid ""
+#~ "If true, display internet time. The internet time system divides the day "
+#~ "into 1000 \".beats\". There is no time zones in this system, so time is "
+#~ "the same all over the world."
+#~ msgstr ""
+#~ "Jika benar, papar masa internet. Masa internet membahagi hari kepada 1000 "
+#~ "\".beats\". Tiada zonwaktu bagi sistem ini, Oleh itu masa adalah sama "
+#~ "satu dunia."
+
+#~ msgid "If true, display time in seconds since Epoch, i.e. 1970-01-01."
+#~ msgstr "Jika benar, papar masa dalam saat sejak Epok, cth. 1970-01-01"
+
+#~ msgid ""
+#~ "This key specifies the hour format used by the clock applet. Possible "
+#~ "values are 12 and 24."
+#~ msgstr ""
+#~ "Kekunci ini menyatakan format jam digunakan bagi aplet jam. Nilai yang "
+#~ "bolehh adalah 12 dan 24."
+
+#~ msgid "Window Menu"
+#~ msgstr "Menu Tetingkap"
+
+#~ msgid "Print Screenshot"
+#~ msgstr "Cetak Cekupanskrin"
+
+#~ msgid "Screenshot Print Preview"
+#~ msgstr "Pralihat Cetakan Cekupanskrin"
+
+#~ msgid "_Print screenshot..."
+#~ msgstr "_Cetak cekupanskrin"
+
+#~ msgid ""
+#~ "The panel encountered a problem while loading \"%s\"\n"
+#~ "Details: %s%s"
+#~ msgstr ""
+#~ "Panel dirundung masalah ketika memuatkan  \"%s\"\n"
+#~ "Perincian: %s%s"
+
+#~ msgid "Open Recent"
+#~ msgstr "Buka Kebelakangan"

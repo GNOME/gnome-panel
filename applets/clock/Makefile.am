@@ -66,7 +66,7 @@ EXTRA_DIST =						\
 	$(schemas_in_files)				\
 	$(ui_DATA)
 
-CLEANFILES = $(server_in_files) $(server_DATA)
+CLEANFILES = $(server_in_files) $(server_DATA) $(schemas_DATA)
 
 EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
 

@@ -339,7 +339,11 @@ else
 install-data-local:
 endif
 
-CLEANFILES = $(BUILT_SOURCES)
+CLEANFILES = \
+	$(BUILT_SOURCES) \
+	$(schemas_DATA) \
+	$(server_DATA) \
+	$(sys_DATA)
 
 dist-hook:
 	cd $(distdir) ; rm -f $(CLEANFILES)

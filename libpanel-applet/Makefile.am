@@ -112,7 +112,7 @@ glade_DATA = panel-test-applets.glade
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = libpanelapplet-2.0.pc
 
-CLEANFILES = $(BUILT_SOURCES)
+CLEANFILES = $(BUILT_SOURCES) $(noinst_DATA)
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_Panel_TestApplet.server.in

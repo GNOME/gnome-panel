@@ -28,9 +28,8 @@ notification_area_applet_SOURCES =		\
 	obox.c					\
 	obox.h					\
 	$(EGGFILES)				\
-	egg-marshal.c
-
-main.c: egg-marshal.c
+	eggmarshalers.h				\
+	eggmarshalers.c
 
 notification_area_applet_LDADD =			\
 	../../libpanel-applet/libpanel-applet-2.la	\
@@ -57,6 +56,8 @@ EXTRA_DIST =					\
 
 EGGDIR=$(srcdir)/../../../libegg/libegg/tray
 
+BUILT_SOURCES = eggmarshalers.c eggmarshalers.h
+
 CLEANFILES =                                    \
 	GNOME_NotificationAreaApplet.server.in        \
 	GNOME_NotificationAreaApplet.server
@@ -64,17 +65,9 @@ CLEANFILES =                                    \
 regenerate-built-sources:
 	EGGFILES="$(EGGFILES)" EGGDIR="$(EGGDIR)" $(srcdir)/update-from-egg.sh
 
-eggmarshalers.h:
-	cd $(srcdir)										\
-	&& $(GLIB_GENMARSHAL) --prefix=_egg_marshal eggmarshalers.list --header > xgen-emh	\
-	&& cp xgen-emh eggmarshalers.h								\
-	&& rm -f xgen-emh xgen-emh~
+eggmarshalers.h: eggmarshalers.list $(GLIB_GENMARSHAL)
+	$(GLIB_GENMARSHAL) $< --header --prefix=_egg_marshal > $@
 
-eggmarshalers.c:
-	cd $(srcdir)										\
-	&& $(GLIB_GENMARSHAL) --prefix=_egg_marshal eggmarshalers.list --body > xgen-emc	\
-	&& cp xgen-emc eggmarshalers.c								\
-	&& rm -f xgen-emc xgen-emc~
-
-egg-marshal.c: eggmarshalers.h eggmarshalers.c
-
+eggmarshalers.c: eggmarshalers.list $(GLIB_GENMARSHAL)
+	echo "#include \"eggmarshalers.h\"" > $@ && \
+	$(GLIB_GENMARSHAL) $< --body --prefix=_egg_marshal >> $@

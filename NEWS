@@ -1,4 +1,75 @@
 =============
+Version 2.5.2
+=============
+
+  Panel
+
+	* Kill some unused functions (Vincent)
+	* Be more paranoid about removing dirs from the GConfClient cache (Mark)
+	* Fix some strings to by more translator friendly (Vincent)
+	* Make blocking auto-hiding recursive (Vincent)
+	* Rename "Open Recent" to "Recent Documents" (Vincent)
+	* Use gdk_screen_get_monitor_at_point() instead of a hack (Chuan-kai Lin)
+	* Sort the applets in the "Add to panel" menu according to the locale (Mark)
+	* Fix various bugs with autohide with no animations (Vincent)
+	* Make schema descriptions of the "screen" and "monitor" keys more expicit (Vincent)
+	* Use the monitor size and not the screen size to position the panel (linchua)
+	* Fix bug in menu positioning when the panel is hidden (Arvind)
+	* Add labelled-by relation for the slider in the properties dialog (Padraig)
+	* Fix the preferences dialog to use the locked_down key (Vincent)
+	* Remove invalid assertion about auto_hide_size > 0 (Mark)
+	* Don't set invalid tooltips on menu buttons (Vincent)
+	* Set the accessible name on drawers (Padraig)
+	* Make sure to set the PPosition WM_NORMAL_HINT to keep other WMs happy (Olivier Chapuis)
+	* Make the expander in the run dialog activatable via a mnemonic (Mark)
+	* Use GObject's instance private data (Mark)
+	* Use GConf's standard function for unsetting a hierarchy (Mark)
+	* Make the Menu Bar help point at the correct location (Vincent)
+	* Make menu buttons use the correct tooltip (Vincent)
+	* Make "Force Quit" confirmation dialog cancel on escape (Vijaykumar Patwari)
+
+  Screenshooter
+
+	* Don't crash when using the shape extension on an offscreen window (Vincent)
+	* Fix slight performace issue (Vincent)
+	* Expand filenames with a tilde when saving (Vincent)
+	* Kill crufty printing support (Mark)
+
+  Applets
+
+	* Simplify the various clock time format GConf keys into one enum (Vincent)
+	* Make the clock not display leading zeros in dates (Vincent)
+	* Make Wanda not use deprecated functions (Vincent)
+	* Rename the Window Menu to "Window Selector" (Vincent)
+	* Make the Window Selector's help point at the user guide (Vincent)
+	* Destroy the Window Selector's about dialog when the applet is removed (Archana Shah)
+	* Ditto for the Show Desktop button (Archana Shah)
+	* Make the Show Desktop button use SVG icons (tvismor)
+
+  libpanel-applet
+
+	* Fix weird issue caused by not removing the dir from the GConfClient cache (Vijaykumar Patwari)
+
+  Misc
+
+	* Many distcheck fixes required for using automake 1.7 (Mark)
+	* XML-ize the libpanel-applet docs (Vincent)
+	* Man pages updates (Vincent)
+	* Update build message to say "2.5" (Fernando Herrera)
+	* Make sure Wanda's generated .server files get deleted on make clean (Padraig)
+
+  Translators
+
+	* Andras Timar (hu)
+	* Åsmund Skjæveland (nn)
+	* Gnome PL Team (pl)
+	* Jordi Mallach (ca)
+	* Kostas Papadimas (el)
+	* Miloslav Trmac (cs)
+	* Ole Laursen (da)
+	* Данило Шеган (sr)
+
+=============
 Version 2.5.1
 =============
 
