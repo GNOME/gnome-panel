@@ -94,9 +94,9 @@ ditem_properties_changed (GtkWidget *dedit, gpointer data)
 
 
 static void
-ditem_properties_close (GtkWidget *widget, gpointer data)
+ditem_properties_close (GtkWidget *dialog,
+			GtkWidget *dedit)
 {
-	GtkWidget *dedit = data;
 	const char *saving_error;
 	gpointer timeout_data = g_object_get_data (G_OBJECT (dedit),
 						   "apply_timeout");
@@ -164,29 +164,27 @@ GtkWidget *
 panel_edit_dentry (const char *loc,
 		   const char *dir)
 {
-	GtkWidget *dialog;
-	GtkWidget *dedit;
 	GnomeDesktopItem *ditem;
+	GtkWidget        *dialog;
+	GtkWidget        *dedit;
 	
 	g_return_val_if_fail (loc != NULL, NULL);
 
-	ditem = gnome_desktop_item_new_from_uri (loc,
-						 0 /* flags */,
-						 NULL /* error */);		 
+	ditem = gnome_desktop_item_new_from_uri (loc, 0, NULL);		 
 
-	/* watch the enum at the top of the file */
-	dialog = gtk_dialog_new_with_buttons (_("Launcher Properties"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_HELP,
-					      GTK_RESPONSE_HELP,
-					      GTK_STOCK_REVERT_TO_SAVED,
-					      REVERT_BUTTON,
-					      GTK_STOCK_CLOSE,
-					      GTK_RESPONSE_CLOSE,
-					      NULL);
+	dialog = gtk_dialog_new_with_buttons (
+				_("Launcher Properties"),
+				NULL, 0 /* flags */,
+				GTK_STOCK_HELP,
+				GTK_RESPONSE_HELP,
+				GTK_STOCK_REVERT_TO_SAVED,
+				REVERT_BUTTON,
+				GTK_STOCK_CLOSE,
+				GTK_RESPONSE_CLOSE,
+				NULL);
 
-	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
+	gtk_dialog_set_default_response (
+			GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
 
 	dedit = gnome_ditem_edit_new ();
 
@@ -194,8 +192,8 @@ panel_edit_dentry (const char *loc,
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    dedit, TRUE, TRUE, 0);
 
-	gtk_window_set_wmclass(GTK_WINDOW(dialog),
-			       "desktop_entry_properties","Panel");
+	gtk_window_set_wmclass (GTK_WINDOW (dialog),
+			        "desktop_entry_properties","Panel");
 	
 	g_object_set_data_full (G_OBJECT (dedit), "location",
 				g_strdup (loc),
@@ -208,13 +206,11 @@ panel_edit_dentry (const char *loc,
 			     GNOME_DITEM_EDIT (dedit),
 			     loc, dir);
 
-	g_signal_connect (G_OBJECT (dedit), "changed",
-			    G_CALLBACK (ditem_properties_changed),
-			    NULL);
+	g_signal_connect (dedit, "changed",
+			  G_CALLBACK (ditem_properties_changed), NULL);
 
-	g_signal_connect (G_OBJECT (dialog), "destroy",
-			    G_CALLBACK (ditem_properties_close),
-			    dedit);
+	g_signal_connect (dialog, "destroy",
+			  G_CALLBACK (ditem_properties_close), dedit);
 
 	g_object_set_data (G_OBJECT (dialog), "GnomeDItemEdit", dedit);
 
@@ -248,21 +244,18 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 	
 	dirfile = g_strconcat (dir, "/", ".directory", NULL);
 
-	ditem = gnome_desktop_item_new_from_uri (dirfile,
-						 0 /* flags */,
-						 NULL /* error */);
+	ditem = gnome_desktop_item_new_from_uri (dirfile, 0, NULL);
 
-	/* watch the enum at the top of the file */
-	dialog = gtk_dialog_new_with_buttons (_("Launcher Properties"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_HELP,
-					      GTK_RESPONSE_HELP,
-					      GTK_STOCK_REVERT_TO_SAVED,
-					      REVERT_BUTTON,
-					      GTK_STOCK_CLOSE,
-					      GTK_RESPONSE_CLOSE,
-					      NULL);
+	dialog = gtk_dialog_new_with_buttons (
+				_("Launcher Properties"),
+				NULL, 0 /* flags */,
+				GTK_STOCK_HELP,
+				GTK_RESPONSE_HELP,
+				GTK_STOCK_REVERT_TO_SAVED,
+				REVERT_BUTTON,
+				GTK_STOCK_CLOSE,
+				GTK_RESPONSE_CLOSE,
+				NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"desktop_entry_properties", "Panel");
@@ -310,13 +303,11 @@ panel_edit_direntry (const char *dir, const char *dir_name)
 			     GNOME_DITEM_EDIT (dedit),
 			     dirfile, NULL);
 
-	g_signal_connect (G_OBJECT (dedit), "changed",
-			    G_CALLBACK (ditem_properties_changed),
-			    NULL);
+	g_signal_connect (dedit, "changed",
+			  G_CALLBACK (ditem_properties_changed), NULL);
 
-	g_signal_connect (G_OBJECT (dialog), "destroy",
-			    G_CALLBACK (ditem_properties_close),
-			    dedit);
+	g_signal_connect (dialog, "destroy",
+			  G_CALLBACK (ditem_properties_close), dedit);
 
 	g_object_set_data (G_OBJECT (dialog), "GnomeDItemEdit", dedit);
 
@@ -511,21 +502,20 @@ panel_new_launcher (const char *item_loc)
 	GtkWidget *dee;
 
 	if (!is_item_writable (item_loc, NULL)) {
-		
-		dialog = panel_error_dialog ("cannot_create_launcher",
-				             _("You can not create a new launcher at this location since the location is not writable."));
+		dialog = panel_error_dialog (
+				"cannot_create_launcher",
+				_("You can not create a new launcher at this location "
+				  "since the location is not writable."));
 
 		return dialog;
 	}
 
-	dialog = gtk_dialog_new_with_buttons (_("Create Launcher"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_CANCEL,
-					      GTK_RESPONSE_CANCEL,
-					      GTK_STOCK_OK,
-					      GTK_RESPONSE_OK,
-					      NULL);
+	dialog = gtk_dialog_new_with_buttons (
+				_("Create Launcher"),
+				NULL, 0 /* flags */,
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				GTK_STOCK_OK, GTK_RESPONSE_OK,
+				NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 			       "create_menu_item", "Panel");
@@ -554,4 +544,3 @@ panel_new_launcher (const char *item_loc)
 
 	return dialog;
 }
-

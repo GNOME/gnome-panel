@@ -1,3 +1,11 @@
+2002-06-21  Mark McLoughlin  <mark@skynet.ie>
+
+	* fish.c: (load_image_file), (create_fish_widget),
+	(fish_applet_fill): don't create a silly popup menu
+	to use when creating pixmaps for rgb rendering.
+	Just use the root window to figure out the visual
+	depth and let gdk render without an rgb colormap.
+
 2002-06-18  Mark McLoughlin  <mark@skynet.ie>
 
 	* Makefile.am: use $(prefix)/$(DATADIRNAME)/locale instead

@@ -1,8 +1,8 @@
 /*
- *   multiscreen-stuff: Xinerama (and in the future multidisplay)
- *   support for the panel
+ *   multiscreen-stuff: Multiscreen and Xinerama support for the panel.
  *
  *   Copyright (C) 2001 George Lebl <jirka@5z.com>
+ *                 2002 Sun Microsystems Inc. (Mark McLoughlin <mark@skynet.ie>)
  *
  * This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as 
@@ -22,188 +22,190 @@
 
 #include <config.h>
 
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <gdk/gdkx.h>
-#ifdef HAVE_LIBXINERAMA
-#include <X11/extensions/Xinerama.h>
-#endif
-
 #include "multiscreen-stuff.h"
+#include "panel-util.h"
+#include "panel.h"
 
-#include "foobar-widget.h"
-#include "basep-widget.h"
+static int            screens     = 0;
+static int           *monitors    = NULL;
+static GdkRectangle **geometries  = NULL;
+static gboolean	      initialized = FALSE;
 
-/* some globals */
-static int		screens = 1;
-static GdkRectangle *	rectangles = NULL;
-static gboolean		initialized = FALSE;
+#ifdef HAVE_LIBXINERAMA
+
+#include <gdk/gdkx.h>
+#include <X11/extensions/Xinerama.h>
+
+static void
+multiscreen_support_init (void)
+{
+	gboolean have_xinerama;
+
+        gdk_flush ();
+        gdk_error_trap_push ();
+        have_xinerama = XineramaIsActive (GDK_DISPLAY ());
+        gdk_flush ();
+        if (gdk_error_trap_pop ())
+                have_xinerama = FALSE;
+
+        if (g_getenv ("GNOME_PANEL_NO_XINERAMA"))
+                have_xinerama = FALSE;
+
+	screens    = 1;
+	monitors   = g_new0 (int, screens);
+	geometries = g_new0 (GdkRectangle *, screens);
+
+        if (have_xinerama) {
+                XineramaScreenInfo *xmonitors;
+                int                 n_monitors;
+		int                 i;
+
+                xmonitors = XineramaQueryScreens (GDK_DISPLAY (), &n_monitors);
+		g_assert (n_monitors > 0);
+
+                monitors [0]   = n_monitors;
+                geometries [0] = g_new0 (GdkRectangle, n_monitors);
+
+                for (i = 0; i < n_monitors; i++) {
+                        geometries [0][i].x      = xmonitors [i].x_org;
+                        geometries [0][i].y      = xmonitors [i].y_org;
+                        geometries [0][i].width  = xmonitors [i].width;
+                        geometries [0][i].height = xmonitors [i].height;
+                }
+
+                XFree (xmonitors);
+        } else {
+		monitors [0]   = 1;
+		geometries [0] = g_new0 (GdkRectangle, monitors [0]);
+
+		geometries [0][0].x      = 0;
+		geometries [0][0].y      = 0;
+		geometries [0][0].width  = gdk_screen_width ();
+		geometries [0][0].height = gdk_screen_height ();
+	}
+}
+
+#else /* !defined(HAVE_LIBXINERAMA) */
+
+static void
+multiscreen_support_init (void)
+{
+	screens    = 1;
+	monitors   = g_new0 (int, screens);
+	geometries = g_new0 (GdkRectangle *, screens);
+
+	monitors [0]   = 1;
+	geometries [0] = g_new0 (GdkRectangle, monitors [0]);
+
+	geometries [0][0].x      = 0;
+	geometries [0][0].y      = 0;
+	geometries [0][0].width  = gdk_screen_width ();
+	geometries [0][0].height = gdk_screen_height ();
+}
+#endif
 
 void
 multiscreen_init (void)
 {
-#ifdef HAVE_LIBXINERAMA
-	gboolean have_xinerama = FALSE;
-#endif
-
 	if (initialized)
 		return;
 
-	if (g_getenv ("FAKE_XINERAMA_PANEL") != NULL) {
+	if (g_getenv ("FAKE_XINERAMA_PANEL")) {
+		int width, height;
+
+		width  = gdk_screen_width  ();
+		height = gdk_screen_height ();
+
 		/* fake xinerama setup for debugging */
-		screens = 2;
-		rectangles = g_new0 (GdkRectangle, 2);
-		rectangles[0].x = 0;
-		rectangles[0].y = 0;
-		rectangles[0].width = gdk_screen_width () / 2;
-		rectangles[0].height = gdk_screen_height () / 2;
-		rectangles[1].x = gdk_screen_width () / 2;
-		rectangles[1].y = gdk_screen_height () / 2;
-		rectangles[1].width = gdk_screen_width () - rectangles[0].x;
-		rectangles[1].height = gdk_screen_height () - rectangles[0].y;
+		screens = 1;
+		monitors = g_new0 (int, screens);
+		geometries = g_new0 (GdkRectangle *, screens);
+		monitors [0] = 2;
+		geometries [0] = g_new0 (GdkRectangle, monitors [0]);
+
+		geometries [0][0].x      = 0;
+		geometries [0][0].y      = 0;
+		geometries [0][0].width  = width / 2;
+		geometries [0][0].height = height;
+
+		geometries [0][1].x      = width / 2;
+		geometries [0][1].y      = 0;
+		geometries [0][1].width  = width - geometries [0][1].x;
+		geometries [0][1].height = height;
 
 		initialized = TRUE;
 
 		return;
 	}
 
-#ifdef HAVE_LIBXINERAMA
-	gdk_flush ();
-	gdk_error_trap_push ();
-	have_xinerama = XineramaIsActive (GDK_DISPLAY ());
-	gdk_flush ();
-	if (gdk_error_trap_pop () != 0)
-		have_xinerama = FALSE;
-
-	if (g_getenv ("GNOME_PANEL_NO_XINERAMA") != NULL)
-		have_xinerama = FALSE;
-
-	if (have_xinerama) {
-		int screen_num, i;
-		XineramaScreenInfo *xscreens =
-			XineramaQueryScreens (GDK_DISPLAY (),
-					      &screen_num);
-
-
-		if (screen_num <= 0) {
-			/* EEEEEK!, should never happen */
-			goto no_xinerama;
-		}
-
-		rectangles = g_new0 (GdkRectangle, screen_num);
-		screens = screen_num;
-
-		for (i = 0; i < screen_num; i++) {
-			rectangles[i].x = xscreens[i].x_org;
-			rectangles[i].y = xscreens[i].y_org;
-			rectangles[i].width = xscreens[i].width;
-			rectangles[i].height = xscreens[i].height;
-		}
-
-		XFree (xscreens);
-	} else
-#endif
-	{
-#ifdef HAVE_LIBXINERAMA
-no_xinerama:
-#endif
-		/* no xinerama */
-		screens = 1;
-		rectangles = g_new0 (GdkRectangle, 1);
-		rectangles[0].x = 0;
-		rectangles[0].y = 0;
-		rectangles[0].width = gdk_screen_width ();
-		rectangles[0].height = gdk_screen_height ();
-	}
+	multiscreen_support_init ();
 
 	initialized = TRUE;
 }
 
 int
-multiscreen_screens (void)
+multiscreen_screens ()
 {
 	g_return_val_if_fail (initialized, 1);
 
-	return screens;
+	return monitors [0];
 }
 
 int
 multiscreen_x (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
+	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
 
-	/* If we don't know what screen we're talking about
-	 * assume screen 0 */
-	if (screen < 0 || screen >= screens)
-		screen = 0;
-
-	return rectangles[screen].x;
+	return geometries [0][screen].x;
 }
 
 int
 multiscreen_y (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
+	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
 
-	/* If we don't know what screen we're talking about
-	 * assume screen 0 */
-	if (screen < 0 || screen >= screens)
-		screen = 0;
-
-	return rectangles[screen].y;
+	return geometries [0][screen].y;
 }
 
 int
 multiscreen_width (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
+	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
 
-	/* If we don't know what screen we're talking about
-	 * assume screen 0 */
-	if (screen < 0 || screen >= screens)
-		screen = 0;
-
-	return rectangles[screen].width;
+	return geometries [0][screen].width;
 }
 
 int
 multiscreen_height (int screen)
 {
 	g_return_val_if_fail (initialized, 0);
+	g_return_val_if_fail (screen >= 0 || screen < monitors [0], 0);
 
-	/* If we don't know what screen we're talking about
-	 * assume screen 0 */
-	if (screen < 0 || screen >= screens)
-		screen = 0;
-
-	return rectangles[screen].height;
+	return geometries [0][screen].height;
 }
 
 int
-multiscreen_screen_from_pos (int x, int y)
+multiscreen_locate_coords (int x,
+			   int y)
 {
 	int i;
-	for (i = 0; i < screens; i++) {
-		if (x >= rectangles[i].x &&
-		    x < rectangles[i].x + rectangles[i].width &&
-		    y >= rectangles[i].y &&
-		    y < rectangles[i].y + rectangles[i].height)
+
+	for (i = 0; i < monitors [0]; i++)
+		if (x >= geometries [0][i].x &&
+		    x <  geometries [0][i].x + geometries [0][i].width &&
+		    y >= geometries [0][i].y &&
+		    y <  geometries [0][i].y + geometries [0][i].height)
 			return i;
-	}
+
 	return -1;
 }
 
 int
-multiscreen_screen_from_panel (GtkWidget *widget)
+multiscreen_locate_widget (GtkWidget *widget)
 {
-	g_return_val_if_fail (widget != NULL, 0);
-	g_return_val_if_fail (BASEP_IS_WIDGET (widget) ||
-			      FOOBAR_IS_WIDGET (widget), 0);
-	
-	if (BASEP_IS_WIDGET (widget))
-		return BASEP_WIDGET (widget)->screen;
-	else if (FOOBAR_IS_WIDGET (widget))
-		return FOOBAR_WIDGET (widget)->screen;
-	else
-		return 0;
+	return panel_monitor_from_toplevel (
+				gtk_widget_get_toplevel (widget));
 }

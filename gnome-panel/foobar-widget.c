@@ -61,13 +61,6 @@ static GList *foobars = NULL;
 
 static GtkWindowClass *foobar_widget_parent_class = NULL;
 
-enum {
-	MOVE_FOCUS_OUT_SIGNAL,
-	WIDGET_LAST_SIGNAL
-};
-
-static guint foobar_widget_signals[WIDGET_LAST_SIGNAL] = { 0 };
-
 GType
 foobar_widget_get_type (void)
 {
@@ -211,8 +204,8 @@ append_actions_menu (GtkWidget *menu_bar)
 					"unauthorized use"),
 				      NULL);
 		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (panel_lock), 0);
+		g_signal_connect (item, "activate",
+				  G_CALLBACK (panel_lock), NULL);
 		setup_internal_applet_drag(item, "LOCK:NEW");
 	}
 
@@ -269,14 +262,16 @@ foobar_widget_realize (GtkWidget *w)
 
 
 static void
-programs_menu_to_display (GtkWidget *menu)
+programs_menu_to_display (GtkWidget    *menu,
+			  FoobarWidget *foo)
 {
 	if (menu_need_reread (menu)) {
 		while (GTK_MENU_SHELL (menu)->children)
 			gtk_widget_destroy (GTK_MENU_SHELL (menu)->children->data);
 
-		create_root_menu (menu, TRUE, FOOBAR_MENU_FLAGS,
-				  FALSE, FALSE /* extra_items */);
+		create_root_menu (
+			menu, PANEL_WIDGET (foo->panel),
+			TRUE, FOOBAR_MENU_FLAGS, FALSE, FALSE);
 	}
 }
 
@@ -674,12 +669,13 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	g_signal_connect (G_OBJECT (foo), "delete_event",
 			  G_CALLBACK (gtk_true), NULL);
 
-	gtk_window_move (GTK_WINDOW (foo),
-			 multiscreen_x (foo->screen),
-			 multiscreen_y (foo->screen));
-	g_object_set (G_OBJECT (foo),
-		      "width_request", (int)multiscreen_width (foo->screen),
-		      NULL);
+	/* panel widget */
+	foo->panel = panel_widget_new (NULL, FALSE, GTK_ORIENTATION_HORIZONTAL,
+				       PANEL_SIZE_X_SMALL, PANEL_BACK_NONE,
+				       NULL, FALSE, FALSE, FALSE, NULL);
+	PANEL_WIDGET (foo->panel)->panel_parent = GTK_WIDGET (foo);
+	PANEL_WIDGET (foo->panel)->drop_widget = GTK_WIDGET (foo);
+	add_atk_name_desc (foo->panel, _("Menu Panel"), _("GNOME Menu Panel"));
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);
@@ -702,13 +698,14 @@ foobar_widget_instance_init (FoobarWidget *foo)
 					 "gnome-logo-icon-transparent.png",
 					 TRUE /* force_image */);
 
-	menu = create_root_menu (NULL, TRUE, FOOBAR_MENU_FLAGS,
-				 FALSE, FALSE /* extra_items */);
+	menu = create_root_menu (
+			NULL, PANEL_WIDGET (foo->panel),
+			TRUE, FOOBAR_MENU_FLAGS, FALSE, FALSE);
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu_bar), menuitem);
 	g_signal_connect (G_OBJECT (menu), "show",
 			  G_CALLBACK (programs_menu_to_display),
-			  NULL);
+			  foo);
 	foo->programs = menu;
 
 	/* Strech the applications menu to the corner */
@@ -719,19 +716,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 
 	gtk_box_pack_start (GTK_BOX (foo->hbox), menu_bar, FALSE, FALSE, 0);
 	
-	
-	/* panel widget */
-	foo->panel = panel_widget_new (NULL, FALSE, GTK_ORIENTATION_HORIZONTAL,
-				       PANEL_SIZE_X_SMALL, PANEL_BACK_NONE,
-				       NULL, FALSE, FALSE, FALSE, NULL);
-	PANEL_WIDGET (foo->panel)->panel_parent = GTK_WIDGET (foo);
-	PANEL_WIDGET (foo->panel)->drop_widget = GTK_WIDGET (foo);
-
 	gtk_container_add (GTK_CONTAINER (foo->hbox), foo->panel);
-
-	g_object_set_data (G_OBJECT (menu_bar), "menu_panel", foo->panel);
-
-	add_atk_name_desc (foo->panel, _("Menu Panel"), _("GNOME Menu Panel"));
 
 	path = panel_pixmap_discovery ("panel-corner-right.png", FALSE /* fallback */);
 	if (path != NULL) {
@@ -812,28 +797,28 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 }
 
 GtkWidget *
-foobar_widget_new (const char *panel_id, int screen)
+foobar_widget_new (const char *panel_id,
+		   int         screen)
 {
 	FoobarWidget *foo;
 
-	g_return_val_if_fail (screen >=0, NULL);
+	g_return_val_if_fail (screen >= 0, NULL);
 
 	if (foobar_widget_exists (screen))
 		return NULL;
 
-	foo = g_object_new (FOOBAR_TYPE_WIDGET, NULL);
+	foo = g_object_new (FOOBAR_TYPE_WIDGET,
+			    "width_request", multiscreen_width (screen),
+			    NULL);
 
 	if (panel_id)
 		panel_widget_set_id (PANEL_WIDGET (foo->panel), panel_id);
 
-	foo->screen = screen;
+	foo->screen  = screen;
 
 	gtk_window_move (GTK_WINDOW (foo),
-			 multiscreen_x (foo->screen),
-			 multiscreen_y (foo->screen));
-	g_object_set (G_OBJECT (foo),
-		      "width_request", (int)multiscreen_width (foo->screen),
-		      NULL);
+			 multiscreen_x (screen),
+			 multiscreen_y (screen));
 
 	foobars = g_list_prepend (foobars, foo);
 
@@ -843,14 +828,17 @@ foobar_widget_new (const char *panel_id, int screen)
 gboolean
 foobar_widget_exists (int screen)
 {
-	GList *li;
+	GList *l;
 
-	for (li = foobars; li != NULL; li = li->next) {
-		FoobarWidget *foo = li->data;
+	g_return_val_if_fail (screen  >= 0, 0);
+
+	for (l = foobars; l; l = l->next) {
+		FoobarWidget *foo = l->data;
 
 		if (foo->screen == screen)
 			return TRUE;
 	}
+
 	return FALSE;
 }
 
@@ -870,19 +858,20 @@ foobar_widget_force_menu_remake (void)
 	}
 }
 
-gint
+int
 foobar_widget_get_height (int screen)
 {
-	GList *li;
+	GList *l;
 
-	g_return_val_if_fail (screen >= 0, 0);
+	g_return_val_if_fail (screen  >= 0, 0);
 
-	for (li = foobars; li != NULL; li = li->next) {
-		FoobarWidget *foo = FOOBAR_WIDGET(li->data);
+	for (l = foobars; l; l = l->next) {
+		FoobarWidget *foo = FOOBAR_WIDGET (l->data);
 
-		if (foo->screen == screen)
+		if (foo->screen  == screen)
 			return GTK_WIDGET (foo)->allocation.height;
 	}
+
 	return 0; 
 }
 

@@ -122,8 +122,6 @@ struct _PanelWidgetClass
 	void (* applet_removed) (PanelWidget *panel,
 				 GtkWidget *applet);
 	void (* back_change) (PanelWidget *panel);
-	void (* applet_about_to_die) (PanelWidget *panel,
-				      GtkWidget *applet);
 	void (* push_move) (PanelWidget		*panel,
                             GtkDirectionType	 dir);
 	void (* switch_move) (PanelWidget	*panel,

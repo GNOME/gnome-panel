@@ -319,17 +319,15 @@ add_menu_type_options(Menu *menu, GtkTable *table, int row,
 static void
 dialog_response (GtkWidget *dialog, int response, gpointer data)
 {
-	Menu *menu = data;
-
-	if (response == GTK_RESPONSE_CLOSE) {
+	if (response == GTK_RESPONSE_CLOSE)
 		gtk_widget_destroy (dialog);
-	} else if (response == GTK_RESPONSE_HELP) {
+
+	else if (response == GTK_RESPONSE_HELP)
 			panel_show_help ("wgospanel.xml", "gospanel-37");
-	}
 }
 
 static GtkWidget *
-create_properties_dialog (Menu *menu)
+create_properties_dialog (Menu      *menu)
 {
 	GtkWidget *dialog, *notebook;
 	GtkWidget *vbox;
@@ -340,14 +338,12 @@ create_properties_dialog (Menu *menu)
 	GtkWidget *t;
 	GtkWidget *main_menu, *global_main;
 
-	dialog = gtk_dialog_new_with_buttons (_("Menu properties"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_HELP,
-					      GTK_RESPONSE_HELP,
-					      GTK_STOCK_CLOSE,
-					      GTK_RESPONSE_CLOSE,
-					      NULL);
+	dialog = gtk_dialog_new_with_buttons (
+			_("Menu properties"),
+			NULL, 0 /* flags */,
+			GTK_STOCK_HELP, GTK_RESPONSE_HELP,
+			GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+			NULL);
 
 	menu->prop_dialog = dialog;
 
@@ -357,8 +353,8 @@ create_properties_dialog (Menu *menu)
 	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
 			    notebook, TRUE, TRUE, 0);
 
-	gtk_window_set_wmclass(GTK_WINDOW(dialog),
-			       "menu_properties", "Panel");
+	gtk_window_set_wmclass (GTK_WINDOW (dialog),
+				"menu_properties", "Panel");
 	
 	vbox = gtk_vbox_new(FALSE,GNOME_PAD_SMALL);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),GNOME_PAD_SMALL);
@@ -531,13 +527,13 @@ create_properties_dialog (Menu *menu)
 	gtk_notebook_append_page (GTK_NOTEBOOK(notebook),
 				  vbox, gtk_label_new (_("Icon")));
 	
-	g_signal_connect (G_OBJECT(dialog), "destroy",
+	g_signal_connect (dialog, "destroy",
 			  G_CALLBACK (properties_close_callback),
 			  menu);
 
-	g_signal_connect (G_OBJECT (dialog), "response",
+	g_signal_connect (dialog, "response",
 			  G_CALLBACK (dialog_response),
-			  menu);
+			  NULL);
 
 	/* Set the sensitivity of the frames as req'd. */
 	if (menu->main_menu) {

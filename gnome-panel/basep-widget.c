@@ -224,7 +224,7 @@ basep_widget_class_init (BasePWidgetClass *klass)
 				G_STRUCT_OFFSET (BasePWidgetClass, screen_change),
 				NULL,
 				NULL,
-				panel_marshal_VOID__INT,
+				g_cclosure_marshal_VOID__INT,
 				G_TYPE_NONE,
 				1,
 				G_TYPE_INT);
@@ -544,13 +544,12 @@ basep_widget_mode_change (BasePWidget *basep, BasePMode old_mode)
 static void
 set_tip (GtkWidget *widget, gboolean showing) 
 {
-	if (showing) {
+	if (showing)
 		gtk_tooltips_set_tip (panel_tooltips, widget,
 		      _("Hide this panel"), NULL);
-	} else {
+	else
 		gtk_tooltips_set_tip (panel_tooltips, widget,
 		      _("Show this panel"), NULL);
-	}
 }
 
 static void
@@ -2172,88 +2171,69 @@ basep_widget_autohide (gpointer data)
 }
 
 void
-basep_widget_queue_autohide(BasePWidget *basep)
+basep_widget_queue_autohide (BasePWidget *basep)
 {
-        /* check if there's already a timeout set, and delete it if 
-         * there was */
-	if (basep->moving) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autohide: return 2");
-#endif
+	if (basep->moving)
 		return; 
-	}
 
-        if (basep->enter_notify_timer_tag != 0) {
+        if (basep->enter_notify_timer_tag) {
                 g_source_remove (basep->enter_notify_timer_tag);
                 basep->enter_notify_timer_tag = 0;
 	}
 
-        if (basep->leave_notify_timer_tag != 0) {
+        if (basep->leave_notify_timer_tag) {
                 g_source_remove (basep->leave_notify_timer_tag);
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autohide: <timeout removed>\n");
-#endif
+		basep->leave_notify_timer_tag = 0;
 	}
 
-        if ((basep->mode != BASEP_AUTO_HIDE) ||
-            (basep->state != BASEP_SHOWN)) {
-#ifdef BASEP_WIDGET_DEBUG
-		g_print ("basep_widget_queue_autohide: return 1\n");
-#endif
+        if (basep->mode != BASEP_AUTO_HIDE ||
+            basep->state != BASEP_SHOWN)
                 return;
-	}
                 
-	/* set up our delay for popup. */
-	if (global_config.hide_delay == 0) {
+	if (!global_config.hide_delay)
 		basep->leave_notify_timer_tag =
 			g_idle_add (basep_widget_autohide, basep);
-	} else {
+	else
 		basep->leave_notify_timer_tag =
 			g_timeout_add (global_config.hide_delay,
 				       basep_widget_autohide, basep);
-	}
 }
 
 void
 basep_widget_get_menu_pos (BasePWidget *basep,
-			   GtkWidget *menu,
+			   GtkWidget   *menu,
 			   int *x, int *y,
 			   int wx, int wy,
 			   int ww, int wh)
 {
-	GtkRequisition mreq;
-	BasePPosClass *klass = 
-		basep_widget_get_pos_class (basep);
+	BasePPosClass  *klass = basep_widget_get_pos_class (basep);
+	GtkRequisition  mreq;
+	int             monitor_x;
+	int             monitor_y;
+	int             monitor_width;
+	int             monitor_height;
+
 	g_return_if_fail (klass && klass->get_menu_pos);
 
-	gtk_widget_get_child_requisition(menu, &mreq);
+	gtk_widget_get_child_requisition (menu, &mreq);
 
-#ifdef BASEP_WIDGET_DEBUG
-	g_print ("basep_widget_get_menu_pos: menu req: w = %d, h = %d\n", 
-		 mreq.width, mreq.height);
-#endif
+	klass->get_menu_pos (
+			basep, menu, &mreq, x, y, wx, wy, ww, wh);
 
-	klass->get_menu_pos (basep, menu, &mreq,
-			     x, y, wx, wy, 
-			     ww, wh);
+	monitor_x      = multiscreen_x (basep->screen);
+	monitor_y      = multiscreen_y (basep->screen);
+	monitor_width  = multiscreen_width (basep->screen);
+	monitor_height = multiscreen_height (basep->screen);
 
-#ifdef BASEP_WIDGET_DEBUG
-	g_print ("basep_widget_get_menu_pos: x = %d, y = %d\n", *x, *y);
-#endif
+	if (*x + mreq.width > (monitor_x + monitor_width))
+		*x = monitor_x + monitor_width - mreq.width;
+	if (*x < monitor_x)
+		*x = monitor_x;
 
-	if (*x + mreq.width >
-	    multiscreen_x (basep->screen) + multiscreen_width (basep->screen))
-		*x = multiscreen_x (basep->screen) + 
-			multiscreen_width (basep->screen) - mreq.width;
-	if (*x < multiscreen_x (basep->screen))
-		*x = multiscreen_x (basep->screen);
-
-	if (*y + mreq.height >
-	    multiscreen_y (basep->screen) + multiscreen_height (basep->screen))
-		*y = multiscreen_y (basep->screen) + 
-			multiscreen_height (basep->screen) - mreq.height;
-	if (*y < multiscreen_y (basep->screen))
-		*y = multiscreen_y (basep->screen);
+	if (*y + mreq.height > (monitor_y + monitor_height))
+		*y = monitor_y + monitor_height - mreq.height;
+	if (*y < monitor_y)
+		*y = monitor_y;
 }
 
 PanelOrient
@@ -2328,7 +2308,7 @@ basep_widget_set_pos (BasePWidget *basep,
 	g_return_if_fail (klass && klass->set_pos);
 
 	/* first take care of switching screens */
-	newscreen = multiscreen_screen_from_pos (x, y);
+	newscreen = multiscreen_locate_coords (x, y);
 	if (newscreen >= 0 &&
 	    newscreen != basep->screen) {
 		force = TRUE;
@@ -2391,40 +2371,42 @@ static GList *border_list = NULL;
 static ScreenBorders *
 get_borders (int screen)
 {
-	GList *li;
-	ScreenBorders *sb;
+	ScreenBorders *retval;
+	GList         *l;
 
-	for (li = border_list; li != NULL; li = li->next) {
-		sb = li->data;
+	for (l = border_list; l; l = l->next) {
+		ScreenBorders *sb = l->data;
+
 		if (sb->screen == screen)
 			return sb;
 	}
 
-	sb = g_new0 (ScreenBorders, 1);
-	sb->screen = screen;
-	border_list = g_list_prepend (border_list, sb);
+	retval = g_new0 (ScreenBorders, 1);
+	retval->screen  = screen;
+	border_list = g_list_prepend (border_list, retval);
 
-	return sb;
+	return retval;
 }
 
 static void
 basep_calculate_borders (int screen)
 {
-	GSList *li;
 	ScreenBorders *sb;
+	GSList        *l;
 
 	sb = get_borders (screen);
 
-	for (li = panel_list; li != NULL; li = li->next) {
-		PanelData *pd = li->data;
-		BasePWidget *basep;
-		GtkRequisition chreq;
-		BorderEdge edge;
+	for (l = panel_list; l; l = l->next) {
+		PanelData      *pd = l->data;
+		BasePWidget    *basep;
+		GtkRequisition  chreq;
+		BorderEdge      edge;
+		int             size = 0;
 
 		g_assert (pd != NULL);
 
-		if ( ! EDGE_IS_WIDGET (pd->panel) &&
-		     ! ALIGNED_IS_WIDGET (pd->panel))
+		if (!EDGE_IS_WIDGET (pd->panel) &&
+		    !ALIGNED_IS_WIDGET (pd->panel))
 			continue;
 
 		basep = BASEP_WIDGET (pd->panel);
@@ -2437,142 +2419,125 @@ basep_calculate_borders (int screen)
 
 		edge = BORDER_POS (basep->pos)->edge;
 
+		switch (edge) {
+		case BORDER_RIGHT:
+		case BORDER_LEFT:
+			size = chreq.width;
+			break;
+		case BORDER_TOP:
+		case BORDER_BOTTOM:
+			size = chreq.height;
+			break;
+		default:
+			g_assert_not_reached ();
+			break;
+		}
+
 		if (EDGE_IS_WIDGET (basep)) {
 			BasePState state = basep->state;
-			if (PANEL_WIDGET (basep->panel)->orient ==
-			    GTK_ORIENTATION_VERTICAL) {
-				if (sb->borders[edge].left < chreq.width &&
-				    state != BASEP_HIDDEN_RIGHT)
-					sb->borders[edge].left = chreq.width;
-				if (sb->borders[edge].center < chreq.width &&
-				    state != BASEP_HIDDEN_RIGHT &&
-				    state != BASEP_HIDDEN_LEFT)
-					sb->borders[edge].center = chreq.width;
-				if (sb->borders[edge].right < chreq.width &&
-				    state != BASEP_HIDDEN_LEFT)
-					sb->borders[edge].right = chreq.width;
-			} else {
-				if (sb->borders[edge].left < chreq.height &&
-				    state != BASEP_HIDDEN_RIGHT)
-					sb->borders[edge].left = chreq.height;
-				if (sb->borders[edge].center < chreq.height &&
-				    state != BASEP_HIDDEN_RIGHT &&
-				    state != BASEP_HIDDEN_LEFT)
-					sb->borders[edge].center = chreq.height;
-				if (sb->borders[edge].right < chreq.height &&
-				    state != BASEP_HIDDEN_LEFT)
-					sb->borders[edge].right = chreq.height;
+			int        size = 0;
+
+			switch (state) {
+			case BASEP_HIDDEN_RIGHT:
+				sb->borders [edge].right = MAX (sb->borders [edge].right, size);
+				break;
+			case BASEP_HIDDEN_LEFT:
+				sb->borders [edge].left = MAX (sb->borders [edge].left, size);
+				break;
+			default:
+				sb->borders [edge].right  = MAX (sb->borders [edge].right, size);
+				sb->borders [edge].center = MAX (sb->borders [edge].center, size);
+				sb->borders [edge].left   = MAX (sb->borders [edge].left, size);
+				break;
 			}
 		} else /* ALIGNED */ {
-			AlignedAlignment align = ALIGNED_POS(basep->pos)->align;
-			if (PANEL_WIDGET (basep->panel)->orient ==
-			    GTK_ORIENTATION_VERTICAL) {
-				if (align == ALIGNED_LEFT &&
-				    sb->borders[edge].left < chreq.width)
-					sb->borders[edge].left = chreq.width;
-				else if (align == ALIGNED_CENTER &&
-					 sb->borders[edge].center < chreq.width)
-					sb->borders[edge].center = chreq.width;
-				else if (align == ALIGNED_RIGHT &&
-					 sb->borders[edge].right < chreq.width)
-					sb->borders[edge].right = chreq.width;
-			} else {
-				if (align == ALIGNED_LEFT &&
-				    sb->borders[edge].left < chreq.height)
-					sb->borders[edge].left = chreq.height;
-				else if (align == ALIGNED_CENTER &&
-					 sb->borders[edge].center < chreq.height)
-					sb->borders[edge].center = chreq.height;
-				else if (align == ALIGNED_RIGHT &&
-					 sb->borders[edge].right < chreq.height)
-					sb->borders[edge].right = chreq.height;
+			AlignedAlignment align = ALIGNED_POS (basep->pos)->align;
+
+			switch (align) {
+			case ALIGNED_LEFT:
+				sb->borders [edge].left = MAX (sb->borders [edge].left, size);
+				break;
+			case ALIGNED_RIGHT:
+				sb->borders [edge].right = MAX (sb->borders [edge].right, size);
+				break;
+			case ALIGNED_CENTER:
+				sb->borders [edge].center = MAX (sb->borders [edge].center, size);
+				break;
+			default:
+				g_assert_not_reached ();
+				break;
 			}
 		}
 	}
 }
 
 static int
-border_max (ScreenBorders *sb, BorderEdge edge)
+border_max (ScreenBorders *sb,
+	    BorderEdge     edge)
 {
-	return MAX (sb->borders[edge].center,
-		    MAX (sb->borders[edge].left, sb->borders[edge].right));
+	return MAX (sb->borders [edge].center,
+			MAX (sb->borders [edge].left,
+			     sb->borders [edge].right));
 }
 
 void
 basep_border_recalc (int screen)
 {
-	int i;
-	GSList *li;
 	ScreenBorders *sb;
-	ScreenBorders old;
+	ScreenBorders  old;
+	GSList        *l;
+	int            i;
 
 	sb = get_borders (screen);
 
 	memcpy (&old, sb, sizeof (ScreenBorders));
 
 	for (i = 0; i < 4; i++) {
-		sb->borders[i].left = 0;
-		sb->borders[i].center = 0;
-		sb->borders[i].right = 0;
+		sb->borders [i].left = 0;
+		sb->borders [i].center = 0;
+		sb->borders [i].right = 0;
 	}
 
 	basep_calculate_borders (screen);
 
-	sb->left = border_max (sb, BORDER_LEFT);
-	sb->right = border_max (sb, BORDER_RIGHT);
-	sb->top = border_max (sb, BORDER_TOP) +
-		foobar_widget_get_height (screen);
+	sb->left   = border_max (sb, BORDER_LEFT);
+	sb->right  = border_max (sb, BORDER_RIGHT);
 	sb->bottom = border_max (sb, BORDER_BOTTOM);
+	sb->top    = border_max (sb, BORDER_TOP) +
+				foobar_widget_get_height (screen);
 
-#ifdef BASEP_WIDGET_DEBUG
-	g_print ("[basep_border_recalc] SCREEN %d (%d %d %d %d)\n", screen,
-		 sb->left, sb->right, sb->top, sb->bottom);
-#endif
+	if (!memcmp (&old, sb, sizeof (ScreenBorders)))
+		return;
 
-	if (memcmp (&old, sb, sizeof (ScreenBorders)) != 0) {
-		for (li = panel_list; li != NULL; li = li->next) {
-			PanelData *pd = li->data;
-			GtkWidget *panel;
+	for (l = panel_list; l; l = l->next) {
+		PanelData *pdata = l->data;
+		GtkWidget *panel;
 
-			g_assert (pd != NULL);
+		g_assert (pdata != NULL);
 
-			panel = pd->panel;
+		panel = pdata->panel;
 
-			if (BORDER_IS_WIDGET (panel) &&
-			    BASEP_WIDGET (panel)->screen == screen) {
-				gtk_widget_queue_resize (panel);
-			}
-		}
-
-		if (sb->left != old.left ||
-		    sb->right != old.right ||
-		    sb->top != old.top ||
-		    sb->bottom != old.bottom)
-			xstuff_setup_desktop_area (screen,
-						   sb->left,
-						   sb->right,
-						   sb->top,
-						   sb->bottom);
+		if (BORDER_IS_WIDGET (panel) &&
+		    BASEP_WIDGET (panel)->screen == screen)
+			gtk_widget_queue_resize (panel);
 	}
 }
 
-static guint queue_recalc_id = 0;
-static GList *recalc_list = NULL;
+static guint  queue_recalc_id = 0;
+static GList *pending_recalc_list = NULL;
 
 static gboolean
 queue_recalc_handler (gpointer data)
 {
-	GList *list, *li;
+	GList *list, *l;
 
 	queue_recalc_id = 0;
 
-	list = recalc_list;
-	recalc_list = NULL;
+	list = pending_recalc_list;
+	pending_recalc_list = NULL;
 
-	for (li = list; li != NULL; li = li->next) {
-		int screen = GPOINTER_TO_INT (li->data);
-		basep_border_recalc (screen);
-	}
+	for (l = list; l; l = l->next)
+		basep_border_recalc (GPOINTER_TO_INT (l->data));
 
 	g_list_free (list);
 
@@ -2582,9 +2547,10 @@ queue_recalc_handler (gpointer data)
 void
 basep_border_queue_recalc (int screen)
 {
-	if (!g_list_find (recalc_list, GINT_TO_POINTER (screen)))
-		recalc_list = g_list_prepend (recalc_list,
-					      GINT_TO_POINTER (screen));
+	if (!g_list_find (pending_recalc_list, GINT_TO_POINTER (screen)))
+		pending_recalc_list =
+			g_list_prepend (pending_recalc_list,
+					GINT_TO_POINTER (screen));
 
 	if (!queue_recalc_id)
 		queue_recalc_id = g_idle_add (queue_recalc_handler, NULL);

@@ -1644,13 +1644,12 @@ panel_config (GtkWidget *panel)
 	ppc->panel = panel;
 	
 	/* main window */
-	ppc->config_window = gtk_dialog_new_with_buttons (_("Panel properties"),
-							  NULL, 0,
-							  GTK_STOCK_HELP,
-							  GTK_RESPONSE_HELP,
-							  GTK_STOCK_CLOSE,
-							  GTK_RESPONSE_CLOSE,
-							  NULL);
+	ppc->config_window = gtk_dialog_new_with_buttons (
+					_("Panel properties"),
+					NULL, 0,
+					GTK_STOCK_HELP, GTK_RESPONSE_HELP,
+					GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+					NULL);
 	gtk_widget_add_events (ppc->config_window, GDK_KEY_PRESS_MASK);
 	g_signal_connect (G_OBJECT (ppc->config_window), "event",
 			  G_CALLBACK (panel_dialog_window_event), NULL);
@@ -1750,5 +1749,3 @@ panel_config (GtkWidget *panel)
 	if (ppc->size_menu != NULL)
 		gtk_widget_grab_focus (ppc->size_menu);
 }
-
-

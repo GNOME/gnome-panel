@@ -1,12 +1,14 @@
 #include <string.h>
 #include <math.h>
+
+#include <X11/Xlib.h>
 #include <libgnomecanvas/libgnomecanvas.h>
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_filterlevel.h>
+
 #include "panel-util.h"
 #include "rgb-stuff.h"
-#include "xstuff.h"
 #include "nothing.h"
 
 /*code snippet, not to be compiled separately*/
@@ -21,6 +23,28 @@ static int goat_x = -1, goat_y = -1;
 static int goat_accx = -1, goat_accy = -1;
 
 static char *goat_filename = NULL;
+
+static char *
+find_me_the_damn_pixmap (const char *name, gboolean fallback)
+{
+	char *pixmap;
+	pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+					    name,
+					    TRUE /* only_if_exists */,
+					    NULL /* ret_locations */);
+	if (pixmap == NULL)
+		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_APP_PIXMAP, 
+						    name,
+						    TRUE /* only_if_exists */,
+						    NULL /* ret_locations */);
+	/* just as a fallback return something */
+	if (pixmap == NULL && fallback)
+		pixmap = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
+						    name,
+						    FALSE /* only_if_exists */,
+						    NULL /* ret_locations */);
+	return pixmap;
+}
 
 static void
 destroy_egg(GtkWidget *widget, gpointer data)
@@ -125,7 +149,7 @@ goat_realize(GtkWidget *widget)
 		gdouble affine[6];
 		char *file;
 
-		file = panel_pixmap_discovery (files[frame], FALSE /* fallback */);
+		file = find_me_the_damn_pixmap (files[frame], FALSE /* fallback */);
 		if(!file || 
 		   !(pb=gdk_pixbuf_new_from_file (file, NULL))) {
 			g_warning("Goat is not available!");
@@ -1176,7 +1200,7 @@ ensure_creatures (void)
 
 	g_object_unref (G_OBJECT (pb));
 
-	goat_file = panel_pixmap_discovery ("gnome-gegl2.png",
+	goat_file = find_me_the_damn_pixmap ("gnome-gegl2.png",
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
 		g_object_unref (G_OBJECT (phsh1));
@@ -1195,7 +1219,7 @@ ensure_creatures (void)
 	goat1 = pb_scale (pb, inv_factor * 0.66);
 	g_object_unref (pb);
 
-	goat_file = panel_pixmap_discovery ("gnome-gegl2-2.png",
+	goat_file = find_me_the_damn_pixmap ("gnome-gegl2-2.png",
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
 		g_object_unref (G_OBJECT (goat1));

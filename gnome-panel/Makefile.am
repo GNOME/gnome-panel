@@ -6,7 +6,6 @@ NULL =
 INCLUDES =							\
 	-I.							\
 	-I$(srcdir)						\
-	-I$(top_srcdir)/gnome-desktop				\
 	-I$(top_builddir)/gnome-panel				\
 	-DPANEL_DEBUG						\
 	-DGNOMELOCALEDIR=\""$(prefix)/$(DATADIRNAME)/locale"\"	\
@@ -165,8 +164,8 @@ gnome_panel_LDFLAGS = -export-dynamic
 
 gnome_panel_preferences_SOURCES =	\
 	gnome-panel-preferences.c	\
-	panel-util.c			\
 	panel-gconf.c			\
+	rgb-stuff.c			\
 	panel-access.c
 
 gnome_panel_preferences_LDADD =		\

@@ -46,46 +46,40 @@ add_menu_separator (GtkWidget *menu)
 static void
 panel_standard_menu_pos (GtkMenu *menu, gint *x, gint *y)
 {
-	gint screen_width;
-	gint screen_height;
-	int screen_basex, screen_basey;
-	int screen;
 	GtkRequisition requisition;
+	int            screen;
+	int            monitor_basex;
+	int            monitor_basey;
+	int            monitor_width;
+	int            monitor_height;
 
 	gtk_widget_get_child_requisition (GTK_WIDGET (menu),
 					  &requisition);
 
-	screen = multiscreen_screen_from_pos (*x, *y);
+	screen = multiscreen_locate_coords (*x, *y);
 
-	if (screen < 0) {
-		screen_width = gdk_screen_width ();
-		screen_height = gdk_screen_height ();
-		screen_basex = 0;
-		screen_basey = 0;
-	} else {
-		screen_width = multiscreen_width (screen);
-		screen_height = multiscreen_height (screen);
-		screen_basex = multiscreen_x (screen);
-		screen_basey = multiscreen_y (screen);
-	}
+	monitor_basex  = multiscreen_x (screen);
+	monitor_basey  = multiscreen_y (screen);
+	monitor_width  = multiscreen_width (screen);
+	monitor_height = multiscreen_height (screen);
 
-	*x -= screen_basex;
-	*y -= screen_basey;
+	*x -= monitor_basex;
+	*y -= monitor_basey;
 
 	*x -= 2;
 	*y -= 2;
 
-	if ((*x + requisition.width) > screen_width)
-		*x -= ((*x + requisition.width) - screen_width);
+	if ((*x + requisition.width) > monitor_width)
+		*x -= ((*x + requisition.width) - monitor_width);
 	if (*x < 0)
 		*x = 0;
-	if ((*y + requisition.height) > screen_height)
-		*y -= ((*y + requisition.height) - screen_height);
+	if ((*y + requisition.height) > monitor_height)
+		*y -= ((*y + requisition.height) - monitor_height);
 	if (*y < 0)
 		*y = 0;
 
-	*x += screen_basex;
-	*y += screen_basey;
+	*x += monitor_basex;
+	*y += monitor_basey;
 }
 
 static void
@@ -282,26 +276,6 @@ pixmap_menu_item_new (const char *text, const char *try_file, gboolean force_ima
         }
 
         return item;
-}
-
-void
-menu_util_screenshot (GtkWidget *widget, gpointer data)
-{
-        char *argv[2] = {"gnome-panel-screenshot", NULL};
-
-        if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
-                panel_error_dialog ("cannot_exec_gnome-panel-screenshot",
-                                    N_("Cannot execute gnome-panel-screenshot"));
-}
-
-void
-menu_util_search (GtkWidget *widget, gpointer   data)
-{
-        char *argv[2] = {"gnome-search-tool", NULL};
-
-        if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
-                panel_error_dialog ("cannot_exec_gnome-search-tool",
-                                    N_("Cannot execute gnome-search-tool"));
 }
 
 char *

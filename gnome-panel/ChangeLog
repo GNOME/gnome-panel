@@ -1,5 +1,68 @@
 2002-06-21  Mark McLoughlin  <mark@skynet.ie>
 
+	Cleanups and bugfixes while doing mulitscreen support.
+	Committing them now will make branching a lot easier.
+
+	* Makefile.am: just link gnome-panel-preferences against
+	rgb-stuff.c, not panel-util.c.
+
+	* applet.c: (applet_callback_callback): use launcher_show_help.
+
+	* basep-widget.c:
+	(basep_widget_class_init): use the glib marshaller.
+	(basep_calculate_borders): simplify this code greatly.
+
+	* disclosure-widget.c: fix some warnings. Should sync
+	with gnome-media really.
+
+	* foobar-widget.c:
+	(foobar_widget_instance_init): pass the panel widget to
+	create_root_menu to fix warnings.
+
+	* gnome-panel-preferences.c: kill copied and pasted code.
+
+	* gnome-run.c: kill loads of headers.
+
+	* launcher.c:
+	(launcher_show_help): move code frmo applet_callback_callback.
+
+	* menu-util.c: move screenshot and search launching code to
+	menu.c.
+
+	* menu.c: (menu_get_panel): rename from get_panel_from_menu_data
+	and simplify + fix.
+	(create_new_panel): save the panels to gconf as they are created.
+
+	* multiscreen-stuff.c:
+	(multiscreen_init): split libxinerama code and plain code into	
+	seperate methods. Also leave room in geometries for multscreen
+	as well as xinerama.
+	(multiscreen_locate_coords), (multiscreen_locate_widget): renamed
+	methods.
+
+	* panel-gconf.h: (panel_gconf_sprintf): use G_GNUC_PRINTF.
+
+	* panel-marshal.list: kill VOID:INT. glib provides it.
+
+	* panel-util.c: kill old battery code.
+
+	* panel-widget.c: kill unused applet_about_to_die stuff.
+
+	* panel.c: (move_panel_to_cursor): use the root window in
+	gdk_window_get_pointer.
+	(panel_setup): return PanelData.
+	(panel_save_to_gconf): save xinerama monitor info in the
+	one place.
+	(panel_monitor_from_toplevel): impl monitor info accessor.
+
+	* session.c: kill loads of headers.
+
+	* xstuff.c: (panel_atom_get): remove multidisplay stuff.
+	(xstuff_setup_desktop_area): remove GNOME_PANEL_DESKTOP_AREA
+	stuff. Nautilus now use _NET_WM_WORKAREA.
+
+2002-06-21  Mark McLoughlin  <mark@skynet.ie>
+
 	* gnome-panel-screenshot.glade2: rename to .glade.
 
 	* Makefile.am:

@@ -475,7 +475,7 @@ _panel_applet_popup_menu (PanelApplet *applet,
 	return TRUE;
 }
 
-gboolean
+static gboolean
 panel_applet_popup_menu (PanelApplet *applet)
 {
 	return _panel_applet_popup_menu (applet, 3, GDK_CURRENT_TIME);

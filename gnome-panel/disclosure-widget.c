@@ -70,16 +70,13 @@ get_x_y (CDDBDisclosure *disclosure,
 	 GtkStateType *state_type)
 {
 	GtkCheckButton *check_button;
-	GdkRectangle new_area, restrict_area;
-	int indicator_size, indicator_spacing;
+	int indicator_size = 0;
 	int focus_width;
 	int focus_pad;
 	gboolean interior_focus;
 	GtkWidget *widget = GTK_WIDGET (disclosure);
-	GtkAllocation *area = &widget->allocation;
 	GtkBin *bin = GTK_BIN (disclosure);
-	GtkRequisition child_requisition;
-	int width, height;
+	int width;
 	
 	if (GTK_WIDGET_VISIBLE (disclosure) &&
 	    GTK_WIDGET_MAPPED (disclosure)) {
@@ -125,7 +122,6 @@ get_x_y (CDDBDisclosure *disclosure,
 static gboolean
 expand_collapse_timeout (gpointer data)
 {
-	GdkRectangle area;
 	GtkWidget *widget = data;
 	CDDBDisclosure *disclosure = data;
 	GtkStateType state_type;
@@ -176,9 +172,8 @@ static void
 do_animation (CDDBDisclosure *disclosure,
 	      gboolean opening)
 {
-	if (disclosure->priv->expand_id > 0) {
-		gtk_timeout_remove (disclosure->priv->expand_id);
-	}
+	if (disclosure->priv->expand_id > 0)
+		g_source_remove (disclosure->priv->expand_id);
 
 	disclosure->priv->direction = opening ? 1 : -1;
 	disclosure->priv->expand_id = g_timeout_add (50, expand_collapse_timeout, disclosure);
@@ -281,12 +276,4 @@ cddb_disclosure_new (const char *shown,
 	disclosure->priv->shown = g_strdup (shown);
 	disclosure->priv->hidden = g_strdup (hidden);
 	return GTK_WIDGET (disclosure);
-}
-
-void
-cddb_disclosure_set_container (CDDBDisclosure *disclosure,
-			       GtkWidget *container)
-{
-	g_object_ref (G_OBJECT (container));
-	disclosure->priv->container = container;
 }

@@ -53,8 +53,6 @@ typedef struct {
 	PanelAppletOrient  orient;
 } Fish;
 
-GtkWidget *bah_window = NULL;
-
 /*
  * set_access_name_desc
  * Description : Set Accessible Name and Description.
@@ -252,8 +250,6 @@ load_image_file (Fish *fish)
 	if (fish->pix)
 		gdk_pixmap_unref (fish->pix);
 
-	g_assert (bah_window && bah_window->window);
-
 	frames = panel_applet_gconf_get_int (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 
 	tmp = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_IMAGE, NULL);
@@ -285,10 +281,8 @@ load_image_file (Fish *fish)
 			fish->w = frames * fish->size;
 			fish->h = fish->size;
 		}
-
- 		fish->pix = gdk_pixmap_new (bah_window->window,
+ 		fish->pix = gdk_pixmap_new (GDK_ROOT_PARENT (),
 					    fish->w, fish->h, -1);
-
 		return;
 	}
 
@@ -353,7 +347,7 @@ load_image_file (Fish *fish)
 	fish->w = w;
 	fish->h = h;
 
-	fish->pix = gdk_pixmap_new (bah_window->window,
+	fish->pix = gdk_pixmap_new (GDK_ROOT_PARENT (),
 				    fish->w,fish->h,-1);
 
 	gc = gdk_gc_new (fish->pix);
@@ -1083,8 +1077,6 @@ create_fish_widget(Fish *fish)
 	frames = panel_applet_gconf_get_int   (PANEL_APPLET (fish->applet), FISH_PREFS_FRAMES, NULL);
 	speed  = panel_applet_gconf_get_float (PANEL_APPLET (fish->applet), FISH_PREFS_SPEED, NULL);
 
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-
 	fish->darea = gtk_drawing_area_new();
 
 	if (fish_applet_rotate (fish)) {
@@ -1121,8 +1113,6 @@ create_fish_widget(Fish *fish)
         fish->timeout_id = gtk_timeout_add (speed * 1000, fish_timeout, fish);
 
         gtk_container_add(GTK_CONTAINER(fish->frame),fish->darea);
-        
-        gtk_widget_pop_colormap ();
 }
 
 static void
@@ -1317,17 +1307,6 @@ fish_applet_fill (PanelApplet *applet)
 			  fish);
 
 	panel_applet_add_preferences (applet, "/schemas/apps/fish_applet/prefs", NULL);
-
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
-
-	bah_window = gtk_window_new (GTK_WINDOW_POPUP);
-
-	gtk_widget_pop_colormap ();
-
-	gtk_widget_set_uposition (bah_window,
-				  gdk_screen_width () + 1,
-				  gdk_screen_height () + 1);
-	gtk_widget_show_now (bah_window);
 
 	fish->frame = gtk_frame_new (NULL);
 	gtk_frame_set_shadow_type (GTK_FRAME (fish->frame), GTK_SHADOW_IN);

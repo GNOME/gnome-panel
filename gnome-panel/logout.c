@@ -169,8 +169,8 @@ create_lock_widget(void)
 	g_free (pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips, button, _("Lock screen"), NULL);
 
-	g_signal_connect (G_OBJECT (button), "clicked",
-			    G_CALLBACK (panel_lock), NULL);
+	g_signal_connect (button, "clicked",
+			  G_CALLBACK (panel_lock), NULL);
 
 	return button;
 }

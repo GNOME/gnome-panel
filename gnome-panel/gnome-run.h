@@ -24,9 +24,13 @@
 #ifndef GNOME_RUN_H
 #define GNOME_RUN_H
 
-#include "panel-widget.h"
+#include <glib/gmacros.h>
 
-void show_run_dialog (void);
+G_BEGIN_DECLS
+
+void show_run_dialog           (void);
 void show_run_dialog_with_text (const char *text);
+
+G_END_DECLS
 
 #endif /* GNOME_RUN_H */

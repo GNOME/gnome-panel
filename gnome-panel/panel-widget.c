@@ -168,7 +168,6 @@ enum {
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
 	BACK_CHANGE_SIGNAL,
-	APPLET_ABOUT_TO_DIE_SIGNAL,
 	PUSH_MOVE_SIGNAL,
 	SWITCH_MOVE_SIGNAL,
 	FREE_MOVE_SIGNAL,
@@ -411,18 +410,6 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
-	panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL] =
-                g_signal_new ("applet_about_to_die",
-                              G_TYPE_FROM_CLASS (object_class),
-                              G_SIGNAL_RUN_LAST,
-                              G_STRUCT_OFFSET (PanelWidgetClass, applet_about_to_die),
-                              NULL,
-                              NULL, 
-                              panel_marshal_VOID__POINTER,
-                              G_TYPE_NONE,
-                              1,
-                              G_TYPE_POINTER); 
-
 	panel_widget_signals[PUSH_MOVE_SIGNAL] =
 		g_signal_new ("push_move",
                               G_TYPE_FROM_CLASS (class),
@@ -499,7 +486,6 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
 	class->back_change = NULL;
-	class->applet_about_to_die = NULL;
 	class->push_move = panel_widget_push_move_applet;
 	class->switch_move = panel_widget_switch_move_applet;
 	class->free_move = panel_widget_free_move_applet;
@@ -651,14 +637,6 @@ panel_widget_cremove (GtkContainer *container, GtkWidget *widget)
 	p = g_object_get_data (G_OBJECT (widget),
 				 PANEL_APPLET_ASSOC_PANEL_KEY);
 
-	if (ad != NULL &&
-	    ad->no_die == 0) {
-		g_signal_emit (G_OBJECT (container),
-			       panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
-			       0, widget);
-	}
-
-
 	if (p != NULL)
 		run_up_forbidden (p, remove_panel_from_forbidden);
 
@@ -721,7 +699,7 @@ panel_widget_is_applet_stuck(PanelWidget *panel, GtkWidget *applet)
 	list = g_list_find(panel->applet_list,ad);
 
 	g_return_val_if_fail(list!=NULL,FALSE);
-	
+
 	do {
 		i=ad->pos+ad->cells;
 		if(i==panel->size)
@@ -2552,10 +2530,6 @@ panel_widget_applet_destroy (GtkWidget *applet, gpointer data)
 	if(applet->parent) {
 		PanelWidget *panel = PANEL_WIDGET (applet->parent);
 
-		g_signal_emit (G_OBJECT (panel),
-			       panel_widget_signals[APPLET_ABOUT_TO_DIE_SIGNAL],
-			       0, applet);
-
 		if (panel->currently_dragged_applet == ad)
 			panel_widget_applet_drag_end (panel);
 
@@ -2970,7 +2944,6 @@ panel_widget_tab_move (PanelWidget *panel,
 	GSList *li;
 	PanelWidget *new_panel = NULL;
 	PanelWidget *previous_panel = NULL;
-	PanelWidget *first_panel = panels->data;
 
 	ad = panel->currently_dragged_applet;
 

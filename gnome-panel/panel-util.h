@@ -2,6 +2,9 @@
 #define PANEL_UTIL_H
 
 #include <gtk/gtk.h>
+#include <gdk/gdk.h>
+
+#include <libgnome/gnome-desktop-item.h>
 
 #include "panel-widget.h"
 #include "panel-config-global.h"
@@ -133,6 +136,7 @@ gboolean	panel_ensure_dir	(const char *dirname);
 gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 
+
 /* GnomeVFS reading utils */
 
 typedef struct _ReadBuf ReadBuf;
@@ -150,8 +154,6 @@ void		readbuf_close		(ReadBuf *rb);
 /* Accessibility support routines */
 void add_atk_name_desc (GtkWidget *widget, gchar *name, gchar *desc);
 void set_relation (GtkWidget *widget, GtkLabel *label, int set_for);
-
-/* FIXME : make battery stuff public as appropriate */
 
 
 G_END_DECLS

@@ -10,7 +10,6 @@
 #include "border-widget.h"
 #include "panel-marshal.h"
 #include "panel-config-global.h"
-#include "multiscreen-stuff.h"
 #include "panel-typebuiltins.h"
 
 #undef BORDER_WIDGET_DEBUG
@@ -171,32 +170,6 @@ border_pos_get_hide_orient (BasePWidget *basep)
 	return PANEL_ORIENT_LEFT;
 }
 
-#ifdef BORDER_WIDGET_DEBUG
-static void
-border_pos_debug_print_edge (BorderEdge edge)
-{
-	g_print ("BorderEdge = ");
-
-	switch (edge) {
-	case BORDER_TOP:
-		g_print ("(top)\n");
-		break;
-	case BORDER_RIGHT:
-		g_print ("(right)\n");
-		break;
-	case BORDER_BOTTOM:
-		g_print ("(bottom)\n");
-		break;
-	case BORDER_LEFT:
-		g_print ("(left)\n");
-		break;
-	default:
-		g_assert_not_reached ();
-		break;
-	}
-}
-#endif /* BORDER_WIDGET_DEBUG */
-
 static void
 border_pos_get_menu_pos (BasePWidget *basep,
 			 GtkWidget *widget,
@@ -205,11 +178,6 @@ border_pos_get_menu_pos (BasePWidget *basep,
 			 int wx, int wy,
 			 int ww, int wh)
 {
-
-#ifdef BORDER_WIDGET_DEBUG
-	border_pos_debug_print_edge (BORDER_POS(basep->pos)->edge);
-#endif /* BORDER_WIDGET_DEBUG */
-
 	switch (BORDER_POS(basep->pos)->edge) {
 	case BORDER_TOP:
 		*x += wx;

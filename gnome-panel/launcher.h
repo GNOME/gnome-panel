@@ -62,7 +62,8 @@ Launcher *	load_launcher_applet_from_info_url(const char *name,
 						   PanelWidget *panel,
 						   int pos,
 						   gboolean exactpos);
-void		launcher_properties		(Launcher *launcher);
+
+void		launcher_properties		(Launcher  *launcher);
 
 void            launcher_save_to_gconf          (Launcher   *launcher,
 						 const char *gconf_key);
@@ -80,6 +81,8 @@ void		ask_about_launcher		(const char *file,
 void		launcher_hoard			(Launcher *launcher);
 
 Launcher *	find_launcher			(const char *path);
+
+void            launcher_show_help              (Launcher *launcher);
 
 G_END_DECLS
 

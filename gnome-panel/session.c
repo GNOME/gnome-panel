@@ -7,44 +7,19 @@
  */
 
 #include <config.h>
-#include <string.h>
-#include <signal.h>
-#include <limits.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-
-#include <gdk/gdkx.h>
-#include <X11/keysym.h>
 
 #include <libgnome/libgnome.h>
-#include <libgnome/gnome-desktop-item.h>
-#include <libbonobo.h>
 
 #include "session.h"
 
-#include "aligned-widget.h"
-#include "button-widget.h"
-#include "distribution.h"
-#include "drawer-widget.h"
-#include "edge-widget.h"
-#include "floating-widget.h"
-#include "foobar-widget.h"
-#include "launcher.h"
-#include "logout.h"
-#include "menu-fentry.h"
-#include "menu-util.h"
+#include "applet.h"
 #include "menu.h"
-#include "panel-util.h"
-#include "panel-gconf.h"
-#include "panel-config-global.h"
-#include "session.h"
-#include "sliding-widget.h"
-#include "gnome-run.h"
-#include "xstuff.h"
-#include "multiscreen-stuff.h"
+#include "panel.h"
 #include "panel-applet-frame.h"
+#include "panel-config-global.h"
+#include "panel-gconf.h"
 #include "panel-shell.h"
+#include "xstuff.h"
 
 #undef SESSION_DEBUG
 
@@ -267,8 +242,6 @@ panel_session_die (GnomeClient *client,
 
 	gnome_config_sync ();
 
-	xstuff_unsetup_desktop_area ();
-			
 	panel_shell_unregister ();
 	
 	gtk_main_quit();

@@ -1,101 +1,53 @@
 /*
  * GNOME panel x stuff
- * Copyright 2000,2001 Eazel, Inc.
  *
- * Authors: George Lebl
+ * Copyright (C) 2000, 2001 Eazel, Inc.
+ *               2002 Sun Microsystems Inc.
+ *
+ * Authors: George Lebl <jirka@5z.com>
+ *          Mark McLoughlin <mark@skynet.ie>
  */
 #include <config.h>
-#include <gdk/gdkx.h>
 #include <string.h>
 
-#include <X11/Xmd.h>
+#include <gdk/gdk.h>
+#include <gdk/gdkx.h>
+
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 
-/* Yes, yes I know, now bugger off ... */
-#define WNCK_I_KNOW_THIS_IS_UNSTABLE
-#include <libwnck/libwnck.h>
-
 #include "xstuff.h"
-#include "multiscreen-stuff.h"
-#include "basep-widget.h"
-#include "foobar-widget.h"
+
 #include "global-keys.h"
 
-/*list of all panel widgets created*/
-extern GSList *panel_list;
-
-static void xstuff_setup_global_desktop_area (int left, int right,
-					      int top, int bottom);
-
-#define ATOM(name) xstuff_atom_intern(GDK_DISPLAY(),name)
-/* Once we have multiple display support we need to only use
- * the below ones */
-
-#define ATOMD(display,name) xstuff_atom_intern(display,name)
-#define ATOMEV(event,name) xstuff_atom_intern(((XAnyEvent *)event)->display,name)
-#define ATOMGDK(win,name) xstuff_atom_intern(GDK_WINDOW_XDISPLAY(win),name)
-
-Atom
-xstuff_atom_intern (Display *display, const char *name)
+static Atom
+panel_atom_get (Display    *display,
+		const char *atom_name)
 {
-	static GHashTable *cache = NULL;
-	char *key;
-	Atom atom;
+	static GHashTable *atom_hash;
+	Atom               retval;
 
 	g_return_val_if_fail (display != NULL, None);
-	g_return_val_if_fail (name != NULL, None);
+	g_return_val_if_fail (atom_name != NULL, None);
 
-	if (cache == 0)
-		cache = g_hash_table_new (g_str_hash, g_str_equal);
+	if (!atom_hash)
+		atom_hash = g_hash_table_new_full (
+				g_str_hash, g_str_equal, g_free, NULL);
 
-	key = g_strdup_printf ("%p %s", display, name);
+	retval = GPOINTER_TO_UINT (g_hash_table_lookup (atom_hash, atom_name));
+	if (!retval) {
+		retval = XInternAtom (display, atom_name, FALSE);
 
-	atom = (Atom)g_hash_table_lookup (cache, key);
-	if (atom == 0) {
-		atom = XInternAtom (display, name, False);
-		g_hash_table_insert (cache, key, (gpointer)atom);
-	} else {
-		g_free (key);
+		if (retval != None)
+			g_hash_table_insert (atom_hash, g_strdup (atom_name),
+					     GUINT_TO_POINTER (retval));
 	}
 
-	return atom;
-}
-
-void
-xstuff_init (void)
-{
-	/* setup the keys filter */
-	gdk_window_add_filter (gdk_get_default_root_window (),
-			       panel_global_keys_filter,
-			       NULL);
-
-	gdk_error_trap_push ();
-
-	xstuff_setup_global_desktop_area (0, 0, 0, 0);
-
-	gdk_error_trap_pop ();
-}
-
-void
-xstuff_set_simple_hint (GdkWindow *w, const char *name, long val)
-{
-	Atom atom = ATOMGDK (w, name);
-
-	gdk_error_trap_push ();
-
-	XChangeProperty (GDK_DISPLAY (),
-			 GDK_WINDOW_XWINDOW (w),
-			 atom, atom,
-			 32, PropModeReplace,
-			 (unsigned char*)&val, 1);
-
-	gdk_flush ();
-	gdk_error_trap_pop ();
+	return retval;
 }
 
 /* Stolen from deskguide */
-gpointer
+static gpointer
 get_typed_property_data (Display *xdisplay,
 			 Window   xwindow,
 			 Atom     property,
@@ -204,7 +156,7 @@ xstuff_is_compliant_wm (void)
         
 	data = get_typed_property_data (GDK_DISPLAY (),
 					GDK_ROOT_WINDOW (),
-					ATOM ("_NET_SUPPORTED"),
+					panel_atom_get (GDK_DISPLAY (), "_NET_SUPPORTED"),
 					XA_ATOM,
 					&size, 32);
 	if (data != NULL) {
@@ -224,9 +176,11 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 
 	XDeleteProperty (GDK_WINDOW_XDISPLAY (win),
 			 GDK_WINDOW_XWINDOW (win),
-			 ATOMGDK (win, "WM_CLIENT_LEADER"));
+			 panel_atom_get (GDK_WINDOW_XDISPLAY (win),
+					 "WM_CLIENT_LEADER"));
 
-	old_wmhints = XGetWMHints (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (win));
+	old_wmhints = XGetWMHints (GDK_WINDOW_XDISPLAY (win),
+				   GDK_WINDOW_XWINDOW (win));
 	/* General paranoia */
 	if (old_wmhints != NULL) {
 		memcpy (&wmhints, old_wmhints, sizeof (XWMHints));
@@ -243,122 +197,16 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 		wmhints.input = False;
 		wmhints.initial_state = NormalState;
 	}
-	XSetWMHints (GDK_DISPLAY (),
+
+	XSetWMHints (GDK_WINDOW_XDISPLAY (win),
 		     GDK_WINDOW_XWINDOW (win),
 		     &wmhints);
-}
-
-static void
-xstuff_setup_global_desktop_area (int left, int right, int top, int bottom)
-{
-	long vals[4];
-	static int old_left = -1, old_right = -1, old_top = -1, old_bottom = -1;
-
-	left = left >= 0 ? left : old_left;
-	right = right >= 0 ? right : old_right;
-	top = top >= 0 ? top : old_top;
-	bottom = bottom >= 0 ? bottom : old_bottom;
-
-	if (old_left == left &&
-	    old_right == right &&
-	    old_top == top &&
-	    old_bottom == bottom)
-		return;
-
-	vals[0] = left;
-	vals[1] = right;
-	vals[2] = top;
-	vals[3] = bottom;
-
-	XChangeProperty (GDK_DISPLAY (),
-			 GDK_ROOT_WINDOW (), 
-			 ATOM ("GNOME_PANEL_DESKTOP_AREA"),
-			 XA_CARDINAL,
-			 32, PropModeReplace,
-			 (unsigned char *)vals, 4);
-
-	old_left = left;
-	old_right = right;
-	old_top = top;
-	old_bottom = bottom;
-}
-
-void
-xstuff_setup_desktop_area (int screen, int left, int right, int top, int bottom)
-{
-	char *screen_atom;
-	long vals[4];
-	static int screen_width = -1, screen_height = -1;
-
-	if (screen_width < 0)
-		screen_width = gdk_screen_width ();
-	if (screen_height < 0)
-		screen_height = gdk_screen_height ();
-
-	vals[0] = left;
-	vals[1] = right;
-	vals[2] = top;
-	vals[3] = bottom;
-
-	gdk_error_trap_push ();
-
-	/* Note, when we do standard multihead and we have per screen
-	 * root window, this should just set the GNOME_PANEL_DESKTOP_AREA */
-	screen_atom = g_strdup_printf ("GNOME_PANEL_DESKTOP_AREA_%d",
-				       screen);
-	XChangeProperty (GDK_DISPLAY (),
-			 GDK_ROOT_WINDOW (), 
-			 ATOM (screen_atom),
-			 XA_CARDINAL,
-			 32, PropModeReplace,
-			 (unsigned char *)vals, 4);
-
-	g_free (screen_atom);
-
-	xstuff_setup_global_desktop_area
-		((multiscreen_x (screen)      == 0)             ? left   : -1,
-		 (multiscreen_x (screen) +
-		  multiscreen_width (screen)  == screen_width)  ? right  : -1,
-		 (multiscreen_y (screen)      == 0)             ? top    : -1,
-		 (multiscreen_y (screen) +
-		  multiscreen_height (screen) == screen_height) ? bottom : -1);
-
-	gdk_flush ();
-	gdk_error_trap_pop ();
-}
-
-void
-xstuff_unsetup_desktop_area (void)
-{
-	int i;
-	char *screen_atom;
-
-	gdk_error_trap_push ();
-
-	XDeleteProperty (GDK_DISPLAY (),
-			 GDK_ROOT_WINDOW (),
-			 ATOM ("GNOME_PANEL_DESKTOP_AREA"));
-
-	for (i = 0; i < multiscreen_screens (); i++) {
-		screen_atom =
-			g_strdup_printf ("GNOME_PANEL_DESKTOP_AREA_%d", i);
-
-		XDeleteProperty (GDK_DISPLAY (),
-				 GDK_ROOT_WINDOW (),
-				 ATOM (screen_atom));
-
-		g_free (screen_atom);
-	}
-
-	gdk_flush ();
-	gdk_error_trap_pop ();
 }
 
 /* This is such a broken stupid function. */   
 void
 xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
 {
-       Window win = GDK_WINDOW_XWINDOW (window);
        XSizeHints size_hints;
 
        /* Do not add USPosition / USSize here, fix the damn WM */
@@ -374,7 +222,9 @@ xstuff_set_pos_size (GdkWindow *window, int x, int y, int w, int h)
   
        gdk_error_trap_push ();
 
-       XSetWMNormalHints (GDK_DISPLAY (), win, &size_hints);
+       XSetWMNormalHints (GDK_WINDOW_XDISPLAY (window),
+			  GDK_WINDOW_XWINDOW (window),
+			  &size_hints);
 
        gdk_window_move_resize (window, x, y, w, h);
 
@@ -386,48 +236,62 @@ void
 xstuff_set_wmspec_dock_hints (GdkWindow *window,
 			      gboolean autohide)
 {
-        Atom atoms[2] = { None, None };
+        Atom atoms [2] = { None, None };
         
-	if (autohide) {
-		atoms[0] = ATOMGDK (window, "_GNOME_WINDOW_TYPE_AUTOHIDE_PANEL");
-		atoms[1] = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
-	} else {
-		atoms[0] = ATOMGDK (window, "_NET_WM_WINDOW_TYPE_DOCK");
+	if (!autohide)
+		atoms [0] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
+					    "_NET_WM_WINDOW_TYPE_DOCK");
+	else {
+		atoms [0] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
+					    "_GNOME_WINDOW_TYPE_AUTOHIDE_PANEL");
+		atoms [1] = panel_atom_get (GDK_WINDOW_XDISPLAY (window),
+					    "_NET_WM_WINDOW_TYPE_DOCK");
 	}
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
-			 ATOMGDK (window, "_NET_WM_WINDOW_TYPE"),
+			 panel_atom_get (GDK_WINDOW_XDISPLAY (window),
+					 "_NET_WM_WINDOW_TYPE"),
                          XA_ATOM, 32, PropModeReplace,
-                         (guchar *)atoms, 
+                         (unsigned char *) atoms, 
 			 autohide ? 2 : 1);
 }
 
 void
 xstuff_set_wmspec_strut (GdkWindow *window,
-			 int left,
-			 int right,
-			 int top,
-			 int bottom)
+			 int        left,
+			 int        right,
+			 int        top,
+			 int        bottom)
 {
-	long vals[4];
+	long vals [4];
         
-	vals[0] = left;
-	vals[1] = right;
-	vals[2] = top;
-	vals[3] = bottom;
+	vals [0] = left;
+	vals [1] = right;
+	vals [2] = top;
+	vals [3] = bottom;
 
         XChangeProperty (GDK_WINDOW_XDISPLAY (window),
                          GDK_WINDOW_XWINDOW (window),
-			 ATOMGDK (window, "_NET_WM_STRUT"),
+			 panel_atom_get (GDK_WINDOW_XDISPLAY (window),
+					 "_NET_WM_STRUT"),
                          XA_CARDINAL, 32, PropModeReplace,
-                         (guchar *)vals, 4);
+                         (unsigned char *) vals, 4);
 }
 
 void
 xstuff_delete_property (GdkWindow *window, const char *name)
 {
-        XDeleteProperty (GDK_WINDOW_XDISPLAY (window),
-                         GDK_WINDOW_XWINDOW (window),
-			 ATOMGDK (window, name));
+	Display *xdisplay = GDK_WINDOW_XDISPLAY (window);
+	Window   xwindow  = GDK_WINDOW_XWINDOW (window);
+
+        XDeleteProperty (xdisplay, xwindow,
+			 panel_atom_get (xdisplay, name));
+}
+
+void
+xstuff_init (void)
+{
+	gdk_window_add_filter (gdk_get_default_root_window (),
+			       panel_global_keys_filter, NULL);
 }

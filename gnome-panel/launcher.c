@@ -753,22 +753,23 @@ really_add_launcher (GtkWidget *dialog, int response, gpointer data)
 }
 
 void
-ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exactpos)
+ask_about_launcher (const char  *file,
+		    PanelWidget *panel,
+		    int          pos,
+		    gboolean     exactpos)
 {
 	GtkWidget *dialog;
 	GnomeDItemEdit *dee;
 	GnomeDesktopItem *ditem;
 
-	dialog = gtk_dialog_new_with_buttons (_("Create Launcher"),
-					      NULL /* parent */,
-					      0 /* flags */,
-					      GTK_STOCK_HELP,
-					      GTK_RESPONSE_HELP,
-					      GTK_STOCK_CANCEL,
-					      GTK_RESPONSE_CANCEL,
-					      GTK_STOCK_OK,
-					      GTK_RESPONSE_OK,
-					      NULL);
+	dialog = gtk_dialog_new_with_buttons (
+				_("Create Launcher"),
+				GTK_WINDOW (panel->panel_parent),
+				0 /* flags */,
+				GTK_STOCK_HELP, GTK_RESPONSE_HELP,
+				GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				GTK_STOCK_OK, GTK_RESPONSE_OK,
+				NULL);
 
 	gtk_window_set_wmclass (GTK_WINDOW (dialog),
 				"create_launcher", "Panel");
@@ -1029,4 +1030,25 @@ find_launcher (const char *path)
 	}
 
 	return NULL;
+}
+
+void
+launcher_show_help (Launcher *launcher)
+{
+	GError     *error = NULL;
+	const char *docpath;
+
+	if (!launcher->ditem)
+		return;
+
+	docpath = gnome_desktop_item_get_string (
+				launcher->ditem, "DocPath");
+	panel_show_gnome_kde_help (docpath, &error);
+	if (error) {
+		panel_error_dialog (
+			"cannot_show_gnome_kde_help",
+			_("<b>Cannot display help document</b>\n\nDetails: %s"),
+			error->message);
+		g_error_free (error);
+	}
 }

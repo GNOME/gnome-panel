@@ -29,9 +29,6 @@
 #include <glade/glade.h>
 
 #include <gdk/gdkx.h>
-#include "panel-gconf.h"
-#include "global-keys.h"
-#include "panel-util.h"
 
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
@@ -41,6 +38,11 @@
 #include <libart_lgpl/art_alphagamma.h>
 
 #include <gconf/gconf-client.h>
+
+#include "panel-gconf.h"
+#include "global-keys.h"
+#include "panel-types.h"
+#include "rgb-stuff.h"
 
 /* Just so we can link with panel-util.c for the convert keys stuff*/
 GSList *applets;
@@ -54,37 +56,6 @@ static GConfEnumStringPair global_properties_speed_type_enum_map [] = {
 	{ PANEL_SPEED_MEDIUM, "panel-speed-medium" },
 	{ PANEL_SPEED_FAST,   "panel-speed-fast" },
 };
-
-/*
- * GEGL Wants Winners,
- * GEGL Wants Solutions,
- * GEGL Wants TV,
- * GEGL Wants Repeated Code...
- *
- * See rgb-stuff.c.
- */
-
-static void
-transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
-		 GdkPixbuf *pixbuf, double affine[6],
-		 int level, ArtAlphaGamma *ag)
-{
-        gint w, h, rs;
-
-        rs = gdk_pixbuf_get_rowstride(pixbuf);
-        h =  gdk_pixbuf_get_height(pixbuf);
-        w =  gdk_pixbuf_get_width(pixbuf);
-
-        if (gdk_pixbuf_get_has_alpha(pixbuf)) {
-                art_rgb_rgba_affine(dst, x0, y0, x1, y1, drs,
-                                    gdk_pixbuf_get_pixels(pixbuf),
-                                    w, h, rs, affine, level, ag);
-        } else {
-                art_rgb_affine(dst, x0, y0, x1, y1, drs,
-                               gdk_pixbuf_get_pixels(pixbuf),
-                               w, h, rs, affine, level, ag);
-        }
-}
 
 #include "nothing.cP"
 

@@ -70,13 +70,12 @@ void		setup_menuitem		(GtkWidget *menuitem,
 					 GtkWidget *pixmap,
 					 const char *title);
 
-GtkWidget *	create_panel_root_menu	(PanelWidget *panel);
-GtkWidget *     create_panel_context_menu (PanelWidget *panel);
+GtkWidget      *create_panel_context_menu (PanelWidget *panel);
+GtkWidget      *create_panel_root_menu    (PanelWidget *panel);
 
 void		menu_properties		(Menu *menu);
 
-void		panel_lock		(GtkWidget *widget,
-					 gpointer data);
+void		panel_lock		(GtkWidget *widget);
 
 /*to be called on startup to load in some of the directories*/
 void		init_menus		(void);
@@ -98,11 +97,12 @@ gboolean	menu_need_reread	(GtkWidget *menuw);
 
 void		setup_internal_applet_drag (GtkWidget *menuitem,
 					    const char *applet_type);
-GtkWidget *	create_root_menu	(GtkWidget *root_menu,
-					 gboolean fake_submenus,
-					 int flags,
-					 gboolean is_basep,
-					 gboolean extra_items);
+GtkWidget *	create_root_menu	(GtkWidget   *root_menu,
+					 PanelWidget *panel,
+					 gboolean     fake_submenus,
+					 int          flags,
+					 gboolean     is_basep,
+					 gboolean     extra_items);
 
 /* some gtk code cut-n-paste action */
 void		our_gtk_menu_position	(GtkMenu *menu);

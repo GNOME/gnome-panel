@@ -22,20 +22,18 @@ void orientation_change(AppletInfo *info, PanelWidget *panel);
 void size_change(AppletInfo *info, PanelWidget *panel);
 void back_change(AppletInfo *info, PanelWidget *panel);
 
-void panel_setup(GtkWidget *panel);
 void basep_pos_connect_signals (BasePWidget *basep);
 
 /*send state change to all the panels*/
 void send_state_change(void);
 
-GtkWidget * make_popup_panel_menu (PanelWidget *panel);
+PanelData *panel_setup(GtkWidget *panel);
+PanelData *panel_data_by_id (const char *id);
 
-PanelData * panel_data_by_id (const char *id);
-
+GtkWidget *make_popup_panel_menu (PanelWidget *panel);
 
 #define get_panel_parent(appletw) \
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
-
 
 void panel_load_global_config  (void);
 void panel_save_global_config  (void);
@@ -47,6 +45,8 @@ void panel_remove_from_gconf (PanelWidget *panel);
 void panel_save_to_gconf     (PanelData *pd);
 
 void panel_register_window_icon (void);
+
+int        panel_monitor_from_toplevel (GtkWidget *panel);
 
 G_END_DECLS
 

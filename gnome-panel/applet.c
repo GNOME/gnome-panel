@@ -180,33 +180,21 @@ applet_remove_callback (GtkWidget  *widget,
 }
 
 static void
-applet_callback_callback(GtkWidget *widget, gpointer data)
+applet_callback_callback (GtkWidget      *widget,
+			  AppletUserMenu *menu)
 {
-	AppletUserMenu *menu = data;
+	g_return_if_fail (menu->info != NULL);
 
-	g_return_if_fail(menu->info != NULL);
-
-	switch(menu->info->type) {
+	switch (menu->info->type) {
 	case APPLET_LAUNCHER:
-		if (strcmp (menu->name, "properties") == 0) {
+		if (!strcmp (menu->name, "properties"))
 			launcher_properties (menu->info->data);
-		} else if (strcmp (menu->name, "help") == 0) {
+
+		else if (!strcmp (menu->name, "help"))
 			panel_show_help ("wgospanel.xml", "gospanel-16");
-		} else if (strcmp (menu->name, "help_on_app") == 0) {
-			Launcher * launcher = menu->info->data;
-			if (launcher->ditem != NULL) {
-				GError *error = NULL;
-				const char *docpath =
-					gnome_desktop_item_get_string
-					    (launcher->ditem, "DocPath");
-				if ( ! panel_show_gnome_kde_help (docpath, &error)) {
-					panel_error_dialog ("cannot_show_gnome_kde_help",
-							    _("<b>Cannot display help document</b>\n\n"
-							      "Details: %s"), error->message);
-					g_clear_error (&error);
-				}
-			}
-		}
+
+		else if (!strcmp (menu->name, "help_on_app"))
+			launcher_show_help (menu->info->data);
 		break;
 	case APPLET_DRAWER: 
 		if (strcmp (menu->name, "properties")==0) {
@@ -400,16 +388,16 @@ setup_an_item(AppletUserMenu *menu,
 		gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menu->menuitem);
 
 	/*if an item not a submenu*/
-	if(!is_submenu) {
-		g_signal_connect(G_OBJECT(menu->menuitem), "activate",
-				 G_CALLBACK (applet_callback_callback),
-				   menu);
-		g_signal_connect(G_OBJECT (submenu), "destroy",
-				 G_CALLBACK (gtk_widget_destroyed),
-				 &menu->submenu);
+	if (!is_submenu) {
+		g_signal_connect (menu->menuitem, "activate",
+				  G_CALLBACK (applet_callback_callback),
+				  menu);
+		g_signal_connect (submenu, "destroy",
+				  G_CALLBACK (gtk_widget_destroyed),
+				  &menu->submenu);
 	/* if the item is a submenu and doesn't have it's menu
 	   created yet*/
-	} else if(!menu->submenu) {
+	} else if (!menu->submenu) {
 		menu->submenu = panel_menu_new ();
 	}
 
@@ -832,10 +820,8 @@ panel_applet_load_from_unique_id (AppletType   type,
 	panel_widget = panel_widget_get_by_id (panel_id);
 	g_free (panel_id);
 
-	if (!panel_widget) {
-		g_warning ("panel_applet_load: can't find the panel for this object\n");
+	if (!panel_widget)
 		return;
-	}
 
 	if (right_stick)
 		position = panel_widget->size - position;

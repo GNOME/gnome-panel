@@ -1,8 +1,8 @@
 /*
- *   multiscreen-stuff: Xinerama (and in the future multidisplay)
- *   support for the panel
+ *   multiscreen-stuff: Multiscreen and Xinerama support for the panel.
  *
  *   Copyright (C) 2001 George Lebl <jirka@5z.com>
+ *                 2002 Sun Microsystems Inc. (Mark McLoughlin <mark@skynet.ie>)
  *
  * This program is free software; you can redistribute it and/or 
  * modify it under the terms of the GNU General Public License as 
@@ -25,17 +25,16 @@
 
 #include <gtk/gtk.h>
 
-void		multiscreen_init		(void);
+void	multiscreen_init		(void);
 
-int		multiscreen_screens		(void) G_GNUC_CONST;
+int	multiscreen_screens		(void);
 
-/* information about a screen */
-int		multiscreen_x			(int screen);
-int		multiscreen_y			(int screen);
-int		multiscreen_width		(int screen);
-int		multiscreen_height		(int screen);
-int		multiscreen_screen_from_pos	(int x,
-						 int y);
-int		multiscreen_screen_from_panel	(GtkWidget *widget);
+int	multiscreen_x			(int        screen);
+int	multiscreen_y			(int        screen);
+int	multiscreen_width		(int        screen);
+int	multiscreen_height		(int        screen);
+int	multiscreen_locate_coords	(int        x,
+					 int        y);
+int	multiscreen_locate_widget	(GtkWidget *widget);
 
 #endif /* MULTISCREEN_STUFF_H */

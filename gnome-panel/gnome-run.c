@@ -37,17 +37,6 @@
 #include <libgnomevfs/gnome-vfs-file-info.h>
 
 #include "gnome-run.h"
-
-#include "foobar-widget.h"
-#include "menu-fentry.h"
-#include "menu.h"
-#include "nothing.h"
-#include "multiscreen-stuff.h"
-#include "quick-desktop-reader.h"
-
-#include "applet.h"
-#include "button-widget.h"
-#include "foobar-widget.h"
 #include "disclosure-widget.h"
 #include "menu-fentry.h"
 #include "menu.h"
@@ -55,6 +44,8 @@
 #include "panel-main.h"
 #include "panel-util.h"
 #include "panel-gconf.h"
+#include "quick-desktop-reader.h"
+#include "nothing.h"
 
 #define ICON_SIZE 20
 
@@ -93,7 +84,6 @@ static void       update_contents          (GtkWidget *dialog);
 static void       unset_selected           (GtkWidget *dialog);
 static void	  unset_pixmap		   (GtkWidget *gpixmap);
 static gboolean	  find_icon_timeout	   (gpointer   data);
-
 
 static void
 fill_executables_from (const char *dirname)

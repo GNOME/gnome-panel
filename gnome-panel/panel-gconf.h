@@ -16,7 +16,7 @@ G_CONST_RETURN char *panel_gconf_get_profile (void);
 GConfClient         *panel_gconf_get_client  (void);
 
 G_CONST_RETURN char *panel_gconf_sprintf     (const gchar *format,
-					      ...);
+					      ...) G_GNUC_PRINTF (1, 2);
 G_CONST_RETURN char *panel_gconf_global_key  (const gchar *key);
 G_CONST_RETURN char *panel_gconf_general_key (const gchar *profile,
 					      const gchar *key);
