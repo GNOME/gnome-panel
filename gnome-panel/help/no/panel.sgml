@@ -860,7 +860,7 @@
       </listitem>
       <listitem>
 	<para>
-	  <guilabel>Documentasjon</guilabel> &mdash; brukes ikke
+	  <guilabel>Dokumentasjon</guilabel> &mdash; brukes ikke
 	  nå.
 	</para>
       </listitem>
@@ -896,257 +896,254 @@
 	  GNOME sammen med deres 2-bokstav koder i  <ulink
    type="http"
 	  url="http://www.gnome.org/gnomefaq/html/x867.html">GNOME
-	  Frequently Asked Questions</ulink>.
+	  Ofte besvarte spørsmål</ulink>.
 	</para>
       </listitem>
     </itemizedlist>
 
     <para>
-XXX  All the changes you made in <interface>Launcher
-      Properties</interface> dialog will take effect when you press
-      <guibutton>Apply</guibutton> or
-      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
-      closes this dialog; pressing <guibutton>Apply</guibutton> will
-      allow you to continue editing.
+      Alle endringer du gjør i dialogen <interface>Egenskaper
+      for oppstarter</interface> vil bli aktivert når du trykker
+      <guibutton>Bruk</guibutton> eller
+      <guibutton>OK</guibutton>. Trykk på <guibutton>OK</guibutton>
+      for å lukke denne dialogen; Ved å trykke <guibutton>Bruk</guibutton>
+      vil du kunne fortsette med redigeringen.
     </para>
  </sect1>
 
 
 <!-- ###########  Applets  ############## -->
  <sect1 id="applets">
-  <title>Applets</title>
+  <title>Appleter</title>
   <para>
-   Applets are GNOME applications which reside in the
-   <interface>Panel</interface>.  An applet's appearance typically
-   reveals the state of the applet or other information. Applets often
-   have buttons, sliders, entries, or other methods to allow you to
-   control their behavior.
+   Appleter er GNOME-applikasjoner som kjører inne i
+   <interface>Panelet</interface>.  En applets utseende viser typisk
+   tilstanden for appleten eller annen informasjon. Appleter har ofte
+   knapper, rullefelt, felt for inntasting eller andre metoder som lar deg
+   kontrollere oppførselen deres.
   </para>
   <figure>
-   <title>Example Applets</title>
+   <title>Eksempel-appleter</title>
    <screenshot>
-    <screeninfo>Example Applets</screeninfo>
+    <screeninfo>Eksempel-appleter</screeninfo>
      <graphic fileref="./figures/panel_applets" format="png"
      srccredit="muet">
      </graphic>
    </screenshot>
   </figure>
   <para>
-   Some example applets are shown above.  At the very left is  the
-   <application>Sound Monitor Applet</application>, which displays the
-   current volume of sound being played and allows you to control
-   various sound features.  Second is the <application>Mixer
-   Applet</application>, which allows you to turn on/off sound and
-   control its volume by clicking on applet.  This is followed by the
-   <application>Battery Power Applet</application>, useful for
-   monitoring the battery on a laptop. The fourth applet is the
-   <application>GTCD Applet</application>, a CD player which has all
-   its controls available in the applet and displays the track and
-   time. The next applet is the <application>Drive Mount
-   Applet</application>, used to mount and unmount drives with a
-   single click of the mouse. The last applet shown is an analog
-   clock, displaying the current time.
+   Noen eksempler på appleter vises over. Helt til venstre ser du
+   <application>Lydmonitor-appleten</application>, som viser nåværende
+   volum for lyder som spilles og lar deg kontrollere forskjellige
+   funksjoner for lyd. Videre ses <application>Mikser-
+   appleten</application>, som lar deg skru på/av lyd og kontrollere
+   volumet ved å klikke på appleten. Dette etterfølges av
+   <application>Batterimonitor-appleten</application>, som er nyttig
+   for å overvåke batteriet på en bærbar. Den fjerde appleten er
+   <application>GTCD-appleten</application>, en CD-spiller som har alle
+   kontrollene tilgjengelig i appleten og viser informasjon om spor og
+   tid. Den neste appleten er <application>Diskmonterings-
+   appleten</application>, som brukes til å montere og avmontere disker
+   med et enkelt musklikk. Den siste appleten som vises er en analog
+   klokke som viser klokken nå.
   </para>
   <para>
-   GNOME has many useful applets.  Just right click on your
-   <interface>Panel</interface>  and add some applets to your panel to
-   find out what is available and which ones are best for you.
+   GNOME har mange nyttige appleter. Bare høyreklikk på ditt
+   <interface>Panel</interface> og legg til noen appleter på panelet for
+   å finne ut hva som er tilgjengelig og hvilke som passer best for deg.
   </para>
  </sect1>
 
 
 <!-- ###########  Drawers  ############## -->
  <sect1 id="drawers">
-  <title>Drawers</title>
+  <title>Skuffer</title>
   <para>
-   The simplest way of thinking about a <interface>Drawer</interface>
-   is that it is a  container to store things.  Typically one may use
-   a Drawer to hold multiple launchers which are related to each other
-   in some way, such as the various applications in GNOME Office. The
-   Drawers in the GNOME <interface>Panel</interface> take this one
-   step further by making a Drawer an actual extension of the
-   <interface>Panel</interface> itself.  Thus, a Drawer is a
-   collapsible branch of an existing <interface>Panel</interface>.  It
-   can contain anything  that a <interface>Panel</interface> can,
-   including launchers, applets, and other Drawers.
+   Den enkleste måten å tenke på en <interface>Skuff</interface>
+   er at den er en kontainer hvor du kan lagre ting. Man vil typisk bruke
+   en skuff til å inneholde flere oppstartere som er relatert til hverandre
+   på en eller annen måte, for eksempel de forskjellige applikasjonen i GNOME
+   office. Skuffene i GNOME <interface>Panelet</interface> tar dette ett
+   steg videre ved å gjøre en skuff til en utvidelse av selve
+   <interface>Panelet</interface>. Slik kan man se på en skuff som en
+   sammenleggbar gren av et eksisterende <interface>Panel</interface>.  Den
+   kan inneholde alt som et <interface>Panel</interface> kan ha,
+   inkludert oppstartere, appleter og andre skuffer.
   </para>
   <figure>
-   <title>An open Drawer</title>
+   <title>En åpen skuff</title>
    <screenshot>
-    <screeninfo>An open Drawer</screeninfo>
+    <screeninfo>En åpen skuff</screeninfo>
     <graphic fileref="./figures/drawer_open" format="png"
     srccredit="dcm">
     </graphic>
    </screenshot>
   </figure>
   <para>
-   Once you have placed a Drawer on the <interface>Panel</interface>,
-   you may click on it to "open" the Drawer, revealing its contents.
-   You may then add items to the Drawer in the same way you would add
-   items to the panel, right clicking on the end of the drawer with
-   the arrow.  You can close the Drawer by clicking on its icon again
-   or by clicking on the arrow at its end.
+   Når du har plassert en skuff på <interface>Panelet</interface> kan
+   du klikke på den for å "åpne" skuffen, hvilket viser innholdet i den.
+   Du kan da legge til objekter i skuffen på samme måte som du ville legge
+   til objekter på panelet. Høyreklikk på slutten av skuffen med
+   pilen. Du kan lukke skuffen ved å klikke på ikonet for skuffen igjen
+   eller ved å klikke på pilen på kanten.
   </para>
   <para>
-   You can configure a Drawer's properties by right clicking on the
-   Drawer's icon and selecting
-   <guimenuitem>Properties</guimenuitem>. This brings up the
-   <interface>Drawer Properties</interface> dialog. Here you can
-   select the icon used for the drawer by clicking on the icon. A
-   tooltip may be entered by typing in the
-   <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
-   displayed whenever the mouse is moved over the Drawer to remind you
-   what is inside.  One may also select whether the <guibutton>hide
-   button</guibutton> and arrow are displayed at the end of the drawer.
+   Du kan konfigurere egenskaper for en skuff ved å høyreklikke på
+   skuffens ikon og velge
+   <guimenuitem>Egenskaper</guimenuitem>. Dette henter opp dialogen
+   <interface>Egenskaper for skuff</interface>. Her kan du velge
+   ikonet som brukes for skuffen ved å klikke på ikonet. Et verktøytips
+   kan skrives inn ved å skrive i feltet
+   <guilabel>Verktøytips/Navn</guilabel>. Dette verktøytipset
+   vises når musen beveges over skuffen for å minne deg på hva som er
+   inne i skuffen. Man kan også velge om <guibutton>skjul-
+   knappen</guibutton> og pilen skal vises på kanten av skuffen.
   </para>
   <figure>
-   <title>Drawer Properties Dialog</title>
+   <title>Dialogen egenskaper for skuff</title>
    <screenshot>
-    <screeninfo>Drawer Properties Dialog</screeninfo>
+    <screeninfo>Dialogen egenskaper for skuff</screeninfo>
     <graphic fileref="./figures/drawer_properties" format="png"
      srccredit="dcm">
     </graphic>
    </screenshot>
   </figure>
   <para>
-   You may also control the background of the Drawer. Just right click
-   on the Drawer and select the <guilabel>Background</guilabel> tab to
-   bring up the standard <interface>Panel Background
-   Dialog</interface> (see <xref linkend="panelbacktab">).  </para>
+   Du kan også kontrollere bakgrunnen for skuffen. Bare høyreklikk
+   på skuffen og velg fanen <guilabel>Bakgrunn</guilabel> for å
+   hente opp den vanlige <interface>Panelbakgrunn-
+   dialogen</interface> (se <xref linkend="panelbacktab">).  </para>
  </sect1>
 
 
 
 <!-- ###########  Special Panel Objects  ############## -->
  <sect1 id="specialobjects">
-  <title>Special Panel Objects</title>
+  <title>Spesielle panelobjecter</title>
   <para>
-   There are several special panel objects which are not considered
-   Menus, Applets, or Launchers.  These special objects are described
-   below.
+   Det finnes flere spesielle panelobjekter som ikke regnes for å være
+   menyer, appleter eller oppstartere. Disse spesielle objektene beskrives
+   under.
   </para>
   <sect2 id="lockbutton">
-   <title>The Lock Button</title>
+   <title>Lås-knappen</title>
    <figure>
-    <title>The Lock Button</title>
+    <title>Lås-knappen</title>
     <screenshot>
-     <screeninfo>The Lock Button</screeninfo>
+     <screeninfo>Lås-knappen</screeninfo>
      <graphic fileref="./figures/panel_lockbut" format="png"
      srccredit="muet">
      </graphic>
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Lock Button</guibutton> is a
-    <interface>Panel</interface> button which  begins a screensaver
-    which locks the screen. In order to remove the screensaver and
-    access the GNOME session again, you must supply your password.
-    For more information on locking the screen, see <xref
+    <guibutton>Lås-knappen</guibutton> er en
+    <interface>Panel</interface>-knapp som starter en skjermsparer
+    som låser skjermen. For å fjerne skjermspareren og gå tilbake
+    til GNOME-sesjonen igjen må du oppgi ditt passord. For mer
+    informasjon om låsing av skjermen se <xref
     linkend="lockscreen">.
    </para>
   </sect2>
   <sect2 id="logoutbutton">
-   <title>The Logout Button</title>
+   <title>Logg ut knappen</title>
    <figure id="logoutbuttonfig">
-    <title>The Logout Button</title>
+    <title>Logg ut knappen</title>
     <screenshot>
-     <screeninfo>The Logout Button</screeninfo>
+     <screeninfo>Logg ut knappen</screeninfo>
      <graphic fileref="./figures/panel_logoutbut"
      format="png" srccredit="muet">
      </graphic>
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Logout</guibutton> button is used to exit the GNOME
-    desktop environment.  It initiates the logout sequence, bringing
-    up the <interface>Logout Dialog</interface>, as described in <xref
+    <guibutton>Logg ut</guibutton>-knappen brukes for å avslutte GNOME
+    skrivebordsmiljøet. Dette starter utloggingssekvensen som henter opp
+    <interface>Logg ut dialogen</interface>, som beskrevet i <xref
     linkend="loggingout">.
    </para>
   </sect2>
   <sect2 id="swallowedapps">
-   <title>Swallowed Applications</title>
+   <title>Slukte applikasjoner</title>
    <para>
-    The GNOME <interface>Panel</interface> allows you to run
-    applications which are not  applets inside the
-    <interface>Panel</interface> as if they were applets.
-    Applications  which you pull into the
-    <interface>Panel</interface>, even though they are not GNOME
-    applets, are called "swallowed applications".  Applications do not
-    have to be GNOME-compliant to be swallowed.  In general, the only
-    constraints for swallowing an application are that the application
-    must be small enough to fit in your panel and you must know the
-    title of the window you would like to swallow.  In many cases, the
-    application can be automatically shrank to fit in the
-    <interface>Panel</interface>,  as specified in the
-    <interface>Create Swallowed Application Dialog.</interface>.
+    GNOME <interface>Panelet</interface> lar deg kjøre applikasjoner
+    som ikke er appleter inne i <interface>Panel</interface> som om de var
+    appleter. Applikasjoner som du trekker inn i
+    <interface>Panelet</interface>, uansett om de ikke er GNOME
+    appleter, kalles "slukte applikasjoner". Applikasjoner må ikke
+    støtte alle GNOME-standarder for å bli slukt. Vanligvis er de eneste
+    begrensningene for å sluke en applikasjon at applikasjonen må være
+    liten nok til å få plass i panelet og du må vite tittelen på
+    vinduet su skal sluke. I mange tilfeller kan applikasjonen krympes
+    automatisk slik at den passer i <interface>Panel</interface>,
+    som spesifisert i <interface>dialogen Opprett slukte applikasjoner.</interface>.
    </para>
    <figure id="swallappfig">
-     <title>Create Swallowed Application Dialog</title>
+     <title>Dialogen Opprett slukt applikasjon</title>
      <screenshot>
-      <screeninfo>Create Swallowed Application Dialog</screeninfo>
+      <screeninfo>Dialogen Opprett Slukt applikasjon</screeninfo>
       <graphic fileref="./figures/panel_swallow" format="png"
       srccredit="muet">
       </graphic>
      </screenshot>
     </figure>
    <para>
-    The <guilabel>Title of application to swallow</guilabel> is the
-    window title, typically displayed on the top left edge of the
-    window. (Note that the window title is case sensitive.) The width
-    and height determine the size of the swallowed application in the
-    panel in pixels.
-      </para>
+    <guilabel>Tittel på applikasjonen som skal slukes</guilabel> er
+    vindustittelen, som vanligvis vises i øvre venstre kant av
+    vinduet. (Merk at vindutittelen skiller mellom store og små bokstaver.)
+    Bredden og høyden bestemmer størrelsen i piksler for den slukte 
+    applikasjonen i panelet.
+   </para>
       <para>
-      If you leave the <guilabel>Command</guilabel> field empty, this
-      dialog will create an empty window of given size on the panel
-      which will sit there waiting for a window with the given title
-      to appear on your desktop. As soon such a window appears (for
-      example, when you choose appropriate item in the menu), it will
-      be swallowed.
+      Hvis du lar <guilabel>Kommando</guilabel>-feltet være tomt vil
+      denne dialogen opprette et tomt vindu av gitt størrelse i panelet
+      som vil vente der på at et vindu med tittelen som ble oppgitt
+      skal dukke opp på skrivebordet. Så snart et slikt vindu kommer til syne
+      (for eksempel når du velger tilsvarende oppføring i menyen), vil dette
+      bli slukt.
 	</para>
-      <para> You can also enter any command in the
-      <guilabel>Command</guilabel> field; this command will be
-      executed before adding the swallowing window to the
-      <interface>Panel</interface> (and  each time the panel is
-      restarted afterwards). This is normally used to start an
-      application which you want the <interface>Panel</interface> to
-      swallow.
+      <para>Du kan også oppgi en hvilken som helst kommando i
+      <guilabel>Kommando</guilabel>-feltet; denne kommandoen vil bli
+      kjørt før det slukte vinduet legges til på
+      <interface>Panelet</interface> (og hver gang panelet startes
+      på nytt senere). Dette brukes vanligvis til å starte en applikasjon
+      du ønsker at skal slukes av <interface>Panelet</interface>.
    </para>
          
   </sect2>
   <sect2 id="statusdock">
-   <title>Status Dock</title>
+   <title>Statusdokk</title>
    <para>
-    The <interface>Status Dock</interface> is a
-    <interface>Panel</interface> object which can  hold Status
-    Docklets &mdash; small windows which applications place in the
-    <interface>Status Dock</interface> to  provide status information.
-    Status Docklets can also be used to control the
-    application. Essentially, Docklets are small (both in size and in
-    complexity) applets.   GNOME currently does not have many
-    applications which place Status Docklets in the <interface>Status
-    Dock</interface>.  However, GNOME's Status Dock is compatible with
-    that of the K Desktop Environment (KDE), so KDE applications, such
-    as <application>kscd</application>, may place Status Docklets in
-    GNOME's <interface>Status Dock</interface>.  Future versions of
-    GNOME applications will  make use of this recently added
-    <interface>Panel</interface> object.
+    <interface>Statusdokk</interface> er et
+    <interface>Panel</interface>-objekt som kan inneha statusdokk-
+    appleter &mdash; små vinduer som applikasjoner plasserer i
+    <interface>Statusdokken</interface> for å gi statusinformasjon.
+    Statusdokk-appleter kan også brukes til å kontrollere
+    applikasjonen. Statusdokk-appleter er i virkeligheten små (både i
+    størrelse og i kompleksitet) appleter. GNOME har ikke så mange 
+    applikasjoner som benytter statusdokk-appleter i <interface>Statusdokken
+    </interface> ennå, men GNOME's statusdokk er kompatibel med 
+    den du finner i K Desktop Environment (KDE), slik at KDE-applikasjoner, slik
+    som <application>kscd</application>, kan plassere statusdokk-appleter i
+    GNOME's <interface>Statusdokk</interface>.  Fremtidige versjoner av
+    GNOME-applikasjonene vil gjøre seg bruk av dette
+    <interface>Panel</interface>-objektet.
    </para>
    <figure id="statusdockfig">
-     <title>Example Status Dock With Docklet</title>
+     <title>Eksempel på statusdokk med docklet</title>
      <screenshot>
-      <screeninfo>Example Status Dock With Docklet</screeninfo>
+      <screeninfo>Eksempel på statusdokk med docklet</screeninfo>
       <graphic fileref="./figures/status_dock" format="png"
       srccredit="lebl">
       </graphic>
      </screenshot>
     </figure>
    <para>
-    The above example shows the <interface>Status Dock</interface>
-    with a Status Docklet from  the <application>kscd</application> CD
-    player program.  This particular Docklet is used to open and close
-    the main <application>kscd</application> window without ending the
-    program.
+    Eksempelet over viser <interface>Statusdokken</interface>
+    med en statusdokk-applet fra <application>kscd</application>, et CD-
+    spiller program. Denne spesifikke dockleten brukes til å åpne og lukke
+    hovedvinduet til <application>kscd</application> uten å avslutte
+    programmet.
    </para>
   </sect2>
  </sect1>
@@ -1155,214 +1152,206 @@ XXX  All the changes you made in <interface>Launcher
 <!-- ########### Adding, Moving, and Removing Panel Objects
 ############## -->
   <sect1 id="appletadd">
-    <title>Adding, Moving, and Removing Panel Objects</title>
+    <title>Legg til, flytt og fjern panelobjekter</title>
     <sect2 id="moving">
-      <title>Moving objects</title>
+      <title>Flytting av objekter</title>
       <para>
 <!--
      <indexterm id="idx-a14">
-      <primary>Panel</primary> <secondary>launchers</secondary>
+      <primary>Panel</primary>-<secondary>oppstartere</secondary>
      </indexterm>
      <indexterm id="idx-a15">
       <primary>Panel</primary> <secondary>adding applets
       to</secondary><see>"Applets"</see> </indexterm> -->
 
-	To move any object on the <interface>Panel</interface> to a
-	different location, just  drag it with the middle mouse button
-	to the desired place, or right-click on it and choose
-	<guimenuitem>Move applet</guimenuitem>. You can move it to a
-	dfferent location on the same <interface>Panel</interface>, or
-	to a different <interface>Panel</interface>.  If in the course
-	of this movement it hits other objects, the behavior depends
-	on the global preferences you set (see <xref
- linkend="appletstab">): the object you are moving can switch
-	places with other objects, "push" all objects it meets, or
-	"jump" over all other objects without disturbing them. You can
-	also override the default behavior by holding
-	<keycap>Shift</keycap> button (for "push" mode),
-	<keycap>Ctrl</keycap> (for "switched" mode), or
-	<keycap>Alt</keycap> (for "free" mode, i.e. jumping other
-	other objects without disturbing them) button while dragging.
-	</para>
+	For å flytte et objekt på <interface>Panelet</interface> til en
+	annen lokasjon kan du brae dra det til ønsket plassering med
+	den midterste musknappen, eller høyreklikk på den og velg
+	<guimenuitem>Flytt</guimenuitem>. Du kan flytte den til en annen
+	lokasjon på det samme <interface>Panelet</interface>, eller
+	til et annet <interface>Panel</interface>. Hvis det i løpet
+	av denne bevegelsen treffer andre objekter er oppførselen avhengig
+	av de globale brukervalgene du har satt (see <xref
+	linkend="appletstab">): objektet du flytter kan bytte plass med
+	andre objekter, "skyve" på alle objekter det møter, eller
+	"hoppe" over alle andre objekter uten å forstyrre dem. Du kan
+	også overstyre forvalgt oppførsel ved å holde nede
+	<keycap>Shift</keycap>-knappen (for "skyv"-modus),
+	<keycap>Ctrl</keycap> (for "bytt"-modus), eller
+	<keycap>Alt</keycap> (for "fri"-modus (hopp over andre objekter 
+	uten å forstyrre dem)-knappen mens du drar objektet rundt.
+      </para>
     </sect2>
 
     <sect2 id="remove">
-      <title> Removing objects from the panel</title>   <para>   To
-      remove an object from the <interface>Panel</interface>,
-      right-click on it and choose  <guimenuitem>Remove from
-      panel</guimenuitem> from the pop-up menu.
+      <title>Fjern objekter fra panelet</title>
+      <para> For å fjerne et objekt fra <interface>Panelet</interface>
+        kan du høyreklikke på det og velge  <guimenuitem>Fjern fra
+        panelet</guimenuitem> fra høyreklikk-menyen.
       </para>
     </sect2>
 
 
-    <sect2 id="add">    <title>Adding objects to the panel</title>
-      
+    <sect2 id="add">
+    <title>Legg til objekter på panelet</title>
       <para>
 	<indexterm id="idx-a13">
-	  <primary>Panel</primary> <secondary>adding applications
-	  to</secondary>
+	  <primary>Panel</primary> <secondary>legg til applikasjoner
+	  på</secondary>
 	</indexterm>
-	By default, the GNOME <interface>Panel</interface> contains
-	very few basic objects,  such as the <guimenu>Main
-	Menu</guimenu>. However, there is a number of things you can
-	add to it. For example, every menu item in the <guimenu>Main
-	Menu</guimenu> or its submenus can be added to the panel as an
-	application launcher. GNOME also contains a number of applets
-	that can be added to the panel, ranging from
-	<application>Printer Applet</application>, which prints a file
-	which you drag and drop onto this applet, to
-	<application>Wanda the Fish</application>. If these are not
-	enough, there is also a number of GNOME applets available on
-	the Internet.
+	I utgangspunktet har GNOME <interface>Panelet</interface>
+	svært få grunnleggende objekter, slik som <guimenu>Hovedmenyen
+	</guimenu>. Men det finnes et antall ting du kan legge til på denne
+	For eksempel, alle menyoppføringer i <guimenu>Hovedmenyen</guimenu>
+	eller undermenyene kan legges til på panelet som en applikasjons-
+	oppstarter. GNOME har også et antall appleter som kan legges til på
+	panelet. Disse omspenner alt fra <application>Skriverapplet</application>,
+	som skriver ute en fil når du drar den til appleten og slipper den der,
+	til <application>Fisken Wanda</application>. Hvis disse ikke dekker ditt
+	behov finnes det også mange GNOME-appleter på nettet.
       </para>
 	<variablelist>
 	  <varlistentry>
-	    <term> <emphasis>Applets</emphasis></term>
+	    <term> <emphasis>Appleter</emphasis></term>
 	    <listitem>
 	      <para>
-		To add an applet, right-click on the
-		<interface>Panel</interface> and select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Applet</guisubmenu></menuchoice> from the
-		<guimenu>Panel</guimenu> menu. This will show you the
-		menu of all the applets on your system, divided into
-		categories; choosing any applet from this menu will
-		add it to the <interface>Panel</interface>.
+		For å legge til en applet høyreklikker du på
+		<interface>Panelet</interface> og velger
+		<menuchoice><guisubmenu>Applet</guisubmenu></menuchoice> fra
+		<guimenu>Panel</guimenu>-menyen. Dette vil vise menyen som
+		inneholder alle appletene på ditt system, delt inn i
+		kategorier; ved å velge en applet fra denne menyen vil du
+		legge den til på <interface>Panelet</interface>.
 	      </para>
 	    </listitem>
 	  </varlistentry>
 
 
 	  <varlistentry>
-	    <term> <emphasis>Application launchers</emphasis></term>
+	    <term> <emphasis>Applikasjonsoppstartere</emphasis></term>
 	    <listitem>
 	      <para>
-		To create a new application launcher, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guimenuitem>Launcher</guimenuitem> </menuchoice> from
-		the <guimenu>Panel</guimenu> menu.  You will be
-		presented the <interface>Create Launcher
-		dialog</interface>, shown below.  In this dialog you
-		should enter a name for your launcher, a comment, and
-		the command line to launch the application. This
-		dialog is virtually identical to <interface>Launcher
-		Properties</interface> dialog, so we refer the reader
-		to <xref linkend="launchers"> for detailed description.
+		For å opprette en ny applikasjonsoppstarter velger du
+		<menuchoice><guisubmenu>Legg til på panelet</guisubmenu>
+		<guimenuitem>Oppstarter</guimenuitem> </menuchoice> fra
+		<guimenu>Panel</guimenu>. Du vil få opp dialogen
+		<interface>Opprett oppstarter</interface>, som vist under.
+		I denne dialogen oppgir du et navn for din oppstarter, en
+		kommentar, og kommandolinjen for å starte applikasjonen. Denne
+		dialoger nesten helt lik til <interface>Egenskaper for
+		oppstarter</interface>-dialogen, så vi henviser leseren
+		til <xref linkend="launchers"> for en detaljert beskrivelse.
 	      </para>
 	      <figure>
-		<title>The Create launcher dialog</title>
+		<title>Dialogen Opprett oppstarter</title>
 		<screenshot>
-		  <screeninfo>Create launcher dialog</screeninfo>
+		  <screeninfo>Dialogen Opprett oppstarter</screeninfo>
 		  <graphic fileref="./figures/create_launcher" format="png"
 			   srccredit="muet">
 		  </graphic>
 		</screenshot>
 	      </figure>
 	      <para>
-		You can also add to the <interface>Panel</interface>
-		any existing menu item  or any launcher on your
-		desktop: just drag it to the panel and drop there. Be
-		careful to drop in the empty space on the panel and
-		not on any existing object: for example, if you drop
-		it on the printer applet, it will be printed. For menu
-		items, you can also right-click on an item in the menu
-		and select <guimenuitem>Add this launcher to the
-		panel</guimenuitem>. After this, you can change any
-		options for that launcher by clicking on it with the
-		right mouse button and selecting
-		<guimenuitem>Properties</guimenuitem> menu item.
+		Du kan også legge til enhver eksisterende menyoppføring eller
+		oppstarter fra skrivebordet på <interface>Panel</interface>:
+		bare dra dem til panelet og slipp dem der. Vær nøye med å
+		slippe dem på en ledig plass på panelet og ikke på et 
+		eksisterende objekt: hvis du for eksempel slipper
+		det på skriverappleten, vil det bli skrevet ut. For
+		menyoppføringer kan du også høyreklikke på en oppføring i menyen
+		og velge <guimenuitem>Legg til denne oppstarteren på
+		panelet</guimenuitem>. Etter dette kan du endre alle
+		alternativene for denne oppstarteren ved å klike på den med
+		høyre musknappe og velge menyoppføringen
+		<guimenuitem>Egenskaper</guimenuitem>.
 	      </para>
 	    </listitem>
 	  </varlistentry>
 
 	  <varlistentry>
-	    <term> <emphasis>Menus</emphasis></term>
+	    <term> <emphasis>Menyer</emphasis></term>
 	    <listitem>
-	      <para>To add a menu, select <menuchoice><guisubmenu>Add
-		to panel</guisubmenu> <guisubmenu>Menu</guisubmenu>
-		</menuchoice>  from the <guimenu>Panel</guimenu>
-		menu. This gives you a choice of the <guimenu>Main
-		menu</guimenu>, <guimenu>Programs</guimenu> menu, and
-		<guimenu>Favorites</guimenu> menu.
+	      <para>For å legge til en meny velg<menuchoice><guisubmenu>Legg
+		til på panelet</guisubmenu> <guisubmenu>Meny</guisubmenu>
+		</menuchoice>  fra <guimenu>Panel</guimenu>-
+		menyen. Dette gir deg valget mellom <guimenu>Hovedmeny
+		</guimenu>, <guimenu>Programmer</guimenu>-meny, og
+		<guimenu>Favoritter</guimenu>-meny.
 	      </para>
 	      <para>
-		You can also add the <guimenu>Main Menu</guimenu> or
-		any its submenu  as a new menu to the panel by
-		right-clicking  on the menu title (the top line of the
-		menu, separated from menu items by a thin line) and
-		selecting <guimenuitem>Add this as a menu to the
-		panel</guimenuitem>.
+		Du kan også legge til <guimenu>Hovedmeny</guimenu> eller
+		hvilken som helst undermeny som en ny meny på panelet ved å
+		høyreklikke på menytittelen (den øverste linjen i
+		menyen, separert fra menyoppføringene av en tynn linje) og
+		velge <guimenuitem>Legg til som meny på panelet
+		</guimenuitem>.
 	      </para>
-	    <para>  Advanced users can also create new menus
-              manually. To do so, you need to know that internally,
-              GNOME represents a menu by a directory, with menu items
-              presented by files of special type
-              (<filename>.desktop</filename> files &mdash; these files
-              also represent the application launchers), and submenus
-              presented by subdirectories. For example, the
-              <guimenu>Favorites</guimenu> menu corresponds to the
-              directory <filename>~/.gnome/apps</filename> (where
-              <filename>~</filename> denotes your home directory), and
-              the <guimenu>Programs</guimenu> menu corresponds to the
-              directory
-              <filename>/usr/share/gnome/apps</filename>. Thus, you
-              can create a new directory, using the GNOME File
-              Manager, drag and drop there any
-              <filename>.desktop</filename> files from any other
-              directories you might have (for example, from
-              <filename>/usr/share/gnome/apps</filename>) or from the
-              desktop, and then drag and drop this directory from the
-              File Manager window to the
-              <interface>Panel</interface>. This will add this
-              directory as a menu to the <interface>Panel</interface>.
+	    <para>Avanserte brukere kan også opprette nye menyer
+              manuelt. For å gjøre dette må du vite at en meny er representert
+              av en katalog i GNOME. Denne har menyoppføringer som er filer
+              av en spesiell type.  special type
+              (<filename>.desktop</filename> filer &mdash; disse filene
+              representerer også applikasjonsoppstarterene), og undermenyer
+              presentert av underkataloger. <guimenu>Favoritter</guimenu>-menyen
+	      er for eksempel representert av katalogen <filename>
+	      ~/.gnome/apps</filename> (hvor
+              <filename>~</filename> er din hjemmekatalog), og
+	      <guimenu>Programmer</guimenu>-menyen tilsvarer katalogen
+              <filename>/usr/share/gnome/apps</filename>. Når du vet dette
+              kan du opprette en ny katalog ved hjelp av GNOME filhåndtereren,
+              dra-og-slipp evt. <filename>.desktop</filename> filer fro en annen
+              katalog du har (for eksempel fra
+              <filename>/usr/share/gnome/apps</filename>) eller fra
+              skrivebordet og dra-og-slipp denne katalogen fra filhåndtereren
+              til <interface>Panelet</interface>. Dette vil legge til denne
+              katalogen som en meny på <interface>Panelet</interface>.
 	    </para>
 	    <para>
-	      After you have added a menu to the
-	      <interface>Panel</interface> using any of  the methods
-	      described above, you can modify its properties (for
-	      example, add new items to this menu or change the icon
-	      used by the menu), as described in <xref
-       linkend="menus">.
+	      Etter at du har lagt til en meny på 
+	      <interface>Panelet</interface> ved å bruke en av metodene
+	      beskrevet over kan du endre egenskaper for denne (du kan for
+	      eksempel legge til nye oppføringer på denne menyen eller endre
+	      ikon som brukes), som beskrevet i <xref
+	      linkend="menus">.
 	    </para>
 
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term> <emphasis>Drawers</emphasis></term>
+	    <term> <emphasis>Skuffer</emphasis></term>
 	    <listitem>
 	      <para>
-                 To add a new empty drawer, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Drawer</guisubmenu> </menuchoice> from the
-		<guimenu>Panel</guimenu> menu. After this, you can
-		right-click on this drawer and select
-		<guimenuitem>Properties</guimenuitem> to change its
-		properties (for example, the icon it uses). You can
-		add new items to this drawer in the same way as you
-		add items to the panel: all the methods for adding new
-		objects to the panel described in this section will
-		also work for adding new items to the drawer.
+                 For å legge til en ny tom skuff velger du
+		<menuchoice><guisubmenu>Legg til på panelet</guisubmenu>
+		<guisubmenu>Skuff</guisubmenu> </menuchoice> fra
+		<guimenu>Panel</guimenu>-menyen. Etter dette kan du
+		høyreklikke på denne skuffen og velge
+		<guimenuitem>Egenskaper</guimenuitem> for å endre
+		egenskapene (for eksempel ikonet som brukes). Du kan
+		legge til nye oppføringer i denne skuffen på samme måte som du
+		legger til oppføringer på panelet: alle metodene for å legge til
+		nye objekter på panelet som er beskrevet i denne delen vil
+		også fungere for å legge til nye oppføringer i skuffen.
 	    </para>
 	    <para>
-	      You can also add the <guimenu>Main Menu</guimenu> or any
-		its submenu as a new drawer to the panel by
-		right-clicking on the menu title and selecting
-		<guimenuitem>Add this as a drawer to the
-		panel</guimenuitem>.
-	      </para>
+	      Du kan også legge til <guimenu>Hovedmenyen</guimenu> eller dens
+	      undermenyer som en ny skuff på panelet ved å høyreklikke på meny-
+	      tittelen og velge <guimenuitem>Legg til dette som en skuff på
+	      panelet</guimenuitem>.
+	    </para>
 	    </listitem>
 	  </varlistentry>
 	  <varlistentry>
-	    <term> <emphasis>Swallowed application</emphasis></term>
+	    <term> <emphasis>Slukt applikasjon</emphasis></term>
 	    <listitem>
-	      <para>To add a new swallowed application, select
-		<menuchoice><guisubmenu>Add to panel</guisubmenu>
-		<guisubmenu>Swallowed app</guisubmenu> </menuchoice>
-		from the <guimenu>Panel</guimenu> menu. This will
-		produce a <interface>Create Swallowed
-		Application</interface> dialog, which is shown in
-		<xref linkend="swallappfig">. For details, see <xref
- 	linkend="swallowedapps">.
+	      <para>For å legge til en ny slukt applikasjon velger du
+		<menuchoice><guisubmenu>Legg til på panelet</guisubmenu>
+		<guisubmenu>Slukt applikasjon...</guisubmenu> </menuchoice>
+		fra <guimenu>Panel</guimenu>-menyen. Dette vil
+		opprette en <interface>Opprett slukt
+		applikasjon</interface>-dialog, som er vist i
+		<xref linkend="swallappfig">. For detaljer se <xref
+ 		linkend="swallowedapps">.
 	      </para>
 	    </listitem>
 	  </varlistentry>
@@ -1377,140 +1366,138 @@ XXX  All the changes you made in <interface>Launcher
 <!-- ########### Creating, Moving, and Removing Panels  ##############
 -->
   <sect1 id="panelmove">
-   <title>Creating, Moving, and Removing Panels</title>
+   <title>Opprett, flytt og fjern paneler</title>
 
-      <sect2 id="paneladd">  <title>Creating new panels</title>
-	  <para>
+      <sect2 id="paneladd">
+      <title>Creating new panels</title>
+	<para>
 	<indexterm id="idx-a8">
-	  <primary>Panel</primary> <secondary>adding new</secondary>
+	  <primary>Panel</primary> <secondary>legg til nytt</secondary>
 	</indexterm>
-	To add a new <interface>Panel</interface> to your desktop,
-	select the <guimenuitem>Create panel</guimenuitem> command
-	from <guisubmenu>Panel</guisubmenu> menu. You have a choice of
-	five possible panel types:
+	For å legge til et nytt <interface>panel</interface> på ditt skrivebord
+	velger du <guimenuitem>Opprett panel</guimenuitem>-kommandoen
+	fra <guisubmenu>Panel</guisubmenu>-menyen. Du kan velge mellom
+	fem mulige paneltyper:
       </para>
       <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
 	    <indexterm id="idx-a9">
-	      <primary>Panel</primary> <secondary>Edge</secondary>
+	      <primary>Panel</primary> <secondary>Kant</secondary>
 	    </indexterm>
-	    <guilabel>Edge Panel</guilabel> &mdash; An Edge Panel is
-	    exactly like the main Panel that starts up with GNOME; it
-	    stretches along the whole length of one of screen
-	    edges. By selecting this type of panel you may add a new
-	    Panel to another edge of your screen to give yourself more
-	    functionality.
+	    <guilabel>Kantpanel</guilabel> &mdash; Et kantpanel er
+	    helt likt hovedpanelet som starter opp med GNOME; det
+	    strekker seg langs hele lengden av en skjermkant
+	    Ved å velge denne typen panel kan du legge til enda ett
+	    panel på en annen side av skjermen for å utnytte funksjonaliteten
+	    enda bedre.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel>Aligned Panel</guilabel> &mdash;  Aligned Panel
-	     is also positioned along one of the screen edges. But
-	     unlike the Edge Panel, the Aligned Panel will not stretch
-	     across the entire edge of the screen it is on: it will
-	     only stretch as much as necessary to  display the icons
-	     and applets it contains. It can be positioned either at
-	     one of the corners (in this case, it will stretch towards
-	     the opposite corner) or at the center of the edge (in
-	     this case, it will stretch in both directions,
-	     automatically recentering when you add new objects).
+	    <guilabel>Justert panel</guilabel> &mdash;  Justert panel
+	     er også plassert langs en av skjermkantene. Men i motsetning
+	     til kantpanelet vil ikke et justert panel strekke seg
+	     over hele kanten av skjermen det befinner seg på; det vil
+	     kun dekke så mye som nødvendig for å vise de ikonene og
+	     appletene det inneholder. Det kan plasseres enten i et av
+	     hjørnene (i dette tilfellet vil det strekke seg mot motsatt
+	     hjørne) eller midt på skjermkanten (det vil da strekke seg i begge
+	     retninger ut fra midten, or vil sentreres på nytt når du legger
+	     til nye objekter).
             </para>
-	  <para> If the Aligned panel is aligned with one of the
-	    corners, the hide buttons will work slightly differently
-	    than for the Edge Panel.  The hide button closest to the
-	    edge of your screen will hide the Panel as usual but the
-	    other hide button will send the whole panel to the
-	    opposite edge. When the latter move is made it will not
-	    hide the Panel since it is changing the side of the screen
-	    it resides on.  If you want to hide it you will have to
-	    press the hide button once again.
+	  <para> Hvis det justerte panelet plasseres i ett av hjørnene
+	    vil knappene for skjuling fungere på en litt annen måte enn for
+	    kantpanelet. Skulingsknappen nærmest kanten av skjermen vil skjule
+	    panelet som vanlig, men den andre knappen for skjuling vil sende
+	    hele panelet til motsatt side av skjermen. Når dette skjer
+	    vil panelet ikke skjules siden det bytter side av skjermen.
+	    Hvis du ønsker å skjule det igjen vil du måtte trykke på knappen
+	    for skjuling enda en gang.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-	        <guilabel>Sliding Panel</guilabel> &mdash; This type
- 	        of panel is very similar to the Aligned Panel, but can
- 	        be placed anywhere along the screen edge, not
- 	        necessarily in one of the corners or in the center. As
- 	        you add objects, it will only grow in one directions
- 	        &mdash; it won't automatically recenter.
+	        <guilabel>Glidende panel</guilabel> &mdash; Denne typen
+ 	        panel er meget likt det justerte panelet, men kan plasseres
+ 	        hvor som helst langs skjermkanten, ikke  nødvendigvis i et
+ 	        hjørne eller på midten. Etter som du legger til objekter
+ 	        vil det kun vokse i én retning &mdash; det vil ikke sentreres
+		på nytt automatisk.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<guilabel>Floating Panel</guilabel> &mdash;   This
-		type of panel can be placed anywhere on your screen,
-		not necessarily along one of the edges.
+		<guilabel>Flytende panel</guilabel> &mdash; Denne
+		typen panel kan plasseres hvor som helst på skjermen, ikke
+		nødvendigvis langs kantene.
 	      </para>
 	    </listitem>
 	    <listitem>
 	      <para>
-		<guilabel>Menu Panel</guilabel> &mdash; The
-		<interface>Menu Panel</interface> is a special panel
-		which is always placed at the top of your screen and
-		contains several pull-down menus.  These are
-		<guimenu>Programs</guimenu>,
-		<guimenu>Favorites</guimenu>,
-		<guimenu>Settings</guimenu>,
-		<guimenu>Desktop</guimenu>, a clock/calendar, and a
-		special launcher which provides quick access to
-		GNOME-related Internet resources (look for the bullet
-		hole icon).  This panel can also hold the other
-		objects which other panels can hold, but it does not
-		have the configuration properties which other panels
-		have. Note that the <interface>Menu Panel</interface> is
-		more restrictive than other panels, and some normal
-		panel operations, such as moving the panel, cannot be
-		performed on it.
+		<guilabel>Menypanel</guilabel> &mdash;
+		<interface>Menypanelet</interface> er et spesielt panel
+		som alltid plasseres øverst på skjermen og som inneholder
+		flere nedtrekksmenyer. Disse er
+		<guimenu>Programmer</guimenu>,
+		<guimenu>Favoritter</guimenu>,
+		<guimenu>Innstillinger</guimenu>,
+		<guimenu>Skrivebord</guimenu>, en klokke/kalender, og en
+		spesiell oppstarter som gir rask tilgang til GNOME-relaterte
+		ressurser på Internett (se på kulehull-ikonet) Dette panelet kan
+		også også ha andre objekter som de resterende panelene kan ha,
+		men det har ikke egenskaper for konfigurasjon slik som de andre
+		panelene. Merk at <interface>Menypanelet</interface> er
+		mer restriktivt enn de andre panelene, og noen av de vanlige
+		operasjonene på panelet slik som å flytte det kan ikke utøres
+		på dette.
 	      </para>
 	    </listitem>
 	  </itemizedlist>
 
 	<tip>
-	  <title> Changing panel type</title>
+	  <title>Bytt paneltype</title>
 	  <para>
 	      <indexterm id="idx-a11">
-	      <primary>Panel</primary> <secondary>changing type
-	      of</secondary>
+	      <primary>Panel</primary> <secondary>endre type</secondary>
 	    </indexterm>
-	  You can also change type of existing panel &mdash; for
-	  example, convert edge panel to a floating panel, see <xref
-   linkend="panelproperties">.
+	  Du kan også endre type for det eksisterende panelet &mdash; for
+	  eksempel endre et kantpanel til et flytende panel, se <xref
+	  linkend="panelproperties">.
 	  </para>
 	</tip>
       </sect2>
 
 
       <sect2 id="panelmoving">
-	<title> Moving panels </title> <para>
+	<title>Flytting av paneler</title>
+	<para>
 	<indexterm id="idx-a7">
-	  <primary>Panel</primary> <secondary>moving</secondary>
+	  <primary>Panel</primary> <secondary>flytting</secondary>
 	</indexterm>
-	  Any <interface>Panel</interface> you have on your desktop
-	  can be moved by using the  middle mouse button, or by
-	  simultaneously pressing the left and right mouse buttons, to
-	  drag the panel to the desired edge of your screen. If you do
-	  not have a middle mouse button and did not configure your
-	  mouse to emulate a middle button you may also move a
-	  <interface>Panel</interface> by changing its location in the
-	  <interface>Panel properties</interface> dialog.  You can
-	  read more about this in <xref linkend="panelproperties"> of
-	  this documentation.
+	  Ethvert <interface>Panel</interface> du har på ditt skrivebord
+	  kan flyttes ved å bruke midtre musknappen, eller ved å
+	  holde neded venstre og høyre musknapp til å dra panelet til ønsket
+	  side av skjermen. Hvis du ikke har en tre-knappers mus, og ikke
+	  har konfigurert din mus til å emulere tre knapper, kan du også
+	  flytte et <interface>Panel</interface> ved å endre lokasjonen i
+	  <interface>Egenskaper for panel</interface>-dialogen. Du kan lese
+	  mer om dette i <xref linkend="panelproperties"> denne
+	  dokumentasjonen.
 	</para>
       </sect2>
     <sect2 id="panelremoving">
-      <title> Removing panels </title>
+      <title>Fjern paneler</title>
       <para>
-	To remove an existing panel, right-click on it and choose
-	<guimenuitem>Remove this panel</guimenuitem> command from the
-	<guisubmenu>Panel</guisubmenu> menu. You will be prompted for
-	a confirmation.
+	For å fjerne et eksisterende panel høyreklikker du på det og velger
+	<guimenuitem>Fjern dette panelet</guimenuitem>-kommandoen fra
+	<guisubmenu>Panel</guisubmenu>-menyen. Du vil bli spurt om å bekrefte
+	handlingen.
       </para>
-      <note>  <title>NOTE</title>
+      <note>  <title>MERK</title>
 	<para>
-	  At all times, you must have at least one panel; GNOME will
-	  not allow you to remove your only panel.
+	  Du må alltid ha minst ett panel; GNOME vil ikke la deg fjerne
+	  det siste panelet du har.
 	</para>
       </note>
     </sect2>
@@ -1520,28 +1507,28 @@ XXX  All the changes you made in <interface>Launcher
 
 <!-- ############### Global Panel Preferences  ################## -->
   <sect1 id="globalpanelprefs">
-   <title>Global Panel Preferences</title>
+   <title>Globale brukervalg</title>
     <para>
       <indexterm id="idx-a61">  <primary>Panel</primary>
-	<secondary>Global Panel Preferences</secondary>
+	<secondary>Globale brukervalg</secondary>
       </indexterm>
-     To start configuring the GNOME panel, select <guimenuitem>Global
-     Preferences</guimenuitem> from the <guisubmenu>Panel</guisubmenu>
-     submenu of the <guimenu>Main Menu</guimenu> (you can access the
-     main menu by either pressing the foot icon or by right-clicking
-     on the panel).
+     For å konfigurere panelet i GNOME velger du <guimenuitem>Globale
+     brukervalg</guimenuitem> fra <guisubmenu>Panel</guisubmenu>
+     undermenyen av <guimenu>Hovedmenyen</guimenu> (du kan aksessere
+     hovedmenyen ved å klikke på foten eller ved å høyreklikke på
+     panelet).
     </para>
     <para>
-     This will bring the <interface>Global Panel
-     Preferences</interface> dialog up (this dialog is one of the
-     components of the <application>GNOME Control
-     Center</application>).  With this dialog you can set properties
-     that will affect all Panels you use now and any panels you add in
-     the future.
+     Dette vil hente opp <interface>Globale brukervalg
+     </interface>-dialogen (denne dialogen er en av
+     komponentene i <application>GNOME kontroll-
+     senter</application>). I denne dialogen kan du sette egenskaper
+     som vil påvirke alle paneler du bruker nå og alle paneler du legger til
+     i fremtiden.
      <figure>
-      <title>The Global Panel Configuration Dialog</title>
+      <title>Global konfigurasjonsdialog for panelet</title>
      <screenshot>
-      <screeninfo>The Global Panel Configuration Dialog</screeninfo>
+      <screeninfo>Global konfigurasjonsdialog for panelet</screeninfo>
        <graphic fileref="./figures/glob_pref_anim"
        format="png" srccredit="muet">
        </graphic>
@@ -1549,264 +1536,261 @@ XXX  All the changes you made in <interface>Launcher
      </figure>
     </para>
     <para>
-     The Global Panel Configuration Dialog contains five tabs which
-     help you configure the global properties of the GNOME Panel:
-     <guilabel>Animation</guilabel>, <guilabel>Buttons</guilabel>,
-     <guilabel>Panel Objects</guilabel>, <guilabel>Menu</guilabel>, and
-     <guilabel>Miscellaneous</guilabel>. Each of these tabs is
-     explained below.
+     Global konfigurasjonsdialog for panelet inneholder fem faner som
+     hjelper deg med å konigurere globale egenskaper for GNOME panelet:
+     <guilabel>Animasjon</guilabel>, <guilabel>Knapper</guilabel>,
+     <guilabel>Panelobjekter</guilabel>, <guilabel>Meny</guilabel>, og
+     <guilabel>Forskjellig</guilabel>. Hver av disse fanene 
+     er forklart under.
     </para>
     <sect2 id="animtab">
-     <title>Animation  Tab</title>
+     <title>Animasjonsfanen</title>
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Enable animations</guilabel> &mdash; This allows the
-       animations configurable on this tab to be visible.  The
-       animations must be enabled to use the other features of this
-       tab. The default position is on.
+       <guilabel>Aktiver animasjoner</guilabel> &mdash; Dette aktiverer
+       animasjonene som kan konfigureres i denne fanen. Animasjonene
+       må være aktivert for å bruke de andre funksjonene i denne fanen
+       Forvalgt innstilling er aktivert.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Constant speed animations</guilabel> &mdash; By
-       default, the animations start slowly, but then accelerate. If
-       you enable this option, the animations will not use any
-       acceleration.
+       <guilabel>Animasjoner med konstant hastighet</guilabel> &mdash; Som
+       standard vil animasjonene starte sakte, men aksellerere etterhvert. Hvis
+       du aktiverer dette alternativet vil animasjonene ikke bruke
+       aksellerasjon.
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Auto hide animation speed</guilabel> &mdash; If you
-       have the panel hiding automatically this will control how fast
-       it occurs. The slowest setting is 1, the fastest, 100.
+       <guilabel>Hastighet for automatisk skjuling</guilabel> &mdash; Hvis du
+       har satt panelet til automatisk skjuling vil dette kontrollere hvor
+       raskt dette skjer. Den laveste innstillingen er 1 og den høyeste 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Explicit hide animation speed</guilabel> &mdash; This
-       controls the hide speed when you press the Panel's
-       <guibutton>Hide Button</guibutton>. The slowest setting is 1,
-       the fastest, 100.
+       <guilabel>Animasjonshastighet for eksplisitt skjuling</guilabel> &mdash;
+       Dette kontrollerer hastighet for skjuling når du trykker på panelets
+       <guibutton>Skjuleknapp</guibutton>. Sakteste innstilling er 1,
+       raskeste er 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Drawer sliding animation speed</guilabel> &mdash;
-       this will control how fast the drawer menu will raise when you
-       press a Drawer button on the Panel. The slowest setting is 1,
-       the fastest, 100.
+       <guilabel>Hastighet for glidende skuff</guilabel> &mdash;
+       dette kontrollerer hvor raskt skuff-menyen vil heves når du trykker
+       på en skuff-knapp på panelet. Sakteste innstilling er 1,
+       raskeste er 100.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto hide delay (ms)</guilabel> &mdash; If you have
-       the Panel set to minimize automatically this will allow you to
-       control how much time passes before it minimizes.  The Panel
-       will start the time count once the mouse is no longer over
-       it. It will appear again when the mouse is passed over the
-       portion of the Panel that remains visible. This time is
-       measured in milliseconds.
+       <guilabel>Pause for skjuling (ms)</guilabel> &mdash; Hvis du har
+       satt panelet til å minimeres automatisk vil dette la deg kontrollere
+       hvor lang tid som skal passere før det minimeres. Panelet
+       vil starte telleren i det muspekeren ikke lenger er plassert over det.
+       Panelet vil komme til syne igjen når pekeren flyttes over den delen
+       av panelet som forblir synlig. Denne tiden måles i millisekunder.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Auto hide minimized size (pixels)</guilabel> &mdash;
-       If you have the Panel hiding automatically this determines the
-       number of pixels that will show while the Panel is
-       minimized. To maximize the panel the pointer must enter the
-       Panel area.
+       <guilabel>Minimert størrelse ved automatisk skjuling 
+       (piksler)</guilabel> &mdash; Hvis du har satt panelet til å skjules
+       automatisk vil dette bestemme hvor mange piksler som vil vises når
+       panelet er minimert. For å maksimere panelet må pekeren entre 
+       panelområdet.
       </para>
      </listitem>
     </itemizedlist>
    </sect2>
    <sect2 id="launchtab">
-    <title>Buttons Tab</title> <para> In this section, you can set
-      appearance of buttons of various types (launcher buttons, menu
-      buttons, drawer buttons, and special (Logout and Lock Screen)
-      buttons).
+    <title>Knapper-fanen</title>
+    <para>I denne fanen kan du sette utseende av knapper av forskjellige
+      typer (oppstarterknapper, menyknapper, skuffeknapper og spesielle
+      knapper (utlogging og lås skjerm).
       </para>
     <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tiles enabled</guilabel> &mdash; This checkbox will
-       enable background tiles for buttons of given type on the Panel.
+       <guilabel>Fliser aktivert</guilabel> &mdash; Denne avkrysningsboksen
+       vil aktivere bakgrunnsfliser for knapper av en gitt type på panelet.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Normal Tile</guilabel> &mdash; This shows the image
-       used for the tile in the up position (inactive, not
-       pressed). To choose another image file, just click on the
-       image, and it will launch the icon browser. Tiles must be
-       enabled to access this option.
+       <guilabel>Normal flis</guilabel> &mdash; Dette viser bildet som brukes
+       for flisen i normal posisjon (inaktiv, ikke 
+       nedtrykt). For å velge et annet bilde klikker du bare på
+       bildet og du vil få opp en dialog for å bla gjennom ikoner. Fliser må
+       være aktivert for å aksessere dette valget.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Clicked Tile</guilabel> &mdash; This shows the image
-       used for the tile in the down position (active, pressed). To
-       choose another image file, just press on the image, and it will
-       launch the icon browser. Tiles must be enabled to access this
-       option.
+       <guilabel>Nedtrykt flis</guilabel> &mdash; Dette viser bildet som brukes
+       for flisen i nedtrykt posisjon (aktiv, nedtrykt). For å 
+       velge et annet bilde trykker du bare på bildet og du får opp en
+       ikonvelger-dialog. Fliser må være aktivert for å aksessere dette 
+       valget.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Border width (tile only)</guilabel> &mdash; This
-       determines the width of the border around an icon. For example,
-       if you set border width equal to 5, this will ensure that at
-       least 5 pixels of the tile will be shown on every side of the
-       icon; if necessary, the icon will be cropped. This is very
-       useful if you have an icon that would normally cover up a tile.
-       Tiles must be enabled to access this option.
+       <guilabel>Kantbredde (kun flis)</guilabel> &mdash; Dette 
+       bestemmer bredden på kanten rundt et ikon. Hvis du for eksempel
+       setter kantbredden til 5, vil dette sikre at minst 5 piksler av
+       flisen vil vises på hver side av ikonet; hvis nødvendig, vil ikonet
+       kuttes av. Dette er meget nyttig hvis du har et ikon som normalt
+       vil dekke en hel flis. Fliser må være aktivert for å aksessere dette
+       valget.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Depth (displacement when pressed)</guilabel> &mdash;
-       This determines the depth an icon will displace when
-       pressed. Tiles must be enabled to access this option.
+       <guilabel>Dybde (forskyvning når nedtrykt)</guilabel> &mdash;
+       Dette bestemmer hvor langt ned et ikon vil forskyves når det 
+       trykkes ned. Fliser må være aktivert for å aksessere dette valget.
       </para>
      </listitem>
     </itemizedlist>
-      <para> This tab also contains 3 options which affect all types
-      of buttons simultaneously:
+      <para>Denne fanen inneholder også tre alternativer som vil påvirke alle
+      typer knapper samtidig:
      </para>
       <itemizedlist>
-	<listitem>  <para> <guilabel>Make buttons flush with panel
-	  edge</guilabel> &mdash; allows you to align the button with
-	  the edge of the panel.  If this option is not set then the
-	  border width setting is obeyed.  By default this option is
-	  off.
+	<listitem>
+	  <para> <guilabel>La knappene fylle panelet helt til
+	  kanten</guilabel> &mdash; lar deg justere knappen helt ut til
+	  kanten av panelet. Hvis dette valget ikke er satt vil valget for
+	  kantbredde brukes. Forvalgt posisjon er av.
 	  </para>
 	</listitem>
 	<listitem>
-	  <para><guilabel>Show button tiles only when cursor is over
-	  the button</guilabel> &mdash; if this option is enabled, the
-	  tiles will only appear when mouse cursor is over the button.
+	  <para><guilabel>Vis knappefliser bare når markøren er over
+	  knappen</guilabel> &mdash; hvis dette valget er aktivert vil flisene
+	  kun vises når muspekeren er over knappen.
 	  </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel> Keep saturation low when cursor is not over the
-	    button</guilabel> &mdash; Choosing this option will dim
-	    the panel buttons; the button will brighten up when the
-	    mouse cursor is over it.
+	    <guilabel>Gjør knappene lysere når markøren er over
+	    dem</guilabel> &mdash; Ved å velge dette vil lysstyrken på knappene
+	    på panelet dempes; knappen vil bli lysere når muspekeren passerer
+	    over den.
 	  </para>
 	</listitem>
       </itemizedlist>
    </sect2>
     <sect2 id="appletstab">
-      <title>Panel objects Tab</title>
+      <title>Panelobjekter-fanen</title>
       <para>
-	This tab shows some options related to placement and moving
-	objects on the panel.  
+	Denne fanne viser noen alternativer relatert til plassering og flytting
+	av objekter på panelet.
       </para>
       <itemizedlist>
 	<listitem>
 	  <para>
-	    <guilabel> Default movement mode </guilabel> &mdash; here
-	    you can choose the default mode for moving the objects on
-	    the panel. Possible variants are
+	    <guilabel>Forvalgt flyttemodus</guilabel> &mdash; her
+	    kan du velge forvalgt modus for flytting av objekter på 
+	    panelet. Mulige varianter er
 	    </para>
 	    <itemizedlist>
-	      <listitem><para> <emphasis>Switched</emphasis> &mdash;
-		when the object you are moving hits another object,
-		they switch places
+	      <listitem><para> <emphasis>Byttet</emphasis> &mdash;
+		når objektet du flytter treffer et annet objekt 
+		vil de bytte plass
 		  </para>
 	      </listitem>
 
-	      <listitem><para>  <emphasis>Free</emphasis> &mdash; when
-		  the object you are moving hits another object, it
-		  "jumps" over it, so no other object is disturbed
-		  &mdash; this is a convenient option if you like the
-		  current arrangement of objects on your panel and
-		  want to lock it
+	      <listitem><para>  <emphasis>Fri</emphasis> &mdash; når
+		  objektet du flytter treffer et annet objemkt vil det
+		  "hoppe" over det slik at ingen andre objekter forstyrres
+		  &mdash; dette er et greit valg hvis du ønsker å beholde
+		  plasseringen dine objekter har på panelet og vil låse
+		  denne.
 		</para>
 	      </listitem>
 
 	      <listitem>
 		<para>
-		  <emphasis>Push</emphasis> &mdash; the object you are
-		  moving pushes all other objects in front of it, like
-		  a snow plow.
+		  <emphasis>Skyv</emphasis> &mdash; objektet du flytter
+		  skyver alle andre objekter foran seg, som en snøplog.
 		</para>
 	      </listitem>
 	    </itemizedlist>
-	  <para>You can override the default movement mode by dragging
-	    an  object while holding <keycap>Ctrl</keycap> (for
-	    switched movement), <keycap>Alt</keycap> (for free
-	    movement), or <keycap>Shift</keycap> (for push movement)
-	    button pressed.
+	  <para>Du kan overstyre forvalgt flyttemodus ved å fra et objekt
+	    mens du holder nede <keycap>Ctrl</keycap> (for 
+	    byttet flytting), <keycap>Alt</keycap> (for fri
+	    flytting), eller <keycap>Shift</keycap> (for skjøvet flytting)
+	    knappen nedtrykket.
 	    </para>
 	</listitem>
 	<listitem>
 	  <para>
-	    <guilabel>Padding</guilabel> &mdash;  This changes
-	    the amount of space (padding) between objects on the
-	    panel. It is measured in pixels.
+	    <guilabel>Fyll</guilabel> &mdash;  Dette endrer
+	    mengden mellomrom (fyll) mellom objekter på panelet
+	    Dette måles i piksler.
 	  </para>
 	</listitem>
       </itemizedlist>
     </sect2>
 
    <sect2 id="menutab">
-    <title>Menu Tab</title> 
+    <title>Menyfane</title> 
 
-      <para> In this tab, you can set the options determining the
-	appearance of <interface>Panel</interface> menus.
+      <para>I denne fanen kan du sette alternativer som bestemmer
+	utseende av <interface>Panel</interface>-menyene.
       </para>
       
      <itemizedlist>
       <listitem>
       <para>
-       <guilabel>Use large icons</guilabel> &mdash; This will use
-       large icons (rather than the default size) in menus. Only
-       practical for those with high resolution screens (1280x1024 and
-       higher)
+       <guilabel>Bruk store ikoner</guilabel> &mdash; Dette vil aktivere bruk
+       av store ikoner (i stedet for forvalgt størrelse) i menyene. Kun
+       praktisk hvis du har høy oppløsning på skjermen (1280x1024 og 
+       høyere)
       </para>
      </listitem>
       <listitem>
       <para>
-       <guilabel>Show ... buttons</guilabel> &mdash; This will add
-       small buttons labelled by three dots (...) to all the items of
-       the <guimenu>Main Menu</guimenu>. Clicking on such a button
-       with the left mouse button will bring the
-       <guimenu>pop-up</guimenu> menu for this item, i.e. the same
-       menu which you get by clicking on the menu item wiht the right
-       mouse button.   
+       <guilabel>Vis  ... knapper</guilabel> &mdash; Dette vil legge til
+       små knapper med tre prikker (...) for alle oppføringene i
+       <guimenu>Hovedmenyen</guimenu>. Ved å klikke på en slik knapp
+       med venstre musknapp vil du få opp
+       <guimenu>oppsprett</guimenu>-menyen for denne oppføringen altså samme
+       meny som du får opp ved å klikke på menyoppføringen med høyre musknapp.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Show popup menus outside of panels</guilabel> &mdash;
-       When this button is on, it allows pop-up menus to appear away
-       from the Panel. When toggled off, the pop-ups will appear over
-       the Panel. This can be useful on smaller screens or cluttered
-       desktops.
+       <guilabel>Vis oppsprettmenyer utenfor panelene</guilabel> &mdash;
+       Når dette er aktivert vil det la oppsprettmenyer vises borte fra
+       panelet. Når det er slått av vil disse oppsprettmenyene vises over
+       panelet. Dette kan være nyttig på mindre skjermer eller rotete
+       skrivebord.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Keep menus in memory</guilabel> &mdash; This will
-       keep your menus in memory so that they do not rescan for added
-       items. This can increase the speed of GNOME, but may also
-       result in you missing new items added to your menu.
+       <guilabel>Behold menyer i minne</guilabel> &mdash; Dette vil
+       holde dine menyer i minne slik at de ikke må leses på nytt jevnlig
+       for å se etter nye oppføringer. Dette vil øke ytelsen men vil også
+       medføre at du vil mangle nye oppføringer som legges til i menyen.
 	</para>
 	</listitem>
 	<listitem> <para> 
-          <guilabel>Global menu</guilabel> &mdash; This
-	  allows you to configure the  <link linkend="globalmenu">
-          <guimenu>Global Menu</guimenu></link>
-	  which you get by right-clicking on the panel, or by using
-	  the keyboard shortcut. For each of the possible submenus
-	  (<guisubmenu>Programs</guisubmenu>,
-	  <guisubmenu>Favorites</guisubmenu>, etc.), you can choose
-	  whether it should be included as a part of the <guimenu>Global
-	  Menu</guimenu>, as a submenu, or not included at all. A
-	  description of these submenus is given in <xref
-   linkend="submenus">.
+          <guilabel>Global meny</guilabel> &mdash; Dette lar
+	  deg konfigurere <link linkend="globalmenu">
+          <guimenu>Global Meny</guimenu></link>
+	  som vises ved å høyreklikke på panelet, eller ved å bruke tastatur-
+	  snarveien. For hver av de mulige undermenyene
+	  (<guisubmenu>Programmer</guisubmenu>,
+	  <guisubmenu>Favoritter</guisubmenu>, etc.), kan du velge
+	  om denne skal tas med som en del av den <guimenu>Globale
+	  menyen</guimenu>, som en undermeny, eller ikke tas med i det hele tatt.
+	  En beskrivelse av disse undermenyene finnes i <xref
+          linkend="submenus">.
 	  </para>
 	</listitem>
       </itemizedlist>
@@ -1814,112 +1798,108 @@ XXX  All the changes you made in <interface>Launcher
 
 
    <sect2 id="misctab">
-    <title>Miscellaneous Tab</title>    
-      <para>The Miscellaneous group
-      contains options for various customizable behavior that didn't
-      fit anywhere else.
+    <title>Forskjellig-fanen</title>    
+      <para>Gruppen «forskjellig» inneholder alternativer for forskjellig
+      oppførsel som kan tilpasses og som ikke passet inn andre steder.
       </para>
 
      <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Tooltips enabled</guilabel> &mdash; This option
-            defines whether GNOME should show a tooltip when the
-            pointer pauses on a panel item.
+       <guilabel>Verktøytips på</guilabel> &mdash; Dette valget
+            definerer om GNOME skal vises et verktøytips når muspekeren
+            stopper over en paneloppføring.
       </para>
 	</listitem>
      <listitem>
       <para>
-       <guilabel>Close drawer if a launcher inside it is
-       pressed</guilabel> &mdash; By default drawers will remain open
-       when you select an item within one. This can be annoying as the
-       drawer will remain open until you close it with a mouse
-       click. With this option selected drawers will close
-       automatically when you select any item within one.
+       <guilabel>Lukk skuff hvis en oppstarter inne i den trykkes
+       ned</guilabel> &mdash; Skuffer vil normalt forbli åpne når
+       du velger en oppføring inne i den. Dette kan være plagsomt siden
+       skuffen vil forbli åpen til du lukker den med et musklikk.
+       Med dette valget aktivert vil skuffer lukkes automatisk etter
+       at du har valgt en oppføring inne i den.
       </para>
      </listitem>
 
      <listitem>
       <para>
-       <guilabel>Raise panels on mouse-over</guilabel> &mdash; If you
-       are using a window manager that is not GNOME compliant it will
-       not understand its relationship with the Panel. This can cause
-       your <interface>Panel</interface> to be covered by
-       applications. If you enable this feature you can have the
-       <interface>Panel</interface> automatically raise when your
-       mouse is over it.
+       <guilabel>Hev panelet når pekeren beveger seg over det</guilabel> &mdash;
+       Hvis du bruker en vindushåndterer som ikke støtter GNOME vil den
+       ikke forstå sitt forhold til panelet. Dette kan medføre at 
+       <interface>Panelet</interface> blir dekket av applikasjoner.
+       Hvis du aktiverer denne funksjonen vil <interface>Panelet</interface>
+       heves automatisk når musen beveges over det.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Keep panel below windows</guilabel> &mdash; If you
-       are using a GNOME compliant window manager the window manager
-       will understand its relationship with the Panel. If you choose
-       this feature the window manager and GNOME will allow
-       applications to appear over the Panel. This can be useful on
-       smaller screens.
+       <guilabel>Hold paneler under andre vinduer</guilabel> &mdash; Hvis du
+       bruker en vindushåndterer som støtter GNOME vil denne forstå
+       sitt forhold til panelet. Hvis du aktiverer denne funksjonen vil
+       vindushåndtereren og GNOME la applikasjoner dekke panelet. Dette kan
+       være nyttig på mindre skjermer.
       </para>
      </listitem>
 
 	  <listitem>
 	    <para>
-	      <guilabel>Confirm removal of panels with a
-	      dialog</guilabel> &mdash; If this option is enabled,
-	      GNOME will ask for confirmation before removing a panel.
+	      <guilabel>Bekreft fjerning av paneler med en
+	      dialog</guilabel> &mdash; Hvis dette valget er aktivert
+	      vil GNOME spørre deg om å bekrefte fjerning av et panel.
 	      </para>
 	  </listitem>
 
     </itemizedlist>
       <para>
-      This tab also allows you to configure some global key
-      bindings. At the moment, you can define key bindings for <link
-      linkend="globalmenu"><guimenu>Global Menu</guimenu></link> and
-      for Run Command dialog.  For example, if you are using a
-      standard PC keyboard, you can bind the <keycap>Menu</keycap> key
-      (this key is usually located to the left of the space bar and
-      labelled with a picture of a menu) to the <guimenu>Global
-      Menu</guimenu>, so that pressing this key will bring up the
-      <guimenu>Global Menu</guimenu>; similarly, the common key
-      binding for the Run command dialog is the so-called
-      <keycap>Windows</keycap> key (called so because on most PC
-      keyboards this key is indeed labelled with a flying window).  To
-      change the key bound to <guimenu>Global Menu</guimenu> or to the
-      Run Dialog, you can either select a key from the drop-down list,
-      or click on the <guibutton>Grab</guibutton> button and then
-      press the desired key. </para>
+      Denne fanen lar deg også konfigurere noen globale tastaturbindinger.
+      For øyeblikket kan du definere tastaturbindinger for <link
+      linkend="globalmenu"><guimenu>Global meny</guimenu></link> og 
+      for Kjør kommando dialogen. Hvis du for eksempel bruker et standard
+      PC-tastatur, kan du binde <keycap>Meny</keycap>-tasten
+      (denne tasten er vanligvis plassert til venstre for mellomrom-tasten og
+      har et bilde av en meny) til <guimenu>Global
+      meny</guimenu>, slik at du vil få opp <guimenu>Global Menu</guimenu>
+      ved å trykke ned denne tasten; på samme måte er den vanlige bindingen
+      for Kjør kommando-dialogen den såkalte <keycap>Windows</keycap> tasten 
+      (navnet kommer av at den på de fleste PC-tastatur faktisk har et
+      bilde av et flyvende vindu). For å endre tasten som er bundet til
+      <guimenu>Global meny</guimenu> eller til Kjør-dialogen, kan du enten velge
+      en tast fra en nedtrekksliste, eller klikke på <guibutton>Grab</guibutton>-
+      knappen og så trykke på ønsket tast. </para>
       <note>
-	<title>NOTE</title>
+	<title>MERK</title>
 	<para>
-	  If you have problems with using <keycap>Menu</keycap> or
-	  <keycap>Windows</keycap> keys, the most probable explanation
-	  is that your X server was incorrectly configured: the
-	  keyboard type chosen during installation  does not match
-	  your actual keyboard. If you are using
-	  <application>XFree86</application> server, you can fix it by
-	  manually editing the configuration file. This file, named
-	  <filename>XF86Config</filename>, is usually located in
-	  <filename>/etc</filename> or <filename>/etc/X11</filename>
-	  directory. Open this file with any text editor (not a
-	  word-processor!), find there the line containing words
-	  <literal>XkbModel</literal> and change it to read
+	  Hvis du har problemer med å bruke <keycap>Meny</keycap> eller
+	  <keycap>Windows</keycap>-tastene, er den mest sannsynlige forklaringen
+	  at din X-tjener ikke er konfigurert korrekt:
+	  tastaturtypen valgt under installasjonen er ikke riktig i forhold til
+	  det faktiske tastaturet. Hvis du bruker
+	  <application>XFree86</application>-tjeneren kan du rette dette opp
+	  ved å redigere konfigurasjonsfilen for hånd. Denne filen, med navn
+	  <filename>XF86Config</filename>, finnes normalt i
+	  <filename>/etc</filename> eller <filename>/etc/X11</filename>
+	  katalogene. Åpne denne filen med en teksteditor (ikke en
+	  tekstbehandler!), finn linjen som inneholder ordene
+	  <literal>XkbModel</literal> og endre den slik at den blir
 	  <programlisting>
               XkbModel "pc104"
 	  </programlisting>
-	  You need to be root (system administrator) to do this. Now,
-	  logout of GNOME and restart the X server by simultaneously
-	  pressing <keycombo> <keycap>Ctrl</keycap>
+	  Du må være root (systemadministrator) for å gjøre dette. Nå må du
+	  logge ut fra GNOME og starte X-tjeneren på nutt ved å trykke
+	  <keycombo> <keycap>Ctrl</keycap>
 	  <keycap>Alt</keycap> <keycap>Backspace</keycap> </keycombo>.
 	</para>
       </note>
       <warning>
-	<title>WARNING</title>
+	<title>ADVARSEL</title>
 	<para>
-	Making a mistake while editing <filename>XF86Config</filename>
-	file can make you keyboard or screen unusable in X
-	Windows. Therefore, please be careful, make a backup copy of
-	this file and make sure you know how to restore it from backup
-	without using X Windows, i.e., from a terminal. If you don't,
-	then do not edit it at all.  </para>
+	Hvis du gjør feil når du redigerer <filename>XF86Config</filename>-
+	filen kan dette medføre at tastaturet eller skjermen blir ubrukelig i X
+	Windows. Vær derfor meget forsiktig. Ta en sikkerhetskope av 
+	denne filen og forsikre deg om at du kan gjenopprette den fra sikkerhets-
+	kopien uten å bruke X-Windows, altså fra en terminal. Hvis du ikke kan
+	så bør du ikke redigere den i det hele tatt.</para>
       </warning>
    </sect2>
    </sect1>
@@ -1928,50 +1908,50 @@ XXX  All the changes you made in <interface>Launcher
 <!-- ###############  Individual Panel Properties  ################ -->
 
    <sect1 id="panelproperties">
-    <title>Individual Panel Properties</title>
+    <title>Individuelle panelegenskaper</title>
     <para>
      <indexterm id="idx-a62"> <primary>Panel</primary>
-      <secondary>Individual Panel Properties</secondary>
+      <secondary>Individuelle panelegenskaper</secondary>
      </indexterm>
      <indexterm id="idx-a63">
-      <primary>Panel</primary> <secondary>properties</secondary>
+      <primary>Panel</primary> <secondary>egenskaper</secondary>
       </indexterm>
 
-      In addition to global Panel's properties, described in <xref
-      linkend="globalpanelprefs">, some properties can be configured
-      individually for each panel.  This includes panel type (Edge,
-      Aligned, Sliding, Floating), size, location, background color,
-      and hiding preferences. To change these properties for a panel,
-      click on it with the right mouse button and select
+      I tillegg til de globale egenskapene for panelet, beskrevet i <xref
+      linkend="globalpanelprefs">, kan noen av egenskapene konfigureres
+      individuelt for hvert panel. Dette inkluderer paneltype (kant,
+      justert, glidende, flytende), størrelse, plassering, bakgrunnsfarge,
+      og brukervalg for skjuling For å endre disse egenskapene for et panel
+      klikker du på det med høyre musknapp og velger
       <menuchoice><guimenu>Panel</guimenu>
-      <guisubmenu>Properties</guisubmenu></menuchoice>. You may also
-      press the <guibutton>Main Menu</guibutton> button and select
+      <guisubmenu>egenskaper</guisubmenu></menuchoice>. Du kan også
+      trykke på <guibutton>Hovedmeny</guibutton>-knappen og velge
       <menuchoice><guimenu>Panel</guimenu>
-      <guisubmenu>Properties</guisubmenu></menuchoice>.
+      <guisubmenu>Egenskaper</guisubmenu></menuchoice>.
     </para>
-    <para> From the <guisubmenu>Properties</guisubmenu>, you can
-      choose <guimenuitem>All properties</guimenuitem>, which will
-      launch <interface>Panel properties</interface> dialog.  If you
-      are already familiar with this dialog, you can also quickly
-      change some of the properties &mdash; say, panel size or type
-      &mdash; by selecting the appropriate item  in the
-      <guisubmenu>Properties</guisubmenu> menu.
+    <para>Fra <guisubmenu>Egenskaper</guisubmenu>, kan du
+      velge <guimenuitem>Alle egenskaper</guimenuitem>, som vil
+      starte <interface>Panelegenskaper</interface>-dialogen. Hvis du
+      er kjent med denne dialogen allerede kan du også raskt endre
+      noen av egenskapene &mdash; for eksempel størrelse eller type
+      &mdash; ved å velge passende oppføring i
+      <guisubmenu>Egenskaper</guisubmenu>-menyen.
     </para>
     <para>
-     The <interface>Panel properties</interface> dialog contains two
-     tabs to help you set the active Panel properties: <guilabel>Edge
-     Panel</guilabel> (or <guilabel>Aligned</guilabel>, &hellip; -
-     depending on your panel type) and
-     <guilabel>Background</guilabel>. Both of these tabs are explained
-     below.
+     The <interface>Panelegenskaper</interface>-dialogen inneholder to
+     faner til hjelp for å sette aktive panelegenskaper: <guilabel>Kant-
+     panel</guilabel> (eller <guilabel>Justert</guilabel>, &hellip; -
+     avhengig av din paneltype) og
+     <guilabel>Bakgrunn</guilabel>. Begge disse fanene er forklart
+     under.
     </para>
 
    <sect2 id="edgetab">
-    <title>Edge Panel Tab</title>
+    <title>Kantpanel-fane</title>
     <figure>
-     <title>Panel Edge Properties Dialog</title>
+     <title>Dialog for egenskaper for kantpanel</title>
     <screenshot>
-     <screeninfo>Panel Edge Properties Dialog</screeninfo>
+     <screeninfo>Dialog for egenskaper for kantpanel</screeninfo>
       <graphic fileref="./figures/panel_props_edge"
       format="png" srccredit="muet">
       </graphic>
@@ -1980,82 +1960,82 @@ XXX  All the changes you made in <interface>Launcher
     <itemizedlist mark="bullet">
 	<listitem>
 	  <para>
-	    <guilabel>Panel Position</guilabel> &mdash; This changes
-	    the position of the Panel on the screen. For
-	    <interface>Edge Panel</interface>, you must specify an
-	    edge (<guilabel>Top</guilabel>,
-	    <guilabel>Right</guilabel>, <guilabel>Left</guilabel> or
-	    <guilabel>Bottom</guilabel>). For <interface>Aligned
-	    Panel</interface>, you have to specify an edge and one of
-	    the edge's ends or the center. For <interface>Sliding
-	    Panel</interface>, you must specify the edge and offset
-	    from one of the corners (in pixels). Finally, for
-	    <interface>Floating Panel</interface> you must specify
-	    orientation (horizontal or vertical) and position of
-	    panel's left top corner (relative to the left top corner
-	    of the screen and measured in pixels).
+	    <guilabel>Panelplassering</guilabel> &mdash; Dette endrer
+	    plasseringen av panelet på skjermen. For
+	    <interface>Kantpanel</interface> må du spesifisere en side
+	    (<guilabel>Topp</guilabel>,
+	    <guilabel>Høyre</guilabel>, <guilabel>Venstre</guilabel> eller
+	    <guilabel>Bunn</guilabel>). For <interface>Justert
+	    panel</interface>, må du spesifisere en kant og enden eller midten
+	    på denne. For <interface>Glidende
+	    panel</interface>, må du spesifisere kanten og avstanden
+	    fra ett av hjørnene (i piksler). Til slutt; for 
+	    <interface>Flytende panel</interface> må du spesifisere
+	    orientering (horisontal eller vertikal) og plassering av
+	    panelets øverste venstre hjørne (relativt til øvre venstre hjørne
+	    av skjermen og målt i piksler).
 	  </para>
 	  <para>
-	    The Panel will change position once you have pressed
-	    <guibutton>Apply</guibutton> or <guibutton>OK</guibutton>
-	    buttons.
+	    Panelet vil endre posisjon når du trykker på
+	    <guibutton>Bruk</guibutton>- eller <guibutton>OK</guibutton>-
+	    knappene.
 	  </para>
 	  <tip>
-	    <title>TIP</title>
+	    <title>TIPS</title>
 	    <para>
-	      You can also change Panel position by dragging it with
-	      the middle mouse button to the new location.
+	      Du kan også endre panelets plassering ved å dra det med
+	      midtetste musknapp til en ny plassering.
 	      </para>
 	  </tip>
 	</listitem>
 
 	<listitem>
-	  <para><guilabel>Panel size</guilabel> &mdash; here you can
-	  choose panel width. The default size is 48 pixels, which is
-	  also the default size of icons used by GNOME. Users with low
-	  screen resolution might want to decrease the panel size to
-	  free some screen space; conversely, users with high
-	  resolution displays may try using larger panel sizes.
+	  <para><guilabel>Panelstørrelse</guilabel> &mdash; her kan du velge
+	  bredde på panelet. Forvalgt størrelse er 48 piksler, hvilket også
+	  er forvalgt størrelse for ikonene som brukes av GNOME. Brukere med
+	  lav skjermoppløsning vil kanskje måtte sette ned panelstørrelsen for
+	  å frigi plass på skjermen; på samme måte vil brukere med høyere
+	  oppløsning kunne bruke større paneler.
 	    </para>
 	    <para>
-             Changing panel size automatically resizes all the icons
-             on this panel, which can lead to some quality loss. Also,
-             the panel will ask all the applets to resize
-             themselves. Most of the applets will comply; however, if
-             some applets do not obey this request, then the panel
-             will resize itself so that it can fit all the applets.
+             Endring av panelstørrelse endred også størrelse på alle ikoner
+             på panelet automatisk, hvilket kan medføre dårligere kvalitet,
+             i tillegg vil panelet be alle appleter om å endre størrelse.
+             De fleste appleter vil kunne gjøre dette, men hvis noen
+             appleter ikke etterkommer forespørselen vil panelet
+             endre størrelse slik at alle appleter vil ha nok plass.
 	  </para>
 	</listitem>
 
      <listitem>
       <para>
       <indexterm id="idx-a64"> <primary>Panel</primary>
-       <secondary>Auto-hide</secondary> </indexterm>
+       <secondary>Automatisk skjuling</secondary> </indexterm>
 
-	    <guilabel>Hiding</guilabel> &mdash; In this section, you
-	    can choose whether you want to enable Panel Auto-hide
-	    &mdash; that is, have the Panel automatically hide when
-	    the mouse is not over the Panel. The autohide parameters
-	    can be configured in <link linkend="animtab">Global
-	    Preferences dialog</link>. If you  choose to Auto-hide you
-	    might want to disable the hide buttons here as well. You
-	    may also disable the hide button arrows graphics on the
-	    Panel.
+	    <guilabel>Skjuling</guilabel> &mdash; I denne delen kan du
+	    velge om du ønsker at panelet skal skjules automatisk
+	    &mdash; dvs. at panelet skjules automatisk når musen ikke er
+	    over panelet. Parametere for automatisk skjuling kan konfigureres
+	    i <link linkend="animtab">dialogen Globale
+	    brukervalg</link>. Hvis du velger å skjule automatisk vil du
+	    kanskje deaktivere knappene for skjuling her også. Du
+	    vil kanskje også deaktivere bildene for skjulingsknappen
+	    også.
       </para>
      </listitem>
     </itemizedlist>
    </sect2>
 
    <sect2 id="panelbacktab">
-    <title>Background Tab</title>
+    <title>Bakgrunnsfane</title>
       <indexterm id="idx-a65">
-	<primary>Panel</primary>  <secondary>Background</secondary>
+	<primary>Panel</primary>  <secondary>Bakgrunn</secondary>
 	</indexterm>
   
       <figure>
-	<title>Panel Background Properties Dialog</title>
+	<title>Dialog for egenskaper for panelbakgrunn</title>
 	<screenshot>
-	  <screeninfo>Panel Background Properties Dialog</screeninfo>
+	  <screeninfo>Dialog for egenskaper for panelbakgrunn</screeninfo>
 	  <graphic fileref="./figures/panel_props_back"
 	       format="png" srccredit="muet">
 	  </graphic>
@@ -2064,82 +2044,80 @@ XXX  All the changes you made in <interface>Launcher
 
 
       <para>
-	These options allow you to change the background of the Panel
-       itself. You may choose, if you wish, to have the
-       <guilabel>Standard</guilabel>, <guilabel>Pixmap</guilabel>, or
-       <guilabel>Color</guilabel> background. The standard look for
-       the Panel is determined by the GTK theme you are running at the
-       time (you can configure the GTK theme using the
-       <application>GNOME Control Center</application>).  The
-       <guilabel>Pixmap</guilabel> option allows you to choose an
-       image to tile or scale to the Panel. The
-       <guilabel>Color</guilabel> option allows you to specify a
-       particular color for the Panel.
+	Disse valgene lar deg endre bakgrunnen for selve panelet.
+        Du kan velge mellom følgende valg,
+       <guilabel>Standard</guilabel>, <guilabel>Bilde</guilabel>, eller
+       <guilabel>Farge</guilabel>-bakgrunn. Forvalgt utseende for
+       panelet bestemmes av GTK-temaet du bruker (du kan konfigurere GTK-tema
+       ved å bruke <application>GNOME kontrollsenter</application>).
+       <guilabel>Bilde</guilabel>-alternativet lar deg velge et bilde
+       for å flislegge eller skalere på panelet. 
+       <guilabel>Farge</guilabel>-alternativet lar deg spesifisere en
+       spesiell farge for panelet.
       </para>
 
    <itemizedlist mark="bullet">
 
      <listitem>
       <para>
-       <guilabel>Color to use</guilabel> &mdash; If you choose to have
-       your <interface>Panel</interface> one color, this button will
-       launch a dialog which allows you to specify which color to use.
+       <guilabel>Farge som skal brukes</guilabel> &mdash; Hvis du velger å ha
+       ditt <interface>Panel</interface> helfarget vil denne knappen
+       starte en dialog som lar deg spesifisere hvilken farge som skal brukes.
       </para>
      </listitem>
 
 
      <listitem>
       <para>
-       <guilabel>Image</guilabel> &mdash; If you wish to have a Pixmap
-       for the background of your <interface>Panel</interface>, this
-       section of the dialog allows you to choose which image to use.
-       If you press the <guibutton>Browse</guibutton> button, you can
-       search for the file you want to use. The current filename is
-       shown to the left of this button. The window above it shows you
-       the preview of this background.
+       <guilabel>Bilde</guilabel> &mdash; Hvis du ønsker å bruke et bilde
+       som bakgrunn for ditt <interface>Panel</interface>, denne
+       delen av dialogen lar deg velge hvilket bilde som skal brukes.
+       Hvis du trykker på <guibutton>Bla gjennom</guibutton>-knappen, kan du
+       søke etter filen du ønsker å bruke. Aktivt filnavn vises til
+       venstre for denne knappen. Vinduet over har en forhåndsvisning av
+       bakgrunnen.
       </para>
      </listitem>
 </itemizedlist>
 
       
       <tip>
-	<title>Drag and Drop With Images</title>
+	<title>Dra-og-slipp med bilder</title>
 	<para>
-	  An easier way to change the  background of your panel is to
-	  drag and  drop an image  file from  the GNOME  File Manager
-	  onto the Panel.  This will  automatically  change the
-	  background of  the panel to that image.
+	  En enklere måte å skifte bakgrunnen for panelet er å dra og slippe
+	  en bildefil fra GNOME filhåndtereren til panelet. Dette vil endre
+	  bakgrunnen automatisk til det valgte bildet.
 	</para>
       </tip>
     
 <itemizedlist mark="bullet">
      <listitem>
       <para>
-       <guilabel>Don't scale image to fit</guilabel> &mdash; If this
-       button is checked, the background image will be tiled to cover
-       the panel, rather than scaled.
+       <guilabel>Ikke skaler bildet</guilabel> &mdash; Hvis du krysser av
+       her vil bakgrunnsbildet brukes som en flis i stedet for å skaleres
+       til å passe panelets størrelse.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Scale image (keep proportions)</guilabel> &mdash; If
-       this button is checked, the background image will be scaled as
-       much as possible preserving image's proportions, and then the
-       scaled image will be used to tile the panel.
+       <guilabel>Skaler bildet (behold proporsjoner)</guilabel> &mdash; Hvis
+       du krysser av her vil bakgrunnsbildet bli skalert så mye som mulig
+       samtidig som proporsjonene beholdes, før det brukes som en flis
+       på panelet.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Stretch image (change proportions)</guilabel> &mdash;
-       If this button is checked, the background image will be
-       stretched in both dimensions to the size of the panel.
+       <guilabel>Strekk bildet (endre proporsjonene)</guilabel> &mdash;
+       Hvis du krysser av her vil bakgrunnsbildet strekkes i begge retninger
+       til panelets størrelse.
       </para>
      </listitem>
      <listitem>
       <para>
-       <guilabel>Rotate image for vertical panel</guilabel> &mdash; If
-         this button is checked, the image will be rotated when you
-         change panel orientation (horizontal/vertical).
+       <guilabel>Roter bilde for vertikalt panel</guilabel> &mdash; Hvis
+         du krysser av her vil bildet roteres når du endrer panelets
+         orientering (horisontal/vertikal).
       </para>
      </listitem>
     </itemizedlist>
@@ -2150,32 +2128,30 @@ XXX  All the changes you made in <interface>Launcher
 
 <sect1 id="panelbugs">
 
-    <title>Current bugs and limitations</title>
+    <title>Kjente feil og begrensninger</title>
     <para>
-      Most of the things here are not really bugs; rather, they
-      describe situations when the Panel's behavior is not what you
-      would expect.   </para>
-
-    <para> You can not place an ordinary file or directory on the
-      Panel. If you try to drag and drop a file from the File Manager
-      window to the panel, it won't work. The only type of file that
-      can be placed on the Panel are <filename>.desktop</filename>
-      files, which describe launchers (and
-      <filename>.kdelnk</filename> files, which describe lunchers in
-      the format used by K Desktop Environment); any directory dropped on the
-      panel will be interpreted as a menu &mdash; that is, all the
-      files other than <filename>.desktop</filename> files will be
-      ignored.
+      De fleste punktene her er ikke feil, men de beskriver situasjoner
+      hvor panelets oppførsel ikke er helt hva man kan forvente seg.
     </para>
 
-    <para> Editing menus other than the <guimenu>Main Menu</guimenu>
-      is rather confusing. <application>Menu Editor</application> at
-      the moment can not be used for this, and
-      <guimenuitem>Properties</guimenuitem> item of the right-click
-      menu is not too helpful either - for example, it doesn't allow
-      one to change menu's icon (see <xref linkend="menusconf"> for
-      instructions for doing this). This will be improved in the next
-      release.
+    <para> Du kan ikke plassere en vanlig fil eller katalog på panelet.
+      Hvis du prøver å dra og slippe en fil fra filhåndterervinduet
+      til panelet vil ikke dette fungere. Den eneste typen fil som
+      kan plasseres på panelet er <filename>.desktop</filename>-
+      filer, som beskriver oppstartere (og
+      <filename>.kdelnk</filename>-filer, som beskriver oppstartere i
+      formatet som brukes av K Desktop Environment); enhver katalog som slippes
+      på panelet vil bli tolket som en meny &mdash; dvs. alle filene bortsett
+      fra <filename>.desktop</filename>-filer vil ignoreres.
+    </para>
+
+    <para>Redigering av andre menyer enn <guimenu>Hovedmenyen</guimenu>
+      kan være forvirrende. <application>Menyredigering</application> kan
+      ikke brukes for dette ennå, og
+      <guimenuitem>Egenskaper</guimenuitem>-oppføringen i høyreklikk-
+      menyen er ikke så nyttig heller &mdash; f.eks. lar den deg ikke
+      endre menyens ikon (se <xref linkend="menusconf"> for
+      instruksjoner for å gjøre dette). Dette vil utbedres i neste versjon.
     </para>
 
     <para> The <guimenu>Global Menu</guimenu> (which you get by

@@ -284,7 +284,7 @@ append_gnome_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 		},
 		{
 		  N_("Bug Tracking System (www)"),
-		  N_("http://bugs.gnome.org/"),
+		  N_("http://bugzilla.gnome.org/"),
 		  "bug-buddy.png"
 		},
 		{ 
