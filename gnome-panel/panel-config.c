@@ -658,6 +658,58 @@ border_set_align (GtkWidget *widget, gpointer data)
 	panel_config_register_changes (ppc);
 }
 
+static void
+make_position_widget_accessible (GtkWidget   *w,
+				 int          current,
+				 int          max,
+				 PanelOrient  orient)
+{
+	static const char *horiz_prefix[] = { "Left ", "Middle ", "Right " };
+	static const char *vert_prefix[] = { "Top ", "Middle ", "Bottom " };
+	char              *atk_name;
+	char              *str1 = "";
+	char              *str2 = "";
+
+	switch (orient) {
+	case PANEL_ORIENT_LEFT:
+		str2 = "Left Vertical";
+		break;
+	case PANEL_ORIENT_UP:
+		str2 = "Top Horizontal";
+		break;
+	case PANEL_ORIENT_RIGHT:
+		str2 = "Right Vertical";
+		break;
+	case PANEL_ORIENT_DOWN:
+		str2 = "Bottom Horizontal";
+		break;
+	}
+
+	if (max > 1) {
+		/* In this case, we have to skip the entry "Middle" */
+		if (max == 2 && current == 1)
+			current++;
+
+		switch (orient) {
+		case PANEL_ORIENT_LEFT:
+		case PANEL_ORIENT_RIGHT:
+			str1 = (char *) vert_prefix [current];
+			break;
+		case PANEL_ORIENT_UP:
+		case PANEL_ORIENT_DOWN:
+			str1 = (char *) horiz_prefix [current];
+			break;
+		}
+	}
+
+	atk_name = g_strconcat (str1, str2, NULL);
+
+	add_atk_name_desc (w, _(atk_name),
+			   _("Indicates the panel position and orientation on screen"));
+
+	g_free (atk_name);
+}
+
 static GtkWidget *
 make_position_widget (PerPanelConfig *ppc, int aligns)
 {
@@ -698,12 +750,16 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align,
 				  GTK_FILL,
 				  GTK_EXPAND | GTK_FILL, 0, 0);
-		g_signal_connect (G_OBJECT (w), "toggled",
+
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_edge),
 				  GINT_TO_POINTER (BORDER_LEFT));
-		g_signal_connect (G_OBJECT (w), "toggled",
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_align),
 				  GINT_TO_POINTER (align));
+
+		make_position_widget_accessible (
+				w, align, aligns, PANEL_ORIENT_LEFT);
 	}
 	
 
@@ -719,12 +775,16 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align, 0, 1,
 				  GTK_EXPAND | GTK_FILL,
 				  0, 0, 0);
-		g_signal_connect (G_OBJECT (w), "toggled",
+
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_edge),
 				  GINT_TO_POINTER (BORDER_TOP));
-		g_signal_connect (G_OBJECT (w), "toggled",
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_align),
 				  GINT_TO_POINTER (align));
+
+		make_position_widget_accessible (
+				w, align, aligns, PANEL_ORIENT_UP);
 	}
 
 
@@ -741,12 +801,16 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + align, 2 + align,
 				  GTK_FILL,
 				  GTK_FILL | GTK_EXPAND, 0, 0);
-		g_signal_connect (G_OBJECT (w), "toggled",
+
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_edge),
 				  GINT_TO_POINTER (BORDER_RIGHT));
-		g_signal_connect (G_OBJECT (w), "toggled",
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_align),
 				  GINT_TO_POINTER (align));
+
+		make_position_widget_accessible (
+				w, align, aligns, PANEL_ORIENT_RIGHT);
 	}
 
 
@@ -763,12 +827,16 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 				  1 + aligns, 2 + aligns,
 				  GTK_EXPAND | GTK_FILL,
 				  0, 0, 0);
-		g_signal_connect (G_OBJECT (w), "toggled",
+
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_edge),
 				  GINT_TO_POINTER (BORDER_BOTTOM));
-		g_signal_connect (G_OBJECT (w), "toggled",
+		g_signal_connect (w, "toggled",
 				  G_CALLBACK (border_set_align),
 				  GINT_TO_POINTER (align));
+
+		make_position_widget_accessible (
+				w, align, aligns, PANEL_ORIENT_DOWN);
 	}
 
 	update_position_toggles (ppc);
