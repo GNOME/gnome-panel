@@ -231,7 +231,6 @@ init_user_panels(void)
 		/*FIXME: this should be made cleaner I guess*/
 		if(!root_menu) init_main_menu(panel);
 
-
 		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
 		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",

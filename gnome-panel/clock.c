@@ -27,6 +27,8 @@
 
 typedef void (*ClockUpdateFunc) (GtkWidget *clock, time_t current_time);
 
+GtkWidget *aw;
+
 int applet_id=-1; /*this is our id we use to comunicate with the panel*/
 
 
@@ -168,24 +170,32 @@ create_clock_widget (GtkWidget *window)
 
 /*these are commands sent over corba:*/
 void
-change_orient(int id, int orient)
+change_orient(int orient)
 {
 	PanelOrientType o = (PanelOrientType)orient;
 	puts("CHANGE_ORIENT");
 }
 
 void
-session_save(int id, int panel, int pos)
+session_save(int panel, int pos)
 {
 	/*FIXME: save the position*/
 	puts("SESSION_SAVE");
 }
 
-void
-do_shutdown(int id)
+static void
+applet_die(gpointer data)
 {
-	puts("DO_SHUTDOWN");
 	exit(0);
+}
+
+void
+shutdown_applet()
+{
+	puts("SHUTDOWN_APPLET");
+	/*kill our window*/
+	gtk_widget_unref(aw);
+	gtk_timeout_add(100,applet_die,NULL);
 }
 
 
@@ -193,7 +203,6 @@ int
 main(int argc, char **argv)
 {
 	GtkWidget *clock;
-	GtkWidget *aw;
 	char *result;
 	
 	gnome_init("clock_applet", &argc, &argv);

@@ -135,7 +135,7 @@ save_applet_configuration(gpointer data, gpointer user_data)
 
 	if(info->type==APPLET_EXTERN) {
 		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id,((*num)++)-1,panel,pos);
+		send_applet_session_save(info->id,panel,pos);
 		fullpath = g_copy_strings(path,"path",NULL);
 		gnome_config_set_string(fullpath, info->params);
 		g_free(fullpath);
@@ -287,12 +287,12 @@ panel_session_save (GnomeClient *client,
 	if(is_shutdown) {
 		GList *list;
 		int i;
+		AppletInfo *info;
 
 		for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++) {
-			AppletInfo *info = list->data;
-
+			info = list->data;
 			if(info->type == APPLET_EXTERN) {
-				send_applet_do_shutdown(info->id,i);
+				send_applet_shutdown_applet(info->id);
 			} else {
 				gtk_widget_unref(info->widget);
 			}

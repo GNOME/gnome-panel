@@ -84,25 +84,25 @@ panel_corba_gtk_main (int *argc, char ***argv, char *service_name)
 }
 
 void
-send_applet_session_save (const char *ior, int id, int panel, int pos)
+send_applet_session_save (const char *ior, int panel, int pos)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->session_save(id,panel,pos);
+	applet->session_save(panel,pos);
 }
 
 void
-send_applet_do_shutdown (const char *ior, int id)
+send_applet_shutdown_applet (const char *ior)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->do_shutdown(id);
+	applet->shutdown_applet();
 }
 
 void
@@ -113,5 +113,5 @@ send_applet_change_orient (const char *ior, int id, int orient)
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->change_orient(id,orient);
+	applet->change_orient(orient);
 }
