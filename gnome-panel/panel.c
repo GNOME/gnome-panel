@@ -31,10 +31,13 @@ static GtkWidget *applet_menu_prop_item;
 static menu_count=0; /*how many "menu" applets we have ....*/
 			/*FIXME: this should only count "main" menus!*/
 
+
 extern GList *panels;
+extern GList *drawers;
 extern GList *applets;
 
 extern GtkTooltips *panel_tooltips;
+extern gint tooltips_enabled;	
 
 /*FIXME: a hack for current code to work*/
 #define the_panel (PANEL_WIDGET(panels->data))
@@ -101,22 +104,35 @@ applet_orientation_notify(GtkWidget *widget, gpointer data)
 }
 
 static void
-save_applet_configuration(GtkWidget *widget, int pos, int *num)
+save_applet_configuration(gpointer data, gpointer user_data)
 {
 	char          *id;
 	char          *params;
 	char          *path;
 	char          *fullpath;
 	char           buf[256];
+	GtkWidget     *widget = data;
+	int           *num = user_data;
+	int            pos;
+	int            panel;
+	GList         *list;
 	AppletCommand  cmd;
+
+	pos = -1;
+	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
+	    	if((pos=panel_widget_get_pos(PANEL_WIDGET(list->data),
+	    				     widget))!=-1)
+			break; 
+
+	/*not found*/
+	if(pos == -1)
+		return;
 
 	cmd.cmd = APPLET_CMD_QUERY;
 	id      = call_applet(widget, &cmd);
 
 	cmd.cmd = APPLET_CMD_GET_INSTANCE_PARAMS;
 	params  = call_applet(widget, &cmd);
-	
-	/* XXX: The increasing number is sort of a hack to guarantee unique keys */
 
 	sprintf(buf, "_%d/", (*num)++);
 	path = g_copy_strings("/panel/Applet", buf, NULL);
@@ -125,8 +141,12 @@ save_applet_configuration(GtkWidget *widget, int pos, int *num)
 	gnome_config_set_string(fullpath, id);
 	g_free(fullpath);
 
-	fullpath = g_copy_strings(path,"geometry",NULL);
+	fullpath = g_copy_strings(path,"position",NULL);
 	gnome_config_set_int(fullpath, pos);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"panel",NULL);
+	gnome_config_set_int(fullpath, panel);
 	g_free(fullpath);
 
 	fullpath = g_copy_strings(path,"parameters",NULL);
@@ -138,15 +158,60 @@ save_applet_configuration(GtkWidget *widget, int pos, int *num)
 	g_free(path);
 }
 
-/*static void
-save_drawer_configuration(PanelDrawer *drawer, GtkWidget *widget, int pos,
-	gint *drawernum)
+static void
+save_panel_configuration(gpointer data, gpointer user_data)
 {
 	char          *path;
 	char          *fullpath;
 	char           buf[256];
+	int           *num = user_data;
+	PanelWidget   *panel = data;
+
+	sprintf(buf, "_%d/", (*num)++);
+	path = g_copy_strings("/panel/Panel", buf, NULL);
+
+	fullpath = g_copy_strings(path,"orient",NULL);
+	gnome_config_set_int(fullpath,panel->orient);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"snapped",NULL);
+	gnome_config_set_int(fullpath,panel->snapped);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"mode",NULL);
+	gnome_config_set_int(fullpath,panel->mode);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"state",NULL);
+	gnome_config_set_int(fullpath,panel->state);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"step_size",NULL);
+	gnome_config_set_int(fullpath,panel->step_size);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"minimized_size",NULL);
+	gnome_config_set_int(fullpath,panel->minimized_size);
+	g_free(fullpath);
+
+	fullpath = g_copy_strings(path,"minimize_delay",NULL);
+	gnome_config_set_int(fullpath,panel->minimize_delay);
+	g_free(fullpath);
+
+	g_free(path);
+}
+
+static void
+save_drawer_configuration(gpointer data, gpointer user_data)
+{
+	/*FIXME: drawers*/
+	/*char          *path;
+	char          *fullpath;
+	char           buf[256];
+	GtkWidget     *widget = data;
+	int           *num = user_data;
 	
-	sprintf(buf, "_%d/", *drawernum);
+	sprintf(buf, "_%d/", (*num)++);
 	path = g_copy_strings("/panel/Drawer", buf, NULL);
 
 	fullpath = g_copy_strings(path,"name",NULL);
@@ -169,9 +234,9 @@ save_drawer_configuration(PanelDrawer *drawer, GtkWidget *widget, int pos,
 	gnome_config_set_int(fullpath, drawer->panel->step_size);
 	g_free(fullpath);
 
-	g_free(path);
+	g_free(path);*/
 }
-*/
+
 
 
 static void
@@ -181,7 +246,7 @@ destroy_applet_module(gpointer key, gpointer value, gpointer user_data)
 	AppletFile    *af;
 
 	cmd.cmd    = APPLET_CMD_DESTROY_MODULE;
-	cmd.panel  = the_panel;
+	cmd.panel  = NULL; /*the_panel;*/
 	cmd.applet = NULL;
 
 	af = value;
@@ -189,27 +254,11 @@ destroy_applet_module(gpointer key, gpointer value, gpointer user_data)
 	(*af->cmd_func) (&cmd);
 }
 
-/*FIXME: save applet params!*/
-/*static void
-save_applets_on_panel(PanelWidget *panel, gint base, gint *num, gint *drawernum)
+static void
+destroy_widget_list(gpointer data, gpointer user_data)
 {
-	int i;
-
-	for(i=0;i<PANEL_TABLE_SIZE;i++)
-		if(panel->applets[i]->type==APPLET_NORMAL)
-			save_applet_configuration(panel->applets[i]->applet,
-						  i+base,num);
-		else if(panel->applets[i]->type==APPLET_DRAWER && base==0) {
-			save_drawer_configuration(panel->applets[i]->drawer,
-						  panel->applets[i]->applet,
-						  i,drawernum);
-			save_applets_on_panel(panel->applets[i]->drawer->panel,
-					      *drawernum * 1000,
-					      num,drawernum);
-			(*drawernum)++;
-		}
-}*/
-
+	gtk_widget_destroy(GTK_WIDGET(data));
+}
 
 /* This is called when the session manager requests a shutdown.  It
    can also be run directly when we don't detect a session manager.
@@ -231,41 +280,37 @@ panel_session_save (gpointer client_data,
 		sprintf(buf,"/panel/Applet_%d",num);
 		gnome_config_clean_section(buf);
 	}
-	for(drawernum=gnome_config_get_int("/panel/Config/drawer_count=0");
-		drawernum>0;drawernum--) {
-		sprintf(buf,"/panel/Drawer_%d",drawernum);
+	for(num=gnome_config_get_int("/panel/Config/drawer_count=0");
+		num>0;num--) {
+		sprintf(buf,"/panel/Drawer_%d",num);
+		gnome_config_clean_section(buf);
+	}
+	for(num=gnome_config_get_int("/panel/Config/panel_count=0");
+		num>0;num--) {
+		sprintf(buf,"/panel/Panel_%d",num);
 		gnome_config_clean_section(buf);
 	}
 
 	num = 1;
-	drawernum = 1;
-	/*FIXME:*/
-	/*save_applets_on_panel(the_panel->panel,0,&num,&drawernum);*/
-
-	/* FIXME: use condiguration!
-	gnome_config_clean_section("/panel/Applets");
-
+	g_list_foreach(applets,save_applet_configuration,&num);
 	gnome_config_set_int("/panel/Config/applet_count",num-1);
-	gnome_config_set_int("/panel/Config/drawer_count",drawernum-1);
+	num = 1;
+	/* g_list_foreach(drawers,save_drawer_configuration,&num); */
+	gnome_config_set_int("/panel/Config/drawer_count",num-1);
+	num = 1;
+	g_list_foreach(panels,save_panel_configuration,&num);
+	gnome_config_set_int("/panel/Config/panel_count",num-1);
 
-	gnome_config_set_int("/panel/Config/position",the_panel->panel->pos);
-	gnome_config_set_int("/panel/Config/mode",the_panel->mode);
-	gnome_config_set_int("/panel/Config/step_size",
-			     the_panel->panel->step_size);
-	gnome_config_set_int("/panel/Config/delay",the_panel->delay);
-	gnome_config_set_int("/panel/Config/minimize_delay",
-			     the_panel->minimize_delay);
-	gnome_config_set_int("/panel/Config/minimized_size",
-			     the_panel->minimized_size);
+	/*global options*/
 	gnome_config_set_bool("/panel/Config/tooltips_enabled",
-			      the_panel->tooltips_enabled);
-	*/
+			      tooltips_enabled);
+
 	gnome_config_sync();
 
-	gtk_widget_destroy(GTK_WIDGET(the_panel));
+	g_list_foreach(drawers,destroy_widget_list,NULL);
+	g_list_foreach(panels,destroy_widget_list,NULL);
 
 	g_hash_table_foreach(applet_files_ht, destroy_applet_module, NULL);
-
 	applet_files_destroy();
 
 	/* Always successful.  */
@@ -328,7 +373,7 @@ create_applet(char *id, char *params, int pos, int panel)
 	}
 
 	cmd.cmd    = APPLET_CMD_CREATE_INSTANCE;
-	cmd.panel  = PANEL_WIDGET(GTK_WINDOW(the_panel));
+	cmd.panel  = PANEL_WIDGET(g_list_nth(panels,panel)->data);
 	cmd.applet = NULL;
 	cmd.params.create_instance.params = params;
 	cmd.params.create_instance.pos   = pos;
@@ -598,11 +643,13 @@ register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	panel_widget_add(PANEL_WIDGET(g_list_nth(panels,panel-1)->data),
+	panel_widget_add(PANEL_WIDGET(g_list_nth(panels,panel)->data),
 			 eventbox, pos);
 
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
+
+	applets = g_list_append(applets,eventbox);
 
 	/*notify the applet of the orientation of the panel!*/
 	applet_orientation_notify(eventbox,NULL);
@@ -650,7 +697,7 @@ panel_command(PanelCommand *cmd)
 			
 		case PANEL_CMD_REGISTER_TOY:
 			/*FIXME: fix it so that applets pass panel*/
-			cmd->params.register_toy.panel = 1;
+			cmd->params.register_toy.panel = 0;
 			register_toy(cmd->params.register_toy.applet,
 				     cmd->params.register_toy.id,
 				     cmd->params.register_toy.pos,

@@ -25,6 +25,7 @@
 
 
 GList *panels = NULL;
+GList *drawers = NULL;
 GList *applets = NULL;
 
 GtkTooltips *panel_tooltips;
@@ -69,9 +70,9 @@ load_default_applets(void)
 	/* XXX: the IDs for these applets are hardcoded here. */
 
 	/* Here we use NULL to request querying of default applet parameters */
-	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION,1);
-	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,1);
-	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,1);
+	load_applet("Menu", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
+	load_applet("Clock", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
+	load_applet("Mail check", NULL, PANEL_UNKNOWN_APPLET_POSITION,0);
 }
 
 static void
@@ -104,7 +105,7 @@ init_user_drawers(void)
 		sprintf(buf,"/panel/Drawer_%d/geometry=%d",num,
 			PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Drawer_%d/panel=1",num);
+		sprintf(buf,"/panel/Drawer_%d/panel=0",num);
 		panel = gnome_config_get_int(buf);
 		load_drawer(drawer_name,drawer_iconopen,drawer_iconclosed,
 			    step_size,pos,panel);
@@ -132,10 +133,10 @@ init_user_applets(void)
 		applet_name = gnome_config_get_string(buf);
 		sprintf(buf,"/panel/Applet_%d/parameters=",num);
 		applet_params = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Applet_%d/geometry=%d",num,
+		sprintf(buf,"/panel/Applet_%d/position=%d",num,
 			PANEL_UNKNOWN_APPLET_POSITION);
 		pos = gnome_config_get_int(buf);
-		sprintf(buf,"/panel/Applet_%d/panel=1",num);
+		sprintf(buf,"/panel/Applet_%d/panel=0",num);
 		panel = gnome_config_get_int(buf);
 		load_applet(applet_name, applet_params, pos, panel);
 		g_free(applet_name);
@@ -230,7 +231,7 @@ init_user_panels(void)
 					 config.minimized_size,
 					 config.minimize_delay);
 
-		panel_menu = create_panel_root_menu(panel);
+		panel_menu = create_panel_root_menu(PANEL_WIDGET(panel));
 		/*FIXME: small memory leak since there is no way to
 		  remember to kill the menu*/
 		gtk_signal_connect(GTK_OBJECT(panel),

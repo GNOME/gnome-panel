@@ -994,8 +994,15 @@ panel_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 
 static void
-bind_applet_events(GtkWidget *widget, void *data)
+bind_applet_events(GtkWidget *widget, gpointer data)
 {
+	/*if(!GTK_WIDGET_REALIZED(widget)) {
+		gtk_signal_connect_after(GTK_OBJECT(widget),
+					 "realize",
+					 GTK_SIGNAL_FUNC(bind_applet_events),
+					 NULL);
+		return;
+	}*/
 	/* XXX: This is more or less a hack.  We need to be able to
 	 * capture events over applets so that we can drag them with
 	 * the mouse and such.  So we need to force the applet's
@@ -1005,6 +1012,7 @@ bind_applet_events(GtkWidget *widget, void *data)
 	 */
 	
 	if (!GTK_WIDGET_NO_WINDOW(widget)) {
+		/*FIXME: casn't be realized!*/
 		gtk_widget_set_events(widget, gtk_widget_get_events(widget) |
 				      APPLET_EVENT_MASK);
 		gtk_signal_connect(GTK_OBJECT(widget), "event",
@@ -1018,8 +1026,27 @@ bind_applet_events(GtkWidget *widget, void *data)
 }
 
 static void
-bind_child_applet_events(GtkWidget *widget, void *data)
+bind_top_applet_events(PanelWidget *panel, GtkWidget *widget)
 {
+	/*if(!GTK_WIDGET_REALIZED(widget)) {
+		gtk_signal_connect_after(GTK_OBJECT(widget),
+					 "realize",
+					 GTK_SIGNAL_FUNC(
+					 	bind_top_applet_events),
+					 NULL);
+		return;
+	}*/
+	gtk_signal_connect_after(GTK_OBJECT(widget),
+			   	 "size_allocate",
+			   	 GTK_SIGNAL_FUNC(
+			   	 	panel_widget_applet_size_allocate),
+				 panel);
+
+	gtk_signal_connect(GTK_OBJECT(widget),
+			   "event",
+			   GTK_SIGNAL_FUNC(panel_widget_applet_event),
+			   panel);
+
 	/* XXX: This is more or less a hack.  We need to be able to
 	 * capture events over applets so that we can drag them with
 	 * the mouse and such.  So we need to force the applet's
@@ -1027,7 +1054,7 @@ bind_child_applet_events(GtkWidget *widget, void *data)
 	 * until the event gets to the applet wrapper (the
 	 * GtkEventBox) for processing by us.
 	 */
-	
+
 	if (GTK_IS_CONTAINER(widget))
 		gtk_container_foreach (GTK_CONTAINER (widget),
 				       bind_applet_events, 0);
@@ -1045,7 +1072,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	if(pos>=panel->size)
 		pos = panel->size - 1;
 
-	for(i=0;i<panel->size;i += panel->applets[i].cells)
+	for(i=pos;i<panel->size;i += panel->applets[i].cells)
 		if(!panel->applets[i].applet)
 			break;
 
@@ -1065,20 +1092,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	panel->applets[i].drawer = NULL;
 	panel->applets[i].cells = 1;
 
-	gtk_signal_connect_after(GTK_OBJECT(applet),
-			   "size_allocate",
-			   GTK_SIGNAL_FUNC(panel_widget_applet_size_allocate),
-			   panel);
-
-	gtk_signal_connect(GTK_OBJECT(applet),
-			   "event",
-			   GTK_SIGNAL_FUNC(panel_widget_applet_event),
-			   panel);
-
-	gtk_signal_connect_after(GTK_OBJECT(applet),
-				 "realize",
-				 GTK_SIGNAL_FUNC(bind_child_applet_events),
-				 NULL);
+	bind_top_applet_events(panel,applet);
 
 	return i;
 }
