@@ -155,7 +155,7 @@ panel_properties_dialog_setup_name_entry (PanelPropertiesDialog *dialog,
 	is_attached = panel_toplevel_get_is_attached (dialog->toplevel);
 
 	name = get_name (dialog->toplevel, is_attached);
-	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name);
+	gtk_entry_set_text (GTK_ENTRY (dialog->name_entry), name ? name : "");
 	g_free (name);
 
 	g_signal_connect_swapped (dialog->name_entry, "changed",
@@ -631,7 +631,7 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 {
 	switch (response) {
 	case GTK_RESPONSE_CLOSE:
-		gtk_widget_hide (properties_dialog);
+		gtk_widget_destroy (properties_dialog);
 		break;
 	case GTK_RESPONSE_HELP:
 		panel_show_help (gtk_window_get_screen (GTK_WINDOW (properties_dialog)),
@@ -640,6 +640,14 @@ panel_properties_dialog_response (PanelPropertiesDialog *dialog,
 	default:
 		break;
 	}
+}
+
+static void
+panel_properties_dialog_destroy (PanelPropertiesDialog *dialog)
+{
+	g_object_set_qdata (G_OBJECT (dialog->toplevel),
+			    panel_properties_dialog_quark,
+			    NULL);
 }
 
 static void
@@ -919,6 +927,8 @@ panel_properties_dialog_new (PanelToplevel *toplevel,
 	dialog->properties_dialog = glade_xml_get_widget (gui, "panel_properties_dialog");
 	g_signal_connect_swapped (dialog->properties_dialog, "response",
 				  G_CALLBACK (panel_properties_dialog_response), dialog);
+	g_signal_connect_swapped (dialog->properties_dialog, "destroy",
+				  G_CALLBACK (panel_properties_dialog_destroy), dialog);
 
 	gtk_window_set_screen (GTK_WINDOW (dialog->properties_dialog),
 			       gtk_window_get_screen (GTK_WINDOW (toplevel)));

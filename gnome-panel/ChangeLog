@@ -1,3 +1,16 @@
+Fri Aug 22 14:28:42 2003  George Lebl <jirka@5z.com>
+
+	* panel-properties-dialog.c: Fix warning when a drawer doesn't
+	  have a tooltip set.  Also destroy the dialog when closed
+	  (there is absolutely no point in keeping it in memory,
+	  that's a waste), and handle closing the dialog with the
+	  close WM button without causing crashes/warnings on next
+	  use of properties
+
+	* panel-run-dialog.c: When destroying the dialog, destroy
+	  the file selection if it exists otherwise closing the
+	  dialog without closing the fileselection causes a crash.
+
 Fri Aug 22 09:50:19 2003  George Lebl <jirka@5z.com>
 
 	* panel-applet-frame.c: fix a couple of possible

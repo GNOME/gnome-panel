@@ -110,6 +110,10 @@ panel_run_dialog_destroy (PanelRunDialog *dialog)
 {
 	GList *l;
 
+	if (dialog->file_sel != NULL)
+		gtk_widget_destroy (GTK_WIDGET (dialog->file_sel));
+	dialog->file_sel = NULL;
+
 	g_object_unref (dialog->program_list_box);
 	
 	g_slist_foreach (dialog->add_icon_paths, (GFunc) gtk_tree_path_free, NULL);
