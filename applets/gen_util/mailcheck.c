@@ -1209,11 +1209,11 @@ make_mailcheck_applet(const gchar *goad_id)
 	gtk_widget_show(mailcheck);
 	applet_widget_add (APPLET_WIDGET (applet), mailcheck);
 
-        gtk_widget_set_events(GTK_WIDGET(applet), 
-                              gtk_widget_get_events(GTK_WIDGET(applet)) |
+        gtk_widget_set_events(GTK_WIDGET(mc->ebox), 
+                              gtk_widget_get_events(GTK_WIDGET(mc->ebox)) |
                               GDK_BUTTON_PRESS_MASK);
 
-        gtk_signal_connect(GTK_OBJECT(mailcheck), "button_press_event",
+        gtk_signal_connect(GTK_OBJECT(mc->ebox), "button_press_event",
                            GTK_SIGNAL_FUNC(exec_clicked_cmd), mc);
 
 	gtk_signal_connect(GTK_OBJECT(applet),"save_session",
