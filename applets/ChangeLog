@@ -1,3 +1,10 @@
+Fri May 22 02:03:36 1998  George Lebl  <jirka@5z.com>
+
+	* netload/properties.c: fixed up properties, the current
+	  ones wouldn't work, if you are storing from cfg path,
+	  you can only use a key in the path. if you need to store
+	  global information use globcfgpath and then use section/key
+
 Fri May 22 00:48:16 1998  George Lebl  <jirka@5z.com>
 
 	* */*.c: changed to compile and work with the new
