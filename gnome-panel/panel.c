@@ -585,7 +585,8 @@ panel_destroy(GtkWidget *widget, gpointer data)
 	}
 
 	if(pd->menu)
-		gtk_widget_destroy(pd->menu);
+		gtk_widget_unref(pd->menu);
+	pd->menu = NULL;
 	
 	panel_list = g_slist_remove(panel_list,pd);
 	g_free(pd);

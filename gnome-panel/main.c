@@ -56,7 +56,7 @@ menu_age_timeout(gpointer data)
 		AppletInfo *info = li->data;
 		if(info->menu && info->menu_age++>=6 &&
 		   !GTK_WIDGET_VISIBLE(info->menu)) {
-			gtk_widget_destroy(info->menu);
+			gtk_widget_unref(info->menu);
 			info->menu = NULL;
 			info->menu_age = 0;
 		}
@@ -66,7 +66,7 @@ menu_age_timeout(gpointer data)
 			Menu *menu = info->data;
 			if(menu->menu && menu->age++>=6 &&
 			   !GTK_WIDGET_VISIBLE(menu->menu)) {
-				gtk_widget_destroy(menu->menu);
+				gtk_widget_unref(menu->menu);
 				menu->menu = NULL;
 				menu->age = 0;
 			}
@@ -81,7 +81,7 @@ menu_age_timeout(gpointer data)
 		PanelData *pd = li->data;
 		if(pd->menu && pd->menu_age++>=6 &&
 		   !GTK_WIDGET_VISIBLE(pd->menu)) {
-			gtk_widget_destroy(pd->menu);
+			gtk_widget_unref(pd->menu);
 			pd->menu = NULL;
 			pd->menu_age = 0;
 		}

@@ -60,6 +60,7 @@ panel_clean_applet(AppletInfo *info)
 		if(info->type == APPLET_STATUS) {
 			status_applet_put_offscreen(info->data);
 		}
+		/* destroy will remove it from the panel */
 		gtk_widget_destroy(info->widget);
 		info->widget = NULL;
 	}
@@ -241,8 +242,8 @@ applet_add_callback(AppletInfo *info,
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_destroy(info->menu);
-		info->menu=NULL;
+		gtk_widget_unref(info->menu);
+		info->menu = NULL;
 		info->menu_age = 0;
 	}
 }
@@ -274,8 +275,8 @@ applet_remove_callback(AppletInfo *info, const char *callback_name)
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_destroy(info->menu);
-		info->menu=NULL;
+		gtk_widget_unref(info->menu);
+		info->menu = NULL;
 		info->menu_age = 0;
 	}
 }
@@ -300,8 +301,8 @@ applet_callback_set_sensitive(AppletInfo *info, const char *callback_name, int s
 			menu->menuitem=NULL;
 			menu->submenu=NULL;
 		}
-		gtk_widget_destroy(info->menu);
-		info->menu=NULL;
+		gtk_widget_unref(info->menu);
+		info->menu = NULL;
 		info->menu_age = 0;
 	}
 }
@@ -566,7 +567,7 @@ applet_destroy(GtkWidget *w, AppletInfo *info)
 		}
 	}
 	if(info->menu) {
-		gtk_widget_destroy(info->menu);
+		gtk_widget_unref(info->menu);
 		info->menu = NULL;
 		info->menu_age = 0;
 	}

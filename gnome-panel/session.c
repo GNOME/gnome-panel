@@ -112,14 +112,14 @@ apply_global_config(void)
 		for(li=applets;li!=NULL;li=g_slist_next(li)) {
 			AppletInfo *info = li->data;
 			if(info->menu) {
-				gtk_widget_destroy(info->menu);
+				gtk_widget_unref(info->menu);
 				info->menu = NULL;
 				info->menu_age = 0;
 			}
 			if(info->type == APPLET_MENU) {
 				Menu *menu = info->data;
 				if(menu->menu) {
-					gtk_widget_destroy(menu->menu);
+					gtk_widget_unref(menu->menu);
 					menu->menu = NULL;
 					menu->age = 0;
 				}
@@ -128,7 +128,7 @@ apply_global_config(void)
 		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
 			PanelData *pd = li->data;
 			if(pd->menu) {
-				gtk_widget_destroy(pd->menu);
+				gtk_widget_unref(pd->menu);
 				pd->menu = NULL;
 				pd->menu_age = 0;
 			}
@@ -173,7 +173,7 @@ apply_global_config(void)
 
 			if ((menu_flags_old != global_config.menu_flags) &&
 			    pd->menu) {
-				gtk_widget_destroy (pd->menu);
+				gtk_widget_unref (pd->menu);
 				pd->menu = NULL;
 				pd->menu_age = 0;
 			}
