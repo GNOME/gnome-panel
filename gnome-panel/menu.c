@@ -528,6 +528,7 @@ about_cb (GtkWidget *widget, gpointer data)
 	GtkWidget *about;
 	char *authors[] = {
 	  "George Lebl (jirka@5z.com)",
+	  "Jacob Berkman (jberkman@andrew.cmu.edu)",
 	  "Miguel de Icaza (miguel@kernel.org)",
 	  "Federico Mena (quartic@gimp.org)",
 	  "Tom Tromey (tromey@cygnus.com)",
