@@ -1,3 +1,15 @@
+Thu Sep 28 01:01:41 2000  George Lebl <jirka@5z.com>
+
+	* panel_config.[ch], drawer.c, launcher.[ch]: Make, property
+	  dialogs (the panel one and launcher one only for now) not modal
+	  and make them have immediate effect.  This is the way nautilus
+	  and actually most of the new apps work.
+
+	* launcher.[ch], session.[ch]: only schedule syncs, never force
+	  them.  This way syncs from launchers won't come closer together
+	  then 30 seconds.  Deal with the drag case where the launcher wasn't
+	  saved yet.
+
 Wed Sep 27 22:34:21 2000  George Lebl <jirka@5z.com>
 
 	* foobar-widget.c: make a bunch of code #if 0'ed out as it's not

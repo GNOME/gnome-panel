@@ -85,8 +85,8 @@ set_toggle (GtkWidget *widget, gpointer data)
 	int *the_toggle = data;
 
 	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+
+	panel_config_register_changes (ppc);
 }
 
 static void

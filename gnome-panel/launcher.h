@@ -19,6 +19,8 @@ typedef struct {
 	GtkWidget         *button;
 	GtkObject	  *dedit;
 	GnomeDesktopEntry *dentry;
+
+	GtkWidget         *prop_dialog;
 } Launcher;
 
 void load_launcher_applet_full(char *params, GnomeDesktopEntry *dentry,

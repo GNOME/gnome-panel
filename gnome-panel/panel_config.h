@@ -76,6 +76,8 @@ struct _PerPanelConfig {
 	GtkWidget               *offset_spin;
 };
 
+void panel_config_register_changes (PerPanelConfig *ppc);
+
 void panel_config (GtkWidget *panel);
 void update_config_size (GtkWidget *panel);
 void update_config_back (PanelWidget *panel);
@@ -89,4 +91,5 @@ void update_config_floating_orient (BasePWidget *panel);
 void update_config_floating_pos_limits (BasePWidget *panel);
 void update_config_type (BasePWidget *panel);
 void kill_config_dialog (GtkWidget *panel);
+
 #endif /* PANEL_CONFIG_H */

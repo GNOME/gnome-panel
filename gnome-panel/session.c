@@ -704,12 +704,22 @@ do_session_save(GnomeClient *client,
 #endif
 }
 
+static guint sync_handler = 0;
+static gboolean sync_handler_needed = FALSE;
+
 void
 panel_config_sync(void)
 {
 	int ncs = need_complete_save;
 	int ats = applets_to_sync;
 	int pts = panels_to_sync;
+
+	if (sync_handler != 0) {
+		gtk_timeout_remove (sync_handler);
+		sync_handler = 0;
+	}
+
+	sync_handler_needed = FALSE;
 
 	if(need_complete_save ||
 	   applets_to_sync ||
@@ -733,6 +743,31 @@ panel_config_sync(void)
 						   GNOME_INTERACT_NONE, FALSE, FALSE);
 		}
 #endif /* PER_SESSION_CONFIGURATION */
+	}
+}
+
+static gboolean
+sync_handler_timeout (gpointer data)
+{
+	sync_handler = 0;
+
+	if (sync_handler_needed)
+		panel_config_sync ();
+
+	return FALSE;
+}
+
+void
+panel_config_sync_schedule (void)
+{
+	if (sync_handler == 0) {
+		/* don't sync for another 30 secs */
+		sync_handler = gtk_timeout_add (30000, sync_handler_timeout, NULL);
+		sync_handler_needed = FALSE;
+		panel_config_sync ();
+	} else {
+		/* a timeout is running */
+		sync_handler_needed = TRUE;
 	}
 }
 

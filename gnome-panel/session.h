@@ -38,6 +38,7 @@ int panel_session_die (GnomeClient *client,
 void panel_quit(void);
 
 void panel_config_sync(void);
+void panel_config_sync_schedule (void);
 
 void load_up_globals(void);
 /* only to be used on beginning, we don't really want to write globals much */

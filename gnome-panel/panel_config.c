@@ -23,14 +23,19 @@
 #include "rgb-stuff.h"
 #include "nothing.cP"
 
-
-#define REGISTER_CHANGES(ppc) \
-	if ((ppc)->register_changes) \
-		gnome_property_box_changed (GNOME_PROPERTY_BOX ((ppc)->config_window))
+static void config_apply (PerPanelConfig *ppc);
 
 static GtkWidget *make_size_widget (PerPanelConfig *ppc);
 
-static GList *ppconfigs=NULL;
+static GList *ppconfigs = NULL;
+
+/* register changes */
+void
+panel_config_register_changes (PerPanelConfig *ppc)
+{
+	if (ppc->register_changes)
+		config_apply (ppc);
+}
 
 static PerPanelConfig *
 get_config_struct(GtkWidget *panel)
@@ -303,13 +308,8 @@ config_destroy(GtkWidget *widget, gpointer data)
 }
 
 static void
-config_apply (GtkWidget *widget, int page, gpointer data)
+config_apply (PerPanelConfig *ppc)
 {
-	PerPanelConfig *ppc = data;
-	
-	if(page != -1)
-		return;
-
 	panel_freeze_changes(PANEL_WIDGET(BASEP_WIDGET(ppc->panel)->panel));
 	if(IS_EDGE_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
@@ -400,7 +400,7 @@ set_toggle (GtkWidget *widget, gpointer data)
 
 	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -419,7 +419,7 @@ basep_set_auto_hide (GtkWidget *widget, gpointer data)
 		: BASEP_EXPLICIT_HIDE;
 
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static GtkWidget *
@@ -483,7 +483,7 @@ border_set_edge (GtkWidget *widget, gpointer data)
 
 	ppc->edge = edge;
 	
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -494,7 +494,7 @@ border_set_align (GtkWidget *widget, gpointer data)
 
 	ppc->align = align;
 	
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static GtkWidget *
@@ -685,7 +685,7 @@ floating_set_orient (GtkWidget *widget, gpointer data)
 
 	ppc->orient = orient;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -695,7 +695,7 @@ floating_set_xy (GtkWidget *widget, gpointer data)
 	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
 
 	*xy = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-	REGISTER_CHANGES (ppc);	
+	panel_config_register_changes (ppc);	
 }
 
 static GtkWidget *
@@ -797,7 +797,7 @@ sliding_set_offset (GtkWidget *widget, gpointer data)
 	ppc->offset = 
 		gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ppc->offset_spin));
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 	
 
@@ -866,7 +866,7 @@ size_set_size (GtkWidget *widget, gpointer data)
 
 	ppc->sz = sz;
 	
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 /* XXX: until this is fixed in GTK+ */
@@ -1016,7 +1016,7 @@ value_changed (GtkWidget *w, gpointer data)
 	g_free(ppc->back_pixmap);
 	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -1025,7 +1025,7 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 	PerPanelConfig *ppc = data;
 	ppc->fit_pixmap_bg = toggle->active;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -1034,7 +1034,7 @@ set_strech_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 	PerPanelConfig *ppc = data;
 	ppc->strech_pixmap_bg = toggle->active;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -1043,7 +1043,7 @@ set_rotate_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 	PerPanelConfig *ppc = data;
 	ppc->rotate_pixmap_bg = toggle->active;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 
 static void
@@ -1055,7 +1055,7 @@ color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
 	ppc->back_color.green = g;
 	ppc->back_color.blue = b;
 	
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
 }
 			   
 static void
@@ -1084,7 +1084,28 @@ set_back (GtkWidget *widget, gpointer data)
 	
 	ppc->back_type = back_type;
 
-	REGISTER_CHANGES (ppc);
+	panel_config_register_changes (ppc);
+}
+
+static void
+color_picker_clicked_signal (GtkWidget *widget, gpointer data)
+{
+	GtkWidget *toplevel;
+	GnomeColorPicker *cp;
+
+	cp = GNOME_COLOR_PICKER (widget);
+
+	if (cp->cs_dialog == NULL)
+		return;
+
+	toplevel = gtk_widget_get_toplevel (widget);
+
+	/* sanity */
+	if (toplevel == NULL)
+		return;
+
+	gtk_window_set_transient_for (GTK_WINDOW (cp->cs_dialog),
+				      GTK_WINDOW (toplevel));
 }
 
 static GtkWidget *
@@ -1143,6 +1164,13 @@ background_page (PerPanelConfig *ppc)
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
 	ppc->backsel = gnome_color_picker_new();
+	/* This will make sure the selection dialog is set as a transient for
+	 * the config dialog */
+	gtk_signal_connect_after (GTK_OBJECT (ppc->backsel),
+				  "clicked",
+				  GTK_SIGNAL_FUNC (color_picker_clicked_signal),
+				  NULL);
+
 	gtk_signal_connect(GTK_OBJECT(ppc->backsel),"color_set",
 			   GTK_SIGNAL_FUNC(color_set_cb), ppc);
         gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
@@ -1258,7 +1286,6 @@ setup_pertype_defs(BasePWidget *basep, PerPanelConfig *ppc)
 		ppc->align = 0;
 }
 
-
 void
 update_config_type (BasePWidget *w)
 {
@@ -1310,11 +1337,25 @@ update_config_type (BasePWidget *w)
 }
 
 static void
-phelp_cb (GtkWidget *w, gint tab, gpointer path)
+window_clicked (GtkWidget *w, int button, gpointer data)
 {
-	GnomeHelpMenuEntry help_entry = { "panel" };
-	help_entry.path = tab ? "panelproperties.html#PANELBACKTAB" : path;
-	gnome_help_display(NULL, &help_entry);
+	GtkWidget *notebook = data;
+	char *help_path = gtk_object_get_data (GTK_OBJECT (w), "help_path");
+
+	if (button == 1) { /* help */
+		GnomeHelpMenuEntry help_entry = { "panel" };
+		int tab;
+
+		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
+
+		if (tab == 1)
+			help_entry.path = "panelproperties.html#PANELBACKTAB";
+		else
+			help_entry.path = help_path;
+		gnome_help_display(NULL, &help_entry);
+	} else {
+		gnome_dialog_close (GNOME_DIALOG (w));
+	}
 }
 	     
 void 
@@ -1357,7 +1398,11 @@ panel_config(GtkWidget *panel)
 	ppc->panel = panel;
 	
 	/* main window */
-	ppc->config_window = gnome_property_box_new ();
+	ppc->config_window = gnome_dialog_new (_("Panel properties"),
+					       GNOME_STOCK_BUTTON_CLOSE,
+					       GNOME_STOCK_BUTTON_HELP);
+	gnome_dialog_set_close (GNOME_DIALOG (ppc->config_window),
+				FALSE /* click_closes */);
 	gtk_window_set_wmclass(GTK_WINDOW(ppc->config_window),
 			       "panel_properties","Panel");
 	gtk_widget_set_events(ppc->config_window,
@@ -1368,10 +1413,11 @@ panel_config(GtkWidget *panel)
 
 	gtk_signal_connect(GTK_OBJECT(ppc->config_window), "destroy",
 			   GTK_SIGNAL_FUNC (config_destroy), ppc);
-	gtk_window_set_title (GTK_WINDOW(ppc->config_window),
-			      _("Panel properties"));
 	
-	prop_nbook = GNOME_PROPERTY_BOX (ppc->config_window)->notebook;
+	prop_nbook = gtk_notebook_new ();
+
+	gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (ppc->config_window)->vbox),
+			    prop_nbook, TRUE, TRUE, 0);
 
 	if(IS_EDGE_WIDGET(panel)) {
 		/* edge notebook page */
@@ -1428,13 +1474,13 @@ panel_config(GtkWidget *panel)
 	page = background_page (ppc);
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 				  page, gtk_label_new (_("Background")));
+
+	gtk_object_set_data (GTK_OBJECT (ppc->config_window), "help_path",
+			     help_path);
+	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "clicked",
+			    GTK_SIGNAL_FUNC (window_clicked),
+			    prop_nbook);
 	
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "apply",
-			    GTK_SIGNAL_FUNC (config_apply), ppc);
-
-	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "help",
-			    GTK_SIGNAL_FUNC (phelp_cb), help_path);
-
 	gtk_signal_connect (GTK_OBJECT (ppc->config_window), "event",
 			    GTK_SIGNAL_FUNC (config_event),
 			    prop_nbook);
