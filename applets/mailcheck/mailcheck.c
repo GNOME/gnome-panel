@@ -1503,7 +1503,7 @@ mailcheck_properties (BonoboUIComponent *uic, gpointer data, const gchar *verbna
 		return; /* Only one instance of the properties dialog! */
 	}
 	
-	mc->property_window = gtk_dialog_new_with_buttons (_("Inbox Monitor Properties"), 
+	mc->property_window = gtk_dialog_new_with_buttons (_("Inbox Monitor Preferences"), 
 							   NULL,
 						           GTK_DIALOG_DESTROY_WITH_PARENT,
 						           GTK_STOCK_CLOSE, 
@@ -1654,10 +1654,10 @@ help_callback (BonoboUIComponent *uic, gpointer data, const gchar *verbname)
 }
 
 static const BonoboUIVerb mailcheck_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("Properties", mailcheck_properties),
-	BONOBO_UI_UNSAFE_VERB ("Help",       help_callback),
-	BONOBO_UI_UNSAFE_VERB ("About",      mailcheck_about),
-	BONOBO_UI_UNSAFE_VERB ("Check",      check_callback),
+	BONOBO_UI_UNSAFE_VERB ("Preferences", mailcheck_properties),
+	BONOBO_UI_UNSAFE_VERB ("Help",        help_callback),
+	BONOBO_UI_UNSAFE_VERB ("About",       mailcheck_about),
+	BONOBO_UI_UNSAFE_VERB ("Check",       check_callback),
         BONOBO_UI_VERB_END
 };
 

@@ -421,11 +421,11 @@ copy_date (BonoboUIComponent *uic,
 
 /* current timestamp */
 static const BonoboUIVerb clock_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("ClockProperties", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockHelp",       display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockAbout",      display_about_dialog),
-	BONOBO_UI_UNSAFE_VERB ("ClockCopyTime",   copy_time),
-	BONOBO_UI_UNSAFE_VERB ("ClockCopyDate",   copy_date),
+	BONOBO_UI_UNSAFE_VERB ("ClockPreferences", display_properties_dialog),
+	BONOBO_UI_UNSAFE_VERB ("ClockHelp",        display_help_dialog),
+	BONOBO_UI_UNSAFE_VERB ("ClockAbout",       display_about_dialog),
+	BONOBO_UI_UNSAFE_VERB ("ClockCopyTime",    copy_time),
+	BONOBO_UI_UNSAFE_VERB ("ClockCopyDate",    copy_date),
 	BONOBO_UI_VERB_END
 };
 
@@ -746,7 +746,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 		return;
 	}
 
-	cd->props = gtk_dialog_new_with_buttons (_("Clock Properties"), NULL, 0,
+	cd->props = gtk_dialog_new_with_buttons (_("Clock Preferences"), NULL, 0,
 						 GTK_STOCK_HELP,
 						 GTK_RESPONSE_HELP,
 						 GTK_STOCK_CLOSE,

@@ -154,9 +154,9 @@ destroy_pager(GtkWidget * widget, PagerData *pager)
 }
 
 static const BonoboUIVerb pager_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("PagerProperties", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("PagerHelp",       display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("PagerAbout",      display_about_dialog),
+	BONOBO_UI_UNSAFE_VERB ("PagerPreferences", display_properties_dialog),
+	BONOBO_UI_UNSAFE_VERB ("PagerHelp",        display_help_dialog),
+	BONOBO_UI_UNSAFE_VERB ("PagerAbout",       display_about_dialog),
         BONOBO_UI_VERB_END
 };
 

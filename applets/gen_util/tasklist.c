@@ -164,9 +164,9 @@ destroy_tasklist(GtkWidget * widget, TasklistData *tasklist)
 }
 
 static const BonoboUIVerb tasklist_menu_verbs [] = {
-	BONOBO_UI_UNSAFE_VERB ("TasklistProperties", display_properties_dialog),
-	BONOBO_UI_UNSAFE_VERB ("TasklistHelp",       display_help_dialog),
-	BONOBO_UI_UNSAFE_VERB ("TasklistAbout",      display_about_dialog),
+	BONOBO_UI_UNSAFE_VERB ("TasklistPreferences", display_properties_dialog),
+	BONOBO_UI_UNSAFE_VERB ("TasklistHelp",        display_help_dialog),
+	BONOBO_UI_UNSAFE_VERB ("TasklistAbout",       display_about_dialog),
         BONOBO_UI_VERB_END
 };
 
