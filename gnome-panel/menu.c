@@ -2944,7 +2944,7 @@ setup_remove_this_panel (GtkWidget *menu,
 
 	sensitive =
 		panel_toplevel_is_last_unattached (panel_widget->toplevel) ||
-		panel_lockdown_get_locked_down () ||
+		!panel_lockdown_get_locked_down () ||
 		!panel_profile_list_is_writable (PANEL_GCONF_TOPLEVELS);
 
 	gtk_widget_set_sensitive (menuitem, sensitive);
