@@ -110,6 +110,18 @@ activate_app_def (GtkWidget *widget, char *item_loc)
 }
 
 static void
+add_app_to_personal (GtkWidget *widget, char *item_loc)
+{
+	char *s;
+	char *p;
+	p = gnome_util_home_file("apps/");
+	s = g_strdup_printf("cp -f %s %s",item_loc,p);
+	g_free(p);
+	system(s);
+	g_free(s);
+}
+
+static void
 add_app_to_panel (GtkWidget *widget, char *item_loc)
 {
 	load_launcher_applet(item_loc, current_panel,0);
@@ -422,6 +434,13 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_app_to_panel),
+					   sim->item_loc);
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add this to personal menu"));
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_app_to_personal),
 					   sim->item_loc);
 		} else {
 			menuitem = gtk_menu_item_new ();
