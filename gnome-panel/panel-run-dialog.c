@@ -368,7 +368,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		return;
 	}
 
-	url = gnome_vfs_make_uri_from_input_with_dirs (disk,
+	url = gnome_vfs_make_uri_from_input_with_dirs (command,
 						       GNOME_VFS_MAKE_URI_DIR_HOMEDIR);
 	escaped = g_markup_escape_text (url, -1);
 	scheme = gnome_vfs_get_uri_scheme (url);
@@ -382,7 +382,7 @@ panel_run_dialog_execute (PanelRunDialog *dialog)
 		 * command in the user's shell so that it can do all the parameter
 		 * expansion and other magic for us.
 		 */
-		result = panel_run_dialog_launch_command (dialog, command, escaped);
+		result = panel_run_dialog_launch_command (dialog, disk, escaped);
 	
 	if (!result)
 		result = panel_run_dialog_show_url (dialog, url, escaped);
@@ -1348,16 +1348,17 @@ entry_event (GtkEditable    *entry,
 	char *temp;
 	int   pos, tmp;
 
+	if (event->type != GDK_KEY_PRESS)
+		return FALSE;
+
 	/* if user typed something we're not using the list anymore */
-	if (event->type == GDK_KEY_PRESS)
-		dialog->use_program_list = FALSE;
+	dialog->use_program_list = FALSE;
 
 	if (!panel_profile_get_enable_autocomplete ())
 		return FALSE;
 
 	/* tab completion */
-	if (event->type == GDK_KEY_PRESS &&
-	    event->keyval == GDK_Tab) {
+	if (event->keyval == GDK_Tab) {
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
 		if (dialog->completion_started &&
@@ -1369,8 +1370,7 @@ entry_event (GtkEditable    *entry,
 			
 			return TRUE;
 		}
-	} else if (event->type == GDK_KEY_PRESS &&
-		   event->length > 0) {
+	} else if (event->length > 0) {
 			   
 		gtk_editable_get_selection_bounds (entry, &pos, &tmp);
 
@@ -1556,7 +1556,7 @@ panel_run_dialog_setup_entry (PanelRunDialog *dialog,
 		      "width_request", width_request,
 		      NULL);
 
-        g_signal_connect (dialog->gtk_entry, "event",
+        g_signal_connect (dialog->gtk_entry, "key-press-event",
 			  G_CALLBACK (entry_event), dialog);
 			  
         g_signal_connect (dialog->gtk_entry, "changed",
