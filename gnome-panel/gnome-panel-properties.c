@@ -319,8 +319,8 @@ load_key_bindings()
 
                 entry = glade_xml_get_widget(glade_gui,entries[i]);
 		key = g_strdup_printf("/apps/panel/global/%s",entries[i]);
-		gtk_entry_set_text(entry, gconf_client_get_string(gconf_client,
-			key,NULL));
+		gtk_entry_set_text(GTK_ENTRY(entry),
+			gconf_client_get_string(gconf_client, key, NULL));
 		button_name = g_strdup_printf("grab-%s", entries[i]);
 		button = glade_xml_get_widget(glade_gui, button_name);
                 g_signal_connect(G_OBJECT(button),"clicked",
