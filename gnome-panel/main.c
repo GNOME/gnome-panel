@@ -180,8 +180,8 @@ main(int argc, char **argv)
 	init_menus();
 	
 	init_user_panels();
-
 	init_user_applets();
+	init_user_tearoffs();
 
 	gnome_triggers_do("Session startup", NULL, "gnome", "login", NULL);
 

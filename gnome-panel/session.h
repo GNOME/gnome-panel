@@ -43,6 +43,7 @@ void load_up_globals(void);
 
 void init_user_applets(void);
 void init_user_panels(void);
+void init_user_tearoffs(void);
 
 void apply_global_config(void);
 

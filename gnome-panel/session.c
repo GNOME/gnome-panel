@@ -513,6 +513,30 @@ save_next_applet(void)
 }
 
 static void
+save_tornoff(void)
+{
+	GSList *tornoff,*li;
+	GString *gs;
+	int i;
+
+	/* here we save the torn off menus */
+	tornoff = make_data_from_tearoffs();
+	gnome_config_set_int("tornoff_count",g_slist_length(tornoff));
+
+	gs = g_string_new(NULL);
+
+	for(i=0,li=tornoff;li;i++,li=li->next) {
+		g_string_sprintf(gs,"tornoff_menu_%d",i);
+		gnome_config_set_string(gs->str,li->data);
+		g_free(li->data);
+	}
+	g_slist_free(tornoff);
+	g_string_free(gs,TRUE);
+}
+
+
+
+static void
 do_session_save(GnomeClient *client,
 		int complete_sync,
 		int sync_applets,
@@ -566,6 +590,9 @@ do_session_save(GnomeClient *client,
 	printf(" 4\n"); fflush(stdout);
 #endif
 
+	if(complete_sync)
+		save_tornoff();
+
 	gnome_config_pop_prefix ();
 	gnome_config_sync();
 	
@@ -574,6 +601,7 @@ do_session_save(GnomeClient *client,
 		ss_done_save = FALSE;
 		save_next_applet();
 	}
+
 
 #if 0 /*PANEL_DEBUG*/
 	puts("");
@@ -716,22 +744,22 @@ load_default_applets1(PanelWidget *panel)
 	if (g_file_exists(DEBIAN_MENUDIR))
 		flags |= MAIN_MENU_DEBIAN_SUB;
 	
-	load_menu_applet(NULL,flags, panels->data, 0);
+	load_menu_applet(NULL,flags, panel, 0);
 
-	/*load a Programs menu*/
-	p = gnome_datadir_file ("gnome/apps");
-	/*it really should exist*/
-	if(g_file_exists(p))
-		load_menu_applet(p,flags, panel, 1);
-	g_free(p);
+	/* if bigger then 640+50+50 add a logout button */
+	if(gdk_screen_width()>640+50)
+		load_logout_applet(panel, 48);
+	/* if bigger then 640+100+50 add a lock button */
+	if(gdk_screen_width()>640+100+50)
+		load_lock_applet(panel, 48*2);
 	
-	if(gdk_screen_width()>800) {
-		/*load up some launchers, but only if screen larger then 800*/
+	if(gdk_screen_width()>639) {
+		/*load up some launchers, but only if screen larger then 639*/
 		for(i=0;def_launchers[i]!=NULL;i++) {
 			p = gnome_datadir_file (def_launchers[i]);
 			/*int center = gdk_screen_width()/2;*/
 			if(p) {
-				load_launcher_applet(p,panel,48*3+i*48);
+				load_launcher_applet(p,panel,48*4+i*48);
 				g_free(p);
 			}
 		}
@@ -739,11 +767,10 @@ load_default_applets1(PanelWidget *panel)
 
 	load_extern_applet("tasklist_applet",NULL,
 			   panel,INT_MAX/2/*flush right*/,TRUE);
-	load_status_applet(panel,INT_MAX/2 + 1000/*flush right*/);
-	load_extern_applet("gen_util_clock",NULL,
-			   panel,INT_MAX/2 + 2000/*flush right*/,TRUE);
-	load_extern_applet("gen_util_mailcheck",NULL,
-			   panel,INT_MAX/2 + 3000/*flush right*/,TRUE);
+	/* if we are larger then 640, put the status dock on the main
+	   panel, otherwise on the auxiliaray below */
+	if(gdk_screen_width()>640)
+		load_status_applet(panel,INT_MAX/2 + 1000/*flush right*/);
 }
 
 static void
@@ -751,6 +778,14 @@ load_default_applets2(PanelWidget *panel)
 {
 	load_extern_applet("deskguide_applet",NULL,
 			   panel,0,TRUE);
+	load_extern_applet("gen_util_clock",NULL,
+			   panel,1000,TRUE);
+	load_extern_applet("gen_util_mailcheck",NULL,
+			   panel,2000,TRUE);
+	/* if we are smaller or equal to 640, put the status dock on the
+	   auxiliary and not the main panel */
+	if(gdk_screen_width()<=640)
+		load_status_applet(panel,3000);
 }
 
 void
@@ -1155,6 +1190,39 @@ init_user_panels(void)
 		}
 	}
 	g_string_free(buf,TRUE);
+}
+
+void
+init_user_tearoffs(void)
+{
+	GSList *tornoff = NULL;
+	GString *gs;
+	int i,length;
+
+	gs = g_string_new(NULL);
+	g_string_sprintf(gs,"%spanel/Config/", PANEL_CONFIG_PATH);
+	gnome_config_push_prefix(gs->str);
+
+	length = gnome_config_get_int("tornoff_count=0");
+	if(length==0) {
+		gnome_config_pop_prefix();
+		g_string_free(gs,TRUE);
+		return;
+	}
+
+	for(i=0;i<length;i++) {
+		char *s;
+		g_string_sprintf(gs,"tornoff_menu_%d=",i);
+		s = gnome_config_get_string(gs->str);
+		if(s)
+			tornoff = g_slist_prepend(tornoff,s);
+	}
+	g_string_free(gs,TRUE);
+
+	gnome_config_pop_prefix();
+
+	/* this call will free the strings and the list */
+	make_tearoffs_from_data(tornoff);
 }
 
 void

@@ -1,3 +1,18 @@
+Tue Jan 04 00:11:23 2000  George Lebl <jirka@5z.com>
+
+	* menu.[ch],main.c,session.c: Save the dynamic menus that are torn
+	  off in the state file.  This doesn't yet set the special menus yet
+
+	* menu.c: make torn off menus be sticky be default to cover up for
+	  the fact that we have no clue how to properly get positions of
+	  windows that are in different workspaces and stuff
+
+	* session.c: play with the default session again.  More logic to
+	  make it work on all screens from 640x480 upwards.  Added a lock
+	  and a logout button and kill the programs menu as it was redundant.
+	  Also stick the mailcheck and the clock on the vertical panel with
+	  the tasklist to make more room on the bottom one.
+
 Mon Jan 03 00:30:42 2000  George Lebl <jirka@5z.com>
 
 	* status.[ch],xstuff.c: destroy docklets on the _REMOVE message

@@ -63,6 +63,14 @@ void panel_lock (GtkWidget *widget, void *data);
 /*to be called on startup to load in some of the directories*/
 void init_menus(void);
 
+/* two functions for saving and loading torn off menus in state */
+/* this function also frees the list as a byproduct */
+void make_tearoffs_from_data(GSList *list);
+/* returns a list of strings that can be loaded later with the function
+   above */
+GSList * make_data_from_tearoffs(void);
+
+
 #define MENU_PATH "menu_path"
 
 #define MENU_PROPERTIES "menu_properties"
