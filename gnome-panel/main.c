@@ -1204,6 +1204,7 @@ static error_t
 parse_an_arg (int key, char *arg, struct argp_state *state)
 {
 	if (key == DISCARD_KEY) {
+		gnome_client_disable_master_connection ();
 		discard_session (arg);
 		just_exit = 1;
 		return 0;
