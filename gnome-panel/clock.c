@@ -50,13 +50,6 @@ free_data(GtkWidget *widget, gpointer data)
 	g_free(data);
 }
 
-void
-do_callback(short id,
-	    const char *callback_name)
-{
-  printf("Not doing callback %s\n", callback_name);
-}
-
 static int
 clock_timeout_callback (gpointer data)
 {
@@ -185,7 +178,7 @@ change_orient(int id, int orient)
 }
 
 void
-session_save(int id, int panel, int pos)
+session_save(int id, const char *cfgpath)
 {
 	/*FIXME: save the position*/
 	puts("SESSION_SAVE");

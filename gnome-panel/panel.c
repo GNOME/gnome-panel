@@ -136,11 +136,12 @@ save_applet_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int(fullpath, panel);
 		g_free(fullpath);
 
-		/*have the applet do it's own session saving*/
-		send_applet_session_save(info->id,(*num)-2,panel,pos);
 		fullpath = g_copy_strings(path,"parameters",NULL);
 		gnome_config_set_string(fullpath, info->params);
 		g_free(fullpath);
+
+		/*have the applet do it's own session saving*/
+		send_applet_session_save(info->id,(*num)-2,path);
 	} else {
 		fullpath = g_copy_strings(path,"id",NULL);
 		gnome_config_set_string(fullpath, info->id);
@@ -352,12 +353,6 @@ panel_quit(void)
 	}
 }
 
-/*FIXME: how will we handle adding of applets????*/
-static void
-create_applet(char *id, char *params, int pos, int panel)
-{
-}
-
 static PanelWidget *
 find_applet_panel(GtkWidget *applet)
 {
@@ -419,8 +414,7 @@ remove_applet_callback(GtkWidget *widget, gpointer data)
 	g_free(info);
 }
 
-
-/*tell applet to do properties*/
+/*replace with corba applet callbacks*/
 static void
 applet_properties_callback(GtkWidget *widget, gpointer data)
 {
@@ -514,14 +508,6 @@ static void
 panel_log_out_callback(GtkWidget *widget, gpointer data)
 {
 	panel_quit();
-}
-
-static void
-add_main_menu(GtkWidget *widget, gpointer data)
-{
-	PanelWidget *panel = data;
-	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
-	/* create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1); */
 }
 
 int

@@ -28,7 +28,7 @@ static CORBA::BOA_ptr boa_ptr;
 /*every applet must implement these*/
 BEGIN_GNOME_DECLS
 void change_orient(int id, int orient);
-void session_save(int id, int panel, int pos);
+void session_save(int id, const char *cfgpath);
 void shutdown_applet(int id);
 END_GNOME_DECLS
 
@@ -40,9 +40,8 @@ public:
 		::change_orient(id,orient);
 	}
 	void session_save (CORBA::Short id,
-			   CORBA::Short panel,
-			   CORBA::Short pos) {
-		::session_save(id,panel,pos);
+			   const char *cfgpath) {
+		::session_save(id,cfgpath);
 	}
 	void shutdown_applet (CORBA::Short id) {
 		::shutdown_applet(id);
@@ -50,7 +49,7 @@ public:
         void do_callback (CORBA::Short id,
 			  const char *callback_name)
         {
-	        ::do_callback(id, callback_name);
+		/*FIXME: run the proper function that the applet registered*/
 	}
 };
 
@@ -83,6 +82,16 @@ gnome_panel_applet_init_corba (void)
 	
 	panel_client = GNOME::Panel::_narrow (obj);
 	return 1;
+}
+
+void
+gnome_panel_applet_register_callback(int id,
+				     char *name,
+				     char *menutext,
+				     GFunc func,
+				     gpointer data)
+{
+	/*FIXME: do callbacks*/
 }
 
 static void

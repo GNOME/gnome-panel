@@ -64,10 +64,12 @@ public:
         void applet_add_callback (CORBA::Short id,
 				  const char *callback_name,
 				  const char *menuitem_text) {
-	  ::applet_add_callback(id, (char *)callback_name, (char *)menuitem_text);
+		::applet_add_callback(id,
+				      (char *)callback_name,
+				      (char *)menuitem_text);
 	}
-        void quit(void) {
-	  ::panel_quit();
+	void quit(void) {
+		::panel_quit();
 	}
 };
 
@@ -99,14 +101,14 @@ panel_corba_gtk_main (char *service_name)
 }
 
 void
-send_applet_session_save (const char *ior, int id, int panel, int pos)
+send_applet_session_save (const char *ior, int id, const char *cfgpath)
 {
 	/* Use the ior that was sent to us to get an Applet CORBA object */
 	CORBA::Object_var obj = orb_ptr->string_to_object (ior);
 	GNOME::Applet_var applet = GNOME::Applet::_narrow (obj);
 
 	/* Now, use corba to invoke the routine in the panel */
-	applet->session_save(id,panel,pos);
+	applet->session_save(id,cfgpath);
 }
 
 void

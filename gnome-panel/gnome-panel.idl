@@ -20,7 +20,7 @@ module GNOME {
 	interface Applet {
 		void change_orient (in short id, in short orient);
 		void do_callback (in short id, in string callback_name);
-		void session_save (in short id, in short panel, in short pos);
+		void session_save (in short id, in string cfgpath);
 		void shutdown_applet (in short id);
 	};
 };
