@@ -19,8 +19,6 @@
 
 GNOME::Panel_var panel_client;
 
-static GdkCursor *fleur_cursor=NULL;
-
 typedef struct _CallbackInfo CallbackInfo;
 struct _CallbackInfo {
 	gint applet_id;
@@ -435,26 +433,4 @@ void
 applet_corba_gtk_main (char *str)
 {
 	boa_ptr->impl_is_ready (CORBA::ImplementationDef::_nil());
-}
-
-void
-move_grab_add (GtkWidget *applet)
-{
-	if(!fleur_cursor)
-		fleur_cursor = gdk_cursor_new(GDK_FLEUR);
-
- 	gtk_grab_add(applet);
-	gdk_pointer_grab(applet->window,
-			 TRUE,
-			 (enum GdkEventMask)APPLET_EVENT_MASK,
-			 NULL,
-			 fleur_cursor,
-			 GDK_CURRENT_TIME);
-}
-
-void
-move_grab_remove (GtkWidget *applet)
-{
-	gdk_pointer_ungrab(GDK_CURRENT_TIME);
-	gtk_grab_remove(applet);
 }

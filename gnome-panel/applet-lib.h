@@ -28,9 +28,6 @@ void gnome_panel_applet_register_callback (int applet_id,
 					   gpointer data);
 void applet_corba_gtk_main (char *str);
 
-void move_grab_add (GtkWidget *applet);
-void move_grab_remove (GtkWidget *applet);
-
 char * gnome_panel_applet_add_tooltip (gint applet_id, char *tooltip);
 char * gnome_panel_applet_remove_tooltip (gint applet_id);
 

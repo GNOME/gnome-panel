@@ -1,3 +1,11 @@
+Thu Apr 30 01:15:54 1998  George Lebl  <jirka@5z.com>
+
+	* applet-lib.(cc|h): removed the grab functions and
+	  the fleur cursor var, since they aren't needed any
+	  more
+
+	* ChangeLog: :%s/\<teh\>/the/g (it was time again:)
+
 Thu Apr 30 01:11:24 1998  George Lebl  <jirka@5z.com>
 
 	* gnome-panel.idl,mico-glue.cc: a new call for
@@ -40,7 +48,7 @@ Tue Apr 28 23:45:16 1998  George Lebl  <jirka@5z.com>
 Tue Apr 28 01:24:11 1998  George Lebl  <jirka@5z.com>
 
 	* launcher.c: gnome_pixmap doesn't enjoy null filenames, this
-	  fixes teh default pixmap problem with the launcher
+	  fixes the default pixmap problem with the launcher
 
 Tue Apr 28 01:12:15 1998  George Lebl  <jirka@5z.com>
 
@@ -103,7 +111,7 @@ Sun Apr 26 01:06:07 1998  Tom Tromey  <tromey@cygnus.com>
 Sat Apr 25 14:20:27 1998  George Lebl  <jirka@5z.com>
 
 	* panel-widget.c: fixed the find_new pos and reparenting
-	  to full panels, tehre are still problems with some of
+	  to full panels, there are still problems with some of
 	  this stuff which I will deal with later
 
 Sat Apr 25 00:13:16 1998  George Lebl  <jirka@5z.com>
@@ -136,7 +144,7 @@ Fri Apr 24 00:06:58 1998  George Lebl  <jirka@5z.com>
 	* cookie.h: added, includes the CHECK_COOKIE macros
 	  and create_cookie definition. the CHECK_COOKIES
 	  now spitout a warning with file and line so we can
-	  see if tehre are any bugs remaining (races)
+	  see if there are any bugs remaining (races)
 
 	* main.c, applet-lib.cc, launcher-lib.cc, mico-glue.cc:
 	  use cookie.h, read cookie on corba_reinit, allways
@@ -319,7 +327,7 @@ Wed Apr 15 20:14:55 1998  George Lebl  <jirka@5z.com>
 	* gnome-panel.idl, applet-lib.cc: no more shutdown_applet
 	  mess. now it's handeled by the destroy signal on the plug.
 
-	* panel.c: now only destroys teh panel, doesn't send any
+	* panel.c: now only destroys the panel, doesn't send any
 	  corba messages to shutdown
 
 	* main.c: fixed a nasty bug on startup where I was using an
@@ -336,7 +344,7 @@ Wed Apr 15 00:30:44 1998  George Lebl  <jirka@5z.com>
 	* panel.c,main.c: implemented session managment, seems
 	  to work without a session manager, but I can't get
 	  gnome-session to work so I can't test that ... but
-	  teh code is there ... waiting to be debugged
+	  the code is there ... waiting to be debugged
 
 Tue Apr 14 21:43:55 1998  George Lebl  <jirka@5z.com>
 
@@ -385,7 +393,7 @@ Sun Apr 12 12:37:44 1998  George Lebl  <jirka@5z.com>
 Sat Apr 11 18:00:01 1998  George Lebl  <jirka@5z.com>
 
 	* swallow.c: made the swallow app stuff work better,
-	  waits for teh window (right now only through timeout)
+	  waits for the window (right now only through timeout)
 
 Sat Apr 11 17:35:32 1998  George Lebl  <jirka@5z.com>
 
