@@ -1,3 +1,15 @@
+2004-11-01  Marco Pesenti Gritti  <mpg@redhat.com>
+
+	reviewed by: Vincent Untz  <vincent@vuntz.net> 
+
+	* gnome-panel/menu-util.c: (get_default_menu_flags):
+	* gnome-panel/menu.c: (create_root_menu):
+	* gnome-panel/menu.h:
+	* gnome-panel/panel-stock-icons.c: (panel_init_stock_icons):
+
+	Use icon theme for the stock icons so that they are themed
+	correctly. Fix #156817.
+
 2004-11-01  Vincent Untz  <vincent@vuntz.net>
 
 	* *.[ch]: stop including everything from libgnome and libgnomeui, use

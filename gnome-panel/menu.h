@@ -9,9 +9,7 @@ G_BEGIN_DECLS
 enum {
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
-	MAIN_MENU_PANEL_SUB = 1<<13,
-	MAIN_MENU_DESKTOP = 1<<14,
-	MAIN_MENU_DESKTOP_SUB = 1<<15
+	MAIN_MENU_DESKTOP = 1<<14
 };
 
 void		setup_menuitem		(GtkWidget        *menuitem,

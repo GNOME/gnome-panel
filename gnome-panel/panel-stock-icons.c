@@ -29,7 +29,6 @@
 #include <gtk/gtkstock.h>
 #include <gtk/gtkiconfactory.h>
 #include <glib/gi18n.h>
-#include <libgnome/gnome-desktop-item.h>
 
 #include "panel-globals.h"
 
@@ -71,8 +70,7 @@ static PanelStockIcon stock_icons [] = {
 	{ PANEL_STOCK_APPLICATIONS,	   "gnome-applications"},
 	{ PANEL_STOCK_MAIN_MENU,           "gnome-main-menu"},
 	{ PANEL_STOCK_LAUNCHER,            "launcher-program" },
-	{ PANEL_STOCK_DRAWER,              "drawer" },
-	{ PANEL_STOCK_DESKTOP,             "gnome-ccdesktop" },
+	{ PANEL_STOCK_DRAWER,              "drawer" }
 };
 
 static void
@@ -86,28 +84,8 @@ panel_init_stock_icons (GtkIconFactory *factory)
 
 	for (i = 0; i < G_N_ELEMENTS (stock_icons); i++) {
 		GtkIconSet *set;
-		char       *filename;
 
-		if (!stock_icons [i].icon)
-			continue;
-
-		/* Look up the icon at an arbitrary large size; if we are
-		 * adding at only one size, we want the largest image
-		 * available
-		 */
-		filename = gnome_desktop_item_find_icon (
-				panel_icon_theme, stock_icons [i].icon, 1000, 0);
-		if (!filename) {
-			g_warning (_("Unable to load panel stock icon '%s'\n"), stock_icons [i].icon);
-
-			/* FIXME: does this take into account the theme? */
-			set = gtk_icon_factory_lookup_default (GTK_STOCK_MISSING_IMAGE);
-			gtk_icon_factory_add (factory, stock_icons [i].stock_id, set);
-			continue;
-		}
-
-		gtk_icon_source_set_filename (source, filename);
-		g_free (filename);
+		gtk_icon_source_set_icon_name (source, stock_icons [i].icon);
 
 		set = gtk_icon_set_new ();
 		gtk_icon_set_add_source (set, source);

@@ -179,5 +179,5 @@ panel_position_applet_menu (GtkMenu   *menu,
 int
 get_default_menu_flags (void)
 {
-	return MAIN_MENU_SYSTEM_SUB | MAIN_MENU_PANEL_SUB | MAIN_MENU_DESKTOP;
+	return MAIN_MENU_SYSTEM_SUB | MAIN_MENU_DESKTOP;
 }

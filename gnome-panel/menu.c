@@ -2442,14 +2442,13 @@ create_root_menu (GtkWidget   *root_menu,
 	GtkWidget              *menuitem;
 	gboolean                has_inline;
 	gboolean                has_subs;
-	gboolean                has_subs2;
+	gboolean                has_inline2;
 
 	has_inline = (flags & MAIN_MENU_SYSTEM);
 
 	has_subs = (flags & MAIN_MENU_SYSTEM_SUB);
 
-	has_subs2 = (flags & (MAIN_MENU_DESKTOP_SUB |
-			      MAIN_MENU_PANEL_SUB));
+	has_inline2 = (flags & MAIN_MENU_DESKTOP);
 
 	if (!root_menu)
 		root_menu = menu_new ();
@@ -2540,19 +2539,9 @@ create_root_menu (GtkWidget   *root_menu,
 					    panel_action_get_drag_id (PANEL_ACTION_SCREENSHOT));
 	}
 
-	if (((has_inline && !has_subs) || has_subs) && has_subs2)
+	if (((has_inline && !has_subs) || has_subs) && has_inline2)
 		add_menu_separator (root_menu);
 	
-	if (flags & MAIN_MENU_DESKTOP_SUB) {
-		menu = create_desktop_menu (NULL);
-		menuitem = gtk_image_menu_item_new ();
-		setup_stock_menu_item (
-			menuitem, panel_menu_icon_get_size (),
-			PANEL_STOCK_DESKTOP, _("Desktop"), TRUE);
-		gtk_menu_shell_append (GTK_MENU_SHELL (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-	}
-
 	if (flags & MAIN_MENU_DESKTOP)
 		create_desktop_menu (root_menu);
 
