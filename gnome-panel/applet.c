@@ -1145,9 +1145,7 @@ panel_applet_register (GtkWidget       *applet,
 
 	orientation_change (info, panel);
 	size_change (info, panel);
-#ifdef FIXME_FOR_NEW_CONFIG
 	back_change (info, panel);
-#endif
 
 	if (type != PANEL_OBJECT_BONOBO)
 		gtk_widget_grab_focus (applet);

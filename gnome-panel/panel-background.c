@@ -309,6 +309,8 @@ panel_background_composite (PanelBackground *background)
 
 	panel_background_prepare (background);
 
+	background->notify_changed (background, background->user_data);
+
 	return TRUE;
 }
 
@@ -810,9 +812,13 @@ panel_background_change_region (PanelBackground *background,
 }
 
 void
-panel_background_init (PanelBackground *background)
+panel_background_init (PanelBackground              *background,
+		       PanelBackgroundChangedNotify  notify_changed,
+		       gpointer                      user_data)
 {
 	background->type = PANEL_BACK_NONE;
+	background->notify_changed = notify_changed;
+	background->user_data = user_data;
 
 	background->color.gdk.red   = 0;
 	background->color.gdk.blue  = 0;
@@ -897,15 +903,14 @@ panel_background_make_string (PanelBackground *background,
 	char *retval = NULL;
 
 	if (background->type == PANEL_BACK_IMAGE ||
-	    (background->type == PANEL_BACK_COLOR && background->has_alpha) ||
-	    (background->type == PANEL_BACK_NONE && background->default_pixmap)) {
+	    (background->type == PANEL_BACK_COLOR && background->has_alpha)) {
 		GdkNativeWindow pixmap_xid;
 
-		if (!background->window)
+		if (!background->pixmap)
 			return NULL;
 
 		pixmap_xid = gdk_x11_drawable_get_xid (
-				GDK_DRAWABLE (background->window));
+				GDK_DRAWABLE (background->pixmap));
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
 

@@ -33,6 +33,7 @@ typedef enum {
 
 enum {
 	SIZE_CHANGE_SIGNAL,
+	BACK_CHANGE_SIGNAL,
 	APPLET_MOVE_SIGNAL,
 	APPLET_ADDED_SIGNAL,
 	APPLET_REMOVED_SIGNAL,
@@ -71,6 +72,9 @@ static void panel_widget_state_changed  (GtkWidget        *widget,
 					 GtkStateType      previous_state);
 static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
+
+static void panel_widget_background_changed (PanelBackground *background,
+					     PanelWidget     *panel);
 
 static void panel_widget_push_move_applet   (PanelWidget      *panel,
                                              GtkDirectionType  dir);
@@ -337,6 +341,17 @@ panel_widget_class_init (PanelWidgetClass *class)
                               G_TYPE_NONE,
                               0);
 
+	panel_widget_signals[BACK_CHANGE_SIGNAL] =
+                g_signal_new ("back_change",
+                              G_TYPE_FROM_CLASS (object_class),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelWidgetClass, back_change),
+                              NULL,
+                              NULL, 
+                              panel_marshal_VOID__VOID,
+                              G_TYPE_NONE,
+                              0);
+
 	panel_widget_signals[APPLET_MOVE_SIGNAL] =
                 g_signal_new ("applet_move",
                               G_TYPE_FROM_CLASS (object_class),
@@ -433,6 +448,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               0);
 
 	class->size_change = NULL;
+	class->back_change = NULL;
 	class->applet_move = NULL;
 	class->applet_added = NULL;
 	class->applet_removed = NULL;
@@ -1710,7 +1726,9 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->drop_widget   = widget;
 	panel->open_dialogs  = NULL;
 
-	panel_background_init (&panel->background);
+	panel_background_init (&panel->background,
+			       (PanelBackgroundChangedNotify) panel_widget_background_changed,
+			       panel);
 
 	panels = g_slist_append (panels, panel);
 }
@@ -2610,6 +2628,16 @@ panel_widget_set_size (PanelWidget *panel_widget,
 	g_signal_emit (panel_widget, panel_widget_signals [SIZE_CHANGE_SIGNAL], 0);
 
 	gtk_widget_queue_resize (GTK_WIDGET (panel_widget));
+}
+
+static void
+panel_widget_background_changed (PanelBackground *background,
+				 PanelWidget     *panel)
+{
+	g_return_if_fail (PANEL_IS_WIDGET (panel));
+	g_signal_emit (G_OBJECT (panel),
+		       panel_widget_signals [BACK_CHANGE_SIGNAL],
+		       0);
 }
 
 static void 

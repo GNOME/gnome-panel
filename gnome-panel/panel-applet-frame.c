@@ -526,6 +526,28 @@ panel_applet_frame_expose (GtkWidget      *widget,
 }
 
 static void
+panel_applet_frame_update_background_size (PanelAppletFrame *frame,
+					   GtkAllocation    *old_allocation,
+					   GtkAllocation    *new_allocation)
+{
+	PanelBackground *background;
+
+	if (old_allocation->x      == new_allocation->x &&
+	    old_allocation->y      == new_allocation->y &&
+	    old_allocation->width  == new_allocation->width &&
+	    old_allocation->height == new_allocation->height)
+		return;
+
+	background = &frame->priv->panel->background;
+
+	if (background->type == PANEL_BACK_NONE ||
+	   (background->type == PANEL_BACK_COLOR && !background->has_alpha))
+		return;
+
+	panel_applet_frame_change_background (frame, background->type);
+}
+
+static void
 panel_applet_frame_size_request (GtkWidget      *widget,
 				 GtkRequisition *requisition)
 {
@@ -576,12 +598,22 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 	PanelAppletFrame *frame;
 	GtkBin           *bin;
 	GtkAllocation     new_allocation;
+	GtkAllocation     old_allocation;
+
+	old_allocation.x      = widget->allocation.x;
+	old_allocation.y      = widget->allocation.y;
+	old_allocation.width  = widget->allocation.width;
+	old_allocation.height = widget->allocation.height;
 
 	frame = PANEL_APPLET_FRAME (widget);
 	bin = GTK_BIN (widget);
 
 	if (!frame->priv->has_handle) {
-		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+		GTK_WIDGET_CLASS (parent_class)->size_allocate (widget,
+								allocation);
+		panel_applet_frame_update_background_size (frame,
+							   &old_allocation,
+							   allocation);
 		return;
 	}
 
@@ -641,6 +673,10 @@ panel_applet_frame_size_allocate (GtkWidget     *widget,
 		gtk_widget_size_allocate (bin->child, &new_allocation);
   
 	frame->priv->child_allocation = new_allocation;
+
+	panel_applet_frame_update_background_size (frame,
+						   &old_allocation,
+						   allocation);
 }
 
 static inline gboolean

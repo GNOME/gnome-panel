@@ -148,7 +148,6 @@ panel_size_change (GtkWidget *widget, gpointer data)
 			      widget);
 }
 
-#ifdef FIXME_FOR_NEW_CONFIG
 void
 back_change (AppletInfo  *info,
 	     PanelWidget *panel)
@@ -181,7 +180,6 @@ panel_back_change (GtkWidget *widget, gpointer data)
 	update_config_back(PANEL_WIDGET(widget));
 #endif /* FIXME_FOR_NEW_CONFIG */
 }
-#endif
 
 static void
 panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
@@ -194,9 +192,7 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 
 	orientation_change(info,PANEL_WIDGET(widget));
 	size_change(info,PANEL_WIDGET(widget));
-#ifdef FIXME_FOR_NEW_CONFIG
 	back_change(info,PANEL_WIDGET(widget));
-#endif
 }
 
 static void
@@ -1077,12 +1073,10 @@ panel_widget_setup(PanelWidget *panel)
 			  "applet_move",
 			  G_CALLBACK(panel_applet_move),
 			  NULL);
-#ifdef FIXME_FOR_NEW_TOPLEVEL
 	g_signal_connect (G_OBJECT (panel),
 			  "back_change",
 			  G_CALLBACK (panel_back_change),
 			  NULL);
-#endif
 	g_signal_connect (G_OBJECT (panel),
 			  "size_change",
 			  G_CALLBACK (panel_size_change),

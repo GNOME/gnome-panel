@@ -34,8 +34,15 @@
 
 typedef struct _PanelBackground PanelBackground;
 
+typedef void (*PanelBackgroundChangedNotify) 
+				(PanelBackground *background,
+				 gpointer         user_data);
+
 struct _PanelBackground {
 	PanelBackgroundType     type;
+
+	PanelBackgroundChangedNotify notify_changed;
+	gpointer                user_data;
 
 	PanelColor              color;
 	char                   *image;
@@ -70,7 +77,9 @@ struct _PanelBackground {
 	guint                   prepared : 1;
 };
 
-void  panel_background_init              (PanelBackground     *background);
+void  panel_background_init              (PanelBackground     *background,
+					  PanelBackgroundChangedNotify notify_changed,
+					  gpointer             user_data);
 void  panel_background_free              (PanelBackground     *background);
 void  panel_background_set               (PanelBackground     *background,
 					  PanelBackgroundType  type,

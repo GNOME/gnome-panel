@@ -1,3 +1,40 @@
+2003-11-03  Vincent Untz  <vincent@vuntz.net>
+
+	Make the change background notification work for applets. Now there is
+	one problem left: applets don't keep the new background and come back
+	to a plain colour background.
+	This fixes bugs #107617, #123092, #107146.
+	Some parts of the patch are based on a patch from John Ellis
+	<johne@bellatlantic.net>.
+
+	* applet.c: (panel_applet_register): remove #ifdef FIXME_FOR_NEW_CONFIG
+	to initialize the applet background.
+	* panel-applet-frame.c:
+	(panel_applet_frame_update_background_size): new function which updates
+	the background pixmap if the size of the applet has changed.
+	(panel_applet_frame_size_request): use above function.
+	* panel-background.h: add a PanelBackgroundChangedNotify type and two
+	variables to the PanelBackground structure so we can notify the panel
+	of a background change.
+	* panel-background.c: (panel_background_composite): notify the panel
+	when the background changes.
+	(panel_background_init): initialize some new PanelBackground variables
+	with the new parameters.
+	(panel_background_make_string): don't tell the background is a pixmap
+	if the type is PANEL_BACK_NONE and use the pixmap xid instead of the
+	window xid.
+	* panel-widget.h: add back_change to PanelWidgetClass.
+	* panel-widget.c: (panel_widget_class_init): add BACK_CHANGE_SIGNAL.
+	(panel_widget_instance_init): add new parameters to
+	panel_background_init.
+	(panel_widget_background_changed): new function which is called when
+	the background changes and emits BACK_CHANGE_SIGNAL.
+	* panel.c: (back_change), (back_change_foreach), (panel_back_change):
+	uncommented these functions.
+	(panel_applet_added): remove FIXME_FOR_NEW_CONFIG so we call
+	back_change.
+	(panel_widget_setup): connect to the back_change signal.
+
 2003-10-31  Arvind Samptur  <arvind.samptur@wipro.com>
 
 	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler):

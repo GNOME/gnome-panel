@@ -105,6 +105,7 @@ struct _PanelWidgetClass
 	GtkFixedClass parent_class;
 
 	void (* size_change) (PanelWidget *panel);
+	void (* back_change) (PanelWidget *panel);
 	void (* applet_move) (PanelWidget *panel,
 			      GtkWidget *applet);
 	void (* applet_added) (PanelWidget *panel,
