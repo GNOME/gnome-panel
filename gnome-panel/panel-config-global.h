@@ -22,6 +22,7 @@ struct _GlobalConfig {
 	int applet_border_padding;
 	gboolean autoraise;
 	gboolean keep_bottom;
+	gboolean normal_layer;
 	gboolean drawer_auto_close;
 	gboolean simple_movement;
 	gboolean tiles_enabled[LAST_TILE];

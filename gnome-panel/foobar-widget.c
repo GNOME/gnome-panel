@@ -508,8 +508,9 @@ void
 foobar_widget_update_winhints (FoobarWidget *foo)
 {
 	GtkWidget *w = GTK_WIDGET (foo);
+	GnomeWinLayer layer;
 
-	if (!foo->compliant_wm)
+	if ( ! foo->compliant_wm)
 		return;
 
 	gdk_window_set_hints (w->window, 0, 0, 
@@ -522,9 +523,14 @@ foobar_widget_update_winhints (FoobarWidget *foo)
 	
 	gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
 				   WIN_HINTS_DO_NOT_COVER);	
-	gnome_win_hints_set_layer (w, global_config.keep_bottom
-				   ? WIN_LAYER_BELOW
-				   : WIN_LAYER_DOCK);
+	if (global_config.normal_layer) {
+		layer = WIN_LAYER_NORMAL;
+	} else if (global_config.keep_bottom) {
+		layer = WIN_LAYER_BELOW;
+	} else {
+		layer = WIN_LAYER_DOCK;
+	}
+	gnome_win_hints_set_layer (w, layer);
 }
 
 static void

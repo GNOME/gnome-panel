@@ -124,6 +124,7 @@ static GtkWidget *tooltips_enabled_cb;
 static GtkWidget *drawer_auto_close_cb;
 static GtkWidget *autoraise_cb;
 static GtkWidget *keep_bottom_cb;
+static GtkWidget *normal_layer_cb;
 static GtkWidget *keys_enabled_cb;
 static GtkWidget *menu_key_entry;
 static GtkWidget *run_key_entry;
@@ -878,6 +879,8 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				     conf->autoraise);
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (keep_bottom_cb),
 				     conf->keep_bottom);
+	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (normal_layer_cb),
+				     conf->normal_layer);
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (confirm_panel_remove_cb),
 				     conf->confirm_panel_remove);
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (avoid_collisions_cb),
@@ -901,6 +904,8 @@ sync_config_with_misc_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON (autoraise_cb)->active;
 	conf->keep_bottom =
 		GTK_TOGGLE_BUTTON (keep_bottom_cb)->active;
+	conf->normal_layer =
+		GTK_TOGGLE_BUTTON (normal_layer_cb)->active;
 	conf->confirm_panel_remove =
 		GTK_TOGGLE_BUTTON (confirm_panel_remove_cb)->active;
 	conf->avoid_collisions =
@@ -991,6 +996,7 @@ misc_notebook_page(void)
 	GtkWidget *vbox;
 	GtkWidget *w;
 	GList *list;
+	GSList *group;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -1024,12 +1030,6 @@ misc_notebook_page(void)
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), autoraise_cb, FALSE, FALSE, 0);
 
-	/* Keep on bottom */
-	keep_bottom_cb = gtk_check_button_new_with_label (_("Keep panel below windows (GNOME compliant window managers only)"));
-	gtk_signal_connect (GTK_OBJECT (keep_bottom_cb), "toggled", 
-			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
-
 	/* Confirm panel removal */
 	confirm_panel_remove_cb = gtk_check_button_new_with_label (_("Confirm the removal of panels with a dialog"));
 	gtk_signal_connect (GTK_OBJECT (confirm_panel_remove_cb), "toggled", 
@@ -1041,6 +1041,36 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (avoid_collisions_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), avoid_collisions_cb, FALSE, FALSE, 0);
+
+	/* Layer frame */
+	frame = gtk_frame_new (_("Keep panels (GNOME compliant window managers only)"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+	/* vbox for frame */
+	box = gtk_vbox_new (FALSE, 0);
+	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	/* Keep on bottom */
+	keep_bottom_cb = gtk_radio_button_new_with_label (NULL, _("Below other windows"));
+	gtk_signal_connect (GTK_OBJECT (keep_bottom_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_box_pack_start (GTK_BOX (box), keep_bottom_cb, FALSE, FALSE, 0);
+
+	/* Normal */
+	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
+	normal_layer_cb = gtk_radio_button_new_with_label (group, _("On the same level as other windows"));
+	gtk_signal_connect (GTK_OBJECT (normal_layer_cb), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_box_pack_start (GTK_BOX (box), normal_layer_cb, FALSE, FALSE, 0);
+
+	/* Above */
+	group = gtk_radio_button_group (GTK_RADIO_BUTTON (keep_bottom_cb));
+	w = gtk_radio_button_new_with_label (group, _("Above other windows"));
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE, 0);
 
 	/* Key Bindings frame */
 	frame = gtk_frame_new (_("Key Bindings"));
@@ -1125,11 +1155,17 @@ help (GtkWidget *capplet)
 }
 
 static void
-loadup_vals(void)
+loadup_vals (void)
 {
 	GString *buf;
-	char *tile_def[]={"normal","purple","green","blue"};
+	char *tile_def[] = {
+		"normal",
+		"purple",
+		"green",
+		"blue"
+	};
 	int i;
+	gboolean def;
 	
 	buf = g_string_new(NULL);
 
@@ -1206,7 +1242,18 @@ loadup_vals(void)
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
-	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=TRUE");
+	global_config.keep_bottom =
+		gnome_config_get_bool_with_default ("keep_bottom=FALSE", &def);
+	/* if keep bottom was the default, then we want to do a nicer
+	 * saner default which is normal layer.  If it was not the
+	 * default then we don't want to change the layerness as it was
+	 * selected by the user and thus we default to FALSE */
+	if (def)
+		global_config.normal_layer =
+			gnome_config_get_bool ("normal_layer=TRUE");
+	else
+		global_config.normal_layer =
+			gnome_config_get_bool ("normal_layer=FALSE");
 
 	global_config.drawer_auto_close =
 		gnome_config_get_bool ("drawer_auto_close=FALSE");
@@ -1269,11 +1316,11 @@ tell_panel(void)
 }
 
 static void
-write_config(GlobalConfig *conf)
+write_config (GlobalConfig *conf)
 {
 	int i;
 	GString *buf;
-	gnome_config_push_prefix("/panel/Config/");
+	gnome_config_push_prefix ("/panel/Config/");
 
 	gnome_config_set_int("auto_hide_step_size",
 			     conf->auto_hide_step_size);
@@ -1309,6 +1356,8 @@ write_config(GlobalConfig *conf)
 			      conf->autoraise);
 	gnome_config_set_bool("keep_bottom",
 			      conf->keep_bottom);
+	gnome_config_set_bool("normal_layer",
+			      conf->normal_layer);
 	gnome_config_set_bool("drawer_auto_close",
 			      conf->drawer_auto_close);
 	gnome_config_set_bool("simple_movement",

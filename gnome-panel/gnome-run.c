@@ -67,18 +67,16 @@ string_callback (GtkWidget *w, int button_num, gpointer data)
 		goto return_and_close;
 	}
 	if (strcmp (s, "you shall bring us a shrubbery") == 0) {
-		GtkWidget *dlg;
 		gnome_ok_dialog ("NI! NI! NI! NI! NI! NI!");
 		goto return_and_close;
 	}
 	if (strcmp (s, "supreme executive power") == 0) {
-		GtkWidget *dlg;
-		dlg = gnome_ok_dialog ("Listen -- strange women lying in\n"
-				       "ponds distributing swords is no\n"
-				       "basis for a system of government.\n"
-				       "Supreme executive power derives from\n"
-				       "a mandate from the masses, not from\n"
-				       "some farcical aquatic ceremony!");
+		gnome_ok_dialog ("Listen -- strange women lying in\n"
+				 "ponds distributing swords is no\n"
+				 "basis for a system of government.\n"
+				 "Supreme executive power derives from\n"
+				 "a mandate from the masses, not from\n"
+				 "some farcical aquatic ceremony!");
 		goto return_and_close;
 	}
 

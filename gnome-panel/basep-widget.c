@@ -1032,7 +1032,9 @@ void
 basep_widget_update_winhints (BasePWidget *basep)
 {
 	GtkWidget *w = GTK_WIDGET (basep);
-	if (!basep->compliant_wm)
+	GnomeWinLayer layer;
+
+	if ( ! basep->compliant_wm)
 		return;
 
 	gnome_win_hints_set_expanded_size (w, 0, 0, 0, 0);
@@ -1043,19 +1045,30 @@ basep_widget_update_winhints (BasePWidget *basep)
 	switch (basep->state) {
 	case BASEP_SHOWN:
 	case BASEP_MOVING:
-		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
-					   WIN_HINTS_DO_NOT_COVER);
 		/* drawers are always in DOCK */
-		if(IS_DRAWER_WIDGET(w))
-			gnome_win_hints_set_layer (w, WIN_LAYER_DOCK);
-		else
-			gnome_win_hints_set_layer (w, global_config.keep_bottom
-						   ? WIN_LAYER_BELOW
-						   : WIN_LAYER_DOCK);
+		if(IS_DRAWER_WIDGET(w)) {
+			if (global_config.normal_layer)
+				layer = WIN_LAYER_NORMAL;
+			else
+				layer = WIN_LAYER_DOCK;
+			gnome_win_hints_set_layer (w, layer);
+		} else {
+			if (global_config.normal_layer) {
+				layer = WIN_LAYER_NORMAL;
+			} else if (global_config.keep_bottom) {
+				layer = WIN_LAYER_BELOW;
+			} else {
+				layer = WIN_LAYER_DOCK;
+			}
+			gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS |
+						   WIN_HINTS_DO_NOT_COVER);
+			gnome_win_hints_set_layer (w, layer);
+		}
 		break;
 	default: /* all of the hidden states */
 		gnome_win_hints_set_hints (w, GNOME_PANEL_HINTS);
-		gnome_win_hints_set_layer (w, global_config.keep_bottom
+		gnome_win_hints_set_layer (w, (global_config.keep_bottom ||
+					       global_config.normal_layer)
 					   ? WIN_LAYER_ONTOP 
 					   : WIN_LAYER_ABOVE_DOCK);
 		break;

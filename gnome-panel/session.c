@@ -80,12 +80,13 @@ send_tooltips_state(int enabled)
 }
 
 void
-apply_global_config(void)
+apply_global_config (void)
 {
 	int i;
 	static int dot_buttons_old = 0; /*doesn't matter first time this is
 					  done there are no menu applets*/
 	static int keep_bottom_old = -1;
+	static int normal_layer_old = -1;
 	static int autohide_size_old = -1;
 	static int menu_flags_old = -1;
 	static int old_use_large_icons = -1;
@@ -169,11 +170,13 @@ apply_global_config(void)
 		}
 	}
 
-	if(keep_bottom_old == -1 ||
-	   keep_bottom_old != global_config.keep_bottom) {
-		for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+	if (keep_bottom_old == -1 ||
+	    keep_bottom_old != global_config.keep_bottom ||
+	    normal_layer_old == -1 ||
+	    normal_layer_old != global_config.normal_layer) {
+		for (li = panel_list; li != NULL; li = li->next) {
 			PanelData *pd = li->data;
-			if(!GTK_WIDGET_REALIZED(pd->panel))
+			if ( ! GTK_WIDGET_REALIZED (pd->panel))
 				continue;
 			if (IS_BASEP_WIDGET (pd->panel))
 				basep_widget_update_winhints (BASEP_WIDGET (pd->panel));
@@ -182,14 +185,15 @@ apply_global_config(void)
 		}
 	}
 	keep_bottom_old = global_config.keep_bottom;
+	normal_layer_old = global_config.normal_layer;
 
-	for(i = 0; i < LAST_TILE; i++) {
-		button_widget_set_flags(i, global_config.tiles_enabled[i],
-					1, 0);
-		button_widget_load_tile(i, global_config.tile_up[i],
-					global_config.tile_down[i],
-					global_config.tile_border[i],
-					global_config.tile_depth[i]);
+	for (i = 0; i < LAST_TILE; i++) {
+		button_widget_set_flags (i, global_config.tiles_enabled[i],
+					 1, 0);
+		button_widget_load_tile (i, global_config.tile_up[i],
+					 global_config.tile_down[i],
+					 global_config.tile_border[i],
+					 global_config.tile_depth[i]);
 	}
 
 	if (old_fast_button_scaling != global_config.fast_button_scaling) {
@@ -197,7 +201,7 @@ apply_global_config(void)
 	}
 	old_fast_button_scaling = global_config.fast_button_scaling;
 
-	for(li = panel_list; li != NULL; li = g_slist_next(li)) {
+	for (li = panel_list; li != NULL; li = li->next) {
 		PanelData *pd = li->data;
 		if (IS_BASEP_WIDGET (pd->panel)) {
 			if ((autohide_size_old != global_config.minimized_size) &&
@@ -1486,7 +1490,7 @@ init_user_panels(void)
 
 
 void
-load_up_globals(void)
+load_up_globals (void)
 {
 	GString *buf;
 	char *tile_def[] = {
@@ -1496,6 +1500,7 @@ load_up_globals(void)
 		"blue"
 	};
 	int i;
+	gboolean def;
 	
 	buf = g_string_new(NULL);
 
@@ -1568,7 +1573,18 @@ load_up_globals(void)
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
 
-	global_config.keep_bottom = gnome_config_get_bool("keep_bottom=TRUE");
+	global_config.keep_bottom =
+		gnome_config_get_bool_with_default ("keep_bottom=FALSE", &def);
+	/* if keep bottom was the default, then we want to do a nicer
+	 * saner default which is normal layer.  If it was not the
+	 * default then we don't want to change the layerness as it was
+	 * selected by the user and thus we default to FALSE */
+	if (def)
+		global_config.normal_layer =
+			gnome_config_get_bool ("normal_layer=TRUE");
+	else
+		global_config.normal_layer =
+			gnome_config_get_bool ("normal_layer=FALSE");
 
 	global_config.drawer_auto_close =
 		gnome_config_get_bool ("drawer_auto_close=FALSE");
@@ -1590,7 +1606,7 @@ load_up_globals(void)
 	g_string_sprintf (buf, "menu_flags=%d", get_default_menu_flags ());
 	global_config.menu_flags = gnome_config_get_int (buf->str);
 
-	for(i=0;i<LAST_TILE;i++) {
+	for (i = 0; i < LAST_TILE; i++) {
 		g_string_sprintf(buf,"new_tiles_enabled_%d=FALSE",i);
 		global_config.tiles_enabled[i] =
 			gnome_config_get_bool(buf->str);
@@ -1611,14 +1627,13 @@ load_up_globals(void)
 		global_config.tile_depth[i] = gnome_config_get_int(buf->str);
 	}
 
-	gnome_config_sync();
+	gnome_config_sync ();
 
-	gnome_config_pop_prefix();
+	gnome_config_pop_prefix ();
 
+	g_string_free (buf, TRUE);
 
-	g_string_free(buf,TRUE);
-
-	apply_global_config();
+	apply_global_config ();
 }
 
 void
