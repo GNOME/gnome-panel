@@ -2528,6 +2528,8 @@ create_new_panel(GtkWidget *w, gpointer data)
 		char *s;
 		if (!foobar_widget_exists ()) {
 			panel = foobar_widget_new ();
+			FOOBAR_WIDGET (panel)->clock_format = 
+				gnome_config_get_string ("/panel/Config/clock_format=%I:%M:%S %p");
 			panel_setup (panel);
 			gtk_widget_show (panel);
 			break;
