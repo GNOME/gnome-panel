@@ -1,3 +1,16 @@
+2004-11-28  Vincent Untz  <vincent@vuntz.net>
+
+	Add a gconf key to show/hide the week numbers in the calendar. It's
+	not exposed in the UI. Fix bug #147565.
+
+	* clock.c: (create_calendar): only show the week numbers if it's
+	configured this way
+	(show_week_changed): new, update the configuration and the calendar
+	if it's open
+	(setup_gconf): new listener for the new gconf key
+	(fill_clock_applet): init the configuration for the week numbers
+	* clock.schemas.in: add the show_week_numbers key
+
 2004-11-17  Vincent Noel  <vnoel@cox.net>
 
 	* clock.c (handle_task_percent_complete_edited): When entering

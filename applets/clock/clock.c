@@ -67,7 +67,7 @@
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
-#define N_GCONF_PREFS 6
+#define N_GCONF_PREFS 7
 
 #define NEVER_SENSITIVE "never_sensitive"
 
@@ -77,6 +77,7 @@ static const char* KEY_SHOW_DATE     = "show_date";
 static const char* KEY_GMT_TIME      = "gmt_time";
 static const char* KEY_CONFIG_TOOL   = "config_tool";
 static const char* KEY_CUSTOM_FORMAT = "custom_format";
+static const char* KEY_SHOW_WEEK     = "show_week_numbers";
 
 static const char *clock_config_tools [] = {
 	"system-config-date",
@@ -132,6 +133,7 @@ struct _ClockData {
 	gboolean     showseconds;
 	gboolean     showdate;
 	gboolean     gmt_time;
+	gboolean     showweek;
 
         char *config_tool;
 
@@ -1313,7 +1315,8 @@ create_calendar (ClockData *cd,
                                    (gpointer *) &cd->calendar);
 
 	options = gtk_calendar_get_display_options (GTK_CALENDAR (cd->calendar));
-	options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
+	if (cd->showweek)
+		options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
 	gtk_calendar_set_display_options (GTK_CALENDAR (cd->calendar), options);
 
 	if (cd->gmt_time)
@@ -1935,6 +1938,41 @@ custom_format_changed (GConfClient  *client,
 }
 
 static void
+show_week_changed (GConfClient  *client,
+		   guint         cnxn_id,
+		   GConfEntry   *entry,
+		   ClockData    *clock)
+{
+	GtkCalendarDisplayOptions options;
+	gboolean value;
+	
+	if (!entry->value || entry->value->type != GCONF_VALUE_BOOL)
+		return;
+
+	value = gconf_value_get_bool (entry->value);
+	
+	if (clock->showweek == (value != 0))
+		return;
+
+	clock->showweek = (value != 0);
+
+	if (clock->calendar_popup != NULL) {
+		options = gtk_calendar_get_display_options (GTK_CALENDAR (clock->calendar));
+
+		if (clock->showweek)
+			options |= GTK_CALENDAR_SHOW_WEEK_NUMBERS;
+		else
+			options &= ~(GTK_CALENDAR_SHOW_WEEK_NUMBERS);
+
+		gtk_calendar_set_display_options (GTK_CALENDAR (clock->calendar),
+						  options);
+
+                position_calendar_popup (clock, clock->calendar_popup,
+					 clock->toggle);
+	}
+}
+
+static void
 setup_gconf (ClockData *clock)
 {
 	GConfClient *client;
@@ -1996,6 +2034,15 @@ setup_gconf (ClockData *clock)
 				clock, NULL, NULL);
 	g_free (key);
 	
+	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
+					       KEY_SHOW_WEEK);
+	clock->listeners [6] =
+			gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) show_week_changed,
+				clock, NULL, NULL);
+	g_free (key);
+
 	g_object_unref (G_OBJECT (client));
 }
 
@@ -2082,6 +2129,7 @@ fill_clock_applet (PanelApplet *applet)
 	}
 
 	cd->gmt_time = panel_applet_gconf_get_bool (applet, KEY_GMT_TIME, NULL);
+	cd->showweek = panel_applet_gconf_get_bool (applet, KEY_SHOW_WEEK, NULL);
 	cd->config_tool = panel_applet_gconf_get_string (applet, KEY_CONFIG_TOOL, NULL);
 
 	cd->timeformat = NULL;
