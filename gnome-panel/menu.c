@@ -498,7 +498,10 @@ fake_pixmap_from_fake(FakeIcon *fake)
 static GtkWidget *
 fake_pixmap_at_size(char *file, int size)
 {
-	FakeIcon *fake = g_new0(FakeIcon,1);
+	FakeIcon *fake;
+	if(!g_file_exists(file))
+		return NULL;
+	fake = g_new0(FakeIcon,1);
 	fake->file = g_strdup(file);
 	fake->size = size;
 	return fake_pixmap_from_fake(fake);
