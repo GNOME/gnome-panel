@@ -25,7 +25,7 @@ struct _PerPanelConfig {
 
 	/*floating widget*/
 	GtkOrientation        orient;
-	int                     x, y;
+	gint16                x, y;
 
 	/*indexes for toggle*/
 	int edge;
