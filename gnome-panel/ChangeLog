@@ -1,3 +1,35 @@
+2005-01-06  Mark McLoughlin  <mark@skynet.ie>
+
+	Based on a patch by Raffaele Sandrini <rasa@gmx.ch>
+
+	Add Shut Down/Restart menu items to the actions menu and
+	the main menu. Works by using GDM's SET_LOGOUT_ACTION
+	protocol.
+	
+	gnome-session implications still being discussed in
+	bug #92277
+
+	* Makefile.am: add gdm-logout-action.[ch].
+	
+	* gdm-logout-action.[ch]: logout action protocol
+	implementation.
+	
+	* menu.c: (create_main_menu):
+	  panel-menu-bar.c: (panel_menu_bar_create_actions_menu):
+	 add Shut Down/Restart menu items.
+	
+	* panel-action-button.c:
+	(panel_action_shutdown), (panel_action_reboot): hook
+	up the action buttons.
+	
+	* panel-enums.h: add shutdown/reboot actions.
+	
+	* panel-lockdown.[ch]:
+	(panel_lockdown_get_disable_shutdown),
+	(panel_lockdown_get_disable_reboot): check to see if
+	logout is disabled and whether GDM supports the logout
+	action.
+
 2005-01-04  Vincent Noel  <vnoel@cox.net>
 
 	* panel-menu-bar.c: (panel_menu_bar_on_expose),

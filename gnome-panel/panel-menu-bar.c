@@ -139,22 +139,41 @@ panel_menu_bar_create_actions_menu (PanelMenuBar *menubar)
 
 	separator_inserted = FALSE;
 
-	item = menu_create_action_item (PANEL_ACTION_LOCK);
-	if (item != NULL) {
-		add_menu_separator (actions_menu);
-		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
-		separator_inserted = TRUE;
+	if (panel_is_program_in_path ("xscreensaver")) {
+		item = menu_create_action_item (PANEL_ACTION_LOCK);
+		if (item != NULL) {
+			add_menu_separator (actions_menu);
+			gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
+			separator_inserted = TRUE;
+		}
 	}
 
-	if (panel_is_program_in_path ("xscreensaver")) {
-		item = menu_create_action_item (PANEL_ACTION_LOGOUT);
-
-		if (item != NULL) {
-			if (!separator_inserted)
-				add_menu_separator (actions_menu);
-			gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu),
-					       item);
+	item = menu_create_action_item (PANEL_ACTION_SHUTDOWN);
+	if (item != NULL) {
+		if (!separator_inserted) {
+			add_menu_separator (actions_menu);
+			separator_inserted = TRUE;
 		}
+		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
+	}
+
+	item = menu_create_action_item (PANEL_ACTION_REBOOT);
+	if (item != NULL) {
+		if (!separator_inserted) {
+			add_menu_separator (actions_menu);
+			separator_inserted = TRUE;
+		}
+		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu), item);
+	}
+
+	item = menu_create_action_item (PANEL_ACTION_LOGOUT);
+	if (item != NULL) {
+		if (!separator_inserted) {
+			add_menu_separator (actions_menu);
+			separator_inserted = TRUE;
+		}
+		gtk_menu_shell_append (GTK_MENU_SHELL (actions_menu),
+				       item);
 	}
 
 	return actions_menu;

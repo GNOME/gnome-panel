@@ -113,6 +113,7 @@ panel_sources =			\
 	panel-force-quit.c	\
 	panel-lockdown.c	\
 	panel-addto.c		\
+	gdm-logout-action.c	\
 	$(EGG_RECENT_FILES_C)	\
 	$(NULL)
 
@@ -158,6 +159,7 @@ panel_headers =			\
 	panel-force-quit.h	\
 	panel-lockdown.h	\
 	panel-addto.h		\
+	gdm-logout-action.h	\
 	$(EGG_RECENT_FILES_H)	\
 	$(NULL)
 
