@@ -183,7 +183,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	gtk_widget_show_all (menu_item);
 	
 	/* a model that shows the global recent doc list */
-	model = egg_recent_model_new ("gnome-panel", EGG_RECENT_MODEL_SORT_MRU);
+	model = egg_recent_model_new (EGG_RECENT_MODEL_SORT_MRU);
 
 	view = egg_recent_view_gtk_new (menu, NULL);
 
