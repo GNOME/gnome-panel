@@ -1523,7 +1523,7 @@ window_response (GtkWidget *w, int response, gpointer data)
 		tab = gtk_notebook_get_current_page (GTK_NOTEBOOK (notebook));
 
 		if (tab == 1)
-			panel_show_help ("panelproperties", "PANELBACKTAB");
+			panel_show_help ("wgospanel.xml", "gospanel-28");
 		else
 			panel_show_help (help_path, help_linkid);
 	} else {
@@ -1602,8 +1602,8 @@ panel_config (GtkWidget *panel)
 
 	if(EDGE_IS_WIDGET(panel)) {
 		/* edge notebook page */
-		help_path = "panelproperties";
-		help_linkid = "EDGETAB";
+		help_path = "wgospanel.xml";
+		help_linkid = "gospanel-28";
 		page = edge_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1613,8 +1613,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(ALIGNED_IS_WIDGET(panel)) {
 		/* aligned notebook page */
-		help_path = "panelproperties";
-		help_linkid = "EDGETAB";
+		help_path = "wgospanel.xml";
+		help_linkid = "gospanel-28";
 		page = aligned_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1624,8 +1624,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(SLIDING_IS_WIDGET(panel)) {
 		/* sliding notebook page */
-		help_path = "panelproperties";
-		help_linkid = "EDGETAB";
+		help_path = "wgospanel.xml";
+		help_linkid = "gospanel-28";
 		page = sliding_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1635,8 +1635,8 @@ panel_config (GtkWidget *panel)
 					 ppc->type_tab_label);
 	} else if(FLOATING_IS_WIDGET(panel)) {
 		/* floating notebook page */
-		help_path = "panelproperties";
-		help_linkid = "EDGETAB";
+		help_path = "wgospanel.xml";
+		help_linkid = "gospanel-28";
 		page = floating_notebook_page(ppc);
 		ppc->type_tab = gtk_event_box_new();
 		gtk_container_add(GTK_CONTAINER(ppc->type_tab), page);
@@ -1650,8 +1650,8 @@ panel_config (GtkWidget *panel)
 		AppletInfo *info =
 			g_object_get_data (G_OBJECT (applet), "applet_info");
 		add_drawer_properties_page(ppc, GTK_NOTEBOOK (prop_nbook), info->data);
-		help_path = "drawers";
-		help_linkid = NULL;
+		help_path = "wgospanel.xml";
+		help_linkid = "gospanel-550";
 		/* we can't change to/from drawers anyhow */
 		ppc->type_tab = NULL;
  	}
