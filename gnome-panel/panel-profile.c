@@ -484,7 +484,7 @@ panel_profile_set_background_image (PanelToplevel *toplevel,
 
 	client = panel_gconf_get_client ();
 
-	key = panel_profile_get_toplevel_key (toplevel, "image");
+	key = panel_profile_get_toplevel_key (toplevel, "background/image");
 
 	if (image && image [0])
 		gconf_client_set_string (client, key, image, NULL);
@@ -501,7 +501,7 @@ panel_profile_get_background_image (PanelToplevel *toplevel)
 
 	client = panel_gconf_get_client ();
 
-	key = panel_profile_get_toplevel_key (toplevel, "image");
+	key = panel_profile_get_toplevel_key (toplevel, "background/image");
 	retval = gconf_client_get_string (client, key, NULL);
 
 	return retval;
