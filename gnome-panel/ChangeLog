@@ -1,5 +1,10 @@
 2003-11-23  Mark McLoughlin  <mark@skynet.ie>
 
+	* gnome-panel-screenshot.c: include gnome-vfs-utils.h.
+	(gimme_file): don't take a const char*.
+
+2003-11-23  Mark McLoughlin  <mark@skynet.ie>
+
 	* menu.c: (applet_info_sort_func): use g_utf8_collate instead
 	of strcmp() for sorting so we respect the locale's collation
 	order.
