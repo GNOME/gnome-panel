@@ -28,6 +28,9 @@
 #include <gtk/gtk.h>
 #include <glade/glade.h>
 
+#include <gdk/gdkx.h>
+#include "global-keys.h"
+
 #include <libart_lgpl/art_misc.h>
 #include <libart_lgpl/art_affine.h>
 #include <libart_lgpl/art_rgb_affine.h>
@@ -37,12 +40,19 @@
 
 #include <gconf/gconf-client.h>
 
+/*This array is the names of the checkboxes in the gnome-panel-properties.glade
+  file. The names also correspond directly to the gconf-keys which they 
+  represent.  If you add a new checkbox to the interface make sure its name is 
+  the same as the gconf-key it is to edit and make sure you add its name to 
+  this array.*/
+
 gchar* checkboxes[] = {
-	"tooltips-enabled",
 	"drawer-auto-close",
 	"auto-raise-panel",
 	"confirm-panel-remove",
 	"avoid-panel-overlap",
+	"keep-menus-in-memory",
+	"disable-animations",
 	NULL
 	};
 
@@ -82,7 +92,6 @@ void transform_pixbuf(guchar *dst, int x0, int y0, int x1, int y1, int drs,
 
 
 #include "nothing.cP"
-
 /*
 static GtkWidget *grab_dialog;
 
@@ -180,13 +189,6 @@ grab_button_pressed (GtkButton *button, gpointer data)
 	gtk_widget_show_all (grab_dialog);
 	return;
 }
-
-static void
-help (GtkWidget *capplet)
-{
-	panel_show_help ("globalpanelprefs", NULL);
-}
-
 */
 
 static void
@@ -199,9 +201,27 @@ checkbox_clicked (GtkWidget *widget, gpointer data)
 }
 
 static void
+disable_animations_clicked (GtkWidget *widget, gpointer data)
+{
+	GtkWidget *vbox = GTK_WIDGET(data);
+	int disable = GTK_TOGGLE_BUTTON(widget)->active;
+
+	gtk_widget_set_sensitive(vbox,disable);
+}
+
+static void
+animation_speed_changed (GtkWidget *widget, gpointer data)
+{
+	gconf_client_set_string(gconf_client_get_default(),
+		"/apps/panel/animation-speed",
+		gtk_entry_get_text(GTK_ENTRY(widget)),NULL);	
+}
+
+static void
 load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
 {
 	GtkWidget *checkbox;
+	GtkWidget *anim_vbox;
 	gchar *key;
 	int i=0;
 
@@ -214,22 +234,44 @@ load_booleans_for_checkboxes(GladeXML *gui, GConfClient *client)
 			G_CALLBACK(checkbox_clicked),key);
 		i++;
 	}
+	/*if (key) {
+		g_free(key);
+		key = NULL;
+	}*/
+
+	checkbox = glade_xml_get_widget(gui,"disable-animations");
+	anim_vbox =  glade_xml_get_widget(gui,"animation-vbox");
+	gtk_widget_set_sensitive(anim_vbox,
+		gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(checkbox)));
+	g_signal_connect(G_OBJECT(checkbox),"clicked",
+                        G_CALLBACK(disable_animations_clicked),anim_vbox);
 }
 
+static void
+load_strings_for_comboboxes(GladeXML *gui, GConfClient *client)
+{
+	GtkWidget *entry;
+
+	entry = glade_xml_get_widget(gui,"speed-entry");
+	gtk_entry_set_text(GTK_ENTRY(entry),
+		gconf_client_get_string(client,
+		"/apps/panel/animation-speed",NULL));
+	g_signal_connect(G_OBJECT(entry),"activate",
+                        G_CALLBACK(animation_speed_changed),NULL);
+}
 
 static void
-load_config_into_gui(GladeXML *gui)
+load_config_into_gui(GladeXML *gui, GConfClient *client)
 {
-	GConfClient *client;
 
-	client = gconf_client_get_default();
 	load_booleans_for_checkboxes(gui,client);
+	load_strings_for_comboboxes(gui,client);
+	
 }
 
 static void
-setup_the_ui(GtkWidget *main_window)
+setup_the_ui(GtkWidget *main_window, GConfClient* client)
 {
-
 	GladeXML *gui;
 	gchar *glade_file;
 	GtkWidget *notebook;
@@ -252,34 +294,26 @@ setup_the_ui(GtkWidget *main_window)
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(main_window)->vbox),notebook,
 		TRUE,TRUE,0);
 
-	load_config_into_gui(gui);
+	load_config_into_gui(gui, client);
 }
 
 static void
 main_dialog_response(GtkWindow *window, int button, gpointer data)
 {
 	switch (button) {
-		case GTK_RESPONSE_CANCEL:
-			/*quit with no changes*/
-			gtk_main_quit();
-			break;
 		case GTK_RESPONSE_OK:
-			/*push changes to gconf then quit*/
 			gtk_main_quit();
-			break;
-		case GTK_RESPONSE_HELP:
-			/*call help for this stuff*/
 			break;
 		default:
 			break;
 	}
 }
 
-
 int
 main (int argc, char **argv)
 {
   	GtkWidget *main_window;
+	GConfClient *gconf_client;
 
 	bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
@@ -291,42 +325,33 @@ main (int argc, char **argv)
 
   	main_window = gtk_dialog_new();
 
-	/*gtk_widget_set_usize(main_window,410,360);*/
-
-	gtk_dialog_add_button (GTK_DIALOG(main_window),GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
-	gtk_dialog_add_button (GTK_DIALOG(main_window),GTK_STOCK_HELP, GTK_RESPONSE_HELP);
-	gtk_dialog_add_button (GTK_DIALOG(main_window),GTK_STOCK_OK, GTK_RESPONSE_OK);
+	gtk_dialog_add_button (GTK_DIALOG(main_window),
+		GTK_STOCK_OK, GTK_RESPONSE_OK);
 
 	 gtk_signal_connect(GTK_OBJECT(main_window), "response",
                      GTK_SIGNAL_FUNC(main_dialog_response), main_window);
 
+	gconf_client = gconf_client_get_default();
+
 	/* Ahhh, yes the infamous commie mode, don't allow running of this,
-	 * just display a label
-	if (gnome_config_get_bool
-		("=" GLOBAL_CONFDIR "/System=/Config/LockDown=FALSE")) {
+	 * just display a label*/
+
+	if(gconf_client_get_bool(gconf_client,"/apps/panel/lock-down",NULL)) 
+	{
 		GtkWidget *label;
 
-		capplet = capplet_widget_new();
-
 		label = gtk_label_new (_("The system administrator has "
-					 "disallowed modification of the "
+					 "disallowed\n modification of the "
 					 "panel configuration"));
-		gtk_widget_show (label);
+		gtk_box_pack_start (GTK_BOX(GTK_DIALOG(main_window)->vbox),
+			label,TRUE,TRUE,0);
 
-		gtk_container_add (GTK_CONTAINER (capplet), label);
-
-		capplet_gtk_main ();
-
-		return 0;
+		gtk_widget_set_usize(main_window,350,350);
 	}
-
-	loadup_vals ();
-	
-	set_config (&loaded_config, &global_config);
-
-	capplet = capplet_widget_new();*/
-
-	setup_the_ui(main_window);
+	else
+	{
+		setup_the_ui(main_window, gconf_client);
+	}
 
 	gtk_widget_show_all(main_window);
 
