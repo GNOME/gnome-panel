@@ -55,6 +55,12 @@ char *strtok_with_escape(char *string, const char *seps, gboolean empty);
 /* return a newly allocated string that escapes / and 'special' */
 char *escape_string(const char *string, const char *special);
 
+gboolean convert_string_to_keysym_state(char *string,
+					guint *keysym,
+					guint *state);
+char * convert_keysym_state_to_string(guint keysym,
+				      guint state);
+
 
 END_GNOME_DECLS
 

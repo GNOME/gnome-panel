@@ -257,7 +257,7 @@ main(int argc, char **argv)
 	load_queued_externs();
 
 	status_applet_create_offscreen();
-	
+
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();
 

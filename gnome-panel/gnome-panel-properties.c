@@ -118,8 +118,8 @@ static GtkWidget *drawer_auto_close_cb;
 static GtkWidget *autoraise_cb;
 static GtkWidget *keep_bottom_cb;
 static GtkWidget *keys_enabled_cb;
-static GtkWidget *menu_key_sb;
-static GtkWidget *run_key_sb;
+static GtkWidget *menu_key_entry;
+static GtkWidget *run_key_entry;
 static GtkWidget *confirm_panel_remove_cb;
 
 static gboolean changing = TRUE;
@@ -761,14 +761,10 @@ sync_misc_page_with_config(GlobalConfig *conf)
 				    conf->confirm_panel_remove);
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(keys_enabled_cb),
 				    conf->keys_enabled);
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (menu_key_sb),
-				   (float)conf->menu_keycode);
-	gtk_object_set_user_data (GTK_OBJECT (menu_key_sb),
-				  GINT_TO_POINTER (conf->menu_state));
-	gtk_spin_button_set_value (GTK_SPIN_BUTTON (run_key_sb),
-				   (float)conf->run_keycode);
-	gtk_object_set_user_data (GTK_OBJECT (run_key_sb),
-				  GINT_TO_POINTER (conf->run_state));
+	gtk_entry_set_text (GTK_ENTRY(menu_key_entry),
+			    conf->menu_key?conf->menu_key:"");
+	gtk_entry_set_text (GTK_ENTRY(run_key_entry),
+			    conf->run_key?conf->run_key:"");
 }
 static void
 sync_config_with_misc_page(GlobalConfig *conf)
@@ -785,14 +781,12 @@ sync_config_with_misc_page(GlobalConfig *conf)
 		GTK_TOGGLE_BUTTON(confirm_panel_remove_cb)->active;
 	conf->keys_enabled =
 		GTK_TOGGLE_BUTTON(keys_enabled_cb)->active;
-	conf->menu_keycode = gtk_spin_button_get_value_as_int (
-		GTK_SPIN_BUTTON (menu_key_sb));
-	conf->menu_state = GPOINTER_TO_INT (gtk_object_get_user_data (
-		GTK_OBJECT (menu_key_sb)));		
-	conf->run_keycode = gtk_spin_button_get_value_as_int (
-		GTK_SPIN_BUTTON (run_key_sb));
-	conf->run_state = GPOINTER_TO_INT (gtk_object_get_user_data (
-		GTK_OBJECT (run_key_sb)));		
+	g_free(conf->menu_key);
+	conf->menu_key =
+		g_strdup(gtk_entry_get_text (GTK_ENTRY(menu_key_entry)));
+	g_free(conf->run_key);
+	conf->run_key =
+		g_strdup(gtk_entry_get_text (GTK_ENTRY(run_key_entry)));
 }
 
 static GtkWidget *grab_dialog;
@@ -801,21 +795,28 @@ static GdkFilterReturn
 grab_key_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 {
 	XEvent *xevent = (XEvent *)gdk_xevent;
-	XKeyEvent *xkevent;
-	GtkSpinButton *sb;
+	GtkEntry *entry;
+	char *key;
 
 	if (xevent->type != KeyPress && xevent->type != KeyRelease)
+		puts("EXIT X");
+	if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)
+		puts("EXIT GDK");
+
+	if (xevent->type != KeyPress && xevent->type != KeyRelease)
+	/*if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)*/
 		return GDK_FILTER_CONTINUE;
 	
-	xkevent = (XKeyEvent *)xevent;
-	sb = GTK_SPIN_BUTTON (data);
+	entry = GTK_ENTRY (data);
 
+	/* note: GDK has already translated the keycode to a keysym for us */
 	g_message ("keycode: %d\tstate: %d",
-		   xkevent->keycode, xkevent->state);
+		   event->key.keyval, event->key.state);
 
-	gtk_spin_button_set_value (sb, (float)xkevent->keycode);
-	gtk_object_set_user_data (GTK_OBJECT (sb),
-				  GINT_TO_POINTER (xkevent->state));
+	key = convert_keysym_state_to_string (event->key.keyval,
+					      event->key.state);
+	gtk_entry_set_text (entry, key?key:"");
+	g_free(key);
 
 	gdk_keyboard_ungrab (GDK_CURRENT_TIME);
 	gtk_widget_destroy (grab_dialog);
@@ -863,7 +864,7 @@ misc_notebook_page(void)
 	GtkWidget *table;
 	GtkWidget *vbox;
 	GtkWidget *w;
-	GtkObject *adj;
+	GList *list;
 	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
@@ -933,35 +934,51 @@ misc_notebook_page(void)
 	w = gtk_label_new (_("Popup menu key"));
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 1, 2);
 	
-	adj = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
-	gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+
+	list = g_list_append(NULL, "Hyper_L");
+	list = g_list_append(list, "Hyper_R");
+	list = g_list_append(list, "Menu");
+	list = g_list_append(list, "Control-Mod1-m");
+	list = g_list_append(list, _("Disabled"));
+	w = gtk_combo_new();
+	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
+	g_list_free(list);
+	menu_key_entry = GTK_COMBO(w)->entry;
+	gtk_signal_connect (GTK_OBJECT (menu_key_entry),
+			    "changed",
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	menu_key_sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 0);
-	gtk_widget_set_sensitive (menu_key_sb, FALSE);
-	gtk_table_attach_defaults (GTK_TABLE (table), menu_key_sb, 1, 2, 1, 2);
+	/*gtk_widget_set_sensitive (menu_key_entry, FALSE);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 1, 2);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 1, 2);
 	gtk_signal_connect (GTK_OBJECT (w), "clicked",
 			    GTK_SIGNAL_FUNC (grab_button_pressed),
-			    menu_key_sb);
+			    menu_key_entry);
 
 	/* run key...*/
 	w = gtk_label_new (_("Run dialog key"));
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 0, 1, 2, 3);
 	
-	adj = gtk_adjustment_new (0, 0, 255, 1, 10, 10);
-	gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+	list = g_list_append(NULL, "Control-Mod1-r");
+	list = g_list_append(list, "Hyper_R");
+	list = g_list_append(list, "Menu");
+	list = g_list_append(list, _("Disabled"));
+	w = gtk_combo_new();
+	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
+	g_list_free(list);
+	run_key_entry = GTK_COMBO(w)->entry;
+	gtk_signal_connect (GTK_OBJECT (run_key_entry),
+			    "changed",
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
-	run_key_sb = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 0);
-	gtk_widget_set_sensitive (run_key_sb, FALSE);
-	gtk_table_attach_defaults (GTK_TABLE (table), run_key_sb, 1, 2, 2, 3);
+	/*gtk_widget_set_sensitive (run_key_entry, FALSE);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 2, 3);
 
 	w = gtk_button_new_with_label (_("Grab key..."));
 	gtk_table_attach_defaults (GTK_TABLE (table), w, 2, 3, 2, 3);
 	gtk_signal_connect (GTK_OBJECT (w), "clicked",
 			    GTK_SIGNAL_FUNC (grab_button_pressed),
-			    run_key_sb);
+			    run_key_entry);
 	
 
  	return (vbox);
@@ -1044,19 +1061,19 @@ loadup_vals(void)
 			       MAIN_MENU_APPLETS_SUB | MAIN_MENU_REDHAT_SUB|
 			       MAIN_MENU_DEBIAN_SUB | MAIN_MENU_KDE_SUB|
 			       MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
-	global_config.menu_flags=gnome_config_get_int(buf->str);
+	global_config.menu_flags = gnome_config_get_int(buf->str);
 
-	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
+	global_config.keys_enabled = gnome_config_get_bool("keys_enabled=TRUE");
 
-	g_string_sprintf(buf,"menu_keycode=%d", XK_LEFT_WIN);
-	global_config.menu_keycode=gnome_config_get_int(buf->str);
+	global_config.menu_key = gnome_config_get_string("menu_key=Hyper_L");
+	/*convert_string_to_keysym_state(global_config.menu_key,
+				       &global_config.menu_keysym,
+				       &global_config.menu_state);*/
 
-	global_config.menu_state=gnome_config_get_int("menu_state=0");
-
-	g_string_sprintf(buf,"run_keycode=%d", GDK_r);
-	global_config.run_keycode=gnome_config_get_int(buf->str);
-
-	global_config.run_state=gnome_config_get_int("run_state=0");
+	global_config.run_key = gnome_config_get_string("run_key=Control-Mod1-r");
+	/*convert_string_to_keysym_state(global_config.run_key,
+				       &global_config.run_keysym,
+				       &global_config.run_state);*/
 
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
@@ -1163,10 +1180,8 @@ write_config(GlobalConfig *conf)
 			      conf->saturate_when_over);
 	gnome_config_set_int("menu_flags", conf->menu_flags);
 	gnome_config_set_bool("keys_enabled", conf->keys_enabled);
-	gnome_config_set_int("menu_keycode", conf->menu_keycode);
-	gnome_config_set_int("menu_state", conf->menu_state);
-	gnome_config_set_int("run_keycode", conf->run_keycode);
-	gnome_config_set_int("run_sate", conf->run_state);
+	gnome_config_set_string("menu_key", conf->menu_key);
+	gnome_config_set_string("run_key", conf->run_key);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

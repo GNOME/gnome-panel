@@ -33,10 +33,12 @@ struct _GlobalConfig {
 	gboolean saturate_when_over;
 	gboolean confirm_panel_remove;
 	gboolean keys_enabled;
-	guint menu_keycode;
-	guint menu_state;
-	guint run_keycode;
-	guint run_state;
+	char *menu_key;
+	  guint menu_keysym;  /* these are not really properties but */
+	  guint menu_state;   /* from the above */
+	char *run_key;
+	  guint run_keysym;   /* these are not really properties but */
+	  guint run_state;    /* from the above */
 	int menu_flags;
 	gboolean use_large_icons;
 };

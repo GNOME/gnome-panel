@@ -1275,16 +1275,18 @@ load_up_globals(void)
 
 	global_config.keys_enabled=gnome_config_get_bool("keys_enabled=TRUE");
 
-	g_string_sprintf(buf,"menu_keycode=%d", XK_RIGHT_MENU);
-	global_config.menu_keycode=gnome_config_get_int(buf->str);
+	g_free(global_config.menu_key);
+	global_config.menu_key = gnome_config_get_string("menu_key=Hyper_L");
+	convert_string_to_keysym_state(global_config.menu_key,
+				       &global_config.menu_keysym,
+				       &global_config.menu_state);
 
-	global_config.menu_state=gnome_config_get_int("menu_state=0");
+	g_free(global_config.run_key);
+	global_config.run_key = gnome_config_get_string("run_key=Control-Mod1-r");
+	convert_string_to_keysym_state(global_config.run_key,
+				       &global_config.run_keysym,
+				       &global_config.run_state);
 
-	g_string_sprintf(buf,"run_keycode=%d", XK_r);
-	global_config.run_keycode=gnome_config_get_int(buf->str);
-
-	global_config.run_state=gnome_config_get_int("run_state=0");
-	
 	global_config.applet_padding=gnome_config_get_int("applet_padding=3");
 
 	global_config.autoraise = gnome_config_get_bool("autoraise=TRUE");
@@ -1383,10 +1385,8 @@ write_global_config(void)
 			      global_config.confirm_panel_remove);
 	gnome_config_set_int("menu_flags", global_config.menu_flags);
 	gnome_config_set_bool("keys_enabled", global_config.keys_enabled);
-	gnome_config_set_int("menu_keycode", global_config.menu_keycode);
-	gnome_config_set_int("menu_state", global_config.menu_state);
-	gnome_config_set_int("run_keycode", global_config.run_keycode);
-	gnome_config_set_int("run_sate", global_config.run_state);
+	gnome_config_set_string("menu_key", global_config.menu_key);
+	gnome_config_set_string("run_key", global_config.run_key);
 			     
 	buf = g_string_new(NULL);
 	for(i=0;i<LAST_TILE;i++) {

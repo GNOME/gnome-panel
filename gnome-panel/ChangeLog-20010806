@@ -1,3 +1,15 @@
+Fri Feb 18 17:38:50 2000  George Lebl <jirka@5z.com>
+
+	* global-keys.c,session.c,gnome-panel-properties.c,panel-util.c: use
+	  keysyms and not keycodes to handle the global key combinations,
+	  don't do run as a "subkey" but as it's own separate key.  The
+	  default for menu is now "Hyper_L" and default for run is
+	  "Control-Mod1-r".  Since by default on RH there is no keysym for
+	  the windows key you may need to do
+	  "xmodmap -e 'keycode 115 = Hyper_L'"
+
+	* menu.c: lock the accelerators since we don't handle them anyway
+
 Fri Feb 18 17:37    2000  Alexander Kirillov <kirillov@math.sunysb.edu> 
         * Worked on the menus sections; added "bugs and limitations"
 	section (developers: take a look!)
