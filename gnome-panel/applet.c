@@ -658,7 +658,9 @@ applet_destroy (GtkWidget *w, AppletInfo *info)
 
 		location = gnome_desktop_item_get_location (launcher->ditem);
 
-		session_add_dead_launcher (location);
+		/* Launcher may not yet have been hoarded */
+		if (location)
+			session_add_dead_launcher (location);
 	}
 
 

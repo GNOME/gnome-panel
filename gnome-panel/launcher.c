@@ -43,6 +43,8 @@
 static void properties_apply (Launcher *launcher);
 static void launcher_save    (Launcher *launcher);
 
+static GSList *launchers_to_hoard = NULL;
+
 extern GtkTooltips *panel_tooltips;
 
 extern GSList *applets;
@@ -173,6 +175,8 @@ static void
 free_launcher (gpointer data)
 {
 	Launcher *launcher = data;
+
+	launchers_to_hoard = g_slist_remove (launchers_to_hoard, launcher);
 
 	gnome_desktop_item_unref (launcher->ditem);
 	launcher->ditem = NULL;
@@ -987,6 +991,25 @@ launcher_save (Launcher *launcher)
 	}
 }
 
+static gboolean
+launcher_idle_hoard (void)
+{
+	Launcher *launcher;
+
+	if (!launchers_to_hoard)
+		return FALSE;
+
+	launcher = launchers_to_hoard->data;
+	launchers_to_hoard = g_slist_delete_link (
+					launchers_to_hoard, launchers_to_hoard);
+
+	launcher_save (launcher);
+	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
+
+	return launchers_to_hoard ? TRUE : FALSE;
+}
+
+
 void
 launcher_hoard (Launcher *launcher)
 {
@@ -995,9 +1018,10 @@ launcher_hoard (Launcher *launcher)
 
 	gnome_desktop_item_set_location (launcher->ditem, NULL);
 
-	launcher_save (launcher);
+	if (!launchers_to_hoard)
+		g_idle_add ((GSourceFunc) launcher_idle_hoard, NULL);
 
-	launcher_save_to_gconf (launcher, launcher->info->gconf_key);
+	launchers_to_hoard = g_slist_prepend (launchers_to_hoard, launcher);
 }
 
 Launcher *

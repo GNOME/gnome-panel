@@ -1186,7 +1186,7 @@ add_menudrawer_to_panel(GtkWidget *widget, gpointer data)
 	pd = g_object_get_data (G_OBJECT (panel->panel_parent), "PanelData");
 	if (pd != NULL)
 		insertion_pos = pd->insertion_pos;
-	
+
 	add_drawers_from_dir (mf->menudir, mf->dir_name, insertion_pos, panel);
 }
 

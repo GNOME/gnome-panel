@@ -1,5 +1,15 @@
 2002-07-09  Mark McLoughlin  <mark@skynet.ie>
 
+	* launcher.c:
+	(free_launcher): remove launcher from hoarding list.
+	(launcher_idle_hoard), (launcher_hoard): hoard launchers
+	in idle. Hopefully fixes #83373.
+
+	* applet.c: (applet_destroy): Don't add dead launcher
+	unless it has been hoarded.
+
+2002-07-09  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-gconf.[ch]: (panel_gconf_string_to_enum): impl
 	with a fallback argument. Fixes #87133.
 
