@@ -108,8 +108,13 @@ computer_clock_update_func(ClockData * cd, time_t current_time)
 	if (cd->hourformat == 0) {
 	  /* This format string is used, to display the actual time in
              12 hour format.  */
-		if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
-			hour[19] = '\0';
+		if (cd->orient == ORIENT_LEFT || cd->orient == ORIENT_RIGHT) {
+			if (strftime(hour, 20, _("%I:%M\n%p"), tm) == 20)
+				hour[19] = '\0';
+		} else {
+			if (strftime(hour, 20, _("%I:%M %p"), tm) == 20)
+				hour[19] = '\0';
+		}
 	} else if (cd->hourformat == 1) {
 	  /* This format string is used, to display the actual time in
              24 hour format.  */
