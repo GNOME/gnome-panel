@@ -903,8 +903,9 @@ panel_setup(GtkWidget *panelw)
 	pd->menu_age = 0;
 	pd->panel = panelw;
 
-	if (IS_BORDER_WIDGET (panelw))
-	    base_panels++;
+	if (IS_BASEP_WIDGET (panelw) &&
+	    !IS_DRAWER_WIDGET (panelw))
+		base_panels++;
 	
 	if(IS_EDGE_WIDGET(panelw))
 		pd->type = EDGE_PANEL;
