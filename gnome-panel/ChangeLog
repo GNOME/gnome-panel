@@ -1,3 +1,25 @@
+Mon Mar 25 20:27:00 2002  George Lebl <jirka@5z.com>
+
+	* panel-applet-frame.c: include panel-util.h, and use
+	  panel_error_dialog
+
+	* menu.c: use panel_info_dialog instead of custom gtk_message_box
+
+	* main.c: add POPT_AUTOHELP
+
+	* menu-ditem.c: a nicer way to find if a file already exists or not
+	  for new launchers.  Also test schema:file since this is good
+	  thing to do for vfolder schemas really.
+
+	* gnome-desktop-item-edit.c: better handeling of uris vs. local
+	  filenames
+
+	* applet.c: when adding bonobo applets in the idle, we also connect
+	  the panel destroy signal and whack from the add list if that
+	  happens.  This should fix #76169
+
+	* panel-types.c: add comma to the end of an enum
+
 2002-03-25  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu.c: (create_add_panel_submenu): don't display the

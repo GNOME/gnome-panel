@@ -33,6 +33,7 @@
 
 #include "panel-applet-frame.h"
 #include "panel-gconf.h"
+#include "panel-util.h"
 #include "session.h"
 #include "applet.h"
 #include "panel-marshal.h"
@@ -568,26 +569,15 @@ panel_applet_frame_construct (PanelAppletFrame *frame,
 	g_free (moniker);
 
 	if (BONOBO_EX (&ev)) {
-		GtkWidget *dialog;
 		char *err = bonobo_exception_get_text (&ev);
-		char *txt = g_strdup_printf (
-			_("There was a problem loading applet '%s': %s"),
+		panel_error_dialog
+			("problem_loading_applet",
+			 _("<b>There was a problem loading applet '%s'</b>\n\n"
+			   "Details: %s"),
 			  iid, err);
-	
-		dialog = gtk_message_dialog_new (
-			NULL,
-			GTK_DIALOG_DESTROY_WITH_PARENT,
-			GTK_MESSAGE_ERROR,
-			GTK_BUTTONS_OK,
-			txt);
-		g_signal_connect (dialog, "response",
-				  G_CALLBACK (gtk_widget_destroy), NULL);
-	
-		gtk_widget_show (dialog);
 
 		CORBA_exception_free (&ev);
 
-		g_free (txt);
 		g_free (err);
 
 		return NULL;

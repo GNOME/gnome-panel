@@ -366,6 +366,58 @@ validate_for_filename (char *file)
 	}
 }
 
+static char *
+get_schema (const char *dir)
+{
+	char *schema = g_strdup (dir);
+	char *p = strchr (schema, ':');
+	if (p == NULL) {
+		g_free (schema);
+		return NULL;
+	} else {
+		*p = '\0';
+		return schema;
+	}
+}
+
+static char *
+get_unique_name (const char *dir, const char *name)
+{
+	int i;
+	char *schema;
+	char *full, *test;
+
+	schema = get_schema (dir);
+
+	full = g_strdup_printf ("%s/%s.desktop", dir, name);
+	if ( ! panel_uri_exists (full)) {
+		test = g_strdup_printf ("%s:%s.desktop", schema, name);
+		if ( ! panel_uri_exists (test)) {
+			g_free (schema);
+			g_free (test);
+			return full;
+		}
+		g_free (test);
+	}
+	g_free (full);
+
+	i = 2;
+	for (;;) {
+		full = g_strdup_printf ("%s/%s%d.desktop", dir, name, i++);
+
+		if ( ! panel_uri_exists (full)) {
+			test = g_strdup_printf ("%s:%s.desktop", schema, name);
+			if ( ! panel_uri_exists (test)) {
+				g_free (schema);
+				g_free (test);
+				return full;
+			}
+			g_free (test);
+		}
+		g_free (full);
+	}
+}
+
 static void
 really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 {
@@ -373,7 +425,6 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	char *dir = g_object_get_data (G_OBJECT (d), "dir");
 	GnomeDesktopItem *ditem;
 	GError *error = NULL;
-	int i;
 	char *name, *loc;
 
 	if (response != GTK_RESPONSE_OK) {
@@ -403,17 +454,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 
 	validate_for_filename (name);
 
-	loc = g_strdup_printf ("%s/%s.desktop", dir, name);
-
-	i = 2;
-	while (panel_uri_exists (loc)) {
-		g_free (loc);
-		/* FIXME: test for schema:basename.desktop as well
-		 * here!!!! */
-		loc = g_strdup_printf ("%s/%s%d.desktop",
-				       dir, name,
-				       i ++);
-	}
+	loc = get_unique_name (dir, name);
 	gnome_desktop_item_set_location_file (ditem, loc);
 	g_free (name);
 

@@ -39,8 +39,39 @@ dialog_destroyed (GtkWidget *dialog, gpointer data)
 		gtk_main_quit ();
 }
 
+static gboolean
+is_an_uri (const char *uri)
+{
+	GnomeVFSURI *suri = gnome_vfs_uri_new (uri);
+	if (suri == NULL)
+		return FALSE;
+	gnome_vfs_uri_unref (suri);
+	return TRUE;
+}
+
+static char *
+get_uri (const char *arg)
+{
+	char *uri;
+
+	if (is_an_uri (arg))
+		return g_strdup (arg);
+
+	if (g_path_is_absolute (arg)) {
+		uri = gnome_vfs_get_uri_from_local_path (arg);
+	} else {
+		char *cur = g_get_current_dir ();
+		char *full = g_build_filename (cur, arg, NULL);
+		g_free (cur);
+		uri = gnome_vfs_get_uri_from_local_path (full);
+		g_free (full);
+	}
+
+	return uri;
+}
+
 int
-main(int argc, char * argv[])
+main (int argc, char * argv[])
 {
 	poptContext ctx;
 	GnomeProgram *program;
@@ -61,52 +92,31 @@ main(int argc, char * argv[])
 
 	if (desktops == NULL ||
 	    desktops[0] == NULL) {
-		fprintf (stderr, "gnome-desktop-item-edit: no filename to edit\n");
+		fprintf (stderr, "gnome-desktop-item-edit: no file to edit\n");
 		return 0;
 	}
 
 	info = gnome_vfs_file_info_new ();
 
 	for (i = 0; desktops[i] != NULL; i++) {
-		char *uri = g_strdup (desktops[i]);
+		char *uri = get_uri (desktops[i]);
 		GtkWidget *dlg = NULL;
 
 		gnome_vfs_file_info_clear (info);
 
 		if (gnome_vfs_get_file_info
 		    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
-			g_free (uri);
-
-			if (g_path_is_absolute (desktops[i])) {
-				uri = gnome_vfs_get_uri_from_local_path
-					(desktops[i]);
+			/* ok, this doesn't exist, really */
+			if (is_ext (desktops[i], ".directory")) {
+				char *dirname = g_path_get_dirname (uri);
+				char *basename = g_path_get_basename (dirname);
+				dlg = panel_edit_direntry (dirname, basename);
+				g_free (basename);
+				g_free (dirname);
 			} else {
-				char *cur = g_get_current_dir ();
-				char *full = g_build_filename
-					(cur, desktops[i], NULL);
-				g_free (cur);
-				uri = gnome_vfs_get_uri_from_local_path (full);
-				g_free (full);
-			}
-
-			gnome_vfs_file_info_clear (info);
-			if (gnome_vfs_get_file_info
-			    (uri, info, GNOME_VFS_FILE_INFO_DEFAULT) != GNOME_VFS_OK) {
-				g_free (uri);
-				/* FIXME: we now assume these are uris, this is all
-				 * somewhat broken */
-				/* ok, this doesn't exist, really */
-				if (is_ext (desktops[i], ".directory")) {
-					char *dirname = g_path_get_dirname (desktops[i]);
-					char *basename = g_path_get_basename (dirname);
-					dlg = panel_edit_direntry (dirname, basename);
-					g_free (basename);
-					g_free (dirname);
-				} else {
-					char *dirname = g_path_get_dirname (desktops[i]);
-					dlg = panel_edit_dentry (desktops[i], dirname);
-					g_free (dirname);
-				}
+				char *dirname = g_path_get_dirname (uri);
+				dlg = panel_edit_dentry (uri, dirname);
+				g_free (dirname);
 			}
 		}
 

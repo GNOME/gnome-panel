@@ -164,6 +164,7 @@ kill_free_drawers (void)
 
 static const struct poptOption options[] = {
   {"profile", '\0', POPT_ARG_STRING, &profile_name, 0, N_("Specify a profile name to load"), NULL},
+  POPT_AUTOHELP
   {NULL, '\0', 0, NULL, 0}
 };
 

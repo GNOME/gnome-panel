@@ -1699,16 +1699,10 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 		insertion_pos = pd->insertion_pos;
 	
 	if (!load_status_applet (panel, insertion_pos, FALSE, NULL)) {
-		GtkWidget *mbox;
-		mbox = gtk_message_dialog_new (NULL, 0,
-					       GTK_MESSAGE_INFO,
-					       GTK_BUTTONS_CLOSE,
-					       _("You already have a status "
-						 "dock on the panel. You can "
-						 "only have one"));
-		gtk_window_set_wmclass(GTK_WINDOW(mbox),
-				       "no_more_status_dialog","Panel");
-		gtk_widget_show_all (mbox);
+		panel_info_dialog ("no_more_status_dialog",
+				   _("You already have a status "
+				     "dock on the panel. You can "
+				     "only have one"));
 	}
 }
 

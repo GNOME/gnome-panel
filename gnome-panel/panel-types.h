@@ -25,7 +25,7 @@ typedef enum {
 typedef enum {
 	PANEL_BACK_NONE,
 	PANEL_BACK_COLOR,
-	PANEL_BACK_PIXMAP,
+	PANEL_BACK_PIXMAP
 } PanelBackType;
 
 typedef enum {
