@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-core HEAD\n"
-"POT-Creation-Date: 2002-12-10 13:27+1300\n"
+"POT-Creation-Date: 2002-12-12 01:50+0800\n"
 "PO-Revision-Date: 2002-03-15 12:20+0800\n"
 "Last-Translator: Hasbullah Bin Pit <sebol@ikhlas.com>\n"
 "Language-Team: ms <sebol@ikhlas.com>\n"
@@ -27,7 +27,7 @@ msgid "There was an error displaying help: %s"
 msgstr "Terdapat ralat memapar bantuan: %s"
 
 #: applets/fish/fish.c:194
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -36,7 +36,7 @@ msgid ""
 msgstr ""
 "Amaran: arahan nampaknya menjadi sesuatu yang berguna.\n"
 "Oleh kerana ini adalah aplet tak berguna, anda tak perlu melakukannya.\n"
-"Kami menasihatkan anda menolak penggunaan wanda untuk apa-apa\n"
+"Kami menasihatkan anda menolak penggunaan %s untuk apa-apa\n"
 "yang mana menjadikan aplet \"praktikal\" atau berguna."
 
 #: applets/fish/fish.c:378 applets/fish/fish.c:536
@@ -45,17 +45,17 @@ msgid "%s the Fish"
 msgstr "Ikan %"
 
 #: applets/fish/fish.c:379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s has no use what-so-ever. It only takes up disk space and compilation "
 "time, and if loaded it also takes up precious panel space and memory. If "
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"Aplet ini tiada gunanya. Ianya hanya mengambil ruang cakera danmasa "
+"%s ini tiada gunanya. Ianya hanya mengambil ruang cakera dan masa "
 "pengkompilan, dan jika ianya dimuatkan ia juga mengambil ruang berharga "
-"panel dan memoriJika sesiapa didapati menggunakan aplet ini, dia patut "
-"diperiksa oleh pakar sakit jiwa secepat mungkin"
+"panel dan memori Jika sesiapa didapati menggunakan aplet ini, dia patut "
+"diperiksa oleh pakar sakit jiwa."
 
 #: applets/fish/fish.c:400
 msgid "(with minor help from George)"
@@ -85,12 +85,12 @@ msgid "Unable to locate the command to execute"
 msgstr "Tak menjumpai arahan untuk dilaksanakan"
 
 #: applets/fish/fish.c:541
-#, fuzzy, no-c-format
+#, no-c-format
 msgid "%s the GNOME Fish Says:"
-msgstr "Ikan GNOME %s"
+msgstr "%s Ikan GNOME berkata:"
 
 #: applets/fish/fish.c:666
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to execute '%s'\n"
 "\n"
@@ -142,7 +142,6 @@ msgid "Frame_s in animation:"
 msgstr "_Kerangka pada animasi:"
 
 #: applets/fish/fish.glade.h:5
-#, fuzzy
 msgid "GNOME FIsh Preferences"
 msgstr "Keutamaan Ikan GNOME"
 
@@ -347,9 +346,8 @@ msgid "Display Internet time, which is same all over the world"
 msgstr "Papar masa Internet, dimana ianya sama di seluruh dunia"
 
 #: applets/gen_util/clock.schemas.in.h:3
-#, fuzzy
 msgid "Display date in the Clock, in addition to time"
-msgstr "Papar tarikh pada aplet,sebagai tambahan kepada masa"
+msgstr "Papar tarikh pada Jam, sebagai tambahan kepada masa"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display seconds in time"
@@ -372,14 +370,12 @@ msgid "Sets the hour format, may be either 12 or 24"
 msgstr "Tetapkan format jam, samada 12 atau 24"
 
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in Clock"
-msgstr "Papar tarikh di aplet"
+msgstr "Papar tarikh pada Jam"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in a tooltip when a mouse is over the Clock"
-msgstr "Papar tarikh pada tooltip bila tetikus di atas aplet"
+msgstr "Papar tarikh pada tooltip bila tetikus di atas Jam"
 
 #: applets/gen_util/clock.schemas.in.h:11
 msgid "Show date in tooltip"
@@ -476,7 +472,7 @@ msgid "_Check for mail"
 msgstr "_Periksa mel"
 
 #: applets/gen_util/mailcheck.c:196
-#, fuzzy, c-format
+#, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Terdapat ralat melaksanakan %s: %s"
 
@@ -690,9 +686,8 @@ msgid "Command to execute when checking mail"
 msgstr "Arahan untuk dilaksanakan bila memeriksa mel"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when you click on the Inbox Monitor"
-msgstr "Arahan untuk dilaksanakan bila diklik"
+msgstr "Arahan untuk dilaksanakan bila anda klik pada Monitor PetiMasuk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
 msgid "Command to run before checking mail"
@@ -771,12 +766,11 @@ msgid "This is how we process the mail, process the mail, process the mail..."
 msgstr "Inilah bagaimana kami memproses mel, proses mel, proses mel..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
-#, fuzzy
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
 msgstr ""
-"Inilah Animasi yang dipaparkan semasa penggunaan normal bagi aplet Monitor "
+"Inilah Animasi yang dipaparkan semasa penggunaan normal bagi Monitor "
 "PetiMasuk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
@@ -784,14 +778,13 @@ msgid "Username on the remote server"
 msgstr "Namapengguna pada pelayan luaran"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
-#, fuzzy
 msgid "We run this command when the user clicks on Inbox Monitor"
-msgstr "Kami melaksanakan arahan ini bila pengguna klik pada aplet"
+msgstr "Kami melaksanakan arahan ini bila pengguna klik pada Monitor PetiMasuk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
-#, fuzzy
 msgid "Whether to reset mail status when you click on Inbox Monitor"
-msgstr "Samasa untuk ulangtetap status mel bila aplet diklik"
+msgstr ""
+"Samada untuk ulangtetap status mel bila anda klik pada Monitor PetiMasuk"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
 msgid "You've got mail!"
@@ -815,24 +808,22 @@ msgid "Columns"
 msgstr "Kolum"
 
 #: applets/gen_util/pager.c:376
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
-msgstr "Ralat memuatkan nilai num_rows bagi aplet penukar ruangkerja: %s\n"
+msgstr "Ralat memuatkan nilai num_rows bagi Penukar Ruangkerja: %s\n"
 
 #: applets/gen_util/pager.c:387
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr ""
-"Ralat memuatkan nilai display_workspace_names bagi aplet penukar ruangkerja: "
-"%s\n"
+"Ralat memuatkan nilai display_workspace_names bagi Penukar Ruangkerja: %s\n"
 
 #: applets/gen_util/pager.c:402
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
-"Ralat memuatkan nilai display_all_workspaces bagi aplet penukar ruangkerja: %"
-"s\n"
+"Ralat memuatkan nilai display_all_workspaces bagi Penukar Ruangkerja: %s\n"
 
 #: applets/gen_util/pager.c:546
 msgid "(c) 2001 Red Hat, Inc."
@@ -1059,13 +1050,12 @@ msgid "_Never group windows"
 msgstr "_Jangan kumpul tetingkap"
 
 #: applets/gen_util/tasklist.schemas.in.h:1
-#, fuzzy
 msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
 "Menentukan bila mengumpulkan tetingkap dari aplikasi sama pada Senarai "
-"Tetingkap.nilai yang sah adalah tidak sekali, auto dan sentiasa."
+"Tetingkap. Nilai yang sah adalah \"tidak sekali\", \"auto\" dan \"sentiasa\"."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -1085,14 +1075,12 @@ msgstr ""
 "Sebaliknya, bertukar ke ruangkerja bagi tetingkap."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
-#, fuzzy
 msgid "Maximum size that Window List requests"
-msgstr "Saiz maksima yang aplet Senarai Tetingkap akan pinta"
+msgstr "Saiz maksimum yang Senarai Tetingkap akan pinta"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
-#, fuzzy
 msgid "Minimum size that Window List requests"
-msgstr "Saiz minima  yang aplet Senarai Tetingkap akan pinta"
+msgstr "Saiz minimum  yang Senarai Tetingkap akan pinta"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
 msgid "Move windows to the current workspace when unminimized"
@@ -1103,26 +1091,26 @@ msgid "Show windows from all workspaces"
 msgstr "Papar tetingkap dari semua ruangkerja"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
-#, fuzzy
 msgid ""
 "This value is the maximum width that Window List requests. The maximum width "
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"Nilai ini adalah nilai lebar maksima yang aplet akan pinta. Ini berguna "
-"untuk menghadkan saiz digunakan pada panel besar dimana aplet ini boleh "
-"memenuhkan keseluruhan ruang, seperti pada panel pinggiran."
+"Nilai ini adalah nilai lebar maksimum yang Senarai Tetingkap akan pinta.  "
+"Tetapan lebar maksimum ini berguna untuk menghadkan saiz digunakan bagi "
+"Senarai Tetingkap pada panel besar seperti panel pinggiran, dimana Senarai "
+"tetingkap boleh memenuhkan keseluruhan ruang yang ada."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
-#, fuzzy
 msgid ""
 "To be usable, Window List requires a minimum width. Window List requests "
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"Aplet Senarai Tetingkap memerlukan lebar minima supaya berguna. Nilai ini "
-"adalah lebar minima yang akan aplet pinta. Ianya berguna untuk panel "
-"gelungsur dan pinggiran, dimana akan meminta lebar default yang amat kecil."
+"Supaya mudah digunakan, Senarai Tetingkap memerlukan lebar minimum supaya "
+"berguna. Nilai ini adalah lebar minima yang akan aplet pinta. Ianya berguna "
+"untuk panel gelungsur dan pinggiran, dimana akan meminta lebar default yang "
+"amat kecil."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1496,9 +1484,8 @@ msgid "Close _drawer when launcher is clicked"
 msgstr "_Tutup laci jika pelancar diklik"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:3
-#, fuzzy
 msgid "Drawer and Panel _Animation"
-msgstr "_Hidupkan animasi panel"
+msgstr "_Animasi Laci dan Panel"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:4
 msgid "Fast"
@@ -1625,19 +1612,16 @@ msgid "Unable to take a screenshot of the current desktop."
 msgstr "Tak dapat mencekup skrin desktop semasa. :("
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:2
-#, fuzzy
 msgid "<b>Options</b>"
-msgstr "Opsyen"
+msgstr "<b>Opsyen</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:3
-#, fuzzy
 msgid "<b>Preview</b>"
-msgstr "Prebiu"
+msgstr "<b>Prebiu</b>"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:4
-#, fuzzy
 msgid "Save Screenshot"
-msgstr "Cekupanskrin"
+msgstr "Simpan Cekupanskrin"
 
 #: gnome-panel/gnome-panel-screenshot.glade.h:5
 msgid "Save screenshot to _desktop"
@@ -1846,14 +1830,13 @@ msgid "Specify a profile name to load"
 msgstr "Nyatakan nama profil untuk dimuatkan"
 
 #: gnome-panel/menu.c:240
-#, fuzzy
 msgid "Many, many others..."
-msgstr "Yang lain-lain..."
+msgstr "Banyak, banyak yang lain..."
 
 #. ... from the Monty Pythons show...
 #: gnome-panel/menu.c:242
 msgid "and finally, The Knights Who Say... NI!"
-msgstr "dan akhirnya, Sang Satria berkata ...WAWA!"
+msgstr "dan akhirnya, Sang Satria berkata.. WAWA!"
 
 #: gnome-panel/menu.c:277
 msgid ""
@@ -2081,23 +2064,20 @@ msgid "KDE Menu"
 msgstr "Menu KDE"
 
 #: gnome-panel/menu.c:3036
-#, fuzzy
 msgid "Lock"
-msgstr "Jam"
+msgstr "Kunci"
 
 #: gnome-panel/menu.c:3044 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "Cekupanskrin"
 
 #: gnome-panel/menu.c:3052
-#, fuzzy
 msgid "Search"
-msgstr "Butang Carian"
+msgstr "Carian"
 
 #: gnome-panel/menu.c:3060
-#, fuzzy
 msgid "Run"
-msgstr "_Laksana"
+msgstr "Laksana"
 
 #: gnome-panel/menu.c:3132
 msgid "You cannot remove your last panel."
@@ -2112,9 +2092,8 @@ msgstr ""
 "tetapannya akan hilang. Buang panel ini?"
 
 #: gnome-panel/menu.c:3153
-#, fuzzy
 msgid "Delete Panel"
-msgstr "Pa_dam Panel Ini"
+msgstr "Padam Panel"
 
 #: gnome-panel/menu.c:3392
 msgid "Launcher..."
@@ -2125,9 +2104,8 @@ msgid "Launcher from menu"
 msgstr "Pelancar daripada menu"
 
 #: gnome-panel/menu.c:3407
-#, fuzzy
 msgid "Button"
-msgstr "Butang Laksana"
+msgstr "Butang"
 
 #: gnome-panel/menu.c:3416 gnome-panel/menu.c:3917 gnome-panel/menu.c:3945
 #: gnome-panel/menu.c:4141
@@ -2167,7 +2145,7 @@ msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
-"Logkeluar sessi ini untuk logmasuk sebagai pengguna lain atau untuk tutup "
+"Logkeluar sesi ini untuk logmasuk sebagai pengguna lain atau untuk tutup "
 "komputer"
 
 #: gnome-panel/menu.c:3773
@@ -2321,9 +2299,10 @@ msgid ""
 "\n"
 "Do you want to delete the applet from your configuration?"
 msgstr ""
-"Terdapat masalah memuatkan aplet '%s'\n"
-"\n"
+"Panel dirundung masalah ketika memuatkan  \"%s\"\n"
 "Perincian: %s"
+"\n"
+"Adakah anda ingin memadam aplet drpd konfigurasi anda?"
 
 #: gnome-panel/panel-applet-frame.c:882
 msgid "Unable to obtain AppletShell interface from control\n"
@@ -2358,13 +2337,12 @@ msgid "Arro_ws on hide buttons"
 msgstr "Pa_nah pada butang sembunyi"
 
 #: gnome-panel/panel-config.c:624
-#, fuzzy
 msgid "Miscellaneous:"
-msgstr "Lain-lain"
+msgstr "Lain-lain:"
 
 #: gnome-panel/panel-config.c:642
 msgid "Current screen:"
-msgstr "Layar semasa"
+msgstr "Skrin semasa:"
 
 #: gnome-panel/panel-config.c:658
 msgid "Current monitor:"
@@ -2383,33 +2361,28 @@ msgid "Orientation:"
 msgstr "Orientasi:"
 
 #: gnome-panel/panel-config.c:1008
-#, fuzzy
 msgid "Hori_zontal"
-msgstr "Offset meng_ufuk"
+msgstr "Meng_ufuk"
 
 #: gnome-panel/panel-config.c:1020
-#, fuzzy
 msgid "_Vertical"
-msgstr "Offset Men_egak:"
+msgstr "Men_egak"
 
 #: gnome-panel/panel-config.c:1030
-#, fuzzy
 msgid "Position:"
-msgstr "_Posisi:"
+msgstr "Posisi:"
 
 #: gnome-panel/panel-config.c:1045
-#, fuzzy
 msgid "H_orizontal:"
-msgstr "Offset meng_ufuk"
+msgstr "Meng_ufuk:"
 
 #: gnome-panel/panel-config.c:1065
-#, fuzzy
 msgid "Ver_tical:"
-msgstr "Offset Men_egak:"
+msgstr "Men_egak:"
 
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
-msgstr ""
+msgstr "_Jarak drpd pinggir:"
 
 #: gnome-panel/panel-config.c:1189
 msgid "_Size:"
@@ -2463,36 +2436,32 @@ msgstr "Imej"
 
 #: gnome-panel/panel-config.c:1435
 msgid "Transparent"
-msgstr ""
+msgstr "Telus"
 
 #: gnome-panel/panel-config.c:1450
-#, fuzzy
 msgid "_Color:"
-msgstr "Warna"
+msgstr "_Warna"
 
 #. image frame
 #: gnome-panel/panel-config.c:1480
-#, fuzzy
 msgid "Image:"
-msgstr "Imej"
+msgstr "Imej:"
 
 #: gnome-panel/panel-config.c:1512
 msgid "T_ile"
-msgstr ""
+msgstr "T_ile"
 
 #: gnome-panel/panel-config.c:1517
 msgid "_Scale"
-msgstr ""
+msgstr "_Skala"
 
 #: gnome-panel/panel-config.c:1521
-#, fuzzy
 msgid "St_retch"
-msgstr "_Regang imej"
+msgstr "_Regang"
 
 #: gnome-panel/panel-config.c:1535
-#, fuzzy
 msgid "Rotate image when panel is _vertical"
-msgstr "Kilaskan imej untuk panel me_negak"
+msgstr "Kilaskan imej bila panel me_negak"
 
 #: gnome-panel/panel-config.c:1596
 msgid "Edge panel"
