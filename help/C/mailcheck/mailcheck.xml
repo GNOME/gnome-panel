@@ -1,535 +1,349 @@
 <?xml version="1.0"?>
-<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-    "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY legal SYSTEM "legal.xml"> <!-- this is file with legalinfo; -->
-                                   <!-- no need to edit it. --> 
-<!ENTITY version "2.1">      <!-- replace with application version -->
-<!ENTITY date "May 21, 2002"> <!-- date the manual was last updated -->
-<!ENTITY app "<application>Inbox monitor</application>">
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.0">
+  <!ENTITY date "May 2002">
+  <!ENTITY applet "Inbox Monitor">
 ]>
-
-
-<!-- 
-  This is a GNOME documentation template, designed by the GNOME
-  Documentation Project Team. Please use it for writing GNOME
-  documentation, making obvious changes. In particular, all the words
-  written in UPPERCASE (with the exception of GNOME) should be
-  replaced. As for "legalnotice", please leave the reference
-  unchanged.
-
-  Remember that this is a guide, rather than a perfect model to follow
-  slavishly. Make your manual logical and readable.  And don't forget
-  to remove these comments in your final documentation!  ;-)
--->
 
 <!-- 
       (Do not remove this comment block.)
   Maintained by the GNOME Documentation Project
   http://developer.gnome.org/projects/gdp
   Template version: 2.0 beta
-  Template last modified Jan 2, 2002
+  Template last modified Apr 11, 2002
 -->
-
-
 <!-- =============Document Header ============================= -->
-
-<article id="index" lang="en"> 
+<article id="index" lang="en">
 <!-- please do not change the id; for translations, change lang to -->
 <!-- appropriate code -->
-
-
- 
-
-<articleinfo>
-  <title>Inbox Monitor Manual</title>
- <!-- According to GFDL, the Title Page "should use  a title distinct from that of 
-      the Document, and from those of previous versions (which should, if there were 
-      any, be listed in the History section of the Document). You may use the same 
-      title as a previous version if the original publisher of that version gives 
-      permission." An easy way to satisfy this requirement (if you do
-      not have orginal publisher's permission)  is to include version
-      number as part of the title, e.g. MY-GNOME-APP V2.0
-   -->
-  <copyright>
-	<year>2000</year>
-	<holder>Telsa Gwynne</holder>
-  </copyright>
-  <copyright>
-	<year>2000</year>
-	<year>2001</year>
-	<year>2002</year>
-	<holder>Eric Baudais</holder>
-  </copyright>
-
-
-  
-  <!-- translators: uncomment this:
+  <articleinfo> 
+	 <title>&applet; Applet Manual V&manrevision;</title> 
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
 
   <copyright>
-   <year>2000</year>
+   <year>2002</year>
    <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
   </copyright>
 
    -->
-
-
-
 <!-- An address can be added to the publisher information.  If a role is 
      not specified, the publisher/author is the same for all versions of the 
      document.  -->
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
 
-  <publisher>
-	<publishername>
-	  GNOME Documentation Project
-	</publishername>
-  </publisher>
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
 
+	 <authorgroup> 
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address> 
+		  </affiliation> 
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address> 
+		  </affiliation> 
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address> 
+		  </affiliation> 
+		</author>  
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
 
- &legal; <!-- This file  contains link to license for the documentation (GNU
-               FDL), and other
-               legal stuff such as "NO WARRANTY" statement. Please do
-               not change any of this. -->
-
-
-  <legalnotice id="feedback">
-      <title>Feedback Information</title>
-	<para>
-	  To report a bug or make a suggestion regarding this
-	  application or this documentation, please see  the
-	  <ulink type="help"
-	  url="ghelp:gnome-feedback">GNOME Feedback Page</ulink>.
-	</para>
-  </legalnotice>
-
-  <authorgroup>
-	<author>
-	  <firstname>Telsa </firstname>
-	  <surname> Gwynne</surname>
-	  <affiliation>
-		<orgname>GNOME Documentation Project</orgname>
-		<address> <email>telsa@linuxchix.org</email> </address>
-	  </affiliation>
-	</author>
-	<author>
-	  <firstname>Eric </firstname>
-	  <surname> Baudais</surname>
-	  <affiliation>
-		<orgname>GNOME Documentation Project</orgname>
-		<address><email>baudais@kkpsi.org</email></address>
-	  </affiliation>
-	</author>
-  </authorgroup>
-
-
-
-<!-- According to GNU FDL, revision history is mandatory if you are -->
-<!-- modifiyng/reusing someone else's document.  If not, you can omit it. -->  
-
-
-  <revhistory>
-
-	  <revision>
-		<revnumber>2.0</revnumber>
-		<date>November 2001</date>
-		<revdescription>
-		  <para role="author">Eric Baudais</para>
-		  <para role="publisher">GNOME Documentation Project</para>
-		  <para>This was the second release for GNOME 1.4</para>
-		</revdescription>
-	  </revision>
-
-
-	<revision>
-	  <revnumber>1.0</revnumber>
-	  <date>April 2000</date>
-	  <revdescription>
-	  <para role="author">Telsa Gwynne</para>
-	  <para role="author">Eric Baudais</para>
-                   <para role="publisher">GNOME Documentation
-                    Project</para>
-	            <para>This was the original release, for GNOME 1.2</para>
-          </revdescription>
-
-
-	</revision>
-
-  </revhistory>
-
-    <releaseinfo>
-       This manual describes version &version; of &app;. It was
-       last updated on &date;.
-    </releaseinfo>
- </articleinfo>
-
-<indexterm zone="index"><primary>Inbox Monitor</primary></indexterm>
-
- <sect1 id="panel-applets-inboxmonitor">
-  <title>The Inbox Monitor</title> 
-
-  <para>
-    The &app; is an applet which
-    sits in your panel and tells you when you have new email. To add 
-    this applet to the panel, right-click on the panel and choose
-    <menuchoice>
-     <guimenu>Add to panel</guimenu>
-     <guisubmenu>Internet</guisubmenu>
-     <guimenuitem>Inbox Monitor</guimenuitem>
-    </menuchoice>
-  </para>
-
-    <figure id="inbox-monitor-core-fig">
-      <title>Inbox Monitor</title>
-      <screenshot>
-	<mediaobject>
-	  <imageobject>
-	    <imagedata fileref="figures/mailcheck-applet.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="figures/mailcheck-applet.eps" format="EPS"/>
-	  </imageobject>
-	  <textobject>
-	    <phrase>Inbox Monitor</phrase>
-	  </textobject>
-	</mediaobject>
-      </screenshot>
-    </figure>
-
-
-   <sect2 id="inboxmonitor-usage">
-    <title> Usage</title>
-    <para>
-      You don't need to do anything in particular to run this applet.
-      Providing it is looking in the right place for your email, it
-      will run itself quite happily. The following options, however,
-      are available:
-    </para>
- 
-    <itemizedlist>
-     <listitem>
-      <para>
-        Clicking <mousebutton>mouse button 1</mousebutton> does nothing
-        unless you have told it to start a program when you do this. You
-        do this with the properties box described <link
-        linkend="inbox-monitor-prefs">below</link>.
-      </para>
-     </listitem>
-     <listitem>
-      <para>
-        Holding down <mousebutton>mouse button 2</mousebutton> allows
-        you to drag the applet around the panel (and between panels).
-        option.
-      </para>
-     </listitem>
-     <listitem>
-      <para>
-        Clicking <mousebutton>mouse button 3</mousebutton> brings up
-        the typical <guimenu>applet menu</guimenu> which includes a 
-		<guimenuitem>Check for mail</guimenuitem> button, an
-        <guimenuitem>About</guimenuitem> box, a 
-		<guimenuitem>Help</guimenuitem> browser, and a 
-		<link linkend="inbox-monitor-prefs">properties</link> dialog.
-      </para>
-
-	  <para>
-		Clicking on the <guimenuitem>Check for mail</guimenuitem> button 
-		will force the applet to check your inbox for any mail.  The 
-		applet will then update its status depending if you have any mail 
-		waiting in your inbox.
-	  </para>
-     </listitem>
-    </itemizedlist>
-   </sect2>
- 
-   <sect2 id="inbox-monitor-prefs">
-    <title>Preferences</title>
-    <para>
-       The inbox monitor <interface>properties dialogue box</interface> is
-       divided into two sections, one for what the mail check applet
-       does, and one for where it checks for email.
-    </para>
-
-      <figure id="inbox-monitor-settings-mailcheck-fig">
-	<title>Properties dialog &mdash; Mail check tab</title>
-	<screenshot>
-	  <mediaobject>
-	    <imageobject>
-	      <imagedata fileref="figures/mailcheck-properties-mailcheck.png" format="PNG"/>
-	    </imageobject>
-	    <imageobject>
-	      <imagedata fileref="figures/mailcheck-properties-mailcheck.eps" format="EPS"/>
-	    </imageobject>
-	    <textobject>
-	      <phrase>Properties dialog &mdash; Mail check tab</phrase>
-	    </textobject>
-	  </mediaobject>
-	</screenshot>
-      </figure>
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Mail Check Applet Manual, for GNOME 1.4</revnumber> 
+		  <date>November 2001</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Mail Check Applet Manual, for GNOME 1.2</revnumber> 
+		  <date>April 2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> This manual describes version &appletversion; of &applet;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Feedback</title> 
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this
+		  manual, follow the directions in the 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Inbox Monitor</primary> 
+  </indexterm> 
   
-    <variablelist>
-     <varlistentry>
-      <term>Mail check options</term>
-      <listitem>
-       <para>
-         The mail check options have six sections:
-       </para>
- 
-       <variablelist>
-        <varlistentry>
-         <term>Execute...before each update</term>
-         <listitem>
-          <para>
-            Sometimes you may want to run something such as
-            <application>fetchmail</application> before the applet 
-            checks for new mail. To do this, check the checkbox and
-            fill in the program name in the space here.
-          </para>
-         </listitem>
-        </varlistentry>
- 
-        <varlistentry>
-         <term>Execute...when new mail arrives</term>
-         <listitem>
-          <para>
-            Sometimes you may want other programs to run when new mail
-            arrives. It is common to tell the machine to play a noise
-            at you, for example. Checking this checkbox and filling in
-            the command (such as <command>mpg123
-            <replaceable>sillynoise.mpg</replaceable></command> or
-            <command>esdplay
-            <replaceable>sillynoise.wav</replaceable></command>) will
-            let this happen.
-          </para>
-         </listitem>
-        </varlistentry>
- 
-        <varlistentry>
-         <term>Execute...when clicked</term>
-         <listitem>
-          <para>
-            By putting a program name (generally a mail-reader such as
-            <application>balsa</application> or <application>spruce</application>
-            here and clicking on the checkbox, you can set things up so that
-            when you click <mousebutton>button 1</mousebutton> on the 
-            applet, that program will be automatically run.
-          </para>
-          <para>
-           By clicking the checkbox below you can set things up so that
-           the number of unread mails will be set to zero and thus any 
-           animation will be stopped when you click the applet.
-          </para>
-         </listitem>
-        </varlistentry>
- 
-        <varlistentry>
-         <term>Check for mail every...</term>
-         <listitem>
-          <para>
-            By clicking on this checkbox you will enable the applet
-            to check for mails automatically.
-            This option will be turned off if an error 
-            (eg. wrong password) occured.
-          </para>
-          <para>
-            You can adjust the range for checking whether mail has arrived
-            between 1440 minutes (once a day) to never. Setting it to never
-            is silly and will confuse it. The default value is every two
-            minutes.
-          </para>
-         </listitem>
-        </varlistentry>
- 
-        <varlistentry>
-         <term>Play a sound when new mail arrives</term>
-         <listitem>
-          <para>
-            The sound played if you check this <guibutton>checkbox</guibutton>
-            is an alarm bell. It is contained in
-            <filename>$prefix/sound/events/mailcheck.soundlist</filename>;
-            if you want to change it to a different sound, alter that and
-            put the sound in <filename>$prefix/sounds/</filename>.
-          </para>
-         </listitem>
-        </varlistentry>
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"> 
+	 <title>Introduction</title> 
+	 <figure id="mailcheck-fig"> 
+		<title>&applet; Applet</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Shows &applet; applet. Contains a message.
+				</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+	 <para>The <application>&applet;</application> applet checks your mail server at regular intervals 
+	 to determine if there is new mail in your mailbox. The applet displays a message to inform you 
+	 whether you have new mail. </para> 
+	 <para>To add <application>&applet;</application> to a panel, right-click on the panel to open the 
+		panel popup menu, then choose 
+		<menuchoice> 
+		  <guimenu>Add to Panel</guimenu> 
+		  <guisubmenu>Internet</guisubmenu> 
+		  <guimenuitem>Inbox Monitor</guimenuitem> 
+		</menuchoice>.</para> 
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"> 
+	 <title>Usage</title> 
+	 
+		<para>To check the mail server for new messages, right-click on the applet, then choose 
+		<guimenuitem>Check for mail</guimenuitem>. <application>&applet;</application> contacts the mail
+		server to determine if there is new mail on the server.</para>
+		<para>You can configure <application>&applet;</application> to run a command when 
+		you click on the applet. See <xref linkend="mailcheck-mailcheck"/> for information about how to 
+		configure <application>&applet;</application> to run commands.</para>
+
+  </sect1>
   
-        <varlistentry>
-         <term>Select animation</term>
-         <listitem>
-          <para>
-            By clicking on the <guilabel>box with the animation name</guilabel>,
-            you can get a list of different pictures which have different
-            animations when new email arrives.
-          </para>
-         </listitem>
-        </varlistentry>
-       </variablelist>
-      </listitem>   
-     </varlistentry>
-    </variablelist>
+<!-- ============= Customization ============================= -->
 
+  <sect1 id="mailcheck-prefs"> 
+	 <title>Settings</title> 
+	 <para>To configure <application>&applet;</application>, right-click on the
+	 applet, then choose <guimenuitem>Preferences</guimenuitem> from the applet popup menu.</para> 
 
-      <figure  id="inbox-monitor-settings-mailbox-fig">
-	<title>Properties dialog &mdash; Mailbox tab</title>
-	<screenshot>
-	  <mediaobject>
-	    <imageobject>
-	      <imagedata fileref="figures/mailcheck-properties-mailbox.png" format="PNG"/>
-	    </imageobject>
-	    <imageobject>
-	      <imagedata fileref="figures/mailcheck-properties-mailbox.eps" format="EPS"/>
-	    </imageobject>
-	    <textobject>
-	      <phrase>Properties dialog &mdash; Mailbox tab</phrase>
-	    </textobject>
-	  </mediaobject>
-	</screenshot>
-      </figure>
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>Mail check</title> 
+			
+		<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Before each update</guilabel></term> 
+			 <listitem> 
+			 <para>Select this option to run a command before <application>&applet;</application>
+			 checks for new mail. Type the command in the text box provided. For example, type the 
+			 command to run the dialup software that you use to connect to the Internet.</para> 
+			 <para>Default: unselected.</para> 
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>When new mail arrives</guilabel></term>
+			 <listitem> 
+			 <para>Select this option to run a command when <application>&applet;</application>
+			 detects new mail. Type the command in the text box provided. For example, type 
+			 <command>fetchmail</command> to run the <application>fetchmail</application> program
+			 to retrieve mail from a remote mail server.</para> 
+			 <para>Default: unselected.</para> 
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>When clicked</guilabel></term> 
+			 <listitem> 
+			 <para>Select this option to run a command when you click on the 
+			 <application>&applet;</application> applet. Type the command in the text box provided. 
+			 For example, to start a <application>Netscape Messenger</application> window when you 
+			 click on the applet, type <command>netscape -mail</command> in the text box.</para> 
+			 <para>Default: unselected.</para> 
+			 </listitem> 
+		  </varlistentry>  
+		  <varlistentry> 
+			 <term><guilabel>Set the number of unread mails to zero</guilabel></term> 
+			 <listitem> 
+			 <para>Select this option to set the number of unread messages to zero 
+			 when you click on the applet.</para> 
+			 <para>Default: unselected. </para> 
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Check for mail every</guilabel></term> 
+			 <listitem> 
+			 <para>Use this spin box to specify how often <application>&applet;</application>
+			 checks the mail server to determine if there is new mail. </para> 
+			 <para>Default: 2 minutes, 0 seconds.</para> 
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Play a sound when new mail arrives</guilabel></term> 
+			 <listitem> 
+			 <para>Select this option to play a default sound when the applet finds new mail 
+			 on the mail server. The default sound file is specified in
+			 <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename>. </para> 
+			 <para>Default: unselected.</para> 
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Select animation</guilabel></term> 
+			 <listitem> 
+			 <para>Use this drop-down list box to select the type of display to use
+			 in the applet. You can display text, an image, or an animation.</para> 
+			 <para>Default: Text only.</para> 
+			 </listitem> 
+		  </varlistentry> 
+		</variablelist> 
+	 </sect2>
 
-    <variablelist>
-     <varlistentry>
-      <term>Mailbox options</term>
-      <listitem>
-       <para>
-         The mailbox options have four sections, some of which will be
-         greyed-out.
-       </para>
-           
-       <para>
-         By clicking on the <guilabel>box with the mailbox location</guilabel>,
-         you can tell the &app; where to look for your incoming email.
-       </para>
-       <itemizedlist>
-        <listitem>
-         <para>
-           When local mailspool or local maildir are selected as the location
-           for the mailbox, then you can fill in the details on which file
-           or directory the applet should check for new email. You can only
-           put one filename here. The section about mail servers will be
-           greyed out.
-          </para>
-         </listitem>
-         <listitem>
-          <para>
-           When remote POP3 or remote IMAP are selected as the location for
-           the mailbox, then you can fill in the details on the mail server,
-           username and password. If the you don't supply the password, the
-           applet will ask for it when it first tries to check for mail.
-           The section about local filenames will be greyed out.
-         </para>
-        </listitem>
-       </itemizedlist>
-      </listitem>
-     </varlistentry>    
-   </variablelist>
-  </sect2>
- 
-  <sect2 id="inbox-monitor-bugs">
-   <title> Known bugs and limitations</title>
-   <itemizedlist>
-    <listitem>
-     <para>
-       Setting something to be executed before each update can hang the
-       applet and the panel.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-       Sometimes the animation stops happening after prolonged use.
-     </para>
-    </listitem>
-    <listitem>
-     <para>
-       If you use a mail filter such as <application>procmail</application>,
-       which sorts email into different folders, the applet won't check them
-       all for new email. It will only look at one file.
-     </para>
-    </listitem>
-   </itemizedlist>
-  </sect2>
+	 <sect2 id="mailcheck-mailbox"> 
 
-  <!-- ============= Authors ================================ -->
+		<title>Mailbox</title> 
 
-  <sect2 id="authors">
-   <title>Authors</title>
-   <para>
-    <application>Mail Check</application> was written by  
-      Miguel de Icaza (<email>miguel@gnu.org</email>),
-      Jacob Berkman (<email>jberkman@andrew.cmu.edu</email>),
-      Jaka Mocnik (<email>jaka.mocnik@kiss.uni-lj.si</email>) and
-      Lennart Poettering (<email>poettering@gmx.net</email>).  
-      Please send all comments, suggestions, and bug 
-      reports to the <ulink url="http://bugs.gnome.org/" type="http">GNOME
-      bug tracking database</ulink>. (Instructions for submitting bug
-      reports can be found <ulink
-      url="http://bugs.gnome.org/Reporting.html" type="http">
-      on-line</ulink>. If you are using
-      GNOME 1.1 or later, you can also use <application>Bug Report
-      Tool</application> (<command>bug-buddy</command>), available in the
-      <guisubmenu>Utilities</guisubmenu> submenu of <guimenu>Main
-      Menu</guimenu>, for submitting bug reports.
-   </para>
+		<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Mailbox resides on</guilabel></term> 
+			 <listitem> 
+			 <para>Select one of the following options from the drop-down list box to
+			 specify the type of mail server on which your mailbox resides:</para> 
+			 <itemizedlist>
+			 	<listitem><para><guilabel>Local mailspool</guilabel>: if your mailbox 
+			 	resides on a shared mail spool area on a local mail server.</para></listitem>
+			 	<listitem><para><guilabel>Local maildir</guilabel>: if your mailbox 
+			 	is set up as a <command>maildir</command> mailbox that resides in your 
+			 	local directory tree.</para></listitem>
+			 	<listitem><para><guilabel>Remote POP3-server</guilabel>: if your mailbox
+			 	resides on a remote Post Office Protocol 3 (POP3) mail server.</para></listitem>
+			 	<listitem><para><guilabel>Remote IMAP-server</guilabel>: if your mailbox
+			 	resides on a remote Internet Message Access Protocol (IMAP) server.</para></listitem>
+			 </itemizedlist>
+			 <para>Default: <guilabel>Local mailspool</guilabel></para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Mail spool file</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Local mailspool</guilabel> or
+			 <guilabel>Local maildir</guilabel> as your mailbox location, 
+			 use this field to specify the location to check for new messages.</para> 
+			 <para>Default: The default depends on the operating system.</para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Mail server</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
+			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
+			 use this text box to specify the name of the remote mail server.</para> 
+			 <para>Default: mail.</para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Username</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
+			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
+			 use this text box to specify the username to access the remote mail server.</para> 
+			 <para>Default: none.</para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Password</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
+			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
+			 use this text box to specify the password to access the remote mail server.</para> 
+			 <para>Default: none.</para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Folder</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Remote IMAP-server</guilabel> as your mailbox 
+			 location, use this text box to specify the folder on the server
+			 that contains your mailbox.</para> 
+			 <para>Default: none.</para>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Command to run before checking for mail</guilabel></term> 
+			 <listitem> 
+			 <para>If you select <guilabel>Remote POP3-server</guilabel> or
+			 <guilabel>Remote IMAP-server</guilabel> as your mailbox location, 
+			 use this text box to specify a command to run before <application>&applet;</application> 
+			 checks the mail server for new mail.</para> 
+			 <para>Default: none.</para>
+			 </listitem> 
+		  </varlistentry> 
+		</variablelist> 
+	 </sect2> 
+  </sect1>
 
-   <para>
-      This manual was written by Telsa Gwynne
-      (<email>telsa@linuxchix.org</email>) and Eric Baudais
-      (<email>baudais@okstate.edu</email>). Please send all comments
-      and suggestions regarding this manual to the <ulink type="http"
-      url="http://developer.gnome.org/projects/gdp/">GNOME
-      Documentation Project</ulink> by sending an email to
-      <email>docs@gnome.org</email>. You can also submit comments
-      online by using the <ulink type="http"
-      url="http://developer.gnome.org/projects/gdp/doctable/">GNOME
-      Documentation Status Table</ulink>.
-   </para>
-
-   <!-- For translations: uncomment this:
-
-   <para>  
-    Latin translation was done by ME
-    (<email>MYNAME@MYADDRESS</email>). Please send all  comments  and
-    suggestions regarding this translation to SOMEWHERE.
-   </para>
-
-   -->
-
-  </sect2>
-
-
-  <!-- ============= Application License ============================= -->
-
-  <sect2 id="license">
-   <title>License</title>
-   <para>
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the <ulink type="help"
-    url="gnome-help:gpl"><citetitle>GNU General Public
-    License</citetitle></ulink> as published by the Free Software
-    Foundation; either version 2 of the License, or (at your option)
-    any later version.
-   </para>
-   <para>
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    <ulink type="help" url="gnome-help:gpl"><citetitle>GNU General
-    Public License</citetitle></ulink> for more details.
-   </para>
-   <para>
-    A copy of the <ulink type="help"
-    url="gnome-help:gpl"><citetitle>GNU General Public
-    License</citetitle></ulink> is included with the GNOME documentation. You
-    also may obtain a
-    copy of the <ulink type="help" url="gnome-help:gpl"><citetitle>GNU
-    General Public License</citetitle></ulink> from the Free Software
-    Foundation by visiting <ulink type="http"
-    url="http://www.fsf.org/">their Web site</ulink> or by writing to
-    <address>
-     Free Software Foundation, Inc.
-     <street>59 Temple Place</street> - Suite 330
-     <city>Boston</city>, <state>MA</state> <postcode>02111-1307</postcode>
-     <country>USA</country>
-    </address>
-   </para>
-  </sect2>
-
- </sect1>
-</article>
+</article> 
