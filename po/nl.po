@@ -5,15 +5,18 @@
 # Almer S. Tigelaar <almer1@dds.nl>, 2000.
 # Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>, 2001.
 # Huib Kleinhout <huib@stack.nl>, 2002.
-# Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002
-# 
+# Ronald Hummelink <ronald@hummelink.xs4all.nl>, 2002.
+# Tino Meinen <a.t.meinen@chello.nl>, 2002.
+#
+# we kunnen er voor kiezen om mail te vertalen met berichten.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 1.4.0.5\n"
-"POT-Creation-Date: 2002-06-10 18:38+1200\n"
-"PO-Revision-Date: 2002-05-15 01:25+0200\n"
-"Last-Translator: Huib Kleinhout <huib@stack.nl>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"POT-Creation-Date: 2002-06-09 21:06+0200\n"
+"PO-Revision-Date: 2002-06-14 05:28+0200\n"
+"Last-Translator: Tino meinen <a.t.meinen@chell.nl>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,7 +33,7 @@ msgstr "%s de GNOME Vis, een eigentijds orakel"
 
 #: applets/fish/fish.c:109
 msgid "GNOME Fish, the fortune teller"
-msgstr "GNOME Fish, de waarzegster"
+msgstr "GNOME Vis, de waarzegster"
 
 #: applets/fish/fish.c:484 applets/fish/fish.c:1151
 #, no-c-format
@@ -55,7 +58,7 @@ msgstr ""
 
 #: applets/fish/fish.c:709
 msgid "GNOME Fish Preferences"
-msgstr "GNOME Vis voorkeuren"
+msgstr "GNOME Vis Instellingen"
 
 #: applets/fish/fish.c:719
 msgid "_Name of GNOME fish:"
@@ -83,9 +86,10 @@ msgstr "Beeldje_s in animatie:"
 msgid "Pause _per frame (s):"
 msgstr "Pauze _per beeldje (sec):"
 
+# Roteren hier vervangen door Kantelen
 #: applets/fish/fish.c:804
 msgid "_Rotate on vertical panels"
-msgstr "_Roteren in verticale panelen"
+msgstr "_Kantelen in verticale panelen"
 
 #: applets/fish/fish.c:977
 msgid ""
@@ -94,10 +98,9 @@ msgid ""
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"U heeft geen \"fortune\" geïnstalleerd op uw systeem of u heeft de "
-"configuratie niet goed staan.\n"
+"U heeft \"fortune\" niet geïnstalleerd op uw systeem of u heeft de configuratie niet goed staan. \n"
 "\n"
-"Wij verwijzen u naar het eigenschappenvenster van de vis."
+"Wij verwijzen u naar het eigenschappenvenster van de vis"
 
 #: applets/fish/fish.c:991
 msgid ""
@@ -116,49 +119,45 @@ msgstr "(met enige hulp van George)"
 msgid "Fish"
 msgstr "Vis"
 
+# Ik denk dat hier processor time ipv compilation time bedoeld wordt. Het applet is namelijk gecompileerd!
 #: applets/fish/fish.c:1187
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
 "memory. If anyone is found using this applet, he should be promptly sent for "
 "a psychiatric evaluation."
-msgstr ""
-"Dit applet heeft geen nut. Het kost slechts schijfruimte en compileertijd, "
-"en, indien geladen, ook kostbare ruimte in het paneel en het geheugen.Wie "
-"toch nut ziet in dit appletje moet zich laten nakijken ;-)"
+msgstr "Dit applet heeft totaal geen nut. Het kost slechts schijfruimte en processortijd, en, indien geladen, ook kostbare ruimte in het paneel en het geheugen. Wie toch nut ziet in dit appletje moet zich laten nakijken ;-)"
 
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
+msgstr "Een vis zonder naam is behoorlijk saai. Geef het beestje een naam om er leven in te blazen."
 
 #: applets/fish/fish.schemas.in.h:2
-#, fuzzy
 msgid "Command to execute when the fish is clicked"
-msgstr "Uit te voeren _opdracht wanneer op de vis wordt geklikt:"
+msgstr "Uit te voeren opdracht wanneer de vis wordt aangeklikt"
 
 #: applets/fish/fish.schemas.in.h:3
-#, fuzzy
 msgid "Pause per frame"
-msgstr "Pauze _per beeldje (sec):"
+msgstr "Pauze per beeldje"
 
+# Roteren hier vervangen door Kantelen
 #: applets/fish/fish.schemas.in.h:4
-#, fuzzy
 msgid "Rotate on vertical panels"
-msgstr "_Roteren in verticale panelen"
+msgstr "Kantelen in verticale panelen"
 
 #: applets/fish/fish.schemas.in.h:5
 msgid "The fish's animation pixmap"
-msgstr ""
+msgstr "Het animatiepictogram van de vis"
 
 #: applets/fish/fish.schemas.in.h:6
 msgid "The fish's name"
-msgstr ""
+msgstr "De naam van de vis"
 
 #: applets/fish/fish.schemas.in.h:7
 msgid "The number of frames in the fish's animation"
-msgstr ""
+msgstr "Het aantal beeldjes in het animatiebestand"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
 msgid "Amusements"
@@ -174,34 +173,31 @@ msgstr "Waar Die Stomme Vis Vandaan Kwam"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:5
 msgid "Wanda Factory"
-msgstr "Wanda fabriek"
+msgstr "Wanda-fabriek"
 
 #: applets/fish/GNOME_FishApplet.xml.h:1
 #: applets/gen_util/GNOME_ClockApplet.xml.h:3
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:1
 #: applets/gen_util/GNOME_PagerApplet.xml.h:1
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:1
-#, fuzzy
 msgid "_About..."
-msgstr "Info..."
+msgstr "_Info..."
 
 #: applets/fish/GNOME_FishApplet.xml.h:2
 #: applets/gen_util/GNOME_ClockApplet.xml.h:4
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:3
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
-#, fuzzy
 msgid "_Help"
-msgstr "Hulp"
+msgstr "_Hulp"
 
 #: applets/fish/GNOME_FishApplet.xml.h:3
 #: applets/gen_util/GNOME_ClockApplet.xml.h:5
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-#, fuzzy
 msgid "_Preferences..."
-msgstr "Voorkeuren..."
+msgstr "_Instellingen..."
 
 #: applets/gen_util/clock.c:152 applets/gen_util/clock.c:462
 msgid "%I:%M:%S %p"
@@ -242,15 +238,15 @@ msgstr "%A, %B %d %Y"
 #: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
 #, c-format
 msgid "There was an error displaying help: %s"
-msgstr ""
+msgstr "Er trad een fout op bij het weergeven van de hulp: %s"
 
 #: applets/gen_util/clock.c:916
 msgid "Clock Preferences"
-msgstr "Klok-voorkeuren"
+msgstr "Klok-instellingen"
 
 #: applets/gen_util/clock.c:943
 msgid "Clock type"
-msgstr "Kloktype"
+msgstr "Klok-type"
 
 #: applets/gen_util/clock.c:953
 msgid "_12 hour"
@@ -262,11 +258,11 @@ msgstr "_24 uur"
 
 #: applets/gen_util/clock.c:964
 msgid "_UNIX time"
-msgstr "_UNIX tijd"
+msgstr "_UNIX-tijd"
 
 #: applets/gen_util/clock.c:968
 msgid "_Internet time"
-msgstr "_Internet tijd"
+msgstr "_Internet-tijd"
 
 #: applets/gen_util/clock.c:1005
 msgid "Show _seconds"
@@ -285,7 +281,15 @@ msgstr "Gebruik _UTC"
 #: applets/gen_util/pager.c:491 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
-msgstr "Huib Kleinhout, Reinout van Schouwen"
+msgstr ""
+"Dirk-Jan C. Binnema <djcb@dds.nl>\n"
+"Dennis Smit <synap@area101.penguin.nl>\n"
+"Almer S. Tigelaar <almer1@dds.nl>\n"
+"Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>\n"
+"Huib Kleinhout <huib@stack.nl>\n"
+"Ronald Hummelink <ronald@hummelink.xs4all.nl>\n"
+"Reinout van Schouwen <reinout@cs.vu.nl>\n"
+"Tino Meinen <a.t.meinen@chello.nl>"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
 #: applets/gen_util/clock.c:1156
@@ -297,81 +301,72 @@ msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
 #: applets/gen_util/clock.c:1158
-#, fuzzy
 msgid "The Clock displays the current time and date"
-msgstr "Het Klok Applet toont de huidige tijd en datum"
+msgstr "De Klok toont de huidige tijd en datum"
 
 #: applets/gen_util/clock.schemas.in.h:1
 msgid "Display Internet time, which is same all over the world"
-msgstr ""
+msgstr "Toon Internet-tijd. Deze is over de gehele wereld hetzelfde"
 
 #: applets/gen_util/clock.schemas.in.h:2
 msgid "Display date in applet, in addition to time"
-msgstr ""
+msgstr "Toon naast de tijd, ook de datum in het applet"
 
 #: applets/gen_util/clock.schemas.in.h:3
 msgid "Display seconds in time"
-msgstr ""
+msgstr "Geef de tijd in seconden naukeurig"
 
 #: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Greenwich Mean Time zone"
-msgstr ""
+msgstr "Greenwich Mean Time (GMT) weergeven"
 
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
-msgstr ""
+msgstr "Geef het aantal seconden verlopen sinds Epoch. (1-jan-1970)"
 
 #: applets/gen_util/clock.schemas.in.h:6
 msgid "Hour format"
-msgstr ""
+msgstr "Uur-formaat"
 
 #: applets/gen_util/clock.schemas.in.h:7
 msgid "Sets the hour format, may be either 12 or 24"
-msgstr ""
+msgstr "Stelt het uurformaat in. Dit mag 12 of 24 zijn"
 
 #: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in a tooltip when a mouse is over applet"
-msgstr ""
+msgstr "Toon de datum in een tooltip als de muis over het applet beweegt"
 
 #: applets/gen_util/clock.schemas.in.h:9
-#, fuzzy
 msgid "Show date in applet"
-msgstr "Toon _datum"
+msgstr "Toon datum in het applet"
 
 #: applets/gen_util/clock.schemas.in.h:10
-#, fuzzy
 msgid "Show date in tooltip"
-msgstr "Toon _datum"
+msgstr "Toon datum in een tooltip"
 
 #: applets/gen_util/clock.schemas.in.h:11
-#, fuzzy
 msgid "Show time with seconds"
-msgstr "Toon _seconden"
+msgstr "Geef de tijd in seconden"
 
 #: applets/gen_util/clock.schemas.in.h:12
-#, fuzzy
 msgid "Use GMT"
-msgstr "Gebruik _UTC"
+msgstr "Gebruik GMT"
 
 #: applets/gen_util/clock.schemas.in.h:13
-#, fuzzy
 msgid "Use Internet time"
-msgstr "_Internet tijd"
+msgstr "Gebruik Internet-tijd"
 
 #: applets/gen_util/clock.schemas.in.h:14
-#, fuzzy
 msgid "Use UNIX time"
-msgstr "_UNIX tijd"
+msgstr "Gebruik UNIX-tijd"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:1
-#, fuzzy
 msgid "Copy _date"
-msgstr "Kopieer datum"
+msgstr "Kopiëren _datum"
 
 #: applets/gen_util/GNOME_ClockApplet.xml.h:2
-#, fuzzy
 msgid "Copy _time"
-msgstr "Kopieer tijd"
+msgstr "Kopiëren _tijd"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:1
 msgid "Accessories"
@@ -408,7 +403,7 @@ msgstr "Wissel tussen werkbladen"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:10
 msgid "Utility"
-msgstr "Hulpmiddelen"
+msgstr "Hulpmiddel"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
 #: applets/gen_util/tasklist.c:713
@@ -419,28 +414,27 @@ msgstr "Vensterlijst"
 #: applets/gen_util/pager.c:503 applets/gen_util/pager.c:793
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
-msgstr "Werkblad Wisselaar"
+msgstr "Werkbladwisselaar"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
 msgid "factory for creating some general applets"
-msgstr "Fabriek om wat algemene applets aan te maken"
+msgstr "fabriek om wat algemene applets aan te maken"
 
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:2
-#, fuzzy
 msgid "_Check for mail"
-msgstr "Controleer op e-mail"
+msgstr "_Controleren op email"
 
 #: applets/gen_util/mailcheck.c:224
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"U heeft geen wachtwoord bij de Voorkeuren van Postvak in ingesteld,\n"
-"u zult dit daarom iedere keer bij het opstarten moeten invoeren."
+"U heeft geen wachtwoord bij de Instellingen van 'Postvak in' ingesteld.\n"
+"U zult dit daarom iedere keer bij het opstarten moeten invoeren."
 
 #: applets/gen_util/mailcheck.c:232
 msgid "Please enter your mailserver's _password:"
-msgstr "Voer a.u.b. het _wachtwoord van uw mailserver in:"
+msgstr "Voer het _wachtwoord van uw mailserver in:"
 
 #: applets/gen_util/mailcheck.c:278
 msgid ""
@@ -491,6 +485,7 @@ msgstr "Lokaal bestand met e-mail"
 msgid "Local maildir"
 msgstr "Lokale e-mail map"
 
+# Wat moeten we met dat: op afstand. Kunnen we het niet gewoon weglaten.? Remote mail server is in de meeste gevallen ook dubbelop. Het gebeurt zelden dat een pop3-server een lokale mail server is.
 #: applets/gen_util/mailcheck.c:1213
 msgid "Remote POP3-server"
 msgstr "POP3-server op afstand"
@@ -499,6 +494,7 @@ msgstr "POP3-server op afstand"
 msgid "Remote IMAP-server"
 msgstr "IMAP-server op afstand"
 
+# Kunnen we hier voor E-mail_map-bestand niet iets anders verzinnen?
 #: applets/gen_util/mailcheck.c:1241
 msgid "Mail _spool file:"
 msgstr "E-mail_map-bestand:"
@@ -537,17 +533,18 @@ msgstr "Voor elke _verversing:"
 msgid "Command to execute"
 msgstr "Uit te voeren opdracht"
 
+# De opdracht wordt uitgevoerd:....
 #: applets/gen_util/mailcheck.c:1399
 msgid "When new mail _arrives:"
-msgstr "Wanneer nieuwe e-mail _binnenkomt:"
+msgstr "Als nieuwe e-mail _binnenkomt:"
 
 #: applets/gen_util/mailcheck.c:1422
 msgid "When clicke_d:"
-msgstr "Wanneer _aangeklikt:"
+msgstr "Bij _aanklikken:"
 
 #: applets/gen_util/mailcheck.c:1445
 msgid "Set the number of unread mails to _zero"
-msgstr "Aantal ongelezen e-mails in op _nul stellen"
+msgstr "Aantal ongelezen berichten op _nul zetten"
 
 #: applets/gen_util/mailcheck.c:1456
 msgid "Check for mail _every"
@@ -569,26 +566,27 @@ msgstr "Geluid _afspelen wanneer nieuwe post binnenkomt"
 msgid "Select a_nimation"
 msgstr "Kies a_nimatie"
 
+# Monitor is niet mooi hier, maar bij gebrek aan beter...
 #: applets/gen_util/mailcheck.c:1580
 msgid "Inbox Monitor Preferences"
-msgstr "Postvak in Monitor voorkeuren"
+msgstr "'Postvak in' Monitor Instellingen"
 
 #: applets/gen_util/mailcheck.c:1599
 msgid "_Mail check"
 msgstr "_Post controle"
 
+# Postbus is meer iets voor uitgaande post, vandaar: postvak.
 #: applets/gen_util/mailcheck.c:1603
 msgid "Mail_box"
-msgstr "Post_bus"
+msgstr "Post_vak"
 
 #: applets/gen_util/mailcheck.c:1681
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
 #: applets/gen_util/mailcheck.c:1682
-#, fuzzy
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
-msgstr "'Post controleren' waarschuwt u wanneer er nieuwe e-mail is"
+msgstr "'Post Controleren' waarschuwt u wanneer er nieuwe berichten binnenkomen"
 
 #: applets/gen_util/mailcheck.c:1841
 msgid "Text only"
@@ -603,126 +601,118 @@ msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "'Post controleren' waarschuwt u wanneer er nieuwe e-mail is"
 
 #: applets/gen_util/mailcheck.schemas.in.h:1
-#, fuzzy
 msgid "Command to execute when checking mail"
-msgstr "Uit te voeren _opdracht wanneer op de vis wordt geklikt:"
+msgstr "Uit te voeren opdracht wanneer op nieuwe mail wordt gecontroleerd"
 
 #: applets/gen_util/mailcheck.schemas.in.h:2
-#, fuzzy
 msgid "Command to execute when new mail arrives"
-msgstr "Uit te voeren _opdracht wanneer op de vis wordt geklikt:"
+msgstr "Uit te voeren opdracht wanneer nieuwe mail binnenkomt"
 
 #: applets/gen_util/mailcheck.schemas.in.h:3
-#, fuzzy
 msgid "Command to execute when the applet is clicked"
-msgstr "Uit te voeren _opdracht wanneer op de vis wordt geklikt:"
+msgstr "Uit te voeren opdracht wanneer het applet wordt aangeklikt"
 
 #: applets/gen_util/mailcheck.schemas.in.h:4
-#, fuzzy
 msgid "Command to run before checking mail"
-msgstr ""
-"_Opdracht die uitgevoerd dient te worden voordat de post wordt gecontroleerd:"
+msgstr "Uit te voeren opdracht voordat op nieuwe mail wordt gecontroleerd"
 
 #: applets/gen_util/mailcheck.schemas.in.h:5
 msgid "Do we run the exec-command"
-msgstr ""
+msgstr "Voeren we de exec-opdracht uit"
 
 #: applets/gen_util/mailcheck.schemas.in.h:6
 msgid "Do we run the newmail-command"
-msgstr ""
+msgstr "Voeren we de newmail-opdracht uit"
 
 #: applets/gen_util/mailcheck.schemas.in.h:7
 msgid "How often (in milliseconds) we check the mail"
-msgstr ""
+msgstr "Hoe vaak (in miliseconden) we op nieuwe mail controleren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:8
 msgid "If mail should be checked automatically"
-msgstr ""
+msgstr "Of automatisch op nieuwe mail moet worden gecontroleerd"
 
+# misschien beter: als dit aanstaat, of 'als dit is aangevinkt'
 #: applets/gen_util/mailcheck.schemas.in.h:9
 msgid "If this is set mail will be checked every update-freq milliseconds"
-msgstr ""
+msgstr "Als dit is ingesteld, zal elke 'update-freq' miliseconden op nieuwe berichten worden gecontroleerd"
 
 #: applets/gen_util/mailcheck.schemas.in.h:10
 msgid "If this is set, we should run the exec-command"
-msgstr ""
+msgstr "Als dit is ingesteld, moeten we de exec-opdracht uitvoeren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:11
 msgid "If this is set, we should run the newmail-command"
-msgstr ""
+msgstr "Als dit is ingesteld, moeten we de newmail-opdracht uitvoeren"
 
 #: applets/gen_util/mailcheck.schemas.in.h:12
-#, fuzzy
 msgid "Interval for checking mail"
-msgstr ""
-"_Opdracht die uitgevoerd dient te worden voordat de post wordt gecontroleerd:"
+msgstr "Interval voor controleren op nieuwe mail"
 
 #: applets/gen_util/mailcheck.schemas.in.h:13
 msgid "Path to the animation file"
-msgstr ""
+msgstr "Het Pad naar het animatiebestand"
 
 #: applets/gen_util/mailcheck.schemas.in.h:14
-#, fuzzy
 msgid "Play a sound when mail is recieved"
-msgstr "Geluid _afspelen wanneer nieuwe post binnenkomt"
+msgstr "Geluid afspelen wanneer nieuwe mail binnenkomt"
 
 #: applets/gen_util/mailcheck.schemas.in.h:15
 msgid "Remote folder for mail retrieval"
-msgstr ""
+msgstr "Map op andere computer voor ophalen berichten"
 
+# Remove moet waarschijnlijk Remote zijn
 #: applets/gen_util/mailcheck.schemas.in.h:16
 msgid "Remove server to connect to for our mail"
-msgstr ""
+msgstr "De server waarmee we verbinding maken voor onze mail"
 
 #: applets/gen_util/mailcheck.schemas.in.h:17
-#, fuzzy
 msgid "Run this command before we check the mail"
-msgstr ""
-"_Opdracht die uitgevoerd dient te worden voordat de post wordt gecontroleerd:"
+msgstr "Voer deze opdracht uit voordat op nieuwe berichten wordt gecontroleerd"
 
 #: applets/gen_util/mailcheck.schemas.in.h:18
-#, fuzzy
 msgid "The mail server"
-msgstr "Mail s_erver:"
+msgstr "De mailserver"
 
+# Soms is het gebruikerswachtwoord (om bij de provider in te loggen) anders dan het wachtwoord om de mail op te halen. Vandaar mailwachtwoord.
 #: applets/gen_util/mailcheck.schemas.in.h:19
 msgid "The user's password"
-msgstr ""
+msgstr "Het mailwachtwoord"
 
 #: applets/gen_util/mailcheck.schemas.in.h:20
 msgid "The user's password for the remote server"
-msgstr ""
+msgstr "Het wachtwoord van de gebruiker voor de mailserver"
 
+# Wazig, waarom die herhalingen?
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
+msgstr "Zo controleren we op nieuwe mail, nieuwe mail, nieuwe mail..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
+msgstr "Zo verwerken we de nieuwe mail, nieuwe mail, nieuwe mail..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal use of the "
 "mailcheck applet"
-msgstr ""
+msgstr "Dit is de animatie die wordt vertoond tijdens normaal gebruik van het mailcontrole-applet"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
-msgstr ""
+msgstr "Gebruikersnaam op de mailserver"
 
 #: applets/gen_util/mailcheck.schemas.in.h:25
 msgid "We run this command when the user clicks on the applet"
-msgstr ""
+msgstr "We voeren deze opdracht uit als het applet wordt aangeklikt"
 
 #: applets/gen_util/mailcheck.schemas.in.h:26
 msgid "Whether to reset mail status when the applet is clicked"
-msgstr ""
+msgstr "Of de mailstatus gereset moet worden als het applet wordt aangeklikt"
 
 #: applets/gen_util/mailcheck.schemas.in.h:27
-#, fuzzy
 msgid "You've got mail!"
-msgstr "U heeft (oude) berichten."
+msgstr "U heeft nieuwe mail!"
 
 #: applets/gen_util/mailcheck.soundlist.in.h:1
 msgid "Mailcheck"
@@ -739,43 +729,36 @@ msgstr "Rijen"
 
 #: applets/gen_util/pager.c:130 applets/gen_util/pager.c:716
 msgid "Columns"
-msgstr ""
+msgstr "Kolommen"
 
 #: applets/gen_util/pager.c:344
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
-msgstr "Fout bij laden van num_rows waarde voor de bureaubladwisselaar: %s\n"
+msgstr "Fout bij laden van waarde: aantal-rijen voor de werkbladwisselaar: %s\n"
 
 #: applets/gen_util/pager.c:355
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
 "s\n"
-msgstr ""
-"Fout bij laden van display_workspace_names waarde voor bureaubladwisselaar "
-"appletje: %s\n"
+msgstr "Fout bij laden van waarde: toon-werkblad-namen voor de werkbladwisselaar: %s\n"
 
 #: applets/gen_util/pager.c:370
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
 "s\n"
-msgstr ""
-"Fout bij laden van display_all_workspaces waarde voor bureublad wisselaar "
-"applet: %s\n"
+msgstr "Fout bij laden van waarde: toon-alle-werkbladen voor de werkbladwisselaar: %s\n"
 
 #: applets/gen_util/pager.c:504
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc"
 
 #: applets/gen_util/pager.c:505
-#, fuzzy
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
-msgstr ""
-"De Werkblad Wisselaar laat een verkleinde versie van uw werkbladen zien "
-"zodat u de vensters hierin kunt beheren."
+msgstr "De Werkbladwisselaar laat een verkleinde versie van uw werkruimte zien zodat u de vensters hierin kunt beheren."
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -791,16 +774,15 @@ msgstr "Toon alleen het _huidige werkblad"
 
 #: applets/gen_util/pager.glade.h:5
 msgid "Show workspace _names in the switcher"
-msgstr "Toon alle werkblad _namen in de wisselaar"
+msgstr "Toon werkblad_namen in de wisselaar"
 
 #: applets/gen_util/pager.glade.h:6
-#, fuzzy
 msgid "Workspace Names"
-msgstr "Werkbladen"
+msgstr "Werkbladnamen"
 
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "Werkbladwisselaar voorkeuren"
+msgstr "Werkbladwisselaar-instellingen"
 
 #: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
@@ -810,37 +792,36 @@ msgstr "Werkbladen"
 msgid ""
 "If this is true, the pager will show all workspaces, otherwise it will only "
 "show the current workspace."
-msgstr ""
+msgstr "Als dit waar is zal de pager alle werkbladen tonen. Anders alleen het huidige werkblad."
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
 "If this is true, the workspaces in the pager will display the names of the "
 "workspaces, otherwise they will display the contents of the workspace."
-msgstr ""
+msgstr "Als dit waar is zullen de werkbladen in de pager de namen van de werkbladen tonen. Anders tonen ze de inhoud van de werkbladen."
 
 #: applets/gen_util/pager.schemas.in.h:3
-#, fuzzy
 msgid "Number of rows in the pager"
-msgstr "Aantal _werkbladen:"
+msgstr "Aantal rijen in de pager"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
 "When showing all the workspaces this determines how many rows (for "
 "horizontal layout) or columns (for vertical layout) the pager shows the "
 "workspaces in."
-msgstr ""
+msgstr "Als alle werkbladen worden weergegeven, bepaalt dit de verdeling van de werkbladen in de pager over het aantal rijen (voor een horizontale layout) of kolommen (voor een verticale layout)."
 
 #: applets/gen_util/pager.schemas.in.h:5
 msgid "Whether to display the all workspaces in the pager."
-msgstr ""
+msgstr "Of alle werkbladen moeten worden weergegeven in de pager."
 
 #: applets/gen_util/pager.schemas.in.h:6
 msgid "Whether to display the names of the workspaces in the pager."
-msgstr ""
+msgstr "Of de namen van de werkbladen moeten worden getoond in de pager."
 
 #: applets/gen_util/printer.c:120
 msgid "Can't execute printer command"
-msgstr "Kan printer opdracht niet uitvoeren"
+msgstr "Kan printeropdracht niet uitvoeren"
 
 #: applets/gen_util/printer.c:306
 msgid "Printer properties"
@@ -860,7 +841,7 @@ msgstr "Printer"
 
 #: applets/gen_util/printer.c:353
 msgid "Printer Applet"
-msgstr "Printer Appletje"
+msgstr "Printer Applet"
 
 #: applets/gen_util/printer.c:354
 msgid "(c) 1998 the Free Software Foundation"
@@ -870,9 +851,7 @@ msgstr "(c) 1998 the Free Software Foundation"
 msgid ""
 "The printer applet lets you easily drag files to be printed via a print "
 "command"
-msgstr ""
-"Het print appletje laat je simpel bestanden afdrukken door ze op het "
-"appletje te slepen"
+msgstr "Het printer applet laat je simpel bestanden afdrukken door ze naar het applet te slepen"
 
 #: applets/gen_util/printer.c:423
 msgid "Can't create applet!\n"
@@ -911,11 +890,11 @@ msgstr "Vensters groeperen wanneer de _ruimte beperkt is"
 
 #: applets/gen_util/tasklist.glade.h:2
 msgid "M_inimum size:"
-msgstr ""
+msgstr "M_inimale afmeting:"
 
 #: applets/gen_util/tasklist.glade.h:3
 msgid "Ma_ximum size:"
-msgstr ""
+msgstr "Ma_ximale afmeting:"
 
 #: applets/gen_util/tasklist.glade.h:4
 msgid "Restore to current _workspace"
@@ -935,7 +914,7 @@ msgstr "Toon vensters van a_lle werkbladen"
 
 #: applets/gen_util/tasklist.glade.h:8
 msgid "Tasklist size"
-msgstr ""
+msgstr "Afmeting van taaklijst"
 
 #: applets/gen_util/tasklist.glade.h:9
 msgid "When restoring minimized windows"
@@ -966,56 +945,56 @@ msgid ""
 "Decides when to group windows from the same application on the tasklist. "
 "Valid values are never, auto, and always."
 msgstr ""
+"Bepaalt waneer vensters van eenzelfde programma op de taaklijst worden gegroepeerd.\n"
+"Geldige waarden zijn: nooit, auto, en altijd."
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the tasklist will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
-msgstr ""
+msgstr "Als dit waar is zal de taaklijst alle vensters van alle werkbladen tonen. Anders alleen de vensters van het huidige werkblad."
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
-msgstr ""
+msgstr "Als dit waar is zal het herstellen van een venster deze naar het huidige werkblad brengen. Anders zal worden gewisseld naar het oorspronkelijke werkblad van het venster."
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size the tasklist applet will request"
-msgstr ""
+msgstr "Maximale ruimte die de taaklijst-applet zal vragen"
 
 #: applets/gen_util/tasklist.schemas.in.h:5
 msgid "Minimum size the tasklist applet will request"
-msgstr ""
+msgstr "Minimale ruimte die de taaklijst-applet zal vragen"
 
 #: applets/gen_util/tasklist.schemas.in.h:6
-#, fuzzy
 msgid "Move windows to the current workspace when unminimized"
-msgstr "Toon vensters van _huidige werkblad"
+msgstr "Vensters die hersteld worden verplaatsen naar het huidige werkblad"
 
 #: applets/gen_util/tasklist.schemas.in.h:7
-#, fuzzy
 msgid "Show windows from all workspaces"
-msgstr "Toon vensters van a_lle werkbladen"
+msgstr "Toon vensters van alle werkbladen"
 
 #: applets/gen_util/tasklist.schemas.in.h:8
 msgid ""
 "The tasklist applet needs a minimum width to be useful at all. This value is "
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
-msgstr ""
+msgstr "Het taaklijst-applet heeft een minimumafmeting nodig om zinvol te kunnen zijn. Kleiner dan deze waarde zal het applet niet worden. Dit is handig voor schuivende panelen en randpanelen die anders hele kleine afmetingen zouden aannemen."
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
 "This value is the maximum width the applet will request. This is useful to "
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
-msgstr ""
+msgstr "Dit is de maximumafmeting die het applet zal aannemen. Dit is handig om de afmeting in grote panelen beperkt te houden. Het applet zou anders de volledige ruimte kunnen gaan benutten, zoals in randpanelen."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
-#, fuzzy
 msgid "When to group windows"
-msgstr "Vensters _nooit groeperen"
+msgstr "Wanneer vensters gegroepeerd zullen worden"
 
+# help is hier vertaald met help ipv hulp omdat hulp-document dubbelzinnig is
 #: gnome-panel/applet.c:204 gnome-panel/menu.c:1043
 #: gnome-panel/panel-util.c:49
 #, c-format
@@ -1024,7 +1003,7 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"<b>Het help document kan niet weergegeven worden</b>\n"
+"<b>Het help-document kan niet weergegeven worden</b>\n"
 "\n"
 "Details: %s"
 
@@ -1037,7 +1016,7 @@ msgstr "???"
 
 #: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:535
 msgid "Remove From Panel"
-msgstr "Van paneel verwijderen"
+msgstr "Van Paneel Verwijderen"
 
 #. FIXME: should have a "Move" pixmap.
 #.
@@ -1050,43 +1029,36 @@ msgid "Can't find an empty spot"
 msgstr "Kan geen lege plaats vinden"
 
 #: gnome-panel/basep-widget.c:154
-#, fuzzy
 msgid "Mode"
-msgstr "Verplaatsen"
+msgstr "Modus"
 
 #: gnome-panel/basep-widget.c:155
-#, fuzzy
 msgid "Mode of this panel"
-msgstr "Dit paneel verbergen"
+msgstr "De modus van dit paneel"
 
 #: gnome-panel/basep-widget.c:162
-#, fuzzy
 msgid "State"
-msgstr "staat"
+msgstr "Staat"
 
 #: gnome-panel/basep-widget.c:163
-#, fuzzy
 msgid "Current state of this panel"
-msgstr "Verwijder dit paneel"
+msgstr "Huidige staat van dit paneel"
 
 #: gnome-panel/basep-widget.c:171
-#, fuzzy
 msgid "Hidebuttons enabled"
-msgstr "verbergknoppen_ingeschakeld"
+msgstr "Verbergknoppen ingeschakeld"
 
 #: gnome-panel/basep-widget.c:172
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr ""
+msgstr "Zijn de verbergknoppen (knoppen die het paneel tonen of verbergen) ingeschakeld?"
 
 #: gnome-panel/basep-widget.c:179
-#, fuzzy
 msgid "Hidebutton pixmaps enabled"
-msgstr "verbergknoppen_pictogrammen_ingeschakeld"
+msgstr "Pictogrammen op verbergknoppen ingeschakeld"
 
 #: gnome-panel/basep-widget.c:180
-#, fuzzy
 msgid "Hidebuttons have pixmaps"
-msgstr "verbergknoppen_pictogrammen_ingeschakeld"
+msgstr "Verbergknoppen hebben een pictogram"
 
 #: gnome-panel/basep-widget.c:549
 msgid "Hide this panel"
@@ -1098,11 +1070,11 @@ msgstr "Dit paneel tonen"
 
 #: gnome-panel/disclosure-widget.c:242
 msgid "Expander Size"
-msgstr ""
+msgstr "Afmeting Uitschuiver"
 
 #: gnome-panel/disclosure-widget.c:243
 msgid "Size of the expander arrow"
-msgstr ""
+msgstr "Afmeting van de pijl op de uitschuiver"
 
 #: gnome-panel/distribution.c:26
 msgid "Debian GNU/Linux"
@@ -1163,7 +1135,7 @@ msgstr "Toon pijl op verbergknop"
 
 #: gnome-panel/drawer.c:193 gnome-panel/drawer.c:442 gnome-panel/menu.c:3168
 msgid "Drawer"
-msgstr "Opbergmap"
+msgstr "Opberglade"
 
 #: gnome-panel/foobar-widget.c:147 gnome-panel/menu-util.c:294
 msgid "Cannot execute gnome-panel-screenshot"
@@ -1476,21 +1448,24 @@ msgid "GNOME Panel Shell"
 msgstr "GNOME Paneel shell"
 
 #: gnome-panel/gnome-run.c:239 gnome-panel/gnome-run.c:256
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Failed to run this program</b>\n"
 "\n"
 "Details: %s"
-msgstr "Dit programma kon niet worden gestart: '%s'"
+msgstr ""
+"<b>Dit programma kon niet worden gestart</b>\n"
+"\n"
+"Details: %s"
 
 #: gnome-panel/gnome-run.c:346 gnome-panel/gnome-run.c:420
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Failed to execute command:</b> '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Het uitvoeren van opdracht '%s' is mislukt.\n"
+"Deze opdracht kon niet wordern uitgevoerd:</b> '%s'\n"
 "\n"
 "Details: %s"
 
@@ -1501,24 +1476,26 @@ msgid ""
 "\n"
 "Details: no application available to open file"
 msgstr ""
+"<b>Kon bestand niet openen:</b> '%s'\n"
+"\n"
+"Details: geen programma aanwezig om bestand te openen"
 
 #: gnome-panel/gnome-run.c:457
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b>Failed to open file:</b> '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"Het uitvoeren van opdracht '%s' is mislukt.\n"
+"<b>Dit bestand kon niet worden geopend:</b> '%s'\n"
 "\n"
 "Details: %s"
 
 #: gnome-panel/gnome-run.c:533
 msgid "Choose a file"
-msgstr ""
+msgstr "Kies een bestand"
 
 #: gnome-panel/gnome-run.c:728 gnome-panel/gnome-run.c:729
-#, fuzzy
 msgid "Known Applications"
 msgstr "Bekende Toe_passingen"
 
@@ -1532,7 +1509,7 @@ msgstr "Uitvoeren in een _terminal"
 
 #: gnome-panel/gnome-run.c:896
 msgid "_Append File..."
-msgstr ""
+msgstr "Bestand _Achteraan Toevoegen..."
 
 #: gnome-panel/gnome-run.c:1276
 #, c-format
@@ -1714,6 +1691,9 @@ msgid ""
 "\n"
 "Details: %s probably does not exist"
 msgstr ""
+"<b>Kan opdracht 'Over GNOME' niet uitvoeren</b>\n"
+"\n"
+"Details: %s bestaat waarschijnlijk niet"
 
 #: gnome-panel/menu.c:329
 #, c-format
@@ -1759,12 +1739,14 @@ msgid "Could not get directory name from path: %s"
 msgstr "Kon map naam van pad %s niet vinden."
 
 #: gnome-panel/menu.c:1017
-#, fuzzy
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
 "Details: No 'Exec' or 'URL' field in entry"
-msgstr "Geen 'Exec' of 'URL' veld in dit item"
+msgstr ""
+"<b>Kan niet aan 'Uitvoeren' toevoegen</b>\n"
+"\n"
+"Details: Geen 'Exec' of 'URL' veld in dit item"
 
 #: gnome-panel/menu.c:1307
 msgid "Add this launcher to panel"
@@ -1810,7 +1792,7 @@ msgstr "query resulteerde in uitzondering %s\n"
 
 #: gnome-panel/menu.c:2555 gnome-panel/menu.c:2559
 msgid "Aligned Panel"
-msgstr "Uitgelijnd paneel"
+msgstr "Uitgelijnd Paneel"
 
 #: gnome-panel/menu.c:2560
 msgid "GNOME Aligned Panel"
@@ -1822,23 +1804,23 @@ msgstr "Randpaneel"
 
 #: gnome-panel/menu.c:2580
 msgid "GNOME Edge Panel"
-msgstr "GNOME randpaneel"
+msgstr "GNOME Randpaneel"
 
 #: gnome-panel/menu.c:2596 gnome-panel/menu.c:2600 gnome-panel/menu.c:2712
 msgid "Sliding Panel"
-msgstr "Schuivend paneel"
+msgstr "Schuivend Paneel"
 
 #: gnome-panel/menu.c:2601
 msgid "GNOME Sliding Panel"
-msgstr "GNOME schuivend paneel"
+msgstr "GNOME Schuivend Paneel"
 
 #: gnome-panel/menu.c:2617 gnome-panel/menu.c:2621 gnome-panel/menu.c:2720
 msgid "Floating Panel"
-msgstr "Zwevend paneel"
+msgstr "Zwevend Paneel"
 
 #: gnome-panel/menu.c:2622
 msgid "GNOME Floating Panel"
-msgstr "GNOME zwevend paneel"
+msgstr "GNOME Zwevend Paneel"
 
 #: gnome-panel/menu.c:2638
 msgid "You can only have one menu panel at a time."
@@ -1907,11 +1889,11 @@ msgstr "Maak een nieuw paneel"
 
 #: gnome-panel/menu.c:3310
 msgid "Global Preferences..."
-msgstr "Algemene voorkeuren..."
+msgstr "Algemene Instellingen..."
 
 #: gnome-panel/menu.c:3323
 msgid "Panel Manual..."
-msgstr "Paneel Handleiding..."
+msgstr "Paneelhandleiding..."
 
 #: gnome-panel/menu.c:3335
 msgid ""
@@ -1919,6 +1901,9 @@ msgid ""
 "\n"
 "Details: xscreensaver-command not found"
 msgstr ""
+"<b>Kan xscreensaver niet uitvoeren</b>\n"
+"\n"
+"Details: xscreensaver-opdracht niet gevonden"
 
 #: gnome-panel/menu.c:3355
 msgid "About the panel..."
@@ -2014,7 +1999,7 @@ msgstr "Directory kan niet geopend worden via het hoofdmenu!"
 
 #: gnome-panel/menu-properties.c:127
 msgid "Edit menus..."
-msgstr "Bewerk menu's..."
+msgstr "Menu's bewerken..."
 
 #: gnome-panel/menu-properties.c:308
 msgid "Off"
@@ -2099,11 +2084,15 @@ msgid ""
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to panel\" submenu)"
 msgstr ""
+"Het %s-applet is onverwacht beeindigd\n"
+"\n"
+"Opnieuw laten starten?\n"
+"\n"
+"(Als u op dit moment besluit het applet niet te herstarten kunt u het altijd op een later moment weer toevoegen. Klik hiervoor met de rechter muisknop op het paneel, en kies via het submenu: \"Toevoegen aan paneel\", het gewenste applet)"
 
 #: gnome-panel/panel-applet-frame.c:795
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr ""
-"Het is mislukt een 'AppletShell' interface te verkrijgen van 'control'\n"
+msgstr "Het is mislukt een 'AppletShell'-interface te verkrijgen van 'control'\n"
 
 #: gnome-panel/panel-applet-frame.c:921
 #, c-format
@@ -2160,7 +2149,7 @@ msgstr "Huidige scherm:"
 
 #: gnome-panel/panel-config.c:708
 msgid "Indicates the panel position and orientation on screen"
-msgstr ""
+msgstr "Geeft de paneelpositite en de oriëntatie op het scherm"
 
 #: gnome-panel/panel-config.c:726
 msgid "Panel Position"
@@ -2176,15 +2165,16 @@ msgstr "Plaats het paneel verticaal"
 
 #: gnome-panel/panel-config.c:1012
 msgid "Top left corner's position: X"
-msgstr "Positie Linker bovenkant: X"
+msgstr "Positie linker bovenkant: X"
 
 #: gnome-panel/panel-config.c:1027
 msgid "Y"
 msgstr "Y"
 
+# Verwijderd van schermrand is dubbelzinnig, vervangen door Afstand van schermrand
 #: gnome-panel/panel-config.c:1102
 msgid "Offset from screen edge:"
-msgstr "Verwijderd van schermrand:"
+msgstr "Afstand van schermrand:"
 
 #: gnome-panel/panel-config.c:1164
 msgid "Panel size:"
@@ -2192,11 +2182,11 @@ msgstr "Paneelgrootte:"
 
 #: gnome-panel/panel-config.c:1172
 msgid "XX Small (12 pixels)"
-msgstr "XXS, klein (12 pixels)"
+msgstr "Miniem (12 pixels)"
 
 #: gnome-panel/panel-config.c:1180
 msgid "X Small (24 pixels)"
-msgstr "XS, klein (24 pixels)"
+msgstr "Heel klein (24 pixels)"
 
 #: gnome-panel/panel-config.c:1188
 msgid "Small (36 pixels)"
@@ -2204,7 +2194,7 @@ msgstr "Klein (36 punten)"
 
 #: gnome-panel/panel-config.c:1196
 msgid "Medium (48 pixels)"
-msgstr "M, gemiddeld (48 pixels)"
+msgstr "Medium (48 pixels)"
 
 #: gnome-panel/panel-config.c:1204
 msgid "Large (64 pixels)"
@@ -2212,11 +2202,11 @@ msgstr "Groot (64 punten)"
 
 #: gnome-panel/panel-config.c:1212
 msgid "X Large (80 pixels)"
-msgstr "XL, groot (80 pixels)"
+msgstr "Heel groot (80 pixels)"
 
 #: gnome-panel/panel-config.c:1220
 msgid "XX Large (128 pixels)"
-msgstr "XXL, zeer groot (128 pixels)"
+msgstr "Gigantisch (128 pixels)"
 
 #: gnome-panel/panel-config.c:1236
 msgid ""
@@ -2224,9 +2214,9 @@ msgid ""
 "largest applet in the panel, and that\n"
 "not all applets obey these sizes."
 msgstr ""
-"Opmerking: Het paneel zal de grootte aannemen\n"
-"van het grootste appletje, en niet alle appletjes\n"
-"zullen dezelfde groote hebben."
+"Opmerking: Het paneel zal zich aanpassen aan\n"
+"het grootste applet, en niet alle applets\n"
+"zullen zich daaraan aanpassen."
 
 #: gnome-panel/panel-config.c:1370
 msgid "Background Type: "
@@ -2247,7 +2237,7 @@ msgstr "Afbeelding"
 
 #: gnome-panel/panel-config.c:1407
 msgid "Color to use:"
-msgstr "Kleur:"
+msgstr "Te gebruiken kleur:"
 
 #. image frame
 #: gnome-panel/panel-config.c:1425
@@ -2297,49 +2287,47 @@ msgstr "Achtergrond"
 
 #: gnome-panel/panel-global-config.schemas.in.h:1
 msgid "Display \"Run\" dialog"
-msgstr ""
+msgstr "Toon het \"Uitvoeren\"-dialoogvenster"
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr "FIXME - is dit opgelosd met het nieuwe menu-spul?"
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr "FIXME - moet nog limieten opgeven"
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
-#, fuzzy
 msgid "Popup the panel menu"
-msgstr "In het hoofdmenu"
+msgstr "Het paneelmenu tonen"
 
 #: gnome-panel/panel-global-config.schemas.in.h:5
-#, fuzzy
 msgid "Take a screen shot"
-msgstr "Schermafdruk maken..."
+msgstr "Schermafdruk maken"
 
 #: gnome-panel/panel-global-config.schemas.in.h:6
-#, fuzzy
 msgid "Take a screen shot of a window"
-msgstr "Schermafdruk van uw bureaublad maken"
+msgstr "Een schermafdruk van uw bureaublad maken"
 
+# Moet denk ik in het Engels Run box zijn ipv run box 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:1
 msgid "Enable the program listing in the run box"
-msgstr ""
+msgstr "Programma-opsomming inschakelen in 'Uitvoeren'"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:2
 msgid "Show the program listing by default when opening the Run box"
-msgstr ""
+msgstr "Standaard de programma-opsomming tonen bij het openen van 'Uitvoeren'"
 
 #: gnome-panel/panel-per-panel-config.schemas.in.h:3
 msgid "Show the program listing in the Run box"
-msgstr ""
+msgstr "De programma-opsomming tonen in 'Uitvoeren'"
 
 #: gnome-panel/panel-shell.c:43
 msgid ""
 "I've detected a panel already running,\n"
 "and will now exit."
 msgstr ""
-"Er is een al opgestart paneel gedetecteerd,\n"
+"Er is een reeds opgestart paneel gedetecteerd,\n"
 "het uitvoeren wordt gestopt."
 
 #: gnome-panel/panel-shell.c:47
@@ -2360,11 +2348,11 @@ msgstr ""
 #: gnome-panel/panel-util.c:72 gnome-panel/panel-util.c:107
 #: gnome-panel/panel-util.c:132
 msgid "Help document not found"
-msgstr "Help document kon niet gevonden worden"
+msgstr "Help-document kon niet gevonden worden"
 
 #: gnome-panel/panel-util.c:145
 msgid "No document to show"
-msgstr "Er is geen document om te laten zien"
+msgstr "Er is geen document om te tonen"
 
 #: gnome-panel/panel-util.c:582 gnome-panel/panel-util.c:598
 msgid "Disabled"
@@ -2399,7 +2387,7 @@ msgstr "Het is mislukt pictogram %s te verkrijgen"
 
 #: libpanel-applet/panel-applet.c:778
 msgid "Unknown background type received"
-msgstr "Onbekend achtergrond type ontvangen"
+msgstr "Onbekend achtergrondtype ontvangen"
 
 #: libpanel-applet/panel-applet.c:947
 msgid "The Applet's containing Panel's orientation"
@@ -2423,166 +2411,58 @@ msgstr ""
 "Bereiken die aangeven welke afmetingen voor het appletje acceptabel zijn"
 
 #: libpanel-applet/panel-test-applets.glade2.h:1
-#, fuzzy
 msgid "Applet:"
-msgstr "Applets: "
+msgstr "Applet: "
 
 #: libpanel-applet/panel-test-applets.glade2.h:2
 msgid "Bottom"
-msgstr ""
+msgstr "Onder"
 
 #: libpanel-applet/panel-test-applets.glade2.h:3
-#, fuzzy
 msgid "Large"
-msgstr "Afbeelding"
+msgstr "Groot"
 
 #: libpanel-applet/panel-test-applets.glade2.h:4
 msgid "Left"
-msgstr ""
+msgstr "Links"
 
 #: libpanel-applet/panel-test-applets.glade2.h:6
 msgid "Orientation:"
-msgstr ""
+msgstr "Oriëntatie:"
 
 #: libpanel-applet/panel-test-applets.glade2.h:7
 msgid "Prefs Dir:"
-msgstr ""
+msgstr "Inst Map:"
 
 #: libpanel-applet/panel-test-applets.glade2.h:8
 msgid "Right"
-msgstr ""
+msgstr "Rechts"
 
 #: libpanel-applet/panel-test-applets.glade2.h:9
 msgid "Size:"
-msgstr ""
+msgstr "Afmeting:"
 
 #: libpanel-applet/panel-test-applets.glade2.h:10
 msgid "Small"
-msgstr ""
+msgstr "Klein"
 
 #: libpanel-applet/panel-test-applets.glade2.h:11
 msgid "Top"
-msgstr ""
+msgstr "Boven"
 
 #: libpanel-applet/panel-test-applets.glade2.h:12
 msgid "X Large"
-msgstr ""
+msgstr "Heel Groot"
 
 #: libpanel-applet/panel-test-applets.glade2.h:13
 msgid "X Small"
-msgstr ""
+msgstr "Heel Klein"
 
 #: libpanel-applet/panel-test-applets.glade2.h:14
 msgid "XX Large"
-msgstr ""
+msgstr "Gigantisch"
 
 #: libpanel-applet/panel-test-applets.glade2.h:15
 msgid "XX Small"
-msgstr ""
+msgstr "Miniem"
 
-#~ msgid "mode"
-#~ msgstr "modus"
-
-#~ msgid "You already have a status dock on the panel. You can only have one"
-#~ msgstr "Er is al een status venster op het paneel. Er kan maar 1 zijn."
-
-#~ msgid "Status dock"
-#~ msgstr "Statusvenster"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "Het GNOME Vis Appletje"
-
-#~ msgid "Clock Applet"
-#~ msgstr "Klok Appletje"
-
-#~ msgid "Mail check Applet"
-#~ msgstr "'Post controleren' Appletje"
-
-#~ msgid "Failed to execute command: '%s'"
-#~ msgstr "Deze opdracht kon niet worden uitgevoerd: '%s'"
-
-#~ msgid "Choose a program to run"
-#~ msgstr "Kies uit te voeren programma"
-
-#~ msgid "_Browse..."
-#~ msgstr "_Bladeren..."
-
-#~ msgid "_Known Applications <<"
-#~ msgstr "_Bekende toepassingen <<"
-
-#~ msgid "Hide the list of known applications"
-#~ msgstr "Lijst met bekende toepassingen verbergen"
-
-#~ msgid "_Known Applications >>"
-#~ msgstr "_Bekende toepassingen >>"
-
-#~ msgid "Display a list of known applications from the applications menu"
-#~ msgstr "Lijst van bekende toepassingen uit het Toepassingen-menu weergeven"
-
-#~ msgid "Can't execute 'About GNOME'"
-#~ msgstr "Kan 'GNOME Info' niet uitvoeren"
-
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "Xscreensaver kan niet uitgevoerd worden"
-
-#~ msgid "CDE Applications"
-#~ msgstr "CDE Toepassingen"
-
-#~ msgid "Base Panel"
-#~ msgstr "Basis Paneel"
-
-#~ msgid "Gnome Base Panel"
-#~ msgstr "Gnome Basis Paneel"
-
-#~ msgid "Screenshot Capture"
-#~ msgstr "Schermafdruk Maken"
-
-#~ msgid "Take a picture of the current screen contents"
-#~ msgstr "Maak een foto van de huidige scherm inhoud"
-
-#~ msgid "Executable name for selected application"
-#~ msgstr "Uitvoerbare naam voor de geselecteerde toepassing"
-
-#~ msgid "_Advanced <<"
-#~ msgstr "_Geavanceerd <<"
-
-#~ msgid "Hide the advanced controls below this button."
-#~ msgstr "Geavanceerde opties hieronder niet weergeven."
-
-#~ msgid "_Advanced >>"
-#~ msgstr "_Geavanceerd >>"
-
-#~ msgid ""
-#~ "Allow typing in a command line instead of choosing an application from "
-#~ "the list"
-#~ msgstr "Zelf intypen van een opdracht i.p.v. kiezen uit een lijst toestaan."
-
-#~ msgid ""
-#~ "Cannot create the launcher.\n"
-#~ "\n"
-#~ "No command or url specified."
-#~ msgstr ""
-#~ "Kan geen starter aanmaken.\n"
-#~ "\n"
-#~ "Geen opdracht of url gespecificeerd."
-
-#~ msgid ""
-#~ "Cannot save menu item to disk, the following error occured:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Kan menu item niet opslaan op schijf, de volgende fout is opgetreden:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Gnome Aligned Panel"
-#~ msgstr "Gnome Uitgelijnd Paneel"
-
-#~ msgid "Gnome Egde Panel"
-#~ msgstr "Gnome Randpaneel"
-
-#~ msgid "Gnome Sliding Panel"
-#~ msgstr "Gnome Schuivend paneel"
-
-#~ msgid "Gnome Floating Panel"
-#~ msgstr "Gnome Zwevend paneel"
