@@ -13,7 +13,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <libgnomeui.h>
 #include "button-widget.h"
 #include "panel-types.h"
 

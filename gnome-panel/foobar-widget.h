@@ -8,7 +8,6 @@
 #ifndef FOOBAR_WIDGET_H
 #define FOOBAR_WIDGET_H
 
-#include <libgnomeui.h>
 #include "panel-types.h"
 #include "gwmh.h"
 

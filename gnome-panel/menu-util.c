@@ -7,7 +7,6 @@
  */
 
 #include <config.h>
-#include <libgnomeui.h>
 
 #include "panel-include.h"
 #include "multiscreen-stuff.h"

@@ -5,7 +5,6 @@
  * Authors: George Lebl
  */
 #include <config.h>
-#include <libgnomeui.h>
 #include <gdk/gdkx.h>
 #include <string.h>
 

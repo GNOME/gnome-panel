@@ -22,7 +22,6 @@
  */
 
 #include <config.h>
-#include <libgnomeui.h>
 #include <libgnomeui/gnome-window-icon.h>
 #include <errno.h>
 #include <sys/types.h>

@@ -8,7 +8,6 @@
 #include <math.h>
 #include <config.h>
 #include <gtk/gtk.h>
-#include <libgnomeui.h>
 #include "panel-widget.h"
 #include "button-widget.h"
 #include "panel-util.h"

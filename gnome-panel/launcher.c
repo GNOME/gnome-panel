@@ -18,7 +18,6 @@
 #include <string.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
-#include <libgnomeui.h>
 
 #include <gnome-desktop/gnome-desktop-item.h>
 

@@ -16,7 +16,6 @@
 #include <sys/wait.h>
 #include <libgnome/gnome-i18n.h>
 #include <libgnome/gnome-util.h>
-#include <libgnomeui.h>
 
 #include "panel-include.h"
 #include "gnome-run.h"

@@ -1,8 +1,6 @@
 #ifndef PANEL_UTIL_H
 #define PANEL_UTIL_H
 
-#include <libgnomeui.h>
-
 G_BEGIN_DECLS
 
 typedef void (*UpdateFunction) (gpointer);

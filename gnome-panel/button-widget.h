@@ -2,7 +2,6 @@
 #define BUTTON_WIDGET_H
 
 #include <gtk/gtk.h>
-#include <libgnomeui.h>
 #include "panel-types.h"
 
 #ifdef __cplusplus

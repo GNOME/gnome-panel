@@ -8,7 +8,6 @@
 
 
 #include "config.h"
-#include <libgnomeui.h>
 
 #include "icon-entry-hack.h"
 

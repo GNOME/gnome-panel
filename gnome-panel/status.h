@@ -1,7 +1,6 @@
 #ifndef STATUS_H
 #define STATUS_H
 
-#include <libgnomeui.h>
 #include "panel.h"
 #include "panel-types.h"
 #include "panel-widget.h"
