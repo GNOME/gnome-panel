@@ -131,7 +131,7 @@ about_cb (PanelApplet *applet,
                            pixbuf);
   
   g_object_add_weak_pointer (G_OBJECT (about),
-                             (void**) &about);
+                             (gpointer) &about);
 
   gtk_widget_show (about);
 }
