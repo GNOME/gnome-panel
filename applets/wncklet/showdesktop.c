@@ -394,7 +394,7 @@ display_help_dialog (BonoboUIComponent *uic,
         GError *error = NULL;
 
         egg_help_display_desktop_on_screen (
-                NULL, "show-desktop", "show-desktop", NULL,
+                NULL, "user-guide", "wgospanel.xml", "gospanel-564",
                 gtk_widget_get_screen (sdd->applet),
 		&error);
 
