@@ -714,9 +714,10 @@ button_widget_instance_init (ButtonWidget *button)
 
 	button->size = 0;
 
-	panel_signal_connect_object_while_alive (
-			panel_icon_theme, "changed",
-			G_CALLBACK (button_widget_icon_theme_changed), button);
+	g_signal_connect_object (panel_icon_theme, "changed",
+				 G_CALLBACK (button_widget_icon_theme_changed),
+				 button,
+				 G_CONNECT_SWAPPED);
 
 	g_signal_connect (button, "style-set", 
 			  G_CALLBACK (button_widget_gtk_theme_changed), button);

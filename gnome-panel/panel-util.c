@@ -492,22 +492,6 @@ panel_pixmap_discovery (const char *name, gboolean fallback)
 	return pixmap;
 }
 
-/* stolen from gtk */
-void
-panel_signal_connect_object_while_alive (gpointer    object,
-					 const char *signal,
-					 GCallback   func,
-					 gpointer    alive_object)
-{
-	g_return_if_fail (G_IS_OBJECT (object));
-	g_return_if_fail (G_IS_OBJECT (alive_object));
-  
-	g_signal_connect_closure_by_id (object,
-					g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
-					g_cclosure_new_object_swap (func, G_OBJECT (alive_object)),
-					FALSE);
-}
-
 static gboolean
 panel_ensure_dir (const char *dirname)
 {

@@ -60,11 +60,6 @@ gboolean	panel_is_program_in_path (const char *program);
 char *		panel_pixmap_discovery	(const char *name,
 					 gboolean fallback);
 
-void		panel_signal_connect_object_while_alive (gpointer     object,
-							 const gchar *signal,
-							 GCallback    func,
-							 gpointer     alive_object);
-
 gboolean	panel_is_uri_writable	(const char *uri);
 gboolean	panel_uri_exists	(const char *uri);
 

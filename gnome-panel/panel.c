@@ -1284,10 +1284,10 @@ panel_query_deletion (PanelToplevel *toplevel)
 			  G_CALLBACK (panel_deletion_response),
 			  toplevel);
 
-	panel_signal_connect_object_while_alive (
-			G_OBJECT (toplevel), "destroy",
-			G_CALLBACK (gtk_widget_destroy),
-			G_OBJECT (dialog));
+	g_signal_connect_object (toplevel, "destroy",
+				 G_CALLBACK (gtk_widget_destroy),
+				 dialog,
+				 G_CONNECT_SWAPPED);
 
 	gtk_widget_show_all (dialog);
 }

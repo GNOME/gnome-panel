@@ -2930,7 +2930,8 @@ panel_widget_register_open_dialog (PanelWidget *panel,
 	panel->open_dialogs = g_slist_append (panel->open_dialogs,
 					      dialog);
 	
-	panel_signal_connect_object_while_alive (dialog, "destroy",
-	 		 G_CALLBACK (panel_widget_open_dialog_destroyed),
-			 panel);
+	g_signal_connect_object (dialog, "destroy",
+				 G_CALLBACK (panel_widget_open_dialog_destroyed),
+				 panel,
+				 G_CONNECT_SWAPPED);
 }

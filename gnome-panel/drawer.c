@@ -801,10 +801,10 @@ drawer_query_deletion (Drawer *drawer)
 			  	  G_CALLBACK (drawer_deletion_response),
 			  	  drawer);
 
-		panel_signal_connect_object_while_alive (
-				G_OBJECT (drawer->toplevel), "destroy",
-				G_CALLBACK (gtk_widget_destroy),
-				G_OBJECT (dialog));
+		g_signal_connect_object (drawer->toplevel, "destroy",
+					 G_CALLBACK (gtk_widget_destroy),
+					 dialog,
+					 G_CONNECT_SWAPPED);
 
         	gtk_widget_show_all (dialog);
 	}

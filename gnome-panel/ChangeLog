@@ -1,5 +1,16 @@
 2004-01-27  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-util.[ch]: (panel_signal_connect_object_while_alive):
+	Kill this, g_signal_connect_object() does the same thing.
+	
+	* button-widget.c: (button_widget_instance_init):
+	* drawer.c: (drawer_query_deletion):
+	* panel-widget.c: (panel_widget_register_open_dialog):
+	* panel.c: (panel_query_deletion):
+	Update to use g_signal_connect_object().
+
+2004-01-27  Mark McLoughlin  <mark@skynet.ie>
+
 	Based on patch from Fernando Herrera in bug #128375.
 
 	* gnome-panel-screenshot.c: (update_window_icon),
