@@ -188,7 +188,6 @@ drawer_widget_open_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 {
 	if (IS_BASEP_WIDGET (parentp))
 		BASEP_WIDGET (parentp)->drawers_open++;
-	/*gtk_widget_show (GTK_WIDGET (drawer));*/
 	basep_widget_explicit_show (BASEP_WIDGET (drawer));
 }
 
@@ -210,7 +209,7 @@ drawer_widget_close_drawer (DrawerWidget *drawer, GtkWidget *parentp)
 		basep_widget_explicit_hide (basep, BASEP_HIDDEN_LEFT);
 		break;
 	}
-	/*gtk_widget_hide (GTK_WIDGET (drawer));*/
+
 	if (IS_BASEP_WIDGET (parentp))
 		BASEP_WIDGET (parentp)->drawers_open--;
 }

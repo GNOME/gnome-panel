@@ -1892,13 +1892,6 @@ basep_widget_get_pos (BasePWidget *basep,
 
 	basep_widget_get_size (basep, &w, &h);
 	klass->get_pos(basep, x, y, w, h);
-
-#if 0
-	/* sanity check, may not be desired */
-	*x = CLAMP (*x, 0, gdk_screen_width () - w);
-	*y = CLAMP (*y, 0, gdk_screen_height () - h);
-#endif
-
 }
 
 void
