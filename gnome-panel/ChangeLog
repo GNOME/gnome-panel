@@ -1,3 +1,10 @@
+Thu May 18 21:03:31 2000  George Lebl <jirka@5z.com>
+
+	* basep-widget.c: the destroy handler is now an override rather then
+	  a signal connection.  This means that panel_destroy signal
+	  connection is run before the pos is destroyed.  Also now the
+	  pos is set to NULL to catch such errors in the future.
+
 2000-05-18  Jacob Berkman  <jacob@helixcode.com>
 
 	* applet.c (create_applet_menu): 

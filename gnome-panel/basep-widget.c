@@ -25,6 +25,8 @@ static void basep_widget_init		(BasePWidget      *basep);
 static void basep_pos_class_init (BasePPosClass *klass);
 static void basep_pos_init (BasePPos *pos);
 
+static void basep_widget_destroy (GtkObject *o);
+
 static GtkWindowClass *basep_widget_parent_class = NULL;
 static GtkObjectClass *basep_pos_parent_class = NULL;
 /*global settings*/
@@ -300,11 +302,13 @@ basep_widget_class_init (BasePWidgetClass *klass)
 	widget_class->size_request = basep_widget_size_request;
 	widget_class->size_allocate = basep_widget_size_allocate;
 	widget_class->realize = basep_widget_realize;
+
+	object_class->destroy = basep_widget_destroy;
 }
 
 /* pos core */
 GtkType
-basep_pos_get_type ()
+basep_pos_get_type (void)
 {
 	static GtkType basep_pos_type = 0;
 	
@@ -784,13 +788,18 @@ make_hidebutton(BasePWidget *basep,
 }
 
 static void
-basep_widget_destroy (BasePWidget *basep)
+basep_widget_destroy (GtkObject *o)
 {
+	BasePWidget *basep = BASEP_WIDGET(o);
         /* check if there's a timeout set, and delete it if 
 	 * there was */
 	if (basep->leave_notify_timer_tag != 0)
 		gtk_timeout_remove (basep->leave_notify_timer_tag);
 	gtk_object_unref (GTK_OBJECT (basep->pos));
+	basep->pos = NULL;
+
+	if (GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy)
+		(* GTK_OBJECT_CLASS (basep_widget_parent_class)->destroy) (o);
 }	
 
 static void
@@ -949,10 +958,6 @@ basep_widget_init (BasePWidget *basep)
 
 	gtk_signal_connect(GTK_OBJECT(basep), "leave_notify_event",
 			   GTK_SIGNAL_FUNC(basep_leave_notify),
-			   NULL);
-
-	gtk_signal_connect(GTK_OBJECT(basep), "destroy",
-			   GTK_SIGNAL_FUNC(basep_widget_destroy),
 			   NULL);
 
 #if 0
