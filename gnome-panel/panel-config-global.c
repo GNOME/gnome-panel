@@ -3,6 +3,7 @@
 
 #include <gconf/gconf.h>
 
+#include "panel.h"
 #include "panel-util.h"
 
 #undef PANEL_GLOBAL_CONFIG_DEBUG

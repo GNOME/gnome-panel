@@ -625,7 +625,7 @@ panel_destroy (GtkWidget *widget, gpointer data)
 	}
 
 	if (pd->menu != NULL)
-		gtk_widget_unref (pd->menu);
+		g_object_unref (G_OBJECT (pd->menu));
 	pd->menu = NULL;
 
 	pd->panel = NULL;
@@ -2647,10 +2647,11 @@ panel_remove_from_gconf (PanelWidget *panel)
 					       PANEL_WIDGET (panel)->unique_id);
 
                         panel_gconf_clean_dir (panel_gconf_get_client (), dir);
-
-                        g_free (key);
-		} else
+			g_free (dir);
+			g_free (l->data);
+		} else {
 			new_panels = g_slist_prepend (new_panels, l->data);
+		}
         }
 
 	g_slist_free (panels);

@@ -66,6 +66,7 @@ static void panel_widget_cremove        (GtkContainer     *container,
 static int  panel_widget_expose         (GtkWidget        *widget,
 					 GdkEventExpose   *event);
 static void panel_widget_destroy        (GtkObject        *obj);
+static void panel_widget_finalize       (GObject        *obj);
 static void panel_widget_style_set      (GtkWidget        *widget,
 					 GtkStyle         *previous_style);
 static void panel_widget_realize        (GtkWidget        *widget);
@@ -280,6 +281,7 @@ static void
 panel_widget_class_init (PanelWidgetClass *class)
 {
 	GtkObjectClass *object_class = (GtkObjectClass*) class;
+	GObjectClass *gobject_class = (GObjectClass*) class;
 	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
 	GtkContainerClass *container_class = (GtkContainerClass*) class;
 
@@ -444,6 +446,7 @@ panel_widget_class_init (PanelWidgetClass *class)
 	class->end_move = panel_widget_end_move;
 
 	object_class->destroy = panel_widget_destroy;
+	gobject_class->finalize = panel_widget_finalize;
 	
 	widget_class->size_request = panel_widget_size_request;
 	widget_class->size_allocate = panel_widget_size_allocate;
@@ -1603,6 +1606,30 @@ panel_widget_realize(GtkWidget *w)
 #ifdef PANEL_WIDGET_DEBUG
 	puts("PANEL_WIDGET_REALIZE");
 #endif
+}
+
+static void
+panel_widget_finalize (GObject *obj)
+{
+	PanelWidget *panel;
+	GtkWidget *w = GTK_WIDGET (obj);
+
+	g_return_if_fail(PANEL_IS_WIDGET(w));
+
+	panel = PANEL_WIDGET(w);
+
+	g_free (panel->back_pixmap);
+	panel->back_pixmap = NULL;
+
+	/*remove from panels list*/
+	panels = g_slist_remove(panels,w);
+	panel_remove_from_gconf (panel);
+
+	g_free (panel->unique_id);
+	panel->unique_id = NULL;
+
+	if (G_OBJECT_CLASS (panel_widget_parent_class)->finalize)
+		G_OBJECT_CLASS (panel_widget_parent_class)->finalize (obj);
 }
 
 static void
