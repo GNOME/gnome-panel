@@ -1235,34 +1235,49 @@ panel_widget_set_back_color(PanelWidget *panel, GdkColor *color)
 static void
 panel_resize_pixmap(PanelWidget *panel)
 {
-	GdkImlibImage *im;
 	GdkPixmap *p;
 	GtkStyle *ns;
+	GdkPixBuf *pb = NULL;
+	GdkGC *gc;
 	int w, h;
 
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(panel));
+	
+	if(!panel->backpix) return;
 
-	im = gtk_object_get_data(GTK_OBJECT(panel),"gdk_image");
-	if(!im) return;
-
-	w = im->rgb_width;
-	h = im->rgb_height;
+	w = panel->backpix->art_pixbuf->width;
+	h = panel->backpix->art_pixbuf->height;
 
 	switch (panel->orient) {
 	case PANEL_HORIZONTAL:
-		gdk_imlib_render (im, w * panel->thick / h, panel->thick);
+		pb = gdk_pixbuf_scale(panel->backpix,
+				      w * panel->thick / h, panel->thick);
 		break;
 
 	case PANEL_VERTICAL:
-		gdk_imlib_render (im, panel->thick, h * panel->thick / w);
+		pb = gdk_pixbuf_scale(panel->backpix,
+				      panel->thick, h * panel->thick / w);
 		break;
 
 	default:
 		g_assert_not_reached ();
 	}
 
-	p = gdk_imlib_copy_image (im);
+	p = gdk_pixmap_new(GTK_WIDGET(panel)->window,
+			   pb->art_pixbuf->width,
+			   pb->art_pixbuf->height,
+			   gtk_widget_get_visual(GTK_WIDGET(panel))->depth);
+	gc = gdk_gc_new(p);
+	gdk_draw_rgb_image(p,gc,0,0,
+			   pb->art_pixbuf->width,
+			   pb->art_pixbuf->height,
+			   GDK_RGB_DITHER_NORMAL,
+			   pb->art_pixbuf->pixels,
+			   pb->art_pixbuf->rowstride);
+	gdk_gc_destroy(gc);
+	
+	gdk_pixbuf_destroy(pb);
 
 	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
 	gtk_style_ref(ns);
@@ -1281,8 +1296,9 @@ panel_resize_pixmap(PanelWidget *panel)
 static int
 panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 {
-	GdkImlibImage *im;
-	GdkImlibImage *im2;
+	GdkPixBuf *pb;
+	GdkPixBuf *pb_to_render;
+	GdkGC *gc;
 	GdkPixmap *p;
 	GtkStyle *ns;
 
@@ -1309,35 +1325,55 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	if (!g_file_exists (pixmap))
 		return FALSE;
 	
-	im = gdk_imlib_load_image (pixmap);
-	if (!im)
+	pb = gdk_pixbuf_load_image (pixmap);
+	if (!pb)
 		return FALSE;
-
-	im2 = gtk_object_get_data(GTK_OBJECT(panel),"gdk_image");
-	if(im2) gdk_imlib_destroy_image (im2);
 	
+	if(panel->backpix)
+		gdk_pixbuf_destroy(panel->backpix);
+
+	panel->backpix = pb_to_render = pb;
+
 	if (panel->fit_pixmap_bg) {
 		int w, h;
 
-		w = im->rgb_width;
-		h = im->rgb_height;
+		w = pb->art_pixbuf->width;
+		h = pb->art_pixbuf->height;
 
 		switch (panel->orient) {
 		case PANEL_HORIZONTAL:
-			gdk_imlib_render (im, w * panel->thick / h, panel->thick);
+			pb_to_render =
+				gdk_pixbuf_scale(pb,
+						 w * panel->thick / h, panel->thick);
 			break;
 
 		case PANEL_VERTICAL:
-			gdk_imlib_render (im, panel->thick, h * panel->thick / w);
+			pb_to_render =
+				gdk_pixbuf_scale(pb,
+						 panel->thick, h * panel->thick / w);
 			break;
 
 		default:
 			g_assert_not_reached ();
 		}
-	} else
-		gdk_imlib_render (im, im->rgb_width, im->rgb_height);
+	}
 
-	p = gdk_imlib_copy_image (im);
+	p = gdk_pixmap_new(GTK_WIDGET(panel)->window,
+			   pb_to_render->art_pixbuf->width,
+			   pb_to_render->art_pixbuf->height,
+			   gtk_widget_get_visual(GTK_WIDGET(panel))->depth);
+	gc = gdk_gc_new(p);
+	gdk_draw_rgb_image(p,gc,0,0,
+			   pb_to_render->art_pixbuf->width,
+			   pb_to_render->art_pixbuf->height,
+			   GDK_RGB_DITHER_NORMAL,
+			   pb_to_render->art_pixbuf->pixels,
+			   pb_to_render->art_pixbuf->rowstride);
+	gdk_gc_destroy(gc);
+	
+	/* if we made another pixbuf in scaling, destroy it now */
+	if(pb!=pb_to_render)
+		gdk_pixbuf_destroy(pb_to_render);
 
 	ns = gtk_style_copy(GTK_WIDGET(panel)->style);
 	gtk_style_ref(ns);
@@ -1349,7 +1385,6 @@ panel_try_to_set_pixmap (PanelWidget *panel, char *pixmap)
 	gtk_widget_set_style(GTK_WIDGET(panel), ns);
 	
 	gtk_style_unref(ns);
-	gtk_object_set_data(GTK_OBJECT(panel),"gdk_image",im);
 	
 	panel_widget_draw_all(panel,NULL);
 	return TRUE;
@@ -1378,15 +1413,14 @@ panel_widget_realize(GtkWidget *w, gpointer data)
 static void
 panel_widget_destroy(GtkWidget *w, gpointer data)
 {
-	GdkImlibImage *im;
 	PanelWidget *panel = PANEL_WIDGET(w);
 
 	g_return_if_fail(w!=NULL);
 	g_return_if_fail(IS_PANEL_WIDGET(w));
 
-	im = gtk_object_get_data(GTK_OBJECT(w),"gdk_image");
-	if(im) gdk_imlib_destroy_image (im);
-	gtk_object_set_data(GTK_OBJECT(w),"gdk_image",NULL);
+	if(panel->backpix)
+		gdk_pixbuf_destroy(panel->backpix);
+	panel->backpix = NULL;
 	
 	/*remove from panels list*/
 	panels = g_slist_remove(panels,w);
@@ -1497,8 +1531,8 @@ panel_widget_new (int packed,
 {
 	PanelWidget *panel;
 
-	gtk_widget_push_visual (gdk_imlib_get_visual ());
-	gtk_widget_push_colormap (gdk_imlib_get_colormap ());
+	gtk_widget_push_visual (gdk_rgb_get_visual ());
+	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 
 	panel = gtk_type_new(panel_widget_get_type());
 
