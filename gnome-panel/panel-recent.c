@@ -172,7 +172,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 	setup_stock_menu_item (menu_item,
 			       panel_menu_icon_get_size (),
 			       GTK_STOCK_OPEN,
-			       _("Open Recent"),
+			       _("Recent Documents"),
 			       TRUE);
 	menu = panel_create_menu ();
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menu_item), menu);
