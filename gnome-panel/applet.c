@@ -66,10 +66,18 @@ panel_clean_applet(AppletInfo *info)
 	}
 }
 
+static gboolean
+kill_applet_in_idle(gpointer data)
+{
+	AppletInfo *info = data;
+	panel_clean_applet(info);
+	return FALSE;
+}
+
 static void
 remove_applet_callback(GtkWidget *widget, AppletInfo *info)
 {
-	panel_clean_applet(info);
+	gtk_idle_add(kill_applet_in_idle, info);
 }
 
 static void
@@ -479,7 +487,7 @@ create_applet_menu(AppletInfo *info, gboolean is_basep)
 
 	/*connect the deactivate signal, so that we can "re-allow" autohide
 	  when the menu is deactivated*/
-	gtk_signal_connect(GTK_OBJECT(info->menu),"deactivate",
+	gtk_signal_connect(GTK_OBJECT(info->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(applet_menu_deactivate),
 			   info);
 }

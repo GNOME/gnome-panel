@@ -1,3 +1,10 @@
+Sat May 27 16:49:33 2000  George Lebl <jirka@5z.com>
+
+	* applet.c: when removing an applet, kill the applet in an idle.
+	  This is so that events are processed and when a "destroy" happens
+	  on the menu it happens before it is finalized by killing the
+	  applet.  Fixes the flurry of recent bugs with 1.2.
+
 2000-05-23  Dan Mueth <d-mueth@uchicago.edu>
 
 	* panel.hints: Fixed typo in ending tag: </Content> was </content>.
