@@ -186,7 +186,7 @@ static OrientationComboItem orientation_items [] = {
 	{ N_("Top"),    PANEL_ORIENTATION_TOP    },
 	{ N_("Bottom"), PANEL_ORIENTATION_BOTTOM },
 	{ N_("Left"),   PANEL_ORIENTATION_LEFT   },
-	{ N_("Right"),  PANEL_ORIENTATION_RIGHT  },
+	{ N_("Right"),  PANEL_ORIENTATION_RIGHT  }
 };
 
 static void
