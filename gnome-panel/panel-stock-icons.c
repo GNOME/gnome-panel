@@ -108,6 +108,9 @@ panel_init_stock_icons (GtkIconFactory *factory)
 		GtkIconSet *set;
 		char       *filename;
 
+		if (!stock_icons [i].icon)
+			continue;
+
 		filename = gnome_desktop_item_find_icon (
 				panel_icon_theme, stock_icons [i].icon, icon_height, 0);
 		if (!filename) {

@@ -1,5 +1,11 @@
 2003-02-24  Mark McLoughlin  <mark@skynet.ie>
 
+	* panel-stock-icons.c: (panel_init_stock_icons): don't give
+	a warning when we stock_icons[i].icon is NULL - i.e. with
+	PANEL_STOCK_ACTION stock icon.
+
+2003-02-24  Mark McLoughlin  <mark@skynet.ie>
+
 	* Makefile.am:
 	* eggaccelerators.c:
 	* eggaccelerators.h: kill eggaccelerators.[ch]. Not used
