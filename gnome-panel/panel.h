@@ -45,6 +45,7 @@ typedef struct {
 	gint        enter_notify_id;
 	gint        leave_notify_id;
 	gint        visibility_notify_id;
+	gint        button_press_id;
 	gint        leave_notify_timer_tag;
 	gint        minimize_delay;
 	gint        minimized_size;

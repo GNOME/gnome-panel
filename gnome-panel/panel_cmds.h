@@ -18,6 +18,7 @@ typedef enum {
 	PANEL_CMD_CREATE_APPLET,
 	PANEL_CMD_REGISTER_TOY,
 	PANEL_CMD_SET_TOOLTIP,
+	PANEL_CMD_CHANGE_SIZE_NOTIFY,
 	PANEL_CMD_PROPERTIES
 } PanelCommandType;
 
@@ -52,6 +53,11 @@ typedef struct {
 			GtkWidget *applet;
 			char *tooltip;
 		} set_tooltip;
+
+		/* Change size notify parameters */
+		struct {
+			GtkWidget *applet;
+		} change_size_notify;
 	} params;
 } PanelCommand;
 

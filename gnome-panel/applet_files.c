@@ -61,7 +61,7 @@ get_dl_func(void *handle, char *name)
         funcname = g_strdup(name);
 #       endif
 
-	func = dlsym(handle, funcname);
+	func = dlsym(handle, (const char *)funcname);
 	if ((error = dlerror()) != NULL) {
 		fprintf(stderr, "get_dl_func: %s (func is %s)\n", error,
 			funcname);

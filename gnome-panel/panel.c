@@ -49,14 +49,21 @@ static GtkWidget *applet_menu_remove_item;
 static GtkWidget *applet_menu_prop_separator;
 static GtkWidget *applet_menu_prop_item;
 
+static GtkWidget *panel_menu;
+
 
 static GdkCursor *fleur_cursor;
 
 static menu_count=0; /*how many "menu" applets we have ....*/
+			/*FIXME: this should only count "main" menus!*/
 
 Panel *the_panel;
 
 static GtkTooltips *panel_tooltips;
+
+/* some prototypes */
+static void properties(void);
+
 
 
 static void
@@ -669,13 +676,6 @@ move_applet_callback(GtkWidget *widget, gpointer data)
 {
 	GtkWidget      *applet;
 
-	/* FIXME: when the mouse moves outside of the applet, no
-	 * motion events are sent to it, even when the applet has a
-	 * gtk_grab to it.  However, when the drag was started by the
-	 * mouse instead of the menu, it works.  I don't know why this
-	 * happens.
-	 */
-	
 	applet = gtk_object_get_user_data(GTK_OBJECT(applet_menu));
 	applet_drag_start(applet, TRUE);
 }
@@ -732,13 +732,13 @@ create_applet_menu(void)
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
 	gtk_widget_show(menuitem);
 
-	applet_menu_remove_item =
-		gtk_menu_item_new_with_label(_("Remove from panel"));
-	gtk_signal_connect(GTK_OBJECT(applet_menu_remove_item), "activate",
+	menuitem = gtk_menu_item_new_with_label(_("Remove from panel"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   NULL);
-	gtk_menu_append(GTK_MENU(applet_menu), applet_menu_remove_item);
-	gtk_widget_show(applet_menu_remove_item);
+	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
+	gtk_widget_show(menuitem);
+	applet_menu_remove_item = menuitem;
 
 	menuitem = gtk_menu_item_new();
 	gtk_menu_append(GTK_MENU(applet_menu), menuitem);
@@ -782,6 +782,54 @@ show_applet_menu(GtkWidget *applet)
 	gtk_object_set_user_data(GTK_OBJECT(applet_menu), applet);
 
 	gtk_menu_popup(GTK_MENU(applet_menu), NULL, NULL, NULL, NULL, 3, time(NULL));
+}
+
+static void
+panel_properties_callback(GtkWidget *widget, gpointer data)
+{
+	properties();
+}
+
+static void
+panel_log_out_callback(GtkWidget *widget, gpointer data)
+{
+	panel_quit();
+}
+
+
+static void
+create_panel_menu(void)
+{
+	GtkWidget *menuitem;
+
+	panel_menu = gtk_menu_new();
+
+	menuitem = gtk_menu_item_new_with_label(_("Panel properties..."));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) panel_properties_callback,
+			   NULL);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+
+	menuitem = gtk_menu_item_new();
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+	
+	menuitem = gtk_menu_item_new_with_label(_("Log out"));
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) panel_log_out_callback,
+			   NULL);
+	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
+	gtk_widget_show(menuitem);
+}
+
+
+static void
+panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+	if(event->button==3)
+		gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL, NULL,
+		NULL, 3, time(NULL));
 }
 
 typedef struct _applet_pos {
@@ -1382,6 +1430,9 @@ panel_init(void)
 							(GtkSignalFunc) visibility_notify,
 							NULL);
 
+	the_panel->button_press_id = gtk_signal_connect(GTK_OBJECT(the_panel->window), "button_press_event",
+							(GtkSignalFunc) panel_button_press,
+							NULL);
 	/*gtk_signal_connect_after(GTK_OBJECT(the_panel->window), "realize",
 				 (GtkSignalFunc) realize_change_cursor,
 				 NULL);*/
@@ -1396,6 +1447,7 @@ panel_init(void)
 	fleur_cursor = gdk_cursor_new(GDK_FLEUR);
 
 	create_applet_menu();
+	create_panel_menu();
 
 	/*set up the tooltips*/
 	panel_tooltips=gtk_tooltips_new();
@@ -1719,6 +1771,13 @@ register_toy(GtkWidget *applet, char *id, int xpos, int ypos, long flags)
 }
 
 static void
+change_size_notify(GtkWidget *applet)
+{
+	fix_an_applet(applet,applet->allocation.x,applet->allocation.y);
+}
+
+
+static void
 swap_applet_coords(GtkWidget *applet, gpointer data)
 {
 	gint x,y,width,height;
@@ -1757,6 +1816,8 @@ panel_fix_all_applets(void)
 	gtk_container_foreach(GTK_CONTAINER(the_panel->fixed),
 		              fix_an_applet_foreach,NULL);
 }
+
+
 
 void
 panel_reconfigure(Panel *newconfig)
@@ -1865,6 +1926,11 @@ panel_command(PanelCommand *cmd)
 		case PANEL_CMD_SET_TOOLTIP:
 			set_tooltip(cmd->params.set_tooltip.applet,
 				    cmd->params.set_tooltip.tooltip);
+			break;
+
+		case PANEL_CMD_CHANGE_SIZE_NOTIFY:
+			change_size_notify(
+				cmd->params.change_size_notify.applet);
 			break;
 
 		case PANEL_CMD_PROPERTIES:
