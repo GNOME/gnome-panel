@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-19 20:39+0100\n"
+"POT-Creation-Date: 2004-07-20 08:31+0100\n"
 "PO-Revision-Date: 2004-07-10 15:52+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -2262,27 +2262,41 @@ msgstr "サイズ(_S):"
 msgid "_Tile"
 msgstr "タイル状(_T)"
 
-#: gnome-panel/panel-recent.c:60
+#: gnome-panel/panel-recent.c:61
 msgid "Couldn't find a suitable application"
 msgstr "適切なアプリケーションが見つかりませんでした"
 
-#: gnome-panel/panel-recent.c:86
+#: gnome-panel/panel-recent.c:87
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr ""
 "このファイルの種類に対するデフォルト・アプリはリモート・ファイルを扱えません"
 
-#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
+#: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
 msgid "Cannot open recently used document"
 msgstr "最近開いたドキュメントを開けません"
 
-#: gnome-panel/panel-recent.c:157
+#: gnome-panel/panel-recent.c:158
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "%s のオープンする際に不明なエラーが発生しました"
 
-#: gnome-panel/panel-recent.c:178
+#: gnome-panel/panel-recent.c:210
+#, fuzzy
+msgid "Clear recent document history?"
+msgstr "最近開いたドキュメント"
+
+#: gnome-panel/panel-recent.c:211
+msgid "This will clear the contents of the Recent Documents menu."
+msgstr ""
+
+#: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
+msgstr "最近開いたドキュメント"
+
+#: gnome-panel/panel-recent.c:271
+#, fuzzy
+msgid "Clear Recent Documents"
 msgstr "最近開いたドキュメント"
 
 #: gnome-panel/panel-run-dialog.c:288
@@ -2392,6 +2406,11 @@ msgstr "パネルのストック・アイコン '%s' が読み込めません\n"
 #: gnome-panel/panel-stock-icons.c:146
 msgid "_Force quit"
 msgstr "強制的に終了(_F)"
+
+#: gnome-panel/panel-stock-icons.c:147
+#, fuzzy
+msgid "C_lear"
+msgstr "カレンダ"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel 2.5.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-19 20:39+0100\n"
+"POT-Creation-Date: 2004-07-20 08:31+0100\n"
 "PO-Revision-Date: 2004-04-24 15:02+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: GNOME Korea <gnome-kr-hackers@lists.kldp.net>\n"
@@ -2241,26 +2241,40 @@ msgstr "크기(_S):"
 msgid "_Tile"
 msgstr "타일(_T)"
 
-#: gnome-panel/panel-recent.c:60
+#: gnome-panel/panel-recent.c:61
 msgid "Couldn't find a suitable application"
 msgstr "알맞은 프로그램을 찾을 수 없습니다"
 
-#: gnome-panel/panel-recent.c:86
+#: gnome-panel/panel-recent.c:87
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "기본 프로그램이 이런 형식의 원격 파일을 처리할 수 없습니다"
 
-#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
+#: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
 msgid "Cannot open recently used document"
 msgstr "최근 사용한 문서를 열 수 없습니다"
 
-#: gnome-panel/panel-recent.c:157
+#: gnome-panel/panel-recent.c:158
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "%s(을)를 여는 중 오류가 생겼습니다"
 
-#: gnome-panel/panel-recent.c:178
+#: gnome-panel/panel-recent.c:210
+#, fuzzy
+msgid "Clear recent document history?"
+msgstr "최근 문서"
+
+#: gnome-panel/panel-recent.c:211
+msgid "This will clear the contents of the Recent Documents menu."
+msgstr ""
+
+#: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
+msgstr "최근 문서"
+
+#: gnome-panel/panel-recent.c:271
+#, fuzzy
+msgid "Clear Recent Documents"
 msgstr "최근 문서"
 
 #: gnome-panel/panel-run-dialog.c:288
@@ -2368,6 +2382,11 @@ msgstr "패널 스톡 아이콘 '%s'(을)를 읽을 수 없습니다\n"
 #: gnome-panel/panel-stock-icons.c:146
 msgid "_Force quit"
 msgstr "강제로 끝내기(_F)"
+
+#: gnome-panel/panel-stock-icons.c:147
+#, fuzzy
+msgid "C_lear"
+msgstr "달력"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"

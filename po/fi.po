@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-19 20:39+0100\n"
+"POT-Creation-Date: 2004-07-20 08:31+0100\n"
 "PO-Revision-Date: 2004-03-30 00:23+0300\n"
 "Last-Translator: Pauli Virtanen <pauli.virtanen@hut.fi>\n"
 "Language-Team: Gnome Finnish Translation Team <gnome-fi-laatu@lists."
@@ -2608,28 +2608,42 @@ msgstr "_Koko:"
 msgid "_Tile"
 msgstr "V_ierekkäin"
 
-#: gnome-panel/panel-recent.c:60
+#: gnome-panel/panel-recent.c:61
 msgid "Couldn't find a suitable application"
 msgstr "Sopivaa sovellusta ei löydy"
 
-#: gnome-panel/panel-recent.c:86
+#: gnome-panel/panel-recent.c:87
 msgid ""
 "The default application for this type of file cannot handle remote files"
 msgstr "Tämä tiedostotyypin oletussovellus ei voi käsitellä etätiedostoja"
 
 # gnome-panel/launcher.c:1050 gnome-panel/menu.c:1059
 # gnome-panel/panel-util.c:49
-#: gnome-panel/panel-recent.c:149 gnome-panel/panel-recent.c:156
+#: gnome-panel/panel-recent.c:150 gnome-panel/panel-recent.c:157
 msgid "Cannot open recently used document"
 msgstr "Viimeisimmän asiakirjan avaaminen ei onnistu"
 
-#: gnome-panel/panel-recent.c:157
+#: gnome-panel/panel-recent.c:158
 #, c-format
 msgid "An unknown error occurred while trying to open %s"
 msgstr "Tuntematon virhe tapahtui kohteen %s avautuessa"
 
-#: gnome-panel/panel-recent.c:178
+#: gnome-panel/panel-recent.c:210
+#, fuzzy
+msgid "Clear recent document history?"
+msgstr "Viimeisimmät asiakirjat"
+
+#: gnome-panel/panel-recent.c:211
+msgid "This will clear the contents of the Recent Documents menu."
+msgstr ""
+
+#: gnome-panel/panel-recent.c:245
 msgid "Recent Documents"
+msgstr "Viimeisimmät asiakirjat"
+
+#: gnome-panel/panel-recent.c:271
+#, fuzzy
+msgid "Clear Recent Documents"
 msgstr "Viimeisimmät asiakirjat"
 
 # gnome-panel/launcher.c:152
@@ -2751,6 +2765,11 @@ msgstr "Paneelin peruskuvake \"%s\" ei avautunut\n"
 #: gnome-panel/panel-stock-icons.c:146
 msgid "_Force quit"
 msgstr "Sulje _väkisin"
+
+#: gnome-panel/panel-stock-icons.c:147
+#, fuzzy
+msgid "C_lear"
+msgstr "Kalenteri"
 
 #: gnome-panel/panel-toplevel.c:1111
 msgid "Hide Panel"
