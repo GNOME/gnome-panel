@@ -153,7 +153,7 @@ floating_pos_get_applet_orient (BasePWidget *basep)
 static PanelOrientType
 floating_pos_get_hide_orient (BasePWidget *basep)
 {
-	FloatingPos *pos = FLOATING_POS (basep->pos);
+	/*FloatingPos *pos = FLOATING_POS (basep->pos);*/
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
 
 	switch (basep->state) {

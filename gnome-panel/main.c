@@ -12,11 +12,10 @@
 #include <sys/wait.h>
 #include <gnome.h>
 #include <libgnorba/gnorba.h>
-#include <gdk/gdkx.h>
-#include <X11/Xlib.h>
 
 #include "panel-include.h"
-#include "global-keys.h"
+
+#include "xstuff.h"
 
 extern int config_sync_timeout;
 extern int applets_to_sync;
@@ -42,8 +41,6 @@ GnomeClient *client = NULL;
 
 /*a list of started extern applet child processes*/
 extern GList * children;
-
-GList *check_swallows = NULL;
 
 static int
 menu_age_timeout(gpointer data)
@@ -94,90 +91,6 @@ try_config_sync(gpointer data)
 	return TRUE;
 }
 
-static int
-ignore_x_error(Display* d, XErrorEvent* e)
-{
-	return 0;
-}
-
-static int
-get_window_id(Window win, char *title, guint32 *wid)
-{
-	Window root_return;
-	Window parent_return;
-	Window *children = NULL;
-	unsigned int nchildren;
-	unsigned int i;
-	char *tit;
-	int ret = FALSE;
-	
-	if(XFetchName(GDK_DISPLAY(), win, &tit) && tit) {
-		if(strstr(tit,title)!=NULL) {
-			if(wid) *wid = win;
-			ret = TRUE;
-		}
-		XFree(tit);
-	}
-	
-	if(ret) return TRUE;
-
-	XQueryTree(GDK_DISPLAY(),
-		   win,
-		   &root_return,
-		   &parent_return,
-		   &children,
-		   &nchildren);
-	
-	/*otherwise we got a problem*/
-	if(children) {
-		for(i=0;!ret && i<nchildren;i++)
-			ret=get_window_id(children[i],title,wid);
-		XFree(children);
-	}
-	return ret;
-}
-
-static GdkFilterReturn
-event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
-{
-	XEvent *xevent;
-
-	xevent = (XEvent *)gdk_xevent;
-
-	if (xevent->type == KeyPress || xevent->type == KeyRelease)
-		return panel_global_keys_filter(gdk_xevent, event);
-
-	if (xevent->type == MapNotify && check_swallows) {
-		int (*oldErrorHandler)(Display*, XErrorEvent*);
-		GList *li;
-		int remove;
-
-		oldErrorHandler = XSetErrorHandler(ignore_x_error);
-
-		remove = 0;
-		for(li = check_swallows; li; li = g_list_next(li)) {
-			Swallow *swallow = li->data;
-			if(get_window_id(xevent->xmap.window,swallow->title,
-					 &(swallow->wid))) {
-				gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
-				li->data = NULL;
-				remove++;
-			}
-		}
-		while(remove--)
-			check_swallows = g_list_remove(check_swallows,NULL);
-		
-		if(!check_swallows)
-			XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(), 0);
-		
-		XSetErrorHandler(oldErrorHandler);
-	}
-	if ((event->any.window) &&
-	    (gdk_window_get_type(event->any.window) == GDK_WINDOW_FOREIGN))
-		return GDK_FILTER_REMOVE;
-	else
-		return GDK_FILTER_CONTINUE;
-}
 
 
 int
@@ -288,9 +201,9 @@ main(int argc, char **argv)
 	  starting multiple goad_id's at once are libgnorba's problem*/
 	load_queued_externs();
 
-	/* set up a filter on the root window to get map requests */
-	/* we will select the events later when we actually need them */
-	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);
+	xstuff_init();
+
+	status_applet_create_offscreen();
 	
 	/* I use the glue code to avoid making this a C++ file */
 	gtk_main ();

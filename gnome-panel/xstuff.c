@@ -1,0 +1,378 @@
+#include <config.h>
+#include <gnome.h>
+#include <gdk/gdkx.h>
+
+#include <X11/Xmd.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+#include "panel-include.h"
+#include "gnome-panel.h"
+#include "global-keys.h"
+
+#include "xstuff.h"
+
+GdkAtom KWM_MODULE = 0;
+GdkAtom KWM_MODULE_DOCKWIN_ADD = 0;
+GdkAtom KWM_MODULE_DOCKWIN_REMOVE = 0;
+GdkAtom KWM_DOCKWINDOW = 0;
+GdkAtom _WIN_CLIENT_LIST = 0;
+
+extern GList *check_swallows;
+
+static guint32 *client_list = NULL;
+static int client_list_size = 0;
+
+static int
+get_window_id(Window win, char *title, guint32 *wid)
+{
+	Window root_return;
+	Window parent_return;
+	Window *children = NULL;
+	unsigned int nchildren;
+	unsigned int i;
+	char *tit;
+	int ret = FALSE;
+	
+	if(XFetchName(GDK_DISPLAY(), win, &tit) && tit) {
+		if(strstr(tit,title)!=NULL) {
+			if(wid) *wid = win;
+			ret = TRUE;
+		}
+		XFree(tit);
+	}
+	
+	if(ret) return TRUE;
+
+	XQueryTree(GDK_DISPLAY(),
+		   win,
+		   &root_return,
+		   &parent_return,
+		   &children,
+		   &nchildren);
+	
+	/*otherwise we got a problem*/
+	if(children) {
+		for(i=0;!ret && i<nchildren;i++)
+			ret=get_window_id(children[i],title,wid);
+		XFree(children);
+	}
+	return ret;
+}
+
+static void
+try_adding_status(guint32 winid)
+{
+	gulong *data;
+	int size;
+
+	if(got_spot_with_winid(winid))
+		return;
+
+	data = get_typed_property_data (GDK_DISPLAY(),
+					winid,
+					KWM_DOCKWINDOW,
+					KWM_DOCKWINDOW,
+					&size,32);
+
+	if(data) {
+		if(*data) {
+			StatusSpot *ss;
+			ss = new_status_spot();
+			if(ss)
+				gtk_socket_steal(GTK_SOCKET(ss->socket),
+						 winid);
+		}
+		g_free(data);
+	}
+}
+
+static void
+try_checking_swallows(guint32 winid)
+{
+	char *tit;
+	gdk_error_trap_push ();
+	if(XFetchName(GDK_DISPLAY(), winid, &tit) &&
+	   tit) {
+		GList *li;
+		for(li = check_swallows; li;
+		    li = g_list_next(li)) {
+			Swallow *swallow = li->data;
+			if(strstr(tit,swallow->title)!=NULL) {
+				swallow->wid = winid;
+				gtk_socket_steal(GTK_SOCKET(swallow->socket),
+						 swallow->wid);
+				check_swallows = 
+					g_list_remove(check_swallows,swallow);
+				break;
+			}
+		}
+		XFree(tit);
+	}
+	gdk_error_trap_pop ();
+}
+
+static void
+go_through_client_list(void)
+{
+	int i;
+	/* just for status dock stuff for now */
+	for(i=0;i<client_list_size;i++) {
+		if(check_swallows)
+			try_checking_swallows(client_list[i]);
+		try_adding_status(client_list[i]);
+	}
+}
+
+static GdkFilterReturn
+event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent;
+
+	xevent = (XEvent *)gdk_xevent;
+
+	if (xevent->type == KeyPress || xevent->type == KeyRelease)
+		return panel_global_keys_filter(gdk_xevent, event);
+
+	if(xevent->type == PropertyNotify &&
+	   xevent->xproperty.atom == _WIN_CLIENT_LIST) {
+		g_free(client_list);
+		client_list = get_typed_property_data (GDK_DISPLAY(),
+						       GDK_ROOT_WINDOW(),
+						       _WIN_CLIENT_LIST,
+						       XA_CARDINAL,
+						       &client_list_size,32);
+		go_through_client_list();
+	}
+
+	if (xevent->type == MapNotify && check_swallows) {
+		GList *li;
+		int remove; /* counts the number of NULLs we should remove
+			       from the check_swallows_list */
+
+		gdk_error_trap_push ();
+
+		remove = 0;
+		for(li = check_swallows; li; li = g_list_next(li)) {
+			Swallow *swallow = li->data;
+			if(get_window_id(xevent->xmap.window,swallow->title,
+					 &(swallow->wid))) {
+				gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
+				li->data = NULL;
+				remove++;
+			}
+		}
+		while(remove--)
+			check_swallows = g_list_remove(check_swallows,NULL);
+		
+		gdk_error_trap_pop ();
+	}
+	if ((event->any.window) &&
+	    (gdk_window_get_type(event->any.window) == GDK_WINDOW_FOREIGN))
+		return GDK_FILTER_REMOVE;
+	else
+		return GDK_FILTER_CONTINUE;
+}
+
+void
+xstuff_init(void)
+{
+	XWindowAttributes attribs = { 0 };
+
+	KWM_MODULE = gdk_atom_intern("KWM_MODULE",FALSE);
+	KWM_MODULE_DOCKWIN_ADD =
+		gdk_atom_intern("KWM_MODULE_DOCKWIN_ADD",FALSE);
+	KWM_MODULE_DOCKWIN_REMOVE =
+		gdk_atom_intern("KWM_MODULE_DOCKWIN_REMOVE",FALSE);
+	KWM_DOCKWINDOW = gdk_atom_intern("KWM_DOCKWINDOW", FALSE);
+	_WIN_CLIENT_LIST = gdk_atom_intern("_WIN_CLIENT_LIST",FALSE);
+
+	/* set up a filter on the root window to get map requests */
+	/* we will select the events later when we actually need them */
+	gdk_window_add_filter(GDK_ROOT_PARENT(), event_filter, NULL);
+
+	gdk_error_trap_push ();
+
+	/* select events, we need to trap the kde status thingies anyway */
+	XGetWindowAttributes (GDK_DISPLAY (),
+			      GDK_ROOT_WINDOW (),
+			      &attribs);
+	XSelectInput (GDK_DISPLAY (),
+		      GDK_ROOT_WINDOW (),
+		      attribs.your_event_mask |
+		      StructureNotifyMask |
+		      PropertyChangeMask);
+	gdk_flush ();
+
+	gdk_error_trap_pop ();
+
+	client_list = get_typed_property_data (GDK_DISPLAY(),
+					       GDK_ROOT_WINDOW(),
+					       _WIN_CLIENT_LIST,
+					       XA_CARDINAL,
+					       &client_list_size,32);
+
+	go_through_client_list();
+}
+
+void
+xstuff_set_simple_hint(GdkWindow *w, GdkAtom atom, int val)
+{
+	gdk_error_trap_push();
+	XChangeProperty(GDK_DISPLAY(), GDK_WINDOW_XWINDOW(w), atom, atom,
+			32, PropModeReplace, (unsigned char*)&val, 1);
+	gdk_error_trap_pop();
+}
+
+static GdkFilterReturn
+status_event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent;
+
+	xevent = (XEvent *)gdk_xevent;
+
+	if(xevent->type == ClientMessage) {
+		if(xevent->xclient.message_type == KWM_MODULE_DOCKWIN_ADD &&
+		   !got_spot_with_winid(xevent->xclient.data.l[0])) {
+			Window w = xevent->xclient.data.l[0];
+			StatusSpot *ss;
+			ss = new_status_spot();
+			if(ss)
+				gtk_socket_steal(GTK_SOCKET(ss->socket), w);
+		}
+	}
+
+	return GDK_FILTER_CONTINUE;
+}
+
+void
+xstuff_setup_kde_dock_thingie(GdkWindow *w)
+{
+	xstuff_set_simple_hint(w,KWM_MODULE,2);
+	gdk_window_add_filter(w, status_event_filter, NULL);
+	send_client_message_1L(GDK_ROOT_WINDOW(),GDK_WINDOW_XWINDOW(w),
+			       KWM_MODULE,SubstructureNotifyMask,
+			       GDK_WINDOW_XWINDOW(w));
+}
+
+/* Stolen from deskguide */
+gpointer
+get_typed_property_data (Display *xdisplay,
+			 Window   xwindow,
+			 Atom     property,
+			 Atom     requested_type,
+			 gint    *size_p,
+			 guint    expected_format)
+{
+  static const guint prop_buffer_lengh = 1024 * 1024;
+  unsigned char *prop_data = NULL;
+  Atom type_returned = 0;
+  unsigned long nitems_return = 0, bytes_after_return = 0;
+  int format_returned = 0;
+  gpointer data = NULL;
+  gboolean abort = FALSE;
+
+  g_return_val_if_fail (size_p != NULL, NULL);
+  *size_p = 0;
+
+  gdk_error_trap_push ();
+
+  abort = XGetWindowProperty (xdisplay,
+			      xwindow,
+			      property,
+			      0, prop_buffer_lengh,
+			      False,
+			      requested_type,
+			      &type_returned, &format_returned,
+			      &nitems_return,
+			      &bytes_after_return,
+			      &prop_data) != Success;
+  if (gdk_error_trap_pop () ||
+      type_returned == None)
+    abort++;
+  if (!abort &&
+      requested_type != AnyPropertyType &&
+      requested_type != type_returned)
+    {
+      g_warning (G_GNUC_PRETTY_FUNCTION "(): Property has wrong type, probably on crack");
+      abort++;
+    }
+  if (!abort && bytes_after_return)
+    {
+      g_warning (G_GNUC_PRETTY_FUNCTION "(): Eeek, property has more than %u bytes, stored on harddisk?",
+		 prop_buffer_lengh);
+      abort++;
+    }
+  if (!abort && expected_format && expected_format != format_returned)
+    {
+      g_warning (G_GNUC_PRETTY_FUNCTION "(): Expected format (%u) unmatched (%d), programmer was drunk?",
+		 expected_format, format_returned);
+      abort++;
+    }
+  if (!abort && prop_data && nitems_return && format_returned)
+    {
+      switch (format_returned)
+	{
+	case 32:
+	  *size_p = nitems_return * 4;
+	  if (sizeof (gulong) == 8)
+	    {
+	      guint32 i, *mem = g_malloc0 (*size_p + 1);
+	      gulong *prop_longs = (gulong*) prop_data;
+
+	      for (i = 0; i < *size_p / 4; i++)
+		mem[i] = prop_longs[i];
+	      data = mem;
+	    }
+	  break;
+	case 16:
+	  *size_p = nitems_return * 2;
+	  break;
+	case 8:
+	  *size_p = nitems_return;
+	  break;
+	default:
+	  g_warning ("Unknown property data format with %d bits (extraterrestrial?)",
+		     format_returned);
+	  break;
+	}
+      if (!data && *size_p)
+	{
+	  guint8 *mem = g_malloc (*size_p + 1);
+
+	  memcpy (mem, prop_data, *size_p);
+	  mem[*size_p] = 0;
+	  data = mem;
+	}
+    }
+
+  if (prop_data)
+    XFree (prop_data);
+  
+  return data;
+}
+
+/* sorta stolen from deskguide */
+gboolean
+send_client_message_1L (Window recipient,
+			Window event_window,
+			Atom   message_type,
+			long   event_mask,
+			glong  long1)
+{
+  XEvent xevent = { 0 };
+
+  xevent.type = ClientMessage;
+  xevent.xclient.window = event_window;
+  xevent.xclient.message_type = message_type;
+  xevent.xclient.format = 32;
+  xevent.xclient.data.l[0] = long1;
+
+  gdk_error_trap_push ();
+
+  XSendEvent (GDK_DISPLAY (), recipient, False, event_mask, &xevent);
+  gdk_flush ();
+
+  return !gdk_error_trap_pop ();
+}
+

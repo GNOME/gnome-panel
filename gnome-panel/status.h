@@ -31,6 +31,8 @@ struct _StatusSpot {
 	gulong wid;
 };
 
+void status_applet_create_offscreen(void);
+
 StatusSpot *new_status_spot(void);
 void status_spot_remove(StatusSpot *ss, gboolean destroy_socket);
 /*kill all status spots*/
@@ -40,6 +42,8 @@ void status_spot_remove_all(void);
 int load_status_applet(PanelWidget *panel, int pos);
 void status_applet_update(StatusApplet *s);
 void status_applet_put_offscreen(StatusApplet *s);
+
+gboolean got_spot_with_winid(guint32 winid);
 
 /*inhibit adding and updating for the purpose of quitting*/
 extern int status_inhibit;

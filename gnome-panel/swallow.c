@@ -23,7 +23,7 @@
 
 extern PanelWidget *current_panel;
 
-extern GList *check_swallows;
+GList *check_swallows = NULL;
 
 static int
 ignore_x_error(Display* d, XErrorEvent* e)
@@ -87,8 +87,8 @@ socket_realized(GtkWidget *w, gpointer data)
 
 	if(!get_window_id(GDK_ROOT_WINDOW(),swallow->title, &swallow->wid)) {
 		check_swallows = g_list_prepend(check_swallows,swallow);
-		XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(),
-			     SubstructureNotifyMask);
+		/*XSelectInput(GDK_DISPLAY(), GDK_ROOT_WINDOW(),
+			     SubstructureNotifyMask);*/
 	} else
 		gtk_socket_steal(GTK_SOCKET(swallow->socket),swallow->wid);
 
