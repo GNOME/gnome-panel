@@ -707,10 +707,11 @@ panel_menu_button_set_tooltip (PanelMenuButton *button,
 	g_free (button->priv->tooltip);
 	button->priv->tooltip = NULL;
 
-	if (tooltip && tooltip [0])
+	if (tooltip && tooltip [0]) {
 		button->priv->tooltip = g_strdup (tooltip);
-
-	gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button), tooltip, NULL);
+		gtk_tooltips_set_tip (panel_tooltips, GTK_WIDGET (button),
+				      tooltip, NULL);
+	}
 }
 
 void
