@@ -294,7 +294,6 @@ basep_pos_change(GtkWidget *widget,
 void
 back_change(AppletInfo *info, PanelWidget *panel)
 {
-  
 	if(info->type == APPLET_EXTERN) {
 		Extern *ext = info->data;
 		g_assert(ext);

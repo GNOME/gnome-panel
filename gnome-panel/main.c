@@ -41,43 +41,6 @@ GnomeClient *client = NULL;
 /*a list of started extern applet child processes*/
 extern GList * children;
 
-/* True if parsing determined that all the work is already done.  */
-char *just_exit = NULL;
-
-/*I guess this should be called after we load up, but the problem is
-  we never know when all the applets are going to finish loading and
-  we don't want to clean the file before they load up, so now we
-  only call it on the discard cmdline argument*/
-static void
-discard_session (char *id)
-{
-	char *sess;
-
-	sess = g_strconcat (gnome_user_dir,"/panel.d/Session-", id, NULL);
-	remove_directory(sess,FALSE);
-	g_free (sess);
-
-	gnome_config_sync ();
-}
-
-static void
-parse_an_arg (poptContext state,
-              enum poptCallbackReason reason,
-              const struct poptOption *opt,
-              const char *arg, void *data)
-{
-  if(opt->val == 0) {
-    *((char **)data) = (char *)arg;
-  }
-}
-
-static struct poptOption options[] = {
-  { NULL, '\0', POPT_ARG_CALLBACK, parse_an_arg, 0},
-  {"discard-session", '\0', POPT_ARG_STRING, &just_exit,0, N_("Discard session"),
-   N_("ID")},
-  {NULL, '\0', 0, NULL, 0}
-};
-
 static int
 menu_age_timeout(gpointer data)
 {
@@ -133,23 +96,14 @@ main(int argc, char **argv)
 	CORBA_ORB orb;
 	CORBA_Environment ev;
 	
-	panel_cfg_path = g_strdup("/panel.d/default/");
-	old_panel_cfg_path = g_strdup("/panel.d/default/");
-
 	bindtextdomain(PACKAGE, GNOMELOCALEDIR);
 	textdomain(PACKAGE);
 
 	CORBA_exception_init(&ev);
-	orb = gnome_CORBA_init_with_popt_table("panel", VERSION,
-					       &argc, argv, options, 0, NULL,
-					       GNORBA_INIT_SERVER_FUNC, &ev);
+	orb = gnome_CORBA_init("panel", VERSION,
+			       &argc, argv,
+			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
-
-	if (just_exit) {
-	  gnome_client_disable_master_connection ();
-	  discard_session (just_exit);
-	  return 0;
-	}
 
 	panel_corba_gtk_init(orb);
 
@@ -158,29 +112,16 @@ main(int argc, char **argv)
 	gnome_client_set_restart_style(client,
 				       GNOME_RESTART_IMMEDIATELY);
 
+	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
+		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
+	else
+		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+
+	gnome_client_set_global_config_prefix (client, "/panel.d/Session/");
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
-	gtk_object_set_data(GTK_OBJECT(client),"argv0",g_strdup(argv[0]));
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
-
-	if (GNOME_CLIENT_CONNECTED (client)) {
-		char *session_id;
-
-		session_id= gnome_client_get_previous_id (client);
-
-		if(session_id) {
-			g_free(old_panel_cfg_path);
-			old_panel_cfg_path = g_strconcat("/panel.d/Session-",
-							 session_id,"/",
-							 NULL);
-		}
-		puts("connected to session manager");
-	}
-
-	/* Tell session manager how to run us.  */
-	gnome_client_set_clone_command (client, 1, argv);
-	gnome_client_set_restart_command (client, 1, argv);
 
 	panel_tooltips = gtk_tooltips_new();
 

@@ -459,25 +459,20 @@ do_session_save(GnomeClient *client,
 	char *s;
 	char *session_id;
 	int i;
+	gchar *new_args[] = { "rm", "-r", NULL };
 
-	session_id = gnome_client_get_id (client);
-	if(session_id) {
-		char *new_args[3];
-
+	if (panel_cfg_path)
 		g_free(panel_cfg_path);
-		panel_cfg_path = g_strconcat("/panel.d/Session-",session_id,
-					     "/",NULL);
 
-		new_args[0] = (char *) gtk_object_get_data(GTK_OBJECT(client),
-							   "argv0");
-		new_args[1] = "--discard-session";
-		new_args[2] = session_id;
-		gnome_client_set_discard_command (client, 3, new_args);
-	}
+	if (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED)
+		panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
+	else
+		panel_cfg_path = g_strdup ("/panel.d/default/");
+
+	new_args[2] = gnome_config_get_real_path (panel_cfg_path);
+	gnome_client_set_discard_command (client, 3, new_args);
 	
 	/*DEBUG*/printf("Saving to [%s]\n",panel_cfg_path);
-
-	gnome_config_clean_file(panel_cfg_path);
 
 	/*DEBUG*/printf("Saving session: 1"); fflush(stdout);
 	if(complete_sync) {
@@ -577,13 +572,26 @@ panel_config_sync(void)
 		GSList *_applets_to_sync = applets_to_sync;
 
 		applets_to_sync = NULL;
-		do_session_save(client,need_complete_save,
-				_applets_to_sync,panels_to_sync,globals_to_sync);
-		need_complete_save = FALSE;
+		if (!(gnome_client_get_flags(client) & 
+		      GNOME_CLIENT_IS_CONNECTED)) {
+			do_session_save(client,need_complete_save,
+					_applets_to_sync,panels_to_sync,
+					globals_to_sync);
+			need_complete_save = FALSE;
+			panels_to_sync = FALSE;
+			globals_to_sync = FALSE;
+			g_slist_free(_applets_to_sync);
+		} else {
+			/*prevent possible races by doing this before requesting
+			  save*/
+			need_complete_save = FALSE;
+			panels_to_sync = FALSE;
+			globals_to_sync = FALSE;
+			g_slist_free(_applets_to_sync);
+			gnome_client_request_save (client, GNOME_SAVE_LOCAL, FALSE,
+						   GNOME_INTERACT_NONE, FALSE, FALSE);
+		}
 
-		g_slist_free(_applets_to_sync);
-		panels_to_sync = FALSE;
-		globals_to_sync = FALSE;
 	}
 }
 
