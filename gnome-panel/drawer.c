@@ -410,14 +410,16 @@ create_drawer_toplevel (const char *drawer_id)
 	toplevel = panel_profile_load_toplevel (client, profile_dir,
 						PANEL_GCONF_TOPLEVELS, toplevel_id);
 
-	g_free (toplevel_id);
 	g_free (profile_dir);
 
-	if (!toplevel)
+	if (!toplevel) {
+		g_free (toplevel_id);
 		return NULL;
+	}
 
 	key = panel_gconf_full_key (PANEL_GCONF_OBJECTS, profile, drawer_id, "attached_toplevel_id");
 	gconf_client_set_string (client, key, toplevel_id, NULL);
+	g_free (toplevel_id);
 
 	panel_profile_set_toplevel_enable_buttons (toplevel, TRUE);
 	panel_profile_set_toplevel_enable_arrows (toplevel, TRUE);
