@@ -1,3 +1,10 @@
+Mon Oct 04 23:50:21 1999  George Lebl  <jirka@5z.com>
+
+	* menu.c: correctly find the current panel. We set a "menu_panel"
+	  data on a menu, then when we want the current panel we search if
+	  any menu in the hierarchy below us has the "menu_panel" set, and
+	  only if it doesn't shall we use current_panel
+
 Mon Oct 04 23:03:10 1999  George Lebl  <jirka@5z.com>
 
 	* main.[ch],panel.c: don't show the tearoff item on torn off menus
