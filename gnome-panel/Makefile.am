@@ -23,7 +23,7 @@ INCLUDES = \
 	-DGLADEDIR=\""$(datadir)/gnome/panel"\" \
 	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)		\
-	$(PANEL_CFLAGS) -Werror
+	$(PANEL_CFLAGS) -Werror -Wno-unused
 
 bin_PROGRAMS = \
 	panel-2
