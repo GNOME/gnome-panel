@@ -583,6 +583,7 @@ browse_ok (GtkWidget *widget, GtkFileSelection *fsel)
 	fname = gtk_file_selection_get_filename (fsel);
 	if (fname != NULL) {
 		append_file (entry, fname);
+		gtk_widget_grab_focus (entry);
 	}
 	
 	gtk_widget_destroy (GTK_WIDGET (fsel));

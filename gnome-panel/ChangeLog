@@ -1,3 +1,14 @@
+2003-04-04  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* gnome-run.c (browse_ok): Give focus to the entry field after a
+	file has been appended using Append File. Fixes #86610.
+
+	* drawer.c (key_press_drawer): Make left and right arrow keys move
+	focus from drawer in horizontal panel to next item in panel. Up and
+	down arrow keys move focus from open drawer into the drawer and have
+	no effect for closed drawer. Similar behavior for vertical panels.
+	Fixes bug #99176.
+
 2003-04-01  Mark McLoughlin  <mark@skynet.ie>
 
 	reviewed by: <delete if not using a buddy>

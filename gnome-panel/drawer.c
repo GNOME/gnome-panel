@@ -230,24 +230,53 @@ key_press_drawer (GtkWidget   *widget,
 		  Drawer      *drawer)
 {
 	gboolean retval = TRUE;
+	GtkOrientation orient;
 
 	if (event->state == gtk_accelerator_get_default_mod_mask ())
 		return FALSE;
 
+	orient = PANEL_WIDGET (drawer->button->parent)->orient;
+
 	switch (event->keyval) {
 	case GDK_Up:
 	case GDK_KP_Up:
+		if (orient == GTK_ORIENTATION_HORIZONTAL) {
+			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
+				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_BACKWARD);
+		} else {
+			/* let default focus movement happen */
+			retval = FALSE;
+		}
+		break;
 	case GDK_Left:
 	case GDK_KP_Left:
-		if (!panel_toplevel_get_is_hidden (drawer->toplevel))
-			drawer_focus_panel_widget (drawer, GTK_DIR_TAB_BACKWARD);
+		if (orient == GTK_ORIENTATION_VERTICAL) {
+			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
+				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_BACKWARD);
+		} else {
+			/* let default focus movement happen */
+			retval = FALSE;
+		}
 		break;
 	case GDK_Down:
 	case GDK_KP_Down:
+		if (orient == GTK_ORIENTATION_HORIZONTAL) {
+			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
+				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_FORWARD);
+		} else {
+			/* let default focus movement happen */
+			retval = FALSE;
+		}
+		break;
 	case GDK_Right:
 	case GDK_KP_Right:
-		if (!panel_toplevel_get_is_hidden (drawer->toplevel))
-			drawer_focus_panel_widget (drawer, GTK_DIR_TAB_FORWARD);
+		if (orient == GTK_ORIENTATION_VERTICAL) {
+			if (!panel_toplevel_get_is_hidden (drawer->toplevel))
+				drawer_focus_panel_widget (drawer, GTK_DIR_TAB_FORWARD);
+		} else {
+			/* let default focus movement happen */
+			retval = FALSE;
+		}
 		break;
 	case GDK_Escape:
 		panel_toplevel_hide (drawer->toplevel, FALSE, -1);
