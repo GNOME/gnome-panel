@@ -7,6 +7,7 @@ typedef struct _GlobalConfig GlobalConfig;
 struct _GlobalConfig {
 	gint auto_hide_step_size;
 	gint explicit_hide_step_size;
+	gint drawer_step_size;
 	gint minimized_size;
 	gint minimize_delay;
 	gint tooltips_enabled;

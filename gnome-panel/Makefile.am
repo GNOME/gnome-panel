@@ -22,7 +22,7 @@ INCLUDES = -I. -I$(srcdir) 			\
 
 ## FIXME: logout should really be an internal applets since it is just
 ## too trivial 
-bin_PROGRAMS = panel logout_applet #launcher_applet
+bin_PROGRAMS = panel logout_applet fish_applet #launcher_applet
 
 CORBA_SOURCES = \
 	gnome-panel.cc \
@@ -91,6 +91,16 @@ panel_LDADD = $(GNOME_LIBDIR) $(MICO_LIBS) -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
 
 #launcher_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) -lXt \
 #			$(GNOMEUI_LIBS) $(INTLLIBS)
+
+fish_applet_SOURCES = \
+	fish.c
+## Must define linker for fish_applet -- it needs a C++ linker, but
+## automake doesn't discover that automatically.
+fish_applet_LINK = $(CXXLINK)
+
+fish_applet_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(MICO_LIBS) \
+		      -lXt $(GNOMEUI_LIBS) $(INTLLIBS)
+
 
 logout_applet_SOURCES = \
 	logout.c

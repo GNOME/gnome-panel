@@ -118,6 +118,13 @@ animation_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
+	/* ExplicitHide Animation step_size scale frame */
+	frame = make_gint_scale_frame(_("Drawer Animation Speed"),
+				      &(temp_config.drawer_step_size),
+				      1.0,100.0);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
+			    CONFIG_PADDING_SIZE);
+
 	/* Minimize Delay scale frame */
 	frame = make_gint_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
 				      &(temp_config.minimize_delay),

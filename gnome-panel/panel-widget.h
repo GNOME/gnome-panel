@@ -221,6 +221,7 @@ void		panel_widget_change_drop_zone_pos(PanelWidget *panel,
 /*change global params*/
 void		panel_widget_change_global	(gint explicit_step,
 						 gint auto_step,
+						 gint drawer_step,
 						 gint minimized_size,
 						 gint minimize_delay,
 						 PanelMovementType move_type);

@@ -17,6 +17,7 @@ static int  panel_try_to_set_pixmap     (PanelWidget *panel, char *pixmap);
 static GdkCursor *fleur_cursor;
 
 static gint pw_explicit_step = 50;
+static gint pw_drawer_step = 20;
 static gint pw_auto_step = 10;
 static gint pw_minimized_size = 6;
 static gint pw_minimize_delay = 300;
@@ -1406,14 +1407,14 @@ panel_widget_open_drawer(PanelWidget *panel)
 			move_resize_window(GTK_WIDGET(panel),x+width,y,
 					   0,height);
 			move_horiz_d(panel, x+width, x,
-				     pw_explicit_step,FALSE);
+				     pw_drawer_step,FALSE);
 		} else {
 			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
 			move_resize_window(GTK_WIDGET(panel),x-width,y,
 					   0,height);
 			move_horiz_d(panel, x-width, x,
-				     pw_explicit_step,FALSE);
+				     pw_drawer_step,FALSE);
 		}
 	} else {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT) {
@@ -1422,14 +1423,14 @@ panel_widget_open_drawer(PanelWidget *panel)
 			move_resize_window(GTK_WIDGET(panel),x,y+height,
 					   width,0);
 			move_vert_d(panel, y+height, y,
-				  pw_explicit_step,FALSE);
+				  pw_drawer_step,FALSE);
 		} else {
 			gdk_window_move(GTK_WIDGET(panel)->window,-1000,-1000);
 			gtk_widget_show(GTK_WIDGET(panel));
 			move_resize_window(GTK_WIDGET(panel),x,y-height,
 					   width,0);
 			move_vert_d(panel, y-height, y,
-				    pw_explicit_step,FALSE);
+				    pw_drawer_step,FALSE);
 		}
 	}
 
@@ -1467,17 +1468,17 @@ panel_widget_close_drawer(PanelWidget *panel)
 	if(panel->orient == PANEL_HORIZONTAL) {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
 			move_horiz_d(panel, x, x+width,
-				     pw_explicit_step, TRUE);
+				     pw_drawer_step, TRUE);
 		else
 			move_horiz_d(panel, x, x-width,
-				     pw_explicit_step, TRUE);
+				     pw_drawer_step, TRUE);
 	} else {
 		if(panel->drawer_drop_zone_pos==DROP_ZONE_LEFT)
 			move_vert_d(panel, y, y+height,
-				    pw_explicit_step, TRUE);
+				    pw_drawer_step, TRUE);
 		else
 			move_vert_d(panel, y, y-height,
-				    pw_explicit_step, TRUE);
+				    pw_drawer_step, TRUE);
 	}
 
 	gtk_widget_hide(GTK_WIDGET(panel));
@@ -3097,6 +3098,7 @@ panel_widget_restore_state(PanelWidget *panel)
 void
 panel_widget_change_global(gint explicit_step,
 			   gint auto_step,
+			   gint drawer_step,
 			   gint minimized_size,
 			   gint minimize_delay,
 			   PanelMovementType move_type)
@@ -3105,6 +3107,8 @@ panel_widget_change_global(gint explicit_step,
 		pw_explicit_step=explicit_step;
 	if(auto_step>0)
 		pw_auto_step=auto_step;
+	if(drawer_step>0)
+		pw_drawer_step=drawer_step;
 	if(minimized_size>0)
 		pw_minimized_size=minimized_size;
 	if(minimize_delay>=0)

@@ -52,6 +52,7 @@ apply_global_config(void)
 {
 	panel_widget_change_global(global_config.explicit_hide_step_size,
 				   global_config.auto_hide_step_size,
+				   global_config.drawer_step_size,
 				   global_config.minimized_size,
 				   global_config.minimize_delay,
 				   global_config.movement_type);
@@ -267,6 +268,8 @@ panel_session_save (GnomeClient *client,
 			     global_config.auto_hide_step_size);
 	gnome_config_set_int("explicit_hide_step_size",
 			     global_config.explicit_hide_step_size);
+	gnome_config_set_int("drawer_step_size",
+			     global_config.drawer_step_size);
 	gnome_config_set_int("minimized_size", global_config.minimized_size);
 	gnome_config_set_int("minimize_delay", global_config.minimize_delay);
 	gnome_config_set_bool("tooltips_enabled",

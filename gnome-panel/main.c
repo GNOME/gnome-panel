@@ -758,6 +758,7 @@ init_user_panels(void)
 
 	panel_widget_change_global(DEFAULT_EXPLICIT_HIDE_STEP_SIZE,
 				   DEFAULT_AUTO_HIDE_STEP_SIZE,
+				   DEFAULT_DRAWER_STEP_SIZE,
 				   DEFAULT_MINIMIZED_SIZE,
 				   DEFAULT_MINIMIZE_DELAY,
 				   PANEL_SWITCH_MOVE);
@@ -958,6 +959,10 @@ main(int argc, char **argv)
 	g_snprintf(buf,256,"explicit_hide_step_size=%d",
 		   DEFAULT_EXPLICIT_HIDE_STEP_SIZE);
 	global_config.explicit_hide_step_size=gnome_config_get_int(buf);
+		
+	g_snprintf(buf,256,"drawer_step_size=%d",
+		   DEFAULT_DRAWER_STEP_SIZE);
+	global_config.drawer_step_size=gnome_config_get_int(buf);
 		
 	g_snprintf(buf,256,"minimize_delay=%d", DEFAULT_MINIMIZE_DELAY);
 	global_config.minimize_delay=gnome_config_get_int(buf);
