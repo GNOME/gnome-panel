@@ -2063,6 +2063,13 @@ basep_calculate_borders (void)
 	}
 }
 
+static int
+border_max (BorderEdge edge)
+{
+	return MAX (borders[edge].center,
+		    MAX (borders[edge].left, borders[edge].right));
+}
+
 void
 basep_border_recalc (void)
 {
@@ -2097,6 +2104,12 @@ basep_border_recalc (void)
 		}
 	}
 
+	/* this does not generate xtraffic if not needed */
+	xstuff_setup_desktop_area (border_max (BORDER_LEFT),
+				   border_max (BORDER_RIGHT),
+				   border_max (BORDER_TOP) +
+				     foobar_widget_get_height (),
+				   border_max (BORDER_BOTTOM));
 }
 
 static guint queue_recalc_id = 0;

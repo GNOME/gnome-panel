@@ -19,6 +19,7 @@
 #include "panel-include.h"
 #include "gnome-run.h"
 #include "global-keys.h"
+#include "xstuff.h"
 
 /*#define PANEL_DEBUG 1*/
 
@@ -845,6 +846,8 @@ panel_session_die (GnomeClient *client,
 					    GDK_WINDOW_XWINDOW(GTK_SOCKET(swallow->socket)->plug_window));
 		}
 	}
+
+	xstuff_unsetup_desktop_area ();
 			
 	/*clean up corba stuff*/
 	panel_corba_clean_up();

@@ -1,6 +1,6 @@
 /*
  * GNOME panel x stuff
- * Copyright 2000 Eazel, Inc.
+ * Copyright 2000,2001 Eazel, Inc.
  *
  * Authors: George Lebl
  */
@@ -25,6 +25,7 @@ static GdkAtom KWM_MODULE_DOCKWIN_REMOVE = 0;
 static GdkAtom KWM_DOCKWINDOW = 0;
 static GdkAtom NAUTILUS_DESKTOP_WINDOW_ID = 0;
 static GdkAtom _NET_WM_DESKTOP = 0;
+static GdkAtom GNOME_PANEL_DESKTOP_AREA = 0;
 
 extern GList *check_swallows;
 
@@ -165,6 +166,8 @@ xstuff_init (void)
 		gdk_atom_intern ("NAUTILUS_DESKTOP_WINDOW_ID", FALSE);
 	_NET_WM_DESKTOP =
 		gdk_atom_intern ("_NET_WM_DESKTOP", FALSE);
+	GNOME_PANEL_DESKTOP_AREA =
+		gdk_atom_intern ("GNOME_PANEL_DESKTOP_AREA", FALSE);
 
 	gwmh_init ();
 
@@ -175,6 +178,8 @@ xstuff_init (void)
 	gdk_window_add_filter (GDK_ROOT_PARENT(),
 			       panel_global_keys_filter,
 			       NULL);
+
+	xstuff_setup_desktop_area (0, 0, 0, 0);
 
 	xstuff_go_through_client_list ();
 }
@@ -213,10 +218,10 @@ xstuff_nautilus_desktop_present (void)
 }
 
 void
-xstuff_set_simple_hint (GdkWindow *w, GdkAtom atom, int val)
+xstuff_set_simple_hint (GdkWindow *w, GdkAtom atom, long val)
 {
 	gdk_error_trap_push ();
-	XChangeProperty (GDK_DISPLAY(), GDK_WINDOW_XWINDOW(w), atom, atom,
+	XChangeProperty (GDK_DISPLAY (), GDK_WINDOW_XWINDOW (w), atom, atom,
 			 32, PropModeReplace, (unsigned char*)&val, 1);
 	gdk_flush ();
 	gdk_error_trap_pop ();
@@ -423,4 +428,39 @@ xstuff_set_no_group_and_no_input (GdkWindow *win)
 	XSetWMHints (GDK_DISPLAY (),
 		     GDK_WINDOW_XWINDOW (win),
 		     &wmhints);
+}
+
+void
+xstuff_setup_desktop_area (int left, int right, int top, int bottom)
+{
+	long vals[4];
+	static int old_left = -1, old_right = -1, old_top = -1, old_bottom = -1;
+
+	if (old_left == left &&
+	    old_right == right &&
+	    old_top == top &&
+	    old_bottom == bottom)
+		return;
+
+	vals[0] = left;
+	vals[1] = right;
+	vals[2] = top;
+	vals[3] = bottom;
+
+	gdk_error_trap_push ();
+	XChangeProperty (GDK_DISPLAY (), GDK_ROOT_WINDOW (), 
+			 GNOME_PANEL_DESKTOP_AREA, XA_CARDINAL,
+			 32, PropModeReplace, (unsigned char*)vals, 4);
+	gdk_flush ();
+	gdk_error_trap_pop ();
+}
+
+void
+xstuff_unsetup_desktop_area (void)
+{
+	gdk_error_trap_push ();
+	XDeleteProperty (GDK_DISPLAY (), GDK_ROOT_WINDOW (),
+			 GNOME_PANEL_DESKTOP_AREA);
+	gdk_flush ();
+	gdk_error_trap_pop ();
 }
