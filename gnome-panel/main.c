@@ -104,6 +104,7 @@ struct _Fish {
 	GdkBitmap *fish_mask[4];
 	int handler;
 	GdkWindow *win;
+	gboolean scared;
 };
 Fish fish = {0};
 
@@ -136,16 +137,16 @@ fish_move (gpointer data)
 	}
 	if (fish.y <= 0 ||
 	    fish.y >= gdk_screen_height () - 40 ||
-	    rand() % 50 == 0)
+	    rand() % (fish.scared?10:50) == 0)
 		fish.ys = -fish.ys;
 
 	fish.state ++;
-	if (fish.state % 4 == 0)
+	if (fish.state % (fish.scared?2:4) == 0)
 		change = TRUE;
-	if (fish.state >= 8)
+	if (fish.state >= (fish.scared?4:8))
 		fish.state = 0;
 
-	state = fish.state >= 4 ? 1 : 0;
+	state = fish.state >= (fish.scared?2:4) ? 1 : 0;
 	orient = fish.xs >= 0 ? 0 : 2;
 
 	if (change) {
@@ -196,6 +197,24 @@ fish_unwater(GdkPixbuf *gp)
 	}
 }
 
+static GdkFilterReturn
+fish_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
+{
+	XEvent *xevent = (XEvent *)gdk_xevent;
+
+	if (xevent->type == ButtonPress &&
+	    ! fish.scared) {
+		gtk_timeout_remove (fish.handler);
+		fish.handler = gtk_timeout_add (90, fish_move, NULL);
+		fish.xs *= 2.0;
+		fish.ys *= 2.5;
+		fish.scared = TRUE;
+		if (fish.x < (gdk_screen_width () / 2))
+			fish.xs *= -1;
+	}
+	return GDK_FILTER_CONTINUE;
+}
+
 /* the incredibly evil function */
 static void
 check_screen (void)
@@ -224,6 +243,7 @@ check_screen (void)
 	}
 
 	fish.state = 0;
+	fish.scared = FALSE;
 
 	gp = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, 60, 40);
 	gdk_pixbuf_copy_area (tmp, 60, 0, 60, 40, gp, 0, 0);
@@ -256,13 +276,18 @@ check_screen (void)
 	attributes.wclass = GDK_INPUT_OUTPUT;
 	attributes.visual = gdk_rgb_get_visual();
 	attributes.colormap = gdk_rgb_get_cmap();
-	attributes.event_mask = 0;
+	attributes.event_mask = GDK_BUTTON_PRESS_MASK;
 
 	fish.win = gdk_window_new (NULL, &attributes,
 				   GDK_WA_X | GDK_WA_Y |
 				   GDK_WA_VISUAL | GDK_WA_COLORMAP);
 	gdk_window_set_back_pixmap (fish.win, fish.fish[0], FALSE);
 	gdk_window_shape_combine_mask (fish.win, fish.fish_mask[0], 0, 0);
+
+	/* setup the keys filter */
+	gdk_window_add_filter (fish.win,
+			       fish_filter,
+			       NULL);
 
 	gdk_window_show (fish.win);
 	fish.handler = gtk_timeout_add (150, fish_move, NULL);
