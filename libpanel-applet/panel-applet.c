@@ -408,45 +408,6 @@ panel_applet_finalize (GObject *object)
 	parent_class->finalize (object);
 }
 
-static void
-panel_applet_menu_position (GtkMenu  *menu,
-			    gint     *x,
-			    gint     *y,
-			    gboolean *push_in,
-			    gpointer  data)
-{
-	GtkWidget *w = data;
-	GtkRequisition requisition;
-	gint wx, wy;
-
-	g_return_if_fail (w != NULL);
-
-	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
-
-	gdk_window_get_origin (w->window, &wx, &wy);
-	/*
-         * Make sure that the popup position is in the panel
-	 * as the menu may be popped up by a keystroke
-	 */
-	if (*x < wx)
-		*x = wx;
-	else if (*x > wx + w->allocation.width)
-		*x = wx + w->allocation.width;
-
-	if (*x + requisition.width > gdk_screen_width())
-		*x = gdk_screen_width() - requisition.width;
-
-	if (*y < wy)
-		*y = wy;
-	 else if (*y > wy + w->allocation.height)
-		*y = wy + w->allocation.height;
-
-	if (*y + requisition.height > gdk_screen_height())
-		*y = gdk_screen_height() - requisition.height;
-
-	*push_in = TRUE;
-}
-
 static GtkWidget*
 panel_applet_container_has_focusable_child (GtkWidget *widget)
 {
@@ -500,6 +461,51 @@ panel_applet_has_focusable_child (PanelApplet *applet)
 	return  (applet->priv->focusable_child != 0);
 }
 
+static void
+panel_applet_position_menu (GtkMenu   *menu,
+			    int       *x,
+			    int       *y,
+			    gboolean  *push_in,
+			    GtkWidget *widget)
+{
+	PanelApplet    *applet;
+	GtkRequisition  requisition;
+	GdkScreen      *screen;
+	int             menu_x = 0;
+	int             menu_y = 0;
+
+	g_return_if_fail (PANEL_IS_APPLET (widget));
+
+	applet = PANEL_APPLET (widget);
+
+	screen = gtk_widget_get_screen (widget);
+
+	gtk_widget_size_request (GTK_WIDGET (menu), &requisition);
+
+	gdk_window_get_origin (widget->window, &menu_x, &menu_y);
+
+	menu_x += widget->allocation.x;
+	menu_y += widget->allocation.y;
+
+	if (applet->priv->orient == PANEL_APPLET_ORIENT_UP ||
+	    applet->priv->orient == PANEL_APPLET_ORIENT_DOWN) {
+		if (menu_y > gdk_screen_get_height (screen) / 2)
+			menu_y -= requisition.height;
+		else
+			menu_y += widget->allocation.height;
+	} else  {
+		if (menu_x > gdk_screen_get_width (screen) / 2)
+			menu_x -= requisition.width;
+		else
+			menu_x += widget->allocation.width;
+
+	}
+
+	*x = menu_x;
+	*y = menu_y;
+	*push_in = TRUE;
+}
+
 static gboolean
 panel_applet_button_press (GtkWidget      *widget,
 			   GdkEventButton *event)
@@ -516,9 +522,13 @@ panel_applet_button_press (GtkWidget      *widget,
 	if (event->button == 1)
 		return TRUE;
 	else if (event->button == 3) {
-		bonobo_control_do_popup (applet->priv->control, 
-					 event->button,
-					 event->time);
+		bonobo_control_do_popup_full (
+				applet->priv->control, 
+				NULL, NULL,
+				(GtkMenuPositionFunc) panel_applet_position_menu,
+				applet,
+				event->button,
+				event->time);
 		return TRUE;
 	}
 
@@ -531,9 +541,8 @@ _panel_applet_popup_menu (PanelApplet *applet,
 			  guint32 time)			  
 {
 	bonobo_control_do_popup_full (applet->priv->control, NULL, NULL,
-				      panel_applet_menu_position,
-				      GTK_WIDGET (applet), button,
-				      time);
+				      (GtkMenuPositionFunc) panel_applet_position_menu,
+				      applet, button, time);
 	return TRUE;
 }
 
