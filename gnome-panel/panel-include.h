@@ -6,9 +6,10 @@
 
 #include "panel-widget.h"
 #include "basep-widget.h"
-#include "snapped-widget.h"
+#include "edge-widget.h"
+#include "aligned-widget.h"
+#include "sliding-widget.h"
 #include "drawer-widget.h"
-#include "corner-widget.h"
 
 #include "button-widget.h"
 

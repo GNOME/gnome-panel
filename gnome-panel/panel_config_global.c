@@ -547,6 +547,26 @@ misc_notebook_page(void)
 			    &(temp_config.drawer_auto_close));
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
 
+	/* show/hide frame */
+	button = gtk_check_button_new_with_label (_("Make buttons flush with panel edge"));
+	if (temp_config.hide_panel_frame)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (set_toggle_button_value),
+			    &(temp_config.hide_panel_frame));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+
+
+	/* only show tiles when mouse is over the button */
+	button = gtk_check_button_new_with_label (_("Show button tiles only when cursor is over the button"));
+	if (temp_config.tile_when_over)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (set_toggle_button_value),
+			    &(temp_config.tile_when_over));
+	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 0);
+
+
 	/* Minimize Delay scale frame */
 	frame = make_int_scale_frame(_("Applet padding"),
 				      &(temp_config.applet_padding),

@@ -1,100 +1,299 @@
 /* Gnome panel: drawer widget
- * (C) 1997 the Free Software Foundation
+ * (C) 1999 the Free Software Foundation
  *
- * Authors:  George Lebl
+ * Authors:  Jacob Berkman
+ *           George Lebl
+ *
  */
-#include <math.h>
-#include <config.h>
-#include <gtk/gtk.h>
-#include <gnome.h>
-#include "panel-widget.h"
+
 #include "drawer-widget.h"
-#include "panel-util.h"
+#include "border-widget.h"
 #include "panel_config_global.h"
-#include "panel-include.h" 
-
-/*there  can universally be only one applet being dragged since we assume
-we only have one mouse :) */
-extern int panel_applet_in_drag;
-
-static void drawer_widget_class_init	(DrawerWidgetClass *klass);
-static void drawer_widget_init		(DrawerWidget      *drawer);
-static void drawer_widget_size_request	(GtkWidget          *widget,
-					 GtkRequisition     *requisition);
-static void drawer_widget_size_allocate	(GtkWidget          *widget,
-					 GtkAllocation      *allocation);
-static void drawer_widget_set_hidebuttons(BasePWidget       *basep);
-
-static BasePWidgetClass *parent_class = NULL;
-
-/*global settings*/
-extern int pw_explicit_step;
-extern int pw_drawer_step;
-extern int pw_auto_step;
-extern int pw_minimized_size;
-extern int pw_minimize_delay;
-extern int pw_disable_animations;
-extern PanelMovementType pw_movement_type;
 
 extern GlobalConfig global_config;
+extern int pw_minimized_size;
 
-typedef void (*StateSignal) (GtkObject * object,
-			     DrawerState state,
-			     gpointer data);
+static void drawer_pos_class_init (DrawerPosClass *klass);
+static void drawer_pos_init (DrawerPos *pos);
 
-/************************
- widget core
- ************************/
+static void drawer_pos_set_hidebuttons (BasePWidget *basep);
+static PanelOrientType drawer_pos_get_applet_orient (BasePWidget *basep);
 
-guint
-drawer_widget_get_type ()
+static PanelOrientType drawer_pos_get_hide_orient (BasePWidget *basep);
+static void drawer_pos_get_hide_pos (BasePWidget *basep,
+				     PanelOrientType hide_orient,
+				     gint16 *x, gint16 *y,
+				     guint16 w, guint16 h);
+
+static void drawer_pos_get_pos(BasePWidget *basep,
+			       gint16 *x, gint16 *y,
+			       guint16 width, guint16 height);
+
+static void drawer_pos_get_menu_pos (BasePWidget *basep,
+				     GtkWidget *widget,
+				     GtkRequisition *mreq,
+				     gint *x, gint *y,
+				     gint16 wx, gint16 wy,
+				     guint16 ww, guint16 wh);
+
+static int drawer_pos_hidebutton_click (BasePWidget *basep);
+
+static void drawer_pos_realize (GtkWidget *w);
+
+static void drawer_pos_pre_convert_hook (BasePWidget *basep);
+
+static BasePPosClass *parent_class;
+
+GtkType
+drawer_pos_get_type ()
 {
-	static guint drawer_widget_type = 0;
+	static GtkType drawer_pos_type = 0;
 
-	if (!drawer_widget_type) {
-		GtkTypeInfo drawer_widget_info = {
-			"DrawerWidget",
-			sizeof (DrawerWidget),
-			sizeof (DrawerWidgetClass),
-			(GtkClassInitFunc) drawer_widget_class_init,
-			(GtkObjectInitFunc) drawer_widget_init,
-			(GtkArgSetFunc) NULL,
-			(GtkArgGetFunc) NULL,
+	if (!drawer_pos_type) {
+		GtkTypeInfo drawer_pos_info = {
+			"DrawerPos",
+			sizeof (DrawerPos),
+			sizeof (DrawerPosClass),
+			(GtkClassInitFunc) drawer_pos_class_init,
+			(GtkObjectInitFunc) drawer_pos_init,
+			NULL, NULL
 		};
 
-		drawer_widget_type = gtk_type_unique (basep_widget_get_type (),
-						      &drawer_widget_info);
+		drawer_pos_type = gtk_type_unique (BASEP_POS_TYPE,
+						   &drawer_pos_info);
 	}
 
-	return drawer_widget_type;
+	return drawer_pos_type;
 }
 
+#if 0
 enum {
-	STATE_CHANGE_SIGNAL,
+	ORIENT_CHANGE_SIGNAL,
 	LAST_SIGNAL
 };
-
-static int drawer_widget_signals[LAST_SIGNAL] = {0};
+static int drawer_pos_signals[LAST_SIGNAL] = { 0 };
+#endif
 
 static void
-marshal_signal_state (GtkObject * object,
-		      GtkSignalFunc func,
-		      gpointer func_data,
-		      GtkArg * args)
+drawer_pos_class_init (DrawerPosClass *klass)
 {
-	StateSignal rfunc;
+	/*GtkObjectClass *object_class = GTK_OBJECT_CLASS(klass);*/
+	BasePPosClass *pos_class = BASEP_POS_CLASS(klass);
 
-	rfunc = (StateSignal) func;
+	parent_class = gtk_type_class(BASEP_POS_TYPE);
 
-	(*rfunc) (object, GTK_VALUE_ENUM (args[0]),
-		  func_data);
+#if 0
+	drawer_pos_signals[ORIENT_CHANGE_SIGNAL] =
+		gtk_signal_new ("drawer_orient_change",
+				GTK_RUN_LAST,
+				object_class->type,
+				GTK_SIGNAL_OFFSET (DrawerPosClass,
+						   orient_change),
+				gtk_marshal_NONE__ENUM,
+				GTK_TYPE_NONE,
+				1, GTK_TYPE_ENUM);
+
+	gtk_object_class_add_signals (object_class,
+				      drawer_pos_signals,
+				      LAST_SIGNAL);
+#endif
+	/* fill out the virtual funcs */
+	pos_class->set_hidebuttons = drawer_pos_set_hidebuttons;
+	pos_class->get_applet_orient = drawer_pos_get_applet_orient;
+	pos_class->get_size = NULL; /* the default is ok */
+	pos_class->get_hide_orient = drawer_pos_get_hide_orient;
+	pos_class->get_hide_pos = drawer_pos_get_hide_pos;
+	pos_class->get_pos = drawer_pos_get_pos;
+	pos_class->get_menu_pos = drawer_pos_get_menu_pos;
+	pos_class->realize = drawer_pos_realize;
+	pos_class->north_clicked = 
+		pos_class->west_clicked = 
+		pos_class->south_clicked = 
+		pos_class->east_clicked =
+		drawer_pos_hidebutton_click;
+	pos_class->pre_convert_hook = drawer_pos_pre_convert_hook;
 }
 
 static void
-drawer_widget_realize(GtkWidget *w)
-{
-	GTK_WIDGET_CLASS(parent_class)->realize(w);
+drawer_pos_init (DrawerPos *pos) { }
 
+static void
+drawer_pos_set_hidebuttons (BasePWidget *basep)
+{
+	switch(DRAWER_POS(basep->pos)->orient) {
+	case ORIENT_UP:
+		gtk_widget_show(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
+		break;
+	case ORIENT_DOWN:
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_show(basep->hidebutton_s);
+		break;
+	case ORIENT_LEFT:
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_hide(basep->hidebutton_e);
+		gtk_widget_show(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
+		break;
+	case ORIENT_RIGHT:
+		gtk_widget_hide(basep->hidebutton_n);
+		gtk_widget_show(basep->hidebutton_e);
+		gtk_widget_hide(basep->hidebutton_w);
+		gtk_widget_hide(basep->hidebutton_s);
+		break;
+	}
+}
+
+static PanelData *
+get_lowest_level_master_pd(PanelWidget *panel)
+{
+	GtkObject *parent;
+	PanelData *pd;
+
+	while(panel->master_widget)
+		panel = PANEL_WIDGET(panel->master_widget->parent);
+	parent = gtk_object_get_data(GTK_OBJECT(panel),PANEL_PARENT);
+	g_return_val_if_fail(parent!=NULL,NULL);
+	
+	pd = gtk_object_get_user_data(parent);
+	g_return_val_if_fail(pd!=NULL,NULL);
+	
+	return pd;
+}
+
+static PanelOrientType
+drawer_pos_get_applet_orient (BasePWidget *basep)
+{
+	PanelWidget *panel = PANEL_WIDGET (basep->panel);
+	PanelData *tpd = get_lowest_level_master_pd (panel);
+	PanelOrientType orient = ORIENT_UP;
+	PanelOrientation porient = panel->orient;
+
+	/* unfortunately we must do this */
+	if (IS_BORDER_WIDGET (tpd->panel)) {
+		switch (BORDER_POS (BASEP_WIDGET (tpd->panel)->pos)->edge) {
+		case BORDER_TOP:
+			orient = (porient == PANEL_VERTICAL)
+				? ORIENT_RIGHT : ORIENT_DOWN;
+			break;
+		case BORDER_BOTTOM:
+		case BORDER_LEFT:
+			orient = (porient == PANEL_VERTICAL)
+				? ORIENT_RIGHT : ORIENT_UP;
+			break;
+		case BORDER_RIGHT:
+			orient = (porient == PANEL_VERTICAL)
+				? ORIENT_LEFT : ORIENT_UP;
+			break;
+		}
+	} else if (IS_DRAWER_WIDGET (tpd->panel)) {
+		orient = (porient == PANEL_VERTICAL)
+			? ORIENT_RIGHT : ORIENT_UP;
+	} else {
+		g_warning (_("Don't know about base panel type: %d\n"), tpd->type);
+	}
+	
+	return orient;
+}
+
+static PanelOrientType
+drawer_pos_get_hide_orient (BasePWidget *basep)
+{
+	DrawerPos *pos = DRAWER_POS (basep->pos);
+	PanelWidget *panel = PANEL_WIDGET (basep->panel);
+
+	switch (basep->state) {
+	case BASEP_AUTO_HIDDEN:
+		switch (pos->orient) {
+		case ORIENT_UP: return ORIENT_DOWN;
+		case ORIENT_RIGHT: return ORIENT_LEFT;
+		case ORIENT_DOWN: return ORIENT_UP;
+		case ORIENT_LEFT: return ORIENT_RIGHT;
+		}
+		g_assert_not_reached ();
+		break;
+	case BASEP_HIDDEN_LEFT:
+		return (panel->orient == PANEL_HORIZONTAL)
+			? ORIENT_LEFT : ORIENT_UP;
+	case BASEP_HIDDEN_RIGHT:
+		return (panel->orient == PANEL_HORIZONTAL)
+			? ORIENT_RIGHT : ORIENT_DOWN;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+	g_assert_not_reached ();
+	return -1;
+}
+	
+void
+drawer_widget_open_drawer (DrawerWidget *drawer, BasePWidget *parentp)
+{
+	parentp->drawers_open++;
+	/*gtk_widget_show (GTK_WIDGET (drawer));*/
+	basep_widget_explicit_show (BASEP_WIDGET (drawer));
+}
+
+void
+drawer_widget_close_drawer (DrawerWidget *drawer, BasePWidget *parentp)
+{
+	BasePWidget *basep = BASEP_WIDGET (drawer);
+	switch (DRAWER_POS (basep->pos)->orient) {
+	case ORIENT_UP:
+	case ORIENT_LEFT:
+		basep_widget_explicit_hide (basep, BASEP_HIDDEN_RIGHT);
+		break;
+	case ORIENT_RIGHT:
+	case ORIENT_DOWN:
+		basep_widget_explicit_hide (basep, BASEP_HIDDEN_LEFT);
+		break;
+	}
+	/*gtk_widget_hide (GTK_WIDGET (drawer));*/
+	parentp->drawers_open--;
+}
+
+static int
+drawer_pos_hidebutton_click (BasePWidget *basep)
+{
+	Drawer *drawer = gtk_object_get_data (GTK_OBJECT (basep),
+					      DRAWER_PANEL_KEY);
+	PanelWidget *panel = PANEL_WIDGET (drawer->button->parent);
+	BasePWidget *parent = gtk_object_get_data (GTK_OBJECT (panel),
+						   PANEL_PARENT);
+
+	drawer_widget_close_drawer (DRAWER_WIDGET (basep), parent);
+
+	return FALSE;
+}
+
+static void
+drawer_pos_get_menu_pos (BasePWidget *basep,
+			 GtkWidget *widget,
+			 GtkRequisition *mreq,
+			 gint *x, gint *y,
+			 gint16 wx, gint16 wy,
+			 guint16 ww, guint16 wh)
+{	
+	PanelWidget *panel =
+		PANEL_WIDGET(basep->panel);
+
+	if(panel->orient==PANEL_VERTICAL) {
+		*x = wx + ww;
+		*y += wy;
+	} else {
+		*x += wx;
+		*y = wy - mreq->height;
+	}
+}
+
+
+static void
+drawer_pos_realize (GtkWidget *w)
+{
 	gnome_win_hints_init();
 	if (gnome_win_hints_wm_exists()) {
 		gnome_win_hints_set_hints(w, GNOME_PANEL_HINTS);
@@ -110,81 +309,12 @@ drawer_widget_realize(GtkWidget *w)
 }
 
 static void
-drawer_widget_class_init (DrawerWidgetClass *class)
+drawer_pos_get_pos(BasePWidget *basep,
+		   gint16 *x, gint16 *y,
+		   guint16 width, guint16 height)
 {
-	GtkObjectClass *object_class = (GtkObjectClass*) class;
-	GtkWidgetClass *widget_class = (GtkWidgetClass*) class;
-	BasePWidgetClass *basep_class = (BasePWidgetClass*) class;
-
-        parent_class = gtk_type_class (basep_widget_get_type ());
-        drawer_widget_signals[STATE_CHANGE_SIGNAL] =
-		gtk_signal_new("state_change",
-			       GTK_RUN_LAST,
-			       object_class->type,
-			       GTK_SIGNAL_OFFSET(DrawerWidgetClass,
-			       			 state_change),
-			       marshal_signal_state,
-			       GTK_TYPE_NONE,
-			       1,
-			       GTK_TYPE_ENUM);
-
-	gtk_object_class_add_signals(object_class,drawer_widget_signals,
-				     LAST_SIGNAL);
-
-	class->state_change = NULL;
-
-	basep_class->set_hidebuttons = drawer_widget_set_hidebuttons;
-	
-	widget_class->size_request = drawer_widget_size_request;
-	widget_class->size_allocate = drawer_widget_size_allocate;
-	widget_class->realize = drawer_widget_realize;
-}
-
-/*if this is true the size request will request a 24x24 cube, this is used
-  during orientation changes to make no flicker*/
-static int drawer_widget_request_cube = FALSE;
-static void
-drawer_widget_size_request(GtkWidget *widget,
-			   GtkRequisition *requisition)
-{
-	DrawerWidget *drawer = DRAWER_WIDGET(widget);
-	BasePWidget *basep = BASEP_WIDGET(widget);
-	GtkRequisition chreq;
-	if(drawer_widget_request_cube) {
-		requisition->width = PANEL_MINIMUM_WIDTH;
-		requisition->height = PANEL_MINIMUM_WIDTH;
-		drawer_widget_request_cube = FALSE;
-		return;
-	}
-
-	gtk_widget_size_request (basep->ebox, &chreq);
-
-	if(drawer->state != DRAWER_SHOWN ||
-	   drawer->temp_hidden) {
-		requisition->width = 1;
-		requisition->width = 1;
-		return;
-	}
-
-	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(chreq.width<48)
-			chreq.width=48;
-	} else {
-		if(chreq.height<48)
-			chreq.height=48;
-	}
-
-	requisition->width = chreq.width;
-	requisition->height = chreq.height;
-}
-
-
-static void
-drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
-		      int width, int height)
-{
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(drawer)->panel);
-
+	PanelWidget *panel = PANEL_WIDGET(basep->panel);
+	DrawerPos *pos = DRAWER_POS (basep->pos);
 	if (panel->master_widget &&
 	    GTK_WIDGET_REALIZED (panel->master_widget) &&
 	    /*"allocated" data will be set on each allocation, until then,
@@ -218,7 +348,7 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		pw = ppanel->allocation.width;
 		ph = ppanel->allocation.height;
 
-		switch(drawer->orient) {
+		switch(pos->orient) {
 		case ORIENT_UP:
 			*x = bx+(bw-width)/2;
 			*y = py - height;
@@ -236,332 +366,45 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 			*y = by+(bh-height)/2;
 			break;
 		}
-		return;
 	}
-	/*if we fail*/
-	*x = -width-1;
-	*y = -height-1;
 }
 
 static void
-drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
+drawer_pos_get_hide_pos (BasePWidget *basep,
+			 PanelOrientType hide_orient,
+			 gint16 *x, gint16 *y,
+			 guint16 w, guint16 h)
 {
-	DrawerWidget *drawer = DRAWER_WIDGET(widget);
-	BasePWidget *basep = BASEP_WIDGET(widget);
-	GtkAllocation challoc;
-	GtkRequisition chreq;
-
-	/*we actually want to ignore the size_reqeusts since they
-	  are sometimes a cube for the flicker prevention*/
-	gtk_widget_size_request (basep->ebox, &chreq);
-
-	if(PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
-		if(chreq.width<48)
-			chreq.width=48;
-	} else {
-		if(chreq.height<48)
-			chreq.height=48;
+	if (basep->state != BASEP_SHOWN ||
+	    DRAWER_POS (basep->pos)->temp_hidden) {
+		*x = -ABS(*x) - 1;
+		*y = -ABS(*y) - 1;
 	}
-	allocation->width = chreq.width;
-	allocation->height = chreq.height;
-
-	drawer_widget_get_pos(drawer,
-			      &allocation->x,
-			      &allocation->y,
-			      allocation->width,
-			      allocation->height);
-
-	basep->shown_alloc = *allocation;
-	
-	if(drawer->state != DRAWER_SHOWN ||
-	   drawer->temp_hidden) {
-		allocation->x = -allocation->width -1;
-		allocation->y = -allocation->height -1;
-	}
-	
-	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget)) {
-		gdk_window_move_resize (widget->window,
-					allocation->x,
-					allocation->y,
-					allocation->width,
-					allocation->height);
-		gdk_window_set_hints (widget->window,
-				      allocation->x,
-				      allocation->y,
-				      0,0,0,0, GDK_HINT_POS);
-	}
-
-	challoc.x = challoc.y = 0;
-	challoc.width = allocation->width;
-	challoc.height = allocation->height;
-	gtk_widget_size_allocate(basep->ebox,&challoc);
 }
 
 static void
-drawer_widget_set_hidebuttons(BasePWidget *basep)
+drawer_pos_pre_convert_hook (BasePWidget *basep)
 {
-	DrawerWidget *drawer = DRAWER_WIDGET(basep);
-
-	/*hidebuttons are disabled*/
-	if(!basep->hidebuttons_enabled) {
-		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_hide(basep->hidebutton_e);
-		gtk_widget_hide(basep->hidebutton_w);
-		gtk_widget_hide(basep->hidebutton_s);
-		return;
-	}
-	
-	switch(drawer->orient) {
-	case ORIENT_UP:
-		gtk_widget_show(basep->hidebutton_n);
-		gtk_widget_hide(basep->hidebutton_e);
-		gtk_widget_hide(basep->hidebutton_w);
-		gtk_widget_hide(basep->hidebutton_s);
-		break;
-	case ORIENT_DOWN:
-		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_hide(basep->hidebutton_e);
-		gtk_widget_hide(basep->hidebutton_w);
-		gtk_widget_show(basep->hidebutton_s);
-		break;
-	case ORIENT_LEFT:
-		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_hide(basep->hidebutton_e);
-		gtk_widget_show(basep->hidebutton_w);
-		gtk_widget_hide(basep->hidebutton_s);
-		break;
-	case ORIENT_RIGHT:
-		gtk_widget_hide(basep->hidebutton_n);
-		gtk_widget_show(basep->hidebutton_e);
-		gtk_widget_hide(basep->hidebutton_w);
-		gtk_widget_hide(basep->hidebutton_s);
-		break;
-	}
+	basep->keep_in_screen = FALSE;
+	PANEL_WIDGET (basep->panel)->packed = TRUE;
 }
 
-void
-drawer_widget_open_drawer(DrawerWidget *drawer)
+void drawer_widget_change_params (DrawerWidget *drawer,
+				   PanelOrientType orient,
+				  BasePMode mode,
+				  BasePState state,
+				  PanelSizeType sz,
+				  int hidebuttons_enabled,
+				  int hidebutton_pixmap_enabled,
+				  PanelBackType back_type,
+				  char *back_pixmap,
+				  int fit_pixmap_bg,
+				  GdkColor *back_color)
 {
-	static const char *supinfo[] = {"panel", "collapse", NULL};
-	gint16 x=0,y=0;
-	int width, height;
-
-	if((drawer->state == DRAWER_SHOWN) ||
-	   (drawer->state == DRAWER_MOVING))
-		return;
-
-	if(!GTK_WIDGET(drawer)->window) {
-		gtk_widget_queue_resize(GTK_WIDGET(drawer));
-		drawer->state = DRAWER_SHOWN;
-		return;
-	}
-
-	gnome_triggers_vdo("", NULL, supinfo);
-
-	width   = GTK_WIDGET(drawer)->allocation.width;
-	height  = GTK_WIDGET(drawer)->allocation.height;
-	drawer_widget_get_pos(drawer,&x,&y,width,height);
-	GTK_WIDGET(drawer)->allocation.x = x;
-	GTK_WIDGET(drawer)->allocation.y = y;
-
-	drawer->state = DRAWER_MOVING;
-
-	switch(drawer->orient) {
-	case ORIENT_UP:
-		BASEP_WIDGET(drawer)->shown_alloc.y += 
-			BASEP_WIDGET(drawer)->shown_alloc.height;
-		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_DOWN,
-					0,pw_drawer_step);
-		break;
-	case ORIENT_DOWN:
-		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_UP,
-					0,pw_drawer_step);
-		break;
-	case ORIENT_LEFT:
-		BASEP_WIDGET(drawer)->shown_alloc.x += 
-			BASEP_WIDGET(drawer)->shown_alloc.width;
-		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_RIGHT,
-					0,pw_drawer_step);
-		break;
-	case ORIENT_RIGHT:
-		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_LEFT,
-					0,pw_drawer_step);
-		break;
-	default: break;
-	}
-
-	drawer->state = DRAWER_SHOWN;
-
-	gtk_signal_emit(GTK_OBJECT(drawer),
-			drawer_widget_signals[STATE_CHANGE_SIGNAL],
-			DRAWER_SHOWN);
-
-	gtk_widget_queue_resize(GTK_WIDGET(drawer));
-}
-
-void
-drawer_widget_close_drawer(DrawerWidget *drawer)
-{
-	static const char *supinfo[] = {"panel", "collapse", NULL};
-	gint16 x=0,y=0;
-	int width, height;
-
-	if((drawer->state != DRAWER_SHOWN) ||
-	   (drawer->state == DRAWER_MOVING))
-		return;
-
-	if(!GTK_WIDGET(drawer)->window) {
-		gtk_widget_hide(GTK_WIDGET(drawer));
-		drawer->state = DRAWER_HIDDEN;
-		return;
-	}
-
-	gnome_triggers_vdo("", NULL, supinfo);
-
-	gtk_signal_emit(GTK_OBJECT(drawer),
-			drawer_widget_signals[STATE_CHANGE_SIGNAL],
-			DRAWER_HIDDEN);
-
-	width   = GTK_WIDGET(drawer)->allocation.width;
-	height  = GTK_WIDGET(drawer)->allocation.height;
-	drawer_widget_get_pos(drawer,&x,&y,width,height);
-	GTK_WIDGET(drawer)->allocation.x = x;
-	GTK_WIDGET(drawer)->allocation.y = y;
-
-	drawer->state = DRAWER_MOVING;
-	
-	switch(drawer->orient) {
-	case ORIENT_UP:
-		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_DOWN,
-				       0,pw_drawer_step);
-		break;
-	case ORIENT_DOWN:
-		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_UP,
-				       0,pw_drawer_step);
-		break;
-	case ORIENT_LEFT:
-		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_RIGHT,
-				       0,pw_drawer_step);
-		break;
-	case ORIENT_RIGHT:
-		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_LEFT,
-				       0,pw_drawer_step);
-		break;
-	default: break;
-	}
-
-	drawer->state = DRAWER_HIDDEN;
-}
-
-
-
-static void
-drawer_handle_click(GtkWidget *widget, gpointer data)
-{
-	Drawer *drawer = gtk_object_get_data(GTK_OBJECT(data),
-					     DRAWER_PANEL_KEY);
-	PanelWidget *parent = PANEL_WIDGET(drawer->button->parent);
-	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
-						PANEL_PARENT);
-	drawer_widget_close_drawer(data);
-	if(IS_SNAPPED_WIDGET(panelw))
-		SNAPPED_WIDGET(panelw)->drawers_open--;
-	else if(IS_CORNER_WIDGET(panelw))
-	        CORNER_WIDGET(panelw)->drawers_open--;
-}
-
-static void
-drawer_widget_init (DrawerWidget *drawer)
-{
-	drawer->state = DRAWER_SHOWN;
-	drawer->temp_hidden = FALSE;
-}
-
-GtkWidget*
-drawer_widget_new (PanelOrientType orient,
-		   DrawerState state,
-		   PanelSizeType sz,
-		   PanelBackType back_type,
-		   char *back_pixmap,
-		   int fit_pixmap_bg,
-		   GdkColor *back_color,
-		   int hidebutton_pixmap_enabled,
-		   int hidebutton_enabled)
-{
-	DrawerWidget *drawer;
 	PanelOrientation porient;
-	BasePWidget *basep;
-	
-	drawer = gtk_type_new(drawer_widget_get_type());
+	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
 
-	basep = BASEP_WIDGET(drawer);
-
-	switch(orient) {
-	case ORIENT_UP: porient = PANEL_VERTICAL; break;
-	case ORIENT_DOWN: porient = PANEL_VERTICAL; break;
-	case ORIENT_LEFT: porient = PANEL_HORIZONTAL; break;
-	case ORIENT_RIGHT: porient = PANEL_HORIZONTAL; break;
-	default:
-		porient = PANEL_HORIZONTAL;
-	}
-
-	basep_widget_construct(basep,
-			       TRUE,
-			       TRUE,
-			       porient,
-			       sz,
-			       hidebutton_enabled,
-			       hidebutton_pixmap_enabled,
-			       back_type,
-			       back_pixmap,
-			       fit_pixmap_bg,
-			       back_color);
-
-	/*EAST*/
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_e),"clicked",
-			   GTK_SIGNAL_FUNC(drawer_handle_click),
-			   drawer);
-	/*NORTH*/
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_n),"clicked",
-			   GTK_SIGNAL_FUNC(drawer_handle_click),
-			   drawer);
-	/*WEST*/
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_w),"clicked",
-			   GTK_SIGNAL_FUNC(drawer_handle_click),
-			   drawer);
-	/*SOUTH*/
-	gtk_signal_connect(GTK_OBJECT(basep->hidebutton_s),"clicked",
-			   GTK_SIGNAL_FUNC(drawer_handle_click),
-			   drawer);
-
-
-	drawer->state = state;
-
-	gtk_widget_set_uposition(GTK_WIDGET(drawer),-100,-100);
-
-	return GTK_WIDGET(drawer);
-}
-
-void
-drawer_widget_change_params(DrawerWidget *drawer,
-			    PanelOrientType orient,
-			    DrawerState state,
-			    PanelSizeType sz,
-			    PanelBackType back_type,
-			    char *pixmap,
-			    int fit_pixmap_bg,
-			    GdkColor *back_color,
-			    int hidebutton_pixmap_enabled,
-			    int hidebutton_enabled)
-{
-	DrawerState oldstate;
-	PanelOrientation porient;
-	
-	g_return_if_fail(drawer);
-	g_return_if_fail(GTK_WIDGET_REALIZED(GTK_WIDGET(drawer)));
-
-	switch(orient) {
+	switch (orient) {
 	case ORIENT_UP:
 	case ORIENT_DOWN:
 		porient = PANEL_VERTICAL;
@@ -573,55 +416,98 @@ drawer_widget_change_params(DrawerWidget *drawer,
 		break;
 	}
 
-	oldstate = drawer->state;
+	if (PANEL_WIDGET (BASEP_WIDGET (drawer)->panel)->orient != porient)
+		BASEP_WIDGET (drawer)->request_cube = TRUE;
 
-	drawer->state = state;
+	if (pos->orient != orient) {
+		pos->orient = orient;
+#if 0
+		gtk_signal_emit (GTK_OBJECT (drawer),
+				 drawer_pos_signals[ORIENT_CHANGE_SIGNAL],
+				 orient);
+#endif
+	}
 
-	drawer->orient = orient;
-
-	/*avoid flicker during size_request*/
-	if(PANEL_WIDGET(BASEP_WIDGET(drawer)->panel)->orient != porient)
-		drawer_widget_request_cube = TRUE;
-
-	basep_widget_change_params(BASEP_WIDGET(drawer),
-				   porient,
-				   sz,
-				   hidebutton_enabled,
-				   hidebutton_pixmap_enabled,
-				   back_type,
-				   pixmap,
-				   fit_pixmap_bg,
-				   back_color);
-
-	if(oldstate != drawer->state)
-	   	gtk_signal_emit(GTK_OBJECT(drawer),
-	   			drawer_widget_signals[STATE_CHANGE_SIGNAL],
-	   			drawer->state);
+	basep_widget_change_params (BASEP_WIDGET (drawer),
+				    porient, sz, mode, state,
+				    hidebuttons_enabled,
+				    hidebutton_pixmap_enabled,
+				    back_type, back_pixmap,
+				    fit_pixmap_bg, back_color);
+				    
 }
 
 void
-drawer_widget_change_orient(DrawerWidget *drawer,
-			    PanelOrientType orient)
+drawer_widget_change_orient (DrawerWidget *drawer,
+			     PanelOrientType orient)
 {
-	BasePWidget *basep = BASEP_WIDGET(drawer);
-	PanelWidget *panel = PANEL_WIDGET(basep->panel);
-	drawer_widget_change_params(drawer,
-				    orient,
-				    drawer->state,
-				    panel->sz,
-				    panel->back_type,
-				    panel->back_pixmap,
-				    panel->fit_pixmap_bg,
-				    &panel->back_color,
-				    basep->hidebutton_pixmaps_enabled,
-				    basep->hidebuttons_enabled); 
+	DrawerPos *pos = DRAWER_POS (drawer->pos);
+	if (pos->orient != orient) {
+		BasePWidget *basep = BASEP_WIDGET (drawer);
+		PanelWidget *panel = PANEL_WIDGET (basep->panel);
+		drawer_widget_change_params (drawer, orient,
+					     basep->mode,
+					     basep->state,
+					     panel->sz,
+					     basep->hidebuttons_enabled,
+					     basep->hidebutton_pixmaps_enabled,
+					     panel->back_type,
+					     panel->back_pixmap,
+					     panel->fit_pixmap_bg,
+					     &panel->back_color);
+	}
 }
 
+GtkWidget *
+drawer_widget_new (PanelOrientType orient,
+		   BasePMode mode,
+		   BasePState state,
+		   PanelSizeType sz,
+		   int hidebuttons_enabled,
+		   int hidebutton_pixmap_enabled,
+		   PanelBackType back_type,
+		   char *back_pixmap,
+		   int fit_pixmap_bg,
+		   GdkColor *back_color)
+{
+	DrawerWidget *drawer;
+	DrawerPos *pos;
+	PanelOrientation porient;
+
+	drawer = gtk_type_new (DRAWER_WIDGET_TYPE);
+	drawer->pos = gtk_type_new (DRAWER_POS_TYPE);
+	pos = DRAWER_POS (drawer->pos);
+
+	switch (orient) {
+	case ORIENT_UP:
+	case ORIENT_DOWN:
+		porient = PANEL_VERTICAL;
+		break;
+	default:
+		porient = PANEL_HORIZONTAL;
+		break;
+	}
+
+	basep_widget_construct (BASEP_WIDGET (drawer),
+				TRUE, TRUE,
+				porient,
+				sz, mode, state,
+				hidebuttons_enabled,
+				hidebutton_pixmap_enabled,
+				back_type,
+				back_pixmap,
+				fit_pixmap_bg,
+				back_color);
+
+	return GTK_WIDGET (drawer);
+}
+
+#if 0
 void
 drawer_widget_restore_state(DrawerWidget *drawer)
 {
-	drawer->temp_hidden = FALSE;
+	DRAWER_POS (BASEP_WIDGET (drawer)->pos)->temp_hidden = FALSE;
 	gtk_widget_queue_resize(GTK_WIDGET(drawer));
 	gtk_widget_show(GTK_WIDGET(drawer));
 }
-
+#endif

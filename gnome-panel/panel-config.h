@@ -2,6 +2,10 @@
 #define PANEL_CONFIG_H
 
 #include "panel-widget.h"
+#include "border-widget.h"
+#include "aligned-widget.h"
+#include "sliding-widget.h"
+#include "drawer-widget.h"
 
 /* used to temporarily store config values until the 'Apply'
    button is pressed. */
@@ -12,16 +16,18 @@ struct _PerPanelConfig {
 	/*basep types*/
 	int			hidebuttons;
 	int			hidebutton_pixmaps;
+	BasePMode               mode;
 
-	/*snapped types*/
-	SnappedPos		snapped_pos;
-	SnappedMode		snapped_mode;
+	/*border widget*/
+	BorderEdge              edge;
+
+	/*aligned widget*/
+	AlignedAlignment        align;
+
+	/*sliding widget*/
+	gint16                  offset;
+	SlidingAnchor           anchor;
 	
-	/*corner types*/
-	CornerPos		corner_pos;
-	PanelOrientation	corner_orient;
-        CornerMode              corner_mode;
-
 	/*panel types*/
 	PanelSizeType		sz;
 	int			fit_pixmap_bg;
@@ -33,15 +39,26 @@ struct _PerPanelConfig {
 	GtkWidget		*config_window;
 	GtkWidget		*pix_entry;
 
-	/*snapped buttons*/
-	GtkWidget		*r_button; /*se*/
-	GtkWidget		*l_button; /*nw*/
-	GtkWidget		*t_button; /*ne*/
-	GtkWidget		*b_button; /*sw*/
+	/*sliding buttons*/
+	GtkWidget               *l_anchor;
+	GtkWidget               *r_anchor;
+	GtkWidget               *offset_spin;
+	GtkObject               *offset_adj;
+	/*aligned buttons*/
+	GtkWidget               *l_align;
+	GtkWidget               *c_align;
+	GtkWidget               *r_align;
+	/*border buttons*/
+	GtkWidget		*r_edge;
+	GtkWidget		*l_edge;
+	GtkWidget		*t_edge;
+	GtkWidget		*b_edge;
+	/*size buttons*/
 	GtkWidget		*s_tiny;
 	GtkWidget		*s_std;
 	GtkWidget		*s_large;
 	GtkWidget		*s_huge;
+	/*color buttons*/
 	GtkWidget		*non;
 	GtkWidget		*pix;
 	GtkWidget		*col;
@@ -49,8 +66,11 @@ struct _PerPanelConfig {
 };
 
 void panel_config(GtkWidget *panel);
-void update_config_orient(GtkWidget *panel);
 void update_config_size(GtkWidget *panel);
 void update_config_back(PanelWidget *panel);
+void update_config_edge (BasePWidget *w);
+void update_config_anchor (BasePWidget *w);
+void update_config_offset (BasePWidget *w);
+void update_config_align (BasePWidget *w);
 void kill_config_dialog(GtkWidget *panel);
 #endif /* PANEL_CONFIG_H */

@@ -179,20 +179,18 @@ drawer_click(GtkWidget *w, Drawer *drawer)
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(parent),
 						PANEL_PARENT);
 	
-	gtk_widget_queue_resize(drawer->drawer);
-
-	if(drawerw->state == DRAWER_SHOWN) {
-		drawer_widget_close_drawer(DRAWER_WIDGET(drawer->drawer));
-		if(IS_SNAPPED_WIDGET(panelw))
-			SNAPPED_WIDGET(panelw)->drawers_open--;
-		else if(IS_CORNER_WIDGET(panelw))
-		        CORNER_WIDGET(panelw)->drawers_open--;
-	} else {
-		drawer_widget_open_drawer(DRAWER_WIDGET(drawer->drawer));
-		if(IS_SNAPPED_WIDGET(panelw))
-			SNAPPED_WIDGET(panelw)->drawers_open++;
-		else if(IS_CORNER_WIDGET(panelw))
-		        CORNER_WIDGET(panelw)->drawers_open++;
+	switch (BASEP_WIDGET (drawerw)->state) {
+	case BASEP_SHOWN:
+	case BASEP_AUTO_HIDDEN:
+		drawer_widget_close_drawer (drawerw, BASEP_WIDGET (panelw));
+		break;
+	case BASEP_HIDDEN_LEFT:
+	case BASEP_HIDDEN_RIGHT:
+		drawer_widget_open_drawer (drawerw, BASEP_WIDGET (panelw));
+		break;
+	case BASEP_MOVING:
+		g_assert_not_reached ();
+		break;
 	}
 }
 
@@ -210,11 +208,43 @@ destroy_drawer(GtkWidget *widget, gpointer data)
 static int
 enter_notify_drawer(GtkWidget *widget, GdkEventCrossing *event, gpointer data)
 {
-  Drawer *drawer = data;
+	Drawer *drawer = data;
+	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
 
-  if (!gnome_win_hints_wm_exists())
-    gdk_window_raise(drawer->drawer->window);
-  return TRUE;
+	if (!gnome_win_hints_wm_exists())
+		gdk_window_raise(drawer->drawer->window);
+
+	if (basep->state == BASEP_MOVING)
+		return FALSE;
+	
+	if ((basep->state != BASEP_AUTO_HIDDEN) ||
+	    (event->detail == GDK_NOTIFY_INFERIOR) ||
+	    (basep->mode != BASEP_AUTO_HIDE))
+		return FALSE;
+
+	if (basep->leave_notify_timer_tag != 0) {
+		gtk_timeout_remove (basep->leave_notify_timer_tag);
+		basep->leave_notify_timer_tag = 0;
+	}
+
+	basep_widget_autoshow (basep);
+
+	return FALSE;
+}
+
+static int
+leave_notify_drawer (GtkWidget *widget, GdkEventCrossing *event, gpointer data)
+{
+	Drawer *drawer = data;
+	BasePWidget *basep = BASEP_WIDGET (drawer->drawer);
+
+	if (event->detail == GDK_NOTIFY_INFERIOR)
+		return FALSE;
+
+	basep_widget_queue_autohide (basep);
+
+	return FALSE;
+	
 }
 
 static Drawer *
@@ -240,8 +270,7 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 						      DRAWER_TILE,
 						      TRUE,orient,
 						      _("Drawer"));
-
-	gtk_widget_show(drawer->button);
+		gtk_widget_show(drawer->button);
 
 	drawer->drawer = drawer_panel;
 
@@ -251,7 +280,8 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 			    GTK_SIGNAL_FUNC (destroy_drawer), drawer);
 	gtk_signal_connect (GTK_OBJECT (drawer->button), "enter_notify_event",
 			    GTK_SIGNAL_FUNC (enter_notify_drawer), drawer);
-
+	gtk_signal_connect (GTK_OBJECT (drawer->button), "leave_notify_event",
+			    GTK_SIGNAL_FUNC (leave_notify_drawer), drawer);
 	gtk_object_set_user_data(GTK_OBJECT(drawer->button),drawer);
 	gtk_object_set_data(GTK_OBJECT(drawer_panel),DRAWER_PANEL_KEY,drawer);
 	gtk_widget_queue_resize(GTK_WIDGET(drawer_panel));
@@ -264,10 +294,12 @@ create_empty_drawer_applet(char *tooltip, char *pixmap,
 			   PanelOrientType orient)
 {
 	GtkWidget *dw = drawer_widget_new(orient,
-					  DRAWER_SHOWN,
+					  BASEP_EXPLICIT_HIDE,
+					  BASEP_SHOWN,
 					  SIZE_STANDARD,
+					  TRUE, TRUE,
 					  PANEL_BACK_NONE, NULL,
-					  TRUE, NULL, TRUE, TRUE);
+					  TRUE, NULL);
 	return create_drawer_applet(dw, tooltip,pixmap,orient);
 }
 
@@ -291,7 +323,7 @@ static void
 drawer_setup(Drawer *drawer)
 {
 	gtk_widget_queue_resize(drawer->drawer);
-	if(DRAWER_WIDGET(drawer->drawer)->state != DRAWER_SHOWN) {
+	if(BASEP_WIDGET(drawer->drawer)->state != BASEP_SHOWN) {
 		GtkRequisition chreq;
 		gtk_widget_size_request(drawer->drawer, &chreq);
 		gtk_widget_set_uposition(drawer->drawer,
@@ -338,8 +370,8 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 		g_return_if_fail(li != NULL);
 		dr_pd = li->data;
 
-		drawer=create_drawer_applet(dr_pd->panel, tooltip,pixmap,
-					    orient);
+		drawer=create_drawer_applet(dr_pd->panel, tooltip,
+					    pixmap, orient);
 
 		drawer_widget_change_orient(DRAWER_WIDGET(dr_pd->panel),
 					    orient);
@@ -355,7 +387,7 @@ load_drawer_applet(int mypanel, char *pixmap, char *tooltip,
 				 GTK_SIGNAL_FUNC(button_size_alloc),
 				 drawer);
 
-	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
+	if(BASEP_WIDGET(drawer->drawer)->state == BASEP_SHOWN) {
 		GtkWidget *wpanel;
 		/*pop up, if popped down*/
 		wpanel = gtk_object_get_data(GTK_OBJECT(panel),

@@ -192,40 +192,56 @@ main(int argc, char **argv)
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
 
-	duplicate = (panel_corba_gtk_init(orb) == -4);
+	switch (panel_corba_gtk_init (orb)) {
+	case 0: 
+		duplicate = 0;
+		break; /* success */
+	case -4: {
+		GtkWidget* box = gnome_question_dialog
+			(_("I've detected a panel already running.\n"
+			   "Start another panel as well?\n" 
+			   "(The new panel will not be restarted.)"), NULL, NULL);
+		if (gnome_dialog_run_and_close (GNOME_DIALOG (box)))
+			return 0;
+		duplicate = 1;
+		break;
+	}
+	default: {
+		GtkWidget *box = gnome_error_dialog
+			(_("There was a problem registering the panel"
+			   "with the GOAD server.\n"
+			   "The panel will now exit."));
+		gnome_dialog_run_and_close (GNOME_DIALOG (box));
+		return 0;
+		break;
+	}
+	}
 
 	client = gnome_master_client ();
 
-	if (! duplicate && 
-	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED))
-		duplicate = ! gnome_startup_acquire_token("GNOME_PANEL", gnome_client_get_id(client));
+	gnome_client_set_restart_style (client, duplicate 
+					? GNOME_RESTART_NEVER 
+					: GNOME_RESTART_IMMEDIATELY);
 
-	gnome_client_set_restart_style (client, duplicate ? GNOME_RESTART_NEVER : GNOME_RESTART_IMMEDIATELY);
-
-	if (duplicate) {
-		GtkWidget* box = gnome_question_dialog
-		  (_("I've detected a panel already running.\n"
-		     "Start another panel as well?\n" 
-		     "(The new panel will not be restarted.)"), NULL, NULL);
-		if (gnome_dialog_run_and_close (GNOME_DIALOG (box))) {
-			gnome_client_flush (client);
-			return 0;
-		}
-	}
 	gnome_client_set_priority(client,40);
 
+#if 0
 	if (gnome_client_get_flags(client) & GNOME_CLIENT_RESTORED)
 		old_panel_cfg_path = g_strdup (gnome_client_get_config_prefix (client));
 	else
 		old_panel_cfg_path = g_strdup ("/panel.d/default/");
+#endif
+	
+	gnome_client_set_global_config_prefix (client, PANEL_CONFIG_PATH);
 
-	gnome_client_set_global_config_prefix (client, "/panel.d/Session/");
 	gtk_signal_connect (GTK_OBJECT (client), "save_yourself",
 			    GTK_SIGNAL_FUNC (panel_session_save), NULL);
 	gtk_signal_connect (GTK_OBJECT (client), "die",
 			    GTK_SIGNAL_FUNC (panel_session_die), NULL);
 
 	panel_tooltips = gtk_tooltips_new();
+
+	gnome_win_hints_init ();
 
 	/*set the globals*/
 	load_up_globals();
@@ -243,7 +259,7 @@ main(int argc, char **argv)
 
 	/*this will make the drawers be hidden for closed panels etc ...*/
 	send_state_change();
-	
+
 	/*attempt to sync the config every 10 seconds, only if a change was
 	  indicated though*/
 	config_sync_timeout = gtk_timeout_add(10*1000,try_config_sync,NULL);

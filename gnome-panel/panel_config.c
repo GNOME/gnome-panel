@@ -5,6 +5,9 @@
 
 #include "panel-include.h"
 
+#define REGISTER_CHANGES(ppc) 	if ((ppc)->register_changes) \
+                                gnome_property_box_changed (GNOME_PROPERTY_BOX ((ppc)->config_window))
+
 static GList *ppconfigs=NULL;
 
 static PerPanelConfig *
@@ -28,84 +31,70 @@ kill_config_dialog(GtkWidget *panel)
 }
 
 void
-update_config_orient(GtkWidget *panel)
+update_config_edge(BasePWidget *panel)
 {
-	PerPanelConfig *ppc = get_config_struct(panel);
+	PerPanelConfig *ppc = get_config_struct(GTK_WIDGET (panel));
+	GtkWidget *toggle = NULL;
 	if(!ppc)
 		return;
-	if(IS_SNAPPED_WIDGET(panel)) {
-		switch(SNAPPED_WIDGET(panel)->pos) {
-		case SNAPPED_TOP:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
-						    TRUE);
-			break;
-		case SNAPPED_BOTTOM:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
-						    TRUE);
-			break;
-		case SNAPPED_LEFT:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
-						    TRUE);
-			break;
-		case SNAPPED_RIGHT:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
-						    TRUE);
-			break;
-		}
-	} else if(IS_CORNER_WIDGET(panel)) {
-		switch(CORNER_WIDGET(panel)->pos) {
-		case CORNER_NE:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
-						    TRUE);
-			break;
-		case CORNER_SW:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
-						    TRUE);
-			break;
-		case CORNER_NW:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
-						    TRUE);
-			break;
-		case CORNER_SE:
-			gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
-						    TRUE);
-			break;
-		}
+
+	g_return_if_fail (IS_BORDER_WIDGET (panel));
+
+	switch(BORDER_POS (panel->pos)->edge) {
+	case BORDER_TOP:
+		toggle = ppc->t_edge;
+		break;
+	case BORDER_BOTTOM:
+		toggle = ppc->b_edge;
+		break;
+	case BORDER_LEFT:
+		toggle = ppc->l_edge;
+		break;
+	case BORDER_RIGHT:
+		toggle = ppc->r_edge;
+		break;
 	}
+
+	if (toggle)
+		gtk_toggle_button_set_active(
+			GTK_TOGGLE_BUTTON(toggle), TRUE);
 }
 
 void
 update_config_size(GtkWidget *panel)
 {
 	PerPanelConfig *ppc = get_config_struct(panel);
+	GtkWidget *toggle = NULL;
 	PanelWidget *p;
 	if(!ppc)
 		return;
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 	switch(p->sz) {
 	case SIZE_TINY:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_tiny),
-					     TRUE);
+		toggle = ppc->s_tiny;
 		break;
 	case SIZE_STANDARD:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_std),
-					     TRUE);
+		toggle = ppc->s_std;
 		break;
 	case SIZE_LARGE:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_large),
-					     TRUE);
+		toggle = ppc->s_large;
 		break;
 	case SIZE_HUGE:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->s_huge),
-					     TRUE);
+		toggle = ppc->s_huge;
 		break;
 	}
+	
+	if (toggle)
+		gtk_toggle_button_set_active(
+			GTK_TOGGLE_BUTTON(ppc->s_huge), TRUE);
+	
+
 }
 
 void
 update_config_back(PanelWidget *pw)
 {
-	GtkWidget *t;
+	GtkWidget *t, *toggle = NULL;
 	GtkWidget *panelw = gtk_object_get_data(GTK_OBJECT(pw), PANEL_PARENT);
 	PerPanelConfig *ppc = get_config_struct(panelw);
 
@@ -113,8 +102,7 @@ update_config_back(PanelWidget *pw)
 		return;
 	switch(pw->back_type) {
 	case PANEL_BACK_NONE:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->non),
-					    TRUE);
+		toggle = ppc->non;
 		break;
 	case PANEL_BACK_COLOR:
 		gnome_color_picker_set_i16(GNOME_COLOR_PICKER(ppc->backsel),
@@ -122,17 +110,82 @@ update_config_back(PanelWidget *pw)
 					   pw->back_color.green,
 					   pw->back_color.blue,
 					   65535);
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->col),
-					    TRUE);
+		toggle = ppc->col;
 		break;
 	case PANEL_BACK_PIXMAP:
 		t=gnome_pixmap_entry_gtk_entry(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
 		gtk_entry_set_text(GTK_ENTRY(t),
 				   pw->back_pixmap?pw->back_pixmap:"");
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->pix),
-					    TRUE);
+		toggle = ppc->pix;
 		break;
 	}
+
+	if (toggle)
+		gtk_toggle_button_set_active(
+			GTK_TOGGLE_BUTTON(toggle), TRUE);
+}
+
+void
+update_config_anchor (BasePWidget *w)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+	gboolean left_aligned;
+
+	g_return_if_fail (IS_SLIDING_WIDGET (w));
+
+	if (!ppc) 
+		return;
+
+	left_aligned = (SLIDING_POS (w->pos)->anchor == SLIDING_ANCHOR_LEFT);
+	gtk_toggle_button_set_active (left_aligned 
+				      ? GTK_TOGGLE_BUTTON (ppc->l_anchor)
+				      : GTK_TOGGLE_BUTTON (ppc->r_anchor),
+				      TRUE);
+}
+
+void
+update_config_offset (BasePWidget *w)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+
+	g_return_if_fail (IS_SLIDING_WIDGET (w));
+
+	if (!ppc)
+		return;
+
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (ppc->offset_spin),
+				   SLIDING_POS (w->pos)->offset);
+}
+
+void
+update_config_align (BasePWidget *w)
+{
+	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (w));
+	GtkWidget *toggle;
+
+	g_return_if_fail (IS_ALIGNED_WIDGET (w));
+
+	if (!ppc)
+		return;
+
+	switch (ALIGNED_POS (w->pos)->align) {
+	case ALIGNED_LEFT:
+		toggle = ppc->l_align;
+		break;
+	case ALIGNED_CENTER:
+		toggle = ppc->c_align;
+		break;
+	case ALIGNED_RIGHT:
+		toggle = ppc->r_align;
+		break;
+	default:
+		toggle = NULL;
+		break;
+	}
+
+	if (toggle)
+		gtk_toggle_button_set_active (
+			GTK_TOGGLE_BUTTON (toggle), TRUE);
 }
 
 static void
@@ -153,32 +206,47 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	
 	if(page != -1)
 		return;
-	
-	if(IS_SNAPPED_WIDGET(ppc->panel))
-		snapped_widget_change_params(SNAPPED_WIDGET(ppc->panel),
-					     ppc->snapped_pos,
-					     ppc->snapped_mode,
-					     SNAPPED_WIDGET(ppc->panel)->state,
-					     ppc->sz,
-					     ppc->hidebuttons,
-					     ppc->hidebutton_pixmaps,
-					     ppc->back_type,
-					     ppc->back_pixmap,
-					     ppc->fit_pixmap_bg,
-					     &ppc->back_color);
-	else if(IS_CORNER_WIDGET(ppc->panel))
-		corner_widget_change_params(CORNER_WIDGET(ppc->panel),
-					    ppc->corner_pos,
-					    ppc->corner_orient,
-					    ppc->corner_mode,
-					    CORNER_WIDGET(ppc->panel)->state,
+
+	if(IS_EDGE_WIDGET(ppc->panel))
+		border_widget_change_params(BORDER_WIDGET(ppc->panel),
+					    ppc->edge,
 					    ppc->sz,
+					    ppc->mode,
+					    BASEP_WIDGET(ppc->panel)->state,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
 					    ppc->back_type,
 					    ppc->back_pixmap,
 					    ppc->fit_pixmap_bg,
 					    &ppc->back_color);
+	else if(IS_SLIDING_WIDGET(ppc->panel))
+		sliding_widget_change_params(SLIDING_WIDGET(ppc->panel),
+					     ppc->anchor,
+					     ppc->offset,
+					     ppc->edge,
+					     ppc->sz,
+					     ppc->mode,
+					     BASEP_WIDGET(ppc->panel)->state,
+					     ppc->hidebuttons,
+					     ppc->hidebutton_pixmaps,
+					     ppc->back_type,
+					     ppc->back_pixmap,
+					     ppc->fit_pixmap_bg,
+					     &ppc->back_color);
+	else if (IS_ALIGNED_WIDGET (ppc->panel))
+		aligned_widget_change_params (ALIGNED_WIDGET (ppc->panel),
+					      ppc->align,
+					      ppc->edge,
+					      ppc->sz,
+					      ppc->mode,
+					      BASEP_WIDGET(ppc->panel)->state,
+					      ppc->hidebuttons,
+					      ppc->hidebutton_pixmaps,
+					      ppc->back_type,
+					      ppc->back_pixmap,
+					      ppc->fit_pixmap_bg,
+					      &ppc->back_color);
+#if 0
 	else if(IS_DRAWER_WIDGET(ppc->panel)) {
 	        DrawerWidget *dw = DRAWER_WIDGET(ppc->panel);
 		drawer_widget_change_params(dw,
@@ -192,6 +260,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->hidebutton_pixmaps,
 					    ppc->hidebuttons);
 	}
+#endif
 	gtk_widget_queue_draw (ppc->panel);
 }
 
@@ -253,8 +322,8 @@ set_toggle (GtkWidget *widget, gpointer data)
 	int *the_toggle = data;
 
 	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+
+	REGISTER_CHANGES (ppc);
 }
 
 static void
@@ -264,148 +333,46 @@ set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
 }
 
 static void
-snapped_set_pos (GtkWidget *widget, gpointer data)
+basep_set_auto_hide (GtkWidget *widget, gpointer data)
 {
-	SnappedPos pos = (SnappedPos) data;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return;
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
 	
-	ppc->snapped_pos = pos;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+	ppc->mode = (GTK_TOGGLE_BUTTON (widget)->active)
+		? BASEP_AUTO_HIDE
+		: BASEP_EXPLICIT_HIDE;
+
+
+	REGISTER_CHANGES (ppc);
 }
-
-static void
-snapped_set_auto_hide (GtkWidget *widget, gpointer data)
-{
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(GTK_TOGGLE_BUTTON(widget)->active)
-		ppc->snapped_mode = SNAPPED_AUTO_HIDE;
-	else
-		ppc->snapped_mode = SNAPPED_EXPLICIT_HIDE;
-	
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
 
 static GtkWidget *
-snapped_notebook_page(PerPanelConfig *ppc)
+make_hidebuttons_widget (PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
-	GtkWidget *button;
 	GtkWidget *box;
-	GtkWidget *hbox;
-	GtkWidget *vbox;
-        GtkWidget *table;
-        GtkWidget *w;
+	GtkWidget *button;
+	GtkWidget *w;
 
-	/* main vbox */
-	vbox = gtk_vbox_new (FALSE, 0);
-	
-	/* main hbox */
-	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
-	
-	/* Position frame */
-	frame = gtk_frame_new (_("Position"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,0);
-	
-	/* table for frame */
-	table = gtk_table_new(3, 3, TRUE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), table);
-	
-	/* Top Position */
-	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("Top"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->t_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->t_button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_pos), 
-			    (gpointer)SNAPPED_TOP);
-        gtk_table_attach(GTK_TABLE(table), ppc->t_button, 1, 2, 0, 1,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-	
-	/* Bottom Position */
-	ppc->b_button = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-			  _("Bottom"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->b_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->b_button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_pos), 
-			    (gpointer)SNAPPED_BOTTOM);
-        gtk_table_attach(GTK_TABLE(table), ppc->b_button, 1, 2, 2, 3,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-	
-	/* Left Position */
-	ppc->l_button = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-			  _("Left"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->l_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->l_button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_pos), 
-			    (gpointer)SNAPPED_LEFT);
-        gtk_table_attach(GTK_TABLE(table), ppc->l_button, 0, 1, 1, 2,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-
-	/* Right Position */
-	ppc->r_button = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-			  _("Right"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->r_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->r_button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_pos), 
-			    (gpointer)SNAPPED_RIGHT);
-        gtk_table_attach(GTK_TABLE(table), ppc->r_button, 2, 3, 1, 2,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-
-	switch(ppc->snapped_pos) {
-	case SNAPPED_TOP:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
-					     TRUE);
-		break;
-	case SNAPPED_BOTTOM:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
-					     TRUE);
-		break;
-	case SNAPPED_LEFT:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
-					     TRUE);
-		break;
-	case SNAPPED_RIGHT:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
-					    TRUE);
-		break;
-	}
-
-	/* Auto-hide/stayput frame */
 	frame = gtk_frame_new (_("Minimize options"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,0);
+	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
 
-	/* vbox for frame */
 	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 	/* Auto-hide */
 	button = gtk_check_button_new_with_label(_("Auto hide"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->snapped_mode == SNAPPED_AUTO_HIDE)
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	if (ppc->mode == BASEP_AUTO_HIDE)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_auto_hide), 
+			    GTK_SIGNAL_FUNC (basep_set_auto_hide), 
 			    NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
 
 	/* Hidebuttons enable */
 	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->hidebuttons)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
@@ -420,15 +387,299 @@ snapped_notebook_page(PerPanelConfig *ppc)
 			    button);
 	if (!ppc->hidebuttons)
 		gtk_widget_set_sensitive(button,FALSE);
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
 	if (ppc->hidebutton_pixmaps)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);	
 
-	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+	return frame;
+}
+
+static void
+border_set_edge (GtkWidget *widget, gpointer data)
+{
+	BorderEdge edge = GPOINTER_TO_INT (data);
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	ppc->edge = edge;
+	
+	REGISTER_CHANGES (ppc);
+}
+
+static GtkWidget *
+make_border_edge_widget (PerPanelConfig *ppc)
+{
+	GtkWidget *frame;
+	GtkWidget *table;
+	GtkWidget *button;
+	
+	/* Position frame */
+	frame = gtk_frame_new (_("Edge"));
+	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	
+	/* table for frame */
+	table = gtk_table_new(3, 3, TRUE);
+	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
+	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), table);
+
+	/* Top Position */
+	ppc->t_edge = button = 
+		gtk_radio_button_new_with_label (NULL, _("Top"));
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (border_set_edge),
+			    GINT_TO_POINTER (BORDER_TOP));
+        gtk_table_attach(GTK_TABLE(table), button, 1, 2, 0, 1,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+	
+	/* Bottom Position */
+	ppc->b_edge = button =
+		gtk_radio_button_new_with_label (
+			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_edge)),
+			_("Bottom"));
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (border_set_edge),
+			    GINT_TO_POINTER (BORDER_BOTTOM));
+        gtk_table_attach(GTK_TABLE(table), button, 1, 2, 2, 3,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+	
+	/* Left Position */
+	ppc->l_edge = button =
+		gtk_radio_button_new_with_label (
+			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_edge)),
+			_("Left"));
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (border_set_edge),
+			    GINT_TO_POINTER (BORDER_LEFT));
+        gtk_table_attach(GTK_TABLE(table), button, 0, 1, 1, 2,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+
+	/* Right Position */
+	ppc->r_edge = button = 
+		gtk_radio_button_new_with_label (
+			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_edge)),
+			_("Right"));
+	gtk_object_set_user_data(GTK_OBJECT(button), ppc);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
+			    GTK_SIGNAL_FUNC (border_set_edge),
+			    GINT_TO_POINTER (BORDER_RIGHT));
+        gtk_table_attach(GTK_TABLE(table), button, 2, 3, 1, 2,
+			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
+
+	button = NULL;
+	switch(ppc->edge) {
+	case BORDER_TOP:
+		button = ppc->t_edge;
+		break;
+	case BORDER_BOTTOM:
+		button = ppc->b_edge;
+		break;
+	case BORDER_LEFT:
+		button = ppc->l_edge;
+		break;
+	case BORDER_RIGHT:
+		button = ppc->r_edge;
+		break;
+	}	
+
+	if (button)
+		gtk_toggle_button_set_active(
+			GTK_TOGGLE_BUTTON(button), TRUE);
+
+	return frame;
+
+}
+
+static GtkWidget *
+edge_notebook_page (PerPanelConfig *ppc)
+{
+	GtkWidget *hbox;
+	GtkWidget *edgew;
+	GtkWidget *hidebuttonsw;
+
+	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
+
+	edgew = make_border_edge_widget (ppc);
+	gtk_box_pack_start_defaults (GTK_BOX (hbox), edgew);
+
+	hidebuttonsw = make_hidebuttons_widget (ppc);
+	gtk_box_pack_start_defaults (GTK_BOX (hbox), hidebuttonsw);
+
+	return hbox;
+}
+
+static void
+aligned_set_align (GtkWidget *widget, gpointer data)
+{
+	AlignedAlignment align = GPOINTER_TO_INT (data);
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	if (!ppc)
+		return;
+
+	if (!GTK_TOGGLE_BUTTON (widget)->active)
+		return;
+	
+	ppc->align = align;
+	
+	REGISTER_CHANGES (ppc);
+}
+
+static GtkWidget *
+aligned_notebook_page (PerPanelConfig *ppc)
+{
+	GtkWidget *vbox;
+	GtkWidget *box;
+	GtkWidget *frame;
+	GtkWidget *button;
+
+	vbox = gtk_vbox_new (FALSE, 0);
+
+	box = edge_notebook_page (ppc);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+
+	frame = gtk_frame_new (_("Alignment"));
+	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	/* LEFT ALIGNMENT */
+	ppc->l_align = button = 
+		gtk_radio_button_new_with_label (NULL, _("Left / Top"));
+	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	if (ppc->align == ALIGNED_LEFT)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (aligned_set_align),
+			    GINT_TO_POINTER (ALIGNED_LEFT));
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+
+	/* CENTER ALIGNMENT */
+	ppc->c_align = button = 
+		gtk_radio_button_new_with_label (
+			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->l_align)),
+			_("Center"));
+	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	if (ppc->align == ALIGNED_CENTER)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (aligned_set_align),
+			    GINT_TO_POINTER (ALIGNED_CENTER));
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+
+	/* RIGHT ALIGNMENT */
+	ppc->r_align = button = 
+		gtk_radio_button_new_with_label (
+			gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->l_align)),
+			_("Rightt / Bottom"));
+	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	if (ppc->align == ALIGNED_RIGHT)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (aligned_set_align),
+			    GINT_TO_POINTER (ALIGNED_RIGHT));
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+
+	return vbox;
+}
+
+static void
+sliding_set_anchor (GtkWidget *widget, gpointer data)
+{
+	SlidingAnchor anchor = GPOINTER_TO_INT (data);
+	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
+
+	if (!(GTK_TOGGLE_BUTTON (widget)->active))
+		return;
+
+	ppc->anchor = anchor;
+
+	REGISTER_CHANGES (ppc);
+}
+
+static void
+sliding_set_offset (GtkWidget *widget, gpointer data)
+{
+	PerPanelConfig *ppc = data;
+
+	ppc->offset = 
+		gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (ppc->offset_spin));
+
+	REGISTER_CHANGES (ppc);
+}
+	
+
+static GtkWidget *
+sliding_notebook_page (PerPanelConfig *ppc)
+{
+	GtkWidget *vbox;
+	GtkWidget *box;
+	GtkWidget *box2;
+	GtkWidget *frame;
+	GtkWidget *button = NULL;
+	GtkWidget *l;
+	int range;
+
+	vbox = gtk_vbox_new (FALSE, 0);
+
+	box = edge_notebook_page (ppc);
+	gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
+
+	frame = gtk_frame_new (_("Offset Options"));
+	gtk_container_set_border_width (GTK_CONTAINER (frame), GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+
+	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_container_set_border_width (GTK_CONTAINER (box), GNOME_PAD_SMALL);
+	gtk_container_add (GTK_CONTAINER (frame), box);
+
+	ppc->l_anchor = button = gtk_radio_button_new_with_label (
+		NULL, _("Offset is from left / top"));
+	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	if (ppc->anchor == SLIDING_ANCHOR_LEFT)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (sliding_set_anchor),
+			    GINT_TO_POINTER (SLIDING_ANCHOR_LEFT));
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+
+	ppc->r_anchor = button = gtk_radio_button_new_with_label (
+		gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->l_anchor)), 
+		_("Offset is from right / bottom"));
+	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
+	if (ppc->anchor == SLIDING_ANCHOR_RIGHT)
+		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+	gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			    GTK_SIGNAL_FUNC (sliding_set_anchor),
+			    GINT_TO_POINTER (SLIDING_ANCHOR_RIGHT));
+	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, 0);
+
+	box2 = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
+	gtk_box_pack_start (GTK_BOX (box), box2, TRUE, TRUE, 0);
+
+	l = gtk_label_new (_("Offset from screen edge:"));
+	gtk_box_pack_start (GTK_BOX (box2), l, FALSE, FALSE, GNOME_PAD_SMALL);
+
+#warning FIXME: do the range correctly
+	range = MAX (gdk_screen_width (), gdk_screen_height ());
+	ppc->offset_adj = gtk_adjustment_new (ppc->offset, 0, range, 1, 10, 10);
+	ppc->offset_spin = button = 
+		gtk_spin_button_new (GTK_ADJUSTMENT (ppc->offset_adj), 1, 0);
+	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->offset);
+	gtk_signal_connect (GTK_OBJECT (button), "changed",
+			    GTK_SIGNAL_FUNC (sliding_set_offset), ppc);
+	gtk_box_pack_start (GTK_BOX (box2), button, TRUE, TRUE, 0);
 
 	return vbox;
 }
@@ -443,8 +694,8 @@ size_set_size (GtkWidget *widget, gpointer data)
 		return;
 	
 	ppc->sz = sz;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+	
+	REGISTER_CHANGES (ppc);
 }
 
 static GtkWidget *
@@ -540,219 +791,6 @@ size_notebook_page(PerPanelConfig *ppc)
 	return vbox;
 }
 
-static void
-corner_set_pos (GtkWidget *widget, gpointer data)
-{
-	CornerPos pos = (CornerPos) data;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return;
-	
-	ppc->corner_pos = pos;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-static void
-corner_set_orient (GtkWidget *widget, gpointer data)
-{
-	PanelOrientation orient = (PanelOrientation) data;
-	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return;
-	
-	ppc->corner_orient = orient;
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
-}
-
-static void
-corner_set_auto_hide (GtkWidget *widget, gpointer data)
-{
-        PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
-	if (GTK_TOGGLE_BUTTON(widget)->active)
-	        ppc->corner_mode = CORNER_AUTO_HIDE;
-	else
-	        ppc->corner_mode = CORNER_EXPLICIT_HIDE;
-	
-	if (ppc->register_changes)
-	        gnome_property_box_changed(GNOME_PROPERTY_BOX(ppc->config_window));
-}
-
-static GtkWidget *
-corner_notebook_page(PerPanelConfig *ppc)
-{
-	GtkWidget *frame;
-	GtkWidget *button;
-	GtkWidget *w;
-	GtkWidget *box;
-	GtkWidget *hbox;
-	GtkWidget *vbox;
-        GtkWidget *table;
-	
-	/* main hbox */
-	hbox = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (hbox), GNOME_PAD_SMALL);
-	
-	/* Position frame */
-	frame = gtk_frame_new (_("Position"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE,0);
-	
-	/* table for frame */
-	table = gtk_table_new(3, 3, TRUE);
-	gtk_table_set_row_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
-	gtk_table_set_col_spacings(GTK_TABLE(table), GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER(table), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), table);
-	
-	/* North East Position */
-	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("North east"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->t_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->t_button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_pos), 
-			    (gpointer)CORNER_NE);
-        gtk_table_attach(GTK_TABLE(table), ppc->t_button, 2, 3, 0, 1,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-	
-	/* Bottom Position */
-	ppc->b_button = gtk_radio_button_new_with_label (
-		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		 _("South west"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->b_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->b_button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_pos), 
-			    (gpointer)CORNER_SW);
-        gtk_table_attach(GTK_TABLE(table), ppc->b_button, 0, 1, 2, 3,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-	
-	/* North West Position */
-	ppc->l_button = gtk_radio_button_new_with_label (
-		  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		  _("North west"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->l_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->l_button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_pos), 
-			    (gpointer)CORNER_NW);
-        gtk_table_attach(GTK_TABLE(table), ppc->l_button, 0, 1, 0, 1,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-
-	/* South East Position */
-	ppc->r_button = gtk_radio_button_new_with_label (
-		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		 _("South east"));
-	gtk_object_set_user_data(GTK_OBJECT(ppc->r_button),ppc);
-	gtk_signal_connect (GTK_OBJECT (ppc->r_button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_pos), 
-			    (gpointer)CORNER_SE);
-        gtk_table_attach(GTK_TABLE(table), ppc->r_button, 2, 3, 2, 3,
-			 GTK_FILL | GTK_SHRINK, GTK_EXPAND | GTK_SHRINK, 0, 0);
-
-	switch(ppc->corner_pos) {
-	case CORNER_NE:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->t_button),
-					    TRUE);
-		break;
-	case CORNER_SW:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->b_button),
-					    TRUE);
-		break;
-	case CORNER_NW:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->l_button),
-					    TRUE);
-		break;
-	case CORNER_SE:
-		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(ppc->r_button),
-					    TRUE);
-		break;
-	}
-
-	vbox = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE,0);
-
-	/* Orientation frame */
-	frame = gtk_frame_new (_("Orientation"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
-
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	
-	/* Horizontal */
-	button = gtk_radio_button_new_with_label (NULL, _("Horizontal"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->corner_orient == PANEL_HORIZONTAL)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_orient), 
-			    (gpointer)PANEL_HORIZONTAL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-	
-	/* Vertical */
-	button = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  _("Vertical"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->corner_orient == PANEL_VERTICAL)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_orient), 
-			    (gpointer)PANEL_VERTICAL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-
-	/* Hidebuttons frame */
-	frame = gtk_frame_new (_("Minimize options"));
-	gtk_container_set_border_width(GTK_CONTAINER (frame), GNOME_PAD_SMALL);
-	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,0);
-
-	/* vbox for frame */
-	box = gtk_vbox_new (FALSE, GNOME_PAD_SMALL);
-	gtk_container_set_border_width(GTK_CONTAINER (box), GNOME_PAD_SMALL);
-	gtk_container_add (GTK_CONTAINER (frame), box);
-	
-	/* Auto-hide */
-	button = gtk_check_button_new_with_label(_("Auto hide"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->corner_mode == CORNER_AUTO_HIDE)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (corner_set_auto_hide), 
-			    NULL);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-
-	/* Hidebuttons enable */
-	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->hidebuttons)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->hidebuttons);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-
-	/* Arrow enable */
-	button = gtk_check_button_new_with_label (_("Enable hidebutton arrows"));
-	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
-			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
-			    button);
-	if (!ppc->hidebuttons)
-		gtk_widget_set_sensitive(button,FALSE);
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->hidebutton_pixmaps)
-		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle),
-			    &ppc->hidebutton_pixmaps);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,0);
-
-	return (hbox);
-}
-
-
 static int
 value_changed (GtkWidget *w, gpointer data)
 {
@@ -760,8 +798,9 @@ value_changed (GtkWidget *w, gpointer data)
 
 	g_free(ppc->back_pixmap);
 	ppc->back_pixmap = gnome_pixmap_entry_get_filename(GNOME_PIXMAP_ENTRY(ppc->pix_entry));
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+
+	REGISTER_CHANGES (ppc);
+
 	return FALSE;
 }
 
@@ -771,8 +810,7 @@ set_fit_pixmap_bg (GtkToggleButton *toggle, gpointer data)
 	PerPanelConfig *ppc = data;
 	ppc->fit_pixmap_bg = toggle->active;
 
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+	REGISTER_CHANGES (ppc);
 }
 
 static void
@@ -784,8 +822,7 @@ color_set_cb(GtkWidget *w, int r, int g, int b, int a, gpointer data)
 	ppc->back_color.green = g;
 	ppc->back_color.blue = b;
 	
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+	REGISTER_CHANGES (ppc);
 }
 			   
 static int
@@ -814,8 +851,8 @@ set_back (GtkWidget *widget, gpointer data)
 	
 	ppc->back_type = back_type;
 
-	if (ppc->register_changes)
-		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+	REGISTER_CHANGES (ppc);
+
 	return FALSE;
 }
 
@@ -988,16 +1025,17 @@ panel_config(GtkWidget *panel)
 	ppc->back_pixmap = g_strdup(pw->back_pixmap);
 	ppc->back_color = pw->back_color;
 	ppc->back_type = pw->back_type;
+	ppc->mode = basep->mode;
 
-	if(IS_SNAPPED_WIDGET(panel)) {
-		SnappedWidget *snapped = SNAPPED_WIDGET(panel);
-		ppc->snapped_pos = snapped->pos;
-		ppc->snapped_mode = snapped->mode;
-	} else if(IS_CORNER_WIDGET(panel)) {
-		CornerWidget *corner = CORNER_WIDGET(panel);
-		ppc->corner_pos = corner->pos;
-		ppc->corner_orient = pw->orient;
-		ppc->corner_mode = corner->mode;
+	if (IS_BORDER_WIDGET (panel))
+		ppc->edge = BORDER_POS (basep->pos)->edge;
+	
+	if(IS_ALIGNED_WIDGET(panel))
+		ppc->align = ALIGNED_POS (basep->pos)->align;
+	else if(IS_SLIDING_WIDGET(panel)) {
+		SlidingPos *pos = SLIDING_POS (basep->pos);
+		ppc->offset = pos->offset;
+		ppc->anchor = pos->anchor;
 	}
 
 	ppc->panel = panel;
@@ -1020,27 +1058,33 @@ panel_config(GtkWidget *panel)
 					GNOME_PAD_SMALL);
 	
 	prop_nbook = GNOME_PROPERTY_BOX (ppc->config_window)->notebook;
-	
-	if(IS_SNAPPED_WIDGET(panel)) {
-		/* Snapped notebook page */
-		page = snapped_notebook_page (ppc);
+
+	if(IS_EDGE_WIDGET(panel)) {
+		/* edge notebook page */
+		page = edge_notebook_page (ppc);
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 					  page,
 					  gtk_label_new (_("Edge panel")));
-	} else if(IS_CORNER_WIDGET(panel)) {
-		/* Corner notebook page */
-		page = corner_notebook_page (ppc);
+	} else if(IS_ALIGNED_WIDGET(panel)) {
+		/* aligned notebook page */
+		page = aligned_notebook_page (ppc);
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 					  page,
-					  gtk_label_new (_("Corner panel")));
+					  gtk_label_new (_("Aligned panel")));
+	}else if (IS_SLIDING_WIDGET (panel)) {
+		/* sliding notebook page */
+		page = sliding_notebook_page (ppc);
+		gtk_notebook_append_page (GTK_NOTEBOOK (prop_nbook),
+					  page,
+					  gtk_label_new (_("Sliding panel")));
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		BasePWidget *basep = BASEP_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(basep->panel)->master_widget;
 		AppletInfo *info =
 			gtk_object_get_data(GTK_OBJECT(applet), "applet_info");
 		add_drawer_properties_page(ppc, info->data);
-	}
-						
+ 	}
+
 	/* Size configuration */
 	page = size_notebook_page (ppc);
 	gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),

@@ -1,8 +1,102 @@
+1999-08-20  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* menu.c: s/GNOME menus/Programs/ s/User menus/Favorites/
+
+	* session.c (load_default_applets): added gnome-terminal.desktop
+
+	* menu.c (create_root_menu): use KDE_ICONDIR to get the exec.xpm
+	(create_kde_menu): ditto
+
+	* button-widget.c (button_widget_draw): don't draw the tile if
+	we are not in the button and we only draw when we are
+
+	* panel_config_global.h: added 'tile_when_over' variable
+
+	* panel_config_global.c (misc_notebook_page): added checkbox
+	for showing tiles only when the cursor is over
+
+	* session.c: save/load tile_when_over
+
+	* menu.c (update_hidebutton_menu): one stupid mistake...
+	(update_back_menu): two stupid mistakes...
+
+	changing properties from the menu now works :)
+
+1999-08-19  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* menu.c (make_properties_submenu): added properties for the hide
+	mode, hidebuttons, size, background type  (these are broken though)
+	(change_background): 
+	(change_hidebuttons): 
+	(change_size): 
+	(change_hiding_mode): 
+	(update_back_menu): 
+	(update_size_menu): 
+	(update_hidebutton_menu): 
+	(update_hiding_menu): functions to support this
+	(add_radio_menu): convienence function
+
+	* basep-widget.c (basep_widget_autohide): fixed a bug wrt changing
+	modes
+
+	* aligned-widget.c (aligned_pos_show_hide_right): 
+	(aligned_pos_show_hide_left): 
+	(aligned_pos_class_init): Facilitate jumping to other side of
+	screen like the standard panel does
+
+	* panel-widget.c (push_applet_left): initialize variables to NULL so
+	gcc leaves us alone
+	(push_applet_right): same deal here
+
+	(now that I have the Blackbox GNOME winhint patch working...
+	
+	* basep-widget.c (basep_widget_update_winhints): set the gnome WM hints if
+	available
+	(basep_widget_realize): 
+	(basep_widget_explicit_hide): 
+	(basep_widget_explicit_show): 
+	(basep_widget_autohide): 
+	(basep_widget_autohide): update the hints in the functions 
+
+	* main.c (main): init win hints here
+
+	* panel-types.h: removed unused types
+
+1999-08-18  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* *.c: store config in ~/.gnome/panel.d/default/ instead of
+	~/.gnome/panel.d/Session-asd09n09sda/  (don't know if this is
+	done right though)
+	
+	* *-widget.c: general fixes to clean up resizing when hidden
+
 Wed Aug 18 10:54:31 1999  George Lebl  <jirka@5z.com>
 
-	* baspe-widget.c: don't allow closing the window with a window
+	* basep-widget.c: don't allow closing the window with a window
 	  manager
 
+1999-08-18  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel_config.c (update_config_back): fix stupid typo by me
+
+	* panel-widget.c (panel_widget_new): g_strdup (NULL) == NULL
+
+	* session.c (apply_global_config): call the new function
+
+	* basep-widget.c (basep_update_frame): added function so that
+	we can update the frame when we change preferences
+	(basep_back_change): call this function from here
+
+	* panel_config_global.c (misc_notebook_page): add a check box
+	for keeping buttons flush with the edge
+
+	* panel_config_global.h: added hide_panel_frame variable for
+	keeping buttons flush with the edge
+
+	* basep-widget.c (basep_back_change): only draw the frame if we are
+	no-color and not hide-frame
+
+>>>>>>> 1.602.2.10
 1999-08-10  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* applet-widget.c (applet_widget_register_stock_callback_dir): 

@@ -2,6 +2,7 @@
 #define DRAWER_H
 
 #include "panel.h"
+#include "panel_config.h"
 
 BEGIN_GNOME_DECLS
 

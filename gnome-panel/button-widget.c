@@ -5,6 +5,9 @@
 #include "button-widget.h"
 #include "panel-widget.h"
 #include "panel-types.h"
+#include "panel_config_global.h"
+
+extern GlobalConfig global_config;
 
 static void button_widget_class_init	(ButtonWidgetClass *klass);
 static void button_widget_init		(ButtonWidget      *button);
@@ -388,7 +391,7 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap, int offx, int offy)
 		if(button->pressed && button->in_button) {
 			tile = tiles[panel->sz].tiles_down[button->tile];
 			tile_mask = tiles[panel->sz].tiles_down_mask[button->tile];
-		} else {
+		} else if (!global_config.tile_when_over || button->in_button) {
 			tile = tiles[panel->sz].tiles_up[button->tile];
 			tile_mask = tiles[panel->sz].tiles_up_mask[button->tile];
 		}

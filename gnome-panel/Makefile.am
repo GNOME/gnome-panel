@@ -78,12 +78,16 @@ base_panel_SOURCES=\
 	panel-widget.h		\
 	basep-widget.c  	\
 	basep-widget.h		\
-	snapped-widget.c  	\
-	snapped-widget.h	\
-	drawer-widget.c  	\
+	border-widget.c		\
+	border-widget.h		\
+	edge-widget.c		\
+	edge-widget.h		\
+	aligned-widget.c	\
+	aligned-widget.h	\
+	sliding-widget.c	\
+	sliding-widget.h	\
+	drawer-widget.c		\
 	drawer-widget.h		\
-	corner-widget.c  	\
-	corner-widget.h		\
 	button-widget.c  	\
 	button-widget.h		\
 	panel-util.c		\

@@ -23,12 +23,8 @@ logout(GtkWidget *widget)
 			GtkWidget *grandparent = PANEL_WIDGET(basep->panel)->master_widget->parent;
 			GtkWidget *grandparentw = gtk_object_get_data(GTK_OBJECT(grandparent),
 								      PANEL_PARENT);
-
-			drawer_widget_close_drawer(DRAWER_WIDGET(parent));
-			if(IS_SNAPPED_WIDGET(grandparentw))
-				SNAPPED_WIDGET(grandparentw)->drawers_open--;
-			else if(IS_CORNER_WIDGET(grandparentw))
-		                CORNER_WIDGET(grandparentw)->drawers_open--;
+			drawer_widget_close_drawer (DRAWER_WIDGET (parent),
+						    BASEP_WIDGET (grandparentw));
 		}
 	}
 

@@ -34,6 +34,7 @@ extern int globals_to_sync;
 extern int need_complete_save;
 
 extern GlobalConfig global_config;
+extern PanelWidget *current_panel;
 
 static void
 move_applet_callback(GtkWidget *widget, AppletInfo *info)
@@ -120,10 +121,8 @@ applet_menu_deactivate(GtkWidget *w, AppletInfo *info)
 	GtkWidget *panel = get_panel_parent(info->widget);
 	info->menu_age = 0;
 	
-	if(IS_SNAPPED_WIDGET(panel))
-		SNAPPED_WIDGET(panel)->autohide_inhibit = FALSE;
-	else if (IS_CORNER_WIDGET(panel))
-	        CORNER_WIDGET(panel)->autohide_inhibit = FALSE;
+	if(IS_BASEP_WIDGET(panel))
+		BASEP_WIDGET(panel)->autohide_inhibit = FALSE;
 }
 
 static AppletUserMenu *
@@ -306,14 +305,15 @@ add_to_submenus(AppletInfo *info,
 void
 create_applet_menu(AppletInfo *info)
 {
-	GtkWidget *menuitem, *pixmap;
+	GtkWidget *menuitem, *panel_menu;
 	GList *user_menu = info->user_menu;
 
 	info->menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new();
-	pixmap = gnome_stock_new_with_icon (GNOME_STOCK_PIXMAP_REMOVE);
-	setup_menuitem(menuitem,pixmap,_("Remove from panel"));
+	setup_menuitem(menuitem,
+		       gnome_stock_new_with_icon (GNOME_STOCK_PIXMAP_REMOVE),
+		       _("Remove from panel"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) remove_applet_callback,
 			   info);
@@ -325,10 +325,26 @@ create_applet_menu(AppletInfo *info)
 			   (GtkSignalFunc) move_applet_callback,
 			   info);
 	gtk_menu_append(GTK_MENU(info->menu), menuitem);
+
+	panel_menu = gtk_menu_new();
+	make_panel_submenu(panel_menu,TRUE);
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Panel"));
+	gtk_menu_append (GTK_MENU (info->menu), menuitem);
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),panel_menu);
+
+
+#if 0	/*add_menu_separator (info->menu);*/
+	menuitem = gtk_menu_item_new();
+	gtk_menu_append(GTK_MENU(info->menu), menuitem);
+	gtk_widget_set_sensitive (menuitem, FALSE);
+	gtk_widget_show(menuitem);
+#endif
 	
 	if(user_menu) {
 		menuitem = gtk_menu_item_new();
 		gtk_menu_append(GTK_MENU(info->menu), menuitem);
+		gtk_widget_set_sensitive (menuitem, FALSE);
 		gtk_widget_show(menuitem);
 	}
 
@@ -353,16 +369,14 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 	g_return_if_fail(info!=NULL);
 
 	panel = get_panel_parent(info->widget);
+	current_panel = PANEL_WIDGET (BASEP_WIDGET (panel)->panel);
 
 	if (!info->menu)
 		create_applet_menu(info);
 
-	if(IS_SNAPPED_WIDGET(panel)) {
-		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
-		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
-	} else if (IS_CORNER_WIDGET(panel)) {
-	        CORNER_WIDGET(panel)->autohide_inhibit = TRUE;
-		corner_widget_queue_pop_down(CORNER_WIDGET(panel));
+	if(IS_BASEP_WIDGET(panel)) {
+		BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
+		basep_widget_queue_autohide(BASEP_WIDGET(panel));
 	}
 	info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(info->menu), NULL, NULL,

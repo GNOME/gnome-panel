@@ -1013,7 +1013,7 @@ server_applet_do_callback(CustomAppletServant *servant,
 	for(list = servant->callbacks;
 	    list!=NULL;list = g_slist_next (list)) {
 		info = (CallbackInfo *)list->data;
-		if(strcmp(info->name,(char *)callback_name)==0) {
+		if(strcmp(info->name,(char *)callback_name)==0)	{
 			(*(info->func)) (servant->appwidget,
 					 info->data);
 			return;

@@ -268,11 +268,11 @@ send_position_change(Extern *ext)
 	/*ingore this until we get an ior*/
 	if(ext->applet) {
 		int x=0,y=0;
-		GtkWidget *wid;
-
+		GtkWidget *wid=ext->ebox;
+		
 		CORBA_Environment ev;
 		CORBA_exception_init(&ev);
-
+		g_warning ("Crazy function!\n");
 		/*go the the toplevel panel widget*/
 		for(;;) {
 			if(!GTK_WIDGET_NO_WINDOW(wid)) {
@@ -368,8 +368,8 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos, in
 	POA_GNOME_PanelSpot *panelspot_servant;
 
 	if(!cfgpath || !*cfgpath)
-		cfgpath = g_strconcat(old_panel_cfg_path,
-					 "Applet_Dummy/",NULL);
+		cfgpath = g_strconcat(PANEL_CONFIG_PATH,
+				      "Applet_Dummy/",NULL);
 	else
 		/*we will free this lateer*/
 		cfgpath = g_strdup(cfgpath);
@@ -473,7 +473,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 				*cfgpath = CORBA_string_dup(ext->cfg);
 				g_free(ext->cfg);
 				ext->cfg = NULL;
-				*globcfgpath = CORBA_string_dup(old_panel_cfg_path);
+				*globcfgpath = CORBA_string_dup(PANEL_CONFIG_PATH);
 				info->type = APPLET_EXTERN_RESERVED;
 				*wid=GDK_WINDOW_XWINDOW(socket->window);
 #ifdef PANEL_DEBUG
@@ -533,10 +533,10 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 		*cfgpath = NULL;
 		return CORBA_OBJECT_NIL;
 	}
-	p = g_strconcat(old_panel_cfg_path,"Applet_Dummy/",NULL);
+	p = g_strconcat(PANEL_CONFIG_PATH,"Applet_Dummy/",NULL);
 	*cfgpath = CORBA_string_dup(p);
 	g_free(p);
-	*globcfgpath = CORBA_string_dup(old_panel_cfg_path);
+	*globcfgpath = CORBA_string_dup (PANEL_CONFIG_PATH);
 
 	return CORBA_Object_duplicate(acc, ev);
 }
@@ -769,13 +769,9 @@ s_panelspot_show_menu(POA_GNOME_PanelSpot *servant,
 		create_applet_menu(ext->info);
 
 	panel = get_panel_parent(ext->info->widget);
-	if(IS_SNAPPED_WIDGET(panel)) {
-		SNAPPED_WIDGET(panel)->autohide_inhibit = TRUE;
-		snapped_widget_queue_pop_down(SNAPPED_WIDGET(panel));
-	} else if (IS_CORNER_WIDGET(panel)) {
-	        CORNER_WIDGET(panel)->autohide_inhibit = TRUE;
-	        corner_widget_queue_pop_down(CORNER_WIDGET(panel));
-	}
+
+	BASEP_WIDGET(panel)->autohide_inhibit = TRUE;
+	basep_widget_queue_autohide(BASEP_WIDGET(panel));
 	
 	ext->info->menu_age = 0;
 	gtk_menu_popup(GTK_MENU(ext->info->menu), NULL, NULL,
@@ -923,7 +919,7 @@ s_panelspot_done_session_save(POA_GNOME_PanelSpot *servant,
 	
 	ext = info->data;
 	
-	buf = g_strdup_printf("%sApplet_Config/Applet_%d/", panel_cfg_path, info->applet_id+1);
+	buf = g_strdup_printf("%sApplet_Config/Applet_%d/", PANEL_CONFIG_PATH, info->applet_id+1);
 	gnome_config_push_prefix(buf);
 	g_free(buf);
 

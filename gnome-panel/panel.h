@@ -7,14 +7,6 @@
 
 BEGIN_GNOME_DECLS
 
-typedef enum {
-	SNAPPED_PANEL,
-	DRAWER_PANEL,
-	CORNER_PANEL,
-	FREE_PANEL, /*not yet implemented*/
-	TABBED_PANEL /*not yet implemented*/
-} PanelType;
-
 typedef struct _PanelData PanelData;
 struct _PanelData {
 	PanelType type;
@@ -30,6 +22,7 @@ void back_change(AppletInfo *info, PanelWidget *panel);
 PanelOrientType get_applet_orient(PanelWidget *panel);
 
 void panel_setup(GtkWidget *panel);
+void basep_pos_connect_signals (BasePWidget *basep);
 
 /*send state change to all the panels*/
 void send_state_change(void);

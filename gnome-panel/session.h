@@ -19,6 +19,8 @@ BEGIN_GNOME_DECLS
 
 #define DEFAULT_PANEL_NUM 0
 
+#define PANEL_CONFIG_PATH "/panel.d/default/"
+
 int panel_session_save (GnomeClient *client,
 			int phase,
 			GnomeSaveStyle save_style,

@@ -10,7 +10,7 @@ int
 string_is_in_list(GSList *list,char *text)
 {
 	for(;list!=NULL;list=g_slist_next(list))
-		if(strcmp(text,list->data)==0)
+		if(strcmp(text,(char *)list->data)==0)
 			return TRUE;
 	return FALSE;
 }
