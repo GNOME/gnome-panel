@@ -58,7 +58,8 @@ enum {
 	TARGET_DIRECTORY,
 	TARGET_COLOR,
 	TARGET_APPLET,
-	TARGET_APPLET_INTERNAL
+	TARGET_APPLET_INTERNAL,
+	TARGET_BGIMAGE
 };
 
 static GtkTargetEntry panel_drop_types[] = {
@@ -69,7 +70,8 @@ static GtkTargetEntry panel_drop_types[] = {
 	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
 	{ "application/x-panel-applet", 0, TARGET_APPLET },
 	{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
-	{ "application/x-color", 0, TARGET_COLOR }
+	{ "application/x-color", 0, TARGET_COLOR },
+	{ "property/bgimage",    0, TARGET_BGIMAGE }
 };
 
 static gint n_panel_drop_types = 
@@ -914,6 +916,19 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist,
 }
 
 static void
+drop_bgimage(PanelWidget *panel, char *bgimage)
+{
+	char *filename;
+
+	filename = extract_filename(bgimage);
+	if(filename != NULL) {
+		panel_widget_set_back_pixmap (panel, filename);
+
+		g_free(filename);
+	}
+}
+
+static void
 drop_internal_applet(PanelWidget *panel, int pos, char *applet_type)
 {
 	if(!applet_type)
@@ -992,7 +1007,8 @@ is_this_drop_ok(GtkWidget *widget, GdkDragContext *context, guint *info,
 		if(gtk_target_list_find(panel_target_list, 
 					GPOINTER_TO_UINT(li->data),
 					&temp_info)) {
-			if(temp_info == TARGET_COLOR &&
+			if((temp_info == TARGET_COLOR ||
+			    temp_info == TARGET_BGIMAGE) &&
 			   IS_FOOBAR_WIDGET(widget))
 				return FALSE;
 			if(info) *info = temp_info;
@@ -1131,6 +1147,9 @@ drag_data_recieved_cb (GtkWidget	 *widget,
 		break;
 	case TARGET_COLOR:
 		drop_color(panel, pos, (guint16 *)selection_data->data);
+		break;
+	case TARGET_BGIMAGE:
+		drop_bgimage(panel, (char *)selection_data->data);
 		break;
 	case TARGET_DIRECTORY:
 		drop_menu(panel, pos, (char *)selection_data->data);
