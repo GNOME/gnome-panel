@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "3.4.7.4ac19">
+  <!ENTITY manrevision "2.3">
+  <!ENTITY date "September 2003">
+  <!ENTITY applet "Рибка">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+  
+-->
+
+<article id="index" lang="uk">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>Довідка з аплету &applet; версії &manrevision;</title> 
+	 <copyright> 
+		<year>2002</year> 
+		<year>2003</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+
+
+  <copyright>
+   <year>2003</year>
+   <holder>Maxim Dziumanenko (Ukrainian translation)</holder>
+  </copyright>
+
+
+
+	 <publisher> 
+		<publishername>Проект документування GNOME</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>Команда документування GNOME</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address></address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>Проект документування GNOME</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address> 
+		  </affiliation> 
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+           <othercredit role="translator">
+	     <firstname>Максим</firstname> 
+	     <surname>Дзюманенко</surname> 
+	     <affiliation> 
+	       <orgname>myLinux, Ltd</orgname> 
+	       <address> <email>mvd@mylinux.com.ua</email> </address> 
+	     </affiliation>
+	     <contrib>Переклад українською</contrib>
+           </othercredit>
+
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії V2.2</revnumber> 
+		  <date>Січень 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії  V2.1</revnumber> 
+		  <date>Серпень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії  V2.0</revnumber> 
+		  <date>Травень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Довідка з аплету &applet;</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> Ця довідка описує аплет &applet; версії &appletversion;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Зворотній зв'язок</title> 
+		<para> Щоб сповістити про помилку або внести пропозицію відносно аплету &applet; або цієї довідки,
+		  дотримуйтесь інструкцій на 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Рибка</primary> 
+  </indexterm> 
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<sect1 id="fish-introduction">
+<title>Вступ</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"> 
+		<title>Аплет &applet;</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Показує аплет Рибка.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+<para>Аплет <application>&applet;</application> відображує у панелі анімаційне зображення. </para>
+<para>Щоб додати аплет <application>&applet;</application> до панелі, клацніть правою кнопкою на панелі, потім виберіть <menuchoice>
+<guimenu>Додати до панелі</guimenu>
+<guisubmenu>Розваги</guisubmenu>
+<guimenuitem>Рибка</guimenuitem>
+</menuchoice>.</para>
+</sect1>
+
+<sect1 id="fish-usage">
+<title>Використання</title>
+<para>Натисніть на аплеті, щоб відобразити діалог <guilabel>Рибка Wanda</guilabel>. Зазвичай діалог відображує всілякі вислови. Ви можете налаштувати аплет так, щоб при натисканні на ньому виконувалась певна команда. Докладніше про це дивіться у розділі <xref linkend="fish-settings"/>.</para>
+</sect1>
+
+<!-- ============= Preferences  ================================ -->
+<sect1 id="fish-settings">
+<title>Властивості</title>
+<para>Щоб настроїти аплет <application>&applet;</application>, клацніть правою кнопкою на аплеті <application>
+&applet;</application>, потім виберіть <guimenu>Властивості</guimenu>. </para>
+<variablelist>
+<varlistentry>
+<term><guilabel>Ім'я рибки</guilabel> </term>
+<listitem>
+<para>Це текстове поле використовується для вказування імені рибки.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Команда, що запускатиметься при клацанні</guilabel> </term>
+<listitem>
+<para>Типово, при клацанні на аплеті <application>&applet;</application> він виконує команду <literal>fortune</literal>. В цьому текстовому полі можні ввести іншу команду. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Файл</guilabel> </term>
+<listitem>
+<para>У цьому полі виберіть зображення, яке відображається у аплеті. Ви можете вибрати зображення, яке постачаєтсья разом з аплетом, чи вказати власне.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Кадрів у анімації</guilabel> </term>
+<listitem>
+<para>У цьому полі вказується кількість кадрів у анімації. </para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Затримка на кадр</guilabel> </term>
+<listitem>
+<para>У цьому полі вказується проміжок часу між змінами кадрів (у секундах).</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Розвертати на вертикальних панелях</guilabel> </term>
+<listitem>
+<para>Виберіть цей параметр, щоб розвертати зображення у аплеті, коли ви додаєте аплет до вертикальної панелі.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article> 

@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.4.0">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "Вересень 2003">
+  <!ENTITY applet "Перемикач робочих областей">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="uk">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>Довідка з аплету &applet; версії &manrevision;</title> 
+	 <copyright> 
+		<year>2002</year> 
+		<year>2003</year>
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+  <copyright>
+   <year>2003</year>
+   <holder>Maxim Dziumanenko (Ukrainian translation)</holder>
+  </copyright>
+
+	 <publisher> 
+		<publishername> Проект документування GNOME </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>Команда документування GNOME</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address></address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>Проект документування GNOME</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address> 
+		  </affiliation> 
+		</author> 
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+           <othercredit role="translator">
+	     <firstname>Максим</firstname> 
+	     <surname>Дзюманенко</surname> 
+	     <affiliation> 
+	       <orgname>myLinux, Ltd</orgname> 
+	       <address> <email>mvd@mylinux.com.ua</email> </address> 
+	     </affiliation>
+	     <contrib>Переклад українською</contrib>
+           </othercredit>
+
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії 2.3</revnumber> 
+		  <date>Серпень 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії 2.2</revnumber> 
+		  <date>Серпень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії V2.1</revnumber> 
+		  <date>Липень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету &applet; версії &manrevision;</revnumber> 
+		  <date>Березень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun команда документування GNOME</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Довідка з аплету Desk Guide</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> Ця довідка описує аплет &applet; версії &appletversion;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Зворотний зв'язок</title> 
+		<para> Щоб сповістити про помилку або внести пропозицію відносно аплету &applet; або цієї довідки,
+		  дотримуйтесь інструкцій на 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Перемикач робочих областей</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="workspacelist-introduction"> 
+	 <title>Вступ</title> 
+	<!-- ==== Figure ============================================= -->
+	 <figure id="workspacelist-fig"> 
+		<title>Аплет &applet;</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/workspace_switcher_applet.png"
+				format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Показує аплет Перемикач робочих областей. Містить кнопки для кожної робочої області.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    	<!-- ==== End of Figure ======================================= -->
+	<para>Аплет <application>&applet;</application> відображає робочі області середовища GNOME. 
+	Робоча область - це площина середовища GNOME в якій ви можете працювати. Кожна робоча область середовища
+	GNOME містить одні й ті ж самі тло, панелі та меню. Але, у кожній робочій області ви можете запускати різні додатки та 
+	відкривати різні вікна. Одночасно відображаєтсья лише одна з робочих областей, але можна тримати відкритими вікна на
+	інших робочих областях. </para>
+	
+	<para>Типово, аплет <application>&applet;</application> відображує графічне представлення робочих областей,
+	як показано на <xref linkend="workspacelist-fig"/>. Аплет відображає відкриті у робочій області вікна програм, та діалогові вікна.
+	Аплет підсвічує тло поточної робочої області та вікно, яке має фокус. Можна змінити типову поведінку аплету,
+	щоб він відображав лише назви робочих областей. Докладніше про настройку аплету дивіться у 
+	<xref linkend="workspacelist-prefs"/>.</para>
+	
+	<para>На <xref linkend="workspacelist-fig"/> показано аплет <application>&applet;</application> з чотирма робочими областями.
+	Аплет відображає робочі області зліва направо рядками. 
+	На <xref linkend="workspacelist-fig"/> аплет налаштований для відображення робочих областей у один рядок. 
+	Спосіб змінити кількість відображуваних аплетом рядків дивіться у <xref linkend="workspacelist-prefs"/>. </para>
+	
+	<para>Щоб додати у панель аплет <application>&applet;</application>, клацніть на панелі правою кнопкою миші, потім виберіть
+	<menuchoice>
+	<guimenu>Додати до панелі</guimenu> 
+	<guisubmenu>Утиліта</guisubmenu>
+	<guimenuitem>Перемикач робочих областей</guimenuitem>
+	</menuchoice>.
+	</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="workspacelist-usage"> 
+	<title>Використання</title> 
+	<sect2 id="workspacelist-navigate">
+	<title>Навігація по робочим областям</title>
+	<para>Тло кнопки, яка представляє поточну робочу область, підсвічується. Щоб перемикнутись на 
+	іншу робочу область, клацніть на кнопці, яка її представляє. Якщо ви клацнете на окремому вікні 
+	всередині кнопки робочої області, аплет <application>&applet;</application> перемикнеться на 
+	нову робочу область та передасть фокус вводу вибраному вікну. Щоб повернутись до початкової робочої області, клацніть на
+	кнопці, яка її представляє у аплеті <application>&applet;</application>.</para>
+	<para>Коли ви перемикаєтесь між робочими областями, вміст аплету
+	<application>Список вікон</application> змінюється, щоб показувати відкриті у поточній робочий області вікна.</para>
+	</sect2>
+	<sect2 id="workspacelist-move-window">
+	<title>Переміщення вікна з однієї робочої області на іншу</title>
+	<para>Щоб перемістити вікно з однієї робочої області на іншу використовуючи аплет <application>&applet;</application>, 
+	перетягніть вікно з поточної робочої області на нову. </para>
+	</sect2>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+  <sect1 id="workspacelist-prefs"> 
+	 <title>Властивості</title> 
+	 <para>Щоб настроїти <application>&applet;</application>, клацніть правою кнопкою миші
+	 на аплеті, потім оберіть <guimenuitem>Властивості</guimenuitem>. </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Перемикач</guilabel></term>
+	 	<listitem>
+	 	<para>Щоб вказати які робочі області відображатиме аплет <application>&applet;</application>, 
+			виберіть один з наступних варіантів:</para>	
+	 		<itemizedlist>
+	 		<listitem><para><guilabel>Показувати лише поточну робочу область</guilabel></para>
+	 		<para>Виберіть цей варіант, щоб аплет <application>&applet;</application> відображав лише поточну
+			робочу область.</para>
+	 		</listitem>
+	 		<listitem><para><guilabel>Показувати всі робочі області у X рядків</guilabel></para>
+	 		<para>Виберіть цей варіант, щоб <application>&applet;</application> відображав усі робочі області середовища GNOME. 
+			Використовуючи поле зі стрілками вкажіть у скільки рядків відображатимуться робочі області у аплеті. </para>
+	 		</listitem>
+	 		</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Робочі області</guilabel> </term>
+	 <listitem><para>Користуйтесь наступними варіантами, щоб вказати як аплет відображатиме робочі області:</para> 
+	 <itemizedlist>
+	 	<listitem><para><guilabel>Кількість робочих областей</guilabel></para>
+	 	<para>Користуючись полем зі стрілками можна збільшити або зменшити кількість робочих областей.</para>
+	 	</listitem>
+		<listitem><para><guilabel>Назви робочих областей</guilabel></para> 
+		<para>Використовуючи список можна відредагувати назви робочих областей середовища GNOME. Для цього двічі клацніть 
+		на назві робочого місця, потім введіть нову назву. </para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Показувати назви робочих областей у перемикачі</guilabel></para>
+	 	<para>Використовуючи цей параметр можна вказати, відображатиме аплет назви робочих областей чи їх графічне
+		представлення.</para>
+	 	</listitem>
+	 </itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article> 

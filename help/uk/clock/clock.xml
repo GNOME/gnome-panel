@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.3.4">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "September 2003">
+  <!ENTITY applet "Годинник">
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="uk">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo> 
+	 <title>Посібник з аплету &applet; версії &manrevision;</title> 
+	 <copyright> 
+		<year>2002</year>
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Dan Mueth</holder> 
+	 </copyright>
+
+
+  <copyright>
+   <year>2003</year>
+   <holder>Maxim Dziumanenko (Ukrainian translation)</holder>
+  </copyright>
+
+
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername> Проект документування GNOME </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup> 
+		<author> 
+		  <firstname>Sun </firstname> 
+		  <surname>Microsystems</surname> 
+		  <affiliation> 
+			 <orgname>Проект документування GNOME</orgname> 
+			 <address></address> 
+		  </affiliation> 
+		</author> 
+		<author> 
+		  <firstname>Dan </firstname> 
+		  <surname> Mueth</surname> 
+		  <affiliation> 
+			 <orgname>Проект документування GNOME</orgname> 
+			 <address> <email>d-mueth@uchicago.edu</email> </address> 
+		  </affiliation> 
+		</author> 
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+           <othercredit role="translator">
+	     <firstname>Максим</firstname> 
+	     <surname>Дзюманенко</surname> 
+	     <affiliation> 
+	       <orgname>myLinux, Ltd</orgname> 
+	       <address> <email>mvd@mylinux.com.ua</email> </address> 
+	     </affiliation>
+	     <contrib>Переклад українською</contrib>
+           </othercredit>
+
+	 </authorgroup>
+  
+	 <revhistory>
+		<revision> 
+		  <revnumber>Посібник з аплету &applet; версії &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Посібник з аплету &applet; версії 2.2</revnumber> 
+		  <date>Серпень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Посібник з аплету &applet; версії 2.2</revnumber> 
+		  <date>Серпень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Посібник з аплету &applet; версії 2.1</revnumber> 
+		  <date>Червень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Посібник з аплету &applet; версії 2.0</revnumber> 
+		  <date>Березень 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems</para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
+		  <revnumber>Посібник з аплету &applet;</revnumber> 
+		  <date>Квітень 2000</date> 
+		  <revdescription> 
+			 <para role="author">Dan Mueth
+				<email>d-mueth@uchicago.edu</email></para> 
+			 <para role="publisher">Проект документування GNOME</para> 
+		  </revdescription> 
+		</revision> 
+	 </revhistory> 
+	 <releaseinfo> Цей посібник описує аплет &appletversion; версії &applet;.
+		</releaseinfo> 
+	 <legalnotice> 
+		<title>Зворотний зв'язок</title> 
+		<para> Щоб сповістити про помилку або внести пропозицію відносно аплету &applet; або цієї довідки,
+		  дотримуйтесь інструкцій на 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice> 
+  </articleinfo> 
+  <indexterm> 
+	 <primary>Годинник</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="clock-introduction"> 
+	 <title>Вступ</title> 
+	 
+<!-- ==== Figure ============================================= -->
+	 <figure id="clock-fig"> 
+		<title>Аплет &applet;</title> 
+		<screenshot> 
+		  <mediaobject> 
+			 <imageobject><imagedata fileref="figures/clock_applet.png"
+				format="PNG"/> 
+			 </imageobject>
+			 <textobject> 
+				<phrase>Показує аплет &applet;.</phrase> 
+			 </textobject> 
+		  </mediaobject> 
+		</screenshot> 
+	 </figure> 
+    <!-- ==== End of Figure ======================================= -->
+<para>
+Аплет <application>&applet;</application> відображує у панелі час та дату. 
+</para>
+
+<para>
+Щоб додати до панелі аплет <application>&applet;</application>, клацніть правою кнопкою миші на
+панелі, потім виберіть
+   <menuchoice>
+    <guimenu>Додати до панелі</guimenu>
+    <guisubmenu>Реманент</guisubmenu>
+    <guimenuitem>Годинник</guimenuitem>
+   </menuchoice>.
+</para>
+<para>
+Контекстне меню аплету <application>&applet;</application> містить стандартні пункти меню аплету
+та декілька додаткових пунктів меню:</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+				<guimenuitem>Копіювати час</guimenuitem>
+				</para>
+				<para>Дозволяє скопіювати час у програму, наприклад текстовий редактор.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				<guimenuitem>Копіювати дату</guimenuitem>
+				</para>
+				<para>Дозволяє скопіювати дату у програму, наприклад текстовий редактор.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				<guimenuitem>Настроїти дату й час</guimenuitem>
+				</para>
+				<para>Дозволяє змінити дату та час, який відображує годинник. 
+				Щоб користуватись цим меню меню необхідно зареєструватись як користувач <literal>root</literal>.</para>
+			</listitem>
+		</itemizedlist>
+
+</sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="clock-usage"> 
+	 <title>Використання</title> 
+
+	<sect2 id="clock-usage-copy">
+	<title>Вставляння дати або часу у програму</title>	
+<para>Аплет <application>&applet;</application> отримує час з системного годинника.
+</para>
+<para>
+	Щоб вставити дату або час з аплету <application>&applet;</application> 
+	у програму, виконайте наступні дії:</para>
+	<orderedlist>
+		<listitem>
+			<para>Клацніть правою кнопкою миші на аплеті <application>&applet;</application>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+				Виберіть один з наступних пунктів контекстного меню аплету:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+					<guimenuitem>Копіювати час</guimenuitem>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+					<guimenuitem>Копіювати дату</guimenuitem>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+			Вкажіть місце у програмі, де ви бажаєте вставити час.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+			Виберіть <menuchoice><guimenu>Правка</guimenu><guimenuitem>Вставити</guimenuitem>
+			</menuchoice> або клацніть середньою кнопкою миші.
+			</para>
+		</listitem>
+		</orderedlist>
+	</sect2>
+
+	<sect2 id="clock-usage-adjust">
+	<title>Настройка системної дати або часу</title>
+	<para>Щоб настроїти системну дату або час, які відображає аплет <application>&applet;</application>,
+	виконайте наступні дії:	</para>
+	<orderedlist>
+	<listitem>
+			<para>Клацніть правою кнопкою миші по аплету, потім оберіть
+			<guimenuitem>Настроїти дату й час</guimenuitem>.
+			</para>
+	</listitem>
+	<listitem>
+			<para>Введіть пароль користувача <literal>root</literal>, потім натисніть <guibutton>Гаразд</guibutton>.
+			</para>
+	</listitem>
+	<listitem>
+			<para>Запуститься системна утиліта настройки дати та часу. Користуючись утилітою встановіть дату та час.
+			</para>
+	</listitem>
+	</orderedlist>
+	</sect2>
+
+</sect1>
+
+<!-- ============= Preferences ============================= -->
+
+<sect1 id="clock-settings"> 
+<title>Властивості</title> 
+	<para>
+	Щоб настроїти <application>&applet;</application>, клацніть правою кнопкою миші
+	по аплету, потім виберіть <guimenuitem>Властивості</guimenuitem>. </para>
+	
+	
+	<variablelist> 
+		  <varlistentry> 
+			 <term><guilabel>Тип годинника</guilabel></term> 
+			 <listitem> 
+			 <para>Виберіть один з наступних параметрів:</para> 
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>12 годин</guilabel></para>
+			 <para>Відображати час у 12-годинному форматі.</para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>24 години</guilabel></para>
+			 <para>Відображати час у форматі від 00.00 до 24.00.</para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>в стилі UNIX</guilabel></para>
+			 <para>Відображати час у секундах, що минули з 1 Січня 1970. 
+			 Користувачами часу у такому форматі є переважно розробники. </para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>в стилі Інтернет</guilabel></para>
+			 <para>Відображати у аплеті час у стилі Інтернет. Час Інтернет базується на всесвітньому еталоні
+			 Biel Mean Time (BMT), і є однаковим в усьому світі. 
+			 Час у стилі Інтернет дозволяє користувачам Інтернет синхронізуватись до єдиного часу.</para>
+			 </listitem>
+			 </itemizedlist>
+			 </listitem> 
+		  </varlistentry> 
+		  <varlistentry> 
+			 <term><guilabel>Показувати секунди</guilabel></term>
+			 <listitem> 
+			 <para>Виберіть цей параметр, щоб аплет відображав час з секундами.</para> 
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Показувати дату</guilabel></term>
+			 <listitem> 
+			 <para>Виберіть цей параметр, щоб аплет відображав дату.</para> 
+			 </listitem> 
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Використовувати UTC</guilabel></term>
+			 <listitem> 
+			 <para>Виберіть цей параметр, щоб аплет відображав Універсальний Координований Час (UCT), 
+			також відомий як час за Грінвичем.</para> 
+			 </listitem> 
+		  </varlistentry>
+	</variablelist>		  
+	
+</sect1> 
+</article> 
