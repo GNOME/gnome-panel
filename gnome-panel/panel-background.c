@@ -907,10 +907,15 @@ panel_background_make_string (PanelBackground *background,
 			      int              x,
 			      int              y)
 {
-	char *retval = NULL;
+	PanelBackgroundType  effective_type;
+	char                *retval;
+	
+	retval = NULL;
 
-	if (background->type == PANEL_BACK_IMAGE ||
-	    (background->type == PANEL_BACK_COLOR && background->has_alpha)) {
+	effective_type = panel_background_effective_type (background);
+
+	if (effective_type == PANEL_BACK_IMAGE ||
+	    (effective_type == PANEL_BACK_COLOR && background->has_alpha)) {
 		GdkNativeWindow pixmap_xid;
 
 		if (!background->pixmap)
@@ -921,7 +926,7 @@ panel_background_make_string (PanelBackground *background,
 
 		retval = g_strdup_printf ("pixmap:%d,%d,%d", pixmap_xid, x, y);
 
-	} else if (background->type == PANEL_BACK_COLOR)
+	} else if (effective_type == PANEL_BACK_COLOR)
 		retval = g_strdup_printf (
 				"color:%.4x%.4x%.4x",
 				background->color.gdk.red,
