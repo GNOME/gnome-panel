@@ -40,6 +40,8 @@ typedef struct {
 	GtkWidget    *applet;
 	GtkWidget    *selector;
 	GtkWidget    *about_dialog;
+	int	      size;
+	PanelAppletOrient orient;
 } WindowMenu;
 
 static void
@@ -237,6 +239,39 @@ force_no_focus_padding (GtkWidget *widget)
         gtk_widget_set_name (widget, "window-menu-applet-button");
 }
 
+static void
+window_menu_size_allocate (PanelApplet	 *applet, 
+			   GtkAllocation *allocation,
+			   WindowMenu	 *window_menu)
+{
+	GList *children;
+	GtkWidget *child;
+	PanelAppletOrient orient;
+
+	orient = panel_applet_get_orient (applet);
+
+	children = gtk_container_get_children(GTK_CONTAINER (window_menu->selector));
+	child = GTK_WIDGET(children->data);
+	g_list_free (children);
+
+	if (orient == PANEL_APPLET_ORIENT_LEFT || 
+	    orient == PANEL_APPLET_ORIENT_RIGHT) {
+		if (window_menu->size == allocation->width &&
+		    orient == window_menu->orient)
+			return;
+		window_menu->size = allocation->width;
+		gtk_widget_set_size_request (child, window_menu->size, -1);
+	} else {
+		if (window_menu->size == allocation->height &&
+		    orient == window_menu->orient)
+			return;
+		window_menu->size = allocation->height;
+		gtk_widget_set_size_request (child, -1, window_menu->size);
+	}
+
+	window_menu->orient = orient;
+}
+
 static gboolean
 window_menu_key_press_event (GtkWidget   *widget,
                              GdkEventKey *event,
@@ -312,6 +347,8 @@ window_menu_applet_fill (PanelApplet *applet)
 	set_tooltip (window_menu->applet, _("Window Selector"));
  
 	panel_applet_set_flags (applet, PANEL_APPLET_EXPAND_MINOR);
+	window_menu->size = panel_applet_get_size (applet);
+	window_menu->orient = panel_applet_get_orient (applet);
 
 	g_signal_connect (window_menu->applet, "destroy",
 			  G_CALLBACK (window_menu_destroy), window_menu);
@@ -328,6 +365,8 @@ window_menu_applet_fill (PanelApplet *applet)
 			  G_CALLBACK (window_menu_change_background), window_menu);
 	g_signal_connect (window_menu->applet, "key_press_event",
 			  G_CALLBACK (window_menu_key_press_event), window_menu);
+	g_signal_connect (window_menu->applet, "size-allocate",
+			  G_CALLBACK (window_menu_size_allocate), window_menu);
 
 	g_signal_connect_after (G_OBJECT (window_menu->applet), "focus-in-event",
 				G_CALLBACK (gtk_widget_queue_draw), window_menu);
@@ -339,7 +378,7 @@ window_menu_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (window_menu->selector), "button_press_event",
 			  G_CALLBACK (filter_button_press), window_menu);
 
-  gtk_widget_show_all (GTK_WIDGET (window_menu->applet));
+	gtk_widget_show_all (GTK_WIDGET (window_menu->applet));
 
 	return TRUE;
 }
