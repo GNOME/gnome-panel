@@ -83,8 +83,9 @@ static const char *clock_config_tools [] = {
 	"time-admin",
 };
 
+/* Needs to match the indices in the combo */
 typedef enum {
-	CLOCK_FORMAT_12,
+	CLOCK_FORMAT_12 = 0,
 	CLOCK_FORMAT_24,
 	CLOCK_FORMAT_UNIX,
 	CLOCK_FORMAT_INTERNET,
@@ -142,6 +143,14 @@ struct _ClockData {
 
 	int fixed_width;
 	int fixed_height;
+
+        GtkWidget *showseconds_check;
+        GtkWidget *showdate_check;
+        GtkWidget *gmt_time_check;
+        GtkWidget *custom_hbox;
+        GtkWidget *custom_label;
+        GtkWidget *custom_entry;
+        gboolean   custom_format_shown;
 
 	guint listeners [N_GCONF_PREFS];
 };
@@ -328,41 +337,6 @@ set_atk_name_description (GtkWidget  *widget,
 		atk_object_set_description (obj, desc);
 	if (name != NULL)
 		atk_object_set_name (obj, name);
-}
-
-/* sets up ATK relation between the widgets */
-static void
-add_atk_relation (GtkWidget       *widget,
-		  GSList          *list,
-		  AtkRelationType  type)
-{
-	AtkRelationSet *relation_set;
-	AtkObject      *aobj;
-
-	aobj = gtk_widget_get_accessible (widget);
-	if (!GTK_IS_ACCESSIBLE (aobj))
-		return;
-
-	relation_set = atk_object_ref_relation_set (aobj);
-
-	if (list) {
-		AtkObject  **accessible_array;
-		AtkRelation *relation;
-		GSList      *l;
-		guint        len;
-		int          i = 0;
-
-		len = g_slist_length (list);
-		accessible_array =
-			(AtkObject **)g_malloc (sizeof (AtkObject *) * len);
-
-		for (l = list, i = 0; l; l = l->next, i++)
-			accessible_array [i] = gtk_widget_get_accessible (l->data);
-
-		relation = atk_relation_new (accessible_array, len, type);
-		atk_relation_set_add (relation_set, relation);
-		g_object_unref (relation);
-	}
 }
 
 static void
@@ -2054,31 +2028,79 @@ setup_writability_sensitivity (ClockData *clock, GtkWidget *w, GtkWidget *label,
 }
 
 static void
-set_data_sensitive_cb (GtkWidget *w,
-		       GtkWidget *wid)
+update_properties_for_format (ClockData   *cd,
+                              GtkComboBox *combo,
+                              ClockFormat  format)
 {
-	if ( ! g_object_get_data (G_OBJECT (wid), NEVER_SENSITIVE))
-		gtk_widget_set_sensitive (wid, TRUE);
+
+        /* show the custom format things the first time we actually
+         * have a custom format set in GConf, but after that don't
+         * unshow it if the format changes
+         */
+        if (!cd->custom_format_shown &&
+            (cd->format == CLOCK_FORMAT_CUSTOM ||
+             (cd->custom_format && cd->custom_format [0]))) {
+                gtk_widget_show (cd->custom_hbox);
+                gtk_widget_show (cd->custom_label);
+                gtk_widget_show (cd->custom_entry);
+                
+                gtk_combo_box_append_text (combo, _("Custom format"));
+
+                cd->custom_format_shown = TRUE;
+        }
+
+        /* Some combinations of options do not make sense */
+        switch (format) {
+        case CLOCK_FORMAT_12:
+        case CLOCK_FORMAT_24:
+                gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
+                gtk_widget_set_sensitive (cd->showdate_check, TRUE);
+                gtk_widget_set_sensitive (cd->gmt_time_check, TRUE);
+		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
+		gtk_widget_set_sensitive (cd->custom_label, FALSE);
+                break;
+        case CLOCK_FORMAT_UNIX:
+                gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
+                gtk_widget_set_sensitive (cd->showdate_check, FALSE);
+                gtk_widget_set_sensitive (cd->gmt_time_check, FALSE);
+                gtk_widget_set_sensitive (cd->custom_entry, FALSE);
+                gtk_widget_set_sensitive (cd->custom_label, FALSE);
+                break;
+        case CLOCK_FORMAT_INTERNET:
+                gtk_widget_set_sensitive (cd->showseconds_check, TRUE);
+                gtk_widget_set_sensitive (cd->showdate_check, FALSE);
+		gtk_widget_set_sensitive (cd->gmt_time_check, FALSE);
+		gtk_widget_set_sensitive (cd->custom_entry, FALSE);
+		gtk_widget_set_sensitive (cd->custom_label, FALSE);
+                break;
+	case CLOCK_FORMAT_CUSTOM:
+		gtk_widget_set_sensitive (cd->showseconds_check, FALSE);
+		gtk_widget_set_sensitive (cd->showdate_check, FALSE);
+		gtk_widget_set_sensitive (cd->gmt_time_check, TRUE);
+		gtk_widget_set_sensitive (cd->custom_entry, TRUE);
+		gtk_widget_set_sensitive (cd->custom_label, TRUE);
+                break;
+        default:
+                g_assert_not_reached ();
+                break;
+	}
 }
 
 static void
-set_data_insensitive_cb (GtkWidget *w,
-			 GtkWidget *wid)
+set_format_cb (GtkComboBox *combo,
+	       ClockData   *cd)
 {
-	gtk_widget_set_sensitive (wid, FALSE);
-}
+        ClockFormat format;
 
-static void
-set_format_cb (GtkWidget *w,
-	       gpointer data)
-{
-	ClockData *clock = g_object_get_data (G_OBJECT (w), "user_data");
+        format = gtk_combo_box_get_active (combo);
 
-	panel_applet_gconf_set_string (PANEL_APPLET (clock->applet),
-				       KEY_FORMAT,
-				       gconf_enum_to_string (format_type_enum_map,
-							     GPOINTER_TO_INT (data)),
-				       NULL);
+        update_properties_for_format (cd, combo, format);
+
+        if (cd->format != format)
+                panel_applet_gconf_set_string (PANEL_APPLET (cd->applet),
+                                               KEY_FORMAT,
+                                               gconf_enum_to_string (format_type_enum_map, format),
+                                               NULL);
 }
 
 static void
@@ -2167,21 +2189,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 {
 	GtkWidget *hbox;
 	GtkWidget *vbox;
-	GtkWidget *twelvehour;
-	GtkWidget *twentyfourhour;
-	GtkWidget *showseconds;
-	GtkWidget *showdate;
-	GtkWidget *unixtime;
-	GtkWidget *internettime;
-	GtkWidget *customtime;
-	GtkWidget *use_gmt_time;
-	GtkWidget *option_menu;
-	GtkWidget *menu;
+	GtkWidget *combo;
 	GtkWidget *label;
-	GtkWidget *custom_hbox;
-	GtkWidget *custom_label;
-	GtkWidget *custom_entry;
-	GSList    *list;
 	char      *file;
 
 	if (cd->props) {
@@ -2234,242 +2243,87 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
 	gtk_widget_show (label);
 
-	option_menu = gtk_option_menu_new ();
-	gtk_label_set_mnemonic_widget (GTK_LABEL(label), option_menu);
+        combo = gtk_combo_box_new_text ();
+	gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-	menu = gtk_menu_new ();
-	twelvehour = gtk_menu_item_new_with_label (_("12 hour"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twelvehour);
-	g_object_set_data (G_OBJECT (twelvehour), "user_data", cd);
-   	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_format_cb),
-			  GINT_TO_POINTER (CLOCK_FORMAT_12));
-	gtk_widget_show (twelvehour);
+        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("12 hour"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("24 hour"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("UNIX time"));
+        gtk_combo_box_append_text (GTK_COMBO_BOX (combo), _("Internet time"));
 
-	twentyfourhour = gtk_menu_item_new_with_label (_("24 hour"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), twentyfourhour);	
-	g_object_set_data (G_OBJECT (twentyfourhour), "user_data", cd);
-   	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_format_cb),
-			  GINT_TO_POINTER (CLOCK_FORMAT_24));
-	gtk_widget_show (twentyfourhour);
+	gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+	gtk_widget_show (combo);
 
-	unixtime = gtk_menu_item_new_with_label (_("UNIX time"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), unixtime);
-	g_object_set_data (G_OBJECT (unixtime), "user_data", cd);
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_format_cb),
-			  GINT_TO_POINTER (CLOCK_FORMAT_UNIX));
-	gtk_widget_show (unixtime);
+	cd->custom_hbox = gtk_hbox_new (FALSE, 12);
+	gtk_box_pack_start (GTK_BOX (vbox), cd->custom_hbox, TRUE, TRUE, 0);
 
-	internettime = gtk_menu_item_new_with_label (_("Internet time"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), internettime);
-	g_object_set_data (G_OBJECT (internettime), "user_data", cd);
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_format_cb),
-			  GINT_TO_POINTER (CLOCK_FORMAT_INTERNET));
-	gtk_widget_show (internettime);
-
-	customtime = gtk_menu_item_new_with_label (_("Custom format"));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), customtime);
-	g_object_set_data (G_OBJECT (customtime), "user_data", cd);
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			G_CALLBACK (set_format_cb),
-			GINT_TO_POINTER (CLOCK_FORMAT_CUSTOM));
-	
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
-	gtk_widget_show (option_menu);
-	gtk_widget_show (menu);
-
-	gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
-
-	custom_hbox = gtk_hbox_new (FALSE, 12);
-	gtk_box_pack_start (GTK_BOX (vbox), custom_hbox, TRUE, TRUE, 0);
-
-	custom_label = gtk_label_new_with_mnemonic (_("Custom _format:"));
-	gtk_label_set_use_markup (GTK_LABEL (custom_label), TRUE);
-	gtk_label_set_justify (GTK_LABEL (custom_label),
+	cd->custom_label = gtk_label_new_with_mnemonic (_("Custom _format:"));
+	gtk_label_set_use_markup (GTK_LABEL (cd->custom_label), TRUE);
+	gtk_label_set_justify (GTK_LABEL (cd->custom_label),
 			       GTK_JUSTIFY_LEFT);
-	gtk_misc_set_alignment (GTK_MISC (custom_label), 0, 0.5);
-	gtk_box_pack_start (GTK_BOX (custom_hbox), custom_label,
+	gtk_misc_set_alignment (GTK_MISC (cd->custom_label), 0, 0.5);
+	gtk_box_pack_start (GTK_BOX (cd->custom_hbox),
+                            cd->custom_label,
 			    FALSE, FALSE, 0);
 
-	custom_entry = gtk_entry_new ();
-	gtk_box_pack_start (GTK_BOX (custom_hbox), custom_entry,
+	cd->custom_entry = gtk_entry_new ();
+	gtk_box_pack_start (GTK_BOX (cd->custom_hbox), 
+                            cd->custom_entry,
 			    FALSE, FALSE, 0);
-	gtk_entry_set_text (GTK_ENTRY (custom_entry),
+	gtk_entry_set_text (GTK_ENTRY (cd->custom_entry),
 			    cd->custom_format);
-	g_signal_connect (G_OBJECT (custom_entry), "changed",
+	g_signal_connect (cd->custom_entry, "changed",
 			  G_CALLBACK (set_custom_format_cb),
 			  cd);
 
-	showseconds = gtk_check_button_new_with_mnemonic (_("Show _seconds"));
-	gtk_box_pack_start (GTK_BOX (vbox), showseconds, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showseconds),
+	cd->showseconds_check = gtk_check_button_new_with_mnemonic (_("Show _seconds"));
+	gtk_box_pack_start (GTK_BOX (vbox), cd->showseconds_check, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->showseconds_check),
 	                              cd->showseconds);
-	g_signal_connect (G_OBJECT (showseconds), "toggled",
+	g_signal_connect (cd->showseconds_check, "toggled",
 			  G_CALLBACK (set_show_seconds_cb),
 			  cd);
-	gtk_widget_show (showseconds);
+	gtk_widget_show (cd->showseconds_check);
 
-	showdate = gtk_check_button_new_with_mnemonic (_("Show _date"));
-	gtk_box_pack_start (GTK_BOX (vbox), showdate, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (showdate),
+	cd->showdate_check = gtk_check_button_new_with_mnemonic (_("Show _date"));
+	gtk_box_pack_start (GTK_BOX (vbox), cd->showdate_check, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->showdate_check),
 	                              cd->showdate);
-	g_signal_connect (G_OBJECT (showdate), "toggled",
+	g_signal_connect (cd->showdate_check, "toggled",
 			  G_CALLBACK (set_show_date_cb),
 			  cd);
-  	gtk_widget_show (showdate);
+  	gtk_widget_show (cd->showdate_check);
 
-	use_gmt_time = gtk_check_button_new_with_mnemonic (_("Use _UTC"));
-	gtk_box_pack_start (GTK_BOX (vbox), use_gmt_time, FALSE, FALSE, 0);
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (use_gmt_time),
+	cd->gmt_time_check = gtk_check_button_new_with_mnemonic (_("Use _UTC"));
+	gtk_box_pack_start (GTK_BOX (vbox), cd->gmt_time_check, FALSE, FALSE, 0);
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cd->gmt_time_check),
 	                              cd->gmt_time);
-	g_signal_connect (G_OBJECT (use_gmt_time), "toggled",
+	g_signal_connect (cd->gmt_time_check, "toggled",
 			  G_CALLBACK (set_gmt_time_cb),
 			  cd);	
-	gtk_widget_show (use_gmt_time);
+	gtk_widget_show (cd->gmt_time_check);
 
-	gtk_option_menu_set_history (GTK_OPTION_MENU (option_menu), cd->format);
+	g_signal_connect (cd->props, "destroy",
+			  G_CALLBACK (gtk_widget_destroyed),
+                          &cd->props);
+	g_signal_connect (cd->props, "response",
+			  G_CALLBACK (properties_response_cb),
+                          cd);
 
-	/* only show the custom format stuff if necessary */
-	if (cd->format == CLOCK_FORMAT_CUSTOM ||
-	    (cd->custom_format && cd->custom_format [0])) {
-		gtk_widget_show (custom_hbox);
-		gtk_widget_show (custom_label);
-		gtk_widget_show (custom_entry);
-		gtk_widget_show (customtime);
-	}
+        update_properties_for_format (cd, GTK_COMBO_BOX (combo), cd->format);
 
-	/* Some combinations of options do not make sense */
-	if (cd->format == CLOCK_FORMAT_UNIX) {
-		gtk_widget_set_sensitive (showseconds, FALSE);
-		gtk_widget_set_sensitive (showdate, FALSE);
-		gtk_widget_set_sensitive (use_gmt_time, FALSE);
-		gtk_widget_set_sensitive (custom_entry, FALSE);
-		gtk_widget_set_sensitive (custom_label, FALSE);
-	} else if (cd->format == CLOCK_FORMAT_INTERNET) {
-		gtk_widget_set_sensitive (showdate, FALSE);
-		gtk_widget_set_sensitive (use_gmt_time, FALSE);
-		gtk_widget_set_sensitive (custom_entry, FALSE);
-		gtk_widget_set_sensitive (custom_label, FALSE);
-	} else if (cd->format == CLOCK_FORMAT_CUSTOM) {
-		gtk_widget_set_sensitive (showseconds, FALSE);
-		gtk_widget_set_sensitive (showdate, FALSE);
-	} else {
-		gtk_widget_set_sensitive (custom_entry, FALSE);
-		gtk_widget_set_sensitive (custom_label, FALSE);
-	}
-
-	/* 12 hour mode -- toggle sensitivity of check button items */
-	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  showseconds);
-  	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  showdate);	
-	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  use_gmt_time);
-	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_entry);
-	g_signal_connect (G_OBJECT (twelvehour), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_label);
-
-	/* 24 hour mode -- toggle sensitivity of check button items */
-	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  showseconds);
-  	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  showdate);	
-	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  use_gmt_time);
-	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_entry);
-	g_signal_connect (G_OBJECT (twentyfourhour), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_label);
-
-	/* UNIX time mode -- toggle sensitivity of check button items */
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  showseconds);
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  showdate);
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  use_gmt_time);
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_entry);
-	g_signal_connect (G_OBJECT (unixtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_label);
-
-	/* Internet time mode -- toggle sensitivity of check button items */	
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  showseconds);
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  showdate);
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  use_gmt_time);
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_entry);
-	g_signal_connect (G_OBJECT (internettime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  custom_label);
-
-	/* Custom mode -- toggle sensitivity of check button items */	
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  showseconds);
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			  G_CALLBACK (set_data_insensitive_cb),
-			  showdate);
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  use_gmt_time);
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  custom_entry);
-	g_signal_connect (G_OBJECT (customtime), "activate",
-			  G_CALLBACK (set_data_sensitive_cb),
-			  custom_label);
-	
-	g_signal_connect (G_OBJECT (cd->props), "destroy",
-			  G_CALLBACK (gtk_widget_destroyed), &(cd->props));
-	g_signal_connect (G_OBJECT (cd->props), "response",
-			  G_CALLBACK (properties_response_cb), cd);
+	gtk_combo_box_set_active (GTK_COMBO_BOX (combo), cd->format);
+        g_signal_connect (combo, "changed",
+                          G_CALLBACK (set_format_cb), cd);
 
 	/* Now set up the sensitivity based on gconf key writability */
-	setup_writability_sensitivity (cd, option_menu, label, KEY_FORMAT);
-	setup_writability_sensitivity (cd, custom_entry, custom_label,
+	setup_writability_sensitivity (cd, combo, label, KEY_FORMAT);
+	setup_writability_sensitivity (cd, cd->custom_entry, cd->custom_label,
 				       KEY_CUSTOM_FORMAT);
-	setup_writability_sensitivity (cd, showseconds, NULL, KEY_SHOW_SECONDS);
-	setup_writability_sensitivity (cd, showdate, NULL, KEY_SHOW_DATE);
-	setup_writability_sensitivity (cd, use_gmt_time, NULL, KEY_GMT_TIME);
+	setup_writability_sensitivity (cd, cd->showseconds_check, NULL, KEY_SHOW_SECONDS);
+	setup_writability_sensitivity (cd, cd->showdate_check, NULL, KEY_SHOW_DATE);
+	setup_writability_sensitivity (cd, cd->gmt_time_check, NULL, KEY_GMT_TIME);
 
-	/* sets up atk relation  */
-	list = g_slist_append (NULL, twelvehour);
-	list = g_slist_append (list, twentyfourhour);
-	add_atk_relation (use_gmt_time, list, ATK_RELATION_CONTROLLED_BY);
-	g_slist_free (list);
-
-	list = g_slist_append (NULL, use_gmt_time);
-	add_atk_relation (twelvehour, list, ATK_RELATION_CONTROLLER_FOR);
-	add_atk_relation (twentyfourhour, list, ATK_RELATION_CONTROLLER_FOR);
-	g_slist_free (list);
-				
 	gtk_widget_show (cd->props);
 }
 
