@@ -127,16 +127,8 @@ panel_applet_clean (AppletInfo *info)
 {
 	g_return_if_fail (info != NULL);
 
-	switch (info->type) {
-	case PANEL_OBJECT_LAUNCHER:
+	if (info->type == PANEL_OBJECT_LAUNCHER)
 		panel_launcher_delete (info->data);
-		break;
-	case PANEL_OBJECT_DRAWER:
-		panel_drawer_delete (info->data);
-		break;
-	default:
-		break;
-	}
 
 	if (info->widget) {
 		GtkWidget *widget = info->widget;
@@ -676,8 +668,8 @@ typedef struct {
 	guint            locked : 1;
 } PanelAppletToLoad;
 
-static GSList *panel_applets_to_load = NULL;
-gboolean panel_applet_have_load_idle = FALSE;
+static GSList  *panel_applets_to_load = NULL;
+static gboolean panel_applet_have_load_idle = FALSE;
 
 static void
 free_applet_to_load (PanelAppletToLoad *applet)

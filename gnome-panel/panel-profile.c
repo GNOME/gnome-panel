@@ -278,6 +278,8 @@ panel_profile_find_new_id (PanelGConfKeyType type)
 			}
 	}
 
+	g_assert (retval != NULL);
+
 	for (l = existing_ids; l; l = l->next)
 		g_free (l->data);
 	g_slist_free (existing_ids);
@@ -1983,7 +1985,7 @@ panel_profile_copy_defaults_for_screen (GConfClient       *client,
 
 		schema_key = g_strdup_printf (PANEL_SCHEMAS_DIR "/%s", 
 			                      schemas_str);
-		panel_gconf_associate_schemas_in_dir (client, dest_dir, key);
+		panel_gconf_associate_schemas_in_dir (client, dest_dir, schema_key);
 		g_free (schema_key);
 
 		new_ids = g_slist_prepend (new_ids, new_id);
@@ -2060,6 +2062,26 @@ panel_profile_copy_default_objects_for_screen (GConfClient       *client,
 	panel_profile_append_new_ids (client, type, new_objects);
 }
 
+/* FIXME:
+ *   We might want to do something more sophisticated like hardcode
+ *   the default panel setup as the fallback panels.
+ */
+static GSList *
+panel_profile_create_fallback_toplevel_list (GConfClient *client,
+					     const char  *profile_dir)
+{
+	char *id;
+	char *dir;
+
+	id = panel_profile_find_new_id (PANEL_GCONF_TOPLEVELS);
+
+	dir = g_strdup_printf ("%s/toplevels/%s", profile_dir, id);
+	panel_gconf_associate_schemas_in_dir (client, dir, PANEL_SCHEMAS_DIR "/toplevels");
+	g_free (dir);
+
+	return g_slist_prepend (NULL, id);
+}
+
 static void
 panel_profile_load_defaults_on_screen (GConfClient *client,
 				       const char  *profile_dir,
@@ -2072,6 +2094,11 @@ panel_profile_load_defaults_on_screen (GConfClient *client,
 
 	new_toplevels = panel_profile_copy_defaults_for_screen (
 				client, profile_dir, screen_n, PANEL_GCONF_TOPLEVELS);
+	if (!new_toplevels) {
+		g_warning ("Failed to load default panel configuration. panel-default-setup.entries "
+			   "hasn't been installed using gconftool-2 --load ?\n");
+		new_toplevels = panel_profile_create_fallback_toplevel_list (client, profile_dir);
+	}
 
 	for (l = new_toplevels; l; l = l->next) {
 		char       *toplevel_id = l->data;
@@ -2122,9 +2149,6 @@ panel_profile_ensure_toplevel_per_screen (GConfClient *client,
 
 	for (l = empty_screens; l; l = l->next)
 		panel_profile_load_defaults_on_screen (client, profile_dir, l->data);
-		/* FIXME: if we fail to load the defaults for whatever reason we
-		 *        should load a fallback panel.
-		 */
 
 	g_slist_free (empty_screens);
 }

@@ -206,7 +206,7 @@ destroy_drawer (GtkWidget *widget,
 	drawer->properties = NULL;
 
 	if (drawer->toplevel)
-		panel_toplevel_detach (drawer->toplevel);
+		gtk_widget_destroy (GTK_WIDGET (drawer->toplevel));
 	drawer->toplevel = NULL;
 
 	if (drawer->close_timeout_id)
@@ -683,12 +683,6 @@ panel_drawer_create (PanelToplevel *toplevel,
 
 	/* frees id */
 	panel_profile_add_to_list (PANEL_GCONF_OBJECTS, id);
-}
-
-void
-panel_drawer_delete (Drawer *drawer)
-{
-	panel_profile_delete_toplevel (drawer->toplevel);
 }
 
 void

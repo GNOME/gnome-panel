@@ -1,3 +1,47 @@
+2003-07-02  Mark McLoughlin  <mark@skynet.ie>
+
+	* applet.c: make panel_applet_have_load_idle static.
+	
+2003-07-01  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix bug #109374. When no panel's are found in the default
+	configuration, show a fallback panel so we don't end up
+	with a running panel process and no panels.
+
+	This seems to be getting reported a fair bit, so I reckon
+	packagers mustn't yet have twigged about installing the
+	default configuration using gconftool-2 --load. Your post
+	install magic should be something like this:
+
+	gconftool-2 --direct
+	            --config-source=$GCONF_CONFIG_SOURCE
+	            --load %{_sysconfdir}/gconf/schemas/panel-default-setup.entries
+
+	* panel-profile.c:
+	(panel_profile_find_new_id): assert that we always return
+	an id.
+	(panel_profile_copy_defaults_for_screen): fix using the
+	wrong key for the schemas location.
+	(panel_profile_create_fallback_toplevel_list): impl returning
+	a list of fallback toplevels. Currently just a single toplevel
+	according to the schemas defaults with no objects.
+	(panel_profile_load_defaults_on_screen): if we can't find any
+	toplevels in the default configuration, load a fallback panel.
+	(panel_profile_ensure_toplevel_per_screen): kill FIXME.
+	
+2003-07-01  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix issue with drawer panels not getting deleted when
+	you delete the drawer button.
+
+	* drawer.[ch]:
+	(destroy_drawer): actually destroy the toplevel instead
+	of just detaching it.
+	(panel_drawer_delete): kill.
+
+	* applet.c:
+	(panel_applet_clean): don't call panel_drawer_delete().
+	
 Tue Jul 01 16:54:53 2003  George Lebl <jirka@5z.com>
 
 	* panel-applet-frame.c: only delete the applet from config (when we
