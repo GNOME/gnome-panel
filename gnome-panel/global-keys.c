@@ -58,16 +58,11 @@ do_grab_key (guint mod, ModAndKey* data)
 		  GDK_ROOT_WINDOW(), True, GrabModeAsync, GrabModeAsync);
 }
 
-/* we exclude shift, GDK_CONTROL_MASK and GDK_MOD1_MASK since we know what 
-   these modifiers mean */
-#define ALL_MODS (0x2000 /*Xkb modifier*/ | GDK_LOCK_MASK  | \
-	GDK_MOD2_MASK | GDK_MOD3_MASK | GDK_MOD4_MASK | GDK_MOD5_MASK) 
-    
 static void
 grab_key (guint mod, guint key)
 {
 	ModAndKey data;
-        int other_mods = ALL_MODS & ~mod;
+        int other_mods = IGNORED_MODS & ~mod;
     
 	data.mods = mod;
         data.key = key;
@@ -86,7 +81,7 @@ static void
 ungrab_key (guint mod,guint key)
 {
 	ModAndKey data;
-	int other_mods = ALL_MODS & ~mod;    
+	int other_mods = IGNORED_MODS & ~mod;    
     
 	data.mods = mod;
 	data.key = key;
@@ -246,7 +241,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 	window_screenshot_state = global_config.window_screenshot_state;
 
 	if (keycode == menu_keycode &&
-	    (state & menu_state) == menu_state) {
+	    (state & USED_MODS) == menu_state) {
 		PanelWidget *panel;
 		GtkWidget *menu, *basep;
 		/* check if anybody else has a grab */
@@ -265,7 +260,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 				NULL, NULL, 0, GDK_CURRENT_TIME);
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == run_keycode &&
-		   (state & run_state) == run_state) {
+		   (state & USED_MODS) == run_state) {
 		/* check if anybody else has a grab */
 		if (check_for_grabs ()) {
 			return GDK_FILTER_CONTINUE;
@@ -274,7 +269,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 		show_run_dialog ();
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == screenshot_keycode &&
-		   (state & run_state) == screenshot_state) {
+		   (state & USED_MODS) == screenshot_state) {
 		char *argv[2];
 		char *proggie;
 
@@ -300,7 +295,7 @@ panel_global_keys_filter (GdkXEvent *gdk_xevent,
 
 		return GDK_FILTER_REMOVE;
 	} else if (keycode == window_screenshot_keycode &&
-		   (state & run_state) == window_screenshot_state) {
+		   (state & USED_MODS) == window_screenshot_state) {
 		char *argv[3];
 		char *proggie;
 

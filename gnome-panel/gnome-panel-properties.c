@@ -1011,7 +1011,6 @@ grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	KeySym keysym;
 
 	if (xevent->type != KeyPress && xevent->type != KeyRelease)
-	/*if (event->type != GDK_KEY_PRESS && event->type != GDK_KEY_RELEASE)*/
 		return GDK_FILTER_CONTINUE;
 	
 	entry = GTK_ENTRY (data);
@@ -1021,7 +1020,7 @@ grab_key_filter (GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 	if (is_modifier (keycode))
 		return GDK_FILTER_CONTINUE;
 
-	state = xevent->xkey.state;
+	state = xevent->xkey.state & USED_MODS;
 
 	XLookupString (&xevent->xkey, buf, 0, &keysym, NULL);
   
