@@ -9,7 +9,7 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
-#include <waitflags.h>
+#include <sys/wait.h>
 #include <gnome.h>
 #include "panel-widget.h"
 #include "panel.h"
