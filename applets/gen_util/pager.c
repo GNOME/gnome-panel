@@ -28,6 +28,9 @@
 
 #include "pager.h"
 
+/* even 16 is pretty darn dubious. */
+#define MAX_REASONABLE_ROWS 16
+
 typedef struct {
 	GtkWidget *applet;
 
@@ -166,7 +169,9 @@ num_rows_changed (GConfClient *client,
 	    entry->value->type == GCONF_VALUE_INT) {
 		n_rows = gconf_value_get_int (entry->value);
 	}
-	
+
+        n_rows = CLAMP (n_rows, 1, MAX_REASONABLE_ROWS);
+        
 	pager->n_rows = n_rows;
 	pager_update (pager);
 
@@ -287,15 +292,21 @@ fill_pager_applet(PanelApplet *applet)
 	error = NULL;
 	pager->n_rows = panel_applet_gconf_get_int (applet, "num_rows", &error);
 	if (error) {
+                g_printerr (_("Error loading num_rows value for workspace switcher applet: %s\n"),
+                            error->message);
 		g_error_free (error);
-		pager->n_rows = 2; /* Default value */
+                /* leave current value */
 	}
+
+        pager->n_rows = CLAMP (pager->n_rows, 1, MAX_REASONABLE_ROWS);
 
 	error = NULL;
 	display_names = panel_applet_gconf_get_bool (applet, "display_workspace_names", &error);
 	if (error) {
+                g_printerr (_("Error loading display_workspace_names value for workspace switcher applet: %s\n"),
+                            error->message);
 		g_error_free (error);
-		display_names = FALSE; /* Default value */
+                /* leave current value */
 	}
 
 	if (display_names) {
@@ -307,8 +318,10 @@ fill_pager_applet(PanelApplet *applet)
 	error = NULL;
 	pager->display_all = panel_applet_gconf_get_bool (applet, "display_all_workspaces", &error);
 	if (error) {
+                g_printerr (_("Error loading display_all_workspaces value for workspace switcher applet: %s\n"),
+                            error->message);
 		g_error_free (error);
-		pager->display_all = TRUE; /* Default value */
+                /* leave current value */
 	}
 	
 	pager->size = panel_applet_get_size (applet);

@@ -1,5 +1,16 @@
 2002-03-10  Havoc Pennington  <hp@pobox.com>
 
+	* pager.c (fill_pager_applet): print out gconf errors rather than 
+	silently dumping them leaving people wondering what happened.
+
+	* pager.glade: make max rows on spin button match max in the code.
+
+	* pager.c (num_rows_changed): if someone sets 0 or negative pager
+	rows, force the value back to 1. Also set sane maximum value.
+	#70406
+
+2002-03-10  Havoc Pennington  <hp@pobox.com>
+
 	* pager.c (setup_dialog): someone did not mean "connect_swapped"
 	even though they typed it. ;-) #71395
 
