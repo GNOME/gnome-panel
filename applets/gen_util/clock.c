@@ -367,6 +367,8 @@ destroy_clock(GtkWidget * widget, ClockData *cd)
 		cd->props = NULL;
 	}
 
+        g_free (cd->timeformat);
+        
 	g_free (cd);
 }
 

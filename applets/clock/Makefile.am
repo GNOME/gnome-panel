@@ -26,6 +26,10 @@ DISABLE_DEPRECATED_CFLAGS =			\
 gladedir   = $(datadir)/gen_util
 glade_DATA = pager.glade tasklist.glade
 
+pixmapdir = $(datadir)/pixmaps
+pixmap_DATA = \
+	gnome-show-desktop.png
+
 EGGFILES =                      \
 	egg-screen-exec.h       \
 	egg-screen-exec.c       \
@@ -40,6 +44,8 @@ libgen_util_applet_2_la_SOURCES = \
 	clock.h	\
 	pager.c	\
 	pager.h	\
+	showdesktop.c \
+	showdesktop.h \
 	tasklist.c \
 	tasklist.h \
 	mailcheck.c \
@@ -79,7 +85,8 @@ ui_DATA		= \
 	GNOME_ClockApplet.xml		\
 	GNOME_MailCheckApplet.xml	\
 	GNOME_PagerApplet.xml		\
-	GNOME_TasklistApplet.xml	
+	GNOME_ShowDesktopApplet.xml	\
+	GNOME_TasklistApplet.xml
 
 serverdir       = $(libdir)/bonobo/servers
 server_in_files = GNOME_GenUtilApplet_Factory.server.in
@@ -110,6 +117,7 @@ EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in	\
 	$(soundlist_in_files)				\
 	$(schemas_in_files)				\
 	$(glade_DATA)					\
+	$(pixmap_DATA)					\
 	$(ui_DATA)
 
 EGGDIR = $(srcdir)/../../../libegg/libegg/screen-exec
