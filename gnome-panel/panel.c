@@ -916,8 +916,9 @@ drop_urilist(PanelWidget *panel, int pos, char *urilist)
 
 		if(mimetype && !strncmp(mimetype, "image", sizeof("image")-1))
 			panel_widget_set_back_pixmap (panel, filename);
-		else if(mimetype
-			&& !strcmp(mimetype, "application/x-gnome-app-info"))
+		else if(mimetype &&
+			(strcmp(mimetype, "application/x-gnome-app-info")==0 ||
+			 strcmp(mimetype, "application/x-kde-app-info")==0))
 			load_launcher_applet(filename, panel, pos, TRUE);
 		else if(S_ISDIR(s.st_mode)) {
 			drop_menu(panel, pos, filename);
