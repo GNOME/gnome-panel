@@ -497,8 +497,11 @@ static GtkWidget *geginv_label = NULL;
 static GdkPixmap *geginv_pixmap = NULL;
 static GdkPixmap *inv_goat1 = NULL;
 static GdkPixmap *inv_goat2 = NULL;
-static GdkPixmap *inv_phsh = NULL;
-static GdkBitmap *inv_phsh_mask = NULL;
+static GdkPixmap *inv_phsh1 = NULL;
+static GdkBitmap *inv_phsh1_mask = NULL;
+static GdkPixmap *inv_phsh2 = NULL;
+static GdkBitmap *inv_phsh2_mask = NULL;
+static int inv_phsh_state = 0;
 static int inv_goat_state = 0;
 static int inv_width = 0;
 static int inv_height = 0;
@@ -610,16 +613,27 @@ inv_draw (gpointer data)
 	}
 
 	if ( ! inv_game_over) {
+		GdkPixmap *phsh;
+		GdkBitmap *mask;
+
+		if (inv_phsh_state < 5) {
+			phsh = inv_phsh1;
+			mask = inv_phsh1_mask;
+		} else {
+			phsh = inv_phsh2;
+			mask = inv_phsh2_mask;
+		}
+
 		gdk_gc_set_clip_origin (geginv_canvas->style->white_gc,
 					inv_our_x*inv_factor - inv_phsh_width/2,
 					550*inv_factor - inv_phsh_height/2);
 
 		gdk_gc_set_clip_mask (geginv_canvas->style->white_gc,
-				      inv_phsh_mask);
+				      mask);
 
 		gdk_draw_drawable (geginv_pixmap,
 				   geginv_canvas->style->white_gc,
-				   inv_phsh,
+				   phsh,
 				   0, 0,
 				   inv_our_x*inv_factor - inv_phsh_width/2,
 				   550*inv_factor - inv_phsh_height/2,
@@ -638,6 +652,8 @@ inv_draw (gpointer data)
 			   0, 0,
 			   inv_width, inv_height);
 
+	gdk_flush ();
+
 	if (inv_do_pause) {
 		sleep (1);
 		inv_do_pause = FALSE;
@@ -653,6 +669,55 @@ inv_queue_draw (GtkWidget *window)
 	if (inv_draw_idle == 0)
 		inv_draw_idle = g_idle_add (inv_draw, window);
 }
+
+static void
+inv_draw_explosion (int x, int y)
+{
+	int i;
+	GdkColormap *cmap;
+	GdkColor red;
+	GdkGC *gc;
+
+	if ( ! GTK_WIDGET_DRAWABLE (geginv_canvas))
+		return;
+
+	cmap = gdk_drawable_get_colormap (geginv_canvas->window);
+	gdk_color_parse ("red", &red);
+	gdk_colormap_alloc_color (cmap, &red, FALSE, TRUE);
+
+	gc = gdk_gc_new (geginv_canvas->window);
+	gdk_gc_set_foreground (gc, &red);
+	gdk_gc_set_background (gc, &red);
+
+	for (i = 5; i < 100; i += 5) {
+		gdk_draw_arc (geginv_canvas->window,
+			      gc,
+			      TRUE /* filled */,
+			      x-i, y-i,
+			      i*2, i*2,
+			      0, 360*64);
+		gdk_flush ();
+		g_usleep (50000);
+	}
+
+	g_object_unref (G_OBJECT (gc));
+
+	for (i = 5; i < 100; i += 5) {
+		gdk_draw_arc (geginv_canvas->window,
+			      geginv_canvas->style->white_gc,
+			      TRUE /* filled */,
+			      x-i, y-i,
+			      i*2, i*2,
+			      0, 360*64);
+		gdk_flush ();
+		g_usleep (50000);
+	}
+	
+	gdk_colormap_free_colors (cmap, &red, 1);
+
+	inv_queue_draw (geginv);
+}
+
 
 static void
 inv_do_game_over (void)
@@ -811,13 +876,16 @@ geginv_timeout (gpointer data)
 				invs[i][j].x = inv_x + i * 100;
 				invs[i][j].y = inv_y + j * 80;
 
-				if (invs[i][j].y >= 570) {
+				if ( ! inv_game_over &&
+				    invs[i][j].y >= 570) {
 					inv_do_game_over ();
-				} else if (invs[i][j].y >= 530 &&
+				} else if ( ! inv_game_over &&
+					   invs[i][j].y >= 530 &&
 					   invs[i][j].x + 40 > inv_our_x - 25 &&
 					   invs[i][j].x - 40 < inv_our_x + 25) {
 					whack_gegl (i,j);
 					inv_lives --;
+					inv_draw_explosion (inv_our_x, 550);
 					if (inv_lives <= 0) {
 						inv_do_game_over ();
 					} else {
@@ -900,6 +968,8 @@ geginv_move_timeout (gpointer data)
 	    inv_y > 700)
 		return FALSE;
 
+	inv_phsh_state = (inv_phsh_state+1)%10;
+
 	/* we will be drawing something */
 	if (inv_shots != NULL)
 		inv_queue_draw (geginv);
@@ -929,6 +999,7 @@ geginv_move_timeout (gpointer data)
 			    shot->x >= inv_our_x - 25 &&
 			    shot->x <= inv_our_x + 25) {
 				inv_lives --;
+				inv_draw_explosion (inv_our_x, 550);
 				if (inv_lives <= 0) {
 					inv_do_game_over ();
 				} else {
@@ -1049,7 +1120,7 @@ inv_key_release (GtkWidget *widget, GdkEventKey *event, gpointer data)
 static gboolean
 ensure_creatures (void)
 {
-	GdkPixbuf *pb, *pb1, *phsh, *goat1, *goat2;
+	GdkPixbuf *pb, *pb1, *phsh1, *phsh2, *goat1, *goat2;
 	char *phsh_file;
 	char *goat_file;
 
@@ -1067,23 +1138,30 @@ ensure_creatures (void)
 		return FALSE;
 
 	pb1 = get_phsh_frame (pb, 1);
-	gdk_pixbuf_unref (pb);
-	phsh = pb_scale (pb1, inv_factor);
+	phsh1 = pb_scale (pb1, inv_factor);
 	gdk_pixbuf_unref (pb1);
+	phsh_dered (phsh1);
 
-	phsh_dered (phsh);
+	pb1 = get_phsh_frame (pb, 2);
+	phsh2 = pb_scale (pb1, inv_factor);
+	gdk_pixbuf_unref (pb1);
+	phsh_dered (phsh2);
+
+	gdk_pixbuf_unref (pb);
 
 	goat_file = panel_pixmap_discovery ("gnome-gegl2.png",
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
-		gdk_pixbuf_unref (phsh);
+		gdk_pixbuf_unref (phsh1);
+		gdk_pixbuf_unref (phsh2);
 		return FALSE;
 	}
 
 	pb = gdk_pixbuf_new_from_file (goat_file, NULL);
 	g_free (goat_file);
 	if (pb == NULL) {
-		gdk_pixbuf_unref (phsh);
+		gdk_pixbuf_unref (phsh1);
+		gdk_pixbuf_unref (phsh2);
 		return FALSE;
 	}
 
@@ -1094,7 +1172,8 @@ ensure_creatures (void)
 					    FALSE /* fallback */);
 	if (goat_file == NULL) {
 		gdk_pixbuf_unref (goat1);
-		gdk_pixbuf_unref (phsh);
+		gdk_pixbuf_unref (phsh1);
+		gdk_pixbuf_unref (phsh2);
 		return FALSE;
 	}
 
@@ -1102,7 +1181,8 @@ ensure_creatures (void)
 	g_free (goat_file);
 	if (pb == NULL) {
 		gdk_pixbuf_unref (goat1);
-		gdk_pixbuf_unref (phsh);
+		gdk_pixbuf_unref (phsh1);
+		gdk_pixbuf_unref (phsh2);
 		return FALSE;
 	}
 
@@ -1111,15 +1191,17 @@ ensure_creatures (void)
 
 	inv_goat_width = gdk_pixbuf_get_width (goat1);
 	inv_goat_height = gdk_pixbuf_get_height (goat1);
-	inv_phsh_width = gdk_pixbuf_get_width (phsh);
-	inv_phsh_height = gdk_pixbuf_get_height (phsh);
+	inv_phsh_width = gdk_pixbuf_get_width (phsh1);
+	inv_phsh_height = gdk_pixbuf_get_height (phsh1);
 
 	gdk_pixbuf_render_pixmap_and_mask (goat1, &inv_goat1, NULL, 127);
 	gdk_pixbuf_unref (goat1);
 	gdk_pixbuf_render_pixmap_and_mask (goat2, &inv_goat2, NULL, 127);
 	gdk_pixbuf_unref (goat2);
-	gdk_pixbuf_render_pixmap_and_mask (phsh, &inv_phsh, &inv_phsh_mask, 127);
-	gdk_pixbuf_unref (phsh);
+	gdk_pixbuf_render_pixmap_and_mask (phsh1, &inv_phsh1, &inv_phsh1_mask, 127);
+	gdk_pixbuf_unref (phsh1);
+	gdk_pixbuf_render_pixmap_and_mask (phsh2, &inv_phsh2, &inv_phsh2_mask, 127);
+	gdk_pixbuf_unref (phsh2);
 
 	return TRUE;
 }

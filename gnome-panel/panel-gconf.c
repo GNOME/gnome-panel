@@ -130,7 +130,7 @@ panel_gconf_get_string (const gchar *key, const gchar *default_val) {
 		gconf_value_free (value);
 		return retval;
 	} else {
-		return (gchar *)default_val;
+		return g_strdup (default_val);
 	}
 }
 
