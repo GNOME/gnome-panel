@@ -3,7 +3,7 @@ AUTOMAKE_OPTIONS = 1.3
 
 NULL =
 
-# SUBDIRS =
+#SUBDIRS =
 
 EXTRA_SUBDIRS = config help
 
@@ -58,15 +58,19 @@ libpanel_applet_2_la_SOURCES =	\
 	panel-applet.c          \
 	panel-applet-shell.c    \
 	panel-applet-shell.h    \
+	panel-applet-private.h  \
 	panel-marshal-main.c    \
 	panel-typebuiltins.c    \
 	panel-typebuiltins.h    \
 	$(CORBA_SRCLIST)        \
 	$(NULL)
 
-libpanelappletincludedir = $(includedir)/panel-2.0
+libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0
+libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
 
-libpanelappletinclude_HEADERS = \
+libpanel_appletincludedir = $(includedir)/panel-2.0
+
+libpanel_appletinclude_HEADERS = \
 	panel-applet.h		\
 	GNOME_Panel.h
 
@@ -87,17 +91,6 @@ libpanelappletinclude_HEADERS = \
 # 	$(CORBA_SRCLIST)	\
 # 	$(NULL)
 
-libpanel_applet_2_la_LDFLAGS = -version-info 0:0:0
-libpanel_applet_2_la_LIBADD  = $(PANEL_LIBS) -lm
-
-libpanel_appletincludedir = $(includedir)/gnome-2.0/panel/applet
- 
-libpanel_appletinclude_HEADERS =\
-	applet-widget.h		\
-	applet-object.h		\
-	applet-init.h		\
-	GNOME_Panel.h		\
-	$(NULL)
 
 CORBA_SRCLIST =			\
 	GNOME_Panel-stubs.c	\
@@ -240,17 +233,18 @@ panel_2_LDADD=\
 
 panel_2_LDFLAGS=-export-dynamic
 
-EXTRA_DIST = \
-	APPLET_WRITING			\
-	GNOME_Panel.server.in		\
-	panel.hints			\
-	gnome-panel-properties.desktop	\
-	nothing.cP			\
-	title-item.gob			\
-	gnome-panel-screenshot.glade	\
-	gnome-panel-screenshot.glade.h	\
-	$(schema_DATA)			\
-	panel-marhsal.list		\
+EXTRA_DIST =					\
+	APPLET_WRITING				\
+	GNOME_Panel.server.in			\
+	GNOME_Panel_TestApplet.server.in	\
+	panel.hints				\
+	gnome-panel-properties.desktop		\
+	nothing.cP				\
+	title-item.gob				\
+	gnome-panel-screenshot.glade		\
+	gnome-panel-screenshot.glade.h		\
+	$(schema_DATA)				\
+	panel-marshal.list			\
 	libpanelapplet-2.0.pc.in
 
 gladedir = $(datadir)/gnome/panel

@@ -1,6 +1,7 @@
 SUBDIRS =		\
 	gen_util	\
-	fish
+	fish		\
+	desk-guide
 
 EXTRA_SUBDIRS =		\
 	applet-dirs	\

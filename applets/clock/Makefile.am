@@ -40,8 +40,8 @@ PRINTER_BITMAPS = print.xpm
 MAILCHECK_BITMAPS = email.png email-e.png tux-anim.png email-eclouds.png \
                     email-tiny.png eclouds.png
 
-EXTRA_DIST = GNOME_GenUtilApplet_Factory.in.in \
-             $(PRINTER_BITMAPS)		\
+EXTRA_DIST = GNOME_GenUtilApplet_Factory.server.in.in		\
+             $(PRINTER_BITMAPS)					\
              $(MAILCHECK_BITMAPS)
 
 serverdir       = $(libdir)/bonobo/servers
