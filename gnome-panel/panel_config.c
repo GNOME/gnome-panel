@@ -34,7 +34,7 @@ config_destroy(GtkWidget *widget, gpointer data)
     panel_config_struct.config_box = 0;
 }
 
-static void 
+static gint
 set_snapped (GtkWidget *widget, gpointer data)
 {
 	PanelSnapped snapped = (PanelSnapped) data;
@@ -42,9 +42,10 @@ set_snapped (GtkWidget *widget, gpointer data)
 	panel_config_struct.snapped = snapped;
 	if (panel_config_struct.config_box)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+	return FALSE;
 }
 
-static void 
+static gint
 set_mode (GtkWidget *widget, gpointer data)
 {
 	PanelMode mode = (PanelMode) data;
@@ -52,9 +53,10 @@ set_mode (GtkWidget *widget, gpointer data)
 	panel_config_struct.mode = mode;
 	if (panel_config_struct.config_box)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+	return FALSE;
 }
 
-static void 
+static gint
 set_toggle_button_value (GtkWidget *widget, gpointer data)
 {
 	if(GTK_TOGGLE_BUTTON(widget)->active)
@@ -63,6 +65,7 @@ set_toggle_button_value (GtkWidget *widget, gpointer data)
 		*(int *)data=FALSE;
 	if (panel_config_struct.config_box)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+	return FALSE;
 }
 
 static void
@@ -88,15 +91,13 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 }
 
 GtkWidget *
-position_notebook_page(GtkWidget *propertybox)
+position_notebook_page(void)
 {
 	GtkWidget *frame;
 	GtkWidget *button;
 	GtkWidget *box;
 	GtkWidget *vbox;
 
-	panel_config_struct.config_box = 0;
-	
 	/* main vbox */
 	vbox = gtk_vbox_new (FALSE, CONFIG_PADDING_SIZE);
 	gtk_container_border_width(GTK_CONTAINER (vbox), CONFIG_PADDING_SIZE);
@@ -113,44 +114,44 @@ position_notebook_page(GtkWidget *propertybox)
 	
 	/* Top Position */
 	button = gtk_radio_button_new_with_label (NULL, _("Top"));
+	if (panel_config_struct.snapped == PANEL_TOP)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_TOP);
-	if (panel_config_struct.snapped == PANEL_TOP)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	
 	/* Bottom Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Bottom"));
+	if (panel_config_struct.snapped == PANEL_BOTTOM)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_BOTTOM);
-	if (panel_config_struct.snapped == PANEL_BOTTOM)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 	
 	/* Left Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Left"));
+	if (panel_config_struct.snapped == PANEL_LEFT)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_LEFT);
-	if (panel_config_struct.snapped == PANEL_LEFT)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 
 	/* Right Position */
 	button = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
 			  _("Right"));
+	if (panel_config_struct.snapped == PANEL_RIGHT)
+		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
 			    GTK_SIGNAL_FUNC (set_snapped), 
 			    (gpointer)PANEL_RIGHT);
-	if (panel_config_struct.snapped == PANEL_RIGHT)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
 
 	/* Auto-hide/stayput frame */
@@ -183,8 +184,6 @@ position_notebook_page(GtkWidget *propertybox)
 			    (gpointer)PANEL_AUTO_HIDE);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE, CONFIG_PADDING_SIZE);
 
-	panel_config_struct.config_box = propertybox;
-
 	return (vbox);
 }
 
@@ -197,11 +196,12 @@ align (GtkWidget *w, float x)
 	return align;
 }
 
-static void
+static gint
 value_changed ()
 {
 	if (panel_config_struct.config_box)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (panel_config_struct.config_box));
+	return FALSE;
 }
 
 static void 
@@ -249,12 +249,12 @@ pixmap_page (PanelWidget *panel)
 			    panel->back_pixmap : "");
 
 	w = gtk_check_button_new_with_label (_("Enable Background Image"));
-	gtk_signal_connect (GTK_OBJECT (w), "clicked", 
-			    GTK_SIGNAL_FUNC (set_pixmap_enable), 
-			    file_entry);
 	/*always set to true, because in the beginning we don't have
 	  any pixmap so it's not gonna be set by default anyhow*/
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (w), TRUE);
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_pixmap_enable), 
+			    file_entry);
 	gtk_box_pack_start (GTK_BOX (box), w, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
@@ -272,12 +272,14 @@ panel_config(PanelWidget *panel)
 		return;
 	}
 
+	panel_config_struct.config_box = 0;
+
 	/* so far, these are the only ones that can be set */
 	panel_config_struct.orient = panel->orient;
 	panel_config_struct.snapped = panel->snapped;
 	panel_config_struct.mode = panel->mode;
-	panel_config_struct.pixmap_enable = panel->back_pixmap != NULL;
-	
+	/*panel_config_struct.pixmap_enable = panel->back_pixmap != NULL;*/
+	panel_config_struct.pixmap_enable = TRUE;
 	
 	/* main window */
 	config_window = gnome_property_box_new ();
@@ -288,7 +290,7 @@ panel_config(PanelWidget *panel)
 	gtk_container_border_width (GTK_CONTAINER(config_window), CONFIG_PADDING_SIZE);
 	
 	/* Position notebook page */
-	page = position_notebook_page (config_window);
+	page = position_notebook_page ();
 	gnome_property_box_append_page (GNOME_PROPERTY_BOX (config_window),
 					page, gtk_label_new (_("Orientation")));
 
@@ -300,6 +302,8 @@ panel_config(PanelWidget *panel)
 	gtk_signal_connect (GTK_OBJECT (config_window), "apply",
 			    GTK_SIGNAL_FUNC (config_apply), panel);
 	
+	panel_config_struct.config_box = config_window;
+
 	/* show main window */
 	gtk_widget_show_all (config_window);
 }

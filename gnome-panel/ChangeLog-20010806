@@ -1,3 +1,15 @@
+Tue May 05 12:17:38 1998  George Lebl  <jirka@5z.com>
+
+	* panel_config.c: we set state BEFORE we connect the toggled
+	  signal so that it doesn't get toggled on the set_state, but
+	  it doesn't amtter too much in this dialog since we set the
+	  propertybox later (I had to take it out into the main
+	  function) was tehre any particular reason someone changed
+	  the set_state to go after the toggled connect? the values
+	  are set in teh function that inits the panel so we never
+	  need to go to teh toggled unless the user himself toggles
+	  the thing.
+
 Mon May 04 22:31:06 1998  George Lebl  <jirka@5z.com>
 
 	* menu.c: use some gnome-stock pixmaps
