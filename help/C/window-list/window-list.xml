@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.4.0">
-  <!ENTITY manrevision "2.6">
-  <!ENTITY date "September 2003">
+  <!ENTITY appletversion "2.5.3.1">
+  <!ENTITY manrevision "2.7">
+  <!ENTITY date "February 2004">
   <!ENTITY applet "Window List">
 
 ]>
@@ -25,6 +25,7 @@
 	 <copyright> 
 		<year>2002</year>
 		<year>2003</year> 
+		<year>2004</year> 
 		<holder>Sun Microsystems</holder> 
 	 </copyright> 
 	 <copyright> 
@@ -82,6 +83,14 @@
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Window List Applet Manual V2.6</revnumber> 
+		  <date>September 2003</date> 
 		  <revdescription> 
 			 <para role="author">Sun GNOME Documentation Team</para> 
 			 <para role="publisher">GNOME Documentation Project</para> 
@@ -149,9 +158,7 @@
 		</releaseinfo> 
 	 <legalnotice> 
 		<title>Feedback</title> 
-		<para> To report a bug or make a suggestion regarding the &applet; applet or this
-		  manual, follow the directions in the 
-		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		<para> To report a bug or make a suggestion regarding the &applet; applet or this manual, follow the directions in the <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
 		
 	 </legalnotice> 
   </articleinfo> 
@@ -176,11 +183,7 @@
 		</screenshot> 
 	 </figure> 
     	<!-- ==== End of Figure ======================================= -->
-	 <para>The <application>&applet;</application> applet enables you to manage the windows
-	 that are open on the GNOME desktop. <application>&applet;</application> uses a button
-	 to represent each window or group of windows that is open. The state of the buttons in the 
-	 applet varies depending on the state of the window that the button represents. The following 
-	 table explains the possible states of the <application>&applet;</application> buttons.</para>
+	 <para>The <application>&applet;</application> applet enables you to manage the windows that are open on the GNOME desktop. <application>&applet;</application> uses a button to represent each window or group of windows that is open. The state of the buttons in the applet varies depending on the state of the window that the button represents. The following table explains the possible states of the <application>&applet;</application> buttons.</para>
 	<informaltable>
 	<tgroup cols="2">
 	<colspec colname="col1"/>
@@ -211,23 +214,15 @@
 	</tbody>
 	</tgroup>
 	</informaltable>
-	 <para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose 
-		<menuchoice> 
-		  <guimenu>Add to Panel</guimenu> 
-		  <guisubmenu>Utility</guisubmenu> 
-		  <guimenuitem>Window List</guimenuitem> 
-		</menuchoice>. 
-	The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
+                                                                               
+    <sect2 id="windowlist-introduction-add">
+      <title>To Add &applet; to a Panel</title>
+	 <para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose <menuchoice><guimenu>Add to Panel</guimenu><guisubmenu>Utility</guisubmenu><guimenuitem>Window List</guimenuitem></menuchoice>. The number of rows that <application>&applet;</application> uses to display the buttons depends on the size of the panel in which the applet resides.</para> 
+    </sect2>
 	
 	<sect2 id="window-groups">
 	<title>Grouping Buttons</title>
-	<para>If the space on a panel is limited, <application>&applet;</application> can group the 
-	buttons that represent windows that belong to the same process under one <application>&applet;</application> 
-	button. To open a list of the buttons in a button group, click on the 
-	<application>&applet;</application> button that represents the button group. The 
-	<guibutton>Terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> 
-	is an example of a button that represents a group of buttons.
-	The following figure shows an example of the <application>&applet;</application> applet with a button group open.</para> 
+	<para>If the space on a panel is limited, <application>&applet;</application> can group the buttons that represent windows that belong to the same process under one <application>&applet;</application> button. To open a list of the buttons in a button group, click on the <application>&applet;</application> button that represents the button group. The <guibutton>Terminal</guibutton> button in <xref linkend="windowlist-applet-fig"/> is an example of a button that represents a group of buttons. The following figure shows an example of the <application>&applet;</application> applet with a button group open.</para> 
 	<!-- ==== Figure ============================================= -->
 	 <figure id="windowgroup-open-fig"> 
 		<title>&applet; Applet with a Button Group Open</title> 
@@ -251,29 +246,36 @@
 	<itemizedlist>
 	<listitem>
 	<para>To give focus to a window</para>
-	<para>If you click on the <application>&applet;</application> button that represents a window that is 
-	on the desktop but does not have focus, the applet gives focus to the window. </para>
+	<para>If you click on the <application>&applet;</application> button that represents a window that is on the desktop but does not have focus, the applet gives focus to the window. </para>
 	</listitem>
 	<listitem>
 	<para>To minimize a window</para>
-	<para>If you click on the <application>&applet;</application> button that represents the window 
-	that has focus, the applet minimizes the window. </para>
+	<para>If you click on the <application>&applet;</application> button that represents the window that has focus, the applet minimizes the window. </para>
 	</listitem>
 	<listitem>
 	<para>To restore a minimized window</para>
-	<para>If you click on the <application>&applet;</application> button that represents a 
-	minimized window, the applet restores the window.</para>
+	<para>If you click on the <application>&applet;</application> button that represents a minimized window, the applet restores the window.</para>
 	</listitem>
 	</itemizedlist>
   </sect1>
 <!-- ============= Preferences ============================= -->
   <sect1 id="windowlist-prefs"> 
 	 <title>Preferences</title> 
-	 <para>To configure <application>&applet;</application>, right-click 
-	 on the applet, then choose <guimenuitem>Preferences</guimenuitem>. 
+	 <para>To configure <application>&applet;</application>, right-click on the applet, then choose <guimenuitem>Preferences</guimenuitem>. The <guilabel>Window List Preferences</guilabel> dialog contains the following tabbed sections:
 	 </para>
+         <itemizedlist>
+           <listitem>
+             <para><xref linkend="windowlist-prefs-behavior"/></para>
+           </listitem>
+           <listitem>
+             <para><xref linkend="windowlist-prefs-size"/></para>
+           </listitem>
+         </itemizedlist>
+
+  <sect2 id="windowlist-prefs-behavior"> 
+	 <title>Behavior</title> 
 	 <variablelist>
-	 <varlistentry><term><guilabel>Window List content</guilabel> </term>
+	 <varlistentry><term><guilabel>Window List Content</guilabel> </term>
 	 <listitem>
 	 <para>To specify which windows to display in <application>&applet;</application>, select one of the following options: </para>
 	 	<itemizedlist>
@@ -287,23 +289,7 @@
 	 	</itemizedlist>
 	 </listitem>
 	 </varlistentry>
-	 <varlistentry><term><guilabel>When restoring minimized windows</guilabel> </term>
-	 <listitem>
-	 <para>To define how <application>&applet;</application> behaves when you restore windows, select one of the following options: </para>
-	 	<itemizedlist>
-	 	<listitem>
-	 	<para><guilabel>Restore to current workspace</guilabel></para>
-	 	<para>Select this option to restore a window from the applet to the current workspace, even if the 
-	 	window did not previously reside in the current workspace.</para>
-	 	</listitem>
-	 	<listitem><para><guilabel>Restore to native workspace</guilabel></para>
-	 	<para>Select this option to switch to the native workspace in which a window resides when you restore the window
-	 	from the applet. </para>
-	 	</listitem>
-	 	</itemizedlist>
-	 </listitem>
-	 </varlistentry>
-	 <varlistentry><term><guilabel>Window grouping</guilabel> </term>
+	 <varlistentry><term><guilabel>Window Grouping</guilabel> </term>
 	 <listitem>
 	 <para>To specify when <application>&applet;</application> groups windows that belong to the same process, select one of the following options: </para>
 		<itemizedlist>
@@ -313,8 +299,7 @@
 		</listitem>
 	 	<listitem>
 	 	<para><guilabel>Group windows when space is limited</guilabel></para>
-	 	<para>Select this option to group windows of the same process under one <application>&applet;</application> button when
-	 	the space on the panel is restricted.</para>
+	 	<para>Select this option to group windows of the same process under one <application>&applet;</application> button when the space on the panel is restricted.</para>
 		</listitem>
 	 	<listitem>
 	 	<para><guilabel>Always group windows</guilabel></para>
@@ -323,24 +308,43 @@
 		</itemizedlist>
 	 </listitem>
 	 </varlistentry>
-	 <varlistentry><term><guilabel>Window List size</guilabel> </term>
+	 <varlistentry><term><guilabel>Restoring Minimized Windows</guilabel> </term>
 	 <listitem>
-	 <para>The size of the <application>&applet;</application> applet varies depending on the size of the panel in 
-	 which the applet resides. Use the following spin boxes to set limitations on the size of the applet:</para>
+	 <para>To define how <application>&applet;</application> behaves when you restore windows, select one of the following options: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Restore to current workspace</guilabel></para>
+	 	<para>Select this option to restore a window from the applet to the current workspace, even if the window did not previously reside in the current workspace.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Restore to native workspace</guilabel></para>
+	 	<para>Select this option to switch to the native workspace in which a window resides when you restore the window from the applet. </para>
+	 	</listitem>
+	 	</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect2>
+
+  <sect2 id="windowlist-prefs-size"> 
+	 <title>Size</title> 
+	 <variablelist>
+	 <varlistentry><term><guilabel>Window List Size</guilabel> </term>
+	 <listitem>
+	 <para>The size of the <application>&applet;</application> applet varies depending on the size of the panel in which the applet resides. Use the following spin boxes to set limitations on the size of the applet:</para>
 		<itemizedlist>
 	 	<listitem>
-	 	<para><guilabel>Minimum size</guilabel></para>
-	 	<para>Specify the minimum size of the applet. If the panel is smaller than the minimum size specified, the panel
-	 	adjusts in size to fit the applet.</para>
+	 	<para><guilabel>Minimum size ... pixels</guilabel></para>
+	 	<para>Use the spin box to specify the minimum size of the applet. If the panel is smaller than the minimum size specified, the panel adjusts in size to fit the applet.</para>
 		</listitem>
 	 	<listitem>
-	 	<para><guilabel>Maximum size</guilabel></para>
-	 	<para>Specify the maximum size of the applet.</para>
+	 	<para><guilabel>Maximum size ... pixels</guilabel></para>
+	 	<para>Use the spin box to specify the maximum size of the applet.</para>
 		</listitem>
 		</itemizedlist>
 	 </listitem>
 	 </varlistentry>
 	 </variablelist>
+  </sect2>
   </sect1>
 
 </article> 
