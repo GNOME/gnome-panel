@@ -1915,7 +1915,7 @@ add_action_button_to_panel (GtkWidget *widget,
 		insertion_pos = pd->insertion_pos;
 	
 	panel_action_button_load (
-		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL);
+		GPOINTER_TO_INT (data), panel, insertion_pos, FALSE, NULL, FALSE);
 }
 
 static void
@@ -2478,6 +2478,7 @@ static char *applet_sort_criteria [] = {
 	NULL
 	};
 
+#ifdef FIXME /* Disabled for the 2.2.0 release. See bug #103159 */
 typedef struct {
 	Bonobo_ServerInfoList *applet_list;
 	GtkMenuItem           *item;
@@ -2591,6 +2592,7 @@ instrument_add_submenu_for_reload (GtkMenuItem *item,
 		return NULL;
 	}
 
+
 	reload_data->timeout_id =
 		g_timeout_add (5 * 1000, (GSourceFunc) recheck_applet_list, reload_data);
 
@@ -2604,6 +2606,32 @@ instrument_add_submenu_for_reload (GtkMenuItem *item,
 
 	return reload_data->applet_list;
 }
+#else /* FIXME: Disabled for the 2.2.0 release. See bug #103159 */
+static Bonobo_ServerInfoList *
+instrument_add_submenu_for_reload (GtkMenuItem *item,
+				   GtkWidget   *menu)
+{
+	Bonobo_ServerInfoList *retval;
+	CORBA_Environment      env;
+
+	CORBA_exception_init (&env);
+
+	retval = bonobo_activation_query (applet_requirements,
+					  applet_sort_criteria,
+					  &env);
+	if (BONOBO_EX (&env)) {
+		g_warning (_("query returned exception %s\n"), BONOBO_EX_REPOID (&env));
+
+		CORBA_exception_free (&env);
+
+		return NULL;
+	}
+
+	CORBA_exception_free (&env);
+
+	return retval;
+}
+#endif /* FIXME: Disabled for the 2.2.0 release. See bug #103159 */
 
 static GtkWidget *
 create_applets_menu (GtkWidget             *menu,

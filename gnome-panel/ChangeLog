@@ -1,3 +1,34 @@
+2003-01-20  Mark McLoughlin  <mark@skynet.ie>
+
+	* menu.c: (instrument_add_submenu_for_reload): disable
+	reloading the applet menu for the 2.2.0 release. Its
+	causing bug #103159 which I think is the result of
+	bonobo-activation setting a CORBA string to NULL rather
+	than "" somewhere, which is out of spec.
+
+2003-01-20  Mark McLoughlin  <mark@skynet.ie>
+
+	Do not migrate old logout/lock buttons to the action
+	button configuration - this broke backwards compatibility
+	with gnome-panel 2.0.x. Fixes #103927.
+
+	* panel-action-button.[ch]:
+	(panel_action_button_load): add compatibility flag to 
+	indicate a logout/lock action button should be loaded
+	and saved as an old style logout/lock button.
+	(panel_action_button_load_from_gconf),
+	(panel_action_button_load_from_drag): upd.
+
+	* applet.c:
+	(applet_callback_callback): handle old style lock
+	and logout buttons.
+	(panel_applet_load_idle_handler): fix bug with compatible
+	loading.
+	(panel_applet_save_to_gconf): handle old style lock/logout
+	buttons.
+
+	* menu.c: (add_action_button_to_panel): upd.
+
 2003-01-14  Mark McLoughlin  <mark@skynet.ie>
 
 	* gnome-panelrc: add a comment to say this is
