@@ -379,11 +379,11 @@ create_launcher (const char *parameters, GnomeDesktopItem *ditem)
 	launcher->dedit = NULL;
 	launcher->prop_dialog = NULL;
 
-	icon = gnome_desktop_item_get_icon_path(ditem);
+	icon = gnome_desktop_item_get_string(ditem, GNOME_DESKTOP_ITEM_ICON);
 	if (icon) {
 		gchar *name;
 
-		name = gnome_desktop_item_get_name(ditem, NULL);
+		name = gnome_desktop_item_get_string(ditem, GNOME_DESKTOP_ITEM_NAME);
 		launcher->button = button_widget_new(icon,
 						     -1,
 						     LAUNCHER_TILE,
