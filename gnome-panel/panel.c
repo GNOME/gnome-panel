@@ -27,8 +27,6 @@ static GtkWidget *applet_menu_remove_item;
 static GtkWidget *applet_menu_prop_separator;
 static GtkWidget *applet_menu_prop_item;
 
-static GtkWidget *panel_menu;
-
 /*FIXME: get rid of this, menu will be part of panel not an applet*/
 static menu_count=0; /*how many "menu" applets we have ....*/
 			/*FIXME: this should only count "main" menus!*/
@@ -43,7 +41,7 @@ extern GtkTooltips *panel_tooltips;
 
 
 /* some prototypes */
-static void properties(void);
+static void properties(PanelWidget *panel);
 
 
 static AppletCmdFunc
@@ -89,6 +87,7 @@ call_applet(GtkWidget *applet, AppletCommand *cmd)
 	return (*cmd_func) (cmd);
 }
 
+/*FIXME this should be somehow done througj signals and panel-widget*/
 static void
 applet_orientation_notify(GtkWidget *widget, gpointer data)
 {
@@ -475,7 +474,7 @@ show_applet_menu(GtkWidget *applet)
 static void
 panel_properties_callback(GtkWidget *widget, gpointer data)
 {
-	properties();
+	properties(PANEL_WIDGET(data));
 }
 
 static void
@@ -487,28 +486,30 @@ panel_log_out_callback(GtkWidget *widget, gpointer data)
 static void
 add_main_menu(GtkWidget *widget, gpointer data)
 {
+	PanelWidget *panel = data;
 	/*FIXME: 1) doesn't work at all, 2)should add to current panel*/
 	create_applet("Menu",".:1",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
-static void
-create_panel_menu(void)
+GtkWidget *
+create_panel_root_menu(PanelWidget *panel)
 {
 	GtkWidget *menuitem;
+	GtkWidget *panel_menu;
 
 	panel_menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new_with_label(_("Panel properties..."));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) panel_properties_callback,
-			   NULL);
+			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
 	menuitem = gtk_menu_item_new_with_label(_("Add main menu applet"));
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) add_main_menu,
-			   NULL);
+			   panel);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
 
@@ -522,21 +523,10 @@ create_panel_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(panel_menu), menuitem);
 	gtk_widget_show(menuitem);
+
+	return panel_menu;
 }
 
-
-static int
-panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
-{
-	/* FIXME: add some interface to a main menu and display main menu
-	   on button1 press */
-	if(event->button==3 || event->button==1) {
-		gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL, NULL,
-			NULL, event->button, time(NULL));
-		return TRUE;
-	}
-	return FALSE;
-}
 
 static void
 get_applet_type(gpointer key, gpointer value, gpointer user_data)
@@ -589,7 +579,7 @@ set_tooltip(GtkWidget *applet, char *tooltip)
 
 
 static void
-register_toy(GtkWidget *applet, char *id, int pos, long flags)
+register_toy(GtkWidget *applet, char *id, int pos, int panel, long flags)
 {
 	GtkWidget     *eventbox;
 	
@@ -607,9 +597,9 @@ register_toy(GtkWidget *applet, char *id, int pos, long flags)
 	gtk_object_set_data(GTK_OBJECT(eventbox), APPLET_FLAGS, (gpointer) flags);
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
-		panel_widget_add(the_panel, eventbox, 0);
-	else
-		panel_widget_add(the_panel, eventbox, pos);
+		pos = 0;
+	panel_widget_add(PANEL_WIDGET(g_list_nth(panels,panel-1)->data),
+			 eventbox, pos);
 
 	gtk_widget_show(eventbox);
 	gtk_widget_show(applet);
@@ -630,9 +620,9 @@ create_drawer(char *name, char *iconopen, char* iconclosed, int step_size,
 }
 
 static void
-properties(void)
+properties(PanelWidget *panel)
 {
-	panel_config(the_panel);
+	panel_config(panel);
 }
 
 gpointer
@@ -659,9 +649,12 @@ panel_command(PanelCommand *cmd)
 			break;
 			
 		case PANEL_CMD_REGISTER_TOY:
+			/*FIXME: fix it so that applets pass panel*/
+			cmd->params.register_toy.panel = 1;
 			register_toy(cmd->params.register_toy.applet,
 				     cmd->params.register_toy.id,
 				     cmd->params.register_toy.pos,
+				     cmd->params.register_toy.panel,
 				     cmd->params.register_toy.flags);
 			break;
 
@@ -680,7 +673,9 @@ panel_command(PanelCommand *cmd)
 			break;
 
 		case PANEL_CMD_PROPERTIES:
-			properties();
+			/*FIXME: this gotta be fixed, but we'll do it after
+			  move dl -> CORBA*/
+			properties(the_panel);
 			break;
 
 		default:

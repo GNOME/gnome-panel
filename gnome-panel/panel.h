@@ -30,6 +30,8 @@ int panel_session_save (gpointer client_data,
 			GnomeInteractStyle interact_style,
 			int is_fast);
 
+GtkWidget * create_panel_root_menu(PanelWidget *panel);
+
 END_GNOME_DECLS
 
 #endif

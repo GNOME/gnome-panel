@@ -159,6 +159,19 @@ panel_realize(GtkWidget *widget, gpointer data)
 	change_window_cursor(widget->window, GDK_ARROW);
 }
 
+static int
+panel_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+	/* FIXME: display main menu instead! */
+	if(event->button==3 || event->button==1) {
+		gtk_menu_popup(GTK_MENU(data), NULL, NULL, NULL,
+			NULL, event->button, time(NULL));
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
 static void
 init_user_panels(void)
 {
@@ -167,6 +180,7 @@ init_user_panels(void)
 	int   length,x,y;
 	PanelConfig config;
 	GtkWidget *panel;
+	GtkWidget *panel_menu;
 
 	count=gnome_config_get_int("/panel/Config/panel_count=0");
 	if(count<=0) count++; /*this will load up a single panel with
@@ -216,18 +230,16 @@ init_user_panels(void)
 					 config.minimized_size,
 					 config.minimize_delay);
 
-		/*FIXME: move panel_menu into this file or move this
-		  function*/
-		/*gtk_signal_connect(GTK_OBJECT(panel),
+		panel_menu = create_panel_root_menu(panel);
+		/*FIXME: small memory leak since there is no way to
+		  remember to kill the menu*/
+		gtk_signal_connect(GTK_OBJECT(panel),
 				   "button_press_event",
 				   GTK_SIGNAL_FUNC(panel_button_press),
-				   NULL);*/
+				   panel_menu);
 		gtk_signal_connect_after(GTK_OBJECT(panel), "realize",
 					 GTK_SIGNAL_FUNC(panel_realize),
 					 NULL);
-
-		/*FIXME: panel menu*/
-		/*create_panel_menu();*/
 
 		panels = g_list_append(panels,panel);
 
