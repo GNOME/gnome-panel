@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-24 20:25+0100\n"
-"PO-Revision-Date: 2004-12-25 15:49+0100\n"
+"POT-Creation-Date: 2005-01-02 12:14+0100\n"
+"PO-Revision-Date: 2005-01-02 15:00+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -188,10 +188,10 @@ msgstr "Vlastní formát"
 
 #: applets/clock/clock.c:2375 applets/clock/clock.c:2552
 #: applets/fish/fish.c:137 applets/notification_area/main.c:81
-#: applets/wncklet/showdesktop.c:438 applets/wncklet/window-list.c:114
-#: applets/wncklet/window-list.c:780 applets/wncklet/window-menu.c:88
-#: applets/wncklet/workspace-switcher.c:202
-#: applets/wncklet/workspace-switcher.c:508
+#: applets/wncklet/showdesktop.c:437 applets/wncklet/window-list.c:114
+#: applets/wncklet/window-list.c:779 applets/wncklet/window-menu.c:88
+#: applets/wncklet/workspace-switcher.c:263
+#: applets/wncklet/workspace-switcher.c:573
 #, c-format
 msgid "There was an error displaying help: %s"
 msgstr "Chyba při zobrazování nápovědy: %s"
@@ -238,9 +238,9 @@ msgstr "Používat _UTC"
 
 #. Translator credits
 #: applets/clock/clock.c:2584 applets/fish/fish.c:480
-#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:468
-#: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
-#: applets/wncklet/workspace-switcher.c:539
+#: applets/notification_area/main.c:115 applets/wncklet/showdesktop.c:467
+#: applets/wncklet/window-list.c:808 applets/wncklet/window-menu.c:118
+#: applets/wncklet/workspace-switcher.c:604
 #: gnome-panel/panel-context-menu.c:128
 msgid "translator-credits"
 msgstr ""
@@ -612,6 +612,7 @@ msgid "Area where notification icons appear"
 msgstr "Oblast, kde se objevují oznamovací ikony"
 
 #: applets/notification_area/GNOME_NotificationAreaApplet.server.in.in.h:2
+#: applets/notification_area/main.c:128
 msgid "Notification Area"
 msgstr "Oznamovací oblast"
 
@@ -627,7 +628,7 @@ msgstr "Orientace"
 msgid "The orientation of the tray."
 msgstr "Orientace oznamovací oblasti."
 
-#: applets/notification_area/main.c:128 applets/notification_area/main.c:341
+#: applets/notification_area/main.c:341
 msgid "Panel Notification Area"
 msgstr "Oznamovací oblast na panelu"
 
@@ -652,7 +653,7 @@ msgid "Switch between workspaces"
 msgstr "Přepínat mezi pracovními plochami"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:6
-#: applets/wncklet/window-list.c:820
+#: applets/wncklet/window-list.c:819
 msgid "Window List"
 msgstr "Seznam oken"
 
@@ -661,13 +662,14 @@ msgid "Window Navigation Applet Factory"
 msgstr "Generátor appletu navigace mezi okny"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:8
-#: applets/wncklet/window-menu.c:886 applets/wncklet/window-menu.c:888
+#: applets/wncklet/window-menu.c:129 applets/wncklet/window-menu.c:886
+#: applets/wncklet/window-menu.c:888
 msgid "Window Selector"
 msgstr "Výběr oken"
 
 #: applets/wncklet/GNOME_Wncklet_Factory.server.in.in.h:9
-#: applets/wncklet/workspace-switcher.c:550
-#: applets/wncklet/workspace-switcher.c:957
+#: applets/wncklet/workspace-switcher.c:615
+#: applets/wncklet/workspace-switcher.c:1022
 msgid "Workspace Switcher"
 msgstr "Přepínač pracovních ploch"
 
@@ -688,16 +690,16 @@ msgstr "Nemohu načíst %s: %s\n"
 msgid "File not found"
 msgstr "Soubor nenalezen"
 
-#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:479
+#: applets/wncklet/showdesktop.c:358 applets/wncklet/showdesktop.c:478
 msgid "Show Desktop Button"
 msgstr "Tlačítko Zobrazit pracovní plochu"
 
-#: applets/wncklet/showdesktop.c:482
+#: applets/wncklet/showdesktop.c:481
 msgid "This button lets you hide all windows and show the desktop."
 msgstr ""
 "Toto tlačítko vám umožňuje skrýt všechna okna a zobrazit pracovní plochu."
 
-#: applets/wncklet/showdesktop.c:523
+#: applets/wncklet/showdesktop.c:522
 msgid ""
 "Your window manager does not support the show desktop button, or you are not "
 "running a window manager."
@@ -705,7 +707,7 @@ msgstr ""
 "Váš správce oken nepodporuje tlačítko Zobrazit pracovní plochu nebo správce "
 "oken neběží."
 
-#: applets/wncklet/window-list.c:823
+#: applets/wncklet/window-list.c:822
 msgid "The Window List shows a list of all windows and lets you browse them."
 msgstr ""
 "Seznam oken zobrazuje seznam všech oken a umožňuje vám mezi nimi přepínat."
@@ -775,7 +777,7 @@ msgid "_Never group windows"
 msgstr "_Nikdy neseskupovat okna"
 
 #: applets/wncklet/window-list.glade.h:18
-#: gnome-panel/panel-properties-dialog.glade.h:27
+#: gnome-panel/panel-properties-dialog.glade.h:28
 msgid "pixels"
 msgstr "pixelů"
 
@@ -839,10 +841,6 @@ msgstr ""
 msgid "When to group windows"
 msgstr "Kdy seskupovat okna"
 
-#: applets/wncklet/window-menu.c:129
-msgid "Workspace Selector"
-msgstr "Přepínač pracovních ploch"
-
 #: applets/wncklet/window-menu.c:134
 msgid ""
 "The Window Selector shows a list of all windows and lets you browse them."
@@ -862,23 +860,23 @@ msgid "Tool to switch between windows"
 msgstr "Nástroj pro přepínání mezi okny"
 
 #: applets/wncklet/workspace-switcher.c:146
-#: applets/wncklet/workspace-switcher.c:861
+#: applets/wncklet/workspace-switcher.c:926
 #: applets/wncklet/workspace-switcher.glade.h:11
 msgid "rows"
 msgstr "řádků"
 
 #: applets/wncklet/workspace-switcher.c:146
-#: applets/wncklet/workspace-switcher.c:861
+#: applets/wncklet/workspace-switcher.c:926
 msgid "columns"
 msgstr "sloupců"
 
-#: applets/wncklet/workspace-switcher.c:390
+#: applets/wncklet/workspace-switcher.c:451
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Chyba při načítání hodnoty num_rows pro Přepínač pracovních ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:401
+#: applets/wncklet/workspace-switcher.c:462
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -886,14 +884,14 @@ msgstr ""
 "Chyba při načítání hodnoty display_workspace_names pro Přepínač pracovních "
 "ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:416
+#: applets/wncklet/workspace-switcher.c:477
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Chyba při načítání hodnoty display_all_workspaces pro Přepínač pracovních "
 "ploch: %s\n"
 
-#: applets/wncklet/workspace-switcher.c:553
+#: applets/wncklet/workspace-switcher.c:618
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -979,29 +977,27 @@ msgstr ""
 msgid "GNOME Panel Shell"
 msgstr "GNOME Panel Shell"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:99
-#: gnome-panel/applet.c:480 gnome-panel/panel-applet-frame.c:130
-msgid "_Lock"
-msgstr "Za_mknout"
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1
+msgid "_Lock To Panel"
+msgstr "_Zamknout do panelu"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:488
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:487
 msgid "_Move"
 msgstr "_Přesunout"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:472
+#: gnome-panel/GNOME_Panel_Popup.xml.h:3 gnome-panel/applet.c:471
 msgid "_Remove From Panel"
 msgstr "_Odstranit z panelu"
 
-#: gnome-panel/applet.c:99 gnome-panel/applet.c:480
-#: gnome-panel/panel-applet-frame.c:130
-msgid "Un_lock"
-msgstr "Ode_mknout"
-
-#: gnome-panel/applet.c:389
+#: gnome-panel/applet.c:388
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:1145
+#: gnome-panel/applet.c:478
+msgid "Lock To Panel"
+msgstr "Zamknout do panelu"
+
+#: gnome-panel/applet.c:1144
 msgid "Can't find an empty spot"
 msgstr "Nemohu najít volné místo"
 
@@ -1282,48 +1278,48 @@ msgstr "Zvolte _položku, kterou přidat do %s:"
 msgid "Select an _item to add to the panel:"
 msgstr "Zvolte _položku, kterou přidat na panel:"
 
-#: gnome-panel/panel-applet-frame.c:785
+#: gnome-panel/panel-applet-frame.c:806
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
 msgstr "Výjimka z popup_menu '%s'\n"
 
-#: gnome-panel/panel-applet-frame.c:904
+#: gnome-panel/panel-applet-frame.c:925
 #, c-format
 msgid "\"%s\" has quit unexpectedly"
 msgstr "\"%s\" neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:906
+#: gnome-panel/panel-applet-frame.c:927
 msgid "Panel object has quit unexpectedly"
 msgstr "Objekt panelu neočekávaně skončil"
 
-#: gnome-panel/panel-applet-frame.c:913
+#: gnome-panel/panel-applet-frame.c:934
 msgid ""
 "If you reload a panel object, it will automatically be added back to the "
 "panel."
 msgstr "Pokud obnovíte objekt panelu, bude automaticky přidán zpět na panel."
 
-#: gnome-panel/panel-applet-frame.c:919
+#: gnome-panel/panel-applet-frame.c:940
 msgid "_Don't Reload"
 msgstr "_Neobnovovat"
 
-#: gnome-panel/panel-applet-frame.c:920
+#: gnome-panel/panel-applet-frame.c:941
 msgid "_Reload"
 msgstr "_Obnovit"
 
-#: gnome-panel/panel-applet-frame.c:946
+#: gnome-panel/panel-applet-frame.c:967
 msgid "D_on't Delete"
 msgstr "_Neodstraňovat"
 
-#: gnome-panel/panel-applet-frame.c:994
+#: gnome-panel/panel-applet-frame.c:1015
 #, c-format
 msgid "The panel encountered a problem while loading \"%s\"."
 msgstr "V panelu došlo k problému při načítání \"%s\"."
 
-#: gnome-panel/panel-applet-frame.c:1011
+#: gnome-panel/panel-applet-frame.c:1032
 msgid "Do you want to delete the applet from your configuration?"
 msgstr "Chcete odstranit tento aplet ze svého nastavení?"
 
-#: gnome-panel/panel-applet-frame.c:1108
+#: gnome-panel/panel-applet-frame.c:1129
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Z ovládacího prvku nelze získat rozhraní AppletShell\n"
 
@@ -1845,6 +1841,30 @@ msgstr ""
 msgid "Error reading GConf boolean value '%s': %s"
 msgstr "Chyba při čtení pravdivostní hodnoty GConf '%s': %s"
 
+#: gnome-panel/panel-properties-dialog.c:120
+#: libpanel-applet/panel-test-applets.c:52
+msgid "Top"
+msgstr "Nahoře"
+
+#: gnome-panel/panel-properties-dialog.c:121
+#: libpanel-applet/panel-test-applets.c:53
+msgid "Bottom"
+msgstr "Dole"
+
+#: gnome-panel/panel-properties-dialog.c:122
+#: libpanel-applet/panel-test-applets.c:54
+msgid "Left"
+msgstr "Vlevo"
+
+#: gnome-panel/panel-properties-dialog.c:123
+#: libpanel-applet/panel-test-applets.c:55
+msgid "Right"
+msgstr "Vpravo"
+
+#: gnome-panel/panel-properties-dialog.c:406
+msgid "Images"
+msgstr "Obrázky"
+
 #: gnome-panel/panel-properties-dialog.glade.h:3
 msgid "<small>Opaque</small>"
 msgstr "<small>Neprůhledný</small>"
@@ -1898,48 +1918,52 @@ msgid "S_tyle:"
 msgstr "_Styl:"
 
 #: gnome-panel/panel-properties-dialog.glade.h:16
+msgid "Select background"
+msgstr "Zvolit pozadí"
+
+#: gnome-panel/panel-properties-dialog.glade.h:17
 msgid "Show hide _buttons"
 msgstr "Zobrazovat ukrývací _tlačítka"
 
-#: gnome-panel/panel-properties-dialog.glade.h:17
+#: gnome-panel/panel-properties-dialog.glade.h:18
 msgid "Solid c_olor"
 msgstr "_Jednolitá barva"
 
-#: gnome-panel/panel-properties-dialog.glade.h:18
+#: gnome-panel/panel-properties-dialog.glade.h:19
 msgid "Some of these properties are locked down"
 msgstr "Některé z těchto nastavení jsou zamčené"
 
-#: gnome-panel/panel-properties-dialog.glade.h:19
+#: gnome-panel/panel-properties-dialog.glade.h:20
 msgid "St_retch"
 msgstr "_Roztažený"
 
-#: gnome-panel/panel-properties-dialog.glade.h:20
+#: gnome-panel/panel-properties-dialog.glade.h:21
 msgid "_Autohide"
 msgstr "_Automaticky ukrývat"
 
-#: gnome-panel/panel-properties-dialog.glade.h:21
+#: gnome-panel/panel-properties-dialog.glade.h:22
 msgid "_Icon:"
 msgstr "_Ikona:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:22
+#: gnome-panel/panel-properties-dialog.glade.h:23
 msgid "_None (use system theme)"
 msgstr "_Žádné (používat téma systému)"
 
-#: gnome-panel/panel-properties-dialog.glade.h:23
+#: gnome-panel/panel-properties-dialog.glade.h:24
 #: libpanel-applet/panel-test-applets.glade.h:4
 msgid "_Orientation:"
 msgstr "_Orientace:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:24
+#: gnome-panel/panel-properties-dialog.glade.h:25
 msgid "_Scale"
 msgstr "Přizpů_sobený"
 
-#: gnome-panel/panel-properties-dialog.glade.h:25
+#: gnome-panel/panel-properties-dialog.glade.h:26
 #: libpanel-applet/panel-test-applets.glade.h:6
 msgid "_Size:"
 msgstr "_Velikost:"
 
-#: gnome-panel/panel-properties-dialog.glade.h:26
+#: gnome-panel/panel-properties-dialog.glade.h:27
 msgid "_Tile"
 msgstr "Dlažd_ice"
 
@@ -2629,22 +2653,6 @@ msgid ""
 "Specify the initial orientation of the applet (top, bottom, left or right)"
 msgstr "Určení počáteční orientace apletu (top, bottom, left nebo right)"
 
-#: libpanel-applet/panel-test-applets.c:52
-msgid "Top"
-msgstr "Nahoře"
-
-#: libpanel-applet/panel-test-applets.c:53
-msgid "Bottom"
-msgstr "Dole"
-
-#: libpanel-applet/panel-test-applets.c:54
-msgid "Left"
-msgstr "Vlevo"
-
-#: libpanel-applet/panel-test-applets.c:55
-msgid "Right"
-msgstr "Vpravo"
-
 #: libpanel-applet/panel-test-applets.c:60
 msgid "XX Small"
 msgstr "Mrňavý"
@@ -2684,6 +2692,15 @@ msgstr "_Aplet:"
 #: libpanel-applet/panel-test-applets.glade.h:5
 msgid "_Prefs Dir:"
 msgstr "_Adresář nastavení:"
+
+#~ msgid "Workspace Selector"
+#~ msgstr "Přepínač pracovních ploch"
+
+#~ msgid "_Lock"
+#~ msgstr "Za_mknout"
+
+#~ msgid "Un_lock"
+#~ msgstr "Ode_mknout"
 
 #~ msgid "Workspace List"
 #~ msgstr "Seznam pracovních ploch"
