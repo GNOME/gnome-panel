@@ -365,26 +365,13 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
 
 	child = NULL;
 	parent = root = None;
-	while (XQueryTree (xdisplay,
-			   xwin,
-			   &root, &parent, &child,
-			   (guint *) &num_children)) {
-
+	do {
 		Atom	type_return;
 		Atom	window_type;
 		int	format_return;
 		gulong	number_return, bytes_after_return;
 		guchar *data_return;
 
-		if (child && num_children > 0)
-			XFree (child);
-
-		if (parent == None || parent == root)
-			return None;
-
-		xwin = parent;
-
-		data_return = NULL;
 		XGetWindowProperty (xdisplay,
 				    xwin,
 				    _net_wm_window_type,
@@ -394,16 +381,30 @@ panel_applet_find_toplevel_dock_window (PanelApplet *applet,
 				    &number_return,
 				    &bytes_after_return,
 				    &data_return);
-		if (type_return != XA_ATOM)
-			continue;
 
-		window_type = *(Atom *) data_return;
+		if (type_return == XA_ATOM) {
+			window_type = *(Atom *) data_return;
 
-		XFree (data_return);
+			XFree (data_return);
+			data_return = NULL;
 
-		if (window_type == _net_wm_window_type_dock)
-			return xwin;
-	}
+			if (window_type == _net_wm_window_type_dock)
+				return xwin;
+		}
+
+		if (!XQueryTree (xdisplay,
+			   xwin,
+			   &root, &parent, &child,
+			   (guint *) &num_children)) {
+			   return None;
+		}
+
+		if (child && num_children > 0)
+			XFree (child);
+
+		xwin = parent;
+
+	} while (xwin != None && xwin != root);
 
 	return None;
 }

@@ -1,3 +1,11 @@
+2005-01-09  Elijah Newren  <newren@gmail.com>
+
+	Prevent panel_applet_request_focus from failing for in-process
+	applets.  (Patch approved by Mark)
+
+	* panel-applet.c: (panel_applet_find_toplevel_dock_window): start
+	with the toplevel instead of with the toplevel's parent
+
 2005-01-07  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c:
