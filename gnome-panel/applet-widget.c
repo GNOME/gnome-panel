@@ -90,6 +90,14 @@ static CORBA_char *
 server_applet__get_goad_id(CustomAppletServant *servant,
 			   CORBA_Environment *ev);
 
+static void
+server_applet_freeze_changes(CustomAppletServant *servant,
+			     CORBA_Environment *ev);
+
+static void
+server_applet_thaw_changes(CustomAppletServant *servant,
+			   CORBA_Environment *ev);
+
 static POA_GNOME_Applet__epv applet_epv = {
   NULL,
   (gpointer)&server_applet_change_orient,
@@ -99,7 +107,9 @@ static POA_GNOME_Applet__epv applet_epv = {
   (gpointer)&server_applet_back_change,
   (gpointer)&server_applet_set_tooltips_state,
   (gpointer)&server_applet_change_position,
-  (gpointer)&server_applet__get_goad_id
+  (gpointer)&server_applet__get_goad_id,
+  (gpointer)&server_applet_freeze_changes,
+  (gpointer)&server_applet_thaw_changes
 };
 
 static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
@@ -109,10 +119,6 @@ static POA_GNOME_Applet__vepv vepv = { &base_epv, &applet_epv };
  *****************************************************************************/
 static void applet_widget_class_init	(AppletWidgetClass *klass);
 static void wapplet_widget_init		(AppletWidget      *applet_widget);
-static void change_orient		(AppletWidget *applet,
-					 GNOME_Panel_OrientType orient);
-static void change_size			(AppletWidget *applet,
-		      			 GNOME_Panel_SizeType size);
 
 
 typedef int (*SaveSignal) (GtkObject * object,
@@ -306,8 +312,8 @@ applet_widget_class_init (AppletWidgetClass *class)
 	gtk_object_class_add_signals(object_class,applet_widget_signals,
 				     LAST_SIGNAL);
 
-	class->change_orient = change_orient;
-	class->change_size = change_size;
+	class->change_orient = NULL;
+	class->change_size = NULL;
 	class->save_session = NULL;
 	class->back_change = NULL;
 	class->tooltip_state = NULL;
@@ -384,24 +390,6 @@ applet_widget_destroy(GtkWidget *w, gpointer data)
 
 	if(die_on_last && applet_count == 0)
 		applet_widget_gtk_main_quit();
-}
-
-static void
-change_orient(AppletWidget *applet, GNOME_Panel_OrientType orient)
-{
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
-
-	applet->orient = orient;
-}
-
-static void
-change_size(AppletWidget *applet, GNOME_Panel_SizeType size)
-{
-	g_return_if_fail(applet != NULL);
-	g_return_if_fail(IS_APPLET_WIDGET(applet));
-
-	applet->size = size;
 }
 
 void
@@ -998,11 +986,12 @@ server_applet_change_orient(CustomAppletServant *servant,
 			    GNOME_Panel_OrientType orient,
 			    CORBA_Environment *ev)
 {
-	AppletWidget *applet;
-
-	applet = servant->appwidget;
-	if(applet) {
-		gtk_signal_emit(GTK_OBJECT(applet),
+	servant->appwidget->orient = orient;
+	if(servant->appwidget->frozen_level>0) {
+		servant->appwidget->frozen_got_orient = TRUE;
+		servant->appwidget->frozen_size = (GNOME_Panel_OrientType)orient;
+	} else {
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
 				(GNOME_Panel_OrientType)orient);
 	}
@@ -1013,11 +1002,12 @@ server_applet_change_size(CustomAppletServant *servant,
 			  GNOME_Panel_SizeType size,
 			  CORBA_Environment *ev)
 {
-	AppletWidget *applet;
-
-	applet = servant->appwidget;
-	if(applet) {
-		gtk_signal_emit(GTK_OBJECT(applet),
+	servant->appwidget->size = size;
+	if(servant->appwidget->frozen_level>0) {
+		servant->appwidget->frozen_got_size = TRUE;
+		servant->appwidget->frozen_size = (GNOME_Panel_SizeType)size;
+	} else {
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
 				applet_widget_signals[CHANGE_SIZE_SIGNAL],
 				(GNOME_Panel_SizeType)size);
 	}
@@ -1074,7 +1064,7 @@ server_applet_back_change(CustomAppletServant *servant,
 			  GNOME_Panel_BackInfoType *backing,
 			  CORBA_Environment *ev)
 {
-	GdkColor color, *cptr = NULL;
+	GdkColor color={0,0,0,0}, *cptr = NULL;
 	char *pptr = NULL;
 
 	switch(backing->_d) {
@@ -1090,11 +1080,22 @@ server_applet_back_change(CustomAppletServant *servant,
 	default:
 	}
 
-	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-			applet_widget_signals[BACK_CHANGE_SIGNAL],
-			(GNOME_Panel_BackType)backing->_d,
-			pptr,
-			cptr);
+	if(servant->appwidget->frozen_level>0) {
+		servant->appwidget->frozen_got_back = TRUE;
+		servant->appwidget->frozen_back_type = (GNOME_Panel_BackType)backing->_d;
+		g_free(servant->appwidget->frozen_back_pixmap);
+		if(servant->appwidget->frozen_back_pixmap)
+			servant->appwidget->frozen_back_pixmap = g_strdup(pptr);
+		else
+			servant->appwidget->frozen_back_pixmap = NULL;
+		servant->appwidget->frozen_back_color = color;
+	} else {
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[BACK_CHANGE_SIGNAL],
+				(GNOME_Panel_BackType)backing->_d,
+				pptr,
+				cptr);
+	}
 }
 
 static void
@@ -1121,10 +1122,16 @@ server_applet_change_position(CustomAppletServant *servant,
 			      CORBA_short y,
 			      CORBA_Environment *ev)
 {
-	gtk_signal_emit(GTK_OBJECT(servant->appwidget),
-			applet_widget_signals[CHANGE_POSITION_SIGNAL],
-			(int)x,
-			(int)y);
+	if(servant->appwidget->frozen_level>0) {
+		servant->appwidget->frozen_got_position = TRUE;
+		servant->appwidget->frozen_position_x = x;
+		servant->appwidget->frozen_position_y = y;
+	} else {
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[CHANGE_POSITION_SIGNAL],
+				(int)x,
+				(int)y);
+	}
 }
 
 static CORBA_char *
@@ -1134,6 +1141,52 @@ server_applet__get_goad_id(CustomAppletServant *servant,
 	return CORBA_string_dup(servant->goad_id);
 }
 
+static void
+server_applet_freeze_changes(CustomAppletServant *servant,
+			     CORBA_Environment *ev)
+{
+	servant->appwidget->frozen_level++;
+}
+
+static void
+server_applet_thaw_changes(CustomAppletServant *servant,
+			   CORBA_Environment *ev)
+{
+	if(servant->appwidget->frozen_level>0)
+		servant->appwidget->frozen_level--;
+	
+	if(servant->appwidget->frozen_level>0)
+		return;
+
+	if(servant->appwidget->frozen_got_orient) {
+		servant->appwidget->frozen_got_orient = FALSE;
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[CHANGE_ORIENT_SIGNAL],
+				servant->appwidget->frozen_orient);
+	}
+	if(servant->appwidget->frozen_got_size) {
+		servant->appwidget->frozen_got_size = FALSE;
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[CHANGE_SIZE_SIGNAL],
+				servant->appwidget->frozen_size);
+	}
+	if(servant->appwidget->frozen_got_back) {
+		servant->appwidget->frozen_got_back = FALSE;
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[BACK_CHANGE_SIGNAL],
+				servant->appwidget->frozen_back_type,
+				servant->appwidget->frozen_back_pixmap,
+				&servant->appwidget->frozen_back_color);
+		g_free(servant->appwidget->frozen_back_pixmap);
+	}
+	if(servant->appwidget->frozen_got_position) {
+		servant->appwidget->frozen_got_position = FALSE;
+		gtk_signal_emit(GTK_OBJECT(servant->appwidget),
+				applet_widget_signals[CHANGE_POSITION_SIGNAL],
+				servant->appwidget->frozen_position_x,
+				servant->appwidget->frozen_position_y);
+	}
+}
 
 /*XXX: this is not used!
 static void

@@ -108,6 +108,70 @@ panel_realize(GtkWidget *widget, gpointer data)
 	gtk_widget_queue_resize(GTK_WIDGET(widget));
 }
 
+static void
+freeze_changes(AppletInfo *info)
+{
+	if(info->type == APPLET_EXTERN) {
+		Extern *ext = info->data;
+		g_assert(ext);
+		/*ingore this until we get an ior*/
+		if(ext->applet) {
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			GNOME_Applet_freeze_changes(ext->applet, &ev);
+			if(ev._major)
+				panel_clean_applet(ext->info);
+			CORBA_exception_free(&ev);
+		}
+	}
+}
+
+static void
+thaw_changes(AppletInfo *info)
+{
+	if(info->type == APPLET_EXTERN) {
+		Extern *ext = info->data;
+		g_assert(ext);
+		/*ingore this until we get an ior*/
+		if(ext->applet) {
+			CORBA_Environment ev;
+			CORBA_exception_init(&ev);
+			GNOME_Applet_thaw_changes(ext->applet, &ev);
+			if(ev._major)
+				panel_clean_applet(ext->info);
+			CORBA_exception_free(&ev);
+		}
+	}
+}
+
+static void
+freeze_changes_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	freeze_changes(info);
+}
+
+void
+panel_freeze_changes(PanelWidget *panel)
+{
+	gtk_container_foreach(GTK_CONTAINER(panel),
+			      freeze_changes_foreach, NULL);
+}
+
+static void
+thaw_changes_foreach(GtkWidget *w, gpointer data)
+{
+	AppletInfo *info = gtk_object_get_data(GTK_OBJECT(w), "applet_info");
+	thaw_changes(info);
+}
+
+void
+panel_thaw_changes(PanelWidget *panel)
+{
+	gtk_container_foreach(GTK_CONTAINER(panel),
+			      thaw_changes_foreach, NULL);
+}
+
 PanelOrientType
 get_applet_orient (PanelWidget *panel)
 {
@@ -432,9 +496,11 @@ panel_applet_added(GtkWidget *widget, GtkWidget *applet, gpointer data)
 		basep_widget_queue_autohide(BASEP_WIDGET(panelw));
 	}
 
+	freeze_changes(info);
 	orientation_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
 	size_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
 	back_change(info,PANEL_WIDGET(BASEP_WIDGET(panelw)->panel));
+	thaw_changes(info);
 
 	/*we will need to save this applet's config now*/
 	applets_to_sync = TRUE;

@@ -27,6 +27,10 @@ void basep_pos_connect_signals (BasePWidget *basep);
 /*send state change to all the panels*/
 void send_state_change(void);
 
+void panel_freeze_changes(PanelWidget *panel);
+
+void panel_thaw_changes(PanelWidget *panel);
+
 #define get_panel_parent(appletw) \
 	 (PANEL_WIDGET(GTK_WIDGET(appletw)->parent)->panel_parent)
 

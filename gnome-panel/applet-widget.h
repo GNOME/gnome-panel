@@ -50,13 +50,35 @@ struct _AppletWidget
 {
 	GtkPlug			window;
 	
+	/* this is the public data */
+	
 	char			*privcfgpath;
 	char			*globcfgpath;
 	
 	PanelOrientType		orient;			
 	PanelSizeType		size;			
+	
+	/* below this is private data */
 
         gpointer                corbadat; /* CORBA stuff */
+	
+	/*change freezing*/
+	int			frozen_level;
+
+	gboolean		frozen_got_orient;
+	PanelOrientType		frozen_orient;			
+
+	gboolean		frozen_got_size;
+	PanelSizeType		frozen_size;			
+	
+	gboolean		frozen_got_back;
+	PanelBackType		frozen_back_type;			
+	char 			*frozen_back_pixmap;			
+	GdkColor		frozen_back_color;			
+	
+	gboolean		frozen_got_position;
+	int			frozen_position_x;
+	int			frozen_position_y;
 };
 
 struct _AppletWidgetClass
@@ -93,7 +115,8 @@ struct _AppletWidgetClass
 			      char *globcfgpath);
 	/*when the position changes and we selected to get this signal,
 	  it is sent so that you can move some external window along with
-	  the applet*/
+	  the applet, it is not normally sent, so you need to enable it
+	  with the applet_widget_send_position*/
 	void (* change_position) (AppletWidget *applet,
 				  int x, int y);
 };

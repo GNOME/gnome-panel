@@ -5,8 +5,9 @@
 
 #include "panel-include.h"
 
-#define REGISTER_CHANGES(ppc) 	if ((ppc)->register_changes) \
-                                gnome_property_box_changed (GNOME_PROPERTY_BOX ((ppc)->config_window))
+#define REGISTER_CHANGES(ppc) \
+	if ((ppc)->register_changes) \
+		gnome_property_box_changed (GNOME_PROPERTY_BOX ((ppc)->config_window))
 
 static GList *ppconfigs=NULL;
 
@@ -210,6 +211,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 	if(page != -1)
 		return;
 
+	panel_freeze_changes(BASEP_WIDGET(ppc->panel)->panel);
 	if(IS_EDGE_WIDGET(ppc->panel))
 		border_widget_change_params(BORDER_WIDGET(ppc->panel),
 					    ppc->edge,
@@ -264,6 +266,7 @@ config_apply (GtkWidget *widget, int page, gpointer data)
 					    ppc->hidebuttons);
 	}
 #endif
+	panel_thaw_changes(BASEP_WIDGET(ppc->panel)->panel);
 	gtk_widget_queue_draw (ppc->panel);
 }
 
