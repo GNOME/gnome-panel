@@ -414,10 +414,10 @@ sync_buttons_page_with_config(GlobalConfig *conf)
 					    conf->tiles_enabled[i]);
 
 		file = get_full_tile(conf->tile_up[i]);
-		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_up[i]), file);
+		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_up[i]), file);
 		g_free(file);
 		file = get_full_tile(conf->tile_down[i]);
-		gnome_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_down[i]), file);
+		hack_icon_entry_set_icon(GNOME_ICON_ENTRY(entry_down[i]), file);
 		g_free(file);
 		gtk_adjustment_set_value(tile_border[i], conf->tile_border[i]);
 		gtk_adjustment_set_value(tile_depth[i], conf->tile_depth[i]);
