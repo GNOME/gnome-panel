@@ -1,3 +1,24 @@
+1998-05-31  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
+
+	* panel.c (panel_session_save): Removed the 'if
+ 	(is_shutdown)'-clause.  The is_shutdown parameter is only a hint,
+ 	that this save_yourself signal is called in the context of a
+ 	shutdown.  It does not mean, that the client has to shut down
+ 	immediatly.  On the contrary the client must not exit, because it
+ 	may happen, that the shutdown is cancelled by another client.
+	(panel_session_die): New function.  This is the shutdown stuff,
+ 	that has been in the panel_session_save function.
+	(panel_really_logout): Added a call to 'panel_session_die', if we
+ 	are not connected to a session manager.
+
+	* main.c (main): Connect 'panel_session_die' to the client's die
+ 	signal.
+
+	* panel.h: Added declaration for 'panel_session_die'.
+
+	* panel_config.c (panel_config): Changed "Panel Configuration"
+ 	text into "panel properties" to be consistent with menu.
+
 1998-05-30  Federico Mena Quintero  <federico@nuclecu.unam.mx>
 
 	* panel_config.c (pixmap_page): Provide better sensitizing of
