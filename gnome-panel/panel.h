@@ -87,7 +87,7 @@ gint panel_session_save (GnomeClient *client,
 
 GtkWidget * create_panel_root_menu(PanelWidget *panel);
 
-void register_toy(GtkWidget *applet,
+gint register_toy(GtkWidget *applet,
 		  GtkWidget *assoc,
 		  gpointer data,
 		  char *id_str,

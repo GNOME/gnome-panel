@@ -145,7 +145,6 @@ load_applet(char *id_str, char *params, int pos, int panel, char *cfgpath)
 
 		menu = create_menu_applet(params, MENU_UP);
 
-		
 		register_toy(menu->button,menu->menu,menu,MENU_ID,params,pos,
 			     panel,NULL,APPLET_MENU);
 	} else if(strcmp(id_str,DRAWER_ID) == 0) {

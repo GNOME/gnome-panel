@@ -681,6 +681,11 @@ applet_request_id (const char *path, char **cfgpath,
 
 	*winid = reserve_applet_spot (EXTERN_ID, path, 0, 0, NULL,
 				      APPLET_EXTERN_RESERVED);
+	if(*winid == 0) {
+		*globcfgpath = NULL;
+		*cfgpath = NULL;
+		return -1;
+	}
 	*cfgpath = NULL;
 	*globcfgpath = g_strdup(old_panel_cfg_path);
 	return i;
@@ -730,8 +735,9 @@ reserve_applet_spot (const char *id_str, const char *path, int panel,
 	
 	/*we save the ior in the id field of the appletinfo and the 
 	  path in the params field*/
-	register_toy(socket,NULL,NULL,g_strdup(id_str),g_strdup(path),
-		     pos,panel,cfgpath, type);
+	if(!register_toy(socket,NULL,NULL,g_strdup(id_str),g_strdup(path),
+		         pos,panel,cfgpath, type))
+		return 0;
 
 	return GDK_WINDOW_XWINDOW(socket->window);
 }
@@ -818,7 +824,7 @@ panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 static char *applet_drag_types[]={"internal/applet-widget-pointer"};
 #endif
 
-void
+gint
 register_toy(GtkWidget *applet,
 	     GtkWidget * assoc,
 	     gpointer data,
@@ -854,9 +860,7 @@ register_toy(GtkWidget *applet,
 
 	info = g_new(AppletInfo,1);
 
-	for(i=0,list=applets;list!=NULL;list = g_list_next(list),i++)
-		;
-	info->applet_id = i;
+	info->applet_id = g_list_length(applets);
 	info->type = type;
 	info->widget = eventbox;
 	info->applet_widget = applet;
@@ -883,10 +887,20 @@ register_toy(GtkWidget *applet,
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	/*FIXME: return an error and do cleanup if we can't add ...
-	  or make it go though all panels first before giving up*/
-	if(panel_widget_add(panelw, eventbox, pos)==-1)
-		return;
+	while(panel_widget_add(panelw, eventbox, pos)==-1) {
+		list = g_list_next(list);
+		if(!list) {
+			gtk_widget_unref(eventbox);
+			if(info->cfg)
+				g_free(info->cfg);
+			if(info->params)
+				g_free(info->params);
+			g_free(info->id_str);
+			g_free(info);
+			return FALSE;
+		}
+		panelw = PANEL_WIDGET(list->data);
+	}
 
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);
@@ -908,4 +922,6 @@ register_toy(GtkWidget *applet,
 			   info);
 
 	orientation_change(info,panelw);
+
+	return TRUE;
 }
