@@ -138,6 +138,8 @@ fr_fill_dir(FileRec *fr, int sublevels)
 	time_t curtime = time(NULL);
 	
 	g_return_if_fail(dr->recs==NULL);
+	g_return_if_fail(fr!=NULL);
+	g_return_if_fail(fr->name!=NULL);
 
 	ffr = g_new0(FileRec,1);
 	ffr->type = FILE_REC_EXTRA;
@@ -206,6 +208,8 @@ fr_read_dir(DirRec *dr, char *mdir, struct stat *dstat, int sublevels)
 	struct stat s;
 	FileRec *fr;
 	time_t curtime = time(NULL);
+	
+	g_return_val_if_fail(mdir!=NULL,NULL);
 
 	/*this will zero all fields*/
 	if(!dr)
@@ -412,10 +416,12 @@ FileRec *
 fr_get_dir(char *mdir)
 {
 	GSList *li;
+	g_return_val_if_fail(mdir!=NULL,NULL);
 	for(li=dir_list;li!=NULL;li=g_slist_next(li)) {
 		FileRec *fr = li->data;
-		if(fr && fr->name &&
-		   strcmp(fr->name,mdir)==0)
+		g_assert(fr!=NULL);
+		g_assert(fr->name!=NULL);
+		if(strcmp(fr->name,mdir)==0)
 			return fr_check_and_reread(fr);
 	}
 	return fr_read_dir(NULL,mdir,NULL,1);
