@@ -728,7 +728,7 @@ load_launcher_applet (const char       *location,
 
 	launcher->info = panel_applet_register (launcher->button, launcher,
 						free_launcher,
-						panel, pos, locked, exactpos,
+						panel, locked, pos, exactpos,
 						PANEL_OBJECT_LAUNCHER, id);
 	if (!launcher->info)
 		return NULL;

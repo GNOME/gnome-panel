@@ -1,5 +1,11 @@
 2003-05-26  Mark McLoughlin  <mark@skynet.ie>
 
+	* launcher.c: (load_launcher_applet): get the args to
+	panel_applet_register() the right way around so adding
+	launchers works properly again.
+
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
 	* panel-menu-button.c: (panel_menu_button_parent_set):
 	Chain up to the parent so ButtonWidget's overlay window gets
 	re-parented.
