@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-03-11 11:54+1300\n"
+"POT-Creation-Date: 2003-05-15 12:45+0100\n"
 "PO-Revision-Date: 2002-06-11 12:13+0200\n"
 "Last-Translator: Jesús Bravo Álvarez <suso@trasno.net>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1645
-#: applets/gen_util/mailcheck.c:1853 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:899
+#: applets/gen_util/clock.c:1130 applets/gen_util/mailcheck.c:1637
+#: applets/gen_util/mailcheck.c:1836 applets/gen_util/pager.c:176
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:400
+#: applets/gen_util/tasklist.c:113 applets/gen_util/tasklist.c:746
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -129,7 +129,7 @@ msgstr "O peixe de GNOME, o narrador de fortunes"
 msgid "*"
 msgstr ""
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1341
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1342
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Examinar"
@@ -228,7 +228,7 @@ msgstr "_Acerca..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
+#: gnome-panel/drawer.c:818 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
 #: gnome-panel/menu.c:4181 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "A_xuda"
@@ -304,47 +304,47 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d de %B de %Y"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:947
 msgid "Clock Preferences"
 msgstr "Preferencias do reloxo"
 
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:976
 msgid "Clock type"
 msgstr "Tipo de reloxo"
 
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:986
 msgid "_12 hour"
 msgstr "_12 horas"
 
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:992
 msgid "_24 hour"
 msgstr "_24 horas"
 
-#: applets/gen_util/clock.c:1007
+#: applets/gen_util/clock.c:997
 #, fuzzy
 msgid "UNI_X time"
 msgstr "Hora _Unix"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:1001
 msgid "_Internet time"
 msgstr "Hora _Internet"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1038
 msgid "Show _seconds"
 msgstr "Mostrar os _segundos"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1048
 msgid "Show _date"
 msgstr "Mostrar a _data"
 
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1058
 msgid "Use _UTC"
 msgstr "Usar _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1775
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1166 applets/gen_util/mailcheck.c:1767
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:431
+#: applets/gen_util/tasklist.c:778 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:243
 msgid "translator_credits"
 msgstr ""
@@ -352,11 +352,11 @@ msgstr ""
 "Proxecto Trasno - http://www.trasno.net"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1204
+#: applets/gen_util/clock.c:1185
 msgid "Clock"
 msgstr "Reloxo"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1187
 msgid "The Clock displays the current time and date"
 msgstr "A applet do reloxo mostra a hora e a data actuais"
 
@@ -454,7 +454,7 @@ msgid "Get the current time and date"
 msgstr "Obter a hora e data actuais"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1788
+#: applets/gen_util/mailcheck.c:328 applets/gen_util/mailcheck.c:1780
 msgid "Inbox Monitor"
 msgstr "Monitor da caixa de entrada"
 
@@ -463,7 +463,7 @@ msgid "Internet"
 msgstr "Internet"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
+#: applets/gen_util/showdesktop.c:440
 #, fuzzy
 msgid "Show Desktop Button"
 msgstr "Mostrar os botóns de agochamento"
@@ -482,12 +482,12 @@ msgid "Utility"
 msgstr "Utilidade"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:792
 msgid "Window List"
 msgstr "Lista de fiestras"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:859
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Selector de escritorio"
@@ -500,12 +500,12 @@ msgstr "fábrica para crear diversas applets xerais"
 msgid "_Check for mail"
 msgstr "_Comprobar o correo"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:206
 #, fuzzy, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Houbo un erro ao mostrar a axuda: %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:334
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -513,15 +513,15 @@ msgstr ""
 "Non indicou un contrasinal nas preferencias do monitor da caixa de\n"
 "entrada, polo que terá que escribilo cada vez que se inicie."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:342
 msgid "Please enter your mailserver's _password:"
 msgstr "Indique o _contrasinal para o servidor de correo:"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1401
+#: applets/gen_util/mailcheck.c:347 applets/gen_util/mailcheck.c:1402
 msgid "Password Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:388
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -531,182 +531,182 @@ msgstr ""
 "automática foi desactivada temporalmente.\n"
 "Pode ser que usara un nome/contrasinal/servidor incorrecto"
 
-#: applets/gen_util/mailcheck.c:580
+#: applets/gen_util/mailcheck.c:581
 msgid "You have new mail."
 msgstr "Ten novo correo."
 
-#: applets/gen_util/mailcheck.c:582
+#: applets/gen_util/mailcheck.c:583
 msgid "You have mail."
 msgstr "Ten correo."
 
-#: applets/gen_util/mailcheck.c:586
+#: applets/gen_util/mailcheck.c:587
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d mensaxes"
 
-#: applets/gen_util/mailcheck.c:588
+#: applets/gen_util/mailcheck.c:589
 #, c-format
 msgid "%d messages"
 msgstr "%d mensaxes"
 
-#: applets/gen_util/mailcheck.c:592
+#: applets/gen_util/mailcheck.c:593
 msgid "No mail."
 msgstr "Non ten correo."
 
-#: applets/gen_util/mailcheck.c:1112 applets/gen_util/mailcheck.c:1113
-#: applets/gen_util/mailcheck.c:1979 applets/gen_util/mailcheck.c:1980
+#: applets/gen_util/mailcheck.c:1113 applets/gen_util/mailcheck.c:1114
+#: applets/gen_util/mailcheck.c:1963 applets/gen_util/mailcheck.c:1964
 msgid "Status not updated"
 msgstr "Estado non actualizado"
 
-#: applets/gen_util/mailcheck.c:1285
+#: applets/gen_util/mailcheck.c:1286
 msgid "Mailbox _resides on:"
 msgstr "A _caixa de correo está en:"
 
-#: applets/gen_util/mailcheck.c:1293
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local mailspool"
 msgstr "Directorio de caixas de correo locais"
 
-#: applets/gen_util/mailcheck.c:1301
+#: applets/gen_util/mailcheck.c:1302
 msgid "Local maildir"
 msgstr "Directorio de correo local"
 
-#: applets/gen_util/mailcheck.c:1309
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote POP3-server"
 msgstr "Servidor POP3 remoto"
 
-#: applets/gen_util/mailcheck.c:1317
+#: applets/gen_util/mailcheck.c:1318
 msgid "Remote IMAP-server"
 msgstr "Servidor IMAP remoto"
 
-#: applets/gen_util/mailcheck.c:1337
+#: applets/gen_util/mailcheck.c:1338
 msgid "Mail _spool file:"
 msgstr "_Ficheiro de correo:"
 
-#: applets/gen_util/mailcheck.c:1356
+#: applets/gen_util/mailcheck.c:1357
 msgid "Mail s_erver:"
 msgstr "_Servidor de correo:"
 
-#: applets/gen_util/mailcheck.c:1362
+#: applets/gen_util/mailcheck.c:1363
 msgid "Mail Server Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1376
+#: applets/gen_util/mailcheck.c:1377
 msgid "_Username:"
 msgstr "Nome de _usuario:"
 
-#: applets/gen_util/mailcheck.c:1384
+#: applets/gen_util/mailcheck.c:1385
 msgid "Username Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1393
+#: applets/gen_util/mailcheck.c:1394
 msgid "_Password:"
 msgstr "_Contrasinal:"
 
-#: applets/gen_util/mailcheck.c:1414
+#: applets/gen_util/mailcheck.c:1415
 msgid "_Folder:"
 msgstr "Carta_fol:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1423
 msgid "Folder Entry box"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1434
+#: applets/gen_util/mailcheck.c:1435
 msgid "C_ommand to run before checking for mail:"
 msgstr "Comando _executado antes de comprobar o correo:"
 
-#: applets/gen_util/mailcheck.c:1442
+#: applets/gen_util/mailcheck.c:1443
 #, fuzzy
 msgid "Command Entry box"
 msgstr "Comando para executar"
 
-#: applets/gen_util/mailcheck.c:1467
+#: applets/gen_util/mailcheck.c:1468
 msgid "Execute"
 msgstr "Executar"
 
-#: applets/gen_util/mailcheck.c:1478
+#: applets/gen_util/mailcheck.c:1479
 msgid "Before each _update:"
 msgstr "Antes de cada _actualización:"
 
-#: applets/gen_util/mailcheck.c:1493
+#: applets/gen_util/mailcheck.c:1494
 #, fuzzy
 msgid "Command to execute before each update"
 msgstr "Comando executado ao comprobar o correo"
 
-#: applets/gen_util/mailcheck.c:1503
+#: applets/gen_util/mailcheck.c:1504
 msgid "When new mail _arrives:"
 msgstr "Cando c_hega novo correo:"
 
-#: applets/gen_util/mailcheck.c:1516 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1517 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Comando executado cando chega novo correo"
 
-#: applets/gen_util/mailcheck.c:1526
+#: applets/gen_util/mailcheck.c:1527
 msgid "When clicke_d:"
 msgstr "Ao _premer:"
 
-#: applets/gen_util/mailcheck.c:1539
+#: applets/gen_util/mailcheck.c:1540
 #, fuzzy
 msgid "Command to execute when clicked"
 msgstr "Comando e_xecutado ao premer o peixe:"
 
-#: applets/gen_util/mailcheck.c:1549
+#: applets/gen_util/mailcheck.c:1550
 msgid "Set the number of unread mails to _zero"
 msgstr "Pór o número de mensaxes non lidas a _cero"
 
-#: applets/gen_util/mailcheck.c:1560
+#: applets/gen_util/mailcheck.c:1561
 msgid "Check for mail _every"
 msgstr "Comprobar o correo ca_da"
 
-#: applets/gen_util/mailcheck.c:1572 applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1573 applets/gen_util/mailcheck.c:1577
 msgid "minutes"
 msgstr "minutos"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1573
 msgid "Choose time interval in minutes to check mail"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1586 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/mailcheck.c:1587 applets/gen_util/mailcheck.c:1591
 msgid "seconds"
 msgstr "segundos"
 
-#: applets/gen_util/mailcheck.c:1586
+#: applets/gen_util/mailcheck.c:1587
 #, fuzzy
 msgid "Choose time interval in seconds to check mail"
 msgstr "Frecuencia (en milisegundos) con que se comproba o correo"
 
-#: applets/gen_util/mailcheck.c:1598
+#: applets/gen_util/mailcheck.c:1599
 msgid "Play a _sound when new mail arrives"
 msgstr "Reproducir un _son cando chega novo correo"
 
-#: applets/gen_util/mailcheck.c:1609
+#: applets/gen_util/mailcheck.c:1610
 msgid "Select a_nimation"
 msgstr "Seleccionar a_nimación"
 
-#: applets/gen_util/mailcheck.c:1686
+#: applets/gen_util/mailcheck.c:1678
 msgid "Inbox Monitor Preferences"
 msgstr "Preferencias do monitor da caixa de entrada"
 
-#: applets/gen_util/mailcheck.c:1706
+#: applets/gen_util/mailcheck.c:1698
 msgid "_Mail check"
 msgstr "_Comprobación de correo"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1702
 msgid "Mail_box"
 msgstr "_Caixa de correo"
 
-#: applets/gen_util/mailcheck.c:1790
+#: applets/gen_util/mailcheck.c:1782
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "A comprobación de correo avísalle cando chega novo correo"
 
-#: applets/gen_util/mailcheck.c:1955
+#: applets/gen_util/mailcheck.c:1939
 msgid "Text only"
 msgstr "Só texto"
 
-#: applets/gen_util/mailcheck.c:1981
+#: applets/gen_util/mailcheck.c:1965
 msgid "Mail check"
 msgstr "Comprobación de correo"
 
-#: applets/gen_util/mailcheck.c:1982
+#: applets/gen_util/mailcheck.c:1966
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "A comprobación de correo avísalle cando ten novo correo na caixa"
 
@@ -831,23 +831,23 @@ msgstr "Comprobación de correo"
 msgid "New Mail"
 msgstr "Novo correo"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Fileiras"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 msgid "Columns"
 msgstr "Columnas"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:388
 #, fuzzy, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Erro ao cargar o valor de num_rows para a applet de selección de escritorio: "
 "%s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:399
 #, fuzzy, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -855,14 +855,14 @@ msgstr ""
 "Erro ao cargar o valor de display_workspace_names para a applet de selección "
 "de escritorio: %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:414
 #, fuzzy, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Erro ao cargar o valor de display_all_workspaces para a applet de selección "
 "de escritorio: %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -964,11 +964,11 @@ msgstr ""
 msgid "File not found"
 msgstr "Documento de axuda non atopado"
 
-#: applets/gen_util/showdesktop.c:454
+#: applets/gen_util/showdesktop.c:442
 msgid "This button lets you hide all windows and show the desktop"
 msgstr ""
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:794
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "A lista de fiestras permite examinar a lista das fiestras visibles."
@@ -1323,7 +1323,7 @@ msgstr "Mostrar as frechas nos botóns de agochamento"
 msgid "Drawer"
 msgstr "Caixón"
 
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
+#: gnome-panel/drawer.c:815 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
 #: gnome-panel/menu.c:3391 gnome-panel/panel-action-button.c:89
 #, fuzzy
 msgid "_Properties"
@@ -1583,15 +1583,15 @@ msgstr "%s%cPantalla-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Non hai espacio dabondo para escribir o ficheiro %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1221
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Grab a window instead of the entire screen"
 msgstr "Capturar unha fiestra en vez da pantalla completa"
 
-#: gnome-panel/gnome-panel-screenshot.c:1222
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Facer a captura de pantalla logo dun retardo [en segundos]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1274
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1599,7 +1599,7 @@ msgstr ""
 "Falta o ficheiro glade do programa de captura de pantalla.\n"
 "Verifique a instalación do gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1298
+#: gnome-panel/gnome-panel-screenshot.c:1299
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Non se pode facer unha captura de pantalla do escritorio."
 
@@ -1692,44 +1692,44 @@ msgstr ""
 "\n"
 "Detalles: %s"
 
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:600
 msgid "Choose a file"
 msgstr "Escolla un ficheiro"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:839 gnome-panel/gnome-run.c:840
 msgid "Known Applications"
 msgstr "Aplicacións coñecidas"
 
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:971
 msgid "Command to run"
 msgstr "Comando para executar"
 
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:1006
 msgid "Run in _terminal"
 msgstr "Executar nun _terminal"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:1011
 msgid "_Append File..."
 msgstr "_Engadir ficheiro..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1397
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Executará o comando '%s'"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1406
 msgid "No application selected"
 msgstr "Ningunha aplicación seleccionada"
 
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1527
 msgid "List of known applications"
 msgstr "Lista de aplicacións coñecidas"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1528
 msgid "Choose an application to run from the list"
 msgstr "Escolla da lista unha aplicación para executar"
 
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1667 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Executar programa"
 
@@ -1794,7 +1794,7 @@ msgstr ""
 msgid "Create Launcher"
 msgstr "Crear lanzador"
 
-#: gnome-panel/launcher.c:1068
+#: gnome-panel/launcher.c:1070
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1805,7 +1805,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1155 gnome-panel/menu.c:1179
+#: gnome-panel/launcher.c:1157 gnome-panel/menu.c:1179
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2307,18 +2307,18 @@ msgstr ""
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Non é posible obter a interface AppletShell do control\n"
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel.c:892
 #, c-format
 msgid "Open URL: %s"
 msgstr "Abrir URL: %s"
 
-#: gnome-panel/panel.c:2609
+#: gnome-panel/panel.c:2610
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr "Non se atoparon paneis na configuración.  Vaise crear un panel de menú"
 
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:2899
 #, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
@@ -2327,7 +2327,7 @@ msgstr ""
 "Cando se elimina un panel, a súa configuración\n"
 "e a das applets pérdese. ¿Quere eliminalo?"
 
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:2908
 #, fuzzy
 msgid "Delete Panel"
 msgstr "Eliminar este panel"
@@ -2636,42 +2636,42 @@ msgstr "Applet Bonobo de proba"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fábrica de applet Bonobo de proba"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Recibiuse un tipo de fondo '%s' incompleto"
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:880
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Recibiuse un tipo de fonto '%s' incompleto: %s"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:889
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Fallo ao obter a imaxe %s"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:896
 msgid "Unknown background type received"
 msgstr "Recibiuse un tipo de fondo descoñecido"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1077
 msgid "The Applet's containing Panel's orientation"
 msgstr "A applet contén a orientación do panel"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1085
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "A applet contén o tamaño do panel en pixels"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1093
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "A applet contén a cor ou imaxe do fondo do panel"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1101
 msgid "The Applet's flags"
 msgstr "As flags da applet"
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1109
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Intervalos que aconsellan os tamaños aceptables para a applet"
 

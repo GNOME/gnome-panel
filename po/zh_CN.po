@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-03-11 11:54+1300\n"
+"POT-Creation-Date: 2003-05-15 12:45+0100\n"
 "PO-Revision-Date: 2003-01-29 22:29+0800\n"
 "Last-Translator: Wang Li <charles@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.0\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1645
-#: applets/gen_util/mailcheck.c:1853 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:899
+#: applets/gen_util/clock.c:1130 applets/gen_util/mailcheck.c:1637
+#: applets/gen_util/mailcheck.c:1836 applets/gen_util/pager.c:176
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:400
+#: applets/gen_util/tasklist.c:113 applets/gen_util/tasklist.c:746
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -139,7 +139,7 @@ msgstr "*"
 # applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
 # panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
 # panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1341
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1342
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "浏览"
@@ -255,7 +255,7 @@ msgstr "关于(_A)..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
+#: gnome-panel/drawer.c:818 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
 #: gnome-panel/menu.c:4181 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "帮助(_H)"
@@ -340,51 +340,51 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%Y %B %d, %A"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:947
 msgid "Clock Preferences"
 msgstr "时钟首选项"
 
 # applets/another_clock/another_clock.c:323
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:976
 msgid "Clock type"
 msgstr "时钟类型"
 
 # applets/gen_util/clock.c:421
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:986
 msgid "_12 hour"
 msgstr "_12 小时"
 
 # applets/gen_util/clock.c:430
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:992
 msgid "_24 hour"
 msgstr "_24 小时"
 
 # applets/gen_util/clock.c:479
-#: applets/gen_util/clock.c:1007
+#: applets/gen_util/clock.c:997
 msgid "UNI_X time"
 msgstr "UNI_X 时间"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:1001
 msgid "_Internet time"
 msgstr "互联网时间(_I)"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1038
 msgid "Show _seconds"
 msgstr "显示秒(_S)"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1048
 msgid "Show _date"
 msgstr "显示日期(_D)"
 
 # applets/clockmail/clockmail.c:140
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1058
 msgid "Use _UTC"
 msgstr "使用 _UTC"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1775
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1166 applets/gen_util/mailcheck.c:1767
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:431
+#: applets/gen_util/tasklist.c:778 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:243
 msgid "translator_credits"
 msgstr ""
@@ -396,11 +396,11 @@ msgstr ""
 # applets/clockmail/properties.c:294 applets/gen_util/clock.c:502
 # applets/mini-commander/src/preferences.c:454
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1204
+#: applets/gen_util/clock.c:1185
 msgid "Clock"
 msgstr "时钟"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1187
 msgid "The Clock displays the current time and date"
 msgstr "时钟显示当前时间和日期"
 
@@ -497,7 +497,7 @@ msgid "Get the current time and date"
 msgstr "获取当前时间和日期"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1788
+#: applets/gen_util/mailcheck.c:328 applets/gen_util/mailcheck.c:1780
 msgid "Inbox Monitor"
 msgstr "收件箱监视器"
 
@@ -507,7 +507,7 @@ msgstr "互联网"
 
 # panel/panel_config_global.c:446
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
+#: applets/gen_util/showdesktop.c:440
 msgid "Show Desktop Button"
 msgstr "显示桌面按钮"
 
@@ -526,12 +526,12 @@ msgstr "工具"
 
 # help-browser/window.c:180
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:792
 msgid "Window List"
 msgstr "窗口列表"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:859
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "工作区切换器"
@@ -545,12 +545,12 @@ msgstr "创建某些通用小程序的车间"
 msgid "_Check for mail"
 msgstr "检查邮件(_C)"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:206
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "执行 %s 时发生错误：%s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:334
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -558,15 +558,15 @@ msgstr ""
 "您没有在收件箱监视器的首选项中设定口令，\n"
 "所以您必须在每次启动时输入口令。"
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:342
 msgid "Please enter your mailserver's _password:"
 msgstr "请输入您的邮件服务器的口令(_P)："
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1401
+#: applets/gen_util/mailcheck.c:347 applets/gen_util/mailcheck.c:1402
 msgid "Password Entry box"
 msgstr "口令输入框"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:388
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -576,193 +576,193 @@ msgstr ""
 "可能您使用了错误的服务器、用户名或口令？"
 
 # applets/gen_util/mailcheck.c:267
-#: applets/gen_util/mailcheck.c:580
+#: applets/gen_util/mailcheck.c:581
 msgid "You have new mail."
 msgstr "您有新邮件。"
 
 # applets/gen_util/mailcheck.c:269
-#: applets/gen_util/mailcheck.c:582
+#: applets/gen_util/mailcheck.c:583
 msgid "You have mail."
 msgstr "您有未读的邮件。"
 
-#: applets/gen_util/mailcheck.c:586
+#: applets/gen_util/mailcheck.c:587
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d 邮件"
 
-#: applets/gen_util/mailcheck.c:588
+#: applets/gen_util/mailcheck.c:589
 #, c-format
 msgid "%d messages"
 msgstr "%d 个邮件"
 
 # applets/gen_util/mailcheck.c:271
-#: applets/gen_util/mailcheck.c:592
+#: applets/gen_util/mailcheck.c:593
 msgid "No mail."
 msgstr "您没有邮件。"
 
-#: applets/gen_util/mailcheck.c:1112 applets/gen_util/mailcheck.c:1113
-#: applets/gen_util/mailcheck.c:1979 applets/gen_util/mailcheck.c:1980
+#: applets/gen_util/mailcheck.c:1113 applets/gen_util/mailcheck.c:1114
+#: applets/gen_util/mailcheck.c:1963 applets/gen_util/mailcheck.c:1964
 msgid "Status not updated"
 msgstr "状态未更新"
 
-#: applets/gen_util/mailcheck.c:1285
+#: applets/gen_util/mailcheck.c:1286
 msgid "Mailbox _resides on:"
 msgstr "邮箱位于(_R)："
 
-#: applets/gen_util/mailcheck.c:1293
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local mailspool"
 msgstr "本地邮件池"
 
-#: applets/gen_util/mailcheck.c:1301
+#: applets/gen_util/mailcheck.c:1302
 msgid "Local maildir"
 msgstr "本地邮件目录"
 
-#: applets/gen_util/mailcheck.c:1309
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote POP3-server"
 msgstr "远程 POP3 服务器"
 
-#: applets/gen_util/mailcheck.c:1317
+#: applets/gen_util/mailcheck.c:1318
 msgid "Remote IMAP-server"
 msgstr "远程 IMAP 服务器"
 
-#: applets/gen_util/mailcheck.c:1337
+#: applets/gen_util/mailcheck.c:1338
 msgid "Mail _spool file:"
 msgstr "邮件池文件(_S)："
 
-#: applets/gen_util/mailcheck.c:1356
+#: applets/gen_util/mailcheck.c:1357
 msgid "Mail s_erver:"
 msgstr "邮件服务器(_E)："
 
-#: applets/gen_util/mailcheck.c:1362
+#: applets/gen_util/mailcheck.c:1363
 msgid "Mail Server Entry box"
 msgstr "邮件服务器输入框"
 
-#: applets/gen_util/mailcheck.c:1376
+#: applets/gen_util/mailcheck.c:1377
 msgid "_Username:"
 msgstr "用户名(_U)："
 
-#: applets/gen_util/mailcheck.c:1384
+#: applets/gen_util/mailcheck.c:1385
 msgid "Username Entry box"
 msgstr "用户名输入框"
 
-#: applets/gen_util/mailcheck.c:1393
+#: applets/gen_util/mailcheck.c:1394
 msgid "_Password:"
 msgstr "密码(_P)："
 
 # gmenu/desktop.c:80
-#: applets/gen_util/mailcheck.c:1414
+#: applets/gen_util/mailcheck.c:1415
 msgid "_Folder:"
 msgstr "文件夹(_F)："
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1423
 msgid "Folder Entry box"
 msgstr "文件夹输入框"
 
-#: applets/gen_util/mailcheck.c:1434
+#: applets/gen_util/mailcheck.c:1435
 msgid "C_ommand to run before checking for mail:"
 msgstr "检查邮件前要运行的命令(_O)："
 
 # panel/swallow.c:235
-#: applets/gen_util/mailcheck.c:1442
+#: applets/gen_util/mailcheck.c:1443
 msgid "Command Entry box"
 msgstr "命令输入框"
 
 # applets/gen_util/mailcheck.c:557 applets/gen_util/mailcheck.c:578
-#: applets/gen_util/mailcheck.c:1467
+#: applets/gen_util/mailcheck.c:1468
 msgid "Execute"
 msgstr "执行"
 
 # applets/gen_util/mailcheck.c:569
-#: applets/gen_util/mailcheck.c:1478
+#: applets/gen_util/mailcheck.c:1479
 msgid "Before each _update:"
 msgstr "每次更新之前(_U)："
 
-#: applets/gen_util/mailcheck.c:1493
+#: applets/gen_util/mailcheck.c:1494
 msgid "Command to execute before each update"
 msgstr "每次更新前执行的命令"
 
-#: applets/gen_util/mailcheck.c:1503
+#: applets/gen_util/mailcheck.c:1504
 msgid "When new mail _arrives:"
 msgstr "当新邮件到达时(_A)："
 
-#: applets/gen_util/mailcheck.c:1516 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1517 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "新邮件到达时执行的命令"
 
 # applets/gen_util/mailcheck.c:591
-#: applets/gen_util/mailcheck.c:1526
+#: applets/gen_util/mailcheck.c:1527
 msgid "When clicke_d:"
 msgstr "点击时(_D)："
 
-#: applets/gen_util/mailcheck.c:1539
+#: applets/gen_util/mailcheck.c:1540
 msgid "Command to execute when clicked"
 msgstr "点击时执行的命令"
 
-#: applets/gen_util/mailcheck.c:1549
+#: applets/gen_util/mailcheck.c:1550
 msgid "Set the number of unread mails to _zero"
 msgstr "将未读邮件数设置为零(_Z)"
 
 # applets/gen_util/mailcheck.c:600
-#: applets/gen_util/mailcheck.c:1560
+#: applets/gen_util/mailcheck.c:1561
 msgid "Check for mail _every"
 msgstr "邮件检查的间隔(_E)"
 
-#: applets/gen_util/mailcheck.c:1572 applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1573 applets/gen_util/mailcheck.c:1577
 msgid "minutes"
 msgstr "分"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1573
 msgid "Choose time interval in minutes to check mail"
 msgstr "选择检查邮件的时间间隔(以分钟为单位)"
 
-#: applets/gen_util/mailcheck.c:1586 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/mailcheck.c:1587 applets/gen_util/mailcheck.c:1591
 msgid "seconds"
 msgstr "秒"
 
-#: applets/gen_util/mailcheck.c:1586
+#: applets/gen_util/mailcheck.c:1587
 msgid "Choose time interval in seconds to check mail"
 msgstr "选择检查邮件的时间间隔(以秒为单位)"
 
-#: applets/gen_util/mailcheck.c:1598
+#: applets/gen_util/mailcheck.c:1599
 msgid "Play a _sound when new mail arrives"
 msgstr "新邮件到达时播放音乐(_S)"
 
 # panel/panel_config_global.c:199
-#: applets/gen_util/mailcheck.c:1609
+#: applets/gen_util/mailcheck.c:1610
 msgid "Select a_nimation"
 msgstr "选择动画(_N)"
 
 # panel/menu.c:772 panel/menu.c:812
-#: applets/gen_util/mailcheck.c:1686
+#: applets/gen_util/mailcheck.c:1678
 msgid "Inbox Monitor Preferences"
 msgstr "收件箱监视器首选项"
 
 # applets/gen_util/mailcheck.c:654
-#: applets/gen_util/mailcheck.c:1706
+#: applets/gen_util/mailcheck.c:1698
 msgid "_Mail check"
 msgstr "邮件检查(_M)"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1702
 msgid "Mail_box"
 msgstr "邮件箱(_B)"
 
 # applets/gen_util/mailcheck.c:707
-#: applets/gen_util/mailcheck.c:1790
+#: applets/gen_util/mailcheck.c:1782
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "当新邮件到达您的邮件箱时邮件监视器将提醒您"
 
 # applets/gen_util/mailcheck.c:772
-#: applets/gen_util/mailcheck.c:1955
+#: applets/gen_util/mailcheck.c:1939
 msgid "Text only"
 msgstr "文本方式"
 
 # applets/gen_util/mailcheck.c:654
-#: applets/gen_util/mailcheck.c:1981
+#: applets/gen_util/mailcheck.c:1965
 msgid "Mail check"
 msgstr "邮件检查"
 
 # applets/gen_util/mailcheck.c:707
-#: applets/gen_util/mailcheck.c:1982
+#: applets/gen_util/mailcheck.c:1966
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "当新邮件到达您的邮件箱时邮件检查程序将提醒您"
 
@@ -886,33 +886,33 @@ msgstr "新建邮件"
 # applets/fish/fish.c:247 gnome-terminal/gnome-terminal.c:1230
 # panel/menu.c:3587 panel/panel-util.c:78 panel/panel-util.c:116
 # panel/panel-util.c:154 panel/panel_config.c:740 panel/swallow.c:237
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "行"
 
 # help-browser/history.c:257
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 msgid "Columns"
 msgstr "列"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:388
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 num_rows 数值时出错：%s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:399
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 display_workspace_names 数值时出错：%s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:414
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr "载入工作区切换器的 display_all_workspaces 数值时出错：%s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -999,11 +999,11 @@ msgstr "载入 %s 失败：%s\n"
 msgid "File not found"
 msgstr "未找到文件"
 
-#: applets/gen_util/showdesktop.c:454
+#: applets/gen_util/showdesktop.c:442
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "这个按钮让您隐藏所有的窗口并显示桌面"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:794
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "窗口列表显示了所有可见窗口的列表以便于您浏览它们。"
@@ -1373,7 +1373,7 @@ msgid "Drawer"
 msgstr "抽屉"
 
 # applets/fvwm-pager/fvwm-pager.c:412
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
+#: gnome-panel/drawer.c:815 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
 #: gnome-panel/menu.c:3391 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "属性(_P)"
@@ -1644,15 +1644,15 @@ msgstr "%s%cScreenshot-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "没有足够空间写入文件 %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1221
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Grab a window instead of the entire screen"
 msgstr "抓取一个窗口而不是整个屏幕的抓图"
 
-#: gnome-panel/gnome-panel-screenshot.c:1222
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "在指定的延迟之后抓取抓图[以秒为单位]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1274
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1660,7 +1660,7 @@ msgstr ""
 "屏幕抓图程序需要的 Glade 文件可能丢失。\n"
 "请检查您的 gnome-core 的安装"
 
-#: gnome-panel/gnome-panel-screenshot.c:1298
+#: gnome-panel/gnome-panel-screenshot.c:1299
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "无法抓取当前桌面的抓图。"
 
@@ -1754,50 +1754,50 @@ msgstr ""
 "细节：%s"
 
 # help-browser/gnome-help-browser.c:603
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:600
 msgid "Choose a file"
 msgstr "选择一个文件"
 
 # gsm/logout.c:240
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:839 gnome-panel/gnome-run.c:840
 msgid "Known Applications"
 msgstr "已知的应用程序"
 
 # panel/swallow.c:235
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:971
 msgid "Command to run"
 msgstr "要运行的命令"
 
 # gnome-terminal/gnome-terminal.c:1517 gnome-terminal/gnome-terminal.c:1534
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:1006
 msgid "Run in _terminal"
 msgstr "在终端里运行(_T)"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:1011
 msgid "_Append File..."
 msgstr "附加文件(_A)..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1397
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "将运行命令：“%s”"
 
 # gnome-terminal/gnome-terminal.c:1430
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1406
 msgid "No application selected"
 msgstr "没有选中应用程序"
 
 # gsm/logout.c:240
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1527
 msgid "List of known applications"
 msgstr "已知应用程序的列表"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1528
 msgid "Choose an application to run from the list"
 msgstr "从列表中选择一个要运行的应用程序"
 
 # applets/gkb/gkb.c:262
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1667 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "运行程序"
 
@@ -1866,7 +1866,7 @@ msgstr "没有设置 GConf 项 %s，无法载入启动器\n"
 msgid "Create Launcher"
 msgstr "建立启动器"
 
-#: gnome-panel/launcher.c:1068
+#: gnome-panel/launcher.c:1070
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1877,7 +1877,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1155 gnome-panel/menu.c:1179
+#: gnome-panel/launcher.c:1157 gnome-panel/menu.c:1179
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2414,18 +2414,18 @@ msgstr ""
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "无法从控制得到小程序外壳界面\n"
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel.c:892
 #, c-format
 msgid "Open URL: %s"
 msgstr "打开 URL：%s"
 
-#: gnome-panel/panel.c:2609
+#: gnome-panel/panel.c:2610
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr "在您的配置中没有找到面板。我将为您创建一个菜单面板"
 
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:2899
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2434,7 +2434,7 @@ msgstr ""
 "都会丢失。真要删除该面板？"
 
 # panel/menu.c:2276
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:2908
 msgid "Delete Panel"
 msgstr "删除面板"
 
@@ -2768,42 +2768,42 @@ msgstr "测试 Bonobo 小程序"
 msgid "Test Bonobo Applet Factory"
 msgstr "测试 Bonobo 小程序车间"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "收到不完整的“%s”背景"
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:880
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "收到不完整的“%s”背景：%s"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:889
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "获取位图 %s 失败"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:896
 msgid "Unknown background type received"
 msgstr "收到未知的背景类型"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1077
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有小程序的面板的方向"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1085
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有小程序的面板的尺寸(以像素为单位)"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1093
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有小程序的面板的背景颜色或图片"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1101
 msgid "The Applet's flags"
 msgstr "小程序的标志"
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1109
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "界定关于小程序所能接受的尺寸的提示"
 

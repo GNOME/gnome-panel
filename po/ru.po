@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2003-03-11 11:54+1300\n"
+"POT-Creation-Date: 2003-05-15 12:45+0100\n"
 "PO-Revision-Date: 2003-01-18 14:05+0300\n"
 "Last-Translator: Dmitry G. Mastrukov <dmitry@taurussoft.org>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1645
-#: applets/gen_util/mailcheck.c:1853 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:899
+#: applets/gen_util/clock.c:1130 applets/gen_util/mailcheck.c:1637
+#: applets/gen_util/mailcheck.c:1836 applets/gen_util/pager.c:176
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:400
+#: applets/gen_util/tasklist.c:113 applets/gen_util/tasklist.c:746
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -126,7 +126,7 @@ msgstr "Рыбка среды Гном, гадалка"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1341
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1342
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Просмотреть"
@@ -222,7 +222,7 @@ msgstr "_Об апплете..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
+#: gnome-panel/drawer.c:818 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
 #: gnome-panel/menu.c:4181 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "Получить _справку"
@@ -298,46 +298,46 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %d %B %Y"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:947
 msgid "Clock Preferences"
 msgstr "Настройки часов"
 
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:976
 msgid "Clock type"
 msgstr "Тип часов"
 
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:986
 msgid "_12 hour"
 msgstr "_12-часовые"
 
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:992
 msgid "_24 hour"
 msgstr "_24-часовые"
 
-#: applets/gen_util/clock.c:1007
+#: applets/gen_util/clock.c:997
 msgid "UNI_X time"
 msgstr "в стиле _Юникса"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:1001
 msgid "_Internet time"
 msgstr "в стиле _Интернета"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1038
 msgid "Show _seconds"
 msgstr "Показывать се_кунды"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1048
 msgid "Show _date"
 msgstr "Показывать _дату"
 
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1058
 msgid "Use _UTC"
 msgstr "Использовать _Универсальное (UTC) время"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1775
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1166 applets/gen_util/mailcheck.c:1767
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:431
+#: applets/gen_util/tasklist.c:778 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:243
 msgid "translator_credits"
 msgstr ""
@@ -347,11 +347,11 @@ msgstr ""
 "Дмитрий Мастрюков"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1204
+#: applets/gen_util/clock.c:1185
 msgid "Clock"
 msgstr "Часы"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1187
 msgid "The Clock displays the current time and date"
 msgstr "Апплет \"Часы\" показывает текущие время и дату"
 
@@ -444,7 +444,7 @@ msgid "Get the current time and date"
 msgstr "Апплет отображает текущие дату и время"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1788
+#: applets/gen_util/mailcheck.c:328 applets/gen_util/mailcheck.c:1780
 msgid "Inbox Monitor"
 msgstr "Индикатор входящих писем"
 
@@ -453,7 +453,7 @@ msgid "Internet"
 msgstr "Интернет"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
+#: applets/gen_util/showdesktop.c:440
 msgid "Show Desktop Button"
 msgstr "Кнопка расчистки рабочего стола"
 
@@ -471,12 +471,12 @@ msgid "Utility"
 msgstr "Утилиты"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:792
 msgid "Window List"
 msgstr "Переключатель окон"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:859
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Переключатель рабочих мест"
@@ -489,12 +489,12 @@ msgstr "фабрика для создания некоторых общих а�
 msgid "_Check for mail"
 msgstr "_Проверить почту"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:206
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "Произошла ошибка при запуске \"%s\": %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:334
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -502,15 +502,15 @@ msgstr ""
 "Пароль не был установлен в настройках \"Индикатора входящей почты\"\n"
 "и будет запрашиваться всякий раз при запуске."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:342
 msgid "Please enter your mailserver's _password:"
 msgstr "Пожалуйста, введите _пароль для почтового сервера"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1401
+#: applets/gen_util/mailcheck.c:347 applets/gen_util/mailcheck.c:1402
 msgid "Password Entry box"
 msgstr "Поле ввода пароля"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:388
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -520,180 +520,180 @@ msgstr ""
 "автоматическое обновление отключено.\n"
 "Возможно, были указаны неправильные сервер, имя пользователя или пароль."
 
-#: applets/gen_util/mailcheck.c:580
+#: applets/gen_util/mailcheck.c:581
 msgid "You have new mail."
 msgstr "Есть новая почта."
 
-#: applets/gen_util/mailcheck.c:582
+#: applets/gen_util/mailcheck.c:583
 msgid "You have mail."
 msgstr "Есть почта."
 
-#: applets/gen_util/mailcheck.c:586
+#: applets/gen_util/mailcheck.c:587
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d сообщений"
 
-#: applets/gen_util/mailcheck.c:588
+#: applets/gen_util/mailcheck.c:589
 #, c-format
 msgid "%d messages"
 msgstr "%d сообщений"
 
-#: applets/gen_util/mailcheck.c:592
+#: applets/gen_util/mailcheck.c:593
 msgid "No mail."
 msgstr "Нет почты."
 
-#: applets/gen_util/mailcheck.c:1112 applets/gen_util/mailcheck.c:1113
-#: applets/gen_util/mailcheck.c:1979 applets/gen_util/mailcheck.c:1980
+#: applets/gen_util/mailcheck.c:1113 applets/gen_util/mailcheck.c:1114
+#: applets/gen_util/mailcheck.c:1963 applets/gen_util/mailcheck.c:1964
 msgid "Status not updated"
 msgstr "Состояние не обновлялось"
 
-#: applets/gen_util/mailcheck.c:1285
+#: applets/gen_util/mailcheck.c:1286
 msgid "Mailbox _resides on:"
 msgstr "Почтовый ящик _находится на:"
 
-#: applets/gen_util/mailcheck.c:1293
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local mailspool"
 msgstr "Локальный спул почты"
 
-#: applets/gen_util/mailcheck.c:1301
+#: applets/gen_util/mailcheck.c:1302
 msgid "Local maildir"
 msgstr "Локальный почтовый каталог"
 
-#: applets/gen_util/mailcheck.c:1309
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote POP3-server"
 msgstr "Удалённый сервер протокола POP3"
 
-#: applets/gen_util/mailcheck.c:1317
+#: applets/gen_util/mailcheck.c:1318
 msgid "Remote IMAP-server"
 msgstr "Удалённый сервер протокола IMAP"
 
-#: applets/gen_util/mailcheck.c:1337
+#: applets/gen_util/mailcheck.c:1338
 msgid "Mail _spool file:"
 msgstr "Файл почтового спу_ла:"
 
-#: applets/gen_util/mailcheck.c:1356
+#: applets/gen_util/mailcheck.c:1357
 msgid "Mail s_erver:"
 msgstr "Почтовый с_ервер:"
 
-#: applets/gen_util/mailcheck.c:1362
+#: applets/gen_util/mailcheck.c:1363
 msgid "Mail Server Entry box"
 msgstr "Поле ввода сервера почты"
 
-#: applets/gen_util/mailcheck.c:1376
+#: applets/gen_util/mailcheck.c:1377
 msgid "_Username:"
 msgstr "И_мя пользователя:"
 
-#: applets/gen_util/mailcheck.c:1384
+#: applets/gen_util/mailcheck.c:1385
 msgid "Username Entry box"
 msgstr "Поле ввода имени пользователя"
 
-#: applets/gen_util/mailcheck.c:1393
+#: applets/gen_util/mailcheck.c:1394
 msgid "_Password:"
 msgstr "П_ароль:"
 
-#: applets/gen_util/mailcheck.c:1414
+#: applets/gen_util/mailcheck.c:1415
 msgid "_Folder:"
 msgstr "_Каталог:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1423
 msgid "Folder Entry box"
 msgstr "Поле ввода каталога"
 
-#: applets/gen_util/mailcheck.c:1434
+#: applets/gen_util/mailcheck.c:1435
 msgid "C_ommand to run before checking for mail:"
 msgstr "Команда, зап_ускаемая перед проверкой почты:"
 
-#: applets/gen_util/mailcheck.c:1442
+#: applets/gen_util/mailcheck.c:1443
 msgid "Command Entry box"
 msgstr "Поле ввода команды"
 
-#: applets/gen_util/mailcheck.c:1467
+#: applets/gen_util/mailcheck.c:1468
 msgid "Execute"
 msgstr "Выполнять"
 
-#: applets/gen_util/mailcheck.c:1478
+#: applets/gen_util/mailcheck.c:1479
 msgid "Before each _update:"
 msgstr "перед каждым _обновлением:"
 
-#: applets/gen_util/mailcheck.c:1493
+#: applets/gen_util/mailcheck.c:1494
 msgid "Command to execute before each update"
 msgstr "Команда, выполняемая перед каждым обновлением"
 
-#: applets/gen_util/mailcheck.c:1503
+#: applets/gen_util/mailcheck.c:1504
 msgid "When new mail _arrives:"
 msgstr "при при_бытии новой почты:"
 
-#: applets/gen_util/mailcheck.c:1516 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1517 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Команда, выполняемая при прибытии почты"
 
-#: applets/gen_util/mailcheck.c:1526
+#: applets/gen_util/mailcheck.c:1527
 msgid "When clicke_d:"
 msgstr "при _щелчке:"
 
-#: applets/gen_util/mailcheck.c:1539
+#: applets/gen_util/mailcheck.c:1540
 msgid "Command to execute when clicked"
 msgstr "Команда, выполняемая при щелчке"
 
-#: applets/gen_util/mailcheck.c:1549
+#: applets/gen_util/mailcheck.c:1550
 msgid "Set the number of unread mails to _zero"
 msgstr "Установить число непрочитанных сообщений в нол_ь"
 
-#: applets/gen_util/mailcheck.c:1560
+#: applets/gen_util/mailcheck.c:1561
 msgid "Check for mail _every"
 msgstr "Проверять почтовый ящик ка_ждые"
 
-#: applets/gen_util/mailcheck.c:1572 applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1573 applets/gen_util/mailcheck.c:1577
 msgid "minutes"
 msgstr "минут"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1573
 msgid "Choose time interval in minutes to check mail"
 msgstr "Выбрать интервал времени в минутах между проверками почты"
 
-#: applets/gen_util/mailcheck.c:1586 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/mailcheck.c:1587 applets/gen_util/mailcheck.c:1591
 msgid "seconds"
 msgstr "секунд"
 
-#: applets/gen_util/mailcheck.c:1586
+#: applets/gen_util/mailcheck.c:1587
 msgid "Choose time interval in seconds to check mail"
 msgstr "Выбрать интервал времени в секундах между проверками почты"
 
-#: applets/gen_util/mailcheck.c:1598
+#: applets/gen_util/mailcheck.c:1599
 msgid "Play a _sound when new mail arrives"
 msgstr "Воспроизводить з_вук при получении новой почты"
 
-#: applets/gen_util/mailcheck.c:1609
+#: applets/gen_util/mailcheck.c:1610
 msgid "Select a_nimation"
 msgstr "Включить анима_цию"
 
-#: applets/gen_util/mailcheck.c:1686
+#: applets/gen_util/mailcheck.c:1678
 msgid "Inbox Monitor Preferences"
 msgstr "Настройки \"Индикатора входящей почты\""
 
-#: applets/gen_util/mailcheck.c:1706
+#: applets/gen_util/mailcheck.c:1698
 msgid "_Mail check"
 msgstr "Проверка _почты"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1702
 msgid "Mail_box"
 msgstr "Почтовый _ящик"
 
-#: applets/gen_util/mailcheck.c:1790
+#: applets/gen_util/mailcheck.c:1782
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr ""
 "\"Индикатор входящей почты\" извещает о поступлении новой почты в почтовый "
 "ящик"
 
-#: applets/gen_util/mailcheck.c:1955
+#: applets/gen_util/mailcheck.c:1939
 msgid "Text only"
 msgstr "Только текст"
 
-#: applets/gen_util/mailcheck.c:1981
+#: applets/gen_util/mailcheck.c:1965
 msgid "Mail check"
 msgstr "Проверка почты"
 
-#: applets/gen_util/mailcheck.c:1982
+#: applets/gen_util/mailcheck.c:1966
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr ""
 "\"Индикатор входящей почты\" извещает о поступлении новой почты в почтовый "
@@ -819,23 +819,23 @@ msgstr "Проверка почты"
 msgid "New Mail"
 msgstr "Пришла почта"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "строку(и)"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 msgid "Columns"
 msgstr "столбец(ца)"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:388
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "Произошла ошибка при загрузке значения num_rows для апплета переключателя "
 "рабочих мест: %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:399
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -843,14 +843,14 @@ msgstr ""
 "Произошла ошибка при загрузке значения display_workspace_names для "
 "\"Переключателя рабочих мест\": %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:414
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "Произошла ошибка при загрузке значения display_all_workspaces для "
 "\"Переключателя рабочих мест\": %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -944,11 +944,11 @@ msgstr "Произошёл сбой при загрузке \"%s\": %s\n"
 msgid "File not found"
 msgstr "Файл не найден"
 
-#: applets/gen_util/showdesktop.c:454
+#: applets/gen_util/showdesktop.c:442
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "Эта кнопка позволяет свернуть все окна и расчистить рабочий стол"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:794
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1285,7 +1285,7 @@ msgstr "Разрешить стрелки на кнопках сокрытия"
 msgid "Drawer"
 msgstr "Ящик"
 
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
+#: gnome-panel/drawer.c:815 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
 #: gnome-panel/menu.c:3391 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Изменить свойства"
@@ -1539,15 +1539,15 @@ msgstr "%s%cснимок_экрана-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Недостаточно места для записи файла \"%s\""
 
-#: gnome-panel/gnome-panel-screenshot.c:1221
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Grab a window instead of the entire screen"
 msgstr "Сделать снимок окна вместо всего экрана"
 
-#: gnome-panel/gnome-panel-screenshot.c:1222
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "Сделать снимок экрана после определённой задержки (в секундах)"
 
-#: gnome-panel/gnome-panel-screenshot.c:1274
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1555,7 +1555,7 @@ msgstr ""
 "Отсутствует файл формата glade для программы, делающей снимки экрана.\n"
 "Проверьте установку пакета gnome-panel"
 
-#: gnome-panel/gnome-panel-screenshot.c:1298
+#: gnome-panel/gnome-panel-screenshot.c:1299
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Невозможно сделать снимок экрана текущего рабочего стола."
 
@@ -1647,44 +1647,44 @@ msgstr ""
 "\n"
 "Подробности: %s"
 
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:600
 msgid "Choose a file"
 msgstr "Выберите файл"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:839 gnome-panel/gnome-run.c:840
 msgid "Known Applications"
 msgstr "Известные приложения"
 
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:971
 msgid "Command to run"
 msgstr "Команда для выполнения"
 
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:1006
 msgid "Run in _terminal"
 msgstr "Запустить в те_рминале"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:1011
 msgid "_Append File..."
 msgstr "Доб_авить файл..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1397
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "Будет выполнена команда: \"%s\""
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1406
 msgid "No application selected"
 msgstr "Ни одно приложение не выбрано"
 
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1527
 msgid "List of known applications"
 msgstr "Список известных приложений"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1528
 msgid "Choose an application to run from the list"
 msgstr "Выберите приложение для запуска из этого списка"
 
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1667 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Запустить программу"
 
@@ -1749,7 +1749,7 @@ msgstr "Ключ %s не установлен, невозможно загруз
 msgid "Create Launcher"
 msgstr "Создать кнопку запуска"
 
-#: gnome-panel/launcher.c:1068
+#: gnome-panel/launcher.c:1070
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1760,7 +1760,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1155 gnome-panel/menu.c:1179
+#: gnome-panel/launcher.c:1157 gnome-panel/menu.c:1179
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2235,18 +2235,18 @@ msgstr ""
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Невозможно получить интерфейс AppletShell из управляющего элемента\n"
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel.c:892
 #, c-format
 msgid "Open URL: %s"
 msgstr "Открыть ссылку (URL): %s"
 
-#: gnome-panel/panel.c:2609
+#: gnome-panel/panel.c:2610
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr "В настройках не найдены панели. Будет создана одна панель меню."
 
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:2899
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2254,7 +2254,7 @@ msgstr ""
 "Когда панель удаляется, теряются настройки её апплетов\n"
 "и её собственные. Удалить эту панель?"
 
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:2908
 msgid "Delete Panel"
 msgstr "Удалить панель"
 
@@ -2551,42 +2551,42 @@ msgstr "Тестовый апплет Bonobo"
 msgid "Test Bonobo Applet Factory"
 msgstr "Фабрика тестового апплета bonobo"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Получен незавершённый тип фона \"%s\""
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:880
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Получен незавершённый тип фона \"%s\": %s"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:889
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Произошёл сбой при получении изображения %s"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:896
 msgid "Unknown background type received"
 msgstr "Получен неизвестный тип фона"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1077
 msgid "The Applet's containing Panel's orientation"
 msgstr "Апплет содержит указание на ориентацию панели"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1085
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Апплет содержит размер панели в точках растра"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1093
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Апплет содержит цвет фона панели или изображение"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1101
 msgid "The Applet's flags"
 msgstr "Флаги апплета"
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1109
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "Изменяет размеры подсказки так, чтобы они были приемлемы для апплета"
 

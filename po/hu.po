@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
-"POT-Creation-Date: 2003-03-11 11:54+1300\n"
+"POT-Creation-Date: 2003-05-15 12:45+0100\n"
 "PO-Revision-Date: 2003-01-07 21:58+0100\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 # gnome-terminal/gnome-terminal.c:2027
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1645
-#: applets/gen_util/mailcheck.c:1853 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:899
+#: applets/gen_util/clock.c:1130 applets/gen_util/mailcheck.c:1637
+#: applets/gen_util/mailcheck.c:1836 applets/gen_util/pager.c:176
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:400
+#: applets/gen_util/tasklist.c:113 applets/gen_util/tasklist.c:746
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -127,7 +127,7 @@ msgstr "A GNOME hal"
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1341
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1342
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "Keresés"
@@ -225,7 +225,7 @@ msgstr "_Névjegy..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
+#: gnome-panel/drawer.c:818 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
 #: gnome-panel/menu.c:4181 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "_Súgó"
@@ -301,46 +301,46 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%Y %B %d, %A"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:947
 msgid "Clock Preferences"
 msgstr "Óra beállításai..."
 
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:976
 msgid "Clock type"
 msgstr "Óra típusa"
 
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:986
 msgid "_12 hour"
 msgstr "_12 órás"
 
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:992
 msgid "_24 hour"
 msgstr "_24 órás"
 
-#: applets/gen_util/clock.c:1007
+#: applets/gen_util/clock.c:997
 msgid "UNI_X time"
 msgstr "_UNIX idő"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:1001
 msgid "_Internet time"
 msgstr "_Internet idő"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1038
 msgid "Show _seconds"
 msgstr "_Másodpercek megjelenítése"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1048
 msgid "Show _date"
 msgstr "_Dátum megjelenítése"
 
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1058
 msgid "Use _UTC"
 msgstr "_UTC használata"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1775
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
+#: applets/gen_util/clock.c:1166 applets/gen_util/mailcheck.c:1767
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:431
+#: applets/gen_util/tasklist.c:778 applets/notification_area/main.c:112
 #: gnome-panel/menu.c:243
 msgid "translator_credits"
 msgstr ""
@@ -350,11 +350,11 @@ msgstr ""
 "Vámosi Tamás <tvamosi@suselinux.hu>"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
-#: applets/gen_util/clock.c:1204
+#: applets/gen_util/clock.c:1185
 msgid "Clock"
 msgstr "Óra"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1187
 msgid "The Clock displays the current time and date"
 msgstr "Az óra a pontos időt és a dátumot mutatja"
 
@@ -448,7 +448,7 @@ msgid "Get the current time and date"
 msgstr "A pontos időt és dátumot jeleníti meg"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1788
+#: applets/gen_util/mailcheck.c:328 applets/gen_util/mailcheck.c:1780
 msgid "Inbox Monitor"
 msgstr "Levélfigyelő"
 
@@ -457,7 +457,7 @@ msgid "Internet"
 msgstr "Internet"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
+#: applets/gen_util/showdesktop.c:440
 msgid "Show Desktop Button"
 msgstr "Munkaasztal gomb megjelenítése"
 
@@ -475,12 +475,12 @@ msgid "Utility"
 msgstr "Segédeszköz"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:792
 msgid "Window List"
 msgstr "Ablaklista"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:859
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "Munkaterület-váltó"
@@ -494,12 +494,12 @@ msgid "_Check for mail"
 msgstr "Levele_k ellenőrzése"
 
 # gnome-terminal/gnome-terminal.c:2027
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:206
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "%s futtatása közben hiba történt: %s"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:334
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -507,15 +507,15 @@ msgstr ""
 "Nem adtál meg jelszót a Levélfigyelő beállításában,\n"
 "így minden indításnál be kell majd azt írnod."
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:342
 msgid "Please enter your mailserver's _password:"
 msgstr "Írd be a levelezőkiszolgálón használt _jelszavad:"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1401
+#: applets/gen_util/mailcheck.c:347 applets/gen_util/mailcheck.c:1402
 msgid "Password Entry box"
 msgstr "Jelszóbeviteli mező"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:388
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
@@ -525,178 +525,178 @@ msgstr ""
 "egyelőre kikapcsolta.\n"
 "Lehet, hogy nem volt jó a megadott kiszolgáló, felhasználónév vagy jelszó?"
 
-#: applets/gen_util/mailcheck.c:580
+#: applets/gen_util/mailcheck.c:581
 msgid "You have new mail."
 msgstr "Új leveled érkezett."
 
-#: applets/gen_util/mailcheck.c:582
+#: applets/gen_util/mailcheck.c:583
 msgid "You have mail."
 msgstr "Van olvasatlan leveled."
 
-#: applets/gen_util/mailcheck.c:586
+#: applets/gen_util/mailcheck.c:587
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d üzenet"
 
-#: applets/gen_util/mailcheck.c:588
+#: applets/gen_util/mailcheck.c:589
 #, c-format
 msgid "%d messages"
 msgstr "%d üzenet"
 
-#: applets/gen_util/mailcheck.c:592
+#: applets/gen_util/mailcheck.c:593
 msgid "No mail."
 msgstr "Nem érkezett levél."
 
-#: applets/gen_util/mailcheck.c:1112 applets/gen_util/mailcheck.c:1113
-#: applets/gen_util/mailcheck.c:1979 applets/gen_util/mailcheck.c:1980
+#: applets/gen_util/mailcheck.c:1113 applets/gen_util/mailcheck.c:1114
+#: applets/gen_util/mailcheck.c:1963 applets/gen_util/mailcheck.c:1964
 msgid "Status not updated"
 msgstr "Állapot nem frissül"
 
-#: applets/gen_util/mailcheck.c:1285
+#: applets/gen_util/mailcheck.c:1286
 msgid "Mailbox _resides on:"
 msgstr "A levelesláda _helye:"
 
-#: applets/gen_util/mailcheck.c:1293
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local mailspool"
 msgstr "Helyi levelesláda"
 
-#: applets/gen_util/mailcheck.c:1301
+#: applets/gen_util/mailcheck.c:1302
 msgid "Local maildir"
 msgstr "Helyi levélkönyvtár"
 
-#: applets/gen_util/mailcheck.c:1309
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote POP3-server"
 msgstr "Távoli POP3-kiszolgáló"
 
-#: applets/gen_util/mailcheck.c:1317
+#: applets/gen_util/mailcheck.c:1318
 msgid "Remote IMAP-server"
 msgstr "Távoli IMAP-kiszolgáló"
 
-#: applets/gen_util/mailcheck.c:1337
+#: applets/gen_util/mailcheck.c:1338
 msgid "Mail _spool file:"
 msgstr "Levelesláda _fájlja (spool):"
 
-#: applets/gen_util/mailcheck.c:1356
+#: applets/gen_util/mailcheck.c:1357
 msgid "Mail s_erver:"
 msgstr "Levelező_kiszolgáló:"
 
-#: applets/gen_util/mailcheck.c:1362
+#: applets/gen_util/mailcheck.c:1363
 msgid "Mail Server Entry box"
 msgstr "Levelezőkiszolgáló beviteli mező"
 
-#: applets/gen_util/mailcheck.c:1376
+#: applets/gen_util/mailcheck.c:1377
 msgid "_Username:"
 msgstr "_Felhasználói név: "
 
-#: applets/gen_util/mailcheck.c:1384
+#: applets/gen_util/mailcheck.c:1385
 msgid "Username Entry box"
 msgstr "Felhasználói név beviteli mező"
 
-#: applets/gen_util/mailcheck.c:1393
+#: applets/gen_util/mailcheck.c:1394
 msgid "_Password:"
 msgstr "_Jelszó:"
 
-#: applets/gen_util/mailcheck.c:1414
+#: applets/gen_util/mailcheck.c:1415
 msgid "_Folder:"
 msgstr "_Mappa:"
 
-#: applets/gen_util/mailcheck.c:1422
+#: applets/gen_util/mailcheck.c:1423
 msgid "Folder Entry box"
 msgstr "Mappabeviteli mező"
 
-#: applets/gen_util/mailcheck.c:1434
+#: applets/gen_util/mailcheck.c:1435
 msgid "C_ommand to run before checking for mail:"
 msgstr "A p_ostaláda ellenőrzése előtt lefuttatandó parancs:"
 
-#: applets/gen_util/mailcheck.c:1442
+#: applets/gen_util/mailcheck.c:1443
 msgid "Command Entry box"
 msgstr "Parancsbeviteli mező"
 
-#: applets/gen_util/mailcheck.c:1467
+#: applets/gen_util/mailcheck.c:1468
 msgid "Execute"
 msgstr "Indítás"
 
-#: applets/gen_util/mailcheck.c:1478
+#: applets/gen_util/mailcheck.c:1479
 msgid "Before each _update:"
 msgstr "Minden _frissítés előtt:"
 
-#: applets/gen_util/mailcheck.c:1493
+#: applets/gen_util/mailcheck.c:1494
 msgid "Command to execute before each update"
 msgstr "Minden frissítés előtt végrehajtandó parancs"
 
-#: applets/gen_util/mailcheck.c:1503
+#: applets/gen_util/mailcheck.c:1504
 msgid "When new mail _arrives:"
 msgstr "Levél _érkezéskor induljon:"
 
-#: applets/gen_util/mailcheck.c:1516 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1517 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "Új levél érkezésekor végrehajtandó parancs"
 
-#: applets/gen_util/mailcheck.c:1526
+#: applets/gen_util/mailcheck.c:1527
 msgid "When clicke_d:"
 msgstr "Amikor _rákattintasz:"
 
-#: applets/gen_util/mailcheck.c:1539
+#: applets/gen_util/mailcheck.c:1540
 msgid "Command to execute when clicked"
 msgstr "Kattintáskor végrehajtandó parancs"
 
-#: applets/gen_util/mailcheck.c:1549
+#: applets/gen_util/mailcheck.c:1550
 msgid "Set the number of unread mails to _zero"
 msgstr "Olvasatlan levelek számának _nullára állítása"
 
-#: applets/gen_util/mailcheck.c:1560
+#: applets/gen_util/mailcheck.c:1561
 msgid "Check for mail _every"
 msgstr "Levél _ellenőrzése"
 
-#: applets/gen_util/mailcheck.c:1572 applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1573 applets/gen_util/mailcheck.c:1577
 msgid "minutes"
 msgstr "perc"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1573
 msgid "Choose time interval in minutes to check mail"
 msgstr "A levélellenőrzés időközének megadása percben"
 
-#: applets/gen_util/mailcheck.c:1586 applets/gen_util/mailcheck.c:1590
+#: applets/gen_util/mailcheck.c:1587 applets/gen_util/mailcheck.c:1591
 msgid "seconds"
 msgstr "másodpercenként"
 
-#: applets/gen_util/mailcheck.c:1586
+#: applets/gen_util/mailcheck.c:1587
 msgid "Choose time interval in seconds to check mail"
 msgstr "A levélellenőrzés időközének megadása másodpercben"
 
-#: applets/gen_util/mailcheck.c:1598
+#: applets/gen_util/mailcheck.c:1599
 msgid "Play a _sound when new mail arrives"
 msgstr "_Hang lejátszása levél érkezésekor"
 
-#: applets/gen_util/mailcheck.c:1609
+#: applets/gen_util/mailcheck.c:1610
 msgid "Select a_nimation"
 msgstr "_Animáció kiválasztása"
 
-#: applets/gen_util/mailcheck.c:1686
+#: applets/gen_util/mailcheck.c:1678
 msgid "Inbox Monitor Preferences"
 msgstr "Postaládafigyelő beállításai"
 
-#: applets/gen_util/mailcheck.c:1706
+#: applets/gen_util/mailcheck.c:1698
 msgid "_Mail check"
 msgstr "_Levélellenőrzés"
 
-#: applets/gen_util/mailcheck.c:1710
+#: applets/gen_util/mailcheck.c:1702
 msgid "Mail_box"
 msgstr "L_evelesláda"
 
-#: applets/gen_util/mailcheck.c:1790
+#: applets/gen_util/mailcheck.c:1782
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "A levélfigyelő figyelmeztet, ha új leveled van"
 
-#: applets/gen_util/mailcheck.c:1955
+#: applets/gen_util/mailcheck.c:1939
 msgid "Text only"
 msgstr "Csak szöveg"
 
-#: applets/gen_util/mailcheck.c:1981
+#: applets/gen_util/mailcheck.c:1965
 msgid "Mail check"
 msgstr "Levélellenőrzés"
 
-#: applets/gen_util/mailcheck.c:1982
+#: applets/gen_util/mailcheck.c:1966
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "A levélellenőrző figyelmeztet, ha új leveled van"
 
@@ -823,22 +823,22 @@ msgstr "Levélellenőrzés"
 msgid "New Mail"
 msgstr "Új levél"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "Sor"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 msgid "Columns"
 msgstr "Oszlop"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:388
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr ""
 "A num_rows érték betöltése közben hiba történt a Munkaterület-váltóban: %s\n"
 
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:399
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
@@ -846,14 +846,14 @@ msgstr ""
 "A display_workspace_names érték betöltése közben hiba történt a Munkaterület-"
 "váltóban: %s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:414
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
 msgstr ""
 "A display_all_workspaces érték betöltése közben hiba történt a Munkaterület-"
 "váltóban: %s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -947,11 +947,11 @@ msgstr "%s betöltése sikertelen: %s\n"
 msgid "File not found"
 msgstr "A fájl nem található"
 
-#: applets/gen_util/showdesktop.c:454
+#: applets/gen_util/showdesktop.c:442
 msgid "This button lets you hide all windows and show the desktop"
 msgstr "A gomb elrejti az alkalmazások ablakait, és megjeleníti a munkaasztalt"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:794
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
@@ -1290,7 +1290,7 @@ msgstr "Az elrejtőgombon lévő nyíl engedélyezése"
 msgid "Drawer"
 msgstr "Fiók"
 
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
+#: gnome-panel/drawer.c:815 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
 #: gnome-panel/menu.c:3391 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_Tulajdonságok"
@@ -1546,15 +1546,15 @@ msgstr "%s%cKepernyokep-%d.png"
 msgid "Not enough room to write file %s"
 msgstr "Nincs elég hely, a következő fájl kiírásához: %s"
 
-#: gnome-panel/gnome-panel-screenshot.c:1221
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Grab a window instead of the entire screen"
 msgstr "Ablak fotózása a teljes képernyő helyett"
 
-#: gnome-panel/gnome-panel-screenshot.c:1222
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "A megadott késleltetéssel készít képet [másodpercben]"
 
-#: gnome-panel/gnome-panel-screenshot.c:1274
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1562,7 +1562,7 @@ msgstr ""
 "A képernyőkép készítő program glade fájlja hiányzik.\n"
 "Kérlek ellenőrizd a gnome-panel telepítését"
 
-#: gnome-panel/gnome-panel-screenshot.c:1298
+#: gnome-panel/gnome-panel-screenshot.c:1299
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "Nem lehet képernyőképet készíteni a jelenlegi munkaasztalról."
 
@@ -1654,44 +1654,44 @@ msgstr ""
 "\n"
 "Részletek: %s"
 
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:600
 msgid "Choose a file"
 msgstr "Válassz ki egy fájlt"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:839 gnome-panel/gnome-run.c:840
 msgid "Known Applications"
 msgstr "Ismert alkalmazások"
 
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:971
 msgid "Command to run"
 msgstr "Futtatandó parancs"
 
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:1006
 msgid "Run in _terminal"
 msgstr "_Terminálban fusson"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:1011
 msgid "_Append File..."
 msgstr "_Fájl hozzáfűzése..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1397
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "A következő parancsot futtatja: '%s'"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1406
 msgid "No application selected"
 msgstr "Nincs kiválasztott alkalmazás"
 
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1527
 msgid "List of known applications"
 msgstr "Ismert alkalmazások listája"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1528
 msgid "Choose an application to run from the list"
 msgstr "Válaszd ki a listából a futtatandó alkalmazást"
 
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1667 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "Program futtatása"
 
@@ -1756,7 +1756,7 @@ msgstr "%s billentyű nincs beállítva, indítóikon betöltése sikertelen\n"
 msgid "Create Launcher"
 msgstr "Indítóikon létrehozása"
 
-#: gnome-panel/launcher.c:1068
+#: gnome-panel/launcher.c:1070
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1767,7 +1767,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/launcher.c:1155 gnome-panel/menu.c:1179
+#: gnome-panel/launcher.c:1157 gnome-panel/menu.c:1179
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -2241,18 +2241,18 @@ msgstr ""
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Nem kapom meg az AppletShell interfészt a vezérlőtől\n"
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel.c:892
 #, c-format
 msgid "Open URL: %s"
 msgstr "URL megnyitása: %s"
 
-#: gnome-panel/panel.c:2609
+#: gnome-panel/panel.c:2610
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr "Nem találtam panelt a konfigurációdban. Egy menüpanelt generálok neked"
 
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:2899
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2260,7 +2260,7 @@ msgstr ""
 "A panel törölésekor, a panel és az appletek\n"
 "beállításai elvesznek. Törlöd a panelt?"
 
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:2908
 msgid "Delete Panel"
 msgstr "Panel törlése"
 
@@ -2561,42 +2561,42 @@ msgstr "Próba Bonobo Applet"
 msgid "Test Bonobo Applet Factory"
 msgstr "Próba Bonobo Applet Factory"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Nem teljes '%s' háttértípust kaptam"
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:880
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Nem teljes '%s' háttértípust kaptam: %s"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:889
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Nem sikerült a következő képet megkapni: %s"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:896
 msgid "Unknown background type received"
 msgstr "Ismeretlen háttértípus érkezett"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1077
 msgid "The Applet's containing Panel's orientation"
 msgstr "Az applet tartalmazza a panel elhelyezkedését"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1085
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Az applet tartalmazza a panel méretét képpontban"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1093
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Az applet tartalmazza a panel háttérszínét vagy mintázatát"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1101
 msgid "The Applet's flags"
 msgstr "Az applet kapcsolói"
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1109
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr ""
 "Tartományok, amelyek azt mutatják, milyen méret elfogadható az appletnek"

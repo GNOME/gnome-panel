@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GNOME Panel 2.2 \n"
-"POT-Creation-Date: 2003-03-03 04:59+0100\n"
+"POT-Creation-Date: 2003-05-15 12:45+0100\n"
 "PO-Revision-Date: 2003-03-03 10:21+0530\n"
 "Last-Translator: Runa Bhattacharjee<runa77@softhome.net>\n"
 "Language-Team: BANGLA <gnome-translation@bengalinux.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: applets/fish/fish.c:128 applets/gen_util/clock.c:909
-#: applets/gen_util/clock.c:1149 applets/gen_util/mailcheck.c:1638
-#: applets/gen_util/mailcheck.c:1846 applets/gen_util/pager.c:187
-#: applets/gen_util/pager.c:522 applets/gen_util/showdesktop.c:412
-#: applets/gen_util/tasklist.c:123 applets/gen_util/tasklist.c:765
+#: applets/fish/fish.c:128 applets/gen_util/clock.c:899
+#: applets/gen_util/clock.c:1130 applets/gen_util/mailcheck.c:1637
+#: applets/gen_util/mailcheck.c:1836 applets/gen_util/pager.c:176
+#: applets/gen_util/pager.c:501 applets/gen_util/showdesktop.c:400
+#: applets/gen_util/tasklist.c:113 applets/gen_util/tasklist.c:746
 #: applets/notification_area/main.c:80
 #, c-format
 msgid "There was an error displaying help: %s"
@@ -32,8 +32,8 @@ msgid ""
 "We strongly advise you against using %s for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
-"সাবধানবাণীঃ এই কমান্ড-টি প্রয়োজনীয় বলে মনে হচ্ছে।\n "
-"যেহেতু এটি একটি অকাজের অ্যাপ্‌লেট, আপনি বোধহয় একাজ করতে চাইবেন না। \n"
+"সাবধানবাণীঃ এই কমান্ড-টি প্রয়োজনীয় বলে মনে হচ্ছে।\n"
+" যেহেতু এটি একটি অকাজের অ্যাপ্‌লেট, আপনি বোধহয় একাজ করতে চাইবেন না। \n"
 "আপনাকে এমন কোনো কাজের জন্যে %sর ব্যবহার না করার বিশেষ পরামর্শ দেওয়া হচ্ছে\n"
 "যাতে এই অ্যাপ্‌লেট-টি ব্যবহারযোগ্য হয়ে উঠবে।"
 
@@ -50,17 +50,17 @@ msgid ""
 "anyone is found using it, he should be promptly sent for a psychiatric "
 "evaluation."
 msgstr ""
-"%sর  কার্যত কোন ব্যবহার নেই। এটি অযথা ডিস্ক থেকে জায়গা নেয় আর কম্পাইল করার ফলে"
-"সময় নষ্ট করে, আর যদি লোড করা হয় তাহলে প্যানেলের মূল্যবান জায়গা আর মেমরি-ও নিয়ে নেয়। যদি "
-"কাউকে এটি ব্যবহার করতে দেখা যায়, তাহলে তাকে তক্ষুণি মানসিক পরীক্ষার জন্য পাঠিয়ে দিন।"
-
+"%sর  কার্যত কোন ব্যবহার নেই। এটি অযথা ডিস্ক থেকে জায়গা নেয় আর কম্পাইল করার "
+"ফলেসময় নষ্ট করে, আর যদি লোড করা হয় তাহলে প্যানেলের মূল্যবান জায়গা আর মেমরি-ও "
+"নিয়ে নেয়। যদি কাউকে এটি ব্যবহার করতে দেখা যায়, তাহলে তাকে তক্ষুণি মানসিক "
+"পরীক্ষার জন্য পাঠিয়ে দিন।"
 
 #: applets/fish/fish.c:400
 msgid "(with minor help from George)"
 msgstr "(জর্জের থেকে সামান্য সাহায্য নিয়ে)"
 
-#: applets/fish/fish.c:416
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:3
+#: applets/fish/fish.c:416
 msgid "Fish"
 msgstr "মাছ"
 
@@ -78,7 +78,6 @@ msgstr "%s গুহ্‍নোম মাছ, সমকালীন দৈব-�
 msgid "Unable to get the name of the command to execute"
 msgstr "নির্বাহ করার কমান্ডটির নাম উদ্ধার করা সম্ভভ হয়নি"
 
-
 #: applets/fish/fish.c:513
 msgid "Unable to locate the command to execute"
 msgstr "নির্বাহ করার কমান্ডটিকে খুজে পাওয়া যায়নি"
@@ -95,8 +94,8 @@ msgid ""
 "\n"
 "Details: %s"
 msgstr ""
-"'%s'\n নির্বাহ করা সম্ভভ হয়নি"
-"\n"
+"'%s'\n"
+" নির্বাহ করা সম্ভভ হয়নি\n"
 "বিবরণ: %s"
 
 #: applets/fish/fish.c:687
@@ -106,12 +105,9 @@ msgid ""
 "\n"
 "Please refer to fish properties dialog."
 msgstr ""
-"আপনি ফরচুণ ইন্‌ষ্টল করেননি অথবা চালানোর জন্যে কোন প্রোগ্রামের নাম "
-"উল্লেখ করেননি। \n"
+"আপনি ফরচুণ ইন্‌ষ্টল করেননি অথবা চালানোর জন্যে কোন প্রোগ্রামের নাম উল্লেখ করেননি। \n"
 "\n"
 "মাছের বৈশিষ্ট্যাবলি নির্ধারণের ডায়লোগটি দেখুন।"
-
-
 
 #: applets/fish/fish.c:1289
 msgid ""
@@ -129,7 +125,7 @@ msgstr "গুহ্‍নোম মাছ, ভবিষ্যত্‍ বক�
 msgid "*"
 msgstr "*"
 
-#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1334
+#: applets/fish/fish.glade.h:2 applets/gen_util/mailcheck.c:1342
 #: gnome-panel/panel-config.c:1498 gnome-panel/panel-util.c:287
 msgid "Browse"
 msgstr "ব্রাউজ"
@@ -150,7 +146,6 @@ msgstr "গুহ্‍নোম মাছের পছন্দ তালিক
 msgid "Pause _per frame (s):"
 msgstr "প্রতি ফ্রেম-এ বিরাম :"
 
-
 #: applets/fish/fish.glade.h:7
 msgid "_Animation filename:"
 msgstr "_অ্যানিমেশন ফাইল-এর নাম:"
@@ -163,14 +158,12 @@ msgstr "_গুহ্‍নোম মাছের নাম:"
 msgid "_Rotate on vertical panels"
 msgstr "_লম্বা-লম্বি প্যাণেলে ঘোরাণো"
 
-
 #: applets/fish/fish.schemas.in.h:1
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
 msgstr ""
-"নামহীন মাছ ভীষণ নির্জীব লাগে। আপনার মাছের নামকরণ করুন এবং তাকে"
-"জাগিয়ে তুলুন।"
+"নামহীন মাছ ভীষণ নির্জীব লাগে। আপনার মাছের নামকরণ করুন এবং তাকেজাগিয়ে তুলুন।"
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -204,7 +197,6 @@ msgstr "বিনোদন"
 msgid "Display a swimming fish or another animated creature"
 msgstr "সন্তরনরত মাছ অথবা অন্য কোন জীবন্ত প্রানী প্রদর্শন করুন"
 
-
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:4
 msgid "From Whence That Stupid Fish Came"
 msgstr "এই বুর্বক মাছ-টি কোথা হইতে আসিয়াছে"
@@ -230,8 +222,8 @@ msgstr "_বিষয়ে..."
 #: applets/gen_util/GNOME_ShowDesktopApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/notification_area/GNOME_NotificationAreaApplet.xml.h:2
-#: gnome-panel/drawer.c:775 gnome-panel/launcher.c:804 gnome-panel/menu.c:3446
-#: gnome-panel/menu.c:4190 gnome-panel/panel-action-button.c:518
+#: gnome-panel/drawer.c:818 gnome-panel/launcher.c:788 gnome-panel/menu.c:3437
+#: gnome-panel/menu.c:4181 gnome-panel/panel-action-button.c:518
 msgid "_Help"
 msgstr "_সহায়িকা"
 
@@ -306,56 +298,56 @@ msgstr "%I:%M %p"
 msgid "%A, %B %d %Y"
 msgstr "%A, %B %d %Y"
 
-#: applets/gen_util/clock.c:957
+#: applets/gen_util/clock.c:947
 msgid "Clock Preferences"
 msgstr "ঘড়ি-র বৈশিষ্ট্যাবলি"
 
-#: applets/gen_util/clock.c:986
+#: applets/gen_util/clock.c:976
 msgid "Clock type"
 msgstr "ঘড়ি-র রকম"
 
-#: applets/gen_util/clock.c:996
+#: applets/gen_util/clock.c:986
 msgid "_12 hour"
 msgstr "_১২ ঘন্টা"
 
-#: applets/gen_util/clock.c:1002
+#: applets/gen_util/clock.c:992
 msgid "_24 hour"
 msgstr "_২৪ ঘন্টা"
 
-#: applets/gen_util/clock.c:1007
+#: applets/gen_util/clock.c:997
 msgid "UNI_X time"
 msgstr "ইউনি_ক্স সময়"
 
-#: applets/gen_util/clock.c:1011
+#: applets/gen_util/clock.c:1001
 msgid "_Internet time"
 msgstr "_ইন্টারনেট সময়"
 
-#: applets/gen_util/clock.c:1048
+#: applets/gen_util/clock.c:1038
 msgid "Show _seconds"
 msgstr "সেকেন্ড _দেখাও"
 
-#: applets/gen_util/clock.c:1058
+#: applets/gen_util/clock.c:1048
 msgid "Show _date"
 msgstr "তারিখ _দেখাও"
 
-#: applets/gen_util/clock.c:1068
+#: applets/gen_util/clock.c:1058
 msgid "Use _UTC"
 msgstr "ইউ-টি-সি_ব্যবহার করা হোক"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1185 applets/gen_util/mailcheck.c:1768
-#: applets/gen_util/pager.c:555 applets/gen_util/showdesktop.c:443
-#: applets/gen_util/tasklist.c:797 applets/notification_area/main.c:112
-#: gnome-panel/menu.c:252
+#: applets/gen_util/clock.c:1166 applets/gen_util/mailcheck.c:1767
+#: applets/gen_util/pager.c:534 applets/gen_util/showdesktop.c:431
+#: applets/gen_util/tasklist.c:778 applets/notification_area/main.c:112
+#: gnome-panel/menu.c:243
 msgid "translator_credits"
 msgstr "অনুবাদকবৃন্দ"
 
-#: applets/gen_util/clock.c:1204
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:4
+#: applets/gen_util/clock.c:1185
 msgid "Clock"
 msgstr "ঘড়ি"
 
-#: applets/gen_util/clock.c:1206
+#: applets/gen_util/clock.c:1187
 msgid "The Clock displays the current time and date"
 msgstr "ঘড়ি-তে এই মূহুর্তের সময় ও তারিখ দেখানো হচ্ছে"
 
@@ -378,9 +370,9 @@ msgstr "সময় দেখানোর বেলা সেকেন্ড-ও �
 #: applets/gen_util/clock.schemas.in.h:5
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "উনিভারসাল কোওরডিনেটেড টাইম জোন-এ সময় দেখাবে"
-#msgstr "ইউনিভারসাল কোওরডিনেটেড টাইম জোন-এ সময় দেখাবে"
-#msgstr "সমগ্র বিশ্বের সাপেক্ষে হিসাবকৃত সময়ক্ষেত্রের সময় দেখানো হোক"
 
+# msgstr "ইউনিভারসাল কোওরডিনেটেড টাইম জোন-এ সময় দেখাবে"
+# msgstr "সমগ্র বিশ্বের সাপেক্ষে হিসাবকৃত সময়ক্ষেত্রের সময় দেখানো হোক"
 #: applets/gen_util/clock.schemas.in.h:6
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "ইউনিক্সের জন্মমুহূর্ত অর্থাত্‍ ১৯৭০-০১-০১ সাপেক্ষে সময় প্রদর্শন করা হোক"
@@ -450,7 +442,7 @@ msgid "Get the current time and date"
 msgstr "বর্তমান সময় ও তারিখ নাও"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:7
-#: applets/gen_util/mailcheck.c:326 applets/gen_util/mailcheck.c:1781
+#: applets/gen_util/mailcheck.c:328 applets/gen_util/mailcheck.c:1780
 msgid "Inbox Monitor"
 msgstr "ইনবকস্‌ মনিটার"
 
@@ -459,7 +451,7 @@ msgid "Internet"
 msgstr "ইন্টারনেট"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:9
-#: applets/gen_util/showdesktop.c:452
+#: applets/gen_util/showdesktop.c:440
 msgid "Show Desktop Button"
 msgstr "ডেস্কটপ বোতাম-টি প্রদর্শন করো"
 
@@ -476,14 +468,13 @@ msgstr "কর্মক্ষেত্র-র মধ্যে অদলবদল
 msgid "Utility"
 msgstr "প্রয়োজনীয়তা"
 
-
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:13
-#: applets/gen_util/tasklist.c:811
+#: applets/gen_util/tasklist.c:792
 msgid "Window List"
 msgstr "উইন্ডো তালিকা"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:14
-#: applets/gen_util/pager.c:568 applets/gen_util/pager.c:880
+#: applets/gen_util/pager.c:547 applets/gen_util/pager.c:859
 #: applets/gen_util/pager.glade.h:7
 msgid "Workspace Switcher"
 msgstr "ওয়ার্কস্পেস অদলবদলকারী"
@@ -496,12 +487,12 @@ msgstr "কিছু সাধারণ অ্যাপ্‌লেট তৈর
 msgid "_Check for mail"
 msgstr "_মেইল পরীক্ষা করা হোক"
 
-#: applets/gen_util/mailcheck.c:204
+#: applets/gen_util/mailcheck.c:206
 #, c-format
 msgid "There was an error executing %s: %s"
 msgstr "%s: %s নির্বাহিত করতে সমস্যা দেখা দিয়েছে"
 
-#: applets/gen_util/mailcheck.c:332
+#: applets/gen_util/mailcheck.c:334
 msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
@@ -509,197 +500,196 @@ msgstr ""
 "ইনবক্‌স মনিটরের পছন্দ তালিকায় আপনি কোন পাসওয়ার্ড দেননি,\n"
 "তাই প্রতিবার শুরুর সময় আপনাকে এটি দিতে হবে।"
 
-#: applets/gen_util/mailcheck.c:340
+#: applets/gen_util/mailcheck.c:342
 msgid "Please enter your mailserver's _password:"
 msgstr "দয়া করে অপনার মেইলসার্ভারের_পাসওয়ার্ডটি লিখুন:"
 
-#: applets/gen_util/mailcheck.c:345 applets/gen_util/mailcheck.c:1394
+#: applets/gen_util/mailcheck.c:347 applets/gen_util/mailcheck.c:1402
 msgid "Password Entry box"
 msgstr "পাসওয়ার্ড লেখার বাক্স"
 
-#: applets/gen_util/mailcheck.c:386
+#: applets/gen_util/mailcheck.c:388
 msgid ""
 "The Inbox Monitor failed to check your mails and thus automatic updating has "
 "been deactivated for now.\n"
 "Maybe you used a wrong server, username or password?"
 msgstr ""
-"ইনবকস্‌ মনিটার মেইল পরীক্ষা করতে অসফল হয়েছে তাই সয়ংক্রীয় অপডেটিং "
-"আপাতত নিষ্ক্রিয় করে রাখা হলো।\n"
+"ইনবকস্‌ মনিটার মেইল পরীক্ষা করতে অসফল হয়েছে তাই সয়ংক্রীয় অপডেটিং আপাতত নিষ্ক্রিয় "
+"করে রাখা হলো।\n"
 "হয়তো আপনি ভূল সার্ভার, ব্যবহারকারির-নাম অথবা পাসওয়ার্ড লিখেছেন?"
 
-#: applets/gen_util/mailcheck.c:573
+#: applets/gen_util/mailcheck.c:581
 msgid "You have new mail."
 msgstr "আপনার জন্য নতুন মেইল এসেছে।"
 
-#: applets/gen_util/mailcheck.c:575
+#: applets/gen_util/mailcheck.c:583
 msgid "You have mail."
 msgstr "আপনার জন্য মেইল আছে।"
 
-#: applets/gen_util/mailcheck.c:579
+#: applets/gen_util/mailcheck.c:587
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d বার্তা"
 
-#: applets/gen_util/mailcheck.c:581
+#: applets/gen_util/mailcheck.c:589
 #, c-format
 msgid "%d messages"
 msgstr "%d বার্তা"
 
-#: applets/gen_util/mailcheck.c:585
+#: applets/gen_util/mailcheck.c:593
 msgid "No mail."
 msgstr "কোন মেইল নেই।"
 
-#: applets/gen_util/mailcheck.c:1105 applets/gen_util/mailcheck.c:1106
-#: applets/gen_util/mailcheck.c:1972 applets/gen_util/mailcheck.c:1973
+#: applets/gen_util/mailcheck.c:1113 applets/gen_util/mailcheck.c:1114
+#: applets/gen_util/mailcheck.c:1963 applets/gen_util/mailcheck.c:1964
 msgid "Status not updated"
 msgstr ""
 
-#: applets/gen_util/mailcheck.c:1278
+#: applets/gen_util/mailcheck.c:1286
 msgid "Mailbox _resides on:"
 msgstr "মেইলবাক্‌স_এখানে আছে:"
 
-#: applets/gen_util/mailcheck.c:1286
+#: applets/gen_util/mailcheck.c:1294
 msgid "Local mailspool"
 msgstr "স্থানীয় মেইলস্পুল"
 
-#: applets/gen_util/mailcheck.c:1294
+#: applets/gen_util/mailcheck.c:1302
 msgid "Local maildir"
 msgstr "স্থানীয় maildir"
 
-#: applets/gen_util/mailcheck.c:1302
+#: applets/gen_util/mailcheck.c:1310
 msgid "Remote POP3-server"
 msgstr "দূরবর্তী POP3-সার্ভার"
 
-#: applets/gen_util/mailcheck.c:1310
+#: applets/gen_util/mailcheck.c:1318
 msgid "Remote IMAP-server"
 msgstr "দূরবর্তী IMAP-সার্ভার"
 
-#: applets/gen_util/mailcheck.c:1330
+#: applets/gen_util/mailcheck.c:1338
 msgid "Mail _spool file:"
 msgstr "মেইল_স্পুল ফাইল"
 
-#: applets/gen_util/mailcheck.c:1349
+#: applets/gen_util/mailcheck.c:1357
 msgid "Mail s_erver:"
 msgstr "মেইল সা_র্ভার"
 
-#: applets/gen_util/mailcheck.c:1355
+#: applets/gen_util/mailcheck.c:1363
 msgid "Mail Server Entry box"
 msgstr "মেইল সার্ভার-এর নাম লেখার বাক্‌স"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1377
 msgid "_Username:"
 msgstr "_ব্যবহারকারি-র নাম:"
 
-#: applets/gen_util/mailcheck.c:1377
+#: applets/gen_util/mailcheck.c:1385
 msgid "Username Entry box"
 msgstr "ব্যবহারকারি-র নাম লেখার বাক্‌স"
 
-#: applets/gen_util/mailcheck.c:1386
+#: applets/gen_util/mailcheck.c:1394
 msgid "_Password:"
 msgstr "_পাসওয়ার্ড:"
 
-#: applets/gen_util/mailcheck.c:1407
+#: applets/gen_util/mailcheck.c:1415
 msgid "_Folder:"
 msgstr "_ফোলডার:"
 
-
-#: applets/gen_util/mailcheck.c:1415
+#: applets/gen_util/mailcheck.c:1423
 msgid "Folder Entry box"
 msgstr "ফোলডার-এর নাম লেখার বাক্‌স"
 
-#: applets/gen_util/mailcheck.c:1427
+#: applets/gen_util/mailcheck.c:1435
 msgid "C_ommand to run before checking for mail:"
 msgstr "মেইল পরীক্ষা করার পুর্বে যে ক_মান্ডটি চালানো হবে:"
 
-#: applets/gen_util/mailcheck.c:1435
+#: applets/gen_util/mailcheck.c:1443
 msgid "Command Entry box"
 msgstr "কমান্ড লেখার বাক্‌স"
 
-#: applets/gen_util/mailcheck.c:1460
+#: applets/gen_util/mailcheck.c:1468
 msgid "Execute"
 msgstr "কার্যকরী কর"
 
-#: applets/gen_util/mailcheck.c:1471
+#: applets/gen_util/mailcheck.c:1479
 msgid "Before each _update:"
 msgstr "প্রতি আপডেট-এর _পুর্বে:"
 
-#: applets/gen_util/mailcheck.c:1486
+#: applets/gen_util/mailcheck.c:1494
 msgid "Command to execute before each update"
 msgstr "প্রতি আপডেট-এর পুর্বে যে কমান্ড-টি চালানো হবে"
 
-#: applets/gen_util/mailcheck.c:1496
+#: applets/gen_util/mailcheck.c:1504
 msgid "When new mail _arrives:"
 msgstr "যখন নতুন চিঠি_আসে:"
 
-#: applets/gen_util/mailcheck.c:1509 applets/gen_util/mailcheck.schemas.in.h:2
+#: applets/gen_util/mailcheck.c:1517 applets/gen_util/mailcheck.schemas.in.h:2
 msgid "Command to execute when new mail arrives"
 msgstr "নতুন চিঠি এলে যে কমান্ড-টি চালানো হবে"
 
-#: applets/gen_util/mailcheck.c:1519
+#: applets/gen_util/mailcheck.c:1527
 msgid "When clicke_d:"
 msgstr "যখন ক্লিক_করা হবে"
 
-#: applets/gen_util/mailcheck.c:1532
+#: applets/gen_util/mailcheck.c:1540
 msgid "Command to execute when clicked"
 msgstr "ক্লিক করা হলে যে কমান্ড-টি চালানো হবে"
 
-#: applets/gen_util/mailcheck.c:1542
+#: applets/gen_util/mailcheck.c:1550
 msgid "Set the number of unread mails to _zero"
 msgstr "না পড়া চিঠি-র সংখ্যা_শূন্য করে রাখো"
 
-#: applets/gen_util/mailcheck.c:1553
+#: applets/gen_util/mailcheck.c:1561
 msgid "Check for mail _every"
 msgstr "মেইল পরীক্ষা কর_প্রতি"
 
-#: applets/gen_util/mailcheck.c:1565 applets/gen_util/mailcheck.c:1569
+#: applets/gen_util/mailcheck.c:1573 applets/gen_util/mailcheck.c:1577
 msgid "minutes"
 msgstr "মিনিট"
 
-#: applets/gen_util/mailcheck.c:1565
+#: applets/gen_util/mailcheck.c:1573
 msgid "Choose time interval in minutes to check mail"
 msgstr "মেইল পরীক্ষা করার সময়ের ব্যবধান মিনিটে নির্ধারণ করুন"
 
-#: applets/gen_util/mailcheck.c:1579 applets/gen_util/mailcheck.c:1583
+#: applets/gen_util/mailcheck.c:1587 applets/gen_util/mailcheck.c:1591
 msgid "seconds"
 msgstr "সেকেন্ড"
 
-#: applets/gen_util/mailcheck.c:1579
+#: applets/gen_util/mailcheck.c:1587
 msgid "Choose time interval in seconds to check mail"
 msgstr "মেইল পরীক্ষা করার সময়ের ব্যবধান সেকেন্ডে নির্ধারণ করুন"
 
-#: applets/gen_util/mailcheck.c:1591
+#: applets/gen_util/mailcheck.c:1599
 msgid "Play a _sound when new mail arrives"
 msgstr "নতুন মেইল এলে কোন_শব্দ বাজিয়ে জানান দেবে"
 
-#: applets/gen_util/mailcheck.c:1602
+#: applets/gen_util/mailcheck.c:1610
 msgid "Select a_nimation"
 msgstr "অ্যা_নিমেশন বেছে নিন"
 
-#: applets/gen_util/mailcheck.c:1679
+#: applets/gen_util/mailcheck.c:1678
 msgid "Inbox Monitor Preferences"
 msgstr "ইনবকস্‌ মনিটর-এর পছন্দতালিকা"
 
-#: applets/gen_util/mailcheck.c:1699
+#: applets/gen_util/mailcheck.c:1698
 msgid "_Mail check"
 msgstr "_মেইল পরীক্ষক"
 
-#: applets/gen_util/mailcheck.c:1703
+#: applets/gen_util/mailcheck.c:1702
 msgid "Mail_box"
 msgstr "মেইল_বাক্স"
 
-#: applets/gen_util/mailcheck.c:1783
+#: applets/gen_util/mailcheck.c:1782
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "আপনার মেইল বাক্‌সে নতুন মেইল এলে ইনবক্‌স মনিটর অপনাকে তা জানিয়ে দেয়"
 
-#: applets/gen_util/mailcheck.c:1948
+#: applets/gen_util/mailcheck.c:1939
 msgid "Text only"
 msgstr "শুধুমাত্র টেক্‌সট"
 
-#: applets/gen_util/mailcheck.c:1974
+#: applets/gen_util/mailcheck.c:1965
 msgid "Mail check"
 msgstr "মেইল পরীক্ষক"
 
-#: applets/gen_util/mailcheck.c:1975
+#: applets/gen_util/mailcheck.c:1966
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "আপনার মেইল বাক্‌সে নতুন মেইল এলে মেইল পরীক্ষক অপনাকে তা জানিয়ে দেয়"
 
@@ -785,16 +775,13 @@ msgstr "এভাবেই আমরা মেইলের খঁোজ নে�
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr "এভাবেই আমরা মেইল প্রক্রিয়াভুত করি, প্রক্রিয়াভুত করি, প্রক্রিয়াভুত করি..." 
-
+msgstr "এভাবেই আমরা মেইল প্রক্রিয়াভুত করি, প্রক্রিয়াভুত করি, প্রক্রিয়াভুত করি..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
 "This is the animation that will be displayed during normal Inbox Monitor "
 "usage"
-msgstr ""
-"এই অ্যানিমেশন-টি দেখানো হবে সাধারনত ইনবক্‌স মনিটর"
-"ব্যবহারের সময়"
+msgstr "এই অ্যানিমেশন-টি দেখানো হবে সাধারনত ইনবক্‌স মনিটরব্যবহারের সময়"
 
 #: applets/gen_util/mailcheck.schemas.in.h:24
 msgid "Username on the remote server"
@@ -820,39 +807,42 @@ msgstr "নতুন মেইলের খঁোজ নেয়া"
 msgid "New Mail"
 msgstr "নতুন মেইল"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "সারি"
 
-#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:790
+#: applets/gen_util/pager.c:157 applets/gen_util/pager.c:769
 msgid "Columns"
 msgstr "কলাম"
 
-#: applets/gen_util/pager.c:399
+#: applets/gen_util/pager.c:388
 #, c-format
 msgid "Error loading num_rows value for Workspace Switcher: %s\n"
 msgstr "ওয়ার্কস্পেস সুইচার-এ num-rows-এর তথ্য লোড করতে সমস্যা দেখা দিয়েছে %s\n"
 
-
-#: applets/gen_util/pager.c:410
+#: applets/gen_util/pager.c:399
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for Workspace Switcher: %s\n"
-msgstr "ওয়ার্কস্পেস সুইচার-এ display_workspace_names-এর তথ্য লোড করতে সমস্যা দেখা দিয়েছে %s\n"
+msgstr ""
+"ওয়ার্কস্পেস সুইচার-এ display_workspace_names-এর তথ্য লোড করতে সমস্যা দেখা দিয়েছে %"
+"s\n"
 
-#: applets/gen_util/pager.c:425
+#: applets/gen_util/pager.c:414
 #, c-format
 msgid "Error loading display_all_workspaces value for Workspace Switcher: %s\n"
-msgstr "ওয়ার্কস্পেস সুইচার-এ display_all_workspaces-এর তথ্য লোড করতে সমস্যা দেখা দিয়েছে %s\n"
+msgstr ""
+"ওয়ার্কস্পেস সুইচার-এ display_all_workspaces-এর তথ্য লোড করতে সমস্যা দেখা দিয়েছে %"
+"s\n"
 
-#: applets/gen_util/pager.c:570
+#: applets/gen_util/pager.c:549
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
 msgstr ""
-"ওয়ার্কস্পেস সুইচার আপনাকে আপনার কর্মক্ষেত্রগুলির একটি ছোট নমুনা প্রদর্শন করে যা"
-"আপনাকে উইন্ডোগুলি সামলাতে সাহায্য করে"
+"ওয়ার্কস্পেস সুইচার আপনাকে আপনার কর্মক্ষেত্রগুলির একটি ছোট নমুনা প্রদর্শন করে যাআপনাকে "
+"উইন্ডোগুলি সামলাতে সাহায্য করে"
 
 #: applets/gen_util/pager.glade.h:1
 msgid "Number of _workspaces:"
@@ -887,8 +877,8 @@ msgid ""
 "If this is true, the Workspace Switcher will show all workspaces, otherwise "
 "it will only show the current workspace."
 msgstr ""
-"এটি সত্য হলে, ওয়ার্কস্পেস সুইচার সব কর্মক্ষেত্রগুলি দেখাবে, নাহলে"
-"শুধু বর্তমান কর্মক্ষেত্রটি দেখাবে।"
+"এটি সত্য হলে, ওয়ার্কস্পেস সুইচার সব কর্মক্ষেত্রগুলি দেখাবে, নাহলেশুধু বর্তমান "
+"কর্মক্ষেত্রটি দেখাবে।"
 
 #: applets/gen_util/pager.schemas.in.h:2
 msgid ""
@@ -896,9 +886,8 @@ msgid ""
 "names of the workspaces, otherwise they will display the contents of the "
 "workspace."
 msgstr ""
-"এটি সত্য হলে, ওয়ার্কস্পেস সুইচার-এর কর্মক্ষেত্রগুলি "
-"নাম দেখাবে, নাহলে "
-"কর্মক্ষেত্রর বিষয়বস্তু দেখাবে।"
+"এটি সত্য হলে, ওয়ার্কস্পেস সুইচার-এর কর্মক্ষেত্রগুলি নাম দেখাবে, নাহলে কর্মক্ষেত্রর "
+"বিষয়বস্তু দেখাবে।"
 
 #: applets/gen_util/pager.schemas.in.h:3
 msgid "Number of rows in the Workspace Switcher."
@@ -910,8 +899,8 @@ msgid ""
 "horizontal layout) or columns (for vertical layout) the Workspace Switcher "
 "shows the workspaces in."
 msgstr ""
-"এটি-র সাহায্যে আপনি নির্ধারন করতে পারবেন সব কর্মক্ষেত্রগুলি প্রদর্শন করার সময় কতটি সারি (আড়াআড়ি "
-"প্রদর্শন-এ) অথবা কলাম (লম্বালম্বি প্রদর্শন-এ) নিয়ে ওয়ার্কস্পেস সুইচার "
+"এটি-র সাহায্যে আপনি নির্ধারন করতে পারবেন সব কর্মক্ষেত্রগুলি প্রদর্শন করার সময় কতটি "
+"সারি (আড়াআড়ি প্রদর্শন-এ) অথবা কলাম (লম্বালম্বি প্রদর্শন-এ) নিয়ে ওয়ার্কস্পেস সুইচার "
 "কর্মক্ষেত্রগুলিকে দেখাবে।"
 
 #: applets/gen_util/pager.schemas.in.h:5
@@ -921,8 +910,7 @@ msgstr "ওয়ার্কস্পেস সুইচার-এ সকল ক�
 #: applets/gen_util/pager.schemas.in.h:6
 msgid ""
 "Whether to display the names of the workspaces in the Workspace Switcher."
-msgstr ""
-"ওয়ার্কস্পেস সুইচার-এ সকল কর্মক্ষেত্রগুলির নাম দেখানো হবে কী।"
+msgstr "ওয়ার্কস্পেস সুইচার-এ সকল কর্মক্ষেত্রগুলির নাম দেখানো হবে কী।"
 
 #: applets/gen_util/showdesktop.c:217
 msgid "Click here to restore hidden windows."
@@ -941,15 +929,18 @@ msgstr "%s লোড করা যায়নি: %s\n"
 msgid "File not found"
 msgstr "ফাইল খুজে পাওয়া যায়নি"
 
-#: applets/gen_util/showdesktop.c:454
+#: applets/gen_util/showdesktop.c:442
 msgid "This button lets you hide all windows and show the desktop"
-msgstr "এই বোতাম-টির সাহায্যে আপনি সকল উইন্ডো-গুলিকে লুকিয়ে ফেলে ডেস্কটপ প্রদর্শন করতে পারবেন"
+msgstr ""
+"এই বোতাম-টির সাহায্যে আপনি সকল উইন্ডো-গুলিকে লুকিয়ে ফেলে ডেস্কটপ প্রদর্শন করতে "
+"পারবেন"
 
-#: applets/gen_util/tasklist.c:813
+#: applets/gen_util/tasklist.c:794
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr ""
-"উইন্ডোর তালিকা আপনাকে সকল দৃশ্যমান উইন্ডোগুলোর নাম পেশ করবে এবং সেগুলিকে ব্রাউজ করতে সাহায্য করবে।"
+"উইন্ডোর তালিকা আপনাকে সকল দৃশ্যমান উইন্ডোগুলোর নাম পেশ করবে এবং সেগুলিকে ব্রাউজ "
+"করতে সাহায্য করবে।"
 
 #: applets/gen_util/tasklist.glade.h:1
 msgid "Group windows when _space is limited"
@@ -970,7 +961,6 @@ msgstr "বর্তমান_কর্মক্ষেত্রে ফেরত 
 #: applets/gen_util/tasklist.glade.h:5
 msgid "Restore to na_tive workspace"
 msgstr "মৌ_লিক ওয়ার্কস্পেস-এ ফেরত যাতে হবে"
-
 
 #: applets/gen_util/tasklist.glade.h:6
 msgid "Show windows from _current workspace"
@@ -1013,24 +1003,24 @@ msgid ""
 "Decides when to group windows from the same application on the Window List. "
 "Valid values are \"never\", \"auto\" and \"always\"."
 msgstr ""
-"এটি নির্ধারণ করে কখন একই অ্যাপ্‌লিকেশনের উইন্ডো-গুলোকে উইন্ডো তালিকায় দলবদ্ধ করা হবে।"
-"বৈধ মান-গুলি হল \"কখনও না\",\"স্বয়ংক্রিয়\" এবং \"সর্বদা\"।"
+"এটি নির্ধারণ করে কখন একই অ্যাপ্‌লিকেশনের উইন্ডো-গুলোকে উইন্ডো তালিকায় দলবদ্ধ করা "
+"হবে।বৈধ মান-গুলি হল \"কখনও না\",\"স্বয়ংক্রিয়\" এবং \"সর্বদা\"।"
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
 "If this is true, the Window List will show windows from all workspaces, "
 "otherwise it will display windows from the current workspace only."
 msgstr ""
-"এটি সত্য হলে, উইন্ডো তালিকা সব কর্মক্ষেত্রের উইন্ডোগুলিকে দেখাবে,"
-"নাহলে শুধু বর্তমান কর্মক্ষেত্রের উইন্ডোগুলিকে দেখাবে।"
+"এটি সত্য হলে, উইন্ডো তালিকা সব কর্মক্ষেত্রের উইন্ডোগুলিকে দেখাবে,নাহলে শুধু বর্তমান "
+"কর্মক্ষেত্রের উইন্ডোগুলিকে দেখাবে।"
 
 #: applets/gen_util/tasklist.schemas.in.h:3
 msgid ""
 "If true, then when unminimizing a window, bring it to the current workspace. "
 "Otherwise, change to the workspace of the window."
 msgstr ""
-"এটি সত্য হলে, কোন উইন্ডো-কে বড় করার সময়, বর্তমান কর্মক্ষেত্রে নিয়ে আসবে।"
-"নাহলে,উইন্ডো-টির কর্মক্ষেত্র-টি বদলে দাও।"
+"এটি সত্য হলে, কোন উইন্ডো-কে বড় করার সময়, বর্তমান কর্মক্ষেত্রে নিয়ে আসবে।নাহলে,"
+"উইন্ডো-টির কর্মক্ষেত্র-টি বদলে দাও।"
 
 #: applets/gen_util/tasklist.schemas.in.h:4
 msgid "Maximum size that Window List requests"
@@ -1054,9 +1044,9 @@ msgid ""
 "setting is useful to limit the size of Window List in large panels such as "
 "edge panels, where Window List could fill the entire space available."
 msgstr ""
-"এটি সর্বোত্তম মান যা উইন্ডো তালিকা চাইতে পারে। সর্বোত্তম পাশ নির্ধারণ করা "
-"দরকারি হয় উইন্ডো তালিকার মাপ সীমিত রাখতে যখন বড় প্যানেল-গুলি  যেমন "
-"ধারের প্যানেল, উইন্ডো তালিকার পুরো ব্যবহারযোগ্য যায়গা দখল করে নিতে পারে।"
+"এটি সর্বোত্তম মান যা উইন্ডো তালিকা চাইতে পারে। সর্বোত্তম পাশ নির্ধারণ করা দরকারি "
+"হয় উইন্ডো তালিকার মাপ সীমিত রাখতে যখন বড় প্যানেল-গুলি  যেমন ধারের প্যানেল, উইন্ডো "
+"তালিকার পুরো ব্যবহারযোগ্য যায়গা দখল করে নিতে পারে।"
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
@@ -1064,8 +1054,8 @@ msgid ""
 "this minimum width. The minimum width setting is useful for sliding and edge "
 "panels, which usually request a small default width."
 msgstr ""
-"উইন্ডো তালিকা ব্যবহারযোগ্য করতে হলে, সর্বনিম্ন পাশ-এর মাপ নির্ধারণ করতে হবে। উইন্ডো তালিকা এই "
-"মাপ চেয়ে নেবে। সর্বনিম্ন পাশ-এর মাপ দরকার হয় ভাসমান এবং ধার-এর "
+"উইন্ডো তালিকা ব্যবহারযোগ্য করতে হলে, সর্বনিম্ন পাশ-এর মাপ নির্ধারণ করতে হবে। উইন্ডো "
+"তালিকা এই মাপ চেয়ে নেবে। সর্বনিম্ন পাশ-এর মাপ দরকার হয় ভাসমান এবং ধার-এর "
 "প্যানেল-এ, যেগুলি সাধারনত পাশ-এর জন্য ছোট একটি মাপ চেয়ে নেয়।"
 
 #: applets/gen_util/tasklist.schemas.in.h:10
@@ -1095,11 +1085,11 @@ msgstr ""
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:497 gnome-panel/GNOME_Panel_Popup.xml.h:2
+#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:497
 msgid "_Remove From Panel"
 msgstr "_প্যানেল থেকে সরিয়ে ফেলা হোক"
 
-#: gnome-panel/applet.c:509 gnome-panel/GNOME_Panel_Popup.xml.h:1
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:509
 msgid "_Move"
 msgstr "_সরাও"
 
@@ -1139,7 +1129,9 @@ msgstr "হাইড্‌বাটন-গুলি সক্রিয় করা
 
 #: gnome-panel/basep-widget.c:177
 msgid "Are hidebuttons (buttons that hide or show the panel) enabled?"
-msgstr "হাইড্‌বাটন-গুলি (যে বোতামগুলির সাহায্যে প্যানেল-টি দেখানো বা লুকোনো যায়) কি সক্রিয় করা হয়েছে?"
+msgstr ""
+"হাইড্‌বাটন-গুলি (যে বোতামগুলির সাহায্যে প্যানেল-টি দেখানো বা লুকোনো যায়) কি সক্রিয় "
+"করা হয়েছে?"
 
 #: gnome-panel/basep-widget.c:184
 msgid "Hidebutton pixmaps enabled"
@@ -1168,53 +1160,51 @@ msgstr ""
 "\n"
 "বিবরন: %s"
 
-#: gnome-panel/button-widget.c:537
+#: gnome-panel/button-widget.c:538
 msgid "none"
 msgstr "একটিও নয়"
 
-#: gnome-panel/button-widget.c:542
+#: gnome-panel/button-widget.c:543
 msgid "file not found"
 msgstr "ফাইল পাওয়া যায়নি"
 
-#: gnome-panel/button-widget.c:868
+#: gnome-panel/button-widget.c:904
 msgid "Size"
 msgstr "মাপ"
 
-#: gnome-panel/button-widget.c:869
+#: gnome-panel/button-widget.c:905
 msgid "The desired ButtonWidget size"
 msgstr "বাটনউইজেট-এর বান্ছনিয় মাপ"
 
-#: gnome-panel/button-widget.c:877
+#: gnome-panel/button-widget.c:913
 msgid "Has Arrow"
 msgstr "তীর আছে"
 
-#: gnome-panel/button-widget.c:878
+#: gnome-panel/button-widget.c:914
 msgid "Whether or not to draw an arrow indicator"
 msgstr "তীর-চিহ্ন আঁকা হবে কিনা"
 
-#: gnome-panel/button-widget.c:886
+#: gnome-panel/button-widget.c:922
 msgid "Orientation"
 msgstr "দিশা"
 
-
-#: gnome-panel/button-widget.c:887
+#: gnome-panel/button-widget.c:923
 msgid "The ButtonWidget orientation"
 msgstr "বাটনউইজেট-এর দিশা"
 
-
-#: gnome-panel/button-widget.c:896
+#: gnome-panel/button-widget.c:932
 msgid "Icon Name"
 msgstr "প্রতীকচিহ্নের নাম"
 
-#: gnome-panel/button-widget.c:897
+#: gnome-panel/button-widget.c:933
 msgid "The desired icon for the ButtonWidget"
 msgstr "বাটনউইজেটের জন্য বান্ছনিয় প্রতীকচিহ্ন"
 
-#: gnome-panel/button-widget.c:905
+#: gnome-panel/button-widget.c:941
 msgid "Stock Icon ID"
 msgstr ""
 
-#: gnome-panel/button-widget.c:906
+#: gnome-panel/button-widget.c:942
 msgid "The desired stock icon for the ButtonWidget"
 msgstr ""
 
@@ -1262,7 +1252,6 @@ msgstr "টুলটিপ/নাম"
 msgid "Icon"
 msgstr "প্রতীক"
 
-
 #: gnome-panel/drawer.c:146
 msgid "Applet appearance"
 msgstr "অ্যাপ্‌লেট-এর চেহারা"
@@ -1281,16 +1270,16 @@ msgstr "হাইড্‌বাটন-কে সক্রিয় করো"
 msgid "Enable hidebutton arrow"
 msgstr "হাইড্‌বাটন তীর-কে সক্রিয় করো"
 
-#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3545
+#: gnome-panel/drawer.c:183 gnome-panel/menu.c:3536
 msgid "Drawer"
 msgstr "ড্রয়ার"
 
-#: gnome-panel/drawer.c:772 gnome-panel/launcher.c:802 gnome-panel/menu.c:1533
-#: gnome-panel/menu.c:3400 gnome-panel/panel-action-button.c:89
+#: gnome-panel/drawer.c:815 gnome-panel/launcher.c:786 gnome-panel/menu.c:1524
+#: gnome-panel/menu.c:3391 gnome-panel/panel-action-button.c:89
 msgid "_Properties"
 msgstr "_বৈশিষ্ট্যাবলি"
 
-#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3743
+#: gnome-panel/foobar-widget.c:176 gnome-panel/menu.c:3734
 msgid "Run Program..."
 msgstr "প্রোগ্রাম চালানো হোক..."
 
@@ -1298,23 +1287,23 @@ msgstr "প্রোগ্রাম চালানো হোক..."
 msgid "Run applications, if you know the correct command to type in"
 msgstr "সঠিক কমান্ড-টি জানা থাকলে, অ্যাপ্‌লিকেশন চালান"
 
-#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3759
+#: gnome-panel/foobar-widget.c:193 gnome-panel/menu.c:3750
 msgid "Search for Files..."
 msgstr "ফাইল খঁোজো..."
 
-#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3762
+#: gnome-panel/foobar-widget.c:198 gnome-panel/menu.c:3753
 msgid "Find files, folders, and documents on your computer"
 msgstr "আপনার কম্পিউটারে ফাইল, ফোল্ডার এবং ডকুমেন্ট খঁুজুন"
 
-#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3778
+#: gnome-panel/foobar-widget.c:213 gnome-panel/menu.c:3769
 msgid "Screenshot..."
 msgstr "স্ক্রিনশট..."
 
-#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3781
+#: gnome-panel/foobar-widget.c:217 gnome-panel/menu.c:3772
 msgid "Take a screenshot of your desktop"
 msgstr "ডেস্কটপ-এর একটি ছবি নাও"
 
-#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3567
+#: gnome-panel/foobar-widget.c:229 gnome-panel/menu.c:3558
 msgid "Lock Screen"
 msgstr "পর্দা লক করা হোক"
 
@@ -1322,8 +1311,8 @@ msgstr "পর্দা লক করা হোক"
 msgid "Protect your computer from unauthorized use"
 msgstr "আপনার কম্পিউটারের অবৈধ ব্যবহার প্রতিরোধ করুন"
 
-#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3224
-#: gnome-panel/menu.c:3579
+#: gnome-panel/foobar-widget.c:242 gnome-panel/menu.c:3215
+#: gnome-panel/menu.c:3570
 msgid "Log Out"
 msgstr "লগ অউট"
 
@@ -1340,7 +1329,7 @@ msgstr "কার্যাবলী"
 msgid "No windows open"
 msgstr "কোন উইন্ডো খোলা নেই"
 
-#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2984
+#: gnome-panel/foobar-widget.c:716 gnome-panel/menu.c:2975
 msgid "Menu Panel"
 msgstr "মেনু প্যানেল"
 
@@ -1348,8 +1337,8 @@ msgstr "মেনু প্যানেল"
 msgid "GNOME Menu Panel"
 msgstr "গু নোম মেনু প্যানেল"
 
-#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3122
-#: gnome-panel/menu.c:3127 gnome-panel/menu.c:3718
+#: gnome-panel/foobar-widget.c:736 gnome-panel/menu.c:3113
+#: gnome-panel/menu.c:3118 gnome-panel/menu.c:3709
 msgid "Applications"
 msgstr "অ্যাপ্‌লিকেসন-সমূহ"
 
@@ -1386,14 +1375,15 @@ msgstr "যে মানটি যোগ করতে হবে, তা এক�
 msgid ""
 "You must supply a single argument with the .desktop file or url to use\n"
 msgstr ""
-"যে .desktop ফাইল বা ইউ.আর.এল টি ব্যবহার করতে চান তার সাথে একটি মান সরবরাহ করতে হবে\n"
+"যে .desktop ফাইল বা ইউ.আর.এল টি ব্যবহার করতে চান তার সাথে একটি মান সরবরাহ "
+"করতে হবে\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
 msgid "No panel found\n"
 msgstr "প্যানেল পাওয়া যায়নি\n"
 
 #: gnome-panel/gnome-panel-preferences.c:259
-#: gnome-panel/gnome-panel-screenshot.c:862
+#: gnome-panel/gnome-panel-screenshot.c:870
 #, c-format
 msgid ""
 "There was an error displaying help: \n"
@@ -1401,6 +1391,7 @@ msgid ""
 msgstr ""
 "সহায়িকা প্রদর্শনে সমস্যা দেখা দিয়েছে: \n"
 "%s"
+
 #: gnome-panel/gnome-panel-preferences.c:307
 msgid ""
 "The system administrator has disallowed\n"
@@ -1484,13 +1475,13 @@ msgstr ""
 "পর্দা-র ছবি সেভ করার জন্য যথেষ্ট মেমরি ফঁাকা নেই।\n"
 "কিছু প্রোগ্রাম বন্ধ করে সিস্টেমের ওপর চাপ কমান এবং তারপর আবার চেষ্টা করুন।"
 
-#: gnome-panel/gnome-panel-screenshot.c:220
+#: gnome-panel/gnome-panel-screenshot.c:222
 #, c-format
 msgid "File %s already exists. Overwrite?"
 msgstr "%s নামে একটি ফাইল বর্তমানে আছে। সেটিকে মুছে কি নতুন করে লেখা হবে?"
 
-#: gnome-panel/gnome-panel-screenshot.c:237
-#: gnome-panel/gnome-panel-screenshot.c:743
+#: gnome-panel/gnome-panel-screenshot.c:241
+#: gnome-panel/gnome-panel-screenshot.c:747
 #, c-format
 msgid ""
 "Unable to create the file:\n"
@@ -1501,52 +1492,52 @@ msgstr ""
 "\"%s\"\n"
 "দয়া করে যে ডিরেক্টরিতে ফাইল তৈরী করতে চাইছেন তা ব্যবহারের অনুমতি যাচাই করুন"
 
-#: gnome-panel/gnome-panel-screenshot.c:509
+#: gnome-panel/gnome-panel-screenshot.c:513
 msgid "Print Screenshot"
 msgstr "পর্দার ছবি প্রিন্ট করা হোক"
 
-#: gnome-panel/gnome-panel-screenshot.c:557
+#: gnome-panel/gnome-panel-screenshot.c:561
 msgid "Screenshot Print Preview"
 msgstr "পর্দার ছবির প্রিন্ট প্রিভিউ"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:584
+#: gnome-panel/gnome-panel-screenshot.c:588
 #, c-format
 msgid "%s%cScreenshot-%s.png"
 msgstr "%s%cScreenshot-%s.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:591
+#: gnome-panel/gnome-panel-screenshot.c:595
 #, c-format
 msgid "%s%cScreenshot.png"
 msgstr "%s%cScreenshot.png"
 
 #. translators: this is the file that gets made up with the screenshot if a specific window is taken
-#: gnome-panel/gnome-panel-screenshot.c:608
+#: gnome-panel/gnome-panel-screenshot.c:612
 #, c-format
 msgid "%s%cScreenshot-%s-%d.png"
 msgstr "%s%cScreenshot-%s-%d.png"
 
 #. translators: this is the file that gets made up with the screenshot if the entire screen is taken
-#: gnome-panel/gnome-panel-screenshot.c:615
+#: gnome-panel/gnome-panel-screenshot.c:619
 #, c-format
 msgid "%s%cScreenshot-%d.png"
 msgstr "%s%cScreenshot-%d.png"
 
-#: gnome-panel/gnome-panel-screenshot.c:764
+#: gnome-panel/gnome-panel-screenshot.c:768
 #, c-format
 msgid "Not enough room to write file %s"
 msgstr "%s ফাইল-টি লেখার যথেষ্ট যায়গা নেই"
 
-#: gnome-panel/gnome-panel-screenshot.c:1213
+#: gnome-panel/gnome-panel-screenshot.c:1222
 msgid "Grab a window instead of the entire screen"
 msgstr "সমস্ত পর্দা-র ছবি না নিয়ে শুধু একটি উইন্ডো-র ছবি নিন"
 
-#: gnome-panel/gnome-panel-screenshot.c:1214
+#: gnome-panel/gnome-panel-screenshot.c:1223
 msgid "Take screenshot after specified delay [in seconds]"
 msgstr "নির্ধারিত সময়ের [সেকেন্ড] পরে পর্দা-র ছবি নাও"
 
-#: gnome-panel/gnome-panel-screenshot.c:1266
+#: gnome-panel/gnome-panel-screenshot.c:1275
 msgid ""
 "Glade file for the screenshot program is missing.\n"
 "Please check your installation of gnome-panel"
@@ -1554,7 +1545,7 @@ msgstr ""
 "স্ক্রিনশট প্রোগ্রাম-এর জন্য নির্দিষ্ট গ্লেড ফাইল খুজে পাওয়া যায়নি।\n"
 "দয়া করে গু নোম প্যানেলে-র ইনস্টলেশন পরীক্ষা করুন"
 
-#: gnome-panel/gnome-panel-screenshot.c:1290
+#: gnome-panel/gnome-panel-screenshot.c:1299
 msgid "Unable to take a screenshot of the current desktop."
 msgstr "বর্তমান ডেস্কটপের স্ক্রিনশট নেয়া যায়নি।"
 
@@ -1610,6 +1601,7 @@ msgstr ""
 "<b>এই প্রোগ্রাম-টি চালানো যায়নি</b>\n"
 "\n"
 "বিবরন: %s"
+
 #: gnome-panel/gnome-run.c:388 gnome-panel/gnome-run.c:468
 #, c-format
 msgid ""
@@ -1632,7 +1624,6 @@ msgstr ""
 "\n"
 "বিবরণ: ফাইল খোলার জন্য কোন অ্যাপলিকেশন পাওয়া যায়নি"
 
-
 #: gnome-panel/gnome-run.c:510
 #, c-format
 msgid ""
@@ -1644,50 +1635,51 @@ msgstr ""
 "\n"
 "বিবরণ: %s"
 
-#: gnome-panel/gnome-run.c:599
+#: gnome-panel/gnome-run.c:600
 msgid "Choose a file"
 msgstr "কোন একটি ফাইল বেছে নিন"
 
-#: gnome-panel/gnome-run.c:838 gnome-panel/gnome-run.c:839
+#: gnome-panel/gnome-run.c:839 gnome-panel/gnome-run.c:840
 msgid "Known Applications"
 msgstr "পরিচিত অ্যাপ্‌লিকেশন সমুহ"
 
-#: gnome-panel/gnome-run.c:970
+#: gnome-panel/gnome-run.c:971
 msgid "Command to run"
 msgstr "যে কমান্ড-টি চালানো হবে"
 
-#: gnome-panel/gnome-run.c:1005
+#: gnome-panel/gnome-run.c:1006
 msgid "Run in _terminal"
 msgstr "টার্মিনালে _চালানো হোক"
 
-#: gnome-panel/gnome-run.c:1010
+#: gnome-panel/gnome-run.c:1011
 msgid "_Append File..."
 msgstr "_ফাইল জুড়ে দাও..."
 
-#: gnome-panel/gnome-run.c:1396
+#: gnome-panel/gnome-run.c:1397
 #, c-format
 msgid "Will run command: '%s'"
 msgstr "এই কমান্ডটি চালানো হবে: '%s'"
 
-#: gnome-panel/gnome-run.c:1405
+#: gnome-panel/gnome-run.c:1406
 msgid "No application selected"
 msgstr "কোন অ্যাপ্‌লিকেশন নির্দিষ্ট করা হয়নি"
 
-#: gnome-panel/gnome-run.c:1526
+#: gnome-panel/gnome-run.c:1527
 msgid "List of known applications"
 msgstr "পরিচিত অ্যাপ্‌লিকেশন-এর তালিকা"
 
-#: gnome-panel/gnome-run.c:1527
+#: gnome-panel/gnome-run.c:1528
 msgid "Choose an application to run from the list"
 msgstr "যে অ্যাপ্‌লিকেশন-টি চালানো হবে সেটি তালিকা থেকে বেছে নিন"
 
-#: gnome-panel/gnome-run.c:1653 gnome-panel/panel-action-button.c:203
+#: gnome-panel/gnome-run.c:1667 gnome-panel/panel-action-button.c:203
 msgid "Run Program"
 msgstr "প্রোগ্রাম চালাও"
 
 #: gnome-panel/launcher.c:100
 msgid "This launch icon does not specify a url to show"
-msgstr "প্রোগ্রাম চালু করার এই প্রতীকচিহ্ন-টিতে দেখানোর মত কোন ইউ.আর.এল এর উল্লেখ নেই"
+msgstr ""
+"প্রোগ্রাম চালু করার এই প্রতীকচিহ্ন-টিতে দেখানোর মত কোন ইউ.আর.এল এর উল্লেখ নেই"
 
 #: gnome-panel/launcher.c:109
 #, c-format
@@ -1718,36 +1710,36 @@ msgstr ""
 "%s প্রতীক-টি লঙ্চ করা\n"
 "সম্ভব হয়নি"
 
-#: gnome-panel/launcher.c:391
+#: gnome-panel/launcher.c:375
 msgid "No URI provided for panel launcher desktop file\n"
-msgstr "প্যানেল চালু করার ডেস্কটপ ফাইল-এর জন্য কোন ইউ-আর-আই নির্দিষ্ট করে দেওয়া হয়নি\n"
+msgstr ""
+"প্যানেল চালু করার ডেস্কটপ ফাইল-এর জন্য কোন ইউ-আর-আই নির্দিষ্ট করে দেওয়া হয়নি\n"
 
-#: gnome-panel/launcher.c:411
+#: gnome-panel/launcher.c:395
 #, c-format
 msgid "Unable to open desktop file %s for panel launcher%s%s\n"
 msgstr "%s ডেস্কটপ্‌ ফাইল-টি %s%s প্যানেল লঙ্চারের জন্য খোলা যায়নি\n"
 
-#: gnome-panel/launcher.c:525
+#: gnome-panel/launcher.c:509
 #, c-format
 msgid "Help on %s _Application"
 msgstr "%s_অ্যাপ্‌লিকেশন-এর সহায়িকা"
 
-#: gnome-panel/launcher.c:647 gnome-panel/menu-ditem.c:180
+#: gnome-panel/launcher.c:631 gnome-panel/menu-ditem.c:180
 #: gnome-panel/menu-ditem.c:257
 msgid "Launcher Properties"
 msgstr "লঙ্চার-এর বৈশিষ্ট্যাবলি"
 
-
-#: gnome-panel/launcher.c:758
+#: gnome-panel/launcher.c:742
 #, c-format
 msgid "Key %s is not set, can't load launcher\n"
 msgstr "%s key-টি বিন্যাস করা হয়নি, লঙ্চার লোড করা সম্ভব হয়নি\n"
 
-#: gnome-panel/launcher.c:858 gnome-panel/menu-ditem.c:526
+#: gnome-panel/launcher.c:842 gnome-panel/menu-ditem.c:526
 msgid "Create Launcher"
 msgstr "লঙ্চার তৈরি কর"
 
-#: gnome-panel/launcher.c:1084
+#: gnome-panel/launcher.c:1070
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1757,7 +1749,8 @@ msgstr ""
 "লঙ্চার-টি ডিস্ক-এ সেভ করা যায়নি, এই সমস্যা-টি দেখা দিয়েছে:\n"
 "\n"
 "%s"
-#: gnome-panel/launcher.c:1171 gnome-panel/menu.c:1188
+
+#: gnome-panel/launcher.c:1157 gnome-panel/menu.c:1179
 #: gnome-panel/panel-util.c:96
 #, c-format
 msgid ""
@@ -1773,24 +1766,22 @@ msgstr ""
 msgid "Specify a profile name to load"
 msgstr "একটি প্রোফাইলের নাম লিখুন যা এখন পড়া হবে"
 
-#: gnome-panel/menu.c:240
+#: gnome-panel/menu.c:231
 msgid "Many, many others..."
 msgstr "আরো,আরো অনেকে..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:242
+#: gnome-panel/menu.c:233
 msgid "and finally, The Knights Who Say... NI!"
 msgstr ""
 
-#: gnome-panel/menu.c:277
+#: gnome-panel/menu.c:268
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
 msgstr ""
-""
-""
 
-#: gnome-panel/menu.c:283
+#: gnome-panel/menu.c:274
 msgid ""
 "\n"
 "\n"
@@ -1799,18 +1790,18 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"\"Lockdown\" মোড-এ চালানো হচ্ছে। আপনার সিস্টেম অ্যাড্‌মিনিস্ট্রেটর"
-"প্যানেল-এর কন্‌ফিগরেশন পরিবর্তন নিষিদ্ধ করেছেন"
+"\"Lockdown\" মোড-এ চালানো হচ্ছে। আপনার সিস্টেম অ্যাড্‌মিনিস্ট্রেটরপ্যানেল-এর "
+"কন্‌ফিগরেশন পরিবর্তন নিষিদ্ধ করেছেন"
 
-#: gnome-panel/menu.c:289
+#: gnome-panel/menu.c:280
 msgid "The GNOME Panel"
 msgstr "গু নোম প্যানেল"
 
-#: gnome-panel/menu.c:311
+#: gnome-panel/menu.c:302
 msgid "End world hunger"
 msgstr "বিশ্বব্যাপি ক্ষুধার মৃত্যু হোক"
 
-#: gnome-panel/menu.c:329
+#: gnome-panel/menu.c:320
 #, c-format
 msgid ""
 "<b>Can't execute 'About GNOME'</b>\n"
@@ -1821,7 +1812,7 @@ msgstr ""
 "\n"
 "বিবরন: %s সম্ভবত নেই"
 
-#: gnome-panel/menu.c:353
+#: gnome-panel/menu.c:344
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1829,7 +1820,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:363 gnome-panel/menu.c:1162 gnome-panel/menu.c:1199
+#: gnome-panel/menu.c:354 gnome-panel/menu.c:1153 gnome-panel/menu.c:1190
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1837,7 +1828,7 @@ msgid ""
 "Details: %s"
 msgstr ""
 
-#: gnome-panel/menu.c:1066
+#: gnome-panel/menu.c:1057
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1848,16 +1839,17 @@ msgstr ""
 "\n"
 "বিবরন: %s\n"
 
-#: gnome-panel/menu.c:1076
+#: gnome-panel/menu.c:1067
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "ফাইল-এর নাম পাথ থেকে উদ্ধার করা যায়নি: %s"
-#: gnome-panel/menu.c:1083
+
+#: gnome-panel/menu.c:1074
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "ডিরেক্‌টরি-র নাম পাথ থেকে উদ্ধার করা যায়নি: %s"
 
-#: gnome-panel/menu.c:1153
+#: gnome-panel/menu.c:1144
 msgid ""
 "<b>Can't add to run box</b>\n"
 "\n"
@@ -1867,231 +1859,230 @@ msgstr ""
 "\n"
 "বিবরন: কোন 'Exec' অথবা 'URL' ফিল্ড লিখে দেওয়া হয়নি"
 
-#: gnome-panel/menu.c:1463
+#: gnome-panel/menu.c:1454
 msgid "Add this launcher to panel"
 msgstr "এই লঙ্চার-টি প্যানেল-এ যোগ করো"
 
-#: gnome-panel/menu.c:1471
+#: gnome-panel/menu.c:1462
 msgid "Remove this item"
 msgstr "এই বস্তুটি সরিয়ে ফেল"
 
-#: gnome-panel/menu.c:1487
+#: gnome-panel/menu.c:1478
 msgid "Put into run dialog"
 msgstr "run ডায়লোগ-এ ঢোকাও"
 
-#: gnome-panel/menu.c:1505
+#: gnome-panel/menu.c:1496
 #, c-format
 msgid "Help on %s"
 msgstr "%s বিষয়ক সহায়িকা"
 
-#: gnome-panel/menu.c:1506
+#: gnome-panel/menu.c:1497
 msgid "Application"
 msgstr "অ্যাপ্‌লিকেশন"
 
-#: gnome-panel/menu.c:1552
+#: gnome-panel/menu.c:1543
 msgid "Entire menu"
 msgstr "সম্পূর্ণ মেনু"
 
-#: gnome-panel/menu.c:1561
+#: gnome-panel/menu.c:1552
 msgid "Add this as drawer to panel"
 msgstr "এই ড্রয়ার-টি প্যানেল-এ যোগ করো"
 
-#: gnome-panel/menu.c:1569
+#: gnome-panel/menu.c:1560
 msgid "Add this as menu to panel"
 msgstr "এই মেনু-টি প্যানেল-এ যোগ করো"
 
-#: gnome-panel/menu.c:1577
+#: gnome-panel/menu.c:1568
 msgid "Add new item to this menu"
 msgstr "এই মেনু-তে নতুন বস্তু যোগ করো"
 
-#: gnome-panel/menu.c:1603
+#: gnome-panel/menu.c:1594
 msgid "Properties"
 msgstr "বৈশিষ্ট্যাবলি"
 
-#: gnome-panel/menu.c:2532 gnome-panel/menu.c:2587 gnome-panel/menu.c:2623
+#: gnome-panel/menu.c:2523 gnome-panel/menu.c:2578 gnome-panel/menu.c:2614
 #: libpanel-applet/panel-test-applets.c:102
 #, c-format
 msgid "query returned exception %s\n"
 msgstr ""
 
-#: gnome-panel/menu.c:2894 gnome-panel/menu.c:2899
+#: gnome-panel/menu.c:2885 gnome-panel/menu.c:2890
 msgid "Aligned Panel"
 msgstr ""
 
-#: gnome-panel/menu.c:2900
+#: gnome-panel/menu.c:2891
 msgid "GNOME Aligned Panel"
 msgstr ""
 
-#: gnome-panel/menu.c:2917 gnome-panel/menu.c:2921
+#: gnome-panel/menu.c:2908 gnome-panel/menu.c:2912
 #: gnome-panel/panel-config.c:1727
 msgid "Edge Panel"
 msgstr "ধার-এর প্যানেল"
 
-#: gnome-panel/menu.c:2922
+#: gnome-panel/menu.c:2913
 msgid "GNOME Edge Panel"
 msgstr "গু নোম ধারের প্যানেল"
 
-#: gnome-panel/menu.c:2943 gnome-panel/menu.c:2947
+#: gnome-panel/menu.c:2934 gnome-panel/menu.c:2938
 #: gnome-panel/panel-config.c:1749
 msgid "Sliding Panel"
 msgstr "গুটানোরযোগ্য প্যানেল"
 
-#: gnome-panel/menu.c:2948
+#: gnome-panel/menu.c:2939
 msgid "GNOME Sliding Panel"
 msgstr "গুটানোরযোগ্য গু নোম প্যানেল"
 
-#: gnome-panel/menu.c:2966 gnome-panel/menu.c:2971
+#: gnome-panel/menu.c:2957 gnome-panel/menu.c:2962
 #: gnome-panel/panel-config.c:1760
 msgid "Floating Panel"
 msgstr "ভাসমান প্যানেল"
 
-#: gnome-panel/menu.c:2972
+#: gnome-panel/menu.c:2963
 msgid "GNOME Floating Panel"
 msgstr "গু নোম ভাসমান প্যানেল"
 
-#: gnome-panel/menu.c:2992
+#: gnome-panel/menu.c:2983
 msgid "You can only have one menu panel at a time."
 msgstr "একবারে আপনি শুধুমাত্র একটিমাত্র মেনু প্যানেল পাবেন"
 
-#: gnome-panel/menu.c:3037
+#: gnome-panel/menu.c:3028
 msgid "C_orner Panel"
 msgstr "কো_নার প্যানেল"
 
-#: gnome-panel/menu.c:3039
+#: gnome-panel/menu.c:3030
 msgid "Create corner panel"
 msgstr "কোনার প্যানেল তৈরি করো"
 
-#: gnome-panel/menu.c:3047
+#: gnome-panel/menu.c:3038
 msgid "_Edge Panel"
 msgstr "_ধারের প্যানেল"
 
-#: gnome-panel/menu.c:3049
+#: gnome-panel/menu.c:3040
 msgid "Create edge panel"
 msgstr "ধারের প্যানেল তৈরি করো"
 
-#: gnome-panel/menu.c:3057
+#: gnome-panel/menu.c:3048
 msgid "_Floating Panel"
 msgstr "_ভাসমান প্যানেল"
 
-#: gnome-panel/menu.c:3059
+#: gnome-panel/menu.c:3050
 msgid "Create floating panel"
 msgstr "ভাসমান প্যানেল তৈরি করো"
 
-#: gnome-panel/menu.c:3067
+#: gnome-panel/menu.c:3058
 msgid "_Sliding Panel"
 msgstr "_গুটানোরযোগ্য প্যানেল"
 
-#: gnome-panel/menu.c:3069
+#: gnome-panel/menu.c:3060
 msgid "Create sliding panel"
 msgstr ""
 
-#: gnome-panel/menu.c:3079
+#: gnome-panel/menu.c:3070
 msgid "_Menu Panel"
 msgstr "_মেনু প্যানেল"
 
-#: gnome-panel/menu.c:3081
+#: gnome-panel/menu.c:3072
 msgid "Create menu panel"
 msgstr "মেনু প্যানেল তৈরি করো"
 
-#: gnome-panel/menu.c:3170 gnome-panel/menu.c:3176 gnome-panel/menu.c:3642
+#: gnome-panel/menu.c:3161 gnome-panel/menu.c:3167 gnome-panel/menu.c:3633
 msgid "KDE Menu"
 msgstr "কে-ডি-ই মেনু "
 
-#: gnome-panel/menu.c:3233
+#: gnome-panel/menu.c:3224
 msgid "Lock"
 msgstr "তালা"
 
-#: gnome-panel/menu.c:3242 gnome-panel/panel-action-button.c:213
+#: gnome-panel/menu.c:3233 gnome-panel/panel-action-button.c:213
 msgid "Screenshot"
 msgstr "স্ক্রিনশট"
 
-#: gnome-panel/menu.c:3251
+#: gnome-panel/menu.c:3242
 msgid "Search"
 msgstr "খঁোজ"
 
-#: gnome-panel/menu.c:3260
+#: gnome-panel/menu.c:3251
 msgid "Run"
 msgstr "চালানো হোক"
 
-#: gnome-panel/menu.c:3284
+#: gnome-panel/menu.c:3275
 msgid "You cannot remove your last panel."
 msgstr "আপনার শেষ প্যানেল-টি আপনি মুছে ফেলতে পারবেন না"
 
-#: gnome-panel/menu.c:3340
+#: gnome-panel/menu.c:3331
 msgid "_Delete This Panel..."
 msgstr "_এই প্যানেলটি মুছে ফেলা হোক..."
 
-#: gnome-panel/menu.c:3343 gnome-panel/menu.c:3385
+#: gnome-panel/menu.c:3334 gnome-panel/menu.c:3376
 msgid "_Delete This Panel"
 msgstr "_এই প্যনেল-টি মুছে ফেল..."
 
-#: gnome-panel/menu.c:3365
+#: gnome-panel/menu.c:3356
 msgid "_Add to Panel"
 msgstr "_প্যানেল-এ যোগ করো"
 
-#: gnome-panel/menu.c:3414
+#: gnome-panel/menu.c:3405
 msgid "_New Panel"
 msgstr "_নতুন প্যানেল"
 
-#: gnome-panel/menu.c:3456
+#: gnome-panel/menu.c:3447
 msgid "_About Panels"
 msgstr "_প্যানেল বিষয়ক"
 
-#: gnome-panel/menu.c:3469
+#: gnome-panel/menu.c:3460
 msgid "About _GNOME"
 msgstr "গু নোম_বিষয়ক"
 
-#: gnome-panel/menu.c:3509
+#: gnome-panel/menu.c:3500
 msgid "Launcher..."
 msgstr "লঙ্চার..."
 
-
-#: gnome-panel/menu.c:3517
+#: gnome-panel/menu.c:3508
 msgid "Launcher from menu"
 msgstr "মেনু-তে রাখা লঙ্চার"
 
-#: gnome-panel/menu.c:3526
+#: gnome-panel/menu.c:3517
 msgid "Button"
 msgstr "বোতাম"
 
-#: gnome-panel/menu.c:3536 gnome-panel/menu.c:3866 gnome-panel/menu.c:3894
-#: gnome-panel/menu.c:4112
+#: gnome-panel/menu.c:3527 gnome-panel/menu.c:3857 gnome-panel/menu.c:3885
+#: gnome-panel/menu.c:4103
 msgid "Main Menu"
 msgstr "মূল মেনু"
 
-#: gnome-panel/menu.c:3573
+#: gnome-panel/menu.c:3564
 msgid "Lock the screen so that you can temporarily leave your computer"
 msgstr "পর্দা লক করে নিন যাতে আপনি কিছুক্ষনের জন্য আপনার কম্‌পিউটার ছেড়ে যেতে পারেন"
 
-#: gnome-panel/menu.c:3585
+#: gnome-panel/menu.c:3576
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
 msgstr ""
-"এই সেশন থেকে লগ-আউট করুন যাতে আপনি নতুন ব্যবহারকারীরূপে লগ-ইন করতে পারেন অথবা কমপিউটার "
-"বন্ধ করে দিতে পারেন"
+"এই সেশন থেকে লগ-আউট করুন যাতে আপনি নতুন ব্যবহারকারীরূপে লগ-ইন করতে পারেন অথবা "
+"কমপিউটার বন্ধ করে দিতে পারেন"
 
-#: gnome-panel/menu.c:3750
+#: gnome-panel/menu.c:3741
 msgid "Run a command"
 msgstr "একটি কমান্ড চালাও"
 
-#: gnome-panel/menu.c:3796
+#: gnome-panel/menu.c:3787
 msgid "Desktop"
 msgstr "ডেস্কটপ"
 
-#: gnome-panel/menu.c:3814 gnome-panel/menu-ditem.c:290
+#: gnome-panel/menu-ditem.c:290 gnome-panel/menu.c:3805
 msgid "Menu"
 msgstr "মেনু"
 
-#: gnome-panel/menu.c:3816
+#: gnome-panel/menu.c:3807
 msgid "Menu:"
 msgstr "মেনু:"
 
-#: gnome-panel/menu.c:3888
+#: gnome-panel/menu.c:3879
 msgid "Can't create menu, using main menu!"
 msgstr "মূল মেনু ব্যবহার করে, মেনু তৈরি করা যাচ্ছে না"
 
-#: gnome-panel/menu.c:4347
+#: gnome-panel/menu.c:4338
 #, c-format
 msgid "No path set at %s for panel menu object\n"
 msgstr "প্যানেল মেনু অব্‌জেক্ট-এর জন্য %s-এ কোন পাথ নির্ধারন করা নেই\n"
@@ -2132,8 +2123,7 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
-"এই স্থানে আপনি নতুন লঙ্চার তৈরি করতে পারবেন না কারন এই স্থানে"
-"কিছু লেখার অনুমতি নেই"
+"এই স্থানে আপনি নতুন লঙ্চার তৈরি করতে পারবেন না কারন এই স্থানেকিছু লেখার অনুমতি নেই"
 
 #: gnome-panel/panel-action-button.c:83
 msgid "_Activate Screensaver"
@@ -2183,7 +2173,6 @@ msgstr "এই বোতাম-টি যে ধরনের কাজ করে
 msgid "Cannot register control widget\n"
 msgstr "কন্‌ট্রল উইজেট রেজিস্টার করা যায়নি \n"
 
-
 #: gnome-panel/panel-applet-frame.c:602
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
@@ -2203,9 +2192,8 @@ msgstr ""
 "\n"
 "অ্যাপলটটি কি চালু করা হবে?\n"
 "\n"
-"(এখন চালু করতে না চাইলে আপনি সুবিধামত সময়ে প্যানেলে "
-"মাউসের ডান বাটন ক্লিক করে \"Add to Panel\" সাবমেনুতে অ্যাপলেটটি যোগ করতে পারবেন)"
-
+"(এখন চালু করতে না চাইলে আপনি সুবিধামত সময়ে প্যানেলে মাউসের ডান বাটন ক্লিক করে "
+"\"Add to Panel\" সাবমেনুতে অ্যাপলেটটি যোগ করতে পারবেন)"
 
 #: gnome-panel/panel-applet-frame.c:746
 msgid "D_on't Delete"
@@ -2228,20 +2216,20 @@ msgstr ""
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr ""
 
-#: gnome-panel/panel.c:891
+#: gnome-panel/panel.c:892
 #, c-format
 msgid "Open URL: %s"
 msgstr "এই ইউ.আর.এল এ যেতে হবেঃ %s"
 
-#: gnome-panel/panel.c:2609
+#: gnome-panel/panel.c:2610
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr ""
-"আপনার কন্‌ফিগরেশন-এ কোন প্যানেল পাওয়া যায়নি। আপনার জন্য একটি মেনু প্যানেল "
-"তৈরি করা হবে"
+"আপনার কন্‌ফিগরেশন-এ কোন প্যানেল পাওয়া যায়নি। আপনার জন্য একটি মেনু প্যানেল তৈরি করা "
+"হবে"
 
-#: gnome-panel/panel.c:2892
+#: gnome-panel/panel.c:2899
 msgid ""
 "When a panel is deleted, the panel and its\n"
 " settings are lost. Delete this panel?"
@@ -2249,7 +2237,7 @@ msgstr ""
 "প্যানেল মুছে ফেলার সময়, প্যানেল এবং তার \n"
 " নির্ধারিত বৈশিষ্ট্য হারিয়ে যাবে। প্যানেলটি কি মুছে ফেলা হবে?"
 
-#: gnome-panel/panel.c:2901
+#: gnome-panel/panel.c:2908
 msgid "Delete Panel"
 msgstr "প্যানেল মুছে ফেল"
 
@@ -2308,16 +2296,13 @@ msgstr "স্থান:"
 msgid "H_orizontal:"
 msgstr "পা_শাপাশি"
 
-
 #: gnome-panel/panel-config.c:1065
 msgid "Ver_tical:"
 msgstr "লম্বা_লম্বি"
 
-
 #: gnome-panel/panel-config.c:1130
 msgid "_Distance from edge:"
 msgstr "_ধারের থেকে দূরত্ব:"
-
 
 #: gnome-panel/panel-config.c:1189
 msgid "_Size:"
@@ -2417,8 +2402,8 @@ msgstr "ভাসমান প্যানেল"
 #: gnome-panel/panel-config.c:1693
 msgid "Panel Properties"
 msgstr "প্যানেল-এর বৈশিষ্ট্যাবলি"
-#msgstr "প্যানেল-এর বৈশিষ্ট্যাবলী"
 
+# msgstr "প্যানেল-এর বৈশিষ্ট্যাবলী"
 #: gnome-panel/panel-config.c:1738
 msgid "Corner Panel"
 msgstr "কোনার প্যানেল"
@@ -2498,8 +2483,7 @@ msgid ""
 "The error code is: %d\n"
 "The panel will now exit."
 msgstr ""
-"বোনোবো-অ্যাক্‌টিভেশন-সার্ভার-এর সাহায্যে প্যানেল রেজিস্টার করতে সমস্যা "
-"হয়েছে।\n"
+"বোনোবো-অ্যাক্‌টিভেশন-সার্ভার-এর সাহায্যে প্যানেল রেজিস্টার করতে সমস্যা হয়েছে।\n"
 "সমস্যা সংখ্যা: %d\n"
 "প্যানেল এখন বন্ধ হয়ে যাবে।"
 
@@ -2549,42 +2533,42 @@ msgstr "বোনোবো অ্যাপলেট পরীক্ষা কর
 msgid "Test Bonobo Applet Factory"
 msgstr "বোনোবো অ্যাপলেটের কারখানা পরীক্ষা করা হোক"
 
-#: libpanel-applet/panel-applet.c:862
+#: libpanel-applet/panel-applet.c:866
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "অসম্পূর্ন '%s' পটভূমি-র সংকেত পাওয়া গিয়েছে"
 
-#: libpanel-applet/panel-applet.c:876
+#: libpanel-applet/panel-applet.c:880
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "অসম্পূর্ন '%s' পটভূমি-র সংকেত পাওয়া গিয়েছে: %s"
 
-#: libpanel-applet/panel-applet.c:885
+#: libpanel-applet/panel-applet.c:889
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "%s পিক্‌সম্যাপটি পাওয়া হয়নি"
 
-#: libpanel-applet/panel-applet.c:892
+#: libpanel-applet/panel-applet.c:896
 msgid "Unknown background type received"
 msgstr "অপরিচিত ধরনের পটভূমি পাওয়া গিয়েছে"
 
-#: libpanel-applet/panel-applet.c:1073
+#: libpanel-applet/panel-applet.c:1077
 msgid "The Applet's containing Panel's orientation"
 msgstr "প্যানেল-এর দিশা অ্যাপ্‌লেট-এ আছে"
 
-#: libpanel-applet/panel-applet.c:1081
+#: libpanel-applet/panel-applet.c:1085
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "পিক্‌সেল-এ নির্ধারিত প্যানেলের মাপ অ্যাপ্‌লেট-এ আছে"
 
-#: libpanel-applet/panel-applet.c:1089
+#: libpanel-applet/panel-applet.c:1093
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "প্যানেল-এর পটভূমির রঙ অথবা ছবি অ্যাপলেট-এ আছে"
 
-#: libpanel-applet/panel-applet.c:1097
+#: libpanel-applet/panel-applet.c:1101
 msgid "The Applet's flags"
 msgstr "অ্যাপ্‌লেট-এর ফ্ল্যাগ"
 
-#: libpanel-applet/panel-applet.c:1105
+#: libpanel-applet/panel-applet.c:1109
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "এই ব্যবধানগুলি সংকেত করে অ্যাপ্‌লেট-টি কি মাপ গ্রহন করতে পারে"
 
