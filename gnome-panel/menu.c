@@ -1730,6 +1730,7 @@ setup_full_menuitem (GtkWidget *menuitem, GtkWidget *pixmap,
 	gtk_container_add (GTK_CONTAINER (menuitem), label);
 	
 	if (icons_in_menus && pixmap) {
+		gtk_widget_show (pixmap);
 	        gtk_image_menu_item_set_image (GTK_IMAGE_MENU_ITEM (menuitem), pixmap);
 	} else if (pixmap) {
 	        gtk_widget_unref (pixmap);

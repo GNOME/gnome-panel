@@ -465,7 +465,8 @@ main(int argc, char **argv)
 
 	client = gnome_master_client ();
 
-	gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
+	if (g_getenv ("I_LOVE_PANEL_CRACK") == NULL)
+		gnome_client_set_restart_style (client, GNOME_RESTART_IMMEDIATELY);
 
 	gnome_client_set_priority (client, 40);
 

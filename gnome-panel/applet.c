@@ -260,7 +260,7 @@ panel_applet_add_callback (AppletInfo *info,
 	AppletUserMenu *menu;
 
 	g_return_if_fail (info != NULL);
-	
+
 	menu = panel_applet_get_callback (info->user_menu, callback_name);
 	if (menu == NULL) {
 		menu = g_new0 (AppletUserMenu, 1);
@@ -365,6 +365,7 @@ setup_an_item(AppletUserMenu *menu,
 	      int is_submenu)
 {
 	menu->menuitem = gtk_image_menu_item_new ();
+
 	g_signal_connect (G_OBJECT (menu->menuitem), "destroy",
 			  G_CALLBACK (gtk_widget_destroyed),
 			  &menu->menuitem);
@@ -483,8 +484,25 @@ applet_setup_panel_menu (gboolean is_basep)
 	pixmap_path = gnome_program_locate_file (NULL, GNOME_FILE_DOMAIN_PIXMAP, 
 						 "gnome-panel.png", TRUE, NULL);
 	if (pixmap_path) {
+		GdkPixbuf *pixbuf, *scaled_pixbuf = NULL;
+		GtkWidget *image = NULL;
+		
+		pixbuf = gdk_pixbuf_new_from_file (pixmap_path, NULL);
+
+		if (pixbuf) {
+			scaled_pixbuf = gdk_pixbuf_scale_simple (pixbuf,
+								 SMALL_ICON_SIZE,
+								 SMALL_ICON_SIZE,
+								 GDK_INTERP_BILINEAR);
+			g_object_unref (pixbuf);
+		}
+
+		if (scaled_pixbuf)
+			image = gtk_image_new_from_pixbuf (scaled_pixbuf);
+		g_object_unref (scaled_pixbuf);
+		
 		setup_menuitem (menuitem, 
-				gtk_image_new_from_file (pixmap_path),
+				image,
 				_("Panel"));
 
 		g_free (pixmap_path);
@@ -510,7 +528,8 @@ panel_applet_create_menu (AppletInfo *info,
 	GtkWidget *menuitem;
 	GList     *l;
 
-	info->menu = gtk_menu_new ();
+	info->menu = g_object_ref (gtk_menu_new ());
+	gtk_object_sink (GTK_OBJECT (info->menu));
 
 	if (!commie_mode) {
 		GtkWidget *image;

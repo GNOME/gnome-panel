@@ -1,3 +1,15 @@
+2001-12-09  Anders Carlsson  <andersca@gnu.org>
+
+	* applet.c: (panel_applet_add_callback), (setup_an_item),
+	(applet_setup_panel_menu), (panel_applet_create_menu):
+	Ref/Sink our menu, scale the panel menu icon.
+	
+	* main.c: (main): Don't respawn if I_LOVE_PANEL_CRACK is set.
+	
+	* menu.c: (setup_full_menuitem): gtk_widget_show our image.
+	
+	* panel.c: (drop_urilist): Implement so we can dnd urls to the panel.
+
 Sun Dec 09 03:34:18 2001  George Lebl <jirka@5z.com>
 
 	* Makefile.am, tasklist_icon.[ch], foobar-widget.c, main.c, menu.c,

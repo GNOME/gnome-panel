@@ -17,6 +17,8 @@
 
 #include <libgnome/libgnome.h>
 #include <libbonobo.h>
+#include <libgnomevfs/gnome-vfs-uri.h>
+#include <libgnomevfs/gnome-vfs-mime.h>
 
 #include "panel.h"
 
@@ -962,19 +964,16 @@ static void
 drop_urilist (PanelWidget *panel, int pos, char *urilist,
 	      gboolean background_drops)
 {
-  g_warning ("FIXME: drop_urilist() not implemented");
-#ifdef FIXME
 	GList *li, *files;
 	struct stat s;
 
-	files = gnome_uri_list_extract_uris(urilist);
+	files = gnome_vfs_uri_list_parse (urilist);
 
-	for(li = files; li; li = li->next) {
-		char *uri;
+	for (li = files; li; li = li->next) {
+		GnomeVFSURI *vfs_uri = li->data;
+		gchar *uri = gnome_vfs_uri_to_string (vfs_uri, GNOME_VFS_URI_HIDE_NONE);
 		const char *mimetype;
 		char *filename;
-
-		uri = li->data;
 
 		if (strncmp (uri, "http:", strlen ("http:")) == 0 ||
 		    strncmp (uri, "https:", strlen ("https:")) == 0 ||
@@ -987,7 +986,8 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			continue;
 		}
 
-		filename = extract_filename (li->data);
+		/* FIXME: We should probably use a gnome-vfs function here instead. */
+		filename = extract_filename (uri);
 		if(filename == NULL)
 			continue;
 
@@ -995,20 +995,20 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 			g_free(filename);
 			continue;
 		}
-
-		mimetype = gnome_mime_type(filename);
+		
+		mimetype = gnome_vfs_mime_type_from_name(filename);
 
 		if (background_drops &&
 		    mimetype != NULL &&
 		    strncmp(mimetype, "image", sizeof("image")-1) == 0) {
 			panel_widget_set_back_pixmap (panel, filename);
 		} else if (mimetype != NULL &&
-			  (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
-			   strcmp(mimetype, "application/x-kde-app-info") == 0)) {
+			   (strcmp(mimetype, "application/x-gnome-app-info") == 0 ||
+			    strcmp(mimetype, "application/x-kde-app-info") == 0)) {
 			Launcher *launcher;
-
+			
 			launcher = load_launcher_applet (filename, panel, pos, TRUE);
-
+			
 			if (launcher != NULL)
 				launcher_hoard (launcher);
 		} else if (S_ISDIR(s.st_mode)) {
@@ -1016,10 +1016,10 @@ drop_urilist (PanelWidget *panel, int pos, char *urilist,
 		} else if (S_IEXEC & s.st_mode) /*executable?*/
 			ask_about_launcher (filename, panel, pos, TRUE);
 		g_free (filename);
+		g_free (uri);
 	}
 
-	gnome_uri_list_free_strings (files);
-#endif
+	gnome_vfs_uri_list_free (files);
 }
 
 static void
