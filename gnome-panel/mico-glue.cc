@@ -16,11 +16,16 @@ char *first_ior_sent;
 
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
-	CORBA::Short reparent_window_id (const char *ior,
-		                         CORBA:: CORBA::ULong wid,
-					 CORBA::Short panel,
-					 CORBA::Short pos) {
+	void reparent_window_id (CORBA::ULong wid,
+				 CORBA::Short id) {
 		printf ("REPARENT!\n");
+
+		::reparent_window_id (wid,id);
+	}
+	CORBA::Short reserve_applet_spot (const char *ior,
+					  CORBA::Short panel,
+					  CORBA::Short pos) {
+		printf ("RESERVE_APPLET_SPOT!\n");
 		printf ("applet registered with IOR: %s\n", ior);
 
 		/* 
@@ -31,7 +36,7 @@ public:
 		 */
 		first_ior_sent = g_strdup (ior);
 
-		return ::reparent_window_id (wid,panel,pos);
+		return ::reserve_applet_spot (panel,pos);
 	}
 	CORBA::Short applet_get_panel (CORBA::Short id) {
 		printf ("APPLET_GET_PANEL!\n");

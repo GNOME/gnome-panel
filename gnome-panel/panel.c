@@ -520,84 +520,46 @@ applet_drag_stop(int id)
 	panel_widget_applet_drag_end_no_grab(panel);
 }
 
-
-/*int
-applet_button_press_event(int id, int button)
+void
+reparent_window_id (unsigned long winid, int id)
 {
-	puts("BUTTONPRESS1");
-	if(button==3) {
-		AppletInfo *info = g_list_nth(applets,id)->data;
-	puts("BUTTONPRESS2");
-		show_applet_menu(info);
-	puts("BUTTONPRESS3");
-		return TRUE;
-	} else if(button == 2) {
-		AppletInfo *info = g_list_nth(applets,id)->data;
-		PanelWidget *panel = find_applet_panel(info->widget);
-
-	puts("BUTTONPRESS4");
-		panel_widget_applet_drag_start(panel,info->widget);
-	puts("BUTTONPRESS5");
-		return TRUE;
-	}
-	return FALSE;
-}*/
-
-
-struct  reparent_struct {
-	GtkWidget *panel;
-	GdkWindow *win;
-	GdkWindow *target;
-};
-	
-int
-delayed_reparent_window_id (gpointer data)
-{
-	struct reparent_struct *rs = data;
-	int i;
-	
-	printf ("delayed in\n");
-	for (i = 0; i < 200; i++){
-		gdk_window_reparent(rs->win,rs->target,0,0);
-		gdk_flush ();
-	}
-	g_free (rs);
-	printf ("delayed out\n");
-	gtk_widget_draw(rs->panel, NULL);
-	return 0;
-}
-
-int
-reparent_window_id (unsigned long id, int panel, int pos)
-{
-	struct reparent_struct *rs = g_new (struct reparent_struct, 1);
 	GtkWidget *eb;
 	GdkWindow *win;
-	GList *list;
 	int w,h;
-	int i;
 	
-	printf ("I got this window ID to reparent: %d\n", id);
-	eb = gtk_event_box_new();
+	printf ("I got this window ID to reparent: %d\n", winid);
+	/*FIXME: check for NULLS!*/
+	eb = ((AppletInfo *)(g_list_nth(applets,id)->data))->widget;
 	
-	win = gdk_window_foreign_new(id);
+	win = gdk_window_foreign_new(winid);
 	gdk_window_get_size(win,&w,&h);
 	printf ("setting window size to: %d %d\n", w, h);
 	gtk_widget_set_usize(eb,w,h);
+
+	gdk_window_reparent(win,eb->window,0,0);
+	
+	printf ("leaving reparent\n");
+}
+
+int
+reserve_applet_spot (int panel, int pos)
+{
+	GtkWidget *eb;
+	GdkWindow *win;
+	GList *list;
+	int i;
+
+	printf ("entering reserve spot\n");
+	
+	eb = gtk_event_box_new();
 	gtk_widget_show (eb);
 
 	register_toy(eb,NULL,"External",NULL,pos,panel,0,APPLET_EXTERN);
 
-	rs->win = win;
-	rs->target = eb->window;
-	rs->panel = g_list_nth(panels,panel)->data;
-	
-	gtk_idle_add (delayed_reparent_window_id, (gpointer) rs);
-	
-	printf ("leaving reparent\n");
-
 	for(i=0,list=applets;list!=NULL;list=g_list_next(list))
 		i++;
+
+	printf ("leaving reserve spot\n");
 
 	return i-1;
 }
@@ -613,7 +575,9 @@ add_reparent(GtkWidget *widget, gpointer data)
 	puts("Enter window ID to reparent:");
 	scanf("%d",&id);
 
-	(void)reparent_window_id (id,0,0);
+	appletid = reserve_applet_spot(0,0);
+
+	reparent_window_id (id,appletid);
 }
 
 static void

@@ -81,7 +81,8 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
-int reparent_window_id (unsigned long id, int panel, int pos);
+void reparent_window_id (unsigned long winid, int id);
+int reserve_applet_spot (int panel, int pos);
 
 /*stuff for corba*/
 int applet_get_panel(int id);
