@@ -609,11 +609,25 @@ gnome_panel_quit (void)
   return 0;
 }
 
+
+static void
+applet_handle_connection(GIOPConnection *cnx, gint source,
+			 GdkInputCondition cond)
+{
+  switch(cond) {
+  case GDK_INPUT_EXCEPTION:
+    giop_main_handle_connection_exception(cnx);
+    break;
+  default:
+    giop_main_handle_connection(cnx);
+  }
+}
+
 static void orb_add_connection(GIOPConnection *cnx)
 {
   cnx->user_data = GINT_TO_POINTER(gtk_input_add_full(GIOP_CONNECTION_GET_FD(cnx),
 					   GDK_INPUT_READ|GDK_INPUT_EXCEPTION,
-					   (GdkInputFunction)giop_main_handle_connection,
+					   (GdkInputFunction)applet_handle_connection,
 					   NULL, cnx, NULL));
 }
 

@@ -132,6 +132,7 @@ static void
 server_quit(POA_GNOME_Panel *servant,
 	    CORBA_char * ccookie,
 	    CORBA_Environment *ev);
+void panel_corba_gtk_init(void);
 
 static PortableServer_ServantBase__epv base_epv = {
   NULL, /* _private */
@@ -382,7 +383,7 @@ server_sync_config(POA_GNOME_Panel *servant,
 {
   CHECK_COOKIE();
 
-  if(g_list_find(applets_to_sync,GINT_TO_POINTER(applet_id))==NULL)
+  if(g_list_find(applets_to_sync, GINT_TO_POINTER(applet_id))==NULL)
     applets_to_sync = g_list_prepend(applets_to_sync,
 				     GINT_TO_POINTER(applet_id));
   panel_config_sync();
@@ -419,6 +420,9 @@ send_applet_session_save (const char *ior, int applet_id,
 				     (CORBA_char *)cfgpath,
 				     (CORBA_char *)globcfgpath, &ev);
 
+  if(ev._major)
+    panel_clean_applet(applet_id);
+
   CORBA_Object_release(appl, &ev);
 
   return retval;
@@ -431,15 +435,21 @@ send_applet_change_orient (const char *ior, int applet_id,  int orient)
 
   GNOME_Applet_change_orient(appl, cookie, applet_id, orient, &ev);
 
+  if(ev._major)
+    panel_clean_applet(applet_id);
+
   CORBA_Object_release(appl, &ev);
 }
 
 void send_applet_do_callback (const char *ior, int applet_id,
-                               const char *callback_name)
+			      const char *callback_name)
 {
   GNOME_Applet appl = CORBA_ORB_string_to_object(orb, (CORBA_char *)ior, &ev);
 
   GNOME_Applet_do_callback(appl, cookie, applet_id, (CORBA_char *)callback_name, &ev);
+
+  if(ev._major)
+    panel_clean_applet(applet_id);
   
   CORBA_Object_release(appl, &ev);
 }
@@ -462,6 +472,9 @@ void send_applet_change_back (const char *ior, int applet_id,
   GNOME_Applet_back_change(appl, cookie, applet_id, back_type,
 			   (CORBA_char *)pixmap, color->red, color->green, color->blue, &ev);
   
+  if(ev._major)
+    panel_clean_applet(applet_id);
+  
   CORBA_Object_release(appl, &ev);
 }
 
@@ -474,11 +487,23 @@ void send_applet_tooltips_state (const char *ior, int enabled)
   CORBA_Object_release(appl, &ev);
 }
 
+static void
+orb_handle_connection(GIOPConnection *cnx, gint source, GdkInputCondition cond)
+{
+  switch(cond) {
+  case GDK_INPUT_EXCEPTION:
+    giop_main_handle_connection_exception(cnx);
+    break;
+  default:
+    giop_main_handle_connection(cnx);
+  }
+}
+
 static void orb_add_connection(GIOPConnection *cnx)
 {
   cnx->user_data = (gpointer)gtk_input_add_full(GIOP_CONNECTION_GET_FD(cnx),
 						GDK_INPUT_READ|GDK_INPUT_EXCEPTION,
-						(GdkInputFunction)giop_main_handle_connection,
+						(GdkInputFunction)orb_handle_connection,
 						NULL, cnx, NULL);
 }
 
