@@ -216,7 +216,8 @@ EXTRA_DIST = \
 	nothing.cP			\
 	title-item.gob			\
 	gnome-panel-screenshot.glade	\
-	gnome-panel-screenshot.glade.h
+	gnome-panel-screenshot.glade.h	\
+	libpanelapplet-2.0.pc.in
 
 SERVER_FILES = 						\
 	panel.server
@@ -277,3 +278,5 @@ $(srcdir)/panel-typebuiltins.h: @REBUILD@ Makefile.am $(panel_headers)
 	&& cp xgen-gth $(@F) \
 	&& rm -f xgen-gth
 
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = libpanelapplet-2.0.pc
