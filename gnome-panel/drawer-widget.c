@@ -177,8 +177,11 @@ drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 				*y = by+(bh-height)/2;
 				break;
 			}
+			return;
 		}
 	}
+	/*if we fail*/
+	*x = *y = -3000;
 }
 
 static void

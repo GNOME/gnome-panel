@@ -1628,7 +1628,7 @@ create_menu_applet(char *arguments, PanelOrientType orient, MainMenuType main_me
 		gnome_folder = gnome_unconditional_pixmap_file
 			("gnome-folder.png");
 		if (!g_file_exists (gnome_folder)) {
-			free (gnome_folder);
+			g_free (gnome_folder);
 			gnome_folder = NULL;
 		}
 	}

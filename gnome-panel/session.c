@@ -830,9 +830,7 @@ init_user_panels(void)
 
 		panel_setup(panel);
 
-		if(!IS_DRAWER_WIDGET(panel) ||
-		   DRAWER_WIDGET(panel)->state ==  DRAWER_SHOWN)
-			gtk_widget_show(panel);
+		gtk_widget_show(panel);
 	}
 }
 
