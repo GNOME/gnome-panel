@@ -161,39 +161,51 @@ get_itime (time_t current_time)
 }
 
 static void
-update_timeformat(ClockData *cd)
+update_timeformat (ClockData *cd)
 {
-	const char *time;
-	gchar *loc;
+ /* Show date in another line if panel is vertical, or
+  * horizontal but large enough to hold two lines of text
+  */
+#define USE_TWO_LINE_FORMAT(cd) ((cd)->orient == PANEL_APPLET_ORIENT_LEFT  || \
+                                 (cd)->orient == PANEL_APPLET_ORIENT_RIGHT || \
+                                 (cd)->size >= GNOME_Vertigo_PANEL_MEDIUM)
 
-	if (cd->hourformat == 12) {
-		if (cd->showseconds)
-			time = _("%l:%M:%S %p");
-		else
-			time = _("%l:%M %p");
-	} else {
-		if (cd->showseconds)
-			time = _("%H:%M:%S");
-		else
-			time = _("%H:%M");
-	}
+	const char *time_format;
+	const char *date_format;
+	char       *clock_format;
 
-	if (cd->showdate) {
-		/* Show date in another line if panel is vertical, or
-		 * horizontal but large enough to hold two lines of text */
-		if (cd->orient == PANEL_APPLET_ORIENT_LEFT ||
-		    cd->orient == PANEL_APPLET_ORIENT_RIGHT ||
-		    cd->size >= GNOME_Vertigo_PANEL_MEDIUM)
-			loc = g_strconcat (_("%a %b %d"), "\n", time, NULL);
+	if (cd->hourformat == 12)
+		time_format = cd->showseconds ? _("%l:%M:%S %p") : _("%l:%M %p");
+	else
+		time_format = cd->showseconds ? _("%H:%M:%S") : _("%H:%M");
+
+	if (!cd->showdate)
+		clock_format = g_strdup (time_format);
+
+	else {
+		date_format = _("%a %b %d");
+
+		if (USE_TWO_LINE_FORMAT (cd))
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%s\n%s"),
+							date_format, time_format);
 		else
-			loc = g_strconcat (_("%a %b %d"), ", ", time, NULL);
-	} else {
-		loc = g_strdup (time);
+			/* translators: reverse the order of these arguments
+			 *              if the time should come before the
+			 *              date on a clock in your locale.
+			 */
+			clock_format = g_strdup_printf (_("%s, %s"),
+							date_format, time_format);
 	}
 
 	g_free (cd->timeformat);
-	cd->timeformat = g_locale_from_utf8 (loc, -1, NULL, NULL, NULL);
-	g_free (loc);
+	cd->timeformat = g_locale_from_utf8 (clock_format, -1, NULL, NULL, NULL);
+	g_free (clock_format);
+
+#undef USE_TWO_LINE_FORMAT
 }
 
 /* sets accessible name and description for the widget */
