@@ -563,6 +563,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 
 	set_data (info->menu, info->widget->parent);
 
+#ifdef FIXME
 	gtk_menu_shell_popup (GTK_MENU_SHELL (info->menu),
 			      NULL,
 			      NULL,
@@ -572,6 +573,7 @@ show_applet_menu(AppletInfo *info, GdkEventButton *event)
 			      info,
 			      event->button,
 			      event->time);
+#endif
 }
 
 

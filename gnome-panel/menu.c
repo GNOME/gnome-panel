@@ -5770,9 +5770,11 @@ menu_button_pressed (GtkWidget *widget, gpointer data)
 	gtk_grab_remove(menu->button);
 
 	menu->age = 0;
+#ifdef FIXME
 	gtk_menu_shell_popup(GTK_MENU_SHELL(menu->menu), 0, 0, 
 			     applet_menu_position,
 			     menu->info, bevent->button, bevent->time);
+#endif
 	gdk_event_free((GdkEvent *)bevent);
 }
 

@@ -732,17 +732,20 @@ set_the_task_submenu (FoobarWidget *foo, GtkWidget *item)
 static void
 focus_task (GtkWidget *w, GwmhTask *task)
 {
+#ifdef FIXME
 	gwmh_desk_set_current_area (task->desktop, task->harea, task->varea);
 	if (GWMH_TASK_ICONIFIED (task)) 
 		gwmh_task_deiconify (task);
 	gwmh_task_show  (task);
 	gwmh_task_raise (task);
 	gwmh_task_focus (task);
+#endif
 }
 
 static void
 add_task (GwmhTask *task, FoobarWidget *foo)
 {
+#ifdef FIXME
 	GtkWidget *item, *label;
 	char *title = NULL;
 	int slen;
@@ -801,11 +804,13 @@ add_task (GwmhTask *task, FoobarWidget *foo)
 		gtk_menu_shell_prepend (GTK_MENU_SHELL (foo->task_menu), item);
 	else
 		gtk_menu_shell_append (GTK_MENU_SHELL (foo->task_menu), item);
+#endif
 }
 
 static void
 create_task_menu (GtkWidget *w, gpointer data)
 {
+#ifdef FIXME
 	FoobarWidget *foo = FOOBAR_WIDGET (data);
 	GList *tasks = gwmh_task_list_get ();
 	GList *list;
@@ -830,6 +835,7 @@ create_task_menu (GtkWidget *w, gpointer data)
 	/* Owen: don't read the next line */
 	GTK_MENU_SHELL (GTK_MENU_ITEM (w)->submenu)->active = 1;
 	our_gtk_menu_position (GTK_MENU (GTK_MENU_ITEM (w)->submenu));
+#endif
 }
 
 static void
@@ -975,6 +981,7 @@ append_task_menu (FoobarWidget *foo, GtkMenuBar *menu_bar)
 static void
 setup_task_menu (FoobarWidget *foo)
 {
+#ifdef FIXME
 	GList *tasks;
 	g_assert (foo->task_item != NULL);
 
@@ -1000,6 +1007,7 @@ setup_task_menu (FoobarWidget *foo)
 		set_das_pixmap  (foo, NULL);
 
 	foo->notify = gwmh_task_notifier_add (task_notify, foo);
+#endif
 }
 
 static void
@@ -1058,8 +1066,6 @@ foobar_widget_init (FoobarWidget *foo)
 #endif
 
 	menu_bar = gtk_menu_bar_new ();	
-	gtk_menu_bar_set_shadow_type (GTK_MENU_BAR (menu_bar),
-				      GTK_SHADOW_NONE);
 	
 	
 	menuitem = pixmap_menu_item_new (_("Programs"),
@@ -1108,8 +1114,6 @@ foobar_widget_init (FoobarWidget *foo)
 #endif
 
 	bar = menu_bar = gtk_menu_bar_new ();
-	gtk_menu_bar_set_shadow_type (GTK_MENU_BAR (menu_bar),
-				      GTK_SHADOW_NONE);
 	append_clock_menu (foo, menu_bar);
 #if 0
 	/* TODO: use the gnome menu if no gnome compliant WM or tasklist disabled */
@@ -1160,9 +1164,11 @@ foobar_widget_destroy (GtkObject *o)
 	if (foo->tasks != NULL)
 		g_hash_table_destroy (foo->tasks);
 	foo->tasks = NULL;
+#ifdef FIXME
 	if (foo->notify > 0)
 		gwmh_task_notifier_remove (foo->notify);
 	foo->notify = 0;
+#endif
 
 	if (GTK_OBJECT_CLASS (parent_class)->destroy)
 		GTK_OBJECT_CLASS (parent_class)->destroy (o);

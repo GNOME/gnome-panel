@@ -97,6 +97,7 @@ try_checking_swallows (GwmhTask *task)
 void
 xstuff_go_through_client_list (void)
 {
+#ifdef FIXME
 	GList *li;
 
 	gdk_error_trap_push ();
@@ -113,6 +114,7 @@ xstuff_go_through_client_list (void)
 	}
 	gdk_flush();
 	gdk_error_trap_pop ();
+#endif
 }
 
 static void
@@ -184,10 +186,12 @@ xstuff_init (void)
 	GNOME_PANEL_DESKTOP_AREA =
 		gdk_atom_intern ("GNOME_PANEL_DESKTOP_AREA", FALSE);
 
+#ifdef FIXME
 	gwmh_init ();
 
 	gwmh_desk_notifier_add (desk_notifier, NULL);
 	gwmh_task_notifier_add (task_notifier, NULL);
+#endif
 
 	/* setup the keys filter */
 	gdk_window_add_filter (GDK_ROOT_PARENT(),
@@ -408,11 +412,15 @@ send_client_message_1L (Window recipient,
 gboolean
 xstuff_is_compliant_wm (void)
 {
+#ifdef FIXME
 	GwmhDesk *desk;
 
 	desk = gwmh_desk_get_config ();
 
 	return desk->detected_gnome_wm;
+#else
+	return FALSE;
+#endif
 }
 
 void

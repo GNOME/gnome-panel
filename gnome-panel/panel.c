@@ -797,10 +797,12 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 					basep_widget_autohide (basep);
 				}
 
+#ifdef FIXME
 				gtk_menu_shell_popup (GTK_MENU_SHELL (menu), NULL, NULL, 
 						      panel_menu_position,
 						      widget, bevent->button,
 						      bevent->time);
+#endif
 				return TRUE;
 			}
 			break;

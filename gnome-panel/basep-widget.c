@@ -1593,8 +1593,6 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 		return;
 	}
 
-	gnome_triggers_vdo("", NULL, supinfo);
-
 	gtk_signal_emit(GTK_OBJECT(basep),
 			basep_widget_signals[STATE_CHANGE_SIGNAL],
 			state);
@@ -1645,8 +1643,6 @@ basep_widget_explicit_show (BasePWidget *basep)
 #endif
 		return;
 	}
-
-	gnome_triggers_vdo("", NULL, supinfo);
 
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1701,8 +1697,6 @@ basep_widget_autoshow (gpointer data)
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
 		PanelOrientType hide_orient;
 		int w, h, size;
-
-		gnome_triggers_vdo("", NULL, supinfo);
 
 		hide_orient = klass->get_hide_orient (basep);
 		basep_widget_get_size (basep, &w, &h);
@@ -1811,8 +1805,6 @@ basep_widget_autohide (gpointer data)
 			gdk_pointer_ungrab (GDK_CURRENT_TIME);
 		}
 	}
-
-	gnome_triggers_vdo("", NULL, supinfo);
 
 	gtk_signal_emit(GTK_OBJECT(basep),
 			basep_widget_signals[STATE_CHANGE_SIGNAL],

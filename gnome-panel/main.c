@@ -412,8 +412,6 @@ static void
 setup_visuals (void)
 {
 	gdk_rgb_init ();
-	gtk_widget_push_visual (gdk_rgb_get_visual ());
-	gtk_widget_push_colormap (gdk_rgb_get_cmap ());
 }
 
 static void
@@ -442,7 +440,9 @@ main(int argc, char **argv)
 
 	bonobo_ui_init ("panel", VERSION, &argc, argv);
 	orb = bonobo_orb ();
+#ifdef FIXME
 	gnome_window_icon_set_default_from_file (GNOME_ICONDIR"/gnome-panel.png");
+#endif
 	setup_visuals ();
 
 	switch (panel_corba_gtk_init (orb)) {
@@ -470,7 +470,8 @@ main(int argc, char **argv)
 			(_("There was a problem registering the panel "
 			   "with the GOAD server.\n"
 			   "The panel will now exit."));
-		gnome_dialog_run_and_close (GNOME_DIALOG (box));
+		gtk_dialog_run (GTK_DIALOG (box));
+		gtk_widget_destroy (box);
 		return 0;
 		break;
 	}
@@ -532,7 +533,9 @@ main(int argc, char **argv)
 	if ( ! commie_mode)
 		write_global_config ();
 
+#ifdef FIXME
 	gwmh_init ();
+#endif
 
 	init_fr_chunks ();
 	
@@ -544,8 +547,6 @@ main(int argc, char **argv)
 	kill_free_drawers ();
 
 	load_tornoff ();
-
-	gnome_triggers_do ("Session startup", NULL, "gnome", "login", NULL);
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
