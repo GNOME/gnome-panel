@@ -17,22 +17,44 @@
 
 2003-04-01  Mark McLoughlin  <mark@skynet.ie>
 
-	reviewed by: <delete if not using a buddy>
+	Fix long standing bug where size changes affected applet
+	positions. E.g. make the panel bigger then smaller and
+	there used to be gaps between all your launchers, changing
+	the font size used to move the clock applet, adding an
+	icon to the notification area and then removing it caused
+	it to change position etc.
 
-	* panel-widget.c: (emit_applet_moved), (panel_widget_cremove),
-	(panel_widget_is_applet_stuck), (get_size_from_hints),
-	(allocate_dirty_child), (panel_widget_switch_applet_right),
+	* panel-widget.h: add another member to AppletData
+	which tracks the actual position as it currently
+	appears on the panel. AppletData:pos now corresponds
+	to the user specified position as opposed to the
+	constrained position.
+
+	* panel-widget.c:
+	(emit_applet_moved): impl.
+	(panel_widget_cremove): fixup.
+	(panel_widget_is_applet_stuck): re-write for clarity.
+	(get_size_from_hints): respect the min_cells hint here.
+	(allocate_dirty_child): use the constrained applet position
+	and don't do any actual moving.
+	(panel_widget_switch_applet_right),
 	(panel_widget_switch_applet_left),
 	(panel_widget_get_right_switch_pos),
 	(panel_widget_get_left_switch_pos), (panel_widget_switch_move),
 	(push_applet_right), (push_applet_left), (panel_widget_push_move),
-	(panel_widget_right_stick), (panel_widget_size_allocate),
+	(panel_widget_right_stick): use the constrained position when
+	figuring out where to move things and emit the moved signal at
+	when applets have been moved.
+	(panel_widget_size_allocate): don't make size changes affect
+	the user specified position. Also don't saze the constrained
+	position.
 	(panel_widget_applet_drag_start_no_grab), (walk_up_to),
-	(is_in_applet), (panel_widget_get_free_spot),
-	(panel_widget_nice_move), (panel_widget_applet_move_to_cursor),
-	(panel_widget_add), (panel_widget_reparent),
-	(panel_widget_free_move_applet):
-	* panel-widget.h:
+	(is_in_applet), (panel_widget_get_free_spot): upd. to use the
+	constrained position as appropriate.
+	(panel_widget_nice_move): emit the moved signal.
+	(panel_widget_applet_move_to_cursor),
+	(panel_widget_add): use the constrained positionl.
+	(panel_widget_reparent): emit the moved signal.
 
 2003-03-17  Alex Duggan  <aldug@astrolinux.com>
 
