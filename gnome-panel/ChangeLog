@@ -1,3 +1,17 @@
+2005-01-31  Vincent Untz  <vincent@vuntz.net>
+
+	Allow use of the whole screen when hiding a panel
+	Fix bug #142317. Credits go to Mark.
+
+	* panel-struts.c: (panel_struts_set_window_hint): call
+	panel_struts_unset_window_hint() when necessary
+	(panel_struts_unset_window_hint): new
+	* panel-toplevel.c: (panel_toplevel_update_struts): if the window is
+	not hidden and not in a hide animation, then set the strut, else
+	unset it
+	(panel_toplevel_start_animation): set the animating bit earlier so
+	it can be used in panel_toplevel_update_struts()
+
 2005-01-30  Vincent Untz  <vincent@vuntz.net>
 
 	* panel-toplevel.c: (panel_toplevel_update_hidden_position): better

@@ -1398,7 +1398,12 @@ panel_toplevel_update_struts (PanelToplevel *toplevel, gboolean end_of_animation
 	else
 		panel_struts_unregister_strut (toplevel);
 
-	panel_struts_set_window_hint (toplevel);
+	if (toplevel->priv->state == PANEL_STATE_NORMAL ||
+	    toplevel->priv->state == PANEL_STATE_AUTO_HIDDEN ||
+	    toplevel->priv->animating)
+		panel_struts_set_window_hint (toplevel);
+	else
+		panel_struts_unset_window_hint (toplevel);
 
 	return geometry_changed;
 }
@@ -3118,7 +3123,9 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 						       &toplevel->priv->animation_end_y,
 						       &toplevel->priv->animation_end_width,
 						       &toplevel->priv->animation_end_height);
-	
+
+	toplevel->priv->animating = TRUE;
+
 	panel_toplevel_update_struts (toplevel, TRUE);
 	panel_struts_update_toplevel_geometry (toplevel,
 					       &toplevel->priv->animation_end_x,
@@ -3173,8 +3180,6 @@ panel_toplevel_start_animation (PanelToplevel *toplevel)
 	t2 = panel_toplevel_get_animation_time (toplevel, deltah);
 	
 	toplevel->priv->animation_end_time = MAX (t1, t2);
-
-	toplevel->priv->animating = TRUE;
 
 	toplevel->priv->animation_timeout =
 		g_timeout_add (20, (GSourceFunc) panel_toplevel_animation_timeout, toplevel);
