@@ -11,11 +11,16 @@ module GNOME {
 
 		typedef	sequence<octet> RgbData;
 
+		/* pass an rgb image or a color */
 		struct RgbImage {
 			RgbData data;
 			unsigned short width;
 			unsigned short height;
 			unsigned short rowstride;
+			boolean color_only; /* indicates if this is 
+					       a color only (3bytes
+					       in data, but width and
+					       height are full size) */
 		};
 
 		enum OrientType {
