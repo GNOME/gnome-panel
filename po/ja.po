@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-09 09:24+0100\n"
-"PO-Revision-Date: 2004-08-31 15:25+0900\n"
+"POT-Creation-Date: 2004-11-09 20:17+0900\n"
+"PO-Revision-Date: 2004-11-09 20:10+0900\n"
 "Last-Translator: Takeshi AIHANA <aihana@gnome.gr.jp>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -244,7 +244,6 @@ msgstr "UTC を使用する(_U)"
 #: applets/notification_area/main.c:117 applets/wncklet/showdesktop.c:466
 #: applets/wncklet/window-list.c:809 applets/wncklet/window-menu.c:118
 #: applets/wncklet/workspace-switcher.c:539 gnome-panel/menu.c:189
-#, fuzzy
 msgid "translator-credits"
 msgstr ""
 "相花 毅 <aihana@gnome.gr.jp>\n"
@@ -434,24 +433,24 @@ msgid "%s the Fish Says:"
 msgstr "GNOME おさかな君 %s が言うには:"
 
 #: applets/fish/fish.c:717
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read output from command\n"
 "\n"
 "Details: %s"
 msgstr ""
-"'%s' を実行できません。\n"
+"コマンドの出力を読み込めません:\n"
 "\n"
 "詳細: %s"
 
 #: applets/fish/fish.c:782
 msgid "_Speak again"
-msgstr ""
+msgstr "もう一度聞く(_S)"
 
 #: applets/fish/fish.c:863
 #, c-format
 msgid "The configured command is not working and has been replaced by: %s"
-msgstr ""
+msgstr "設定コマンドが動作しないので、次のコマンドで置き換えました: %s"
 
 #: applets/fish/fish.c:886
 #, c-format
@@ -465,13 +464,13 @@ msgstr ""
 "詳細: %s"
 
 #: applets/fish/fish.c:902
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to read from '%s'\n"
 "\n"
 "Details: %s"
 msgstr ""
-"'%s' を実行できません。\n"
+"'%s' から読み込めません:\n"
 "\n"
 "詳細: %s"
 
@@ -623,13 +622,12 @@ msgid "Notification Area Factory"
 msgstr "通知スペース・ファクトリ"
 
 #: applets/notification_area/eggtraymanager.c:145
-#, fuzzy
 msgid "Orientation"
-msgstr "向き:"
+msgstr "向き"
 
 #: applets/notification_area/eggtraymanager.c:146
 msgid "The orientation of the tray."
-msgstr ""
+msgstr "トレイの向きです。"
 
 #: applets/notification_area/main.c:130 applets/notification_area/main.c:358
 msgid "Panel Notification Area"
@@ -698,7 +696,6 @@ msgid "Show Desktop Button"
 msgstr "デスクトップ・ボタンの表示"
 
 #: applets/wncklet/showdesktop.c:480
-#, fuzzy
 msgid "This button lets you hide all windows and show the desktop."
 msgstr "このボタンは、全てのウィンドウを隠してデスクトップを表示させます"
 
@@ -711,9 +708,8 @@ msgstr ""
 "か、ウィンドウ・マネージャを起動していないようです。"
 
 #: applets/wncklet/window-list.c:820
-#, fuzzy
 msgid "Workspace List"
-msgstr "ワークスペース名"
+msgstr "ワークスペースの一覧"
 
 #: applets/wncklet/window-list.c:823
 msgid "The Window List shows a list of all windows and lets you browse them."
@@ -849,7 +845,6 @@ msgid "When to group windows"
 msgstr "ウインドウをグループ化する時"
 
 #: applets/wncklet/window-menu.c:129
-#, fuzzy
 msgid "Workspace Selector"
 msgstr "ワークスペース切り換え器"
 
@@ -1374,20 +1369,19 @@ msgstr "popup_menu '%s' から例外です\n"
 #: gnome-panel/panel-applet-frame.c:876
 #, c-format
 msgid "\"%s\" Has Quit Unexpectedly"
-msgstr ""
+msgstr "\"%s\" が突然終了しました"
 
 #: gnome-panel/panel-applet-frame.c:877
 msgid "Panel Object Has Quit Unexpectedly"
-msgstr ""
+msgstr "パネル・オブジェクトが突然終了しました"
 
 #: gnome-panel/panel-applet-frame.c:888
-#, fuzzy
 msgid "_Don't Reload"
-msgstr "削除しない(_O)"
+msgstr "再読み込みしない(_D)"
 
 #: gnome-panel/panel-applet-frame.c:889
 msgid "_Reload"
-msgstr ""
+msgstr "再読み込み(_R)"
 
 #: gnome-panel/panel-applet-frame.c:915
 msgid "D_on't Delete"
@@ -2013,14 +2007,14 @@ msgstr ""
 "最近開いたドキュメントの一覧をクリアすると、\n"
 "次のエントリを消去することになります:\n"
 "\n"
-"・メニュー [最近開いたドキュメント] にある全てのエントリ\n"
-"・アプリケーションで記録した [最近開いた...] の全てのエントリ"
+"• メニュー [最近開いたドキュメント] にある全てのエントリ\n"
+"• アプリケーションで記録した [最近開いた・・・] の全てのエントリ"
 
 #. Translators: %s is a URI
 #: gnome-panel/panel-recent.c:258
-#, fuzzy, c-format
+#, c-format
 msgid "Open '%s'"
-msgstr "URL を開く: %s"
+msgstr "'%s' を開きます"
 
 #: gnome-panel/panel-recent.c:279
 msgid "Recent Documents"
@@ -2031,9 +2025,8 @@ msgid "Clear Recent Documents"
 msgstr "この一覧をクリアする"
 
 #: gnome-panel/panel-recent.c:312
-#, fuzzy
 msgid "Clear all items from the recent documents list"
-msgstr "\"最近開いたドキュメント\" の一覧をクリアしますか？"
+msgstr "\"最近開いたドキュメント\" の一覧を全てクリアします"
 
 #: gnome-panel/panel-run-dialog.c:293
 #, c-format
@@ -2557,27 +2550,24 @@ msgid "Open URL: %s"
 msgstr "URL を開く: %s"
 
 #: gnome-panel/panel.c:1226
-#, fuzzy
 msgid ""
 "When a drawer is deleted, the drawer and its\n"
 "settings are lost. Delete this drawer?"
 msgstr ""
-"パネルを削除すると、パネルとそのアプレットの\n"
-"設定は失われてしまいます。このパネルを削除しますか？"
+"引き出しを削除すると、引き出しと\n"
+"その設定が失われてしまいます。この引き出しを削除しますか？"
 
 #: gnome-panel/panel.c:1228
-#, fuzzy
 msgid "Delete Drawer"
-msgstr "パネルの削除"
+msgstr "引き出しの削除"
 
 #: gnome-panel/panel.c:1230
-#, fuzzy
 msgid ""
 "When a panel is deleted, the panel and its\n"
 "settings are lost. Delete this panel?"
 msgstr ""
-"パネルを削除すると、パネルとそのアプレットの\n"
-"設定は失われてしまいます。このパネルを削除しますか？"
+"パネルを削除すると、パネルと\n"
+"その設定が失われてしまいます。このパネルを削除しますか？"
 
 #: gnome-panel/panel.c:1232
 msgid "Delete Panel"
@@ -2702,186 +2692,13 @@ msgid "XX Large"
 msgstr "とても大きい"
 
 #: libpanel-applet/panel-test-applets.glade.h:2
-#, fuzzy
 msgid "Test applet utility"
-msgstr "パネル・アプレット ID のリスト"
+msgstr "アプレットのテスト用ユーティリティ"
 
 #: libpanel-applet/panel-test-applets.glade.h:3
-#, fuzzy
 msgid "_Applet:"
-msgstr "アプレット:"
+msgstr "アプレット(_A):"
 
 #: libpanel-applet/panel-test-applets.glade.h:5
-#, fuzzy
 msgid "_Prefs Dir:"
-msgstr "設定ディレクトリ:"
-
-#~ msgid "Unable to get the name of the command to execute"
-#~ msgstr "実行するコマンド名を取得できません"
-
-#~ msgid ""
-#~ "You do not have fortune installed or you have not specified a program to "
-#~ "run.\n"
-#~ "\n"
-#~ "Please refer to fish properties dialog."
-#~ msgstr ""
-#~ "Fortune がインストールされていない、または実行するプログラムを指定していま"
-#~ "せん。\n"
-#~ "\n"
-#~ "おさかな君の設定ダイアログを参照して下さい。"
-
-#~ msgid "Debian GNU/Linux"
-#~ msgstr "Debian GNU/Linux"
-
-#~ msgid "Debian Menu"
-#~ msgstr "Debian メニュー"
-
-#~ msgid "SuSE Linux"
-#~ msgstr "SuSE Linux"
-
-#~ msgid "SuSE Menu"
-#~ msgstr "SuSE メニュー"
-
-#~ msgid "Solaris"
-#~ msgstr "Solaris"
-
-#~ msgid "CDE Menu"
-#~ msgstr "CDE メニュー"
-
-#~ msgid ""
-#~ "Unable to initialize png structure.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "PNG 構造体を初期化できません。\n"
-#~ "お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
-
-#~ msgid ""
-#~ "Unable to create png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "PNG 情報を作成できません。\n"
-#~ "お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
-
-#~ msgid ""
-#~ "Unable to set png info.\n"
-#~ "You probably have a bad version of libpng on your system"
-#~ msgstr ""
-#~ "PNG 情報を設定できません。\n"
-#~ "お使いのシステムにある libpng のバージョンに問題があるかもしれません。"
-
-#~ msgid ""
-#~ "Insufficient memory to save the screenshot.\n"
-#~ "Please free up some resources and try again."
-#~ msgstr ""
-#~ "スクリーンショットの保存に必要なメモリが足りません。\n"
-#~ "リソースを確保した上で再度、実行して下さい。"
-
-#~ msgid "File %s already exists. Overwrite?"
-#~ msgstr "ファイル %s は既に存在します。上書きしますか？"
-
-#~ msgid ""
-#~ "Unable to create the file:\n"
-#~ "\"%s\"\n"
-#~ "Please check your permissions of the parent directory"
-#~ msgstr ""
-#~ "ファイルを作成できません:\n"
-#~ "\"%s\"\n"
-#~ "親ディレクトリのパーミッションを確認して下さい。"
-
-#~ msgid "Screenshot-%s.png"
-#~ msgstr "Screenshot-%s.png"
-
-#~ msgid "Screenshot.png"
-#~ msgstr "Screenshot.png"
-
-#~ msgid "Screenshot-%s-%d.png"
-#~ msgstr "Screenshot-%s-%d.png"
-
-#~ msgid "Screenshot-%d.png"
-#~ msgstr "Screenshot-%d.png"
-
-#~ msgid "Not enough room to write file %s"
-#~ msgstr "ファイル %s の保存に必要な空き容量がありません。"
-
-#~ msgid ""
-#~ "There was an error displaying help: \n"
-#~ "%s"
-#~ msgstr ""
-#~ "ヘルプを表示する際にエラーが発生しました:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Glade file for the screenshot program is missing.\n"
-#~ "Please check your installation of gnome-panel"
-#~ msgstr ""
-#~ "スクリーンショット・プログラムの Glade ファイルが見つかりません。\n"
-#~ "gnome-panel が正しくインスールされているか確認して下さい。"
-
-#~ msgid "Unable to take a screenshot of the current desktop."
-#~ msgstr "このデスクトップのスクリーンショットが撮れません。"
-
-#~ msgid "Save screenshot to _web page (save in %s)"
-#~ msgstr "スクリーンショットを Web ページ (%s) へ保存する(_W)"
-
-#~ msgid "Grab a window instead of the entire screen"
-#~ msgstr "画面全体ではなくウインドウの画像を取得する"
-
-#~ msgid "Take screenshot after specified delay [in seconds]"
-#~ msgstr "指定した時間 (秒単位) が経過したらスクリーンショットを撮る"
-
-#~ msgid "<b>Options</b>"
-#~ msgstr "<b>オプション</b>"
-
-#~ msgid "<b>Preview</b>"
-#~ msgstr "<b>プレビュー</b>"
-
-#~ msgid "Save Screenshot"
-#~ msgstr "スクリーンショットの保存"
-
-#~ msgid "Save screenshot to _desktop"
-#~ msgstr "デスクトップに保存する(_D)"
-
-#~ msgid "Save screenshot to _file:"
-#~ msgstr "ファイルに保存する(_F):"
-
-#~ msgid "Save screenshot to _web page (save in ~/public__html)"
-#~ msgstr "Web ページ (~/public_html) に保存する(_W)"
-
-#~ msgid ""
-#~ "The user's directory in which screenshots should be saved so as to appear "
-#~ "on the web."
-#~ msgstr ""
-#~ "Web で表示できるように、スクリーンショットを保存するユーザのフォルダです"
-
-#~ msgid "Web directory"
-#~ msgstr "Web ディレクトリ"
-
-#~ msgid "Desktop"
-#~ msgstr "デスクトップ"
-
-#~ msgid ""
-#~ "The \"%s\" applet appears to have died unexpectedly.\n"
-#~ "\n"
-#~ "Do you want to reload this applet?"
-#~ msgstr ""
-#~ "\"%s\" アプレットが不意に終了したようです。\n"
-#~ "\n"
-#~ "アプレットを再読み込みしますか？"
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "(If you choose not to reload it at this time you can always add it by "
-#~ "right clicking on the panel and clicking on the \"Add to Panel\" submenu)"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "(いま再読み込みしないと選択した場合でも、パネルを右クリックして \"パネルに"
-#~ "追加\" サブメニューを選べばいつでも追加できます)"
-
-#~ msgid "Unable to load panel stock icon '%s'\n"
-#~ msgstr "パネルのストック・アイコン '%s' が読み込めません\n"
-
-#~ msgid "Size:"
-#~ msgstr "大きさ:"
+msgstr "設定 Dir(_P):"
