@@ -732,7 +732,7 @@ panel_menu_get(PanelData *pd)
 {
 	if(pd->menu)
 		return pd->menu;
-
+	
 	pd->menu = create_panel_root_menu(pd->panel);
 	gtk_signal_connect(GTK_OBJECT(pd->menu), "deactivate",
 			   GTK_SIGNAL_FUNC(menu_deactivate),pd);
@@ -749,41 +749,39 @@ panel_event(GtkWidget *widget, GdkEvent *event, PanelData *pd)
 		switch(bevent->button) {
 		case 3: /* fall through */
 			if(!panel_applet_in_drag) {
-				GtkWidget *panel_menu = panel_menu_get(pd);
-				GtkWidget *rem = 
-					gtk_object_get_data(GTK_OBJECT(panel_menu),
-							    "remove_item");
+				GtkWidget *panel_menu;
+				GtkWidget *rem;
+				/*slightly ugly, but current_panel needs to be
+				  set before we call panel_menu_get*/
 				if(IS_SNAPPED_WIDGET(widget)) {
 					SnappedWidget *snapped =
 						SNAPPED_WIDGET(widget);
 					current_panel =
 						PANEL_WIDGET(snapped->panel);
-					if(base_panels <= 1)
-						gtk_widget_set_sensitive(rem,
-									 FALSE);
-					else
-						gtk_widget_set_sensitive(rem,
-									 TRUE);
-					snapped->autohide_inhibit = TRUE;
-					snapped_widget_queue_pop_down(snapped);
 				} else if(IS_CORNER_WIDGET(widget)) {
 					CornerWidget *corner =
 						CORNER_WIDGET(widget);
 					current_panel = PANEL_WIDGET(corner->panel);
-					if(base_panels <= 1)
-						gtk_widget_set_sensitive(rem,
-									 FALSE);
-					else
-						gtk_widget_set_sensitive(rem,
-									 TRUE);
 				} else if(IS_DRAWER_WIDGET(widget)) {
 					DrawerWidget *drawer =
 						DRAWER_WIDGET(widget);
 					current_panel = PANEL_WIDGET(drawer->panel);
-					gtk_widget_set_sensitive(rem, TRUE);
-				} else
+				}
+				panel_menu = panel_menu_get(pd);
+				rem = gtk_object_get_data(GTK_OBJECT(panel_menu),
+							  "remove_item");
+				if(IS_SNAPPED_WIDGET(widget)) {
+					SnappedWidget *snapped =
+						SNAPPED_WIDGET(widget);
 					gtk_widget_set_sensitive(rem,
-								 TRUE);
+								 base_panels > 1);
+					snapped->autohide_inhibit = TRUE;
+					snapped_widget_queue_pop_down(snapped);
+				} else if(IS_CORNER_WIDGET(widget)) {
+					gtk_widget_set_sensitive(rem,
+								 base_panels > 1);
+				} else
+					gtk_widget_set_sensitive(rem, TRUE);
 				pd->menu_age = 0;
 				gtk_menu_popup(GTK_MENU(panel_menu), NULL, NULL,
 					       global_config.off_panel_popups?

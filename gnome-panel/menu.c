@@ -1853,6 +1853,13 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 			   (GtkSignalFunc) convert_to_panel,
 			   GINT_TO_POINTER(SNAPPED_PANEL));
 	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
+
+	/*actually show hide right now to get the first size
+	  request correctly, still has a display problem when
+	  main menu is dragged onto a different type of a panel,
+	  but the problem is minimal (it only happens if the person
+	  uses the same menu)*/
+	show_x_on_panels(menu,NULL);
 	
 	gtk_signal_connect(GTK_OBJECT(menu),"show",
 			   GTK_SIGNAL_FUNC(show_x_on_panels),NULL);
