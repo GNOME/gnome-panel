@@ -104,9 +104,10 @@ panel_menu_button_finalize (GObject *object)
 	gconf_client_notify_remove (panel_gconf_get_client (), button->priv->gconf_notify);
 	button->priv->gconf_notify = 0;
 
-	if (button->priv->menu)
+	if (button->priv->menu) {
+		gtk_menu_detach (button->priv->menu);
 		g_object_unref (button->priv->menu);
-	button->priv->menu = NULL;
+	}
 
 	g_free (button->priv->menu_path);
 	button->priv->menu_path = NULL;
@@ -267,6 +268,23 @@ panel_menu_button_create_menu (PanelMenuButton *button)
 	return GTK_MENU (menu);
 }
 
+static void 
+panel_menu_button_menu_detacher	(GtkWidget *widget,
+				 GtkMenu   *menu)
+{
+ 	PanelMenuButton *button;
+
+	g_return_if_fail (PANEL_IS_MENU_BUTTON (widget));
+
+	button = PANEL_MENU_BUTTON (widget);
+
+	g_return_if_fail (button->priv->menu == menu);
+
+	/* This is a workaround pending fixing bug #113112 */
+	g_object_set_data (G_OBJECT (button), "gtk-attached-menu", NULL);
+	button->priv->menu = NULL;
+}
+
 static void
 panel_menu_button_popup_menu (PanelMenuButton *button,
 			      guint            n_button,
@@ -284,6 +302,12 @@ panel_menu_button_popup_menu (PanelMenuButton *button,
 
 		g_object_ref (button->priv->menu);
 		gtk_object_sink (GTK_OBJECT (button->priv->menu));
+
+		gtk_menu_attach_to_widget (button->priv->menu, 
+					   GTK_WIDGET (button),
+					   panel_menu_button_menu_detacher);
+		/* This is a workaround pending fixing bug #113112 */
+		g_object_set_data (G_OBJECT (button), "gtk-attached-menu", button->priv->menu);
 
 		panel_menu_button_associate_panel (button);
 

@@ -1,3 +1,10 @@
+2003-05-16  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* gnome-panel-button (panel_menu_button_menu_popup_menu):
+	Call gtk_menu_attach_to_widget() to attach menu to widget.
+	Set "gtk-attached-menu" on button to the menu pending fix for
+	bug #113112. This fixes bug #111573.
+
 2003-05-14  Hidetoshi Tajima  <hidetoshi.tajima@sun.com>
 
 	* gnome-panel-screenshot.c (main): convert filename to utf-8 when
