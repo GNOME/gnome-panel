@@ -128,6 +128,47 @@ applet_change_orient (PanelApplet       *applet,
 		gtk_label_set_text(GTK_LABEL(pager->label_row_col), pager->orientation == GTK_ORIENTATION_HORIZONTAL ? _("Rows") : _("Columns"));	
 }
 
+static void 
+response_cb(GtkWidget * widget,int id, gpointer data)
+{
+	if(id == GTK_RESPONSE_HELP) {
+		
+		GError *error = NULL;
+		static GnomeProgram *applet_program = NULL;
+
+		if (!applet_program) {
+			int argc = 1;
+			char *argv[2] = { "workspace-switcher" };
+			applet_program = gnome_program_init ("workspace-switcher", VERSION,
+							     LIBGNOME_MODULE, argc, argv,
+							     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+		}
+
+		gnome_help_display_desktop (applet_program, "workspace-switcher",
+					    "workspace-switcher", "workspacelist-prefs", &error);
+		if (error) {
+			GtkWidget *dialog;
+			dialog = gtk_message_dialog_new (GTK_WINDOW(widget),
+							 GTK_DIALOG_DESTROY_WITH_PARENT,
+							 GTK_MESSAGE_ERROR,
+							 GTK_BUTTONS_CLOSE,
+							  _("There was an error displaying help: %s"),
+							 error->message);
+
+			g_signal_connect (G_OBJECT (dialog), "response",
+					  G_CALLBACK (gtk_widget_destroy),
+					  NULL);
+
+			gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+			gtk_widget_show (dialog);
+			g_error_free (error);
+
+		}
+
+	}
+	else
+		gtk_widget_hide (widget);
+}
 
 static void
 applet_change_pixel_size (PanelApplet *applet,
@@ -394,11 +435,35 @@ display_help_dialog (BonoboUIComponent *uic,
 		     const gchar       *verbname)
 {
 	GError *error = NULL;
+	static GnomeProgram *applet_program = NULL;
 
-	gnome_help_display_desktop (NULL, "workspace-switcher", "workspace-switcher", NULL, &error);
+	if (!applet_program) {
+		int argc = 1;
+		char *argv[2] = { "workspace-switcher" };
+		applet_program = gnome_program_init ("workspace-switcher", VERSION,
+						     LIBGNOME_MODULE, argc, argv,
+						     GNOME_PROGRAM_STANDARD_PROPERTIES, NULL);
+	}
+
+	gnome_help_display_desktop (applet_program, "workspace-switcher",
+				    "workspace-switcher", NULL, &error);
 	if (error) {
-		g_warning ("help error: %s\n", error->message);
+		GtkWidget *dialog;
+		dialog = gtk_message_dialog_new (NULL,
+						 GTK_DIALOG_MODAL,
+						 GTK_MESSAGE_ERROR,
+						 GTK_BUTTONS_CLOSE,
+						  _("There was an error displaying help: %s"),
+						 error->message);
+
+		g_signal_connect (G_OBJECT (dialog), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  NULL);
+
+		gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+		gtk_widget_show (dialog);
 		g_error_free (error);
+
 	}
 }
 
@@ -648,6 +713,9 @@ setup_dialog (GladeXML  *xml,
 
 	g_signal_connect (pager->properties_dialog, "delete_event",
 			  G_CALLBACK (delete_event),
+			  pager);
+	g_signal_connect (pager->properties_dialog, "response",
+			  G_CALLBACK (response_cb),
 			  pager);
 	
 	g_signal_connect_swapped (WID ("done_button"), "clicked",
