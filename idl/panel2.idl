@@ -1,0 +1,65 @@
+module GNOME {
+	struct Color {
+		unsigned short red, green, blue;
+	};
+
+	typedef short AppletId;
+	typedef short PanelId;
+
+	interface PanelSpot;
+	interface Applet;
+
+	interface Panel {
+		enum OrientType {
+		        ORIENT_UP,
+	        	ORIENT_DOWN,
+		        ORIENT_LEFT,
+		        ORIENT_RIGHT	
+		};
+
+		enum BackType {
+			BACK_NONE,
+			BACK_COLOR,
+			BACK_PIXMAP
+		};
+
+		union BackInfoType switch(BackType) {
+			case BACK_COLOR: Color c;
+			case BACK_PIXMAP: string pmap;
+			default:
+		}
+
+		/* XXX do activation stuff here - the applet side of it
+		   will be via a GNOME::GenericFactory (ask elliot) */
+
+		oneway void quit ();
+		readonly attribute boolean in_drag;
+	};
+
+	interface PanelSpot { /* panel half of applets */
+		attribute string tooltip;
+		readonly attribute Panel parent_panel;
+
+		oneway void remove_from_panel();
+		short get_pos ();
+		Orientation get_panel_orient();
+
+		oneway void show_menu ();
+		oneway void drag_start ();
+		oneway void drag_stop ();
+		oneway void add_callback (in string callback_name,
+					  in string stock_item,
+					  in string menuitem_text);
+		oneway void remove_callback (in string callback_name);
+		oneway void sync_config ();
+	};
+
+	interface Applet {
+		oneway void change_orient (in Orientation orient);
+		oneway void do_callback (in string callback_name);
+		short session_save (in string cfgpath,
+				    in string global_cfgpath);
+		oneway void back_change (in Panel::BackInfoType backing);
+		oneway void set_tooltips_state (in boolean enabled);
+	};
+};
