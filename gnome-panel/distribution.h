@@ -18,7 +18,7 @@ typedef struct {
 	const gchar *version_file;
 	const gchar *distribution_name;
 	const gchar *menu_name;
-	const gchar *menu_icon;
+	const gchar *stock_icon;
 	gchar       *menu_path;
 	void (*menu_init_func) (void);
 	void (*menu_show_func) (GtkWidget *, GtkMenuItem *);

@@ -106,6 +106,7 @@ panel_sources =			\
 	panel-shell.c		\
 	quick-desktop-reader.c	\
 	panel-access.c		\
+	panel-stock-icons.c	\
 	$(NULL)
 
 panel_headers =			\
@@ -145,6 +146,7 @@ panel_headers =			\
 	panel-applet-frame.h	\
 	quick-desktop-reader.h	\
 	panel-shell.h		\
+	panel-stock-icons.h	\
 	$(NULL)
 
 gnome_panel_SOURCES =		\

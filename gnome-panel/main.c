@@ -29,6 +29,7 @@
 #include "panel-shell.h"
 #include "session.h"
 #include "xstuff.h"
+#include "panel-stock-icons.h"
 
 extern int config_sync_timeout;
 
@@ -191,6 +192,7 @@ main(int argc, char **argv)
 
 	xstuff_init ();
 	multiscreen_init ();
+	panel_init_stock_icons_and_items ();
 
 	panel_gconf_add_dir ("/apps/panel/global");
 	panel_gconf_add_dir ("/desktop/gnome/interface");
