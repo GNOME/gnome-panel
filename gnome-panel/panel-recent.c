@@ -237,6 +237,7 @@ panel_recent_append_documents_menu (GtkWidget *top_menu)
 				 menu_item, 0);
 
 	view = egg_recent_view_gtk_new (menu, NULL);
+	g_object_unref (G_OBJECT (menu));
 
 	egg_recent_view_gtk_set_tooltip_func (view,
 					      recent_documents_tooltip_func,

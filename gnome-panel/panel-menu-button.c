@@ -776,6 +776,7 @@ panel_menu_button_set_menu_path (PanelMenuButton *button,
 		return;
 
 	button->priv->path_root = panel_menu_scheme_to_path_root (scheme);
+	g_free (scheme);
 
 	if (!button->priv->menu_path && (!menu_path || !menu_path [0]))
 		return;
