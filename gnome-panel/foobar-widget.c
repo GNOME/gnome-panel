@@ -34,6 +34,7 @@
 #include "drawer-widget.h"
 #include "gnome-run.h"
 #include "multiscreen-stuff.h"
+#include "panel-gconf.h"
 
 #define ICON_SIZE 20
 
@@ -321,13 +322,29 @@ append_folder_menu (GtkWidget *menu_bar, const char *label,
 #endif
 
 static void
-append_gnomecal_item (GtkWidget *menu, const char *label, const char *flag)
+append_gnomecal_items (GtkWidget *menu)
 {
-	GtkWidget *item = gtk_image_menu_item_new_with_label (label);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	g_signal_connect (G_OBJECT (item), "activate",
-			  G_CALLBACK (gnomecal_client),
-			  (char *)flag);
+	GtkWidget *item;
+	int i;
+	
+	const char *cals[] = { 
+		N_("Today"),      N_("View the calendar for today."),      "gnome-day.png",   "dayview",
+		N_("This Week"),  N_("View the calendar for this week."),  "gnome-week.png",  "weekview",
+		N_("This Month"), N_("View the calendar for this month."), "gnome-month.png", "monthview",
+		NULL
+	};
+	
+	for (i=0; cals[i]; i+=4) {
+		item = pixmap_menu_item_new (cals[i], cals[i+2]);
+		gtk_tooltips_set_tip (panel_tooltips, item,
+			      	      cals[i+1],
+			      	      NULL);
+	
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_signal_connect (G_OBJECT (item), "activate",
+				  G_CALLBACK (gnomecal_client),
+				  (char *)cals[i+3]);
+	}
 }
 
 static void
@@ -397,27 +414,52 @@ set_fooclock_format (GtkWidget *w, char *format)
 }
 
 static void
-append_format_item (GtkWidget *menu, const char *format)
+append_format_items (GtkWidget *menu)
 {
 	char hour[256];
 	GtkWidget *item;
+	GSList *group = NULL;
 	struct tm *das_tm;
 	time_t das_time = 0;
+	char *key;
+	char *s;
+	int i;
+	const char *formats[] = {
+		N_("%H:%M"),
+		N_("%H:%M:%S"),
+		N_("%l:%M %p"),
+		N_("%l:%M:%S %p"),
+		NULL
+	};
 
-	das_tm = localtime (&das_time);
-	if (strftime (hour, sizeof(hour), _(format), das_tm) == 0) {
-		/* according to docs, if the string does not fit, the
-		 * contents of tmp2 are undefined, thus just use
-		 * ??? */
-		strcpy(hour, "???");
-	}
-	hour[sizeof(hour)-1] = '\0'; /* just for sanity */
+	key = panel_gconf_global_config_get_full_key ("clock-format");
+	s = panel_gconf_get_string (key);
+	g_free (key);
+	
+	for (i = 0; formats[i]; i++)
+	{
+		das_tm = localtime (&das_time);
+		if (strftime (hour, sizeof(hour), _(formats[i]), das_tm) == 0) {
+ 			/* according to docs, if the string does not fit, the
+ 		 	 * contents of tmp2 are undefined, thus just use
+ 		 	 * ??? */
+			strcpy(hour, "???");
+		}
+		hour[sizeof(hour)-1] = '\0'; /* just for sanity */
 
-	item = gtk_image_menu_item_new_with_label (hour);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-	g_signal_connect (G_OBJECT (item), "activate",
+		item = gtk_radio_menu_item_new_with_label (group, hour);
+		group = gtk_radio_menu_item_group (GTK_RADIO_MENU_ITEM (item));
+	
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);	
+		g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (set_fooclock_format),
-			  (char *)format);
+			  (char *)formats[i]);
+
+		if (s && !strcmp (s, formats[i])) {
+			gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
+		}
+	}
+	g_free (s);
 }
 
 static void
@@ -436,50 +478,33 @@ append_clock_menu (FoobarWidget *foo, GtkWidget *menu_bar)
 {
 	GtkWidget *item, *menu, *menu2;
 	gchar *time_admin_path;
-	int i;
-	const char *cals[] = { 
-		N_("Today"),      "dayview",
-		N_("This Week"),  "weekview",
-		N_("This Month"), "monthview",
-		NULL
-	};
-
-	const char *formats[] = {
-		N_("%H:%M"),
-		N_("%H:%M:%S"),
-		N_("%l:%M %p"),
-		N_("%l:%M:%S %p"),
-		NULL
-	};
 
 	menu = gtk_menu_new ();
-	
-#if 0 /* put back when evolution can do this */
-	item = gtk_image_menu_item_new_with_label (_("Add appointement..."));
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+	append_gnomecal_items (menu);
 
-	add_menu_separator (menu);
+#if 0 /* put back when evolution can do this */
+	item = gtk_image_menu_item_new_with_label (_("Add Appointment..."));
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 #endif
 
-	/* FIXME: wtf is time-admin???? */
-	time_admin_path = g_find_program_in_path  ("time-admin");
-	if (time_admin_path != NULL) {
-		item = gtk_image_menu_item_new_with_label (_("Set Time"));
-		g_signal_connect (G_OBJECT (item), "activate",
-				  G_CALLBACK (set_time_cb),
-				  time_admin_path);
-		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-		add_menu_separator (menu);
-	}
-
-	for (i=0; cals[i]; i+=2)
-		append_gnomecal_item (menu, _(cals[i]), cals[i+1]);
-
 	add_menu_separator (menu);
 
+	/* check for time-admin (part of ximian-setup-tools) */
+	time_admin_path = g_find_program_in_path  ("time-admin");
+	if (time_admin_path != NULL) {
+		item = pixmap_menu_item_new (_("Set Time..."), "gnome-set-time.png");
+		gtk_tooltips_set_tip (panel_tooltips, item,
+			      	      _("Adjust the date and time."),
+			      	      NULL);	
+		
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_signal_connect (G_OBJECT (item), "activate",
+				  G_CALLBACK (set_time_cb),
+				  time_admin_path);			
+	}
+
 	menu2 = gtk_menu_new ();
-	for (i=0; formats[i]; i++)
-		append_format_item (menu2, formats[i]);
+	append_format_items (menu2); 
 
 	add_tearoff (GTK_MENU_SHELL (menu2));
 

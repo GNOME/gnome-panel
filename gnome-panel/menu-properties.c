@@ -451,6 +451,7 @@ create_properties_dialog (Menu *menu)
 	if (menu->main_menu &&
 	    menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
+
 	g_signal_connect (G_OBJECT (w), "toggled", 
 			  G_CALLBACK (toggle_global_main), 
 			  menu);
@@ -464,6 +465,7 @@ create_properties_dialog (Menu *menu)
 	if (menu->main_menu &&
 	    ! menu->global_main)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w), TRUE);
+
 	g_signal_connect (G_OBJECT (w), "toggled", 
 			  G_CALLBACK (toggle_main_menu), 
 			  menu);
@@ -474,6 +476,7 @@ create_properties_dialog (Menu *menu)
 		  _("Normal menu"));
 	if ( ! menu->main_menu)
 		gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(w2), TRUE);
+
 	g_signal_connect (G_OBJECT (w2), "toggled", 
 			  G_CALLBACK (toggle_normal_menu), 
 			  menu);
@@ -610,6 +613,20 @@ create_properties_dialog (Menu *menu)
 	g_signal_connect (G_OBJECT (dialog), "response",
 			  G_CALLBACK (dialog_response),
 			  menu);
+
+	/* Set the sensitivity of the frames as req'd. */
+	if (menu->main_menu) {
+		if (menu->global_main) {
+			gtk_widget_set_sensitive(menu->dialog_info->main_frame, FALSE);
+			gtk_widget_set_sensitive(menu->dialog_info->normal_frame, FALSE);
+		} else {
+			gtk_widget_set_sensitive(menu->dialog_info->main_frame, TRUE);
+			gtk_widget_set_sensitive(menu->dialog_info->normal_frame, FALSE);
+		}
+	} else {
+		gtk_widget_set_sensitive(menu->dialog_info->main_frame, FALSE);
+		gtk_widget_set_sensitive(menu->dialog_info->normal_frame, TRUE);
+	}
 
 	return dialog;
 }
