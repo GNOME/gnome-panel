@@ -444,11 +444,11 @@ setup_button (Launcher *launcher)
 
 	/* Setup help */
 	docpath = gnome_desktop_item_get_string (launcher->ditem,
-						 "DocPath");
+						 "X-GNOME-DocPath");
 
 	panel_applet_remove_callback (launcher->info, "help_on_app");
 
-	if (docpath != NULL) {
+	if (docpath && *docpath != '\0') {
 		char *title;
 
 		title = g_strdup_printf (_("Help on %s Application"), name);
@@ -714,8 +714,6 @@ load_launcher_applet_full (const char       *params,
 					   "properties",
 					   GTK_STOCK_PROPERTIES,
 					   _("Properties"));
-
-	panel_applet_add_callback (launcher->info, "help", GTK_STOCK_HELP, _("Help"));
 
 	/* setup button according to ditem */
 	setup_button (launcher);
@@ -1042,7 +1040,7 @@ launcher_show_help (Launcher *launcher)
 		return;
 
 	docpath = gnome_desktop_item_get_string (
-				launcher->ditem, "DocPath");
+				launcher->ditem, "X-GNOME-DocPath");
 	panel_show_gnome_kde_help (docpath, &error);
 	if (error) {
 		panel_error_dialog (

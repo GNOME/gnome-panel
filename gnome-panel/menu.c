@@ -1052,7 +1052,7 @@ show_help_on (GtkWidget    *widget,
 						&error);
 	if (item != NULL) {
 		const char *docpath = gnome_desktop_item_get_string
-			(item, "DocPath");
+			(item, "X-GNOME-DocPath");
 		if ( ! panel_show_gnome_kde_help (docpath, &error)) {
 			panel_error_dialog (
 				"cannot_show_gnome_kde_help",
@@ -1382,7 +1382,7 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 				 G_CALLBACK(gtk_menu_shell_deactivate),
 				 G_OBJECT(item->parent));
 
-			if (gnome_desktop_item_get_string (ii, "DocPath") != NULL) {
+			if (gnome_desktop_item_get_string (ii, "X-GNOME-DocPath") != NULL) {
 				char *title;
 				const char *name;
 
