@@ -51,6 +51,7 @@ extern PanelWidget *current_panel;
 
 enum {
 	TARGET_URL,
+	TARGET_NETSCAPE_URL,
 	TARGET_DIRECTORY,
 	TARGET_COLOR,
 	TARGET_APPLET,
@@ -59,6 +60,7 @@ enum {
 
 static GtkTargetEntry panel_drop_types[] = {
 	{ "text/uri-list",       0, TARGET_URL },
+	{ "_NETSCAPE_URL",       0, TARGET_NETSCAPE_URL },
 	{ "application/x-panel-directory", 0, TARGET_DIRECTORY },
 	{ "application/x-panel-applet", 0, TARGET_APPLET },
 	{ "application/x-panel-applet-internal", 0, TARGET_APPLET_INTERNAL },
@@ -890,6 +892,18 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 		}
 		
 		gnome_uri_list_free_strings (files);
+		break;
+	}
+	case TARGET_NETSCAPE_URL: {
+		int pos = panel_widget_get_cursorloc(panel);
+		char *exec[3] = {"gnome-moz-remote",
+				 selection_data->data,
+				 NULL};
+		char *p;
+		
+		p = g_strdup_printf("Open URL: %s",selection_data->data);
+		load_launcher_applet_from_info(selection_data->data,p,exec,2,
+					       "netscape.png",panel,pos);
 		break;
 	}
 	case TARGET_COLOR: {

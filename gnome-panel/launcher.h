@@ -22,6 +22,9 @@ typedef struct {
 } Launcher;
 
 void load_launcher_applet(char *params, PanelWidget *panel, int pos);
+void load_launcher_applet_from_info(char *name, char *comment,
+				    char **exec, int execn, char *icon,
+				    PanelWidget *panel, int pos);
 void launcher_properties(Launcher *launcher);
 
 void ask_about_launcher(char *file, PanelWidget *panel, int pos);

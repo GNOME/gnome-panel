@@ -34,8 +34,16 @@ static void
 launch (GtkWidget *widget, void *data)
 {
 	GnomeDesktopEntry *item = data;
+	
+	g_return_if_fail(item->exec!=NULL);
 
-	gnome_desktop_entry_launch (item);
+	/*UGLY HACK!*/
+	if (item->exec_length == 2 &&
+	    strcmp(item->exec[0],"gnome-moz-remote")==0 &&
+	    *(item->exec[1])!='-') {
+		gnome_url_show(item->exec[1]);
+	} else
+		gnome_desktop_entry_launch (item);
 }
 
 static void
@@ -316,6 +324,23 @@ ask_about_launcher(char *file, PanelWidget *panel, int pos)
 	gtk_widget_show_all(d);
 }
 
+void
+load_launcher_applet_from_info(char *name, char *comment,
+			       char **exec, int execn, char *icon,
+			       PanelWidget *panel, int pos)
+{
+	GnomeDesktopEntry *dentry = g_new0(GnomeDesktopEntry,1);
+	dentry->name = g_strdup(name);
+	dentry->comment = g_strdup(comment);
+	dentry->exec_length = execn;
+	dentry->exec = g_copy_vector(exec);
+	if(icon && *icon != '/')
+		dentry->icon = gnome_pixmap_file(icon);
+	else
+		dentry->icon = g_strdup(icon);
+
+	_load_launcher_applet(NULL,dentry,panel, pos);
+}
 
 void
 load_launcher_applet(char *params, PanelWidget *panel, int pos)
