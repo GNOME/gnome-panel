@@ -235,23 +235,13 @@ create_drawer_applet(GtkWidget * drawer_panel, char *tooltip, char *pixmap,
 
 	if(!pixmap || !*pixmap) {
 		drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
-		drawer->button = button_widget_new_from_file (drawer->pixmap,
-							      DRAWER_TILE,
-							      TRUE,orient);
 	} else {
-		drawer->button = button_widget_new_from_file(pixmap,
-							     DRAWER_TILE,
-							     TRUE,orient);
-		if(drawer->button)
-			drawer->pixmap = g_strdup(pixmap);
-		else {
-			drawer->pixmap = gnome_pixmap_file ("panel-drawer.png");
-			drawer->button =
-				button_widget_new_from_file (drawer->pixmap,
-							     DRAWER_TILE,
-							     TRUE,orient);
-		}
+		drawer->pixmap = g_strdup(pixmap);
 	}
+	drawer->button = button_widget_new_from_file (drawer->pixmap,
+						      DRAWER_TILE,
+						      TRUE,orient,
+						      _("Drawer"));
 
 	gtk_widget_show(drawer->button);
 
@@ -302,11 +292,15 @@ static void
 drawer_realize_cb(GtkWidget *button, Drawer *drawer)
 {
 	gtk_widget_queue_resize(drawer->drawer);
-	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)
+	if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
 		gtk_widget_show(drawer->drawer);
-	else {
+		if(BASEP_WIDGET(drawer->drawer)->fake)
+			gdk_window_show(BASEP_WIDGET(drawer->drawer)->fake);
+	} else {
 		if(!GTK_WIDGET_REALIZED(drawer->drawer))
 			gtk_widget_realize(drawer->drawer);
+		if(BASEP_WIDGET(drawer->drawer)->fake)
+			gdk_window_hide(BASEP_WIDGET(drawer->drawer)->fake);
 		gtk_widget_hide(drawer->drawer);
 	}
 }

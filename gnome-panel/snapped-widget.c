@@ -192,55 +192,85 @@ snapped_widget_size_request(GtkWidget *widget,
 }
 
 static void
+snapped_widget_get_hidepos(SnappedWidget *snapped,
+			   PanelOrientType *hide_orient, int *w, int *h)
+{
+	BasePWidget *basep = BASEP_WIDGET(snapped);
+	PanelWidget *panel = PANEL_WIDGET(basep->panel);
+	
+	*w = GTK_WIDGET(snapped)->allocation.width;
+	*h = GTK_WIDGET(snapped)->allocation.height;
+	*hide_orient = ORIENT_UP;
+	if(snapped->state == SNAPPED_SHOWN)
+		return;
+
+	if(snapped->mode == SNAPPED_AUTO_HIDE &&
+	   snapped->state == SNAPPED_HIDDEN) {
+		switch(snapped->pos) {
+		case SNAPPED_TOP:
+			*h = pw_minimized_size;
+			*hide_orient = ORIENT_UP;
+			break;
+		case SNAPPED_BOTTOM:
+			*h = pw_minimized_size;
+			*hide_orient = ORIENT_DOWN;
+			break;
+		case SNAPPED_LEFT:
+			*w = pw_minimized_size;
+			*hide_orient = ORIENT_LEFT;
+			break;
+		case SNAPPED_RIGHT:
+			*w = pw_minimized_size;
+			*hide_orient = ORIENT_RIGHT;
+			break;
+		}
+	} else if(panel->orient == PANEL_HORIZONTAL) {
+		if(snapped->state == SNAPPED_HIDDEN_LEFT) {
+			*w = basep->hidebutton_e->allocation.width;
+			*hide_orient = ORIENT_LEFT;
+
+		} else if(snapped->state == SNAPPED_HIDDEN_RIGHT) {
+			*w = basep->hidebutton_w->allocation.width;
+			*hide_orient = ORIENT_RIGHT;
+		}
+	} else { /*vertical*/
+		if(snapped->state == SNAPPED_HIDDEN_LEFT) {
+			*h = basep->hidebutton_s->allocation.height;
+			*hide_orient = ORIENT_UP;
+		} else if(snapped->state == SNAPPED_HIDDEN_RIGHT) {
+			*h = basep->hidebutton_n->allocation.height;
+			*hide_orient = ORIENT_DOWN;
+		}
+	}
+}
+
+static void
 snapped_widget_get_pos(SnappedWidget *snapped, gint16 *x, gint16 *y,
 		       int width, int height)
 {
-	int xcor = 0;
-	int ycor = 0;
-	int thick;
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(snapped)->panel);
-	
-	if(snapped->pos == SNAPPED_BOTTOM ||
-	   snapped->pos == SNAPPED_TOP)
-		thick = height;
-	else
-		thick = width;
-
-	if(snapped->mode == SNAPPED_AUTO_HIDE &&
-	   snapped->state == SNAPPED_HIDDEN)
-		ycor = thick - pw_minimized_size;
-	if(panel->orient == PANEL_HORIZONTAL) {
-		if(snapped->state == SNAPPED_HIDDEN_LEFT)
-			xcor = - gdk_screen_width() +
-			       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width;
-		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
-			xcor = gdk_screen_width() -
-			       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width;
-	} else { /*vertical*/
-		if(snapped->state == SNAPPED_HIDDEN_LEFT)
-			xcor = - gdk_screen_height() +
-			       BASEP_WIDGET(snapped)->hidebutton_s->allocation.height;
-		else if(snapped->state == SNAPPED_HIDDEN_RIGHT)
-			xcor = gdk_screen_height() -
-			       BASEP_WIDGET(snapped)->hidebutton_n->allocation.height;
-	}
-
+	*x = *y = 0;
 	switch(snapped->pos) {
-		case SNAPPED_TOP:
-			*x = xcor;
-			*y = -ycor;
-			break;
 		case SNAPPED_BOTTOM:
-			*x = xcor;
-			*y = gdk_screen_height() - thick + ycor;
-			break;
-		case SNAPPED_LEFT:
-			*x = -ycor;
-			*y = xcor;
+			if(snapped->state == SNAPPED_HIDDEN)
+				*y = gdk_screen_height() - pw_minimized_size;
+			else
+				*y = gdk_screen_height() - height;
+			/*fall though*/
+		case SNAPPED_TOP:
+			if(snapped->state == SNAPPED_HIDDEN_RIGHT)
+				*x = gdk_screen_width() -
+					BASEP_WIDGET(snapped)->hidebutton_w->allocation.width;
 			break;
 		case SNAPPED_RIGHT:
-			*x = gdk_screen_width() - thick + ycor;
-			*y = xcor;
+			if(snapped->state == SNAPPED_HIDDEN)
+				*x = gdk_screen_width() - pw_minimized_size;
+			else
+				*x = gdk_screen_width() - width;
+			/*fall though*/
+		case SNAPPED_LEFT:
+			if(snapped->state == SNAPPED_HIDDEN_RIGHT)
+				*y = gdk_screen_height() -
+					BASEP_WIDGET(snapped)->hidebutton_n->allocation.height;
 			break;
 	}
 }
@@ -278,12 +308,45 @@ snapped_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 
 	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
-					allocation->x, 
-					allocation->y,
-					allocation->width, 
-					allocation->height);
+	if (GTK_WIDGET_REALIZED (widget)) {
+		BasePWidget *basep = BASEP_WIDGET(widget);
+		if(!basep->fake &&
+		   snapped->state != SNAPPED_SHOWN) {
+			PanelOrientType hide_orient;
+			int w,h;
+			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
+			basep_widget_add_fake(basep,hide_orient,FALSE,
+					      -1,-1,w,h,TRUE);
+			gdk_window_show(widget->window);
+			gdk_flush();
+			gdk_window_resize (widget->window,
+					   allocation->width, 
+					   allocation->height);
+		} else if(basep->fake) {
+			PanelOrientType hide_orient;
+			int w,h;
+			snapped_widget_get_hidepos(snapped, &hide_orient, &w, &h);
+			basep_widget_set_fake_orient(basep, hide_orient);
+			gdk_window_move_resize (basep->fake,
+						allocation->x, 
+						allocation->y,
+						w,
+						h);
+			gdk_window_show(widget->window);
+			gdk_flush();
+			gdk_window_resize (widget->window,
+					   allocation->width, 
+					   allocation->height);
+			basep_widget_set_infake_position(basep,
+							 hide_orient, w,h);
+		} else { /*if(!basep->fake) {*/
+			gdk_window_move_resize (widget->window,
+						allocation->x, 
+						allocation->y,
+						allocation->width, 
+						allocation->height);
+		}
+	}
 
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
@@ -318,104 +381,45 @@ snapped_widget_set_initial_pos(SnappedWidget *snapped)
 	gtk_widget_set_uposition(GTK_WIDGET(snapped),x,y);
 }
 
-static int
-move_step(int src, int dest, int pos, int step)
-{
-	int range = abs(src-dest);
-	int diff = abs(range-abs(pos-src));
-	int percentage = (diff*100)/range;
-
-	if(percentage>50)
-		percentage = 100-percentage;
-
-	return ((step>>1)*log((percentage/10.0)+1))+1;
-}
-
-static void
-move_horiz(SnappedWidget *snapped, int src_x, int dest_x, int step)
-{
-	int x, y;
-	GtkWidget *w = GTK_WIDGET(snapped);
-
-	gdk_window_get_origin(w->window,&x,&y);
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_x < dest_x) {
-			for( x = src_x; x < dest_x;
-			     x+= move_step(src_x,dest_x,x,step))
-				move_window(w,x,y);
-		} else {
-			for (x = src_x; x > dest_x;
-			     x-= move_step(src_x,dest_x,x,step))
-				move_window(w,x,y);
-		}
-	}
-	
-	move_window(w, dest_x, y);
-}
-
-
-static void
-move_vert(SnappedWidget *snapped, int src_y, int dest_y, int step)
-{
-	int x, y;
-
-	GtkWidget *w = GTK_WIDGET(snapped);
-
-	gdk_window_get_origin(w->window,&x,&y);
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_y < dest_y) {
-                        for (y = src_y; y < dest_y;
-			     y+= move_step(src_y,dest_y,y,step))
-				move_window(w,x,y);
-		} else {
-                        for (y = src_y; y > dest_y;
-			     y-= move_step(src_y,dest_y,y,step))
-				move_window(w,x,y);
-		}
-	}
-
-	move_window(w, x, dest_y);
-}
-
 void
 snapped_widget_pop_up(SnappedWidget *snapped)
 {
-	int width, height;
-	int swidth, sheight;
-
 	if ((snapped->state == SNAPPED_MOVING) ||
 	    (snapped->state == SNAPPED_SHOWN))
 		return;
 
-	snapped->state = SNAPPED_MOVING;
+	if(GTK_WIDGET_REALIZED(snapped)) {
+		snapped->state = SNAPPED_MOVING;
 
-	width   = GTK_WIDGET(snapped)->allocation.width;
-	height  = GTK_WIDGET(snapped)->allocation.height;
-	swidth  = gdk_screen_width();
-	sheight = gdk_screen_height();
-
-	switch (snapped->pos) {
+		switch (snapped->pos) {
 		case SNAPPED_TOP:
-		        move_vert(snapped, -height + pw_minimized_size, 0,
-				  pw_auto_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_UP,
+						pw_minimized_size,
+						pw_auto_step);
 			break;
 
 		case SNAPPED_BOTTOM:
-			move_vert(snapped, sheight - pw_minimized_size, 
-				  sheight - height,pw_auto_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_DOWN,
+						pw_minimized_size,
+						pw_auto_step);
 			break;
 
 		case SNAPPED_LEFT:
-			move_horiz(snapped, -width + pw_minimized_size, 0,
-				   pw_auto_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_LEFT,
+						pw_minimized_size,
+						pw_auto_step);
 			break;
 
 		case SNAPPED_RIGHT:
-			move_horiz(snapped, swidth - pw_minimized_size, 
-				   swidth - width,pw_auto_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_RIGHT,
+						pw_minimized_size,
+						pw_auto_step);
 			break;
+		}
 	}
 
 	snapped->state = SNAPPED_SHOWN;
@@ -430,8 +434,6 @@ static int
 snapped_widget_pop_down(gpointer data)
 {
 	SnappedWidget *snapped = data;
-	int width, height;
-	int swidth, sheight;
 
 	if(snapped->autohide_inhibit)
 		return TRUE;
@@ -452,35 +454,38 @@ snapped_widget_pop_down(gpointer data)
 			snapped_widget_signals[STATE_CHANGE_SIGNAL],
 			SNAPPED_HIDDEN);
 
-	snapped->state = SNAPPED_MOVING;
+	if(GTK_WIDGET_REALIZED(snapped)) {
+		snapped->state = SNAPPED_MOVING;
 
-	width   = GTK_WIDGET(snapped)->allocation.width;
-	height  = GTK_WIDGET(snapped)->allocation.height;
-	swidth  = gdk_screen_width();
-	sheight = gdk_screen_height();
-
-	switch (snapped->pos) {
+		switch (snapped->pos) {
 		case SNAPPED_TOP:
-			move_vert(snapped, 0, -height + pw_minimized_size,
-				  pw_auto_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_UP,
+					       pw_minimized_size,
+					       pw_auto_step);
 			break;
 
 		case SNAPPED_BOTTOM:
-			move_vert(snapped, sheight - height, 
-				  sheight - pw_minimized_size,
-				  pw_auto_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_DOWN,
+					       pw_minimized_size,
+					       pw_auto_step);
 			break;
 
 		case SNAPPED_LEFT:
-			move_horiz(snapped, 0, -width + pw_minimized_size,
-				   pw_auto_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_LEFT,
+					       pw_minimized_size,
+					       pw_auto_step);
 			break;
 
 		case SNAPPED_RIGHT:
-			move_horiz(snapped, swidth - width, 
-				   swidth - pw_minimized_size,
-				   pw_auto_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_RIGHT,
+					       pw_minimized_size,
+					       pw_auto_step);
 			break;
+		}
 	}
 
 	snapped->state = SNAPPED_HIDDEN;
@@ -494,7 +499,6 @@ snapped_widget_pop_down(gpointer data)
 static void
 snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 {
-	int width, height;
 	static const char *supinfo[] = {"panel", "collapse", NULL};
 
 	if ((snapped->state == SNAPPED_MOVING) ||
@@ -505,27 +509,28 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 
 	snapped->state = SNAPPED_MOVING;
 
-	width   = GTK_WIDGET(snapped)->allocation.width;
-	height  = GTK_WIDGET(snapped)->allocation.height;
-
 	if(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
-			move_horiz(snapped, -width +
-				   BASEP_WIDGET(snapped)->hidebutton_w->allocation.width, 0,
-				   pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_LEFT,
+						BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
+						pw_explicit_step);
 		else
-			move_horiz(snapped, width -
-				   BASEP_WIDGET(snapped)->hidebutton_e->allocation.width, 0,
-				   pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_RIGHT,
+						BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
+						pw_explicit_step);
 	} else {
 		if(fromright)
-			move_vert(snapped, -height +
-				  BASEP_WIDGET(snapped)->hidebutton_s->allocation.height, 0,
-				  pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_UP,
+						BASEP_WIDGET(snapped)->hidebutton_s->allocation.height,
+						pw_explicit_step);
 		else
-			move_vert(snapped, height -
-				  BASEP_WIDGET(snapped)->hidebutton_n->allocation.height, 0,
-				  pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(snapped),
+						ORIENT_DOWN,
+						BASEP_WIDGET(snapped)->hidebutton_n->allocation.height,
+						pw_explicit_step);
 	}
 
 	snapped->state = SNAPPED_SHOWN;
@@ -538,7 +543,6 @@ snapped_widget_pop_show(SnappedWidget *snapped, int fromright)
 static void
 snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 {
-	int width, height;
 	static const char *supinfo[] = {"panel", "collapse", NULL};
 
 	if((snapped->state != SNAPPED_SHOWN))
@@ -562,27 +566,28 @@ snapped_widget_pop_hide(SnappedWidget *snapped, int fromright)
 
 	snapped->state = SNAPPED_MOVING;
 
-	width   = GTK_WIDGET(snapped)->allocation.width;
-	height  = GTK_WIDGET(snapped)->allocation.height;
-
 	if(PANEL_WIDGET(BASEP_WIDGET(snapped)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
-			move_horiz(snapped, 0, -width +
-				   BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
-				   pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_LEFT,
+					       BASEP_WIDGET(snapped)->hidebutton_w->allocation.width,
+					       pw_explicit_step);
 		else
-			move_horiz(snapped, 0, width -
-				   BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
-				   pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_RIGHT,
+					       BASEP_WIDGET(snapped)->hidebutton_e->allocation.width,
+					       pw_explicit_step);
 	} else {
 		if(fromright)
-			move_vert(snapped, 0, -height +
-				  BASEP_WIDGET(snapped)->hidebutton_s->allocation.height,
-				  pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_UP,
+					       BASEP_WIDGET(snapped)->hidebutton_s->allocation.height,
+					       pw_explicit_step);
 		else
-			move_vert(snapped, 0, height -
-				  BASEP_WIDGET(snapped)->hidebutton_n->allocation.height,
-				  pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(snapped),
+					       ORIENT_DOWN,
+					       BASEP_WIDGET(snapped)->hidebutton_n->allocation.height,
+					       pw_explicit_step);
 	}
 
 	if(fromright)

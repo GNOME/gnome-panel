@@ -2931,7 +2931,8 @@ create_panel_menu (char *menudir, int main_menu,
 	/*make the pixmap*/
 	menu->button = button_widget_new_from_file (pixmap_name,
 						    MENU_TILE,
-						    TRUE,orient);
+						    TRUE,orient,
+						    _("Menu"));
 	gtk_signal_connect_after (GTK_OBJECT (menu->button), "pressed",
 				  GTK_SIGNAL_FUNC (menu_button_pressed), menu);
 	gtk_signal_connect (GTK_OBJECT (menu->button), "destroy",
@@ -3291,6 +3292,7 @@ menu_properties(Menu *menu)
 				     MENU_PROPERTIES);
 	if(dialog) {
 		gdk_window_raise(dialog->window);
+		gtk_widget_show(dialog);
 		return;
 	}
 

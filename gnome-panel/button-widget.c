@@ -48,6 +48,9 @@ static int tile_depth[LAST_TILE]={0,0,0,0};
 /*are tiles enabled*/
 static int tiles_enabled[LAST_TILE]={FALSE,FALSE,FALSE,FALSE};
 
+static int pixmaps_enabled[LAST_TILE] = {TRUE,TRUE,TRUE,TRUE};
+static int always_text[LAST_TILE] = {FALSE,FALSE,FALSE,FALSE}; /*text always displayed*/
+
 static GtkWidgetClass *parent_class;
 
 guint
@@ -244,6 +247,8 @@ button_widget_destroy(GtkWidget *w, gpointer data)
 		gdk_bitmap_unref(button->mask);
 	button->mask = NULL;
 
+	g_free(button->text);
+
 	buttons = g_list_remove(buttons,button);
 }
 
@@ -332,28 +337,78 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 		}
 	}
 
-	if (button->mask) {
-		gdk_gc_set_clip_mask (gc, button->mask);
-		gdk_gc_set_clip_origin (gc,
-					widget->allocation.x+off,
-					widget->allocation.y+off);
-	}
+	if (pixmaps_enabled[button->tile]) {
+		if (button->mask) {
+			gdk_gc_set_clip_mask (gc, button->mask);
+			gdk_gc_set_clip_origin (gc,
+						widget->allocation.x+off,
+						widget->allocation.y+off);
+		}
 
 
-	i = MAX(border-off,0);
-	if(button->pixmap) {
-		gdk_draw_pixmap (pixmap, gc, button->pixmap,
-				 i, i,
-				 widget->allocation.x+i+off,
-				 widget->allocation.y+i+off,
-				 BIG_ICON_SIZE-i-off-border,
-				 BIG_ICON_SIZE-i-off-border);
+		i = MAX(border-off,0);
+		if(button->pixmap) {
+			gdk_draw_pixmap (pixmap, gc, button->pixmap,
+					 i, i,
+					 widget->allocation.x+i+off,
+					 widget->allocation.y+i+off,
+					 BIG_ICON_SIZE-i-off-border,
+					 BIG_ICON_SIZE-i-off-border);
+		}
+
+		if (button->mask) {
+			gdk_gc_set_clip_mask (gc, NULL);
+			gdk_gc_set_clip_origin (gc, 0, 0);
+		}
 	}
 
-	if (button->mask) {
-		gdk_gc_set_clip_mask (gc, NULL);
-		gdk_gc_set_clip_origin (gc, 0, 0);
+	/*draw text*/
+	if (!pixmaps_enabled[button->tile] ||
+	  always_text[button->tile] ||
+	  !button->pixmap) {
+		char *text = g_strdup(button->text);
+		int twidth,theight;
+		GdkFont *font;
+		GdkRectangle rect = {
+			widget->allocation.x,
+			widget->allocation.y,
+			widget->allocation.width,
+			widget->allocation.height
+		};
+		if(!text) text = g_strdup("XXX");
+		
+		font = gdk_font_load("-*-helvetica-medium-r-normal-*-8-*-*-*-*-*-*-*");
+		if(!font)
+			font = gdk_font_load("fixed");
+		if(!font)
+			font = widget->style->font;
+		
+
+		gdk_gc_set_clip_rectangle (gc, &rect);
+
+		twidth = gdk_string_width(font,text);
+		theight = gdk_string_height(font,text);
+		if(twidth>BIG_ICON_SIZE)
+			twidth = BIG_ICON_SIZE;
+		
+		gdk_gc_set_foreground(gc,&widget->style->black);
+		gdk_draw_rectangle(pixmap,gc,TRUE,
+				   widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off-1,
+				   widget->allocation.y+(widget->allocation.height/2)-(theight/2)-1+off,
+				   twidth+2,
+				   theight+2);
+		gdk_gc_set_foreground(gc,&widget->style->white);
+		gdk_draw_string(pixmap,font,gc,
+				widget->allocation.x+(widget->allocation.width/2)-(twidth/2)+off,
+				widget->allocation.y+(widget->allocation.height/2)+(theight/2)+off,
+				text);
+		gdk_gc_set_foreground(gc,&widget->style->black);
+		gdk_gc_set_clip_rectangle (gc, NULL);
+		if(font!=widget->style->font)
+			gdk_font_unref(font);
+		g_free(text);
 	}
+
 	
 	if(button->arrow) {
 		int i;
@@ -541,7 +596,8 @@ button_widget_new(GdkPixmap *pixmap,
 		  GdkBitmap *mask,
 		  guint tile,
 		  guint arrow,
-		  PanelOrientType orient)
+		  PanelOrientType orient,
+		  char *text)
 {
 	ButtonWidget *button;
 
@@ -552,6 +608,7 @@ button_widget_new(GdkPixmap *pixmap,
 	button->tile = tile;
 	button->arrow = arrow;
 	button->orient = orient;
+	button->text = text?g_strdup(text):NULL;
 	
 	return GTK_WIDGET(button);
 }
@@ -610,14 +667,15 @@ GtkWidget*
 button_widget_new_from_file(char *pixmap,
 			    guint tile,
 			    guint arrow,
-			    PanelOrientType orient)
+			    PanelOrientType orient,
+			    char *text)
 {
 	GdkPixmap *_pixmap;
 	GdkBitmap *mask;
 	
 	loadup_file(&_pixmap,&mask,pixmap);
 	
-	return button_widget_new(_pixmap,mask,tile,arrow,orient);
+	return button_widget_new(_pixmap,mask,tile,arrow,orient,text);
 }
 
 void
@@ -650,6 +708,16 @@ button_widget_set_pixmap_from_file(ButtonWidget *button, char *pixmap)
 		return FALSE;
 	
 	return TRUE;
+}
+
+void
+button_widget_set_text(ButtonWidget *button, char *text)
+{
+	g_free(button->text);
+	button->text = text?g_strdup(text):NULL;
+	
+	panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(button)->parent),
+			       button);
 }
 
 void
@@ -701,11 +769,16 @@ button_widget_load_tile(int tile, char *tile_up, char *tile_down,
 }
 
 void
-button_widget_tile_enable(int i, int enabled)
+button_widget_set_flags(int type, int _tiles_enabled, int _pixmaps_enabled, int _always_text)
 {
-	if(tiles_enabled[i] != enabled) {
+	if(tiles_enabled[type] != _tiles_enabled ||
+	   pixmaps_enabled[type] != _pixmaps_enabled ||
+	   always_text[type] != _always_text) {
 		GList *list;
-		tiles_enabled[i] = enabled;
+
+		tiles_enabled[type] = _tiles_enabled;
+		pixmaps_enabled[type] = _pixmaps_enabled;
+		always_text[type] = _always_text;
 
 		for(list = buttons;list!=NULL;list=g_list_next(list))
 			panel_widget_draw_icon(PANEL_WIDGET(GTK_WIDGET(list->data)->parent),

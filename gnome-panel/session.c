@@ -121,7 +121,8 @@ apply_global_config(void)
 	send_tooltips_state(global_config.tooltips_enabled);
 
 	for(i=0;i<LAST_TILE;i++) {
-		button_widget_tile_enable(i, global_config.tiles_enabled[i]);
+		button_widget_set_flags(i, global_config.tiles_enabled[i],
+					1,0);
 		button_widget_load_tile(i, global_config.tile_up[i],
 					global_config.tile_down[i],
 					global_config.tile_border[i],
@@ -660,6 +661,7 @@ panel_quit(void)
 
 	if(box) {
 		gdk_window_raise(box->window);
+		gtk_widget_show(box);
 		return;
 	}
 

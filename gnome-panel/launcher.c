@@ -118,16 +118,15 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 		launcher->button = button_widget_new_from_file(dentry->icon,
 							       LAUNCHER_TILE,
 							       FALSE,
-							       ORIENT_UP);
+							       ORIENT_UP,
+							       dentry->name);
 	}
 	if (!launcher->button) {
-		if (default_app_pixmap)
-			launcher->button =
-				button_widget_new_from_file(default_app_pixmap,
-							    LAUNCHER_TILE,
-							    FALSE,ORIENT_UP);
-		else
-			launcher->button = gtk_button_new_with_label (_("App"));
+		launcher->button =
+			button_widget_new_from_file(default_app_pixmap,
+						    LAUNCHER_TILE,
+						    FALSE,ORIENT_UP,
+						    _("App"));
 	}
 	gtk_widget_show (launcher->button);
 
@@ -176,28 +175,23 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	gtk_tooltips_set_tip (panel_tooltips,launcher->button,
 			      launcher->dentry->comment,NULL);
 	
-	/*it also might be a text button*/
-	if(IS_BUTTON_WIDGET(launcher->button)) {
-		icon = launcher->dentry->icon;
-		if (icon && *icon) {
-			/* Sigh, now we need to make them local to the gnome
-			   install */
-			if (*icon != '/') {
-				launcher->dentry->icon = gnome_pixmap_file (icon);
-				g_free (icon);
-			}
-			if(!button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
-								 launcher->dentry->icon))
-				/*we know default_app_pixmap is ok since otherwise we
-				  wouldn't get here*/
-				button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
-								    default_app_pixmap);
-		} else {
-			/*we know default_app_pixmap is ok since otherwise we
-			  wouldn't get here*/
+	button_widget_set_text (BUTTON_WIDGET(launcher->button),
+				launcher->dentry->name);
+	icon = launcher->dentry->icon;
+	if (icon && *icon) {
+		/* Sigh, now we need to make them local to the gnome
+		   install */
+		if (*icon != '/') {
+			launcher->dentry->icon = gnome_pixmap_file (icon);
+			g_free (icon);
+		}
+		if(!button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
+							launcher->dentry->icon))
 			button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
 							    default_app_pixmap);
-		}
+	} else {
+		button_widget_set_pixmap_from_file (BUTTON_WIDGET(launcher->button),
+						    default_app_pixmap);
 	}
 }
 
@@ -253,6 +247,7 @@ launcher_properties(Launcher *launcher)
 				     LAUNCHER_PROPERTIES);
 	if(dialog) {
 		gdk_window_raise(dialog->window);
+		gtk_widget_show(dialog);
 		return;
 	}
 

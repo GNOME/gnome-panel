@@ -6,19 +6,6 @@
 
 #include "panel-include.h"
 
-/*this is used to do an immediate move instead of set_uposition, which
-queues one*/
-void
-move_window(GtkWidget *widget, int x, int y)
-{
-	gdk_window_set_hints(widget->window, x, y, 0, 0, 0, 0, GDK_HINT_POS);
-	gdk_window_move(widget->window, x, y);
-	/* FIXME: this should draw only the newly exposed area! */
-	gtk_widget_draw(widget, NULL);
-}
-
-
-
 int
 string_is_in_list(GSList *list,char *text)
 {
@@ -246,32 +233,6 @@ my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
 	      (*func)(dl->data,dl->prev->data)<0)
 		list=my_g_list_swap_prev(list,dl);
 	return list;
-}
-
-/*this is used to do an immediate move instead of set_uposition, which
-queues one*/
-void
-move_resize_window(GtkWidget *widget, int x, int y, int w, int h)
-{
-	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
-	gdk_window_set_hints(widget->window, x, y, w, h, w, h,
-			     GDK_HINT_POS|GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
-	gdk_window_move_resize(widget->window, x, y, w, h);
-	/* FIXME: this should draw only the newly exposed area! */
-	gtk_widget_draw(widget, NULL);
-}
-
-/*this is used to do an immediate resize instead of set_usize, which
-queues one*/
-void
-resize_window(GtkWidget *widget, int w, int h)
-{
-	/*printf("%d x %d x %d x %d\n",x,y,w,h);*/
-	gdk_window_set_hints(widget->window, 0, 0, w, h, w, h,
-			     GDK_HINT_MIN_SIZE|GDK_HINT_MAX_SIZE);
-	gdk_window_resize(widget->window, w, h);
-	/* FIXME: this should draw only the newly exposed area! */
-	gtk_widget_draw(widget, NULL);
 }
 
 /*following code shamelessly stolen from gtk*/

@@ -180,6 +180,7 @@ drawer_widget_size_request(GtkWidget *widget,
 	requisition->height = h;
 }
 
+
 static void
 drawer_widget_get_pos(DrawerWidget *drawer, gint16 *x, gint16 *y,
 		      int width, int height)
@@ -266,17 +267,35 @@ drawer_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			      allocation->width,
 			      allocation->height);
 	
-	/*ugly optimisation*/
-	if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
-		return;
+	/*ugly optimisation, XXX: most likely won't work, test this
+	 more*/
+	/*if(memcmp(allocation,&widget->allocation,sizeof(GtkAllocation))==0)
+		return;*/
 
 	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
-					allocation->x, 
-					allocation->y,
-					allocation->width, 
-					allocation->height);
+	if (GTK_WIDGET_REALIZED (widget)) {
+		BasePWidget *basep = BASEP_WIDGET(widget);
+		if(!basep->fake)
+			gdk_window_move_resize (widget->window,
+						allocation->x, 
+						allocation->y,
+						allocation->width, 
+						allocation->height);
+		else {
+			gdk_window_move_resize (basep->fake,
+						allocation->x, 
+						allocation->y,
+						allocation->width, 
+						allocation->height);
+			gdk_window_show(widget->window);
+			gdk_flush();
+			gdk_window_move_resize (widget->window,
+						0,
+						0,
+						allocation->width, 
+						allocation->height);
+		}
+	}
 
 	challoc.x = challoc.y = 0;
 	challoc.width = allocation->width;
@@ -317,123 +336,6 @@ drawer_widget_set_hidebuttons(BasePWidget *basep)
 	}
 }
 
-static int
-move_step(int src, int dest, int pos, int step)
-{
-	int range = abs(src-dest);
-	int diff = abs(range-abs(pos-src));
-	int percentage = (diff*100)/range;
-
-	if(percentage>50)
-		percentage = 100-percentage;
-	
-	return ((step>>1)*log((percentage/10.0)+1))+1;
-}
-
-static void
-move_horiz_d(DrawerWidget *drawer, int x, int y, int w, int h,
-	    int src_x, int dest_x, int step, int hide)
-{
-	int orig_x;
-	int orig_w;
-	GtkWidget *wid = GTK_WIDGET(drawer);
-
-	if(!hide)
-		w = 0;
-
-	orig_x = x;
-	orig_w = w;
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_x < dest_x) {
-			for( x = src_x; x < dest_x;
-			     x+= move_step(src_x,dest_x,x,step)) {
-				if(hide) {
-					move_resize_window(wid,
-							   x, y, w, h);
-					w-=move_step(src_x,dest_x,x,step);
-				} else {
-					move_resize_window(wid,
-							   orig_x, y, w, h);
-					w+=move_step(src_x,dest_x,x,step);
-				}
-			}
-		} else {
-			for (x = src_x; x > dest_x;
-			     x-= move_step(src_x,dest_x,x,step)) {
-				if(hide) {
-					move_resize_window(wid,
-							   orig_x, y, w, h);
-					w-=move_step(src_x,dest_x,x,step);
-				} else {
-					move_resize_window(wid,
-							   x, y, w, h);
-					w+=move_step(src_x,dest_x,x,step);
-				}
-			}
-		}
-	}
-	
-	if(hide)
-		w = orig_w - abs(src_x-dest_x);
-	else
-		w = orig_w + abs(src_x-dest_x);
-
-	move_resize_window(wid, dest_x, y,w,h);
-}
-
-static void
-move_vert_d(DrawerWidget *drawer, int x, int y, int w, int h,
-	    int src_y, int dest_y, int step, int hide)
-{
-	int orig_y;
-	int orig_h;
-	GtkWidget *wid = GTK_WIDGET(drawer);
-
-	if(!hide)
-		h = 0;
-
-	orig_y = y;
-	orig_h = h;
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_y < dest_y) {
-			for( y = src_y; y < dest_y;
-			     y+= move_step(src_y,dest_y,y,step)) {
-				if(hide) {
-					move_resize_window(wid,
-							   x, y, w, h);
-					h-=move_step(src_y,dest_y,y,step);
-				} else {
-					move_resize_window(wid,
-							   x, orig_y, w, h);
-					h+=move_step(src_y,dest_y,y,step);
-				}
-			}
-		} else {
-			for (y = src_y; y > dest_y;
-			     y-= move_step(src_y,dest_y,y,step)) {
-				if(hide) {
-					move_resize_window(wid,
-							   x, orig_y, w, h);
-					h-=move_step(src_y,dest_y,y,step);
-				} else {
-					move_resize_window(wid,
-							   x, y, w, h);
-					h+=move_step(src_y,dest_y,y,step);
-				}
-			}
-		}
-	}
-	
-	if(hide)
-		h = orig_h - abs(src_y-dest_y);
-	else
-		h = orig_h + abs(src_y-dest_y);
-
-	move_resize_window(wid, x, dest_y, w,h);
-}
-
 void
 drawer_widget_open_drawer(DrawerWidget *drawer)
 {
@@ -453,30 +355,33 @@ drawer_widget_open_drawer(DrawerWidget *drawer)
 	width   = GTK_WIDGET(drawer)->allocation.width;
 	height  = GTK_WIDGET(drawer)->allocation.height;
 	drawer_widget_get_pos(drawer,&x,&y,width,height);
+	GTK_WIDGET(drawer)->allocation.x = x;
+	GTK_WIDGET(drawer)->allocation.y = y;
 
 	drawer->state = DRAWER_MOVING;
 
-	gdk_window_move(GTK_WIDGET(drawer)->window, -3000,-3000);
-	ignore_allocate = TRUE;
-	gtk_widget_show_now(GTK_WIDGET(drawer));
-	ignore_allocate = FALSE;
 	switch(drawer->orient) {
 	case ORIENT_UP:
-		move_vert_d(drawer,x,y,width,height, y+height, y,
-			    pw_drawer_step,FALSE);
+		GTK_WIDGET(drawer)->allocation.y += 
+			GTK_WIDGET(drawer)->allocation.height;
+		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_DOWN,
+					0,pw_drawer_step);
 		break;
 	case ORIENT_DOWN:
-		move_vert_d(drawer,x,y,width,height, y-height, y,
-			    pw_drawer_step,FALSE);
+		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_UP,
+					0,pw_drawer_step);
 		break;
 	case ORIENT_LEFT:
-		move_horiz_d(drawer,x,y,width,height, x+width, x,
-			     pw_drawer_step,FALSE);
+		GTK_WIDGET(drawer)->allocation.x += 
+			GTK_WIDGET(drawer)->allocation.width;
+		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_RIGHT,
+					0,pw_drawer_step);
 		break;
 	case ORIENT_RIGHT:
-		move_horiz_d(drawer,x,y,width,height, x-width, x,
-			     pw_drawer_step,FALSE);
+		basep_widget_do_showing(BASEP_WIDGET(drawer), ORIENT_LEFT,
+					0,pw_drawer_step);
 		break;
+	default: break;
 	}
 
 	drawer->state = DRAWER_SHOWN;
@@ -511,31 +416,30 @@ drawer_widget_close_drawer(DrawerWidget *drawer)
 	width   = GTK_WIDGET(drawer)->allocation.width;
 	height  = GTK_WIDGET(drawer)->allocation.height;
 	drawer_widget_get_pos(drawer,&x,&y,width,height);
+	GTK_WIDGET(drawer)->allocation.x = x;
+	GTK_WIDGET(drawer)->allocation.y = y;
 
 	drawer->state = DRAWER_MOVING;
-
-	if(!pw_disable_animations) {
-		switch(drawer->orient) {
-		case ORIENT_UP:
-			move_vert_d(drawer,x,y,width,height, y, y+height,
-				    pw_drawer_step, TRUE);
-			break;
-		case ORIENT_DOWN:
-			move_vert_d(drawer,x,y,width,height, y, y-height,
-				    pw_drawer_step, TRUE);
-			break;
-		case ORIENT_LEFT:
-			move_horiz_d(drawer,x,y,width,height, x, x+width,
-				     pw_drawer_step, TRUE);
-			break;
-		case ORIENT_RIGHT:
-			move_horiz_d(drawer,x,y,width,height, x, x-width,
-				     pw_drawer_step, TRUE);
-			break;
-		}
+	
+	switch(drawer->orient) {
+	case ORIENT_UP:
+		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_DOWN,
+				       0,pw_drawer_step);
+		break;
+	case ORIENT_DOWN:
+		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_UP,
+				       0,pw_drawer_step);
+		break;
+	case ORIENT_LEFT:
+		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_RIGHT,
+				       0,pw_drawer_step);
+		break;
+	case ORIENT_RIGHT:
+		basep_widget_do_hiding(BASEP_WIDGET(drawer), ORIENT_LEFT,
+				       0,pw_drawer_step);
+		break;
+	default: break;
 	}
-
-	gtk_widget_hide(GTK_WIDGET(drawer));
 
 	drawer->state = DRAWER_HIDDEN;
 }
@@ -556,11 +460,29 @@ drawer_handle_click(GtkWidget *widget, gpointer data)
 		SNAPPED_WIDGET(panelw)->drawers_open--;
 }
 
+/*static void
+do_show(BasePWidget *basep)
+{
+	if(basep->fake)
+		gdk_window_show(basep->fake);
+}
+static void
+do_hide(BasePWidget *basep)
+{
+	if(basep->fake)
+		gdk_window_hide(basep->fake);
+}*/
+
 
 static void
 drawer_widget_init (DrawerWidget *drawer)
 {
 	drawer->state = DRAWER_SHOWN;
+	
+	/*gtk_signal_connect(GTK_OBJECT(drawer),"hide",
+			   GTK_SIGNAL_FUNC(do_hide),NULL);
+	gtk_signal_connect_after(GTK_OBJECT(drawer),"show",
+				 GTK_SIGNAL_FUNC(do_show),NULL);*/
 }
 
 GtkWidget*
@@ -702,6 +624,10 @@ void
 drawer_widget_restore_state(DrawerWidget *drawer)
 {
 	gtk_widget_queue_resize(GTK_WIDGET(drawer));
-	gtk_widget_show(GTK_WIDGET(drawer));
+	gtk_widget_show_now(GTK_WIDGET(drawer));
+	if(BASEP_WIDGET(drawer)->fake) {
+		gdk_window_show(BASEP_WIDGET(drawer)->fake);
+		gdk_flush();
+	}
 }
 

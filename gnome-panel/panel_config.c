@@ -812,6 +812,7 @@ panel_config(GtkWidget *panel)
 	/* return if the window is already up. */
 	if (ppc) {
 		gdk_window_raise(ppc->config_window->window);
+		gtk_widget_show(ppc->config_window);
 		return;
 	}
 	

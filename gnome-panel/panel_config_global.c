@@ -555,8 +555,11 @@ panel_config_global(void)
 	int i;
 	
 	/* return if the window is already up. */
-	if (config_window)
+	if (config_window) {
+		gdk_window_raise(config_window->window);
+		gtk_widget_show(config_window);
 		return;
+	}
 
 	memcpy(&temp_config,&global_config,sizeof(GlobalConfig));
 

@@ -177,78 +177,91 @@ corner_widget_size_request(GtkWidget *widget,
 }
 
 static void
-corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int height)
+corner_widget_get_hidepos(CornerWidget *corner, PanelOrientType *hide_orient,
+			  int *w, int *h)
 {
-	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(corner)->panel);
+	BasePWidget *basep = BASEP_WIDGET(corner);
+	PanelWidget *panel = PANEL_WIDGET(basep->panel);
+	*w = GTK_WIDGET(corner)->allocation.width;
+	*h = GTK_WIDGET(corner)->allocation.height;
+	*hide_orient = ORIENT_UP;
+	if(corner->state == CORNER_SHOWN)
+		return;
 	
 	switch(corner->pos) {
 	case CORNER_NE:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			*y = 0;
-			if(corner->state == CORNER_HIDDEN)
-				*x = gdk_screen_width() -
-					BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
-			else /*shown*/
-				*x = gdk_screen_width() - width;
-		} else { /*vertical*/
-			*x = gdk_screen_width() - width;
-			if(corner->state == CORNER_HIDDEN)
-				*y = BASEP_WIDGET(corner)->hidebutton_s->requisition.height -
-					height;
-			else /*shown*/
-				*y = 0;
+			*w = basep->hidebutton_w->allocation.width;
+			*hide_orient = ORIENT_RIGHT;
+		} else {
+			*h = basep->hidebutton_s->allocation.height;
+			*hide_orient = ORIENT_UP;
 		}
 		break;
 	case CORNER_SE:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			*y = gdk_screen_height() - height;
-			if(corner->state == CORNER_HIDDEN)
-				*x = gdk_screen_width() -
-					BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
-			else /*shown*/
-				*x = gdk_screen_width() - width;
-		} else { /*vertical*/
-			*x = gdk_screen_width() - width;
-			if(corner->state == CORNER_HIDDEN)
-				*y = gdk_screen_height() -
-					BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
-			else /*shown*/
-				*y = gdk_screen_height() - height;
+			*w = basep->hidebutton_w->allocation.width;
+			*hide_orient = ORIENT_RIGHT;
+		} else {
+			*h = basep->hidebutton_n->allocation.height;
+			*hide_orient = ORIENT_DOWN;
 		}
 		break;
 	case CORNER_SW:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			*y = gdk_screen_height() - height;
-			if(corner->state == CORNER_HIDDEN)
-				*x = BASEP_WIDGET(corner)->hidebutton_e->requisition.width -
-					width;
-			else /*shown*/
-				*x = 0;
-		} else { /*vertical*/
-			*x = 0;
-			if(corner->state == CORNER_HIDDEN)
-				*y = gdk_screen_height() -
-					BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
-			else /*shown*/
-				*y = gdk_screen_height() - height;
+			*w = basep->hidebutton_e->allocation.width;
+			*hide_orient = ORIENT_LEFT;
+		} else {
+			*h = basep->hidebutton_n->allocation.height;
+			*hide_orient = ORIENT_DOWN;
 		}
 		break;
 	case CORNER_NW:
 		if(panel->orient == PANEL_HORIZONTAL) {
-			*y = 0;
-			if(corner->state == CORNER_HIDDEN)
-				*x = BASEP_WIDGET(corner)->hidebutton_e->requisition.width -
-					width;
-			else /*shown*/
-				*x = 0;
-		} else { /*vertical*/
-			*x = 0;
-			if(corner->state == CORNER_HIDDEN)
-				*y = BASEP_WIDGET(corner)->hidebutton_s->requisition.height -
-					height;
-			else /*shown*/
-				*y = 0;
+			*w = basep->hidebutton_e->allocation.width;
+			*hide_orient = ORIENT_LEFT;
+		} else {
+			*h = basep->hidebutton_s->allocation.height;
+			*hide_orient = ORIENT_UP;
 		}
+		break;
+	}
+}
+
+static void
+corner_widget_get_pos(CornerWidget *corner, gint16 *x, gint16 *y, int width, int height)
+{
+	PanelWidget *panel = PANEL_WIDGET(BASEP_WIDGET(corner)->panel);
+	
+	*y = *x = 0;
+	switch(corner->pos) {
+	case CORNER_NE:
+		*x = gdk_screen_width() - width;
+		if(panel->orient == PANEL_HORIZONTAL &&
+		   corner->state == CORNER_HIDDEN)
+			*x = gdk_screen_width() -
+				BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
+		break;
+	case CORNER_SE:
+		*x = gdk_screen_width() - width;
+		*y = gdk_screen_height() - height;
+		if(panel->orient == PANEL_HORIZONTAL &&
+		   corner->state == CORNER_HIDDEN)
+			*x = gdk_screen_width() -
+				BASEP_WIDGET(corner)->hidebutton_w->requisition.width;
+		else if(panel->orient == PANEL_VERTICAL &&
+			corner->state == CORNER_HIDDEN)
+			*y = gdk_screen_height() -
+				BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
+		break;
+	case CORNER_SW:
+		*y = gdk_screen_height() - height;
+		if(panel->orient == PANEL_VERTICAL &&
+		   corner->state == CORNER_HIDDEN)
+			*y = gdk_screen_height() -
+				BASEP_WIDGET(corner)->hidebutton_n->requisition.height;
+		break;
+	case CORNER_NW:
 		break;
 	}
 }
@@ -275,13 +288,45 @@ corner_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 
 
 	widget->allocation = *allocation;
-	if (GTK_WIDGET_REALIZED (widget))
-		gdk_window_move_resize (widget->window,
-					allocation->x, 
-					allocation->y,
-					allocation->width, 
-					allocation->height);
-	else
+	if (GTK_WIDGET_REALIZED (widget)) {
+		BasePWidget *basep = BASEP_WIDGET(widget);
+		if(!basep->fake &&
+		   corner->state != CORNER_SHOWN) {
+			PanelOrientType hide_orient;
+			int w,h;
+			corner_widget_get_hidepos(corner, &hide_orient, &w, &h);
+			basep_widget_add_fake(basep,hide_orient,FALSE,
+					      -1,-1,w,h,TRUE);
+			gdk_window_show(widget->window);
+			gdk_flush();
+			gdk_window_resize (widget->window,
+					   allocation->width, 
+					   allocation->height);
+		} else if(basep->fake) {
+			PanelOrientType hide_orient;
+			int w,h;
+			corner_widget_get_hidepos(corner, &hide_orient, &w, &h);
+			basep_widget_set_fake_orient(basep, hide_orient);
+			gdk_window_move_resize (basep->fake,
+						allocation->x, 
+						allocation->y,
+						w,
+						h);
+			gdk_window_show(widget->window);
+			gdk_flush();
+			gdk_window_resize (widget->window,
+					   allocation->width, 
+					   allocation->height);
+			basep_widget_set_infake_position(basep,
+							 hide_orient, w,h);
+		} else { /*if(!basep->fake) {*/
+			gdk_window_move_resize (widget->window,
+						allocation->x, 
+						allocation->y,
+						allocation->width, 
+						allocation->height);
+		}
+	} else
 		gtk_widget_set_uposition(widget,allocation->x,allocation->y);
 
 	challoc.x = challoc.y = 0;
@@ -298,104 +343,38 @@ corner_widget_set_initial_pos(CornerWidget *corner)
 	gtk_widget_set_uposition(GTK_WIDGET(corner),x,y);
 }
 
-
-static int
-move_step(int src, int dest, int pos, int step)
-{
-	int range = abs(src-dest);
-	int diff = abs(range-abs(pos-src));
-	int percentage = (diff*100)/range;
-
-	if(percentage>50)
-		percentage = 100-percentage;
-
-	return ((step>>1)*log((percentage/10.0)+1))+1;
-}
-
-static void
-move_horiz(CornerWidget *corner, int src_x, int dest_x, int step)
-{
-	int x, y;
-	GtkWidget *w = GTK_WIDGET(corner);
-
-	gdk_window_get_origin(w->window,&x,&y);
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_x < dest_x) {
-			for( x = src_x; x < dest_x;
-			     x+= move_step(src_x,dest_x,x,step))
-				move_window(w,x,y);
-		} else {
-			for (x = src_x; x > dest_x;
-			     x-= move_step(src_x,dest_x,x,step))
-				move_window(w,x,y);
-		}
-	}
-	
-	move_window(w, dest_x, y);
-}
-
-
-static void
-move_vert(CornerWidget *corner, int src_y, int dest_y, int step)
-{
-	int x, y;
-
-	GtkWidget *w = GTK_WIDGET(corner);
-
-	gdk_window_get_origin(w->window,&x,&y);
-
-	if (!pw_disable_animations && step != 0) {
-		if (src_y < dest_y) {
-                        for (y = src_y; y < dest_y;
-			     y+= move_step(src_y,dest_y,y,step))
-				move_window(w,x,y);
-		} else {
-                        for (y = src_y; y > dest_y;
-			     y-= move_step(src_y,dest_y,y,step))
-				move_window(w,x,y);
-		}
-	}
-
-	move_window(w, x, dest_y);
-}
-
 static void
 corner_widget_pop_show(CornerWidget *corner, int fromright)
 {
-	int width, height;
-
 	if ((corner->state == CORNER_MOVING) ||
 	    (corner->state == CORNER_SHOWN))
 		return;
 
 	corner->state = CORNER_MOVING;
 
-	width   = GTK_WIDGET(corner)->allocation.width;
-	height  = GTK_WIDGET(corner)->allocation.height;
-
 	if(PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
-			move_horiz(corner, -width +
-				   BASEP_WIDGET(corner)->hidebutton_w->allocation.width, 0,
-				   pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(corner),
+						ORIENT_LEFT,
+						BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
+						pw_explicit_step);
 		else
-			move_horiz(corner, gdk_screen_width() -
-				   BASEP_WIDGET(corner)->hidebutton_e->allocation.width, 
-				   gdk_screen_width() - width,
-				   pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(corner),
+						ORIENT_RIGHT,
+						BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
+						pw_explicit_step);
 	} else {
 		if(fromright)
-			move_vert(corner, -height +
-				  BASEP_WIDGET(corner)->hidebutton_s->allocation.height, 0,
-				  pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(corner),
+						ORIENT_UP,
+						BASEP_WIDGET(corner)->hidebutton_s->allocation.height,
+						pw_explicit_step);
 		else
-			move_vert(corner, gdk_screen_height() -
-				  BASEP_WIDGET(corner)->hidebutton_n->allocation.height, 
-				  gdk_screen_height() - height,
-				  pw_explicit_step);
+			basep_widget_do_showing(BASEP_WIDGET(corner),
+						ORIENT_DOWN,
+						BASEP_WIDGET(corner)->hidebutton_n->allocation.height,
+						pw_explicit_step);
 	}
-
 	corner->state = CORNER_SHOWN;
 
 	gtk_signal_emit(GTK_OBJECT(corner),
@@ -418,29 +397,28 @@ corner_widget_pop_hide(CornerWidget *corner, int fromright)
 
 	corner->state = CORNER_MOVING;
 
-	width   = GTK_WIDGET(corner)->allocation.width;
-	height  = GTK_WIDGET(corner)->allocation.height;
-
 	if(PANEL_WIDGET(BASEP_WIDGET(corner)->panel)->orient == PANEL_HORIZONTAL) {
 		if(fromright)
-			move_horiz(corner, 0, -width +
-				   BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
-				   pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(corner),
+					       ORIENT_LEFT,
+					       BASEP_WIDGET(corner)->hidebutton_w->allocation.width,
+					       pw_explicit_step);
 		else
-			move_horiz(corner, gdk_screen_width() - width,
-				   gdk_screen_width() -
-				   BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
-				   pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(corner),
+					       ORIENT_RIGHT,
+					       BASEP_WIDGET(corner)->hidebutton_e->allocation.width,
+					       pw_explicit_step);
 	} else {
 		if(fromright)
-			move_vert(corner, 0, -height +
-				  BASEP_WIDGET(corner)->hidebutton_s->allocation.height,
-				  pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(corner),
+					       ORIENT_UP,
+					       BASEP_WIDGET(corner)->hidebutton_s->allocation.height,
+					       pw_explicit_step);
 		else
-			move_vert(corner, gdk_screen_height() - height,
-				  gdk_screen_height() -
-				  BASEP_WIDGET(corner)->hidebutton_n->allocation.height,
-				  pw_explicit_step);
+			basep_widget_do_hiding(BASEP_WIDGET(corner),
+					       ORIENT_DOWN,
+					       BASEP_WIDGET(corner)->hidebutton_n->allocation.height,
+					       pw_explicit_step);
 	}
 
 	corner->state = CORNER_HIDDEN;

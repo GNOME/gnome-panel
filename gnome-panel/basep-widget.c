@@ -5,7 +5,9 @@
  */
 #include <math.h>
 #include <config.h>
+#include <X11/Xlib.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gnome.h>
 #include "panel-widget.h"
 #include "basep-widget.h"
@@ -17,10 +19,6 @@ extern int panel_applet_in_drag;
 
 static void basep_widget_class_init	(BasePWidgetClass *klass);
 static void basep_widget_init		(BasePWidget      *basep);
-static void basep_widget_size_request	(GtkWidget         *widget,
-					 GtkRequisition    *requisition);
-static void basep_widget_size_allocate	(GtkWidget         *widget,
-					 GtkAllocation     *allocation);
 
 static GtkWindowClass *parent_class = NULL;
 
@@ -101,6 +99,425 @@ basep_enter_notify(GtkWidget *basep,
 	return FALSE;
 }
 
+static void
+get_position(BasePWidget *basep, PanelOrientType hide_orient,
+	     int *x, int *y, int w, int h)
+{
+	GtkWidget *widget = GTK_WIDGET(basep);
+
+	*x = *y = 0;
+	switch(hide_orient) {
+	case ORIENT_UP:
+		if(h < widget->allocation.height)
+			*y -= widget->allocation.height - h;
+		break;
+	case ORIENT_DOWN:
+		break;
+	case ORIENT_LEFT:
+		if(w < widget->allocation.width)
+			*x -= widget->allocation.width - w;
+		break;
+	case ORIENT_RIGHT:
+		break;
+	default:
+		break;
+	}
+}
+
+void
+basep_widget_add_fake(BasePWidget *basep,
+		      PanelOrientType hide_orient,
+		      int override, int x, int y, int w, int h,
+		      int show)
+{
+	GdkWindowAttr attributes;
+	gint attributes_mask;
+	GdkWindow *window;
+	GdkWindow *win = basep->fake;
+	GtkWidget *widget = GTK_WIDGET(basep);
+	int rx,ry;
+
+	if(!override && !gnome_win_hints_wm_exists())
+		override = TRUE;
+
+	if(override)
+		attributes.window_type = GDK_WINDOW_TEMP;
+	else
+		attributes.window_type = GDK_WINDOW_TOPLEVEL;
+
+	if(x<0)
+		attributes.x = widget->allocation.x;
+	else
+		attributes.x = x;
+	if(y<0)
+		attributes.y = widget->allocation.y;
+	else
+		attributes.y = y;
+	if(w<0)
+		attributes.width = widget->allocation.width;
+	else
+		attributes.width = w;
+	if(h<0)
+		attributes.height = widget->allocation.height;
+	else
+		attributes.height = h;
+
+	attributes.wclass = GDK_INPUT_OUTPUT;
+
+	attributes.visual = gtk_widget_get_visual(widget);
+	attributes.colormap = gtk_widget_get_colormap(widget);
+
+	attributes.event_mask = gtk_widget_get_events (widget);
+	/*attributes.event_mask |= GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK;*/
+
+	attributes_mask = GDK_WA_X | GDK_WA_Y | GDK_WA_VISUAL | GDK_WA_COLORMAP;
+
+	window = gdk_window_new (NULL, &attributes, attributes_mask);
+
+	/*hack to set the right hints and stuff*/
+	if(!override) {
+		GdkWindow *orig = widget->window;
+
+		/*pretend that that's the right window*/
+		widget->window = window;
+		gnome_win_hints_set_hints(widget, 
+					  WIN_HINTS_SKIP_FOCUS |
+					  WIN_HINTS_SKIP_WINLIST |
+					  WIN_HINTS_SKIP_TASKBAR);
+		gnome_win_hints_set_state(widget, 
+					  WIN_STATE_STICKY |
+					  WIN_STATE_FIXED_POSITION);
+		gnome_win_hints_set_layer(widget, WIN_LAYER_ABOVE_DOCK);
+
+		gnome_win_hints_set_expanded_size(widget, 0, 0, 0, 0);
+		
+		/*put the original window of the basep back*/
+		widget->window = orig;
+
+		gdk_window_set_decorations(window, 0);
+	}
+	
+	basep_widget_set_fake_orient(basep,hide_orient);
+	
+	if(show) {
+		gdk_window_show(window);
+		gdk_flush();
+	}
+	
+	get_position(basep, hide_orient, &rx, &ry,
+		     attributes.width,attributes.height);
+
+	gdk_window_reparent(widget->window,window,rx,ry);
+	
+	basep->fake = window;
+	basep->fake_override = override;
+	if(win) gdk_window_destroy(win);
+}
+
+void
+basep_widget_set_infake_position(BasePWidget *basep,
+				 PanelOrientType hide_orient,
+				 int w, int h)
+{
+	int x,y;
+
+	g_return_if_fail(basep->fake!=NULL);
+
+	if(w<0)
+		w = GTK_WIDGET(basep)->allocation.width;
+	if(h<0)
+		h = GTK_WIDGET(basep)->allocation.height;
+
+	get_position(basep, hide_orient, &x, &y, w, h);
+
+	gdk_window_show(GTK_WIDGET(basep)->window);
+	gdk_flush();
+	gdk_window_move(GTK_WIDGET(basep)->window,x,y);
+}
+
+
+void
+basep_widget_set_fake_orient(BasePWidget *basep,
+			     PanelOrientType hide_orient)
+{
+	GtkWidget *widget = GTK_WIDGET(basep);
+	XSetWindowAttributes xattributes;
+
+	switch(hide_orient) {
+	case ORIENT_UP:
+		xattributes.win_gravity = SouthGravity;
+		break;
+	case ORIENT_DOWN:
+		xattributes.win_gravity = NorthGravity;
+		break;
+	case ORIENT_LEFT:
+		xattributes.win_gravity = EastGravity;
+		break;
+	case ORIENT_RIGHT:
+		xattributes.win_gravity = WestGravity;
+		break;
+	default:
+		xattributes.win_gravity = NorthWestGravity;
+		break;
+	}
+
+	XChangeWindowAttributes (GDK_WINDOW_XDISPLAY(widget->window),
+				 GDK_WINDOW_XWINDOW(widget->window),
+				 CWWinGravity,  &xattributes);
+	
+}
+
+void
+basep_widget_remove_fake(BasePWidget *basep)
+{
+	GtkWidget *wid = GTK_WIDGET(basep);
+	gdk_window_reparent(wid->window,NULL,wid->allocation.x,wid->allocation.y);
+	gdk_window_destroy(basep->fake);
+	basep->fake = NULL;
+}
+
+
+static int
+move_step(int src, int dest, int pos, int step)
+{
+	int range;
+	int diff;
+	int percentage;
+	int ret;
+	
+	if(src == dest)
+		return 0;
+
+	range = abs(src-dest);
+	diff = abs(range-abs(pos-src));
+	percentage = (diff*100)/range;
+
+	if(percentage>50)
+		percentage = 100-percentage;
+	
+	ret = (src>dest?-1:1)*(((step>>1)*log((percentage/10.0)+1))+1);
+	if(src>dest) {
+		if(ret+pos<dest) ret = dest - pos;
+	} else {
+		if(ret+pos>dest) ret = dest - pos;
+	}
+	return ret;
+}
+
+void
+basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
+		       int leftover, int step)
+{
+	GtkWidget *wid;
+	int ox,oy,ow,oh;
+	int x,y,w,h;
+	int dx,dy,dw,dh;
+
+	g_return_if_fail(basep != NULL);
+	g_return_if_fail(IS_BASEP_WIDGET(basep));
+
+	wid = GTK_WIDGET(basep);
+	
+	ox = x = wid->allocation.x;
+	oy = y = wid->allocation.y;
+	ow = w = wid->allocation.width;
+	oh = h = wid->allocation.height;
+	
+	switch(hide_orient) {
+	case ORIENT_UP:
+		dx = x;
+		dy = y;
+		dw = w;
+		dh = leftover;
+		break;
+	case ORIENT_DOWN:
+		dx = x;
+		dy = y+h-leftover;
+		dw = w;
+		dh = leftover;
+		break;
+	case ORIENT_LEFT:
+		dx = x;
+		dy = y;
+		dw = leftover;
+		dh = h;
+		break;
+	case ORIENT_RIGHT:
+		dx = x+w-leftover;
+		dy = y;
+		dw = leftover;
+		dh = h;
+		break;
+	default:
+		/*fix warning*/ dx = dy = dw = dh = 0;
+		g_assert_not_reached();
+		break;
+	}
+
+	if(!pw_disable_animations && step != 0) {
+		if(basep->fake && basep->fake_override) {
+			gdk_window_show(basep->fake);
+			gdk_flush();
+			basep_widget_set_fake_orient(basep,hide_orient);
+			basep_widget_set_infake_position(basep, hide_orient,
+							 -1,-1);
+		} else {
+			basep_widget_add_fake(basep, hide_orient,
+					      TRUE, -1,-1,-1,-1,TRUE);
+		}
+		while(x != dx ||
+		      y != dy ||
+		      w != dw ||
+		      h != dh) {
+			x += move_step(ox,dx,x,step);
+			y += move_step(oy,dy,y,step);
+			w += move_step(ow,dw,w,step);
+			h += move_step(oh,dh,h,step);
+			gdk_window_move_resize(basep->fake, x,y,w,h);
+			gtk_widget_draw(wid, NULL);
+		}
+	}
+	
+	wid->allocation.x = dx;
+	wid->allocation.y = dy;
+	
+	if(dw == 0 || dh == 0) {
+		if(basep->fake) {
+			if (gnome_win_hints_wm_exists()) {
+				gdk_window_reparent(wid->window,NULL,
+						    -ow-1,-oh-1);
+				gdk_window_destroy(basep->fake);
+				basep->fake = NULL;
+			} else {
+				gdk_window_hide(basep->fake);
+			}
+		}
+		gtk_widget_hide(wid);
+	} else {
+		if(!basep->fake) {
+			basep_widget_add_fake(basep, hide_orient,
+					      FALSE, -1,-1,dw,dh,TRUE);
+		} else {
+			if (gnome_win_hints_wm_exists()) {
+				basep_widget_add_fake(basep,
+						      hide_orient,
+						      FALSE,
+						      -1,-1,dw,dh,TRUE);
+			} else {
+				gdk_window_resize(basep->fake,dw,dh);
+			}
+		}
+	}
+}
+
+void
+basep_widget_do_showing(BasePWidget *basep, PanelOrientType hide_orient,
+			int leftover, int step)
+{
+	GtkWidget *wid;
+	int ox,oy,ow,oh;
+	int x,y,w,h;
+	int dx,dy,dw,dh;
+
+	g_return_if_fail(basep != NULL);
+	g_return_if_fail(IS_BASEP_WIDGET(basep));
+
+	wid = GTK_WIDGET(basep);
+
+	ox = x = wid->allocation.x;
+	oy = y = wid->allocation.y;
+	dw = wid->allocation.width;
+	dh = wid->allocation.height;
+	
+	switch(hide_orient) {
+	case ORIENT_UP:
+		dx = x;
+		dy = y;
+		ow = w = dw;
+		oh = h = leftover;
+		break;
+	case ORIENT_DOWN:
+		dx = x;
+		dy = y - dh + leftover;
+		ow = w = dw;
+		oh = h = leftover;
+		break;
+	case ORIENT_LEFT:
+		dx = x;
+		dy = y;
+		ow = w = leftover;
+		oh = h = dh;
+		break;
+	case ORIENT_RIGHT:
+		dx = x - dw + leftover;
+		dy = y;
+		ow = w = leftover;
+		oh = h = dh;
+		break;
+	default:
+		/*fix warning*/ dx = dy = ow = oh = w = h = 0;
+		g_assert_not_reached();
+		break;
+	}
+	
+	if(!pw_disable_animations && step != 0) {
+		//puts("1"); sleep(1);
+		if(basep->fake && basep->fake_override && ow && oh) {
+		//puts("2"); sleep(1);
+			gdk_window_hide(basep->fake);
+		//puts("3"); sleep(1);
+			basep_widget_set_fake_orient(basep,hide_orient);
+			basep_widget_set_infake_position(basep, hide_orient,
+							 ow,oh);
+		//puts("4"); sleep(1);
+			gdk_window_resize(basep->fake,ow,oh);
+		//puts("5"); sleep(1);
+		} else {
+		//puts("6"); sleep(1);
+			basep_widget_add_fake(basep, hide_orient,
+					      TRUE, -1,-1,ow,oh,FALSE);
+		//puts("7"); sleep(1);
+		}
+		//puts("8"); sleep(1);
+		/*make sure the window doesn't blink*/
+		//puts("9"); sleep(1);
+		gtk_widget_show_now(wid);
+		//puts("10"); sleep(1);
+		gdk_window_show(basep->fake);
+		gdk_flush();
+		//puts("11"); sleep(1);
+		while(x != dx ||
+		      y != dy ||
+		      w != dw ||
+		      h != dh) {
+			x += move_step(ox,dx,x,step);
+			y += move_step(oy,dy,y,step);
+			w += move_step(ow,dw,w,step);
+			h += move_step(oh,dh,h,step);
+			gdk_window_move_resize(basep->fake, x,y,w,h);
+			gtk_widget_draw(wid, NULL);
+		}
+	}
+	
+	wid->allocation.x = dx;
+	wid->allocation.y = dy;
+	
+	if(basep->fake) {
+		if (gnome_win_hints_wm_exists()) {
+			gdk_window_reparent(wid->window,NULL,dx,dy);
+			gdk_window_destroy(basep->fake);
+			basep->fake = NULL;
+		/*else we would have an override redirect window anyhow,
+		  so just keep it to avoid a flash*/
+		} else {
+			gdk_window_move_resize(basep->fake,dx,dy,dw,dh);
+		}
+	} else {
+		gtk_widget_set_uposition(wid,dx,dy);
+		gtk_widget_show_now(wid);
+	}
+}
+
 
 static GtkWidget *
 make_hidebutton(BasePWidget *basep,
@@ -140,6 +557,9 @@ basep_widget_init (BasePWidget *basep)
 	GTK_WINDOW(basep)->allow_shrink = TRUE;
 	GTK_WINDOW(basep)->allow_grow = TRUE;
 	GTK_WINDOW(basep)->auto_shrink = TRUE;
+	
+	basep->fake = NULL;
+	basep->fake_override = FALSE;
 
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(basep),
@@ -167,6 +587,9 @@ basep_widget_init (BasePWidget *basep)
 	basep->hidebuttons_enabled = TRUE;
 	basep->hidebutton_pixmaps_enabled = TRUE;
 }
+
+
+
 
 static void
 show_hidebutton_pixmap(GtkWidget *hidebutton, int show)

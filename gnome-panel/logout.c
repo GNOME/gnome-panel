@@ -24,15 +24,12 @@ create_logout_widget(void)
 
 	pixmap_name = gnome_pixmap_file("gnome-term-night.png");
 
-	if (!pixmap_name)
-		button = gtk_button_new_with_label(_("Log out"));
-	else {
-		button = button_widget_new_from_file(pixmap_name,
-						     LOGOUT_TILE,
-						     FALSE,
-						     ORIENT_UP);
-		g_free(pixmap_name);
-	}
+	button = button_widget_new_from_file(pixmap_name,
+					     LOGOUT_TILE,
+					     FALSE,
+					     ORIENT_UP,
+					     _("Log out"));
+	g_free(pixmap_name);
 	gtk_tooltips_set_tip (panel_tooltips,button,_("Log out of GNOME"),NULL);
 
 	gtk_signal_connect(GTK_OBJECT(button), "clicked",

@@ -1,3 +1,20 @@
+Wed Feb 03 23:47:06 1999  George Lebl  <jirka@5z.com>
+
+	* *.c: on all dialogs, when just trying to "redisplay" an existing
+	  dialog, do a gdk_window_raise and gtk_widget_show on it
+
+	* button-widget.[ch],launcher.c,drawer.c,logout.c,menu.c: added
+	  ability to display the name of the icon to button-widget,
+	  it's ugly now so it's only used if no icon can be found
+
+	* basep-widget.[ch],drawer-widget.c,corner-widget.c,snapped-widget.c:
+	  use another window (fake) as a override redirect parent, and use
+	  gravity to get animations right and make it work ok with the
+	  compliant windowmanagers
+
+	* panel.c: don't move the panel when dragging and the cursor is in
+	  the middle 1/3 of the screen to avoid flickery movement
+
 Fri Jan 29 00:50:57 1999  George Lebl  <jirka@5z.com>
 
 	* *.c: for all toplevel windows set the correct wmclass

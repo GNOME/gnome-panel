@@ -5,7 +5,6 @@
 
 BEGIN_GNOME_DECLS
 
-void move_window(GtkWidget *widget, int x, int y);
 int string_is_in_list(GSList *list,char *text);
 GtkWidget * create_text_entry(GtkWidget *table,
 			      char *history_id,
@@ -38,14 +37,6 @@ GList * my_g_list_swap_prev(GList *list, GList *dl);
 /*maybe this should be a glib function?
  it resorts a single item in the list*/
 GList * my_g_list_resort_item(GList *list, gpointer data, GCompareFunc func);
-
-/*this is used to do an immediate move instead of set_uposition, which
-queues one*/
-void move_resize_window(GtkWidget *widget, int x, int y, int w, int h);
-
-/*this is used to do an immediate resize instead of set_usize, which
-queues one*/
-void resize_window(GtkWidget *widget, int w, int h);
 
 void set_frame_colors(PanelWidget *panel, GtkWidget *frame,
 		      GtkWidget *but1, GtkWidget *but2, GtkWidget *but3,

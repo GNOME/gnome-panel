@@ -352,14 +352,17 @@ state_restore_foreach(GtkWidget *w, gpointer data)
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
+		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
 		if(dw->state == DRAWER_SHOWN) {
 			drawer_widget_restore_state(dw);
-			gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(dw)->panel),
+			gtk_container_foreach(GTK_CONTAINER(basep->panel),
 					      state_restore_foreach,
 					      NULL);
 		} else { /*it's hidden*/
+			if(basep->fake)
+				gdk_window_hide(basep->fake);
 			gtk_widget_hide(drawer->drawer);
-			gtk_container_foreach(GTK_CONTAINER(BASEP_WIDGET(dw)->panel),
+			gtk_container_foreach(GTK_CONTAINER(basep->panel),
 					      state_hide_foreach,
 					      NULL);
 		}
@@ -374,6 +377,8 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
+		if(basep->fake)
+			gdk_window_hide(basep->fake);
 		gtk_widget_hide(drawer->drawer);
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      state_hide_foreach,
@@ -566,6 +571,14 @@ snapped_panel_move(SnappedWidget *snapped, double x, double y)
 	    y >= miny &&
 	    y <= maxy)
  	        return;
+	
+	/*if in the inner 1/3rd, don't change to avoid fast flickery
+	  movement*/
+	if ( x>(gdk_screen_width()/3) &&
+	     x<(2*gdk_screen_width()/3) &&
+	     y>(gdk_screen_height()/3) &&
+	     y<(2*gdk_screen_height()/3))
+		return;
 
 	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
 		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
@@ -601,6 +614,14 @@ corner_panel_move(CornerWidget *corner, double x, double y)
 	    y >= miny &&
 	    y <= maxy)
  	        return;
+
+	/*if in the inner 1/3rd, don't change to avoid fast flickery
+	  movement*/
+	if ( x>(gdk_screen_width()/3) &&
+	     x<(2*gdk_screen_width()/3) &&
+	     y>(gdk_screen_height()/3) &&
+	     y<(2*gdk_screen_height()/3))
+		return;
 
 	if ((x) * gdk_screen_height() > y * gdk_screen_width() ) {
 		if(gdk_screen_height() * (gdk_screen_width()-(x)) >
@@ -887,7 +908,7 @@ panel_widget_dnd_drop_internal (GtkWidget *widget,
 			  char *p;
 
 			  p = g_strdup_printf("Open URL: %s",
-					      ltmp->data);
+					      (char *)ltmp->data);
 			  load_launcher_applet_from_info(ltmp->data,
 							 p,exec,2,
 							 "netscape.png",

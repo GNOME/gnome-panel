@@ -25,6 +25,8 @@ struct _ButtonWidget
 	
 	GdkWindow               *event_window;
 	
+	char			*text;
+	
 	guint			pressed:1; /*true if the button is pressed*/
 	guint			in_button:1;
 
@@ -35,6 +37,7 @@ struct _ButtonWidget
 	
 	guint			tile:2; /*the tile number, only used if tiles are on*/
 	guint			arrow:1; /*0 no arrow, 1 simple arrow, more to do*/
+
 	PanelOrientType		orient;
 };
 
@@ -53,11 +56,13 @@ GtkWidget*	button_widget_new		(GdkPixmap *pixmap,
 						 GdkBitmap *mask,
 						 guint tile,
 						 guint arrow,
-						 PanelOrientType orient);
+						 PanelOrientType orient,
+						 char *text);
 GtkWidget*	button_widget_new_from_file	(char *pixmap,
 						 guint tile,
 						 guint arrow,
-						 PanelOrientType orient);
+						 PanelOrientType orient,
+						 char *text);
 
 void		button_widget_draw		(ButtonWidget *button,
 						 GdkPixmap *pixmap);
@@ -67,6 +72,9 @@ void		button_widget_set_pixmap	(ButtonWidget *button,
 						 GdkBitmap *mask);
 int		button_widget_set_pixmap_from_file(ButtonWidget *button,
 						   char *pixmap);
+
+void		button_widget_set_text		(ButtonWidget *button,
+						 char *text);
 
 void		button_widget_set_params	(ButtonWidget *button,
 						 guint tile,
@@ -86,7 +94,10 @@ void		button_widget_load_tile		(int tile,
 						 int border,
 						 int depth);
 
-void		button_widget_tile_enable	(int type, int enabled);
+void		button_widget_set_flags		(int type,
+						 int tiles_enabled,
+						 int pixmaps_enabled,
+						 int always_text);
 
 #ifdef __cplusplus
 }

@@ -23,6 +23,11 @@ struct _BasePWidget
 	GtkWindow		window;
 	
 	GtkWidget		*panel;
+	
+	/*the fake is a gdk window in which we place the basepwidgets window
+	  if we want to hide a part of it*/
+	GdkWindow		*fake;
+	int			fake_override; /*is fake override redirect?*/
 
 	GtkWidget		*table;
 	GtkWidget		*hidebutton_n;
@@ -70,6 +75,30 @@ void		basep_widget_enable_buttons	(BasePWidget *basep);
 void		basep_widget_disable_buttons	(BasePWidget *basep);
 
 void		basep_widget_set_hidebuttons	(BasePWidget *basep);
+
+void		basep_widget_do_hiding		(BasePWidget *basep,
+						 PanelOrientType hide_orient,
+						 int leftover,
+						 int step);
+void		basep_widget_do_showing		(BasePWidget *basep,
+						 PanelOrientType hide_orient,
+						 int leftover,
+						 int step);
+void		basep_widget_set_infake_position(BasePWidget *basep,
+						 PanelOrientType hide_orient,
+						 int w,
+						 int h);
+void		basep_widget_set_fake_orient	(BasePWidget *basep,
+						 PanelOrientType hide_orient);
+void		basep_widget_add_fake		(BasePWidget *basep,
+						 PanelOrientType hide_orient,
+						 int override,
+						 int x,
+						 int y,
+						 int w,
+						 int h,
+						 int show);
+void		basep_widget_remove_fake	(BasePWidget *basep);
 
 END_GNOME_DECLS
 
