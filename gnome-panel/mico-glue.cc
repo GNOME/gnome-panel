@@ -1,3 +1,4 @@
+#include <config.h>
 #include <iostream.h>
 #include <mico/gtkmico.h>
 #include <mico/naming.h>
