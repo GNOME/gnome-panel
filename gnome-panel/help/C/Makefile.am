@@ -1,14 +1,33 @@
-panel_figsdir = $(panel_helpdir)/figs
-panel_figs_DATA =
+# it does things aphabetically, we need these dirs there
+a_newfigsdir = $(panel_helpdir)/figures/newtest/
+a_newfigs_DATA =
+
+a_oldfigsdir = $(panel_helpdir)/figures/old/
+a_oldfigs_DATA =
+
 figs = \
-	figs/clock.png		\
-	figs/drawer.png		\
-	figs/global-config.png	\
-	figs/hide-button.png	\
-	figs/launcher-props.png	\
-	figs/logout-screen.png	\
-	figs/mm-button.png	\
-	figs/thispanel.png
+	figures/newtest/glob_pref_anim.png	\
+	figures/newtest/glob_pref_applet.png	\
+	figures/newtest/glob_pref_button.png	\
+	figures/newtest/glob_pref_menu.png	\
+	figures/newtest/glob_pref_misc.png	\
+	figures/newtest/panel_ex.png		\
+	figures/newtest/panel_lockbut.png	\
+	figures/newtest/panel_logoutbut.png	\
+	figures/newtest/panel_menu.png		\
+	figures/newtest/panel_props_back.png	\
+	figures/newtest/panel_props_edge.png	\
+	figures/newtest/panel_swallow.png	\
+	figures/old/clock.png			\
+	figures/old/drawer.png			\
+	figures/old/global-config.png		\
+	figures/old/hide-button.png		\
+	figures/old/launcher-props.png		\
+	figures/old/logout-screen.png		\
+	figures/old/mm-button.png		\
+	figures/old/thispanel.png
+
+
 
 panel_helpdir = $(datadir)/gnome/help/panel/C
 panel_help_DATA = \
@@ -20,11 +39,11 @@ EXTRA_DIST = panel.sgml topic.dat $(figs)
 
 all: index.html
 
-panel.sgml: panel.sgml.header panel.sgml.chapter panel.sgml.footer
-	cd $(srcdir)
-	cp panel.sgml.header panel.sgml
-	cat panel.sgml.chapter >> panel.sgml
-	cat panel.sgml.footer >> panel.sgml
+#panel.sgml: panel.sgml.header panel.sgml.chapter panel.sgml.footer
+#	cd $(srcdir)
+#	cp panel.sgml.header panel.sgml
+#	cat panel.sgml.chapter >> panel.sgml
+#	cat panel.sgml.footer >> panel.sgml
 
 index.html: panel/index.html
 	-cp panel/index.html .
