@@ -2,7 +2,7 @@
  * GNOME panel utils
  * (C) 1997, 1998, 1999, 2000 The Free Software Foundation
  * Copyright 2000 Helix Code, Inc.
- * Copyright 2000 Eazel, Inc.
+ * Copyright 2000,2001 Eazel, Inc.
  *
  * Authors: George Lebl
  *          Jacob Berkman
@@ -64,7 +64,22 @@ panel_gnome_help_path (const char *docpath)
 static char *
 panel_kde_help_path (const char *docpath)
 {
-	/* FIXME: */
+	GList *li;
+
+	if ( ! panel_file_exists (KDE_DOCDIR))
+		return NULL;
+
+	for (li = gnome_i18n_get_language_list ("LC_MESSAGES");
+	     li != NULL;
+	     li = li->next) {
+		char *fullpath = g_strdup_printf ("%s/HTML/%s/%s",
+						  KDE_DOCDIR,
+						  li->data,
+						  docpath);
+		if (panel_file_exists (fullpath))
+			return fullpath;
+		g_free (fullpath);
+	}
 	return NULL;
 }
 
