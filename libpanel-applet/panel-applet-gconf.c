@@ -1,7 +1,7 @@
 /*
  * panel-applet-gconf.c: panel applet preferences handling.
  *
- * Copyright (C) 2001 Sun Microsystems, Inc.
+ * Copyright (C) 2001-2003 Sun Microsystems, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,6 +26,17 @@
 
 #include "panel-applet-gconf.h"
 #include "panel-applet-private.h"
+
+static GConfClient *
+panel_applet_gconf_get_client (void)
+{
+	static GConfClient *client = NULL;
+
+	if (!client)
+		client = gconf_client_get_default ();
+
+	return client;
+}
 
 gchar *
 panel_applet_gconf_get_full_key (PanelApplet *applet,
@@ -68,7 +79,7 @@ panel_applet_gconf_set_bool (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	gconf_client_set_bool (client, full_key, the_bool, error);
 
@@ -100,7 +111,7 @@ panel_applet_gconf_set_int (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	gconf_client_set_int (client, full_key, the_int, error);
 
@@ -132,7 +143,7 @@ panel_applet_gconf_set_string (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	gconf_client_set_string (client, full_key, the_string, error);
 
@@ -164,9 +175,42 @@ panel_applet_gconf_set_float (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	gconf_client_set_float (client, full_key, the_float, error);
+
+	g_free (full_key);
+
+	if (!opt_error && our_error) {
+		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
+		g_error_free (our_error);
+	}
+}
+
+void
+panel_applet_gconf_set_list (PanelApplet     *applet,
+			     const gchar     *key,
+			     GConfValueType   list_type,
+			     GSList          *list,
+			     GError         **opt_error)
+{
+	GConfClient  *client;
+	gchar        *full_key;
+	GError      **error = NULL;
+	GError       *our_error = NULL;
+
+	g_return_if_fail (PANEL_IS_APPLET (applet));
+
+	if (opt_error)
+		error = opt_error;
+	else
+		error = &our_error;
+
+	full_key = panel_applet_gconf_get_full_key (applet, key);
+
+	client = panel_applet_gconf_get_client ();
+
+	gconf_client_set_list (client, full_key, list_type, list, error);
 
 	g_free (full_key);
 
@@ -196,7 +240,7 @@ panel_applet_gconf_set_value (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	gconf_client_set (client, full_key, value, error);
 
@@ -228,7 +272,7 @@ panel_applet_gconf_get_bool (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	retval = gconf_client_get_bool (client, full_key, error);
 
@@ -262,7 +306,7 @@ panel_applet_gconf_get_int (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	retval = gconf_client_get_int (client, full_key, error);
 
@@ -296,7 +340,7 @@ panel_applet_gconf_get_string (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	retval = gconf_client_get_string (client, full_key, error);
 
@@ -330,7 +374,7 @@ panel_applet_gconf_get_float (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	retval = gconf_client_get_float (client, full_key, error);
 
@@ -364,9 +408,44 @@ panel_applet_gconf_get_value (PanelApplet  *applet,
 
 	full_key = panel_applet_gconf_get_full_key (applet, key);
 
-	client = gconf_client_get_default ();
+	client = panel_applet_gconf_get_client ();
 
 	retval = gconf_client_get (client, full_key, error);
+
+	g_free (full_key);
+
+	if (!opt_error && our_error) {
+		g_warning (G_STRLOC ": gconf error : '%s'", our_error->message);
+		g_error_free (our_error);
+	}
+
+	return retval;
+}
+
+GSList *
+panel_applet_gconf_get_list (PanelApplet     *applet,
+			     const gchar     *key,
+			     GConfValueType   list_type,
+			     GError         **opt_error)
+{
+	GConfClient  *client;
+	gchar        *full_key;
+	GSList       *retval;
+	GError      **error = NULL;
+	GError       *our_error = NULL;
+
+	g_return_val_if_fail (PANEL_IS_APPLET (applet), NULL);
+
+	if (opt_error)
+		error = opt_error;
+	else
+		error = &our_error;
+
+	full_key = panel_applet_gconf_get_full_key (applet, key);
+
+	client = panel_applet_gconf_get_client ();
+
+	retval = gconf_client_get_list (client, full_key, list_type, error);
 
 	g_free (full_key);
 

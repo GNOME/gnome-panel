@@ -1,7 +1,7 @@
 /*
  * panel-applet-gconf.h: panel applet preferences handling.
  *
- * Copyright (C) 2001 Sun Microsystems, Inc.
+ * Copyright (C) 2001-2003 Sun Microsystems, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,54 +33,54 @@
 
 G_BEGIN_DECLS
 
-gchar       *panel_applet_gconf_get_full_key    (PanelApplet  *applet,
-						 const gchar  *key);
+gchar       *panel_applet_gconf_get_full_key (PanelApplet     *applet,
+					      const gchar     *key);
 
-void         panel_applet_gconf_set_bool        (PanelApplet  *applet,
-						 const gchar  *key,
-						 gboolean      the_bool,
-						 GError      **error);
+void         panel_applet_gconf_set_bool     (PanelApplet     *applet,
+					      const gchar     *key,
+					      gboolean         the_bool,
+					      GError         **opt_error);
+void         panel_applet_gconf_set_int      (PanelApplet     *applet,
+					      const gchar     *key,
+					      gint             the_int,
+					      GError         **opt_error);
+void         panel_applet_gconf_set_string   (PanelApplet     *applet,
+					      const gchar     *key,
+					      const gchar     *the_string,
+					      GError         **opt_error);
+void         panel_applet_gconf_set_float    (PanelApplet     *applet,
+					      const gchar     *key,
+					      gdouble          the_float,
+					      GError         **opt_error);
+void         panel_applet_gconf_set_list     (PanelApplet     *applet,
+					      const gchar     *key,
+					      GConfValueType   list_type,
+					      GSList          *list,
+					      GError         **opt_error);
+void         panel_applet_gconf_set_value    (PanelApplet     *applet,
+					      const gchar     *key,
+					      GConfValue      *value,
+					      GError         **opt_error);
 
-void         panel_applet_gconf_set_int         (PanelApplet  *applet,
-						 const gchar  *key,
-						 gint          the_int,
-						 GError      **error);
-
-void         panel_applet_gconf_set_string      (PanelApplet  *applet,
-						 const gchar  *key,
-						 const gchar  *the_string,
-						 GError      **error);
-
-void         panel_applet_gconf_set_float       (PanelApplet  *applet,
-						 const gchar  *key,
-						 gdouble       the_float,
-						 GError      **error);
-
-void         panel_applet_gconf_set_value       (PanelApplet  *applet,
-						 const gchar  *key,
-						 GConfValue   *value,
-						 GError      **error);
-
-
-gboolean     panel_applet_gconf_get_bool        (PanelApplet  *applet,
-						 const gchar  *key,
-						 GError      **error);
-
-gint         panel_applet_gconf_get_int         (PanelApplet  *applet,
-						 const gchar  *key,
-						 GError      **error);
-
-gchar       *panel_applet_gconf_get_string      (PanelApplet  *applet,
-						 const gchar  *key,
-						 GError      **error);
-
-gdouble      panel_applet_gconf_get_float       (PanelApplet  *applet,
-						 const gchar  *key,
-						 GError      **error);
-
-GConfValue  *panel_applet_gconf_get_value       (PanelApplet  *applet,
-						 const gchar  *key,
-						 GError      **error);
+gboolean     panel_applet_gconf_get_bool     (PanelApplet     *applet,
+					      const gchar     *key,
+					      GError         **opt_error);
+gint         panel_applet_gconf_get_int      (PanelApplet     *applet,
+					      const gchar     *key,
+					      GError         **opt_error);
+gchar       *panel_applet_gconf_get_string   (PanelApplet     *applet,
+					      const gchar     *key,
+					      GError         **opt_error);
+gdouble      panel_applet_gconf_get_float    (PanelApplet     *applet,
+					      const gchar     *key,
+					      GError         **opt_error);
+GSList      *panel_applet_gconf_get_list     (PanelApplet     *applet,
+					      const gchar     *key,
+					      GConfValueType   list_type,
+					      GError         **opt_error);
+GConfValue  *panel_applet_gconf_get_value    (PanelApplet     *applet,
+					      const gchar     *key,
+					      GError         **opt_error);
 
 G_END_DECLS
 

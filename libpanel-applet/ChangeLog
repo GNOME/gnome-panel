@@ -1,3 +1,15 @@
+2003-05-20  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-gconf.[ch]:
+	(panel_applet_gconf_set_list),
+	(panel_applet_gconf_get_list): implemenet.
+	Also, use a static GConfClient instead of calling
+	gconf_client_get_default() the whole time.
+
+	* panel-applet.c: Remove inline API docs.
+	
+	* panel-applet.h: Remove C99ism from enum decl.
+
 2003-05-08  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel-applet.c: (panel_applet_associate_schemas_in_dir):

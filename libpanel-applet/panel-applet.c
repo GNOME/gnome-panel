@@ -255,15 +255,6 @@ panel_applet_set_size_hints (PanelApplet      *applet,
 		applet->priv->size_hints[i] += base_size;
 }
 
-/**
- * panel_applet_get_size:
- * @applet: A #PanelApplet.
- *
- * Returns the current size of the panel which
- * the applet is contained in.
- *
- * Return value: a #guint value.
- */
 guint
 panel_applet_get_size (PanelApplet *applet)
 {
@@ -272,15 +263,6 @@ panel_applet_get_size (PanelApplet *applet)
 	return applet->priv->size;
 }
 
-/**
- * panel_applet_get_orient
- * @applet: A #PanelApplet.
- *
- * Returns the current orientation of the panel which
- * the applet is contained in.
- *
- * Return value: a #PanelAppletOrient value.
- */
 PanelAppletOrient
 panel_applet_get_orient (PanelApplet *applet)
 {
@@ -289,17 +271,6 @@ panel_applet_get_orient (PanelApplet *applet)
 	return applet->priv->orient;
 }
 
-/**
- * panel_applet_setup_menu:
- * @applet: A #PanelApplet.
- * @xml: The xml character string describing the popup menu.
- * @verb_list: The list of #BonoboUIVerbs for the menu.
- * @user_data: The user data pointer for the menu.
- *
- * Sets up a popup menu for @applet described by the xml 
- * string, @xml. See <link linkend="applet-writing">Applet Writing
- * </link> section for a description of the format of the xml.
- */
 void
 panel_applet_setup_menu (PanelApplet        *applet,
 			 const gchar        *xml,
@@ -320,19 +291,6 @@ panel_applet_setup_menu (PanelApplet        *applet,
 	bonobo_ui_component_add_verb_list_with_data (popup_component, verb_list, user_data);
 }
 
-/**
- * panel_applet_setup_menu_from_file:
- * @applet: A #PanelApplet.
- * @opt_datadir: The data directory - i.e. ${prefix}/share (optional).
- * @file: The file's name.
- * @opt_app_name: The application's name (optional).
- * @verb_list: The list of #BonoboUIVerbs for the menu.
- * @user_data: The user data pointer for the menu.
- *
- * Sets up a popup menu for @applet described by the xml 
- * file, @file. See &applet-writing for a description of
- * the format of the xml.
- */
 void
 panel_applet_setup_menu_from_file (PanelApplet        *applet, 
 				   const gchar        *opt_datadir,
@@ -363,14 +321,6 @@ panel_applet_setup_menu_from_file (PanelApplet        *applet,
 		g_free (app_name);
 }
 
-/**
- * panel_applet_get_control:
- * @applet: A #PanelApplet.
- *
- * Retrieves the #BonoboControl associated with @applet.
- *
- * Return value: A #BonobControl on success, %NULL on failure.
- */
 BonoboControl *
 panel_applet_get_control (PanelApplet *applet)
 {
@@ -379,15 +329,6 @@ panel_applet_get_control (PanelApplet *applet)
 	return applet->priv->control;
 }
 
-/**
- * panel_applet_get_popup_component:
- * @applet: A #PanelApplet.
- *
- * Retrieves the #BonoboUIComponent used for popup menus associated
- * with @applet. 
- *
- * Return value: A #BonoboUIComponent on success, or %NULL on failure.
- */
 BonoboUIComponent *
 panel_applet_get_popup_component (PanelApplet *applet)
 {
@@ -903,23 +844,6 @@ panel_applet_handle_background_string (PanelApplet  *applet,
 	return retval;
 }
 
-
-/**
- * panel_applet_get_background
- * @applet: A #PanelApplet.
- * @color: A #GdkColor to be filled in.
- * @pixmap: Returned #GdkPixmap
- *
- * Returns the current background type. If the background
- * type is %PANEL_NO_BACKGROUND both @color and @pixmap will
- * be unaffected. If the background type is %PANEL_COLOR_BACKGROUND
- * then @color will contain the current panel background colour.
- * If the background type is %PANEL_PIXMAP_BACKGROUND, @pixmap will
- * contain a pointer to a #GdkPixmap which is a copy of the applet's
- * portion of the panel's background pixmap.
- * 
- * Return value: a #PanelAppletOrient value.
- */
 PanelAppletBackgroundType
 panel_applet_get_background (PanelApplet *applet,
 			     GdkColor *color,
@@ -1432,13 +1356,6 @@ panel_applet_setup (PanelApplet *applet)
 	priv->hierarchy_changed_id  = 0;
 }
 
-/**
- * panel_applet_new:
- *
- * Creates a new #PanelApplet.
- *
- * Return value: A #GtkWidget on success, %NULL on failure.
- */
 GtkWidget *
 panel_applet_new (void)
 {
@@ -1503,16 +1420,6 @@ panel_applet_all_controls_dead (void)
 		bonobo_main_quit ();
 }
 
-/**
- * panel_applet_factory_main_closure:
- * @iid: The bonobo-activation iid of the factory.
- * @closure: The factory callback closure.
- *
- * A generic 'main' routine for applets. This should not normally be
- * used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
- *
- * Return value: 0 on success, 1 on failure.
- */
 int
 panel_applet_factory_main_closure (const gchar *iid,
 				   GType        applet_type,
@@ -1549,17 +1456,6 @@ panel_applet_factory_main_closure (const gchar *iid,
 	return retval;
 }
 
-/**
- * panel_applet_factory_main:
- * @iid: The bonobo-activation iid of the factory.
- * @callback: The factory callback.
- * @data: The factory user data pointer.
- *
- * A generic 'main' routine for applets. This should not normally be
- * used directly because it is invoked by #PANEL_APPLET_BONOBO_FACTORY.
- *
- * Return value: 0 on success, 1 on failure.
- */
 int
 panel_applet_factory_main (const gchar                 *iid,
 			   GType                        applet_type,
