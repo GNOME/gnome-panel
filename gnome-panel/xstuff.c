@@ -80,6 +80,18 @@ get_window_id(guint32 window, char *title, guint32 *wid, gboolean depth)
 }
 
 static void
+steal_statusspot(StatusSpot *ss, Window winid)
+{
+	GdkDragProtocol protocol;
+
+	gtk_socket_steal(GTK_SOCKET(ss->socket), winid);
+	if (gdk_drag_get_protocol (winid, &protocol))
+		gtk_drag_dest_set_proxy (GTK_WIDGET (ss->socket),
+					 GTK_SOCKET(ss->socket)->plug_window,
+					 protocol, TRUE);
+}
+
+static void
 try_adding_status(guint32 winid)
 {
 	guint32 *data;
@@ -98,7 +110,7 @@ try_adding_status(guint32 winid)
 		StatusSpot *ss;
 		ss = new_status_spot();
 		if(ss)
-			gtk_socket_steal(GTK_SOCKET(ss->socket), winid);
+			steal_statusspot(ss, winid);
 	}
 	g_free(data);
 }
@@ -352,7 +364,7 @@ status_event_filter(GdkXEvent *gdk_xevent, GdkEvent *event, gpointer data)
 			StatusSpot *ss;
 			ss = new_status_spot();
 			if(ss)
-				gtk_socket_steal(GTK_SOCKET(ss->socket), w);
+				steal_statusspot(ss, w);
 		} else if(xevent->xclient.message_type ==
 			  KWM_MODULE_DOCKWIN_REMOVE) {
 			StatusSpot *ss;
