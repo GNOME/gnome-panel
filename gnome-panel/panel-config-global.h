@@ -45,6 +45,9 @@ struct _GlobalConfig {
 	char *screenshot_key;
 	  guint screenshot_keysym;   /* these are not really properties but */
 	  guint screenshot_state;    /* from the above */
+	char *window_screenshot_key;
+	  guint window_screenshot_keysym; /* these are not really properties */
+	  guint window_screenshot_state;  /* but from the above */
 	int menu_flags;
 	gboolean use_large_icons;
 	gboolean merge_menus;

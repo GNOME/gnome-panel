@@ -1733,6 +1733,14 @@ load_up_globals (void)
 					&global_config.screenshot_keysym,
 					&global_config.screenshot_state);
 
+	g_free(global_config.window_screenshot_key);
+	global_config.window_screenshot_key =
+		conditional_get_string ("window_screenshot_key",
+					"Control-Print", NULL);
+	convert_string_to_keysym_state (global_config.window_screenshot_key,
+					&global_config.window_screenshot_keysym,
+					&global_config.window_screenshot_state);
+
 	global_config.applet_padding =
 		conditional_get_int ("applet_padding", 3, NULL);
 
@@ -1885,6 +1893,8 @@ write_global_config (void)
 	gnome_config_set_string ("run_key", global_config.run_key);
 	gnome_config_set_string ("screenshot_key",
 				 global_config.screenshot_key);
+	gnome_config_set_string ("window_screenshot_key",
+				 global_config.window_screenshot_key);
 	gnome_config_set_bool ("fast_button_scaling",
 			       global_config.fast_button_scaling);
 	gnome_config_set_bool ("avoid_collisions",

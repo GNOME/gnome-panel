@@ -139,6 +139,7 @@ static GtkWidget *keys_enabled_cb;
 static GtkWidget *menu_key_entry;
 static GtkWidget *run_key_entry;
 static GtkWidget *screenshot_key_entry;
+static GtkWidget *window_screenshot_key_entry;
 static GtkWidget *confirm_panel_remove_cb;
 static GtkWidget *avoid_collisions_cb;
 
@@ -196,6 +197,7 @@ set_config (GlobalConfig *dest, GlobalConfig *src)
 	g_free (dest->menu_key);
 	g_free (dest->run_key);
 	g_free (dest->screenshot_key);
+	g_free (dest->window_screenshot_key);
 
 	*dest = *src;
 
@@ -206,6 +208,7 @@ set_config (GlobalConfig *dest, GlobalConfig *src)
 	dest->menu_key = g_strdup (dest->menu_key);
 	dest->run_key = g_strdup (dest->run_key);
 	dest->screenshot_key = g_strdup (dest->screenshot_key);
+	dest->window_screenshot_key = g_strdup (dest->window_screenshot_key);
 }
 
 
@@ -931,6 +934,8 @@ sync_misc_page_with_config(GlobalConfig *conf)
 			    sure_string (conf->run_key));
 	gtk_entry_set_text (GTK_ENTRY (screenshot_key_entry),
 			    sure_string (conf->screenshot_key));
+	gtk_entry_set_text (GTK_ENTRY (window_screenshot_key_entry),
+			    sure_string (conf->window_screenshot_key));
 }
 
 static void
@@ -961,6 +966,9 @@ sync_config_with_misc_page(GlobalConfig *conf)
 	g_free (conf->screenshot_key);
 	conf->screenshot_key =
 		g_strdup (gtk_entry_get_text (GTK_ENTRY (screenshot_key_entry)));
+	g_free (conf->window_screenshot_key);
+	conf->window_screenshot_key =
+		g_strdup (gtk_entry_get_text (GTK_ENTRY (window_screenshot_key_entry)));
 }
 
 static GtkWidget *grab_dialog;
@@ -1230,11 +1238,11 @@ misc_notebook_page(void)
 	gtk_table_attach (GTK_TABLE (table), w, 0, 1, 3, 4,
 			  GTK_FILL, GTK_FILL, 0, 0);
 	
-	list = g_list_append(NULL, "Print");
-	list = g_list_append(list, "Control-Mod1-s");
-	list = g_list_append(list, "Control-Mod1-p");
-	list = g_list_append(list, _("Disabled"));
-	w = gtk_combo_new();
+	list = g_list_append (NULL, "Print");
+	list = g_list_append (list, "Control-Mod1-s");
+	list = g_list_append (list, "Control-Mod1-p");
+	list = g_list_append (list, _("Disabled"));
+	w = gtk_combo_new ();
 	gtk_combo_set_popdown_strings(GTK_COMBO(w), list);
 	g_list_free(list);
 	screenshot_key_entry = GTK_COMBO(w)->entry;
@@ -1250,6 +1258,33 @@ misc_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (w), "clicked",
 			    GTK_SIGNAL_FUNC (grab_button_pressed),
 			    screenshot_key_entry);
+
+	/* window screenshot key...*/
+	w = gtk_label_new (_("Take window screenshot key"));
+	gtk_misc_set_alignment (GTK_MISC (w), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), w, 0, 1, 4, 5,
+			  GTK_FILL, GTK_FILL, 0, 0);
+	
+	list = g_list_append (NULL, "Control-Print");
+	list = g_list_append (list, "Mod1-Print");
+	list = g_list_append (list, "Control-Mod1-w");
+	list = g_list_append (list, _("Disabled"));
+	w = gtk_combo_new ();
+	gtk_combo_set_popdown_strings (GTK_COMBO (w), list);
+	g_list_free (list);
+	window_screenshot_key_entry = GTK_COMBO(w)->entry;
+	gtk_signal_connect (GTK_OBJECT (window_screenshot_key_entry),
+			    "changed",
+			    GTK_SIGNAL_FUNC (changed_cb), NULL);
+	/*gtk_widget_set_sensitive (window_screenshot_key_entry, FALSE);*/
+	gtk_table_attach_defaults (GTK_TABLE (table), w, 1, 2, 4, 5);
+
+	w = gtk_button_new_with_label (_("Grab key..."));
+	gtk_table_attach (GTK_TABLE (table), w, 2, 3, 4, 5,
+			  GTK_FILL, GTK_FILL, 0, 0);
+	gtk_signal_connect (GTK_OBJECT (w), "clicked",
+			    GTK_SIGNAL_FUNC (grab_button_pressed),
+			    window_screenshot_key_entry);
 
  	return (vbox);
 }
@@ -1378,6 +1413,15 @@ loadup_vals (void)
 	convert_string_to_keysym_state(global_config.screenshot_key,
 				       &global_config.screenshot_keysym,
 				       &global_config.screenshot_state);
+
+	g_free(global_config.window_screenshot_key);
+	global_config.window_screenshot_key =
+		conditional_get_string ("window_screenshot_key",
+					"Control-Print", NULL);
+	convert_string_to_keysym_state(global_config.window_screenshot_key,
+				       &global_config.window_screenshot_keysym,
+				       &global_config.window_screenshot_state);
+
 
 
 	global_config.applet_padding =
@@ -1555,6 +1599,7 @@ write_config (GlobalConfig *conf)
 	gnome_config_set_string("menu_key", conf->menu_key);
 	gnome_config_set_string("run_key", conf->run_key);
 	gnome_config_set_string("screenshot_key", conf->screenshot_key);
+	gnome_config_set_string("window_screenshot_key", conf->window_screenshot_key);
 	gnome_config_set_bool("fast_button_scaling", conf->fast_button_scaling);
 			     
 	buf = g_string_new(NULL);
