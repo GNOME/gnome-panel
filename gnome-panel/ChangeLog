@@ -1,3 +1,9 @@
+2003-10-31  Arvind Samptur  <arvind.samptur@wipro.com>
+
+	* panel-toplevel.c: (panel_toplevel_auto_unhide_timeout_handler):
+	Don't unhide if we are not in the vicinity of the panel.
+	Fix bug #122589
+
 2003-10-30  Vijaykumar Patwari <vijaykumar.patwari@wipro.com>
 
 	* panel-widget.c: (panel_widget_applet_drag_start): block the autohide
