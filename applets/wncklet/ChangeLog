@@ -1,3 +1,11 @@
+1999-02-27  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* battery/battery.c (make_new_battery_applet): Made the timeout
+	actually be bat->graph_interval seconds.
+
+	* battery/properties.c (prop_apply): Re-set the timeout when the
+	properties are applied.
+
 1999-02-27  Miguel de Icaza  <miguel@nuclecu.unam.mx>
 
 	* gkb/gkb.c (apply_callback): Do not apply properties more than
