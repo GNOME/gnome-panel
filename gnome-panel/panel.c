@@ -20,6 +20,10 @@
 #include "panel_config_global.h"
 #include <gdk/gdkx.h>
 
+#undef GTK_OBJECT
+#define GTK_OBJECT(obj)  (printf("func: %s line: %d\n", __FILE__, __LINE__)!=123? GTK_CHECK_CAST ((obj), gtk_object_get_type (), GtkObject):0)
+
+
 #define APPLET_EVENT_MASK (GDK_BUTTON_PRESS_MASK |		\
 			   GDK_BUTTON_RELEASE_MASK |		\
 			   GDK_POINTER_MOTION_MASK |		\
@@ -270,6 +274,9 @@ panel_session_save (GnomeClient *client,
 		GList *list;
 		AppletInfo *info;
 
+		/*don't catch these any more*/
+		signal(SIGCHLD, SIG_DFL);
+
 		g_list_foreach(panels,destroy_widget_list,NULL);
 
 /* clean programming goeas aside, this was causing too many segfaults,
@@ -279,6 +286,8 @@ panel_session_save (GnomeClient *client,
 		    i++,info++)
 			if(info->menu)
 				gtk_widget_unref(info->menu);
+
+		g_array_free(applets,TRUE);
 
 		gtk_object_unref(GTK_OBJECT (panel_tooltips));
 
@@ -296,10 +305,6 @@ panel_session_save (GnomeClient *client,
 		puts("killing launcher");
 		kill(launcher_pid,SIGTERM);
 #endif
-		/*
-		g_array_free(applets,TRUE);
-		*/
-
 		gtk_exit (0);
 	}
 
@@ -381,6 +386,8 @@ applet_callback_callback(GtkWidget *widget, gpointer data)
 {
 	AppletUserMenu *menu = data;
 	AppletInfo *info = get_applet_info(menu->applet_id);
+
+	g_return_if_fail(info != NULL);
 
 	if(info->type == APPLET_EXTERN) {
 		send_applet_do_callback(info->id_str,
@@ -540,6 +547,8 @@ applet_show_menu(gint applet_id)
 	static GdkCursor *arrow = NULL;
 	AppletInfo *info = get_applet_info(applet_id);
 
+	g_return_if_fail(info != NULL);
+
 	if (!info->menu)
 		info->menu = create_applet_menu(applet_id,info->user_menu);
 
@@ -565,8 +574,12 @@ applet_get_panel(gint applet_id)
 	int panel;
 	GList *list;
 	AppletInfo *info = get_applet_info(applet_id);
-	gpointer p = gtk_object_get_data(GTK_OBJECT(info->widget),
-					 PANEL_APPLET_PARENT_KEY);
+	gpointer p;
+
+	g_return_if_fail(info != NULL);
+
+	p = gtk_object_get_data(GTK_OBJECT(info->widget),
+				PANEL_APPLET_PARENT_KEY);
 
 	for(panel=0,list=panels;list!=NULL;list=g_list_next(list),panel++)
 		if(list->data == p)
@@ -578,6 +591,8 @@ void
 applet_abort_id(gint applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info != NULL);
 
 	/*only reserved spots can be canceled, if an applet
 	  wants to chance a pending applet it needs to first
@@ -596,8 +611,12 @@ applet_get_pos(gint applet_id)
 	int panel;
 	GList *list;
 	AppletInfo *info = get_applet_info(applet_id);
-	PanelWidget *p = gtk_object_get_data(GTK_OBJECT(info->widget),
-					     PANEL_APPLET_PARENT_KEY);
+	PanelWidget *p;
+
+	g_return_if_fail(info != NULL);
+
+	p = gtk_object_get_data(GTK_OBJECT(info->widget),
+				PANEL_APPLET_PARENT_KEY);
 
 	if((pos=panel_widget_get_pos(p, info->widget))!=-1)
 		return pos;
@@ -609,6 +628,8 @@ applet_drag_start(gint applet_id)
 {
 	PanelWidget *panel;
 	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info != NULL);
 
 	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 				    PANEL_APPLET_PARENT_KEY);
@@ -624,6 +645,8 @@ applet_drag_stop(gint applet_id)
 	PanelWidget *panel;
 	AppletInfo *info = get_applet_info(applet_id);
 
+	g_return_if_fail(info != NULL);
+
 	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 				    PANEL_APPLET_PARENT_KEY);
 	g_return_if_fail(panel!=NULL);
@@ -636,6 +659,8 @@ applet_add_callback(gint applet_id, char *callback_name, char *menuitem_text)
 {
 	AppletUserMenu *menu = g_new(AppletUserMenu,1);
 	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info != NULL);
 
 	menu->name = g_strdup(callback_name);
 	menu->text = g_strdup(menuitem_text);
@@ -695,6 +720,8 @@ applet_register (const char * ior, int applet_id)
 {
 	AppletInfo *info = get_applet_info(applet_id);
 	PanelWidget *panel;
+
+	g_return_if_fail(info != NULL);
 
  	panel = gtk_object_get_data(GTK_OBJECT(info->widget),
 				    PANEL_APPLET_PARENT_KEY);
@@ -790,6 +817,8 @@ void
 applet_set_tooltip(gint applet_id, const char *tooltip)
 {
 	AppletInfo *info = get_applet_info(applet_id);
+	g_return_if_fail(info != NULL);
+
 	gtk_tooltips_set_tip (panel_tooltips,info->widget,tooltip,NULL);
 }
 
@@ -816,6 +845,19 @@ panel_dnd_drag_request(GtkWidget *widget, GdkEvent *event, gpointer data)
 
 static char *applet_drag_types[]={"internal/applet-widget-pointer"};
 #endif
+
+static gint
+applet_destroy(GtkWidget *w, gpointer data)
+{
+	gint applet_id = PTOI(data);
+	AppletInfo *info = get_applet_info(applet_id);
+
+	g_return_if_fail(info!=NULL);
+
+	info->widget = NULL;
+
+	panel_clean_applet(applet_id);
+}
 
 gint
 register_toy(GtkWidget *applet,
@@ -894,6 +936,16 @@ register_toy(GtkWidget *applet,
 		panelw = PANEL_WIDGET(list->data);
 	}
 
+	gtk_signal_connect(GTK_OBJECT(eventbox),
+			   "button_press_event",
+			   GTK_SIGNAL_FUNC(applet_button_press),
+			   ITOP(applet_count));
+
+	gtk_signal_connect(GTK_OBJECT(eventbox),
+			   "destroy",
+			   GTK_SIGNAL_FUNC(applet_destroy),
+			   ITOP(applet_count));
+
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);
 
@@ -907,12 +959,6 @@ register_toy(GtkWidget *applet,
 
 	gtk_widget_dnd_drag_set (GTK_WIDGET(eventbox), TRUE,
 				 applet_drag_types, 1);*/
-
-
-	gtk_signal_connect(GTK_OBJECT(eventbox),
-			   "button_press_event",
-			   GTK_SIGNAL_FUNC(applet_button_press),
-			   ITOP(applet_count-1));
 
 	orientation_change(applet_count-1,panelw);
 

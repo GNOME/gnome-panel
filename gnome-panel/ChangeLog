@@ -1,3 +1,11 @@
+Wed Apr 22 02:12:08 1998  George Lebl  <jirka@5z.com>
+
+	* panel.c: checks for info!=NULL
+
+	* panel.c: remove SIGCHLD handler before we kill panels,
+	  so that we don't get into trouble cleaning cleaned applets
+	  etc...etc.. also catch destroy event and clean applet
+
 Wed Apr 22 01:46:49 1998  George Lebl  <jirka@5z.com>
 
 	* panel.c: fixed popup menu segfault, few sanity
