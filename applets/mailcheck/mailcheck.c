@@ -150,22 +150,24 @@ static void applet_load_prefs(MailCheck *mc);
 #define WANT_BITMAPS(x) (x == REPORT_MAIL_USE_ANIMATION || x == REPORT_MAIL_USE_BITMAP)
 
 
-static char *
+static G_CONST_RETURN char *
 mail_animation_filename (MailCheck *mc)
 {
-	if (!mc->animation_file){
+	if (!mc->animation_file) {
 		mc->animation_file =
-			gnome_unconditional_pixmap_file ("mailcheck/email.png");
-		if (g_file_exists (mc->animation_file))
-			return g_strdup (mc->animation_file);
+			gnome_program_locate_file (
+				NULL, GNOME_FILE_DOMAIN_PIXMAP,
+				"mailcheck/email.png", TRUE, NULL);
+
+		return mc->animation_file;
+
+	} else if (mc->animation_file [0]) {
+		if (g_file_test (mc->animation_file, G_FILE_TEST_EXISTS))
+			return mc->animation_file;
+
 		g_free (mc->animation_file);
 		mc->animation_file = NULL;
-		return NULL;
-	} else if (*mc->animation_file){
-		if (g_file_exists (mc->animation_file))
-			return g_strdup (mc->animation_file);
-		g_free (mc->animation_file);
-		mc->animation_file = NULL;
+
 		return NULL;
 	} else
 		/* we are using text only, since the filename was "" */
@@ -191,28 +193,45 @@ calc_dir_contents (char *dir)
        return size;
 }
 
-static void
-get_password_callback (gchar *string, gpointer data)
-{
-	gchar **pass = (gchar **)data;
-
-	*pass = string;
-}
-
-static gchar *
+static char *
 get_remote_password (void)
 {
-	gchar *pass = NULL;
 	GtkWidget *dialog;
+	GtkWidget *hbox;
+	GtkWidget *label;
+	GtkWidget *entry;
+	int        response;
+	char      *pass = NULL;
 
-	dialog = gnome_request_dialog(TRUE, _("Password:"), "",
-				      256, get_password_callback, &pass, NULL);
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gnome_dialog_run_and_close (GNOME_DIALOG (dialog));
+	dialog = gtk_dialog_new_with_buttons (
+			_("Mail check Applet"), NULL, 0,
+			GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			GTK_STOCK_OK, GTK_RESPONSE_OK, NULL);
+
+	gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+	hbox = gtk_hbox_new (FALSE, 1);
+	gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+			    hbox, FALSE, FALSE, GNOME_PAD_SMALL);
+
+	label = gtk_label_new_with_mnemonic (_("_Password:"));
+	gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+
+	entry = gtk_entry_new ();
+	gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+	gtk_widget_show_all (hbox);
+
+	gtk_window_set_modal (GTK_WINDOW(dialog), TRUE);
+
+	response = gtk_dialog_run (GTK_DIALOG (dialog));
+
+	if (response == GTK_RESPONSE_OK)
+		pass = g_strdup (gtk_entry_get_text (GTK_ENTRY (entry)));
+
+	gtk_widget_destroy (dialog);
 
 	return pass;
 }
-
 
 static void
 got_remote_answer (int mails, gpointer data)
@@ -355,19 +374,21 @@ mailcheck_load_animation (MailCheck *mc, const char *fname)
 	int pbwidth, pbheight;
 	GdkPixbuf *pb;
 
-	if (mc->email_pixmap != NULL)
-		gdk_pixmap_unref(mc->email_pixmap);
-	if (mc->email_mask != NULL)
-		gdk_bitmap_unref(mc->email_mask);
+	if (mc->email_pixmap)
+		g_object_unref (mc->email_pixmap);
+
+	if (mc->email_mask)
+		g_object_unref (mc->email_mask);
+
 	mc->email_pixmap = NULL;
 	mc->email_mask = NULL;
 
 	pb = gdk_pixbuf_new_from_file (fname, NULL);
-	if (pb == NULL)
+	if (!pb)
 		return FALSE;
 
-	pbwidth = gdk_pixbuf_get_width(pb);
-	pbheight = gdk_pixbuf_get_height(pb);
+	pbwidth = gdk_pixbuf_get_width (pb);
+	pbheight = gdk_pixbuf_get_height (pb);
 
 	if(pbheight != mc->size) {
 		GdkPixbuf *pbt;
@@ -376,7 +397,7 @@ mailcheck_load_animation (MailCheck *mc, const char *fname)
 
 		pbt = gdk_pixbuf_scale_simple(pb, width, height,
 					      GDK_INTERP_NEAREST);
-		gdk_pixbuf_unref(pb);
+		g_object_unref (pb);
 		pb = pbt;
 	} else {
 		width = pbwidth;
@@ -396,7 +417,7 @@ mailcheck_load_animation (MailCheck *mc, const char *fname)
 					  &mc->email_mask,
 					  128);
 
-	gdk_pixbuf_unref (pb);
+	g_object_unref (pb);
 	
 	return TRUE;
 }
@@ -409,7 +430,9 @@ next_frame (gpointer data)
 	mc->nframe = (mc->nframe + 1) % mc->frames;
 	if (mc->nframe == 0)
 		mc->nframe = 1;
-	gtk_widget_draw (mc->da, NULL);
+
+	gtk_widget_queue_draw (mc->da);
+
 	return TRUE;
 }
 
@@ -450,9 +473,10 @@ after_mail_check (MailCheck *mc)
 			}
 			mc->nframe = 0;
 		}
-		gtk_widget_draw (mc->da, NULL);
+
+		gtk_widget_queue_draw (mc->da);
+
 		break;
-		
 	case REPORT_MAIL_USE_BITMAP:
 		if (mc->anymail){
 			if (mc->newmail)
@@ -461,9 +485,10 @@ after_mail_check (MailCheck *mc)
 				mc->nframe = 1;
 		} else
 			mc->nframe = 0;
-		gtk_widget_draw (mc->da, NULL);
-		break;
 
+		gtk_widget_queue_draw (mc->da);
+
+		break;
 	case REPORT_MAIL_USE_TEXT: {
 		char *text;
 
@@ -526,10 +551,13 @@ static gint
 icon_expose (GtkWidget *widget, GdkEventExpose *event, gpointer data)
 {
 	MailCheck *mc = data;
-	int h = mc->size;
-	gdk_draw_pixmap (mc->da->window, mc->da->style->black_gc,
-			 mc->email_pixmap, mc->nframe * h,
-			 0, 0, 0, h, h);
+	int        h = mc->size;
+
+	gdk_draw_drawable (
+		mc->da->window, mc->da->style->black_gc,
+		mc->email_pixmap, mc->nframe * h,
+		0, 0, 0, h, h);
+
 	return TRUE;
 }
 
@@ -574,10 +602,11 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 	g_free (mc->animation_file);
 	g_free (mc->mail_file);
 
-	if (mc->email_pixmap != NULL)
-		gdk_pixmap_unref (mc->email_pixmap);
-	if (mc->email_mask != NULL)
-		gdk_bitmap_unref (mc->email_mask);
+	if (mc->email_pixmap)
+		g_object_unref (mc->email_pixmap);
+
+	if (mc->email_mask)
+		g_object_unref (mc->email_mask);
 
 	if (mc->mail_timeout != 0)
 		gtk_timeout_remove (mc->mail_timeout);
@@ -597,7 +626,9 @@ mailcheck_destroy (GtkWidget *widget, gpointer data)
 static GtkWidget *
 create_mail_widgets (MailCheck *mc)
 {
-	char *fname = mail_animation_filename (mc);
+	const char *fname;
+
+	fname = mail_animation_filename (mc);
 
 	mc->ebox = gtk_event_box_new();
         gtk_widget_set_events(mc->ebox, 
@@ -624,8 +655,9 @@ create_mail_widgets (MailCheck *mc)
 	/* The drawing area */
 	mc->da = gtk_drawing_area_new ();
 	gtk_widget_ref (mc->da);
-	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),
-			       mc->size, mc->size);
+
+	gtk_widget_set_size_request (mc->da, mc->size, mc->size);
+
 	g_signal_connect (G_OBJECT(mc->da), "expose_event", (GtkSignalFunc)icon_expose, mc);
 	gtk_widget_show (mc->da);
 
@@ -642,8 +674,9 @@ create_mail_widgets (MailCheck *mc)
 		mc->report_mail_mode = REPORT_MAIL_USE_TEXT;
 		mc->containee = mc->label;
 	}
-	g_free (fname);
+
 	gtk_container_add (GTK_CONTAINER (mc->bin), mc->containee);
+
 	return mc->ebox;
 }
 
@@ -659,11 +692,13 @@ load_new_pixmap (MailCheck *mc)
 		g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	} else {
-		char *fname = g_concat_dir_and_file ("mailcheck",
-						     mc->selected_pixmap_name);
+		char *fname;
 		char *full;
-		
-		full = gnome_pixmap_file (fname);
+
+		fname = g_build_filename ("mailcheck", mc->selected_pixmap_name, NULL);
+		full = gnome_program_locate_file (
+				NULL, GNOME_FILE_DOMAIN_PIXMAP,
+				fname, TRUE, NULL);
 		free (fname);
 		
 		if(full != NULL &&
@@ -679,8 +714,9 @@ load_new_pixmap (MailCheck *mc)
 			mc->animation_file = NULL;
 		}
 	}
+
 	mail_check_timeout (mc);
-	gtk_widget_set_uposition (GTK_WIDGET (mc->containee), 0, 0);
+
 	gtk_container_add (GTK_CONTAINER (mc->bin), mc->containee);
 	gtk_widget_show (mc->containee);
 }
@@ -699,28 +735,27 @@ animation_selected (GtkMenuItem *item, gpointer data)
 static void
 mailcheck_new_entry (MailCheck *mc, GtkWidget *menu, GtkWidget *item, char *s)
 {
-	gtk_menu_append (GTK_MENU (menu), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
 	g_object_set_data (G_OBJECT (item), "MailCheck", mc);
 	
-	gtk_signal_connect_full (GTK_OBJECT (item), "activate",
-				 GTK_SIGNAL_FUNC (animation_selected),
-				 NULL,
-				 g_strdup (s),
-				 (GtkDestroyNotify)g_free,
-				 FALSE, FALSE);
-
+	g_signal_connect_data (item, "activate", G_CALLBACK (animation_selected),
+			       g_strdup (s), (GClosureNotify) g_free, 0);
 }
 
 static GtkWidget *
 mailcheck_get_animation_menu (MailCheck *mc)
 {
 	GtkWidget *omenu, *menu, *item;
-	struct    dirent *e;
-	char      *dname = gnome_unconditional_pixmap_file ("mailcheck");
+	struct     dirent *e;
+	char      *dname;
 	DIR       *dir;
-	const char      *basename = NULL;
-	int       i = 0, select_item = 0;
+	char      *basename = NULL;
+	int        i = 0, select_item = 0;
+
+	dname = gnome_program_locate_file (
+			NULL, GNOME_FILE_DOMAIN_PIXMAP,
+			"mailcheck", TRUE, NULL);
 
 	mc->selected_pixmap_name = mc->mailcheck_text_only;
 	omenu = gtk_option_menu_new ();
@@ -731,7 +766,7 @@ mailcheck_get_animation_menu (MailCheck *mc)
 	mailcheck_new_entry (mc, menu, item, mc->mailcheck_text_only);
 
 	if (mc->animation_file != NULL)
-		basename = g_basename (mc->animation_file);
+		basename = g_path_get_basename (mc->animation_file);
 	else
 		basename = NULL;
 
@@ -768,7 +803,10 @@ mailcheck_get_animation_menu (MailCheck *mc)
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (omenu), menu);
 	gtk_option_menu_set_history (GTK_OPTION_MENU (omenu), select_item);
 	gtk_widget_show (omenu);
+
 	g_free (dname);
+	g_free (basename);
+
 	return omenu;
 }
 
@@ -1062,7 +1100,7 @@ mailbox_properties_page(MailCheck *mc)
 	g_signal_connect (G_OBJECT(item), "activate", 
 			    G_CALLBACK(set_mailbox_selection), 
 			    GINT_TO_POINTER(MAILBOX_LOCAL));
-	gtk_menu_append(GTK_MENU(l2), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (l2), item);
 
 	item = gtk_menu_item_new_with_label(_("Local maildir")); 
 	gtk_widget_show(item);
@@ -1070,7 +1108,7 @@ mailbox_properties_page(MailCheck *mc)
 	g_signal_connect (G_OBJECT(item), "activate", 
 			    G_CALLBACK(set_mailbox_selection), 
 			    GINT_TO_POINTER(MAILBOX_LOCALDIR));
-	gtk_menu_append(GTK_MENU(l2), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (l2), item);
 
 	item = gtk_menu_item_new_with_label(_("Remote POP3-server")); 
 	gtk_widget_show(item);
@@ -1079,14 +1117,14 @@ mailbox_properties_page(MailCheck *mc)
 			    G_CALLBACK(set_mailbox_selection), 
 			    GINT_TO_POINTER(MAILBOX_POP3));
         
-	gtk_menu_append(GTK_MENU(l2), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (l2), item);
 	item = gtk_menu_item_new_with_label(_("Remote IMAP-server")); 
 	gtk_widget_show(item);
 	g_object_set_data(G_OBJECT(item), "MailCheck", mc);
 	g_signal_connect (G_OBJECT(item), "activate", 
 			    G_CALLBACK(set_mailbox_selection), 
 			    GINT_TO_POINTER(MAILBOX_IMAP));
-	gtk_menu_append(GTK_MENU(l2), item);
+	gtk_menu_shell_append (GTK_MENU_SHELL (l2), item);
 	
 	gtk_widget_show(l2);
   
@@ -1421,13 +1459,18 @@ applet_load_prefs(MailCheck *mc)
 {
 	gchar *query;
 
-	query = gnome_unconditional_pixmap_file("mailcheck/email.png");
+	query = gnome_program_locate_file (
+			NULL, GNOME_FILE_DOMAIN_PIXMAP,
+			"mailcheck/email.png", FALSE, NULL);
+
 	mc->animation_file = panel_applet_gconf_get_string(mc->applet, "animation-file", NULL);
 	if(!mc->animation_file || strcmp(mc->animation_file, "none")) {
 		g_free(mc->animation_file);
 		mc->animation_file = g_strdup(query);
 	}
+
 	g_free(query);
+
 	mc->update_freq = panel_applet_gconf_get_int(mc->applet, "update-frequency", NULL);
 	mc->pre_check_cmd = panel_applet_gconf_get_string(mc->applet, "exec-command", NULL);
 	mc->pre_check_enabled = panel_applet_gconf_get_bool(mc->applet, "exec-enabled", NULL);
@@ -1491,7 +1534,7 @@ static void
 applet_change_pixel_size(PanelApplet * w, gint size, gpointer data)
 {
 	MailCheck *mc = data;
-	char *fname;
+	const char *fname;
 
 	if(mc->report_mail_mode == REPORT_MAIL_USE_TEXT)
 		return;
@@ -1499,14 +1542,12 @@ applet_change_pixel_size(PanelApplet * w, gint size, gpointer data)
 	mc->size = size;
 	fname = mail_animation_filename (mc);
 
-	gtk_drawing_area_size (GTK_DRAWING_AREA(mc->da),size,size);
 	gtk_widget_set_size_request (GTK_WIDGET(mc->da), size, size);
 	
 	if (!fname)
 		return;
 
 	mailcheck_load_animation (mc, fname);
-	g_free (fname);
 }
 
 static void

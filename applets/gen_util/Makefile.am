@@ -1,9 +1,9 @@
 SUBDIRS = help
 
-INCLUDES = -I. -I$(srcdir) 			\
+INCLUDES = 					\
 	-I$(srcdir)/../../libpanel-applet 	\
 	-I$(top_builddir)/libpanel-applet 	\
-	-I$(includedir) 			\
+	$(DISABLE_DEPRECATED_CFLAGS)		\
 	$(GNOME_INCLUDEDIR) 			\
 	$(WARN_CFLAGS) 				\
 	$(WNCKLET_CFLAGS) 			\
@@ -11,6 +11,13 @@ INCLUDES = -I. -I$(srcdir) 			\
 	-DTASKLIST_GLADEDIR=\""$(gladedir)"\"	\
 	-DGNOME_ICONDIR=\""$(datadir)/pixmaps\""\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" 
+
+DISABLE_DEPRECATED_CFLAGS =			\
+	-DG_DISABLE_DEPRECATED			\
+	-DGDK_DISABLE_DEPRECATED		\
+	-DGTK_DISABLE_DEPRECATED		\
+	-DGDK_PIXBUF_DISABLE_DEPRECATED		\
+	-DGNOME_DISABLE_DEPRECATED
 
 gladedir   = $(datadir)/gen_util
 glade_DATA = pager.glade tasklist.glade

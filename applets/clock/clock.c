@@ -19,10 +19,6 @@
 #include <string.h>
 #include <time.h>
 
-#define G_DISABLE_DEPRECATED
-#define GTK_DISABLE_DEPRECATED
-#define GNOME_DISABLE_DEPRECATED
-
 #include <panel-applet.h>
 #include <panel-applet-gconf.h>
 
@@ -480,32 +476,7 @@ copy_date (BonoboUIComponent *uic,
 	g_free (utf8);
 }
 
-
 /* current timestamp */
-static void
-copy_timestamp (BonoboUIComponent *uic,
-		ClockData         *cd,
-		const gchar       *verbname)
-{
-	time_t current_time = time (NULL);
-	struct tm *tm;
-	char string[256];
-	char *utf8;
-
-	tm = localtime (&current_time);
-
-	if (strftime (string, sizeof (string),
-		     /* RFC822 conformant date, likely not different for other
-		      * locales I don't think */
-		     _("%a, %d  %b  %Y %H:%M:%S %z"), tm) <= 0)
-		strcpy (string, "???");
-	
-	utf8 = g_locale_to_utf8 (string, -1, NULL, NULL, NULL);
-	gtk_clipboard_set_text (gtk_clipboard_get (GDK_SELECTION_CLIPBOARD),
-				utf8, -1);
-	g_free (utf8);
-}
-
 static const BonoboUIVerb clock_menu_verbs [] = {
 	BONOBO_UI_UNSAFE_VERB ("ClockProperties", display_properties_dialog),
 	BONOBO_UI_UNSAFE_VERB ("ClockHelp",       display_help_dialog),
