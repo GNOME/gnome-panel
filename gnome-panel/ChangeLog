@@ -1,3 +1,10 @@
+2002-07-26  Mark McLoughlin  <mark@skynet.ie>
+
+	* gnome-panel-screenshot.c:
+	(nibble_on_file), (save_to_file), (gimme_file): sanity
+	checks so we don't crash on Solaris trying to do
+	printf ("%s", NULL);
+
 2002-07-25 Padraig O'Briain  <padraig.obriain@sun.com>
 
 	* panel-widget.c (panel_widget_reset_focus): This function is called
