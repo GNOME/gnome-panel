@@ -4,9 +4,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-11-04 09:29+0100\n"
-"PO-Revision-Date: 2002-11-05 11:04+0200\n"
-"Last-Translator: Vital Khilko <dojlid@mova.org>\n"
+"POT-Creation-Date: 2002-11-15 05:43+0100\n"
+"PO-Revision-Date: 2002-11-15 19:51+0200\n"
+"Last-Translator: Ales Nyakhaychyk <i18n@infonet.by>\n"
 "Language-Team: Belarusian <i18n@mova.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +37,7 @@ msgstr "Дапамога"
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
 msgid "_Preferences..."
-msgstr "Усталяваньні..."
+msgstr "Перавагі..."
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.in.h:1
 msgid "Amusements"
@@ -91,10 +91,14 @@ msgid ""
 "We strongly advise you against usage of wanda for anything\n"
 "which would make the applet \"practical\" or useful."
 msgstr ""
+"Увага: здаецца каманда зьбіраецца рабіць нешта сапраўды карыснае.\n"
+"З таго што гэта непатрэбны аплет, вы можа не пажадаеце рабіць гэта.\n"
+"Мы раім вам пазьбягаць якога б то небыла выкарыстаньня Ванды для\n"
+"ўсяго, што багло б зрабіць аплет \"практычным\" ці карысным."
 
 #: applets/fish/fish.c:712
 msgid "GNOME Fish Preferences"
-msgstr "Уласьцівасьці рыбкі"
+msgstr "Перавагі рыбкі"
 
 #: applets/fish/fish.c:722
 msgid "_Name of GNOME fish:"
@@ -322,7 +326,7 @@ msgstr "Памылка адлюстравала дапамогу: %s"
 
 #: applets/gen_util/clock.c:933
 msgid "Clock Preferences"
-msgstr "Уласьцівасьці гадзіньніку"
+msgstr "Перавагі гадзіньніку"
 
 #: applets/gen_util/clock.c:960
 msgid "Clock type"
@@ -380,50 +384,49 @@ msgid "Display date in applet, in addition to time"
 msgstr "Адлюстроўвае дату ў аплеце, побач з часам"
 
 #: applets/gen_util/clock.schemas.in.h:3
-msgid "Display seconds in time"
-msgstr "Адлюстроўвае сэкунды"
-
-#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in Universal Coordinated Time zone"
 msgstr "Адлюстроўвае час у Universal Coordinated Time zone"
 
-#: applets/gen_util/clock.schemas.in.h:5
+#: applets/gen_util/clock.schemas.in.h:4
 msgid "Display time in seconds since Epoch, i.e. 1970-01-01"
 msgstr "Адлюстроўвае час у сэкундах з пэўнага часу, напр. 1970-01-01"
 
-#: applets/gen_util/clock.schemas.in.h:6
+#: applets/gen_util/clock.schemas.in.h:5
 msgid "Hour format"
 msgstr "Фармат гадзін"
 
-#: applets/gen_util/clock.schemas.in.h:7
-msgid "Sets the hour format, may be either 12 or 24"
-msgstr "Усталёўвае фармат гадзін, можа быць 12 ці 24"
+#: applets/gen_util/clock.schemas.in.h:6
+msgid ""
+"Sets the hour format, may be either 12 or 24</long> <default>24</default> </"
+"locale> <locale name=\"en_US\"> <short>Hour format</short> <long>Sets the "
+"hour format, may be either 12 or 24</long> <default>12</default> </locale> </"
+"schema> <schema> <key>/schemas/apps/clock_applet/prefs/show_seconds</key> "
+"<owner>clock-applet</owner> <type>bool</type> <default>true</default> "
+"<locale name=\"C\"> <short>Show time with seconds</short> <long>Display "
+"seconds in time"
+msgstr ""
 
-#: applets/gen_util/clock.schemas.in.h:8
+#: applets/gen_util/clock.schemas.in.h:7
 msgid "Show date in a tooltip when a mouse is over applet"
 msgstr "Адлюстроўвае дату ў падказцы, калі навесьці мыш на аплет"
 
-#: applets/gen_util/clock.schemas.in.h:9
+#: applets/gen_util/clock.schemas.in.h:8
 msgid "Show date in applet"
 msgstr "Адлюстраваць дату ў аплеце"
 
-#: applets/gen_util/clock.schemas.in.h:10
+#: applets/gen_util/clock.schemas.in.h:9
 msgid "Show date in tooltip"
 msgstr "Адлюстроўваць дату ў падказцы"
 
-#: applets/gen_util/clock.schemas.in.h:11
-msgid "Show time with seconds"
-msgstr "Адлюстроўваць час з сэкундамі"
-
-#: applets/gen_util/clock.schemas.in.h:12
+#: applets/gen_util/clock.schemas.in.h:10
 msgid "Use Internet time"
 msgstr "Выкарыстоўваць Інтэрнэт-час"
 
-#: applets/gen_util/clock.schemas.in.h:13
+#: applets/gen_util/clock.schemas.in.h:11
 msgid "Use UNIX time"
 msgstr "Выкарыстоўваць UNIX-час"
 
-#: applets/gen_util/clock.schemas.in.h:14
+#: applets/gen_util/clock.schemas.in.h:12
 msgid "Use UTC"
 msgstr "Выкарыстоўваць UTC"
 
@@ -437,7 +440,7 @@ msgid ""
 "You didn't set a password in the preferences for the Inbox Monitor,\n"
 "so you have to enter it each time it starts up."
 msgstr ""
-"Вы ня ўсталявалі пароль ва ўласьцівасьцях Манітору,\n"
+"Вы ня ўсталявалі пароль у перавагах Манітору,\n"
 "таму Вы мусіце увадзіць яго кожнага разу, калі яго \n"
 "запускаеце."
 
@@ -609,7 +612,7 @@ msgstr "Выбраць анімацыю"
 
 #: applets/gen_util/mailcheck.c:1634
 msgid "Inbox Monitor Preferences"
-msgstr "Уласьцівасьці манітору праверкі пошты"
+msgstr "Перавагі манітору праверкі пошты"
 
 #: applets/gen_util/mailcheck.c:1653
 msgid "_Mail check"
@@ -825,7 +828,7 @@ msgstr "Назвы працоўных мейсцаў"
 
 #: applets/gen_util/pager.glade.h:8
 msgid "Workspace Switcher Preferences"
-msgstr "Уласьцівасьці пераключальніку працоўных мейсцаў"
+msgstr "Перавагі пераключальніку працоўных мейсцаў"
 
 #: applets/gen_util/pager.glade.h:9
 msgid "Workspaces"
@@ -964,7 +967,7 @@ msgstr "Пры аднаўленьні мінімізаваных вокнаў"
 
 #: applets/gen_util/tasklist.glade.h:9
 msgid "Window List Preferences"
-msgstr "Усталёўкі сьпісу вокнаў"
+msgstr "Перавагі сьпісу вокнаў"
 
 #: applets/gen_util/tasklist.glade.h:10
 msgid "Window List content"
@@ -1043,6 +1046,9 @@ msgid ""
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
 msgstr ""
+"Гэта найбольшая шырыня, якую запатрабе аплет. Гэта карысна для "
+"абмежаваньня памеру, выкарыстоўваемага ў вялікіх панэлях, накшталт "
+"бакавых, інакш аплет можа запоўніць усю даступную прастору."
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -1070,12 +1076,12 @@ msgstr "???"
 #: gnome-panel/applet.c:815
 #, c-format
 msgid "No object_type set for panel object with ID %s\n"
-msgstr ""
+msgstr "Неўсталяваны object_type для абьекту панэлі з ID %s\n"
 
 #: gnome-panel/applet.c:837
 #, c-format
 msgid "No panel_id set for panel object with ID %s\n"
-msgstr ""
+msgstr "Неўсталяваны panel_id для абьекту панэлі з ID %s\n"
 
 #: gnome-panel/applet.c:1137
 msgid "Can't find an empty spot"
@@ -1312,7 +1318,7 @@ msgstr "Аргумент гэта url які трэба дадаць, але н�
 
 #: gnome-panel/gnome-panel-add-launcher.c:67
 msgid "You must supply a single argument with the .desktop file or url to use\n"
-msgstr ""
+msgstr "Вам трэба ўказаць адзін аргумэнт у выглядзе файлу .desktop ці url\n"
 
 #: gnome-panel/gnome-panel-add-launcher.c:81
 msgid "No panel found\n"
@@ -1325,6 +1331,8 @@ msgid ""
 "There was an error displaying help: \n"
 "%s"
 msgstr ""
+"Адбылась памылка адлюстраваньня дапамогі: \n"
+"%s"
 
 #: gnome-panel/gnome-panel-preferences.c:240
 msgid ""
@@ -1332,7 +1340,7 @@ msgid ""
 "modification of the panel configuration"
 msgstr ""
 "Сыстэмны адміністратар забараніў\n"
-"мадыфікаваньне канфігурацыі панэлі"
+"зьмяненьне канфігурацыі панэлі"
 
 #: gnome-panel/gnome-panel-preferences.c:270
 #, c-format
@@ -1345,7 +1353,7 @@ msgstr "Панэль"
 
 #: gnome-panel/gnome-panel-preferences.desktop.in.h:2
 msgid "Select preferences for all your panels"
-msgstr "Наладка ўласьцівасьцяў для вашых панэляў"
+msgstr "Абярыце перавагі для вашых панэляў"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:1
 msgid "Animation _speed:"
@@ -1366,7 +1374,7 @@ msgstr "Сярэдне"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
-msgstr "Уласьцівасьці панэлі"
+msgstr "Перавагі панэлі"
 
 #: gnome-panel/gnome-panel-preferences.glade.h:6
 msgid "Slow"
@@ -1769,8 +1777,8 @@ msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
 msgstr ""
-"Вы ня можаце стварыць новы запускальнік да таго часу покуль у гэта "
-" мейсца нельга пісаць."
+"Вы ня можаце стварыць новы запускальнік да таго часу покуль у гэта  мейсца "
+"нельга пісаць."
 
 #: gnome-panel/menu.c:237
 msgid "Many many others ..."
@@ -1796,6 +1804,10 @@ msgid ""
 "Running in \"Lockdown\" mode.  This means your system administrator has "
 "prohibited any changes to the panel's configuration to take place."
 msgstr ""
+"\n"
+"\n"
+"Выконваецца ў \"зачыненым\" рэжыме.  Гэта азначае, што ваш сыстэмны "
+"адміністратар забараніў якія б то небыло зьмяненьні ў кафігурацыі панэлі."
 
 #: gnome-panel/menu.c:284
 msgid "The GNOME Panel"
@@ -2114,7 +2126,7 @@ msgstr "Немагчыма зарэгістраваць віджэт кантр�
 #: gnome-panel/panel-applet-frame.c:607
 #, c-format
 msgid "Exception from popup_menu '%s'\n"
-msgstr ""
+msgstr "Выключэньне з popup_menu '%s'\n"
 
 #: gnome-panel/panel-applet-frame.c:710
 #, c-format
@@ -2126,10 +2138,17 @@ msgid ""
 "(If you choose not to reload it at this time you can always add it by right "
 "clicking on the panel and clicking on the \"Add to Panel\" submenu)"
 msgstr ""
+"Аплет %s нечакана загінуў.\n"
+"\n"
+"Перазагрузіць яго?\n"
+"\n"
+"(Калі вы не перазагрузіе яго зараз, вы заўсёды зможаце "
+"дадаць яго націснуўшы правую кнопку мышы на панэлі й "
+"абраўшы \"Дадаць на панэльl\" у падмэню)."
 
 #: gnome-panel/panel-applet-frame.c:805
 msgid "Unable to obtain AppletShell interface from control\n"
-msgstr ""
+msgstr "Немагчыма атрымаць спалучэньне AppletShell ад кіраўніцтва\n"
 
 #: gnome-panel/panel-applet-frame.c:932
 #, c-format
@@ -2296,11 +2315,11 @@ msgstr "Адлюстраваць дыялёг \"Запуск\""
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr "FIXME - ці гэта выпраўлена з новай магчымасьцю мэню?"
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr "FIXME - неабходна вызначыць межы"
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
@@ -2427,7 +2446,7 @@ msgstr "Сьцягі аплетаў"
 
 #: libpanel-applet/panel-applet.c:1061
 msgid "Ranges that hint what sizes are acceptable for the applet"
-msgstr ""
+msgstr "Межы, якія парада жадае зьмяніць, узгоднены з аплетам"
 
 #: libpanel-applet/panel-test-applets.glade.h:1
 msgid "Applet:"
@@ -2484,4 +2503,13 @@ msgstr "XX вялікая"
 #: libpanel-applet/panel-test-applets.glade.h:15
 msgid "XX Small"
 msgstr "XX маленькая"
+
+#~ msgid "Display seconds in time"
+#~ msgstr "Адлюстроўвае сэкунды"
+
+#~ msgid "Sets the hour format, may be either 12 or 24"
+#~ msgstr "Усталёўвае фармат гадзін, можа быць 12 ці 24"
+
+#~ msgid "Show time with seconds"
+#~ msgstr "Адлюстроўваць час з сэкундамі"
 
