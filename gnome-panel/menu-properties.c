@@ -93,6 +93,8 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget *system_sub = gtk_object_get_data(GTK_OBJECT(widget), "system_sub");
 	GtkWidget *user_off = gtk_object_get_data(GTK_OBJECT(widget), "user_off");
 	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
+	GtkWidget *applets_off = gtk_object_get_data(GTK_OBJECT(widget), "applets_off");
+	GtkWidget *applets_sub = gtk_object_get_data(GTK_OBJECT(widget), "applets_sub");
 	GtkWidget *redhat_off = gtk_object_get_data(GTK_OBJECT(widget), "redhat_off");
 	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
  	GtkWidget *kde_off = gtk_object_get_data(GTK_OBJECT(widget), "kde_off");
@@ -143,6 +145,14 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else {
 		menu->main_menu_flags |= MAIN_MENU_USER;
 		menu->main_menu_flags &=~ MAIN_MENU_USER_SUB;
+	}
+	if(GTK_TOGGLE_BUTTON(applets_off)->active)
+		menu->main_menu_flags &=~ (MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB);
+	else if(GTK_TOGGLE_BUTTON(applets_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_APPLETS|MAIN_MENU_APPLETS_SUB;
+	else {
+		menu->main_menu_flags |= MAIN_MENU_APPLETS;
+		menu->main_menu_flags &=~ MAIN_MENU_APPLETS_SUB;
 	}
 	if(GTK_TOGGLE_BUTTON(redhat_off)->active)
 		menu->main_menu_flags &=~ (MAIN_MENU_REDHAT|MAIN_MENU_REDHAT_SUB);
@@ -354,6 +364,10 @@ create_properties_dialog(Menu *menu)
 			      _("Favorites: "),"user",
 			      menu->main_menu_flags&MAIN_MENU_USER,
 			      menu->main_menu_flags&MAIN_MENU_USER_SUB);
+	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),1,
+			      _("Applets: "),"applets",
+			      menu->main_menu_flags&MAIN_MENU_APPLETS,
+			      menu->main_menu_flags&MAIN_MENU_APPLETS_SUB);
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),2,
 			      _("AnotherLevel menu (if found): "),"redhat",
 			      menu->main_menu_flags&MAIN_MENU_REDHAT,

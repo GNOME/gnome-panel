@@ -23,7 +23,9 @@ enum {
 	MAIN_MENU_KDE = 1<<6,
 	MAIN_MENU_KDE_SUB = 1<<7,
 	MAIN_MENU_DEBIAN = 1<<8,
-	MAIN_MENU_DEBIAN_SUB = 1<<9
+	MAIN_MENU_DEBIAN_SUB = 1<<9,
+	MAIN_MENU_APPLETS = 1<<10,
+	MAIN_MENU_APPLETS_SUB = 1<<11
 };
 
 typedef struct _Menu Menu;
