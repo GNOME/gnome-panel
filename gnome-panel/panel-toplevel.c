@@ -3324,7 +3324,7 @@ panel_toplevel_class_init (PanelToplevelClass *klass)
 		g_param_spec_int (
 			"size",
 			_("Size"),
-			_("The height (or width when vertivcal) of the panel"),
+			_("The height (or width when vertical) of the panel"),
 			0,
 			G_MAXINT,
 			DEFAULT_SIZE,
