@@ -188,6 +188,17 @@ foobar_enter_notify (GtkWidget *widget,
 }
 
 static void
+foobar_search (GtkWidget *widget,
+	       gpointer   data)
+{
+	char *argv[2] = {"gnome-search-tool", NULL};
+
+	if (gnome_execute_async (g_get_home_dir (), 1, argv) < 0)
+		panel_error_dialog ("cannot_exec_gnome-search-tool",
+				    _("Cannot execute gnome-search-tool"));
+}
+
+static void
 append_actions_menu (GtkWidget *menu_bar)
 {
 	GtkWidget *menu, *item;
@@ -205,8 +216,20 @@ append_actions_menu (GtkWidget *menu_bar)
 			  G_CALLBACK (show_run_dialog), 0);
 	setup_internal_applet_drag (item, "RUN:NEW");
 
-	/* FIXME: search */
-	/* FIXME: shutdown or reboot */
+	if (panel_is_program_in_path  ("gnome-search-tool")) {
+		item = pixmap_menu_item_new (
+				_("Search for Files..."), "gnome-searchtool.png", FALSE);
+
+		gtk_tooltips_set_tip (panel_tooltips, item,
+				      _("Find files, folders, and documents "
+				        "on your computer"),
+				      NULL);
+
+		gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
+		g_signal_connect (item, "activate",
+				  G_CALLBACK (foobar_search), 0);
+	}
+
 
 	if (panel_is_program_in_path  ("xscreensaver")) {
 		item = pixmap_menu_item_new (_("Lock Display"), 
@@ -231,6 +254,8 @@ append_actions_menu (GtkWidget *menu_bar)
 	g_signal_connect (G_OBJECT (item), "activate",
 			  G_CALLBACK (panel_quit), 0);
 	setup_internal_applet_drag (item, "LOGOUT:NEW");
+
+	/* FIXME: shutdown or reboot */
 
 	item = gtk_menu_item_new_with_label (_("Actions"));
 	gtk_menu_item_set_submenu (GTK_MENU_ITEM (item), menu);
