@@ -1,3 +1,9 @@
+Fri May 17 21:14:16 2002  George Lebl <jirka@5z.com>
+
+	* gnome-run.c: when getting an iterator check the result of the
+	  function and don't continue if this is false.  this should
+	  fix #82082
+
 Fri May 17 14:50:21 2002  George Lebl <jirka@5z.com>
 
 	* menu.c: never add an icon to show twice, this should fix #71213

@@ -1007,7 +1007,15 @@ find_icon_timeout (gpointer data)
 	model = gtk_tree_view_get_model (GTK_TREE_VIEW (list));
 	path = gtk_tree_path_new_root ();
 	
-	gtk_tree_model_get_iter (model, &iter, path);
+	if (path == NULL ||
+	     ! gtk_tree_model_get_iter (model, &iter, path)) {
+		if (path != NULL)
+			gtk_tree_path_free (path);
+		unset_pixmap (pixmap);
+	
+		find_icon_timeout_id = 0;
+		return FALSE;
+	}
 
 	do {
 		gtk_tree_model_get_value (model, &iter,
@@ -1285,9 +1293,8 @@ selection_activated (GtkTreeView       *tree_view,
 	GtkTreeIter   iter;
 
 	model = gtk_tree_view_get_model (tree_view);
-	gtk_tree_model_get_iter (model, &iter, path);
-
-	launch_selected (model, &iter, dialog);
+	if (gtk_tree_model_get_iter (model, &iter, path))
+		launch_selected (model, &iter, dialog);
 
 	gtk_widget_destroy (dialog);
 }
