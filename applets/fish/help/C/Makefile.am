@@ -1,10 +1,9 @@
 fish_helpdir = $(datadir)/gnome/help/fish/C
 fish_help_DATA = \
 	index.html	\
-	topic.dat	\
-	$(figs)
+	topic.dat
 
-EXTRA_DIST = fish.sgml topic.dat index.html $(figs)
+EXTRA_DIST = fish.sgml topic.dat index.html
 
 all: index.html
 
