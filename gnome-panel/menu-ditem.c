@@ -450,7 +450,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	}
 
 	/* assume we are making a new file */
-	name = g_strdup (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_NAME));
+	name = g_strdup (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME));
 
 	validate_for_filename (name);
 
