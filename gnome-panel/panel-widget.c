@@ -1884,7 +1884,7 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 	g_return_val_if_fail(pos>=0,-1);
 
 	pos = panel_widget_find_empty_pos(panel,pos);
-	if(pos==1) return -1;
+	if(pos==-1) return -1;
 
 	/*this will get done on size allocate!*/
 	gtk_fixed_put(GTK_FIXED(panel->fixed),applet,0,0);
@@ -1916,7 +1916,7 @@ panel_widget_reparent (PanelWidget *old_panel,
 	g_return_val_if_fail(pos>=0,-1);
 
 	pos = panel_widget_find_empty_pos(new_panel,pos);
-	if(pos==1) return -1;
+	if(pos==-1) return -1;
 
 	/*remove from the old_panel*/
 	for(i=0;i<old_panel->size;i++)

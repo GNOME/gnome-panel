@@ -883,7 +883,10 @@ register_toy(GtkWidget *applet,
 
 	if(pos==PANEL_UNKNOWN_APPLET_POSITION)
 		pos = 0;
-	panel_widget_add(panelw, eventbox, pos);
+	/*FIXME: return an error and do cleanup if we can't add ...
+	  or make it go though all panels first before giving up*/
+	if(panel_widget_add(panelw, eventbox, pos)==-1)
+		return;
 
 	gtk_widget_show(applet);
 	gtk_widget_show(eventbox);

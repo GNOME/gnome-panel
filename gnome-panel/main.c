@@ -185,10 +185,8 @@ static void
 load_default_applets(void)
 {
 	queue_load_applet(MENU_ID, ".", PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
-	/* FIXME: this for some reason segfaults rather frequently*/
-	/*queue_load_applet(EXTERN_ID, "clock_applet",
+	queue_load_applet(EXTERN_ID, "clock_applet",
 			  PANEL_UNKNOWN_APPLET_POSITION,0,NULL);
-	*/
 }
 
 static void
