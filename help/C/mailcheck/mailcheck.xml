@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.1">
-  <!ENTITY manrevision "2.0">
-  <!ENTITY date "May 2002">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "August 2002">
   <!ENTITY applet "Inbox Monitor">
 ]>
 
@@ -14,6 +14,7 @@
   http://developer.gnome.org/projects/gdp
   Template version: 2.0 beta
   Template last modified Apr 11, 2002
+  
 -->
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
@@ -107,6 +108,17 @@
 		  </revdescription> 
 		</revision> 
 		<revision> 
+		  <revnumber>Inbox Monitor Applet Manual V2.0</revnumber> 
+		  <date>May 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision> 
+		<revision> 
 		  <revnumber>Mail Check Applet Manual, for GNOME 1.4</revnumber> 
 		  <date>November 2001</date> 
 		  <revdescription> 
@@ -154,7 +166,7 @@
 			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
-				<phrase>Shows &applet; applet. Contains a message.
+				<phrase>Shows &applet; applet. Displays a message.
 				</phrase> 
 			 </textobject> 
 		  </mediaobject> 
@@ -164,8 +176,7 @@
 	 <para>The <application>&applet;</application> applet checks your mail server at regular intervals 
 	 to determine if there is new mail in your mailbox. The applet displays a message to inform you 
 	 whether you have new mail. </para> 
-	 <para>To add <application>&applet;</application> to a panel, right-click on the panel to open the 
-		panel popup menu, then choose 
+	 <para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose 
 		<menuchoice> 
 		  <guimenu>Add to Panel</guimenu> 
 		  <guisubmenu>Internet</guisubmenu> 
@@ -186,12 +197,12 @@
 
   </sect1>
   
-<!-- ============= Customization ============================= -->
+<!-- ============= Preferences ============================= -->
 
   <sect1 id="mailcheck-prefs"> 
-	 <title>Settings</title> 
+	 <title>Preferences</title> 
 	 <para>To configure <application>&applet;</application>, right-click on the
-	 applet, then choose <guimenuitem>Preferences</guimenuitem> from the applet popup menu.</para> 
+	 applet, then choose <guimenuitem>Preferences</guimenuitem>.</para> 
 
 	 <sect2 id="mailcheck-mailcheck"> 
 	 
@@ -274,17 +285,21 @@
 			 <para>Select one of the following options from the drop-down list box to
 			 specify the type of mail server on which your mailbox resides:</para> 
 			 <itemizedlist>
-			 	<listitem><para><guilabel>Local mailspool</guilabel>: if your mailbox 
-			 	resides on a shared mail spool area on a local mail server.</para></listitem>
-			 	<listitem><para><guilabel>Local maildir</guilabel>: if your mailbox 
-			 	is set up as a <command>maildir</command> mailbox that resides in your 
-			 	local directory tree.</para></listitem>
-			 	<listitem><para><guilabel>Remote POP3-server</guilabel>: if your mailbox
-			 	resides on a remote Post Office Protocol 3 (POP3) mail server.</para></listitem>
-			 	<listitem><para><guilabel>Remote IMAP-server</guilabel>: if your mailbox
-			 	resides on a remote Internet Message Access Protocol (IMAP) server.</para></listitem>
+			 	<listitem><para><guilabel>Local mailspool</guilabel></para>
+			 	<para>If your mailbox resides on a shared mail spool area on a local mail server.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Local maildir</guilabel></para>
+			 	<para>If your mailbox is set up as a <command>maildir</command> mailbox that resides in your 
+			 	local directory tree.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Remote POP3-server</guilabel></para>
+			 	<para>If your mailbox resides on a remote Post Office Protocol 3 (POP3) mail server.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Remote IMAP-server</guilabel></para>
+			 	<para>If your mailbox resides on a remote Internet Message Access Protocol (IMAP) server.</para>
+			 	</listitem>
 			 </itemizedlist>
-			 <para>Default: <guilabel>Local mailspool</guilabel></para>
+			 <para>Default: <guilabel>Local mailspool</guilabel>.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 
@@ -293,7 +308,7 @@
 			 <para>If you select <guilabel>Local mailspool</guilabel> or
 			 <guilabel>Local maildir</guilabel> as your mailbox location, 
 			 use this field to specify the location to check for new messages.</para> 
-			 <para>Default: The default depends on the operating system.</para>
+			 <para>Default: depends on the operating system.</para>
 			 </listitem> 
 		  </varlistentry> 
 		  <varlistentry> 

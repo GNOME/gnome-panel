@@ -3,8 +3,8 @@
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
   <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "July 2002">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
   <!ENTITY applet "Workspace Switcher">
 
 ]>
@@ -14,6 +14,7 @@
   http://developer.gnome.org/projects/gdp
   Template version: 2.0 beta
   Template last modified Feb 12, 2002
+  
 -->
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
@@ -87,6 +88,15 @@
 		  </revdescription> 
 		</revision> 
 		<revision> 
+		  <revnumber>Workspace Switcher Applet Manual V2.1</revnumber> 
+		  <date>July 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
 		  <revnumber>Workspace Switcher Applet Manual V&manrevision;</revnumber> 
 		  <date>March 2002</date> 
 		  <revdescription> 
@@ -131,7 +141,7 @@
 				format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
-				<phrase>Screenshot of the Workspace Switcher applet.</phrase> 
+				<phrase>Shows Workspace Switcher applet. Contains a button for each workspace.</phrase> 
 			 </textobject> 
 		  </mediaobject> 
 		</screenshot> 
@@ -140,8 +150,9 @@
 	<para>The <application>&applet;</application> applet displays the workspaces that are on your GNOME desktop. 
 	A workspace is a discrete area on the desktop in which you can work. Every workspace on the desktop contains 
 	the same desktop background, the same panels, and the same menus. However, you can run different applications 
-	and open different windows in each workspace. You can display only one workspace at a time on your 
-	desktop but you can have windows open in other workspaces. </para>
+	and open different windows in each workspace. You can display only one workspace at a time but you can 
+	have windows open in other workspaces. </para>
+	
 	<para>By default, the <application>&applet;</application> applet displays a visual representation of the workspaces 
 	on the desktop, as shown in <xref linkend="workspacelist-fig"/>. The applet displays the application windows and dialogs 
 	that are open in a workspace. The applet highlights the background of the current workspace and the window that has focus. 
@@ -153,7 +164,8 @@
 	across the rows of the applet. 
 	In <xref linkend="workspacelist-fig"/> the applet is set up to display the workspaces in one row. 
 	See <xref linkend="workspacelist-prefs"/> for information about how to change the number of applet rows. </para>
-	<para>To add <application>&applet;</application> to a panel, right-click on the panel to open the panel popup menu, then choose 
+	
+	<para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose 
 	<menuchoice>
 	<guimenu>Add to Panel</guimenu> 
 	<guisubmenu>Utility</guisubmenu>
@@ -168,8 +180,12 @@
 	<title>To Navigate Workspaces</title>
 	<para>The background of the button in the applet that represents the current workspace is highlighted. To switch
 	to another workspace, click on the button that represents the new workspace. If you click on a specific window 
-	on the button that represents the new workspace, <application>&applet;</application> switches to the new workspace and gives focus to the window.
-	</para>
+	on a workspace button, <application>&applet;</application> switches to 
+	the new workspace and gives focus to the window. To return to your original workspace, click on the button
+	that represents the workspace in the <application>&applet;</application>.</para>
+	<para>When you switch to a different workspace, the content of the 
+	<application>Window List</application> applet changes to reflect the windows that are open in the new 
+	workspace.</para>
 	</sect2>
 	<sect2 id="workspacelist-move-window">
 	<title>To Move a Window From One Workspace to Another</title>
@@ -177,12 +193,11 @@
 	drag the window from the current workspace to the new workspace. </para>
 	</sect2>
   </sect1>
-<!-- ============= Customization ============================= -->
+<!-- ============= Preferences ============================= -->
   <sect1 id="workspacelist-prefs"> 
-	 <title>Settings</title> 
+	 <title>Preferences</title> 
 	 <para>To configure the <application>&applet;</application> applet, right-click 
-	 on the applet, then choose <guimenuitem>Preferences</guimenuitem> 
-	 from the applet popup menu. The <guilabel>Workspace Switcher Preferences</guilabel> dialog is displayed.</para>
+	 on the applet, then choose <guimenuitem>Preferences</guimenuitem>. </para>
 	 <variablelist>
 	 <varlistentry><term><guilabel>Show workspace names in the switcher</guilabel> </term>
 	 	<listitem>

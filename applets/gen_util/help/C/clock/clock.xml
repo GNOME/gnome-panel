@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.5.23">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "June 2002">
+  <!ENTITY appletversion "2.0.2">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
   <!ENTITY applet "Clock">
 ]>
 <!-- 
@@ -13,6 +13,7 @@
   http://developer.gnome.org/projects/gdp
   Template version: 2.0 beta
   Template last modified Feb 11, 2002
+  
 -->
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
@@ -78,22 +79,20 @@
            </othercredit>
 -->
 	 </authorgroup>
-<!-- According to GNU FDL, revision history is mandatory if you are -->
-<!-- modifying/reusing someone else's document.  If not, you can omit it. -->
-<!-- Remember to remove the &manrevision; entity from the revision entries other-->
-<!-- than the current revision. -->
-<!-- The revision numbering system for GNOME manuals is as follows: -->
-<!-- * the revision number consists of two components -->
-<!-- * the first component of the revision number reflects the release version of the GNOME desktop. -->
-<!-- * the second component of the revision number is a decimal unit that is incremented with each revision of the manual. -->
-<!-- For example, if the GNOME desktop release is V2.x, the first version of the manual that -->
-<!-- is written in that desktop timeframe is V2.0, the second version of the manual is V2.1, etc. -->
-<!-- When the desktop release version changes to V3.x, the revision number of the manual changes -->
-<!-- to V3.0, and so on. -->  
+  
 	 <revhistory>
 		<revision> 
 		  <revnumber>&applet; Applet Manual V&manrevision;</revnumber> 
 		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
+		  <revnumber>Clock Applet Manual V2.1</revnumber> 
+		  <date>June 2002</date> 
 		  <revdescription> 
 			 <para role="author">Sun Microsystems
 				<email>gdocteam@sun.com</email></para> 
@@ -161,9 +160,9 @@ date in a panel.
 
 <para>
 To add the <application>&applet;</application> applet to a panel, right-click 
-on the panel to open the panel menu, then choose
+on the panel, then choose
    <menuchoice>
-    <guimenu>Add to panel</guimenu>
+    <guimenu>Add to Panel</guimenu>
     <guisubmenu>Accessories</guisubmenu>
     <guimenuitem>Clock</guimenuitem>
    </menuchoice>.
@@ -200,8 +199,7 @@ system clock.
 	applet into an application perform the following steps:</para>
 	<orderedlist>
 		<listitem>
-			<para>Right-click on the <application>&applet;</application> applet
-			to open the applet popup menu.
+			<para>Right-click on the <application>&applet;</application> applet.
 			</para>
 		</listitem>
 		<listitem>
@@ -237,14 +235,13 @@ system clock.
 		</orderedlist>
 </sect1>
 
-<!-- ============= Settings ============================= -->
+<!-- ============= Preferences ============================= -->
 
 <sect1 id="clock-settings"> 
-<title>Settings</title> 
+<title>Preferences</title> 
 	<para>
-	To configure the <application>&applet;</application>, right-click
-	on the <application>&applet;</application> applet, then choose <guimenuitem>
-	Preferences</guimenuitem> from the applet popup menu. </para>
+	To configure <application>&applet;</application>, right-click
+	on the applet, then choose <guimenuitem>Preferences</guimenuitem>. </para>
 	
 	
 	<variablelist> 
@@ -255,11 +252,11 @@ system clock.
 			 <itemizedlist>
 			 <listitem>
 			 <para><guilabel>12 hour</guilabel></para>
-			 <para>Display time in the a.m./p.m. format.</para>
+			 <para>Display the time in the a.m./p.m. format.</para>
 			 </listitem>
 			 <listitem>
 			 <para><guilabel>24 hour</guilabel></para>
-			 <para>Display time in the 00.00 to 24.00 format.</para>
+			 <para>Display the time in the 00.00 to 24.00 format.</para>
 			 </listitem>
 			 <listitem>
 			 <para><guilabel>UNIX time</guilabel></para>
@@ -293,7 +290,7 @@ system clock.
 		  <varlistentry> 
 			 <term><guilabel>Use UTC</guilabel></term>
 			 <listitem> 
-			 <para>Select this option to display Universal Time, also known as Greenwich 
+			 <para>Select this option to display Universal Coordinated Time, also known as Greenwich 
 			 Mean Time, in the applet.</para> 
 			 <para>Default: unselected.</para> 
 			 </listitem> 

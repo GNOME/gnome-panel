@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "1.0">
-  <!ENTITY manrevision "2.1">
-  <!ENTITY date "July 2002">
+  <!ENTITY appletversion "2.0.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
   <!ENTITY applet "Window List">
 
 ]>
@@ -14,6 +14,7 @@
   http://developer.gnome.org/projects/gdp
   Template version: 2.0 beta
   Template last modified Feb 12, 2002
+  
 -->
 <!-- =============Document Header ============================= -->
 <article id="index" lang="en">
@@ -87,6 +88,15 @@
 		  </revdescription> 
 		</revision>
 		<revision> 
+		  <revnumber>Window List Applet Manual V2.1</revnumber> 
+		  <date>July 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
 		  <revnumber>Window List Applet Manual V2.0</revnumber> 
 		  <date>March 2002</date> 
 		  <revdescription> 
@@ -130,7 +140,7 @@
 			 <imageobject><imagedata fileref="figures/window_list_applet.png" format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
-				<phrase>Screenshot of the Window List applet.</phrase> 
+				<phrase>Shows Window List applet.</phrase> 
 			 </textobject> 
 		  </mediaobject> 
 		</screenshot> 
@@ -177,8 +187,7 @@
 	</tbody>
 	</tgroup>
 	</informaltable>
-	 <para>To add <application>&applet;</application> to a panel, right-click on the panel to open the 
-	 panel popup menu, then choose 
+	 <para>To add <application>&applet;</application> to a panel, right-click on the panel, then choose 
 		<menuchoice> 
 		  <guimenu>Add to Panel</guimenu> 
 		  <guisubmenu>Utility</guisubmenu> 
@@ -203,7 +212,7 @@
 			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
 			 </imageobject>
 			 <textobject> 
-				<phrase>Screenshot of the Window List applet with a button group open.</phrase> 
+				<phrase>Shows Window List applet with a button group open.</phrase> 
 			 </textobject> 
 		  </mediaobject> 
 		</screenshot> 
@@ -233,16 +242,16 @@
 	</listitem>
 	</itemizedlist>
   </sect1>
-<!-- ============= Customization ============================= -->
+<!-- ============= Preferences ============================= -->
   <sect1 id="windowlist-prefs"> 
-	 <title>Settings</title> 
-	 <para>To configure the <application>&applet;</application> applet, right-click 
-	 on the applet, then choose <guimenuitem>Preferences</guimenuitem> 
-	 from the applet popup menu. The <guilabel>Window List Preferences</guilabel> dialog is displayed.</para>
+	 <title>Preferences</title> 
+	 <para>To configure <application>&applet;</application>, right-click 
+	 on the applet, then choose <guimenuitem>Preferences</guimenuitem>. 
+	 </para>
 	 <variablelist>
 	 <varlistentry><term><guilabel>Window List content</guilabel> </term>
 	 <listitem>
-	 <para>To specify which windows to display in the <application>&applet;</application> applet, select one of the following options: </para>
+	 <para>To specify which windows to display in <application>&applet;</application>, select one of the following options: </para>
 	 	<itemizedlist>
 	 	<listitem>
 	 	<para><guilabel>Show windows from current workspace</guilabel></para>
@@ -252,12 +261,12 @@
 	 	<para>Select this option to show the windows that are open in all workspaces.</para>
 	 	</listitem>
 	 	</itemizedlist>
-	 <para>Default: <guilabel>Show windows from current workspace</guilabel></para>
+	 <para>Default: <guilabel>Show windows from current workspace</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>When restoring minimized windows</guilabel> </term>
 	 <listitem>
-	 <para>To define how the applet behaves when you restore windows, select one of the following options: </para>
+	 <para>To define how <application>&applet;</application> behaves when you restore windows, select one of the following options: </para>
 	 	<itemizedlist>
 	 	<listitem>
 	 	<para><guilabel>Restore to current workspace</guilabel></para>
@@ -270,7 +279,7 @@
 	 	</listitem>
 	 	</itemizedlist>
 
-	 <para>Default: <guilabel>Restore to current workspace</guilabel></para>
+	 <para>Default: <guilabel>Restore to current workspace</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
 	 <varlistentry><term><guilabel>Window grouping</guilabel> </term>
@@ -294,7 +303,7 @@
 	 <para>Default: <guilabel>Group windows when space is limited</guilabel>.</para>
 	 </listitem>
 	 </varlistentry>
-	 <varlistentry><term><guilabel>Tasklist size</guilabel> </term>
+	 <varlistentry><term><guilabel>Window List size</guilabel> </term>
 	 <listitem>
 	 <para>The size of the <application>&applet;</application> applet varies depending on the size of the panel in 
 	 which the applet resides. Use the following spin boxes to set limitations on the size of the applet:</para>
