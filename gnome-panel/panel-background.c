@@ -202,6 +202,9 @@ composite_image_onto_desktop (PanelBackground *background)
 	if (!background->desktop)
 		background->desktop = get_desktop_pixbuf (background);
 
+	if (!background->desktop)
+		return NULL;
+
 	retval = gdk_pixbuf_copy (background->desktop);
 
 	width  = gdk_pixbuf_get_width  (background->desktop);
@@ -230,6 +233,9 @@ composite_color_onto_desktop (PanelBackground *background)
 
 	if (!background->desktop)
 		background->desktop = get_desktop_pixbuf (background);
+
+	if (!background->desktop)
+		return NULL;
 
 	color = ((background->color.gdk.red & 0xff00) << 8) +
 		 (background->color.gdk.green & 0xff00) +
@@ -531,6 +537,8 @@ void
 panel_background_set_pango_color (PanelBackground *background,
 				  PangoColor      *pango_color)
 {
+	g_return_if_fail (pango_color != NULL);
+
 	if (background->color.gdk.red   == pango_color->red &&
 	    background->color.gdk.green == pango_color->green &&
 	    background->color.gdk.blue  == pango_color->blue)
@@ -566,6 +574,8 @@ panel_background_set_color (PanelBackground *background,
 			    PanelColor      *color)
 {
 	PangoColor pango_color;
+
+	g_return_if_fail (color != NULL);
 
 	pango_color.red   = color->gdk.red;
 	pango_color.green = color->gdk.green;
@@ -675,6 +685,8 @@ panel_background_set_default_style (PanelBackground *background,
 				    GdkColor        *color,
 				    GdkPixmap       *pixmap)
 {
+	g_return_if_fail (color != NULL);
+
 	background->default_color = *color;
 
 	if (pixmap)
@@ -693,6 +705,8 @@ void
 panel_background_realized (PanelBackground *background,
 			   GdkWindow       *window)
 {
+	g_return_if_fail (window != NULL);
+
 	if (background->window && background->colormap && background->gc)
 		return;
 

@@ -1,3 +1,14 @@
+Fri Aug 22 09:50:19 2003  George Lebl <jirka@5z.com>
+
+	* panel-applet-frame.c: fix a couple of possible
+	  warnings about strings being NULL since the
+	  background string can possibly be NULL.  While
+	  investigating #120372
+
+	* panel-background.c: the background->desktop can possibly
+	  be NULL, so catch that gracefully.  Also add a few
+	  preconditions.
+
 Thu Aug 21 13:54:17 2003  George Lebl <jirka@5z.com>
 
 	* panel-compatibility.c: fixing RH #102790, "panel gnomes stole my

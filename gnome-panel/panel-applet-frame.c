@@ -403,11 +403,13 @@ panel_applet_frame_change_background (PanelAppletFrame    *frame,
 	bg_str = panel_applet_frame_get_background_string (
 			frame, PANEL_WIDGET (GTK_WIDGET (frame)->parent), type);
 
-	bonobo_pbclient_set_string (frame->priv->property_bag,
-				    PROPERTY_BACKGROUND,
-				    bg_str, NULL);
+	if (bg_str != NULL) {
+		bonobo_pbclient_set_string (frame->priv->property_bag,
+					    PROPERTY_BACKGROUND,
+					    bg_str, NULL);
 
-	g_free (bg_str);
+		g_free (bg_str);
+	}
 }
 
 void
@@ -1046,6 +1048,9 @@ panel_applet_frame_construct_moniker (PanelAppletFrame *frame,
 
 	bg_str = panel_applet_frame_get_background_string (
 				frame, panel, panel->background.type);
+
+	if (bg_str == NULL)
+		bg_str = g_strdup ("");
 
 	retval = g_strdup_printf (
 			"%s!prefs_key=/apps/panel/profiles/%s/applets/%s/prefs;"
