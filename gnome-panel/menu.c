@@ -406,7 +406,7 @@ fake_mapped_fake(GtkWidget *w, FakeIcon *fake)
 static GtkWidget *
 fake_pixmap_from_fake(FakeIcon *fake)
 {
-	fake->fake = gtk_label_new("X");
+	fake->fake = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	gtk_widget_show(fake->fake);
 	gtk_signal_connect(GTK_OBJECT(fake->fake), "map",
 			   GTK_SIGNAL_FUNC(fake_mapped_fake),
