@@ -1089,7 +1089,8 @@ setup_full_menuitem_with_size (GtkWidget *menuitem, GtkWidget *pixmap,
 					      icon_size - 4);
 
 		gtk_box_pack_start (GTK_BOX (hbox), align, FALSE, FALSE, 0);
-	}
+	} else if(pixmap)
+		gtk_widget_destroy(pixmap);
 
 	if(global_config.show_small_icons ||
 	   global_config.show_dot_buttons)
@@ -1778,11 +1779,13 @@ create_menuitem(GtkWidget *menu,
 	}
 
 	pixmap = NULL;
-	if (fr->icon && g_file_exists (fr->icon)) {
-		pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
-							    size, size);
-		if (pixmap)
-			gtk_widget_show (pixmap);
+	if (global_config.show_small_icons) {
+		if (fr->icon && g_file_exists (fr->icon)) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, fr->icon,
+								    size, size);
+			if (pixmap)
+				gtk_widget_show (pixmap);
+		}
 	}
 
 	if(!sub && strstr(fr->name,"/applets/") &&  fr->goad_id) {
@@ -1915,13 +1918,15 @@ create_menu_at_fr (GtkWidget *menu,
 
 
 	pixmap = NULL;
-	if (pixmap_name) {
-		pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
-							    size, size);
-	}
-	if (!pixmap && gnome_folder && g_file_exists (gnome_folder)) {
-		pixmap = gnome_stock_pixmap_widget_at_size (NULL, gnome_folder,
-							    size, size);
+	if (global_config.show_small_icons) {
+		if (pixmap_name) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
+								    size, size);
+		}
+		if (!pixmap && gnome_folder && g_file_exists (gnome_folder)) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, gnome_folder,
+								    size, size);
+		}
 	}
 
 	if (pixmap)
@@ -2244,6 +2249,11 @@ setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 			   char *title, int icon_size)
 {
 	char *file;
+
+	if (!global_config.show_small_icons) {
+		setup_menuitem (menuitem, NULL, title);
+		return;
+	}
 	
 	file = gnome_pixmap_file (try_file);
 	if (!file) {
