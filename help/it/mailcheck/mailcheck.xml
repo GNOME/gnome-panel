@@ -1,0 +1,323 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "Settembre 2002">
+  <!ENTITY applet "Controllo posta">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="it">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manuale dell'applet &applet; V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet; V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Controllo posta V2.1</revnumber> 
+		  <date>Agosto 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Controllo posta V2.0</revnumber> 
+		  <date>Maggio 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Controllo posta, per GNOME 1.4</revnumber> 
+		  <date>Novembre 2001</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Controllo posta, per GNOME 1.2</revnumber> 
+		  <date>Aprile 2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> Questo manuale descrive la versione &appletversion; di &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Commenti</title>
+		<para> Per segnalare un problema o inviare suggerimenti sull'applet &applet; o su questo manuale, seguire le istruzioni presenti alla <ulink url="ghelp:gnome-feedback" type="help">Pagina di commenti su GNOME</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Controllo posta</primary> 
+  </indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"> 
+	 <title>Introduzione</title>
+	 <figure id="mailcheck-fig"> 
+		<title>Applet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Mostra l'applet &applet;. Visualizza un messaggio.
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para>L'applet <application>&applet;</application> controlla il server di posta ad intervalli regolari per determinare se vi sono messaggi nuovi nella casella postale dell'utente. Se sono presenti nuovi messaggi, l'applet visualizza un messaggio informativo. </para>
+	 <para>Per aggiungere <application>&applet;</application> a un pannello, fare clic con il pulsante destro del mouse sul pannello, quindi scegliere 
+	<menuchoice>
+	<guimenu>Aggiungi al pannello</guimenu> 
+	<guisubmenu>Internet</guisubmenu>
+	<guimenuitem>Controllo posta</guimenuitem>
+	</menuchoice>.</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"> 
+	 <title>Utilizzo</title>
+	 
+		<para>Per controllare sul server di posta se sono arrivati nuovi messaggi, fare clic con il pulsante destro del mouse sull'applet e scegliere <guimenuitem>Controlla la posta</guimenuitem>. L'applet <application>&applet;</application> contatta il server di posta per determinare se vi sono messaggi nuovi sul server.</para>
+		<para>&Egrave; anche possibile configurare <application>&applet;</application> perch&eacute; esegua un comando facendo clic sull'applet. Per maggiori informazioni a riguardo, vedere <xref linkend="mailcheck-mailcheck"/>.</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs"> 
+	 <title>Preferenze</title>
+	 <para>Per configurare <application>&applet;</application>, fare clic con il pulsante destro del mouse sull'applet, quindi scegliere <guimenuitem>Preferenze</guimenuitem>. </para>
+
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>Controllo della posta</title>
+			
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>Prima di ogni aggiornamento</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare questa opzione per eseguire un comando prima di controllare l'arrivo di nuovi messaggi. Digitare il comando nella casella di testo. Ad esempio, &egrave; possibile digitare il comando usato per avviare il software di connessione a Internet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>All'arrivo di nuovi messaggi</guilabel></term>
+			 <listitem>
+			 <para>Selezionare questa opzione per eseguire un comando quando sono presenti nuovi messaggi. Digitare il comando nella casella di testo. Ad esempio, digitare <command>fetchmail</command> per eseguire il programma <application>fetchmail</application> per richiamare la posta da un server remoto.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Al clic</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare questa opzione per eseguire un comando quando si fa clic sull'applet <application>&applet;</application>. Digitare il comando nella casella di testo. 
+			 Ad esempio, per aprire una finestra di <application>Netscape Messenger</application> facendo clic sull'applet, digitare <command>netscape -mail</command> nella casella di testo.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Imposta il numero di messaggi non letti su zero</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare questa opzione per azzerare il numero dei messaggi non letti facendo clic sull'applet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Controlla la posta ogni</guilabel></term> 
+			 <listitem>
+			 <para>Usare questa casella di selezione per specificare la frequenza con cui l'applet <application>&applet;</application> deve controllare il server di posta per determinare se vi sono nuovi messaggi. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Esegui un suono all'arrivo di nuovi messaggi</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare questa opzione per riprodurre un suono predefinito quando l'applet rileva la presenza di nuovi messaggi sul server di posta. Il file audio predefinito &egrave; specificato in
+			 <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename>. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Seleziona animazione</guilabel></term> 
+			 <listitem>
+			 <para>Usare questa casella di riepilogo per selezionare il tipo di visualizzazione da usare nell'applet. &Egrave; possibile visualizzare un testo, un'immagine o un'animazione.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"> 
+
+		<title>Casella postale</title>
+
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>La casella postale si trova in</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare una delle opzioni seguenti dalla casella di riepilogo per specificare il tipo di server su cui risiede la casella postale:</para>
+			 <itemizedlist>
+			 	<listitem><para><guilabel>Posta locale</guilabel></para>
+			 	<para> Se la casella postale risiede in un'area di spool condivisa su un server di posta locale.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Cartella di posta locale</guilabel>:</para>
+			 	<para> Se la casella postale viene configurata come <command>maildir</command> residente nell'albero di directory locale.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Server POP3 remoto</guilabel>:</para>
+			 	<para> Se la casella postale risiede su un server di posta remoto di tipo POP3 (Post Office Protocol 3).</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Server IMAP remoto</guilabel>:</para>
+			 	<para> Se la casella postale risiede su un server remoto IMAP (Internet Message Access Protocol).</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>File di spool della posta</guilabel></term> 
+			 <listitem>
+			 <para>Se viene selezionata l'opzione <guilabel>Posta locale</guilabel> o <guilabel>Cartella di posta locale</guilabel> come posizione per la casella postale, usare questo campo per specificare la posizione in cui controllare l'arrivo di nuovi messaggi.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Server di posta elettronica</guilabel></term> 
+			 <listitem>
+			 <para>Se si seleziona <guilabel>Server POP3 remoto</guilabel> o <guilabel>Server IMAP remoto</guilabel> come posizione per la casella postale, usare questa casella di testo per specificare il nome del server di posta remoto.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Nome utente</guilabel></term> 
+			 <listitem>
+			 <para>Se si seleziona <guilabel>Server POP3 remoto</guilabel> o <guilabel>Server IMAP remoto</guilabel> come posizione per la casella postale, usare questa casella di testo per specificare il nome utente con cui accedere al server di posta remoto.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Password</guilabel></term> 
+			 <listitem>
+			 <para>Se si seleziona <guilabel>Server POP3 remoto</guilabel> o <guilabel>Server IMAP remoto</guilabel> come posizione per la casella postale, usare questa casella di testo per specificare la password con cui accedere al server di posta remoto.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Cartella</guilabel></term> 
+			 <listitem>
+			 <para>Se si seleziona <guilabel>Server IMAP remoto</guilabel> come posizione per la casella postale, usare questa casella di testo per specificare la cartella del server che contiene la casella postale.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Comando da eseguire prima del controllo della posta</guilabel></term> 
+			 <listitem>
+			 <para>Se si seleziona <guilabel>Server POP3 remoto</guilabel> o <guilabel>Server IMAP remoto</guilabel> come posizione per la casella postale, usare questa casella di testo per specificare il comando da eseguire prima che l'applet <application>&applet;</application> controlli sul server di posta l'arrivo di nuovi messaggi.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>

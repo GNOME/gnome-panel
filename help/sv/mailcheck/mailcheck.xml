@@ -1,0 +1,281 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
+  <!ENTITY applet "Inbox Monitor">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="sv">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manual f&ouml;r panelprogrammet &applet;, version&nbsp;&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+  
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>Dokumentationsprojekt f&ouml;r GNOME</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Suns</firstname> 
+		  <surname>GNOME-dokumentationsteam</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>Dokumentationsprojekt f&ouml;r GNOME</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>Dokumentationsprojekt f&ouml;r GNOME</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet &applet;, version  &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam <email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision><revnumber>Manual f&ouml;r panelprogrammet Inkorgs&ouml;vervakaren, version 2.1</revnumber> 
+		  <date>Augusti 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam <email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision><revnumber>Manual f&ouml;r panelprogrammet Inkorgs&ouml;vervakaren, version 2.0</revnumber> 
+		  <date>Maj 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam <email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision><revnumber>Manual f&ouml;r E-postkontroll f&ouml;r GNOME 1.4</revnumber> <date>November 2001</date> <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision><revnumber>Manual f&ouml;r E-postkontroll f&ouml;r GNOME 1.2</revnumber> <date>April 2000</date> <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> I den h&auml;r manualen beskrivs version &appletversion; av &applet;.
+		</releaseinfo>
+	 <legalnotice><title>Feedback</title>
+		<para>F&ouml;lj instruktionerna p&aring; <ulink url="ghelp:gnome-feedback" type="help">GNOMEs feedbacksida</ulink> om du vill rapportera ett fel eller ge f&ouml;rslag betr&auml;ffande panelprogrammet &applet; eller den h&auml;r manualen. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm><primary>Inkorgs&ouml;vervakare</primary></indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"><title>Introduktion</title>
+	 <figure id="mailcheck-fig"><title>Panelprogrammet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Visar panelprogrammet &applet;. Visar ett meddelande.
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para>Panelprogrammet <application>&applet;</application> kontrollerar med regelbundna mellanrum din e-postserver f&ouml;r att se om du har f&aring;tt nya meddelanden. Om du har f&aring;tt ny e-post visas ett meddelande. </para>
+	 <para>H&ouml;gerklicka p&aring; en panel och v&auml;lj sedan <menuchoice><guimenu>L&auml;gg till p&aring; panelen</guimenu> <guisubmenu>Internet</guisubmenu> <guimenuitem>Inkorgs&ouml;vervakare</guimenuitem></menuchoice> om du vill l&auml;gga till <application>&applet;</application> p&aring; den.</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"><title> Anv&auml;ndning</title>
+	 
+		<para>H&ouml;gerklicka p&aring; panelprogrammet och v&auml;lj sedan <guimenuitem>Kolla efter e-post</guimenuitem> om du vill kontrollera om nya meddelanden har anl&auml;nt till e-postservern. <application>&applet;</application> kontaktar e-postservern f&ouml;r att kontrollera om du har f&aring;tt n&aring;gra nya meddelanden.</para>
+		<para>Du kan konfigurera <application>&applet;</application> s&aring; att ett kommando k&ouml;rs n&auml;r du klickar p&aring; panelprogrammet. Mer information om hur du konfigurerar <application>&applet;</application> f&ouml;r att k&ouml;ra kommandon finns i <xref linkend="mailcheck-mailcheck"/>.</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs"> <title>Inst&auml;llningar</title>
+	 <para>H&ouml;gerklicka p&aring; panelprogrammet <application>&applet;</application> och v&auml;lj sedan  <guimenuitem>Inst&auml;llningar</guimenuitem> om du vill &auml;ndra inst&auml;llningarna.</para>
+
+	 <sect2 id="mailcheck-mailcheck"> <title>E-postkontroll</title>
+			
+		<variablelist>
+		  <varlistentry><term><guilabel>F&ouml;re varje uppdatering</guilabel></term> 
+			 <listitem>
+			 <para>Markera det h&auml;r alternativet om du vill att ett kommando ska k&ouml;ras innan <application>&applet;</application> kontrollerar om det har kommit n&aring;gra nya meddelanden. Ange kommandot i textrutan. Du kan till exempel ange det kommando som anv&auml;nds f&ouml;r att ansluta till Internet-leverant&ouml;ren.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>N&auml;r ny e-post levereras</guilabel></term>
+			 <listitem>
+			 <para>Markera det h&auml;r alternativet om du vill att kommandot ska k&ouml;ras n&auml;r nya meddelanden uppt&auml;cks av <application>&applet;</application>. Ange kommandot i textrutan. Du kan till exempel ange <command>fetchmail</command> f&ouml;r att starta programmet med samma namn, som h&auml;mtar e-postmeddelanden fr&aring;n en fj&auml;rrserver.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Vid klick</guilabel></term> 
+			 <listitem>
+			 <para>Markera det h&auml;r alternativet om du vill att ett kommando ska k&ouml;ras n&auml;r du klickar p&aring; panelprogrammet <application>&applet;</application>. Ange kommandot i textrutan. 
+			Ange t&nbsp;ex <command>netscape -mail</command> i textrutan om du vill att ett <application>Netscape Messenger</application>-f&ouml;nster ska visas n&auml;r du klickar p&aring; panelprogrammet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Nollst&auml;ll antalet ol&auml;sta brev</guilabel></term> 
+			 <listitem>
+			 <para>Markera det h&auml;r alternativet om du vill nollst&auml;lla antalet ol&auml;sta meddelanden n&auml;r du klickar p&aring; panelprogrammet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Kolla efter e-post var</guilabel></term> 
+			 <listitem>
+			 <para>Anv&auml;nd den h&auml;r rotationsrutan om du vill ange hur ofta <application>&applet;</application> ska kontakta e-postservern f&ouml;r att se om det har kommit nya meddelanden. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Spela ett ljud n&auml;r ny e-post ankommer</guilabel></term> 
+			 <listitem>
+			 <para>Markera det h&auml;r alternativet om du vill att ett standardljud ska spelas upp n&auml;r panelprogrammet uppt&auml;cker nya meddelanden p&aring; e-postservern. Standardljudfilen anges i <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename>. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>V&auml;lj animation</guilabel></term> 
+			 <listitem>
+			 <para>Anv&auml;nd den h&auml;r listrutan om du vill ange hur panelprogrammet ska se ut. Du kan visa text, en bild eller en animation.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"><title>Brevl&aring;da</title>
+
+		<variablelist>
+		  <varlistentry><term><guilabel>Brevl&aring;dan finns p&aring;</guilabel></term> 
+			 <listitem>
+			 <para>Markera n&aring;got av f&ouml;ljande alternativ i listrutan f&ouml;r att ange vilken typ av e-postserver din brevl&aring;da finns p&aring;:</para>
+			 <itemizedlist>
+			 	<listitem><para><guilabel>Lokal brevl&aring;da</guilabel></para>
+			 	<para>Om din brevl&aring;da ing&aring;r i en delad brevl&aring;da (mail spool) p&aring; en lokal e-postserver.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Lokal e-postkatalog</guilabel>:</para>
+			 	<para>Om din brevl&aring;da har konfigurerats som en <command>maildir</command>-brevl&aring;da i det lokala katalogtr&auml;det.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>POP3-server</guilabel>:</para>
+			 	<para>Om din brevl&aring;da finns p&aring; en POP3-server (Post Office Protocol 3).</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>IMAP-server</guilabel>:</para>
+			 	<para>Om din brevl&aring;da finns p&aring; en IMAP-server (Internet Message Access Protocol).</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Postl&aring;defil (mail spool)</guilabel></term> 
+			 <listitem>
+			 <para>Ange varifr&aring;n nya meddelanden ska h&auml;mtas i det h&auml;r f&auml;ltet om du har markerat <guilabel>Lokal brevl&aring;da</guilabel> eller <guilabel>Lokal e-postkatalog</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> <term><guilabel>E-postserver</guilabel></term> 
+			 <listitem>
+			 <para>Ange namnet p&aring; fj&auml;rrservern som fungerar som e-postserver om du har markerat <guilabel>POP3-server</guilabel> eller <guilabel>IMAP-server</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Anv&auml;ndarnamn</guilabel></term> 
+			 <listitem>
+			 <para>Ange anv&auml;ndarnamnet som kr&auml;vs f&ouml;r att ansluta till e-postservern om du har markerat <guilabel>POP3-server</guilabel> eller <guilabel>IMAP-server</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>L&ouml;senord</guilabel></term> 
+			 <listitem>
+			 <para>Ange l&ouml;senordet som kr&auml;vs f&ouml;r att ansluta till e-postservern om du har markerat <guilabel>POP3-server</guilabel> eller <guilabel>IMAP-server</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry><term><guilabel>Mapp</guilabel></term> 
+			 <listitem>
+			 <para>Ange i vilken katalog p&aring; servern som din brevl&aring;da finns i det h&auml;r textf&auml;ltet om du har markerat <guilabel>POP3-server</guilabel> eller <guilabel>IMAP-server</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry>
+
+<term><guilabel>Kommando som ska k&ouml;ras innan kontroll av e-post</guilabel></term> 
+			 <listitem>
+			 <para>Du kan ange ett kommando som ska k&ouml;ras innan <application>&applet;</application> h&auml;mtar nya meddelanden fr&aring;n e-postservern i den h&auml;r textrutan om du har markerat <guilabel>POP3-server</guilabel> eller <guilabel>IMAP-server</guilabel> som brevl&aring;deplats.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>

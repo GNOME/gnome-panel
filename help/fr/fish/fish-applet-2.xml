@@ -1,0 +1,202 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.5.17">
+  <!ENTITY manrevision "2.1">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Fish">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Mar 12, 2002
+  
+-->
+
+<article id="index" lang="fr">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Manuel de l'applet V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Telsa Gwynne</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+
+	 <publisher> 
+		<publishername>Projet de documentation GNOME</publishername> 
+	 </publisher> 
+
+&legal;
+
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun</firstname> 
+		  <surname>&Eacute;quipe de documentation GNOME</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>Projet de documentation GNOME</orgname> 
+			 <address> <email>hobbit@aloss.ukuu.org.uk</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manuel de l'applet &applet; V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">&Eacute;quipe de documentation Sun GNOME
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Poisson V2.0</revnumber> 
+		  <date>Mai 2002</date> 
+		  <revdescription> 
+			 <para role="author">&Eacute;quipe de documentation Sun GNOME
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Poisson</revnumber> 
+		  <date>2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>hobbit@aloss.ukuu.org.uk</email></para>
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>Le pr&eacute;sent manuel d&eacute;crit la version &appletversion; de &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Votre avis</title>
+		<para>Pour signaler un probl&egrave;me ou faire une suggestion concernant l'applet &applet; ou le pr&eacute;sent manuel, proc&eacute;dez comme indiqu&eacute; &agrave; la <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Poisson</primary> 
+  </indexterm> 
+
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+<sect1 id="fish-introduction">
+<title>Introduction</title>
+<!-- ==== Figure ============================================= -->
+	 <figure id="fish-fig"> 
+		<title>Applet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/fish_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Affiche l'applet Poisson.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+<para>L'applet <application>&applet;</application> affiche une image anim&eacute;e dans un tableau de bord. </para>
+<para>Pour ajouter <application>&applet;</application> &agrave; un tableau de bord, cliquez avec le bouton droit sur celui-ci, puis s&eacute;lectionnez <menuchoice>
+	<guimenu>Ajouter au tableau de bord</guimenu>
+	<guisubmenu>Divertissements</guisubmenu>
+	<guimenuitem>Poisson</guimenuitem>
+	</menuchoice>.</para>
+</sect1>
+
+<sect1 id="fish-usage">
+<title>Utilisation</title>
+<para>L'applet permet d'afficher la bo&icirc;te de dialogue <guilabel>Wanda le poisson</guilabel>. Cette bo&icirc;te de dialogue affiche un biscuit chinois. Vous pouvez configurer l'applet pour que la commande d&eacute;marre lorsque vous cliquez sur celle-ci. Consultez <xref linkend="fish-settings"/> pour plus d'informations.</para>
+</sect1>
+
+<!-- ============= Preferences  ================================ -->
+<sect1 id="fish-settings">
+<title>Pr&eacute;f&eacute;rences</title>
+<para>Pour configurer <application>&applet;</application>, cliquez avec le bouton droit sur l'applet <application>
+&applet;</application>, puis s&eacute;lectionnez <guimenu>Pr&eacute;f&eacute;rences</guimenu>. </para>
+<variablelist>
+<varlistentry>
+<term><guilabel>Nom du poisson GNOME</guilabel> </term>
+<listitem>
+<para>Cette zone de texte permet de sp&eacute;cifier le nom du poisson.</para>
+<para>Par d&eacute;faut : Wanda.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Nom du fichier d'animation</guilabel> </term>
+<listitem>
+<para>Ce champ permet de s&eacute;lectionner l'image &agrave; afficher dans l'applet. Vous pouvez choisir une image fournie avec l'applet ou une image personnelle.</para>
+<para>Par d&eacute;faut : <filename>fish/fishanim.png</filename>.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Commande &eacute; ex&eacute;cuter quand le poisson est cliqu&eacute;</guilabel> </term>
+<listitem>
+<para>Par d&eacute;faut, <application>&applet;</application> ex&eacute;cute la commande "fortune" lorsque vous cliquez sur l'applet. Cette zone de texte permet de sp&eacute;cifier une autre commande &agrave; ex&eacute;cuter. </para>
+<para>Par d&eacute;faut : fortune.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Images dans l'animation</guilabel> </term>
+<listitem>
+<para>Cette zone de s&eacute;lection num&eacute;rique permet de sp&eacute;cifier le nombre d'images de l'animation. </para>
+<para>Par d&eacute;faut : 3.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Pause par image</guilabel> </term>
+<listitem>
+<para>Cette zone de s&eacute;lection num&eacute;rique permet de sp&eacute;cifier la pause en secondes entre chaque image de l'animation.</para>
+<para>Par d&eacute;faut : 1.00.</para>
+</listitem>
+</varlistentry>
+<varlistentry>
+<term><guilabel>Tourner dans les tableaux de bord verticaux</guilabel> </term>
+<listitem>
+<para>Cette option permet de faire pivoter l'image de l'applet lorsque celle-ci est ajout&eacute;e &agrave; un tableau de bord vertical.</para>
+<para>Par d&eacute;faut : s&eacute;lectionn&eacute;e.</para>
+</listitem>
+</varlistentry>
+</variablelist>
+</sect1>
+</article>
+

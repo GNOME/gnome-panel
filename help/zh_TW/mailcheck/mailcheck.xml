@@ -1,0 +1,316 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
+  <!ENTITY applet "Inbox Monitor">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="zh_tw">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet 手冊 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>GNOME 文件專案</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME 文件小組</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>GNOME 文件專案</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME 文件專案</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet 手冊 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>收件匣監視器 Applet 手冊 V2.1</revnumber> 
+		  <date>2002 年 8 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>收件匣監視器 Applet 手冊 V2.0</revnumber> 
+		  <date>2002 年 5 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME 文件小組
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>郵件檢查 Applet 手冊，適用於 GNOME 1.4</revnumber> 
+		  <date>2001 年 11 月</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>郵件檢查 Applet 手冊，適用於 GNOME 1.2</revnumber> 
+		  <date>2000 年 4 月</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME 文件專案</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> 本手冊的內容是說明 &appletversion; 版的 &applet;。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>回饋</title>
+		<para>關於 &applet; applet 或本手冊，如果要報告錯誤或是提出建議，請遵照 <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink> 的指示。 </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>收件匣監視器</primary> 
+  </indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"> 
+	 <title>介紹</title>
+	 <figure id="mailcheck-fig"> 
+		<title>&applet; Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>顯示 &applet; applet。 顯示訊息。
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para> <application>&applet;</application> applet 會定期檢查您的郵件伺服器，查看信箱中是否有新郵件。 本 applet 會顯示訊息，通知您 是否有新郵件。 </para>
+	 <para>如果要將 <application>&applet;</application> 加入面板，請在面板上按滑鼠右鍵，然後選擇 <menuchoice><guimenu>加入面板</guimenu><guisubmenu>網際網路</guisubmenu><guimenuitem>Inbox Monitor</guimenuitem></menuchoice>。</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"> 
+	 <title>使用</title>
+	 
+		<para>如果要檢查郵件伺服器有無新郵件，請在 applet 上按滑鼠右鍵，然後選擇 <guimenuitem>檢查郵件</guimenuitem>。<application>&applet;</application> 會與郵件伺服器連線，查看伺服器中是否有新郵件。</para>
+		<para>您可以將 <application>&applet;</application> 配置為當您在 applet 上按一下時，就執行指令。 請參閱<xref linkend="mailcheck-mailcheck"/>，以便獲得如何將 <application>&applet;</application> 配置為執行指令的相關資訊。</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs"> 
+	 <title>個人喜好</title>
+	 <para>如果要配置 <application>&applet;</application>，請在 applet 上按滑鼠右鍵，然後選擇<guimenuitem>個人喜好</guimenuitem>。</para>
+
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>郵件檢查</title>
+			
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>在每次更新之前</guilabel></term> 
+			 <listitem>
+			 <para>在 <application>&applet;</application> 檢查有無新郵件之前，請先選取這個選項來執行指令。 請在所顯示的文字方塊中鍵入指令。 例如，請鍵入指令，以便執行您的撥號軟體，與網際網路連線。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>當新郵件到達時</guilabel></term>
+			 <listitem>
+			 <para>如果想要在 <application>&applet;</application> 偵測到新郵件時執行某個指令，請選取這個選項。 請在所顯示的文字方塊中鍵入指令。 例如，請鍵入 <command>fetchmail</command> 來執行 <application>fetchmail</application> 程式，從遠端郵件伺服器取回郵件。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>當按一下滑鼠時</guilabel></term> 
+			 <listitem>
+			 <para>如果想要在按一下 <application>&applet;</application> applet 時執行某個指令，請選取這個選項。 請在所顯示的文字方塊中鍵入指令。例如，如果要在您按一下 applet 時，啟動 <application>Netscape Messenger</application> 視窗，請在文字方塊中鍵入 <command>netscape -mail</command>。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>將未讀取郵件的數目設定為零</guilabel></term> 
+			 <listitem>
+			 <para>選取這個選項，在您按一下 applet 時，程式便會將未讀取郵件的數目設定為零。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>檢查郵件的時間間隔</guilabel></term> 
+			 <listitem>
+			 <para>請使用這個旋轉方塊，指定 <application>&applet;</application>查看郵件伺服器是否有新郵件的間隔時間。 </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>在新郵件到達時播放聲音</guilabel></term> 
+			 <listitem>
+			 <para>選取這個選項，applet 會在發現郵件伺服器中有新郵件時，播放預設的聲音。 預設的聲音檔案，是在<filename>$prefix/etc/sound/events/mailcheck. soundlist</filename> 中所指定。 </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>選擇動畫</guilabel></term> 
+			 <listitem>
+			 <para>請使用這個下拉式清單方塊，選取 applet 中所使用的顯示類型。 您可以顯示文字、影像或動畫。</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"> 
+
+		<title>信箱</title>
+
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>信箱常駐位置</guilabel></term> 
+			 <listitem>
+			 <para>請從下拉式清單方塊中，選取下列任一項選項，指定您信箱常駐的郵件伺服器類型：</para>
+			 <itemizedlist>
+			 	<listitem><para><guilabel>本機郵件排存</guilabel></para>
+			 	<para>如果您的信箱是常駐在本機郵件伺服器的共用郵件排存區中。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>本機 maildir</guilabel></para>
+			 	<para>如果您的信箱是設定為常駐在本機目錄樹中的<command>maildir</command> 信箱中。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>遠端 POP3 伺服器</guilabel>：</para>
+			 	<para>如果您的信箱是常駐在遠端 Post Office Protocol 3 (POP3) 郵件伺服器上。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>遠端 IMAP 伺服器</guilabel>：</para>
+			 	<para>如果您的信箱是常駐在遠端網際網路郵件存取協定 (Internet Message Access Protoco，IMAP) 伺服器上。</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>郵件排存檔案</guilabel></term> 
+			 <listitem>
+			 <para>如果您選取了<guilabel>本機郵件排存</guilabel>或<guilabel>本機 maildir</guilabel>做為您的信箱位置，請使用這個欄位，指定檢查新郵件的位置。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>郵件伺服器</guilabel></term> 
+			 <listitem>
+			 <para>如果您選取了<guilabel>遠端 POP3 伺服器</guilabel>或<guilabel>遠端 IMAP 伺服器</guilabel>做為您的信箱位置，請使用這個文字方塊，指定遠端郵件伺服器的名稱。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>使用者名稱</guilabel></term> 
+			 <listitem>
+			 <para>如果您選取了<guilabel>遠端 POP3 伺服器</guilabel>或<guilabel>遠端 IMAP 伺服器</guilabel>做為您的信箱位置，請使用這個文字方塊，指定存取遠端郵件伺服器的使用者名稱。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>密碼</guilabel></term> 
+			 <listitem>
+			 <para>如果您選取了<guilabel>遠端 POP3 伺服器</guilabel>或 <guilabel>遠端 IMAP 伺服器</guilabel>做為您的信箱位置，請使用這個文字方塊，指定存取遠端郵件伺服器的密碼。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>資料夾</guilabel></term> 
+			 <listitem>
+			 <para>如果您選擇<guilabel>遠端 IMAP 伺服器</guilabel>做為您的信箱位置，請使用這個文字方塊，指定伺服器上含有您信箱的資料夾。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>在檢查郵件前執行的指令</guilabel></term> 
+			 <listitem>
+			 <para>如果您選擇<guilabel>遠端 POP3 伺服器</guilabel>或 <guilabel>遠端 IMAP 伺服器</guilabel>做為您的信箱位置請使用這個文字方塊，指定在 <application>&applet;</application>檢查郵件伺服器有無新郵件之前，所要執行的指令。</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>

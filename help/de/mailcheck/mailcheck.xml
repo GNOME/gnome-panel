@@ -1,0 +1,359 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
+  <!ENTITY applet "Inbox Monitor">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="de">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Applet-Handbuch V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>GNOME-Dokumentationsprojekt</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME-Dokumentationsteam</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>GNOME-Dokumentationsprojekt</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME-Dokumentationsprojekt</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; Applet-Handbuch V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>E-Mail-Eingangsmonitor-Applet-Handbuch V2.1</revnumber> 
+		  <date>August 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>E-Mail-Eingangsmonitor-Applet-Handbuch V2.0</revnumber> 
+		  <date>Mai 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME-Dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>E-Mail-Überpr&uuml;fung-Applet-Handbuch f&uuml;r GNOME 1.4</revnumber> 
+		  <date>November 2001</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>E-Mail-&Uuml;berpr&uuml;fung-Applet-Handbuch f&uuml;r GNOME 1.2</revnumber> 
+		  <date>April 2000</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME-Dokumentationsprojekt</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>In diesem Handbuch wird Version &appletversion; von &applet; beschrieben.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Feedback</title>
+		<para> Wenn Sie einen Programmfehler melden m&ouml;chten oder Vorschl&auml;ge zum Applet &applet; oder zu diesem Handbuch haben,
+		  folgen Sie den Anweisungen auf der
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>E-Mail-Eingangsmonitor</primary> 
+  </indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction">
+	 <title>Einf&uuml;hrung</title>
+	 <figure id="mailcheck-fig"> 
+		<title>&applet;-Applet</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Zeigt das &applet;-Applet an. Zeigt eine Meldung an.
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para>Das Applet <application>&applet;</application> pr&uuml;ft Ihren Mailserver in regelm&auml;&szlig;igen Abst&auml;nden  
+	 auf neue Nachrichten in Ihrer
+Mailbox. Sie werden vom Applet informiert, wenn Sie neue 	Nachrichten erhalten haben. </para>
+	 <para>Zum Hinzuf&uuml;gen von <application>&applet;</application> in ein Panel klicken Sie mit der rechten Maustaste auf das Panel, und w&auml;hlen Sie 
+		<menuchoice> 
+		  <guimenu>Zum Panel hinzuf&uuml;gen</guimenu> 
+		  <guisubmenu>Internet</guisubmenu> 
+		  <guimenuitem>E-Mail-Eingangsmonitor</guimenuitem> 
+		</menuchoice>.</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage">
+	 <title>Verwendung</title>
+	 
+		<para>Zum &Uuml;berpr&uuml;fen des Mailservers auf neue Nachrichten klicken Sie mit der rechten Maustaste auf das Applet, und w&auml;hlen Sie 
+		<guimenuitem>Auf E-Mails pr&uuml;fen</guimenuitem>. <application>&applet;</application> stellt eine Verbindung zum
+		Mailserver her und pr&uuml;ft nach, ob neue Nachrichten vorhanden sind.</para>
+		<para>Sie k&ouml;nnen <application>&applet;</application> so konfigurieren, dass ein Befehl ausgef&uuml;hrt wird, 
+		wenn Sie auf das Applet klicken. Unter <xref linkend="mailcheck-mailcheck"/> erfahren Sie, wie Sie
+		<application>&applet;</application> konfigurieren, damit es Befehle ausf&uuml;hrt.</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs"> 
+	 <title>Einstellungen</title>
+	 <para>Zur Konfiguration von <application>&applet;</application> klicken Sie mit der rechten Maustaste auf das 
+	 Applet, und w&auml;hlen Sie <guimenuitem>Einstellungen</guimenuitem>.</para>
+
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>E-Mail-Überpr&uuml;fung</title>
+			
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>Vor jeder Aktualisierung</guilabel></term> 
+			 <listitem>
+			 <para>W&auml;hlen Sie diese Option, wenn <application>&applet;</application>
+			 einen Befehl ausf&uuml;hren soll, bevor es den Server auf Nachrichten &uuml;berpr&uuml;ft. Geben Sie den Befehl im daf&uuml;r vorgesehenen Textfeld ein. Hier k&ouml;nnen Sie zum Beispiel einen 
+			 Befehl eingeben, der die Dialogsoftware ausf&uuml;hrt, &uuml;ber die Sie die Verbindung zum Internet herstellen.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Wenn neue Mail eintrifft</guilabel></term>
+			 <listitem>
+			 <para>W&auml;hlen Sie diese Option, wenn <application>&applet;</application>
+			 einen Befehl ausf&uuml;hren soll, sobald es neue Nachrichten vorfindet. Geben Sie den Befehl im daf&uuml;r vorgesehenen Textfeld ein. Hier k&ouml;nnen Sie zum Beispiel den Befehl 
+			 <command>fetchmail</command> eingeben, der das Programm <application>fetchmail</application> ausf&uuml;hrt.
+			 Das Programm ruft Nachrichten von einem entfernten Mailserver ab.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Wenn angeklickt</guilabel></term> 
+			 <listitem>
+			 <para>W&auml;hlen Sie diese Option, wenn ein Befehl ausgef&uuml;hrt werden soll, sobald Sie auf das  
+			 <application>&applet;</application> Applet klicken. Geben Sie den Befehl im daf&uuml;r vorgesehenen Textfeld ein. 
+			 Wenn beim Anklicken des Applets beispielsweise ein <application>Netscape Messenger</application>-Fenster ge&ouml;ffnet werden soll, 
+			 geben Sie den Befehl <command>netscape -mail</command> im Textfeld ein.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Anzahl der ungelesenen E-Mails auf Null setzen</guilabel></term> 
+			 <listitem>
+			 <para>W&auml;hlen Sie diese Option, wenn die Anzahl der ungelesenen Nachrichten auf null 
+			 gesetzt werden soll, sobald Sie auf das Applet klicken.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Nach E-Mail sehen alle</guilabel></term> 
+			 <listitem>
+			 <para>Geben Sie hier an, wie h&auml;ufig <application>&applet;</application>
+			 den Mailserver auf neue Nachrichten &uuml;berpr&uuml;fen soll. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Einen Ton abspielen, wenn neue Mail eintrifft</guilabel></term> 
+			 <listitem>
+			 <para>W&auml;hlen Sie diese Option, wenn bei einer neuen Nachricht 
+			auf dem Mailserver ein Standard-Signalton ausgegeben werden soll. Die Standard-Sounddatei ist unter
+			 <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename> angegeben. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Animationen ausw&auml;hlen</guilabel></term> 
+			 <listitem>
+			 <para>W&auml;hlen Sie in diesem aufklappbaren Listenfeld die Art der Anzeige 
+			im Applet. Sie k&ouml;nnen Text, ein Bild oder eine Animation anzeigen.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"> 
+
+		<title>Mailbox</title>
+
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>Die Mailbox befindet sich hier</guilabel></term> 
+			 <listitem>
+			 <para>Geben Sie mit den folgenden Optionen des aufklappbaren Listenfelds die
+			 Art des Mailservers an, auf dem sich Ihre Mailbox befindet:</para>
+			 <itemizedlist>
+			 	<listitem><para> <guilabel>Lokales Mail-Spoolverzeichnis</guilabel>:</para>
+			 	<para>Wenn sich Ihre Mailbox auf einem gemeinsam genutzten Mail-Spoolbereich auf einem lokalen Mailserver befindet.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Lokales Mail-Verzeichnis</guilabel></para>
+			 	<para>Wenn Ihre Mailbox als <command>Maildir</command>-Mailbox in 
+Ihrer 
+				lokalen Verzeichnisstruktur eingerichtet ist.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Entfernter POP3-Server</guilabel>:</para>
+			 	<para>Wenn sich Ihre Mailbox auf einem entfernten Post Office Protocol 3-(POP3-)Mailserver befindet.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Entfernter IMAP-Server</guilabel></para>
+			 	<para>Wenn sich Ihre Mailbox auf einem entfernten Internet Message Access Protocol-(IMAP-)Server befindet.</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Mail-Spooldatei</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Lokales Mail-Spoolverzeichnis</guilabel> oder
+			 <guilabel>Lokales Mail-Verzeichnis</guilabel> gew&auml;hlt haben, 
+			 geben Sie in diesem Feld das Verzeichnis an, in dem nach neuen Nachrichten gesucht werden soll.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Mail-Server</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Entfernter POP3-Server</guilabel> oder					<guilabel>Entfernter IMAP-Server</guilabel> gew&auml;hlt haben, 
+			geben Sie in diesem Feld den Namen des entfernten Mailservers ein.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Benutzername</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Entfernter POP3-Server</guilabel> oder
+		 <guilabel>Entfernter IMAP-Server</guilabel> gew&auml;hlt haben, 
+			geben Sie in diesem Feld den Benutzernamen ein, mit dem auf den entfernten Mailserver zugegriffen werden kann.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Passwort</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Entfernter POP3-Server</guilabel> oder
+			<guilabel>Entfernter IMAP-Server</guilabel> gew&auml;hlt haben, 
+			geben Sie in diesem Feld das Passwort ein, mit dem auf den entfernten Mailserver zugegriffen werden kann.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Ordner</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Entfernter IMAP-Server</guilabel> gew&auml;hlt haben, 
+			 geben Sie in diesem Feld den Ordner auf dem Server ein, 
+			 in dem sich Ihre Mailbox befindet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Auszuf&uuml;hrender Befehl bevor nach E-Mail gesehen wird</guilabel></term> 
+			 <listitem>
+			 <para>Wenn Sie als Mailboxverzeichnis <guilabel>Entfernter POP3-Server</guilabel> oder
+		 <guilabel>Entfernter IMAP-Server</guilabel> gew&auml;hlt haben, 
+			geben Sie in diesem Feld einen Befehl ein, der ausgef&uuml;hrt werden soll, bevor <application>&applet;</application> 
+			 den Mailserver auf neue Nachrichten &uuml;berpr&uuml;ft.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>
+

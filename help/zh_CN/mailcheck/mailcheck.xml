@@ -1,0 +1,317 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
+  <!ENTITY applet "Inbox Monitor">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="zh_cn">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; 小程序手册 V&manrevision;</title>
+	 <copyright> 
+		<year>2002</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>GNOME Documentation Project</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>GNOME Documentation Team</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>&applet; 小程序手册 V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>收件箱监视程序小程序手册 V2.1</revnumber> 
+		  <date>2002 年 8 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>收件箱监视程序小程序手册 V2.0</revnumber> 
+		  <date>2002 年 5 月</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>GNOME 1.4 的邮件检查小程序手册</revnumber> 
+		  <date>2001 年 11 月</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>GNOME 1.2 的邮件检查小程序手册</revnumber> 
+		  <date>2000 年 4 月</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> 本手册介绍 &applet; &appletversion; 版。
+		</releaseinfo>
+	 <legalnotice> 
+		<title>反馈</title>
+		<para>要报告关于 &applet; 小程序或本手册的错误或提出建议，请遵循 <ulink url="ghelp:gnome-feedback" type="help">GNOME 反馈页</ulink>中的指导。</para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>收件箱监视程序</primary> 
+  </indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"> 
+	 <title>简介</title>
+	 <figure id="mailcheck-fig"> 
+		<title>&applet; 小程序</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>显示 &applet; 小程序。显示一条消息。
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para><application>&applet;</application> 小程序以指定的时间间隔检查您的邮件服务器，以确定邮箱中是否有新邮件。 该小程序会显示一条消息，通知您是否有新邮件。</para>
+	 <para>要将 <application>&applet;</application> 添加到面板，请右击该面板，然后选择<menuchoice><guimenu>"添加到面板"</guimenu><guisubmenu>"Internet"</guisubmenu><guimenuitem>"收件箱监视程序"</guimenuitem></menuchoice>。</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"> 
+	 <title>用法</title>
+	 
+		<para>要检查邮件服务器以确定是否有新邮件，可右击该小程序，然后选择<guimenuitem>"监视邮件"</guimenuitem>。 <application>&applet;</application> 会与邮件服务器联系，确定服务器上是否有新邮件。</para>
+		<para>您可以将 <application>&applet;</application> 配置为在单击该小程序时会运行一条命令。有关如何配置 <application>&applet;</application> 以运行命令的信息，请参阅 <xref linkend="mailcheck-mailcheck"/>。</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs">   
+	 <title>首选项</title>
+	 <para>要配置 <application>&applet;</application>，请右击小程序，然后选择<guimenuitem>"首选项"</guimenuitem>。</para>
+
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>邮件检查</title>
+			
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>每次更新之前</guilabel></term> 
+			 <listitem>
+			 <para>选择此选项会在 <application>&applet;</application> 检查新邮件之前运行一条命令。在提供的文本框中键入命令。例如，键入用于运行连接到互联网的拨号软件的命令。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>有新邮件到达时</guilabel></term>
+			 <listitem>
+			 <para>选择此选项在 <application>&applet;</application> 检测到新邮件时运行一条命令。在提供的文本框中键入命令。例如，键入 <command>fetchmail</command>，以便运行 <application>fetchmail</application> 程序来检索远程邮件服务器的邮件。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>单击时</guilabel></term> 
+			 <listitem>
+			 <para>选择此选项会在您单击 <application>&applet;</application> 小程序时运行一条命令。在提供的文本框中键入命令。
+			例如，要在您单击小程序时启动 <application>Netscape Messenger</application> 窗口，可在文本框中键入 <command>netscape -mail</command>。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>将未读邮件数设置为零</guilabel></term> 
+			 <listitem>
+			 <para>选择此选项可以在单击该小程序时将未读邮件数设置为零。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>检查邮件的时间间隔</guilabel></term> 
+		 <listitem>
+			 <para>使用该旋转框可以指定 <application>&applet;</application> 多长时间检查一次邮件服务器以确定是否有新邮件。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>新邮件到达时播放声音</guilabel></term> 
+			 <listitem>
+			 <para>选择此选项，当小程序在邮件服务器上发现新邮件时会播放一段默认声音。默认声音文件在 <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename> 中指定。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>选择动画</guilabel></term> 
+			 <listitem>
+			 <para>使用此下拉菜单列表框可以选择在小程序中使用的显示类型。您可以显示文本、图像或动画。</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"> 
+
+		<title>邮箱</title>
+
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>邮箱位于</guilabel></term> 
+			 <listitem>
+			 <para>从下拉菜单列表框中选择以下其中一种选项，指定邮箱所在的邮件服务器的类型：</para>
+			 <itemizedlist>
+			 	<listitem><para><guilabel>本地 mailspool</guilabel></para>
+			 	<para>如果您的邮箱位于本地邮件服务器上的共享邮件缓冲池区域中，则选择此项。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>本地 maildir</guilabel></para>
+			 	<para>如果您的邮箱设置为位于本地目录树上的 <command>maildir</command> 邮箱，则选择此项。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>远程 POP3 服务器</guilabel></para>
+			 	<para>如果邮箱位于远程邮局协议 3 (Post Office Protocol 3,  POP3) 邮件服务器上，则选择此项。</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>远程 IMAP 服务器</guilabel></para>
+			 	<para>如果邮箱位于远程互联网消息访问协议 (Internet Message Access Protocol, IMAP) 服务器上，则选择此项。</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>邮件假脱机文件</guilabel></term> 
+			 <listitem>
+			 <para>如果您选择<guilabel>"本地 mailspool"</guilabel>或<guilabel>"本地 maildir"</guilabel>作为邮箱位置，则使用此字段可以指定检查新邮件的位置。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>邮件服务器</guilabel></term> 
+			 <listitem>
+			 <para>如果选择<guilabel>"远程 POP3 服务器"</guilabel>或<guilabel>"远程 IMAP 服务器"</guilabel>作为邮箱位置，使用此文本框可以指定远程邮件服务器的名称。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>用户名</guilabel></term> 
+			 <listitem>
+			 <para>如果选择<guilabel>"远程 POP3 服务器"</guilabel>或<guilabel>"远程 IMAP 服务器"</guilabel>作为邮箱位置，使用此文本框可以指定访问远程邮件服务器的用户名。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>口令</guilabel></term> 
+			 <listitem>
+			 <para>如果选择<guilabel>"远程 POP3 服务器"</guilabel>或<guilabel>"远程 IMAP 服务器"</guilabel>作为邮箱位置，使用此文本框可以指定访问远程邮件服务器的口令。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>文件夹</guilabel></term> 
+			 <listitem>
+			 <para>如果选择<guilabel>"远程 IMAP 服务器"</guilabel>作为邮箱位置，使用此文本框可以指定该服务器上包含您的邮箱的文件夹。</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>检查邮件之前运行的命令</guilabel></term> 
+			 <listitem>
+			 <para>如果选择<guilabel>"远程 POP3 服务器"</guilabel>或<guilabel>"远程 IMAP 服务器"</guilabel>作为您的邮箱位置，使用此文本框可以指定在 <application>&applet;</application> 检查邮件服务器查看新邮件之前运行的命令。</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>

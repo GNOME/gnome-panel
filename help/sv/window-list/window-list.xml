@@ -1,0 +1,324 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.0">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "August 2002">
+  <!ENTITY applet "Window List">
+
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 12, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="sv">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manual f&ouml;r panelprogrammet &applet;, version&nbsp;&manrevision;</title>
+	 <copyright> 
+		<year>2003</year> 
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2001</year> 
+		<holder>John Fleck</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+	 <publisher> 
+		<publishername> Dokumentationsprojekt f&ouml;r GNOME </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Suns</firstname> 
+		  <surname>GNOME-dokumentationsteam</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>John </firstname> 
+		  <surname>Fleck</surname> 
+		  <affiliation> 
+			 <orgname>Dokumentationsprojekt f&ouml;r GNOME</orgname> 
+			 <address> <email>jfleck@inkstain.net</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet &applet;, version &manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet F&ouml;nsterlista, version 2.1</revnumber> 
+		  <date>Juli 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet F&ouml;nsterlista, version 2.0</revnumber> 
+		  <date>Mars 2002</date> 
+		  <revdescription> 
+			 <para role="author">Suns GNOME-dokumentationsteam
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manual f&ouml;r panelprogrammet F&ouml;nsterlista</revnumber> 
+		  <date>2001</date> 
+		  <revdescription> 
+			 <para role="author">John Fleck
+				<email>jfleck@inkstain.net</email></para>
+			 <para role="publisher">Dokumentationsprojekt f&ouml;r GNOME</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> I den h&auml;r manualen beskrivs version &appletversion; av &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Feedback</title>
+		<para> Om du vill rapportera ett fel eller ge f&ouml;rslag om panelprogrammet &applet;
+		  eller den h&auml;r manualen f&ouml;ljer du instruktionerna p&aring; 
+		  <ulink url="ghelp:gnome-feedback" type="help">GNOME:s feedbacksida</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>F&ouml;nsterlista</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+  <sect1 id="windowlist-introduction"> 
+
+	 <title>Introduktion</title>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowlist-applet-fig"> 
+		<title>Panelprogrammet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_applet.png"  format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Visar panelprogrammet F&ouml;nsterlista.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    	<!-- ==== End of Figure ======================================= -->
+	 <para>Med panelprogrammet <application>&applet;</application> kan du hantera &ouml;ppna f&ouml;nster
+	 p&aring; GNOME-skrivbordet. I <application>&applet;</application> visas en knapp f&ouml;r varje &ouml;ppet
+	 f&ouml;nster eller &ouml;ppnad f&ouml;nstergrupp. Knapparnas tillst&aring;nd i
+	 panelprogrammet beror p&aring; tillst&aring;ndet f&ouml;r det f&ouml;nster som knappen representerar. F&ouml;ljande 
+	 tabell f&ouml;rklaras olika l&auml;gen f&ouml;r knappar i <application>&applet;</application>:</para>
+	<informaltable>
+	<tgroup cols="3">
+	<colspec colname="col1"/>
+	<colspec colname="col2"/>
+	<colspec colname="col3"/>
+	<thead>
+	<row valign="top">
+	<entry colname="col1"><para>Tillst&aring;nd</para></entry>
+	<entry colname="col2"><para>Indikerar&nbsp;...</para></entry>
+	<entry colname="col3"><para>Exempel i <xref linkend="windowlist-applet-fig"/></para></entry>
+	</row>
+	</thead>
+	<tbody>
+	<row valign="top">
+	<entry colname="col1"><para>Knappen &auml;r intryckt.</para></entry>
+	<entry colname="col2"><para>F&ouml;nstret har fokus.</para></entry>
+	<entry colname="col3"><para> <guibutton>gedit</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Hakparenteser runt f&ouml;nsternamnet och nedtonat knappinneh&aring;ll.</para></entry>
+	<entry colname="col2"><para>F&ouml;nstret &auml;r minimerat.</para></entry>
+	<entry colname="col3"><para><guibutton>Ordbok</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Knappen &auml;r inte intryckt och det finns inga hakparenteser runt f&ouml;nsternamnet.</para></entry>
+	<entry colname="col2"><para>F&ouml;nstret visas p&aring; skrivbordet och &auml;r inte minimerat.</para></entry>
+	<entry colname="col3"><para><guibutton>ghex</guibutton></para></entry>
+	</row>
+	<row valign="top">
+	<entry colname="col1"><para>Punktmarkerad triangul&auml;r figur i knappens &ouml;vre h&ouml;gra h&ouml;rn och en siffra inom parentes.</para></entry>
+	<entry colname="col2"><para>Knappen representerar en grupp med knappar. </para></entry>
+	<entry colname="col3"><para><guibutton>Gnome-terminal</guibutton></para></entry>
+	</row>
+	</tbody>
+	</tgroup>
+	</informaltable>
+	 <para>Du l&auml;gger till <application>&applet;</application> p&aring; en panel genom att h&ouml;gerklicka p&aring; panelen och v&auml;lja <menuchoice> 
+		<guimenu>L&auml;gg till p&aring; panelen</guimenu>
+		<guisubmenu>Verktyg</guisubmenu> 
+		<guimenuitem>F&ouml;nsterlista</guimenuitem>
+		</menuchoice>. 
+	Antalet rader som <application>&applet;</application> anv&auml;nder f&ouml;r att visa knapparna beror p&aring; storleken p&aring; den panel d&auml;r panelprogrammet finns.</para>
+	
+	<sect2 id="window-groups">
+	<title>Knappgruppering</title>
+	<para>Om utrymmet p&aring; en panel &auml;r begr&auml;nsat kan <application>&applet;</application> gruppera de knappar 
+	som representerar f&ouml;nster av samma klass i en <application>&applet;</application>-knapp. Om du vill &ouml;ppna en lista med knapparna i en knappgrupp klickar du p&aring; den
+	<application>&applet;</application>-knapp som representerar knappgruppen. Knappen 
+	<guibutton>Gnome-terminal</guibutton> i <xref linkend="windowlist-applet-fig"/> 
+	&auml;r ett exempel p&aring; en knapp som representerar en knappgrupp.
+	F&ouml;ljande bild visar ett exempel p&aring; panelprogrammet <application>&applet;</application> med en &ouml;ppnad knappgrupp.</para>
+	<!-- ==== Figure ============================================= -->
+	 <figure id="windowgroup-open-fig"> 
+		<title>Panelprogrammet &applet; med en &ouml;ppnad knappgrupp</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/window_list_group_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Visar panelprogrammet F&ouml;nsterlista med en &ouml;ppen knappgrupp.</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+ 
+	</sect2>
+  </sect1>
+<!-- ================ Usage ================================ -->
+  <sect1 id="windowlist-usage"> 
+	 <title>Anv&auml;ndning</title>
+	 <para>Du kan anv&auml;nda <application>&applet;</application> f&ouml;r att utf&ouml;ra f&ouml;ljande:</para>
+	<itemizedlist>
+	<listitem>
+	<para>Ge ett f&ouml;nster fokus</para>
+	<para>Om du klickar p&aring; den <application>&applet;</application>-knapp som representerar ett f&ouml;nster som visas p&aring; skrivbordet, men som 
+	inte har fokus, f&aring;r f&ouml;nstret fokus. </para>
+	</listitem>
+	<listitem>
+	<para>Minimera ett f&ouml;nster</para>
+	<para>Om du klickar p&aring; den <application>&applet;</application>-knapp som representerar det f&ouml;nster som har fokus minimeras 
+	f&ouml;nstret. </para>
+	</listitem>
+	<listitem>
+	<para>&Aring;terst&auml;lla ett minimerat f&ouml;nster</para>
+	<para>Om du klickar p&aring; den <application>&applet;</application>-knapp som representerar ett minimerat f&ouml;nster 
+	&aring;terst&auml;lls f&ouml;nstret.</para>
+	</listitem>
+	</itemizedlist>
+  </sect1>
+<!-- ============= Preferences ============================= -->
+  <sect1 id="windowlist-prefs"> 
+	 <title>Inst&auml;llningar</title>
+	 <para>Om du vill konfigurera <application>&applet;</application> h&ouml;gerklickar du p&aring; panelprogrammet och v&auml;ljer <guimenuitem>Inst&auml;llningar</guimenuitem>. 
+	 </para>
+	 <variablelist>
+	 <varlistentry><term><guilabel>Inneh&aring;ll i F&ouml;nsterlista</guilabel> </term>
+	 <listitem>
+	 <para>Markera n&aring;got av f&ouml;ljande alternativ f&ouml;r att ange vilka f&ouml;nster du vill visa i <application>&applet;</application>: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Visa f&ouml;nster fr&aring;n aktuell arbetsyta</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du endast vill visa &ouml;ppna f&ouml;nster fr&aring;n aktuell arbetsyta. </para>
+	 	</listitem>
+	 	<listitem><para><guilabel>Visa f&ouml;nster fr&aring;n alla arbetsytor</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du vill visa &ouml;ppna f&ouml;nster fr&aring;n alla arbetsytor. </para>
+	 	</listitem>
+	 	</itemizedlist>
+	 <para>Standard: <guilabel>Visa f&ouml;nster fr&aring;n aktuell arbetsyta</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Vid &aring;terst&auml;llning av minimerade f&ouml;nster</guilabel> </term>
+	 <listitem>
+	 <para>Markera n&aring;got av f&ouml;ljande alternativ f&ouml;r att ange vad som h&auml;nder i <application>&applet;</application> n&auml;r du &aring;terst&auml;ller f&ouml;nster: </para>
+	 	<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>&Aring;terst&auml;ll p&aring; aktuell arbetsyta</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du vill &aring;terst&auml;lla ett f&ouml;nster fr&aring;n panelprogrammet till  
+	 	den aktuella arbetsytan, &auml;ven om f&ouml;nstret inte tidigare fanns p&aring; den aktuella arbetsytan.</para>
+	 	</listitem>
+	 	<listitem><para><guilabel>&Aring;terst&auml;ll p&aring; ursprunglig arbetsyta</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du vill byta till f&ouml;nstrets ursprungliga arbetsyta n&auml;r du 
+	          &aring;terst&auml;ller f&ouml;nstret fr&aring;n panelprogrammet. </para>
+	 	</listitem>
+	 	</itemizedlist>
+
+	 <para>Standard: <guilabel>&Aring;terst&auml;ll p&aring; aktuell arbetsyta</guilabel></para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>F&ouml;nstergruppering</guilabel> </term>
+	 <listitem>
+	 <para>Markera n&aring;got av f&ouml;ljande alternativ f&ouml;r att ange n&auml;r  <application>&applet;</application> grupperar f&ouml;nster av samma klass: </para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Gruppera aldrig f&ouml;nster</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du aldrig vill gruppera f&ouml;nster under en <application>&applet;</application>-knapp. </para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Gruppera f&ouml;nster d&aring; utrymmet &auml;r begr&auml;nsat</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du vill gruppera f&ouml;nster av samma klass i en <application>&applet;</application>-knapp n&auml;r utrymmet 			p&aring; panelen &auml;r begr&auml;nsat.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Gruppera alltid f&ouml;nster</guilabel></para>
+	 	<para>Markera det h&auml;r alternativet om du alltid vill gruppera f&ouml;nster av samma klass under en <application>&applet;</application>-knapp. </para>
+		</listitem>
+		</itemizedlist>
+	 <para>Standard: <guilabel>Gruppera f&ouml;nster d&aring; utrymmet &auml;r begr&auml;nsat</guilabel>.</para>
+	 </listitem>
+	 </varlistentry>
+	 <varlistentry><term><guilabel>Storlek p&aring; F&ouml;nsterlista</guilabel> </term>
+	 <listitem>
+	 <para>Storleken p&aring; panelprogrammet <application>&applet;</application> varierar beroende p&aring; storleken p&aring; den panel d&auml;r 
+		panelprogrammet finns. Anv&auml;nd f&ouml;ljande i rotationsrutor om du vill begr&auml;nsa storleken p&aring; panelprogrammet:</para>
+		<itemizedlist>
+	 	<listitem>
+	 	<para><guilabel>Minsta storlek</guilabel></para>
+	 	<para>Ange minsta storlek p&aring; panelprogrammet. Om panelen &auml;r mindre &auml;n minsta angivna storlek justeras panelen
+	 	s&aring; att den passar panelprogrammet.</para>
+		<para>Standard: 50 bildpunkter.</para>
+		</listitem>
+	 	<listitem>
+	 	<para><guilabel>Maximal storlek</guilabel></para>
+	 	<para>Ange maximal storlek p&aring; panelprogrammet. </para>
+		<para>Standard: 4&nbsp;096 bildpunkter.</para>
+		</listitem>
+		</itemizedlist>
+	 </listitem>
+	 </varlistentry>
+	 </variablelist>
+  </sect1>
+
+</article>

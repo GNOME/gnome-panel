@@ -1,0 +1,285 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "2.0.2">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "Agosto 2002">
+  <!ENTITY applet "Orologio">
+]>
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Feb 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="it">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>Manuale dell'applet &applet; V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright> 
+	 <copyright> 
+		<year>2000</year> 
+		<holder>Dan Mueth</holder> 
+	 </copyright>
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername> GNOME Documentation Project </publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+		<author> 
+		  <firstname>Sun </firstname> 
+		  <surname>Microsystems</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Dan </firstname> 
+		  <surname> Mueth</surname> 
+		  <affiliation> 
+			 <orgname>GNOME Documentation Project</orgname> 
+			 <address> <email>d-mueth@uchicago.edu</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+           <othercredit role="translator">
+	     <firstname>Latin</firstname> 
+	     <surname>Translator 1</surname> 
+	     <affiliation> 
+	       <orgname>Latin Translation Team</orgname> 
+	       <address> <email>translator@gnome.org</email> </address> 
+	     </affiliation>
+	     <contrib>Latin translation</contrib>
+           </othercredit>
+-->
+	 </authorgroup>
+  
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet; V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Orologio V2.1</revnumber> 
+		  <date>Giugno 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet Orologio V2.0</revnumber> 
+		  <date>Marzo 2002</date> 
+		  <revdescription> 
+			 <para role="author">Sun Microsystems
+				<email>gdocteam@sun.com</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuale dell'applet &applet;</revnumber> 
+		  <date>Aprile 2000</date> 
+		  <revdescription> 
+			 <para role="author">Dan Mueth
+				<email>d-mueth@uchicago.edu</email></para>
+			 <para role="publisher">GNOME Documentation Project</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo> Questo manuale descrive la versione &appletversion; dell'applet &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Commenti</title>
+		<para> Per segnalare un problema o inviare suggerimenti sull'applet &applet; o su questo manuale, seguire le istruzioni presenti alla <ulink url="ghelp:gnome-feedback" type="help">Pagina di commenti su GNOME</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Orologio</primary> 
+  </indexterm> 
+<!-- ============= Document Body ============================= -->
+
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="clock-introduction">  
+	 <title>Introduzione</title>
+	 
+<!-- ==== Figure ============================================= -->
+	 <figure id="clock-fig"> 
+		<title>Applet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject><imagedata fileref="figures/clock_applet.png"  				format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Mostra l'applet &applet;. </phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+<para>
+L'applet <application>&applet;</application> visualizza l'ora e la data in un pannello. 
+</para>
+
+<para>Per aggiungere l'<application>&applet;</application> a un pannello, fare clic con il pulsante destro del mouse sul pannello, quindi scegliere 
+	<menuchoice>
+	<guimenu>Aggiungi al pannello</guimenu> 
+	<guisubmenu>Accessori</guisubmenu>
+	<guimenuitem>Orologio</guimenuitem>
+	</menuchoice>.
+</para>
+<para>
+Il menu popup dell'applet <application>&applet;</application> contiene le voci di menu standard e le seguenti voci aggiuntive:
+		<itemizedlist>
+			<listitem>
+				<para>
+				Copia ora
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+				Copia data
+				</para>
+			</listitem>
+		</itemizedlist>
+
+&Egrave; possibile usare queste voci di menu per inserire la data o l'ora in un'applicazione, ad esempio un editor di testo. 
+</para>
+</sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="clock-usage"> 
+	 <title>Utilizzo</title>
+<para>L'applet <application>&applet;</application> visualizza l'ora dell'orologio di sistema.
+</para>
+<para>
+	Per inserire l'ora o la data dell'applet <application>&applet;</application> 
+	in un'applicazione, procedere come segue:</para>
+	<orderedlist>
+		<listitem>
+			<para>Fare clic con il pulsante  destro del mouse sull'applet <application>&applet;</application>.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+Scegliere una delle voci di menu seguenti dal menu popup dell'applet:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+					<guilabel>Copia ora</guilabel>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+					<guilabel>Copia data</guilabel>
+					</para>
+				</listitem>
+			</itemizedlist>
+		</listitem>
+		<listitem>
+			<para>
+Spostare il puntatore nel punto in cui si desidera inserire la data o l'ora.
+			</para>
+		</listitem>
+		<listitem>
+			<para>
+Scegliere <menuchoice><guimenu>Modifica</guimenu><guimenuitem>Incolla</guimenuitem>
+			</menuchoice> o fare clic con il pulsante centrale del mouse per inserire la data o l'ora.
+			</para>
+		</listitem>
+		</orderedlist>
+</sect1>
+
+<!-- ============= Preferences ============================= -->
+
+<sect1 id="clock-settings">
+<title>Preferenze</title>
+	<para>Per configurare l'<application>&applet;</application>, fare clic con il pulsante destro del mouse sull'applet, quindi scegliere <guimenuitem>Preferenze</guimenuitem>. </para>
+	
+	
+	<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>Tipo di orologio</guilabel></term> 
+			 <listitem>
+			 <para>Selezionare una delle seguenti opzioni:</para>
+			 <itemizedlist>
+			 <listitem>
+			 <para><guilabel>12 ore</guilabel></para>
+			 <para>Visualizza l'ora nel formato a 12 ore (a.m./p.m). </para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>24 ore</guilabel></para>
+			 <para>Visualizza l'ora nel formato a 24 ore (00.00 - 24.00).</para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>Ora UNIX</guilabel></para>
+			 <para>Visualizza l'ora espressa come numero di secondi trascorsi dal primo gennaio 1970. 
+			 Questo formato si rivolge specificamente agli sviluppatori. </para>
+			 </listitem>
+			 <listitem>
+			 <para><guilabel>Ora di Internet</guilabel></para>
+			 <para>Visualizza nell'applet l'ora Internet. Questo formato adotta il Biel Mean Time (BMT) come riferimento universale ed &egrave; identico in tutto il mondo. 
+			L'ora di Internet permette a tutti gli utenti di Internet di sincronizzarsi su un orario comune.</para>
+			 </listitem>
+			 </itemizedlist>
+			 <para>Impostazione predefinita:  <guilabel>24 ore</guilabel>.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Mostra secondi</guilabel></term>
+			 <listitem>
+			 <para>Selezionare questa opzione per visualizzare i secondi nell'applet.</para>
+			 <para>Impostazione predefinita:  selezionato.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Mostra data</guilabel></term>
+			 <listitem>
+			 <para>Selezionare questa opzione per visualizzare la data nell'applet.</para>
+			 <para>Impostazione predefinita:  selezionato.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Utilizza GMT</guilabel></term>
+			 <listitem>
+			 <para>Selezionare questa opzione per visualizzare l'ora media del fuso di Greenwich (GMT) nell'applet.</para>
+			 <para>Impostazione predefinita:  non selezionato.</para>
+			 </listitem>
+		  </varlistentry>
+	</variablelist>		  
+	
+</sect1> 
+</article>

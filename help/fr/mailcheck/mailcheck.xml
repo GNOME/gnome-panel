@@ -1,0 +1,323 @@
+<?xml version="1.0"?><!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
+  <!ENTITY legal SYSTEM "legal.xml">
+  <!ENTITY appletversion "1.1">
+  <!ENTITY manrevision "2.2">
+  <!ENTITY date "September 2002">
+  <!ENTITY applet "Inbox Monitor">
+]>
+
+<!-- 
+      (Do not remove this comment block.)
+  Maintained by the GNOME Documentation Project
+  http://developer.gnome.org/projects/gdp
+  Template version: 2.0 beta
+  Template last modified Apr 11, 2002
+  
+-->
+<!-- =============Document Header ============================= -->
+<article id="index" lang="fr">
+<!-- please do not change the id; for translations, change lang to -->
+<!-- appropriate code -->
+  <articleinfo>
+	 <title>&applet; Manuel de l'applet V&manrevision;</title>
+	 <copyright> 
+		<year>2003</year>  
+		<holder>Sun Microsystems</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>
+		<year>2001</year>
+		<year>2002</year> 
+		<holder>Eric Baudais</holder> 
+	 </copyright>
+	 <copyright> 
+		<year>2000</year>  
+		<holder>Telsa Gwynne</holder> 
+	 </copyright> 
+<!-- translators: uncomment this:
+
+  <copyright>
+   <year>2002</year>
+   <holder>ME-THE-TRANSLATOR (Latin translation)</holder>
+  </copyright>
+
+   -->
+<!-- An address can be added to the publisher information.  If a role is 
+     not specified, the publisher/author is the same for all versions of the 
+     document.  -->
+	 <publisher> 
+		<publishername>Projet de documentation GNOME</publishername> 
+	 </publisher> 
+
+&legal;
+<!-- This file  contains link to license for the documentation (GNU FDL), and 
+     other legal stuff such as "NO WARRANTY" statement. Please do not change 
+     any of this. -->
+
+	 <authorgroup>
+	    <author> 
+		  <firstname>Sun</firstname> 
+		  <surname>&Eacute;quipe de documentation GNOME</surname> 
+		  <affiliation> 
+			 <orgname>Sun Microsystems</orgname> 
+			 <address> <email>gdocteam@sun.com</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Eric</firstname> 
+		  <surname>Baudais</surname> 
+		  <affiliation> 
+			 <orgname>Projet de documentation GNOME</orgname> 
+			 <address> <email>baudais@okstate.edu</email> </address>
+		  </affiliation>
+		</author>
+		<author> 
+		  <firstname>Telsa</firstname> 
+		  <surname>Gwynne</surname> 
+		  <affiliation> 
+			 <orgname>Projet de documentation GNOME</orgname> 
+			 <address> <email>telsa@linuxchix.org</email> </address>
+		  </affiliation>
+		</author>
+      <!-- This is appropriate place for other contributors: translators,
+           maintainers,  etc. Commented out by default.
+        <othercredit role="translator">
+	      <firstname>Latin</firstname> 
+	      <surname>Translator 1</surname> 
+	      <affiliation> 
+	      	<orgname>Latin Translation Team</orgname> 
+	       	<address> <email>translator@gnome.org</email> </address> 
+	      </affiliation>
+	      <contrib>Latin translation</contrib>
+        </othercredit>
+-->
+	 </authorgroup>
+
+	 <revhistory>
+		<revision> 
+		  <revnumber>Manuel de l'applet &applet; V&manrevision;</revnumber> 
+		  <date>&date;</date> 
+		  <revdescription> 
+			 <para role="author">&Eacute;quipe de documentation Sun GNOME
+				<email>gdocteam@sun.com</email></para>	 
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Moniteur de bo&icirc;te aux lettres V2.1</revnumber> 
+		  <date>Ao&ucirc;t 2002</date> 
+		  <revdescription> 
+			 <para role="author">&Eacute;quipe de documentation Sun GNOME
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Moniteur de bo&icirc;te aux lettres V2.0</revnumber> 
+		  <date>Mai 2002</date> 
+		  <revdescription> 
+			 <para role="author">&Eacute;quipe de documentation Sun GNOME
+				<email>gdocteam@sun.com</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Mail Check, pour GNOME 1.4</revnumber> 
+		  <date>Novembre 2001</date> 
+		  <revdescription> 
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+		<revision> 
+		  <revnumber>Manuel de l'applet Mail Check, pour GNOME 1.2</revnumber> 
+		  <date>Avril 2001</date> 
+		  <revdescription> 
+			 <para role="author">Telsa Gwynne
+				<email>telsa@linuxchix.org</email></para>
+			 <para role="author">Eric Baudais
+				<email>baudais@okstate.edu</email></para>	 
+			 <para role="publisher">Projet de documentation GNOME</para>
+		  </revdescription>
+		</revision>
+	 </revhistory>
+	 <releaseinfo>Le pr&eacute;sent manuel d&eacute;crit la version &appletversion; de &applet;.
+		</releaseinfo>
+	 <legalnotice> 
+		<title>Votre avis</title>
+		<para>Pour signaler un probl&egrave;me ou faire une suggestion concernant l'applet &applet; ou le pr&eacute;sent manuel, proc&eacute;dez comme indiqu&eacute; &agrave; la <ulink url="ghelp:gnome-feedback" type="help">GNOME Feedback Page</ulink>. </para>
+		
+	 </legalnotice>
+  </articleinfo>
+  <indexterm> 
+	 <primary>Moniteur de bo&icirc;te aux lettres</primary> 
+  </indexterm> 
+  
+<!-- ============= Document Body ============================= -->
+<!-- ============= Introduction ============================== -->
+
+  <sect1 id="mailcheck-introduction"> 
+	 <title>Introduction</title>
+	 <figure id="mailcheck-fig"> 
+		<title>Applet &applet;</title>
+		<screenshot>
+		  <mediaobject>
+			 <imageobject>
+			 <imagedata fileref="figures/mailcheck_applet.png" format="PNG"/> 
+			 </imageobject>
+			 <textobject>
+				<phrase>Affiche l'applet &applet;. Affiche un message.
+				</phrase>
+			 </textobject>
+		  </mediaobject>
+		</screenshot>
+	 </figure>
+    <!-- ==== End of Figure ======================================= -->
+	 <para>L'applet <application>&applet;</application> v&eacute;rifie votre serveur de courrier r&eacute;guli&egrave;rement pour d&eacute;terminer si de nouveaux messages vous attendent dans votre bo&icirc;te aux lettres. L'applet affiche un message pour vous informer des &eacute;ventuels nouveaux courriers. </para>
+	 <para>Pour ajouter <application>&applet;</application> &agrave; un tableau de bord, cliquez avec le bouton droit sur celui-ci, puis s&eacute;lectionnez 
+		<menuchoice> 
+		  <guimenu>Ajouter au tableau de bord</guimenu> 
+		  <guisubmenu>Internet</guisubmenu> 
+		  <guimenuitem>Moniteur de bo&icirc;te aux lettres</guimenuitem> 
+		</menuchoice>.</para>
+  </sect1>
+<!-- ================ Usage ================================ -->
+
+  <sect1 id="mailcheck-usage"> 
+	 <title>Utilisation</title>
+	 
+		<para>Pour rechercher les nouveaux messages sur le serveur de courrier, cliquez avec le bouton droit sur l'applet, puis s&eacute;lectionnez <guimenuitem>Rechercher le courrier</guimenuitem>. <application>&applet;</application> contacte le serveur de courrier pour savoir si de nouveaux messages sont arriv&eacute;s.</para>
+		<para>Vous pouvez configurer <application>&applet;</application> pour qu'il ex&eacute;cute une commande lorsque vous cliquez sur lui. Consultez <xref linkend="mailcheck-mailcheck"/> pour plus d'informations concernant la configuration de <application>&applet;</application> pour l'ex&eacute;cution de commandes.</para>
+
+  </sect1>
+  
+<!-- ============= Preferences ============================= -->
+
+  <sect1 id="mailcheck-prefs"> 
+	 <title>Pr&eacute;f&eacute;rences</title>
+	 <para>Pour configurer <application>&applet;</application>, cliquez avec le bouton droit sur celui-ci, puis s&eacute;lectionnez <guimenuitem>Pr&eacute;f&eacute;rences</guimenuitem>.</para>
+
+	 <sect2 id="mailcheck-mailcheck"> 
+	 
+		<title>V&eacute;rification du courrier</title>
+			
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>Avant chaque mise &agrave; jour</guilabel></term> 
+			 <listitem>
+			 <para>Cette option permet d'ex&eacute;cuter une commande avant que <application>&applet;</application> v&eacute;rifie les nouveaux messages. Entrez la commande dans la zone de texte pr&eacute;vue &agrave; cet effet. Par exemple, entrez la commande permettant d'ex&eacute;cuter le logiciel d'appel utilis&eacute; pour vous connecter &agrave; Internet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>orsque du nouveau courrier arrive</guilabel></term>
+			 <listitem>
+			 <para>Cette option permet d'ex&eacute;cuter une commande quand <application>&applet;</application> d&eacute;tecte de nouveaux messages. Entrez la commande dans la zone de texte pr&eacute;vue &agrave; cet effet. Par exemple, entrez <command>fetchmail</command> pour lancer le programme <application>fetchmail</application> permettant de r&eacute;cup&eacute;rer des messages sur un serveur de courrier distant.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>En cas de clic</guilabel></term> 
+			 <listitem>
+			 <para>Cette option permet d'ex&eacute;cuter une commande lorsque vous cliquez sur l'applet <application>&applet;</application>. Entrez la commande dans la zone de texte pr&eacute;vue &agrave; cet effet. 
+			Par exemple, pour ouvrir une fen&ecirc;tre <application>Netscape Messenger</application> quand vous cliquez sur l'applet, entrez <command>netscape -mail</command> dans la zone de texte.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>D&eacute;finir le nombre de courriers non lus &eacute; z&eacute;ro</guilabel></term> 
+			 <listitem>
+			 <para>Cette option permet de remettre &agrave; z&eacute;ro le nombre de messages non lus quand vous cliquez sur l'applet.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Rechercher le courrier toutes les</guilabel></term> 
+			 <listitem>
+			 <para>Cette zone de s&eacute;lection num&eacute;rique permet de sp&eacute;cifier &agrave; quelle fr&eacute;quence <application>&applet;</application> doit v&eacute;rifier la pr&eacute;sence de nouveaux messages sur le serveur de courrier. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Emettre un son lorsqu'un nouveau courrier arrive</guilabel></term> 
+			 <listitem>
+			 <para>Cette option permet d'&eacute;mettre un son par d&eacute;faut quand l'applet d&eacute;tecte de nouveaux messages sur le serveur de courrier. Le fichier son par d&eacute;faut est sp&eacute;cifi&eacute; dans <filename>$prefix/etc/sound/events/mailcheck.soundlist</filename>. </para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>S&eacute;lectionner une animation</guilabel></term> 
+			 <listitem>
+			 <para>Cette zone de liste d&eacute;roulante permet de s&eacute;lectionner le type d'affichage &agrave; utiliser dans l'applet. Vous pouvez afficher du texte, une image ou une animation.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+
+	 <sect2 id="mailcheck-mailbox"> 
+
+		<title>Bo&icirc;te aux lettres</title>
+
+		<variablelist>
+		  <varlistentry> 
+			 <term><guilabel>La bo&icirc;te aux lettres r&eacute;side sur</guilabel></term> 
+			 <listitem>
+			 <para>S&eacute;lectionnez l'une des options suivantes de la zone de liste d&eacute;roulante pour sp&eacute;cifier le type de serveur de courrier sur lequel votre bo&icirc;te aux lettres r&eacute;side.</para>
+			 <itemizedlist>
+			 	<listitem><para><guilabel>Spool de courrier local</guilabel></para>
+			 	<para>Si votre bo&icirc;te aux lettres r&eacute;side sur une zone de spool de courrier partag&eacute;e dans un serveur de courrier local.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Maildir local</guilabel></para>
+			 	<para>Si votre bo&icirc;te aux lettres est configur&eacute;e comme bo&icirc;te aux lettres <command>maildir</command> r&eacute;sidant dans votre structure de r&eacute;pertoires locale.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Serveur POP3 distant</guilabel></para>
+			 	<para>Si votre bo&icirc;te aux lettres r&eacute;side sur un serveur de courrier POP3 (Post Office Protocol 3) distant.</para>
+			 	</listitem>
+			 	<listitem><para><guilabel>Serveur IMPA distant</guilabel></para>
+			 	<para>Si votre bo&icirc;te aux lettres r&eacute;side sur un serveur IMAP (Internet Message Access Protocol) distant.</para>
+			 	</listitem>
+			 </itemizedlist>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Fichier d'arriv&eacute;e de courrier</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Spool de courrier local</guilabel> ou <guilabel>Maildir local</guilabel> comme emplacement de votre bo&icirc;te aux lettres, ce champ vous permet de sp&eacute;cifer l'emplacement o&ugrave; v&eacute;rifier la pr&eacute;sence de nouveaux messages.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Serveur de courrier</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Serveur POP3 distant</guilabel> ou <guilabel>Serveur IMAP distant</guilabel> comme emplacement pour votre bo&icirc;te aux lettres, cette zone de texte vous permet de sp&eacute;cifier le nom du serveur de courrier distant.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Nom d'utilisateur</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Serveur POP3 distant</guilabel> ou <guilabel>Serveur IMAP distant</guilabel> comme emplacement pour votre bo&icirc;te aux lettres, cette zone de texte vous permet de sp&eacute;cifier le nom d'utilisateur permettant d'acc&eacute;der au serveur de courrier distant.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Mot de passe</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Serveur POP3 distant</guilabel> ou <guilabel>Serveur IMAP distant</guilabel> comme emplacement pour votre bo&icirc;te aux lettres, cette zone de texte vous permet de sp&eacute;cifier le mot de passe permettant d'acc&eacute;der au serveur de courrier distant.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Dossier</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Serveur IMAP distant</guilabel> comme emplacement pour votre bo&icirc;te aux lettres, cette zone de texte vous permet de sp&eacute;cifier le dossier du serveur qui contient votre bo&icirc;te aux lettres.</para>
+			 </listitem>
+		  </varlistentry>
+		  <varlistentry> 
+			 <term><guilabel>Commande &agrave; ex&eacute;cuter avant de v&eacute;rifier le courrier</guilabel></term> 
+			 <listitem>
+			 <para>Si vous s&eacute;lectionnez <guilabel>Serveur POP3 distant</guilabel> ou <guilabel>Serveur IMAP distant</guilabel> comme emplacement pour votre bo&icirc;te aux lettres, cette zone de texte vous permet de sp&eacute;cifier une commande &agrave; ex&eacute;cuter avant que <application>&applet;</application> v&eacute;rifie les messages sur le serveur de courrier.</para>
+			 </listitem>
+		  </varlistentry>
+		</variablelist>
+	 </sect2>
+  </sect1>
+
+</article>
+
