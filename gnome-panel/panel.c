@@ -153,7 +153,7 @@ pop_up(void)
 }
 
 static gint
-pop_down(void)
+pop_down(gpointer data)
 {
 	int width, height;
 	int swidth, sheight;
@@ -659,14 +659,34 @@ panel_is_spot_clean(GtkWidget *widget, gint x, gint y, gint width,
 		return FALSE;
 }
 
+static void
+fix_coordinates_to_limits(int *x,int *y, int width, int height)
+{
+	if ((*x + width) > the_panel->fixed->allocation.width)
+		*x = the_panel->fixed->allocation.width - width;
+
+	if ((*y + height) > the_panel->fixed->allocation.height)
+		*y = the_panel->fixed->allocation.height - height;
+
+	if (*x < 0)
+		*x = 0;
+
+	if (*y < 0)
+		*y = 0;
+}
+
 /*find a free spot for the applet*/
 static void
 fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 	gint height)
 {
-	gint moveright,movedown; /*used for moving the applet
-						into acceptable position*/
-	gint x2,y2,xpos,ypos;
+	gint movedown; /*used for moving the applet (it would be move right
+			 for horizontal but we use only one .. i.e. move
+			 down the panel (down or right)!)
+			 into acceptable position*/
+	gint *adjvar;	/*this points to the variable that we are adjusting*/
+	gint adjdef;	/*default for the above*/
+	gint xpos,ypos;
 
 
 	if(!widget)
@@ -675,60 +695,49 @@ fixup_applet_position(GtkWidget *widget, gint *x, gint *y, gint width,
 	xpos=widget->allocation.x;
 	ypos=widget->allocation.y;
 
-	x2 = *x + width;
-	y2 = *y + height;
-
-	if (x2 > the_panel->fixed->allocation.width)
-		*x = the_panel->fixed->allocation.width - width;
-
-	if (y2 > the_panel->fixed->allocation.height)
-		*y = the_panel->fixed->allocation.height - height;
-
-	if (*x < 0)
-		*x = 0;
-
-	if (*y < 0)
-		*y = 0;
-
-	/*where did we move?*/
-	moveright=(xpos<*x || xpos<=0 ||
-		xpos>=the_panel->fixed->allocation.width)?TRUE:FALSE;
-	movedown=(ypos<*y || ypos<=0 ||
-		ypos>=the_panel->fixed->allocation.height)?TRUE:FALSE;
+	fix_coordinates_to_limits(x,y,width,height);
+	
+	/*change the adjustment variables for horizontal/vertical
+	  position*/
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			/*where did we move?*/
+			movedown=(xpos<*x || xpos<=0 ||
+				xpos>=the_panel->fixed->allocation.width)?
+				TRUE:FALSE;
+			adjvar=x;
+			adjdef=*x;
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			/*where did we move?*/
+			movedown=(ypos<*y || ypos<=0 ||
+				ypos>=the_panel->fixed->allocation.height)?
+				TRUE:FALSE;
+			adjvar=y;
+			adjdef=*y;
+			break;
+	}
 
 	/*move the applet as close as we can to the
 	  one blocking it*/
 	while(!panel_is_spot_clean(widget,*x,*y,
 		width,height)) {
 
-		if(moveright) {
-			if(--(*x)<0) {
-				moveright=FALSE;
-				*x=xpos;
+		if(movedown) {
+			if(--(*adjvar)<0) {
+				movedown=FALSE;
+				*adjvar=adjdef;
 			}
 		} else
-			(*x)++;
-		/* FIXME: should be done for
-		   vertical bar as well */
+			(*adjvar)++;
 	}
 
-	/*ajust positions again!, in the worst case
+	/*ajust positions to limits again!, in the worst case
 	  we don't have enough room and we will have
 	  to overlap applets*/
-	x2 = *x + width;
-	y2 = *y + height;
-
-	if (x2 > the_panel->fixed->allocation.width)
-		*x = the_panel->fixed->allocation.width - width;
-
-	if (y2 > the_panel->fixed->allocation.height)
-		*y = the_panel->fixed->allocation.height - height;
-
-	if (*x < 0)
-		*x = 0;
-
-	if (*y < 0)
-		*y = 0;
+	fix_coordinates_to_limits(x,y,width,height);
 }
 
 static gint
@@ -877,66 +886,81 @@ panel_init(void)
 
 	the_panel->window = gtk_window_new(GTK_WINDOW_POPUP);
 
-	the_panel->box = gtk_hbox_new(FALSE,0); /*FIXME: this will have to be
-							vbox for a vertical
-							one!*/
 
+	/*the_panel->pos   = PANEL_POS_RIGHT;*/
 	the_panel->pos   = PANEL_POS_BOTTOM;
 	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	/*the_panel->mode  = PANEL_STAYS_PUT;*/
+	/*the_panel->mode  = PANEL_GETS_HIDDEN;*/
+	the_panel->mode  = PANEL_STAYS_PUT;
 
-	/*FIXME: the hide button should only be shown if the panel
-	  is staying put*/
-	
-	/* I'll leave you to fix it, cause it does kinda screw up in
-	 * PANEL_GETS_HIDDEN mode */
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+		case PANEL_POS_BOTTOM:
+			the_panel->box = gtk_hbox_new(FALSE,0);
+			break;
+		case PANEL_POS_LEFT:
+		case PANEL_POS_RIGHT:
+			the_panel->box = gtk_vbox_new(FALSE,0);
+			break;
+	}
+	/*hide button*/
 	the_panel->hidebutton=gtk_button_new_with_label("<");
 	gtk_signal_connect(GTK_OBJECT(the_panel->hidebutton), "clicked",
 			   GTK_SIGNAL_FUNC(panel_show_hide),NULL);
 	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->hidebutton,
 			   FALSE,FALSE,0);
-	gtk_widget_show(the_panel->hidebutton);
+
+	if(the_panel->mode==PANEL_STAYS_PUT && the_panel->state==PANEL_SHOWN)
+		gtk_widget_show(the_panel->hidebutton);
 	
-	
+	/*fixed*/
 	the_panel->fixed = gtk_fixed_new();
 
 	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->fixed,
 		TRUE,TRUE,0);
 	gtk_widget_show(the_panel->fixed);
 
+	/*show button*/
 	the_panel->showbutton=gtk_button_new_with_label(">");
 	gtk_signal_connect(GTK_OBJECT(the_panel->showbutton), "clicked",
 				  GTK_SIGNAL_FUNC(panel_show_hide),NULL);
 	gtk_box_pack_start(GTK_BOX(the_panel->box),the_panel->showbutton,
 		FALSE,FALSE,0);
+	if(the_panel->mode==PANEL_STAYS_PUT && the_panel->state!=PANEL_SHOWN)
+		gtk_widget_show(the_panel->showbutton);
 
+	/*add this whole thing to the window*/
 	gtk_container_add(GTK_CONTAINER(the_panel->window), the_panel->box);
 	gtk_widget_show(the_panel->box);
 
-	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
-	gtk_widget_set_uposition(the_panel->window, 0, gdk_screen_height() - DEFAULT_HEIGHT);
-#if 0
-	the_panel->pos   = PANEL_POS_TOP;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, gdk_screen_width(), DEFAULT_HEIGHT);
-	gtk_widget_set_uposition(the_panel->window, 0, 0);
-#endif
-#if 0
-	the_panel->pos   = PANEL_POS_RIGHT;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
-	gtk_widget_set_uposition(the_panel->window, gdk_screen_width() - DEFAULT_HEIGHT, 0);
-#endif
-#if 0
-	the_panel->pos   = PANEL_POS_LEFT;
-	the_panel->state = PANEL_SHOWN;
-	the_panel->mode  = PANEL_GETS_HIDDEN;
-	gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT, gdk_screen_height());
-	gtk_widget_set_uposition(the_panel->window, 0, 0);
-#endif
+	switch (the_panel->pos) {
+		case PANEL_POS_TOP:
+			gtk_widget_set_usize(the_panel->window,
+					     gdk_screen_width(),
+					     DEFAULT_HEIGHT);
+			gtk_widget_set_uposition(the_panel->window, 0, 0);
+			break;
+		case PANEL_POS_BOTTOM:
+			gtk_widget_set_usize(the_panel->window,
+					     gdk_screen_width(),
+					     DEFAULT_HEIGHT);
+			gtk_widget_set_uposition(the_panel->window, 0,
+						 gdk_screen_height() -
+						 DEFAULT_HEIGHT);
+			break;
+		case PANEL_POS_LEFT:
+			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
+					     gdk_screen_height());
+			gtk_widget_set_uposition(the_panel->window, 0, 0);
+			break;
+		case PANEL_POS_RIGHT:
+			gtk_widget_set_usize(the_panel->window, DEFAULT_HEIGHT,
+					     gdk_screen_height());
+			gtk_widget_set_uposition(the_panel->window,
+						 gdk_screen_width() -
+						 DEFAULT_HEIGHT, 0);
+			break;
+	}
 	the_panel->step_size            = DEFAULT_STEP_SIZE;
 	the_panel->delay                = DEFAULT_DELAY;
 	the_panel->minimize_delay       = DEFAULT_MINIMIZE_DELAY;
