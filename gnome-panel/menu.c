@@ -2416,33 +2416,34 @@ create_menuitem (GtkWidget *menu,
 	return TRUE;
 }
 
+/*
+ * Sort the FileRecs in locale defined alphabetical order,
+ * with directories first and files last.
+ */
 static gint
 compare_filerecs (FileRec *fr1, FileRec *fr2)
 {
-  if (((fr1->type != FILE_REC_FILE) && (fr1->type != FILE_REC_DIR)) ||
-      ((fr2->type != FILE_REC_FILE) && (fr2->type != FILE_REC_DIR))) {
-    /* one of the two is not a file or a directory */
-    return 0;
-  } else if ((fr1->type == FILE_REC_FILE) 
-      && (fr2->type == FILE_REC_DIR)) {
-    /* sort files last */
-    return 1;
-  } else if ((fr2->type == FILE_REC_FILE) 
-	     && (fr1->type == FILE_REC_DIR)) {
-    /* sort files last */
-    return -1;
-  } else {
-    /* sort by locale ordering */
-    if ((fr1 == NULL) || (fr1->fullname == NULL)) {
-      return 1;
-    }
-    if ((fr2 == NULL) || (fr2->fullname == NULL)) {
-      return -1;
-    }
-    return g_utf8_collate (fr1->fullname, fr2->fullname);
-  }
-}
+	g_assert (fr1 != NULL && fr2 != NULL);
 
+	if (((fr1->type != FILE_REC_FILE) && (fr1->type != FILE_REC_DIR)) ||
+	    ((fr2->type != FILE_REC_FILE) && (fr2->type != FILE_REC_DIR)))
+		return 0;
+
+	else if ((fr1->type == FILE_REC_FILE) && (fr2->type == FILE_REC_DIR))
+		return 1;
+
+	else if ((fr2->type == FILE_REC_FILE) && (fr1->type == FILE_REC_DIR))
+		return -1;
+	else {
+		if (!fr1->fullname)
+			return 1;
+
+		if (!fr2->fullname)
+			return -1;
+
+		return g_utf8_collate (fr1->fullname, fr2->fullname);
+	}
+}
 
 GtkWidget *
 create_menu_at (GtkWidget *menu,
@@ -2518,7 +2519,7 @@ create_menu_at_fr (GtkWidget *menu,
 		 * added as a menu item */
 		GSList *last_added = NULL;
 
-		dr->recs = g_slist_sort (dr->recs, (GCompareFunc)&compare_filerecs);
+		dr->recs = g_slist_sort (dr->recs, (GCompareFunc) compare_filerecs);
 
 		for(li = dr->recs; li != NULL; li = li->next) {
 			FileRec *tfr = li->data;
