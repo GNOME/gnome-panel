@@ -398,7 +398,7 @@ load_swallow_applet(char *path, char *params, int width, int height,
 			gnome_desktop_entry_launch(item);
 			gnome_desktop_entry_free(item);
 		} else {
-			char *s = g_copy_strings("(true; ",path," &)",NULL);
+			char *s = g_strconcat("(true; ",path," &)",NULL);
 			system(s);
 			g_free(s);
 		}

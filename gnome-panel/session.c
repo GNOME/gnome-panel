@@ -135,11 +135,11 @@ gnome_desktop_entry_save_no_sync (GnomeDesktopEntry *dentry)
 	g_assert (dentry != NULL);
 	g_assert (dentry->location != NULL);
 
-	prefix = g_copy_strings ("=", dentry->location, "=/Desktop Entry", NULL);
+	prefix = g_strconcat ("=", dentry->location, "=/Desktop Entry", NULL);
 
 	gnome_config_clean_section (prefix);
 
-	prefix = g_copy_strings (prefix, "/", NULL);
+	prefix = g_strconcat (prefix, "/", NULL);
 	gnome_config_push_prefix (prefix);
 	g_free (prefix);
 
@@ -243,7 +243,7 @@ save_applet_configuration(AppletInfo *info)
 			gnome_config_drop_all();
 #endif
 
-			globalcfg = g_copy_strings(panel_cfg_path,
+			globalcfg = g_strconcat(panel_cfg_path,
 						   "Applet_All_Extern/",NULL);
 
 			/*this is the file path we pass to the applet for it's
@@ -425,7 +425,7 @@ do_session_save(GnomeClient *client,
 		char *new_args[3];
 
 		g_free(panel_cfg_path);
-		panel_cfg_path = g_copy_strings("/panel.d/Session-",session_id,
+		panel_cfg_path = g_strconcat("/panel.d/Session-",session_id,
 						"/",NULL);
 
 		new_args[0] = (char *) gtk_object_get_data(GTK_OBJECT(client),
@@ -457,7 +457,7 @@ do_session_save(GnomeClient *client,
 	}
 	/*DEBUG*/printf(" 2"); fflush(stdout);
 
-	buf = g_copy_strings(panel_cfg_path,"panel/Config/",NULL);
+	buf = g_strconcat(panel_cfg_path,"panel/Config/",NULL);
 	gnome_config_push_prefix (buf);
 	g_free(buf);
 

@@ -446,7 +446,7 @@ load_new_pixmap (MailCheck *mc)
 		if(mc->animation_file) g_free(mc->animation_file);
 		mc->animation_file = NULL;
 	} else {
-		char *fname = g_copy_strings ("mailcheck/", mc->selected_pixmap_name, NULL);
+		char *fname = g_strconcat ("mailcheck/", mc->selected_pixmap_name, NULL);
 		char *full;
 		
 		full = gnome_unconditional_pixmap_file (fname);
@@ -654,17 +654,17 @@ make_mailcheck_applet(const gchar *goad_id)
 
 	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.png");
 
-	query = g_copy_strings(APPLET_WIDGET(applet)->privcfgpath,
+	query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
 			       "mail/animation_file=",emailfile,NULL);
 	mc->animation_file = gnome_config_get_string(query);
 	g_free(query);
 
-  query = g_copy_strings(APPLET_WIDGET(applet)->privcfgpath,
+  query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
                          "mail/update_frequency=2000", NULL);
   mc->update_freq = gnome_config_get_int(query);
   g_free(query);
 
-  query = g_copy_strings(APPLET_WIDGET(applet)->privcfgpath,
+  query = g_strconcat(APPLET_WIDGET(applet)->privcfgpath,
                          "mail/exec_command", NULL);
   mc->cmd = gnome_config_get_string(query);
   g_free(query);

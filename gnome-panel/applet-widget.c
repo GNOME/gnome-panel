@@ -535,7 +535,7 @@ gnome_panel_applet_register_callback_dir(GtkWidget *applet,
 	g_return_if_fail(name!=NULL);
 
 	if(name[strlen(name)-1]!='/')
-		n = g_copy_strings(name,"/",NULL);
+		n = g_strconcat(name,"/",NULL);
 	else
 		n = g_strdup(name);
 	CORBA_exception_init(&ev);
@@ -582,7 +582,7 @@ applet_widget_unregister_callback_dir(AppletWidget *applet, char *name)
 	/*skip over leading '/'s*/
 	name = make_sane_name(name);
 	if(name[strlen(name)-1]!='/')
-		n = g_copy_strings(name,"/",NULL);
+		n = g_strconcat(name,"/",NULL);
 	else
 		n = g_strdup(name);
 

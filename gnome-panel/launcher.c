@@ -73,7 +73,7 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 			else
 				extension = ".desktop";
 
-			apps_par = g_copy_strings ("apps/", parameters,
+			apps_par = g_strconcat ("apps/", parameters,
 						   extension, NULL);
 			entry = gnome_datadir_file (apps_par);
 			g_free (apps_par);

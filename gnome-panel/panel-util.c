@@ -35,7 +35,7 @@ get_full_path(char *argv0)
 		if(!curpath)
 			return NULL;
 
-		outbuf = g_copy_strings(curpath,"/",argv0,NULL);
+		outbuf = g_strconcat(curpath,"/",argv0,NULL);
 		free(curpath);
 
 		realpath(outbuf,buf);
@@ -76,7 +76,7 @@ get_full_path(char *argv0)
 		return NULL;
 
 #else
-	cmdbuf = g_copy_strings("/usr/bin/which ", argv0, NULL);
+	cmdbuf = g_strconcat("/usr/bin/which ", argv0, NULL);
 	fwhich = popen(cmdbuf, "r");
 	g_free(cmdbuf);
 	

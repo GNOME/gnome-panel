@@ -261,7 +261,7 @@ add_to_submenus(AppletInfo *info,
 	*p = '\0';
 	p++;
 	
-	t = g_copy_strings(path,n,"/",NULL);
+	t = g_strconcat(path,n,"/",NULL);
 	s_menu = applet_get_callback(user_menu,t);
 	/*the user did not give us this sub menu, whoops, will create an empty
 	  one then*/

@@ -73,7 +73,7 @@ execute (char *command)
 static void
 print_file (gchar *name, Printer *pr)
 {
-	gchar *str = g_copy_strings (pr->print_command, " ", name, NULL);
+	gchar *str = g_strconcat (pr->print_command, " ", name, NULL);
 	execute (str);
 	g_free (str);
 }

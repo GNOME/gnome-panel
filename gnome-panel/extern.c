@@ -271,7 +271,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 	POA_GNOME_PanelSpot *panelspot_servant;
 
 	if(!cfgpath || !*cfgpath)
-		cfgpath = g_copy_strings(old_panel_cfg_path,
+		cfgpath = g_strconcat(old_panel_cfg_path,
 					 "Applet_Dummy/",NULL);
 	else
 		/*we will free this lateer*/
@@ -413,7 +413,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 		*cfgpath = NULL;
 		return CORBA_OBJECT_NIL;
 	}
-	p = g_copy_strings(old_panel_cfg_path,"Applet_Dummy/",NULL);
+	p = g_strconcat(old_panel_cfg_path,"Applet_Dummy/",NULL);
 	*cfgpath = CORBA_string_dup(p);
 	g_free(p);
 	*globcfgpath = CORBA_string_dup(old_panel_cfg_path);
