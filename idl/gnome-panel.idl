@@ -61,6 +61,11 @@ module GNOME {
 		readonly attribute boolean in_drag;
 		
 		StatusSpot add_status (out unsigned long winid);
+		
+		/* this is a call so that we tell the panel that the
+		   global config has changed on disk and that it should
+		   reread it */
+		oneway void notice_config_changes ();
 	};
 
 	interface PanelSpot { /* panel half of applets */
