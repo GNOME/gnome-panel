@@ -285,6 +285,7 @@ panel_menu_bar_get_type (void)
 
 static void
 panel_menu_bar_load (PanelWidget *panel,
+		     gboolean     locked,
 		     int          position,
 		     gboolean     exactpos,
 		     const char  *id)
@@ -296,8 +297,9 @@ panel_menu_bar_load (PanelWidget *panel,
 	menubar = g_object_new (PANEL_TYPE_MENU_BAR, NULL);
 
 	menubar->priv->info = panel_applet_register (
-					GTK_WIDGET (menubar), NULL, NULL, panel,
-					position, exactpos, PANEL_OBJECT_MENU_BAR, id);
+					GTK_WIDGET (menubar), NULL, NULL,
+					panel, locked, position, exactpos,
+					PANEL_OBJECT_MENU_BAR, id);
 	if (!menubar->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (menubar));
 		return;
@@ -311,11 +313,12 @@ panel_menu_bar_load (PanelWidget *panel,
 
 void
 panel_menu_bar_load_from_gconf (PanelWidget *panel,
+				gboolean     locked,
 				int          position,
 				gboolean     exactpos,
 				const char  *id)
 {
-	panel_menu_bar_load (panel, position, exactpos, id);
+	panel_menu_bar_load (panel, locked, position, exactpos, id);
 }
 
 void

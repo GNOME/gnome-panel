@@ -129,7 +129,7 @@ is_item_writable (const char *loc, const char *dir)
 {
 	if (loc != NULL) {
 		/* if old style kde link file, don't allow editing */
-		if (is_ext (loc, ".kdelnk"))
+		if (g_str_has_suffix (loc, ".kdelnk"))
 			return FALSE;
 		if (panel_is_uri_writable (loc))
 			return TRUE;

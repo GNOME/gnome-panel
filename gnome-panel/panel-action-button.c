@@ -47,6 +47,7 @@
 enum {
 	PROP_0,
 	PROP_ACTION_TYPE,
+	PROP_DND_ENABLED
 };
 
 struct _PanelActionButtonPrivate {
@@ -54,6 +55,8 @@ struct _PanelActionButtonPrivate {
 	AppletInfo            *info;
 
 	guint                  gconf_notify;
+	
+	guint                  dnd_enabled : 1;
 };
 
 static GObjectClass *parent_class;
@@ -265,6 +268,9 @@ panel_action_button_get_property (GObject    *object,
 	case PROP_ACTION_TYPE:
 		g_value_set_enum (value, button->priv->type);
 		break;
+	case PROP_DND_ENABLED:
+		g_value_set_boolean (value, button->priv->dnd_enabled);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -287,6 +293,10 @@ panel_action_button_set_property (GObject      *object,
 	case PROP_ACTION_TYPE:
 		panel_action_button_set_type (button,
 					      g_value_get_enum (value));
+		break;
+	case PROP_DND_ENABLED:
+		panel_action_button_set_dnd_enabled (button,
+						     g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -371,29 +381,28 @@ panel_action_button_class_init (PanelActionButtonClass *klass,
 					   PANEL_TYPE_ACTION_BUTTON_TYPE,
 					   PANEL_ORIENTATION_TOP,
 					   G_PARAM_READWRITE));
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_DND_ENABLED,
+			g_param_spec_boolean ("dnd-enabled",
+					      _("Drag N' Drop enabled"),
+					      _("Whether or not drag and drop is enabled on the widget"),
+					      TRUE,
+					      G_PARAM_READWRITE));
 }
 
 static void
 panel_action_button_instance_init (PanelActionButton      *button,
 				   PanelActionButtonClass *klass)
 {
-	static GtkTargetEntry dnd_targets [] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
-	};
-
 	button->priv = g_new0 (PanelActionButtonPrivate, 1);
 
 	button->priv->type = PANEL_ACTION_NONE;
 	button->priv->info = NULL;
 
 	button->priv->gconf_notify = 0;
-
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
-	gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
-			     dnd_targets, 1,
-			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
-
+	button->priv->dnd_enabled  = FALSE;
 }
 
 GType
@@ -487,6 +496,7 @@ panel_action_button_style_set (PanelActionButton *button)
 static void
 panel_action_button_load (PanelActionButtonType  type,
 			  PanelWidget           *panel,
+			  gboolean               locked,
 			  int                    position,
 			  gboolean               exactpos,
 			  const char            *id,
@@ -507,9 +517,10 @@ panel_action_button_load (PanelActionButtonType  type,
 			object_type = PANEL_OBJECT_LOGOUT;
 	}
 
-	button->priv->info = panel_applet_register (
-				GTK_WIDGET (button), NULL, NULL, panel,
-				position, exactpos, object_type, id);
+	button->priv->info = panel_applet_register (GTK_WIDGET (button),
+						    NULL, NULL,
+						    panel, locked, position,
+						    exactpos, object_type, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -560,6 +571,7 @@ panel_action_button_create (PanelToplevel         *toplevel,
 void
 panel_action_button_load_compatible (PanelObjectType  object_type,
 				     PanelWidget     *panel,
+				     gboolean         locked,
 				     int              position,
 				     gboolean         exactpos,
 				     const char      *id)
@@ -570,11 +582,12 @@ panel_action_button_load_compatible (PanelObjectType  object_type,
 
 	action_type = object_type == PANEL_OBJECT_LOGOUT ? PANEL_ACTION_LOGOUT : PANEL_ACTION_LOCK;
 
-	panel_action_button_load (action_type, panel, position, exactpos, id, TRUE);
+	panel_action_button_load (action_type, panel, locked, position, exactpos, id, TRUE);
 }
 
 void
 panel_action_button_load_from_gconf (PanelWidget *panel,
+				     gboolean     locked,
 				     int          position,
 				     gboolean     exactpos,
 				     const char  *id)
@@ -597,7 +610,7 @@ panel_action_button_load_from_gconf (PanelWidget *panel,
 
 	g_free (action_type);
 
-	panel_action_button_load (type, panel, position, exactpos, id, FALSE);
+	panel_action_button_load (type, panel, locked, position, exactpos, id, FALSE);
 }
 
 void
@@ -666,4 +679,38 @@ panel_action_button_load_from_drag (PanelToplevel *toplevel,
 	panel_action_button_create (toplevel, position, type);
 
 	return retval;
+}
+
+void
+panel_action_button_set_dnd_enabled (PanelActionButton *button,
+				     gboolean           enabled)
+{
+	g_return_if_fail (PANEL_IS_ACTION_BUTTON (button));
+
+	if (!button->priv->type)
+		return; /* wait until we know what type it is */
+
+	enabled = enabled != FALSE;
+
+	if (button->priv->dnd_enabled == enabled)
+		return;
+
+	if (enabled) {
+		static GtkTargetEntry dnd_targets [] = {
+			{ "application/x-panel-applet-internal", 0, 0 }
+		};
+
+		GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
+				     dnd_targets, 1,
+				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+		gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
+						actions [button->priv->type].stock_icon);
+		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
+	} else
+		gtk_drag_source_unset (GTK_WIDGET (button));
+
+	button->priv->dnd_enabled = enabled;
+
+	g_object_notify (G_OBJECT (button), "dnd-enabled");
 }

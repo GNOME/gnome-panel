@@ -44,7 +44,8 @@ enum {
 	PROP_MENU_PATH,
 	PROP_CUSTOM_ICON,
 	PROP_USE_MENU_PATH,
-	PROP_USE_CUSTOM_ICON
+	PROP_USE_CUSTOM_ICON,
+	PROP_DND_ENABLED
 };
 
 struct _PanelMenuButtonPrivate {
@@ -59,6 +60,7 @@ struct _PanelMenuButtonPrivate {
 
 	guint                  use_menu_path : 1;
 	guint                  use_custom_icon : 1;
+	guint                  dnd_enabled : 1;
 };
 
 static GObjectClass *parent_class;
@@ -67,10 +69,6 @@ static void
 panel_menu_button_instance_init (PanelMenuButton      *button,
 				 PanelMenuButtonClass *klass)
 {
-	static GtkTargetEntry dnd_targets [] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
-	};
-
 	button->priv = g_new0 (PanelMenuButtonPrivate, 1);
 
 	button->priv->info         = NULL;
@@ -84,12 +82,6 @@ panel_menu_button_instance_init (PanelMenuButton      *button,
 	button->priv->use_custom_icon = FALSE;
 
 	button_widget_set_stock_id (BUTTON_WIDGET (button), PANEL_STOCK_GNOME_LOGO);
-
-	GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
-	gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
-			     dnd_targets, 1,
-			     GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
 
 	/* FIXME: set a tooltip */
 }
@@ -146,6 +138,9 @@ panel_menu_button_get_property (GObject    *object,
 	case PROP_USE_CUSTOM_ICON:
 		g_value_set_boolean (value, button->priv->use_custom_icon);
 		break;
+	case PROP_DND_ENABLED:
+		g_value_set_boolean (value, button->priv->dnd_enabled);
+		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
 		break;
@@ -176,6 +171,9 @@ panel_menu_button_set_property (GObject      *object,
 		break;
 	case PROP_USE_CUSTOM_ICON:
 		panel_menu_button_set_use_custom_icon (button, g_value_get_boolean (value));
+		break;
+	case PROP_DND_ENABLED:
+		panel_menu_button_set_dnd_enabled (button, g_value_get_boolean (value));
 		break;
 	default:
 		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -449,9 +447,18 @@ panel_menu_button_class_init (PanelMenuButtonClass *klass,
 			PROP_USE_CUSTOM_ICON,
                         g_param_spec_boolean ("use-custom-icon",
 					      _("Use Custom Icon"),
-					     _("Use the icon specified by the custom-icon property"),
-					     FALSE,
-					     G_PARAM_READWRITE));
+					      _("Use the icon specified by the custom-icon property"),
+					      FALSE,
+					      G_PARAM_READWRITE));
+
+	g_object_class_install_property (
+			gobject_class,
+			PROP_DND_ENABLED,
+                        g_param_spec_boolean ("dnd-enabled",
+					      _("Drag N' Drop enabled"),
+					      _("Whether or not drag and drop is enabled on the widget"),
+					      FALSE,
+					      G_PARAM_READWRITE));
 }
 
 GType
@@ -538,6 +545,7 @@ panel_menu_button_load (const char  *menu_path,
 			const char  *custom_icon,
 			gboolean     use_custom_icon,
 			PanelWidget *panel,
+			gboolean     locked,
 			int          position,
 			gboolean     exactpos,
 			const char  *id)
@@ -554,8 +562,9 @@ panel_menu_button_load (const char  *menu_path,
 			       NULL);
 
 	button->priv->info = panel_applet_register (
-					GTK_WIDGET (button), NULL, NULL, panel,
-					position, exactpos, PANEL_OBJECT_MENU, id);
+					GTK_WIDGET (button), NULL, NULL,
+					panel, locked, position, exactpos,
+					PANEL_OBJECT_MENU, id);
 	if (!button->priv->info) {
 		gtk_widget_destroy (GTK_WIDGET (button));
 		return;
@@ -685,6 +694,7 @@ panel_menu_button_set_use_custom_icon (PanelMenuButton *button,
 
 void
 panel_menu_button_load_from_gconf (PanelWidget *panel,
+				   gboolean     locked,
 				   int          position,
 				   gboolean     exactpos,
 				   const char  *id)
@@ -720,6 +730,7 @@ panel_menu_button_load_from_gconf (PanelWidget *panel,
 				custom_icon,
 				use_custom_icon,
 				panel,
+				locked,
 				position,
 				exactpos,
 				id);
@@ -780,4 +791,31 @@ panel_menu_button_change_orientation (PanelMenuButton  *button,
 	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
 
 	button_widget_set_params (BUTTON_WIDGET (button), TRUE, orientation);
+}
+
+void
+panel_menu_button_set_dnd_enabled (PanelMenuButton *button,
+				   gboolean         dnd_enabled)
+{
+	g_return_if_fail (PANEL_IS_MENU_BUTTON (button));
+
+	dnd_enabled = dnd_enabled != FALSE;
+
+	if (button->priv->dnd_enabled == dnd_enabled)
+		return;
+
+	if (dnd_enabled) {
+		static GtkTargetEntry dnd_targets [] = {
+			{ "application/x-panel-applet-internal", 0, 0 }
+		};
+
+		GTK_WIDGET_UNSET_FLAGS (button, GTK_NO_WINDOW);
+		gtk_drag_source_set (GTK_WIDGET (button), GDK_BUTTON1_MASK,
+				     dnd_targets, 1,
+				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+		gtk_drag_source_set_icon_stock (GTK_WIDGET (button),
+						PANEL_STOCK_GNOME_LOGO);
+		GTK_WIDGET_SET_FLAGS (button, GTK_NO_WINDOW);
+	} else
+		gtk_drag_source_unset (GTK_WIDGET (button));
 }

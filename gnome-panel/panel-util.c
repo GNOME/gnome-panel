@@ -45,12 +45,7 @@
 #include "panel-globals.h"
 #include "launcher.h"
 
-GdkScreen *
-panel_screen_from_number (int screen)
-{
-	return gdk_display_get_screen (
-			gdk_display_get_default (), screen);
-}
+static gboolean panel_is_url (const char *url);
 
 int
 panel_ditem_launch (const GnomeDesktopItem       *item,
@@ -293,6 +288,68 @@ create_icon_entry(GtkWidget *table,
 }
 
 GList *
+panel_g_list_insert_before (GList *list,
+			    GList *sibling,
+			    GList *link)
+{
+	if (!list) {
+		g_return_val_if_fail (sibling == NULL, list);
+		return link;
+	} else if (sibling) {
+		if (sibling->prev) {
+			link->prev = sibling->prev;
+			link->prev->next = link;
+			link->next = sibling;
+			sibling->prev = link;
+			return list;
+		} else {
+			link->next = sibling;
+			sibling->prev = link;
+			g_return_val_if_fail (sibling == list, link);
+			return link;
+		}
+	} else {
+		GList *last;
+
+		last = list;
+		while (last->next)
+			last = last->next;
+
+		last->next = link;
+		link->prev = last;
+		return list;
+	}
+}
+
+GList *
+panel_g_list_insert_after (GList *list,
+			   GList *sibling,
+			   GList *link)
+{
+	if (!list) {
+		g_return_val_if_fail (sibling == NULL, link);
+		return link;
+	} else if (sibling) {
+		if (sibling->next) {
+			link->next = sibling->next;
+			link->next->prev = link;
+			link->prev = sibling;
+			sibling->next = link;
+			return list;
+		} else {
+			sibling->next = link;
+			link->prev = sibling;
+			return list;
+		}
+			
+	} else {
+		link->next = list;
+		list->prev = link;
+		return link;
+	}
+}
+
+GList *
 panel_g_list_swap_next (GList *list, GList *dl)
 {
 	GList *t;
@@ -361,255 +418,6 @@ panel_g_list_resort_item(GList *list, gpointer data, GCompareFunc func)
 	return list;
 }
 
-/*following code shamelessly stolen from gtk*/
-static void
-rgb_to_hls (gdouble *r,
-	    gdouble *g,
-	    gdouble *b)
-{
-  gdouble min;
-  gdouble max;
-  gdouble red;
-  gdouble green;
-  gdouble blue;
-  gdouble h, l, s;
-  gdouble delta;
-
-  red = *r;
-  green = *g;
-  blue = *b;
-
-  if (red > green)
-    {
-      if (red > blue)
-	max = red;
-      else
-	max = blue;
-
-      if (green < blue)
-	min = green;
-      else
-	min = blue;
-    }
-  else
-    {
-      if (green > blue)
-	max = green;
-      else
-	max = blue;
-
-      if (red < blue)
-	min = red;
-      else
-	min = blue;
-    }
-
-  l = (max + min) / 2;
-  s = 0;
-  h = 0;
-
-  if (max != min)
-    {
-      if (l <= 0.5)
-	s = (max - min) / (max + min);
-      else
-	s = (max - min) / (2 - max - min);
-
-      delta = max -min;
-      if (red == max)
-	h = (green - blue) / delta;
-      else if (green == max)
-	h = 2 + (blue - red) / delta;
-      else if (blue == max)
-	h = 4 + (red - green) / delta;
-
-      h *= 60;
-      if (h < 0.0)
-	h += 360;
-    }
-
-  *r = h;
-  *g = l;
-  *b = s;
-}
-
-static void
-hls_to_rgb (gdouble *h,
-	    gdouble *l,
-	    gdouble *s)
-{
-  gdouble hue;
-  gdouble lightness;
-  gdouble saturation;
-  gdouble m1, m2;
-  gdouble r, g, b;
-
-  lightness = *l;
-  saturation = *s;
-
-  if (lightness <= 0.5)
-    m2 = lightness * (1 + saturation);
-  else
-    m2 = lightness + saturation - lightness * saturation;
-  m1 = 2 * lightness - m2;
-
-  if (saturation == 0)
-    {
-      *h = lightness;
-      *l = lightness;
-      *s = lightness;
-    }
-  else
-    {
-      hue = *h + 120;
-      while (hue > 360)
-	hue -= 360;
-      while (hue < 0)
-	hue += 360;
-
-      if (hue < 60)
-	r = m1 + (m2 - m1) * hue / 60;
-      else if (hue < 180)
-	r = m2;
-      else if (hue < 240)
-	r = m1 + (m2 - m1) * (240 - hue) / 60;
-      else
-	r = m1;
-
-      hue = *h;
-      while (hue > 360)
-	hue -= 360;
-      while (hue < 0)
-	hue += 360;
-
-      if (hue < 60)
-	g = m1 + (m2 - m1) * hue / 60;
-      else if (hue < 180)
-	g = m2;
-      else if (hue < 240)
-	g = m1 + (m2 - m1) * (240 - hue) / 60;
-      else
-	g = m1;
-
-      hue = *h - 120;
-      while (hue > 360)
-	hue -= 360;
-      while (hue < 0)
-	hue += 360;
-
-      if (hue < 60)
-	b = m1 + (m2 - m1) * hue / 60;
-      else if (hue < 180)
-	b = m2;
-      else if (hue < 240)
-	b = m1 + (m2 - m1) * (240 - hue) / 60;
-      else
-	b = m1;
-
-      *h = r;
-      *l = g;
-      *s = b;
-    }
-}
-
-static void
-gtk_style_shade (GdkColor *a,
-		 GdkColor *b,
-		 gdouble   k)
-{
-  gdouble red;
-  gdouble green;
-  gdouble blue;
-
-  red   = (gdouble) a->red / 65535.0;
-  green = (gdouble) a->green / 65535.0;
-  blue  = (gdouble) a->blue / 65535.0;
-
-  rgb_to_hls (&red, &green, &blue);
-
-  green *= k;
-  if (green > 1.0)
-    green = 1.0;
-  else if (green < 0.0)
-    green = 0.0;
-
-  blue *= k;
-  if (blue > 1.0)
-    blue = 1.0;
-  else if (blue < 0.0)
-    blue = 0.0;
-
-  hls_to_rgb (&red, &green, &blue);
-
-  b->red   = red * 65535.0;
-  b->green = green * 65535.0;
-  b->blue  = blue * 65535.0;
-}
-
-#define LIGHTNESS_MULT  1.3
-#define DARKNESS_MULT   0.7
-
-static void
-set_color_back (GtkWidget *widget, PanelWidget *panel)
-{
-	GtkStyle *ns;
-	GdkColor  gdkcolor = {0, };
-	int       i;
-
-	/* FIXME:
-	 *   need to implement alpha background for these
-	 *   widgets too ...
-	 */
-	if (panel->background.has_alpha) {
-		gtk_widget_set_style (widget, NULL);
-		return;
-	}
-
-	gdkcolor = panel->background.color.gdk;
-
-	gtk_widget_set_style (widget, NULL);
-	ns = gtk_style_copy (gtk_widget_get_style (widget));
-
-	ns->bg [GTK_STATE_NORMAL] = gdkcolor;
-	ns->bg [GTK_STATE_INSENSITIVE] = gdkcolor;
-
-	gtk_style_shade (&gdkcolor, &ns->bg [GTK_STATE_PRELIGHT], 1.5);
-	gtk_style_shade (&gdkcolor, &ns->bg [GTK_STATE_ACTIVE], 0.8);
-
-	for (i = 0; i < 5; i++) {
-		gtk_style_shade (&ns->bg [i], &ns->light [i], LIGHTNESS_MULT);
-		gtk_style_shade (&ns->bg [i], &ns->dark  [i], DARKNESS_MULT);
-
-		ns->mid [i].red   = (ns->light [i].red   + ns->dark [i].red) / 2;
-		ns->mid [i].green = (ns->light [i].green + ns->dark [i].green) / 2;
-		ns->mid [i].blue  = (ns->light [i].blue  + ns->dark [i].blue) / 2;
-	}
-
-	gtk_widget_set_style (widget, ns);
-
-	g_object_unref (ns);
-}
-
-void
-panel_set_frame_colors (PanelWidget *panel, GtkWidget *frame,
-			GtkWidget *but1, GtkWidget *but2,
-			GtkWidget *but3, GtkWidget *but4)
-{
-	if (panel->background.type == PANEL_BACK_COLOR) {
-		set_color_back (frame, panel);
-		set_color_back (but1, panel);
-		set_color_back (but2, panel);
-		set_color_back (but3, panel);
-		set_color_back (but4, panel);
-	} else {
-		gtk_widget_set_style (frame, NULL);
-		gtk_widget_set_style (but1, NULL);
-		gtk_widget_set_style (but2, NULL);
-		gtk_widget_set_style (but3, NULL);
-		gtk_widget_set_style (but4, NULL);
-	}
-}
-
 static GtkWidget *
 panel_dialog (GdkScreen  *screen,
 	      int         type,
@@ -664,67 +472,6 @@ panel_error_dialog (GdkScreen  *screen,
 	return w;
 }
 
-GtkWidget *
-panel_info_dialog (GdkScreen  *screen,
-		   const char *class,
-		   const char *format,
-		   ...)
-{
-	GtkWidget *w;
-	char *s;
-	va_list ap;
-
-	if (format == NULL) {
-		g_warning ("NULL info dialog");
-		s = g_strdup ("(null)");
-	} else {
-		va_start (ap, format);
-		s = g_strdup_vprintf (format, ap);
-		va_end (ap);
-	}
-
-	w = panel_dialog (screen, GTK_MESSAGE_INFO, class, s);
-	g_free (s);
-	return w;
-}
-
-gboolean
-is_ext (const char *file, const char *ext)
-{
-	const char *p;
-
-	if (file == NULL)
-		return FALSE;
-
-	p = strrchr (file, '.');
-
-	if (p != NULL &&
-	    strcmp (p, ext) == 0)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-gboolean
-is_ext2 (const char *file,
-	 const char *ext1,
-	 const char *ext2)
-{
-	const char *p;
-
-	if (file == NULL)
-		return FALSE;
-
-	p = strrchr (file, '.');
-
-	if (p != NULL &&
-	    (strcmp (p, ext1) == 0 ||
-	     strcmp (p, ext2) == 0))
-		return TRUE;
-	else
-		return FALSE;
-}
-
 int
 panel_find_applet_index (GtkWidget *widget)
 {
@@ -743,28 +490,8 @@ panel_find_applet_index (GtkWidget *widget)
 	return i;
 }
 
-int
-get_requisition_width (GtkWidget *widget)
-{
-	GtkRequisition req;
-
-	gtk_widget_get_child_requisition (widget, &req);
-
-	return req.width;
-}
-
-int
-get_requisition_height (GtkWidget *widget)
-{
-	GtkRequisition req;
-
-	gtk_widget_get_child_requisition (widget, &req);
-
-	return req.height;
-}
-
 /* is url showable by gnome_url_show */
-gboolean
+static gboolean
 panel_is_url (const char *url)
 {
 	if (strncmp (url, "http://", strlen ("http://")) == 0 ||
@@ -834,7 +561,7 @@ struct _ReadBuf {
 	gsize pos;
 };
 
-int
+static int
 readbuf_getc (ReadBuf *rb)
 {
 	if (rb->eof)
@@ -977,235 +704,7 @@ panel_pixmap_discovery (const char *name, gboolean fallback)
 	return pixmap;
 }
 
-static GtkWidget *
-stretch_widget_calc_geometry (GtkWidget *widget,
-			      int       *x,
-			      int       *y,
-			      int       *w,
-			      int       *h)
-{
-	PanelStretchFlags  flags;
-	GtkWidget         *toplevel;
-
-	g_assert (x && y && w && h);
-
-	flags = GPOINTER_TO_INT (
-			g_object_get_data (G_OBJECT (widget) , "stretch-flags"));
-	toplevel = gtk_widget_get_toplevel (widget);
-
-	if (!toplevel || !GTK_WIDGET_REALIZED (toplevel))
-		return NULL;
-	
-	gtk_widget_translate_coordinates (widget, toplevel, 0, 0, x, y);
-
-	*w = widget->allocation.width;
-	*h = widget->allocation.height;
-
-	if (flags & PANEL_STRETCH_TOP) {
-		*h += *y;
-		*y  = 0;
-	}
-
-	if (flags & PANEL_STRETCH_LEFT) {
-		*w += *x;
-		*x  = 0;
-	}
-
-	if (flags & PANEL_STRETCH_BOTTOM)
-		*h = toplevel->allocation.height - *y;
-
-	if (flags & PANEL_STRETCH_RIGHT)
-		*w = toplevel->allocation.width - *x;
-
-	return toplevel;
-}
-
-static void
-stretch_widget_realize (GtkWidget *widget)
-{
-	GdkWindowAttr  attributes = { 0 };
-	int            attributes_mask;
-	int            x, y, w, h;
-	GdkWindow     *eventwin;
-	GtkWidget     *toplevel;
-
-	eventwin = g_object_get_data (G_OBJECT (widget), "StrechEventWindow");
-	if (eventwin != NULL)
-		gdk_window_destroy (eventwin);
-
-	toplevel = stretch_widget_calc_geometry (widget, &x, &y, &w, &h);
-	if (!toplevel)
-		return;
-
-	attributes.window_type = GDK_WINDOW_CHILD;
-	attributes.x = x;
-	attributes.y = y;
-	attributes.width = w;
-	attributes.height = h;
-	attributes.wclass = GDK_INPUT_ONLY;
-	attributes.event_mask = (GDK_BUTTON_PRESS_MASK |
-				 GDK_BUTTON_RELEASE_MASK |
-				 GDK_POINTER_MOTION_MASK |
-				 GDK_POINTER_MOTION_HINT_MASK |
-				 GDK_KEY_PRESS_MASK |
-				 GDK_ENTER_NOTIFY_MASK |
-				 GDK_LEAVE_NOTIFY_MASK);
-	attributes_mask = GDK_WA_X | GDK_WA_Y;
-
-	eventwin = gdk_window_new (toplevel->window,
-				   &attributes,
-				   attributes_mask);
-	gdk_window_set_user_data (eventwin, widget);
-
-	g_object_set_data (G_OBJECT (widget),
-			   "StrechEventWindow",
-			   eventwin);
-}
-
-static void
-stretch_widget_unrealize (GtkWidget *widget)
-{
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
-						 "StrechEventWindow");
-	if (eventwin == NULL)
-		return;
-
-	gdk_window_destroy (eventwin);
-	g_object_set_data (G_OBJECT (widget),
-			   "StrechEventWindow",
-			   NULL);
-}
-
-/* Evil but otherwise it doesn't seem
- * to work.  There needs to be a cleaner
- * solution */
-static gboolean
-raise_in_idle (gpointer data)
-{
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (data),
-						 "StrechEventWindow");
-
-	g_object_unref (G_OBJECT (data));
-
-	if (eventwin == NULL)
-		return FALSE;
-
-	gdk_window_raise (eventwin);
-	return FALSE;
-}
-
-
-static void
-stretch_widget_map (GtkWidget *widget)
-{
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
-						 "StrechEventWindow");
-	if (eventwin == NULL)
-		return;
-
-	if (GTK_WIDGET_MAPPED (widget)) {
-		gdk_window_show (eventwin);
-		gdk_window_raise (eventwin);
-		g_idle_add (raise_in_idle,
-			    g_object_ref (G_OBJECT (widget)));
-	}
-}
-
-static void
-stretch_widget_unmap (GtkWidget *widget)
-{
-	GdkWindow *eventwin = g_object_get_data (G_OBJECT (widget),
-						 "StrechEventWindow");
-	if (eventwin == NULL)
-		return;
-
-	gdk_window_hide (eventwin);
-}
-
-
-static void
-stretch_widget_size_allocate (GtkWidget     *widget,
-			      GtkAllocation *allocation)
-{
-	GdkWindow *eventwin;
-	int        x, y, w, h;
-	int        old_x, old_y, old_w, old_h, old_d;
-
-	eventwin = g_object_get_data (G_OBJECT (widget), "StrechEventWindow");
-	if (!eventwin)
-		return;
-
-	if (!stretch_widget_calc_geometry (widget, &x, &y, &w, &h))
-		return;
-
-	gdk_window_get_geometry (eventwin, &old_x, &old_y, &old_w, &old_h, &old_d);
-
-	if ((x == old_x) && (y == old_y) && (w == old_w) && (h == old_h))
-		return;
-
-	/* somewhat evil */
-	stretch_widget_unrealize (widget);
-	stretch_widget_realize (widget);
-	stretch_widget_map (widget);
-}
-
-static void
-stretch_widget_hierarchy_changed (GtkWidget *widget,
-				 GtkWidget *previous_toplevel)
-{
-	stretch_widget_unrealize (widget);
-	stretch_widget_realize (widget);
-	stretch_widget_map (widget);
-}
-
-void
-panel_stretch_events_to_toplevel (GtkWidget         *widget,
-				  PanelStretchFlags  flags)
-{
-	g_signal_connect_after (GTK_WIDGET (widget), "realize",
-				G_CALLBACK (stretch_widget_realize),
-				NULL);
-	g_signal_connect (GTK_WIDGET (widget), "unrealize",
-			  G_CALLBACK (stretch_widget_unrealize),
-			  NULL);
-	g_signal_connect_after (GTK_WIDGET (widget), "size_allocate",
-				G_CALLBACK (stretch_widget_size_allocate),
-				NULL);
-	g_signal_connect_after (GTK_WIDGET (widget), "map",
-				G_CALLBACK (stretch_widget_map),
-				NULL);
-	g_signal_connect_after (GTK_WIDGET (widget), "unmap",
-				G_CALLBACK (stretch_widget_unmap),
-				NULL);
-	g_signal_connect_after (GTK_WIDGET (widget), "hierarchy_changed",
-				G_CALLBACK (stretch_widget_hierarchy_changed),
-				NULL);
-
-	g_object_set_data_full (
-		G_OBJECT (widget), "stretch-flags", GINT_TO_POINTER (flags), NULL);
-}
-
 /* stolen from gtk */
-void
-panel_signal_connect_while_alive (gpointer    object,
-				  const char *signal,
-				  GCallback   func,
-				  gpointer    func_data,
-				  gpointer    alive_object)
-{
-	GClosure *closure;
-
-	g_return_if_fail (G_IS_OBJECT (object));
-	g_return_if_fail (G_IS_OBJECT (alive_object));
-
-	closure = g_cclosure_new (func, func_data, NULL);
-	g_object_watch_closure (G_OBJECT (alive_object), closure);
-	g_signal_connect_closure_by_id (object,
-					g_signal_lookup (signal, G_OBJECT_TYPE (object)), 0,
-					closure,
-					FALSE);
-}
-
 void
 panel_signal_connect_object_while_alive (gpointer    object,
 					 const char *signal,
@@ -1221,7 +720,7 @@ panel_signal_connect_object_while_alive (gpointer    object,
 					FALSE);
 }
 
-gboolean
+static gboolean
 panel_ensure_dir (const char *dirname)
 {
 	char *parsed, *p;
@@ -1259,17 +758,6 @@ panel_ensure_dir (const char *dirname)
 
 	g_free (parsed);
 	return TRUE;
-}
-
-void
-panel_g_list_deep_free	(GList *list)
-{
-	GList *li;
-	for (li = list; li != NULL; li = li->next) {
-		g_free (li->data);
-		li->data = NULL;
-	}
-	g_list_free (list);
 }
 
 void

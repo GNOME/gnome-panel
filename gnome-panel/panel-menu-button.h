@@ -69,6 +69,7 @@ void       panel_menu_button_set_use_custom_icon (PanelMenuButton  *button,
 						  gboolean          use_custom_icon);
 
 void       panel_menu_button_load_from_gconf     (PanelWidget      *panel,
+						  gboolean          locked,
 						  int               position,
 						  gboolean          exactpos,
 						  const char       *id);
@@ -81,6 +82,9 @@ void       panel_menu_button_invoke_menu         (PanelMenuButton  *button,
 
 void       panel_menu_button_change_orientation  (PanelMenuButton  *button,
 						  PanelOrientation  orientation);
+
+void       panel_menu_button_set_dnd_enabled     (PanelMenuButton  *button,
+						  gboolean          dnd_enabled);
 
 G_END_DECLS
 

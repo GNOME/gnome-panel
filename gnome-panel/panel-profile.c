@@ -1522,6 +1522,7 @@ panel_profile_load_object (GConfClient       *client,
 	char            *toplevel_id;
 	int              position;
 	gboolean         right_stick;
+	gboolean         locked;
 
 	key = panel_gconf_full_key (type, current_profile, id, "object_type");
 	type_string = gconf_client_get_string (client, key, NULL);
@@ -1542,7 +1543,15 @@ panel_profile_load_object (GConfClient       *client,
 	key = panel_gconf_full_key (type, current_profile, id, "panel_right_stick");
 	right_stick = gconf_client_get_bool (client, key, NULL);
 
-	panel_applet_queue_applet_to_load (id, object_type, toplevel_id, position, right_stick);
+	key = panel_gconf_full_key (type, current_profile, id, "locked");
+	locked = gconf_client_get_bool (client, key, NULL);
+
+	panel_applet_queue_applet_to_load (id,
+					   object_type,
+					   toplevel_id,
+					   position,
+					   right_stick,
+					   locked);
 }
 
 static void

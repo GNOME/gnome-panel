@@ -19,6 +19,7 @@ typedef struct {
 	GtkWidget       *widget;
 
 	GtkWidget       *menu;
+	GtkWidget       *move_item;
 	GList           *user_menu;
 
 	gpointer         data;
@@ -43,6 +44,7 @@ AppletInfo *panel_applet_register    (GtkWidget       *applet,
 				      gpointer         data,
 				      GDestroyNotify   data_destroy,
 				      PanelWidget     *panel,
+				      gboolean         locked,
 				      gint             pos,
 				      gboolean         exactpos,
 				      PanelObjectType  type,
@@ -58,7 +60,8 @@ void panel_applet_queue_applet_to_load (char            *id,
 					PanelObjectType  type,
 					char            *toplevel_id,
 					int              position,
-					gboolean         right_stick);
+					gboolean         right_stick,
+					gboolean         locked);
 void panel_applet_load_queued_applets  (void);
 
 
@@ -83,6 +86,8 @@ int         panel_applet_get_position    (AppletInfo *applet);
 void        panel_applet_menu_set_recurse (GtkMenu     *menu,
 					   const gchar *key,
 					   gpointer     data);
+
+gboolean    panel_applet_toggle_locked  (AppletInfo *info);
 
 G_END_DECLS
 

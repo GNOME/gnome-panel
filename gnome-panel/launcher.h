@@ -50,6 +50,7 @@ void		launcher_properties		(Launcher  *launcher,
 						 GdkScreen *screen);
 
 void            launcher_load_from_gconf        (PanelWidget *panel_widget,
+						 gboolean     locked,
 						 gint         position,
 						 const char  *id);
 
@@ -66,6 +67,10 @@ void            launcher_show_help              (Launcher  *launcher,
 						 GdkScreen *screen);
 
 void            launcher_properties_destroy     (Launcher *launcher);
+
+void            panel_launcher_set_dnd_enabled  (Launcher *launcher,
+						 gboolean  dnd_enabled);
+
 
 G_END_DECLS
 

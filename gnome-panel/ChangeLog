@@ -1,3 +1,112 @@
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
+	Implement a "Lock" flag on applets so you can disable moving them
+	about. Fixes bug #74997.
+
+	* GNOME_Panel_Popup.xml: add a "Lock" menu item to the
+	applets context menu.
+	
+	* applet.[ch]:
+	(panel_applet_set_dnd_enabled): enable/disable dnd depending
+	on whether or not an applet is locked.
+	(panel_applet_toggle_locked), (panel_applet_lock),
+	(panel_applet_create_menu), (applet_show_menu): implement the
+	"Lock" menu item.
+	(panel_applet_load_idle_handler),
+	(panel_applet_queue_applet_to_load),
+	(panel_applet_save_position): impl saving the flag to GConf.
+	(panel_applet_register): pass the parcel.
+	
+	* panel-applet-frame.[ch]:
+	(panel_applet_frame_sync_menu_state),
+	(popup_handle_lock), (popup_handle_move): implement the "Lock"
+	menu item.
+	(panel_applet_frame_load),
+	(panel_applet_frame_load_from_gconf),
+	(panel_applet_frame_reload_response): pass the parcel.
+	
+	* panel-default-setup.entries: make all default applets locked.
+	
+	* panel-object.schemas.in: add the "locked" schema.
+	
+	* panel-profile.c: (panel_profile_load_object): read the locked
+	flag from GConf.
+	
+	* panel-util.[ch]:
+	(panel_g_list_insert_before),
+	(panel_g_list_insert_after): impl.
+	
+	* panel-widget.[ch]:
+	(panel_widget_cadd): add applets unlocked by default.
+	(panel_widget_jump_applet_right),
+	(panel_widget_switch_applet_right),
+	(panel_widget_jump_applet_left),
+	(panel_widget_switch_applet_left),
+	(panel_widget_try_push_right),
+	(panel_widget_get_right_jump_pos),
+	(panel_widget_get_right_switch_pos),
+	(panel_widget_try_push_left),
+	(panel_widget_get_left_jump_pos),
+	(panel_widget_get_left_switch_pos),
+	(panel_widget_switch_move): modify the "switch mode" algorithm
+	to take into account locked applets that might be allowed. Now
+	its the "try switch, then jump, then push, then jump, then ..."
+	mode.
+	(panel_widget_push_applet_right), (panel_widget_push_applet_left):
+	allow pushing an arbitrary amount.
+	(panel_widget_push_move): don't push locked applets.
+	(panel_widget_applet_drag_start_no_grab),
+	(panel_widget_applet_drag_start): you can't move locked applets
+	dammit.
+	(panel_widget_nice_move): call get_free_spot() and kill the silly
+	comment.
+	(panel_widget_add): add locked flag.
+	(panel_widget_reparent): when re-parenting look for the first free
+	spot and queue a resize.
+	(panel_widget_set_applet_locked),
+	(panel_widget_get_applet_locked),
+	(panel_widget_toggle_applet_locked): implement accessors.
+	
+	* drawer.[ch]: (create_drawer_applet), (load_drawer_applet),
+	(drawer_load_from_gconf), (panel_drawer_set_dnd_enabled):
+	Impl enabling/disabling dnd.
+	
+	* launcher.[ch]: (create_launcher), (load_launcher_applet),
+	(launcher_load_from_gconf), (launcher_show_help),
+	(panel_launcher_set_dnd_enabled): ditto.
+	
+	* panel-action-button.[ch]: (panel_action_button_get_property),
+	(panel_action_button_set_property),
+	(panel_action_button_class_init),
+	(panel_action_button_instance_init), (panel_action_button_load),
+	(panel_action_button_load_compatible),
+	(panel_action_button_load_from_gconf),
+	(panel_action_button_load_from_drag),
+	(panel_action_button_set_dnd_enabled): ditto.
+	
+	* panel-menu-button.[ch]: (panel_menu_button_instance_init),
+	(panel_menu_button_get_property), (panel_menu_button_set_property),
+	(panel_menu_button_class_init), (panel_menu_button_load),
+	(panel_menu_button_load_from_gconf),
+	(panel_menu_button_change_orientation),
+	(panel_menu_button_set_dnd_enabled): ditto.
+	
+	* panel-menu-bar.[ch]: (panel_menu_bar_load),
+	(panel_menu_bar_load_from_gconf): pass the parcel.
+	
+2003-05-26  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-util.[ch]: remove heaps and heaps of unused code.
+	
+	* gnome-desktop-item-edit.c: (main): use g_str_has_suffix and
+	not our own home grown crack.
+	
+	* menu-ditem.c: (is_item_writable):
+	* menu-fentry.c: (fr_fill_dir):
+	* menu.c: (add_drawers_from_dir): ditto.
+	
+	* menu.h: upd.
+	
 2003-05-26  Ray Strode  <halfline@hawaii.rr.com>
 
         * panel-properties-dialog.c: 

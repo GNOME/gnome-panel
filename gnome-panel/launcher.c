@@ -405,11 +405,6 @@ create_launcher (const char *location)
 	Launcher         *launcher;
 	GError           *error = NULL;
 
-        static GtkTargetEntry dnd_targets[] = {
-		{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
-		{ "text/uri-list", 0, TARGET_URI_LIST }
-	};
-
 	if (!location) {
 		g_printerr (_("No URI provided for panel launcher desktop file\n"));
 		return NULL;
@@ -451,18 +446,6 @@ create_launcher (const char *location)
 
 	gtk_widget_show (launcher->button);
 
-	/*A hack since this function only pretends to work on window
-	  widgets (which we actually kind of are) this will select
-	  some (already selected) events on the panel instead of
-	  the launcher window (where they are also selected) but
-	  we don't mind*/
-	GTK_WIDGET_UNSET_FLAGS (launcher->button, GTK_NO_WINDOW);
-	gtk_drag_source_set(launcher->button,
-			    GDK_BUTTON1_MASK,
-			    dnd_targets, 2,
-			    GDK_ACTION_COPY | GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (launcher->button, GTK_NO_WINDOW);
-	
 	/*gtk_drag_dest_set (GTK_WIDGET (launcher->button),
 			   GTK_DEST_DEFAULT_ALL,
 			   dnd_targets, 2,
@@ -731,6 +714,7 @@ launcher_properties (Launcher  *launcher,
 static Launcher *
 load_launcher_applet (const char       *location,
 		      PanelWidget      *panel,
+		      gboolean          locked,
 		      int               pos,
 		      gboolean          exactpos,
 		      const char       *id)
@@ -743,9 +727,9 @@ load_launcher_applet (const char       *location,
 		return NULL;
 
 	launcher->info = panel_applet_register (launcher->button, launcher,
-						free_launcher, panel, pos, 
-						exactpos, PANEL_OBJECT_LAUNCHER,
-						id);
+						free_launcher,
+						panel, pos, locked, exactpos,
+						PANEL_OBJECT_LAUNCHER, id);
 	if (!launcher->info)
 		return NULL;
 
@@ -798,6 +782,7 @@ panel_launcher_ensure_hoarded (Launcher   *launcher,
 
 void
 launcher_load_from_gconf (PanelWidget *panel_widget,
+			  gboolean     locked,
 			  int          position,
 			  const char  *id)
 {
@@ -823,6 +808,7 @@ launcher_load_from_gconf (PanelWidget *panel_widget,
         
 	launcher = load_launcher_applet (launcher_location,
 					 panel_widget,
+					 locked,
 					 position,
 					 TRUE,
 					 id);
@@ -1101,4 +1087,29 @@ launcher_show_help (Launcher  *launcher,
 			error->message);
 		g_error_free (error);
 	}
+}
+
+void
+panel_launcher_set_dnd_enabled (Launcher *launcher,
+				gboolean  dnd_enabled)
+{
+	if (dnd_enabled) {
+		static GtkTargetEntry dnd_targets[] = {
+			{ "application/x-panel-icon-internal", 0, TARGET_ICON_INTERNAL },
+			{ "text/uri-list", 0, TARGET_URI_LIST }
+		};
+
+		GTK_WIDGET_UNSET_FLAGS (launcher->button, GTK_NO_WINDOW);
+		gtk_drag_source_set (launcher->button,
+				     GDK_BUTTON1_MASK,
+				     dnd_targets, 2,
+				     GDK_ACTION_COPY | GDK_ACTION_MOVE);
+		if (BUTTON_WIDGET (launcher->button)->pixbuf)
+			gtk_drag_source_set_icon_pixbuf (launcher->button,
+							 BUTTON_WIDGET (launcher->button)->pixbuf);
+		GTK_WIDGET_SET_FLAGS (launcher->button, GTK_NO_WINDOW);
+	
+
+	} else
+		gtk_drag_source_unset (launcher->button);
 }

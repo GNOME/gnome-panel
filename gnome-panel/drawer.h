@@ -27,7 +27,11 @@ void    panel_drawer_create (PanelToplevel *toplevel,
 
 void    panel_drawer_delete (Drawer *drawer);
 
+void    panel_drawer_set_dnd_enabled (Drawer   *drawer,
+				      gboolean  dnd_enabled);
+
 void    drawer_load_from_gconf (PanelWidget *panel_widget,
+				gboolean     locked,
 				gint         position,
 				const char  *id);
 

@@ -73,6 +73,29 @@ typedef enum {
 } PanelAppletFlags;
 
 static void
+panel_applet_frame_sync_menu_state (PanelAppletFrame *frame)
+{
+	PanelWidget *panel_widget;
+	gboolean     locked;
+
+	panel_widget = PANEL_WIDGET (GTK_WIDGET (frame)->parent);
+
+	locked = panel_widget_get_applet_locked (panel_widget, GTK_WIDGET (frame));
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/popups/button3/placeholder/lock",
+				      "label",
+				      locked ? _("Un_lock") : _("_Lock"),
+				      NULL);
+
+	bonobo_ui_component_set_prop (frame->priv->ui_component,
+				      "/commands/MoveApplet",
+				      "sensitive",
+				      locked ? "0" : "1",
+				      NULL);
+}
+
+static void
 popup_handle_remove (BonoboUIComponent *uic,
 		     PanelAppletFrame  *frame,
 		     const gchar       *verbname)
@@ -86,6 +109,16 @@ popup_handle_remove (BonoboUIComponent *uic,
 }
 
 static void
+popup_handle_lock (BonoboUIComponent *uic,
+		   PanelAppletFrame  *frame,
+		   const char        *verb)
+{
+	panel_applet_toggle_locked (frame->priv->applet_info);
+
+	panel_applet_frame_sync_menu_state (frame);
+}
+
+static void
 popup_handle_move (BonoboUIComponent *uic,
 		   PanelAppletFrame  *frame,
 		   const gchar       *verbname)
@@ -93,26 +126,28 @@ popup_handle_move (BonoboUIComponent *uic,
 	GtkWidget *widget;
 
 	g_return_if_fail (GTK_IS_WIDGET (frame));
-	g_return_if_fail (PANEL_IS_WIDGET (frame->priv->panel));
 
 	widget = GTK_WIDGET (frame);
-
+	
 	g_return_if_fail (PANEL_IS_WIDGET (widget->parent));
 
 	panel_widget_applet_drag_start (
-		frame->priv->panel, widget, PW_DRAG_OFF_CENTER, GDK_CURRENT_TIME);
+		PANEL_WIDGET (widget->parent), widget, PW_DRAG_OFF_CENTER, GDK_CURRENT_TIME);
 }
 
 static BonoboUIVerb popup_verbs [] = {
         BONOBO_UI_UNSAFE_VERB ("RemoveAppletFromPanel", popup_handle_remove),
+	BONOBO_UI_UNSAFE_VERB ("LockAppletToPanel",     popup_handle_lock),
         BONOBO_UI_UNSAFE_VERB ("MoveApplet",            popup_handle_move),
 
         BONOBO_UI_VERB_END
 };
 
+
 static void
 panel_applet_frame_load (const gchar *iid,
 			 PanelWidget *panel,
+			 gboolean     locked,
 			 int          position,
 			 gboolean     exactpos,
 			 const char  *id)
@@ -130,14 +165,18 @@ panel_applet_frame_load (const gchar *iid,
 	
 	gtk_widget_show_all (frame);
 
-	info = panel_applet_register (frame, frame, NULL, panel, position,
+	info = panel_applet_register (frame, frame, NULL,
+				      panel, locked, position,
 				      exactpos, PANEL_OBJECT_BONOBO, id);
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
+
+	panel_applet_frame_sync_menu_state (PANEL_APPLET_FRAME (frame));
 }
 
 void
 panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
+				    gboolean     locked,
 				    int          position,
 				    const char  *id)
 {
@@ -153,7 +192,7 @@ panel_applet_frame_load_from_gconf (PanelWidget *panel_widget,
 	key = panel_gconf_full_key (PANEL_GCONF_APPLETS, profile, id, "bonobo_iid");
 	applet_iid = gconf_client_get_string (panel_gconf_get_client (), key, NULL);
 
-	panel_applet_frame_load (applet_iid, panel_widget, position, TRUE, id);
+	panel_applet_frame_load (applet_iid, panel_widget, locked, position, TRUE, id);
 
 	g_free (applet_iid);
 }
@@ -664,7 +703,9 @@ panel_applet_frame_reload_response (GtkWidget        *dialog,
 			panel_applet_clean (info);
 		}
 
-		panel_applet_frame_load (iid, panel, position, TRUE, id);
+		panel_applet_frame_load (iid, panel,
+					 panel_widget_get_applet_locked (panel, info->widget),
+					 position, TRUE, id);
 
 		g_free (iid);
 		g_free (id);
@@ -1091,8 +1132,9 @@ panel_applet_frame_get_panel (PanelAppletFrame *frame)
 	return frame->priv->panel;
 }
 
-void panel_applet_frame_set_panel (PanelAppletFrame *frame,
-				   PanelWidget *panel)
+void
+panel_applet_frame_set_panel (PanelAppletFrame *frame,
+			      PanelWidget      *panel)
 {
 	g_return_if_fail (PANEL_IS_APPLET_FRAME (frame));
 	g_return_if_fail (PANEL_IS_WIDGET (panel));

@@ -473,9 +473,6 @@ create_drawer_applet (PanelToplevel    *toplevel,
 		      const char       *pixmap,
 		      PanelOrientation  orientation)
 {
-        static GtkTargetEntry dnd_targets[] = {
-		{ "application/x-panel-applet-internal", 0, 0 }
-	};
 	Drawer *drawer;
 	
 	drawer = g_new0 (Drawer, 1);
@@ -501,19 +498,6 @@ create_drawer_applet (PanelToplevel    *toplevel,
 		free_drawer (drawer);
 		return NULL;
 	}
-
-	/*A hack since this function only pretends to work on window
-	  widgets (which we actually kind of are) this will select
-	  some (already selected) events on the panel instead of
-	  the button window (where they are also selected) but
-	  we don't mind*/ 
-	GTK_WIDGET_UNSET_FLAGS (drawer->button, GTK_NO_WINDOW);
- 
-	gtk_drag_source_set (drawer->button,
-			     GDK_BUTTON1_MASK,
-			     dnd_targets, 1,
-			     GDK_ACTION_MOVE);
-	GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
 
 	gtk_drag_dest_set (drawer->button, 0, NULL, 0, 0); 
 
@@ -610,6 +594,7 @@ load_drawer_applet (char          *toplevel_id,
 		    const char    *pixmap,
 		    const char    *tooltip,
 		    PanelToplevel *parent_toplevel,
+		    gboolean       locked,
 		    int            pos,
 		    gboolean       exactpos,
 		    const char    *id)
@@ -635,7 +620,8 @@ load_drawer_applet (char          *toplevel_id,
 	drawer->info = panel_applet_register (drawer->button, drawer,
 					      (GDestroyNotify) free_drawer,
 					      panel_toplevel_get_panel_widget (parent_toplevel),
-					      pos, exactpos, PANEL_OBJECT_DRAWER, id);
+					      locked, pos, exactpos,
+					      PANEL_OBJECT_DRAWER, id);
 
 	if (!drawer->info) {
 		gtk_widget_destroy (GTK_WIDGET (toplevel));
@@ -702,6 +688,7 @@ panel_drawer_delete (Drawer *drawer)
 
 void
 drawer_load_from_gconf (PanelWidget *panel_widget,
+			gboolean     locked,
 			gint         position,
 			const char  *id)
 {
@@ -737,6 +724,7 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 			    pixmap,
 			    tooltip,
 			    panel_widget->toplevel,
+			    locked,
 			    position,
 			    TRUE,
 			    id);
@@ -744,4 +732,25 @@ drawer_load_from_gconf (PanelWidget *panel_widget,
 	g_free (profile_dir);
 	g_free (pixmap);
 	g_free (tooltip);
+}
+
+void
+panel_drawer_set_dnd_enabled (Drawer   *drawer,
+			      gboolean  dnd_enabled)
+{
+	if (dnd_enabled) {
+		static GtkTargetEntry dnd_targets[] = {
+			{ "application/x-panel-applet-internal", 0, 0 }
+		};
+
+		GTK_WIDGET_UNSET_FLAGS (drawer->button, GTK_NO_WINDOW);
+		gtk_drag_source_set (drawer->button,
+				     GDK_BUTTON1_MASK,
+				     dnd_targets, 1,
+				     GDK_ACTION_MOVE);
+		gtk_drag_source_set_icon_stock (drawer->button, PANEL_STOCK_DRAWER);
+		GTK_WIDGET_SET_FLAGS (drawer->button, GTK_NO_WINDOW);
+
+	} else
+		gtk_drag_source_unset (drawer->button);
 }

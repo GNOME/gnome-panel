@@ -6,14 +6,6 @@
 
 G_BEGIN_DECLS
 
-/* FIXME and WARNING:
- *   !!! DO NOT CHANGE THESE VALUES !!!!
- *
- * These values are stupidly stored in gconf. See "main_menu_flags",
- * So changing these will screw old configurations.
- *
- * We have to fix this shite.
- */
 enum {
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
@@ -26,10 +18,10 @@ enum {
 	MAIN_MENU_DESKTOP_SUB = 1<<15
 };
 
-void		setup_menuitem		(GtkWidget   *menuitem,
-					 GtkIconSize  icon_size,
-					 GtkWidget   *pixmap,
-					 const char  *title);
+void		setup_menuitem		(GtkWidget        *menuitem,
+					 GtkIconSize       icon_size,
+					 GtkWidget        *pixmap,
+					 const char       *title);
 
 GtkWidget      *create_menu_at          (GtkWidget     *menu,
 					 const char    *menudir,

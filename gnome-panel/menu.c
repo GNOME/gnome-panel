@@ -1318,7 +1318,8 @@ add_drawers_from_dir (const char *dirname, const char *name,
 			continue;
 		}
 			
-		if (is_ext2 (mfile->name, ".desktop", ".kdelnk") &&
+		if ((g_str_has_suffix (mfile->name, ".desktop") ||
+		     g_str_has_suffix (mfile->name, ".kdelnk")) &&
 		    g_file_test (filename, G_FILE_TEST_EXISTS))
 			panel_launcher_create (newpanel->toplevel, G_MAXINT/2, filename);
 	}

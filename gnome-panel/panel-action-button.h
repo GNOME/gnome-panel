@@ -63,18 +63,23 @@ void       panel_action_button_set_type         (PanelActionButton     *button,
 						 PanelActionButtonType  type);
 
 void       panel_action_button_load_from_gconf  (PanelWidget            *panel,
+						 gboolean                locked,
 						 int                     position,
 						 gboolean                exactpos,
 						 const char             *id);
 
 void       panel_action_button_load_compatible  (PanelObjectType         object_type,
 						 PanelWidget            *panel,
+						 gboolean                locked,
 						 int                     position,
 						 gboolean                exactpos,
 						 const char             *id);
 
 void       panel_action_button_invoke_menu      (PanelActionButton      *button,
 						 const char             *callback_name);
+
+void       panel_action_button_set_dnd_enabled  (PanelActionButton      *button,
+						 gboolean                dnd_enabled);
 
 gboolean   panel_action_button_load_from_drag   (PanelToplevel          *toplevel,
 						 int                     position,

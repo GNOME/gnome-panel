@@ -313,7 +313,8 @@ fr_fill_dir (FileRec *fr, int sublevels)
 		} else {
 			QuickDesktopItem *qitem;
 			char *tryexec_path;
-			if ( ! is_ext2 (mfile->name, ".desktop", ".kdelnk")) {
+			if (!g_str_has_suffix (mfile->name, ".desktop") &&
+			    !g_str_has_suffix (mfile->name, ".kdelnk")) {
 				g_free (name);
 				free_mfile (mfile);
 #ifdef MENU_FENTRY_DEBUG

@@ -48,6 +48,7 @@ struct _AppletData
 
 	gboolean        expand_major;
 	gboolean        expand_minor;
+	gboolean        locked;
 	
 	gboolean	dirty;
 
@@ -127,9 +128,10 @@ GtkWidget *	panel_widget_new		(PanelToplevel  *toplevel,
 /*add an applet to the panel, preferably at position pos, if insert_at_pos
   is on, we REALLY want to insert at the pos given by pos*/
 int		panel_widget_add		(PanelWidget *panel,
-						 GtkWidget *applet,
-						 int pos,
-						 gboolean insert_at_pos);
+						 GtkWidget   *applet,
+						 gboolean     locked,
+						 int          pos,
+						 gboolean     insert_at_pos);
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);
@@ -151,12 +153,6 @@ void		panel_widget_applet_drag_start	(PanelWidget *panel,
 						 int          drag_off,
 						 guint32      time_);
 void		panel_widget_applet_drag_end	(PanelWidget *panel);
-
-/* needed for corba */
-void		panel_widget_applet_drag_start_no_grab(PanelWidget *panel,
-						       GtkWidget *applet,
-						       int drag_off);
-void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 
 void            panel_widget_set_packed         (PanelWidget    *panel_widget,
 						 gboolean        packed);
@@ -191,6 +187,14 @@ void         panel_widget_set_applet_expandable (PanelWidget *panel,
 						 GtkWidget   *applet,
 						 gboolean     major,
 						 gboolean     minor);
+
+void         panel_widget_set_applet_locked     (PanelWidget *panel,
+						 GtkWidget   *applet,
+						 gboolean     locked);
+gboolean     panel_widget_get_applet_locked     (PanelWidget *panel,
+						 GtkWidget   *applet);
+gboolean     panel_widget_toggle_applet_locked  (PanelWidget *panel,
+						 GtkWidget   *applet);
 
 G_END_DECLS
 
