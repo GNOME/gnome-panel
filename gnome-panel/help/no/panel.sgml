@@ -902,186 +902,184 @@
     </itemizedlist>
 
     <para>
-XXX  All the changes you made in <interface>Launcher
-      Properties</interface> dialog will take effect when you press
-      <guibutton>Apply</guibutton> or
-      <guibutton>OK</guibutton>. Pressing <guibutton>OK</guibutton>
-      closes this dialog; pressing <guibutton>Apply</guibutton> will
-      allow you to continue editing.
+      Alle endringer du gjør i dialogen <interface>Egenskaper
+      for oppstarter</interface> vil bli aktivert når du trykker
+      <guibutton>Bruk</guibutton> eller
+      <guibutton>OK</guibutton>. Trykk på <guibutton>OK</guibutton>
+      for å lukke denne dialogen; Ved å trykke <guibutton>Bruk</guibutton>
+      vil du kunne fortsette med redigeringen.
     </para>
  </sect1>
 
 
 <!-- ###########  Applets  ############## -->
  <sect1 id="applets">
-  <title>Applets</title>
+  <title>Appleter</title>
   <para>
-   Applets are GNOME applications which reside in the
-   <interface>Panel</interface>.  An applet's appearance typically
-   reveals the state of the applet or other information. Applets often
-   have buttons, sliders, entries, or other methods to allow you to
-   control their behavior.
+   Appleter er GNOME applikasjoner som kjører inne i
+   <interface>Panelet</interface>.  En applets utseende viser typisk
+   tilstanden for appleten eller annen informasjon. Appleter har ofte
+   knapper, rullefelt, felt for inntasting eller andre metoder som lar deg
+   kontrollere oppførselen deres.
   </para>
   <figure>
-   <title>Example Applets</title>
+   <title>Eksempel-appleter</title>
    <screenshot>
-    <screeninfo>Example Applets</screeninfo>
+    <screeninfo>Eksempel-appleter</screeninfo>
      <graphic fileref="./figures/panel_applets" format="png"
      srccredit="muet">
      </graphic>
    </screenshot>
   </figure>
   <para>
-   Some example applets are shown above.  At the very left is  the
-   <application>Sound Monitor Applet</application>, which displays the
-   current volume of sound being played and allows you to control
-   various sound features.  Second is the <application>Mixer
-   Applet</application>, which allows you to turn on/off sound and
-   control its volume by clicking on applet.  This is followed by the
-   <application>Battery Power Applet</application>, useful for
-   monitoring the battery on a laptop. The fourth applet is the
-   <application>GTCD Applet</application>, a CD player which has all
-   its controls available in the applet and displays the track and
-   time. The next applet is the <application>Drive Mount
-   Applet</application>, used to mount and unmount drives with a
-   single click of the mouse. The last applet shown is an analog
-   clock, displaying the current time.
+   Noen eksempler på appleter vises over. Helt til venstre ser du
+   <application>Lydmonitor-appleten</application>, som viser nåværende
+   volum for lyder som spilles og lar deg kontrollere forskjellige
+   funksjoner for lyd. Videre ses <application>Mikser-
+   appleten</application>, som lar deg skru på/av lyd og kontrollere
+   volumet ved å klikke på appleten. Dette etterfølges av
+   <application>Batterimonitor-appleten</application>, som er nyttig
+   for å overvåke batteriet på en bærbar. Den fjerde appleten er
+   <application>GTCD-appleten</application>, en CD-spiller som har alle
+   kontrollene tilgjengelig i appleten og viser informasjon om spor og
+   tid. Den neste appleten er <application>Diskmonterings-
+   appleten</application>, som brukes til å montere og avmontere disker
+   med et enkelt musklikk. Den siste appleten som vises er en analog
+   klokke som viser klokken nå.
   </para>
   <para>
-   GNOME has many useful applets.  Just right click on your
-   <interface>Panel</interface>  and add some applets to your panel to
-   find out what is available and which ones are best for you.
+   GNOME har mange nyttige appleter. Bare høyreklikk på ditt
+   <interface>Panel</interface> og legg til noen appleter på panelet for
+   å finne ut hva som er tilgjengelig og hvilke som passer best for deg.
   </para>
  </sect1>
 
 
 <!-- ###########  Drawers  ############## -->
  <sect1 id="drawers">
-  <title>Drawers</title>
+  <title>Skuffer</title>
   <para>
-   The simplest way of thinking about a <interface>Drawer</interface>
-   is that it is a  container to store things.  Typically one may use
-   a Drawer to hold multiple launchers which are related to each other
-   in some way, such as the various applications in GNOME Office. The
-   Drawers in the GNOME <interface>Panel</interface> take this one
-   step further by making a Drawer an actual extension of the
-   <interface>Panel</interface> itself.  Thus, a Drawer is a
-   collapsible branch of an existing <interface>Panel</interface>.  It
-   can contain anything  that a <interface>Panel</interface> can,
-   including launchers, applets, and other Drawers.
+   Den enkleste måten å tenke på en <interface>Skuff</interface>
+   er at den er en kontainer hvor du kan lagre ting. Man vil typisk bruke
+   en skuff til å inneholde flere oppstartere som er relatert til hverandre
+   på en eller annen måte, for eksempel de forskjellige applikasjonen i GNOME
+   office. Skuffene i GNOME <interface>Panelet</interface> tar dette ett
+   steg videre ved å gjøre en skuff til en utvidelse av selve
+   <interface>Panelet</interface>. Slik kan man se på en skuff som en
+   sammenleggbar gren av et eksisterende <interface>Panel</interface>.  Den
+   kan inneholde alt som et <interface>Panel</interface> kan ha,
+   inkludert oppstartere, appleter og andre skuffer.
   </para>
   <figure>
-   <title>An open Drawer</title>
+   <title>En åpen skuff</title>
    <screenshot>
-    <screeninfo>An open Drawer</screeninfo>
+    <screeninfo>En åpen skuff</screeninfo>
     <graphic fileref="./figures/drawer_open" format="png"
     srccredit="dcm">
     </graphic>
    </screenshot>
   </figure>
   <para>
-   Once you have placed a Drawer on the <interface>Panel</interface>,
-   you may click on it to "open" the Drawer, revealing its contents.
-   You may then add items to the Drawer in the same way you would add
-   items to the panel, right clicking on the end of the drawer with
-   the arrow.  You can close the Drawer by clicking on its icon again
-   or by clicking on the arrow at its end.
+   Når du har plassert en skuff på <interface>Panelet</interface> kan
+   du klikke på den for å "åpne" skuffen, hvilket viser innholdet i den.
+   Du kan da legge til objekter i skuffen på samme måte som du ville legge
+   til objekter på panelet. Høyreklikk på slutten av skuffen med
+   pilen. Du kan lukke skuffen ved å klikke på ikonet for skuffen igjen
+   eller ved å klikke på pilen på kanten.
   </para>
   <para>
-   You can configure a Drawer's properties by right clicking on the
-   Drawer's icon and selecting
-   <guimenuitem>Properties</guimenuitem>. This brings up the
-   <interface>Drawer Properties</interface> dialog. Here you can
-   select the icon used for the drawer by clicking on the icon. A
-   tooltip may be entered by typing in the
-   <guilabel>Tooltip/Name</guilabel> entry. This tooltip will be
-   displayed whenever the mouse is moved over the Drawer to remind you
-   what is inside.  One may also select whether the <guibutton>hide
-   button</guibutton> and arrow are displayed at the end of the drawer.
+   Du kan konfigurere egenskaper for en skuff ved å høyreklikke på
+   skuffens ikon og velge
+   <guimenuitem>Egenskaper</guimenuitem>. Dette henter opp dialogen
+   <interface>Egenskaper for skuff</interface>. Her kan du velge
+   ikonet som brukes for skuffen ved å klikke på ikonet. Et verktøytips
+   kan skrives inn ved å skrive i feltet
+   <guilabel>Verktøytips/Navn</guilabel>. Dette verktøytipset
+   vises når musen beveges over skuffen for å minne deg på hva som er
+   inne i skuffen. Man kan også velge om <guibutton>skjul-
+   knappen</guibutton> og pilen skal vises på kanten av skuffen.
   </para>
   <figure>
-   <title>Drawer Properties Dialog</title>
+   <title>Dialogen egenskaper for skuff</title>
    <screenshot>
-    <screeninfo>Drawer Properties Dialog</screeninfo>
+    <screeninfo>Dialogen egenskaper for skuff</screeninfo>
     <graphic fileref="./figures/drawer_properties" format="png"
      srccredit="dcm">
     </graphic>
    </screenshot>
   </figure>
   <para>
-   You may also control the background of the Drawer. Just right click
-   on the Drawer and select the <guilabel>Background</guilabel> tab to
-   bring up the standard <interface>Panel Background
-   Dialog</interface> (see <xref linkend="panelbacktab">).  </para>
+   Du kan også kontrollere bakgrunnen for skuffen. Bare høyreklikk
+   på skuffen og velg fanen <guilabel>Bakgrunn</guilabel> for å
+   hente opp den vanlige <interface>Panelbakgrunn-
+   dialogen</interface> (se <xref linkend="panelbacktab">).  </para>
  </sect1>
 
 
 
 <!-- ###########  Special Panel Objects  ############## -->
  <sect1 id="specialobjects">
-  <title>Special Panel Objects</title>
+  <title>Spesielle panelobjecter</title>
   <para>
-   There are several special panel objects which are not considered
-   Menus, Applets, or Launchers.  These special objects are described
-   below.
+   Det finnes flere spesielle panelobjekter som ikke regnes for å være
+   menyer, appleter eller oppstartere. Disse spesielle objektene beskrives
+   under.
   </para>
   <sect2 id="lockbutton">
-   <title>The Lock Button</title>
+   <title>Lås-knappen</title>
    <figure>
-    <title>The Lock Button</title>
+    <title>Lås-knappen</title>
     <screenshot>
-     <screeninfo>The Lock Button</screeninfo>
+     <screeninfo>Lås-knappen</screeninfo>
      <graphic fileref="./figures/panel_lockbut" format="png"
      srccredit="muet">
      </graphic>
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Lock Button</guibutton> is a
-    <interface>Panel</interface> button which  begins a screensaver
-    which locks the screen. In order to remove the screensaver and
-    access the GNOME session again, you must supply your password.
-    For more information on locking the screen, see <xref
+    <guibutton>Lås-knappen</guibutton> er en
+    <interface>Panel</interface>-knapp som starter en skjermsparer
+    som låser skjermen. For å fjerne skjermspareren og gå tilbake
+    til GNOME-sesjonen igjen må du oppgi ditt passord. For mer
+    informasjon om låsing av skjermen se <xref
     linkend="lockscreen">.
    </para>
   </sect2>
   <sect2 id="logoutbutton">
-   <title>The Logout Button</title>
+   <title>Logg ut knappen</title>
    <figure id="logoutbuttonfig">
-    <title>The Logout Button</title>
+    <title>Logg ut knappen</title>
     <screenshot>
-     <screeninfo>The Logout Button</screeninfo>
+     <screeninfo>Logg ut knappen</screeninfo>
      <graphic fileref="./figures/panel_logoutbut"
      format="png" srccredit="muet">
      </graphic>
     </screenshot>
    </figure>
    <para>
-    The <guibutton>Logout</guibutton> button is used to exit the GNOME
-    desktop environment.  It initiates the logout sequence, bringing
-    up the <interface>Logout Dialog</interface>, as described in <xref
+    <guibutton>Logg ut</guibutton>-knappen brukes for å avslutte GNOME
+    skrivebordsmiljøet. Dette starter utloggingssekvensen som henter opp
+    <interface>Logg ut dialogen</interface>, som beskrevet i <xref
     linkend="loggingout">.
    </para>
   </sect2>
   <sect2 id="swallowedapps">
-   <title>Swallowed Applications</title>
+   <title>Slukte applikasjoner</title>
    <para>
-    The GNOME <interface>Panel</interface> allows you to run
-    applications which are not  applets inside the
-    <interface>Panel</interface> as if they were applets.
-    Applications  which you pull into the
-    <interface>Panel</interface>, even though they are not GNOME
-    applets, are called "swallowed applications".  Applications do not
-    have to be GNOME-compliant to be swallowed.  In general, the only
-    constraints for swallowing an application are that the application
-    must be small enough to fit in your panel and you must know the
-    title of the window you would like to swallow.  In many cases, the
-    application can be automatically shrank to fit in the
-    <interface>Panel</interface>,  as specified in the
-    <interface>Create Swallowed Application Dialog.</interface>.
+    GNOME <interface>Panelet</interface> lar deg kjøre applikasjoner
+    som ikke er appleter inne i interface>Panel</interface> som om de var
+    appleter. Applikasjoner som du trekker inn i
+    <interface>Panelet</interface>, uansett om de ikke er GNOME
+    appleter, kalles "slukte applikasjoner". Applikasjoner må ikke
+    støtte alle GNOME-standarder for å bli slukt. Vanligvis er de eneste
+    begrensningene for å sluke en applikasjon at applikasjonen må være
+    liten nok til å få plass i panelet og du må vite tittelen på
+    vinduet su skal sluke. I mange tilfeller kan applikasjonen krympes
+    automatisk slik at den passer i <interface>Panel</interface>,
+    som spesifisert i <interface>Opprett slukte applikasjoner-dialogen.</interface>.
    </para>
    <figure id="swallappfig">
-     <title>Create Swallowed Application Dialog</title>
+XXX     <title>Create Swallowed Application Dialog</title>
      <screenshot>
       <screeninfo>Create Swallowed Application Dialog</screeninfo>
       <graphic fileref="./figures/panel_swallow" format="png"
