@@ -35,6 +35,9 @@ extern GList *applets;
 extern GList *applets_last;
 extern int applet_count;
 
+/*list of all panel widgets created*/
+extern GList *panel_list;
+
 extern GlobalConfig global_config;
 
 extern int config_sync_timeout;
@@ -1428,18 +1431,89 @@ create_applets_menu(int fake_submenus)
 	return applet_menu;
 }
 
+/*find the most empty spot, slightly hackish but kind of cool:)*/
+static SnappedPos
+find_empty_spos(void)
+{
+	GList *li;
+	int i;
+	int low = 0;
+	int posscore[4]={0,0,0,0};
+	for(li=panel_list;li!=NULL;li=g_list_next(li)) {
+		PanelData *pd = li->data;
+		if(IS_DRAWER_WIDGET(pd->panel))
+			continue;
+		else if(IS_SNAPPED_WIDGET(pd->panel)) {
+			SnappedWidget *sw = SNAPPED_WIDGET(pd->panel);
+			posscore[sw->pos]+=3;
+			posscore[(sw->pos+1)%4]++;
+			posscore[(sw->pos+3)%4]++;
+		} else if(IS_CORNER_WIDGET(pd->panel)) {
+			CornerWidget *cw = CORNER_WIDGET(pd->panel);
+			PanelWidget *panel = PANEL_WIDGET(cw->panel);
+			int cor = (cw->pos%2)?1-panel->orient:panel->orient;
+			posscore[(cw->pos+cor)%4]+=3;
+			posscore[(cw->pos+(1-cor))%4]++;
+		}
+	}
+
+	for(i=1;i<4;i++) {
+		if(posscore[i]<posscore[low])
+			low = i;
+	}
+	return (SnappedPos)low;
+}
+
+/*find the most empty spot, slightly hackish but kind of cool:)*/
+static void
+find_empty_cpos_cori(CornerPos *cpos, PanelOrientation *cori)
+{
+	GList *li;
+	int i;
+	int low = 0;
+	int posscore[8]={0,0,0,0,0,0,0,0};
+	for(li=panel_list;li!=NULL;li=g_list_next(li)) {
+		PanelData *pd = li->data;
+		if(IS_DRAWER_WIDGET(pd->panel))
+			continue;
+		else if(IS_SNAPPED_WIDGET(pd->panel)) {
+			SnappedWidget *sw = SNAPPED_WIDGET(pd->panel);
+			posscore[(sw->pos*2)]+=3;
+			posscore[((sw->pos*2)+6)%8]+=3;
+			posscore[(sw->pos*2)+1]++;
+			posscore[((sw->pos*2)+7)%8]++;
+		} else if(IS_CORNER_WIDGET(pd->panel)) {
+			CornerWidget *cw = CORNER_WIDGET(pd->panel);
+			PanelWidget *panel = PANEL_WIDGET(cw->panel);
+			int cor = (cw->pos%2)?1-panel->orient:panel->orient;
+			posscore[(cw->pos*2)+cor]+=3;
+			posscore[(cw->pos*2)+(1-cor)]++;
+		}
+	}
+
+	for(i=1;i<8;i++) {
+		if(posscore[i]<posscore[low])
+			low = i;
+	}
+	*cpos = (CornerPos)(low/2);
+	*cori = (PanelOrientation)(((*cpos)%2)?1-(low%2):(low%2));
+}
+
 static void
 create_new_panel(GtkWidget *w,gpointer data)
 {
 	PanelType type = GPOINTER_TO_INT(data);
 	GdkColor bcolor = {0,0,0,1};
 	GtkWidget *panel;
-	
+
+	CornerPos cpos;
+	PanelOrientation cori;
+
 	switch(type) {
 	case DRAWER_PANEL:
 		break; /*we don't handle this one here*/
 	case SNAPPED_PANEL: 
-		panel = snapped_widget_new(SNAPPED_BOTTOM,
+		panel = snapped_widget_new(find_empty_spos(),
 					   SNAPPED_EXPLICIT_HIDE,
 					   SNAPPED_SHOWN,
 					   TRUE,
@@ -1452,8 +1526,9 @@ create_new_panel(GtkWidget *w,gpointer data)
 		gtk_widget_show(panel);
 		break;
 	case CORNER_PANEL: 
-		panel = corner_widget_new(CORNER_NE,
-					  PANEL_HORIZONTAL,
+		find_empty_cpos_cori(&cpos,&cori);
+		panel = corner_widget_new(cpos,
+					  cori,
 					  CORNER_SHOWN,
 					  TRUE,
 					  TRUE,
@@ -1469,7 +1544,6 @@ create_new_panel(GtkWidget *w,gpointer data)
 	panels_to_sync = TRUE;
 }
 
-
 static GtkWidget *
 create_add_panel_submenu (void)
 {
@@ -1478,21 +1552,14 @@ create_add_panel_submenu (void)
 	menu = gtk_menu_new ();
 	
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Drawer"));
-	gtk_menu_append (GTK_MENU (menu), menuitem);
-	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
-			   (GtkSignalFunc) add_drawer_to_panel,
-			   NULL);
-
-	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Edge Panel"));
+	setup_menuitem (menuitem, 0, _("Edge panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) create_new_panel,
 			   (gpointer)SNAPPED_PANEL);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("Corner Panel"));
+	setup_menuitem (menuitem, 0, _("Corner panel"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   (GtkSignalFunc) create_new_panel,
@@ -1510,7 +1577,7 @@ create_system_menu(GtkWidget *menu, int fake_submenus)
 	menudir = g_concat_dir_and_file (menu_base, ".");
 	g_free (menu_base);
 	if (g_file_exists (menudir)) {
-		menu = create_menu_at (menu,menudir,FALSE,_("System Menus"),
+		menu = create_menu_at (menu,menudir,FALSE,_("System menus"),
 				       gnome_folder, fake_submenus, FALSE);
 		g_return_val_if_fail(menu,NULL);
 		g_free (menudir);
@@ -1530,7 +1597,7 @@ create_user_menu(GtkWidget *menu, int fake_submenus, int force)
 		mkdir (menu_base, 0755);
 	g_free (menu_base);
 	menu = create_menu_at (menu,menudir, FALSE,
-			       _("User Menus"),
+			       _("User menus"),
 			       gnome_folder,fake_submenus,
 			       force);
 	g_free (menudir); 
@@ -1547,7 +1614,7 @@ create_panel_root_menu(GtkWidget *panel)
 	panel_menu = gtk_menu_new();
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("System Menus"));
+	setup_menuitem (menuitem, 0, _("System menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = gtk_menu_new();
 	create_system_menu(menu,TRUE);
@@ -1557,7 +1624,7 @@ create_panel_root_menu(GtkWidget *panel)
 			   NULL);
 
 	menuitem = gtk_menu_item_new ();
-	setup_menuitem (menuitem, 0, _("User Menus"));
+	setup_menuitem (menuitem, 0, _("User menus"));
 	gtk_menu_append (GTK_MENU (panel_menu), menuitem);
 	menu = gtk_menu_new();
 	create_user_menu(menu,TRUE,TRUE);
@@ -1612,10 +1679,105 @@ ask_about_launcher_cb(GtkWidget *w, gpointer data)
 	ask_about_launcher(NULL,current_panel,0);
 }
 
+static void
+convert_to_panel(GtkWidget *w, gpointer data)
+{
+	PanelType type = GPOINTER_TO_INT(data);
+	GdkColor bcolor = {0,0,0,1};
+	GtkWidget *panel;
+	PanelWidget *newpanel = NULL;
+	GtkWidget *pw;
+	CornerWidget *cw;
+	SnappedWidget *sw;
+	int i,cor;
+
+	g_return_if_fail(current_panel != NULL);
+	
+	pw = gtk_object_get_data(GTK_OBJECT(current_panel),"panel_parent");
+	g_return_if_fail(pw != NULL);
+	
+	switch(type) {
+	case SNAPPED_PANEL:
+		/*we know that it's a corner widget since only
+		  corner widget is ever converted to snapped*/
+		cw = CORNER_WIDGET(pw);
+
+		cor = (cw->pos%2)?1-current_panel->orient:current_panel->orient;
+		panel = snapped_widget_new((cw->pos+cor)%4,
+					   SNAPPED_EXPLICIT_HIDE,
+					   SNAPPED_SHOWN,
+					   cw->hidebuttons_enabled,
+					   cw->hidebutton_pixmaps_enabled,
+					   current_panel->back_type,
+					   current_panel->back_pixmap,
+					   current_panel->fit_pixmap_bg,
+					   &current_panel->back_color);
+		panel_setup(panel);
+		gtk_widget_show(panel);
+		newpanel = PANEL_WIDGET(SNAPPED_WIDGET(panel)->panel);
+		break;
+	case CORNER_PANEL: 
+		/*we know that it's a snapped widget since only
+		  snapped widget is ever converted to corner*/
+		sw = SNAPPED_WIDGET(pw);
+		panel = corner_widget_new((sw->pos==SNAPPED_TOP ||
+					   sw->pos==SNAPPED_RIGHT)?
+					  CORNER_NE:CORNER_SW,
+					  (sw->pos==SNAPPED_TOP ||
+					   sw->pos==SNAPPED_BOTTOM)?
+					  PANEL_HORIZONTAL:PANEL_VERTICAL,
+					  CORNER_SHOWN,
+					  sw->hidebuttons_enabled,
+					  sw->hidebutton_pixmaps_enabled,
+					  current_panel->back_type,
+					  current_panel->back_pixmap,
+					  current_panel->fit_pixmap_bg,
+					  &current_panel->back_color);
+		panel_setup(panel);
+		gtk_widget_show(panel);
+		newpanel = PANEL_WIDGET(CORNER_WIDGET(panel)->panel);
+		break;
+	default: g_assert_not_reached();
+	}
+	panels_to_sync = TRUE;
+	for(i=0;current_panel->applet_list!=NULL;i++) {
+		AppletData *ad = current_panel->applet_list->data;
+		panel_widget_reparent(current_panel,newpanel,ad->applet,i);
+		printf("%lX, %d\n",(long)ad->applet,i);
+	}
+	gtk_widget_destroy(pw);
+}
+
+static void
+show_x_on_panels(GtkWidget *menu, gpointer data)
+{
+	GtkWidget *pw;
+	GtkWidget *convcorn = gtk_object_get_data(GTK_OBJECT(menu),"convcorn");
+	GtkWidget *convsnap = gtk_object_get_data(GTK_OBJECT(menu),"convsnap");
+	g_return_if_fail(current_panel != NULL);
+	g_return_if_fail(convcorn != NULL);
+	g_return_if_fail(convsnap != NULL);
+	
+	pw = gtk_object_get_data(GTK_OBJECT(current_panel),"panel_parent");
+	g_return_if_fail(pw != NULL);
+	
+	if(IS_SNAPPED_WIDGET(pw)) {
+		gtk_widget_show(convcorn);
+		gtk_widget_hide(convsnap);
+	} else if(IS_CORNER_WIDGET(pw)) {
+		gtk_widget_hide(convcorn);
+		gtk_widget_show(convsnap);
+	} else {
+		gtk_widget_hide(convcorn);
+		gtk_widget_hide(convsnap);
+	}
+}
+
 void
 make_panel_submenu (GtkWidget *menu, int fake_submenus)
 {
 	GtkWidget *menuitem;
+	GtkWidget *a,*b;
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add applet"));
@@ -1635,11 +1797,39 @@ make_panel_submenu (GtkWidget *menu, int fake_submenus)
 	add_menu_separator(menu);
 
 	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Convert to corner panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) convert_to_panel,
+			   GINT_TO_POINTER(CORNER_PANEL));
+	gtk_object_set_data(GTK_OBJECT(menu),"convcorn",menuitem);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Convert to edge panel"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) convert_to_panel,
+			   GINT_TO_POINTER(SNAPPED_PANEL));
+	gtk_object_set_data(GTK_OBJECT(menu),"convsnap",menuitem);
+	
+	gtk_signal_connect(GTK_OBJECT(menu),"show",
+			   GTK_SIGNAL_FUNC(show_x_on_panels),NULL);
+
+
+	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add main menu"));
 	gtk_menu_append (GTK_MENU (menu), menuitem);
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 			   GTK_SIGNAL_FUNC(add_menu_to_panel),
 			   NULL);
+
+	menuitem = gtk_menu_item_new ();
+	setup_menuitem (menuitem, 0, _("Add drawer"));
+	gtk_menu_append (GTK_MENU (menu), menuitem);
+	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+			   (GtkSignalFunc) add_drawer_to_panel,
+			   NULL);
+
 
 	menuitem = gtk_menu_item_new ();
 	setup_menuitem (menuitem, 0, _("Add log out button"));
@@ -2080,7 +2270,7 @@ create_root_menu(int fake_submenus, MainMenuType type)
 	
 	if(type == MAIN_MENU_USER) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("System Menus"));
+		setup_menuitem (menuitem, 0, _("System menus"));
 		gtk_menu_append (GTK_MENU (uroot_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 					   root_menu);
@@ -2090,7 +2280,7 @@ create_root_menu(int fake_submenus, MainMenuType type)
 		root_menu = uroot_menu;
 	} else if(type == MAIN_MENU_SYSTEM) {
 		menuitem = gtk_menu_item_new ();
-		setup_menuitem (menuitem, 0, _("User Menus"));
+		setup_menuitem (menuitem, 0, _("User menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
 		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
 					   uroot_menu);
@@ -2426,14 +2616,14 @@ create_properties_dialog(Menu *menu)
 	vbox = gtk_vbox_new(FALSE,5);
 	gtk_container_set_border_width(GTK_CONTAINER(vbox),5);
 
-	f = gtk_frame_new(_("Menu Type"));
+	f = gtk_frame_new(_("Menu type"));
 	gtk_box_pack_start(GTK_BOX(vbox),f,FALSE,FALSE,0);
 	
 	box = gtk_hbox_new(FALSE,5);
 	gtk_container_set_border_width(GTK_CONTAINER(box),5);
 	gtk_container_add(GTK_CONTAINER(f),box);
 	
-	w = gtk_radio_button_new_with_label (NULL, _("Main Menu"));
+	w = gtk_radio_button_new_with_label (NULL, _("Main menu"));
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_menu",w);
 	if(!menu->path || strcmp(menu->path,".")==0)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w), TRUE);
@@ -2444,7 +2634,7 @@ create_properties_dialog(Menu *menu)
 
 	w2 = gtk_radio_button_new_with_label (
 			  gtk_radio_button_group (GTK_RADIO_BUTTON (w)),
-			  _("Normal Menu"));
+			  _("Normal menu"));
 	if(menu->path && strcmp(menu->path,".")!=0)
 		gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(w2), TRUE);
 	gtk_signal_connect (GTK_OBJECT (w2), "toggled", 
@@ -2453,7 +2643,7 @@ create_properties_dialog(Menu *menu)
 	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
 
 
-	f = gtk_frame_new(_("Main Menu"));
+	f = gtk_frame_new(_("Main menu"));
 	if(menu->path && strcmp(menu->path,".")!=0)
 		gtk_widget_set_sensitive(f,FALSE);
 	gtk_object_set_data(GTK_OBJECT(dialog),"main_frame",f);
@@ -2494,7 +2684,7 @@ create_properties_dialog(Menu *menu)
 			    dialog);
 	gtk_box_pack_start(GTK_BOX(box),w2,TRUE,TRUE,0);
 	
-	f = gtk_frame_new(_("Normal Menu"));
+	f = gtk_frame_new(_("Normal menu"));
 	if(!menu->path || strcmp(menu->path,".")==0)
 		gtk_widget_set_sensitive(f,FALSE);
 	gtk_object_set_data(GTK_OBJECT(dialog),"normal_frame",f);

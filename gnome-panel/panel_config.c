@@ -344,7 +344,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	}
 
 	/* Auto-hide/stayput frame */
-	frame = gtk_frame_new (_("Minimize Options"));
+	frame = gtk_frame_new (_("Minimize options"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
@@ -355,7 +355,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 	/* Auto-hide */
-	button = gtk_check_button_new_with_label(_("Auto Hide"));
+	button = gtk_check_button_new_with_label(_("Auto hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->snapped_mode == SNAPPED_AUTO_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
@@ -455,7 +455,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_container_add (GTK_CONTAINER (frame), table);
 	
 	/* North East Position */
-	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("North East"));
+	ppc->t_button = gtk_radio_button_new_with_label (NULL, _("North east"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->t_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->t_button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_pos), 
@@ -466,7 +466,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	/* Bottom Position */
 	ppc->b_button = gtk_radio_button_new_with_label (
 		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		 _("South West"));
+		 _("South west"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->b_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->b_button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_pos), 
@@ -477,7 +477,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	/* North West Position */
 	ppc->l_button = gtk_radio_button_new_with_label (
 		  gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		  _("North West"));
+		  _("North west"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->l_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->l_button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_pos), 
@@ -488,7 +488,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 	/* South East Position */
 	ppc->r_button = gtk_radio_button_new_with_label (
 		 gtk_radio_button_group (GTK_RADIO_BUTTON (ppc->t_button)),
-		 _("South East"));
+		 _("South east"));
 	gtk_object_set_user_data(GTK_OBJECT(ppc->r_button),ppc);
 	gtk_signal_connect (GTK_OBJECT (ppc->r_button), "toggled", 
 			    GTK_SIGNAL_FUNC (corner_set_pos), 
@@ -555,7 +555,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 			    CONFIG_PADDING_SIZE);
 
 	/* Hidebuttons frame */
-	frame = gtk_frame_new (_("Hidebutton Options"));
+	frame = gtk_frame_new (_("Hidebutton options"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
@@ -876,13 +876,13 @@ panel_config(GtkWidget *panel)
 		page = snapped_notebook_page (ppc);
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 					  page,
-					  gtk_label_new (_("Edge Panel")));
+					  gtk_label_new (_("Edge panel")));
 	} else if(IS_CORNER_WIDGET(panel)) {
 		/* Corner notebook page */
 		page = corner_notebook_page (ppc);
 		gtk_notebook_append_page (GTK_NOTEBOOK(prop_nbook),
 					  page,
-					  gtk_label_new (_("Corner Panel")));
+					  gtk_label_new (_("Corner panel")));
 	} else if(IS_DRAWER_WIDGET(panel)) {
 		DrawerWidget *dw = DRAWER_WIDGET(panel);
 		GtkWidget *applet = PANEL_WIDGET(dw->panel)->master_widget;

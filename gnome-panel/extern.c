@@ -402,7 +402,7 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 				*globcfgpath = CORBA_string_dup(old_panel_cfg_path);
 				info->type = APPLET_EXTERN_RESERVED;
 				*wid=GDK_WINDOW_XWINDOW(socket->window);
-				printf("\nSOCKET XID: %lX\n\n", *wid);
+				printf("\nSOCKET XID: %lX\n\n", (long)*wid);
 
 				panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 				acc = PortableServer_POA_servant_to_reference(thepoa, panelspot_servant, ev);

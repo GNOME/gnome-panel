@@ -724,7 +724,6 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 		bevent = (GdkEventButton *) event;
 		switch(bevent->button) {
 		case 3: /* fall through */
-		case 1:
 			if(!panel_applet_in_drag) {
 				GtkWidget *rem = 
 					gtk_object_get_data(GTK_OBJECT(widget),
@@ -796,6 +795,7 @@ panel_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 				return TRUE;
 			}
 			break;
+		default: break;
 		}
 		break;
 

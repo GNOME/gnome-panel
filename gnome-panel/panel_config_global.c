@@ -200,7 +200,7 @@ animation_notebook_page(void)
 
 
 	/* AutoHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Auto-Hide Animation Speed"),
+	frame = make_int_scale_frame(_("Auto-hide animation speed"),
 				      &(temp_config.auto_hide_step_size),
 				      1.0, 100.0, 1.0);
 	if (temp_config.disable_animations)
@@ -211,7 +211,7 @@ animation_notebook_page(void)
 	aniframe[0] = frame;
 
 	/* ExplicitHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Explicit-Hide Animation Speed"),
+	frame = make_int_scale_frame(_("Explicit-hide animation speed"),
 				      &(temp_config.explicit_hide_step_size),
 				      1.0, 100.0, 1.0);
 	if (temp_config.disable_animations)
@@ -222,7 +222,7 @@ animation_notebook_page(void)
 	aniframe[1] = frame;
 
 	/* DrawerHide Animation step_size scale frame */
-	frame = make_int_scale_frame(_("Drawer Animation Speed"),
+	frame = make_int_scale_frame(_("Drawer animation speed"),
 				      &(temp_config.drawer_step_size),
 				      1.0, 100.0, 1.0);
 	if (temp_config.disable_animations)
@@ -233,14 +233,14 @@ animation_notebook_page(void)
 	aniframe[2] = frame;
 
 	/* Minimize Delay scale frame */
-	frame = make_int_scale_frame(_("Auto-Hide Minimize Delay (ms)"),
+	frame = make_int_scale_frame(_("Auto-hide minimize delay (ms)"),
 				      &(temp_config.minimize_delay),
 				      30.0, 10000.0, 10.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
 	/* Minimized size scale frame */
-	frame = make_int_scale_frame(_("Auto-Hide Minimized Size (pixels)"),
+	frame = make_int_scale_frame(_("Auto-hide minimized size (pixels)"),
 				      &(temp_config.minimized_size),
 				      1.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE,
@@ -485,7 +485,7 @@ misc_notebook_page(void)
 			    CONFIG_PADDING_SIZE);	
 	
 	/* Logout frame */
-	frame = gtk_frame_new (_("Log Out"));
+	frame = gtk_frame_new (_("Log out"));
 	gtk_container_set_border_width(GTK_CONTAINER (frame), CONFIG_PADDING_SIZE);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
 			    CONFIG_PADDING_SIZE);
@@ -506,7 +506,7 @@ misc_notebook_page(void)
 			    CONFIG_PADDING_SIZE);
 
 	/* Minimize Delay scale frame */
-	frame = make_int_scale_frame(_("Applet Padding"),
+	frame = make_int_scale_frame(_("Applet padding"),
 				      &(temp_config.applet_padding),
 				      0.0, 10.0, 1.0);
 	gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE,
@@ -545,7 +545,7 @@ panel_config_global(void)
 	gtk_signal_connect (GTK_OBJECT (box), "delete_event",
 			    GTK_SIGNAL_FUNC (config_destroy), NULL);
 	gtk_window_set_title (GTK_WINDOW(box),
-			      _("Global Panel Configuration"));
+			      _("Global panel configuration"));
 	gtk_container_set_border_width (GTK_CONTAINER(box), CONFIG_PADDING_SIZE);
 	
 	prop_nbook = GNOME_PROPERTY_BOX (box)->notebook;

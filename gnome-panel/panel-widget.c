@@ -1785,13 +1785,10 @@ panel_widget_applet_move_to_cursor(PanelWidget *panel)
 static int
 move_timeout_handler(gpointer data)
 {
-	int r;
 	g_return_val_if_fail(data!=NULL,FALSE);
 	g_return_val_if_fail(IS_PANEL_WIDGET(data),FALSE);
 	
-	r = panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
-	printf("MOVE(%d)\n",r);
-	return r;
+	return panel_widget_applet_move_to_cursor(PANEL_WIDGET(data));
 }
 
 void

@@ -34,7 +34,7 @@ typedef struct _AppletRecord		AppletRecord;
 typedef struct _AppletData		AppletData;
 typedef struct _DNDRecord		DNDRecord;
 typedef enum {
-	PANEL_HORIZONTAL,
+	PANEL_HORIZONTAL=0,
 	PANEL_VERTICAL
 } PanelOrientation;
 typedef enum {
