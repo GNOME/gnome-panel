@@ -224,11 +224,6 @@ fr_free (FileRec *fr, gboolean free_fr)
 	g_free (fr->tryexec_path);
 	fr->tryexec_path = NULL;
 
-	if (fr->parent != NULL &&
-	    free_fr)
-		fr->parent->recs = g_slist_remove (fr->parent->recs, fr);
-	fr->parent = NULL;
-
 	if (fr->type == FILE_REC_DIR) {
 		DirRec *dr = (DirRec *)fr;
 		GSList *li;
@@ -258,9 +253,14 @@ fr_free (FileRec *fr, gboolean free_fr)
 	}
 
 	if (free_fr) {
+		if (fr->parent != NULL) {
+			fr->parent->recs = g_slist_remove (fr->parent->recs, fr);
+			fr->parent = NULL;
+		}
 		g_free (fr);
 	} else  {
 		int type = fr->type;
+		DirRec *parent = fr->parent;
 		if (fr->type == FILE_REC_DIR)
 			memset (fr, 0, sizeof(DirRec));
 		else
@@ -268,6 +268,7 @@ fr_free (FileRec *fr, gboolean free_fr)
 		/* we must reset the type so that we don't crash
 		 * if we call fr_free on this again */
 		fr->type = type;
+		fr->parent = parent;
 	}
 }
 
@@ -305,6 +306,7 @@ fr_fill_dir (FileRec *fr, int sublevels)
 			FileRec *ffr = fr_read_dir (NULL, name, mfile->mtime,
 						     sublevels - 1);
 			if (ffr != NULL) {
+				ffr->parent = dr;
 				dr->recs = g_slist_prepend (dr->recs, ffr);
 			}
 		} else {
@@ -483,12 +485,10 @@ FileRec *
 fr_replace (FileRec *fr)
 {
 	char *name = fr->name;
-	DirRec *par = fr->parent;
 	
 	g_assert (fr->type == FILE_REC_DIR);
 
 	/* null these so they don't get freed */
-	fr->parent = NULL;
 	fr->name = NULL;
 
 	/* don't free the actual structure */
@@ -498,8 +498,7 @@ fr_replace (FileRec *fr)
 	fr->type = FILE_REC_DIR;
 
 	fr = fr_read_dir ((DirRec *)fr, name, 0, 1);
-	if (fr != NULL)
-		fr->parent = par;
+
 	g_free (name);
 
 	return fr;

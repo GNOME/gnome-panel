@@ -1,4 +1,12 @@
 2004-05-28  Mark McLoughlin  <mark@skynet.ie>
+2004-06-02  Mark McLoughlin  <mark@skynet.ie>
+
+	Patch from Chris Lahey <clahey@ximian.com> in bug #138720
+	to fix a crash while menu editing.
+
+	* menu-fentry.c: (fr_free), (fr_fill_dir), (fr_replace):
+	Fixup to make sure FileRec::parent is updated correctly. 
+
 
 	* panel-recent.c: (show_uri),
 	  panel-run-dialog.c: (panel_run_dialog_append_file_utf8),
