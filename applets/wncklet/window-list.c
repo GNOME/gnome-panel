@@ -817,7 +817,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	tasklist->about = gtk_about_dialog_new ();
 	g_object_set (tasklist->about,
-		      "name",  _("Workspace List"),
+		      "name",  _("Window List"),
 		      "version", VERSION,
 		      "copyright", "Copyright \xc2\xa9 2001-2002 Red Hat, Inc.",
 		      "comments", _("The Window List shows a list of all windows and lets you browse them."),
