@@ -1,3 +1,9 @@
+1999-06-04  Jacob Berkman  <jberkman@andrew.cmu.edu>
+
+	* panel.c (panel_applet_removed):  check to see if drawer->drawer is NULL,
+	to avoid crash when removing a drawer by 'remove panel' on the panel 
+	and not 'remove applet' on the applet
+
 Sat Apr 24 20:23:57 1999  George Lebl  <jirka@5z.com>
 
 	* menu.c: fix problem with right clicking on a user-writable menu

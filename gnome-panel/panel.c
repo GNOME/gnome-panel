@@ -543,7 +543,8 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
-		if(DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN) {
+		if((drawer->drawer) && 
+		   (DRAWER_WIDGET(drawer->drawer)->state == DRAWER_SHOWN)) {
 			if(IS_SNAPPED_WIDGET(parentw)) {
 				SNAPPED_WIDGET(parentw)->drawers_open--;
 				snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
