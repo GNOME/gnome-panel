@@ -152,7 +152,6 @@ void orientation_change(gint applet_id, PanelWidget *panel);
 #	define ITOP(i) (gpointer)((gshort)i)
 #endif
 
-
 END_GNOME_DECLS
 
 #endif
