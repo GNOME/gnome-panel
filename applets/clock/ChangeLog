@@ -1,3 +1,11 @@
+2002-06-07  Mark McLoughlin <mark@skynet.ie>
+
+	* clock.c: (setup_gconf): store the notifies
+	ids.
+	(destroy_clock): remove the notifies when the
+	applet is destroyed. Fixes crash when removing
+	the applet.
+
 2002-06-02  Havoc Pennington  <hp@pobox.com>
 
 	* pager.glade: revert one of Rajkumar's changes to strings

@@ -30,6 +30,7 @@
 #define INTERNETSECOND (864)
 #define INTERNETBEAT   (86400)
 
+#define N_GCONF_PREFS 6
 static const char* KEY_HOUR_FORMAT	= "hour_format";
 static const char* KEY_SHOW_SECONDS 	= "show_seconds";
 static const char* KEY_SHOW_DATE 	= "show_date";
@@ -61,6 +62,8 @@ struct _ClockData {
 	int timeouttime;
 	PanelAppletOrient orient;
 	int size;
+
+	guint listeners [N_GCONF_PREFS];
 };
 
 static void update_clock (ClockData * cd, time_t current_time);
@@ -328,6 +331,15 @@ refresh_clock_timeout(ClockData *cd)
 static void
 destroy_clock(GtkWidget * widget, ClockData *cd)
 {
+	GConfClient *client;
+	int          i;
+
+	client = gconf_client_get_default ();
+
+	for (i = 0; i < N_GCONF_PREFS; i++)
+		gconf_client_notify_remove (
+				client, cd->listeners [i]);
+
 	if (cd->timeout > 0) {
 		g_source_remove (cd->timeout);
 		cd->timeout = 0;
@@ -442,8 +454,8 @@ copy_time (BonoboUIComponent *uic,
 		else
 			g_snprintf (string, sizeof (string), "@%3.0f", itime);
 	} else {
-		const char *format;
 		struct tm *tm;
+		char      *format;
 
 		if (cd->hourformat == 12) {
 			if (cd->showseconds)
@@ -621,56 +633,62 @@ static void
 setup_gconf (ClockData *clock)
 {
 	GConfClient *client;
-	char *key;
+	char        *key;
 
 	client = gconf_client_get_default ();
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_HOUR_FORMAT);
-	gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)hour_format_changed,
-				clock,
-				NULL, NULL);
+	clock->listeners [0] =
+		gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) hour_format_changed,
+				clock, NULL, NULL);
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_SHOW_SECONDS);
-	gconf_client_notify_add(client, key,
+	clock->listeners [1] =
+			gconf_client_notify_add (
+				client, key,
 				(GConfClientNotifyFunc)show_seconds_changed,
-				clock,
-				NULL, NULL);
+				clock, NULL, NULL);
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_SHOW_DATE);
-	gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)show_date_changed,
-				clock,
-				NULL, NULL);
+	clock->listeners [2] =
+			gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) show_date_changed,
+				clock, NULL, NULL);
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_GMT_TIME);
-	gconf_client_notify_add(client, key,
-				(GConfClientNotifyFunc)gmt_time_changed,
-				clock,
-				NULL, NULL);
+	clock->listeners [3] =
+			gconf_client_notify_add (
+				client, key,
+				(GConfClientNotifyFunc) gmt_time_changed,
+				clock, NULL, NULL);
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_UNIX_TIME);
-	gconf_client_notify_add(client, key,
+	clock->listeners [4] =
+		gconf_client_notify_add (
+				client, key,
 				(GConfClientNotifyFunc)unix_time_changed,
-				clock,
-				NULL, NULL);
+				clock, NULL, NULL);
 	g_free (key);
 
 	key = panel_applet_gconf_get_full_key (PANEL_APPLET (clock->applet),
 					       KEY_INTERNET_TIME);
-	gconf_client_notify_add(client, key,
+	clock->listeners [5] =
+		gconf_client_notify_add (
+				client, key,
 				(GConfClientNotifyFunc)internet_time_changed,
-				clock,
-				NULL, NULL);
+				clock, NULL, NULL);
 	g_free (key);
 }
 
