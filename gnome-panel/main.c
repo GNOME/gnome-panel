@@ -851,7 +851,7 @@ panel_applet_move(GtkWidget *panel,GtkWidget *widget, gpointer data)
 	return TRUE;
 }
 
-static gint panel_move( GtkWidget *widget, double x, double y )
+static gint panel_move( GtkWidget *widget, double x, double y, int time )
 {
 	gint panel_space;
 	gint width, height;
@@ -874,8 +874,20 @@ static gint panel_move( GtkWidget *widget, double x, double y )
 	}
 	if( newloc != panel->snapped)
 	{
-		panel_widget_change_params( panel, panel->orient, newloc, panel->mode, panel->fit_pixmap_bg, panel->state, panel->drawer_drop_zone_pos, panel->pixmap_enabled?panel->back_pixmap: NULL);
+		panel_widget_change_params( panel,
+					    panel->orient,
+					    newloc,
+					    panel->mode,
+					    panel->fit_pixmap_bg,
+					    panel->state,
+					    panel->drawer_drop_zone_pos,
+					    panel->pixmap_enabled ? panel->back_pixmap : NULL);
+		while( gtk_events_pending() )
+		{
+			gtk_main_iteration();
+		}
 	}
+	gdk_pointer_ungrab( time );
 	return TRUE;
 #if 0
 	gdk_window_get_geometry( panel->window->window, NULL, NULL, &width, &height, NULL );
@@ -911,14 +923,14 @@ static gint panel_move( GtkWidget *widget, double x, double y )
 static gint
 panel_move_callback(GtkWidget *panel,GdkEventMotion *event, gpointer data)
 {
-	return panel_move( panel, event->x_root, event->y_root );
+	return panel_move( panel, event->x_root, event->y_root, event->time );
 }
 
 
 static gint
 panel_move_release_callback(GtkWidget *panel,GdkEventButton *event, gpointer data)
 {
-	return panel_move( panel, event->x_root, event->y_root );
+	return panel_move( panel, event->x_root, event->y_root, event->time );
 }
 
 static void
@@ -964,7 +976,7 @@ panel_setup(PanelWidget *panel)
 				GTK_SIGNAL_FUNC(panel_move_callback),
 				panel);
 	gtk_signal_connect(GTK_OBJECT(panel),
-				"release_event",
+				"button_release_event",
 				GTK_SIGNAL_FUNC(panel_move_release_callback),
 				panel);
 
