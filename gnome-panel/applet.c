@@ -845,10 +845,8 @@ panel_applet_load_from_unique_id (AppletType   type,
 		return;
 	}
 
-	/*
-	 * A hack from the old panel to make sure the applet is on the right
-	 */
-	position += right_stick ? G_MAXINT/2 : 0;
+	if (right_stick)
+		position = panel_widget->size - position;
 
 	switch (applet_type) {
 	case APPLET_BONOBO: {
@@ -950,6 +948,8 @@ panel_applet_save_position (AppletInfo *applet_info,
 	GConfClient  *client;
 	const char   *profile;
 	const char   *temp_key;
+	gboolean      right_stick;
+	int           position;
 
 	g_return_if_fail (applet_info != NULL);
 
@@ -970,17 +970,23 @@ panel_applet_save_position (AppletInfo *applet_info,
 	client  = panel_gconf_get_client ();
 	profile = panel_gconf_get_profile ();
 
+	right_stick = panel_applet_get_right_stick (applet_info);
+	temp_key = panel_applet_get_full_gconf_key (
+			applet_info->type, profile, gconf_key, "panel_right_stick");
+	gconf_client_set_bool (client, temp_key, right_stick, NULL);
+
+	position = panel_applet_get_position (applet_info);
+	if (right_stick)
+		position = PANEL_WIDGET (applet_info->widget->parent)->size - position;
+
 	temp_key = panel_applet_get_full_gconf_key (
 			applet_info->type, profile, gconf_key, "position");
-	gconf_client_set_int (client, temp_key, panel_applet_get_position (applet_info), NULL);
+	gconf_client_set_int (client, temp_key, position, NULL);
 
 	temp_key = panel_applet_get_full_gconf_key (
 			applet_info->type, profile, gconf_key, "panel_id");
 	gconf_client_set_string (client, temp_key, panel_applet_get_panel_id (applet_info), NULL);
 
-	temp_key = panel_applet_get_full_gconf_key (
-			applet_info->type, profile, gconf_key, "panel_right_stick");
-	gconf_client_set_bool (client, temp_key, panel_applet_get_right_stick (applet_info), NULL);
 
 	gconf_client_suggest_sync (client, NULL);
 }

@@ -1,5 +1,13 @@
 2002-05-22  Mark McLoughlin  <mark@skynet.ie>
 
+	* applet.c: (panel_applet_load_from_unique_id),
+	(panel_applet_save_position): interpret the meaning of
+	the 'right_stick' property slightly differently to
+	fix #76925. This will break the ordering of your applets
+	the first time you load a panel with this fix.
+
+2002-05-22  Mark McLoughlin  <mark@skynet.ie>
+
 	* applet.c: (whack_applet_to_load): kill setting
 	panel_widget to NULL, just before we try and
 	use it ...
