@@ -431,13 +431,22 @@ state_hide_foreach(GtkWidget *w, gpointer data)
 	if(info->type == APPLET_DRAWER) {
 		Drawer *drawer = info->data;
 		BasePWidget *basep = BASEP_WIDGET(drawer->drawer);
+		GtkWidget *widget = GTK_WIDGET(basep);
 
 		DRAWER_POS (basep->pos)->temp_hidden = TRUE;
 		gtk_container_foreach(GTK_CONTAINER(basep->panel),
 				      state_hide_foreach,
 				      NULL);
 
-		gtk_widget_queue_resize (GTK_WIDGET (basep));
+		gtk_widget_queue_resize (widget);
+
+		/* quickly hide the window from sight, the allocation
+		   and all that will get updated in the main loop */
+		if(widget->window) {
+			gdk_window_move(widget->window,
+					-widget->allocation.width - 1,
+					-widget->allocation.height - 1);
+		}
 	}
 }
 

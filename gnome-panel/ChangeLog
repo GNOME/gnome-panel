@@ -1,3 +1,27 @@
+Wed Feb 09 02:06:20 2000  George Lebl <jirka@5z.com>
+
+	* gnome-panel-properties.c: the autoraise is no longer a non-gnome-wm
+	  option only
+
+	* basep-widget.c: do the autoraise even on compliant windowmanagers.
+	  Also state_change signal is now called BEFORE the animation occurs.
+	  The only purpose of the state_change signal is basically to
+	  show and hide drawers, and we want to hide drawers before we start
+	  moving.
+
+	* menu.c: fix a segfault when adding drawers
+
+	* drawer-widget.c: when hiding a drawer, raise the parent panel
+	  so that the drawer doesn't flash over the panel itself
+	  (XMoveResizeWindow first moves a window then resizes and I
+	  have no clue how to make both happen at the same time, so this
+	  is the only way to make it not be ugly).  Also in get_pos
+	  we check temp_hidden and return an offscreen pos if we are
+	  temp_hidden.
+
+	* panel.c: when temp_hiding a drawer, move it off screen with gdk
+	  so that the hiding is immediate.
+
 Mon Feb 07 18:43:42 2000  George Lebl <jirka@5z.com>
 
 	* session.c,extern.c: make the session saving check for non existent

@@ -435,8 +435,7 @@ basep_enter_notify(BasePWidget *basep,
 		basep_widget_autoshow (basep);
 	}  
 
-	if (!xstuff_is_compliant_wm() &&
-	    global_config.autoraise)
+	if (global_config.autoraise)
 		gdk_window_raise(GTK_WIDGET(basep)->window);
 
 	return FALSE;
@@ -598,7 +597,7 @@ basep_widget_do_hiding(BasePWidget *basep, PanelOrientType hide_orient,
 			(diff/1000.0)*200*(10001-(step*step));
 
 		basep_widget_set_ebox_orient(basep, hide_orient);
-		
+
 		while(x != dx ||
 		      y != dy ||
 		      w != dw ||
@@ -1368,6 +1367,13 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 	}
 
 	gnome_triggers_vdo("", NULL, supinfo);
+
+	gtk_signal_emit(GTK_OBJECT(basep),
+			basep_widget_signals[STATE_CHANGE_SIGNAL],
+			state);
+
+	/* if the app did any updating of the interface, flush that for us*/
+	gdk_flush();
 	
 	if (GTK_WIDGET_REALIZED(GTK_WIDGET(basep))) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
@@ -1393,11 +1399,6 @@ basep_widget_explicit_hide (BasePWidget *basep, BasePState state)
 
 	basep->state = state;
 	basep_widget_update_winhints (basep);
-
-	gtk_signal_emit(GTK_OBJECT(basep),
-			basep_widget_signals[STATE_CHANGE_SIGNAL],
-			basep->state);
-
 }
 
 void
@@ -1533,6 +1534,13 @@ basep_widget_autohide (gpointer data)
 
 	gnome_triggers_vdo("", NULL, supinfo);
 
+	gtk_signal_emit(GTK_OBJECT(basep),
+			basep_widget_signals[STATE_CHANGE_SIGNAL],
+			BASEP_AUTO_HIDDEN);
+
+	/* if the app did any updating of the interface, flush that for us*/
+	gdk_flush();
+
 	if (GTK_WIDGET_REALIZED(basep)) {
 		BasePPosClass *klass = basep_widget_get_pos_class (basep);
 		PanelOrientType hide_orient;
@@ -1560,10 +1568,6 @@ basep_widget_autohide (gpointer data)
 
 	basep->state = BASEP_AUTO_HIDDEN;
 	basep_widget_update_winhints (basep);
-
-	gtk_signal_emit(GTK_OBJECT(basep),
-			basep_widget_signals[STATE_CHANGE_SIGNAL],
-			BASEP_AUTO_HIDDEN);
 
 	basep->leave_notify_timer_tag = 0;
 	return FALSE;

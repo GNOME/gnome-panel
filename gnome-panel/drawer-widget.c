@@ -206,6 +206,10 @@ void
 drawer_widget_close_drawer (DrawerWidget *drawer, BasePWidget *parentp)
 {
 	BasePWidget *basep = BASEP_WIDGET (drawer);
+
+	if(GTK_WIDGET(parentp)->window)
+		gdk_window_raise(GTK_WIDGET(parentp)->window);
+
 	switch (DRAWER_POS (basep->pos)->orient) {
 	case ORIENT_UP:
 	case ORIENT_LEFT:
@@ -260,6 +264,14 @@ drawer_pos_get_pos(BasePWidget *basep,
 {
 	PanelWidget *panel = PANEL_WIDGET(basep->panel);
 	DrawerPos *pos = DRAWER_POS (basep->pos);
+
+	/* we are shown but we are hidden, life is full of ironies */
+	if (pos->temp_hidden) {
+		*x = -width - 1;
+		*y = -height - 1;
+		return;
+	}
+
 	if (panel->master_widget &&
 	    GTK_WIDGET_REALIZED (panel->master_widget) &&
 	    /*"allocated" data will be set on each allocation, until then,

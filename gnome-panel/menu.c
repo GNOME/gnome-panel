@@ -442,9 +442,9 @@ add_drawers_from_dir(char *dirname, char *name, int pos, PanelWidget *panel)
 		GnomeDesktopEntry *dentry;
 
 		g_free (filename);
-		g_free(li->data);
-
 		filename = g_concat_dir_and_file(dirname, li->data);
+
+		g_free (li->data);
 
 		if (stat (filename, &s) != 0)
 			continue;

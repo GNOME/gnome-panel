@@ -887,7 +887,7 @@ misc_notebook_page(void)
 	gtk_box_pack_start (GTK_BOX (box), drawer_auto_close_cb, FALSE, FALSE, 0);
 
 	/* Autoraise */
-	autoraise_cb = gtk_check_button_new_with_label (_("Raise panels on mouse-over (non GNOME compliant window managers only)"));
+	autoraise_cb = gtk_check_button_new_with_label (_("Raise panels on mouse-over"));
 	gtk_signal_connect (GTK_OBJECT (autoraise_cb), "toggled", 
 			    GTK_SIGNAL_FUNC (changed_cb), NULL);
 	gtk_box_pack_start (GTK_BOX (box), autoraise_cb, FALSE, FALSE, 0);
