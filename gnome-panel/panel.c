@@ -1797,7 +1797,6 @@ properties(void)
 	panel_config();
 }
 
-
 gpointer
 panel_command(PanelCommand *cmd)
 {

@@ -264,8 +264,6 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
-	/* FIXME: This should take the screen size into account */
-	
 	switch(panel_pos) {
 		case PANEL_POS_TOP:
 			*x = wx;
@@ -284,6 +282,10 @@ menu_position (GtkMenu *menu, gint *x, gint *y, gpointer data)
 			*y = wy;
 			break;
 	}
+	if(*x + GTK_WIDGET (menu)->allocation.width > gdk_screen_width())
+		*x=gdk_screen_width() - GTK_WIDGET (menu)->allocation.width;
+	if(*y + GTK_WIDGET (menu)->allocation.height > gdk_screen_height())
+		*y=gdk_screen_height() - GTK_WIDGET (menu)->allocation.height;
 }
 
 void
@@ -616,12 +618,6 @@ create_instance (Panel *panel, char *params, int xpos, int ypos)
 	cmd.params.register_toy.xpos   = xpos;
 	cmd.params.register_toy.ypos   = ypos;
 	cmd.params.register_toy.flags  = APPLET_HAS_PROPERTIES;
-
-	(*panel_cmd_func) (&cmd);
-
-	cmd.cmd = PANEL_CMD_SET_TOOLTIP;
-	cmd.params.set_tooltip.applet  = menu_component;
-	cmd.params.set_tooltip.tooltip = _("Menu");
 
 	(*panel_cmd_func) (&cmd);
 }
