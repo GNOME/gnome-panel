@@ -1,3 +1,10 @@
+2001-11-27  Glynn Foster  <glynn.foster@sun.com>
+
+	* menu.c, panel.c: Revert Mark's reverts...Yay, commit war!
+
+	s/g_signal_connect_object/g_signal_connect/swapped
+	s/g_signal_disconnect_by_func/g_signal_handlers_disconnect_by_func
+
 2001-11-26  Mark McLoughlin  <mark@skynet.ie>
 
 	* menu-fentry.c: (fr_fill_dir), (fr_read_dir): #ifdef out

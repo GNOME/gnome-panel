@@ -800,9 +800,7 @@ fake_mapped_fake(GtkWidget *w, FakeIcon *fake)
 	if(!load_icons_id)
 		load_icons_id = g_idle_add(load_icons_handler, NULL);
 
-	g_signal_handlers_disconnect_matched (G_OBJECT(w),
-					      G_SIGNAL_MATCH_FUNC | G_SIGNAL_MATCH_DATA,
-					      0, 0, NULL,
+	g_signal_handlers_disconnect_by_func (G_OBJECT(w),
 					      G_CALLBACK (fake_mapped_fake),
 					      fake);
 					      
@@ -1734,10 +1732,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			if (access (tmp, W_OK) != 0)
 				gtk_widget_set_sensitive(menuitem,FALSE);
 			g_free (tmp);
-			gtk_signal_connect_object (GTK_OBJECT (menuitem),
+			g_signal_connect_swapped (G_OBJECT (menuitem),
 						   "activate",
-						   GTK_SIGNAL_FUNC (gtk_menu_shell_deactivate),
-						   GTK_OBJECT (item->parent));
+						   G_CALLBACK (gtk_menu_shell_deactivate),
+						   G_OBJECT (item->parent));
 
 			if ( ! sim->applet) {
 				menuitem = gtk_menu_item_new ();
@@ -1787,10 +1785,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 			menuitem = gtk_menu_item_new ();
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object (GTK_OBJECT (menuitem),
+			g_signal_connect_swapped (G_OBJECT (menuitem),
 						   "activate",
-						   GTK_SIGNAL_FUNC (gtk_menu_shell_deactivate),
-						   GTK_OBJECT (item->parent));
+						   G_CALLBACK (gtk_menu_shell_deactivate),
+						   G_OBJECT (item->parent));
 
 			g_signal_connect (G_OBJECT(menuitem),
 					   "activate",
@@ -1855,10 +1853,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 					_("Add new item to this menu"));
 			gtk_menu_shell_append (GTK_MENU_SHELL (submenu), menuitem);
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object (GTK_OBJECT (menuitem),
-						   "activate",
-						   GTK_SIGNAL_FUNC (gtk_menu_shell_deactivate),
-						   GTK_OBJECT (item->parent));
+			g_signal_connect_swapped (G_OBJECT (menuitem),
+						 "activate",
+						 G_CALLBACK (gtk_menu_shell_deactivate),
+						 G_OBJECT (item->parent));
 
 			g_signal_connect (G_OBJECT(menuitem), "activate",
 					    G_CALLBACK(add_new_app_to_menu),
@@ -1869,10 +1867,10 @@ show_item_menu (GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 
 			menuitem = gtk_menu_item_new ();
 			/*when activated we must pop down the first menu*/
-			gtk_signal_connect_object (GTK_OBJECT (menuitem),
-						   "activate",
-						   GTK_SIGNAL_FUNC (gtk_menu_shell_deactivate),
-						   GTK_OBJECT (item->parent));
+			g_signal_connect_swapped (G_OBJECT (menuitem),
+						 "activate",
+						 G_CALLBACK (gtk_menu_shell_deactivate),
+						 G_OBJECT (item->parent));
 
 			g_signal_connect (G_OBJECT (menuitem),
 					    "activate",
