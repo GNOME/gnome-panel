@@ -1299,7 +1299,7 @@ init_user_panels(void)
 					 BASEP_SHOWN /* state */,
 					 BASEP_LEVEL_DEFAULT /* level */,
 					 TRUE /* avoid_on_maximize */,
-					 SIZE_STANDARD /* size */,
+					 PANEL_SIZE_MEDIUM,
 					 TRUE /* hidebuttons_enabled */,
 					 TRUE /* hidebutton_pixmaps */,
 					 PANEL_BACK_NONE /* back type */,
@@ -1372,22 +1372,10 @@ init_user_panels(void)
 		rotate_pixmap_bg = conditional_get_bool ("rotate_pixmap_bg",
 							 FALSE, NULL);
 
-		sz=conditional_get_int ("sz", SIZE_STANDARD, NULL);
+		sz=conditional_get_int ("sz", PANEL_SIZE_MEDIUM, NULL);
 		if(sz < 0)
 			sz = 0;
 
-		/*a hack to allow for old config files to be read correctly*/
-		/*don't update this if new sizes (SIZE_SMALL) are added*/
-		if(sz < 4) {
-			switch(sz) {
-			case 0: sz = SIZE_TINY; break;
-			case 1: sz = SIZE_STANDARD; break;
-			case 2: sz = SIZE_LARGE; break;
-			case 3: sz = SIZE_HUGE; break;
-			default: break;
-			}
-		}
-		
 		/*now for type specific config*/
 
 		type = conditional_get_int ("type", EDGE_PANEL, NULL);

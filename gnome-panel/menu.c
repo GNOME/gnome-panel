@@ -3543,7 +3543,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BASEP_SHOWN,
 					    BASEP_LEVEL_DEFAULT,
 					    TRUE,
-					    SIZE_STANDARD,
+					    PANEL_SIZE_MEDIUM,
 					    TRUE,
 					    TRUE,
 					    PANEL_BACK_NONE,
@@ -3561,7 +3561,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 BASEP_SHOWN,
 					 BASEP_LEVEL_DEFAULT,
 					 TRUE,
-					 SIZE_STANDARD,
+					 PANEL_SIZE_MEDIUM,
 					 TRUE,
 					 TRUE,
 					 PANEL_BACK_NONE,
@@ -3580,7 +3580,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BASEP_SHOWN,
 					    BASEP_LEVEL_DEFAULT,
 					    TRUE,
-					    SIZE_STANDARD,
+					    PANEL_SIZE_MEDIUM,
 					    TRUE, TRUE,
 					    PANEL_BACK_NONE,
 					    NULL, TRUE, FALSE, TRUE,
@@ -3598,7 +3598,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 					     BASEP_SHOWN,
 					     BASEP_LEVEL_DEFAULT,
 					     FALSE,
-					     SIZE_STANDARD,
+					     PANEL_SIZE_MEDIUM,
 					     TRUE, TRUE,
 					     PANEL_BACK_NONE,
 					     NULL, TRUE, FALSE, TRUE,
@@ -4629,42 +4629,47 @@ update_avoid_on_maximize_menu (GtkWidget *menu, gpointer data)
 }
 
 static void
-update_size_menu (GtkWidget *menu, gpointer data)
+update_size_menu (GtkWidget *menu,
+		  gpointer   data)
 {
-	GtkWidget *menuitem = NULL;
-	char *s = NULL;
-	PanelWidget *cur_panel = get_panel_from_menu_data(menu, TRUE);
+	GtkWidget   *menuitem;
+	PanelWidget *cur_panel;
+	char        *s;
+
+	cur_panel = get_panel_from_menu_data (menu, TRUE);
+
 	switch (cur_panel->sz) {
-	case SIZE_ULTRA_TINY:
+	case PANEL_SIZE_XX_SMALL:
 		s = MENU_SIZE_ULTRA_TINY;
 		break;
-	case SIZE_TINY:
+	case PANEL_SIZE_X_SMALL:
 		s = MENU_SIZE_TINY;
 		break;
-	case SIZE_SMALL:
+	case PANEL_SIZE_SMALL:
 		s = MENU_SIZE_SMALL;
 		break;
-	case SIZE_STANDARD:
+	case PANEL_SIZE_MEDIUM:
 		s = MENU_SIZE_STANDARD;
 		break;
-	case SIZE_LARGE:
+	case PANEL_SIZE_LARGE:
 		s = MENU_SIZE_LARGE;
 		break;
-	case SIZE_HUGE:
+	case PANEL_SIZE_X_LARGE:
 		s = MENU_SIZE_HUGE;
 		break;
-	case SIZE_RIDICULOUS:
+	case PANEL_SIZE_XX_LARGE:
 		s = MENU_SIZE_RIDICULOUS;
 		break;
 	default:
+		s = NULL;
 		return;
 	}
 
 	menuitem = gtk_object_get_data (GTK_OBJECT (menu), s);
+
 	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (menuitem),
 					TRUE);
 }
-
 
 static void
 update_back_menu (GtkWidget *menu, gpointer data)
@@ -4838,13 +4843,13 @@ make_properties_submenu (GtkWidget *menu)
 	};
 
 	NameIdEnum sizes[] = {
-		{ N_("Ultra Tiny (12 pixels)"), MENU_SIZE_ULTRA_TINY, SIZE_ULTRA_TINY },
-		{ N_("Tiny (24 pixels)"), MENU_SIZE_TINY, SIZE_TINY },
-		{ N_("Small (36 pixels)"), MENU_SIZE_SMALL, SIZE_SMALL },
-		{ N_("Standard (48 pixels)"), MENU_SIZE_STANDARD, SIZE_STANDARD },
-		{ N_("Large (64 pixels)"), MENU_SIZE_LARGE, SIZE_LARGE },
-		{ N_("Huge (80 pixels)"), MENU_SIZE_HUGE, SIZE_HUGE },
-		{ N_("Ridiculous (128 pixels)"), MENU_SIZE_RIDICULOUS, SIZE_RIDICULOUS },
+		{ N_("XX Small (12 pixels)"), MENU_SIZE_ULTRA_TINY, PANEL_SIZE_XX_SMALL },
+		{ N_("X Small (24 pixels)"), MENU_SIZE_TINY, PANEL_SIZE_X_SMALL },
+		{ N_("Small (36 pixels)"), MENU_SIZE_SMALL, PANEL_SIZE_SMALL },
+		{ N_("Medium (48 pixels)"), MENU_SIZE_STANDARD, PANEL_SIZE_MEDIUM },
+		{ N_("Large (64 pixels)"), MENU_SIZE_LARGE, PANEL_SIZE_LARGE },
+		{ N_("X Large (80 pixels)"), MENU_SIZE_HUGE, PANEL_SIZE_X_LARGE },
+		{ N_("XX Large (128 pixels)"), MENU_SIZE_RIDICULOUS, PANEL_SIZE_XX_LARGE },
 		{ NULL, NULL, -1 }
 	};
 

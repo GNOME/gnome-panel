@@ -17,6 +17,9 @@ G_BEGIN_DECLS
 void panel_applet_change_orient (PanelApplet       *applet,
 				 PanelAppletOrient  orient);
 
+void panel_applet_change_size   (PanelApplet       *applet,
+				 const gint         size);
+
 G_END_DECLS
 
 #endif /* __PANEL_APPLET_PRIVATE_H__ */

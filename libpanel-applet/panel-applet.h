@@ -51,6 +51,9 @@ struct _PanelAppletClass {
 
 	void (*change_orient) (PanelApplet       *applet,
 			       PanelAppletOrient  orient);
+
+	void (*change_size)   (PanelApplet       *applet,
+			       gint               size);
 };
 
 GType              panel_applet_get_type  (void) G_GNUC_CONST;

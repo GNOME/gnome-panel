@@ -1,3 +1,42 @@
+2001-11-19  Mark McLoughlin  <mark@skynet.ie>
+
+	* panel-applet-frame.[ch]: 
+	(panel_applet_frame_change_size): impl.
+
+	* panel-applet-shell.c: 
+	(impl_GNOME_PanelAppletShell_changeSize): impl.
+	(panel_applet_shell_class_init): upd.
+
+	* panel-applet.[ch], panel-applet-private.h: 
+	(panel_applet_change_size): impl.
+	(panel_applet_class_init), (panel_applet_instance_init): upd.
+
+	* panel-marshal.list: add VOID:INT.
+
+	* test-bonobo-applet.c: 
+	(test_applet_handle_size_change): impl - set text size when
+	panel size changes.
+
+	* panel-types.h: change from SIZE_RIDICULOUS to
+	PANEL_SIZE_XX_LARGE etc.
+
+	* drawer.c: (create_empty_drawer_applet): upd.
+
+	* extern.c: (s_panelspot_get_parent_size): upd.
+
+	* foobar-widget.c: (foobar_widget_instance_init): upd.
+
+	* menu.c: 
+	(create_new_panel), (update_size_menu): upd.
+	(make_properties_submenu): change menuitem labels.
+
+	* panel.c: (size_change): upd.
+
+	* panel_config.c: 
+	(update_config_size), (make_size_widget): upd.
+
+	* session.c: (init_user_panels): upd.
+
 2001-11-19  Glynn Foster  <glynn.foster@sun.com>
 
 	aligned-widget.c, aligned-widget.h, basep-widget.c,

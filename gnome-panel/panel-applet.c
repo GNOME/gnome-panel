@@ -22,13 +22,16 @@ struct _PanelAppletPrivate {
 	PanelAppletShell  *shell;
 
 	BonoboControl     *control;
+
 	PanelAppletOrient  orient;
+	gint               size;
 };
 
 static GObjectClass *parent_class;
 
 enum {
         CHANGE_ORIENT,
+        CHANGE_SIZE,
         LAST_SIGNAL
 };
 
@@ -44,6 +47,19 @@ panel_applet_change_orient (PanelApplet       *applet,
 		g_signal_emit (G_OBJECT (applet),
 			       panel_applet_signals [CHANGE_ORIENT],
 			       0, orient);
+	}
+}
+
+void
+panel_applet_change_size (PanelApplet *applet,
+			  const gint   size)
+{
+	if (applet->priv->size != size) {
+		applet->priv->size = size;
+
+		g_signal_emit (G_OBJECT (applet),
+			       panel_applet_signals [CHANGE_SIZE],
+			       0, size);
 	}
 }
 
@@ -160,6 +176,18 @@ panel_applet_class_init (PanelAppletClass *klass,
                               G_TYPE_NONE,
 			      1,
 			      PANEL_TYPE_G_NOME__PANEL_ORIENT);
+
+	panel_applet_signals [CHANGE_SIZE] =
+                g_signal_new ("change_size",
+                              G_TYPE_FROM_CLASS (klass),
+                              G_SIGNAL_RUN_LAST,
+                              G_STRUCT_OFFSET (PanelAppletClass, change_size),
+                              NULL,
+			      NULL,
+                              panel_marshal_VOID__INT,
+                              G_TYPE_NONE,
+			      1,
+			      G_TYPE_INT);
 }
 
 static void
@@ -169,6 +197,7 @@ panel_applet_instance_init (PanelApplet      *applet,
 	applet->priv = g_new0 (PanelAppletPrivate, 1);
 
 	applet->priv->orient = PANEL_APPLET_ORIENT_UP;
+	applet->priv->size   = GNOME_PANEL_MEDIUM;
 
 	gtk_widget_set_events (GTK_WIDGET (applet), 
 			       GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);

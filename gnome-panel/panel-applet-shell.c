@@ -32,6 +32,18 @@ impl_GNOME_PanelAppletShell_changeOrientation (PortableServer_Servant  servant,
 }
 
 static void
+impl_GNOME_PanelAppletShell_changeSize (PortableServer_Servant  servant,
+					const GNOME_PanelSize   size,
+					CORBA_Environment      *ev)
+{
+	PanelAppletShell *shell;
+
+	shell = PANEL_APPLET_SHELL (bonobo_object (servant));
+	
+	panel_applet_change_size (shell->priv->applet, size);
+}
+
+static void
 panel_applet_shell_finalize (GObject *object)
 {
 	PanelAppletShell *shell = PANEL_APPLET_SHELL (object);
@@ -50,6 +62,7 @@ panel_applet_shell_class_init (PanelAppletShellClass *klass)
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
 	klass->epv.changeOrientation = impl_GNOME_PanelAppletShell_changeOrientation;
+	klass->epv.changeSize        = impl_GNOME_PanelAppletShell_changeSize;
 
 	object_class->finalize = panel_applet_shell_finalize;
 

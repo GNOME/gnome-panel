@@ -1807,7 +1807,7 @@ s_panelspot_get_parent_size(PortableServer_Servant servant,
 	if(!panel) {
 		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
-		return SIZE_STANDARD;
+		return PANEL_SIZE_MEDIUM;
 	}
 
 	return panel->sz;

@@ -310,26 +310,26 @@ update_config_size (GtkWidget *panel)
 
 	p = PANEL_WIDGET(BASEP_WIDGET(panel)->panel);
 	switch(p->sz) {
-	case SIZE_ULTRA_TINY:
+	case PANEL_SIZE_XX_SMALL:
 		i = 0;
 		break;
-	case SIZE_TINY:
+	case PANEL_SIZE_X_SMALL:
 		i = 1;
 		break;
-	case SIZE_SMALL:
+	case PANEL_SIZE_SMALL:
 		i = 2;
 		break;
 	default:
-	case SIZE_STANDARD:
+	case PANEL_SIZE_MEDIUM:
 		i = 3;
 		break;
-	case SIZE_LARGE:
+	case PANEL_SIZE_LARGE:
 		i = 4;
 		break;
-	case SIZE_HUGE:
+	case PANEL_SIZE_X_LARGE:
 		i = 5;
 		break;
-	case SIZE_RIDICULOUS:
+	case PANEL_SIZE_XX_LARGE:
 		i = 6;
 		break;
 	}
@@ -1271,21 +1271,21 @@ make_size_widget (PerPanelConfig *ppc)
 			    GTK_SIGNAL_FUNC (activate_proper_item), 
 			    NULL);
 
-	menuitem = gtk_menu_item_new_with_label (_("Ultra Tiny (12 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("XX Small Tiny (12 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_ULTRA_TINY));
+			    GINT_TO_POINTER (PANEL_SIZE_XX_SMALL));
 
-	menuitem = gtk_menu_item_new_with_label (_("Tiny (24 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("X Small (24 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_TINY));
+			    GINT_TO_POINTER (PANEL_SIZE_X_SMALL));
 	
 	menuitem = gtk_menu_item_new_with_label (_("Small (36 pixels)"));
 	gtk_widget_show(menuitem);
@@ -1293,15 +1293,15 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_SMALL));
+			    GINT_TO_POINTER (PANEL_SIZE_SMALL));
 	
-	menuitem = gtk_menu_item_new_with_label (_("Standard (48 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("Medium (48 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_STANDARD));
+			    GINT_TO_POINTER (PANEL_SIZE_MEDIUM));
 
 	menuitem = gtk_menu_item_new_with_label (_("Large (64 pixels)"));
 	gtk_widget_show(menuitem);
@@ -1309,23 +1309,23 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_LARGE));
+			    GINT_TO_POINTER (PANEL_SIZE_LARGE));
 
-	menuitem = gtk_menu_item_new_with_label (_("Huge (80 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("X Large (80 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_HUGE));
+			    GINT_TO_POINTER (PANEL_SIZE_X_LARGE));
 
-	menuitem = gtk_menu_item_new_with_label (_("Ridiculous (128 pixels)"));
+	menuitem = gtk_menu_item_new_with_label (_("XX Large (128 pixels)"));
 	gtk_widget_show(menuitem);
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
 	gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
 			    GTK_SIGNAL_FUNC (size_set_size),
-			    GINT_TO_POINTER (SIZE_RIDICULOUS));
+			    GINT_TO_POINTER (PANEL_SIZE_XX_LARGE));
 
 	ppc->size_menu = gtk_option_menu_new ();
 	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->size_menu), menu);
@@ -1342,26 +1342,26 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
 	switch(ppc->sz) {
-	case SIZE_ULTRA_TINY:
+	case PANEL_SIZE_XX_SMALL:
 		i = 0;
 		break;
-	case SIZE_TINY:
+	case PANEL_SIZE_X_SMALL:
 		i = 1;
 		break;
-	case SIZE_SMALL:
+	case PANEL_SIZE_SMALL:
 		i = 2;
 		break;
 	default:
-	case SIZE_STANDARD:
+	case PANEL_SIZE_MEDIUM:
 		i = 3;
 		break;
-	case SIZE_LARGE:
+	case PANEL_SIZE_LARGE:
 		i = 4;
 		break;
-	case SIZE_HUGE:
+	case PANEL_SIZE_X_LARGE:
 		i = 5;
 		break;
-	case SIZE_RIDICULOUS:
+	case PANEL_SIZE_XX_LARGE:
 		i = 6;
 		break;
 	}

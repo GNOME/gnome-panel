@@ -89,7 +89,7 @@ panel_applet_frame_load (const gchar *iid,
 				      APPLET_BONOBO);
 
 	if (!info)
-		g_warning ("Cannot register control widget\n");
+		g_warning (_("Cannot register control widget\n"));
 
 	panel_applet_frame_set_info (PANEL_APPLET_FRAME (frame), info);
 }
@@ -104,8 +104,23 @@ panel_applet_frame_change_orient (PanelAppletFrame *frame,
 
 	GNOME_PanelAppletShell_changeOrientation (frame->priv->applet_shell, orient, &env);
 	if (BONOBO_EX (&env))
-		g_warning ("Error trying to change applet's orientation\n");
+		g_warning (_("Exception from changeOrientation: '%s'\n"), 
+			   BONOBO_EX_REPOID (&env));
 
+	CORBA_exception_free (&env);
+}
+
+void
+panel_applet_frame_change_size (PanelAppletFrame *frame,
+				PanelSize         size)
+{
+	CORBA_Environment env;
+
+	CORBA_exception_init (&env);
+
+	GNOME_PanelAppletShell_changeSize (frame->priv->applet_shell, size, &env);
+	if (BONOBO_EX (&env))
+		g_warning (_("Exception from changeSize: '%s'\n"), BONOBO_EX_REPOID (&env));
 
 	CORBA_exception_free (&env);
 }
@@ -187,7 +202,7 @@ panel_applet_frame_get_applet_shell (Bonobo_Control control)
 						"IDL:GNOME/PanelAppletShell:1.0",
 						&env);
 	if (BONOBO_EX (&env)) {
-		g_warning ("Unable to obtain AppletShell interface from control\n");
+		g_warning (_("Unable to obtain AppletShell interface from control\n"));
 
 		retval = CORBA_OBJECT_NIL;
 	}

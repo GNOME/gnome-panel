@@ -68,6 +68,39 @@ test_applet_handle_orient_change (PanelApplet       *applet,
         g_free (text);
 }
 
+static void
+test_applet_handle_size_change (PanelApplet *applet,
+				gint         size,
+				GtkLabel    *label)
+{
+	switch (size) {
+	case GNOME_PANEL_XX_SMALL:
+		gtk_label_set_markup (label, "<span size=\"xx-small\">Hello</span>");
+		break;
+	case GNOME_PANEL_X_SMALL:
+		gtk_label_set_markup (label, "<span size=\"x-small\">Hello</span>");
+		break;
+	case GNOME_PANEL_SMALL:
+		gtk_label_set_markup (label, "<span size=\"small\">Hello</span>");
+		break;
+	case GNOME_PANEL_MEDIUM:
+		gtk_label_set_markup (label, "<span size=\"medium\">Hello</span>");
+		break;
+	case GNOME_PANEL_LARGE:
+		gtk_label_set_markup (label, "<span size=\"large\">Hello</span>");
+		break;
+	case GNOME_PANEL_X_LARGE:
+		gtk_label_set_markup (label, "<span size=\"x-large\">Hello</span>");
+		break;
+	case GNOME_PANEL_XX_LARGE:
+		gtk_label_set_markup (label, "<span size=\"xx-large\">Hello</span>");
+		break;
+	default:
+		g_assert_not_reached ();
+		break;
+	}
+}
+
 static BonoboObject *
 test_applet_new (const gchar *iid)
 {
@@ -76,7 +109,7 @@ test_applet_new (const gchar *iid)
 
 	g_message ("test_applet_new: %s\n", iid);
 
-	label = gtk_label_new ("Hello");
+	label = gtk_label_new (NULL);
 
 	applet = panel_applet_new (label);
 
@@ -87,6 +120,11 @@ test_applet_new (const gchar *iid)
 	g_signal_connect (G_OBJECT (applet),
 			  "change_orient",
 			  (GCallback) test_applet_handle_orient_change,
+			  label);
+
+	g_signal_connect (G_OBJECT (applet),
+			  "change_size",
+			  (GCallback) test_applet_handle_size_change,
 			  label);
 			  
 	return BONOBO_OBJECT (panel_applet_get_control (applet));

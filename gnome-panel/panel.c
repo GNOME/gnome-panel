@@ -266,16 +266,29 @@ border_edge_change (BorderPos *border,
 static void size_change_foreach(GtkWidget *w, gpointer data);
 
 void
-size_change(AppletInfo *info, PanelWidget *panel)
+size_change (AppletInfo  *info,
+	     PanelWidget *panel)
 {
-	if (info->type == APPLET_EXTERN)
-		extern_handle_change_size ((Extern)info->data,
-					   panel->sz);
-
-	else if(info->type == APPLET_STATUS) {
+	PanelSize size = panel->sz;
+	
+	switch (info->type) {
+	case APPLET_BONOBO:
+		panel_applet_frame_change_size (
+			PANEL_APPLET_FRAME (info->data), size);
+		break;
+	case APPLET_EXTERN:
+		extern_handle_change_size ((Extern)info->data, size);
+		break;
+	case APPLET_STATUS: {
 		StatusApplet *status = info->data;
-		status->size = panel->sz;
-		status_applet_update(status);
+
+		status->size = size;
+
+		status_applet_update (status);
+		}
+		break;
+	default:
+		break;
 	}
 }
 

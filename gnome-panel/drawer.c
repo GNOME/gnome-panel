@@ -383,7 +383,7 @@ create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 					   BASEP_SHOWN,
 					   BASEP_LEVEL_DEFAULT,
 					   FALSE,
-					   SIZE_STANDARD,
+					   PANEL_SIZE_MEDIUM,
 					   TRUE, TRUE,
 					   PANEL_BACK_NONE, NULL,
 					   TRUE, FALSE, TRUE, NULL);
