@@ -13,6 +13,7 @@ INCLUDES = -I. -I$(srcdir) \
 	-I$(top_builddir)/intl \
 	-I$(top_builddir)/panel \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
+	-DGNOME_DATADIR=\""$(datadir)"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS) \
 	@PIXBUF_CFLAGS@
 
@@ -83,6 +84,8 @@ panel_SOURCES=\
 	panel_config.c  	\
 	panel_config.h		\
 	panel_config_global.h  	\
+	distribution.c		\
+	distribution.h		\
 	menu.c  		\
 	menu.h  		\
 	menu-fentry.c  		\

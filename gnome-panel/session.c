@@ -871,6 +871,7 @@ init_user_applets(void)
 {
 	GString *buf;
 	int count, num;	
+	DistributionType distribution = get_distribution();
 
 	count = gnome_config_get_int(PANEL_CONFIG_PATH
 				     "panel/Config/applet_count=0");
@@ -978,15 +979,12 @@ init_user_applets(void)
 					flags |= MAIN_MENU_SYSTEM_SUB|
 						MAIN_MENU_USER;
 				}
-				/*guess redhat menus*/
-				if(g_file_exists("/etc/X11/wmconfig"))
-					flags |= MAIN_MENU_REDHAT_SUB;
+				/*guess distribution menus*/
+				if(distribution != DISTRIBUTION_UNKNOWN)
+					flags |= MAIN_MENU_DISTRIBUTION_SUB;
 				/*guess KDE menus */
 				if(g_file_exists(kde_menudir))
 					flags |= MAIN_MENU_KDE_SUB;
-				/*guess debian menus*/
-				if (g_file_exists(DEBIAN_MENUDIR))
-					flags |= MAIN_MENU_DEBIAN_SUB;
 			}
 			if(old_style) {
 				/*this is needed to make panel properly
@@ -997,12 +995,14 @@ init_user_applets(void)
 				if(flags&MAIN_MENU_USER &&
 				   flags&MAIN_MENU_USER_SUB)
 					flags &=~ MAIN_MENU_USER;
-				if(flags&MAIN_MENU_REDHAT &&
-				   flags&MAIN_MENU_REDHAT_SUB)
-					flags &=~ MAIN_MENU_REDHAT;
-				if(flags&MAIN_MENU_DEBIAN &&
-				   flags&MAIN_MENU_DEBIAN_SUB)
-					flags &=~ MAIN_MENU_DEBIAN;
+				if(flags&MAIN_MENU_DISTRIBUTION &&
+				   flags&MAIN_MENU_DISTRIBUTION_SUB)
+					flags &=~ MAIN_MENU_DISTRIBUTION;
+				/*keep this for compatibility with older
+				  config files */
+				if(flags&MAIN_MENU_OBSOLETE_DEBIAN &&
+				   flags&MAIN_MENU_OBSOLETE_DEBIAN_SUB)
+					flags &=~ MAIN_MENU_DISTRIBUTION;
 				if(flags&MAIN_MENU_KDE &&
 				   flags&MAIN_MENU_KDE_SUB)
 					flags &=~ MAIN_MENU_KDE;

@@ -23,6 +23,8 @@
 #include "panel_config.h"
 #include "panel_config_global.h"
 
+#include "distribution.h"
+
 #include "menu.h"
 #include "menu-fentry.h"
 #include "menu-rh.h"

@@ -853,10 +853,11 @@ static void
 drop_menu(PanelWidget *panel, int pos, char *dir)
 {
 	int flags = MAIN_MENU_SYSTEM|MAIN_MENU_USER;
+	DistributionType distribution = get_distribution ();
 
-	/*guess redhat menus*/
-	if(g_file_exists("/etc/X11/wmconfig"))
-		flags |= MAIN_MENU_REDHAT_SUB;
+	/*guess distribution menus*/
+	if(distribution != DISTRIBUTION_UNKNOWN)
+		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 	/* Guess KDE menus */
 	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;

@@ -79,6 +79,9 @@ static GSList *tearoffs = NULL;
 void
 init_menus(void)
 {
+	DistributionType distribution = get_distribution ();
+	const DistributionInfo *distribution_info = get_distribution_info (distribution);
+
 	/*just load the menus from disk, don't make the widgets
 	  this just reads the .desktops of the top most directory
 	  and a level down*/
@@ -94,9 +97,9 @@ init_menus(void)
 	if(menu)
 		fr_read_dir(NULL,menu,NULL,2);
 	g_free(menu);
-	/*if redhat menus, use the fork version to read*/
-	if(g_file_exists(REDHAT_MENUDIR))
-		create_rh_menu(TRUE);
+
+	if(distribution_info && distribution_info->menu_init_func)
+		distribution_info->menu_init_func ();
 }
 
 /*the most important dialog in the whole application*/
@@ -879,21 +882,18 @@ add_menu_to_panel (GtkWidget *widget, gpointer data)
 {
 	char *menudir = data;
 	PanelWidget *panel;
+	DistributionType distribution = get_distribution ();
 	int flags = MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
 		MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 		MAIN_MENU_DESKTOP_SUB;
 	
-	/*guess redhat menus*/
-	if (g_file_exists(REDHAT_MENUDIR))
-		flags |= MAIN_MENU_REDHAT_SUB;
+	/*guess distribution menus*/
+	if (distribution != DISTRIBUTION_UNKNOWN)
+		flags |= MAIN_MENU_DISTRIBUTION_SUB;
 
 	/*guess KDE menus*/
 	if(g_file_exists(kde_menudir))
 		flags |= MAIN_MENU_KDE_SUB;
-
-	/*guess debian menus*/
-	if (g_file_exists(DEBIAN_MENUDIR))
-		flags |= MAIN_MENU_DEBIAN_SUB;
 
 	panel = get_panel_from_menu_data (widget);
 
@@ -2721,18 +2721,22 @@ static void
 setup_menuitem_try_pixmap (GtkWidget *menuitem, char *try_file,
 			   char *title, int icon_size)
 {
-	char *file;
+	char *file = NULL;
 
 	if (!gnome_preferences_get_menus_have_icons ()) {
 		setup_menuitem (menuitem, NULL, title);
 		return;
 	}
+
+	if (try_file) {
+		file = gnome_pixmap_file (try_file);
+		if (!file)
+			g_warning (_("Cannot find pixmap file %s"), try_file);
+	}
 	
-	file = gnome_pixmap_file (try_file);
-	if (!file) {
-		g_message (_("Cannot find pixmap file %s"), try_file);
+	if (!file)
 		setup_menuitem (menuitem, NULL, title);
-	} else
+	else
 		setup_menuitem_with_size (menuitem,
 					  fake_pixmap_at_size(file, icon_size),
 					  title, icon_size);
@@ -2800,18 +2804,36 @@ create_user_menu(char *title, char *dir, GtkWidget *menu, char *pixmap,
 }
 
 static GtkWidget *
-create_debian_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake,
-		   gboolean title)
+create_distribution_menu(GtkWidget *menu, gboolean fake_submenus, gboolean fake,
+			 gboolean title)
 {
+	DistributionType distribution = get_distribution ();
+	const DistributionInfo *info = get_distribution_info (distribution);
+	gchar *pixmap_file = NULL, *menu_path;
+
+	if (!info)
+		return NULL;
+
+	if (info->menu_icon)
+		pixmap_file = gnome_pixmap_file (info->menu_icon);
+
+	if (info->menu_path [0] != '/')
+		menu_path = gnome_util_home_file (info->menu_path);
+	else
+		menu_path = g_strdup (info->menu_path);
+
 	if (!fake || menu) {
-		menu = create_menu_at (menu, DEBIAN_MENUDIR, FALSE,
-				       _("Debian menus"), "gnome-debian.png",
+		menu = create_menu_at (menu, menu_path, FALSE,
+				       info->menu_name, pixmap_file,
 				       fake_submenus, FALSE, title);
 	} else {
-		menu = create_fake_menu_at (DEBIAN_MENUDIR, FALSE,
-					    _("Debian menus"),
-					    "gnome-debian.png", title);
+		menu = create_fake_menu_at (menu_path, FALSE,
+					    info->menu_name, pixmap_file,
+					    title);
 	}
+
+	g_free (pixmap_file);
+	g_free (menu_path);
 
 	return menu;
 }
@@ -4106,19 +4128,18 @@ create_root_menu(GtkWidget *root_menu,
 	GtkWidget *menu;
 	GtkWidget *menuitem;
 
+	DistributionType distribution = get_distribution ();
+	const DistributionInfo *distribution_info = get_distribution_info (distribution);
+
 	gboolean has_inline = (flags & (MAIN_MENU_SYSTEM |
 					MAIN_MENU_USER |
 					MAIN_MENU_APPLETS |
-					MAIN_MENU_KDE |
-					MAIN_MENU_REDHAT |
-					MAIN_MENU_DEBIAN));
+					MAIN_MENU_KDE));
 
 	gboolean has_subs = (flags & (MAIN_MENU_SYSTEM_SUB |
 				      MAIN_MENU_USER_SUB |
 				      MAIN_MENU_APPLETS_SUB |
-				      MAIN_MENU_KDE_SUB |
-				      MAIN_MENU_REDHAT_SUB |
-				      MAIN_MENU_DEBIAN_SUB));
+				      MAIN_MENU_KDE_SUB));
 
 	gboolean has_inline2 = (flags & (MAIN_MENU_DESKTOP |
 					 MAIN_MENU_PANEL));
@@ -4127,6 +4148,12 @@ create_root_menu(GtkWidget *root_menu,
 
 	IconSize size = global_config.use_large_icons 
 		? MEDIUM_ICON_SIZE : SMALL_ICON_SIZE;
+
+	if (distribution_info) {
+		has_inline |= (flags & (MAIN_MENU_DISTRIBUTION));
+		has_subs |= (flags & (MAIN_MENU_DISTRIBUTION_SUB));
+	}
+
 
 	if(!root_menu)
 		root_menu = menu_new ();
@@ -4148,15 +4175,12 @@ create_root_menu(GtkWidget *root_menu,
 	if (flags & MAIN_MENU_APPLETS)
 		create_applets_menu(root_menu, fake_submenus, title);
 
-	if (flags & MAIN_MENU_REDHAT) {
-		rh_submenu_to_display(NULL,NULL);
-		create_user_menu(_("AnotherLevel menus"), "apps-redhat",
-				 root_menu, NULL, fake_submenus, FALSE,
-				 FALSE, title);
-	}
+	if (flags & MAIN_MENU_DISTRIBUTION) {
+		if (distribution_info->menu_show_func)
+			distribution_info->menu_show_func(NULL,NULL);
 
-	if (flags & MAIN_MENU_DEBIAN)
-		create_debian_menu(root_menu, fake_submenus, FALSE, title);
+		create_distribution_menu(root_menu, fake_submenus, FALSE, title);
+	}
 	if (flags & MAIN_MENU_KDE)
 		create_kde_menu(root_menu, fake_submenus, FALSE, FALSE, title);
 
@@ -4198,7 +4222,7 @@ create_root_menu(GtkWidget *root_menu,
 				   NULL);
 	}
 	if (flags & MAIN_MENU_APPLETS_SUB) {
-		menu = create_applets_menu(NULL, fake_submenus, TRUE);
+		menu = create_applets_menu(NULL, fake_submenus, FALSE);
 		menuitem = gtk_menu_item_new ();
 		gtk_widget_lock_accelerators (menuitem);
 		setup_menuitem_try_pixmap (menuitem, "gnome-applets.png",
@@ -4209,38 +4233,25 @@ create_root_menu(GtkWidget *root_menu,
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
-	if (flags & MAIN_MENU_REDHAT_SUB) {
-		menu = create_user_menu(_("AnotherLevel menus"), "apps-redhat",
-					NULL, NULL, fake_submenus, TRUE, TRUE,
-					TRUE);
-		menuitem = gtk_menu_item_new ();
-		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem_with_size (menuitem, NULL, 
-					  _("AnotherLevel menus"),
-					  size);
-		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), menu);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(rh_submenu_to_display),
-				   menuitem);
-		gtk_signal_connect(GTK_OBJECT(menu),"show",
-				   GTK_SIGNAL_FUNC(submenu_to_display), NULL);
-	}
-	if (flags & MAIN_MENU_DEBIAN_SUB) {
-		menu = create_debian_menu(NULL, fake_submenus, TRUE, TRUE);
-		menuitem = gtk_menu_item_new ();
-		gtk_widget_lock_accelerators (menuitem);
-		setup_menuitem_try_pixmap (menuitem,
-					   "gnome-debian.png",
-					   _("Debian menus"), size);
-		gtk_menu_append (GTK_MENU (root_menu), menuitem);
-		if(menu) {
-			gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
-						   menu);
+	if (flags & MAIN_MENU_DISTRIBUTION_SUB) {
+		g_assert (distribution_info != NULL);
+
+		menu = create_distribution_menu(NULL, fake_submenus, TRUE, TRUE);
+                menuitem = gtk_menu_item_new ();
+                gtk_widget_lock_accelerators (menuitem);
+                setup_menuitem_try_pixmap (menuitem,
+                                           (gchar*) distribution_info->menu_icon,
+                                           _(distribution_info->menu_name), size);
+                gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),
+					   menu);
+		if (distribution_info->menu_show_func)
 			gtk_signal_connect(GTK_OBJECT(menu),"show",
-					   GTK_SIGNAL_FUNC(submenu_to_display),
-					   NULL);
-		}
+					   GTK_SIGNAL_FUNC(distribution_info->menu_show_func),
+					   menuitem);
+		gtk_signal_connect(GTK_OBJECT(menu),"show",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   NULL);
 	}
 	if (flags & MAIN_MENU_KDE_SUB) {
 		GtkWidget *pixmap = NULL;
@@ -4382,9 +4393,10 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 
 		g_slist_free(list);
 	} else {
-		if(menu->main_menu_flags&MAIN_MENU_REDHAT &&
-		   !(menu->main_menu_flags&MAIN_MENU_REDHAT_SUB))
-			rh_submenu_to_display(NULL,NULL);
+		if(menu->main_menu_flags&MAIN_MENU_DISTRIBUTION &&
+		   !(menu->main_menu_flags&MAIN_MENU_DISTRIBUTION_SUB) &&
+		   distribution_info && distribution_info->menu_show_func)
+			distribution_info->menu_show_func(NULL,NULL);
 
 		check_and_reread_applet(menu, main_menu);
 	}

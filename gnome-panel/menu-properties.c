@@ -97,12 +97,10 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget *user_sub = gtk_object_get_data(GTK_OBJECT(widget), "user_sub");
 	GtkWidget *applets = gtk_object_get_data(GTK_OBJECT(widget), "applets");
 	GtkWidget *applets_sub = gtk_object_get_data(GTK_OBJECT(widget), "applets_sub");
-	GtkWidget *redhat = gtk_object_get_data(GTK_OBJECT(widget), "redhat");
-	GtkWidget *redhat_sub = gtk_object_get_data(GTK_OBJECT(widget), "redhat_sub");
+	GtkWidget *distribution = gtk_object_get_data(GTK_OBJECT(widget), "distribution");
+	GtkWidget *distribution_sub = gtk_object_get_data(GTK_OBJECT(widget), "distribution_sub");
  	GtkWidget *kde = gtk_object_get_data(GTK_OBJECT(widget), "kde");
  	GtkWidget *kde_sub = gtk_object_get_data(GTK_OBJECT(widget), "kde_sub");
-	GtkWidget *debian = gtk_object_get_data(GTK_OBJECT(widget), "debian");
-	GtkWidget *debian_sub = gtk_object_get_data(GTK_OBJECT(widget), "debian_sub");
 
 	GtkWidget *panel = gtk_object_get_data(GTK_OBJECT(widget), "panel");
 	GtkWidget *panel_sub = gtk_object_get_data(GTK_OBJECT(widget), "panel_sub");
@@ -155,15 +153,10 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	else if (GTK_TOGGLE_BUTTON (applets)->active)
 		menu->main_menu_flags |= MAIN_MENU_APPLETS;
 
-	if(GTK_TOGGLE_BUTTON(redhat_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_REDHAT_SUB;
-	else if (GTK_TOGGLE_BUTTON (redhat)->active)
-		menu->main_menu_flags |= MAIN_MENU_REDHAT;
-
-	if(GTK_TOGGLE_BUTTON(debian_sub)->active)
-		menu->main_menu_flags |= MAIN_MENU_DEBIAN_SUB;
-	else if (GTK_TOGGLE_BUTTON (debian)->active)
-		menu->main_menu_flags |= MAIN_MENU_DEBIAN;
+	if(GTK_TOGGLE_BUTTON(distribution_sub)->active)
+		menu->main_menu_flags |= MAIN_MENU_DISTRIBUTION_SUB;
+	else if (GTK_TOGGLE_BUTTON (distribution)->active)
+		menu->main_menu_flags |= MAIN_MENU_DISTRIBUTION;
 
 	if(GTK_TOGGLE_BUTTON(kde_sub)->active)
 		menu->main_menu_flags |= MAIN_MENU_KDE_SUB;
@@ -371,17 +364,13 @@ create_properties_dialog(Menu *menu)
 			      menu->main_menu_flags&MAIN_MENU_APPLETS,
 			      menu->main_menu_flags&MAIN_MENU_APPLETS_SUB);
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),3,
-			      _("AnotherLevel menu (if found): "),"redhat",
-			      menu->main_menu_flags&MAIN_MENU_REDHAT,
-			      menu->main_menu_flags&MAIN_MENU_REDHAT_SUB);
+			      _("Distribution menu (if found): "),"distribution",
+			      menu->main_menu_flags&MAIN_MENU_DISTRIBUTION,
+			      menu->main_menu_flags&MAIN_MENU_DISTRIBUTION_SUB);
  	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),4,
  			      _("KDE menu (if found): "),"kde",
  			      menu->main_menu_flags&MAIN_MENU_KDE,
  			      menu->main_menu_flags&MAIN_MENU_KDE_SUB);
-	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),5,
-			      _("Debian menu (if found): "),"debian",
-			      menu->main_menu_flags&MAIN_MENU_DEBIAN,
-			      menu->main_menu_flags&MAIN_MENU_DEBIAN_SUB);
 	add_menu_type_options(GTK_OBJECT(dialog),GTK_TABLE(table),6,
 			      _("Panel menu: "),"panel",
 			      menu->main_menu_flags&MAIN_MENU_PANEL,

@@ -18,12 +18,13 @@ enum {
 	MAIN_MENU_USER_SUB = 1<<1,
 	MAIN_MENU_SYSTEM = 1<<2,
 	MAIN_MENU_SYSTEM_SUB = 1<<3,
-	MAIN_MENU_REDHAT = 1<<4,
-	MAIN_MENU_REDHAT_SUB = 1<<5,
+	MAIN_MENU_DISTRIBUTION = 1<<4,
+	MAIN_MENU_DISTRIBUTION_SUB = 1<<5,
 	MAIN_MENU_KDE = 1<<6,
 	MAIN_MENU_KDE_SUB = 1<<7,
-	MAIN_MENU_DEBIAN = 1<<8,
-	MAIN_MENU_DEBIAN_SUB = 1<<9,
+	/* keep this for compatibility. */
+	MAIN_MENU_OBSOLETE_DEBIAN = 1<<8,
+	MAIN_MENU_OBSOLETE_DEBIAN_SUB = 1<<9,
 	MAIN_MENU_APPLETS = 1<<10,
 	MAIN_MENU_APPLETS_SUB = 1<<11,
 	MAIN_MENU_PANEL = 1<<12,
@@ -92,8 +93,6 @@ GtkWidget * create_root_menu(GtkWidget *root_menu,
 #define MENU_PATH "menu_path"
 
 #define MENU_PROPERTIES "menu_properties"
-
-#define DEBIAN_MENUDIR "/var/lib/gnome/Debian/."
 
 #define MENU_TYPES "types_menu"
 #define MENU_TYPE_EDGE "type-edge"

@@ -106,14 +106,13 @@ typedef struct {
 /* don't forget to update the table size when changing the num of elements
    in this array */
 static MenuOptions menu_options[] = {
-	{ MAIN_MENU_SYSTEM,  MAIN_MENU_SYSTEM_SUB,  N_("Programs: ") },
-	{ MAIN_MENU_USER,    MAIN_MENU_USER_SUB,    N_("Favorites: ") },
-	{ MAIN_MENU_APPLETS, MAIN_MENU_APPLETS_SUB, N_("Applets: ") },
-	{ MAIN_MENU_REDHAT,  MAIN_MENU_REDHAT_SUB,  N_("AnotherLevel: ") },
-	{ MAIN_MENU_KDE,     MAIN_MENU_KDE_SUB,     N_("KDE: ") },
-	{ MAIN_MENU_DEBIAN,  MAIN_MENU_DEBIAN_SUB,  N_("Debian: ") },
-	{ MAIN_MENU_PANEL,   MAIN_MENU_PANEL_SUB,   N_("Panel: ") },
-	{ MAIN_MENU_DESKTOP, MAIN_MENU_DESKTOP_SUB, N_("Desktop: ") },
+	{ MAIN_MENU_SYSTEM,       MAIN_MENU_SYSTEM_SUB,        N_("Programs: ") },
+	{ MAIN_MENU_USER,         MAIN_MENU_USER_SUB,          N_("Favorites: ") },
+	{ MAIN_MENU_APPLETS,      MAIN_MENU_APPLETS_SUB,       N_("Applets: ") },
+	{ MAIN_MENU_DISTRIBUTION, MAIN_MENU_DISTRIBUTION_SUB,  N_("Distribution: ") },
+	{ MAIN_MENU_KDE,          MAIN_MENU_KDE_SUB,           N_("KDE: ") },
+	{ MAIN_MENU_PANEL,        MAIN_MENU_PANEL_SUB,         N_("Panel: ") },
+	{ MAIN_MENU_DESKTOP,      MAIN_MENU_DESKTOP_SUB,       N_("Desktop: ") },
 	{ 0 }
 };
 
@@ -1108,9 +1107,8 @@ loadup_vals(void)
 
 	g_string_sprintf(buf,"menu_flags=%d", 
 			 (int)(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB|
-			       MAIN_MENU_APPLETS_SUB | MAIN_MENU_REDHAT_SUB|
-			       MAIN_MENU_DEBIAN_SUB | MAIN_MENU_KDE_SUB|
-			       MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
+			       MAIN_MENU_APPLETS_SUB | MAIN_MENU_DISTRIBUTION_SUB|
+			       MAIN_MENU_KDE_SUB | MAIN_MENU_PANEL | MAIN_MENU_DESKTOP));
 	global_config.menu_flags = gnome_config_get_int(buf->str);
 
 	global_config.keys_enabled = gnome_config_get_bool("keys_enabled=TRUE");

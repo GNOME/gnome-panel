@@ -1,3 +1,53 @@
+2000-04-24  Martin Baulig  <baulig@suse.de>
+
+	Improved handling of distribution specific menus.
+
+	Rather than providing code for RH and Debian menus, we now
+	have some generic "distribution menu" code - all customizing
+	is done in a `DistributionInfo' array in distribution.c.
+
+	This makes it very easy for distribution vendors to add a
+	custom menu for their distribution (like the already existent
+	AnotherLevel and Debian menus) with a about-10-line-change
+	in a single source file.
+
+	* distribution.h: New file.
+	(DistributionType): Contains all possible Linux distributions.
+	(DistributionInfo): New struct type containing info about
+	distribution specific menus.
+
+	* distribution.c: New file.
+	(get_distribution): New global function; returns the current
+	Linux distribution as a `DistributionType'.
+	(get_distribution_info): New global global function; takes a
+	`DistributionType' argument and returns a `DistributionInfo *',
+	this struct contains information about distribution specific
+	menus.
+
+	* menu.h (MAIN_MENU_REDHAT): Renamed to `MAIN_MENU_DISTRIBUTION'.
+	(MAIN_MENU_REDHAT_SUB): Renamed to `MAIN_MENU_DISTRIBUTION_SUB'.
+	(MAIN_MENU_DEBIAN, MAIN_MENU_DEBIAN_SUB): Removed (replaced with
+	`MAIN_MENU_OBSOLETE_DEBIAN' and `MAIN_MENU_OBSOLETE_DEBIAN_SUB'
+	for compatibility with old config files).
+	(DEBIAN_MENUDIR): Removed.
+
+	* session.c (init_user_applets): Use the new distribution menu
+	rather than the old RH and Debian menus.
+
+	* panel.c (drop_menu): Don't check for "/etc/X11/wmconfig" etc.,
+	but use the new get_distribution () function to get the
+	current distribution.
+
+	* menu.c (init_menus): Use the new get_distribution () function
+	and run the `distribution_info->menu_init_func' hook if it
+	exists.
+	(setup_menuitem_try_pixmap): Allow the "try_file" to be NULL.
+	(create_distribution_menu): New function. This replaces the
+	old create_debian_menu () function but is now distribution
+	independent.
+	(create_debian_menu): Removed.
+	(create_root_menu): Use the new distribution menus.
+
 Thu Jun 15 22:18:15 2000  George Lebl <jirka@5z.com>
 
 	* button-widget.c: make the previous fix work well with autohidden
