@@ -1743,7 +1743,7 @@ mailcheck_about(BonoboUIComponent *uic, MailCheck *mc, const gchar *verbname)
 	g_free (file);
 	
 	mc->about = gnome_about_new (_("Inbox Monitor"), "1.1",
-				     _("(c) 1998-2000 the Free Software Foundation"),
+				     _("(C) 1998 Free Software Foundation, Inc."),
 				     _("Inbox Monitor notifies you when new mail arrives in your mailbox"),
 				     authors,
 				     documenters,
