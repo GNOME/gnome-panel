@@ -1,4 +1,4 @@
-#SUBDIRS = help
+SUBDIRS = help
 
 INCLUDES = -I. -I$(srcdir) 			\
 	-I$(srcdir)/../../libpanel-applet 	\

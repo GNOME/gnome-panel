@@ -1,1 +1,1 @@
-SUBDIRS = clock mailcheck printer
+SUBDIRS = pager
