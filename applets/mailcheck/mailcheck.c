@@ -1157,7 +1157,7 @@ make_mailcheck_applet(const gchar *goad_id)
 	mc->animation_file = gnome_config_get_string(query);
 	g_free(query);
 
-	mc->update_freq = gnome_config_get_int("mail/update_frequency=2000");
+	mc->update_freq = gnome_config_get_int("mail/update_frequency=120000");
 		
 	mc->pre_check_cmd = gnome_config_get_string("mail/exec_command");
 	mc->pre_check_enabled = gnome_config_get_bool("mail/exec_enabled=0");
