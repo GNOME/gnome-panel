@@ -588,7 +588,7 @@ create_menu_applet(char *arguments, MenuOrient orient)
 	
 	if(!gnome_folder) {
 		gnome_folder = gnome_unconditional_pixmap_file
-					("gnome-folder-small.xpm");
+					("gnome-folder.png");
 		if (!g_file_exists (gnome_folder)) {
 			free (gnome_folder);
 			gnome_folder = NULL;

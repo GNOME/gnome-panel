@@ -41,7 +41,7 @@ create_logout_widget(void)
 	GtkWidget *pixmap;
 	char *pixmap_name;
 
-	pixmap_name = gnome_unconditional_pixmap_file("gnome-term-night.xpm");
+	pixmap_name = gnome_unconditional_pixmap_file("gnome-term-night.png");
 
 	if (!pixmap_name)
 		button = gtk_button_new_with_label(_("Log out"));

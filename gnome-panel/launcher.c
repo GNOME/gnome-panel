@@ -88,7 +88,7 @@ create_launcher (GtkWidget *window, char *parameters)
 	Launcher *launcher;
 
 	if (!default_app_pixmap)
-		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.xpm");
+		default_app_pixmap = gnome_pixmap_file ("gnome-unknown.png");
 
 	if (*parameters == '/')
 		dentry = gnome_desktop_entry_load (parameters);
