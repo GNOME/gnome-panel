@@ -1,3 +1,9 @@
+Mon Feb  8 20:03:53 1999  Timur Bakeyev <mc@bat.ru>
+
+	* Makefile.am, appletsConf.sh.in: Strangly, libgnorba.a wasn't in de-
+	pendences and $(APPLETS_LIBS). Fixed, by changing occurences of GNOMEUI_
+	LIBS and ORB_LIBS with GNOMEGNORBA_LIBS. Suggested by Owen Taylor.
+
 Mon Feb  8 10:00:03 1999 The Rasterman <raster@redhat.com>
 	* corner-widget.c, drawer-widget.c, snapped-widget.c: changed layering
 	  to be below normal app window layer unless autohide is on.

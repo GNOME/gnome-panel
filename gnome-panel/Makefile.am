@@ -9,7 +9,7 @@ AUTOMAKE_OPTIONS = 1.3
 INCLUDES = -I. -I$(srcdir) \
 	-I$(top_srcdir)/intl \
 	-I$(top_builddir)/intl \
-	-I$(top_builddir)/panel \
+	-I$(top_builddir)/panel  \
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-I$(includedir) $(GNOME_INCLUDEDIR) $(ORB_CFLAGS)
 
@@ -44,7 +44,7 @@ libpanel_appletinclude_HEADERS = \
 	panel-types.h
 
 libpanel_applet_la_LDFLAGS = -version-info 0:0:0 -rpath $(libdir)
-libpanel_applet_la_LIBADD = $(ORB_LIBS) -lm $(DL_LIB)
+libpanel_applet_la_LIBADD = $(GNOMEGNORBA_LIBS) -lm $(DL_LIB)
 
 BUILT_SOURCES = $(CORBA_SRCLIST)
 
@@ -97,8 +97,8 @@ panel_SOURCES = 		\
 
 $(base_panel_SOURCES): $(CORBA_SRCLIST)
 
-panel_LDADD = libpanel_applet.la $(GNOME_LIBDIR) $(GNORBA_LIBS) $(ORB_LIBS) $(GNOMEUI_LIBS) $(INTLLIBS)
-panel_LDFLAGS=-export-dynamic
+panel_LDADD = libpanel_applet.la $(INTLLIBS)
+panel_LDFLAGS=-export-dynamic $(GNOME_LIBDIR)
 
 data_DATA = panelrc
 
@@ -137,9 +137,8 @@ confexec_DATA = appletsConf.sh
 #
 appletsConf.sh: appletsConf.sh.in Makefile
 	sed -e 's?\@GNOME_LIBDIR\@?$(GNOME_LIBDIR)?g' \
-	    -e 's?\@GNOMEUI_LIBS\@?$(GNOMEUI_LIBS)?g' \
 	    -e 's?\@GNOME_INCLUDEDIR\@?$(GNOME_INCLUDEDIR)?g' \
-	    -e 's?\@ORB_LIBS\@?$(ORB_LIBS)?g' \
+	    -e 's?\@GNOMEGNORBA_LIBS\@?$(GNOMEGNORBA_LIBS)?g' \
 	    < $(srcdir)/appletsConf.sh.in > appletsConf.tmp \
 	  && mv appletsConf.tmp appletsConf.sh
 
