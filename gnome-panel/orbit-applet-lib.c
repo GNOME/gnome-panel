@@ -303,37 +303,22 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(in_drag) {
 				GNOME_Panel_applet_drag_stop(panel_client,
 							     ourid, &ev);
-				gdk_pointer_ungrab(GDK_CURRENT_TIME);
-				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-				gtk_grab_remove(widget);
 				return TRUE;
 			}else if(bevent->button == 2) {
-				GdkCursor *fleur_cursor =
-					gdk_cursor_new(GDK_FLEUR);
-
-				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				if((w = gtk_grab_get_current()))
 					gtk_grab_remove(w);
-				gtk_grab_add(widget);
-				if(widget->window) {
-					gdk_pointer_grab(widget->window,
-							 FALSE,
-							 GDK_BUTTON_PRESS_MASK |
-							  GDK_BUTTON_RELEASE_MASK,
-							 NULL,
-							 fleur_cursor,
-							 GDK_CURRENT_TIME);
-				}
+				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+				gdk_pointer_ungrab(GDK_CURRENT_TIME);
+				gdk_flush();
 				GNOME_Panel_applet_drag_start(panel_client,
 							      ourid, &ev);
-				gdk_cursor_destroy(fleur_cursor);
 				return TRUE;
 			} else if(bevent->button == 3) {
 				if((w = gtk_grab_get_current()))
 					gtk_grab_remove(w);
 				gdk_pointer_ungrab(GDK_CURRENT_TIME);
 				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
+				gdk_flush();
 				GNOME_Panel_applet_show_menu(panel_client,
 							     ourid, &ev);
 				return TRUE;
@@ -343,16 +328,8 @@ applet_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 			if(GNOME_Panel_applet_in_drag(panel_client, &ev)) {
 				GNOME_Panel_applet_drag_stop(panel_client,
 							     ourid, &ev);
-				gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-				gdk_pointer_ungrab(GDK_CURRENT_TIME);
-				gtk_grab_remove(widget);
 				return TRUE;
 			}
-			break;
-		case GDK_MOTION_NOTIFY:
-			puts("MOTION");
-			if(GNOME_Panel_applet_in_drag(panel_client, &ev))
-				return TRUE;
 			break;
 		default:
 			break;
@@ -368,7 +345,6 @@ applet_sub_event_handler(GtkWidget *widget, GdkEvent *event, gpointer data)
 		/*pass these to the parent!*/
 		case GDK_BUTTON_PRESS:
 		case GDK_BUTTON_RELEASE:
-		case GDK_MOTION_NOTIFY:
 			return gtk_widget_event(GTK_WIDGET(data), event);
 
 			break;

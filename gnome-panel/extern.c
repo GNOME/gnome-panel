@@ -234,7 +234,7 @@ applet_drag_start(int applet_id)
 
 	/*panel_widget_applet_drag_start(panel,info->widget);
 	panel_widget_applet_drag_end(panel);*/
-	panel_widget_applet_drag_start_no_grab(panel,info->widget);
+	panel_widget_applet_drag_start(panel,info->widget);
 	panel_widget_applet_move_use_idle(panel);
 }
 
@@ -250,7 +250,7 @@ applet_drag_stop(int applet_id)
 
 	g_return_if_fail(panel!=NULL);
 
-	panel_widget_applet_drag_end_no_grab(panel);
+	panel_widget_applet_drag_end(panel);
 }
 
 int
