@@ -480,7 +480,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, int type)
 			NULL,
 			NULL,
 			bevent->button,
-			0);
+			bevent->time);
 }
 
 static int
@@ -953,6 +953,7 @@ static GtkWidget * create_menu_at (GtkWidget *menu,
 				   int applets, char *dir_name,
 				   char *pixmap_name, int fake_submenus,
 				   int force);
+static GtkWidget * create_rh_menu(void);
 
 /*if menu is NULL that means just reread the menu don't do anything with the
   applet*/
@@ -1117,6 +1118,12 @@ create_menu_at (GtkWidget *menu,
 	GtkWidget *menuitem;
 	
 	MenuFinfo *mf = NULL;
+	
+	/*this is slightly hackish I guess*/
+	if(strcmp(menudir,"=REDHAT=")==0) {
+		g_return_val_if_fail(menu==NULL,menu);
+		return create_rh_menu();
+	}
 	
 	if(!force && !g_file_exists(menudir))
 		return menu;
@@ -1745,12 +1752,324 @@ add_special_entries (GtkWidget *menu, int fake_submenus)
 
 }
 
+enum { RH_MENU_ITEM,RH_MENU_GROUP };
+typedef struct _RHMenuItem RHMenuItem;
+struct _RHMenuItem {
+	int type;
+	char *name;
+	union {
+		struct {
+			char *description;
+			char *icon;
+			char *mini_icon;
+			char *exec;
+			FileInfo *finfo;
+		} item;
+		GList *items;
+	} u;
+};
+
+static void
+free_rh_item(RHMenuItem *rh)
+{
+	if(!rh) return;
+	g_free(rh->name);
+	if(rh->type == RH_MENU_ITEM) {
+		g_free(rh->u.item.description);
+		g_free(rh->u.item.icon);
+		g_free(rh->u.item.mini_icon);
+		g_free(rh->u.item.exec);
+		if(rh->u.item.finfo) {
+			g_free(rh->u.item.finfo->name);
+			g_free(rh->u.item.finfo);
+		}
+	} else {
+		g_list_foreach(rh->u.items,(GFunc)free_rh_item,NULL);
+		g_list_free(rh->u.items);
+	}
+	g_free(rh);
+}
+
+/*most likely one of the ugliest functions in existence*/
+static char *
+read_word(char **p)
+{
+	static char buf[256] = "";
+	char *w;
+	int quoted = FALSE;
+	if(!p) return NULL;
+	if(!*p) return NULL;
+	while(*(*p) == ' ' || *(*p) == '\t') (*p)++;
+	if(!(*(*p))) return NULL;
+	for(w=buf;*(*p) && (quoted || (*(*p)!=' ' && *(*p)!='\t'));(*p)++) {
+		if(*(*p)=='"')
+			quoted = !quoted;
+		else {
+			*w = *(*p);
+			if((w++)-buf >= 255) {
+				*w='\0';
+				return buf;
+			}
+		}
+	}
+	*w='\0';
+	return buf;
+}
+
+static int
+sort_rh(RHMenuItem *a, RHMenuItem *b)
+{
+	if(a->type > b->type) return -1;
+	else if(a->type < b->type) return 1;
+	return strcmp(a->name,b->name);
+}
+
+static GList *
+insert_rh_into_tree(GList *list,RHMenuItem *rh,GList *group)
+{
+	GList *li;
+	RHMenuItem *ri;
+	if(!group) 
+		return g_list_insert_sorted(list,rh,(GCompareFunc)sort_rh);
+	for(li=list;li!=NULL;li=g_list_next(li)) {
+		ri = li->data;
+		if(ri->type == RH_MENU_GROUP &&
+		   strcmp(ri->name,group->data)==0) {
+			ri->u.items = insert_rh_into_tree(ri->u.items, rh,
+							  group->next);
+			break;
+		}
+	}
+	/*we inserted it already*/
+	if(li) return list;
+	
+	ri = g_new0(RHMenuItem,1);
+	ri->type = RH_MENU_GROUP;
+	ri->name = g_strdup(group->data);
+	ri->u.items = insert_rh_into_tree(ri->u.items, rh,
+					  group->next);
+	return g_list_insert_sorted(list,ri,(GCompareFunc)sort_rh);
+}
+
+static GList *
+add_redhat_entry(GList *list, char *file)
+{
+	FILE *fp;
+	char *p,*w;
+	char buf[256];
+	GList *group = NULL;
+	
+	RHMenuItem *rh = NULL;
+	
+	fp = fopen(file,"r");
+	if(!fp) return list;
+	
+	rh = g_new0(RHMenuItem,1);
+	rh->u.item.finfo = make_finfo(file,FALSE);
+	while(fgets(buf,256,fp)) {
+		char **param = NULL;
+		p = strchr(buf,'\n');
+		if(p) *p='\0';
+		p = buf;
+		read_word(&p); /*XXX:ignore??*/
+		w = read_word(&p);
+		if(strcmp(w,"name")==0) {
+			g_free(rh->name);
+			rh->name = g_strdup(read_word(&p));
+		} else if(strcmp(w,"description")==0) {
+			g_free(rh->u.item.description);
+			rh->u.item.description = g_strdup(read_word(&p));
+		} else if(strcmp(w,"icon")==0) {
+			w = read_word(&p);
+			g_free(rh->u.item.icon);
+			if(*w == '/') {
+				if(g_file_exists(w))
+					rh->u.item.icon = g_strdup(w);
+				else
+					rh->u.item.icon = NULL;
+			} else {
+				rh->u.item.icon = g_concat_dir_and_file("/usr/share/icons", w);
+				if(!g_file_exists(rh->u.item.icon)) {
+					g_free(rh->u.item.icon);
+					rh->u.item.icon = gnome_pixmap_file(w);
+				}
+			}
+		} else if(strcmp(w,"mini-icon")==0) {
+			w = read_word(&p);
+			g_free(rh->u.item.mini_icon);
+			if(*w == '/') {
+				if(g_file_exists(w))
+					rh->u.item.mini_icon = g_strdup(w);
+				else
+					rh->u.item.mini_icon = NULL;
+			} else {
+				rh->u.item.mini_icon = g_concat_dir_and_file("/usr/share/icons/mini", w);
+				if(!g_file_exists(rh->u.item.mini_icon)) {
+					g_free(rh->u.item.mini_icon);
+					rh->u.item.mini_icon = gnome_pixmap_file(w);
+				}
+			}
+		} else if(strcmp(w,"exec")==0) {
+			g_free(rh->u.item.exec);
+			rh->u.item.exec = g_strdup(read_word(&p));
+		} else if(strcmp(w,"group")==0) {
+			char *sc;
+			w = read_word(&p);
+
+			if(group) {
+				g_list_foreach(group,(GFunc)g_free,NULL);
+				g_list_free(group);
+				group = NULL;
+			}
+			sc = strtok(w,"/");
+			while(sc) {
+				group = g_list_append(group, g_strdup(sc));
+				sc = strtok(NULL,"/");
+			}
+		}
+	}
+	if(!rh->name || !rh->u.item.exec) {
+		free_rh_item(rh);
+		return list;
+	}
+	list = insert_rh_into_tree(list,rh,group);
+	g_list_foreach(group,(GFunc)g_free,NULL);
+	g_list_free(group);
+	return list;
+}
+
+static void
+exec_rh_item(GtkWidget *w, RHMenuItem *ri)
+{
+	char *s = g_copy_strings("( ",ri->u.item.exec," ) &",NULL);
+	system(s);
+	g_free(s);
+}
+
+static GtkWidget *
+make_submenu(MenuFinfo *mf, GList *rhlist)
+{
+	GList *li;
+	GtkWidget *menu = gtk_menu_new();
+	for(li = rhlist;li!=NULL;li = g_list_next(li)) {
+		RHMenuItem *ri = li->data;
+		GtkWidget *menuitem;
+		GtkWidget *pixmap = NULL;
+		char *pixmap_name = ri->u.item.mini_icon;
+		if(!pixmap_name) pixmap_name = ri->u.item.icon;
+		if (pixmap_name) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, pixmap_name,
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
+			if (pixmap)
+				gtk_widget_show (pixmap);
+		}
+
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, pixmap, ri->name);
+		gtk_menu_append (GTK_MENU (menu), menuitem);
+		if(ri->type == RH_MENU_GROUP) {
+			GtkWidget *w;
+			w = make_submenu(mf,ri->u.items);
+			gtk_menu_item_set_submenu(GTK_MENU_ITEM(menuitem),w);
+		} else {
+			gtk_signal_connect_full(GTK_OBJECT(menuitem),
+						"activate",
+						GTK_SIGNAL_FUNC (exec_rh_item),
+						NULL,ri,
+						(GtkDestroyNotify)free_rh_item,
+						FALSE, FALSE);
+			/*so that we don't clear this later*/
+			li->data = NULL;
+			mf->finfo = g_list_prepend(mf->finfo,ri->u.item.finfo);
+			ri->u.item.finfo = NULL;
+		}
+	}
+	return menu;
+}
+
+static GtkWidget *
+make_rh_menu_from_list(GList *list)
+{
+	MenuFinfo *mf;
+	GtkWidget *menu;
+	GList *li;
+	char *p;
+	
+	mf = g_new(MenuFinfo,1);
+	mf->menudir = g_strdup("=REDHAT=");
+	mf->applets = FALSE;
+	mf->dir_name = g_strdup(_("RedHat menu"));
+	if(g_file_exists("/usr/share/icons/mini/mini-redhat.xpm"))
+		mf->pixmap_name =
+			g_strdup("/usr/share/icons/mini/mini-redhat.xpm");
+	else
+		mf->pixmap_name = NULL;
+	mf->fake_menu = FALSE;
+	mf->finfo = g_list_prepend(NULL,make_finfo("/etc/X11/wmconfig/",TRUE));
+	p = gnome_util_prepend_user_home(".wmconfig/");
+	mf->finfo = g_list_prepend(mf->finfo, make_finfo(p,TRUE));
+	g_free(p);
+	
+	menu = make_submenu(mf,list);
+	li = g_list_append(NULL,mf);
+	gtk_object_set_data(GTK_OBJECT(menu),"mf",li);
+	return menu;
+}
+
+
+static GtkWidget *
+create_rh_menu(void)
+{
+	char *userrh = gnome_util_prepend_user_home(".wmconfig/");
+	GList *rhlist = NULL;
+	GtkWidget *w;
+	int i;
+	char *dirs[3] = {"/etc/X11/wmconfig/",userrh,NULL};
+	g_return_val_if_fail(userrh!=NULL,NULL);
+	
+	/*this only works on RH systems and on those the path's are set*/
+	if(!g_file_test("/etc/X11/wmconfig/",G_FILE_TEST_ISDIR) &&
+	   !g_file_test(userrh,G_FILE_TEST_ISDIR)) {
+		g_free(userrh);
+		return NULL;
+	}
+
+	/*read redhat wmconfig files*/
+	for(i=0;dirs[i];i++) {
+		DIR *dir;
+		struct dirent *dent;
+
+		dir = opendir (dirs[i]);
+		if(!dir) continue;
+		while((dent = readdir (dir)) != NULL) {
+			char *p;
+			if(strcmp(dent->d_name,".")==0 ||
+			   strcmp(dent->d_name,"..")==0)
+				continue;
+			p = g_concat_dir_and_file(dirs[i],dent->d_name);
+			rhlist = add_redhat_entry(rhlist,p);
+			g_free(p);
+		}
+		closedir(dir);
+	}
+	g_free(userrh);
+	if(!rhlist)
+		return NULL;
+	w = make_rh_menu_from_list(rhlist);
+	g_list_foreach(rhlist,(GFunc)free_rh_item,NULL);
+	g_list_free(rhlist);
+	return w;
+}
+
 static GtkWidget *
 create_root_menu(int fake_submenus, MainMenuType type)
 {
 	GtkWidget *root_menu;
 	GtkWidget *uroot_menu;
-
+	GtkWidget *rhmenu;
+	GtkWidget *menuitem;
+	
 	root_menu = create_system_menu(NULL,fake_submenus);
 	uroot_menu = NULL;
 	
@@ -1760,7 +2079,6 @@ create_root_menu(int fake_submenus, MainMenuType type)
 		uroot_menu = create_user_menu(NULL, fake_submenus, TRUE);
 	
 	if(type == MAIN_MENU_USER) {
-		GtkWidget *menuitem;
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("System Menus"));
 		gtk_menu_append (GTK_MENU (uroot_menu), menuitem);
@@ -1771,7 +2089,6 @@ create_root_menu(int fake_submenus, MainMenuType type)
 				   NULL);
 		root_menu = uroot_menu;
 	} else if(type == MAIN_MENU_SYSTEM) {
-		GtkWidget *menuitem;
 		menuitem = gtk_menu_item_new ();
 		setup_menuitem (menuitem, 0, _("User Menus"));
 		gtk_menu_append (GTK_MENU (root_menu), menuitem);
@@ -1781,6 +2098,26 @@ create_root_menu(int fake_submenus, MainMenuType type)
 				   GTK_SIGNAL_FUNC(submenu_to_display),
 				   NULL);
 	}
+#if 0
+	rhmenu = create_rh_menu();
+	if(rhmenu) {
+		GtkWidget *pixmap = NULL;
+		if (g_file_exists("/usr/share/icons/mini/mini-redhat.xpm")) {
+			pixmap = gnome_stock_pixmap_widget_at_size (NULL, "/usr/share/icons/mini/mini-redhat.xpm",
+								    SMALL_ICON_SIZE,
+								    SMALL_ICON_SIZE);
+			if (pixmap)
+				gtk_widget_show (pixmap);
+		}
+		menuitem = gtk_menu_item_new ();
+		setup_menuitem (menuitem, pixmap, _("RedHat menus"));
+		gtk_menu_append (GTK_MENU (root_menu), menuitem);
+		gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem),rhmenu);
+		gtk_signal_connect(GTK_OBJECT(menuitem),"select",
+				   GTK_SIGNAL_FUNC(submenu_to_display),
+				   NULL);
+	}
+#endif
 
 	add_special_entries (root_menu, fake_submenus);
 	

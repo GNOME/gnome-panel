@@ -91,14 +91,20 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 }
 
 static void
-set_toggle_not (GtkWidget *widget, gpointer data)
+set_toggle (GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	int *the_toggle = data;
 
-	*the_toggle = !(GTK_TOGGLE_BUTTON(widget)->active);
+	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
+{
+	gtk_widget_set_sensitive(widget2,GTK_TOGGLE_BUTTON(widget)->active);
 }
 
 void
@@ -134,22 +140,29 @@ add_drawer_properties_page(PerPanelConfig *ppc, Drawer *drawer)
 
 	f = gtk_frame_new(_("Drawer handle"));
 	box_in = gtk_vbox_new(FALSE,5);
-	button = gtk_check_button_new_with_label (_("Disable hidebutton"));
+	/*we store this in w for later use!, so don't use w as temp from now
+	  on*/
+	w = button = gtk_check_button_new_with_label (_("Enable hidebutton"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->drawer_hidebutton)
+	if (ppc->drawer_hidebutton)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->drawer_hidebutton);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, FALSE,
 			    CONFIG_PADDING_SIZE);
 
-	button = gtk_check_button_new_with_label (_("Disable hidebutton arrow"));
+	button = gtk_check_button_new_with_label (_("Enable hidebutton arrow"));
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
+			    button);
+	if (!ppc->drawer_hidebutton)
+		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->drawer_hidebutton_pixmap)
+	if (ppc->drawer_hidebutton_pixmap)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->drawer_hidebutton_pixmap);
 	gtk_box_pack_start (GTK_BOX (box_in), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);

@@ -206,14 +206,20 @@ config_event(GtkWidget *widget,GdkEvent *event,GtkNotebook *nbook)
 }
 
 static void
-set_toggle_not (GtkWidget *widget, gpointer data)
+set_toggle (GtkWidget *widget, gpointer data)
 {
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 	int *the_toggle = data;
 
-	*the_toggle = !(GTK_TOGGLE_BUTTON(widget)->active);
+	*the_toggle = GTK_TOGGLE_BUTTON(widget)->active;
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
+}
+
+static void
+set_sensitive_toggle (GtkWidget *widget, GtkWidget *widget2)
+{
+	gtk_widget_set_sensitive(widget2,GTK_TOGGLE_BUTTON(widget)->active);
 }
 
 static void
@@ -231,15 +237,15 @@ snapped_set_pos (GtkWidget *widget, gpointer data)
 }
 
 static void
-snapped_set_mode (GtkWidget *widget, gpointer data)
+snapped_set_auto_hide (GtkWidget *widget, gpointer data)
 {
-	SnappedMode mode = (SnappedMode) data;
 	PerPanelConfig *ppc = gtk_object_get_user_data(GTK_OBJECT(widget));
 
-	if(!(GTK_TOGGLE_BUTTON(widget)->active))
-		return;
+	if(GTK_TOGGLE_BUTTON(widget)->active)
+		ppc->snapped_mode = SNAPPED_AUTO_HIDE;
+	else
+		ppc->snapped_mode = SNAPPED_EXPLICIT_HIDE;
 	
-	ppc->snapped_mode = mode;
 	if (ppc->register_changes)
 		gnome_property_box_changed (GNOME_PROPERTY_BOX (ppc->config_window));
 }
@@ -253,6 +259,7 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	GtkWidget *box;
 	GtkWidget *hbox;
         GtkWidget *table;
+        GtkWidget *w;
 	
 	/* main hbox */
 	hbox = gtk_hbox_new (FALSE, CONFIG_PADDING_SIZE);
@@ -343,48 +350,40 @@ snapped_notebook_page(PerPanelConfig *ppc)
 	gtk_container_set_border_width(GTK_CONTAINER (box), CONFIG_PADDING_SIZE);
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
-	/* Stay Put */
-	button = gtk_radio_button_new_with_label (NULL, _("Explicitly Hide"));
-	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (ppc->snapped_mode == SNAPPED_EXPLICIT_HIDE)
-		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
-	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_mode), 
-			    (gpointer)SNAPPED_EXPLICIT_HIDE);
-	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
-			    CONFIG_PADDING_SIZE);
-	
 	/* Auto-hide */
-	button = gtk_radio_button_new_with_label (
-			  gtk_radio_button_group (GTK_RADIO_BUTTON (button)),
-			  _("Auto Hide"));
+	button = gtk_check_button_new_with_label(_("Auto Hide"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
 	if (ppc->snapped_mode == SNAPPED_AUTO_HIDE)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (snapped_set_mode), 
-			    (gpointer)SNAPPED_AUTO_HIDE);
+			    GTK_SIGNAL_FUNC (snapped_set_auto_hide), 
+			    NULL);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* Hidebuttons disable */
-	button = gtk_check_button_new_with_label (_("Disable hidebuttons"));
+	/* Hidebuttons enable */
+	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->snapped_hidebuttons)
+	if (ppc->snapped_hidebuttons)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->snapped_hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* Arrow disable */
-	button = gtk_check_button_new_with_label (_("Disable hidebutton arrows"));
+	/* Arrow enable */
+	button = gtk_check_button_new_with_label (_("Enable hidebutton arrows"));
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
+			    button);
+	if (!ppc->snapped_hidebuttons)
+		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->snapped_hidebutton_pixmaps)
+	if (ppc->snapped_hidebutton_pixmaps)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->snapped_hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
@@ -426,6 +425,7 @@ corner_notebook_page(PerPanelConfig *ppc)
 {
 	GtkWidget *frame;
 	GtkWidget *button;
+	GtkWidget *w;
 	GtkWidget *box;
 	GtkWidget *hbox;
 	GtkWidget *vbox;
@@ -560,24 +560,29 @@ corner_notebook_page(PerPanelConfig *ppc)
 	gtk_container_add (GTK_CONTAINER (frame), box);
 	
 
-	/* Hidebuttons disable */
-	button = gtk_check_button_new_with_label (_("Disable hidebuttons"));
+	/* Hidebuttons enable */
+	w = button = gtk_check_button_new_with_label (_("Enable hidebuttons"));
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->corner_hidebuttons)
+	if (ppc->corner_hidebuttons)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->corner_hidebuttons);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);
 
-	/* Arrow disable */
-	button = gtk_check_button_new_with_label (_("Disable hidebutton arrows"));
+	/* Arrow enable */
+	button = gtk_check_button_new_with_label (_("Enable hidebutton arrows"));
+	gtk_signal_connect (GTK_OBJECT (w), "toggled", 
+			    GTK_SIGNAL_FUNC (set_sensitive_toggle),
+			    button);
+	if (!ppc->corner_hidebuttons)
+		gtk_widget_set_sensitive(button,FALSE);
 	gtk_object_set_user_data(GTK_OBJECT(button),ppc);
-	if (!ppc->corner_hidebutton_pixmaps)
+	if (ppc->corner_hidebutton_pixmaps)
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_signal_connect (GTK_OBJECT (button), "toggled", 
-			    GTK_SIGNAL_FUNC (set_toggle_not),
+			    GTK_SIGNAL_FUNC (set_toggle),
 			    &ppc->corner_hidebutton_pixmaps);
 	gtk_box_pack_start (GTK_BOX (box), button, TRUE, TRUE,
 			    CONFIG_PADDING_SIZE);

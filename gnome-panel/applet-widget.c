@@ -1,6 +1,9 @@
 #include <config.h>
 #include <string.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkx.h>
 #include <gnome.h>
 
 #include <applet-widget.h>
@@ -703,54 +706,48 @@ applet_widget_get_applet_count()
 	return applet_count;
 }
 
-/*button press event over the applet*/
 static int
-applet_bevent(GtkWidget *widget, GdkEventButton *bevent, GtkWidget *appw)
+applet_event(GtkWidget *w,GdkEvent *event,GtkPlug *aw)
 {
-	GtkWidget *w;
-	CORBA_Environment ev;
-	int retval = FALSE;
-	
-	CORBA_exception_init(&ev);
-
-	if(GNOME_Panel__get_in_drag(panel_client, &ev)) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
-					     "button_press_event");
-		GNOME_PanelSpot_drag_stop(CD(appw)->pspot, &ev);
-		retval = TRUE;
-	} else if(bevent->button == 2) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
-					     "button_press_event");
-		if((w = gtk_grab_get_current()))
-			gtk_grab_remove(w);
-		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
-		gdk_pointer_ungrab(GDK_CURRENT_TIME);
-		gdk_flush();
-		GNOME_PanelSpot_drag_start(CD(appw)->pspot, &ev);
-		retval = TRUE;
-	} else if(bevent->button == 3) {
-		gtk_signal_emit_stop_by_name(GTK_OBJECT(widget),
-					     "button_press_event");
-		if((w = gtk_grab_get_current()))
-			gtk_grab_remove(w);
+	GdkEventButton *bevent = (GdkEventButton *)event;
+	if(event->type == GDK_BUTTON_PRESS && 
+	   (bevent->button == 3 || bevent->button == 2)) {
+		XButtonEvent ev;
+		GtkWidget *wi;
+		if((wi = gtk_grab_get_current()))
+			gtk_grab_remove(wi);
 		gdk_pointer_ungrab(GDK_CURRENT_TIME);
 		gdk_keyboard_ungrab(GDK_CURRENT_TIME);
 		gdk_flush();
-		GNOME_PanelSpot_show_menu(CD(appw)->pspot, &ev);
-		retval = TRUE;
+		gtk_signal_emit_stop_by_name(GTK_OBJECT(w),
+					     "event");
+		ev.type = ButtonPress;
+		ev.send_event = True;
+		ev.display = GDK_DISPLAY();
+		ev.window = GDK_WINDOW_XWINDOW(aw->socket_window);
+		ev.subwindow = None;
+		ev.time = bevent->time;
+		ev.x = bevent->x;
+		ev.y = bevent->y;
+		ev.x_root = bevent->x_root;
+		ev.y_root = bevent->y_root;
+		ev.state = bevent->state;
+		ev.button = bevent->button;
+		ev.same_screen = True;
+		XSendEvent(GDK_DISPLAY(),
+			   GDK_WINDOW_XWINDOW(aw->socket_window),
+			   True,NoEventMask,(XEvent *)&ev);
+		return TRUE;
 	}
-
-	CORBA_exception_free(&ev);
-
-	return retval;
+	return FALSE;
 }
 
 static void
 bind_applet_events(GtkWidget *widget, gpointer data)
 {
 	if (!GTK_WIDGET_NO_WINDOW(widget)) {
-		gtk_signal_connect(GTK_OBJECT(widget), "button_press_event",
-				   (GtkSignalFunc) applet_bevent,
+		gtk_signal_connect(GTK_OBJECT(widget), "event",
+				   (GtkSignalFunc) applet_event,
 				   data);
 	}
 	

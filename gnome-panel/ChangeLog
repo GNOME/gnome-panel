@@ -1,3 +1,17 @@
+Sat Dec 19 01:55:10 1998  George Lebl  <jirka@5z.com>
+
+	* menu.c: experimental Redhat menu reading code, #if 0'ed
+	  out now until proven stable and functionally complete
+
+	* panel_config.c,drawer.c: changed negative checkboxes to positive
+	  and made only AutoHide checkbox (not two radio boxes)
+
+	* applet-widget.c: fixed a bug with right click menus, now the
+	  menus come up the same way all over (if you click they will stay).
+	  this took some X hackery which is probably not 100% the
+	  RightWay(tm) but it works (it bypasses corba and emulates a
+	  button press on the socket with XSendEvent)
+
 Wed Dec 16 14:54:09 1998  Owen Taylor  <otaylor@redhat.com>
 
 	* applet.c button-widget.c button-widget.h panel-widget.c:
