@@ -288,6 +288,7 @@ applet_request_id (const char *goad_id, char **cfgpath,
 	ext->obj = CORBA_OBJECT_NIL;
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = NULL;
+	ext->goad_ids = NULL;
 
 	*winid = reserve_applet_spot (ext, panels->data, 0,
 				      APPLET_EXTERN_RESERVED);
@@ -427,6 +428,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel, int pos)
 	ext->obj = CORBA_OBJECT_NIL;
 	ext->goad_id = g_strdup(goad_id);
 	ext->cfg = cfgpath;
+	ext->goad_ids = NULL;
 
 	if(reserve_applet_spot (ext, panel, pos, APPLET_EXTERN_PENDING)==0) {
 		g_warning("Whoops! for some reason we can't add "
