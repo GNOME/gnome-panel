@@ -57,9 +57,9 @@ launcher_get_screen (Launcher *launcher)
 {
 	PanelWidget *panel_widget;
 
-	g_return_val_if_fail (launcher != NULL, 0);
-	g_return_val_if_fail (launcher->info != NULL, 0);
-	g_return_val_if_fail (launcher->info->widget != NULL, 0);
+	g_return_val_if_fail (launcher != NULL, NULL);
+	g_return_val_if_fail (launcher->info != NULL, NULL);
+	g_return_val_if_fail (launcher->info->widget != NULL, NULL);
 
 	panel_widget = PANEL_WIDGET (launcher->info->widget->parent);
 
@@ -384,7 +384,7 @@ drag_drop_cb (GtkWidget	        *widget,
 	      guint              time,
 	      Launcher          *launcher)
 {
-	static GdkAtom text_uri_list = 0;
+	static GdkAtom text_uri_list = NULL;
 
 	if ( ! is_this_drop_ok (widget, context))
 		return FALSE;

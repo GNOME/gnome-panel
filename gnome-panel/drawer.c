@@ -280,7 +280,7 @@ drag_drop_cb (GtkWidget      *widget,
 	      guint           time_,
 	      Drawer         *drawer)
 {
-	GdkAtom atom = 0;
+	GdkAtom atom = NULL;
 
 	if (!panel_check_dnd_target_data (widget, context, NULL, &atom))
 		return FALSE;

@@ -1,3 +1,9 @@
+2004-08-11  Kjartan Maraas  <kmaraas@gnome.org>
+
+	* drawer.c: (drag_drop_cb): Fix NULL vs 0 confusion.
+	* launcher.c: (launcher_get_screen), (drag_drop_cb): Same
+	Closes bug #149833. Yay for sparse.
+
 2004-08-10  Christian Neumair  <chris@gnome-de.org>
 
 	* Makefile.am: Remove panel preferences dialog, cleanup LIBS/CFLAGS
