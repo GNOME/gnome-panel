@@ -130,9 +130,6 @@ add_drawer_properties_page (PerPanelConfig *ppc, GtkNotebook *prop_nbook, Drawer
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (box_in), w, FALSE, FALSE, 0);
 
-	w = make_level_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (box_in), w, FALSE, FALSE, 0);
-
 	f = gtk_frame_new (_("Size and Position"));
 	gtk_container_add (GTK_CONTAINER (f), box_in);
 	gtk_box_pack_start (GTK_BOX (box), f, FALSE, FALSE, 0);
@@ -381,7 +378,6 @@ create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 	GtkWidget *dw = drawer_widget_new (orient,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
-					   BASEP_LEVEL_DEFAULT,
 					   FALSE,
 					   PANEL_SIZE_MEDIUM,
 					   TRUE, TRUE,

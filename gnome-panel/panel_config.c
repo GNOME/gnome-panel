@@ -194,7 +194,7 @@ update_config_floating_orient (BasePWidget *panel)
 	    ppc->ppc_origin_change)
 		return;
 
-	toggle = (PANEL_WIDGET (panel->panel)->orient == PANEL_HORIZONTAL)
+	toggle = (PANEL_WIDGET (panel->panel)->orient == GTK_ORIENTATION_HORIZONTAL)
 		? ppc->h_orient : ppc->v_orient;
 
 	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -336,38 +336,6 @@ update_config_size (GtkWidget *panel)
 	
 	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->size_menu), i);
 	menuitem = g_list_nth_data(GTK_MENU_SHELL(GTK_OPTION_MENU(ppc->size_menu)->menu)->children, i);
-	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
-}
-
-void
-update_config_level (BasePWidget *panel)
-{
-	PerPanelConfig *ppc = get_config_struct (GTK_WIDGET (panel));
-	int i;
-	GtkWidget *menuitem;
-
-	if (ppc == NULL ||
-	    ppc->ppc_origin_change)
-		return;
-
-	switch (panel->level) {
-	default:
-	case BASEP_LEVEL_DEFAULT:
-		i = 0;
-		break;
-	case BASEP_LEVEL_ABOVE:
-		i = 1;
-		break;
-	case BASEP_LEVEL_NORMAL:
-		i = 2;
-		break;
-	case BASEP_LEVEL_BELOW:
-		i = 3;
-		break;
-	}
-	
-	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->level_menu), i);
-	menuitem = g_list_nth_data(GTK_MENU_SHELL(GTK_OPTION_MENU(ppc->level_menu)->menu)->children, i);
 	gtk_menu_item_activate(GTK_MENU_ITEM(menuitem));
 }
 
@@ -528,7 +496,6 @@ config_apply (PerPanelConfig *ppc)
 					    ppc->sz,
 					    ppc->mode,
 					    BASEP_WIDGET(ppc->panel)->state,
-					    ppc->level,
 					    ppc->avoid_on_maximize,
 					    ppc->hidebuttons,
 					    ppc->hidebutton_pixmaps,
@@ -547,7 +514,6 @@ config_apply (PerPanelConfig *ppc)
 					     ppc->sz,
 					     ppc->mode,
 					     BASEP_WIDGET(ppc->panel)->state,
-					     ppc->level,
 					     ppc->avoid_on_maximize,
 					     ppc->hidebuttons,
 					     ppc->hidebutton_pixmaps,
@@ -565,7 +531,6 @@ config_apply (PerPanelConfig *ppc)
 					      ppc->sz,
 					      ppc->mode,
 					      BASEP_WIDGET(ppc->panel)->state,
-					      ppc->level,
 					      ppc->avoid_on_maximize,
 					      ppc->hidebuttons,
 					      ppc->hidebutton_pixmaps,
@@ -583,7 +548,6 @@ config_apply (PerPanelConfig *ppc)
 					       ppc->orient,
 					       ppc->mode,
 					       BASEP_WIDGET (ppc->panel)->state,
-					       ppc->level,
 					       ppc->avoid_on_maximize,
 					       ppc->sz,
 					       ppc->hidebuttons,
@@ -600,7 +564,6 @@ config_apply (PerPanelConfig *ppc)
 					    dp->orient,
 					    ppc->mode,
 					    BASEP_WIDGET (ppc->panel)->state, 
-					    ppc->level,
 					    ppc->avoid_on_maximize,
 					    ppc->sz,
 					    ppc->hidebuttons,
@@ -954,9 +917,6 @@ edge_notebook_page (PerPanelConfig *ppc)
 	w = make_position_widget (ppc, 1);
 	gtk_box_pack_start (GTK_BOX (box), w,  TRUE, TRUE, 0);
 
-	w = make_level_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
-
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
@@ -992,9 +952,6 @@ aligned_notebook_page (PerPanelConfig *ppc)
 	w = make_position_widget (ppc, 3);
 	gtk_box_pack_start (GTK_BOX (box), w,  FALSE, FALSE, 0);
 
-	w = make_level_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
-
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
 
@@ -1008,7 +965,7 @@ aligned_notebook_page (PerPanelConfig *ppc)
 static void
 floating_set_orient (GtkWidget *widget, gpointer data)
 {
-	PanelOrientation orient = GPOINTER_TO_INT (data);
+	GtkOrientation orient = GPOINTER_TO_INT (data);
 	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
 
 	if (!(GTK_TOGGLE_BUTTON (widget)->active))
@@ -1069,24 +1026,24 @@ floating_notebook_page (PerPanelConfig *ppc)
 
 	ppc->h_orient = button = gtk_radio_button_new_with_label (
 		NULL, _("Orient panel horizontally"));
-	if(ppc->orient == PANEL_HORIZONTAL)
+	if(ppc->orient == GTK_ORIENTATION_HORIZONTAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			  G_CALLBACK (floating_set_orient),
-			  GINT_TO_POINTER (PANEL_HORIZONTAL));
+			  GINT_TO_POINTER (GTK_ORIENTATION_HORIZONTAL));
 	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	ppc->v_orient = button = 
 		gtk_radio_button_new_with_label_from_widget (
 			GTK_RADIO_BUTTON (ppc->h_orient), 
 			_("Orient panel vertically"));
-	if(ppc->orient == PANEL_VERTICAL)
+	if(ppc->orient == GTK_ORIENTATION_VERTICAL)
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	gtk_object_set_user_data (GTK_OBJECT (button), ppc);
 	g_signal_connect (G_OBJECT (button), "toggled",
 			  G_CALLBACK (floating_set_orient),
-			  GINT_TO_POINTER (PANEL_VERTICAL));
+			  GINT_TO_POINTER (GTK_ORIENTATION_VERTICAL));
 	gtk_box_pack_start (GTK_BOX (orientbox), button, FALSE, FALSE, 0);
 
 	hbox = gtk_hbox_new (FALSE, 0);
@@ -1119,9 +1076,6 @@ floating_notebook_page (PerPanelConfig *ppc)
 			  G_CALLBACK (floating_set_xy),
 			  &ppc->y);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-
-	w = make_level_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1200,9 +1154,6 @@ sliding_notebook_page (PerPanelConfig *ppc)
 	g_signal_connect (G_OBJECT (button), "changed",
 			  G_CALLBACK (sliding_set_offset), ppc);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-
-	w = make_level_widget (ppc);
-	gtk_box_pack_start (GTK_BOX (vvbox), w,  FALSE, FALSE, 0);
 
 	w = make_hidebuttons_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1370,100 +1321,6 @@ make_size_widget (PerPanelConfig *ppc)
 }
 
 static void
-level_set_level (GtkWidget *widget, gpointer data)
-{
-	BasePLevel level = GPOINTER_TO_INT (data);
-	PerPanelConfig *ppc = gtk_object_get_user_data (GTK_OBJECT (widget));
-
-	if(ppc->level == level)
-		return;
-
-	ppc->level = level;
-	
-	panel_config_register_changes (ppc);
-}
-
-GtkWidget *
-make_level_widget (PerPanelConfig *ppc)
-{
-	GtkWidget *box;
-	GtkWidget *menu;
-	GtkWidget *menuitem;
-	int i;
-
-	box = gtk_hbox_new (FALSE, GNOME_PAD_SMALL);
-
-	gtk_box_pack_start (GTK_BOX (box),
-			    gtk_label_new (_("Panel window level:")),
-			    FALSE, FALSE, 0);
-
-	menu = gtk_menu_new ();
-	g_signal_connect (G_OBJECT (menu), "deactivate", 
-			  G_CALLBACK (activate_proper_item), 
-			  NULL);
-
-	menuitem = gtk_menu_item_new_with_label (_("Default (from global preferences)"));
-	gtk_widget_show(menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			  G_CALLBACK (level_set_level),
-			  GINT_TO_POINTER (BASEP_LEVEL_DEFAULT));
-
-	menuitem = gtk_menu_item_new_with_label (_("Above other windows"));
-	gtk_widget_show(menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			  G_CALLBACK (level_set_level),
-			  GINT_TO_POINTER (BASEP_LEVEL_ABOVE));
-
-	menuitem = gtk_menu_item_new_with_label (_("Normal"));
-	gtk_widget_show(menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			  G_CALLBACK (level_set_level),
-			  GINT_TO_POINTER (BASEP_LEVEL_NORMAL));
-
-	menuitem = gtk_menu_item_new_with_label (_("Below other windows"));
-	gtk_widget_show(menuitem);
-	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
-	gtk_object_set_user_data (GTK_OBJECT (menuitem), ppc);
-	g_signal_connect (G_OBJECT (menuitem), "activate",
-			  G_CALLBACK (level_set_level),
-			  GINT_TO_POINTER (BASEP_LEVEL_BELOW));
-
-	ppc->level_menu = gtk_option_menu_new ();
-	gtk_option_menu_set_menu (GTK_OPTION_MENU (ppc->level_menu), menu);
-	
-	gtk_box_pack_start (GTK_BOX (box), ppc->level_menu,
-			    FALSE, FALSE, 0);
-	
-	switch (ppc->level) {
-	default:
-	case BASEP_LEVEL_DEFAULT:
-		i = 0;
-		break;
-	case BASEP_LEVEL_ABOVE:
-		i = 1;
-		break;
-	case BASEP_LEVEL_NORMAL:
-		i = 2;
-		break;
-	case BASEP_LEVEL_BELOW:
-		i = 3;
-		break;
-	}
-
-	gtk_option_menu_set_history (GTK_OPTION_MENU (ppc->level_menu), i);
-	menuitem = g_list_nth_data (GTK_MENU_SHELL (GTK_OPTION_MENU (ppc->level_menu)->menu)->children, i);
-	gtk_menu_item_activate (GTK_MENU_ITEM (menuitem));
-
-	return box;
-}
-
-static void
 value_changed (GtkWidget *w, gpointer data)
 {
 	PerPanelConfig *ppc = data;
@@ -1543,29 +1400,6 @@ set_back (GtkWidget *widget, gpointer data)
 	panel_config_register_changes (ppc);
 }
 
-static void
-color_picker_clicked_signal (GtkWidget *widget, gpointer data)
-{
-#ifdef FIXME
-	GtkWidget *toplevel;
-	GnomeColorPicker *cp;
-
-	cp = GNOME_COLOR_PICKER (widget);
-
-	if (cp->cs_dialog == NULL)
-		return;
-
-	toplevel = gtk_widget_get_toplevel (widget);
-
-	/* sanity */
-	if (toplevel == NULL)
-		return;
-
-	gtk_window_set_transient_for (GTK_WINDOW (cp->cs_dialog),
-				      GTK_WINDOW (toplevel));
-#endif
-}
-
 static GtkWidget *
 background_page (PerPanelConfig *ppc)
 {
@@ -1622,12 +1456,6 @@ background_page (PerPanelConfig *ppc)
 			    FALSE, FALSE, GNOME_PAD_SMALL);
 
 	ppc->backsel = gnome_color_picker_new();
-	/* This will make sure the selection dialog is set as a transient for
-	 * the config dialog */
-	g_signal_connect_after (G_OBJECT (ppc->backsel),
-				"clicked",
-				G_CALLBACK (color_picker_clicked_signal),
-				NULL);
 
 	g_signal_connect (G_OBJECT(ppc->backsel),"color_set",
 			  G_CALLBACK(color_set_cb), ppc);
@@ -1846,7 +1674,6 @@ panel_config (GtkWidget *panel)
 
 	ppc->sz = pw->sz;
 	ppc->screen = basep->screen;
-	ppc->level = basep->level;
 	ppc->avoid_on_maximize = basep->avoid_on_maximize;
 	ppc->hidebuttons = basep->hidebuttons_enabled;
 	ppc->hidebutton_pixmaps = basep->hidebutton_pixmaps_enabled;

@@ -618,7 +618,6 @@ launcher_properties (Launcher *launcher)
 
 	launcher->prop_dialog = create_properties_dialog (launcher);
 	gtk_widget_show_all (launcher->prop_dialog);
-	panel_set_dialog_layer (launcher->prop_dialog);
 }
 
 Launcher *
@@ -752,7 +751,6 @@ ask_about_launcher (const char *file, PanelWidget *panel, int pos, gboolean exac
 	gtk_dialog_set_default_response (GTK_DIALOG (dialog), OK_BUTTON);
 
 	gtk_widget_show_all (dialog);
-	panel_set_dialog_layer (dialog);
 
 	gnome_ditem_edit_grab_focus (dee);
 }

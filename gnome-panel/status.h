@@ -15,7 +15,7 @@ typedef struct _StatusApplet StatusApplet;
 struct _StatusApplet {
 	GtkWidget *frame;
 	GtkWidget *handle; /*a gtk handlebox but one that doesn't undock*/
-	PanelOrientation orient;
+	GtkOrientation orient;
 	int size;
 	AppletInfo *info;
 };

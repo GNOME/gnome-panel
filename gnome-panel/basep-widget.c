@@ -159,15 +159,6 @@ basep_widget_class_init (BasePWidgetClass *klass)
                                                              G_PARAM_READWRITE));
 
         g_object_class_install_property (object_class,
-                                        PROP_LEVEL,
-                                        g_param_spec_enum ("level",
-                                                             _("level"),
-                                                             _("level"),
-							     PANEL_TYPE_BASE_PLEVEL,
-                                                             BASEP_LEVEL_DEFAULT,
-                                                             G_PARAM_READWRITE));
-
-        g_object_class_install_property (object_class,
         			  	PROP_HIDEBUTTONS_ENABLED,
                                         g_param_spec_boolean ("hidebuttons_enabled",
                                                              _("hidebuttons_enabled"),
@@ -253,9 +244,6 @@ basep_widget_set_property (GObject *object, guint prop_id, const GValue *value, 
 			break;
         	case PROP_STATE:
 			basep->state = g_value_get_enum (value);
-			break;
-		case PROP_LEVEL:
-			basep->level = g_value_get_enum (value);
 			break;
         	case PROP_HIDEBUTTONS_ENABLED:
 			basep->hidebuttons_enabled = g_value_get_boolean (value);
@@ -1174,7 +1162,6 @@ basep_widget_instance_init (BasePWidget *basep)
 	g_object_set (G_OBJECT (basep),
 		      "mode", BASEP_EXPLICIT_HIDE,
 		      "state", BASEP_SHOWN,
-		      "level", BASEP_LEVEL_DEFAULT, 
 		      "hidebuttons_enabled", TRUE,
 		      "hidebutton_pixmaps_enabled", TRUE,
 		      NULL);
@@ -1413,11 +1400,10 @@ basep_widget_construct (BasePWidget *basep,
 			gboolean packed,
 			gboolean reverse_arrows,
 			int screen,
-			PanelOrientation orient,
+			GtkOrientation orient,
 			int sz,
 			BasePMode mode,
 			BasePState state,
-			BasePLevel level,
 			gboolean avoid_on_maximize,
 			gboolean hidebuttons_enabled,
 			gboolean hidebutton_pixmaps_enabled,
@@ -1505,7 +1491,6 @@ basep_widget_construct (BasePWidget *basep,
 
 	basep->screen = screen;
 
-	basep->level = level;
 	basep->avoid_on_maximize = avoid_on_maximize;
 
 	basep->hidebuttons_enabled = hidebuttons_enabled;
@@ -1535,11 +1520,10 @@ basep_widget_construct (BasePWidget *basep,
 void
 basep_widget_change_params (BasePWidget *basep,
 			    int screen,
-			    PanelOrientation orient,
+			    GtkOrientation orient,
 			    int sz,
 			    BasePMode mode,
 			    BasePState state,
-			    BasePLevel level,
 			    gboolean avoid_on_maximize,
 			    gboolean hidebuttons_enabled,
 			    gboolean hidebutton_pixmaps_enabled,
@@ -1592,9 +1576,7 @@ basep_widget_change_params (BasePWidget *basep,
 				   rotate_pixmap_bg,
 				   back_color);
 
-	if (basep->level != level ||
-	    basep->avoid_on_maximize != avoid_on_maximize) {
-		basep->level = level;
+	if (basep->avoid_on_maximize != avoid_on_maximize) {
 		basep->avoid_on_maximize = avoid_on_maximize;
 		basep_widget_update_winhints (basep);
 	}
@@ -2290,7 +2272,7 @@ basep_calculate_borders (int screen)
 		if (EDGE_IS_WIDGET (basep)) {
 			BasePState state = basep->state;
 			if (PANEL_WIDGET (basep->panel)->orient ==
-			    PANEL_VERTICAL) {
+			    GTK_ORIENTATION_VERTICAL) {
 				if (sb->borders[edge].left < chreq.width &&
 				    state != BASEP_HIDDEN_RIGHT)
 					sb->borders[edge].left = chreq.width;
@@ -2316,7 +2298,7 @@ basep_calculate_borders (int screen)
 		} else /* ALIGNED */ {
 			AlignedAlignment align = ALIGNED_POS(basep->pos)->align;
 			if (PANEL_WIDGET (basep->panel)->orient ==
-			    PANEL_VERTICAL) {
+			    GTK_ORIENTATION_VERTICAL) {
 				if (align == ALIGNED_LEFT &&
 				    sb->borders[edge].left < chreq.width)
 					sb->borders[edge].left = chreq.width;

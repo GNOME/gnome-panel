@@ -128,7 +128,7 @@ floating_pos_instance_init (FloatingPos *pos) { }
 static void
 floating_pos_set_hidebuttons (BasePWidget *basep)
 {
-	if (PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+	if (PANEL_WIDGET(basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		gtk_widget_hide(basep->hidebutton_n);
 		gtk_widget_show(basep->hidebutton_e);
 		gtk_widget_show(basep->hidebutton_w);
@@ -145,7 +145,7 @@ static PanelOrient
 floating_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
-	if (panel->orient == PANEL_HORIZONTAL)
+	if (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 		return (FLOATING_POS (basep->pos)->y -
 			multiscreen_y (basep->screen) < 
 			multiscreen_height (basep->screen) / 2)
@@ -165,13 +165,13 @@ floating_pos_get_hide_orient (BasePWidget *basep)
 
 	switch (basep->state) {
 	case BASEP_HIDDEN_LEFT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	case BASEP_AUTO_HIDDEN:
-		if (panel->orient == PANEL_HORIZONTAL) {
+		if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			return ((pos->x >
 				 (multiscreen_width (basep->screen) +
 				  multiscreen_x (basep->screen) - pos->x -
@@ -251,7 +251,7 @@ floating_pos_set_pos (BasePWidget *basep,
 	x -= multiscreen_x (basep->screen);
 	y -= multiscreen_y (basep->screen);
 
-	if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
+	if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		switch (basep->state) {
 		case BASEP_SHOWN:
 		case BASEP_MOVING:
@@ -268,7 +268,7 @@ floating_pos_set_pos (BasePWidget *basep,
 
 	newx = xclamp (basep->screen, x, w);
 
-	if (PANEL_WIDGET (basep->panel)->orient == PANEL_VERTICAL) {
+	if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_VERTICAL) {
 		switch (basep->state) {
 		case BASEP_SHOWN:
 		case BASEP_MOVING:
@@ -411,10 +411,9 @@ floating_widget_change_params (FloatingWidget *floating,
 			       int screen,
 			       gint16 x,
 			       gint16 y,
-			       PanelOrientation orient,
+			       GtkOrientation orient,
 			       BasePMode mode,
 			       BasePState state,
-			       BasePLevel level,
 			       gboolean avoid_on_maximize,
 			       int sz,
 			       gboolean hidebuttons_enabled,
@@ -449,7 +448,6 @@ floating_widget_change_params (FloatingWidget *floating,
 				    sz,
 				    mode,
 				    state,
-				    level,
 				    avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
@@ -464,7 +462,7 @@ floating_widget_change_params (FloatingWidget *floating,
 
 void
 floating_widget_change_orient (FloatingWidget *floating,
-			       PanelOrientation orient)
+			       GtkOrientation orient)
 {
 	FloatingPos *pos = FLOATING_POS (floating->pos);
 	if (PANEL_WIDGET (BASEP_WIDGET (floating)->panel)->orient != orient) {
@@ -477,7 +475,6 @@ floating_widget_change_orient (FloatingWidget *floating,
 					       orient,
 					       basep->mode,
 					       basep->state,
-					       basep->level,
 					       basep->avoid_on_maximize,
 					       panel->sz,
 					       basep->hidebuttons_enabled,
@@ -506,7 +503,6 @@ floating_widget_change_coords (FloatingWidget *floating,
 					       panel->orient,
 					       basep->mode,
 					       basep->state,
-					       basep->level,
 					       basep->avoid_on_maximize,
 					       panel->sz,
 					       basep->hidebuttons_enabled,
@@ -524,10 +520,9 @@ GtkWidget *
 floating_widget_new (int screen,
 		     gint16 x,
 		     gint16 y,
-		     PanelOrientation orient,
+		     GtkOrientation orient,
 		     BasePMode mode,
 		     BasePState state,
-		     BasePLevel level,
 		     gboolean avoid_on_maximize,
 		     int sz,
 		     gboolean hidebuttons_enabled,
@@ -556,7 +551,6 @@ floating_widget_new (int screen,
 				sz,
 				mode,
 				state,
-				level,
 				avoid_on_maximize,
 				hidebuttons_enabled,
 				hidebutton_pixmap_enabled,

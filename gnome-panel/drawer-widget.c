@@ -136,13 +136,13 @@ static PanelOrient
 drawer_pos_get_applet_orient (BasePWidget *basep)
 {
 	PanelWidget *panel = PANEL_WIDGET (basep->panel);
-	PanelOrientation porient = panel->orient;
+	GtkOrientation porient = panel->orient;
 	int x,y;
 
 	x = GTK_WIDGET(basep)->allocation.x;
 	y = GTK_WIDGET(basep)->allocation.y;
 
-	if(porient == PANEL_VERTICAL) {
+	if(porient == GTK_ORIENTATION_VERTICAL) {
 		if (x > (multiscreen_width (basep->screen)/2 +
 			 multiscreen_x (basep->screen)))
 			return PANEL_ORIENT_LEFT;
@@ -174,10 +174,10 @@ drawer_pos_get_hide_orient (BasePWidget *basep)
 		g_assert_not_reached ();
 		break;
 	case BASEP_HIDDEN_LEFT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	default:
 		g_assert_not_reached ();
@@ -240,7 +240,7 @@ drawer_pos_get_menu_pos (BasePWidget *basep,
 	PanelWidget *panel =
 		PANEL_WIDGET(basep->panel);
 
-	if(panel->orient==PANEL_VERTICAL) {
+	if(panel->orient==GTK_ORIENTATION_VERTICAL) {
 		*x = wx + ww;
 		*y += wy;
 	} else {
@@ -361,7 +361,6 @@ drawer_widget_change_params (DrawerWidget *drawer,
 			     PanelOrient orient,
 			     BasePMode mode,
 			     BasePState state,
-			     BasePLevel level,
 			     gboolean avoid_on_maximize,
 			     int sz,
 			     gboolean hidebuttons_enabled,
@@ -373,18 +372,18 @@ drawer_widget_change_params (DrawerWidget *drawer,
 			     gboolean rotate_pixmap_bg,
 			     GdkColor *back_color)
 {
-	PanelOrientation porient;
+	GtkOrientation porient;
 	DrawerPos *pos = DRAWER_POS (BASEP_WIDGET (drawer)->pos);
 
 	switch (orient) {
 	case PANEL_ORIENT_UP:
 	case PANEL_ORIENT_DOWN:
-		porient = PANEL_VERTICAL;
+		porient = GTK_ORIENTATION_VERTICAL;
 		break;
 	case PANEL_ORIENT_LEFT:
 	case PANEL_ORIENT_RIGHT:
 	default:
-		porient = PANEL_HORIZONTAL;
+		porient = GTK_ORIENTATION_HORIZONTAL;
 		break;
 	}
 
@@ -418,7 +417,6 @@ drawer_widget_change_params (DrawerWidget *drawer,
 				    sz,
 				    mode,
 				    state,
-				    level,
 				    avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmap_enabled,
@@ -443,7 +441,6 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 					     orient,
 					     basep->mode,
 					     basep->state,
-					     basep->level,
 					     basep->avoid_on_maximize,
 					     panel->sz,
 					     basep->hidebuttons_enabled,
@@ -461,7 +458,6 @@ GtkWidget *
 drawer_widget_new (PanelOrient orient,
 		   BasePMode mode,
 		   BasePState state,
-		   BasePLevel level,
 		   gboolean avoid_on_maximize,
 		   int sz,
 		   gboolean hidebuttons_enabled,
@@ -475,7 +471,7 @@ drawer_widget_new (PanelOrient orient,
 {
 	DrawerWidget *drawer;
 	DrawerPos *pos;
-	PanelOrientation porient;
+	GtkOrientation porient;
 
 	drawer = gtk_type_new (DRAWER_TYPE_WIDGET);
 	drawer->pos = gtk_type_new (DRAWER_TYPE_POS);
@@ -485,10 +481,10 @@ drawer_widget_new (PanelOrient orient,
 	switch (orient) {
 	case PANEL_ORIENT_UP:
 	case PANEL_ORIENT_DOWN:
-		porient = PANEL_VERTICAL;
+		porient = GTK_ORIENTATION_VERTICAL;
 		break;
 	default:
-		porient = PANEL_HORIZONTAL;
+		porient = GTK_ORIENTATION_HORIZONTAL;
 		break;
 	}
 
@@ -497,7 +493,6 @@ drawer_widget_new (PanelOrient orient,
 				0 /*FIXME */,
 				porient,
 				sz, mode, state,
-				level,
 				avoid_on_maximize,
 				hidebuttons_enabled,
 				hidebutton_pixmap_enabled,

@@ -1174,7 +1174,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	
 	
 	/* panel widget */
-	foo->panel = panel_widget_new (FALSE, PANEL_HORIZONTAL,
+	foo->panel = panel_widget_new (FALSE, GTK_ORIENTATION_HORIZONTAL,
 				       PANEL_SIZE_X_SMALL, PANEL_BACK_NONE,
 				       NULL, FALSE, FALSE, FALSE, NULL);
 	PANEL_WIDGET (foo->panel)->panel_parent = GTK_WIDGET (foo);

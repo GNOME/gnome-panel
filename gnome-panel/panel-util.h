@@ -76,8 +76,6 @@ gboolean	convert_string_to_keysym_state (const char *string,
 char *		convert_keysym_state_to_string (guint keysym,
 						guint state);
 
-void		panel_set_dialog_layer	(GtkWidget *dialog);
-void		panel_reset_dialog_layers (void);
 GtkWidget *	panel_error_dialog	(const char *class,
 					 const char *format,
 					 ...) G_GNUC_PRINTF (2, 3);

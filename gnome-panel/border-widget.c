@@ -114,7 +114,7 @@ border_pos_instance_init (BorderPos *pos)
 static void
 border_pos_set_hidebuttons (BasePWidget *basep)
 {
-	if (PANEL_WIDGET(basep->panel)->orient == PANEL_HORIZONTAL) {
+	if (PANEL_WIDGET(basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 		gtk_widget_hide(basep->hidebutton_n);
 		gtk_widget_show(basep->hidebutton_e);
 		gtk_widget_show(basep->hidebutton_w);
@@ -158,10 +158,10 @@ border_pos_get_hide_orient (BasePWidget *basep)
 		g_assert_not_reached ();
 		break;
 	case BASEP_HIDDEN_LEFT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_LEFT : PANEL_ORIENT_UP;
 	case BASEP_HIDDEN_RIGHT:
-		return (panel->orient == PANEL_HORIZONTAL)
+		return (panel->orient == GTK_ORIENTATION_HORIZONTAL)
 			? PANEL_ORIENT_RIGHT : PANEL_ORIENT_DOWN;
 	default:
 		g_assert_not_reached ();
@@ -240,7 +240,6 @@ border_widget_change_params (BorderWidget *border,
 			     int sz,
 			     BasePMode mode,
 			     BasePState state,
-			     BasePLevel level,
 			     gboolean avoid_on_maximize,
 			     gboolean hidebuttons_enabled,
 			     gboolean hidebutton_pixmaps_enabled,
@@ -251,13 +250,13 @@ border_widget_change_params (BorderWidget *border,
 			     gboolean rotate_pixmap_bg,
 			     GdkColor *back_color)
 {
-	PanelOrientation new_orient;
+	GtkOrientation new_orient;
 	g_return_if_fail (GTK_WIDGET_REALIZED (GTK_WIDGET (border)));
 
 	new_orient = (edge == BORDER_TOP ||
 		      edge == BORDER_BOTTOM)
-		? PANEL_HORIZONTAL
-		: PANEL_VERTICAL;
+		? GTK_ORIENTATION_HORIZONTAL
+		: GTK_ORIENTATION_VERTICAL;
 
 	if (edge != BORDER_POS (border->pos)->edge) {	
 		BORDER_POS(border->pos)->edge = edge;
@@ -272,7 +271,6 @@ border_widget_change_params (BorderWidget *border,
 				    sz,
 				    mode,
 				    state,
-				    level,
 				    avoid_on_maximize,
 				    hidebuttons_enabled,
 				    hidebutton_pixmaps_enabled,
@@ -337,7 +335,6 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 				     panel->sz,
 				     basep->mode,
 				     basep->state,
-				     basep->level,
 				     basep->avoid_on_maximize,
 				     basep->hidebuttons_enabled,
 				     basep->hidebutton_pixmaps_enabled,
@@ -358,7 +355,6 @@ border_widget_construct (BorderWidget *border,
 			 int sz,
 			 BasePMode mode,
 			 BasePState state,
-			 BasePLevel level,
 			 gboolean avoid_on_maximize,
 			 gboolean hidebuttons_enabled,
 			 gboolean hidebutton_pixmaps_enabled,
@@ -370,13 +366,13 @@ border_widget_construct (BorderWidget *border,
 			 GdkColor *back_color)
 {
 	BasePWidget *basep = BASEP_WIDGET (border);
-	PanelOrientation orient;
+	GtkOrientation orient;
 
 	if (edge == BORDER_TOP ||
 	    edge == BORDER_BOTTOM)
-		orient = PANEL_HORIZONTAL;
+		orient = GTK_ORIENTATION_HORIZONTAL;
 	else
-		orient = PANEL_VERTICAL;
+		orient = GTK_ORIENTATION_VERTICAL;
 
 	BORDER_POS (basep->pos)->edge = edge;
 	basep->keep_in_screen = TRUE;
@@ -389,7 +385,6 @@ border_widget_construct (BorderWidget *border,
 				sz,
 				mode,
 				state,
-				level,
 				avoid_on_maximize,
 				hidebuttons_enabled,
 				hidebutton_pixmaps_enabled,

@@ -770,78 +770,6 @@ convert_keysym_state_to_string(guint keysym,
 	}
 }
 
-#if FIXME
-static GSList *layered_dialogs = NULL;
-#endif /* FIXME */
-
-#if FIXME
-static void
-panel_dialog_realized (GtkWidget *dialog)
-{
-	if ( ! global_config.keep_bottom &&
-	     ! global_config.normal_layer)
-		gnome_win_hints_set_layer (GTK_WIDGET(dialog),
-					   WIN_LAYER_ABOVE_DOCK);
-	else
-		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
-					   WIN_LAYER_NORMAL);
-}
-#endif /* FIXME */
-
-#if FIXME
-static void
-remove_from_layered (GtkWidget *w)
-{
-	layered_dialogs = g_slist_remove (layered_dialogs, w);
-}
-#endif /* FIXME */
-
-void
-panel_set_dialog_layer (GtkWidget *dialog)
-{
-#if FIXME
-	if (g_slist_find (layered_dialogs, dialog) == NULL) {
-		layered_dialogs = g_slist_prepend (layered_dialogs, dialog);
-		g_signal_connect (G_OBJECT (dialog), "destroy",
-				  G_CALLBACK (remove_from_layered),
-				  NULL);
-	}
-
-	if (GTK_WIDGET_REALIZED (dialog) &&
-	    ! global_config.normal_layer &&
-	    ! global_config.keep_bottom)
-		gnome_win_hints_set_layer (GTK_WIDGET (dialog),
-					   WIN_LAYER_ABOVE_DOCK);
-
-	g_signal_connect (G_OBJECT (dialog), "realize",
-			  G_CALLBACK (panel_dialog_realized),
-			  NULL);
-#endif
-}
-
-void
-panel_reset_dialog_layers (void)
-{
-#if FIXME
-	GSList *li;
-
-	for (li = layered_dialogs; li != NULL; li = li->next) {
-		GtkWidget *dialog = li->data;
-
-		if ( ! GTK_WIDGET_REALIZED (dialog))
-			continue;
-
-		if ( ! global_config.normal_layer &&
-		     ! global_config.keep_bottom)
-			gnome_win_hints_set_layer (GTK_WIDGET (dialog),
-						   WIN_LAYER_ABOVE_DOCK);
-		else
-			gnome_win_hints_set_layer (GTK_WIDGET (dialog),
-						   WIN_LAYER_NORMAL);
-	}
-#endif
-}
-
 GtkWidget *
 panel_error_dialog (const char *class,
 		    const char *format,
@@ -867,7 +795,6 @@ panel_error_dialog (const char *class,
 	g_free (s);
 
 	gtk_widget_show_all (w);
-	panel_set_dialog_layer (w);
 
 	g_signal_connect_swapped (G_OBJECT (w), "response",
 				   G_CALLBACK (gtk_widget_destroy),
@@ -901,7 +828,6 @@ panel_info_dialog (const char *class,
 	g_free (s);
 
 	gtk_widget_show_all (w);
-	panel_set_dialog_layer (w);
 
 	g_signal_connect_swapped (G_OBJECT (w), "response",
 				  G_CALLBACK (gtk_widget_destroy),

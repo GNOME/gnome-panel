@@ -22,11 +22,10 @@ struct _PerPanelConfig {
 	gboolean		hidebuttons;
 	gboolean		hidebutton_pixmaps;
 	BasePMode               mode;
-	BasePLevel		level;
 	gboolean		avoid_on_maximize;
 
 	/*floating widget*/
-	PanelOrientation        orient;
+	GtkOrientation        orient;
 	int                     x, y;
 
 	/*indexes for toggle*/
@@ -60,9 +59,6 @@ struct _PerPanelConfig {
 	GtkWidget		*type_tab_label;
 
 	GtkWidget		*pix_entry;
-
-	/*levels*/
-	GtkWidget               *level_menu;
 
 	/*avoid_on_maximize*/
 	GtkWidget               *avoid_on_maximize_button;
@@ -104,7 +100,6 @@ void panel_config_register_changes (PerPanelConfig *ppc);
 
 void panel_config (GtkWidget *panel);
 void update_config_size (GtkWidget *panel);
-void update_config_level (BasePWidget *panel);
 void update_config_avoid_on_maximize (BasePWidget *panel);
 void update_config_screen (BasePWidget *panel);
 void update_config_mode (BasePWidget *panel);
@@ -121,7 +116,6 @@ void update_config_floating_pos_limits (BasePWidget *panel);
 void update_config_type (BasePWidget *panel);
 void kill_config_dialog (GtkWidget *panel);
 
-GtkWidget *make_level_widget (PerPanelConfig *ppc);
 GtkWidget *make_size_widget (PerPanelConfig *ppc);
 
 

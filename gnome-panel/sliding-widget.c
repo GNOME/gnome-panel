@@ -171,7 +171,7 @@ sliding_pos_set_pos (BasePWidget *basep,
 		/* we need to do this since the sizes might have changed 
 		   (orientation changes and what not) */
 		if(newedge != BORDER_POS(basep->pos)->edge) {
-			PanelOrientation old_orient;
+			GtkOrientation old_orient;
 			old_orient = PANEL_WIDGET (basep->panel)->orient;
 
 			border_widget_change_edge (BORDER_WIDGET(basep),
@@ -198,7 +198,7 @@ sliding_pos_set_pos (BasePWidget *basep,
 	g_assert (newanchor == pos->anchor);
 
 	switch (PANEL_WIDGET (basep->panel)->orient) {
-	case PANEL_HORIZONTAL:
+	case GTK_ORIENTATION_HORIZONTAL:
 		newanchor =  (innerx < 0.1 * screen_width) 
 			? SLIDING_ANCHOR_LEFT
 			: ( (innerx > 0.9 * screen_width)
@@ -216,7 +216,7 @@ sliding_pos_set_pos (BasePWidget *basep,
 		}
 		newoffset = CLAMP (newoffset, 0, screen_width - w);
 		break;
-	case PANEL_VERTICAL:
+	case GTK_ORIENTATION_VERTICAL:
 		newanchor =  (innery < 0.1 * screen_height) 
 			? SLIDING_ANCHOR_LEFT
 			: ( (innery > 0.9 * screen_height)
@@ -284,7 +284,6 @@ sliding_widget_new (int screen,
 		    BorderEdge edge,
 		    BasePMode mode,
 		    BasePState state,
-		    BasePLevel level,
 		    gboolean avoid_on_maximize,
 		    int sz,
 		    gboolean hidebuttons_enabled,
@@ -312,7 +311,6 @@ sliding_widget_new (int screen,
 				 sz,
 				 mode,
 				 state,
-				 level,
 				 avoid_on_maximize,
 				 hidebuttons_enabled,
 				 hidebutton_pixmaps_enabled,
@@ -334,7 +332,6 @@ sliding_widget_change_params (SlidingWidget *sliding,
 			      int sz,
 			      BasePMode mode,
 			      BasePState state,
-			      BasePLevel level,
 			      gboolean avoid_on_maximize,
 			      gboolean hidebuttons_enabled,
 			      gboolean hidebutton_pixmaps_enabled,
@@ -368,7 +365,6 @@ sliding_widget_change_params (SlidingWidget *sliding,
 				     sz,
 				     mode,
 				     state,
-				     level,
 				     avoid_on_maximize,
 				     hidebuttons_enabled,
 				     hidebutton_pixmaps_enabled,
@@ -398,7 +394,6 @@ sliding_widget_change_offset (SlidingWidget *sliding, gint16 offset)
 				      panel->sz,
 				      basep->mode,
 				      basep->state,
-				      basep->level,
 				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
@@ -428,7 +423,6 @@ sliding_widget_change_anchor (SlidingWidget *sliding, SlidingAnchor anchor)
 				      panel->sz,
 				      basep->mode,
 				      basep->state,
-				      basep->level,
 				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,
@@ -457,7 +451,6 @@ sliding_widget_change_anchor_offset_edge (SlidingWidget *sliding,
 				      panel->sz,
 				      basep->mode,
 				      basep->state,
-				      basep->level,
 				      basep->avoid_on_maximize,
 				      basep->hidebuttons_enabled,
 				      basep->hidebutton_pixmaps_enabled,

@@ -81,7 +81,7 @@ struct Extern_struct {
 	/*
 	 * current orient, if it doesn't change, don't send any orient change
 	 */
-	PanelOrientation     orient;
+	GtkOrientation     orient;
 
 	gint                 send_draw_timeout;
 	gint                 send_draw_idle;

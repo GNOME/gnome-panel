@@ -45,13 +45,6 @@ typedef enum {
 	BASEP_HIDDEN_RIGHT
 } BasePState;
 
-typedef enum {
-	BASEP_LEVEL_DEFAULT,
-	BASEP_LEVEL_ABOVE,
-	BASEP_LEVEL_NORMAL,
-	BASEP_LEVEL_BELOW
-} BasePLevel;
-
 struct _BasePWidget
 {
 	GtkWindow		window;
@@ -76,7 +69,6 @@ struct _BasePWidget
 
 	BasePMode               mode;
 	BasePState              state;
-	BasePLevel		level;
 	gboolean		avoid_on_maximize;
 
 	gboolean		hidebuttons_enabled;
@@ -185,11 +177,10 @@ GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,
 						 int screen,
-						 PanelOrientation orient,
+						 GtkOrientation orient,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 BasePLevel level,
 						 gboolean avoid_on_maximize,
 						 gboolean hidebuttons_enabled,
 						 gboolean hidebutton_pixmaps_enabled,
@@ -203,11 +194,10 @@ GtkWidget*	basep_widget_construct		(BasePWidget *basep,
 /* changing parameters */
 void		basep_widget_change_params	(BasePWidget *basep,
 						 int screen,
-						 PanelOrientation orient,
+						 GtkOrientation orient,
 						 int sz,
 						 BasePMode mode,
 						 BasePState state,
-						 BasePLevel level,
 						 gboolean avoid_on_maximize,
 						 gboolean hidebuttons_enabled,
 						 gboolean hidebutton_pixmaps_enabled,

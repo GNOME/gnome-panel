@@ -327,7 +327,6 @@ ask_about_swallowing(PanelWidget *panel, int pos, gboolean exactpos)
 	gtk_widget_grab_focus(title_e);
 
 	gtk_widget_show_all (d);
-	panel_set_dialog_layer (d);
 }
 
 static int

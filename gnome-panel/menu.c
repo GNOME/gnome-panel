@@ -990,7 +990,6 @@ add_new_app_to_menu (GtkWidget *widget, const char *item_loc)
 					 GTK_RESPONSE_OK);
 
 	gtk_widget_show_all (dialog);
-	panel_set_dialog_layer (dialog);
 
 	gnome_ditem_edit_grab_focus (GNOME_DITEM_EDIT (dee));
 }
@@ -2266,7 +2265,6 @@ try_add_status_to_panel (GtkWidget *widget, gpointer data)
 		gtk_window_set_wmclass(GTK_WINDOW(mbox),
 				       "no_more_status_dialog","Panel");
 		gtk_widget_show_all (mbox);
-		panel_set_dialog_layer (mbox);
 	}
 }
 
@@ -3391,7 +3389,7 @@ find_empty_pos_array (int screen, int posscore[3][3])
 		ty -= multiscreen_y (screen);
 		basep_widget_get_size (basep, &w, &h);
 
-		if (PANEL_WIDGET (basep->panel)->orient == PANEL_HORIZONTAL) {
+		if (PANEL_WIDGET (basep->panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 			j = MIN (ty / sh, 2);
 			ty = tx + w;
 			if (tx < sw) posscore[0][j]++;
@@ -3482,7 +3480,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
-					    BASEP_LEVEL_DEFAULT,
 					    TRUE,
 					    PANEL_SIZE_MEDIUM,
 					    TRUE,
@@ -3500,7 +3497,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 					 find_empty_edge (screen),
 					 BASEP_EXPLICIT_HIDE,
 					 BASEP_SHOWN,
-					 BASEP_LEVEL_DEFAULT,
 					 TRUE,
 					 PANEL_SIZE_MEDIUM,
 					 TRUE,
@@ -3519,7 +3515,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
 					    BASEP_SHOWN,
-					    BASEP_LEVEL_DEFAULT,
 					    TRUE,
 					    PANEL_SIZE_MEDIUM,
 					    TRUE, TRUE,
@@ -3534,10 +3529,9 @@ create_new_panel (GtkWidget *w, gpointer data)
 		find_empty_pos (screen, &x, &y);
 		panel = floating_widget_new (screen,
 					     x, y,
-					     PANEL_VERTICAL,
+					     GTK_ORIENTATION_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
 					     BASEP_SHOWN,
-					     BASEP_LEVEL_DEFAULT,
 					     FALSE,
 					     PANEL_SIZE_MEDIUM,
 					     TRUE, TRUE,
@@ -3574,7 +3568,6 @@ create_new_panel (GtkWidget *w, gpointer data)
 		gtk_window_set_wmclass (GTK_WINDOW (dialog),
 					"only_one_foobar", "Panel");
 		gtk_widget_show_all (dialog);
-		panel_set_dialog_layer (dialog);
 		break;
 	}
 	default: break;
@@ -3949,7 +3942,6 @@ remove_panel_query (GtkWidget *w, gpointer data)
 					       G_CALLBACK (gtk_widget_destroy),
 					       GTK_OBJECT (dialog));
 	gtk_widget_show_all (dialog);
-	panel_set_dialog_layer (dialog);
 }
 
 static void
@@ -4078,7 +4070,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
-		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+		else if (PANEL_WIDGET (cur_panel)->orient == GTK_ORIENTATION_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
 				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
@@ -4100,7 +4092,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
-		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+		else if (PANEL_WIDGET (cur_panel)->orient == GTK_ORIENTATION_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
 				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
@@ -4109,7 +4101,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 				(multiscreen_width (basep->screen) / 2))
 				? BORDER_RIGHT : BORDER_LEFT;
 
-		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
+		if (PANEL_WIDGET (cur_panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 			mid = x + w / 2 - multiscreen_x (basep->screen);
 			max = multiscreen_width (basep->screen);
 		} else {
@@ -4138,7 +4130,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 		
 		if (BORDER_IS_POS (old_pos))
 			edge = BORDER_POS (old_pos)->edge;
-		else if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL)
+		else if (PANEL_WIDGET (cur_panel)->orient == GTK_ORIENTATION_HORIZONTAL)
 			edge = (y - multiscreen_y (basep->screen) >
 				(multiscreen_height (basep->screen) / 2))
 				? BORDER_BOTTOM : BORDER_TOP;
@@ -4147,7 +4139,7 @@ convert_to_panel(GtkWidget *widget, gpointer data)
 				(multiscreen_width (basep->screen) / 2))
 				? BORDER_RIGHT : BORDER_LEFT;
 		
-		if (PANEL_WIDGET (cur_panel)->orient == PANEL_HORIZONTAL) {
+		if (PANEL_WIDGET (cur_panel)->orient == GTK_ORIENTATION_HORIZONTAL) {
 			val = x - multiscreen_x (basep->screen);
 			max = multiscreen_width (basep->screen);
 		} else {

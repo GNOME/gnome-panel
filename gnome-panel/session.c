@@ -180,7 +180,6 @@ apply_global_config (void)
 			else if (FOOBAR_IS_WIDGET (pd->panel))
 				foobar_widget_update_winhints (FOOBAR_WIDGET (pd->panel));
 		}
-		panel_reset_dialog_layers ();
 	}
 	layer_old = global_config.layer;
 	
@@ -449,7 +448,6 @@ save_panel_configuration(gpointer data, gpointer user_data)
 		gnome_config_set_int ("mode", basep->mode);
 		gnome_config_set_int ("state", basep->state);
 
-		gnome_config_set_int ("level", basep->level);
 		gnome_config_set_bool ("avoid_on_maximize",
 				       basep->avoid_on_maximize);
 		gnome_config_set_int ("screen",
@@ -1072,7 +1070,6 @@ init_user_panels(void)
 					 BORDER_BOTTOM,
 					 BASEP_EXPLICIT_HIDE /* mode */,
 					 BASEP_SHOWN /* state */,
-					 BASEP_LEVEL_DEFAULT /* level */,
 					 TRUE /* avoid_on_maximize */,
 					 PANEL_SIZE_MEDIUM,
 					 TRUE /* hidebuttons_enabled */,
@@ -1106,7 +1103,6 @@ init_user_panels(void)
 		int sz;
 		BasePState state;
 		BasePMode mode;
-		BasePLevel level;
 		gboolean avoid_on_maximize;
 		BorderEdge edge;
 		char *back_pixmap, *color;
@@ -1164,7 +1160,6 @@ init_user_panels(void)
 
 		state = conditional_get_int ("state", 0, NULL);
 		mode = conditional_get_int ("mode", 0, NULL);
-		level = conditional_get_int ("level", 0, NULL);
 		screen = conditional_get_int ("screen", 0, NULL);
 		if (screen < 0)
 			screen = 0;
@@ -1183,7 +1178,7 @@ init_user_panels(void)
 			panel = edge_widget_new (screen,
 						 edge, 
 						 mode, state,
-						 level, avoid_on_maximize,
+						 avoid_on_maximize,
 						 sz,
 						 hidebuttons_enabled,
 						 hidebutton_pixmaps_enabled,
@@ -1209,7 +1204,6 @@ init_user_panels(void)
 						    edge,
 						    mode,
 						    state,
-						    level,
 						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
@@ -1243,7 +1237,6 @@ init_user_panels(void)
 						    edge,
 						    mode,
 						    state,
-						    level,
 						    avoid_on_maximize,
 						    sz,
 						    hidebuttons_enabled,
@@ -1271,7 +1264,6 @@ init_user_panels(void)
 			panel = drawer_widget_new (orient,
 						   BASEP_EXPLICIT_HIDE, 
 						   state,
-						   level,
 						   avoid_on_maximize,
 						   sz,
 						   hidebuttons_enabled,
@@ -1290,11 +1282,11 @@ init_user_panels(void)
 			break;
 		}
 		case FLOATING_PANEL: {
-			PanelOrientation orient;
+			GtkOrientation orient;
 			int x, y;
 			
 			orient = conditional_get_int ("orient",
-						      PANEL_HORIZONTAL,
+						      GTK_ORIENTATION_HORIZONTAL,
 						      NULL);
 
 			x = conditional_get_int ("x", 0, NULL);
@@ -1309,7 +1301,6 @@ init_user_panels(void)
 						     orient,
 						     mode,
 						     state,
-						     level,
 						     avoid_on_maximize,
 						     sz,
 						     hidebuttons_enabled,

@@ -94,7 +94,7 @@ status_applet_update(StatusApplet *s)
 	DPUTS("STATUS_APPLET_UPDATE");
 	DPRINTD(nspots);
 
-	if(s->orient == PANEL_HORIZONTAL)
+	if(s->orient == GTK_ORIENTATION_HORIZONTAL)
 		GTK_HANDLE_BOX(s->handle)->handle_position = GTK_POS_LEFT;
 	else
 		GTK_HANDLE_BOX(s->handle)->handle_position = GTK_POS_TOP;
@@ -117,7 +117,7 @@ status_applet_update(StatusApplet *s)
 	h = DOCKLET_SPOT*rows;
 
 	/*if we are vertical just switch stuff around*/
-	if(s->orient == PANEL_VERTICAL) {
+	if(s->orient == GTK_ORIENTATION_VERTICAL) {
 		int t = w;
 		w = h;
 		h = t;

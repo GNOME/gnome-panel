@@ -35,15 +35,6 @@ typedef struct _PanelWidgetClass	PanelWidgetClass;
 typedef struct _AppletRecord		AppletRecord;
 typedef struct _AppletData		AppletData;
 typedef struct _DNDRecord		DNDRecord;
-typedef enum {
-	PANEL_HORIZONTAL=0,
-	PANEL_VERTICAL
-} PanelOrientation;
-typedef enum {
-	PANEL_SWITCH_MOVE = 0,
-	PANEL_FREE_MOVE,
-	PANEL_PUSH_MOVE
-} PanelMovementType;
 
 struct _AppletData
 {
@@ -70,7 +61,7 @@ struct _PanelWidget
 	GList			*no_window_applet_list;
 
 	int			size;
-	PanelOrientation	orient;
+	GtkOrientation		orient;
 	int			sz;
 	gboolean		fit_pixmap_bg;  /* fit pixmap while keeping
 						   ratio*/
@@ -114,7 +105,7 @@ struct _PanelWidgetClass
 	GtkFixedClass parent_class;
 
 	void (* orient_change) (PanelWidget *panel,
-				PanelOrientation orient);
+				GtkOrientation orient);
 	void (* size_change) (PanelWidget *panel,
 			      int sz);
 	void (* applet_move) (PanelWidget *panel,
@@ -136,7 +127,7 @@ struct _PanelWidgetClass
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
 GtkWidget *	panel_widget_new		(gboolean packed,
-						 PanelOrientation orient,
+						 GtkOrientation orient,
 						 int sz,
 						 PanelBackType back_type,
 						 char *back_pixmap,
@@ -197,7 +188,7 @@ void		panel_widget_applet_drag_end_no_grab(PanelWidget *panel);
 
 /* changing parameters */
 void		panel_widget_change_params	(PanelWidget *panel,
-						 PanelOrientation orient,
+						 GtkOrientation orient,
 						 int sz,
 						 PanelBackType back_type,
 						 char *pixmap_name,
@@ -208,7 +199,7 @@ void		panel_widget_change_params	(PanelWidget *panel,
 
 /* changing parameters (orient only) */
 void		panel_widget_change_orient	(PanelWidget *panel,
-						 PanelOrientation orient);
+						 GtkOrientation orient);
 
 void		panel_widget_set_back_pixmap	(PanelWidget *panel,
 						 char *file);

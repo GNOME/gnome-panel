@@ -49,10 +49,9 @@ GType floating_pos_get_type (void) G_GNUC_CONST;
 GtkWidget *floating_widget_new (int screen,
 				gint16 x,
 				gint16 y,
-				PanelOrientation orient,
+				GtkOrientation orient,
 				BasePMode mode,
 				BasePState state,
-				BasePLevel level,
 				gboolean avoid_on_maximize,
 				int sz,
 				gboolean hidebuttons_enabled,
@@ -68,10 +67,9 @@ void floating_widget_change_params (FloatingWidget *floating,
 				    int screen,
 				    gint16 x,
 				    gint16 y,
-				    PanelOrientation orient,
+				    GtkOrientation orient,
 				    BasePMode mode,
 				    BasePState state,
-				    BasePLevel level,
 				    gboolean avoid_on_maximize,
 				    int sz,
 				    gboolean hidebuttons_enabled,
@@ -87,7 +85,7 @@ void floating_widget_change_coords (FloatingWidget *floating,
 				    gint16 x, gint16 y);
 
 void floating_widget_change_orient (FloatingWidget *floating,
-				    PanelOrientation orient);
+				    GtkOrientation orient);
 
 G_END_DECLS
 

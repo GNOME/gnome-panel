@@ -195,7 +195,7 @@ calculate_overlay_geometry (PanelWidget *panel, GtkWidget *parent,
 		return;
 	}
 
-	if(panel->orient == PANEL_HORIZONTAL) {
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 		if (applet->allocation.x > panel->size) {
 			*x = parent->requisition.width + 1;
 			*y = parent->requisition.height + 1;

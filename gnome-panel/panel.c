@@ -154,7 +154,7 @@ orientation_change (AppletInfo  *info,
 	case APPLET_SWALLOW: {
 		Swallow *swallow = info->data;
 
-		if (panel->orient == PANEL_VERTICAL)
+		if (panel->orient == GTK_ORIENTATION_VERTICAL)
 			set_swallow_applet_orient (swallow,
 						   SWALLOW_VERTICAL);
 		else
@@ -188,7 +188,7 @@ orient_change_foreach(GtkWidget *w, gpointer data)
 
 static void
 panel_orient_change(GtkWidget *widget,
-		    PanelOrientation orient,
+		    GtkOrientation orient,
 		    gpointer data)
 {
 	gtk_container_foreach(GTK_CONTAINER(widget),

@@ -24,6 +24,12 @@
 #include "rgb-stuff.h"
 #include "panel-typebuiltins.h"
 
+typedef enum {
+	PANEL_SWITCH_MOVE = 0,
+	PANEL_FREE_MOVE,
+	PANEL_PUSH_MOVE
+} PanelMovementType;
+
 GSList *panels = NULL; /*other panels we might want to move the applet to*/
 
 /*define for some debug output*/
@@ -162,7 +168,7 @@ panel_widget_class_init (PanelWidgetClass *class)
                               panel_marshal_VOID__ENUM,
                               G_TYPE_NONE,
                               1,
-                              PANEL_TYPE_PANEL_ORIENTATION); 
+                              GTK_TYPE_ORIENTATION); 
 
 	panel_widget_signals[SIZE_CHANGE_SIGNAL] =
                 g_signal_new ("size_change",
@@ -513,7 +519,7 @@ allocate_dirty_child(gpointer data)
 	
 	gtk_widget_get_child_requisition(ad->applet,&chreq);
 
-	if(panel->orient == PANEL_HORIZONTAL) {
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 		ad->cells = chreq.width; 
 		challoc.x = ad->pos;
 		challoc.y = (GTK_WIDGET(panel)->allocation.height -
@@ -838,7 +844,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 
 	panel = PANEL_WIDGET(widget);
 
-	if(panel->orient == PANEL_HORIZONTAL) {
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 		requisition->width = 0;
 		requisition->height = panel->sz;
 	} else {
@@ -850,7 +856,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 		AppletData *ad = list->data;
 		GtkRequisition chreq;
 		gtk_widget_size_request(ad->applet,&chreq);
-		if(panel->orient == PANEL_HORIZONTAL) {
+		if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			if(requisition->height < chreq.height)
 				requisition->height = chreq.height;
 			if(panel->packed)
@@ -864,7 +870,7 @@ panel_widget_size_request(GtkWidget *widget, GtkRequisition *requisition)
 	}
 
 	if(!panel->packed) {
-		if(panel->orient == PANEL_HORIZONTAL) {
+		if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 			requisition->width = panel->size;
 		} else {
 			requisition->height = panel->size;
@@ -991,11 +997,11 @@ setup_background(PanelWidget *panel, GdkPixbuf **pb, int *scale_w, int *scale_h,
 		   panel->strech_pixmap_bg) {
 			*scale_w = panel->scale_w;
 			*scale_h = panel->scale_h;
-			if(panel->orient == PANEL_VERTICAL &&
+			if(panel->orient == GTK_ORIENTATION_VERTICAL &&
 			   panel->rotate_pixmap_bg)
 				*rotate = TRUE;
 		} else {
-			if(panel->orient == PANEL_VERTICAL &&
+			if(panel->orient == GTK_ORIENTATION_VERTICAL &&
 			   panel->rotate_pixmap_bg) {
 				/* we need to set scales to rotate*/
 				*scale_w = gdk_pixbuf_get_width((*pb));
@@ -1235,7 +1241,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 					allocation->width, 
 					allocation->height);
 
-	if(panel->orient == PANEL_HORIZONTAL)
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
 		panel->size = allocation->width;
 	else
 		panel->size = allocation->height;
@@ -1256,7 +1262,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 				ad->pos = i;
 				send_move = g_slist_prepend(send_move,ad);
 			}
-			if(panel->orient == PANEL_HORIZONTAL) {
+			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 				ad->cells = chreq.width;
 				challoc.x = ad->pos;
 				challoc.y = (allocation->height - chreq.height) / 2;
@@ -1280,7 +1286,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			GtkRequisition chreq;
 			gtk_widget_get_child_requisition(ad->applet,&chreq);
 
-			if(panel->orient == PANEL_HORIZONTAL)
+			if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
 				ad->cells = chreq.width;
 			else
 				ad->cells = chreq.height;
@@ -1315,7 +1321,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			GtkAllocation challoc;
 			GtkRequisition chreq;
 			gtk_widget_get_child_requisition(ad->applet,&chreq);
-			if(panel->orient == PANEL_HORIZONTAL) {
+			if(panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 				challoc.x = ad->pos;
 				challoc.y = (allocation->height - chreq.height) / 2;
 			} else {
@@ -1328,7 +1334,7 @@ panel_widget_size_allocate(GtkWidget *widget, GtkAllocation *allocation)
 			gtk_widget_size_allocate(ad->applet,&challoc);
 		}
 	}
-	if(panel->orient == PANEL_HORIZONTAL)
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
 		panel->thick = allocation->height;
 	else
 		panel->thick = allocation->width;
@@ -1521,12 +1527,12 @@ panel_resize_pixmap(PanelWidget *panel)
 
 	if(panel->fit_pixmap_bg) {
 		switch (panel->orient) {
-		case PANEL_HORIZONTAL:
+		case GTK_ORIENTATION_HORIZONTAL:
 			panel->scale_w = w * ph / h;
 			panel->scale_h = ph;
 			break;
 
-		case PANEL_VERTICAL:
+		case GTK_ORIENTATION_VERTICAL:
 			if(panel->rotate_pixmap_bg) {
 				panel->scale_w = w * pw / h;
 				panel->scale_h = pw;
@@ -1540,7 +1546,7 @@ panel_resize_pixmap(PanelWidget *panel)
 			g_assert_not_reached ();
 		}
 	} else if(panel->strech_pixmap_bg) {
-		if(panel->orient == PANEL_VERTICAL &&
+		if(panel->orient == GTK_ORIENTATION_VERTICAL &&
 		   panel->rotate_pixmap_bg) {
 			panel->scale_w = ph;
 			panel->scale_h = pw;
@@ -1555,7 +1561,7 @@ panel_resize_pixmap(PanelWidget *panel)
 					panel->backpix,
 					panel->scale_w,
 					panel->scale_h,
-					panel->orient == PANEL_VERTICAL &&
+					panel->orient == GTK_ORIENTATION_VERTICAL &&
 					panel->rotate_pixmap_bg);
 }
 
@@ -1762,7 +1768,7 @@ panel_widget_instance_init (PanelWidget *panel)
 	panel->back_color.blue = 0;
 	panel->back_color.pixel = 1;
 	panel->packed = FALSE;
-	panel->orient = PANEL_HORIZONTAL;
+	panel->orient = GTK_ORIENTATION_HORIZONTAL;
 	panel->thick = PANEL_MINIMUM_WIDTH;
 	panel->size = G_MAXINT;
 	panel->applet_list = NULL;
@@ -1788,7 +1794,7 @@ panel_widget_instance_init (PanelWidget *panel)
 
 GtkWidget *
 panel_widget_new (gboolean packed,
-		  PanelOrientation orient,
+		  GtkOrientation orient,
 		  int sz,
 		  PanelBackType back_type,
 		  char *back_pixmap,
@@ -1954,7 +1960,7 @@ panel_widget_get_cursorloc (PanelWidget *panel)
 
 	gtk_widget_get_pointer (GTK_WIDGET (panel), &x, &y);
 
-	if (panel->orient == PANEL_HORIZONTAL) {
+	if (panel->orient == GTK_ORIENTATION_HORIZONTAL) {
 		return x;
 	} else {
 		return y;
@@ -2603,7 +2609,7 @@ panel_widget_add_full (PanelWidget *panel, GtkWidget *applet, int pos,
 			g_list_prepend(panel->no_window_applet_list,ad);
 
 	/*this will get done right on size allocate!*/
-	if(panel->orient == PANEL_HORIZONTAL)
+	if(panel->orient == GTK_ORIENTATION_HORIZONTAL)
 		gtk_fixed_put(GTK_FIXED(panel),applet,
 			      pos,0);
 	else
@@ -2735,7 +2741,7 @@ panel_widget_get_pos(PanelWidget *panel, GtkWidget *applet)
 
 void
 panel_widget_change_params(PanelWidget *panel,
-			   PanelOrientation orient,
+			   GtkOrientation orient,
 			   int sz,
 			   PanelBackType back_type,
 			   char *pixmap,
@@ -2744,7 +2750,7 @@ panel_widget_change_params(PanelWidget *panel,
 			   gboolean rotate_pixmap_bg,
 			   GdkColor *back_color)
 {
-	PanelOrientation oldorient;
+	GtkOrientation oldorient;
 	int oldsz;
 	gboolean change_back = FALSE;
 
@@ -2828,7 +2834,7 @@ panel_widget_change_params(PanelWidget *panel,
 
 void
 panel_widget_change_orient(PanelWidget *panel,
-			   PanelOrientation orient)
+			   GtkOrientation orient)
 {
 	panel_widget_change_params(panel,
 				   orient,

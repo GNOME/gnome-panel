@@ -125,58 +125,12 @@ void		our_gtk_menu_position	(GtkMenu *menu);
 
 void		panel_add_favourite	(const char *source_dentry);
 
-#define MENU_PATH "menu_path"
-
-#define MENU_TYPES "types_menu"
-#define MENU_TYPE_EDGE "type-edge"
-#define MENU_TYPE_ALIGNED "type-aligned"
-#define MENU_TYPE_SLIDING "type-sliding"
-#define MENU_TYPE_FLOATING "type-floating"
-
-#define MENU_MODES "modes_menu"
-#define MENU_MODE_EXPLICIT_HIDE "mode-explicit-hide"
-#define MENU_MODE_AUTO_HIDE "mode-auto-hide"
-
-#define MENU_HIDEBUTTONS "hidebuttons_menu"
-#define MENU_HIDEBUTTONS_PIXMAP "hidebuttons-pixmap"
-#define MENU_HIDEBUTTONS_PLAIN "hidebuttons-plain"
-#define MENU_HIDEBUTTONS_NONE "hidebuttons-none"
-
 /* perhaps into basep-widget.h? */
 enum {
 	HIDEBUTTONS_PIXMAP,
 	HIDEBUTTONS_PLAIN,
 	HIDEBUTTONS_NONE
 };
-
-
-#define MENU_SIZES         "sizes_menu"
-#define MENU_SIZE_XX_SMALL "size-xx-small"
-#define MENU_SIZE_X_SMALL  "size-x-small"
-#define MENU_SIZE_SMALL    "size-small"
-#define MENU_SIZE_MEDIUM   "size-medium"
-#define MENU_SIZE_LARGE    "size-large"
-#define MENU_SIZE_X_LARGE  "size-x-large"
-#define MENU_SIZE_XX_LARGE "size-xx-large"
-
-#define MENU_BACKS "background_menu"
-#define MENU_BACK_NONE "back-none"
-#define MENU_BACK_PIXMAP "back-pixmap"
-#define MENU_BACK_COLOR "back-color"
-
-#define MENU_ORIENTS "orients_menu"
-#define MENU_ORIENT_HORIZONTAL "orient-horizontal"
-#define MENU_ORIENT_VERTICAL "orient-vertical"
-
-#define MENU_MAXIMIZE_MODE "maximize_mode_menu"
-#define MENU_AVOID_ON_MAX "avoid-on-max"
-#define MENU_NO_AVOID_ON_MAX "no-avoid-on-max"
-
-#define MENU_LEVELS "levels_menu"
-#define MENU_LEVEL_DEFAULT "level-default"
-#define MENU_LEVEL_ABOVE "level-above"
-#define MENU_LEVEL_NORMAL "level-normal"
-#define MENU_LEVEL_BELOW "level-below"
 
 G_END_DECLS
 
