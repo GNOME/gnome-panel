@@ -2,9 +2,9 @@
 <!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
 "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
   <!ENTITY legal SYSTEM "legal.xml">
-  <!ENTITY appletversion "2.3.4">
-  <!ENTITY manrevision "2.3">
-  <!ENTITY date "August 2003">
+  <!ENTITY appletversion "2.4.0">
+  <!ENTITY manrevision "2.4">
+  <!ENTITY date "September 2003">
   <!ENTITY applet "Workspace Switcher">
 
 ]>
@@ -88,6 +88,14 @@
 		  </revdescription> 
 		</revision> 
 		<revision> 
+		  <revnumber>Workspace Switcher Applet Manual V2.3</revnumber> 
+		  <date>August 2003</date> 
+		  <revdescription> 
+			 <para role="author">Sun GNOME Documentation Team</para> 
+			 <para role="publisher">GNOME Documentation Project</para> 
+		  </revdescription> 
+		</revision>
+		<revision> 
 		  <revnumber>Workspace Switcher Applet Manual V2.2</revnumber> 
 		  <date>August 2002</date> 
 		  <revdescription> 
@@ -153,20 +161,21 @@
 		</screenshot> 
 	 </figure> 
     	<!-- ==== End of Figure ======================================= -->
-	<para>The <application>&applet;</application> applet displays the workspaces that are on your GNOME desktop. 
-	A workspace is a discrete area on the desktop in which you can work. Every workspace on the desktop contains 
-	the same desktop background, the same panels, and the same menus. However, you can run different applications 
-	and open different windows in each workspace. You can display only one workspace at a time but you can 
-	have windows open in other workspaces. </para>
+	<para>The <application>&applet;</application> applet displays the workspaces that are on your GNOME Desktop. 
+	A workspace is a discrete area on the GNOME Desktop in which you can work. Every workspace on the 
+	GNOME Desktop contains the same desktop background, the same panels, and the same menus. However, you can 
+	run different applications and open different windows in each workspace. You can display only one workspace at a 
+	time but you can have windows open in other workspaces. </para>
 	
 	<para>By default, the <application>&applet;</application> applet displays a visual representation of the workspaces 
-	on the desktop, as shown in <xref linkend="workspacelist-fig"/>. The applet displays the application windows and dialogs 
-	that are open in a workspace. The applet highlights the background of the current workspace and the window that has focus. 
-	You can change the default behavior of the applet to display only the names of the workspaces in the applet. See 
-	<xref linkend="workspacelist-prefs"/> for more information about how to configure the applet.</para>
+	on the GNOME Desktop, as shown in <xref linkend="workspacelist-fig"/>. The applet displays the 
+	application windows and dialogs that are open in a workspace. The applet highlights the background of the 
+	current workspace and the window that has focus. You can change the default behavior of the applet to 
+	display only the names of the workspaces in the applet. See <xref linkend="workspacelist-prefs"/> for 
+	more information about how to configure the applet.</para>
 	
-	<para><xref linkend="workspacelist-fig"/> shows the <application>&applet;</application> applet when the 
-	GNOME session contains four workspaces. The applet displays the workspaces in order from left to right 
+	<para><xref linkend="workspacelist-fig"/> shows the <application>&applet;</application> applet when a 
+	session contains four workspaces. The applet displays the workspaces in order from left to right 
 	across the rows of the applet. 
 	In <xref linkend="workspacelist-fig"/> the applet is set up to display the workspaces in one row. 
 	See <xref linkend="workspacelist-prefs"/> for information about how to change the number of applet rows. </para>
@@ -215,7 +224,7 @@
 			<application>&applet;</application> applet.</para>
 	 		</listitem>
 	 		<listitem><para><guilabel>Show all workspaces in X rows</guilabel></para>
-	 		<para>Select this option to show all of the workspaces that are on your GNOME desktop in the 
+	 		<para>Select this option to show all of the workspaces that are on your GNOME Desktop in the 
 			<application>&applet;</application> applet. Use the spin box to specify 
 			the number of rows to use to display the workspaces in the applet. </para>
 	 		</listitem>
@@ -226,11 +235,11 @@
 	 <listitem><para>Use the following options to determine how the applet displays the workspaces:</para> 
 	 <itemizedlist>
 	 	<listitem><para><guilabel>Number of workspaces</guilabel></para>
-	 	<para>Use this spin box to increase or decrease the number of workspaces in the GNOME session.</para>
+	 	<para>Use this spin box to increase or decrease the number of workspaces in a session.</para>
 	 	</listitem>
 		<listitem><para><guilabel>Workspace names</guilabel></para> 
-		<para>Use this list box to edit the names of the workspaces on your desktop. To edit a workspace name, 
-		select the name, then type the new name. </para>
+		<para>Use this list box to edit the names of the workspaces on your GNOME Desktop. To edit a 
+		workspace name, click twice on the name, then type the new name. </para>
 	 	</listitem>
 	 	<listitem><para><guilabel>Show workspace names in switcher</guilabel></para>
 	 	<para>Select this option to display the names of the workspaces in the applet instead of a visual representation
