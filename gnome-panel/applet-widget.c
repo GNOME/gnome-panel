@@ -27,8 +27,8 @@ static GNOME_Panel panel_client = CORBA_OBJECT_NIL;
 
 #define APPLET_ID_KEY "applet_id_key"
 #define APPLET_WIDGET_KEY "applet_widget_key"
-#define pg_return_if_fail(x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return; }}
-#define pg_return_val_if_fail(x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return y;}}
+#define pg_return_if_fail(evp,x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return; }}
+#define pg_return_val_if_fail(evp,x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return y;}}
 
 typedef struct {
 	POA_GNOME_Applet		servant;
@@ -741,27 +741,27 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 
 	POA_GNOME_Applet__init((POA_GNOME_Applet *)applet_servant, &ev);
 
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	applet_servant->poa = poa = (PortableServer_POA)
 		CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
 
 	PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	applet_servant->objid =
 		PortableServer_POA_activate_object(poa, applet_servant,
 						   &ev);
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	applet_servant->obj = applet_obj =
 		PortableServer_POA_servant_to_reference(poa, applet_servant,
 							&ev);
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	goad_server_register(CORBA_OBJECT_NIL, applet_obj, goad_id,
 			     "server", &ev);
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	if (panel_client == CORBA_OBJECT_NIL) {
 		panel_client =
@@ -769,7 +769,10 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 							  "IDL:GNOME/Panel:1.0",
 							  0, NULL);
 
-		pg_return_val_if_fail (panel_client != CORBA_OBJECT_NIL, NULL);
+		if(panel_client == CORBA_OBJECT_NIL) {
+			g_warning(_("Cannot activate a panel object"));
+			return NULL;
+		}
 	}
 
 
@@ -789,7 +792,7 @@ gnome_panel_applet_corba_init(AppletWidget *applet, const char *goad_id)
 						       &privcfg,&globcfg,
 						       &applet_servant->winid,
 						       &ev);
-	pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, NULL);
+	pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, NULL);
 
 	if(privcfg && *privcfg)
 		applet->privcfgpath = g_strdup(privcfg);
@@ -1602,10 +1605,10 @@ void applet_factory_new(const char *goad_id, AppletFactoryQuerier qfunc,
 	PortableServer_POAManager_activate
 		(PortableServer_POA__get_the_POAManager(poa, &ev), &ev);
 
-	pg_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+	pg_return_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION);
 
 	f->objid = PortableServer_POA_activate_object(poa, f, &ev);
-	pg_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+	pg_return_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION);
 
 	f->fobj = PortableServer_POA_servant_to_reference(poa, f, &ev);
 

@@ -20,8 +20,8 @@
 			   GDK_POINTER_MOTION_MASK |		\
 			   GDK_POINTER_MOTION_HINT_MASK)
 
-#define pg_return_if_fail(x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return; }}
-#define pg_return_val_if_fail(x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, ev._major, ev._repo_id); return y;}}
+#define pg_return_if_fail(evp,x) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return; }}
+#define pg_return_val_if_fail(evp,x,y) {if(!(x)) { g_warning("file %s: line %d: Corba Exception: type = %d exid = %s\n", __FILE__, __LINE__, (evp)->_major, (evp)->_repo_id); return y;}}
 
 extern GSList *panels;
 
@@ -507,7 +507,7 @@ load_extern_applet(char *goad_id, char *cfgpath, PanelWidget *panel,
 	POA_GNOME_PanelSpot__init(panelspot_servant, &ev);
 	
 	CORBA_free(PortableServer_POA_activate_object(thepoa, panelspot_servant, &ev));
-	pg_return_if_fail(ev._major == CORBA_NO_EXCEPTION);
+	pg_return_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION);
 
 	ext->pspot = CORBA_OBJECT_NIL; /*will be filled in during add_applet*/
 	ext->applet = CORBA_OBJECT_NIL;
@@ -606,9 +606,9 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 
 				panelspot_servant = (POA_GNOME_PanelSpot *)ext;
 				acc = PortableServer_POA_servant_to_reference(thepoa, panelspot_servant, ev);
-				pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,CORBA_OBJECT_NIL);
+				pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION, CORBA_OBJECT_NIL);
 				ext->pspot = CORBA_Object_duplicate(acc, ev);
-				pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,CORBA_OBJECT_NIL);
+				pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION, CORBA_OBJECT_NIL);
 
 				return CORBA_Object_duplicate(acc, ev);
 			}
@@ -631,14 +631,17 @@ s_panel_add_applet_full(POA_GNOME_Panel *servant,
 	POA_GNOME_PanelSpot__init(panelspot_servant, ev);
 	
 	CORBA_free(PortableServer_POA_activate_object(thepoa, panelspot_servant, ev));
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	acc = PortableServer_POA_servant_to_reference(thepoa, panelspot_servant, ev);
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	ext->pspot = CORBA_Object_duplicate(acc, ev);
 
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	ext->applet = CORBA_Object_duplicate(panel_applet, ev);
 	ext->goad_id = g_strdup(goad_id);
@@ -702,14 +705,17 @@ s_panel_add_status(POA_GNOME_Panel *servant,
 	POA_GNOME_StatusSpot__init(statusspot_servant, ev);
 	
 	CORBA_free(PortableServer_POA_activate_object(thepoa, statusspot_servant, ev));
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	acc = PortableServer_POA_servant_to_reference(thepoa, statusspot_servant, ev);
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	ss->sspot = CORBA_Object_duplicate(acc, ev);
 
-	pg_return_val_if_fail(ev->_major == CORBA_NO_EXCEPTION,NULL);
+	pg_return_val_if_fail(ev, ev->_major == CORBA_NO_EXCEPTION,
+			      CORBA_OBJECT_NIL);
 
 	*wid = ss->wid;
 	return CORBA_Object_duplicate(acc, ev);
@@ -799,7 +805,7 @@ s_panelspot_get_parent_orient(POA_GNOME_PanelSpot *servant,
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return ORIENT_UP;
 	}
@@ -820,7 +826,7 @@ s_panelspot_get_parent_size(POA_GNOME_PanelSpot *servant,
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return SIZE_STANDARD;
 	}
@@ -841,7 +847,7 @@ s_panelspot_get_free_space(POA_GNOME_PanelSpot *servant,
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return 0;
 	}
@@ -957,7 +963,7 @@ s_panelspot_register_us(POA_GNOME_PanelSpot *servant,
 
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return;
 	}
@@ -1045,7 +1051,7 @@ s_panelspot_drag_start(POA_GNOME_PanelSpot *servant,
 
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return;
 	}
@@ -1067,7 +1073,7 @@ s_panelspot_drag_stop(POA_GNOME_PanelSpot *servant,
 
 	panel = PANEL_WIDGET(ext->info->widget->parent);
 	if(!panel) {
-		g_waring("%s:%d ??? Applet with no panel ???",
+		g_warning("%s:%d ??? Applet with no panel ???",
 			 __FILE__, __LINE__);
 		return;
 	}
@@ -1266,21 +1272,21 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
   orb = panel_orb;
 
   POA_GNOME_Panel__init(&panel_servant, &ev);
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   thepoa = (PortableServer_POA)
     CORBA_ORB_resolve_initial_references(orb, "RootPOA", &ev);
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   PortableServer_POAManager_activate(PortableServer_POA__get_the_POAManager(thepoa, &ev), &ev);
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   CORBA_free(PortableServer_POA_activate_object(thepoa,
 						&panel_servant, &ev));
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   acc = PortableServer_POA_servant_to_reference(thepoa, &panel_servant, &ev);
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
 
   old_server = goad_server_activate_with_repo_id (NULL, "IDL:GNOME/Panel:1.0", 
 						  GOAD_ACTIVATE_EXISTING_ONLY,
@@ -1295,7 +1301,7 @@ panel_corba_gtk_init(CORBA_ORB panel_orb)
 
   /*
   CORBA_Object_release(acc, &ev);
-  pg_return_val_if_fail(ev._major == CORBA_NO_EXCEPTION, -1);
+  pg_return_val_if_fail(&ev, ev._major == CORBA_NO_EXCEPTION, -1);
   */
 
   return status;

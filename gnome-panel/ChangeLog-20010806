@@ -1,3 +1,11 @@
+Thu Jan 27 14:32:09 2000  George Lebl <jirka@5z.com>
+
+	* applet-widget.h: Don't use the GNUC extention ({ }) as it's
+	  absolutely not needed here.
+
+	* applet-widget.c,extern.c: fix pg_return_.*if_fail compile errors
+	  by passing a poitner to ev to these macros
+
 Wed Jan 26 21:49:48 2000  George Lebl <jirka@5z.com>
 
 	* applet-widget.c,extern.c: don't use g_return.*_if_fail stuff
