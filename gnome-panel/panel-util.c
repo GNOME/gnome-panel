@@ -252,7 +252,7 @@ create_text_entry(GtkWidget *table,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,
 			 GTK_FILL | GTK_SHRINK,
 			 GNOME_PAD_SMALL, GNOME_PAD_SMALL);
-	set_relation (entry, GTK_LABEL (wlabel), 1);
+	panel_set_atk_relation (entry, GTK_LABEL (wlabel));
 
 	if(func) {
 		g_object_set_data (G_OBJECT (t), "update_function", func);
@@ -291,7 +291,7 @@ create_icon_entry(GtkWidget *table,
 	if (text != NULL)
 		gnome_icon_entry_set_filename (GNOME_ICON_ENTRY(entry), text);
 
-	set_relation (entry, GTK_LABEL (wlabel), 1);
+	panel_set_atk_relation (entry, GTK_LABEL (wlabel));
 	gtk_table_attach(GTK_TABLE(table), entry,
 			 cols, cole, 1, 2,
 			 GTK_EXPAND | GTK_FILL | GTK_SHRINK,

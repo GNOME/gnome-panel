@@ -721,7 +721,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 				       NULL, FALSE, FALSE, FALSE, NULL);
 	PANEL_WIDGET (foo->panel)->panel_parent = GTK_WIDGET (foo);
 	PANEL_WIDGET (foo->panel)->drop_widget = GTK_WIDGET (foo);
-	add_atk_name_desc (foo->panel, _("Menu Panel"), _("GNOME Menu Panel"));
+	panel_set_atk_name_desc (foo->panel, _("Menu Panel"), _("GNOME Menu Panel"));
 
 	foo->ebox = gtk_event_box_new ();
 	foo->hbox = gtk_hbox_new (FALSE, 0);

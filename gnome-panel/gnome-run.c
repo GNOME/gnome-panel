@@ -1497,8 +1497,9 @@ create_program_list_contents (void)
 
 	gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (list), FALSE);
 
-	add_atk_name_desc (list, _("List of known applications"),
-			   _("Choose an application to run from the list"));
+	panel_set_atk_name_desc (list,
+				 _("List of known applications"),
+				 _("Choose an application to run from the list"));
 
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (list));
 	gtk_tree_selection_set_mode (selection, GTK_SELECTION_SINGLE);

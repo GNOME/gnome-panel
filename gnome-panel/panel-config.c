@@ -747,8 +747,9 @@ make_position_widget_accessible (GtkWidget   *w,
 
 	atk_name = g_strconcat (str1, str2, NULL);
 
-	add_atk_name_desc (w, _(atk_name),
-			   _("Indicates the panel position and orientation on screen"));
+	panel_set_atk_name_desc (w,
+				 _(atk_name),
+				 _("Indicates the panel position and orientation on screen"));
 
 	g_free (atk_name);
 }
@@ -776,7 +777,7 @@ make_position_widget (PerPanelConfig *ppc, int aligns)
 	gtk_widget_set_direction (table, GTK_TEXT_DIR_LTR);
 	gtk_container_add (GTK_CONTAINER (w), table);
 
-	set_relation (table, GTK_LABEL (label), 1);
+	panel_set_atk_relation (table, GTK_LABEL (label));
 
 	w = NULL;
 
@@ -1036,7 +1037,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1,
 			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-	set_relation (ppc->x_spin, GTK_LABEL (label), 1);
+	panel_set_atk_relation (ppc->x_spin, GTK_LABEL (label));
 	
 	alignment = gtk_alignment_new (0, 0.5, 0, 0);
 	label = gtk_label_new_with_mnemonic (_("Ver_tical offset:"));
@@ -1053,7 +1054,7 @@ floating_notebook_page (PerPanelConfig *ppc)
 	gtk_spin_button_set_value (GTK_SPIN_BUTTON (button), ppc->y);
 	g_signal_connect (button, "value-changed",
 			  G_CALLBACK (floating_set_xy), &ppc->y);
-	set_relation (ppc->y_spin, GTK_LABEL (label), 1);
+	panel_set_atk_relation (ppc->y_spin, GTK_LABEL (label));
 	gtk_table_attach (GTK_TABLE (table), button, 1, 2, 1, 2,
 			  GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
@@ -1123,7 +1124,7 @@ sliding_notebook_page (PerPanelConfig *ppc)
 			  G_CALLBACK (sliding_set_offset), ppc);
 	gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
 
-	set_relation (ppc->offset_spin, GTK_LABEL (l), 1);
+	panel_set_atk_relation (ppc->offset_spin, GTK_LABEL (l));
 	
 	w = make_size_widget (ppc);
 	gtk_box_pack_start (GTK_BOX (vbox), w, FALSE, FALSE, 0);
@@ -1234,7 +1235,7 @@ make_size_widget (PerPanelConfig *ppc)
 	gtk_box_pack_start (GTK_BOX (box), ppc->size_menu,
 			    FALSE, FALSE, 0);
 
-	set_relation (ppc->size_menu, GTK_LABEL (label), 1);
+	panel_set_atk_relation (ppc->size_menu, GTK_LABEL (label));
 	
 	switch(ppc->sz) {
 	case PANEL_SIZE_XX_SMALL:
@@ -1396,7 +1397,7 @@ background_page (PerPanelConfig *ppc)
 			  GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL,
 			  2, 2);
 
-	set_relation (ppc->back_om, GTK_LABEL (label), 1);
+	panel_set_atk_relation (ppc->back_om, GTK_LABEL (label));
 
 	label = gtk_label_new_with_mnemonic (_("Background co_lor:"));
 	gtk_widget_set_sensitive (label, ppc->back_type == PANEL_BACK_COLOR);
@@ -1420,7 +1421,7 @@ background_page (PerPanelConfig *ppc)
 				   ppc->back_color.green,
 				   ppc->back_color.blue,
 				   65535);
-	set_relation (ppc->backsel, GTK_LABEL (label), 1);
+	panel_set_atk_relation (ppc->backsel, GTK_LABEL (label));
 
 	gtk_table_attach (GTK_TABLE (table), ppc->backsel,
 			  1, 2, 1, 2,
