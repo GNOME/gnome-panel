@@ -56,8 +56,6 @@ typedef struct
   GtkWidget *frame;
 
   GtkOrientation orientation;
-  int size;
-  
 } SystemTray;
 
 static void
@@ -195,20 +193,17 @@ update_size_and_orientation (SystemTray *tray)
 {
   tray_obox_set_orientation (TRAY_OBOX (tray->box), tray->orientation);
 
+  egg_tray_manager_set_orientation (tray_manager, tray->orientation);
+
   /* note, you want this larger if the frame has non-NONE relief by default. */
 #define MIN_BOX_SIZE 3
   switch (tray->orientation)
     {
     case GTK_ORIENTATION_VERTICAL:
-      gtk_widget_set_size_request (tray->frame,
-                                   tray->size, -1);
-
       /* Give box a min size so the frame doesn't look dumb */
       gtk_widget_set_size_request (tray->box, MIN_BOX_SIZE, -1);
       break;
     case GTK_ORIENTATION_HORIZONTAL:
-      gtk_widget_set_size_request (tray->frame,
-                                   -1, tray->size);
       gtk_widget_set_size_request (tray->box, -1, MIN_BOX_SIZE);
       break;
     }
@@ -275,18 +270,6 @@ applet_change_background (PanelApplet               *applet,
       gtk_widget_set_style (GTK_WIDGET (tray->applet), style);
       break;
     }
-}
-
-static void
-applet_change_pixel_size (PanelApplet  *applet,
-			  gint          size,
-			  SystemTray   *tray)
-{
-  if (tray->size == size)
-    return;
-  
-  tray->size = size;
-  update_size_and_orientation (tray);
 }
 
 static void
@@ -357,13 +340,14 @@ applet_factory (PanelApplet *applet,
   atko = gtk_widget_get_accessible (GTK_WIDGET (tray->applet));
   atk_object_set_name (atko, _("Panel Notification Area"));
 
+  panel_applet_set_flags (PANEL_APPLET (tray->applet),
+                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
+  
   tray->frame = gtk_alignment_new (0.5, 0.5, 1.0, 1.0);
   tray->box = tray_obox_new ();
   gtk_box_set_spacing (GTK_BOX (tray->box), 1);
 
   gtk_container_add (GTK_CONTAINER (tray->frame), tray->box);
-
-  tray->size = panel_applet_get_size (applet);
 
   switch (panel_applet_get_orient (applet))
     {
@@ -380,14 +364,6 @@ applet_factory (PanelApplet *applet,
   
   all_trays = g_slist_append (all_trays, tray);
   
-  panel_applet_set_flags (PANEL_APPLET (tray->applet),
-                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
-  
-  g_signal_connect (G_OBJECT (tray->applet),
-                    "change_size",
-                    G_CALLBACK (applet_change_pixel_size),
-                    tray);
-
   g_signal_connect (G_OBJECT (tray->applet),
                     "change_orient",
                     G_CALLBACK (applet_change_orientation),

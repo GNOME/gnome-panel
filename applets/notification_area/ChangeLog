@@ -1,3 +1,13 @@
+2004-11-30  Mark McLoughlin  <mark@skynet.ie>
+
+	Correctly update the orientation hint and allow "size-allocate"
+	to define the applet size rather than the "size-changed" signal.
+
+	* main.c:
+	(update_size_and_orientation): update the orientation hint and
+	don't set the size request on the frame.
+	(applet_factory): don't connect to "change-size".
+
 ==================== 2.9.2 ====================
 
 ==================== 2.9.1 ====================
