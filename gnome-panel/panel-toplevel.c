@@ -1416,6 +1416,8 @@ panel_toplevel_construct_description (PanelToplevel *toplevel)
 
 	static const char *description[4][4] = {
 		{
+	/* translators: these string will be shown in MetaCity's switch window
+	 * popup when you pass the focus to a panel */
 			N_("Top Expanded Edge Panel"),
 			N_("Top Centered Panel"),
 	     		N_("Top Floating Panel"),
@@ -1489,7 +1491,7 @@ panel_toplevel_update_description (PanelToplevel *toplevel)
 
 	if (toplevel->priv->description)
 		g_free (toplevel->priv->description);
-	toplevel->priv->description = g_strdup (description);
+	toplevel->priv->description = g_strdup (_(description));
 
 	if (!toplevel->priv->name)
 		gtk_window_set_title (GTK_WINDOW (toplevel),
@@ -1498,8 +1500,8 @@ panel_toplevel_update_description (PanelToplevel *toplevel)
 	panel_a11y_set_atk_name_desc (
 		GTK_WIDGET (toplevel->priv->panel_widget),
 		toplevel->priv->name ? toplevel->priv->name :
-				       toplevel->priv->description,
-		toplevel->priv->description);
+				       _(toplevel->priv->description),
+		_(toplevel->priv->description));
 }
 
 static void
