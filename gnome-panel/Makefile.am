@@ -318,7 +318,11 @@ rc_DATA = gnome-panelrc
 @INTLTOOL_SERVER_RULE@
 
 schemasdir       = $(sysconfdir)/gconf/schemas
-schemas_in_files = panel-global-config.schemas.in panel-per-panel-config.schemas.in
+schemas_in_files =				\
+	panel-global-config.schemas.in		\
+	panel-per-panel-config.schemas.in	\
+	gnome-panel-screenshot.schemas.in	\
+	$(NULL)
 schemas_DATA     = $(schemas_in_files:.schemas.in=.schemas)
 
 @INTLTOOL_SCHEMAS_RULE@

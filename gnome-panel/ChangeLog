@@ -1,3 +1,13 @@
+2002-11-04  Mark McLoughlin  <mark@skynet.ie>
+
+	* Makefile.am: install gnome-panel-screenshot.schemas.
+
+	* gnome-panel-screenshot.c: (main): don't pretend to
+	use GError, don't use hypens in gconf keys and don't
+	crash.
+
+	* gnome-panel-screenshot.schemas.in: new file.
+
 2002-11-01  Mark McLoughlin  <mark@skynet.ie>
 
 	Add support for translucent panels. Based on a patch
