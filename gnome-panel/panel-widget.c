@@ -45,6 +45,7 @@ GSList *panels = NULL; /*other panels we might want to move the applet to*/
 /*there  can universally be only one applet being dragged since we assume
 we only have one mouse :) */
 gboolean panel_applet_in_drag = FALSE;
+static GtkWidget *saved_focus_widget = NULL;
 
 /* Commie mode! */
 extern gboolean commie_mode;
@@ -219,6 +220,7 @@ add_all_move_bindings (PanelWidget *panel)
 {
 	GtkWidgetClass *class;
 	GtkBindingSet *binding_set;
+	GtkWidget *focus_widget;
 
 	class = GTK_WIDGET_GET_CLASS (panel);
 
@@ -247,6 +249,20 @@ add_all_move_bindings (PanelWidget *panel)
 	gtk_binding_entry_add_signal (binding_set,
                                       GDK_space, 0,
                                       "end_move", 0);
+
+	focus_widget = GTK_WINDOW (panel->panel_parent)->focus_widget;
+	if (GTK_IS_SOCKET (focus_widget)) {
+		/*
+		 * If the focus widget is a GtkSocket, i.e. the
+		 * focus is in an applet in another process then
+		 * key bindings do not work. We get around this by
+		 * by setting the focus to the PanelWidget for the
+		 * duration of the move.
+		 */
+		GTK_WIDGET_SET_FLAGS (panel, GTK_CAN_FOCUS);
+		gtk_widget_grab_focus (GTK_WIDGET (panel));
+		saved_focus_widget = focus_widget;
+	}
 }
 
 static void
@@ -278,6 +294,11 @@ remove_all_move_bindings (PanelWidget *panel)
 
 	binding_set = gtk_binding_set_by_class (class);
 
+	if (saved_focus_widget) {
+		GTK_WIDGET_UNSET_FLAGS (panel, GTK_CAN_FOCUS);
+		gtk_widget_grab_focus (saved_focus_widget);
+		saved_focus_widget = NULL;
+	}
 	remove_move_bindings (binding_set, GDK_SHIFT_MASK);
 	remove_move_bindings (binding_set, GDK_CONTROL_MASK);
 	remove_move_bindings (binding_set, GDK_MOD1_MASK);
@@ -2880,6 +2901,8 @@ panel_widget_tab_move (PanelWidget *panel,
 	AppletData       *ad;
 	GSList *li;
 	PanelWidget *new_panel = NULL;
+	PanelWidget *previous_panel = NULL;
+	PanelWidget *first_panel = panels->data;
 
 	ad = panel->currently_dragged_applet;
 
@@ -2887,15 +2910,20 @@ panel_widget_tab_move (PanelWidget *panel,
 		return;	
 	
 	for (li = panels; li; li = li->next) {
-		PanelWidget *previous_panel = NULL;
 		PanelWidget *panel_in_list = li->data;
 
 		if (panel_in_list == panel) {
 			if (next) {
 				if (li->next)
 					new_panel = li->next->data;
+				else
+					new_panel = ((GSList *)panels)->data;
+				
 			} else {
-				new_panel = previous_panel;
+				if (previous_panel)
+					new_panel = previous_panel;
+				else
+					continue;
 			}
 			break;
 		} else {		
@@ -2904,8 +2932,15 @@ panel_widget_tab_move (PanelWidget *panel,
 		}
 	}
 	g_return_if_fail (li);
-        if (new_panel)
+	if (!new_panel) {
+		if (previous_panel)
+			new_panel = previous_panel;
+	}
+	if (new_panel && (new_panel != panel)) {
+		if (saved_focus_widget)
+			saved_focus_widget = NULL;
 		panel_widget_reparent (panel, new_panel, ad->applet, 0);
+	}
 }
 
 static void

@@ -1,3 +1,13 @@
+2002-05-10  Padraig O'Briain  <padraig.obriain@sun.com>
+
+	* panel-widget.c:
+	(add_all_move_bindings) If focus widget is a GtkSocket unset focus
+	while doing move so that key bindings for panel will work
+	(remove_all_move_bindings) Reset focus widget at end of move if
+	focus widget was unset (#79515)
+	(panel_widget_tab_move) Correct bug when panel is not first panel on
+	list; cycle around end of panel list
+
 2002-05-09 Stephen Browne <stephen.browne@sun.com>
 
 	* distribution.c
