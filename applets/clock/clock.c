@@ -1219,6 +1219,7 @@ constrain_list_size (GtkWidget      *widget,
         gtk_widget_size_request (constraint->tree, &req);
 
         requisition->height = MIN (req.height, max_height);
+        requisition->height += 2 * widget->style->ythickness;
 }
 
 static void
