@@ -20,5 +20,6 @@ figs = \
 	figures/status_dock.png
 app = panel
 lang = de
+omffiles=panel-de.omf
 include $(top_srcdir)/app-docs.make
 dist-hook: app-dist-hook
