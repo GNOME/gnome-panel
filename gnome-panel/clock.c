@@ -20,10 +20,13 @@
 #include <gnome.h>
 #include <gdk/gdkx.h>
 #include <applet-lib.h>
+#include <applet-widget.h>
 
 #define CLOCK_DATA "clock_data"
 
 typedef void (*ClockUpdateFunc) (GtkWidget *clock, time_t current_time);
+
+int applet_id=-1; /*this is our id we use to comunicate with the panel*/
 
 
 typedef struct {
@@ -81,6 +84,12 @@ computer_clock_update_func(GtkWidget *clock, time_t current_time)
 	gtk_label_set (GTK_LABEL (cc->time), hour);
 }
 
+static gint
+testbutton_c(GtkWidget *widget, gpointer data)
+{
+	puts("CLICKED TEST!");
+}
+
 static void
 create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 {
@@ -88,6 +97,7 @@ create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 	GtkWidget     *align;
 	GtkWidget     *vbox;
 	ComputerClock *cc;
+	GtkWidget *testbutton;
 
 	frame = gtk_frame_new(NULL);
 	gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
@@ -110,6 +120,13 @@ create_computer_clock_widget(GtkWidget **clock, ClockUpdateFunc *update_func)
 	gtk_box_pack_start_defaults(GTK_BOX(vbox), cc->time);
 	gtk_widget_show(cc->date);
 	gtk_widget_show(cc->time);
+
+	testbutton = gtk_button_new_with_label("TEST");
+	gtk_signal_connect(GTK_OBJECT(testbutton), "clicked",
+			   (GtkSignalFunc) testbutton_c,
+			   NULL);
+	gtk_box_pack_start_defaults(GTK_BOX(vbox), testbutton);
+	gtk_widget_show(testbutton);
 
 	gtk_object_set_user_data(GTK_OBJECT(frame), cc);
 	gtk_signal_connect(GTK_OBJECT(frame), "destroy",
@@ -166,7 +183,7 @@ int
 main(int argc, char **argv)
 {
 	GtkWidget *clock;
-	GtkWidget *window;
+	GtkWidget *aw;
 	char *result;
 	
 	gnome_init("clock_applet", &argc, &argv);
@@ -176,15 +193,16 @@ main(int argc, char **argv)
 		exit (1);
 	}
 
-	window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-	gtk_window_set_policy (GTK_WINDOW (window), 1, 1, 1);
+	aw = applet_widget_new ();
 
-	clock = create_clock_widget (GTK_WIDGET(window));
+	clock = create_clock_widget (GTK_WIDGET(aw));
 	gtk_widget_show(clock);
-	gtk_container_add (GTK_CONTAINER (window), clock);
-	gtk_widget_show (window);
+	applet_widget_add (APPLET_WIDGET (aw), clock);
+	gtk_widget_show (aw);
 
-	result = gnome_panel_prepare_and_transfer(window);
+	/*FIXME: do session saving, find out panel and pos from the panel
+		 so we can restore them on the next startup*/
+	result = gnome_panel_prepare_and_transfer(aw,&applet_id,0,0);
 	printf ("Done\n");
 	if (result){
 		printf ("Could not talk to the Panel: %s\n", result);

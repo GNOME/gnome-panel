@@ -81,11 +81,15 @@ void panel_quit(void);
 
 void apply_global_config(void);
 
-/*these are in main.c*/
+int reparent_window_id (unsigned long id, int panel, int pos);
+
+/*event coming though corba*/
+int applet_button_press_event(int id, int button);
+
+
+/*this is in main.c*/
 void load_applet(char *id, char *params, int pos, int panel);
 
-void reparent_window_id (unsigned long id);
-	
 END_GNOME_DECLS
 
 #endif

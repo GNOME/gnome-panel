@@ -488,6 +488,16 @@ add_main_menu(GtkWidget *widget, gpointer data)
 	create_applet("Menu",".",PANEL_UNKNOWN_APPLET_POSITION,1);
 }
 
+int
+applet_button_press_event(int id, int button)
+{
+	/*send these to the parent of the applet*/
+	if(button == 2 || button == 3) {
+	}
+	return FALSE;
+}
+
+
 struct  reparent_struct {
 	GdkWindow *win;
 	GdkWindow *target;
@@ -500,7 +510,7 @@ delayed_reparent_window_id (gpointer data)
 	int i;
 	
 	printf ("delayed in\n");
-	for (i = 0; i < 1; i++){
+	for (i = 0; i < 200; i++){
 		gdk_window_reparent(rs->win,rs->target,0,0);
 		gdk_flush ();
 	}
@@ -509,8 +519,8 @@ delayed_reparent_window_id (gpointer data)
 	return 0;
 }
 
-void
-reparent_window_id (unsigned long id)
+int
+reparent_window_id (unsigned long id, int panel, int pos)
 {
 	struct reparent_struct *rs = g_new (struct reparent_struct, 1);
 	GtkWidget *eb;
@@ -527,8 +537,7 @@ reparent_window_id (unsigned long id)
 	gtk_widget_set_usize(eb,w,h);
 	gtk_widget_show (eb);
 
-	panel_widget_add(PANEL_WIDGET(panels->data), eb, 0);
-
+	register_toy(eb,NULL,"External",NULL,pos,panel,0,APPLET_EXTERN);
 
 	rs->win = win;
 	rs->target = eb->window;
@@ -536,6 +545,8 @@ reparent_window_id (unsigned long id)
 	gtk_idle_add (delayed_reparent_window_id, (gpointer) rs);
 	
 	printf ("leaving reparent\n");
+
+	return /*FIXME: appletid*/0;
 }
 
 /*FIXME: add a function that does this, so generalize register_toy for this*/
@@ -543,11 +554,13 @@ static void
 add_reparent(GtkWidget *widget, gpointer data)
 {
 	int id;
+	int appletid;
 
+	puts("** warning this will probably crash when saving session **");
 	puts("Enter window ID to reparent:");
 	scanf("%d",&id);
 
-	reparent_window_id (id);
+	(void)reparent_window_id (id,0,0);
 }
 
 GtkWidget *

@@ -4,6 +4,7 @@
 #include <gnome.h>
 #include "mico-glue.h"
 #include "gnome-panel.h"
+#include "panel.h"
 
 /* This implements the server-side of the gnome-panel.idl
  * specification Currently there is no way to create new CORBA
@@ -13,10 +14,18 @@
    
 class Panel_impl : virtual public GNOME::Panel_skel {
 public:
-	void reparent_window_id (CORBA::ULong wid){
+	CORBA::Short reparent_window_id (CORBA::ULong wid,
+					 CORBA::Short panel,
+					 CORBA::Short pos) {
 		printf ("REPARENT!\n");
 
-		::reparent_window_id (wid);
+		return ::reparent_window_id (wid,panel,pos);
+	}
+	CORBA::Short applet_button_press_event (CORBA::Short id,
+						CORBA::Short button) {
+		printf ("BUTTON_PRESS_EVENT!\n");
+
+		return ::applet_button_press_event (id,button);
 	}
 };
 
