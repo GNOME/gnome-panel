@@ -12,6 +12,7 @@
 #include <dirent.h>
 #include <unistd.h>
 #include <string.h>
+#include <errno.h>
 #include <gnome.h>
 
 #include "panel-include.h"
@@ -296,8 +297,105 @@ restore_grabs(GtkWidget *w, gpointer data)
 
 	gtk_grab_add (GTK_WIDGET (menu));
 }
-	
 
+static void
+dentry_apply_callback(GtkWidget *widget, int page, gpointer data)
+{
+	GnomeDesktopEntry *dentry;
+
+	if (page != -1)
+		return;
+	
+	g_return_if_fail(data!=NULL);
+	g_return_if_fail(GNOME_IS_DENTRY_EDIT(data));
+
+	dentry = gnome_dentry_get_dentry(GNOME_DENTRY_EDIT(data));
+	dentry->location = g_strdup(gtk_object_get_data(data,"location"));
+	gnome_desktop_entry_save(dentry);
+	gnome_desktop_entry_free(dentry);
+}
+
+static void
+edit_dentry(GtkWidget *widget, GnomeDesktopEntry *dentry)
+{
+	GtkWidget *dialog;
+	GtkObject *o;
+
+	dialog = gnome_property_box_new();
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	
+	o = gnome_dentry_edit_new(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+	gtk_object_set_data(o,"location",dentry->location);
+
+	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o),dentry);
+
+	gtk_signal_connect_object(GTK_OBJECT(o), "changed",
+				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
+				  GTK_OBJECT(dialog));
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
+			   GTK_SIGNAL_FUNC(dentry_apply_callback),
+			   o);
+	gtk_widget_show(dialog);
+}
+
+static int
+destroy_dedit(GtkObject *dedit,gpointer data)
+{
+	char *s = gtk_object_get_data(dedit,"location");
+	g_free(s);
+	return FALSE;
+}
+
+static void
+edit_direntry(GtkWidget *widget, MenuFinfo *mf)
+{
+	GtkWidget *dialog;
+	GtkObject *o;
+	char *dirfile = g_concat_dir_and_file(mf->menudir, ".directory");
+	GnomeDesktopEntry *dentry;
+
+	dialog = gnome_property_box_new();
+	gtk_window_set_title(GTK_WINDOW(dialog), _("Desktop entry properties"));
+	gtk_window_set_policy(GTK_WINDOW(dialog), FALSE, FALSE, TRUE);
+	
+	o = gnome_dentry_edit_new(GTK_NOTEBOOK(GNOME_PROPERTY_BOX(dialog)->notebook));
+
+	dentry = gnome_desktop_entry_load_unconditional(dirfile);
+	if (dentry) {
+		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
+		gtk_object_set_data(o,"location",g_strdup(dentry->location));
+		gnome_desktop_entry_destroy(dentry);
+		g_free(dirfile);
+	} else {
+		dentry = g_new0(GnomeDesktopEntry, 1);
+		dentry->name =
+			mf->dir_name?g_strdup(mf->dir_name):g_strdup("Menu");
+		dentry->type = g_strdup("Directory");
+		/*we don't have to free dirfile here it will be freed as if
+		  we had strduped it here*/
+		gtk_object_set_data(o,"location",dirfile);
+		gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(o), dentry);
+		gnome_desktop_entry_destroy(dentry);
+	}
+
+	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->exec_entry, FALSE);
+	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->tryexec_entry, FALSE);
+	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->doc_entry, FALSE);
+	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->type_combo, FALSE);
+	gtk_widget_set_sensitive(GNOME_DENTRY_EDIT(o)->terminal_button, FALSE);
+
+	gtk_signal_connect_object(o, "changed",
+				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
+				  GTK_OBJECT(dialog));
+	gtk_signal_connect(o, "destroy", GTK_SIGNAL_FUNC(destroy_dedit),NULL);
+
+	gtk_signal_connect(GTK_OBJECT(dialog), "apply",
+			   GTK_SIGNAL_FUNC(dentry_apply_callback),
+			   o);
+	gtk_widget_show(dialog);
+}
 
 static int
 show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
@@ -352,14 +450,34 @@ show_item_menu(GtkWidget *w, GdkEvent *event, gpointer data)
 		}
 
 		prop_item = gtk_menu_item_new ();
+		/*when activated we must pop down the first menu*/
+		gtk_signal_connect_object(GTK_OBJECT(prop_item), "activate",
+					  GTK_SIGNAL_FUNC(gtk_menu_shell_deactivate),
+					  GTK_OBJECT(w->parent->parent->parent));
+		if(type == 1)
+			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
+					   GTK_SIGNAL_FUNC(edit_dentry),
+					   dentry);
+		else
+			gtk_signal_connect(GTK_OBJECT(prop_item), "activate",
+					   GTK_SIGNAL_FUNC(edit_direntry),
+					   mf);
 		gtk_object_set_data(GTK_OBJECT(w),"prop_item",prop_item);
 		setup_menuitem (prop_item, 0, _("Properties ..."));
 		gtk_menu_append (GTK_MENU (menu), prop_item);
 	}
 	
-	/*FIXME: do properties*/
 	gtk_widget_set_sensitive(prop_item,FALSE);
-
+	if(dentry && access(dentry->location,W_OK)==0) {
+		/*file exists and is writable, we're in bussines*/
+		gtk_widget_set_sensitive(prop_item,TRUE);
+	} else if(!dentry || errno==ENOENT) {
+		/*the dentry isn't there, check if we can write the
+		  directory*/
+		if(access(mf->menudir,W_OK)==0)
+			gtk_widget_set_sensitive(prop_item,TRUE);
+	}
+	
 	gtk_menu_popup (GTK_MENU (menu),
 			NULL,
 			NULL,

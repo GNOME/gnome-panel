@@ -114,11 +114,10 @@ create_launcher (char *parameters, GnomeDesktopEntry *dentry)
 	}
 	gtk_widget_show (launcher->button);
 
-	launcher->signal_click_tag =
-		gtk_signal_connect (GTK_OBJECT(launcher->button),
-				    "clicked",
-				    (GtkSignalFunc) launch,
-				    dentry);
+	gtk_signal_connect (GTK_OBJECT(launcher->button),
+			    "clicked",
+			    (GtkSignalFunc) launch,
+			    dentry);
 	
 	gtk_signal_connect (GTK_OBJECT(launcher->button), "destroy",
 			    GTK_SIGNAL_FUNC(destroy_launcher),
@@ -175,14 +174,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 							    default_app_pixmap);
 		}
 	}
-
-	gtk_signal_disconnect(GTK_OBJECT(launcher->button),
-			      launcher->signal_click_tag);
-
-	launcher->signal_click_tag =
-		gtk_signal_connect (GTK_OBJECT(launcher->button), "clicked",
-				    GTK_SIGNAL_FUNC(launch),
-				    launcher->dentry);
 }
 
 static int
@@ -193,14 +184,6 @@ properties_close_callback(GtkWidget *widget, gpointer data)
 			    LAUNCHER_PROPERTIES,NULL);
 	launcher->dedit = NULL;
 	return FALSE;
-}
-
-static void
-notify_change (GtkWidget *widget, void *data)
-{
-	GnomePropertyBox *box = GNOME_PROPERTY_BOX (data);
-
-	gnome_property_box_changed (box);
 }
 
 static GtkWidget *
@@ -220,9 +203,9 @@ create_properties_dialog(Launcher *launcher)
 	gnome_dentry_edit_set_dentry(GNOME_DENTRY_EDIT(launcher->dedit),
 				     launcher->dentry);
 	
-	gtk_signal_connect(GTK_OBJECT(launcher->dedit), "changed",
-			   GTK_SIGNAL_FUNC(notify_change),
-			   dialog);
+	gtk_signal_connect_object(GTK_OBJECT(launcher->dedit), "changed",
+				  GTK_SIGNAL_FUNC(gnome_property_box_changed),
+				  GTK_OBJECT(dialog));
 
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
 			   GTK_SIGNAL_FUNC(properties_close_callback),
