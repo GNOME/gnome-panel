@@ -12,9 +12,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-panel 1.5.22\n"
-"POT-Creation-Date: 2002-05-29 03:08+1200\n"
-"PO-Revision-Date: 2002-05-28 12:36+0800\n"
+"Project-Id-Version: gnome-panel 1.5.23\n"
+"POT-Creation-Date: 2002-06-03 05:20+0800\n"
+"PO-Revision-Date: 2002-06-03 07:12+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -69,8 +69,8 @@ msgid "_Animation filename:"
 msgstr "動畫檔案名稱(_A)："
 
 #: applets/fish/fish.c:738 applets/gen_util/mailcheck.c:1245
-#: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
-#: gnome-panel/panel-config.c:1369 gnome-panel/panel-util.c:241
+#: gnome-panel/menu-properties.c:498 gnome-panel/menu-properties.c:536
+#: gnome-panel/panel-config.c:1437 gnome-panel/panel-util.c:241
 msgid "Browse"
 msgstr "瀏覽"
 
@@ -113,8 +113,8 @@ msgstr ""
 msgid "(with minor help from George)"
 msgstr "(還有 George 的幫忙)"
 
-#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
 #: applets/fish/fish.c:1184
+#: applets/fish/GNOME_FishApplet_Factory.server.in.h:3
 msgid "Fish"
 msgstr "小魚"
 
@@ -132,7 +132,7 @@ msgstr ""
 msgid ""
 "A fish without a name is a pretty dull fish. Bring your fish to life by "
 "naming him."
-msgstr ""
+msgstr "沒有名稱的魚兒是比較呆板的。請為魚兒命名，為它帶來一點生氣。"
 
 #: applets/fish/fish.schemas.in.h:2
 msgid "Command to execute when the fish is clicked"
@@ -231,59 +231,71 @@ msgstr "電腦時鐘"
 msgid "%A, %B %d %Y"
 msgstr "%B %d %Y(%A)"
 
-#: applets/gen_util/clock.c:874
+#: applets/gen_util/clock.c:854 applets/gen_util/clock.c:1086
+#: applets/gen_util/mailcheck.c:1539 applets/gen_util/mailcheck.c:1742
+#: applets/gen_util/pager.c:155 applets/gen_util/pager.c:456
+#: applets/gen_util/tasklist.c:114 applets/gen_util/tasklist.c:671
+#, c-format
+msgid "There was an error displaying help: %s"
+msgstr "顯示說明文件時出現錯誤：%s"
+
+#: applets/gen_util/clock.c:898
 msgid "Clock Preferences"
 msgstr "時鐘偏好設定"
 
-#: applets/gen_util/clock.c:901
+#: applets/gen_util/clock.c:925
 msgid "Clock type"
 msgstr "時鐘樣式"
 
-#: applets/gen_util/clock.c:911
+#: applets/gen_util/clock.c:935
 msgid "_12 hour"
 msgstr "_12 小時制"
 
-#: applets/gen_util/clock.c:917
+#: applets/gen_util/clock.c:941
 msgid "_24 hour"
 msgstr "_24 小時制"
 
-#: applets/gen_util/clock.c:922
+#: applets/gen_util/clock.c:946
 msgid "_UNIX time"
 msgstr "_UNIX 時間"
 
-#: applets/gen_util/clock.c:926
+#: applets/gen_util/clock.c:950
 msgid "_Internet time"
 msgstr "_Internet 時間"
 
-#: applets/gen_util/clock.c:963
+#: applets/gen_util/clock.c:987
 msgid "Show _seconds"
 msgstr "顯示秒數(_S)"
 
-#: applets/gen_util/clock.c:973
+#: applets/gen_util/clock.c:997
 msgid "Show _date"
 msgstr "顯示日期(_D)"
 
-#: applets/gen_util/clock.c:983
+#: applets/gen_util/clock.c:1007
 msgid "Use _UTC"
 msgstr "使用 _UTC 時間"
 
 #. Translator credits
-#: applets/gen_util/clock.c:1073 applets/gen_util/mailcheck.c:1640
-#: applets/gen_util/pager.c:422 applets/gen_util/tasklist.c:641
+#: applets/gen_util/clock.c:1120 applets/gen_util/mailcheck.c:1667
+#: applets/gen_util/pager.c:487 applets/gen_util/tasklist.c:701
 #: gnome-panel/menu.c:240
 msgid "translator_credits"
-msgstr "Abel Cheung <maddog@linux.org.hk>"
+msgstr ""
+"Abel Cheung <maddog@linux.org.hk>, 2001-2002\n"
+"Chih-Wei Huang <cwhuang@linux.org.tw>, 2000\n"
+"Jing-Jong SHYUE <shyue@sonoma.com.tw>, 2000\n"
+"Yuan-Chung Cheng <platin@linux.org.tw>, 1999"
 
+#: applets/gen_util/clock.c:1138
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:3
-#: applets/gen_util/clock.c:1091
 msgid "Clock"
 msgstr "時鐘"
 
-#: applets/gen_util/clock.c:1092
+#: applets/gen_util/clock.c:1139
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "(C) 1998-2002 the Free Software Foundation"
 
-#: applets/gen_util/clock.c:1093
+#: applets/gen_util/clock.c:1140
 msgid "The Clock displays the current time and date"
 msgstr "時鐘程式可顯示目前的時間及日期"
 
@@ -368,7 +380,7 @@ msgid "Get the current time and date"
 msgstr "取得目前的時間及日期"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
-#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1653
+#: applets/gen_util/mailcheck.c:218 applets/gen_util/mailcheck.c:1680
 msgid "Inbox Monitor"
 msgstr "郵箱監控程式"
 
@@ -389,12 +401,12 @@ msgid "Utility"
 msgstr "公用程式"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:11
-#: applets/gen_util/tasklist.c:653
+#: applets/gen_util/tasklist.c:713
 msgid "Window List"
 msgstr "視窗清單"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:12
-#: applets/gen_util/pager.c:434 applets/gen_util/pager.glade.h:6
+#: applets/gen_util/pager.c:499 applets/gen_util/pager.glade.h:6
 msgid "Workspace Switcher"
 msgstr "工作區切換程式"
 
@@ -450,7 +462,7 @@ msgid "No mail."
 msgstr "沒有郵件。"
 
 #: applets/gen_util/mailcheck.c:1015 applets/gen_util/mailcheck.c:1017
-#: applets/gen_util/mailcheck.c:1816 applets/gen_util/mailcheck.c:1818
+#: applets/gen_util/mailcheck.c:1865 applets/gen_util/mailcheck.c:1867
 msgid "Status not updated"
 msgstr "沒有更新狀態"
 
@@ -543,35 +555,35 @@ msgstr "有新郵件的時候播放音效(_S)"
 msgid "Select a_nimation"
 msgstr "選擇動畫(_N)"
 
-#: applets/gen_util/mailcheck.c:1555
+#: applets/gen_util/mailcheck.c:1580
 msgid "Inbox Monitor Preferences"
 msgstr "郵箱監控程式偏好設定"
 
-#: applets/gen_util/mailcheck.c:1572
+#: applets/gen_util/mailcheck.c:1599
 msgid "_Mail check"
 msgstr "郵件檢查(_M)"
 
-#: applets/gen_util/mailcheck.c:1576
+#: applets/gen_util/mailcheck.c:1603
 msgid "Mail_box"
 msgstr "郵箱(_B)"
 
-#: applets/gen_util/mailcheck.c:1654
+#: applets/gen_util/mailcheck.c:1681
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "(c) 1998-2000 the Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1655
+#: applets/gen_util/mailcheck.c:1682
 msgid "Inbox Monitor notifies you when new mail arrives in your mailbox"
 msgstr "郵件檢查程式會在收到新電郵的時候發出通知"
 
-#: applets/gen_util/mailcheck.c:1792
+#: applets/gen_util/mailcheck.c:1841
 msgid "Text only"
 msgstr "僅使用文字"
 
-#: applets/gen_util/mailcheck.c:1819
+#: applets/gen_util/mailcheck.c:1868
 msgid "Mail check"
 msgstr "郵件檢查"
 
-#: applets/gen_util/mailcheck.c:1820
+#: applets/gen_util/mailcheck.c:1869
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "郵件檢查程式會在收到新電郵的時候通知你"
 
@@ -657,11 +669,11 @@ msgstr "用戶在遠端伺服器中的密碼"
 
 #: applets/gen_util/mailcheck.schemas.in.h:21
 msgid "This is how we check the mail, check the mail, check the mail..."
-msgstr ""
+msgstr "這裡設定如何檢查電郵..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:22
 msgid "This is how we process the mail, process the mail, process the mail..."
-msgstr ""
+msgstr "這裡設定如何處理電郵..."
 
 #: applets/gen_util/mailcheck.schemas.in.h:23
 msgid ""
@@ -693,21 +705,21 @@ msgstr "郵件檢查"
 msgid "New Mail"
 msgstr "新郵件"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
 #: applets/gen_util/pager.glade.h:2
 msgid "Rows"
 msgstr "行"
 
-#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:647
+#: applets/gen_util/pager.c:128 applets/gen_util/pager.c:712
 msgid "Columns"
 msgstr "列"
 
-#: applets/gen_util/pager.c:301
+#: applets/gen_util/pager.c:342
 #, c-format
 msgid "Error loading num_rows value for workspace switcher applet: %s\n"
 msgstr "啟動切換工作區面板程式途中，載入 num_rows 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:312
+#: applets/gen_util/pager.c:353
 #, c-format
 msgid ""
 "Error loading display_workspace_names value for workspace switcher applet: %"
@@ -715,7 +727,7 @@ msgid ""
 msgstr ""
 "啟動切換工作區面板程式途中，載入 display_workspace_names 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:327
+#: applets/gen_util/pager.c:368
 #, c-format
 msgid ""
 "Error loading display_all_workspaces value for workspace switcher applet: %"
@@ -723,11 +735,11 @@ msgid ""
 msgstr ""
 "啟動切換工作區面板程式途中，載入 display_all_workspaces 數值時出錯：%s\n"
 
-#: applets/gen_util/pager.c:435
+#: applets/gen_util/pager.c:500
 msgid "(c) 2001 Red Hat, Inc."
 msgstr "(c) 2001 Red Hat, Inc."
 
-#: applets/gen_util/pager.c:436
+#: applets/gen_util/pager.c:501
 msgid ""
 "The Workspace Switcher shows you a small version of your workspaces that "
 "lets you manage your windows."
@@ -779,8 +791,9 @@ msgstr "小型畫面管理程式的行數"
 
 #: applets/gen_util/pager.schemas.in.h:4
 msgid ""
-"When showing all the workspaces this determines how many rows(for horizontal "
-"layout) or columns (for vertical layout) the pager shows the workspaces in."
+"When showing all the workspaces this determines how many rows (for "
+"horizontal layout) or columns (for vertical layout) the pager shows the "
+"workspaces in."
 msgstr ""
 "當顯示所有工作區時，此選項會決定小型畫面管理程式使用多少行（水平排列）或多少"
 "列（垂直排列）來顯示工作區。"
@@ -847,11 +860,11 @@ msgstr "說明"
 msgid "About..."
 msgstr "關於..."
 
-#: applets/gen_util/tasklist.c:654
+#: applets/gen_util/tasklist.c:714
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "(c) 2001 Red Hat, Inc"
 
-#: applets/gen_util/tasklist.c:655
+#: applets/gen_util/tasklist.c:715
 msgid ""
 "The Window List shows a list of all visible windows and lets you browse them."
 msgstr "視窗清單會列出包含所有視窗的清單，方便瀏覽。"
@@ -915,8 +928,10 @@ msgstr "不會合併同類的視窗(_N)"
 #: applets/gen_util/tasklist.schemas.in.h:1
 msgid ""
 "Decides when to group windows from the same application on the tasklist. "
-"valid values are never, auto, and always."
+"Valid values are never, auto, and always."
 msgstr ""
+"決定是否在工作清單中合併同類應用程式的視窗。可接受的值為 never、auto 及 "
+"always。"
 
 #: applets/gen_util/tasklist.schemas.in.h:2
 msgid ""
@@ -956,6 +971,9 @@ msgid ""
 "the minimum width the applet will request. This is useful for sliding and "
 "edge panels, which would otherwise ask for a very small default width."
 msgstr ""
+"工作清單面板程式需要一定的寬度來顯示方可使用。此數值是該面板程式要求的寬度下"
+"限。此數值適用於滑動面板及邊界面板，因為如果沒有設定此數值，在該類面板上的面"
+"板程式預設寬度可能會太小。"
 
 #: applets/gen_util/tasklist.schemas.in.h:9
 msgid ""
@@ -963,6 +981,8 @@ msgid ""
 "limit the size used in big panels where this applet could otherwise fill the "
 "entire available space, like in edge panels."
 msgstr ""
+"此數值是該面板程式要求的寬度上限。此數值適用於在大型面板（例如邊界面板）中限"
+"制面板程式的尺寸，因為如果沒有設定此數值，面板程式可能會填滿所有可用的空間。"
 
 #: applets/gen_util/tasklist.schemas.in.h:10
 msgid "When to group windows"
@@ -983,21 +1003,21 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:474 gnome-panel/foobar-widget.c:364
+#: gnome-panel/applet.c:471 gnome-panel/foobar-widget.c:364
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/GNOME_Panel_Popup.xml.h:2 gnome-panel/applet.c:538
+#: gnome-panel/applet.c:535 gnome-panel/GNOME_Panel_Popup.xml.h:2
 msgid "Remove From Panel"
 msgstr "從面板中移除"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:549
+#: gnome-panel/applet.c:546 gnome-panel/GNOME_Panel_Popup.xml.h:1
 msgid "Move"
 msgstr "移動"
 
-#: gnome-panel/applet.c:1150
+#: gnome-panel/applet.c:1147
 msgid "Can't find an empty spot"
 msgstr "找不到空位"
 
@@ -1043,11 +1063,11 @@ msgstr "顯示此面板"
 
 #: gnome-panel/disclosure-widget.c:242
 msgid "Expander Size"
-msgstr ""
+msgstr "擴充選項箭頭大小"
 
 #: gnome-panel/disclosure-widget.c:243
 msgid "Size of the expander arrow"
-msgstr ""
+msgstr "擴充選項用的箭頭的大小"
 
 #: gnome-panel/distribution.c:26
 msgid "Debian GNU/Linux"
@@ -1073,9 +1093,9 @@ msgstr "Solaris"
 msgid "CDE Menus"
 msgstr "CDE 選單"
 
-#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:795
-#: gnome-panel/panel-config.c:830 gnome-panel/panel-config.c:901
-#: gnome-panel/panel-config.c:1009
+#: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:863
+#: gnome-panel/panel-config.c:898 gnome-panel/panel-config.c:969
+#: gnome-panel/panel-config.c:1077
 msgid "Size and Position"
 msgstr "大小及位置"
 
@@ -1083,8 +1103,8 @@ msgstr "大小及位置"
 msgid "Tooltip/Name"
 msgstr "工具提示/名稱"
 
-#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:522
-#: gnome-panel/menu-properties.c:556
+#: gnome-panel/drawer.c:150 gnome-panel/menu-properties.c:519
+#: gnome-panel/menu-properties.c:553
 msgid "Icon"
 msgstr "圖示"
 
@@ -1219,13 +1239,13 @@ msgstr "必須提供一個 .desktop 檔案或 URL 作為引數\n"
 msgid "No panel found\n"
 msgstr "找不到面板\n"
 
-#: gnome-panel/gnome-panel-preferences.c:300
+#: gnome-panel/gnome-panel-preferences.c:327
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
 msgstr "系統管理員禁止任何人修改面板設定"
 
-#: gnome-panel/gnome-panel-preferences.c:311
+#: gnome-panel/gnome-panel-preferences.c:338
 #: gnome-panel/gnome-panel-preferences.glade.h:5
 msgid "Panel Preferences"
 msgstr "面板偏好設定"
@@ -1410,9 +1430,8 @@ msgid "_Save screenshot to file:"
 msgstr "將螢幕畫面存入檔案(_S)："
 
 #: gnome-panel/GNOME_Panel.server.in.h:1
-#, fuzzy
 msgid "GNOME Panel Shell"
-msgstr "GNOME Panel Shell"
+msgstr "GNOME 面板指令解譯器"
 
 #: gnome-panel/gnome-run.c:239 gnome-panel/gnome-run.c:256
 #, c-format
@@ -1475,7 +1494,7 @@ msgstr "在終端機中執行(_T)"
 
 #: gnome-panel/gnome-run.c:896
 msgid "_Append File..."
-msgstr ""
+msgstr "附加檔案名稱(_A)..."
 
 #: gnome-panel/gnome-run.c:1276
 #, c-format
@@ -1548,7 +1567,7 @@ msgstr "應用程式 %s 的說明"
 msgid "Launcher Properties"
 msgstr "啟動圖示屬性"
 
-#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:508
+#: gnome-panel/launcher.c:762 gnome-panel/menu-ditem.c:521
 msgid "Create Launcher"
 msgstr "建立啟動圖示"
 
@@ -1898,8 +1917,8 @@ msgstr "執行指令"
 msgid "Desktop"
 msgstr "桌面"
 
-#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:517
 #: gnome-panel/menu.c:3672 gnome-panel/menu.c:3897
+#: gnome-panel/menu-ditem.c:289 gnome-panel/menu-properties.c:514
 msgid "Menu"
 msgstr "選單"
 
@@ -1926,16 +1945,16 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu-ditem.c:439
+#: gnome-panel/menu-ditem.c:448
 msgid "You have to specify a name for the launcher."
 msgstr "必須指定啟動圖示的名稱。"
 
-#: gnome-panel/menu-ditem.c:456
+#: gnome-panel/menu-ditem.c:464
 msgid "You have to specify a valid URL or command."
 msgstr "必須指定有效的 URL 或指令。"
 
 #. class
-#: gnome-panel/menu-ditem.c:480
+#: gnome-panel/menu-ditem.c:493
 #, c-format
 msgid ""
 "<b>Cannot save menu item to disk</b>\n"
@@ -1946,7 +1965,7 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/menu-ditem.c:503
+#: gnome-panel/menu-ditem.c:516
 msgid ""
 "You can not create a new launcher at this location since the location is not "
 "writable."
@@ -1972,55 +1991,55 @@ msgstr "於副選單內"
 msgid "On the main menu"
 msgstr "在主選單上"
 
-#: gnome-panel/menu-properties.c:367
+#: gnome-panel/menu-properties.c:364
 msgid "Menu properties"
 msgstr "選單屬性"
 
-#: gnome-panel/menu-properties.c:390
+#: gnome-panel/menu-properties.c:387
 msgid "Menu type"
 msgstr "選單種類"
 
-#: gnome-panel/menu-properties.c:397
+#: gnome-panel/menu-properties.c:394
 msgid "Global main menu"
 msgstr "整體的主選單"
 
-#: gnome-panel/menu-properties.c:411 gnome-panel/menu-properties.c:434
+#: gnome-panel/menu-properties.c:408 gnome-panel/menu-properties.c:431
 msgid "Main menu"
 msgstr "主選單"
 
-#: gnome-panel/menu-properties.c:425 gnome-panel/menu-properties.c:488
+#: gnome-panel/menu-properties.c:422 gnome-panel/menu-properties.c:485
 msgid "Normal menu"
 msgstr "一般選單"
 
-#: gnome-panel/menu-properties.c:447
+#: gnome-panel/menu-properties.c:444
 msgid "Programs: "
 msgstr "程式："
 
-#: gnome-panel/menu-properties.c:454
+#: gnome-panel/menu-properties.c:451
 msgid "Applets: "
 msgstr "面板程式："
 
-#: gnome-panel/menu-properties.c:461
+#: gnome-panel/menu-properties.c:458
 msgid "Distribution menu (if found): "
 msgstr "發行套件選單 (若存在)："
 
-#: gnome-panel/menu-properties.c:468
+#: gnome-panel/menu-properties.c:465
 msgid "KDE menu (if found): "
 msgstr "KDE 選單 (若存在)："
 
-#: gnome-panel/menu-properties.c:475
+#: gnome-panel/menu-properties.c:472
 msgid "Panel menu: "
 msgstr "面板選單："
 
-#: gnome-panel/menu-properties.c:482
+#: gnome-panel/menu-properties.c:479
 msgid "Desktop menu: "
 msgstr "桌面選單："
 
-#: gnome-panel/menu-properties.c:498
+#: gnome-panel/menu-properties.c:495
 msgid "Menu path"
 msgstr "選單路徑"
 
-#: gnome-panel/menu-properties.c:529
+#: gnome-panel/menu-properties.c:526
 msgid "Use custom icon for panel button"
 msgstr "面板按鈕使用自訂圖示"
 
@@ -2065,12 +2084,12 @@ msgstr ""
 "\n"
 "原因：%s"
 
-#: gnome-panel/panel.c:937
+#: gnome-panel/panel.c:930
 #, c-format
 msgid "Open URL: %s"
 msgstr "開啟網址：%s"
 
-#: gnome-panel/panel.c:2261
+#: gnome-panel/panel.c:2254
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
@@ -2103,63 +2122,67 @@ msgstr "其它"
 msgid "Current screen:"
 msgstr "目前的畫面："
 
-#: gnome-panel/panel-config.c:674
+#: gnome-panel/panel-config.c:708
+msgid "Indicates the panel position and orientation on screen"
+msgstr "指示畫面中面板的位置及方向"
+
+#: gnome-panel/panel-config.c:726
 msgid "Panel Position"
 msgstr "面板位置"
 
-#: gnome-panel/panel-config.c:920
+#: gnome-panel/panel-config.c:988
 msgid "Orient panel horizontally"
 msgstr "水平放置面板"
 
-#: gnome-panel/panel-config.c:932
+#: gnome-panel/panel-config.c:1000
 msgid "Orient panel vertically"
 msgstr "垂直放置面板"
 
-#: gnome-panel/panel-config.c:944
+#: gnome-panel/panel-config.c:1012
 msgid "Top left corner's position: X"
 msgstr "左上角的位置：X"
 
-#: gnome-panel/panel-config.c:959
+#: gnome-panel/panel-config.c:1027
 msgid "Y"
 msgstr "Y"
 
-#: gnome-panel/panel-config.c:1034
+#: gnome-panel/panel-config.c:1102
 msgid "Offset from screen edge:"
 msgstr "和畫面邊緣的距離："
 
-#: gnome-panel/panel-config.c:1096
+#: gnome-panel/panel-config.c:1164
 msgid "Panel size:"
 msgstr "面板大小："
 
-#: gnome-panel/panel-config.c:1104
+#: gnome-panel/panel-config.c:1172
 msgid "XX Small (12 pixels)"
 msgstr "極微型（12 像素）"
 
-#: gnome-panel/panel-config.c:1112
+#: gnome-panel/panel-config.c:1180
 msgid "X Small (24 pixels)"
 msgstr "微型（24 像素）"
 
-#: gnome-panel/panel-config.c:1120
+#: gnome-panel/panel-config.c:1188
 msgid "Small (36 pixels)"
 msgstr "小型（36 像素）"
 
-#: gnome-panel/panel-config.c:1128
+#: gnome-panel/panel-config.c:1196
 msgid "Medium (48 pixels)"
 msgstr "中型（48 像素）"
 
-#: gnome-panel/panel-config.c:1136
+#: gnome-panel/panel-config.c:1204
 msgid "Large (64 pixels)"
 msgstr "大型（64 像素）"
 
-#: gnome-panel/panel-config.c:1144
+#: gnome-panel/panel-config.c:1212
 msgid "X Large (80 pixels)"
 msgstr "巨型（80 像素）"
 
-#: gnome-panel/panel-config.c:1152
+#: gnome-panel/panel-config.c:1220
 msgid "XX Large (128 pixels)"
 msgstr "極巨型（128 像素）"
 
-#: gnome-panel/panel-config.c:1168
+#: gnome-panel/panel-config.c:1236
 msgid ""
 "Note: The panel will size itself to the\n"
 "largest applet in the panel, and that\n"
@@ -2169,70 +2192,70 @@ msgstr ""
 "為依據來設定尺寸，但並不是\n"
 "所有面板程式都會遵守這個尺寸。"
 
-#: gnome-panel/panel-config.c:1302
+#: gnome-panel/panel-config.c:1370
 msgid "Background Type: "
 msgstr "背景圖案類型："
 
-#: gnome-panel/panel-config.c:1307
+#: gnome-panel/panel-config.c:1375
 msgid "Standard"
 msgstr "標準"
 
 #. color frame
-#: gnome-panel/panel-config.c:1311 gnome-panel/panel-config.c:1327
+#: gnome-panel/panel-config.c:1379 gnome-panel/panel-config.c:1395
 msgid "Color"
 msgstr "顏色"
 
-#: gnome-panel/panel-config.c:1315
+#: gnome-panel/panel-config.c:1383
 msgid "Pixmap"
 msgstr "Pixmap"
 
-#: gnome-panel/panel-config.c:1339
+#: gnome-panel/panel-config.c:1407
 msgid "Color to use:"
 msgstr "使用的顏色："
 
 #. image frame
-#: gnome-panel/panel-config.c:1357
+#: gnome-panel/panel-config.c:1425
 msgid "Image"
 msgstr "圖像"
 
-#: gnome-panel/panel-config.c:1383
+#: gnome-panel/panel-config.c:1451
 msgid "Don't scale image to fit"
 msgstr "不要縮放圖像來符合畫面"
 
-#: gnome-panel/panel-config.c:1389
+#: gnome-panel/panel-config.c:1457
 msgid "Scale image (keep proportions)"
 msgstr "縮放圖像（保持比例）"
 
-#: gnome-panel/panel-config.c:1394
+#: gnome-panel/panel-config.c:1462
 msgid "Stretch image (change proportions)"
 msgstr "伸展圖像（改變比例）"
 
-#: gnome-panel/panel-config.c:1409
+#: gnome-panel/panel-config.c:1477
 msgid "Rotate image for vertical panels"
 msgstr "當面板是垂直方向時要旋轉圖像"
 
-#: gnome-panel/panel-config.c:1488 gnome-panel/panel-config.c:1610
+#: gnome-panel/panel-config.c:1556 gnome-panel/panel-config.c:1678
 msgid "Edge panel"
 msgstr "邊界面板"
 
-#: gnome-panel/panel-config.c:1495 gnome-panel/panel-config.c:1621
+#: gnome-panel/panel-config.c:1563 gnome-panel/panel-config.c:1689
 msgid "Corner panel"
 msgstr "邊角面板"
 
-#: gnome-panel/panel-config.c:1501 gnome-panel/panel-config.c:1632
+#: gnome-panel/panel-config.c:1569 gnome-panel/panel-config.c:1700
 msgid "Sliding panel"
 msgstr "滑動面板"
 
-#: gnome-panel/panel-config.c:1507 gnome-panel/panel-config.c:1643
+#: gnome-panel/panel-config.c:1575 gnome-panel/panel-config.c:1711
 msgid "Floating panel"
 msgstr "浮動面板"
 
 #. main window
-#: gnome-panel/panel-config.c:1579
+#: gnome-panel/panel-config.c:1647
 msgid "Panel properties"
 msgstr "面板屬性"
 
-#: gnome-panel/panel-config.c:1662
+#: gnome-panel/panel-config.c:1730
 msgid "Background"
 msgstr "背景"
 
@@ -2242,11 +2265,11 @@ msgstr "顯示「執行」對話窗"
 
 #: gnome-panel/panel-global-config.schemas.in.h:2
 msgid "FIXME - is this resolved with the new menu stuff?"
-msgstr ""
+msgstr " "
 
 #: gnome-panel/panel-global-config.schemas.in.h:3
 msgid "FIXME - need to define limits"
-msgstr ""
+msgstr " "
 
 #: gnome-panel/panel-global-config.schemas.in.h:4
 msgid "Popup the panel menu"
@@ -2319,42 +2342,42 @@ msgstr "Bonobo 面板測試程式"
 msgid "Test Bonobo Applet Factory"
 msgstr "Bonobo 面板測試程式工廠"
 
-#: libpanel-applet/panel-applet.c:750
+#: libpanel-applet/panel-applet.c:749
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "接收到不完整的背景圖案類型‘%s’"
 
-#: libpanel-applet/panel-applet.c:764
+#: libpanel-applet/panel-applet.c:763
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "接收到不完整的背景圖案類型‘%s’：%s"
 
-#: libpanel-applet/panel-applet.c:773
+#: libpanel-applet/panel-applet.c:772
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "無法取得 pixmap %s"
 
-#: libpanel-applet/panel-applet.c:780
+#: libpanel-applet/panel-applet.c:779
 msgid "Unknown background type received"
 msgstr "接收到不明的背景圖案類型"
 
-#: libpanel-applet/panel-applet.c:949
+#: libpanel-applet/panel-applet.c:948
 msgid "The Applet's containing Panel's orientation"
 msgstr "含有該面板程式的面板的方向"
 
-#: libpanel-applet/panel-applet.c:957
+#: libpanel-applet/panel-applet.c:956
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "含有該面板程式的面板的大小，以像素為單位"
 
-#: libpanel-applet/panel-applet.c:965
+#: libpanel-applet/panel-applet.c:964
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "含有該面板程式的面板的背景顏色或 pixmap"
 
-#: libpanel-applet/panel-applet.c:973
+#: libpanel-applet/panel-applet.c:972
 msgid "The Applet's flags"
 msgstr "面板程式的旗標"
 
-#: libpanel-applet/panel-applet.c:981
+#: libpanel-applet/panel-applet.c:980
 msgid "Ranges that hint what sizes are acceptable for the applet"
 msgstr "提示該面板程式可接受的尺寸範圍"
 
@@ -2444,32 +2467,8 @@ msgstr "極微型"
 #~ msgid "You already have a status dock on the panel. You can only have one"
 #~ msgstr "已經有一個嵌入式程式顯示工具放置於面板中。此工具只能有一個。"
 
-#~ msgid "Status dock"
-#~ msgstr "嵌入式狀態顯示工具"
-
-#~ msgid "Cannot execute xscreensaver"
-#~ msgstr "無法執行 xscreensaver"
-
-#~ msgid "The GNOME Fish Applet"
-#~ msgstr "GNOME 小魚面板程式"
-
-#~ msgid "Clock Applet"
-#~ msgstr "時鐘面板程式"
-
 #~ msgid "Password:"
 #~ msgstr "密碼："
-
-#~ msgid "Mail check Applet"
-#~ msgstr "郵件檢查面板程式"
-
-#~ msgid "CDE Applications"
-#~ msgstr "CDE 應用程式"
-
-#~ msgid "Screenshot Capture"
-#~ msgstr "畫面快照"
-
-#~ msgid "Take a picture of the current screen contents"
-#~ msgstr "擷取目前畫面的內容"
 
 #~ msgid "Executable name for selected application"
 #~ msgstr "所選取的應用程式的可執行檔名稱"
@@ -2545,12 +2544,6 @@ msgstr "極微型"
 #~ msgid "Reread all menus"
 #~ msgstr "重新讀取所有選單"
 
-#~ msgid "Wanda"
-#~ msgstr "Wanda"
-
-#~ msgid "Your GNOME Fish's _Name:"
-#~ msgstr "GNOME 小魚的名字(_N)："
-
 #~ msgid "Remove from panel"
 #~ msgstr "從面板中移除"
 
@@ -2580,12 +2573,6 @@ msgstr "極微型"
 
 #~ msgid "_Enable shortcut keys"
 #~ msgstr "啟用捷徑鍵(_E)"
-
-#~ msgid "Clock Properties"
-#~ msgstr "時鐘偏好設定"
-
-#~ msgid "Time Format"
-#~ msgstr "時間格式"
 
 #~ msgid "menu wasn't created"
 #~ msgstr "沒有建立選單"
@@ -2764,33 +2751,6 @@ msgstr "極微型"
 #~ msgid "Execute a command line"
 #~ msgstr "執行指令列"
 
-#~ msgid "The session name cannot be empty"
-#~ msgstr "工作階段名稱不能留空"
-
-#~ msgid "The session name already exists"
-#~ msgstr "此工作階段名稱已經存在"
-
-#~ msgid "Add a new session"
-#~ msgstr "增加新的工作階段"
-
-#~ msgid "Edit session name"
-#~ msgstr "編輯工作階段名稱"
-
-#~ msgid "Show splash screen on login"
-#~ msgstr "登入時顯示啟動畫面"
-
-#~ msgid "Prompt on logout"
-#~ msgstr "登出前先提示"
-
-#~ msgid "Automatically save changes to session"
-#~ msgstr "自動儲存工作階段"
-
-#~ msgid "Choose Current Session"
-#~ msgstr "選擇現時的工作階段"
-
-#~ msgid "Session Name"
-#~ msgstr "工作階段名稱"
-
 #~ msgid "Add..."
 #~ msgstr "增加..."
 
@@ -2799,12 +2759,6 @@ msgstr "極微型"
 
 #~ msgid "Delete"
 #~ msgstr "刪除"
-
-#~ msgid "Session Options"
-#~ msgstr "工作階段選項"
-
-#~ msgid "Non-session-managed Startup Programs"
-#~ msgstr "並非由工作階段管理的啟動程式"
 
 #~ msgid "Priority"
 #~ msgstr "優先值"
@@ -2839,14 +2793,8 @@ msgstr "極微型"
 #~ msgid " (empty)"
 #~ msgstr " (空白)"
 
-#~ msgid "Favorites menu"
-#~ msgstr "我的最愛選單"
-
 #~ msgid "Run button"
 #~ msgstr "執行按鈕"
-
-#~ msgid "Favorites: "
-#~ msgstr "我的最愛："
 
 #~ msgid "Avoid this panel when maximizing windows"
 #~ msgstr "視窗最大化時不會蓋過此面板"
@@ -2976,9 +2924,6 @@ msgstr "極微型"
 
 #~ msgid "_Sort Submenu"
 #~ msgstr "排列副選單(_S)"
-
-#~ msgid "Sort Submenu _Recursive"
-#~ msgstr "遞迴排列副選單(_R)"
 
 #~ msgid "_Sort"
 #~ msgstr "排列(_S)"
@@ -3222,9 +3167,6 @@ msgstr "極微型"
 #~ msgid "Hide buttons"
 #~ msgstr "隱藏按鈕"
 
-#~ msgid "Level"
-#~ msgstr "層次"
-
 #~ msgid "Maximize mode"
 #~ msgstr "最大化模式"
 
@@ -3353,12 +3295,6 @@ msgstr "極微型"
 
 #~ msgid "Halt"
 #~ msgstr "停機"
-
-#~ msgid "Help system"
-#~ msgstr "輔助說明系統"
-
-#~ msgid "Integrated help system (Info, man, HTML)"
-#~ msgstr "整合輔助說明系統 (Info, man, HTML)"
 
 #~ msgid "GNOME Tasklist"
 #~ msgstr "GNOME 工作清單"
