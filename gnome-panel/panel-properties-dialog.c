@@ -214,6 +214,9 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 	g_signal_connect_swapped (dialog->size_spin, "value_changed",
 				  G_CALLBACK (panel_properties_dialog_size_changed),
 				  dialog);
+
+	if ( ! panel_profile_is_writable_toplevel_size (dialog->toplevel))
+		gtk_widget_set_sensitive (dialog->size_spin, FALSE);
 }
 
 #define SETUP_TOGGLE_BUTTON(wid, n, p)                                                            \
@@ -233,6 +236,8 @@ panel_properties_dialog_setup_size_spin (PanelPropertiesDialog *dialog,
 					      panel_profile_get_toplevel_##p (dialog->toplevel)); \
 		g_signal_connect_swapped (dialog->n, "toggled",                                   \
 					  G_CALLBACK (panel_properties_dialog_##n), dialog);      \
+		if ( ! panel_profile_is_writable_toplevel_##p (dialog->toplevel))                 \
+			gtk_widget_set_sensitive (dialog->n, FALSE);                              \
 	}
 
 SETUP_TOGGLE_BUTTON ("expand_toggle",      expand_toggle,      expand)
@@ -424,8 +429,11 @@ static void
 panel_properties_update_arrows_toggle_visible (PanelPropertiesDialog *dialog,
 					       GtkToggleButton       *toggle)
 {
-	gtk_widget_set_sensitive (dialog->arrows_toggle,
-				  gtk_toggle_button_get_active (toggle));
+	if (gtk_toggle_button_get_active (toggle))
+		gtk_widget_set_sensitive (dialog->arrows_toggle,
+					  panel_profile_is_writable_toplevel_enable_arrows (dialog->toplevel));
+	else
+		gtk_widget_set_sensitive (dialog->arrows_toggle, FALSE);
 }
 
 static void

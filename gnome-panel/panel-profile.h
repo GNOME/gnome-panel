@@ -80,21 +80,31 @@ void        panel_profile_set_toplevel_orientation    (PanelToplevel *toplevel,
 						       PanelOrientation orientation);
 PanelOrientation
             panel_profile_get_toplevel_orientation    (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_size           (PanelToplevel *toplevel,
 						       int            size);
 int         panel_profile_get_toplevel_size           (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_size   (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_expand         (PanelToplevel *toplevel,
 						       gboolean       expand);
 gboolean    panel_profile_get_toplevel_expand         (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_expand (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_auto_hide      (PanelToplevel *toplevel,
 						       gboolean       auto_hide);
 gboolean    panel_profile_get_toplevel_auto_hide      (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_auto_hide (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_enable_buttons (PanelToplevel *toplevel,
 						       gboolean       enable_buttons);
 gboolean    panel_profile_get_toplevel_enable_buttons (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_enable_buttons (PanelToplevel *toplevel);
+
 void        panel_profile_set_toplevel_enable_arrows  (PanelToplevel *toplevel,
 						       gboolean       enable_arrows);
 gboolean    panel_profile_get_toplevel_enable_arrows  (PanelToplevel *toplevel);
+gboolean    panel_profile_is_writable_toplevel_enable_arrows (PanelToplevel *toplevel);
 
 void        panel_profile_set_background_type         (PanelToplevel       *toplevel,
 						       PanelBackgroundType  background_type);
@@ -114,15 +124,21 @@ guint16     panel_profile_get_background_opacity      (PanelToplevel       *topl
 void        panel_profile_set_background_image        (PanelToplevel       *toplevel,
 						       const char          *image);
 char       *panel_profile_get_background_image        (PanelToplevel       *toplevel);
+
 void        panel_profile_set_background_fit          (PanelToplevel       *toplevel,
 						       gboolean             fit);
 gboolean    panel_profile_get_background_fit          (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_fit  (PanelToplevel *toplevel);
+
 void        panel_profile_set_background_stretch      (PanelToplevel       *toplevel,
 						       gboolean             stretch);
 gboolean    panel_profile_get_background_stretch      (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_stretch (PanelToplevel *toplevel);
+
 void        panel_profile_set_background_rotate       (PanelToplevel       *toplevel,
 						       gboolean             rotate);
 gboolean    panel_profile_get_background_rotate       (PanelToplevel       *toplevel);
+gboolean    panel_profile_is_writable_background_rotate (PanelToplevel *toplevel);
 
 guint       panel_profile_toplevel_notify_add         (PanelToplevel         *toplevel,
 						       const char            *key,

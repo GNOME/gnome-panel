@@ -596,6 +596,15 @@ panel_profile_get_toplevel_orientation (PanelToplevel *toplevel)
 		key = panel_profile_get_toplevel_key (toplevel, k);   \
 		retval = gconf_client_get_##t (client, key, NULL);    \
 		return retval;                                        \
+	}                                                             \
+	gboolean                                                      \
+	panel_profile_is_writable_##p##_##s (PanelToplevel *toplevel) \
+	{                                                             \
+		GConfClient *client;                                  \
+		const char  *key;                                     \
+		client = panel_gconf_get_client ();                   \
+		key = panel_profile_get_toplevel_key (toplevel, k);   \
+		return gconf_client_key_is_writable (client, key, NULL); \
 	}
 
 TOPLEVEL_GET_SET_FUNCS ("size",               toplevel,   int,  size,           int)
