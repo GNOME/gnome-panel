@@ -514,7 +514,7 @@ add_app_to_personal (GtkWidget *widget, char *item_loc)
 	char *s;
 	char *p;
 	p = gnome_util_home_file("apps/");
-	s = g_strdup_printf("cp -f %s %s",item_loc,p);
+	s = g_strdup_printf("cp -r -f %s %s",item_loc,p);
 	g_free(p);
 	system(s);
 	g_free(s);
@@ -793,6 +793,9 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_app_to_personal),
 					   sim->item_loc);
+			/*ummmm slightly ugly but should work 99% of time*/
+			if(strstr(sim->item_loc,"/.gnome/apps/"))
+				gtk_widget_set_sensitive(menuitem,FALSE);
 		} else {
 			menuitem = gtk_menu_item_new ();
 			setup_menuitem (menuitem, 0,
@@ -809,6 +812,16 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
 					   GTK_SIGNAL_FUNC(add_menu_to_panel),
 					   sim->mf);
+			menuitem = gtk_menu_item_new ();
+			setup_menuitem (menuitem, 0,
+					_("Add this to personal menu"));
+			gtk_menu_append (GTK_MENU (sim->menu), menuitem);
+			gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
+					   GTK_SIGNAL_FUNC(add_app_to_personal),
+					   sim->mf->menudir);
+			/*ummmm slightly ugly but should work 99% of time*/
+			if(strstr(sim->mf->menudir,"/.gnome/apps"))
+				gtk_widget_set_sensitive(menuitem,FALSE);
 		}
 
 		sim->prop_item = gtk_menu_item_new ();
@@ -837,7 +850,7 @@ show_item_menu(GtkWidget *item, GdkEventButton *bevent, ShowItemMenu *sim)
 	if(sim->item_loc &&
 	   /*A HACK: but it works, don't have it edittable if it's redhat
 	     menus as they are auto generated!*/
-	   !strstr(sim->item_loc,".gnome/apps-redhat/") &&
+	   !strstr(sim->item_loc,"/.gnome/apps-redhat/") &&
 	   access(sim->item_loc,W_OK)==0) {
 		puts(sim->item_loc);
 		/*file exists and is writable, we're in bussines*/
@@ -1301,6 +1314,7 @@ check_and_reread_applet(Menu *menu,int main_menu)
 		}
 	}
 }
+
 
 static void
 submenu_to_display(GtkMenuItem *menuitem, gpointer data)
