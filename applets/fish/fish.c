@@ -55,6 +55,107 @@ typedef struct {
 
 GtkWidget *bah_window = NULL;
 
+/*
+ * set_access_name_desc
+ * Description : Set Accessible Name and Description.
+ */
+static void
+set_access_name_desc (GtkWidget *widget, Fish *fish)
+{
+	AtkObject *obj;
+	static GtkWidget *w = NULL;
+	gchar *fish_name, *acc_desc, *acc_name;
+
+	const gchar *name_format = _("%s the GNOME Fish");
+	const gchar *desc_format = _("%s the GNOME Fish, a contemporary oracle");
+
+	fish_name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet),
+						   FISH_PREFS_NAME,
+						   NULL);
+
+	if (widget)
+		w = widget;
+
+	if (w) 
+		obj = gtk_widget_get_accessible (GTK_WIDGET (w));
+	else
+		return;
+
+	/* Return immediately if GAIL is not loaded */
+	if (!GTK_IS_ACCESSIBLE (obj))
+		return;
+
+	acc_name = g_strdup_printf (name_format, fish_name);
+	atk_object_set_name (obj, acc_name);
+	g_free (acc_name);       
+
+	acc_desc = g_strdup_printf (desc_format, fish_name);
+	atk_object_set_description (obj, acc_desc);
+	g_free (acc_desc);
+}
+
+static void
+set_tooltip (GtkWidget *applet)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = gtk_tooltips_new ();
+	g_object_ref (tooltips);
+	gtk_object_sink (GTK_OBJECT (tooltips));
+
+	g_object_set_data (G_OBJECT (applet), "tooltips", tooltips);
+
+	gtk_tooltips_set_tip (tooltips, applet,
+			      _("GNOME Fish, the fortune teller"), NULL);
+}
+
+static void
+destroy_tooltip (GtkWidget *applet)
+{
+	GtkTooltips *tooltips;
+
+	tooltips = g_object_get_data (G_OBJECT (applet), "tooltips");
+	if (tooltips) {
+		g_object_unref (tooltips);
+		g_object_set_data (G_OBJECT (applet), "tooltips", NULL);
+	}
+}
+
+/*
+ * set_relation
+ * @widget : The Gtk widget whose corresponding label is @label
+ * @label : The label for the @widget.
+ * Description : This function establishes the labelled-by/for relation
+ * between any Gtk widget and a Gtk label.
+ */
+static void
+set_relation (GtkWidget *widget, GtkLabel *label)
+{
+	AtkObject      *aobject;
+	AtkRelationSet *relation_set;
+	AtkRelation    *relation;
+	AtkObject      *targets [1];
+
+	g_return_if_fail (GTK_IS_WIDGET(widget));
+	g_return_if_fail (GTK_IS_LABEL(label));
+
+	aobject = gtk_widget_get_accessible (widget);
+
+	/* return if gail is not loaded */
+	g_return_if_fail (GTK_IS_ACCESSIBLE (aobject));
+
+	/* Set the ATK_RELATION_LABEL_FOR relation */
+	gtk_label_set_mnemonic_widget (label, widget);
+
+	targets [0] = gtk_widget_get_accessible (GTK_WIDGET (label));
+
+	relation_set = atk_object_ref_relation_set (aobject);
+
+	relation = atk_relation_new (targets, 1, ATK_RELATION_LABELLED_BY);
+	atk_relation_set_add (relation_set, relation);
+	g_object_unref (relation);
+}
+
 static gboolean
 fish_applet_rotate (Fish *fish)
 {
@@ -305,17 +406,6 @@ setup_size (Fish *fish)
 	gtk_widget_queue_resize (fish->darea->parent->parent);
 }
 
-static char *
-splice_name(const char * format, const char * name)
-{
-	char * buf;
-	int len;
-	len = strlen(name) + strlen(format);
-	buf = g_malloc(len+1);
-	g_snprintf(buf, len, format, name);
-	return buf;
-}
-
 static void
 fish_draw (GtkWidget *darea,
 	   Fish      *fish)
@@ -391,8 +481,8 @@ apply_dialog_properties (Fish *fish)
 {
 	/* xgettext:no-c-format */
 	const char *title_format = _("%s the Fish");
-	const char *label_format = _("%s the GNOME Fish Says:");
-	char *name, *tmp, *fmt;
+	const char *label_format = _("<big><big>%s the GNOME Fish Says:</big></big>");
+	char *name, *tmp;
 
 	if (fish->fortune_dialog == NULL)
 		return;
@@ -401,13 +491,11 @@ apply_dialog_properties (Fish *fish)
 					      FISH_PREFS_NAME,
 					      NULL);
 
-	tmp = splice_name (title_format, name);
+	tmp = g_strdup_printf (title_format, name);
 	gtk_window_set_title (GTK_WINDOW (fish->fortune_dialog), tmp);
 	g_free (tmp);
 
-	fmt = g_strdup_printf ("<big><big>%s</big></big>", label_format);
-	tmp = splice_name (fmt, name);
-	g_free (fmt);
+	tmp = g_strdup_printf (label_format, name);
 	gtk_label_set_markup (GTK_LABEL (fish->fortune_label), tmp);
 	g_free (tmp);
 
@@ -519,6 +607,8 @@ fish_properties_apply (GtkDialog *pb, Fish *fish)
 				     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (rotate)),
 				     NULL);
 
+	set_access_name_desc (NULL,fish); 
+
 	apply_properties (fish);
 }
 
@@ -575,6 +665,7 @@ display_properties_dialog (BonoboUIComponent *uic,
 	GtkWidget     *hbox;
 	GtkWidget     *w;
 	GtkWidget     *e;
+	GtkWidget     *l;
 	GtkAdjustment *adj;
 	PanelApplet   *applet;
 	gchar         *name;
@@ -631,6 +722,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_box_pack_start (GTK_BOX (hbox), e, TRUE, TRUE, 0);
 	gtk_object_set_data (GTK_OBJECT (fish->pb),"name",e);
 
+	set_relation (e, GTK_LABEL (w));
+
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
 					       GTK_SIGNAL_FUNC (changed_cb),
@@ -639,13 +732,15 @@ display_properties_dialog (BonoboUIComponent *uic,
 	hbox = gtk_hbox_new (FALSE, GNOME_PAD);
 	gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-	w = gtk_label_new (_("The Animation Filename:"));
-	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	l = gtk_label_new (_("The Animation Filename:"));
+	gtk_box_pack_start (GTK_BOX (hbox), l, FALSE, FALSE, 0);
 	w = gnome_pixmap_entry_new ("fish_animation", _("Browse"), TRUE);
 	gtk_box_pack_start (GTK_BOX (hbox), w, TRUE, TRUE, 0);
 	e = gnome_pixmap_entry_gtk_entry (GNOME_PIXMAP_ENTRY (w));
 	gtk_entry_set_text (GTK_ENTRY (e), image);
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "image", w);
+
+	set_relation (e, GTK_LABEL (l));
 
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
@@ -662,6 +757,8 @@ display_properties_dialog (BonoboUIComponent *uic,
 	gtk_box_pack_start (GTK_BOX (hbox), e, TRUE, TRUE, 0);
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "command", e);
 
+	set_relation (e, GTK_LABEL (w));
+
 	gtk_signal_connect_object_while_alive (GTK_OBJECT (e),
 					       "changed",
 					       GTK_SIGNAL_FUNC (changed_cb),
@@ -673,10 +770,12 @@ display_properties_dialog (BonoboUIComponent *uic,
 	w = gtk_label_new (_("Frames In Animation:"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (frames, 1.0, 255.0, 1.0, 5.0, 0.0);
-	w = gtk_spin_button_new (adj, 0, 0);
-	gtk_widget_set_usize (w, 70, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	e = gtk_spin_button_new (adj, 0, 0);
+	gtk_widget_set_usize (e, 70, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), e, FALSE, FALSE, 0);
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "frames", adj);
+
+	set_relation (e, GTK_LABEL (w));
 
 	gtk_signal_connect_object (GTK_OBJECT (adj),
 				   "value_changed",
@@ -689,10 +788,12 @@ display_properties_dialog (BonoboUIComponent *uic,
 	w = gtk_label_new (_("Pause per frame (s):"));
 	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
 	adj = (GtkAdjustment *) gtk_adjustment_new (speed, 0.1, 10.0, 0.1, 1.0, 0.0);
-	w = gtk_spin_button_new (adj, 0, 2);
-	gtk_widget_set_usize (w, 70, 0);
-	gtk_box_pack_start (GTK_BOX (hbox), w, FALSE, FALSE, 0);
+	e = gtk_spin_button_new (adj, 0, 2);
+	gtk_widget_set_usize (e, 70, 0);
+	gtk_box_pack_start (GTK_BOX (hbox), e, FALSE, FALSE, 0);
 	gtk_object_set_data (GTK_OBJECT (fish->pb), "speed", adj);
+
+	set_relation (e, GTK_LABEL (w));
 
 	gtk_signal_connect_object (GTK_OBJECT (adj),
 				   "value_changed",
@@ -844,6 +945,8 @@ update_fortune_dialog (Fish *fish)
 
 		gtk_container_add (GTK_CONTAINER (sw), view);
 
+		set_access_name_desc (view, fish);
+
 		fish->fortune_label = gtk_label_new ("");
 
 		gtk_box_pack_start (GTK_BOX (GNOME_DIALOG (fish->fortune_dialog)->vbox), 
@@ -858,6 +961,7 @@ update_fortune_dialog (Fish *fish)
 
 		gtk_widget_show_all (fish->fortune_dialog);
 	} else {
+		set_access_name_desc (NULL, fish);
 		gtk_window_present (GTK_WINDOW (fish->fortune_dialog));
 	}
 
@@ -1025,7 +1129,7 @@ display_about_dialog (BonoboUIComponent *uic,
 
 	name = panel_applet_gconf_get_string (PANEL_APPLET (fish->applet), FISH_PREFS_NAME, NULL);
 
-	authors[0] = splice_name (author_format, name);
+	authors[0] = g_strdup_printf (author_format, name);
 	authors[1] = _("(with minor help from George)");
 	authors[2] = NULL;
 
@@ -1076,6 +1180,8 @@ display_about_dialog (BonoboUIComponent *uic,
 static void
 applet_destroy (GtkWidget *applet, Fish *fish)
 {
+	destroy_tooltip (GTK_WIDGET (fish->applet));
+
 	if (fish->pix != NULL)
 		gdk_pixmap_unref(fish->pix);
 	fish->pix = NULL;
@@ -1149,6 +1255,8 @@ static const BonoboUIVerb fish_menu_verbs [] = {
         BONOBO_UI_VERB_END
 };
 
+
+
 static gboolean
 fish_applet_fill (PanelApplet *applet)
 {
@@ -1198,6 +1306,8 @@ fish_applet_fill (PanelApplet *applet)
 	set_wanda_day ();
 
 	gtk_container_add (GTK_CONTAINER (fish->applet), fish->frame);
+
+	set_tooltip (GTK_WIDGET (fish->applet));
 
 	gtk_widget_show_all (GTK_WIDGET (fish->frame));
 
