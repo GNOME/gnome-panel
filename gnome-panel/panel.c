@@ -591,10 +591,12 @@ drop_urilist (PanelWidget *panel,
 							  NULL);
 
 				if (!icon)
-					icon = "gnome-unknown.png";
+					icon = g_strdup ("gnome-unknown.png");
 
 				if (!drop_uri (panel, pos, uri, icon))
 					success = FALSE;
+
+				g_free (icon);
 			}
 		} else {
 			if (!drop_uri (panel, pos, uri, "gnome-unknown.png"))
