@@ -591,7 +591,6 @@ button_widget_draw(ButtonWidget *button, guchar *rgb, int rowstride)
 			}
 		} else if (!global_config.tile_when_over ||
 			   button->in_button) {
-			GdkPixbuf *pb;
 			if(!global_config.saturate_when_over ||
 			   !button->in_button) {
 				pb = tiles.tiles_up[button->tile];
