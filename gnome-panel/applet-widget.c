@@ -575,6 +575,8 @@ applet_widget_register_callback_dir(AppletWidget *applet,
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(name != NULL);
+	g_return_if_fail(menutext != NULL);
 
 	gnome_panel_applet_register_callback_dir (GTK_WIDGET(applet),name,
 						  "",menutext);
@@ -587,6 +589,9 @@ applet_widget_register_stock_callback_dir(AppletWidget *applet,
 {
 	g_return_if_fail(applet != NULL);
 	g_return_if_fail(IS_APPLET_WIDGET(applet));
+	g_return_if_fail(name != NULL);
+	g_return_if_fail(stock_type != NULL);
+	g_return_if_fail(menutext != NULL);
 
 	gnome_panel_applet_register_callback_dir (GTK_WIDGET(applet),name,
 						  stock_type,menutext);
@@ -825,7 +830,7 @@ applet_widget_set_tooltip(AppletWidget *applet, char *text)
 	CORBA_exception_free(&ev);
 }
 
-/* Get the oprientation the applet should use */
+/* Get the orientation the applet should use */
 GNOME_Panel_OrientType
 applet_widget_get_panel_orient(AppletWidget *applet)
 {
