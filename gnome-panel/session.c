@@ -896,7 +896,7 @@ init_user_panels(void)
 					NULL,
 					TRUE,
 					FALSE,
-					FALSE,
+					TRUE,
 					NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);
@@ -915,7 +915,7 @@ init_user_panels(void)
 					   NULL,
 					   TRUE,
 					   FALSE,
-					   FALSE,
+					   TRUE,
 					   NULL);
 		panel_setup(panel);
 		gtk_widget_show(panel);

@@ -22,8 +22,8 @@ GdkPixbuf *my_gdk_pixbuf_rgb_from_drawable(GdkWindow *window);
 void make_scale_affine(double affine[], int w, int h, int size);
 
 #if 0
-void cutout_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs);
-void place_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs);
+void rgb_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs);
+void rgba_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs);
 #endif
 
 #endif /* _RGB_STUFF_H_ */

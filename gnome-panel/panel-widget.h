@@ -79,6 +79,7 @@ struct _PanelWidget
 	PanelBackType		back_type;
 	char                    *back_pixmap;
 	GdkColor		back_color;
+	gboolean		inhibit_draw;
 	
 	GtkWidget		*master_widget;
 	

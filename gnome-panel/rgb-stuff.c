@@ -16,6 +16,8 @@
 #include <libart_lgpl/art_filterlevel.h>
 #include <libart_lgpl/art_pixbuf.h>
 #include <libart_lgpl/art_rgb_pixbuf_affine.h>
+#include <libart_lgpl/art_rgb_rgba_affine.h>
+#include <libart_lgpl/art_rgb_affine.h>
 #include <libart_lgpl/art_affine.h>
 #include "rgb-stuff.h"
 
@@ -156,7 +158,7 @@ tile_rgb(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	off = drs - (dw*3); /*the space after width ends until next row*/
 	for(j=0;j<dh;j++) {
 		x = offx % w;
-		imgrow = tile + y * rowstride + x * (has_alpha?4:3);
+		imgrow = tile + y * rowstride + (has_alpha?/*x*4*/x<<2:x*3);
 		for(i=0;i<dw;i++) {
 			*(p++) = *(imgrow++);
 			*(p++) = *(imgrow++);
@@ -188,6 +190,7 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		ArtPixBuf *pbuf, int scale_w, int scale_h, int rotate)
 {
 	int i,j;
+	/*guchar *rot = NULL;*/
 
 	gdouble scaleaff[6];
 	gdouble affine[6];
@@ -197,6 +200,7 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 	scaleaff[0] = scale_w / (double)(pbuf->width);
 	scaleaff[3] = scale_h / (double)(pbuf->height);
 
+	/* libart is still too slow */
 	if(rotate) {
 		int tmp;
 
@@ -209,17 +213,70 @@ tile_rgb_pixbuf(guchar *dest, int dw, int dh, int offx, int offy, int drs,
 		scale_h = scale_w;
 		scale_w = tmp;
 	}
+#if 0
+	if(rotate) {
+		if(pbuf->has_alpha) {
+			rot = g_new(guchar,
+				    pbuf->height *
+				    pbuf->width * 4);
+
+			rgba_rotate270(rot, pbuf->height * 4,
+				       pbuf->pixels,
+				       pbuf->width,
+				       pbuf->height,
+				       pbuf->rowstride);
+		} else {
+			rot = g_new(guchar,
+				    pbuf->height *
+				    pbuf->width * 3);
+
+			rgb_rotate270(rot, pbuf->height * 3,
+				      pbuf->pixels,
+				      pbuf->width,
+				      pbuf->height,
+				      pbuf->rowstride);
+		}
+	}
+#endif
+
 	
 	for(i=-(offx%scale_w);i<dw;i+=scale_w) {
 		for(j=-(offy%scale_h);j<dh;j+=scale_h) {
 			art_affine_translate(affine,i,j);
 			art_affine_multiply(affine,scaleaff,affine);
-			art_rgb_pixbuf_affine(dest,
-					      0,0,dw,dh,drs,
-					      pbuf,affine,
-					      ART_FILTER_NEAREST,NULL);
+#if 0
+			if(rot) {
+				if(pbuf->has_alpha) {
+					art_rgb_rgba_affine(dest,
+							    0,0,dw,dh,drs,
+							    rot,
+							    pbuf->height,
+							    pbuf->width,
+							    pbuf->height*4,
+							    affine,
+							    ART_FILTER_NEAREST,
+							    NULL);
+				} else {
+					art_rgb_affine(dest,
+						       0,0,dw,dh,drs,
+						       rot,
+						       pbuf->height,
+						       pbuf->width,
+						       pbuf->height*3,
+						       affine,
+						       ART_FILTER_NEAREST,
+						       NULL);
+				}
+			} else {
+#endif
+				art_rgb_pixbuf_affine(dest,
+						      0,0,dw,dh,drs,
+						      pbuf,affine,
+						      ART_FILTER_NEAREST,NULL);
+			/*}*/
 		}
 	}
+	/*if(rot) g_free(rot);*/
 }
 
 void
@@ -246,30 +303,43 @@ make_scale_affine(double affine[], int w, int h, int size)
 
 #if 0
 void
-cutout_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs)
+rgb_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs)
 {
-	int j;
-	guchar *srcrow;
-	guchar *dstrow;
+	guchar *p;
+	guchar *sp;
+
+	int i,j;
 
 	for(j=0;j<h;j++) {
-		srcrow = src + (j+y) * srs + (x*3);
-		dstrow = dest + j * drs;
-		memcpy(dstrow,srcrow,3*w);
+		sp = src + j*srs;
+		p = dest + j*3;
+		for(i=0;i<w;i++) {
+			*(p++) = *(sp++);
+			*(p++) = *(sp++);
+			*p = *(sp++);
+			p += drs-2;
+		}
 	}
 }
 
 void
-place_rgb(guchar *dest, int drs, guchar *src, int x, int y, int w, int h, int srs)
+rgba_rotate270(guchar *dest, int drs, guchar *src, int w, int h, int srs)
 {
-	int j;
-	guchar *srcrow;
-	guchar *dstrow;
+	guchar *p;
+	guchar *sp;
+
+	int i,j;
 
 	for(j=0;j<h;j++) {
-		srcrow = src + j * srs;
-		dstrow = dest + (j+y) * drs + (x*3);
-		memcpy(dstrow,srcrow,3*w);
+		sp = src + j*srs;
+		p = dest + j*4;
+		for(i=0;i<w;i++) {
+			*(p++) = *(sp++);
+			*(p++) = *(sp++);
+			*(p++) = *(sp++);
+			*p = *(sp++);
+			p += drs-3;
+		}
 	}
 }
 #endif

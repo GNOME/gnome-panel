@@ -1,3 +1,14 @@
+Wed Oct 27 19:33:06 1999  George Lebl  <jirka@5z.com>
+
+	* rgb-stuff.[ch]: remove the two unused rgb methods and add two
+	  new unused rgb methods.
+
+	* panel-widget.[ch]: inhibit the drawing after change_params until
+	  size_allocate to avoid scaling huge pixmaps
+
+	* session.c,menu.c: make the rotate pixmap default again as the
+	  performance issues are solved
+
 1999-10-27  Jacob Berkman  <jberkman@andrew.cmu.edu>
 
 	* basep-widget.c (basep_widget_set_pos): I don't think we
