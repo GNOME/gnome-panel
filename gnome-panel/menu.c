@@ -604,6 +604,37 @@ add_app_to_panel (GtkWidget     *item,
 			       menu_tree_entry_get_desktop_file_path (entry));
 }
 
+static void add_drawers_from_dir (MenuTreeDirectory *directory,
+				  int                pos,
+				  const char        *toplevel_id);
+
+static void
+add_drawers_from_alias (MenuTreeAlias *alias,
+			const char    *toplevel_id)
+{
+	MenuTreeItem *aliased_item;
+
+	aliased_item = menu_tree_alias_get_item (alias);
+
+	switch (menu_tree_item_get_type (aliased_item)) {
+	case MENU_TREE_ITEM_DIRECTORY:
+		add_drawers_from_dir (MENU_TREE_DIRECTORY (aliased_item),
+				      G_MAXINT/2,
+				      toplevel_id);
+		break;
+
+	case MENU_TREE_ITEM_ENTRY:
+		panel_launcher_create_with_id (toplevel_id,
+					       G_MAXINT/2,
+					       menu_tree_entry_get_desktop_file_path (MENU_TREE_ENTRY (aliased_item)));
+		break;
+
+	default:
+		break;
+	}
+
+	menu_tree_item_unref (aliased_item);
+}
 
 static void
 add_drawers_from_dir (MenuTreeDirectory *directory,
@@ -612,8 +643,7 @@ add_drawers_from_dir (MenuTreeDirectory *directory,
 {
 	const char *name;
 	const char *icon;
-	GSList     *entries;
-	GSList     *subdirs;
+	GSList     *items;
 	GSList     *l;
 	char       *attached_toplevel_id;
 
@@ -628,27 +658,35 @@ add_drawers_from_dir (MenuTreeDirectory *directory,
 	if (!attached_toplevel_id)
 		return;
 
-	entries = menu_tree_directory_get_entries (directory);
-	for (l = entries; l; l = l->next) {
-		MenuTreeEntry *entry = l->data;
+	items = menu_tree_directory_get_contents (directory);
+	for (l = items; l; l = l->next) {
+		MenuTreeItem *item = l->data;
 
-		panel_launcher_create_with_id (attached_toplevel_id,
-					       G_MAXINT/2,
-					       menu_tree_entry_get_desktop_file_path (entry));
+		switch (menu_tree_item_get_type (item)) {
+		case MENU_TREE_ITEM_ENTRY:
+			panel_launcher_create_with_id (attached_toplevel_id,
+						       G_MAXINT/2,
+						       menu_tree_entry_get_desktop_file_path (MENU_TREE_ENTRY (item)));
+			break;
 
-		menu_tree_entry_unref (entry);
+		case MENU_TREE_ITEM_DIRECTORY:
+			add_drawers_from_dir (MENU_TREE_DIRECTORY (item),
+					      G_MAXINT/2,
+					      attached_toplevel_id);
+			break;
+
+		case MENU_TREE_ITEM_ALIAS:
+			add_drawers_from_alias (MENU_TREE_ALIAS (item), attached_toplevel_id);
+			break;
+
+		default:
+			break;
+		}
+
+		menu_tree_item_unref (item);
 	}
-	g_slist_free (entries);
 
-	subdirs = menu_tree_directory_get_subdirs (directory);
-	for (l = subdirs; l; l = l->next) {
-		MenuTreeDirectory *subdir = l->data;
-
-		add_drawers_from_dir (subdir, G_MAXINT/2, attached_toplevel_id);
-
-		menu_tree_directory_unref (subdir);
-	}
-	g_slist_free (subdirs);
+	g_slist_free (items);
 
 	g_free (attached_toplevel_id);
 }
@@ -663,7 +701,7 @@ add_menudrawer_to_panel (GtkWidget     *menuitem,
 	PanelData         *pd;
 	int                insertion_pos;
 
-	directory = menu_tree_entry_get_parent (entry);
+	directory = menu_tree_item_get_parent (MENU_TREE_ITEM (entry));
 
 	panel = menu_get_panel (menuitem);
 
@@ -674,7 +712,7 @@ add_menudrawer_to_panel (GtkWidget     *menuitem,
 			      insertion_pos,
 			      panel_profile_get_toplevel_id (panel->toplevel));
 
-	menu_tree_directory_unref (directory);
+	menu_tree_item_unref (directory);
 }
 
 static void
@@ -696,7 +734,7 @@ add_menu_to_panel (GtkWidget     *menuitem,
 		return;
 	}
 
-	directory = menu_tree_entry_get_parent (entry);
+	directory = menu_tree_item_get_parent (MENU_TREE_ITEM (entry));
 
 	panel = menu_get_panel (menuitem);
 
@@ -714,7 +752,7 @@ add_menu_to_panel (GtkWidget     *menuitem,
 
 	g_free (menu_path);
 
-	menu_tree_directory_unref (directory);
+	menu_tree_item_unref (directory);
 }
 
 /*most of this function stolen from the real gtk_menu_popup*/
@@ -789,6 +827,7 @@ create_item_context_menu (GtkWidget   *item,
 
 	parent = item->parent;
 
+	menu_filename = NULL;
 	while (parent) {
 		menu_filename = g_object_get_data (G_OBJECT (parent),
 						   "panel-menu-tree-filename");
@@ -1192,7 +1231,7 @@ submenu_to_display (GtkWidget *menu)
 
 		g_object_set_data_full (G_OBJECT (menu), "panel-menu-tree-directory",
 					directory,
-					(GDestroyNotify) menu_tree_directory_unref);
+					(GDestroyNotify) menu_tree_item_unref);
 	}
 
 	if (directory)
@@ -1208,8 +1247,8 @@ create_fake_menu (MenuTreeDirectory *directory)
 
 	g_object_set_data_full (G_OBJECT (menu),
 				"panel-menu-tree-directory",
-				menu_tree_directory_ref (directory),
-				(GDestroyNotify) menu_tree_directory_unref);
+				menu_tree_item_ref (directory),
+				(GDestroyNotify) menu_tree_item_unref);
 	
 	g_object_set_data (G_OBJECT (menu),
 			   "panel-menu-needs-loading",
@@ -1227,19 +1266,13 @@ create_fake_menu (MenuTreeDirectory *directory)
 	return menu;
 }
 
-static void
-create_submenu (GtkWidget         *menu,
-		MenuTreeDirectory *directory)
+static GtkWidget *
+create_submenu_entry (GtkWidget         *menu,
+		      MenuTreeDirectory *directory)
 {
 	GtkWidget *menuitem;
-	GtkWidget *submenu;
 
 	menuitem = gtk_image_menu_item_new ();
-
-	g_object_set_data_full (G_OBJECT (menuitem),
-				"panel-menu-tree-directory",
-				menu_tree_directory_ref (directory),
-				(GDestroyNotify) menu_tree_directory_unref);
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
@@ -1261,13 +1294,51 @@ create_submenu (GtkWidget         *menu,
 
 	gtk_menu_shell_append (GTK_MENU_SHELL (menu), menuitem);
 
-	submenu = create_fake_menu (directory);
-	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+	return menuitem;
 }
 
 static void
-create_menuitem (GtkWidget     *menu,
-		 MenuTreeEntry *entry)
+create_submenu (GtkWidget         *menu,
+		MenuTreeDirectory *directory,
+		MenuTreeDirectory *alias_directory)
+{
+	GtkWidget *menuitem;
+	GtkWidget *submenu;
+
+	if (alias_directory)
+		menuitem = create_submenu_entry (menu, alias_directory);
+	else
+		menuitem = create_submenu_entry (menu, directory);
+	
+	submenu = create_fake_menu (directory);
+
+	gtk_menu_item_set_submenu (GTK_MENU_ITEM (menuitem), submenu);
+}
+
+static void 
+create_header (GtkWidget      *menu,
+	       MenuTreeHeader *header)
+{
+	MenuTreeDirectory *directory;
+	GtkWidget         *menuitem;
+
+	directory = menu_tree_header_get_directory (header);
+	menuitem = create_submenu_entry (menu, directory);
+	menu_tree_item_unref (directory);
+
+	g_object_set_data_full (G_OBJECT (menuitem),
+				"panel-menu-tree-header",
+				menu_tree_item_ref (header),
+				(GDestroyNotify) menu_tree_item_unref);
+
+	g_signal_connect (menuitem, "activate",
+			  G_CALLBACK (gtk_false), NULL);
+}
+
+static void
+create_menuitem (GtkWidget         *menu,
+		 MenuTreeEntry     *entry,
+		 MenuTreeDirectory *alias_directory)
 {
 	GtkWidget  *menuitem;
 	
@@ -1275,29 +1346,38 @@ create_menuitem (GtkWidget     *menu,
 
 	g_object_set_data_full (G_OBJECT (menuitem),
 				"panel-menu-tree-entry",
-				menu_tree_entry_ref (entry),
-				(GDestroyNotify) menu_tree_entry_unref);
+				menu_tree_item_ref (entry),
+				(GDestroyNotify) menu_tree_item_unref);
+
+	if (alias_directory)
+		g_object_set_data_full (G_OBJECT (menuitem),
+					"panel-menu-tree-alias-directory",
+					menu_tree_item_ref (alias_directory),
+					(GDestroyNotify) menu_tree_item_unref);
 
 	panel_load_menu_image_deferred (menuitem,
 					panel_menu_icon_get_size (),
 					NULL,
-					menu_tree_entry_get_icon (entry),
+					alias_directory ? menu_tree_directory_get_icon (alias_directory) :
+							  menu_tree_entry_get_icon (entry),
 					NULL);
 
 	setup_menuitem (menuitem,
 			panel_menu_icon_get_size (),
 			NULL,
-			menu_tree_entry_get_name (entry),
+			alias_directory ? menu_tree_directory_get_name (alias_directory) :
+					  menu_tree_entry_get_name (entry),
 			TRUE);
 
 	if (menu_tree_entry_get_comment (entry))
 		gtk_tooltips_set_tip (panel_tooltips,
 				      menuitem,
-				      menu_tree_entry_get_comment (entry),
+				      alias_directory ? menu_tree_directory_get_comment (alias_directory) :
+							menu_tree_entry_get_comment (entry),
 				      NULL);
 
-	g_signal_connect (menuitem, "button_press_event",
-			  G_CALLBACK (menuitem_button_press_event), NULL);
+	g_signal_connect_after (menuitem, "button_press_event",
+				G_CALLBACK (menuitem_button_press_event), NULL);
 
 	if (!panel_lockdown_get_locked_down ()) {
 		static GtkTargetEntry menu_item_targets[] = {
@@ -1323,6 +1403,34 @@ create_menuitem (GtkWidget     *menu,
 
 	g_signal_connect (menuitem, "activate",
 			  G_CALLBACK (activate_app_def), entry);
+}
+
+static void
+create_menuitem_from_alias (GtkWidget     *menu,
+			    MenuTreeAlias *alias)
+{
+	MenuTreeItem *aliased_item;
+
+	aliased_item = menu_tree_alias_get_item (alias);
+
+	switch (menu_tree_item_get_type (aliased_item)) {
+	case MENU_TREE_ITEM_DIRECTORY:
+		create_submenu (menu,
+				MENU_TREE_DIRECTORY (aliased_item),
+				menu_tree_alias_get_directory (alias));
+		break;
+
+	case MENU_TREE_ITEM_ENTRY:
+		create_menuitem (menu,
+				 MENU_TREE_ENTRY (aliased_item),
+				 menu_tree_alias_get_directory (alias));
+		break;
+
+	default:
+		break;
+	}
+
+	menu_tree_item_unref (aliased_item);
 }
 
 static void
@@ -1408,42 +1516,52 @@ static GtkWidget *
 populate_menu_from_directory (GtkWidget         *menu,
 			      MenuTreeDirectory *directory)
 {	
-	GSList   *subdirs;
-	GSList   *entries;
 	GSList   *l;
+	GSList   *items;
 	gboolean  add_separator;
 
 	add_separator = (GTK_MENU_SHELL (menu)->children != NULL);
 
-	subdirs = menu_tree_directory_get_subdirs (directory);
-	for (l = subdirs; l; l = l->next) {
-		MenuTreeDirectory *subdir = l->data;
+	items = menu_tree_directory_get_contents (directory);
 
-		if (add_separator) {
+	for (l = items; l; l = l->next) {
+		MenuTreeItem *item = l->data;
+
+		if (add_separator ||
+		    menu_tree_item_get_type (item) == MENU_TREE_ITEM_SEPARATOR) {
 			add_menu_separator (menu);
 			add_separator = FALSE;
 		}
 
-		create_submenu (menu, subdir);
+		switch (menu_tree_item_get_type (item)) {
+		case MENU_TREE_ITEM_DIRECTORY:
+			create_submenu (menu, MENU_TREE_DIRECTORY (item), NULL);
+			break;
 
-		menu_tree_directory_unref (subdir);
-	}
-	g_slist_free (subdirs);
+		case MENU_TREE_ITEM_ENTRY:
+			create_menuitem (menu, MENU_TREE_ENTRY (item), NULL);
+			break;
 
-	entries = menu_tree_directory_get_entries (directory);
-	for (l = entries; l; l = l->next) {
-		MenuTreeEntry *entry = l->data;
+		case MENU_TREE_ITEM_SEPARATOR :
+			/* already added */
+			break;
 
-		if (add_separator) {
-			add_menu_separator (menu);
-			add_separator = FALSE;
+		case MENU_TREE_ITEM_ALIAS:
+			create_menuitem_from_alias (menu, MENU_TREE_ALIAS (item));
+			break;
+
+		case MENU_TREE_ITEM_HEADER:
+			create_header (menu, MENU_TREE_HEADER (item));
+			break;
+
+		default:
+			break;
 		}
 
-		create_menuitem (menu, entry);
-
-		menu_tree_entry_unref (entry);
+		menu_tree_item_unref (item);
 	}
-	g_slist_free (entries);
+
+	g_slist_free (items);
 
 	return menu;
 }
@@ -1480,6 +1598,7 @@ main_menu_append (GtkWidget   *main_menu,
 
 	children = gtk_container_get_children (GTK_CONTAINER (main_menu));
 
+	add_separator = FALSE;
 	if (children != NULL) {
 		while (children->next != NULL)
 			children = children->next;

@@ -549,66 +549,120 @@ panel_addto_make_applet_model (PanelAddtoDialog *dialog)
 	return (GtkTreeModel *) model;
 }
 
+static void panel_addto_make_application_list (GSList            **parent_list,
+					       MenuTreeDirectory  *directory,
+					       const char         *filename);
+
+static void
+panel_addto_prepend_directory (GSList            **parent_list,
+			       MenuTreeDirectory  *directory,
+			       const char         *filename)
+{
+	PanelAddtoAppList *data;
+
+	data = g_new0 (PanelAddtoAppList, 1);
+
+	data->item_info.type          = PANEL_ADDTO_MENU;
+	data->item_info.name          = g_strdup (menu_tree_directory_get_name (directory));
+	data->item_info.description   = g_strdup (menu_tree_directory_get_comment (directory));
+	data->item_info.icon          = g_strdup (menu_tree_directory_get_icon (directory));
+	data->item_info.menu_filename = g_strdup (filename);
+	data->item_info.menu_path     = menu_tree_directory_make_path (directory, NULL);
+	data->item_info.static_data   = FALSE;
+
+	/* We should set the iid here to something and do
+	 * iid = g_strdup_printf ("MENU:%s", tfr->name)
+	 * but this means we'd have to free the iid later
+	 * and this would complexify too much the free
+	 * function.
+	 * So the iid is built when we select the row.
+	 */
+
+	*parent_list = g_slist_prepend (*parent_list, data);
+			
+	panel_addto_make_application_list (&data->children, directory, filename);
+}
+
+static void
+panel_addto_prepend_entry (GSList        **parent_list,
+			   MenuTreeEntry  *entry,
+			   const char     *filename)
+{
+	PanelAddtoAppList *data;
+
+	data = g_new0 (PanelAddtoAppList, 1);
+
+	data->item_info.type          = PANEL_ADDTO_LAUNCHER;
+	data->item_info.name          = g_strdup (menu_tree_entry_get_name (entry));
+	data->item_info.description   = g_strdup (menu_tree_entry_get_comment (entry));
+	data->item_info.icon          = g_strdup (menu_tree_entry_get_icon (entry));
+	data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
+	data->item_info.static_data   = FALSE;
+
+	*parent_list = g_slist_prepend (*parent_list, data);
+}
+
+static void
+panel_addto_prepend_alias (GSList        **parent_list,
+			   MenuTreeAlias  *alias,
+			   const char     *filename)
+{
+	MenuTreeItem *aliased_item;
+
+	aliased_item = menu_tree_alias_get_item (alias);
+
+	switch (menu_tree_item_get_type (aliased_item)) {
+	case MENU_TREE_ITEM_DIRECTORY:
+		panel_addto_prepend_directory (parent_list,
+					       MENU_TREE_DIRECTORY (aliased_item),
+					       filename);
+		break;
+
+	case MENU_TREE_ITEM_ENTRY:
+		panel_addto_prepend_entry (parent_list,
+					   MENU_TREE_ENTRY (aliased_item),
+					   filename);
+		break;
+
+	default:
+		break;
+	}
+
+	menu_tree_item_unref (aliased_item);
+}
+
 static void
 panel_addto_make_application_list (GSList            **parent_list,
 				   MenuTreeDirectory  *directory,
 				   const char         *filename)
 {
-	GSList *subdirs;
-	GSList *entries;
+	GSList *items;
 	GSList *l;
 
-	subdirs = menu_tree_directory_get_subdirs (directory);
-	for (l = subdirs; l; l = l->next) {
-		MenuTreeDirectory *subdir = l->data;
-		PanelAddtoAppList *data;
+	items = menu_tree_directory_get_contents (directory);
 
-		data = g_new0 (PanelAddtoAppList, 1);
+	for (l = items; l; l = l->next) {
+		switch (menu_tree_item_get_type (l->data)) {
+		case MENU_TREE_ITEM_DIRECTORY:
+			panel_addto_prepend_directory (parent_list, l->data, filename);
+			break;
 
-		data->item_info.type        = PANEL_ADDTO_MENU;
-		data->item_info.name        = g_strdup (menu_tree_directory_get_name (subdir));
-		data->item_info.description = g_strdup (menu_tree_directory_get_comment (subdir));
-		data->item_info.icon        = g_strdup (menu_tree_directory_get_icon (subdir));
-		data->item_info.menu_filename = g_strdup (filename);
-		data->item_info.menu_path   = menu_tree_directory_make_path (subdir, NULL);
-		data->item_info.static_data = FALSE;
+		case MENU_TREE_ITEM_ENTRY:
+			panel_addto_prepend_entry (parent_list, l->data, filename);
+			break;
 
-		/* We should set the iid here to something and do
-		 * iid = g_strdup_printf ("MENU:%s", tfr->name)
-		 * but this means we'd have to free the iid later
-		 * and this would complexify too much the free
-		 * function.
-		 * So the iid is built when we select the row.
-		 */
+		case MENU_TREE_ITEM_ALIAS:
+			panel_addto_prepend_alias (parent_list, l->data, filename);
+			break;
 
-		*parent_list = g_slist_prepend (*parent_list, data);
+		default:
+			break;
+		}
 
-		panel_addto_make_application_list (&data->children, subdir,
-						   filename);
-
-		menu_tree_directory_unref (subdir);
+		menu_tree_item_unref (l->data);
 	}
-	g_slist_free (subdirs);
 
-	entries = menu_tree_directory_get_entries (directory);
-	for (l = entries; l; l = l->next) {
-		MenuTreeEntry     *entry = l->data;
-		PanelAddtoAppList *data;
-
-		data = g_new0 (PanelAddtoAppList, 1);
-
-		data->item_info.type          = PANEL_ADDTO_LAUNCHER;
-		data->item_info.name          = g_strdup (menu_tree_entry_get_name (entry));
-		data->item_info.description   = g_strdup (menu_tree_entry_get_comment (entry));
-		data->item_info.icon          = g_strdup (menu_tree_entry_get_icon (entry));
-		data->item_info.launcher_path = g_strdup (menu_tree_entry_get_desktop_file_path (entry));
-		data->item_info.static_data = FALSE;
-
-		*parent_list = g_slist_prepend (*parent_list, data);
-
-		menu_tree_entry_unref (entry);
-	}
-	g_slist_free (entries);
+	g_slist_free (items);
 
 	*parent_list = g_slist_reverse (*parent_list);
 }
@@ -671,7 +725,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 						   root, "applications.menu");
 		panel_addto_populate_application_model (store, NULL, dialog->application_list);
 
-		menu_tree_directory_unref (root);
+		menu_tree_item_unref (root);
 	}
 
 	menu_tree_unref (tree);
@@ -694,7 +748,7 @@ panel_addto_make_application_model (PanelAddtoDialog *dialog)
 		panel_addto_populate_application_model (store, NULL,
 							dialog->settings_list);
 
-		menu_tree_directory_unref (root);
+		menu_tree_item_unref (root);
 	}
 
 	menu_tree_unref (tree);

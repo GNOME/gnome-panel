@@ -90,6 +90,7 @@ panel_menu_bar_append_applications_menu (GtkWidget    *menu,
 
 		children = gtk_container_get_children (GTK_CONTAINER (menu));
 
+		add_separator = FALSE;
 		if (children != NULL) {
 			while (children->next != NULL)
 				children = children->next;
