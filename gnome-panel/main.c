@@ -46,12 +46,11 @@ init_user_applets(void)
 {
 	char *applet_name;
 	char *applet_params;
-	char *applet_geometry;
 	int   pos=0;
 	char  buf[256];
 	int   count,num;	
 
-	count=gnome_config_get_int("/panel/Applets/count=0");
+	count=gnome_config_get_int("/panel/Config/applet_count=0");
 	if(count<=0)
 		load_default_applets();
 	for(num=1;num<=count;num++) {
@@ -59,19 +58,11 @@ init_user_applets(void)
 		applet_name = gnome_config_get_string(buf);
 		sprintf(buf,"/panel/Applet_%d/parameters=",num);
 		applet_params = gnome_config_get_string(buf);
-		sprintf(buf,"/panel/Applet_%d/geometry=0 0",num);
-		applet_geometry = gnome_config_get_string(buf);
-		if (sscanf(applet_geometry, "%d", &pos) != 1) {
-			fprintf(stderr,
-				"init_user_applets: using unknown applet position for \"%s\"\n",
-				applet_name);
-
-			pos = PANEL_UNKNOWN_APPLET_POSITION;
-		}
+		sprintf(buf,"/panel/Applet_%d/geometry=0",num);
+		pos = gnome_config_get_int(buf);
 		load_applet(applet_name, applet_params, pos);
 		g_free(applet_name);
 		g_free(applet_params);
-		g_free(applet_geometry);
 	}
 }
 
@@ -101,7 +92,7 @@ main(int argc, char **argv)
 	panel_init_applet_modules();
 	init_user_applets();
 
-	gtk_widget_show(the_panel->window);
+	gtk_widget_show(the_panel->panel->window);
 
 	gtk_main();
 	return 0;

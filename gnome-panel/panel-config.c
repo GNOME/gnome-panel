@@ -16,7 +16,8 @@
 
 /* used to temporarily store config values until the 'Apply'
  * button is pressed. */
-Panel config_panel;
+PanelMain config_panel;
+Panel config_panel_gen;
 
 
 GtkWidget *config_window;
@@ -39,7 +40,7 @@ set_position (GtkWidget *widget, gpointer data)
 {
 	PanelPos position = (PanelPos) data;
 	
-	config_panel.pos = position;
+	config_panel.panel->pos = position;
 }
 
 static void 
@@ -99,7 +100,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_TOP);
-	if (config_panel.pos == PANEL_POS_TOP) {
+	if (config_panel.panel->pos == PANEL_POS_TOP) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -112,7 +113,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_BOTTOM);
-	if (config_panel.pos == PANEL_POS_BOTTOM) {
+	if (config_panel.panel->pos == PANEL_POS_BOTTOM) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -125,7 +126,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_LEFT);
-	if (config_panel.pos == PANEL_POS_LEFT) {
+	if (config_panel.panel->pos == PANEL_POS_LEFT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -138,7 +139,7 @@ position_notebook_page(void)
 	gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 			    GTK_SIGNAL_FUNC (set_position), 
 			    (gpointer)PANEL_POS_RIGHT);
-	if (config_panel.pos == PANEL_POS_RIGHT) {
+	if (config_panel.panel->pos == PANEL_POS_RIGHT) {
 		gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
 	}
 	gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, CONFIG_PADDING_SIZE);
@@ -187,7 +188,7 @@ static void
 step_size_scale_update (GtkAdjustment *adjustment, gpointer data)
 {
 	double scale_val = adjustment->value;
-	config_panel.step_size = (gint) scale_val;
+	config_panel.panel->step_size = (gint) scale_val;
 }
 
 static void
@@ -236,7 +237,7 @@ animation_notebook_page(void)
 	gtk_widget_show (box);
 
 	/* Animation step_size scale */
-	step_size_scale_data = gtk_adjustment_new ((double) config_panel.step_size, 
+	step_size_scale_data = gtk_adjustment_new ((double) config_panel.panel->step_size, 
 						   3.0, 100.0, 1.0, 1.0, 0.0);
 	scale = gtk_hscale_new (GTK_ADJUSTMENT (step_size_scale_data));
 	gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
@@ -359,10 +360,11 @@ panel_config(void)
 		return;
 
 	/* so far, these are the only ones that can be set */
+	config_panel.panel = &config_panel_gen;
 	config_panel.mode = the_panel->mode;
-	config_panel.pos = the_panel->pos;
+	config_panel.panel->pos = the_panel->panel->pos;
 	
-	config_panel.step_size = the_panel->step_size;
+	config_panel.panel->step_size = the_panel->panel->step_size;
 	config_panel.delay = the_panel->delay;
 	config_panel.minimize_delay = the_panel->minimize_delay;
 	config_panel.minimized_size = the_panel->minimized_size;

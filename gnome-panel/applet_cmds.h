@@ -21,8 +21,8 @@ typedef enum {
 typedef struct {
 	AppletCommandType cmd;
 
-	Panel     *panel;
-	GtkWidget *applet;
+	Panel      *panel;
+	GtkWidget  *applet;
 
 	union {
 		/* Init module parameters */
@@ -35,6 +35,11 @@ typedef struct {
 			char *params;
 			int   pos;
 		} create_instance;
+
+		/* Orientation change notify parameters */
+		struct {
+			PanelPos pos;
+		} orientation_change_notify;
 	} params;
 } AppletCommand;
 

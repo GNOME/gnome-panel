@@ -700,16 +700,13 @@ create_instance (Panel *panel, char *params, int pos)
 }
 
 static void
-set_orientation(GtkWidget *applet, Panel *panel)
+set_orientation(GtkWidget *applet, Panel *panel, PanelPos pos)
 {
 	GtkWidget *pixmap;
 	char *pixmap_name;
 	Menu *menu;
 
-	if(panel_pos==panel->pos)
-		return;
-	panel_pos=panel->pos;
-
+	panel_pos = pos; /*FIXME: this should probably be in the structure*/
 
 	menu = gtk_object_get_user_data(GTK_OBJECT(applet));
 	if(!menu || !menu->path)
@@ -743,7 +740,7 @@ set_orientation(GtkWidget *applet, Panel *panel)
 	gtk_widget_destroy(pixmap);
 
 	/*make the pixmap*/
-	pixmap = gnome_create_pixmap_widget (panel->panel, applet, pixmap_name);
+	pixmap = gnome_create_pixmap_widget (panel->window,applet,pixmap_name);
 
 	gtk_container_add (GTK_CONTAINER(applet), pixmap);
 	gtk_widget_show (pixmap);
@@ -894,7 +891,8 @@ applet_cmd_func(AppletCommand *cmd)
 					      NULL);
 
 		case APPLET_CMD_ORIENTATION_CHANGE_NOTIFY:
-			set_orientation(cmd->applet,cmd->panel);
+			set_orientation(cmd->applet,cmd->panel,
+					cmd->params.orientation_change_notify.pos);
 			break;
 
 		case APPLET_CMD_PROPERTIES:

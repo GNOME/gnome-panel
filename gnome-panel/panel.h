@@ -38,6 +38,7 @@ typedef enum {
 
 typedef struct _PanelApplet PanelApplet;
 typedef struct _PanelDrawer PanelDrawer;
+typedef struct _PanelMain PanelMain;
 typedef struct _Panel Panel;
 
 
@@ -47,37 +48,39 @@ struct _PanelApplet {
 	AppletType    type;
 };
 
-struct _PanelDrawer {
-	GtkWidget    *window;
-	GtkWidget    *table;
-	GtkWidget    *panel_eb;
-	GtkWidget    *panel;
-	PanelApplet **applets;        
-	gint          applet_count;
-	gint          applet_base;
-	PanelState    state;
-	gint          step_size;
-	gint          button_press_id;
-	gint          leave_notify_timer_tag;
-	GtkWidget    *applet_being_dragged;
-	gint          applet_id_being_dragged;
-};
-
+/*this is a structure where the applets are actually stored, the table 
+  on which they are placed and their array*/
 struct _Panel {
 	GtkWidget    *window;
-	GtkWidget    *table;
-	GtkWidget    *hidebutton_l_h;
-	GtkWidget    *hidebutton_r_h;
-	GtkWidget    *hidebutton_l_v;
-	GtkWidget    *hidebutton_r_v;
 	GtkWidget    *panel_eb;
 	GtkWidget    *panel;
 	PanelApplet **applets;        
 	gint          applet_count;
 	PanelPos      pos;
 	PanelState    state;
-	PanelMode     mode;
 	gint          step_size;
+	GtkWidget    *applet_being_dragged;
+	gint          applet_id_being_dragged;
+};
+	
+
+struct _PanelDrawer {
+	Panel        *panel;
+	gchar        *name;
+	gchar        *icon;
+};
+
+struct _PanelMain {
+	/*regular panel structure*/
+	Panel        *panel;
+	GtkWidget    *table;
+	/*extra widgets for main panel*/
+	GtkWidget    *hidebutton_l_h;
+	GtkWidget    *hidebutton_r_h;
+	GtkWidget    *hidebutton_l_v;
+	GtkWidget    *hidebutton_r_v;
+	/*main panel properties*/
+	PanelMode     mode;
 	gint          drawer_step_size;
 	gint          delay;
 	gint          tooltips_enabled;
@@ -87,13 +90,11 @@ struct _Panel {
 	gint          leave_notify_timer_tag;
 	gint          minimize_delay;
 	gint          minimized_size;
-	GtkWidget    *applet_being_dragged;
-	gint          applet_id_being_dragged;
 };
 
 
 
-extern Panel *the_panel;
+extern PanelMain *the_panel;
 
 
 void panel_init(void);
@@ -107,7 +108,7 @@ int panel_session_save (gpointer client_data,
 			GnomeInteractStyle interact_style,
 			int is_fast);
 
-void panel_reconfigure(Panel *newconfig);
+void panel_reconfigure(PanelMain *newconfig);
 
 
 END_GNOME_DECLS
