@@ -70,7 +70,7 @@ panel_clean_applet(int applet_id)
 					    PANEL_APPLET_PARENT_KEY);
 
 		if(panel)
-			panel_widget_remove(panel,w);
+			gtk_container_remove(GTK_CONTAINER(panel),w);
 	}
 	info->applet_widget = NULL;
 	if(type == APPLET_DRAWER) {

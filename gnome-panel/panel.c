@@ -235,9 +235,9 @@ orientation_change(int applet_id, PanelWidget *panel)
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
 		reposition_drawer(drawer);
 		set_drawer_applet_orient(drawer,get_applet_orient(panel));
-		panel_widget_foreach(PANEL_WIDGET(dw->panel),
-				     orient_change_foreach,
-				     (gpointer)dw->panel);
+		gtk_container_foreach(GTK_CONTAINER(dw->panel),
+				      orient_change_foreach,
+				      (gpointer)dw->panel);
 	} else if(info->type == APPLET_SWALLOW) {
 		Swallow *swallow = info->data;
 
@@ -263,8 +263,8 @@ panel_orient_change(GtkWidget *widget,
 		    PanelOrientation orient,
 		    gpointer data)
 {
-	panel_widget_foreach(PANEL_WIDGET(widget),orient_change_foreach,
-			     widget);
+	gtk_container_foreach(GTK_CONTAINER(widget),orient_change_foreach,
+			      widget);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(gtk_object_get_data(GTK_OBJECT(widget),
@@ -276,9 +276,10 @@ snapped_pos_change(GtkWidget *widget,
 		   SnappedPos pos,
 		   gpointer data)
 {
-	panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
-			     orient_change_foreach,
-			     SNAPPED_WIDGET(widget)->panel);
+	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
+	gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+			      orient_change_foreach,
+			      snapped->panel);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
@@ -289,9 +290,10 @@ corner_pos_change(GtkWidget *widget,
 		  CornerPos pos,
 		  gpointer data)
 {
-	panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
-			     orient_change_foreach,
-			     CORNER_WIDGET(widget)->panel);
+	CornerWidget *corner = CORNER_WIDGET(widget);
+	gtk_container_foreach(GTK_CONTAINER(corner->panel),
+			      orient_change_foreach,
+			      corner->panel);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_orient(widget);
@@ -331,7 +333,7 @@ panel_back_change(GtkWidget *widget,
 		  char *pixmap,
 		  GdkColor *color)
 {
-	panel_widget_foreach(PANEL_WIDGET(widget),back_change_foreach,widget);
+	gtk_container_foreach(GTK_CONTAINER(widget),back_change_foreach,widget);
 	panels_to_sync = TRUE;
 	/*update the configuration box if it is displayed*/
 	update_config_back(PANEL_WIDGET(widget));
@@ -350,14 +352,14 @@ state_restore_foreach(gpointer data, gpointer user_data)
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
 		if(dw->state == DRAWER_SHOWN) {
 			drawer_widget_restore_state(dw);
-			panel_widget_foreach(PANEL_WIDGET(dw->panel),
-					     state_restore_foreach,
-					     NULL);
+			gtk_container_foreach(GTK_CONTAINER(dw->panel),
+					      state_restore_foreach,
+					      NULL);
 		} else { /*it's hidden*/
 			gtk_widget_hide(GTK_WIDGET(dw));
-			panel_widget_foreach(PANEL_WIDGET(dw->panel),
-					     state_hide_foreach,
-					     NULL);
+			gtk_container_foreach(GTK_CONTAINER(dw->panel),
+					      state_hide_foreach,
+					      NULL);
 		}
 	}
 }
@@ -372,9 +374,9 @@ state_hide_foreach(gpointer data, gpointer user_data)
 		Drawer *drawer = info->data;
 		DrawerWidget *dw = DRAWER_WIDGET(drawer->drawer);
 		gtk_widget_hide(GTK_WIDGET(dw));
-		panel_widget_foreach(PANEL_WIDGET(dw->panel),
-				     state_hide_foreach,
-				     NULL);
+		gtk_container_foreach(GTK_CONTAINER(dw->panel),
+				      state_hide_foreach,
+				      NULL);
 	}
 }
 
@@ -383,14 +385,15 @@ snapped_state_change(GtkWidget *widget,
 		     SnappedState state,
 		     gpointer data)
 {
+	SnappedWidget *snapped = SNAPPED_WIDGET(widget);
 	if(state==SNAPPED_SHOWN)
-		panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
-				     state_restore_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+				      state_restore_foreach,
+				      (gpointer)widget);
 	else
-		panel_widget_foreach(PANEL_WIDGET(SNAPPED_WIDGET(widget)->panel),
-				     state_hide_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(snapped->panel),
+				      state_hide_foreach,
+				      (gpointer)widget);
 
 	panels_to_sync = TRUE;
 
@@ -401,14 +404,15 @@ corner_state_change(GtkWidget *widget,
 		    CornerState state,
 		    gpointer data)
 {
+	CornerWidget *corner = CORNER_WIDGET(widget);
 	if(state==CORNER_SHOWN)
-		panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
-				     state_restore_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(corner->panel),
+				      state_restore_foreach,
+				      (gpointer)widget);
 	else
-		panel_widget_foreach(PANEL_WIDGET(CORNER_WIDGET(widget)->panel),
-				     state_hide_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(corner->panel),
+				      state_hide_foreach,
+				      (gpointer)widget);
 
 	panels_to_sync = TRUE;
 
@@ -419,14 +423,15 @@ drawer_state_change(GtkWidget *widget,
 		    DrawerState state,
 		    gpointer data)
 {
+	DrawerWidget *drawer = DRAWER_WIDGET(widget);
 	if(state==DRAWER_SHOWN)
-		panel_widget_foreach(PANEL_WIDGET(DRAWER_WIDGET(widget)->panel),
-				     state_restore_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(drawer->panel),
+				      state_restore_foreach,
+				      (gpointer)widget);
 	else
-		panel_widget_foreach(PANEL_WIDGET(DRAWER_WIDGET(widget)->panel),
-				     state_hide_foreach,
-				     (gpointer)widget);
+		gtk_container_foreach(GTK_CONTAINER(drawer->panel),
+				      state_hide_foreach,
+				      (gpointer)widget);
 
 	panels_to_sync = TRUE;
 
@@ -518,9 +523,9 @@ panel_applet_removed(GtkWidget *widget, GtkWidget *applet, gpointer data)
 	if(IS_SNAPPED_WIDGET(parentw)) {
 		int drawers_open = 0;
 
-		panel_widget_foreach(PANEL_WIDGET(widget),
-				     count_open_drawers,
-				     &drawers_open);
+		gtk_container_foreach(GTK_CONTAINER(widget),
+				      count_open_drawers,
+				      &drawers_open);
 		SNAPPED_WIDGET(parentw)->drawers_open = drawers_open;
 		snapped_widget_queue_pop_down(SNAPPED_WIDGET(parentw));
 	}

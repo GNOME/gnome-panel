@@ -128,10 +128,6 @@ int		panel_widget_move		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 int pos);
 
-/*remove an applet from the panel*/
-int		panel_widget_remove		(PanelWidget *panel,
-						 GtkWidget *applet);
-
 /*move applet to a different panel*/
 int		panel_widget_reparent		(PanelWidget *old_panel,
 						 PanelWidget *new_panel,
@@ -140,12 +136,6 @@ int		panel_widget_reparent		(PanelWidget *old_panel,
 /*return position of an applet*/
 int		panel_widget_get_pos		(PanelWidget *panel,
 						 GtkWidget *applet);
-/*return a list of all applets*/
-GList*		panel_widget_get_applets	(PanelWidget *panel);
-/*run func for each applet*/
-void		panel_widget_foreach		(PanelWidget *panel,
-						 GFunc func,
-						 gpointer user_data);
 
 /*drag*/
 void		panel_widget_applet_drag_start	(PanelWidget *panel,

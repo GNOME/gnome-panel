@@ -574,12 +574,18 @@ drawer_widget_change_drop_zone_pos(DrawerWidget *drawer,
 void
 drawer_widget_set_pos(DrawerWidget *drawer, int x, int y)
 {
+	GtkAllocation alloc;
 	if(drawer->x!=x || drawer->y!=y) {
 		drawer->x = x;
 		drawer->y = y;
 		if(GTK_WIDGET(drawer)->window)
 			move_window(GTK_WIDGET(drawer),x,y);
 		gtk_widget_set_uposition(GTK_WIDGET(drawer),x,y);
+
+		alloc = GTK_WIDGET(drawer)->allocation;
+		alloc.x = x;
+		alloc.y = y;
+		gtk_widget_size_allocate(GTK_WIDGET(drawer),&alloc);
 	}
 }
 
