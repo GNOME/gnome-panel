@@ -354,8 +354,8 @@ applet_factory (PanelApplet *applet,
   all_trays = g_slist_append (all_trays, tray);
   
   panel_applet_set_flags (PANEL_APPLET (tray->applet),
-                          PANEL_APPLET_HAS_HANDLE);
-
+                          PANEL_APPLET_HAS_HANDLE|PANEL_APPLET_EXPAND_MINOR);
+  
   g_signal_connect (G_OBJECT (tray->applet),
                     "change_size",
                     G_CALLBACK (applet_change_pixel_size),
