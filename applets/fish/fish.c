@@ -149,7 +149,7 @@ update_fortune_dialog()
 		       fortune_less,
 		       TRUE, TRUE, GNOME_PAD);
 
-    gnome_less_fixed_font(GNOME_LESS(fortune_less));
+    gnome_less_set_fixed_font(GNOME_LESS(fortune_less),TRUE);
 
     gtk_widget_show(fortune_less);
     gtk_widget_show(fortune_label);
