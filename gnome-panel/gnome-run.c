@@ -639,6 +639,45 @@ sync_entry_to_list (GtkWidget *dialog)
 	}
 }
 
+static char *
+remove_parameters (const char *exec)
+{
+	GString *str;
+	char    *retval, *p;
+
+	str = g_string_new (exec);
+
+	while ((p = strstr (str->str, "%"))) {
+		switch (p [1]) {
+		case '%':
+			g_string_erase (str, p - str->str, 1);
+			break;
+		case 'U':
+		case 'F':
+		case 'N':
+		case 'D':
+		case 'f':
+		case 'u':
+		case 'd':
+		case 'n':
+		case 'm':
+		case 'i':
+		case 'c':
+		case 'k':
+		case 'v':
+			g_string_erase (str, p - str->str, 2);
+			break;
+		default:
+			break;
+		}
+	}
+
+	retval = str->str;
+	g_string_free (str, FALSE);
+
+	return retval;
+}
+
 static void
 sync_list_to_entry (GtkWidget *dialog)
 {
@@ -679,20 +718,27 @@ sync_list_to_entry (GtkWidget *dialog)
 				gboolean terminal;
                                 const char *exec;
 
-				exec = gnome_desktop_item_get_string
-					(ditem, GNOME_DESKTOP_ITEM_EXEC);
-				if (exec == NULL)
-					exec = gnome_desktop_item_get_string
-						(ditem, GNOME_DESKTOP_ITEM_URL);
-				terminal = gnome_desktop_item_get_boolean
-					(ditem, GNOME_DESKTOP_ITEM_TERMINAL);
+				exec = gnome_desktop_item_get_string (
+						ditem, GNOME_DESKTOP_ITEM_EXEC);
+				if (exec) {
+					char *stripped;
 
-                                gtk_entry_set_text (GTK_ENTRY (entry),
-						    sure_string (exec));
+					stripped = remove_parameters (exec);
 
-                                gtk_toggle_button_set_active
-					(GTK_TOGGLE_BUTTON (terminal_toggle),
-					 terminal);
+					gtk_entry_set_text (GTK_ENTRY (entry), stripped);
+
+					g_free (stripped);
+				} else {
+					exec = gnome_desktop_item_get_string (
+							ditem, GNOME_DESKTOP_ITEM_URL);
+					gtk_entry_set_text (GTK_ENTRY (entry), sure_string (exec));
+				}
+
+				terminal = gnome_desktop_item_get_boolean (
+							ditem, GNOME_DESKTOP_ITEM_TERMINAL);
+
+                                gtk_toggle_button_set_active (
+					GTK_TOGGLE_BUTTON (terminal_toggle), terminal);
 				
                                 gnome_desktop_item_unref (ditem);
                         }
