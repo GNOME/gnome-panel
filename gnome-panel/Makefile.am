@@ -6,7 +6,7 @@
 ## We require new-style dependency handling.
 AUTOMAKE_OPTIONS = 1.3
 
-SUBDIRS = doc help
+SUBDIRS = config doc help
 
 INCLUDES = \
 	-I.			\
@@ -16,7 +16,7 @@ INCLUDES = \
 	-I$(top_builddir)/panel	\
 	-DGNOMELOCALEDIR=\""$(datadir)/locale"\" \
 	-DGNOME_DATADIR=\""$(datadir)"\" \
-	-DGLOBAL_CONFDIR=\""$(datadir)/gnome/panel-config"\" \
+	-DGLOBAL_CONFDIR=\""$(sysconfdir)/gnome/panel-config"\" \
 	-I$(includedir)		\
 	$(GNOME_INCLUDEDIR)	\
 	$(ORB_CFLAGS)		\

@@ -21,9 +21,6 @@ int		conditional_get_int	(const char *key,
 /* get key and treat it as a conditional, if missing, it's true */
 gboolean	conditional_true	(const char *key);
 
-/* for now exported, in future only inside a conditional */
-gboolean	battery_exists		(void);
-
 END_GNOME_DECLS
 
 #endif

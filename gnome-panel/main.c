@@ -21,6 +21,7 @@
 
 #include "xstuff.h"
 #include "multiscreen-stuff.h"
+#include "conditional.h"
 
 extern int config_sync_timeout;
 extern int applets_to_sync;
@@ -363,7 +364,9 @@ setup_merge_directory(void)
 
 	merge_main_dir = gnome_datadir_file("gnome/apps/");
 	merge_main_dir_len = merge_main_dir != NULL ? strlen (merge_main_dir) : 0;
-	merge_merge_dir = gnome_config_get_string("/panel/Merge/Directory=/etc/X11/applnk/");
+	merge_merge_dir = conditional_get_string ("/panel/Merge/Directory",
+						  "/etc/X11/applnk/",
+						  NULL);
 
 	if (string_empty (merge_merge_dir) ||
 	    ! g_file_test(merge_merge_dir, G_FILE_TEST_ISDIR)) {

@@ -1,3 +1,15 @@
+Tue May 29 19:07:40 2001  George Lebl <jirka@5z.com>
+
+	* Makefile.am, conditional.[ch], gnome-panel-properties.c,
+	  launcher.c, main.c, config/Applet_Config, config/Makefile.am,
+	  config/panel.config, config/panel.global: Put the default config
+	  into a set of installed files rather then hardcoded.  The failsafe
+	  default is a bottom panel with a menu, it should also probably
+	  complain in that case.
+
+	* session.c: Allow per user control of which users are restricted or
+	  unrestricted, and change the name of the section to Restrictions
+
 2001-05-29  Havoc Pennington  <hp@redhat.com>
 
 	* gnome-run.c: Add a list of desktop entries, and "advanced mode"

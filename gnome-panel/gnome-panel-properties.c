@@ -1278,10 +1278,7 @@ loadup_vals (void)
 		conditional_get_bool ("memory_hungry_menus", FALSE, NULL);
 
 	global_config.use_large_icons =
-		conditional_get_bool ("use_large_icons",
-				      gdk_screen_height () > 768 ?
-				      TRUE : FALSE,
-				      NULL);
+		conditional_get_bool ("use_large_icons", FALSE, NULL);
 
 	global_config.merge_menus =
 		conditional_get_bool ("merge_menus", TRUE, NULL);
@@ -1383,6 +1380,13 @@ loadup_vals (void)
 				MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
 				MAIN_MENU_DESKTOP),
 		 NULL);
+
+	if (global_config.menu_flags < 0) {
+		global_config.menu_flags =
+			(MAIN_MENU_SYSTEM_SUB | MAIN_MENU_USER_SUB |
+			 MAIN_MENU_APPLETS_SUB | MAIN_MENU_PANEL_SUB |
+			 MAIN_MENU_DESKTOP);
+	}
 
 	keybuf = g_string_new(NULL);
 	tilebuf = g_string_new(NULL);

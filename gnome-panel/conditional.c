@@ -46,7 +46,7 @@ linux_battery_exists (void)
 		return FALSE;
 }
 
-gboolean
+static gboolean
 battery_exists (void)
 {
 #ifndef __linux__
@@ -271,9 +271,22 @@ conditional_parse (const char *conditional, int len)
 	int last_connector = CONN_AND;
 	gboolean invert = FALSE;
 
+	if (conditional == NULL)
+		return TRUE;
+
 	if (len <= 0) {
 		len = strlen (conditional);
 	}
+
+#if 0
+	/* Some debugging */
+	{
+		char *foo = g_strndup (conditional, len);
+		g_print ("Conditional: '%s'\n", foo);
+		g_free (foo);
+	}
+#endif
+
 
 	word = conditional;
 	while ((word = get_word (&conditional, &len, &llen))) {
@@ -332,10 +345,13 @@ conditional_parse (const char *conditional, int len)
 			}
 			if (*word == '\'') {
 				int slen = get_string (conditional, len);
-				file = g_strndup (conditional, len);
+				file = g_strndup (conditional, slen);
 				conditional += slen;
-				if (*conditional == '\'')
+				len -= slen;
+				if (*conditional == '\'') {
 					conditional ++;
+					len--;
+				}
 			} else {
 				file = g_strndup (word, llen);
 			}
@@ -353,6 +369,7 @@ conditional_parse (const char *conditional, int len)
 					       last_cond,
 					       invert ? !cond : cond);
 			invert = FALSE;
+			g_free (file);
 		} else if (is_tokchar (*word)) {
 			int value1 = get_value (word, llen);
 			int value2;
