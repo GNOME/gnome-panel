@@ -325,20 +325,12 @@ basep_pos_get_hide_size (BasePWidget *basep,
 {
 	switch (hide_orient) {
 	case ORIENT_UP:
+	case ORIENT_DOWN:
 		*h = (basep->state == BASEP_AUTO_HIDDEN)
 			? pw_minimized_size
 			: basep->hidebutton_n->allocation.height;
 		break;
 	case ORIENT_RIGHT:
-		*w = (basep->state == BASEP_AUTO_HIDDEN)
-			? pw_minimized_size
-			: basep->hidebutton_w->allocation.width;
-		break;
-	case ORIENT_DOWN:
-		*h = (basep->state == BASEP_AUTO_HIDDEN)
-			? pw_minimized_size
-			: basep->hidebutton_s->allocation.height;
-		break;
 	case ORIENT_LEFT:
 		*w = (basep->state == BASEP_AUTO_HIDDEN)
 			? pw_minimized_size
