@@ -9,6 +9,7 @@ BEGIN_GNOME_DECLS
 typedef struct _MenuFinfo MenuFinfo;
 typedef struct _FileRec FileRec;
 typedef struct _DirRec DirRec;
+typedef struct _MFile MFile;
 
 struct _MenuFinfo {
 	char *menudir;
@@ -19,6 +20,12 @@ struct _MenuFinfo {
 	gboolean fake_menu;
 	gboolean title;
 	FileRec *fr;
+};
+
+struct _MFile {
+	char *name;
+	gboolean merged;
+	gboolean verified;
 };
 
 enum {
@@ -54,7 +61,7 @@ struct _DirRec {
 
 char * get_applet_goad_id_from_dentry(GnomeDesktopEntry *ii);
 
-GSList * get_files_from_menudir(const char *menudir);
+GSList * get_mfiles_from_menudir(const char *menudir);
 
 FileRec * fr_read_dir(DirRec *dr, const char *mdir, struct stat *dstat, struct stat *merge_dstat, int sublevels);
 FileRec * fr_replace(FileRec *fr);
@@ -65,6 +72,10 @@ char * fr_get_mergedir (const char *dir);
 void fr_force_reread(void);
 
 void init_fr_chunks (void);
+
+void free_mfile (MFile *mfile);
+void free_mfile_list (GSList *list);
+
 END_GNOME_DECLS
 
 #endif

@@ -1,3 +1,12 @@
+Fri Feb 16 21:35:14 2001  George Lebl <jirka@5z.com>
+
+	* menu-fentry.[ch], menu.c:  Fix menu merging in the respect that
+	  only directories are merged and if a dir is in the .order file
+	  it is not neccesairly on disk, so don't merge it until you find
+	  it.  When directory disappears make sure to reread the
+	  whole menu, and stat everything at most every 3 seconds.
+	  fix dir_list corruption, and other cleanups
+
 Fri Feb 16 00:42:53 2001  George Lebl <jirka@5z.com>
 
 	* floating-widget.c: The menu position function follows the 

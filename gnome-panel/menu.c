@@ -202,7 +202,7 @@ about_cb (GtkWidget *widget, gpointer data)
 #endif
 	
 	about = gnome_about_new ( _("The GNOME Panel"), VERSION,
-			"(C) 1997-2000 the Free Software Foundation",
+			_("(C) 1997-2000 the Free Software Foundation"),
 			(const gchar **)authors,
 			_("This program is responsible for launching "
 			"other applications, embedding small applets "
@@ -983,6 +983,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	char *pixmap_name;
 	char *p;
 	char *filename = NULL;
+	char *mergedir;
 	GSList *list, *li;
 
 	if(!panel_file_exists(dirname))
@@ -1015,27 +1016,27 @@ add_drawers_from_dir (const char *dirname, const char *name,
 	drawer = info->data;
 	g_assert(drawer);
 	newpanel = PANEL_WIDGET(BASEP_WIDGET(drawer->drawer)->panel);
+
+	mergedir = fr_get_mergedir(dirname);
 	
-	list = get_files_from_menudir(dirname);
+	list = get_mfiles_from_menudir(dirname);
 	for(li = list; li!= NULL; li = li->next) {
+		MFile *mfile = li->data;
 		struct stat s;
 		GnomeDesktopEntry *dentry;
 
 		g_free (filename);
-		filename = g_concat_dir_and_file(dirname, li->data);
+		if ( ! mfile->merged) {
+			filename = g_concat_dir_and_file(dirname, mfile->name);
+		} else if (mergedir != NULL) {
+			filename = g_concat_dir_and_file(mergedir, mfile->name);
+		} else {
+			filename = NULL;
+			continue;
+		}
 
 		if (stat (filename, &s) != 0) {
-			char *mergedir = fr_get_mergedir(dirname);
-			if(mergedir != NULL) {
-				g_free(filename);
-				filename = g_concat_dir_and_file(mergedir, li->data);
-				g_free(mergedir);
-				if (stat (filename, &s) != 0) {
-					continue;
-				}
-			} else {
-				continue;
-			}
+			continue;
 		}
 
 		if (S_ISDIR (s.st_mode)) {
@@ -1066,9 +1067,9 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		}
 	}
 	g_free (filename);
+	g_free (mergedir);
 
-	g_slist_foreach (list, (GFunc)g_free, NULL);
-	g_slist_free (list);
+	free_mfile_list (list);
 }
 
 /*add a drawer with the contents of a menu to the panel*/
