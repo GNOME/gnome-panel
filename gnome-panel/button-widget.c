@@ -239,7 +239,6 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 	GtkWidget *pwidget;
 	GdkPixmap *tile;
 	GdkBitmap *tile_mask;
-	GdkGCValues values;
 	GdkPoint points[3];
 	GdkGC *gc;
 	/*offset for pressed buttons*/

@@ -1033,7 +1033,7 @@ menu_position (GtkMenu *menu, int *x, int *y, gpointer data)
 	
 	gdk_window_get_origin (widget->window, &wx, &wy);
 
-	switch(menup->orient) {
+	switch(BUTTON_WIDGET(widget)->orient) {
 		case ORIENT_DOWN:
 			*x = wx;
 			*y = wy + widget->allocation.height;
@@ -1543,7 +1543,7 @@ menu_button_pressed(GtkWidget *widget, gpointer data)
 }
 
 static char *
-get_pixmap(char *menudir, PanelOrientType orient, int main_menu)
+get_pixmap(char *menudir, int main_menu)
 {
 	char *pixmap_name;
 	if (main_menu) {
@@ -1576,10 +1576,8 @@ create_panel_menu (char *menudir, int main_menu,
 
 	menu = g_new(Menu,1);
 
-	pixmap_name = get_pixmap(menudir,orient,main_menu);
+	pixmap_name = get_pixmap(menudir,main_menu);
 
-	menu->orient = orient;
-	
 	menu->main_menu_type = main_menu_type;
 
 
@@ -1664,8 +1662,6 @@ set_menu_applet_orient(Menu *menu, PanelOrientType orient)
 {
 	g_return_if_fail(menu!=NULL);
 
-	menu->orient = orient;
-	
 	button_widget_set_params(BUTTON_WIDGET(menu->button),
 				 MENU_TILE,TRUE,orient);
 }
@@ -1677,7 +1673,6 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 	GtkWidget *main_menu = gtk_object_get_data(GTK_OBJECT(widget), "main_menu");
 	GtkWidget *menu_both = gtk_object_get_data(GTK_OBJECT(widget), "menu_both");
 	GtkWidget *menu_system = gtk_object_get_data(GTK_OBJECT(widget), "menu_system");
-	GtkWidget *menu_user = gtk_object_get_data(GTK_OBJECT(widget), "menu_user");
 	GtkWidget *pathentry = gtk_object_get_data(GTK_OBJECT(widget), "path");
 	char *s;
 
@@ -1709,7 +1704,7 @@ properties_apply_callback(GtkWidget *widget, int page, gpointer data)
 		char *menu_base = gnome_unconditional_datadir_file ("apps");
 		char *this_menu = get_real_menu_path(menu->path,menu_base);
 		GList *list = g_list_append(NULL,this_menu);
-		char *pixmap_name = get_pixmap(this_menu,menu->orient,
+		char *pixmap_name = get_pixmap(this_menu,
 					       strcmp(menu->path,".")==0);
 		/*make the pixmap*/
 		gnome_pixmap_load_file_at_size (GNOME_PIXMAP(menu->button),

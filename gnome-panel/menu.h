@@ -16,7 +16,6 @@ struct _Menu {
 	GtkWidget *menu;
 	char *path;
 	MainMenuType main_menu_type;
-	PanelOrientType orient;
 };
 
 void load_menu_applet(char *params, int main_menu_type,

@@ -690,7 +690,6 @@ panel_widget_draw_all(PanelWidget *panel)
 void
 panel_widget_draw_icon(PanelWidget *panel, ButtonWidget *button)
 {
-	GList *li;
 	GtkWidget *widget;
 	GtkWidget *applet;
 	GdkGC *gc;
@@ -761,7 +760,7 @@ panel_widget_expose(GtkWidget *widget, GdkEventExpose *event)
 	GList *li;
 	PanelWidget *panel = PANEL_WIDGET(widget);
 	if(!GTK_WIDGET_DRAWABLE(widget))
-		return;
+		return FALSE;
 	if(panel->pixmap) {
 		gdk_draw_pixmap(widget->window,
 				widget->style->fg_gc[GTK_WIDGET_STATE(widget)],
