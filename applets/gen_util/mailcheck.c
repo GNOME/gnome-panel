@@ -93,7 +93,7 @@ mail_animation_filename (MailCheck *mc)
 {
 	if(!mc->animation_file) {
 		mc->animation_file =
-			gnome_unconditional_pixmap_file("mailcheck/email.xpm");
+			gnome_unconditional_pixmap_file("mailcheck/email.png");
 		if (g_file_exists (mc->animation_file))
 			return g_strdup(mc->animation_file);
 		g_free (mc->animation_file);
@@ -564,7 +564,7 @@ make_mailcheck_applet(const gchar *param)
 	if (!applet)
 		g_error(_("Can't create applet!\n"));
 
-	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.xpm");
+	emailfile = gnome_unconditional_pixmap_file("mailcheck/email.png");
 
 	query = g_copy_strings(APPLET_WIDGET(applet)->privcfgpath,
 			       "mail/animation_file=",emailfile,NULL);
