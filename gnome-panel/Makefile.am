@@ -159,6 +159,31 @@ panel_temp_SOURCES=\
 	title-item-private.h	\
 	panel.c			\
 	panel.h         	\
+	applet.c		\
+	applet.h         	\
+	logout.c		\
+	logout.h		\
+	drawer.c  		\
+	drawer.h  		\
+	panel-util.c		\
+	panel-util.h		\
+	global-keys.c		\
+	global-keys.h		\
+	panel_config.c  	\
+	panel_config.h		\
+	panel_config_global.h  	\
+	status.c  		\
+	status.h  		\
+	distribution.c		\
+	distribution.h		\
+	menu.c  		\
+	menu.h  		\
+	menu-util.c		\
+	menu-util.h		\
+	menu-rh.c  		\
+	menu-rh.h  		\
+	menu-fentry.c  		\
+	menu-fentry.h  		\
 	$(NULL)
 
 panel_temp_LDADD=\
@@ -168,39 +193,14 @@ panel_temp_LDADD=\
 panel_SOURCES=\
 	$(GWMH_SRCLIST)		\
 	things-will-not-compile-below-this-line		\
-	applet.c		\
-	applet.h         	\
-	panel_config.c  	\
-	panel_config.h		\
-	panel_config_global.h  	\
-	distribution.c		\
-	distribution.h		\
-	menu.c  		\
-	menu.h  		\
-	menu-fentry.c  		\
-	menu-fentry.h  		\
-	menu-rh.c  		\
-	menu-rh.h  		\
 	menu-properties.c	\
 	menu-properties.h	\
-	menu-util.c		\
-	menu-util.h		\
 	launcher.c		\
 	launcher.h		\
-	logout.c		\
-	logout.h		\
 	extern.c  		\
 	extern.h  		\
-	status.c  		\
-	status.h  		\
 	swallow.c  		\
 	swallow.h  		\
-	drawer.c  		\
-	drawer.h  		\
-	panel-util.c		\
-	panel-util.h		\
-	global-keys.c		\
-	global-keys.h		\
 	gnome-run.c		\
 	gnome-run.h		\
 	scroll-menu.h		\
