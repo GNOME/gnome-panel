@@ -27,7 +27,6 @@ create_logout_widget(void)
 	if (!pixmap_name)
 		button = gtk_button_new_with_label(_("Log out"));
 	else {
-		button = gtk_button_new();
 		button = button_widget_new_from_file(pixmap_name,
 						     LOGOUT_TILE,
 						     FALSE,

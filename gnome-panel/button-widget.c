@@ -341,12 +341,14 @@ button_widget_draw(ButtonWidget *button, GdkPixmap *pixmap)
 
 
 	i = MAX(border-off,0);
-	gdk_draw_pixmap (pixmap, gc, button->pixmap,
-			 i, i,
-			 widget->allocation.x+i+off,
-			 widget->allocation.y+i+off,
-			 BIG_ICON_SIZE-i-off-border,
-			 BIG_ICON_SIZE-i-off-border);
+	if(button->pixmap) {
+		gdk_draw_pixmap (pixmap, gc, button->pixmap,
+				 i, i,
+				 widget->allocation.x+i+off,
+				 widget->allocation.y+i+off,
+				 BIG_ICON_SIZE-i-off-border,
+				 BIG_ICON_SIZE-i-off-border);
+	}
 
 	if (button->mask) {
 		gdk_gc_set_clip_mask (gc, NULL);
@@ -559,10 +561,16 @@ loadup_file(GdkPixmap **pixmap, GdkBitmap **mask, char *file)
 {
 	GdkImlibImage *im = NULL;
 	int w,h;
+	
+	if(!file) {
+		*pixmap = NULL;
+		*mask = NULL;
+		return;
+	}
 
 	if(*file!='/') {
 		char *f;
-		f = gnome_unconditional_pixmap_file (file);
+		f = gnome_pixmap_file (file);
 		if(f) {
 			im = gdk_imlib_load_image (f);
 			g_free(f);
@@ -608,8 +616,6 @@ button_widget_new_from_file(char *pixmap,
 	GdkBitmap *mask;
 	
 	loadup_file(&_pixmap,&mask,pixmap);
-	if(!_pixmap)
-		return NULL;
 	
 	return button_widget_new(_pixmap,mask,tile,arrow,orient);
 }
@@ -638,10 +644,11 @@ button_widget_set_pixmap_from_file(ButtonWidget *button, char *pixmap)
 	GdkBitmap *mask;
 	
 	loadup_file(&_pixmap,&mask,pixmap);
+	button_widget_set_pixmap(button,_pixmap,mask);
+
 	if(!_pixmap)
 		return FALSE;
 	
-	button_widget_set_pixmap(button,_pixmap,mask);
 	return TRUE;
 }
 
