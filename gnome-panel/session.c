@@ -9,6 +9,7 @@
 #include <config.h>
 #include <string.h>
 #include <signal.h>
+#include <limits.h>
 #include <gnome.h>
 #include <gdk/gdkx.h>
 
