@@ -1,5 +1,46 @@
 2001-08-09  Martin Baulig  <baulig@suse.de>
 
+	* launcher.[ch]: GnomeDesktopEntry -> GnomeDesktopItem, only
+	half-way done, so FIXME.
+
+	* applet.c: Ported to GTK+ 2.0, did some GnomeDesktopItem stuff,
+	has `#ifdef FIXME' issues in the ditem code.
+
+	* menu-fentry.[ch]: Ported to GTK+ 2.0, did some
+	GnomeDesktopEntry -> GnomeDesktopItem stuff, has larger
+	`#ifdef FIXME' issues.
+
+	* menu-properties.c: Don't #include "icon-entry-hack.h".
+
+	* menu-rh.c: `#ifdef FIMXE' some stuff.
+
+	* menu-util.c: Ported to GTK+ 2.0.
+
+	* menu.c: Ported to GTK+ 2.0, but `#ifdef FIXME' large parts
+	of this file.
+
+	* panel-util.c: Ported to GTK+ 2.0, has `#ifdef FIXME' issues.
+
+	* panel_config.c: Ported to GTK+ 2.0, but `#ifdef FIXME' large parts
+	of this file.
+
+	* nothing.cP: Ported to GTK+ 2.0, `#ifdef FIXME' the sound stuff.
+
+	* swalloc.c: Some GnomeDesktopEntry -> GnomeDesktopItem stuff.
+
+	* session.c: Ported to GTK+ 2.0, has `#ifdef FIXME' issues.
+
+	* drawer.c: Ported to GTK+ 2.0, has `#ifdef FIXME' issues.
+
+	* status.c: Ported to GTK+ 2.0.
+
+	* logout.c: Ported to GTK+ 2.0.
+
+	* basep-widget.c, button-widget.c, foobar-widget.c, main.c:
+	Don't use gnome_program_locate_file().
+
+2001-08-09  Martin Baulig  <baulig@suse.de>
+
 	* Makefile.am (panel_temp_SOURCES): Added
 	rgb-stuff.[ch],	tearoffitem.[ch], title-item.[ch],
 	title-item-private.h, panel.[ch].
