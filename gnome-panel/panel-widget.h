@@ -157,9 +157,9 @@ GtkWidget*	panel_widget_new		(gint size,
 gint		panel_widget_add		(PanelWidget *panel,
 						 GtkWidget *applet,
 						 gint pos);
-/*move oldpos to newpos*/
+/*move applet to newpos*/
 gint		panel_widget_move		(PanelWidget *panel,
-						 gint oldpos,
+						 GtkWidget *applet,
 						 gint pos);
 
 /*remove an applet from the panel*/
