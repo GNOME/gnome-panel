@@ -209,6 +209,7 @@ panel_applet_frame_get_size_hints (PanelAppletFrame *frame,
 	CORBA_any *value;
 	CORBA_sequence_CORBA_long *seq;
 	int *size_hints;
+	int extra_size;
 	int i;
 
 	*n_elements = 0;
@@ -224,8 +225,13 @@ panel_applet_frame_get_size_hints (PanelAppletFrame *frame,
 
 	*n_elements = seq->_length;
 	size_hints = g_new (int, seq->_length);
+
+	extra_size = 0;
+	if (panel_applet_frame_get_flags (frame) & APPLET_HAS_HANDLE)
+		extra_size = HANDLE_SIZE + 1;
+	
 	for (i = 0; i < seq->_length; i++) {
-		size_hints[i] = seq->_buffer[i];
+		size_hints[i] = seq->_buffer[i] + extra_size;
 	}
 	
 	CORBA_free (value);
