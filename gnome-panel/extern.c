@@ -400,20 +400,22 @@ reserve_applet_spot (Extern *ext, PanelWidget *panel, int pos,
 
 	gtk_container_add(GTK_CONTAINER(ext->ebox),socket);
 
-	gtk_signal_connect(GTK_OBJECT(socket),"destroy",
-			   GTK_SIGNAL_FUNC(extern_socket_destroy),
-			   ext);
-
 	gtk_widget_show_all (ext->ebox);
 	
 	/*we save the obj in the id field of the appletinfo and the 
 	  path in the path field */
 	ext->info = NULL;
 	if(!register_toy(ext->ebox,ext,panel,pos,type)) {
+		/* the ebox is destroyed in register_toy */
+		ext->ebox = NULL;
 		g_warning("Couldn't add applet");
 		return 0;
 	}
 	ext->info = applets_last->data;
+
+	gtk_signal_connect(GTK_OBJECT(socket),"destroy",
+			   GTK_SIGNAL_FUNC(extern_socket_destroy),
+			   ext);
 	
 	if(!GTK_WIDGET_REALIZED(socket))
 		gtk_widget_realize(socket);
