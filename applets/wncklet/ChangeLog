@@ -1,3 +1,17 @@
+2003-03-13  Mark McLoughlin  <mark@skynet.ie>
+
+	Fix bug #98357 - make the workspace switcher follow fitt's
+	law by being flush up against the screen edge. Requires
+	libwnck HEAD.
+
+	* workspace-switcher.c:
+	(pager_update): don't set the paget size request.
+	(applet_change_pixel_size): kill the size_changed handler.
+	(workspace_switcher_applet_fill): set the EXPAND_MINOR
+	flag on the applet, put the tooltip on the pager itself
+	and remove the frame from around the pager. WnckPager
+	now draws the frame.
+
 2003-03-06  Havoc Pennington  <hp@pobox.com>
 
 	* showdesktop.c (button_toggled_callback): Error dialog if you

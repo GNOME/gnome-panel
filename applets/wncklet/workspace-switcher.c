@@ -42,7 +42,6 @@
 typedef struct {
 	GtkWidget *applet;
 
-	GtkWidget *frame;
 	GtkWidget *pager;
 	
 	WnckScreen *screen;
@@ -63,7 +62,6 @@ typedef struct {
 	int n_rows;				/* for vertical layout this is cols */
 	WnckPagerDisplayMode display_mode;
 	gboolean display_all;
-	int size;
 
 	/* gconf listeners id */
 	guint listeners [3];
@@ -84,19 +82,6 @@ static void set_tooltip               (GtkWidget         *applet);
 static void
 pager_update (PagerData *pager)
 {
-	int internal_size;
-
-	/* 2 pixels of frame on each side */
-	internal_size = pager->size - 2 * 2;
-	
-	if (pager->orientation == GTK_ORIENTATION_HORIZONTAL) {
-		gtk_widget_set_size_request (GTK_WIDGET (pager->pager),
-					     -1, internal_size);
-	} else {
-		gtk_widget_set_size_request (GTK_WIDGET (pager->pager),
-					     internal_size, -1);
-	}
-
 	wnck_pager_set_orientation (WNCK_PAGER (pager->pager),
 				    pager->orientation);
 	wnck_pager_set_n_rows (WNCK_PAGER (pager->pager),
@@ -204,18 +189,6 @@ response_cb(GtkWidget * widget,int id, PagerData *pager)
 	}
 	else
 		gtk_widget_hide (widget);
-}
-
-static void
-applet_change_pixel_size (PanelApplet *applet,
-			  gint         size,
-			  PagerData   *pager)
-{
-	if (pager->size == size)
-		return;
-
-	pager->size = size;
-	pager_update (pager);
 }
 
 static void
@@ -374,6 +347,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 
 	pager->applet = GTK_WIDGET (applet);
 
+	panel_applet_set_flags (PANEL_APPLET (pager->applet), PANEL_APPLET_EXPAND_MINOR);
+
 	setup_gconf (pager);
 	
 	error = NULL;
@@ -411,7 +386,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
                 /* leave current value */
 	}
 	
-	pager->size = panel_applet_get_size (applet);
 	switch (panel_applet_get_orient (applet)) {
 	case PANEL_APPLET_ORIENT_LEFT:
 	case PANEL_APPLET_ORIENT_RIGHT:
@@ -429,10 +403,8 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	/* because the pager doesn't respond to signals at the moment */
 	wnck_screen_force_update (pager->screen);
 
-	pager->frame = gtk_frame_new (NULL);
-	gtk_frame_set_shadow_type (GTK_FRAME (pager->frame), GTK_SHADOW_IN);
-	
 	pager->pager = wnck_pager_new (pager->screen);
+	wnck_pager_set_shadow_type (WNCK_PAGER (pager->pager), GTK_SHADOW_IN);
 
 	g_signal_connect (G_OBJECT (pager->pager), "destroy",
 			  G_CALLBACK (destroy_pager),
@@ -441,13 +413,9 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	pager_update (pager);
 	
 	gtk_widget_show (pager->pager);
-	gtk_container_add (GTK_CONTAINER (pager->frame), pager->pager);
+	gtk_container_add (GTK_CONTAINER (pager->applet), pager->pager);
 
-	gtk_widget_show (pager->frame);
-	
-	gtk_container_add (GTK_CONTAINER (pager->applet), pager->frame);
-
-	set_tooltip (GTK_WIDGET (pager->applet));
+	set_tooltip (GTK_WIDGET (pager->pager));
 
 	gtk_widget_show (pager->applet);
 
@@ -458,10 +426,6 @@ workspace_switcher_applet_fill (PanelApplet *applet)
 	g_signal_connect (G_OBJECT (pager->applet),
 			  "change_orient",
 			  G_CALLBACK (applet_change_orient),
-			  pager);
-	g_signal_connect (G_OBJECT (pager->applet),
-			  "change_size",
-			  G_CALLBACK (applet_change_pixel_size),
 			  pager);
 	
 	panel_applet_setup_menu_from_file (PANEL_APPLET (pager->applet),
