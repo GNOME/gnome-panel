@@ -106,19 +106,24 @@ main(int argc, char **argv)
 			       GNORBA_INIT_SERVER_FUNC, &ev);
 	CORBA_exception_free(&ev);
 
-	duplicate = (panel_corba_gtk_init(orb) == -4);
-
-	client = gnome_master_client ();
-
-	if (! duplicate && 
-	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED)) {
+	{
 		CORBA_Object exist;
 		exist = goad_server_activate_with_repo_id(NULL, "IDL:GNOME/Panel:1.0", GOAD_ACTIVATE_EXISTING_ONLY, NULL);
 		if(!CORBA_Object_is_nil(exist, &ev))
 			duplicate = TRUE;
 		else
-			CORBA_Object_release(duplicate, &ev);
+			CORBA_Object_release(exist, &ev);
 	}
+
+	duplicate = (panel_corba_gtk_init(orb) == -4);
+
+	client = gnome_master_client ();
+
+#if 0
+	if (! duplicate && 
+	    (gnome_client_get_flags(client) & GNOME_CLIENT_IS_CONNECTED)) {
+	}
+#endif
 
 	gnome_client_set_restart_style (client, duplicate ? GNOME_RESTART_NEVER : GNOME_RESTART_IMMEDIATELY);
 
