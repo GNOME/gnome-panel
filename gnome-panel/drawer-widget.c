@@ -25,6 +25,9 @@ static void drawer_pos_get_hide_pos (BasePWidget *basep,
 				     PanelOrientType hide_orient,
 				     gint16 *x, gint16 *y,
 				     guint16 w, guint16 h);
+static void drawer_pos_get_hide_size (BasePWidget *basep, 
+				      PanelOrientType hide_orient,
+				      guint16 *w, guint16 *h);
 
 static void drawer_pos_get_pos(BasePWidget *basep,
 			       gint16 *x, gint16 *y,
@@ -79,6 +82,7 @@ drawer_pos_class_init (DrawerPosClass *klass)
 	pos_class->get_size = NULL; /* the default is ok */
 	pos_class->get_hide_orient = drawer_pos_get_hide_orient;
 	pos_class->get_hide_pos = drawer_pos_get_hide_pos;
+	pos_class->get_hide_size = drawer_pos_get_hide_size;
 	pos_class->get_pos = drawer_pos_get_pos;
 	pos_class->get_menu_pos = drawer_pos_get_menu_pos;
 
@@ -347,6 +351,24 @@ drawer_pos_get_hide_pos (BasePWidget *basep,
 		*y = -ABS(*y) - 1;
 	}
 }
+
+static void
+drawer_pos_get_hide_size (BasePWidget *basep, 
+			  PanelOrientType hide_orient,
+			  guint16 *w, guint16 *h)
+{
+	switch (hide_orient) {
+	case ORIENT_UP:
+	case ORIENT_DOWN:
+		*h = 1;
+		break;
+	case ORIENT_RIGHT:
+	case ORIENT_LEFT:
+		*w = 1;
+		break;
+	}
+}
+
 
 static void
 drawer_pos_pre_convert_hook (BasePWidget *basep)
