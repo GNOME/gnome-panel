@@ -12,7 +12,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-panel\n"
-"POT-Creation-Date: 2002-03-25 13:31+0000\n"
+"POT-Creation-Date: 2002-04-01 19:41+0100\n"
 "PO-Revision-Date: 2002-03-12 18:12+0100\n"
 "Last-Translator: Johan Dahlin <jdahlin@telia.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -35,9 +35,8 @@ msgstr "Om..."
 #: applets/gen_util/GNOME_PagerApplet.xml.h:2
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:2
 #: applets/gen_util/printer.c:473 gnome-panel/drawer.c:660
-#: gnome-panel/launcher.c:723 gnome-panel/logout.c:130
-#: gnome-panel/logout.c:215 gnome-panel/menu.c:4000 gnome-panel/status.c:375
-#: gnome-panel/swallow.c:453
+#: gnome-panel/launcher.c:729 gnome-panel/logout.c:132
+#: gnome-panel/logout.c:219 gnome-panel/menu.c:3973 gnome-panel/status.c:377
 msgid "Help"
 msgstr "Hjälp"
 
@@ -46,11 +45,9 @@ msgstr "Hjälp"
 #: applets/gen_util/GNOME_MailCheckApplet.xml.h:4
 #: applets/gen_util/GNOME_PagerApplet.xml.h:3
 #: applets/gen_util/GNOME_TasklistApplet.xml.h:3
-#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:657
-#: gnome-panel/launcher.c:721 gnome-panel/menu.c:1321 gnome-panel/menu.c:1393
-#: gnome-panel/menu.c:3284 gnome-panel/menu.c:3990
-msgid "Properties..."
-msgstr "Egenskaper..."
+#, fuzzy
+msgid "Preferences..."
+msgstr "Inställningar"
 
 #: applets/fish/GNOME_FishApplet_Factory.server.in.h:1
 msgid "Amusements"
@@ -72,17 +69,31 @@ msgstr "Wanda"
 msgid "Wanda Factory"
 msgstr "Wanda-fabrik"
 
-#: applets/fish/fish.c:391 applets/fish/fish.c:974
+#: applets/fish/fish.c:69
+#, fuzzy, c-format
+msgid "%s the GNOME Fish"
+msgstr "GNOME-fisken %s säger:"
+
+#: applets/fish/fish.c:70
+#, fuzzy, c-format
+msgid "%s the GNOME Fish, a contemporary oracle"
+msgstr "GNOME-fisken %s säger:"
+
+#: applets/fish/fish.c:109
+msgid "GNOME Fish, the fortune teller"
+msgstr ""
+
+#: applets/fish/fish.c:483 applets/fish/fish.c:1118
 #, no-c-format
 msgid "%s the Fish"
 msgstr "Fisken %s"
 
-#: applets/fish/fish.c:392
-#, c-format
-msgid "%s the GNOME Fish Says:"
+#: applets/fish/fish.c:484
+#, fuzzy, c-format
+msgid "<big><big>%s the GNOME Fish Says:</big></big>"
 msgstr "GNOME-fisken %s säger:"
 
-#: applets/fish/fish.c:492
+#: applets/fish/fish.c:577
 msgid ""
 "Warning:  The command appears to be something actually useful.\n"
 "Since this is a useless applet, you may not want to do this.\n"
@@ -95,46 +106,46 @@ msgstr ""
 "någonting som skulle göra panelprogrammet praktiskt eller\n"
 "användbart."
 
-#: applets/fish/fish.c:575
-msgid "GNOME Fish Properties"
+#: applets/fish/fish.c:705
+#, fuzzy
+msgid "GNOME Fish Preferences"
 msgstr "GNOME-fiskens egenskaper"
 
-#: applets/fish/fish.c:585
+#: applets/fish/fish.c:718
 msgid "Your GNOME Fish's Name:"
 msgstr "Namnet på din GNOME-fisk:"
 
-#: applets/fish/fish.c:600
+#: applets/fish/fish.c:735
 msgid "The Animation Filename:"
 msgstr "Animationens filnamn:"
 
-#: applets/fish/fish.c:602 applets/gen_util/mailcheck.c:1151
+#: applets/fish/fish.c:737 applets/gen_util/mailcheck.c:1226
 #: gnome-panel/menu-properties.c:501 gnome-panel/menu-properties.c:539
-#: gnome-panel/panel-config.c:1378 gnome-panel/panel-util.c:240
-#: gnome-panel/swallow.c:283
+#: gnome-panel/panel-config.c:1376 gnome-panel/panel-util.c:240
 msgid "Browse"
 msgstr "Bläddra"
 
-#: applets/fish/fish.c:616
+#: applets/fish/fish.c:753
 msgid "Command to execute when fish is clicked:"
 msgstr "Kommando som ska utföras när man klickar på fisken:"
 
-#: applets/fish/fish.c:631
+#: applets/fish/fish.c:770
 msgid "Frames In Animation:"
 msgstr "Antal bildrutor i animationen:"
 
-#: applets/fish/fish.c:647
+#: applets/fish/fish.c:788
 msgid "Pause per frame (s):"
 msgstr "Paus per bildruta (s):"
 
-#: applets/fish/fish.c:660
+#: applets/fish/fish.c:803
 msgid "Rotate on vertical panels"
 msgstr "Rotera i vertikala paneler"
 
-#: applets/fish/fish.c:672
+#: applets/fish/fish.c:815
 msgid "Fish"
 msgstr "Fisk"
 
-#: applets/fish/fish.c:845
+#: applets/fish/fish.c:986
 msgid ""
 "You do not have fortune installed or you have not specified a program to "
 "run.\n"
@@ -146,7 +157,7 @@ msgstr ""
 "\n"
 "Ställ in detta i inställningsrutan för GNOME-fiskens egenskaper"
 
-#: applets/fish/fish.c:865
+#: applets/fish/fish.c:1006
 msgid ""
 "The water needs changing!\n"
 "(Look at today's date)"
@@ -154,15 +165,15 @@ msgstr ""
 "Vattnet behöver bytas!\n"
 "(Titta på dagens datum)"
 
-#: applets/fish/fish.c:989
+#: applets/fish/fish.c:1133
 msgid "(with minor help from George)"
 msgstr "(med lite hjälp från George)"
 
-#: applets/fish/fish.c:1007
+#: applets/fish/fish.c:1151
 msgid "The GNOME Fish Applet"
 msgstr "GNOME:s fiskpanelprogram"
 
-#: applets/fish/fish.c:1010
+#: applets/fish/fish.c:1154
 msgid ""
 "This applet has no use what-so-ever. It only takes up disk space and "
 "compilation time, and if loaded it also takes up precious panel space and "
@@ -203,6 +214,7 @@ msgid "Get the current time and date"
 msgstr "Visa aktuell tid och aktuellt datum"
 
 #: applets/gen_util/GNOME_GenUtilApplet_Factory.server.in.in.h:6
+#: applets/gen_util/mailcheck.c:214
 msgid "Inbox Monitor"
 msgstr "Inkorgsövervakare"
 
@@ -255,7 +267,6 @@ msgstr "%I.%M %p"
 #. This format string is used, to display the actual time in
 #. 24 hour format.
 #: applets/gen_util/clock.c:174 applets/gen_util/clock.c:388
-#: gnome-panel/foobar-widget.c:432 gnome-panel/foobar-widget.c:1057
 msgid "%H:%M"
 msgstr "%H.%M"
 
@@ -277,7 +288,7 @@ msgid "%a %b %d"
 msgstr "%a %d %b"
 
 #. Set the applet's tooltip
-#: applets/gen_util/clock.c:202 gnome-panel/foobar-widget.c:353
+#: applets/gen_util/clock.c:202
 msgid "%A %B %d"
 msgstr "%A %d %B"
 
@@ -290,41 +301,42 @@ msgid "%A, %B %d %Y"
 msgstr "%A %d %B %Y"
 
 #: applets/gen_util/clock.c:749
-msgid "Clock Properties"
-msgstr "Klockegenskaper"
+#, fuzzy
+msgid "Clock Preferences"
+msgstr "Inställningar"
 
-#: applets/gen_util/clock.c:772
+#: applets/gen_util/clock.c:773
 msgid "Time Format"
 msgstr "Tidsformat"
 
-#: applets/gen_util/clock.c:784
+#: applets/gen_util/clock.c:785
 msgid "_12 hour"
 msgstr "_12 timmar"
 
-#: applets/gen_util/clock.c:792
+#: applets/gen_util/clock.c:793
 msgid "_24 hour"
 msgstr "_24 timmar"
 
-#: applets/gen_util/clock.c:823
+#: applets/gen_util/clock.c:824
 msgid "Show _date"
 msgstr "Visa datum"
 
-#: applets/gen_util/clock.c:834
+#: applets/gen_util/clock.c:835
 msgid "Use _GMT"
 msgstr "Använd _GMT"
 
-#: applets/gen_util/clock.c:845
+#: applets/gen_util/clock.c:846
 msgid "_UNIX time"
 msgstr "_Unixtid"
 
-#: applets/gen_util/clock.c:849
+#: applets/gen_util/clock.c:850
 msgid "_Internet time"
 msgstr "_Internettid"
 
 #. Translator credits
-#: applets/gen_util/clock.c:942 applets/gen_util/mailcheck.c:1509
+#: applets/gen_util/clock.c:943 applets/gen_util/mailcheck.c:1590
 #: applets/gen_util/pager.c:420 applets/gen_util/tasklist.c:489
-#: gnome-panel/menu.c:239
+#: gnome-panel/menu.c:238
 msgid "translator_credits"
 msgstr ""
 "Christian Rose\n"
@@ -335,157 +347,175 @@ msgstr ""
 "Martin Wahlén\n"
 "Rapportera fel i översättningen till sv@li.org"
 
-#: applets/gen_util/clock.c:960
+#: applets/gen_util/clock.c:961
 msgid "Clock Applet"
 msgstr "Klockapanelprogram"
 
-#: applets/gen_util/clock.c:961
+#: applets/gen_util/clock.c:962
 msgid "(C) 1998-2002 the Free Software Foundation"
 msgstr "© 1998-2002 Free Software Foundation"
 
-#: applets/gen_util/clock.c:962
+#: applets/gen_util/clock.c:963
 msgid "The Clock Applet displays current time and date"
 msgstr "Klockpanelprogrammet visar aktuell tid och aktuellt datum"
 
-#: applets/gen_util/mailcheck.c:208 applets/gen_util/mailcheck.c:1522
-msgid "Mail check Applet"
-msgstr "Panelprogram för e-postkontroll"
-
-#: applets/gen_util/mailcheck.c:218
-msgid "_Password:"
-msgstr "_Lösenord:"
-
-#: applets/gen_util/mailcheck.c:252
+#: applets/gen_util/mailcheck.c:220
 msgid ""
-"Remote-client-error occured. Remote-polling deactivated. Maybe you used a "
-"wrong server/username/password?"
+"You didn't set a password in the preferences for the Inbox Monitor,\n"
+"so you have to enter it each time it starts up."
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:228
+msgid "Please enter your mailserver's _password:"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:263
+#, fuzzy
+msgid ""
+"The Inbox Monitor failed to check your mails and thus automatic updating has "
+"been deactivated for now.\n"
+"Maybe you used a wrong server, username or password?"
 msgstr ""
 "Ett fjärrklientfel uppstod. Fjärrundersökning avaktiverad. Du kanske använde "
 "fel server/användarnamn/lösenord?"
 
-#: applets/gen_util/mailcheck.c:452
+#: applets/gen_util/mailcheck.c:470
 msgid "You have new mail."
 msgstr "Du har ny e-post."
 
-#: applets/gen_util/mailcheck.c:454
+#: applets/gen_util/mailcheck.c:472
 msgid "You have mail."
 msgstr "Du har e-post."
 
-#: applets/gen_util/mailcheck.c:458
+#: applets/gen_util/mailcheck.c:476
 #, c-format
 msgid "%d/%d messages"
 msgstr "%d/%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:460
+#: applets/gen_util/mailcheck.c:478
 #, c-format
 msgid "%d messages"
 msgstr "%d meddelanden"
 
-#: applets/gen_util/mailcheck.c:464
+#: applets/gen_util/mailcheck.c:482
 msgid "No mail."
 msgstr "Ingen e-post."
 
-#: applets/gen_util/mailcheck.c:1096
+#: applets/gen_util/mailcheck.c:1002 applets/gen_util/mailcheck.c:1724
+#, fuzzy
+msgid "Status not updated"
+msgstr "Starta i \"dagens meddelande\"-läge"
+
+#: applets/gen_util/mailcheck.c:1171
 msgid "Mailbox resides on:"
 msgstr "Brevlådan finns på:"
 
-#: applets/gen_util/mailcheck.c:1103
+#: applets/gen_util/mailcheck.c:1178
 msgid "Local mailspool"
 msgstr "Lokal brevlåda"
 
-#: applets/gen_util/mailcheck.c:1111
+#: applets/gen_util/mailcheck.c:1186
 msgid "Local maildir"
 msgstr "Lokal e-postkatalog"
 
-#: applets/gen_util/mailcheck.c:1119
+#: applets/gen_util/mailcheck.c:1194
 msgid "Remote POP3-server"
 msgstr "POP3-server"
 
-#: applets/gen_util/mailcheck.c:1127
+#: applets/gen_util/mailcheck.c:1202
 msgid "Remote IMAP-server"
 msgstr "IMAP-server"
 
-#: applets/gen_util/mailcheck.c:1147
+#: applets/gen_util/mailcheck.c:1222
 msgid "Mail spool file:"
 msgstr "Postlådefil (mail spool):"
 
-#: applets/gen_util/mailcheck.c:1164
+#: applets/gen_util/mailcheck.c:1239
 msgid "Mail server:"
 msgstr "E-postserver:"
 
-#: applets/gen_util/mailcheck.c:1181
+#: applets/gen_util/mailcheck.c:1256
 msgid "Username:"
 msgstr "Användarnamn:"
 
-#: applets/gen_util/mailcheck.c:1195
+#: applets/gen_util/mailcheck.c:1270
 msgid "Password:"
 msgstr "Lösenord:"
 
-#: applets/gen_util/mailcheck.c:1213
+#: applets/gen_util/mailcheck.c:1288
 msgid "Folder:"
 msgstr "Mapp:"
 
-#: applets/gen_util/mailcheck.c:1231
+#: applets/gen_util/mailcheck.c:1306
 msgid "Command to run before checking for mail:"
 msgstr "Kommando som ska köras innan kontroll av e-post:"
 
-#: applets/gen_util/mailcheck.c:1261
+#: applets/gen_util/mailcheck.c:1336
 msgid "Execute"
 msgstr "Kör program"
 
-#: applets/gen_util/mailcheck.c:1272
+#: applets/gen_util/mailcheck.c:1347
 msgid "Before each update:"
 msgstr "Före varje uppdatering:"
 
-#: applets/gen_util/mailcheck.c:1293
+#: applets/gen_util/mailcheck.c:1368
 msgid "When new mail arrives:"
 msgstr "När ny e-post levereras:"
 
-#: applets/gen_util/mailcheck.c:1312
+#: applets/gen_util/mailcheck.c:1387
 msgid "When clicked:"
 msgstr "Vid klick:"
 
-#: applets/gen_util/mailcheck.c:1335
+#: applets/gen_util/mailcheck.c:1406
+msgid "Set the number of unread mails to zero"
+msgstr ""
+
+#: applets/gen_util/mailcheck.c:1417
 msgid "Check for mail every"
 msgstr "Kolla efter e-post var"
 
-#: applets/gen_util/mailcheck.c:1350
+#: applets/gen_util/mailcheck.c:1431
 msgid "minutes"
 msgstr "minut"
 
-#: applets/gen_util/mailcheck.c:1365
+#: applets/gen_util/mailcheck.c:1442
 msgid "seconds"
 msgstr "sekund"
 
-#: applets/gen_util/mailcheck.c:1369
+#: applets/gen_util/mailcheck.c:1446
 msgid "Play a sound when new mail arrives"
 msgstr "Spela ett ljud när ny e-post ankommer"
 
-#: applets/gen_util/mailcheck.c:1380
+#: applets/gen_util/mailcheck.c:1457
 msgid "Select animation"
 msgstr "Välj animation"
 
-#: applets/gen_util/mailcheck.c:1427
-msgid "Inbox Monitor Properties"
+#: applets/gen_util/mailcheck.c:1506
+#, fuzzy
+msgid "Inbox Monitor Preferences"
 msgstr "Egenskaper för inkorgsövervakare"
 
-#: applets/gen_util/mailcheck.c:1443
+#: applets/gen_util/mailcheck.c:1522
 msgid "_Mail check"
 msgstr "_E-postkontroll"
 
-#: applets/gen_util/mailcheck.c:1447
+#: applets/gen_util/mailcheck.c:1526
 msgid "Mail_box"
 msgstr "_Brevlåda"
 
-#: applets/gen_util/mailcheck.c:1523
+#: applets/gen_util/mailcheck.c:1603
+msgid "Mail check Applet"
+msgstr "Panelprogram för e-postkontroll"
+
+#: applets/gen_util/mailcheck.c:1604
 msgid "(c) 1998-2000 the Free Software Foundation"
 msgstr "© 1998-2000 Free Software Foundation"
 
-#: applets/gen_util/mailcheck.c:1524
+#: applets/gen_util/mailcheck.c:1605
 msgid "Mail check notifies you when new mail arrives in your mailbox"
 msgstr "E-postkontroll meddelar dig när nya brev hamnar i din brevlåda"
 
-#: applets/gen_util/mailcheck.c:1619
+#: applets/gen_util/mailcheck.c:1700
 msgid "Text only"
 msgstr "Endast text"
 
@@ -551,7 +581,8 @@ msgid "Show workspace _names in the switcher"
 msgstr "Visa _namn på arbetsytor i bytaren"
 
 #: applets/gen_util/pager.glade.h:7
-msgid "Workspace Switcher Properties"
+#, fuzzy
+msgid "Workspace Switcher Preferences"
 msgstr "Egenskaper för arbetsytebytare"
 
 #: applets/gen_util/pager.glade.h:8
@@ -598,6 +629,12 @@ msgstr ""
 msgid "Can't create applet!\n"
 msgstr "Kan inte skapa panelprogram!\n"
 
+#: applets/gen_util/printer.c:466 gnome-panel/drawer.c:657
+#: gnome-panel/launcher.c:727 gnome-panel/menu.c:1320 gnome-panel/menu.c:1392
+#: gnome-panel/menu.c:3247 gnome-panel/menu.c:3963
+msgid "Properties..."
+msgstr "Egenskaper..."
+
 #: applets/gen_util/tasklist.c:502
 msgid "(c) 2001 Red Hat, Inc"
 msgstr "© 2001 Red Hat, Inc"
@@ -634,7 +671,8 @@ msgid "When restoring minimized windows"
 msgstr "Vid återställning av minimerade fönster"
 
 #: applets/gen_util/tasklist.glade.h:7
-msgid "Window List Properties"
+#, fuzzy
+msgid "Window List Preferences"
 msgstr "Egenskaper för fönsterlista"
 
 #: applets/gen_util/tasklist.glade.h:8
@@ -659,7 +697,7 @@ msgstr "GNOME-panelskalet"
 
 #. FIXME: should have a "Move" pixmap.
 #.
-#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:563
+#: gnome-panel/GNOME_Panel_Popup.xml.h:1 gnome-panel/applet.c:543
 msgid "Move"
 msgstr "Flytta"
 
@@ -667,7 +705,7 @@ msgstr "Flytta"
 msgid "Remove From Panel"
 msgstr "Ta bort från panelen"
 
-#: gnome-panel/applet.c:216 gnome-panel/menu.c:988 gnome-panel/panel-util.c:49
+#: gnome-panel/applet.c:207 gnome-panel/menu.c:987 gnome-panel/panel-util.c:49
 #, c-format
 msgid ""
 "<b>Cannot display help document</b>\n"
@@ -681,15 +719,15 @@ msgstr ""
 #. Translators: Task with no name, should not really happen, so
 #. * this should signal that the panel is confused by this task
 #. * (thus question marks)
-#: gnome-panel/applet.c:501 gnome-panel/foobar-widget.c:756
+#: gnome-panel/applet.c:481 gnome-panel/foobar-widget.c:365
 msgid "???"
 msgstr "???"
 
-#: gnome-panel/applet.c:552
+#: gnome-panel/applet.c:532
 msgid "Remove from panel"
 msgstr "Ta bort från panelen"
 
-#: gnome-panel/applet.c:1161
+#: gnome-panel/applet.c:1151
 msgid "Can't find an empty spot"
 msgstr "Kan inte hitta ett ledigt ställe"
 
@@ -743,7 +781,7 @@ msgstr "CDE-menyer"
 
 #: gnome-panel/drawer.c:136 gnome-panel/panel-config.c:798
 #: gnome-panel/panel-config.c:833 gnome-panel/panel-config.c:904
-#: gnome-panel/panel-config.c:1010
+#: gnome-panel/panel-config.c:1008
 msgid "Size and Position"
 msgstr "Storlek och position"
 
@@ -774,122 +812,44 @@ msgstr "Visa döljknapp"
 msgid "Enable hidebutton arrow"
 msgstr "Visa pil på döljknappen"
 
-#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3129
+#: gnome-panel/drawer.c:193 gnome-panel/drawer.c:473 gnome-panel/menu.c:3101
 msgid "Drawer"
 msgstr "Låda"
 
-#: gnome-panel/foobar-widget.c:202
-msgid ""
-"Cannot execute the gnome calendar,\n"
-"perhaps it's not installed.\n"
-"It is in the gnome-pim package."
-msgstr ""
-"Kan inte köra gnome-kalendern.\n"
-"Den är kanske inte installerad.\n"
-"Den finns i gnome-pim-paketet."
-
-#: gnome-panel/foobar-widget.c:214 gnome-panel/menu.c:3586
+#: gnome-panel/foobar-widget.c:197 gnome-panel/menu.c:3559
 msgid "Run Program..."
 msgstr "Kör program..."
 
-#: gnome-panel/foobar-widget.c:217
+#: gnome-panel/foobar-widget.c:200
 msgid "Run applications, if you know the correct command to type in"
 msgstr "Kör program om du känner till rätt kommando att mata in"
 
-#: gnome-panel/foobar-widget.c:229
+#: gnome-panel/foobar-widget.c:212
 msgid "Lock Display"
 msgstr "Lås skärmen"
 
-#: gnome-panel/foobar-widget.c:233
+#: gnome-panel/foobar-widget.c:216
 msgid "Protect your computer from unauthorized use"
 msgstr "Skydda din dator mot obehörig användning"
 
-#: gnome-panel/foobar-widget.c:242
+#: gnome-panel/foobar-widget.c:225
 msgid "Log Out"
 msgstr "Logga ut"
 
-#: gnome-panel/foobar-widget.c:245
+#: gnome-panel/foobar-widget.c:228
 msgid "Quit from the GNOME desktop"
 msgstr "Avsluta GNOME-skrivbordet"
 
-#: gnome-panel/foobar-widget.c:252
+#: gnome-panel/foobar-widget.c:235
 msgid "Actions"
 msgstr "Händelser"
 
-#: gnome-panel/foobar-widget.c:278
-msgid "menu wasn't created"
-msgstr "menyn skapades inte"
-
-#: gnome-panel/foobar-widget.c:315
-msgid "Today"
-msgstr "Idag"
-
-#: gnome-panel/foobar-widget.c:315
-msgid "View the calendar for today."
-msgstr "Visa kalendern för idag."
-
-#: gnome-panel/foobar-widget.c:316
-msgid "This Week"
-msgstr "Den här veckan"
-
-#: gnome-panel/foobar-widget.c:316
-msgid "View the calendar for this week."
-msgstr "Visa kalendern för denna vecka."
-
-#: gnome-panel/foobar-widget.c:317
-msgid "This Month"
-msgstr "Den här månaden"
-
-#: gnome-panel/foobar-widget.c:317
-msgid "View the calendar for this month."
-msgstr "Visa kalendern för denna månad."
-
-#: gnome-panel/foobar-widget.c:433
-msgid "%H:%M:%S"
-msgstr "%H.%M.%S"
-
-#: gnome-panel/foobar-widget.c:434
-msgid "%l:%M %p"
-msgstr "%k.%M"
-
-#: gnome-panel/foobar-widget.c:435
-msgid "%l:%M:%S %p"
-msgstr "%k.%M.%S"
-
-#: gnome-panel/foobar-widget.c:443 gnome-panel/panel.c:2404
-msgid "%I:%M:%S %p"
-msgstr "%H.%M.%S"
-
-#: gnome-panel/foobar-widget.c:483
-msgid ""
-"Could not call time-admin\n"
-"Perhaps time-admin is not installed"
-msgstr ""
-"Kunde inte anropa time-admin\n"
-"time-admin är kanske inte installerat"
-
-#: gnome-panel/foobar-widget.c:497
-msgid "Add Appointment..."
-msgstr "Lägg till möte..."
-
-#: gnome-panel/foobar-widget.c:506
-msgid "Set Time..."
-msgstr "Ställ tid..."
-
-#: gnome-panel/foobar-widget.c:509
-msgid "Adjust the date and time."
-msgstr "Ställ datumet och tiden."
-
-#: gnome-panel/foobar-widget.c:521
-msgid "Format"
-msgstr "Format"
-
-#: gnome-panel/foobar-widget.c:838
+#: gnome-panel/foobar-widget.c:447
 msgid "No windows open"
 msgstr "Inga fönster öppna"
 
-#: gnome-panel/foobar-widget.c:1097 gnome-panel/menu.c:2684
-#: gnome-panel/menu.c:2690 gnome-panel/menu.c:3552
+#: gnome-panel/foobar-widget.c:706 gnome-panel/menu.c:2675
+#: gnome-panel/menu.c:2681 gnome-panel/menu.c:3525
 msgid "Applications"
 msgstr "Applikationer"
 
@@ -933,11 +893,7 @@ msgstr ""
 msgid "No panel found\n"
 msgstr "Hittade ingen panel\n"
 
-#: gnome-panel/gnome-panel-properties.c:189
-msgid "Press a key..."
-msgstr "Tryck på en tangent..."
-
-#: gnome-panel/gnome-panel-properties.c:447
+#: gnome-panel/gnome-panel-properties.c:319
 msgid ""
 "The system administrator has disallowed\n"
 " modification of the panel configuration"
@@ -945,7 +901,7 @@ msgstr ""
 "Systemadministratören har förbjudit\n"
 " ändringar i panelkonfigurationen"
 
-#: gnome-panel/gnome-panel-properties.c:461
+#: gnome-panel/gnome-panel-properties.c:333
 msgid "Global Panel Properties"
 msgstr "Globala panelegenskaper"
 
@@ -953,7 +909,7 @@ msgstr "Globala panelegenskaper"
 msgid "Global panel properties"
 msgstr "Globala panelegenskaper"
 
-#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3602
+#: gnome-panel/gnome-panel-properties.desktop.in.h:2 gnome-panel/menu.c:3575
 msgid "Panel"
 msgstr "Panel"
 
@@ -1027,8 +983,8 @@ msgid "Medium"
 msgstr "Mellan"
 
 #: gnome-panel/gnome-panel-properties.glade.h:18 gnome-panel/menu-ditem.c:290
-#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3641
-#: gnome-panel/menu.c:3866
+#: gnome-panel/menu-properties.c:517 gnome-panel/menu.c:3614
+#: gnome-panel/menu.c:3839
 msgid "Menu"
 msgstr "Meny"
 
@@ -1203,7 +1159,7 @@ msgstr ""
 "Misslyckades med att läsa in detta program!\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:331
+#: gnome-panel/gnome-run.c:328
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1212,7 +1168,7 @@ msgstr ""
 "Misslyckades med att köra kommandot:\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:385
+#: gnome-panel/gnome-run.c:382
 #, c-format
 msgid ""
 "Failed to execute command:\n"
@@ -1223,44 +1179,44 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: gnome-panel/gnome-run.c:428
+#: gnome-panel/gnome-run.c:425
 msgid "Choose a program to run"
 msgstr "Välj ett program att köra"
 
-#: gnome-panel/gnome-run.c:683
+#: gnome-panel/gnome-run.c:680
 msgid "_Browse..."
 msgstr "_Bläddra..."
 
-#: gnome-panel/gnome-run.c:692
+#: gnome-panel/gnome-run.c:689
 msgid "Run in _terminal"
 msgstr "Kör i _terminal"
 
-#: gnome-panel/gnome-run.c:916
+#: gnome-panel/gnome-run.c:915
 #, c-format
 msgid "Will run '%s'"
 msgstr "Kommer att köra \"%s\""
 
-#: gnome-panel/gnome-run.c:927 gnome-panel/gnome-run.c:930
+#: gnome-panel/gnome-run.c:926 gnome-panel/gnome-run.c:929
 msgid "No program selected"
 msgstr "Inget program är valt"
 
-#: gnome-panel/gnome-run.c:1034
+#: gnome-panel/gnome-run.c:1033
 msgid "A_pplications:"
 msgstr "_Program:"
 
-#: gnome-panel/gnome-run.c:1151
+#: gnome-panel/gnome-run.c:1152
 msgid "_Advanced <<"
 msgstr "_Avancerat <<"
 
-#: gnome-panel/gnome-run.c:1154
+#: gnome-panel/gnome-run.c:1155
 msgid "Hide the advanced controls below this button."
 msgstr "Dölj avancerade kontroller under denna knapp."
 
-#: gnome-panel/gnome-run.c:1163
+#: gnome-panel/gnome-run.c:1164
 msgid "_Advanced >>"
 msgstr "_Avancerat >>"
 
-#: gnome-panel/gnome-run.c:1166
+#: gnome-panel/gnome-run.c:1167
 msgid ""
 "Allow typing in a command line instead of choosing an application from the "
 "list"
@@ -1268,11 +1224,11 @@ msgstr ""
 "Tillåt att en kommandorad skrivs in istället för att ett program väljs från "
 "listan"
 
-#: gnome-panel/gnome-run.c:1183
+#: gnome-panel/gnome-run.c:1184
 msgid "_Run"
 msgstr "_Kör"
 
-#: gnome-panel/gnome-run.c:1240
+#: gnome-panel/gnome-run.c:1241
 msgid "Run Program"
 msgstr "Kör program"
 
@@ -1309,21 +1265,21 @@ msgstr ""
 "Kan inte starta ikon\n"
 "%s"
 
-#: gnome-panel/launcher.c:459
+#: gnome-panel/launcher.c:465
 #, c-format
 msgid "Help on %s Application"
 msgstr "Hjälp med programmet %s"
 
-#: gnome-panel/launcher.c:578
+#: gnome-panel/launcher.c:584
 msgid "Launcher properties"
 msgstr "Egenskaper för programknappen"
 
-#: gnome-panel/launcher.c:767
+#: gnome-panel/launcher.c:773
 msgid "Create launcher applet"
 msgstr "Skapa programknapp"
 
 #. class
-#: gnome-panel/launcher.c:987
+#: gnome-panel/launcher.c:993
 #, c-format
 msgid ""
 "Cannot save launcher to disk, the following error occured:\n"
@@ -1334,7 +1290,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/logout.c:84 gnome-panel/menu.c:3418
+#: gnome-panel/logout.c:84 gnome-panel/menu.c:3381
 msgid "Log out"
 msgstr "Logga ut"
 
@@ -1342,40 +1298,43 @@ msgstr "Logga ut"
 msgid "Log out of GNOME"
 msgstr "Logga ut ur GNOME"
 
-#: gnome-panel/logout.c:149 gnome-panel/logout.c:168 gnome-panel/menu.c:3405
+#: gnome-panel/logout.c:151 gnome-panel/logout.c:170 gnome-panel/menu.c:3368
 msgid "Lock screen"
 msgstr "Lås skärmen"
 
 #.
-#. <jwz> Blank Screen Now
-#. <jwz> Lock Screen Now
-#. <jwz> Kill Daemon
-#. <jwz> Restart Daemon
-#. <jwz> Preferences
+#. <jwz> Activate Screensaver
+#. <jwz> Lock Screen
+#. <jwz> Kill Screensaver Daemon
+#. <jwz> Restart Screensaver Daemon
+#. <jwz> Properties
 #. <jwz> (or "configuration" instead?  whatever word you use)
 #. <jwz> those should do xscreensaver-command -activate, -lock, -exit...
 #. <jwz> and "xscreensaver-command -exit ; xscreensaver &"
 #. <jwz> and "xscreensaver-demo"
 #.
-#: gnome-panel/logout.c:207
-msgid "Blank Screen Now"
-msgstr "Släck skärmen nu"
+#: gnome-panel/logout.c:211
+#, fuzzy
+msgid "Activate Screensaver"
+msgstr "Skärmsläckare"
 
-#: gnome-panel/logout.c:208
-msgid "Lock Screen Now"
-msgstr "Lås skärmen nu"
-
-#: gnome-panel/logout.c:209
-msgid "Kill Daemon"
-msgstr "Döda demon"
-
-#: gnome-panel/logout.c:210
-msgid "Restart Daemon"
-msgstr "Starta om demon"
+#: gnome-panel/logout.c:212
+msgid "Lock Screen"
+msgstr "Lås skärmen"
 
 #: gnome-panel/logout.c:213
-msgid "Preferences"
-msgstr "Inställningar"
+#, fuzzy
+msgid "Kill Screensaver Daemon"
+msgstr "Döda demon"
+
+#: gnome-panel/logout.c:214
+#, fuzzy
+msgid "Restart Screensaver Daemon"
+msgstr "Starta om demon"
+
+#: gnome-panel/logout.c:217
+msgid "Properties"
+msgstr "Egenskaper"
 
 #: gnome-panel/main.c:166
 msgid "Specify a profile name to load"
@@ -1399,7 +1358,7 @@ msgstr ""
 msgid "Desktop entry properties"
 msgstr "Egenskaper förs skrivbordspost"
 
-#: gnome-panel/menu-ditem.c:396
+#: gnome-panel/menu-ditem.c:447
 msgid ""
 "Cannot create the launcher.\n"
 "\n"
@@ -1410,7 +1369,7 @@ msgstr ""
 "Inget kommando eller url angavs."
 
 #. class
-#: gnome-panel/menu-ditem.c:427
+#: gnome-panel/menu-ditem.c:468
 #, c-format
 msgid ""
 "Cannot save menu item to disk, the following error occured:\n"
@@ -1421,7 +1380,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: gnome-panel/menu-ditem.c:448
+#: gnome-panel/menu-ditem.c:489
 msgid "Create menu item"
 msgstr "Skapa menyval"
 
@@ -1429,8 +1388,8 @@ msgstr "Skapa menyval"
 msgid "Can't open directory, using main menu!"
 msgstr "Kan inte öppna katalog, använder huvudmenyn!"
 
-#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3305
-#: gnome-panel/menu.c:3996
+#: gnome-panel/menu-properties.c:127 gnome-panel/menu.c:3268
+#: gnome-panel/menu.c:3969
 msgid "Edit menus..."
 msgstr "Redigera menyer..."
 
@@ -1498,16 +1457,16 @@ msgstr "Sökväg till meny"
 msgid "Use custom icon for panel button"
 msgstr "Använd anpassad ikon för panelknapp"
 
-#: gnome-panel/menu.c:227
+#: gnome-panel/menu.c:226
 msgid "Many many others ..."
 msgstr "Många många andra..."
 
 #. ... from the Monty Pythons show...
-#: gnome-panel/menu.c:229
+#: gnome-panel/menu.c:228
 msgid "and finally, The Knights Who Say ... NI!"
 msgstr "och slutligen, riddarna som säger ... NI!"
 
-#: gnome-panel/menu.c:262
+#: gnome-panel/menu.c:261
 msgid ""
 "This program is responsible for launching other applications, embedding "
 "small applets within itself, world peace, and random X crashes."
@@ -1515,7 +1474,7 @@ msgstr ""
 "Det här programmet kan köra andra program, bädda in små panelprogram i sig "
 "själv, skapa världsfred, och orsaka diverse X-krascher."
 
-#: gnome-panel/menu.c:268
+#: gnome-panel/menu.c:267
 msgid ""
 "\n"
 "\n"
@@ -1527,23 +1486,23 @@ msgstr ""
 "Kör i \"låst\" läge. Detta betyder att din systemadministratör har förbjudit "
 "alla ändringar i panelkonfigurationen."
 
-#: gnome-panel/menu.c:274
+#: gnome-panel/menu.c:273
 msgid "The GNOME Panel"
 msgstr "GNOME-panelen"
 
-#: gnome-panel/menu.c:275
+#: gnome-panel/menu.c:274
 msgid "(C) 1997-2002 the Free Software Foundation"
 msgstr "© 1997-2002 Free Software Foundation"
 
-#: gnome-panel/menu.c:294
+#: gnome-panel/menu.c:293
 msgid "End world hunger"
 msgstr "Stoppa svälten i världen"
 
-#: gnome-panel/menu.c:308
+#: gnome-panel/menu.c:307
 msgid "Can't execute 'About GNOME'"
 msgstr "Kan inte köra \"Om GNOME\""
 
-#: gnome-panel/menu.c:326 gnome-panel/swallow.c:84
+#: gnome-panel/menu.c:325
 #, c-format
 msgid ""
 "<b>Can't launch entry</b>\n"
@@ -1554,7 +1513,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/menu.c:334 gnome-panel/menu.c:969 gnome-panel/menu.c:997
+#: gnome-panel/menu.c:333 gnome-panel/menu.c:968 gnome-panel/menu.c:996
 #, c-format
 msgid ""
 "<b>Can't load entry</b>\n"
@@ -1565,7 +1524,7 @@ msgstr ""
 "\n"
 "Detaljer: %s"
 
-#: gnome-panel/menu.c:882
+#: gnome-panel/menu.c:881
 #, c-format
 msgid ""
 "<b>Could not remove the menu item %s</b>\n"
@@ -1576,108 +1535,104 @@ msgstr ""
 "\n"
 "Detaljer: %s\n"
 
-#: gnome-panel/menu.c:890
+#: gnome-panel/menu.c:889
 #, c-format
 msgid "Could not get file name from path: %s"
 msgstr "Kunde inte urskilja filnamn från sökväg: %s"
 
-#: gnome-panel/menu.c:897
+#: gnome-panel/menu.c:896
 #, c-format
 msgid "Could not get directory name from path: %s"
 msgstr "Kunde inte urskilja katalognamn från sökväg: %s"
 
-#: gnome-panel/menu.c:963
+#: gnome-panel/menu.c:962
 msgid "No 'Exec' or 'URL' field in entry"
 msgstr "Inget \"Exec\"- eller \"URL\"-fält i posten"
 
-#: gnome-panel/menu.c:1251
+#: gnome-panel/menu.c:1250
 msgid "Add this launcher to panel"
 msgstr "Lägg till den här programknappen på panelen"
 
-#: gnome-panel/menu.c:1259
+#: gnome-panel/menu.c:1258
 msgid "Remove this item"
 msgstr "Ta bort detta menyval"
 
-#: gnome-panel/menu.c:1276
+#: gnome-panel/menu.c:1275
 msgid "Put into run dialog"
 msgstr "Lägg i kördialogen"
 
-#: gnome-panel/menu.c:1295
+#: gnome-panel/menu.c:1294
 #, c-format
 msgid "Help on %s"
 msgstr "Hjälp om %s"
 
-#: gnome-panel/menu.c:1296
+#: gnome-panel/menu.c:1295
 msgid "Application"
 msgstr "Program"
 
-#: gnome-panel/menu.c:1342
+#: gnome-panel/menu.c:1341
 msgid "Entire menu"
 msgstr "Hela menyn"
 
-#: gnome-panel/menu.c:1351
+#: gnome-panel/menu.c:1350
 msgid "Add this as drawer to panel"
 msgstr "Lägg till detta som en låda på panelen"
 
-#: gnome-panel/menu.c:1359
+#: gnome-panel/menu.c:1358
 msgid "Add this as menu to panel"
 msgstr "Lägg till detta som en meny på panelen"
 
-#: gnome-panel/menu.c:1367
+#: gnome-panel/menu.c:1366
 msgid "Add new item to this menu"
 msgstr "Lägg till ett nytt menyval"
 
-#: gnome-panel/menu.c:1706
+#: gnome-panel/menu.c:1702
 msgid "You already have a status dock on the panel. You can only have one"
 msgstr "Du har redan en statusdocka på panelen. Du kan bara ha en"
 
-#: gnome-panel/menu.c:2304 libpanel-applet/panel-test-applets.c:107
+#: gnome-panel/menu.c:2297 libpanel-applet/panel-test-applets.c:107
 #, c-format
 msgid "query returned exception %s\n"
 msgstr "fråg returnerade undantag %s\n"
 
-#: gnome-panel/menu.c:2577
-msgid "%I: %M: %S: %p"
-msgstr "%H. %M. %S"
-
-#: gnome-panel/menu.c:2584
+#: gnome-panel/menu.c:2575
 msgid "You can only have one menu panel at a time."
 msgstr "Du kan bara ha en menypanel."
 
-#: gnome-panel/menu.c:2622
+#: gnome-panel/menu.c:2613
 msgid "Menu panel"
 msgstr "Menypanel"
 
-#: gnome-panel/menu.c:2632 gnome-panel/panel-config.c:1497
-#: gnome-panel/panel-config.c:1619
+#: gnome-panel/menu.c:2623 gnome-panel/panel-config.c:1495
+#: gnome-panel/panel-config.c:1617
 msgid "Edge panel"
 msgstr "Kantpanel"
 
-#: gnome-panel/menu.c:2640 gnome-panel/panel-config.c:1504
-#: gnome-panel/panel-config.c:1630
+#: gnome-panel/menu.c:2631 gnome-panel/panel-config.c:1502
+#: gnome-panel/panel-config.c:1628
 msgid "Corner panel"
 msgstr "Hörnpanel"
 
-#: gnome-panel/menu.c:2648 gnome-panel/panel-config.c:1510
-#: gnome-panel/panel-config.c:1641
+#: gnome-panel/menu.c:2639 gnome-panel/panel-config.c:1508
+#: gnome-panel/panel-config.c:1639
 msgid "Sliding panel"
 msgstr "Glidande panel"
 
-#: gnome-panel/menu.c:2656 gnome-panel/panel-config.c:1516
-#: gnome-panel/panel-config.c:1652
+#: gnome-panel/menu.c:2647 gnome-panel/panel-config.c:1514
+#: gnome-panel/panel-config.c:1650
 msgid "Floating panel"
 msgstr "Flytande panel"
 
 #. force_image
-#: gnome-panel/menu.c:2753 gnome-panel/menu.c:2760 gnome-panel/menu.c:3478
+#: gnome-panel/menu.c:2744 gnome-panel/menu.c:2751 gnome-panel/menu.c:3441
 msgid "KDE menus"
 msgstr "KDE-menyer"
 
-#: gnome-panel/menu.c:2833
+#: gnome-panel/menu.c:2821
 msgid "You cannot remove your last panel."
 msgstr "Du kan inte ta bort din sista panel."
 
-#: gnome-panel/menu.c:2845
+#: gnome-panel/menu.c:2833
 msgid ""
 "When a panel is removed, the panel and its\n"
 "applet settings are lost. Remove this panel?"
@@ -1685,87 +1640,83 @@ msgstr ""
 "När en panel blir borttagen förloras panelen och dess\n"
 "panelprogramsinställningar. Vill du ta bort den här panelen?"
 
-#: gnome-panel/menu.c:3101
+#: gnome-panel/menu.c:3073
 msgid "Launcher..."
 msgstr "Programstartare..."
 
-#: gnome-panel/menu.c:3109
+#: gnome-panel/menu.c:3081
 msgid "Launcher from menu"
 msgstr "Programstartare från meny"
 
-#: gnome-panel/menu.c:3119
+#: gnome-panel/menu.c:3091
 msgid "GNOME Menu"
 msgstr "GNOME-meny"
 
-#: gnome-panel/menu.c:3139
+#: gnome-panel/menu.c:3111
 msgid "Log out button"
 msgstr "Utloggningsknapp"
 
-#: gnome-panel/menu.c:3149
+#: gnome-panel/menu.c:3121
 msgid "Lock button"
 msgstr "Låsknapp"
 
-#: gnome-panel/menu.c:3159
-msgid "Swallowed app..."
-msgstr "Svalt program..."
-
-#: gnome-panel/menu.c:3166
+#: gnome-panel/menu.c:3129
 msgid "Status dock"
 msgstr "Statusdocka"
 
-#: gnome-panel/menu.c:3180
+#: gnome-panel/menu.c:3143
 msgid "Cannot execute panel global properties"
 msgstr "Kan inte köra panelens globala egenskaper"
 
-#: gnome-panel/menu.c:3218
+#: gnome-panel/menu.c:3181
 msgid "Remove this panel..."
 msgstr "Ta bort denna panel..."
 
-#: gnome-panel/menu.c:3220 gnome-panel/menu.c:3268
+#: gnome-panel/menu.c:3183 gnome-panel/menu.c:3231
 msgid "Remove this panel"
 msgstr "Ta bort denna panel"
 
-#: gnome-panel/menu.c:3235
+#: gnome-panel/menu.c:3198
 msgid "Cannot launch nautilus!"
 msgstr "Kan inte starta nautilus!"
 
-#: gnome-panel/menu.c:3247
+#: gnome-panel/menu.c:3210
 msgid "Add to panel"
 msgstr "Lägg till i panelen"
 
-#: gnome-panel/menu.c:3259
+#: gnome-panel/menu.c:3222
 msgid "Create panel"
 msgstr "Skapa ny panel"
 
-#: gnome-panel/menu.c:3296
+#: gnome-panel/menu.c:3259
 msgid "Global Preferences..."
 msgstr "Globala egenskaper..."
 
-#: gnome-panel/menu.c:3315
+#: gnome-panel/menu.c:3278
 msgid "Reread all menus"
 msgstr "Läs in alla menyer på nytt"
 
-#: gnome-panel/menu.c:3329
+#: gnome-panel/menu.c:3292
 msgid "Panel Manual..."
 msgstr "Panelmanual..."
 
-#: gnome-panel/menu.c:3341
+#: gnome-panel/menu.c:3304
 msgid "Cannot execute xscreensaver"
 msgstr "Kan inte köra xscreensaver"
 
-#: gnome-panel/menu.c:3360
+#: gnome-panel/menu.c:3323
 msgid "About the panel..."
 msgstr "Om panelen..."
 
-#: gnome-panel/menu.c:3374
+#: gnome-panel/menu.c:3337
 msgid "About GNOME..."
 msgstr "Om GNOME..."
 
-#: gnome-panel/menu.c:3411
+#: gnome-panel/menu.c:3374
 msgid "Lock the screen so that you can temporairly leave your computer"
 msgstr "Läs skärmen så att du kan lämna din dator tillfälligt"
 
-#: gnome-panel/menu.c:3424
+#: gnome-panel/menu.c:3387
 msgid ""
 "Log out of this session to log in as a different user or to shut down your "
 "computer"
@@ -1773,41 +1724,44 @@ msgstr ""
 "Logga ut från denna session för att logga in som en annan användare eller "
 "stänga av din dator"
 
-#: gnome-panel/menu.c:3569
+#: gnome-panel/menu.c:3542
 msgid "Applets"
 msgstr "Panelprogram"
 
-#: gnome-panel/menu.c:3592
+#: gnome-panel/menu.c:3565
 msgid "Run a command"
 msgstr "Kör ett kommando"
 
-#: gnome-panel/menu.c:3610
+#: gnome-panel/menu.c:3583
 msgid "Desktop"
 msgstr "Skrivbord"
 
-#: gnome-panel/menu.c:3643
+#: gnome-panel/menu.c:3616
 msgid "Menu:"
 msgstr "Meny:"
 
-#: gnome-panel/menu.c:3693 gnome-panel/menu.c:3721 gnome-panel/menu.c:3906
+#: gnome-panel/menu.c:3666 gnome-panel/menu.c:3694 gnome-panel/menu.c:3879
 msgid "Main Menu"
 msgstr "Huvudmeny"
 
-#: gnome-panel/menu.c:3715
+#: gnome-panel/menu.c:3688
 msgid "Can't create menu, using main menu!"
 msgstr "Kan inte skapa meny, använder huvudmenyn!"
 
-#: gnome-panel/panel-applet-frame.c:171
+#: gnome-panel/panel-applet-frame.c:172
 msgid "Cannot register control widget\n"
 msgstr "Kan inte registrera styrwidget\n"
 
-#: gnome-panel/panel-applet-frame.c:448
+#: gnome-panel/panel-applet-frame.c:449
 msgid "Unable to obtain AppletShell interface from control\n"
 msgstr "Kan inte få AppletShell-gränssnitt från kontroll\n"
 
-#: gnome-panel/panel-applet-frame.c:574
-#, c-format
-msgid "There was a problem loading applet '%s': %s"
+#: gnome-panel/panel-applet-frame.c:575
+#, fuzzy, c-format
+msgid ""
+"<b>There was a problem loading applet '%s'</b>\n"
+"\n"
+"Details: %s"
 msgstr "Det uppstod ett problem vid inläsning av panelprogrammet \"%s\": %s"
 
 #: gnome-panel/panel-config.c:540
@@ -1853,47 +1807,47 @@ msgstr "Orientera panelen vertikalt"
 msgid "Top left corner's position: X"
 msgstr "Översta vänstra hörnets position: X"
 
-#: gnome-panel/panel-config.c:961
+#: gnome-panel/panel-config.c:960
 msgid "Y"
 msgstr "Y"
 
-#: gnome-panel/panel-config.c:1035
+#: gnome-panel/panel-config.c:1033
 msgid "Offset from screen edge:"
 msgstr "Avstånd från skärmkant:"
 
-#: gnome-panel/panel-config.c:1107
+#: gnome-panel/panel-config.c:1105
 msgid "Panel size:"
 msgstr "Panelstorlek:"
 
-#: gnome-panel/panel-config.c:1116
+#: gnome-panel/panel-config.c:1114
 msgid "XX Small Tiny (12 pixels)"
 msgstr "Ultraliten (12 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1124
+#: gnome-panel/panel-config.c:1122
 msgid "X Small (24 pixels)"
 msgstr "Extraliten (24 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1132
+#: gnome-panel/panel-config.c:1130
 msgid "Small (36 pixels)"
 msgstr "Liten (36 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1140
+#: gnome-panel/panel-config.c:1138
 msgid "Medium (48 pixels)"
 msgstr "Mellan (48 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1148
+#: gnome-panel/panel-config.c:1146
 msgid "Large (64 pixels)"
 msgstr "Stor (64 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1156
+#: gnome-panel/panel-config.c:1154
 msgid "X Large (80 pixels)"
 msgstr "Extrastor (80 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1164
+#: gnome-panel/panel-config.c:1162
 msgid "XX Large (128 pixels)"
 msgstr "Ultrastor (128 bildpunkter)"
 
-#: gnome-panel/panel-config.c:1178
+#: gnome-panel/panel-config.c:1176
 msgid ""
 "Note: The panel will size itself to the\n"
 "largest applet in the panel, and that\n"
@@ -1903,54 +1857,54 @@ msgstr ""
 "efter det panelprogram som är störst, och att\n"
 "inte alla panelprogram följer dessa storlekar."
 
-#: gnome-panel/panel-config.c:1311
+#: gnome-panel/panel-config.c:1309
 msgid "Background Type: "
 msgstr "Bakgrundstyp: "
 
-#: gnome-panel/panel-config.c:1319
+#: gnome-panel/panel-config.c:1317
 msgid "Standard"
 msgstr "Standard"
 
 #. color frame
-#: gnome-panel/panel-config.c:1323 gnome-panel/panel-config.c:1338
+#: gnome-panel/panel-config.c:1321 gnome-panel/panel-config.c:1336
 msgid "Color"
 msgstr "Färg"
 
-#: gnome-panel/panel-config.c:1327
+#: gnome-panel/panel-config.c:1325
 msgid "Pixmap"
 msgstr "Bild"
 
-#: gnome-panel/panel-config.c:1350
+#: gnome-panel/panel-config.c:1348
 msgid "Color to use:"
 msgstr "Färg att använda:"
 
 #. image frame
-#: gnome-panel/panel-config.c:1366
+#: gnome-panel/panel-config.c:1364
 msgid "Image"
 msgstr "Bild"
 
-#: gnome-panel/panel-config.c:1392
+#: gnome-panel/panel-config.c:1390
 msgid "Don't scale image to fit"
 msgstr "Skala inte bilden så den passar"
 
-#: gnome-panel/panel-config.c:1398
+#: gnome-panel/panel-config.c:1396
 msgid "Scale image (keep proportions)"
 msgstr "Skala bilden (behåll propertionerna)"
 
-#: gnome-panel/panel-config.c:1403
+#: gnome-panel/panel-config.c:1401
 msgid "Stretch image (change proportions)"
 msgstr "Töj bild (ändra propertionerna)"
 
-#: gnome-panel/panel-config.c:1418
+#: gnome-panel/panel-config.c:1416
 msgid "Rotate image for vertical panels"
 msgstr "Rotera bild i vertikala paneler"
 
 #. main window
-#: gnome-panel/panel-config.c:1588
+#: gnome-panel/panel-config.c:1586
 msgid "Panel properties"
 msgstr "Panelegenskaper"
 
-#: gnome-panel/panel-config.c:1671
+#: gnome-panel/panel-config.c:1669
 msgid "Background"
 msgstr "Bakgrund"
 
@@ -1986,50 +1940,18 @@ msgstr "Hjälpdokument hittades inte"
 msgid "No document to show"
 msgstr "Inget dokument att visa"
 
-#: gnome-panel/panel.c:975
+#: gnome-panel/panel.c:956
 #, c-format
 msgid "Open URL: %s"
 msgstr "Öppna URL: %s"
 
-#: gnome-panel/panel.c:2430
+#: gnome-panel/panel.c:2397
 msgid ""
 "No panels were found in your configuration.  I will create a menu panel for "
 "you"
 msgstr ""
 "Inga paneler hittades i din konfiguration. Jag kommer att skapa en ny "
 "menypanel åt dig"
-
-#: gnome-panel/swallow.c:106
-msgid ""
-"A swallowed application appears to have died unexpectedly.\n"
-"Attempt to reload it?"
-msgstr ""
-"Ett svalt program verkar ha dött oväntat.\n"
-"Vill du försöka läsa in det igen?"
-
-#: gnome-panel/swallow.c:114
-msgid "Reload"
-msgstr "Läs om"
-
-#: gnome-panel/swallow.c:252
-msgid "Create swallow applet"
-msgstr "Skapa sväljande panelprogram"
-
-#: gnome-panel/swallow.c:271
-msgid "Title of application to swallow"
-msgstr "Namn på programmet som skall sväljas"
-
-#: gnome-panel/swallow.c:281
-msgid "Command (optional)"
-msgstr "Kommando (valfritt)"
-
-#: gnome-panel/swallow.c:292
-msgid "Width"
-msgstr "Bredd"
-
-#: gnome-panel/swallow.c:305
-msgid "Height"
-msgstr "Höjd"
 
 #: libpanel-applet/GNOME_Panel_TestApplet.server.in.h:1
 msgid "A simple applet for testing the GNOME-2.0 panel"
@@ -2043,40 +1965,147 @@ msgstr "Bonobo-testpanelprogram"
 msgid "Test Bonobo Applet Factory"
 msgstr "Fabrik för Bonobo-testpanelprogram"
 
-#: libpanel-applet/panel-applet.c:606
+#: libpanel-applet/panel-applet.c:610
 #, c-format
 msgid "Incomplete '%s' background type received"
 msgstr "Ofullständig \"%s\"-bakgrundstyp mottogs"
 
-#: libpanel-applet/panel-applet.c:620
+#: libpanel-applet/panel-applet.c:624
 #, c-format
 msgid "Incomplete '%s' background type received: %s"
 msgstr "Ofullständig \"%s\"-bakgrundstyp mottogs: %s"
 
-#: libpanel-applet/panel-applet.c:629
+#: libpanel-applet/panel-applet.c:633
 #, c-format
 msgid "Failed to get pixmap %s"
 msgstr "Misslyckades med att hämta bilden %s"
 
-#: libpanel-applet/panel-applet.c:636
+#: libpanel-applet/panel-applet.c:640
 msgid "Unknown background type received"
 msgstr "Okänd bakgrundstyp mottogs"
 
-#: libpanel-applet/panel-applet.c:791
+#: libpanel-applet/panel-applet.c:795
 msgid "The Applet's containing Panel's orientation"
 msgstr "Panelprogrammet innehåller panelens orientering"
 
-#: libpanel-applet/panel-applet.c:799
+#: libpanel-applet/panel-applet.c:803
 msgid "The Applet's containing Panel's size in pixels"
 msgstr "Panelprogrammet innehåller panelens storlek i bildpunkter"
 
-#: libpanel-applet/panel-applet.c:807
+#: libpanel-applet/panel-applet.c:811
 msgid "The Applet's containing Panel's background color or pixmap"
 msgstr "Panelprogrammet innehåller panelens bakgrundsfärg eller bild"
 
-#: libpanel-applet/panel-applet.c:815
+#: libpanel-applet/panel-applet.c:819
 msgid "The Applet's flags"
 msgstr "Panelprogrammets flaggor"
+
+#~ msgid "Clock Properties"
+#~ msgstr "Klockegenskaper"
+
+#~ msgid "_Password:"
+#~ msgstr "_Lösenord:"
+
+#~ msgid ""
+#~ "Cannot execute the gnome calendar,\n"
+#~ "perhaps it's not installed.\n"
+#~ "It is in the gnome-pim package."
+#~ msgstr ""
+#~ "Kan inte köra gnome-kalendern.\n"
+#~ "Den är kanske inte installerad.\n"
+#~ "Den finns i gnome-pim-paketet."
+
+#~ msgid "menu wasn't created"
+#~ msgstr "menyn skapades inte"
+
+#~ msgid "Today"
+#~ msgstr "Idag"
+
+#~ msgid "View the calendar for today."
+#~ msgstr "Visa kalendern för idag."
+
+#~ msgid "This Week"
+#~ msgstr "Den här veckan"
+
+#~ msgid "View the calendar for this week."
+#~ msgstr "Visa kalendern för denna vecka."
+
+#~ msgid "This Month"
+#~ msgstr "Den här månaden"
+
+#~ msgid "View the calendar for this month."
+#~ msgstr "Visa kalendern för denna månad."
+
+#~ msgid "%H:%M:%S"
+#~ msgstr "%H.%M.%S"
+
+#~ msgid "%l:%M %p"
+#~ msgstr "%k.%M"
+
+#~ msgid "%l:%M:%S %p"
+#~ msgstr "%k.%M.%S"
+
+#~ msgid "%I:%M:%S %p"
+#~ msgstr "%H.%M.%S"
+
+#~ msgid ""
+#~ "Could not call time-admin\n"
+#~ "Perhaps time-admin is not installed"
+#~ msgstr ""
+#~ "Kunde inte anropa time-admin\n"
+#~ "time-admin är kanske inte installerat"
+
+#~ msgid "Add Appointment..."
+#~ msgstr "Lägg till möte..."
+
+#~ msgid "Set Time..."
+#~ msgstr "Ställ tid..."
+
+#~ msgid "Adjust the date and time."
+#~ msgstr "Ställ datumet och tiden."
+
+#~ msgid "Format"
+#~ msgstr "Format"
+
+#~ msgid "Press a key..."
+#~ msgstr "Tryck på en tangent..."
+
+#~ msgid "Blank Screen Now"
+#~ msgstr "Släck skärmen nu"
+
+#~ msgid "Lock Screen Now"
+#~ msgstr "Lås skärmen nu"
+
+#~ msgid "%I: %M: %S: %p"
+#~ msgstr "%H. %M. %S"
+
+#~ msgid "Swallowed app..."
+#~ msgstr "Svalt program..."
+
+#~ msgid ""
+#~ "A swallowed application appears to have died unexpectedly.\n"
+#~ "Attempt to reload it?"
+#~ msgstr ""
+#~ "Ett svalt program verkar ha dött oväntat.\n"
+#~ "Vill du försöka läsa in det igen?"
+
+#~ msgid "Reload"
+#~ msgstr "Läs om"
+
+#~ msgid "Create swallow applet"
+#~ msgstr "Skapa sväljande panelprogram"
+
+#~ msgid "Title of application to swallow"
+#~ msgstr "Namn på programmet som skall sväljas"
+
+#~ msgid "Command (optional)"
+#~ msgstr "Kommando (valfritt)"
+
+#~ msgid "Width"
+#~ msgstr "Bredd"
+
+#~ msgid "Height"
+#~ msgstr "Höjd"
 
 #~ msgid "%A, %B %d"
 #~ msgstr "%A %d %B"
@@ -3128,9 +3157,6 @@ msgstr "Panelprogrammets flaggor"
 #~ msgid "Audio Settings"
 #~ msgstr "Ljudinställningar"
 
-#~ msgid "Screensaver"
-#~ msgstr "Skärmsläckare"
-
 #~ msgid "Sawfish Window Manager"
 #~ msgstr "Fönsterhanteraren Sawfish"
 
@@ -3414,9 +3440,6 @@ msgstr "Panelprogrammets flaggor"
 
 #~ msgid "Rescan Desktop Devices"
 #~ msgstr "Läs om skrivbordsenheter"
-
-#~ msgid "Lock Screen"
-#~ msgstr "Lås skärmen"
 
 #~ msgid " Desktop "
 #~ msgstr " Skrivbord "
@@ -3967,9 +3990,6 @@ msgstr "Panelprogrammets flaggor"
 
 #~ msgid "Start in hint browsing mode"
 #~ msgstr "Starta i tipsbläddringsläge"
-
-#~ msgid "Start in motd mode"
-#~ msgstr "Starta i \"dagens meddelande\"-läge"
 
 #~ msgid "Start in fortune mode"
 #~ msgstr "Starta i lyckokakeläge"
@@ -4675,9 +4695,6 @@ msgstr "Panelprogrammets flaggor"
 
 #~ msgid "Maximize mode"
 #~ msgstr "Maximeringsläge"
-
-#~ msgid "Properties"
-#~ msgstr "Egenskaper"
 
 #~ msgid "All properties..."
 #~ msgstr "Alla egenskaper..."
