@@ -700,6 +700,7 @@ panel_applet_focus (GtkWidget        *widget,
 			 */ 
 			GTK_WIDGET_SET_FLAGS (widget, GTK_CAN_FOCUS);
 			gtk_widget_grab_focus (widget);
+			GTK_WIDGET_UNSET_FLAGS (widget, GTK_CAN_FOCUS);
 			ret = TRUE;
 		}
 	}

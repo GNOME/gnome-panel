@@ -1,3 +1,8 @@
+2003-10-04  Padraig O'Briain <padraig.obriain@sun.com>
+
+	* panel-applet.c: (panel_applet_focus): Unset GTK_CAN_FOCUS flag on
+	applet after grabbing focus. This fixes bug #120151.
+
 Mon Sep 15 15:08:48 2003  George Lebl <jirka@5z.com>
 
 	* panel-applet.[ch]: support the locked_down flag in the interface,
