@@ -51,7 +51,6 @@ panel_widget_init (PanelWidget *panel_widget)
 	panel_widget->size = 0;
 	panel_widget->leave_notify_timer_tag = 0;
 	panel_widget->currently_dragged_applet = NULL;
-	puts("&&&&&&&&&&&&&&&&&&&&&&");
 	panel_widget->drawer_drop_zone = NULL;
 	panel_widget->drawer_drop_zone_pos = DRAWER_LEFT;
 }
@@ -177,6 +176,7 @@ panel_widget_set_size(PanelWidget *panel, gint size)
 static void
 panel_widget_applet_put(PanelWidget *panel,gint pos)
 {
+	g_return_if_fail(panel->applets[pos].applet!=NULL);
 	if(panel->orient == PANEL_HORIZONTAL)
 		gtk_fixed_move(GTK_FIXED(panel->fixed),
 			       panel->applets[pos].applet,
@@ -271,25 +271,36 @@ panel_widget_push_right(PanelWidget *panel,gint pos)
 	gint i;
 	gint freepos;
 
-	if(panel->snapped == PANEL_DRAWER)
-		puts("TEST");
+	if(panel->snapped == PANEL_DRAWER) {
+		if(panel->size+1>=PANEL_MAX)
+			return FALSE;
+		if(panel->applets[pos].applet==NULL) {
+			/*it must be the right end*/
+			panel_widget_set_size(panel,++panel->size);
+			return TRUE;
+		}
+		for(i=panel->size;i>pos;i--) {
+			panel->applets[i].applet=
+				panel->applets[i-1].applet;
+			panel->applets[i].cells =
+				panel->applets[i-1].cells;
+		}
+		panel->applets[pos].applet=NULL;
+		panel->applets[pos].cells=1;
+		panel->size++;
+		for(i=pos+1;i<panel->size;i+=panel->applets[i].cells)
+			panel_widget_applet_put(panel,i);
+		panel_widget_set_size(panel,panel->size);
+		return TRUE;
+	}
 	
 
-	for(i=0;pos+i<(panel->snapped==PANEL_DRAWER?PANEL_MAX:panel->size) &&
-	        panel->applets[pos+i].applet;i++)
-		printf("applet at %d: %lX\n",pos+i,panel->applets[pos+i].applet);
-	printf("applet at %d: %lX\n",pos+i,panel->applets[pos+i].applet);
-	printf("pr i:%d\n",i);
-	if(pos+i >= (panel->snapped==PANEL_DRAWER?PANEL_MAX:panel->size))
+	for(i=0;pos+i<panel->size && panel->applets[pos+i].applet;i++)
+		;
+	if(pos+i >= panel->size)
 		return FALSE;
-	/*this will only happen for drawers*/
-	if(pos+i > panel->size) {
-		panel->size = pos+i;
-		panel_widget_set_size(panel,panel->size);
-	}
 
 	freepos=i;
-	printf("freepos:%d\n",freepos);
 
 	for(;i>0;i--) {
 		panel->applets[pos+i].applet=
@@ -328,8 +339,10 @@ panel_widget_seize_space(PanelWidget *panel,
 		(panel->applets[pos+i].applet == applet ||
 		 panel->applets[pos+i].applet == NULL);i++)
 		allocated++;
-	if(pos+i>panel->size)
+	if(pos+i>panel->size) {
 		panel->size = pos+i;
+		panel_widget_set_size(panel,panel->size);
+	}
 	for(i=1;(pos-i >= 0) &&
 		(allocated < width) &&
 		(panel->applets[pos-i].applet == NULL);i++)
@@ -544,6 +557,7 @@ panel_widget_applet_size_allocate (GtkWidget *widget,
 				   GdkEvent *event,
 				   gpointer data)
 {
+	/*FIXME: has to get it's parent! since it can change*/
 	panel_widget_adjust_applet((PanelWidget *)data,widget);
 
 	return TRUE;
@@ -1041,6 +1055,11 @@ panel_widget_new (gint size,
 
 	panel_widget_set_hidebuttons(panel);
 
+	for(i=0;i<PANEL_MAX;i++) {
+		panel->applets[i].applet = NULL;
+		panel->applets[i].cells = 1;
+	}
+
 	if(panel->snapped == PANEL_DRAWER) {
 		GtkWidget *frame;
 
@@ -1052,18 +1071,12 @@ panel_widget_new (gint size,
 				  frame);
 		gtk_widget_show(frame);
 		for(i=0;i<PANEL_DRAWER_DROP_TARGET_SIZE;i++) {
-			puts("KKKKKKKKKKK");
 			panel->applets[i].applet = panel->drawer_drop_zone;
 			panel->applets[i].cells = PANEL_DRAWER_DROP_TARGET_SIZE;
 		}
 		gtk_fixed_put(GTK_FIXED(panel->fixed),panel->drawer_drop_zone,
 			      0,0);
 		drawer_resize_drop_zone(panel);
-	}
-
-	for(i=0;i<PANEL_MAX;i++) {
-		panel->applets[i].applet = NULL;
-		panel->applets[i].cells = 1;
 	}
 
 	if(!fleur_cursor)
@@ -1300,11 +1313,9 @@ panel_widget_add (PanelWidget *panel, GtkWidget *applet, gint pos)
 			    panel->applets[i].applet;i--)
 				;
 			i++;
-			printf("i: %d\n",i);
-			printf("size before push: %d\n",panel->size);
 			panel_widget_push_right(panel,i);
-			printf("size after push: %d\n",panel->size);
 		}
+		panel_widget_set_size(panel,panel->size);
 	} else {
 		if(pos>=panel->size)
 			pos = panel->size - 1;

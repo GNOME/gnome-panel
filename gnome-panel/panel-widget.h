@@ -17,7 +17,7 @@ extern "C" {
 
 #define PANEL_MAX 1000 /*10,000 long screen, FIXME! make dynamic*/
 
-#define PANEL_DRAWER_DROP_TARGET_SIZE 3
+#define PANEL_DRAWER_DROP_TARGET_SIZE 5
 
 typedef struct _PanelWidget		PanelWidget;
 typedef struct _PanelWidgetClass	PanelWidgetClass;
