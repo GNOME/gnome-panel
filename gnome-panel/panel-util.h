@@ -74,6 +74,14 @@ GtkWidget *	panel_error_dialog	(const char *class,
 GtkWidget *	panel_info_dialog	(const char *class,
 					 const char *format,
 					 ...) G_GNUC_PRINTF (2, 3);
+GtkWidget *	panel_error_dialog_with_parent (GtkWindow *parent,
+						const char *class,
+						const char *format,
+						...) G_GNUC_PRINTF (3, 4);
+GtkWidget *	panel_info_dialog_with_parent (GtkWindow *parent,
+					       const char *class,
+					       const char *format,
+					       ...) G_GNUC_PRINTF (3, 4);
 
 gboolean	is_ext			(const char *file,
 					 const char *ext);

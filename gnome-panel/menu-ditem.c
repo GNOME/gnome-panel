@@ -83,10 +83,10 @@ ditem_properties_changed (GtkWidget *dedit, gpointer data)
 	if (timeout != 0)
 		g_source_remove (timeout);
 
-	/* Will save after 5 seconds */
+	/* Will delay save for after 5 seconds */
 	timeout = g_timeout_add (5 * 1000,
-				   ditem_properties_apply_timeout,
-				   dedit);
+				 ditem_properties_apply_timeout,
+				 dedit);
 
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout",
 			   GUINT_TO_POINTER (timeout));
@@ -104,6 +104,8 @@ ditem_properties_close (GtkWidget *widget, gpointer data)
 
 	g_object_set_data (G_OBJECT (dedit), "apply_timeout", NULL);
 
+	/* If there was a timeout, then something changed after last save,
+	 * so we must save again now */
 	if (timeout != 0) {
 		g_source_remove (timeout);
 
@@ -113,8 +115,8 @@ ditem_properties_close (GtkWidget *widget, gpointer data)
 	saving_error = g_object_get_data (G_OBJECT (dedit), "SavingError");
 
 	if (saving_error != NULL) {
-		panel_error_dialog ("cant_save_entry",
-				    _("<b>Cannot save changes to menu entry</b>\n\n"
+		panel_error_dialog ("cannot_save_entry",
+				    _("<b>Cannot save changes to launcher</b>\n\n"
 				      "Details: %s"), saving_error);
 	}
 }
@@ -412,30 +414,50 @@ static void
 really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 {
 	GnomeDItemEdit *dedit = GNOME_DITEM_EDIT(data);
-	char *dir = g_object_get_data (G_OBJECT (d), "dir");
 	GnomeDesktopItem *ditem;
 	GError *error = NULL;
-	char *name, *loc;
+	char *name, *loc, *dir;
+	GtkWidget *dialog; 
 
 	if (response != GTK_RESPONSE_OK) {
 		gtk_widget_destroy (d);
 		return;
 	}
 
+	dir = g_object_get_data (G_OBJECT (d), "dir");
 	g_return_if_fail (dir != NULL);
 
 	panel_push_window_busy (d);
 
 	ditem = gnome_ditem_edit_get_ditem (dedit);
 
+	/* check for valid name */
+	if (string_empty (gnome_desktop_item_get_localestring (ditem, GNOME_DESKTOP_ITEM_NAME))) {
+		dialog = panel_error_dialog_with_parent
+			(GTK_WINDOW (d),
+			 "cannot_create_launcher",
+			 _("You have to specify a name for the launcher."));
+		g_signal_connect_swapped (G_OBJECT (dialog),
+					  "destroy",
+					  G_CALLBACK (panel_pop_window_busy),
+					  G_OBJECT (d));
+		return;
+	}
+
+	/* check for valid URL or command */
 	if ((gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_APPLICATION &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_EXEC))) ||
 	    (gnome_desktop_item_get_entry_type (ditem) == GNOME_DESKTOP_ITEM_TYPE_LINK &&
 	     string_empty (gnome_desktop_item_get_string (ditem, GNOME_DESKTOP_ITEM_URL)))) {
 		gnome_desktop_item_unref (ditem);
-		panel_error_dialog ("cannot_create_launcher",
-				    _("Cannot create the launcher.\n\n"
-				      "No command or url specified."));
+		dialog = panel_error_dialog_with_parent
+			(GTK_WINDOW (d),
+			 "cannot_create_launcher",
+			 _("You have to specify a valid URL or command."));
+		g_signal_connect_swapped (G_OBJECT (dialog),
+					  "destroy",
+					  G_CALLBACK (panel_pop_window_busy),
+					  G_OBJECT (d));
 		return;
 	}
 
@@ -445,7 +467,7 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 	validate_for_filename (name);
 
 	loc = get_unique_name (dir, name);
-	gnome_desktop_item_set_location_file (ditem, loc);
+	gnome_desktop_item_set_location (ditem, loc);
 	g_free (name);
 
 	error = NULL;
@@ -455,9 +477,8 @@ really_add_new_menu_item (GtkWidget *d, int response, gpointer data)
 				 &error);
 	if (error != NULL) {
 		panel_error_dialog ("cannot_save_menu_item" /* class */,
-				    _("Cannot save menu item to disk, "
-				      "the following error occured:\n\n"
-				      "%s"),
+				    _("<b>Cannot save menu item to disk</b>\n\n"
+				      "Details: %s"),
 				    error->message);
 		g_clear_error (&error);
 	}
@@ -478,7 +499,7 @@ panel_new_launcher (const char *item_loc)
 
 	if (!is_item_writable (item_loc, NULL)) {
 		
-		dialog = panel_error_dialog ("can_not_create_launcher",
+		dialog = panel_error_dialog ("cannot_create_launcher",
 				             _("You can not create a new launcher at this location since the location is not writable."));
 
 		return dialog;

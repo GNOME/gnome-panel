@@ -599,6 +599,33 @@ convert_keysym_state_to_string(guint keysym,
 	return gtk_accelerator_name (keysym, state);
 }
 
+static GtkWidget *
+panel_dialog (GtkWidget *parent,
+	      int type,
+	      const char *class,
+	      const char *str)
+{
+	GtkWidget *w;
+
+	w = gtk_message_dialog_new (parent, 0, type,
+				    GTK_BUTTONS_OK, "foo");
+	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
+	g_signal_connect (G_OBJECT (w), "event",
+			  G_CALLBACK (panel_dialog_window_event), NULL);
+	gtk_window_set_wmclass (GTK_WINDOW (w),
+				class, "Panel");
+
+	gtk_label_set_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (w)->label), str);
+
+	gtk_widget_show_all (w);
+
+	g_signal_connect_swapped (G_OBJECT (w), "response",
+				  G_CALLBACK (gtk_widget_destroy),
+				  G_OBJECT (w));
+
+	return w;
+}
+
 GtkWidget *
 panel_error_dialog (const char *class,
 		    const char *format,
@@ -617,24 +644,8 @@ panel_error_dialog (const char *class,
 		va_end (ap);
 	}
 
-	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_ERROR,
-				    GTK_BUTTONS_OK, "foo");
-	gtk_widget_add_events (w, GDK_KEY_PRESS_MASK);
-	g_signal_connect (G_OBJECT (w), "event",
-			  G_CALLBACK (panel_dialog_window_event), NULL);
-	gtk_window_set_wmclass (GTK_WINDOW (w),
-				class, "Panel");
-
-	gtk_label_set_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (w)->label), s);
-
+	w = panel_dialog (NULL, GTK_MESSAGE_ERROR, class, s);
 	g_free (s);
-
-	gtk_widget_show_all (w);
-
-	g_signal_connect_swapped (G_OBJECT (w), "response",
-				   G_CALLBACK (gtk_widget_destroy),
-				   G_OBJECT (w));
-
 	return w;
 }
 
@@ -656,23 +667,56 @@ panel_info_dialog (const char *class,
 		va_end (ap);
 	}
 
-	w = gtk_message_dialog_new (NULL, 0, GTK_MESSAGE_INFO,
-				    GTK_BUTTONS_OK, "foo");
-	g_signal_connect (G_OBJECT (w), "event",
-			  G_CALLBACK (panel_dialog_window_event), NULL);
-	gtk_window_set_wmclass (GTK_WINDOW (w),
-				class, "Panel");
-
-	gtk_label_set_markup (GTK_LABEL (GTK_MESSAGE_DIALOG (w)->label), s);
-
+	w = panel_dialog (NULL, GTK_MESSAGE_INFO, class, s);
 	g_free (s);
+	return w;
+}
 
-	gtk_widget_show_all (w);
+GtkWidget *
+panel_error_dialog_with_parent (GtkWindow *parent,
+				const char *class,
+				const char *format,
+				...)
+{
+	GtkWidget *w;
+	char *s;
+	va_list ap;
 
-	g_signal_connect_swapped (G_OBJECT (w), "response",
-				  G_CALLBACK (gtk_widget_destroy),
-				  G_OBJECT (w));
+	if (format == NULL) {
+		g_warning ("NULL error dialog");
+		s = g_strdup ("(null)");
+	} else {
+		va_start (ap, format);
+		s = g_strdup_vprintf (format, ap);
+		va_end (ap);
+	}
 
+	w = panel_dialog (parent, GTK_MESSAGE_ERROR, class, s);
+	g_free (s);
+	return w;
+}
+
+GtkWidget *
+panel_info_dialog_with_parent (GtkWindow *parent,
+			       const char *class,
+			       const char *format,
+			       ...)
+{
+	GtkWidget *w;
+	char *s;
+	va_list ap;
+
+	if (format == NULL) {
+		g_warning ("NULL info dialog");
+		s = g_strdup ("(null)");
+	} else {
+		va_start (ap, format);
+		s = g_strdup_vprintf (format, ap);
+		va_end (ap);
+	}
+
+	w = panel_dialog (parent, GTK_MESSAGE_INFO, class, s);
+	g_free (s);
 	return w;
 }
 
