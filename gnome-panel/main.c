@@ -127,8 +127,6 @@ main(int argc, char **argv)
 	
 	find_kde_directory();
 
-	panel_session_init (argv [0]);
-
 	panel_register_window_icon ();
 
 	panel_tooltips = gtk_tooltips_new ();
@@ -143,6 +141,9 @@ main(int argc, char **argv)
 
 	panel_global_config_load ();
 	panel_profile_load (profile_arg);
+
+	panel_session_init (argv [0]);
+
 
 	/*add forbidden lists to ALL panels*/
 	g_slist_foreach (panels,
