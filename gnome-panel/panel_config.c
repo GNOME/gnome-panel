@@ -1,17 +1,11 @@
 #include <gtk/gtk.h>
-#ifdef HAVE_LIBINTL
-#include <libintl.h>
-#define _(String) gettext(String)
-#else
-#define _(String) (String)
-#endif
 
-#include "gnome.h"
+#include <config.h>
+#include <gnome.h>
 #include "panel.h"
 #include "panel-widget.h"
 #include "panel_config.h"
 #include "panel_config_global.h"
-#include "config.h"
 
 /* Used for all the packing and padding options */
 #define CONFIG_PADDING_SIZE 3

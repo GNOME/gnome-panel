@@ -1,3 +1,11 @@
+1998-03-13  Carsten Schaar  <nhadcasc@fs-maphy.uni-hannover.de>
+
+	* panel_config.c: Removed the definition of the '_' macro. Uses
+ 	definition in 'gnome-i18n.h' instead. To make this work I changed
+ 	the order, in which 'config.h' and 'gnome.h' are included.
+
+	* panel_config_global.c: Likewise.
+
 Fri Mar 13 02:42:56 1998  George Lebl  <jirka@5z.com>
 
         * panel.[ch]: fixed a race when starting applets, by
