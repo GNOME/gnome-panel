@@ -27,7 +27,6 @@
 
 #include <libbonoboui.h>
 #include <gconf/gconf.h>
-#include <libgnome/gnome-i18n.h>
 #include <gdk/gdk.h>
 #include <gdk/gdkx.h>
 
@@ -826,16 +825,15 @@ panel_applet_frame_get_name (char *iid)
 	list = bonobo_activation_query (query, NULL, NULL);
 	if (list && list->_length > 0 && list->_buffer) {
 		Bonobo_ServerInfo *info = &list->_buffer [0];
-		const GList       *langs_glist;
+		const char       **langs_pointer;
 		GSList            *langs_gslist;
+		int                i;
 
-		/* Evil evil evil evil, we need to convert to
-		 * a GSList from a GList */
-		langs_glist = gnome_i18n_get_language_list ("LC_MESSAGES");
 		langs_gslist = NULL;
-		while (langs_glist) {
-			langs_gslist = g_slist_append (langs_gslist, langs_glist->data);
-			langs_glist = langs_glist->next;
+		langs_pointer = g_get_language_names ();
+		for (i = 0; langs_pointer[i] != NULL; i++) {
+			langs_gslist = g_slist_append (langs_gslist,
+						       langs_pointer[i]);
 		}
 
 		retval = g_strdup (bonobo_server_info_prop_lookup (

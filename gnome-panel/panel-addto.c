@@ -25,7 +25,6 @@
 #include <config.h>
 #include <string.h>
 
-#include <libgnome/gnome-i18n.h>
 #include <libbonobo.h>
 
 #include "menu.h"
@@ -367,9 +366,9 @@ panel_addto_query_applets (GSList *list)
 {
 	Bonobo_ServerInfoList *applet_list;
 	CORBA_Environment  env;
-	const GList *langs_glist;
-	GSList *langs_gslist;
-	int i;
+	const char       **langs_pointer;
+	GSList            *langs_gslist;
+	int                i;
 
 	CORBA_exception_init (&env);
 
@@ -390,10 +389,9 @@ panel_addto_query_applets (GSList *list)
 	/* Evil evil evil evil, we need to convery from a
 	   GList to a GSList */
 	langs_gslist = NULL;
-	for (langs_glist = gnome_i18n_get_language_list ("LC_MESSAGES");
-	     langs_glist != NULL; langs_glist = langs_glist->next) {
-		langs_gslist = g_slist_append (langs_gslist,
-					       langs_glist->data);
+	langs_pointer = g_get_language_names ();
+	for (i = 0; langs_pointer[i] != NULL; i++) {
+		langs_gslist = g_slist_append (langs_gslist, langs_pointer[i]);
 	}
 
 	for (i = 0; i < applet_list->_length; i++) {
