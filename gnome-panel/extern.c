@@ -1157,8 +1157,8 @@ get_us_position (const int   panel,
 		if (pos < 0)
 			*newpos = gnome_config_get_int ("position=-1");
 		if (panel < 0) {
-			guint32 unique_id = gnome_config_get_int ("panel_unique_id=0");
-			if (unique_id != 0) {
+			gchar *unique_id = gnome_config_get_string ("panel_unique_id=0");
+			if (unique_id != NULL) {
 				pw = panel_widget_get_by_id (unique_id);
 			}
 			if (pw == NULL) {

@@ -923,7 +923,7 @@ add_drawers_from_dir (const char *dirname, const char *name,
 		subdir_name = name;
 	pixmap_name = item_info != NULL ? item_info->icon : NULL;
 
-	drawer = load_drawer_applet (-1, pixmap_name, subdir_name, panel, pos, FALSE);
+	drawer = load_drawer_applet (NULL, pixmap_name, subdir_name, panel, pos, FALSE);
 	if (!drawer) {
 		g_warning("Can't load a drawer");
 		return;
@@ -2985,7 +2985,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 	switch (type) {
 	case ALIGNED_PANEL: 
 		find_empty_pos (screen, &x, &y);
-		panel = aligned_widget_new (screen,
+		panel = aligned_widget_new (NULL,
+					    screen,
 					    ALIGNED_LEFT,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -3002,7 +3003,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		basep_widget_set_pos (BASEP_WIDGET (panel), x, y);
 		break;
 	case EDGE_PANEL: 
-		panel = edge_widget_new (screen,
+		panel = edge_widget_new (NULL,
+					 screen,
 					 find_empty_edge (screen),
 					 BASEP_EXPLICIT_HIDE,
 					 BASEP_SHOWN,
@@ -3018,7 +3020,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case SLIDING_PANEL:
 		find_empty_pos (screen, &x, &y);
-		panel = sliding_widget_new (screen,
+		panel = sliding_widget_new (NULL,
+					    screen,
 					    SLIDING_ANCHOR_LEFT, 0,
 					    BORDER_TOP,
 					    BASEP_EXPLICIT_HIDE,
@@ -3034,7 +3037,8 @@ create_new_panel (GtkWidget *w, gpointer data)
 		break;
 	case FLOATING_PANEL:
 		find_empty_pos (screen, &x, &y);
-		panel = floating_widget_new (screen,
+		panel = floating_widget_new (NULL,
+					     screen,
 					     x, y,
 					     GTK_ORIENTATION_VERTICAL,
 					     BASEP_EXPLICIT_HIDE,
@@ -3053,7 +3057,7 @@ create_new_panel (GtkWidget *w, gpointer data)
 		gchar *s;
 		if (!foobar_widget_exists (screen)) {
 			char *panel_id;
-			panel = foobar_widget_new (screen);
+			panel = foobar_widget_new (NULL, screen);
 			panel_id = g_strdup_printf ("%u",
 						    (guint) PANEL_WIDGET (FOOBAR_WIDGET (panel)->panel)->unique_id);
 
@@ -4834,6 +4838,7 @@ load_tearoff_menu(void)
 	x = conditional_get_int ("x", 0, NULL);
 	y = conditional_get_int ("y", 0, NULL);
 
+	/* FIXME : FUCK sake..too many ids */
 	i = conditional_get_int("menu_panel_id", -1, NULL);
 	if (i < 0) {
 		i = conditional_get_int("menu_panel", 0, NULL);
@@ -4841,7 +4846,7 @@ load_tearoff_menu(void)
 			i = 0;
 		menu_panel_widget = g_slist_nth_data(panels, i);
 	} else {
-		menu_panel_widget = panel_widget_get_by_id (i);
+		/* FIXME : menu_panel_widget = panel_widget_get_by_id (i); */
 	}
 	if (menu_panel_widget == NULL)
 		menu_panel_widget = panels->data;

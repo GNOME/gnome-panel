@@ -525,7 +525,8 @@ floating_widget_change_coords (FloatingWidget *floating,
 }
 
 GtkWidget *
-floating_widget_new (int screen,
+floating_widget_new (gchar *panel_id,
+		     int screen,
 		     gint16 x,
 		     gint16 y,
 		     GtkOrientation orient,
@@ -551,7 +552,8 @@ floating_widget_new (int screen,
 	pos->x = x;
 	pos->y = y;
 
-	basep_widget_construct (BASEP_WIDGET (floating),
+	basep_widget_construct (panel_id,
+				BASEP_WIDGET (floating),
 				TRUE, FALSE,
 				screen,
 				orient,

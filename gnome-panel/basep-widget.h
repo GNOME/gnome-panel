@@ -178,7 +178,8 @@ struct _BasePPosClass {
 GType           basep_pos_get_type              (void) G_GNUC_CONST;
 GType		basep_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget*	basep_widget_construct		(BasePWidget *basep,
+GtkWidget*	basep_widget_construct		(gchar *panel_id,
+						 BasePWidget *basep,
 						 gboolean packed,
 						 gboolean reverse_arrows,
 						 int screen,

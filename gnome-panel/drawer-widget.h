@@ -51,7 +51,8 @@ struct _DrawerPosClass {
 
 GType drawer_pos_get_type (void) G_GNUC_CONST;
 
-GtkWidget *drawer_widget_new (PanelOrient orient,
+GtkWidget *drawer_widget_new (gchar *panel_id,
+			      PanelOrient orient,
 			      BasePMode mode,
 			      BasePState state,
 			      int sz,

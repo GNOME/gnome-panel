@@ -56,7 +56,8 @@ struct _SlidingPosClass {
 
 GType sliding_pos_get_type (void) G_GNUC_CONST;
 
-GtkWidget *sliding_widget_new (int screen,
+GtkWidget *sliding_widget_new (gchar *panel_id,
+			       int screen,
 			       SlidingAnchor anchor,
 			       gint16 offset,
 			       BorderEdge edge,

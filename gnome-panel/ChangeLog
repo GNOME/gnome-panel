@@ -1,3 +1,15 @@
+2001-12-21  Glynn Foster  <glynn.foster@sun.com>
+
+	* aligned-widget.c, aligned-widget.h, basep-widget.c, basep-widget.h,
+	  border-widget.c, border-widget.h, drawer-widget.c, drawer-widget.h,
+	  drawer.c, drawer.h, edge-widget.c, edge-widget.h, extern.c,
+	  floating-widget.c, floating-widget.h, foobar-widget.c, foobar-widget.h,
+	  menu.c, panel-widget.c, panel-widget.h, panel.c, panel.h, session.c,
+	  sliding-widget.c, sliding-widget.h:
+
+	I know I'm going to regret this later on. Store unique id's as strings 
+	instead of guints. It makes handling them in gconf much easier.
+
 2001-12-20  Mark McLoughlin  <mark@skynet.ie>
 
 	* panel.c: (panel_applet_about_to_die): kill warnig and

@@ -344,7 +344,8 @@ border_widget_change_edge (BorderWidget *border, BorderEdge edge)
 }
 
 GtkWidget *
-border_widget_construct (BorderWidget *border,
+border_widget_construct (gchar *panel_id,
+			 BorderWidget *border,
 			 int screen,
 			 BorderEdge edge,
 			 gboolean packed,
@@ -373,7 +374,8 @@ border_widget_construct (BorderWidget *border,
 	BORDER_POS (basep->pos)->edge = edge;
 	basep->keep_in_screen = TRUE;
 
-	basep_widget_construct (basep,
+	basep_widget_construct (panel_id,
+				basep,
 				packed,
 				reverse_arrows,
 				screen,

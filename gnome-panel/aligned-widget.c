@@ -378,7 +378,8 @@ aligned_widget_change_align_edge (AlignedWidget *aligned,
 }
 				 
 GtkWidget *
-aligned_widget_new (int screen,
+aligned_widget_new (gchar *panel_id,
+		    int screen,
 		    AlignedAlignment align,
 		    BorderEdge edge,
 		    BasePMode mode,
@@ -399,7 +400,8 @@ aligned_widget_new (int screen,
 
 	BASEP_WIDGET (aligned)->pos = BASEP_POS (pos);
 
-	border_widget_construct (BORDER_WIDGET (aligned),
+	border_widget_construct (panel_id,
+				 BORDER_WIDGET (aligned),
 				 screen,
 				 edge, 
 				 TRUE,

@@ -1120,7 +1120,7 @@ drop_internal_applet (PanelWidget *panel, int pos, const char *applet_type,
 			drop_menu (panel, pos, menu);
 
 	} else if (strcmp(applet_type,"DRAWER:NEW")==0) {
-		load_drawer_applet(-1, NULL, NULL, panel, pos, TRUE);
+		load_drawer_applet(NULL, NULL, NULL, panel, pos, TRUE);
 
 	} else if (strcmp (applet_type, "LOGOUT:NEW") == 0) {
 		load_logout_applet (panel, pos, TRUE);
@@ -1664,31 +1664,40 @@ send_state_change(void)
 }
 
 PanelData *
-panel_data_by_id (int id)
+panel_data_by_id (gchar *id)
 {
 	GSList *list;
 	for(list = panel_list; list != NULL; list = g_slist_next(list)) {
 		PanelData *pd = list->data;
-		int pd_id = -1;
+		gchar *pd_id = NULL;
 
 		if (BASEP_IS_WIDGET (pd->panel))
-		       pd_id = PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id;
+		       pd_id = g_strdup (PANEL_WIDGET (BASEP_WIDGET (pd->panel)->panel)->unique_id);
 		else if (FOOBAR_IS_WIDGET (pd->panel))
-		       pd_id = PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id;
+		       pd_id = g_strdup (PANEL_WIDGET (FOOBAR_WIDGET (pd->panel)->panel)->unique_id);
 
-		if (id == pd_id)
+		if (strcmp (id, pd_id) == 0) {
+			g_free (pd_id);
 			return pd;
+		}
+		g_free (pd_id);
 	}
 	return NULL;
 }
 
 void
-panel_set_id (GtkWidget *widget, int id)
+panel_set_id (GtkWidget *widget, gchar *id)
 {
-	if (BASEP_IS_WIDGET (widget))
-		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = id;
-	else if (FOOBAR_IS_WIDGET (widget))
-		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = id;
+	if (BASEP_IS_WIDGET (widget))  {
+		if (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id != NULL)
+			g_free (PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id);	
+		PANEL_WIDGET (BASEP_WIDGET (widget)->panel)->unique_id = g_strdup (id);
+	}
+	else if (FOOBAR_IS_WIDGET (widget)) {
+		if (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id != NULL)
+			g_free (PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id);
+		PANEL_WIDGET (FOOBAR_WIDGET (widget)->panel)->unique_id = g_strdup (id);
+	}
 }
 
 void

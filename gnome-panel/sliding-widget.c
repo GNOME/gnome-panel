@@ -278,7 +278,8 @@ sliding_pos_get_pos (BasePWidget *basep, int *x, int *y,
 }
 
 GtkWidget *
-sliding_widget_new (int screen,
+sliding_widget_new (gchar *panel_id,
+		    int screen,
 		    SlidingAnchor anchor,
 		    gint16 offset,
 		    BorderEdge edge,
@@ -302,7 +303,8 @@ sliding_widget_new (int screen,
 	
 	BASEP_WIDGET (sliding)->pos = BASEP_POS (pos);
 
-	border_widget_construct (BORDER_WIDGET (sliding),
+	border_widget_construct (panel_id,
+				 BORDER_WIDGET (sliding),
 				 screen,
 				 edge,
 				 TRUE,

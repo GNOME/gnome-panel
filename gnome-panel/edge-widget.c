@@ -197,7 +197,8 @@ edge_pos_pre_convert_hook (BasePWidget *basep)
 }
 
 GtkWidget *
-edge_widget_new (int screen,
+edge_widget_new (gchar *panel_id,
+		 int screen,
 		 BorderEdge edge,
 		 BasePMode mode,
 		 BasePState state,
@@ -216,7 +217,8 @@ edge_widget_new (int screen,
 
 	basep->pos = gtk_type_new (EDGE_TYPE_POS);
 
-	border_widget_construct (BORDER_WIDGET (basep), 
+	border_widget_construct (panel_id,
+				 BORDER_WIDGET (basep), 
 				 screen,
 				 edge, 
 				 TRUE, FALSE,

@@ -16,7 +16,7 @@ typedef struct {
 	GtkWidget *properties;
 } Drawer;
 
-Drawer *load_drawer_applet (int          mypanel,
+Drawer *load_drawer_applet (gchar       *mypanel,
 			    const char  *pixmap,
 			    const char  *tooltip,
 			    PanelWidget *panel,

@@ -1408,7 +1408,8 @@ basep_widget_west_clicked (GtkWidget *widget, gpointer data)
 }
 
 GtkWidget*
-basep_widget_construct (BasePWidget *basep,
+basep_widget_construct (gchar *panel_id,
+			BasePWidget *basep,
 			gboolean packed,
 			gboolean reverse_arrows,
 			int screen,
@@ -1427,7 +1428,8 @@ basep_widget_construct (BasePWidget *basep,
 {
 	BasePPosClass *klass = basep_widget_get_pos_class (basep);
 	int x = 0, y = 0;
-	basep->panel = panel_widget_new(packed,
+	basep->panel = panel_widget_new(panel_id,
+					packed,
 					orient,
 					sz,
 					back_type,

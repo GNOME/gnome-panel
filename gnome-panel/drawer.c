@@ -374,7 +374,7 @@ static Drawer *
 create_empty_drawer_applet(const char *tooltip, const char *pixmap,
 			   PanelOrient orient)
 {
-	GtkWidget *dw = drawer_widget_new (orient,
+	GtkWidget *dw = drawer_widget_new (NULL, orient,
 					   BASEP_EXPLICIT_HIDE,
 					   BASEP_SHOWN,
 					   PANEL_SIZE_MEDIUM,
@@ -425,7 +425,7 @@ button_size_alloc(GtkWidget *widget, GtkAllocation *alloc, Drawer *drawer)
 }
 
 Drawer *
-load_drawer_applet (int mypanel_id, const char *pixmap, const char *tooltip,
+load_drawer_applet (gchar *mypanel_id, const char *pixmap, const char *tooltip,
 		    PanelWidget *panel, int pos, gboolean exactpos)
 {
 	Drawer          *drawer;

@@ -452,7 +452,8 @@ drawer_widget_change_orient (DrawerWidget *drawer,
 }
 
 GtkWidget *
-drawer_widget_new (PanelOrient orient,
+drawer_widget_new (gchar *panel_id,
+		   PanelOrient orient,
 		   BasePMode mode,
 		   BasePState state,
 		   int sz,
@@ -484,7 +485,8 @@ drawer_widget_new (PanelOrient orient,
 		break;
 	}
 
-	basep_widget_construct (BASEP_WIDGET (drawer),
+	basep_widget_construct (panel_id, 
+				BASEP_WIDGET (drawer),
 				TRUE, TRUE,
 				0 /*FIXME */,
 				porient,

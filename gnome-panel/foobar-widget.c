@@ -1083,7 +1083,7 @@ foobar_widget_instance_init (FoobarWidget *foo)
 	
 	
 	/* panel widget */
-	foo->panel = panel_widget_new (FALSE, GTK_ORIENTATION_HORIZONTAL,
+	foo->panel = panel_widget_new (NULL, FALSE, GTK_ORIENTATION_HORIZONTAL,
 				       PANEL_SIZE_X_SMALL, PANEL_BACK_NONE,
 				       NULL, FALSE, FALSE, FALSE, NULL);
 	PANEL_WIDGET (foo->panel)->panel_parent = GTK_WIDGET (foo);
@@ -1185,7 +1185,7 @@ foobar_widget_size_allocate (GtkWidget *w, GtkAllocation *alloc)
 }
 
 GtkWidget *
-foobar_widget_new (int screen)
+foobar_widget_new (gchar *panel_id, int screen)
 {
 	FoobarWidget *foo;
 
@@ -1195,6 +1195,10 @@ foobar_widget_new (int screen)
 		return NULL;
 
 	foo = gtk_type_new (FOOBAR_TYPE_WIDGET);
+
+	/* Ugly hack to reset the unique id back to the original one */	
+	if (panel_id != NULL) 
+		panel_widget_set_new_id (PANEL_WIDGET (foo->panel));
 
 	foo->screen = screen;
 	gtk_widget_set_uposition (GTK_WIDGET (foo),

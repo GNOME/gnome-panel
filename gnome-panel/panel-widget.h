@@ -60,7 +60,7 @@ struct _PanelWidget
 {
 	GtkFixed		fixed;
 
-	guint32			unique_id;
+	gchar 			*unique_id;
 	
 	GList			*applet_list;
 	GList			*no_window_applet_list;
@@ -131,7 +131,8 @@ struct _PanelWidgetClass
 
 GType		panel_widget_get_type		(void) G_GNUC_CONST;
 
-GtkWidget *	panel_widget_new		(gboolean packed,
+GtkWidget *	panel_widget_new		(gchar *panel_id,
+						 gboolean packed,
 						 GtkOrientation orient,
 						 int sz,
 						 PanelBackType back_type,
@@ -151,9 +152,10 @@ int		panel_widget_add_full		(PanelWidget *panel,
 						 gboolean expand_minor);
 #define panel_widget_add(panel,applet,pos) (panel_widget_add_full(panel,applet,pos,TRUE,FALSE,FALSE,FALSE))
 
-PanelWidget *	panel_widget_get_by_id		(gint32 id);
+PanelWidget *	panel_widget_get_by_id		(gchar *id);
 void		panel_widget_set_id		(PanelWidget *panel,
-						 gint32 id);
+						 gchar *id);
+void		panel_widget_set_new_id		(PanelWidget *panel);
 
 /*needs to be called for drawers after add*/
 void		panel_widget_add_forbidden	(PanelWidget *panel);

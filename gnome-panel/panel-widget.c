@@ -8,6 +8,7 @@
 #include <limits.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -1784,34 +1785,13 @@ panel_widget_event(GtkWidget *widget, GdkEvent *event, gpointer data)
 	}
 	return FALSE;
 }
-
-PanelWidget *
-panel_widget_get_by_id (gint32 id)
-{
-	GSList *li;
-
-	for (li = panels; li != NULL; li = li->next) {
-		PanelWidget *panel = li->data;
-
-		if (panel->unique_id == id)
-			return panel;
-	}
-
-	return NULL;
-}
-
-void
-panel_widget_set_id (PanelWidget *panel, gint32 id)
-{
-	panel->unique_id = id;
-}
-
-static gint32
+static gchar * 
 generate_unique_id (void)
 {
 	gint32 id;
 	GTimeVal tv;
 	static int incr = -1;
+	gchar *retval = NULL;
 
 	if (incr == -1)
 		incr = (rand () >> 3) & 0xFF;
@@ -1824,10 +1804,67 @@ generate_unique_id (void)
 
 	incr ++;
 
-	if (panel_widget_get_by_id (id) != NULL)
-		id = generate_unique_id ();
+	retval = g_strdup_printf ("%u", id);	
+#ifdef PANEL_WIDGET_DEBUG
+	printf ("generating %s\n", retval);
+#endif
+	if (panel_widget_get_by_id (retval) != NULL) {
+		g_free (retval);
+		retval = generate_unique_id ();
+	}
 
-	return id;
+	return retval;
+}
+
+PanelWidget *
+panel_widget_get_by_id (gchar *id)
+{
+	GSList *li;
+
+	g_return_val_if_fail (id != NULL, NULL);
+
+#ifdef PANEL_WIDGET_DEBUG
+	printf ("Call panel_widget_get_by_id (%s) \n", id):
+#endif
+	for (li = panels; li != NULL; li = li->next) {
+		PanelWidget *panel = li->data;
+
+#ifdef PANEL_WIDGET_DEBUG
+	printf ("Testing panel id %s\n"panel->unique_id);
+#endif
+		if (panel->unique_id != NULL) {
+			if (strcmp (panel->unique_id, id) == 0) {
+
+#ifdef PANEL_WIDGET_DEBUG
+	printf ("We have found our panel!\n");
+#endif
+				return panel;
+			}
+		}
+	}
+	return NULL;
+}
+
+void
+panel_widget_set_id (PanelWidget *panel, gchar *id)
+{
+	g_return_if_fail (id != NULL);
+	if (panel->unique_id != NULL)
+		g_free (panel->unique_id);
+	panel->unique_id = g_strdup (id);
+#ifdef PANEL_WIDGET_DEBUG
+	printf ("panel_widget_set_id : TO %s\n", panel->unique_id);
+#endif
+	return;
+}
+
+void
+panel_widget_set_new_id (PanelWidget *panel) 
+{
+	if (panel->unique_id != NULL) {
+		g_free (panel->unique_id);
+	}
+	panel->unique_id = g_strdup (generate_unique_id ());
 }
 
 static void
@@ -1836,7 +1873,7 @@ panel_widget_instance_init (PanelWidget *panel)
 	g_return_if_fail(panel!=NULL);
 	g_return_if_fail(PANEL_IS_WIDGET(panel));
 
-	panel->unique_id = generate_unique_id ();
+	panel->unique_id = NULL;
 
 	/*this makes the popup "pop down" once the button is released*/
 	gtk_widget_set_events(GTK_WIDGET(panel),
@@ -1877,7 +1914,8 @@ panel_widget_instance_init (PanelWidget *panel)
 }
 
 GtkWidget *
-panel_widget_new (gboolean packed,
+panel_widget_new (gchar *panel_id,
+		  gboolean packed,
 		  GtkOrientation orient,
 		  int sz,
 		  PanelBackType back_type,
@@ -1891,6 +1929,14 @@ panel_widget_new (gboolean packed,
 
 	panel = gtk_type_new(PANEL_TYPE_WIDGET);
         GTK_WIDGET_UNSET_FLAGS (panel, GTK_NO_WINDOW);
+
+	if (panel_id == NULL) {
+	panel->unique_id = g_strdup (generate_unique_id ());
+	}
+	else {
+	  g_free (panel->unique_id);
+	  panel->unique_id = g_strdup (panel_id);
+	} 
 
 	panel->back_type = back_type;
 

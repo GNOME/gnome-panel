@@ -46,7 +46,8 @@ struct _FloatingPosClass {
 
 GType floating_pos_get_type (void) G_GNUC_CONST;
 
-GtkWidget *floating_widget_new (int screen,
+GtkWidget *floating_widget_new (gchar *panel_id,
+				int screen,
 				gint16 x,
 				gint16 y,
 				GtkOrientation orient,

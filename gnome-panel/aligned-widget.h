@@ -52,7 +52,9 @@ struct _AlignedPosClass {
 };
 
 GType aligned_pos_get_type (void) G_GNUC_CONST;
-GtkWidget *aligned_widget_new (int screen,
+
+GtkWidget *aligned_widget_new (gchar *panel_id,
+			       int screen,
 			       AlignedAlignment aligned,
 			       BorderEdge edge,
 			       BasePMode mode,
